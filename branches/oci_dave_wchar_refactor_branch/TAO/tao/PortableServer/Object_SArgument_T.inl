@@ -3,6 +3,8 @@
 // $Id$
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 template<typename S_ptr,
          typename S_var,
          typename Insert_Policy>
@@ -77,3 +79,5 @@ TAO::Ret_Object_SArgument_T<S_ptr,S_var,Insert_Policy>::arg (void)
 {
   return this->x_.out ();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

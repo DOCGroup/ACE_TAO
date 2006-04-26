@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -43,6 +43,8 @@
 #ifndef ACE_XTI_ATM_DEVICE
 #define ACE_XTI_ATM_DEVICE "/dev/xtisvc0"
 #endif
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_TLI
@@ -102,6 +104,8 @@ private:
   struct t_optmgmt so_opt_ret;
 #endif /* ACE_HAS_SVR4_TLI */
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/TLI.inl"

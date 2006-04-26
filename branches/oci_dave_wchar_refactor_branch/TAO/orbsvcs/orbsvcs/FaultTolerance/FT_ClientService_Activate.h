@@ -1,3 +1,5 @@
+// -*- C++ -*-
+
 //=============================================================================
 /**
  * @file FT_ClientService_Activate.h
@@ -14,7 +16,7 @@
 #define TAO_FT_CLIENTACTIVATE_H
 #include /**/ "ace/pre.h"
 
-#include "FT_ClientORB_export.h"
+#include "orbsvcs/FaultTolerance/FT_ClientORB_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -22,6 +24,8 @@
 
 #include "tao/Services_Activate.h"
 #include "ace/Service_Config.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Service_Callbacks;
 
@@ -55,14 +59,15 @@ public:
 
   /// Used to force the initialization.
   static int Initializer (void);
-
 };
-
-ACE_STATIC_SVC_DECLARE (TAO_FT_ClientService_Activate)
-ACE_FACTORY_DECLARE (TAO_FT_ClientORB, TAO_FT_ClientService_Activate)
 
 static int
 TAO_FT_Requires_ClientService_Activate = TAO_FT_ClientService_Activate::Initializer ();
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+ACE_STATIC_SVC_DECLARE (TAO_FT_ClientService_Activate)
+ACE_FACTORY_DECLARE (TAO_FT_ClientORB, TAO_FT_ClientService_Activate)
 
 #include /**/ "ace/post.h"
 #endif /*TAO_FT_CLIENTACTIVATE_H*/

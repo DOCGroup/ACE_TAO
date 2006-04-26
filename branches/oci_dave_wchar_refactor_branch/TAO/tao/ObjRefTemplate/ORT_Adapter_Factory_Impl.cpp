@@ -1,12 +1,14 @@
 // $Id$
 
-#include "ORT_Adapter_Factory_Impl.h"
-#include "ORT_Adapter_Impl.h"
+#include "tao/ObjRefTemplate/ORT_Adapter_Factory_Impl.h"
+#include "tao/ObjRefTemplate/ORT_Adapter_Impl.h"
 #include "tao/PortableServer/Root_POA.h"
 
 ACE_RCSID (ORT,
            ORT_Adapter_Factory_Impl,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -38,14 +40,19 @@ namespace TAO
           ace_svc_desc_ORT_Adapter_Factory_Impl
         );
   }
-
-  ACE_STATIC_SVC_DEFINE (
-    ORT_Adapter_Factory_Impl,
-    ACE_TEXT ("Concrete_ORT_Adapter_Factory"),
-    ACE_SVC_OBJ_T,
-    &ACE_SVC_NAME (ORT_Adapter_Factory_Impl),
-    ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
-    0)
-
-  ACE_FACTORY_DEFINE (TAO_ORT, ORT_Adapter_Factory_Impl)
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+ACE_STATIC_SVC_DEFINE (
+  ORT_Adapter_Factory_Impl,
+  ACE_TEXT ("Concrete_ORT_Adapter_Factory"),
+  ACE_SVC_OBJ_T,
+  &ACE_SVC_NAME (ORT_Adapter_Factory_Impl),
+  ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
+  0)
+
+ACE_FACTORY_NAMESPACE_DEFINE (
+  TAO_ORT,
+  ORT_Adapter_Factory_Impl,
+  TAO::ORT_Adapter_Factory_Impl)

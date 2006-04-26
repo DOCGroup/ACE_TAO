@@ -15,20 +15,22 @@ project(Benchmark_stub): ciao_client_dnc {
   }
 }
 
-project(Benchmark_svnt) : ciao_server_dnc {
+project(Benchmark_svnt) : ciao_component_dnc {
   after +=  Benchmark_stub
   sharedname = Benchmark_svnt
   libs    += Benchmark_stub
 
   idlflags  +=  -Wb,export_macro=BENCHMARK_SVNT_Export -Wb,export_include=Benchmark_svnt_export.h
   dynamicflags = BENCHMARK_SVNT_BUILD_DLL
+  IDL_Files {
+  }
 
   Source_Files {
     BenchmarkS.cpp
   }
 }
 
-project (*server) : taoserver, strategies,ciao_server_dnc {
+project (*server) : taoserver, strategies,ciao_component_dnc {
   after += Benchmark_svnt
   libs += Benchmark_svnt Benchmark_stub 
 

@@ -1,6 +1,6 @@
 // $Id$
 
-#include "Operation_Table_Perfect_Hash.h"
+#include "tao/PortableServer/Operation_Table_Perfect_Hash.h"
 #include "tao/Timeprobe.h"
 #include "ace/Log_Msg.h"
 
@@ -29,10 +29,7 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Operation_Table_Timeprobe_Description,
 
 #endif /* ACE_ENABLE_TIMEPROBES */
 
-// Do nothing constructor.
-TAO_Perfect_Hash_OpTable::TAO_Perfect_Hash_OpTable (void)
-{
-}
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Do nothing destrctor.
 TAO_Perfect_Hash_OpTable::~TAO_Perfect_Hash_OpTable (void)
@@ -103,3 +100,4 @@ TAO_Perfect_Hash_OpTable::bind (const char *,
   return 0;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

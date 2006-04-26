@@ -13,6 +13,8 @@ ACE_RCSID (tao,
            "$Id$")
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_GIOP_Message_Generator_Parser::~TAO_GIOP_Message_Generator_Parser (void)
 {
 }
@@ -35,9 +37,8 @@ TAO_GIOP_Message_Generator_Parser::parse_reply (
     }
 
   // and the reply status type.  status can be NO_EXCEPTION,
-  // SYSTEM_EXCEPTION, USER_EXCEPTION, LOCATION_FORWARD
-
-  // Cannot handle LOCATION_FORWARD_PERM here
+  // SYSTEM_EXCEPTION, USER_EXCEPTION, LOCATION_FORWARD,
+  // LOCATION_FORWARD_PERM
   CORBA::ULong rep_stat = 0;
   if (!stream.read_ulong (rep_stat))
     {
@@ -74,13 +75,12 @@ TAO_GIOP_Message_Generator_Parser::parse_reply (
         TAO_PLUGGABLE_MESSAGE_LOCATION_FORWARD;
       break;
       // Reply is a location forward perm type
-      // @@For the time being the behaviour of the
-      // LOCATION_FORWARD_PERM would be similar to the
-      // LOCATION_FORWARD as there is a controversy surrounding the
-      // usage of this in the OMG.
+     // LOCATION_FORWARD_PERM is only allowed in context of
+     // FaultTolerant featured requests and requires PortableGroup
+     // features in forwarded object and service context
     case TAO_GIOP_LOCATION_FORWARD_PERM:
       params.reply_status_ =
-        TAO_PLUGGABLE_MESSAGE_LOCATION_FORWARD;
+        TAO_PLUGGABLE_MESSAGE_LOCATION_FORWARD_PERM;
       break;
       // Reply is a location forward type
     case TAO_GIOP_NEEDS_ADDRESSING_MODE:
@@ -115,8 +115,7 @@ TAO_GIOP_Message_Generator_Parser::parse_locate_reply (
 
   // and the reply status type.  status can be NO_EXCEPTION,
   // SYSTEM_EXCEPTION, USER_EXCEPTION, LOCATION_FORWARD
-
-  // Cannot handle LOCATION_FORWARD_PERM here
+  // LOCATION_FORWARD_PERM
 
   // Please note here that we are NOT converting to the Pluggable
   // messaging layer exception as this is GIOP specific. Not many
@@ -168,3 +167,5 @@ TAO_GIOP_Message_Generator_Parser::marshal_reply_status (
       break;
     }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,10 +1,8 @@
-// This may look like C, but it's really -*- C++ -*-
-//
 // $Id$
 
-#include "UIPMC_Profile.h"
-#include "PortableGroup_Request_Dispatcher.h"
-#include "PortableGroup_Loader.h"
+#include "orbsvcs/PortableGroup/UIPMC_Profile.h"
+#include "orbsvcs/PortableGroup/PortableGroup_Request_Dispatcher.h"
+#include "orbsvcs/PortableGroup/PortableGroup_Loader.h"
 
 #include "tao/TAO_Server_Request.h"
 #include "tao/ORB_Core.h"
@@ -12,6 +10,8 @@
 ACE_RCSID (PortableGroup,
            PortableGroup_Request_Dispatcher,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 PortableGroup_Request_Dispatcher::~PortableGroup_Request_Dispatcher (void)
 {
@@ -57,3 +57,5 @@ PortableGroup_Request_Dispatcher::dispatch (TAO_ORB_Core *orb_core,
                                            ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

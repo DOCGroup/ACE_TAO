@@ -11,18 +11,20 @@
 
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
-#include "ServantRetentionStrategyRetain.h"
-#include "Non_Servant_Upcall.h"
-#include "Servant_Upcall.h"
-#include "POA_Current_Impl.h"
-#include "Root_POA.h"
-#include "Active_Object_Map.h"
-#include "Active_Object_Map_Entry.h"
+#include "tao/PortableServer/ServantRetentionStrategyRetain.h"
+#include "tao/PortableServer/Non_Servant_Upcall.h"
+#include "tao/PortableServer/Servant_Upcall.h"
+#include "tao/PortableServer/POA_Current_Impl.h"
+#include "tao/PortableServer/Root_POA.h"
+#include "tao/PortableServer/Active_Object_Map.h"
+#include "tao/PortableServer/Active_Object_Map_Entry.h"
 #include "ace/Auto_Ptr.h"
 
 ACE_RCSID (PortableServer,
            Servant_Retention_Strategy,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -104,6 +106,18 @@ namespace TAO
     {
       // Decrement the reference count.
       CORBA::UShort new_count = --active_object_map_entry->reference_count_;
+
+      // Inform the custom servant dispatching (CSD) strategy that the
+      // servant is deactivated. This would be called just once when the
+      // servant is deactivated the first time.
+      if (active_object_map_entry->deactivated_ == 0)
+        {
+          this->poa_->servant_deactivated_hook (
+            active_object_map_entry->servant_,
+            active_object_map_entry->user_id_
+            ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK;
+        }
 
       if (new_count == 0)
         {
@@ -344,6 +358,44 @@ namespace TAO
       return servant;
     }
 
+    int 
+    ServantRetentionStrategyRetain::find_servant_priority (
+        const PortableServer::ObjectId &system_id,
+        CORBA::Short &priority
+        ACE_ENV_ARG_DECL)
+    {
+      PortableServer::ObjectId user_id;
+      // If we have the RETAIN policy, convert/transform from system id to
+      // user id.
+      if (this->active_object_map_->
+          find_user_id_using_system_id (system_id,
+                                        user_id) != 0)
+        {
+          ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
+                            -1);
+        }
+
+      // If the POA has the RETAIN policy, the POA looks in the Active
+      // Object Map to find if there is a servant associated with the
+      // Object Id value from the request. If such a servant exists, the
+      // POA invokes the appropriate method on the servant.
+      PortableServer::Servant servant = 0;
+      TAO_Active_Object_Map_Entry *active_object_map_entry = 0;
+      int result = this->active_object_map_->
+        find_servant_using_system_id_and_user_id (system_id,
+                                                  user_id,
+                                                  servant,
+                                                  active_object_map_entry);
+
+      if (result == 0)
+        {
+          priority = active_object_map_entry->priority_;
+          return 0;
+        }
+
+      return -1;
+    }
+
     int
     ServantRetentionStrategyRetain::is_servant_in_map (
       PortableServer::Servant servant,
@@ -557,6 +609,13 @@ namespace TAO
           // Everything is finally ok
           //
 
+          // Inform the custom servant dispatching (CSD) strategy that the
+          // sevant is activated.
+          this->poa_->servant_activated_hook (servant,
+                                              user_id.in ()
+                                              ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK_RETURN (0);
+
           // ATTENTION: Trick locking here, see class header for details
           Non_Servant_Upcall non_servant_upcall (*this->poa_);
           ACE_UNUSED_ARG (non_servant_upcall);
@@ -634,6 +693,13 @@ namespace TAO
           //
           // Everything is finally ok
           //
+
+          // Inform the custom servant dispatching (CSD) strategy that the
+          // sevant is activated.
+          this->poa_->servant_activated_hook (servant,
+                                              system_id.in ()
+                                              ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK_RETURN (0);
 
           // ATTENTION: Trick locking here, see class header for details
           Non_Servant_Upcall non_servant_upcall (*this->poa_);
@@ -758,6 +824,13 @@ namespace TAO
       // Everything is finally ok
       //
 
+      // Inform the custom servant dispatching (CSD) strategy that the
+      // sevant is activated.
+      this->poa_->servant_activated_hook (servant,
+                                          user_id.in ()
+                                          ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (0);
+
       // ATTENTION: Trick locking here, see class header for details
       Non_Servant_Upcall non_servant_upcall (*this->poa_);
       ACE_UNUSED_ARG (non_servant_upcall);
@@ -780,9 +853,9 @@ namespace TAO
       int &wait_occurred_restart_call
       ACE_ENV_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::POA::ServantAlreadyActive,
-                   PortableServer::POA::ObjectAlreadyActive,
-                   PortableServer::POA::WrongPolicy))
+                         PortableServer::POA::ServantAlreadyActive,
+                         PortableServer::POA::ObjectAlreadyActive,
+                         PortableServer::POA::WrongPolicy))
     {
       // If the POA has the SYSTEM_ID policy and it detects that the
       // Object Id value was not generated by the system or for this POA,
@@ -864,6 +937,13 @@ namespace TAO
       //
       // Everything is finally ok
       //
+
+      // Inform the custom servant dispatching (CSD) strategy that the
+      // sevant is activated.
+      this->poa_->servant_activated_hook (servant,
+                                          id
+                                          ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
 
       // ATTENTION: Trick locking here, see class header for details
       Non_Servant_Upcall non_servant_upcall (*this->poa_);
@@ -1001,6 +1081,7 @@ namespace TAO
       return this->active_object_map_->remaining_activations (servant);
     }
 
+
     ::PortableServer::ServantRetentionPolicyValue
     ServantRetentionStrategyRetain::type() const
     {
@@ -1010,3 +1091,4 @@ namespace TAO
   }
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

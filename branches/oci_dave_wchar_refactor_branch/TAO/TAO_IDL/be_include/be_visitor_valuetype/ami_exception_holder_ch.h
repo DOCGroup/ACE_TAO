@@ -41,8 +41,6 @@ public:
   ~be_visitor_valuetype_ami_exception_holder_ch (void);
   // destructor
 
-  virtual int visit_valuetype (be_valuetype *node);
-
   virtual int visit_operation (be_operation *node);
 
 };

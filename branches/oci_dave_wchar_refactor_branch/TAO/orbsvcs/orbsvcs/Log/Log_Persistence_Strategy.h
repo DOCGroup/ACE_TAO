@@ -17,13 +17,16 @@
 
 #include /**/ "ace/pre.h"
 
-#include "log_serv_export.h"
+#include "orbsvcs/Log/log_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Versioned_Namespace.h"
 #include "ace/Service_Object.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_LogStore;
 class TAO_LogMgr_i;
@@ -50,6 +53,8 @@ public:
 
 private:
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

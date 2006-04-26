@@ -21,11 +21,15 @@
 
 #include "Task_Stats.h"
 #include "Notify_StructuredPushConsumer.h"
+
 #include "ace/Arg_Shifter.h"
-#include "ace/Argv_Type_Converter.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+class ACE_Barrier;
+//class ACE_TArg_Shifter< char >;
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 class TAO_Notify_Tests_Task_Callback;
-class ACE_Barrier;
 
 /**
  * @class TAO_Notify_Tests_Periodic_Consumer

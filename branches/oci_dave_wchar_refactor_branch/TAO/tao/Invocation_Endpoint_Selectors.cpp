@@ -1,32 +1,26 @@
-// -*- C++ -*-
 //$Id$
 #include "tao/Invocation_Endpoint_Selectors.h"
 #include "tao/Stub.h"
 #include "tao/Profile.h"
 #include "tao/ORB_Core.h"
 #include "tao/IIOP_Endpoint.h"
-#include "Base_Transport_Property.h"
-#include "Profile_Transport_Resolver.h"
-#include "ORB_Constants.h"
-#include "SystemException.h"
+#include "tao/Base_Transport_Property.h"
+#include "tao/Profile_Transport_Resolver.h"
+#include "tao/ORB_Constants.h"
+#include "tao/SystemException.h"
 
 ACE_RCSID (tao,
            Invocation_Endpoint_Selectors,
            "$Id$")
 
-TAO_Invocation_Endpoint_Selector::TAO_Invocation_Endpoint_Selector (void)
-{
-}
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Invocation_Endpoint_Selector::~TAO_Invocation_Endpoint_Selector (void)
 {
 }
 
 // ****************************************************************
-
-TAO_Default_Endpoint_Selector::TAO_Default_Endpoint_Selector (void)
-{
-}
 
 TAO_Default_Endpoint_Selector::~TAO_Default_Endpoint_Selector (void)
 {
@@ -135,16 +129,16 @@ TAO_Default_Endpoint_Selector::select_endpoint (
       if (r->blocked_connect () ||
          (!r->blocked_connect () && r->profile ()->supports_non_blocking_oneways ()))
         {
-          const size_t endpoint_count =
+          size_t const endpoint_count =
             r->profile ()->endpoint_count ();
 
-          TAO_Endpoint *ep =
+          TAO_Endpoint * ep =
             r->profile ()->endpoint ();
 
           for (size_t i = 0; i < endpoint_count; ++i)
             {
               TAO_Base_Transport_Property desc (ep);
-              const bool retval =
+              bool const retval =
                 r->try_connect (&desc,
                                 max_wait_time
                                 ACE_ENV_ARG_PARAMETER);
@@ -166,3 +160,5 @@ TAO_Default_Endpoint_Selector::select_endpoint (
   ACE_THROW (CORBA::TRANSIENT (CORBA::OMGVMCID | 2,
                                CORBA::COMPLETED_NO));
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

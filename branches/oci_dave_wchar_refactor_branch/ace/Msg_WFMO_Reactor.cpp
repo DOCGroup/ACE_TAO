@@ -10,6 +10,8 @@ ACE_RCSID(ace, Msg_WFMO_Reactor, "$Id$")
 #include "ace/Msg_WFMO_Reactor.inl"
 #endif /* __ACE_INLINE__ */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_Msg_WFMO_Reactor::ACE_Msg_WFMO_Reactor (ACE_Sig_Handler *sh,
                                             ACE_Timer_Queue *tq)
   : ACE_WFMO_Reactor (sh, tq)
@@ -71,7 +73,7 @@ ACE_Msg_WFMO_Reactor::dispatch_window_messages (void)
         }
 
       ::DispatchMessage (&msg);
-      number_of_messages++;
+      ++number_of_messages;
     }
 
   return number_of_messages;
@@ -86,5 +88,7 @@ ACE_Msg_WFMO_Reactor::poll_remaining_handles (DWORD slot)
                                       0,
                                       QS_ALLINPUT);
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_WIN32 && !ACE_LACKS_MSG_WFMO */

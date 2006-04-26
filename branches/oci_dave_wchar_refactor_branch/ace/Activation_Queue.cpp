@@ -13,6 +13,8 @@ ACE_RCSID (ace,
            Activation_Queue,
            "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 void
 ACE_Activation_Queue::dump (void) const
 {
@@ -59,7 +61,7 @@ ACE_Activation_Queue::~ACE_Activation_Queue (void)
 ACE_Method_Request *
 ACE_Activation_Queue::dequeue (ACE_Time_Value *tv)
 {
-  ACE_Message_Block *mb;
+  ACE_Message_Block *mb = 0;
 
   // Dequeue the message.
   if (this->queue_->dequeue_head (mb, tv) != -1)
@@ -79,7 +81,7 @@ int
 ACE_Activation_Queue::enqueue (ACE_Method_Request *mr,
                                ACE_Time_Value *tv)
 {
-  ACE_Message_Block *mb;
+  ACE_Message_Block *mb = 0;
 
   // We pass sizeof (*mr) here so that flow control will work
   // correctly.  Since we also pass <mr> note that no unnecessary
@@ -100,7 +102,7 @@ ACE_Activation_Queue::enqueue (ACE_Method_Request *mr,
                          -1);
 
   // Enqueue in priority order.
-  int result = this->queue_->enqueue_prio (mb, tv);
+  int const result = this->queue_->enqueue_prio (mb, tv);
 
   // Free ACE_Message_Block if enqueue_prio failed.
   if (result == -1)
@@ -108,3 +110,5 @@ ACE_Activation_Queue::enqueue (ACE_Method_Request *mr,
 
   return result;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

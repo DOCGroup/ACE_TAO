@@ -1,9 +1,12 @@
 // $Id$
 
 
-#include "Protocol_Factory.h"
+#include "orbsvcs/AV/Protocol_Factory.h"
 #include "tao/debug.h"
 #include "ace/Dynamic_Service.h"
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // TAO_AV_Flow_Protocol_Factory
 TAO_AV_Flow_Protocol_Factory::TAO_AV_Flow_Protocol_Factory (void)
@@ -124,3 +127,5 @@ TAO_AV_Protocol_Object::handle_control_input (ACE_Message_Block *,
     ACE_DEBUG ((LM_DEBUG,"TAO_AV_Protocol_Object::handle_control_input\n"));
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -31,15 +31,18 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+#include "tao/AnyTypeCode/AnyTypeCode_methods.h"
+#include "tao/PI/ClientRequestInfoC.h"
+#include "tao/PI/PIForwardRequestC.h"
+#include "tao/PI/PICurrent_Impl.h"
+#include "tao/PI/PICurrent_Copy_Callback.h"
 #include "tao/CORBA_methods.h"
-#include "ClientRequestInfoC.h"
-#include "PIForwardRequestC.h"
-#include "PICurrent_Impl.h"
-#include "PICurrent_Copy_Callback.h"
 #include "tao/ORB_Constants.h"
 #include "tao/LocalObject.h"
 #include "tao/Invocation_Utils.h"
+#include "tao/TimeBaseC.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Service_Context;
 
@@ -67,7 +70,7 @@ namespace Messaging
  * @brief Implementation of the PortableInterceptor::ClientRequestInfo
  *        interface.
  */
-class TAO_ClientRequestInfo
+class TAO_PI_Export TAO_ClientRequestInfo
   : public virtual PortableInterceptor::ClientRequestInfo,
     public virtual TAO_Local_RefCounted_Object
 {
@@ -220,6 +223,27 @@ public:
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
      ACE_THROW_SPEC ((CORBA::SystemException));
 
+  /*
+  * Proprietary accessor methods for the FT retention ID and
+  * request expiration time.
+  */
+
+  /// Set the absolute FT expiration time for this request.
+  void tao_ft_expiration_time (TimeBase::TimeT time);
+
+  /// Get the absolute FT expiration time for this request
+  TimeBase::TimeT tao_ft_expiration_time (void) const;
+
+  /// Set the FT request retention ID for this request.
+  void tao_ft_retention_id (CORBA::Long request_id);
+
+  /// Get the FT request retention ID for this request.
+  CORBA::Long tao_ft_retention_id (void) const;
+
+  /*
+  * End proprietary FT methods.
+  */
+
 private:
 
   bool parameter_list (Dynamic::ParameterList &param_list);
@@ -267,6 +291,8 @@ private:
    */
   TAO::PICurrent_Copy_Callback copy_callback_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

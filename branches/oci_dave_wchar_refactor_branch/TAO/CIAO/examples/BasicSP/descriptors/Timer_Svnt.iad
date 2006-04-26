@@ -22,7 +22,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>createECHome_Servant</string>
+          <string>create_BasicSP_ECHome_Servant</string>
         </value>
       </value>
     </execParameter>

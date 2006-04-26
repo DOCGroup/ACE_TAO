@@ -1,10 +1,10 @@
 // $Id$
 
-#include "PG_Object_Group.h"
-#include "PG_conf.h"
+#include "orbsvcs/PortableGroup/PG_Object_Group.h"
+#include "orbsvcs/PortableGroup/PG_conf.h"
 
-#include "PG_Operators.h" // Borrow operator== on CosNaming::Name
-#include "PG_Utils.h"
+#include "orbsvcs/PortableGroup/PG_Operators.h" // Borrow operator== on CosNaming::Name
+#include "orbsvcs/PortableGroup/PG_Utils.h"
 
 #include "tao/debug.h"
 
@@ -12,21 +12,21 @@
 #include "ace/Vector_T.h"
 
 
-// Borland C++ 6 Update Pack 4 and earlier give a warning about comparing
+// Borland Developer Studio 2006 and earlier give a warning about comparing
 // signed and unsigned values in the minimum_polulate() and
 // initial_populate() warnings. The comparison uses a unsigned long and
 // unsigned short and it seems that the compiler promotes the unsigned
 // short of an int and this then gives the warning. Just for Borland
 // disabled the warning in this file.
-#if defined (__BORLANDC__) && (__BORLANDC__ <= 0x564)
+#if defined (__BORLANDC__) && (__BORLANDC__ <= 0x582)
 # pragma option push -w-csu
 # pragma nopushoptwarn
 # pragma nopackwarning
-#endif /* __BORLANDC__ && __BORLANDC__ <= 0x564 */
+#endif /* __BORLANDC__ && __BORLANDC__ <= 0x582 */
 
 #define TODO int todo;
-//#define TODO
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::PG_Object_Group::MemberInfo::MemberInfo (
     CORBA::Object_ptr member,
@@ -886,9 +886,11 @@ TAO::PG_Object_Group::has_member_at (const PortableGroup::Location & location)
   return (0 == this->members_.find (location));
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 // Restore original compiler flags.
-#if defined (__BORLANDC__) && (__BORLANDC__ <= 0x564)
+#if defined (__BORLANDC__) && (__BORLANDC__ <= 0x582)
 # pragma option pop
 # pragma nopushoptwarn
 # pragma nopackwarning
-#endif /* __BORLANDC__ && __BORLANDC__ <= 0x564 */
+#endif /* __BORLANDC__ && __BORLANDC__ <= 0x582 */

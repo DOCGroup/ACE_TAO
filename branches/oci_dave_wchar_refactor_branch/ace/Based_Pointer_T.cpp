@@ -13,6 +13,8 @@
 #include "ace/Based_Pointer_T.inl"
 #endif /* __ACE_INLINE__ */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 template <class CONCRETE>
 ACE_Based_Pointer<CONCRETE>::ACE_Based_Pointer (void)
 {
@@ -113,5 +115,7 @@ ACE_Based_Pointer<CONCRETE>::ACE_Based_Pointer (const ACE_Based_Pointer<CONCRETE
   ACE_TRACE ("ACE_Based_Pointer<CONCRETE>::ACE_Based_Pointer");
   ACE_ASSERT (0); // not implemented.
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_BASED_POINTER_T_CPP */

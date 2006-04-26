@@ -12,6 +12,8 @@ ACE_RCSID(ace, Asynch_IO, "$Id$")
 #include "ace/INET_Addr.h"
 #include "ace/Asynch_IO_Impl.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 size_t
 ACE_Asynch_Result::bytes_transferred (void) const
 {
@@ -1330,8 +1332,4 @@ ACE_Asynch_Write_Dgram::Result::~Result (void)
 
 #endif /* ACE_WIN32 || ACE_HAS_AIO_CALLS */
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Refcounted_Auto_Ptr<ACE_Handler::Proxy, ACE_SYNCH_MUTEX>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Refcounted_Auto_Ptr<ACE_Handler::Proxy, ACE_SYNCH_MUTEX>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+ACE_END_VERSIONED_NAMESPACE_DECL

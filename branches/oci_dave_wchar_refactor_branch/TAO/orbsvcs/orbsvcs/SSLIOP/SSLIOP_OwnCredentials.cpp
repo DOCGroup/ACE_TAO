@@ -1,12 +1,14 @@
 // $Id$
 
-#include "SSLIOP_OwnCredentials.h"
+#include "orbsvcs/SSLIOP/SSLIOP_OwnCredentials.h"
 
 
 ACE_RCSID (SSLIOP,
            SSLIOP_OwnCredentials,
            "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::SSLIOP::OwnCredentials::OwnCredentials (X509 *cert, EVP_PKEY *evp)
   : SSLIOP_Credentials (cert, evp)
@@ -72,3 +74,4 @@ TAO::SSLIOP::OwnCredentials::release_credentials (
   this->creds_state_ = SecurityLevel3::CS_PendingRelease;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

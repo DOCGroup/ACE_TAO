@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -15,16 +15,19 @@
 #ifndef BIT_VECTOR_H
 #define BIT_VECTOR_H
 #include /**/ "ace/pre.h"
-#include /**/ "ace/config-all.h"
+
+#include "orbsvcs/Notify/notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "notify_serv_export.h"
+#include "tao/Versioned_Namespace.h"
 
 #include "ace/Vector_T.h"
 #include "ace/Basic_Types.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify
 {
@@ -71,6 +74,8 @@ private:
 };
 
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* BIT_VECTOR_H */

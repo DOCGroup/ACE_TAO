@@ -2,6 +2,8 @@
 //
 // $Id$
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_INLINE
 TAO_Object_Ref_Table::TAO_Object_Ref_Table (void)
   : table_ (TAO_DEFAULT_OBJECT_REF_TABLE_SIZE)
@@ -12,9 +14,18 @@ TAO_Object_Ref_Table::TAO_Object_Ref_Table (void)
 ACE_INLINE int
 TAO_Object_Ref_Table::register_initial_reference (
   const char *id,
-  CORBA::Object_ptr obj)
+  CORBA::Object_ptr obj,
+  bool rebind)
 {
-  return this->bind (id, obj);
+  if (rebind)
+    {
+      if (this->unbind (id) == -1)
+        return -1;
+      else
+        return this->bind (id, obj);
+    }
+  else
+    return this->bind (id, obj);
 }
 
 ACE_INLINE CORBA::Object_ptr
@@ -60,3 +71,5 @@ TAO_Object_Ref_Table::unbind (const char *id)
   return
     (this->table_.erase (CORBA::String_var (id)) == 0 ? -1 : 0);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

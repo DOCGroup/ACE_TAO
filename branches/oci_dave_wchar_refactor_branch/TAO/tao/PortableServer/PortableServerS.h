@@ -33,7 +33,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "PortableServerC.h"
+#include "tao/PortableServer/PortableServerC.h"
 #include "tao/Policy_ForwardS.h"
 #include "tao/OctetSeqS.h"
 #include "tao/orb_typesS.h"
@@ -54,6 +54,8 @@
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_sh.cpp:49
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace POA_PortableServer
 {
   
@@ -65,6 +67,8 @@ namespace POA_PortableServer
 
 // TAO_IDL - Generated from 
 // be\be_codegen.cpp:1060
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 
 #if defined (__ACE_INLINE__)

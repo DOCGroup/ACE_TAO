@@ -1,4 +1,8 @@
+// -*- C++ -*-
+//
 // $Id$
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<typename S,
          typename Insert_Policy>
@@ -93,3 +97,4 @@ TAO::Ret_Fixed_Size_Argument_T<S,Insert_Policy>::retn (void)
   return this->x_;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

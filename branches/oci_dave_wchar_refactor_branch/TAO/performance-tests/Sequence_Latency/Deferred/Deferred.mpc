@@ -9,7 +9,7 @@ project(*sequence_idl): taoidldefaults, strategies, minimum_corba {
 }
 
 project(*sequence server): taoserver, strategies, minimum_corba {
-  after += *seqence_idl
+  after += *sequence_idl
 
   exename = server
   Source_Files {

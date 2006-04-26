@@ -1,4 +1,5 @@
 //$Id$
+
 project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
   sharedname   = TAO
   dynamicflags = TAO_BUILD_DLL
@@ -29,6 +30,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Cleanup_Func_Registry.cpp
     Client_Strategy_Factory.cpp
     ClientRequestInterceptor_Adapter_Factory.cpp
+    ClientRequestInterceptor_Adapter.cpp
     Codeset_Manager.cpp
     Codeset_Manager_Factory_Base.cpp
     Codeset_Translator_Base.cpp
@@ -66,6 +68,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     FILE_Parser.cpp
     FloatSeqC.cpp
     Flushing_Strategy.cpp
+    GIOP_Fragmentation_Strategy.cpp
     GIOP_Message_Base.cpp
     GIOP_Message_Generator_Parser.cpp
     GIOP_Message_Generator_Parser_10.cpp
@@ -90,6 +93,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     IIOP_Transport.cpp
     IIOPC.cpp
     Incoming_Message_Queue.cpp
+    Incoming_Message_Stack.cpp
     Invocation_Adapter.cpp
     Invocation_Base.cpp
     Invocation_Endpoint_Selectors.cpp
@@ -118,7 +122,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     LongLongSeqC.cpp
     LongSeqC.cpp
     LRU_Connection_Purging_Strategy.cpp
-    Managed_Types.cpp
     MCAST_Parser.cpp
     Messaging_PolicyValueC.cpp
     Messaging_SyncScopeC.cpp
@@ -126,6 +129,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Muxed_TMS.cpp
     New_Leader_Generator.cpp
     NVList_Adapter.cpp
+    Null_Fragmentation_Strategy.cpp
     Object.cpp
     Object_KeyC.cpp
     Object_Loader.cpp
@@ -134,6 +138,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     ObjectIdListC.cpp
     ObjectKey_Table.cpp
     OctetSeqC.cpp
+    On_Demand_Fragmentation_Strategy.cpp
     operation_details.cpp
     ORB.cpp
     ORBInitializer_Registry.cpp
@@ -174,13 +179,15 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Request_Dispatcher.cpp
     Resource_Factory.cpp
     Resume_Handle.cpp
-    Sequence.cpp
     Server_Strategy_Factory.cpp
+    ServerRequestInterceptor_Adapter.cpp
     ServerRequestInterceptor_Adapter_Factory.cpp
     Service_Callbacks.cpp
     Service_Context.cpp
     Services_Activate.cpp
+    ServicesC.cpp
     ShortSeqC.cpp
+    String_Alloc.cpp
     StringSeqC.cpp
     Stub.cpp
     Stub_Factory.cpp
@@ -215,6 +222,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     UserException.cpp
     UShortSeqC.cpp
     Valuetype_Adapter.cpp
+    Valuetype_Adapter_Factory.cpp
     Wait_On_Leader_Follower.cpp
     Wait_On_LF_No_Upcall.cpp
     Wait_On_Reactor.cpp
@@ -344,6 +352,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     IIOP_Profile.h
     IIOP_Transport.h
     Incoming_Message_Queue.h
+    Incoming_Message_Stack.h
     Invocation_Adapter.h
     Invocation_Base.h
     Invocation_Endpoint_Selectors.h
@@ -377,7 +386,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     LongSeqC.h
     LongSeqS.h
     LRU_Connection_Purging_Strategy.h
-    Managed_Types.h
     MCAST_Parser.h
     Messaging_PolicyValueC.h
     Messaging_SyncScopeC.h
@@ -446,8 +454,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Resource_Factory.h
     Resume_Handle.h
     Seq_Out_T.h
-    Sequence.h
-    Sequence_T.h
     Seq_Var_T.h
     Server_Strategy_Factory.h
     Service_Callbacks.h
@@ -461,6 +467,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Special_Basic_Argument_T.h
     StringSeqC.h
     StringSeqS.h
+    String_Alloc.h
     Stub_Factory.h
     Stub.h
     Synch_Invocation.h
@@ -505,11 +512,13 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     UShortSeqC.h
     UShortSeqS.h
     Valuetype_Adapter.h
+    Valuetype_Adapter_Factory.h
     Var_Array_Argument_T.h
     varbase.h
     VarOut_T.h
     Var_Size_Argument_T.h
     Version.h
+    Versioned_Namespace.h
     Wait_On_Leader_Follower.h
     Wait_On_LF_No_Upcall.h
     Wait_On_Reactor.h

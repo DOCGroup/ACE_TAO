@@ -22,6 +22,8 @@
 
 #include "orbsvcs/Trader/trading_serv_export.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // =  Classes to deal with the ACE_Hash_Map_Manager.
 
 /**
@@ -55,6 +57,10 @@ public:
   // The function that computes a hash value.
 };
 
+#if defined ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT
+  template class TAO_Trading_Serv_Export TAO::String_var <char>;
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT */
+
 typedef ACE_Hash_Map_Manager_Ex<TAO_String_Hash_Key,
                                 int,
                                 ACE_Hash<TAO_String_Hash_Key>,
@@ -85,6 +91,8 @@ public:
   // Return the sequence element type for the sequence whose typecode
   // is <code>.
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

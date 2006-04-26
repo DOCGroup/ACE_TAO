@@ -12,15 +12,17 @@
 #define TAO_Notify_STRUCTUREDEVENT_H
 
 #include /**/ "ace/pre.h"
-#include "../notify_serv_export.h"
+#include "orbsvcs/Notify/notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "../Event.h"
-#include "../EventType.h"
+#include "orbsvcs/Notify/Event.h"
+#include "orbsvcs/Notify/EventType.h"
 #include "orbsvcs/CosNotificationC.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Notify_StructuredEvent;
 
@@ -81,7 +83,7 @@ protected:
   const TAO_Notify_EventType type_;
 };
 
-/*****************************************************************************************************/
+/*****************************************************************************/
 
 /**
  * @class TAO_Notify_StructuredEvent
@@ -103,6 +105,8 @@ protected:
   /// Copy of the Event.
   CosNotification::StructuredEvent notification_copy;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_Notify_STRUCTUREDEVENT_H */

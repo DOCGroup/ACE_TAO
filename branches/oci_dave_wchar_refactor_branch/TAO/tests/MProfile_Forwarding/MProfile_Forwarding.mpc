@@ -10,6 +10,7 @@ project(*Server): taoserver, minimum_corba {
 
 project(*Client): taoclient, anytypecode, minimum_corba {
   exename = client
+  after += *Server
   Source_Files {
     testC.cpp
     client.cpp
@@ -18,6 +19,7 @@ project(*Client): taoclient, anytypecode, minimum_corba {
 
 project(*Manager): taoserver, minimum_corba, iormanip {
   exename = manager
+  after += *Client
   Source_Files {
     testC.cpp
     Servant_Locator.cpp

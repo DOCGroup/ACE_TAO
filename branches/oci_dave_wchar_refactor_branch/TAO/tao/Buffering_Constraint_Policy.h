@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file   Buffering_Constraint_Policy.h
@@ -30,6 +31,8 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_Buffering_Constraint_Policy
  *
@@ -55,6 +58,7 @@ public:
 
   virtual TAO::BufferingConstraint buffering_constraint (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
+
   void get_buffering_constraint (TAO::BufferingConstraint &) const;
 
   virtual CORBA::PolicyType policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
@@ -73,6 +77,8 @@ private:
   /// The attribute
   TAO::BufferingConstraint buffering_constraint_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

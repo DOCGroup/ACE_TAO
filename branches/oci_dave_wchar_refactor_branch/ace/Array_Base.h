@@ -22,6 +22,8 @@
 #include "ace/Global_Macros.h"
 #include "ace/Malloc_Base.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Forward declaration.
 template <class T> class ACE_Array_Iterator;
 
@@ -117,7 +119,7 @@ public:
    */
   int max_size (size_t new_size);
 
-private:
+protected:
   /// Returns 1 if <slot> is within range, i.e., 0 >= <slot> <
   /// <cur_size_>, else returns 0.
   int in_range (size_t slot) const;
@@ -189,6 +191,8 @@ private:
   /// Pointer to the Array we're iterating over.
   ACE_Array_Base<T> &array_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Array_Base.inl"

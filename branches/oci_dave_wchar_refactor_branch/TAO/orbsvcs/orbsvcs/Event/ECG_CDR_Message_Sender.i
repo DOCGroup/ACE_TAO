@@ -1,6 +1,10 @@
+// -*- C++ -*-
+//
 // $Id$
 
 #include "ace/Null_Mutex.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 TAO_ECG_CDR_Message_Sender::TAO_ECG_CDR_Message_Sender (CORBA::Boolean crc)
@@ -48,3 +52,5 @@ TAO_ECG_CDR_Message_Sender::mtu (CORBA::ULong new_mtu)
   this->mtu_ = new_mtu;
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

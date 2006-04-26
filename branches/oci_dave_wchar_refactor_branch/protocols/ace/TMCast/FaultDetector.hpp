@@ -10,7 +10,7 @@ namespace ACE_TMCast
   {
   public:
     FaultDetector ()
-        : silence_period_ (-1)
+        : alone_ (true), silence_period_ (-1)
     {
     }
 
@@ -21,13 +21,16 @@ namespace ACE_TMCast
     void
     insync ()
     {
+      if (alone_)
+        alone_ = false;
+	
       silence_period_ = 0;
     }
 
     void
     outsync ()
     {
-      if (++silence_period_ >= Protocol::FATAL_SILENCE_FRAME)
+      if (!alone_ && ++silence_period_ >= Protocol::FATAL_SILENCE_FRAME)
       {
         // cerr << "Silence period has been passed." << endl;
         // cerr << "Decalring the node failed." << endl;
@@ -36,6 +39,7 @@ namespace ACE_TMCast
     }
 
   private:
+    bool alone_; // true if we haven't heard from any members yet.
     short silence_period_;
   };
 }

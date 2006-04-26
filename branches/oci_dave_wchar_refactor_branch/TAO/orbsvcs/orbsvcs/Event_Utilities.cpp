@@ -13,6 +13,8 @@ ACE_RCSID (orbsvcs,
            Event_Utilities, 
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_ConsumerQOS_Factory::
     ACE_ConsumerQOS_Factory (TAO_EC_Event_Initializer initializer)
   : designator_set_ (0),
@@ -203,7 +205,7 @@ void ACE_SupplierQOS_Factory::debug (const RtecEventChannelAdmin::SupplierQOS& q
 
   for (u_int i = 0; i < qos.publications.length (); ++i)
     {
-      char buf[128];
+      char buf[128] = { 0 };
       ACE_OS::sprintf (buf, " publications[%d]", i);
       event_debug (buf, qos.publications[i].event);
       ACE_DEBUG ((LM_DEBUG,
@@ -215,3 +217,5 @@ void ACE_SupplierQOS_Factory::debug (const RtecEventChannelAdmin::SupplierQOS& q
   ACE_DEBUG ((LM_DEBUG, "}\n"));
 
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

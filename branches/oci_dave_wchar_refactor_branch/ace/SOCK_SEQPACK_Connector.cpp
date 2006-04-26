@@ -20,6 +20,8 @@
 
 ACE_RCSID(ace, SOCK_SEQPACK_Connector, "SOCK_SEQPACK_Connector.cpp,v 4.35 2002/03/08 23:18:09 spark Exp")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_ALLOC_HOOK_DEFINE(ACE_SOCK_SEQPACK_Connector)
 
 void
@@ -166,14 +168,14 @@ ACE_SOCK_SEQPACK_Connector::shared_connect_start (ACE_SOCK_SEQPACK_Association &
         // get sockaddr_in for the local handle
         if (ACE_OS::getsockname(new_association.get_handle (),
                                 reinterpret_cast<sockaddr *> (&portst),
-		                                     &sn))
+                                                     &sn))
         {
           ACE_Errno_Guard error (errno);
-	  new_association.close ();
+          new_association.close ();
           return -1;
         }
 
-	// set the local port # assigned by the os to every secondary addr
+        // set the local port # assigned by the os to every secondary addr
         for (size_t i = 1; i < num_addresses; i++)
         {
           local_inet_addrs[i].sin_port = portst.sin_port;
@@ -198,7 +200,7 @@ ACE_SOCK_SEQPACK_Connector::shared_connect_start (ACE_SOCK_SEQPACK_Association &
           return -1;
         }
 
-      	delete [] local_sockaddr;
+        delete [] local_sockaddr;
       }
 #else
 
@@ -437,3 +439,5 @@ ACE_SOCK_SEQPACK_Connector::ACE_SOCK_SEQPACK_Connector (ACE_SOCK_SEQPACK_Associa
                 ACE_LIB_TEXT ("%p\n"),
                 ACE_LIB_TEXT ("ACE_SOCK_SEQPACK_Connector::ACE_SOCK_SEQPACK_Connector")));
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

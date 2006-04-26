@@ -26,6 +26,7 @@
 
 #include "ace/DLL.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// Forward declarations.
 class ACE_Service_Config;
@@ -38,6 +39,8 @@ class ACE_Service_Type;
  * tree of Service Nodes.
  *
  * @note This class is only meant for INTERNAL use by ACE.
+ *
+ * @internal
  */
 class ACE_Parse_Node
 {
@@ -70,6 +73,8 @@ private:
  * @brief Suspend a Service Node.
  *
  * @note This class is only meant for INTERNAL use by ACE.
+ *
+ * @internal
  */
 class ACE_Suspend_Node : public ACE_Parse_Node
 {
@@ -92,6 +97,8 @@ public:
  * @brief Resume a Service Node.
  *
  * @note This class is only meant for INTERNAL use by ACE.
+ *
+ * @internal
  */
 class ACE_Resume_Node : public ACE_Parse_Node
 {
@@ -114,6 +121,8 @@ public:
  * @brief Remove a Service Node.
  *
  * @note This class is only meant for INTERNAL use by ACE.
+ *
+ * @internal
  */
 class ACE_Remove_Node : public ACE_Parse_Node
 {
@@ -136,6 +145,8 @@ public:
  * @brief Handle a statically linked node.
  *
  * @note This class is only meant for INTERNAL use by ACE.
+ *
+ * @internal
  */
 class ACE_Static_Node : public ACE_Parse_Node
 {
@@ -164,6 +175,8 @@ private:
  * @brief Handle a dynamically linked node.
  *
  * @note This class is only meant for INTERNAL use by ACE.
+ *
+ * @internal
  */
 class ACE_Dynamic_Node : public ACE_Static_Node
 {
@@ -191,6 +204,8 @@ private:
  * @brief Handle a Stream.
  *
  * @note This class is only meant for INTERNAL use by ACE.
+ *
+ * @internal
  */
 class ACE_Stream_Node : public ACE_Parse_Node
 {
@@ -218,6 +233,8 @@ private:
  * @brief Keep track of where a shared library is located.
  *
  * @note This class is only meant for INTERNAL use by ACE.
+ *
+ * @internal
  */
 class ACE_Location_Node
 {
@@ -265,6 +282,8 @@ protected:
  * @brief Keeps track of the symbol name for a shared object.
  *
  * @note This class is only meant for INTERNAL use by ACE.
+ *
+ * @internal
  */
 class ACE_Object_Node : public ACE_Location_Node
 {
@@ -291,6 +310,8 @@ private:
  * @brief Keeps track of the symbol name of for a shared function.
  *
  * @note This class is only meant for INTERNAL use by ACE.
+ *
+ * @internal
  */
 class ACE_Function_Node : public ACE_Location_Node
 {
@@ -307,6 +328,28 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
+
+  /// Return mangled function name that takes into account ACE
+  /// versioned namespace.
+  /**
+   * This function embeds the ACE versioned namespace name into the
+   * original function name if versioned namespace support has been
+   * enabled and the original function name conforms to the ACE
+   * Service Object factory function naming conventions.  For example
+   * "@c _make_Foo" becomes "@c make_ACE_5_4_7_Foo".
+   * @par
+   * If versioned namespace support is disabled or the factory
+   * function name does conform to ACE conventions, no mangling will
+   * occur and the verbatim function name is returned.
+   *
+   * @return Function name that takes into account versioned namespace
+   *         name.  Caller is responsible for calling operator
+   *         delete[] or ACE::strdelete() on the returned string.
+   */
+  ACE_TCHAR * make_func_name (ACE_TCHAR const * func_name);
+
+private:
+
   /// Name of the function that we're parsing.
   const ACE_TCHAR *function_name_;
 };
@@ -317,6 +360,8 @@ private:
  * @brief I forget why this is here... ;-)
  *
  * @note This class is only meant for INTERNAL use by ACE.
+ *
+ * @internal
  */
 class ACE_Dummy_Node : public ACE_Parse_Node
 {
@@ -345,6 +390,8 @@ private:
  * application.
  *
  * @note This class is only meant for INTERNAL use by ACE.
+ *
+ * @internal
  */
 class ACE_Static_Function_Node : public ACE_Location_Node
 {
@@ -368,6 +415,8 @@ private:
 /// Global variable used to communicate between the parser and the main
 /// program.
 extern ACE_Service_Config *ace_this_svc;
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_USES_CLASSIC_SVC_CONF == 1 */
 

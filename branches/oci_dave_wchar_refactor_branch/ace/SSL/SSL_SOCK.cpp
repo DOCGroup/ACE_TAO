@@ -1,7 +1,4 @@
-// -*- C++ -*-
-//
 // $Id$
-
 
 #include "SSL_SOCK.h"
 
@@ -16,6 +13,8 @@ ACE_RCSID (ACE_SSL,
            SSL_SOCK,
            "$Id$")
 
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_SSL_SOCK::ACE_SSL_SOCK (void)
 {
@@ -69,3 +68,5 @@ ACE_SSL_SOCK::disable (int value) const
       return -1;
     }
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

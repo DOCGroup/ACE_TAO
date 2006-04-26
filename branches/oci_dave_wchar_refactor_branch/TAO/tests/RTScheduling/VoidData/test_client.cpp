@@ -18,14 +18,9 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv [])
                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      test_ptr foo_i;
-
-      ACE_NEW_RETURN (foo_i,
-                      test_impl,
-                      -1);
-
+      test_impl foo_i;
       int something = 28;
-      foo_i->bar ((CORBA::VoidData) &something);
+      foo_i.bar ((CORBA::VoidData) &something);
     }
   ACE_CATCHANY
     {

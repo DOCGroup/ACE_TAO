@@ -32,6 +32,8 @@ ACE_RCSID (ace,
 #define IMR_MULTIADDR imr_multiaddr
 #endif /* ! defined (IMR_MULTIADDR) */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Helper (inline) functions.
 class ACE_SDM_helpers
 {
@@ -47,9 +49,8 @@ public:
         ACE_OS::strcpy (ret_string, ACE_LIB_TEXT ("<?>"));
       else
         {
-          ACE_TCHAR *pc;
-          if (clip_portnum
-              && (pc = ACE_OS::strrchr (ret_string, ACE_LIB_TEXT (':'))))
+          ACE_TCHAR *pc = ACE_OS::strrchr (ret_string, ACE_LIB_TEXT (':'));
+          if (clip_portnum && pc)
             *pc = ACE_LIB_TEXT ('\0'); // clip port# info.
         }
     }
@@ -984,3 +985,5 @@ ACE_SOCK_Dgram_Mcast::clear_subs_list (void)
 #endif /* ACE_SOCK_DGRAM_MCAST_DUMPABLE */
   return result;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

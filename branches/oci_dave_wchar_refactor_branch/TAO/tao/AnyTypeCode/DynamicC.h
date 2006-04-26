@@ -70,6 +70,8 @@
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:48
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace CORBA
 {
 
@@ -96,22 +98,19 @@ namespace Dynamic
 
   typedef
     TAO_VarSeq_Var_T<
-        ParameterList,
-        Parameter
+        ParameterList
       >
     ParameterList_var;
 
   typedef
     TAO_Seq_Out_T<
-        ParameterList,
-        ParameterList_var,
-        Parameter
+        ParameterList
       >
     ParameterList_out;
 
   class TAO_AnyTypeCode_Export ParameterList
     : public
-        TAO_Unbounded_Sequence<
+        TAO::unbounded_value_sequence<
             Parameter
           >
   {
@@ -122,7 +121,7 @@ namespace Dynamic
         CORBA::ULong max,
         CORBA::ULong length,
         Parameter* buffer,
-        CORBA::Boolean release = 0
+        CORBA::Boolean release = false
       );
     ParameterList (const ParameterList &);
     ~ParameterList (void);
@@ -151,29 +150,20 @@ namespace Dynamic
   class ExceptionList;
 
   typedef
-    TAO_MngSeq_Var_T<
-        ExceptionList,
-        TAO_Object_Manager<
-            CORBA::TypeCode,
-            CORBA::TypeCode_var
-          >
+    TAO_VarSeq_Var_T<
+        ExceptionList
       >
     ExceptionList_var;
 
   typedef
-    TAO_MngSeq_Out_T<
-        ExceptionList,
-        ExceptionList_var,
-        TAO_Object_Manager<
-            CORBA::TypeCode,
-            CORBA::TypeCode_var
-          >
+    TAO_Seq_Out_T<
+        ExceptionList
       >
     ExceptionList_out;
 
   class TAO_AnyTypeCode_Export ExceptionList
     : public
-        TAO_Unbounded_Object_Sequence<
+        TAO::unbounded_object_reference_sequence<
             CORBA::TypeCode,
             CORBA::TypeCode_var
           >
@@ -185,7 +175,7 @@ namespace Dynamic
         CORBA::ULong max,
         CORBA::ULong length,
         CORBA::TypeCode_ptr* buffer,
-        CORBA::Boolean release = 0
+        CORBA::Boolean release = false
       );
     ExceptionList (const ExceptionList &);
     ~ExceptionList (void);
@@ -250,6 +240,8 @@ TAO_AnyTypeCode_Export CORBA::Boolean operator>> (
 
 // TAO_IDL - Generated from
 // be\be_codegen.cpp:955
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

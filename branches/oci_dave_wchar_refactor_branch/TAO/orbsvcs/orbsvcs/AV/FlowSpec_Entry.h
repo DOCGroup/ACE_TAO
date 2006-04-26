@@ -1,5 +1,4 @@
-/* -*- C++ -*- */
-
+// -*- C++ -*-
 
 // ============================================================================
 /**
@@ -17,10 +16,13 @@
 #include /**/ "ace/pre.h"
 
 #include "orbsvcs/AV/AV_export.h"
-#include "AV_Core.h"
+#include "orbsvcs/AV/AV_Core.h"
 #include "ace/Addr.h"
 #include "ace/Containers.h"
 #include "ace/SString.h"
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Tokenizer
@@ -260,10 +262,9 @@ protected:
 
 /**
  * @class TAO_Forward_FlowSpec_Entry
- * @brief
  */
 class TAO_AV_Export TAO_Forward_FlowSpec_Entry
-  :public TAO_FlowSpec_Entry
+  : public TAO_FlowSpec_Entry
 {
 public:
   enum Position {TAO_AV_FLOWNAME = 0,
@@ -346,10 +347,12 @@ public:
   virtual int parse (const char* flowSpec_entry);
 };
 
-#include "Transport.h"
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+#include "orbsvcs/AV/Transport.h"
 
 #if defined (__ACE_INLINE__)
-#include "FlowSpec_Entry.i"
+#include "orbsvcs/AV/FlowSpec_Entry.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

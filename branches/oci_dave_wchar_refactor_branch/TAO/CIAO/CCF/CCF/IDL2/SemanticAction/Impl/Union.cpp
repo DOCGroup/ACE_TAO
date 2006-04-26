@@ -96,7 +96,7 @@ namespace CCF
                 throw WrongType (type_->scoped_name ());
               }
 
-              ctx.tu ().new_edge<Specialized> (now (), *type_);
+              ctx.tu ().new_edge<ArgumentsWithType> (*type_, now ());
             }
             catch (Resolve const&)
             {
@@ -140,7 +140,11 @@ namespace CCF
           {
             try
             {
-              member_type_ = &resolve<Type> (from, name, Flags::complete);
+              // With introduction of CORBA 3.1 we have a new beast:
+              // union with incoplete members which itself becomes
+              // incomplete.
+              //
+              member_type_ = &resolve<Type> (from, name/*, Flags::complete*/);
             }
             catch (Resolve const&)
             {

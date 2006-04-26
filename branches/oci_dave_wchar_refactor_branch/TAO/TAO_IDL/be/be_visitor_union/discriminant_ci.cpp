@@ -18,8 +18,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_union, 
-           discriminant_ci, 
+ACE_RCSID (be_visitor_union,
+           discriminant_ci,
            "$Id$")
 
 // *************************************************************************
@@ -78,7 +78,7 @@ be_visitor_union_discriminant_ci::visit_enum (be_enum *node)
           << "void " << be_nl
           << bu->name () << "::_default ()" << be_nl
           << "{" << be_idt_nl
-          << "this->_reset (this->disc_, false);" << be_nl
+          << "this->_reset ();" << be_nl
           << "this->disc_ = ";
 
       be_type* dt =
@@ -169,11 +169,11 @@ be_visitor_union_discriminant_ci::visit_predefined_type (
       // Only if all cases are not covered AND there is no explicit
       // default, we get the _default () method.
 
-      *os << "ACE_INLINE" << be_nl 
+      *os << "ACE_INLINE" << be_nl
           << "void " << be_nl
           << bu->name () << "::_default ()" << be_nl
           << "{" << be_idt_nl
-          << "this->_reset (this->disc_, false);" << be_nl
+          << "this->_reset ();" << be_nl
           << "this->disc_ = ";
 
       switch (bu->udisc_type ())
@@ -255,7 +255,7 @@ be_visitor_union_discriminant_ci::visit_typedef (be_typedef *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_discriminant_ci::"
                          "visit_typedef - "
-                         "Bad primitive type\n"), 
+                         "Bad primitive type\n"),
                         -1);
     }
 

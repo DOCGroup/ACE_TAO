@@ -1,8 +1,11 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
 
 #include "ace/MEM_Stream.h"
 #include "ace/OS_NS_sys_socket.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 ACE_MEM_Stream::ACE_MEM_Stream (void)
@@ -173,3 +176,5 @@ ACE_MEM_Stream::recv_urg (void *ptr,
                     timeout);
 }
 #endif /* 0 */
+
+ACE_END_VERSIONED_NAMESPACE_DECL

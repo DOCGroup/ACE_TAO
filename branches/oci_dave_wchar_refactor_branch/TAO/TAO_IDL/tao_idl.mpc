@@ -1,13 +1,18 @@
 // -*- MPC -*-
 // $Id$
 
-project(TAO_IDL_EXE) : aceexe, acethreadslib_for_tao, core, tao_output, crosscompile {
+project(TAO_IDL_EXE) : aceexe, core, tao_output, crosscompile {
   exename      = tao_idl
   libs        += TAO_IDL_BE TAO_IDL_FE
-  includes    += include be_include fe
   install      = $(ACE_ROOT)/bin
   after       += TAO_IDL_BE TAO_IDL_FE gperf
   avoids      += uses_wchar
+
+  specific (automake) {
+    includes    += $(srcdir)/include $(srcdir)/be_include $(srcdir)/fe
+  } else {
+    includes    += include be_include fe
+  }
 
   specific {
     // Override the template value for optimize.  Building the exe
@@ -23,7 +28,11 @@ project(TAO_IDL_EXE) : aceexe, acethreadslib_for_tao, core, tao_output, crosscom
 
   verbatim(gnuace, local) {
     ifeq ($(TAO_IDL_PREPROCESSOR),)
-      CPPFLAGS += -DTAO_IDL_PREPROCESSOR=\\\"$(strip $(CXX))\\\"
+      ifeq ($(ACE_CC_PREPROCESSOR),)
+        CPPFLAGS += -DTAO_IDL_PREPROCESSOR=\\\"$(strip $(CXX))\\\"
+      else
+        CPPFLAGS += -DACE_CC_PREPROCESSOR=\\\"$(subst \\,\\,$(ACE_CC_PREPROCESSOR))\\\"
+      endif
     else
       CPPFLAGS += -DTAO_IDL_PREPROCESSOR=\\\"$(subst \\,\\,$(TAO_IDL_PREPROCESSOR))\\\"
     endif
@@ -41,12 +50,17 @@ project(TAO_IDL_EXE) : aceexe, acethreadslib_for_tao, core, tao_output, crosscom
 }
 
 
-project(TAO_IDL_BE) : acelib, acethreadslib_for_tao, conv_lib, tao_output, crosscompile {
+project(TAO_IDL_BE) : acelib, conv_lib, tao_output, crosscompile {
   sharedname   = TAO_IDL_BE
   libs        += TAO_IDL_FE
-  includes    += include be_include fe
   dynamicflags = TAO_IDL_BE_BUILD_DLL
   after       += TAO_IDL_FE
+
+  specific (automake) {
+    includes    += $(srcdir)/include $(srcdir)/be_include $(srcdir)/fe
+  } else {
+    includes    += include be_include fe
+  }
 
   specific {
     // Override the template value for optimize.  Building the backend
@@ -66,10 +80,15 @@ project(TAO_IDL_BE) : acelib, acethreadslib_for_tao, conv_lib, tao_output, cross
 }
 
 
-project(TAO_IDL_FE) : acelib, acethreadslib_for_tao, conv_lib, tao_output, crosscompile {
+project(TAO_IDL_FE) : acelib, conv_lib, tao_output, crosscompile {
   sharedname   = TAO_IDL_FE
-  includes    += include fe
   dynamicflags = TAO_IDL_FE_BUILD_DLL
+
+  specific (automake) {
+    includes    += $(srcdir)/include $(srcdir)/fe
+  } else {
+    includes    += include fe
+  }
 
   specific {
     // Override the template value for optimize.  Building the frontend

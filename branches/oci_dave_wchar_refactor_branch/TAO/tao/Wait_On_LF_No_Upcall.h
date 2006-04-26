@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -13,6 +13,7 @@
 
 #ifndef TAO_WAIT_ON_LF_NO_UPCALL_H
 #define TAO_WAIT_ON_LF_NO_UPCALL_H
+
 #include /**/ "ace/pre.h"
 
 #include "tao/Wait_On_Leader_Follower.h"
@@ -21,9 +22,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
-
   /**
    * @class TAO_Wait_On_LF_No_Upcall
    *
@@ -54,5 +56,9 @@ namespace TAO
     virtual bool can_process_upcalls (void) const;
   };
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #include /**/ "ace/post.h"
+
 #endif /* TAO_WAIT_ON_LF_NO_UPCALL_H */

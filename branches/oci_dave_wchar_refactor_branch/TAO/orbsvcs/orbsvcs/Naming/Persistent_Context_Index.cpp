@@ -1,12 +1,14 @@
 // $Id$
 
-#include "Persistent_Context_Index.h"
-#include "Persistent_Naming_Context.h"
+#include "orbsvcs/Naming/Persistent_Context_Index.h"
+#include "orbsvcs/Naming/Persistent_Naming_Context.h"
 
 #include "tao/debug.h"
 
 #include "ace/Auto_Ptr.h"
 #include "ace/OS_NS_unistd.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
 TAO_Persistent_Context_Index::unbind (const char *poa_id)
@@ -304,3 +306,5 @@ TAO_Persistent_Context_Index::create_index_helper (void *buffer)
   this->index_ = new (buffer) CONTEXT_INDEX (this->allocator_);
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,10 +1,10 @@
-// Connector.cpp
 // $Id$
 
-#ifndef ACE_CONNECTOR_C
-#define ACE_CONNECTOR_C
+#ifndef ACE_CONNECTOR_CPP
+#define ACE_CONNECTOR_CPP
 
 #include "ace/Connector.h"
+#include "ace/ACE.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 #include "ace/os_include/os_fcntl.h"     /* Has ACE_NONBLOCK */
@@ -13,7 +13,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-ACE_RCSID(ace, Connector, "$Id$")
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Connector)
 
@@ -66,46 +66,6 @@ ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::dump (void) const
 #endif /* ACE_HAS_DUMP */
 }
 
-template <class SVC_HANDLER> SVC_HANDLER *
-ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::close (void)
-{
-  // @@ TODO: This method should be removed after a couple of betas.
-  SVC_HANDLER *svc_handler = 0;
-
-  // Make sure that we haven't already initialized the Svc_Handler.
-  if (this->svc_handler_)
-    {
-      // Exclusive access to the Reactor.
-      ACE_GUARD_RETURN (ACE_Lock, ace_mon, this->reactor ()->lock (), 0);
-
-      // Double check.
-      if (this->svc_handler_)
-        {
-          // Remember the Svc_Handler.
-          svc_handler = this->svc_handler_;
-
-          // Remove from Reactor.
-          this->reactor ()->remove_handler
-            (this->svc_handler_->get_handle (),
-             ACE_Event_Handler::ALL_EVENTS_MASK);
-
-          // Cancel timer.
-          this->reactor ()->cancel_timer
-            (this->timer_id (), 0, 0);
-
-          // Remove this handle from the set of non-blocking handles
-          // in the Connector.
-          this->connector_.non_blocking_handles ().clr_bit
-            (this->svc_handler_->get_handle ());
-
-          // We are done. Don't initialize the Svc_Handler again.
-          this->svc_handler_ = 0;
-        }
-    }
-
-  return svc_handler;
-}
-
 template <class SVC_HANDLER> bool
 ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::close (SVC_HANDLER *&sh)
 {
@@ -126,14 +86,12 @@ ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::close (SVC_HANDLER *&sh)
 
     // Remember the Svc_Handler.
     sh = this->svc_handler_;
-
+    ACE_HANDLE h = sh->get_handle ();
     this->svc_handler_ = 0;
 
-    // Remove from Reactor.
-    if (this->reactor ()->remove_handler (
-          sh->get_handle (),
-          ACE_Event_Handler::ALL_EVENTS_MASK) == -1)
-      return false;
+    // Remove this handle from the set of non-blocking handles
+    // in the Connector.
+    this->connector_.non_blocking_handles ().remove (h);
 
     // Cancel timer.
     if (this->reactor ()->cancel_timer (this->timer_id (),
@@ -141,10 +99,11 @@ ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::close (SVC_HANDLER *&sh)
                                         0) == -1)
       return false;
 
-    // Remove this handle from the set of non-blocking handles
-    // in the Connector.
-    this->connector_.non_blocking_handles ().clr_bit
-      (sh->get_handle ());
+    // Remove from Reactor.
+    if (this->reactor ()->remove_handler (
+          h,
+          ACE_Event_Handler::ALL_EVENTS_MASK) == -1)
+      return false;
   }
 
   return true;
@@ -159,21 +118,18 @@ ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::handle_timeout
   // This method is called if a connection times out before completing.
   ACE_TRACE ("ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::handle_timeout");
 
-  SVC_HANDLER *svc_handler =
-    this->close ();
-
-  if (svc_handler == 0)
-    return 0;
+  SVC_HANDLER *svc_handler = 0;
+  int retval = this->close (svc_handler) ? 0 : -1;
 
   // Forward to the SVC_HANDLER the <arg> that was passed in as a
   // magic cookie during ACE_Connector::connect().  This gives the
   // SVC_HANDLER an opportunity to take corrective action (e.g., wait
   // a few milliseconds and try to reconnect again.
-  if (svc_handler->handle_timeout (tv, arg) == -1)
+  if (svc_handler != 0 && svc_handler->handle_timeout (tv, arg) == -1)
     svc_handler->handle_close (svc_handler->get_handle (),
                                ACE_Event_Handler::TIMER_MASK);
 
-  return 0;
+  return retval;
 }
 
 
@@ -184,16 +140,14 @@ ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::handle_input (ACE_HANDLE)
   // establishment.
   ACE_TRACE ("ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::handle_input");
 
-  SVC_HANDLER *svc_handler =
-    this->close ();
-
-  if (svc_handler == 0)
-    return 0;
+  SVC_HANDLER *svc_handler = 0;
+  int retval = this->close (svc_handler) ? 0 : -1;
 
   // Close Svc_Handler.
-  svc_handler->close (0);
+  if (svc_handler != 0)
+    svc_handler->close (0);
 
-  return 0;
+  return retval;
 }
 
 template <class SVC_HANDLER> int
@@ -202,16 +156,15 @@ ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::handle_output (ACE_HANDLE handle)
   // Called when a connection is establishment asynchronous.
   ACE_TRACE ("ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::handle_output");
 
-  SVC_HANDLER *svc_handler =
-    this->close ();
+  // Grab the connector ref before smashing ourselves in close().
+  ACE_Connector_Base<SVC_HANDLER> &connector = this->connector_;
+  SVC_HANDLER *svc_handler = 0;
+  int retval = this->close (svc_handler) ? 0 : -1;
 
-  if (svc_handler == 0)
-    return 0;
+  if (svc_handler != 0)
+    connector.initialize_svc_handler (handle, svc_handler);
 
-  this->connector_.initialize_svc_handler (handle,
-                                           svc_handler);
-
-  return 0;
+  return retval;
 }
 
 template <class SVC_HANDLER> int
@@ -220,7 +173,6 @@ ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::handle_exception (ACE_HANDLE h)
   // On Win32, the except mask must also be set for asynchronous
   // connects.
   ACE_TRACE ("ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::handle_exception");
-
   return this->handle_output (h);
 }
 
@@ -417,7 +369,7 @@ ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::connect_i
   if (this->make_svc_handler (sh) == -1)
     return -1;
 
-  ACE_Time_Value *timeout;
+  ACE_Time_Value *timeout = 0;
   int use_reactor = synch_options[ACE_Synch_Options::USE_REACTOR];
 
   if (use_reactor)
@@ -529,6 +481,7 @@ ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::cancel (SVC_HANDLER *sh)
   if (handler == 0)
     return -1;
 
+  // find_handler() increments handler's refcount; ensure we decrement it.
   ACE_Event_Handler_var safe_handler (handler);
 
   NBCH *nbch =
@@ -583,25 +536,24 @@ ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::nonblocking_connect
     goto reactor_registration_failure;
 
   // Add handle to non-blocking handle set.
-  this->non_blocking_handles ().set_bit (handle);
+  this->non_blocking_handles ().insert (handle);
 
   // If we're starting connection under timer control then we need to
   // schedule a timeout with the ACE_Reactor.
   tv = const_cast<ACE_Time_Value *> (synch_options.time_value ());
-  if (tv == 0)
-    return 0;
+  if (tv != 0)
+    {
+      timer_id =
+        this->reactor ()->schedule_timer (nbch,
+                                          synch_options.arg (),
+                                          *tv);
+      if (timer_id == -1)
+        goto timer_registration_failure;
 
-  timer_id =
-    this->reactor ()->schedule_timer (nbch,
-                                      synch_options.arg (),
-                                      *tv);
-  if (timer_id == -1)
-    goto timer_registration_failure;
+      // Remember timer id.
+      nbch->timer_id (timer_id);
+    }
 
-  // Remember timer id.
-  nbch->timer_id (timer_id);
-
-  // Everything was successful.
   return 0;
 
   // Undo previous actions using the ol' "goto label and fallthru"
@@ -612,7 +564,7 @@ ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::nonblocking_connect
   this->reactor ()->remove_handler (handle, mask);
 
   // Remove handle from the set of non-blocking handles.
-  this->non_blocking_handles ().clr_bit (handle);
+  this->non_blocking_handles ().remove (handle);
 
   /* FALLTHRU */
 
@@ -681,7 +633,7 @@ ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::reactor (void) const
   return this->reactor_;
 }
 
-template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1> ACE_Handle_Set &
+template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1> ACE_Unbounded_Set<ACE_HANDLE> &
 ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::non_blocking_handles (void)
 {
   return this->non_blocking_handles_;
@@ -691,7 +643,7 @@ template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1> int
 ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::close (void)
 {
   // If there are no non-blocking handle pending, return immediately.
-  if (this->non_blocking_handles ().num_set () == 0)
+  if (this->non_blocking_handles ().size () == 0)
     return 0;
 
   // Exclusive access to the Reactor.
@@ -700,28 +652,41 @@ ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::close (void)
   // Go through all the non-blocking handles.  It is necessary to
   // create a new iterator each time because we remove from the handle
   // set when we cancel the Svc_Handler.
+  ACE_HANDLE *handle = 0;
   while (1)
     {
-      ACE_Handle_Set_Iterator iterator (this->non_blocking_handles ());
-      ACE_HANDLE handle = iterator ();
-
-      if (handle == ACE_INVALID_HANDLE)
+      ACE_Unbounded_Set_Iterator<ACE_HANDLE>
+	iterator (this->non_blocking_handles ());
+      if (!iterator.next (handle))
         break;
 
       ACE_Event_Handler *handler =
-        this->reactor ()->find_handler (handle);
+        this->reactor ()->find_handler (*handle);
+      if (handler == 0)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_LIB_TEXT ("%t: Connector::close h %d, no handler\n"),
+                      *handle));
+          // Remove handle from the set of non-blocking handles.
+          this->non_blocking_handles ().remove (*handle);
+          continue;
+        }
 
-      ACE_ASSERT (handler != 0);
-
+      // find_handler() incremented handler's refcount; ensure it's decremented
       ACE_Event_Handler_var safe_handler (handler);
-
-      NBCH *nbch =
-        dynamic_cast<NBCH *> (handler);
-
-      ACE_ASSERT (nbch != 0);
-
-      SVC_HANDLER *svc_handler =
-        nbch->svc_handler ();
+      NBCH *nbch = dynamic_cast<NBCH *> (handler);
+      if (nbch == 0)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_LIB_TEXT ("%t: Connector::close h %d handler %@ ")
+                      ACE_LIB_TEXT ("not a legit handler\n"),
+                      *handle,
+                      handler));
+          // Remove handle from the set of non-blocking handles.
+          this->non_blocking_handles ().remove (*handle);
+          continue;
+        }
+      SVC_HANDLER *svc_handler = nbch->svc_handler ();
 
       // Cancel the non-blocking connection.
       this->cancel (svc_handler);
@@ -993,5 +958,7 @@ ACE_Strategy_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::concurrency_strategy 
 {
   return this->concurrency_strategy_;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_CONNECTOR_C */

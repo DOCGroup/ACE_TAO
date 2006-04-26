@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
 
 //=============================================================================
@@ -16,19 +17,21 @@
 #define TAO_DYNUNION_I_H
 #include /**/ "ace/pre.h"
 
-#include "DynamicAny.h"
+#include "tao/DynamicAny/DynamicAny.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "DynCommon.h"
+#include "tao/DynamicAny/DynCommon.h"
 #include "tao/LocalObject.h"
 
 #if defined (_MSC_VER)
 # pragma warning(push)
 # pragma warning (disable:4250)
 #endif /* _MSC_VER */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_DynUnion_i
@@ -207,6 +210,8 @@ private:
   /// The active member's slot in the union type code.
   CORBA::ULong member_slot_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 # pragma warning(pop)

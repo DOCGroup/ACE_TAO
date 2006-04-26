@@ -1,11 +1,12 @@
 // $Id$
 
-#include "ORT_Adapter_Factory.h"
-#include "ace/Dynamic_Service.h"
+#include "tao/PortableServer/ORT_Adapter_Factory.h"
 
 ACE_RCSID (PortableServer,
            ORT_Adapter_Factory,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -14,3 +15,4 @@ namespace TAO
   }
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

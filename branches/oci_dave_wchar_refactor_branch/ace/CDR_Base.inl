@@ -2,6 +2,8 @@
 //
 // $Id$
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 //
 // The ACE_CDR::swap_X and ACE_CDR::swap_X_array routines are broken
 // in 4 cases for optimization:
@@ -97,7 +99,7 @@ ACE_CDR::swap_4 (const char* orig, char* target)
 ACE_INLINE void
 ACE_CDR::swap_8 (const char* orig, char* target)
 {
-#if defined(__amd64__) && defined(__GNUG__) 
+#if defined(__amd64__) && defined(__GNUG__)
   register unsigned long x =
     * reinterpret_cast<const unsigned long*> (orig);
   asm ("bswapq %1" : "=r" (x) : "0" (x));
@@ -195,5 +197,7 @@ ACE_CDR::next_size (size_t minsize)
 
   return newsize;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 // ****************************************************************

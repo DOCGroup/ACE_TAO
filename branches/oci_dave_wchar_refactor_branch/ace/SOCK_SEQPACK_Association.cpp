@@ -13,6 +13,8 @@
 
 ACE_RCSID(ace, SOCK_SEQPACK_Association, "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_ALLOC_HOOK_DEFINE(ACE_SOCK_SEQPACK_Association)
 
 void
@@ -334,10 +336,4 @@ ACE_SOCK_SEQPACK_Association::get_remote_addrs (ACE_INET_Addr *addrs, size_t &si
   return 0;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Auto_Array_Ptr<sockaddr_in>;
-template class ACE_Auto_Basic_Array_Ptr<sockaddr_in>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Auto_Array_Ptr<sockaddr_in>
-#pragma instantiate ACE_Auto_Basic_Array_Ptr<sockaddr_in>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+ACE_END_VERSIONED_NAMESPACE_DECL

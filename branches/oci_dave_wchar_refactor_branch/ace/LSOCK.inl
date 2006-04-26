@@ -1,5 +1,8 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Simple-minded constructor.
 
@@ -36,3 +39,5 @@ ACE_LSOCK::ACE_LSOCK (ACE_HANDLE handle)
 {
   ACE_TRACE ("ACE_LSOCK::ACE_LSOCK");
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

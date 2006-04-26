@@ -22,6 +22,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Forward decl.
 template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
 class ACE_RB_Tree_Iterator_Base;
@@ -151,9 +153,9 @@ protected:
  * a future version of ACE.  Please migrate your code
  * to the appropriate public methods indicated in the
  * method deprecation comments.
- * This class uses an <ACE_Allocator> to allocate memory.  The
+ * This class uses an ACE_Allocator to allocate memory.  The
  * user can make this a persistent class by providing an
- * <ACE_Allocator> with a persistable memory pool.
+ * ACE_Allocator with a persistable memory pool.
  *
  * <b> Requirements and Performance Characteristics</b>
  *   - Internal Structure:
@@ -223,7 +225,7 @@ public:
   // = insertion, removal, and search methods.
 
   /**
-   * Associate <ext_id> with <int_id>.  If <ext_id> is already in the
+   * Associate @a ext_id with @a int_id.  If @a ext_id is already in the
    * tree then the <ACE_RB_Tree_Node> is not changed.  Returns 0 if a
    * new entry is bound successfully, returns 1 if an attempt is made
    * to bind an existing entry, and returns -1 if failures occur.
@@ -242,8 +244,8 @@ public:
 
 
   /**
-   * Associate <ext_id> with <int_id> if and only if <ext_id> is not
-   * in the tree.  If <ext_id> is already in the tree then the <int_id>
+   * Associate @a ext_id with @a int_id if and only if @a ext_id is not
+   * in the tree.  If @a ext_id is already in the tree then the @a int_id
    * parameter is assigned the existing value in the tree.  Returns 0
    * if a new entry is bound successfully, returns 1 if an attempt is
    * made to bind an existing entry, and returns -1 if failures occur.
@@ -261,7 +263,7 @@ public:
                ACE_RB_Tree_Node<EXT_ID, INT_ID> *&entry);
 
   /**
-   * Reassociate <ext_id> with <int_id>.  If <ext_id> is not in the
+   * Reassociate @a ext_id with @a int_id.  If @a ext_id is not in the
    * tree then behaves just like <bind>.  Returns 0 if a new entry is
    * bound successfully, returns 1 if an existing entry was rebound,
    * and returns -1 if failures occur.
@@ -279,9 +281,9 @@ public:
               ACE_RB_Tree_Node<EXT_ID, INT_ID> *&entry);
 
   /**
-   * Associate <ext_id> with <int_id>.  If <ext_id> is not in the tree
+   * Associate @a ext_id with @a int_id.  If @a ext_id is not in the tree
    * then behaves just like <bind>.  Otherwise, store the old value of
-   * <int_id> into the "out" parameter and rebind the new parameters.
+   * @a int_id into the "out" parameter and rebind the new parameters.
    * Returns 0 if a new entry is bound successfully, returns 1 if an
    * existing entry was rebound, and returns -1 if failures occur.
    */
@@ -300,9 +302,9 @@ public:
               ACE_RB_Tree_Node<EXT_ID, INT_ID> *&entry);
 
   /**
-   * Associate <ext_id> with <int_id>.  If <ext_id> is not in the tree
+   * Associate @a ext_id with @a int_id.  If @a ext_id is not in the tree
    * then behaves just like <bind>.  Otherwise, store the old values
-   * of <ext_id> and <int_id> into the "out" parameters and rebind the
+   * of @a ext_id and @a int_id into the "out" parameters and rebind the
    * new parameters.  This is very useful if you need to have an
    * atomic way of updating <ACE_RB_Tree_Nodes> and you also need
    * full control over memory allocation.  Returns 0 if a new entry is
@@ -325,24 +327,24 @@ public:
               INT_ID &old_int_id,
               ACE_RB_Tree_Node<EXT_ID, INT_ID> *&entry);
 
-  /// Locate <ext_id> and pass out parameter via <int_id>.  If found,
+  /// Locate @a ext_id and pass out parameter via @a int_id.  If found,
   /// return 0, returns -1 if not found.
   int find (const EXT_ID &ext_id,
             INT_ID &int_id);
 
-  /// Locate <ext_id> and pass out parameter via <entry>.  If found,
+  /// Locate @a ext_id and pass out parameter via <entry>.  If found,
   /// return 0, returns -1 if not found.
   int find (const EXT_ID &ext_id,
             ACE_RB_Tree_Node<EXT_ID, INT_ID> *&entry);
 
   /**
-   * Unbind (remove) the <ext_id> from the tree.  Don't return the
-   * <int_id> to the caller (this is useful for collections where the
-   * <int_id>s are *not* dynamically allocated...)
+   * Unbind (remove) the @a ext_id from the tree.  Don't return the
+   * @a int_id to the caller (this is useful for collections where the
+   * @c int_ids are *not* dynamically allocated...)
    */
   int unbind (const EXT_ID &ext_id);
 
-  /// Break any association of <ext_id>.  Returns the value of <int_id>
+  /// Break any association of @a ext_id.  Returns the value of @a int_id
   /// in case the caller needs to deallocate memory.
   int unbind (const EXT_ID &ext_id,
               INT_ID &int_id);
@@ -370,8 +372,8 @@ public:
    * possible to acquire the lock explicitly, which can be useful in
    * some cases if you instantiate the <ACE_Atomic_Op> with an
    * <ACE_Recursive_Mutex> or <ACE_Process_Mutex>, or if you need to
-   * guard the state of an iterator.  NOTE: the right name would be
-   * <lock>, but HP/C++ will choke on that!
+   * guard the state of an iterator.
+   * @note The right name would be <lock>, but HP/C++ will choke on that!
    */
   ACE_LOCK &mutex (void);
 
@@ -408,7 +410,7 @@ public:
    *
    * @deprecated signature will change to become
    * int find (const EXT_ID &ext_id); which will return
-   * 0 if the <ext_id> is in the tree, otherwise -1.
+   * 0 if the @a ext_id is in the tree, otherwise -1.
    */
   INT_ID* find (const EXT_ID &k);
 
@@ -418,7 +420,7 @@ public:
    * for copy construction.  The default implementation also requires that
    * the key type support well defined < semantics.  This method returns a
    * pointer to the inserted item copy, or 0 if an error occurred.
-   * NOTE: if an identical key already exists in the tree, no new item
+   * @note If an identical key already exists in the tree, no new item
    * is created, and the returned pointer addresses the existing item
    * associated with the existing key.
    * @deprecated
@@ -522,7 +524,7 @@ protected:
    * for copy construction.  The default implementation also requires that
    * the key type support well defined < semantics.  This method returns a
    * pointer to the inserted item copy, or 0 if an error occurred.
-   * NOTE: if an identical key already exists in the tree, no new item
+   * @note If an identical key already exists in the tree, no new item
    * is created, and the returned pointer addresses the existing item
    * associated with the existing key.
    */
@@ -879,6 +881,8 @@ public:
   int next (ACE_RB_Tree_Node<EXT_ID, INT_ID> *&next_entry) const;
 
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/RB_Tree.inl"

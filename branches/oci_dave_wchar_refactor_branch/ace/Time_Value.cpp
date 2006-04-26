@@ -9,6 +9,19 @@ ACE_RCSID (ace,
 #include "ace/Time_Value.inl"
 #endif /* __ACE_INLINE__ */
 
+#if !defined(ACE_LACKS_NUMERIC_LIMITS)
+// some platforms pollute the namespace by defining max() and min() macros
+#ifdef max
+#undef max
+#endif
+#ifdef min
+#undef min
+#endif
+#include <limits>
+#endif /* ACE_LACKS_NUMERIC_LIMITS */
+
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Static constant representing `zero-time'.
 // Note: this object requires static construction.
@@ -20,7 +33,14 @@ const ACE_Time_Value ACE_Time_Value::zero;
 // Its primary use is in time computations such as those used by the
 // dynamic subpriority strategies in the ACE_Dynamic_Message_Queue class.
 // Note: this object requires static construction.
-const ACE_Time_Value ACE_Time_Value::max_time (LONG_MAX,
+// Note: on platforms without std::numeric_limits<>, we assume time_t is
+// a long, the historical type used for time.
+const ACE_Time_Value ACE_Time_Value::max_time (
+#if !defined(ACE_LACKS_NUMERIC_LIMITS) && !defined (ACE_WIN64)
+                                               std::numeric_limits<time_t>::max (),
+#else
+                                               LONG_MAX,
+#endif
                                                ACE_ONE_SECOND_IN_USECS - 1);
 
 ACE_ALLOC_HOOK_DEFINE (ACE_Time_Value)
@@ -100,7 +120,7 @@ void ACE_Time_Value::set (const FILETIME &file_time)
   // Convert 100ns units to seconds;
   this->tv_.tv_sec = (long) (LL_100ns / ((double) (10000 * 1000)));
   // Convert remainder to microseconds;
-  this->tv_.tv_usec = (long)((LL_100ns % ((ACE_UINT32)(10000 * 1000))) / 10);
+  this->tv_.tv_usec = (suseconds_t)((LL_100ns % ((ACE_UINT32)(10000 * 1000))) / 10);
 #else
   // Don't use a struct initializer, gcc don't like it.
   ULARGE_INTEGER _100ns;
@@ -112,7 +132,7 @@ void ACE_Time_Value::set (const FILETIME &file_time)
   // Convert 100ns units to seconds;
   this->tv_.tv_sec = (long) (_100ns.QuadPart / (10000 * 1000));
   // Convert remainder to microseconds;
-  this->tv_.tv_usec = (long) ((_100ns.QuadPart % (10000 * 1000)) / 10);
+  this->tv_.tv_usec = (suseconds_t) ((_100ns.QuadPart % (10000 * 1000)) / 10);
 #endif // ACE_LACKS_LONGLONG_T
   this->normalize ();
 }
@@ -215,20 +235,25 @@ ACE_Time_Value::operator *= (double d)
      + static_cast<double> (this->usec ()) / ACE_ONE_SECOND_IN_USECS) * d;
 
   // shall we saturate the result?
-  static const double max_int = ACE_INT32_MAX + 0.999999;
-  static const double min_int = ACE_INT32_MIN - 0.999999;
+#if !defined(ACE_LACKS_NUMERIC_LIMITS) && !defined (ACE_WIN64)
+  static const double max_int = std::numeric_limits<time_t>::max () + 0.999999;
+  static const double min_int = std::numeric_limits<time_t>::min () - 0.999999;
+#else
+  static const double max_int = LONG_MAX + 0.999999;
+  static const double min_int = LONG_MIN - 0.999999;
+#endif
 
   if (time_total > max_int)
     time_total = max_int;
   if (time_total < min_int)
     time_total = min_int;
 
-  const long time_sec = static_cast<long> (time_total);
+  const time_t time_sec = static_cast<time_t> (time_total);
 
   time_total -= time_sec;
   time_total *= ACE_ONE_SECOND_IN_USECS;
 
-  long time_usec = static_cast<long> (time_total);
+  suseconds_t time_usec = static_cast<suseconds_t> (time_total);
 
   // round up the result to save the last usec
   if (time_usec > 0 && (time_total - time_usec) >= 0.5)
@@ -237,7 +262,8 @@ ACE_Time_Value::operator *= (double d)
     --time_usec;
 
   this->set (time_sec, time_usec);
-  this->normalize (); // protect against future changes in normalization
 
   return *this;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

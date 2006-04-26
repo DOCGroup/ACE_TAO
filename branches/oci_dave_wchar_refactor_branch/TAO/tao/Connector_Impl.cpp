@@ -1,3 +1,5 @@
+// $Id$
+
 #ifndef TAO_CONNECTOR_IMPL_CPP
 #define TAO_CONNECTOR_IMPL_CPP
 
@@ -7,7 +9,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-ACE_RCSID(tao, Connector_Impl, "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class SVC_HANDLER>
 TAO_Connect_Creation_Strategy<SVC_HANDLER>::
@@ -58,5 +60,6 @@ TAO_Connect_Concurrency_Strategy<SVC_HANDLER>::
                                                                       arg);
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
-#endif /*TAO_CONNECTOR_IMPL_CPP*/
+#endif  /* TAO_CONNECTOR_IMPL_CPP */

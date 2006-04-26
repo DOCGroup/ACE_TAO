@@ -1,15 +1,17 @@
-// @(#) $Id$
+// $Id$
 
-#include "Default_Policy_Validator.h"
+#include "tao/PortableServer/Default_Policy_Validator.h"
 #include "tao/ORB_Core.h"
 #include "tao/Policy_Set.h"
 #include "tao/PolicyFactory_Registry_Adapter.h"
-#include "PortableServer.h"
+#include "tao/PortableServer/PortableServer.h"
 
 ACE_RCSID (PortableServer,
            Default_Policy_Validator,
            "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_POA_Default_Policy_Validator::TAO_POA_Default_Policy_Validator (
   TAO_ORB_Core &orb_core)
@@ -122,7 +124,6 @@ TAO_POA_Default_Policy_Validator::validate_impl (TAO_Policy_Set &policies
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 }
 
-
 CORBA::Boolean
 TAO_POA_Default_Policy_Validator::legal_policy_impl (CORBA::PolicyType type)
 {
@@ -147,3 +148,5 @@ TAO_POA_Default_Policy_Validator::merge_policies_impl (
   ACE_ENV_ARG_DECL_NOT_USED)
 {
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

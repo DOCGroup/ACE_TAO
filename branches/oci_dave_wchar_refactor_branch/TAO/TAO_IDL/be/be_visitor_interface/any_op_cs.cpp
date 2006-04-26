@@ -53,6 +53,8 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
   // All template specializations must be generated before the instantiations
   // in the operators.
 
+  *os << be_global->core_versioning_begin () << be_nl;
+
   if (! node->is_abstract ())
     {
       *os << be_nl << be_nl
@@ -121,6 +123,7 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
           << "}";
     }
 
+  *os << be_global->core_versioning_end () << be_nl;
 
   be_module *module = 0;
 
@@ -196,6 +199,8 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
       *os << "#else\n";
     }
 
+  *os << be_global->core_versioning_begin () << be_nl;
+  
   *os << be_nl << be_nl
       << "// Copying insertion." << be_nl
       << "void" << be_nl
@@ -240,6 +245,8 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
       << "_tao_elem" << be_uidt_nl
       << ");" << be_uidt << be_uidt << be_uidt_nl
       << "}";
+
+  *os << be_global->core_versioning_end () << be_nl;
 
   if (module != 0)
     {

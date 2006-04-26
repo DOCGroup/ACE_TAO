@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ../bin/mwc.pl -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/config -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/templates -type automake -noreldefs TAO.mwc
+## ../bin/mwc.pl -type automake -noreldefs TAO.mwc
 
 ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
@@ -16,16 +16,14 @@ TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
-CLEANFILES =
 noinst_PROGRAMS =
-BUILT_SOURCES =
 
-## Makefile.Buffered_AMI_Client.am
+## Makefile.Buffered_AMI_IDL.am
 
 if BUILD_AMI
 if BUILD_CORBA_MESSAGING
 
-BUILT_SOURCES += \
+BUILT_SOURCES = \
   testC.cpp \
   testC.h \
   testC.inl \
@@ -36,7 +34,7 @@ BUILT_SOURCES += \
   testS_T.h \
   testS_T.inl
 
-CLEANFILES += \
+CLEANFILES = \
   test-stamp \
   testC.cpp \
   testC.h \
@@ -54,6 +52,18 @@ test-stamp: $(srcdir)/test.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -GC $(srcdir)/test.idl
 	@touch $@
 
+
+noinst_HEADERS = \
+  test.idl
+
+endif BUILD_CORBA_MESSAGING
+endif BUILD_AMI
+
+## Makefile.Buffered_AMI_Client.am
+
+if BUILD_AMI
+if BUILD_CORBA_MESSAGING
+
 noinst_PROGRAMS += client
 
 client_CPPFLAGS = \
@@ -66,11 +76,7 @@ client_SOURCES = \
   client.cpp \
   testC.cpp \
   testS.cpp \
-  testC.h \
-  testC.inl \
-  testS.h \
-  testS_T.h \
-  testS_T.inl
+  test_i.h
 
 client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
@@ -90,35 +96,6 @@ endif BUILD_AMI
 if BUILD_AMI
 if BUILD_CORBA_MESSAGING
 
-BUILT_SOURCES += \
-  testC.cpp \
-  testC.h \
-  testC.inl \
-  testS.cpp \
-  testS.h \
-  testS.inl \
-  testS_T.cpp \
-  testS_T.h \
-  testS_T.inl
-
-CLEANFILES += \
-  test-stamp \
-  testC.cpp \
-  testC.h \
-  testC.inl \
-  testS.cpp \
-  testS.h \
-  testS.inl \
-  testS_T.cpp \
-  testS_T.h \
-  testS_T.inl
-
-testC.cpp testC.h testC.inl testS.cpp testS.h testS.inl testS_T.cpp testS_T.h testS_T.inl: test-stamp
-
-test-stamp: $(srcdir)/test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -GC $(srcdir)/test.idl
-	@touch $@
-
 noinst_PROGRAMS += server
 
 server_CPPFLAGS = \
@@ -132,11 +109,6 @@ server_SOURCES = \
   testC.cpp \
   testS.cpp \
   test_i.cpp \
-  testC.h \
-  testC.inl \
-  testS.h \
-  testS_T.h \
-  testS_T.inl \
   test_i.h
 
 server_LDADD = \

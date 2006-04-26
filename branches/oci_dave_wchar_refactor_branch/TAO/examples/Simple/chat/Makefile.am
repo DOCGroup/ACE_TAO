@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ../bin/mwc.pl -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/config -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/templates -type automake -noreldefs TAO.mwc
+## ../bin/mwc.pl -type automake -noreldefs TAO.mwc
 
 ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
@@ -16,7 +16,7 @@ TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
-## Makefile.chat_client.am
+## Makefile.chat_IDL.am
 
 BUILT_SOURCES = \
   ReceiverC.cpp \
@@ -44,7 +44,7 @@ CLEANFILES = \
 ReceiverC.cpp ReceiverC.h ReceiverC.inl ReceiverS.cpp ReceiverS.h ReceiverS.inl ReceiverS_T.cpp ReceiverS_T.h ReceiverS_T.inl: Receiver-stamp
 
 Receiver-stamp: $(srcdir)/Receiver.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Receiver.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Receiver.idl
 	@touch $@
 
 BUILT_SOURCES += \
@@ -73,8 +73,15 @@ CLEANFILES += \
 BroadcasterC.cpp BroadcasterC.h BroadcasterC.inl BroadcasterS.cpp BroadcasterS.h BroadcasterS.inl BroadcasterS_T.cpp BroadcasterS_T.h BroadcasterS_T.inl: Broadcaster-stamp
 
 Broadcaster-stamp: $(srcdir)/Broadcaster.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Broadcaster.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Broadcaster.idl
 	@touch $@
+
+
+noinst_HEADERS = \
+  Broadcaster.idl \
+  Receiver.idl
+
+## Makefile.chat_client.am
 
 noinst_PROGRAMS = client
 
@@ -86,23 +93,12 @@ client_CPPFLAGS = \
 
 client_SOURCES = \
   BroadcasterC.cpp \
-  BroadcasterS.cpp \
   Client_i.cpp \
   ReceiverC.cpp \
   ReceiverS.cpp \
   Receiver_i.cpp \
   client.cpp \
-  BroadcasterC.h \
-  BroadcasterC.inl \
-  BroadcasterS.h \
-  BroadcasterS_T.h \
-  BroadcasterS_T.inl \
   Client_i.h \
-  ReceiverC.h \
-  ReceiverC.inl \
-  ReceiverS.h \
-  ReceiverS_T.h \
-  ReceiverS_T.inl \
   Receiver_i.h
 
 client_LDADD = \
@@ -115,64 +111,6 @@ client_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.chat_server.am
-
-BUILT_SOURCES += \
-  ReceiverC.cpp \
-  ReceiverC.h \
-  ReceiverC.inl \
-  ReceiverS.cpp \
-  ReceiverS.h \
-  ReceiverS.inl \
-  ReceiverS_T.cpp \
-  ReceiverS_T.h \
-  ReceiverS_T.inl
-
-CLEANFILES += \
-  Receiver-stamp \
-  ReceiverC.cpp \
-  ReceiverC.h \
-  ReceiverC.inl \
-  ReceiverS.cpp \
-  ReceiverS.h \
-  ReceiverS.inl \
-  ReceiverS_T.cpp \
-  ReceiverS_T.h \
-  ReceiverS_T.inl
-
-ReceiverC.cpp ReceiverC.h ReceiverC.inl ReceiverS.cpp ReceiverS.h ReceiverS.inl ReceiverS_T.cpp ReceiverS_T.h ReceiverS_T.inl: Receiver-stamp
-
-Receiver-stamp: $(srcdir)/Receiver.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Receiver.idl
-	@touch $@
-
-BUILT_SOURCES += \
-  BroadcasterC.cpp \
-  BroadcasterC.h \
-  BroadcasterC.inl \
-  BroadcasterS.cpp \
-  BroadcasterS.h \
-  BroadcasterS.inl \
-  BroadcasterS_T.cpp \
-  BroadcasterS_T.h \
-  BroadcasterS_T.inl
-
-CLEANFILES += \
-  Broadcaster-stamp \
-  BroadcasterC.cpp \
-  BroadcasterC.h \
-  BroadcasterC.inl \
-  BroadcasterS.cpp \
-  BroadcasterS.h \
-  BroadcasterS.inl \
-  BroadcasterS_T.cpp \
-  BroadcasterS_T.h \
-  BroadcasterS_T.inl
-
-BroadcasterC.cpp BroadcasterC.h BroadcasterC.inl BroadcasterS.cpp BroadcasterS.h BroadcasterS.inl BroadcasterS_T.cpp BroadcasterS_T.h BroadcasterS_T.inl: Broadcaster-stamp
-
-Broadcaster-stamp: $(srcdir)/Broadcaster.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Broadcaster.idl
-	@touch $@
 
 noinst_PROGRAMS += server
 
@@ -187,20 +125,9 @@ server_SOURCES = \
   BroadcasterS.cpp \
   Broadcaster_i.cpp \
   ReceiverC.cpp \
-  ReceiverS.cpp \
   Server_i.cpp \
   server.cpp \
-  BroadcasterC.h \
-  BroadcasterC.inl \
-  BroadcasterS.h \
-  BroadcasterS_T.h \
-  BroadcasterS_T.inl \
   Broadcaster_i.h \
-  ReceiverC.h \
-  ReceiverC.inl \
-  ReceiverS.h \
-  ReceiverS_T.h \
-  ReceiverS_T.inl \
   Server_i.h
 
 server_LDADD = \

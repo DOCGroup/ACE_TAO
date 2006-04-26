@@ -1,10 +1,13 @@
 // $Id$
 
-#include "IdAssignmentStrategySystem.h"
+#include "tao/PortableServer/IdAssignmentStrategySystem.h"
 
 ACE_RCSID (PortableServer,
            Id_Assignment_Strategy,
            "$Id$")
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -21,17 +24,21 @@ namespace TAO
     {
       return true;
     }
-
-    ACE_FACTORY_DEFINE (ACE_Local_Service, IdAssignmentStrategySystem)
-
-    ACE_STATIC_SVC_DEFINE (
-        IdAssignmentStrategySystem,
-        ACE_TEXT ("IdAssignmentStrategySystem"),
-        ACE_SVC_OBJ_T,
-        &ACE_SVC_NAME (IdAssignmentStrategySystem),
-        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
-        0
-      )
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+ACE_FACTORY_NAMESPACE_DEFINE (
+  ACE_Local_Service,
+  IdAssignmentStrategySystem,
+  TAO::Portable_Server::IdAssignmentStrategySystem)
+
+ACE_STATIC_SVC_DEFINE (
+  IdAssignmentStrategySystem,
+  ACE_TEXT ("IdAssignmentStrategySystem"),
+  ACE_SVC_OBJ_T,
+  &ACE_SVC_NAME (IdAssignmentStrategySystem),
+  ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
+  0)
 

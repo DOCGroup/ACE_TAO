@@ -177,16 +177,6 @@ dnl @todo Clean up / consolidate these conditionals
      esac
      ;;
    *freebsd*)
-     case "$CXX" in
-       *)
-         if test "$GXX" = yes; then
-           CXXFLAGS="$CXXFLAGS"
-           ACE_CXXFLAGS="$ACE_CXXFLAGS -w -fno-strict-prototypes"
-           DCXXFLAGS=""
-           OCXXFLAGS=""
-         fi
-         ;;
-     esac
      ;;
    *hpux*)
      # In case anything here or in the config depends on OS
@@ -367,42 +357,113 @@ dnl @todo Clean up / consolidate these conditionals
      ;;
  esac
 
- dnl Additional flags
+ dnl Warning flags
+ if test "$GCC" = yes; then
+   ACE_CFLAGS="$ACE_CFLAGS -W -Wall -Wpointer-arith"
+ fi
  if test "$GXX" = yes; then
    ACE_CXXFLAGS="$ACE_CXXFLAGS -W -Wall -Wpointer-arith"
+ fi
 
-   dnl Take advantage of visibility attributes when using g++ 4.0 or
-   dnl better.
-   if test "$ACE_GXX_MAJOR_VERSION" -ge 4; then
-     case "$host_os" in
-       darwin*)
-	 ;; 
-     
-       *)
-	 AC_MSG_NOTICE([enabling GNU G++ visibility attribute support])
-	 ACE_GXX_VISIBILITY_FLAGS="-fvisibility=hidden -fvisibility-inlines-hidden"
-	 ACE_CXXFLAGS="$ACE_CXXFLAGS $ACE_GXX_VISIBILITY_FLAGS"
-	 AC_DEFINE([ACE_HAS_CUSTOM_EXPORT_MACROS])
-	 AC_DEFINE([ACE_Proper_Export_Flag],
-		   [__attribute__ ((visibility("default")))])
+ dnl Symbol Visibility flags
+ dnl Take advantage of visibility attributes when using g++ 4.0 or
+ dnl better.
+ if test "$GXX" = yes; then
+   dnl As of this writing, there are symbol visibility issues on some
+   dnl platforms.  The --disable-symbol-visibility option is intended
+   dnl to allow users to explicitly disable symbol visibility support
+   dnl in the cases where it does not work (or does not work properly),
+   dnl but the feature test selects it anyway.
+
+   AC_ARG_ENABLE([symbol-visibility],
+     AS_HELP_STRING([--enable-symbol-visibility],
+		    [build with gcc symbol visibility attributes [[[no]]]]),
+     [
+      case "${enableval}" in
+       yes)
+	 ace_user_symbol_visibility=yes
 	 ;;
-     esac
-   else
-     case `$CXX --version` in
-       2.9*)
-         if test "$ace_user_enable_exceptions" != yes; then
-           ACE_CXXFLAGS="$ACE_CXXFLAGS -fcheck-new"
-         fi
-         ;;
-     esac
+       no)
+	 ace_user_symbol_visibility=no
+	 ;;
+       *)
+	 AC_MSG_ERROR([bad value ${enableval} for --enable-symbol-visibility])
+	 ;;
+      esac
+     ],
+     [
+      ace_user_enable_symbol_visibility=no
+     ])
+
+   if test "$ace_user_enable_symbol_visibility" = yes; then
+     ACE_CHECK_CXXFLAGS([fvisibility=hidden],
+			[
+       ACE_CXXFLAGS="$ACE_CXXFLAGS -fvisibility=hidden"
+       AC_DEFINE([ACE_HAS_CUSTOM_EXPORT_MACROS])
+       AC_DEFINE([ACE_Proper_Export_Flag],
+		 [__attribute__ ((visibility("default")))])
+			])
+     ACE_CHECK_CXXFLAGS([fvisibility-inlines-hidden],
+			[
+       ACE_CXXFLAGS="$ACE_CXXFLAGS -fvisibility-inlines-hidden"
+			])
    fi
+ fi
+ 
+ dnl Additional flags
+ if test "$GXX" = yes; then
+   case `$CXX --version` in
+     2.9*)
+       if test "$ace_user_enable_exceptions" != yes; then
+	 ACE_CXXFLAGS="$ACE_CXXFLAGS -fcheck-new"
+       fi
+       ;;
+   esac
 
 dnl    if test "$ace_user_enable_repo" = no; then
 dnl      ACE_CXXFLAGS="$ACE_CXXFLAGS -fno-implicit-templates"
 dnl    fi
  fi
+])
 
- if test "$GCC" = yes; then
-   ACE_CFLAGS="$ACE_CFLAGS -W -Wall -Wpointer-arith"
- fi
+AC_DEFUN([ACE_CHECK_CFLAGS],
+[
+AS_VAR_PUSHDEF([VAR],'ace_cv_cflag_$1')
+AC_MSG_CHECKING([whether $CC supports -$1])
+AC_LANG_SAVE
+AC_LANG([C])
+ace_save_CFLAGS=$CFLAGS
+CFLAGS="$CFLAGS -$1"
+AC_COMPILE_IFELSE([AC_LANG_PROGRAM([],[return 0])],[VAR=yes],[VAR=no])
+CFLAGS=$ace_save_CFLAGS
+AC_LANG_RESTORE
+if test $VAR = yes; then
+  AC_MSG_RESULT([yes])
+  $2
+else
+  AC_MSG_RESULT([no])
+  $3
+fi
+AS_VAR_POPDEF([VAR])
+])
+
+AC_DEFUN([ACE_CHECK_CXXFLAGS],
+[
+AS_VAR_PUSHDEF([VAR],'ace_cv_cxxflag_$1')
+AC_MSG_CHECKING([whether $CXX supports -$1])
+AC_LANG_SAVE
+AC_LANG([C++])
+ace_save_CXXFLAGS=$CXXFLAGS
+CXXFLAGS="$CXXFLAGS -$1"
+AC_COMPILE_IFELSE([AC_LANG_PROGRAM([],[return 0])],[VAR=yes],[VAR=no])
+CXXFLAGS=$ace_save_CXXFLAGS
+AC_LANG_RESTORE
+if test $VAR = yes; then
+  AC_MSG_RESULT([yes])
+  $2
+else
+  AC_MSG_RESULT([no])
+  $3
+fi
+AS_VAR_POPDEF([VAR])
 ])

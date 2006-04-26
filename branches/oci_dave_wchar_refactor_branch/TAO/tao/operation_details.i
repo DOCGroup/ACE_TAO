@@ -2,6 +2,8 @@
 //
 //$Id$
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_INLINE
 TAO_Operation_Details::TAO_Operation_Details (const char *name,
                                               CORBA::ULong len,
@@ -20,6 +22,10 @@ TAO_Operation_Details::TAO_Operation_Details (const char *name,
     , num_args_ (num)
     , ex_data_ (data)
     , ex_count_ (count)
+#if TAO_HAS_INTERCEPTORS == 1
+    , ft_expiration_time_ (0)
+    , ft_retention_id_ (0)
+#endif /*TAO_HAS_INTERCEPTORS == 1*/
 {
 }
 
@@ -92,12 +98,12 @@ TAO_Operation_Details::reply_service_info (void) const
 ACE_INLINE void
 TAO_Operation_Details::reset_request_service_info (void)
 {
-  this->request_service_context ().service_info ()._deallocate_buffer ();
+  this->request_service_context ().service_info ().length (0);
 }
 ACE_INLINE void
 TAO_Operation_Details::reset_reply_service_info (void)
 {
-  this->reply_service_context ().service_info ()._deallocate_buffer ();
+  this->reply_service_context ().service_info ().length (0);
 }
 
 ACE_INLINE void
@@ -164,3 +170,31 @@ TAO_Operation_Details::args_num (void) const
 {
   return this->num_args_;
 }
+
+#if TAO_HAS_INTERCEPTORS == 1
+ACE_INLINE void
+TAO_Operation_Details::ft_expiration_time (TimeBase::TimeT time)
+{
+  this->ft_expiration_time_ = time;
+}
+
+ACE_INLINE TimeBase::TimeT
+TAO_Operation_Details::ft_expiration_time (void) const
+{
+  return this->ft_expiration_time_;
+}
+
+ACE_INLINE void
+TAO_Operation_Details::ft_retention_id (CORBA::Long request_id)
+{
+  this->ft_retention_id_ = request_id;
+}
+
+ACE_INLINE CORBA::Long
+TAO_Operation_Details::ft_retention_id (void) const
+{
+  return this->ft_retention_id_;
+}
+#endif /*TAO_HAS_INTERCEPTORS == 1*/
+
+TAO_END_VERSIONED_NAMESPACE_DECL

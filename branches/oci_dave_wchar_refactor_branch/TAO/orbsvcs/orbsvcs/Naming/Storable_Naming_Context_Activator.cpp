@@ -12,19 +12,21 @@
 //
 // ============================================================================
 
-#include "Storable_Naming_Context_Activator.h"
+#include "orbsvcs/Naming/Storable_Naming_Context_Activator.h"
 
 #if (TAO_HAS_MINIMUM_POA == 0)
-#include "Naming_Context_Interface.h"
-#include "Storable_Naming_Context.h"
-#include "Storable.h"
+#include "orbsvcs/Naming/Naming_Context_Interface.h"
+#include "orbsvcs/Naming/Storable_Naming_Context.h"
+#include "orbsvcs/Naming/Storable.h"
 #include "ace/Auto_Ptr.h"
 
-TAO_Storable_Naming_Context_Activator::
-TAO_Storable_Naming_Context_Activator (CORBA::ORB_ptr orb,
-                                       TAO_Naming_Service_Persistence_Factory *factory,
-                                       const ACE_TCHAR *persistence_directory,
-                                       size_t context_size)
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+TAO_Storable_Naming_Context_Activator::TAO_Storable_Naming_Context_Activator (
+  CORBA::ORB_ptr orb,
+  TAO_Naming_Service_Persistence_Factory *factory,
+  const ACE_TCHAR *persistence_directory,
+  size_t context_size)
   : orb_(orb),
     factory_(factory),
     persistence_directory_(persistence_directory),
@@ -38,9 +40,10 @@ TAO_Storable_Naming_Context_Activator::~TAO_Storable_Naming_Context_Activator ()
 }
 
 PortableServer::Servant
-TAO_Storable_Naming_Context_Activator::incarnate (const PortableServer::ObjectId &oid,
-                                                  PortableServer::POA_ptr poa
-                                                  ACE_ENV_ARG_DECL)
+TAO_Storable_Naming_Context_Activator::incarnate (
+    const PortableServer::ObjectId &oid,
+    PortableServer::POA_ptr poa
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::ForwardRequest))
 {
@@ -103,17 +106,20 @@ TAO_Storable_Naming_Context_Activator::incarnate (const PortableServer::ObjectId
 }
 
 void
-TAO_Storable_Naming_Context_Activator::etherealize (const PortableServer::ObjectId &/*oid*/,
-                                                    PortableServer::POA_ptr /*adapter*/,
-                                                    PortableServer::Servant servant,
-                                                    CORBA::Boolean /*cleanup_in_progress*/,
-                                                    CORBA::Boolean remaining_activations
-                                                    ACE_ENV_ARG_DECL_NOT_USED)
+TAO_Storable_Naming_Context_Activator::etherealize (
+    const PortableServer::ObjectId &/*oid*/,
+    PortableServer::POA_ptr /*adapter*/,
+    PortableServer::Servant servant,
+    CORBA::Boolean /*cleanup_in_progress*/,
+    CORBA::Boolean remaining_activations
+    ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (!remaining_activations) {
     delete servant;
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_MINIMUM_POA */

@@ -1,13 +1,15 @@
 //$Id$
 
-#ifndef CLEANUP_STRATEGIES_T_C
-#define CLEANUP_STRATEGIES_T_C
+#ifndef ACE_CLEANUP_STRATEGIES_T_CPP
+#define ACE_CLEANUP_STRATEGIES_T_CPP
 
 #include "ace/Cleanup_Strategies_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ////////////////////////////////////////////////////////////////////////////
 
@@ -19,19 +21,18 @@ ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER>::~ACE_Cleanup_Strategy (void)
 template <class KEY, class VALUE, class CONTAINER> int
 ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER>::cleanup (CONTAINER &container,
                                                       KEY *key,
-                                                      VALUE *value)
+                                                      VALUE *)
 {
-  ACE_UNUSED_ARG (value);
-
   return container.unbind (*key);
 }
 
 ////////////////////////////////////////////////////////////////////////////
 
 template <class KEY, class VALUE, class CONTAINER> int
-ACE_Recyclable_Handler_Cleanup_Strategy<KEY, VALUE, CONTAINER>::cleanup (CONTAINER &container,
-                                                                         KEY *key,
-                                                                         VALUE *)
+ACE_Recyclable_Handler_Cleanup_Strategy<KEY, VALUE, CONTAINER>::cleanup (
+  CONTAINER &container,
+  KEY *key,
+  VALUE *)
 {
   VALUE value;
 
@@ -48,9 +49,12 @@ ACE_Recyclable_Handler_Cleanup_Strategy<KEY, VALUE, CONTAINER>::cleanup (CONTAIN
 /////////////////////////////////////////////////////////////////////////////
 
 template <class KEY, class VALUE, class CONTAINER> int
-ACE_Refcounted_Recyclable_Handler_Cleanup_Strategy<KEY, VALUE, CONTAINER>::cleanup (CONTAINER &,
-                                                                                    KEY *,
-                                                                                    VALUE *value)
+ACE_Refcounted_Recyclable_Handler_Cleanup_Strategy<KEY,
+                                                   VALUE,
+                                                   CONTAINER>::cleanup (
+  CONTAINER &,
+  KEY *,
+  VALUE *value)
 {
   return value->first ()->handle_close_i ();
 }
@@ -58,9 +62,10 @@ ACE_Refcounted_Recyclable_Handler_Cleanup_Strategy<KEY, VALUE, CONTAINER>::clean
 ////////////////////////////////////////////////////////////////////////////
 
 template <class KEY, class VALUE, class CONTAINER> int
-ACE_Handler_Cleanup_Strategy<KEY, VALUE, CONTAINER>::cleanup (CONTAINER &container,
-                                                              KEY *key,
-                                                              VALUE *value)
+ACE_Handler_Cleanup_Strategy<KEY, VALUE, CONTAINER>::cleanup (
+  CONTAINER &container,
+  KEY *key,
+  VALUE *value)
 {
   // Remove the item from cache only if the handler isnt in use.
   if ((*value)->active () == 0)
@@ -78,15 +83,13 @@ ACE_Handler_Cleanup_Strategy<KEY, VALUE, CONTAINER>::cleanup (CONTAINER &contain
 ////////////////////////////////////////////////////////////////////////////
 
 template <class KEY, class VALUE, class CONTAINER> int
-ACE_Null_Cleanup_Strategy<KEY, VALUE, CONTAINER>::cleanup (CONTAINER &container,
-                                                           KEY *key,
-                                                           VALUE *value)
+ACE_Null_Cleanup_Strategy<KEY, VALUE, CONTAINER>::cleanup (CONTAINER &,
+                                                           KEY *,
+                                                           VALUE *)
 {
-  ACE_UNUSED_ARG (container);
-  ACE_UNUSED_ARG (key);
-  ACE_UNUSED_ARG (value);
-
   return 0;
 }
 
-#endif /* CLEANUP_STRATEGIES_T_C */
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* ACE_CLEANUP_STRATEGIES_T_CPP */

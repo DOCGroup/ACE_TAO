@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file    PG_Property_Set.h
@@ -20,12 +21,14 @@
 #define TAO_PG_PROPERTY_SET
 #include /**/ "ace/pre.h"
 
-#include "portablegroup_export.h"
+#include "orbsvcs/PortableGroup/portablegroup_export.h"
 #include "orbsvcs/PortableGroupS.h"
 #include "orbsvcs/CosNamingC.h"
 #include "ace/Hash_Map_Manager.h"
 #include "ace/SString.h"
 #include "ace/Null_Mutex.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -186,9 +189,11 @@ namespace TAO
 #endif // PG_PS_UNIT_TEST
 } //namespace TAO
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 ////////////////////////////////////
 // include templated helper function
-#include "PG_Property_Set_Find.h"
+#include "orbsvcs/PortableGroup/PG_Property_Set_Find.h"
 
 #include /**/ "ace/post.h"
 

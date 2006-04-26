@@ -1,6 +1,6 @@
 /**
  * $Id$
- * 
+ *
  * @file DynEnum_Handler.h
  * @author Will Otte <wotte@dre.vanderbilt.edu>
  */
@@ -25,7 +25,7 @@ namespace CIAO
     class Any;
     class DataType;
     class DataValue;
-    
+
     /**
      * @class DynEnum_Handler
      * @brief Translates enums specified in deployment plans into Dynamic Anys
@@ -36,14 +36,13 @@ namespace CIAO
     public:
       static DynamicAny::DynAny_ptr extract_into_dynany (const DataType &type,
                                                       const DataValue &value);
-      
+
       static void extract_out_of_dynany (const DynamicAny::DynAny_ptr dyn);
     };
-    
+
   }
 }
 
 
 #include /**/ "ace/post.h"
 #endif /* CIAO_CONFIG_HANDLERS_DYNENUM_HANDLER_H*/
-

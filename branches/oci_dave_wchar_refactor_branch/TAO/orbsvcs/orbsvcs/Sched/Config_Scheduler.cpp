@@ -7,9 +7,11 @@
 #include "orbsvcs/Time_Utilities.h"
 #include "orbsvcs/Scheduler_Factory.h"
 
-#include "Config_Scheduler.h"
+#include "orbsvcs/Sched/Config_Scheduler.h"
 
 ACE_RCSID(Sched, Config_Scheduler, "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_Config_Scheduler::ACE_Config_Scheduler (void)
 #if defined (TAO_USES_STRATEGY_SCHEDULER)
@@ -35,7 +37,7 @@ ACE_Config_Scheduler::create (const char * entry_point
 {
   typedef RtecScheduler::RT_Info* RT_Info_ptr;
 
-  RtecScheduler::RT_Info** rt_info;
+  RtecScheduler::RT_Info** rt_info = 0;
   ACE_NEW_RETURN (rt_info, RT_Info_ptr[1], -1);
 
   ACE_NEW_RETURN (rt_info[0], RtecScheduler::RT_Info, -1);
@@ -668,3 +670,5 @@ void ACE_Config_Scheduler::get_config_info_set (RtecScheduler::Config_Info_Set_o
 {
   ACE_THROW (CORBA::NO_IMPLEMENT ());
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -87,8 +87,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_strlist.h"
 #include "global_extern.h"
 
-ACE_RCSID (ast, 
-           ast_operation, 
+ACE_RCSID (ast,
+           ast_operation,
            "$Id$")
 
 AST_Operation::AST_Operation (void)
@@ -107,8 +107,8 @@ AST_Operation::AST_Operation (void)
 AST_Operation::AST_Operation (AST_Type *rt,
                               Flags fl,
                               UTL_ScopedName *n,
-                              idl_bool local,
-                              idl_bool abstract)
+                              bool local,
+                              bool abstract)
   : COMMON_Base (local,
                  abstract),
     AST_Decl(AST_Decl::NT_op,
@@ -332,7 +332,7 @@ AST_Operation::fe_add_exceptions (UTL_NameList *t)
   for (UTL_NamelistActiveIterator nl_i (t); !nl_i.is_done (); nl_i.next ())
     {
       nl_n = nl_i.item ();
-      d = this->lookup_by_name (nl_n, I_TRUE);
+      d = this->lookup_by_name (nl_n, true);
 
       if (d == 0)
         {
@@ -429,7 +429,7 @@ AST_Operation::fe_add_argument (AST_Argument *t)
 
   // This error is not caught in y.tab.cpp so we check for it here.
   if (arg_type->node_type () == AST_Decl::NT_array
-      && arg_type->anonymous () == I_TRUE)
+      && arg_type->anonymous () == true)
     {
       idl_global->err ()->syntax_error (idl_global->parse_state ());
     }
@@ -439,7 +439,7 @@ AST_Operation::fe_add_argument (AST_Argument *t)
 
   // Add it to set of locally referenced symbols.
   this->add_to_referenced (t,
-                           I_FALSE,
+                           false,
                            t->local_name ());
 
   UTL_ScopedName *mru = arg_type->last_referenced_as ();
@@ -447,7 +447,7 @@ AST_Operation::fe_add_argument (AST_Argument *t)
   if (mru != 0)
     {
       this->add_to_referenced (arg_type,
-                               I_FALSE,
+                               false,
                                mru->first_component ());
     }
 

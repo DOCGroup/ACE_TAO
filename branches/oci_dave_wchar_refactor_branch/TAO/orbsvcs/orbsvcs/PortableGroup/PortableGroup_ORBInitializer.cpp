@@ -1,7 +1,7 @@
 // $Id$
 
-#include "PortableGroup_ORBInitializer.h"
-#include "PortableGroup_Request_Dispatcher.h"
+#include "orbsvcs/PortableGroup/PortableGroup_ORBInitializer.h"
+#include "orbsvcs/PortableGroup/PortableGroup_Request_Dispatcher.h"
 
 #include "tao/Exception.h"
 #include "tao/ORB_Core.h"
@@ -12,9 +12,11 @@ ACE_RCSID (PortableGroup,
            PortableGroup_ORBInitializer,
            "$Id$")
 
-static const char pg_poa_factory_name[] = "TAO_PG_POA";
-static const char pg_poa_factory_directive[] = ACE_DYNAMIC_SERVICE_DIRECTIVE_A(
-  "TAO_PG_POA", "TAO_PortableGroup", "_make_TAO_PG_Object_Adapter_Factory", "");
+static const char pg_poa_factory_name[] = "TAO_GOA";
+static const char pg_poa_factory_directive[] = ACE_DYNAMIC_SERVICE_DIRECTIVE(
+  "TAO_GOA", "TAO_PortableGroup", "_make_TAO_PG_Object_Adapter_Factory", "");
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
 TAO_PortableGroup_ORBInitializer::pre_init (
@@ -65,3 +67,5 @@ TAO_PortableGroup_ORBInitializer::post_init (
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

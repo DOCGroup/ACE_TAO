@@ -4,6 +4,7 @@
 // Include Section
 // ******************************************************************
 
+#include "ace/Auto_Ptr.h"
 #include "ace/Get_Opt.h"
 #include "ace/Argv_Type_Converter.h"
 

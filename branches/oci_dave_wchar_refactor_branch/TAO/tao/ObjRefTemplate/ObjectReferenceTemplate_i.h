@@ -24,13 +24,15 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Default_ORTC.h"
+#include "tao/ObjRefTemplate/Default_ORTC.h"
 #include "tao/SystemException.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace PortableServer
 {
@@ -43,13 +45,13 @@ namespace PortableServer
 namespace TAO
 {
   /**
-   * @class TAO_ObjectReferenceTemplate
+   * @class ObjectReferenceTemplate
    *
    * @brief Implementation of the PortableInterceptor::ObjectReferenceTemplate
    *        interface. This is a default implementation created to be returned
    *        by the IORInfo when the user requests the ORT or ORF.
    */
-  class TAO_ORT_Export ObjectReferenceTemplate
+  class ObjectReferenceTemplate
     : public virtual OBV_TAO_Default_ORT::ObjectReferenceTemplate,
       public virtual CORBA::DefaultValueRefCountBase
   {
@@ -110,6 +112,8 @@ namespace TAO
     PortableServer::POA_var poa_;
   };
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

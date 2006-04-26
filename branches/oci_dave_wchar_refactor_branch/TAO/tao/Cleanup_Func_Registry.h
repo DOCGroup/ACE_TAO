@@ -15,13 +15,18 @@
 
 #include /**/ "ace/pre.h"
 
-#include "TAO_Export.h"
+#include "tao/TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Versioned_Namespace.h"
+
 #include "ace/Array_Base.h"
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Cleanup_Func_Registry
@@ -32,17 +37,14 @@
  * invoking the corresponding cleanup function on each object.  Hence,
  * there is a tight coupling between this class and the TAO ORB Core.
  */
-class TAO_Export TAO_Cleanup_Func_Registry
+class TAO_Cleanup_Func_Registry
 {
   friend class TAO_ORB_Core;
 
 public:
 
-  /// Constructor
+  /// Constructor.
   TAO_Cleanup_Func_Registry (void);
-
-  /// Destructor
-  ~TAO_Cleanup_Func_Registry (void);
 
   /// Return the number of registered cleanup functions.
   size_t size (void) const;
@@ -65,9 +67,8 @@ private:
 
   /// Prevent copying through the copy constructor and the assignment
   /// operator.
-  ACE_UNIMPLEMENTED_FUNC (
-    TAO_Cleanup_Func_Registry (const TAO_Cleanup_Func_Registry &))
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Cleanup_Func_Registry &))
+  TAO_Cleanup_Func_Registry (const TAO_Cleanup_Func_Registry &);
+  void operator= (const TAO_Cleanup_Func_Registry &);
 
 private:
 
@@ -79,8 +80,10 @@ private:
 
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-# include "Cleanup_Func_Registry.inl"
+# include "tao/Cleanup_Func_Registry.inl"
 #endif  /* __ACE_INLINE__ */
 
 

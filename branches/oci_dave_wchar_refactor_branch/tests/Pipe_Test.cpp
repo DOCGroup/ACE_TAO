@@ -27,8 +27,13 @@
 
 ACE_RCSID(tests, Pipe_Test, "$Id$")
 
+// Indicates whether we should close the pipe or not.
 static int close_pipe = 1;
+
+// Indicates whether we're running as the child or the parent.
 static int child_process = 0;
+
+// Number of iterations to run the test.
 static int iterations = ACE_MAX_ITERATIONS;
 
 // Explain usage and exit.
@@ -42,6 +47,7 @@ print_usage_and_die (void)
 }
 
 // Parse the command-line arguments and set options.
+
 static void
 parse_args (int argc, ACE_TCHAR *argv[])
 {
@@ -67,14 +73,19 @@ parse_args (int argc, ACE_TCHAR *argv[])
   }
 }
 
+// Consolidate the ACE_Pipe initializations.
+
 static void
 open (ACE_Pipe &pipe,
       const char *name)
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("opening %C\n"), name));
-  ACE_ASSERT (pipe.open () != -1);
-  ACE_ASSERT (pipe.read_handle () != ACE_INVALID_HANDLE
-              && pipe.write_handle () != ACE_INVALID_HANDLE);
+  int result = pipe.open ();
+
+  ACE_ASSERT (result != -1);
+  result = pipe.read_handle () != ACE_INVALID_HANDLE
+    && pipe.write_handle () != ACE_INVALID_HANDLE;
+  ACE_ASSERT (result == 1);
 
   if (close_pipe)
     pipe.close ();

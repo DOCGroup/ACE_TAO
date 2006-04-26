@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -13,11 +13,14 @@
 
 #ifndef TAO_AV_UDP_H
 #define TAO_AV_UDP_H
+
 #include /**/ "ace/pre.h"
 
-#include "Protocol_Factory.h"
+#include "orbsvcs/AV/Protocol_Factory.h"
 
 #include "ace/Service_Config.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_AV_UDP_Factory
@@ -275,6 +278,8 @@ public:
                                                 TAO_AV_Transport *transport);
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 ACE_STATIC_SVC_DECLARE (TAO_AV_UDP_Flow_Factory)
 ACE_FACTORY_DECLARE (TAO_AV, TAO_AV_UDP_Flow_Factory)
 
@@ -283,8 +288,9 @@ ACE_FACTORY_DECLARE (TAO_AV, TAO_AV_UDP_Factory)
 
 
 #if defined(__ACE_INLINE__)
-#include "UDP.i"
+#include "orbsvcs/AV/UDP.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
+
 #endif /* TAO_AV_UDP_H */

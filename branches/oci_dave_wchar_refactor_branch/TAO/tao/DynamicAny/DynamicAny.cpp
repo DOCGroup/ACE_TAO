@@ -1,5 +1,3 @@
-/* -*- C++ -*- */
-
 //=============================================================================
 /**
  *  @file    DynamicAny.cpp
@@ -11,10 +9,12 @@
 //=============================================================================
 
 
-#include "DynamicAny.h"
-#include "DynAnyFactory.h"
+#include "tao/DynamicAny/DynamicAny.h"
+#include "tao/DynamicAny/DynAnyFactory.h"
 
 ACE_RCSID(DynamicAny, DynamicAny, "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_DynamicAny_Loader::TAO_DynamicAny_Loader (void)
 {
@@ -39,6 +39,8 @@ TAO_DynamicAny_Loader::Initializer (void)
 {
   return ACE_Service_Config::process_directive (ace_svc_desc_TAO_DynamicAny_Loader);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (TAO_DynamicAny_Loader,
                        ACE_TEXT ("DynamicAny_Loader"),

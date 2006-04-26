@@ -14,14 +14,16 @@
 
 #include /**/ "ace/pre.h"
 
-#include /**/ "event_serv_export.h"
+#include /**/ "orbsvcs/Event/event_serv_export.h"
 
 #include "orbsvcs/RtecUDPAdminS.h"
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/INET_Addr.h"
 #include "ace/Null_Mutex.h"
 
-#include "EC_Lifetime_Utils_T.h"
+#include "orbsvcs/Event/EC_Lifetime_Utils_T.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_ECG_Complex_Address_Server
@@ -105,8 +107,10 @@ private:
   ACE_INET_Addr default_addr_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined(__ACE_INLINE__)
-#include "ECG_Complex_Address_Server.i"
+#include "orbsvcs/Event/ECG_Complex_Address_Server.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

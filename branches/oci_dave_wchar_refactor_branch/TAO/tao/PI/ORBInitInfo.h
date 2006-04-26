@@ -15,13 +15,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "pi_export.h"
+#include "tao/PI/pi_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ORBInitInfoC.h"
+#include "tao/PI/ORBInitInfoC.h"
 #include "tao/LocalObject.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
@@ -34,6 +34,8 @@
 #if defined (__BORLANDC__)
 #pragma option push -w-rvl -w-rch -w-ccc -w-inl
 #endif /* __BORLANDC__ */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_ORB_Core;
 class TAO_ORBInitInfo;
@@ -48,14 +50,14 @@ typedef TAO_Objref_Out_T<TAO_ORBInitInfo>
 /**
  * @class TAO_ORBInitInfo
  *
- * @brief An implementation of the PortableInterceptor::ORBInitInfo
+ * @brief An implementation of the PortableInterceptor::ORBInitInfo_3_1
  *        interface.
  *
  * This class encapsulates the data passed to ORBInitializers during
  * ORB initialization.
  */
 class TAO_PI_Export TAO_ORBInitInfo
-  : public virtual PortableInterceptor::ORBInitInfo,
+  : public virtual PortableInterceptor::ORBInitInfo_3_1,
     public virtual TAO_Local_RefCounted_Object
 {
 public:
@@ -139,6 +141,36 @@ public:
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ORBInitInfo::DuplicateName));
+
+  /// Register a client request interceptor with the ORB currently
+  /// being initialized, along with a list of policies.
+  virtual void add_client_request_interceptor_with_policy (
+      PortableInterceptor::ClientRequestInterceptor_ptr interceptor,
+      const CORBA::PolicyList& policies
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableInterceptor::ORBInitInfo::DuplicateName,
+                     CORBA::PolicyError));
+
+  /// Register a server request interceptor with the ORB currently
+  /// being initialized, along with a list of policies.
+  virtual void add_server_request_interceptor_with_policy (
+      PortableInterceptor::ServerRequestInterceptor_ptr interceptor,
+      const CORBA::PolicyList& policies
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableInterceptor::ORBInitInfo::DuplicateName,
+                     CORBA::PolicyError));
+
+  /// Register an IOR interceptor with the ORB currently being
+  /// initialized, along with a list of policies.
+  virtual void add_ior_interceptor_with_policy (
+      PortableInterceptor::IORInterceptor_ptr interceptor,
+      const CORBA::PolicyList& policies
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableInterceptor::ORBInitInfo::DuplicateName,
+                     CORBA::PolicyError));
 
   /// Reserve a slot in table found within the
   /// PortableInterceptor::Current object.
@@ -293,8 +325,10 @@ namespace TAO
   };
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "ORBInitInfo.inl"
+#include "tao/PI/ORBInitInfo.inl"
 #endif  /* __ACE_INLINE__ */
 
 #if defined(_MSC_VER)

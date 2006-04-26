@@ -1,13 +1,14 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
-
-// Task_Ex_T.i
 
 #include "ace/os_include/os_assert.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 template <ACE_SYNCH_DECL, class ACE_MESSAGE_TYPE> ACE_INLINE void
-ACE_Task_Ex<ACE_SYNCH_USE,ACE_MESSAGE_TYPE>::water_marks (ACE_IO_Cntl_Msg::ACE_IO_Cntl_Cmds cmd, 
-				    size_t wm_size)
+ACE_Task_Ex<ACE_SYNCH_USE,ACE_MESSAGE_TYPE>::water_marks (ACE_IO_Cntl_Msg::ACE_IO_Cntl_Cmds cmd,
+                                    size_t wm_size)
 {
   ACE_TRACE ("ACE_Task_Ex<ACE_SYNCH_USE,ACE_MESSAGE_TYPE>::water_marks");
   if (cmd == ACE_IO_Cntl_Msg::SET_LWM)
@@ -16,14 +17,14 @@ ACE_Task_Ex<ACE_SYNCH_USE,ACE_MESSAGE_TYPE>::water_marks (ACE_IO_Cntl_Msg::ACE_I
     this->msg_queue_->high_water_mark (wm_size);
 }
 
-template <ACE_SYNCH_DECL, class ACE_MESSAGE_TYPE> ACE_INLINE int 
+template <ACE_SYNCH_DECL, class ACE_MESSAGE_TYPE> ACE_INLINE int
 ACE_Task_Ex<ACE_SYNCH_USE,ACE_MESSAGE_TYPE>::getq (ACE_MESSAGE_TYPE *&mb, ACE_Time_Value *tv)
 {
   ACE_TRACE ("ACE_Task_Ex<ACE_SYNCH_USE,ACE_MESSAGE_TYPE>::getq");
   return this->msg_queue_->dequeue_head (mb, tv);
 }
 
-template <ACE_SYNCH_DECL, class ACE_MESSAGE_TYPE> ACE_INLINE int 
+template <ACE_SYNCH_DECL, class ACE_MESSAGE_TYPE> ACE_INLINE int
 ACE_Task_Ex<ACE_SYNCH_USE,ACE_MESSAGE_TYPE>::can_put (ACE_MESSAGE_TYPE *)
 {
   ACE_TRACE ("ACE_Task_Ex<ACE_SYNCH_USE,ACE_MESSAGE_TYPE>::can_put");
@@ -100,10 +101,12 @@ ACE_Task_Ex<ACE_SYNCH_USE,ACE_MESSAGE_TYPE>::next (ACE_Task<ACE_SYNCH_USE> *q)
 // Transfer msg to the next ACE_Task_Ex.
 
 template <ACE_SYNCH_DECL, class ACE_MESSAGE_TYPE> ACE_INLINE int
-ACE_Task_Ex<ACE_SYNCH_USE,ACE_MESSAGE_TYPE>::put_next (ACE_MESSAGE_TYPE *msg, ACE_Time_Value *tv)
+ACE_Task_Ex<ACE_SYNCH_USE,ACE_MESSAGE_TYPE>::put_next (
+  ACE_MESSAGE_TYPE * /* msg */,
+  ACE_Time_Value * /* tv */)
 {
   ACE_TRACE ("ACE_Task_Ex<ACE_SYNCH_USE,ACE_MESSAGE_TYPE>::put_next");
-  ACE_UNUSED_ARG (msg);
-  ACE_UNUSED_ARG (tv);
   return  -1; // this->next_ == 0 ? -1 : this->next_->put (msg, tv);
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

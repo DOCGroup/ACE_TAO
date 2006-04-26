@@ -29,7 +29,7 @@
 // be\be_codegen.cpp:277
 
 
-#include "AdapterActivatorC.h"
+#include "tao/PortableServer/AdapterActivatorC.h"
 #include "tao/CDR.h"
 #include "ace/OS_NS_string.h"
 
@@ -37,6 +37,8 @@
 // be\be_visitor_arg_traits.cpp:70
 
 #if (TAO_HAS_MINIMUM_POA == 0)
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Arg traits specializations.
 namespace TAO
@@ -62,7 +64,7 @@ TAO::Objref_Traits<PortableServer::AdapterActivator>::release (
     PortableServer::AdapterActivator_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 PortableServer::AdapterActivator_ptr
@@ -111,18 +113,18 @@ PortableServer::AdapterActivator::_unchecked_narrow (
 PortableServer::AdapterActivator_ptr
 PortableServer::AdapterActivator::_duplicate (AdapterActivator_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void
 PortableServer::AdapterActivator::_tao_release (AdapterActivator_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean
@@ -164,5 +166,7 @@ PortableServer::AdapterActivator::marshal (TAO_OutputCDR &)
 {
   return false;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */

@@ -5,6 +5,7 @@
 #include "ace/Argv_Type_Converter.h"
 #include "orbsvcs/FaultTolerance/FT_ClientService_Activate.h"
 #include "tao/corba.h"
+#include "tao/PI/PI.h"
 
 CORBA::ORB_var orb = CORBA::ORB::_nil ();
 

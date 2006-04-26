@@ -1,18 +1,37 @@
 // $Id$
 
-#ifndef ACE_TIMER_HEAP_T_C
-#define ACE_TIMER_HEAP_T_C
+#ifndef ACE_TIMER_HEAP_T_CPP
+#define ACE_TIMER_HEAP_T_CPP
 
 #include "ace/Timer_Heap_T.h"
 #include "ace/Log_Msg.h"
 #include "ace/Guard_T.h"
+#include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_string.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-ACE_RCSID(ace, Timer_Heap_T, "$Id$")
+/*
+** The ACE_Timer_Heap::max_size_ and array loops, checks, etc. are all size_t.
+** The timer IDs are long, and since they are indices into the heap, we need
+** to be sure that the timer heap size can fit in a long. Hence, when size
+** is (re)set, limit it to the maximum long value. We use the C++ standard
+** limits if available.
+*/
+#if !defined(ACE_LACKS_NUMERIC_LIMITS)
+// some platforms pollute the namespace by defining max() and min() macros
+#ifdef max
+#undef max
+#endif
+#ifdef min
+#undef min
+#endif
+#include <limits>
+#endif /* ACE_LACKS_NUMERIC_LIMITS */
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Define some simple macros to clarify the code.
 #define ACE_HEAP_PARENT(X) (X == 0 ? 0 : (((X) - 1) / 2))
@@ -89,6 +108,21 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::ACE_Timer_Heap_T (size_t size,
 {
   ACE_TRACE ("ACE_Timer_Heap_T::ACE_Timer_Heap_T");
 
+  // Possibly reduce size to fit in a long.
+#if !defined(ACE_LACKS_NUMERIC_LIMITS)
+  if (size > static_cast<size_t> (std::numeric_limits<long>::max ()))
+    {
+      size = static_cast<size_t> (std::numeric_limits<long>::max ());
+      this->max_size_ = size;
+    }
+#else
+  if (size > LONG_MAX)
+    {
+      size = LONG_MAX;
+      this->max_size_ = size;
+    }
+#endif /* ACE_LACKS_NUMERIC_LIMITS */
+
   // Create the heap array.
   ACE_NEW (this->heap_,
            ACE_Timer_Node_T<TYPE> *[size]);
@@ -145,6 +179,15 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::ACE_Timer_Heap_T (FUNCTOR *upcall_fun
     preallocated_nodes_freelist_ (0)
 {
   ACE_TRACE ("ACE_Timer_Heap_T::ACE_Timer_Heap_T");
+
+  // Possibly reduce size to fit in a long.
+#if !defined(ACE_LACKS_NUMERIC_LIMITS)
+  if (this->max_size_ > static_cast<size_t> (std::numeric_limits<long>::max ()))
+    this->max_size_ = static_cast<size_t> (std::numeric_limits<long>::max ());
+#else
+  if (this->max_size_ > LONG_MAX)
+    this->max_size_ = LONG_MAX;
+#endif /* ACE_LACKS_NUMERIC_LIMITS */
 
   // Create the heap array.
 #if defined (__IBMCPP__) && (__IBMCPP__ >= 400) && defined (_WINDOWS)
@@ -237,7 +280,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::pop_freelist (void)
       this->timer_ids_min_free_ = this->max_size_;
     }
 
-  return this->timer_ids_curr_;
+  return static_cast<long> (this->timer_ids_curr_);
 }
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK> void
@@ -474,8 +517,26 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::insert (ACE_Timer_Node_T<TYPE> *new_n
 template <class TYPE, class FUNCTOR, class ACE_LOCK> void
 ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::grow_heap (void)
 {
-  // All the containers will double in size from max_size_
+  // All the containers will double in size from max_size_.
   size_t new_size = this->max_size_ * 2;
+
+#if 0
+  // Yikes - there's no way to flag a failure of going out of range of
+  // a 'long' - this is a problem that should be addressed at some point.
+#if !defined(ACE_LACKS_NUMERIC_LIMITS)
+  if (new_size > std::numeric_limits<long>::max ())
+    new_size = std::numeric_limits<long>::max ();
+#else
+  if (new_size > LONG_MAX)
+    new_size = LONG_MAX;
+#endif /* ACE_LACKS_NUMERIC_LIMITS */
+
+  if (new_size <= this->max_size_)   // We are already at the limit
+    {
+      errno = ENOMEM;
+      return -1;
+    }
+#endif /* 0 */
 
    // First grow the heap itself.
 
@@ -554,6 +615,9 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::grow_heap (void)
     }
 
   this->max_size_ = new_size;
+  // Force rescan of list from beginning for a free slot (I think...)
+  // This fixed Bugzilla #2447.
+  this->timer_ids_min_free_ = this->max_size_;
 }
 
 // Reschedule a periodic timer.  This function must be called with the
@@ -765,6 +829,11 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::cancel (const TYPE &type,
           number_of_cancellations++;
 
           this->free_node (temp);
+
+          // We reset to zero so that we don't miss checking any nodes
+          // if a reheapify occurs when a node is removed.  There
+          // may be a better fix than this, however.
+          i = 0;
         }
       else
         i++;
@@ -814,4 +883,6 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::get_first (void)
   return this->cur_size_ == 0 ? 0 : this->heap_[0];
 }
 
-#endif /* ACE_TIMER_HEAP_T_C */
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* ACE_TIMER_HEAP_T_CPP */

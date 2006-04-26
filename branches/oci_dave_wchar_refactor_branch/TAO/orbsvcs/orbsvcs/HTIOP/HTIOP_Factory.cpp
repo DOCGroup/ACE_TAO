@@ -1,9 +1,9 @@
 // $Id$
 
-#include "HTIOP_Factory.h"
-#include "HTIOP_Acceptor.h"
-#include "HTIOP_Connector.h"
-#include "HTIOP_Profile.h"
+#include "orbsvcs/HTIOP/HTIOP_Factory.h"
+#include "orbsvcs/HTIOP/HTIOP_Acceptor.h"
+#include "orbsvcs/HTIOP/HTIOP_Connector.h"
+#include "orbsvcs/HTIOP/HTIOP_Profile.h"
 
 #include "ace/HTBP/HTBP_Environment.h"
 #include "tao/IOPC.h"
@@ -12,7 +12,9 @@ ACE_RCSID (HTIOP,
            TAOHTIOP_Factory,
            "$Id$")
 
-  static const char prefix_[] = "htiop";
+static const char the_prefix[] = "htiop";
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::HTIOP::Protocol_Factory::Protocol_Factory (void)
   :  TAO_Protocol_Factory (OCI_TAG_HTIOP_PROFILE),
@@ -32,13 +34,13 @@ int
 TAO::HTIOP::Protocol_Factory::match_prefix (const ACE_CString &prefix)
 {
   // Check for the proper prefix for this protocol.
-  return (ACE_OS::strcasecmp (prefix.c_str (), ::prefix_) == 0);
+  return (ACE_OS::strcasecmp (prefix.c_str (), ::the_prefix) == 0);
 }
 
 const char *
 TAO::HTIOP::Protocol_Factory::prefix (void) const
 {
-  return ::prefix_;
+  return ::the_prefix;
 }
 
 char
@@ -122,6 +124,8 @@ TAO::HTIOP::Protocol_Factory::requires_explicit_endpoint (void) const
   return 0;
 }
 
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (TAO_HTIOP_Protocol_Factory,
                        ACE_TEXT ("HTIOP_Factory"),

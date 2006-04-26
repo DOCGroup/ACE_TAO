@@ -1,14 +1,15 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -p HUDisplay GPS"
 
-project(GPS_DnC_stub): ciao_client_dnc {
+project(GPS_DnC_stub): ciao_events_base_dnc {
+  avoids += ace_for_tao
   after += HUDisplay_DnC_stub
   sharedname = GPS_DnC_stub
   idlflags += -Wb,stub_export_macro=GPS_STUB_Export -Wb,stub_export_include=GPS_stub_export.h -Wb,skel_export_macro=GPS_SVNT_Export -Wb,skel_export_include=GPS_svnt_export.h
   libpaths+=..
   libs += HUDisplay_DnC_stub
   dynamicflags   = GPS_STUB_BUILD_DLL
-  
+
   IDL_Files {
     GPS.idl
   }
@@ -55,12 +56,9 @@ project(GPS_DnC_exec) : ciao_component_dnc {
   }
 
   Source_Files {
-    
+
     GPSEIC.cpp
 
     GPS_exec.cpp
   }
 }
-
-
-

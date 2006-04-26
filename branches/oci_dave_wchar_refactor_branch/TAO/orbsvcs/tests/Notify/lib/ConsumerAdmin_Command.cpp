@@ -160,17 +160,21 @@ TAO_Notify_Tests_ConsumerAdmin_Command::execute_i (ACE_ENV_SINGLE_ARG_DECL)
   if (this->command_ == CREATE)
     {
       this->handle_create (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
     }
   else if (this->command_ == SUBSCRIPTION)
     {
       this->handle_subscriptions (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
     }
   else if (this->command_ == SET_QOS)
     {
       this->handle_set_qos (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
     }
   else if (this->command_ == DUMP_STATE)
     {
       this->handle_status (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
     }
 }

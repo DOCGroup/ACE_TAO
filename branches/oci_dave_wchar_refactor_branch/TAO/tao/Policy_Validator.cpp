@@ -1,8 +1,8 @@
 // $Id$
 
-#include "Policy_Validator.h"
-#include "Environment.h"
-#include "debug.h"
+#include "tao/Policy_Validator.h"
+#include "tao/Environment.h"
+#include "tao/debug.h"
 
 #include "ace/Log_Msg.h"
 
@@ -10,19 +10,18 @@ ACE_RCSID (tao,
            Policy_Validator,
            "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_Policy_Validator::TAO_Policy_Validator (TAO_ORB_Core &orb_core)
   : orb_core_ (orb_core),
     next_ (0)
 {
-  // No-Op.
 }
 
 TAO_Policy_Validator::~TAO_Policy_Validator (void)
 {
-  if (this->next_)
-    {
-      delete this->next_;
-    }
+  delete this->next_;
 }
 
 TAO_ORB_Core & 
@@ -87,7 +86,7 @@ TAO_Policy_Validator::merge_policies (TAO_Policy_Set &policies
   this->merge_policies_impl (policies ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  if (this->next_ != 0)
+  if (this->next_)
     {
       this->next_->merge_policies (policies ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
@@ -101,3 +100,5 @@ TAO_Policy_Validator::legal_policy (CORBA::PolicyType type)
           || ((this->next_ != 0)
               && this->next_->legal_policy_impl (type)));
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

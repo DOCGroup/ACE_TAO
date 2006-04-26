@@ -39,9 +39,9 @@
 #  endif /* ACE_HAS_STL_QUEUE_CONFLICT */
 #endif /* !ACE_LACKS_NETDB_H */
 
-#if defined (VXWORKS)
+#if defined (ACE_VXWORKS) && (ACE_VXWORKS < 0x620)
 #  include /**/ <hostLib.h>
-#endif /* VXWORKS */
+#endif /* ACE_VXWORKS */
 
 // Place all additions (especially function declarations) within extern "C" {}
 #ifdef __cplusplus
@@ -49,9 +49,7 @@ extern "C"
 {
 #endif /* __cplusplus */
 
-// VxWorks does define these, at least on a Sun cross compile, so this
-// may need to be added back for windows.
-#if defined (ACE_PSOS) //|| defined (VXWORKS)
+#if defined (ACE_PSOS)
    struct  hostent {
      char    *h_name;        /* official name of host */
      char    **h_aliases;    /* alias list */

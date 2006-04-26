@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file   EC_Busy_Lock.h
  *
@@ -21,6 +22,8 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<class Adaptee>
 class TAO_EC_Busy_Lock_Adapter
@@ -45,12 +48,14 @@ private:
   Adaptee* adaptee_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "EC_Busy_Lock.i"
+#include "orbsvcs/Event/EC_Busy_Lock.i"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "EC_Busy_Lock.cpp"
+#include "orbsvcs/Event/EC_Busy_Lock.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

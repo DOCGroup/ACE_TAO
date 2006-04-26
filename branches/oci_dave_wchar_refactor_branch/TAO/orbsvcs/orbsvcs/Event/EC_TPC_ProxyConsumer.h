@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file   EC_TPC_ProxyConsumer.h
  *
@@ -12,11 +13,13 @@
 #define TAO_EC_TPC_PROXYCONSUMER_H
 #include /**/ "ace/pre.h"
 
-#include "EC_Default_ProxyConsumer.h"
+#include "orbsvcs/Event/EC_Default_ProxyConsumer.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_EC_Dispatching;
 class TAO_EC_TPC_Dispatching;
@@ -39,6 +42,8 @@ private:
   typedef TAO_EC_Default_ProxyPushConsumer BASECLASS;
   TAO_EC_TPC_Dispatching* tpc_dispatching ();
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

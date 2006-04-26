@@ -13,6 +13,8 @@ ACE_RCSID (ace,
 #include "ace/OS_NS_string.h"
 #include "ace/OS_Errno.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_Argv_Type_Converter::ACE_Argv_Type_Converter (int &argc, wchar_t** argv)
 : saved_argc_ (argc)
 , char_argv_ (0)
@@ -193,3 +195,5 @@ ACE_Argv_Type_Converter::cleanup (void)
   this->wchar_passed_ = false;
   this->char_passed_ = false;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

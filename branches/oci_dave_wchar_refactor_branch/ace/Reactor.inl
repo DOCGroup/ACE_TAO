@@ -7,9 +7,11 @@
 
 /*
  * Hook to specialize the Reactor with the concrete implementation
- * known at compile time. 
+ * known at compile time.
  */
 //@@ REACTOR_SPL_INCLUDE_FORWARD_DECL_ADD_HOOK
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE int
 ACE_Reactor::run_event_loop (void)
@@ -95,3 +97,5 @@ ACE_Reactor::event_loop_done (void)
   ACE_TRACE ("ACE_Reactor::event_loop_done");
   return ACE_Reactor::instance ()->reactor_event_loop_done ();
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

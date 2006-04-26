@@ -22,6 +22,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 #if defined (VXWORKS)
 class ACE_Message_Queue_Vx;
 #endif /* defined (VXWORKS) */
@@ -33,14 +35,19 @@ class ACE_Message_Queue_NT;
 /**
  * @class ACE_Message_Queue
  *
- * @brief A threaded message queueing facility, modeled after the
- * queueing facilities in System V STREAMs.
+ * @brief A message queueing facility with parameterized synchronization
+ * capability. ACE_Message_Queue is modeled after the queueing facilities
+ * in System V STREAMs.
  *
- * An <ACE_Message_Queue> is the central queueing facility for
- * messages in the ACE framework.  If <ACE_SYNCH_DECL> is
- * <ACE_MT_SYNCH> then all operations are thread-safe.
- * Otherwise, if it's <ACE_NULL_SYNCH> then there's no locking
- * overhead.
+ * ACE_Message_Queue is the primary queueing facility for
+ * messages in the ACE framework.  It's one template argument parameterizes
+ * the queue's synchronization. The argument specifies a synchronization
+ * strategy. The two main strategies available for ACE_SYNCH_DECL are:
+ *   -# ACE_MT_SYNCH: all operations are thread-safe
+ *   -# ACE_NULL_SYNCH: no synchronization and no locking overhead
+ *
+ * All data passing through ACE_Message_Queue is in the form of
+ * ACE_Message_Block objects. @sa ACE_Message_Block.
  */
 template <ACE_SYNCH_DECL>
 class ACE_Message_Queue : public ACE_Message_Queue_Base
@@ -56,82 +63,90 @@ public:
           REVERSE_ITERATOR;
 
   // = Initialization and termination methods.
+  //@{
   /**
-   * Initialize an <ACE_Message_Queue>.  The <high_water_mark>
-   * determines how many bytes can be stored in a queue before it's
-   * considered "full."  Supplier threads must block until the queue
-   * is no longer full.  The <low_water_mark> determines how many
-   * bytes must be in the queue before supplier threads are allowed to
-   * enqueue additional <ACE_Message_Block>s.  By default, the
-   * <high_water_mark> equals the <low_water_mark>, which means that
-   * suppliers will be able to enqueue new messages as soon as a
-   * consumer removes any message from the queue.  Making the
-   * <low_water_mark> smaller than the <high_water_mark> forces
-   * consumers to drain more messages from the queue before suppliers
-   * can enqueue new messages, which can minimize the "silly window
-   * syndrome."
+   * Initialize an ACE_Message_Queue.
+   *
+   * @param hwm High water mark. Determines how many bytes can be stored in a
+   *        queue before it's considered full.  Supplier threads must block
+   *        until the queue is no longer full.
+   * @param lwm Low water mark. Determines how many bytes must be in the queue
+   *        before supplier threads are allowed to enqueue additional
+   *        data.  By default, the @a hwm equals @a lwm, which means
+   *        that suppliers will be able to enqueue new messages as soon as
+   *        a consumer removes any message from the queue.  Making the low
+   *        water mark smaller than the high water mark forces consumers to
+   *        drain more messages from the queue before suppliers can enqueue
+   *        new messages, which can minimize the "silly window syndrome."
+   * @param ns Notification strategy. Pointer to an object conforming to the
+   *        ACE_Notification_Strategy interface. If set, the object's
+   *        notify(void) method will be called each time data is added to
+   *        this ACE_Message_Queue. @see ACE_Reactor_Notification_Strategy.
    */
-  ACE_Message_Queue (size_t high_water_mark = ACE_Message_Queue_Base::DEFAULT_HWM,
-                     size_t low_water_mark = ACE_Message_Queue_Base::DEFAULT_LWM,
-                     ACE_Notification_Strategy * = 0);
-
-  /**
-   * Initialize an <ACE_Message_Queue>.  The <high_water_mark>
-   * determines how many bytes can be stored in a queue before it's
-   * considered "full."  Supplier threads must block until the queue
-   * is no longer full.  The <low_water_mark> determines how many
-   * bytes must be in the queue before supplier threads are allowed to
-   * enqueue additional <ACE_Message_Block>s.  By default, the
-   * <high_water_mark> equals the <low_water_mark>, which means that
-   * suppliers will be able to enqueue new messages as soon as a
-   * consumer removes any message from the queue.  Making the
-   * <low_water_mark> smaller than the <high_water_mark> forces
-   * consumers to drain more messages from the queue before suppliers
-   * can enqueue new messages, which can minimize the "silly window
-   * syndrome."
-   */
+  ACE_Message_Queue (size_t hwm = ACE_Message_Queue_Base::DEFAULT_HWM,
+                     size_t lwm = ACE_Message_Queue_Base::DEFAULT_LWM,
+                     ACE_Notification_Strategy *ns = 0);
   virtual int open (size_t hwm = ACE_Message_Queue_Base::DEFAULT_HWM,
                     size_t lwm = ACE_Message_Queue_Base::DEFAULT_LWM,
-                    ACE_Notification_Strategy * = 0);
+                    ACE_Notification_Strategy *ns = 0);
+  //@}
 
-  /// Release all resources from the message queue and mark it as deactivated.
-  /// Returns the number of messages released from the queue.
+  /// Releases all resources from the message queue and marks it deactivated.
+  /// @sa flush().
+  ///
+  /// @retval The number of messages released from the queue; -1 on error.
   virtual int close (void);
 
-  /// Release all resources from the message queue and mark it as deactivated.
+  /// Releases all resources from the message queue and marks it deactivated.
   virtual ~ACE_Message_Queue (void);
 
-  /// Release all resources from the message queue but do not mark it
-  /// as deactivated.
+  /// Releases all resources from the message queue but does not mark it
+  /// deactivated.
+  /// @sa close().
   /**
    * This method holds the queue lock during this operation.
    *
-   * @return The number of messages flushed.
+   * @return The number of messages flushed; -1 on error.
    */
   virtual int flush (void);
 
   /// Release all resources from the message queue but do not mark it
   /// as deactivated.
   /**
-   * The caller must be holding the queue lock before calling this
+   * @pre The caller must be holding the queue lock before calling this
    * method.
    *
    * @return The number of messages flushed.
    */
   virtual int flush_i (void);
 
-  // = Enqueue and dequeue methods.
-
-  // For the following enqueue and dequeue methods if <timeout> == 0,
-  // the caller will block until action is possible, else will wait
-  // until the absolute time specified in *<timeout> elapses).  These
-  // calls will return, however, when queue is closed, deactivated,
-  // when a signal occurs, or if the time specified in timeout
-  // elapses, (in which case errno = EWOULDBLOCK).
-
+  /** @name Enqueue and dequeue methods
+   *
+   * The enqueue and dequeue methods accept a timeout value passed as
+   * an ACE_Time_Value *. In all cases, if the timeout pointer is 0,
+   * the caller will block until action is possible. If the timeout pointer
+   * is non-zero, the call will wait (if needed, subject to water mark
+   * settings) until the absolute time specified in the referenced
+   * ACE_Time_Value object is reached. If the time is reached before the
+   * desired action is possible, the method will return -1 with errno set
+   * to @c EWOULDBLOCK. Regardless of the timeout setting, however,
+   * these methods will also fail and return -1 when the queue is closed,
+   * deactivated, pulsed, or when a signal occurs.
+   *
+   * See C++NPv2 Section 6.2 and APG Section 12.3 for a fuller treatment of
+   * ACE_Message_Queue, enqueueing, dequeueing, and how these operations are
+   * affected by queue state transitions.
+   */
+  //@{
   /**
    * Retrieve a pointer to the first ACE_Message_Block in the queue
    * without removing it.
+   *
+   * @note Because the block whose pointer is returned is still on the queue,
+   *       another thread may dequeue the referenced block at any time,
+   *       including before the calling thread examines the peeked-at block.
+   *       Be very careful with this method in multithreaded queueing
+   *       situations.
    *
    * @param first_item  Reference to an ACE_Message_Block * that will
    *                    point to the first block on the queue.  The block
@@ -141,9 +156,9 @@ public:
    *                    for a block to be queued.
    *
    * @retval >0 The number of ACE_Message_Blocks on the queue.
-   * @retval -1 On failure.  errno holds the reason. If EWOULDBLOCK,
-   *            the timeout elapsed.  If ESHUTDOWN, the queue was
-   *            deactivated or pulsed.
+   * @retval -1 On failure.  errno holds the reason. Common errno values are:
+   *            - EWOULDBLOCK: the timeout elapsed
+   *            - ESHUTDOWN: the queue was deactivated or pulsed
    */
   virtual int peek_dequeue_head (ACE_Message_Block *&first_item,
                                  ACE_Time_Value *timeout = 0);
@@ -162,112 +177,161 @@ public:
    *
    * @retval >0 The number of ACE_Message_Blocks on the queue after adding
    *             the specified block.
-   * @retval -1 On failure.  errno holds the reason. If EWOULDBLOCK,
-   *            the timeout elapsed.  If ESHUTDOWN, the queue was
-   *            deactivated or pulsed.
+   * @retval -1 On failure.  errno holds the reason. Common errno values are:
+   *            - EWOULDBLOCK: the timeout elapsed
+   *            - ESHUTDOWN: the queue was deactivated or pulsed
    */
   virtual int enqueue_prio (ACE_Message_Block *new_item,
                             ACE_Time_Value *timeout = 0);
 
   /**
-   * Enqueue an <ACE_Message_Block *> into the <Message_Queue> in
-   * accordance with its <msg_deadline_time>.  FIFO
-   * order is maintained when messages of the same deadline time are
-   * inserted consecutively.  Note that <timeout> uses <{absolute}>
-   * time rather than <{relative}> time.  If the <timeout> elapses
-   * without receiving a message -1 is returned and <errno> is set to
-   * <EWOULDBLOCK>.  If the queue is deactivated -1 is returned and
-   * <errno> is set to <ESHUTDOWN>.  Otherwise, returns -1 on failure,
-   * else the number of items still on the queue.
+   * Enqueue an ACE_Message_Block into the queue in accordance with the
+   * block's deadline time. FIFO order is maintained when messages of
+   * the same deadline time are inserted consecutively.
+   *
+   * @param new_item Pointer to an ACE_Message_Block that will be
+   *                 added to the queue.  The block's @c msg_deadline_time()
+   *                 method will be called to obtain the relative queueing
+   *                 position.
+   * @param timeout  The absolute time the caller will wait until
+   *                 for the block to be queued.
+   *
+   * @retval >0 The number of ACE_Message_Blocks on the queue after adding
+   *             the specified block.
+   * @retval -1 On failure.  errno holds the reason. Common errno values are:
+   *            - EWOULDBLOCK: the timeout elapsed
+   *            - ESHUTDOWN: the queue was deactivated or pulsed
    */
   virtual int enqueue_deadline (ACE_Message_Block *new_item,
                                 ACE_Time_Value *timeout = 0);
 
   /**
-   * This is an alias for <enqueue_prio>.  It's only here for
+   * @deprecated This is an alias for enqueue_prio().  It's only here for
    * backwards compatibility and will go away in a subsequent release.
-   * Please use <enqueue_prio> instead.  Note that <timeout> uses
-   * <{absolute}> time rather than <{relative}> time.
+   * Please use enqueue_prio() instead.
    */
   virtual int enqueue (ACE_Message_Block *new_item,
                        ACE_Time_Value *timeout = 0);
 
   /**
-   * Enqueue an <ACE_Message_Block *> at the end of the queue.  Note
-   * that <timeout> uses <{absolute}> time rather than <{relative}>
-   * time.  If the <timeout> elapses without receiving a message -1 is
-   * returned and <errno> is set to <EWOULDBLOCK>.  If the queue is
-   * deactivated -1 is returned and <errno> is set to <ESHUTDOWN>.
-   * Otherwise, returns -1 on failure, else the number of items still
-   * on the queue.
+   * Enqueue one or more ACE_Message_Block objects at the tail of the queue.
+   * If the @a new_item @c next() pointer is non-zero, it is assumed to be the
+   * start of a series of ACE_Message_Block objects connected via their
+   * @c next() pointers. The series of blocks will be added to the queue in
+   * the same order they are passed in as.
+   *
+   * @param new_item Pointer to an ACE_Message_Block that will be
+   *                 added to the queue. If the block's @c next() pointer
+   *                 is non-zero, all blocks chained from the @c next()
+   *                 pointer are enqueued as well.
+   * @param timeout  The absolute time the caller will wait until
+   *                 for the block to be queued.
+   *
+   * @retval >0 The number of ACE_Message_Blocks on the queue after adding
+   *             the specified block(s).
+   * @retval -1 On failure.  errno holds the reason. Common errno values are:
+   *            - EWOULDBLOCK: the timeout elapsed
+   *            - ESHUTDOWN: the queue was deactivated or pulsed
    */
   virtual int enqueue_tail (ACE_Message_Block *new_item,
                             ACE_Time_Value *timeout = 0);
 
   /**
-   * Enqueue an <ACE_Message_Block *> at the head of the queue.  Note
-   * that <timeout> uses <{absolute}> time rather than <{relative}>
-   * time.  If the <timeout> elapses without receiving a message -1 is
-   * returned and <errno> is set to <EWOULDBLOCK>.  If the queue is
-   * deactivated -1 is returned and <errno> is set to <ESHUTDOWN>.
-   * Otherwise, returns -1 on failure, else the number of items still
-   * on the queue.
+   * Enqueue one or more ACE_Message_Block objects at the head of the queue.
+   * If the @a new_item @c next() pointer is non-zero, it is assumed to be the
+   * start of a series of ACE_Message_Block objects connected via their
+   * @c next() pointers. The series of blocks will be added to the queue in
+   * the same order they are passed in as.
+   *
+   * @param new_item Pointer to an ACE_Message_Block that will be
+   *                 added to the queue. If the block's @c next() pointer
+   *                 is non-zero, all blocks chained from the @c next()
+   *                 pointer are enqueued as well.
+   * @param timeout  The absolute time the caller will wait until
+   *                 for the block to be queued.
+   *
+   * @retval >0 The number of ACE_Message_Blocks on the queue after adding
+   *             the specified block(s).
+   * @retval -1 On failure.  errno holds the reason. Common errno values are:
+   *            - EWOULDBLOCK: the timeout elapsed
+   *            - ESHUTDOWN: the queue was deactivated or pulsed
    */
   virtual int enqueue_head (ACE_Message_Block *new_item,
                             ACE_Time_Value *timeout = 0);
 
-  /// This method is an alias for the following <dequeue_head> method.
+  /// This method is an alias for the dequeue_head() method.
   virtual int dequeue (ACE_Message_Block *&first_item,
                        ACE_Time_Value *timeout = 0);
 
   /**
-   * Dequeue and return the <ACE_Message_Block *> at the head of the
-   * queue.  Note that <timeout> uses <{absolute}> time rather than
-   * <{relative}> time.  If the <timeout> elapses without receiving a
-   * message -1 is returned and <errno> is set to <EWOULDBLOCK>.  If
-   * the queue is deactivated -1 is returned and <errno> is set to
-   * <ESHUTDOWN>.  Otherwise, returns -1 on failure, else the number
-   * of items still on the queue.
+   * Dequeue the ACE_Message_Block at the head of the queue and return
+   * a pointer to the dequeued block.
+   *
+   * @param first_item  Reference to an ACE_Message_Block * that will
+   *                    be set to the address of the dequeued block.
+   * @param timeout     The absolute time the caller will wait until
+   *                    for a block to be dequeued.
+   *
+   * @retval >=0 The number of ACE_Message_Blocks remaining in the queue.
+   * @retval -1 On failure.  errno holds the reason. Common errno values are:
+   *            - EWOULDBLOCK: the timeout elapsed
+   *            - ESHUTDOWN: the queue was deactivated or pulsed
    */
   virtual int dequeue_head (ACE_Message_Block *&first_item,
                             ACE_Time_Value *timeout = 0);
 
   /**
-   * Dequeue and return earliest the <ACE_Message_Block *> that has
-   * the lowest priority (i.e., preserves FIFO order for messages with
-   * the same priority).  Note that <timeout> uses <{absolute}> time
-   * rather than <{relative}> time.  If the <timeout> elapses without
-   * receiving a message -1 is returned and <errno> is set to
-   * <EWOULDBLOCK>.  If the queue is deactivated -1 is returned and
-   * <errno> is set to <ESHUTDOWN>.  Otherwise, returns -1 on failure,
-   * else the number of items still on the queue.
+   * Dequeue the ACE_Message_Block that has the lowest priority (preserves
+   * FIFO order for messages with the same priority) and return a pointer
+   * to the dequeued block.
+   *
+   * @param first_item  Reference to an ACE_Message_Block * that will
+   *                    be set to the address of the dequeued block.
+   * @param timeout     The absolute time the caller will wait until
+   *                    for a block to be dequeued.
+   *
+   * @retval >=0 The number of ACE_Message_Blocks remaining in the queue.
+   * @retval -1 On failure.  errno holds the reason. Common errno values are:
+   *            - EWOULDBLOCK: the timeout elapsed
+   *            - ESHUTDOWN: the queue was deactivated or pulsed
    */
   virtual int dequeue_prio (ACE_Message_Block *&first_item,
                             ACE_Time_Value *timeout = 0);
 
   /**
-   * Dequeue and return the <ACE_Message_Block *> at the tail of the
-   * queue.  Note that <timeout> uses <{absolute}> time rather than
-   * <{relative}> time.  If the <timeout> elapses without receiving a
-   * message -1 is returned and <errno> is set to <EWOULDBLOCK>.  If
-   * the queue is deactivated -1 is returned and <errno> is set to
-   * <ESHUTDOWN>.  Otherwise, returns -1 on failure, else the number
-   * of items still on the queue.
+   * Dequeue the ACE_Message_Block at the tail of the queue and return
+   * a pointer to the dequeued block.
+   *
+   * @param dequeued  Reference to an ACE_Message_Block * that will
+   *                  be set to the address of the dequeued block.
+   * @param timeout   The absolute time the caller will wait until
+   *                  for a block to be dequeued.
+   *
+   * @retval >=0 The number of ACE_Message_Blocks remaining in the queue.
+   * @retval -1 On failure.  errno holds the reason. Common errno values are:
+   *            - EWOULDBLOCK: the timeout elapsed
+   *            - ESHUTDOWN: the queue was deactivated or pulsed
    */
   virtual int dequeue_tail (ACE_Message_Block *&dequeued,
                             ACE_Time_Value *timeout = 0);
 
   /**
-   * Dequeue and return the <ACE_Message_Block *> with the lowest
-   * deadline time.  Note that <timeout> uses <{absolute}> time rather than
-   * <{relative}> time.  If the <timeout> elapses without receiving a
-   * message -1 is returned and <errno> is set to <EWOULDBLOCK>.  If
-   * the queue is deactivated -1 is returned and <errno> is set to
-   * <ESHUTDOWN>.  Otherwise, returns -1 on failure, else the number
-   * of items still on the queue.
+   * Dequeue the ACE_Message_Block with the earliest deadline time and return
+   * a pointer to the dequeued block.
+   *
+   * @param dequeued  Reference to an ACE_Message_Block * that will
+   *                  be set to the address of the dequeued block.
+   * @param timeout   The absolute time the caller will wait until
+   *                  for a block to be dequeued.
+   *
+   * @retval >=0 The number of ACE_Message_Blocks remaining in the queue.
+   * @retval -1 On failure.  errno holds the reason. Common errno values are:
+   *            - EWOULDBLOCK: the timeout elapsed
+   *            - ESHUTDOWN: the queue was deactivated or pulsed
    */
   virtual int dequeue_deadline (ACE_Message_Block *&dequeued,
                                 ACE_Time_Value *timeout = 0);
+  //@}
 
   // = Check if queue is full/empty.
   /// True if queue is full, else false.
@@ -275,7 +339,10 @@ public:
   /// True if queue is empty, else false.
   virtual int is_empty (void);
 
-  // = Queue statistic methods.
+  /** @name Queue statistics methods
+   */
+  //@{
+
   /**
    * Number of total bytes on the queue, i.e., sum of the message
    * block sizes.
@@ -306,7 +373,12 @@ public:
    */
   virtual void message_length (size_t new_length);
 
-  // = Flow control methods.
+  //@}
+
+
+  /** @name Water mark (flow control) methods
+   */
+  //@{
 
   /**
    * Get high watermark.
@@ -325,11 +397,17 @@ public:
   /**
    * Set the low watermark, which determines how many bytes must be in
    * the queue before supplier threads are allowed to enqueue
-   * additional <ACE_Message_Block>s.
+   * additional ACE_Message_Blocks.
    */
   virtual void low_water_mark (size_t lwm);
+  //@}
 
-  // = Activation control methods.
+  /** @name Activation and queue state methods
+   * See C++NPv2 Section 6.2 and APG Section 12.3 for a fuller treatment of
+   * queue states and transitions and how the transitions affect message
+   * enqueueing and dequeueing operations.
+   */
+  //@{
 
   /**
    * Deactivate the queue and wakeup all threads waiting on the queue
@@ -363,8 +441,11 @@ public:
   /// Returns true if the state of the queue is <DEACTIVATED>,
   /// but false if the queue's is <ACTIVATED> or <PULSED>.
   virtual int deactivated (void);
+  //@}
 
-  // = Notification hook.
+  /** @name Notification strategy methods
+   */
+  //@{
 
   /**
    * This hook is automatically invoked by <enqueue_head>,
@@ -383,8 +464,9 @@ public:
 
   /// Set the notification strategy for the <Message_Queue>
   virtual void notification_strategy (ACE_Notification_Strategy *s);
+  //@}
 
-  /// Returns a reference to the lock used by the <ACE_Message_Queue>.
+  /// Returns a reference to the lock used by the ACE_Message_Queue.
   virtual ACE_SYNCH_MUTEX_T &lock (void);
 
   /// Dump the state of an object.
@@ -398,7 +480,7 @@ protected:
 
   // These routines assume that locks are held by the corresponding
   // public methods.  Since they are virtual, you can change the
-  // queueing mechanism by subclassing from <ACE_Message_Queue>.
+  // queueing mechanism by subclassing from ACE_Message_Queue.
 
   /// Enqueue an <ACE_Message_Block *> in accordance with its priority.
   virtual int enqueue_i (ACE_Message_Block *new_item);
@@ -494,7 +576,7 @@ protected:
   size_t cur_length_;
 
   /// Current number of messages in the queue.
-  int cur_count_;
+  size_t cur_count_;
 
   /// The notification strategy used when a new message is enqueued.
   ACE_Notification_Strategy *notification_strategy_;
@@ -523,7 +605,7 @@ typedef ACE_Message_Queue<ACE_SYNCH> ACE_DEFAULT_MESSAGE_QUEUE_TYPE;
 /**
  * @class ACE_Message_Queue_Iterator
  *
- * @brief Iterator for the <ACE_Message_Queue>.
+ * @brief Iterator for the ACE_Message_Queue.
  */
 template <ACE_SYNCH_DECL>
 class ACE_Message_Queue_Iterator
@@ -561,7 +643,7 @@ private:
 /**
  * @class ACE_Message_Queue_Reverse_Iterator
  *
- * @brief Reverse Iterator for the <ACE_Message_Queue>.
+ * @brief Reverse Iterator for the ACE_Message_Queue.
  */
 template <ACE_SYNCH_DECL>
 class ACE_Message_Queue_Reverse_Iterator
@@ -599,7 +681,7 @@ private:
 /**
  * @class ACE_Dynamic_Message_Queue
  *
- * @brief A derived class which adapts the <ACE_Message_Queue>
+ * @brief A derived class which adapts the ACE_Message_Queue
  * class in order to maintain dynamic priorities for enqueued
  * <ACE_Message_Blocks> and manage the queue order according
  * to these dynamic priorities.
@@ -867,7 +949,7 @@ public:
  *        queueing facilities in System V STREAMs.
  *
  * An <ACE_Message_Queue_Ex> is a strongly-typed version of the
- * <ACE_Message_Queue>.  If
+ * ACE_Message_Queue.  If
  * <ACE_SYNCH_DECL> is <ACE_MT_SYNCH> then all operations are
  * thread-safe. Otherwise, if it's <ACE_NULL_SYNCH> then there's no
  * locking overhead.
@@ -899,12 +981,12 @@ public:
   // = Initialization and termination methods.
 
   /**
-   * Initialize an <ACE_Message_Queue>.  The <high_water_mark>
+   * Initialize an ACE_Message_Queue.  The <high_water_mark>
    * determines how many bytes can be stored in a queue before it's
    * considered "full."  Supplier threads must block until the queue
    * is no longer full.  The <low_water_mark> determines how many
    * bytes must be in the queue before supplier threads are allowed to
-   * enqueue additional <ACE_Message_Block>s.  By default, the
+   * enqueue additional ACE_Message_Blocks.  By default, the
    * <high_water_mark> equals the <low_water_mark>, which means that
    * suppliers will be able to enqueue new messages as soon as a
    * consumer removes any message from the queue.  Making the
@@ -918,12 +1000,12 @@ public:
                         ACE_Notification_Strategy * = 0);
 
   /**
-   * Initialize an <ACE_Message_Queue>.  The <high_water_mark>
+   * Initialize an ACE_Message_Queue.  The <high_water_mark>
    * determines how many bytes can be stored in a queue before it's
    * considered "full."  Supplier threads must block until the queue
    * is no longer full.  The <low_water_mark> determines how many
    * bytes must be in the queue before supplier threads are allowed to
-   * enqueue additional <ACE_Message_Block>s.  By default, the
+   * enqueue additional ACE_Message_Blocks.  By default, the
    * <high_water_mark> equals the <low_water_mark>, which means that
    * suppliers will be able to enqueue new messages as soon as a
    * consumer removes any message from the queue.  Making the
@@ -947,9 +1029,10 @@ public:
   /// messages flushed.
   virtual int flush (void);
 
-  /// Release all resources from the message queue but do not mark it as deactivated.
-  /// This method does not hold the queue lock during this operation, i.e., it assume
-  /// the lock is held externally.    Returns the number of messages flushed.
+  /// Release all resources from the message queue but do not mark it as
+  /// deactivated. This method does not hold the queue lock during this
+  /// operation, i.e., it assume the lock is held externally.
+  /// Returns the number of messages flushed.
   virtual int flush_i (void);
 
   // = Enqueue and dequeue methods.
@@ -1210,9 +1293,11 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-  /// Implement this via an <ACE_Message_Queue>.
+  /// Implement this via an ACE_Message_Queue.
   ACE_Message_Queue<ACE_SYNCH_USE> queue_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Message_Queue_T.cpp"

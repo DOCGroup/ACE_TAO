@@ -1,4 +1,3 @@
-// SOCK_IO.cpp
 // $Id$
 
 #include "ace/SOCK_IO.h"
@@ -7,12 +6,15 @@
 #include "ace/OS_NS_sys_select.h"
 #include "ace/OS_NS_sys_socket.h"
 #include "ace/OS_Memory.h"
+#include "ace/Truncate.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/SOCK_IO.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, SOCK_IO, "$Id$")
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_SOCK_IO)
 
@@ -67,20 +69,26 @@ ACE_SOCK_IO::recvv (iovec *io_vec,
       break;
     }
 
-  u_long inlen;
+  int inlen = 0;
 
   if (ACE_OS::ioctl (this->get_handle (),
                      FIONREAD,
-                     (u_long *) &inlen) == -1)
+                     &inlen) == -1)
     return -1;
   else if (inlen > 0)
     {
       ACE_NEW_RETURN (io_vec->iov_base,
                       char[inlen],
                       -1);
-      io_vec->iov_len = this->recv (io_vec->iov_base,
-                                    inlen);
-      return io_vec->iov_len;
+      // It's ok to blindly cast this value since 'inlen' is an int and, thus,
+      // we can't get more than that back. Besides, if the recv() fails, we
+      // don't want that value cast to unsigned and returned.
+      ssize_t recv_len = this->recv (io_vec->iov_base, inlen);
+      if (recv_len > 0)
+	// u_long is the Windows type; size_t is everyone else's. A u_long
+	// should go into a size_t anywhere without an issue.
+	io_vec->iov_len = static_cast<u_long> (recv_len);
+      return recv_len;
     }
   else
     return 0;
@@ -102,8 +110,8 @@ ACE_SOCK_IO::send (size_t n, ...) const
   ACE_TRACE ("ACE_SOCK_IO::send");
 
   va_list argp;
-  int total_tuples = static_cast<int> (n) / 2;
-  iovec *iovp;
+  int total_tuples = ACE_Utils::Truncate<size_t> (n / 2);
+  iovec *iovp = 0;
 #if defined (ACE_HAS_ALLOCA)
   iovp = (iovec *) alloca (total_tuples * sizeof (iovec));
 #else
@@ -142,7 +150,7 @@ ACE_SOCK_IO::recv (size_t n, ...) const
   ACE_TRACE ("ACE_SOCK_IO::recv");
 
   va_list argp;
-  int total_tuples = static_cast<int> (n / 2);
+  int total_tuples = ACE_Utils::Truncate<size_t> (n / 2);
   iovec *iovp;
 #if defined (ACE_HAS_ALLOCA)
   iovp = (iovec *) alloca (total_tuples * sizeof (iovec));
@@ -169,3 +177,5 @@ ACE_SOCK_IO::recv (size_t n, ...) const
   va_end (argp);
   return result;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

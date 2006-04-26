@@ -1,7 +1,10 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
 
 #include "ace/OS_NS_signal.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 ACE_Sig_Set::ACE_Sig_Set (sigset_t *ss)
@@ -301,3 +304,5 @@ ACE_Sig_Handler::in_range (int signum)
   ACE_TRACE ("ACE_Sig_Handler::in_range");
   return signum > 0 && signum < ACE_NSIG;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

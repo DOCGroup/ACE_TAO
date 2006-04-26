@@ -15,7 +15,7 @@
 #ifndef TAO_FT_SERVER_REQUEST_INTERCEPTOR_H
 #define TAO_FT_SERVER_REQUEST_INTERCEPTOR_H
 
-#include "FT_ServerORB_export.h"
+#include "orbsvcs/FaultTolerance/FT_ServerORB_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -32,6 +32,8 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace IOP
 {
   struct ServiceContext;
@@ -45,9 +47,9 @@ namespace TAO
    *
    *
    */
-  class TAO_FT_ServerORB_Export FT_ServerRequest_Interceptor
-    : public virtual PortableInterceptor::ServerRequestInterceptor,
-      public virtual TAO_Local_RefCounted_Object
+  class FT_ServerRequest_Interceptor
+    : public virtual PortableInterceptor::ServerRequestInterceptor
+    , public virtual TAO_Local_RefCounted_Object
   {
   public:
 
@@ -109,8 +111,6 @@ namespace TAO
       ACE_THROW_SPEC ((CORBA::SystemException,
            PortableInterceptor::ForwardRequest));
 
-    bool is_primary (void);
-
     void update_iogr (
         PortableInterceptor::ServerRequestInfo_ptr ri
         ACE_ENV_ARG_DECL)
@@ -120,7 +120,7 @@ namespace TAO
 
     CORBA::ULong object_group_ref_version_;
 
-    bool is_primary_;
+    CORBA::Boolean is_primary_;
 
     CORBA::Object_var iogr_;
 
@@ -128,6 +128,9 @@ namespace TAO
   };
 
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */

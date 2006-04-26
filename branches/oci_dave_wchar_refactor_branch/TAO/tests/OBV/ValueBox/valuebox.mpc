@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Server): taoexe, portableserver, valuetype {
+project(*Server): taoserver, valuetype {
   IDL_Files {
     vb_basic.idl
     vb_struct.idl
@@ -22,7 +22,8 @@ project(*Server): taoexe, portableserver, valuetype {
   }
 }
 
-project(*Client): taoexe, valuetype {
+project(*Client): taoclient, valuetype {
+  after += *Server
   Source_Files {
     vb_basicC.cpp
     vb_structC.cpp

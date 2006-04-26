@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -8,10 +8,7 @@
  *
  *  Methods to enable log-generated events.
  *
- *
  *  @author D A Hanvey <d.hanvey@qub.ac.uk>
- *
- *
  */
 //=============================================================================
 
@@ -33,19 +30,21 @@
 #include "orbsvcs/Event/EC_ProxySupplier.h"
 #include "orbsvcs/Event/EC_ProxyConsumer.h"
 
-#include "rteventlog_export.h"
+#include "orbsvcs/Log/rteventlog_serv_export.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_RTEventLogNotification
  *
  * @brief Used to forward log generated events to a logging server.
  */
-class TAO_RTEventLog_Export TAO_RTEventLogNotification :
+class TAO_RTEventLog_Serv_Export TAO_RTEventLogNotification :
   public TAO_LogNotification,
   public POA_RtecEventComm::PushSupplier
 {
@@ -83,6 +82,8 @@ private:
   /// The ProxyPushConsumer used to connect to the event channel.
   RtecEventChannelAdmin::ProxyPushConsumer_var consumer_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

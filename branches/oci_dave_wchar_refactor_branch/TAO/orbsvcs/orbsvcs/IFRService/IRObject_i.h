@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 // $Id$
 
 // ============================================================================
@@ -21,18 +22,20 @@
 #define TAO_IROBJECT_I_H
 
 #include "ace/Configuration.h"
-#include "ifr_service_export.h"
+#include "orbsvcs/IFRService/ifr_service_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "IFR_ExtendedS.h"
+#include "orbsvcs/IFRService/IFR_ExtendedS.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Repository_i;
 class TAO_IDLType_i;
@@ -86,6 +89,8 @@ protected:
   ACE_Configuration_Section_Key section_key_;
   // Our ACE_Configuration section key.
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

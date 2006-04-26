@@ -32,9 +32,9 @@ parse_args (int argc,
   return 0;
 }
 
-#if defined (ACE_HAS_PREDEFINED_THREAD_CANCELLED_MACRO)
+#if defined (THREAD_CANCELLED)
 #undef THREAD_CANCELLED
-#endif /* ACE_HAS_PREDEFINED_THREAD_CANCELLED_MACRO */
+#endif /* THREAD_CANCELLED */
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR* argv [])
@@ -43,6 +43,8 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv [])
 
   CORBA::ORB_var orb;
   test_var server;
+  RTScheduling::Scheduler_var safe_scheduler;
+
   ACE_TRY_NEW_ENV
     {
 
@@ -55,17 +57,21 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv [])
       if (parse_args (convert.get_argc(), convert.get_ASCII_argv()) == -1)
         return (-1);
 
-      CORBA::Object_ptr manager_obj = orb->resolve_initial_references ("RTSchedulerManager"
+      CORBA::Object_var manager_obj = orb->resolve_initial_references ("RTSchedulerManager"
                                                                        ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      TAO_RTScheduler_Manager_var manager = TAO_RTScheduler_Manager::_narrow (manager_obj
+      TAO_RTScheduler_Manager_var manager = TAO_RTScheduler_Manager::_narrow (manager_obj.in ()
                                                                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      TAO_Scheduler scheduler (orb.in ());
+      TAO_Scheduler* scheduler;
+      ACE_NEW_RETURN (scheduler,
+		      TAO_Scheduler (orb.in ()),
+		      -1);
+      safe_scheduler = scheduler;
 
-      manager->rtscheduler (&scheduler);
+      manager->rtscheduler (scheduler);
 
 
       CORBA::Object_var object =
@@ -85,11 +91,11 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv [])
                             1);
         }
 
-      CORBA::Object_ptr current_obj = orb->resolve_initial_references ("RTScheduler_Current"
+      CORBA::Object_var current_obj = orb->resolve_initial_references ("RTScheduler_Current"
 								       ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      RTScheduling::Current_var current = RTScheduling::Current::_narrow (current_obj
+      RTScheduling::Current_var current = RTScheduling::Current::_narrow (current_obj.in ()
                                                                           ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 

@@ -1,14 +1,21 @@
 // -*- C++ -*-
+//
 // $Id$
 
 #include "ace/OS_NS_errno.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_INLINE void *
-ACE_OS::shmat (int int_id, void *shmaddr, int shmflg)
+ACE_OS::shmat (int int_id, const void *shmaddr, int shmflg)
 {
   ACE_OS_TRACE ("ACE_OS::shmat");
 #if defined (ACE_HAS_SYSV_IPC)
-  ACE_OSCALL_RETURN (::shmat (int_id, static_cast <char *> (shmaddr), shmflg), void *, (void *) -1);
+#  if defined (ACE_HAS_CHARPTR_SHMAT)
+  ACE_OSCALL_RETURN (::shmat (int_id, static_cast <char*> (const_cast <void *>(shmaddr)), shmflg), void *, (void *) -1);
+#  else
+  ACE_OSCALL_RETURN (::shmat (int_id, shmaddr, shmflg), void *, (void *) -1);
+#  endif /* ACE_HAS_CHARPTR_SHMAT */
 #else
   ACE_UNUSED_ARG (int_id);
   ACE_UNUSED_ARG (shmaddr);
@@ -34,11 +41,16 @@ ACE_OS::shmctl (int int_id, int cmd, struct shmid_ds *buf)
 }
 
 ACE_INLINE int
-ACE_OS::shmdt (void *shmaddr)
+ACE_OS::shmdt (const void *shmaddr)
 {
   ACE_OS_TRACE ("ACE_OS::shmdt");
 #if defined (ACE_HAS_SYSV_IPC)
-  ACE_OSCALL_RETURN (::shmdt ((char *) shmaddr), int, -1);
+#  if defined (ACE_HAS_CHARPTR_SHMDT)
+     ACE_OSCALL_RETURN (::shmdt (
+      static_cast <char*> (const_cast <void *>(shmaddr))), int, -1);
+# else
+     ACE_OSCALL_RETURN (::shmdt (shmaddr), int, -1);
+#  endif /* ACE_HAS_CHARPTR_SHMDT */
 #else
   ACE_UNUSED_ARG (shmaddr);
 
@@ -60,3 +72,5 @@ ACE_OS::shmget (key_t key, size_t size, int flags)
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_SYSV_IPC */
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

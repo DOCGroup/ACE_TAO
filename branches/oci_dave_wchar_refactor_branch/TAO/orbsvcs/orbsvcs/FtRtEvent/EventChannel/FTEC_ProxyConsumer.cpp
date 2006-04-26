@@ -1,13 +1,15 @@
 // $Id$
 
-#include "FTEC_ProxyConsumer.h"
-#include "Request_Context_Repository.h"
-#include "Replication_Service.h"
+#include "orbsvcs/FtRtEvent/EventChannel/FTEC_ProxyConsumer.h"
+#include "orbsvcs/FtRtEvent/EventChannel/Request_Context_Repository.h"
+#include "orbsvcs/FtRtEvent/EventChannel/Replication_Service.h"
 #include "../Utils/activate_with_id.h"
 
 ACE_RCSID (EventChannel,
            TAO_FTEC_ProxyPushConsumer,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 const TAO_FTEC_ProxyPushConsumer::RollbackOperation
   TAO_FTEC_ProxyPushConsumer::rollback_obtain =
@@ -128,3 +130,5 @@ void TAO_FTEC_ProxyPushConsumer::set_state(const FtRtecEventChannelAdmin::ProxyP
                      ACE_ENV_ARG_PARAMETER);
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -4,19 +4,20 @@
 
 // Return the address of the address.
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE bool
 ACE_Addr::operator == (const ACE_Addr &sap) const
 {
   return (sap.addr_type_ == this->addr_type_ &&
-	  sap.addr_size_ == this->addr_size_   );
+          sap.addr_size_ == this->addr_size_   );
 }
 
 ACE_INLINE bool
 ACE_Addr::operator != (const ACE_Addr &sap) const
 {
   return (sap.addr_type_ != this->addr_type_ ||
-	  sap.addr_size_ != this->addr_size_   );
+          sap.addr_size_ != this->addr_size_   );
 }
 
 // Return the size of the address.
@@ -56,3 +57,5 @@ ACE_Addr::hash (void) const
 {
   return 0;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

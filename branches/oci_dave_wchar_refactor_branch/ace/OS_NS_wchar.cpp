@@ -1,4 +1,3 @@
-// -*- C++ -*-
 // $Id$
 
 # include "ace/OS_NS_wchar.h"
@@ -49,7 +48,10 @@ ACE_RCSID(ace, OS_NS_wchar_t, "$Id$")
  * SUCH DAMAGE.
  */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 #if defined (ACE_LACKS_WCSCAT)
+
 wchar_t *
 ACE_OS::wcscat_emulation (wchar_t *destination,
                           const wchar_t *source)
@@ -371,3 +373,4 @@ ACE_OS::wcsstr_emulation (const wchar_t *string,
 }
 #endif /* ACE_LACKS_WCSSTR */
 
+ACE_END_VERSIONED_NAMESPACE_DECL

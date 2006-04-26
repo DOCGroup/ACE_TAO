@@ -1,4 +1,8 @@
+// -*- C++ -*-
+//
 // $Id$
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 TAO_CEC_TypedEvent::TAO_CEC_TypedEvent (void)
@@ -22,3 +26,5 @@ TAO_CEC_TypedEvent::operator= (const TAO_CEC_TypedEvent& other)
 
   return *this;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

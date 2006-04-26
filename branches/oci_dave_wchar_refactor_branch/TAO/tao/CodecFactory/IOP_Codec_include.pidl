@@ -1,3 +1,5 @@
+// -*- IDL -*-
+
 /**
  * @file IOP_Codec_include.pidl
  *
@@ -20,6 +22,8 @@
  *          -Wb,export_include="tao/CodecFactory/codecfactory_export.h" \
  *          -Wb,pre_include="ace/pre.h"
  *          -Wb,post_include="ace/post.h"
+ *          -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+ *          -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL
  *          IOP_Codec_include.pidl
  *
  *   2. Then change this line in IOP_Codec_includeC.h:
@@ -35,6 +39,6 @@
 #define _IOP_CODEC_INCLUDE_IDL_
 
 ///FUZZ: disable check_for_include/
-#include <tao/CodecFactory/IOP_Codec.pidl>
+#include "tao/CodecFactory/IOP_Codec.pidl"
 
 #endif /* _IOP_CODEC_INCLUDE_IDL_ */

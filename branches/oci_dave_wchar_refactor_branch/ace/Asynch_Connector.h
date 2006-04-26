@@ -26,6 +26,8 @@
 #include "ace/Asynch_IO.h"
 #include "ace/INET_Addr.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Forward declarations
 class ACE_Message_Block;
 
@@ -154,6 +156,8 @@ private:
   int validate_new_connection_;
 
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Asynch_Connector.cpp"

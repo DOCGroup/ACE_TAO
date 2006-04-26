@@ -48,6 +48,7 @@ threads ?= 1
 versioned_so ?= 1
 tk_reactor ?= 0
 ace_with_x11 ?= 0
+no_hidden_visibility ?= 1
 
 PLATFORM_TK_CPPFLAGS=
 PLATFORM_TK_LIBS=-ltk -ltcl
@@ -65,7 +66,13 @@ endif # threads
 CC              = cc
 CXX             = CC
 
-CC_VERSION = $(shell $(CXX) -V 2>&1)
+CC_VERSION := $(shell $(CXX) -V 2>&1)
+
+### CC 5.4 provides insufficient preprocessor output (at 111715-17 2005/10/13)
+### We need to use cc instead - see bugzilla #2478.
+ifeq (C++ 5.4,$(findstring C++ 5.4,$(CC_VERSION)))
+  ACE_CC_PREPROCESSOR = cc
+endif
 
 ifeq (C++ 5.6,$(findstring C++ 5.6,$(CC_VERSION)))
   PLATFORM_STLPORT_CPPFLAGS = -library=stlport4
@@ -227,6 +234,24 @@ ifeq (0,$(exceptions))
     endif
   endif
 endif # ! exceptions
+
+ifeq ($(shared_libs), 1)
+  ifneq ($(static_libs_only), 1)
+
+   # Sun Studio 8 or better has version greater than 5.3.
+    SUN_STUDIO_8_OR_BETTER := $(shell a=`echo $(CC_VERSION) | sed -e 's/[^0-9]*\([0-9]*\)\.\([0-9]*\).*$$/\1\2/g'`; if test "$$a" -gt 53; then echo 1; else echo 0; fi)
+
+    # Take advantage of Sun Studio 8 (v5.5) symbol scopes to
+    # generate improved shared library binaries.
+    ifeq ($(SUN_STUDIO_8_OR_BETTER),1)
+      ifneq ($(no_hidden_visibility),1)
+        CCFLAGS += -xldscope=hidden
+      else
+        CPPFLAGS += -DACE_HAS_CUSTOM_EXPORT_MACROS=0
+      endif # no_hidden_visibility
+    endif # Sun Studio 8 (C++ 5.5) or better.
+  endif # static_libs_only
+endif # shared_libs
 
 LD              = $(CXX)
 ifeq ($(distrib),0)

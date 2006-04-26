@@ -1,12 +1,14 @@
 // $Id$
 
-#include "RecursDef_i.h"
+#include "orbsvcs/IFRService/RecursDef_i.h"
 
 
 ACE_RCSID (IFRService,
            RecursDef_i,
            "RecursDef_i.cpp,v 1.1 2004/10/18 09:00:00 SMA Exp")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 //-----------------------------------------------------------------------------
 // Class TAO_RecursiveDef_OuterScopes is a support class for StructDef_i.h and
@@ -41,3 +43,5 @@ bool TAO_RecursiveDef_OuterScopes::SeenBefore( const ACE_TString &id )
 
 const TAO_RecursiveDef_OuterScopes
   *TAO_RecursiveDef_OuterScopes::pIDsSeenAlready= 0;
+
+TAO_END_VERSIONED_NAMESPACE_DECL

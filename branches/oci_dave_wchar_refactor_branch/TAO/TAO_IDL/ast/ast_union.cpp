@@ -89,8 +89,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 
-ACE_RCSID (ast, 
-           ast_union, 
+ACE_RCSID (ast,
+           ast_union,
            "$Id$")
 
 AST_Union::AST_Union (void)
@@ -106,8 +106,8 @@ AST_Union::AST_Union (void)
 
 AST_Union::AST_Union (AST_ConcreteType *dt,
                       UTL_ScopedName *n,
-                      idl_bool local,
-                      idl_bool abstract)
+                      bool local,
+                      bool abstract)
   : COMMON_Base (local,
                  abstract),
     AST_Decl (AST_Decl::NT_union,
@@ -240,7 +240,7 @@ AST_Union::default_index (void)
 }
 
 // Are we or the parameter node involved in any recursion?
-idl_bool
+bool
 AST_Union::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
 {
   // Proceed if the number of members in our scope is greater than 0.
@@ -248,14 +248,14 @@ AST_Union::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
     {
       ACE_Unbounded_Queue<AST_Type *> scope_list = list;
       scope_list.enqueue_tail (this);
-        
+
       // Initialize an iterator to iterate thru our scope.
       // Continue until each element is visited.
       for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls);
            !si.is_done ();
            si.next ())
         {
-          AST_UnionBranch *field = 
+          AST_UnionBranch *field =
             AST_UnionBranch::narrow_from_decl (si.item ());
 
           if (field == 0)
@@ -418,7 +418,7 @@ AST_Union::lookup_enum (AST_UnionBranch *b)
   // See if the symbol defines a constant in the discriminator enum.
   UTL_ScopedName *sn = lv->n ();
   d = e->lookup_by_name (sn,
-                         I_TRUE);
+                         true);
 
   if (d == 0 || d->defined_in () != e)
     {
@@ -816,7 +816,7 @@ AST_Union::compute_default_value (void)
                           if (this->default_value_.u.bool_val
                                 == expr->ev ()->u.bval)
                             {
-                              this->default_value_.u.bool_val++;
+                              this->default_value_.u.bool_val ^= true;
                               break_loop = 1;
                             }
 
@@ -939,7 +939,7 @@ AST_Union::fe_add_union_branch (AST_UnionBranch *t)
     }
 
   // If branch with same field name exists, complain.
-  if ((d = this->lookup_for_add (t, I_FALSE)) != 0)
+  if ((d = this->lookup_for_add (t, false)) != 0)
     {
       if (!can_be_redefined (d))
         {
@@ -980,7 +980,7 @@ AST_Union::fe_add_union_branch (AST_UnionBranch *t)
 
   // Add it to set of locally referenced symbols.
   this->add_to_referenced (t,
-                           I_FALSE,
+                           false,
                            t->local_name ());
 
   AST_Type *ft = t->field_type ();
@@ -989,10 +989,10 @@ AST_Union::fe_add_union_branch (AST_UnionBranch *t)
   if (mru != 0)
     {
       this->add_to_referenced (ft,
-                               I_FALSE,
+                               false,
                                mru->first_component ());
     }
-    
+
   this->fields_.enqueue_tail (t);
 
   return t;
@@ -1005,7 +1005,7 @@ AST_Union::fe_add_union (AST_Union *t)
   AST_Decl *d = 0;
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t, I_FALSE)) != 0)
+  if ((d = this->lookup_for_add (t, false)) != 0)
     {
       if (!can_be_redefined (d))
         {
@@ -1038,7 +1038,7 @@ AST_Union::fe_add_union (AST_Union *t)
 
   // Add it to set of locally referenced symbols.
   this->add_to_referenced (t,
-                           I_FALSE,
+                           false,
                            t->local_name ());
 
   return t;
@@ -1051,7 +1051,7 @@ AST_Union::fe_add_structure (AST_Structure *t)
   AST_Decl *d = 0;
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t, I_FALSE)) != 0)
+  if ((d = this->lookup_for_add (t, false)) != 0)
     {
       if (!can_be_redefined (d))
         {
@@ -1084,7 +1084,7 @@ AST_Union::fe_add_structure (AST_Structure *t)
 
   // Add it to set of locally referenced symbols.
   this->add_to_referenced (t,
-                           I_FALSE,
+                           false,
                            t->local_name ());
 
   return t;
@@ -1097,7 +1097,7 @@ AST_Union::fe_add_enum (AST_Enum *t)
   AST_Decl *d = 0;
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t, I_FALSE)) != 0)
+  if ((d = this->lookup_for_add (t, false)) != 0)
     {
       if (!can_be_redefined (d))
         {
@@ -1130,7 +1130,7 @@ AST_Union::fe_add_enum (AST_Enum *t)
 
   // Add it to set of locally referenced symbols.
   this->add_to_referenced (t,
-                           I_FALSE,
+                           false,
                            t->local_name ());
 
   return t;
@@ -1146,7 +1146,7 @@ AST_Union::fe_add_enum_val (AST_EnumVal *t)
   AST_Decl *d = 0;
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t, I_FALSE)) != 0)
+  if ((d = this->lookup_for_add (t, false)) != 0)
     {
       if (!can_be_redefined (d))
         {
@@ -1179,7 +1179,7 @@ AST_Union::fe_add_enum_val (AST_EnumVal *t)
 
   // Add it to set of locally referenced symbols.
   this->add_to_referenced (t,
-                           I_FALSE,
+                           false,
                            t->local_name ());
 
   return t;

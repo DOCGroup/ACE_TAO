@@ -48,9 +48,9 @@
 #  endif /* ACE_LACKS_SIGINFO_H */
 #endif /* ACE_HAS_SIGINFO_T */
 
-#if defined (VXWORKS) && !defined (ACE_HAS_PTHREADS)
+#if defined (ACE_VXWORKS) && (ACE_VXWORKS < 0x620) && !defined (__RTP__)
 #  include /**/ <sigLib.h>
-#endif /* VXWORKS */
+#endif /* ACE_VXWORKS */
 
 // should this be extern "C" {}?
 #if defined (CHORUS)

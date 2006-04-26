@@ -35,6 +35,6 @@
 #define _RTPORTABLESERVER_INCLUDE_IDL_
 
 ///FUZZ: disable check_for_include/
-#include <tao/RTPortableServer/RTPortableServer.pidl>
+#include "tao/RTPortableServer/RTPortableServer.pidl"
 
 #endif /* _RTPORTABLESERVER_INCLUDE_IDL_ */

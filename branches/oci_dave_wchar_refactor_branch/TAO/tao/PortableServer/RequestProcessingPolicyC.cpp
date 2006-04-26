@@ -29,7 +29,7 @@
 // be\be_codegen.cpp:277
 
 
-#include "RequestProcessingPolicyC.h"
+#include "tao/PortableServer/RequestProcessingPolicyC.h"
 #include "tao/CDR.h"
 #include "ace/OS_NS_string.h"
 
@@ -37,6 +37,8 @@
 // be\be_visitor_arg_traits.cpp:70
 
 #if (TAO_HAS_MINIMUM_POA == 0)
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Arg traits specializations.
 namespace TAO
@@ -62,7 +64,7 @@ TAO::Objref_Traits<PortableServer::RequestProcessingPolicy>::release (
     PortableServer::RequestProcessingPolicy_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 PortableServer::RequestProcessingPolicy_ptr
@@ -111,18 +113,18 @@ PortableServer::RequestProcessingPolicy::_unchecked_narrow (
 PortableServer::RequestProcessingPolicy_ptr
 PortableServer::RequestProcessingPolicy::_duplicate (RequestProcessingPolicy_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void
 PortableServer::RequestProcessingPolicy::_tao_release (RequestProcessingPolicy_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean
@@ -181,13 +183,15 @@ CORBA::Boolean operator>> (TAO_InputCDR & strm, PortableServer::RequestProcessin
 {
   CORBA::ULong _tao_temp = 0;
   CORBA::Boolean const _tao_success = strm >> _tao_temp;
-  
+
   if (_tao_success)
     {
       _tao_enumerator = static_cast<PortableServer::RequestProcessingPolicyValue> (_tao_temp);
     }
-  
+
   return _tao_success;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */

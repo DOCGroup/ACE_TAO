@@ -15,13 +15,7 @@
 
 #include /**/ "ace/pre.h"
 
-#ifdef ACE_THREADS_BUILD_DLL
-# include "ace/ACE_Threads_export.h"
-#else
-# include "ace/ACE_export.h"
-# define ACE_Threads_Export ACE_Export
-#endif  /* ACE_THREADS_BUILD_DLL */
-
+#include "ace/ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -35,6 +29,8 @@
 #  include "ace/Recursive_Thread_Mutex.h"
 #endif /* ACE_HAS_THREADS */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class ACE_Reactor;
 
 /**
@@ -43,7 +39,7 @@ class ACE_Reactor;
  * @brief Information describing each process that's controlled by an
  * \<ACE_Process_Manager\>.
  */
-class ACE_Threads_Export ACE_Process_Descriptor
+class ACE_Export ACE_Process_Descriptor
 {
 private:
   friend class ACE_Process_Manager;
@@ -97,8 +93,8 @@ private:
  * <Process> exits, or when any <Process> without a specific
  * <Event_Handler> exits.  When a <Process> exits, the
  * appropriate <Event_Handler>'s <handle_input> is called; the
- * <ACE_HANDLE> passed is either the Process' HANDLE (on Win32),
- * or its pid cast to an <ACE_HANDLE> (on unix).
+ * ACE_HANDLE passed is either the Process' HANDLE (on Win32),
+ * or its pid cast to an ACE_HANDLE (on unix).
  * It is also possible to call the <Process_Manager::wait>
  * functions even though the <Process_Manager> is registered with
  * a <Reactor>.
@@ -125,7 +121,7 @@ private:
  * + The <handle_input> method collects all available exit
  *   statuses.
  */
-class ACE_Threads_Export ACE_Process_Manager : protected ACE_Event_Handler
+class ACE_Export ACE_Process_Manager : protected ACE_Event_Handler
 {
 public:
   friend class ACE_Process_Control;
@@ -142,7 +138,7 @@ public:
    * needed.  If a non-NULL <reactor> is provided, this
    * <ACE_Process_Manager> uses it to notify an application when a
    * process it controls exits.  By default, however, we don't use an
-   * <ACE_Reactor>.
+   * ACE_Reactor.
    */
   ACE_Process_Manager (size_t size = ACE_Process_Manager::DEFAULT_SIZE,
                        ACE_Reactor *reactor = 0);
@@ -153,7 +149,7 @@ public:
    * needed.  If a non-NULL <reactor> is provided, this
    * <ACE_Process_Manager> uses it to notify an application when a
    * process it controls exits.  By default, however, we don't use an
-   * <ACE_Reactor>.
+   * ACE_Reactor.
    */
   int open (size_t size = DEFAULT_SIZE,
             ACE_Reactor *r = 0);
@@ -183,30 +179,38 @@ public:
   // = Process creation methods.
 
   /**
-   * Create a new process by passing <options> to <proc.spawn>.  On
-   * success, returns the process id of the child that was created.
+   * Create a new process by passing <options> to <proc.spawn>.
+   * Register <event_handler> to be called back when the process exits.
+   *
+   * On success, returns the process id of the child that was created.
    * On failure, returns ACE_INVALID_PID.
    */
   pid_t spawn (ACE_Process *proc,
-               ACE_Process_Options &options);
+               ACE_Process_Options &options,
+	       ACE_Event_Handler *event_handler = 0);
 
   /**
-   * Create a new process by passing <options> to
-   * <ACE_Process::spawn>.  On success, returns the process id of the
-   * child that was created.  On failure, returns ACE_INVALID_PID.
+   * Create a new process by passing <options> to <ACE_Process::spawn>.
+   * Register <event_handler> to be called back when the process exits.
+   *
+   * On success, returns the process id of the child that was created.
+   * On failure, returns ACE_INVALID_PID.
    */
-  pid_t spawn (ACE_Process_Options &options);
+  pid_t spawn (ACE_Process_Options &options,
+	       ACE_Event_Handler *event_handler = 0);
 
   /**
    * Create <n> new processes by passing <options> to
    * <ACE_Process::spawn>, which is called <n> times.  If <child_pids>
    * is non-0 it is expected to be an array of <n> <pid_t>'s, which
    * are filled in with the process ids of each newly created process.
+   * Register <event_handler> to be called back when each process exits.
    * Returns 0 on success and -1 on failure.
    */
   int spawn_n (size_t n,
                ACE_Process_Options &options,
-               pid_t *child_pids = 0);
+               pid_t *child_pids = 0,
+	       ACE_Event_Handler *event_Handler = 0);
 
   // = Process synchronization operations.
 
@@ -248,6 +252,7 @@ public:
               ACE_exitcode *status = 0);
 
   /**
+   * @deprecated
    * Reap the result of a single process by calling <ACE_OS::waitpid>,
    * therefore, this method is not portable to Win32.  If the child is
    * successfully reaped, <remove> is called automatically.  This
@@ -263,6 +268,11 @@ public:
    * Register an Event_Handler to be called back when the specified
    * process exits.  If pid == ACE_INVALID_PID this handler is called
    * when any process with no specific handler exits.
+   *
+   * @note In multi-threaded applications, there is a race condition
+   * if a process exits between the time it is spawned and when its
+   * handler is registered.  To avoid this, register the handler at
+   * the time the process is spawned.
    */
   int register_handler (ACE_Event_Handler *event_handler,
                         pid_t pid = ACE_INVALID_PID);
@@ -292,6 +302,22 @@ public:
 
   /// Return the number of managed Processes.
   size_t managed (void) const;
+  /**
+   * Sets the scheduling parameters for the <Process> managed by
+   * <ACE_Process_Manager> identified by pid by passing <params>, <pid> to
+   * <ACE_OS::sched_params>. Returns 0 on success, -1 on failure, and
+   * ACE_INVALID_PID when given pid is not managed by
+   * <ACE_Process_Manager>.
+   */
+  int set_scheduler (const ACE_Sched_Params &params,
+                          pid_t pid);
+
+  /**
+   * Sets the scheduling parameters for all the <Process>es managed by
+   * <ACE_Process_Manager> by passing <params> to
+   * <ACE_OS::sched_params>. Returns 0 on success, -1 on failure.
+   */
+  int set_scheduler_all (const ACE_Sched_Params &);
 
   /// Dump the state of an object.
   void dump (void) const;
@@ -357,14 +383,18 @@ private:
 
   /// Insert a process in the table (checks for duplicates).  Omitting
   /// the process handle won't work on Win32...
-  int insert_proc (ACE_Process *process);
+  /// Register <event_handler> to be called back when the process exits.
+  int insert_proc (ACE_Process *process,
+		   ACE_Event_Handler *event_handler = 0);
 
   /**
    * Append information about a process, i.e., its <process_id> in the
    * <process_table_>.  Each entry is added at the end, growing the
    * table if necessary.
+   * Register <event_handler> to be called back when the process exits.
    */
-  int append_proc (ACE_Process *process);
+  int append_proc (ACE_Process *process,
+		   ACE_Event_Handler *event_handler = 0);
 
   /// Actually removes the process at index <n> from the table.  This method
   /// must be called with locks held.
@@ -401,6 +431,8 @@ private:
   ACE_Recursive_Thread_Mutex lock_;
 #endif /* ACE_HAS_THREADS */
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Process_Manager.inl"

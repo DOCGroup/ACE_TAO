@@ -1,4 +1,8 @@
+// -*- C++ -*-
+//
 // $Id$
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<class T> ACE_INLINE T*
 ACE_Intrusive_List_Node<T>::prev (void) const
@@ -23,3 +27,5 @@ ACE_Intrusive_List_Node<T>::next (T *x)
 {
   this->next_ = x;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

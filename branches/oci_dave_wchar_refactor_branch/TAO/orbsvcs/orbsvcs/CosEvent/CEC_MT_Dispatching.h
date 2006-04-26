@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file   CEC_MT_Dispatching.h
@@ -15,13 +16,15 @@
 
 #include /**/ "ace/pre.h"
 
-#include "CEC_Dispatching.h"
+#include "orbsvcs/CosEvent/CEC_Dispatching.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "CEC_Dispatching_Task.h"
+#include "orbsvcs/CosEvent/CEC_Dispatching_Task.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_CEC_EventChannel;
 
@@ -89,6 +92,8 @@ private:
   /// Are the threads running?
   int active_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

@@ -1,9 +1,7 @@
-// This may look like C, but it's really -*- C++ -*-
-//
 // $Id$
 
-#include "UIPMC_Profile.h"
-#include "UIPMC_Connector.h"
+#include "orbsvcs/PortableGroup/UIPMC_Profile.h"
+#include "orbsvcs/PortableGroup/UIPMC_Connector.h"
 
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
@@ -14,8 +12,10 @@
 #include "ace/Connector.h"
 #include "ace/OS_NS_strings.h"
 
-ACE_RCSID (tao,
+ACE_RCSID (PortableGroup,
            UIPMC_Connector, "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_UIPMC_Connector::TAO_UIPMC_Connector (CORBA::Boolean)
   : TAO_Connector (TAO_TAG_UIPMC_PROFILE)
@@ -181,15 +181,15 @@ TAO_UIPMC_Connector::check_prefix (const char *endpoint)
   if (!endpoint || !*endpoint)
     return -1;  // Failure
 
-  const char *protocol[] = { "miop" };
+  static const char protocol[] = "miop";
+  static size_t const len = sizeof (protocol) - 1;
 
-  size_t slot = ACE_OS::strchr (endpoint, ':') - endpoint;
-  size_t len0 = ACE_OS::strlen (protocol[0]);
+  size_t const slot = ACE_OS::strchr (endpoint, ':') - endpoint;
 
   // Check for the proper prefix in the IOR.  If the proper prefix
   // isn't in the IOR then it is not an IOR we can use.
-  if (slot == len0
-      && ACE_OS::strncasecmp (endpoint, protocol[0], len0) == 0)
+  if (slot == len
+      && ACE_OS::strncasecmp (endpoint, protocol, len) == 0)
     return 0;
 
   return -1;
@@ -205,34 +205,11 @@ TAO_UIPMC_Connector::object_key_delimiter (void) const
 
 int
 TAO_UIPMC_Connector::cancel_svc_handler (
-  TAO_Connection_Handler * svc_handler)
+  TAO_Connection_Handler * /* svc_handler */)
 {
-  ACE_UNUSED_ARG(svc_handler);
-
   // Noop
   return 0;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+TAO_END_VERSIONED_NAMESPACE_DECL
 
-template class ACE_Hash <ACE_INET_Addr>;
-template class ACE_Equal_To <ACE_INET_Addr>;
-template class ACE_Hash_Map_Manager_Ex<ACE_INET_Addr,
-                                       TAO_UIPMC_Connection_Handler *,
-                                       ACE_Hash <ACE_INET_Addr>,
-                                       ACE_Equal_To <ACE_INET_Addr>,
-                                       ACE_Null_Mutex>;
-template class ACE_Hash_Map_Entry<ACE_INET_Addr,
-                                  TAO_UIPMC_Connection_Handler *>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Hash <ACE_INET_Addr>
-#pragma instantiate ACE_Equal_To <ACE_INET_Addr>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_INET_Addr, \
-                                            TAO_UIPMC_Connection_Handler *, \
-                                            ACE_Hash <ACE_INET_Addr>, \
-                                            ACE_Equal_To <ACE_INET_Addr>,
-                                            ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Entry<ACE_INET_Addr, \
-                                       TAO_UIPMC_Connection_Handler *>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

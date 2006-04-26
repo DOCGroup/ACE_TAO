@@ -7,6 +7,9 @@ ACE_RCSID (tao,
            Server_Strategy_Factory, 
            "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_Server_Strategy_Factory::TAO_Server_Strategy_Factory (void)
   : active_object_map_creation_parameters_ ()
 {
@@ -71,3 +74,5 @@ TAO_Server_Strategy_Factory::Active_Object_Map_Creation_Parameters::Active_Objec
     use_active_hint_in_poa_names_ (1)
 {
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

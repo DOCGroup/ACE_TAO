@@ -1,6 +1,6 @@
 // $Id$
 
-#include "Collocation_Proxy_Broker.h"
+#include "tao/Collocation_Proxy_Broker.h"
 
 
 ACE_RCSID (tao,
@@ -8,6 +8,10 @@ ACE_RCSID (tao,
            "$Id$")
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO::Collocation_Proxy_Broker::~Collocation_Proxy_Broker (void)
 {
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

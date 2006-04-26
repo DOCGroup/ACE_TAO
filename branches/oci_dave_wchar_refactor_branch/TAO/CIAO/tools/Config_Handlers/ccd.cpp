@@ -3,12 +3,12 @@
  *
  * Changes made to this code will most likely be overwritten
  * when the handlers are recompiled.
- * 
+ *
  * If you find errors or feel that there are bugfixes to be made,
  * please contact the current XSC maintainer:
  *             Will Otte <wotte@dre.vanderbilt.edu>
  */
- 
+
 #include "ccd.hpp"
 
 namespace CIAO
@@ -16,66 +16,56 @@ namespace CIAO
   namespace Config_Handlers
   {
     // ComponentInterfaceDescription
-    // 
+    //
 
     ComponentInterfaceDescription::
     ComponentInterfaceDescription ()
-    : 
-    ::XSCRT::Type (), 
-    regulator__ ()
+      :
+      ::XSCRT::Type (),
+      regulator__ ()
     {
     }
 
     ComponentInterfaceDescription::
     ComponentInterfaceDescription (::CIAO::Config_Handlers::ComponentInterfaceDescription const& s)
-    :
-    ::XSCRT::Type (),
-    label_ (s.label_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.label_) : 0),
-    UUID_ (s.UUID_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.UUID_) : 0),
-    specificType_ (s.specificType_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.specificType_) : 0),
-    contentLocation_ (s.contentLocation_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.contentLocation_) : 0),
-    regulator__ ()
+      :
+      ::XSCRT::Type (),
+      label_ (s.label_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.label_) : 0),
+        UUID_ (s.UUID_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.UUID_) : 0),
+          specificType_ (s.specificType_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.specificType_) : 0),
+            contentLocation_ (s.contentLocation_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.contentLocation_) : 0),
+              href_ (s.href_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.href_) : 0),
+                regulator__ ()
     {
       if (label_.get ()) label_->container (this);
       if (UUID_.get ()) UUID_->container (this);
       if (specificType_.get ()) specificType_->container (this);
       {
-        for (supportedType_const_iterator i (s.supportedType_.begin ());
-        i != s.supportedType_.end ();
-        ++i) add_supportedType (*i);
+        for (supportedType_const_iterator i (s.supportedType_.begin ());i != s.supportedType_.end ();++i) add_supportedType (*i);
       }
 
       {
-        for (idlFile_const_iterator i (s.idlFile_.begin ());
-        i != s.idlFile_.end ();
-        ++i) add_idlFile (*i);
+        for (idlFile_const_iterator i (s.idlFile_.begin ());i != s.idlFile_.end ();++i) add_idlFile (*i);
       }
 
       {
-        for (configProperty_const_iterator i (s.configProperty_.begin ());
-        i != s.configProperty_.end ();
-        ++i) add_configProperty (*i);
+        for (configProperty_const_iterator i (s.configProperty_.begin ());i != s.configProperty_.end ();++i) add_configProperty (*i);
       }
 
       {
-        for (port_const_iterator i (s.port_.begin ());
-        i != s.port_.end ();
-        ++i) add_port (*i);
+        for (port_const_iterator i (s.port_.begin ());i != s.port_.end ();++i) add_port (*i);
       }
 
       {
-        for (property_const_iterator i (s.property_.begin ());
-        i != s.property_.end ();
-        ++i) add_property (*i);
+        for (property_const_iterator i (s.property_.begin ());i != s.property_.end ();++i) add_property (*i);
       }
 
       {
-        for (infoProperty_const_iterator i (s.infoProperty_.begin ());
-        i != s.infoProperty_.end ();
-        ++i) add_infoProperty (*i);
+        for (infoProperty_const_iterator i (s.infoProperty_.begin ());i != s.infoProperty_.end ();++i) add_infoProperty (*i);
       }
 
       if (contentLocation_.get ()) contentLocation_->container (this);
+      if (href_.get ()) href_->container (this);
     }
 
     ::CIAO::Config_Handlers::ComponentInterfaceDescription& ComponentInterfaceDescription::
@@ -92,55 +82,46 @@ namespace CIAO
 
       supportedType_.clear ();
       {
-        for (supportedType_const_iterator i (s.supportedType_.begin ());
-        i != s.supportedType_.end ();
-        ++i) add_supportedType (*i);
+        for (supportedType_const_iterator i (s.supportedType_.begin ());i != s.supportedType_.end ();++i) add_supportedType (*i);
       }
 
       idlFile_.clear ();
       {
-        for (idlFile_const_iterator i (s.idlFile_.begin ());
-        i != s.idlFile_.end ();
-        ++i) add_idlFile (*i);
+        for (idlFile_const_iterator i (s.idlFile_.begin ());i != s.idlFile_.end ();++i) add_idlFile (*i);
       }
 
       configProperty_.clear ();
       {
-        for (configProperty_const_iterator i (s.configProperty_.begin ());
-        i != s.configProperty_.end ();
-        ++i) add_configProperty (*i);
+        for (configProperty_const_iterator i (s.configProperty_.begin ());i != s.configProperty_.end ();++i) add_configProperty (*i);
       }
 
       port_.clear ();
       {
-        for (port_const_iterator i (s.port_.begin ());
-        i != s.port_.end ();
-        ++i) add_port (*i);
+        for (port_const_iterator i (s.port_.begin ());i != s.port_.end ();++i) add_port (*i);
       }
 
       property_.clear ();
       {
-        for (property_const_iterator i (s.property_.begin ());
-        i != s.property_.end ();
-        ++i) add_property (*i);
+        for (property_const_iterator i (s.property_.begin ());i != s.property_.end ();++i) add_property (*i);
       }
 
       infoProperty_.clear ();
       {
-        for (infoProperty_const_iterator i (s.infoProperty_.begin ());
-        i != s.infoProperty_.end ();
-        ++i) add_infoProperty (*i);
+        for (infoProperty_const_iterator i (s.infoProperty_.begin ());i != s.infoProperty_.end ();++i) add_infoProperty (*i);
       }
 
       if (s.contentLocation_.get ()) contentLocation (*(s.contentLocation_));
       else contentLocation_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (0);
+
+      if (s.href_.get ()) href (*(s.href_));
+      else href_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (0);
 
       return *this;
     }
 
 
     // ComponentInterfaceDescription
-    // 
+    //
     bool ComponentInterfaceDescription::
     label_p () const
     {
@@ -157,19 +138,19 @@ namespace CIAO
     label (::XMLSchema::string< ACE_TCHAR > const& e)
     {
       if (label_.get ())
-      {
-        *label_ = e;
-      }
+        {
+          *label_ = e;
+        }
 
       else
-      {
-        label_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
-        label_->container (this);
-      }
+        {
+          label_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
+          label_->container (this);
+        }
     }
 
     // ComponentInterfaceDescription
-    // 
+    //
     bool ComponentInterfaceDescription::
     UUID_p () const
     {
@@ -186,19 +167,19 @@ namespace CIAO
     UUID (::XMLSchema::string< ACE_TCHAR > const& e)
     {
       if (UUID_.get ())
-      {
-        *UUID_ = e;
-      }
+        {
+          *UUID_ = e;
+        }
 
       else
-      {
-        UUID_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
-        UUID_->container (this);
-      }
+        {
+          UUID_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
+          UUID_->container (this);
+        }
     }
 
     // ComponentInterfaceDescription
-    // 
+    //
     bool ComponentInterfaceDescription::
     specificType_p () const
     {
@@ -215,19 +196,19 @@ namespace CIAO
     specificType (::XMLSchema::string< ACE_TCHAR > const& e)
     {
       if (specificType_.get ())
-      {
-        *specificType_ = e;
-      }
+        {
+          *specificType_ = e;
+        }
 
       else
-      {
-        specificType_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
-        specificType_->container (this);
-      }
+        {
+          specificType_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
+          specificType_->container (this);
+        }
     }
 
     // ComponentInterfaceDescription
-    // 
+    //
     ComponentInterfaceDescription::supportedType_iterator ComponentInterfaceDescription::
     begin_supportedType ()
     {
@@ -265,7 +246,7 @@ namespace CIAO
     }
 
     // ComponentInterfaceDescription
-    // 
+    //
     ComponentInterfaceDescription::idlFile_iterator ComponentInterfaceDescription::
     begin_idlFile ()
     {
@@ -303,7 +284,7 @@ namespace CIAO
     }
 
     // ComponentInterfaceDescription
-    // 
+    //
     ComponentInterfaceDescription::configProperty_iterator ComponentInterfaceDescription::
     begin_configProperty ()
     {
@@ -341,7 +322,7 @@ namespace CIAO
     }
 
     // ComponentInterfaceDescription
-    // 
+    //
     ComponentInterfaceDescription::port_iterator ComponentInterfaceDescription::
     begin_port ()
     {
@@ -379,7 +360,7 @@ namespace CIAO
     }
 
     // ComponentInterfaceDescription
-    // 
+    //
     ComponentInterfaceDescription::property_iterator ComponentInterfaceDescription::
     begin_property ()
     {
@@ -417,7 +398,7 @@ namespace CIAO
     }
 
     // ComponentInterfaceDescription
-    // 
+    //
     ComponentInterfaceDescription::infoProperty_iterator ComponentInterfaceDescription::
     begin_infoProperty ()
     {
@@ -455,7 +436,7 @@ namespace CIAO
     }
 
     // ComponentInterfaceDescription
-    // 
+    //
     bool ComponentInterfaceDescription::
     contentLocation_p () const
     {
@@ -472,15 +453,50 @@ namespace CIAO
     contentLocation (::XMLSchema::string< ACE_TCHAR > const& e)
     {
       if (contentLocation_.get ())
-      {
-        *contentLocation_ = e;
-      }
+        {
+          *contentLocation_ = e;
+        }
 
       else
-      {
-        contentLocation_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
-        contentLocation_->container (this);
-      }
+        {
+          contentLocation_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
+          contentLocation_->container (this);
+        }
+    }
+
+    // ComponentInterfaceDescription
+    //
+    bool ComponentInterfaceDescription::
+    href_p () const
+    {
+      return href_.get () != 0;
+    }
+
+    ::XMLSchema::string< ACE_TCHAR > const& ComponentInterfaceDescription::
+    href () const
+    {
+      return *href_;
+    }
+
+    ::XMLSchema::string< ACE_TCHAR >& ComponentInterfaceDescription::
+    href ()
+    {
+      return *href_;
+    }
+
+    void ComponentInterfaceDescription::
+    href (::XMLSchema::string< ACE_TCHAR > const& e)
+    {
+      if (href_.get ())
+        {
+          *href_ = e;
+        }
+
+      else
+        {
+          href_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
+          href_->container (this);
+        }
     }
   }
 }
@@ -494,80 +510,95 @@ namespace CIAO
 
     ComponentInterfaceDescription::
     ComponentInterfaceDescription (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-    :Base__ (e), regulator__ ()
+      :Base__ (e), regulator__ ()
     {
 
       ::XSCRT::Parser< ACE_TCHAR > p (e);
 
       while (p.more_elements ())
-      {
-        ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
-        ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
-
-        if (n == "label")
         {
-          ::XMLSchema::string< ACE_TCHAR > t (e);
-          label (t);
+          ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
+          ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
+
+          if (n == "label")
+            {
+              ::XMLSchema::string< ACE_TCHAR > t (e);
+              label (t);
+            }
+
+          else if (n == "UUID")
+            {
+              ::XMLSchema::string< ACE_TCHAR > t (e);
+              UUID (t);
+            }
+
+          else if (n == "specificType")
+            {
+              ::XMLSchema::string< ACE_TCHAR > t (e);
+              specificType (t);
+            }
+
+          else if (n == "supportedType")
+            {
+              ::XMLSchema::string< ACE_TCHAR > t (e);
+              add_supportedType (t);
+            }
+
+          else if (n == "idlFile")
+            {
+              ::XMLSchema::string< ACE_TCHAR > t (e);
+              add_idlFile (t);
+            }
+
+          else if (n == "configProperty")
+            {
+              ::CIAO::Config_Handlers::Property t (e);
+              add_configProperty (t);
+            }
+
+          else if (n == "port")
+            {
+              ::CIAO::Config_Handlers::ComponentPortDescription t (e);
+              add_port (t);
+            }
+
+          else if (n == "property")
+            {
+              ::CIAO::Config_Handlers::ComponentPropertyDescription t (e);
+              add_property (t);
+            }
+
+          else if (n == "infoProperty")
+            {
+              ::CIAO::Config_Handlers::Property t (e);
+              add_infoProperty (t);
+            }
+
+          else if (n == "contentLocation")
+            {
+              ::XMLSchema::string< ACE_TCHAR > t (e);
+              contentLocation (t);
+            }
+
+          else
+            {
+            }
         }
 
-        else if (n == "UUID")
+      while (p.more_attributes ())
         {
-          ::XMLSchema::string< ACE_TCHAR > t (e);
-          UUID (t);
-        }
+          ::XSCRT::XML::Attribute< ACE_TCHAR > a (p.next_attribute ());
+          ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (a.name ()));
+          if (n == "href")
+            {
+              ::XMLSchema::string< ACE_TCHAR > t (a);
+              href (t);
+            }
 
-        else if (n == "specificType")
-        {
-          ::XMLSchema::string< ACE_TCHAR > t (e);
-          specificType (t);
+          else
+            {
+            }
         }
-
-        else if (n == "supportedType")
-        {
-          ::XMLSchema::string< ACE_TCHAR > t (e);
-          add_supportedType (t);
-        }
-
-        else if (n == "idlFile")
-        {
-          ::XMLSchema::string< ACE_TCHAR > t (e);
-          add_idlFile (t);
-        }
-
-        else if (n == "configProperty")
-        {
-          ::CIAO::Config_Handlers::Property t (e);
-          add_configProperty (t);
-        }
-
-        else if (n == "port")
-        {
-          ::CIAO::Config_Handlers::ComponentPortDescription t (e);
-          add_port (t);
-        }
-
-        else if (n == "property")
-        {
-          ::CIAO::Config_Handlers::ComponentPropertyDescription t (e);
-          add_property (t);
-        }
-
-        else if (n == "infoProperty")
-        {
-          ::CIAO::Config_Handlers::Property t (e);
-          add_infoProperty (t);
-        }
-
-        else if (n == "contentLocation")
-        {
-          ::XMLSchema::string< ACE_TCHAR > t (e);
-          contentLocation (t);
-        }
-
-        else 
-        {
-        }
-      }
     }
   }
 }
@@ -634,6 +665,8 @@ namespace CIAO
         infoProperty (o);
         if (o.contentLocation_p ()) contentLocation (o);
         else contentLocation_none (o);
+        if (o.href_p ()) href (o);
+        else href_none (o);
         post (o);
       }
 
@@ -655,6 +688,8 @@ namespace CIAO
         infoProperty (o);
         if (o.contentLocation_p ()) contentLocation (o);
         else contentLocation_none (o);
+        if (o.href_p ()) href (o);
+        else href_none (o);
         post (o);
       }
 
@@ -742,18 +777,16 @@ namespace CIAO
         ComponentInterfaceDescription::Type::supportedType_iterator b (o.begin_supportedType()), e (o.end_supportedType());
 
         if (b != e)
-        {
-          supportedType_pre (o);
-          for (;
-           b != e;
-          )
           {
-            dispatch (*b);
-            if (++b != e) supportedType_next (o);
-          }
+            supportedType_pre (o);
+            for (; b != e;)
+              {
+                dispatch (*b);
+                if (++b != e) supportedType_next (o);
+              }
 
-          supportedType_post (o);
-        }
+            supportedType_post (o);
+          }
 
         else supportedType_none (o);
       }
@@ -766,18 +799,16 @@ namespace CIAO
         ComponentInterfaceDescription::Type::supportedType_const_iterator b (o.begin_supportedType()), e (o.end_supportedType());
 
         if (b != e)
-        {
-          supportedType_pre (o);
-          for (;
-           b != e;
-          )
           {
-            dispatch (*b);
-            if (++b != e) supportedType_next (o);
-          }
+            supportedType_pre (o);
+            for (; b != e;)
+              {
+                dispatch (*b);
+                if (++b != e) supportedType_next (o);
+              }
 
-          supportedType_post (o);
-        }
+            supportedType_post (o);
+          }
 
         else supportedType_none (o);
       }
@@ -830,18 +861,16 @@ namespace CIAO
         ComponentInterfaceDescription::Type::idlFile_iterator b (o.begin_idlFile()), e (o.end_idlFile());
 
         if (b != e)
-        {
-          idlFile_pre (o);
-          for (;
-           b != e;
-          )
           {
-            dispatch (*b);
-            if (++b != e) idlFile_next (o);
-          }
+            idlFile_pre (o);
+            for (; b != e;)
+              {
+                dispatch (*b);
+                if (++b != e) idlFile_next (o);
+              }
 
-          idlFile_post (o);
-        }
+            idlFile_post (o);
+          }
 
         else idlFile_none (o);
       }
@@ -854,18 +883,16 @@ namespace CIAO
         ComponentInterfaceDescription::Type::idlFile_const_iterator b (o.begin_idlFile()), e (o.end_idlFile());
 
         if (b != e)
-        {
-          idlFile_pre (o);
-          for (;
-           b != e;
-          )
           {
-            dispatch (*b);
-            if (++b != e) idlFile_next (o);
-          }
+            idlFile_pre (o);
+            for (; b != e;)
+              {
+                dispatch (*b);
+                if (++b != e) idlFile_next (o);
+              }
 
-          idlFile_post (o);
-        }
+            idlFile_post (o);
+          }
 
         else idlFile_none (o);
       }
@@ -918,18 +945,16 @@ namespace CIAO
         ComponentInterfaceDescription::Type::configProperty_iterator b (o.begin_configProperty()), e (o.end_configProperty());
 
         if (b != e)
-        {
-          configProperty_pre (o);
-          for (;
-           b != e;
-          )
           {
-            dispatch (*b);
-            if (++b != e) configProperty_next (o);
-          }
+            configProperty_pre (o);
+            for (; b != e;)
+              {
+                dispatch (*b);
+                if (++b != e) configProperty_next (o);
+              }
 
-          configProperty_post (o);
-        }
+            configProperty_post (o);
+          }
 
         else configProperty_none (o);
       }
@@ -942,18 +967,16 @@ namespace CIAO
         ComponentInterfaceDescription::Type::configProperty_const_iterator b (o.begin_configProperty()), e (o.end_configProperty());
 
         if (b != e)
-        {
-          configProperty_pre (o);
-          for (;
-           b != e;
-          )
           {
-            dispatch (*b);
-            if (++b != e) configProperty_next (o);
-          }
+            configProperty_pre (o);
+            for (; b != e;)
+              {
+                dispatch (*b);
+                if (++b != e) configProperty_next (o);
+              }
 
-          configProperty_post (o);
-        }
+            configProperty_post (o);
+          }
 
         else configProperty_none (o);
       }
@@ -1006,18 +1029,16 @@ namespace CIAO
         ComponentInterfaceDescription::Type::port_iterator b (o.begin_port()), e (o.end_port());
 
         if (b != e)
-        {
-          port_pre (o);
-          for (;
-           b != e;
-          )
           {
-            dispatch (*b);
-            if (++b != e) port_next (o);
-          }
+            port_pre (o);
+            for (; b != e;)
+              {
+                dispatch (*b);
+                if (++b != e) port_next (o);
+              }
 
-          port_post (o);
-        }
+            port_post (o);
+          }
 
         else port_none (o);
       }
@@ -1030,18 +1051,16 @@ namespace CIAO
         ComponentInterfaceDescription::Type::port_const_iterator b (o.begin_port()), e (o.end_port());
 
         if (b != e)
-        {
-          port_pre (o);
-          for (;
-           b != e;
-          )
           {
-            dispatch (*b);
-            if (++b != e) port_next (o);
-          }
+            port_pre (o);
+            for (; b != e;)
+              {
+                dispatch (*b);
+                if (++b != e) port_next (o);
+              }
 
-          port_post (o);
-        }
+            port_post (o);
+          }
 
         else port_none (o);
       }
@@ -1094,18 +1113,16 @@ namespace CIAO
         ComponentInterfaceDescription::Type::property_iterator b (o.begin_property()), e (o.end_property());
 
         if (b != e)
-        {
-          property_pre (o);
-          for (;
-           b != e;
-          )
           {
-            dispatch (*b);
-            if (++b != e) property_next (o);
-          }
+            property_pre (o);
+            for (; b != e;)
+              {
+                dispatch (*b);
+                if (++b != e) property_next (o);
+              }
 
-          property_post (o);
-        }
+            property_post (o);
+          }
 
         else property_none (o);
       }
@@ -1118,18 +1135,16 @@ namespace CIAO
         ComponentInterfaceDescription::Type::property_const_iterator b (o.begin_property()), e (o.end_property());
 
         if (b != e)
-        {
-          property_pre (o);
-          for (;
-           b != e;
-          )
           {
-            dispatch (*b);
-            if (++b != e) property_next (o);
-          }
+            property_pre (o);
+            for (; b != e;)
+              {
+                dispatch (*b);
+                if (++b != e) property_next (o);
+              }
 
-          property_post (o);
-        }
+            property_post (o);
+          }
 
         else property_none (o);
       }
@@ -1182,18 +1197,16 @@ namespace CIAO
         ComponentInterfaceDescription::Type::infoProperty_iterator b (o.begin_infoProperty()), e (o.end_infoProperty());
 
         if (b != e)
-        {
-          infoProperty_pre (o);
-          for (;
-           b != e;
-          )
           {
-            dispatch (*b);
-            if (++b != e) infoProperty_next (o);
-          }
+            infoProperty_pre (o);
+            for (; b != e;)
+              {
+                dispatch (*b);
+                if (++b != e) infoProperty_next (o);
+              }
 
-          infoProperty_post (o);
-        }
+            infoProperty_post (o);
+          }
 
         else infoProperty_none (o);
       }
@@ -1206,18 +1219,16 @@ namespace CIAO
         ComponentInterfaceDescription::Type::infoProperty_const_iterator b (o.begin_infoProperty()), e (o.end_infoProperty());
 
         if (b != e)
-        {
-          infoProperty_pre (o);
-          for (;
-           b != e;
-          )
           {
-            dispatch (*b);
-            if (++b != e) infoProperty_next (o);
-          }
+            infoProperty_pre (o);
+            for (; b != e;)
+              {
+                dispatch (*b);
+                if (++b != e) infoProperty_next (o);
+              }
 
-          infoProperty_post (o);
-        }
+            infoProperty_post (o);
+          }
 
         else infoProperty_none (o);
       }
@@ -1285,6 +1296,28 @@ namespace CIAO
       }
 
       void ComponentInterfaceDescription::
+      href (Type& o)
+      {
+        dispatch (o.href ());
+      }
+
+      void ComponentInterfaceDescription::
+      href (Type const& o)
+      {
+        dispatch (o.href ());
+      }
+
+      void ComponentInterfaceDescription::
+      href_none (Type&)
+      {
+      }
+
+      void ComponentInterfaceDescription::
+      href_none (Type const&)
+      {
+      }
+
+      void ComponentInterfaceDescription::
       post (Type&)
       {
       }
@@ -1309,7 +1342,7 @@ namespace CIAO
 
       ComponentInterfaceDescription::
       ComponentInterfaceDescription (::XSCRT::XML::Element< ACE_TCHAR >& e)
-      : ::XSCRT::Writer< ACE_TCHAR > (e)
+        : ::XSCRT::Writer< ACE_TCHAR > (e)
       {
       }
 
@@ -1468,6 +1501,15 @@ namespace CIAO
         push_ (::XSCRT::XML::Element< ACE_TCHAR > ("contentLocation", top_ ()));
         Traversal::ComponentInterfaceDescription::contentLocation (o);
         pop_ ();
+      }
+
+      void ComponentInterfaceDescription::
+      href (Type const& o)
+      {
+        ::XSCRT::XML::Attribute< ACE_TCHAR > a ("href", "", top_ ());
+        attr_ (&a);
+        Traversal::ComponentInterfaceDescription::href (o);
+        attr_ (0);
       }
     }
   }

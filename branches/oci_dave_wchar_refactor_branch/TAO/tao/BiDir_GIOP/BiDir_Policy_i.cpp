@@ -1,6 +1,6 @@
 // $Id$
 
-#include "BiDir_Policy_i.h"
+#include "tao/BiDir_GIOP/BiDir_Policy_i.h"
 
 #include "tao/Stub.h"
 #include "tao/debug.h"
@@ -10,27 +10,28 @@ ACE_RCSID (TAO,
            BiDir_Policy_i,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_BidirectionalPolicy::TAO_BidirectionalPolicy (
     const BiDirPolicy::BidirectionalPolicyValue  val)
-  : ACE_NESTED_CLASS (CORBA, Object) ()
-  , ACE_NESTED_CLASS (CORBA, Policy) ()
-  , ACE_NESTED_CLASS (BiDirPolicy, BidirectionalPolicy) ()
-  , ACE_NESTED_CLASS (CORBA, LocalObject) ()
+  : ::CORBA::Object ()
+  , ::CORBA::Policy ()
+  , ::BiDirPolicy::BidirectionalPolicy ()
+  , ::CORBA::LocalObject ()
   , TAO_Local_RefCounted_Object ()
   , value_ (val)
 {
 }
 
 TAO_BidirectionalPolicy::TAO_BidirectionalPolicy (const TAO_BidirectionalPolicy &rhs)
-  : ACE_NESTED_CLASS (CORBA, Object) ()
-  , ACE_NESTED_CLASS (CORBA, Policy) ()
-  , ACE_NESTED_CLASS (BiDirPolicy, BidirectionalPolicy) ()
-  , ACE_NESTED_CLASS (CORBA, LocalObject) ()
+  : ::CORBA::Object ()
+  , ::CORBA::Policy ()
+  , ::BiDirPolicy::BidirectionalPolicy ()
+  , ::CORBA::LocalObject ()
   , TAO_Local_RefCounted_Object ()
   , value_ (rhs.value_)
 {
 }
-
 
 CORBA::PolicyType
 TAO_BidirectionalPolicy::policy_type (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
@@ -74,7 +75,6 @@ TAO_BidirectionalPolicy::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
 }
 
-
 BiDirPolicy::BidirectionalPolicyValue
 TAO_BidirectionalPolicy::value (
     ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
@@ -90,3 +90,5 @@ TAO_BidirectionalPolicy::_tao_cached_type (void) const
 {
   return TAO_CACHED_POLICY_BIDIRECTIONAL_GIOP;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

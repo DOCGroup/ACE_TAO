@@ -9,6 +9,8 @@
 #include "tao/PortableServer/Fixed_Array_SArgument_T.inl"
 #endif /* __ACE_INLINE__ */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 template<typename S,
          typename S_slice,
          typename S_forany,
@@ -156,5 +158,7 @@ TAO::Ret_Fixed_Array_SArgument_T<S_slice,
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_FIXED_ARRAY_SARGUMENT_T_CPP */

@@ -29,12 +29,14 @@
 // be\be_codegen.cpp:277
 
 
-#include "ServantManagerC.h"
+#include "tao/PortableServer/ServantManagerC.h"
 #include "tao/CDR.h"
 #include "ace/OS_NS_string.h"
 
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:70
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Arg traits specializations.
 namespace TAO
@@ -61,7 +63,7 @@ TAO::Objref_Traits<PortableServer::ServantManager>::release (
     PortableServer::ServantManager_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 PortableServer::ServantManager_ptr
@@ -110,18 +112,18 @@ PortableServer::ServantManager::_unchecked_narrow (
 PortableServer::ServantManager_ptr
 PortableServer::ServantManager::_duplicate (ServantManager_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void
 PortableServer::ServantManager::_tao_release (ServantManager_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean
@@ -163,5 +165,7 @@ PortableServer::ServantManager::marshal (TAO_OutputCDR &)
 {
   return false;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */

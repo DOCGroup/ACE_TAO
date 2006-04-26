@@ -1,7 +1,7 @@
-#include "SSLIOP_Connection_Handler.h"
-#include "SSLIOP_Transport.h"
-#include "SSLIOP_Profile.h"
-#include "SSLIOP_Acceptor.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Transport.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Profile.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Acceptor.h"
 
 #include "tao/debug.h"
 
@@ -14,11 +14,14 @@
 #include "tao/debug.h"
 #include "tao/GIOP_Message_Base.h"
 #include "tao/Acceptor_Registry.h"
+#include "tao/Thread_Lane_Resources.h"
 
 ACE_RCSID (SSLIOP,
            SSLIOP_Transport,
            "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::SSLIOP::Transport::Transport (
   TAO::SSLIOP::Connection_Handler *handler,
@@ -30,7 +33,7 @@ TAO::SSLIOP::Transport::Transport (
 {
   // Use the normal GIOP object
   ACE_NEW (this->messaging_object_,
-           TAO_GIOP_Message_Base (orb_core));
+           TAO_GIOP_Message_Base (orb_core, this));
 }
 
 TAO::SSLIOP::Transport::~Transport (void)
@@ -378,3 +381,5 @@ TAO::SSLIOP::Transport::get_listen_point (
 
   return 1;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

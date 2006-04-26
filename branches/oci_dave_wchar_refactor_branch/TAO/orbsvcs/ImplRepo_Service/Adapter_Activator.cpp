@@ -13,13 +13,13 @@
 
 #include "ace/Log_Msg.h"
 
-ImR_Adapter::ImR_Adapter(void)
-: servant_locator_(0)
+ImR_Adapter::ImR_Adapter (void)
+: servant_locator_ (0)
 {
 }
 
 void
-ImR_Adapter::init(PortableServer::ServantLocator_ptr servant)
+ImR_Adapter::init (PortableServer::ServantLocator_ptr servant)
 {
   servant_locator_ = servant;
 }
@@ -30,8 +30,8 @@ ImR_Adapter::unknown_adapter (PortableServer::POA_ptr parent,
                                         ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_ASSERT(! CORBA::is_nil(parent));
-  ACE_ASSERT(name != 0);
+  ACE_ASSERT (! CORBA::is_nil(parent));
+  ACE_ASSERT (name != 0);
   CORBA::PolicyList policies (2);
   policies.length (2);
 
@@ -76,7 +76,7 @@ ImR_Adapter::unknown_adapter (PortableServer::POA_ptr parent,
       ACE_TRY_CHECK;
 
       exception_message = "While unknown_adapter, set_servant_manager";
-      child->set_servant_manager(this->servant_locator_ ACE_ENV_ARG_PARAMETER);
+      child->set_servant_manager (this->servant_locator_ ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

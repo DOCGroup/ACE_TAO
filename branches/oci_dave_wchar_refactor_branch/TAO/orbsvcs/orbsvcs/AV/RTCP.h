@@ -1,5 +1,6 @@
-/* -*- C++ -*- */
-/*-
+// -*- C++ -*-
+
+/**
  * Copyright (c) 1993-1994 The Regents of the University of California.
  * All rights reserved.
  *
@@ -48,16 +49,18 @@
 #define TAO_AV_RTCP_H
 #include /**/ "ace/pre.h"
 
+#include "orbsvcs/AV/RTCP_Channel.h"
+
 // FUZZ: disable check_for_math_include
-#include "ace/OS.h"
-#include "ace/Hash_Map_Manager.h"
+
 #include "orbsvcs/AV/AVStreams_i.h"
 #include "orbsvcs/AV/UDP.h"
+#include "orbsvcs/AV/RTP.h"
+#include "ace/Hash_Map_Manager_T.h"
 #include <math.h>
 #include <stdlib.h>
-#include "orbsvcs/AV/RTP.h"
 
-#include "RTCP_Channel.h"
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_AV_RTCP_Callback;
 
@@ -244,7 +247,7 @@ private:
   ACE_UINT32 ssrc_;
 };
 
-
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE (TAO_AV_RTCP_Flow_Factory)
 ACE_FACTORY_DECLARE (TAO_AV, TAO_AV_RTCP_Flow_Factory)

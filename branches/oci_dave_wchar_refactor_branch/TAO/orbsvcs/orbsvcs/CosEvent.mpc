@@ -1,22 +1,20 @@
 // $Id$
 
-project (CosEvent_IDL) : orbsvcslib, core, minimum_corba, ec_typed_events_idl {
-
-  idlflags    += -Wb,stub_export_macro=TAO_Event_Export -Wb,stub_export_include=orbsvcs/CosEvent/event_export.h -Wb,skel_export_macro=TAO_Event_Skel_Export -Wb,skel_export_include=orbsvcs/CosEvent/event_skel_export.h
+project (CosEvent_IDL) : orbsvcslib, core, minimum_corba, ec_typed_events_idl, tao_versioning_idl_defaults {
+  custom_only = 1
+  idlflags   += -Wb,stub_export_macro=TAO_Event_Export -Wb,stub_export_include=orbsvcs/CosEvent/event_export.h -Wb,skel_export_macro=TAO_Event_Skel_Export -Wb,skel_export_include=orbsvcs/CosEvent/event_skel_export.h
 
   IDL_Files {
     CosEventComm.idl
     CosEventChannelAdmin.idl
   }
-
-  custom_only = 1
 }
 
 project (CosEvent) : orbsvcslib, core, minimum_corba, ec_typed_events {
   sharedname   = TAO_CosEvent
   dynamicflags = TAO_EVENT_BUILD_DLL
-
-  after += CosEvent_IDL
+  tagchecks   += CosEvent
+  after       += CosEvent_IDL
 
   IDL_Files {
   }
@@ -54,6 +52,7 @@ project (CosEvent) : orbsvcslib, core, minimum_corba, ec_typed_events {
 project (CosEvent_Skel) : orbsvcslib, core, minimum_corba, event, portableserver, ec_typed_events_skel {
   sharedname   = TAO_CosEvent_Skel
   dynamicflags = TAO_EVENT_SKEL_BUILD_DLL
+  tagchecks   += CosEvent
 
   IDL_Files {
   }
@@ -89,7 +88,7 @@ project (CosEvent_Skel) : orbsvcslib, core, minimum_corba, event, portableserver
 }
 
 
-project (CosEvent_Serv) : orbsvcslib, core, minimum_corba, event_skel, ec_typed_events_serv, messaging, naming, svc_utils {
+project (CosEvent_Serv) : orbsvcslib, core, minimum_corba, event_skel, ec_typed_events_serv, messaging_optional, naming, svc_utils {
   sharedname   = TAO_CosEvent_Serv
   dynamicflags = TAO_EVENT_SERV_BUILD_DLL
   tagchecks   += CosEvent
@@ -97,28 +96,34 @@ project (CosEvent_Serv) : orbsvcslib, core, minimum_corba, event_skel, ec_typed_
   IDL_Files {
   }
 
-  Source_Files(ORBSVCS_COMPONENTS) {
-    CosEvent {
-      CosEvent/CEC_ConsumerAdmin.cpp
-      CosEvent/CEC_ConsumerControl.cpp
-      CosEvent/CEC_Default_Factory.cpp
-      CosEvent/CEC_Dispatching.cpp
-      CosEvent/CEC_Dispatching_Task.cpp
-      CosEvent/CEC_EventChannel.cpp
-      CosEvent/CEC_Event_Loader.cpp
-      CosEvent/CEC_Factory.cpp
-      CosEvent/CEC_MT_Dispatching.cpp
-      CosEvent/CEC_ProxyPullConsumer.cpp
-      CosEvent/CEC_ProxyPullSupplier.cpp
-      CosEvent/CEC_ProxyPushConsumer.cpp
-      CosEvent/CEC_ProxyPushSupplier.cpp
-      CosEvent/CEC_Pulling_Strategy.cpp
-      CosEvent/CEC_Reactive_ConsumerControl.cpp
-      CosEvent/CEC_Reactive_Pulling_Strategy.cpp
-      CosEvent/CEC_Reactive_SupplierControl.cpp
-      CosEvent/CEC_SupplierAdmin.cpp
-      CosEvent/CEC_SupplierControl.cpp
-    }
+  Source_Files {
+    CosEvent/CEC_ConsumerAdmin.cpp
+    CosEvent/CEC_ConsumerControl.cpp
+    CosEvent/CEC_Default_Factory.cpp
+    CosEvent/CEC_Dispatching.cpp
+    CosEvent/CEC_Dispatching_Task.cpp
+    CosEvent/CEC_EventChannel.cpp
+    CosEvent/CEC_Event_Loader.cpp
+    CosEvent/CEC_Factory.cpp
+    CosEvent/CEC_MT_Dispatching.cpp
+    CosEvent/CEC_ProxyPullConsumer.cpp
+    CosEvent/CEC_ProxyPullSupplier.cpp
+    CosEvent/CEC_ProxyPushConsumer.cpp
+    CosEvent/CEC_ProxyPushSupplier.cpp
+    CosEvent/CEC_Pulling_Strategy.cpp
+    CosEvent/CEC_Reactive_ConsumerControl.cpp
+    CosEvent/CEC_Reactive_Pulling_Strategy.cpp
+    CosEvent/CEC_Reactive_SupplierControl.cpp
+    CosEvent/CEC_SupplierAdmin.cpp
+    CosEvent/CEC_SupplierControl.cpp
+  }
+
+  Header_Files {
+    CosEvent/CEC_Defaults.h
+    CosEvent/event_serv_export.h
+  }
+
+  Inline_Files {
   }
 
   Template_Files {

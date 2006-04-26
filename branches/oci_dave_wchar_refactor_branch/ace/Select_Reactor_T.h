@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -23,9 +23,11 @@
 #include "ace/Lock_Adapter_T.h"
 #include "ace/Token.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /*
- * Hook for specializing the reactor with the concrete 
- * type, for example, select, or thread pool. 
+ * Hook for specializing the reactor with the concrete
+ * type, for example, select, or thread pool.
  */
 //@@ REACTOR_SPL_INCLUDE_FORWARD_DECL_ADD_HOOK
 
@@ -128,7 +130,7 @@ public:
   /// Set a user-specified timer queue.
   virtual int timer_queue (ACE_Timer_Queue *tq);
 
-  /// Return the current <ACE_Timer_Queue>.
+  /// Return the current ACE_Timer_Queue.
   virtual ACE_Timer_Queue *timer_queue (void) const;
 
   /// Close down the select_reactor and release all of its resources.
@@ -147,20 +149,20 @@ public:
   virtual int work_pending (const ACE_Time_Value &max_wait_time =  ACE_Time_Value::zero);
 
   /**
-   * This event loop driver that blocks for <max_wait_time> before
+   * This event loop driver that blocks for @a max_wait_time before
    * returning.  It will return earlier if timer events, I/O events,
-   * or signal events occur.  Note that <max_wait_time> can be 0, in
+   * or signal events occur.  Note that @a max_wait_time can be 0, in
    * which case this method blocks indefinitely until events occur.
    *
-   * <max_wait_time> is decremented to reflect how much time this call
+   * @a max_wait_time is decremented to reflect how much time this call
    * took.  For instance, if a time value of 3 seconds is passed to
    * handle_events and an event occurs after 2 seconds,
-   * <max_wait_time> will equal 1 second.  This can be used if an
+   * @a max_wait_time will equal 1 second.  This can be used if an
    * application wishes to handle events for some fixed amount of
    * time.
    *
-   * Returns the total number of I/O and Timer <ACE_Event_Handler>s
-   * that were dispatched, 0 if the <max_wait_time> elapsed without
+   * Returns the total number of I/O and Timer ACE_Event_Handler's
+   * that were dispatched, 0 if the @a max_wait_time elapsed without
    * dispatching any handlers, or -1 if something goes wrong.
    *
    * Current <alertable_handle_events> is identical to
@@ -171,7 +173,7 @@ public:
 
   /**
    * This method is just like the one above, except the
-   * <max_wait_time> value is a reference and can therefore never be
+   * @a max_wait_time value is a reference and can therefore never be
    * NULL.
    *
    * Current <alertable_handle_events> is identical to
@@ -196,7 +198,7 @@ public:
    */
   virtual void deactivate (int do_stop);
 
-  // = Register and remove <ACE_Event_Handler>s.
+  // = Register and remove ACE_Event_Handlers.
   /**
    * Register a <eh> with a particular <mask>.  Note that the
    * <Select_Reactor> will call <ACE_Event_Handler::get_handle> to
@@ -206,9 +208,9 @@ public:
                                 ACE_Reactor_Mask mask);
 
   /**
-   * Register a <eh> with a particular <mask>.  Note that since the
-   * <handle> is given the Select_Reactor will *not* call
-   * <ACE_Event_Handler::get_handle> to extract the underlying I/O
+   * Register a @a eh with a particular @a mask.  Note that since the
+   * @a handle is given the Select_Reactor will *not* call
+   * ACE_Event_Handler::get_handle() to extract the underlying I/O
    * handle.
    */
   virtual int register_handler (ACE_HANDLE handle,
@@ -236,7 +238,7 @@ public:
                                 ACE_Event_Handler *event_handler,
                                 ACE_Reactor_Mask mask);
 
-  /// Register <eh> with all the <handles> in the <Handle_Set>.
+  /// Register @a eh with all the @a handles in the <Handle_Set>.
   virtual int register_handler (const ACE_Handle_Set &handles,
                                 ACE_Event_Handler *eh,
                                 ACE_Reactor_Mask mask);
@@ -348,9 +350,10 @@ public:
    * @see reset_timer_interval()
    *
    * @param event_handler  Event handler to schedule on reactor
-   * @param arg   Argument passed to the handle_timeout() method of  event_handler
-   * @param delay  Time interval after which the timer will expire
-   * @param interval  Time interval after which the timer will be automatically rescheduled
+   * @param arg Argument passed to the handle_timeout() method of event_handler
+   * @param delay Time interval after which the timer will expire
+   * @param interval Time interval after which the timer will be automatically
+   * rescheduled
    * @return -1 on failure, a timer_id value on success
    */
   virtual long schedule_timer (ACE_Event_Handler * event_handler,
@@ -378,7 +381,7 @@ public:
                             int dont_call_handle_close = 1);
 
   /**
-   * Cancel the single <ACE_Event_Handler> that matches the <timer_id>
+   * Cancel the single ACE_Event_Handler that matches the <timer_id>
    * value (which was returned from the <schedule> method).  If arg is
    * non-NULL then it will be set to point to the ``magic cookie''
    * argument passed in when the <Event_Handler> was registered.  This
@@ -612,9 +615,9 @@ protected:
   // = Dispatching methods.
 
   /**
-   * Template Method that dispatches <ACE_Event_Handler>s for time
+   * Template Method that dispatches ACE_Event_Handlers for time
    * events, I/O events, and signal events.  Returns the total number
-   * of <ACE_Event_Handler>s that were dispatched or -1 if something
+   * of ACE_Event_Handlers that were dispatched or -1 if something
    * goes wrong.
    */
   virtual int dispatch (int nfound,
@@ -697,10 +700,9 @@ private:
   ACE_UNIMPLEMENTED_FUNC (ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN> &operator=  (const ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN> &) )
 };
 
-// @@ The latest version of SunCC can't grok the code if we put inline
-// function here.  Therefore, we temporarily disable the code here.
-// We shall turn this back on once we know the problem gets fixed.
-#if 0 // defined (__ACE_INLINE__)
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+#if defined (__ACE_INLINE__)
 #include "ace/Select_Reactor_T.inl"
 #endif /* __ACE_INLINE__ */
 

@@ -55,50 +55,7 @@
 #define ACE_TQIT_R \
         ACE_Timer_Queue_Iterator_T<ACE_WHEEL_TEMPLATE_ARGS_R>
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
-template class ACE_Svc_Handler<ACE_LSOCK_STREAM, ACE_NULL_SYNCH>;
-template class ACE_Atomic_Op<ACE_SYNCH_MUTEX, int>;
-template class ACE_Atomic_Op_Ex<ACE_SYNCH_MUTEX, int>;
-template class ACE_Node<void *>;
-template class ACE_Unbounded_Queue<void *>;
-template class ACE_Unbounded_Queue_Iterator<void *>;
-template class ACE_Singleton<JAWS_Synch_IO, ACE_SYNCH_MUTEX>;
-template class ACE_Singleton<JAWS_Asynch_IO, ACE_SYNCH_MUTEX>;
-template class ACE_Singleton<JAWS_Reactive_IO, ACE_SYNCH_MUTEX>;
-template class ACE_Singleton<JAWS_IO, ACE_SYNCH_MUTEX>;
-template class ACE_Singleton<JAWS_TPOOL_Concurrency, ACE_SYNCH_MUTEX>;
-template class ACE_Singleton<JAWS_TPR_Concurrency, ACE_SYNCH_MUTEX>;
-template class ACE_Singleton<JAWS_THYBRID_Concurrency, ACE_SYNCH_MUTEX>;
-template class ACE_Singleton<JAWS_Concurrency, ACE_SYNCH_MUTEX>;
-template class ACE_Singleton<JAWS_Options, ACE_SYNCH_MUTEX>;
-template class ACE_Select_Reactor_Token_T<ACE_Noop_Token>;
-template class ACE_Select_Reactor_T<ACE_Select_Reactor_Noop_Token>;
-template class ACE_Lock_Adapter<ACE_Select_Reactor_Noop_Token>;
-template class ACE_EHHTU_RW;
-template class ACE_EHHTU_R;
-template class ACE_TWT_RW;
-template class ACE_TWT_R;
-template class ACE_TWIT_RW;
-template class ACE_TWIT_R;
-template class ACE_TQT_RW;
-template class ACE_TQT_R;
-template class ACE_TQIT_RW;
-template class ACE_TQIT_R;
-template class ACE_Thread_Timer_Queue_Adapter< ACE_TWT_RW >;
-template class ACE_Thread_Timer_Queue_Adapter< ACE_TWT_R >;
-template class ACE_Singleton<JAWS_Timer, ACE_SYNCH_MUTEX>;
-template class ACE_Singleton<JAWS_Task_Timer, ACE_SYNCH_MUTEX>;
-template class ACE_Singleton<JAWS_Signal_Task, ACE_SYNCH_MUTEX>;
-template class ACE_Singleton<ACE_Message_Block, ACE_SYNCH_NULL_MUTEX>;
-template class JAWS_SYMBOL_TABLE_ENTRY;
-template class JAWS_SYMBOL_TABLE_BASE;
-template class JAWS_SYMBOL_TABLE_ITERATOR_BASE;
-template class JAWS_SYMBOL_TABLE_ITERATOR;
-template class JAWS_SYMBOL_TABLE_REVERSE_ITERATOR;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#elif defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
+#if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
 template ACE_Singleton<ACE_Message_Block, ACE_Null_Mutex> *ACE_Singleton<ACE_Message_Block, ACE_Null_Mutex>::singleton_;
 template ACE_Singleton<JAWS_Asynch_IO, ACE_Thread_Mutex> *ACE_Singleton<JAWS_Asynch_IO, ACE_Thread_Mutex>::singleton_;
 template ACE_Singleton<JAWS_Concurrency, ACE_Thread_Mutex> *ACE_Singleton<JAWS_Concurrency, ACE_Thread_Mutex>::singleton_;
@@ -112,4 +69,4 @@ template ACE_Singleton<JAWS_TPOOL_Concurrency, ACE_Thread_Mutex> *ACE_Singleton<
 template ACE_Singleton<JAWS_TPR_Concurrency, ACE_Thread_Mutex> *ACE_Singleton<JAWS_TPR_Concurrency, ACE_Thread_Mutex>::singleton_;
 template ACE_Singleton<JAWS_Task_Timer, ACE_Thread_Mutex> *ACE_Singleton<JAWS_Task_Timer, ACE_Thread_Mutex>::singleton_;
 template ACE_Singleton<JAWS_Timer, ACE_Thread_Mutex> *ACE_Singleton<JAWS_Timer, ACE_Thread_Mutex>::singleton_;
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /* ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION */

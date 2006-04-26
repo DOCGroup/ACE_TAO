@@ -13,10 +13,12 @@
 #include "ace/Value_Ptr.h"
 
 
-ACE_RCSID (tao,
+ACE_RCSID (AnyTypeCode,
            Union_TypeCode_Static,
            "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 bool
 TAO::TypeCode::Union<char const *,
@@ -56,13 +58,23 @@ TAO::TypeCode::Union<char const *,
   if (!success)
     return false;
 
+  offset += enc.total_length ();
+
   // Note that we handle the default case below, too.
 
-  for (unsigned int i = 0; i < this->ncases_; ++i)
+  for (CORBA::ULong i = 0; i < this->ncases_; ++i)
     {
+      TAO_OutputCDR case_enc;
+      offset = ACE_align_binary (offset,
+                                 ACE_CDR::LONG_ALIGN);
       case_type const & c = *this->cases_[i];
 
-      if (!c.marshal (enc, offset + enc.total_length ()))
+      if (!c.marshal (case_enc, offset))
+        return false;
+
+      offset += case_enc.total_length ();
+
+      if (!enc.write_octet_array_mb (case_enc.begin ()))
         return false;
     }
 
@@ -105,28 +117,28 @@ TAO::TypeCode::Union<char const *,
 
   CORBA::ULong const tc_count =
     tc->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK_RETURN (false);
 
   CORBA::Long tc_def = tc->default_index (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK_RETURN (false);
 
   if (tc_count != this->ncases_
       || tc_def != this->default_index_)
-    return 0;
+    return false;
 
   // Check the discriminator type.
   CORBA::TypeCode_var tc_discriminator =
     tc->discriminator_type (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK_RETURN (false);
 
   CORBA::Boolean const equal_discriminators =
     Traits<char const *>::get_typecode (this->discriminant_type_)->equal (
       tc_discriminator.in ()
       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK_RETURN (false);
 
   if (!equal_discriminators)
-    return 0;
+    return false;
 
   for (CORBA::ULong i = 0; i < this->ncases_; ++i)
     {
@@ -145,13 +157,13 @@ TAO::TypeCode::Union<char const *,
         lhs_case.equal (i,
                         tc
                         ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+      ACE_CHECK_RETURN (false);
 
       if (!equal_case)
-        return 0;
+        return false;
     }
 
-  return 1;
+  return true;
 }
 
 CORBA::Boolean
@@ -168,27 +180,27 @@ TAO::TypeCode::Union<char const *,
 
   CORBA::ULong const tc_count =
     tc->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK_RETURN (false);
 
   CORBA::Long tc_def = tc->default_index (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK_RETURN (false);
 
   if (tc_count != this->ncases_
       || tc_def != this->default_index_)
-    return 0;
+    return false;
 
   CORBA::TypeCode_var tc_discriminator =
     tc->discriminator_type (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK_RETURN (false);
 
   CORBA::Boolean const equiv_discriminators =
     Traits<char const *>::get_typecode (this->discriminant_type_)->equivalent (
       tc_discriminator.in ()
       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK_RETURN (false);
 
   if (!equiv_discriminators)
-    return 0;
+    return false;
 
   for (CORBA::ULong i = 0; i < this->ncases_; ++i)
     {
@@ -207,13 +219,13 @@ TAO::TypeCode::Union<char const *,
         lhs_case.equivalent (i,
                              tc
                              ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+      ACE_CHECK_RETURN (false);
 
       if (!equivalent_case)
-        return 0;
+        return false;
     }
 
-  return 1;
+  return true;
 }
 
 CORBA::TypeCode_ptr
@@ -406,3 +418,5 @@ TAO::TypeCode::Union<char const *,
 {
   return this->default_index_;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

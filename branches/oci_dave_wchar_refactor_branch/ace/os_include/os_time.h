@@ -53,6 +53,24 @@ using std::timezone;
 using std::difftime;
 # endif /* ACE_USES_STD_NAMESPACE_FOR_STDC_LIB */
 
+# if !defined (ACE_HAS_POSIX_TIME) && !defined (ACE_PSOS)
+// Definition per POSIX.
+typedef struct timespec
+{
+  /// Seconds
+  time_t tv_sec;
+  /// Nanoseconds
+  long tv_nsec;
+} timespec_t;
+# elif defined (ACE_HAS_BROKEN_POSIX_TIME)
+// OSF/1 defines struct timespec in <sys/timers.h> - Tom Marrs
+#   include /**/ <sys/timers.h>
+# endif /* !ACE_HAS_POSIX_TIME */
+
+# if defined(ACE_LACKS_TIMESPEC_T)
+typedef struct timespec timespec_t;
+# endif /* ACE_LACKS_TIMESPEC_T */
+
 // Place all additions (especially function declarations) within extern "C" {}
 #ifdef __cplusplus
 extern "C"

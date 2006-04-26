@@ -1,7 +1,7 @@
 // $Id$
 
-#include "DII_Reply_Dispatcher.h"
-#include "Request.h"
+#include "tao/DynamicInterface/DII_Reply_Dispatcher.h"
+#include "tao/DynamicInterface/Request.h"
 #include "tao/Environment.h"
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
@@ -13,8 +13,7 @@ ACE_RCSID(DynamicInterface,
           "$Id$")
 
 
-
-
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Constructor.
 TAO_DII_Deferred_Reply_Dispatcher::TAO_DII_Deferred_Reply_Dispatcher (
@@ -144,3 +143,5 @@ TAO_DII_Deferred_Reply_Dispatcher::connection_closed (void)
 
   (void) this->decr_refcount ();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

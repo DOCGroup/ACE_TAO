@@ -53,6 +53,8 @@ be_visitor_union_any_op_cs::visit_union (be_union *node)
       << "// TAO_IDL - Generated from " << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
+  *os << be_global->core_versioning_begin () << be_nl;
+
   // Since we don't generate CDR stream operators for types that
   // explicitly contain a local interface (at some level), we
   // must override these Any template class methods to avoid
@@ -149,6 +151,8 @@ be_visitor_union_any_op_cs::visit_union (be_union *node)
       << "_tao_elem" << be_uidt_nl
       << ");" << be_uidt << be_uidt << be_uidt_nl
       << "}";
+
+  *os << be_global->core_versioning_end () << be_nl;
 
   // All we have to do is to visit the scope and generate code.
   if (this->visit_scope (node) == -1)

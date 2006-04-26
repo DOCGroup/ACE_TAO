@@ -18,10 +18,12 @@
 
 #include "ace/Sched_Params.h"
 
-#include "Scheduler_Generic.h"
+#include "orbsvcs/Sched/Scheduler_Generic.h"
 #include "ace/OS_NS_stdio.h"
 
 ACE_RCSID(Sched, Scheduler_Generic, "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
@@ -214,11 +216,9 @@ Scheduler_Generic::init (const int minimum_priority,
 
 
 Scheduler::status_t
-Scheduler_Generic::schedule (ACE_Unbounded_Set<Scheduling_Anomaly *>
-                               &anomaly_set)
+Scheduler_Generic::schedule (ACE_Unbounded_Set<Scheduling_Anomaly *> &
+                             /* anomaly_set */)
 {
-  ACE_UNUSED_ARG (anomaly_set);
-
   ACE_GUARD_RETURN (LOCK, ace_mon, lock_, ACE_Scheduler::FAILED);
 
   // here goes . . .
@@ -240,15 +240,12 @@ Scheduler_Generic::schedule (ACE_Unbounded_Set<Scheduling_Anomaly *>
 
 
 int
-Scheduler_Generic::priority (const handle_t handle,
+Scheduler_Generic::priority (const handle_t /* handle */,
                              OS_Thread_Priority &priority,
                              Sub_Priority &subpriority,
                              Preemption_Priority &preemption_prio,
-                             const mode_t requested_mode) const
+                             const mode_t /* requested_mode */) const
 {
-  ACE_UNUSED_ARG (handle);
-  ACE_UNUSED_ARG (requested_mode);
-
   priority = minimum_priority_;
   subpriority = ACE_Scheduler_MIN_SUB_PRIORITY;
   preemption_prio = ACE_Scheduler_MAX_PREEMPTION_PRIORITY;
@@ -268,3 +265,5 @@ void
 Scheduler_Generic::print_schedule ()
 {
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

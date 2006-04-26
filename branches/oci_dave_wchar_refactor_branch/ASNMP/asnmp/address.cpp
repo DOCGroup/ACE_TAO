@@ -1975,9 +1975,9 @@ addr_type MacAddress::get_type() const
 
 unsigned int MacAddress::hashFunction() const
 {
-        return ((((address_buffer[0] << 8) + address_buffer[1]) * HASH0)
-                + (((address_buffer[2] << 8) + address_buffer[3]) * HASH1)
-                + (((address_buffer[4] << 8) + address_buffer[5]) * HASH2));
+        return ((((address_buffer[0] << 8) + address_buffer[1]) * HASH0LEN)
+                + (((address_buffer[2] << 8) + address_buffer[3]) * HASH1LEN)
+                + (((address_buffer[4] << 8) + address_buffer[5]) * HASH2LEN));
 }
 
 void MacAddress::to_octet(OctetStr& octet) const

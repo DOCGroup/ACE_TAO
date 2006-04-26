@@ -25,37 +25,43 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
+#include "tao/PI/PIForwardRequestA.h"
 #include "tao/AnyTypeCode/Null_RefCount_Policy.h"
 #include "tao/AnyTypeCode/TypeCode_Constants.h"
 #include "tao/AnyTypeCode/Alias_TypeCode_Static.h"
 #include "tao/AnyTypeCode/Struct_TypeCode_Static.h"
 #include "tao/AnyTypeCode/TypeCode_Struct_Field.h"
 #include "tao/AnyTypeCode/Any.h"
+#include "tao/CDR.h"
 #include "tao/AnyTypeCode/Any_Dual_Impl_T.h"
 
-#include "PIForwardRequestC.h"
-#include "tao/CDR.h"
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+// TAO extension - the virtual _type method.
+::CORBA::TypeCode_ptr PortableInterceptor::ForwardRequest::_tao_type (void) const
+{
+  return ::PortableInterceptor::_tc_ForwardRequest;
+}
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/struct_typecode.cpp:87
+// be\be_visitor_typecode/struct_typecode.cpp:89
 
-static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const _tao_fields_PortableInterceptor_ForwardRequest[] =
+static TAO::TypeCode::Struct_Field<char const *, ::CORBA::TypeCode_ptr const *> const _tao_fields_PortableInterceptor_ForwardRequest[] =
   {
     { "forward", &CORBA::_tc_Object }
-
+    
   };
 static TAO::TypeCode::Struct<char const *,
-                      CORBA::TypeCode_ptr const *,
-                      TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const *,
+                      ::CORBA::TypeCode_ptr const *,
+                      TAO::TypeCode::Struct_Field<char const *, ::CORBA::TypeCode_ptr const *> const *,
                       TAO::Null_RefCount_Policy>
   _tao_tc_PortableInterceptor_ForwardRequest (
-    CORBA::tk_except,
+    ::CORBA::tk_except,
     "IDL:omg.org/PortableInterceptor/ForwardRequest:1.0",
     "ForwardRequest",
     _tao_fields_PortableInterceptor_ForwardRequest,
     1);
-
+  
 namespace PortableInterceptor
 {
   ::CORBA::TypeCode_ptr const _tc_ForwardRequest =
@@ -64,24 +70,24 @@ namespace PortableInterceptor
 
 
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be\be_visitor_exception/any_op_cs.cpp:50
 
 namespace TAO
 {
   template<>
-  CORBA::Boolean
+  ::CORBA::Boolean
   Any_Dual_Impl_T<PortableInterceptor::ForwardRequest>::demarshal_value (
       TAO_InputCDR & cdr
     )
   {
-    CORBA::String_var id;
-
+    ::CORBA::String_var id;
+    
     if (!(cdr >> id.out ()))
       {
         return false;
       }
-
+    
     ACE_TRY_NEW_ENV
       {
         this->value_->_tao_decode (cdr ACE_ENV_ARG_PARAMETER);
@@ -92,14 +98,14 @@ namespace TAO
         return false;
       }
     ACE_ENDTRY;
-
+    
     return true;
   }
 }
 
 // Copying insertion.
 void operator<<= (
-    CORBA::Any &_tao_any,
+    ::CORBA::Any &_tao_any,
     const PortableInterceptor::ForwardRequest &_tao_elem
   )
 {
@@ -113,7 +119,7 @@ void operator<<= (
 
 // Non-copying insertion.
 void operator<<= (
-    CORBA::Any &_tao_any,
+    ::CORBA::Any &_tao_any,
     PortableInterceptor::ForwardRequest *_tao_elem
   )
 {
@@ -126,8 +132,8 @@ void operator<<= (
 }
 
 // Extraction to non-const pointer (deprecated).
-CORBA::Boolean operator>>= (
-    const CORBA::Any &_tao_any,
+::CORBA::Boolean operator>>= (
+    const ::CORBA::Any &_tao_any,
     PortableInterceptor::ForwardRequest *&_tao_elem
   )
 {
@@ -138,8 +144,8 @@ CORBA::Boolean operator>>= (
 }
 
 // Extraction to const pointer.
-CORBA::Boolean operator>>= (
-    const CORBA::Any &_tao_any,
+::CORBA::Boolean operator>>= (
+    const ::CORBA::Any &_tao_any,
     const PortableInterceptor::ForwardRequest *&_tao_elem
   )
 {
@@ -151,3 +157,5 @@ CORBA::Boolean operator>>= (
         _tao_elem
       );
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

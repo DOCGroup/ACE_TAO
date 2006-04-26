@@ -52,38 +52,37 @@
 #endif
 #define TAO_EXPORT_MACRO TAO_Export
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:49
 
 namespace CORBA
 {
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_sequence/sequence_ch.cpp:101
 
 #if !defined (_CORBA_BOOLEANSEQ_CH_)
 #define _CORBA_BOOLEANSEQ_CH_
-  
+
   class BooleanSeq;
-  
+
   typedef
     TAO_FixedSeq_Var_T<
-        BooleanSeq,
-        CORBA::Boolean
+        BooleanSeq
       >
     BooleanSeq_var;
-  
+
   typedef
     TAO_Seq_Out_T<
-        BooleanSeq,
-        BooleanSeq_var,
-        CORBA::Boolean
+        BooleanSeq
       >
     BooleanSeq_out;
-  
+
   class TAO_Export BooleanSeq
     : public
-        TAO_Unbounded_Sequence<
+        TAO::unbounded_value_sequence<
             CORBA::Boolean
           >
   {
@@ -93,14 +92,14 @@ namespace CORBA
     BooleanSeq (
         ::CORBA::ULong max,
         ::CORBA::ULong length,
-        ::CORBA::Boolean* buffer, 
-        ::CORBA::Boolean release = 0
+        ::CORBA::Boolean* buffer,
+        ::CORBA::Boolean release = false
       );
     BooleanSeq (const BooleanSeq &);
     ~BooleanSeq (void);
-    
+
     static void _tao_any_destructor (void *);
-    
+
     typedef BooleanSeq_var _var_type;
   };
 
@@ -138,6 +137,8 @@ TAO_Export ::CORBA::Boolean operator>> (
 
 // TAO_IDL - Generated from
 // be\be_codegen.cpp:1040
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

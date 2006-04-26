@@ -1,21 +1,22 @@
 // $Id$
 
-#include "ECG_UDP_Out_Endpoint.h"
+#include "orbsvcs/Event/ECG_UDP_Out_Endpoint.h"
 #include "ace/INET_Addr.h"
 #include "ace/Sock_Connect.h"
 
 #if !defined(__ACE_INLINE__)
-#include "ECG_UDP_Out_Endpoint.i"
+#include "orbsvcs/Event/ECG_UDP_Out_Endpoint.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(Event, ECG_UDP_Out_Endpoint, "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_ECG_UDP_Out_Endpoint::~TAO_ECG_UDP_Out_Endpoint (void)
 {
   this->dgram_.close ();
 
-  delete[] this->ifs_;
-  this->ifs_ = 0;
+  delete [] this->ifs_;
 }
 
 CORBA::Boolean
@@ -51,7 +52,6 @@ TAO_ECG_UDP_Out_Endpoint::is_loopback (const ACE_INET_Addr& from)
   return 0;
 }
 
-
 TAO_ECG_UDP_Out_Endpoint&
 TAO_ECG_UDP_Out_Endpoint::operator= (const TAO_ECG_UDP_Out_Endpoint& rhs)
 {
@@ -79,3 +79,5 @@ TAO_ECG_UDP_Out_Endpoint::operator= (const TAO_ECG_UDP_Out_Endpoint& rhs)
 
   return *this;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

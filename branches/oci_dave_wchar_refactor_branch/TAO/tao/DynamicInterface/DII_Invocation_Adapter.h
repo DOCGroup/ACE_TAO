@@ -22,9 +22,14 @@
 
 #include "tao/Invocation_Adapter.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+class ACE_Time_Value;
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Operation_Details;
 class TAO_Stub;
-class ACE_Time_Value;
 class TAO_ORB_Core;
 class TAO_DII_Deferred_Reply_Dispatcher;
 namespace  CORBA
@@ -109,10 +114,10 @@ namespace TAO
   private:
 
     /// Dont allow default initializations
-    ACE_UNIMPLEMENTED_FUNC (DII_Invocation_Adapter (void))
+    DII_Invocation_Adapter (void);
 
-    ACE_UNIMPLEMENTED_FUNC (
-        DII_Invocation_Adapter & operator= (const DII_Invocation_Adapter &))
+    DII_Invocation_Adapter (const DII_Invocation_Adapter &);
+    DII_Invocation_Adapter & operator= (const DII_Invocation_Adapter &);
   };
 
   /**
@@ -154,10 +159,11 @@ namespace TAO
     TAO_DII_Deferred_Reply_Dispatcher *rd_;
 
     /// Cache the orb_core
-    TAO_ORB_Core *orb_core_;
+    TAO_ORB_Core * const orb_core_;
   };
 } // End namespace TAO
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /*TAO_INVOCATION_ADAPTER_H*/

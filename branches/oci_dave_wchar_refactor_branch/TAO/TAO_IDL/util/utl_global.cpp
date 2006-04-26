@@ -104,8 +104,8 @@ IDL_GlobalData::IDL_GlobalData (void)
     pd_main_filename (0),
     pd_real_filename (0),
     pd_stripped_filename (0),
-    pd_import (I_FALSE),
-    pd_in_main_file (I_FALSE),
+    pd_import (false),
+    pd_in_main_file (false),
     pd_prog_name (0),
     pd_cpp_location (0),
     pd_compile_flags (0),
@@ -123,13 +123,14 @@ IDL_GlobalData::IDL_GlobalData (void)
     gperf_path_ (0),
     temp_dir_ (0),
     ident_string_ (0),
-    case_diff_error_ (I_TRUE),
-    nest_orb_ (I_FALSE),
+    case_diff_error_ (true),
+    nest_orb_ (false),
     idl_flags_ (""),
-    preserve_cpp_keywords_ (I_TRUE),
-    pass_orb_idl_ (I_FALSE),
+    preserve_cpp_keywords_ (true),
+    pass_orb_idl_ (false),
     using_ifr_backend_ (false),
-    ignore_idl3_ (false)
+    ignore_idl3_ (false),
+    recursion_start_ (0)  // Not used by all backends.
 {
   // Path for the perfect hash generator(gperf) program.
   // Default is $ACE_ROOT/bin/gperf unless ACE_GPERF is defined.
@@ -237,6 +238,7 @@ IDL_GlobalData::reset_flag_seen (void)
   short_seq_seen_ = false;
   special_basic_arg_seen_ = false;
   string_seen_ = false;
+  string_member_seen_ = false;
   string_seq_seen_ = false;
   typecode_seen_ = false;
   ub_string_arg_seen_ = false;
@@ -252,6 +254,8 @@ IDL_GlobalData::reset_flag_seen (void)
   vt_seq_seen_ = false;
   wchar_seq_seen_ = false;
   wstring_seq_seen_ = false;
+
+  need_skeleton_includes_ = false;
 }
 
 // Get or set scopes stack
@@ -400,33 +404,33 @@ IDL_GlobalData::set_real_filename (UTL_String *n)
 }
 
 // Get or set indicator whether import is on
-idl_bool
+bool
 IDL_GlobalData::imported (void)
 {
-  return this->pd_in_main_file ? I_FALSE : pd_import;
+  return this->pd_in_main_file ? false : pd_import;
 }
 
-idl_bool
+bool
 IDL_GlobalData::import (void)
 {
   return this->pd_import;
 }
 
 void
-IDL_GlobalData::set_import (idl_bool is_in)
+IDL_GlobalData::set_import (bool is_in)
 {
   this->pd_import = is_in;
 }
 
 // Get or set indicator whether we're reading the main file now
-idl_bool
+bool
 IDL_GlobalData::in_main_file (void)
 {
   return this->pd_in_main_file;
 }
 
 void
-IDL_GlobalData::set_in_main_file (idl_bool is_in)
+IDL_GlobalData::set_in_main_file (bool is_in)
 {
   this->pd_in_main_file = is_in;
 }
@@ -972,24 +976,24 @@ IDL_GlobalData::ident_string (void) const
 }
 
 void
-IDL_GlobalData::case_diff_error (idl_bool val)
+IDL_GlobalData::case_diff_error (bool val)
 {
   this->case_diff_error_ = val;
 }
 
-idl_bool
+bool
 IDL_GlobalData::case_diff_error (void)
 {
   return this->case_diff_error_;
 }
 
 void
-IDL_GlobalData::nest_orb (idl_bool val)
+IDL_GlobalData::nest_orb (bool val)
 {
   this->nest_orb_ = val;
 }
 
-idl_bool
+bool
 IDL_GlobalData::nest_orb (void)
 {
   return this->nest_orb_;
@@ -1062,6 +1066,9 @@ IDL_GlobalData::destroy (void)
   this->n_included_idl_files_ = 0;
 
   this->pd_root->destroy ();
+
+  ACE::strdelete (this->recursion_start_);
+  this->recursion_start_ = 0;
 }
 
 void
@@ -1285,7 +1292,7 @@ IDL_GlobalData::stripped_preproc_include (const char *name)
  C++ keywords e.g. delete, operator etc. with _cxx_ prefix.
  Should be true when being used by the IFR Service
  */
-idl_bool
+bool
 IDL_GlobalData::preserve_cpp_keywords (void)
 {
   return preserve_cpp_keywords_;
@@ -1297,7 +1304,7 @@ IDL_GlobalData::preserve_cpp_keywords (void)
  Is unset by the tao_idl compiler.
  */
 void
-IDL_GlobalData::preserve_cpp_keywords (idl_bool val)
+IDL_GlobalData::preserve_cpp_keywords (bool val)
 {
   preserve_cpp_keywords_ = val;
 }
@@ -1314,14 +1321,14 @@ IDL_GlobalData::file_prefixes (void)
   return this->file_prefixes_;
 }
 
-idl_bool
+bool
 IDL_GlobalData::pass_orb_idl (void) const
 {
   return this->pass_orb_idl_;
 }
 
 void
-IDL_GlobalData::pass_orb_idl (idl_bool val)
+IDL_GlobalData::pass_orb_idl (bool val)
 {
   this->pass_orb_idl_ = val;
 }
@@ -1417,8 +1424,7 @@ IDL_GlobalData::check_gperf (void)
 #if defined (ACE_WIN32)
   // No wait or anything in Win32.
   return 0;
-#endif /* ACE_WIN32 */
-
+#else
   // Wait for gperf to complete.
   ACE_exitcode wait_status = 0;
   if (process.wait (&wait_status) == -1)
@@ -1456,6 +1462,7 @@ IDL_GlobalData::check_gperf (void)
           return -1;
         }
     }
+#endif /* ACE_WIN32 */
 }
 
 void
@@ -1514,7 +1521,7 @@ IDL_GlobalData::create_uses_multiple_stuff (
   UTL_ScopedName scoped_name (&module_id,
                               &local_name);
   AST_Decl *d = c->lookup_by_name (&scoped_name,
-                                   I_TRUE);
+                                   true);
   local_id.destroy ();
   module_id.destroy ();
 
@@ -1612,9 +1619,9 @@ void
 IDL_GlobalData::check_primary_keys (void)
 {
   AST_ValueType *holder = 0;
-  
+
   while (!this->primary_keys_.is_empty ())
-    {  
+    {
       // Dequeue the element at the head of the queue.
       if (this->primary_keys_.dequeue_head (holder))
         {
@@ -1628,6 +1635,19 @@ IDL_GlobalData::check_primary_keys (void)
           this->pd_err->illegal_primary_key (holder);
         }
     }
+}
+
+const char *
+IDL_GlobalData::recursion_start (void) const
+{
+  return this->recursion_start_;
+}
+
+void
+IDL_GlobalData::recursion_start (const char *val)
+{
+  ACE::strdelete (this->recursion_start_);
+  this->recursion_start_ = ACE::strnew (val);
 }
 
 void
@@ -1668,7 +1688,7 @@ IDL_GlobalData::add_dcps_data_type(const char* id)
 
 }
 
-idl_bool
+bool
 IDL_GlobalData::add_dcps_data_key(const char* id, const char* key)
 {
   // Search the map for the type.

@@ -1,5 +1,8 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE int
 ACE_RW_Thread_Mutex::tryacquire_write_upgrade (void)
@@ -12,3 +15,5 @@ ACE_INLINE
 ACE_RW_Thread_Mutex::~ACE_RW_Thread_Mutex (void)
 {
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

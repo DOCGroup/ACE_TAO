@@ -21,6 +21,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_Copy_Disabled
  *
@@ -47,6 +49,7 @@
 class ACE_Export ACE_Copy_Disabled
 {
 public:
+
   /// Default constructor
   ACE_Copy_Disabled (void);
 
@@ -54,6 +57,8 @@ private:
   ACE_Copy_Disabled (const ACE_Copy_Disabled &);
   ACE_Copy_Disabled &operator= (const ACE_Copy_Disabled &);
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

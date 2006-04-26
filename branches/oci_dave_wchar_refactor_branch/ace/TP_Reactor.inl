@@ -1,26 +1,23 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /************************************************************************/
 // Methods for ACE_EH_Dispatch_Info
 /************************************************************************/
 
-ACE_INLINE void
-ACE_EH_Dispatch_Info::reset (void)
-{
-  this->dispatch_ = 0;
-
-  this->handle_ = ACE_INVALID_HANDLE;
-  this->event_handler_ = 0;
-  this->mask_ = ACE_Event_Handler::NULL_MASK;
-  this->callback_ = 0;
-}
-
-
 ACE_INLINE
-ACE_EH_Dispatch_Info::ACE_EH_Dispatch_Info (void)
+ACE_EH_Dispatch_Info::ACE_EH_Dispatch_Info (void) :
+  handle_ (ACE_INVALID_HANDLE),
+  event_handler_ (0),
+  mask_ (ACE_Event_Handler::NULL_MASK),
+  callback_ (0),
+  resume_flag_ (ACE_Event_Handler::ACE_REACTOR_RESUMES_HANDLER),
+  reference_counting_required_ (false),
+  dispatch_ (false)
 {
-  this->reset ();
 }
 
 ACE_INLINE void
@@ -29,15 +26,19 @@ ACE_EH_Dispatch_Info::set (ACE_HANDLE handle,
                            ACE_Reactor_Mask mask,
                            ACE_EH_PTMF callback)
 {
-  this->dispatch_ = 1;
+  this->dispatch_ = true;
 
   this->handle_ = handle;
   this->event_handler_ = event_handler;
   this->mask_ = mask;
   this->callback_ = callback;
+  this->resume_flag_ = event_handler->resume_handler ();
+  this->reference_counting_required_ =
+    (event_handler_->reference_counting_policy ().value () ==
+      ACE_Event_Handler::Reference_Counting_Policy::ENABLED);
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_EH_Dispatch_Info::dispatch (void) const
 {
   return this->dispatch_;
@@ -109,3 +110,5 @@ ACE_TP_Reactor::clear_dispatch_mask (ACE_HANDLE ,
   this->ready_set_.wr_mask_.reset ();
   this->ready_set_.ex_mask_.reset ();
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

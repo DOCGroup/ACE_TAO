@@ -19,6 +19,8 @@
 #include "orbsvcs/Trader/trading_serv_export.h"
 #include "ace/Containers.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_DynSequence_i;
 
 class TAO_Constraint;
@@ -85,7 +87,11 @@ public:
   virtual int visit_property (TAO_Property_Constraint* literal) = 0;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #include "orbsvcs/Trader/Constraint_Nodes.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Constraint_Validator
@@ -436,6 +442,8 @@ public:
   int operator () (TAO_DynSequence_i& dyn_any,
                    const char* element) const;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* CONSTRAINT_VISITORS_H */

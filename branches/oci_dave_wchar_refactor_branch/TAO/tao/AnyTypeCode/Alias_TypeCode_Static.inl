@@ -2,6 +2,8 @@
 //
 // $Id$
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_INLINE
 TAO::TypeCode::Alias<char const *,
                      CORBA::TypeCode_ptr const *,
@@ -10,9 +12,11 @@ TAO::TypeCode::Alias<char const *,
   char const * id,
   char const * name,
   CORBA::TypeCode_ptr const * tc)
-  : CORBA::TypeCode (kind)
-  , ACE_NESTED_CLASS (TAO, Null_RefCount_Policy) ()
+  : ::CORBA::TypeCode (kind)
+  , ::TAO::Null_RefCount_Policy ()
   , attributes_ (id, name)
   , content_type_ (tc)
 {
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

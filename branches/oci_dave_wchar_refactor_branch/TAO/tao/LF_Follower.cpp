@@ -1,4 +1,3 @@
-// -*- C++ -*-
 // $Id$
 
 #include "tao/LF_Follower.h"
@@ -11,6 +10,8 @@
 ACE_RCSID (tao,
            LF_Follower,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_LF_Follower::TAO_LF_Follower (TAO_Leader_Follower &leader_follower)
   : leader_follower_ (leader_follower)
@@ -37,3 +38,4 @@ TAO_LF_Follower::signal (void)
   return this->condition_.signal ();
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

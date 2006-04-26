@@ -20,6 +20,8 @@ ACE_RCSID (ace,
            "$Id$")
 
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace ACE_Utils
 {
 
@@ -369,8 +371,8 @@ namespace ACE_Utils
     u_char cseqHAV;
     {
       ACE_GUARD (ACE_SYNCH_MUTEX, mon, *lock_);
-      uuid.clockSeqLow (uuid_state_.clockSequence & 0xFF);
-      cseqHAV = (uuid_state_.clockSequence & 0x3f00) >> 8;
+      uuid.clockSeqLow (static_cast<u_char> (uuid_state_.clockSequence & 0xFF));
+      cseqHAV = static_cast<u_char> ((uuid_state_.clockSequence & 0x3f00) >> 8);
       uuid_state_.timestamp = timestamp;
     }
 
@@ -409,27 +411,19 @@ namespace ACE_Utils
   void
   UUID_Generator::get_timestamp (UUID_time& timestamp)
   {
+    ACE_GUARD (ACE_SYNCH_MUTEX, mon, *lock_);
+
     this->get_systemtime(timestamp);
 
-    /// Account for the clock being set back. Increment the clock
-    /// sequence.
+    // Account for the clock being set back. Increment the clock /
+    // sequence.
     if (timestamp <= timeLast_)
-      {
-        {
-          ACE_GUARD (ACE_SYNCH_MUTEX, mon, *lock_);
-          uuid_state_.clockSequence = (uuid_state_.clockSequence + 1) & ACE_UUID_CLOCK_SEQ_MASK;
-        }
-      }
+      uuid_state_.clockSequence = static_cast<u_char> ((uuid_state_.clockSequence + 1) & ACE_UUID_CLOCK_SEQ_MASK);
 
-    /// If the system time ticked since the last UUID was generated. Set
-    /// the clock sequence back.
+    // If the system time ticked since the last UUID was
+    // generated. Set / the clock sequence back.
     else if (timestamp > timeLast_)
-      {
-        {
-          ACE_GUARD (ACE_SYNCH_MUTEX, mon, *lock_);
-          uuid_state_.clockSequence = 0;
-        }
-      }
+      uuid_state_.clockSequence = 0;
 
     timeLast_ = timestamp;
   }
@@ -479,11 +473,9 @@ namespace ACE_Utils
 
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Singleton <ACE_Utils::UUID_Generator, ACE_SYNCH_MUTEX>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Singleton <ACE_Utils::UUID_Generator, ACE_SYNCH_MUTEX>
-#elif defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
+#if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
 template ACE_Singleton<ACE_Utils::UUID_Generator, ACE_SYNCH_MUTEX> *
   ACE_Singleton<ACE_Utils::UUID_Generator, ACE_SYNCH_MUTEX>::singleton_;
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /* ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION */
+
+ACE_END_VERSIONED_NAMESPACE_DECL

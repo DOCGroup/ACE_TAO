@@ -1,4 +1,8 @@
+// -*- C++ -*-
+//
 // $Id$
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE CORBA::ULong
 TAO_POA_Policy_Set::num_policies (void) const
@@ -51,3 +55,5 @@ TAO_POA_Policy_Set::policies (void)
 {
   return this->impl_;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

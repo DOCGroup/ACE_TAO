@@ -25,7 +25,7 @@
 #include "ace/SString.h"
 #include "ace/Hash_Map_Manager.h"
 #include "Containers_Info_Map.h"
-
+#include "CIAO_NAM_Export.h"
 
 //@@ I wish we could have precompiled header support soon!!!
 
@@ -34,12 +34,14 @@
 
 namespace CIAO
 {
-  class NodeImplementationInfoHandler
+  class CIAO_NAM_Export NodeImplementationInfoHandler
   {
   public:
-    NodeImplementationInfoHandler (::Deployment::DeploymentPlan & plan);
+    NodeImplementationInfoHandler (
+        const ::Deployment::DeploymentPlan & plan,
+        const Deployment::ComponentPlans & shared_components);
 
-    Deployment::NodeImplementationInfo * 
+    Deployment::NodeImplementationInfo *
       node_impl_info (void) const;
 
   private:
@@ -51,20 +53,11 @@ namespace CIAO
 
     void populate_container_impl_infos (void);
 
-    /// Helper class that helps populate the container_impl_infos 
+    /// Helper class that helps populate the container_impl_infos
     /// field.
     Containers_Info_Map containers_info_map_;
   };
 }
-
-//#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-//#include "ImplementationInfo.cpp"
-//#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-//#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-//#pragma implementation ("ImplementationInfo.cpp")
-//#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
-
 
 #include /**/ "ace/post.h"
 #endif /* IMPLEMENTATIONIFO_H */

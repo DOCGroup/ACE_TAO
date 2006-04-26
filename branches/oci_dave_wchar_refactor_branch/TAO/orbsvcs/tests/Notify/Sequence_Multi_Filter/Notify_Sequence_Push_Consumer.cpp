@@ -9,12 +9,10 @@
 
 Notify_Sequence_Push_Consumer::Notify_Sequence_Push_Consumer (
                                             const char* name,
-                                            CORBA::Short policy,
                                             unsigned int low,
                                             unsigned int high,
                                             Notify_Test_Client& client)
  : name_ (name),
-   discard_policy_ (policy),
    low_ (low),
    high_ (high),
    count_ (0),
@@ -56,9 +54,7 @@ Notify_Sequence_Push_Consumer::_connect (
   properties[0].name = CORBA::string_dup(CosNotification::MaximumBatchSize);
   properties[0].value <<= (CORBA::Long)5;
   properties[1].name = CORBA::string_dup(CosNotification::PacingInterval);
-  properties[1].value <<= (TimeBase::TimeT)2;  // 4
-  properties[2].name = CORBA::string_dup(CosNotification::DiscardPolicy);
-  properties[2].value <<= this->discard_policy_;
+  properties[1].value <<= (TimeBase::TimeT) 2 * 1000 * 10000;
 
   proxy_->set_qos(properties);
   proxy_->connect_sequence_push_consumer (objref.in ()
@@ -74,45 +70,12 @@ Notify_Sequence_Push_Consumer::_connect (
 void
 Notify_Sequence_Push_Consumer::push_structured_events(
                           const CosNotification::EventBatch& events
-                          ACE_ENV_ARG_DECL_NOT_USED /*ACE_ENV_SINGLE_ARG_PARAMETER*/)
+                          ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_DEBUG((LM_DEBUG, "-"));
+  ACE_DEBUG((LM_DEBUG, "{%u}", events.length()));
 
-  CORBA::ULong length = events.length();
-
-  if (TAO_debug_level)
-    ACE_DEBUG ((LM_DEBUG, "Received %u events:\n", length));
-
-  for(CORBA::ULong e = 0; e < length; e++)
-    {
-      if (events[e].header.variable_header.length () > 0)
-        {
-          if (TAO_debug_level)
-            ACE_DEBUG ((LM_DEBUG,
-                        "%s = %s, ",
-                        (const char*)events[e].header.variable_header[0].name,
-                        Any_String (events[e].header.variable_header[0].value)));
-        }
-      for(CORBA::ULong i = 0; i < 3; i++)
-        {
-          if (TAO_debug_level)
-            ACE_DEBUG ((LM_DEBUG,
-                        "%s = %s   ",
-                        (const char*)events[e].filterable_data[i].name,
-                        Any_String (events[e].filterable_data[i].value)));
-        }
-
-      if (TAO_debug_level)
-        ACE_DEBUG ((LM_DEBUG,
-                    "\n"));
-    }
-
-  if (TAO_debug_level)
-    ACE_DEBUG ((LM_DEBUG,
-                "-------------------------\n"));
-
-  this->count_++;
+  this->count_ += events.length();
   if (this->count_ > this->high_)
     {
       this->client_.consumer_done (this);
@@ -120,12 +83,8 @@ Notify_Sequence_Push_Consumer::push_structured_events(
                  ACE_TEXT ("Sequence Consumer (%P|%t): ERROR: too ")
                  ACE_TEXT ("many events received.\n")));
     }
-  else if (this->count_ == this->low_)
+  else if (this->count_ >= this->low_)
     {
       this->client_.consumer_done (this);
-    }
-  else
-    {
-      ACE_OS::sleep(1);
     }
 }

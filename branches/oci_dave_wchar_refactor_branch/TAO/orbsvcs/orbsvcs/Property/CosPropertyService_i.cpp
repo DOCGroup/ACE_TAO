@@ -19,6 +19,8 @@
 
 ACE_RCSID(Property, CosPropertyService_i, "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // = Methods to deal with ACE_Hash_Map_Manager.
 
 CosProperty_Hash_Key::CosProperty_Hash_Key (void)
@@ -1882,3 +1884,5 @@ TAO_PropertiesIterator::destroy (ACE_ENV_SINGLE_ARG_DECL)
                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -15,9 +15,11 @@
 #define TAO_OFFER_DATABASE_H
 #include /**/ "ace/pre.h"
 
-#include "Trader.h"
-#include "Offer_Iterators.h"
+#include "orbsvcs/Trader/Trader.h"
+#include "orbsvcs/Trader/Offer_Iterators.h"
 #include "ace/Null_Mutex.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class LOCK_TYPE> class TAO_Service_Offer_Iterator;
 
@@ -199,9 +201,10 @@ class TAO_Service_Offer_Iterator
   const char* type_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "Offer_Database.cpp"
+#include "orbsvcs/Trader/Offer_Database.cpp"
 #endif  /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #include /**/ "ace/post.h"

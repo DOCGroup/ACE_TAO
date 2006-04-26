@@ -1,16 +1,16 @@
 // $Id$
 
-#include "Routing_Slip.h"
+#include "orbsvcs/Notify/Routing_Slip.h"
 
-#include "Delivery_Request.h"
-#include "Worker_Task.h"
-#include "ProxyConsumer.h"
-#include "ProxySupplier.h"
-#include "Event_Persistence_Strategy.h"
-#include "Routing_Slip_Persistence_Manager.h"
-#include "Routing_Slip_Queue.h"
-#include "Method_Request_Lookup.h"
-#include "Method_Request_Dispatch.h"
+#include "orbsvcs/Notify/Delivery_Request.h"
+#include "orbsvcs/Notify/Worker_Task.h"
+#include "orbsvcs/Notify/ProxyConsumer.h"
+#include "orbsvcs/Notify/ProxySupplier.h"
+#include "orbsvcs/Notify/Event_Persistence_Strategy.h"
+#include "orbsvcs/Notify/Routing_Slip_Persistence_Manager.h"
+#include "orbsvcs/Notify/Routing_Slip_Queue.h"
+#include "orbsvcs/Notify/Method_Request_Lookup.h"
+#include "orbsvcs/Notify/Method_Request_Dispatch.h"
 
 #include "tao/debug.h"
 #include "tao/corba.h"
@@ -23,6 +23,8 @@
 #endif //DEBUG_LEVEL
 
 #define QUEUE_ALLOWED 1
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify
 {
@@ -117,7 +119,7 @@ Routing_Slip::create (
       {
         TAO_InputCDR cdr_event (event_mb);
         TAO_Notify_Event::Ptr event (TAO_Notify_Event::unmarshal (cdr_event));
-        if (event.get () != 0)
+        if (event.isSet())
         {
           result = create (event ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
@@ -907,6 +909,7 @@ Routing_Slip::reconnect (ACE_ENV_SINGLE_ARG_DECL)
   for (size_t nmethod = 0; nmethod < count; ++nmethod)
   {
     this->delivery_methods_[nmethod]->execute (ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_CHECK;
   }
   this->delivery_methods_.clear ();
 }
@@ -925,6 +928,6 @@ Routing_Slip::should_retry () const
   return this->state_ != rssTRANSIENT;
 }
 
-
-
 } // namespace
+
+TAO_END_VERSIONED_NAMESPACE_DECL

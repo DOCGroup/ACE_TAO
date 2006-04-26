@@ -142,33 +142,7 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
 
       // STEP 2: Generate the body ==
 
-      *os << "{" << be_nl;
-
-      this->begin_public ();
-
-      // Default constructor and destructor are public if OBV class is concrete
-      if (!node->have_operation ())
-        {
-
-          *os << be_nl;
-
-          if (! node->is_nested ())
-            {
-              *os << "OBV_";
-            }
-
-          *os << node->local_name () << " (void);";
-
-          *os << be_nl << "virtual ~";
-
-          if (! node->is_nested ())
-            {
-              *os << "OBV_";
-            }
-
-          *os << node->local_name () << " (void);";
-        }
-
+      *os << "{";
 
       // Generate code for the OBV_ class definition.
       if (this->visit_valuetype_scope (node) == -1)
@@ -194,26 +168,51 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
 
       if (node->have_operation ())
         {
-           // Default constructor and destructor are protected if OBV class is abstract
-          *os << be_nl << be_uidt_nl << "protected:" << be_idt;
-
-          *os << be_nl;
-          if (! node->is_nested ())
-            {
-              *os << "OBV_";
-            }
-
-          *os << node->local_name () << " (void);";
-
-          *os << be_nl << "virtual ~";
-
-          if (! node->is_nested ())
-            {
-              *os << "OBV_";
-            }
-
-          *os << node->local_name () << " (void);";
+          this->begin_private ();
         }
+      else
+        {
+          this->begin_public ();
+        }
+      
+      *os << be_nl;
+      
+      // Default constructor.
+      if (! node->is_nested ())
+        {
+          *os << "OBV_";
+        }
+
+      *os << node->local_name () << " (void);";
+      
+      // Initializing constructor.
+      if (node->has_member ())
+        {
+          *os << be_nl;
+        
+          if (! node->is_nested ())
+            {
+              *os << "OBV_";
+            }
+            
+          *os << node->local_name () << " (" << be_idt << be_idt;
+          
+          unsigned long index = 0;
+          this->gen_obv_init_constructor_args (node, index);
+
+          *os << be_uidt_nl
+              << ");" << be_uidt;
+        }
+
+      // Virtual destructor.
+      *os << be_nl << "virtual ~";
+
+      if (! node->is_nested ())
+        {
+          *os << "OBV_";
+        }
+
+      *os << node->local_name () << " (void);";
 
       // Map fields to private data.
       if (!node->opt_accessor ())
@@ -287,14 +286,23 @@ be_visitor_valuetype_obv_ch::visit_field (be_field *node)
 void
 be_visitor_valuetype_obv_ch::begin_public (void)
 {
+  AST_Decl::NodeType nt = this->ctx_->node ()->node_type ();
+  
+  // These types are skipped in the OBV class.
+  if (nt == AST_Decl::NT_attr || nt == AST_Decl::NT_op)
+    {
+      return;
+    }
+    
   TAO_OutStream *os = this->ctx_->stream ();
-  *os << "public:" << be_idt;
+  *os << be_uidt_nl << be_nl
+      << "public:" << be_idt;
 }
 
 void
 be_visitor_valuetype_obv_ch::begin_private (void)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  *os << be_uidt_nl << be_nl;
-  *os << "protected:" << be_idt;
+  *os << be_uidt_nl << be_nl
+      << "protected:" << be_idt;
 }

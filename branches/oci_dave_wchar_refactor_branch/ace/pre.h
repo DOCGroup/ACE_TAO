@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -10,10 +10,8 @@
  *
  *  This file saves the original alignment rules and changes the alignment
  *  boundary to ACE's default.
- *
  */
 //=============================================================================
-
 
 // No header guard
 #if defined (_MSC_VER)

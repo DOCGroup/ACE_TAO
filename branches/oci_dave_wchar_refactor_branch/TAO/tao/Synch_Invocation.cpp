@@ -1,22 +1,22 @@
 // $Id$
 
-#include "Synch_Invocation.h"
-#include "Profile_Transport_Resolver.h"
-#include "Profile.h"
-#include "Synch_Reply_Dispatcher.h"
-#include "Transport.h"
-#include "Stub.h"
-#include "Bind_Dispatcher_Guard.h"
-#include "operation_details.h"
-#include "Wait_Strategy.h"
-#include "debug.h"
-#include "ORB_Constants.h"
-#include "Messaging_SyncScopeC.h"
-#include "ORB_Core.h"
-#include "Service_Context.h"
+#include "tao/Synch_Invocation.h"
+#include "tao/Profile_Transport_Resolver.h"
+#include "tao/Profile.h"
+#include "tao/Synch_Reply_Dispatcher.h"
+#include "tao/Transport.h"
+#include "tao/Stub.h"
+#include "tao/Bind_Dispatcher_Guard.h"
+#include "tao/operation_details.h"
+#include "tao/Wait_Strategy.h"
+#include "tao/debug.h"
+#include "tao/ORB_Constants.h"
+#include "tao/Messaging_SyncScopeC.h"
+#include "tao/ORB_Core.h"
+#include "tao/Service_Context.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
-# include "PortableInterceptorC.h"
+# include "tao/PortableInterceptorC.h"
 #endif /*TAO_HAS_INTERCEPTORS */
 
 #include "ace/Auto_Ptr.h"
@@ -24,7 +24,7 @@
 #include "ace/Countdown_Time.h"
 
 #if !defined (__ACE_INLINE__)
-# include "Synch_Invocation.inl"
+# include "tao/Synch_Invocation.inl"
 #endif /* __ACE_INLINE__ */
 
 
@@ -32,6 +32,8 @@ ACE_RCSID (tao,
            Synch_Invocation,
            "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -79,9 +81,11 @@ namespace TAO
     ACE_TRY
       {
         TAO_OutputCDR &cdr = this->resolver_.transport ()->out_stream ();
-#if TAO_RESET_OUTPUT_CDR_AFTER_SEND == 1
-        OutputCDR_Auto_Reset cdr_reset(cdr);
-#endif /* TAO_RESET_OUTPUT_CDR_AFTER_SEND */
+
+        cdr.message_attributes (this->details_.request_id (),
+                                this->resolver_.stub (),
+                                TAO_Transport::TAO_TWOWAY_REQUEST,
+                                max_wait_time);
 
         this->write_header (tspec,
                             cdr
@@ -91,7 +95,6 @@ namespace TAO
         this->marshal_data (cdr
                             ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
-
 
         // Register a reply dispatcher for this invocation. Use the
         // preallocated reply dispatcher.
@@ -338,7 +341,7 @@ namespace TAO
           {
             (void) bd.unbind_dispatcher ();
             this->resolver_.transport ()->close_connection ();
-            
+
             ACE_TRY
               {
                 return
@@ -403,6 +406,36 @@ namespace TAO
       case TAO_PLUGGABLE_MESSAGE_LOCATION_FORWARD:
         return this->location_forward (cdr
                                        ACE_ENV_ARG_PARAMETER);
+      case TAO_PLUGGABLE_MESSAGE_LOCATION_FORWARD_PERM:
+        {
+          // Unmarshal the location forward object and set the
+          // variable this->forward_to_.
+          const Invocation_Status s
+            = this->location_forward (cdr
+                                      ACE_ENV_ARG_PARAMETER);
+          if (s != TAO_INVOKE_FAILURE)
+            {
+              // de-marshalling of permanent object reference was successfull
+              const CORBA::Boolean permanent_forward_condition =
+                this->orb_core ()->is_permanent_forward_condition
+                  (this->forwarded_to_.in (),
+                   this->request_service_context ());
+
+              if (!permanent_forward_condition)
+                {
+                   // permanent condition not given
+                    if (TAO_debug_level > 3)
+                        ACE_DEBUG ((LM_DEBUG,
+                               "TAO (%P|%t) - Synch_Twoway_Invocation::"
+                                "check_reply_status: unexpected LOCATION_FORWARD_PERM reply\n"));
+
+                   ACE_THROW_RETURN (CORBA::INTERNAL (0, CORBA::COMPLETED_NO),
+                                     TAO_INVOKE_FAILURE);
+                }
+            }
+
+          return s;
+        }
       case TAO_PLUGGABLE_MESSAGE_USER_EXCEPTION:
         return this->handle_user_exception (cdr
                                             ACE_ENV_ARG_PARAMETER);
@@ -621,7 +654,7 @@ namespace TAO
       }
 
     CORBA::SystemException *ex =
-      TAO_Exceptions::create_system_exception (type_id.in ());
+      TAO::create_system_exception (type_id.in ());
 
     if (ex == 0)
       {
@@ -704,12 +737,14 @@ namespace TAO
       this->resolver_.transport ();
 
     TAO_OutputCDR &cdr = transport->out_stream ();
-#if TAO_RESET_OUTPUT_CDR_AFTER_SEND == 1
-    OutputCDR_Auto_Reset cdr_reset(cdr);
-#endif /* TAO_RESET_OUTPUT_CDR_AFTER_SEND */
 
     ACE_TRY
       {
+        cdr.message_attributes (this->details_.request_id (),
+                                this->resolver_.stub (),
+                                TAO_Transport::TAO_ONEWAY_REQUEST,
+                                max_wait_time);
+
         this->write_header (tspec,
                             cdr
                             ACE_ENV_ARG_PARAMETER);
@@ -787,3 +822,5 @@ namespace TAO
     return s;
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

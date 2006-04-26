@@ -108,11 +108,11 @@ DRV_init (int &argc, char *argv[])
 {
   // Initialize BE.
   FE_init ();
-  
+
   // Initialize driver private data
   DRV_nfiles = 0;
   DRV_file_index = 0;
-  
+
 #if defined (TAO_IDL_PREPROCESSOR)
   idl_global->set_cpp_location (TAO_IDL_PREPROCESSOR);
 #elif defined (ACE_CC_PREPROCESSOR)
@@ -140,8 +140,8 @@ DRV_refresh (void)
   idl_global->set_main_filename (0);
   idl_global->set_real_filename (0);
   idl_global->set_stripped_filename (0);
-//  idl_global->set_import (I_TRUE);
-//  idl_global->set_in_main_file (I_FALSE);
+//  idl_global->set_import (true);
+//  idl_global->set_in_main_file (false);
   idl_global->set_lineno (-1);
   idl_global->reset_flag_seen ();
 }
@@ -195,7 +195,7 @@ DRV_drive (const char *s)
     }
 
   FE_yyparse ();
-  
+
   // We must do this as late as possible to make sure any
   // forward declared structs or unions contained in a
   // primary key at some level have been fully defined.
@@ -264,7 +264,7 @@ DRV_drive (const char *s)
     {
       ACE_OS::exit (static_cast<int> (error_count));
     }
-    
+
   DRV_refresh ();
 }
 
@@ -305,8 +305,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_OS::exit (0);
     }
 
-  // If there are no input files, no sense going any further.
-  if (DRV_nfiles == 0)
+  // If there are no input files, and we are not using the
+  // directory recursion option, there's no sense going any further.
+  if (DRV_nfiles == 0 && idl_global->recursion_start () == 0)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("IDL: No input files\n")));
@@ -329,7 +330,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   else
     {
       idl_global->set_gen (gen);
-    } 
+    }
 
   // Initialize AST and load predefined types.
   FE_populate ();
@@ -343,14 +344,21 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       DRV_drive (DRV_files[DRV_file_index]);
     }
-    
-  be_global->destroy ();  
+
+  be_global->destroy ();
   delete be_global;
   be_global = 0;
-  
-  idl_global->fini ();  
+
+  idl_global->fini ();
   delete idl_global;
   idl_global = 0;
+
+  for (DRV_file_index = 0;
+       DRV_file_index < DRV_nfiles;
+       ++DRV_file_index)
+    {
+      ACE::strdelete (const_cast<char *> (DRV_files[DRV_file_index]));
+    }
 
   ACE_OS::exit (0);
 

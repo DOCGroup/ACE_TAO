@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : portableserver {
+project : orbsvcslib {
   after     += CosConcurrency
   libs      += TAO_CosConcurrency
   tagchecks += Concurrency

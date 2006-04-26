@@ -1,6 +1,4 @@
-// DEV.cpp
 // $Id$
-
 
 #include "ace/DEV.h"
 
@@ -11,6 +9,8 @@
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, DEV, "$Id$")
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_DEV)
 
@@ -39,3 +39,5 @@ ACE_DEV::close (void)
   this->set_handle (ACE_INVALID_HANDLE);
   return result;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

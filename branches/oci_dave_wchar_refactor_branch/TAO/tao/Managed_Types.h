@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -30,6 +30,8 @@
 
 /****************************************************************/
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_String_Manager
  *
@@ -50,6 +52,9 @@ public:
 
   /// copy constructor
   TAO_String_Manager (const TAO_String_Manager &);
+
+  /// constructor from const char* makes a copy.
+  TAO_String_Manager (const char *);
 
   /// destructor
   ~TAO_String_Manager (void);
@@ -200,6 +205,9 @@ public:
 
   /// copy constructor
   TAO_WString_Manager (const TAO_WString_Manager &);
+
+  /// constructor from const whar* makes a copy.
+  TAO_WString_Manager (const CORBA::WChar *);
 
   /// destructor
   ~TAO_WString_Manager (void);
@@ -364,6 +372,8 @@ namespace ACE_OS
   }
 }
 #endif /* ACE_LACKS_DEPRECATED_MACROS */
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "tao/Managed_Types.i"

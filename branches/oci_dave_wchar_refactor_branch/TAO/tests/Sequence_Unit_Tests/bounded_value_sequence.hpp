@@ -1,5 +1,5 @@
-#ifndef guard_unbounded_value_sequence_hpp
-#define guard_unbounded_value_sequence_hpp
+#ifndef guard_bounded_value_sequence_hpp
+#define guard_bounded_value_sequence_hpp
 /**
  * @file
  *
@@ -15,6 +15,8 @@
 #include "value_traits.hpp"
 #include "generic_sequence.hpp"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
 
@@ -22,9 +24,8 @@ template<class T, CORBA::ULong MAX>
 class bounded_value_sequence
 {
 public:
-  // static CORBA::ULong const MAXIMUM = MAX;
-
   typedef T value_type;
+  typedef T element_type;
   typedef T const const_value_type;
 
   typedef details::bounded_value_allocation_traits<value_type,MAX,true> allocation_traits;
@@ -92,4 +93,6 @@ private:
 
 } // namespace TAO
 
-#endif // guard_unbounded_string_sequence_hpp
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+#endif // guard_bounded_string_sequence_hpp

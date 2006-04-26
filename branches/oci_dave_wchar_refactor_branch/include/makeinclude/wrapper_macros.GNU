@@ -50,6 +50,9 @@
 #  static_link      Link only static libs to executables, e.g., uses "-static"
 #                   flag with the GNU ld linker.
 #  threads          Build with thread support.
+#  ace_for_tao      Build "ace_for_tao" subset.  Primarily useful for
+#                   reducing the size of the ACE shared library when
+#                   using TAO.
 #  xt               Build with Xt (X11 Toolkit) support.
 #  fl               Build with FlTk (Fast Light Toolkit) support.
 #  tk               Build with Tk (Tcl/Tk) support.
@@ -284,16 +287,14 @@ ifeq ($(threads),0)
 endif # threads
 
 ####
-#### Defaults are exceptions off (0), fast off (0), rtti on (1), and
+#### Defaults are exceptions on (1), fast off (0), rtti on (1), and
 #### versioned_so on (1).
 ####
-exceptions ?= 0
-
+exceptions ?= 1
 fast ?= 0
-
 rtti ?= 1
-
 versioned_so ?= 1
+use_dep_libs ?= 1
 
 SOVERSION ?=
 SONAME ?=
@@ -338,7 +339,10 @@ INSMAN          ?= $(ACE_ROOT)/man
 ifeq (,$(findstring -L$(ACE_ROOT)/ace,$(LDFLAGS)))
   LDFLAGS         += -L$(ACE_ROOT)/ace -L./
 endif
-LEX             ?= flex
+
+ifeq (default,$(origin LEX))
+LEX = flex
+endif
 
 EXEEXT ?=
 
@@ -370,7 +374,9 @@ ACELIB ?= -lACE
 
 # NOTE: VLDLIBS is defined below, in case it is overridden for static-
 #       or shared-only builds.
-YACC          ?= bison
+ifeq (default,$(origin YACC))
+YACC = bison
+endif
 
 #----------------------------------------------------------------------------
 #      Platform-dependent macros that require platform_macros.GNU.
@@ -437,6 +443,17 @@ endif # debug
 ifeq ($(threads),0)
   override threads =
 endif # threads
+
+# ace_for_tao subsetting is disabled by default.
+ace_for_tao ?=
+ifeq ($(ace_for_tao),0)
+  override ace_for_tao =
+endif # ace_for_tao
+
+ifneq ($(ace_for_tao),)
+  ACE_MAKE_OPTIONS += ace_for_tao
+endif # ace_for_tao
+
 
 ifeq ($(xt),0)
   override xt =
@@ -547,15 +564,14 @@ ifeq ($(ssl),0)
   override ssl =
 else
   ifneq ($(SSL_ROOT),)
-      # Don't do a thing..
-    else
-      CPPFLAGS += $(PLATFORM_SSL_CPPFLAGS)
-      LDFLAGS  += $(PLATFORM_SSL_LDFLAGS)
-      LIBS     += $(PLATFORM_SSL_LIBS)
-  ACE_MAKE_OPTIONS += ssl
+    # Don't do a thing..
+  else
+    CPPFLAGS += $(PLATFORM_SSL_CPPFLAGS)
+    LDFLAGS  += $(PLATFORM_SSL_LDFLAGS)
+    LIBS     += $(PLATFORM_SSL_LIBS)
+    ACE_MAKE_OPTIONS += ssl
   endif
 endif
-
 ec_typed_events ?= 1
 
 ifeq ($(exceptions),0)
@@ -783,6 +799,7 @@ ace_svcconf   ?= 1
 ace_uuid      ?= 1
 ace_filecache ?= 1
 acexml        ?= 1
+xerces        ?= 1
 
 #----------------------------------------------------------------------------
 #      Conditional macro definitions
@@ -799,7 +816,7 @@ COMPILE.c       = $(CC) $(CFLAGS) $(CPPFLAGS) -c
 COMPILE.cc      = $(CXX) $(CCFLAGS) $(CPPFLAGS) $(PTDIRS) -c
 RC ?=
 
-COMPILE.rc      = $(RC)
+COMPILE.rc      = $(RC) $(RCFLAGS)
 COMPILE-NO_DASH_G.cc = `echo $(COMPILE.cc) | sed 's/-g //'`
 # 960905 Marius Kjeldahl <marius@funcom.com>
 # Added the line below to be used for compiling executable shared objects

@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ../bin/mwc.pl -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/config -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/templates -type automake -noreldefs TAO.mwc
+## ../bin/mwc.pl -type automake -noreldefs TAO.mwc
 
 ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
@@ -32,6 +32,7 @@ Trading_Service_SOURCES = \
 
 Trading_Service_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosTrading_Serv.la \
+  $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosTrading_Skel.la \

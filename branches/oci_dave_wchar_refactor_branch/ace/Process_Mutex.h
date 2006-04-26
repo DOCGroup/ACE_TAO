@@ -1,4 +1,5 @@
 // -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file    Process_Mutex.h
@@ -35,6 +36,8 @@
 #else
 #  include "ace/Mutex.h"
 #endif /* ACE_HAS_SYSV_IPC && !ACE_USES_MUTEX_FOR_PROCESS_MUTEX */
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward declarations
 class ACE_Time_Value;
@@ -198,6 +201,8 @@ private:
   ACE_Mutex lock_;
 #endif /* _ACE_USE_SV_SEM */
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Process_Mutex.inl"

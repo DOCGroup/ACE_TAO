@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -67,6 +67,8 @@
 # define ACE_NO_TSS_TOKENS 1
 #endif /* !(defined (ACE_HAS_THREADS) && defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)) */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // 1.
 /**
  * @class ACE_TOKEN_CONST
@@ -77,9 +79,8 @@
  * this class is necessary to fight the compiler with order of
  * declaration errors.
  */
-class ACE_Export ACE_TOKEN_CONST
+namespace ACE_TOKEN_CONST
 {
-public:
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   // ACE platform supports some form of threading.
   typedef ACE_Condition_Thread_Mutex COND_VAR;
@@ -90,7 +91,7 @@ public:
   typedef ACE_Null_Mutex MUTEX;
   typedef ACE_Guard<ACE_Null_Mutex> GUARD;
 #endif /* ACE_HAS_THREADS */
-};
+}
 
 // Forward decl.
 class ACE_Token_Proxy;
@@ -105,7 +106,7 @@ class ACE_Token_Proxy;
  */
 class ACE_Export ACE_TPQ_Entry
 {
-friend class ACE_Token_Manager;
+  friend class ACE_Token_Manager;
 public:
   typedef void (*PTVF) (void *);
 
@@ -357,15 +358,15 @@ protected:
  * Not a public interface.
  * Currently, I don't see a reason for providing an abstract
  * interface at this level of the library.  As of yet, no one
- * uses <ACE_Tokens> derivatives through this abstract interface
- * except for <ACE_Token_Manager>.  It only uses the statistical
+ * uses ACE_Tokens derivatives through this abstract interface
+ * except for ACE_Token_Manager.  It only uses the statistical
  * methods which are shared by all Tokens.  For that reason, it
  * still makes since to have a common base class.  However,
  * acquire, renew, and release do not need to have matching
  * interfaces throughout all Tokens.
  * To add a new type of token (e.g. semaphore), this class must
  * be subtyped to define the new semantics.  See
- * <ACE_Token_Manager> for details.
+ * ACE_Token_Manager for details.
  */
 class ACE_Export ACE_Tokens
 {
@@ -1108,6 +1109,8 @@ protected:
   /// Return a new ACE_Local_Mutex.
   ACE_Tokens *create_token (const ACE_TCHAR *name);
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_TOKENS_LIBRARY */
 

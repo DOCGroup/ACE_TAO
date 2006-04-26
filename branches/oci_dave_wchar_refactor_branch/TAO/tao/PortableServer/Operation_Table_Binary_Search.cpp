@@ -1,6 +1,6 @@
 // $Id$
 
-#include "Operation_Table_Binary_Search.h"
+#include "tao/PortableServer/Operation_Table_Binary_Search.h"
 #include "tao/Timeprobe.h"
 #include "ace/Log_Msg.h"
 
@@ -29,10 +29,7 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Operation_Table_Timeprobe_Description,
 
 #endif /* ACE_ENABLE_TIMEPROBES */
 
-
-TAO_Binary_Search_OpTable::TAO_Binary_Search_OpTable (void)
-{
-}
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Binary_Search_OpTable::~TAO_Binary_Search_OpTable (void)
 {
@@ -56,7 +53,6 @@ TAO_Binary_Search_OpTable::find (const char *opname,
 
   return 0;
 }
-
 
 int
 TAO_Binary_Search_OpTable::find (const char *opname,
@@ -87,8 +83,9 @@ TAO_Binary_Search_OpTable::find (const char *opname,
 
 int
 TAO_Binary_Search_OpTable::bind (const char *,
-                                 const TAO::Operation_Skeletons )
+                                 const TAO::Operation_Skeletons)
 {
   return 0;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

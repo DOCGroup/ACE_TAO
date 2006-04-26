@@ -32,6 +32,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_Config_ImpExp_Base
  *
@@ -206,6 +208,8 @@ private:
   ACE_Ini_ImpExp (const ACE_Ini_ImpExp&);
   ACE_Ini_ImpExp& operator= (const ACE_Ini_ImpExp&);
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIGURATION_IMPORT_EXPORT_H */

@@ -9,6 +9,7 @@
 # DEBUG - if defined means building with debug information
 # UNICODE - if defined means building unicode
 # CBX - if defined means building with the new CBuilderX preview compiler
+# CPU_FLAG - if defined the flag for CPU optimization
 #
 # Outputs:
 # ~~~~~~~~
@@ -33,6 +34,9 @@
 #
 
 # Get the BCBVER and VCLVER, if it is not set, we default to BCB6.
+!if $(BCBVER) == 8
+VCLVER =
+!else
 !if $(BCBVER) == 6
 VCLVER =
 !else
@@ -42,8 +46,8 @@ VCLVER = 50
 !if $(BCBVER) == 4
 VCLVER = 40
 !else
-BCBVER = 6
-VCLVER =
+!error BCBVER must be explicitly set as environment variable or is set to a not supported value.
+!endif
 !endif
 !endif
 !endif
@@ -75,6 +79,15 @@ RC = brcc32
 #
 # Common flags
 #
+!ifndef $(BCB)
+BCB = $(MAKEDIR)\..
+!endif
+
+!ifdef CPU_FLAG
+CPU_CFLAG = $(CPU_FLAG)
+!else
+CPU_CFLAG =
+!endif
 
 !ifdef DEBUG
 !ifdef CBX
@@ -82,7 +95,7 @@ DEBUG_CFLAGS = -v -y -Od -vi- -k -D_DEBUG -DACE_NO_INLINE=1
 DEBUG_LFLAGS = -v
 !else
 DEBUG_CFLAGS = -v -y -Od -r- -vi- -k -D_DEBUG -DACE_NO_INLINE=1
-DEBUG_LFLAGS = -v
+DEBUG_LFLAGS = -v -L$(BCB)\lib\debug
 !endif
 !else
 !if $(BCBVER) == 6 || $(BCBVER) == 5
@@ -90,7 +103,7 @@ DEBUG_CFLAGS = -OS -Ov -Og -DNDEBUG
 !else
 DEBUG_CFLAGS = -O2 -DNDEBUG
 !endif
-DEBUG_LFLAGS =
+DEBUG_LFLAGS = -L$(BCB)\lib\release
 !endif
 
 !ifdef STATIC
@@ -120,7 +133,11 @@ DEFINES_CFLAGS =
 QUIET_CFLAGS =
 MISC_CFLAGS =
 !else
+!ifdef VCL
+DEFINES_CFLAGS = -DWIN32
+!else
 DEFINES_CFLAGS = -DWIN32;_NO_VCL
+!endif
 QUIET_CFLAGS = -q
 MISC_CFLAGS =
 !endif
@@ -129,9 +146,15 @@ DECORATOR_CFLAGS = -DACE_LD_DECORATOR_STR=ACE_LIB_TEXT(\"$(LIB_DECORATOR)\")
 COMMON_CFLAGS = $(QUIET_CFLAGS) $(DEBUG_CFLAGS) $(THREAD_CFLAGS) \
 	$(STATIC_CFLAGS) $(WARNINGS_CFLAGS) $(DEFINES_CFLAGS) \
 	$(MISC_CFLAGS) $(CODEGUARD_CFLAGS) $(UNICODE_CFLAGS) \
-	$(DECORATOR_CFLAGS) $(PCH_CFLAGS)
+        $(DECORATOR_CFLAGS) $(PCH_CFLAGS) $(CPU_CFLAG)
 
-COMMON_LFLAGS = $(DEBUG_LFLAGS) $(STATIC_LFLAGS) -x -w-dup -Gn
+COMMON_LFLAGS = $(DEBUG_LFLAGS) $(STATIC_LFLAGS) -x -w-dup -Gn -L$(BCB)\lib -L$(BCB)\lib\psdk
+
+!ifdef VCL
+PACKAGES = rtl.bpi vcl.bpi vclx.bpi vcljpg.bpi bcbsmp.bpi qrpt.bpi dbrtl.bpi \
+    vcldb.bpi bdertl.bpi ibsmp.bpi vcldbx.bpi teeui.bpi teedb.bpi tee.bpi \
+    nmfast.bpi dclocx.bpi
+!endif
 
 #
 # DLL specific flags
@@ -152,9 +175,17 @@ DLL_STARTUP_OBJ = c0d32.$(OBJ_EXT)
 EXE_CFLAGS =
 EXE_LFLAGS = -Tpe
 !ifdef UNICODE
+!ifdef VCL
+EXE_STARTUP_OBJ = c0w32w.$(OBJ_EXT)
+!else
 EXE_STARTUP_OBJ = c0x32w.$(OBJ_EXT)
+!endif
+!else
+!ifdef VCL
+EXE_STARTUP_OBJ = c0w32.$(OBJ_EXT)
 !else
 EXE_STARTUP_OBJ = c0x32.$(OBJ_EXT)
+!endif
 !endif
 
 #

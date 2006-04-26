@@ -8,6 +8,8 @@ ACE_RCSID (ace,
            Remote_Name_Space,
            "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 int
 ACE_Remote_Name_Space::open (const ACE_TCHAR *servername, u_short port)
 {
@@ -375,8 +377,4 @@ ACE_Remote_Name_Space::dump (void) const
 #endif /* ACE_HAS_DUMP */
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Auto_Basic_Array_Ptr<wchar_t>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Auto_Basic_Array_Ptr<wchar_t>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+ACE_END_VERSIONED_NAMESPACE_DECL

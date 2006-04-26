@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file   EC_Conjunction_Filter.h
  *
@@ -16,12 +17,14 @@
 #define TAO_EC_CONJUNCTION_FILTER_H
 #include /**/ "ace/pre.h"
 
-#include "EC_Filter.h"
-#include /**/ "event_serv_export.h"
+#include "orbsvcs/Event/EC_Filter.h"
+#include /**/ "orbsvcs/Event/event_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_EC_Conjunction_Filter
@@ -76,10 +79,8 @@ private:
   /// Determine if all the children have received their events.
   int all_received (void) const;
 
-  ACE_UNIMPLEMENTED_FUNC (TAO_EC_Conjunction_Filter
-                              (const TAO_EC_Conjunction_Filter&))
-  ACE_UNIMPLEMENTED_FUNC (TAO_EC_Conjunction_Filter& operator=
-                              (const TAO_EC_Conjunction_Filter&))
+  TAO_EC_Conjunction_Filter (const TAO_EC_Conjunction_Filter&);
+  TAO_EC_Conjunction_Filter& operator= (const TAO_EC_Conjunction_Filter&);
 
 private:
   /// The children
@@ -105,6 +106,8 @@ private:
   /// The current child in the iteration, used in the push() method...
   ChildrenIterator current_child_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_EC_CONJUNCTION_FILTER_H */

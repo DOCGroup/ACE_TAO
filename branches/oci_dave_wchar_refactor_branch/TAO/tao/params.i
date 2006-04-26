@@ -2,6 +2,8 @@
 //
 // $Id$
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_INLINE int
 TAO_ORB_Parameters::sock_rcvbuf_size (void) const
 {
@@ -36,6 +38,18 @@ ACE_INLINE void
 TAO_ORB_Parameters::cdr_memcpy_tradeoff (int x)
 {
   this->cdr_memcpy_tradeoff_ = x;
+}
+
+ACE_INLINE ACE_CDR::ULong
+TAO_ORB_Parameters::max_message_size (void) const
+{
+  return this->max_message_size_;
+}
+
+ACE_INLINE void
+TAO_ORB_Parameters::max_message_size (ACE_CDR::ULong size)
+{
+  this->max_message_size_ = size;
 }
 
 ACE_INLINE int
@@ -137,6 +151,18 @@ TAO_ORB_Parameters::nodelay (int x)
 }
 
 ACE_INLINE int
+TAO_ORB_Parameters::sock_keepalive (void)
+{
+  return this->sock_keepalive_;
+}
+
+ACE_INLINE void
+TAO_ORB_Parameters::sock_keepalive (int x)
+{
+  this->sock_keepalive_ = x;
+}
+
+ACE_INLINE int
 TAO_ORB_Parameters::ace_sched_policy (void) const
 {
   return this->ace_sched_policy_;
@@ -228,3 +254,5 @@ TAO_ORB_Parameters::negotiate_codesets (bool x)
 {
   this->negotiate_codesets_ = x;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

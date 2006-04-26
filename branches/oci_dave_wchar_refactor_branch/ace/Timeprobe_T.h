@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -24,6 +24,8 @@
 #if defined (ACE_COMPILE_TIMEPROBES)
 
 #include "ace/Unbounded_Set.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_Timeprobe_Ex
@@ -204,6 +206,8 @@ protected:
   /// Event.
   u_long event_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Timeprobe_T.cpp"

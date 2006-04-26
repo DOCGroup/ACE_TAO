@@ -130,7 +130,7 @@ run_main (int, ACE_TCHAR *[])
 
   {
     /* Set #2 */
-    ACE_CString s0 ("hello", 0, 0);
+    ACE_CString s0 = "hello";
     ACE_CString s1 ("hello", 0, 0);
     ACE_CString s2 ("world", 0, 0);
     ACE_CString s3 ("ll", 0, 0);

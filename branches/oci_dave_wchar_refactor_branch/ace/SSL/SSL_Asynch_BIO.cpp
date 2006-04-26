@@ -1,14 +1,49 @@
 // -*- C++ -*-
 
-#include "ace/OS_NS_string.h"
 #include "SSL_Asynch_BIO.h"
+
+#if OPENSSL_VERSION_NUMBER > 0x0090581fL && ((defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || (defined (ACE_HAS_AIO_CALLS)))
+
 #include "SSL_Asynch_Stream.h"
+#include "ace/OS_NS_string.h"
+
 
 ACE_RCSID (ACE_SSL,
            SSL_Asynch_BIO,
            "$Id$")
 
-#if OPENSSL_VERSION_NUMBER > 0x0090581fL && ((defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || (defined (ACE_HAS_AIO_CALLS)))
+
+#if (defined (ACE_HAS_VERSIONED_NAMESPACE) && ACE_HAS_VERSIONED_NAMESPACE == 1)
+# define ACE_ASYNCH_BIO_WRITE_NAME ACE_PREPROC_CONCATENATE(ACE_VERSIONED_NAMESPACE_NAME, _ACE_Asynch_BIO_write)
+# define ACE_ASYNCH_BIO_READ_NAME  ACE_PREPROC_CONCATENATE(ACE_VERSIONED_NAMESPACE_NAME, _ACE_Asynch_BIO_read)
+# define ACE_ASYNCH_BIO_PUTS_NAME  ACE_PREPROC_CONCATENATE(ACE_VERSIONED_NAMESPACE_NAME, _ACE_Asynch_BIO_puts)
+# define ACE_ASYNCH_BIO_CTRL_NAME  ACE_PREPROC_CONCATENATE(ACE_VERSIONED_NAMESPACE_NAME, _ACE_Asynch_BIO_ctrl)
+# define ACE_ASYNCH_BIO_NEW_NAME   ACE_PREPROC_CONCATENATE(ACE_VERSIONED_NAMESPACE_NAME, _ACE_Asynch_BIO_new)
+# define ACE_ASYNCH_BIO_FREE_NAME  ACE_PREPROC_CONCATENATE(ACE_VERSIONED_NAMESPACE_NAME, _ACE_Asynch_BIO_free)
+#else
+# define ACE_ASYNCH_BIO_WRITE_NAME ACE_Asynch_BIO_write
+# define ACE_ASYNCH_BIO_READ_NAME  ACE_Asynch_BIO_read
+# define ACE_ASYNCH_BIO_PUTS_NAME  ACE_Asynch_BIO_puts
+# define ACE_ASYNCH_BIO_CTRL_NAME  ACE_Asynch_BIO_ctrl
+# define ACE_ASYNCH_BIO_NEW_NAME   ACE_Asynch_BIO_new
+# define ACE_ASYNCH_BIO_FREE_NAME  ACE_Asynch_BIO_free
+#endif  /* ACE_HAS_VERSIONED_NAMESPACE == 1 */
+
+/**
+ * @name OpenSSL BIO Helper Methods for use with ACE's Asynchronous
+ *       SSL I/O support.
+ */
+//@{
+extern "C"
+{
+  int  ACE_ASYNCH_BIO_WRITE_NAME (BIO *pBIO, const char *buf, int len);
+  int  ACE_ASYNCH_BIO_READ_NAME  (BIO *pBIO, char *buf, int len);
+  int  ACE_ASYNCH_BIO_PUTS_NAME  (BIO *pBIO, const char *str);
+  long ACE_ASYNCH_BIO_CTRL_NAME  (BIO *pBIO, int cmd, long arg1, void *arg2);
+  int  ACE_ASYNCH_BIO_NEW_NAME   (BIO *pBIO);
+  int  ACE_ASYNCH_BIO_FREE_NAME  (BIO *pBIO);
+}
+//@}
 
 #define BIO_TYPE_ACE  ( 21 | BIO_TYPE_SOURCE_SINK )
 
@@ -16,26 +51,22 @@ static BIO_METHOD methods_ACE =
   {
     BIO_TYPE_ACE, // BIO_TYPE_PROXY_SERVER,
     "ACE_Asynch_BIO",
-    ACE_Asynch_BIO_write,
-    ACE_Asynch_BIO_read,
-    ACE_Asynch_BIO_puts,
-    NULL, /* ACE_Asynch_BIO_gets, */
-    ACE_Asynch_BIO_ctrl,
-    ACE_Asynch_BIO_new,
-    ACE_Asynch_BIO_free,
+    ACE_ASYNCH_BIO_WRITE_NAME,
+    ACE_ASYNCH_BIO_READ_NAME,
+    ACE_ASYNCH_BIO_PUTS_NAME,
+    NULL, /* ACE_ASYNCH_BIO_GETS_NAME, */
+    ACE_ASYNCH_BIO_CTRL_NAME,
+    ACE_ASYNCH_BIO_NEW_NAME,
+    ACE_ASYNCH_BIO_FREE_NAME,
     NULL
   };
 
-BIO_METHOD *
-BIO_s_ACE_Asynch (void)
-{
-  return (&methods_ACE);
-}
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 BIO *
-BIO_new_ACE_Asynch (void *ssl_asynch_stream)
+ACE_SSL_make_BIO (void * ssl_asynch_stream)
 {
-  BIO * pBIO = BIO_new (BIO_s_ACE_Asynch ());
+  BIO * const pBIO = BIO_new (&methods_ACE);
 
   if (pBIO)
     BIO_ctrl (pBIO,
@@ -46,8 +77,41 @@ BIO_new_ACE_Asynch (void *ssl_asynch_stream)
   return pBIO;
 }
 
+/**
+ * @struct @c ACE_SSL_Asynch_Stream_Accessor
+ *
+ * @brief Privileged @c ACE_SSL_Asynch_Stream accessor.
+ *
+ * This structure is a @c friend to the @c ACE_SSL_Asynch_Stream
+ * class so that it can gain access to the protected
+ * ssl_bio_{read,write}() methods in that class.  It is full declared
+ * in this implementation file to hide its interface from users to
+ * prevent potential abuse of the friend relationship between it and
+ * the @c ACE_SSL_Asynch_Stream class.
+ */
+struct ACE_SSL_Asynch_Stream_Accessor
+{
+  static int read (ACE_SSL_Asynch_Stream * stream,
+               char * buf,
+               size_t len,
+               int & errval)
+  {
+    return stream->ssl_bio_read (buf, len, errval);
+  }
+
+  static int write (ACE_SSL_Asynch_Stream * stream,
+                    const char * buf,
+                    size_t len,
+                    int & errval)
+  {
+    return stream->ssl_bio_write (buf, len, errval);
+  }
+};
+
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 int
-ACE_Asynch_BIO_new (BIO *pBIO)
+ACE_ASYNCH_BIO_NEW_NAME (BIO * pBIO)
 {
   pBIO->init  = 0;    // not initialized
   pBIO->num   = 0;    // still zero ( we can use it )
@@ -58,37 +122,30 @@ ACE_Asynch_BIO_new (BIO *pBIO)
 }
 
 int
-ACE_Asynch_BIO_free (BIO *pBIO)
+ACE_ASYNCH_BIO_FREE_NAME (BIO * pBIO)
 {
-  if (pBIO == 0)
-    return 0;
-
-  if (pBIO->shutdown)
+  if (pBIO && pBIO->shutdown)
     {
       pBIO->ptr   = 0;
       pBIO->init  = 0;
       pBIO->num   = 0;
       pBIO->flags = 0;
+
+      return 1;
     }
 
-  return 1;
+  return 0;
 }
 
 int
-ACE_Asynch_BIO_read (BIO * pBIO, char * buf, int len)
+ACE_ASYNCH_BIO_READ_NAME (BIO * pBIO, char * buf, int len)
 {
   BIO_clear_retry_flags (pBIO);
 
-  ACE_SSL_Asynch_Stream * p_stream =
+  ACE_SSL_Asynch_Stream * const p_stream =
     static_cast<ACE_SSL_Asynch_Stream *> (pBIO->ptr);
 
-  if (pBIO->init == 0 || p_stream == 0)
-    return -1;
-
-  if (buf == 0)
-    return -1;
-
-  if (len <= 0 )
+  if (pBIO->init == 0 || p_stream == 0 || buf == 0 || len <= 0)
     return -1;
 
   BIO_clear_retry_flags (pBIO);
@@ -96,9 +153,10 @@ ACE_Asynch_BIO_read (BIO * pBIO, char * buf, int len)
   int errval = 0;
 
   int retval =
-    p_stream->ssl_bio_read (buf,
-                            len,
-                            errval);
+    ACE_SSL_Asynch_Stream_Accessor::read (p_stream,
+                                          buf,
+                                          len,
+                                          errval);
 
   if (retval >= 0)
     return retval;
@@ -110,20 +168,14 @@ ACE_Asynch_BIO_read (BIO * pBIO, char * buf, int len)
 }
 
 int
-ACE_Asynch_BIO_write (BIO * pBIO, const char * buf, int len)
+ACE_ASYNCH_BIO_WRITE_NAME (BIO * pBIO, const char * buf, int len)
 {
   BIO_clear_retry_flags (pBIO);
 
   ACE_SSL_Asynch_Stream * p_stream =
     static_cast<ACE_SSL_Asynch_Stream *> (pBIO->ptr);
 
-  if (pBIO->init == 0 || p_stream == 0)
-    return -1;
-
-  if (buf == 0)
-    return -1;
-
-  if (len <= 0)
+  if (pBIO->init == 0 || p_stream == 0 || buf == 0 || len <= 0)
     return -1;
 
   BIO_clear_retry_flags (pBIO);
@@ -131,9 +183,10 @@ ACE_Asynch_BIO_write (BIO * pBIO, const char * buf, int len)
   int errval = 0;
 
   int retval =
-    p_stream->ssl_bio_write (buf,
-                             len,
-                             errval);
+    ACE_SSL_Asynch_Stream_Accessor::write (p_stream,
+                                           buf,
+                                           len,
+                                           errval);
 
   if (retval >= 0)
     return retval;
@@ -145,7 +198,7 @@ ACE_Asynch_BIO_write (BIO * pBIO, const char * buf, int len)
 }
 
 long
-ACE_Asynch_BIO_ctrl (BIO * pBIO, int cmd, long num, void *ptr)
+ACE_ASYNCH_BIO_CTRL_NAME (BIO * pBIO, int cmd, long num, void *ptr)
 {
   long ret = 1;
 
@@ -187,13 +240,12 @@ ACE_Asynch_BIO_ctrl (BIO * pBIO, int cmd, long num, void *ptr)
   return ret;
 }
 
-
 int
-ACE_Asynch_BIO_puts (BIO *pBIO, const char *str)
+ACE_ASYNCH_BIO_PUTS_NAME (BIO *pBIO, const char *str)
 {
-  size_t n = ACE_OS::strlen (str);
+  size_t const n = ACE_OS::strlen (str);
 
-  return ACE_Asynch_BIO_write (pBIO, str, n);
+  return ACE_ASYNCH_BIO_WRITE_NAME (pBIO, str, n);
 }
 
 #endif  /* OPENSSL_VERSION_NUMBER > 0x0090581fL && (ACE_WIN32 ||

@@ -19,8 +19,8 @@
 
 #include /**/ "ace/pre.h"
 
-#include /**/ "event_serv_export.h"
-#include "EC_Gateway.h"
+#include /**/ "orbsvcs/Event/event_serv_export.h"
+#include "orbsvcs/Event/EC_Gateway.h"
 
 #include "orbsvcs/RtecEventChannelAdminS.h"
 #include "orbsvcs/RtecEventCommS.h"
@@ -28,6 +28,8 @@
 
 #include "ace/Map_Manager.h"
 #include "ace/Null_Mutex.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_ECG_ConsumerEC_Control;
 class TAO_EC_Gateway_IIOP_Factory;
@@ -245,6 +247,8 @@ protected:
   int use_consumer_proxy_map_;
 
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

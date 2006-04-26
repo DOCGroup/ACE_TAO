@@ -64,6 +64,8 @@
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:48
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace CORBA
 {
 
@@ -83,23 +85,20 @@ namespace CORBA
   class ORB_ObjectIdList;
 
   typedef
-    TAO_MngSeq_Var_T<
-        ORB_ObjectIdList,
-        TAO_SeqElem_String_Manager
+    TAO_VarSeq_Var_T<
+        ORB_ObjectIdList
       >
     ORB_ObjectIdList_var;
 
   typedef
-    TAO_MngSeq_Out_T<
-        ORB_ObjectIdList,
-        ORB_ObjectIdList_var,
-        TAO_SeqElem_String_Manager
+    TAO_Seq_Out_T<
+        ORB_ObjectIdList
       >
     ORB_ObjectIdList_out;
 
   class TAO_Export ORB_ObjectIdList
     : public
-        TAO_Unbounded_String_Sequence
+        TAO::unbounded_string_sequence
   {
   public:
     ORB_ObjectIdList (void);
@@ -108,7 +107,7 @@ namespace CORBA
         CORBA::ULong max,
         CORBA::ULong length,
         char ** buffer,
-        CORBA::Boolean release = 0
+        CORBA::Boolean release = false
       );
     ORB_ObjectIdList (const ORB_ObjectIdList &);
     ~ORB_ObjectIdList (void);
@@ -150,6 +149,8 @@ TAO_Export CORBA::Boolean operator>> (
 
 // TAO_IDL - Generated from
 // be\be_codegen.cpp:955
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

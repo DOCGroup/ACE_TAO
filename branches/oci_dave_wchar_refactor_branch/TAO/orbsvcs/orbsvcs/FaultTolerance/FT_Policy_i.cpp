@@ -1,13 +1,15 @@
 //$Id$
-#include "FT_Policy_i.h"
+#include "orbsvcs/FaultTolerance/FT_Policy_i.h"
 
 #include "tao/debug.h"
 
 #if !defined (__ACE_INLINE__)
-#include "FT_Policy_i.inl"
+#include "orbsvcs/FaultTolerance/FT_Policy_i.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(FaultTolerance, FT_Policy_i, "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TimeBase::TimeT
 TAO_FT_Request_Duration_Policy::request_duration_policy_value (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
@@ -253,3 +255,5 @@ TAO_FT_Heart_Beat_Enabled_Policy::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

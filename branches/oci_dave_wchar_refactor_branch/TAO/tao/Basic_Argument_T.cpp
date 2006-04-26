@@ -1,7 +1,7 @@
 // $Id$
 
-#ifndef TAO_BASIC_ARGUMENT_T_C
-#define TAO_BASIC_ARGUMENT_T_C
+#ifndef TAO_BASIC_ARGUMENT_T_CPP
+#define TAO_BASIC_ARGUMENT_T_CPP
 
 #include "tao/Basic_Argument_T.h"
 
@@ -9,9 +9,7 @@
 #include "tao/Basic_Argument_T.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (tao,
-           Basic_Argument_T,
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<typename S, typename Insert_Policy>
 CORBA::Boolean
@@ -98,4 +96,6 @@ TAO::Ret_Basic_Argument_T<S, Insert_Policy>::interceptor_value (CORBA::Any *any)
 
 #endif /* TAO_HAS_INTERCEPTORS */
 
-#endif /* TAO_BASIC_ARGUMENT_T_C */
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* TAO_BASIC_ARGUMENT_T_CPP */

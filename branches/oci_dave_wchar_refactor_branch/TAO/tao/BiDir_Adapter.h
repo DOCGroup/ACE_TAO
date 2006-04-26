@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -21,14 +21,9 @@
 
 #include "tao/SystemException.h"
 
-class TAO_ORB_Core;
-class TAO_Policy_Validator;
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-namespace CORBA
-{
-  class ORB;
-  typedef ORB *ORB_ptr;
-}
+class TAO_Policy_Validator;
 
 /**
  * @class TAO_BiDir_Adapter
@@ -50,5 +45,8 @@ public:
 
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #include /**/ "ace/post.h"
+
 #endif /* TAO_BIDIR_ADAPTER_H */

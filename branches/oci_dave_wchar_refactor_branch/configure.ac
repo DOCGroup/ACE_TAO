@@ -208,6 +208,18 @@ dnl Determine which subsets to build
 dnl This is done using the autoconf "--enable-foobar" mechanism.
 ACE_CHECK_SUBSETS
 
+dnl Some of the third party libraries (X11, openssl, etc.) depend on 
+dnl other libraries.  Check for those before the processing --enable
+dnl options.
+
+dnl Check if the socket library is available
+AC_SEARCH_LIBS([socket],[socket],,,[-lnsl])
+
+dnl Check for gethostbyname in -lnsl since some platforms (e.g. Solaris)
+dnl put it there.
+AC_SEARCH_LIBS([gethostbyname],[nsl],,)
+
+
 dnl Add --{enable,disable,with,without}-feature options.
 ACE_CONFIGURATION_OPTIONS
 ACE_COMPILATION_OPTIONS
@@ -235,9 +247,6 @@ dnl Platform specific libraries needed for ACE's autoconf tests
 dnl that currently do not have tests themselves.
 dnl Platform specific flags
 case "$host" in
-  *freebsd*)
-    LIBS="$LIBS -lcompat"
-    ;;
   *osf3.2*)
     LIBS="$LIBS -lmach -lsys5 -lcxx -lc"
     ;;
@@ -312,18 +321,9 @@ AC_SEARCH_LIBS([dlopen],[dl svld],[ace_has_svr4_dynamic_linking=yes],
    AC_CHECK_LIB([dld],[shl_get],,)
   ])
 
-dnl Check if the socket library is available
-AC_SEARCH_LIBS([socket],[socket],,,[-lnsl])
-
-dnl Check for gethostbyname in -lnsl since some platforms (e.g. Solaris)
-dnl put it there.
-AC_SEARCH_LIBS([gethostbyname],[nsl],,)
-
 dnl Check for getservbyname in -lxnet since some platforms (e.g. Solaris)
 dnl may put it there.
 AC_SEARCH_LIBS([getservbyname],[socket xnet],,[AC_DEFINE([ACE_LACKS_GETSERVBYNAME])],[-lnsl])
-
-ACE_CHECK_LACKS_FUNCS(inet_aton)
 
 dnl Check for compile() regex function in -lgen.  Solaris, for example,
 dnl may put it there.
@@ -600,6 +600,8 @@ ACE_CHECK_LACKS_HEADERS(fcntl.h)
 
 ACE_CHECK_HAS_HEADERS(pthread_np.h)
 
+ACE_CHECK_LACKS_HEADERS(sched.h)
+
 ACE_CHECK_LACKS_HEADERS(search.h)
 
 ACE_CHECK_HAS_HEADERS(select.h)
@@ -648,9 +650,21 @@ ACE_CHECK_LACKS_HEADERS(sys/socket.h)
 
 ACE_CHECK_LACKS_HEADERS(sys/stat.h)
 
-ACE_CHECK_LACKS_HEADERS(sys/time.h)
-
+dnl Test for <sys/types.h> out of alphabetical order, since it must
+dnl be (conditionally) #included in other feature tests.
 ACE_CHECK_LACKS_HEADERS(sys/types.h)
+
+ACE_CHECK_LACKS_HEADERS(sys/sysctl.h, [], [], 
+[
+#ifndef ACE_LACKS_SYS_TYPES_H
+# include <sys/types.h>
+#endif
+#ifndef ACE_LACKS_SYS_PARAM_H
+# include <sys/param.h>
+#endif
+])
+
+ACE_CHECK_LACKS_HEADERS(sys/time.h)
 
 ACE_CHECK_LACKS_HEADERS(sys/uio.h)
 
@@ -907,16 +921,6 @@ AS_IF([test "$ace_has_xti" = yes || test "$ace_has_tli" = yes],
 
  ],[])
 
-AC_CHECK_HEADER([sys/time.h],
-  [
-   dnl This is a weak test.
-   AC_EGREP_HEADER([sys/time.h],[time.h],
-     ,
-      [
-       AC_DEFINE([ACE_LACKS_SYSTIME_H])
-      ])
-  ],)
-
 dnl See the notes about ACE_LACKS_MMAP in the functions section of this
 dnl configure script.
 dnl                       -Ossama
@@ -1069,17 +1073,6 @@ ACE_CACHE_CHECK([for old malloc() prototype],
 ]) dnl ACE_CONVERT_WARNINGS_TO_ERRORS
 
 
-dnl Check for getopt() prototype
-AC_CHECK_DECL([getopt],
-              [],
-              [AC_DEFINE([ACE_LACKS_GETOPT_PROTOTYPE], 1,
-                         [Define to 1 if platform lacks the declaration
-                         of getopt().])],
-              [#include <stdlib.h>
-              #ifndef ACE_LACKS_UNISTD_H
-              # include <unistd.h>
-              #endif])
-
 dnl Check for *_timedwait() prototypes
 dnl TODO: We only check for one of the *_timedwait() prototypes.
 dnl       Is this enough?
@@ -1090,22 +1083,6 @@ AC_CHECK_DECL([recv_timedwait],
                          of recv_timedwait, send_timedwait, etc.])],
               [#include <pthread.h>
 	       #include <fcntl.h>])
-
-dnl Check for ualarm prototype
-AC_CHECK_DECL([ualarm],
-              [],
-	      [AC_DEFINE([ACE_LACKS_UALARM_PROTOTYPE], 1,
-	                 [Define to 1 if platform lacks the declaration
-			 of ualarm().])],
-              [#include <unistd.h>])
-
-dnl Check for getrusage prototype in sys/resource.h
-AC_CHECK_DECL([getrusage],
-	      [AC_DEFINE([ACE_HAS_GETRUSAGE_PROTOTYPE], 1,
-			 [Define to 1 if platform has the declaration
-			 of getrusage().])],
-	      [],
-	      [#include <sys/resource.h>])
 
 dnl Check for {get,set}rlimit prototypes
 AC_CHECK_DECL([getrlimit],[],[],[#include <sys/resource.h>])
@@ -1150,6 +1127,16 @@ dnl AC_CHECK_TYPE([off64_t],[long long])
 
 dnl Specific typedef checks
 dnl TODO: Check whether these typedefs can be defined somewhere else.
+AC_CHECK_TYPE([cpu_set_t],
+	      [AC_DEFINE([ACE_HAS_CPU_SET_T], 1,
+			 [Define to 1 if the system has the type `cpu_set_t'.])],
+	      [],
+	      [
+#if !defined(ACE_LACKS_SCHED_H)
+#include <sched.h>
+#endif
+	      ])
+
 AC_CHECK_TYPE([idtype_t],
 	      [AC_DEFINE([ACE_HAS_IDTYPE_T], 1,
 			 [Define to 1 if the system has the type `idtype_t'.])],
@@ -1181,6 +1168,19 @@ AC_CHECK_TYPE([ssize_t],
 			 [Define to 1 if the system has the type `ssize_t'.])],
 	      [],
 	      [#include <sys/types.h>])
+
+AC_CHECK_TYPE([suseconds_t],
+	      [],
+	      [AC_DEFINE([ACE_LACKS_SUSECONDS_T], 1,
+			 [Define to 1 if the system lacks the type 'suseconds_t'.])],
+	      [#include <sys/types.h>])
+
+AC_CHECK_TYPE([useconds_t],
+	      [],
+	      [AC_DEFINE([ACE_LACKS_USECONDS_T], 1,
+			 [Define to 1 if the system lacks the type 'useconds_t'.])],
+	      [#include <sys/types.h>])
+
 
 dnl Some platforms define ucontext_t in <sys/ucontext.h>, but ACE
 dnl doesn't explicitly include that header.  However, it is very
@@ -1393,11 +1393,10 @@ ACE_CACHE_CHECK([for POSIX timer structure],
  [ace_cv_lib_posix_timer_struct],
  [
   AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
-#include <time.h>
-
-#if defined(ACE_LACKS_SYSTIME_H)
+#if !defined(ACE_LACKS_SYS_TIME_H)
 # include <sys/time.h>
 #endif
+#include <time.h>
         ]],[[
          timespec sr;
         ]])],[
@@ -1408,10 +1407,6 @@ ACE_CACHE_CHECK([for POSIX timer structure],
          AC_COMPILE_IFELSE([AC_LANG_PROGRAM(
            [[
 #include <time.h>
-
-#if defined(ACE_LACKS_SYSTIME_H)
-# include <sys/time.h>
-#endif
            ]],
            [[
             timestruc_t sr;
@@ -1469,10 +1464,6 @@ ACE_CACHE_CHECK([for timespec_t],
     [ace_cv_lib_posix_timespec_t],[
       AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
 #include <time.h>
-
-#if defined(ACE_LACKS_SYSTIME_H)
-# include <sys/time.h>
-#endif
         ]],[[
          timespec_t tt;
         ]])],[
@@ -1512,10 +1503,6 @@ ACE_CACHE_CHECK([for broken struct timespec members],
   [
     AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
 #include <time.h>
-
-#if defined(ACE_LACKS_SYSTIME_H)
-# include <sys/time.h>
-#endif
         ]],[[
          timespec sr;
          sr.ts_sec  = 0;
@@ -1572,22 +1559,30 @@ if test "$ace_cv_struct_siginfo_t" = yes; then
 fi dnl test "$ace_cv_struct_siginfo_t" = yes
 
 dnl Check for sin_len member in struct sockaddr_in
-ACE_CACHE_CHECK([for sin_len member in struct sockaddr_in],
-    [ace_cv_lib_has_sin_len],[
-        AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+AC_CHECK_MEMBER([struct sockaddr_in.sin_len],
+		[AC_DEFINE([ACE_HAS_SOCKADDR_IN_SIN_LEN], 1,
+		           [Define to 1 if `sin_len' is a member of `sockaddr_in'.])],
+		[],
+		[
 #ifndef ACE_LACKS_SYS_TYPES_H
 # include <sys/types.h>
 #endif
+#include <sys/socket.h>
 #include <netinet/in.h>
-          ]],[[
-           sockaddr_in ace_sin;
-           ace_sin.sin_len = sizeof(ace_sin);
-          ]])],[
-           ace_cv_lib_has_sin_len=yes
-          ],[
-           ace_cv_lib_has_sin_len=no
-          ])
-],[AC_DEFINE([ACE_HAS_SIN_LEN])],)
+		])
+
+dnl Check for sin6_len member in struct sockaddr_in6
+AC_CHECK_MEMBER([struct sockaddr_in6.sin6_len],
+		[AC_DEFINE([ACE_HAS_SOCKADDR_IN6_SIN6_LEN], 1,
+		           [Define to 1 if `sin6_len' is a member of `sockaddr_in6'.])],
+		[],
+		[
+#ifndef ACE_LACKS_SYS_TYPES_H
+# include <sys/types.h>
+#endif
+#include <sys/socket.h>
+#include <netinet/in.h>
+		])
 
 dnl Check for sys_siglist
 dnl TODO: Check whether this variable can be defined somewhere else.
@@ -1946,6 +1941,17 @@ AC_CHECK_TYPE([uint64_t],
 #ifndef ACE_LACKS_INTTYPES_H
 #include <inttypes.h>
 #endif])
+
+AC_CACHE_CHECK([for std::numeric_limits<>],
+[ace_func_numeric_limits],
+[AC_COMPILE_IFELSE([AC_LANG_PROGRAM([#include <limits>],
+		  [return std::numeric_limits<int>::max();])],
+		  [ace_cv_func_numeric_limits=yes],
+		  [ace_cv_func_numeric_limits=no])])
+if test $ace_cv_func_numeric_limits = no; then
+  AC_DEFINE([ACE_LACKS_NUMERIC_LIMITS], 1,
+	    [Define to 1 if platfom lacks std::numeric_limits<>.])
+fi
 
 
 dnl Other checks
@@ -3305,6 +3311,13 @@ AC_CACHE_SAVE
 
 dnl SECTION 10: checks for library functions
 
+ACE_FUNC_STRCASECMP
+ACE_FUNC_STRNCASECMP
+ACE_FUNC_STRDUP
+ACE_FUNC_WCSCASECMP
+ACE_FUNC_WCSNCASECMP
+ACE_FUNC_WCSDUP
+
 if test "$ace_user_enable_alloca" = yes; then
   AC_FUNC_ALLOCA
   if test "$ac_cv_header_alloca_h" = yes; then
@@ -3423,13 +3436,32 @@ esac
 
 ACE_CHECK_LACKS_FUNCS(access)
 
+ACE_CHECK_LACKS_FUNCS(alarm)
+
 ACE_CHECK_LACKS_FUNCS(bsearch)
+
+ACE_CHECK_LACKS_FUNCS(chdir)
 
 ACE_CHECK_HAS_FUNCS(clock_gettime clock_settime nanosleep)
 
 ACE_CHECK_LACKS_FUNCS(difftime)
 
-ACE_CHECK_LACKS_FUNCS(fgetwc fcntl fsync)
+ACE_CHECK_LACKS_FUNCS(dup)
+
+ACE_CHECK_LACKS_FUNCS(dup2)
+
+dnl ACE uses execv, execvp and execve, so we don't bother to check
+dnl for the others (e.g. execl, execlp, execle)
+AC_CHECK_FUNC(execv)
+AC_CHECK_FUNC(execvp)
+AC_CHECK_FUNC(execve)
+if test "$ac_cv_func_execv" != yes &&
+   test "$ac_cv_func_execvp" != yes &&
+   test "$ac_cv_func_execve" != yes; then
+  AC_DEFINE([ACE_LACKS_EXEC])
+fi
+
+ACE_CHECK_LACKS_FUNCS(fgetwc fcntl fork fsync)
 
 ACE_CHECK_LACKS_FUNCS(gethostent)
 
@@ -3439,15 +3471,200 @@ ACE_CHECK_LACKS_FUNCS(getipnodebyname)
 
 ACE_CHECK_HAS_FUNCS(getifaddrs)
 
+ACE_CHECK_LACKS_FUNCS(getegid geteuid getgid)
+
+ACE_CHECK_LACKS_FUNCS(getopt)
+if test $ac_cv_func_getopt = yes; then
+    AC_CHECK_DECL([getopt],
+		  [],
+		  [AC_DEFINE([ACE_LACKS_GETOPT_PROTOTYPE], 1,
+			     [Define to 1 if platform lacks the declaration
+			     of getopt().])],
+		  [#include <stdlib.h>
+		  #ifndef ACE_LACKS_UNISTD_H
+		  # include <unistd.h>
+		  #endif])
+fi
+
+AC_CHECK_FUNC([getpagesize],
+  [AC_DEFINE([ACE_HAS_GETPAGESIZE])],
+  [AC_DEFINE([ACE_PAGE_SIZE], [4096])])
+
+ACE_CHECK_LACKS_FUNCS(getpid)
+
+ACE_CHECK_LACKS_FUNCS([getpgid])
+if test "$ac_cv_func_getpgid" = yes; then
+  dnl Check if _XOPEN_SOURCE and _XOPEN_SOURCE_EXTENDED macros are
+  dnl needed to make the getpgid() prototype visible.
+  ACE_CACHE_CHECK([for getpgid prototype],
+    [ace_cv_lib_has_getpgid_prototype],
+    [
+     ace_save_CPPFLAGS="$CPPFLAGS"
+     ace_no_xopen="-U_XOPEN_SOURCE -U_XOPEN_SOURCE_EXTENDED"
+     CPPFLAGS="$CPPFLAGS $ace_no_xopen"
+     AC_EGREP_HEADER([[^_]+getpgid], [unistd.h],
+       [
+        ace_cv_lib_has_getpgid_prototype=yes
+       ],
+       [
+        ace_cv_lib_has_getpgid_prototype=no
+       ])
+     dnl Reset the compiler flags
+     CPPFLAGS="$ace_save_CPPFLAGS"
+    ],, [AC_DEFINE([ACE_LACKS_GETPGID_PROTOTYPE])])
+  AH_TEMPLATE([ACE_LACKS_GETPGID_PROTOTYPE],
+  [Define to 1 if platform lacks getpgid() declaration in <unistd.h>.])
+fi
+
+ACE_CHECK_LACKS_FUNCS(getppid)
+
+ACE_CHECK_HAS_FUNCS(getrusage)
+if test $ac_cv_func_getrusage = yes; then
+    AC_CHECK_DECL([getrusage],
+		  [AC_DEFINE([ACE_HAS_GETRUSAGE_PROTOTYPE], 1,
+			     [Define to 1 if platform has the declaration
+			     of getrusage().])],
+		  [],
+		  [#include <sys/resource.h>])
+fi
+
+ACE_CHECK_LACKS_FUNCS(getuid)
+
+ACE_CHECK_LACKS_FUNCS(inet_aton)
+
+ACE_CHECK_LACKS_FUNCS(isatty)
+
 ACE_CHECK_HAS_FUNCS(itoa)
+
+dnl Check for 64 bit llseek() or lseek64()
+case "$host" in
+  *UnixWare7*)
+    dnl Skip the check
+    ;;
+  *)
+    ACE_CHECK_LSEEK64
+    ;;
+esac
+
+ACE_CHECK_LACKS_FUNCS(kill)
+
+ACE_CHECK_LACKS_FUNCS(lstat)
+
+ACE_CHECK_LACKS_FUNCS(madvise)
+if test $ac_cv_func_madvise = yes; then
+    AC_CHECK_DECL([madvise],
+		  [],
+		  [AC_DEFINE([ACE_LACKS_MADVISE_PROTOTYPE], 1,
+			     [Define to 1 if platform lacks the declaration
+			     of madvise().])],
+		  [
+#if !defined(ACE_LACKS_SYS_TYPES_H)
+# include <sys/types.h>
+#endif
+#include <sys/mman.h>
+		  ])
+fi
+
+ACE_CHECK_HAS_FUNCS(memchr)
+
+ACE_CHECK_LACKS_FUNCS(mkfifo mkstemp mktemp)
+
+ACE_CHECK_LACKS_FUNCS(msync mprotect)
+
+ACE_CHECK_LACKS_FUNCS(pipe)
 
 ACE_CHECK_LACKS_FUNCS(qsort)
 
+ACE_CHECK_LACKS_FUNCS(setegid seteuid setgid)
+
+ACE_CHECK_LACKS_FUNCS([setpgid])
+if test "$ac_cv_func_setpgid" = yes; then
+  dnl Check if _XOPEN_SOURCE and _XOPEN_SOURCE_EXTENDED macros are
+  dnl needed to make the setpgid() prototype visible.
+  ACE_CACHE_CHECK([for setpgid prototype],
+    [ace_cv_lib_has_setpgid_prototype],
+    [
+     ace_save_CPPFLAGS="$CPPFLAGS"
+     ace_no_xopen="-U_XOPEN_SOURCE -U_XOPEN_SOURCE_EXTENDED"
+     CPPFLAGS="$CPPFLAGS $ace_no_xopen"
+     AC_EGREP_HEADER([[^_]+setpgid], [unistd.h],
+       [
+        ace_cv_lib_has_setpgid_prototype=yes
+       ],
+       [
+        ace_cv_lib_has_setpgid_prototype=no
+       ])
+     dnl Reset the compiler flags
+     CPPFLAGS="$ace_save_CPPFLAGS"
+    ],, [AC_DEFINE([ACE_LACKS_SETPGID_PROTOTYPE])])
+  AH_TEMPLATE([ACE_LACKS_SETPGID_PROTOTYPE],
+  [Define to 1 if platform lacks setpgid() declaration in <unistd.h>.])
+fi
+
+ACE_CHECK_LACKS_FUNCS([setregid])
+if test "$ac_cv_func_setregid" = yes; then
+  dnl Check if _XOPEN_SOURCE and _XOPEN_SOURCE_EXTENDED macros are
+  dnl needed to make the setregid() prototype visible.
+  ACE_CACHE_CHECK([for setregid prototype],
+    [ace_cv_lib_has_setregid_prototype],
+    [
+     ace_save_CPPFLAGS="$CPPFLAGS"
+     ace_no_xopen="-U_BSD_SOURCE -U_XOPEN_SOURCE -U_XOPEN_SOURCE_EXTENDED"
+     CPPFLAGS="$CPPFLAGS $ace_no_xopen"
+     AC_EGREP_HEADER([[^_]+setregid], [unistd.h],
+       [
+        ace_cv_lib_has_setregid_prototype=yes
+       ],
+       [
+        ace_cv_lib_has_setregid_prototype=no
+       ])
+     dnl Reset the compiler flags
+     CPPFLAGS="$ace_save_CPPFLAGS"
+    ],, [AC_DEFINE([ACE_LACKS_SETREGID_PROTOTYPE])])
+  AH_TEMPLATE([ACE_LACKS_SETREGID_PROTOTYPE],
+  [Define to 1 if platform lacks setregid() declaration in <unistd.h>.])
+fi
+
+ACE_CHECK_LACKS_FUNCS([setreuid])
+if test "$ac_cv_func_setreuid" = yes; then
+  dnl Check if _XOPEN_SOURCE and _XOPEN_SOURCE_EXTENDED macros are
+  dnl needed to make the setreuid() prototype visible.
+  ACE_CACHE_CHECK([for setreuid prototype],
+    [ace_cv_lib_has_setreuid_prototype],
+    [
+     ace_save_CPPFLAGS="$CPPFLAGS"
+     ace_no_xopen="-U_BSD_SOURCE -U_XOPEN_SOURCE -U_XOPEN_SOURCE_EXTENDED"
+     CPPFLAGS="$CPPFLAGS $ace_no_xopen"
+     AC_EGREP_HEADER([[^_]+setreuid], [unistd.h],
+       [
+        ace_cv_lib_has_setreuid_prototype=yes
+       ],
+       [
+        ace_cv_lib_has_setreuid_prototype=no
+       ])
+     dnl Reset the compiler flags
+     CPPFLAGS="$ace_save_CPPFLAGS"
+    ],, [AC_DEFINE([ACE_LACKS_SETREUID_PROTOTYPE])])
+  AH_TEMPLATE([ACE_LACKS_SETREUID_PROTOTYPE],
+  [Define to 1 if platform lacks setreuid() declaration in <unistd.h>.])
+fi
+
+ACE_CHECK_LACKS_FUNCS(setsid setuid)
+
+ACE_CHECK_LACKS_FUNCS(sigaction)
+
 ACE_CHECK_HAS_FUNCS(strnlen)
 
+ACE_CHECK_LACKS_FUNCS(strchr)
+
+# believe it or not, both ACE_LACKS_STRERROR and ACE_HAS_STRERROR 
+# feature test macros are currently used.
+ACE_CHECK_HAS_FUNCS(strerror)
 ACE_CHECK_LACKS_FUNCS(strerror)
 
 ACE_CHECK_LACKS_FUNCS(strpbrk)
+
+ACE_CHECK_LACKS_FUNCS(strrchr)
 
 ACE_CHECK_LACKS_FUNCS(strspn)
 
@@ -3458,9 +3675,9 @@ ACE_CHECK_LACKS_FUNCS(strtol)
 ACE_CHECK_LACKS_FUNCS(strtoul)
 
 # swab() comes in a number of forms:
-#   swab (const void*, void*, ssize_t) is POSIX, XPG4, SUS, SUSv2 standard.
-#   swab (const char*, char*, ssize_t) is SVID third edition.
-#   swab (char*, char*, ssize_t) is on some odd platforms like Windows.
+#   swab (const void*, void*, size_t) is POSIX, XPG4, SUS, SUSv2 standard.
+#   swab (const char*, char*, size_t) is SVID third edition.
+#   swab (char*, char*, size_t) is on some odd platforms like Windows.
 # So, if swab() is available, figure out which of the three variants it is.
 # The second and third have ACE config settings.
 ACE_CHECK_LACKS_FUNCS([swab],
@@ -3506,16 +3723,18 @@ swab (src, dst, 2);
     ],
 )
 
-dnl ACE uses execv, execvp and execve, so we don't bother to check
-dnl for the others (e.g. execl, execlp, execle)
-AC_CHECK_FUNC(execv)
-AC_CHECK_FUNC(execvp)
-AC_CHECK_FUNC(execve)
-if test "$ac_cv_func_execv" != yes &&
-   test "$ac_cv_func_execvp" != yes &&
-   test "$ac_cv_func_execve" != yes; then
-  AC_DEFINE([ACE_LACKS_EXEC])
-fi
+ACE_CHECK_LACKS_FUNCS(sysconf)
+
+ACE_CHECK_HAS_FUNCS(sysctl)
+
+AC_CHECK_FUNC([sysinfo],
+  [
+   if test "$ac_cv_header_sys_systeminfo_h" = yes; then
+     AC_DEFINE([ACE_HAS_SYSINFO])
+   fi
+  ],)
+
+ACE_CHECK_LACKS_FUNCS(system)
 
 AC_CHECK_FUNC([getmsg],
   [
@@ -3564,16 +3783,6 @@ main ()
   ],)
 
 AC_CHECK_FUNC([gethostbyaddr],,)
-
-dnl Check for 64 bit llseek() or lseek64()
-case "$host" in
-  *UnixWare7*)
-    dnl Skip the check
-    ;;
-  *)
-    ACE_CHECK_LSEEK64
-    ;;
-esac
 
 AC_CHECK_FUNC([bind],
   [
@@ -3703,17 +3912,11 @@ AC_CHECK_FUNC([pread],
 
 ACE_CHECK_LACKS_FUNCS(readv writev)
 
-AC_CHECK_FUNC([set_t_errno], [AC_DEFINE([ACE_HAS_SET_T_ERRNO])],)
+ACE_CHECK_HAS_FUNCS(set_t_errno)
 
 ACE_CHECK_HAS_FUNCS(sigsuspend sigtimedwait)
 
-ACE_CHECK_LACKS_FUNCS(socketpair strcasecmp)
-
-AC_CHECK_FUNC([strdup],
-  ,
-  [AC_DEFINE([ACE_HAS_STRDUP_EMULATION])])
-
-ACE_CHECK_LACKS_FUNCS(strrchr)
+ACE_CHECK_LACKS_FUNCS(socketpair)
 
 AC_CHECK_FUNC([strptime],
   [
@@ -3741,16 +3944,12 @@ AC_CHECK_FUNC([strptime],
    AC_DEFINE([ACE_LACKS_NATIVE_STRPTIME])
   ])
 
-ACE_CHECK_HAS_FUNCS(memchr)
-
 if test "$ac_cv_type_wchar_t" = yes; then
   AC_CHECK_FUNC([wcslen],
     [AC_DEFINE([ACE_HAS_XPG4_MULTIBYTE_CHAR])],)
 fi
 
 ACE_CHECK_LACKS_FUNCS(syscall)
-
-ACE_CHECK_HAS_FUNCS(ualarm)
 
 AC_CHECK_FUNC([alarm],,)
 AC_CHECK_FUNC([signal],,)
@@ -3760,8 +3959,6 @@ if test "$ac_cv_func_alarm" != yes &&
   AC_DEFINE([ACE_LACKS_UNIX_SIGNALS])
 fi
 
-ACE_CHECK_LACKS_FUNCS(fork)
-
 AC_CHECK_FUNC([getrlimit])
 AC_CHECK_FUNC([setrlimit])
 if test "$ac_cv_func_getrlimit" != yes ||
@@ -3769,102 +3966,7 @@ if test "$ac_cv_func_getrlimit" != yes ||
   AC_DEFINE([ACE_LACKS_RLIMIT])
 fi
 
-AC_CHECK_FUNC([sysinfo],
-  [
-   if test "$ac_cv_header_sys_systeminfo_h" = yes; then
-     AC_DEFINE([ACE_HAS_SYSINFO])
-   fi
-  ],)
-
-ACE_CHECK_HAS_FUNCS(strerror)
-
-ACE_CHECK_LACKS_FUNCS(lstat readlink rename recvmsg sendmsg)
-
-ACE_CHECK_HAS_FUNCS(getrusage)
-
-ACE_CHECK_LACKS_FUNCS([getpgid])
-if test "$ac_cv_func_getpgid" = yes; then
-  dnl Check if _XOPEN_SOURCE and _XOPEN_SOURCE_EXTENDED macros are
-  dnl needed to make the getpgid() prototype visible.
-  ACE_CACHE_CHECK([for getpgid prototype],
-    [ace_cv_lib_has_getpgid_prototype],
-    [
-     ace_save_CPPFLAGS="$CPPFLAGS"
-     ace_no_xopen="-U_XOPEN_SOURCE -U_XOPEN_SOURCE_EXTENDED"
-     CPPFLAGS="$CPPFLAGS $ace_no_xopen"
-     AC_EGREP_HEADER([[^_]+getpgid], [unistd.h],
-       [
-        ace_cv_lib_has_getpgid_prototype=yes
-       ],
-       [
-        ace_cv_lib_has_getpgid_prototype=no
-       ])
-     dnl Reset the compiler flags
-     CPPFLAGS="$ace_save_CPPFLAGS"
-    ],, [AC_DEFINE([ACE_LACKS_GETPGID_PROTOTYPE])])
-  AH_TEMPLATE([ACE_LACKS_GETPGID_PROTOTYPE],
-  [Define to 1 if platform lacks getpgid() declaration in <unistd.h>.])
-fi
-
-ACE_CHECK_LACKS_FUNCS(getppid)
-
-ACE_CHECK_LACKS_FUNCS([setregid])
-if test "$ac_cv_func_setregid" = yes; then
-  dnl Check if _XOPEN_SOURCE and _XOPEN_SOURCE_EXTENDED macros are
-  dnl needed to make the setregid() prototype visible.
-  ACE_CACHE_CHECK([for setregid prototype],
-    [ace_cv_lib_has_setregid_prototype],
-    [
-     ace_save_CPPFLAGS="$CPPFLAGS"
-     ace_no_xopen="-U_BSD_SOURCE -U_XOPEN_SOURCE -U_XOPEN_SOURCE_EXTENDED"
-     CPPFLAGS="$CPPFLAGS $ace_no_xopen"
-     AC_EGREP_HEADER([[^_]+setregid], [unistd.h],
-       [
-        ace_cv_lib_has_setregid_prototype=yes
-       ],
-       [
-        ace_cv_lib_has_setregid_prototype=no
-       ])
-     dnl Reset the compiler flags
-     CPPFLAGS="$ace_save_CPPFLAGS"
-    ],, [AC_DEFINE([ACE_LACKS_SETREGID_PROTOTYPE])])
-  AH_TEMPLATE([ACE_LACKS_SETREGID_PROTOTYPE],
-  [Define to 1 if platform lacks setregid() declaration in <unistd.h>.])
-fi
-
-ACE_CHECK_LACKS_FUNCS([setreuid])
-if test "$ac_cv_func_setreuid" = yes; then
-  dnl Check if _XOPEN_SOURCE and _XOPEN_SOURCE_EXTENDED macros are
-  dnl needed to make the setreuid() prototype visible.
-  ACE_CACHE_CHECK([for setreuid prototype],
-    [ace_cv_lib_has_setreuid_prototype],
-    [
-     ace_save_CPPFLAGS="$CPPFLAGS"
-     ace_no_xopen="-U_BSD_SOURCE -U_XOPEN_SOURCE -U_XOPEN_SOURCE_EXTENDED"
-     CPPFLAGS="$CPPFLAGS $ace_no_xopen"
-     AC_EGREP_HEADER([[^_]+setreuid], [unistd.h],
-       [
-        ace_cv_lib_has_setreuid_prototype=yes
-       ],
-       [
-        ace_cv_lib_has_setreuid_prototype=no
-       ])
-     dnl Reset the compiler flags
-     CPPFLAGS="$ace_save_CPPFLAGS"
-    ],, [AC_DEFINE([ACE_LACKS_SETREUID_PROTOTYPE])])
-  AH_TEMPLATE([ACE_LACKS_SETREUID_PROTOTYPE],
-  [Define to 1 if platform lacks setreuid() declaration in <unistd.h>.])
-fi
-
-AC_CHECK_FUNC([getpagesize],
-  [AC_DEFINE([ACE_HAS_GETPAGESIZE])],
-  [AC_DEFINE([ACE_PAGE_SIZE], [4096])])
-
-ACE_CHECK_LACKS_FUNCS(msync mprotect mkfifo)
-
-ACE_CHECK_LACKS_FUNCS(mkstemp mktemp)
-
-ACE_CHECK_LACKS_FUNCS(madvise)
+ACE_CHECK_LACKS_FUNCS(readlink rename recvmsg sendmsg)
 
 if test "$ac_cv_header_sys_priocntl_h" = yes; then
   AC_CHECK_FUNC([priocntl],
@@ -3896,11 +3998,25 @@ fi dnl test "$ac_cv_header_sys_priocntl_h" = yes
 dnl FIXME:  How do we check for a working sbrk()?  Do we need to?
 ACE_CHECK_LACKS_FUNCS(sbrk)
 
-ACE_CHECK_HAS_FUNCS(vfwprintf vswprintf)
-
-ACE_CHECK_LACKS_FUNCS(fgetws fputws itow towlower towupper wcscat wcschr wcscmp wcscpy wcscspn wcsdup wcsicmp wcslen wcsncat wcsncmp wcsncpy wcsnicmp wcspbrk wcsrchr wcsspn wcsstr wcstod wcstok wcstol wcstoul)
+ACE_CHECK_HAS_FUNCS(ualarm)
+if test $ac_cv_func_ualarm = yes; then
+    AC_CHECK_DECL([ualarm],
+		  [],
+		  [AC_DEFINE([ACE_LACKS_UALARM_PROTOTYPE], 1,
+			     [Define to 1 if platform lacks the declaration
+			     of ualarm().])],
+		  [#include <unistd.h>])
+fi
 
 ACE_CHECK_LACKS_FUNCS(umask)
+
+ACE_CHECK_LACKS_FUNCS(uname)
+
+ACE_CHECK_LACKS_FUNCS(unlink)
+
+ACE_CHECK_HAS_FUNCS(vfwprintf vswprintf)
+
+ACE_CHECK_LACKS_FUNCS(fgetws fputws itow towlower towupper wcscat wcschr wcscmp wcscpy wcscspn wcslen wcsncat wcsncmp wcsncpy wcsnicmp wcspbrk wcsrchr wcsspn wcsstr wcstod wcstok wcstol wcstoul)
 
 if test "$ac_cv_func_wcstok" = yes; then
 dnl The wcstok() function varies with standards. Check which one we have.
@@ -3916,7 +4032,8 @@ AC_LINK_IFELSE([AC_LANG_PROGRAM(
            wchar_t *p = wcstok (str, delim, &ptr);
           ]])],
           [
-           AC_DEFINE([ACE_HAS_3_PARAM_WCSTOK])
+           AC_DEFINE([ACE_HAS_3_PARAM_WCSTOK], 1,
+		     [Define to 1 if platform has 3 parameter wcstok()])
            AC_MSG_RESULT([3])
           ],
           [
@@ -4050,8 +4167,15 @@ WE_HAVE_SHARED_POSIX_SEMAPHORES
     [
      AC_DEFINE([ACE_HAS_POSIX_SEM])
 
-     AC_CHECK_FUNC([sem_open],
-       [
+     AC_CHECK_FUNC([sem_open])
+     AC_CHECK_FUNC([sem_close])
+     AC_CHECK_FUNC([sem_unlink])
+     if test "$ac_cv_func_sem_open" = no ||
+        test "$ac_cv_func_sem_close" = no ||
+        test "$ac_cv_func_sem_unlink" = no; then
+
+        AC_DEFINE([ACE_LACKS_NAMED_POSIX_SEM])
+     else
         dnl Check if it works!  For example, in glibc 2.x sem_open exists
         dnl but it appears to be a stub.  However, it isn't listed as a
         dnl stub in <gnu/stubs.h> so the configure script thinks it is
@@ -4099,10 +4223,7 @@ main ()
               ace_cv_sem_open_works=yes
              ])
           ],, [AC_DEFINE([ACE_LACKS_NAMED_POSIX_SEM])])
-       ],
-       [
-        AC_DEFINE([ACE_LACKS_NAMED_POSIX_SEM])
-       ])
+       fi
     ],)
 
 fi dnl check for POSIX Semaphore functions
@@ -4309,6 +4430,104 @@ dnl Check for Unix98 pthreads extensions
 
   ACE_CHECK_HAS_FUNCS(pthread_continue pthread_continue_np pthread_resume_np pthread_suspend pthread_suspend_np)
   ACE_CHECK_HAS_FUNCS(pthread_getconcurrency pthread_setconcurrency)
+  ACE_CHECK_HAS_FUNCS(pthread_attr_setcreatesuspend_np)
+
+  ACE_CHECK_HAS_FUNCS(pthread_getaffinity_np pthread_setaffinity_np)
+
+dnl Linux's sched_{set,get}affinity interface has changed three times:
+dnl
+dnl In glibc 2.3.2, it was: 
+dnl
+dnl   int sched_setaffinity(pid_t __pid, 
+dnl                         unsigned int __len, unsigned long * __mask);
+dnl
+dnl In glibc 2.3.3, it was changed to:
+dnl
+dnl   int sched_setaffinity(pid_t __pid, const cpu_set_t* __mask);
+dnl
+dnl And in glibc ?.?.?, it was changed again to:
+dnl
+dnl   int sched_setaffinity(pid_t __pid, size_t __cpusetsize, 
+dnl                         const cpu_set_t* __cpuset);
+dnl
+dnl The following feature tests attempt to determine which (if any)
+dnl version is supported by the system.  A further complication is
+dnl that the C library may support one version, the kernel may not,
+dnl and vice versa.
+dnl
+dnl As of this writing, ACE's ACE_OS::sched_setaffinity() wrapper
+dnl facade implementation only supports the latter two varients.  So
+dnl if the system doesn't define cpu_set_t, we simply avoid checking
+dnl for sched_setaffinity().  No attempt is made to verify C library /
+dnl kernel consistency.
+dnl
+dnl The "right" thing to do is to implement something similar to the
+dnl PLPA (Portable Linux Processor Affinity) Library, converting the
+dnl arguments and invoking the syscall directly (instead of calling
+dnl the C library wrapper).
+dnl
+
+if test "$ac_cv_type_cpu_set_t" = yes; then
+
+  ACE_CHECK_HAS_FUNCS(sched_getaffinity)
+if test "$ac_cv_func_sched_getaffinity" = yes; then
+dnl The sched_getaffinity() function varies between linux versions
+dnl Check which one we have.
+AC_MSG_CHECKING([for 2- or 3-param sched_getaffinity])
+AC_LINK_IFELSE([AC_LANG_PROGRAM(
+          [[
+#if !defined(ACE_LACKS_SYS_TYPES_H)
+#include <sys/types.h>
+#endif
+#if !defined(ACE_LACKS_SCHED_H)
+#include <sched.h>
+#endif
+          ]],
+          [[
+	   pid_t pid;
+	   cpu_set_t cpuset;
+           sched_getaffinity(pid, sizeof(cpuset), &cpuset);
+          ]])],
+          [
+           AC_MSG_RESULT([3])
+          ],
+          [
+           AC_MSG_RESULT([2])
+           AC_DEFINE([ACE_HAS_2_PARAM_SCHED_GETAFFINITY], 1, 
+		     [Define to 1 if platform has 2 parameter sched_getaffinity()])
+          ])
+fi dnl test "$ac_cv_func_sched_getaffinity" = yes
+
+  ACE_CHECK_HAS_FUNCS(sched_setaffinity)
+if test "$ac_cv_func_sched_setaffinity" = yes; then
+dnl The sched_setaffinity() function varies between linux versions
+dnl Check which one we have.
+AC_MSG_CHECKING([for 2- or 3-param sched_setaffinity])
+AC_LINK_IFELSE([AC_LANG_PROGRAM(
+          [[
+#if !defined(ACE_LACKS_SYS_TYPES_H)
+#include <sys/types.h>
+#endif
+#if !defined(ACE_LACKS_SCHED_H)
+#include <sched.h>
+#endif
+          ]],
+          [[
+	   pid_t pid;
+	   cpu_set_t cpuset;
+           sched_setaffinity(pid, sizeof(cpuset), &cpuset);
+          ]])],
+          [
+           AC_MSG_RESULT([3])
+          ],
+          [
+           AC_MSG_RESULT([2])
+           AC_DEFINE([ACE_HAS_2_PARAM_SCHED_SETAFFINITY], 1, 
+		     [Define to 1 if platform has 2 parameter sched_setaffinity()])
+          ])
+fi dnl test "$ac_cv_func_sched_setaffinity" = yes
+
+fi dnl test "$ac_cv_type_cpu_set_t" = yes
 
   AC_CHECK_FUNC([pthread_rwlock_init],,)
   AC_CHECK_FUNC([pthread_rwlock_destroy],,)
@@ -5785,35 +6004,76 @@ AC_CACHE_CHECK([if msgrcv() takes a void* second argument],
   ])
 ]) dnl ACE_CONVERT_WARNINGS_TO_ERRORS
 
-dnl TODO: This doesn't work.
-dnl The linux compiler issues a warning regarding the invalid void*
-dnl conversion.
-dnl
-dnl FIXED by adding "-Werror" to compiler flags when using GNU C++
-dnl                                 -Ossama
-ACE_CONVERT_WARNINGS_TO_ERRORS(
-[
-dnl Check if shmat() takes a void* second argument
-AC_CACHE_CHECK([if shmat() takes a void* second argument],
-  [ace_cv_lib_posix_shmat_voidp_2],[
-    AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
-#ifndef ACE_LACKS_SYS_TYPES_H
-# include <sys/types.h>
-#endif
-# include <sys/ipc.h>
-# include <sys/shm.h>
-      ]], [[
-       int shmid = 0;
-       void* shmaddr = 0;
-       int shmflg = 0;
-       shmat(shmid, shmaddr, shmflg);
-      ]])],[
-       ace_cv_lib_posix_shmat_voidp_2=yes
-      ],[
-       ace_cv_lib_posix_shmat_voidp_2=no
+
+if test "$ac_cv_func_shmat" = yes; then
+    dnl TODO: This doesn't work.
+    dnl The linux compiler issues a warning regarding the invalid void*
+    dnl conversion.
+    dnl
+    dnl FIXED by adding "-Werror" to compiler flags when using GNU C++
+    dnl                                 -Ossama
+    ACE_CONVERT_WARNINGS_TO_ERRORS(
+    [
+    dnl Check if shmat() takes a void* second argument
+    AC_CACHE_CHECK([if shmat() takes a void* second argument],
+      [ace_cv_lib_posix_shmat_voidp_2],[
+        AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+           #ifndef ACE_LACKS_SYS_TYPES_H
+           # include <sys/types.h>
+           #endif
+           # include <sys/ipc.h>
+           # include <sys/shm.h>
+          ]], [[
+           int shmid = 0;
+           void* shmaddr = 0;
+           int shmflg = 0;
+           shmat(shmid, shmaddr, shmflg);
+          ]])],[
+           ace_cv_lib_posix_shmat_voidp_2=yes
+          ],[
+           ace_cv_lib_posix_shmat_voidp_2=no
+          ])
       ])
-  ])
-]) dnl ACE_CONVERT_WARNINGS_TO_ERRORS
+    ]) dnl ACE_CONVERT_WARNINGS_TO_ERRORS
+    if test "$ace_cv_lib_posix_shmat_voidp_2" = no; then
+       AC_DEFINE([ACE_HAS_CHARPTR_SHMAT], 1,
+                 [Define to 1 if arg 2 of 'shmat' is char *'])
+    fi
+fi
+
+if test "$ac_cv_func_shmdt" = yes; then
+    dnl TODO: This doesn't work.
+    dnl The linux compiler issues a warning regarding the invalid void*
+    dnl conversion.
+    dnl
+    dnl FIXED by adding "-Werror" to compiler flags when using GNU C++
+    dnl                                 -Ossama
+    ACE_CONVERT_WARNINGS_TO_ERRORS(
+    [
+    dnl Check if shmdt() takes a void* second argument
+    AC_CACHE_CHECK([if shmdt() takes a void* argument],
+      [ace_cv_lib_posix_shmdt_voidp],[
+        AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+           #ifndef ACE_LACKS_SYS_TYPES_H
+           # include <sys/types.h>
+           #endif
+           # include <sys/ipc.h>
+           # include <sys/shm.h>
+          ]], [[
+           void* shmaddr = 0;
+           shmdt(shmaddr);
+          ]])],[
+           ace_cv_lib_posix_shmdt_voidp=yes
+          ],[
+           ace_cv_lib_posix_shmdt_voidp=no
+          ])
+      ])
+    ]) dnl ACE_CONVERT_WARNINGS_TO_ERRORS
+    if test "$ace_cv_lib_posix_shmdt_voidp" = no; then
+       AC_DEFINE([ACE_HAS_CHARPTR_SHMDT], 1,
+                 [Define to 1 if arg 1 of 'shmdt' is char *'])
+    fi
+fi
 
 dnl TODO: This doesn't work.
 dnl The linux compiler issues a warning regarding the invalid void*
@@ -5943,10 +6203,6 @@ if test "$ace_cv_lib_voidptr_gettimeofday" = yes ||
      AC_EGREP_CPP([gettimeofday],
        [
 #include <time.h>
-
-#ifdef ACE_LACKS_SYSTIME_H
-# include <sys/time.h>
-#endif
        ],
        [
 dnl We have a gettimeofday prototype
@@ -5985,10 +6241,6 @@ if test "$ac_cv_func_ctime_r" = yes; then
 #endif
 
 #include <time.h>
-
-#if defined(ACE_LACKS_SYSTIME_H)
-# include <sys/time.h>
-#endif
        ]], [[
         const time_t *t = 0;
         char *buf;
@@ -6169,10 +6421,6 @@ ACE_CACHE_CHECK([for ctime() macro],
      [
 #include <time.h>
 
-#if defined(ACE_LACKS_SYSTIME_H)
-# include <sys/time.h>
-#endif
-
 #if defined (ctime)
   ACE_CTIME_MACRO
 #endif
@@ -6197,10 +6445,6 @@ ACE_CACHE_CHECK([for reentrant function macros],
 #endif
 
 #include <time.h>
-
-#if defined(ACE_LACKS_SYSTIME_H)
-# include <sys/time.h>
-#endif
 
 #if !defined (ACE_LACKS_PWD_H)
 # include <pwd.h>
@@ -6827,7 +7071,8 @@ dnl   test "$ac_cv_func_pthread_getspecific" = yes &&
    test "$ac_cv_func_pthread_kill" = yes; then
   ace_has_pthreads=yes
   AC_MSG_RESULT([POSIX Threads Draft 4])
-  AC_DEFINE([ACE_HAS_PTHREADS_DRAFT4])
+  AC_DEFINE([ACE_HAS_PTHREADS_DRAFT4], 1,
+            [Platform supports POSIX Threads .4a Draft 4])
 dnl Check if we have Pthreads Draft 6
 elif test "$ac_cv_func_pthread_mutexattr_init" = yes &&
    test "$ac_cv_func_pthread_mutexattr_destroy" = yes &&
@@ -6839,7 +7084,8 @@ elif test "$ac_cv_func_pthread_mutexattr_init" = yes &&
    test "$ac_cv_func_pthread_setintrtype" = yes; then
   ace_has_pthreads=yes
   AC_MSG_RESULT([POSIX Threads Draft 6])
-  AC_DEFINE([ACE_HAS_PTHREADS_DRAFT6])
+  AC_DEFINE([ACE_HAS_PTHREADS_DRAFT6], 1,
+            [Platform supports POSIX Threads .4a Draft 6])
 dnl Check if we have Pthreads Draft 7
 elif test "$ac_cv_func_pthread_mutexattr_init" = yes &&
    test "$ac_cv_func_pthread_mutexattr_destroy" = yes &&
@@ -6852,7 +7098,8 @@ elif test "$ac_cv_func_pthread_mutexattr_init" = yes &&
    test "$ace_has_sched_yield" != yes; then
   ace_has_pthreads=yes
   AC_MSG_RESULT([POSIX Threads Draft 7])
-  AC_DEFINE([ACE_HAS_PTHREADS_DRAFT7])
+  AC_DEFINE([ACE_HAS_PTHREADS_DRAFT7], 1,
+            [Platform supports POSIX Threads .1c Draft 7])
 dnl Check if we have Pthreads Draft Standard
 elif test "$ac_cv_func_pthread_mutexattr_init" = yes &&
    test "$ac_cv_func_pthread_mutexattr_destroy" = yes &&
@@ -6865,7 +7112,8 @@ elif test "$ac_cv_func_pthread_mutexattr_init" = yes &&
    test "$ace_has_sched_yield" = yes; then
   ace_has_pthreads=yes
   AC_MSG_RESULT([POSIX Threads Draft Standard])
-  AC_DEFINE([ACE_HAS_PTHREADS_STD])
+  AC_DEFINE([ACE_HAS_PTHREADS_STD], 1,
+            [Platform supports POSIX.1c-1995 threads])
 else
   ace_has_pthreads=no
   AC_MSG_RESULT([none])
@@ -7612,98 +7860,6 @@ AC_CONFIG_FILES([
   apps/soreduce/Makefile
   bin/Makefile
   bin/PerlACE/Makefile
-  examples/Makefile
-  examples/APG/Makefile
-  examples/APG/Active_Objects/Makefile
-  examples/APG/Config/Makefile
-  examples/APG/Containers/Makefile
-  examples/APG/Logging/Makefile
-  examples/APG/Misc_IPC/Makefile
-  examples/APG/Naming/Makefile
-  examples/APG/Proactor/Makefile
-  examples/APG/Processes/Makefile
-  examples/APG/Reactor/Makefile
-  examples/APG/Shared_Memory/Makefile
-  examples/APG/Signals/Makefile
-  examples/APG/Sockets/Makefile
-  examples/APG/Streams/Makefile
-  examples/APG/Svc_Config/Makefile
-  examples/APG/ThreadManagement/Makefile
-  examples/APG/ThreadPools/Makefile
-  examples/APG/ThreadSafety/Makefile
-  examples/APG/Threads/Makefile
-  examples/APG/Timers/Makefile
-  examples/ASX/Makefile
-  examples/ASX/CCM_App/Makefile
-  examples/ASX/Message_Queue/Makefile
-  examples/Bounded_Packet_Relay/Makefile
-  examples/C++NPv1/Makefile
-  examples/C++NPv2/Makefile
-  examples/Connection/Makefile
-  examples/Connection/blocking/Makefile
-  examples/Connection/misc/Makefile
-  examples/Connection/non_blocking/Makefile
-  examples/DLL/Makefile
-  examples/Export/Makefile
-  examples/IOStream/Makefile
-  examples/IOStream/client/Makefile
-  examples/IOStream/server/Makefile
-  examples/IPC_SAP/Makefile
-  examples/IPC_SAP/ATM_SAP/Makefile
-  examples/IPC_SAP/DEV_SAP/Makefile
-  examples/IPC_SAP/DEV_SAP/reader/Makefile
-  examples/IPC_SAP/DEV_SAP/writer/Makefile
-  examples/IPC_SAP/FIFO_SAP/Makefile
-  examples/IPC_SAP/FILE_SAP/Makefile
-  examples/IPC_SAP/SOCK_SAP/Makefile
-  examples/IPC_SAP/SPIPE_SAP/Makefile
-  examples/IPC_SAP/SSL_SAP/Makefile
-  examples/IPC_SAP/TLI_SAP/Makefile
-  examples/IPC_SAP/UPIPE_SAP/Makefile
-  examples/Log_Msg/Makefile
-  examples/Logger/Makefile
-  examples/Logger/Acceptor-server/Makefile
-  examples/Logger/client/Makefile
-  examples/Logger/simple-server/Makefile
-  examples/Mem_Map/Makefile
-  examples/Mem_Map/IO-tests/Makefile
-  examples/Mem_Map/file-reverse/Makefile
-  examples/Misc/Makefile
-  examples/NT_Service/Makefile
-  examples/Naming/Makefile
-  examples/OS/Makefile
-  examples/OS/Process/Makefile
-  examples/QOS/Makefile
-  examples/QOS/Change_Receiver_FlowSpec/Makefile
-  examples/QOS/Change_Sender_TSpec/Makefile
-  examples/QOS/Diffserv/Makefile
-  examples/QOS/Simple/Makefile
-  examples/Reactor/Makefile
-  examples/Reactor/Dgram/Makefile
-  examples/Reactor/FIFO/Makefile
-  examples/Reactor/Misc/Makefile
-  examples/Reactor/Multicast/Makefile
-  examples/Reactor/Ntalker/Makefile
-  examples/Reactor/Proactor/Makefile
-  examples/Reactor/WFMO_Reactor/Makefile
-  examples/Registry/Makefile
-  examples/Service_Configurator/Makefile
-  examples/Service_Configurator/IPC-tests/Makefile
-  examples/Service_Configurator/IPC-tests/client/Makefile
-  examples/Service_Configurator/IPC-tests/server/Makefile
-  examples/Service_Configurator/Misc/Makefile
-  examples/Shared_Malloc/Makefile
-  examples/Shared_Memory/Makefile
-  examples/Smart_Pointers/Makefile
-  examples/Synch/Makefile
-  examples/System_V_IPC/Makefile
-  examples/System_V_IPC/SV_Message_Queues/Makefile
-  examples/System_V_IPC/SV_Semaphores/Makefile
-  examples/TMCast/Makefile
-  examples/TMCast/Member/Makefile
-  examples/Threads/Makefile
-  examples/Timer_Queue/Makefile
-  examples/Web_Crawler/Makefile
   netsvcs/Makefile
   netsvcs/lib/Makefile
   netsvcs/clients/Makefile
@@ -7712,18 +7868,6 @@ AC_CONFIG_FILES([
   netsvcs/clients/Naming/Client/Makefile
   netsvcs/clients/Naming/Dump_Restore/Makefile
   netsvcs/servers/Makefile
-  performance-tests/Makefile
-  performance-tests/Misc/Makefile
-  performance-tests/SCTP/Makefile
-  performance-tests/Server_Concurrency/Makefile
-  performance-tests/Server_Concurrency/Leader_Follower/Makefile
-  performance-tests/Server_Concurrency/Queue_Based_Workers/Makefile
-  performance-tests/Synch-Benchmarks/Makefile
-  performance-tests/Synch-Benchmarks/Synch_Lib/Makefile
-  performance-tests/Synch-Benchmarks/Base_Test/Makefile
-  performance-tests/Synch-Benchmarks/Perf_Test/Makefile
-  performance-tests/TCP/Makefile
-  performance-tests/UDP/Makefile
   protocols/Makefile
   protocols/ace/Makefile
   protocols/ace/HTBP/Makefile
@@ -7732,17 +7876,133 @@ AC_CONFIG_FILES([
   protocols/examples/Makefile
   protocols/examples/RMCast/Makefile
   protocols/examples/RMCast/Send_Msg/Makefile
-  tests/Makefile
-  tests/HTBP/Makefile
-  tests/HTBP/Reactor_Tests/Makefile
-  tests/HTBP/Send_Large_Msg/Makefile
-  tests/HTBP/Send_Recv_Tests/Makefile
-  tests/HTBP/ping/Makefile
-  tests/SSL/Makefile
   websvcs/Makefile
   websvcs/lib/Makefile
   websvcs/tests/Makefile
 ])
+
+dnl Configure examples if configured...
+if test $ace_build_examples = yes; then
+  AC_CONFIG_FILES([
+    examples/Makefile
+    examples/APG/Makefile
+    examples/APG/Active_Objects/Makefile
+    examples/APG/Config/Makefile
+    examples/APG/Containers/Makefile
+    examples/APG/Logging/Makefile
+    examples/APG/Misc_IPC/Makefile
+    examples/APG/Naming/Makefile
+    examples/APG/Proactor/Makefile
+    examples/APG/Processes/Makefile
+    examples/APG/Reactor/Makefile
+    examples/APG/Shared_Memory/Makefile
+    examples/APG/Signals/Makefile
+    examples/APG/Sockets/Makefile
+    examples/APG/Streams/Makefile
+    examples/APG/Svc_Config/Makefile
+    examples/APG/ThreadManagement/Makefile
+    examples/APG/ThreadPools/Makefile
+    examples/APG/ThreadSafety/Makefile
+    examples/APG/Threads/Makefile
+    examples/APG/Timers/Makefile
+    examples/ASX/Makefile
+    examples/ASX/CCM_App/Makefile
+    examples/ASX/Message_Queue/Makefile
+    examples/Bounded_Packet_Relay/Makefile
+    examples/C++NPv1/Makefile
+    examples/C++NPv2/Makefile
+    examples/Connection/Makefile
+    examples/Connection/blocking/Makefile
+    examples/Connection/misc/Makefile
+    examples/Connection/non_blocking/Makefile
+    examples/DLL/Makefile
+    examples/Export/Makefile
+    examples/IOStream/Makefile
+    examples/IOStream/client/Makefile
+    examples/IOStream/server/Makefile
+    examples/IPC_SAP/Makefile
+    examples/IPC_SAP/ATM_SAP/Makefile
+    examples/IPC_SAP/DEV_SAP/Makefile
+    examples/IPC_SAP/DEV_SAP/reader/Makefile
+    examples/IPC_SAP/DEV_SAP/writer/Makefile
+    examples/IPC_SAP/FIFO_SAP/Makefile
+    examples/IPC_SAP/FILE_SAP/Makefile
+    examples/IPC_SAP/SOCK_SAP/Makefile
+    examples/IPC_SAP/SPIPE_SAP/Makefile
+    examples/IPC_SAP/SSL_SAP/Makefile
+    examples/IPC_SAP/TLI_SAP/Makefile
+    examples/IPC_SAP/UPIPE_SAP/Makefile
+    examples/Log_Msg/Makefile
+    examples/Logger/Makefile
+    examples/Logger/Acceptor-server/Makefile
+    examples/Logger/client/Makefile
+    examples/Logger/simple-server/Makefile
+    examples/Mem_Map/Makefile
+    examples/Mem_Map/IO-tests/Makefile
+    examples/Mem_Map/file-reverse/Makefile
+    examples/Misc/Makefile
+    examples/NT_Service/Makefile
+    examples/Naming/Makefile
+    examples/OS/Makefile
+    examples/OS/Process/Makefile
+    examples/QOS/Makefile
+    examples/QOS/Change_Receiver_FlowSpec/Makefile
+    examples/QOS/Change_Sender_TSpec/Makefile
+    examples/QOS/Diffserv/Makefile
+    examples/QOS/Simple/Makefile
+    examples/Reactor/Makefile
+    examples/Reactor/Dgram/Makefile
+    examples/Reactor/FIFO/Makefile
+    examples/Reactor/Misc/Makefile
+    examples/Reactor/Multicast/Makefile
+    examples/Reactor/Ntalker/Makefile
+    examples/Reactor/Proactor/Makefile
+    examples/Reactor/WFMO_Reactor/Makefile
+    examples/Registry/Makefile
+    examples/Service_Configurator/Makefile
+    examples/Service_Configurator/IPC-tests/Makefile
+    examples/Service_Configurator/IPC-tests/client/Makefile
+    examples/Service_Configurator/IPC-tests/server/Makefile
+    examples/Service_Configurator/Misc/Makefile
+    examples/Shared_Malloc/Makefile
+    examples/Shared_Memory/Makefile
+    examples/Smart_Pointers/Makefile
+    examples/Synch/Makefile
+    examples/System_V_IPC/Makefile
+    examples/System_V_IPC/SV_Message_Queues/Makefile
+    examples/System_V_IPC/SV_Semaphores/Makefile
+    examples/TMCast/Makefile
+    examples/TMCast/Member/Makefile
+    examples/Threads/Makefile
+    examples/Timer_Queue/Makefile
+    examples/Web_Crawler/Makefile
+  ])
+fi
+
+dnl Configure examples if configured...
+if test $ace_build_tests = yes; then
+  AC_CONFIG_FILES([
+    performance-tests/Makefile
+    performance-tests/Misc/Makefile
+    performance-tests/SCTP/Makefile
+    performance-tests/Server_Concurrency/Makefile
+    performance-tests/Server_Concurrency/Leader_Follower/Makefile
+    performance-tests/Server_Concurrency/Queue_Based_Workers/Makefile
+    performance-tests/Synch-Benchmarks/Makefile
+    performance-tests/Synch-Benchmarks/Synch_Lib/Makefile
+    performance-tests/Synch-Benchmarks/Base_Test/Makefile
+    performance-tests/Synch-Benchmarks/Perf_Test/Makefile
+    performance-tests/TCP/Makefile
+    performance-tests/UDP/Makefile
+    tests/Makefile
+    tests/HTBP/Makefile
+    tests/HTBP/Reactor_Tests/Makefile
+    tests/HTBP/Send_Large_Msg/Makefile
+    tests/HTBP/Send_Recv_Tests/Makefile
+    tests/HTBP/ping/Makefile
+    tests/SSL/Makefile
+  ])
+fi
 
 dnl Configure subdirectories if they are present.
 if test -d $srcdir/ACEXML; then

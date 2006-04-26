@@ -61,6 +61,8 @@ be_visitor_root_ch::init (void)
           << "// TAO_IDL - Generated from " << be_nl
           << "// " << __FILE__ << ":" << __LINE__;
 
+      *os << be_global->core_versioning_begin () << be_nl;
+      
       *os << be_nl << be_nl
           << "namespace TAO" << be_nl
           << "{" << be_idt_nl;
@@ -72,7 +74,10 @@ be_visitor_root_ch::init (void)
           *os << "template<typename T> class AbstractBase_Narrow_Utils;" << be_nl;
         }
 
-      *os << "template<typename T> class Narrow_Utils;" << be_uidt_nl << "}" ;
+      *os << "template<typename T> class Narrow_Utils;" << be_uidt_nl
+          << "}" ;
+
+      *os << be_global->core_versioning_end () << be_nl;
     }
 
   return 0;

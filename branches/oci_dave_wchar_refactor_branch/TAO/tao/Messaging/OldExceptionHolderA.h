@@ -33,7 +33,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "messaging_export.h"
+#include "tao/Messaging/messaging_export.h"
 #include "tao/Messaging/OldExceptionHolderC.h"
 #include "tao/AnyTypeCode/OctetSeqA.h"
 
@@ -41,6 +41,8 @@
 
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:59
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace Messaging
 {
@@ -76,6 +78,8 @@ TAO_Messaging_Export void operator<<= (::CORBA::Any &, Messaging::ExceptionHolde
 TAO_Messaging_Export ::CORBA::Boolean operator>>= (const ::CORBA::Any &, Messaging::ExceptionHolder *&);
 
 #endif
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* */
 

@@ -1,22 +1,26 @@
 // $Id$
 
-#include "FT_ClientRequest_Interceptor.h"
+#include "orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.h"
+#include "orbsvcs/FaultTolerance/FT_Service_Callbacks.h"
 #include "orbsvcs/FT_CORBA_ORBC.h"
 
 #include "tao/CORBA_String.h"
 #include "tao/debug.h"
 #include "tao/ORB_Constants.h"
 #include "tao/CDR.h"
+#include "tao/PI/ClientRequestInfo.h"
 
 #include "ace/UUID.h"
 #include "ace/Lock_Adapter_T.h"
 #include "ace/Lock.h"
 #include "ace/Synch_Traits.h"
-#include "ace/OS_NS_sys_time.h"
 
 ACE_RCSID (FaultTolerance,
            FT_ORBInitializer,
            "$Id$")
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -43,11 +47,6 @@ namespace TAO
     delete this->lock_;
   }
 
-  FT_TSS *
-  FT_ClientRequest_Interceptor::tss_resources (void)
-  {
-    return ACE_TSS_GET (&this->tss_,FT_TSS);
-  }
   char *
   FT_ClientRequest_Interceptor::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
@@ -104,17 +103,66 @@ namespace TAO
     ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    this->tss_resources ()->clean_flag_ = true;
   }
 
   void
   FT_ClientRequest_Interceptor::receive_other (
-    PortableInterceptor::ClientRequestInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ClientRequestInfo_ptr ri
+    ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest))
   {
+    TAO_ClientRequestInfo* tao_ri = dynamic_cast<TAO_ClientRequestInfo*> (ri);
 
+    if (!tao_ri)
+      {
+        ACE_THROW (CORBA::INTERNAL ());
+      }
+
+    TimeBase::TimeT expires = tao_ri->tao_ft_expiration_time ();
+
+    if (!expires)
+      {
+        // Not an FT request
+        return;
+      }
+
+    PortableInterceptor::ReplyStatus status = -1;
+
+    ACE_TRY
+    {
+       status = ri->reply_status(ACE_ENV_SINGLE_ARG_PARAMETER);
+    }
+    ACE_CATCHANY
+    {
+       // No reply status => Not a location forward.
+       return;
+    }
+    ACE_ENDTRY;
+
+    if (status ==  PortableInterceptor::LOCATION_FORWARD)
+      {
+        // We are in an FT request and a location forward has been received.
+
+        if (expires < TAO_FT_Service_Callbacks::now ())
+          {
+            // The request has already expired...
+
+            if (TAO_debug_level > 3)
+              {
+                ACE_DEBUG ((LM_DEBUG,
+                        "TAO_FT (%P|%t): FT_ClientRequest_Interceptor::receive_other - LOCATION_FORWARD received after request expiration.\n"));
+              }
+
+            // The spec says throw a SYSTEM_EXCEPTION, but doesn't specify which one.
+            // I think a TRANSIENT is the most suitable.
+            ACE_THROW (CORBA::TRANSIENT (
+              CORBA::SystemException::_tao_minor_code (
+              TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE,
+              errno),
+              CORBA::COMPLETED_NO));
+          }
+      }
   }
 
   void
@@ -274,7 +322,6 @@ namespace TAO
       IOP::ServiceContext sc;
       sc.context_id = IOP::FT_REQUEST;
 
-
       CORBA::Policy_var policy =
         ri->get_request_policy (FT::REQUEST_DURATION_POLICY
         ACE_ENV_ARG_PARAMETER);
@@ -283,33 +330,34 @@ namespace TAO
       FT::FTRequestServiceContext ftrsc;
       ftrsc.client_id =
         CORBA::string_dup (this->uuid_->to_string ()->c_str ());
-      ftrsc.expiration_time =
-        this->request_expiration_time (policy.in ()
-        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
-      FT_TSS *tss =
-        this->tss_resources ();
+      TAO_ClientRequestInfo* tao_ri = dynamic_cast<TAO_ClientRequestInfo*> (ri);
 
-      if (tss->clean_flag_)
-      {
-        ACE_GUARD  (ACE_Lock,
-          guard,
-          *this->lock_);
+      if (!tao_ri)
+        {
+          ACE_THROW (CORBA::INTERNAL ());
+        }
 
-        ftrsc.retention_id = ++this->retention_id_;
-
-      //  ACE_DEBUG ((LM_DEBUG,
-      //    ACE_TEXT ("TAO_FT (%P|%t) - Retention id [%d]\n"),
-      //    ftrsc.retention_id));
-        tss->retention_id_ = ftrsc.retention_id;
-        tss->clean_flag_ = false;
-      }
+      if (tao_ri->tao_ft_expiration_time ())
+        {
+          ftrsc.retention_id = tao_ri->tao_ft_retention_id ();
+          ftrsc.expiration_time = tao_ri->tao_ft_expiration_time ();
+        }
       else
-      {
-        ftrsc.retention_id =
-          tss->retention_id_;
-      }
+        {
+          ACE_GUARD  (ACE_Lock,
+                      guard,
+                      *this->lock_);
+
+          ftrsc.retention_id = ++this->retention_id_;
+          ftrsc.expiration_time =
+              this->request_expiration_time (policy.in ()
+                                           ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+
+          tao_ri->tao_ft_retention_id (ftrsc.retention_id);
+          tao_ri->tao_ft_expiration_time (ftrsc.expiration_time);
+        }
 
       TAO_OutputCDR ocdr;
       if (!(ocdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)))
@@ -361,7 +409,7 @@ namespace TAO
       {
         p =  FT::RequestDurationPolicy::_narrow (policy
                                                  ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+        ACE_CHECK_RETURN (0);
       }
 
     TimeBase::TimeT t = 0;
@@ -384,16 +432,10 @@ namespace TAO
       }
 
     // Calculaton of the expiration time
-
-    // Grab the localtime on the machine where this is running
-    ACE_Time_Value time_val = ACE_OS::gettimeofday ();
-
-    TimeBase::TimeT sec_part  = time_val.sec () * 10000000;
-    TimeBase::TimeT usec_part = time_val.usec ()* 10;
-
-    // Now we have the total time
-    t += (sec_part + usec_part);
+    t += TAO_FT_Service_Callbacks::now ();
 
     return t;
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

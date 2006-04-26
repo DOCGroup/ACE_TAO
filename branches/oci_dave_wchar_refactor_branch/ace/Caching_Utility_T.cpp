@@ -1,7 +1,7 @@
 // $Id$
 
-#ifndef CACHING_UTILITY_T_C
-#define CACHING_UTILITY_T_C
+#ifndef ACE_CACHING_UTILITY_T_CPP
+#define ACE_CACHING_UTILITY_T_CPP
 
 #include "ace/Caching_Utility_T.h"
 
@@ -11,12 +11,11 @@
 
 #include "ace/Min_Max.h"
 #include "ace/OS_Memory.h"
-// #include "ace/Strategies.h"
 #include "ace/Recyclable.h"
 
-ACE_RCSID(ace, Caching_Utility_T, "$Id$")
-
 //////////////////////////////////////////////////////////////////////////////
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class KEY, class VALUE, class CONTAINER, class ITERATOR, class ATTRIBUTES>
 ACE_Pair_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::ACE_Pair_Caching_Utility (ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_strategy,
@@ -57,7 +56,7 @@ ACE_Pair_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::clear_cac
 
   // Calculate the no of entries to remove from the cache depending
   // upon the <purge_percent>.
-  size_t entries_to_remove
+  size_t const entries_to_remove
     = ACE_MAX (static_cast<size_t> (1),
                static_cast<size_t> (static_cast<double> (purge_percent)
                                     / 100 * current_map_size));
@@ -157,7 +156,7 @@ ACE_Recyclable_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUT
 
   // Calculate the no of entries to remove from the cache depending
   // upon the <purge_percent>.
-  size_t entries_to_remove
+  size_t const entries_to_remove
     = ACE_MAX (static_cast<size_t> (1),
                static_cast<size_t> (static_cast<double> (purge_percent)
                                     / 100 * current_map_size));
@@ -267,7 +266,8 @@ ACE_Refcounted_Recyclable_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATO
     return 0;
 
   // Get the number of entries in the container which can be considered for purging.
-  size_t available_entries = container.current_size () - this->marked_as_closed_entries_;
+  size_t const available_entries =
+    container.current_size () - this->marked_as_closed_entries_;
 
   // Also whether the number of entries in the cache zero.
   // Oops! then there is no way out but exiting.
@@ -281,8 +281,7 @@ ACE_Refcounted_Recyclable_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATO
                static_cast<size_t> (static_cast<double> (purge_percent)
                                     / 100 * available_entries));
 
-  if (entries_to_remove >= available_entries  ||
-      entries_to_remove == 0)
+  if (entries_to_remove >= available_entries  || entries_to_remove == 0)
     entries_to_remove = available_entries - 1;
 
   KEY *key_to_remove = 0;
@@ -495,4 +494,6 @@ ACE_Null_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::minimum (
   ACE_UNUSED_ARG (value_to_remove);
 }
 
-#endif /* CACHING_UTILITY_T_C */
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* ACE_CACHING_UTILITY_T_CPP */

@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
 
 #include "ace/ACE.h"
@@ -6,6 +7,8 @@
 #include "ace/OS_NS_signal.h"
 #include "ace/OS_NS_pwd.h"
 #include "ace/OS_NS_string.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_WIN32)
 
@@ -375,35 +378,33 @@ ACE_Process_Options::process_name (void)
 // under CE.  They are not empty on most other platforms.
 
 ACE_INLINE int
-ACE_Process_Options::setenv (ACE_TCHAR *envp[])
-{
-  ACE_UNUSED_ARG (envp);
-  return -1;
-}
-
-ACE_INLINE int
-ACE_Process_Options::setenv (const ACE_TCHAR *format, ...)
+ACE_Process_Options::setenv (ACE_TCHAR * /* envp */[])
 {
   return -1;
 }
 
 ACE_INLINE int
-ACE_Process_Options::setenv (const ACE_TCHAR *variable_name,
-                             const ACE_TCHAR *format,
+ACE_Process_Options::setenv (const ACE_TCHAR * /* format */, ...)
+{
+  return -1;
+}
+
+ACE_INLINE int
+ACE_Process_Options::setenv (const ACE_TCHAR * /* variable_name */,
+                             const ACE_TCHAR * /* format */,
                              ...)
 {
   return -1;
 }
 
 ACE_INLINE int
-ACE_Process_Options::set_handles (ACE_HANDLE std_in,
-                                  ACE_HANDLE std_out,
-                                  ACE_HANDLE std_err)
+ACE_Process_Options::set_handles (ACE_HANDLE /* std_in */,
+                                  ACE_HANDLE /* std_out */,
+                                  ACE_HANDLE /* std_err */)
 {
-  ACE_UNUSED_ARG (std_in);
-  ACE_UNUSED_ARG (std_out);
-  ACE_UNUSED_ARG (std_err);
   return -1;
 }
 
 #endif /* ACE_HAS_WINCE */
+
+ACE_END_VERSIONED_NAMESPACE_DECL

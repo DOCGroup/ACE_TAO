@@ -21,31 +21,31 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 namespace CIAO
-{   
-    namespace Config_Handlers
+{
+  namespace Config_Handlers
+  {
+
+    class ServerResourcesDef;
+    class ServerCmdlineOptions;
+
+    /*
+     * class CLA_Handler
+     * This is a brief Handler class for <CommandlineArg>
+     */
+
+    class RT_CCM_Handlers_Export CLA_Handler
     {
-	
-	class ServerResourcesDef;
-	class ServerCmdlineOptions;
+    public:
+      static bool
+      commandline_arguments (
+                             const ServerResourcesDef &src,
+                             ::CIAO::DAnCE::CommandlineArgs &dest);
 
-	/*
-	 * class CLA_Handler
-	 * This is a brief Handler class for <CommandlineArg>
-	 */
-	
-	class RT_CCM_Handlers_Export CLA_Handler
-	{
-	public:
-	    static bool
-		commandline_arguments (
-		    const ServerResourcesDef &src,
-		    ::CIAO::DAnCE::CommandlineArgs &dest);
-	    
-	    static ServerCmdlineOptions
-            commandline_argument (const ::CIAO::DAnCE::CommandlineArgs &src);
+      static ServerCmdlineOptions
+      commandline_argument (const ::CIAO::DAnCE::CommandlineArgs &src);
 
-	};
-    }
+    };
+  }
 }
 
 #include /**/ "ace/post.h"

@@ -1,8 +1,8 @@
 // $Id$
 
-#include "Any_Impl.h"
-#include "TypeCode.h"
-#include "Marshal.h"
+#include "tao/AnyTypeCode/Any_Impl.h"
+#include "tao/AnyTypeCode/TypeCode.h"
+#include "tao/AnyTypeCode/Marshal.h"
 
 #include "tao/CORBA_String.h"
 #include "tao/SystemException.h"
@@ -13,6 +13,8 @@ ACE_RCSID (tao,
            Any_Impl,
            "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::Any_Impl::Any_Impl (_tao_destructor destructor,
                          CORBA::TypeCode_ptr tc,
@@ -33,7 +35,7 @@ TAO::Any_Impl::marshal (TAO_OutputCDR &cdr)
 {
   if ((cdr << this->type_) == 0)
     {
-      return 0;
+      return false;
     }
 
   return this->marshal_value (cdr);
@@ -43,7 +45,7 @@ void
 TAO::Any_Impl::free_value (void)
 {
   // We always have to do this.
-  CORBA::release (this->type_);
+  ::CORBA::release (this->type_);
 }
 
 CORBA::TypeCode_ptr
@@ -61,7 +63,7 @@ TAO::Any_Impl::_tao_get_typecode (void) const
 void
 TAO::Any_Impl::type (CORBA::TypeCode_ptr tc)
 {
-  CORBA::release (this->type_);
+  ::CORBA::release (this->type_);
   this->type_ = CORBA::TypeCode::_duplicate (tc);
 }
 
@@ -114,19 +116,19 @@ TAO::Any_Impl::_tao_decode (TAO_InputCDR &
 CORBA::Boolean
 TAO::Any_Impl::to_object (CORBA::Object_ptr &) const
 {
-  return 0;
+  return false;
 }
 
 CORBA::Boolean
 TAO::Any_Impl::to_value (CORBA::ValueBase *&) const
 {
-  return 0;
+  return false;
 }
 
 CORBA::Boolean
 TAO::Any_Impl::to_abstract_base (CORBA::AbstractBase_ptr &) const
 {
-  return 0;
+  return false;
 }
 
 bool
@@ -135,3 +137,4 @@ TAO::Any_Impl::encoded (void) const
   return this->encoded_;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

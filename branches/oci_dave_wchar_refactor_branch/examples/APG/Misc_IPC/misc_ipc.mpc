@@ -2,6 +2,7 @@
 // $Id$
 
 project(UDP Broadcast) : aceexe {
+  avoids += ace_for_tao
   exename = UDP_Broadcast
   Source_Files {
     UDP_Broadcast.cpp
@@ -16,6 +17,7 @@ project(UDP Multicast) : aceexe {
 }
 
 project(UDP Unicast) : aceexe {
+  avoids += ace_for_tao
   exename = UDP_Unicast
   Source_Files {
     UDP_Unicast.cpp

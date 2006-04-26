@@ -162,7 +162,7 @@ class ACE_TS_Mutex : public ACE_Local_Mutex
 
 public:
   /// Creation.
-  ACE_TS_Mutex (const char *name,
+  ACE_TS_Mutex (const ACE_TCHAR *name,
                 ACE_Token_Handler *th);
 
 protected:
@@ -197,7 +197,7 @@ class ACE_TS_RLock : public ACE_Local_RLock
 {
 public:
   /// Creation.
-  ACE_TS_RLock (const char *name,
+  ACE_TS_RLock (const ACE_TCHAR *name,
                 ACE_Token_Handler *th);
 
 protected:
@@ -232,7 +232,7 @@ class ACE_TS_WLock : public ACE_Local_WLock
 {
 public:
   /// Creation.
-  ACE_TS_WLock (const char *name,
+  ACE_TS_WLock (const ACE_TCHAR *name,
                 ACE_Token_Handler *th);
 
 protected:
@@ -268,10 +268,10 @@ class ACE_Token_Acceptor : public ACE_Strategy_Acceptor<ACE_Token_Handler, ACE_S
 {
 public:
   /// Dynamic linking hook.
-  virtual int init (int argc, char *argv[]);
+  virtual int init (int argc, ACE_TCHAR *argv[]);
 
   /// Parse svc.conf arguments.
-  int parse_args (int argc, char *argv[]);
+  int parse_args (int argc, ACE_TCHAR *argv[]);
 
 private:
   /// The scheduling strategy is designed for Reactive services.

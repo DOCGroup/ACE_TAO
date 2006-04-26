@@ -18,6 +18,8 @@
 #include "ETCL_Constraint.h"
 #include "ETCL_Interpreter.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 extern int yylex (void);
 
 static void yyerror (const char *)
@@ -256,3 +258,4 @@ union_val:  /* empty */
 
 %%
 
+TAO_END_VERSIONED_NAMESPACE_DECL

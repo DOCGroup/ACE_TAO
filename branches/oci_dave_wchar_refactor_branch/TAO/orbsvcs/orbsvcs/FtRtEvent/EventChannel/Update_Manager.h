@@ -14,14 +14,15 @@
 #define UPDATE_MANAGER_H
 
 #include "ace/Synch_T.h"
-#include "Dynamic_Bitset.h"
+#include "orbsvcs/FtRtEvent/EventChannel/Dynamic_Bitset.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-typedef Dynamic_Bitset bit_vector;
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+typedef Dynamic_Bitset bit_vector;
 
 class Update_Manager
 {
@@ -45,5 +46,7 @@ private:
   bool& success_;
   ACE_SYNCH_MUTEX mutex_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif

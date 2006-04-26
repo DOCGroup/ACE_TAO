@@ -31,6 +31,8 @@ ACE_RCSID (tao,
            "$Id$")
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_Acceptor_Registry::TAO_Acceptor_Registry (void)
   : acceptors_ (0),
     size_ (0)
@@ -893,3 +895,5 @@ TAO_Acceptor_Registry::open_i (TAO_ORB_Core *orb_core,
 
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -27,12 +27,14 @@
 #include "ace/UNIX_Addr.h"
 #include "ace/LSOCK.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_LSOCK_Stream
  *
  * @brief Create a Local ACE_SOCK stream.
  */
-class ACE_Sockets_Export ACE_LSOCK_Stream : public ACE_SOCK_Stream, public ACE_LSOCK
+class ACE_Export ACE_LSOCK_Stream : public ACE_SOCK_Stream, public ACE_LSOCK
 {
 public:
   // = Send/recv methods.
@@ -68,6 +70,8 @@ public:
   /// for UNIX domain sockets.
   int get_remote_addr (ACE_Addr &) const;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/LSOCK_Stream.inl"

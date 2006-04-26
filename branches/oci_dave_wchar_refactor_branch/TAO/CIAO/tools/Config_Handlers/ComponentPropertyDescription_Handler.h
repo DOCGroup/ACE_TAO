@@ -1,11 +1,11 @@
 //==============================================================
 /**
- *  @file  ComponentPropertyDescription_Handler.h
- *
- *  $Id$
- *
- *  @author Jules White <jules@dre.vanderbilt.edu>
- */
+*  @file  ComponentPropertyDescription_Handler.h
+*
+*  $Id$
+*
+*  @author Jules White <jules@dre.vanderbilt.edu>
+*/
 //================================================================
 
 #ifndef CIAO_CONFIG_HANDLERS_ComponentPropertyDescription_Handler_H
@@ -21,40 +21,40 @@
 
 namespace Deployment
 {
-  struct ComponentPropertyDescription;
+struct ComponentPropertyDescription;
 }
 
 namespace CIAO
 {
-  namespace Config_Handlers
-  {
-    class ComponentPropertyDescription;
+namespace Config_Handlers
+{
+class ComponentPropertyDescription;
 
-    /*
-     * @class ComponentPropertyDescription_Handler
-     *
-     * @brief Handler class for <ComponentPortDescription> types.
-     *
-     * This class defines handler methods to map values from
-     * XSC objects, parsed from the descriptor files, to the
-     * corresponding CORBA IDL type for the schema element.
-     *
-     */
-    class Config_Handlers_Export ComponentPropertyDescription_Handler
-    {
-    public:
+/*
+* @class ComponentPropertyDescription_Handler
+*
+* @brief Handler class for <ComponentPortDescription> types.
+*
+* This class defines handler methods to map values from
+* XSC objects, parsed from the descriptor files, to the
+* corresponding CORBA IDL type for the schema element.
+*
+*/
+class Config_Handlers_Export ComponentPropertyDescription_Handler
+{
+public:
 
-      /// This method maps the values from the XSC object
-      /// <ComponentPropertyDescription> to the CORBA IDL type
-      /// <Deployment::ComponentPropertyDescription>.
-     static void   component_property_description (
-         const ComponentPropertyDescription& desc,
-         ::Deployment::ComponentPropertyDescription& toconfig);
-     static ComponentPropertyDescription
-     component_property_description (
-         const ::Deployment::ComponentPropertyDescription &src);
-    };
-  }
+/// This method maps the values from the XSC object
+/// <ComponentPropertyDescription> to the CORBA IDL type
+/// <Deployment::ComponentPropertyDescription>.
+static void   component_property_description (
+const ComponentPropertyDescription& desc,
+::Deployment::ComponentPropertyDescription& toconfig);
+static ComponentPropertyDescription
+component_property_description (
+const ::Deployment::ComponentPropertyDescription &src);
+};
+}
 }
 
 #include /**/ "ace/post.h"

@@ -68,7 +68,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #define _AST_SEQUENCE_AST_SEQUENCE_HH
 
 #include "ast_concrete_type.h"
-#include "idl_bool.h"
+
 
 class AST_Expression;
 class AST_Type;
@@ -83,12 +83,12 @@ public:
   AST_Sequence (AST_Expression *max_size,
                 AST_Type *bt,
                 UTL_ScopedName *n,
-                idl_bool local,
-                idl_bool abstract);
+                bool local,
+                bool abstract);
 
   virtual ~AST_Sequence (void);
 
-  virtual idl_bool in_recursion (ACE_Unbounded_Queue<AST_Type *> &list);
+  virtual bool in_recursion (ACE_Unbounded_Queue<AST_Type *> &list);
   // Are we or the node represented by node involved in recursion.
 
   // Data Accessors.
@@ -96,7 +96,7 @@ public:
 
   AST_Type *base_type (void) const;
 
-  virtual idl_bool unbounded (void) const;
+  virtual bool unbounded (void) const;
   // Is this sequence bounded or not.
 
   // Recursively called on valuetype to check for legal use as
@@ -122,7 +122,7 @@ private:
   AST_Type *pd_base_type;
   // Sequence base type.
 
-  idl_bool unbounded_;
+  bool unbounded_;
   // Whether we are bounded or unbounded.
 };
 

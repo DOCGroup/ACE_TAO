@@ -33,6 +33,8 @@
 #endif
 #define ACE_EXPORT_MACRO ACE_Export
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace ACE_OS {
 
   ACE_NAMESPACE_INLINE_FUNCTION
@@ -83,6 +85,8 @@ private:
 #else
 #  define ACE_ERRNO_TYPE int
 #endif /* ACE_HAS_WINCE_BROKEN_ERRNO */
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 # if defined (ACE_HAS_INLINED_OSCALLS)
 #   if defined (ACE_INLINE)

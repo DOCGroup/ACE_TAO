@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file   CEC_SupplierControl.h
@@ -10,7 +11,6 @@
  * More details can be found in:
  *
  * http://doc.ece.uci.edu/~coryan/EC/
- *
  */
 //=============================================================================
 
@@ -28,6 +28,8 @@
 
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/Basic_Types.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_CEC_EventChannel;
 class TAO_CEC_ProxyPushConsumer;
@@ -103,6 +105,8 @@ public:
   /// Allow others to inform us when a send or receive was successful.
   virtual void successful_transmission (PortableServer::ServantBase* proxy);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_CEC_SUPPLIERCONTROL_H */

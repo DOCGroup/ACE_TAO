@@ -8,7 +8,7 @@
 // Listing 2 code/ch20
 // The signature of this method changed at ACE 5.4. The 'recurring_timer'
 // parameter was added.
-int 
+int
 UpcallHandler::timeout (PTimerQueue &,
                         PCB *handler,
                         const void *arg,
@@ -160,8 +160,8 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   tv += 20L;
 
   // Schedule two different timers to go off.
-  PTimer::instance ()->schedule (&cb1, &arg1, tv, 1);
-  PTimer::instance ()->schedule (&cb2, &arg2, tv, 2);
+  PTimer::instance ()->schedule (&cb1, &arg1, tv, ACE_Time_Value (1));
+  PTimer::instance ()->schedule (&cb2, &arg2, tv, ACE_Time_Value (2));
 
   // Run the timer event loop forever.
   PTimer::instance ()->wait_for_event ();
@@ -170,26 +170,3 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
 }
 // Listing 3
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Free_List<ACE_Timer_Node_T<PCB*> >;
-template class ACE_Locked_Free_List<ACE_Timer_Node_T<PCB*>, ACE_Null_Mutex>;
-template class ACE_Timer_Node_T<PCB*>;
-template class ACE_Timer_Heap_T<PCB*, UpcallHandler, ACE_Null_Mutex>;
-template class ACE_Timer_Heap_Iterator_T<PCB*, UpcallHandler, ACE_Null_Mutex>;
-template class ACE_Timer_Queue_T<PCB*, UpcallHandler, ACE_Null_Mutex>;
-template class ACE_Timer_Queue_Iterator_T<PCB*, UpcallHandler, ACE_Null_Mutex>;
-template class ACE_Node<ACE_Timer_Node_T<PCB*>*>;
-template class ACE_Unbounded_Set<ACE_Timer_Node_T<PCB*>*>;
-template class ACE_Unbounded_Set_Iterator<ACE_Timer_Node_T<PCB*>*>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Free_List<ACE_Timer_Node_T<PCB*> >
-#pragma instantiate ACE_Locked_Free_List<ACE_Timer_Node_T<PCB*>, ACE_Null_Mutex>
-#pragma instantiate ACE_Timer_Node_T<PCB*>
-#pragma instantiate ACE_Timer_Heap_T<PCB*, UpcallHandler, ACE_Null_Mutex>
-#pragma instantiate ACE_Timer_Heap_Iterator_T<PCB*, UpcallHandler, ACE_Null_Mutex>
-#pragma instantiate ACE_Timer_Queue_T<PCB*, UpcallHandler, ACE_Null_Mutex>
-#pragma instantiate ACE_Timer_Queue_Iterator_T<PCB*, UpcallHandler, ACE_Null_Mutex>
-#pragma instantiate ACE_Node<ACE_Timer_Node_T<PCB*>*>
-#pragma instantiate ACE_Unbounded_Set<ACE_Timer_Node_T<PCB*>*>
-#pragma instantiate ACE_Unbounded_Set_Iterator<ACE_Timer_Node_T<PCB*>*>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION*/

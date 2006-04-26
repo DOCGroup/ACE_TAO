@@ -1,12 +1,13 @@
-/* -*- C++ -*- */
 // $Id$
 
-#include "Repository_i.h"
-#include "FixedDef_i.h"
+#include "orbsvcs/IFRService/Repository_i.h"
+#include "orbsvcs/IFRService/FixedDef_i.h"
 
 ACE_RCSID (IFRService, 
            FixedDef_i, 
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_FixedDef_i::TAO_FixedDef_i (TAO_Repository_i *repo)
   : TAO_IRObject_i (repo),
@@ -148,3 +149,4 @@ TAO_FixedDef_i::scale_i (CORBA::Short /* scale */
   // TODO
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

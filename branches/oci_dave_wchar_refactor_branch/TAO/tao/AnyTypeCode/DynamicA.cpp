@@ -25,7 +25,7 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#include "DynamicA.h"
+#include "tao/AnyTypeCode/DynamicA.h"
 #include "tao/AnyTypeCode/Null_RefCount_Policy.h"
 #include "tao/AnyTypeCode/TypeCode_Constants.h"
 #include "tao/AnyTypeCode/Alias_TypeCode_Static.h"
@@ -37,6 +37,8 @@
 
 #include "tao/AnyTypeCode/StringSeqA.h"
 #include "tao/AnyTypeCode/Dynamic_ParameterA.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #ifndef _TAO_TYPECODE_Dynamic_ParameterList_GUARD
 #define _TAO_TYPECODE_Dynamic_ParameterList_GUARD
@@ -285,3 +287,5 @@ CORBA::Boolean operator>>= (
         _tao_elem
       );
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -254,7 +254,7 @@ oneway          return IDL_ONEWAY;
 (\"([^\\\"]*|\\[ntvbrfax\\\?\'\"]|\\[0-7]{1,3})*\"[ \t]*)+ {
                   /* Skip the quotes */
                   char *tmp = ace_yytext;
-                  for(int i = strlen(tmp) - 1; i >= 0; --i) {
+                  for(int i = ACE_OS::strlen(tmp) - 1; i >= 0; --i) {
                     if (isspace(tmp[i])) {
                       tmp[i] = '\0';
                     }
@@ -262,7 +262,7 @@ oneway          return IDL_ONEWAY;
                       break;
                     }
                   }
-                  tmp[strlen (tmp) - 1] = '\0';
+                  tmp[ACE_OS::strlen (tmp) - 1] = '\0';
                   ACE_NEW_RETURN (yylval.sval,
                                   UTL_String (tmp + 1),
                                   IDL_STRING_LITERAL);
@@ -271,7 +271,15 @@ oneway          return IDL_ONEWAY;
 (L\"([^\\\"]*|\\[ntvbrfax\\\?\'\"]|\\[0-7]{1,3}|\\u([0-9a-fA-F]{1,4}))*\"[ \t]*)+ {
                   /* Skip the bookends */
                   char *tmp = ACE_OS::strdup (ace_yytext);
-                  tmp[strlen (tmp) - 1] = '\0';
+                  for(int i = ACE_OS::strlen(tmp) - 1; i >= 0; --i) {
+                    if (isspace(tmp[i])) {
+                      tmp[i] = '\0';
+                    }
+                    else {
+                      break;
+                    }
+                  }
+                  tmp[ACE_OS::strlen (tmp) - 1] = '\0';
                   yylval.wsval = idl_wstring_escape_reader(tmp + 2);
                   return IDL_WSTRING_LITERAL;
                 }
@@ -312,7 +320,7 @@ L"'"\\u([0-9a-fA-F]{1,4})"'" {
 ^\?\?=[ \t]*file[ \t].*{NL} {/* ignore file */
                   idl_global->set_lineno(idl_global->lineno() + 1);
                 }
-^[ \t]*#[ \t]*[0-9]*" ""\""[^\"]*"\""" "[0-9]*([ \t]*[0-9]*)?{NL} |
+^[ \t]*#[ \t]*[0-9]*" ""\""[^\"]*"\""" "[0-9]*([ \t]*[0-9]*)*{NL} |
 ^\?\?=[ \t]*[0-9]*" ""\""[^\"]*"\""" "[0-9]*([ \t]*[0-9]*)?{NL} {
                   idl_parse_line_and_file(ace_yytext);
                 }

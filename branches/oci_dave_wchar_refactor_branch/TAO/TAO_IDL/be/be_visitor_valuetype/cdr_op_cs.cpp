@@ -58,7 +58,7 @@ be_visitor_valuetype_cdr_op_cs::visit_valuetype (be_valuetype *node)
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
-  node->cli_stub_cdr_op_gen (I_TRUE);
+  node->cli_stub_cdr_op_gen (true);
 
   if (this->visit_scope (node) == -1)
     {
@@ -72,6 +72,8 @@ be_visitor_valuetype_cdr_op_cs::visit_valuetype (be_valuetype *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
+  *os << be_global->core_versioning_begin () << be_nl;
+  
   //  Set the sub state as generating code for the output operator.
   this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_OUTPUT);
 
@@ -103,6 +105,8 @@ be_visitor_valuetype_cdr_op_cs::visit_valuetype (be_valuetype *node)
       << "::_tao_unmarshal (strm, _tao_valuetype);"
       << be_uidt_nl
       << "}" << be_nl << be_nl;
+
+  *os << be_global->core_versioning_end () << be_nl;
 
   if (!node->is_abstract ())
     {

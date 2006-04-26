@@ -1,12 +1,12 @@
 // $Id$
 
-#include "Alias_TypeCode_Static.h"
+#include "tao/AnyTypeCode/Alias_TypeCode_Static.h"
 
 #ifndef __ACE_INLINE__
-# include "Alias_TypeCode_Static.inl"
+# include "tao/AnyTypeCode/Alias_TypeCode_Static.inl"
 #endif  /* !__ACE_INLINE__ */
 
-#include "TypeCode_Traits.h"
+#include "tao/AnyTypeCode/TypeCode_Traits.h"
 
 #include "tao/ORB_Core.h"
 #include "tao/CDR.h"
@@ -19,6 +19,7 @@ ACE_RCSID (tao,
            Alias_TypeCode_Static,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 bool
 TAO::TypeCode::Alias<char const *,
@@ -173,3 +174,5 @@ TAO::TypeCode::Alias<char const *,
      CORBA::TypeCode::_duplicate (
        Traits<char const *>::get_typecode (this->content_type_));
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

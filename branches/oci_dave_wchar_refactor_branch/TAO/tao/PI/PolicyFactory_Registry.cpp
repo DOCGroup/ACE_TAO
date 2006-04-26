@@ -1,5 +1,5 @@
-#include "PolicyFactory_Registry.h"
-#include "PolicyFactoryC.h"
+#include "tao/PI/PolicyFactory_Registry.h"
+#include "tao/PI/PolicyFactoryC.h"
 #include "tao/ORB_Constants.h"
 #include "tao/SystemException.h"
 #include "tao/PolicyC.h"
@@ -10,6 +10,8 @@ ACE_RCSID (PI,
 
 
 // ****************************************************************
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_PolicyFactory_Registry::TAO_PolicyFactory_Registry (void)
   : factories_ (TAO_DEFAULT_POLICY_FACTORY_REGISTRY_SIZE)
@@ -22,7 +24,7 @@ TAO_PolicyFactory_Registry::~TAO_PolicyFactory_Registry (void)
 
   for (TABLE::iterator i = this->factories_.begin (); i != end; ++i)
     {
-      CORBA::release ((*i).int_id_);
+      ::CORBA::release ((*i).int_id_);
     }
 
   this->factories_.close ();
@@ -52,7 +54,7 @@ TAO_PolicyFactory_Registry::register_policy_factory (
   if (result != 0)
     {
       // Release the duplicated factory to prevent a memory leak
-      CORBA::release (factory);
+      ::CORBA::release (factory);
 
       if (result == 1)
         {
@@ -117,3 +119,5 @@ TAO_PolicyFactory_Registry::factory_exists (CORBA::PolicyType & type) const
   return (this->factories_.find (type) == 0);
 }
 
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -14,11 +14,13 @@
 #define TAO_ACTIVATION_STRATEGY_H
 #include /**/ "ace/pre.h"
 
-#include "Policy_Strategy.h"
+#include "tao/PortableServer/Policy_Strategy.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -36,6 +38,8 @@ namespace TAO
     };
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_ACTIVATION_STRATEGY_H */

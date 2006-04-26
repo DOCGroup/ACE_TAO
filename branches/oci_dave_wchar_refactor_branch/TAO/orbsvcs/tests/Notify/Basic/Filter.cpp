@@ -153,6 +153,7 @@ Filter::verify_filter_count (CosNotifyFilter::FilterAdmin_ptr filter_admin, CORB
 {
   expected_count = expected_count; // if we don;t do this, we get a warning on linux about arg not used.
   CosNotifyFilter::FilterIDSeq_var filter_seq = filter_admin->get_all_filters (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
   ACE_ASSERT (filter_seq->length () == expected_count);
 }
 

@@ -1,4 +1,4 @@
-#include "ObjectReferenceTemplate_i.h"
+#include "tao/ObjRefTemplate/ObjectReferenceTemplate_i.h"
 #include "tao/PortableServer/Root_POA.h"
 
 #include "tao/CORBA_String.h"
@@ -7,6 +7,8 @@
 ACE_RCSID (ORT,
            ObjectReferenceTemplate_i,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -74,3 +76,5 @@ namespace TAO
     return tao_poa->invoke_key_to_object (ACE_ENV_SINGLE_ARG_PARAMETER);
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

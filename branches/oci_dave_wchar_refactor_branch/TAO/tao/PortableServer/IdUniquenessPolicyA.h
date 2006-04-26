@@ -33,13 +33,15 @@
 
 #include /**/ "ace/pre.h"
 
-#include "portableserver_export.h"
-#include "IdUniquenessPolicyC.h"
+#include "tao/PortableServer/portableserver_export.h"
+#include "tao/PortableServer/IdUniquenessPolicyC.h"
 #include "tao/AnyTypeCode/PolicyA.h"
 
 
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:59
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace PortableServer
 {
@@ -64,6 +66,8 @@ namespace PortableServer
 
 TAO_PortableServer_Export void operator<<= (CORBA::Any &, PortableServer::IdUniquenessPolicyValue);
 TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableServer::IdUniquenessPolicyValue &);
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

@@ -52,6 +52,8 @@ be_visitor_sequence_any_op_ch::visit_sequence (be_sequence *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
+  *os << be_global->core_versioning_begin () << be_nl;
+  
   // Generate the Any <<= and >>= operators.
   *os << macro;
   *os << " void"
@@ -74,6 +76,8 @@ be_visitor_sequence_any_op_ch::visit_sequence (be_sequence *node)
   *os << node->name ();
   *os << " *&);";
 
+  *os << be_global->core_versioning_end () << be_nl;
+  
   node->cli_hdr_any_op_gen (1);
   return 0;
 }

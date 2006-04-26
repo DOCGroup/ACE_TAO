@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file   Persistent_Naming_Context.h
@@ -14,9 +15,11 @@
 #define TAO_PERSISTENT_NAMING_CONTEXT_H
 #include /**/ "ace/pre.h"
 
-#include "Hash_Naming_Context.h"
-#include "Persistent_Entries.h"
-#include "naming_serv_export.h"
+#include "orbsvcs/Naming/Hash_Naming_Context.h"
+#include "orbsvcs/Naming/Persistent_Entries.h"
+#include "orbsvcs/Naming/naming_serv_export.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Persistent_Bindings_Map
@@ -29,7 +32,8 @@
  * from persistent storage) to make bindings persistent and
  * supports TAO_Bindings_Map interface.  Used by TAO_Persistent_Naming_Context.
  */
-class TAO_Naming_Serv_Export TAO_Persistent_Bindings_Map : public TAO_Bindings_Map
+class TAO_Naming_Serv_Export TAO_Persistent_Bindings_Map
+  : public TAO_Bindings_Map
 {
 public:
 
@@ -262,6 +266,8 @@ protected:
    */
   TAO_Persistent_Context_Index *index_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_PERSISTENT_NAMING_CONTEXT_H */

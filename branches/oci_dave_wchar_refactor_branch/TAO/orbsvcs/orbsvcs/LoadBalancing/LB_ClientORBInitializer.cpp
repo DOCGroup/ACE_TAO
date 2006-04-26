@@ -1,11 +1,13 @@
-#include "LB_ClientORBInitializer.h"
-#include "LB_ClientRequestInterceptor.h"
+#include "orbsvcs/LoadBalancing/LB_ClientORBInitializer.h"
+#include "orbsvcs/LoadBalancing/LB_ClientRequestInterceptor.h"
 
 #include "tao/ORB_Constants.h"
 
 ACE_RCSID (LoadBalancing,
            LB_ClientORBInitializer,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
 TAO_LB_ClientORBInitializer::pre_init (
@@ -37,3 +39,5 @@ TAO_LB_ClientORBInitializer::post_init (
                                         ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

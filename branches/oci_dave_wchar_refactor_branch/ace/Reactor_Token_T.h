@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -18,6 +18,7 @@
 #include "ace/Reactor_Impl.h"
 #include "ace/Token.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_Reactor_Token_T
@@ -53,10 +54,12 @@ template <class ACE_TOKEN_TYPE>
 class ACE_Reactor_Token_T : public ACE_TOKEN_TYPE
 {
 public:
-  // *** After ACE 5.5.1, change ACE_Token::FIFO to ACE_TOKEN_TYPE::FIFO.
-  // **** This is only like this to work around MSVC 6 problems.
+  /**
+   * @todo After ACE 5.5.1, change ACE_Token::FIFO to ACE_TOKEN_TYPE::FIFO.
+   * This is only like this to work around MSVC 6 problems.
+   */
   ACE_Reactor_Token_T (ACE_Reactor_Impl &r,
-		       int s_queue = ACE_Token::FIFO);
+                       int s_queue = ACE_Token::FIFO);
   ACE_Reactor_Token_T (int s_queue = ACE_Token::FIFO);
   virtual ~ACE_Reactor_Token_T (void);
 
@@ -80,11 +83,7 @@ private:
   ACE_Reactor_Impl *reactor_;
 };
 
-// There's no Reactor_Token_T.inl, but if there was, here's where it would
-// get included.
-#if 0 // defined (__ACE_INLINE__)
-#include "ace/Reactor_Token_T.inl"
-#endif /* __ACE_INLINE__ */
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Reactor_Token_T.cpp"

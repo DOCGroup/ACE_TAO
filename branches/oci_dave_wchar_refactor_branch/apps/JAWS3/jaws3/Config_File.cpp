@@ -263,7 +263,7 @@ void
 JAWS_Config_File_Impl::dump (void)
 {
   JAWS_SYMBOL_TABLE_ITERATOR iter (*this->symbols_);
-  JAWS_SYMBOL_TABLE_ENTRY *entry;
+  JAWS_SYMBOL_TABLE_ENTRY *entry = 0;
 
   while (iter.next (entry))
     {
@@ -302,7 +302,3 @@ JAWS_Config_File::dump (void)
   this->impl_->dump ();
 }
 
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -1,18 +1,21 @@
 //$Id$
-#include "Remote_Invocation.h"
-#include "Profile.h"
-#include "Profile_Transport_Resolver.h"
-#include "Stub.h"
-#include "Transport.h"
-#include "Connection_Handler.h"
-#include "operation_details.h"
-#include "ORB_Core.h"
-#include "Protocols_Hooks.h"
-#include "debug.h"
+
+#include "tao/Remote_Invocation.h"
+#include "tao/Profile.h"
+#include "tao/Profile_Transport_Resolver.h"
+#include "tao/Stub.h"
+#include "tao/Transport.h"
+#include "tao/Connection_Handler.h"
+#include "tao/operation_details.h"
+#include "tao/ORB_Core.h"
+#include "tao/Protocols_Hooks.h"
+#include "tao/debug.h"
 
 ACE_RCSID (tao,
            Remote_Invocation,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -25,7 +28,8 @@ namespace TAO
                        resolver.object (),
                        resolver.stub (),
                        detail,
-                       response_expected)
+                       response_expected,
+                       true /* request_is_remote */ )
     , resolver_ (resolver)
   {
   }
@@ -75,7 +79,7 @@ namespace TAO
       // index that we need.
       CORBA::ULong index = 0;
       IOP::IOR *ior_info = 0;
-      const int retval =
+      int const retval =
         this->resolver_.stub ()->create_ior_info (ior_info,
                                                   index
                                                   ACE_ENV_ARG_PARAMETER);
@@ -110,6 +114,7 @@ namespace TAO
   {
     this->resolver_.transport ()->clear_translators (0,
                                                      &out_stream);
+
     // Send the request for the header
     if (this->resolver_.transport ()->generate_request_header (this->details_,
                                                                spec,
@@ -155,7 +160,7 @@ namespace TAO
 
     connection_handler->set_dscp_codepoint (set_client_network_priority);
 
-    const int retval =
+    int const retval =
       this->resolver_.transport ()->send_request (
         this->resolver_.stub (),
         this->resolver_.stub ()->orb_core (),
@@ -200,3 +205,5 @@ namespace TAO
     return TAO_INVOKE_SUCCESS;
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

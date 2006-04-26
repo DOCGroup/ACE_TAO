@@ -1,14 +1,21 @@
-#include "SSLIOP_Invocation_Interceptor.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Invocation_Interceptor.h"
 
+#include "orbsvcs/SecurityLevel2C.h"
+
+#include "tao/ORB_Constants.h"
+#include "tao/PortableServer/PS_CurrentC.h"
 #include "tao/debug.h"
 
-// #include <openssl/x509.h>   // @@ For debugging code below
-
+#if defined(SSLIOP_DEBUG_PEER_CERTIFICATE)
+#include <openssl/x509.h>   // @@ For debugging code below
+#endif /* DEBUG_PEER_CERTIFICATES */
 
 ACE_RCSID (SSLIOP,
            SSLIOP_Invocation_Interceptor,
            "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::SSLIOP::Server_Invocation_Interceptor::Server_Invocation_Interceptor (
    ::SSLIOP::Current_ptr current,
@@ -41,7 +48,7 @@ TAO::SSLIOP::Server_Invocation_Interceptor::destroy (
 
 void
 TAO::SSLIOP::Server_Invocation_Interceptor::receive_request_service_contexts (
-    PortableInterceptor::ServerRequestInfo_ptr /* ri */
+                                              PortableInterceptor::ServerRequestInfo_ptr /*ri*/
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
@@ -55,14 +62,17 @@ TAO::SSLIOP::Server_Invocation_Interceptor::receive_request_service_contexts (
   //          SecTargetSecureInvocationPolicy so that we can
   //          accept or reject requests on a per-object basis
   //          instead on a per-endpoint basis.
-  CORBA::Boolean no_ssl =
+  CORBA::Boolean const no_ssl =
     this->ssliop_current_->no_context (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
+
+  if (TAO_debug_level >= 3)
+    ACE_DEBUG ((LM_DEBUG, "SSLIOP (%P|%t) Interceptor (context), ssl=%d\n", !(no_ssl)));
 
   if (no_ssl && this->qop_ != ::Security::SecQOPNoProtection)
     ACE_THROW (CORBA::NO_PERMISSION ());
 
-#if 0
+#if defined(DEBUG_PEER_CERTIFICATES)
   ACE_TRY
     {
       // If the request was not made through an SSL connection, then
@@ -84,7 +94,7 @@ TAO::SSLIOP::Server_Invocation_Interceptor::receive_request_service_contexts (
           X509 *peer = ::d2i_X509 (0, &der_cert, cert->length ());
           if (peer != 0)
             {
-              char buf[BUFSIZ];
+              char buf[BUFSIZ] = { 0 };
 
               ::X509_NAME_oneline (::X509_get_subject_name (peer),
                                    buf,
@@ -123,8 +133,9 @@ TAO::SSLIOP::Server_Invocation_Interceptor::receive_request_service_contexts (
     }
   ACE_ENDTRY;
   ACE_CHECK;
-#endif /* 0 */
+#endif /* DEBUG_PEER_CERTIFICATES */
 }
+
 
 void
 TAO::SSLIOP::Server_Invocation_Interceptor::receive_request (
@@ -160,3 +171,5 @@ TAO::SSLIOP::Server_Invocation_Interceptor::send_other (
                    PortableInterceptor::ForwardRequest))
 {
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

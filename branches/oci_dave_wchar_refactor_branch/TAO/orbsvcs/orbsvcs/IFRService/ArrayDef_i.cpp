@@ -1,8 +1,8 @@
 // $Id$
 
-#include "ArrayDef_i.h"
-#include "Repository_i.h"
-#include "IFR_Service_Utils.h"
+#include "orbsvcs/IFRService/ArrayDef_i.h"
+#include "orbsvcs/IFRService/Repository_i.h"
+#include "orbsvcs/IFRService/IFR_Service_Utils.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/SString.h"
 
@@ -11,6 +11,7 @@ ACE_RCSID (IFRService,
            ArrayDef_i,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_ArrayDef_i::TAO_ArrayDef_i (TAO_Repository_i *repo)
   : TAO_IRObject_i (repo),
@@ -274,3 +275,5 @@ TAO_ArrayDef_i::destroy_element_type (
       break;
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

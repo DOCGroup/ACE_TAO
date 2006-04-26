@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ../bin/mwc.pl -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/config -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/templates -type automake -noreldefs TAO.mwc
+## ../bin/mwc.pl -type automake -noreldefs TAO.mwc
 
 ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
@@ -79,9 +79,14 @@ client-stamp: $(srcdir)/client.idl $(TAO_IDL_DEP)
 	@touch $@
 
 
+noinst_HEADERS = \
+  client.idl \
+  server.idl
+
 ## Makefile.Callback_Security_Client.am
 
 if BUILD_SSL
+if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS += client
 
@@ -112,11 +117,13 @@ client_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la \
   @ACE_TLS_LIBS@
 
+endif !BUILD_ACE_FOR_TAO
 endif BUILD_SSL
 
 ## Makefile.Callback_Security_Server.am
 
 if BUILD_SSL
+if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS += server
 
@@ -147,6 +154,7 @@ server_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la \
   @ACE_TLS_LIBS@
 
+endif !BUILD_ACE_FOR_TAO
 endif BUILD_SSL
 
 ## Clean up template repositories, etc.

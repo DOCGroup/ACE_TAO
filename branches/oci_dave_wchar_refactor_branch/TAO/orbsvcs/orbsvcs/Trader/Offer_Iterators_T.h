@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -16,13 +16,17 @@
 #define TAO_REGISTER_OFFER_ITERATOR_H
 #include /**/ "ace/pre.h"
 
-#include "Offer_Iterators.h"
-#include "Offer_Database.h"
+#include "orbsvcs/Trader/Offer_Iterators.h"
+#include "orbsvcs/Trader/Offer_Database.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_Register_Offer_Iterator
  *
@@ -78,9 +82,10 @@ private:
   TAO_String_Queue offer_ids_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "Offer_Iterators_T.cpp"
+#include "orbsvcs/Trader/Offer_Iterators_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined(_MSC_VER)

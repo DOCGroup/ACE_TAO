@@ -100,7 +100,7 @@ ACE_Blob_Reader::send_request (void)
 
   // Check to see if the request is too big
   if (MAX_HEADER_SIZE < (ACE_OS::strlen (request_prefix_)
-                         + ACE_OS::strlen (filename_) 
+                         + ACE_OS::strlen (filename_)
                          + ACE_OS::strlen (request_suffix_) + 4))
     ACE_ERROR_RETURN((LM_ERROR,"Request too large!"), -1);
 
@@ -343,8 +343,3 @@ ACE_Blob_Writer::receive_reply (void)
   ACE_NOTREACHED(return 0);
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Svc_Handler <ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Svc_Handler <ACE_SOCK_STREAM, ACE_NULL_SYNCH>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

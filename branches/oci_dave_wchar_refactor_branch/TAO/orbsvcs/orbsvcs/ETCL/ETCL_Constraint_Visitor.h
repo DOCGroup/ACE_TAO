@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 //=============================================================================
 /**
  * @file ETCL_Constraint_Visitor.h
@@ -14,11 +14,15 @@
 #ifndef TAO_ETCL_CONSTRAINT_VISITOR_H
 #define TAO_ETCL_CONSTRAINT_VISITOR_H
 
-#include "etcl_export.h"
+#include "orbsvcs/ETCL/etcl_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "tao/Versioned_Namespace.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_ETCL_Literal_Constraint;
 class TAO_ETCL_Identifier;
@@ -60,5 +64,7 @@ public:
   virtual int visit_binary_expr (TAO_ETCL_Binary_Expr *) = 0;
   virtual int visit_preference (TAO_ETCL_Preference *) = 0;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_ETCL_CONSTRAINT_VISITOR_H */

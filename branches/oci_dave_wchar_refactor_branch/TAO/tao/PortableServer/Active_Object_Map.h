@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -16,15 +16,17 @@
 
 #include /**/ "ace/pre.h"
 
-#include "Key_Adapters.h"
+#include "tao/PortableServer/Key_Adapters.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Map_T.h"
+#include "tao/PortableServer/Servant_Base.h"
 #include "tao/Server_Strategy_Factory.h"
-#include "Servant_Base.h"
+#include "ace/Map_T.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward declarations.
 class TAO_Id_Uniqueness_Strategy;
@@ -613,8 +615,10 @@ public:
                          TAO_Active_Object_Map_Entry &entry);
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-# include "Active_Object_Map.i"
+# include "tao/PortableServer/Active_Object_Map.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

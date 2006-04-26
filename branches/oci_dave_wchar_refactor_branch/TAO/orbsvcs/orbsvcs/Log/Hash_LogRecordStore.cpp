@@ -12,12 +12,14 @@ ACE_RCSID (Log,
            Hash_LogRecordStore,
            "$Id$")
 
-TAO_Hash_LogRecordStore::TAO_Hash_LogRecordStore (CORBA::ORB_ptr orb,
-                                                  DsLogAdmin::LogId logid,
-                                                  DsLogAdmin::LogFullActionType log_full_action,
-                                                  CORBA::ULongLong max_size,
-                                                  const DsLogAdmin::CapacityAlarmThresholdList* thresholds
-                                                  )
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+TAO_Hash_LogRecordStore::TAO_Hash_LogRecordStore (
+  CORBA::ORB_ptr orb,
+  DsLogAdmin::LogId logid,
+  DsLogAdmin::LogFullActionType log_full_action,
+  CORBA::ULongLong max_size,
+  const DsLogAdmin::CapacityAlarmThresholdList* thresholds)
   : maxid_ (0),
     max_size_ (max_size),
     id_ (logid),
@@ -42,6 +44,9 @@ TAO_Hash_LogRecordStore::TAO_Hash_LogRecordStore (CORBA::ORB_ptr orb,
       this->thresholds_.length(1);
       this->thresholds_[0] = 100;
     }
+
+  this->log_qos_.length(1);
+  this->log_qos_[0] = DsLogAdmin::QoSNone;
 }
 
 TAO_Hash_LogRecordStore::~TAO_Hash_LogRecordStore (void)
@@ -65,24 +70,12 @@ TAO_Hash_LogRecordStore::close (void)
 CORBA::ULongLong
 TAO_Hash_LogRecordStore::get_current_size (ACE_ENV_SINGLE_ARG_DECL)
 {
-  ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
-                           guard,
-                           lock_,
-                           CORBA::INTERNAL ());
-  ACE_CHECK_RETURN (0);
-
   return this->current_size_;
 }
 
 CORBA::ULongLong
 TAO_Hash_LogRecordStore::get_n_records (ACE_ENV_SINGLE_ARG_DECL)
 {
-  ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
-                           guard,
-                           lock_,
-                           CORBA::INTERNAL ());
-  ACE_CHECK_RETURN (0);
-
   return this->num_records_;
 }
 
@@ -90,12 +83,6 @@ int
 TAO_Hash_LogRecordStore::log (const DsLogAdmin::LogRecord &const_rec
 			      ACE_ENV_ARG_DECL)
 {
-  ACE_WRITE_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
-			    guard,
-			    lock_,
-			    CORBA::INTERNAL ());
-  ACE_CHECK_RETURN (-1);
-
   // Get log record size...
   size_t record_size = log_record_size (const_rec);
 
@@ -142,12 +129,6 @@ TAO_Hash_LogRecordStore::retrieve (DsLogAdmin::RecordId id,
 				   DsLogAdmin::LogRecord &rec
 				   ACE_ENV_ARG_DECL)
 {
-  ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
-			   guard,
-			   lock_,
-			   CORBA::INTERNAL ());
-  ACE_CHECK_RETURN (-1);
-
   int retval = rec_hash_.find (id, rec);
   return retval;
 }
@@ -156,12 +137,6 @@ int
 TAO_Hash_LogRecordStore::update (DsLogAdmin::LogRecord &rec
 				 ACE_ENV_ARG_DECL)
 {
-  ACE_WRITE_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
-			    guard,
-			    lock_,
-			    CORBA::INTERNAL ());
-  ACE_CHECK_RETURN (-1);
-
   DsLogAdmin::LogRecord oldrec;
 
   if (rec_hash_.unbind (rec.id, oldrec) != 0)
@@ -203,12 +178,6 @@ int
 TAO_Hash_LogRecordStore::remove (DsLogAdmin::RecordId id
 				 ACE_ENV_ARG_DECL)
 {
-  ACE_WRITE_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
-			    guard,
-			    lock_,
-			    CORBA::INTERNAL ());
-  ACE_CHECK_RETURN (-1);
-
   return remove_i (id);
 }
 
@@ -216,12 +185,6 @@ TAO_Hash_LogRecordStore::remove (DsLogAdmin::RecordId id
 int
 TAO_Hash_LogRecordStore::purge_old_records (ACE_ENV_SINGLE_ARG_DECL)
 {
-  ACE_WRITE_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
-			    guard,
-			    lock_,
-			    CORBA::INTERNAL ());
-  ACE_CHECK_RETURN (-1);
-
   CORBA::ULongLong num_records_to_purge = this->num_records_ * 5U / 100U;
 
   if (num_records_to_purge < 1)
@@ -339,6 +302,7 @@ TAO_Hash_LogRecordStore::query_i (const char *constraint,
       TAO_Hash_Iterator_i *iter_query = 0;
       ACE_NEW_THROW_EX (iter_query,
                         TAO_Hash_Iterator_i (this->reactor_,
+					     this,
                                              iter,
                                              iter_end,
                                              count,
@@ -367,12 +331,6 @@ TAO_Hash_LogRecordStore::query (const char *grammar,
                    DsLogAdmin::InvalidGrammar,
                    DsLogAdmin::InvalidConstraint))
 {
-  ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
-			   guard,
-			   lock_,
-			   CORBA::INTERNAL ());
-  ACE_CHECK_RETURN (0);
-
   this->check_grammar (grammar ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
@@ -389,12 +347,6 @@ TAO_Hash_LogRecordStore::retrieve (DsLogAdmin::TimeT from_time,
                                    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
-			   guard,
-			   lock_,
-			   CORBA::INTERNAL ());
-  ACE_CHECK_RETURN (0);
-
   // Decide between forward vs backward retrieval.
   char constraint[32];
   char uint64_formating[32];
@@ -470,12 +422,6 @@ TAO_Hash_LogRecordStore::match (const char* grammar,
                    DsLogAdmin::InvalidGrammar,
                    DsLogAdmin::InvalidConstraint))
 {
-  ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
-			   guard,
-			   lock_,
-			   CORBA::INTERNAL ());
-  ACE_CHECK_RETURN (0);
-
   this->check_grammar (grammar ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
@@ -494,12 +440,6 @@ TAO_Hash_LogRecordStore::delete_records (const char *grammar,
                      DsLogAdmin::InvalidGrammar,
                      DsLogAdmin::InvalidConstraint))
 {
-  ACE_WRITE_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
-			    guard,
-			    lock_,
-			    CORBA::INTERNAL ());
-  ACE_CHECK_RETURN (0);
-
   this->check_grammar (grammar ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
@@ -515,12 +455,6 @@ TAO_Hash_LogRecordStore::delete_records_by_id (const DsLogAdmin::RecordIdList &i
                                                ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_WRITE_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
-			    guard,
-			    lock_,
-			    CORBA::INTERNAL ());
-  ACE_CHECK_RETURN (0);
-
   CORBA::ULong count (0);
 
   for (CORBA::ULong i = 0; i < ids.length (); i++)
@@ -537,12 +471,6 @@ TAO_Hash_LogRecordStore::delete_records_by_id (const DsLogAdmin::RecordIdList &i
 CORBA::ULong
 TAO_Hash_LogRecordStore::remove_old_records (ACE_ENV_SINGLE_ARG_DECL)
 {
-  ACE_WRITE_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
-			    guard,
-			    lock_,
-			    CORBA::INTERNAL ());
-  ACE_CHECK_RETURN (0);
-
   if (this->max_record_life_ == 0) {
     return 0;
   }
@@ -587,6 +515,13 @@ TAO_Hash_LogRecordStore::remove_old_records (ACE_ENV_SINGLE_ARG_DECL)
   return count;
 }
 
+ACE_SYNCH_RW_MUTEX&
+TAO_Hash_LogRecordStore::lock()
+{
+  return lock_;
+}
+
+
 void
 TAO_Hash_LogRecordStore::check_grammar (const char* grammar
                                         ACE_ENV_ARG_DECL)
@@ -604,12 +539,6 @@ TAO_Hash_LogRecordStore::check_grammar (const char* grammar
 DsLogAdmin::AdministrativeState
 TAO_Hash_LogRecordStore::get_administrative_state (ACE_ENV_SINGLE_ARG_DECL) const
 {
-  ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
-                           guard,
-                           lock_,
-                           CORBA::INTERNAL ());
-  ACE_CHECK_RETURN (this->admin_state_);
-
   return this->admin_state_;
 }
 
@@ -617,12 +546,6 @@ void
 TAO_Hash_LogRecordStore::set_administrative_state (DsLogAdmin::AdministrativeState state
                                                    ACE_ENV_ARG_DECL)
 {
-  ACE_WRITE_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
-                            guard,
-                            lock_,
-                            CORBA::INTERNAL ());
-  ACE_CHECK;
-
   this->admin_state_ = state;
 }
 
@@ -630,12 +553,6 @@ TAO_Hash_LogRecordStore::set_administrative_state (DsLogAdmin::AdministrativeSta
 DsLogAdmin::CapacityAlarmThresholdList*
 TAO_Hash_LogRecordStore::get_capacity_alarm_thresholds (ACE_ENV_SINGLE_ARG_DECL) const
 {
-  ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
-                           guard,
-                           lock_,
-                           CORBA::INTERNAL ());
-  ACE_CHECK_RETURN (0);
-
   DsLogAdmin::CapacityAlarmThresholdList* ret_val;
   ACE_NEW_THROW_EX (ret_val,
                     DsLogAdmin::CapacityAlarmThresholdList (this->thresholds_),
@@ -649,12 +566,6 @@ void
 TAO_Hash_LogRecordStore::set_capacity_alarm_thresholds (const DsLogAdmin::CapacityAlarmThresholdList& thresholds
                                                         ACE_ENV_ARG_DECL)
 {
-  ACE_WRITE_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
-                            guard,
-                            lock_,
-                            CORBA::INTERNAL ());
-  ACE_CHECK;
-
   this->thresholds_ = thresholds;
 }
 
@@ -663,12 +574,6 @@ TAO_Hash_LogRecordStore::set_capacity_alarm_thresholds (const DsLogAdmin::Capaci
 DsLogAdmin::ForwardingState
 TAO_Hash_LogRecordStore::get_forwarding_state (ACE_ENV_SINGLE_ARG_DECL) const
 {
-  ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
-                           guard,
-                           lock_,
-                           CORBA::INTERNAL ());
-  ACE_CHECK_RETURN (this->forward_state_);
-
   return this->forward_state_;
 }
 
@@ -676,24 +581,12 @@ void
 TAO_Hash_LogRecordStore::set_forwarding_state (DsLogAdmin::ForwardingState state
                                                ACE_ENV_ARG_DECL)
 {
-  ACE_WRITE_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
-                            guard,
-                            lock_,
-                            CORBA::INTERNAL ());
-  ACE_CHECK;
-
   this->forward_state_ = state;
 }
 
 DsLogAdmin::TimeInterval
 TAO_Hash_LogRecordStore::get_interval (ACE_ENV_SINGLE_ARG_DECL) const
 {
-  ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
-                           guard,
-                           lock_,
-                           CORBA::INTERNAL ());
-  ACE_CHECK_RETURN (this->interval_);
-
   return this->interval_;
 }
 
@@ -701,12 +594,6 @@ void
 TAO_Hash_LogRecordStore::set_interval (const DsLogAdmin::TimeInterval &interval
                                        ACE_ENV_ARG_DECL)
 {
-  ACE_WRITE_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
-                            guard,
-                            lock_,
-                            CORBA::INTERNAL ());
-  ACE_CHECK;
-
   this->interval_ = interval;
 }
 
@@ -714,12 +601,6 @@ TAO_Hash_LogRecordStore::set_interval (const DsLogAdmin::TimeInterval &interval
 DsLogAdmin::LogFullActionType
 TAO_Hash_LogRecordStore::get_log_full_action (ACE_ENV_SINGLE_ARG_DECL) const
 {
-  ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
-                           guard,
-                           lock_,
-                           CORBA::INTERNAL ());
-  ACE_CHECK_RETURN (this->log_full_action_);
-
   return this->log_full_action_;
 }
 
@@ -727,25 +608,31 @@ void
 TAO_Hash_LogRecordStore::set_log_full_action (DsLogAdmin::LogFullActionType action
                                               ACE_ENV_ARG_DECL)
 {
-  ACE_WRITE_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
-                            guard,
-                            lock_,
-                            CORBA::INTERNAL ());
-  ACE_CHECK;
-
   this->log_full_action_ = action;
 }
 
+DsLogAdmin::QoSList *
+TAO_Hash_LogRecordStore::get_log_qos (ACE_ENV_SINGLE_ARG_DECL) const
+{
+  DsLogAdmin::QoSList* ret_val;
+  ACE_NEW_THROW_EX (ret_val,
+                    DsLogAdmin::QoSList (this->log_qos_),
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (0);
+
+  return ret_val;
+}
+
+void
+TAO_Hash_LogRecordStore::set_log_qos (const DsLogAdmin::QoSList& qos
+				      ACE_ENV_ARG_DECL)
+{
+  this->log_qos_ = qos;
+}
 
 CORBA::ULong
 TAO_Hash_LogRecordStore::get_max_record_life (ACE_ENV_SINGLE_ARG_DECL) const
 {
-  ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
-                           guard,
-                           lock_,
-                           CORBA::INTERNAL ());
-  ACE_CHECK_RETURN (0);
-
   return this->max_record_life_;
 }
 
@@ -753,24 +640,12 @@ void
 TAO_Hash_LogRecordStore::set_max_record_life (CORBA::ULong max_record_life
                                               ACE_ENV_ARG_DECL)
 {
-  ACE_WRITE_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
-                            guard,
-                            lock_,
-                            CORBA::INTERNAL ());
-  ACE_CHECK;
-
   this->max_record_life_ = max_record_life;
 }
 
 CORBA::ULongLong
 TAO_Hash_LogRecordStore::get_max_size (ACE_ENV_SINGLE_ARG_DECL) const
 {
-  ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
-                           guard,
-                           lock_,
-                           CORBA::INTERNAL ());
-  ACE_CHECK_RETURN (0);
-
   return this->max_size_;
 }
 
@@ -778,11 +653,26 @@ void
 TAO_Hash_LogRecordStore::set_max_size (CORBA::ULongLong size
                                        ACE_ENV_ARG_DECL)
 {
-  ACE_WRITE_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
-                            guard,
-                            lock_,
-                            CORBA::INTERNAL ());
-  ACE_CHECK;
-
   this->max_size_ = size;
 }
+
+DsLogAdmin::WeekMask*
+TAO_Hash_LogRecordStore::get_week_mask (ACE_ENV_SINGLE_ARG_DECL)
+{
+  DsLogAdmin::WeekMask* ret_val;
+  ACE_NEW_THROW_EX (ret_val,
+                    DsLogAdmin::WeekMask (this->weekmask_),
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (0);
+
+  return ret_val;
+}
+
+void
+TAO_Hash_LogRecordStore::set_week_mask (const DsLogAdmin::WeekMask &masks
+					ACE_ENV_ARG_DECL)
+{
+  this->weekmask_ = masks;
+}
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -29,7 +29,7 @@
 // be\be_codegen.cpp:291
 
 
-#include "IIOP_EndpointsC.h"
+#include "tao/IIOP_EndpointsC.h"
 #include "tao/CDR.h"
 
 #if defined (__BORLANDC__)
@@ -39,16 +39,18 @@
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:70
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Arg traits specializations.
 namespace TAO
 {
 }
 
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_structure/structure_cs.cpp:66
 
-void 
+void
 TAO::IIOP_Endpoint_Info::_tao_any_destructor (
     void *_tao_void_pointer
   )
@@ -58,7 +60,7 @@ TAO::IIOP_Endpoint_Info::_tao_any_destructor (
   delete _tao_tmp_pointer;
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_TAO_IIOPENDPOINTSEQUENCE_CS_)
@@ -70,7 +72,7 @@ TAO::IIOPEndpointSequence::IIOPEndpointSequence (void)
 TAO::IIOPEndpointSequence::IIOPEndpointSequence (
     CORBA::ULong max
   )
-  : TAO_Unbounded_Sequence<
+  : TAO::unbounded_value_sequence<
         TAO::IIOP_Endpoint_Info
       >
     (max)
@@ -82,7 +84,7 @@ TAO::IIOPEndpointSequence::IIOPEndpointSequence (
     TAO::IIOP_Endpoint_Info * buffer,
     CORBA::Boolean release
   )
-  : TAO_Unbounded_Sequence<
+  : TAO::unbounded_value_sequence<
         TAO::IIOP_Endpoint_Info
       >
     (max, length, buffer, release)
@@ -91,7 +93,7 @@ TAO::IIOPEndpointSequence::IIOPEndpointSequence (
 TAO::IIOPEndpointSequence::IIOPEndpointSequence (
     const IIOPEndpointSequence &seq
   )
-  : TAO_Unbounded_Sequence<
+  : TAO::unbounded_value_sequence<
         TAO::IIOP_Endpoint_Info
       >
     (seq)
@@ -147,22 +149,7 @@ CORBA::Boolean operator<< (
     const TAO::IIOPEndpointSequence &_tao_sequence
   )
 {
-  const CORBA::ULong _tao_seq_len = _tao_sequence.length ();
-  
-  if (strm << _tao_seq_len)
-    {
-      // Encode all elements.
-      CORBA::Boolean _tao_marshal_flag = true;
-      
-      for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
-        {
-          _tao_marshal_flag = (strm << _tao_sequence[i]);
-        }
-      
-      return _tao_marshal_flag;
-    }
-  
-  return false;
+  return TAO::marshal_sequence(strm, _tao_sequence);
 }
 
 CORBA::Boolean operator>> (
@@ -170,40 +157,9 @@ CORBA::Boolean operator>> (
     TAO::IIOPEndpointSequence &_tao_sequence
   )
 {
-  CORBA::ULong _tao_seq_len;
-  
-  if (strm >> _tao_seq_len)
-    {
-      // Add a check to the length of the sequence
-      // to make sure it does not exceed the length
-      // of the stream. (See bug 58.)
-      if (_tao_seq_len > strm.length ())
-        {
-          return false;
-        }
-      
-      // Set the length of the sequence.
-      _tao_sequence.length (_tao_seq_len);
-      
-      // If length is 0 we return true.
-      if (0 >= _tao_seq_len) 
-        {
-          return true;
-        }
-      
-      // Retrieve all the elements.
-      CORBA::Boolean _tao_marshal_flag = true;
-      
-      for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
-        {
-          _tao_marshal_flag = (strm >> _tao_sequence[i]);
-        }
-      
-      return _tao_marshal_flag;
-    
-    }
-  
-  return false;
+  return TAO::demarshal_sequence(strm, _tao_sequence);
 }
 
 #endif /* _TAO_CDR_OP_TAO_IIOPEndpointSequence_CPP_ */
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,7 +1,7 @@
 // $Id$
 
-#include "HTIOP_Connector.h"
-#include "HTIOP_Profile.h"
+#include "orbsvcs/HTIOP/HTIOP_Connector.h"
+#include "orbsvcs/HTIOP/HTIOP_Profile.h"
 
 #include "ace/HTBP/HTBP_Session.h"
 #include "ace/HTBP/HTBP_ID_Requestor.h"
@@ -22,6 +22,8 @@ ACE_RCSID (HTIOP,
            TAO_HTIOP_Connector,
            "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::HTIOP::Connector::Connector (ACE::HTBP::Environment *ht_env)
   : TAO_Connector (OCI_TAG_HTIOP_PROFILE),
@@ -166,7 +168,7 @@ TAO::HTIOP::Connector::make_connection (TAO::Profile_Transport_Resolver *r,
     return 0;
 
   ACE_NEW_RETURN (proxy,
-                  ACE_INET_Addr(proxy_port,proxy_host.c_str()),
+                  ACE_INET_Addr(static_cast<u_short> (proxy_port),proxy_host.c_str()),
                   0);
 
   session_id.peer_ = htiop_endpoint->object_addr ();
@@ -414,3 +416,5 @@ TAO::HTIOP::Connector::remote_endpoint (TAO_Endpoint *endpoint)
 
   return htiop_endpoint;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

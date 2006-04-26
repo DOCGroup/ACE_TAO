@@ -1,10 +1,10 @@
 // $Id$
-#include "ace/OS.h"
 
+#include "orbsvcs/AV/RTCP_Channel.h"
+#include "orbsvcs/AV/RTP.h"
 #include "tao/debug.h"
 
-#include "RTCP_Channel.h"
-#include "RTP.h"
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 RTCP_Channel_In::RTCP_Channel_In (ACE_UINT32 ssrc,
                                   const ACE_Addr *peer_addr)
@@ -361,3 +361,4 @@ RTCP_Channel_Out::active (void)
   return this->active_;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

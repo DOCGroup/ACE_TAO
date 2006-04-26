@@ -24,7 +24,9 @@
 #include "Command.h"
 //#include "../../../orbsvcs/Notify/CosNotify_Initializer.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Notify_Service;
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Notify_Tests_EventChannel_Command

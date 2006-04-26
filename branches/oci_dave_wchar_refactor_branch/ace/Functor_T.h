@@ -37,6 +37,9 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Functor_String.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ///////////////////////////////////
 // GOF Command Pattern Templates //
 ///////////////////////////////////
@@ -135,6 +138,8 @@ public:
   bool operator () (const TYPE &lhs,
                     const TYPE &rhs) const;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Functor_T.inl"

@@ -15,7 +15,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "valuetype_export.h"
+#include "tao/Valuetype/valuetype_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -28,6 +28,8 @@
 #include "tao/Object.h"  /* For CORBA::Object_var */
 #include "tao/Pseudo_VarOut_T.h"
 #include "ace/CORBA_macros.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Stub;
 class TAO_Abstract_ServantBase;
@@ -165,8 +167,10 @@ namespace TAO
   };
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-# include "AbstractBase.inl"
+# include "tao/Valuetype/AbstractBase.inl"
 #endif /* __ACE_INLINE__) */
 
 #include /**/ "ace/post.h"

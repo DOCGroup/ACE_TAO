@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -16,12 +16,7 @@
 #define ACE_MSG_WFMO_REACTOR_H
 #include /**/ "ace/pre.h"
 
-#ifdef ACE_REACTOR_BUILD_DLL
-# include "ace/ACE_Reactor_export.h"
-#else
-# include "ace/ACE_export.h"
-# define ACE_Reactor_Export ACE_Export
-#endif  /* ACE_REACTOR_BUILD_DLL */
+#include "ace/ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -30,6 +25,8 @@
 #if defined (ACE_WIN32) && !defined (ACE_LACKS_MSG_WFMO)
 
 #include "ace/WFMO_Reactor.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_Msg_WFMO_Reactor
@@ -42,7 +39,7 @@
  * its ability to react on Windows messages.  It is needed when
  * the task should serve also as a COM/DCOM server.
  */
-class ACE_Reactor_Export ACE_Msg_WFMO_Reactor : public ACE_WFMO_Reactor
+class ACE_Export ACE_Msg_WFMO_Reactor : public ACE_WFMO_Reactor
 {
 public:
   // = Initialization and termination methods.
@@ -79,7 +76,7 @@ public:
    *
    * <MsgWaitForMultipleObjects> is used as the demultiplexing call
    *
-   * Returns the total number of <ACE_Event_Handler>s that were
+   * Returns the total number of ACE_Event_Handlers that were
    * dispatched, 0 if the <max_wait_time> elapsed without dispatching
    * any handlers, or -1 if an error occurs.
    *
@@ -111,11 +108,13 @@ protected:
   virtual int dispatch_window_messages (void);
 };
 
-#endif /* ACE_WIN32 && !ACE_LACKS_MSG_WFMO */
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Msg_WFMO_Reactor.inl"
 #endif /* __ACE_INLINE__ */
+
+#endif /* ACE_WIN32 && !ACE_LACKS_MSG_WFMO */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_MSG_WFMO_REACTOR_H */

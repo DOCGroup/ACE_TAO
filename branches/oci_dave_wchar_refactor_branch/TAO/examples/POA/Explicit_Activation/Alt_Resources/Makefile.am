@@ -6,14 +6,17 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ../bin/mwc.pl -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/config -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/templates -type automake -noreldefs TAO.mwc
+## ../bin/mwc.pl -type automake -noreldefs TAO.mwc
 
 ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
 TAO_BUILDDIR = $(top_builddir)
 TAO_ROOT = $(top_srcdir)
 
+
 ## Makefile.Alt_Resource.am
+
+if BUILD_WFMO
 
 noinst_LTLIBRARIES = libAlt_Resource_Factory.la
 
@@ -30,6 +33,8 @@ libAlt_Resource_Factory_la_SOURCES = \
 noinst_HEADERS = \
   Alt_Resource_Factory.h \
   Resource_Factory.h
+
+endif BUILD_WFMO
 
 ## Clean up template repositories, etc.
 clean-local:

@@ -8,7 +8,6 @@
  *
  * SHMIOP implementation of PP Framework Endpoint interface.
  *
- *
  * @author Marina Spivak <marina@cs.wustl.edu>
  */
 //==========================================================================
@@ -17,20 +16,22 @@
 #define TAO_SHMIOP_ENDPOINT_H
 #include /**/ "ace/pre.h"
 
-#include "tao/Endpoint.h"
+#include "tao/orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined (TAO_HAS_SHMIOP) && (TAO_HAS_SHMIOP != 0)
+
 #include "tao/CORBA_String.h"
-#include "strategies_export.h"
+#include "tao/Endpoint.h"
+#include "tao/Strategies/strategies_export.h"
 
 #include "ace/INET_Addr.h"
 #include "ace/MEM_Addr.h"
 
-
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_SHMIOP_Endpoint
@@ -135,8 +136,10 @@ private:
   TAO_SHMIOP_Endpoint *next_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-# include "SHMIOP_Endpoint.i"
+# include "tao/Strategies/SHMIOP_Endpoint.i"
 #endif /* __ACE_INLINE__ */
 
 #endif /* TAO_HAS_SHMIOP && TAO_HAS_SHMIOP != 0 */

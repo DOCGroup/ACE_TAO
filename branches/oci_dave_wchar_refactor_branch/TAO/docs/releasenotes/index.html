@@ -60,6 +60,9 @@ release</a> of <a href="http://www.dre.vanderbilt.edu/TAO">TAO</a>:
 <a href="#ami">Asynchronous Method Invocation (AMI)</a></li>
 
 <li>
+<a href="#csd">Custom Servant Dispatching (CSD)</a></li>
+
+<li>
 <a href="../dynany/index.html">Dynamic Any</a></li>
 
 <li>
@@ -108,7 +111,7 @@ release</a> of <a href="http://www.dre.vanderbilt.edu/TAO">TAO</a>:
 
 
 <li>
-<a href="../rtcorba/">Real-Time CORBA</a></li>
+<a href="../rtcorba/index.html">Real-Time CORBA</a></li>
 
 <li>
 <a href="#sciop">SCIOP Support in TAO</a></li>
@@ -1055,12 +1058,14 @@ POA. This also allows multiple threads to dispatch requests on the same
 POA simultaneous.</li>
 
 <li>
-TAO now supports reference counting between POA and servants, including
+Before 1.4.6 TAO supports reference counting between POA and servants, including
 the new RefCountServantBase and ServantBase_var classes. RefCountServantBase
 is a reference counted base class that was added to the CORBA specification
 to avoid race conditions for servant deletion in threaded servers. <a href="ftp://ftp.omg.org/pub/docs/orbos/98-07-12.pdf">ftp://ftp.omg.org/pub/docs/orbos/98-07-12.pdf</a>
 contains the relevant text. Check <a href="../poa_migration.html#Reference counting Servants">here</a>
-on some hints to avoid trouble.</li>
+on some hints to avoid trouble. From TAO 1.4.6 reference counting is always
+enabled for servants and RefCountServantBase is a noop struct you don't
+need anymore.</li>
 
 <li>
 The POA now supports active demultiplexing of servants in the SYSTEM_ID
@@ -2281,7 +2286,7 @@ and
 <ul>We've implemented the callback model of the
 <a href="http://www.omg.org/cgi-bin/doc?formal/01-12-60">CORBA
 Messaging specification</a>. To activate the AMI for TAO and the TAO IDL
-compiler define <tt>TAO_HAS_CORBA_MESSAGING</tt>>,
+compiler define <tt>TAO_HAS_CORBA_MESSAGING</tt>,
 <tt>TAO_HAS_AMI_CALLBACK</tt>
 in your config.h file. The TAO IDL compiler can generate the AMI "callback"
 stubs, ReplyHandler und reply stubs using the <tt>-GC</tt> switch.
@@ -2311,13 +2316,70 @@ Parsons</a></li>
 <li>
 Support for timeouts in combination with AMI calls, response handler gets
 CORBA::TIMEOUT exception on timeout</li>
+<li>
+The AMI support in TAO 1.4.7 is as described in the 2.6 spec, from 1.4.8 we support
+by default the 3.0.3 described mapping.</li>
 </ul>
 Future Work:
 <ul>
 <li>
 Implementation of the poller model.</li>
 </ul>
+<hr>
+<h3>
+<a NAME="csd"></a>Custom Servant Dispatching</h3>
+Points of contact: <a href="mailto:bradley_t@ociweb.com">Tim Bradley</a>
+<h4>
+Current Status:</h4>
+<ul>This Custom Servant Dispatching (CSD) feature provides user applications with the ability to implement and "plug-in" custom strategies to handle the dispatching of requests to servants.
+<p>A concrete CSD Strategy implementation has also been added to serve as a "reference implementation".  This is being called the CSD Thread Pool Strategy (TP_Strategy).  The TP_Strategy provides a means to decouple the threads (ORB threads) that receive requests from the underlying transport from the thread that will ultimately dispatch the request to the target servant object.  The TP_Strategy implements a "request queue" as the integral part of the mechanism that allows an ORB thread to "hand-off" a request to one of the TP_Strategy object's worker threads.  The TP_Strategy reference implementation is provided as an example of how concrete CSD Strategy could be implemented.
+<p>Two approaches are supported for applying CSD strategy to an application.
+<ol>
+<li>Explicitly calling CSD interfaces. 
+<p>Here is an example application code showing how a TP_Strategy object can be created and applied to a POA:
 
+<pre>
+
+  PortableServer::POA_var poa = ...; // create the poa.
+
+  // Create a new TP_Strategy object and save it into a "smart pointer" variable.
+  TAO::CSD::TP_Strategy_Handle csd_strategy = new TAO::CSD::TP_Strategy();
+
+  // Set the number of threads before calling apply_to().
+  csd_strategy->set_num_threads(2);
+
+  // Set the servant serialization flag before calling apply_to().
+  csd_strategy->set_servant_serialization (false);
+
+  // Tell the strategy to apply itself to the poa.
+  if (csd_strategy->apply_to(poa.in()) == false) 
+    {
+      ACE_ERROR((LM_ERROR, "Failed to apply CSD strategy to the poa.\n"));
+      return -1;
+    }
+</pre>
+<li>Service Configurator
+
+ <p>The format of the CSD specific parameters for creating the TP_Strategy service object is:          
+ <pre>-CSDtp &lt;poa_name&gt;:&lt;csd_thread_number&gt;:[OFF]</pre>
+
+ <p>The last portion of the parameter is the servant serialization flag. It's only needed when the servant serialization needs be turned off, otherwise the servant serialization is always on. When servant serialization is on (the default), the TP_Strategy will serialize requests to any particular servant.  Requests to different servant objects can occur in parallel, but requests to any particular servant will be dispatched serially (ie, one at a time).
+
+ <p>Here is an example of the svc.conf file.
+
+ <pre>
+  dynamic TAO_CSD_TP_Strategy_Factory Service_Object * 
+	TAO_CSD_ThreadPool:_make_TAO_CSD_TP_Strategy_Factory() "-CSDtp RootPOA:2"
+ </pre>
+</ol>
+</ul>
+<h4>
+Known Issues:</h4>
+<ul>
+<li>
+This feature is not currently tested for VxWorks.
+</li>
+</ul>
 <hr>
 <h3>
 <a NAME="interceptor"></a>Portable Interceptors</h3>

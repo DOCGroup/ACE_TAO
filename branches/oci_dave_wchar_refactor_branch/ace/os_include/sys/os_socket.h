@@ -36,7 +36,7 @@
 #  endif /* ACE_HAS_AIX_BROKEN_SOCKET_HEADER */
 #endif /* !ACE_LACKS_SYS_SOCKET_H */
 
-#if defined (VXWORKS)
+#if defined (ACE_VXWORKS) && (ACE_VXWORKS < 0x620)
 #  include /**/ <sockLib.h>
 #endif /* VXWORKS */
 

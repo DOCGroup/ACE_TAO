@@ -27,6 +27,8 @@
 #include "ace/SString.h"
 #include "ace/OS_NS_signal.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Forward decl.
 class ACE_Service_Object;
 class ACE_Service_Type;
@@ -59,6 +61,8 @@ class ACE_DLL;
   "() \"" \
   parameters \
   "\""
+
+
 #define ACE_REMOVE_SERVICE_DIRECTIVE(ident) \
   ACE_LIB_TEXT ("remove ") \
   ACE_LIB_TEXT (ident)
@@ -74,7 +78,7 @@ class ACE_Svc_Conf_Param;
   ACE_LIB_TEXT (objectclass) \
   ACE_LIB_TEXT ("\"") \
   ACE_LIB_TEXT (" params=\"") \
-  ACE_LIB_TEXT (parameters)
+  ACE_LIB_TEXT (parameters) \
   ACE_LIB_TEXT ("\"/></dynamic></ACE_Svc_Conf>")
 #define ACE_REMOVE_SERVICE_DIRECTIVE(ident) \
   ACE_LIB_TEXT ("<ACE_Svc_Conf><remove id=\"") \
@@ -83,10 +87,14 @@ class ACE_Svc_Conf_Param;
 class ACE_XML_Svc_Conf;
 #endif /* ACE_USES_CLASSIC_SVC_CONF == 1 */
 
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 extern "C"
 {
   typedef ACE_Service_Object *(*ACE_SERVICE_ALLOCATOR) (ACE_Service_Object_Exterminator *);
 }
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_Static_Svc_Descriptor
@@ -166,7 +174,11 @@ public:
 
   // = Initialization and termination methods.
 
-  /// Initialize the Service Repository.
+  /**
+   * Initialize the Service Repository. Note that initialising @a
+   * signum to a negative number will prevent a signal handler being
+   * registered when the repository is opened.
+   */
   ACE_Service_Config (int ignore_static_svcs = 1,
                       size_t size = ACE_Service_Config::MAX_SERVICES,
                       int signum = SIGHUP);
@@ -206,7 +218,7 @@ public:
    * number of errors encountered loading the services in the
    * specified svc.conf configuration file.  If @a ignore_debug_flag is
    * non-0 then the application is responsible for setting the
-   * <ACE_Log_Msg::priority_mask> appropriately.
+   * @c ACE_Log_Msg::priority_mask appropriately.
    */
   static int open (const ACE_TCHAR program_name[],
                    const ACE_TCHAR *logger_key = ACE_DEFAULT_LOGGER_KEY,
@@ -327,7 +339,7 @@ public:
    * Suspend @a svc_name.  Note that this will not unlink the service
    * from the daemon if it was dynamically linked, it will mark it as
    * being suspended in the Service Repository and call the <suspend>
-   * member function on the appropriate <ACE_Service_Object>.  A
+   * member function on the appropriate ACE_Service_Object.  A
    * service can be resumed later on by calling the <RESUME> member
    * function...
    */
@@ -391,7 +403,7 @@ public:
 
   /**
    * Handle the command-line options intended for the
-   * <ACE_Service_Config>.  Note that <argv[0]> is assumed to be the
+   * ACE_Service_Config.  Note that @c argv[0] is assumed to be the
    * program name.
    * The arguments that are valid in a call to this method are
    * - '-b' Option to indicate that we should be a daemon
@@ -479,7 +491,7 @@ private:
   static ACE_Sig_Adapter *signal_handler_;
 
   /**
-   * Keep track of whether the <ACE_Service_Config> is already
+   * Keep track of whether the ACE_Service_Config is already
    * initialized.  If so, we can't allow <yyparse> to be called since
    * it's not reentrant.  This variable is incremented by the
    * <ACE_Service_Config::open> method and decremented by the
@@ -487,6 +499,8 @@ private:
    */
   static int is_initialized_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Service_Config.inl"

@@ -8,19 +8,21 @@
 #include "ace/Dynamic_Service.h"
 #include "ace/Arg_Shifter.h"
 
-#include "ECG_ConsumerEC_Control.h"
-#include "ECG_Reactive_ConsumerEC_Control.h"
-#include "ECG_Reconnect_ConsumerEC_Control.h"
-#include "EC_Gateway_IIOP.h"
+#include "orbsvcs/Event/ECG_ConsumerEC_Control.h"
+#include "orbsvcs/Event/ECG_Reactive_ConsumerEC_Control.h"
+#include "orbsvcs/Event/ECG_Reconnect_ConsumerEC_Control.h"
+#include "orbsvcs/Event/EC_Gateway_IIOP.h"
 #include "ace/OS_NS_strings.h"
 
 #if !defined (__ACE_INLINE__)
-#include "EC_Gateway_IIOP_Factory.i"
+#include "orbsvcs/Event/EC_Gateway_IIOP_Factory.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (Event,
            EC_Gateway_IIOP_Factory,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
 TAO_EC_Gateway_IIOP_Factory::init_svcs (void)
@@ -198,6 +200,8 @@ TAO_EC_Gateway_IIOP_Factory::destroy_consumerec_control (
 {
    delete x;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (TAO_EC_Gateway_IIOP_Factory,
                        ACE_TEXT ("EC_Gateway_IIOP_Factory"),

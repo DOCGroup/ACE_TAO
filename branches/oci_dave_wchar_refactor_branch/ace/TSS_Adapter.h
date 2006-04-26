@@ -22,6 +22,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_TSS_Adapter
  *
@@ -41,24 +43,19 @@ public:
   /// Initialize the adapter.
   ACE_TSS_Adapter (void *object, ACE_THR_DEST f);
 
-  /// Default dtor.
-  ~ACE_TSS_Adapter (void);
-
   /// Perform the cleanup operation.
   void cleanup (void);
 
 //private:
 
   /// The real TS object.
-  void *ts_obj_;
+  void * const ts_obj_;
 
   /// The real cleanup routine for ts_obj;
   ACE_THR_DEST func_;
 };
 
-#if defined (__ACE_INLINE__)
-#include "ace/TSS_Adapter.inl"
-#endif /* __ACE_INLINE__ */
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* ACE_TSS_ADAPTER_H */

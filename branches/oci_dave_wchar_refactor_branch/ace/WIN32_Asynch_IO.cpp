@@ -17,6 +17,8 @@ ACE_RCSID (ace,
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_sys_socket.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 size_t
 ACE_WIN32_Asynch_Result::bytes_transferred (void) const
 {
@@ -166,7 +168,7 @@ ACE_WIN32_Asynch_Operation::cancel (void)
 {
 #if (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) \
     && (   (defined (_MSC_VER)) \
-        || (defined (__BORLANDC__) && (__BORLANDC__ >= 0x530)) \
+        || (defined (__BORLANDC__)) \
         || (defined (__MINGW32)))
   // All I/O operations that are canceled will complete with the error
   // ERROR_OPERATION_ABORTED. All completion notifications for the I/O
@@ -175,7 +177,7 @@ ACE_WIN32_Asynch_Operation::cancel (void)
   // @@ This API returns 0 on failure. So, I am returning -1 in that
   //    case. Is that right? (Alex).
 
-  int result = (int) ::CancelIo (this->handle_);
+  int const result = (int) ::CancelIo (this->handle_);
 
   if (result == 0)
     // Couldnt cancel the operations.
@@ -411,7 +413,7 @@ ACE_WIN32_Asynch_Read_Stream::read (ACE_Message_Block &message_block,
                   -1);
 
   // Shared read
-  int return_val = this->shared_read (result);
+  int const return_val = this->shared_read (result);
 
   // Upon errors
   if (return_val == -1)
@@ -468,7 +470,7 @@ ACE_WIN32_Asynch_Read_Stream::readv (ACE_Message_Block &message_block,
 
         // Increment iovec counter if there's more to do.
         if (msg_space > 0)
-          iovcnt++;
+          ++iovcnt;
       }
     if (msg_space > 0)       // Ran out of iovecs before msg_space exhausted
       {
@@ -594,6 +596,8 @@ ACE_WIN32_Asynch_Read_Stream::shared_read (ACE_WIN32_Asynch_Read_Stream_Result *
   switch (errno)
     {
     case ERROR_IO_PENDING:
+      /* FALLTHRU */
+    case ERROR_MORE_DATA:
       // The IO will complete proactively: the OVERLAPPED will still
       // get queued.
       return 0;
@@ -2575,8 +2579,6 @@ ACE_WIN32_Asynch_Connect::connect_i (ACE_WIN32_Asynch_Connect_Result *result,
         }
       return 1 ;  // connect finished
     }
-
-  ACE_NOTREACHED (return 0);
 }
 
 
@@ -3336,15 +3338,15 @@ ACE_WIN32_Asynch_Read_Dgram::recv (ACE_Message_Block *message_block,
                   -1);
 
   // do the scatter/gather recv
-  int initiate_result = ACE_OS::recvfrom (result->handle (),
-                                          iov,
-                                          iovcnt,
-                                          number_of_bytes_recvd,
-                                          result->flags_,
-                                          result->saddr (),
-                                          &(result->addr_len_),
-                                          result,
-                                          0);
+  ssize_t initiate_result = ACE_OS::recvfrom (result->handle (),
+                                              iov,
+                                              iovcnt,
+                                              number_of_bytes_recvd,
+                                              result->flags_,
+                                              result->saddr (),
+                                              &(result->addr_len_),
+                                              result,
+                                              0);
   if (initiate_result == SOCKET_ERROR)
   {
     // If initiate failed, check for a bad error.
@@ -3663,15 +3665,15 @@ ACE_WIN32_Asynch_Write_Dgram::send (ACE_Message_Block *message_block,
 
   // do the scatter/gather send
 
-  int initiate_result = ACE_OS::sendto (result->handle (),
-                                        iov,
-                                        iovcnt,
-                                        number_of_bytes_sent,
-                                        result->flags_,
-                                        (sockaddr *) addr.get_addr (),
-                                        addr.get_size(),
-                                        result,
-                                        0);
+  ssize_t initiate_result = ACE_OS::sendto (result->handle (),
+                                            iov,
+                                            iovcnt,
+                                            number_of_bytes_sent,
+                                            result->flags_,
+                                            (sockaddr *) addr.get_addr (),
+                                            addr.get_size(),
+                                            result,
+                                            0);
 
 
   if (initiate_result == SOCKET_ERROR)
@@ -3748,26 +3750,6 @@ ACE_WIN32_Asynch_Write_Dgram::ACE_WIN32_Asynch_Write_Dgram (ACE_WIN32_Proactor *
 {
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Map_Entry<ACE_HANDLE, ACE_WIN32_Asynch_Connect_Result *>;
-template class ACE_Map_Manager<ACE_HANDLE, ACE_WIN32_Asynch_Connect_Result *, ACE_SYNCH_NULL_MUTEX>;
-template class ACE_Map_Iterator_Base<ACE_HANDLE, ACE_WIN32_Asynch_Connect_Result *, ACE_SYNCH_NULL_MUTEX>;
-template class ACE_Map_Const_Iterator_Base<ACE_HANDLE, ACE_WIN32_Asynch_Connect_Result *, ACE_SYNCH_NULL_MUTEX>;
-template class ACE_Map_Iterator<ACE_HANDLE, ACE_WIN32_Asynch_Connect_Result *, ACE_SYNCH_NULL_MUTEX>;
-template class ACE_Map_Const_Iterator<ACE_HANDLE, ACE_WIN32_Asynch_Connect_Result *, ACE_SYNCH_NULL_MUTEX>;
-template class ACE_Map_Reverse_Iterator<ACE_HANDLE, ACE_WIN32_Asynch_Connect_Result *, ACE_SYNCH_NULL_MUTEX>;
-
-#elif  defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Map_Entry<ACE_HANDLE, ACE_WIN32_Asynch_Connect_Result *>
-#pragma instantiate ACE_Map_Manager<ACE_HANDLE, ACE_WIN32_Asynch_Connect_Result *, ACE_SYNCH_NULL_MUTEX>
-#pragma instantiate ACE_Map_Iterator_Base<ACE_HANDLE, ACE_WIN32_Asynch_Connect_Result *, ACE_SYNCH_NULL_MUTEX>
-#pragma instantiate ACE_Map_Const_Iterator_Base<ACE_HANDLE, ACE_WIN32_Asynch_Connect_Result *, ACE_SYNCH_NULL_MUTEX>
-#pragma instantiate ACE_Map_Iterator<ACE_HANDLE, ACE_WIN32_Asynch_Connect_Result *, ACE_SYNCH_NULL_MUTEX>
-#pragma instantiate ACE_Map_Const_Iterator<ACE_HANDLE, ACE_WIN32_Asynch_Connect_Result *, ACE_SYNCH_NULL_MUTEX>
-#pragma instantiate ACE_Map_Reverse_Iterator<ACE_HANDLE, ACE_WIN32_Asynch_Connect_Result *, ACE_SYNCH_NULL_MUTEX>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_WIN32 || ACE_HAS_WINCE */

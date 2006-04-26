@@ -1,8 +1,8 @@
 // $Id$
 
-#include "Constraint_Visitors.h"
-#include "Constraint_Nodes.h"
-#include "Interpreter_Utils_T.h"
+#include "orbsvcs/Trader/Constraint_Visitors.h"
+#include "orbsvcs/Trader/Constraint_Nodes.h"
+#include "orbsvcs/Trader/Interpreter_Utils_T.h"
 
 #include "tao/DynamicAny/DynSequence_i.h"
 
@@ -13,6 +13,8 @@ ACE_RCSID (Trader,
            Constraint_Visitors,
            "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Constraint_Evaluator::Operand_Queue::Operand_Queue (void)
 {
@@ -1198,3 +1200,5 @@ TAO_Constraint_Validator::expr_returns_string (TAO_Expression_Type expr_type)
 
   return return_value;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,5 +1,5 @@
-
 // -*- C++ -*-
+
 // ===================================================================
 /**
  *  @file   GIOP_Message_Generator_Parser_10.h
@@ -20,6 +20,8 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_GIOP_Message_State;
 
@@ -64,6 +66,9 @@ public:
       TAO_GIOP_Locate_Status_Msg &status
     );
 
+  virtual bool write_fragment_header (TAO_OutputCDR & cdr,
+                                      CORBA::ULong request_id);
+
   /// Parse the Request Header from the incoming stream. This will do a
   /// version specific parsing of the incoming Request header
   virtual int parse_request_header (TAO_ServerRequest &);
@@ -90,5 +95,8 @@ public:
   virtual size_t fragment_header_length (void) const;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #include /**/ "ace/post.h"
+
 #endif /*TAO_GIOP_MESSAGE_GENERATOR_PARSER_10_H*/

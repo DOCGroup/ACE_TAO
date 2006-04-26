@@ -4,17 +4,17 @@
 
 module Empty
 {
-  interface I 
+  interface I
   {
   };
 };
 
 module M
-{ 
+{
   interface I {};
-  
+
   typedef I Internal;
-  
+
   //local interface CCM_I : I {};
 };
 

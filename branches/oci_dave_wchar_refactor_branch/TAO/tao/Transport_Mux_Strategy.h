@@ -23,10 +23,15 @@
 
 #include "tao/Basic_Types.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+class ACE_Lock;
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_Reply_Dispatcher;
 class TAO_Transport;
 class TAO_Pluggable_Reply_Params;
-class ACE_Lock;
 
 /**
  * @class TAO_Transport_Mux_Strategy
@@ -92,6 +97,8 @@ protected:
   /// Lock to protect the state of the object
   ACE_Lock *lock_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

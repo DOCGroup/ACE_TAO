@@ -78,6 +78,8 @@ be_visitor_valuetype_fwd_cdr_op_ch::visit_valuetype_fwd (
   *os << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
+  *os << be_global->core_versioning_begin () << be_nl;
+
   *os << be_global->stub_export_macro ()
       << " ::CORBA::Boolean operator<< (TAO_OutputCDR &, const "
       << node->full_name () << " *);" << be_nl;
@@ -85,9 +87,11 @@ be_visitor_valuetype_fwd_cdr_op_ch::visit_valuetype_fwd (
   *os << be_global->stub_export_macro ()
       << " ::CORBA::Boolean operator>> (TAO_InputCDR &, "
       << node->full_name () << " *&);" << be_nl;
+  
+  *os << be_global->core_versioning_end () << be_nl;
 
-  node->cli_hdr_cdr_op_gen (I_TRUE);
-  bfd->cli_hdr_cdr_op_gen (I_TRUE);
+  node->cli_hdr_cdr_op_gen (true);
+  bfd->cli_hdr_cdr_op_gen (true);
 
   return 0;
 }

@@ -1,11 +1,13 @@
-// @(#) $Id$
+// $Id$
 
-#include "GOA.h"
-#include "PG_Servant_Dispatcher.h"
+#include "orbsvcs/PortableGroup/GOA.h"
+#include "orbsvcs/PortableGroup/PG_Servant_Dispatcher.h"
 
 ACE_RCSID(PortableGroup,
           PG_Servant_Dispatcher,
           "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_PG_Servant_Dispatcher::~TAO_PG_Servant_Dispatcher (void)
 {
@@ -40,24 +42,29 @@ TAO_PG_Servant_Dispatcher::create_Root_POA (const ACE_CString &name,
 }
 
 void
-TAO_PG_Servant_Dispatcher::pre_invoke_remote_request (TAO_Root_POA &,
-                                                      CORBA::Short,
-                                                      TAO_ServerRequest &,
-                                                      TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State &
-                                                      ACE_ENV_ARG_DECL_NOT_USED)
+TAO_PG_Servant_Dispatcher::pre_invoke_remote_request (
+  TAO_Root_POA &,
+  CORBA::Short,
+  TAO_ServerRequest &,
+  TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State &
+  ACE_ENV_ARG_DECL_NOT_USED)
 {
 }
 
 void
-TAO_PG_Servant_Dispatcher::pre_invoke_collocated_request (TAO_Root_POA &,
-                                                          CORBA::Short,
-                                                          TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State &
-                                                          ACE_ENV_ARG_DECL_NOT_USED)
+TAO_PG_Servant_Dispatcher::pre_invoke_collocated_request (
+  TAO_Root_POA &,
+  CORBA::Short,
+  TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State &
+  ACE_ENV_ARG_DECL_NOT_USED)
 {
 }
 
 void
-TAO_PG_Servant_Dispatcher::post_invoke (TAO_Root_POA &,
-                                        TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State &)
+TAO_PG_Servant_Dispatcher::post_invoke (
+  TAO_Root_POA &,
+  TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State &)
 {
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -2,6 +2,7 @@
 // $Id$
 
 project(*cancel) : aceexe {
+  avoids += ace_for_tao
   exename = test_cancel
   Source_Files {
     test_cancel.cpp
@@ -9,6 +10,7 @@ project(*cancel) : aceexe {
 }
 
 project(*end_event_loops) : aceexe {
+  avoids += ace_for_tao
   exename = test_end_event_loop
   Source_Files {
     test_end_event_loop.cpp
@@ -16,6 +18,7 @@ project(*end_event_loops) : aceexe {
 }
 
 project(*multiple_loops) : aceexe {
+  avoids += ace_for_tao
   exename = test_multiple_loops
   Source_Files {
     test_multiple_loops.cpp
@@ -23,6 +26,7 @@ project(*multiple_loops) : aceexe {
 }
 
 project(*post_completions) : aceexe {
+  avoids += ace_for_tao
   exename = test_post_completions
   Source_Files {
     post_completions.cpp
@@ -30,6 +34,7 @@ project(*post_completions) : aceexe {
 }
 
 project(*proactor) : aceexe {
+  avoids += ace_for_tao
   exename = test_proactor
   Source_Files {
     test_proactor.cpp
@@ -37,6 +42,7 @@ project(*proactor) : aceexe {
 }
 
 project(*timeout) : aceexe {
+  avoids += ace_for_tao
   exename = test_timeout
   Source_Files {
     test_timeout.cpp
@@ -44,6 +50,7 @@ project(*timeout) : aceexe {
 }
 
 project(*udp_proactor) : aceexe {
+  avoids += ace_for_tao
   exename = test_udp_proactor
   Source_Files {
     test_udp_proactor.cpp

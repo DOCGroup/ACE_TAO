@@ -1,10 +1,12 @@
 // $Id$
 
-#include "create_persistent_poa.h"
+#include "orbsvcs/FtRtEvent/EventChannel/create_persistent_poa.h"
 
 ACE_RCSID (EventChannel,
            create_persistent_poa,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 PortableServer::POA_var create_persistent_poa(PortableServer::POA_var root_poa,
                                               PortableServer::POAManager_var mgr,
@@ -43,3 +45,5 @@ PortableServer::POA_var create_persistent_poa(PortableServer::POA_var root_poa,
 
   return result;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

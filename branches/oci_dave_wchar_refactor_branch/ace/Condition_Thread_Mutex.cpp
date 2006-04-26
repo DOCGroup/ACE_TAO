@@ -21,6 +21,8 @@
 
 ACE_RCSID(ace, Condition_Thread_Mutex, "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_ALLOC_HOOK_DEFINE(ACE_Condition_Thread_Mutex)
 
 void
@@ -132,5 +134,7 @@ ACE_Condition_Thread_Mutex::broadcast (void)
 // ACE_TRACE ("ACE_Condition_Thread_Mutex::broadcast");
   return ACE_OS::cond_broadcast (&this->cond_);
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_THREADS */

@@ -3,7 +3,6 @@
 // Main driver program for the event server example.
 
 #include "ace/OS_main.h"
-#include "ace/Stream.h"
 #include "ace/Service_Config.h"
 #include "ace/OS_NS_unistd.h"
 #include "Options.h"
@@ -11,6 +10,7 @@
 #include "Event_Analyzer.h"
 #include "Supplier_Router.h"
 #include "ace/Signal.h"
+#include "ace/Stream.h"
 
 ACE_RCSID (Event_Server,
            event_server,
@@ -20,10 +20,12 @@ ACE_RCSID (Event_Server,
 typedef ACE_Stream<ACE_SYNCH> MT_Stream;
 typedef ACE_Module<ACE_SYNCH> MT_Module;
 
+
 class Event_Server : public ACE_Sig_Adapter
 {
   // = TITLE
   //     Run the logic for the <Event_Server>.
+
   //
   // = DESCRIPTION
   //     In addition to packaging the <Event_Server> components, this

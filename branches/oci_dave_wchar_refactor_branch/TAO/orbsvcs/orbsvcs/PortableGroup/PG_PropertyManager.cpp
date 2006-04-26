@@ -1,8 +1,8 @@
 // -*- C++ -*-
 
-#include "PG_PropertyManager.h"
-#include "PG_ObjectGroupManager.h"
-#include "PG_Property_Utils.h"
+#include "orbsvcs/PortableGroup/PG_PropertyManager.h"
+#include "orbsvcs/PortableGroup/PG_ObjectGroupManager.h"
+#include "orbsvcs/PortableGroup/PG_Property_Utils.h"
 
 #include "tao/ORB_Constants.h"
 
@@ -11,6 +11,8 @@
 ACE_RCSID (PortableGroup,
            PG_PropertyManager,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_PG_PropertyManager::TAO_PG_PropertyManager (
   TAO_PG_ObjectGroupManager & object_group_manager)
@@ -362,3 +364,5 @@ TAO_PG_PropertyManager::remove_properties (
   // variable.
   properties = new_properties;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

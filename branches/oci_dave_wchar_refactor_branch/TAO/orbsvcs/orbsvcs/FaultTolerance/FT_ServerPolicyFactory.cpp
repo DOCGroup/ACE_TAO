@@ -2,8 +2,8 @@
 //
 // $Id$
 
-#include "FT_ServerPolicyFactory.h"
-#include "FT_ServerPolicy_i.h"
+#include "orbsvcs/FaultTolerance/FT_ServerPolicyFactory.h"
+#include "orbsvcs/FaultTolerance/FT_ServerPolicy_i.h"
 #include "orbsvcs/FT_CORBA_ORBC.h"
 #include "tao/PolicyC.h"
 
@@ -11,6 +11,8 @@
 ACE_RCSID (FaultTolerance,
            FT_ServerPolicyFactory,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::Policy_ptr
 TAO_FT_ServerPolicyFactory::create_policy (
@@ -28,3 +30,5 @@ TAO_FT_ServerPolicyFactory::create_policy (
   ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_TYPE),
                     CORBA::Policy::_nil ());
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

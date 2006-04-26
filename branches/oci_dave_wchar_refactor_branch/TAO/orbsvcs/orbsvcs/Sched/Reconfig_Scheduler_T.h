@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 // $Id$
 // ============================================================================
 //
@@ -19,11 +20,13 @@
 
 #include "ace/config-all.h"
 
-#include "Reconfig_Scheduler.h"
+#include "orbsvcs/Sched/Reconfig_Scheduler.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 class TAO_Reconfig_Scheduler :
@@ -146,16 +149,16 @@ public:
                      RtecScheduler::SYNCHRONIZATION_FAILURE));
   // Return a pointer to the RT_Info corresponding to the passed handle.
 
-  virtual void set (RtecScheduler::handle_t handle,
-                    RtecScheduler::Criticality_t criticality,
-                    RtecScheduler::Time time,
-                    RtecScheduler::Time typical_time,
-                    RtecScheduler::Time cached_time,
-                    RtecScheduler::Period_t period,
-                    RtecScheduler::Importance_t importance,
-                    RtecScheduler::Quantum_t quantum,
-                    CORBA::Long threads,
-                    RtecScheduler::Info_Type_t info_type
+  virtual void set (::RtecScheduler::handle_t handle,
+                    ::RtecScheduler::Criticality_t criticality,
+                    ::RtecScheduler::Time time,
+                    ::RtecScheduler::Time typical_time,
+                    ::RtecScheduler::Time cached_time,
+                    ::RtecScheduler::Period_t period,
+                    ::RtecScheduler::Importance_t importance,
+                    ::RtecScheduler::Quantum_t quantum,
+                    ::RtecScheduler::Threads_t threads,
+                    ::RtecScheduler::Info_Type_t info_type
                     ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      RtecScheduler::UNKNOWN_TASK,
@@ -759,8 +762,10 @@ maintain_scheduling_array (ARRAY_ELEMENT_TYPE ** & current_ptr_array,
 // arrays.  This function expands the array eagerly, to minimize time
 // overhead for memory allocation (at a cost of some unused space).
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "Reconfig_Scheduler_T.cpp"
+#include "orbsvcs/Sched/Reconfig_Scheduler_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

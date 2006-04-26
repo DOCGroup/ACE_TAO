@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 // $Id$
 
 // ============================================================================
@@ -27,6 +28,8 @@
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/RtecSchedulerC.h"
 #include "orbsvcs/Sched/sched_export.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Reconfig_Scheduler_Entry;
 struct TAO_RT_Info_Tuple;
@@ -267,18 +270,11 @@ private:
 
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
 #include "orbsvcs/Scheduler_Factory.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_SCHEDULER_FACTORY_H */
-
-
-
-
-
-
-
-
-

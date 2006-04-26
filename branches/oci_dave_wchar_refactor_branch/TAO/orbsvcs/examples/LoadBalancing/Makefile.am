@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ../bin/mwc.pl -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/config -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/templates -type automake -noreldefs TAO.mwc
+## ../bin/mwc.pl -type automake -noreldefs TAO.mwc
 
 ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
@@ -16,6 +16,7 @@ TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
+noinst_PROGRAMS =
 
 ## Makefile.LoadBalancing_Idl.am
 
@@ -49,9 +50,14 @@ Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
 	@touch $@
 
 
+noinst_HEADERS = \
+  Test.idl
+
 ## Makefile.LoadBalancing_Client.am
 
-noinst_PROGRAMS = client
+if !BUILD_ACE_FOR_TAO
+
+noinst_PROGRAMS += client
 
 client_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -74,11 +80,14 @@ client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+endif !BUILD_ACE_FOR_TAO
+
 ## Makefile.LoadBalancing_Server.am
 
 if BUILD_AMI
 if BUILD_CORBA_MESSAGING
 if BUILD_EXCEPTIONS
+if !BUILD_ACE_FOR_TAO
 if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS += server
@@ -124,6 +133,7 @@ server_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_MINIMUM_CORBA
+endif !BUILD_ACE_FOR_TAO
 endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
 endif BUILD_AMI

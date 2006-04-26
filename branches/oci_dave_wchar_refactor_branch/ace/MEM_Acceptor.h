@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -14,12 +14,7 @@
 #define ACE_MEM_ACCEPTOR_H
 #include /**/ "ace/pre.h"
 
-#ifdef ACE_MEMORY_BUILD_DLL
-# include "ace/ACE_Memory_export.h"
-#else
-# include "ace/ACE_export.h"
-# define ACE_Memory_Export ACE_Export
-#endif  /* ACE_MEMORY_BUILD_DLL */
+#include "ace/ACE_export.h"
 
 #include "ace/SOCK_Acceptor.h"
 
@@ -35,6 +30,8 @@
 #if !defined (ACE_HAS_WINCE)
 #include "ace/OS_QoS.h"
 #endif  // ACE_HAS_WINCE
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward decl.
 class ACE_Reactor;
@@ -54,7 +51,7 @@ class ACE_Reactor;
  * if so desired.  (Currently, using UNIX-domain sockets, i.e.,
  * ACE_LSOCK_*, with this class will not work.)
  */
-class ACE_Memory_Export ACE_MEM_Acceptor : public ACE_SOCK_Acceptor
+class ACE_Export ACE_MEM_Acceptor : public ACE_SOCK_Acceptor
 {
 public:
   // = Initialization methods.
@@ -182,6 +179,8 @@ private:
   /// Preferred signaling strategy.
   ACE_MEM_IO::Signal_Strategy preferred_strategy_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/MEM_Acceptor.inl"

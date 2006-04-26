@@ -1,6 +1,8 @@
 // $Id$
-#include "RTCP_Packet.h"
-#include "RTP.h"
+#include "orbsvcs/AV/RTCP_Packet.h"
+#include "orbsvcs/AV/RTP.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 RTCP_Packet::RTCP_Packet(void)
 {
@@ -34,7 +36,7 @@ RTCP_Packet::~RTCP_Packet(void)
 void
 RTCP_Packet::get_packet_data(char **buffer, ACE_UINT16 &length)
 {
-  length = this->packet_size();
+  length = static_cast<ACE_UINT16> (this->packet_size());
 
   // buiidPacket is defined for each child of RTCP_Packet
   // buildPacket creates a snapshot of the RTCP packet in the buffer pktData
@@ -103,7 +105,7 @@ RTCP_BYE_Packet::RTCP_BYE_Packet(ACE_UINT32 *ssrc_list,
     this->reason_length_ = 0;
 
   // Set the packet length
-  this->chd_.length_ = this->chd_.count_ + (this->reason_length_+1)/4;
+  this->chd_.length_ = static_cast<ACE_UINT16> (this->chd_.count_ + (this->reason_length_+1)/4);
   if ((this->reason_length_+1)%4)
     this->chd_.length_++;
 
@@ -169,7 +171,7 @@ RTCP_BYE_Packet::~RTCP_BYE_Packet(void)
 unsigned int
 RTCP_BYE_Packet::packet_size(void)
 {
-  ACE_UINT16 size = (1+chd_.count_) * 4;
+  ACE_UINT16 size = static_cast<ACE_UINT16> ((1+chd_.count_) * 4);
 
   if (this->reason_length_ > 0)
     {
@@ -215,9 +217,9 @@ RTCP_BYE_Packet::build_packet(void)
            char[this->packet_size()]);
 
   index = 0;
-  this->packet_data_[index] = (this->chd_.ver_ << 6) |
-                              (this->chd_.pad_ << 5) |
-                               this->chd_.count_;
+  this->packet_data_[index] = static_cast<char> ((this->chd_.ver_ << 6) |
+                                                 (this->chd_.pad_ << 5) |
+                                                 this->chd_.count_);
   index++;
   this->packet_data_[index] = this->chd_.pt_;
   index++;
@@ -282,7 +284,7 @@ RTCP_RR_Packet::RTCP_RR_Packet(ACE_UINT32 ssrc, RR_Block *blocks)
       block_ptr = block_ptr->next_;
     }
 
-  this->chd_.length_ = 1+6*this->chd_.count_; // + profile specific extensions ??
+  this->chd_.length_ = static_cast<ACE_UINT16> (1+6*(this->chd_.count_)); // + profile specific extensions ??
 
   this->packet_data_ = 0;
 }
@@ -364,7 +366,7 @@ RTCP_RR_Packet::~RTCP_RR_Packet(void)
 unsigned int
 RTCP_RR_Packet::packet_size(void)
 {
-    ACE_UINT16 size = (2+this->chd_.count_*6) * 4;
+    ACE_UINT16 size = static_cast<ACE_UINT16> ((2+this->chd_.count_*6) * 4);
     return size;
 }
 
@@ -383,9 +385,9 @@ RTCP_RR_Packet::build_packet(void)
            char [this->packet_size ()]);
 
   index = 0;
-  this->packet_data_[index] = (this->chd_.ver_ << 6) |
-                              (this->chd_.pad_ << 5) |
-                              this->chd_.count_;
+  this->packet_data_[index] = static_cast<char> ((this->chd_.ver_ << 6) |
+                                                 (this->chd_.pad_ << 5) |
+                                                 this->chd_.count_);
   index++;
   this->packet_data_[index] = chd_.pt_;
   index++;
@@ -806,7 +808,7 @@ RTCP_SDES_Packet::packet_size(void)
       cp = cp->next_;
     }
 
-  chd_.length_ = size/4 - 1;
+  chd_.length_ = static_cast<ACE_UINT16> (size/4 - 1);
 
   return size;
 }
@@ -827,7 +829,9 @@ RTCP_SDES_Packet::build_packet(void)
            char[this->packet_size()]);
 
   index = 0;
-  this->packet_data_[index] = (chd_.ver_ << 6) | (chd_.pad_ << 5) | chd_.count_;
+  this->packet_data_[index] = static_cast<char> ((chd_.ver_ << 6) |
+                                                 (chd_.pad_ << 5) |
+			                         chd_.count_);
   index++;
   this->packet_data_[index] = chd_.pt_;
   index++;
@@ -1013,7 +1017,7 @@ RTCP_SR_Packet::RTCP_SR_Packet(ACE_UINT32 ssrc,
       block_ptr = block_ptr->next_;
     }
 
-  this->chd_.length_ = 6 + 6*chd_.count_; //+profile specific extensions ??
+  this->chd_.length_ = static_cast<ACE_UINT16> (6 + 6*(chd_.count_)); //+profile specific extensions ??
 
   this->packet_data_ = 0;
 }
@@ -1104,7 +1108,7 @@ RTCP_SR_Packet::~RTCP_SR_Packet(void)
 
 unsigned int RTCP_SR_Packet::packet_size (void)
 {
-  ACE_UINT16 size  = (2+chd_.count_*6) * 4; // + profile specific extensions ?
+  ACE_UINT16 size  = static_cast<ACE_UINT16> ((2+chd_.count_*6) * 4); // + profile specific extensions ?
   size += 20; // the first line is the same as RR; 20 more bytes for SR
 
   return size;
@@ -1123,7 +1127,9 @@ void RTCP_SR_Packet::build_packet(void)
   ACE_NEW (this->packet_data_,
            char[this->packet_size()]);
 
-  this->packet_data_[index] = (this->chd_.ver_ << 6) | (this->chd_.pad_ << 5) | this->chd_.count_;
+  this->packet_data_[index] = static_cast<char> ((this->chd_.ver_ << 6) |
+                                                 (this->chd_.pad_ << 5) | 
+			                          this->chd_.count_);
   index++;
   this->packet_data_[index] = this->chd_.pt_;
   index++;
@@ -1202,3 +1208,5 @@ RTCP_SR_Packet::dump (void)
       ++count;
     }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

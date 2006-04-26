@@ -15,13 +15,15 @@
 
 #include /**/ "ace/pre.h"
 
-#include "portableserver_export.h"
+#include "tao/PortableServer/portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "PS_ForwardC.h"
+#include "tao/PortableServer/PS_ForwardC.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -69,17 +71,21 @@ namespace TAO
       /**
        * Return pointer to the object id through which this was invoked.
        * This may be necessary in cases where a <Servant> is serving under
-       * the guise of multiple object ids.  This has _out semantics Raises
-       * the <CORBA::NoContext> exception.
+       * the guise of multiple object ids.
        */
       PortableServer::ObjectId *get_object_id (void);
 
       /**
        * Returns a reference to the servant that hosts the object in whose
-       * context it is called. If called outside the context of the POA
-       * dispatched operation, a NoContext exception is raised
+       * context it is called.
        */
       PortableServer::Servant get_servant (void);
+
+      /**
+       * This operation returns a locally manufactured reference to the object
+       * in the context of which it is called.
+       */
+      CORBA::Object_ptr get_reference (void);
 
       /// Set the POA implementation.
       void poa (::TAO_Root_POA *);
@@ -130,6 +136,12 @@ namespace TAO
       void setup (::TAO_Root_POA *impl,
                   const TAO::ObjectKey &key);
 
+    private:
+
+      // = Hidden because we don't allow these
+      POA_Current_Impl (const POA_Current_Impl &);
+      void operator= (const POA_Current_Impl &);
+
     protected:
       /// The POA implementation invoking an upcall
       ::TAO_Root_POA *poa_;
@@ -159,15 +171,14 @@ namespace TAO
       /// Pointer to tss resources.
       TAO_TSS_Resources *tss_resources_;
 
-      // = Hidden because we don't allow these
-      POA_Current_Impl (const POA_Current_Impl &);
-      void operator= (const POA_Current_Impl &);
     };
   }
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-# include "POA_Current_Impl.inl"
+# include "tao/PortableServer/POA_Current_Impl.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

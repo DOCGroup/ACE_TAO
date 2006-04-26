@@ -1,17 +1,17 @@
 // $Id$
 #include "ace/Service_Config.h"
-#include "advanced_resource.h"
+#include "tao/Strategies/advanced_resource.h"
 
-#include "UIOP_Factory.h"
-#include "SHMIOP_Factory.h"
-#include "DIOP_Factory.h"
-#include "SCIOP_Factory.h"
+#include "tao/Strategies/UIOP_Factory.h"
+#include "tao/Strategies/SHMIOP_Factory.h"
+#include "tao/Strategies/DIOP_Factory.h"
+#include "tao/Strategies/SCIOP_Factory.h"
 
-#include "LFU_Connection_Purging_Strategy.h"
-#include "FIFO_Connection_Purging_Strategy.h"
-#include "NULL_Connection_Purging_Strategy.h"
+#include "tao/Strategies/LFU_Connection_Purging_Strategy.h"
+#include "tao/Strategies/FIFO_Connection_Purging_Strategy.h"
+#include "tao/Strategies/NULL_Connection_Purging_Strategy.h"
 
-#include "LF_Strategy_Null.h"
+#include "tao/Strategies/LF_Strategy_Null.h"
 
 #include "tao/debug.h"
 #include "tao/LRU_Connection_Purging_Strategy.h"
@@ -36,6 +36,8 @@
 #include "ace/OS_NS_strings.h"
 
 ACE_RCSID(Strategies, advanced_resource, "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Resource_Factory_Changer::TAO_Resource_Factory_Changer (void)
 {
@@ -128,7 +130,7 @@ TAO_Advanced_Resource_Factory::init (int argc, ACE_TCHAR** argv)
                             -1);
 
         }
-      else if ((current_arg = arg_shifter.get_the_parameter
+      else if (0 != (current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBReactorLock"))))
         {
           ACE_DEBUG ((LM_DEBUG,
@@ -142,7 +144,7 @@ TAO_Advanced_Resource_Factory::init (int argc, ACE_TCHAR** argv)
 
           arg_shifter.consume_arg ();
         }
-      else if ((current_arg = arg_shifter.get_the_parameter
+      else if (0 != (current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBReactorType"))))
         {
           if (ACE_OS::strcasecmp (current_arg,
@@ -184,7 +186,7 @@ TAO_Advanced_Resource_Factory::init (int argc, ACE_TCHAR** argv)
 
           arg_shifter.consume_arg ();
         }
-      else if ((current_arg = arg_shifter.get_the_parameter
+      else if (0 != (current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBInputCDRAllocator"))))
         {
           if (ACE_OS::strcasecmp (current_arg,
@@ -206,7 +208,7 @@ TAO_Advanced_Resource_Factory::init (int argc, ACE_TCHAR** argv)
 
           arg_shifter.consume_arg ();
         }
-      else if ((current_arg = arg_shifter.get_the_parameter
+      else if (0 != (current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBAMHResponseHandlerAllocator"))))
         {
           if (ACE_OS::strcasecmp (current_arg,
@@ -226,7 +228,7 @@ TAO_Advanced_Resource_Factory::init (int argc, ACE_TCHAR** argv)
 
           arg_shifter.consume_arg ();
         }
-      else if ((current_arg = arg_shifter.get_the_parameter
+      else if (0 != (current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBAMIResponseHandlerAllocator"))))
         {
           if (ACE_OS::strcasecmp (current_arg,
@@ -246,7 +248,7 @@ TAO_Advanced_Resource_Factory::init (int argc, ACE_TCHAR** argv)
 
           arg_shifter.consume_arg ();
         }
-      else if ((current_arg = arg_shifter.get_the_parameter
+      else if (0 != (current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBReactorThreadQueue"))))
         {
           if (ACE_OS::strcasecmp (current_arg,
@@ -689,9 +691,6 @@ TAO_Advanced_Resource_Factory::allocate_reactor_impl (void) const
 typedef ACE_Malloc<ACE_LOCAL_MEMORY_POOL,ACE_Null_Mutex> NULL_LOCK_MALLOC;
 typedef ACE_Allocator_Adapter<NULL_LOCK_MALLOC> NULL_LOCK_ALLOCATOR;
 
-typedef ACE_Malloc<ACE_LOCAL_MEMORY_POOL,TAO_SYNCH_MUTEX> LOCKED_MALLOC;
-typedef ACE_Allocator_Adapter<LOCKED_MALLOC> LOCKED_ALLOCATOR;
-
 ACE_Allocator *
 TAO_Advanced_Resource_Factory::input_cdr_dblock_allocator (void)
 {
@@ -722,12 +721,9 @@ TAO_Advanced_Resource_Factory::input_cdr_buffer_allocator (void)
                       NULL_LOCK_ALLOCATOR,
                       0);
       break;
-    case TAO_ALLOCATOR_THREAD_LOCK:
     default:
-      ACE_NEW_RETURN (allocator,
-                      LOCKED_ALLOCATOR,
-                      0);
-      break;
+      return
+        this->TAO_Default_Resource_Factory::input_cdr_buffer_allocator();
     }
   return allocator;
 }
@@ -877,6 +873,8 @@ TAO_Advanced_Resource_Factory::report_unsupported_error (
              ACE_TEXT(" not supported on this platform\n"),
              option_name));
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 // ****************************************************************
 

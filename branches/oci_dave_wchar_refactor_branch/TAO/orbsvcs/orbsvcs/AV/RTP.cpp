@@ -34,12 +34,14 @@
 
 // $Id$
 
-#include "RTP.h"
-#include "RTCP.h"
+#include "orbsvcs/AV/RTP.h"
+#include "orbsvcs/AV/RTCP.h"
 
 #include "tao/debug.h"
 #include "ace/OS_NS_arpa_inet.h"
 #include "ace/OS_NS_strings.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // RTP_Packet
 
@@ -70,8 +72,8 @@ RTP_Packet::RTP_Packet(char* buffer, int length)
   else
     this->extension_bytes_ = 0;
 
-  this->packet_size_ = length;
-  this->payload_size_ = length-index;
+  this->packet_size_ = static_cast<ACE_UINT16> (length);
+  this->payload_size_ = static_cast<ACE_UINT16> (length-index);
 
   // This is necessary only for payload types that have 16 bit values to correct
   //  the network byte ordering.
@@ -137,7 +139,7 @@ RTP_Packet::RTP_Packet(unsigned char padding,
   this->packet_[index] = ((marker & 0x1) << 7 ) |
                          ((payload_type & 0x7f));
   index++;
-  *((ACE_UINT16*)&this->packet_[index]) = (ACE_UINT16)htons(seq_num);
+  *((ACE_UINT16*)&this->packet_[index]) = (ACE_UINT16)htons(static_cast<u_short> (seq_num));
   index+=2;
   *((ACE_UINT32*)&this->packet_[index]) = (ACE_UINT32)htonl(timestamp);
   index+=4;
@@ -256,7 +258,7 @@ RTP_Packet::get_frame_info (TAO_AV_frame_info *frame_info)
   frame_info->timestamp = this->ts();
   frame_info->ssrc = this->ssrc();
   frame_info->sequence_num = this->sn();
-  frame_info->format = this->pt();
+  frame_info->format = static_cast<CORBA::Octet> (this->pt());
 }
 
 int
@@ -292,7 +294,7 @@ void
 RTP_Packet::get_csrc_list (ACE_UINT32 **csrc_list, ACE_UINT16 &length)
 {
   *csrc_list = this->host_byte_order_csrc_list_;
-  length = this->cc ();
+  length = static_cast<ACE_UINT16> (this->cc ());
 }
 
 void
@@ -396,11 +398,11 @@ TAO_AV_RTP_Object::send_frame (ACE_Message_Block *frame,
       ACE_NEW_RETURN (rtp_packet,
                       RTP_Packet (0,                            // padding
                                   frame_info->boundary_marker,  // marker
-                                  this->format_,                // payload type
+                                  static_cast<unsigned char> (this->format_),                // payload type
                                   frame_info->sequence_num,     // sequence num
                                   frame_info->timestamp,        // time stamp
                                   this->ssrc_,                  // ssrc
-                                  csrc_count,                   // csrc count
+                                  static_cast<unsigned char> (csrc_count),                   // csrc count
                                   csrc_list,                    // csrc list
                                   frame->rd_ptr (),             // data
                                   (ACE_UINT16)frame->length ()),// data size
@@ -452,11 +454,11 @@ TAO_AV_RTP_Object::send_frame (ACE_Message_Block *frame,
       ACE_NEW_RETURN (rtp_packet,
                       RTP_Packet (0,                            // padding
                                   0,                            // marker
-                                  this->format_,                // payload type
+                                  static_cast<unsigned char> (this->format_),                // payload type
                                   this->sequence_num_,          // sequence num
                                   ts,                           // time stamp
                                   this->ssrc_,                  // ssrc
-                                  csrc_count,                   // csrc count
+                                  static_cast<unsigned char> (csrc_count),                   // csrc count
                                   csrc_list,                    // csrc list
                                   frame->rd_ptr (),             // data
                                   (ACE_UINT16)frame->length ()),// data size
@@ -506,7 +508,7 @@ TAO_AV_RTP_Object::send_frame (const iovec *iov,
       if (frame_info->format != this->format_)
         ACE_DEBUG ((LM_DEBUG,
                     "TAO_AV_RTP_Object::send_frame - error: format type mismatch"));
-      this->sequence_num_ = frame_info->sequence_num;
+      this->sequence_num_ = static_cast<ACE_UINT16> (frame_info->sequence_num);
       if (frame_info->ssrc != 0)
         this->ssrc_ = frame_info->ssrc;
 
@@ -519,11 +521,11 @@ TAO_AV_RTP_Object::send_frame (const iovec *iov,
       ACE_NEW_RETURN (rtp_packet,
                       RTP_Packet (0,                            // padding
                                   frame_info->boundary_marker,  // marker
-                                  this->format_,                // payload type
+                                  static_cast<unsigned char> (this->format_),                // payload type
                                   frame_info->sequence_num,     // sequence num
                                   frame_info->timestamp,        // time stamp
                                   this->ssrc_,                  // ssrc
-                                  csrc_count,                   // csrc count
+                                  static_cast<unsigned char> (csrc_count),                   // csrc count
                                   csrc_list,                    // csrc list
                                   (char *)iov[0].iov_base,      // data
                                   data_size),                   // data size
@@ -577,11 +579,11 @@ TAO_AV_RTP_Object::send_frame (const iovec *iov,
       ACE_NEW_RETURN (rtp_packet,
                       RTP_Packet (0,                            // padding
                                   0,                            // marker
-                                  this->format_,                // payload type
+                                  static_cast<unsigned char> (this->format_),                // payload type
                                   this->sequence_num_,          // sequence num
                                   ts,                           // time stamp
                                   this->ssrc_,                  // ssrc
-                                  csrc_count,                   // csrc count
+                                  static_cast<unsigned char> (csrc_count),                   // csrc count
                                   csrc_list,                    // csrc list
                                   (char *)iov[0].iov_base,      // data
                                   data_size),                   // data size
@@ -623,7 +625,7 @@ TAO_AV_RTP_Object::TAO_AV_RTP_Object (TAO_AV_Callback *callback,
    control_object_ (0),
    connection_gone_ (0)
 {
-  this->sequence_num_ = ACE_OS::rand ();
+  this->sequence_num_ = static_cast<ACE_UINT16> (ACE_OS::rand ());
   this->timestamp_offset_ = ACE_OS::rand ();
 
   char buf [BUFSIZ];
@@ -770,6 +772,8 @@ TAO_AV_RTP_Flow_Factory::control_flow_factory (void)
 {
   return "RTCP";
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_FACTORY_DEFINE (TAO_AV, TAO_AV_RTP_Flow_Factory)
 ACE_STATIC_SVC_DEFINE (TAO_AV_RTP_Flow_Factory,

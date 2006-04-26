@@ -34,9 +34,9 @@ class Roundtrip_Task : public ACE_Task_Base
 {
 public:
   Roundtrip_Task (Test::Session_Factory_ptr session_factory,
-                  ACE_Barrier *barrier)
+                  ACE_Barrier *the_barrier)
     : session_factory_ (Test::Session_Factory::_duplicate (session_factory))
-    , barrier_ (barrier)
+    , the_barrier_ (the_barrier)
   {
   }
 
@@ -44,7 +44,7 @@ public:
 
   virtual int svc (void)
   {
-    this->barrier_->wait ();
+    this->the_barrier_->wait ();
     ACE_DECLARE_NEW_CORBA_ENV;
     ACE_TRY
       {
@@ -63,18 +63,18 @@ public:
 protected:
   Test::Session_Factory_var session_factory_;
 
-  ACE_Barrier *barrier_;
+  ACE_Barrier *the_barrier_;
 };
 
 class High_Priority_Task : public Roundtrip_Task
 {
 public:
   High_Priority_Task (Test::Session_Factory_ptr session_factory,
-                      ACE_Barrier *barrier,
+                      ACE_Barrier *the_barrier,
                       PortableServer::POA_ptr poa,
                       int iterations,
                       int period_in_usecs)
-    : Roundtrip_Task (session_factory, barrier)
+    : Roundtrip_Task (session_factory, the_barrier)
     , callback (new Callback (iterations, poa))
     , iterations_ (iterations)
     , period_in_usecs_ (period_in_usecs)
@@ -130,10 +130,10 @@ class Low_Priority_Task : public Roundtrip_Task
 {
 public:
   Low_Priority_Task (Test::Session_Factory_ptr session_factory,
-                     ACE_Barrier *barrier,
+                     ACE_Barrier *the_barrier,
                      PortableServer::POA_ptr poa,
                      int period_in_usecs)
-    : Roundtrip_Task (session_factory, barrier)
+    : Roundtrip_Task (session_factory, the_barrier)
     , callback (new Callback (1, poa))
     , stopped_ (0)
     , period_in_usecs_ (period_in_usecs)
@@ -268,7 +268,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_TRY_CHECK;
 
       int thread_count = 1 + options.nthreads;
-      ACE_Barrier barrier (thread_count);
+      ACE_Barrier the_barrier (thread_count);
 
       ACE_DEBUG ((LM_DEBUG, "Calibrating high res timer ...."));
       ACE_High_Res_Timer::calibrate ();
@@ -280,7 +280,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (options.global_low_priority_rate)
         per_thread_period = options.low_priority_period * options.nthreads;
       Low_Priority_Task low_priority (session_factory.in (),
-                                      &barrier,
+                                      &the_barrier,
                                       the_poa.in (),
                                       per_thread_period);
       low_priority.activate (rt_class.thr_sched_class ()
@@ -289,7 +289,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                              rt_class.priority_low ());
 
       High_Priority_Task high_priority (session_factory.in (),
-                                        &barrier,
+                                        &the_barrier,
                                         the_poa.in (),
                                         options.iterations,
                                         options.high_priority_period);

@@ -3,11 +3,11 @@
 
 // Implementation of Named Value List and NamedValue classes
 
-#include "NVList.h"
-#include "BoundsC.h"
-#include "TypeCode.h"
-#include "Marshal.h"
-#include "Any_Impl.h"
+#include "tao/AnyTypeCode/NVList.h"
+#include "tao/AnyTypeCode/BoundsC.h"
+#include "tao/AnyTypeCode/TypeCode.h"
+#include "tao/AnyTypeCode/Marshal.h"
+#include "tao/AnyTypeCode/Any_Impl.h"
 
 #include "tao/SystemException.h"
 #include "tao/CORBA_String.h"
@@ -18,12 +18,14 @@
 #include "ace/Log_Msg.h"
 
 #if !defined (__ACE_INLINE__)
-# include "NVList.inl"
+# include "tao/AnyTypeCode/NVList.inl"
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID (tao,
            NVList,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Reference counting for DII Request object
 
@@ -80,7 +82,7 @@ CORBA::NVList::~NVList (void)
 
   for (iter.first (); !iter.done (); iter.advance ())
     {
-      CORBA::NamedValue_ptr *nv;
+      CORBA::NamedValue_ptr *nv = 0;
       (void) iter.next (nv);
       delete *nv;
     }
@@ -413,7 +415,7 @@ CORBA::NVList::_tao_decode (TAO_InputCDR &incoming,
 
   for (i.first (); !i.done (); i.advance ())
     {
-      CORBA::NamedValue_ptr *item;
+      CORBA::NamedValue_ptr *item = 0;
       (void) i.next (item);
 
       CORBA::NamedValue_ptr nv = *item;
@@ -496,3 +498,4 @@ CORBA::NVList::_lazy_has_arguments (void) const
     }
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

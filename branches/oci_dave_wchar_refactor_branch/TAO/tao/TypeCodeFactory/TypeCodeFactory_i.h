@@ -14,7 +14,7 @@
 #define TAO_TYPECODEFACTORY_I_H
 
 #include /**/ "ace/pre.h"
-#include "TypeCodeFactory_Loader.h"
+#include "tao/TypeCodeFactory/TypeCodeFactory_Loader.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -27,6 +27,7 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -311,6 +312,8 @@ private:
   TAO_TypeCodeFactory_i (const TAO_TypeCodeFactory_i &src);
   TAO_TypeCodeFactory_i &operator= (const TAO_TypeCodeFactory_i &src);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

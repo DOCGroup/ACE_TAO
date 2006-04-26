@@ -1,16 +1,18 @@
 // $Id$
 
-#include "Properties.h"
+#include "orbsvcs/Notify/Properties.h"
 #include "orbsvcs/NotifyExtC.h"
 #include "tao/debug.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "Properties.inl"
+#include "orbsvcs/Notify/Properties.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (Notify,
            TAO_Notify_Properties,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_Properties::TAO_Notify_Properties (void)
   : factory_ (0)
@@ -38,3 +40,5 @@ TAO_Notify_Properties::~TAO_Notify_Properties ()
 #if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
 template class TAO_Singleton<TAO_Notify_Properties, ACE_Thread_Mutex> *TAO_Singleton<TAO_Notify_Properties, ACE_Thread_Mutex>::singleton_;
 #endif /* ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION */
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ../bin/mwc.pl -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/config -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/templates -type automake -noreldefs TAO.mwc
+## ../bin/mwc.pl -type automake -noreldefs TAO.mwc
 
 ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
@@ -18,9 +18,9 @@ TAO_ROOT = $(top_srcdir)
 
 if !BUILD_MINIMUM_CORBA
 
-noinst_PROGRAMS = main
+noinst_PROGRAMS = Subscribe
 
-main_CPPFLAGS = \
+Subscribe_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
@@ -29,12 +29,12 @@ main_CPPFLAGS = \
   -I$(TAO_BUILDDIR)/orbsvcs \
   -DTAO_HAS_TYPED_EVENT_CHANNEL
 
-main_SOURCES = \
+Subscribe_SOURCES = \
   Subscribe.cpp \
   main.cpp \
   Subscribe.h
 
-main_LDADD = \
+Subscribe_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Skel.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosEvent_Skel.la \

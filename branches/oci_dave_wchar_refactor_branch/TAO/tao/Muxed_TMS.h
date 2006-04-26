@@ -15,15 +15,18 @@
 #define TAO_MUXED_TMS_H
 
 #include /**/ "ace/pre.h"
-#include "ace/Hash_Map_Manager_T.h"
+
+#include "tao/Transport_Mux_Strategy.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Hash_Map_Manager_T.h"
 #include "ace/Null_Mutex.h"
 
-#include "tao/Transport_Mux_Strategy.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_ORB_Core;
 class TAO_Pluggable_Reply_Params;
@@ -72,7 +75,7 @@ protected:
 
   /// Keep track of the orb core pointer. We need to this to create the
   /// Reply Dispatchers.
-  TAO_ORB_Core *orb_core_;
+  TAO_ORB_Core * const orb_core_;
 
   typedef ACE_Hash_Map_Manager_Ex <CORBA::ULong,
                                    TAO_Reply_Dispatcher *,
@@ -87,6 +90,8 @@ protected:
 protected:
   int clear_cache (void);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

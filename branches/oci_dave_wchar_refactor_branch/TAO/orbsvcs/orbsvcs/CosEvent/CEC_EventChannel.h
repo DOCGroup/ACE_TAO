@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file   CEC_EventChannel.h
@@ -20,7 +21,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "CEC_Factory.h"
+#include "orbsvcs/CosEvent/CEC_Factory.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -28,9 +29,11 @@
 
 #include "orbsvcs/CosEventChannelAdminS.h"
 
-#include "CEC_Defaults.h"
-#include "event_serv_export.h"
+#include "orbsvcs/CosEvent/CEC_Defaults.h"
+#include "orbsvcs/CosEvent/event_serv_export.h"
 #include "ace/Hash_Map_Manager.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_CEC_EventChannel_Attributes
@@ -298,8 +301,10 @@ private:
   ServantRetryMap retry_map_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "CEC_EventChannel.i"
+#include "orbsvcs/CosEvent/CEC_EventChannel.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

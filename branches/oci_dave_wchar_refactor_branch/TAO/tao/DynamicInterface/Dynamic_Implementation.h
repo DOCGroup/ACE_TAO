@@ -1,4 +1,5 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
+//
 // $Id$
 
 // ============================================================================
@@ -22,13 +23,15 @@
 
 #include /**/ "ace/pre.h"
 
-#include "dynamicinterface_export.h"
+#include "tao/DynamicInterface/dynamicinterface_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/PortableServer/Servant_Base.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace CORBA
 {
@@ -102,6 +105,8 @@ private:
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     );
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

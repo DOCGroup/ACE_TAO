@@ -50,6 +50,8 @@ be_visitor_enum_cdr_op_cs::visit_enum (be_enum *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
+  *os << be_global->core_versioning_begin () << be_nl;
+
   *os << "::CORBA::Boolean operator<< (TAO_OutputCDR & strm, "
       << node->name () << " _tao_enumerator)" << be_nl
       << "{" << be_idt_nl
@@ -71,6 +73,8 @@ be_visitor_enum_cdr_op_cs::visit_enum (be_enum *node)
       << "return _tao_success;" << be_uidt_nl
       << "}";
 
-  node->cli_stub_cdr_op_gen (I_TRUE);
+  *os << be_global->core_versioning_end () << be_nl;
+
+  node->cli_stub_cdr_op_gen (true);
   return 0;
 }

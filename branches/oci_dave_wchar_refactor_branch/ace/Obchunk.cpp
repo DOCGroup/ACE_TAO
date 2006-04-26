@@ -8,6 +8,8 @@
 
 ACE_RCSID(ace, Obchunk, "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_ALLOC_HOOK_DEFINE(ACE_Obchunk)
 
 void
@@ -30,3 +32,5 @@ ACE_Obchunk::ACE_Obchunk (size_t size)
     next_ (0)
 {
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

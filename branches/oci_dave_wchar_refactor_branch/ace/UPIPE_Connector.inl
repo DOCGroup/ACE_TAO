@@ -1,5 +1,8 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Creates a Local ACE_UPIPE.
 ACE_INLINE
@@ -13,7 +16,7 @@ ACE_UPIPE_Connector::ACE_UPIPE_Connector (ACE_UPIPE_Stream &new_stream,
 {
   ACE_TRACE ("ACE_UPIPE_Connector::ACE_UPIPE_Connector");
   if (this->connect (new_stream, addr, timeout, local_sap,
-		     reuse_addr, flags, perms) == -1
+                     reuse_addr, flags, perms) == -1
       && timeout != 0 && !(errno == EWOULDBLOCK || errno == ETIME))
     ACE_ERROR ((LM_ERROR,
                 ACE_LIB_TEXT ("address %s, %p\n"),
@@ -22,9 +25,10 @@ ACE_UPIPE_Connector::ACE_UPIPE_Connector (ACE_UPIPE_Stream &new_stream,
 }
 
 ACE_INLINE int
-ACE_UPIPE_Connector::reset_new_handle (ACE_HANDLE handle)
+ACE_UPIPE_Connector::reset_new_handle (ACE_HANDLE /* handle */)
 {
-  ACE_UNUSED_ARG (handle);
   // Nothing to do here since the handle is not a socket
   return 0;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

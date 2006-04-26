@@ -21,7 +21,7 @@ if (!defined $svcconf_ext) {
 }
 
 # Default timeout.  NSCORBA needs more time for process start up.
-$wait_interval_for_process_creation = ($^O eq "nonstop_kernel") ? 10 : ($PerlACE::VxWorks_Test ? 60 : 5);
+$wait_interval_for_process_creation = ($^O eq "nonstop_kernel") ? 10 : (($^O eq "lynxos") ? 12 : ($PerlACE::VxWorks_Test ? 60 : 5));
 
 # Turn on autoflush
 $| = 1;
@@ -49,6 +49,11 @@ sub VX_HostFile($)
     $file = File::Spec->rel2abs ($file);
     $file = File::Spec->abs2rel ($file, $ENV{"ACE_ROOT"});
     return $ENV{"HOST_ROOT"}."/".$file;
+}
+
+# Returns a random port within the range of 10002 - 32767
+sub random_port {
+  return (int(rand($$)) % 22766) + 10002;
 }
 
 # Returns a unique id, uid for unix, last digit of IP for NT
@@ -150,14 +155,7 @@ sub add_path {
   my $name   = shift;
   my $value  = shift;
   if (defined $ENV{$name}) {
-    # $Config{'path_sep'} gives '/' or '\'  we want ':' or ';'
-    #$ENV{$name} .= $Config{'path_sep'} . $value
-    if ($^O eq "MSWin32") {
-      $ENV{$name} .= ';' . $value
-    }
-    else {
-      $ENV{$name} .= ';' . $value
-    }
+    $ENV{$name} .= ($^O eq 'MSWin32' ? ';' : ':') . $value
   }
   else {
     $ENV{$name} = $value;

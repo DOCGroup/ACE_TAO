@@ -2,7 +2,7 @@
 
 // Implementation of the Dynamic Server Skeleton Interface.
 
-#include "Server_Request.h"
+#include "tao/DynamicInterface/Server_Request.h"
 
 ACE_RCSID (DynamicInterface,
            Server_Request,
@@ -16,8 +16,10 @@ ACE_RCSID (DynamicInterface,
 #include "tao/SystemException.h"
 
 #if !defined (__ACE_INLINE__)
-# include "Server_Request.inl"
+# include "tao/DynamicInterface/Server_Request.inl"
 #endif /* ! __ACE_INLINE__ */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Reference counting for DSI ServerRequest object.
 
@@ -70,7 +72,7 @@ CORBA::ServerRequest::~ServerRequest (void)
 {
   if (this->params_ != 0)
     {
-      CORBA::release (this->params_);
+      ::CORBA::release (this->params_);
     }
 
   delete this->retval_;
@@ -238,3 +240,4 @@ CORBA::ServerRequest::gateway_exception_reply (ACE_CString &raw_exception)
   this->orb_server_request_.tao_send_reply ();
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

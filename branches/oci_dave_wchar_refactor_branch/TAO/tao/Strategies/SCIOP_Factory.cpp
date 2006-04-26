@@ -1,6 +1,6 @@
-#include "SCIOP_Factory.h"
-#include "SCIOP_Acceptor.h"
-#include "SCIOP_Connector.h"
+#include "tao/Strategies/SCIOP_Factory.h"
+#include "tao/Strategies/SCIOP_Acceptor.h"
+#include "tao/Strategies/SCIOP_Connector.h"
 #include "ace/OS_NS_strings.h"
 
 #if TAO_HAS_SCIOP == 1
@@ -12,6 +12,8 @@ ACE_RCSID (tao,
            "$Id$")
 
 static const char prefix_[] = "sciop";
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_SCIOP_Protocol_Factory::TAO_SCIOP_Protocol_Factory (void)
   :  TAO_Protocol_Factory (TAO_TAG_SCIOP_PROFILE),
@@ -78,6 +80,8 @@ TAO_SCIOP_Protocol_Factory::requires_explicit_endpoint (void) const
 {
   return 1;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (TAO_SCIOP_Protocol_Factory,
                        ACE_TEXT ("SCIOP_Factory"),

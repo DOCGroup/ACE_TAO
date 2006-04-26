@@ -19,8 +19,8 @@
 #include "helper.h"
 #include "bd_str_seq.h"
 
-ACE_RCSID (Param_Test, 
-           bd_str_seq, 
+ACE_RCSID (Param_Test,
+           bd_str_seq,
            "$Id$")
 
 // ************************************************************************
@@ -150,9 +150,9 @@ Test_Bounded_String_Sequence::check_validity (void)
       // lengths are same. Now compare the contents
       for (CORBA::ULong i=0; i < this->in_->length () && flag; i++)
         {
-          if (ACE_OS::strcmp(this->in_[i].in(), this->inout_[i].in()) ||
-              ACE_OS::strcmp(this->in_[i].in(), this->out_[i].in()) ||
-              ACE_OS::strcmp(this->in_[i].in(), this->ret_[i].in()))
+          if (ACE_OS::strcmp(static_cast<const char*>(this->in_[i]), static_cast<const char*>(this->inout_[i])) ||
+              ACE_OS::strcmp(static_cast<const char*>(this->in_[i]), static_cast<const char*>(this->out_[i])) ||
+              ACE_OS::strcmp(static_cast<const char*>(this->in_[i]), static_cast<const char*>(this->ret_[i])))
             // not equal
             flag = 0;
         }

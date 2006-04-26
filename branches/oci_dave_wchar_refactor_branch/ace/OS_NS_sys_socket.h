@@ -60,10 +60,13 @@
 #define ACE_SHUTDOWN_BOTH 2
 #endif /* SD_BOTH */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class ACE_Accept_QoS_Params;
 class ACE_QoS_Params;
 
-namespace ACE_OS {
+namespace ACE_OS
+{
 
 # if defined (ACE_WIN32)
   /// Keeps track of whether we've already initialized WinSock...
@@ -77,7 +80,7 @@ namespace ACE_OS {
                      struct sockaddr *addr,
                      int *addrlen);
 
-#if !defined (ACE_HAS_WINCE)
+#if !(defined (ACE_HAS_WINCE) && (UNDER_CE < 500))
   /**
    * QoS-enabled <accept>, which passes <qos_params> to <accept>.  If
    * the OS platform doesn't support QoS-enabled <accept> then the
@@ -88,7 +91,7 @@ namespace ACE_OS {
                      struct sockaddr *addr,
                      int *addrlen,
                      const ACE_Accept_QoS_Params &qos_params);
-#endif  // ACE_HAS_WINCE
+#endif  /* !(defined (ACE_HAS_WINCE) && (UNDER_CE < 500)) */
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int bind (ACE_HANDLE s,
@@ -105,7 +108,7 @@ namespace ACE_OS {
                struct sockaddr *addr,
                int addrlen);
 
-#if !defined (ACE_HAS_WINCE)
+#if !(defined (ACE_HAS_WINCE) && (UNDER_CE < 500))
   /**
    * QoS-enabled <connect>, which passes <qos_params> to <connect>.
    * If the OS platform doesn't support QoS-enabled <connect> then the
@@ -116,7 +119,7 @@ namespace ACE_OS {
                const sockaddr *addr,
                int addrlen,
                const ACE_QoS_Params &qos_params);
-#endif  // ACE_HAS_WINCE
+#endif  /* !(defined (ACE_HAS_WINCE) && (UNDER_CE < 500)) */
 
   /// Retrieve information about available transport protocols
   /// installed on the local machine. Windows specific...
@@ -141,14 +144,14 @@ namespace ACE_OS {
                   char *optval,
                   int *optlen);
 
-#if !defined (ACE_HAS_WINCE)
+#if !(defined (ACE_HAS_WINCE) && (UNDER_CE < 500))
   /// Joins a leaf node into a QoS-enabled multi-point session.
   extern ACE_Export
   ACE_HANDLE join_leaf (ACE_HANDLE socket,
                         const sockaddr *name,
                         int namelen,
                         const ACE_QoS_Params &qos_params);
-#endif  // ACE_HAS_WINCE
+#endif  /* !(defined (ACE_HAS_WINCE) && (UNDER_CE < 500)) */
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int listen (ACE_HANDLE handle,
@@ -284,6 +287,8 @@ namespace ACE_OS {
                   ACE_HANDLE sv[2]);
 
 } /* namespace ACE_OS */
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 # if defined (ACE_HAS_INLINED_OSCALLS)
 #   if defined (ACE_INLINE)

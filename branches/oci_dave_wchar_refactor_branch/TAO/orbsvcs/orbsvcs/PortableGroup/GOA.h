@@ -17,7 +17,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "portablegroup_export.h"
+#include "orbsvcs/PortableGroup/portablegroup_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -32,6 +32,8 @@
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Profile;
 class TAO_PortableGroup_Acceptor_Registry;
@@ -313,6 +315,8 @@ protected:
       ACE_THROW_SPEC ((CORBA::SystemException,
                        PortableGroup::NotAGroupObject));
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 // ****************************************************************
 

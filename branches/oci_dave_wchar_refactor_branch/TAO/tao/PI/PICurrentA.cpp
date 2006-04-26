@@ -32,8 +32,10 @@
 #include "tao/AnyTypeCode/String_TypeCode_Static.h"
 #include "tao/AnyTypeCode/Any.h"
 #include "tao/AnyTypeCode/Any_Impl_T.h"
-#include "PICurrentA.h"
+#include "tao/PI/PICurrentA.h"
 #include "tao/CDR.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // TAO_IDL - Generated from
 // be\be_visitor_typecode/objref_typecode.cpp:76
@@ -127,3 +129,5 @@ operator>>= (
         _tao_elem
       );
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

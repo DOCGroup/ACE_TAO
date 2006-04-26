@@ -1,6 +1,6 @@
 // $Id$
 
-#include "TypeCode.h"
+#include "tao/AnyTypeCode/TypeCode.h"
 
 ACE_RCSID (tao,
            TypeCode,
@@ -8,7 +8,7 @@ ACE_RCSID (tao,
 
 
 #if !defined (__ACE_INLINE__)
-# include "TypeCode.inl"
+# include "tao/AnyTypeCode/TypeCode.inl"
 #endif /* ! __ACE_INLINE__ */
 
 #include "tao/SystemException.h"
@@ -18,6 +18,7 @@ ACE_RCSID (tao,
 
 #include "ace/OS_NS_string.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::TypeCode::~TypeCode (void)
 {
@@ -332,7 +333,7 @@ CORBA::TypeCode::BadKind::_downcast (CORBA::Exception *ex)
 CORBA::Exception *
 CORBA::TypeCode::BadKind::_tao_duplicate (void) const
 {
-  CORBA::Exception *result;
+  CORBA::Exception *result = 0;
   ACE_NEW_RETURN (result,
                   CORBA::TypeCode::BadKind (*this),
                   0);
@@ -454,7 +455,7 @@ namespace TAO
   void
   Objref_Traits<CORBA::TypeCode>::release (CORBA::TypeCode_ptr p)
   {
-    CORBA::release (p);
+    ::CORBA::release (p);
   }
 
   CORBA::TypeCode_ptr
@@ -485,3 +486,4 @@ TAO::unaliased_kind (CORBA::TypeCode_ptr tc
   return unaliased_tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -12,6 +12,8 @@ ACE_RCSID (ace,
            CDR_Base,
            "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 //
 // See comments in CDR_Base.inl about optimization cases for swap_XX_array.
 //
@@ -21,7 +23,7 @@ ACE_CDR::swap_2_array (const char* orig, char* target, size_t n)
 {
   // ACE_ASSERT(n > 0); The caller checks that n > 0
 
-  // We pretend that AMD64/GNU G++ systems have a Pentium CPU to 
+  // We pretend that AMD64/GNU G++ systems have a Pentium CPU to
   // take advantage of the inline assembly implementation.
 
   // Later, we try to read in 32 or 64 bit chunks,
@@ -287,7 +289,7 @@ ACE_CDR::swap_4_array (const char* orig, char* target, size_t n)
           register unsigned long b =
             * reinterpret_cast<const long*> (orig + 8);
 
-#if defined(__amd64__) && defined(__GNUC__) 
+#if defined(__amd64__) && defined(__GNUC__)
           asm ("bswapq %1" : "=r" (a) : "0" (a));
           asm ("bswapq %1" : "=r" (b) : "0" (b));
           asm ("rol $32, %1" : "=r" (a) : "0" (a));
@@ -482,8 +484,12 @@ ACE_CDR::swap_16_array (const char* orig, char* target, size_t n)
 void
 ACE_CDR::mb_align (ACE_Message_Block *mb)
 {
+#if !defined (ACE_CDR_IGNORE_ALIGNMENT)
   char *start = ACE_ptr_align_binary (mb->base (),
                                       ACE_CDR::MAX_ALIGNMENT);
+#else
+  char *start = mb->base ();
+#endif /* ACE_CDR_IGNORE_ALIGNMENT */
   mb->rd_ptr (start);
   mb->wr_ptr (start);
 }
@@ -542,17 +548,19 @@ ACE_CDR::consolidate (ACE_Message_Block *dst,
                          + ACE_CDR::MAX_ALIGNMENT);
   dst->size (newsize);
 
+#if !defined (ACE_CDR_IGNORE_ALIGNMENT)
   // We must copy the contents of <src> into the new buffer, but
   // respecting the alignment.
   ptrdiff_t srcalign =
     ptrdiff_t(src->rd_ptr ()) % ACE_CDR::MAX_ALIGNMENT;
   ptrdiff_t dstalign =
     ptrdiff_t(dst->rd_ptr ()) % ACE_CDR::MAX_ALIGNMENT;
-  int offset = srcalign - dstalign;
+  ptrdiff_t offset = srcalign - dstalign;
   if (offset < 0)
     offset += ACE_CDR::MAX_ALIGNMENT;
-  dst->rd_ptr (offset);
+  dst->rd_ptr (static_cast<size_t> (offset));
   dst->wr_ptr (dst->rd_ptr ());
+#endif /* ACE_CDR_IGNORE_ALIGNMENT */
 
   for (const ACE_Message_Block* i = src;
        i != 0;
@@ -614,3 +622,5 @@ ACE_CDR::Float::operator!= (const ACE_CDR::Float & /* rhs */) const
   return false;
 }
 #endif /* _UNICOS */
+
+ACE_END_VERSIONED_NAMESPACE_DECL

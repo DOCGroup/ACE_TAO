@@ -5,15 +5,16 @@
 #define TAO_NOTIFY_DELIVERY_REQUEST_H
 #include /**/ "ace/pre.h"
 
-#include "notify_serv_export.h"
-#include "Topology_Object.h"
-#include "Event.h"
+#include "orbsvcs/Notify/notify_serv_export.h"
+#include "orbsvcs/Notify/Topology_Object.h"
+#include "orbsvcs/Notify/Event.h"
 #include <ace/Vector_T.h>
 #include <ace/Bound_Ptr.h>
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward declarations of referenced classes
 class TAO_Notify_EventChannelFactory;
@@ -124,8 +125,10 @@ private:
 
 } // namespace
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "Delivery_Request.inl"
+#include "orbsvcs/Notify/Delivery_Request.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

@@ -2,6 +2,8 @@
 //
 // $Id$
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_INLINE
 TAO::Null_SSL_State_Guard::Null_SSL_State_Guard (
   TAO::SSLIOP::Current_ptr current,
@@ -27,3 +29,5 @@ TAO::Null_SSL_State_Guard::~Null_SSL_State_Guard (void)
   this->current_->teardown (this->previous_current_impl_,
                             this->setup_done_);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

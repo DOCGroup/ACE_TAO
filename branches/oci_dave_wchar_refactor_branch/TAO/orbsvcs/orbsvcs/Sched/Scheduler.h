@@ -35,7 +35,7 @@
 
 #include "orbsvcs/RtecSchedulerC.h"
 #include "orbsvcs/Event_Service_Constants.h"
-#include "sched_export.h"
+#include "orbsvcs/Sched/sched_export.h"
 
 class TAO_RTSched_Export ACE_Scheduler
   // = TITLE
@@ -287,8 +287,8 @@ private:
   u_int output_level_;
 
   // the following functions are not implememented
-  ACE_UNIMPLEMENTED_FUNC(ACE_Scheduler (const ACE_Scheduler &))
-  ACE_UNIMPLEMENTED_FUNC(ACE_Scheduler &operator= (const ACE_Scheduler &))
+  ACE_Scheduler (const ACE_Scheduler &);
+  ACE_Scheduler &operator= (const ACE_Scheduler &);
 };
 
 typedef ACE_Scheduler Scheduler;

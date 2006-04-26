@@ -15,7 +15,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ftrtec_export.h"
+#include "orbsvcs/FtRtEvent/EventChannel/ftrtec_export.h"
 
 #include "tao/orbconf.h"
 
@@ -27,6 +27,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class Fault_Detector;
 
@@ -46,12 +47,13 @@ namespace FTRTEC {
   private:
     auto_ptr<Fault_Detector> detector_;
   };
-
-
-  ACE_STATIC_SVC_DECLARE_EXPORT (TAO_FTRTEC, Fault_Detector_Loader)
-  ACE_STATIC_SVC_REQUIRE(Fault_Detector_Loader)
-  ACE_FACTORY_DECLARE (TAO_FTRTEC, Fault_Detector_Loader)
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+ACE_STATIC_SVC_DECLARE_EXPORT (TAO_FTRTEC, Fault_Detector_Loader)
+ACE_STATIC_SVC_REQUIRE(Fault_Detector_Loader)
+ACE_FACTORY_DECLARE (TAO_FTRTEC, Fault_Detector_Loader)
 
 #include /**/ "ace/post.h"
 #endif //FAULT_DETECTOR_LOADER_H

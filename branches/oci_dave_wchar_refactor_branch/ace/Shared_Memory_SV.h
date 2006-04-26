@@ -6,7 +6,7 @@
  *
  *  $Id$
  *
- *  @author Doug Schmidt
+ *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
 //=============================================================================
 
@@ -23,16 +23,18 @@
 
 #include "ace/SV_Shared_Memory.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_Shared_Memory_SV
  *
  * @brief Shared memory wrapper based on System V shared memory.
  *
- * This class provides a very simple-minded shared memory
- * manager.  For more a powerful memory allocator please see
- * <ACE_Malloc>.
+ * This class provides a very simple-minded shared memory manager.  We
+ * strongly recommend that you do NOT use this class.  Instead, please
+ * use @c ACE_Malloc, which has much more powerful capabilities.
  */
-class ACE_Memory_Export ACE_Shared_Memory_SV : public ACE_Shared_Memory
+class ACE_Export ACE_Shared_Memory_SV : public ACE_Shared_Memory
 {
 public:
   enum
@@ -88,6 +90,8 @@ private:
    /// segments.
    ACE_SV_Shared_Memory shared_memory_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Shared_Memory_SV.inl"

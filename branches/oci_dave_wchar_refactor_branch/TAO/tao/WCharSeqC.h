@@ -55,35 +55,34 @@
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:49
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace CORBA
 {
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_sequence/sequence_ch.cpp:101
 
 #if !defined (_CORBA_WCHARSEQ_CH_)
 #define _CORBA_WCHARSEQ_CH_
-  
+
   class WCharSeq;
-  
+
   typedef
     TAO_FixedSeq_Var_T<
-        WCharSeq,
-        CORBA::WChar
+        WCharSeq
       >
     WCharSeq_var;
-  
+
   typedef
     TAO_Seq_Out_T<
-        WCharSeq,
-        WCharSeq_var,
-        CORBA::WChar
+        WCharSeq
       >
     WCharSeq_out;
-  
+
   class TAO_Export WCharSeq
     : public
-        TAO_Unbounded_Sequence<
+        TAO::unbounded_value_sequence<
             CORBA::WChar
           >
   {
@@ -93,14 +92,14 @@ namespace CORBA
     WCharSeq (
         ::CORBA::ULong max,
         ::CORBA::ULong length,
-        ::CORBA::WChar* buffer, 
-        ::CORBA::Boolean release = 0
+        ::CORBA::WChar* buffer,
+        ::CORBA::Boolean release = false
       );
     WCharSeq (const WCharSeq &);
     ~WCharSeq (void);
-    
+
     static void _tao_any_destructor (void *);
-    
+
     typedef WCharSeq_var _var_type;
   };
 
@@ -138,6 +137,8 @@ TAO_Export ::CORBA::Boolean operator>> (
 
 // TAO_IDL - Generated from
 // be\be_codegen.cpp:1040
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

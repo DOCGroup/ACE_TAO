@@ -27,11 +27,18 @@ Newsweek::operator new (size_t bytes, const ACE_nothrow_t&)
 {
   return ::new (ACE_nothrow) char[bytes];
 }
+#if !defined (ACE_LACKS_PLACEMENT_OPERATOR_DELETE)
+void
+Newsweek::operator delete (void *p, const ACE_nothrow_t&) throw ()
+{
+  delete [] static_cast <char *> (p);
+}
+#endif /* ACE_LACKS_PLACEMENT_OPERATOR_DELETE */
 #endif
 void
 Newsweek::operator delete (void *ptr)
 {
-  delete [] ((char *) ptr);
+  delete [] static_cast <char *> (ptr);
 }
 
 // Returns the Newsweek class pointer.
@@ -42,7 +49,7 @@ extern "C" ACE_Svc_Export Magazine *create_magazine (void);
 Magazine *
 create_magazine (void)
 {
-  Magazine *mag;
+  Magazine *mag = 0;
   ACE_NEW_RETURN (mag, Newsweek, 0);
   return mag;
 }

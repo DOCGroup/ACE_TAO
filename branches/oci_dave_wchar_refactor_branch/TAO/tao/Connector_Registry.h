@@ -26,6 +26,8 @@
 #include "tao/Basic_Types.h"
 #include "ace/Global_Macros.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Forward declarations.
 class TAO_ORB_Core;
 class TAO_Connector;
@@ -89,9 +91,9 @@ public:
   TAO_ConnectorSetIterator end (void);
 
 private:
-  // Prohibited
-  ACE_UNIMPLEMENTED_FUNC (TAO_Connector_Registry (const TAO_Connector_Registry&))
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Connector_Registry&))
+  // Disallow copying and assignment.
+  TAO_Connector_Registry (const TAO_Connector_Registry&);
+  void operator= (const TAO_Connector_Registry&);
 
 private:
   /// List of connectors that are currently open.
@@ -100,6 +102,8 @@ private:
   /// Number of connectors that are currently open.
   size_t size_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(__ACE_INLINE__)
 #include "tao/Connector_Registry.i"

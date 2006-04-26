@@ -16,15 +16,20 @@
 #define TAO_PORTABLEGROUP_LOADER_H
 
 #include /**/ "ace/pre.h"
-#include "ace/Service_Config.h"
+
+#include "orbsvcs/PortableGroup/portablegroup_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Versioned_Namespace.h"
+
+#include "ace/Service_Config.h"
 #include "ace/Service_Object.h"
 
-#include "portablegroup_export.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_PortableGroup_Adapter
@@ -49,12 +54,14 @@ public:
   static int Initializer (void);
 };
 
-ACE_STATIC_SVC_DECLARE (TAO_PortableGroup_Loader)
-ACE_FACTORY_DECLARE (TAO_PortableGroup, TAO_PortableGroup_Loader)
-
 static int
 TAO_Requires_PortableGroup_Initializer =
   TAO_PortableGroup_Loader::Initializer ();
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+ACE_STATIC_SVC_DECLARE (TAO_PortableGroup_Loader)
+ACE_FACTORY_DECLARE (TAO_PortableGroup, TAO_PortableGroup_Loader)
 
 #include /**/ "ace/post.h"
 

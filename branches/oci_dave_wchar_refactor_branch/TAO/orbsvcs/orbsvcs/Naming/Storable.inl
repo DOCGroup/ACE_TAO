@@ -1,3 +1,5 @@
+// -*- C++ -*-
+
 // $Id$
 // ============================================================================
 //
@@ -12,6 +14,8 @@
 //    Chanaka Liyanaarachchi <chanaka@ociweb.com>
 //
 // ============================================================================
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE void
 TAO_NS_Persistence_Header::size (unsigned int size)
@@ -162,3 +166,5 @@ TAO_Storable_Base::fail (void) const
 {
   return (this->state_ & failbit);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

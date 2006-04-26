@@ -1,4 +1,5 @@
 // -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file    PG_FactoryRegistry.h
@@ -21,20 +22,24 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Versioned_Namespace.h"
+
+/////////////////////////////////
+// Includes needed by this header
+#include "orbsvcs/PortableGroup/portablegroup_export.h"
+#include "orbsvcs/PortableGroupS.h"
+#include "ace/Hash_Map_Manager.h"
+#include "ace/SString.h"
+#include "ace/Null_Mutex.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 //////////////////////////////////
 // Classes declared in this header
 namespace TAO
 {
   class PG_FactoryRegistry;
 }
-
-/////////////////////////////////
-// Includes needed by this header
-#include "portablegroup_export.h"
-#include "orbsvcs/PortableGroupS.h"
-#include "ace/Hash_Map_Manager.h"
-#include "ace/SString.h"
-#include "ace/Null_Mutex.h"
 
 /////////////////////
 // Forward references
@@ -46,7 +51,8 @@ namespace TAO
    * Note FactoryRegistry is not part of the OMG standard.  It was added
    * as part of the TAO implementation of Fault Tolerant CORBA
    */
-  class TAO_PortableGroup_Export PG_FactoryRegistry : public virtual POA_PortableGroup::FactoryRegistry
+  class TAO_PortableGroup_Export PG_FactoryRegistry
+    : public virtual POA_PortableGroup::FactoryRegistry
   {
     struct RoleInfo
     {
@@ -249,6 +255,8 @@ namespace TAO
 
   };
 } // namespace TAO
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

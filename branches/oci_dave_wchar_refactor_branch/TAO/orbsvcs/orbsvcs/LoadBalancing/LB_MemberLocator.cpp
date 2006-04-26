@@ -1,5 +1,5 @@
-#include "LB_LoadManager.h"
-#include "LB_MemberLocator.h"
+#include "orbsvcs/LoadBalancing/LB_LoadManager.h"
+#include "orbsvcs/LoadBalancing/LB_MemberLocator.h"
 
 #include "tao/debug.h"
 
@@ -8,6 +8,7 @@ ACE_RCSID (LoadBalancing,
            LB_MemberLocator,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_LB_MemberLocator::TAO_LB_MemberLocator (
   TAO_LB_LoadManager * lm)
@@ -71,3 +72,5 @@ TAO_LB_MemberLocator::postinvoke (
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

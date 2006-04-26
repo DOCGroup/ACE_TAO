@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -10,19 +10,12 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_MEM_SAP_H
 #define ACE_MEM_SAP_H
+
 #include /**/ "ace/pre.h"
 
-#ifdef ACE_MEMORY_BUILD_DLL
-# include "ace/ACE_Memory_export.h"
-#else
-# include "ace/ACE_export.h"
-# define ACE_Memory_Export ACE_Export
-#endif  /* ACE_MEMORY_BUILD_DLL */
-
-#include "ace/PI_Malloc.h"
+#include "ace/ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -31,9 +24,12 @@
 // MEM_SAP requries position independent pointers to work
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 
+#include "ace/PI_Malloc.h"
 #include "ace/Malloc_T.h"
 #include "ace/MMAP_Memory_Pool.h"
 #include "ace/Process_Mutex.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class ACE_MEM_SAP;
 class ACE_Reactive_MEM_IO;
@@ -43,7 +39,7 @@ class ACE_MEM_IO;
 // Internal data structure
 // MEM_SAP uses to queue up
 // data.
-class ACE_Memory_Export ACE_MEM_SAP_Node
+class ACE_MEM_SAP_Node
 {
 public:
 //    friend class ACE_MEM_SAP;
@@ -80,7 +76,7 @@ public:
  * @brief Defines the methods of shared memory management for
  * shared memory transport.
  */
-class ACE_Memory_Export ACE_MEM_SAP
+class ACE_Export ACE_MEM_SAP
 {
 public:
   // = Initialization and termination methods.
@@ -107,7 +103,7 @@ public:
   /**
    * Fetch location of next available data into <recv_buffer_>.
    * As this operation read the address of the data off the socket
-   * using ACE::recv, <timeout> only applies to ACE::recv.
+   * using ACE::recv, @a timeout only applies to ACE::recv.
    */
   virtual ssize_t recv_buf (ACE_MEM_SAP_Node *&buf,
                             int flags,
@@ -160,6 +156,8 @@ protected:
   ACE_MEM_SAP (void);
 };
 
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
 #include "ace/MEM_SAP.inl"
 #endif /* __ACE_INLINE__ */
@@ -167,4 +165,5 @@ protected:
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
 
 #include /**/ "ace/post.h"
+
 #endif /* ACE_SOCK_IO_H */

@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -20,6 +20,16 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "tao/orbconf.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+namespace TAO
+{
+  template <typename charT> class String_var;
+  template <typename charT> class String_out;
+}
 
 namespace CORBA
 {
@@ -69,11 +79,10 @@ namespace CORBA
   typedef WChar &WChar_out;
   //@}
 
-  class String_var;
-  class String_out;
-
-  class WString_var;
-  class WString_out;
+  typedef TAO::String_var<CORBA::Char> String_var;
+  typedef TAO::String_out<CORBA::Char> String_out;
+  typedef TAO::String_var<CORBA::WChar> WString_var;
+  typedef TAO::String_out<CORBA::WChar> WString_out;
 
   class TypeCode;
   typedef TypeCode *TypeCode_ptr;
@@ -83,6 +92,8 @@ namespace CORBA
 
 class TAO_InputCDR;
 class TAO_OutputCDR;
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

@@ -198,9 +198,8 @@ AST_Expression::AST_Expression (long lv)
   this->pd_ev->u.lval = lv;
 }
 
-// An AST_Expression denoting a long integer being used as a boolean.
-AST_Expression::AST_Expression (long lv,
-                                ExprType t)
+// An AST_Expression denoting a boolean.
+AST_Expression::AST_Expression (bool b)
   : pd_ec (EC_none),
     pd_ev (0),
     pd_v1 (0),
@@ -213,9 +212,8 @@ AST_Expression::AST_Expression (long lv,
   ACE_NEW (this->pd_ev,
            AST_ExprValue);
 
-  this->pd_ev->et = EV_long;
-  this->pd_ev->et = t;
-  this->pd_ev->u.lval = lv;
+  this->pd_ev->et = EV_bool;
+  this->pd_ev->u.bval = b;
 }
 
 // An AST_Expression denoting an unsigned long integer.
@@ -1029,24 +1027,24 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
       switch (ev->et)
         {
         case AST_Expression::EV_short:
-          ev->u.bval = (ev->u.sval == 0) ? I_FALSE : I_TRUE;
+          ev->u.bval = (ev->u.sval == 0) ? false : true;
           ev->et = AST_Expression::EV_bool;
           return ev;
         case AST_Expression::EV_ushort:
-          ev->u.bval = (ev->u.usval == 0) ? I_FALSE : I_TRUE;
+          ev->u.bval = (ev->u.usval == 0) ? false : true;
           ev->et = AST_Expression::EV_bool;
           return ev;
         case AST_Expression::EV_long:
-          ev->u.bval = (ev->u.lval == 0) ? I_FALSE : I_TRUE;
+          ev->u.bval = (ev->u.lval == 0) ? false : true;
           ev->et = AST_Expression::EV_bool;
           return ev;
         case AST_Expression::EV_ulong:
-          ev->u.bval = (ev->u.ulval == 0) ? I_FALSE : I_TRUE;
+          ev->u.bval = (ev->u.ulval == 0) ? false : true;
           ev->et = AST_Expression::EV_bool;
           return ev;
         case AST_Expression::EV_longlong:
 #if ! defined (ACE_LACKS_LONGLONG_T)
-          ev->u.bval = (ev->u.llval == 0) ? I_FALSE : I_TRUE;
+          ev->u.bval = (ev->u.llval == 0) ? false : true;
           ev->et = AST_Expression::EV_bool;
           return ev;
 #else /* ! defined (ACE_LACKS_LONGLONG_T) */
@@ -1054,7 +1052,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
 #endif /* ! defined (ACE_LACKS_LONGLONG_T) */
        case AST_Expression::EV_ulonglong:
 #if ! defined (ACE_LACKS_LONGLONG_T)
-          ev->u.bval = (ev->u.ullval == 0) ? I_FALSE : I_TRUE;
+          ev->u.bval = (ev->u.ullval == 0) ? false : true;
           ev->et = AST_Expression::EV_bool;
           return ev;
 #else /* ! defined (ACE_LACKS_LONGLONG_T) */
@@ -1063,23 +1061,23 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
         case AST_Expression::EV_bool:
           return ev;
         case AST_Expression::EV_float:
-          ev->u.bval = (ev->u.fval == 0.0) ? I_FALSE : I_TRUE;
+          ev->u.bval = (ev->u.fval == 0.0) ? false : true;
           ev->et = AST_Expression::EV_bool;
           return ev;
         case AST_Expression::EV_double:
-          ev->u.bval = (ev->u.dval == 0.0) ? I_FALSE : I_TRUE;
+          ev->u.bval = (ev->u.dval == 0.0) ? false : true;
           ev->et = AST_Expression::EV_bool;
           return ev;
         case AST_Expression::EV_char:
-          ev->u.bval = (ev->u.cval == 0) ? I_FALSE : I_TRUE;
+          ev->u.bval = (ev->u.cval == 0) ? false : true;
           ev->et = AST_Expression::EV_bool;
           return ev;
         case AST_Expression::EV_wchar:
-          ev->u.bval = (ev->u.wcval == 0) ? I_FALSE : I_TRUE;
+          ev->u.bval = (ev->u.wcval == 0) ? false : true;
           ev->et = AST_Expression::EV_bool;
           return ev;
         case AST_Expression::EV_octet:
-          ev->u.bval = (ev->u.oval == 0) ? I_FALSE : I_TRUE;
+          ev->u.bval = (ev->u.oval == 0) ? false : true;
           ev->et = AST_Expression::EV_bool;
           return ev;
         case AST_Expression::EV_longdouble:
@@ -1133,7 +1131,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
           return 0;
 #endif /* ! defined (ACE_LACKS_LONGLONG_T) */
         case AST_Expression::EV_bool:
-          ev->u.fval = (float) ((ev->u.bval == I_TRUE) ? 1.0 : 0.0);
+          ev->u.fval = (float) ((ev->u.bval == true) ? 1.0 : 0.0);
           ev->et = AST_Expression::EV_float;
           return ev;
         case AST_Expression::EV_float:
@@ -1213,7 +1211,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
           return NULL;
 #endif /* ! defined (ACE_LACKS_LONGLONG_T) */
         case AST_Expression::EV_bool:
-          ev->u.dval = (ev->u.bval == I_TRUE) ? 1.0 : 0.0;
+          ev->u.dval = (ev->u.bval == true) ? 1.0 : 0.0;
           ev->et = AST_Expression::EV_double;
           return ev;
         case AST_Expression::EV_float:
@@ -1546,7 +1544,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
           return 0;
 #endif /* ! defined (ACE_LACKS_LONGLONG_T) */
         case AST_Expression::EV_bool:
-          ev->u.oval = (unsigned char) ((ev->u.bval == I_FALSE) ? 1 : 0);
+          ev->u.oval = (unsigned char) ((ev->u.bval == false) ? 1 : 0);
           ev->et = AST_Expression::EV_octet;
           return ev;
         case AST_Expression::EV_float:
@@ -1638,7 +1636,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
 
 // Integer literals may not be assigned to floating point constants,
 // and vice versa.
-static idl_bool
+static bool
 incompatible_types (AST_Expression::ExprType t1,
                     AST_Expression::ExprType t2)
 {
@@ -1746,7 +1744,7 @@ eval_kind(AST_Expression::AST_ExprValue *ev, AST_Expression::EvalKind ek)
 // its sub-expressions.
 // Operations supported: '+', '-', '*', '/'
 AST_Expression::AST_ExprValue *
-AST_Expression::eval_bin_op (void)
+AST_Expression::eval_bin_op (AST_Expression::EvalKind ek)
 {
   AST_ExprValue *retval = 0;
 
@@ -1755,16 +1753,10 @@ AST_Expression::eval_bin_op (void)
       return 0;
     }
 
-  this->pd_v1->set_ev (this->pd_v1->coerce (EV_double));
+  this->pd_v1->set_ev (this->pd_v1->eval_internal (ek));
+  this->pd_v2->set_ev (this->pd_v2->eval_internal (ek));
 
-  if (this->pd_v1->ev () == 0)
-    {
-      return 0;
-    }
-
-  this->pd_v2->set_ev (this->pd_v2->coerce (EV_double));
-
-  if (pd_v2->ev () == 0)
+  if (this->pd_v1->ev () == 0 || this->pd_v2->ev () == 0)
     {
       return 0;
     }
@@ -1773,42 +1765,106 @@ AST_Expression::eval_bin_op (void)
                   AST_ExprValue,
                   0);
 
-  retval->et = EV_double;
-
-  switch (this->pd_ec)
+#if !defined (ACE_LACKS_LONGLONG_T)
+  if (ek == EK_ulonglong)
     {
-    case EC_mod:
-      if (this->pd_v2->ev ()->u.lval == 0)
-        {
-          return 0;
-        }
+      this->pd_v1->set_ev (this->pd_v1->coerce (EV_ulonglong));
+      this->pd_v2->set_ev (this->pd_v2->coerce (EV_ulonglong));
+      retval->et = EV_ulonglong;
 
-      retval->u.lval =
-        this->pd_v1->ev ()->u.lval % this->pd_v2->ev ()->u.lval;
-      break;
-    case EC_add:
-      retval->u.dval =
-        this->pd_v1->ev ()->u.dval + this->pd_v2->ev ()->u.dval;
-      break;
-    case EC_minus:
-      retval->u.dval =
-        this->pd_v1->ev ()->u.dval - this->pd_v2->ev ()->u.dval;
-      break;
-    case EC_mul:
-      retval->u.dval =
-        this->pd_v1->ev ()->u.dval * this->pd_v2->ev ()->u.dval;
-      break;
-    case EC_div:
-      if (this->pd_v2->ev ()->u.dval == 0.0)
-        {
-          return 0;
-        }
+      switch (this->pd_ec)
+  {
+  case EC_add:
+    retval->u.ullval =
+      this->pd_v1->ev ()->u.ullval + this->pd_v2->ev ()->u.ullval;
+    break;
+  case EC_minus:
+    retval->u.ullval =
+      this->pd_v1->ev ()->u.ullval - this->pd_v2->ev ()->u.ullval;
+    break;
+  case EC_mul:
+    retval->u.ullval =
+      this->pd_v1->ev ()->u.ullval * this->pd_v2->ev ()->u.ullval;
+    break;
+  case EC_div:
+    if (this->pd_v2->ev ()->u.ullval == 0)
+      {
+        return 0;
+      }
 
-      retval->u.dval =
-        this->pd_v1->ev ()->u.dval / this->pd_v2->ev  ()->u.dval;
-      break;
-    default:
-      return 0;
+    retval->u.ullval =
+      this->pd_v1->ev ()->u.ullval / this->pd_v2->ev  ()->u.ullval;
+    break;
+  default:
+    return 0;
+  }
+    }
+  else if (ek == EK_longlong)
+    {
+      this->pd_v1->set_ev (this->pd_v1->coerce (EV_longlong));
+      this->pd_v2->set_ev (this->pd_v2->coerce (EV_longlong));
+      retval->et = EV_longlong;
+
+      switch (this->pd_ec)
+  {
+  case EC_add:
+    retval->u.llval =
+      this->pd_v1->ev ()->u.llval + this->pd_v2->ev ()->u.llval;
+    break;
+  case EC_minus:
+    retval->u.llval =
+      this->pd_v1->ev ()->u.llval - this->pd_v2->ev ()->u.llval;
+    break;
+  case EC_mul:
+    retval->u.llval =
+      this->pd_v1->ev ()->u.llval * this->pd_v2->ev ()->u.llval;
+    break;
+  case EC_div:
+    if (this->pd_v2->ev ()->u.llval == 0)
+      {
+        return 0;
+      }
+
+    retval->u.llval =
+      this->pd_v1->ev ()->u.llval / this->pd_v2->ev  ()->u.llval;
+    break;
+  default:
+    return 0;
+  }
+    }
+  else
+#endif
+    {
+      this->pd_v1->set_ev (this->pd_v1->coerce (EV_double));
+      this->pd_v2->set_ev (this->pd_v2->coerce (EV_double));
+      retval->et = EV_double;
+
+      switch (this->pd_ec)
+  {
+  case EC_add:
+    retval->u.dval =
+      this->pd_v1->ev ()->u.dval + this->pd_v2->ev ()->u.dval;
+    break;
+  case EC_minus:
+    retval->u.dval =
+      this->pd_v1->ev ()->u.dval - this->pd_v2->ev ()->u.dval;
+    break;
+  case EC_mul:
+    retval->u.dval =
+      this->pd_v1->ev ()->u.dval * this->pd_v2->ev ()->u.dval;
+    break;
+  case EC_div:
+    if (this->pd_v2->ev ()->u.dval == 0.0)
+      {
+        return 0;
+      }
+
+    retval->u.dval =
+      this->pd_v1->ev ()->u.dval / this->pd_v2->ev  ()->u.dval;
+    break;
+  default:
+    return 0;
+  }
     }
 
   return retval;
@@ -1817,7 +1873,7 @@ AST_Expression::eval_bin_op (void)
 // its sub-expressions.
 // Operations supported: '%'
 AST_Expression::AST_ExprValue *
-AST_Expression::eval_mod_op (void)
+AST_Expression::eval_mod_op (AST_Expression::EvalKind ek)
 {
   AST_ExprValue *retval = 0;
 
@@ -1826,16 +1882,10 @@ AST_Expression::eval_mod_op (void)
       return 0;
     }
 
-  this->pd_v1->set_ev (this->pd_v1->coerce (EV_long));
+  this->pd_v1->set_ev (this->pd_v1->eval_internal (ek));
+  this->pd_v2->set_ev (this->pd_v2->eval_internal (ek));
 
-  if (this->pd_v1->ev () == 0)
-    {
-      return 0;
-    }
-
-  this->pd_v2->set_ev (this->pd_v2->coerce (EV_long));
-
-  if (pd_v2->ev () == 0)
+  if (this->pd_v1->ev () == 0 || this->pd_v2->ev () == 0)
     {
       return 0;
     }
@@ -1844,15 +1894,69 @@ AST_Expression::eval_mod_op (void)
                   AST_ExprValue,
                   0);
 
-  retval->et = EV_long;
+#if !defined (ACE_LACKS_LONGLONG_T)
+  if (ek == EK_ulonglong)
+    {
+      this->pd_v1->set_ev (this->pd_v1->coerce (EV_ulonglong));
+      this->pd_v2->set_ev (this->pd_v2->coerce (EV_ulonglong));
+      retval->et = EV_ulonglong;
 
-  if (this->pd_v2->ev ()->u.lval == 0)
+      if (this->pd_v2->ev ()->u.ullval == 0)
+  {
+    return 0;
+  }
+
+      retval->u.ullval =
+  this->pd_v1->ev ()->u.ullval % this->pd_v2->ev ()->u.ullval;
+    }
+  else if (ek == EK_longlong)
+    {
+      this->pd_v1->set_ev (this->pd_v1->coerce (EV_longlong));
+      this->pd_v2->set_ev (this->pd_v2->coerce (EV_longlong));
+      retval->et = EV_longlong;
+
+      if (this->pd_v2->ev ()->u.llval == 0)
+  {
+    return 0;
+  }
+
+      retval->u.llval =
+  this->pd_v1->ev ()->u.llval % this->pd_v2->ev ()->u.llval;
+    }
+  else
+#endif
+  if (ek == EK_ulong)
+    {
+      this->pd_v1->set_ev (this->pd_v1->coerce (EV_ulong));
+      this->pd_v2->set_ev (this->pd_v2->coerce (EV_ulong));
+      retval->et = EV_ulong;
+
+      if (this->pd_v2->ev ()->u.ulval == 0)
+  {
+    return 0;
+  }
+
+      retval->u.ulval =
+  this->pd_v1->ev ()->u.ulval % this->pd_v2->ev ()->u.ulval;
+    }
+  else if (ek == EK_long)
+    {
+      this->pd_v1->set_ev (this->pd_v1->coerce (EV_long));
+      this->pd_v2->set_ev (this->pd_v2->coerce (EV_long));
+      retval->et = EV_long;
+
+      if (this->pd_v2->ev ()->u.lval == 0)
+  {
+    return 0;
+  }
+
+      retval->u.lval =
+  this->pd_v1->ev ()->u.lval % this->pd_v2->ev ()->u.lval;
+    }
+  else
     {
       return 0;
     }
-
-  retval->u.lval =
-    this->pd_v1->ev ()->u.lval % this->pd_v2->ev ()->u.lval;
 
   return retval;
 }
@@ -1882,35 +1986,81 @@ AST_Expression::eval_bit_op (AST_Expression::EvalKind ek)
                   AST_ExprValue,
                   0);
 
-  // @@(JP) The rest will have to be expanded to handle 64-bit ints.
+#if !defined (ACE_LACKS_LONGLONG_T)
+  if (ek == EK_ulonglong)
+    {
+      this->pd_v1->set_ev (this->pd_v1->coerce (EV_ulonglong));
+      this->pd_v2->set_ev (this->pd_v2->coerce (EV_ulonglong));
+      retval->et = EV_ulonglong;
+
+      switch (this->pd_ec)
+  {
+        case EC_or:
+          retval->u.ullval =
+            this->pd_v1->ev ()->u.ullval | this->pd_v2->ev ()->u.ullval;
+          break;
+        case EC_xor:
+          retval->u.ullval =
+            this->pd_v1->ev ()->u.ullval ^ this->pd_v2->ev ()->u.ullval;
+          break;
+        case EC_and:
+          retval->u.ullval =
+            this->pd_v1->ev ()->u.ullval & this->pd_v2->ev ()->u.ullval;
+          break;
+        case EC_left:
+          retval->u.ullval =
+            this->pd_v1->ev ()->u.ullval << this->pd_v2->ev ()->u.ullval;
+          break;
+        case EC_right:
+          retval->u.ullval =
+            this->pd_v1->ev ()->u.ullval >> this->pd_v2->ev ()->u.ullval;
+          break;
+        default:
+          return 0;
+  }
+    }
+  else if (ek == EK_longlong)
+    {
+      this->pd_v1->set_ev (this->pd_v1->coerce (EV_longlong));
+      this->pd_v2->set_ev (this->pd_v2->coerce (EV_longlong));
+      retval->et = EV_longlong;
+
+      switch (this->pd_ec)
+  {
+        case EC_or:
+          retval->u.llval =
+            this->pd_v1->ev ()->u.llval | this->pd_v2->ev ()->u.llval;
+          break;
+        case EC_xor:
+          retval->u.llval =
+            this->pd_v1->ev ()->u.llval ^ this->pd_v2->ev ()->u.llval;
+          break;
+        case EC_and:
+          retval->u.llval =
+            this->pd_v1->ev ()->u.llval & this->pd_v2->ev ()->u.llval;
+          break;
+        case EC_left:
+          retval->u.llval =
+            this->pd_v1->ev ()->u.llval << this->pd_v2->ev ()->u.llval;
+          break;
+        case EC_right:
+          retval->u.llval =
+            this->pd_v1->ev ()->u.llval >> this->pd_v2->ev ()->u.llval;
+          break;
+        default:
+          return 0;
+  }
+    }
+  else
+#endif
   if (ek == EK_ulong)
     {
       this->pd_v1->set_ev (this->pd_v1->coerce (EV_ulong));
       this->pd_v2->set_ev (this->pd_v2->coerce (EV_ulong));
       retval->et = EV_ulong;
-    }
-  else if (ek == EK_bool)
-    {
-      this->pd_v1->set_ev (this->pd_v1->coerce (EV_bool));
-      this->pd_v2->set_ev (this->pd_v2->coerce (EV_bool));
-      retval->et = EV_bool;
-    }
-  else
-    {
-      this->pd_v1->set_ev (this->pd_v1->coerce (EV_long));
-      this->pd_v2->set_ev (this->pd_v2->coerce (EV_long));
-      retval->et = EV_long;
-    }
 
-  if (this->pd_v1->ev () == 0 || this->pd_v2->ev () == 0)
-    {
-      return 0;
-    }
-
-  if (ek == EK_ulong)
-    {
       switch (this->pd_ec)
-      {
+  {
         case EC_or:
           retval->u.ulval =
             this->pd_v1->ev ()->u.ulval | this->pd_v2->ev ()->u.ulval;
@@ -1933,12 +2083,16 @@ AST_Expression::eval_bit_op (AST_Expression::EvalKind ek)
           break;
         default:
           return 0;
-      }
+  }
     }
-  else
+  else if (ek == EK_long)
     {
+      this->pd_v1->set_ev (this->pd_v1->coerce (EV_long));
+      this->pd_v2->set_ev (this->pd_v2->coerce (EV_long));
+      retval->et = EV_long;
+
       switch (this->pd_ec)
-      {
+  {
         case EC_or:
           retval->u.lval =
             this->pd_v1->ev ()->u.lval | this->pd_v2->ev ()->u.lval;
@@ -1961,7 +2115,43 @@ AST_Expression::eval_bit_op (AST_Expression::EvalKind ek)
           break;
         default:
           return 0;
+  }
+    }
+  else if (ek == EK_bool)
+    {
+      this->pd_v1->set_ev (this->pd_v1->coerce (EV_bool));
+      this->pd_v2->set_ev (this->pd_v2->coerce (EV_bool));
+      retval->et = EV_bool;
+
+      switch (this->pd_ec)
+      {
+        case EC_or:
+          retval->u.bval =
+            this->pd_v1->ev ()->u.bval | this->pd_v2->ev ()->u.bval;
+          break;
+        case EC_xor:
+          retval->u.bval =
+            this->pd_v1->ev ()->u.bval ^ this->pd_v2->ev ()->u.bval;
+          break;
+        case EC_and:
+          retval->u.bval =
+            this->pd_v1->ev ()->u.bval & this->pd_v2->ev ()->u.bval;
+          break;
+        case EC_left:
+          retval->u.bval =
+            this->pd_v1->ev ()->u.ulval << this->pd_v2->ev ()->u.ulval;
+          break;
+        case EC_right:
+          retval->u.bval =
+            this->pd_v1->ev ()->u.ulval >> this->pd_v2->ev ()->u.ulval;
+          break;
+        default:
+          return 0;
       }
+    }
+  else
+    {
+      return 0;
     }
 
   return retval;
@@ -2100,7 +2290,7 @@ AST_Expression::eval_symbol (AST_Expression::EvalKind ek)
 
   // Do lookup.
   d = s->lookup_by_name (this->pd_n,
-                         I_TRUE);
+                         true);
 
   if (d == 0)
     {
@@ -2128,7 +2318,7 @@ AST_Expression::eval_symbol (AST_Expression::EvalKind ek)
   return c->constant_value ()->eval_internal (ek);
 }
 
-idl_bool
+bool
 AST_Expression::type_mismatch (AST_Expression::ExprType t)
 {
   if (this->pd_ev != 0)
@@ -2136,8 +2326,8 @@ AST_Expression::type_mismatch (AST_Expression::ExprType t)
       return incompatible_types (this->pd_ev->et, t);
     }
 
-  idl_bool v1_mismatch = 0;
-  idl_bool v2_mismatch = 0;
+  bool v1_mismatch = 0;
+  bool v2_mismatch = 0;
 
   if (this->pd_v1 != 0)
     {
@@ -2348,11 +2538,11 @@ AST_Expression::eval_internal (AST_Expression::EvalKind ek)
     case EC_minus:
     case EC_mul:
     case EC_div:
-       this->pd_ev = this->eval_bin_op ();
+      this->pd_ev = this->eval_bin_op (ek);
       return eval_kind (this->pd_ev,
                         ek);
     case EC_mod:
-      this->pd_ev = this->eval_mod_op ();
+      this->pd_ev = this->eval_mod_op (ek);
       return eval_kind (this->pd_ev,
                         ek);
     case EC_or:
@@ -2501,7 +2691,7 @@ AST_Expression::compare (AST_Expression *vc)
 {
   if (this->pd_ec != vc->ec ())
     {
-      return I_FALSE;
+      return false;
     }
 
   this->evaluate (EK_const);
@@ -2509,68 +2699,68 @@ AST_Expression::compare (AST_Expression *vc)
 
   if (this->pd_ev == 0 || vc->ev () == 0)
     {
-      return I_FALSE;
+      return false;
     }
 
   if (this->pd_ev->et != vc->ev ()->et)
     {
-      return I_FALSE;
+      return false;
     }
 
   switch (this->pd_ev->et)
     {
     case EV_short:
-      return this->pd_ev->u.sval == vc->ev ()->u.sval ? I_TRUE : I_FALSE;
+      return this->pd_ev->u.sval == vc->ev ()->u.sval ? true : false;
     case EV_ushort:
-      return this->pd_ev->u.usval == vc->ev ()->u.usval ? I_TRUE : I_FALSE;
+      return this->pd_ev->u.usval == vc->ev ()->u.usval ? true : false;
     case EV_long:
-      return this->pd_ev->u.lval == vc->ev ()->u.lval ? I_TRUE : I_FALSE;
+      return this->pd_ev->u.lval == vc->ev ()->u.lval ? true : false;
     case EV_ulong:
-      return this->pd_ev->u.ulval == vc->ev ()->u.ulval ? I_TRUE : I_FALSE;
+      return this->pd_ev->u.ulval == vc->ev ()->u.ulval ? true : false;
     case EV_float:
-      return this->pd_ev->u.fval == vc->ev ()->u.fval ? I_TRUE : I_FALSE;
+      return this->pd_ev->u.fval == vc->ev ()->u.fval ? true : false;
     case EV_double:
-      return this->pd_ev->u.dval == vc->ev ()->u.dval ? I_TRUE : I_FALSE;
+      return this->pd_ev->u.dval == vc->ev ()->u.dval ? true : false;
     case EV_char:
-      return this->pd_ev->u.cval == vc->ev ()->u.cval ? I_TRUE : I_FALSE;
+      return this->pd_ev->u.cval == vc->ev ()->u.cval ? true : false;
     case EV_wchar:
-      return this->pd_ev->u.wcval == vc->ev ()->u.wcval ? I_TRUE : I_FALSE;
+      return this->pd_ev->u.wcval == vc->ev ()->u.wcval ? true : false;
     case EV_octet:
-      return this->pd_ev->u.oval == vc->ev ()->u.oval ? I_TRUE : I_FALSE;
+      return this->pd_ev->u.oval == vc->ev ()->u.oval ? true : false;
     case EV_bool:
-      return this->pd_ev->u.lval == vc->ev ()->u.lval ? I_TRUE : I_FALSE;
+      return this->pd_ev->u.lval == vc->ev ()->u.lval ? true : false;
     case EV_string:
       if (this->pd_ev->u.strval == 0)
         {
           if (vc->ev ()->u.strval == 0)
             {
-                    return I_TRUE;
+                    return true;
             }
           else
             {
-                    return I_FALSE;
+                    return false;
             }
         }
       else if (vc->ev ()->u.strval == 0)
         {
-          return I_FALSE;
+          return false;
         }
       else
         {
-          return this->pd_ev->u.strval == vc->ev ()->u.strval ? I_TRUE : I_FALSE;
+          return this->pd_ev->u.strval == vc->ev ()->u.strval ? true : false;
         }
 
     case EV_longlong:
 #if ! defined (ACE_LACKS_LONGLONG_T)
-      return this->pd_ev->u.llval == vc->ev ()->u.llval ? I_TRUE : I_FALSE;
+      return this->pd_ev->u.llval == vc->ev ()->u.llval ? true : false;
 #else /* ! defined (ACE_LACKS_LONGLONG_T) */
-      return I_FALSE;
+      return false;
 #endif /* ! defined (ACE_LACKS_LONGLONG_T) */
     case EV_ulonglong:
 #if ! defined (ACE_LACKS_LONGLONG_T)
-      return this->pd_ev->u.ullval == vc->ev ()->u.ullval ? I_TRUE : I_FALSE;
+      return this->pd_ev->u.ullval == vc->ev ()->u.ullval ? true : false;
 #else /* ! defined (ACE_LACKS_LONGLONG_T) */
-      return I_FALSE;
+      return false;
 #endif /* ! defined (ACE_LACKS_LONGLONG_T) */
     case EV_longdouble:
     case EV_wstring:
@@ -2579,10 +2769,10 @@ AST_Expression::compare (AST_Expression *vc)
     case EV_none:
     case EV_any:
     case EV_object:
-      return I_FALSE;
+      return false;
     }
 
-  return I_FALSE;
+  return false;
 }
 
 AST_Decl *
@@ -2658,7 +2848,7 @@ dump_expr_val (ACE_OSTREAM_TYPE &o,
       o << ev->u.oval;
       break;
     case AST_Expression::EV_bool:
-      o << (ev->u.bval == I_TRUE ? "TRUE" : "FALSE");
+      o << (ev->u.bval == true ? "TRUE" : "FALSE");
       break;
     case AST_Expression::EV_string:
       if (ev->u.strval != 0)

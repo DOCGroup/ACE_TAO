@@ -10,15 +10,17 @@
  */
 //=============================================================================
 
-#include "RTCosScheduling_PCP_Manager.h"
+#include "orbsvcs/RTCosScheduling/RTCosScheduling_PCP_Manager.h"
 #include "ace/Condition_Thread_Mutex.h"
 #include "ace/Thread.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
 
 #if !defined (__ACE_INLINE__)
-#include "RTCosScheduling_PCP_Manager.i"
+#include "orbsvcs/RTCosScheduling/RTCosScheduling_PCP_Manager.i"
 #endif /* __ACE_INLINE__ */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO {
 
@@ -513,3 +515,5 @@ PCP_Manager_Factory::~PCP_Manager_Factory()
 }
 
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

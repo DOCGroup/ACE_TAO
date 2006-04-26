@@ -23,6 +23,7 @@ ACE_RCSID (QoS,
            SOCK_Dgram_Mcast_QoS,
            "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_SOCK_Dgram_Mcast_QoS)
 
@@ -252,3 +253,5 @@ ACE_SOCK_Dgram_Mcast_QoS::subscribe (const ACE_INET_Addr &mcast_addr,
       return 0;
     }
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

@@ -19,6 +19,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_TTY_IO
  *
@@ -89,8 +91,8 @@ public:
     bool rcvenb;
     /** Controls whether DSR is disabled or enabled (Win32). */
     bool dsrenb;
-    /** Controls whether DTR is disabled or enabled (Win32). */
-    int dtrdisable;
+    /** Controls whether DTR is disabled or enabled. */
+    bool dtrdisable;
     /** Data bits. Valid values 5, 6, 7 and 8 data bits.
         Additionally Win32 supports 4 data bits. */
     unsigned char databits;
@@ -106,5 +108,7 @@ public:
   operator ACE_DEV_IO &();
 #endif /* ACE_NEEDS_DEV_IO_CONVERSION */
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_TTY_IO_H */

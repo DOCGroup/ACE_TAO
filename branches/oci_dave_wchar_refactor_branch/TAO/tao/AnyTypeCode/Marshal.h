@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -26,6 +26,8 @@
 
 #include "tao/AnyTypeCode/TAO_AnyTypeCode_Export.h"
 #include "tao/Basic_Types.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace CORBA
 {
@@ -446,6 +448,8 @@ public:
 private:
   CORBA::Boolean nested_processing_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "tao/AnyTypeCode/Marshal.inl"

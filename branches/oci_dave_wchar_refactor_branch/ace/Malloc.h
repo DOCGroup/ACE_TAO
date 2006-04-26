@@ -33,6 +33,9 @@
 #    define ACE_PROCESS_MUTEX ACE_SV_Semaphore_Simple
 #  endif /* ACE_HAS_THREADS */
 
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 typedef ACE_Atomic_Op<ACE_PROCESS_MUTEX, int> ACE_INT;
 
 /******************************************************************
@@ -198,6 +201,9 @@ struct ACE_Export ACE_Malloc_Stats
   /// Number of blocks in use
   ACE_INT ninuse_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 #  define ACE_MALLOC_STATS(X) X
 #else
 #  define ACE_MALLOC_STATS(X)
@@ -211,6 +217,8 @@ struct ACE_Export ACE_Malloc_Stats
 
 #  define ACE_MALLOC_PADDING 1
 #endif /* ACE_MALLOC_PADDING */
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 union ACE_max_align_info
 {
@@ -301,9 +309,6 @@ public:
                    char *pointer,
                    ACE_Name_Node *head);
 
-    /// Copy constructor.
-    ACE_Name_Node (const ACE_Name_Node &);
-
     /// Constructor.
     ACE_Name_Node (void);
 
@@ -317,9 +322,6 @@ public:
 
     /// Return a pointer to the name of this node.
     const char *name (void) const;
-
-    /// Assign a name;
-    void name (const char *);
 
     /// Name of the Node.
     char *name_;
@@ -335,6 +337,9 @@ public:
 
     /// Dump the state of the object.
     void dump (void) const;
+  private:
+    /// Copy constructor.
+    ACE_Name_Node (const ACE_Name_Node &);
   };
 
   /// Print out a bunch of size info for debugging.
@@ -379,6 +384,8 @@ public:
   /// Dump the state of the object.
   void dump (void) const;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Malloc.inl"

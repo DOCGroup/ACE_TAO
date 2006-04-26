@@ -1,4 +1,4 @@
-#include "SSLIOP_Current_Impl.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Current_Impl.h"
 
 #include "ace/OS_String.h"
 
@@ -9,14 +9,17 @@ ACE_RCSID (SSLIOP,
 
 
 #if !defined (__ACE_INLINE__)
-# include "SSLIOP_Current_Impl.inl"
+# include "orbsvcs/SSLIOP/SSLIOP_Current_Impl.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "SSLIOP_X509.h"
-#include "SSLIOP_ClientCredentials.h"
+#include "orbsvcs/SSLIOP/SSLIOP_X509.h"
+#include "orbsvcs/SSLIOP/SSLIOP_ClientCredentials.h"
+
+#include "tao/ORB_Constants.h"
 
 #include <openssl/x509.h>
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::SSLIOP::Current_Impl::~Current_Impl (void)
 {
@@ -121,3 +124,5 @@ TAO::SSLIOP::Current_Impl::tag (void) const
 {
   return ::SSLIOP::TAG_SSL_SEC_TRANS;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

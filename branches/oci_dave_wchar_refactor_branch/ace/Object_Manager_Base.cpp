@@ -1,4 +1,3 @@
-// -*- C++ -*-
 // $Id$
 
 #include "ace/Object_Manager_Base.h"
@@ -10,6 +9,8 @@ ACE_RCSID(ace, Object_Manager_Base, "$Id$")
 #include "ace/OS_NS_sys_socket.h"
 #include "ace/OS_NS_signal.h"
 #include "ace/OS_NS_stdio.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
 int ACE_SEH_Default_Exception_Selector (void *)
@@ -501,3 +502,5 @@ ACE_OS_Object_Manager_Manager::~ACE_OS_Object_Manager_Manager (void)
 
 static ACE_OS_Object_Manager_Manager ACE_OS_Object_Manager_Manager_instance;
 #endif /* ! ACE_HAS_NONSTATIC_OBJECT_MANAGER */
+
+ACE_END_VERSIONED_NAMESPACE_DECL

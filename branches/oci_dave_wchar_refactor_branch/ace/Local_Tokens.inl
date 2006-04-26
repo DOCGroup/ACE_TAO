@@ -1,7 +1,10 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
 
 #if defined (ACE_HAS_TOKENS_LIBRARY)
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // ************************************************************
 
@@ -280,5 +283,7 @@ ACE_Token_Name::operator== (const ACE_Token_Name &rhs) const
   // the name and type must be the same
   return (ACE_OS::strcmp (this->token_name_, rhs.name ()) == 0);
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_TOKENS_LIBRARY */

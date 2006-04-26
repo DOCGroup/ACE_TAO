@@ -1,9 +1,9 @@
 // $Id$
 
-#include "POA_Helper.h"
+#include "orbsvcs/Notify/POA_Helper.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "POA_Helper.inl"
+#include "orbsvcs/Notify/POA_Helper.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(RT_Notify, TAO_Notify_POA_Helper, "$Id$")
@@ -13,6 +13,8 @@ ACE_RCSID(RT_Notify, TAO_Notify_POA_Helper, "$Id$")
 #ifndef DEBUG_LEVEL
 # define DEBUG_LEVEL TAO_debug_level
 #endif // DEBUG_LEVEL
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_POA_Helper::TAO_Notify_POA_Helper (void)
 {
@@ -212,3 +214,5 @@ TAO_Notify_POA_Helper::destroy (ACE_ENV_SINGLE_ARG_DECL)
   poa_->destroy (1,0 ACE_ENV_ARG_PARAMETER);
  // The <wait_for_completion> flag = 0
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

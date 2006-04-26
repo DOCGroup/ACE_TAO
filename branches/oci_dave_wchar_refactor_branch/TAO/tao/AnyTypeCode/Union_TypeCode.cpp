@@ -3,18 +3,19 @@
 #ifndef TAO_UNION_TYPECODE_CPP
 #define TAO_UNION_TYPECODE_CPP
 
-#include "Union_TypeCode.h"
-#include "TypeCode_Case_Base_T.h"
+#include "tao/AnyTypeCode/Union_TypeCode.h"
+#include "tao/AnyTypeCode/TypeCode_Case_Base_T.h"
 
 #ifndef __ACE_INLINE__
-# include "Union_TypeCode.inl"
+# include "tao/AnyTypeCode/Union_TypeCode.inl"
 #endif  /* !__ACE_INLINE__ */
 
 #include "tao/SystemException.h"
-#include "Any.h"
+#include "tao/AnyTypeCode/Any.h"
 
 #include "ace/Value_Ptr.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <typename StringType,
           typename TypeCodeType,
@@ -57,11 +58,22 @@ TAO::TypeCode::Union<StringType,
   if (!success)
     return false;
 
+  offset += enc.total_length ();
+
   for (CORBA::ULong i = 0; i < this->ncases_; ++i)
     {
+      TAO_OutputCDR case_enc;
+      offset = ACE_align_binary (offset,
+                                 ACE_CDR::LONG_ALIGN);
+
       case_type const & c = *this->cases_[i];
 
-      if (!c.marshal (enc, offset + enc.total_length ()))
+      if (!c.marshal (case_enc, offset))
+        return false;
+
+      offset += case_enc.total_length ();
+
+      if (!enc.write_octet_array_mb (case_enc.begin ()))
         return false;
     }
 
@@ -115,28 +127,28 @@ TAO::TypeCode::Union<StringType,
 
   CORBA::ULong const tc_count =
     tc->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK_RETURN (false);
 
   CORBA::Long tc_def = tc->default_index (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK_RETURN (false);
 
   if (tc_count != this->ncases_
       || tc_def != this->default_index_)
-    return 0;
+    return false;
 
   // Check the discriminator type.
   CORBA::TypeCode_var tc_discriminator =
     tc->discriminator_type (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK_RETURN (false);
 
   CORBA::Boolean const equal_discriminators =
     Traits<StringType>::get_typecode (this->discriminant_type_)->equal (
       tc_discriminator.in ()
       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK_RETURN (false);
 
   if (!equal_discriminators)
-    return 0;
+    return false;
 
   for (CORBA::ULong i = 0; i < this->ncases_; ++i)
     {
@@ -155,13 +167,13 @@ TAO::TypeCode::Union<StringType,
         lhs_case.equal (i,
                         tc
                         ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+      ACE_CHECK_RETURN (false);
 
       if (!equal_case)
-        return 0;
+        return false;
     }
 
-  return 1;
+  return true;
 }
 
 template <typename StringType,
@@ -181,27 +193,27 @@ TAO::TypeCode::Union<StringType,
 
   CORBA::ULong const tc_count =
     tc->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK_RETURN (false);
 
   CORBA::Long tc_def = tc->default_index (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK_RETURN (false);
 
   if (tc_count != this->ncases_
       || tc_def != this->default_index_)
-    return 0;
+    return false;
 
   CORBA::TypeCode_var tc_discriminator =
     tc->discriminator_type (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK_RETURN (false);
 
   CORBA::Boolean const equiv_discriminators =
     Traits<StringType>::get_typecode (this->discriminant_type_)->equivalent (
       tc_discriminator.in ()
       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK_RETURN (false);
 
   if (!equiv_discriminators)
-    return 0;
+    return false;
 
   for (CORBA::ULong i = 0; i < this->ncases_; ++i)
     {
@@ -220,13 +232,13 @@ TAO::TypeCode::Union<StringType,
         lhs_case.equivalent (i,
                              tc
                              ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+      ACE_CHECK_RETURN (false);
 
       if (!equivalent_case)
-        return 0;
+        return false;
     }
 
-  return 1;
+  return true;
 }
 
 template <typename StringType,
@@ -395,7 +407,7 @@ TAO::TypeCode::Union<StringType,
   if (this->default_index_ > -1
       && static_cast<CORBA::ULong> (this->default_index_) == index)
     {
-      CORBA::Any * any;
+      CORBA::Any * any = 0;
       ACE_NEW_THROW_EX (any,
                         CORBA::Any,
                         CORBA::NO_MEMORY ());
@@ -445,5 +457,7 @@ TAO::TypeCode::Union<StringType,
 {
   return this->default_index_;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif  /* TAO_UNION_TYPECODE_CPP */

@@ -1,10 +1,10 @@
 // $Id$
 
-#include "OperationDef_i.h"
-#include "Repository_i.h"
-#include "IDLType_i.h"
-#include "ExceptionDef_i.h"
-#include "IFR_Service_Utils.h"
+#include "orbsvcs/IFRService/OperationDef_i.h"
+#include "orbsvcs/IFRService/Repository_i.h"
+#include "orbsvcs/IFRService/IDLType_i.h"
+#include "orbsvcs/IFRService/ExceptionDef_i.h"
+#include "orbsvcs/IFRService/IFR_Service_Utils.h"
 
 #include "ace/Auto_Ptr.h"
 #include "ace/SString.h"
@@ -14,6 +14,7 @@ ACE_RCSID (IFRService,
            OperationDef_i,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_OperationDef_i::TAO_OperationDef_i (
     TAO_Repository_i *repo
@@ -494,7 +495,7 @@ TAO_OperationDef_i::contexts_i (const CORBA::ContextIdSeq &contexts
       char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
       this->repo_->config ()->set_string_value (contexts_key,
                                                 stringified,
-                                                contexts[i].in ());
+                                                contexts[i]);
     }
 }
 
@@ -745,3 +746,5 @@ TAO_OperationDef_i::type_i (ACE_ENV_SINGLE_ARG_DECL)
 {
   return this->result_i (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

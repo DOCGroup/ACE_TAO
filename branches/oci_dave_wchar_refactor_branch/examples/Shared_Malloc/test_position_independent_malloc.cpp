@@ -188,26 +188,3 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Based_Pointer<Test_Data>;
-template class ACE_Based_Pointer_Basic<Test_Data>;
-template class ACE_Based_Pointer_Basic<long>;
-template class ACE_Based_Pointer_Basic<Long_Test>;
-template class ACE_Based_Pointer<Long_Test>;
-template class auto_ptr <TEST_MALLOC>;
-template class ACE_Auto_Basic_Ptr<TEST_MALLOC>;
-#if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
-
-#endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Based_Pointer<Test_Data>
-#pragma instantiate ACE_Based_Pointer_Basic<Test_Data>
-#pragma instantiate ACE_Based_Pointer_Basic<long>
-#pragma instantiate ACE_Based_Pointer_Basic<Long_Test>
-#pragma instantiate ACE_Based_Pointer_Basic<Long>
-#pragma instantiate auto_ptr <TEST_MALLOC>
-#pragma instantiate ACE_Auto_Basic_Ptr<TEST_MALLOC>
-#if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
-
-#endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

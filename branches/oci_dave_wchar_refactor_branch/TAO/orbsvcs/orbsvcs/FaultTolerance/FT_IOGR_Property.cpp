@@ -1,4 +1,4 @@
-#include "FT_IOGR_Property.h"
+#include "orbsvcs/FaultTolerance/FT_IOGR_Property.h"
 
 #include "tao/MProfile.h"
 #include "tao/Profile.h"
@@ -16,9 +16,10 @@ ACE_RCSID (FaultTolerance,
            "$Id$")
 
 #if !defined (__ACE_INLINE__)
-# include "FT_IOGR_Property.inl"
+# include "orbsvcs/FaultTolerance/FT_IOGR_Property.inl"
 #endif /* ! __ACE_INLINE__ */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::Boolean
 TAO_FT_IOGR_Property::set_property (
@@ -423,3 +424,5 @@ TAO_FT_IOGR_Property::remove_primary_tag (
     }
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

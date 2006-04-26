@@ -67,13 +67,10 @@
 
 #if (_MSC_VER >= 1400)
 # include "ace/config-win32-msvc-8.h"
-#elif (_MSC_VER >= 1300)
+#elif (_MSC_VER >= 1310)
 # include "ace/config-win32-msvc-7.h"
-// FUZZ: disable check_for_msc_ver
-#elif (_MSC_VER >= 1200)
-# include "ace/config-win32-msvc-6.h"
 #else
-# error This version of Microsoft Visual C++ not supported.
+# error This version of Microsoft Visual C++ is not supported.
 #endif
 
 #if defined(ACE_MT_SAFE) && (ACE_MT_SAFE != 0)

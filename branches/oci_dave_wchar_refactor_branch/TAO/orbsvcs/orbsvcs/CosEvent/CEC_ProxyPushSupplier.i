@@ -1,4 +1,8 @@
+// -*- C++ -*-
+//
 // $Id$
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE CORBA::Boolean
 TAO_CEC_ProxyPushSupplier::is_connected_i (void) const
@@ -82,11 +86,13 @@ TAO_CEC_ProxyPushSupplier::is_typed_ec (void) const
 {
   if (this->typed_event_channel_ != 0)
   {
-    return 1;
+    return true;
   }
   else
   {
-    return 0;
+    return false;
   }
 }
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
+
+TAO_END_VERSIONED_NAMESPACE_DECL

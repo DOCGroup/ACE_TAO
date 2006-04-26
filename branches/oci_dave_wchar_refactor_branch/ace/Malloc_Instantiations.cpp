@@ -1,7 +1,12 @@
 // $Id$
 
-#include "ace/Malloc.h"
+#include "ace/Local_Memory_Pool.h"
+#include "ace/Malloc_T.h"
 #include "ace/Null_Mutex.h"
+#include "ace/Synch_Traits.h"
+#include "ace/Thread_Mutex.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
@@ -32,3 +37,5 @@ template class ACE_Allocator_Adapter<ACE_Malloc<ACE_LOCAL_MEMORY_POOL, ACE_Null_
 # endif  /* ACE_HAS_THREADS */
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+ACE_END_VERSIONED_NAMESPACE_DECL

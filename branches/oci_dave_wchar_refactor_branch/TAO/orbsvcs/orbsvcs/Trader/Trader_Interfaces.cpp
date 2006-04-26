@@ -1,16 +1,16 @@
 // $Id$
 
-#if !defined (TAO_TRADER_INTERFACES_C)
-#define TAO_TRADER_INTERFACES_C
+#ifndef TAO_TRADER_INTERFACES_CPP
+#define TAO_TRADER_INTERFACES_CPP
 
-#include "Trader_Interfaces.h"
-#include "Trader_T.h"
+#include "orbsvcs/Trader/Trader_Interfaces.h"
+#include "orbsvcs/Trader/Trader_T.h"
 #include "ace/INET_Addr.h"
-#include "Trader_Constraint_Visitors.h"
+#include "orbsvcs/Trader/Trader_Constraint_Visitors.h"
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(Trader, Trader_Interfaces, "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 TAO_Lookup<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
@@ -333,7 +333,7 @@ lookup_all_subtypes (const char* type,
 
       for (CORBA::ULong j = 0; j < num_super_types; j++)
         {
-          if (ACE_OS::strcmp (type_struct->super_types[j].in(), type) == 0)
+          if (ACE_OS::strcmp (static_cast<const char*>(type_struct->super_types[j]), type) == 0)
             {
               // Egads, a subtype! This type has the type passed
               // to query in its list of super_types.
@@ -365,9 +365,9 @@ fill_receptacles (const char* /* type */,
 {
   // BEGIN SPEC
   // The returned offers are passed back in one of two ways (or a
-  // combination of both). ° The "offers" return result conveys a list
+  // combination of both). ?The "offers" return result conveys a list
   // of offers and the "offer_itr" is a reference to an interface at
-  // which offers can be obtained. ° The "how_many" parameter states
+  // which offers can be obtained. ?The "how_many" parameter states
   // how many offers are to be returned via the "offers" result, any
   // remaining offers are available via the iterator interface. If the
   // "how_many" exceeds the number of offers to be returned, then the
@@ -609,7 +609,7 @@ federated_query (const CosTrading::LinkNameSeq& links,
   // collection. The end result is a distributed tree of offer
   // iterators, which if traversed in its entirety is probably hugely
   // inefficient, but oh well, I can't think of a better solution.
-  TAO_Offer_Iterator_Collection* offer_iter_collection;
+  TAO_Offer_Iterator_Collection* offer_iter_collection = 0;
   ACE_NEW (offer_iter_collection,
            TAO_Offer_Iterator_Collection);
   offer_iter_collection->add_offer_iterator (offer_iter);
@@ -1326,7 +1326,7 @@ TAO_Admin (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader)
   // The default way -- eight random integers.
   else
     {
-      size_t time_value = ACE_OS::time ();
+      time_t time_value = ACE_OS::time ();
       ACE_OS::srand (static_cast<u_int> (time_value));
 
       this->stem_id_[0] = static_cast<CORBA::Octet> (ACE_OS::rand () %  256);
@@ -1356,10 +1356,10 @@ TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::request_id_stem (ACE_ENV_SINGLE_ARG_D
   // prefix. The sequence number is four octets long, the unique
   // prefix, also 4 bytes long.
 
-  this->stem_id_[8] = this->sequence_number_ & 0xff;
-  this->stem_id_[9] = (this->sequence_number_ >> 8) & 0xff;
-  this->stem_id_[10] = (this->sequence_number_ >> 16) & 0xff;
-  this->stem_id_[11] = (this->sequence_number_ >> 24) & 0xff;
+  this->stem_id_[8] = static_cast<CORBA::Octet> (this->sequence_number_ & 0xff);
+  this->stem_id_[9] = static_cast<CORBA::Octet> ((this->sequence_number_ >> 8) & 0xff);
+  this->stem_id_[10] = static_cast<CORBA::Octet> ((this->sequence_number_ >> 16) & 0xff);
+  this->stem_id_[11] = static_cast<CORBA::Octet> ((this->sequence_number_ >> 24) & 0xff);
 
   // Increment the sequence number and return a copy of the stem_id.
   this->sequence_number_++;
@@ -1926,13 +1926,15 @@ template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 void
 TAO_Proxy<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
 list_proxies (CORBA::ULong,
-                CosTrading::OfferIdSeq*&,
-                CosTrading::OfferIdIterator_ptr&
-                ACE_ENV_ARG_DECL)
+              CosTrading::OfferIdSeq*&,
+              CosTrading::OfferIdIterator_ptr&
+              ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CosTrading::NotImplemented))
 {
   ACE_THROW (CORBA::UNKNOWN ());
 }
 
-#endif /* TAO_TRADER_INTERFACES_C */
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* TAO_TRADER_INTERFACES_CPP */

@@ -1,7 +1,7 @@
 // $Id$
 
-#ifndef ACE_SELECT_REACTOR_T_C
-#define ACE_SELECT_REACTOR_T_C
+#ifndef ACE_SELECT_REACTOR_T_CPP
+#define ACE_SELECT_REACTOR_T_CPP
 
 #include "ace/Select_Reactor_T.h"
 
@@ -27,16 +27,15 @@
  */
 //@@ REACTOR_SPL_INCLUDE_FORWARD_DECL_ADD_HOOK
 
-// @@ The latest version of SunCC can't grok the code if we put inline
-// function here.  Therefore, we temporarily disable the code here.
-// We shall turn this back on once we know the problem gets fixed.
-#if 1 // !defined (__ACE_INLINE__)
+#if !defined (__ACE_INLINE__)
 #include "ace/Select_Reactor_T.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (ace,
            Select_Reactor_T,
            "$Id$")
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Select_Reactor_T)
 
@@ -382,7 +381,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::open
   ACE_MT (ACE_GUARD_RETURN (ACE_SELECT_REACTOR_TOKEN, ace_mon, this->token_, -1));
 
   // Can't initialize ourselves more than once.
-  if (this->initialized_ > 0)
+  if (this->initialized_)
     return -1;
 
   this->owner_ = ACE_Thread::self ();
@@ -1199,7 +1198,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::dispatch_io_set
 
       // clear the bit from that dispatch mask,
       // so when we need to restart the iteration (rebuilding the iterator...)
-      // we will not dispatch the already dipatched handlers
+      // we will not dispatch the already dispatched handlers
       this->clear_dispatch_mask (handle, mask);
 
       if (this->state_changed_)
@@ -1352,6 +1351,15 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::dispatch
                 io_handlers_dispatched) == -1)
         // State has changed, so exit loop.
         break;
+
+      // if state changed, we need to re-eval active_handle_count,
+      // so we will not end with an endless loop
+      if (this->state_changed_)
+      {
+          active_handle_count = this->dispatch_set_.rd_mask_.num_set ()
+              + this->dispatch_set_.wr_mask_.num_set ()
+              + this->dispatch_set_.ex_mask_.num_set ();
+      }
     }
   while (active_handle_count > 0);
 
@@ -1481,7 +1489,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::check_handles (void)
       select_width = 0;
 #  else
       select_width = int (h) + 1;
-#  endif /* ACE_WIN64 */
+#  endif /* ACE_WIN32 */
 
       if (ACE_OS::select (select_width,
                           rd_mask, 0, 0,
@@ -1552,10 +1560,25 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::dump (void) const
        ++handle_iter_ex_ready)
     ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("except_handle_ready = %d\n"), h));
 
+  for (ACE_Handle_Set_Iterator handle_iter_su_ready (this->suspend_set_.wr_mask_);
+       (h = handle_iter_su_ready ()) != ACE_INVALID_HANDLE;
+       ++handle_iter_su_ready)
+    ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("write_handle_suspend = %d\n"), h));
+
+  for (ACE_Handle_Set_Iterator handle_iter_su_ready (this->suspend_set_.rd_mask_);
+       (h = handle_iter_su_ready ()) != ACE_INVALID_HANDLE;
+       ++handle_iter_su_ready)
+    ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("read_handle_suspend = %d\n"), h));
+
+  for (ACE_Handle_Set_Iterator handle_iter_su_ready (this->suspend_set_.ex_mask_);
+       (h = handle_iter_su_ready ()) != ACE_INVALID_HANDLE;
+       ++handle_iter_su_ready)
+    ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("except_handle_suspend = %d\n"), h));
+
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("restart_ = %d\n"), this->restart_));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nrequeue_position_ = %d\n"), this->requeue_position_));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\ninitialized_ = %d\n"), this->initialized_));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nowner_ = %d\n"), this->owner_));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("requeue_position_ = %d\n"), this->requeue_position_));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("initialized_ = %d\n"), this->initialized_));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("owner_ = %d\n"), this->owner_));
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   this->notify_handler_->dump ();
@@ -1565,4 +1588,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
-#endif /* ACE_SELECT_REACTOR_T_C */
+
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* ACE_SELECT_REACTOR_T_CPP */

@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file EC_Lifetime_Utils.h
  *
@@ -17,7 +18,7 @@
 #define TAO_EC_LIFETIME_UTILS_H
 #include /**/ "ace/pre.h"
 
-#include /**/ "event_serv_export.h"
+#include /**/ "orbsvcs/Event/event_serv_export.h"
 #include "orbsvcs/RtecEventChannelAdminC.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/ORB.h"
@@ -25,6 +26,8 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_EC_Object_Deactivator
@@ -204,9 +207,10 @@ private:
   RtecEventChannelAdmin::EventChannel_var ec_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "EC_Lifetime_Utils.i"
+#include "orbsvcs/Event/EC_Lifetime_Utils.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

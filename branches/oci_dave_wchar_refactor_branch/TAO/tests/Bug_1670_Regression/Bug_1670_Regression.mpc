@@ -9,6 +9,7 @@ project(*Server): taoserver, amh {
 
 project(*Client): taoserver, amh {
   exename = client
+  after += *Server
   Source_Files {
     client.cpp
   }

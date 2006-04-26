@@ -1,11 +1,11 @@
 // $Id$
 
-#include "DIOP_Factory.h"
+#include "tao/Strategies/DIOP_Factory.h"
 
 #if defined (TAO_HAS_DIOP) && (TAO_HAS_DIOP != 0)
 
-#include "DIOP_Acceptor.h"
-#include "DIOP_Connector.h"
+#include "tao/Strategies/DIOP_Acceptor.h"
+#include "tao/Strategies/DIOP_Connector.h"
 
 #include "tao/ORB_Constants.h"
 
@@ -15,7 +15,9 @@ ACE_RCSID (Strategies,
            DIOP_Factory,
            "$Id$")
 
-static const char prefix_[] = "diop";
+static const char the_prefix[] = "diop";
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_DIOP_Protocol_Factory::TAO_DIOP_Protocol_Factory (void)
   :  TAO_Protocol_Factory (TAO_TAG_DIOP_PROFILE),
@@ -32,13 +34,13 @@ int
 TAO_DIOP_Protocol_Factory::match_prefix (const ACE_CString &prefix)
 {
   // Check for the proper prefix for this protocol.
-  return (ACE_OS::strcasecmp (prefix.c_str (), ::prefix_) == 0);
+  return (ACE_OS::strcasecmp (prefix.c_str (), ::the_prefix) == 0);
 }
 
 const char *
 TAO_DIOP_Protocol_Factory::prefix (void) const
 {
-  return ::prefix_;
+  return ::the_prefix;
 }
 
 char
@@ -91,6 +93,8 @@ TAO_DIOP_Protocol_Factory::requires_explicit_endpoint (void) const
 
   return 1;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (TAO_DIOP_Protocol_Factory,
                        ACE_TEXT ("DIOP_Factory"),

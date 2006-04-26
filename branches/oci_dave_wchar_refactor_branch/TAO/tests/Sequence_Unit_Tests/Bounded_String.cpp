@@ -8,7 +8,8 @@
  *
  * @author Carlos O'Ryan
  */
-#include "bounded_string_sequence.hpp"
+#include "tao/Bounded_String_Sequence_T.h"
+#include "tao/CORBA_String.h"
 
 CORBA::ULong const MAXIMUM = 42;
 typedef TAO::bounded_string_sequence<MAXIMUM> s_sequence;

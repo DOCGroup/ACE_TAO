@@ -186,13 +186,13 @@ client (void *arg)
   int i;
 
   // Automagic memory cleanup.
-  Write_Handler **temp_writers;
+  Write_Handler **temp_writers = 0;
   ACE_NEW_RETURN (temp_writers,
                   Write_Handler *[opt_nconnections],
                   0);
   ACE_Auto_Basic_Array_Ptr <Write_Handler *> writers (temp_writers);
 
-  ACE_TCHAR *temp_failed;
+  ACE_TCHAR *temp_failed = 0;
   ACE_NEW_RETURN (temp_failed,
                   ACE_TCHAR[opt_nconnections],
                   0);

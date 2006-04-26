@@ -1,4 +1,8 @@
+// -*- C++ -*-
+//
 // $Id$
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 TAO_CEC_Default_Factory::TAO_CEC_Default_Factory (void)
@@ -24,3 +28,5 @@ TAO_CEC_Default_Factory::TAO_CEC_Default_Factory (void)
      proxy_disconnect_retries_ (TAO_CEC_DEFAULT_PROXY_DISCONNECT_RETRIES)
 {
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

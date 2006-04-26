@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ../bin/mwc.pl -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/config -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/templates -type automake -noreldefs TAO.mwc
+## ../bin/mwc.pl -type automake -noreldefs TAO.mwc
 
 ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
@@ -20,6 +20,7 @@ TAO_ROOT = $(top_srcdir)
 ## Makefile.DII_Cubit_Client.am
 
 if BUILD_CORBA_MESSAGING
+if !BUILD_ACE_FOR_TAO
 if !BUILD_MINIMUM_CORBA
 
 BUILT_SOURCES = \
@@ -79,6 +80,7 @@ client_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_MINIMUM_CORBA
+endif !BUILD_ACE_FOR_TAO
 endif BUILD_CORBA_MESSAGING
 
 ## Clean up template repositories, etc.

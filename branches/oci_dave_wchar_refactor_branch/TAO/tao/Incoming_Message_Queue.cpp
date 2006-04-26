@@ -1,18 +1,20 @@
-#include "Incoming_Message_Queue.h"
-#include "debug.h"
+#include "tao/Incoming_Message_Queue.h"
+#include "tao/debug.h"
 
 #include "ace/Log_Msg.h"
 #include "ace/Malloc_Base.h"
 
 
 #if !defined (__ACE_INLINE__)
-# include "Incoming_Message_Queue.inl"
+# include "tao/Incoming_Message_Queue.inl"
 #endif /* __ACE_INLINE__ */
 
 
 ACE_RCSID (tao,
            Incoming_Message_Queue,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Incoming_Message_Queue::TAO_Incoming_Message_Queue (TAO_ORB_Core *orb_core)
   : last_added_ (0),
@@ -23,10 +25,10 @@ TAO_Incoming_Message_Queue::TAO_Incoming_Message_Queue (TAO_ORB_Core *orb_core)
 
 TAO_Incoming_Message_Queue::~TAO_Incoming_Message_Queue (void)
 {
-  const int sz = this->size_;
+  const CORBA::ULong sz = this->size_;
 
   // Delete all the nodes left behind
-  for (int i = 0;
+  for (CORBA::ULong i = 0;
        i < sz;
        ++i)
     {
@@ -35,35 +37,6 @@ TAO_Incoming_Message_Queue::~TAO_Incoming_Message_Queue (void)
     }
 }
 
-size_t
-TAO_Incoming_Message_Queue::copy_tail (ACE_Message_Block &block)
-{
-  // The size of message that is copied
-  size_t n = 0;
-
-  if (this->size_ > 0)
-    {
-      // Check to see if the length of the incoming block is less than
-      // that of the <missing_data_> of the tail.
-      if ((CORBA::Long)block.length () < this->last_added_->missing_data_)
-        {
-          n = block.length ();
-        }
-      else
-        {
-          n = this->last_added_->missing_data_;
-        }
-
-      // Do the copy
-      this->last_added_->msg_block_->copy (block.rd_ptr (),
-                                            n);
-
-      // Decerement the missing data
-      this->last_added_->missing_data_ -= n;
-    }
-
-  return n;
-}
 
 TAO_Queued_Data *
 TAO_Incoming_Message_Queue::dequeue_head (void)
@@ -72,7 +45,7 @@ TAO_Incoming_Message_Queue::dequeue_head (void)
     return 0;
 
   // Get the node on the head of the queue...
-  TAO_Queued_Data *head = this->last_added_->next_;
+  TAO_Queued_Data * const head = this->last_added_->next_;
 
   // Reset the head node..
   this->last_added_->next_ = head->next_;
@@ -133,90 +106,43 @@ TAO_Incoming_Message_Queue::enqueue_tail (TAO_Queued_Data *nd)
   return 0;
 }
 
-TAO_Queued_Data *
-TAO_Incoming_Message_Queue::find_fragment_chain (CORBA::Octet major,
-                                                 CORBA::Octet minor) const
-{
-  TAO_Queued_Data *found = 0;
-  if (this->last_added_ != 0)
-    {
-      TAO_Queued_Data *qd = this->last_added_->next_;
-
-      do {
-        if (qd->more_fragments_ &&
-            qd->major_version_ == major && qd->minor_version_ == minor)
-          {
-            found = qd;
-          }
-        else
-          {
-            qd = qd->next_;
-          }
-      } while (found == 0 && qd != this->last_added_->next_);
-    }
-
-  return found;
-}
-
-TAO_Queued_Data *
-TAO_Incoming_Message_Queue::find_fragment_chain (CORBA::ULong request_id) const
-{
-  TAO_Queued_Data *found = 0;
-  if (this->last_added_ != 0)
-    {
-      TAO_Queued_Data *qd = this->last_added_->next_;
-
-      do {
-        if (qd->more_fragments_ && qd->request_id_ == request_id)
-          {
-            found = qd;
-          }
-        else
-          {
-            qd = qd->next_;
-          }
-      } while (found == 0 && qd != this->last_added_->next_);
-    }
-
-  return found;
-}
-
 
 /************************************************************************/
 // Methods  for TAO_Queued_Data
 /************************************************************************/
 
 /*!
-  \brief Allocate and return a new empty message block of size \a new_size mimicking parameters of \a mb.
-
-  This function allocates a new aligned message block using the same
-  allocators and flags as found in \a mb.  The size of the new message
-  block is at least \a new_size; the size may be adjusted up in order
-  to accomodate alignment requirements and still fit \a new_size bytes
-  into the aligned buffer.
-
-  \param mb message block whose parameters should be mimicked
-  \param new_size size of the new message block (will be adjusted for proper alignment)
-  \return an aligned message block with rd_ptr sitting at correct alignment spot, 0 on failure
-
-  \author Thanks to Rich Seibel for helping implement the public API for ACE_Message_Block!
+ * @brief Allocate and return a new empty message block of size \a span_size
+ * mimicking parameters of \a mb.
+ *
+ * This function allocates a new aligned message block using the same
+ * allocators and flags as found in \a mb.  The size of the new message
+ * block is at least \a span_size; the size may be adjusted up in order
+ * to accomodate alignment requirements and still fit \a span_size bytes
+ * into the aligned buffer.
+ *
+ * @param mb message block whose parameters should be mimicked
+ * @param span_size size of the new message block (will be adjusted for proper
+ * alignment)
+ * @return an aligned message block with rd_ptr sitting at correct
+ * alignment spot, 0 on failure
  */
 static ACE_Message_Block*
 clone_mb_nocopy_size (ACE_Message_Block *mb, size_t span_size)
 {
   // Calculate the required size of the cloned block with alignment
-  size_t aligned_size = ACE_CDR::first_size (span_size + ACE_CDR::MAX_ALIGNMENT);
+  size_t const aligned_size = ACE_CDR::first_size (span_size + ACE_CDR::MAX_ALIGNMENT);
 
   // Get the allocators
-  ACE_Allocator *data_allocator;
-  ACE_Allocator *data_block_allocator;
-  ACE_Allocator *message_block_allocator;
+  ACE_Allocator *data_allocator = 0;
+  ACE_Allocator *data_block_allocator = 0;
+  ACE_Allocator *message_block_allocator = 0;
   mb->access_allocators (data_allocator,
                          data_block_allocator,
                          message_block_allocator);
 
   // Create a new Message Block
-  ACE_Message_Block *nb;
+  ACE_Message_Block *nb = 0;
   ACE_NEW_MALLOC_RETURN (nb,
                          static_cast<ACE_Message_Block*> (
                                          message_block_allocator->malloc (
@@ -247,11 +173,10 @@ clone_mb_nocopy_size (ACE_Message_Block *mb, size_t span_size)
 TAO_Queued_Data::TAO_Queued_Data (ACE_Allocator *alloc)
   : msg_block_ (0),
     missing_data_ (0),
-    byte_order_ (0),
     major_version_ (0),
     minor_version_ (0),
+    byte_order_ (0),
     more_fragments_ (0),
-    request_id_ (0),
     msg_type_ (TAO_PLUGGABLE_MESSAGE_MESSAGERROR),
     next_ (0),
     allocator_ (alloc)
@@ -262,11 +187,10 @@ TAO_Queued_Data::TAO_Queued_Data (ACE_Message_Block *mb,
                                   ACE_Allocator *alloc)
   : msg_block_ (mb),
     missing_data_ (0),
-    byte_order_ (0),
     major_version_ (0),
     minor_version_ (0),
+    byte_order_ (0),
     more_fragments_ (0),
-    request_id_ (0),
     msg_type_ (TAO_PLUGGABLE_MESSAGE_MESSAGERROR),
     next_ (0),
     allocator_ (alloc)
@@ -276,11 +200,10 @@ TAO_Queued_Data::TAO_Queued_Data (ACE_Message_Block *mb,
 TAO_Queued_Data::TAO_Queued_Data (const TAO_Queued_Data &qd)
   : msg_block_ (qd.msg_block_->duplicate ()),
     missing_data_ (qd.missing_data_),
-    byte_order_ (qd.byte_order_),
     major_version_ (qd.major_version_),
     minor_version_ (qd.minor_version_),
+    byte_order_ (qd.byte_order_),
     more_fragments_ (qd.more_fragments_),
-    request_id_ (qd.request_id_),
     msg_type_ (qd.msg_type_),
     next_ (0),
     allocator_ (qd.allocator_)
@@ -397,7 +320,7 @@ TAO_Queued_Data::duplicate (TAO_Queued_Data &sqd)
   return qd;
 }
 
-void
+int
 TAO_Queued_Data::consolidate (void)
 {
   // Is this a chain of fragments?
@@ -407,6 +330,15 @@ TAO_Queued_Data::consolidate (void)
       ACE_Message_Block *dest = clone_mb_nocopy_size (
                                       this->msg_block_,
                                       this->msg_block_->total_length ());
+
+      if (0 == dest)
+        {
+          // out of memory
+          return -1;
+        }
+      // Memory allocation succeeded, the new message block can hold the consolidated
+      // message. The following code just copies all the data into this new message block.
+      // No further memory allocation will take place.
 
       // Reset the cont() parameter.  We have cloned the message
       // block but not the chain as we will no longer have chain.
@@ -422,5 +354,8 @@ TAO_Queued_Data::consolidate (void)
       this->msg_block_ = dest;
       this->more_fragments_ = 0;
     }
+
+  return 0;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

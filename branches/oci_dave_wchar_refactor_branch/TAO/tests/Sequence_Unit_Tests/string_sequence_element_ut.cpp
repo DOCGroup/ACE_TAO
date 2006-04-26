@@ -9,7 +9,9 @@
  * @author Carlos O'Ryan
  */
 #include "testing_string_traits.hpp"
-#include "string_sequence_element.hpp"
+#include "tao/String_Sequence_Element_T.h"
+#include "tao/String_Manager_T.h"
+#include "tao/CORBA_String.h"
 
 #include "ace/OS_NS_string.h"
 
@@ -21,7 +23,7 @@
 #include <boost/shared_ptr.hpp>
 #include <boost/weak_ptr.hpp>
 
-using namespace TAO::details;
+using namespace TAO_VERSIONED_NAMESPACE_NAME::TAO::details;
 
 using namespace boost::unit_test_framework;
 
@@ -381,20 +383,20 @@ private:
   boost::weak_ptr<Tester> self_;
 };
 
-test_suite *
+ACE_Proper_Export_Flag test_suite *
 init_unit_test_suite(int, char*[])
 {
-  std::auto_ptr<test_suite> ts(
-      BOOST_TEST_SUITE("string sequence element unit test"));
+  test_suite * ts =
+      BOOST_TEST_SUITE("string sequence element unit test");
 
   boost::shared_ptr<Tester<char> > char_tester(
       Tester<char>::allocate());
-  char_tester->add_all(ts.get());
+  char_tester->add_all(ts);
 
   boost::shared_ptr<Tester<CORBA::WChar> > wchar_tester(
       Tester<CORBA::WChar>::allocate());
-  wchar_tester->add_all(ts.get());
+  wchar_tester->add_all(ts);
 
-  return ts.release();
+  return ts;
 }
 

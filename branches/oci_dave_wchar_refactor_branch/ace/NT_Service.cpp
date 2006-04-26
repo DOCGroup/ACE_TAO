@@ -14,6 +14,8 @@
 #include "ace/Service_Object.h"
 #include "ace/OS_NS_errno.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_ALLOC_HOOK_DEFINE(ACE_NT_Service)
 
 // ACE_NT_Service destructor.
@@ -610,5 +612,7 @@ ACE_NT_Service::wait_for_service_state (DWORD desired_state,
 
   return;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_WIN32 && !ACE_HAS_PHARLAP */

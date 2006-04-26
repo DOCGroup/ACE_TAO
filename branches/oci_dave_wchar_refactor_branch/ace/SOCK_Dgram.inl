@@ -1,9 +1,12 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
 
 // SOCK_Dgram.i
 
 #include "ace/OS_NS_sys_socket.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Here's the simple-minded constructor.
 
@@ -23,18 +26,18 @@ ACE_SOCK_Dgram::~ACE_SOCK_Dgram (void)
 
 ACE_INLINE ssize_t
 ACE_SOCK_Dgram::send (const void *buf,
-		      size_t n,
-		      const ACE_Addr &addr,
-		      int flags) const
+                      size_t n,
+                      const ACE_Addr &addr,
+                      int flags) const
 {
   ACE_TRACE ("ACE_SOCK_Dgram::send");
   sockaddr *saddr = (sockaddr *) addr.get_addr ();
   int len = addr.get_size ();
   return ACE_OS::sendto (this->get_handle (),
-			 (const char *) buf,
+                         (const char *) buf,
                          n,
                          flags,
-			 (struct sockaddr *) saddr,
+                         (struct sockaddr *) saddr,
                          len);
 }
 
@@ -42,19 +45,19 @@ ACE_SOCK_Dgram::send (const void *buf,
 
 ACE_INLINE ssize_t
 ACE_SOCK_Dgram::recv (void *buf,
-		      size_t n,
-		      ACE_Addr &addr,
-		      int flags) const
+                      size_t n,
+                      ACE_Addr &addr,
+                      int flags) const
 {
   ACE_TRACE ("ACE_SOCK_Dgram::recv");
   sockaddr *saddr = (sockaddr *) addr.get_addr ();
   int addr_len = addr.get_size ();
 
   ssize_t status = ACE_OS::recvfrom (this->get_handle (),
-				     (char *) buf,
+                                     (char *) buf,
                                      n,
                                      flags,
-				     (sockaddr *) saddr,
+                                     (sockaddr *) saddr,
                                      &addr_len);
   addr.set_size (addr_len);
   addr.set_type (reinterpret_cast<sockaddr_in *> (saddr)->sin_family);
@@ -78,7 +81,7 @@ ACE_SOCK_Dgram::send (const iovec buffers[],
                          buffer_count,
                          number_of_bytes_sent,
                          flags,
-			 (const sockaddr *) saddr,
+                         (const sockaddr *) saddr,
                          len,
                          overlapped,
                          func);
@@ -98,11 +101,11 @@ ACE_SOCK_Dgram::recv (iovec buffers[],
   int addr_len = addr.get_size ();
 
   ssize_t status = ACE_OS::recvfrom (this->get_handle (),
-				     buffers,
+                                     buffers,
                                      buffer_count,
                                      number_of_bytes_recvd,
                                      flags,
-				     (sockaddr *) saddr,
+                                     (sockaddr *) saddr,
                                      &addr_len,
                                      overlapped,
                                      func);
@@ -115,9 +118,9 @@ ACE_SOCK_Dgram::recv (iovec buffers[],
 
 ACE_INLINE ssize_t
 ACE_SOCK_Dgram::send (const void *buf,
-		      size_t n,
-		      const ACE_Addr &addr,
-		      int flags,
+                      size_t n,
+                      const ACE_Addr &addr,
+                      int flags,
                       ACE_OVERLAPPED *overlapped,
                       ACE_OVERLAPPED_COMPLETION_FUNC func) const
 {
@@ -140,9 +143,9 @@ ACE_SOCK_Dgram::send (const void *buf,
 
 ACE_INLINE ssize_t
 ACE_SOCK_Dgram::recv (void *buf,
-		      size_t n,
-		      ACE_Addr &addr,
-		      int flags,
+                      size_t n,
+                      ACE_Addr &addr,
+                      int flags,
                       ACE_OVERLAPPED *overlapped,
                       ACE_OVERLAPPED_COMPLETION_FUNC func) const
 {
@@ -160,3 +163,5 @@ ACE_SOCK_Dgram::recv (void *buf,
                      overlapped,
                      func);
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

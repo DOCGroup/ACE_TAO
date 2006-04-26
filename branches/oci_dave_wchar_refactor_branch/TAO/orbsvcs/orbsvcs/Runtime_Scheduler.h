@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
 
 // ============================================================================
@@ -21,6 +22,8 @@
 #include "orbsvcs/Scheduler_Factory.h"
 #include "orbsvcs/RtecSchedulerS.h"
 #include "orbsvcs/Sched/sched_export.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_RTSched_Export ACE_Runtime_Scheduler : public POA_RtecScheduler::Scheduler
 {
@@ -59,16 +62,16 @@ public:
                      RtecScheduler::UNKNOWN_TASK));
   // Return a pointer to the RT_Info corresponding to the passed handle.
 
-  virtual void set (RtecScheduler::handle_t handle,
-                    RtecScheduler::Criticality_t criticality,
-                    RtecScheduler::Time time,
-                    RtecScheduler::Time typical_time,
-                    RtecScheduler::Time cached_time,
-                    RtecScheduler::Period_t period,
-                    RtecScheduler::Importance_t importance,
-                    RtecScheduler::Quantum_t quantum,
-                    CORBA::Long threads,
-                    RtecScheduler::Info_Type_t info_type
+  virtual void set (::RtecScheduler::handle_t handle,
+                    ::RtecScheduler::Criticality_t criticality,
+                    ::RtecScheduler::Time time,
+                    ::RtecScheduler::Time typical_time,
+                    ::RtecScheduler::Time cached_time,
+                    ::RtecScheduler::Period_t period,
+                    ::RtecScheduler::Importance_t importance,
+                    ::RtecScheduler::Quantum_t quantum,
+                    ::RtecScheduler::Threads_t threads,
+                    ::RtecScheduler::Info_Type_t info_type
                     ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      RtecScheduler::UNKNOWN_TASK));
@@ -82,7 +85,7 @@ public:
                       RtecScheduler::Period_t period,
                       RtecScheduler::Importance_t importance,
                       RtecScheduler::Quantum_t quantum,
-                      CORBA::Long threads,
+                      RtecScheduler::Threads_t threads,
                       RtecScheduler::Info_Type_t info_type
                       ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
@@ -278,6 +281,8 @@ private:
   ACE_Scheduler_Factory::POD_RT_Info* rt_info_;
   // The array of precomputed RT_Info structures.
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* ACE_RUNTIME_SCHEDULER_H */

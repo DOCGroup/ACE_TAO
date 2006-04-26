@@ -32,7 +32,7 @@
 #ifndef _RT_SCHEDULER_INCLUDE_IDL_
 #define _RT_SCHEDULER_INCLUDE_IDL_
 
-#include "../RTScheduling/RTScheduler.pidl"
+#include "tao/RTScheduling/RTScheduler.pidl"
 
 #endif /* _RT_SCHEDULER_INCLUDE_IDL_ */
 

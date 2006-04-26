@@ -33,8 +33,6 @@
 #define ACE_IMPORT_SINGLETON_DECLARATION(T) extern template class T
 #define ACE_IMPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK) extern template class SINGLETON_TYPE <CLASS, LOCK>;
 
-#define ACE_LACKS_SYSTIME_H
-
 #define ACE_HAS_SELECT_H
 
 #define ACE_LACKS_PRAGMA_ONCE
@@ -56,7 +54,9 @@
 #if defined (__GNUG__)
 # include "ace/config-g++-common.h"
 #else
-# error unsupported compiler in ace/config-cygwin32.h
+#  ifdef __cplusplus  /* Let it slide for C compilers. */
+#   error unsupported compiler in ace/config-cygwin32.h
+#  endif  /* __cplusplus */
 #endif /* __GNUG__ */
 
 #define ACE_HAS_VOIDPTR_SOCKOPT 1
@@ -100,7 +100,7 @@
 #define ACE_HAS_BIG_FD_SET
 
 // Platform has POSIX terminal interface.
-#define ACE_HAS_TERMIOS 
+#define ACE_HAS_TERMIOS
 
 #define ACE_DEFAULT_MAX_SOCKET_BUFSIZ 65535
 
@@ -122,6 +122,7 @@
 
 #define ACE_HAS_DIRENT
 #define ACE_HAS_STRPTIME
+#define ACE_HAS_4_4BSD_SENDMSG_RECVMSG
 
 #define ACE_LACKS_MKFIFO
 #define ACE_LACKS_SIGINFO_H
@@ -136,9 +137,10 @@
 #define ACE_LACKS_ITOW 1
 #define ACE_LACKS_LINEBUFFERED_STREAMBUF 1
 #define ACE_LACKS_NETDB_REENTRANT_FUNCTIONS 1
-#define ACE_LACKS_READDIR_R
 #define ACE_LACKS_RLIMIT
 #define ACE_LACKS_RWLOCK_T 1
+#define ACE_LACKS_SUSECONDS_T
+#define ACE_LACKS_SYS_SYSCTL_H
 
 #define ACE_LACKS_FGETWS 1
 #define ACE_LACKS_FPUTWS 1
@@ -154,6 +156,8 @@
 #define ACE_HAS_SIG_ATOMIC_T
 
 #define ACE_HAS_POSIX_SEM
+
+#define ACE_HAS_P_READ_WRITE
 
 #define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
 

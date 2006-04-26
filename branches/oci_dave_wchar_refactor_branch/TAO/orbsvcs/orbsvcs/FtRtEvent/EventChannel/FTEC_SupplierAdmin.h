@@ -14,9 +14,9 @@
 #define TAO_FTEC_SUPPLIERADMIN_H
 #include /**/ "ace/pre.h"
 
-#include "FTEC_ProxyConsumer.h"
-#include "FT_ProxyAdmin_T.h"
-#include "ProxyConsumerStateWorker.h"
+#include "orbsvcs/FtRtEvent/EventChannel/FTEC_ProxyConsumer.h"
+#include "orbsvcs/FtRtEvent/EventChannel/FT_ProxyAdmin_T.h"
+#include "orbsvcs/FtRtEvent/EventChannel/ProxyConsumerStateWorker.h"
 
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -24,6 +24,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/Event/EC_SupplierAdmin.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_FTEC_Event_Channel_Impl;
 
@@ -70,6 +72,8 @@ public:
 
   void disconnect(RtecEventChannelAdmin::ProxyPushConsumer_ptr obj);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_FTEC_SUPPLIERADMIN_H */

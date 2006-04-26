@@ -13,10 +13,12 @@
 //
 // ============================================================================
 
-#include "Naming_Context_Interface.h"
+#include "orbsvcs/Naming/Naming_Context_Interface.h"
 #include "ace/ACE.h"
 #include "ace/OS_NS_string.h"
 #include "ace/os_include/os_ctype.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Naming_Context::TAO_Naming_Context (TAO_Naming_Context_Impl *impl)
   : impl_ (impl)
@@ -533,3 +535,5 @@ TAO_Naming_Context::resolve_str (const char * n
 TAO_Naming_Context_Impl::~TAO_Naming_Context_Impl (void)
 {
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

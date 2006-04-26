@@ -68,19 +68,19 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 // NOTE: This list class only works correctly because we use single public
 //       inheritance, as opposed to multiple inheritance or public virtual.
-//	     It relies on a type-unsafe cast from UTL_List to subclasses, which
-//	     will cease to operate correctly if you use either multiple or
-//	     public virtual inheritance.
+//       It relies on a type-unsafe cast from UTL_List to subclasses, which
+//       will cease to operate correctly if you use either multiple or
+//       public virtual inheritance.
 
 #include "utl_list.h"
 #include "ace/OS_Memory.h"
 
-ACE_RCSID (util, 
-           utl_list, 
+ACE_RCSID (util,
+           utl_list,
            "$Id$")
 
 UTL_List::UTL_List (UTL_List *c)
-	: pd_cdr_data (c)
+  : pd_cdr_data (c)
 {
 }
 
@@ -179,10 +179,10 @@ UTL_ListActiveIterator::UTL_ListActiveIterator (UTL_List *s)
 }
 
 // Is iterator done?
-idl_bool
+bool
 UTL_ListActiveIterator::is_done (void)
 {
-  return (this->source == 0) ? I_TRUE : I_FALSE;
+  return (this->source == 0) ? true : false;
 }
 
 // Advance to next item.

@@ -1,7 +1,10 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
 
 #if defined (ACE_WIN32)
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE size_t
 ACE_Pagefile_Memory_Pool::round_to_chunk_size (size_t nbytes)
@@ -45,4 +48,7 @@ ACE_Pagefile_Memory_Pool::base_addr (void) const
 {
   return 0;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 #endif /* ACE_WIN32 */

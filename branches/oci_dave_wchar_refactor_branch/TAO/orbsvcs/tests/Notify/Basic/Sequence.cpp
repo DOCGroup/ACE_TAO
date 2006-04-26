@@ -72,7 +72,7 @@ Sequence::init (int argc,
                   "Options: event count = %d \n"
                   "supplier batch size = %d \n"
                   "consumer batch size = %d \n"
-                  "pacing = %d \n"
+                  "pacing = %d secs \n"
                   , event_count_
                   , supplier_batch_size_
                   , consumer_batch_size_
@@ -125,7 +125,7 @@ Sequence::init (int argc,
   properties[0].name = CORBA::string_dup (CosNotification::MaximumBatchSize);
   properties[0].value <<= (CORBA::Long) this->consumer_batch_size_;
   properties[1].name = CORBA::string_dup (CosNotification::PacingInterval);
-  properties[1].value <<= (TimeBase::TimeT) this->pacing_;
+  properties[1].value <<= (TimeBase::TimeT) (this->pacing_ * 1000 * 10000);
   properties[2].name = CORBA::string_dup (CosNotification::OrderPolicy);
   properties[2].value <<= this->order_policy_;
 
@@ -180,9 +180,9 @@ Sequence::parse_args (int argc, char *argv[])
 
           arg_shifter.consume_arg ();
         }
-      else if ((current_arg = arg_shifter.get_the_parameter ("-Pacing")))
+      else if ((current_arg = arg_shifter.get_the_parameter ("-Pacing"))) // in seconds
         {
-          this->pacing_ = (TimeBase::TimeT) ACE_OS::atoi (current_arg); // pacing
+          this->pacing_ = (TimeBase::TimeT) ACE_OS::atoi (current_arg);
 
           arg_shifter.consume_arg ();
         }

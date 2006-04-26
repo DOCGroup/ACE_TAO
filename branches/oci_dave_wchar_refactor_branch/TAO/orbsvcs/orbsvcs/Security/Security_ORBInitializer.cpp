@@ -1,6 +1,6 @@
 // -*- C++ -*-
 
-#include "Security_ORBInitializer.h"
+#include "orbsvcs/Security/Security_ORBInitializer.h"
 
 ACE_RCSID (Security,
            Security_ORBInitializer,
@@ -8,9 +8,9 @@ ACE_RCSID (Security,
 
 
 // #include "Security_Current.h"
-#include "SL3_SecurityCurrent.h"
-#include "SL3_CredentialsCurator.h"
-#include "SL3_SecurityManager.h"
+#include "orbsvcs/Security/SL3_SecurityCurrent.h"
+#include "orbsvcs/Security/SL3_CredentialsCurator.h"
+#include "orbsvcs/Security/SL3_SecurityManager.h"
 
 #include "orbsvcs/SecurityC.h"
 
@@ -18,6 +18,7 @@ ACE_RCSID (Security,
 #include "tao/ORB_Constants.h"
 #include "tao/debug.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
 TAO::Security::ORBInitializer::pre_init (
@@ -235,3 +236,5 @@ TAO::Security::ORBInitializer::register_policy_factories (
 
   // ----------------------------------------------------------------
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

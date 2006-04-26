@@ -1,6 +1,6 @@
 // -*- C++ -*-
 
-#include "FT_Invocation_Endpoint_Selectors.h"
+#include "orbsvcs/FaultTolerance/FT_Invocation_Endpoint_Selectors.h"
 
 #include "tao/Profile_Transport_Resolver.h"
 #include "tao/Stub.h"
@@ -14,6 +14,8 @@
 ACE_RCSID (FaultTolerance,
            FT_Invocation_Endpoint_Selectors,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_FT_Invocation_Endpoint_Selector::TAO_FT_Invocation_Endpoint_Selector (void)
   : TAO_Default_Endpoint_Selector ()
@@ -229,3 +231,5 @@ TAO_FT_Invocation_Endpoint_Selector::check_profile_for_primary (
 
   return true;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

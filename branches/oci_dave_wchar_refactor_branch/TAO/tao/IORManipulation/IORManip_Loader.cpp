@@ -1,5 +1,5 @@
-#include "IORManip_Loader.h"
-#include "IORManipulation.h"
+#include "tao/IORManipulation/IORManip_Loader.h"
+#include "tao/IORManipulation/IORManipulation.h"
 
 #include "ace/Log_Msg.h"
 
@@ -8,6 +8,8 @@ ACE_RCSID (IORManipulation,
            IORManip_Loader,
            "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_IORManip_Loader::TAO_IORManip_Loader (void)
 {
@@ -32,6 +34,8 @@ TAO_IORManip_Loader::Initializer (void)
 {
   return ACE_Service_Config::process_directive (ace_svc_desc_TAO_IORManip_Loader);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (TAO_IORManip_Loader,
                        ACE_TEXT ("IORManip_Loader"),

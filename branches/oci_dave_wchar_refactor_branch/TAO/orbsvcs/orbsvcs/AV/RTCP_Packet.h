@@ -1,3 +1,5 @@
+// -*- C++ -*-
+
 // $Id$
 
 #ifndef RTCP_PACKET_INCLUDE
@@ -5,7 +7,11 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/Basic_Types.h"
+#include "tao/orbconf.h"
+#include "tao/Versioned_Namespace.h"
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @struct RTCP_Common_Header
@@ -45,7 +51,7 @@ public:
   RTCP_Packet(char *buffer);
 
   /// Destructor
-  virtual ~RTCP_Packet() = 0;
+  virtual ~RTCP_Packet();
 
   /// Returns a pointer to a local buffer containing the packet.
   void get_packet_data(char **buffer, ACE_UINT16 &length);
@@ -392,6 +398,8 @@ private:
   /// A linked list of receiver report blocks.
   RR_Block *rr_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif  /*  RTCP_PACKET_INCLUDE  */

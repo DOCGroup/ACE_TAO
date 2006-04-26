@@ -99,7 +99,7 @@ public:
         }
     };
 
-  void foo_excep (A::AMI_AMI_TestExceptionHolder * excep_holder
+  void foo_excep (::Messaging::ExceptionHolder * excep_holder
                   ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
@@ -110,7 +110,7 @@ public:
                                   "Testing proper exception handling ...\n"));
       ACE_TRY
         {
-          excep_holder->raise_foo (ACE_ENV_SINGLE_ARG_PARAMETER);
+          excep_holder->raise_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
       ACE_CATCHANY

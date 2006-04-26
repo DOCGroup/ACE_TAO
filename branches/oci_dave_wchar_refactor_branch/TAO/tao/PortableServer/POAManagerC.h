@@ -40,7 +40,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "portableserver_export.h"
+#include "tao/PortableServer/portableserver_export.h"
 #include "tao/ORB.h"
 #include "tao/SystemException.h"
 #include "tao/Environment.h"
@@ -54,6 +54,8 @@
 
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:49
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace PortableServer
 {
@@ -313,6 +315,8 @@ namespace TAO
 
 // TAO_IDL - Generated from
 // be\be_codegen.cpp:1028
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

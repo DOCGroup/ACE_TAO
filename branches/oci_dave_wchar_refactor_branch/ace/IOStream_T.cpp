@@ -16,6 +16,8 @@
 #include "ace/IOStream_T.inl"
 #endif /* !__ACE_INLINE__ */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // We will be given a STREAM by the iostream object which creates us.
 // See the ACE_IOStream template for how that works.  Like other
 // streambuf objects, we can be input-only, output-only or both.
@@ -237,6 +239,8 @@ operator<< (STREAM &stream,
 
   return stream;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_STRING_CLASS */
 #endif /* ACE_LACKS_ACE_IOSTREAM */

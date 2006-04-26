@@ -1,9 +1,9 @@
 // $Id$
 
-#include "Recursive_TypeCode.h"
+#include "tao/TypeCodeFactory/Recursive_TypeCode.h"
 
 #ifndef __ACE_INLINE__
-# include "Recursive_TypeCode.inl"
+# include "tao/TypeCodeFactory/Recursive_TypeCode.inl"
 #endif  /* __ACE_INLINE__ */
 
 #include "tao/SystemException.h"
@@ -14,6 +14,7 @@ ACE_RCSID (TypeCodeFactory,
            Recursive_TypeCode,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 bool
 TAO::TypeCodeFactory::Recursive_TypeCode::tao_marshal (
@@ -276,3 +277,5 @@ TAO::TypeCodeFactory::Recursive_TypeCode::concrete_base_type_i (
   return
     this->the_typecode_->concrete_base_type (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

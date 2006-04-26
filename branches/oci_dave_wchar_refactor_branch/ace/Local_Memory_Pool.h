@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -23,6 +23,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Unbounded_Set.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_Local_Memory_Pool_Options
@@ -124,6 +126,8 @@ protected:
   virtual size_t round_up (size_t nbytes);
 
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* ACE_LOCAL_MEMORY_POOL_H */

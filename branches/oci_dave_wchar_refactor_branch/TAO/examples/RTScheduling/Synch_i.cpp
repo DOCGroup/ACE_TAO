@@ -15,7 +15,7 @@ Synch_i::go (CORBA::Long base_time
   ACE_DEBUG ((LM_DEBUG,
 	      "GO\n"));
   this->synched_ = 1;
-  this->base_time_.set (base_time, 0);
+  this->base_time_.set (static_cast<time_t>(base_time), 0);
 }
 
 int

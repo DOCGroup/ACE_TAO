@@ -1,4 +1,8 @@
+// -*- C++ -*-
+//
 // $Id$
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE void
 TAO_EC_ProxyPushSupplier::suspend_connection_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
@@ -91,3 +95,5 @@ TAO_EC_ProxyPushSupplier::subscriptions (void) const
 
   return this->qos_;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

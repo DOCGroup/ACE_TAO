@@ -19,8 +19,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_interface, 
-           tie_si, 
+ACE_RCSID (be_visitor_interface,
+           tie_si,
            "$Id$")
 
 
@@ -42,8 +42,8 @@ be_visitor_interface_tie_si::~be_visitor_interface_tie_si (void)
 int
 be_visitor_interface_tie_si::visit_interface (be_interface *node)
 {
-  if (node->srv_inline_gen () 
-      || node->imported () 
+  if (node->srv_inline_gen ()
+      || node->imported ()
       || node->is_abstract ())
     {
       return 0;
@@ -53,13 +53,13 @@ be_visitor_interface_tie_si::visit_interface (be_interface *node)
   static char localtiename [NAMEBUFSIZE];
   static char localskelname [NAMEBUFSIZE];
 
-  ACE_OS::memset (fulltiename, 
-                  '\0', 
+  ACE_OS::memset (fulltiename,
+                  '\0',
                   NAMEBUFSIZE);
-  ACE_OS::memset (localtiename, 
-                  '\0', 
+  ACE_OS::memset (localtiename,
+                  '\0',
                   NAMEBUFSIZE);
-  ACE_OS::memset (localskelname, 
+  ACE_OS::memset (localskelname,
                   '\0',
                    NAMEBUFSIZE);
 
@@ -67,25 +67,25 @@ be_visitor_interface_tie_si::visit_interface (be_interface *node)
   // class name.
 
   // We are outermost.
-  ACE_OS::sprintf (fulltiename, 
-                   "%s_tie", 
+  ACE_OS::sprintf (fulltiename,
+                   "%s_tie",
                    node->full_skel_name ());
 
   if (!node->is_nested ())
     {
-      ACE_OS::sprintf (localskelname, 
+      ACE_OS::sprintf (localskelname,
                        "POA_%s",
                        node->local_name ());
-      ACE_OS::sprintf (localtiename, 
+      ACE_OS::sprintf (localtiename,
                        "POA_%s_tie",
                        node->local_name ());
     }
   else
     {
-      ACE_OS::sprintf (localskelname, 
+      ACE_OS::sprintf (localskelname,
                        "%s",
                        node->local_name ());
-      ACE_OS::sprintf (localtiename, 
+      ACE_OS::sprintf (localtiename,
                        "%s_tie",
                        node->local_name ());
     }
@@ -180,19 +180,24 @@ be_visitor_interface_tie_si::visit_interface (be_interface *node)
   *os << "template <class T> ACE_INLINE "
       << "PortableServer::POA_ptr" << be_nl
       << fulltiename
-      << "<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)" << be_nl
+      << "<T>::_default_POA ("
+      << (be_global->use_raw_throw () ? "" : "ACE_ENV_SINGLE_ARG_DECL")
+      << ")" << be_nl
       << "{" << be_idt_nl
-      << "if (! CORBA::is_nil (this->poa_.in ()))" << be_idt_nl
+      << "if (! ::CORBA::is_nil (this->poa_.in ()))" << be_idt_nl
       << "{" << be_idt_nl
-      << "return PortableServer::POA::_duplicate (this->poa_.in ());" << be_uidt_nl
+      << "return PortableServer::POA::_duplicate (this->poa_.in ());"
+      << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
       << "return this->" << localskelname
-      << "::_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);" << be_uidt_nl
+      << "::_default_POA ("
+      << (be_global->use_raw_throw () ? "" : "ACE_ENV_SINGLE_ARG_PARAMETER")
+      << ");" << be_uidt_nl
       << "}";
 
   int status =
     node->traverse_inheritance_graph (
-              be_visitor_interface_tie_si::method_helper, 
+              be_visitor_interface_tie_si::method_helper,
               os
             );
 
@@ -220,7 +225,7 @@ be_visitor_interface_tie_si::method_helper (be_interface *derived,
                                             TAO_OutStream *os)
 {
   // Any methods from abstract parents have already been
-  // "added" to the derived interface scope by the overridden 
+  // "added" to the derived interface scope by the overridden
   // visit_scope() method in be_visitor_interface, so we can skip
   // this base interface, if it is abstract.
   if (node->is_abstract ())
@@ -239,7 +244,7 @@ be_visitor_interface_tie_si::method_helper (be_interface *derived,
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "be_visitor_interface_tie_si::"
-                         "method_helper\n"), 
+                         "method_helper\n"),
                         -1);
     }
 

@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ../bin/mwc.pl -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/config -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/templates -type automake -noreldefs TAO.mwc
+## ../bin/mwc.pl -type automake -noreldefs TAO.mwc
 
 ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
@@ -16,70 +16,11 @@ TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
-CLEANFILES =
 noinst_PROGRAMS =
-BUILT_SOURCES =
 
-## Makefile.POA_Default_Servant_Client.am
+## Makefile.POA_Default_Servant_IDL.am
 
-if !BUILD_MINIMUM_CORBA
-
-BUILT_SOURCES += \
-  FileC.cpp \
-  FileC.h \
-  FileC.inl \
-  FileS.h \
-  FileS.inl \
-  FileS_T.cpp \
-  FileS_T.h \
-  FileS_T.inl
-
-CLEANFILES += \
-  File-stamp \
-  FileC.cpp \
-  FileC.h \
-  FileC.inl \
-  FileS.h \
-  FileS.inl \
-  FileS_T.cpp \
-  FileS_T.h \
-  FileS_T.inl
-
-FileC.cpp FileC.h FileC.inl FileS.h FileS.inl FileS_T.cpp FileS_T.h FileS_T.inl: File-stamp
-
-File-stamp: $(srcdir)/File.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/File.idl
-	@touch $@
-
-noinst_PROGRAMS += client
-
-client_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR)
-
-client_SOURCES = \
-  FileC.cpp \
-  client.cpp \
-  FileC.h \
-  FileC.inl \
-  FileS.h \
-  FileS_T.h \
-  FileS_T.inl
-
-client_LDADD = \
-  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
-  $(TAO_BUILDDIR)/tao/libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
-
-endif !BUILD_MINIMUM_CORBA
-
-## Makefile.POA_Default_Servant_Server.am
-
-if !BUILD_MINIMUM_CORBA
-
-BUILT_SOURCES += \
+BUILT_SOURCES = \
   FileC.cpp \
   FileC.h \
   FileC.inl \
@@ -90,7 +31,7 @@ BUILT_SOURCES += \
   FileS_T.h \
   FileS_T.inl
 
-CLEANFILES += \
+CLEANFILES = \
   File-stamp \
   FileC.cpp \
   FileC.h \
@@ -108,6 +49,38 @@ File-stamp: $(srcdir)/File.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/File.idl
 	@touch $@
 
+
+noinst_HEADERS = \
+  File.idl
+
+## Makefile.POA_Default_Servant_Client.am
+
+if !BUILD_MINIMUM_CORBA
+
+noinst_PROGRAMS += client
+
+client_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR)
+
+client_SOURCES = \
+  FileC.cpp \
+  client.cpp \
+  File_i.h
+
+client_LDADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif !BUILD_MINIMUM_CORBA
+
+## Makefile.POA_Default_Servant_Server.am
+
+if !BUILD_MINIMUM_CORBA
+
 noinst_PROGRAMS += server
 
 server_CPPFLAGS = \
@@ -121,11 +94,6 @@ server_SOURCES = \
   FileS.cpp \
   File_i.cpp \
   server.cpp \
-  FileC.h \
-  FileC.inl \
-  FileS.h \
-  FileS_T.h \
-  FileS_T.inl \
   File_i.h
 
 server_LDADD = \

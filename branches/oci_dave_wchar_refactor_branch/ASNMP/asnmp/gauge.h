@@ -1,24 +1,21 @@
 /* -*-C++-*- */
-// $Id$
 #ifndef GAUGE_
 #define GAUGE_
-// ============================================================================
-//
-// = LIBRARY
-//    asnmp
-//
-// = FILENAME
-//    gauge32.cpp
-//
-// = DESCRIPTION
-//  Class definition for SMI Gauge32 class.
-//  This class currently does not behave as defined by the abstract model
-//  in RFC 1155 section 3.2.3.4 (ie the value doesn't latch on the max value)
-//
-// = AUTHOR
-//    Peter E Mellquist
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    gauge.h
+ *
+ *  $Id$
+ *
+ *  Class definition for SMI Gauge32 class.
+ *  This class currently does not behave as defined by the abstract model
+ *  in RFC 1155 section 3.2.3.4 (ie the value doesn't latch on the max value)
+ *
+ *
+ *  @author Peter E Mellquist
+ */
+//=============================================================================
+
 /*===================================================================
   Copyright (c) 1996
   Hewlett-Packard Company
@@ -43,37 +40,40 @@
 // objects may be set or get into Vb objects.
 //
 
+/**
+ * @class Gauge32:
+ *
+ * @brief Define RFC1902 Gauge datatype from RFC 1155 section 3.2.3.4
+ * Note that this datatype does not behave exactly (acts like a long)
+ */
 class ASNMP_Export Gauge32: public SnmpUInt32
-  // = TITLE
-  //     Define RFC1902 Gauge datatype from RFC 1155 section 3.2.3.4
-  //     Note that this datatype does not behave exactly (acts like a long)
 {
   public:
+     /// constructor with a value
      Gauge32( const unsigned long i = 0);
-     // constructor with a value
 
+     /// copy constructor
      Gauge32 ( const Gauge32 &g);
-     // copy constructor
 
+     /// destructor for a Gauge32 (ensure that Value::~Value() is overridden)
      ~Gauge32();
-     // destructor for a Gauge32 (ensure that Value::~Value() is overridden)
 
+     /// syntax type
      SmiUINT32 get_syntax();
-     // syntax type
 
+     /// create a new instance of this Value
      SnmpSyntax *clone() const;
-     // create a new instance of this Value
 
+     /// overloaded assignment
      Gauge32& operator=( const Gauge32 &uli);
-     // overloaded assignment
 
+     /// overloaded assignment
      Gauge32& operator=( const unsigned long i);
-     // overloaded assignment
 
+     /// otherwise, behave like an unsigned int
      operator unsigned long();
-     // otherwise, behave like an unsigned int
 
+     /// copy an instance of this Value
      SnmpSyntax& operator=( SnmpSyntax &val);
-     // copy an instance of this Value
 };
 #endif //GAUGE_

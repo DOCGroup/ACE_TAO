@@ -177,7 +177,7 @@ ACE_THR_FUNC_RETURN CLD_Handler::forward () {
     }
     if (message_index >= ACE_IOV_MAX ||
         (ACE_OS::gettimeofday () - time_of_last_send
-         >= FLUSH_TIMEOUT)) {
+         >= ACE_Time_Value(FLUSH_TIMEOUT))) {
       if (send (chunk, message_index) == -1) break;
       time_of_last_send = ACE_OS::gettimeofday ();
     }

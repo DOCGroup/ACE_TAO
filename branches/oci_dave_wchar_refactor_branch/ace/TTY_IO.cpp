@@ -1,26 +1,33 @@
 // $Id$
 
-#include "ace/config-lite.h"
-#if defined (ACE_HAS_TERMIOS)
-# include "ace/os_include/os_termios.h"
-#elif  defined (ACE_HAS_TERMIO)
-# include <termio.h>
-#endif
 #include "ace/TTY_IO.h"
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_strings.h"
 
-static const char* const ACE_TTY_IO_ODD   = "odd";
-static const char* const ACE_TTY_IO_EVEN  = "even";
-#if defined (ACE_WIN32)
-static const char* const ACE_TTY_IO_MARK  = "mark";
-static const char* const ACE_TTY_IO_SPACE = "space";
-#endif /* ACE_WIN32 */
+#if defined (ACE_HAS_TERMIOS)
+# include "ace/os_include/os_termios.h"
+#elif  defined (ACE_HAS_TERMIO)
+# include <termio.h>
+#endif
 
 ACE_RCSID (ace,
            TTY_IO,
            "$Id$")
+
+#if defined (ACE_HAS_TERMIOS) || defined (ACE_HAS_TERMIO) || defined (ACE_WIN32)
+namespace
+{
+  const char ACE_TTY_IO_ODD[]   = "odd";
+  const char ACE_TTY_IO_EVEN[]  = "even";
+#if defined (ACE_WIN32)
+  const char ACE_TTY_IO_MARK[]  = "mark";
+  const char ACE_TTY_IO_SPACE[] = "space";
+#endif /* ACE_WIN32 */
+}
+#endif
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_TTY_IO::Serial_Params::Serial_Params (void)
 {
@@ -320,7 +327,8 @@ int ACE_TTY_IO::control (Control_Mode cmd, Serial_Params *arg) const
             devpar.c_cc[VMIN] = static_cast<unsigned char>(arg->readmincharacters);
         }
 
-#if defined (TIOCMGET)
+#if defined (TIOCMGET) && !defined (__Lynx__)
+      // This sets serial port under LynxOS to non-functional state
       int status;
       this->ACE_IO_SAP::control (TIOCMGET, &status);
 
@@ -455,9 +463,9 @@ int ACE_TTY_IO::control (Control_Mode cmd, Serial_Params *arg) const
 
       // Always set limits unless set to negative to use default.
       if (arg->xonlim >= 0)
-        dcb.XonLim  = arg->xonlim;
+        dcb.XonLim  = static_cast<WORD>(arg->xonlim);
       if (arg->xofflim >= 0)
-        dcb.XoffLim = arg->xofflim;
+        dcb.XoffLim = static_cast<WORD>(arg->xofflim);
 
       dcb.fAbortOnError = FALSE;
       dcb.fErrorChar = FALSE;
@@ -526,3 +534,5 @@ ACE_TTY_IO::operator ACE_DEV_IO &()
   return static_cast<ACE_DEV_IO &>(*this);
 }
 #endif /* ACE_NEEDS_DEV_IO_CONVERSION */
+
+ACE_END_VERSIONED_NAMESPACE_DECL

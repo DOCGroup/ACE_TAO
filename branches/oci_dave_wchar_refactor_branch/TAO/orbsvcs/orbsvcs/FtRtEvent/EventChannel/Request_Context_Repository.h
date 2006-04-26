@@ -1,4 +1,4 @@
-// -pe*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -19,6 +19,8 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_FTEC_Event_Channel_Impl;
 
@@ -108,5 +110,7 @@ public:
     PortableInterceptor::ClientRequestInfo_ptr
     ACE_ENV_ARG_DECL);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /// REQUEST_CONTEXT_REPOSITORY_H

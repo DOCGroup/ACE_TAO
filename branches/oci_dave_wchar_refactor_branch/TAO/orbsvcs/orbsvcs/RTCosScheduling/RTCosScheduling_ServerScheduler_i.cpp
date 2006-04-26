@@ -1,5 +1,3 @@
-/* -*- C++ -*- */
-
 //=============================================================================
 /**
  *  @file    RTCosScheduling_ServerScheduler_i.cpp
@@ -10,12 +8,12 @@
  */
 //=============================================================================
 
-#include "RTCosScheduling_ServerScheduler_i.h"
+#include "orbsvcs/RTCosScheduling/RTCosScheduling_ServerScheduler_i.h"
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_unistd.h"
 
 #if !defined (__ACE_INLINE__)
-#include "RTCosScheduling_ServerScheduler_i.i"
+#include "orbsvcs/RTCosScheduling/RTCosScheduling_ServerScheduler_i.i"
 #endif /* __ACE_INLINE__ */
 
 #include "tao/ORB_Core.h"
@@ -24,6 +22,8 @@
 #include "tao/RTCORBA/Priority_Mapping_Manager.h"
 #include "tao/RTPortableServer/RTPortableServer.h"
 #include "tao/CodecFactory/CodecFactory.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO {
 
@@ -762,3 +762,5 @@ RTCosScheduling_ServerScheduler_i::resources(
 }
 
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

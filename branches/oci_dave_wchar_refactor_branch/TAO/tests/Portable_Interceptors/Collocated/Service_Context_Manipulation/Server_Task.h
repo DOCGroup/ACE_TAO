@@ -13,7 +13,9 @@
 
 #include "tao/ORB.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Manual_Event;
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 /// Implement a Task to run the server in a single thread
 class Server_Task : public ACE_Task_Base

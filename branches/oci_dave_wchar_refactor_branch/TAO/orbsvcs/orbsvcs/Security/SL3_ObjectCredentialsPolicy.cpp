@@ -1,12 +1,14 @@
 // $Id$
 
-#include "SL3_ObjectCredentialsPolicy.h"
+#include "orbsvcs/Security/SL3_ObjectCredentialsPolicy.h"
 
 
 ACE_RCSID (Security,
            SL3_ObjectCredentialsPolicy,
            "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::SL3::ObjectCredentialsPolicy::ObjectCredentialsPolicy (
   const SecurityLevel3::OwnCredentialsList & creds)
@@ -59,3 +61,5 @@ TAO::SL3::ObjectCredentialsPolicy::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   this->creds_list_.length (0);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

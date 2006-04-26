@@ -14,7 +14,7 @@
 
 const char *ior = "file://test.ior";
 int comp_number = 4;
-int count = 0;
+int counter = 0;
 
 int parse_args (int argc, char *argv[])
 {
@@ -95,8 +95,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           Deployment::ComponentImplementationInfo info;
 
           std::stringstream tmp;
-          tmp << "NodeAppTest_RoundTrip:" << count;
-          count = count + 1;
+          tmp << "NodeAppTest_RoundTrip:" << counter;
+          counter = counter + 1;
 
           // Add the names and entry points of each of the DLLs
           info.component_instance_name =
@@ -107,7 +107,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           info.servant_dll =
             CORBA::string_dup ("NodeAppTest_RoundTrip_svnt");
           info.servant_entrypt =
-            CORBA::string_dup ("createNodeAppTest_RoundTripHome_Servant");
+            CORBA::string_dup (
+                "create_NodeAppTest_NodeAppTest_RoundTripHome_Servant"
+              );
 
           //Now add the info into the infos
           container_info_1.impl_infos[i] = info;
@@ -141,8 +143,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           Deployment::ComponentImplementationInfo info;
 
           std::stringstream tmp;
-          tmp << "NodeAppTest_RoundTrip:" << count;
-          count = count + 1;
+          tmp << "NodeAppTest_RoundTrip:" << counter;
+          counter = counter + 1;
 
           // Add the names and entry points of each of the DLLs
           info.component_instance_name =
@@ -153,7 +155,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           info.servant_dll =
             CORBA::string_dup ("NodeAppTest_RoundTrip_svnt");
           info.servant_entrypt =
-            CORBA::string_dup ("createNodeAppTest_RoundTripHome_Servant");
+            CORBA::string_dup (
+                "create_NodeAppTest_NodeAppTest_RoundTripHome_Servant"
+              );
 
           //Now add the info into the infos
           container_info_2.impl_infos[i] = info;

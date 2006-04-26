@@ -1,6 +1,6 @@
 // -*- C++ -*-
 
-#include "LB_RoundRobin.h"
+#include "orbsvcs/LoadBalancing/LB_RoundRobin.h"
 
 #include "orbsvcs/PortableGroup/PG_conf.h"
 
@@ -10,6 +10,8 @@
 ACE_RCSID (LoadBalancing,
            LB_RoundRobin,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_LB_RoundRobin::TAO_LB_RoundRobin (PortableServer::POA_ptr poa)
   : poa_ (PortableServer::POA::_duplicate (poa)),
@@ -165,3 +167,5 @@ TAO_LB_RoundRobin::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

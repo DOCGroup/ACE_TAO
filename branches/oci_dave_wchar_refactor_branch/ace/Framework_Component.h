@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file    Framework_Component.h
@@ -8,7 +9,7 @@
  * A prototype mechanism that allows framework components, singletons
  * such as ACE_Reactor, ACE_Proactor, etc, to be registered with a
  * central repository managed by the <ACE_Object_Manager> or
- * <ACE_Service_Config> that will handle destruction.
+ * ACE_Service_Config that will handle destruction.
  *
  * This technique obviates changing ACE_Object_Manager and
  * ACE_Service_Config everytime a new framework is added.  Which also
@@ -47,6 +48,8 @@
 
 #define ACE_DEFAULT_FRAMEWORK_REPOSITORY_SIZE 1024
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_Framework_Component
  *
@@ -69,6 +72,11 @@ public:
 protected:
   /// Destructor.
   virtual ~ACE_Framework_Component (void);
+
+private:
+  // No copy possible
+  ACE_Framework_Component (const ACE_Framework_Component &);
+  void operator= (const ACE_Framework_Component &);
 
 private:
   /// Pointer to the actual component.
@@ -144,11 +152,12 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
-private:
-  // = Initialization and termination methods.
+protected:
 
   /// Initialize the repository.
   ACE_Framework_Repository (int size = ACE_Framework_Repository::DEFAULT_SIZE);
+
+private:
 
   /// Actually removes the dll components, must be called with locks held.
   int remove_dll_components_i (const ACE_TCHAR *dll_name);
@@ -156,6 +165,12 @@ private:
   /// Compact component_vector_ after components have been removed__maintains
   /// order.
   void compact (void);
+
+  /// Disallow copying and assignment.
+  ACE_Framework_Repository (const ACE_Framework_Repository &);
+  ACE_Framework_Repository &operator= (const ACE_Framework_Repository &);
+
+private:
 
   /// Contains all the framework components.
   ACE_Framework_Component **component_vector_;
@@ -180,10 +195,9 @@ private:
   ACE_Thread_Mutex lock_;
 #endif /* ACE_MT_SAFE */
 
-  /// Don't allow these to be called.
-  ACE_UNIMPLEMENTED_FUNC (ACE_Framework_Repository (const ACE_Framework_Repository &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Framework_Repository &operator= (const ACE_Framework_Repository &))
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Framework_Component.inl"

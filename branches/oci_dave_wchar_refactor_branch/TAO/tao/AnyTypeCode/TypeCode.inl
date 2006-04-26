@@ -4,6 +4,8 @@
 
 #include "tao/Environment.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_INLINE CORBA::Boolean
 CORBA::is_nil (CORBA::TypeCode_ptr obj)
 {
@@ -153,6 +155,8 @@ CORBA::TypeCode::concrete_base_type (ACE_ENV_SINGLE_ARG_DECL) const
 ACE_INLINE void
 CORBA::TypeCode::_tao_any_destructor (void * x)
 {
-  CORBA::release (static_cast <CORBA::TypeCode_ptr> (x));
+  ::CORBA::release (static_cast <CORBA::TypeCode_ptr> (x));
 }
 
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -2,6 +2,7 @@
 // $Id$
 
 project(netsvcs): acelib {
+  avoids       += ace_for_tao
   sharedname    = netsvcs
   dynamicflags += ACE_NETSVCS_BUILD_DLL
   Source_Files {

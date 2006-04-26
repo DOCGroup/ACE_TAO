@@ -1,12 +1,12 @@
-#include "LB_LoadManager.h"
-#include "LB_MemberLocator.h"
-#include "LB_LoadAlert_Handler.h"
-#include "LB_RoundRobin.h"
-#include "LB_Random.h"
-#include "LB_LoadMinimum.h"
-#include "LB_LoadAverage.h"
-#include "LB_LeastLoaded.h"
-#include "LB_conf.h"
+#include "orbsvcs/LoadBalancing/LB_LoadManager.h"
+#include "orbsvcs/LoadBalancing/LB_MemberLocator.h"
+#include "orbsvcs/LoadBalancing/LB_LoadAlert_Handler.h"
+#include "orbsvcs/LoadBalancing/LB_RoundRobin.h"
+#include "orbsvcs/LoadBalancing/LB_Random.h"
+#include "orbsvcs/LoadBalancing/LB_LoadMinimum.h"
+#include "orbsvcs/LoadBalancing/LB_LoadAverage.h"
+#include "orbsvcs/LoadBalancing/LB_LeastLoaded.h"
+#include "orbsvcs/LoadBalancing/LB_conf.h"
 
 #include "orbsvcs/PortableGroup/PG_Property_Utils.h"
 #include "orbsvcs/PortableGroup/PG_conf.h"
@@ -27,6 +27,7 @@ ACE_RCSID (LoadBalancing,
            LB_LoadManager,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_LB_LoadManager::TAO_LB_LoadManager (void)
   : reactor_ (0),
@@ -99,7 +100,7 @@ TAO_LB_LoadManager::push_loads (
   for (CORBA::ULong i = 0; i < len; ++i)
     {
       PortableGroup::ObjectGroup_ptr object_group =
-        groups[i].in ();
+        groups[i];
 
       ACE_TRY
         {
@@ -1290,3 +1291,5 @@ TAO_LB_LoadManager::make_strategy (CosLoadBalancing::StrategyInfo * info
 //     this->poa_->reference_to_id (
 //   this->poa_->deactivate_object ();
 // }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

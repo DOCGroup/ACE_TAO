@@ -45,8 +45,8 @@ be_operation::be_operation (void)
 be_operation::be_operation (AST_Type *rt,
                             AST_Operation::Flags fl,
                             UTL_ScopedName *n,
-                            idl_bool local,
-                            idl_bool abstract)
+                            bool local,
+                            bool abstract)
   : COMMON_Base (local,
                  abstract),
     AST_Decl (AST_Decl::NT_op,
@@ -68,13 +68,13 @@ be_operation::be_operation (AST_Type *rt,
     {
       return;
     }
-    
+
   idl_global->operation_seen_ = true;
 
   if (!this->is_local ())
     {
       be_type *bt = be_type::narrow_from_decl (rt);
-      bt->seen_in_operation (I_TRUE);
+      bt->seen_in_operation (true);
       this->set_arg_seen_bit (bt);
       idl_global->non_local_op_seen_ = true;
     }

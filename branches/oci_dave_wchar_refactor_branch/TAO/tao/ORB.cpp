@@ -1,37 +1,38 @@
 // "$Id$"
 
-#include "ORB.h"
+#include "tao/ORB.h"
 
 ACE_RCSID (tao,
            ORB,
            "$Id$")
 
-#include "ORB_Table.h"
-#include "Connector_Registry.h"
-#include "IOR_Parser.h"
-#include "Stub.h"
-#include "ORB_Core.h"
-#include "ORB_Core_TSS_Resources.h"
-#include "TAO_Internal.h"
-#include "Dynamic_Adapter.h"
-#include "Profile.h"
-#include "default_ports.h"
-#include "ORBInitializer_Registry_Adapter.h"
-#include "PolicyFactory_Registry_Adapter.h"
-#include "NVList_Adapter.h"
-#include "TAO_Singleton_Manager.h"
-#include "Policy_Current.h"
-#include "Policy_Manager.h"
-#include "Valuetype_Adapter.h"
-#include "IFR_Client_Adapter.h"
-#include "TypeCodeFactory_Adapter.h"
-#include "debug.h"
-#include "CDR.h"
-#include "SystemException.h"
-#include "default_environment.h"
+#include "tao/ORB_Table.h"
+#include "tao/Connector_Registry.h"
+#include "tao/IOR_Parser.h"
+#include "tao/Stub.h"
+#include "tao/ORB_Core.h"
+#include "tao/ORB_Core_TSS_Resources.h"
+#include "tao/TAO_Internal.h"
+#include "tao/Dynamic_Adapter.h"
+#include "tao/Profile.h"
+#include "tao/default_ports.h"
+#include "tao/ORBInitializer_Registry_Adapter.h"
+#include "tao/PolicyFactory_Registry_Adapter.h"
+#include "tao/NVList_Adapter.h"
+#include "tao/TAO_Singleton_Manager.h"
+#include "tao/Policy_Current.h"
+#include "tao/Policy_Manager.h"
+#include "tao/Valuetype_Adapter.h"
+#include "tao/IFR_Client_Adapter.h"
+#include "tao/TypeCodeFactory_Adapter.h"
+#include "tao/debug.h"
+#include "tao/CDR.h"
+#include "tao/SystemException.h"
+#include "tao/default_environment.h"
+#include "tao/ObjectIdListC.h"
 
 #if !defined (__ACE_INLINE__)
-# include "ORB.i"
+# include "tao/ORB.i"
 #endif /* ! __ACE_INLINE__ */
 
 #include "ace/Dynamic_Service.h"
@@ -51,7 +52,6 @@ void TAO_unexpected_exception_handler (void)
 }
 #endif  /* ACE_HAS_EXCEPTIONS */
 
-
 static const char ior_prefix[] = "IOR:";
 
 // = Static initialization.
@@ -63,6 +63,8 @@ namespace
 }
 
 // ****************************************************************
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::ORB::InvalidName::InvalidName (void)
   : CORBA::UserException ("IDL:omg.org/CORBA/ORB/InvalidName:1.0",
@@ -250,7 +252,7 @@ CORBA::ORB::work_pending (ACE_Time_Value &tv ACE_ENV_ARG_DECL)
   this->check_shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  const int result = this->orb_core_->reactor ()->work_pending (tv);
+  int const result = this->orb_core_->reactor ()->work_pending (tv);
   if (result == 0 || (result == -1 && errno == ETIME))
     return 0;
 
@@ -411,7 +413,7 @@ CORBA::ORB::get_default_context (CORBA::Context_ptr &
 }
 
 void
-CORBA::ORB::send_multiple_requests_oneway (const CORBA::ORB::RequestSeq &
+CORBA::ORB::send_multiple_requests_oneway (const CORBA::RequestSeq &
                                           ACE_ENV_ARG_DECL)
 {
   ACE_THROW (CORBA::NO_IMPLEMENT (
@@ -422,7 +424,7 @@ CORBA::ORB::send_multiple_requests_oneway (const CORBA::ORB::RequestSeq &
 }
 
 void
-CORBA::ORB::send_multiple_requests_deferred (const CORBA::ORB::RequestSeq &
+CORBA::ORB::send_multiple_requests_deferred (const CORBA::RequestSeq &
                                             ACE_ENV_ARG_DECL)
 {
   ACE_THROW (CORBA::NO_IMPLEMENT (
@@ -1893,7 +1895,7 @@ CORBA::ORB::url_ior_string_to_object (const char* str
     this->orb_core_->connector_registry (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  int retv =
+  int const retv =
     conn_reg->make_mprofile (str,
                              mprofile
                              ACE_ENV_ARG_PARAMETER);
@@ -1952,38 +1954,24 @@ CORBA::ORB::register_value_factory (const char *repository_id,
                                     CORBA::ValueFactory factory
                                     ACE_ENV_ARG_DECL)
 {
-  // %! guard, and ACE_Null_Mutex in the map
-  // do _add_ref here not in map->rebind
+  TAO_Valuetype_Adapter *vta = this->orb_core ()->valuetype_adapter ();
 
-  if (this->orb_core ()->valuetype_adapter () == 0)
+  if (vta)
     {
+      int const result = vta->vf_map_rebind (repository_id,
+                                             factory);
 
-     this->orb_core ()->valuetype_adapter () =
-       ACE_Dynamic_Service<TAO_Valuetype_Adapter>::instance (
-            TAO_ORB_Core::valuetype_adapter_name ()
-         );
-
-      if (this->orb_core ()->valuetype_adapter () == 0)
+      if (result == 0)              // No previous factory found
         {
-          ACE_THROW_RETURN (CORBA::INTERNAL (),
+          return 0;
+        }
+
+      if (result == -1)
+        {
+          // Error on bind.
+          ACE_THROW_RETURN (CORBA::MARSHAL (),
                             0);
         }
-    }
-
-  int result =
-    this->orb_core ()->valuetype_adapter ()->vf_map_rebind (repository_id,
-                                                            factory);
-
-  if (result == 0)              // No previous factory found
-    {
-      return 0;
-    }
-
-  if (result == -1)
-    {
-      // Error on bind.
-      ACE_THROW_RETURN (CORBA::MARSHAL (),
-                        0);
     }
 
   return factory;    // previous factory was found
@@ -1993,10 +1981,12 @@ void
 CORBA::ORB::unregister_value_factory (const char *repository_id
                                       ACE_ENV_ARG_DECL_NOT_USED)
 {
-  if (this->orb_core ()->valuetype_adapter ())
+  TAO_Valuetype_Adapter *vta = this->orb_core ()->valuetype_adapter ();
+
+  if (vta)
     {
       // Dont care whther it was successful or not!
-      (void) this->orb_core ()->valuetype_adapter ()->vf_map_unbind (repository_id);
+      (void) vta->vf_map_unbind (repository_id);
     }
 }
 
@@ -2004,20 +1994,14 @@ CORBA::ValueFactory
 CORBA::ORB::lookup_value_factory (const char *repository_id
                                   ACE_ENV_ARG_DECL)
 {
-  if (this->orb_core ()->valuetype_adapter () == 0)
-    {
-      this->orb_core ()->valuetype_adapter () =
-        ACE_Dynamic_Service<TAO_Valuetype_Adapter>::instance (
-            TAO_ORB_Core::valuetype_adapter_name ()
-          );
+  TAO_Valuetype_Adapter *vta = this->orb_core ()->valuetype_adapter ();
 
-      if (this->orb_core ()->valuetype_adapter () == 0)
-        {
-          ACE_THROW_RETURN (CORBA::INTERNAL (),
-                            0);
-        }
+  if (vta)
+    {
+      return vta->vf_map_find (repository_id);
     }
 
-  return this->orb_core ()->valuetype_adapter ()->vf_map_find (repository_id);
+  return 0;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

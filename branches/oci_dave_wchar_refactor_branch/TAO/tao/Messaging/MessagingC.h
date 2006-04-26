@@ -44,7 +44,7 @@
 #error "You should not include MessagingC.h directly, use Messaging.h"
 #endif /* !TAO_MESSAGING_SAFE_INCLUDE */
 
-#include "messaging_export.h"
+#include "tao/Messaging/messaging_export.h"
 #include "tao/ORB.h"
 #include "tao/SystemException.h"
 #include "tao/Environment.h"
@@ -55,16 +55,14 @@
 #include "tao/Messaging/Messaging_RT_PolicyC.h"
 #include "tao/Messaging/Messaging_No_ImplC.h"
 #include "tao/Messaging/PollableC.h"
-#if defined (TAO_HAS_DEPRECATED_EXCEPTION_HOLDER)
-#include "tao/Messaging/OldExceptionHolderC.h"
-#else
 #include "tao/Messaging/ExceptionHolderC.h"
-#endif
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
 #define TAO_EXPORT_MACRO TAO_Messaging_Export
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // TAO_IDL - Generated from
 // be\be_visitor_root/root_ch.cpp:62
@@ -211,7 +209,7 @@ namespace TAO
 
 #if !defined (_MESSAGING_REPLYHANDLER__TRAITS_)
 #define _MESSAGING_REPLYHANDLER__TRAITS_
-  
+
   template<>
   struct TAO_Messaging_Export Objref_Traits< ::Messaging::ReplyHandler>
   {
@@ -240,8 +238,10 @@ TAO_Messaging_Export ::CORBA::Boolean operator>> (TAO_InputCDR &, Messaging::Rep
 // TAO_IDL - Generated from
 // be\be_codegen.cpp:1040
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "MessagingC.inl"
+#include "tao/Messaging/MessagingC.inl"
 #endif /* defined INLINE */
 
 #include /**/ "ace/post.h"

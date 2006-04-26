@@ -134,35 +134,4 @@ Supplier_Router::info (ACE_TCHAR **strp, size_t length) const
   return ACE_OS::strlen (mod_name);
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class Acceptor_Factory<Supplier_Handler, SUPPLIER_KEY>;
-template class ACE_Acceptor<Supplier_Handler, ACE_UPIPE_ACCEPTOR>;
-template class ACE_Svc_Handler<ACE_UPIPE_STREAM, ACE_MT_SYNCH>;
-template class Peer_Handler<SUPPLIER_ROUTER, SUPPLIER_KEY>;
-template class Peer_Router<Supplier_Handler, SUPPLIER_KEY>;
-template class ACE_Map_Entry<SUPPLIER_KEY, Supplier_Handler *>;
-template class ACE_Map_Iterator_Base<SUPPLIER_KEY, Supplier_Handler *, ACE_RW_Mutex>;
-template class ACE_Map_Iterator<SUPPLIER_KEY, Supplier_Handler *, ACE_RW_Mutex>;
-template class ACE_Map_Reverse_Iterator<SUPPLIER_KEY, Supplier_Handler *, ACE_RW_Mutex>;
-template class ACE_Map_Manager<SUPPLIER_KEY, Supplier_Handler *, ACE_RW_Mutex>;
-template class ACE_Read_Guard<ACE_RW_Mutex>;
-template class ACE_Write_Guard<ACE_RW_Mutex>;
-template class ACE_Guard<ACE_RW_Mutex>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate Acceptor_Factory<Supplier_Handler, SUPPLIER_KEY>
-#pragma instantiate ACE_Acceptor<Supplier_Handler, ACE_UPIPE_ACCEPTOR>
-#pragma instantiate ACE_Svc_Handler<ACE_UPIPE_STREAM, ACE_MT_SYNCH>
-#pragma instantiate Peer_Handler<SUPPLIER_ROUTER, SUPPLIER_KEY>
-#pragma instantiate Peer_Router<Supplier_Handler, SUPPLIER_KEY>
-#pragma instantiate ACE_Map_Entry<SUPPLIER_KEY, Supplier_Handler *>
-#pragma instantiate ACE_Map_Iterator_Base<SUPPLIER_KEY, Supplier_Handler *, ACE_RW_Mutex>
-#pragma instantiate ACE_Map_Iterator<SUPPLIER_KEY, Supplier_Handler *, ACE_RW_Mutex>
-#pragma instantiate ACE_Map_Reverse_Iterator<SUPPLIER_KEY, Supplier_Handler *, ACE_RW_Mutex>
-#pragma instantiate ACE_Map_Manager<SUPPLIER_KEY, Supplier_Handler *, ACE_RW_Mutex>
-#pragma instantiate ACE_Read_Guard<ACE_RW_Mutex>
-#pragma instantiate ACE_Write_Guard<ACE_RW_Mutex>
-#pragma instantiate ACE_Guard<ACE_RW_Mutex>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-
 #endif /* ACE_HAS_THREADS */

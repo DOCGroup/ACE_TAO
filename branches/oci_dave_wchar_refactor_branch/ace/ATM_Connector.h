@@ -28,11 +28,19 @@
 
 #if defined (ACE_WIN32) || defined (ACE_HAS_LINUX_ATM)
 #include "ace/SOCK_Connector.h"
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 typedef ACE_SOCK_Connector ATM_Connector;
+ACE_END_VERSIONED_NAMESPACE_DECL
 #else
 #include "ace/XTI_ATM_Mcast.h"
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 typedef ACE_XTI_ATM_Mcast ATM_Connector;
+// Open versioned namespace, if enabled by the user.
+ACE_END_VERSIONED_NAMESPACE_DECL
 #endif
+
+// Open versioned namespace, if enabled by the user.
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_ATM_Connector
@@ -148,6 +156,9 @@ public:
 private:
   ATM_Connector connector_;
 };
+
+// Open versioned namespace, if enabled by the user.
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/ATM_Connector.inl"

@@ -16,7 +16,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "dynamicinterface_export.h"
+#include "tao/DynamicInterface/dynamicinterface_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -24,6 +24,8 @@
 
 #include "tao/orbconf.h"
 #include "tao/Asynch_Reply_Dispatcher_Base.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace CORBA
 {
@@ -70,6 +72,8 @@ private:
   /// Where the reply needs to go.
   const CORBA::Request_ptr req_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

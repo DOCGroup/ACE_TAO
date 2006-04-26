@@ -1,11 +1,11 @@
 // $Id$
 
-#include "Proxy_T.h"
+#include "orbsvcs/Notify/Proxy_T.h"
 
 #ifndef TAO_Notify_PROXY_T_CPP
 #define TAO_Notify_PROXY_T_CPP
 
-ACE_RCSID(Notify, TAO_Notify_Proxy_T, "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class SERVANT_TYPE>
 TAO_Notify_Proxy_T<SERVANT_TYPE>::TAO_Notify_Proxy_T (void)
@@ -159,5 +159,7 @@ TAO_Notify_Proxy_T<SERVANT_TYPE>::remove_all_filters (ACE_ENV_SINGLE_ARG_DECL)
 
   this->filter_admin_.remove_all_filters (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_Notify_PROXY_T_CPP */

@@ -155,35 +155,38 @@ UTL_String::canonicalize (void)
 }
 
 // Compare two UTL_String *.
-idl_bool
+bool
 UTL_String::compare (UTL_String *s)
 {
   char *s_c_str;
-  long result;
+  bool result;
 
   if (this->c_str == 0
       || s == 0
       || (s_c_str = s->get_canonical_rep ()) == 0)
     {
-      result = I_FALSE;
+      result = false;
     }
   else
     {
       result =
-        (ACE_OS::strcmp (this->c_str, s_c_str) == 0) ? I_TRUE : I_FALSE;
+        (ACE_OS::strcmp (this->c_str, s_c_str) == 0) ? true : false;
     }
 
   // Check that the names are typed consistently.
-  if (result == I_TRUE
+  if (result == true
       && ACE_OS::strcmp (this->p_str, s->get_string ()) != 0)
     {
       // Prevents redundant error reporting if we're in this branch.
-      result = I_FALSE;
+      result = false;
 
       if (idl_global->case_diff_error ())
         {
           idl_global->err ()->name_case_error (this->p_str,
                                                s->get_string ());
+
+            // if we try to continue from here, we risk a crash.
+            ACE_OS::exit (99);
         }
       else
         {
@@ -205,19 +208,19 @@ UTL_String::compare_quiet (UTL_String *s)
       || s == 0
       || (s_c_str = s->get_canonical_rep ()) == 0)
     {
-      result = I_FALSE;
+      result = false;
     }
   else if (ACE_OS::strcmp (this->c_str, s_c_str) != 0)
     {
-      result = I_FALSE;
+      result = false;
     }
   else if (ACE_OS::strcmp (this->p_str, s->get_string ()) != 0)
     {
-      result = I_TRUE;
+      result = true;
     }
   else
     {
-      result = I_FALSE;
+      result = false;
     }
 
   return result;

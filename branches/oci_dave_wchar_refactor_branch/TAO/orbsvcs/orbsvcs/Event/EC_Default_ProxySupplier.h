@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file   EC_Default_ProxySupplier.h
  *
@@ -20,7 +21,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "EC_ProxySupplier.h"
+#include "orbsvcs/Event/EC_ProxySupplier.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_EC_Default_ProxyPushSupplier
@@ -28,9 +31,9 @@
  * @brief Implement the ReliableEventChannelAdmin::ProxyPushSupplier
  *         interface
  */
-class TAO_RTEvent_Serv_Export TAO_EC_Default_ProxyPushSupplier :
-  public POA_RtecEventChannelAdmin::ProxyPushSupplier,
-  public TAO_EC_ProxyPushSupplier
+class TAO_RTEvent_Serv_Export TAO_EC_Default_ProxyPushSupplier
+  : public POA_RtecEventChannelAdmin::ProxyPushSupplier,
+    public TAO_EC_ProxyPushSupplier
 {
 public:
 
@@ -71,6 +74,8 @@ private:
             object_id (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

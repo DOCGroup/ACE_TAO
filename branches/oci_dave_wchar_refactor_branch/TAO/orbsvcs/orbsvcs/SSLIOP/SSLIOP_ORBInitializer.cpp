@@ -1,4 +1,4 @@
-#include "SSLIOP_ORBInitializer.h"
+#include "orbsvcs/SSLIOP/SSLIOP_ORBInitializer.h"
 
 
 ACE_RCSID (SSLIOP,
@@ -6,10 +6,10 @@ ACE_RCSID (SSLIOP,
            "$Id$")
 
 
-#include "SSLIOP_Current.h"
-#include "SSLIOP_Invocation_Interceptor.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Current.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Invocation_Interceptor.h"
 //#include "SSLIOP_IORInterceptor.h"
-#include "SSLIOP_CredentialsAcquirerFactory.h"
+#include "orbsvcs/SSLIOP/SSLIOP_CredentialsAcquirerFactory.h"
 
 #include "orbsvcs/Security/SL3_SecurityCurrent.h"
 #include "orbsvcs/Security/SL3_CredentialsCurator.h"
@@ -23,6 +23,8 @@ ACE_RCSID (SSLIOP,
 
 #include "ace/Auto_Ptr.h"
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::SSLIOP::ORBInitializer::ORBInitializer (
   ::Security::QOP qop,
@@ -243,3 +245,4 @@ TAO::SSLIOP::ORBInitializer::get_tss_slot_id (
   return security_current->tss_slot ();
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,12 +1,11 @@
 // -*- MPC -*-
 // $Id$
 
-project (FtRtEvent) : orbsvcslib, core, ftorbutils, rtevent_serv, naming, minimum_corba, pi_server {
+project (FtRtEvent) : orbsvcslib, core, ftorbutils, rtevent_serv, naming, minimum_corba, pi_server, tao_versioning_idl_defaults {
   sharedname   = TAO_FtRtEvent
-
-  idlflags     += -Wb,export_macro=TAO_FtRtEvent_Export -Wb,export_include=orbsvcs/FtRtEvent/Utils/ftrtevent_export.h
+  idlflags    += -Wb,export_macro=TAO_FtRtEvent_Export -Wb,export_include=orbsvcs/FtRtEvent/Utils/ftrtevent_export.h
   dynamicflags = TAO_FTRTEVENT_BUILD_DLL
-  tagchecks    = FtRtEvent
+  tagchecks   += FtRtEvent
 
   IDL_Files {
     idlflags += -GC
@@ -40,7 +39,7 @@ project (FtRtEvent) : orbsvcslib, core, ftorbutils, rtevent_serv, naming, minimu
 project (FTRT_ClientORB) :  messaging, orbsvcslib, pi, core {
   sharedname   = TAO_FTRT_ClientORB
   dynamicflags = TAO_FTRT_BUILD_DLL
-  tagchecks    = FTRT_ClientORB
+  tagchecks   += FTRT_ClientORB
 
   IDL_Files {
   }
@@ -61,7 +60,7 @@ project (FTRT_ClientORB) :  messaging, orbsvcslib, pi, core {
 project (FTRT_EventChannel) :  orbsvcslib, core, ftrtevent, rtevent_serv, utils, pi_server, corba_messaging {
   sharedname   = TAO_FTRT_EventChannel
   dynamicflags = TAO_FTRTEC_BUILD_DLL
-  tagchecks    = FTRT_EventChannel
+  tagchecks   += FTRT_EventChannel
   after       += FTORB_Utils
 
   IDL_Files {

@@ -1,12 +1,12 @@
 // $Id$
 
-#include "Exception.h"
-#include "SystemException.h"
-#include "Environment.h"
-#include "ORB_Constants.h"
-#include "CORBA_String.h"
-#include "CDR.h"
-#include "debug.h"
+#include "tao/Exception.h"
+#include "tao/SystemException.h"
+#include "tao/Environment.h"
+#include "tao/ORB_Constants.h"
+#include "tao/CORBA_String.h"
+#include "tao/CDR.h"
+#include "tao/debug.h"
 
 #include "ace/Malloc.h"
 #include "ace/SString.h"
@@ -25,13 +25,14 @@
 
 #include "ace/OS_NS_stdio.h"
 
-
 ACE_RCSID (tao,
            Exception,
            "$Id$")
 
 
 // ****************************************************************
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::Exception::Exception (const char * repository_id,
                              const char * local_name)
@@ -137,3 +138,4 @@ namespace CORBA
 
 #endif /* (ACE_LACKS_IOSTREAM_TOTALLY) */
 
+TAO_END_VERSIONED_NAMESPACE_DECL

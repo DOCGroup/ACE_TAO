@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 // $Id$
 //
 // ============================================================================
@@ -21,7 +22,9 @@
 #define STRATEGY_SCHEDULER_H
 #include /**/ "ace/pre.h"
 
-#include "DynSched.h"
+#include "orbsvcs/Sched/DynSched.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // forward declaration of the abstract base class for scheduler strategies
 class ACE_Scheduler_Strategy;
@@ -76,9 +79,8 @@ private:
   ACE_Scheduler_Strategy &strategy_;
     // = Strategy for comparing and sorting dispatch entries.
 
-  ACE_UNIMPLEMENTED_FUNC (ACE_Strategy_Scheduler (const ACE_Strategy_Scheduler &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Strategy_Scheduler &operator= (
-    const ACE_Strategy_Scheduler &))
+  ACE_Strategy_Scheduler (const ACE_Strategy_Scheduler &);
+  ACE_Strategy_Scheduler &operator= (const ACE_Strategy_Scheduler &);
 };
 
 
@@ -493,6 +495,9 @@ private:
     // = Instance of the strategy.
 
 };
+
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* STRATEGY_SCHEDULER_H */

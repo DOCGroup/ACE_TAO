@@ -42,6 +42,8 @@
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:59
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace PortableInterceptor
 {
 
@@ -49,6 +51,8 @@ namespace PortableInterceptor
 // be\be_visitor_module/module_ch.cpp:86
 
 } // module PortableInterceptor
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

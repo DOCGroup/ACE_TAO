@@ -1,5 +1,5 @@
-#include "Blocked_Connect_Strategy.h"
-#include "Connection_Handler.h"
+#include "tao/Blocked_Connect_Strategy.h"
+#include "tao/Connection_Handler.h"
 
 #include "ace/Synch_Options.h"
 
@@ -7,6 +7,7 @@ ACE_RCSID(tao,
           Blocked_Connect_Strategy,
           "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Blocked_Connect_Strategy::TAO_Blocked_Connect_Strategy (
     TAO_ORB_Core *orb_core)
@@ -53,3 +54,5 @@ TAO_Blocked_Connect_Strategy::wait (TAO_Transport *,
   // We cannot wait for connection completion
   return -1;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

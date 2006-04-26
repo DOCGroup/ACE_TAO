@@ -63,6 +63,8 @@
 #pragma option push -w-rvl -w-rch -w-ccc -w-inl
 #endif /* __BORLANDC__ */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // TAO_IDL - Generated from
 // be\be_visitor_sequence/sequence_ch.cpp:101
 
@@ -73,22 +75,19 @@ class TAO_SSLEndpointSequence;
 
 typedef
   TAO_FixedSeq_Var_T<
-      TAO_SSLEndpointSequence,
-      SSLIOP::SSL
+      TAO_SSLEndpointSequence
     >
   TAO_SSLEndpointSequence_var;
 
 typedef
   TAO_Seq_Out_T<
-      TAO_SSLEndpointSequence,
-      TAO_SSLEndpointSequence_var,
-      SSLIOP::SSL
+      TAO_SSLEndpointSequence
     >
   TAO_SSLEndpointSequence_out;
 
 class TAO_SSLIOP_Export TAO_SSLEndpointSequence
   : public
-      TAO_Unbounded_Sequence<
+      TAO::unbounded_value_sequence<
           SSLIOP::SSL
         >
 {
@@ -98,12 +97,12 @@ public:
   TAO_SSLEndpointSequence (
       CORBA::ULong max,
       CORBA::ULong length,
-      SSLIOP::SSL* buffer, 
-      CORBA::Boolean release = 0
+      SSLIOP::SSL* buffer,
+      CORBA::Boolean release = false
     );
   TAO_SSLEndpointSequence (const TAO_SSLEndpointSequence &);
   ~TAO_SSLEndpointSequence (void);
-  
+
   typedef TAO_SSLEndpointSequence_var _var_type;
 };
 
@@ -138,6 +137,8 @@ TAO_SSLIOP_Export CORBA::Boolean operator>> (
   );
 
 #endif /* _TAO_CDR_OP_TAO_SSLEndpointSequence_H_ */
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 // TAO_IDL - Generated from
 // be\be_codegen.cpp:955

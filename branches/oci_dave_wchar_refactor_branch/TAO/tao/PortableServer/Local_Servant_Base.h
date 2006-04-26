@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -23,6 +23,8 @@
 
 #include "tao/PortableServer/Servant_Base.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_Local_ServantBase
  *
@@ -39,7 +41,7 @@ class TAO_PortableServer_Export TAO_Local_ServantBase
   : public virtual TAO_ServantBase
 {
 protected:
-  /// This is an auxiliar method for _this().  Make sure *not* to
+  /// This is an auxiliary method for _this().  Make sure *not* to
   /// register with the default POA.
   TAO_Stub *_create_stub (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
@@ -49,8 +51,10 @@ protected:
                   ACE_ENV_ARG_DECL);
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-# include "Local_Servant_Base.inl"
+# include "tao/PortableServer/Local_Servant_Base.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

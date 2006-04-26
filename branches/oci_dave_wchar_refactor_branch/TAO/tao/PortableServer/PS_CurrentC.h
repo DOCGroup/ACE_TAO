@@ -26,10 +26,10 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:153
+// be\be_codegen.cpp:154
 
-#ifndef _TAO_IDL_ORIG_PS_CURRENTC_H_
-#define _TAO_IDL_ORIG_PS_CURRENTC_H_
+#ifndef _TAO_IDL_PS_CURRENTC_H_
+#define _TAO_IDL_PS_CURRENTC_H_
 
 #include /**/ "ace/pre.h"
 
@@ -41,10 +41,13 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/PortableServer/portableserver_export.h"
+#include "tao/AnyTypeCode/AnyTypeCode_methods.h"
 #include "tao/ORB.h"
 #include "tao/SystemException.h"
 #include "tao/Environment.h"
 #include "tao/Object.h"
+#include "tao/PortableServer/PS_ForwardA.h"
+#include "tao/AnyTypeCode/CurrentA.h"
 #include "tao/Objref_VarOut_T.h"
 
 #include "tao/PortableServer/PS_ForwardC.h"
@@ -55,23 +58,16 @@
 #endif
 #define TAO_EXPORT_MACRO TAO_PortableServer_Export
 
-#if defined(_MSC_VER)
-#pragma warning(push)
-#pragma warning(disable:4250)
-#endif /* _MSC_VER */
-
-#if defined (__BORLANDC__)
-#pragma option push -w-rvl -w-rch -w-ccc -w-inl
-#endif /* __BORLANDC__ */
-
 // TAO_IDL - Generated from
-// be\be_visitor_module/module_ch.cpp:48
+// be\be_visitor_module/module_ch.cpp:49
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace PortableServer
 {
 
   // TAO_IDL - Generated from
-  // be\be_interface.cpp:598
+  // be\be_interface.cpp:646
 
 #if !defined (_PORTABLESERVER_CURRENT__VAR_OUT_CH_)
 #define _PORTABLESERVER_CURRENT__VAR_OUT_CH_
@@ -112,12 +108,12 @@ namespace PortableServer
     static void _tao_release (Current_ptr obj);
 
     static Current_ptr _narrow (
-        CORBA::Object_ptr obj
+        ::CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static Current_ptr _unchecked_narrow (
-        CORBA::Object_ptr obj
+        ::CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
@@ -126,7 +122,7 @@ namespace PortableServer
       return static_cast<Current_ptr> (0);
     }
 
-    static void _tao_any_destructor (void *);
+
 
     // TAO_IDL - Generated from
     // be\be_visitor_exception/exception_ch.cpp:53
@@ -134,7 +130,7 @@ namespace PortableServer
 #if !defined (_PORTABLESERVER_CURRENT_NOCONTEXT_CH_)
 #define _PORTABLESERVER_CURRENT_NOCONTEXT_CH_
 
-    class TAO_PortableServer_Export NoContext : public CORBA::UserException
+    class TAO_PortableServer_Export NoContext : public ::CORBA::UserException
     {
     public:
 
@@ -146,12 +142,12 @@ namespace PortableServer
 
       static void _tao_any_destructor (void *);
 
-      static NoContext *_downcast (CORBA::Exception *);
-      static const NoContext *_downcast (CORBA::Exception const *);
+      static NoContext *_downcast ( ::CORBA::Exception *);
+      static const NoContext *_downcast ( ::CORBA::Exception const *);
 
-      static CORBA::Exception *_alloc (void);
+      static ::CORBA::Exception *_alloc (void);
 
-      virtual CORBA::Exception *_tao_duplicate (void) const;
+      virtual ::CORBA::Exception *_tao_duplicate (void) const;
 
       virtual void _raise (void) const;
 
@@ -165,14 +161,11 @@ namespace PortableServer
           ACE_ENV_ARG_DECL
         );
 
-      // TAO_IDL - Generated from
-      // be\be_visitor_exception/exception_ch.cpp:129
-
-      virtual CORBA::TypeCode_ptr _tao_type (void) const;
+      virtual ::CORBA::TypeCode_ptr _tao_type (void) const;
     };
 
     // TAO_IDL - Generated from
-    // be\be_visitor_typecode/typecode_decl.cpp:44
+    // be\be_visitor_typecode/typecode_decl.cpp:49
 
     static ::CORBA::TypeCode_ptr const _tc_NoContext;
 
@@ -185,7 +178,7 @@ namespace PortableServer
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
+        ::CORBA::SystemException,
         ::PortableServer::Current::NoContext
       )) = 0;
 
@@ -196,7 +189,18 @@ namespace PortableServer
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
+        ::CORBA::SystemException,
+        ::PortableServer::Current::NoContext
+      )) = 0;
+
+    // TAO_IDL - Generated from
+    // be\be_visitor_operation/operation_ch.cpp:46
+
+    virtual ::CORBA::Object_ptr get_reference (
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
+      ACE_THROW_SPEC ((
+        ::CORBA::SystemException,
         ::PortableServer::Current::NoContext
       )) = 0;
 
@@ -207,20 +211,20 @@ namespace PortableServer
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
+        ::CORBA::SystemException,
         ::PortableServer::Current::NoContext
       )) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_ch.cpp:210
 
-    virtual CORBA::Boolean _is_a (
+    virtual ::CORBA::Boolean _is_a (
         const char *type_id
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     virtual const char* _interface_repository_id (void) const;
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
+    virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
 
   protected:
     // Abstract or local interface only.
@@ -238,12 +242,12 @@ namespace PortableServer
 #endif /* end #if !defined */
 
   // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:49
 
   extern TAO_PortableServer_Export ::CORBA::TypeCode_ptr const _tc_Current;
 
 // TAO_IDL - Generated from
-// be\be_visitor_module/module_ch.cpp:66
+// be\be_visitor_module/module_ch.cpp:78
 
 } // module PortableServer
 
@@ -254,8 +258,8 @@ namespace PortableServer
 namespace TAO
 {
 
-#if !defined (_PORTABLESERVER_CURRENT__TRAITS_CH_)
-#define _PORTABLESERVER_CURRENT__TRAITS_CH_
+#if !defined (_PORTABLESERVER_CURRENT__TRAITS_)
+#define _PORTABLESERVER_CURRENT__TRAITS_
 
   template<>
   struct TAO_PortableServer_Export Objref_Traits< ::PortableServer::Current>
@@ -267,7 +271,7 @@ namespace TAO
         ::PortableServer::Current_ptr
       );
     static ::PortableServer::Current_ptr nil (void);
-    static CORBA::Boolean marshal (
+    static ::CORBA::Boolean marshal (
         ::PortableServer::Current_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -277,30 +281,9 @@ namespace TAO
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_ch.cpp:52
+// be\be_codegen.cpp:1040
 
-TAO_PortableServer_Export void operator<<= (CORBA::Any &, PortableServer::Current_ptr); // copying
-TAO_PortableServer_Export void operator<<= (CORBA::Any &, PortableServer::Current_ptr *); // non-copying
-TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableServer::Current_ptr &);
-
-// TAO_IDL - Generated from
-// be\be_visitor_exception/any_op_ch.cpp:52
-
-TAO_PortableServer_Export void operator<<= (CORBA::Any &, const PortableServer::Current::NoContext &); // copying version
-TAO_PortableServer_Export void operator<<= (CORBA::Any &, PortableServer::Current::NoContext*); // noncopying version
-TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableServer::Current::NoContext *&); // deprecated
-TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, const PortableServer::Current::NoContext *&);
-
-// TAO_IDL - Generated from
-// be\be_codegen.cpp:955
-
-#if defined(_MSC_VER)
-#pragma warning(pop)
-#endif /* _MSC_VER */
-
-#if defined (__BORLANDC__)
-#pragma option pop
-#endif /* __BORLANDC__ */
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

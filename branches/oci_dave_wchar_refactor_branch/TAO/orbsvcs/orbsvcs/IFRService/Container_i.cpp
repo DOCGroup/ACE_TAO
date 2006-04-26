@@ -1,11 +1,11 @@
 // $Id$
 
-#include "Repository_i.h"
-#include "InterfaceDef_i.h"
-#include "ValueDef_i.h"
-#include "ExtValueDef_i.h"
-#include "IFR_Service_Utils.h"
-#include "IFR_Service_Utils_T.h"
+#include "orbsvcs/IFRService/Repository_i.h"
+#include "orbsvcs/IFRService/InterfaceDef_i.h"
+#include "orbsvcs/IFRService/ValueDef_i.h"
+#include "orbsvcs/IFRService/ExtValueDef_i.h"
+#include "orbsvcs/IFRService/IFR_Service_Utils.h"
+#include "orbsvcs/IFRService/IFR_Service_Utils_T.h"
 
 #include "tao/IFR_Client/IFR_ComponentsC.h"
 
@@ -19,6 +19,7 @@ ACE_RCSID (IFRService,
            Container_i,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 const char *TAO_Container_i::tmp_name_holder_ = 0;
 
@@ -200,7 +201,7 @@ TAO_Container_i::lookup_i (const char *search_name
   ACE_TString section_name;
   int status = 0;
   int index = 0;
-  int pos = 0;
+  ssize_t pos = 0;
   int so_far_so_good = 0;
   u_int kind = 0;
   CORBA::DefinitionKind def_kind = CORBA::dk_none;
@@ -1167,7 +1168,7 @@ TAO_Container_i::create_enum_i (const char *id,
 
       this->repo_->config ()->set_string_value (member_key,
                                                 "name",
-                                                members[i].in ());
+                                                members[i]);
     }
 
   CORBA::DefinitionKind def_kind =
@@ -1319,7 +1320,7 @@ TAO_Container_i::create_interface_i (const char *id,
         {
           inherited_path =
             TAO_IFR_Service_Utils::reference_to_path (
-                base_interfaces[i].in ()
+                base_interfaces[i]
               );
           char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
           this->repo_->config ()->set_string_value (inherited_key,
@@ -1486,7 +1487,7 @@ TAO_Container_i::create_value_box_i (const char *id,
   ACE_CHECK_RETURN (CORBA::ValueBoxDef::_nil ());
 
   return CORBA::ValueBoxDef::_narrow (obj.in ()
-                                     ACE_ENV_ARG_PARAMETER);
+                                      ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::ExceptionDef_ptr
@@ -2424,7 +2425,7 @@ TAO_Container_i::update_refs (const char *path,
                                                 "name",
                                                 ref_name);
 
-      int pos = ref_name.find (this->repo_->extension ());
+      ssize_t pos = ref_name.find (this->repo_->extension ());
 
       // If one of the names has been mangled by move(), fix it.
       if (pos != ACE_TString::npos)
@@ -2575,7 +2576,7 @@ TAO_Container_i::create_value_common (
         {
           base_path =
             TAO_IFR_Service_Utils::reference_to_path (
-                abstract_base_values[i].in ()
+                abstract_base_values[i]
               );
 
           // Get the servant's key into the temporary key holder, because
@@ -2628,7 +2629,7 @@ TAO_Container_i::create_value_common (
         {
           supported_path =
             TAO_IFR_Service_Utils::reference_to_path (
-                supported_interfaces[i].in ()
+                supported_interfaces[i]
               );
 
           // Get the servant's key into the temporary key holder, because
@@ -2679,3 +2680,5 @@ TAO_Container_i::create_value_common (
 
   return path;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

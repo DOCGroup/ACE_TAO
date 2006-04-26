@@ -48,6 +48,6 @@ be_visitor_union_fwd_ch::visit_union_fwd (be_union_fwd *node)
   // This will be a no-op if it has already been done for this node.
   fd->gen_common_varout (os);
 
-  node->cli_hdr_gen (I_TRUE);
+  node->cli_hdr_gen (true);
   return 0;
 }

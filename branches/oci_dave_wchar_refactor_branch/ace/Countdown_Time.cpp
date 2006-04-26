@@ -5,6 +5,8 @@ ACE_RCSID (ace,
            Countdown_Time,
            "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_Countdown_Time::ACE_Countdown_Time (ACE_Time_Value *max_wait_time)
   : max_wait_time_ (max_wait_time),
     stopped_ (0)
@@ -60,3 +62,5 @@ ACE_Countdown_Time::update (void)
 {
   return this->stop () == 0 && this->start ();
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

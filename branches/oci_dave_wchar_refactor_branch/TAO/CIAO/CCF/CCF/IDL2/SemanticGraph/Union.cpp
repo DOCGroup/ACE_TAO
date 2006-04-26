@@ -124,9 +124,8 @@ namespace CCF
         {
           TypeInfo ti (typeid (Union));
 
-          ti.add_base (Access::PUBLIC,
-                       true,
-                       TypeTemplateSpecialization::static_type_info ());
+          ti.add_base (
+            Access::PUBLIC, true, Specialization::static_type_info ());
 
           ti.add_base (Access::PUBLIC, true, Scope::static_type_info ());
           return ti;
@@ -137,6 +136,38 @@ namespace CCF
 
       TypeInfo const& Union::
       static_type_info () { return union_; }
+
+      bool Union::
+      complete () const
+      {
+        if (defined ())
+        {
+          CompilerElements::Context& ctx (
+            const_cast<CompilerElements::Context&> (context ()));
+
+          if (ctx.count ("union-complete-test"))
+            return true;
+
+          ctx.set ("union-complete-test", true);
+          bool c (true);
+
+          for (Scope::NamesIterator i (names_begin ());
+               c && i != names_end ();
+               ++i)
+          {
+            Member const& m (dynamic_cast<Member&> ((*i)->named ()));
+            Type const& t (m.belongs ().type ());
+
+            if (!t.complete ())
+              c = false;
+          }
+
+          ctx.remove ("union-complete-test");
+          return c;
+        }
+
+        return false;
+      }
     }
   }
 }

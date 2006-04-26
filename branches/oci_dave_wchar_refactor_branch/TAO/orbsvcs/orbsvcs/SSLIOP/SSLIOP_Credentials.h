@@ -15,16 +15,19 @@
 
 #include /**/ "ace/pre.h"
 
-#include "SSLIOP_Export.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "SSLIOP_X509.h"
-#include "SSLIOP_EVP_PKEY.h"
+#include "orbsvcs/SSLIOP/SSLIOP_X509.h"
+#include "orbsvcs/SSLIOP/SSLIOP_EVP_PKEY.h"
 #include "orbsvcs/SecurityLevel3C.h"
 #include "tao/LocalObject.h"
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -169,8 +172,10 @@ namespace TAO
 //   } // End SSLIOP namespace
 }   // End TAO namespace
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-# include "SSLIOP_Credentials.inl"
+# include "orbsvcs/SSLIOP/SSLIOP_Credentials.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

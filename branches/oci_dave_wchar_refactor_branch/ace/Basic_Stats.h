@@ -21,6 +21,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /// Collect basic stats about a series of samples
 /**
  * Compute the average and standard deviation (aka jitter) for an
@@ -77,6 +79,8 @@ public:
   /// The sum of all the values
   ACE_UINT64 sum_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Basic_Stats.inl"

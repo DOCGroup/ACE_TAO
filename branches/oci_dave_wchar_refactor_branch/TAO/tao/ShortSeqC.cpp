@@ -29,11 +29,13 @@
 // be\be_codegen.cpp:277
 
 
-#include "ShortSeqC.h"
+#include "tao/ShortSeqC.h"
 #include "tao/CDR.h"
 
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:70
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Arg traits specializations.
 namespace TAO
@@ -41,7 +43,7 @@ namespace TAO
 }
 
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_CORBA_SHORTSEQ_CS_)
@@ -53,7 +55,7 @@ CORBA::ShortSeq::ShortSeq (void)
 CORBA::ShortSeq::ShortSeq (
     CORBA::ULong max
   )
-  : TAO_Unbounded_Sequence<
+  : TAO::unbounded_value_sequence<
         CORBA::Short
       >
     (max)
@@ -65,7 +67,7 @@ CORBA::ShortSeq::ShortSeq (
     CORBA::Short * buffer,
     CORBA::Boolean release
   )
-  : TAO_Unbounded_Sequence<
+  : TAO::unbounded_value_sequence<
         CORBA::Short
       >
     (max, length, buffer, release)
@@ -74,7 +76,7 @@ CORBA::ShortSeq::ShortSeq (
 CORBA::ShortSeq::ShortSeq (
     const ShortSeq &seq
   )
-  : TAO_Unbounded_Sequence<
+  : TAO::unbounded_value_sequence<
         CORBA::Short
       >
     (seq)
@@ -105,15 +107,7 @@ CORBA::Boolean operator<< (
     const CORBA::ShortSeq &_tao_sequence
   )
 {
-  const CORBA::ULong _tao_seq_len = _tao_sequence.length ();
-  
-  if (strm << _tao_seq_len)
-    {
-      // Encode all elements.
-      return strm.write_short_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
-    }
-  
-  return false;
+  return TAO::marshal_sequence(strm, _tao_sequence);
 }
 
 CORBA::Boolean operator>> (
@@ -121,33 +115,9 @@ CORBA::Boolean operator>> (
     CORBA::ShortSeq &_tao_sequence
   )
 {
-  CORBA::ULong _tao_seq_len;
-  
-  if (strm >> _tao_seq_len)
-    {
-      // Add a check to the length of the sequence
-      // to make sure it does not exceed the length
-      // of the stream. (See bug 58.)
-      if (_tao_seq_len > strm.length ())
-        {
-          return false;
-        }
-      
-      // Set the length of the sequence.
-      _tao_sequence.length (_tao_seq_len);
-      
-      // If length is 0 we return true.
-      if (0 >= _tao_seq_len) 
-        {
-          return true;
-        }
-      
-      // Retrieve all the elements.
-      return strm.read_short_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
-    
-    }
-  
-  return false;
+  return TAO::demarshal_sequence(strm, _tao_sequence);
 }
 
 #endif /* _TAO_CDR_OP_CORBA_ShortSeq_CPP_ */
+
+TAO_END_VERSIONED_NAMESPACE_DECL

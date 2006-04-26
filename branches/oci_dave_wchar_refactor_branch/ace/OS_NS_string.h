@@ -15,7 +15,7 @@
 //=============================================================================
 
 #ifndef ACE_OS_NS_STRING_H
-# define ACE_OS_NS_STRING_H
+#define ACE_OS_NS_STRING_H
 
 # include /**/ "ace/pre.h"
 
@@ -30,6 +30,8 @@
 #  undef ACE_EXPORT_MACRO
 #endif
 #define ACE_EXPORT_MACRO ACE_Export
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE_OS {
 
@@ -70,6 +72,7 @@ namespace ACE_OS {
  * On certain platforms this results in better performance.
  * This is determined and set via autoconf.
  */
+  extern ACE_Export
   void *fast_memcpy (void *t, const void *s, size_t len);
 #endif
 
@@ -97,7 +100,8 @@ namespace ACE_OS {
   /// Finds the first occurance of a character in a string (const wchar_t
   /// version).
   ACE_NAMESPACE_INLINE_FUNCTION
-  const wchar_t *strchr (const wchar_t *s, wint_t c);
+
+  const wchar_t *strchr (const wchar_t *s, wchar_t c);
 
   /// Finds the first occurance of a character in a string (char version).
   ACE_NAMESPACE_INLINE_FUNCTION
@@ -105,7 +109,8 @@ namespace ACE_OS {
 
   /// Finds the first occurance of a character in a string (wchar_t version).
   ACE_NAMESPACE_INLINE_FUNCTION
-  wchar_t *strchr (wchar_t *s, wint_t c);
+
+  wchar_t *strchr (wchar_t *s, wchar_t c);
 
   /// Copies a string (char version).
   ACE_NAMESPACE_INLINE_FUNCTION
@@ -126,10 +131,19 @@ namespace ACE_OS {
   size_t strcspn (const wchar_t *s, const wchar_t *reject);
 
   /// Returns a malloced duplicated string (char version).
+  //ACE_NAMESPACE_INLINE_FUNCTION
   extern ACE_Export
   char *strdup (const char *s);
+  /*
+    #if (defined (ACE_LACKS_STRDUP) && !defined(ACE_STRDUP_EQUIVALENT)) \
+    || defined (ACE_HAS_STRDUP_EMULATION)
+    extern ACE_Export
+    char *strdup_emulation (const char *s);
+    #endif
+  */
 
   /// Returns a malloced duplicated string (wchar_t version).
+  //ACE_NAMESPACE_INLINE_FUNCTION
   extern ACE_Export
   wchar_t *strdup (const wchar_t *s);
 
@@ -173,6 +187,7 @@ namespace ACE_OS {
   /// Finds the first occurance of a character in an array (const wchar_t
   /// version).
   extern ACE_Export
+
   const wchar_t *strnchr (const wchar_t *s, wint_t c, size_t len);
 
   /// Finds the first occurance of a character in an array (char version).
@@ -181,6 +196,7 @@ namespace ACE_OS {
 
   /// Finds the first occurance of a character in an array (wchar_t version).
   ACE_NAMESPACE_INLINE_FUNCTION
+
   wchar_t *strnchr (wchar_t *s, wint_t c, size_t len);
 
   /// Compares two arrays (char version).
@@ -266,7 +282,8 @@ namespace ACE_OS {
   /// Finds the last occurance of a character in a string (const wchar_t
   /// version).
   ACE_NAMESPACE_INLINE_FUNCTION
-  const wchar_t *strrchr (const wchar_t *s, wint_t c);
+
+  const wchar_t *strrchr (const wchar_t *s, wchar_t c);
 
   /// Finds the last occurance of a character in a string (char version).
   ACE_NAMESPACE_INLINE_FUNCTION
@@ -274,7 +291,8 @@ namespace ACE_OS {
 
   /// Finds the last occurance of a character in a string (wchar_t version).
   ACE_NAMESPACE_INLINE_FUNCTION
-  wchar_t *strrchr (wchar_t *s, wint_t c);
+
+  wchar_t *strrchr (wchar_t *s, wchar_t c);
 
 #if defined (ACE_LACKS_STRRCHR)
   /// Emulated strrchr (char version) - Finds the last occurance of a
@@ -397,7 +415,8 @@ namespace ACE_OS {
 
 } /* namespace ACE_OS */
 
-#include "ace/OS_NS_string_base.h"
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 # if defined (ACE_HAS_INLINED_OSCALLS)
 #   if defined (ACE_INLINE)

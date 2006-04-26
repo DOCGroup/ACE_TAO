@@ -1,12 +1,15 @@
 // -*- C++ -*-
 // $Id$
 
-#include "ETCL_Interpreter.h"
-#include "ETCL_Constraint.h"
+#include "orbsvcs/ETCL/ETCL_Interpreter.h"
+#include "orbsvcs/ETCL/ETCL_Constraint.h"
 #include "ace/Guard_T.h"
 #include "ace/Thread_Mutex.h"
 
 ACE_RCSID(ETCL, ETCL_Interpreter, "$Id$")
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_SYNCH_MUTEX TAO_ETCL_Interpreter::parserMutex__;
 
@@ -105,3 +108,5 @@ TAO_Lex_String_Input::reset (char* input_string)
   TAO_Lex_String_Input::end_ = 
     input_string + ACE_OS::strlen (TAO_Lex_String_Input::string_);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

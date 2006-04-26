@@ -223,9 +223,6 @@
    PTHREAD_PROCESS_SHARED values */
 #define ACE_HAS_PTHREAD_PROCESS_ENUM
 
-/* Platform has pthread_sigmask() defined. */
-#define ACE_HAS_PTHREAD_SIGMASK
-
 /* Platform will recurse infinitely on thread exits from TSS cleanup routines
    (e.g., AIX) */
 #define ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS
@@ -261,7 +258,7 @@
 #define ACE_HAS_SIG_ATOMIC_T
 
 /* Platform supports new BSD inet_addr len field. */
-#define ACE_HAS_SIN_LEN
+#define ACE_HAS_SOCKADDR_IN_SIN_LEN
 
 /* OS/compiler uses size_t * rather than int * for socket lengths */
 #define ACE_HAS_SIZET_SOCKET_LEN
@@ -366,9 +363,6 @@
 /* Compiler supports the C++ typename keyword */
 #define ACE_HAS_TYPENAME_KEYWORD 1
 
-/* Compiler supports the new using keyword for C++ namespaces. */
-#define ACE_HAS_USING_KEYWORD 1
-
 /* Prints out console message in ACE_NOTSUP.  Useful for tracking down origin
    of ACE_NOTSUP. */
 /* #undef ACE_HAS_VERBOSE_NOTSUP */
@@ -416,9 +410,6 @@
 
 /* Platform needs to #include <sched.h> to get thread scheduling defs. */
 #define ACE_NEEDS_SCHED_H 1
-
-/* <time.h> doesn't automatically #include <sys/time.h> */
-#define ACE_LACKS_SYSTIME_H 1
 
 /* Turns off the LM_DEBUG and LM_ERROR logging macros... */
 /* #undef ACE_NLOGGING */

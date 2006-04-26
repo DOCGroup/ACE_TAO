@@ -2,6 +2,7 @@
 // $Id$
 
 project(DLList) : aceexe {
+  avoids += ace_for_tao
   exename = DLList
   Source_Files {
     DLList.cpp

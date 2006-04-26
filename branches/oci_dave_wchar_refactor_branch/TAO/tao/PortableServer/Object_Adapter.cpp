@@ -1,20 +1,22 @@
 // $Id$
 
 // -- PortableServer Include --
-#include "Object_Adapter.h"
-#include "Non_Servant_Upcall.h"
-#include "Servant_Upcall.h"
-#include "Root_POA.h"
-#include "Regular_POA.h"
-#include "Creation_Time.h"
-#include "POA_Guard.h"
-#include "Default_Servant_Dispatcher.h"
-#include "Collocated_Object_Proxy_Broker.h"
-#include "POAManager.h"
-#include "Servant_Base.h"
+#include "tao/PortableServer/Object_Adapter.h"
+#include "tao/PortableServer/Non_Servant_Upcall.h"
+#include "tao/PortableServer/Servant_Upcall.h"
+#include "tao/PortableServer/Root_POA.h"
+#include "tao/PortableServer/Regular_POA.h"
+#include "tao/PortableServer/Creation_Time.h"
+#include "tao/PortableServer/POA_Guard.h"
+#include "tao/PortableServer/Default_Servant_Dispatcher.h"
+#include "tao/PortableServer/Collocated_Object_Proxy_Broker.h"
+#include "tao/PortableServer/POAManager.h"
+#include "tao/PortableServer/Servant_Base.h"
 
 // -- ACE Include --
 #include "ace/Auto_Ptr.h"
+#include "ace/Log_Msg.h"
+#include "ace/OS_NS_string.h"
 
 // -- TAO Include --
 #include "tao/PortableInterceptorC.h"
@@ -34,18 +36,16 @@
 #include "tao/ServerRequestInterceptor_Adapter.h"
 
 #if !defined (__ACE_INLINE__)
-# include "Object_Adapter.i"
+# include "tao/PortableServer/Object_Adapter.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/OS_NS_string.h"
-
-#include "ThreadPolicy.h"
-#include "LifespanPolicy.h"
-#include "IdAssignmentPolicy.h"
-#include "IdUniquenessPolicy.h"
-#include "ImplicitActivationPolicy.h"
-#include "RequestProcessingPolicy.h"
-#include "ServantRetentionPolicy.h"
+#include "tao/PortableServer/ThreadPolicy.h"
+#include "tao/PortableServer/LifespanPolicy.h"
+#include "tao/PortableServer/IdAssignmentPolicy.h"
+#include "tao/PortableServer/IdUniquenessPolicy.h"
+#include "tao/PortableServer/ImplicitActivationPolicy.h"
+#include "tao/PortableServer/RequestProcessingPolicy.h"
+#include "tao/PortableServer/ServantRetentionPolicy.h"
 
 ACE_RCSID (PortableServer,
            Object_Adapter,
@@ -98,6 +98,8 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Object_Adapter_Timeprobe_Description,
                                   TAO_OBJECT_ADAPTER_DISPATCH_SERVANT_START);
 
 #endif /* ACE_ENABLE_TIMEPROBES */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /* static */
 CORBA::ULong TAO_Object_Adapter::transient_poa_name_size_ = 0;
@@ -164,7 +166,7 @@ TAO_Object_Adapter::TAO_Object_Adapter (const TAO_Server_Strategy_Factory::Activ
 
   new_hint_strategy->object_adapter (this);
 
-  persistent_poa_name_map *ppnm;
+  persistent_poa_name_map *ppnm = 0;
   switch (creation_parameters.poa_lookup_strategy_for_persistent_id_policy_)
     {
     case TAO_LINEAR:
@@ -294,7 +296,7 @@ TAO_Object_Adapter::create_lock (int enable_locking,
 #if defined (ACE_HAS_THREADS)
   if (enable_locking)
     {
-      ACE_Lock *the_lock;
+      ACE_Lock *the_lock = 0;
       ACE_NEW_RETURN (the_lock,
                       ACE_Lock_Adapter<TAO_SYNCH_MUTEX> (thread_lock),
                       0);
@@ -305,7 +307,7 @@ TAO_Object_Adapter::create_lock (int enable_locking,
   ACE_UNUSED_ARG (thread_lock);
 #endif /* ACE_HAS_THREADS */
 
-  ACE_Lock *the_lock;
+  ACE_Lock *the_lock = 0;
   ACE_NEW_RETURN (the_lock,
                   ACE_Lock_Adapter<ACE_SYNCH_NULL_MUTEX> (),
                   0);
@@ -355,9 +357,7 @@ TAO_Object_Adapter::dispatch_servant (const TAO::ObjectKey &key,
   {
     ACE_FUNCTION_TIMEPROBE (TAO_SERVANT_DISPATCH_START);
 
-    servant_upcall.servant ()->_dispatch (req,
-                                          &servant_upcall
-                                          ACE_ENV_ARG_PARAMETER);
+    do_dispatch (req, servant_upcall ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (result);
   }
 
@@ -371,9 +371,9 @@ TAO_Object_Adapter::locate_poa (const TAO::ObjectKey &key,
                                 ACE_ENV_ARG_DECL)
 {
   TAO_Object_Adapter::poa_name poa_system_name;
-  CORBA::Boolean is_root = 0;
-  CORBA::Boolean is_persistent = 0;
-  CORBA::Boolean is_system_id = 0;
+  CORBA::Boolean is_root = false;
+  CORBA::Boolean is_persistent = false;
+  CORBA::Boolean is_system_id = false;
   TAO::Portable_Server::Temporary_Creation_Time poa_creation_time;
 
   int result = 0;
@@ -382,12 +382,12 @@ TAO_Object_Adapter::locate_poa (const TAO::ObjectKey &key,
     ACE_FUNCTION_TIMEPROBE (TAO_POA_PARSE_KEY_START);
 
     result = TAO_Root_POA::parse_key (key,
-                                 poa_system_name,
-                                 system_id,
-                                 is_root,
-                                 is_persistent,
-                                 is_system_id,
-                                 poa_creation_time);
+                                      poa_system_name,
+                                      system_id,
+                                      is_root,
+                                      is_persistent,
+                                      is_system_id,
+                                      poa_creation_time);
   }
 
   if (result != 0)
@@ -406,7 +406,8 @@ TAO_Object_Adapter::locate_poa (const TAO::ObjectKey &key,
   }
 
   if (result != 0)
-    ACE_THROW (CORBA::OBJECT_NOT_EXIST ());
+    ACE_THROW (CORBA::OBJECT_NOT_EXIST (CORBA::OMGVMCID | 2,
+                                        CORBA::COMPLETED_NO));
 }
 
 int
@@ -697,7 +698,7 @@ TAO_Object_Adapter::close (int wait_for_completion
                  wait_for_completion
                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
-  CORBA::release (root);
+  ::CORBA::release (root);
 }
 
 void
@@ -741,7 +742,7 @@ TAO_Object_Adapter::dispatch (TAO::ObjectKey &key,
         {
 #if TAO_HAS_EXTENDED_FT_INTERCEPTORS == 1
           CORBA::OctetSeq_var ocs;
-          sri_adapter.tao_ft_interception_point (request,
+          sri_adapter->tao_ft_interception_point (request,
                                                  0,  // args
                                                  0,  // nargs
                                                  0,  // servant_upcall
@@ -883,7 +884,8 @@ TAO_Object_Adapter::create_collocated_object (TAO_Stub *stub,
   stub->servant_orb (this->orb_core_.orb ());
 
   // It is ok to create a collocated object even when <sb> is
-  // zero.
+  // zero. This constructor will set the stub collocated indicator and
+  // the strategized proxy broker if required.
   CORBA::Object_ptr x;
   ACE_NEW_RETURN (x,
                   CORBA::Object (stub,
@@ -891,20 +893,16 @@ TAO_Object_Adapter::create_collocated_object (TAO_Stub *stub,
                                  sb),
                   CORBA::Object::_nil ());
 
-  // Here we set the strategized Proxy Broker.
-  x->_proxy_broker (the_tao_collocated_object_proxy_broker ());
-
   // Success.
   return x;
 }
 
 CORBA::Long
-TAO_Object_Adapter::initialize_collocated_object (TAO_Stub *stub,
-                                                  CORBA::Object_ptr obj)
+TAO_Object_Adapter::initialize_collocated_object (TAO_Stub *stub)
 {
-  // @@ What about forwarding.  With this approach we are never
-  //    forwarded  when we use collocation!
-  const TAO_MProfile &mp = stub->base_profiles ();
+  // If we have been forwarded: use the forwarded profiles
+  const TAO_MProfile &mp = stub->forward_profiles () ? *(stub->forward_profiles ())
+                                                     : stub->base_profiles ();
 
   TAO_ServantBase *sb = this->get_collocated_servant (mp);
 
@@ -914,13 +912,14 @@ TAO_Object_Adapter::initialize_collocated_object (TAO_Stub *stub,
 
   // It is ok to set the object as a collocated object even when
   // <sb> is zero.
-  obj->set_collocated_servant (sb);
+  stub->collocated_servant (sb);
 
-  // Here we set the strategized Proxy Broker.
-  obj->_proxy_broker (the_tao_collocated_object_proxy_broker ());
+  // Mark the stub as collocated. This will set the strategized object
+  // proxy broker if required.
+  stub->is_collocated (true);
 
-  // Success.
-  return 0;
+  // Return 0 (success) iff we found a servant.
+  return ! sb;
 }
 
 TAO_ServantBase *
@@ -1242,3 +1241,15 @@ TAO_Object_Adapter::servant_dispatcher (TAO_Servant_Dispatcher *dispatcher)
   this->servant_dispatcher_ = dispatcher;
 }
 
+void
+TAO_Object_Adapter::do_dispatch (TAO_ServerRequest& req,
+                                 TAO::Portable_Server::Servant_Upcall& upcall
+                                 ACE_ENV_ARG_DECL)
+{
+  upcall.servant ()->_dispatch(req,
+                               &upcall
+                               ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+}
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,8 +1,8 @@
 // "$Id$"
 
-#include "AbstractBase.h"
-#include "ValueBase.h"
-#include "ValueFactory.h"
+#include "tao/Valuetype/AbstractBase.h"
+#include "tao/Valuetype/ValueBase.h"
+#include "tao/Valuetype/ValueFactory.h"
 #include "tao/Stub.h"
 #include "tao/ORB_Core.h"
 #include "tao/Profile.h"
@@ -10,12 +10,14 @@
 #include "tao/CDR.h"
 
 #if !defined (__ACE_INLINE__)
-# include "AbstractBase.inl"
+# include "tao/Valuetype/AbstractBase.inl"
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID (Valuetype,
            AbstractBase,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // ************************************************************
 // These are in CORBA namespace
@@ -130,7 +132,7 @@ void
 CORBA::AbstractBase::_tao_any_destructor (void *x)
 {
   CORBA::AbstractBase_ptr tmp = static_cast<CORBA::AbstractBase_ptr> (x);
-  CORBA::release (tmp);
+  ::CORBA::release (tmp);
 }
 
 CORBA::Object_ptr
@@ -160,12 +162,11 @@ CORBA::AbstractBase::_to_value (void)
 
   CORBA::ValueBase *retval = this->_tao_to_value ();
 
-  if (retval == 0)
+  if (retval != 0)
     {
-      return retval;
+      retval->_add_ref ();
     }
 
-  retval->_add_ref ();
   return retval;
 }
 
@@ -226,7 +227,7 @@ operator<< (TAO_OutputCDR &strm, const CORBA::AbstractBase_ptr abs)
 
           const TAO_MProfile& mprofile = stubobj->base_profiles ();
 
-          CORBA::ULong profile_count = mprofile.profile_count ();
+          CORBA::ULong const profile_count = mprofile.profile_count ();
 
           if ((strm << profile_count) == 0)
             {
@@ -296,13 +297,13 @@ operator>> (TAO_InputCDR &strm, CORBA::AbstractBase_ptr &abs)
 
           if (!strm.read_ulong (value_tag))
             {
-              return 0;
+              return false;
             }
 
           if (TAO_OBV_GIOP_Flags::is_null_ref (value_tag))
             {
               // Ok, null reference unmarshaled.
-              return 1;
+              return true;
             }
 
           if (!TAO_OBV_GIOP_Flags::is_value_tag (value_tag))
@@ -310,7 +311,7 @@ operator>> (TAO_InputCDR &strm, CORBA::AbstractBase_ptr &abs)
               ACE_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("operator>> CORBA::AbstractBase ")
                           ACE_TEXT ("not value_tag\n")));
-              return 0;
+              return false;
             }
 
           CORBA::String_var repo_id_stream;
@@ -318,7 +319,7 @@ operator>> (TAO_InputCDR &strm, CORBA::AbstractBase_ptr &abs)
           // It would be more efficient not to copy the string)
           if (strm.read_string (repo_id_stream.inout ()) == 0)
             {
-              return 0;
+              return false;
             }
 
           orb_core = strm.orb_core ();
@@ -344,7 +345,7 @@ operator>> (TAO_InputCDR &strm, CORBA::AbstractBase_ptr &abs)
               ACE_ERROR ((LM_ERROR,
                           ACE_TEXT ("(%N:%l): The following unknown type was received: `%s'."),
                           repo_id_stream.in ()));
-              return 0;
+              return false;
             }
 
           abs = factory->create_for_unmarshal_abstract ();
@@ -359,8 +360,8 @@ operator>> (TAO_InputCDR &strm, CORBA::AbstractBase_ptr &abs)
             {
               TAO_Stub *concrete_stubobj = generic_objref->_stubobj ();
 
-              CORBA::Boolean stores_orb =
-                ! CORBA::is_nil (concrete_stubobj->servant_orb_var ().ptr ());
+              CORBA::Boolean const stores_orb =
+                ! CORBA::is_nil (concrete_stubobj->servant_orb_var ().in ());
 
               if (stores_orb)
                 {
@@ -368,7 +369,7 @@ operator>> (TAO_InputCDR &strm, CORBA::AbstractBase_ptr &abs)
                     concrete_stubobj->servant_orb_var ()->orb_core ();
                 }
 
-              CORBA::Boolean collocated =
+              CORBA::Boolean const collocated =
                 orb_core != 0
                 && orb_core->optimize_collocation_objects ()
                 && generic_objref->_is_collocated ();
@@ -378,25 +379,25 @@ operator>> (TAO_InputCDR &strm, CORBA::AbstractBase_ptr &abs)
                                 concrete_stubobj,
                                 collocated,
                                 generic_objref->_servant ()),
-                              0);
-              return 1;
+                              false);
+              return true;
             }
         }
     }
 
-  return 0;
+  return false;
 }
 
 CORBA::Boolean
 CORBA::AbstractBase::_tao_marshal_v (TAO_OutputCDR &) const
 {
-  return 0;
+  return false;
 }
 
 CORBA::Boolean
 CORBA::AbstractBase::_tao_unmarshal_v (TAO_InputCDR &)
 {
-  return 0;
+  return false;
 }
 
 CORBA::ValueBase *
@@ -425,3 +426,5 @@ CORBA::AbstractBase::equivalent_objref (void)
   return this->equivalent_obj_.in ();
 }
 
+
+TAO_END_VERSIONED_NAMESPACE_DECL

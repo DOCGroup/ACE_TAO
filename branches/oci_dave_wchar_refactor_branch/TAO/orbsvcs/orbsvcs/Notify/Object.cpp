@@ -1,31 +1,32 @@
 // $Id$
 
-#include "Object.h"
-#include "POA_Helper.h"
-#include "Worker_Task.h"
-#include "Properties.h"
-#include "Builder.h"
-#include "ThreadPool_Task.h"
-#include "Reactive_Task.h"
+#include "orbsvcs/Notify/Object.h"
+#include "orbsvcs/Notify/POA_Helper.h"
+#include "orbsvcs/Notify/Worker_Task.h"
+#include "orbsvcs/Notify/Properties.h"
+#include "orbsvcs/Notify/Builder.h"
+#include "orbsvcs/Notify/ThreadPool_Task.h"
+#include "orbsvcs/Notify/Reactive_Task.h"
 #include "tao/debug.h"
+#include "orbsvcs/Notify/Event_Manager.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "Object.inl"
+#include "orbsvcs/Notify/Object.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(Notify, TAO_Notify_Object, "$Id$")
 
-
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_Object::TAO_Notify_Object (void)
-  : poa_ (0)
-  , proxy_poa_ (0)
-  , own_proxy_poa_ (false)
-  , object_poa_ (0)
-  , own_object_poa_ (false)
-  , id_ (0)
-  , own_worker_task_ (false)
-  , shutdown_ (false)
+: poa_ (0)
+, proxy_poa_ (0)
+, own_proxy_poa_ (false)
+, object_poa_ (0)
+, own_object_poa_ (false)
+, id_ (0)
+, own_worker_task_ (false)
+, shutdown_ (false)
 {
   if (TAO_debug_level > 2 )
     ACE_DEBUG ((LM_DEBUG,"object:%x  created\n", this ));
@@ -88,19 +89,19 @@ void
 TAO_Notify_Object::deactivate (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_TRY
-    {
-      this->poa_->deactivate (this->id_ ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      // Do not propagate any exceptions
-      if (TAO_debug_level > 2)
   {
-    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "(%P|%t)\n");
-    ACE_DEBUG ((LM_DEBUG, "Could not deactivate object %d\n", this->id_));
+    this->poa_->deactivate (this->id_ ACE_ENV_ARG_PARAMETER);
+    ACE_TRY_CHECK;
   }
+  ACE_CATCHANY
+  {
+    // Do not propagate any exceptions
+    if (TAO_debug_level > 2)
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "(%P|%t)\n");
+      ACE_DEBUG ((LM_DEBUG, "Could not deactivate object %d\n", this->id_));
     }
+  }
   ACE_ENDTRY;
 }
 
@@ -117,6 +118,7 @@ TAO_Notify_Object::shutdown (ACE_ENV_SINGLE_ARG_DECL)
   }
 
   this->deactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (1);
 
   this->shutdown_worker_task ();
 
@@ -136,70 +138,70 @@ TAO_Notify_Object::shutdown_worker_task (void)
   TAO_Notify_Worker_Task::Ptr task( this->worker_task_ );
   this->worker_task_.reset();
   if ( task.isSet() )
-    {
+  {
     if ( this->own_worker_task_ )
     {
       task->shutdown ();
     }
-    }
+  }
 }
 
 void
 TAO_Notify_Object::destroy_proxy_poa (void)
 {
   if (this->proxy_poa_ != 0)
+  {
+    ACE_TRY_NEW_ENV
     {
-      ACE_TRY_NEW_ENV
-        {
-          if ( this->proxy_poa_ == this->object_poa_ ) this->object_poa_ = 0;
-          if ( this->proxy_poa_ == this->poa_ ) this->poa_ = 0;
+      if ( this->proxy_poa_ == this->object_poa_ ) this->object_poa_ = 0;
+      if ( this->proxy_poa_ == this->poa_ ) this->poa_ = 0;
 
-          if ( this->own_proxy_poa_ == true )
-          {
-            this->own_proxy_poa_ = false;
-          	ACE_Auto_Ptr< TAO_Notify_POA_Helper > app( object_poa_ );
-          this->proxy_poa_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-          }
-          this->proxy_poa_ = 0;
-        }
-      ACE_CATCHANY
-        {
-          if (TAO_debug_level > 2)
-            ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                                 "Proxy shutdown error (%P|%t)\n");
-        }
-      ACE_ENDTRY;
+      if ( this->own_proxy_poa_ == true )
+      {
+        this->own_proxy_poa_ = false;
+        ACE_Auto_Ptr< TAO_Notify_POA_Helper > app( object_poa_ );
+        this->proxy_poa_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+      }
+      this->proxy_poa_ = 0;
     }
+    ACE_CATCHANY
+    {
+      if (TAO_debug_level > 2)
+        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+        "Proxy shutdown error (%P|%t)\n");
+    }
+    ACE_ENDTRY;
+  }
 }
 
 void
 TAO_Notify_Object::destroy_object_poa (void)
 {
   if (this->object_poa_ != 0)
+  {
+    ACE_TRY_NEW_ENV
     {
-      ACE_TRY_NEW_ENV
-        {
-          if ( this->object_poa_ == this->proxy_poa_ ) this->proxy_poa_ = 0;
-          if ( this->object_poa_ == this->poa_ ) this->poa_ = 0;
+      if ( this->object_poa_ == this->proxy_poa_ ) this->proxy_poa_ = 0;
+      if ( this->object_poa_ == this->poa_ ) this->poa_ = 0;
 
-          if ( this->own_object_poa_ == true )
-          {
-            this->own_object_poa_ = false;
-          	ACE_Auto_Ptr< TAO_Notify_POA_Helper > aop( object_poa_ );
-          this->object_poa_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-          }
-          this->object_poa_ = 0;
-        }
-      ACE_CATCHANY
-        {
-          if (TAO_debug_level > 2)
-            ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                                 "Proxy shutdown error (%P|%t)\n");
-        }
-      ACE_ENDTRY;
+      if ( this->own_object_poa_ == true )
+      {
+        this->own_object_poa_ = false;
+        ACE_Auto_Ptr< TAO_Notify_POA_Helper > aop( object_poa_ );
+        this->object_poa_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+      }
+      this->object_poa_ = 0;
     }
+    ACE_CATCHANY
+    {
+      if (TAO_debug_level > 2)
+        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+        "Proxy shutdown error (%P|%t)\n");
+    }
+    ACE_ENDTRY;
+  }
 }
 
 /// Shutdown the current poa.
@@ -219,7 +221,6 @@ TAO_Notify_Object::set_worker_task (TAO_Notify_Worker_Task* worker_task)
   this->worker_task_.reset (worker_task);
 
   this->own_worker_task_ = true;
-
 }
 
 void
@@ -243,6 +244,7 @@ TAO_Notify_Object::set_object_poa (TAO_Notify_POA_Helper* object_poa)
 
   this->own_object_poa_ = true;
 }
+
 void
 TAO_Notify_Object::set_poa (TAO_Notify_POA_Helper* poa)
 {
@@ -261,16 +263,22 @@ TAO_Notify_Object::set_qos (const CosNotification::QoSProperties & qos ACE_ENV_A
 
   // Apply the appropriate concurrency QoS
   if (new_qos_properties.thread_pool ().is_valid ())
-    {
-      if (new_qos_properties.thread_pool ().value ().static_threads == 0)
+  {
+    if (new_qos_properties.thread_pool ().value ().static_threads == 0)
+      {
         TAO_Notify_PROPERTIES::instance()->builder()->apply_reactive_concurrency (*this ACE_ENV_ARG_PARAMETER);
-      else
+        ACE_CHECK;
+      }
+    else
+      {
         TAO_Notify_PROPERTIES::instance()->builder()->
-          apply_thread_pool_concurrency (*this, new_qos_properties.thread_pool ().value () ACE_ENV_ARG_PARAMETER);
-    }
+        apply_thread_pool_concurrency (*this, new_qos_properties.thread_pool ().value () ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK;
+      }
+  }
   else if (new_qos_properties.thread_pool_lane ().is_valid ())
     TAO_Notify_PROPERTIES::instance()->builder()->
-      apply_lane_concurrency (*this, new_qos_properties.thread_pool_lane ().value () ACE_ENV_ARG_PARAMETER);
+    apply_lane_concurrency (*this, new_qos_properties.thread_pool_lane ().value () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // Update the Thread Task's QoS properties..
@@ -293,8 +301,8 @@ TAO_Notify_Object::get_qos (ACE_ENV_SINGLE_ARG_DECL)
   CosNotification::QoSProperties_var properties;
 
   ACE_NEW_THROW_EX (properties,
-                    CosNotification::QoSProperties (),
-                    CORBA::NO_MEMORY ());
+    CosNotification::QoSProperties (),
+    CORBA::NO_MEMORY ());
 
   this->qos_properties_.populate (properties);
 
@@ -323,14 +331,16 @@ TAO_Notify_Object::timer (void)
   return this->worker_task_->timer ();
 }
 
-namespace {
+namespace
+{
   template<class T>
-    void add_qos_attr(TAO_Notify::NVPList& attrs, const T& prop) {
-      if (prop.is_valid())
-      {
-        attrs.push_back(TAO_Notify::NVP (prop));
-      }
+  void add_qos_attr(TAO_Notify::NVPList& attrs, const T& prop)
+  {
+    if (prop.is_valid())
+    {
+      attrs.push_back(TAO_Notify::NVP (prop));
     }
+  }
 } // namespace
 
 void
@@ -358,3 +368,5 @@ TAO_Notify_Object::load_attrs(const TAO_Notify::NVPList& attrs)
   this->qos_properties_.init ();
 }
 
+
+TAO_END_VERSIONED_NAMESPACE_DECL

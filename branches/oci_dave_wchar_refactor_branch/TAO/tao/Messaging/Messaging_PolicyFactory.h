@@ -17,7 +17,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "messaging_export.h"
+#include "tao/Messaging/messaging_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -33,8 +33,10 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /// Policy factory for all Messaging related policies.
-class TAO_Messaging_Export TAO_Messaging_PolicyFactory
+class TAO_Messaging_PolicyFactory
   : public virtual PortableInterceptor::PolicyFactory,
     public virtual TAO_Local_RefCounted_Object
 {
@@ -53,6 +55,7 @@ private:
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

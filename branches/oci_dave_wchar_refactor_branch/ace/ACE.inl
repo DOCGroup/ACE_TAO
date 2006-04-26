@@ -1,10 +1,15 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
 
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_Thread.h"
 #include "ace/os_include/os_ctype.h"
 #include "ace/OS_NS_sys_socket.h"
+
+// Open versioned namespace, if enabled by the user.
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 
 // Wrappers for methods that have been moved to ACE_OS.
 
@@ -266,6 +271,20 @@ ACE::handle_exception_ready (ACE_HANDLE handle,
 }
 
 ACE_INLINE void
+ACE::strdelete (char *s)
+{
+  delete [] s;
+}
+
+#if defined (ACE_HAS_WCHAR)
+ACE_INLINE void
+ACE::strdelete (wchar_t *s)
+{
+  delete [] s;
+}
+#endif /* ACE_HAS_WCHAR */
+
+ACE_INLINE void
 ACE::unique_name (const void *object,
                   ACE_TCHAR *name,
                   size_t length)
@@ -312,3 +331,6 @@ ACE::hex2byte (ACE_TCHAR c)
   else
     return (u_char) (10 + c - ACE_LIB_TEXT ('A'));
 }
+
+// Close versioned namespace, if enabled by the user.
+ACE_END_VERSIONED_NAMESPACE_DECL

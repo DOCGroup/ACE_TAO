@@ -1,10 +1,12 @@
 // $Id$
 
-#include "TCP.h"
-#include "AVStreams_i.h"
+#include "orbsvcs/AV/TCP.h"
+#include "orbsvcs/AV/AVStreams_i.h"
 
 #include "tao/debug.h"
 #include "ace/OS_NS_strings.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 //------------------------------------------------------------
 // TAO_AV_TCP_Transport
@@ -693,6 +695,8 @@ TAO_AV_TCP_Flow_Handler::handle_timeout (const ACE_Time_Value &tv,
 {
   return TAO_AV_Flow_Handler::handle_timeout (tv,arg);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (TAO_AV_TCP_Flow_Factory,
                        ACE_TEXT ("TCP_Flow_Factory"),

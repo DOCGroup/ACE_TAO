@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -26,13 +26,15 @@
 #include "ace/LSOCK_Stream.h"
 #include "ace/UNIX_Addr.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_LSOCK_Connector
  *
  * @brief Defines the format and interface for the connector side of
  * the <ACE_LSOCK_Stream>.
  */
-class ACE_Sockets_Export ACE_LSOCK_Connector : public ACE_SOCK_Connector
+class ACE_Export ACE_LSOCK_Connector : public ACE_SOCK_Connector
 {
 public:
   // = Initialization methods.
@@ -77,6 +79,8 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/LSOCK_Connector.inl"

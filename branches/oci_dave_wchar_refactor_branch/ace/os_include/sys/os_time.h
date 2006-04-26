@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file    os_time.h
+ *  @file os_time.h
  *
  *  time types
  *
@@ -29,6 +29,10 @@
 #if !defined (ACE_LACKS_SYS_TIME_H)
 #  include /**/ <sys/time.h>
 #endif /* !ACE_LACKS_SYS_TIME_H */
+
+#if defined (ACE_VXWORKS) && (ACE_VXWORKS == 0x620)
+#  include /**/ <time.h> // VxWorks 6.2 defined timeval in time.h
+#endif
 
 // Place all additions (especially function declarations) within extern "C" {}
 #ifdef __cplusplus

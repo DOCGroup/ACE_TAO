@@ -1,21 +1,27 @@
 // $Id$
 
-#include "Method_Request_Lookup.h"
+#include "orbsvcs/Notify/Method_Request_Lookup.h"
 
 ACE_RCSID(Notify, TAO_Notify_Method_Request_Lookup, "$Id$")
 
-#include "Consumer_Map.h"
-#include "ProxySupplier.h"
-#include "ProxyConsumer.h"
-#include "Proxy.h"
-#include "Admin.h"
-#include "SupplierAdmin.h"
-#include "Method_Request_Dispatch.h"
-#include "Delivery_Request.h"
-#include "EventChannelFactory.h"
+#include "orbsvcs/Notify/Consumer_Map.h"
+#include "orbsvcs/Notify/ProxySupplier.h"
+#include "orbsvcs/Notify/ProxyConsumer.h"
+#include "orbsvcs/Notify/Proxy.h"
+#include "orbsvcs/Notify/Admin.h"
+#include "orbsvcs/Notify/SupplierAdmin.h"
+#include "orbsvcs/Notify/Method_Request_Dispatch.h"
+#include "orbsvcs/Notify/Delivery_Request.h"
+#include "orbsvcs/Notify/EventChannelFactory.h"
+#include "orbsvcs/Notify/Event_Manager.h"
+#include "orbsvcs/Notify/Factory.h"
+
+#include "orbsvcs/ESF/ESF_Proxy_Collection.h"
 
 #include "tao/debug.h"
-#include "tao/corba.h"
+#include "tao/CDR.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_Method_Request_Lookup::TAO_Notify_Method_Request_Lookup (
       const TAO_Notify_Event * event,
@@ -38,6 +44,7 @@ TAO_Notify_Method_Request_Lookup::work (
   {
     TAO_Notify_Method_Request_Dispatch_No_Copy request (*this, proxy_supplier, true);
     proxy_supplier->deliver (request ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
   }
   else
   {
@@ -57,6 +64,7 @@ int TAO_Notify_Method_Request_Lookup::execute_i (ACE_ENV_SINGLE_ARG_DECL)
                                                              parent.filter_admin (),
                                                              parent.filter_operator ()
                                                              ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
 
   if (TAO_debug_level > 1)
     ACE_DEBUG ((LM_DEBUG, "Proxyconsumer %x filter eval result = %d",&this->proxy_consumer_ , val));
@@ -78,7 +86,10 @@ int TAO_Notify_Method_Request_Lookup::execute_i (ACE_ENV_SINGLE_ARG_DECL)
     consumers = entry->collection ();
 
     if (consumers != 0)
-      consumers->for_each (this ACE_ENV_ARG_PARAMETER);
+      {
+        consumers->for_each (this ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK_RETURN (0);
+      }
 
     map.release (entry);
   }
@@ -87,7 +98,10 @@ int TAO_Notify_Method_Request_Lookup::execute_i (ACE_ENV_SINGLE_ARG_DECL)
   consumers = map.broadcast_collection ();
 
   if (consumers != 0)
-    consumers->for_each (this ACE_ENV_ARG_PARAMETER);
+    {
+      consumers->for_each (this ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (0);
+    }
   this->complete ();
   return 0;
 }
@@ -206,13 +220,14 @@ TAO_Notify_Method_Request_Lookup_No_Copy::copy (ACE_ENV_SINGLE_ARG_DECL)
 {
   TAO_Notify_Method_Request_Queueable* request;
 
-  TAO_Notify_Event::Ptr event_var (
-    this->event_->queueable_copy (ACE_ENV_SINGLE_ARG_PARAMETER) );
+  TAO_Notify_Event::Ptr event(this->event_->queueable_copy(ACE_ENV_SINGLE_ARG_PARAMETER));
   ACE_CHECK_RETURN (0);
 
   ACE_NEW_THROW_EX (request,
-                    TAO_Notify_Method_Request_Lookup_Queueable (event_var, this->proxy_consumer_),
+                    TAO_Notify_Method_Request_Lookup_Queueable (event, this->proxy_consumer_),
                     CORBA::INTERNAL ());
 
   return request;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -89,7 +89,7 @@ Options::locking_strategy (ACE_Lock_Adapter<ACE_SYNCH_MUTEX> *ls)
   this->locking_strategy_ = ls;
 }
 
-int
+long
 Options::performance_window (void) const
 {
   return this->performance_window_;

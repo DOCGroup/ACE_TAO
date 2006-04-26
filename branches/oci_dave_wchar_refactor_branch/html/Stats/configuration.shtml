@@ -11,9 +11,11 @@
 
     <!--#include file="navigation.html"-->
 
-    <P>All the experiments run on a dual Xeaon @2.40GHz, with
-      1Gb of RAM.  The machine is running Linux (SuSE 8.2),
-      and we use gcc-3.3 to compile ACE+TAO, with static libraries
+    <P>All the experiments run the system described below.
+      The machine is running Linux
+      (<!--#include file="data/linuxversion.txt"-->),
+      and we use GCC (<!--#include file="data/gccversion.txt"-->),
+      to compile ACE+TAO, with static libraries
       and optimizations enabled.
     </P>
 

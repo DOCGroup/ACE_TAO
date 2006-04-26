@@ -14,6 +14,8 @@ ACE_RCSID (tao,
            Asynch_Reply_Dispatcher_Base,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Constructor.
 TAO_Asynch_Reply_Dispatcher_Base::TAO_Asynch_Reply_Dispatcher_Base (
     TAO_ORB_Core *orb_core,
@@ -84,28 +86,26 @@ TAO_Asynch_Reply_Dispatcher_Base::reply_timed_out (void)
 {
 }
 
-long
+void
 TAO_Asynch_Reply_Dispatcher_Base::incr_refcount (void)
 {
-  ACE_GUARD_RETURN (ACE_Lock,
-                    mutex,
-                    *this->lock_,
-                    -1);
-  return ++this->refcount_;
+  ACE_GUARD (ACE_Lock,
+             mutex,
+             *this->lock_);
+  ++this->refcount_;
 }
 
-long
+void
 TAO_Asynch_Reply_Dispatcher_Base::decr_refcount (void)
 {
   {
-    ACE_GUARD_RETURN (ACE_Lock,
-                      mutex,
-                      *this->lock_,
-                      -1);
+    ACE_GUARD (ACE_Lock,
+               mutex,
+               *this->lock_);
     --this->refcount_;
 
     if (this->refcount_ > 0)
-      return this->refcount_;
+      return;
   }
 
   if (this->allocator_)
@@ -119,16 +119,17 @@ TAO_Asynch_Reply_Dispatcher_Base::decr_refcount (void)
       delete this;
     }
 
-  return 0;
+  return;
 }
 
 bool
 TAO_Asynch_Reply_Dispatcher_Base::try_dispatch_reply (void)
 {
   if (this->is_reply_dispatched_)
-    return false;
-
-  if (!this->is_reply_dispatched_)
+    {
+      return false;
+    }
+  else
     {
       ACE_GUARD_RETURN (ACE_Lock,
                         mutex,
@@ -144,3 +145,5 @@ TAO_Asynch_Reply_Dispatcher_Base::try_dispatch_reply (void)
 
   return false;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

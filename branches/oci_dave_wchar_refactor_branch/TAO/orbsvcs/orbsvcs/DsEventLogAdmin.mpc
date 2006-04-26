@@ -1,11 +1,9 @@
 // -*- MPC -*-
 // $Id$
 
-project(DsEventLogAdmin_IDL) : orbsvcslib, core, dslogadmin, event {
-
+project(DsEventLogAdmin_IDL) : orbsvcslib, core, dslogadmin, event, tao_versioning_idl_defaults {
   custom_only = 1
-
-  idlflags += -Wb,stub_export_macro=TAO_EventLog_Export -Wb,stub_export_include=orbsvcs/Log/eventlog_export.h -Wb,skel_export_macro=TAO_EventLog_Skel_Export -Wb,skel_export_include=orbsvcs/Log/eventlog_skel_export.h
+  idlflags   += -Wb,stub_export_macro=TAO_EventLog_Export -Wb,stub_export_include=orbsvcs/Log/eventlog_export.h -Wb,skel_export_macro=TAO_EventLog_Skel_Export -Wb,skel_export_include=orbsvcs/Log/eventlog_skel_export.h
 
   IDL_Files {
     DsEventLogAdmin.idl
@@ -15,8 +13,8 @@ project(DsEventLogAdmin_IDL) : orbsvcslib, core, dslogadmin, event {
 project(DsEventLogAdmin) : orbsvcslib, core, dslogadmin, event {
   sharedname   = TAO_DsEventLogAdmin
   dynamicflags = TAO_EVENTLOG_BUILD_DLL
-
-  after += DsEventLogAdmin_IDL
+  tagchecks   += EventLog
+  after       += DsEventLogAdmin_IDL
 
   IDL_Files {
   }
@@ -50,6 +48,7 @@ project(DsEventLogAdmin) : orbsvcslib, core, dslogadmin, event {
 project(DsEventLogAdmin_Skel) : orbsvcslib, core, dseventlogadmin, dslogadmin_skel, event_skel, portableserver {
   sharedname   = TAO_DsEventLogAdmin_Skel
   dynamicflags = TAO_EVENTLOG_SKEL_BUILD_DLL
+  tagchecks   += EventLog
 
   IDL_Files {
   }

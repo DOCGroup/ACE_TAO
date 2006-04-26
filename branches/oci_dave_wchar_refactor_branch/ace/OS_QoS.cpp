@@ -13,6 +13,8 @@
 #include "ace/OS_QoS.h"
 #include "ace/OS_NS_errno.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_Flow_Spec::ACE_Flow_Spec (unsigned long token_rate,
                               unsigned long token_bucket_size,
                               unsigned long peak_bandwidth,
@@ -470,3 +472,5 @@ ACE_Accept_QoS_Params::callback_data (unsigned long cd)
 {
   this->callback_data_ = cd;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

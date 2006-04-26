@@ -25,6 +25,7 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // TAO_IDL - Generated from
 // be\be_visitor_interface/interface_ci.cpp:70
@@ -39,7 +40,7 @@ Messaging::ReplyHandler::ReplyHandler (
     TAO_Abstract_ServantBase *servant,
     TAO_ORB_Core *oc
   )
-  : ACE_NESTED_CLASS (CORBA, Object) (
+  : ::CORBA::Object (
         objref,
         _tao_collocated,
         servant,
@@ -55,9 +56,11 @@ Messaging::ReplyHandler::ReplyHandler (
     IOP::IOR *ior,
     TAO_ORB_Core *oc
   )
-  : ACE_NESTED_CLASS ( ::CORBA, Object) (ior, oc),
+  : ::CORBA::Object (ior, oc),
     the_TAO_ReplyHandler_Proxy_Broker_ (0)
 {
 }
 
 #endif /* end #if !defined */
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,4 +1,4 @@
-#include "PG_Utils.h"
+#include "orbsvcs/PortableGroup/PG_Utils.h"
 
 #include "tao/MProfile.h"
 #include "tao/Profile.h"
@@ -13,6 +13,7 @@ ACE_RCSID (PortableGroup,
            PG_Utils,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -171,3 +172,5 @@ namespace TAO
     return cdr.good_bit ();
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

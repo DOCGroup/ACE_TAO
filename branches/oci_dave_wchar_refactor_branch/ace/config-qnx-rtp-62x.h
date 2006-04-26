@@ -14,6 +14,7 @@
 //                ACE_HAS Section
 /////////////////////////////////////////////////////////////////
 #define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
+#define ACE_HAS_3_PARAM_WCSTOK
 #define ACE_HAS_4_4BSD_SENDMSG_RECVMSG
 // Although ACE does have alloca() on this compiler/platform combination, it is
 // disabled by default since it can be dangerous.  Uncomment the following line
@@ -41,7 +42,6 @@
 #define ACE_HAS_POSIX_TIME
 #define ACE_HAS_PTHREADS
 #define ACE_HAS_PTHREADS_STD
-#define ACE_HAS_PTHREAD_SIGMASK
 #define ACE_HAS_P_READ_WRITE
 #define ACE_HAS_REENTRANT_FUNCTIONS
 #define ACE_HAS_SELECT_H
@@ -51,7 +51,7 @@
 #define ACE_HAS_SIGWAIT
 #define ACE_HAS_SIG_ATOMIC_T
 #define ACE_HAS_SIG_MACROS
-#define ACE_HAS_SIN_LEN
+#define ACE_HAS_SOCKADDR_IN_SIN_LEN
 #define ACE_HAS_SNPRINTF
 #define ACE_HAS_SOCKLEN_T
 #define ACE_HAS_SSIZE_T
@@ -92,7 +92,6 @@
 #define ACE_LACKS_STROPTS_H
 #define ACE_LACKS_STRRECVFD
 #define ACE_LACKS_SYSCALL
-#define ACE_LACKS_SYSTIME_H
 #define ACE_LACKS_SYS_MSG_H
 #define ACE_LACKS_SYSV_SHMEM
 #define ACE_LACKS_SYS_SHM_H

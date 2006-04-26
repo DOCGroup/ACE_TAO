@@ -1,4 +1,4 @@
-#include "GOA.h"
+#include "orbsvcs/PortableGroup/GOA.h"
 
 
 ACE_RCSID (PortableGroup,
@@ -6,8 +6,8 @@ ACE_RCSID (PortableGroup,
            "$Id$")
 
 
-#include "PortableGroup_Acceptor_Registry.h"
-#include "PortableGroup_Request_Dispatcher.h"
+#include "orbsvcs/PortableGroup/PortableGroup_Acceptor_Registry.h"
+#include "orbsvcs/PortableGroup/PortableGroup_Request_Dispatcher.h"
 
 #include "tao/ORB_Core.h"
 #include "tao/ORB.h"
@@ -17,6 +17,8 @@ ACE_RCSID (PortableGroup,
 #include "tao/CDR.h"
 
 #include "ace/Auto_Ptr.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 PortableServer::ObjectId *
 TAO_GOA::create_id_for_reference (CORBA::Object_ptr the_ref
@@ -576,7 +578,7 @@ TAO_GOA::find_group_component (const CORBA::Object_ptr the_ref,
   // Iterate through the tagged profiles, and
   // create acceptors for the multicast ones.
   slot = 0;
-  while ((profile = profiles.get_profile (slot)))
+  while (0 != (profile = profiles.get_profile (slot)))
     {
       if (this->find_group_component_in_profile (profile, group) == 0)
         return 0;
@@ -636,7 +638,7 @@ TAO_GOA::create_group_acceptors (CORBA::Object_ptr the_ref,
   // Iterate through the tagged profiles, and
   // create acceptors for the multicast ones.
   slot = 0;
-  while ((profile = profiles.get_profile (slot)))
+  while (0 != (profile = profiles.get_profile (slot)))
     {
       if (profile->supports_multicast ())
         {
@@ -705,3 +707,5 @@ TAO_GOA::associate_group_with_ref (
   ACE_CHECK;
 
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

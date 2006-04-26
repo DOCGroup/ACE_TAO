@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -15,7 +15,7 @@
 #define TAO_TYPECODEFACTORY_ADAPTER_IMPL_H
 #include /**/ "ace/pre.h"
 
-#include "typecodefactory_export.h"
+#include "tao/TypeCodeFactory/typecodefactory_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -24,6 +24,8 @@
 #include "tao/TypeCodeFactory_Adapter.h"
 #include "ace/Service_Config.h"
 #include "tao/default_environment.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_TypeCodeFactory_Adapter_Impl
@@ -248,12 +250,15 @@ public:
   static int Initializer (void);
 };
 
-ACE_STATIC_SVC_DECLARE (TAO_TypeCodeFactory_Adapter_Impl)
-ACE_FACTORY_DECLARE (TAO_TypeCodeFactory, TAO_TypeCodeFactory_Adapter_Impl)
-
 static int
 TAO_Requires_TypeCodeFactory_Initializer =
   TAO_TypeCodeFactory_Adapter_Impl::Initializer ();
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+ACE_STATIC_SVC_DECLARE (TAO_TypeCodeFactory_Adapter_Impl)
+ACE_FACTORY_DECLARE (TAO_TypeCodeFactory, TAO_TypeCodeFactory_Adapter_Impl)
+
 
 #include /**/ "ace/post.h"
 #endif /* TAO_TYPECODEFACTORY_ADAPTER_IMPL_H */

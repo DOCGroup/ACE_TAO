@@ -1,8 +1,6 @@
-// This may look like C, but it's really -*- C++ -*-
-//
 // $Id$
 
-#include "PortableGroup_Acceptor_Registry.h"
+#include "orbsvcs/PortableGroup/PortableGroup_Acceptor_Registry.h"
 #include "tao/ORB_Core.h"
 #include "tao/Profile.h"
 #include "tao/Protocol_Factory.h"
@@ -15,6 +13,8 @@
 ACE_RCSID (PortableGroup,
            PortableGroup_Acceptor_Registry,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_PortableGroup_Acceptor_Registry::TAO_PortableGroup_Acceptor_Registry (void)
 {
@@ -187,3 +187,5 @@ TAO_PortableGroup_Acceptor_Registry::find (const TAO_Profile* profile,
 
    return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

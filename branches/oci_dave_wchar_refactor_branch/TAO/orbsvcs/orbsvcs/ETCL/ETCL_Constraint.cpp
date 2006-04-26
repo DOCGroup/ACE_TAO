@@ -1,24 +1,25 @@
 // -*- C++ -*-
 // $Id$
 
-#include "ETCL_Constraint.h"
-#include "ETCL_Constraint_Visitor.h"
-#include "ETCL_y.h"
+#include "orbsvcs/ETCL/ETCL_Constraint.h"
+#include "orbsvcs/ETCL/ETCL_Constraint_Visitor.h"
+#include "orbsvcs/ETCL/ETCL_y.h"
 
 #include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
 #include "tao/AnyTypeCode/TypeCode.h"
 #include "tao/AnyTypeCode/Any.h"
-#include "tao/Managed_Types.h"
 #include "tao/Environment.h"
 #include "tao/CDR.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "ETCL_Constraint.inl"
+#include "orbsvcs/ETCL/ETCL_Constraint.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (ETCL,
            ETCL_Constraint,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_ETCL_Constraint::TAO_ETCL_Constraint (void)
 {
@@ -951,3 +952,5 @@ TAO_ETCL_Preference::accept (TAO_ETCL_Constraint_Visitor *visitor)
 TAO_ETCL_Constraint_Visitor::~TAO_ETCL_Constraint_Visitor (void)
 {
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

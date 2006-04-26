@@ -31,9 +31,11 @@
 #include "ace/LSOCK_Connector.h"
 #include "ace/Connector.h"
 #include "tao/Transport_Connector.h"
-#include "UIOP_Connection_Handler.h"
+#include "tao/Strategies/UIOP_Connection_Handler.h"
 #include "tao/Resource_Factory.h"
 #include "tao/Connector_Impl.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_UIOP_Endpoint;
 class TAO_Endpoint;
@@ -73,7 +75,7 @@ public:
 
   virtual TAO_Profile *corbaloc_scan (const char *str, size_t &len
                                       ACE_ENV_ARG_DECL);
-  
+
   virtual char object_key_delimiter (void) const;
 
   /// Cancel the passed cvs handler from the connector
@@ -130,6 +132,8 @@ private:
   /// Do we need to use a GIOP_Lite for sending messages?
   const bool lite_flag_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 # endif  /* TAO_HAS_UIOP == 1 */
 

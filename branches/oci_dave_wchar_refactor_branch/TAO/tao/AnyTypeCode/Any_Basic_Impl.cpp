@@ -14,6 +14,8 @@ ACE_RCSID (tao,
            Any_Basic_Impl,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   Any_Basic_Impl::Any_Basic_Impl (CORBA::TypeCode_ptr tc,
@@ -107,9 +109,9 @@ namespace TAO
                               ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
-        if (_tao_equiv == 0)
+        if (!_tao_equiv)
           {
-            return 0;
+            return false;
           }
 
         TAO::Any_Impl *impl = any.impl ();
@@ -121,12 +123,12 @@ namespace TAO
 
             if (narrow_impl == 0)
               {
-                return 0;
+                return false;
               }
 
             Any_Basic_Impl::assign_value (_tao_elem,
                                           narrow_impl);
-            return 1;
+            return true;
           }
 
         TAO::Any_Basic_Impl *replacement =
@@ -148,7 +150,7 @@ namespace TAO
         // shared by another Any. This copies the state, not the buffer.
         TAO_InputCDR for_reading (unk->_tao_get_cdr ());
 
-        CORBA::Boolean good_decode =
+        CORBA::Boolean const good_decode =
           replacement->demarshal_value (for_reading,
                                         static_cast<CORBA::Long> (tck));
 
@@ -159,18 +161,18 @@ namespace TAO
                                           tck);
             const_cast<CORBA::Any &> (any).replace (replacement);
             replacement_safety.release ();
-            return 1;
+            return true;
           }
 
         // Duplicated by Any_Impl base class constructor.
-        CORBA::release (any_tc);
+        ::CORBA::release (any_tc);
       }
     ACE_CATCHANY
       {
       }
     ACE_ENDTRY;
 
-    return 0;
+    return false;
   }
 
   CORBA::Boolean
@@ -380,3 +382,5 @@ namespace TAO
       }
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,10 +1,10 @@
-#include "ORBInitializer_Registry.h"
-#include "ORBInitializer_Registry_Adapter.h"
-#include "PortableInterceptorC.h"
-#include "ORB.h"
-#include "ORB_Constants.h"
-#include "TAO_Singleton_Manager.h"
-#include "SystemException.h"
+#include "tao/ORBInitializer_Registry.h"
+#include "tao/ORBInitializer_Registry_Adapter.h"
+#include "tao/PortableInterceptorC.h"
+#include "tao/ORB.h"
+#include "tao/ORB_Constants.h"
+#include "tao/TAO_Singleton_Manager.h"
+#include "tao/SystemException.h"
 
 #include "ace/Service_Config.h"
 #include "ace/Dynamic_Service.h"
@@ -18,6 +18,8 @@ ACE_RCSID (tao,
 
 
 // ****************************************************************
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace PortableInterceptor
 {
@@ -84,3 +86,4 @@ namespace PortableInterceptor
   }
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

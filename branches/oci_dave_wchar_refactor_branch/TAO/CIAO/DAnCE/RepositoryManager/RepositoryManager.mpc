@@ -1,24 +1,51 @@
 // -*- MPC -*-
 // $Id$
 
-project(Repository_Manager): ciao_server_dnc,ciao_deployment_svnt, ciao_deployment_stub, taoexe, xerces, exceptions {
-  exename = executor
-  after += Config_Handlers ExecutionManager_stub NodeManager_stub
-  includes += /usr/include $(CIAO_ROOT)/tools
-  libpaths += /usr/lib
-  libs     += Config_Handlers NodeManager_stub
-  libs     += ExecutionManager_stub CIAO_DnC_Server
-  after    += Config_Handlers
+//RepositoryManager project: implementation of a repository manager
+//compleint with the D&C spec
+
+project (RepositoryManager) : ciao_server_dnc, ciao_config_handlers, zzip, zlib {
+
+  includes += $(CIAO_ROOT)/tools/Config_Handlers  //to circumvent an improper include resolution
+                                                  //in the Package_Handlers/PC_Intf.h
+  exename = RepositoryManagerDeamon
+  requires += zzip zlib
+  libs += Package_Config_Handlers
 
   IDL_Files {
-    RepositoryManager.idl
+    RepositoryManagerDaemon.idl
   }
 
   Source_Files {
-    RepositoryManagerC.cpp
-    RepositoryManagerS.cpp
-    Update_Plan.cpp
-    Repository_Manager.cpp
+    RepositoryManagerDaemonC.cpp
+    RepositoryManagerDaemonS.cpp
+    ZIP_Wrapper.cpp
+    RepositoryManager.cpp
     RepositoryManager_Impl.cpp
+    RM_Helper.cpp
+    URL_Parser.cpp
+    HTTP_Handler.cpp
+    HTTP_Client.cpp
+    PC_Updater_T.cpp
+    PC_Updater.cpp
+  }
+}
+
+
+// RMadmin project: a sample client for the RM.
+
+project (RMAdmin) : ciao_servant_dnc, ciao_config_handlers {
+  exename = RMadmin
+  after  += RepositoryManager
+
+  IDL_Files {
+   RepositoryManagerDaemon.idl
+  }
+
+  Source_Files {
+    RMadmin.cpp
+    RepositoryManagerDaemonC.cpp
+    Options.cpp
+    RM_Helper.cpp
   }
 }

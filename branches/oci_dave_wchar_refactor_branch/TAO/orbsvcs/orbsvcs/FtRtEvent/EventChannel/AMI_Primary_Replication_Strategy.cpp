@@ -1,13 +1,13 @@
 // $Id$
 
-#include "AMI_Primary_Replication_Strategy.h"
+#include "orbsvcs/FtRtEvent/EventChannel/AMI_Primary_Replication_Strategy.h"
 #include "ace/Synch_T.h"
-#include "GroupInfoPublisher.h"
-#include "Request_Context_Repository.h"
-#include "create_persistent_poa.h"
-#include "Update_Manager.h"
+#include "orbsvcs/FtRtEvent/EventChannel/GroupInfoPublisher.h"
+#include "orbsvcs/FtRtEvent/EventChannel/Request_Context_Repository.h"
+#include "orbsvcs/FtRtEvent/EventChannel/create_persistent_poa.h"
+#include "orbsvcs/FtRtEvent/EventChannel/Update_Manager.h"
 #include "tao/Utils/PolicyList_Destroyer.h"
-#include "ObjectGroupManagerHandler.h"
+#include "orbsvcs/FtRtEvent/EventChannel/ObjectGroupManagerHandler.h"
 #include "tao/Utils/Implicit_Deactivator.h"
 #include "../Utils/resolve_init.h"
 #include "../Utils/ScopeGuard.h"
@@ -17,8 +17,11 @@ ACE_RCSID (EventChannel,
            AMI_Primary_Replication_Strategy,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 AMI_Primary_Replication_Strategy::AMI_Primary_Replication_Strategy(bool mt)
-: handler_(this), mutex_(mt ? new ACE_SYNCH_RW_MUTEX : 0)
+  : handler_(this),
+    mutex_ (mt ? new ACE_SYNCH_RW_MUTEX : 0)
 {
 }
 
@@ -104,8 +107,8 @@ AMI_Primary_Replication_Strategy::replicate_request(
   ACE_ENV_ARG_DECL)
 {
    ACE_Auto_Event event;
-   Update_Manager* manager;
-   bool success;
+   Update_Manager* manager = 0;
+   bool success = false;
 
     FTRT::TransactionDepth transaction_depth =
       Request_Context_Repository().get_transaction_depth(ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -157,7 +160,7 @@ AMI_Primary_Replication_Strategy::replicate_request(
    if (!success) { // replication failed, transaction depth too high
      for (size_t i =0; i < num_backups; ++i)  {
        ACE_TRY_EX(block2) {
-         (backups[i].in()->*rollback)(oid ACE_ENV_ARG_PARAMETER);
+         (backups[i]->*rollback)(oid ACE_ENV_ARG_PARAMETER);
          ACE_TRY_CHECK_EX(block2);
        }
        ACE_CATCHALL {
@@ -198,10 +201,10 @@ AMI_Primary_Replication_Strategy::add_member(const FTRT::ManagerInfo & info,
 
   for (unsigned i = 0; i < num_backups; ++i) {
     ACE_TRY {
-      backups[i].in()->sendc_add_member(handler.in(),
-                                        info,
-                                        object_group_ref_version
-                                        ACE_ENV_ARG_PARAMETER);
+      backups[i]->sendc_add_member(handler.in(),
+                                   info,
+                                   object_group_ref_version
+                                   ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
     ACE_CATCHALL {
@@ -215,3 +218,5 @@ AMI_Primary_Replication_Strategy::add_member(const FTRT::ManagerInfo & info,
 
   event.wait();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -30,8 +30,7 @@ namespace XSCRT
     XML::Element<C>
     next_element ()
     {
-      return XML::Element<C> (
-        dynamic_cast<xercesc::DOMElement*> (e_->item (ei_++)));
+      return XML::Element<C> (XML::dom_cast <xercesc::DOMElement*> (e_->item (ei_++)));
     }
 
     bool
@@ -44,7 +43,7 @@ namespace XSCRT
     next_attribute ()
     {
       return XML::Attribute<C> (
-        dynamic_cast<xercesc::DOMAttr*> (a_->item (ai_++)));
+        XML::dom_cast <xercesc::DOMAttr*> (a_->item (ai_++)));
     }
 
   private:

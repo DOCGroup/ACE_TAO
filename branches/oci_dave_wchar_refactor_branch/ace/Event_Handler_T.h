@@ -22,6 +22,8 @@
 
 #if defined (ACE_HAS_TEMPLATE_TYPEDEFS)
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_Event_Handler_T
  *
@@ -169,6 +171,8 @@ protected:
   SET_HANDLE set_handle_;
   GET_HANDLE get_handle_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Event_Handler_T.inl"

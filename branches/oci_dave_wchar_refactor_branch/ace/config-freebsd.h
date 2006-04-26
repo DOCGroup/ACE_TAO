@@ -103,15 +103,15 @@ extern "C" { char * cuserid (char *s); }
 // Platform defines struct timespec but not timespec_t
 #define ACE_LACKS_TIMESPEC_T
 
-#define ACE_LACKS_SYSTIME_H
-
 #if (__FreeBSD_version < 501000)
 #define ACE_LACKS_STDINT_H
 #endif
 
+#define ACE_HAS_SYSCTL
 #define ACE_LACKS_STRRECVFD
 
-#define ACE_HAS_SIN_LEN
+#define ACE_HAS_SOCKADDR_IN_SIN_LEN
+#define ACE_HAS_SOCKADDR_IN6_SIN6_LEN
 
 // Platform supports System V IPC (most versions of UNIX, but not Win32)
 #define ACE_HAS_SYSV_IPC

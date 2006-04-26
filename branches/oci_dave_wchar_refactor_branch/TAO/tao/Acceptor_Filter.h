@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -24,6 +24,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   class ObjectKey;
@@ -47,9 +49,9 @@ public:
   virtual ~TAO_Acceptor_Filter (void);
 
   /**
-   * Populate <mprofile> with profiles. Profiles are created for
+   * Populate @a mprofile with profiles. Profiles are created for
    * selected acceptors (endpoints) from the array delimited by
-   * <acceptors_begin> and <acceptors_end>.
+   * @a acceptors_begin and @a acceptors_end.
    */
   virtual int fill_profile (const TAO::ObjectKey &object_key,
                             TAO_MProfile &mprofile,
@@ -61,6 +63,8 @@ public:
   /// tag component of profiles.
   virtual int encode_endpoints (TAO_MProfile &mprofile) = 0;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_ACCEPTOR_FILTER_H */

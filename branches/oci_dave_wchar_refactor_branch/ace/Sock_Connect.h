@@ -25,6 +25,8 @@
 #include "ace/Basic_Types.h"
 #include "ace/os_include/netinet/os_in.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Forward Declarations
 class ACE_INET_Addr;
 
@@ -81,6 +83,8 @@ namespace ACE
    */
   extern ACE_Export int ipv6_enabled (void);
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

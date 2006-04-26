@@ -142,7 +142,7 @@ ClientTask::svc()
 
       Bounded_Var_Size_var bd_var_size_string = new Bounded_Var_Size();
       CORBA::String_var buffer1 = CORBA::string_dup ("BOUNDED VAR SIZE CHAR");
-      bd_var_size_string->replace (ACE_OS::strlen (buffer1) + 1, buffer1);
+      bd_var_size_string->replace (ACE_OS::strlen (buffer1.in()) + 1, buffer1);
       this->foo_->test_bounded_var_size_arg (bd_var_size_string.in ()
                                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -150,7 +150,7 @@ ClientTask::svc()
       CORBA::String_var buffer2 = CORBA::string_dup ("UNBOUNDED VAR SIZE CHAR");
       Unbounded_Var_Size_var ub_var_size_string = new Unbounded_Var_Size(100);
       ub_var_size_string->replace (ub_var_size_string->maximum (),
-                                   ACE_OS::strlen (buffer2) + 1,
+                                   ACE_OS::strlen (buffer2.in()) + 1,
                                    buffer2);
       this->foo_->test_unbounded_var_size_arg (ub_var_size_string.in ()
                                                ACE_ENV_ARG_PARAMETER);

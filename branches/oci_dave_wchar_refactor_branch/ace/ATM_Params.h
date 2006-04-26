@@ -49,6 +49,8 @@ typedef int Param_Info;
 typedef int Param_Udata;
 #endif /* ACE_HAS_FORE_ATM_XTI || ACE_HAS_FORE_ATM_WS2 || ACE_HAS_LINUX_ATM */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_ATM_Params
  *
@@ -200,6 +202,8 @@ private:
   /// Open flag for XTI/ATM connections.
   int oflag_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/ATM_Params.inl"

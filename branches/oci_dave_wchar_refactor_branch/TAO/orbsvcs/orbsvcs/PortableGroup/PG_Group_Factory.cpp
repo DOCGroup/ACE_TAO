@@ -10,17 +10,19 @@
  */
 //=============================================================================
 
-#include "PG_Group_Factory.h"
-#include "PG_Property_Utils.h"
-#include "PG_conf.h"
+#include "orbsvcs/PortableGroup/PG_Group_Factory.h"
+#include "orbsvcs/PortableGroup/PG_Property_Utils.h"
+#include "orbsvcs/PortableGroup/PG_conf.h"
 #include "orbsvcs/PortableGroupC.h"
-#include "PG_Object_Group.h"
+#include "orbsvcs/PortableGroup/PG_Object_Group.h"
 #include <orbsvcs/PortableGroup/PG_Utils.h>
 
 ACE_RCSID (PortableGroup,
            PG_Group_Factory,
            "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::PG_Group_Factory::PG_Group_Factory ()
   : orb_ (CORBA::ORB::_nil())
@@ -226,3 +228,5 @@ TAO::PG_Group_Factory::groups_at_location (
   result->length (group_count);
   return result;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

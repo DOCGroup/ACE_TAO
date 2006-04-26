@@ -514,9 +514,9 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::cancel (long timer_id,
     reinterpret_cast<Hash_Token<TYPE> *> (timer_id);
 #endif /* ACE_WIN64 */
 
-  int result = this->table_[h->pos_]->cancel (h->orig_id_,
-                                              0,
-                                              dont_call);
+  int const result = this->table_[h->pos_]->cancel (h->orig_id_,
+                                                    0,
+                                                    dont_call);
 
   if (result == 1)
     {
@@ -591,7 +591,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::cancel (const TYPE &type,
 
   for (i = 0; i < pos; ++i)
     {
-      int result =
+      int const result =
         this->table_[timer_ids[i]->pos_]->cancel (timer_ids[i]->orig_id_,
                                                   0,
                                                   dont_call);
@@ -678,7 +678,7 @@ template <class TYPE, class FUNCTOR, class ACE_LOCK, class BUCKET> int
 ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::dispatch_info_i (const ACE_Time_Value &cur_time,
                                                                     ACE_Timer_Node_Dispatch_Info_T<TYPE> &info)
 {
-  int result =
+  int const result =
     ACE_Timer_Queue_T<TYPE,FUNCTOR,ACE_LOCK>::dispatch_info_i (cur_time,
                                                                info);
 
@@ -711,7 +711,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::expire (const ACE_Time_Value 
 
   int number_of_timers_expired = 0;
 
-  ACE_Timer_Node_T<TYPE> *expired;
+  ACE_Timer_Node_T<TYPE> *expired = 0;
 
   // Go through the table and expire anything that can be expired
 

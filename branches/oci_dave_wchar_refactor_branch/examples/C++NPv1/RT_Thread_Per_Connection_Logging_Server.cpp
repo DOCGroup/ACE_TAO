@@ -132,9 +132,3 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   return ACE_Thread_Manager::instance ()->wait ();
 }
 
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class auto_ptr<Thread_Per_Connection_Logging_Server::Thread_Args>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate auto_ptr<Thread_Per_Connection_Logging_Server::Thread_Args>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

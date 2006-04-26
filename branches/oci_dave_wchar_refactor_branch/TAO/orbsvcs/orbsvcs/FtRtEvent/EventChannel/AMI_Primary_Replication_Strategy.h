@@ -13,14 +13,16 @@
 #ifndef AMI_PRIMARY_REPLICATION_STRATEGY_H
 #define AMI_PRIMARY_REPLICATION_STRATEGY_H
 
-#include "UpdateableHandler.h"
-#include "Replication_Strategy.h"
+#include "orbsvcs/FtRtEvent/EventChannel/UpdateableHandler.h"
+#include "orbsvcs/FtRtEvent/EventChannel/Replication_Strategy.h"
 #include "orbsvcs/FtRtecEventChannelAdminC.h"
 #include "ace/Task.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class  AMI_Primary_Replication_Strategy.
@@ -59,5 +61,7 @@ private:
   UpdateableHandler handler_;
   ACE_SYNCH_RW_MUTEX* mutex_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif // AMI_PRIMARY_REPLICATION_STRATEGY_H

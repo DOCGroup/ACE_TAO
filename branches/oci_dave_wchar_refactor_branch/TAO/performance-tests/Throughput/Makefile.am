@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ../bin/mwc.pl -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/config -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/templates -type automake -noreldefs TAO.mwc
+## ../bin/mwc.pl -type automake -noreldefs TAO.mwc
 
 ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
@@ -15,6 +15,8 @@ TAO_IDL = ACE_ROOT=$(ACE_ROOT) TAO_ROOT=$(TAO_ROOT) $(TAO_BUILDDIR)/TAO_IDL/tao_
 TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
+
+noinst_PROGRAMS =
 
 ## Makefile.Throughput_Idl.am
 
@@ -48,9 +50,14 @@ Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
 	@touch $@
 
 
+noinst_HEADERS = \
+  Test.idl
+
 ## Makefile.Throughput_Client.am
 
-noinst_PROGRAMS = client
+if !BUILD_ACE_FOR_TAO
+
+noinst_PROGRAMS += client
 
 client_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -70,7 +77,11 @@ client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+endif !BUILD_ACE_FOR_TAO
+
 ## Makefile.Throughput_Server.am
+
+if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS += server
 
@@ -95,6 +106,8 @@ server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
+
+endif !BUILD_ACE_FOR_TAO
 
 ## Clean up template repositories, etc.
 clean-local:

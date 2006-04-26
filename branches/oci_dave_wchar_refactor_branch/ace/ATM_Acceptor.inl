@@ -1,7 +1,9 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
 
-// ATM_Acceptor.i
+// Open versioned namespace, if enabled by the user.
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE void
 ACE_ATM_Acceptor::dump (void) const
@@ -35,3 +37,6 @@ ACE_ATM_Acceptor::close (void)
   return 0;
 #endif // ACE_HAS_FORE_ATM_XTI || ACE_HAS_FORE_ATM_WS2 || ACE_HAS_LINUX_ATM
 }
+
+// Close versioned namespace, if enabled by the user.
+ACE_END_VERSIONED_NAMESPACE_DECL

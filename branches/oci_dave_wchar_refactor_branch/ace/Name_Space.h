@@ -25,6 +25,8 @@
 #include "ace/SString.h"
 #include "ace/Unbounded_Set.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 typedef ACE_Unbounded_Set<ACE_NS_WString> ACE_WSTRING_SET;
 
 /**
@@ -156,6 +158,8 @@ public:
   /// Dump the state of the object
   virtual void dump (void) const = 0;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

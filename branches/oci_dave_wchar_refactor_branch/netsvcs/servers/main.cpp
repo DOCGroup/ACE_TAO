@@ -41,7 +41,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
           ACE_TCHAR *l_argv[3];
           ACE_TCHAR name_port[] =
-            ACE_TEXT ("-p ") ACE_DEFAULT_NAME_SERVER_PORT_STR;
+            ACE_TEXT ("-p ") ACE_TEXT (ACE_DEFAULT_NAME_SERVER_PORT_STR);
 
           l_argv[0] = name_port;
           l_argv[1] = 0;
@@ -54,7 +54,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                               1);
 
           ACE_TCHAR time_port[] =
-            ACE_TEXT ("-p ") ACE_DEFAULT_TIME_SERVER_PORT_STR;
+            ACE_TEXT ("-p ") ACE_TEXT (ACE_DEFAULT_TIME_SERVER_PORT_STR);
           l_argv[0] = time_port;
           l_argv[1] = 0;
           ACE_Service_Object_Ptr sp_2 = ACE_SVC_INVOKE (ACE_TS_Server_Acceptor);
@@ -79,7 +79,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
 #if defined (ACE_HAS_TOKENS_LIBRARY)
           ACE_TCHAR token_port[] =
-            ACE_TEXT ("-p ") ACE_DEFAULT_TOKEN_SERVER_PORT_STR;
+            ACE_TEXT ("-p ") ACE_TEXT (ACE_DEFAULT_TOKEN_SERVER_PORT_STR);
           l_argv[0] = token_port;
           l_argv[1] = 0;
           ACE_Service_Object_Ptr sp_4 = ACE_SVC_INVOKE (ACE_Token_Acceptor);
@@ -92,7 +92,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 #endif /* ACE_HAS_TOKENS_LIBRARY */
 
           ACE_TCHAR thr_logging_port[] =
-            ACE_TEXT ("-p ") ACE_DEFAULT_THR_LOGGING_SERVER_PORT_STR;
+            ACE_TEXT ("-p ") ACE_TEXT (ACE_DEFAULT_THR_LOGGING_SERVER_PORT_STR);
           l_argv[0] = thr_logging_port;
           l_argv[1] = 0;
           ACE_Service_Object_Ptr sp_5 =
@@ -105,7 +105,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                               1);
 
           ACE_TCHAR logging_port[] =
-            ACE_TEXT ("-p ") ACE_DEFAULT_LOGGING_SERVER_PORT_STR;
+            ACE_TEXT ("-p ") ACE_TEXT (ACE_DEFAULT_LOGGING_SERVER_PORT_STR);
           l_argv[0] = logging_port;
           l_argv[1] = 0;
           ACE_Service_Object_Ptr sp_6 =

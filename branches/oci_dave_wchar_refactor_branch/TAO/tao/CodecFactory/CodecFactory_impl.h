@@ -15,7 +15,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "IOP_Codec_includeC.h"
+#include "tao/CodecFactory/IOP_Codec_includeC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -29,6 +29,10 @@
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+class TAO_Codeset_Translator_Base;
 
 /**
  * @class TAO_CodecFactory
@@ -53,14 +57,27 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException,
                      IOP::CodecFactory::UnknownEncoding));
 
-private:
+  /// Create a Coder/Decoder for the given type of encoding and codesets.
+  virtual IOP::Codec_ptr create_codec_with_codesets (const IOP::Encoding_1_2 & enc
+                                                     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     IOP::CodecFactory::UnknownEncoding,
+                     IOP::CodecFactory::UnsupportedCodeset));
 
+private:
   /// Prevent copying through the copy constructor and the assignment
   /// operator.
-  ACE_UNIMPLEMENTED_FUNC (
-    TAO_CodecFactory (const TAO_CodecFactory &))
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_CodecFactory &))
+  TAO_CodecFactory (const TAO_CodecFactory &);
+  void operator= (const TAO_CodecFactory &);
 
+  IOP::Codec_ptr create_codec_i (CORBA::Octet major,
+                                 CORBA::Octet minor,
+                                 IOP::EncodingFormat encoding_format,
+                                 TAO_Codeset_Translator_Base * char_trans,
+                                 TAO_Codeset_Translator_Base * wchar_trans
+                                 ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   IOP::CodecFactory::UnknownEncoding));
 private:
 
   /// Pointer to the ORB Core.
@@ -71,6 +88,8 @@ private:
   TAO_ORB_Core * const orb_core_;
 
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

@@ -1,8 +1,8 @@
 // $Id$
 
-#include "UpdateableHandler.h"
-#include "Update_Manager.h"
-#include "AMI_Primary_Replication_Strategy.h"
+#include "orbsvcs/FtRtEvent/EventChannel/UpdateableHandler.h"
+#include "orbsvcs/FtRtEvent/EventChannel/Update_Manager.h"
+#include "orbsvcs/FtRtEvent/EventChannel/AMI_Primary_Replication_Strategy.h"
 #include "../Utils/resolve_init.h"
 
 ACE_RCSID (EventChannel,
@@ -10,8 +10,10 @@ ACE_RCSID (EventChannel,
            "$Id$")
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 UpdateableHandler::UpdateableHandler(AMI_Primary_Replication_Strategy* strategy)
-: strategy_(strategy)
+  : strategy_(strategy)
 {
 }
 
@@ -75,7 +77,7 @@ void UpdateableHandler::set_update (
   dispatch(&Update_Manager::handle_reply ACE_ENV_ARG_PARAMETER);
 }
 void UpdateableHandler::set_update_excep (
-  FTRT::AMI_UpdateableExceptionHolder * excep_holder
+  ::Messaging::ExceptionHolder * excep_holder
   ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -84,7 +86,7 @@ void UpdateableHandler::set_update_excep (
 {
   ACE_DEBUG((LM_DEBUG, "Received Exception from"));
   ACE_TRY {
-    excep_holder->raise_set_update();
+    excep_holder->raise_exception();
     ACE_TRY_CHECK;
   }
   ACE_CATCHANY {
@@ -94,3 +96,5 @@ void UpdateableHandler::set_update_excep (
 
   dispatch(&Update_Manager::handle_exception ACE_ENV_ARG_PARAMETER);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

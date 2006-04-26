@@ -1,7 +1,7 @@
-#include "Cleanup_Func_Registry.h"
+#include "tao/Cleanup_Func_Registry.h"
 
 #if !defined (__ACE_INLINE__)
-# include "Cleanup_Func_Registry.inl"
+# include "tao/Cleanup_Func_Registry.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Log_Msg.h"
@@ -10,21 +10,14 @@ ACE_RCSID (tao,
            Cleanup_Func_Registry,
            "$Id$")
 
-TAO_Cleanup_Func_Registry::TAO_Cleanup_Func_Registry (void)
-  : cleanup_funcs_ ()
-{
-}
-
-TAO_Cleanup_Func_Registry::~TAO_Cleanup_Func_Registry (void)
-{
-}
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
 TAO_Cleanup_Func_Registry::register_cleanup_function (
   ACE_CLEANUP_FUNC func,
   size_t &slot_id)
 {
-  size_t slot = this->cleanup_funcs_.size ();
+  size_t const slot = this->cleanup_funcs_.size ();
 
   if (this->cleanup_funcs_.size (slot + 1) != 0)
     return -1;
@@ -38,7 +31,7 @@ TAO_Cleanup_Func_Registry::register_cleanup_function (
 void
 TAO_Cleanup_Func_Registry::cleanup (ACE_Array_Base<void *> &ts_objects)
 {
-  size_t len = ts_objects.size ();
+  size_t const len = ts_objects.size ();
 
   // The allocated slot may never have been used.  It is therefore
   // possible that the TSS array size may be less than the cleanup
@@ -56,3 +49,4 @@ TAO_Cleanup_Func_Registry::cleanup (ACE_Array_Base<void *> &ts_objects)
     }
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

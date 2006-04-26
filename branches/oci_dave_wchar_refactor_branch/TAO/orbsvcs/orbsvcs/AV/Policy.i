@@ -1,5 +1,9 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 //--------------------------------------------------
 // TAO_AV_Policy
 //--------------------------------------------------
@@ -73,3 +77,5 @@ TAO_AV_SFP_Credit_Policy::value (void)
 {
   return this->value_;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

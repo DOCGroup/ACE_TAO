@@ -24,7 +24,7 @@
 #ifndef _PORTABLESERVER_PS_FORWARD_IDL_
 #define _PORTABLESERVER_PS_FORWARD_IDL_
 
-#include <OctetSeq.pidl>
+#include "tao/OctetSeq.pidl"
 
 #pragma prefix "omg.org"
 

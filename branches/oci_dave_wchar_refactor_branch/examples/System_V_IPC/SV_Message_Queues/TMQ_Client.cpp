@@ -50,11 +50,3 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   return 0;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Typed_SV_Message_Queue<Message_Data>;
-template class ACE_Typed_SV_Message<Message_Data>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Typed_SV_Message_Queue<Message_Data>
-#pragma instantiate ACE_Typed_SV_Message<Message_Data>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-

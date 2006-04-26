@@ -1,20 +1,11 @@
 //  -*- MPC -*- now wouldn't this be cool...
 // $Id$
 
-project(ACE) : acedefaults, core, other, codecs, token, svcconf, uuid, filecache, pkgconfig {
+project(ACE) : acedefaults, core, other, codecs, token, svcconf, uuid, filecache, versioned_namespace, pkgconfig {
   avoids       = ace_for_tao
   libout       = $(ACE_ROOT)/lib
   sharedname   = ACE
   dynamicflags = ACE_BUILD_DLL
-
-  // Old OS files.  put these back and remove the OS_NS*, Cleanup.cpp, and
-  // Object_Manager_Base.cpp to improve compile times at the cost of
-  // footprint. dhinton
-  //OS.cpp
-  //OS_Dirent.cpp
-  //OS_Memory.cpp
-  //OS_String.cpp
-  //Synch.cpp
 
   Source_Files(ACE_COMPONENTS) {
     ACE.cpp
@@ -24,7 +15,9 @@ project(ACE) : acedefaults, core, other, codecs, token, svcconf, uuid, filecache
     Active_Map_Manager.cpp
     Addr.cpp
     Arg_Shifter.cpp
+    ARGV.cpp
     Argv_Type_Converter.cpp
+    Assert.cpp
     Asynch_IO.cpp
     Asynch_IO_Impl.cpp
     Asynch_Pseudo_Task.cpp
@@ -54,10 +47,9 @@ project(ACE) : acedefaults, core, other, codecs, token, svcconf, uuid, filecache
     Configuration.cpp
     Configuration_Import_Export.cpp
     Connection_Recycling_Strategy.cpp
-    Container_Instantiations.cpp
     Containers.cpp
-    Countdown_Time.cpp
     Copy_Disabled.cpp
+    Countdown_Time.cpp
     Date_Time.cpp
     DEV.cpp
     DEV_Addr.cpp
@@ -88,7 +80,6 @@ project(ACE) : acedefaults, core, other, codecs, token, svcconf, uuid, filecache
     gethrtime.cpp
     Handle_Ops.cpp
     Handle_Set.cpp
-    Hash_Map_Manager.cpp
     Hashable.cpp
     High_Res_Timer.cpp
     ICMP_Socket.cpp
@@ -117,7 +108,6 @@ project(ACE) : acedefaults, core, other, codecs, token, svcconf, uuid, filecache
     LSOCK_Stream.cpp
     Malloc.cpp
     Malloc_Allocator.cpp
-    Malloc_Instantiations.cpp
     Manual_Event.cpp
     MEM_Acceptor.cpp
     MEM_Addr.cpp
@@ -129,7 +119,6 @@ project(ACE) : acedefaults, core, other, codecs, token, svcconf, uuid, filecache
     Message_Block.cpp
     Message_Queue.cpp
     Method_Request.cpp
-    Metrics_Cache.cpp
     MMAP_Memory_Pool.cpp
     Msg_WFMO_Reactor.cpp
     Multihomed_INET_Addr.cpp
@@ -138,7 +127,6 @@ project(ACE) : acedefaults, core, other, codecs, token, svcconf, uuid, filecache
     Obchunk.cpp
     Object_Manager.cpp
     Object_Manager_Base.cpp
-    Obstack.cpp
     OS_Errno.cpp
     OS_Log_Msg_Attributes.cpp
     OS_main.cpp
@@ -163,6 +151,7 @@ project(ACE) : acedefaults, core, other, codecs, token, svcconf, uuid, filecache
     OS_NS_sys_msg.cpp
     OS_NS_sys_resource.cpp
     OS_NS_sys_select.cpp
+    OS_NS_sys_sendfile.cpp
     OS_NS_sys_shm.cpp
     OS_NS_sys_socket.cpp
     OS_NS_sys_stat.cpp
@@ -208,7 +197,6 @@ project(ACE) : acedefaults, core, other, codecs, token, svcconf, uuid, filecache
     Sample_History.cpp
     Sbrk_Memory_Pool.cpp
     Sched_Params.cpp
-    Select_Reactor.cpp
     Select_Reactor_Base.cpp
     Semaphore.cpp
     Shared_Memory.cpp
@@ -345,7 +333,6 @@ project(ACE) : acedefaults, core, other, codecs, token, svcconf, uuid, filecache
     TSS_T.cpp
     Task_Ex_T.cpp
     Task_T.cpp
-    Template_Instantiations.cpp
     Test_and_Set.cpp
     Timeprobe_T.cpp
     Timer_Hash_T.cpp
@@ -367,9 +354,6 @@ project(ACE) : acedefaults, core, other, codecs, token, svcconf, uuid, filecache
     Guard_T.inl
     Handle_Gobbler.inl
     Lock_Adapter_T.inl
-    OS.inl
-    OS_Memory.inl
-    OS_String.inl
     Refcounted_Auto_Ptr.inl
     Reverse_Lock_T.inl
     Swap.inl
@@ -387,6 +371,7 @@ project(ACE) : acedefaults, core, other, codecs, token, svcconf, uuid, filecache
     Exception_Macros.h
     Global_Macros.h
     Guard_T.h
+    Hash_Map_Manager.h
     Handle_Gobbler.h
     If_Then_Else.h
     IO_Cntl_Msg.h
@@ -423,14 +408,17 @@ project(ACE) : acedefaults, core, other, codecs, token, svcconf, uuid, filecache
     Synch_Traits.h
     TSS_T.h
     Timer_Queuefwd.h
+    Truncate.h
     UPIPE_Addr.h
     Value_Ptr.h
     Version.h
+    Versioned_Namespace.h
     ace_wchar.h
     config-WinCE.h
     config-all.h
     config-borland-common.h
     config-lite.h
+    config-macros.h
     config-minimal.h
     config-win32-borland.h
     config-win32-common.h

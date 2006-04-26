@@ -21,8 +21,11 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ort_export.h"
+#include "tao/ObjRefTemplate/ort_export.h"
 #include "tao/PortableServer/ORT_Adapter_Factory.h"
+#include "tao/Versioned_Namespace.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -48,13 +51,16 @@ namespace TAO
     // Used to force the initialization of the code.
     static int Initializer (void);
   };
-
-  ACE_STATIC_SVC_DECLARE (ORT_Adapter_Factory_Impl)
-  ACE_FACTORY_DECLARE (TAO_ORT, ORT_Adapter_Factory_Impl)
 }
 
 static int TAO_Requires_ORTFactory_Initializer =
   TAO::ORT_Adapter_Factory_Impl::Initializer ();
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+ACE_STATIC_SVC_DECLARE (ORT_Adapter_Factory_Impl)
+ACE_FACTORY_DECLARE (TAO_ORT, ORT_Adapter_Factory_Impl)
+
 
 #define TAO_OBJREF_TEMPLATE_SAFE_INCLUDE
 #include "tao/ObjRefTemplate/ObjectReferenceTemplateC.h"

@@ -2,6 +2,7 @@
 // $Id$
 
 project(Netsvsc_Client_Test_Lib): acelib {
+  avoids       += ace_for_tao
   sharedname    = Client_Test
   dynamicflags += ACE_CLIENT_TEST_BUILD_DLL
   Source_Files {
@@ -10,9 +11,10 @@ project(Netsvsc_Client_Test_Lib): acelib {
 }
 
 project(Netsvcs_Client_Test) : aceexe {
+  avoids += ace_for_tao
   exename = main
-  libs    += Client_Test
-  after   += Client_Test Netsvsc_Client_Test_Lib
+  libs   += Client_Test
+  after  += Client_Test Netsvsc_Client_Test_Lib
   Source_Files {
     main.cpp
   }

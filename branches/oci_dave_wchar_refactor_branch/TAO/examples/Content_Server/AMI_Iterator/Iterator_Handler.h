@@ -58,7 +58,7 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void next_chunk_excep (
-      Web_Server::AMI_Content_IteratorExceptionHolder *
+      ::Messaging::ExceptionHolder *
       ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException)) {}
 
@@ -66,7 +66,7 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void destroy_excep (
-      Web_Server::AMI_Content_IteratorExceptionHolder *
+      ::Messaging::ExceptionHolder *
       ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException)) {}
 

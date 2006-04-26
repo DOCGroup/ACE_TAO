@@ -55,6 +55,7 @@ namespace CCF
           {
             Enumerator& e (ctx.tu ().new_node<Enumerator> ());
             ctx.tu ().new_edge<Belongs> (e, *type_);
+            ctx.tu ().new_edge<Defines> (ctx.scope (), e, name);
           }
         }
 

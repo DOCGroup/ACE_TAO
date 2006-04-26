@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -15,13 +15,15 @@
 #define TAO_PERSISTENT_CONTEXT_INDEX_H
 #include /**/ "ace/pre.h"
 
-#include "Persistent_Entries.h"
-#include "naming_serv_export.h"
-#include "nsconf.h"
+#include "orbsvcs/Naming/Persistent_Entries.h"
+#include "orbsvcs/Naming/naming_serv_export.h"
+#include "orbsvcs/Naming/nsconf.h"
 #include "tao/PortableServer/PortableServer.h"
 
 #include "ace/Malloc_T.h"
 #include "ace/MMAP_Memory_Pool.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Persistent_Context_Index
@@ -162,6 +164,8 @@ private:
   /// The reference to the root Naming Context.
   CosNaming::NamingContext_var root_context_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_PERSISTENT_CONTEXT_INDEX_H */

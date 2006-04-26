@@ -1,12 +1,14 @@
 // $Id$
 
-#include "LifespanStrategyFactoryImpl.h"
-#include "LifespanStrategy.h"
+#include "tao/PortableServer/LifespanStrategyFactoryImpl.h"
+#include "tao/PortableServer/LifespanStrategy.h"
 #include "ace/Dynamic_Service.h"
 
 ACE_RCSID (PortableServer,
            LifespanStrategyFactoryImpl,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -80,17 +82,20 @@ namespace TAO
         }
       }
     }
-
-    ACE_STATIC_SVC_DEFINE (
-        LifespanStrategyFactoryImpl,
-        ACE_TEXT ("LifespanStrategyFactory"),
-        ACE_SVC_OBJ_T,
-        &ACE_SVC_NAME (LifespanStrategyFactoryImpl),
-        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
-        0
-      )
-
-    ACE_FACTORY_DEFINE (ACE_Local_Service, LifespanStrategyFactoryImpl)
   }
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+ACE_STATIC_SVC_DEFINE (
+  LifespanStrategyFactoryImpl,
+  ACE_TEXT ("LifespanStrategyFactory"),
+  ACE_SVC_OBJ_T,
+  &ACE_SVC_NAME (LifespanStrategyFactoryImpl),
+  ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
+  0)
+
+ACE_FACTORY_NAMESPACE_DEFINE (
+  ACE_Local_Service,
+  LifespanStrategyFactoryImpl,
+  TAO::Portable_Server::LifespanStrategyFactoryImpl)

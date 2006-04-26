@@ -1,13 +1,15 @@
 // $Id$
 
-#include "Dynamic_Adapter_Impl.h"
+#include "tao/DynamicInterface/Dynamic_Adapter_Impl.h"
 
 ACE_RCSID(DynamicInterface, TAO_Dynamic_Adapter_Impl, "$Id$")
 
-#include "Request.h"
-#include "Server_Request.h"
+#include "tao/DynamicInterface/Request.h"
+#include "tao/DynamicInterface/Server_Request.h"
 #include "tao/ORB_Core.h"
 #include "tao/Exception.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Dynamic_Adapter_Impl::TAO_Dynamic_Adapter_Impl (void)
 {
@@ -140,6 +142,8 @@ TAO_Dynamic_Adapter_Impl::Initializer (void)
   TAO_ORB_Core::dynamic_adapter_name ("Concrete_Dynamic_Adapter");
   return ACE_Service_Config::process_directive (ace_svc_desc_TAO_Dynamic_Adapter_Impl);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (
     TAO_Dynamic_Adapter_Impl,

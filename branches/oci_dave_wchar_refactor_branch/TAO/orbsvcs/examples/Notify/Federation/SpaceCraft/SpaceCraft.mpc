@@ -5,5 +5,10 @@ project : rmcast, orbsvcsexe, notification, notification_skel, notification_serv
   exename = craft
   after += Gate
   libs += Gate
-  includes += ..
+
+  specific (automake) {
+    includes += $(srcdir)/..
+  } else {
+    includes += ..
+  }
 }

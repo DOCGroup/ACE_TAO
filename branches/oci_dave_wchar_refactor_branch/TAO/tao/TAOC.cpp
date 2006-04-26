@@ -29,12 +29,14 @@
 // be\be_codegen.cpp:277
 
 
-#include "TAOC.h"
+#include "tao/TAOC.h"
 #include "tao/CDR.h"
 #include "ace/OS_NS_string.h"
 
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:70
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Arg traits specializations.
 namespace TAO
@@ -42,10 +44,10 @@ namespace TAO
 }
 
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_structure/structure_cs.cpp:66
 
-void 
+void
 TAO::BufferingConstraint::_tao_any_destructor (
     void *_tao_void_pointer
   )
@@ -73,7 +75,7 @@ TAO::Objref_Traits<TAO::BufferingConstraintPolicy>::release (
     TAO::BufferingConstraintPolicy_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 TAO::BufferingConstraintPolicy_ptr
@@ -84,7 +86,7 @@ TAO::Objref_Traits<TAO::BufferingConstraintPolicy>::nil (void)
 
 CORBA::Boolean
 TAO::Objref_Traits<TAO::BufferingConstraintPolicy>::marshal (
-    TAO::BufferingConstraintPolicy_ptr p,
+    const TAO::BufferingConstraintPolicy_ptr p,
     TAO_OutputCDR & cdr
   )
 {
@@ -122,18 +124,18 @@ TAO::BufferingConstraintPolicy::_unchecked_narrow (
 TAO::BufferingConstraintPolicy_ptr
 TAO::BufferingConstraintPolicy::_duplicate (BufferingConstraintPolicy_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void
 TAO::BufferingConstraintPolicy::_tao_release (BufferingConstraintPolicy_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean
@@ -206,3 +208,5 @@ CORBA::Boolean operator>> (
     (strm >> _tao_aggregate.message_count) &&
     (strm >> _tao_aggregate.message_bytes);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

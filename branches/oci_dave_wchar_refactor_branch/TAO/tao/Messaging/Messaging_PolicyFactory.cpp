@@ -1,16 +1,18 @@
-#include "Messaging_PolicyFactory.h"
+#include "tao/Messaging/Messaging_PolicyFactory.h"
 
 ACE_RCSID (Messaging,
            Messaging_PolicyFactory,
            "$Id$")
 
-#include "Messaging_Policy_i.h"
-#include "Connection_Timeout_Policy_i.h"
+#include "tao/Messaging/Messaging_Policy_i.h"
+#include "tao/Messaging/Connection_Timeout_Policy_i.h"
 
 #include "tao/PolicyC.h"
 #include "tao/Buffering_Constraint_Policy.h"
 #include "tao/AnyTypeCode/TAOA.h"
 #include "tao/AnyTypeCode/Any.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
@@ -105,3 +107,5 @@ TAO_Messaging_PolicyFactory::create_policy (
   ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_TYPE),
                     CORBA::Policy::_nil ());
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

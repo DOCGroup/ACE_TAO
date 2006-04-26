@@ -1,9 +1,9 @@
 // $Id$
 
-#include "ConstantDef_i.h"
-#include "Repository_i.h"
-#include "IFR_Service_Utils.h"
-#include "IDLType_i.h"
+#include "orbsvcs/IFRService/ConstantDef_i.h"
+#include "orbsvcs/IFRService/Repository_i.h"
+#include "orbsvcs/IFRService/IFR_Service_Utils.h"
+#include "orbsvcs/IFRService/IDLType_i.h"
 
 #include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
 
@@ -15,6 +15,8 @@ ACE_RCSID (IFRService,
            ConstantDef_i,
            "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_ConstantDef_i::TAO_ConstantDef_i (
     TAO_Repository_i *repo
@@ -307,3 +309,5 @@ TAO_ConstantDef_i::value_i (const CORBA::Any &value
                                             mb->base (),
                                             mb->length ());
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

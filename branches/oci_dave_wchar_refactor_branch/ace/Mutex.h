@@ -32,6 +32,8 @@
 # define ACE_DEFAULT_MUTEX_W ACE_TEXT_WIDE(ACE_DEFAULT_MUTEX_A)
 # define ACE_DEFAULT_MUTEX ACE_LIB_TEXT (ACE_DEFAULT_MUTEX_A)
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class ACE_Time_Value;
 
 /**
@@ -173,6 +175,8 @@ private:
   void operator= (const ACE_Mutex &);
   ACE_Mutex (const ACE_Mutex &);
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Mutex.inl"

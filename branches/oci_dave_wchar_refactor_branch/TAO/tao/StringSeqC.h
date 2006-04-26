@@ -55,35 +55,34 @@
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:49
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace CORBA
 {
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_sequence/sequence_ch.cpp:101
 
 #if !defined (_CORBA_STRINGSEQ_CH_)
 #define _CORBA_STRINGSEQ_CH_
-  
+
   class StringSeq;
-  
+
   typedef
-    TAO_MngSeq_Var_T<
-        StringSeq,
-        TAO_SeqElem_String_Manager
+    TAO_VarSeq_Var_T<
+        StringSeq
       >
     StringSeq_var;
-  
+
   typedef
-    TAO_MngSeq_Out_T<
-        StringSeq,
-        StringSeq_var,
-        TAO_SeqElem_String_Manager
+    TAO_Seq_Out_T<
+        StringSeq
       >
     StringSeq_out;
-  
+
   class TAO_Export StringSeq
     : public
-        TAO_Unbounded_String_Sequence
+        TAO::unbounded_string_sequence
   {
   public:
     StringSeq (void);
@@ -91,14 +90,14 @@ namespace CORBA
     StringSeq (
         CORBA::ULong max,
         CORBA::ULong length,
-        char ** buffer, 
-        CORBA::Boolean release = 0
+        char ** buffer,
+        CORBA::Boolean release = false
       );
     StringSeq (const StringSeq &);
     ~StringSeq (void);
-    
+
     static void _tao_any_destructor (void *);
-    
+
     typedef StringSeq_var _var_type;
   };
 
@@ -136,6 +135,8 @@ TAO_Export CORBA::Boolean operator>> (
 
 // TAO_IDL - Generated from
 // be\be_codegen.cpp:1028
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

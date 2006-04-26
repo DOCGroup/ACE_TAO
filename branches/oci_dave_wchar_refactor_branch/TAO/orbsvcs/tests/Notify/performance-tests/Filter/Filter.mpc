@@ -6,7 +6,7 @@ project(*idl): taoidldefaults, minimum_corba {
   }
   custom_only = 1
 }
-  
+
 project(*Ntf Perf Struct Supp): notifytest, minimum_corba {
   after += *idl
   exename = Structured_Supplier
@@ -24,7 +24,6 @@ project(*Ntf Perf Struct Cons): notifytest, minimum_corba {
   exename = Structured_Consumer
   Source_Files {
     goC.cpp
-    common.cpp
     Notify_Structured_Push_Consumer.cpp
     Structured_Consumer.cpp
   }
@@ -49,7 +48,6 @@ project(*notify perf Sequence Consumer): notifytest, minimum_corba {
   exename = Sequence_Consumer
   Source_Files {
     goC.cpp
-    common.cpp
     Notify_Sequence_Push_Consumer.cpp
     Sequence_Consumer.cpp
   }

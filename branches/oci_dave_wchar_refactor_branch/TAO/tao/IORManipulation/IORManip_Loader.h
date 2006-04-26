@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 // $Id$
 
@@ -19,13 +19,15 @@
 #define TAO_IORMANIP_LOADER_H
 #include /**/ "ace/pre.h"
 
-#include "ior_manip_export.h"
+#include "tao/IORManipulation/ior_manip_export.h"
 #include "tao/Object_Loader.h"
 #include "ace/Service_Config.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_IORManip_Export TAO_IORManip_Loader : public TAO_Object_Loader
 {
@@ -44,14 +46,16 @@ public:
   static int Initializer (void);
 };
 
-ACE_STATIC_SVC_DECLARE (TAO_IORManip_Loader)
-ACE_FACTORY_DECLARE (TAO_IORManip, TAO_IORManip_Loader)
-
 static int
 TAO_Requires_IORManip_Initializer = TAO_IORManip_Loader::Initializer ();
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+ACE_STATIC_SVC_DECLARE (TAO_IORManip_Loader)
+ACE_FACTORY_DECLARE (TAO_IORManip, TAO_IORManip_Loader)
+
 #define TAO_IORMANIP_SAFE_INCLUDE
-#include "IORC.h"
+#include "tao/IORManipulation/IORC.h"
 #undef TAO_IORMANIP_SAFE_INCLUDE
 
 #include /**/ "ace/post.h"

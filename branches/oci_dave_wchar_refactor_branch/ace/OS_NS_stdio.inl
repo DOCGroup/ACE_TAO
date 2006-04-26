@@ -35,6 +35,8 @@ fileno (FILE *fp)
 
 /*****************************************************************************/
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 #if defined (ACE_WIN32)
 ACE_INLINE void
 ACE_OS::flock_adjust_params (ACE_OS::ace_flock_t *lock,
@@ -132,7 +134,8 @@ ACE_OS::flock_init (ACE_OS::ace_flock_t *lock,
                   ACE_HANDLE,
                   ACE_INVALID_HANDLE,
                   lock->handle_);
-      lock->lockname_ = ACE_OS::strdup (name);
+      if (lock->handle_ != ACE_INVALID_HANDLE)
+        lock->lockname_ = ACE_OS::strdup (name);
       return lock->handle_ == ACE_INVALID_HANDLE ? -1 : 0;
     }
   else
@@ -492,7 +495,7 @@ ACE_INLINE char *
 ACE_OS::cuserid (char *user, size_t maxlen)
 {
   ACE_OS_TRACE ("ACE_OS::cuserid");
-#if defined (VXWORKS)
+#if defined (ACE_VXWORKS)
   ACE_UNUSED_ARG (maxlen);
   if (user == 0)
     {
@@ -643,8 +646,10 @@ ACE_OS::fdopen (ACE_HANDLE handle, const ACE_TCHAR *mode)
 
   if (crt_handle != -1)
     {
-#   if defined(__BORLANDC__) /* VSB */
-      file = ::_fdopen (crt_handle, (char *) mode);
+#   if defined(ACE_HAS_NONCONST_FDOPEN) && !defined (ACE_USES_WCHAR)
+      file = ::_fdopen (crt_handle, const_cast<ACE_TCHAR *> (mode));
+#   elif defined (ACE_HAS_NONCONST_FDOPEN) && defined (ACE_USES_WCHAR)
+      file = ::_wfdopen (crt_handle, const_cast<ACE_TCHAR *> (mode));
 #   elif defined (ACE_USES_WCHAR)
       file = ::_wfdopen (crt_handle, mode);
 #   else
@@ -743,7 +748,7 @@ ACE_OS::fopen (const wchar_t *filename, const ACE_TCHAR *mode)
 #else
   // Non-Windows doesn't use wchar_t file systems.
   ACE_OSCALL_RETURN
-    (::fopen (ACE_TEXT_TO_CHAR_IN (filename), 
+    (::fopen (ACE_TEXT_TO_CHAR_IN (filename),
               ACE_TEXT_TO_CHAR_IN (mode)), FILE*, 0);
 #endif /* ACE_HAS_WINCE */
 }
@@ -951,7 +956,7 @@ ACE_OS::rename (const wchar_t *old_name,
   ACE_UNUSED_ARG (flags);
   ACE_OSCALL_RETURN (::_wrename (old_name, new_name), int, -1);
 # else /* ACE_LACKS_RENAME */
-  return ACE_OS::rename (ACE_TEXT_TO_CHAR_IN (old_name), 
+  return ACE_OS::rename (ACE_TEXT_TO_CHAR_IN (old_name),
                          ACE_TEXT_TO_CHAR_IN (new_name), flags);
 # endif /* ACE_LACKS_RENAME */
 }
@@ -963,8 +968,9 @@ ACE_OS::rewind (FILE *fp)
   ACE_OS_TRACE ("ACE_OS::rewind");
   ::rewind (fp);
 #else
-  // In WinCE, "FILE *" is actually a HANDLE.
-  ::SetFilePointer (fp, 0L, 0L, FILE_BEGIN);
+  // This isn't perfect since it doesn't reset EOF, but it's probably
+  // the closest we can get on WINCE.
+  (void) fseek (fp, 0L, SEEK_SET);
 #endif /* ACE_HAS_WINCE */
 }
 
@@ -980,8 +986,8 @@ ACE_OS::tempnam (const char *dir, const char *pfx)
   // pSOS only considers the directory prefix
   ACE_UNUSED_ARG (pfx);
   ACE_OSCALL_RETURN (::tmpnam (const_cast <char *> (dir)), char *, 0);
-#elif (defined (ACE_WIN32) && ((defined (__BORLANDC__) && (__BORLANDC__ < 0x600)) || defined (__DMC__)))
-  ACE_OSCALL_RETURN (::_tempnam (const_cast <char *> (dir), const_cast<char *> (pfx)), char *, 0);
+#elif defined (ACE_HAS_NONCONST_TEMPNAM)
+  ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::tempnam (const_cast <char *> (dir), const_cast<char *> (pfx)), char *, 0);
 #else /* ACE_LACKS_TEMPNAM */
   ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::tempnam (dir, pfx), char *, 0);
 #endif /* ACE_LACKS_TEMPNAM */
@@ -996,14 +1002,14 @@ ACE_OS::tempnam (const wchar_t *dir, const wchar_t *pfx)
   ACE_UNUSED_ARG (pfx);
   ACE_NOTSUP_RETURN (0);
 #elif defined(ACE_WIN32)
-#  if (defined (__BORLANDC__) && (__BORLANDC__ < 0x600)) || defined (__DMC__)
+#  if defined (ACE_HAS_NONCONST_TEMPNAM)
   ACE_OSCALL_RETURN (::_wtempnam (const_cast <wchar_t*> (dir), const_cast <wchar_t*> (pfx)), wchar_t *, 0);
 #  else
   ACE_OSCALL_RETURN (::_wtempnam (dir, pfx), wchar_t *, 0);
 #  endif // __BORLANDC__
 #else // ACE_LACKS_TEMPNAM
   // No native wide-char support; convert to narrow and call the char* variant.
-  char *name = ACE_OS::tempnam (ACE_TEXT_TO_CHAR_IN (dir), 
+  char *name = ACE_OS::tempnam (ACE_TEXT_TO_CHAR_IN (dir),
                                 ACE_TEXT_TO_CHAR_IN (pfx));
   // ACE_OS::tempnam returns a pointer to a malloc()-allocated space.
   // Convert that string to wide-char and free() the original.
@@ -1094,6 +1100,22 @@ ACE_OS::vsnprintf (wchar_t *buffer, size_t maxlen, const wchar_t *format, va_lis
 
   return vswprintf (buffer, maxlen, format, ap);
 
+# elif defined (ACE_WIN32)
+
+  int result =
+    ACE_SPRINTF_ADAPTER (::_vsnwprintf (buffer, maxlen, format, ap));
+
+  // Win32 doesn't regard a full buffer with no 0-terminate as an
+  // overrun.
+  if (result == static_cast<int> (maxlen))
+    result = -1;
+
+  // Win32 doesn't 0-terminate the string if it overruns maxlen.
+  if (result == -1)
+    buffer[maxlen-1] = '\0';
+
+  return result;
+
 # else
 
   ACE_UNUSED_ARG (buffer);
@@ -1176,3 +1198,5 @@ ACE_OS::default_win32_security_attributes_r (LPSECURITY_ATTRIBUTES sa,
 
 #endif /* ACE_WIN32 */
 #endif
+
+ACE_END_VERSIONED_NAMESPACE_DECL

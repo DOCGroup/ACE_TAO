@@ -1,4 +1,3 @@
-// DEV_Connector.cpp
 // $Id$
 
 #include "ace/DEV_Connector.h"
@@ -14,6 +13,8 @@ ACE_RCSID (ace,
            DEV_Connector,
            "$Id$")
 
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_DEV_Connector)
 
@@ -48,3 +49,5 @@ ACE_DEV_Connector::connect (ACE_DEV_IO &new_io,
   new_io.addr_ = remote_sap; // class copy.
   return handle == ACE_INVALID_HANDLE ? -1 : 0;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

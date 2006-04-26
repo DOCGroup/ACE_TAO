@@ -29,9 +29,14 @@
 #include "ace/Global_Macros.h"
 #include "ace/Auto_Functor.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+class ACE_Time_Value;
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_Operation_Details;
 class TAO_Stub;
-class ACE_Time_Value;
 class TAO_Asynch_Reply_Dispatcher;
 class TAO_Asynch_Reply_Dispatcher_Base;
 
@@ -90,15 +95,17 @@ namespace TAO
                             ARDB_Refcount_Functor> safe_rd_;
 
   private:
-    /// Dont allow default initializations
-    ACE_UNIMPLEMENTED_FUNC (Asynch_Invocation_Adapter (void))
+    /// Don't allow default initializations
+    Asynch_Invocation_Adapter (void);
 
-    ACE_UNIMPLEMENTED_FUNC (Asynch_Invocation_Adapter & operator= (const Asynch_Invocation_Adapter &))
+    Asynch_Invocation_Adapter (const Asynch_Invocation_Adapter &);
+    Asynch_Invocation_Adapter & operator= (const Asynch_Invocation_Adapter &);
 
   };
 } // End namespace TAO
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 
-#endif /*TAO_MESSAGING_ASYNCH_INVOCATION_ADAPTER_H*/
+#endif /* TAO_MESSAGING_ASYNCH_INVOCATION_ADAPTER_H */

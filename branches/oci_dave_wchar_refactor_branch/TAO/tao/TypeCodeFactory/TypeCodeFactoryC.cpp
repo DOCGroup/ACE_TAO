@@ -29,7 +29,7 @@
 // be\be_codegen.cpp:291
 
 
-#include "TypeCodeFactoryC.h"
+#include "tao/TypeCodeFactory/TypeCodeFactoryC.h"
 #include "tao/CDR.h"
 #include "ace/OS_NS_string.h"
 
@@ -39,6 +39,8 @@
 
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:69
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Arg traits specializations.
 namespace TAO
@@ -64,7 +66,7 @@ TAO::Objref_Traits<CORBA::TypeCodeFactory>::release (
     CORBA::TypeCodeFactory_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 CORBA::TypeCodeFactory_ptr
@@ -88,12 +90,12 @@ CORBA::TypeCodeFactory::TypeCodeFactory (void)
 CORBA::TypeCodeFactory::~TypeCodeFactory (void)
 {}
 
-void 
+void
 CORBA::TypeCodeFactory::_tao_any_destructor (void *_tao_void_pointer)
 {
   TypeCodeFactory *_tao_tmp_pointer =
     static_cast<TypeCodeFactory *> (_tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
+  ::CORBA::release (_tao_tmp_pointer);
 }
 
 CORBA::TypeCodeFactory_ptr
@@ -106,10 +108,10 @@ CORBA::TypeCodeFactory::_narrow (
     {
       return TypeCodeFactory::_nil ();
     }
-  
+
   TypeCodeFactory_ptr proxy =
     dynamic_cast<TypeCodeFactory_ptr> (_tao_objref);
-  
+
   return TypeCodeFactory::_duplicate (proxy);
 }
 
@@ -123,28 +125,28 @@ CORBA::TypeCodeFactory::_unchecked_narrow (
     {
       return TypeCodeFactory::_nil ();
     }
-  
+
   TypeCodeFactory_ptr proxy =
     dynamic_cast<TypeCodeFactory_ptr> (_tao_objref);
-  
+
   return TypeCodeFactory::_duplicate (proxy);
 }
 
 CORBA::TypeCodeFactory_ptr
 CORBA::TypeCodeFactory::_duplicate (TypeCodeFactory_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void
 CORBA::TypeCodeFactory::_tao_release (TypeCodeFactory_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean
@@ -186,3 +188,5 @@ CORBA::TypeCodeFactory::marshal (TAO_OutputCDR &)
 {
   return false;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

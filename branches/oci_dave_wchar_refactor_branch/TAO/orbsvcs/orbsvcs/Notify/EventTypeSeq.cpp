@@ -1,7 +1,7 @@
 // $Id$
 
-#include "EventTypeSeq.h"
-#include "Topology_Saver.h"
+#include "orbsvcs/Notify/EventTypeSeq.h"
+#include "orbsvcs/Notify/Topology_Saver.h"
 
 #include "tao/debug.h"
 //#define DEBUG_LEVEL 9
@@ -10,6 +10,8 @@
 #endif //DEBUG_LEVEL
 
 ACE_RCSID(Notify, TAO_Notify_EventTypeSeq, "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_EventTypeSeq::TAO_Notify_EventTypeSeq (void)
 {
@@ -29,7 +31,7 @@ TAO_Notify_EventTypeSeq::operator = (const TAO_Notify_EventTypeSeq & rhs)
 
 TAO_Notify_EventTypeSeq::TAO_Notify_EventTypeSeq (const TAO_Notify_EventTypeSeq & rhs)
   : TAO_Notify_Object ()
-  , ACE_NESTED_CLASS (TAO_Notify,Topology_Savable ())
+  , TAO_Notify::Topology_Savable ()
   , ACE_Unbounded_Set <TAO_Notify_EventType> (rhs)
   , TAO_Notify::Topology_Object ()
 {
@@ -42,7 +44,7 @@ TAO_Notify_EventTypeSeq::populate (CosNotification::EventTypeSeq& event_type_seq
 
   inherited::CONST_ITERATOR iter (*this);
 
-  TAO_Notify_EventType* event_type;
+  TAO_Notify_EventType* event_type = 0;
 
   CORBA::ULong i = 0;
   for (iter.first (); iter.next (event_type); iter.advance (), ++i)
@@ -311,3 +313,5 @@ TAO_Notify_EventTypeSeq::release (void)
 {
   delete this;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

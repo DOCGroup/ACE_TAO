@@ -16,7 +16,7 @@
    <initializer path="netsvcs" init="_make_ACE_TS_Server_Acceptor" params="-p 20222"/>
  </dynamic>
  <dynamic id="Name_Server" type="Service_Object">
-   <initializer path="netsvcs" init="_make_ACE_Name_Acceptor" params="-p 20012"/>
+   <initializer path="netsvcs" init="_make_ACE_Name_Acceptor" params="-p 20006"/>
  </dynamic>
  <!--  This service is disabled by default -- only enable it ACE is compiled with ACE_HAS_TOKENS_LIBRARY. -->
  <!--  dynamic Token_Service Service_Object * netsvcs:_make_ACE_Token_Acceptor() "-p 20202" -->

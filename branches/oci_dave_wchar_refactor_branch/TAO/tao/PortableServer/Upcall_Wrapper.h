@@ -17,7 +17,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "portableserver_export.h"
+#include "tao/PortableServer/portableserver_export.h"
 
 #ifndef ACE_LACKS_PRAGMA_ONCE
 # pragma once
@@ -27,6 +27,8 @@
 #include "tao/orbconf.h"
 #include "ace/CORBA_macros.h"
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_ServantBase;
 class TAO_ServerRequest;
@@ -122,6 +124,7 @@ namespace TAO
 
 }  // End namespace TAO
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

@@ -1,13 +1,15 @@
 // $Id$
 
-#include "SSLIOP_CredentialsAcquirerFactory.h"
-#include "SSLIOP_CredentialsAcquirer.h"
+#include "orbsvcs/SSLIOP/SSLIOP_CredentialsAcquirerFactory.h"
+#include "orbsvcs/SSLIOP/SSLIOP_CredentialsAcquirer.h"
 
 
 ACE_RCSID (SSLIOP,
            SSLIOP_CredentialsAcquirerFactory,
            "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 SecurityLevel3::CredentialsAcquirer_ptr
 TAO::SSLIOP::CredentialsAcquirerFactory::make (
@@ -24,3 +26,5 @@ TAO::SSLIOP::CredentialsAcquirerFactory::make (
 
   return ca;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

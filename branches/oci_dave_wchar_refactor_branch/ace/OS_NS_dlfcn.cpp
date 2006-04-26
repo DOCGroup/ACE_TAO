@@ -1,4 +1,3 @@
-// -*- C++ -*-
 // $Id$
 
 #include "ace/OS_NS_dlfcn.h"

@@ -15,7 +15,7 @@
 #include "ace/config-all.h"
 
 #if !defined ACE_LACKS_PRAGMA_ONCE
-#pragma once
+# pragma once
 #endif /* ! ACE_LACKS_PRAGMA_ONCE */
 
 #include "CIAO_Client_Export.h"
@@ -30,7 +30,7 @@
         factory->_remove_ref ();      }
 
 // By default tracing is turned off.
-#if !defined (CIAO_NTRACE) 
+#if !defined (CIAO_NTRACE)
 #  if !defined (ACE_NTRACE)
 #    define CIAO_NTRACE 1
 #  else
@@ -43,7 +43,7 @@
 #    define CIAO_TRACE(X)
 #  else
 #    if (ACE_NTRACE == 0)
-#      #error CIAO_TRACE cannot be disabled if ACE_TRACE is enabled 
+#      error CIAO_TRACE cannot be disabled if ACE_TRACE is enabled
 #    else
 #      define CIAO_TRACE(X)
 #    endif
@@ -55,7 +55,6 @@
 #  define CIAO_TRACE(X) ACE_TRACE_IMPL(X)
 #  include "ace/Trace.h"
 #endif /* CIAO_NTRACE */
-
 
 namespace CIAO
 {

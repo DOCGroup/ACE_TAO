@@ -1,4 +1,5 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file Asynch_Reply_Dispatcher_Base.h
@@ -24,13 +25,17 @@
 
 #include "tao/IOP_IORC.h"
 
-class TAO_Pluggable_Reply_Params;
-class TAO_ORB_Core ;
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Time_Value;
-class TAO_Transport;
 class ACE_Lock;
 class ACE_Allocator;
+ACE_END_VERSIONED_NAMESPACE_DECL
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+class TAO_Pluggable_Reply_Params;
+class TAO_ORB_Core;
+class TAO_Transport;
 /**
  * @class TAO_Asynch_Reply_Dispatcher_Base
  *
@@ -65,8 +70,8 @@ public:
 
   /// @name Mutators for refcount
   //@{
-  long incr_refcount (void);
-  long decr_refcount (void);
+  void incr_refcount (void);
+  void decr_refcount (void);
   //@}
 
   /// A helper method that can be used by the subclasses
@@ -120,7 +125,7 @@ private:
   ACE_Lock *lock_;
 
   /// Refcount paraphernalia for this class
-  long refcount_;
+  CORBA::ULong refcount_;
 
   /// Has the reply been dispatched?
   bool is_reply_dispatched_;
@@ -155,6 +160,8 @@ namespace TAO
   };
 
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "tao/Asynch_Reply_Dispatcher_Base.i"

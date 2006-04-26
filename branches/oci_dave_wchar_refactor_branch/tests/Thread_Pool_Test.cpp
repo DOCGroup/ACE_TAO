@@ -123,7 +123,7 @@ Thread_Pool::svc (void)
 
   for (int count = 1; ; count++)
     {
-      ACE_Message_Block *mb;
+      ACE_Message_Block *mb = 0;
 
       int result = this->getq (mb);
 

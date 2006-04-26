@@ -22,8 +22,12 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-/// Forward declarations
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Allocator;
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_ORB_Core;
 class TAO_Queued_Data;
 class TAO_Transport;
@@ -66,62 +70,8 @@ public:
   TAO_Queued_Data *dequeue_tail (void);
   int enqueue_tail (TAO_Queued_Data *nd);
 
-  /// Copy message from @a block to the tail of the queue. The size
-  /// of message that is copied to the tail node is returned. The
-  /// number of bytes copied depends on the amount of bytes needed to
-  /// make the tail node consistent.
-  size_t copy_tail (ACE_Message_Block &block);
-
   /// Return the length of the queue..
   CORBA::ULong queue_length (void);
-
-  /*!
-    @name Node Inspection Predicates
-
-    \brief These methods allow inspection of head and tail nodes for "completeness".
-
-    These methods check to see whether the node on the head or tail is
-    "complete" and ready for further processing.  See each method's
-    documentation for its definition of "complete".
-  */
-  //@{
-  /*!
-    "complete" == the GIOP message at the tail is not missing any data (it may be a complete GIOP Fragment, though)
-
-    \retval -1 queue is empty
-    \retval 0  tail is not "complete"
-    \retval 1  tail is "complete"
-  */
-  int is_tail_complete (void);
-
-  /*!
-
-    "complete" == the GIOP message at the head is not missing any data
-    AND, if it's the first message in a series of GIOP fragments, all
-    the fragments have been received, parsed, and placed into the
-    queue
-
-    \retval -1 if queue is empty
-    \retval 0  if head is not "complete"
-    \retval 1  if head is "complete"
-   */
-  int is_head_complete (void);
-  //@}
-
-  /*!
-    \brief Check to see if the message at the tail (complete or incomplete) is a GIOP Fragment.
-   */
-  int is_tail_fragmented (void);
-
-  /// Return the size of data that is missing in tail of the queue.
-  size_t missing_data_tail (void) const;
-
-  /// Find the first fragment that matches the GIOP version
-  TAO_Queued_Data *find_fragment_chain (CORBA::Octet major,
-                                        CORBA::Octet minor) const;
-
-  /// Find the first fragment that matches the request id
-  TAO_Queued_Data *find_fragment_chain (CORBA::ULong request_id) const;
 
 private:
 
@@ -143,6 +93,10 @@ private:
   /// Copy of our ORB Core
   TAO_ORB_Core *orb_core_;
 };
+
+/// Constant value indicating that the correct value is unknown yet, 
+/// probably parsing the header failed due to insufficient data in buffer.
+const size_t TAO_MISSING_DATA_UNDEFINED = ~((size_t) 0); // MAX_SIZE_T
 
 /************************************************************************/
 
@@ -185,9 +139,11 @@ public:
   static TAO_Queued_Data* duplicate (TAO_Queued_Data &qd);
 
   /// Consolidate this fragments chained message blocks into one.
-  void consolidate (void);
+  /// @return -1 if consolidation failed, eg out or memory, otherwise 0
+  int consolidate (void);
 
 public:
+  
   /// The message block that contains the message.
   ACE_Message_Block *msg_block_;
 
@@ -198,12 +154,11 @@ public:
     data missing from \a msg_block_.
    */
   //@{
-  /*! Data missing in the above message that hasn't been read or processed yet. */
-  CORBA::Long missing_data_;
+  /*! Data missing in the above message that hasn't been read or processed yet, 
+      the value TAO_MISSING_DATA_UNDEFINED indicates it hasn't been processed yet, 
+      otherwise greater or equal zero. */
+  size_t missing_data_;
   //@}
-
-  /// The byte order of the message that is stored in the node.
-  CORBA::Octet byte_order_;
 
   /// Many protocols like GIOP have a major and minor version
   /// information that would be needed to read and decipher the
@@ -211,14 +166,14 @@ public:
   CORBA::Octet major_version_;
   CORBA::Octet minor_version_;
 
+  /// The byte order of the message that is stored in the node.
+  CORBA::Octet byte_order_;
+
   /// Some messages can be fragmented by the protocol (this is an ORB
   /// level fragmentation on top of the TCP/IP fragmentation. This
   /// member indicates whether the message that we have recd. and
   /// queue already has more fragments that is missing..
   CORBA::Octet more_fragments_;
-
-  /// The fragment request id
-  CORBA::ULong request_id_;
 
   /// The message type of the message
   TAO_Pluggable_Message_Type msg_type_;
@@ -237,9 +192,10 @@ private:
   ACE_Allocator *allocator_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "Incoming_Message_Queue.inl"
+# include "tao/Incoming_Message_Queue.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

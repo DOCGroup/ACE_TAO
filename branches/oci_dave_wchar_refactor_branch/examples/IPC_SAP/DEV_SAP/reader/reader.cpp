@@ -2,7 +2,6 @@
 
 #include "ace/DEV_Addr.h"
 #include "ace/DEV_Connector.h"
-#include "ace/DEV_IO.h"
 #include "ace/TTY_IO.h"
 
 ACE_RCSID(reader, reader, "$Id$")
@@ -27,13 +26,22 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   ACE_TTY_IO::Serial_Params myparams;
   myparams.baudrate = 9600;
-  myparams.parityenb = 1;
+  myparams.xonlim = 0;
+  myparams.xofflim = 0;
+  myparams.readmincharacters = 0;
+  myparams.readtimeoutmsec = 10000;
+  myparams.parityenb = true;
   myparams.paritymode = "EVEN";
+  myparams.ctsenb = false;
+  myparams.rtsenb = false;
+  myparams.xinenb = false;
+  myparams.xoutenb = false;
+  myparams.modem = false;
+  myparams.rcvenb = true;
+  myparams.dsrenb = false;
+  myparams.dtrdisable = false;
   myparams.databits = 8;
   myparams.stopbits = 1;
-  myparams.readtimeoutmsec = 10000;
-  myparams.ctsenb = 0;
-  myparams.rcvenb = 1;
 
   if (read_dev.control (ACE_TTY_IO::SETPARAMS,
                         &myparams) == -1)

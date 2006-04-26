@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ../bin/mwc.pl -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/config -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/templates -type automake -noreldefs TAO.mwc
+## ../bin/mwc.pl -type automake -noreldefs TAO.mwc
 
 ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
@@ -17,6 +17,7 @@ TAO_ROOT = $(top_srcdir)
 ## Makefile.EC_MT_Mcast.am
 
 if BUILD_CORBA_MESSAGING
+if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS = MCast
 
@@ -38,6 +39,7 @@ MCast_SOURCES = \
   Supplier.h
 
 MCast_LDADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_Strategies.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTEvent_Serv.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTEvent_Skel.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTEvent.la \
@@ -51,6 +53,7 @@ MCast_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+endif !BUILD_ACE_FOR_TAO
 endif BUILD_CORBA_MESSAGING
 
 ## Clean up template repositories, etc.

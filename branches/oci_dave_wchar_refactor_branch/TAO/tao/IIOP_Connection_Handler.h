@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 // ===================================================================
 /**
@@ -7,7 +7,7 @@
  *  $Id$
  *
  *  @author Originally by Chris Cleeland as IIOP_Connect.h
- *  @author modified by Balachandran Natarajan <bala@cs.wustl.edu>
+ *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
 // ===================================================================
 
@@ -16,18 +16,23 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/Svc_Handler.h"
+#include "tao/orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/SOCK_Stream.h"
+#if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
 
 #include "tao/Connection_Handler.h"
 #include "tao/Basic_Types.h"
 
-// Service Handler for this transport
+#include "ace/SOCK_Stream.h"
+#include "ace/Svc_Handler.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+/// Service Handler for this transport
 typedef ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
         TAO_IIOP_SVC_HANDLER;
 
@@ -128,6 +133,10 @@ private:
   /// Stores the type of service value.
   int dscp_codepoint_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* TAO_HAS_IIOP && TAO_HAS_IIOP != 0 */
 
 #include /**/ "ace/post.h"
 #endif /* TAO_IIOP_CONNECTION_HANDLER_H */

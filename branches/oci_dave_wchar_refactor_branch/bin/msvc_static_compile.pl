@@ -115,6 +115,24 @@ sub Find_Sln (@)
     return @array;
 }
 
+sub Rename_Files ($$)
+{
+  my ($target) = shift;
+  my ($newext) = shift;
+  my (@array)  = ();
+
+  sub wanted_file {
+    my ($text) = shift;
+    my ($next) = shift;
+    if ($File::Find::name =~ /^(.*)$text$/i) {
+      my ($newname) = $1 . $next;
+      rename ($File::Find::name, $newname);
+    }
+  }
+
+  find (sub { wanted_file ($target, $newext) }, $ACE_ROOT);
+}
+
 # Only builds the core libraries.
 sub Build_Core ()
 {
@@ -138,9 +156,9 @@ sub Build_Core ()
 
         foreach $test ($config_list->valid_entries ()) {
           if ($mod_name) {
-            @plist = split(/\//, $test);
+            @plist = split (/\//, $test);
             $fname = pop @plist;
-	    $fname_mod = $name_mod;
+            $fname_mod = $name_mod;
             $fname_mod =~ s/\*/$fname/;
 	    push @plist,($fname_mod);
             push (@core_list, join('/', @plist) . $proj_ext);
@@ -350,7 +368,36 @@ if ($#directories < 0) {
 
 print "msvc_static_compile: Begin\n";
 print STDERR "Beginning Core Build\n" if ($print_status == 1);
-Build_Core if (!$use_custom_dir || $build_core_only);
+if (!$use_custom_dir || $build_core_only) {
+  if ($vc7) {
+    ## devenv is too smart for it's own good.  When a .vcproj is specified,
+    ## as is done when building the CORE, it will find the solution to which
+    ## the .vcproj belongs and begin to build additional portions of the
+    ## solution.  This is not what we want as dependencies are not set up
+    ## between library projects.
+    my($sln) = '.sln';
+    my($core_sln) = $sln . '.build_core';
+
+    Rename_Files ($sln, $core_sln);
+
+    foreach my $sig ('INT', 'TERM') {
+      $SIG{$sig} = sub { print STDERR "Renaming solution files, please be patient...\n";
+                         Rename_Files ($core_sln, $sln);
+                         exit(1); };
+    }
+
+    Build_Core ();
+
+    Rename_Files ($core_sln, $sln);
+
+    foreach my $sig ('INT', 'TERM') {
+      $SIG{$sig} = 'DEFAULT';
+    }
+  }
+  else {
+    Build_Core ();
+  }
+}
 print STDERR "Beginning Full Build\n" if ($print_status == 1);
 if ( $vc7 ) {
     Build_All_VC7 if !$build_core_only;

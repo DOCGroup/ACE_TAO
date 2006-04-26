@@ -1,14 +1,13 @@
-/* -*- C++ -*- */
 // $Id$
 
-#include "DynCommon.h"
-#include "DynAnyFactory.h"
-#include "DynAny_i.h"
-#include "DynArray_i.h"
-#include "DynEnum_i.h"
-#include "DynSequence_i.h"
-#include "DynStruct_i.h"
-#include "DynUnion_i.h"
+#include "tao/DynamicAny/DynCommon.h"
+#include "tao/DynamicAny/DynAnyFactory.h"
+#include "tao/DynamicAny/DynAny_i.h"
+#include "tao/DynamicAny/DynArray_i.h"
+#include "tao/DynamicAny/DynEnum_i.h"
+#include "tao/DynamicAny/DynSequence_i.h"
+#include "tao/DynamicAny/DynStruct_i.h"
+#include "tao/DynamicAny/DynUnion_i.h"
 #include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
 #include "tao/CDR.h"
 #include "ace/OS_NS_wchar.h"
@@ -19,6 +18,8 @@ ACE_RCSID (DynamicAny,
            DynCommon,
            "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_DynCommon::TAO_DynCommon (void)
 {
@@ -1849,3 +1850,5 @@ TAO_DynCommon::check_type_and_unalias (CORBA::TypeCode_ptr tc
   return TAO_DynAnyFactory::strip_alias (tc
                                          ACE_ENV_ARG_PARAMETER);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

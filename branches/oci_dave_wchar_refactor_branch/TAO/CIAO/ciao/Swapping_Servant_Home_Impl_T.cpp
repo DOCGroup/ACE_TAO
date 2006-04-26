@@ -3,8 +3,8 @@
 #ifndef CIAO_SWAPPING_SERVANT_IMPL_T_C
 #define CIAO_SWAPPING_SERVANT_IMPL_T_C
 
-#include "Swapping_Servant_Home_Impl_T.h"
-#include "Dynamic_Component_Servant_T.h"
+#include "ciao/Swapping_Servant_Home_Impl_T.h"
+#include "ciao/Dynamic_Component_Servant_T.h"
 
 namespace CIAO
 {
@@ -105,7 +105,7 @@ namespace CIAO
       PortableServer::string_to_ObjectId (this->obj_id_);
 
     Dynamic_Component_Servant_Base *servant = 0;
-    if (this->dynamic_servant_map_.find (oid, servant) == 0)
+    if (this->dynamic_servant_map_.find (oid.in (), servant) == 0)
     {
       servant->destroy (oid);
     }
@@ -229,8 +229,8 @@ namespace CIAO
 
     this->container_->add_servant_map (oid, svt ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (COMP::_nil ());
-    
-    this->dynamic_servant_map_.bind (oid, svt);
+
+    this->dynamic_servant_map_.bind (oid.in (), svt);
 
     COMP_VAR ho = COMP::_narrow (objref.in ()
                                  ACE_ENV_ARG_PARAMETER);

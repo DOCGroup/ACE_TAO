@@ -27,7 +27,7 @@
 #define TAO_BE_VISITOR_CONTEXT_H
 
 #include "be_codegen.h"
-#include "idl_bool.h"
+
 
 class TAO_OutStream;
 class be_decl;
@@ -128,16 +128,16 @@ public:
   be_attribute *attribute (void);
   // get the attribute node
 
-  void exception (idl_bool);
+  void exception (bool);
   // is it the special ctor for exceptions?
 
-  idl_bool exception (void);
+  bool exception (void);
   // is it the special ctor for exceptions?
 
-  void comma (idl_bool);
+  void comma (bool);
   // scope supoorts generation of comma after each element
 
-  idl_bool comma (void);
+  bool comma (void);
   // are we supposed to generate a comma?
 
   be_interface *interface (void) const;
@@ -243,10 +243,10 @@ public:
 
   be_union *be_scope_as_union (void);
   // return the scope as union if possible
-  
+
   const char *export_macro (void) const;
   // return the export macro currently in force
-  
+
   const char *non_null_export_macro (void) const;
   // if anyop export macro is empty, check stub.
 
@@ -275,10 +275,10 @@ private:
   be_attribute *attr_;
   // attribute node stored here while generating its code
 
-  idl_bool exception_;
+  bool exception_;
   // is it the special ctor for exceptions?
 
-  idl_bool comma_;
+  bool comma_;
   // whether scope should generate a comma after every element
 
   be_interface* interface_;
@@ -288,5 +288,5 @@ private:
 #if defined (interface)
 # define interface aceinterface
 #endif /* interface */
- 
+
 #endif /* BE_VISITOR_CONTEXT_H */

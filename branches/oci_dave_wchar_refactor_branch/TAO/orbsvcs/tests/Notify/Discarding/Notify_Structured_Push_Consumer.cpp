@@ -131,7 +131,7 @@ Notify_Structured_Push_Consumer::push_structured_event (
     this->client_.consumer_done (this);
   }
 
-  ACE_DEBUG((LM_DEBUG, "received %d\n", expected, id));
+  ACE_DEBUG((LM_DEBUG, "received %d\n", id));
 
   // We should receive mepc + 1, because the first event will be in-transit
   // before our sleep causes the notify to queue events.

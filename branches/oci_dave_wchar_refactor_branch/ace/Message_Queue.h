@@ -22,6 +22,8 @@
 
 #include "ace/IO_Cntl_Msg.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Forward decls.
 class ACE_Notification_Strategy;
 template <ACE_SYNCH_DECL> class ACE_Message_Queue_Iterator;
@@ -30,7 +32,7 @@ template <ACE_SYNCH_DECL> class ACE_Message_Queue_Reverse_Iterator;
 /**
  * @class ACE_Message_Queue_Base
  *
- * @brief Base class for <ACE_Message_Queue>, which is the central
+ * @brief Base class for ACE_Message_Queue, which is the central
  * queueing facility for messages in the ACE framework.
  *
  * For all the <ACE_Time_Value> pointer parameters the caller will
@@ -88,7 +90,7 @@ public:
   // = Enqueue and dequeue methods.
 
   /**
-   * Retrieve the first <ACE_Message_Block> without removing it.  Note
+   * Retrieve the first ACE_Message_Block without removing it.  Note
    * that <timeout> uses <{absolute}> time rather than <{relative}>
    * time.  If the <timeout> elapses without receiving a message -1 is
    * returned and <errno> is set to <EWOULDBLOCK>.  If the queue is
@@ -206,16 +208,19 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
+private:
+  // = Disallow copying and assignment.
+  ACE_Message_Queue_Base (const ACE_Message_Queue_Base &);
+  void operator= (const ACE_Message_Queue_Base &);
+
 protected:
   /// Indicates the state of the queue, which can be
   /// <ACTIVATED>, <DEACTIVATED>, or <PULSED>.
   int state_;
 
-private:
-  // = Disallow these operations.
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Message_Queue_Base &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Message_Queue_Base (const ACE_Message_Queue_Base &))
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 // Include the templates here.
 #include "ace/Message_Queue_T.h"
@@ -224,6 +229,8 @@ private:
 # include /**/ <msgQLib.h>
 # include "ace/Null_Mutex.h"
 # include "ace/Null_Condition.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_Message_Queue_Vx
@@ -235,7 +242,7 @@ private:
  * on the native MsgQ implementation to take care of that.  The
  * only system calls that it uses are VxWorks msgQLib calls, so
  * it is suitable for use in interrupt service routines.
- * NOTE: *Many* ACE_Message_Queue features are not supported with
+ * @note *Many* ACE_Message_Queue features are not supported with
  * this specialization, including:
  * * The two size arguments to the constructor and <open> are
  * interpreted differently.  The first is interpreted as the
@@ -252,7 +259,7 @@ private:
  * * <peek_dequeue_head>.
  * * <ACE_Message_Queue_Iterators>.
  * * The ability to change low and high water marks after creation.
- * * <Message_Block> chains.  The continuation field of <ACE_Message_Block>
+ * * <Message_Block> chains.  The continuation field of ACE_Message_Block
  * *   is ignored; only the first block of a fragment chain is
  * *   recognized.
  */
@@ -388,6 +395,16 @@ protected:
   MSG_Q_ID msgq (void);
 
 private:
+
+  // Disallow copying and assignment.
+  ACE_Message_Queue_Vx (const ACE_Message_Queue_Vx &);
+  void operator= (const ACE_Message_Queue_Vx &);
+
+  ACE_UNIMPLEMENTED_FUNC (virtual int peek_dequeue_head
+                            (ACE_Message_Block *&first_item,
+                             ACE_Time_Value *tv = 0))
+
+private:
   /// Maximum number of messages that can be queued.
   int max_messages_;
 
@@ -397,15 +414,13 @@ private:
   /// Native message queue options.
   int options_;
 
-  // = Disallow these operations.
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Message_Queue_Vx &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Message_Queue_Vx (const ACE_Message_Queue_Vx &))
-
-  ACE_UNIMPLEMENTED_FUNC (virtual int peek_dequeue_head
-                            (ACE_Message_Block *&first_item,
-                             ACE_Time_Value *tv = 0))
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 #endif /* VXWORKS */
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_WIN32) && (ACE_HAS_WINNT4 != 0)
 /**
@@ -415,11 +430,11 @@ private:
  *
  * Implementation of a strip-downed ACE_Message_Queue using NT's
  * IO completion port mechanism.
- * NOTE: *Many* ACE_Message_Queue features are not supported with
+ * @note *Many* ACE_Message_Queue features are not supported with
  * this implementation, including:
  * * <open> method have different signatures.
- * * <dequeue_head> *requires* that the <ACE_Message_Block>
- * pointer argument point to an <ACE_Message_Block> that was
+ * * <dequeue_head> *requires* that the ACE_Message_Block
+ * pointer argument point to an ACE_Message_Block that was
  * allocated by the caller.
  * * <peek_dequeue_head>.
  * * <ACE_Message_Queue_Iterators>.
@@ -565,6 +580,12 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
+
+  // Disallow copying and assignment.
+  ACE_Message_Queue_NT (const ACE_Message_Queue_NT &);
+  void operator= (const ACE_Message_Queue_NT &);
+
+private:
   // = Internal states.
 
   /// Maximum threads that can be released (and run) concurrently.
@@ -592,12 +613,10 @@ private:
   /// Underlying NT IoCompletionPort.
   ACE_HANDLE completion_port_;
 
-  // = Disallow these operations.
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Message_Queue_NT &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Message_Queue_NT (const ACE_Message_Queue_NT &))
 };
 #endif /* ACE_WIN32 && ACE_HAS_WINNT4 != 0 */
 
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Message_Queue.inl"

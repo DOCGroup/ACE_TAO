@@ -16,12 +16,7 @@
 
 #include /**/ "ace/pre.h"
 
-#ifdef ACE_SOCKETS_BUILD_DLL
-# include "ace/ACE_Sockets_export.h"
-#else
-# include "ace/ACE_export.h"
-# define ACE_Sockets_Export ACE_Export
-#endif  /* ACE_SOCKETS_BUILD_DLL */
+#include "ace/ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -34,12 +29,14 @@
 #include "ace/ACE.h"
 #include "ace/os_include/sys/os_un.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_UNIX_Addr
  *
  * @brief Defines the ``UNIX domain address family'' address format.
  */
-class ACE_Sockets_Export ACE_UNIX_Addr : public ACE_Addr
+class ACE_Export ACE_UNIX_Addr : public ACE_Addr
 {
 public:
   // = Initialization methods.
@@ -105,10 +102,14 @@ private:
   sockaddr_un unix_addr_;
 };
 
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
 #include "ace/UNIX_Addr.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_LACKS_UNIX_DOMAIN_SOCKETS */
+
 #include /**/ "ace/post.h"
+
 #endif /* ACE_UNIX_ADDR_H */

@@ -1,29 +1,25 @@
-// -*-C++-*-
 
-// $Id$
 
 #ifndef OID_CLS_
 #define OID_CLS_
-// ============================================================================
-//
-// = LIBRARY
-//    asnmp
-//
-// = FILENAME
-//    oid.h
-//
-// = DESCRIPTION
-// This class is fully contained and does not rely on or any other
-// SNMP libraries. This class is portable across any platform
-// which supports C++. Ported to ACE by Mike MacFaden mrm@cisco.com
-// and modified for MT. Some API cleanup: collapse constructors,
-// add suboid() method remove unnecessary overload, and update a few
-// names and types to improve clarity.
-//
-// = AUTHOR
-//    Peter E Mellquist
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    oid.h
+ *
+ *  $Id$
+ *
+ * This class is fully contained and does not rely on or any other
+ * SNMP libraries. This class is portable across any platform
+ * which supports C++. Ported to ACE by Mike MacFaden mrm@cisco.com
+ * and modified for MT. Some API cleanup: collapse constructors,
+ * add suboid() method remove unnecessary overload, and update a few
+ * names and types to improve clarity.
+ *
+ *
+ *  @author Peter E Mellquist
+ */
+//=============================================================================
+
 /*===================================================================
   Copyright (c) 1996
   Hewlett-Packard Company
@@ -49,122 +45,129 @@
 
 #include "asnmp/smival.h"                // derived class for all values
 
-class ASNMP_Export Oid: public  SnmpSyntax
-  // = TITLE
-  //      Implement RFC 1155 Object Identifier (OID) datatype
+/**
+ * @class Oid
+ *
+ * @brief Implement RFC 1155 Object Identifier (OID) datatype
+ */
+class ASNMP_Export Oid : public  SnmpSyntax
 {
 public:
+  /// constructor using a dotted string
   Oid( const char * dotted_oid_string = "", size_t size = unsigned(-1) );
-  // constructor using a dotted string
 
+  /// constructor using another oid object
   Oid ( const Oid &oid);
-  // constructor using another oid object
 
+  /// constructor from raw form
   Oid(const unsigned long *raw_oid, size_t oid_len);
-  // constructor from raw form
 
+  /// destructor
   ~Oid();
-  // destructor
 
+  /// syntax type
   SmiUINT32 get_syntax();
-  // syntax type
 
+  /// assignment to another oid object overloaded
   Oid& operator=( const Oid &oid);
-  // assignment to another oid object overloaded
 
+  /// equal operator overloaded
   friend ASNMP_Export bool operator==( const Oid &lhs,const Oid &rhs);
-  // equal operator overloaded
 
+  /// not equal operator overloaded
   friend ASNMP_Export bool operator!=( const Oid &lhs,const Oid &rhs);
-  // not equal operator overloaded
 
+  /// less than < overloaded
   friend ASNMP_Export bool operator<( const Oid &lhs,const Oid &rhs);
-  // less than < overloaded
 
+  /// less than <= overloaded
   friend ASNMP_Export bool operator<=( const Oid &lhs,const Oid &rhs);
-  // less than <= overloaded
 
+  /// greater than > overloaded
   friend ASNMP_Export bool operator>( const Oid &lhs,const Oid &rhs);
-  // greater than > overloaded
 
+  /// greater than >= overloaded
   friend ASNMP_Export bool operator>=( const Oid &lhs,const Oid &rhs);
-  // greater than >= overloaded
 
+  /// append operator, appends a string
   Oid& operator+=( const char *a);
-  // append operator, appends a string
 
+  /// appends an int
   Oid& operator+=( const unsigned long i);
-  // appends an int
 
+  /// appends an Oid
   Oid& operator+=( const Oid &o);
-  // appends an Oid
 
+  /// allows element access
   unsigned long & operator[]( size_t position);
-  // allows element access
 
+  /// return the WinSnmp oid part
   SmiLPOID oidval();
-  // return the WinSnmp oid part
 
+  /// reset the data from raw 1 byte format
   void set_data( const char *dotted_oid_string);
-  // reset the data from raw 1 byte format
 
+  /// reset the data from raw 4byte integer format
   void set_data( const unsigned long *raw_oid, const size_t oid_len);
-  // reset the data from raw 4byte integer format
 
+  /// return the len of the oid
   size_t length() const;
-  // return the len of the oid
 
+  /// trim off the n rightmost values of an oid
   void trim( const size_t how_many = 1);
-  // trim off the n rightmost values of an oid
 
+  /// the equivalent of a substr(new_str, 0, 1)
   int suboid(Oid& oid, size_t start = 0, size_t how_many = size_t (-1));
-  // the equivalent of a substr(new_str, 0, 1)
 
+  /**
+   * compare the n leftmost bytes (left-to-right)
+   * returns 0, equal
+   * returns -1, <
+   * returns 1 , >
+   */
   int left_comparison( const unsigned long n, const Oid &o) const;
-  // compare the n leftmost bytes (left-to-right)
-  // returns 0, equal
-  // returns -1, <
-  // returns 1 , >
 
 
+  /**
+   * compare the n rightmost bytes (right-to-left)
+   * returns 0, equal
+   * returns -1, <
+   * returns 1 , >
+   */
   int right_comparison( const unsigned long n, const Oid &o) const;
-  // compare the n rightmost bytes (right-to-left)
-  // returns 0, equal
-  // returns -1, <
-  // returns 1 , >
 
+  /// is the Oid object valid
   int valid() const;
-  // is the Oid object valid
 
+  /// return dotted string value from the right
+  /// where the user specifies how many positions to print
   const char *to_string();
-  // return dotted string value from the right
-  // where the user specifies how many positions to print
 
+  /// create a new instance of this Value
   SnmpSyntax *clone() const;
-  // create a new instance of this Value
 
+  /// copy an instance of this Value
   SnmpSyntax& operator=( SnmpSyntax &val);
-  // copy an instance of this Value
 
 protected:
+  /// used for returning oid string
   char *iv_str;
-  // used for returning oid string
 
+  /// convert a string to an smi oid
   int StrToOid( const char *string, SmiLPOID dstOid, size_t& how_many_bytes);
-  // convert a string to an smi oid
 
+  /// clone an smi oid
   int OidCopy(  SmiLPOID srcOid, SmiLPOID dstOid, size_t& how_many_bytes);
-  // clone an smi oid
 
+  /// convert an smi oid to its string representation
   int OidToStr(SmiLPOID srcOid, SmiUINT32 size, char *string,  size_t& how_many_bytes);
-  // convert an smi oid to its string representation
 
   private:
+    /// release memory, re-init data members
     void set_invalid();
-    // release memory, re-init data members
 
+    /// initialize object data members
     void set_null();
-    // initialize object data members
     void init_value( const SmiLPOID srcOid, size_t len);
     void init_value(const unsigned long *raw_oid, size_t oid_len);
 };

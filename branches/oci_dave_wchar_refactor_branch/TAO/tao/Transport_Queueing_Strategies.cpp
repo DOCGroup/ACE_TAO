@@ -1,9 +1,9 @@
 // $Id$
 
-#include "Transport_Queueing_Strategies.h"
-#include "Buffering_Constraint_Policy.h"
-#include "Stub.h"
-#include "debug.h"
+#include "tao/Transport_Queueing_Strategies.h"
+#include "tao/Buffering_Constraint_Policy.h"
+#include "tao/Stub.h"
+#include "tao/debug.h"
 
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_sys_time.h"
@@ -11,6 +11,9 @@
 ACE_RCSID (tao,
            Transport_Queueing_Strategies,
            "$Id$")
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -224,3 +227,5 @@ namespace TAO
   #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

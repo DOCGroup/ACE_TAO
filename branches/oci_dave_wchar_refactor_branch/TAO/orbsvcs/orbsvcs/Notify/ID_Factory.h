@@ -14,7 +14,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "notify_serv_export.h"
+#include "orbsvcs/Notify/notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -22,7 +22,9 @@
 
 #include "ace/Atomic_Op.h"
 
-#include "Object.h"
+#include "orbsvcs/Notify/Object.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Notify_ID_Factory
@@ -49,9 +51,10 @@ private:
   TAO_SYNCH_MUTEX mtx_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ID_Factory.inl"
+#include "orbsvcs/Notify/ID_Factory.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

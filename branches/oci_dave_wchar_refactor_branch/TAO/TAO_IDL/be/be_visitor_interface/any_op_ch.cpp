@@ -92,12 +92,16 @@ be_visitor_interface_any_op_ch::visit_interface (be_interface *node)
       *os << "#else\n\n";
     }
 
+  *os << be_global->core_versioning_begin () << be_nl;
+  
   *os << macro << " void operator<<= (::CORBA::Any &, " << node->name ()
       << "_ptr); // copying" << be_nl;
   *os << macro << " void operator<<= (::CORBA::Any &, " << node->name ()
       << "_ptr *); // non-copying" << be_nl;
   *os << macro << " ::CORBA::Boolean operator>>= (const ::CORBA::Any &, "
       << node->name () << "_ptr &);";
+
+  *os << be_global->core_versioning_end () << be_nl;
 
   if (module != 0)
     {

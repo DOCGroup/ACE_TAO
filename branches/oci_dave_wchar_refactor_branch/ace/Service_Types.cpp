@@ -16,6 +16,7 @@ ACE_RCSID (ace,
            Service_Types,
            "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 typedef ACE_Stream<ACE_SYNCH> MT_Stream;
 typedef ACE_Module<ACE_SYNCH> MT_Module;
@@ -455,54 +456,4 @@ ACE_Stream_Type::find (const ACE_TCHAR *mod_name) const
 }
 
 
-/*
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Message_Queue<ACE_SYNCH>;
-template class ACE_Message_Queue_Iterator<ACE_SYNCH>;
-template class ACE_Message_Queue_Reverse_Iterator<ACE_SYNCH>;
-template class ACE_Message_Queue_Factory<ACE_SYNCH>;
-template class ACE_Dynamic_Message_Queue<ACE_SYNCH>;
-template class ACE_Module<ACE_SYNCH>;
-template class ACE_Stream<ACE_SYNCH>;
-template class ACE_Stream_Head<ACE_SYNCH>;
-template class ACE_Stream_Tail<ACE_SYNCH>;
-template class ACE_Task<ACE_SYNCH>;
-template class ACE_Thru_Task<ACE_SYNCH>;
-
-// Even with threads, these ACE_NULL_SYNCH specializations are necessary.
-#if defined (ACE_HAS_THREADS)
-  template class ACE_Message_Queue<ACE_NULL_SYNCH>;
-  template class ACE_Message_Queue_Iterator<ACE_NULL_SYNCH>;
-  template class ACE_Message_Queue_Reverse_Iterator<ACE_NULL_SYNCH>;
-  template class ACE_Message_Queue_Factory<ACE_NULL_SYNCH>;
-  template class ACE_Dynamic_Message_Queue<ACE_NULL_SYNCH>;
-  template class ACE_Module<ACE_NULL_SYNCH>;
-  template class ACE_Task<ACE_NULL_SYNCH>;
-  template class ACE_Thru_Task<ACE_NULL_SYNCH>;
-  #endif *//* ACE_HAS_THREADS */
-/*
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Message_Queue<ACE_SYNCH>
-#pragma instantiate ACE_Message_Queue_Iterator<ACE_SYNCH>
-#pragma instantiate ACE_Message_Queue_Reverse_Iterator<ACE_SYNCH>
-#pragma instantiate ACE_Message_Queue_Factory<ACE_SYNCH>
-#pragma instantiate ACE_Dynamic_Message_Queue<ACE_SYNCH>
-#pragma instantiate ACE_Module<ACE_SYNCH>
-#pragma instantiate ACE_Stream<ACE_SYNCH>
-#pragma instantiate ACE_Stream_Head<ACE_SYNCH>
-#pragma instantiate ACE_Stream_Tail<ACE_SYNCH>
-#pragma instantiate ACE_Task<ACE_SYNCH>
-#pragma instantiate ACE_Thru_Task<ACE_SYNCH>
-// Even with threads, these ACE_NULL_SYNCH specializations are necessary.
-#if defined (ACE_HAS_THREADS)
-  #pragma instantiate ACE_Message_Queue<ACE_NULL_SYNCH>
-  #pragma instantiate ACE_Message_Queue_Iterator<ACE_NULL_SYNCH>
-  #pragma instantiate ACE_Message_Queue_Reverse_Iterator<ACE_NULL_SYNCH>
-  #pragma instantiate ACE_Message_Queue_Factory<ACE_NULL_SYNCH>
-  #pragma instantiate ACE_Dynamic_Message_Queue<ACE_NULL_SYNCH>
-  #pragma instantiate ACE_Module<ACE_NULL_SYNCH>
-  #pragma instantiate ACE_Task<ACE_NULL_SYNCH>
-  #pragma instantiate ACE_Thru_Task<ACE_NULL_SYNCH>
-  #endif *//* ACE_HAS_THREADS */
-//#else
-//#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+ACE_END_VERSIONED_NAMESPACE_DECL

@@ -47,9 +47,9 @@ public:
                 AST_Interface **supports,
                 long n_supports,
                 AST_Interface *supports_concrete,
-                idl_bool abstract,
-                idl_bool truncatable,
-                idl_bool custom);
+                bool abstract,
+                bool truncatable,
+                bool custom);
   // Constructor that sets its scoped name <n>, a list of inherited valuetypes
   // and supported interfaces <ih>, and the number of inherited interfaces <nih>
 
@@ -58,7 +58,7 @@ public:
 
   virtual void redefine (AST_Interface *from);
 
-  idl_bool opt_accessor (void);
+  bool opt_accessor (void);
   // Should generate optimized form?
 
   virtual int gen_helper_header (char *local_name = 0,
@@ -92,8 +92,8 @@ public:
   int traverse_supports_list_graphs (
       tao_code_emitter gen,
       TAO_OutStream *os,
-      idl_bool use_abstract_paths = I_TRUE,
-      idl_bool use_concrete_paths = I_TRUE
+      bool use_abstract_paths = true,
+      bool use_concrete_paths = true
     );
 
   /// Load the insert queue with the concrete interface we support, and
@@ -103,7 +103,7 @@ public:
       TAO_OutStream *os
     );
 
-  idl_bool supports_abstract (void) const;
+  bool supports_abstract (void) const;
   // Do we support at least one abstract interface?
 
   // Visiting.
@@ -125,7 +125,7 @@ public:
     );
   // Compute the count of private/public/all data members.
 
-  virtual idl_bool in_recursion (ACE_Unbounded_Queue<AST_Type *> &list);
+  virtual bool in_recursion (ACE_Unbounded_Queue<AST_Type *> &list);
   // Check if we are in recursion.
 
   static int abstract_supports_helper (be_interface *node,
@@ -166,21 +166,24 @@ public:
   FactoryStyle determine_factory_style (void);
   // Determine what kind of factory needed.
 
-  idl_bool have_operation (void);
+  bool have_operation (void);
   // Recurse down the inheritance tree to determine
   // if valuetype has at least one operation/attribute.
 
-	static idl_bool have_supported_op (be_interface *node);
+  static bool have_supported_op (be_interface *node);
   // Check if VT supports an interface with at least 1 operation.
 
-  virtual idl_bool will_have_factory (void);
+  virtual bool will_have_factory (void);
   // Use the above enum and methods to determine this after the
   // node's scope is visited but before code generation.
+
+  bool has_member (void);
+  // Decides whether to generate the initializing contstructor or not.
 
 private:
   char *full_obv_skel_name_;
 
-  idl_bool supports_abstract_;
+  bool supports_abstract_;
   // Do we support at least one abstract interface?
 
   int var_out_seq_decls_gen_;

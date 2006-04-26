@@ -1,6 +1,6 @@
-#include "ORBInitializer_Registry_Impl.h"
-#include "ORBInitInfo.h"
-#include "PICurrent.h"
+#include "tao/PI/ORBInitializer_Registry_Impl.h"
+#include "tao/PI/ORBInitInfo.h"
+#include "tao/PI/PICurrent.h"
 
 #include "tao/ORB_Core.h"
 #include "tao/ORB_Constants.h"
@@ -13,6 +13,9 @@
 ACE_RCSID (PI,
            ORBInitializer_Registry,
            "$Id$")
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::ORBInitializer_Registry::ORBInitializer_Registry (void)
   : lock_ (),
@@ -158,6 +161,15 @@ TAO::ORBInitializer_Registry::post_init (
 
 #if TAO_HAS_INTERCEPTORS == 1
       CORBA::Object_ptr picurrent_ptr = orb_core->pi_current ();
+      PortableInterceptor::SlotId slot_count = orb_init_info_->slot_count ();
+
+      if (CORBA::is_nil (picurrent_ptr) && slot_count != 0)
+        {
+          // Force instantiation of the PICurrent object. If we do not do it
+          // now, the slot count will be lost.
+          CORBA::Object_var tmp = orb_core->resolve_picurrent ();
+          picurrent_ptr = orb_core->pi_current ();
+        }
 
       if (!CORBA::is_nil (picurrent_ptr))
         {
@@ -165,7 +177,7 @@ TAO::ORBInitializer_Registry::post_init (
 
           if (pi)
             {
-              pi->initialize (orb_init_info_->slot_count () ACE_ENV_ARG_PARAMETER);
+              pi->initialize (slot_count ACE_ENV_ARG_PARAMETER);
               ACE_CHECK;
             }
         }
@@ -177,6 +189,8 @@ TAO::ORBInitializer_Registry::post_init (
       orb_init_info_temp->invalidate ();
     }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (ORBInitializer_Registry,
                        ACE_TEXT ("ORBInitializer_Registry"),

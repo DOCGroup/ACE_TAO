@@ -7,8 +7,8 @@
 #include "utl_indenter.h"
 #include "global_extern.h"
 
-ACE_RCSID (ast, 
-           ast_eventtype, 
+ACE_RCSID (ast,
+           ast_eventtype,
            "$Id$")
 
 AST_EventType::AST_EventType (void)
@@ -30,10 +30,10 @@ AST_EventType::AST_EventType (UTL_ScopedName *n,
                               AST_Interface **supports,
                               long n_supports,
                               AST_Interface *supports_concrete,
-                              idl_bool abstract,
-                              idl_bool truncatable,
-                              idl_bool custom)
-  : COMMON_Base (I_FALSE,
+                              bool abstract,
+                              bool truncatable,
+                              bool custom)
+  : COMMON_Base (false,
                  abstract),
     AST_Decl (AST_Decl::NT_eventtype,
               n),
@@ -45,7 +45,7 @@ AST_EventType::AST_EventType (UTL_ScopedName *n,
                    n_inherits,
                    inherits_flat,
                    n_inherits_flat,
-                   I_FALSE,
+                   false,
                    abstract),
     AST_ValueType (n,
                    inherits,

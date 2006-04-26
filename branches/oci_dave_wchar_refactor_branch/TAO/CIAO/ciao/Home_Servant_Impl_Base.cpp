@@ -4,11 +4,6 @@
 
 namespace CIAO
 {
-  Home_Servant_Impl_Base::Home_Servant_Impl_Base (void)
-  {
-    ACE_ASSERT (0);
-  }
-
   Home_Servant_Impl_Base::Home_Servant_Impl_Base (Session_Container * c)
     : container_ (c)
   {

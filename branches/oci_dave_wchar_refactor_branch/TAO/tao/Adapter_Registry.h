@@ -29,6 +29,8 @@
 #include "tao/CORBA_methods.h"
 #include "tao/Pseudo_VarOut_T.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace CORBA
 {
   typedef TAO_Pseudo_Var_T<Object> Object_var;
@@ -61,8 +63,7 @@ public:
    * POA while performing an upcall).
    */
   void close (int wait_for_completion
-              ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC (());
+              ACE_ENV_ARG_DECL);
 
   /**
    * Verify if the close() call can be invoked in the current
@@ -70,8 +71,7 @@ public:
    * Raise the right exception if not.
    */
   void check_close (int wait_for_completion
-                    ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC (());
+                    ACE_ENV_ARG_DECL);
 
   /// Insert a new adapter into the registry.
   void insert (TAO_Adapter *adapter
@@ -93,8 +93,7 @@ public:
 
   /// Initialize a collocated object using the given stub and object
   /// pointer for lazily evaluated object references.
-  CORBA::Long initialize_collocated_object (TAO_Stub *,
-                                            CORBA::Object_ptr o);
+  CORBA::Long initialize_collocated_object (TAO_Stub *);
 
   /// Fetch the adapter named @a name
   TAO_Adapter *find_adapter (const char *name) const;
@@ -112,6 +111,8 @@ private:
   TAO_Adapter **adapters_;
   //@}
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

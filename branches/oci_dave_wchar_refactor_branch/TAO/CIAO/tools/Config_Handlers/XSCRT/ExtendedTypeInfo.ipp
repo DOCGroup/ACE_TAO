@@ -6,7 +6,7 @@
 /*
  *  @@HACK: Visual Studio.
  *  I think the return value for operator== for type_info
- *  in VC7 (perhaps others) is int when is should be bool. 
+ *  in VC7 (perhaps others) is int when is should be bool.
  *  This causes a warning about converting the return value from
  *  int to bool.
  */

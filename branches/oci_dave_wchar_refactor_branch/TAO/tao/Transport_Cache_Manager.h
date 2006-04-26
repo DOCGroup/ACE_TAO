@@ -25,15 +25,20 @@
 #include "tao/Cache_Entries.h"
 #include "tao/orbconf.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Handle_Set;
+template <class T> class ACE_Unbounded_Set;
+template <class T> class ACE_Unbounded_Set_Iterator;
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_Connection_Handler;
 class TAO_ORB_Core;
 class TAO_Resource_Factory;
 class TAO_Connection_Purging_Strategy;
 
 template <class ACE_COND_MUTEX> class TAO_Condition;
-template <class T> class ACE_Unbounded_Set;
-template <class T> class ACE_Unbounded_Set_Iterator;
 
 namespace TAO
 {
@@ -259,6 +264,9 @@ namespace TAO
   };
 
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
 # include "tao/Transport_Cache_Manager.inl"
 #endif /* __ACE_INLINE__ */

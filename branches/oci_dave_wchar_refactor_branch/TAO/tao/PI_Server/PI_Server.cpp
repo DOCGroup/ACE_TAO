@@ -1,10 +1,13 @@
-#include "PI_Server.h"
-#include "PI_Server_Loader.h"
-#include "ServerRequestInterceptor_Factory_Impl.h"
+#include "tao/PI_Server/PI_Server.h"
+#include "tao/PI_Server/PI_Server_Loader.h"
+#include "tao/PI_Server/ServerRequestInterceptor_Factory_Impl.h"
 
 ACE_RCSID (PI_Server,
            PI_Server,
            "$Id$")
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
 TAO_PI_Server_Init::Initializer (void)
@@ -16,3 +19,4 @@ TAO_PI_Server_Init::Initializer (void)
   return ACE_Service_Config::process_directive (ace_svc_desc_TAO_PI_Server_Loader);
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

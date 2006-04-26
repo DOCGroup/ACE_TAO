@@ -22,7 +22,18 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Object_KeyC.h"
+#include "tao/Versioned_Namespace.h"
 #include "ace/SString.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+namespace TAO
+{
+  namespace CSD
+  {
+    class FW_Server_Request_Wrapper;
+  }
+}
 
 /**
  * @class TAO_Tagged_Profile
@@ -34,6 +45,12 @@
 class TAO_Export TAO_Tagged_Profile
 {
 public:
+
+  /// Declare FW_Server_Request_Wrapper a friend
+  /// This friendship makes the FW_Server_Request_Wrapper be able to
+  /// clone the TAO_Tagged_Profile data member in TAO_ServerRequest.
+  friend class TAO::CSD::FW_Server_Request_Wrapper;
+
   /// Ctor
   TAO_Tagged_Profile (TAO_ORB_Core *orb_core);
 
@@ -110,7 +127,7 @@ private:
    *        string type_id;
    *        sequence<TaggedProfile>   profiles;
    *      };
-   * The mapping for the type_id of type string is TAO_String_Manager
+   * The mapping for the type_id of type string is TAO::String_Manager
    * which does lot of bad things like allocation on construction and
    * a deallocation on destruction. This is bad along the critical
    * path. So we will store this nested structure ripped open with the
@@ -126,6 +143,8 @@ private:
   /// GIOP::IORAddressingInfo information.
   ACE_CString type_id_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "tao/Tagged_Profile.i"

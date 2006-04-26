@@ -68,6 +68,25 @@ extern "C"
 }
 #endif /* ACE_WIN32 */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
+// This hack is needed to get around an odd and hard-to-reproduce problem
+// with HP aC++. If struct sigaction is defined extern "C" and the sigaction
+// function in namespace ACE_OS, the compiler sometimes gets confused.
+// If we help it with this typedef, it's fine. User code should not use
+// the ACE typedef - it will be removed without warning as soon as we can
+// either drop support for the broken compilers or figure out how to reproduce
+// it so it can be reported to HP and fixed.
+// There's a similar hack in OS_TLI.h for struct t_optmgmt.
+// Also see ChangeLog entries:
+// Mon Jan 23 16:35:40 UTC 2006  Steve Huston  <shuston@riverace.com>
+// Mon Jan 23 22:08:56 UTC 2006  Steve Huston  <shuston@riverace.com>
+#if defined (__HP_aCC) && (__HP_aCC <= 36500)
+typedef extern "C" struct sigaction  ACE_SIGACTION;
+#else
+typedef struct sigaction ACE_SIGACTION;
+#endif
+
 namespace ACE_OS {
 
   //@{ @name A set of wrappers for Signals.
@@ -83,8 +102,8 @@ namespace ACE_OS {
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int sigaction (int signum,
-                 const struct sigaction *nsa,
-                 struct sigaction *osa);
+                 const ACE_SIGACTION *nsa,
+                 ACE_SIGACTION *osa);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int sigaddset (sigset_t *s,
@@ -119,6 +138,8 @@ namespace ACE_OS {
   //@}
 
 } /* namespace ACE_OS */
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 # if defined (ACE_HAS_INLINED_OSCALLS)
 #   if defined (ACE_INLINE)

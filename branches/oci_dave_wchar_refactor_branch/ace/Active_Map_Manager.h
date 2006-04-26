@@ -23,6 +23,8 @@
 
 #include "ace/Basic_Types.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_Active_Map_Manager_Key
  *
@@ -100,6 +102,8 @@ private:
   /// Data for the Active Object Map Key.
   key_data key_data_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Active_Map_Manager.inl"

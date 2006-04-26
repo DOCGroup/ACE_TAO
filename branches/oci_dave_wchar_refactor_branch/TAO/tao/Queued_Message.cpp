@@ -1,15 +1,17 @@
-// -*- C++ -*-
 // $Id$
 
-#include "Queued_Message.h"
+#include "tao/Queued_Message.h"
 
 ACE_RCSID (tao,
            Queued_Message,
            "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_Queued_Message::TAO_Queued_Message (TAO_ORB_Core *oc,
                                         ACE_Allocator *alloc,
-                                        int is_heap_allocated)
+                                        bool is_heap_allocated)
   : allocator_ (alloc)
   , is_heap_created_ (is_heap_allocated)
   , orb_core_ (oc)
@@ -70,13 +72,14 @@ TAO_Queued_Message::push_back (TAO_Queued_Message *&head,
       head = this;
       this->next_ = 0;
       this->prev_ = 0;
-      return;
     }
-
-  tail->next_ = this;
-  this->prev_ = tail;
-  this->next_ = 0;
-  tail = this;
+  else
+    {
+      tail->next_ = this;
+      this->prev_ = tail;
+      this->next_ = 0;
+      tail = this;
+    }
 }
 
 void
@@ -89,11 +92,14 @@ TAO_Queued_Message::push_front (TAO_Queued_Message *&head,
       head = this;
       this->next_ = 0;
       this->prev_ = 0;
-      return;
     }
-
-  head->prev_ = this;
-  this->next_ = head;
-  this->prev_ = 0;
-  head = this;
+  else
+    {
+      head->prev_ = this;
+      this->next_ = head;
+      this->prev_ = 0;
+      head = this;
+    }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

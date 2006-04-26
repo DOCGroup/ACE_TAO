@@ -33,7 +33,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "messaging_export.h"
+#include "tao/Messaging/messaging_export.h"
 #include "tao/Messaging/Messaging_SyncScope_PolicyC.h"
 #include "tao/AnyTypeCode/PolicyA.h"
 #include "tao/AnyTypeCode/Messaging_SyncScopeA.h"
@@ -41,6 +41,9 @@
 
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:59
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace Messaging
 {
@@ -54,6 +57,8 @@ namespace Messaging
 // be\be_visitor_module/module_ch.cpp:86
 
 } // module Messaging
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

@@ -8,26 +8,26 @@
  * @author Carlos O'Ryan
  */
 #include "testing_object_reference_traits.hpp"
-#include "object_reference_traits.hpp"
+#include "tao/Object_Reference_Traits_T.h"
 #include "testing_allocation_traits.hpp"
 #include "testing_range_checking.hpp"
 
 #include "mock_reference.hpp"
 
-#include "bounded_object_reference_sequence.hpp"
+#include "tao/Bounded_Object_Reference_Sequence_T.h"
 
 #include <boost/test/unit_test.hpp>
 #include <boost/shared_ptr.hpp>
 #include <boost/weak_ptr.hpp>
 
 using namespace boost::unit_test_framework;
-using namespace TAO;
+using namespace TAO_VERSIONED_NAMESPACE_NAME::TAO;
 
 CORBA::ULong const TMAX = 64;
 
 struct Tester
 {
-  typedef bounded_object_reference_sequence<mock_reference,TMAX> tested_sequence;
+  typedef bounded_object_reference_sequence<mock_reference,mock_reference_var,TMAX> tested_sequence;
   typedef tested_sequence::value_type value_type;
   typedef tested_sequence::const_value_type const_value_type;
 
@@ -396,15 +396,15 @@ private:
   boost::weak_ptr<Tester> self_;
 };
 
-test_suite *
+ACE_Proper_Export_Flag test_suite *
 init_unit_test_suite(int, char*[])
 {
-  std::auto_ptr<test_suite> ts(
-      BOOST_TEST_SUITE("unbounded object reference sequence unit test"));
+  test_suite * ts =
+      BOOST_TEST_SUITE("unbounded object reference sequence unit test");
 
   boost::shared_ptr<Tester> tester(Tester::allocate());
-  tester->add_all(ts.get());
+  tester->add_all(ts);
 
-  return ts.release();
+  return ts;
 }
 

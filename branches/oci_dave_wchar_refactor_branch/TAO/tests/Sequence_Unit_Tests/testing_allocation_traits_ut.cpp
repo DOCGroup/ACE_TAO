@@ -17,7 +17,7 @@
 try { statement; } catch(...) { \
   BOOST_ERROR("unexpected exception raised"); }
 
-using namespace TAO::details;
+using namespace TAO_VERSIONED_NAMESPACE_NAME::TAO::details;
 
 using namespace boost::unit_test_framework;
 
@@ -172,30 +172,30 @@ private:
 
 struct Foo { int y; };
 
-test_suite *
+ACE_Proper_Export_Flag test_suite *
 init_unit_test_suite(int, char*[])
 {
-  std::auto_ptr<test_suite> ts(
-      BOOST_TEST_SUITE("testing allocation traits unit test"));
+  test_suite * ts =
+      BOOST_TEST_SUITE("testing allocation traits unit test");
 
   {
     boost::shared_ptr<Tester<int> > tester(
         Tester<int>::allocate());
-    tester->add_all(ts.get());
+    tester->add_all(ts);
   }
 
   {
     boost::shared_ptr<Tester<Foo> > tester(
         Tester<Foo>::allocate());
-    tester->add_all(ts.get());
+    tester->add_all(ts);
   }
 
   {
     boost::shared_ptr<Tester<char*> > tester(
         Tester<char*>::allocate());
-    tester->add_all(ts.get());
+    tester->add_all(ts);
   }
 
-  return ts.release();
+  return ts;
 }
 

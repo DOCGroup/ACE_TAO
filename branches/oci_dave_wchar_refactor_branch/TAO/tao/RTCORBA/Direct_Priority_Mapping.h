@@ -1,4 +1,6 @@
-//=============================================================================
+// -*- C++ -*-
+
+// =======================================================================
 /**
  *  @file    Direct_Priority_Mapping.h
  *
@@ -9,6 +11,7 @@
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
+// =======================================================================
 
 #ifndef TAO_DIRECT_PRIORITY_MAPPING_H
 #define TAO_DIRECT_PRIORITY_MAPPING_H
@@ -16,13 +19,15 @@
 
 #include "tao/orbconf.h"
 
-#include "Priority_Mapping.h"
+#include "tao/RTCORBA/Priority_Mapping.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Direct_Priority_Mapping
@@ -34,7 +39,7 @@
 class TAO_RTCORBA_Export TAO_Direct_Priority_Mapping : public TAO_Priority_Mapping
 {
 public:
-  /// Default constructor
+
   TAO_Direct_Priority_Mapping (long);
 
   /// The destructor
@@ -46,9 +51,9 @@ public:
   virtual CORBA::Boolean
       to_CORBA (RTCORBA::NativePriority native_priority,
                 RTCORBA::Priority &corba_priority);
-
-private:
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
 

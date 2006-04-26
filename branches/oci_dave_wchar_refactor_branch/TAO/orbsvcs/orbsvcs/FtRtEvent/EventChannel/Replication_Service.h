@@ -14,14 +14,16 @@
 #define REPLCATION_SERVICE_H
 
 #include "orbsvcs/FtRtecEventChannelAdminC.h"
-#include "FTEC_Become_Primary_Listener.h"
+#include "orbsvcs/FtRtEvent/EventChannel/FTEC_Become_Primary_Listener.h"
 #include "tao/PortableInterceptorC.h"
 #include "ace/Service_Object.h"
-#include "ftrtec_export.h"
+#include "orbsvcs/FtRtEvent/EventChannel/ftrtec_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace FTRTEC
 {
@@ -72,11 +74,12 @@ namespace FTRTEC
 
     int threads() const;
   };
-
-
-  ACE_STATIC_SVC_DECLARE_EXPORT (TAO_FTRTEC, Replication_Service)
-  ACE_STATIC_SVC_REQUIRE(Replication_Service)
-  ACE_FACTORY_DECLARE (TAO_FTRTEC, Replication_Service)
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+ACE_STATIC_SVC_DECLARE_EXPORT (TAO_FTRTEC, Replication_Service)
+ACE_STATIC_SVC_REQUIRE(Replication_Service)
+ACE_FACTORY_DECLARE (TAO_FTRTEC, Replication_Service)
 
 #endif //REPLCATION_SERVICE_H

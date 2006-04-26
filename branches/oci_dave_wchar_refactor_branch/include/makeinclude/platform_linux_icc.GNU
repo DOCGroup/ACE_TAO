@@ -1,14 +1,12 @@
 # $Id$
 
-# According to Roger Tragin <r.tragin@computer.org>, this file
-# should allow ACE to be built on Linux, using the Intel compiler.
-#
-# This is just a copy of platform_linux.GNU, with a few things changed.
+# This file should allow ACE to be built on Linux, using the Intel compiler.
 
 exceptions ?= 1
 debug ?= 1
-optimize ?= 0
+optimize ?= 1
 threads ?= 1
+no_hidden_visibility ?= 1
 
 PLATFORM_XT_CPPFLAGS=
 PLATFORM_XT_LIBS=-lXt
@@ -69,6 +67,9 @@ endif
 ifeq (9.0,$(findstring 9.0,$(CXX_VERSION)))
   CFLAGS += -wd1684
 endif
+ifeq (9.1,$(findstring 9.1,$(CXX_VERSION)))
+  CFLAGS += -wd1684
+endif
 
 ifeq ($(inline),0)
   CPPFLAGS += -fno-inline
@@ -97,14 +98,20 @@ PLATFORM_QT_LIBS ?= -lqt-mt
 PLATFORM_QT_LDFLAGS ?= -L$(QTDIR)/lib
 
 OCFLAGS += -O3
-ifneq ($(SYSARCH),ia64)
-  OCFLAGS += -axK
-endif
 
 # Disable floating point optimizer solves problem with
-# min/max float values in the TAO_IDL compiler
+# min/max float values in the TAO_IDL compiler tests
+# If these options are not passed we can get overflows
+# when testing min/max
 ifeq ($(SYSARCH),ia64)
   CPPFLAGS += -mp
+else
+  CPPFLAGS += -fp-model double
+endif
+
+ifeq ($(optimize),0)
+  # Disable all optimizing in code
+  CPPFLAGS += -O0
 endif
 
 PIC     = -fPIC
@@ -119,8 +126,15 @@ PRELIB  = @true
 ifeq ($(shared_libs), 1)
   ifneq ($static_libs_only), 1)
     LDFLAGS += -Wl,-E
+
+    ifneq ($(no_hidden_visibility),1)
+      CCFLAGS += -fvisibility=hidden
+    else
+      CPPFLAGS += -DACE_HAS_CUSTOM_EXPORT_MACROS=0
+    endif # no_hidden_visibility
   endif
 endif
+
 
 # Added line below to support "Executable Shared Object" files (as
 # needed by the service configurator).

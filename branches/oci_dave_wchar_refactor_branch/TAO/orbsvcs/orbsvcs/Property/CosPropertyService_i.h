@@ -15,7 +15,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Property/property_export.h"
+#include "orbsvcs/Property/property_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -23,6 +23,7 @@
 
 #include "orbsvcs/CosPropertyS.h"
 
+#include "tao/Sequence_T.h"
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Null_Mutex.h"
 
@@ -33,9 +34,11 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // =  Classes to deal with the ACE_Hash_Map_Manager.
 
-class TAO_Property_Export CosProperty_Hash_Key
+class TAO_Property_Serv_Export CosProperty_Hash_Key
 {
   // = TITLE
   //     Key for the Hash Table. The EXT_ID of the
@@ -70,7 +73,7 @@ public:
   // Storage pointer.
 };
 
-class TAO_Property_Export CosProperty_Hash_Value
+class TAO_Property_Serv_Export CosProperty_Hash_Value
 {
   // = TITLE
   //     This will be the value part in the Hash_Table. The INT_ID of
@@ -107,7 +110,7 @@ class TAO_PropertySet;
 
 // ============================================================================
 
-class TAO_Property_Export TAO_PropertySetFactory :  public virtual POA_CosPropertyService::PropertySetFactory
+class TAO_Property_Serv_Export TAO_PropertySetFactory :  public virtual POA_CosPropertyService::PropertySetFactory
 {
   // = TITLE
   //     Factory class for the TAO_PropertySet class objects.
@@ -148,7 +151,7 @@ public:
   // modes".
 
 private:
-  TAO_Unbounded_Sequence<TAO_PropertySet*> propertyset_products_;
+  TAO::unbounded_value_sequence<TAO_PropertySet*> propertyset_products_;
   // The PropertySet objects new'ed and given to the client. Let us
   // keep track all of them so that we can delete them at the end.
 };
@@ -160,7 +163,7 @@ class TAO_PropertySetDef;
 
 // ============================================================================
 
-class TAO_Property_Export TAO_PropertySetDefFactory : public virtual POA_CosPropertyService::PropertySetDefFactory
+class TAO_Property_Serv_Export TAO_PropertySetDefFactory : public virtual POA_CosPropertyService::PropertySetDefFactory
 {
   // = TITLE
   //     Factory class for the TAO_PropertySetDef objects.
@@ -199,14 +202,14 @@ public:
   // initial properties.
 
 private:
-  TAO_Unbounded_Sequence<TAO_PropertySetDef*> propertysetdef_products_;
+  TAO::unbounded_value_sequence<TAO_PropertySetDef*> propertysetdef_products_;
   // The PropertySet objects new'ed and given to the client. Let us
   // keep track all of them so that we can delete them at the end.
 };
 
 // ============================================================================
 
-class TAO_Property_Export TAO_PropertySet :  public virtual POA_CosPropertyService::PropertySet
+class TAO_Property_Serv_Export TAO_PropertySet :  public virtual POA_CosPropertyService::PropertySet
 {
   // = TITLE
   //    Gives operations for defining, deleting, enumerating and
@@ -342,8 +345,7 @@ private:
   TAO_PropertySet (const TAO_PropertySet &);
   // Not possible to copy
 
-// XXX:This public: is a hack to keep the compiler complain about access violation.
-public:
+public: // @todo make private
   COSPROPERTY_HASH_MAP hash_table_;
   // This Hash_Table manages storage for our properties.
 
@@ -363,7 +365,7 @@ protected:
 
 // ============================================================================
 
-class TAO_Property_Export TAO_PropertySetDef : public virtual POA_CosPropertyService::PropertySetDef,
+class TAO_Property_Serv_Export TAO_PropertySetDef : public virtual POA_CosPropertyService::PropertySetDef,
                                               public virtual TAO_PropertySet
 {
   // = TITLE
@@ -486,7 +488,7 @@ public:
 
 // ============================================================================
 
-class TAO_Property_Export TAO_PropertyNamesIterator
+class TAO_Property_Serv_Export TAO_PropertyNamesIterator
   : public virtual POA_CosPropertyService::PropertyNamesIterator
 {
   // = TITLE
@@ -547,7 +549,7 @@ private:
 
 // ============================================================================
 
-class TAO_Property_Export TAO_PropertiesIterator
+class TAO_Property_Serv_Export TAO_PropertiesIterator
   : public virtual POA_CosPropertyService::PropertiesIterator
 {
   // = TITLE
@@ -607,6 +609,8 @@ private:
   COSPROPERTY_HASH_ITERATOR iterator_;
   // The iterator object.
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

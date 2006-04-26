@@ -34,8 +34,8 @@
 #ifndef _PORTABLE_INTERCEPTOR_IDL_
 #define _PORTABLE_INTERCEPTOR_IDL_
 
-#include <PI_Forward.pidl>
-#include <Messaging_SyncScope.pidl>
+#include "tao/PI_Forward.pidl"
+#include "tao/Messaging_SyncScope.pidl"
 
 module PortableInterceptor {
 

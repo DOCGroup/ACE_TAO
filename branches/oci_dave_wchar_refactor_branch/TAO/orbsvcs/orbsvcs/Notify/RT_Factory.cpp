@@ -1,9 +1,12 @@
 // $Id$
 
-#include "RT_Factory.h"
-#include "Structured/RT_StructuredProxyPushSupplier.h"
+#include "orbsvcs/Notify/RT_Factory.h"
+#include "orbsvcs/Notify/Structured/RT_StructuredProxyPushSupplier.h"
 
 ACE_RCSID(RT_Notify, TAO_Notify_RT_Factory, "$Id$")
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_RT_Factory::TAO_Notify_RT_Factory (void)
 {
@@ -122,5 +125,7 @@ TAO_Notify_RT_Factory:: create (TAO_Notify_SequenceProxyPushSupplier*& proxy ACE
 {
   TAO_Notify_Default_Factory::create (proxy ACE_ENV_ARG_PARAMETER);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_FACTORY_DEFINE (TAO_RT_Notify, TAO_Notify_RT_Factory)

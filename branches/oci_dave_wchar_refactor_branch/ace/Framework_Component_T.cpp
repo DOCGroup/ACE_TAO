@@ -1,11 +1,11 @@
-// Framework_Component_T.cpp
 // $Id$
+
 #ifndef ACE_FRAMEWORK_COMPONENT_T_CPP
 #define ACE_FRAMEWORK_COMPONENT_T_CPP
 
 #include "ace/Framework_Component_T.h"
 
-ACE_RCSID(ace, Framework_Component_T, "$Id$")
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class Concrete>
 ACE_Framework_Component_T<Concrete>::ACE_Framework_Component_T (Concrete *concrete)
@@ -28,4 +28,6 @@ ACE_Framework_Component_T<Concrete>::close_singleton (void)
   Concrete::close_singleton ();
 }
 
-#endif /*ACE_FRAWORK_COMPONENT_T_CPP*/
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* ACE_FRAMEWORK_COMPONENT_T_CPP */

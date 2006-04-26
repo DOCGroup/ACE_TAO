@@ -1,3 +1,4 @@
+// -*- C++ -*-
 #include "ace/Arg_Shifter.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_strings.h"
@@ -7,6 +8,8 @@
 ACE_RCSID (ace,
            Arg_Shifter,
            "$Id$")
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template < typename CHAR_TYPE >
 ACE_TArg_Shifter<CHAR_TYPE>::ACE_TArg_Shifter (int& argc,
@@ -219,3 +222,5 @@ ACE_TArg_Shifter<CHAR_TYPE>::num_ignored_args (void) const
 {
   return this->front_;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

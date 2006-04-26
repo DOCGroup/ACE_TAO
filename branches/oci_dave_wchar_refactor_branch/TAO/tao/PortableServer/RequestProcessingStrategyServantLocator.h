@@ -14,24 +14,19 @@
 #define TAO_REQUESTPROCESSINGSTRATEGYSERVANTLOCATOR_H
 #include /**/ "ace/pre.h"
 
-#include "RequestProcessingStrategyServantManager.h"
+#include "tao/PortableServer/RequestProcessingStrategyServantManager.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Servant_Location.h"
-#include "PortableServer.h"
-
 #if (TAO_HAS_MINIMUM_POA == 0)
 
-namespace PortableServer
-{
-  class ServantLocator;
+#include "tao/PortableServer/Servant_Location.h"
+#include "tao/PortableServer/PortableServer.h"
+#include "tao/PortableServer/ServantLocatorC.h"
 
-  typedef ServantLocator *ServantLocator_ptr;
-  typedef TAO_Objref_Var_T<ServantLocator> ServantLocator_var;
-}
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -85,6 +80,8 @@ namespace TAO
     };
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 

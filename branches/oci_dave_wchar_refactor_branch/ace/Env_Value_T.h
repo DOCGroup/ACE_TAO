@@ -27,6 +27,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_Env_Value
  *
@@ -77,6 +79,8 @@ private:
 /// Function to convert a string @a s into type @c T.
 template <class T> void ACE_Convert (const ACE_TCHAR *s, T &t);
 
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
 #include "ace/Env_Value_T.inl"
 #endif /* __ACE_INLINE__ */
@@ -85,72 +89,74 @@ template <class T> void ACE_Convert (const ACE_TCHAR *s, T &t);
 #include "ace/Env_Value_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
+template <> inline void
+ACE_Convert (const ACE_TCHAR *s, ACE_TCHAR *&v)
+{
+  v = (ACE_TCHAR *) s;
+}
+
+template <> inline void
+ACE_Convert (const ACE_TCHAR *s, const ACE_TCHAR *&v)
+{
+  v = (const ACE_TCHAR *) s;
+}
+
+template <> inline void
+ACE_Convert (const ACE_TCHAR *s, short &si)
+{
+  si = static_cast<short> (ACE_OS::strtol (s, 0, 10));
+}
+
+template <> inline void
+ACE_Convert (const ACE_TCHAR *s, u_short &us)
+{
+  us = static_cast <u_short> (ACE_OS::strtol (s, 0, 10));
+}
+
+template <> inline void
+ACE_Convert (const ACE_TCHAR *s, u_int &i)
+{
+  i = static_cast<u_int> (ACE_OS::strtol (s, 0, 10));
+}
+
+template <> inline void
+ACE_Convert (const ACE_TCHAR *s, long &l)
+{
+  l = ACE_OS::strtol (s, 0, 10);
+}
+
+template <> inline void
+ACE_Convert (const ACE_TCHAR *s, int &i)
+{
+  i = static_cast<int> (ACE_OS::strtol (s, 0, 10));
+}
+
+template <> inline void
+ACE_Convert (const ACE_TCHAR *s, u_long &ul)
+{
+  ul = ACE_OS::strtoul (s, 0, 10);
+}
+
+template <> inline void
+ACE_Convert (const ACE_TCHAR *s, double &d)
+{
+  d = ACE_OS::strtod (s, 0);
+}
 
 // Default calls a CTOR on type T of the form 'T::T(const char*)', but
 // users can feel free to create their own specialized conversion
-// functions if necessary, as shown below.  Note that for 'char*' the
+// functions if necessary, as shown above.  Note that for 'char*' the
 // default is used because a simple cast will be performed and no
 // conversion will be necessary.
-
 template <class T> inline void
 ACE_Convert (const ACE_TCHAR *s, T &t)
 {
   t = T (s);
 }
 
-inline void
-ACE_Convert (const ACE_TCHAR *s, ACE_TCHAR *&v)
-{
-  v = (ACE_TCHAR *) s;
-}
-
-inline void
-ACE_Convert (const ACE_TCHAR *s, const ACE_TCHAR *&v)
-{
-  v = (const ACE_TCHAR *) s;
-}
-
-inline void
-ACE_Convert (const ACE_TCHAR *s, short &si)
-{
-  si = static_cast<short> (ACE_OS::strtol (s, 0, 10));
-}
-
-inline void
-ACE_Convert (const ACE_TCHAR *s, u_short &us)
-{
-  us = static_cast <u_short> (ACE_OS::strtol (s, 0, 10));
-}
-
-inline void
-ACE_Convert (const ACE_TCHAR *s, u_int &i)
-{
-  i = static_cast<u_int> (ACE_OS::strtol (s, 0, 10));
-}
-
-inline void
-ACE_Convert (const ACE_TCHAR *s, long &l)
-{
-  l = ACE_OS::strtol (s, 0, 10);
-}
-
-inline void
-ACE_Convert (const ACE_TCHAR *s, int &i)
-{
-  i = static_cast<int> (ACE_OS::strtol (s, 0, 10));
-}
-
-inline void
-ACE_Convert (const ACE_TCHAR *s, u_long &ul)
-{
-  ul = ACE_OS::strtoul (s, 0, 10);
-}
-
-inline void
-ACE_Convert (const ACE_TCHAR *s, double &d)
-{
-  d = ACE_OS::strtod (s, 0);
-}
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
 #pragma implementation ("Env_Value_T.cpp")

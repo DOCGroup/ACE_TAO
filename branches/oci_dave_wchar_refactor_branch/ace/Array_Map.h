@@ -32,6 +32,7 @@
 #include <iterator>
 #include <functional>
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_Array_Map
@@ -101,17 +102,15 @@ public:
   typedef ptrdiff_t                      difference_type;
   typedef size_t                         size_type;
 
-#if ((defined (_MSC_VER) && (_MSC_VER <= 1200)) || \
-     (defined (_MSC_VER) && !defined (_CPPLIB_VER)))
-  // MSVC++ 6 doesn't define a standard's compliant reverse_iterator,
-  // also the latest Platform SDK's don't do this.
-  //
+#if ((defined (_MSC_VER) && !defined (_CPPLIB_VER)))
+  // the latest Platform SDK's doesn't define a standard's compliant
+  // reverse_iterator,
   // It seems when there is no _CPPLIB_VER defined, then we can assume
   // also that the SDK is old.
   typedef std::reverse_iterator<iterator, value_type> reverse_iterator;
   typedef std::reverse_iterator<const_iterator,
                                 value_type const>     const_reverse_iterator;
-#elif defined (__SUNPRO_CC) && __SUNPRO_CC <= 0x570 \
+#elif defined (__SUNPRO_CC) && __SUNPRO_CC <= 0x580 \
       && defined (_RWSTD_NO_CLASS_PARTIAL_SPEC)
   typedef std::reverse_iterator<iterator,
                                 std::input_iterator_tag,
@@ -128,7 +127,7 @@ public:
 #else
   typedef std::reverse_iterator<iterator>       reverse_iterator;
   typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
-#endif  /* _MSC_VER <= 1200 */
+#endif  /* _MSC_VER */
 
   /// Default Constructor.
   /**
@@ -299,6 +298,8 @@ bool operator<  (ACE_Array_Map<Key, Value, EqualTo> const & lhs,
                  ACE_Array_Map<Key, Value, EqualTo> const & rhs);
 
 // --------------------------------------------------------------
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #ifdef __ACE_INLINE__
 # include "ace/Array_Map.inl"

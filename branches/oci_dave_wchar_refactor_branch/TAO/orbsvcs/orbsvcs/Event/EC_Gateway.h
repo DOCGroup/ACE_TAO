@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file   EC_Gateway.h
  *
@@ -17,10 +18,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include /**/ "event_serv_export.h"
+#include /**/ "orbsvcs/Event/event_serv_export.h"
 
 #include "orbsvcs/RtecEventChannelAdminS.h"
 #include "orbsvcs/RtecEventCommS.h"
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_EC_Gateway
@@ -59,6 +63,8 @@ public:
 private:
   RtecEventChannelAdmin::Observer_Handle handle_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

@@ -85,36 +85,6 @@ void
 BE_cleanup (void)
 {
   idl_global->destroy ();
-
-  // Remove the holding scope entry from the repository.
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
-    {
-      if (be_global->repository ())
-        {
-          CORBA::Contained_var result =
-            be_global->repository ()->lookup_id (be_global->holding_scope_name ()
-                                                 ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-
-          if (!CORBA::is_nil (result.in ()))
-            {
-              CORBA::ModuleDef_var scope =
-                CORBA::ModuleDef::_narrow (result.in ()
-                                           ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
-
-              scope->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_TRY_CHECK;
-            }
-        }
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_TEXT ("BE_cleanup"));
-    }
-  ACE_ENDTRY;
 }
 
 // Abort this run of the BE.
@@ -140,6 +110,7 @@ BE_create_holding_scope (ACE_ENV_SINGLE_ARG_DECL)
                                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
+  // Will live until the repository goes away for good.
   if (CORBA::is_nil (result.in ()))
     {
       scope =

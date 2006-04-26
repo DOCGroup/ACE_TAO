@@ -54,6 +54,8 @@ be_visitor_array_any_op_cs::visit_array (be_array *node)
       << "// TAO_IDL - Generated from " << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
+  *os << be_global->core_versioning_begin () << be_nl;
+  
   // Since we don't generate CDR stream operators for types that
   // explicitly contain a local interface (at some level), we
   // must override these Any template class methods to avoid
@@ -125,6 +127,8 @@ be_visitor_array_any_op_cs::visit_array (be_array *node)
       << ");" << be_uidt << be_uidt << be_uidt << be_uidt_nl
       << "}";
 
+  *os << be_global->core_versioning_end () << be_nl;
+  
   node->cli_stub_any_op_gen (1);
   return 0;
 }

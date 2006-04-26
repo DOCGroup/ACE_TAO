@@ -2,7 +2,9 @@
 
 #include "ace/Base_Thread_Adapter.h"
 
-ACE_RCSID(ace, Base_Thread_Adapter, "$Id$")
+ACE_RCSID (ace,
+           Base_Thread_Adapter,
+           "$Id$")
 
 #if !defined (ACE_HAS_INLINED_OSCALLS)
 # include "ace/Base_Thread_Adapter.inl"
@@ -11,6 +13,8 @@ ACE_RCSID(ace, Base_Thread_Adapter, "$Id$")
 #if defined (ACE_HAS_TSS_EMULATION)
 #  include "ace/OS_NS_Thread.h"
 #endif /* ACE_HAS_TSS_EMULATION */
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INIT_LOG_MSG_HOOK     ACE_Base_Thread_Adapter::init_log_msg_hook_ = 0;
 ACE_INHERIT_LOG_MSG_HOOK  ACE_Base_Thread_Adapter::inherit_log_msg_hook_ = 0;
@@ -83,14 +87,16 @@ ACE_Base_Thread_Adapter::thr_desc_log_msg (void)
   return 0;
 }
 
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 // Run the thread entry point for the <ACE_Thread_Adapter>.  This must
 // be an extern "C" to make certain compilers happy...
 
 #if defined (ACE_PSOS)
 extern "C" void
-ace_thread_adapter (unsigned long args)
+ACE_THREAD_ADAPTER_NAME (unsigned long args)
 {
-  ACE_OS_TRACE ("ace_thread_adapter");
+  ACE_OS_TRACE ("ACE_THREAD_ADAPTER_NAME");
 
 #if defined (ACE_HAS_TSS_EMULATION)
   // As early as we can in the execution of the new thread, allocate
@@ -100,7 +106,7 @@ ace_thread_adapter (unsigned long args)
   ACE_TSS_Emulation::tss_open (ts_storage);
 #endif /* ACE_HAS_TSS_EMULATION */
 
-  ACE_Base_Thread_Adapter *thread_args =
+  ACE_Base_Thread_Adapter * const thread_args =
     static_cast<ACE_Base_Thread_Adapter *> (args);
 
   // Invoke the user-supplied function with the args.
@@ -108,9 +114,9 @@ ace_thread_adapter (unsigned long args)
 }
 #else /* ! defined (ACE_PSOS) */
 extern "C" ACE_THR_FUNC_RETURN
-ace_thread_adapter (void *args)
+ACE_THREAD_ADAPTER_NAME (void *args)
 {
-  ACE_OS_TRACE ("ace_thread_adapter");
+  ACE_OS_TRACE ("ACE_THREAD_ADAPTER_NAME");
 
 #if defined (ACE_HAS_TSS_EMULATION)
   // As early as we can in the execution of the new thread, allocate
@@ -120,7 +126,7 @@ ace_thread_adapter (void *args)
   ACE_TSS_Emulation::tss_open (ts_storage);
 #endif /* ACE_HAS_TSS_EMULATION */
 
-  ACE_Base_Thread_Adapter *thread_args =
+  ACE_Base_Thread_Adapter * const thread_args =
     static_cast<ACE_Base_Thread_Adapter *> (args);
 
 #ifdef ACE_USES_GPROF

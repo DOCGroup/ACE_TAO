@@ -37,7 +37,7 @@
 ACE_RCSID(Process, imore, "$Id$")
 
 #if defined (ACE_WIN32)
-static const char * executable = "MORE.COM";
+static const ACE_TCHAR *executable = ACE_TEXT("MORE.COM");
 static const ACE_TCHAR *rendezvous_dir = ACE_TEXT("c:/temp");
 static const ACE_TCHAR *rendezvous_pfx = ACE_TEXT("imore");
 #else

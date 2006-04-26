@@ -163,13 +163,13 @@ int ACE_TMAIN(int argc, ACE_TCHAR **argv)
       qosprops[i].name = CORBA::string_dup(CosNotification::Priority);
       qosprops[i++].value <<= CosNotification::HighestPriority;
       qosprops[i].name = CORBA::string_dup(CosNotification::Timeout);
-      qosprops[i++].value <<= (TimeBase::TimeT) 42000;
+      qosprops[i++].value <<= (TimeBase::TimeT) 42000; // 4.2 ms
       qosprops[i].name = CORBA::string_dup(CosNotification::StopTimeSupported);
       qosprops[i++].value <<= CORBA::Any::from_boolean(1);
       qosprops[i].name = CORBA::string_dup(CosNotification::MaximumBatchSize);
       qosprops[i++].value <<= (CORBA::Long) 555;
       qosprops[i].name = CORBA::string_dup(CosNotification::PacingInterval);
-      qosprops[i++].value <<= (TimeBase::TimeT) 34300;
+      qosprops[i++].value <<= (TimeBase::TimeT) 34300; // 3.4 ms
       qosprops.length(i);
 
       CosNotification::AdminProperties adminprops(4);

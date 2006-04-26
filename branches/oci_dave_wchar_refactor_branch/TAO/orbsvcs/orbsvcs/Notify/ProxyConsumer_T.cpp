@@ -3,12 +3,12 @@
 #ifndef TAO_Notify_PROXYCONSUMER_T_CPP
 #define TAO_Notify_PROXYCONSUMER_T_CPP
 
-#include "ProxyConsumer_T.h"
-#include "SupplierAdmin.h"
+#include "orbsvcs/Notify/ProxyConsumer_T.h"
+#include "orbsvcs/Notify/SupplierAdmin.h"
 
-ACE_RCSID(Notify, TAO_Notify_ProxyConsumer_T, "$Id$")
+#include "orbsvcs/Notify/Event_Manager.h"
 
-#include "Event_Manager.h"
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class SERVANT_TYPE>
 TAO_Notify_ProxyConsumer_T<SERVANT_TYPE>::TAO_Notify_ProxyConsumer_T (void)
@@ -62,16 +62,23 @@ TAO_Notify_ProxyConsumer_T<SERVANT_TYPE>::offer_change (const CosNotification::E
     this->subscribed_types_.add_and_remove (seq_added, seq_removed);
   }
 
-  this->event_manager().offer_change (this, seq_added, seq_removed ACE_ENV_ARG_PARAMETER);
+  this->event_manager().offer_change (this,
+                                      seq_added,
+                                      seq_removed
+                                      ACE_ENV_ARG_PARAMETER);
 }
 
 template <class SERVANT_TYPE> CosNotification::EventTypeSeq*
-TAO_Notify_ProxyConsumer_T<SERVANT_TYPE>::obtain_subscription_types (CosNotifyChannelAdmin::ObtainInfoMode mode ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   ))
+TAO_Notify_ProxyConsumer_T<SERVANT_TYPE>::obtain_subscription_types (
+    CosNotifyChannelAdmin::ObtainInfoMode mode
+    ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return this->obtain_types (mode, this->event_manager().subscription_types () ACE_ENV_ARG_PARAMETER);
+  return
+    this->obtain_types (mode, this->event_manager().subscription_types ()
+                        ACE_ENV_ARG_PARAMETER);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_Notify_PROXYCONSUMER_T_CPP */

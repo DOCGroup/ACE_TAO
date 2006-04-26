@@ -1,4 +1,3 @@
-// SOCK.cpp
 // $Id$
 
 #include "ace/SOCK.h"
@@ -9,6 +8,8 @@
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, SOCK, "$Id$")
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_SOCK)
 
@@ -180,3 +181,5 @@ ACE_SOCK::ACE_SOCK (int type,
                 ACE_LIB_TEXT ("%p\n"),
                 ACE_LIB_TEXT ("ACE_SOCK::ACE_SOCK")));
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

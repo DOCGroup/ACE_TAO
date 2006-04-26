@@ -33,7 +33,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "RTPortableServerC.h"
+#include "tao/RTPortableServer/RTPortableServerC.h"
 #include "tao/PortableServer/PortableServer_includeS.h"
 #include "tao/RTCORBA/RTCORBA_includeS.h"
 
@@ -54,6 +54,8 @@
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_sh.cpp:49
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace POA_RTPortableServer
 {
   
@@ -66,6 +68,7 @@ namespace POA_RTPortableServer
 // TAO_IDL - Generated from 
 // be\be_codegen.cpp:995
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "RTPortableServerS.inl"

@@ -40,7 +40,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "imr_client_export.h"
+#include "tao/ImR_Client/imr_client_export.h"
 #include "tao/AnyTypeCode/AnyTypeCode_methods.h"
 #include "tao/ORB.h"
 #include "tao/SystemException.h"
@@ -52,6 +52,8 @@
 #undef TAO_EXPORT_MACRO
 #endif
 #define TAO_EXPORT_MACRO TAO_IMR_Client_Export
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // TAO_IDL - Generated from 
 // be\be_visitor_root/root_ch.cpp:62
@@ -274,8 +276,10 @@ TAO_IMR_Client_Export ::CORBA::Boolean operator>> (TAO_InputCDR &, Implementatio
 // TAO_IDL - Generated from
 // be\be_codegen.cpp:1040
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "ServerObjectC.inl"
+#include "tao/ImR_Client/ServerObjectC.inl"
 #endif /* defined INLINE */
 
 #include /**/ "ace/post.h"

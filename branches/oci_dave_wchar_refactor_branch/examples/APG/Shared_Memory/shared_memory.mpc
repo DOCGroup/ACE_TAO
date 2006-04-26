@@ -2,6 +2,7 @@
 // $Id$
 
 project(*Hash Map) : aceexe {
+  avoids += ace_for_tao
   exename = Hash_Map
   Source_Files {
     Hash_Map.cpp
@@ -9,6 +10,7 @@ project(*Hash Map) : aceexe {
 }
 
 project(Malloc) : aceexe {
+  avoids += ace_for_tao
   exename = Malloc
   Source_Files {
     Malloc.cpp
@@ -16,6 +18,7 @@ project(Malloc) : aceexe {
 }
 
 project(Mem Map) : aceexe {
+  avoids += ace_for_tao
   exename = Mem_Map
   Source_Files {
     Mem_Map.cpp
@@ -23,6 +26,7 @@ project(Mem Map) : aceexe {
 }
 
 project(PI Malloc) : aceexe {
+  avoids += ace_for_tao
   exename = PI_Malloc
   Source_Files {
     PI_Malloc.cpp
@@ -30,6 +34,7 @@ project(PI Malloc) : aceexe {
 }
 
 project(Pool Growth) : aceexe {
+  avoids += ace_for_tao
   exename = Pool_Growth
   Source_Files {
     Pool_Growth.cpp

@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ../bin/mwc.pl -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/config -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/templates -type automake -noreldefs TAO.mwc
+## ../bin/mwc.pl -type automake -noreldefs TAO.mwc
 
 ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
@@ -16,6 +16,7 @@ TAO_ROOT = $(top_srcdir)
 
 ## Makefile.RT_Notify_lib.am
 
+if BUILD_CORBA_MESSAGING
 if BUILD_RT_CORBA
 if !BUILD_MINIMUM_CORBA
 
@@ -45,6 +46,7 @@ noinst_HEADERS = \
 
 endif !BUILD_MINIMUM_CORBA
 endif BUILD_RT_CORBA
+endif BUILD_CORBA_MESSAGING
 
 ## Clean up template repositories, etc.
 clean-local:

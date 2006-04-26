@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -21,8 +21,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "TAO_Export.h"
-#include "Basic_Types.h"
+#include "tao/TAO_Export.h"
+#include "tao/Basic_Types.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_ORB_Core;
 
@@ -127,6 +129,8 @@ protected:
   /// Active object map creation parameters.
   Active_Object_Map_Creation_Parameters active_object_map_creation_parameters_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

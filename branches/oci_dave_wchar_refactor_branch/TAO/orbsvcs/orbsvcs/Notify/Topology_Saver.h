@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -14,15 +14,16 @@
 #define TOPOLOGY_SAVER_H
 #include /**/ "ace/pre.h"
 
-#include "Topology_Object.h"
-#include "notify_serv_export.h"
+#include "orbsvcs/Notify/Topology_Object.h"
+#include "orbsvcs/Notify/notify_serv_export.h"
 
-#include "tao/corba.h"
 #include "ace/SString.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify
 {
@@ -105,6 +106,8 @@ namespace TAO_Notify
     virtual void close (ACE_ENV_SINGLE_ARG_DECL);
   };
 } // namespace TAO_Notify
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

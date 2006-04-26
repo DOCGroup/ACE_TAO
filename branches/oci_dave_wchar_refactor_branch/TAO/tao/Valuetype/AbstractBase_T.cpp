@@ -1,14 +1,14 @@
 // $Id$
-#ifndef TAO_ABSTRACT_BASE_T_C
-#define TAO_ABSTRACT_BASE_T_C
 
-#include "AbstractBase_T.h"
-#include "AbstractBase.h"
+#ifndef TAO_ABSTRACT_BASE_T_CPP
+#define TAO_ABSTRACT_BASE_T_CPP
+
+#include "tao/Valuetype/AbstractBase_T.h"
+#include "tao/Valuetype/AbstractBase.h"
 #include "tao/Stub.h"
 
-ACE_RCSID (Valuetype,
-           Abstractbase_T,
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   template<typename T> T *
@@ -92,7 +92,7 @@ namespace TAO
         TAO_Stub* stub = obj->_stubobj ();
 
         bool collocated =
-          !CORBA::is_nil (stub->servant_orb_var ().ptr ())
+          !CORBA::is_nil (stub->servant_orb_var ().in ())
           && stub->optimize_collocation_objects ()
           && obj->_is_collocated ()
           && pbf != 0;
@@ -102,6 +102,7 @@ namespace TAO
                              collocated ? 1 : 0,
                              obj->_servant ()),
                           CORBA::NO_MEMORY ());
+        ACE_CHECK_RETURN (proxy);
       }
     else
       {
@@ -113,4 +114,6 @@ namespace TAO
   }
 }
 
-#endif /*TAO_ABSTRACT_BASE_T_C*/
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+#endif  /* TAO_ABSTRACT_BASE_T_CPP */

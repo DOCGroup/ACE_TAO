@@ -13,7 +13,9 @@
 #include "ace/RW_Thread_Mutex.h"
 
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Allocator;
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 
 // Cache bucket -- use Hash_Bucket to hold cacheable objects.

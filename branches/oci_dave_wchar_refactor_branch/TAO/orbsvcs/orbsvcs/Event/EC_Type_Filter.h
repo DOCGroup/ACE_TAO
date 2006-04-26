@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file   EC_Type_Filter.h
  *
@@ -16,12 +17,14 @@
 #define TAO_EC_TYPE_FILTER_H
 #include /**/ "ace/pre.h"
 
-#include "EC_Filter.h"
-#include /**/ "event_serv_export.h"
+#include "orbsvcs/Event/EC_Filter.h"
+#include /**/ "orbsvcs/Event/event_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_EC_Type_Filter
@@ -59,10 +62,8 @@ public:
                                 ACE_ENV_ARG_DECL);
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (TAO_EC_Type_Filter
-                              (const TAO_EC_Type_Filter&))
-  ACE_UNIMPLEMENTED_FUNC (TAO_EC_Type_Filter& operator=
-                              (const TAO_EC_Type_Filter&))
+  TAO_EC_Type_Filter (const TAO_EC_Type_Filter&);
+  TAO_EC_Type_Filter& operator= (const TAO_EC_Type_Filter&);
 
   /// Filter an EventSet that contains more than one event.
   int filter_set (const RtecEventComm::EventSet& event,
@@ -73,6 +74,8 @@ private:
   /// Encapsulate the type/source that we must match.
   RtecEventComm::EventHeader header_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_EC_TYPE_FILTER_H */

@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -26,6 +26,8 @@
 
 #include "ace/Containers.h"
 #include "ace/SString.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_Registry
@@ -60,7 +62,7 @@ public:
   typedef ACE_Unbounded_Set<Name_Component> Name;
 
   /// Separator for components in a name
-  static const ACE_TCHAR *STRING_SEPARATOR;
+  static const ACE_TCHAR STRING_SEPARATOR[];
 
   /// Convert a @a name to a @c string
   static ACE_TString make_string (const Name &name);
@@ -351,7 +353,7 @@ public:
     int flush (void);
 
     /// Close the handle of the context
-    /// Note: <close> does not call <flush>
+    /// @note <close> does not call <flush>
     int close (void);
 
     // Accessors
@@ -554,12 +556,7 @@ private:
   static int is_local_host (const ACE_TCHAR *machine_name);
 };
 
-// Fix me!  Shouldn't have to define this stuff
-
-#if defined (ACE_HAS_BROKEN_NESTED_TEMPLATES)
-  typedef ACE_Registry::Name_Component Name_Component;
-  typedef ACE_Registry::Binding Binding;
-#endif /* ACE_HAS_BROKEN_NESTED_TEMPLATES */
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_WIN32 */
 #include /**/ "ace/post.h"

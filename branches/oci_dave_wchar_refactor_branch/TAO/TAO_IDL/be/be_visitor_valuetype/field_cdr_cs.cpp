@@ -952,8 +952,6 @@ be_visitor_valuetype_field_cdr_decl::visit_array (be_array *node)
                          "visit_array - "),
                         -1);
     }
-
-  ACE_NOTREACHED (return 0);
 }
 
 int

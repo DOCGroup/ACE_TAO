@@ -23,8 +23,8 @@
 #include "global_extern.h"
 #include "utl_err.h"
 
-ACE_RCSID (be, 
-           be_component, 
+ACE_RCSID (be,
+           be_component,
            "$Id$")
 
 be_component::be_component (void)
@@ -39,7 +39,7 @@ be_component::be_component (void)
     be_interface ()
 {
   this->size_type (AST_Type::VARIABLE);
-  this->has_constructor (I_TRUE);
+  this->has_constructor (true);
 }
 
 be_component::be_component (UTL_ScopedName *n,
@@ -48,8 +48,8 @@ be_component::be_component (UTL_ScopedName *n,
                             long n_supports,
                             AST_Interface **supports_flat,
                             long n_supports_flat)
-  : COMMON_Base (I_FALSE,
-                 I_FALSE),
+  : COMMON_Base (false,
+                 false),
     AST_Decl (AST_Decl::NT_component,
               n),
     AST_Type (AST_Decl::NT_component,
@@ -60,8 +60,8 @@ be_component::be_component (UTL_ScopedName *n,
                    n_supports,
                    supports_flat,
                    n_supports_flat,
-                   I_FALSE,
-                   I_FALSE),
+                   false,
+                   false),
     AST_Component (n,
                    base_component,
                    supports,
@@ -76,11 +76,11 @@ be_component::be_component (UTL_ScopedName *n,
                   n_supports,
                   supports_flat,
                   n_supports_flat,
-                  I_FALSE,
-                  I_FALSE)
+                  false,
+                  false)
 {
   this->size_type (AST_Type::VARIABLE);
-  this->has_constructor (I_TRUE);
+  this->has_constructor (true);
 }
 
 be_component::~be_component (void)
@@ -110,7 +110,7 @@ be_component::accept (be_visitor *visitor)
       idl_global->err ()->ignore_idl3_error (this);
       return -1;
     }
-    
+
   return visitor->visit_component (this);
 }
 

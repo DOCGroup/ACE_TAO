@@ -48,13 +48,13 @@ be_union::be_union (void)
     be_type ()
 {
   // Always the case.
-  this->has_constructor (I_TRUE);
+  this->has_constructor (true);
 }
 
 be_union::be_union (AST_ConcreteType *dt,
                     UTL_ScopedName *n,
-                    idl_bool local,
-                    idl_bool abstract)
+                    bool local,
+                    bool abstract)
   : COMMON_Base (local,
                  abstract),
     AST_Decl (AST_Decl::NT_union,
@@ -79,7 +79,7 @@ be_union::be_union (AST_ConcreteType *dt,
              n)
 {
   // Always the case.
-  this->has_constructor (I_TRUE);
+  this->has_constructor (true);
 
   if (!this->imported ())
     {
@@ -97,7 +97,7 @@ be_union::redefine (AST_Structure *from)
   AST_Union::redefine (from);
 }
 
-idl_bool
+bool
 be_union::has_duplicate_case_labels (void)
 {
   for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls);
@@ -110,11 +110,11 @@ be_union::has_duplicate_case_labels (void)
 
       if (ub->label_list_length () > 1)
         {
-          return I_TRUE;
+          return true;
         }
     }
 
-  return I_FALSE;
+  return false;
 }
 
 void
@@ -132,38 +132,38 @@ be_union::accept (be_visitor *visitor)
   return visitor->visit_union (this);
 }
 
-idl_bool
+bool
 be_union::gen_empty_default_label (void)
 {
   // A non-empty explicit default label will be generated.
   if (this->default_index () != -1)
     {
-      return I_FALSE;
+      return false;
     }
-    
+
   AST_ConcreteType *disc = this->disc_type ();
   AST_Decl::NodeType nt = disc->node_type ();
-  
+
   if (nt == AST_Decl::NT_enum)
     {
-      return I_TRUE;
+      return true;
     }
-  
+
   AST_PredefinedType *pdt = AST_PredefinedType::narrow_from_decl (disc);
-  
+
   if (pdt == 0)
     {
-      return I_TRUE;
+      return true;
     }
-    
+
   unsigned long n_labels = this->nlabels ();
-      
+
   if (pdt->pt () == AST_PredefinedType::PT_boolean && n_labels == 2)
     {
-      return I_FALSE;
+      return false;
     }
-    
-  return I_TRUE;
+
+  return true;
 }
 
 unsigned long
@@ -180,11 +180,11 @@ be_union::nlabels (void)
         AST_UnionBranch::narrow_from_decl (d);
 
       if (ub != 0)
-        {     
+        {
           retval += ub->label_list_length ();
         }
     }
-    
+
   return retval;
 }
 

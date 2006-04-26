@@ -1,11 +1,11 @@
 // $Id$
 
-#include "InterfaceDef_i.h"
-#include "Repository_i.h"
-#include "AttributeDef_i.h"
-#include "OperationDef_i.h"
-#include "IFR_Service_Utils.h"
-#include "IFR_Service_Utils_T.h"
+#include "orbsvcs/IFRService/InterfaceDef_i.h"
+#include "orbsvcs/IFRService/Repository_i.h"
+#include "orbsvcs/IFRService/AttributeDef_i.h"
+#include "orbsvcs/IFRService/OperationDef_i.h"
+#include "orbsvcs/IFRService/IFR_Service_Utils.h"
+#include "orbsvcs/IFRService/IFR_Service_Utils_T.h"
 
 #include "ace/SString.h"
 
@@ -14,6 +14,7 @@ ACE_RCSID (IFRService,
            InterfaceDef_i,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_InterfaceDef_i::TAO_InterfaceDef_i (
     TAO_Repository_i *repo
@@ -310,7 +311,7 @@ TAO_InterfaceDef_i::base_interfaces_i (const CORBA::InterfaceDefSeq &base_interf
   for (CORBA::ULong i = 0; i < length; ++i)
     {
       inherited_path =
-        TAO_IFR_Service_Utils::reference_to_path (base_interfaces[i].in ());
+        TAO_IFR_Service_Utils::reference_to_path (base_interfaces[i]);
 
       this->repo_->config ()->expand_path (this->repo_->root_key (),
                                            inherited_path,
@@ -458,8 +459,16 @@ TAO_InterfaceDef_i::describe_interface_i (ACE_ENV_SINGLE_ARG_DECL)
   CORBA::ULong j = 0;
   ACE_Unbounded_Queue<ACE_Configuration_Section_Key> key_queue;
 
+  // Store our section key for later restoration after we have
+  // traversed entries for inherited interfaces.
+  ACE_Configuration_Section_Key key_holder = this->section_key_;
+
   // Operations
   this->inherited_operations (key_queue);
+
+  // Restore our original section key.
+  //   I am not sure this is needed but it will not hurt.
+  this->section_key (key_holder);
 
   ACE_Configuration_Section_Key ops_key, op_key;
   int status =
@@ -508,8 +517,17 @@ TAO_InterfaceDef_i::describe_interface_i (ACE_ENV_SINGLE_ARG_DECL)
       ACE_CHECK_RETURN (0);
     }
 
+  // Restore our original section key.
+  //   It may have been overwritten by a superclass key as part of the
+  //   make_description() call.
+  this->section_key (key_holder);
+
   // Attributes
   this->inherited_attributes (key_queue);
+
+  // Restore our original section key.
+  //   I am not sure this is needed but it will not hurt.
+  this->section_key (key_holder);
 
   ACE_Configuration_Section_Key attrs_key;
   status =
@@ -558,6 +576,11 @@ TAO_InterfaceDef_i::describe_interface_i (ACE_ENV_SINGLE_ARG_DECL)
                              ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
     }
+
+  // Restore our original section key.
+  //   It may have been overwritten by a superclass key as part of the
+  //   make_description() call.
+  this->section_key (key_holder);
 
   CORBA::InterfaceDefSeq_var bases =
     this->base_interfaces_i (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -856,7 +879,7 @@ TAO_InterfaceDef_i::create_operation_i (const char *id,
       for (i = 0; i < length; ++i)
         {
           type_path =
-            TAO_IFR_Service_Utils::reference_to_path (exceptions[i].in ());
+            TAO_IFR_Service_Utils::reference_to_path (exceptions[i]);
 
           char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
           this->repo_->config ()->set_string_value (excepts_key,
@@ -882,7 +905,7 @@ TAO_InterfaceDef_i::create_operation_i (const char *id,
           char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
           this->repo_->config ()->set_string_value (contexts_key,
                                                     stringified,
-                                                    contexts[i].in ());
+                                                    contexts[i]);
         }
     }
 
@@ -1258,3 +1281,5 @@ TAO_InterfaceDef_i::check_inherited (const char *name,
         }
     }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

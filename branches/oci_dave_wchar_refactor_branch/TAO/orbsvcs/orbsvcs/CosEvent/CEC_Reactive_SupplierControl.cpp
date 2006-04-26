@@ -4,33 +4,38 @@
 // the Typed and Un-typed Event Channels.  A check must be made in the code
 // to ensure the correct EC is referenced. 
 
-#include "CEC_EventChannel.h"
-#include "CEC_SupplierAdmin.h"
-#include "CEC_ProxyPushConsumer.h"
-#include "CEC_Reactive_SupplierControl.h"
+#include "orbsvcs/CosEvent/CEC_EventChannel.h"
+#include "orbsvcs/CosEvent/CEC_SupplierAdmin.h"
+#include "orbsvcs/CosEvent/CEC_ProxyPushConsumer.h"
+#include "orbsvcs/CosEvent/CEC_Reactive_SupplierControl.h"
 
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
-#include "CEC_TypedEventChannel.h"
-#include "CEC_TypedSupplierAdmin.h"
-#include "CEC_TypedProxyPushConsumer.h"
+#include "orbsvcs/CosEvent/CEC_TypedEventChannel.h"
+#include "orbsvcs/CosEvent/CEC_TypedSupplierAdmin.h"
+#include "orbsvcs/CosEvent/CEC_TypedProxyPushConsumer.h"
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
-#include "CEC_ProxyPullConsumer.h"
+#include "orbsvcs/CosEvent/CEC_ProxyPullConsumer.h"
 
 #include "orbsvcs/Time_Utilities.h"
 
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 #include "tao/Messaging/Messaging.h"
+#endif
+
 #include "tao/ORB_Core.h"
 
 #include "ace/Reactor.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "CEC_Reactive_SupplierControl.i"
+#include "orbsvcs/CosEvent/CEC_Reactive_SupplierControl.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (CosEvent,
            CEC_Reactive_SupplierControl,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // TAO_CEC_Reactive_SupplierControl constructor for the Un-typed EC
 TAO_CEC_Reactive_SupplierControl::
@@ -44,6 +49,9 @@ TAO_CEC_Reactive_SupplierControl::
     retries_ (retries),
     adapter_ (this),
     event_channel_ (ec),
+#if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
+    typed_event_channel_ (0),
+#endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
     orb_ (CORBA::ORB::_duplicate (orb))
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
    // Initialise timer_id_ to an invalid timer id, so that in case we don't
@@ -67,6 +75,7 @@ TAO_CEC_Reactive_SupplierControl::
     timeout_ (timeout),
     retries_ (retries),
     adapter_ (this),
+    event_channel_ (0),
     typed_event_channel_ (ec),
     orb_ (CORBA::ORB::_duplicate (orb))
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
@@ -525,3 +534,4 @@ TAO_CEC_Ping_Pull_Supplier::work (TAO_CEC_ProxyPullConsumer *consumer
   ACE_ENDTRY;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

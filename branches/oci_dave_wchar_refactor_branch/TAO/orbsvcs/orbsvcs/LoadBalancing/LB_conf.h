@@ -22,6 +22,9 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Versioned_Namespace.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #ifndef TAO_LB_PULL_HANDLER_INTERVAL
 /// The interval in seconds the load balancer queries registered load
@@ -35,6 +38,7 @@ const long TAO_LB_PULL_HANDLER_INTERVAL = 5;
 const long TAO_LB_PULL_HANDLER_RESTART = 5;
 #endif  /* TAO_LB_PULL_HANDLER_RESTART */
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

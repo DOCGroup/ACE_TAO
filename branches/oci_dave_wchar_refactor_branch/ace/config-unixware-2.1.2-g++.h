@@ -25,7 +25,6 @@
 // Optimize ACE_Handle_Set for select().
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
 
-#define ACE_LACKS_SYSTIME_H
 // ualarm is only in BSD compatibility lib, but no header is provided
 // #define ACE_HAS_UALARM
 #define ACE_HAS_SIZET_SOCKET_LEN

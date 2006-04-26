@@ -23,6 +23,9 @@
 
 #include "ace/Unbounded_Queue.h"
 
+// Open versioned namespace, if enabled by the user.
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_TARGV
  *
@@ -31,7 +34,7 @@
  * variable values for tokens that are environment variable references.
  */
 template < typename CHAR_TYPE = char >
-class ACE_TARGV
+class ACE_Export ACE_TARGV
 {
 public:
   // = Initialization and termination.
@@ -178,7 +181,13 @@ private:
 
 typedef ACE_TARGV<ACE_TCHAR> ACE_ARGV;
 
+// Close versioned namespace, if enabled by the user.
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+#if defined (__ACE_INLINE__)
 #include "ace/ARGV.inl"
+#endif /* __ACE_INLINE__ */
+
 
 #include /**/ "ace/post.h"
 #endif /* ACE_ARGUMENT_VECTOR_H */

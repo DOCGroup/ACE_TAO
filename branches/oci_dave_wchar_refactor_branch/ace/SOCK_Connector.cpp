@@ -1,4 +1,3 @@
-// SOCK_Connector.cpp
 // $Id$
 
 #include "ace/SOCK_Connector.h"
@@ -17,6 +16,8 @@
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, SOCK_Connector, "$Id$")
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_SOCK_Connector)
 
@@ -325,3 +326,5 @@ ACE_SOCK_Connector::ACE_SOCK_Connector (ACE_SOCK_Stream &new_stream,
                 ACE_LIB_TEXT ("ACE_SOCK_Connector::ACE_SOCK_Connector")));
 }
 #endif  // ACE_HAS_WINCE
+
+ACE_END_VERSIONED_NAMESPACE_DECL

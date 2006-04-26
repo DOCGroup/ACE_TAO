@@ -32,7 +32,7 @@ siglistset (sigset_t x, int *sigset, int can_miss = 0)
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Signal (s) in the set = %08x:\n"), x)) ;
 
-  for (int i = 1; i < ACE_NSIG; i++) 
+  for (int i = 1; i < ACE_NSIG; i++)
     {
       result = ACE_OS::sigismember (&x, i);
 
@@ -42,18 +42,18 @@ siglistset (sigset_t x, int *sigset, int can_miss = 0)
           empty = 0 ;
         }
       else if (can_miss)
-	{
-	  ACE_DEBUG ((LM_DEBUG,
-		      ACE_TEXT ("Be careful... Signal %d is not valid\n"),
-		      i));
-	  result = 1;
-	}
+        {
+          ACE_DEBUG ((LM_DEBUG,
+            ACE_TEXT ("Be careful... Signal %d is not valid\n"),
+            i));
+          result = 1;
+        }
       ACE_ASSERT ((sigset [i] ? result > 0 : result <= 0)) ;
     }
 
-  if (empty) 
+  if (empty)
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Empty!!\n\n"))) ;
-  else 
+  else
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n\n"))) ;
 }
 
@@ -82,7 +82,7 @@ run_main (int, ACE_TCHAR *[])
   ACE_OS::sigfillset (&x) ;
 
   // fill the comparison set
-  for (i = 0 ; i < ACE_NSIG ; i++) 
+  for (i = 0 ; i < ACE_NSIG ; i++)
     sigset [i] = 1 ;
 
   // There's no guarantee that the valid signals are sequential without
@@ -97,7 +97,7 @@ run_main (int, ACE_TCHAR *[])
   ACE_OS::sigemptyset (&x) ;
 
   // empty the comparison set
-  for (i = 0 ; i < ACE_NSIG ; i++) 
+  for (i = 0 ; i < ACE_NSIG ; i++)
     sigset [i] = 0 ;
 
   siglistset (x, sigset) ;
@@ -123,12 +123,12 @@ run_main (int, ACE_TCHAR *[])
   siglistset (x, sigset) ;
 
   // Now testing out of bound signal
-  if (ACE_OS::sigismember (&x, ACE_NSIG) >= 0) 
+  if (ACE_OS::sigismember (&x, ACE_NSIG) >= 0)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("Platform doesn't check for valid signal number.\n")));
       status = 1;
     }
-  else if (ACE_OS::last_error () != EINVAL) 
+  else if (ACE_OS::last_error () != EINVAL)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p.\n"), ACE_TEXT ("Expected status EINVAL; got")));
       status = 1;

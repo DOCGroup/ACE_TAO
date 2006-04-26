@@ -21,14 +21,16 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "PG_Default_Property_Validator.h"
-#include "portablegroup_export.h"
+#include "orbsvcs/PortableGroup/PG_Default_Property_Validator.h"
+#include "orbsvcs/PortableGroup/portablegroup_export.h"
 #include "orbsvcs/PortableGroupS.h"
 
 #include "ace/SString.h"
 #include "ace/Null_Mutex.h"
 #include "ace/Functor.h"
 #include "ace/Hash_Map_Manager_T.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// Forward declarations.
 class TAO_PG_ObjectGroupManager;
@@ -182,6 +184,8 @@ private:
   TAO_PG_Default_Property_Validator property_validator_;
 
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

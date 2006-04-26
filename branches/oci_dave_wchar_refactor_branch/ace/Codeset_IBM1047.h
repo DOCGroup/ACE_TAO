@@ -29,8 +29,7 @@
 
 #include "ace/CDR_Stream.h"
 
-extern ACE_Export char ACE_to_IBM1047[257];
-extern ACE_Export char ACE_from_IBM1047[257];
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // ****************************************************************
 
@@ -120,7 +119,10 @@ public:
   virtual ACE_CDR::ULong tcs ();
 };
 
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 #endif /* ACE_MVS */
 
 #include /**/ "ace/post.h"
+
 #endif /* ACE_CODESET_IMB1047_H */

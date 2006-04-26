@@ -89,27 +89,28 @@ public:
         }
     };
 
-  void foo_excep (A::AMI_AMI_TestExceptionHolder * excep_holder
+  void foo_excep (::Messaging::ExceptionHolder * excep_holder
                   ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
 
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <foo_excep> called: \n"
-                                  "Testing proper exception handling ...\n"));
+                  "Testing proper exception handling ...\n"));
       ACE_TRY
         {
-          excep_holder->raise_foo (ACE_ENV_SINGLE_ARG_PARAMETER);
+          excep_holder->raise_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
       ACE_CATCH (A::DidTheRightThing, ex)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "... exception received successfully\n"));
-                    }
+        }
       ACE_CATCHANY
         {
-          ACE_DEBUG ((LM_DEBUG,
+          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "ERROR");
+          ACE_ERROR ((LM_ERROR,
                       "... caught the wrong exception -> ERROR\n"));
         }
       ACE_ENDTRY;
@@ -126,7 +127,7 @@ public:
                   result));
     };
 
-  void get_yadda_excep (A::AMI_AMI_TestExceptionHolder *
+  void get_yadda_excep (::Messaging::ExceptionHolder *
                   ACE_ENV_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
@@ -141,7 +142,7 @@ public:
                   "Callback method <set_yadda> called: \n"));
     };
 
-  void set_yadda_excep (A::AMI_AMI_TestExceptionHolder *
+  void set_yadda_excep (::Messaging::ExceptionHolder *
                   ACE_ENV_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
@@ -159,7 +160,7 @@ public:
                 "Callback method <set_yadda_excep> called: \n"));
   }
 
-  void inout_arg_test_excep (A::AMI_AMI_TestExceptionHolder *
+  void inout_arg_test_excep (::Messaging::ExceptionHolder *
                              ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
@@ -227,7 +228,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                ""
                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-
 
       // Trigger the DidTheRightThing exception on the server side
       // by sending 0 to it.

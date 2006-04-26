@@ -12,6 +12,7 @@ project(*Server): taoserver, pi_server, interceptors {
 }
 
 project(*Client): taoclient, pi, interceptors {
+  after += *Server
   Source_Files {
     testC.cpp
     ClientORBInitializer.cpp

@@ -1,6 +1,4 @@
-// -*- C++ -*-
-
-#include "FT_ServerRequest_Interceptor.h"
+#include "orbsvcs/FaultTolerance/FT_ServerRequest_Interceptor.h"
 #include "tao/IOP_IORC.h"
 #include "tao/ORB_Constants.h"
 #include "tao/AnyTypeCode/DynamicC.h"
@@ -13,6 +11,8 @@
 ACE_RCSID (FaultTolerance,
            FT_ServerRequest_Interceptor,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -27,7 +27,6 @@ namespace TAO
   FT_ServerRequest_Interceptor::~FT_ServerRequest_Interceptor (void)
   {
   }
-
 
   char *
   FT_ServerRequest_Interceptor::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
@@ -207,16 +206,17 @@ namespace TAO
       ri->arguments (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
 
-    if (param->length () > 2 ||
-        param->length () == 0)
+    // this is only for checking the tao_update_object_group operation
+    // which accepts three parameters, i.e.,an iogr as a string,
+    // a version object and a boolean.
+    if (param->length () != 3 )
       ACE_THROW (CORBA::TRANSIENT ());
-
 
     const char *str = 0;
 
-
     (*param)[0].argument >>= str;
     (*param)[1].argument >>= this->object_group_ref_version_;
+    (*param)[2].argument >>= CORBA::Any::to_boolean(this->is_primary_);
 
     CORBA::String_var obj (str);
 
@@ -233,3 +233,5 @@ namespace TAO
       ACE_THROW (CORBA::TRANSACTION_ROLLEDBACK ());
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

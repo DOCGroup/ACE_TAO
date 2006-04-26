@@ -1,5 +1,5 @@
-#include "SCIOP_Connector.h"
-#include "SCIOP_Profile.h"
+#include "tao/Strategies/SCIOP_Connector.h"
+#include "tao/Strategies/SCIOP_Profile.h"
 
 #if TAO_HAS_SCIOP == 1
 
@@ -23,6 +23,9 @@
 ACE_RCSID (TAO,
            SCIOP_Connector,
            "$Id$")
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_SCIOP_Connector::TAO_SCIOP_Connector (CORBA::Boolean flag)
   : TAO_Connector (TAO_TAG_SCIOP_PROFILE),
@@ -422,5 +425,6 @@ TAO_SCIOP_Connector::cancel_svc_handler (
   return -1;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_SCIOP == 1 */

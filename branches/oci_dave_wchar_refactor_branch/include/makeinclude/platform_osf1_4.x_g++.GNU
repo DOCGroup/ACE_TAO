@@ -1,7 +1,7 @@
 # $Id$
 
 # This platform macros file is intended to work with Digital UNIX 4.x
-# (OSF/1 4.x) and GCC in version 2.7.2.1 (or newer).
+# (OSF/1 4.x) and GCC in version 2.9.6 or newer
 debug ?= 1
 exceptions ?= 1
 rtti ?= 1
@@ -31,4 +31,4 @@ PRELIB          = @true
 #
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
 
-CCFLAGS         += $(CFLAGS) $(TEMPLATES_FLAG) -fno-strict-prototypes
+CCFLAGS         += $(CFLAGS) $(TEMPLATES_FLAG)

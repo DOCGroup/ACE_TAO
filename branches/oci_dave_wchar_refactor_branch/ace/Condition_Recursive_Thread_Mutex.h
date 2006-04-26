@@ -27,8 +27,9 @@
 #else /* ACE_HAS_THREADS */
 #include "ace/Recursive_Thread_Mutex.h"
 
-template <class ACE_LOCK>
-class ACE_Condition;
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
+template <class ACE_LOCK> class ACE_Condition;
 
 /**
  * @class ACE_Condition<ACE_Recursive_Thread_Mutex>
@@ -86,15 +87,19 @@ public:
   void dump (void) const;
 
 private:
+
+  // = Prevent assignment and copying.
+  void operator= (const ACE_Condition<ACE_Recursive_Thread_Mutex> &);
+  ACE_Condition (const ACE_Condition<ACE_Recursive_Thread_Mutex> &);
+
+private:
+
   /// A normal (i.e., non-recursive) condition variable.
   ACE_cond_t cond_;
 
   /// Reference to the recursive mutex.
   ACE_Recursive_Thread_Mutex &mutex_;
 
-  // = Prevent assignment and initialization.
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Condition<ACE_Recursive_Thread_Mutex> &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Condition (const ACE_Condition<ACE_Recursive_Thread_Mutex> &))
 };
 
 class ACE_Export ACE_Condition_Recursive_Thread_Mutex
@@ -104,6 +109,8 @@ public:
   /// Initialize the condition variable with a recursive mutex.
   ACE_Condition_Recursive_Thread_Mutex (ACE_Recursive_Thread_Mutex &m);
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* !ACE_HAS_THREADS */
 

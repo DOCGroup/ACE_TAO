@@ -29,10 +29,13 @@ ACE_RCSID(ace, Pagefile_Memory_Pool, "$Id$")
 #else //if !defined (ACE_HAS_WINCE)
 #define ACE_MAP_FILE(_hnd, _access, _offHigh, _offLow, _nBytes, _baseAdd)\
   MapViewOfFile (_hnd, _access, _offHigh, _offLow, _nBytes)
-#endif /* !defined (ACE_HAS_WINCE) */
+#endif /* !ACE_HAS_WINCE */
 
-ACE_Pagefile_Memory_Pool_Options::ACE_Pagefile_Memory_Pool_Options (void *base_addr,
-                                                                    size_t max_size)
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
+ACE_Pagefile_Memory_Pool_Options::ACE_Pagefile_Memory_Pool_Options (
+  void *base_addr,
+  size_t max_size)
   : base_addr_ (base_addr),
     max_size_ (max_size)
 {
@@ -66,7 +69,7 @@ ACE_Pagefile_Memory_Pool::ACE_Pagefile_Memory_Pool (const ACE_TCHAR *backing_sto
     {
       this->local_cb_.req_base_ = 0;
       this->local_cb_.mapped_base_ = 0;
-      this->local_cb_.sh_.max_size_ = 
+      this->local_cb_.sh_.max_size_ =
         this->round_to_chunk_size (page_size_) ;
       this->local_cb_.sh_.mapped_size_ = 0;
       this->local_cb_.sh_.free_offset_ =
@@ -375,6 +378,8 @@ ACE_Pagefile_Memory_Pool::map (int &first_time,
 
   return 0;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_WIN32 */
 

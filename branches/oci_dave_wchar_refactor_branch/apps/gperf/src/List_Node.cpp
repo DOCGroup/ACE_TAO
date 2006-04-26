@@ -42,7 +42,7 @@ List_Node::sort (char *base, int len)
     {
       char curr, tmp;
 
-      for (curr = i + 1, tmp = base[curr];
+      for (curr = static_cast<char> (i + 1), tmp = base[curr];
            curr > 0 && tmp < base[curr-1];
            curr--)
         base[curr] = base[curr - 1];
@@ -81,7 +81,7 @@ List_Node::List_Node (char *k, int len)
   if (option[STRCASECMP])
     for (char *p = k; *p; p++)
       if (isupper (*p))
-        *p = tolower (*p);
+        *p = static_cast<char> (tolower (*p));
 
   if (option[ALLCHARS])         // Use all the character position in the KEY.
     for (; *k; k++, ptr++)

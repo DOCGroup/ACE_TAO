@@ -97,15 +97,14 @@
 // Platform defines struct timespec but not timespec_t
 #define ACE_LACKS_TIMESPEC_T
 
-#define ACE_LACKS_SYSTIME_H
-
 #define ACE_LACKS_STDINT_H
 #define ACE_LACKS_STROPTS_H
 #define ACE_LACKS_WCHAR_H
 
 #define ACE_LACKS_STRRECVFD
 
-#define ACE_HAS_SIN_LEN
+#define ACE_HAS_SOCKADDR_IN_SIN_LEN
+#define ACE_HAS_SOCKADDR_IN6_SIN6_LEN
 
 // Platform supports System V IPC (most versions of UNIX, but not Win32)
 #define ACE_HAS_SYSV_IPC
@@ -177,6 +176,8 @@
 // Platform provides <sys/filio.h> header.
 #define ACE_HAS_SYS_FILIO_H
 
+#define ACE_HAS_SYSCTL
+
 // Platform/compiler supports timezone * as second parameter to gettimeofday().
 #define ACE_HAS_TIMEZONE_GETTIMEOFDAY
 
@@ -222,7 +223,7 @@
 #endif /* ! ACE_HAD_THREADS */
 
 // Platform has POSIX terminal interface.
-#define ACE_HAS_TERMIOS 
+#define ACE_HAS_TERMIOS
 
 // OpenBSD actually has the clearerr call, but it causes a
 // bogus compiler syntax error.

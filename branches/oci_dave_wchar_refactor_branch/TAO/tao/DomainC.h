@@ -66,6 +66,8 @@
 #pragma option push -w-rvl -w-rch -w-ccc -w-inl
 #endif /* __BORLANDC__ */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // TAO_IDL - Generated from
 // be\be_visitor_root/root_ch.cpp:62
 
@@ -328,31 +330,21 @@ namespace CORBA
   class DomainManagerList;
 
   typedef
-    TAO_MngSeq_Var_T<
-        DomainManagerList,
-        TAO_Object_Manager<
-            DomainManager,
-            DomainManager_var
-          >
+    TAO_VarSeq_Var_T<
+        DomainManagerList
       >
     DomainManagerList_var;
 
   typedef
-    TAO_MngSeq_Out_T<
-        DomainManagerList,
-        DomainManagerList_var,
-        TAO_Object_Manager<
-            DomainManager,
-            DomainManager_var
-          >
+    TAO_Seq_Out_T<
+        DomainManagerList
       >
     DomainManagerList_out;
 
   class TAO_Export DomainManagerList
     : public
-        TAO_Unbounded_Object_Sequence<
-            DomainManager,
-            DomainManager_var
+        TAO::unbounded_object_reference_sequence<
+            DomainManager, DomainManager_var
           >
   {
   public:
@@ -362,7 +354,7 @@ namespace CORBA
         CORBA::ULong max,
         CORBA::ULong length,
         DomainManager_ptr* buffer,
-        CORBA::Boolean release = 0
+        CORBA::Boolean release = false
       );
     DomainManagerList (const DomainManagerList &);
     ~DomainManagerList (void);
@@ -417,7 +409,7 @@ namespace TAO
       );
     static ::CORBA::DomainManager_ptr nil (void);
     static CORBA::Boolean marshal (
-        ::CORBA::DomainManager_ptr p,
+        const ::CORBA::DomainManager_ptr p,
         TAO_OutputCDR & cdr
       );
   };
@@ -438,7 +430,7 @@ namespace TAO
       );
     static ::CORBA::ConstructionPolicy_ptr nil (void);
     static CORBA::Boolean marshal (
-        ::CORBA::ConstructionPolicy_ptr p,
+        const ::CORBA::ConstructionPolicy_ptr p,
         TAO_OutputCDR & cdr
       );
   };
@@ -478,8 +470,10 @@ TAO_Export CORBA::Boolean operator>> (
 // TAO_IDL - Generated from
 // be\be_codegen.cpp:955
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "DomainC.inl"
+#include "tao/DomainC.inl"
 #endif /* defined INLINE */
 
 #if defined(_MSC_VER)

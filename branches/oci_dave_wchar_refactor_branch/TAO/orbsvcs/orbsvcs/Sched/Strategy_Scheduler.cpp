@@ -16,7 +16,7 @@
 //
 // ============================================================================
 
-#include "Strategy_Scheduler.h"
+#include "orbsvcs/Sched/Strategy_Scheduler.h"
 #include "ace/Sched_Params.h"
 
 ACE_RCSID (Sched,
@@ -42,6 +42,8 @@ typedef int (*COMP_FUNC) (const void*, const void*);
 ///////////////////////////////////////////////////
 
 // = Constructor.
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_Strategy_Scheduler::ACE_Strategy_Scheduler (ACE_Scheduler_Strategy &strategy)
   : ACE_DynScheduler (),
@@ -860,9 +862,8 @@ ACE_MUF_Scheduler_Strategy::minimum_critical_priority ()
 // = Provides the dispatching queue type for the given dispatch entry.
 
 ACE_DynScheduler::Dispatching_Type
-ACE_MUF_Scheduler_Strategy::dispatch_type (const Dispatch_Entry &entry)
+ACE_MUF_Scheduler_Strategy::dispatch_type (const Dispatch_Entry & /* entry */)
 {
-  ACE_UNUSED_ARG (entry);
   return RtecScheduler::LAXITY_DISPATCHING;
 }
 
@@ -951,12 +952,10 @@ ACE_RMS_Scheduler_Strategy::~ACE_RMS_Scheduler_Strategy ()
 // = All entries have the same dynamic subpriority value.
 
 long
-ACE_RMS_Scheduler_Strategy::dynamic_subpriority (Dispatch_Entry &entry,
-                                                 RtecScheduler::Time current_time)
+ACE_RMS_Scheduler_Strategy::dynamic_subpriority (
+  Dispatch_Entry & /* entry */,
+  RtecScheduler::Time /* current_time */)
 {
-  ACE_UNUSED_ARG (entry);
-  ACE_UNUSED_ARG (current_time);
-
   return 0;
 }
 
@@ -996,9 +995,8 @@ ACE_RMS_Scheduler_Strategy::minimum_critical_priority ()
 // = Provide the dispatching queue type for the given dispatch entry.
 
 ACE_DynScheduler::Dispatching_Type
-ACE_RMS_Scheduler_Strategy::dispatch_type (const Dispatch_Entry &entry)
+ACE_RMS_Scheduler_Strategy::dispatch_type (const Dispatch_Entry & /* entry */)
 {
-  ACE_UNUSED_ARG (entry);
   return RtecScheduler::STATIC_DISPATCHING;
 }
 
@@ -1131,9 +1129,8 @@ ACE_MLF_Scheduler_Strategy::sort_function (void *arg1, void *arg2)
 // = Provides the dispatching queue type for the given dispatch entry.
 
 ACE_DynScheduler::Dispatching_Type
-ACE_MLF_Scheduler_Strategy::dispatch_type (const Dispatch_Entry &entry)
+ACE_MLF_Scheduler_Strategy::dispatch_type (const Dispatch_Entry & /* entry */)
 {
-  ACE_UNUSED_ARG (entry);
   return RtecScheduler::LAXITY_DISPATCHING;
 }
 
@@ -1257,9 +1254,8 @@ ACE_EDF_Scheduler_Strategy::sort_function (void *arg1, void *arg2)
 // = Provides the dispatching queue type for the given dispatch entry.
 
 ACE_DynScheduler::Dispatching_Type
-ACE_EDF_Scheduler_Strategy::dispatch_type (const Dispatch_Entry &entry)
+ACE_EDF_Scheduler_Strategy::dispatch_type (const Dispatch_Entry & /* entry */)
 {
-  ACE_UNUSED_ARG (entry);
   return RtecScheduler::DEADLINE_DISPATCHING;
 }
 
@@ -1347,12 +1343,10 @@ ACE_Criticality_Scheduler_Strategy::~ACE_Criticality_Scheduler_Strategy ()
 // = All entries have the same dynamic subpriority value.
 
 long
-ACE_Criticality_Scheduler_Strategy::dynamic_subpriority (Dispatch_Entry &entry,
-                                                 RtecScheduler::Time current_time)
+ACE_Criticality_Scheduler_Strategy::dynamic_subpriority (
+  Dispatch_Entry & /* entry */,
+  RtecScheduler::Time /* current_time */)
 {
-  ACE_UNUSED_ARG (entry);
-  ACE_UNUSED_ARG (current_time);
-
   return 0;
 }
 
@@ -1391,8 +1385,10 @@ ACE_Criticality_Scheduler_Strategy::minimum_critical_priority ()
 // = Provides the dispatching queue type for the given dispatch entry.
 
 ACE_DynScheduler::Dispatching_Type
-ACE_Criticality_Scheduler_Strategy::dispatch_type (const Dispatch_Entry &entry)
+ACE_Criticality_Scheduler_Strategy::dispatch_type (
+  const Dispatch_Entry & /* entry */)
 {
-  ACE_UNUSED_ARG (entry);
   return RtecScheduler::STATIC_DISPATCHING;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

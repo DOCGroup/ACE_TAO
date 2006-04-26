@@ -25,6 +25,8 @@
 #include "tao/AnyTypeCode_Adapter.h"
 #include "ace/Service_Config.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_AnyTypeCode_Adapter
  */
@@ -94,6 +96,18 @@ ANYTYPECODE__EXCEPTION_LIST
 
   virtual void insert_into_any (CORBA::Any * any, CORBA::Short value);
 
+  virtual void insert_into_any (CORBA::Any * any, CORBA::UShort value);
+
+  virtual void insert_into_any (CORBA::Any * any, CORBA::Float value);
+
+  virtual void insert_into_any (CORBA::Any * any, CORBA::Double value);
+
+  virtual void insert_into_any (CORBA::Any * any, CORBA::LongLong value);
+
+  virtual void insert_into_any (CORBA::Any * any, CORBA::ULongLong value);
+
+  virtual void insert_into_any (CORBA::Any * any, CORBA::LongDouble value);
+
   virtual void insert_into_any (CORBA::Any * any, CORBA::Policy_ptr policy);
 
   virtual void insert_into_any (CORBA::Any * any, CORBA::Policy_ptr * policy);
@@ -108,6 +122,8 @@ ANYTYPECODE__EXCEPTION_LIST
 
   virtual void insert_into_any (CORBA::Any * any, ACE_OutputCDR::from_boolean value);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE (TAO_AnyTypeCode_Adapter_Impl)
 ACE_FACTORY_DECLARE (TAO_AnyTypeCode, TAO_AnyTypeCode_Adapter_Impl)

@@ -1,7 +1,7 @@
 //$Id$
 
-ACE_RCSID (be_visitor_interface, 
-           base_proxy_broker_ch, 
+ACE_RCSID (be_visitor_interface,
+           base_proxy_broker_ch,
            "$Id$")
 
 be_visitor_interface_base_proxy_broker_ch::
@@ -26,7 +26,7 @@ be_visitor_interface_base_proxy_broker_ch::visit_interface (
   TAO_OutStream *os = this->ctx_->stream ();
 
   *os << be_nl
-      << "///////////////////////////////////////////////////////////////////////" 
+      << "///////////////////////////////////////////////////////////////////////"
       << be_nl
       << "//                 Base Proxy Broker Declaration " << be_nl
       << "//" << be_nl << be_nl;
@@ -50,8 +50,7 @@ be_visitor_interface_base_proxy_broker_ch::visit_interface (
       << "select_proxy ("
       << be_idt << be_idt_nl;
 
-  *os << node->local_name () << " *object" << be_nl
-      << "ACE_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
+  *os << node->local_name () << " *object" << env_dflts << be_uidt_nl
       << ") = 0;"
       << be_uidt_nl  // idt = 1
       << be_uidt_nl; // idt = 0

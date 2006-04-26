@@ -1,10 +1,10 @@
 // $Id$
 
-#include "SCTP_SEQ.h"
+#include "orbsvcs/AV/SCTP_SEQ.h"
 
 #if defined (ACE_HAS_SCTP)
 
-#include "AVStreams_i.h"
+#include "orbsvcs/AV/AVStreams_i.h"
 #include "ace/Multihomed_INET_Addr.h"
 #include "tao/debug.h"
 #include "ace/Arg_Shifter.h"
@@ -12,6 +12,8 @@
 ACE_RCSID (AV,
            SCTP_SEQ,
            "SCTP_SEQ.cpp,v 1.3 2003/11/05 21:06:53 yamuna Exp")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 //------------------------------------------------------------
 // TAO_AV_SCTP_SEQ_Transport
@@ -906,6 +908,8 @@ TAO_AV_SCTP_SEQ_Flow_Factory::make_protocol_object (TAO_FlowSpec_Entry *entry,
   endpoint->protocol_object_set ();
   return object;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_FACTORY_DEFINE (TAO_AV, TAO_AV_SCTP_SEQ_Flow_Factory)
 ACE_STATIC_SVC_DEFINE (TAO_AV_SCTP_SEQ_Flow_Factory,

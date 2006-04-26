@@ -23,6 +23,12 @@
 #include "ace/Unbounded_Set.h"
 #include "ace/Null_Mutex.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+class ACE_Reactor;
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_Base_StreamEndPoint;
 class TAO_AV_Connector_Registry;
 class TAO_AV_Acceptor_Registry;
@@ -33,7 +39,6 @@ class TAO_AV_Transport_Item;
 class TAO_AV_Transport_Factory;
 class TAO_AV_Flow_Protocol_Item;
 class TAO_AV_Flow_Protocol_Factory;
-class ACE_Reactor;
 
 typedef ACE_Unbounded_Set <TAO_FlowSpec_Entry*> TAO_AV_FlowSpecSet;
 typedef ACE_Unbounded_Set_Iterator <TAO_FlowSpec_Entry*> TAO_AV_FlowSpecSetItor;
@@ -169,6 +174,8 @@ TAO_AV_SINGLETON_DECLARE (ACE_Singleton, TAO_AV_Core, ACE_Null_Mutex)
 #endif
 
 typedef ACE_Singleton<TAO_AV_Core, ACE_Null_Mutex> TAO_AV_CORE;
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_AV_CORE_H */

@@ -1,3 +1,5 @@
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file    RT_Collocation_Resolver.h
@@ -25,6 +27,8 @@
 #include "tao/Collocation_Resolver.h"
 #include "ace/Service_Config.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_RT_Collocation_Resolver
  *
@@ -43,6 +47,8 @@ public:
   virtual CORBA::Boolean is_collocated (CORBA::Object_ptr object
                                         ACE_ENV_ARG_DECL) const;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_RTPortableServer, TAO_RT_Collocation_Resolver)
 ACE_FACTORY_DECLARE (TAO_RTPortableServer, TAO_RT_Collocation_Resolver)

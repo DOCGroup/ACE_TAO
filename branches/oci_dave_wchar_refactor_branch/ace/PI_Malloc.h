@@ -16,12 +16,7 @@
 
 #include /**/ "ace/pre.h"
 
-#ifdef ACE_MEMORY_BUILD_DLL
-# include "ace/ACE_Memory_export.h"
-#else
-# include "ace/ACE_export.h"
-# define ACE_Memory_Export ACE_Export
-#endif  /* ACE_MEMORY_BUILD_DLL */
+#include "ace/ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -32,11 +27,13 @@
 #include "ace/Malloc.h"
 #include "ace/Based_Pointer_T.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // prepare for position independent malloc
 /**
  * @class ACE_PI_Control_Block
  *
- * @brief This information is stored in memory allocated by the <Memory_Pool>.
+ * @brief This information is stored in memory allocated by the Memory_Pool.
  *
  * This class implements the control block structure that can be
  * used in a "position indepent" fashion, i.e., you don't need to
@@ -44,7 +41,7 @@
  * processes sharing the memory.  The tradoff of this flexibility
  * is more expensive malloc/free operations.
  */
-class ACE_Memory_Export ACE_PI_Control_Block
+class ACE_Export ACE_PI_Control_Block
 {
 public:
   class ACE_Malloc_Header;
@@ -57,11 +54,11 @@ public:
   /**
    * @class ACE_Malloc_Header
    *
-   * @brief This is the control block header.  It's used by <ACE_Malloc>
+   * @brief This is the control block header.  It's used by ACE_Malloc
    * to keep track of each chunk of data when it's in the free
    * list or in use.
    */
-  class ACE_Memory_Export ACE_Malloc_Header
+  class ACE_Export ACE_Malloc_Header
   {
   public:
     ACE_Malloc_Header (void);
@@ -86,20 +83,24 @@ public:
     void dump (void) const;
 
   private:
-    ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Malloc_Header &))
+
+    // Disallow copy construction and assignment.
+    ACE_Malloc_Header (ACE_Malloc_Header const &);
+    void operator= (ACE_Malloc_Header const &);
+
   };
 
   /**
    * @class ACE_Name_Node
    *
-   * @brief This class supports "named memory regions" within <ACE_Malloc>.
+   * @brief This class supports "named memory regions" within ACE_Malloc.
    *
    * Internally, the named memory regions are stored as a
-   * doubly-linked list within the <Memory_Pool>.  This makes
+   * doubly-linked list within the Memory_Pool.  This makes
    * it easy to iterate over the items in the list in both FIFO
    * and LIFO order.
    */
-  class ACE_Memory_Export ACE_Name_Node
+  class ACE_Export ACE_Name_Node
   {
   public:
     // = Initialization methods.
@@ -145,7 +146,9 @@ public:
     void dump (void) const;
 
   private:
-    ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Name_Node &))
+
+    // Disallow assignment.
+    void operator= (const ACE_Name_Node &);
   };
 
   /// Print out a bunch of size info for debugging.
@@ -192,8 +195,12 @@ public:
   void dump (void) const;
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Control_Block &))
+
+  // Disallow assignment.
+  void operator= (const ACE_Control_Block &);
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/PI_Malloc.inl"

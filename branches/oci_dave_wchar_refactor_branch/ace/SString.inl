@@ -9,6 +9,10 @@
 #  include "ace/ACE.h"
 #endif /* !ACE_ACE_H */
 
+#include "ace/OS_NS_stdlib.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_INLINE
 ACE_NS_WString::ACE_NS_WString (ACE_Allocator *alloc)
   : ACE_WString (alloc)
@@ -290,3 +294,5 @@ ACE_Auto_String_Free::release (void)
   this->p_ = 0;
   return p;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

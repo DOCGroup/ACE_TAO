@@ -8,6 +8,8 @@ ACE_RCSID (Log,
            EventLogFactory_i,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_EventLogFactory_i::TAO_EventLogFactory_i (void)
 {
   TAO_CEC_Default_Factory::init_svcs ();
@@ -246,3 +248,5 @@ TAO_EventLogFactory_i::obtain_pull_supplier (ACE_ENV_SINGLE_ARG_DECL)
 {
   return consumer_admin_->obtain_pull_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

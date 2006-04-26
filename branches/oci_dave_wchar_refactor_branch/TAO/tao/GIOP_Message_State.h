@@ -11,7 +11,7 @@
  *
  *  @author  Chris Cleeland <cleeland@cs.wustl.edu>
  *  @author  Carlos O' Ryan <coryan@uci.edu>
- *  @author modified by Balachandran Natarajan <bala@cs.wustl.edu>
+ *  @author  Balachandran Natarajan <bala@cs.wustl.edu>
  */
 //=============================================================================
 #ifndef TAO_GIOP_MESSAGE_STATE_H
@@ -25,8 +25,12 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_ORB_Core;
 class TAO_GIOP_Message_Base;
+
 
 /**
  * @class TAO_GIOP_Message_State
@@ -87,14 +91,9 @@ private:
   /// Gets the size of the payload and set the size in the <state>
   void get_payload_size (char *buf);
 
-  /// Parses the GIOP FRAGMENT_HEADER  information from the incoming
-  /// stream.
-  int parse_fragment_header (const char *buf,
-                             size_t length);
-
   /// Read the unsigned long from the buffer. The <buf> should just
   /// point to the next 4 bytes data that represent the ULong
-  CORBA::ULong read_ulong (const char *buf);
+  CORBA::ULong read_ulong (const char *buf) const;
 
 private:
   // GIOP version information..
@@ -109,9 +108,6 @@ private:
   /// in byte_order!
   CORBA::ULong message_size_;
 
-  /// Request Id from the Fragment header
-  CORBA::ULong request_id_;
-
   /// (Requests and Replys)
   /// A value of zero indicates that this message does not have any
   /// fragments.  A value of non-zero indicates that it does have
@@ -122,14 +118,15 @@ private:
   CORBA::ULong missing_data_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
-const size_t TAO_GIOP_MESSAGE_HEADER_LEN = 12;
-const size_t TAO_GIOP_MESSAGE_SIZE_OFFSET = 8;
-const size_t TAO_GIOP_MESSAGE_FLAGS_OFFSET = 6;
-const size_t TAO_GIOP_MESSAGE_TYPE_OFFSET  = 7;
-const size_t TAO_GIOP_VERSION_MINOR_OFFSET = 5;
-const size_t TAO_GIOP_VERSION_MAJOR_OFFSET = 4;
-const size_t TAO_GIOP_MESSAGE_FRAGMENT_HEADER = 4;
+static const size_t TAO_GIOP_MESSAGE_HEADER_LEN = 12;
+static const size_t TAO_GIOP_MESSAGE_SIZE_OFFSET = 8;
+static const size_t TAO_GIOP_MESSAGE_FLAGS_OFFSET = 6;
+static const size_t TAO_GIOP_MESSAGE_TYPE_OFFSET  = 7;
+static const size_t TAO_GIOP_VERSION_MINOR_OFFSET = 5;
+static const size_t TAO_GIOP_VERSION_MAJOR_OFFSET = 4;
+static const size_t TAO_GIOP_MESSAGE_FRAGMENT_HEADER = 4;
 
 #if defined (__ACE_INLINE__)
 # include "tao/GIOP_Message_State.inl"

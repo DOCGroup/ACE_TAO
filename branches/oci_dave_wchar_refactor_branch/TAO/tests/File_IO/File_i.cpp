@@ -194,7 +194,7 @@ FileImpl::Descriptor::read (CORBA::Long num_bytes
   ACE_CHECK_RETURN (0);
 
   CORBA::Octet *buffer = File::Descriptor::DataBuffer::allocbuf (num_bytes);
-  int length = ACE_OS::read (file_descriptor, buffer, num_bytes);
+  ssize_t length = ACE_OS::read (file_descriptor, buffer, num_bytes);
 
   if (length > 0)
     return new File::Descriptor::DataBuffer (length,

@@ -37,6 +37,7 @@
 #include "tao/AnyTypeCode/AnyTypeCode_methods.h"
 #include "tao/Policy_ForwardC.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:59
@@ -97,6 +98,8 @@ TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &, const COR
 
 TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, CORBA::SetOverrideType);
 TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::SetOverrideType &);
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

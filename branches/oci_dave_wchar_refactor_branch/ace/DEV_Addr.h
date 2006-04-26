@@ -23,6 +23,8 @@
 
 #include "ace/os_include/os_dirent.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_DEV_Addr
  *
@@ -76,6 +78,8 @@ private:
   /// Name of the device.
   ACE_TCHAR devname_[DEVNAME_LENGTH];
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/DEV_Addr.inl"

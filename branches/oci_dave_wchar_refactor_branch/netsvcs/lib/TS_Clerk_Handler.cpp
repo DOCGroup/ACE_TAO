@@ -42,7 +42,7 @@ ACE_TS_Clerk_Handler::state (void)
 
 // Sets the timeout delay.
 void
-ACE_TS_Clerk_Handler::timeout (int to)
+ACE_TS_Clerk_Handler::timeout (long to)
 {
   ACE_TRACE (ACE_TEXT ("ACE_TS_Clerk_Handler::timeout"));
   if (to > this->max_timeout_)
@@ -54,11 +54,11 @@ ACE_TS_Clerk_Handler::timeout (int to)
 // Recalculate the current retry timeout delay using exponential
 // backoff.  Returns the original timeout (i.e., before the
 // recalculation).
-int
+long
 ACE_TS_Clerk_Handler::timeout (void)
 {
   ACE_TRACE (ACE_TEXT ("ACE_TS_Clerk_Handler::timeout"));
-  int old_timeout = this->timeout_;
+  long old_timeout = this->timeout_;
   this->timeout_ *= 2;
 
   if (this->timeout_ > this->max_timeout_)
@@ -77,14 +77,14 @@ ACE_TS_Clerk_Handler::handle_signal (int, siginfo_t *, ucontext_t *)
 
 // Set the max timeout delay.
 void
-ACE_TS_Clerk_Handler::max_timeout (int mto)
+ACE_TS_Clerk_Handler::max_timeout (long mto)
 {
   ACE_TRACE (ACE_TEXT ("ACE_TS_Clerk_Handler::max_timeout"));
   this->max_timeout_ = mto;
 }
 
 // Gets the max timeout delay.
-int
+long
 ACE_TS_Clerk_Handler::max_timeout (void)
 {
   ACE_TRACE (ACE_TEXT ("ACE_TS_Clerk_Handler::max_timeout"));
@@ -165,8 +165,9 @@ ACE_TS_Clerk_Handler::reinitiate_connection (void)
                   ACE_TEXT ("(%t) Scheduling reinitiation of connection\n")));
 
       // Reschedule ourselves to try and connect again.
+      ACE_Time_Value const timeout (this->timeout ());
       if (ACE_Reactor::instance ()->schedule_timer (this, 0,
-                                                    this->timeout ()) == -1)
+                                                    timeout) == -1)
         ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
                            ACE_TEXT ("schedule_timer")), -1);
     }
@@ -529,9 +530,10 @@ ACE_TS_Clerk_Processor::initiate_connection (ACE_TS_Clerk_Handler *handler,
           // Reschedule ourselves to try and connect again.
           if (synch_options[ACE_Synch_Options::USE_REACTOR])
             {
+              ACE_Time_Value const handler_timeout (handler->timeout ());
               if (ACE_Reactor::instance ()->schedule_timer (handler,
                                                             0,
-                                                            handler->timeout ()) == -1)
+                                                            handler_timeout) == -1)
                 ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
                                    ACE_TEXT ("schedule_timer")), -1);
             }
@@ -626,18 +628,3 @@ ACE_TS_Clerk_Processor::resume (void)
 
 ACE_SVC_FACTORY_DEFINE (ACE_TS_Clerk_Processor)
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Connector_Base<ACE_TS_Clerk_Handler>;
-template class ACE_Connector<ACE_TS_Clerk_Handler, ACE_SOCK_CONNECTOR>;
-template class ACE_Node<ACE_TS_Clerk_Handler *>;
-template class ACE_NonBlocking_Connect_Handler<ACE_TS_Clerk_Handler>;
-template class ACE_Unbounded_Set<ACE_TS_Clerk_Handler *>;
-template class ACE_Unbounded_Set_Iterator<ACE_TS_Clerk_Handler *>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Connector_Base<ACE_TS_Clerk_Handler>
-#pragma instantiate ACE_Connector<ACE_TS_Clerk_Handler, ACE_SOCK_CONNECTOR>
-#pragma instantiate ACE_Node<ACE_TS_Clerk_Handler *>
-#pragma instantiate ACE_NonBlocking_Connect_Handler<ACE_TS_Clerk_Handler>
-#pragma instantiate ACE_Unbounded_Set<ACE_TS_Clerk_Handler *>
-#pragma instantiate ACE_Unbounded_Set_Iterator<ACE_TS_Clerk_Handler *>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

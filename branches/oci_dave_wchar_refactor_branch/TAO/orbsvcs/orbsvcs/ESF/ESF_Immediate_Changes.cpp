@@ -3,15 +3,15 @@
 #ifndef TAO_ESF_IMMEDIATE_CHANGES_CPP
 #define TAO_ESF_IMMEDIATE_CHANGES_CPP
 
-#include "ESF_Immediate_Changes.h"
+#include "orbsvcs/ESF/ESF_Immediate_Changes.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "ESF_Immediate_Changes.i"
+#include "orbsvcs/ESF/ESF_Immediate_Changes.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ESF_Worker.h"
+#include "orbsvcs/ESF/ESF_Worker.h"
 
-ACE_RCSID(ESF, ESF_Immediate_Changes, "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // ****************************************************************
 
@@ -43,5 +43,7 @@ TAO_ESF_Immediate_Changes<PROXY,C,ITERATOR,ACE_LOCK>::
       ACE_CHECK;
     }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_ESF_IMMEDIATE_CHANGES_CPP */

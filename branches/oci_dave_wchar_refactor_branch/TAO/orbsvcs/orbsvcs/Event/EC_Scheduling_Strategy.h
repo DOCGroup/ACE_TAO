@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file   EC_Scheduling_Strategy.h
  *
@@ -17,7 +18,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include /**/ "event_serv_export.h"
+#include /**/ "orbsvcs/Event/event_serv_export.h"
 
 #include "orbsvcs/RtecBaseC.h"
 #include "orbsvcs/RtecEventCommC.h"
@@ -25,6 +26,8 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_EC_ProxyPushConsumer;
 class TAO_EC_ProxyPushSupplier;
@@ -62,6 +65,8 @@ public:
                                ACE_ENV_ARG_DECL) = 0;
 
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

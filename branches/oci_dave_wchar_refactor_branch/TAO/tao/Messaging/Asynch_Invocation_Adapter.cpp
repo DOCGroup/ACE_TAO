@@ -1,7 +1,7 @@
 //$Id$
-#include "Asynch_Invocation_Adapter.h"
-#include "Asynch_Reply_Dispatcher.h"
-#include "Asynch_Invocation.h"
+#include "tao/Messaging/Asynch_Invocation_Adapter.h"
+#include "tao/Messaging/Asynch_Reply_Dispatcher.h"
+#include "tao/Messaging/Asynch_Invocation.h"
 
 #include "tao/Profile_Transport_Resolver.h"
 #include "tao/operation_details.h"
@@ -12,12 +12,15 @@
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
 #include "tao/Thread_Lane_Resources.h"
+#include "tao/GIOP_Utils.h"
 
 
 ACE_RCSID (Messaging,
            Asynch_Invocation_Adapter,
            "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -172,8 +175,16 @@ namespace TAO
       {
         effective_target = asynch.steal_forwarded_reference ();
 
+#if TAO_HAS_INTERCEPTORS == 1
+        const CORBA::Boolean permanent_forward =
+            (asynch.reply_status() == TAO_GIOP_LOCATION_FORWARD_PERM);
+#else
+        const CORBA::Boolean permanent_forward = false;
+#endif
+
         this->object_forwarded (effective_target,
-                                r.stub ()
+                                r.stub (),
+                                permanent_forward
                                 ACE_ENV_ARG_PARAMETER);
         ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
       }
@@ -182,3 +193,5 @@ namespace TAO
   }
 
 } // End namespace TAO
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -36,12 +36,12 @@ extern "C"
 {
 #endif /* __cplusplus */
 
-#if defined (VXWORKS)
+#if defined (ACE_VXWORKS) && (ACE_VXWORKS <= 0x600)
 struct sockaddr_un {
   short sun_family;    // AF_UNIX.
   char  sun_path[108]; // path name.
 };
-#endif /* VXWORKS */
+#endif /* ACE_VXWORKS */
 
 
 #ifdef __cplusplus

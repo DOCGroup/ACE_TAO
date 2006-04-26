@@ -1,3 +1,5 @@
+// -*- C++ -*-
+
 // $Id$
 
 // ============================================================================
@@ -22,14 +24,16 @@
 
 #include "tao/orbconf.h"
 
-#include "rtcorba_export.h"
-#include "Network_Priority_Mapping.h"
+#include "tao/RTCORBA/rtcorba_export.h"
+#include "tao/RTCORBA/Network_Priority_Mapping.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Linear_Network_Priority_Mapping
@@ -42,8 +46,8 @@
 class TAO_RTCORBA_Export TAO_Linear_Network_Priority_Mapping : public TAO_Network_Priority_Mapping
 {
 public:
-  /// Default constructor
-  TAO_Linear_Network_Priority_Mapping (long policy);
+
+  TAO_Linear_Network_Priority_Mapping (long);
 
   CORBA::Boolean to_network (RTCORBA::Priority corba_priority,
                              RTCORBA::NetworkPriority &network_priority);
@@ -51,6 +55,8 @@ public:
   CORBA::Boolean to_CORBA (RTCORBA::NetworkPriority network_priority,
                            RTCORBA::Priority &corba_priority);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
 

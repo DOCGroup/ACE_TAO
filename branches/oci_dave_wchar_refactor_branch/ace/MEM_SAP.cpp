@@ -10,6 +10,8 @@
 
 ACE_RCSID(ace, MEM_SAP, "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_ALLOC_HOOK_DEFINE(ACE_IPC_SAP)
 
 void
@@ -90,18 +92,6 @@ ACE_MEM_SAP::close_shm_malloc (void)
   return retv;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Write_Guard<ACE_Process_Mutex>;
-template class ACE_Read_Guard<ACE_Process_Mutex>;
-template class ACE_Malloc_T<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex, ACE_PI_Control_Block>;
-template class ACE_Based_Pointer<ACE_MEM_SAP_Node>;
-template class ACE_Based_Pointer_Basic<ACE_MEM_SAP_Node>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Write_Guard<ACE_Process_Mutex>
-#pragma instantiate ACE_Read_Guard<ACE_Process_Mutex>
-#pragma instantiate ACE_Malloc_T<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex, ACE_PI_Control_Block>
-#pragma instantiate ACE_Based_Pointer<ACE_MEM_SAP_Node>
-#pragma instantiate ACE_Based_Pointer_Basic<ACE_MEM_SAP_Node>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
+
+ACE_END_VERSIONED_NAMESPACE_DECL

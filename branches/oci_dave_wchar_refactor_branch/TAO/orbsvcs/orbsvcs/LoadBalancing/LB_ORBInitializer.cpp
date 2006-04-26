@@ -1,6 +1,6 @@
-#include "LB_ORBInitializer.h"
-#include "LB_IORInterceptor.h"
-#include "LB_ServerRequestInterceptor.h"
+#include "orbsvcs/LoadBalancing/LB_ORBInitializer.h"
+#include "orbsvcs/LoadBalancing/LB_IORInterceptor.h"
+#include "orbsvcs/LoadBalancing/LB_ServerRequestInterceptor.h"
 
 #include "orbsvcs/CosLoadBalancingC.h"
 
@@ -9,6 +9,9 @@
 ACE_RCSID (LoadBalancing,
            LB_ORBInitializer,
            "$Id$")
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_LB_ORBInitializer::TAO_LB_ORBInitializer (
   const CORBA::StringSeq & object_groups,
@@ -87,3 +90,5 @@ TAO_LB_ORBInitializer::post_init (
                                         ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -17,7 +17,8 @@
 //
 // ============================================================================
 
-#include "UTF16_BOM_Factory.h"
+#include "tao/debug.h"
+#include "tao/Codeset/UTF16_BOM_Factory.h"
 #include "ace/OS_NS_strings.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/Log_Msg.h"
@@ -30,6 +31,9 @@ ACE_STATIC_SVC_DEFINE (TAO_UTF16_BOM_Factory,
                        | ACE_Service_Type::DELETE_OBJ,
                        0)
 ACE_FACTORY_DEFINE (TAO_Codeset, TAO_UTF16_BOM_Factory)
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_UTF16_BOM_Factory::TAO_UTF16_BOM_Factory ()
   : translator_ (0)
@@ -134,3 +138,5 @@ TAO_UTF16_BOM_Factory::create_translator () const
     }
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

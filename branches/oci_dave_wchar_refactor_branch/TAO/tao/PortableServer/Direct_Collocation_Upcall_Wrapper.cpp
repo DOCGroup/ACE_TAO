@@ -1,9 +1,9 @@
 // $Id$
 
-#include "Direct_Collocation_Upcall_Wrapper.h"
+#include "tao/PortableServer/Direct_Collocation_Upcall_Wrapper.h"
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
-# include "ForwardRequestC.h"
+# include "tao/PortableServer/ForwardRequestC.h"
 #endif  /* TAO_HAS_MINIMUM_CORBA == 0 */
 
 #include "tao/Abstract_Servant_Base.h"
@@ -15,6 +15,8 @@
 ACE_RCSID (PortableServer,
            Direct_Collocation_Upcall_Wrapper,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
 TAO::Direct_Collocation_Upcall_Wrapper::upcall (
@@ -68,3 +70,4 @@ ACE_THROW_SPEC ((CORBA::Exception))
   ACE_CHECK;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

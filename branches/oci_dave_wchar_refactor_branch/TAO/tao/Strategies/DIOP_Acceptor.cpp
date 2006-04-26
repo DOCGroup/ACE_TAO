@@ -1,11 +1,11 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
-#include "DIOP_Acceptor.h"
+#include "tao/Strategies/DIOP_Acceptor.h"
 
 #if defined (TAO_HAS_DIOP) && (TAO_HAS_DIOP != 0)
 
-#include "DIOP_Profile.h"
+#include "tao/Strategies/DIOP_Profile.h"
 #include "tao/MProfile.h"
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
@@ -17,7 +17,7 @@
 #include "ace/OS_NS_string.h"
 
 #if !defined(__ACE_INLINE__)
-#include "DIOP_Acceptor.i"
+#include "tao/Strategies/DIOP_Acceptor.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/os_include/os_netdb.h"
@@ -25,6 +25,8 @@
 ACE_RCSID (Strategies,
            DIOP_Acceptor,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_DIOP_Acceptor::TAO_DIOP_Acceptor (CORBA::Boolean flag)
   : TAO_Acceptor (TAO_TAG_DIOP_PROFILE),
@@ -613,7 +615,8 @@ TAO_DIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
                     profile.profile_data.length ());
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
 
-  CORBA::Octet major, minor;
+  CORBA::Octet major;
+  CORBA::Octet minor = CORBA::Octet();
 
   // Read the version. We just read it here. We don't*do any*
   // processing.
@@ -746,5 +749,7 @@ TAO_DIOP_Acceptor::parse_options (const char *str)
     }
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_DIOP && TAO_HAS_DIOP != 0 */

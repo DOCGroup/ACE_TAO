@@ -1,8 +1,8 @@
-#include "UIOP_Acceptor.h"
+#include "tao/Strategies/UIOP_Acceptor.h"
 
 #if TAO_HAS_UIOP == 1
 
-#include "UIOP_Profile.h"
+#include "tao/Strategies/UIOP_Profile.h"
 #include "tao/MProfile.h"
 #include "tao/ORB_Core.h"
 #include "tao/Server_Strategy_Factory.h"
@@ -18,6 +18,8 @@
 ACE_RCSID (Strategies,
            UIOP_Acceptor,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_UIOP_Acceptor::TAO_UIOP_Acceptor (CORBA::Boolean flag)
   : TAO_Acceptor (TAO_TAG_UIOP_PROFILE),
@@ -476,5 +478,7 @@ TAO_UIOP_Acceptor::parse_options (const char *str)
     }
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif  /* TAO_HAS_UIOP == 1 */

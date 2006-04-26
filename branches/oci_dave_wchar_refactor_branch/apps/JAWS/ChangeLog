@@ -1,15 +1,37 @@
+Mon Feb  6 01:00:55 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
+
+        * server/HTTP_Server.h
+        
+          Surrounded a proactor forward declaration with versioned
+          namespace macros.
+
+Thu Jan  5 00:42:28 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ChangeLog:
+        
+          Untabify.
+          Delete-trailing-whitespace.
+
+Wed Jan  4 22:57:37 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ChangeLog:
+
+          Added "Local Variables" section defining "add-log-time-format"
+          to a really ugly lambda expression that formats changelog
+          timestamps in UTC and works with both GNU Emacs and XEmacs.
+
 Fri Apr 22 21:42:30 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* server/HTTP_Helpers.cpp (HTTP_mktime):
+        * server/HTTP_Helpers.cpp (HTTP_mktime):
 
-	  Made rfc1123_date, rfc850_date and asctime_date strings into
-	  string literals.  Allows g++ format specifier argument checking
-	  to work, and addresses a related g++ 4.0 warning.
+          Made rfc1123_date, rfc850_date and asctime_date strings into
+          string literals.  Allows g++ format specifier argument checking
+          to work, and addresses a related g++ 4.0 warning.
 
-	* server/IO.h (~JAWS_IO_Handler):
-	* server/IO.cpp (~JAWS_IO_Handler):
+        * server/IO.h (~JAWS_IO_Handler):
+        * server/IO.cpp (~JAWS_IO_Handler):
 
-	  Added virtual destructor to silence g++ 4.0 warnings.
+          Added virtual destructor to silence g++ 4.0 warnings.
 
 Thu Aug 26 08:13:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -20,73 +42,73 @@ Thu Aug 26 08:13:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Feb 25 18:58:26 2003  Carlos O'Ryan  <coryan@atdesk.com>
 
-	* clients/WebSTONE/src/cgi-send:
-	  Removed pre-compiled binary for MIPS (R3000 of all things!)
+        * clients/WebSTONE/src/cgi-send:
+          Removed pre-compiled binary for MIPS (R3000 of all things!)
 
 Wed Dec 26 09:35:35 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* clients/Blobby/Options.cpp
-	  server/HTTP_Server.cpp
-	  stress_testing/benchd.cpp
-	  JAWS2/JAWS/Server.cpp: Replaced all uses of getopt.optarg
-	  with getopt.opt_arg().
+        * clients/Blobby/Options.cpp
+          server/HTTP_Server.cpp
+          stress_testing/benchd.cpp
+          JAWS2/JAWS/Server.cpp: Replaced all uses of getopt.optarg
+          with getopt.opt_arg().
 
 Thu Dec  6 09:00:31 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* clients/Caching/http_client.cpp (main): Make sure to remove the
-	  trailing '\n' so the example works properly.  Thanks to Andrey
- 	  Shkinev <andreyshkinev@rogers.com> for reporting this.
+        * clients/Caching/http_client.cpp (main): Make sure to remove the
+          trailing '\n' so the example works properly.  Thanks to Andrey
+          Shkinev <andreyshkinev@rogers.com> for reporting this.
 
 Wed Nov 14 16:21:46 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* clients/Blobby/Blob.{h,cpp},
-	* clients/Blobby/Blob_Handler.{h,cpp},
-	* clients/Blobby/blobby.{h,cpp},
-	* clients/Blobby/Options.{h,cpp}:
-	  Fixed the code to be Unicode-compliant.  Thanks to Johnny
- 	  Willemsen for contributing this.
+        * clients/Blobby/Blob.{h,cpp},
+        * clients/Blobby/Blob_Handler.{h,cpp},
+        * clients/Blobby/blobby.{h,cpp},
+        * clients/Blobby/Options.{h,cpp}:
+          Fixed the code to be Unicode-compliant.  Thanks to Johnny
+          Willemsen for contributing this.
 
 Fri Aug 24 18:39:39 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* server/HTTP_Response.cpp (normal_response),
-	* server/HTTP_Helpers.cpp (HTTP_decode_base64): Use delete [] buf
-	  rather than delete buf.  Thanks to Don Hinton for reporting
- 	  this.
+        * server/HTTP_Response.cpp (normal_response),
+        * server/HTTP_Helpers.cpp (HTTP_decode_base64): Use delete [] buf
+          rather than delete buf.  Thanks to Don Hinton for reporting
+          this.
 
 Thu Aug 16 09:57:15 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* */Makefile: Updated dependencies.
+        * */Makefile: Updated dependencies.
 
 Mon Aug 13 14:04:44 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* Applied the following fixes courtesy of Blair Zajac
- 	  <blair@gps.caltech.edu>:
+        * Applied the following fixes courtesy of Blair Zajac
+          <blair@gps.caltech.edu>:
 
-	  1) Allow a static libHTTPU.a to be built when
+          1) Allow a static libHTTPU.a to be built when
              "make static_libs_only=1" is used.
 
           2) When I try to build both JAWS and JAWS2 with the same
              ACE_ROOT, the libJAWS.* that is built and installed first
-	     prevents the other JAWS from properly compiling.  This
-	     resolves this problem by renaming the JAWS2 library to
-	     libJAWS2.*.
+             prevents the other JAWS from properly compiling.  This
+             resolves this problem by renaming the JAWS2 library to
+             libJAWS2.*.
 
           3) The JAWS2 subdirectory is now descended into by
-	     apps/Makefile.
+             apps/Makefile.
 
           4) The Makefile in JAWS2 now descends into HTTPU and JAWS to
              build those libraries.
 
 Tue Jun 12 20:35:26 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
-	* clients/Blobby/Blob_Handler.cpp:
+        * clients/Blobby/Blob_Handler.cpp:
 
-	  Fixed a size_t printf to make gcc happy on IA-64 Linux.
+          Fixed a size_t printf to make gcc happy on IA-64 Linux.
 
 Sun Feb 18 09:33:33 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* server/IO.cpp (handle): Added a const to the handle() method
-	  to make compilers happy.  Thanks to Kitty for reporting this.
+        * server/IO.cpp (handle): Added a const to the handle() method
+          to make compilers happy.  Thanks to Kitty for reporting this.
 
 Mon Jun 12 14:22:35 PDT 2000 James Hu <jxh@entera.com>
 
@@ -192,18 +214,18 @@ Wed Mar 22 12:36:00 2000  James Hu  <jxh@cs.wustl.edu>
 
 Tue Sep 21 11:47:00 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* server/HTTP_Server.cpp (init):
+        * server/HTTP_Server.cpp (init):
 
-	  Changed cast style to make gcc 2.95.1 happy.  Thanks to Jeffrey
-	  Franks <Jeffrey_Franks@i-o.com> for reporting the problems.
+          Changed cast style to make gcc 2.95.1 happy.  Thanks to Jeffrey
+          Franks <Jeffrey_Franks@i-o.com> for reporting the problems.
 
 Tue Aug 31 05:10:32 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* server/HTTP_Handler.cpp (destroy_http_handler): Switched
-	  the order in which handler and io were deleted since the current
- 	  order seems to destroy handler first, which is problematic since
- 	  io is contained within handler!  Thanks to Yosi Sarusi
- 	  <yosi@appstream.com> for reporting this.
+        * server/HTTP_Handler.cpp (destroy_http_handler): Switched
+          the order in which handler and io were deleted since the current
+          order seems to destroy handler first, which is problematic since
+          io is contained within handler!  Thanks to Yosi Sarusi
+          <yosi@appstream.com> for reporting this.
 
 Wed Aug 18 16:00:46 1999  David L. Levine  <levine@cs.wustl.edu>
 
@@ -950,3 +972,9 @@ Tue May 20 22:49:24 1997  James C Hu  <jxh@polka.cs.wustl.edu>
 
         * test_JAWS_File.cpp: A test program written to see if the new
           virtual filesystem works the way I expect it to.
+
+Local Variables:
+mode: change-log
+add-log-time-format: (lambda () (progn (setq tz (getenv "TZ")) (set-time-zone-rule "UTC") (setq time (format-time-string "%a %b %e %H:%M:%S %Z %Y" (current-time))) (set-time-zone-rule tz) time))
+indent-tabs-mode: nil
+End:

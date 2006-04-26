@@ -36,7 +36,7 @@ int
 Activator_Options::parse_args (int &argc, ACE_TCHAR *argv[])
 {
   ACE_Arg_Shifter shifter (argc, argv);
- 
+
   while (shifter.is_anything_left ())
     {
       if (ACE_OS::strcasecmp (shifter.get_current (),
@@ -53,25 +53,25 @@ Activator_Options::parse_args (int &argc, ACE_TCHAR *argv[])
 
           if (ACE_OS::strcasecmp (shifter.get_current (),
                                    ACE_TEXT ("install")) == 0)
-          {
-            this->service_command_ = SC_INSTALL;
-          }
+            {
+              this->service_command_ = SC_INSTALL;
+            }
           else if (ACE_OS::strcasecmp (shifter.get_current (),
                                    ACE_TEXT ("remove")) == 0)
-          {
-            this->service_command_ = SC_REMOVE;
-          }
+            {
+              this->service_command_ = SC_REMOVE;
+            }
           else if (ACE_OS::strcasecmp (shifter.get_current (),
                                    ACE_TEXT ("install_no_imr")) == 0)
-          {
-            this->service_command_ = SC_INSTALL_NO_LOCATOR;
-          }
+            {
+              this->service_command_ = SC_INSTALL_NO_LOCATOR;
+            }
           else
-          {
-            ACE_ERROR((LM_ERROR, "Error: Unknown service command : %s\n", shifter.get_current()));
-            this->print_usage ();
-            return -1;
-          }
+            {
+              ACE_ERROR((LM_ERROR, "Error: Unknown service command : %s\n", shifter.get_current()));
+              this->print_usage ();
+              return -1;
+            }
         }
       else if (ACE_OS::strcasecmp (shifter.get_current (),
                                    ACE_TEXT ("-d")) == 0)
@@ -149,15 +149,14 @@ Activator_Options::init (int argc, ACE_TCHAR *argv[])
   // This may also run the commands to install or remove the nt service.
   int result = this->parse_args (argc, argv);
   if (result != 0)
-  {
-    return result;
-  }
+    {
+      return result;
+    }
 
   for (int i = 0; i < argc; ++i)
   {
     this->cmdline_ += ACE_TString(argv[i]) + ACE_TEXT(" ");
   }
-
   return 0;
 }
 
@@ -201,6 +200,7 @@ Activator_Options::save_registry_options()
                              &key,
                              NULL
                              );
+
   if (err != ERROR_SUCCESS) {
     return -1;
   }
@@ -221,12 +221,13 @@ Activator_Options::save_registry_options()
   ACE_ASSERT(err == ERROR_SUCCESS);
 
   DWORD tmpint = this->notify_imr_;
+
   err = ACE_TEXT_RegSetValueEx(key, ACE_TEXT("NotifyImR"), 0, REG_DWORD,
     (LPBYTE) &tmpint , sizeof(tmpint));
   ACE_ASSERT(err == ERROR_SUCCESS);
 
-  err = ::RegCloseKey(key);
-  ACE_ASSERT(err == ERROR_SUCCESS);
+  err = ::RegCloseKey (key);
+  ACE_ASSERT (err == ERROR_SUCCESS);
 #endif
   return 0;
 }
@@ -243,24 +244,30 @@ Activator_Options::load_registry_options ()
                              KEY_READ,
                              &key
                              );
+
   if (err != ERROR_SUCCESS) {
     // If there aren't any saved parameters, then that's ok.
     return 0;
   }
   ACE_TCHAR tmpstr[4096];
   DWORD sz = sizeof(tmpstr);
+
   DWORD type = 0;
+
   err = ACE_TEXT_RegQueryValueEx(key, ACE_TEXT("ORBInitOptions"), 0, &type,
-    (LPBYTE) tmpstr, &sz);
-  if (err == ERROR_SUCCESS) {
-    ACE_ASSERT(type == REG_SZ);
-    tmpstr[sz - 1] = '\0';
-    this->cmdline_ = tmpstr;
-  }
+                                 (LPBYTE) tmpstr, &sz);
+  if (err == ERROR_SUCCESS)
+    {
+      ACE_ASSERT (type == REG_SZ);
+      tmpstr[sz - 1] = '\0';
+      this->cmdline_ = tmpstr;
+    }
 
   sz = sizeof(tmpstr);
+
   err = ACE_TEXT_RegQueryValueEx(key, ACE_TEXT("IORFile"), 0, &type,
     (LPBYTE) tmpstr, &sz);
+
   if (err == ERROR_SUCCESS) {
     ACE_ASSERT(type == REG_SZ);
     tmpstr[sz - 1] = '\0';
@@ -268,15 +275,19 @@ Activator_Options::load_registry_options ()
   }
 
   sz = sizeof(debug_);
+
   err = ACE_TEXT_RegQueryValueEx(key, ACE_TEXT("DebugLevel"), 0, &type,
     (LPBYTE) &this->debug_ , &sz);
-  if (err == ERROR_SUCCESS) {
-    ACE_ASSERT(type == REG_DWORD);
-  }
+  if (err == ERROR_SUCCESS)
+    {
+      ACE_ASSERT (type == REG_DWORD);
+    }
 
   sz = sizeof(tmpstr);
+
   err = ACE_TEXT_RegQueryValueEx(key, ACE_TEXT("Name"), 0, &type,
     (LPBYTE) tmpstr, &sz);
+
   if (err == ERROR_SUCCESS) {
     ACE_ASSERT(type == REG_SZ);
     tmpstr[sz - 1] = '\0';
@@ -285,14 +296,16 @@ Activator_Options::load_registry_options ()
 
   DWORD tmpint = 0;
   sz = sizeof(tmpint);
+
   err = ACE_TEXT_RegQueryValueEx(key, ACE_TEXT("NotifyImR"), 0, &type,
     (LPBYTE) &tmpint , &sz);
-  if (err == ERROR_SUCCESS) {
-    ACE_ASSERT(type == REG_DWORD);
-  }
+  if (err == ERROR_SUCCESS)
+    {
+      ACE_ASSERT (type == REG_DWORD);
+    }
   this->notify_imr_ = tmpint != 0;
 
-  err = ::RegCloseKey(key);
+  err = ::RegCloseKey (key);
   ACE_ASSERT(err == ERROR_SUCCESS);
 #endif /* ACE_WIN32 */
   return 0;
@@ -323,7 +336,7 @@ Activator_Options::ior_filename (void) const
 }
 
 Activator_Options::SERVICE_COMMAND
-Activator_Options::service_command(void) const
+Activator_Options::service_command (void) const
 {
   return this->service_command_;
 }
@@ -334,6 +347,7 @@ Activator_Options::cmdline(void) const {
 }
 
 const ACE_CString&
-Activator_Options::name(void) const {
+Activator_Options::name (void) const
+{
   return this->name_;
 }

@@ -1,9 +1,13 @@
+// -*- C++ -*-
+//
 // $Id$
 
 // Exception macros
 #include "tao/PortableServer/poa_macros.h"
 #include "tao/PortableServer/POA_Guard.h"
 #include "tao/Environment.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE CORBA::Object_ptr
 TAO_RT_POA::create_reference_with_priority (const char * intf,
@@ -136,3 +140,5 @@ TAO_RT_POA::thread_pool (void) const
 {
   return this->thread_pool_;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

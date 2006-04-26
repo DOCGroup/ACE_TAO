@@ -70,6 +70,13 @@ public:
   virtual int visit_union (be_union *node);
   // visit union.
 
+private:
+
+  /// Generate virtual destructor.
+  void emit_destructor (void);
+
+  int emit_for_predef_enum (char const * marshal_arg);
+
 };
 
 #endif /* _BE_VISITOR_VALUEBOX_CS_H_ */

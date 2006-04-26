@@ -10,11 +10,15 @@ ACE_RCSID (tao,
            Transport_Descriptor_Interface,
            "$Id$")
 
-TAO_Transport_Descriptor_Interface::
-    ~TAO_Transport_Descriptor_Interface (void)
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+TAO_Transport_Descriptor_Interface::~TAO_Transport_Descriptor_Interface (void)
 {
   if (this->endpoint_from_heap_)
     {
       delete this->endpoint_;
     }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

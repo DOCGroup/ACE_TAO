@@ -5,7 +5,7 @@
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
-#include "Linear_Network_Priority_Mapping.h"
+#include "tao/RTCORBA/Linear_Network_Priority_Mapping.h"
 #include "tao/debug.h"
 
 #include "ace/Sched_Params.h"
@@ -39,7 +39,7 @@ ACE_RCSID (RTCORBA,
 #define IPDSFIELD_CE_MASK       0x01
 #define IPDSFIELD_DSCP_EF       0x2E
 
-static int dscp [] =
+static int const dscp[] =
 {
   IPDSFIELD_DSCP_DEFAULT ,
   IPDSFIELD_DSCP_CS1     ,
@@ -65,7 +65,7 @@ static int dscp [] =
 };
 
 /*
-static const char *dscp_char[]=
+static const char * const dscp_char[]=
 {
   "Normal",
   "CS1",
@@ -90,6 +90,8 @@ static const char *dscp_char[]=
   "Expedited Forwarding"
 };
 */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Linear_Network_Priority_Mapping::TAO_Linear_Network_Priority_Mapping (long)
 {
@@ -134,5 +136,7 @@ TAO_Linear_Network_Priority_Mapping::to_CORBA (RTCORBA::NetworkPriority network_
 
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */

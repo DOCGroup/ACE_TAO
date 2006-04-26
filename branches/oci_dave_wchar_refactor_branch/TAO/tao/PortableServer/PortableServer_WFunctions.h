@@ -17,7 +17,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "portableserver_export.h"
+#include "tao/PortableServer/portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -40,6 +40,8 @@
 #include "tao/PortableServer/PS_ForwardC.h"
 #include "ace/OS_NS_wchar.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace PortableServer
 {
   TAO_NAMESPACE_STORAGE_CLASS CORBA::WChar* ObjectId_to_wstring (
@@ -48,6 +50,8 @@ namespace PortableServer
   TAO_NAMESPACE_STORAGE_CLASS PortableServer::ObjectId *wstring_to_ObjectId (
     const CORBA::WChar *id);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

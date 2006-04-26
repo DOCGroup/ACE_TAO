@@ -9,7 +9,6 @@
  *  The RTEventLogConsumer connects to the RTEventLog and logs the events
  *  that are pushed to the RTEventLog.
  *
- *
  *  @author David A. Hanvey <d.hanvey@qub.ac.uk>
  */
 //=============================================================================
@@ -31,12 +30,15 @@
 #include "orbsvcs/Event/EC_Factory.h"
 #include "orbsvcs/Event/EC_Defaults.h"
 
-#include "rteventlog_export.h"
+#include "orbsvcs/Log/rteventlog_serv_export.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_LogMgr_i;
 class TAO_RTEventLog_i;
@@ -51,7 +53,7 @@ class TAO_RTEventLogFactory_i;
  * Log when events are 'pushed' to the RTEventLog which is an
  * EventChannel.
  */
-class TAO_RTEventLog_Export TAO_Rtec_LogConsumer :public virtual POA_RtecEventComm::PushConsumer
+class TAO_RTEventLog_Serv_Export TAO_Rtec_LogConsumer :public virtual POA_RtecEventComm::PushConsumer
 {
 public:
   // = Initialization and Termination methods.
@@ -83,6 +85,7 @@ private:
   TAO_RTEventLog_i *log_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

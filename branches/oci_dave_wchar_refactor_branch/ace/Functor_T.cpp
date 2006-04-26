@@ -1,8 +1,7 @@
-/* -*- C++ -*- */
 // $Id$
 
-#ifndef ACE_FUNCTOR_T_C
-#define ACE_FUNCTOR_T_C
+#ifndef ACE_FUNCTOR_T_CPP
+#define ACE_FUNCTOR_T_CPP
 
 #include "ace/Functor_T.h"
 
@@ -14,7 +13,7 @@
 #include "ace/Functor_T.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(ace, Functor_T, "$Id$")
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Command_Callback)
 
@@ -45,5 +44,6 @@ ACE_Command_Callback<RECEIVER, ACTION>::execute (void *arg)
   return (receiver_.*action_) (arg);
 }
 
+ACE_END_VERSIONED_NAMESPACE_DECL
 
-#endif /* ACE_FUNCTOR_T_C */
+#endif /* ACE_FUNCTOR_T_CPP */

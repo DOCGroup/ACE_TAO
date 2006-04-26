@@ -1,5 +1,5 @@
-#include "SSLIOP_Profile.h"
-#include "ssl_endpointsC.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Profile.h"
+#include "orbsvcs/SSLIOP/ssl_endpointsC.h"
 #include "tao/CDR.h"
 #include "tao/Environment.h"
 #include "ace/OS_NS_string.h"
@@ -8,6 +8,9 @@
 ACE_RCSID (SSLIOP,
            SSLIOP_Profile,
            "$Id$")
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_SSLIOP_Profile::TAO_SSLIOP_Profile (const ACE_INET_Addr & addr,
                                const TAO::ObjectKey & object_key,
@@ -350,3 +353,5 @@ TAO_SSLIOP_Profile::parse_string (const char * ior
             Security::NoProtection);
    }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

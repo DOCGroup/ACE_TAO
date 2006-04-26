@@ -42,37 +42,26 @@ int
 be_visitor_constant_cs::visit_constant (be_constant *node)
 {
 
-  if (node->cli_stub_gen () 
+  if (node->cli_stub_gen ()
       || node->imported ())
     {
       return 0;
     }
-    
+
   AST_Expression::ExprType etype = node->et ();
   AST_Decl::NodeType snt = node->defined_in ()->scope_node_type ();
 
   // If this is true, can't generate inline constants.
-  bool forbidden_in_class = (snt != AST_Decl::NT_root 
-                             && snt != AST_Decl::NT_module 
+  bool forbidden_in_class = (snt != AST_Decl::NT_root
+                             && snt != AST_Decl::NT_module
                              && (etype == AST_Expression::EV_string
                                  || etype == AST_Expression::EV_wstring
                                  || etype == AST_Expression::EV_float
                                  || etype == AST_Expression::EV_double
                                  || etype == AST_Expression::EV_longdouble));
 
-  // (JP) Workaround for VC6's broken handling of inline constants
-  // until the day comes when we no longer support it. This won't
-  // work for cross-compiling - hopefully the whole issue will soon
-  // be moot.
-
-  // Was the constant value already assigned in *C.h?
-#if defined (_MSC_VER) && (_MSC_VER < 1300)
-  if (snt == AST_Decl::NT_module
-      && be_global->gen_inline_constants ())
-#else
-  if (!node->is_nested () 
+  if (!node->is_nested ()
       || (be_global->gen_inline_constants () && !forbidden_in_class))
-#endif
     {
       return 0;
     }
@@ -88,7 +77,7 @@ be_visitor_constant_cs::visit_constant (be_constant *node)
 
       *os << be_nl << be_nl
           << "const ";
-      
+
       if (node->et () == AST_Expression::EV_enum)
         {
           *os << node->enum_full_name ();
@@ -97,13 +86,13 @@ be_visitor_constant_cs::visit_constant (be_constant *node)
         {
           *os << node->exprtype_to_string ();
         }
-       
+
       *os << " "
           << node->name () << " = " << node->constant_value ()
           << ";";
     }
 
-  node->cli_stub_gen (I_TRUE);
+  node->cli_stub_gen (true);
   return 0;
 }
 

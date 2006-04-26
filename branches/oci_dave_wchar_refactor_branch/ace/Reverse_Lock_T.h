@@ -22,10 +22,12 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
- * @class ACE_Acquire_Method
+ * @namespace ACE_Acquire_Method
  *
- * @brief An enum class.
+ * @brief An enum namespace.
  *
  * These enums should have been inside the reverse lock class, but
  * some lame compilers cannot handle enums inside template classes.
@@ -38,16 +40,19 @@
  * represented here because we have to make sure that the release()
  * method on the reverse lock acquires a lock on the real lock.
  **/
-class ACE_Acquire_Method
+namespace ACE_Acquire_Method
 {
-public:
   enum METHOD_TYPE
   {
     ACE_REGULAR,
     ACE_READ,
     ACE_WRITE
   };
-};
+}
+
+#if defined (ACE_LYNXOS_MAJOR) && (ACE_LYNXOS_MAJOR < 4)
+  using namespace ACE_Acquire_Method;
+#endif
 
 /**
  * @class ACE_Reverse_Lock
@@ -77,8 +82,14 @@ public:
   // = Initialization/Finalization methods.
 
   /// Constructor. All locking requests will be forwarded to <lock>.
+#if defined (ACE_LYNXOS_MAJOR) && (ACE_LYNXOS_MAJOR < 4)
+  // Make LynxOS 3.x buggy compiler happy
+  ACE_Reverse_Lock (ACE_LOCKING_MECHANISM &lock,
+                    METHOD_TYPE acquire_method = ACE_REGULAR);
+#else
   ACE_Reverse_Lock (ACE_LOCKING_MECHANISM &lock,
                     ACE_Acquire_Method::METHOD_TYPE acquire_method = ACE_Acquire_Method::ACE_REGULAR);
+#endif
 
   /// Destructor. If <lock_> was not passed in by the user, it will be
   /// deleted.
@@ -119,6 +130,8 @@ private:
   /// This indicates what kind of acquire method will be called.
   ACE_Acquire_Method::METHOD_TYPE acquire_method_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Reverse_Lock_T.inl"

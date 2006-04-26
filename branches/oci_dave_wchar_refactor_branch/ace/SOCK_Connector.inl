@@ -1,7 +1,8 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
 
-// SOCK_Connector.i
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // This constructor is used by a client when it wants to connect to
 // the specified REMOTE_SAP address using a blocking open.
@@ -33,3 +34,5 @@ ACE_SOCK_Connector::reset_new_handle (ACE_HANDLE handle)
   return 0;
 #endif /* ACE_WIN32 */
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

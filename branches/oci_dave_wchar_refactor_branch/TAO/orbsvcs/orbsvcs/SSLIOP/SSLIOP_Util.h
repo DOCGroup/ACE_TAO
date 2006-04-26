@@ -24,7 +24,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "SSLIOP_Current.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Current.h"
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_ORB_Core;
 class TAO_IIOP_Properties;
@@ -55,6 +58,7 @@ namespace TAO
   }  // End SSLIOP namespace.
 }  // End TAO namespace.
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

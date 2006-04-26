@@ -16,17 +16,18 @@
 
 #include /**/ "ace/pre.h"
 
-#include "SSLIOP_Export.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "SSLIOP_Current.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Current.h"
 
 #include "orbsvcs/SSLIOPC.h"
 #include "tao/IIOP_Connection_Handler.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -109,9 +110,10 @@ namespace TAO
 
 } // End TAO namespace.
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "IIOP_SSL_Connection_Handler.inl"
+#include "orbsvcs/SSLIOP/IIOP_SSL_Connection_Handler.inl"
 #endif /* __ACE_INLINE__ */
 
 

@@ -11,7 +11,7 @@ use lib "../../../bin";
 use PerlACE::Run_Test;
 
 # Amount of delay (in seconds) between starting a server and a client.
-$sleeptime = 6;
+$sleeptime = $PerlACE::wait_interval_for_process_creation;
 
 # File used to pass AMH server ior to its clients.
 # This file name is hard-coded in the server.cpp and client.cpp files

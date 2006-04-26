@@ -19,6 +19,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Null_Mutex.h"
 #include "ace/SString.h"
 #include "ace/Hash_Map_Manager.h"
 #include "Task_Callback.h"
@@ -26,7 +27,9 @@
 #include "Periodic_Consumer.h"
 #include "Activation_ManagerS.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Barrier;
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Notify_Tests_Activation_Manager

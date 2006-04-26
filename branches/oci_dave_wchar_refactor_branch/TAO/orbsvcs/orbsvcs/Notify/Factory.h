@@ -18,10 +18,16 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Versioned_Namespace.h"
 #include "ace/CORBA_macros.h"
 #include "ace/Service_Object.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Lock;
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_Notify_Object;
 class TAO_Notify_EventChannelFactory;
 class TAO_Notify_EventChannel;
@@ -122,6 +128,8 @@ public:
   /// Create SequenceProxyPushSupplier
   virtual void create (TAO_Notify_SequenceProxyPushSupplier*& proxy ACE_ENV_ARG_DECL) = 0;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

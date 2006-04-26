@@ -1,19 +1,21 @@
-#include "LocateRequest_Invocation.h"
-#include "Profile_Transport_Resolver.h"
-#include "operation_details.h"
-#include "Stub.h"
-#include "Bind_Dispatcher_Guard.h"
-#include "Transport.h"
-#include "Synch_Reply_Dispatcher.h"
-#include "GIOP_Utils.h"
-#include "Profile.h"
-#include "ORB_Constants.h"
+#include "tao/LocateRequest_Invocation.h"
+#include "tao/Profile_Transport_Resolver.h"
+#include "tao/operation_details.h"
+#include "tao/Stub.h"
+#include "tao/Bind_Dispatcher_Guard.h"
+#include "tao/Transport.h"
+#include "tao/Synch_Reply_Dispatcher.h"
+#include "tao/GIOP_Utils.h"
+#include "tao/Profile.h"
+#include "tao/ORB_Constants.h"
 
 #include "ace/Countdown_Time.h"
 
 ACE_RCSID (tao,
            LocateRequest_Invocation,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -63,11 +65,8 @@ namespace TAO
       this->resolver_.transport ();
 
     TAO_OutputCDR &cdr = transport->out_stream ();
-#if TAO_RESET_OUTPUT_CDR_AFTER_SEND == 1
-    OutputCDR_Auto_Reset cdr_reset(cdr);
-#endif /* TAO_RESET_OUTPUT_CDR_AFTER_SEND */
 
-    int retval =
+    int const retval =
       transport->generate_locate_request (tspec,
                                           this->details_,
                                           cdr);
@@ -189,3 +188,5 @@ namespace TAO
     return TAO_INVOKE_SUCCESS;
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

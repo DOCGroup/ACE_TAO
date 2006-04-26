@@ -28,6 +28,8 @@
 
 #include "ace/Array_Map.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace CORBA
 {
   class Environment;
@@ -68,10 +70,11 @@ public:
    * Register an object reference with the table, and map the given
    * ID to it.
    * @retval 0 Success
-   * @retval -1 Duplicate id
+   * @retval -1 Duplicate id if @c rebind is false
    */
   int register_initial_reference (const char * id,
-                                  CORBA::Object_ptr obj);
+                                  CORBA::Object_ptr obj,
+                                  bool rebind = false);
 
   /// Return the object reference associated with the given ID.
   /// A duplicate is returned.
@@ -104,9 +107,9 @@ private:
 
 private:
 
-  /// Prevent copying
-  ACE_UNIMPLEMENTED_FUNC (TAO_Object_Ref_Table (const TAO_Object_Ref_Table &))
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Object_Ref_Table &))
+  // Disallow copying and assignment.
+  TAO_Object_Ref_Table (const TAO_Object_Ref_Table &);
+  void operator= (const TAO_Object_Ref_Table &);
 
 private:
 
@@ -118,6 +121,7 @@ private:
 
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #ifdef __ACE_INLINE__
 # include "tao/Object_Ref_Table.inl"

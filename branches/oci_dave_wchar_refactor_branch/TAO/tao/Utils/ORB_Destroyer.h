@@ -1,4 +1,5 @@
 // -*- C++ -*-
+
 //=============================================================================
 /**
  * @file ORB_Destroyer.h
@@ -11,7 +12,7 @@
 #ifndef TAO_UTILS_ORB_DESTROYER_H
 #define TAO_UTILS_ORB_DESTROYER_H
 #include /**/ "ace/pre.h"
-#include "utils_export.h"
+#include "tao/Utils/utils_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -19,6 +20,8 @@
 
 #include "tao/ORB.h"
 #include "ace/Auto_Functor.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -52,6 +55,8 @@ namespace TAO
 
   } // namespace Utils
 } // namespace TAO
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_UTILS_ORB_DESTROYER_H*/

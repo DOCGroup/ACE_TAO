@@ -21,8 +21,11 @@
 #include "ace/Codeset_Registry.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(ace, Codeset_Registry, "$Id$")
+ACE_RCSID (ace,
+           Codeset_Registry,
+           "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
 ACE_Codeset_Registry::locale_to_registry_i (const ACE_CString &locale,
@@ -30,7 +33,7 @@ ACE_Codeset_Registry::locale_to_registry_i (const ACE_CString &locale,
                                             ACE_CDR::UShort *num_sets,
                                             ACE_CDR::UShort **char_sets)
 {
-  registry_entry* element = 0;
+  registry_entry const * element = 0;
   for (size_t i = 0; element == 0 && i < num_registry_entries_; i++)
     if (ACE_OS::strcmp(registry_db_[i].loc_name_,locale.c_str()) == 0)
       element = &registry_db_[i];
@@ -42,8 +45,8 @@ ACE_Codeset_Registry::locale_to_registry_i (const ACE_CString &locale,
   if (char_sets != 0)
     {
       ACE_NEW_RETURN (*char_sets,ACE_CDR::UShort[element->num_sets_],0);
-      ACE_OS::memcpy (element->char_sets_,
-                      *char_sets,
+      ACE_OS::memcpy (*char_sets,
+                      element->char_sets_,
                       element->num_sets_ * sizeof (ACE_CDR::UShort));
     }
   return 1;
@@ -55,7 +58,7 @@ ACE_Codeset_Registry::registry_to_locale_i (ACE_CDR::ULong codeset_id,
                                             ACE_CDR::UShort *num_sets,
                                             ACE_CDR::UShort **char_sets)
 {
-  registry_entry* element = 0;
+  registry_entry const * element = 0;
   for (size_t i = 0; element == 0 && i < num_registry_entries_; i++)
     if (codeset_id == registry_db_[i].codeset_id_)
       element = &registry_db_[i];
@@ -67,8 +70,8 @@ ACE_Codeset_Registry::registry_to_locale_i (ACE_CDR::ULong codeset_id,
   if (char_sets != 0)
     {
       ACE_NEW_RETURN (*char_sets,ACE_CDR::UShort[element->num_sets_],0);
-      ACE_OS::memcpy (element->char_sets_,
-                      *char_sets,
+      ACE_OS::memcpy (*char_sets,
+                      element->char_sets_,
                       element->num_sets_ * sizeof (ACE_CDR::UShort));
     }
   return 1;
@@ -78,8 +81,8 @@ int
 ACE_Codeset_Registry::is_compatible_i (ACE_CDR::ULong codeset_id,
                                        ACE_CDR::ULong other)
 {
-  registry_entry* lhs = 0;
-  registry_entry* rhs = 0;
+  registry_entry const * lhs = 0;
+  registry_entry const * rhs = 0;
   for (size_t i = 0; (lhs == 0 || rhs == 0) && i < num_registry_entries_; i++)
     {
       if (codeset_id == registry_db_[i].codeset_id_)
@@ -106,3 +109,5 @@ ACE_Codeset_Registry::get_max_bytes_i (ACE_CDR::ULong codeset_id)
       return registry_db_[i].max_bytes_;
   return 0;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

@@ -3,23 +3,23 @@
 @@ -37,6 +37,10 @@
  #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
  #endif /* __BORLANDC__ */
- 
+
 +#include "ace/ACE.h"
 +#include "ace/OS_NS_string.h"
 +#include "ace/os_include/os_ctype.h"
 +
  // TAO_IDL - Generated from
  // be\be_visitor_arg_traits.cpp:69
- 
+
 @@ -88,6 +92,150 @@
  TAO::ObjectKey::~ObjectKey (void)
  {}
- 
+
 +// Hand crafted.
 +
 +void
 +TAO::ObjectKey::encode_sequence_to_string (char * &str,
-+                                           const TAO_Unbounded_Sequence<CORBA::Octet> &seq)
++                                           const TAO::unbounded_value_sequence<CORBA::Octet> &seq)
 +{
 +  // We must allocate a buffer which is (gag) 3 times the length
 +  // of the sequence, which is the length required in the worst-case
@@ -71,7 +71,7 @@
 +}
 +
 +void
-+TAO::ObjectKey::decode_string_to_sequence (TAO_Unbounded_Sequence<CORBA::Octet> &seq,
++TAO::ObjectKey::decode_string_to_sequence (TAO::unbounded_value_sequence<CORBA::Octet> &seq,
 +                                           const char *str)
 +{
 +  if (str == 0)
@@ -142,10 +142,8 @@
 +      if (ACE_BIT_DISABLED (strm.start ()->flags (),
 +      ACE_Message_Block::DONT_DELETE))
 +      {
-+        TAO_Unbounded_Sequence<CORBA::Octet> *oseq =
-+          static_cast<TAO_Unbounded_Sequence<CORBA::Octet>*> (&key);
-+        oseq->replace (_tao_seq_len, strm.start ());
-+        oseq->mb ()->wr_ptr (oseq->mb()->rd_ptr () + _tao_seq_len);
++        key.replace (_tao_seq_len, strm.start ());
++        key.mb ()->wr_ptr (key.mb()->rd_ptr () + _tao_seq_len);
 +        strm.skip_bytes (_tao_seq_len);
 +        return 1;
 +      }
@@ -160,7 +158,7 @@
 +}
 +
  #endif /* end #if !defined */
- 
+
  // TAO_IDL - Generated from
 --- orig/Object_KeyC.h	2005-04-08 10:17:40.978604800 +0200
 +++ Object_KeyC.h	2005-04-08 10:17:41.879900800 +0200
@@ -173,10 +171,10 @@
 +
 +    static void encode_sequence_to_string (
 +        char * &str,
-+        const TAO_Unbounded_Sequence<CORBA::Octet> &seq
++        const TAO::unbounded_value_sequence<CORBA::Octet> &seq
 +      );
 +    static void decode_string_to_sequence (
-+        TAO_Unbounded_Sequence<CORBA::Octet> &seq,
++        TAO::unbounded_value_sequence<CORBA::Octet> &seq,
 +        const char *str
 +      );
 +    static int is_legal (u_char & c);
@@ -188,5 +186,5 @@
 +    static CORBA::Boolean demarshal_key (ObjectKey &key,
 +                                         TAO_InputCDR &cdr);
    };
- 
+
  #endif /* end #if !defined */

@@ -235,7 +235,7 @@ be_visitor_union_branch_public_assign_cs::visit_interface (be_interface *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  idl_bool bt_is_defined = node->is_defined ();
+  bool bt_is_defined = node->is_defined ();
 
   *os << "if (u.u_." << ub->local_name () << "_ == 0)" << be_idt_nl
       << "{" << be_idt_nl
@@ -266,7 +266,7 @@ be_visitor_union_branch_public_assign_cs::visit_interface (be_interface *node)
         }
 
       *os << "duplicate (" << be_idt << be_idt_nl
-          << "u.u_." << ub->local_name () << "_->ptr ()" << be_uidt_nl
+          << "u.u_." << ub->local_name () << "_->in ()" << be_uidt_nl
           << ")" << be_uidt << be_uidt_nl << ")" << be_uidt << be_uidt_nl
           << ");" << be_uidt << be_uidt_nl;
     }
@@ -289,7 +289,7 @@ be_visitor_union_branch_public_assign_cs::visit_interface (be_interface *node)
 
       *os << "duplicate (" << be_idt << be_idt_nl
           << "u.u_." << ub->local_name ()
-          << "_->ptr ()" << be_uidt_nl
+          << "_->in ()" << be_uidt_nl
           << ")" << be_uidt << be_uidt_nl << ")," << be_uidt_nl
           << "*this" << be_uidt_nl
           << ");" << be_uidt << be_uidt_nl;
@@ -332,7 +332,7 @@ be_visitor_union_branch_public_assign_cs::visit_interface_fwd (
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  idl_bool bt_is_defined = node->full_definition ()->is_defined ();
+  bool bt_is_defined = node->full_definition ()->is_defined ();
 
   *os << "if (u.u_." << ub->local_name () << "_ == 0)" << be_idt_nl
       << "{" << be_idt_nl
@@ -363,7 +363,7 @@ be_visitor_union_branch_public_assign_cs::visit_interface_fwd (
         }
 
       *os << "duplicate (" << be_idt << be_idt_nl
-          << "u.u_." << ub->local_name () << "_->ptr ()" << be_uidt_nl
+          << "u.u_." << ub->local_name () << "_->in ()" << be_uidt_nl
           << ")" << be_uidt << be_uidt_nl << ")" << be_uidt << be_uidt_nl
           << ");" << be_uidt << be_uidt_nl;
     }
@@ -386,7 +386,7 @@ be_visitor_union_branch_public_assign_cs::visit_interface_fwd (
 
       *os << "duplicate (" << be_idt << be_idt_nl
           << "u.u_." << ub->local_name ()
-          << "_->ptr ()" << be_uidt_nl
+          << "_->in ()" << be_uidt_nl
           << ")" << be_uidt << be_uidt_nl << ")," << be_uidt_nl
           << "*this" << be_uidt_nl
           << ");" << be_uidt << be_uidt_nl;
@@ -465,7 +465,7 @@ be_visitor_union_branch_public_assign_cs::emit_valuetype_common (be_type *node)
       // We are generating the copy constructor.
       *os << "ACE_NEW (" << be_idt << be_idt_nl
           << "this->u_." << ub->local_name () << "_," << be_nl
-          << "OBJECT_FIELD (u.u_." << ub->local_name () << "_->ptr ())"
+          << "OBJECT_FIELD (u.u_." << ub->local_name () << "_->in ())"
           << be_uidt_nl
           << ");" << be_uidt << be_uidt_nl;
     }
@@ -474,7 +474,7 @@ be_visitor_union_branch_public_assign_cs::emit_valuetype_common (be_type *node)
       // We are generating the assignment operator.
       *os << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
           << "this->u_." << ub->local_name () << "_," << be_nl
-          << "OBJECT_FIELD (u.u_." << ub->local_name () << "_->ptr ()),"
+          << "OBJECT_FIELD (u.u_." << ub->local_name () << "_->in ()),"
           << be_nl
           << "*this" << be_uidt_nl
           << ");" << be_uidt << be_uidt_nl;
@@ -531,7 +531,7 @@ be_visitor_union_branch_public_assign_cs::visit_predefined_type (
               << "this->u_." << ub->local_name () << "_," << be_nl
               << "OBJECT_FIELD ( ::CORBA::Object"
               << "::_duplicate (u.u_." << ub->local_name ()
-              << "_->ptr ()))" << be_uidt_nl
+              << "_->in ()))" << be_uidt_nl
               << ");" << be_uidt << be_uidt_nl;
         }
       else
@@ -541,7 +541,7 @@ be_visitor_union_branch_public_assign_cs::visit_predefined_type (
               << "this->u_." << ub->local_name () << "_," << be_nl
               << "OBJECT_FIELD ( ::CORBA::Object"
               << "::_duplicate (u.u_." << ub->local_name ()
-              << "_->ptr ()))," << be_nl
+              << "_->in ()))," << be_nl
               << "*this" << be_uidt_nl
               << ");" << be_uidt << be_uidt_nl;
         }

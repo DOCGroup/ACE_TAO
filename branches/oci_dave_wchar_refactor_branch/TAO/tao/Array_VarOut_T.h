@@ -20,23 +20,18 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   /**
-   * struct Array_Traits
+   * @struct Array_Traits
    *
    * @brief Specialized for each array in generated code.
    *
    */
   template<typename T, typename T_slice, typename TAG>
-  struct Array_Traits
-  {
-    static T_slice * alloc (void);
-    static void free (T_slice * _tao_slice);
-    static T_slice * dup (const T_slice * _tao_slice);
-    static void copy (T_slice * _tao_to,
-                      const T_slice * _tao_from);
-  };
+  struct Array_Traits;
 }
 
 /**
@@ -71,7 +66,6 @@ public:
 
   // TAO extension.
   _retn_type    ptr (void) const;
-
 protected:
   T_slice * ptr_;
 };
@@ -98,7 +92,6 @@ public:
 
   typedef       T_slice *  _out_type;
   _out_type     out (void);
-
 };
 
 /**
@@ -170,7 +163,7 @@ class TAO_Array_Forany_T
 public:
   TAO_Array_Forany_T (void);
   TAO_Array_Forany_T (T_slice *,
-                      CORBA::Boolean nocopy = 0);
+                      CORBA::Boolean nocopy = false);
   TAO_Array_Forany_T (const TAO_Array_Forany_T<T,T_slice,TAG> &);
   ~TAO_Array_Forany_T (void);
 
@@ -198,8 +191,10 @@ public:
   static T_slice * tao_alloc (void);
 private:
   T_slice * ptr_;
-  const CORBA::Boolean nocopy_;
+  CORBA::Boolean nocopy_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "tao/Array_VarOut_T.inl"

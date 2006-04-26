@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -26,6 +26,8 @@
 #include "ace/INET_Addr.h"
 
 #if defined (ACE_HAS_TLI)
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class ACE_Time_Value;
 
@@ -122,11 +124,13 @@ private:
   int rwflag_;
 
   /// Get rwflag
-  int get_rwflag (void);
+  int get_rwflag (void) const;
 
   /// Set rwflag
-  void set_rwflag (int);
+  void set_rwflag (int value);
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/TLI_Stream.inl"

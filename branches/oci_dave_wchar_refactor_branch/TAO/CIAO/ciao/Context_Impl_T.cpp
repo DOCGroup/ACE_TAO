@@ -7,9 +7,9 @@
 
 namespace CIAO
 {
-  template <typename BASE_CTX, 
-            typename SVNT, 
-            typename COMP, 
+  template <typename BASE_CTX,
+            typename SVNT,
+            typename COMP,
             typename COMP_VAR>
   Context_Impl<BASE_CTX, SVNT, COMP, COMP_VAR>::Context_Impl (
       Components::CCMHome_ptr home,
@@ -20,9 +20,9 @@ namespace CIAO
   {
   }
 
-  template <typename BASE_CTX, 
-            typename SVNT, 
-            typename COMP, 
+  template <typename BASE_CTX,
+            typename SVNT,
+            typename COMP,
             typename COMP_VAR>
   Context_Impl<BASE_CTX, SVNT, COMP, COMP_VAR>::~Context_Impl (void)
   {
@@ -30,9 +30,9 @@ namespace CIAO
 
   // Operations from ::Components::SessionContext.
 
-  template <typename BASE_CTX, 
-            typename SVNT, 
-            typename COMP, 
+  template <typename BASE_CTX,
+            typename SVNT,
+            typename COMP,
             typename COMP_VAR>
   CORBA::Object_ptr
   Context_Impl<BASE_CTX, SVNT, COMP, COMP_VAR>::get_CCM_object (
@@ -45,22 +45,22 @@ namespace CIAO
     {
       CORBA::Object_var obj;
 
-      ACE_TRY 
+      ACE_TRY
         {
           obj =
             this->container_->get_objref (this->servant_
                                           ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK; 
+          ACE_TRY_CHECK;
         }
-      ACE_CATCHANY 
-        { 
+      ACE_CATCHANY
+        {
           ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                               "Caught Exception \n"); 
+                               "Caught Exception \n");
           return CORBA::Object::_nil ();
         }
       ACE_ENDTRY;
-      
-      
+
+
       this->component_ = COMP::_narrow (obj.in ()
                                         ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (CORBA::Object::_nil ());

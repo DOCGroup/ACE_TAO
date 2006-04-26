@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file    RTPortableServer.h
@@ -14,7 +15,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "rtportableserver_export.h"
+#include "tao/RTPortableServer/rtportableserver_export.h"
 #include "tao/orbconf.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
@@ -25,6 +26,8 @@
 
 #include "tao/RTCORBA/RTCORBA.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_RTPortableServer_Export TAO_RTPortableServer_Initializer
 {
 public:
@@ -34,8 +37,10 @@ public:
 
 static TAO_RTPortableServer_Initializer TAO_RTPortableServer_initializer;
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #define TAO_RT_PORTABLESERVER_SAFE_INCLUDE
-#include "RTPortableServerC.h"
+#include "tao/RTPortableServer/RTPortableServerC.h"
 #undef TAO_RT_PORTABLESERVER_SAFE_INCLUDE
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */

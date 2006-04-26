@@ -1,20 +1,22 @@
 // $Id$
 
-#include "EC_Event_Channel_Base.h"
-#include "EC_Dispatching.h"
-#include "EC_ConsumerAdmin.h"
-#include "EC_SupplierAdmin.h"
-#include "EC_Timeout_Generator.h"
-#include "EC_ObserverStrategy.h"
-#include "EC_ConsumerControl.h"
-#include "EC_SupplierControl.h"
+#include "orbsvcs/Event/EC_Event_Channel_Base.h"
+#include "orbsvcs/Event/EC_Dispatching.h"
+#include "orbsvcs/Event/EC_ConsumerAdmin.h"
+#include "orbsvcs/Event/EC_SupplierAdmin.h"
+#include "orbsvcs/Event/EC_Timeout_Generator.h"
+#include "orbsvcs/Event/EC_ObserverStrategy.h"
+#include "orbsvcs/Event/EC_ConsumerControl.h"
+#include "orbsvcs/Event/EC_SupplierControl.h"
 #include "ace/Dynamic_Service.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "EC_Event_Channel_Base.i"
+#include "orbsvcs/Event/EC_Event_Channel_Base.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(Event, EC_Event_Channel_Base, "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_Event_Channel_Base::
 TAO_EC_Event_Channel_Base (const TAO_EC_Event_Channel_Attributes& attr,
@@ -347,3 +349,5 @@ TAO_EC_Event_Channel_Base::for_each_supplier (
                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -77,9 +77,9 @@ public:
 
 private:
 
-  idl_bool generated (be_decl *node) const;
+  bool generated (be_decl *node) const;
   void generated (be_decl *node,
-                  idl_bool val);
+                  bool val);
 
   const char *insert_policy (void);
 

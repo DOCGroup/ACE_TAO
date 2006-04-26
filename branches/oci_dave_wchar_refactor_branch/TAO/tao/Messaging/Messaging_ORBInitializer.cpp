@@ -1,15 +1,20 @@
 // -*- C++ -*-
 
-#include "Messaging_ORBInitializer.h"
+#include "tao/Messaging/Messaging_ORBInitializer.h"
 
-#include "Messaging_Policy_i.h"
-#include "Connection_Timeout_Policy_i.h"
-#include "Messaging_PolicyFactory.h"
+#include "tao/Messaging/Messaging_Policy_i.h"
+#include "tao/Messaging/Connection_Timeout_Policy_i.h"
+#include "tao/Messaging/Messaging_PolicyFactory.h"
+#include "tao/Messaging/ExceptionHolder_i.h"
 #include "tao/ORB_Core.h"
+#include "tao/PI/ORBInitInfo.h"
+#include "tao/Valuetype/ValueFactory.h"
 
 ACE_RCSID (Messaging,
            Messaging_ORBInitializer,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
 TAO_Messaging_ORBInitializer::pre_init (
@@ -42,8 +47,47 @@ TAO_Messaging_ORBInitializer::post_init (
   this->register_policy_factories (info
                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
+
+  this->register_value_factory (info
+                                ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
+void
+TAO_Messaging_ORBInitializer::register_value_factory (
+  PortableInterceptor::ORBInitInfo_ptr info
+  ACE_ENV_ARG_DECL)
+{
+  // Narrow to a TAO_ORBInitInfo object to get access to the
+  // orb_core() TAO extension.
+  TAO_ORBInitInfo_var tao_info =
+    TAO_ORBInitInfo::_narrow (info
+                              ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  if (CORBA::is_nil (tao_info.in ()))
+    {
+      if (TAO_debug_level > 0)
+        ACE_ERROR ((LM_ERROR,
+                    "(%P|%t) TAO_Messaging_ORBInitializer::register_value_factory:\n"
+                    "(%P|%t)    Unable to narrow "
+                    "\"PortableInterceptor::ORBInitInfo_ptr\" to\n"
+                    "(%P|%t)   \"TAO_ORBInitInfo *.\"\n"));
+
+      ACE_THROW (CORBA::INTERNAL ());
+    }
+
+  TAO::ExceptionHolderFactory *base_factory = 0;
+  ACE_NEW (base_factory,
+           TAO::ExceptionHolderFactory);
+  CORBA::ValueFactory_var factory = base_factory;
+
+  tao_info->orb_core()->orb ()->register_value_factory (
+        Messaging::ExceptionHolder::_tao_obv_static_repository_id (),
+        base_factory
+        ACE_ENV_ARG_PARAMETER);
+  ACE_TRY_CHECK;
+}
 void
 TAO_Messaging_ORBInitializer::register_policy_factories (
   PortableInterceptor::ORBInitInfo_ptr info
@@ -144,3 +188,5 @@ TAO_Messaging_ORBInitializer::register_policy_factories (
       ACE_CHECK;
     }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

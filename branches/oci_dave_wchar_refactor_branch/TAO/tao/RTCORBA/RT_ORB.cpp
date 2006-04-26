@@ -1,12 +1,12 @@
 // $Id$
 
-#include "RT_ORB.h"
+#include "tao/RTCORBA/RT_ORB.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
-#include "RT_Policy_i.h"
-#include "RT_Mutex.h"
-#include "Priority_Mapping_Manager.h"
+#include "tao/RTCORBA/RT_Policy_i.h"
+#include "tao/RTCORBA/RT_Mutex.h"
+#include "tao/RTCORBA/Priority_Mapping_Manager.h"
 #include "tao/ORB_Core.h"
 #include "tao/ORB.h"
 #include "tao/RTCORBA/Thread_Pool.h"
@@ -17,16 +17,20 @@ ACE_RCSID(RTCORBA,
           RT_ORB,
           "$Id$")
 
-TAO_RT_ORB::TAO_RT_ORB (TAO_ORB_Core *orb_core)
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+TAO_RT_ORB::TAO_RT_ORB (TAO_ORB_Core *orb_core,
+                        ACE_Time_Value const &dynamic_thread_idle_timeout)
   : orb_core_ (orb_core),
     mutex_mgr_ (),
-    tp_manager_ (0)
+    tp_manager_ (0),
+    dynamic_thread_idle_timeout_ (dynamic_thread_idle_timeout)
 {
   TAO_Thread_Lane_Resources_Manager *thread_lane_resources_manager =
     &this->orb_core_->thread_lane_resources_manager ();
 
   TAO_RT_Thread_Lane_Resources_Manager *rt_thread_lane_resources_manager =
-    (TAO_RT_Thread_Lane_Resources_Manager *) thread_lane_resources_manager;
+    dynamic_cast <TAO_RT_Thread_Lane_Resources_Manager *> (thread_lane_resources_manager);
 
   this->tp_manager_ =
     &rt_thread_lane_resources_manager->tp_manager ();
@@ -366,7 +370,8 @@ TAO_RT_ORB::create_threadpool (CORBA::ULong stacksize,
                                                default_priority,
                                                allow_request_buffering,
                                                max_buffered_requests,
-                                               max_request_buffer_size
+                                               max_request_buffer_size,
+                                               this->dynamic_thread_idle_timeout_
                                                ACE_ENV_ARG_PARAMETER);
 }
 
@@ -385,7 +390,8 @@ TAO_RT_ORB::create_threadpool_with_lanes (CORBA::ULong stacksize,
                                                           allow_borrowing,
                                                           allow_request_buffering,
                                                           max_buffered_requests,
-                                                          max_request_buffer_size
+                                                          max_request_buffer_size,
+                                                          this->dynamic_thread_idle_timeout_
                                                           ACE_ENV_ARG_PARAMETER);
 }
 
@@ -546,6 +552,8 @@ TAO_RT_ORB::modify_thread_scheduling_policy (CORBA::ORB_ptr orb)
 
 }
 
-////////////////////////////////////////////////////////////////////////////////
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+///////////////////////////////////////////////////////////////////////////////
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */

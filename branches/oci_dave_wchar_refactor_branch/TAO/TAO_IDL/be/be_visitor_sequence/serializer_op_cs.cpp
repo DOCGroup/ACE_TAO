@@ -779,7 +779,6 @@ be_visitor_sequence_serializer_op_cs::visit_node (be_type *bt)
       nt = td->base_node_type ();
     }
 
-
 switch (this->ctx_->sub_state ())
     {
     case TAO_CodeGen::TAO_IS_BOUNDED_SIZE:
@@ -1011,7 +1010,7 @@ switch (this->ctx_->sub_state ())
     case TAO_CodeGen::TAO_CDR_OUTPUT:
       {
     // Initialize a boolean variable.
-  *os << "::CORBA::Boolean _tao_marshal_flag = 1;" << be_nl << be_nl;
+  *os << "::CORBA::Boolean _tao_marshal_flag = true;" << be_nl << be_nl;
 
 
   if (expr->ev ()->et == AST_Expression::EV_ulong)

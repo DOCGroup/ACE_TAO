@@ -1,12 +1,12 @@
 // $Id$
 
-#include "InterfaceAttrExtension_i.h"
-#include "Repository_i.h"
-#include "InterfaceDef_i.h"
-#include "OperationDef_i.h"
-#include "AttributeDef_i.h"
-#include "ExtAttributeDef_i.h"
-#include "IFR_Service_Utils.h"
+#include "orbsvcs/IFRService/InterfaceAttrExtension_i.h"
+#include "orbsvcs/IFRService/Repository_i.h"
+#include "orbsvcs/IFRService/InterfaceDef_i.h"
+#include "orbsvcs/IFRService/OperationDef_i.h"
+#include "orbsvcs/IFRService/AttributeDef_i.h"
+#include "orbsvcs/IFRService/ExtAttributeDef_i.h"
+#include "orbsvcs/IFRService/IFR_Service_Utils.h"
 
 #include "ace/SString.h"
 
@@ -15,9 +15,9 @@ ACE_RCSID (IFRService,
            InterfaceAttrExtension_i,
            "$Id$")
 
-
-
 // =====================================================================
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_InterfaceAttrExtension_i::TAO_InterfaceAttrExtension_i (
     TAO_Repository_i *repo
@@ -84,10 +84,18 @@ TAO_InterfaceAttrExtension_i::describe_ext_interface_i (
   CORBA::ULong j = 0;
   ACE_Unbounded_Queue<ACE_Configuration_Section_Key> key_queue;
 
+  // Store our section key for later restoration after we have
+  // traversed entries for inherited interfaces.
+  ACE_Configuration_Section_Key key_holder = this->section_key_;
+
   // Operations
   TAO_InterfaceDef_i iface (this->repo_);
   iface.section_key (this->section_key_);
   iface.inherited_operations (key_queue);
+
+  // Restore our original section key.
+  //   I am not sure this is needed but it will not hurt.
+  this->section_key (key_holder);
 
   ACE_Configuration_Section_Key ops_key, op_key;
   int status =
@@ -136,8 +144,17 @@ TAO_InterfaceAttrExtension_i::describe_ext_interface_i (
       ACE_CHECK_RETURN (0);
     }
 
+  // Restore our original section key.
+  //   It may have been overwritten by a superclass key as part of the
+  //   make_description() call.
+  this->section_key (key_holder);
+
   // Attributes.
   iface.inherited_attributes (key_queue);
+
+  // Restore our original section key.
+  //   I am not sure this is needed but it will not hurt.
+  this->section_key (key_holder);
 
   ACE_Configuration_Section_Key attrs_key;
   status =
@@ -186,6 +203,11 @@ TAO_InterfaceAttrExtension_i::describe_ext_interface_i (
                              ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
     }
+
+  // Restore our original section key.
+  //   It may have been overwritten by a superclass key as part of the
+  //   fill_description() call.
+  this->section_key (key_holder);
 
   CORBA::InterfaceDefSeq_var bases =
     iface.base_interfaces_i (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -317,3 +339,5 @@ TAO_InterfaceAttrExtension_i::create_ext_attribute_i (
 
   return retval._retn ();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

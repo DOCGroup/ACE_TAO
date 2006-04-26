@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -23,6 +23,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/corbafwd.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward declarations.
 class TAO_ORB_Core;
@@ -140,8 +142,10 @@ namespace TAO
   }
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "HTIOP_Acceptor_Impl.cpp"
+#include "orbsvcs/HTIOP/HTIOP_Acceptor_Impl.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

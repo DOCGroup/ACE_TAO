@@ -24,6 +24,8 @@
 
 #include "ace/Log_Msg_Backend.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_Log_Msg_UNIX_Syslog
  *
@@ -65,6 +67,8 @@ private:
   /// Convert an ACE_Log_Priority mask to the corresponding syslog mask value.
   int convert_log_mask (int lm_mask);
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* !ACE_LACKS_UNIX_SYSLOG */
 

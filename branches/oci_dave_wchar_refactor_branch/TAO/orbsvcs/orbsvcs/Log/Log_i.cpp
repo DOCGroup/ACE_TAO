@@ -12,6 +12,8 @@ ACE_RCSID (Log,
            "$Id$")
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Log Compaction Interval
 const ACE_Time_Value
 TAO_Log_i::log_compaction_interval_ = ACE_Time_Value(60);
@@ -26,42 +28,77 @@ TAO_Log_i::TAO_Log_i (CORBA::ORB_ptr orb,
                       DsLogAdmin::LogMgr_ptr factory,
                       DsLogAdmin::LogId logid,
                       TAO_LogNotification *log_notifier)
-  : factory_ (DsLogAdmin::LogMgr::_duplicate (factory)),
+  : logmgr_i_(logmgr_i),
+    factory_ (DsLogAdmin::LogMgr::_duplicate (factory)),
     logid_ (logid),
     op_state_ (DsLogAdmin::disabled),
     reactor_ (orb->orb_core()->reactor()),
-    log_compaction_handler_(reactor_, this, log_compaction_interval_),
-    log_flush_handler_(reactor_, this, log_flush_interval_)
+    notifier_ (log_notifier),
+    log_compaction_handler_ (reactor_, this, log_compaction_interval_),
+    log_flush_handler_ (reactor_, this, log_flush_interval_)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-
-  recordstore_ = logmgr_i.get_log_record_store (logid
-						ACE_ENV_ARG_PARAMETER);
-
   // TODO: get log parameters from (persistent?) store.
   avail_status_.off_duty = 0;
   avail_status_.log_full = 0;
-  this->notifier_ = log_notifier;
-  this->current_threshold_ = 0;
-  this->thresholds_.length(1);
-  this->thresholds_[0] = 100;
-  this->qostype_ = DsLogAdmin::QoSNone;
 }
 
 void
 TAO_Log_i::init (ACE_ENV_SINGLE_ARG_DECL)
 {
-  if (recordstore_->open () ==-1)
+#if 0
+  // @@ Calling create_log_reference () here leads to an infinate loop.
+  // When this is fixed, this can be enabled.
+  this->log_ =
+    logmgr_i_.create_log_reference (this->logid_ ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+#endif
+
+  this->recordstore_ =
+    logmgr_i_.get_log_record_store (this->logid_ ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  if (this->recordstore_->open () ==-1)
     ACE_THROW (CORBA::UNKNOWN ());
 
-  if (this->recordstore_->get_max_record_life (ACE_ENV_SINGLE_ARG_PARAMETER) != 0)
+  // fetch the capacity alarm thresholds from the log record store
+  DsLogAdmin::CapacityAlarmThresholdList_var thresholds =
+    this->recordstore_->get_capacity_alarm_thresholds (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+
+  // initialize the internal representation
+  this->thresholds_ = thresholds.in ();
+  this->reset_capacity_alarm_threshold (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+
+
+  // fetch the log QoS from the log record store
+  DsLogAdmin::QoSList_var qos =
+    this->recordstore_->get_log_qos (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+
+  // initialize the internal representation.
+  this->reset_log_qos (qos.in ());
+
+
+  // fetch the week mask from the log record store
+  DsLogAdmin::WeekMask_var week_mask =
+    this->recordstore_->get_week_mask (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+
+  // initialize the internal representation
+  this->reset_week_mask (week_mask.in () ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+
+  // fetch the maximum record life from the log record store
+  CORBA::ULong max_record_life =
+    this->recordstore_->get_max_record_life (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+
+  // if set, activate the compaction handler
+  if (max_record_life != 0)
     {
       this->log_compaction_handler_.schedule ();
-    }
-
-  if (this->qostype_ == DsLogAdmin::QoSFlush)
-    {
-      this->log_flush_handler_.schedule ();
     }
 
   this->op_state_ = DsLogAdmin::enabled;
@@ -90,6 +127,12 @@ DsLogAdmin::QoSList*
 TAO_Log_i::get_log_qos (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
+                           guard,
+                           this->recordstore_->lock (),
+                           CORBA::INTERNAL ());
+  ACE_CHECK_RETURN (0);
+
   // @@ The current revision of the specification (formal/03-07-01)
   // states that get_log_qos() returns a list of the QoS properties
   // supported by the log, not the current value.  However, because
@@ -98,17 +141,7 @@ TAO_Log_i::get_log_qos (ACE_ENV_SINGLE_ARG_DECL)
   // have submitted a defect report to the OMG for clarification.
   //    --jtc
 
-  DsLogAdmin::QoSList* ret_ptr;
-  ACE_NEW_THROW_EX (ret_ptr,
-                    DsLogAdmin::QoSList (1),
-                    CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
-
-  DsLogAdmin::QoSList_var ret_val = ret_ptr;
-  ret_val->length(1);
-  ret_val[0] = qostype_;
-
-  return ret_val._retn ();
+  return this->recordstore_->get_log_qos (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 void
@@ -117,6 +150,12 @@ TAO_Log_i::set_log_qos (const DsLogAdmin::QoSList &qos
   ACE_THROW_SPEC ((CORBA::SystemException,
                    DsLogAdmin::UnsupportedQoS))
 {
+  ACE_WRITE_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
+			    guard,
+			    this->recordstore_->lock (),
+			    CORBA::INTERNAL ());
+  ACE_CHECK;
+
   // @@ The current revision of the specification (formal/03-07-01)
   // does not clearly define the semantics to follow when the QoSList
   // contains mutually exclusive, unsupported, or unknown properties.
@@ -127,71 +166,44 @@ TAO_Log_i::set_log_qos (const DsLogAdmin::QoSList &qos
   // were found, an UnsupportedQoS exception is thrown.
   //    --jtc
 
-  DsLogAdmin::QoSType old_qos = this->qostype_;
-  DsLogAdmin::QoSType qostype = old_qos;
-  DsLogAdmin::QoSList denied;
+  validate_log_qos (qos);
 
-  // validate properties..
-  for (CORBA::ULong i = 0; i < qos.length (); ++i)
-    {
-      qostype = qos[i];
-      if (qostype != DsLogAdmin::QoSNone &&
-	  qostype != DsLogAdmin::QoSFlush &&
-          qostype != DsLogAdmin::QoSReliability)
-        {
-	  CORBA::ULong len = denied.length();
-	  denied.length(len + 1);
-	  denied[len] = qostype;
-        }
-    }
+  DsLogAdmin::QoSList_var old_qos =
+    this->recordstore_->get_log_qos (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
 
-  // if there were any unknown/unsupported properties, thrown an
-  // exception.
-  if (denied.length() != 0)
-    {
-      ACE_THROW (DsLogAdmin::UnsupportedQoS (denied));
-    }
-
-  if (qostype == old_qos)
+  // @@ The current revision of the specification (formal/03-07-01) is
+  // unclear whether an AttributeValueChange event should be sent if a
+  // log attribute was changed (to a new value), or whether the events
+  // should be sent unconditionally.  I have submitted a defect report
+  // to the OMG for clarification.
+  //
+  // In the mean time, we're interepreting it to mean that events are
+  // only sent when the value has changed.
+  if (qos == old_qos.in ())
     return;
 
-  this->qostype_ = qostype;
+  this->recordstore_->set_log_qos (qos ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
-  if (this->qostype_ == DsLogAdmin::QoSFlush)
-    this->log_flush_handler_.schedule ();
-  else
-    this->log_flush_handler_.cancel ();
+  reset_log_qos (qos);
 
   if (notifier_)
     {
-      DsLogAdmin::Log_var log =
-        this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      // @@ Calling create_log_reference () in the ctor or in ::init()
+      // leads to an infinate loop.  This should be removed when that
+      // is fixed.
+      if (CORBA::is_nil (this->log_.in ()))
+	{
+	  this->log_ = logmgr_i_.create_log_reference (this->logid_
+						       ACE_ENV_ARG_PARAMETER);
+	  ACE_CHECK;
+	}
 
-      DsLogAdmin::QoSList* old_qoslist_ptr;
-      ACE_NEW_THROW_EX (old_qoslist_ptr,
-			DsLogAdmin::QoSList (1),
-			CORBA::NO_MEMORY ());
-      ACE_CHECK;
-
-      DsLogAdmin::QoSList_var old_qoslist = old_qoslist_ptr;
-      old_qoslist->length(1);
-      old_qoslist[0] = old_qos;
-
-      DsLogAdmin::QoSList* new_qoslist_ptr;
-      ACE_NEW_THROW_EX (new_qoslist_ptr,
-			DsLogAdmin::QoSList (1),
-			CORBA::NO_MEMORY ());
-      ACE_CHECK;
-
-      DsLogAdmin::QoSList_var new_qoslist = new_qoslist_ptr;
-      new_qoslist->length(1);
-      new_qoslist[0] = qostype;
-
-      notifier_->quality_of_service_value_change (log.in (),
-                                                  logid_,
-                                                  old_qoslist.in (),
-                                                  new_qoslist.in ()
+      notifier_->quality_of_service_value_change (this->log_.in (),
+                                                  this->logid_,
+                                                  old_qos.in (),
+                                                  qos
                                                   ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
@@ -201,6 +213,12 @@ CORBA::ULong
 TAO_Log_i::get_max_record_life (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
+                           guard,
+                           this->recordstore_->lock (),
+                           CORBA::INTERNAL ());
+  ACE_CHECK_RETURN (0);
+
   return
     this->recordstore_->get_max_record_life(ACE_ENV_SINGLE_ARG_PARAMETER);
 }
@@ -210,14 +228,28 @@ TAO_Log_i::set_max_record_life (CORBA::ULong life
                                 ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  CORBA::ULong old_life;
-  old_life = this->get_max_record_life (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_WRITE_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
+			    guard,
+			    this->recordstore_->lock (),
+			    CORBA::INTERNAL ());
   ACE_CHECK;
 
+  CORBA::ULong old_life =
+    this->recordstore_->get_max_record_life (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+
+  // @@ The current revision of the specification (formal/03-07-01) is
+  // unclear whether an AttributeValueChange event should be sent if a
+  // log attribute was changed (to a new value), or whether the events
+  // should be sent unconditionally.  I have submitted a defect report
+  // to the OMG for clarification.
+  //
+  // In the mean time, we're interepreting it to mean that events are
+  // only sent when the value has changed.
   if (life == old_life)
     return;
 
-  this->recordstore_->set_max_record_life(life ACE_ENV_ARG_PARAMETER);
+  this->recordstore_->set_max_record_life (life ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (life != 0)
@@ -227,12 +259,18 @@ TAO_Log_i::set_max_record_life (CORBA::ULong life
 
   if (notifier_)
     {
-      DsLogAdmin::Log_var log =
-        this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      // @@ Calling create_log_reference () in the ctor or in ::init()
+      // leads to an infinate loop.  This should be removed when that
+      // is fixed.
+      if (CORBA::is_nil (this->log_.in ()))
+	{
+	  this->log_ = logmgr_i_.create_log_reference (this->logid_
+						       ACE_ENV_ARG_PARAMETER);
+	  ACE_CHECK;
+	}
 
-      notifier_->max_record_life_value_change (log.in (),
-                                               logid_,
+      notifier_->max_record_life_value_change (this->log_.in (),
+                                               this->logid_,
                                                old_life,
                                                life
                                                ACE_ENV_ARG_PARAMETER);
@@ -244,6 +282,12 @@ CORBA::ULongLong
 TAO_Log_i::get_max_size (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
+                           guard,
+                           this->recordstore_->lock (),
+                           CORBA::INTERNAL ());
+  ACE_CHECK_RETURN (0);
+
   return recordstore_->get_max_size (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
@@ -253,41 +297,90 @@ TAO_Log_i::set_max_size (CORBA::ULongLong size
   ACE_THROW_SPEC ((CORBA::SystemException,
                    DsLogAdmin::InvalidParam))
 {
-  // size == 0 => infinite size.
-  CORBA::ULongLong old_size;
-  old_size = this->get_max_size (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_WRITE_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
+			    guard,
+			    this->recordstore_->lock (),
+			    CORBA::INTERNAL ());
   ACE_CHECK;
 
-  if ((size != 0) && (size <
-      this->recordstore_->get_current_size (ACE_ENV_SINGLE_ARG_PARAMETER)))
+  CORBA::ULongLong old_size =
+    this->recordstore_->get_max_size (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+
+  // @@ The current revision of the specification (formal/03-07-01) is
+  // unclear whether an AttributeValueChange event should be sent if a
+  // log attribute was changed (to a new value), or whether the events
+  // should be sent unconditionally.  I have submitted a defect report
+  // to the OMG for clarification.
+  //
+  // In the mean time, we're interepreting it to mean that events are
+  // only sent when the value has changed.
+  if (size == old_size)
+    return;
+
+  // size == 0 => infinite size.
+  if (size != 0)
     {
-      ACE_THROW (DsLogAdmin::InvalidParam ());
-    }
-  else
-    {
-      this->recordstore_->set_max_size (size ACE_ENV_ARG_PARAMETER);
+      CORBA::ULongLong current_size =
+	this->recordstore_->get_current_size (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
-      if (notifier_ && old_size != size)
-        {
-          DsLogAdmin::Log_var log =
-            this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK;
-
-          notifier_->max_log_size_value_change (log.in (),
-                                                logid_,
-                                                old_size,
-                                                size
-                                                ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
-        }
+      if (size < current_size)
+	ACE_THROW (DsLogAdmin::InvalidParam ());
     }
+
+  this->recordstore_->set_max_size (size ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  if (notifier_)
+    {
+      // @@ Calling create_log_reference () in the ctor or in ::init()
+      // leads to an infinate loop.  This should be removed when that
+      // is fixed.
+      if (CORBA::is_nil (this->log_.in ()))
+	{
+	  this->log_ = logmgr_i_.create_log_reference (this->logid_
+						       ACE_ENV_ARG_PARAMETER);
+	  ACE_CHECK;
+	}
+
+      notifier_->max_log_size_value_change (this->log_.in (),
+					    this->logid_,
+					    old_size,
+					    size
+					    ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+    }
+
+  // @@ The current revision of the specification (formal/03-07-01)
+  // doesn't specify the interaction between set_max_size() and the
+  // capacity alarm thresholds list.  Publicly available documentation
+  // I've read for other log service implementations doesn't offer any
+  // guidance either.  I have submitted a defect report to the OMG for
+  // clarification.
+  //
+  // In the mean time, we will call reset_capacity_alarm_threshold()
+  // to reset the "current_threshold_" index.  This will result in
+  // ThresholdAlarm being sent when the next threshold is crossed.  An
+  // argument could be made that an event should be be sent for each
+  // threshold that has already been crossed.  Hopefully, this will be
+  // clarified when/if the OMG charters a RTF for the log service.
+  //    --jtc
+  //
+  this->reset_capacity_alarm_threshold (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
 CORBA::ULongLong
 TAO_Log_i::get_current_size (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
+                           guard,
+                           this->recordstore_->lock (),
+                           CORBA::INTERNAL ());
+  ACE_CHECK_RETURN (0);
+
   return this->recordstore_->get_current_size (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
@@ -295,6 +388,12 @@ CORBA::ULongLong
 TAO_Log_i::get_n_records (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
+                           guard,
+                           this->recordstore_->lock (),
+                           CORBA::INTERNAL ());
+  ACE_CHECK_RETURN (0);
+
   return this->recordstore_->get_n_records (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
@@ -302,8 +401,13 @@ DsLogAdmin::LogFullActionType
 TAO_Log_i::get_log_full_action (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return
-    this->recordstore_->get_log_full_action(ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
+                           guard,
+                           this->recordstore_->lock (),
+                           CORBA::INTERNAL ());
+  ACE_CHECK_RETURN (0);
+
+  return this->recordstore_->get_log_full_action(ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 void
@@ -312,13 +416,27 @@ TAO_Log_i::set_log_full_action (DsLogAdmin::LogFullActionType action
   ACE_THROW_SPEC ((CORBA::SystemException,
 		   DsLogAdmin::InvalidLogFullAction))
 {
+  ACE_WRITE_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
+			    guard,
+			    this->recordstore_->lock (),
+			    CORBA::INTERNAL ());
+  ACE_CHECK;
+
   if (action != DsLogAdmin::wrap && action != DsLogAdmin::halt)
     ACE_THROW (DsLogAdmin::InvalidLogFullAction ());
 
   DsLogAdmin::LogFullActionType old_action =
-    this->get_log_full_action (ACE_ENV_SINGLE_ARG_PARAMETER);
+    this->recordstore_->get_log_full_action (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
+  // @@ The current revision of the specification (formal/03-07-01) is
+  // unclear whether an AttributeValueChange event should be sent if a
+  // log attribute was changed (to a new value), or whether the events
+  // should be sent unconditionally.  I have submitted a defect report
+  // to the OMG for clarification.
+  //
+  // In the mean time, we're interepreting it to mean that events are
+  // only sent when the value has changed.
   if (action == old_action)
     return;
 
@@ -327,23 +445,53 @@ TAO_Log_i::set_log_full_action (DsLogAdmin::LogFullActionType action
 
   if (notifier_)
     {
-      DsLogAdmin::Log_var log =
-        this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      // @@ Calling create_log_reference () in the ctor or in ::init()
+      // leads to an infinate loop.  This should be removed when that
+      // is fixed.
+      if (CORBA::is_nil (this->log_.in ()))
+	{
+	  this->log_ = logmgr_i_.create_log_reference (this->logid_
+						       ACE_ENV_ARG_PARAMETER);
+	  ACE_CHECK;
+	}
 
-      notifier_->log_full_action_value_change (log.in (),
-                                               logid_,
+      notifier_->log_full_action_value_change (this->log_.in (),
+                                               this->logid_,
                                                old_action,
                                                action
                                                ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
    }
+
+  // @@ The current revision of the specification (formal/03-07-01)
+  // doesn't specify the interaction between set_log_full_action() and the
+  // capacity alarm thresholds list.  Publicly available documentation
+  // I've read for other log service implementations doesn't offer any
+  // guidance either.  I have submitted a defect report to the OMG for
+  // clarification.
+  //
+  // In the mean time, we will call reset_capacity_alarm_threshold()
+  // to reset the "current_threshold_" index.  This will result in
+  // ThresholdAlarm being sent when the next threshold is crossed.  An
+  // argument could be made that an event should be be sent for each
+  // threshold that has already been crossed.  Hopefully, this will be
+  // clarified when/if the OMG charters a RTF for the log service.
+  //    --jtc
+  //
+  this->reset_capacity_alarm_threshold (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
 DsLogAdmin::AdministrativeState
 TAO_Log_i::get_administrative_state (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
+                           guard,
+                           this->recordstore_->lock (),
+                           CORBA::INTERNAL ());
+  ACE_CHECK_RETURN (0);
+
   return this->recordstore_->get_administrative_state (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
@@ -352,10 +500,24 @@ TAO_Log_i::set_administrative_state (DsLogAdmin::AdministrativeState state
                                      ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  DsLogAdmin::AdministrativeState old_state =
-    this->get_administrative_state (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_WRITE_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
+			    guard,
+			    this->recordstore_->lock (),
+			    CORBA::INTERNAL ());
   ACE_CHECK;
 
+  DsLogAdmin::AdministrativeState old_state =
+    this->recordstore_->get_administrative_state (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+
+  // @@ The current revision of the specification (formal/03-07-01) is
+  // unclear whether an AttributeValueChange event should be sent if a
+  // log attribute was changed (to a new value), or whether the events
+  // should be sent unconditionally.  I have submitted a defect report
+  // to the OMG for clarification.
+  //
+  // In the mean time, we're interepreting it to mean that events are
+  // only sent when the value has changed.
   if (state == old_state)
     return;
 
@@ -364,12 +526,18 @@ TAO_Log_i::set_administrative_state (DsLogAdmin::AdministrativeState state
 
   if (notifier_)
     {
-      DsLogAdmin::Log_var log =
-        this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      // @@ Calling create_log_reference () in the ctor or in ::init()
+      // leads to an infinate loop.  This should be removed when that
+      // is fixed.
+      if (CORBA::is_nil (this->log_.in ()))
+	{
+	  this->log_ = logmgr_i_.create_log_reference (this->logid_
+						       ACE_ENV_ARG_PARAMETER);
+	  ACE_CHECK;
+	}
 
-      notifier_->administrative_state_change (log.in (),
-                                              logid_,
+      notifier_->administrative_state_change (this->log_.in (),
+                                              this->logid_,
                                               state
                                               ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
@@ -380,6 +548,12 @@ DsLogAdmin::ForwardingState
 TAO_Log_i::get_forwarding_state (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
+                           guard,
+                           this->recordstore_->lock (),
+                           CORBA::INTERNAL ());
+  ACE_CHECK_RETURN (0);
+
   return
     this->recordstore_->get_forwarding_state (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
@@ -389,10 +563,24 @@ TAO_Log_i::set_forwarding_state (DsLogAdmin::ForwardingState state
                                  ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  DsLogAdmin::ForwardingState old_state =
-    this->get_forwarding_state (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_WRITE_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
+			    guard,
+			    this->recordstore_->lock (),
+			    CORBA::INTERNAL ());
   ACE_CHECK;
 
+  DsLogAdmin::ForwardingState old_state =
+    this->recordstore_->get_forwarding_state (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+
+  // @@ The current revision of the specification (formal/03-07-01) is
+  // unclear whether an AttributeValueChange event should be sent if a
+  // log attribute was changed (to a new value), or whether the events
+  // should be sent unconditionally.  I have submitted a defect report
+  // to the OMG for clarification.
+  //
+  // In the mean time, we're interepreting it to mean that events are
+  // only sent when the value has changed.
   if (state == old_state)
     return;
 
@@ -401,22 +589,30 @@ TAO_Log_i::set_forwarding_state (DsLogAdmin::ForwardingState state
 
   if (notifier_)
     {
-      DsLogAdmin::Log_var log =
-        this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      // @@ Calling create_log_reference () in the ctor or in ::init()
+      // leads to an infinate loop.  This should be removed when that
+      // is fixed.
+      if (CORBA::is_nil (this->log_.in ()))
+	{
+	  this->log_ = logmgr_i_.create_log_reference (this->logid_
+						       ACE_ENV_ARG_PARAMETER);
+	  ACE_CHECK;
+	}
 
-      notifier_->forwarding_state_change (log.in (),
-                                          logid_,
+      notifier_->forwarding_state_change (this->log_.in (),
+                                          this->logid_,
                                           state
                                           ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
-  }
+    }
 }
 
 DsLogAdmin::OperationalState
 TAO_Log_i::get_operational_state (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  // No locks are necessary, since op_state_ is set in ::init() and
+  // never changed.
   return this->op_state_;
 }
 
@@ -424,6 +620,12 @@ DsLogAdmin::TimeInterval
 TAO_Log_i::get_interval (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
+                           guard,
+                           this->recordstore_->lock (),
+                           CORBA::INTERNAL ());
+  ACE_CHECK_RETURN (0);
+
   return this->recordstore_->get_interval (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
@@ -434,7 +636,13 @@ TAO_Log_i::set_interval (const DsLogAdmin::TimeInterval &interval
                    DsLogAdmin::InvalidTime,
                    DsLogAdmin::InvalidTimeInterval))
 {
+  ACE_WRITE_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
+			    guard,
+			    this->recordstore_->lock (),
+			    CORBA::INTERNAL ());
+  ACE_CHECK;
 
+  // validate interval
   if (interval.start != 0)
     {
       if (interval.start >= interval.stop)
@@ -442,11 +650,18 @@ TAO_Log_i::set_interval (const DsLogAdmin::TimeInterval &interval
     }
 
   DsLogAdmin::TimeInterval old_interval =
-    this->get_interval (ACE_ENV_SINGLE_ARG_PARAMETER);
+    this->recordstore_->get_interval (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  if (interval.start == old_interval.start &&
-      interval.stop  == old_interval.stop)
+  // @@ The current revision of the specification (formal/03-07-01) is
+  // unclear whether an AttributeValueChange event should be sent if a
+  // log attribute was changed (to a new value), or whether the events
+  // should be sent unconditionally.  I have submitted a defect report
+  // to the OMG for clarification.
+  //
+  // In the mean time, we're interepreting it to mean that events are
+  // only sent when the value has changed.
+  if (interval == old_interval)
     return;
 
   this->recordstore_->set_interval (interval ACE_ENV_ARG_PARAMETER);
@@ -454,14 +669,20 @@ TAO_Log_i::set_interval (const DsLogAdmin::TimeInterval &interval
 
   if (notifier_)
     {
-      DsLogAdmin::Log_var log =
-        this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      // @@ Calling create_log_reference () in the ctor or in ::init()
+      // leads to an infinate loop.  This should be removed when that
+      // is fixed.
+      if (CORBA::is_nil (this->log_.in ()))
+	{
+	  this->log_ = logmgr_i_.create_log_reference (this->logid_
+						       ACE_ENV_ARG_PARAMETER);
+	  ACE_CHECK;
+	}
 
       if (interval.start != old_interval.start)
         {
-          notifier_->start_time_value_change (log.in (),
-                                              logid_,
+          notifier_->start_time_value_change (this->log_.in (),
+                                              this->logid_,
                                               old_interval.start,
                                               interval.start
                                               ACE_ENV_ARG_PARAMETER);
@@ -470,8 +691,8 @@ TAO_Log_i::set_interval (const DsLogAdmin::TimeInterval &interval
 
       if (interval.stop != old_interval.stop)
         {
-          notifier_->stop_time_value_change (log.in (),
-                                             logid_,
+          notifier_->stop_time_value_change (this->log_.in (),
+                                             this->logid_,
                                              old_interval.stop,
                                              interval.stop
                                              ACE_ENV_ARG_PARAMETER);
@@ -482,6 +703,19 @@ TAO_Log_i::set_interval (const DsLogAdmin::TimeInterval &interval
 
 DsLogAdmin::AvailabilityStatus
 TAO_Log_i::get_availability_status (ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
+                           guard,
+                           this->recordstore_->lock (),
+                           CORBA::INTERNAL ());
+  ACE_CHECK_RETURN (0);
+
+  return this->get_availability_status_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+}
+
+DsLogAdmin::AvailabilityStatus
+TAO_Log_i::get_availability_status_i (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // The log is considered "on duty" if all the following are true:
@@ -495,7 +729,7 @@ TAO_Log_i::get_availability_status (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CHECK_RETURN (this->avail_status_);
 
   DsLogAdmin::AdministrativeState admin_state =
-    this->get_administrative_state (ACE_ENV_SINGLE_ARG_PARAMETER);
+    this->recordstore_->get_administrative_state (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (this->avail_status_);
 
   if (this->op_state_ == DsLogAdmin::enabled
@@ -515,13 +749,13 @@ DsLogAdmin::CapacityAlarmThresholdList*
 TAO_Log_i::get_capacity_alarm_thresholds (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  DsLogAdmin::CapacityAlarmThresholdList* ret_val;
-  ACE_NEW_THROW_EX (ret_val,
-                    DsLogAdmin::CapacityAlarmThresholdList (this->thresholds_),
-                    CORBA::NO_MEMORY ());
+  ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
+                           guard,
+                           this->recordstore_->lock (),
+                           CORBA::INTERNAL ());
   ACE_CHECK_RETURN (0);
 
-  return ret_val;
+  return this->recordstore_->get_capacity_alarm_thresholds (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 void
@@ -532,6 +766,12 @@ TAO_Log_i::set_capacity_alarm_thresholds (const
   ACE_THROW_SPEC ((CORBA::SystemException,
                    DsLogAdmin::InvalidThreshold))
 {
+  ACE_WRITE_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
+			    guard,
+			    this->recordstore_->lock (),
+			    CORBA::INTERNAL ());
+  ACE_CHECK;
+
   const CORBA::Boolean validated =
     TAO_Log_i::validate_capacity_alarm_thresholds (threshs
                                                    ACE_ENV_ARG_PARAMETER);
@@ -540,37 +780,76 @@ TAO_Log_i::set_capacity_alarm_thresholds (const
   if (!validated)
     ACE_THROW (DsLogAdmin::InvalidThreshold ());
 
-  DsLogAdmin::CapacityAlarmThresholdList old_threshs;
-  old_threshs = thresholds_;
+  DsLogAdmin::CapacityAlarmThresholdList_var old_threshs =
+    this->recordstore_->get_capacity_alarm_thresholds (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
 
-  this->thresholds_ = threshs;
+  // @@ The current revision of the specification (formal/03-07-01) is
+  // unclear whether an AttributeValueChange event should be sent if a
+  // log attribute was changed (to a new value), or whether the events
+  // should be sent unconditionally.  I have submitted a defect report
+  // to the OMG for clarification.
+  //
+  // In the mean time, we're interepreting it to mean that events are
+  // only sent when the value has changed.
+  if (threshs == old_threshs.in ())
+      return;
+
+  this->recordstore_->set_capacity_alarm_thresholds (threshs
+						     ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
   if (notifier_)
     {
-      DsLogAdmin::Log_var log =
-        this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      // @@ Calling create_log_reference () in the ctor or in ::init()
+      // leads to an infinate loop.  This should be removed when that
+      // is fixed.
+      if (CORBA::is_nil (this->log_.in ()))
+	{
+	  this->log_ = logmgr_i_.create_log_reference (this->logid_
+						       ACE_ENV_ARG_PARAMETER);
+	  ACE_CHECK;
+	}
 
-      notifier_->capacity_alarm_threshold_value_change (log.in (),
-                                                        logid_,
-                                                        old_threshs,
+      notifier_->capacity_alarm_threshold_value_change (this->log_.in (),
+                                                        this->logid_,
+                                                        old_threshs.in (),
                                                         threshs
                                                         ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
+
+  // @@ The current revision of the specification (formal/03-07-01)
+  // doesn't completly describe the behavior of changing the capacity
+  // alarm threshold list.  Publicly available documentation I've read
+  // for other log service implementations doesn't offer much guidance
+  // either.  I have submitted a defect report to the OMG for
+  // clarification.
+  //
+  // In the mean time, we will call reset_capacity_alarm_threshold()
+  // to reset the "current_threshold_" index.  This will result in
+  // ThresholdAlarm being sent when the next threshold is crossed.  An
+  // argument could be made that an event should be be sent for each
+  // threshold that has already been crossed.  Hopefully, this will be
+  // clarified when/if the OMG charters a RTF for the log service.
+  //    --jtc
+  //
+  this->thresholds_ = threshs;
+  this->reset_capacity_alarm_threshold (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
 DsLogAdmin::WeekMask*
 TAO_Log_i::get_week_mask (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  DsLogAdmin::WeekMask* ret_val;
-  ACE_NEW_THROW_EX (ret_val,
-                    DsLogAdmin::WeekMask (this->weekmask_),
-                    CORBA::NO_MEMORY ());
+  ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
+                           guard,
+                           this->recordstore_->lock (),
+                           CORBA::INTERNAL ());
   ACE_CHECK_RETURN (0);
 
-  return ret_val;
+  return this->recordstore_->get_week_mask (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 void
@@ -581,86 +860,51 @@ TAO_Log_i::set_week_mask (const DsLogAdmin::WeekMask &masks
                    DsLogAdmin::InvalidTimeInterval,
                    DsLogAdmin::InvalidMask))
 {
-  for (CORBA::ULong i = 0; i < masks.length (); ++i)
-    {
-      if (masks[i].days > (DsLogAdmin::Sunday +
-                           DsLogAdmin::Monday +
-                           DsLogAdmin::Tuesday +
-                           DsLogAdmin::Wednesday +
-                           DsLogAdmin::Thursday +
-                           DsLogAdmin::Friday +
-                           DsLogAdmin::Saturday)
-          )
-        ACE_THROW (DsLogAdmin::InvalidMask ());
+  ACE_WRITE_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
+			    guard,
+			    this->recordstore_->lock (),
+			    CORBA::INTERNAL ());
+  ACE_CHECK;
 
-      for (CORBA::ULong j = 0; j < masks[i].intervals.length (); ++j)
-        {
-          if (masks[i].intervals[j].start.hour > 23 ||
-              masks[i].intervals[j].start.minute > 59 ||
-              masks[i].intervals[j].stop.hour > 23 ||
-              masks[i].intervals[j].stop.minute > 59)
-            ACE_THROW (DsLogAdmin::InvalidTime ());
+  validate_week_mask (masks ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
-          if (masks[i].intervals[j].stop.hour <
-              masks[i].intervals[j].start.hour)
-            ACE_THROW (DsLogAdmin::InvalidTimeInterval ());
+  DsLogAdmin::WeekMask_var old_masks =
+    this->recordstore_->get_week_mask (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
 
-          if (masks[i].intervals[j].stop.hour ==
-              masks[i].intervals[j].start.hour &&
-              masks[i].intervals[j].stop.minute <=
-              masks[i].intervals[j].start.minute)
-            ACE_THROW (DsLogAdmin::InvalidTimeInterval ());
+  // @@ The current revision of the specification (formal/03-07-01) is
+  // unclear whether an AttributeValueChange event should be sent if a
+  // log attribute was changed (to a new value), or whether the events
+  // should be sent unconditionally.  I have submitted a defect report
+  // to the OMG for clarification.
+  //
+  // In the mean time, we're interepreting it to mean that events are
+  // only sent when the value has changed.
+  if (masks == old_masks.in ())
+    return;
 
-        }
-    }
+  this->recordstore_->set_week_mask (masks ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
-  DsLogAdmin::WeekMask old_masks;
-  old_masks = weekmask_;
-
-  DsLogAdmin::TimeInterval temp_interval;
-  CORBA::ULong count = 0;
-  weekly_intervals_.length (100);
-
-  // convert the weekmask into a sequence of time intervals.
-  for (CORBA::ULong k = 0; k < masks.length (); ++k)
-    {
-      for (CORBA::ULong j = 0; j < masks[k].intervals.length (); ++j)
-        {
-          for (int d = 0; d < 7; ++d)
-            {
-              if ( (1 << d) & masks[k].days)
-                {
-                  temp_interval.start =
-                    CORBA::ULongLong (
-                      (d * 3600* 24) +
-                      (masks[k].intervals[j].start.hour * 3600) +
-                      (masks[k].intervals[j].start.minute * 60)) * 10000000;
-
-                  temp_interval.stop =
-                    CORBA::ULongLong (
-                      (d * 3600* 24) +
-                      (masks[k].intervals[j].stop.hour * 3600) +
-                      (masks[k].intervals[j].stop.minute * 60)) * 10000000;
-
-                  weekly_intervals_[count] = temp_interval;
-                  ++count;
-                }
-            }
-        }
-    }
-  weekly_intervals_.length (count);
-
-  //TODO: SORT AND CLEAN
+  this->reset_week_mask (masks ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
   if (notifier_)
     {
-      DsLogAdmin::Log_var log =
-        this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      // @@ Calling create_log_reference () in the ctor or in ::init()
+      // leads to an infinate loop.  This should be removed when that
+      // is fixed.
+      if (CORBA::is_nil (this->log_.in ()))
+	{
+	  this->log_ = logmgr_i_.create_log_reference (this->logid_
+						       ACE_ENV_ARG_PARAMETER);
+	  ACE_CHECK;
+	}
 
-      notifier_->week_mask_value_change (log.in (),
-                                         logid_,
-                                         old_masks,
+      notifier_->week_mask_value_change (this->log_.in (),
+                                         this->logid_,
+                                         old_masks.in (),
                                          masks
                                          ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
@@ -677,6 +921,12 @@ TAO_Log_i::query (const char *grammar,
                    DsLogAdmin::InvalidGrammar,
                    DsLogAdmin::InvalidConstraint))
 {
+  ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
+                           guard,
+                           this->recordstore_->lock (),
+                           CORBA::INTERNAL ());
+  ACE_CHECK_RETURN (0);
+
   return this->recordstore_->query (grammar,
 				    constraint,
 				    iter_out
@@ -691,6 +941,12 @@ TAO_Log_i::retrieve (DsLogAdmin::TimeT from_time,
                      ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
+                           guard,
+                           this->recordstore_->lock (),
+                           CORBA::INTERNAL ());
+  ACE_CHECK_RETURN (0);
+
   return this->recordstore_->retrieve (from_time,
 				       how_many,
 				       iter_out
@@ -706,6 +962,12 @@ TAO_Log_i::match (const char* grammar,
                    DsLogAdmin::InvalidGrammar,
                    DsLogAdmin::InvalidConstraint))
 {
+  ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
+                           guard,
+                           this->recordstore_->lock (),
+                           CORBA::INTERNAL ());
+  ACE_CHECK_RETURN (0);
+
   CORBA::ULong count =
     this->recordstore_->match (grammar,
 			       constraint
@@ -724,6 +986,12 @@ TAO_Log_i::delete_records (const char *grammar,
                      DsLogAdmin::InvalidGrammar,
                      DsLogAdmin::InvalidConstraint))
 {
+  ACE_WRITE_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
+			    guard,
+			    this->recordstore_->lock (),
+			    CORBA::INTERNAL ());
+  ACE_CHECK_RETURN (0);
+
   CORBA::ULong count =
     this->recordstore_->delete_records (grammar,
 					constraint
@@ -733,11 +1001,11 @@ TAO_Log_i::delete_records (const char *grammar,
   if (avail_status_.log_full && count > 0)
     {
       const CORBA::ULongLong current_size =
-        this->get_current_size (ACE_ENV_SINGLE_ARG_PARAMETER);
+        this->recordstore_->get_current_size (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       const CORBA::ULongLong max_size =
-        this->get_max_size (ACE_ENV_SINGLE_ARG_PARAMETER);
+        this->recordstore_->get_max_size (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       if (current_size < max_size)
@@ -758,6 +1026,12 @@ TAO_Log_i::delete_records_by_id (const DsLogAdmin::RecordIdList &ids
                                  ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  ACE_WRITE_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
+			    guard,
+			    this->recordstore_->lock (),
+			    CORBA::INTERNAL ());
+  ACE_CHECK_RETURN (0);
+
   CORBA::ULong count =
     this->recordstore_->delete_records_by_id (ids ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
@@ -765,11 +1039,11 @@ TAO_Log_i::delete_records_by_id (const DsLogAdmin::RecordIdList &ids
   if (avail_status_.log_full && count > 0)
     {
       const CORBA::ULongLong current_size =
-        this->get_current_size (ACE_ENV_SINGLE_ARG_PARAMETER);
+        this->recordstore_->get_current_size (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       const CORBA::ULongLong max_size =
-        this->get_max_size (ACE_ENV_SINGLE_ARG_PARAMETER);
+        this->recordstore_->get_max_size (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       if (current_size < max_size)
@@ -816,12 +1090,18 @@ TAO_Log_i::write_recordlist (const DsLogAdmin::RecordList &reclist
                    DsLogAdmin::LogLocked,
                    DsLogAdmin::LogDisabled))
 {
+  ACE_WRITE_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
+			    guard,
+			    this->recordstore_->lock (),
+			    CORBA::INTERNAL ());
+  ACE_CHECK;
+
   DsLogAdmin::LogFullActionType log_full_action =
-    this->get_log_full_action (ACE_ENV_SINGLE_ARG_PARAMETER);
+    this->recordstore_->get_log_full_action (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   DsLogAdmin::AdministrativeState admin_state =
-    this->get_administrative_state (ACE_ENV_SINGLE_ARG_PARAMETER);
+    this->recordstore_->get_administrative_state (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   // @@ The current revision of the specification (formal/03-07-01)
@@ -834,7 +1114,7 @@ TAO_Log_i::write_recordlist (const DsLogAdmin::RecordList &reclist
   // specific LogLocked and LogDisabled exceptions will be thrown.
 
   DsLogAdmin::AvailabilityStatus avail_stat =
-    this->get_availability_status (ACE_ENV_SINGLE_ARG_PARAMETER);
+    this->get_availability_status_i (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   if (avail_stat.log_full == 1
@@ -911,6 +1191,12 @@ TAO_Log_i::set_record_attribute (DsLogAdmin::RecordId id,
                    DsLogAdmin::InvalidRecordId,
                    DsLogAdmin::InvalidAttribute))
 {
+  ACE_WRITE_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
+			    guard,
+			    this->recordstore_->lock (),
+			    CORBA::INTERNAL ());
+  ACE_CHECK;
+
   // TODO: validate attributes here.
 
   DsLogAdmin::LogRecord rec;
@@ -937,6 +1223,12 @@ TAO_Log_i::set_records_attribute (const char *grammar,
                      DsLogAdmin::InvalidConstraint,
                      DsLogAdmin::InvalidAttribute))
 {
+  ACE_WRITE_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
+			    guard,
+			    this->recordstore_->lock (),
+			    CORBA::INTERNAL ());
+  ACE_CHECK;
+
   DsLogAdmin::Iterator_var iter_out;
 
   DsLogAdmin::RecordList_var rec_list =
@@ -988,6 +1280,12 @@ TAO_Log_i::get_record_attribute (DsLogAdmin::RecordId id
   ACE_THROW_SPEC ((CORBA::SystemException,
                    DsLogAdmin::InvalidRecordId))
 {
+  ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
+                           guard,
+                           this->recordstore_->lock (),
+                           CORBA::INTERNAL ());
+  ACE_CHECK_RETURN (0);
+
   DsLogAdmin::LogRecord rec;
 
   int retval = this->recordstore_->retrieve (id, rec ACE_ENV_ARG_PARAMETER);
@@ -1013,6 +1311,7 @@ TAO_Log_i::flush (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                      DsLogAdmin::UnsupportedQoS))
 {
+  /// XXX locks?
   this->recordstore_->flush (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
@@ -1021,7 +1320,7 @@ TAO_Log_i::scheduled (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   DsLogAdmin::TimeInterval interval =
-    this->get_interval (ACE_ENV_SINGLE_ARG_PARAMETER);
+    this->recordstore_->get_interval (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   TimeBase::TimeT current_time;
@@ -1158,11 +1457,11 @@ TAO_Log_i::remove_old_records (ACE_ENV_SINGLE_ARG_DECL)
   if (avail_status_.log_full && count > 0)
     {
       const CORBA::ULongLong current_size =
-        this->get_current_size (ACE_ENV_SINGLE_ARG_PARAMETER);
+        this->recordstore_->get_current_size (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       const CORBA::ULongLong max_size =
-        this->get_max_size (ACE_ENV_SINGLE_ARG_PARAMETER);
+        this->recordstore_->get_max_size (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       if (current_size < max_size)
@@ -1180,7 +1479,7 @@ TAO_Log_i::check_capacity_alarm_threshold (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::ULongLong max_size =
-    this->get_max_size (ACE_ENV_SINGLE_ARG_PARAMETER);
+    this->recordstore_->get_max_size (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   if (max_size != 0 && this->thresholds_.length () > 0)
@@ -1202,12 +1501,18 @@ TAO_Log_i::check_capacity_alarm_threshold (ACE_ENV_SINGLE_ARG_DECL)
 
           if (notifier_)
             {
-              DsLogAdmin::Log_var log =
-                this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_CHECK;
-
+	      // @@ Calling create_log_reference () in the ctor or in ::init()
+	      // leads to an infinate loop.  This should be removed when that
+	      // is fixed.
+	      if (CORBA::is_nil (this->log_.in ()))
+		{
+		  this->log_ = logmgr_i_.create_log_reference (this->logid_
+							       ACE_ENV_ARG_PARAMETER);
+		  ACE_CHECK;
+		}
+		  
               notifier_->threshold_alarm (
-                log.in (),
+                this->log_.in (),
                 logid_,
                 this->thresholds_[this->current_threshold_],
                 percent,
@@ -1239,7 +1544,7 @@ TAO_Log_i::reset_capacity_alarm_threshold (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::ULongLong max_size =
-    this->get_max_size (ACE_ENV_SINGLE_ARG_PARAMETER);
+    this->recordstore_->get_max_size (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   if (max_size != 0 && this->thresholds_.length() > 0)
@@ -1283,3 +1588,327 @@ TAO_Log_i::validate_capacity_alarm_thresholds (
 
   return true;
 }
+
+void
+TAO_Log_i::reset_log_qos (const DsLogAdmin::QoSList& qos
+			  ACE_ENV_ARG_DECL_NOT_USED)
+{
+  // @@ The current revision of the specification (formal/03-07-01)
+  // does not clearly define the semantics to follow when the QoSList
+  // contains mutually exclusive, unsupported, or unknown properties.
+  // I have submitted a defect report to the OMG for clarification.
+  //
+  // In the mean time, the last property found in the QoSList takes
+  // presidence. 
+  //    --jtc
+
+  DsLogAdmin::QoSType qostype = DsLogAdmin::QoSNone;
+
+  for (CORBA::ULong i = 0; i < qos.length (); ++i) 
+    {
+      qostype = qos[i];
+    }
+
+  this->qostype_ = qostype;
+
+  if (this->qostype_ == DsLogAdmin::QoSFlush)
+    this->log_flush_handler_.schedule ();
+  else
+    this->log_flush_handler_.cancel ();
+}
+
+void
+TAO_Log_i::validate_log_qos (const DsLogAdmin::QoSList& qos 
+			     ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((DsLogAdmin::UnsupportedQoS))
+{
+  DsLogAdmin::QoSList denied;
+
+  // validate properties..
+  for (CORBA::ULong i = 0; i < qos.length (); ++i)
+    {
+      DsLogAdmin::QoSType qostype = qos[i];
+      if (qostype != DsLogAdmin::QoSNone &&
+	  qostype != DsLogAdmin::QoSFlush &&
+          qostype != DsLogAdmin::QoSReliability)
+        {
+	  CORBA::ULong len = denied.length();
+	  denied.length(len + 1);
+	  denied[len] = qostype;
+        }
+    }
+
+  // if there were any unknown/unsupported properties, thrown an
+  // exception.
+  if (denied.length() != 0)
+    {
+      ACE_THROW (DsLogAdmin::UnsupportedQoS (denied));
+    }
+}
+
+void
+TAO_Log_i::reset_week_mask (const DsLogAdmin::WeekMask& masks 
+			    ACE_ENV_ARG_DECL_NOT_USED)
+{
+  CORBA::ULong count = 0;
+  weekly_intervals_.length (100);
+
+  // convert the weekmask into a sequence of time intervals.
+  for (CORBA::ULong k = 0; k < masks.length (); ++k)
+    {
+      for (CORBA::ULong j = 0; j < masks[k].intervals.length (); ++j)
+        {
+          for (int d = 0; d < 7; ++d)
+            {
+              if ( (1 << d) & masks[k].days)
+                {
+		  DsLogAdmin::TimeInterval temp_interval;
+
+                  temp_interval.start =
+                    CORBA::ULongLong (
+                      (d * 3600* 24) +
+                      (masks[k].intervals[j].start.hour * 3600) +
+                      (masks[k].intervals[j].start.minute * 60)) * 10000000;
+
+                  temp_interval.stop =
+                    CORBA::ULongLong (
+                      (d * 3600* 24) +
+                      (masks[k].intervals[j].stop.hour * 3600) +
+                      (masks[k].intervals[j].stop.minute * 60)) * 10000000;
+
+                  weekly_intervals_[count] = temp_interval;
+                  ++count;
+                }
+            }
+        }
+    }
+  weekly_intervals_.length (count);
+
+  //TODO: SORT AND CLEAN
+}
+
+void
+TAO_Log_i::validate_week_mask (const DsLogAdmin::WeekMask& masks
+			       ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((DsLogAdmin::InvalidTime,
+		   DsLogAdmin::InvalidTimeInterval,
+		   DsLogAdmin::InvalidMask))
+{
+  for (CORBA::ULong i = 0; i < masks.length (); ++i)
+    {
+      if (masks[i].days > (DsLogAdmin::Sunday +
+                           DsLogAdmin::Monday +
+                           DsLogAdmin::Tuesday +
+                           DsLogAdmin::Wednesday +
+                           DsLogAdmin::Thursday +
+                           DsLogAdmin::Friday +
+                           DsLogAdmin::Saturday)
+          )
+        ACE_THROW (DsLogAdmin::InvalidMask ());
+
+      for (CORBA::ULong j = 0; j < masks[i].intervals.length (); ++j)
+        {
+          if (masks[i].intervals[j].start.hour > 23 ||
+              masks[i].intervals[j].start.minute > 59 ||
+              masks[i].intervals[j].stop.hour > 23 ||
+              masks[i].intervals[j].stop.minute > 59)
+            ACE_THROW (DsLogAdmin::InvalidTime ());
+
+          if (masks[i].intervals[j].stop.hour <
+              masks[i].intervals[j].start.hour)
+            ACE_THROW (DsLogAdmin::InvalidTimeInterval ());
+
+          if (masks[i].intervals[j].stop.hour ==
+              masks[i].intervals[j].start.hour &&
+              masks[i].intervals[j].stop.minute <=
+              masks[i].intervals[j].start.minute)
+            ACE_THROW (DsLogAdmin::InvalidTimeInterval ());
+        }
+    }
+}
+
+
+bool
+operator==(const DsLogAdmin::CapacityAlarmThresholdList& rhs,
+           const DsLogAdmin::CapacityAlarmThresholdList& lhs)
+{
+  const CORBA::ULong length = rhs.length ();
+
+  if (length != lhs.length ())
+    {
+      return false;
+    }
+
+  for (CORBA::ULong i = 0; i < length; ++i) 
+    {
+      if (rhs[i] != lhs[i]) 
+	{
+	  return false;
+	}
+    }
+
+  return true;
+}
+
+bool
+operator!=(const DsLogAdmin::CapacityAlarmThresholdList& rhs,
+           const DsLogAdmin::CapacityAlarmThresholdList& lhs)
+{
+  return !(lhs == rhs);
+}
+
+
+bool
+operator==(const DsLogAdmin::IntervalsOfDay& rhs,
+           const DsLogAdmin::IntervalsOfDay& lhs)
+{
+  const CORBA::ULong length = rhs.length ();
+
+  if (length != lhs.length ())
+    {
+      return false;
+    }
+
+  for (CORBA::ULong i = 0; i < length; ++i)
+    {
+      if (rhs[i] != lhs[i])
+        {
+           return false;
+        }
+    }
+
+  return true;
+}
+
+bool
+operator!=(const DsLogAdmin::IntervalsOfDay& rhs,
+           const DsLogAdmin::IntervalsOfDay& lhs)
+{
+  return !(lhs == rhs);
+}
+
+
+bool
+operator==(const DsLogAdmin::QoSList& rhs,
+           const DsLogAdmin::QoSList& lhs)
+{
+  const CORBA::ULong length = rhs.length ();
+
+  if (length != lhs.length ())
+    {
+      return false;
+    }
+
+  for (CORBA::ULong i = 0; i < length; ++i)
+    {
+      if (rhs[i] != lhs[i])
+        {
+           return false;
+        }
+    }
+
+  return true;
+}
+
+bool
+operator!=(const DsLogAdmin::QoSList& rhs,
+           const DsLogAdmin::QoSList& lhs)
+{
+  return !(lhs == rhs);
+}
+
+
+bool
+operator==(const DsLogAdmin::Time24& rhs,
+           const DsLogAdmin::Time24& lhs)
+{
+  return (rhs.hour   == lhs.hour &&
+          rhs.minute == lhs.minute);
+}
+
+bool
+operator!=(const DsLogAdmin::Time24& rhs,
+           const DsLogAdmin::Time24& lhs)
+{
+  return !(lhs == rhs);
+}
+
+
+bool
+operator==(const DsLogAdmin::Time24Interval& rhs,
+           const DsLogAdmin::Time24Interval& lhs)
+{
+  return (rhs.start == lhs.start &&
+          rhs.stop  == lhs.stop);
+}
+
+bool
+operator!=(const DsLogAdmin::Time24Interval& rhs,
+           const DsLogAdmin::Time24Interval& lhs)
+{
+  return !(lhs == rhs);
+}
+
+
+bool
+operator==(const DsLogAdmin::TimeInterval& rhs,
+           const DsLogAdmin::TimeInterval& lhs)
+{
+  return (rhs.start == lhs.start &&
+          rhs.stop  == lhs.stop);
+}
+
+bool
+operator!=(const DsLogAdmin::TimeInterval& rhs,
+           const DsLogAdmin::TimeInterval& lhs)
+{
+  return !(lhs == rhs);
+}
+
+
+bool
+operator==(const DsLogAdmin::WeekMaskItem& rhs,
+           const DsLogAdmin::WeekMaskItem& lhs)
+{
+  return (rhs.days      == lhs.days &&
+          rhs.intervals == lhs.intervals);
+}
+
+bool
+operator!=(const DsLogAdmin::WeekMaskItem& rhs,
+           const DsLogAdmin::WeekMaskItem& lhs)
+{
+  return !(lhs == rhs);
+}
+
+
+bool
+operator==(const DsLogAdmin::WeekMask& rhs,
+	   const DsLogAdmin::WeekMask& lhs)
+{
+  const CORBA::ULong length = rhs.length ();
+
+  if (length != lhs.length ())
+    {
+      return false;
+    }
+ 
+  for (CORBA::ULong i = 0; i < length; ++i)
+    {
+      if (rhs[i] != lhs[i]) 
+        {
+          return false;
+        }
+    }
+
+  return true;
+}
+
+bool
+operator!=(const DsLogAdmin::WeekMask& rhs,
+	   const DsLogAdmin::WeekMask& lhs)
+{
+  return !(lhs == rhs);
+}
+
+TAO_END_VERSIONED_NAMESPACE_DECL

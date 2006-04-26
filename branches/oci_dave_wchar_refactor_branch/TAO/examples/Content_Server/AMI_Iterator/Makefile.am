@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ../bin/mwc.pl -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/config -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/templates -type automake -noreldefs TAO.mwc
+## ../bin/mwc.pl -type automake -noreldefs TAO.mwc
 
 ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
@@ -16,16 +16,14 @@ TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
-CLEANFILES =
 noinst_PROGRAMS =
-BUILT_SOURCES =
 
-## Makefile.AMI_Iterator_Client.am
+## Makefile.AMI_Iterator_IDL.am
 
 if BUILD_AMI
 if BUILD_CORBA_MESSAGING
 
-BUILT_SOURCES += \
+BUILT_SOURCES = \
   Web_ServerC.cpp \
   Web_ServerC.h \
   Web_ServerC.inl \
@@ -36,7 +34,7 @@ BUILT_SOURCES += \
   Web_ServerS_T.h \
   Web_ServerS_T.inl
 
-CLEANFILES += \
+CLEANFILES = \
   Web_Server-stamp \
   Web_ServerC.cpp \
   Web_ServerC.h \
@@ -51,8 +49,21 @@ CLEANFILES += \
 Web_ServerC.cpp Web_ServerC.h Web_ServerC.inl Web_ServerS.cpp Web_ServerS.h Web_ServerS.inl Web_ServerS_T.cpp Web_ServerS_T.h Web_ServerS_T.inl: Web_Server-stamp
 
 Web_Server-stamp: $(srcdir)/Web_Server.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -I$(TAO_ROOT)/orbsvcs $(srcdir)/Web_Server.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -GC $(srcdir)/Web_Server.idl
 	@touch $@
+
+
+noinst_HEADERS = \
+  Web_Server.idl
+
+endif BUILD_CORBA_MESSAGING
+endif BUILD_AMI
+
+## Makefile.AMI_Iterator_Client.am
+
+if BUILD_AMI
+if BUILD_CORBA_MESSAGING
+if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS += client
 
@@ -69,12 +80,7 @@ client_SOURCES = \
   Web_ServerC.cpp \
   Web_ServerS.cpp \
   client.cpp \
-  Iterator_Handler.h \
-  Web_ServerC.h \
-  Web_ServerC.inl \
-  Web_ServerS.h \
-  Web_ServerS_T.h \
-  Web_ServerS_T.inl
+  Iterator_Handler.h
 
 client_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
@@ -87,6 +93,7 @@ client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+endif !BUILD_ACE_FOR_TAO
 endif BUILD_CORBA_MESSAGING
 endif BUILD_AMI
 
@@ -94,35 +101,7 @@ endif BUILD_AMI
 
 if BUILD_AMI
 if BUILD_CORBA_MESSAGING
-
-BUILT_SOURCES += \
-  Web_ServerC.cpp \
-  Web_ServerC.h \
-  Web_ServerC.inl \
-  Web_ServerS.cpp \
-  Web_ServerS.h \
-  Web_ServerS.inl \
-  Web_ServerS_T.cpp \
-  Web_ServerS_T.h \
-  Web_ServerS_T.inl
-
-CLEANFILES += \
-  Web_Server-stamp \
-  Web_ServerC.cpp \
-  Web_ServerC.h \
-  Web_ServerC.inl \
-  Web_ServerS.cpp \
-  Web_ServerS.h \
-  Web_ServerS.inl \
-  Web_ServerS_T.cpp \
-  Web_ServerS_T.h \
-  Web_ServerS_T.inl
-
-Web_ServerC.cpp Web_ServerC.h Web_ServerC.inl Web_ServerS.cpp Web_ServerS.h Web_ServerS.inl Web_ServerS_T.cpp Web_ServerS_T.h Web_ServerS_T.inl: Web_Server-stamp
-
-Web_Server-stamp: $(srcdir)/Web_Server.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -I$(TAO_ROOT)/orbsvcs $(srcdir)/Web_Server.idl
-	@touch $@
+if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS += server
 
@@ -141,12 +120,7 @@ server_SOURCES = \
   Web_ServerS.cpp \
   server.cpp \
   Content_Iterator_i.h \
-  Iterator_Factory_i.h \
-  Web_ServerC.h \
-  Web_ServerC.inl \
-  Web_ServerS.h \
-  Web_ServerS_T.h \
-  Web_ServerS_T.inl
+  Iterator_Factory_i.h
 
 server_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
@@ -159,6 +133,7 @@ server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+endif !BUILD_ACE_FOR_TAO
 endif BUILD_CORBA_MESSAGING
 endif BUILD_AMI
 

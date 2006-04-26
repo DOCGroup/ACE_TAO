@@ -17,7 +17,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "pi_export.h"
+#include "tao/PI/pi_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -31,6 +31,8 @@
 
 #include "ace/Service_Config.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_PI_Export TAO_PICurrent_Loader
   : public TAO_Object_Loader
 {
@@ -42,6 +44,8 @@ public:
                                            ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE (TAO_PICurrent_Loader)
 ACE_FACTORY_DECLARE (TAO_PI, TAO_PICurrent_Loader)

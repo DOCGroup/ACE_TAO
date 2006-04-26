@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file   ESF_Peer_Workers.h
  *
@@ -12,11 +13,13 @@
 #ifndef TAO_ESF_PEER_WORKERS_H
 #define TAO_ESF_PEER_WORKERS_H
 
-#include "ESF_Worker.h"
+#include "orbsvcs/ESF/ESF_Worker.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_ESF_Peer_Connected
@@ -87,12 +90,14 @@ private:
 
 // ****************************************************************
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "ESF_Peer_Workers.i"
+#include "orbsvcs/ESF/ESF_Peer_Workers.i"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ESF_Peer_Workers.cpp"
+#include "orbsvcs/ESF/ESF_Peer_Workers.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

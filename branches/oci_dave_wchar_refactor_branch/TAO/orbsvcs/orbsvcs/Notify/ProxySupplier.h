@@ -1,29 +1,30 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file ProxySupplier.h
  *
  *  $Id$
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_PROXYSUPPLIER_H
 #define TAO_Notify_PROXYSUPPLIER_H
 #include /**/ "ace/pre.h"
 
-#include "notify_serv_export.h"
+#include "orbsvcs/Notify/notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Event.h"
-#include "Proxy.h"
-#include "ConsumerAdmin.h"
+#include "orbsvcs/Notify/Event.h"
+#include "orbsvcs/Notify/Proxy.h"
+#include "orbsvcs/Notify/ConsumerAdmin.h"
 
 #include "orbsvcs/CosEventChannelAdminC.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Notify_Consumer;
 class TAO_Notify_Method_Request_Dispatch_No_Copy;
@@ -90,8 +91,10 @@ private:
   virtual TAO_Notify_Peer* peer (void);
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "ProxySupplier.inl"
+#include "orbsvcs/Notify/ProxySupplier.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

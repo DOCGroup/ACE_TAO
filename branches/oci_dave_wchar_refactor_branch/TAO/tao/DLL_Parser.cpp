@@ -1,31 +1,29 @@
 // $Id$
 
-#include "DLL_Parser.h"
-#include "Object_Loader.h"
-#include "Object.h"
-#include "Environment.h"
-#include "ORB_Constants.h"
-#include "SystemException.h"
+#include "tao/DLL_Parser.h"
+#include "tao/Object_Loader.h"
+#include "tao/Object.h"
+#include "tao/Environment.h"
+#include "tao/ORB_Constants.h"
+#include "tao/SystemException.h"
 
 #include "ace/Dynamic_Service.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"
-
-#if !defined(__ACE_INLINE__)
-#include "DLL_Parser.i"
-#endif /* __ACE_INLINE__ */
 
 
 ACE_RCSID (tao,
            DLL_Parser,
            "$Id$")
 
+static const char dll_prefix[] = "DLL:";
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_DLL_Parser::~TAO_DLL_Parser (void)
 {
 }
 
-static const char dll_prefix[] = "DLL:";
 
 int
 TAO_DLL_Parser::match_prefix (const char *ior_string) const
@@ -62,6 +60,8 @@ TAO_DLL_Parser::parse_string (const char *ior,
 
   return loader->create_object (orb, 0, 0 ACE_ENV_ARG_PARAMETER);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (TAO_DLL_Parser,
                        ACE_TEXT ("DLL_Parser"),

@@ -19,6 +19,16 @@
  * Those assumptions are pretty good these days, with Crays beign
  * the only known exception.
  *
+ * Optimizations
+ * -------------
+ *  ACE_LACKS_CDR_ALIGNMENT
+ *  @author Arvind S. Krishna <arvindk@dre.vanderbilt.edu>
+ *
+ *  CDR stream ignores alignment when marshaling data. Use this option
+ *  only when ACE_DISABLE_SWAP_ON_READ can be enabled. This option requires
+ *  ACE CDR engine to do both marshaling and demarshaling.
+ *
+ *
  *  @author TAO version by Aniruddha Gokhale <gokhale@cs.wustl.edu>
  *  @author Carlos O'Ryan <coryan@cs.wustl.edu>
  *  @author ACE version by Jeff Parsons <parsons@cs.wustl.edu>
@@ -51,6 +61,8 @@
 // big endian encapsulation byte order has value = 0
 #endif /* ! ACE_LITTLE_ENDIAN */
 
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class ACE_Char_Codeset_Translator;
 class ACE_WChar_Codeset_Translator;
@@ -217,7 +229,7 @@ public:
                                   const ACE_CDR::WChar *x);
   //@}
 
-  /// Note: the portion written starts at <x> and ends
+  /// @note the portion written starts at <x> and ends
   ///    at <x + length>.
   /// The length is *NOT* stored into the CDR stream.
   //@{ @name Array write operations
@@ -289,7 +301,7 @@ public:
 
   /**
    * Return the start of the message block chain for this CDR stream.
-   * NOTE: The complete CDR stream is represented by a chain of
+   * @note The complete CDR stream is represented by a chain of
    * message blocks.
    */
   const ACE_Message_Block *begin (void) const;
@@ -301,14 +313,14 @@ public:
   const ACE_Message_Block *current (void) const;
 
   /**
-   * Access the underlying buffer (read only).  NOTE: This
+   * Access the underlying buffer (read only).  @note This
    * method only returns a pointer to the first block in the
    * chain.
    */
   const char *buffer (void) const;
 
   /**
-   * Return the start and size of the internal buffer.NOTE: This
+   * Return the start and size of the internal buffer.@note This
    * method only returns information about the first block in the
    * chain.
    */
@@ -431,6 +443,7 @@ private:
   /// The current block in the chain were we are writing.
   ACE_Message_Block *current_;
 
+#if !defined (ACE_LACKS_CDR_IALIGNMENT)
   /**
    * The current alignment as measured from the start of the buffer.
    * Usually this coincides with the alignment of the buffer in
@@ -440,6 +453,7 @@ private:
    * the stolen message block.
    */
   size_t current_alignment_;
+#endif /* ACE_LACKS_CDR_ALIGNMENT */
 
   /**
    * Is the current block writable.  When we steal a buffer from the
@@ -485,20 +499,6 @@ protected:
    * set to zero, indicating no wchar data is allowed.
    */
   static int wchar_maxbytes_;
-};
-
-/**
-* @class OutputCDR_Auto_Reset
-*
-* @brief This class will call the reset() method on an
-* output CDR when it goes out of scope.
-*/
-class OutputCDR_Auto_Reset {
-public:
-  OutputCDR_Auto_Reset (ACE_OutputCDR& cdr);
-  ~OutputCDR_Auto_Reset (void);
-private:
-  ACE_OutputCDR& cdr_;
 };
 
 
@@ -1174,9 +1174,13 @@ extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &is,
                                                ACE_CString &x);
 
 
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
 # include "ace/CDR_Stream.inl"
 #else /* __ACE_INLINE__ */
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Not used by CORBA or TAO
 extern ACE_Export ACE_CDR::Boolean operator<< (ACE_OutputCDR &os,
@@ -1263,6 +1267,8 @@ extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &is,
                                                ACE_CDR::Char*& x);
 extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &is,
                                                ACE_CDR::WChar*& x);
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* __ACE_INLINE__ */
 

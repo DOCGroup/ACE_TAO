@@ -1,13 +1,14 @@
 // $Id$
 
-#include "SL3_CredentialsCurator.h"
-#include "SL3_CredentialsAcquirerFactory.h"
+#include "orbsvcs/Security/SL3_CredentialsCurator.h"
+#include "orbsvcs/Security/SL3_CredentialsAcquirerFactory.h"
 
 
 ACE_RCSID (Security,
            SL3_CredentialsCurator,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -279,3 +280,5 @@ TAO::SL3::CredentialsCurator::_tao_add_own_credentials (
  // CredentialsCurator nows owns the id.
   (void) credentials_id._retn ();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

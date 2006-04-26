@@ -27,6 +27,8 @@
 #include "ace/UNIX_Addr.h"
 #include "ace/LSOCK_Stream.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Forward decl.
 class ACE_Reactor;
 
@@ -36,7 +38,7 @@ class ACE_Reactor;
  * @brief Defines the format and interface for the acceptor side of the
  * local ACE_SOCK ACE_Stream.
  */
-class ACE_Sockets_Export ACE_LSOCK_Acceptor : public ACE_SOCK_Acceptor
+class ACE_Export ACE_LSOCK_Acceptor : public ACE_SOCK_Acceptor
 {
 public:
   // = Initialization methods.
@@ -85,6 +87,8 @@ private:
   /// Address of our rendezvous point.
   ACE_UNIX_Addr local_addr_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_LACKS_UNIX_DOMAIN_SOCKETS */
 #include /**/ "ace/post.h"

@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file   EC_Kokyu_Scheduling.h
  *
@@ -17,14 +18,16 @@
 #define TAO_EC_KOKYU_SCHEDULING_H
 #include /**/ "ace/pre.h"
 
-#include "EC_Scheduling_Strategy.h"
+#include "orbsvcs/Event/EC_Scheduling_Strategy.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/RtecSchedulerC.h"
-#include "rtkokyu_event_export.h"
+#include "orbsvcs/Event/rtkokyu_event_export.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_EC_Kokyu_Scheduling
@@ -53,10 +56,8 @@ public:
                                ACE_ENV_ARG_DECL);
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (TAO_EC_Kokyu_Scheduling
-                              (const TAO_EC_Kokyu_Scheduling&))
-  ACE_UNIMPLEMENTED_FUNC (TAO_EC_Kokyu_Scheduling& operator=
-                              (const TAO_EC_Kokyu_Scheduling&))
+  TAO_EC_Kokyu_Scheduling (const TAO_EC_Kokyu_Scheduling&);
+  TAO_EC_Kokyu_Scheduling& operator= (const TAO_EC_Kokyu_Scheduling&);
 
   /// Initialize our RT_Info handle and dependencies
   void init_rt_info (ACE_ENV_SINGLE_ARG_DECL);
@@ -66,8 +67,10 @@ private:
   RtecScheduler::Scheduler_var scheduler_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "EC_Kokyu_Scheduling.i"
+#include "orbsvcs/Event/EC_Kokyu_Scheduling.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

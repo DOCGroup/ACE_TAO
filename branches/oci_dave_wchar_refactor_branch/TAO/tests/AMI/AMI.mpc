@@ -9,12 +9,14 @@ project(*Server): taoserver, messaging, ami {
 }
 
 project(*Client): messaging, taoexe, portableserver, ami {
+  after += *Server
   Source_Files {
     client.cpp
   }
 }
 
 project(*Simple Client): messaging, taoexe, portableserver, ami {
+  after += *Server
   Source_Files {
     simple_client.cpp
   }

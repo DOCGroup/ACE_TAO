@@ -1,4 +1,5 @@
 #include "ace/Local_Name_Space.h"
+#include "ace/ACE.h"
 #include "ace/RW_Process_Mutex.h"
 #include "ace/SString.h"
 #include "ace/OS_NS_string.h"
@@ -6,6 +7,8 @@
 ACE_RCSID (ace,
            Local_Name_Space,
            "$Id$")
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_NS_String::~ACE_NS_String (void)
 {
@@ -129,6 +132,8 @@ ACE_NS_String::hash (void) const
 }
 
 ACE_NS_Internal::ACE_NS_Internal (void)
+  : value_ (),
+    type_ ()
 {
 }
 
@@ -160,55 +165,4 @@ ACE_NS_Internal::type (void)
   return this->type_;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-#if (1)
-template class ACE_Hash_Map_Entry<ACE_NS_String, ACE_NS_Internal>;
-template class ACE_Hash<ACE_NS_String>;
-template class ACE_Equal_To<ACE_NS_String>;
-template class ACE_Hash_Map_Manager_Ex<ACE_NS_String, ACE_NS_Internal, ACE_Hash<ACE_NS_String>, ACE_Equal_To<ACE_NS_String>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Ex<ACE_NS_String, ACE_NS_Internal, ACE_Hash<ACE_NS_String>, ACE_Equal_To<ACE_NS_String>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_NS_String, ACE_NS_Internal, ACE_Hash<ACE_NS_String>, ACE_Equal_To<ACE_NS_String>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Base_Ex<ACE_NS_String, ACE_NS_Internal, ACE_Hash<ACE_NS_String>, ACE_Equal_To<ACE_NS_String>, ACE_Null_Mutex>;
-#else
-template class ACE_Map_Entry<ACE_NS_String, ACE_NS_Internal>;
-template class ACE_Map_Manager<ACE_NS_String, ACE_NS_Internal, ACE_Null_Mutex>;
-template class ACE_Map_Iterator<ACE_NS_String, ACE_NS_Internal, ACE_Null_Mutex>;
-template class ACE_Map_Reverse_Iterator<ACE_NS_String, ACE_NS_Internal, ACE_Null_Mutex>;
-template class ACE_Map_Iterator_Base<ACE_NS_String, ACE_NS_Internal, ACE_Null_Mutex>;
-#endif
-template class ACE_Unbounded_Set<ACE_Name_Binding>;
-template class ACE_Unbounded_Set_Iterator<ACE_Name_Binding>;
-template class ACE_Unbounded_Set<ACE_NS_WString>;
-template class ACE_Unbounded_Set_Iterator<ACE_NS_WString>;
-template class ACE_Node<ACE_NS_WString>;
-template class ACE_Node<ACE_Name_Binding>;
-template class ACE_Guard<ACE_RW_Process_Mutex>;
-template class ACE_Read_Guard<ACE_RW_Process_Mutex>;
-template class ACE_Write_Guard<ACE_RW_Process_Mutex>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#if (1)
-#pragma instantiate ACE_Hash_Map_Entry<ACE_NS_String, ACE_NS_Internal>
-#pragma instantiate ACE_Hash<ACE_NS_String>
-#pragma instantiate ACE_Equal_To<ACE_NS_String>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_NS_String, ACE_NS_Internal, ACE_Hash<ACE_NS_String>, ACE_Equal_To<ACE_NS_String>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_NS_String, ACE_NS_Internal, ACE_Hash<ACE_NS_String>, ACE_Equal_To<ACE_NS_String>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_NS_String, ACE_NS_Internal, ACE_Hash<ACE_NS_String>, ACE_Equal_To<ACE_NS_String>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_NS_String, ACE_NS_Internal, ACE_Hash<ACE_NS_String>, ACE_Equal_To<ACE_NS_String>, ACE_Null_Mutex>
-#else
-#pragma instantiate ACE_Map_Entry<ACE_NS_String, ACE_NS_Internal>
-#pragma instantiate ACE_Map_Manager<ACE_NS_String, ACE_NS_Internal, ACE_Null_Mutex>
-#pragma instantiate ACE_Map_Iterator<ACE_NS_String, ACE_NS_Internal, ACE_Null_Mutex>
-#pragma instantiate ACE_Map_Reverse_Iterator<ACE_NS_String, ACE_NS_Internal, ACE_Null_Mutex>
-#pragma instantiate ACE_Map_Iterator_Base<ACE_NS_String, ACE_NS_Internal, ACE_Null_Mutex>
-#endif
-#pragma instantiate ACE_Unbounded_Set<ACE_Name_Binding>
-#pragma instantiate ACE_Unbounded_Set_Iterator<ACE_Name_Binding>
-#pragma instantiate ACE_Unbounded_Set<ACE_NS_WString>
-#pragma instantiate ACE_Unbounded_Set_Iterator<ACE_NS_WString>
-#pragma instantiate ACE_Node<ACE_NS_WString>
-#pragma instantiate ACE_Node<ACE_Name_Binding>
-#pragma instantiate ACE_Guard<ACE_RW_Process_Mutex>
-#pragma instantiate ACE_Read_Guard<ACE_RW_Process_Mutex>
-#pragma instantiate ACE_Write_Guard<ACE_RW_Process_Mutex>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
+ACE_END_VERSIONED_NAMESPACE_DECL

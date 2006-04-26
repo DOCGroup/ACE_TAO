@@ -20,8 +20,8 @@
 // ******************************************************************
 
 static const char* ior = "file://supplier.ior";
-static unsigned int low = 6;
-static unsigned int high = 7;
+static unsigned int low = 32;
+static unsigned int high = 32;
 
 // ******************************************************************
 // Subroutine Section

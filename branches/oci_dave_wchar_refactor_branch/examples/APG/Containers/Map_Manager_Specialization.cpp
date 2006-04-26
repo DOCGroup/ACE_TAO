@@ -1,5 +1,6 @@
 // $Id$
 
+#include "ace/Log_Msg.h"
 #include "ace/Map_Manager.h"
 #include "ace/Synch.h" // Needed for the lock.
 #include "DataElement.h"
@@ -150,21 +151,3 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   return  me.run ();
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Map_Manager<KeyType,DataElement,ACE_Null_Mutex>
-;
-template class ACE_Map_Entry<KeyType,DataElement>
-;
-template class ACE_Map_Iterator_Base<KeyType,DataElement,ACE_Null_Mutex>
-;
-template class ACE_Map_Iterator<KeyType,DataElement,ACE_Null_Mutex>
-;
-template class ACE_Map_Reverse_Iterator<KeyType,DataElement,ACE_Null_Mutex>
-;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Map_Manager<KeyType,DataElement,ACE_Null_Mutex>
-#pragma instantiate ACE_Map_Iterator<KeyType,DataElement,ACE_Null_Mutex>
-#pragma instantiate ACE_Map_Reverse_Iterator<KeyType,DataElement,ACE_Null_Mutex>
-#pragma instantiate ACE_Map_Entry<KeyType,DataElement>
-#pragma instantiate ACE_Map_Iterator_Base<KeyType,DataElement,ACE_Null_Mutex>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

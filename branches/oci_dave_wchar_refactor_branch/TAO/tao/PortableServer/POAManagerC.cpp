@@ -40,12 +40,14 @@
 #include "tao/AnyTypeCode/Any_Impl_T.h"
 #include "tao/AnyTypeCode/Any_Dual_Impl_T.h"
 #include "tao/AnyTypeCode/Any_Basic_Impl_T.h"
-#include "POAManagerC.h"
+#include "tao/PortableServer/POAManagerC.h"
 #include "tao/CDR.h"
 #include "ace/OS_NS_string.h"
 
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:70
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Arg traits specializations.
 namespace TAO
@@ -71,7 +73,7 @@ TAO::Objref_Traits<PortableServer::POAManager>::release (
     PortableServer::POAManager_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 PortableServer::POAManager_ptr
@@ -89,7 +91,7 @@ TAO::Objref_Traits<PortableServer::POAManager>::marshal (
   return CORBA::Object::marshal (p, cdr);
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/exception_cs.cpp:63
 
 PortableServer::POAManager::AdapterInactive::AdapterInactive (void)
@@ -115,7 +117,7 @@ PortableServer::POAManager::AdapterInactive::AdapterInactive (const ::PortableSe
 PortableServer::POAManager::AdapterInactive&
 PortableServer::POAManager::AdapterInactive::operator= (const ::PortableServer::POAManager::AdapterInactive &_tao_excp)
 {
-  this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
+  this->::CORBA::UserException::operator= (_tao_excp);
   return *this;
 }
 
@@ -198,7 +200,7 @@ static TAO::TypeCode::Struct<char const *,
     "AdapterInactive",
     _tao_fields_PortableServer_POAManager_AdapterInactive,
     0);
-  
+
 ::CORBA::TypeCode_ptr const PortableServer::POAManager::_tc_AdapterInactive =
   &_tao_tc_PortableServer_POAManager_AdapterInactive;
 
@@ -211,7 +213,7 @@ static char const * const _tao_enumerators_PortableServer_POAManager_State[] =
     "ACTIVE",
     "DISCARDING",
     "INACTIVE"
-    
+
   };
 
 static TAO::TypeCode::Enum<char const *,
@@ -222,7 +224,7 @@ static TAO::TypeCode::Enum<char const *,
     "State",
     _tao_enumerators_PortableServer_POAManager_State,
     4);
-  
+
 ::CORBA::TypeCode_ptr const PortableServer::POAManager::_tc_State =
   &_tao_tc_PortableServer_POAManager_State;
 
@@ -257,18 +259,18 @@ PortableServer::POAManager::_unchecked_narrow (
 PortableServer::POAManager_ptr
 PortableServer::POAManager::_duplicate (POAManager_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void
 PortableServer::POAManager::_tao_release (POAManager_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean
@@ -320,7 +322,7 @@ static TAO::TypeCode::Objref<char const *,
     CORBA::tk_local_interface,
     "IDL:omg.org/PortableServer/POAManager:2.3",
     "POAManager");
-  
+
 namespace PortableServer
 {
   ::CORBA::TypeCode_ptr const _tc_POAManager =
@@ -328,3 +330,4 @@ namespace PortableServer
 }
 
 
+TAO_END_VERSIONED_NAMESPACE_DECL

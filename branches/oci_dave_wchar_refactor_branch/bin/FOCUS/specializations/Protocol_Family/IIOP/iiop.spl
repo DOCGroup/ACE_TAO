@@ -316,7 +316,8 @@ TAO_Connection_Handler::TAO_Connection_Handler (
 
   // Put ourselves in the connection wait state as soon as we get
   // created
-  this->state_changed (TAO_LF_Event::LFS_CONNECTION_WAIT);
+  this->state_changed (TAO_LF_Event::LFS_CONNECTION_WAIT,
+                       this->orb_core_->leader_follower ());
 }
  </data>
 </add>
@@ -430,7 +431,6 @@ TAO_Connection_Handler::TAO_Connection_Handler (
 <substitute match-line="yes">
  <search>: TAO_Acceptor \(IOP::TAG_INTERNET_IOP\),</search>
  <replace>: tag_ (IOP::TAG_INTERNET_IOP),
-            lite_flag_ (0)
  </replace>
 </substitute>
 
@@ -708,7 +708,6 @@ TAO_Connection_Handler::TAO_Connection_Handler (
  <search>: TAO_Connector \(IOP::TAG_INTERNET_IOP\)</search>
  <replace>: active_connect_strategy_ (0)
           , tag_ (IOP::TAG_INTERNET_IOP)
-          , lite_flag_ (0)
           , orb_core_ (0)
  </replace>
 </substitute>

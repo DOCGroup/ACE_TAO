@@ -27,9 +27,13 @@
 #include "tao/Exception.h"
 #include "tao/params.h"
 
-// Forward declarations.
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Addr;
 class ACE_Reactor;
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_ORB_Core;
 class TAO_Acceptor;
 class TAO_Acceptor_Filter;
@@ -78,7 +82,7 @@ public:
   /// Returns the total number of endpoints in all of its acceptors.
   size_t endpoint_count (void);
 
-  /// Check if there is at least one profile in <mprofile> that
+  /// Check if there is at least one profile in @a mprofile that
   /// corresponds to a collocated object.
   int is_collocated (const TAO_MProfile& mprofile);
 
@@ -134,9 +138,10 @@ private:
               ACE_ENV_ARG_DECL);
 
 private:
+
   // The acceptor registry should not be copied.
-  ACE_UNIMPLEMENTED_FUNC (TAO_Acceptor_Registry (const TAO_Acceptor_Registry&))
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Acceptor_Registry&))
+  TAO_Acceptor_Registry (const TAO_Acceptor_Registry&);
+  void operator= (const TAO_Acceptor_Registry&);
 
 private:
   /// List of acceptors that are currently open.
@@ -145,6 +150,8 @@ private:
   /// Number of acceptors that are currently open.
   size_t size_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(__ACE_INLINE__)
 #include "tao/Acceptor_Registry.i"

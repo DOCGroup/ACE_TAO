@@ -17,18 +17,15 @@
 
 #include /**/ "ace/pre.h"
 
-#ifdef ACE_THREADS_BUILD_DLL
-# include "ace/ACE_Threads_export.h"
-#else
-# include "ace/ACE_export.h"
-# define ACE_Threads_Export ACE_Export
-#endif  /* ACE_THREADS_BUILD_DLL */
+#include "ace/ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Global_Macros.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_Method_Request
@@ -45,7 +42,7 @@
  *
  * @sa ACE_Activation_Queue
  */
-class ACE_Threads_Export ACE_Method_Request
+class ACE_Export ACE_Method_Request
 {
 public:
   // = Initialization and termination methods.
@@ -84,14 +81,19 @@ public:
    */
   virtual int call (void) = 0;
 
+private:
+
+  /// Disallow copying and assignment.
+  ACE_Method_Request (const ACE_Method_Request &);
+  void operator= (const ACE_Method_Request &);
+
 protected:
   /// The priority of the request.
   unsigned long priority_;
 
-private:
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Method_Request &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Method_Request (const ACE_Method_Request &))
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 
 #include /**/ "ace/post.h"

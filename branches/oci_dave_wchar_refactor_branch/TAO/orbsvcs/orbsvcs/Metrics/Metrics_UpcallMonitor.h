@@ -1,3 +1,5 @@
+// -*- C++ -*-
+
 // $Id$
 
 #ifndef METRICS_UPCALL_MONITOR_H
@@ -22,9 +24,11 @@
 #include "orbsvcs/Time_Utilities.h"
 #include "orbsvcs/MetricsS.h"
 
-#include "Metrics_LocalCache.h"
-#include "Metrics_FrameManager.h"
-#include "Metrics_Utils.h"
+#include "orbsvcs/Metrics/Metrics_LocalCache.h"
+#include "orbsvcs/Metrics/Metrics_FrameManager.h"
+#include "orbsvcs/Metrics/Metrics_Utils.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Metrics_Export TAO_Metrics_UpcallMonitor
   : public POA_Metrics::QoSMonitor
@@ -222,12 +226,15 @@ private:
   // The monitor we're wrapping.
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "Metrics_UpcallMonitor.i"
+#include "orbsvcs/Metrics/Metrics_UpcallMonitor.i"
 #endif /* __ACE_INLINE__ */
 
 #include "orbsvcs/Metrics/Metrics_UpcallMonitor_T.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 typedef TAO_Metrics_UpcallMonitorAdapter<ACE_SYNCH_MUTEX, ACE_New_Allocator>
 TAO_METRICS_MONITOR_ADAPTER_TYPE;
@@ -248,6 +255,8 @@ typedef TAO_METRICS_REPORTING_MONITOR_SINGLETON_TYPE TAO_METRICS_MONITOR_SINGLET
 typedef TAO_METRICS_MONITOR_ADAPTER_TYPE TAO_METRICS_MONITOR_ADAPTER;
 typedef TAO_METRICS_MONITOR_SINGLETON_TYPE TAO_METRICS_MONITOR_SINGLETON;
 #endif
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_ENABLE_TIMEPROBES & ACE_COMPILE_TIMEPROBES */
 #endif /* ACE_METRICS_COLLECTION */

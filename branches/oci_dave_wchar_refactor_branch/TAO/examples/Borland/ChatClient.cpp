@@ -5,14 +5,7 @@
 #include "ace/ace.h"
 #include "tao/corba.h"
 #include "ChatClientWnd.h"
-USERES("ChatClient.res");
 USEFORM("ChatClientWnd.cpp", ChatClientWindow);
-USEUNIT("BroadcasterC.cpp");
-USEUNIT("BroadcasterS.cpp");
-USEUNIT("ReceiverC.cpp");
-USEUNIT("ReceiverS.cpp");
-USEUNIT("ReceiverImpl.cpp");
-USEUNIT("ORBThread.cpp");
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 
@@ -35,7 +28,7 @@ WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
       Application->Initialize ();
       Application->Title = "CORBA Chat Client";
       Application->CreateForm(__classid(TChatClientWindow), &ChatClientWindow);
-       Application->Run ();
+      Application->Run ();
     }
   catch (Exception &exception)
     {

@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ../bin/mwc.pl -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/config -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/templates -type automake -noreldefs TAO.mwc
+## ../bin/mwc.pl -type automake -noreldefs TAO.mwc
 
 ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
@@ -16,7 +16,9 @@ TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
-## Makefile.Performance_Client.am
+noinst_PROGRAMS =
+
+## Makefile.Performance_IDL.am
 
 BUILT_SOURCES = \
   UDPC.cpp \
@@ -44,10 +46,18 @@ CLEANFILES = \
 UDPC.cpp UDPC.h UDPC.inl UDPS.cpp UDPS.h UDPS.inl UDPS_T.cpp UDPS_T.h UDPS_T.inl: UDP-stamp
 
 UDP-stamp: $(srcdir)/UDP.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Sd -Sp $(srcdir)/UDP.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St -Sd -Sp $(srcdir)/UDP.idl
 	@touch $@
 
-noinst_PROGRAMS = client
+
+noinst_HEADERS = \
+  UDP.idl
+
+## Makefile.Performance_Client.am
+
+if !BUILD_ACE_FOR_TAO
+
+noinst_PROGRAMS += client
 
 client_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -61,11 +71,6 @@ client_SOURCES = \
   UDP_PerformanceClient.cpp \
   UDP_i.cpp \
   client.cpp \
-  UDPC.h \
-  UDPC.inl \
-  UDPS.h \
-  UDPS_T.h \
-  UDPS_T.inl \
   UDP_PerformanceClient.h \
   UDP_i.h
 
@@ -76,36 +81,11 @@ client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+endif !BUILD_ACE_FOR_TAO
+
 ## Makefile.Performance_Server.am
 
-BUILT_SOURCES += \
-  UDPC.cpp \
-  UDPC.h \
-  UDPC.inl \
-  UDPS.cpp \
-  UDPS.h \
-  UDPS.inl \
-  UDPS_T.cpp \
-  UDPS_T.h \
-  UDPS_T.inl
-
-CLEANFILES += \
-  UDP-stamp \
-  UDPC.cpp \
-  UDPC.h \
-  UDPC.inl \
-  UDPS.cpp \
-  UDPS.h \
-  UDPS.inl \
-  UDPS_T.cpp \
-  UDPS_T.h \
-  UDPS_T.inl
-
-UDPC.cpp UDPC.h UDPC.inl UDPS.cpp UDPS.h UDPS.inl UDPS_T.cpp UDPS_T.h UDPS_T.inl: UDP-stamp
-
-UDP-stamp: $(srcdir)/UDP.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Sd -Sp $(srcdir)/UDP.idl
-	@touch $@
+if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS += server
 
@@ -120,11 +100,6 @@ server_SOURCES = \
   UDPS.cpp \
   UDP_i.cpp \
   server.cpp \
-  UDPC.h \
-  UDPC.inl \
-  UDPS.h \
-  UDPS_T.h \
-  UDPS_T.inl \
   UDP_i.h
 
 server_LDADD = \
@@ -133,6 +108,8 @@ server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
+
+endif !BUILD_ACE_FOR_TAO
 
 ## Clean up template repositories, etc.
 clean-local:

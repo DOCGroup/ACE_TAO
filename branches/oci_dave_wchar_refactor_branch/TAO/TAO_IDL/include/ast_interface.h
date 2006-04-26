@@ -86,8 +86,8 @@ public:
                  long nih,
                  AST_Interface **ih_flat,
                  long nih_flat,
-                 idl_bool local,
-                 idl_bool abstract);
+                 bool local,
+                 bool abstract);
 
   virtual ~AST_Interface (void);
 
@@ -109,7 +109,7 @@ public:
   ACE_Unbounded_Queue<AST_Interface *> &get_insert_queue (void);
   ACE_Unbounded_Queue<AST_Interface *> &get_del_queue (void);
 
-  void be_add_operation (AST_Operation *);
+  AST_Operation *be_add_operation (AST_Operation *);
 
   void be_replace_operation (AST_Decl *old_op,
                              AST_Decl *new_op);
@@ -117,23 +117,23 @@ public:
   // Is this interface defined? This predicate returns FALSE when an
   // interface was forward declared but not defined yet, and TRUE in
   // all other cases.
-  idl_bool is_defined (void)
+  bool is_defined (void)
   {
-    return (pd_n_inherits < 0) ? I_FALSE : I_TRUE;
+    return (pd_n_inherits < 0) ? false : true;
   }
 
   // Check if we have redefined any of our parents' operations or attributes,
   // and check if there is such a clash among the parents
-  virtual idl_bool redef_clash (void);
-  
+  virtual bool redef_clash (void);
+
   // Accessors for the member.
-  idl_bool home_equiv (void) const;
-  void home_equiv (idl_bool val);
+  bool home_equiv (void) const;
+  void home_equiv (bool val);
 
   // Look through inherited interfaces.
   virtual AST_Decl *look_in_inherited (UTL_ScopedName *e,
-                                       idl_bool treat_as_ref);
-                                       
+                                       bool treat_as_ref);
+
   // Recursively called on valuetype to check for legal use as
   // a primary key. Overridden for valuetype, struct, sequence,
   // union, array, typedef, and interface.
@@ -178,9 +178,9 @@ protected:
 
   // Queue of dequeued nodes to be searched for the above case.
   ACE_Unbounded_Queue<AST_Interface *> del_queue;
-  
+
   // Are we the equivalent interface of a home?
-  idl_bool home_equiv_;
+  bool home_equiv_;
 
 protected:
   // Scope Management Protocol.
@@ -216,7 +216,7 @@ protected:
   // Lookup based on the local name, override of UTL_Scope definition.
   // This version checks for redefinitions of attributes or operations.
   AST_Decl *lookup_for_add (AST_Decl *d,
-                            idl_bool treat_as_ref);
+                            bool treat_as_ref);
 
   void redef_clash_populate_r (AST_Interface *t);
   // Populate the insert queue with our parents, and, if we are a
@@ -224,7 +224,7 @@ protected:
   // supported interfaces.
 
   int insert_non_dup (AST_Interface *t,
-                      idl_bool abstract_paths_only = I_FALSE);
+                      bool abstract_paths_only = false);
   // Do non-duplicating insert of bi, by searching both the
   // insert queue and the delete queue.
 };

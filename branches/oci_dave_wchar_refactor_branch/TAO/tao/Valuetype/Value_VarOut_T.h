@@ -23,24 +23,16 @@
 
 #include "tao/varbase.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   /**
    * struct Value_Traits
    *
    * @brief Specialized for each valuetype in generated code.
-   *
    */
-  template<typename T>
-  struct Value_Traits
-  {
-    static void add_ref (T *);
-    static void remove_ref (T *);
-
-    // For INOUT value type arguments, so they can use the same set
-    // of arg classes as interfaces.
-    static void release (T *);
-  };
+  template<typename T> struct Value_Traits;
 }
 
 /**
@@ -70,11 +62,16 @@ public:
   operator const T * () const;
   operator T *& ();
 
+  typedef T *  _in_type;
+  typedef T *& _inout_type;
+  typedef T *& _out_type;
+  typedef T *  _retn_type;
+
   // in, inout, out, _retn
-  T * in (void) const;
-  T *& inout (void);
-  T *& out (void);
-  T * _retn (void);
+  _in_type in (void) const;
+  _inout_type inout (void);
+  _out_type out (void);
+  _retn_type _retn (void);
 
   // (TAO extension)
   T * ptr (void) const;
@@ -86,9 +83,7 @@ private:
   void operator= (const TAO_Base_var &);
 
 private:
-
   T * ptr_;
-
 };
 
 /**
@@ -106,7 +101,6 @@ public:
   TAO_Value_Out_T (const TAO_Value_Out_T<T> &);
 
   TAO_Value_Out_T &operator= (const TAO_Value_Out_T<T> &);
-  TAO_Value_Out_T &operator= (const TAO_Value_Var_T<T> &);
   TAO_Value_Out_T &operator= (T *);
 
   operator T *& ();
@@ -115,12 +109,15 @@ public:
   T * operator-> (void);
 
 private:
-  typedef TAO_Value_Out_T<T> THIS_OUT_TYPE;
   T *& ptr_;
+  /// Assignment from _var not allowed.
+  TAO_Value_Out_T &operator= (const TAO_Value_Var_T<T> &);
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "Value_VarOut_T.cpp"
+#include "tao/Valuetype/Value_VarOut_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

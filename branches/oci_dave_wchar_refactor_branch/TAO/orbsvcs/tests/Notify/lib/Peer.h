@@ -22,8 +22,12 @@
 #include "orbsvcs/CosNotifyChannelAdminC.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "ace/SString.h"
+
 #include "ace/Arg_Shifter.h"
-#include "ace/Argv_Type_Converter.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+//template <typename> ACE_TArg_Shifter;
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Notify_Tests_Peer

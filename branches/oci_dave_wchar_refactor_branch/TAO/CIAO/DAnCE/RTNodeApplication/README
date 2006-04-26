@@ -1,6 +1,7 @@
 $Id$
 
-This directory contains the RTNodeApplication implementation
+This directory contains the depricated RTNodeApplication
+implementation.  It will be removed shortly.
 
 * Currently, the RTNodeApplication does not support configuring of any
   RT policies.
@@ -21,18 +22,18 @@ This directory contains the RTNodeApplication implementation
   RTNodeApplication.cpp: Main program
 
   NodeApplication_Task.*: ACE_Task class for spawning the thread for
-                          RT-NodeApplication using the right scheduling 
+                          RT-NodeApplication using the right scheduling
                           strategy.
 
-  RTNodeApplication_Impl.* : Actual RTNodeApplication server implementation.  
+  RTNodeApplication_Impl.* : Actual RTNodeApplication server implementation.
 
   senv.sh: A simple shell script for setting up the run-time
-           environment when starting NodeDaemon with sudo.  
+           environment when starting NodeDaemon with sudo.
            This is necessary because the RTNodeApplication needs to
            spawn threads with real-time scheduling class.  This
            operation requires the process to be run by privileged user.
-           You may need to tweak this shell script to suit your need. 
-           Here's an example of how to use the script: 
+           You may need to tweak this shell script to suit your need.
+           Here's an example of how to use the script:
 
             $ sudo senv.sh $CIAO_ROOT/DAnCE/NodeManager/NodeManager \
                 -ORBEndpoint iiop://localhost:10000 \

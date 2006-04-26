@@ -14,7 +14,7 @@
 #define TAO_UIPMC_TRANSPORT_H
 #include /**/ "ace/pre.h"
 
-#include "portablegroup_export.h"
+#include "orbsvcs/PortableGroup/portablegroup_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -24,6 +24,8 @@
 
 #include "ace/SOCK_Stream.h"
 #include "ace/Svc_Handler.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward decls.
 class TAO_UIPMC_Connection_Handler;
@@ -122,6 +124,8 @@ private:
   /// Our messaging object.
   TAO_Pluggable_Messaging *messaging_object_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif  /* TAO_UIPMC_TRANSPORT_H */

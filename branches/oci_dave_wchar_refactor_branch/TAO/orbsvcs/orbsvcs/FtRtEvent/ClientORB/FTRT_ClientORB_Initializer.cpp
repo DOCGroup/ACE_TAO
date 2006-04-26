@@ -1,17 +1,16 @@
 // $Id$
 
-#include "FTRT_ClientORB_Initializer.h"
-#include "FTRT_ClientORB_Interceptor.h"
+#include "orbsvcs/FtRtEvent/ClientORB/FTRT_ClientORB_Initializer.h"
+#include "orbsvcs/FtRtEvent/ClientORB/FTRT_ClientORB_Interceptor.h"
 
 ACE_RCSID (ClientORB,
            FTRT_ClientORB_Initializer,
            "$Id$")
 
-#include "tao/debug.h"
-
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 FTRT_ClientORB_Initializer::FTRT_ClientORB_Initializer (int transaction_depth)
-: client_interceptor_ ( new FTRT_ClientORB_Interceptor(transaction_depth) )
+  : client_interceptor_ ( new FTRT_ClientORB_Interceptor(transaction_depth) )
 {
 }
 
@@ -33,4 +32,4 @@ FTRT_ClientORB_Initializer::post_init (
                                         ACE_ENV_ARG_PARAMETER);
 }
 
-
+TAO_END_VERSIONED_NAMESPACE_DECL

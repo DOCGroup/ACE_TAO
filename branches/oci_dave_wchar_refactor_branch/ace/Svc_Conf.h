@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -29,6 +29,8 @@
 #include "ace/Parse_Node.h"
 
 #if (ACE_USES_CLASSIC_SVC_CONF == 1)
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward declarations.
 struct ace_yy_buffer_state;
@@ -153,20 +155,6 @@ typedef union
 // Forward declaration
 struct ace_yy_buffer_state;
 
-/// Create and push a new lexer buffer on to the buffer stack for use
-/// when scanning the given file.
-void ace_yy_push_buffer (FILE *file,
-                         ace_yy_buffer_state *&buffer);
-
-/// Create and push a new lexer buffer on to the buffer stack for use
-/// when scanning the given directive.
-void ace_yy_push_buffer (const ACE_TCHAR *directive,
-                         ace_yy_buffer_state *&buffer);
-
-/// Pop the current lexer buffer off of the buffer stack and
-/// deallocate it.
-void ace_yy_pop_buffer (ace_yy_buffer_state *buf);
-
 /// Performs the parsing
 #ifdef ACE_YYPARSE_PARAM
 int ace_yyparse (void *);
@@ -199,6 +187,8 @@ ace_create_service_type (const ACE_TCHAR *,
                          unsigned int,
                          ACE_Service_Object_Exterminator = 0);
 
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

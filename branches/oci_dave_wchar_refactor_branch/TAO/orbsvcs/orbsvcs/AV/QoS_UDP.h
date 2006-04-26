@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 // $Id$
 // ============================================================================
@@ -12,7 +12,6 @@
 // = AUTHOR
 //    Yamuna Krishnamurthy <yamuna@cs.wustl.edu>
 //
-//
 // ============================================================================
 
 #ifndef TAO_AV_QOS_UDP_H
@@ -24,14 +23,15 @@
 
 #if defined (ACE_HAS_RAPI) || defined (ACE_HAS_WINSOCK2_GQOS)
 
+#include "orbsvcs/AV/Protocol_Factory.h"
+
 #include "ace/OS.h"
 #include "ace/Service_Config.h"
 #include "ace/QoS/QoS_Session_Factory.h"
 #include "ace/QoS/QoS_Decorator.h"
 #include "ace/QoS/SOCK_Dgram_Mcast_QoS.h"
 
-#include "orbsvcs/AV/Protocol_Factory.h"
-
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_AV_Export TAO_AV_UDP_QoS_Factory : public TAO_AV_Transport_Factory
 {
@@ -287,6 +287,8 @@ public:
 	       TAO_AV_UDP_QoS_Flow_Handler *handler);
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 ACE_STATIC_SVC_DECLARE (TAO_AV_UDP_QoS_Flow_Factory)
 ACE_FACTORY_DECLARE (TAO_AV, TAO_AV_UDP_QoS_Flow_Factory)
 
@@ -295,7 +297,7 @@ ACE_FACTORY_DECLARE (TAO_AV, TAO_AV_UDP_QoS_Factory)
 
 
 #if defined(__ACE_INLINE__)
-#include "QoS_UDP.i"
+#include "orbsvcs/AV/QoS_UDP.i"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_RAPI || ACE_HAS_WINSOCK2_GQOS */

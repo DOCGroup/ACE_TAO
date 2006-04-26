@@ -49,8 +49,8 @@ be_home::be_home (UTL_ScopedName *n,
                   long n_supports,
                   AST_Interface **supports_flat,
                   long n_supports_flat)
-  : COMMON_Base (I_FALSE,
-                 I_FALSE),
+  : COMMON_Base (false,
+                 false),
     AST_Decl (AST_Decl::NT_home,
               n),
     AST_Type (AST_Decl::NT_home,
@@ -61,8 +61,8 @@ be_home::be_home (UTL_ScopedName *n,
                    n_supports,
                    supports_flat,
                    n_supports_flat,
-                   I_FALSE,
-                   I_FALSE),
+                   false,
+                   false),
     AST_Home (n,
               base_home,
               managed_component,
@@ -79,11 +79,11 @@ be_home::be_home (UTL_ScopedName *n,
                   n_supports,
                   supports_flat,
                   n_supports_flat,
-                  I_FALSE,
-                  I_FALSE)
+                  false,
+                  false)
 {
   this->size_type (AST_Type::VARIABLE);
-  
+
   // Some previous error may have caused a lookup failure, in which
   // case we'll crash if we do the narrow below.
   if (managed_component == 0)
@@ -95,7 +95,7 @@ be_home::be_home (UTL_ScopedName *n,
   be_component *bt =
      be_component::narrow_from_decl (managed_component);
 
-  bt->seen_in_operation (I_TRUE);
+  bt->seen_in_operation (true);
 
   idl_global->object_arg_seen_ = true;
 }
@@ -120,7 +120,7 @@ be_home::accept (be_visitor *visitor)
       idl_global->err ()->ignore_idl3_error (this);
       return -1;
     }
-    
+
   return visitor->visit_home (this);
 }
 

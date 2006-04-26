@@ -25,6 +25,8 @@
 #include "ace/os_include/os_fcntl.h"
 #include "ace/Default_Constants.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_FIFO_Recv
  *
@@ -41,14 +43,14 @@ public:
   /// Open up a bytestream named pipe for reading.
   ACE_FIFO_Recv (const ACE_TCHAR *rendezvous,
                  int flags = O_CREAT | O_RDONLY,
-                 int perms = ACE_DEFAULT_FILE_PERMS,
+                 mode_t perms = ACE_DEFAULT_FILE_PERMS,
                  int persistent = 1,
                  LPSECURITY_ATTRIBUTES sa = 0);
 
   /// Open up a bytestream named pipe for reading.
   int open (const ACE_TCHAR *rendezvous,
             int flags = O_CREAT | O_RDONLY,
-            int perms = ACE_DEFAULT_FILE_PERMS,
+            mode_t perms = ACE_DEFAULT_FILE_PERMS,
             int persistent = 1,
             LPSECURITY_ATTRIBUTES sa = 0);
 
@@ -71,6 +73,8 @@ private:
   /// Auxiliary handle that is used to implement persistent FIFOs.
   ACE_HANDLE aux_handle_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/FIFO_Recv.inl"

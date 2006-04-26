@@ -38,7 +38,7 @@ public:
 
         if (--number_of_outstanding_requests == 0)
           ACE_Reactor::instance ()->end_event_loop ();
-  
+
         return -1;
       }
     return 0;
@@ -228,7 +228,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ::fclose (fp);
 
   requests = (char **) ::malloc (number_of_urls * sizeof (char *));
-  
+
   // Read in the file list and create requests
 
   int i = 0;
@@ -259,14 +259,3 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Connector <HTTP_Sink_Svc_Handler, ACE_SOCK_CONNECTOR>;
-template class ACE_Svc_Handler <ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
-template class ACE_Svc_Tuple<HTTP_Sink_Svc_Handler>;
-template class ACE_Map_Iterator_Base<int, ACE_Svc_Tuple<HTTP_Sink_Svc_Handler> *, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Map_Manager<int, ACE_Svc_Tuple<HTTP_Sink_Svc_Handler> *, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Select_Reactor_Token_T<ACE_Noop_Token>;
-template class ACE_Select_Reactor_T<ACE_Select_Reactor_Noop_Token>;
-template class ACE_Lock_Adapter<ACE_Select_Reactor_Noop_Token>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

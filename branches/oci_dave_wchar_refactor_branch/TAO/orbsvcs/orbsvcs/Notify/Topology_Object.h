@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -14,8 +14,8 @@
 #define TOPOLOGY_OBJECT_H
 #include /**/ "ace/pre.h"
 
-#include "Object.h"
-#include "Name_Value_Pair.h"
+#include "orbsvcs/Notify/Object.h"
+#include "orbsvcs/Notify/Name_Value_Pair.h"
 
 #include "ace/SString.h"
 #include "ace/Vector_T.h"
@@ -24,6 +24,7 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// \namespace TAO_Notify
 /// \brief A namespace to be used by all of TAO's Notification Service
@@ -45,7 +46,6 @@
 //
 namespace TAO_Notify
 {
-  static const ACE_TCHAR TOPOLOGY_ID_NAME[] = ACE_TEXT("TopologyID");
 
   class Topology_Saver;
   class Topology_Parent;
@@ -203,8 +203,10 @@ namespace TAO_Notify
 
 } // namespace TAO_Notify
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "Topology_Object.inl"
+#include "orbsvcs/Notify/Topology_Object.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

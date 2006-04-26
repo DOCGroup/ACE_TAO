@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -14,14 +14,15 @@
 #define XML_SAVER_H
 #include /**/ "ace/pre.h"
 
-#include "Topology_Saver.h"
+#include "orbsvcs/Notify/Topology_Saver.h"
 
-#include "tao/corba.h"
 #include "ace/streams.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify
 {
@@ -79,6 +80,8 @@ private:
 };
 
 } // namespace TAO_Notify
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* XML_SAVER_H */

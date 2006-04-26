@@ -1,5 +1,7 @@
 // $Id$
-project : taoexe, rtcorba, core {
-  install = $(ACE_ROOT)/bin
-  exename = catior
+project : namingexe, rtcorba, core {
+  libpaths += $(ACE_ROOT)/lib
+  libpaths += $(ACE_ROOT)/ace
+  exename   = catior
+  install   = $(ACE_ROOT)/bin
 }

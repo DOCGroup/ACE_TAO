@@ -32,6 +32,8 @@ ACE_RCSID (tao,
            Marshal,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_Marshal_Object::~TAO_Marshal_Object (void)
 {
 }
@@ -255,3 +257,4 @@ TAO_Marshal_Object::perform_append (CORBA::TypeCode_ptr tc,
     }
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,27 +1,30 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file Service.h
  *
  *  $Id$
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_SERVICE_H
 #define TAO_Notify_SERVICE_H
 #include /**/ "ace/pre.h"
 
-#include "notify_serv_export.h"
+#include "orbsvcs/Notify/notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Versioned_Namespace.h"
+
 #include "ace/Service_Object.h"
 #include "ace/Service_Config.h"
 #include "ace/CORBA_macros.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace PortableServer
 {
@@ -66,6 +69,8 @@ public:
       PortableServer::POA_ptr default_POA ACE_ENV_ARG_DECL
     ) = 0;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #define TAO_NOTIFY_DEF_EMO_FACTORY_NAME "Notify_Default_Event_Manager_Objects_Factory"
 

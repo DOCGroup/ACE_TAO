@@ -259,16 +259,3 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Allocator_Adapter<ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex> >;
-template class ACE_Malloc_T<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex, ACE_Control_Block>;
-template class ACE_Node<Record>;
-template class ACE_Unbounded_Queue<Record>;
-template class ACE_Unbounded_Queue_Iterator<Record>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Allocator_Adapter<ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex> >
-#pragma instantiate ACE_Malloc_T<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex, ACE_Control_Block>
-#pragma instantiate ACE_Node<Record>
-#pragma instantiate ACE_Unbounded_Queue<Record>
-#pragma instantiate ACE_Unbounded_Queue_Iterator<Record>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

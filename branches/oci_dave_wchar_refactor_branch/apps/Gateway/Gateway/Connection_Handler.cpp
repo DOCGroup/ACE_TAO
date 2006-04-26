@@ -86,7 +86,7 @@ Connection_Handler::connection_role (void) const
 // Sets the timeout delay.
 
 void
-Connection_Handler::timeout (int to)
+Connection_Handler::timeout (long to)
 {
   if (to > this->max_timeout_)
     to = this->max_timeout_;
@@ -98,10 +98,10 @@ Connection_Handler::timeout (int to)
 // backoff.  Returns the original timeout (i.e., before the
 // re-calculation).
 
-int
+long
 Connection_Handler::timeout (void)
 {
-  int old_timeout = this->timeout_;
+  long old_timeout = this->timeout_;
   this->timeout_ *= 2;
 
   if (this->timeout_ > this->max_timeout_)
@@ -113,14 +113,14 @@ Connection_Handler::timeout (void)
 // Sets the max timeout delay.
 
 void
-Connection_Handler::max_timeout (int mto)
+Connection_Handler::max_timeout (long mto)
 {
   this->max_timeout_ = mto;
 }
 
 // Gets the max timeout delay.
 
-int
+long
 Connection_Handler::max_timeout (void) const
 {
   return this->max_timeout_;
@@ -151,7 +151,7 @@ Connection_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
   ACE_DEBUG ((LM_DEBUG,
 	      "(%t) shutting down %s Connection_Handler %d on handle %d\n",
 	      this->connection_role () == 'C' ? "Consumer" : "Supplier",
-	      this->connection_id (), 
+	      this->connection_id (),
               this->get_handle ()));
 
   // Restart the connection, if possible.
@@ -270,24 +270,3 @@ Connection_Handler_Factory::make_connection_handler (const Connection_Config_Inf
   return connection_handler;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Map_Entry<Event_Key, Consumer_Dispatch_Set *>;
-template class ACE_Map_Iterator_Base<Event_Key, Consumer_Dispatch_Set *, MAP_MUTEX>;
-template class ACE_Map_Iterator<Event_Key, Consumer_Dispatch_Set *, MAP_MUTEX>;
-template class ACE_Map_Reverse_Iterator<Event_Key, Consumer_Dispatch_Set *, MAP_MUTEX>;
-template class ACE_Map_Manager<Event_Key, Consumer_Dispatch_Set *, MAP_MUTEX>;
-template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
-#if defined (ACE_HAS_THREADS)
-template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_MT_SYNCH>;
-#endif /* ACE_HAS_THREADS */
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Map_Entry<Event_Key, Consumer_Dispatch_Set *>
-#pragma instantiate ACE_Map_Iterator<Event_Key, Consumer_Dispatch_Set *, MAP_MUTEX>
-#pragma instantiate ACE_Map_Reverse_Iterator<Event_Key, Consumer_Dispatch_Set *, MAP_MUTEX>
-#pragma instantiate ACE_Map_Iterator_Base<Event_Key, Consumer_Dispatch_Set *, MAP_MUTEX>
-#pragma instantiate ACE_Map_Manager<Event_Key, Consumer_Dispatch_Set *, MAP_MUTEX>
-#pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
-#if defined (ACE_HAS_THREADS)
-#pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_MT_SYNCH>
-#endif /* ACE_HAS_THREADS */
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

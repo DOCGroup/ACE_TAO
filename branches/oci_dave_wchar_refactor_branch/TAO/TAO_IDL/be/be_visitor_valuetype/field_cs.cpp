@@ -20,8 +20,8 @@
 //    derived from be_visitor_union_branch/public_ci.cpp
 //
 // ============================================================================
-ACE_RCSID (be_visitor_valuetype, 
-           field_cs, 
+ACE_RCSID (be_visitor_valuetype,
+           field_cs,
            "$Id$")
 
 be_visitor_valuetype_field_cs::be_visitor_valuetype_field_cs (
@@ -47,7 +47,7 @@ be_visitor_valuetype_field_cs::visit_field (be_field *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_field_cs::"
                          "visit_field - "
-                         "Bad field type\n"), 
+                         "Bad field type\n"),
                         -1);
     }
 
@@ -58,7 +58,7 @@ be_visitor_valuetype_field_cs::visit_field (be_field *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_field_cs::"
                          "visit_field - "
-                         "codegen for field type failed\n"), 
+                         "codegen for field type failed\n"),
                         -1);
     }
 
@@ -89,7 +89,7 @@ be_visitor_valuetype_field_cs::visit_array (be_array *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_cs::"
                          "visit_array - "
-                         "bad context information\n"), 
+                         "bad context information\n"),
                         -1);
     }
 
@@ -107,7 +107,7 @@ be_visitor_valuetype_field_cs::visit_array (be_array *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_valuetype_field_cs::"
                              "visit_array - "
-                             "codegen failed\n"), 
+                             "codegen failed\n"),
                             -1);
         }
     }
@@ -115,8 +115,8 @@ be_visitor_valuetype_field_cs::visit_array (be_array *node)
   // For anonymous arrays, the type name has a _ prepended. We compute the
   // full_name with or without the underscore and use it later on.
   char fname [NAMEBUFSIZE];
-  ACE_OS::memset (fname, 
-                  '\0', 
+  ACE_OS::memset (fname,
+                  '\0',
                   NAMEBUFSIZE);
 
   if (bt->node_type () != AST_Decl::NT_typedef
@@ -129,23 +129,23 @@ be_visitor_valuetype_field_cs::visit_array (be_array *node)
         {
           be_decl *parent =
                  be_scope::narrow_from_scope (bt->defined_in ())->decl ();
-          ACE_OS::sprintf (fname, 
-                           "%s::_%s", 
+          ACE_OS::sprintf (fname,
+                           "%s::_%s",
                            parent->full_name (),
                            bt->local_name ()->get_string ());
         }
       else
         {
-          ACE_OS::sprintf (fname, 
-                           "_%s", 
+          ACE_OS::sprintf (fname,
+                           "_%s",
                            bt->full_name ());
         }
     }
   else
     {
       // Typedefed node.
-      ACE_OS::sprintf (fname, 
-                       "%s", 
+      ACE_OS::sprintf (fname,
+                       "%s",
                        bt->full_name ());
     }
 
@@ -156,18 +156,18 @@ be_visitor_valuetype_field_cs::visit_array (be_array *node)
       << this->pre_op () << "void" << be_nl;
 
   this->op_name (bu,
-                 os); 
-  
-  *os << "::" << ub->local_name () << " (" << fname
+                 os);
+
+  *os << "::" << ub->local_name () << " (const " << fname
       << " val)" << be_nl
       << "{" << be_idt_nl;
   *os << fname << "_copy ("
-      << bu->field_pd_prefix () << ub->local_name () 
+      << bu->field_pd_prefix () << ub->local_name ()
       << bu->field_pd_postfix ()
       << ", val);" << be_uidt_nl;
   *os << "}" << be_nl;
 
-  *os << "// Retrieve the member." << be_nl
+  *os << "/// Retrieve the member." << be_nl
       << this->pre_op () << "const " << fname << "_slice *" << be_nl;
 
   this->op_name (bu,
@@ -180,7 +180,7 @@ be_visitor_valuetype_field_cs::visit_array (be_array *node)
       << bu->field_pd_postfix () << ";" << be_uidt_nl
       << "}\n" << be_nl;
 
-  *os << "// Retrieve the member." << be_nl
+  *os << "/// Retrieve the member." << be_nl
       << this->pre_op () << fname << "_slice *" << be_nl;
 
       this->op_name (bu,
@@ -218,7 +218,7 @@ be_visitor_valuetype_field_cs::visit_enum (be_enum *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_cs::"
                          "visit_enum - "
-                         "bad context information\n"), 
+                         "bad context information\n"),
                         -1);
     }
 
@@ -227,7 +227,7 @@ be_visitor_valuetype_field_cs::visit_enum (be_enum *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
-  *os << "// Accessor to set the member." << be_nl
+  *os << "/// Accessor to set the member." << be_nl
       << this->pre_op() << "void" << be_nl;
 
       this->op_name (bu,
@@ -238,13 +238,13 @@ be_visitor_valuetype_field_cs::visit_enum (be_enum *node)
       << "{" << be_idt_nl;
 
   *os << "this->"
-      << bu->field_pd_prefix () << ub->local_name () 
+      << bu->field_pd_prefix () << ub->local_name ()
       << bu->field_pd_postfix ()
       << " = val;" << be_uidt_nl;
 
   *os << "}" << be_nl;
 
-  *os << "// Retrieve the member." << be_nl
+  *os << "/// Retrieve the member." << be_nl
       << this->pre_op () << bt->name () << be_nl;
 
       this->op_name (bu,
@@ -255,7 +255,7 @@ be_visitor_valuetype_field_cs::visit_enum (be_enum *node)
       << "{" << be_idt_nl;
 
   *os << "return this->"
-      << bu->field_pd_prefix() << ub->local_name () 
+      << bu->field_pd_prefix() << ub->local_name ()
       << bu->field_pd_postfix ()
       << ";" << be_uidt_nl;
 
@@ -286,7 +286,7 @@ be_visitor_valuetype_field_cs::visit_interface (be_interface *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_cs::"
                          "visit_interface - "
-                         "bad context information\n"), 
+                         "bad context information\n"),
                         -1);
     }
 
@@ -295,7 +295,7 @@ be_visitor_valuetype_field_cs::visit_interface (be_interface *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
-  *os << "// Accessor to set the member." << be_nl
+  *os << "/// Accessor to set the member." << be_nl
       << this->pre_op () << "void" << be_nl;
 
       this->op_name (bu,
@@ -306,13 +306,13 @@ be_visitor_valuetype_field_cs::visit_interface (be_interface *node)
       << "{" << be_idt_nl;
 
   *os << "this->"
-      << bu->field_pd_prefix () << ub->local_name () 
+      << bu->field_pd_prefix () << ub->local_name ()
       << bu->field_pd_postfix () << " =" << be_idt_nl
-      << "TAO::Objref_Traits< ::" << bt->name () 
+      << "TAO::Objref_Traits< ::" << bt->name ()
       << ">::duplicate (val);" << be_uidt << be_uidt_nl;
   *os << "}" << be_nl << be_nl;
 
-  *os << "// Retrieve the member." << be_nl
+  *os << "/// Retrieve the member." << be_nl
       << this->pre_op () << bt->name () << "_ptr " << be_nl;
 
       this->op_name (bu,
@@ -323,9 +323,9 @@ be_visitor_valuetype_field_cs::visit_interface (be_interface *node)
       << "{" << be_idt_nl;
 
   *os << "return this->"
-      << bu->field_pd_prefix () << ub->local_name () 
+      << bu->field_pd_prefix () << ub->local_name ()
       << bu->field_pd_postfix ()
-      << ".ptr ();" << be_uidt_nl;
+      << ".in ();" << be_uidt_nl;
 
   *os << "}";
 
@@ -354,7 +354,7 @@ be_visitor_valuetype_field_cs::visit_interface_fwd (be_interface_fwd *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_cs::"
                          "visit_interface - "
-                         "bad context information\n"), 
+                         "bad context information\n"),
                         -1);
     }
 
@@ -374,12 +374,12 @@ be_visitor_valuetype_field_cs::visit_interface_fwd (be_interface_fwd *node)
       << "{" << be_idt_nl;
 
   *os << "this->"
-      << bu->field_pd_prefix () << ub->local_name () 
+      << bu->field_pd_prefix () << ub->local_name ()
       << bu->field_pd_postfix ()
       << " = " << bt->name () << "::_duplicate (val);" << be_uidt_nl;
   *os << "}" << be_nl << be_nl;
 
-  *os << "// Retrieve the member" << be_nl
+  *os << "/// Retrieve the member" << be_nl
       << this->pre_op () << bt->name () << "_ptr " << be_nl;
 
   this->op_name (bu,
@@ -390,9 +390,9 @@ be_visitor_valuetype_field_cs::visit_interface_fwd (be_interface_fwd *node)
       << "{" << be_idt_nl;
 
   *os << "return this->"
-      << bu->field_pd_prefix () << ub->local_name () 
+      << bu->field_pd_prefix () << ub->local_name ()
       << bu->field_pd_postfix ()
-      << ".ptr ();" << be_uidt_nl;
+      << ".in ();" << be_uidt_nl;
 
   *os << "}";
 
@@ -427,7 +427,7 @@ be_visitor_valuetype_field_cs::valuetype_common (be_type *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_cs::"
                          "visit_interface - "
-                         "bad context information\n"), 
+                         "bad context information\n"),
                         -1);
     }
 
@@ -436,7 +436,7 @@ be_visitor_valuetype_field_cs::valuetype_common (be_type *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
-  *os << "// Accessor to set the member." << be_nl
+  *os << "/// Accessor to set the member." << be_nl
       << this->pre_op () << "void" << be_nl;
 
   this->op_name (bu,
@@ -448,12 +448,12 @@ be_visitor_valuetype_field_cs::valuetype_common (be_type *node)
 
   *os << "::CORBA::add_ref (val);" << be_nl
       << "this->"
-      << bu->field_pd_prefix () << ub->local_name () 
+      << bu->field_pd_prefix () << ub->local_name ()
       << bu->field_pd_postfix ()
       << " = val;" << be_uidt_nl;
   *os << "}" << be_nl << be_nl;
 
-  *os << "// Retrieve the member" << be_nl
+  *os << "/// Retrieve the member" << be_nl
       << this->pre_op () << bt->name () << " *" << be_nl;
 
   this->op_name (bu,
@@ -464,9 +464,9 @@ be_visitor_valuetype_field_cs::valuetype_common (be_type *node)
       << "{" << be_idt_nl;
 
   *os << "return this->"
-      << bu->field_pd_prefix () << ub->local_name () 
+      << bu->field_pd_prefix () << ub->local_name ()
       << bu->field_pd_postfix ()
-      << ".ptr ();" << be_uidt_nl;
+      << ".in ();" << be_uidt_nl;
 
   *os << "}";
 
@@ -507,7 +507,7 @@ be_visitor_valuetype_field_cs::visit_valuetype_fwd (be_valuetype_fwd *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_cs::"
                          "visit_interface - "
-                         "bad context information\n"), 
+                         "bad context information\n"),
                         -1);
     }
 
@@ -516,10 +516,10 @@ be_visitor_valuetype_field_cs::visit_valuetype_fwd (be_valuetype_fwd *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
-  *os << "// Accessor to set the member." << be_nl
+  *os << "/// Accessor to set the member." << be_nl
       << this->pre_op () << "void" << be_nl;
 
-  this->op_name (bu, 
+  this->op_name (bu,
                  os);
 
   *os << "::" << ub->local_name () << " (" << bt->name ()
@@ -528,15 +528,15 @@ be_visitor_valuetype_field_cs::visit_valuetype_fwd (be_valuetype_fwd *node)
 
   *os << "::CORBA::add_ref (val);" << be_nl
       << "this->"
-      << bu->field_pd_prefix () << ub->local_name () 
+      << bu->field_pd_prefix () << ub->local_name ()
       << bu->field_pd_postfix ()
       << " = val;" << be_uidt_nl;
   *os << "}" << be_nl << be_nl;
 
-  *os << "// Retrieve the member." << be_nl
+  *os << "/// Retrieve the member." << be_nl
       << this->pre_op () << bt->name () << " *" << be_nl;
 
-  this->op_name (bu, 
+  this->op_name (bu,
                  os);
 
   *os << "::" << ub->local_name () << " () const"
@@ -544,10 +544,10 @@ be_visitor_valuetype_field_cs::visit_valuetype_fwd (be_valuetype_fwd *node)
       << "{" << be_idt_nl;
 
   *os << "return this->"
-      << bu->field_pd_prefix () << ub->local_name () 
+      << bu->field_pd_prefix () << ub->local_name ()
       << bu->field_pd_postfix
       ()
-      << ".ptr ();" << be_uidt_nl;
+      << ".in ();" << be_uidt_nl;
 
   *os << "}";
 
@@ -582,7 +582,7 @@ be_visitor_valuetype_field_cs::visit_predefined_type (be_predefined_type *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_cs::"
                          "visit_predef... - "
-                         "bad context information\n"), 
+                         "bad context information\n"),
                         -1);
     }
 
@@ -596,13 +596,16 @@ be_visitor_valuetype_field_cs::visit_predefined_type (be_predefined_type *node)
 
   this->op_name (bu, os);
 
-  *os << "::" << ub->local_name ()
-      << " (" << bt->name ();
-
   AST_PredefinedType::PredefinedType pt = node->pt ();
+  bool is_object = (pt == AST_PredefinedType::PT_object
+                    || pt == AST_PredefinedType::PT_pseudo);
 
-  if (pt == AST_PredefinedType::PT_pseudo
-      || pt == AST_PredefinedType::PT_object)
+  // IN parameter semantics call for 'const' qualifier except
+  // for interface types, which here are Object and TypeCode.
+  *os << "::" << ub->local_name ()
+      << " (" << (is_object ? "" : "const ") << bt->name ();
+
+  if (is_object)
     {
       *os << "_ptr";
     }
@@ -655,7 +658,7 @@ be_visitor_valuetype_field_cs::visit_predefined_type (be_predefined_type *node)
           << " (void) const" << be_nl
           << "{" << be_idt_nl
           << "return this->"
-          << bu->field_pd_prefix () << ub->local_name () 
+          << bu->field_pd_prefix () << ub->local_name ()
           << bu->field_pd_postfix ()
           << ".in ();" << be_uidt_nl
           << "}";
@@ -671,7 +674,7 @@ be_visitor_valuetype_field_cs::visit_predefined_type (be_predefined_type *node)
           << " (void) const" << be_nl
           << "{" << be_idt_nl
           << "return this->"
-          << bu->field_pd_prefix () << ub->local_name () 
+          << bu->field_pd_prefix () << ub->local_name ()
           << bu->field_pd_postfix ()
           << ";" << be_uidt_nl
           << "}" << be_nl << be_nl;
@@ -685,7 +688,7 @@ be_visitor_valuetype_field_cs::visit_predefined_type (be_predefined_type *node)
           << " (void)" << be_nl
           << "{" << be_idt_nl
           << "return this->"
-          << bu->field_pd_prefix () << ub->local_name () 
+          << bu->field_pd_prefix () << ub->local_name ()
           << bu->field_pd_postfix ()
           << ";" << be_uidt_nl
           << "}";
@@ -703,7 +706,7 @@ be_visitor_valuetype_field_cs::visit_predefined_type (be_predefined_type *node)
           << " (void) const" << be_nl
           << "{" << be_idt_nl
           << "return this->"
-          << bu->field_pd_prefix () << ub->local_name () 
+          << bu->field_pd_prefix () << ub->local_name ()
           << bu->field_pd_postfix ()
           << ";" << be_uidt_nl
           << "}";
@@ -736,7 +739,7 @@ be_visitor_valuetype_field_cs::visit_sequence (be_sequence *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_cs::"
                          "visit_sequence - "
-                         "bad context information\n"), 
+                         "bad context information\n"),
                         -1);
     }
 
@@ -754,7 +757,7 @@ be_visitor_valuetype_field_cs::visit_sequence (be_sequence *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_valuetype_field_cs::"
                              "visit_sequence - "
-                             "codegen failed\n"), 
+                             "codegen failed\n"),
                             -1);
         }
     }
@@ -789,7 +792,7 @@ be_visitor_valuetype_field_cs::visit_sequence (be_sequence *node)
       << " (void) const" << be_nl
       << "{" << be_idt_nl
       << "return this->"
-      << bu->field_pd_prefix () << ub->local_name () 
+      << bu->field_pd_prefix () << ub->local_name ()
       << bu->field_pd_postfix ()
       << ";" << be_uidt_nl
       << "}" << be_nl << be_nl;
@@ -803,7 +806,7 @@ be_visitor_valuetype_field_cs::visit_sequence (be_sequence *node)
   *os << "::" << ub->local_name () << " (void)" << be_nl
       << "{" << be_idt_nl
       << "return this->"
-      << bu->field_pd_prefix () << ub->local_name () 
+      << bu->field_pd_prefix () << ub->local_name ()
       << bu->field_pd_postfix()
       << ";" << be_uidt_nl
       << "}";
@@ -822,7 +825,7 @@ be_visitor_valuetype_field_cs::visit_string (be_string *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_cs::"
                          "visit_string - "
-                         "bad context information\n"), 
+                         "bad context information\n"),
                         -1);
     }
 
@@ -851,7 +854,7 @@ be_visitor_valuetype_field_cs::visit_string (be_string *node)
   *os << be_nl
       << "{" << be_idt_nl;
   *os << "this->"
-      << bu->field_pd_prefix () << ub->local_name () 
+      << bu->field_pd_prefix () << ub->local_name ()
       << bu->field_pd_postfix ()
       << " = (val);" << be_uidt_nl
       << "}" << be_nl << be_nl;
@@ -877,7 +880,7 @@ be_visitor_valuetype_field_cs::visit_string (be_string *node)
 
   *os << "// Set the value." << be_nl
       << "this->"
-      << bu->field_pd_prefix () << ub->local_name () 
+      << bu->field_pd_prefix () << ub->local_name ()
       << bu->field_pd_postfix ()
       << " = ";
 
@@ -923,7 +926,7 @@ be_visitor_valuetype_field_cs::visit_string (be_string *node)
 
   *os << "_var = val;" << be_nl
       << "this->"
-      << bu->field_pd_prefix () << ub->local_name () 
+      << bu->field_pd_prefix () << ub->local_name ()
       << bu->field_pd_postfix ()
       << " = "
       << ub->local_name () << "_var._retn ();" << be_uidt_nl;
@@ -945,7 +948,7 @@ be_visitor_valuetype_field_cs::visit_string (be_string *node)
       << " (void) const // get method" << be_nl
       << "{" << be_idt_nl
       << "return this->"
-      << bu->field_pd_prefix () << ub->local_name () 
+      << bu->field_pd_prefix () << ub->local_name ()
       << bu->field_pd_postfix ()
       << ";" << be_uidt_nl
       << "}";
@@ -975,7 +978,7 @@ be_visitor_valuetype_field_cs::visit_structure (be_structure *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_cs::"
                          "visit_structure - "
-                         "bad context information\n"), 
+                         "bad context information\n"),
                         -1);
     }
 
@@ -993,7 +996,7 @@ be_visitor_valuetype_field_cs::visit_structure (be_structure *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_valuetype_field_cs::"
                              "visit_structure - "
-                             "codegen failed\n"), 
+                             "codegen failed\n"),
                             -1);
         }
     }
@@ -1013,7 +1016,7 @@ be_visitor_valuetype_field_cs::visit_structure (be_structure *node)
       << "{" << be_idt_nl;
 
   *os << "this->"
-      << bu->field_pd_prefix () << ub->local_name () 
+      << bu->field_pd_prefix () << ub->local_name ()
       << bu->field_pd_postfix ()
       << " = val;" << be_uidt_nl;
 
@@ -1028,7 +1031,7 @@ be_visitor_valuetype_field_cs::visit_structure (be_structure *node)
   *os << "::" << ub->local_name () << " (void) const" << be_nl
       << "{" << be_idt_nl;
   *os << "return this->"
-      << bu->field_pd_prefix () << ub->local_name () 
+      << bu->field_pd_prefix () << ub->local_name ()
       << bu->field_pd_postfix ()
       << ";" << be_uidt_nl;
   *os << "}" << be_nl;
@@ -1042,7 +1045,7 @@ be_visitor_valuetype_field_cs::visit_structure (be_structure *node)
   *os << "::" << ub->local_name () << " (void)" << be_nl
       << "{" << be_idt_nl;
   *os << "return this->"
-      << bu->field_pd_prefix () << ub->local_name () 
+      << bu->field_pd_prefix () << ub->local_name ()
       << bu->field_pd_postfix ()
       << ";" << be_uidt_nl;
   *os << "}";
@@ -1061,7 +1064,7 @@ be_visitor_valuetype_field_cs::visit_typedef (be_typedef *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_cs::"
                          "visit_typedef - "
-                         "Bad primitive type\n"), 
+                         "Bad primitive type\n"),
                         -1);
     }
 
@@ -1091,7 +1094,7 @@ be_visitor_valuetype_field_cs::visit_union (be_union *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_cs::"
                          "visit_union - "
-                         "bad context information\n"), 
+                         "bad context information\n"),
                         -1);
     }
 
@@ -1109,7 +1112,7 @@ be_visitor_valuetype_field_cs::visit_union (be_union *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_valuetype_field_cs::"
                              "visit_union - "
-                             "codegen failed\n"), 
+                             "codegen failed\n"),
                             -1);
         }
     }
@@ -1139,7 +1142,7 @@ be_visitor_valuetype_field_cs::visit_union (be_union *node)
   *os << "::" << ub->local_name () << " (void) const" << be_nl
       << "{" << be_idt_nl
       << "return this->"
-      << bu->field_pd_prefix () << ub->local_name () 
+      << bu->field_pd_prefix () << ub->local_name ()
       << bu->field_pd_postfix ()
       << ";" << be_uidt_nl
       << "}" << be_nl;
@@ -1153,7 +1156,7 @@ be_visitor_valuetype_field_cs::visit_union (be_union *node)
   *os << "::" << ub->local_name () << " (void)" << be_nl
       << "{" << be_idt_nl
       << "return this->"
-      << bu->field_pd_prefix () << ub->local_name () 
+      << bu->field_pd_prefix () << ub->local_name ()
       << bu->field_pd_postfix ()
       << ";" << be_uidt_nl
       << "}";

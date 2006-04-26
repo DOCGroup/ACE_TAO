@@ -30,6 +30,8 @@
 #endif
 #define TAO_EXPORT_MACRO TAO_Export
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace CORBA
 {
   class ORB;
@@ -76,6 +78,8 @@ namespace CORBA
   TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (Principal_ptr);
   TAO_NAMESPACE_INLINE_FUNCTION void release (Principal_ptr);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

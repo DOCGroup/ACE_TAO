@@ -1,17 +1,19 @@
 // $Id$
 
-#include "Property_Boolean.h"
+#include "orbsvcs/Notify/Property_Boolean.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "Property_Boolean.inl"
+#include "orbsvcs/Notify/Property_Boolean.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(Notify, TAO_Notify_Property_Boolean, "$Id$")
 
-#include "PropertySeq.h"
+#include "orbsvcs/Notify/PropertySeq.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_Property_Boolean::TAO_Notify_Property_Boolean (const char* name)
-  :name_ (name), valid_(0)
+  : name_ (name), valid_(0)
 {
 }
 
@@ -41,3 +43,5 @@ TAO_Notify_Property_Boolean::get (CosNotification::PropertySeq& prop_seq)
 
   prop_seq[prop_seq.length () - 1].value <<= CORBA::Any::from_boolean (this->value_);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

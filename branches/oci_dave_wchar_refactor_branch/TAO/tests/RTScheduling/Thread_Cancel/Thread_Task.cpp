@@ -29,11 +29,11 @@ Thread_Task::activate_task (CORBA::ORB_ptr orb)
 
       this->orb_ = CORBA::ORB::_duplicate (orb);
 
-      CORBA::Object_ptr current_obj = this->orb_->resolve_initial_references ("RTScheduler_Current"
+      CORBA::Object_var current_obj = this->orb_->resolve_initial_references ("RTScheduler_Current"
                                                                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      this->current_ = RTScheduling::Current::_narrow (current_obj
+      this->current_ = RTScheduling::Current::_narrow (current_obj.in ()
                                                        ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
@@ -58,9 +58,9 @@ Thread_Task::activate_task (CORBA::ORB_ptr orb)
   return 0;
 }
 
-#if defined (ACE_HAS_PREDEFINED_THREAD_CANCELLED_MACRO)
+#if defined (THREAD_CANCELLED)
 #undef THREAD_CANCELLED
-#endif /* ACE_HAS_PREDEFINED_THREAD_CANCELLED_MACRO */
+#endif /* THREAD_CANCELLED */
 
 int
 Thread_Task::svc (void)
@@ -102,7 +102,7 @@ Thread_Task::svc (void)
 
       {
         ACE_GUARD_RETURN (ACE_Lock, ace_mon, *shutdown_lock_,-1);
-        RTScheduling::Current::NameList* name_list = this->current_->current_scheduling_segment_names (ACE_ENV_SINGLE_ARG_PARAMETER);
+        RTScheduling::Current::NameList_var name_list = this->current_->current_scheduling_segment_names (ACE_ENV_SINGLE_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
         ACE_DEBUG ((LM_DEBUG,
@@ -113,7 +113,7 @@ Thread_Task::svc (void)
           {
             ACE_DEBUG ((LM_DEBUG,
                         "Scheduling Segment Name - %s\n",
-                        (*name_list) [i].in ()));
+                        static_cast<char const*>((*name_list) [i])));
           }
       }
 

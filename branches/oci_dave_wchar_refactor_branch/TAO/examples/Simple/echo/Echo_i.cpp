@@ -34,7 +34,7 @@ Echo_i::echo_list (const char *
   Echo::List_var list;
 
   {
-    Echo::List *tmp;
+    Echo::List *tmp = 0;
     ACE_NEW_RETURN (tmp,
                     Echo::List (3),
                     0);

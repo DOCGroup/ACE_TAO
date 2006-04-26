@@ -4,7 +4,13 @@
 project(*application): messaging, rteventexe, rtevent_serv, naming {
   after  += ECMcastTests_lib
   libs     += ECMcastTests
-  includes += ../Common
+
+  specific (automake) {
+    includes += $(srcdir)/../Common
+  } else {
+    includes += ../Common
+  }
+
   exename   = application
 
   Source_Files {
@@ -15,7 +21,13 @@ project(*application): messaging, rteventexe, rtevent_serv, naming {
 project(*gateway-ec): messaging, rteventexe, rtevent_serv, naming {
   after  += ECMcastTests_lib
   libs     += ECMcastTests
-  includes += ../Common
+
+  specific (automake) {
+    includes += $(srcdir)/../Common
+  } else {
+    includes += ../Common
+  }
+
   exename   = gateway-ec
 
   Source_Files {

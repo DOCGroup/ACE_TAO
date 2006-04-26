@@ -1,7 +1,7 @@
 // $Id$
 
-#ifndef ACE_UNBOUNDED_QUEUE_C
-#define ACE_UNBOUNDED_QUEUE_C
+#ifndef ACE_UNBOUNDED_QUEUE_CPP
+#define ACE_UNBOUNDED_QUEUE_CPP
 
 #include "ace/Unbounded_Queue.h"
 
@@ -17,7 +17,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/os_include/os_errno.h"
 
-ACE_RCSID(ace, Unbounded_Queue, "$Id$")
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Unbounded_Queue)
 
@@ -134,7 +134,7 @@ ACE_Unbounded_Queue<T>::delete_nodes (void)
                              this->allocator_->free,
                              ACE_Node,
                              <T>);
-      this->cur_size_--;
+      --this->cur_size_;
       // @@ Doesnt make sense to have this check since
       // this will always be true.
       //   ACE_ASSERT (this->cur_size_ >= 0);
@@ -174,7 +174,7 @@ ACE_Unbounded_Queue<T>::enqueue_head (const T &new_item)
   // just a pointer to the dummy node.
   this->head_->next_ = temp;
 
-  this->cur_size_++;
+  ++this->cur_size_;
   return 0;
 }
 
@@ -201,7 +201,7 @@ ACE_Unbounded_Queue<T>::enqueue_tail (const T &new_item)
   // Point the head to the new dummy node.
   this->head_ = temp;
 
-  this->cur_size_++;
+  ++this->cur_size_;
   return 0;
 }
 
@@ -429,4 +429,6 @@ ACE_Unbounded_Queue_Iterator<T>::next (T *&item)
     }
 }
 
-#endif /* ACE_UNBOUNDED_QUEUE_C */
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* ACE_UNBOUNDED_QUEUE_CPP */

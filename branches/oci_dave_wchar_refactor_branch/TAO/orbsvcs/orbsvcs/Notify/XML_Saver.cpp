@@ -1,6 +1,6 @@
 // $Id$
 
-#include "XML_Saver.h"
+#include "orbsvcs/Notify/XML_Saver.h"
 
 #include "ACEXML/common/XML_Util.h"
 
@@ -8,8 +8,12 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO_Notify
 {
+  extern const char TOPOLOGY_ID_NAME[];
+
   XML_Saver::XML_Saver(bool timestamp)
     : output_ (0)
     , close_out_ (false)
@@ -181,11 +185,11 @@ namespace TAO_Notify
     return true;
   }
 
-  void XML_Saver::end_object (CORBA::Long id,
-    const ACE_CString& type ACE_ENV_ARG_DECL_NOT_USED)
+  void XML_Saver::end_object (CORBA::Long /* id */,
+                              const ACE_CString& type
+                              ACE_ENV_ARG_DECL_NOT_USED)
   {
     ACE_ASSERT(this->output_ != 0);
-    ACE_UNUSED_ARG (id);
     FILE *out = this->output_;
     if (this->indent_.length() >= 2)
     {
@@ -195,3 +199,5 @@ namespace TAO_Notify
                      type.c_str(), ">\n");
   }
 } /* namespace TAO_Notify */
+
+TAO_END_VERSIONED_NAMESPACE_DECL

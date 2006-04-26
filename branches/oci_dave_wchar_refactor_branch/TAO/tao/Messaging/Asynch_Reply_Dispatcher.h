@@ -16,19 +16,23 @@
 #define TAO_ASYNCH_REPLY_DISPATCHER_H
 #include /**/ "ace/pre.h"
 
-#include "Messaging.h"
+#include "tao/Messaging/Messaging.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Asynch_Timeout_Handler.h"
+#include "tao/Messaging/Asynch_Timeout_Handler.h"
 #include "tao/Asynch_Reply_Dispatcher_Base.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Allocator;
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// Reply dispatcher for Asynchoronous Method Invocation (AMI)s.
-class TAO_Messaging_Export TAO_Asynch_Reply_Dispatcher
+class TAO_Asynch_Reply_Dispatcher
   : public TAO_Asynch_Reply_Dispatcher_Base
 {
 public:
@@ -68,6 +72,8 @@ private:
   /// Timeout Handler in case of AMI timeouts
   TAO_Asynch_Timeout_Handler *timeout_handler_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_ASYNCH_REPLY_DISPATCHER_H */

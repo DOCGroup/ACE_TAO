@@ -34,8 +34,24 @@
 #define ACE_USE_RCSID 0
 #endif /* #if !defined (ACE_USE_RCSID) */
 
-#define ACE_LACKS_ASSERT_MACRO
+#define ACE_LACKS_ENV
+#define ACE_LACKS_SETEGID
+#define ACE_LACKS_SETPGID
+#define ACE_LACKS_SETSID
+#define ACE_LACKS_SETUID
+#define ACE_LACKS_SETEUID
+#define ACE_LACKS_GETEUID
+#define ACE_LACKS_GETUID
+#define ACE_LACKS_GETPGID
+#define ACE_LACKS_GETEGID
+#define ACE_LACKS_GETGID
 
+#define ACE_LACKS_ASSERT_MACRO
+#define ACE_LACKS_KILL
+#define ACE_LACKS_SIGACTION
+
+#define ACE_LACKS_GETOPT
+#define ACE_LACKS_SYSCONF
 #define ACE_LACKS_WAIT
 #define ACE_LACKS_WAITPID
 #define ACE_LACKS_SIGSET
@@ -44,8 +60,13 @@
 #define ACE_LACKS_FILELOCKS
 #define ACE_LACKS_TRUNCATE
 #define ACE_LACKS_PRAGMA_ONCE
+#define ACE_LACKS_SYSTEM
 #define ACE_NLOGGING
 #define ACE_NDEBUG
+#define ACE_LACKS_GETPROTOBYNUMBER
+#define ACE_LACKS_GETHOSTBYADDR
+#define ACE_LACKS_GETPROTOBYNAME
+#define ACE_LACKS_GETHOSTBYNAME
 
 #define ACE_PSOS_LACKS_PREPC
 
@@ -66,6 +87,8 @@
 # define ACE_LACKS_TELLDIR
 # define ACE_LACKS_SEEKDIR
 # define ACE_LACKS_REWINDDIR
+#define ACE_LACKS_SETGID
+#define ACE_LACKS_PIPE
 
 # define ACE_THREADS_DONT_INHERIT_LOG_MSG
 
@@ -212,8 +235,6 @@
 #define ACE_LACKS_UMASK
 
 #define ACE_LACKS_UNIX_SIGNALS
-
-// #define ACE_LACKS_SYSTIME_H
 
 // @todo: (dhinton) Not sure about this, but the following was in ace/OS_String.h
 // #if !defined (ACE_PSOS_DIAB_MIPS)

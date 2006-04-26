@@ -1,7 +1,7 @@
-/** 
+/**
  * @file PS_Handler.h
  * @author Will Otte <wotte@dre.vanderbilt.edu>
- * 
+ *
  *  $Id$
  */
 
@@ -23,21 +23,21 @@ namespace CIAO
     namespace Config_Handlers
     {
       class PolicySet;
-      
+
       /**
        * @class PS_Handler
        * @brief Handler class for PolicySets
        */
-      
+
       class RT_CCM_Handlers_Export PS_Handler
       {
       public:
         static bool policy_set (const PolicySet &src,
                                 ::CIAO::DAnCE::PolicySet &dest);
-        
+
         static PolicySet policy_set (const ::CIAO::DAnCE::PolicySet &src);
       };
-      
+
     }
 }
 

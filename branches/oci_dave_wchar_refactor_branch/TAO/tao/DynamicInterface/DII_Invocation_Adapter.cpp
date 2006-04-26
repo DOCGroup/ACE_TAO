@@ -1,7 +1,7 @@
 //$Id$
-#include "DII_Invocation_Adapter.h"
-#include "DII_Invocation.h"
-#include "DII_Reply_Dispatcher.h"
+#include "tao/DynamicInterface/DII_Invocation_Adapter.h"
+#include "tao/DynamicInterface/DII_Invocation.h"
+#include "tao/DynamicInterface/DII_Reply_Dispatcher.h"
 
 #include "tao/Exception.h"
 #include "tao/ORB_Constants.h"
@@ -9,7 +9,7 @@
 #include "tao/Transport.h"
 #include "tao/Transport.h"
 #include "tao/Pluggable_Messaging.h"
-#include "Request.h"
+#include "tao/DynamicInterface/Request.h"
 
 #include "ace/os_include/os_errno.h"
 
@@ -17,6 +17,8 @@ ACE_RCSID (tao,
            Invocation_Adapter,
            "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -83,8 +85,15 @@ namespace TAO
         effective_target =
           synch.steal_forwarded_reference ();
 
+#if TAO_HAS_INTERCEPTORS == 1
+        const CORBA::Boolean permanent_forward =
+            (synch.reply_status() == TAO_PLUGGABLE_MESSAGE_LOCATION_FORWARD_PERM);
+#else
+        const CORBA::Boolean permanent_forward = false;
+#endif
         this->object_forwarded (effective_target,
-                                r.stub ()
+                                r.stub (),
+                                permanent_forward
                                 ACE_ENV_ARG_PARAMETER);
         ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
       }
@@ -181,3 +190,5 @@ namespace TAO
     return status;
   }
 } // End namespace TAO
+
+TAO_END_VERSIONED_NAMESPACE_DECL

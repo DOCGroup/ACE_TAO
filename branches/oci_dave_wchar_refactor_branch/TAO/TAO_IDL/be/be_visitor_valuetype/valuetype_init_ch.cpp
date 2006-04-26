@@ -108,16 +108,16 @@ be_visitor_valuetype_init_ch::visit_valuetype (be_valuetype *node)
       os << be_nl << be_nl
          << "virtual ::CORBA::ValueBase *" << be_nl
          << "create_for_unmarshal ("
-         << be_idt << be_idt_nl
-         << "ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
+         << be_idt << be_idt
+         << env_sngl_dflts << be_uidt_nl
          << ");" << be_uidt;
 
       if (node->supports_abstract ())
         {
           os << be_nl << be_nl
              << "virtual ::CORBA::AbstractBase_ptr" << be_nl
-             << "create_for_unmarshal_abstract (" << be_idt << be_idt_nl
-             << "ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
+             << "create_for_unmarshal_abstract (" << be_idt << be_idt
+             << env_sngl_dflts << be_uidt_nl
              << ");" << be_uidt;
         }
     }

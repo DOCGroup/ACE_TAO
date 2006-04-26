@@ -1,14 +1,15 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Nested Upcall Server): taoexe, portableserver {
+project(*Nested_Upcall_Server): taoexe, portableserver {
   Source_Files {
     server_i.cpp
     server.cpp
   }
 }
 
-project(*Nested Upcall Client): taoexe, portableserver {
+project(*Nested_Upcall_Client): taoexe, portableserver {
+  after += *Nested_Upcall_Server
   Source_Files {
     client_i.cpp
     client.cpp

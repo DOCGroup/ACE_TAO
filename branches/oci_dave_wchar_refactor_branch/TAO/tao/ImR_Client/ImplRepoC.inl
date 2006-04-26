@@ -26,6 +26,8 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // TAO_IDL - Generated from
 // be\be_visitor_interface/interface_ci.cpp:70
 
@@ -39,7 +41,7 @@ ImplementationRepository::ServerInformationIterator::ServerInformationIterator (
     TAO_Abstract_ServantBase *servant,
     TAO_ORB_Core *oc
   )
-  : ACE_NESTED_CLASS (CORBA, Object) (
+  : ::CORBA::Object (
         objref,
         _tao_collocated,
         servant,
@@ -55,7 +57,7 @@ ImplementationRepository::ServerInformationIterator::ServerInformationIterator (
     IOP::IOR *ior,
     TAO_ORB_Core *oc
   )
-  : ACE_NESTED_CLASS ( ::CORBA, Object) (ior, oc),
+  : ::CORBA::Object (ior, oc),
     the_TAO_ServerInformationIterator_Proxy_Broker_ (0)
 {
 }
@@ -75,7 +77,7 @@ ImplementationRepository::Administration::Administration (
     TAO_Abstract_ServantBase *servant,
     TAO_ORB_Core *oc
   )
-  : ACE_NESTED_CLASS (CORBA, Object) (
+  : ::CORBA::Object (
         objref,
         _tao_collocated,
         servant,
@@ -91,9 +93,11 @@ ImplementationRepository::Administration::Administration (
     IOP::IOR *ior,
     TAO_ORB_Core *oc
   )
-  : ACE_NESTED_CLASS ( ::CORBA, Object) (ior, oc),
+  : ::CORBA::Object (ior, oc),
     the_TAO_Administration_Proxy_Broker_ (0)
 {
 }
 
 #endif /* end #if !defined */
+
+TAO_END_VERSIONED_NAMESPACE_DECL

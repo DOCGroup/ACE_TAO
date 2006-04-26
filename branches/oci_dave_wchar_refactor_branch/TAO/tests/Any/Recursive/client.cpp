@@ -170,13 +170,22 @@ recursive_union_test (CORBA::ORB_ptr /* orb */,
               "Executing recursive union test\n"));
 
   Test::RecursiveUnion foo;
+  Test::EnumUnion foo_enum;
+  static CORBA::Long const test_long = 238901;
+  CORBA::Any the_any;
+
+  // First simple case, just an union with an enum as discriminator
+  foo_enum.i (test_long);
+  the_any <<= foo_enum;
+
+  ::perform_invocation<Test::EnumUnion> (hello,
+                                         the_any
+                                         ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
   // Non-recursive member case.
-  static CORBA::Long const test_long = 238901;
-
   foo.i (test_long);
 
-  CORBA::Any the_any;
   the_any <<= foo;
 
   ::perform_invocation<Test::RecursiveUnion> (hello,
@@ -197,6 +206,38 @@ recursive_union_test (CORBA::ORB_ptr /* orb */,
   ::perform_invocation<Test::RecursiveUnion> (hello,
                                               the_any
                                               ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  // Recursive member case with no default member
+  Test::RecursiveUnionSeqNoDefault seqnodefault;
+  seqnodefault.length (2);
+  seqnodefault[0].a (37);
+  seqnodefault[1].recursive_unions (Test::RecursiveUnionSeqNoDefault ());
+
+  Test::RecursiveUnionNoDefault foonodefault;
+  foonodefault.recursive_unions (seqnodefault);
+
+  the_any <<= foonodefault;
+
+  ::perform_invocation<Test::RecursiveUnionNoDefault> (hello,
+                                                       the_any
+                                                       ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  // Recursive member case with enum .
+  Test::VSortRecursiveUnionSeq vsortseq;
+  vsortseq.length (2);
+  vsortseq[0].i (37);
+  vsortseq[1].recursive_unions (Test::VSortRecursiveUnionSeq ());
+
+  Test::VSortRecursiveUnion vsort_foo;
+  vsort_foo.recursive_unions (vsortseq);
+
+  the_any <<= vsort_foo;
+
+  ::perform_invocation<Test::VSortRecursiveUnion> (hello,
+                                                   the_any
+                                                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
@@ -256,12 +297,14 @@ recursive_struct_typecodefactory_test (CORBA::ORB_ptr orb,
                              ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  CORBA::StructMemberSeq members (2);
-  members.length (2);
+  CORBA::StructMemberSeq members (3);
+  members.length (3);
   members[0].name = "recursive_structs";
   members[0].type = seq_tc;
   members[1].name = "i";
   members[1].type = CORBA::TypeCode::_duplicate (CORBA::_tc_long);
+  members[2].name = "recursive_structs_second";
+  members[2].type = seq_tc;
 
   CORBA::TypeCode_var struct_tc =
     orb->create_struct_tc ("IDL:Test/RecursiveStruct:1.0",

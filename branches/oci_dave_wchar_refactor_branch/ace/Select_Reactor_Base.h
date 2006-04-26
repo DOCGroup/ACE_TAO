@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -27,8 +27,10 @@
 #include "ace/Reactor_Impl.h"
 
 #if defined (ACE_HAS_REACTOR_NOTIFICATION_QUEUE)
-#include "ace/Unbounded_Queue.h"
+# include "ace/Unbounded_Queue.h"
 #endif /* ACE_HAS_REACTOR_NOTIFICATION_QUEUE */
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Add useful typedefs to simplify the following code.
 typedef void (ACE_Handle_Set::*ACE_FDS_PTMF) (ACE_HANDLE);
@@ -36,10 +38,11 @@ typedef int (ACE_Event_Handler::*ACE_EH_PTMF) (ACE_HANDLE);
 
 // Forward declaration.
 class ACE_Select_Reactor_Impl;
+class ACE_Sig_Handler;
 
 /*
  * Hook to specialize the Select_Reactor_Base implementation
- * with the concrete reactor, e.g., select or tp reactor 
+ * with the concrete reactor, e.g., select or tp reactor
  * specified at build/compilation time.
  */
 //@@ REACTOR_SPL_INCLUDE_FORWARD_DECL_ADD_HOOK
@@ -68,8 +71,8 @@ public:
  *
  * @brief An ACE_Event_Handler and its associated ACE_HANDLE.
  *
- * One <ACE_Event_Handler> is registered for one or more
- * <ACE_HANDLE>.  At various points, this information must be
+ * One ACE_Event_Handler is registered for one or more
+ * ACE_HANDLE.  At various points, this information must be
  * stored explicitly.  This class provides a lightweight
  * mechanism to do so.
  */
@@ -95,7 +98,7 @@ public:
   /// Handle.
   ACE_HANDLE handle_;
 
-  /// <ACE_Event_Handler> associated with the <ACE_HANDLE>.
+  /// ACE_Event_Handler associated with the ACE_HANDLE.
   ACE_Event_Handler *event_handler_;
 };
 
@@ -161,8 +164,8 @@ public:
   /// because of a thread trying to unblock the <Reactor_Impl>
   virtual int dispatch_notify (ACE_Notification_Buffer &buffer);
 
-  /// Read one of the notify call on the <handle> into the
-  /// <buffer>. This could be because of a thread trying to unblock
+  /// Read one of the notify call on the @a handle into the
+  /// @a buffer. This could be because of a thread trying to unblock
   /// the <Reactor_Impl>
   virtual int read_notify_pipe (ACE_HANDLE handle,
                                 ACE_Notification_Buffer &buffer);
@@ -170,7 +173,7 @@ public:
   /// Verify whether the buffer has dispatchable info  or not.
   virtual int is_dispatchable (ACE_Notification_Buffer &buffer);
 
-  /// Called back by the <ACE_Select_Reactor> when a thread wants to
+  /// Called back by the ACE_Select_Reactor when a thread wants to
   /// unblock us.
   virtual int handle_input (ACE_HANDLE handle);
 
@@ -196,14 +199,14 @@ public:
 
   /**
    * Purge any notifications pending in this reactor for the specified
-   * <ACE_Event_Handler> object. If <eh> == 0, all notifications for all
+   * ACE_Event_Handler object. If @a eh == 0, all notifications for all
    * handlers are removed (but not any notifications posted just to wake up
    * the reactor itself). Returns the number of notifications purged.
    * Returns -1 on error.
    */
   virtual int purge_pending_notifications (
-      ACE_Event_Handler *,
-      ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK);
+      ACE_Event_Handler *sh,
+      ACE_Reactor_Mask mask = ACE_Event_Handler::ALL_EVENTS_MASK);
 
   /// Dump the state of an object.
   virtual void dump (void) const;
@@ -213,16 +216,16 @@ public:
 
 protected:
   /**
-   * Keep a back pointer to the <ACE_Select_Reactor>.  If this value
-   * if NULL then the <ACE_Select_Reactor> has been initialized with
+   * Keep a back pointer to the ACE_Select_Reactor.  If this value
+   * if NULL then the ACE_Select_Reactor has been initialized with
    * <disable_notify_pipe>.
    */
   ACE_Select_Reactor_Impl *select_reactor_;
 
   /**
-   * Contains the <ACE_HANDLE> the <ACE_Select_Reactor> is listening
-   * on, as well as the <ACE_HANDLE> that threads wanting the
-   * attention of the <ACE_Select_Reactor> will write to.
+   * Contains the ACE_HANDLE the ACE_Select_Reactor is listening
+   * on, as well as the ACE_HANDLE that threads wanting the
+   * attention of the ACE_Select_Reactor will write to.
    */
   ACE_Pipe notification_pipe_;
 
@@ -260,13 +263,13 @@ protected:
 /**
  * @class ACE_Select_Reactor_Handler_Repository
  *
- * @brief Used to map <ACE_HANDLE>s onto the appropriate
- * <ACE_Event_Handler> *.
+ * @brief Used to map ACE_HANDLEs onto the appropriate
+ * ACE_Event_Handler *.
  *
  * This class is necessary to shield differences between UNIX
- * and Win32.  In UNIX, <ACE_HANDLE> is an int, whereas in Win32
+ * and Win32.  In UNIX, ACE_HANDLE is an int, whereas in Win32
  * it's a void *.  This class hides all these details from the
- * bulk of the <ACE_Select_Reactor> code.  All of these methods
+ * bulk of the ACE_Select_Reactor code.  All of these methods
  * are called with the main <Select_Reactor> token lock held.
  */
 class ACE_Export ACE_Select_Reactor_Handler_Repository
@@ -298,19 +301,19 @@ public:
   // = Search structure operations.
 
   /**
-   * Return the <ACE_Event_Handler *> associated with <ACE_HANDLE>.
+   * Return the <ACE_Event_Handler *> associated with ACE_HANDLE.
    * If <index_p> is non-0, then return the index location of the
    * <handle>, if found.
    */
   ACE_Event_Handler *find (ACE_HANDLE handle, size_t *index_p = 0);
 
-  /// Bind the <ACE_Event_Handler *> to the <ACE_HANDLE> with the
-  /// appropriate <ACE_Reactor_Mask> settings.
+  /// Bind the ACE_Event_Handler * to the ACE_HANDLE with the
+  /// appropriate ACE_Reactor_Mask settings.
   int bind (ACE_HANDLE,
             ACE_Event_Handler *,
             ACE_Reactor_Mask);
 
-  /// Remove the binding of <ACE_HANDLE> in accordance with the <mask>.
+  /// Remove the binding of ACE_HANDLE in accordance with the @a mask.
   int unbind (ACE_HANDLE,
               ACE_Reactor_Mask mask);
 
@@ -376,7 +379,7 @@ private:
 /**
  * @class ACE_Select_Reactor_Handler_Repository_Iterator
  *
- * @brief Iterate through the <ACE_Select_Reactor_Handler_Repository>.
+ * @brief Iterate through the ACE_Select_Reactor_Handler_Repository.
  */
 class ACE_Export ACE_Select_Reactor_Handler_Repository_Iterator
 {
@@ -438,7 +441,7 @@ public:
 
   /**
    * Purge any notifications pending in this reactor for the specified
-   * <ACE_Event_Handler> object. Returns the number of notifications
+   * ACE_Event_Handler object. Returns the number of notifications
    * purged. Returns -1 on error.
    */
   virtual int purge_pending_notifications (ACE_Event_Handler * = 0,
@@ -451,7 +454,7 @@ public:
   virtual int resumable_handler (void);
 
   /*
-   * Hook to add concrete methods required to specialize the 
+   * Hook to add concrete methods required to specialize the
    * implementation with concrete methods required for the concrete
    * reactor implementation, for example, select, tp reactors.
    */
@@ -461,14 +464,14 @@ protected:
   /// Allow manipulation of the <wait_set_> mask and <ready_set_> mask.
   virtual int bit_ops (ACE_HANDLE handle,
                        ACE_Reactor_Mask mask,
-                       ACE_Select_Reactor_Handle_Set &wait_Set,
+                       ACE_Select_Reactor_Handle_Set &handle_set,
                        int ops);
 
   /// Enqueue ourselves into the list of waiting threads at the
   /// appropriate point specified by <requeue_position_>.
   virtual void renew (void) = 0;
 
-  /// Check to see if the <Event_Handler> associated with <handle> is
+  /// Check to see if the <Event_Handler> associated with @a handle is
   /// suspended. Returns 0 if not, 1 if so.
   virtual int is_suspended_i (ACE_HANDLE handle) = 0;
 
@@ -479,7 +482,6 @@ protected:
 
   /// Table that maps <ACE_HANDLEs> to <ACE_Event_Handler *>'s.
   ACE_Select_Reactor_Handler_Repository handler_rep_;
-
 
   /// Tracks handles that are ready for dispatch from <select>
   ACE_Select_Reactor_Handle_Set dispatch_set_;
@@ -497,24 +499,27 @@ protected:
   /// Defined as a pointer to allow overriding by derived classes...
   ACE_Timer_Queue *timer_queue_;
 
-  /// Keeps track of whether we should delete the timer queue (if we
-  /// didn't create it, then we don't delete it).
-  int delete_timer_queue_;
-
   /// Handle signals without requiring global/static variables.
   ACE_Sig_Handler *signal_handler_;
 
-  /// Keeps track of whether we should delete the signal handler (if we
-  /// didn't create it, then we don't delete it).
-  int delete_signal_handler_;
-
-  /// Callback object that unblocks the <ACE_Select_Reactor> if it's
+  /// Callback object that unblocks the ACE_Select_Reactor if it's
   /// sleeping.
   ACE_Reactor_Notify *notify_handler_;
 
+  /// Keeps track of whether we should delete the timer queue (if we
+  /// didn't create it, then we don't delete it).
+  bool delete_timer_queue_;
+
+  /// Keeps track of whether we should delete the signal handler (if we
+  /// didn't create it, then we don't delete it).
+  bool delete_signal_handler_;
+
   /// Keeps track of whether we need to delete the notify handler (if
   /// we didn't create it, then we don't delete it).
-  int delete_notify_handler_;
+  bool delete_notify_handler_;
+
+  /// True if we've been initialized yet...
+  bool initialized_;
 
   /// Restart the <handle_events> event-loop method automatically when
   /// <select> is interrupted via <EINTR>.
@@ -528,9 +533,6 @@ protected:
    * that indicates the number of waiters to skip over.
    */
   int requeue_position_;
-
-  /// True if we've been initialized yet...
-  int initialized_;
 
   /// The original thread that created this Select_Reactor.
   ACE_thread_t owner_;
@@ -558,6 +560,7 @@ protected:
 
 
 private:
+
   /// Determine whether we should renew Select_Reactor's token after handling
   /// the notification message.
   int supress_renew_;
@@ -566,6 +569,8 @@ private:
   ACE_Select_Reactor_Impl (const ACE_Select_Reactor_Impl &);
   ACE_Select_Reactor_Impl &operator = (const ACE_Select_Reactor_Impl &);
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Select_Reactor_Base.inl"

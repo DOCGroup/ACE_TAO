@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -21,6 +21,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/INET_Addr.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward declarations.
 class ACE_Message_Block;
@@ -158,6 +160,8 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/SOCK_Stream.inl"

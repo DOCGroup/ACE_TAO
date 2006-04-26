@@ -14,7 +14,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "bidirgiop_export.h"
+#include "tao/BiDir_GIOP/bidirgiop_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -30,10 +30,12 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /// Messaging ORB initializer.
-class TAO_BiDirGIOP_Export TAO_BiDir_ORBInitializer :
-  public virtual PortableInterceptor::ORBInitializer,
-  public virtual TAO_Local_RefCounted_Object
+class TAO_BiDir_ORBInitializer
+  : public virtual PortableInterceptor::ORBInitializer
+  , public virtual TAO_Local_RefCounted_Object
 {
 public:
 
@@ -53,6 +55,8 @@ private:
          ACE_ENV_ARG_DECL);
 
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

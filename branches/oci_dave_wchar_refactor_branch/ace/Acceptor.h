@@ -24,6 +24,7 @@
 #include "ace/Strategies_T.h"
 #include "ace/Synch_Options.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_Acceptor
@@ -64,16 +65,37 @@ public:
                 int use_select = 1);
 
   /**
-   * Initialize and register {this} with the Reactor and listen for
-   * connection requests at the designated {local_addr}.  {flags}
-   * indicates how {SVC_HANDLER}'s should be initialized prior to
-   * being activated.  Right now, the only flag that is processed is
-   * {ACE_NONBLOCK}, which enabled non-blocking I/O on the
-   * {SVC_HANDLER} when it is opened.  If {use_select} is non-zero
-   * then {select} is used to determine when to break out of the
-   * {accept} loop.  {reuse_addr} is passed down to the
-   * {PEER_ACCEPTOR}.  If it is non-zero this will allow the OS to
-   * reuse this listen port.
+   * Open the contained @c PEER_ACCEPTOR object to begin listening, and
+   * register with the specified reactor for accept events.  An
+   * acceptor can only listen to one port at a time, so make sure to
+   * @c close() the acceptor before calling @c open() again.
+   *
+   * The @c PEER_ACCEPTOR handle is put into non-blocking mode as a
+   * safeguard against the race condition that can otherwise occur
+   * between the time when the passive-mode socket handle is "ready"
+   * and when the actual @c accept() call is made.  During this
+   * interval, the client can shutdown the connection, in which case,
+   * the @c accept() call can hang.
+   *
+   * @param local_addr The address to listen at.
+   * @param reactor    Pointer to the ACE_Reactor instance to register
+   *                   this object with. The default is the singleton.
+   * @param flags      Flags to control what mode an accepted socket
+   *                   will be put into after it is accepted. The only
+   *                   legal value for this argument is @c ACE_NONBLOCK,
+   *                   which enables non-blocking mode on the accepted
+   *                   peer stream object in @c SVC_HANDLER.  The default
+   *                   is 0.
+   * @param use_select Affects behavior when called back by the reactor
+   *                   when a connection can be accepted.  If non-zero,
+   *                   this object will accept all pending connections,
+   *                   intead of just the one that triggered the reactor
+   *                   callback.  Uses ACE_OS::select() internally to
+   *                   detect any remaining acceptable connections.
+   *                   The default is 1.
+   * @param reuse_addr Passed to the @c PEER_ACCEPTOR::open() method with
+   *                   @p local_addr.  Generally used to request that the
+   *                   OS allow reuse of the listen port.  The default is 1.
    */
   ACE_Acceptor (const ACE_PEER_ACCEPTOR_ADDR &local_addr,
                 ACE_Reactor * = ACE_Reactor::instance (),
@@ -83,7 +105,9 @@ public:
 
   /**
    * Open the contained @c PEER_ACCEPTOR object to begin listening, and
-   * register with the specified reactor for accept events.
+   * register with the specified reactor for accept events.  An
+   * acceptor can only listen to one port at a time, so make sure to
+   * @c close() the acceptor before calling @c open() again.
    *
    * The @c PEER_ACCEPTOR handle is put into non-blocking mode as a
    * safeguard against the race condition that can otherwise occur
@@ -643,6 +667,8 @@ private:
   /// delete it, else 0.
   int delete_concurrency_strategy_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Acceptor.cpp"

@@ -20,6 +20,7 @@
 
 #ifdef __cplusplus
 
+#include "tao/orbconf.h"
 #include "ace/OS.h"
 
 /* Use prototypes in function declarations. */
@@ -93,6 +94,8 @@
 
 /* Size of default input buffer. */
 #define YY_BUF_SIZE 16384
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 typedef struct yy_buffer_state *YY_BUFFER_STATE;
 
@@ -444,6 +447,9 @@ static char *yy_last_accepting_cpos;
 char *yytext;
 //#line 1 "ETCL/ETCL.ll"
 #define INITIAL 0
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 //#line 4 "ETCL/ETCL.ll"
 // $Id$
 // ========================================================================
@@ -460,9 +466,11 @@ char *yytext;
 //
 // ========================================================================
 
-#include "ETCL_Interpreter.h"
-#include "ETCL_Constraint.h"
-#include "ETCL_y.h"
+#include "orbsvcs/ETCL/ETCL_Interpreter.h"
+#include "orbsvcs/ETCL/ETCL_Constraint.h"
+#include "orbsvcs/ETCL/ETCL_y.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 static const char* extract_string(char*);
 //static const char * extract_string(char*);
@@ -470,7 +478,7 @@ static const char* extract_string(char*);
 #define TAO_YY_LEX_DEBUG
 
 #ifdef TAO_CONSTRAINT_DEBUG
-#define TAO_YY_LEX_DEBUG TAO_OS::fprintf(stderr, "%s\n", yytext)
+#define TAO_YY_LEX_DEBUG ACE_OS::fprintf(stderr, "%s\n", yytext)
 #endif /* TAO_CONSTRAINT_DEBUG */
 
 //#define YY_DECL int TAO_ETCL_yylex (TAO_ETCL_YYSTYPE *lvalp, void* state)
@@ -526,6 +534,8 @@ static int yy_top_state YY_PROTO(( void ));
 #define YY_NO_POP_STATE 1
 #define YY_NO_TOP_STATE 1
 #endif
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #ifdef YY_MALLOC_DECL
 YY_MALLOC_DECL
@@ -617,6 +627,8 @@ YY_MALLOC_DECL
 
 #define YY_RULE_SETUP \
 	YY_USER_ACTION
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 YY_DECL
 	{
@@ -1868,3 +1880,5 @@ yywrap (void)
 {
   return 1;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

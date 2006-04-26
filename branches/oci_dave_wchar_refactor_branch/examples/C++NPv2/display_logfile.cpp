@@ -24,12 +24,13 @@ class Logrec_Module : public ACE_Module<ACE_SYNCH>
 {
 public:
   Logrec_Module (const ACE_TCHAR *name)
-    : ACE_Module<ACE_SYNCH>
-                    (name,
-                     &task_, // Initialize writer-side task.
-                     0,      // Ignore reader-side task.
-                     0,
-                     ACE_Module<ACE_SYNCH>::M_DELETE_READER) {}
+  {
+    this->open (name,
+		&task_, // Initialize writer-side task.
+		0,      // Ignore reader-side task.
+		0,
+		ACE_Module<ACE_SYNCH>::M_DELETE_READER);
+  }
 private:
   TASK task_;
 };
@@ -194,13 +195,14 @@ class Logrec_Reader_Module : public ACE_Module<ACE_SYNCH>
 {
 public:
   Logrec_Reader_Module (const ACE_TString &filename)
-    : ACE_Module<ACE_SYNCH>
-                    (ACE_TEXT ("Logrec Reader"),
-                     &task_, // Initialize writer-side.
-                     0,      // Ignore reader-side.
-                     0,
-                     ACE_Module<ACE_SYNCH>::M_DELETE_READER),
-      task_ (filename) {}
+    : task_ (filename)
+  {
+    this->open (ACE_TEXT ("Logrec Reader"),
+                &task_, // Initialize writer-side.
+                0,      // Ignore reader-side.
+                0,
+                ACE_Module<ACE_SYNCH>::M_DELETE_READER);
+  }
 private:
   Logrec_Reader task_;
 };
@@ -357,8 +359,3 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   return 1;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Lock_Adapter<ACE_Thread_Mutex>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Lock_Adapter<ACE_Thread_Mutex>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

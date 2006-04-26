@@ -131,6 +131,15 @@ test_i::create_POA (ACE_ENV_SINGLE_ARG_DECL)
                             ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (test::_nil ());
 
+  // Destroy the policies
+  for (CORBA::ULong i = 0;
+       i < policies.length ();
+       ++i)
+    {
+      policies[i]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
+    }
+
   test_i *servant =
     new test_i (this->orb_.in (),
                 this->child_poa_.in ());

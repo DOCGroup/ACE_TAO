@@ -1,19 +1,21 @@
 // $Id$
 
-#include "CEC_ProxyPushConsumer.h"
-#include "CEC_EventChannel.h"
-#include "CEC_ConsumerAdmin.h"
-#include "CEC_ProxyPushSupplier.h"
+#include "orbsvcs/CosEvent/CEC_ProxyPushConsumer.h"
+#include "orbsvcs/CosEvent/CEC_EventChannel.h"
+#include "orbsvcs/CosEvent/CEC_ConsumerAdmin.h"
+#include "orbsvcs/CosEvent/CEC_ProxyPushSupplier.h"
 
 #include "ace/Reverse_Lock_T.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "CEC_ProxyPushConsumer.i"
+#include "orbsvcs/CosEvent/CEC_ProxyPushConsumer.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (CosEvent,
            CEC_ProxyPushConsumer,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 typedef ACE_Reverse_Lock<ACE_Lock> TAO_CEC_Unlock;
 
@@ -21,7 +23,7 @@ TAO_CEC_ProxyPushConsumer::
     TAO_CEC_ProxyPushConsumer (TAO_CEC_EventChannel* ec)
   : event_channel_ (ec),
     refcount_ (1),
-    connected_ (0)
+    connected_ (false)
 {
   this->lock_ =
     this->event_channel_->create_consumer_lock ();
@@ -95,15 +97,15 @@ TAO_CEC_ProxyPushConsumer::supplier_non_existent (
         CORBA::INTERNAL ());
     ACE_CHECK_RETURN (0);
 
-    disconnected = 0;
-    if (this->is_connected_i () == 0)
+    disconnected = false;
+    if (!this->is_connected_i ())
       {
-        disconnected = 1;
-        return 0;
+        disconnected = true;
+        return false;
       }
     if (CORBA::is_nil (this->supplier_.in ()))
       {
-        return 0;
+        return false;
       }
     supplier = CORBA::Object::_duplicate (this->supplier_.in ());
   }
@@ -111,7 +113,7 @@ TAO_CEC_ProxyPushConsumer::supplier_non_existent (
 #if (TAO_HAS_MINIMUM_CORBA == 0)
   return supplier->_non_existent (ACE_ENV_SINGLE_ARG_PARAMETER);
 #else
-  return 0;
+  return false;
 #endif /* TAO_HAS_MINIMUM_CORBA */
 }
 
@@ -128,7 +130,7 @@ TAO_CEC_ProxyPushConsumer::shutdown (ACE_ENV_SINGLE_ARG_DECL)
     ACE_CHECK;
 
     supplier = this->supplier_._retn ();
-    this->connected_ = 0;
+    this->connected_ = false;
   }
 
   this->deactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -155,7 +157,7 @@ TAO_CEC_ProxyPushConsumer::cleanup_i (void)
 {
   this->supplier_ =
     CosEventComm::PushSupplier::_nil ();
-  this->connected_ = 0;
+  this->connected_ = false;
 }
 
 CORBA::ULong
@@ -170,7 +172,7 @@ TAO_CEC_ProxyPushConsumer::_decr_refcnt (void)
 {
   {
     ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, 0);
-    this->refcount_--;
+    --this->refcount_;
     if (this->refcount_ != 0)
       return this->refcount_;
   }
@@ -224,7 +226,7 @@ TAO_CEC_ProxyPushConsumer::connect_push_supplier (
       }
     this->supplier_ =
       CosEventComm::PushSupplier::_duplicate (push_supplier);
-    this->connected_ = 1;
+    this->connected_ = true;
   }
 
   // Notify the event channel...
@@ -262,7 +264,7 @@ TAO_CEC_ProxyPushConsumer::disconnect_push_consumer (
     // @@ CosEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
     ACE_CHECK;
 
-    if (this->is_connected_i () == 0)
+    if (!this->is_connected_i ())
       ACE_THROW (CORBA::BAD_INV_ORDER ()); // @@ add user exception?
 
     supplier = this->supplier_._retn ();
@@ -322,7 +324,7 @@ TAO_CEC_ProxyPushConsumer_Guard::
      refcount_ (refcount),
      event_channel_ (ec),
      proxy_ (proxy),
-     locked_ (0)
+     locked_ (false)
 {
   ACE_Guard<ACE_Lock> ace_mon (*this->lock_);
   // If the guard fails there is not much we can do, raising an
@@ -332,11 +334,11 @@ TAO_CEC_ProxyPushConsumer_Guard::
   // @@ Returning something won't work either, the error should be
   // logged though!
 
-  if (proxy->is_connected_i () == 0)
+  if (!proxy->is_connected_i ())
     return;
 
-  this->locked_ = 1;
-  this->refcount_++;
+  this->locked_ = true;
+  ++this->refcount_;
 }
 
 TAO_CEC_ProxyPushConsumer_Guard::
@@ -356,10 +358,11 @@ TAO_CEC_ProxyPushConsumer_Guard::
     // @@ Returning something won't work either, the error should be
     // logged though!
 
-    this->refcount_--;
+    --this->refcount_;
     if (this->refcount_ != 0)
       return;
   }
   this->event_channel_->destroy_proxy (this->proxy_);
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

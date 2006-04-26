@@ -1,7 +1,7 @@
 // $Id$
 
-#ifndef ACE_TIMEPROBE_T_C
-#define ACE_TIMEPROBE_T_C
+#ifndef ACE_TIMEPROBE_T_CPP
+#define ACE_TIMEPROBE_T_CPP
 
 #include "ace/config-all.h"
 
@@ -9,13 +9,13 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-ACE_RCSID(ace, Timeprobe_T, "$Id$")
-
 #if defined (ACE_COMPILE_TIMEPROBES)
 
 #include "ace/Timeprobe.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/OS_NS_string.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class ACE_LOCK, class ALLOCATOR>
 ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::ACE_Timeprobe_Ex (u_long size)
@@ -47,7 +47,7 @@ ACE_Timeprobe_Ex (ALLOCATOR *allocator,
     report_buffer_full_ (0),
     allocator_ (allocator)
 {
-  ACE_timeprobe_t *temp;
+  ACE_timeprobe_t *temp = 0;
   ACE_NEW_MALLOC_ARRAY (temp,
                         (ACE_timeprobe_t *) this->allocator ()->
                         malloc (this->max_size_*sizeof(ACE_timeprobe_t)),
@@ -99,7 +99,7 @@ ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::timeprobe (u_long event)
   this->timeprobes_[this->current_size_].time_ = ACE_OS::gethrtime ();
   this->timeprobes_[this->current_size_].thread_ = ACE_OS::thr_self ();
 
-  this->current_size_++;
+  ++this->current_size_;
 
 }
 
@@ -115,7 +115,7 @@ ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::timeprobe (const char *event)
   this->timeprobes_[this->current_size_].time_ = ACE_OS::gethrtime ();
   this->timeprobes_[this->current_size_].thread_ = ACE_OS::thr_self ();
 
-  this->current_size_++;
+  ++this->current_size_;
 }
 
 template <class ACE_LOCK, class ALLOCATOR> void
@@ -134,7 +134,7 @@ ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::increase_size (u_long size)
 
    if (size > this->max_size_)
    {
-      ACE_timeprobe_t *temp;
+      ACE_timeprobe_t *temp = 0;
       ACE_NEW_MALLOC_ARRAY (temp,
                            (ACE_timeprobe_t *) this->allocator ()->
                            malloc (this->max_size_
@@ -341,7 +341,7 @@ ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::find_description_i (u_long i)
            iterator++, j++)
         {
           EVENT_DESCRIPTIONS::iterator next_event_descriptions = iterator;
-          next_event_descriptions++;
+          ++next_event_descriptions;
 
           if (this->timeprobes_[i].event_.event_number_ < (*next_event_descriptions).minimum_id_)
             break;
@@ -394,5 +394,7 @@ ACE_Function_Timeprobe<Timeprobe>::~ACE_Function_Timeprobe (void)
   this->timeprobe_.timeprobe (this->event_ + 1);
 }
 
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 #endif /* ACE_COMPILE_TIMEPROBES */
-#endif /* ACE_TIMEPROBE_T_C */
+#endif /* ACE_TIMEPROBE_T_CPP */

@@ -267,22 +267,22 @@ ACE_TMAIN(
        cB,
        rB;
     ACE_DEBUG( (LM_INFO, "a is ") );
-    if (aB= (aA>>= aL))
+    if ((aB= (aA>>= aL)))
        ACE_DEBUG( (LM_INFO, "%d", aL) );
     else
        ACE_DEBUG( (LM_INFO, "?") );
     ACE_DEBUG( (LM_INFO, ", b is ") );
-    if (bB= (bA>>= bL))
+    if ((bB= (bA>>= bL)))
        ACE_DEBUG( (LM_INFO, "%d", bL) );
     else
        ACE_DEBUG( (LM_INFO, "?") );
     ACE_DEBUG( (LM_INFO, ", c is ") );
-    if (cB= (cA>>= cL))
+    if ((cB= (cA>>= cL)))
        ACE_DEBUG( (LM_INFO, "%d", cL) );
     else
        ACE_DEBUG( (LM_INFO, "?") );
     ACE_DEBUG( (LM_INFO, ", r is ") );
-    if (rB= (rA>>= rL))
+    if ((rB= (rA>>= rL)))
        ACE_DEBUG( (LM_INFO, "%d", rL) );
     else
        ACE_DEBUG( (LM_INFO, "?") );

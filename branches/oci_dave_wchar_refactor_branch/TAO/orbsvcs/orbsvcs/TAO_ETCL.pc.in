@@ -5,7 +5,7 @@ includedir=@includedir@
 
 Name: TAO_ETCL
 Description: TAO Extended Trading Constraint Language Library
-Requires: TAO
+Requires: TAO_AnyTypeCode, TAO
 Version: @VERSION@
 Libs: -L${libdir} -lTAO_ETCL
 Cflags: -I${includedir}

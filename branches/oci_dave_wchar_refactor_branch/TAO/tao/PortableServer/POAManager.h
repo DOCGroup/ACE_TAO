@@ -16,23 +16,19 @@
 #define TAO_POAMANAGER_H
 #include /**/ "ace/pre.h"
 
-#include "portableserver_export.h"
+#include "tao/PortableServer/portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "poa_macros.h"
-#include "POAManagerC.h"
+#include "tao/PortableServer/poa_macros.h"
+#include "tao/PortableServer/POAManagerC.h"
 
 // Local Object
 #include "tao/LocalObject.h"
 #include "tao/PI_ForwardC.h"
 #include "ace/Unbounded_Set.h"
-
-// Forward decl.
-class TAO_Root_POA;
-class TAO_Object_Adapter;
 
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
@@ -40,6 +36,13 @@ class TAO_Object_Adapter;
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+// Forward decl.
+class TAO_Root_POA;
+class TAO_Object_Adapter;
+
 
 class TAO_PortableServer_Export TAO_POA_Manager :
   public PortableServer::POAManager,
@@ -154,12 +157,14 @@ protected:
 
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
 #if defined (__ACE_INLINE__)
-# include "POAManager.i"
+# include "tao/PortableServer/POAManager.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

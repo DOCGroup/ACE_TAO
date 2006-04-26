@@ -49,12 +49,11 @@ class TAO_Optimized_Connection_Endpoint_Selector;
 class TAO_Strategies_Export TAO_OC_Endpoint_Selector_Loader
 {
 public:
-  static int init(void);
+  TAO_OC_Endpoint_Selector_Loader (void);
 };
 
-static int
-TAO_Requires_OC_Endpoint_Selector_Loader =
-  TAO_OC_Endpoint_Selector_Loader::init ();
+
+static TAO_OC_Endpoint_Selector_Loader _TAO_oc_endpoint_selector_loader;
 
 
 TAO_END_VERSIONED_NAMESPACE_DECL

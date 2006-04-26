@@ -1,12 +1,12 @@
 // $Id$
 
-#include "Object_Adapter.h"
-#include "Servant_Upcall.h"
-#include "Root_POA.h"
-#include "Default_Servant_Dispatcher.h"
-#include "Collocated_Object_Proxy_Broker.h"
-#include "Active_Object_Map_Entry.h"
-#include "ForwardRequestC.h"
+#include "tao/PortableServer/Object_Adapter.h"
+#include "tao/PortableServer/Servant_Upcall.h"
+#include "tao/PortableServer/Root_POA.h"
+#include "tao/PortableServer/Default_Servant_Dispatcher.h"
+#include "tao/PortableServer/Collocated_Object_Proxy_Broker.h"
+#include "tao/PortableServer/Active_Object_Map_Entry.h"
+#include "tao/PortableServer/ForwardRequestC.h"
 
 // -- TAO Include --
 #include "tao/ORB.h"
@@ -14,7 +14,7 @@
 #include "tao/debug.h"
 
 #if !defined (__ACE_INLINE__)
-# include "Servant_Upcall.inl"
+# include "tao/PortableServer/Servant_Upcall.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/OS_NS_string.h"
@@ -22,6 +22,8 @@
 ACE_RCSID (PortableServer,
            Servant_Upcall,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -41,9 +43,8 @@ namespace TAO
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
         active_object_map_entry_ (0)
     {
-      TAO_Adapter *adapter = oc->poa_adapter ();
       TAO_Object_Adapter *object_adapter =
-        dynamic_cast<TAO_Object_Adapter *>(adapter);
+        dynamic_cast<TAO_Object_Adapter *>(oc->poa_adapter ());
       this->object_adapter_ = object_adapter;
     }
 
@@ -99,7 +100,7 @@ namespace TAO
         ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
                           TAO_Adapter::DS_FAILED);
 
-      // We have acquired the object adapater lock.  Record this for later
+      // We have acquired the object adapter lock.  Record this for later
       // use.
       this->state_ = OBJECT_ADAPTER_LOCK_ACQUIRED;
 
@@ -244,7 +245,7 @@ namespace TAO
         ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
                           0);
 
-      // We have acquired the object adapater lock.  Record this for later
+      // We have acquired the object adapter lock.  Record this for later
       // use.
       this->state_ = OBJECT_ADAPTER_LOCK_ACQUIRED;
 
@@ -468,3 +469,5 @@ namespace TAO
     }
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

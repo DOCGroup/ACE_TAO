@@ -57,6 +57,8 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:49
 
@@ -200,9 +202,9 @@ namespace GIOP
     // TAO_IDL - Generated from
     // be\be_visitor_union_branch/public_ch.cpp:665
 
-    void ior (const ACE_NESTED_CLASS (GIOP, IORAddressingInfo) &);
-    const ACE_NESTED_CLASS (GIOP, IORAddressingInfo) &ior (void) const;
-    ACE_NESTED_CLASS (GIOP, IORAddressingInfo) &ior (void);
+    void ior (const ::GIOP::IORAddressingInfo &);
+    const ::GIOP::IORAddressingInfo &ior (void) const;
+    ::GIOP::IORAddressingInfo &ior (void);
 
     // TAO_IDL - Generated from
     // be\be_visitor_union/union_ch.cpp:147
@@ -222,11 +224,11 @@ namespace GIOP
       IOP::TaggedProfile *profile_;
       // TAO_IDL - Generated from
       // be\be_visitor_union_branch/private_ch.cpp:526
-      ACE_NESTED_CLASS (GIOP, IORAddressingInfo) *ior_;
+      ::GIOP::IORAddressingInfo *ior_;
     } u_;
 
     // TAO extension - frees any allocated storage.
-    void _reset (CORBA::Short, CORBA::Boolean /* finalize */);
+    void _reset (void);
   };
 
 #endif /* end #if !defined */
@@ -265,8 +267,10 @@ TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, GIOP::TargetAddress &);
 // TAO_IDL - Generated from
 // be\be_codegen.cpp:1062
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "GIOPC.inl"
+#include "tao/GIOPC.inl"
 #endif /* defined INLINE */
 
 #if defined(_MSC_VER)

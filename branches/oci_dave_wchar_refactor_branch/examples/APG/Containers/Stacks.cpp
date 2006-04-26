@@ -128,7 +128,7 @@ int StackExample::runUnboundedStack (void)
   ACE_Unbounded_Stack_Iterator<DataElement*> iter (ustack);
   for (iter.first (); !iter.done (); iter.advance ())
     {
-      DataElement** elem;
+      DataElement** elem = 0;
       iter.next (elem);
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%d:"),
                   (*elem)->getData ()));
@@ -145,18 +145,3 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   return se.run ();
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Bounded_Stack<DataElement>;
-template class ACE_Bounded_Stack<DataElement*>;
-template class ACE_Fixed_Stack<DataElement*, 100>;
-template class ACE_Node<DataElement*>;
-template class ACE_Unbounded_Stack<DataElement*>;
-template class ACE_Unbounded_Stack_Iterator<DataElement*>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Bounded_Stack<DataElement>
-#pragma instantiate ACE_Bounded_Stack<DataElement*>
-#pragma instantiate ACE_Fixed_Stack<DataElement*, 100>
-#pragma instantiate ACE_Node<DataElement*>
-#pragma instantiate ACE_Unbounded_Stack<DataElement*>
-#pragma instantiate ACE_Unbounded_Stack_Iterator<DataElement*>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION*/

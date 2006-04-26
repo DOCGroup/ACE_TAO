@@ -18,6 +18,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+//class ACE_TArg_Shifter<char>;
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 /// Parse the command-line client_options for the tests.
 /**
  * Note that some of the tests ignore some of the client_options, but it is

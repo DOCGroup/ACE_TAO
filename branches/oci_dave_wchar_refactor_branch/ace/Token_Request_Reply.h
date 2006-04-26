@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -27,6 +27,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined (ACE_HAS_TOKENS_LIBRARY)
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// Specifies the size of the fixed length portion of
 /// the Transfer structure in ACE_Token_Request
@@ -62,12 +64,12 @@ public:
   ACE_Token_Request (void);
 
   /**
-   * token_type - MUTEX, RWLOCK
-   * proxy_type - MUTEX, RLOCK, WLOCK (acquires mean different things)
-   * operation - method
-   * token_name
-   * client_id
-   * options - we check USE_TIMEOUT and use the arg.
+   * @param token_type MUTEX, RWLOCK
+   * @param proxy_type MUTEX, RLOCK, WLOCK (acquires mean different things)
+   * @param operation method
+   * @param token_name
+   * @param client_id
+   * @param options We check USE_TIMEOUT and use the arg.
    */
   ACE_Token_Request (int token_type,
                      int proxy_type,
@@ -256,11 +258,13 @@ private:
   } transfer_;
 };
 
-#endif /* ACE_HAS_TOKENS_LIBRARY */
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Token_Request_Reply.inl"
 #endif /* __ACE_INLINE__ */
+
+#endif /* ACE_HAS_TOKENS_LIBRARY */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_TOKEN_REQUEST_REPLY_H */

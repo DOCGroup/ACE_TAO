@@ -246,6 +246,21 @@ and the dependencies outlined below are the same. <P>
     this library </td> 
    <td>valuetype.mpb</td>
    </tr>
+   <tr align=left>
+   <th>libTAO_CSD_Framework.so</th>
+   <td>Support framework for Custom Servant Dispatching (CSD) feature. The CSD_ThreadPool
+    depends on this library</td> 
+   <td>csd_framework.mpb</td>
+   </tr>
+   <tr align=left>
+   <th>libTAO_CSD_ThreadPool.so</th>
+   <td>Support for ThreadPool Custom Servant Dispatching (CSD) Strategy. This library can 
+    be loaded statically or dynamically. Applications are required to
+    <code> #include "tao/CSD_ThreadPool/CSD_ThreadPool.h"
+    </code> for static loading and provide service configuration file for dynamic loading.
+   </td> 
+   <td>csd_threadpool.mpb</td>
+   </tr>
 </tr>
 </table>
 

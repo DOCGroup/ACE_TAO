@@ -32,7 +32,7 @@
 class Activator_Export Activator_Options
 {
 public:
- 
+
   enum SERVICE_COMMAND {
     SC_NONE,
     SC_INSTALL,
@@ -50,7 +50,7 @@ public:
   /// Service Mode
   bool service (void) const;
 
-  /// Notify the ImR when server processes die. 
+  /// Notify the ImR when server processes die.
   /// Note : Currently this only works on Unix.
   bool notify_imr (void) const;
 

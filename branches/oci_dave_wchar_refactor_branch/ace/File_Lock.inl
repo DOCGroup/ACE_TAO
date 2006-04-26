@@ -1,5 +1,8 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE int
 ACE_File_Lock::acquire_read (short whence, off_t start, off_t len)
@@ -87,3 +90,5 @@ ACE_File_Lock::set_handle (ACE_HANDLE h)
   this->lock_.handle_ = h;
   this->removed_ = 0;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

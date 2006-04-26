@@ -18,6 +18,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class AMI_Primary_Replication_Strategy;
 class Update_Manager;
 
@@ -42,7 +44,7 @@ public:
         CORBA::SystemException
         ));
     virtual void set_update_excep (
-        FTRT::AMI_UpdateableExceptionHolder * excep_holder
+        ::Messaging::ExceptionHolder * excep_holder
         ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
@@ -52,4 +54,7 @@ public:
 private:
   AMI_Primary_Replication_Strategy* strategy_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #endif

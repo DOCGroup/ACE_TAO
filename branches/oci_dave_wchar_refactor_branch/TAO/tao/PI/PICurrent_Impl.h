@@ -15,7 +15,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "pi_export.h"
+#include "tao/PI/pi_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -25,10 +25,12 @@
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-#include "PICurrentC.h"
+#include "tao/PI/PICurrentC.h"
 #include "tao/AnyTypeCode/Any.h"
 #include "ace/Array_Base.h"
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// Forward declarations.
 class TAO_ORB_Core;
@@ -83,6 +85,7 @@ namespace TAO
     /// notified of this object's destruction.
     void destruction_callback (PICurrent_Impl *p);
 
+    /// Execute the destruction callback object
     void execute_destruction_callback (Table *old_lc_slot_table);
 
     /// Return a reference to the underlying slot table.
@@ -97,7 +100,8 @@ namespace TAO
     Table & current_slot_table (void);
 
     /// Logically (shallow) copy the given slot table.
-    void lc_slot_table (PICurrent_Impl *p);
+    // returns true if copied, false if it would be self-referencing.
+    bool lc_slot_table (PICurrent_Impl *p);
 
     /// Return pointer to the logically copied slot table.
     /**
@@ -109,7 +113,7 @@ namespace TAO
   private:
 
     /// Prevent copying through the copy constructor and the assignment
-    //operator.
+    /// operator.
     //@{
     PICurrent_Impl (const PICurrent_Impl &);
     void operator= (const PICurrent_Impl &);
@@ -125,18 +129,25 @@ namespace TAO
     Table *lc_slot_table_;
 
     /// Callback object responsible for performing deep copies of a
-    /// PICurrent's slot table.
+    /// PICurrent's slot table. This is the PICurrent that has our slot_table_
+    /// referred as lc_slot_table_. This copy is there to make sure that when
+    /// we want to modify our table, that we can first copy our table to
+    /// the PICurrent that refers to our table so that it has an unique copy
+    /// of the data.
     PICurrent_Copy_Callback *copy_callback_;
 
     /// PICurrent_Impl object that will be notified of this object's
-    /// destruction.
+    /// destruction. This is the PICurrent that has our slot_table_ as
+    /// lc_slot_table_.
     PICurrent_Impl *destruction_callback_;
 
   };
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-# include "PICurrent_Impl.inl"
+# include "tao/PI/PICurrent_Impl.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */

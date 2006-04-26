@@ -16,7 +16,7 @@
 #define TAO_EC_GROUP_SCHEDULING_H
 #include /**/ "ace/pre.h"
 
-#include "EC_Scheduling_Strategy.h"
+#include "orbsvcs/Event/EC_Scheduling_Strategy.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -44,14 +44,12 @@ public:
                                ACE_ENV_ARG_DECL);
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (TAO_EC_Group_Scheduling
-                              (const TAO_EC_Group_Scheduling&))
-  ACE_UNIMPLEMENTED_FUNC (TAO_EC_Group_Scheduling& operator=
-                              (const TAO_EC_Group_Scheduling&))
+  TAO_EC_Group_Scheduling (const TAO_EC_Group_Scheduling&);
+  TAO_EC_Group_Scheduling& operator= (const TAO_EC_Group_Scheduling&);
 };
 
 #if defined (__ACE_INLINE__)
-#include "EC_Group_Scheduling.inl"
+#include "orbsvcs/Event/EC_Group_Scheduling.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

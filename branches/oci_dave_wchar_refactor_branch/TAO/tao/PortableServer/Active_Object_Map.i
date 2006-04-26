@@ -1,6 +1,10 @@
+// -*- C++ -*-
+//
 // $Id$
 
-#include "Active_Object_Map_Entry.h"
+#include "tao/PortableServer/Active_Object_Map_Entry.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE int
 TAO_Active_Object_Map::is_servant_in_map (PortableServer::Servant servant,
@@ -256,3 +260,5 @@ TAO_Active_Object_Map::system_id_size (void)
 {
   return TAO_Active_Object_Map::system_id_size_;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -18,16 +18,20 @@
 #define TAO_PRINCIPAL_H
 
 #include /**/ "ace/pre.h"
-#include "ace/Thread_Mutex.h"
+
+#include "tao/CORBA_methods.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/OctetSeqC.h"
+#include "tao/Pseudo_VarOut_T.h"
+
+#include "ace/Thread_Mutex.h"
 #include "ace/Atomic_Op.h"
-#include "OctetSeqC.h"
-#include "Pseudo_VarOut_T.h"
-#include "CORBA_methods.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace CORBA
 {
@@ -99,6 +103,8 @@ operator<< (TAO_OutputCDR &, CORBA::Principal *);
 
 TAO_Export CORBA::Boolean
 operator>> (TAO_InputCDR &, CORBA::Principal *&);
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "tao/Principal.i"

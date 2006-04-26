@@ -3,7 +3,7 @@
 #ifndef TAO_TYPECODE_CASE_T_CPP
 #define TAO_TYPECODE_CASE_T_CPP
 
-#include "TypeCode_Case_T.h"
+#include "tao/AnyTypeCode/TypeCode_Case_T.h"
 
 #include "tao/CDR.h"
 #include "tao/AnyTypeCode/Any.h"
@@ -13,6 +13,7 @@
 # include "tao/AnyTypeCode/TypeCode_Case_T.inl"
 #endif /* __ACE_INLINE__ */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -143,7 +144,7 @@ TAO::TypeCode::Case_T<DiscriminatorType,
                       StringType,
                       TypeCodeType>::label (ACE_ENV_SINGLE_ARG_DECL) const
 {
-  CORBA::Any * value;
+  CORBA::Any * value = 0;
 
   ACE_NEW_THROW_EX (value,
                     CORBA::Any,
@@ -158,5 +159,6 @@ TAO::TypeCode::Case_T<DiscriminatorType,
   return safe_value._retn ();
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif  /* TAO_TYPECODE_CASE_T_CPP */

@@ -13,11 +13,14 @@
 //
 // ============================================================================
 
-#include "CC_LockSet.h"
+#include "orbsvcs/Concurrency/CC_LockSet.h"
 
 ACE_RCSID (Concurrency,
            CC_LockSet,
            "$Id$")
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Default constructor.
 
@@ -314,9 +317,14 @@ CC_LockSet::dump (void)
               lock_[CC_W]));
 }
 
-CORBA::Boolean CC_LockSet::compatible_[NUMBER_OF_LOCK_MODES][NUMBER_OF_LOCK_MODES] ={
-  {1, 1, 1, 1, 0},
-  {1, 1, 1, 0, 0},
-  {1, 1, 0, 0, 0},
-  {1, 0, 0, 1, 0},
-  {0, 0, 0, 0, 0}};
+CORBA::Boolean const
+CC_LockSet::compatible_[NUMBER_OF_LOCK_MODES][NUMBER_OF_LOCK_MODES] =
+  {
+    {1, 1, 1, 1, 0},
+    {1, 1, 1, 0, 0},
+    {1, 1, 0, 0, 0},
+    {1, 0, 0, 1, 0},
+    {0, 0, 0, 0, 0}
+  };
+
+TAO_END_VERSIONED_NAMESPACE_DECL

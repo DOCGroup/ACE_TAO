@@ -9,8 +9,8 @@
 #include "ace/OS_NS_unistd.h"
 #include "tao/IORManipulation/IORManip_Loader.h"
 #include "tao/PortableServer/PortableServer.h"
-#include "orbsvcs/orbsvcs/FaultTolerance/FT_Service_Activate.h"
-#include "orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.h"
+#include "orbsvcs/FaultTolerance/FT_Service_Activate.h"
+#include "orbsvcs/FaultTolerance/FT_IOGR_Property.h"
 #include "ace/OS_NS_stdio.h"
 
 // Files which have the IOR

@@ -1,6 +1,6 @@
 // $Id$
 
-#include "FTRT_ClientORB_Interceptor.h"
+#include "orbsvcs/FtRtEvent/ClientORB/FTRT_ClientORB_Interceptor.h"
 #include "tao/MProfile.h"
 #include "tao/Stub.h"
 #include "tao/CDR.h"
@@ -9,6 +9,8 @@
 ACE_RCSID (ClientORB,
            FTRT_ClientORB_Interceptor,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace FTRT {
   const unsigned FT_TRANSACTION_DEPTH = 30;
@@ -45,7 +47,6 @@ FTRT_ClientORB_Interceptor::send_poll (
     ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  // Do Nothing
 }
 
 void
@@ -150,10 +151,11 @@ FTRT_ClientORB_Interceptor::receive_other (
 
 void
 FTRT_ClientORB_Interceptor::receive_exception (
-    PortableInterceptor::ClientRequestInfo_ptr ri
+    PortableInterceptor::ClientRequestInfo_ptr /* ri */
     ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
-    ACE_UNUSED_ARG(ri);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

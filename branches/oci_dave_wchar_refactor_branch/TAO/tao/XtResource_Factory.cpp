@@ -1,7 +1,7 @@
 //$Id$
 
-#include "XtResource_Factory.h"
-#include "debug.h"
+#include "tao/XtResource_Factory.h"
+#include "tao/debug.h"
 #include "ace/XtReactor.h"
 
 ACE_RCSID( TAO_XtResource,

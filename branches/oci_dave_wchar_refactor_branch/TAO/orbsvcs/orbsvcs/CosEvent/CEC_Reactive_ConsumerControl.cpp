@@ -4,32 +4,37 @@
 // the Typed and Un-typed Event Channels.  A check must be made in the code
 // to ensure the correct EC is referenced. 
 
-#include "CEC_EventChannel.h"
-#include "CEC_ConsumerAdmin.h"
-#include "CEC_Reactive_ConsumerControl.h"
+#include "orbsvcs/CosEvent/CEC_EventChannel.h"
+#include "orbsvcs/CosEvent/CEC_ConsumerAdmin.h"
+#include "orbsvcs/CosEvent/CEC_Reactive_ConsumerControl.h"
 
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
-#include "CEC_TypedEventChannel.h"
-#include "CEC_TypedConsumerAdmin.h"
+#include "orbsvcs/CosEvent/CEC_TypedEventChannel.h"
+#include "orbsvcs/CosEvent/CEC_TypedConsumerAdmin.h"
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
-#include "CEC_ProxyPushSupplier.h"
-#include "CEC_ProxyPullSupplier.h"
+#include "orbsvcs/CosEvent/CEC_ProxyPushSupplier.h"
+#include "orbsvcs/CosEvent/CEC_ProxyPullSupplier.h"
 
 #include "orbsvcs/Time_Utilities.h"
 
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 #include "tao/Messaging/Messaging.h"
+#endif
+
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
 #include "ace/Reactor.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "CEC_Reactive_ConsumerControl.i"
+#include "orbsvcs/CosEvent/CEC_Reactive_ConsumerControl.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (CosEvent,
            CEC_Reactive_ConsumerControl,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // TAO_CEC_Reactive_ConsumerControl constructor for the Un-typed EC
 TAO_CEC_Reactive_ConsumerControl::
@@ -43,7 +48,9 @@ TAO_CEC_Reactive_ConsumerControl::
     retries_ (retries),
     adapter_ (this),
     event_channel_ (ec),
+#if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
     typed_event_channel_ (0),
+#endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
     orb_ (CORBA::ORB::_duplicate (orb))
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
    // Initialise timer_id_ to an invalid timer id, so that in case we don't
@@ -482,3 +489,4 @@ TAO_CEC_Ping_Pull_Consumer::work (TAO_CEC_ProxyPullSupplier *supplier
   ACE_ENDTRY;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

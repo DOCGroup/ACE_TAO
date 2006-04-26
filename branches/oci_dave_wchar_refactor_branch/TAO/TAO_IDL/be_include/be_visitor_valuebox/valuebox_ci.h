@@ -71,16 +71,13 @@ public:
   // visit union.
 
 private:
-  int emit_for_predef_enum(be_type *node,
-                           const char * type_suffix,
-                           bool is_any,
-                           const char * marshal_arg);
+  int emit_for_predef_enum (be_type *node,
+                            const char * type_suffix,
+                            bool is_any);
 
   void emit_default_constructor (void);
 
   void emit_default_constructor_alloc (be_decl *node);
-
-  void emit_destructor (void);
 
   void emit_constructor_one_arg (be_decl *node,
                                 const char * type_suffix);
@@ -91,8 +88,8 @@ private:
 
   void emit_copy_constructor_alloc (be_decl *node);
 
-  void emit_assignment( be_decl *node,
-                       const char * type_suffix);
+  void emit_assignment (be_decl *node,
+                        const char * type_suffix);
 
   void emit_assignment_alloc (be_decl *node);
 

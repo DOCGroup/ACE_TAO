@@ -11,7 +11,7 @@
 #include "testing_allocation_traits.hpp"
 #include "testing_range_checking.hpp"
 
-#include "bounded_value_sequence.hpp"
+#include "tao/Bounded_Value_Sequence_T.h"
 
 #include "value_sequence_tester.hpp"
 
@@ -20,7 +20,7 @@
 #include <boost/weak_ptr.hpp>
 
 using namespace boost::unit_test_framework;
-using namespace TAO;
+using namespace TAO_VERSIONED_NAMESPACE_NAME::TAO;
 
 CORBA::ULong const MAXIMUM = 32;
 
@@ -62,6 +62,35 @@ struct Tester
     buf[0] = 1; buf[1] = 4; buf[2] = 9; buf[3] = 16;
 
     return buf;
+  }
+
+  void test_regression_2201 ()
+  {
+    value_type * buffer = alloc_and_init_buffer();
+
+    expected_calls a(tested_allocation_traits::allocbuf_calls);
+    expected_calls f(tested_allocation_traits::freebuf_calls);
+    {
+      tested_sequence a(32, buffer);
+      BOOST_CHECK_EQUAL(CORBA::ULong(32), a.maximum());
+      BOOST_CHECK_EQUAL(CORBA::ULong(32), a.length());
+      BOOST_CHECK_EQUAL(buffer, a.get_buffer());
+      BOOST_CHECK_EQUAL(int( 1), a[0]);
+      BOOST_CHECK_EQUAL(int( 4), a[1]);
+      BOOST_CHECK_EQUAL(int( 9), a[2]);
+      BOOST_CHECK_EQUAL(int(16), a[3]);
+      BOOST_CHECK_EQUAL(false, a.release());
+      a.length (3);
+      BOOST_CHECK_EQUAL(CORBA::ULong(32), a.maximum());
+      BOOST_CHECK_EQUAL(CORBA::ULong(3), a.length());
+      a.length (4);
+      BOOST_CHECK_EQUAL(CORBA::ULong(32), a.maximum());
+      BOOST_CHECK_EQUAL(CORBA::ULong(4), a.length());
+      BOOST_CHECK_EQUAL(int( 0), a[3]);
+    }
+    BOOST_CHECK_MESSAGE(a.expect(0), a);
+    BOOST_CHECK_MESSAGE(f.expect(0), f);
+    tested_sequence::freebuf(buffer);
   }
 
   void test_buffer_constructor_default()
@@ -222,7 +251,7 @@ struct Tester
   {
     value_type * buffer = alloc_and_init_buffer();
     tested_sequence a(4, buffer, false);
-    BOOST_CHECK_EQUAL(static_cast<int*>(0), a.get_buffer(true));
+    BOOST_CHECK(0 == a.get_buffer(true));
     tested_sequence::freebuf(buffer);
   }
 
@@ -239,6 +268,7 @@ struct Tester
       BOOST_CHECK_EQUAL(MAXIMUM, b.maximum());
       BOOST_CHECK_EQUAL(0UL, b.length());
       BOOST_CHECK(0 != b.get_buffer());
+      BOOST_CHECK_EQUAL(true, b.release());
 
       BOOST_CHECK_MESSAGE(c.expect(1), c);
 
@@ -258,6 +288,10 @@ struct Tester
                 shared_this));
     ts->add(BOOST_CLASS_TEST_CASE(
                 &Tester::test_set_length_more_than_maximum,
+                shared_this));
+
+    ts->add(BOOST_CLASS_TEST_CASE(
+                &Tester::test_regression_2201,
                 shared_this));
 
     ts->add(BOOST_CLASS_TEST_CASE(
@@ -304,23 +338,23 @@ private:
   boost::weak_ptr<Tester> self_;
 };
 
-test_suite *
+ACE_Proper_Export_Flag test_suite *
 init_unit_test_suite(int, char*[])
 {
-  std::auto_ptr<test_suite> ts(
-      BOOST_TEST_SUITE("unbounded value sequence unit test"));
+  test_suite * ts =
+      BOOST_TEST_SUITE("unbounded value sequence unit test");
 
   {
     boost::shared_ptr<Tester> tester(Tester::allocate());
-    tester->add_all(ts.get());
+    tester->add_all(ts);
   }
 
   {
     typedef value_sequence_tester<tested_sequence,tested_allocation_traits> common;
     boost::shared_ptr<common> tester(common::allocate());
-    tester->add_all(ts.get());
+    tester->add_all(ts);
   }
 
-  return ts.release();
+  return ts;
 }
 

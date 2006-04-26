@@ -2,13 +2,15 @@
 
 #include "ace/Token_Request_Reply.h"
 
+#if defined (ACE_HAS_TOKENS_LIBRARY)
+
 #if !defined (__ACE_INLINE__)
 #include "ace/Token_Request_Reply.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_HAS_TOKENS_LIBRARY)
-
 ACE_RCSID(ace, Token_Request_Reply, "$Id$")
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Default "do nothing" constructor.
 
@@ -21,11 +23,11 @@ ACE_Token_Request::ACE_Token_Request (void)
 // Create a ACE_Token_Request message.
 
 ACE_Token_Request::ACE_Token_Request (int token_type,
-				      int proxy_type,
-				      ACE_UINT32 operation_type,
-				      const ACE_TCHAR token_name[],
-				      const ACE_TCHAR client_id[],
-				      const ACE_Synch_Options &options)
+                                      int proxy_type,
+                                      ACE_UINT32 operation_type,
+                                      const ACE_TCHAR token_name[],
+                                      const ACE_TCHAR client_id[],
+                                      const ACE_Synch_Options &options)
 {
   this->token_type (token_type);
   this->proxy_type (proxy_type);
@@ -57,11 +59,11 @@ ACE_Token_Request::decode (void)
   this->token_name_ = this->transfer_.data_;
 
   options_.set (transfer_.use_timeout_ == 1 ? ACE_Synch_Options::USE_TIMEOUT : 0,
-		ACE_Time_Value (transfer_.sec_, transfer_.usec_),
-		(void *) transfer_.arg_);
+                ACE_Time_Value (transfer_.sec_, transfer_.usec_),
+                (void *) transfer_.arg_);
 
   // Decode the variable-sized portion.
-  int token_len = ACE_OS::strlen (this->token_name_);
+  size_t token_len = ACE_OS::strlen (this->token_name_);
 
   // Check to make sure this->tokenName_ isn't too long!
   if (token_len >= ACE_MAXTOKENNAMELEN)
@@ -79,8 +81,8 @@ ACE_Token_Request::decode (void)
   // client_id_ plus '\0'
   size_t data_size = ACE_TOKEN_REQUEST_HEADER_SIZE
                      + ACE_OS::strlen (this->token_name_) + 1
-		     + ACE_OS::strlen (this->client_id_) + 1
-		     + 1;
+                     + ACE_OS::strlen (this->client_id_) + 1
+                     + 1;
 
   // Make sure the message was correctly received and framed.
   return this->length () == data_size ? 0 : -1;
@@ -94,7 +96,7 @@ ACE_Token_Request::dump (void) const
 #if defined (ACE_HAS_DUMP)
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("*******\nlength = %d\ntoken name = %s\nclient id = %s\n"),
-	     this->length (), this->token_name (), this->client_id ()));
+             this->length (), this->token_name (), this->client_id ()));
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("type = ")));
 
   if (this->token_type () == ACE_Tokens::MUTEX)
@@ -102,9 +104,9 @@ ACE_Token_Request::dump (void) const
   else // == ACE_Tokens::RWLOCK
     {
       if (this->proxy_type () == ACE_RW_Token::READER)
-	ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("RLOCK\n")));
+        ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("RLOCK\n")));
       else // == WRITER
-	ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("WLOCK\n")));
+        ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("WLOCK\n")));
     }
 
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("operation = ")));
@@ -129,7 +131,7 @@ ACE_Token_Request::dump (void) const
   else
     {
       ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("waiting for %d secs and %d usecs\n"),
-		 this->options ().timeout ().sec (), this->options ().timeout ().usec ()));
+                 this->options ().timeout ().sec (), this->options ().timeout ().usec ()));
     }
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
@@ -174,9 +176,11 @@ ACE_Token_Reply::dump (void) const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("*******\nlength = %d\nerrnum = %d"),
-	     this->length (), this->errnum ()));
+             this->length (), this->errnum ()));
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("arg = %d"), this->arg ()));
 #endif /* ACE_HAS_DUMP */
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_TOKENS_LIBRARY */

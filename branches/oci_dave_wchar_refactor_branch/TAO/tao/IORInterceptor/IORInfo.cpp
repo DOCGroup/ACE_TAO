@@ -1,4 +1,4 @@
-#include "IORInfo.h"
+#include "tao/IORInterceptor/IORInfo.h"
 #include "tao/PortableServer/Root_POA.h"
 
 #include "tao/PolicyC.h"
@@ -11,13 +11,14 @@ ACE_RCSID (IORInterceptor,
            "$Id$")
 
 #if !defined (__ACE_INLINE__)
-# include "IORInfo.inl"
+# include "tao/IORInterceptor/IORInfo.inl"
 #endif /* __ACE_INLINE__ */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_IORInfo::TAO_IORInfo (TAO_Root_POA *poa)
   : poa_ (poa),
-    components_established_ (0)
+    components_established_ (false)
 {
 }
 
@@ -190,3 +191,5 @@ TAO_IORInfo::check_validity (ACE_ENV_SINGLE_ARG_DECL)
                                           CORBA::COMPLETED_NO));
     }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

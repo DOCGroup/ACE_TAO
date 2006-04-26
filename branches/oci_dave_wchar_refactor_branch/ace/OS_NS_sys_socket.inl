@@ -15,6 +15,8 @@
 #include "ace/OS_NS_string.h"
 #endif
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 #if defined (ACE_HAS_VOIDPTR_SOCKOPT)
 typedef void *ACE_SOCKOPT_TYPE1;
 #elif defined (ACE_HAS_CHARPTR_SOCKOPT)
@@ -76,7 +78,7 @@ ACE_OS::accept (ACE_HANDLE handle,
        addr = (sockaddr *) &fake_addr;
        *addrlen = sizeof fake_addr;
      }
-#    endif /* VXWORKS */
+#    endif /* ACE_HAS_BROKEN_ACCEPT_ADDR */
   ACE_HANDLE ace_result = ::accept ((ACE_SOCKET) handle,
                                     addr,
                                     (ACE_SOCKET_LEN *) addrlen);
@@ -635,7 +637,7 @@ ACE_OS::sendto (ACE_HANDLE handle,
                 int addrlen)
 {
   ACE_OS_TRACE ("ACE_OS::sendto");
-#if defined (VXWORKS)
+#if defined (ACE_VXWORKS)
   ACE_SOCKCALL_RETURN (::sendto ((ACE_SOCKET) handle,
                                  const_cast <char *> (buf),
                                  len,
@@ -671,7 +673,7 @@ ACE_OS::sendto (ACE_HANDLE handle,
                                  addrlen),
                        ssize_t, -1);
 #  endif /* ACE_WIN32 */
-#endif /* VXWORKS */
+#endif /* ACE_VXWORKS */
 }
 
 ACE_INLINE ssize_t
@@ -847,13 +849,22 @@ ACE_OS::setsockopt (ACE_HANDLE handle,
   }
   #endif /*ACE_HAS_WINSOCK2*/
 
-  ACE_SOCKCALL_RETURN (::setsockopt ((ACE_SOCKET) handle,
-                                     level,
-                                     optname,
-                                     (ACE_SOCKOPT_TYPE1) optval,
-                                     optlen),
-                       int,
-                       -1);
+  int result;
+  ACE_SOCKCALL (::setsockopt ((ACE_SOCKET) handle,
+                              level,
+                              optname,
+                              (ACE_SOCKOPT_TYPE1) optval,
+                              optlen),
+                int,
+                -1,
+                result);
+#if defined (WSAEOPNOTSUPP)
+  if (result == -1 && errno == WSAEOPNOTSUPP)
+#else 
+  if (result == -1)
+#endif /* WSAEOPNOTSUPP */
+    errno = ENOTSUP;
+  return result;
 }
 
 ACE_INLINE int
@@ -954,3 +965,5 @@ ACE_OS::if_freenameindex (struct if_nameindex *ptr)
     ::if_freenameindex (ptr);
 }
 #endif /* __linux__ && ACE_HAS_IPV6 */
+
+ACE_END_VERSIONED_NAMESPACE_DECL

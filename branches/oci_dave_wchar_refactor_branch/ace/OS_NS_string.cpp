@@ -18,6 +18,8 @@ ACE_RCSID (ace,
 #  include "ace/OS_NS_stdio.h"
 #endif /* ACE_LACKS_STRERROR */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 #if !defined (ACE_HAS_MEMCHR)
 const void *
 ACE_OS::memchr_emulation (const void *s, int c, size_t len)
@@ -118,7 +120,7 @@ ACE_OS::strerror (int errnum)
   ACE_Errno_Guard g (errno);
   errno = 0;
   char *errmsg = ::strerror (errnum);
-  if (errno == EINVAL || ACE_OS::strlen (errmsg) == 0)
+  if (errno == EINVAL || errmsg == 0 || errmsg[0] == 0)
     {
       ACE_OS::sprintf (ret_errortext, "Unknown error %d", errnum);
       errmsg = ret_errortext;
@@ -399,3 +401,6 @@ ACE_OS::strtok_r_emulation (wchar_t *s,
   return s ;
 }
 # endif  /* ACE_LACKS_WCSTOK */
+
+
+ACE_END_VERSIONED_NAMESPACE_DECL

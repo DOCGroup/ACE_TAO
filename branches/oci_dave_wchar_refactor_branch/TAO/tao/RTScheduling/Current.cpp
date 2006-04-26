@@ -1,5 +1,5 @@
-#include "Current.h"
-#include "Distributable_Thread.h"
+#include "tao/RTScheduling/Current.h"
+#include "tao/RTScheduling/Distributable_Thread.h"
 #include "tao/RTCORBA/Priority_Mapping_Manager.h"
 #include "tao/RTCORBA/RT_Current.h"
 #include "tao/ORB_Core.h"
@@ -13,6 +13,7 @@ ACE_RCSID (RTScheduling,
            Current,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_Atomic_Op<TAO_SYNCH_MUTEX, long> TAO_RTScheduler_Current::guid_counter;
 
@@ -25,9 +26,11 @@ TAO_DTId_Hash::operator () (const IdType &id) const
 
 TAO_RTScheduler_Current::TAO_RTScheduler_Current (void)
 {
-
 }
 
+TAO_RTScheduler_Current::~TAO_RTScheduler_Current (void)
+{
+}
 
 void
 TAO_RTScheduler_Current::init (TAO_ORB_Core* orb
@@ -325,13 +328,17 @@ TAO_RTScheduler_Current_i::TAO_RTScheduler_Current_i (
     previous_current_ (prev_current),
     dt_hash_ (dt_hash)
 {
-  CORBA::Object_ptr scheduler_obj =
+  CORBA::Object_var scheduler_obj =
     orb->object_ref_table ().resolve_initial_reference (
       "RTScheduler");
 
-  this->scheduler_ = RTScheduling::Scheduler::_narrow (scheduler_obj
+  this->scheduler_ = RTScheduling::Scheduler::_narrow (scheduler_obj.in ()
                                                        ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
+}
+
+TAO_RTScheduler_Current_i::~TAO_RTScheduler_Current_i (void)
+{
 }
 
 void
@@ -636,6 +643,11 @@ DTTask::DTTask (//ACE_Thread_Manager *manager,
 {
 }
 
+DTTask::~DTTask (void)
+{
+  delete this->current_;
+}
+
 int
 DTTask::svc (void)
 {
@@ -672,7 +684,6 @@ DTTask::svc (void)
 
   return 0;
 }
-
 
 RTScheduling::Current::IdType *
 TAO_RTScheduler_Current_i::id (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
@@ -725,9 +736,9 @@ TAO_RTScheduler_Current_i::name (void)
   return CORBA::string_dup (this->name_.in ());
 }
 
-#if defined (ACE_HAS_PREDEFINED_THREAD_CANCELLED_MACRO)
+#if defined (THREAD_CANCELLED)
 #undef THREAD_CANCELLED
-#endif /* ACE_HAS_PREDEFINED_THREAD_CANCELLED_MACRO */
+#endif /* THREAD_CANCELLED */
 
 void
 TAO_RTScheduler_Current_i::cancel_thread (ACE_ENV_SINGLE_ARG_DECL)
@@ -801,7 +812,7 @@ TAO_RTScheduler_Current_i::id (RTScheduling::Current::IdType guid)
 }
 
 void
-TAO_RTScheduler_Current_i::name (char * name)
+TAO_RTScheduler_Current_i::name (const char * name)
 {
   this->name_ = CORBA::string_dup (name);
 }
@@ -854,13 +865,13 @@ TAO_RTScheduler_Current_var::TAO_RTScheduler_Current_var (const ::TAO_RTSchedule
 
 TAO_RTScheduler_Current_var::~TAO_RTScheduler_Current_var (void) // destructor
 {
-  CORBA::release (this->ptr_);
+  ::CORBA::release (this->ptr_);
 }
 
 TAO_RTScheduler_Current_var &
 TAO_RTScheduler_Current_var::operator= (TAO_RTScheduler_Current_ptr p)
 {
-  CORBA::release (this->ptr_);
+  ::CORBA::release (this->ptr_);
   this->ptr_ = p;
   return *this;
 }
@@ -870,7 +881,7 @@ TAO_RTScheduler_Current_var::operator= (const ::TAO_RTScheduler_Current_var &p)
 {
   if (this != &p)
   {
-    CORBA::release (this->ptr_);
+    ::CORBA::release (this->ptr_);
     this->ptr_ = ::TAO_RTScheduler_Current::_duplicate (p.ptr ());
   }
   return *this;
@@ -907,7 +918,7 @@ TAO_RTScheduler_Current_var::inout (void)
 TAO_RTScheduler_Current_ptr &
 TAO_RTScheduler_Current_var::out (void)
 {
-  CORBA::release (this->ptr_);
+  ::CORBA::release (this->ptr_);
   this->ptr_ = ::TAO_RTScheduler_Current::_nil ();
   return this->ptr_;
 }
@@ -930,7 +941,7 @@ TAO_RTScheduler_Current_var::duplicate (TAO_RTScheduler_Current_ptr p)
 void
 TAO_RTScheduler_Current_var::release (TAO_RTScheduler_Current_ptr p)
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 TAO_RTScheduler_Current_ptr
@@ -980,3 +991,4 @@ const char* TAO_RTScheduler_Current::_interface_repository_id (void) const
   return "IDL:TAO_RTScheduler_Current:1.0";
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

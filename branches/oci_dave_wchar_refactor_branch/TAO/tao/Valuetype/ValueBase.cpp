@@ -5,8 +5,8 @@
 #include "tao/AnyTypeCode/Value_TypeCode_Static.h"
 #include "tao/AnyTypeCode/TypeCode_Constants.h"
 
-#include "ValueBase.h"
-#include "ValueFactory.h"
+#include "tao/Valuetype/ValueBase.h"
+#include "tao/Valuetype/ValueFactory.h"
 
 #include "tao/CDR.h"
 #include "tao/ORB.h"
@@ -15,7 +15,7 @@
 #include "ace/OS_NS_string.h"
 
 #if !defined (__ACE_INLINE__)
-# include "ValueBase.inl"
+# include "tao/Valuetype/ValueBase.inl"
 #endif /* ! __ACE_INLINE__ */
 
 
@@ -23,6 +23,8 @@ ACE_RCSID (Valuetype,
            ValueBase,
            "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Static operations in namespace CORBA.
 
@@ -173,7 +175,6 @@ CORBA::ValueBase::_tao_unmarshal (TAO_InputCDR &strm,
   //  new_object->_tao_unmarshal_v ()
   //  new_object->_tao_unmarshal_post ()
 
-//  CORBA::ValueBase *base = 0;
   CORBA::ValueFactory_var factory;
   CORBA::Boolean retval =
     CORBA::ValueBase::_tao_unmarshal_pre (strm,
@@ -192,14 +193,14 @@ CORBA::ValueBase::_tao_unmarshal (TAO_InputCDR &strm,
 
       if (new_object == 0)
         {
-          return 0;  // %! except.?
+          return false;  // %! except.?
         }
 
       retval = new_object->_tao_unmarshal_v (strm);
 
       if (retval == 0)
         {
-          return 0;
+          return false;
         }
     }
 
@@ -239,7 +240,7 @@ CORBA::ValueBase::_tao_unmarshal_pre (TAO_InputCDR &strm,
   if (TAO_OBV_GIOP_Flags::is_null_ref (value_tag))
     {
       valuetype = 0;
-      return 1;
+      return true;
       // ok, null reference unmarshaled
     }
   // 2. Now at this point it must be a <value-tag> (error else).
@@ -284,11 +285,11 @@ CORBA::ValueBase::_tao_unmarshal_pre (TAO_InputCDR &strm,
     {
       CORBA::String_var repo_id_stream;
 
-      CORBA::ULong length;
+      CORBA::ULong length = 0;
 
       if (!strm.read_ulong (length))
         {
-          return 0;
+          return false;
         }
 
       // 'length' may not be the repo id length - it could be the
@@ -300,7 +301,7 @@ CORBA::ValueBase::_tao_unmarshal_pre (TAO_InputCDR &strm,
           // Read the negative byte offset
           if (!strm.read_long (offset) || offset >= 0)
             {
-              return 0;
+              return false;
             }
 
           // Cribbed from tc_demarshal_indirection in Typecode_CDR_Extraction.cpp
@@ -310,7 +311,7 @@ CORBA::ValueBase::_tao_unmarshal_pre (TAO_InputCDR &strm,
 
           if (!indir_stream.good_bit ())
             {
-              return 0;
+              return false;
             }
 
           indir_stream.read_string(repo_id_stream.inout ());
@@ -324,7 +325,7 @@ CORBA::ValueBase::_tao_unmarshal_pre (TAO_InputCDR &strm,
                               0);
               if (!strm.read_char_array (repo_id_stream.inout (), length))
                 {
-                  return 0;
+                  return false;
                 }
             }
           else if (length == 0)
@@ -336,7 +337,7 @@ CORBA::ValueBase::_tao_unmarshal_pre (TAO_InputCDR &strm,
             }
           else
             {
-              return 0;
+              return false;
             }
         }
 
@@ -344,11 +345,17 @@ CORBA::ValueBase::_tao_unmarshal_pre (TAO_InputCDR &strm,
         orb_core->orb ()->lookup_value_factory (repo_id_stream.in ());
     }
 
-  if (factory == 0) // %! except.!
+  if (factory == 0)
     {
-      ACE_DEBUG ((LM_ERROR,
-                  ACE_TEXT ("(%N:%l) OBV factory is null !!!\n")));
-      return false;
+      if (TAO_debug_level > 0)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%N:%l) ERROR: OBV factory is null for <%s>!\n"),
+                      repo_id));
+        }
+      ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::OMGVMCID | 1,
+                                        CORBA::COMPLETED_MAYBE),
+                                        false);
     }
 
   return retval;
@@ -609,3 +616,5 @@ namespace TAO
     CORBA::remove_ref (p);
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

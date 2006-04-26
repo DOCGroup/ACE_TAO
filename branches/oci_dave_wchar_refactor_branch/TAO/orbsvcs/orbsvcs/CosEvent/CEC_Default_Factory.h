@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file   CEC_Default_Factory.h
@@ -15,16 +16,18 @@
 
 #include /**/ "ace/pre.h"
 
-#include "CEC_Factory.h"
+#include "orbsvcs/CosEvent/CEC_Factory.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "CEC_Defaults.h"
+#include "orbsvcs/CosEvent/CEC_Defaults.h"
 
 #include "ace/Service_Config.h"
 #include "ace/Time_Value.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_CEC_Default_Factory
@@ -204,8 +207,10 @@ private:
   unsigned int proxy_disconnect_retries_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "CEC_Default_Factory.i"
+#include "orbsvcs/CosEvent/CEC_Default_Factory.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_STATIC_SVC_DECLARE (TAO_CEC_Default_Factory)

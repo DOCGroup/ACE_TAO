@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ../bin/mwc.pl -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/config -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/templates -type automake -noreldefs TAO.mwc
+## ../bin/mwc.pl -type automake -noreldefs TAO.mwc
 
 ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
@@ -16,7 +16,7 @@ TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
-## Makefile.Callback_Quoter_consumer.am
+## Makefile.Callback_Quoter_IDL.am
 
 BUILT_SOURCES = \
   ConsumerC.cpp \
@@ -44,7 +44,7 @@ CLEANFILES = \
 ConsumerC.cpp ConsumerC.h ConsumerC.inl ConsumerS.cpp ConsumerS.h ConsumerS.inl ConsumerS_T.cpp ConsumerS_T.h ConsumerS_T.inl: Consumer-stamp
 
 Consumer-stamp: $(srcdir)/Consumer.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/Consumer.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Consumer.idl
 	@touch $@
 
 BUILT_SOURCES += \
@@ -73,8 +73,15 @@ CLEANFILES += \
 NotifierC.cpp NotifierC.h NotifierC.inl NotifierS.cpp NotifierS.h NotifierS.inl NotifierS_T.cpp NotifierS_T.h NotifierS_T.inl: Notifier-stamp
 
 Notifier-stamp: $(srcdir)/Notifier.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/Notifier.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Notifier.idl
 	@touch $@
+
+
+noinst_HEADERS = \
+  Consumer.idl \
+  Notifier.idl
+
+## Makefile.Callback_Quoter_consumer.am
 
 noinst_PROGRAMS = consumer
 
@@ -94,22 +101,11 @@ consumer_SOURCES = \
   Consumer_Signal_Handler.cpp \
   Consumer_i.cpp \
   NotifierC.cpp \
-  NotifierS.cpp \
   consumer.cpp \
-  ConsumerC.h \
-  ConsumerC.inl \
-  ConsumerS.h \
-  ConsumerS_T.h \
-  ConsumerS_T.inl \
   Consumer_Handler.h \
   Consumer_Input_Handler.h \
   Consumer_Signal_Handler.h \
-  Consumer_i.h \
-  NotifierC.h \
-  NotifierC.inl \
-  NotifierS.h \
-  NotifierS_T.h \
-  NotifierS_T.inl
+  Consumer_i.h
 
 consumer_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
@@ -119,64 +115,6 @@ consumer_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Callback_Quoter_notifier.am
-
-BUILT_SOURCES += \
-  ConsumerC.cpp \
-  ConsumerC.h \
-  ConsumerC.inl \
-  ConsumerS.cpp \
-  ConsumerS.h \
-  ConsumerS.inl \
-  ConsumerS_T.cpp \
-  ConsumerS_T.h \
-  ConsumerS_T.inl
-
-CLEANFILES += \
-  Consumer-stamp \
-  ConsumerC.cpp \
-  ConsumerC.h \
-  ConsumerC.inl \
-  ConsumerS.cpp \
-  ConsumerS.h \
-  ConsumerS.inl \
-  ConsumerS_T.cpp \
-  ConsumerS_T.h \
-  ConsumerS_T.inl
-
-ConsumerC.cpp ConsumerC.h ConsumerC.inl ConsumerS.cpp ConsumerS.h ConsumerS.inl ConsumerS_T.cpp ConsumerS_T.h ConsumerS_T.inl: Consumer-stamp
-
-Consumer-stamp: $(srcdir)/Consumer.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/Consumer.idl
-	@touch $@
-
-BUILT_SOURCES += \
-  NotifierC.cpp \
-  NotifierC.h \
-  NotifierC.inl \
-  NotifierS.cpp \
-  NotifierS.h \
-  NotifierS.inl \
-  NotifierS_T.cpp \
-  NotifierS_T.h \
-  NotifierS_T.inl
-
-CLEANFILES += \
-  Notifier-stamp \
-  NotifierC.cpp \
-  NotifierC.h \
-  NotifierC.inl \
-  NotifierS.cpp \
-  NotifierS.h \
-  NotifierS.inl \
-  NotifierS_T.cpp \
-  NotifierS_T.h \
-  NotifierS_T.inl
-
-NotifierC.cpp NotifierC.h NotifierC.inl NotifierS.cpp NotifierS.h NotifierS.inl NotifierS_T.cpp NotifierS_T.h NotifierS_T.inl: Notifier-stamp
-
-Notifier-stamp: $(srcdir)/Notifier.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/Notifier.idl
-	@touch $@
 
 noinst_PROGRAMS += notifier
 
@@ -190,22 +128,11 @@ notifier_CPPFLAGS = \
 
 notifier_SOURCES = \
   ConsumerC.cpp \
-  ConsumerS.cpp \
   NotifierC.cpp \
   NotifierS.cpp \
   Notifier_Input_Handler.cpp \
   Notifier_i.cpp \
   notifier.cpp \
-  ConsumerC.h \
-  ConsumerC.inl \
-  ConsumerS.h \
-  ConsumerS_T.h \
-  ConsumerS_T.inl \
-  NotifierC.h \
-  NotifierC.inl \
-  NotifierS.h \
-  NotifierS_T.h \
-  NotifierS_T.inl \
   Notifier_Input_Handler.h \
   Notifier_i.h
 
@@ -220,64 +147,6 @@ notifier_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Callback_Quoter_supplier.am
-
-BUILT_SOURCES += \
-  ConsumerC.cpp \
-  ConsumerC.h \
-  ConsumerC.inl \
-  ConsumerS.cpp \
-  ConsumerS.h \
-  ConsumerS.inl \
-  ConsumerS_T.cpp \
-  ConsumerS_T.h \
-  ConsumerS_T.inl
-
-CLEANFILES += \
-  Consumer-stamp \
-  ConsumerC.cpp \
-  ConsumerC.h \
-  ConsumerC.inl \
-  ConsumerS.cpp \
-  ConsumerS.h \
-  ConsumerS.inl \
-  ConsumerS_T.cpp \
-  ConsumerS_T.h \
-  ConsumerS_T.inl
-
-ConsumerC.cpp ConsumerC.h ConsumerC.inl ConsumerS.cpp ConsumerS.h ConsumerS.inl ConsumerS_T.cpp ConsumerS_T.h ConsumerS_T.inl: Consumer-stamp
-
-Consumer-stamp: $(srcdir)/Consumer.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/Consumer.idl
-	@touch $@
-
-BUILT_SOURCES += \
-  NotifierC.cpp \
-  NotifierC.h \
-  NotifierC.inl \
-  NotifierS.cpp \
-  NotifierS.h \
-  NotifierS.inl \
-  NotifierS_T.cpp \
-  NotifierS_T.h \
-  NotifierS_T.inl
-
-CLEANFILES += \
-  Notifier-stamp \
-  NotifierC.cpp \
-  NotifierC.h \
-  NotifierC.inl \
-  NotifierS.cpp \
-  NotifierS.h \
-  NotifierS.inl \
-  NotifierS_T.cpp \
-  NotifierS_T.h \
-  NotifierS_T.inl
-
-NotifierC.cpp NotifierC.h NotifierC.inl NotifierS.cpp NotifierS.h NotifierS.inl NotifierS_T.cpp NotifierS_T.h NotifierS_T.inl: Notifier-stamp
-
-Notifier-stamp: $(srcdir)/Notifier.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/Notifier.idl
-	@touch $@
 
 noinst_PROGRAMS += supplier
 
@@ -294,21 +163,10 @@ supplier_SOURCES = \
   ConsumerS.cpp \
   Consumer_i.cpp \
   NotifierC.cpp \
-  NotifierS.cpp \
   Supplier_Timer_Handler.cpp \
   Supplier_i.cpp \
   supplier.cpp \
-  ConsumerC.h \
-  ConsumerC.inl \
-  ConsumerS.h \
-  ConsumerS_T.h \
-  ConsumerS_T.inl \
   Consumer_i.h \
-  NotifierC.h \
-  NotifierC.inl \
-  NotifierS.h \
-  NotifierS_T.h \
-  NotifierS_T.inl \
   Supplier_Timer_Handler.h \
   Supplier_i.h
 

@@ -8,6 +8,7 @@ project(*Server): rt_server {
 }
 
 project(*Client): rt_client, interceptors {
+  after += *Server
   Source_Files {
     testC.cpp
     interceptors.cpp

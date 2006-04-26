@@ -1,11 +1,13 @@
 // $Id$
 
-#include "EC_Gateway_Sched.h"
+#include "orbsvcs/Event/EC_Gateway_Sched.h"
 #include "orbsvcs/Time_Utilities.h"
 
 ACE_RCSID (Event, 
            EC_Gateway_sched, 
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_Gateway_Sched::TAO_EC_Gateway_Sched (void)
   :  TAO_EC_Gateway_IIOP ()
@@ -76,3 +78,5 @@ TAO_EC_Gateway_Sched::init (RtecEventChannelAdmin::EventChannel_ptr supplier_ec,
                        ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

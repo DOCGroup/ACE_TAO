@@ -1,6 +1,7 @@
 /* $Id$ */
 
 #include "JAWS/Headers.h"
+#include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_string.h"
 
@@ -158,10 +159,3 @@ JAWS_Headers::remove_all (const char *const &header_name)
   while (! done);
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_DLList<JAWS_Header_Data>;
-template class ACE_DLList_Iterator<JAWS_Header_Data>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_DLList<JAWS_Header_Data>
-#pragma instantiate ACE_DLList_Iterator<JAWS_Header_Data>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

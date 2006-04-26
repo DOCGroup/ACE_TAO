@@ -1,4 +1,5 @@
 // -*- C++ -*-
+
 // $Id$
 // ============================================================================
 //
@@ -21,19 +22,20 @@
 
 #include "tao/orbconf.h"
 
-# if TAO_HAS_UIOP == 1
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+# if TAO_HAS_UIOP == 1
+
 #include "ace/Service_Config.h"
-#include "strategies_export.h"
+#include "tao/Strategies/strategies_export.h"
 #include "tao/Protocol_Factory.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Acceptor;
 class TAO_Connector;
-
 
 class TAO_Strategies_Export TAO_UIOP_Lite_Protocol_Factory :
   public TAO_Protocol_Factory
@@ -77,6 +79,8 @@ private:
   // compatibility with old clients.
 
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE (TAO_UIOP_Lite_Protocol_Factory)
 ACE_FACTORY_DECLARE (TAO_Strategies, TAO_UIOP_Lite_Protocol_Factory)

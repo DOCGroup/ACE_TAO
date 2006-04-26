@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ../bin/mwc.pl -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/config -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/templates -type automake -noreldefs TAO.mwc
+## ../bin/mwc.pl -type automake -noreldefs TAO.mwc
 
 ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
@@ -16,7 +16,7 @@ TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
-## Makefile.grid_client.am
+## Makefile.grid_IDL.am
 
 BUILT_SOURCES = \
   GridC.cpp \
@@ -44,8 +44,14 @@ CLEANFILES = \
 GridC.cpp GridC.h GridC.inl GridS.cpp GridS.h GridS.inl GridS_T.cpp GridS_T.h GridS_T.inl: Grid-stamp
 
 Grid-stamp: $(srcdir)/Grid.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/Grid.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Grid.idl
 	@touch $@
+
+
+noinst_HEADERS = \
+  Grid.idl
+
+## Makefile.grid_client.am
 
 noinst_PROGRAMS = client
 
@@ -60,15 +66,9 @@ client_CPPFLAGS = \
 client_SOURCES = \
   ../Simple_util.cpp \
   GridC.cpp \
-  GridS.cpp \
   Grid_Client_i.cpp \
   client.cpp \
   ../Simple_util.h \
-  GridC.h \
-  GridC.inl \
-  GridS.h \
-  GridS_T.h \
-  GridS_T.inl \
   Grid_Client_i.h
 
 client_LDADD = \
@@ -83,35 +83,6 @@ client_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.grid_server.am
-
-BUILT_SOURCES += \
-  GridC.cpp \
-  GridC.h \
-  GridC.inl \
-  GridS.cpp \
-  GridS.h \
-  GridS.inl \
-  GridS_T.cpp \
-  GridS_T.h \
-  GridS_T.inl
-
-CLEANFILES += \
-  Grid-stamp \
-  GridC.cpp \
-  GridC.h \
-  GridC.inl \
-  GridS.cpp \
-  GridS.h \
-  GridS.inl \
-  GridS_T.cpp \
-  GridS_T.h \
-  GridS_T.inl
-
-GridC.cpp GridC.h GridC.inl GridS.cpp GridS.h GridS.inl GridS_T.cpp GridS_T.h GridS_T.inl: Grid-stamp
-
-Grid-stamp: $(srcdir)/Grid.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/Grid.idl
-	@touch $@
 
 noinst_PROGRAMS += server
 
@@ -130,11 +101,6 @@ server_SOURCES = \
   Grid_i.cpp \
   server.cpp \
   ../Simple_util.h \
-  GridC.h \
-  GridC.inl \
-  GridS.h \
-  GridS_T.h \
-  GridS_T.inl \
   Grid_i.h
 
 server_LDADD = \

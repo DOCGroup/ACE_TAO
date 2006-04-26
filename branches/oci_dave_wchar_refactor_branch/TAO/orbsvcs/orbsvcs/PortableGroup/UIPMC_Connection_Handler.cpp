@@ -3,9 +3,9 @@
 // $Id$
 
 
-#include "UIPMC_Connection_Handler.h"
-#include "UIPMC_Transport.h"
-#include "UIPMC_Endpoint.h"
+#include "orbsvcs/PortableGroup/UIPMC_Connection_Handler.h"
+#include "orbsvcs/PortableGroup/UIPMC_Transport.h"
+#include "orbsvcs/PortableGroup/UIPMC_Endpoint.h"
 
 #include "tao/Timeprobe.h"
 #include "tao/debug.h"
@@ -23,6 +23,7 @@ ACE_RCSID(PortableGroup,
           UIPMC_Connection_Handler,
           "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_UIPMC_Connection_Handler::TAO_UIPMC_Connection_Handler (ACE_Thread_Manager *t)
   : TAO_UIPMC_SVC_HANDLER (t, 0 , 0),
@@ -262,3 +263,5 @@ TAO_UIPMC_Connection_Handler::add_transport_to_cache (void)
           .transport_cache ().cache_transport (&prop,
                                                this->transport ());
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

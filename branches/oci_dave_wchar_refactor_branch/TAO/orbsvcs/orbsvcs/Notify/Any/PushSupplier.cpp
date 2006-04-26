@@ -1,9 +1,11 @@
 // $Id$
 
-#include "PushSupplier.h"
+#include "orbsvcs/Notify/Any/PushSupplier.h"
 
 ACE_RCSID (Notify, TAO_Notify_PushSupplier, "$Id$")
-#include "../Properties.h"
+#include "orbsvcs/Notify/Properties.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_PushSupplier::TAO_Notify_PushSupplier (TAO_Notify_ProxyConsumer* proxy)
   :TAO_Notify_Supplier (proxy)
@@ -17,8 +19,8 @@ TAO_Notify_PushSupplier::~TAO_Notify_PushSupplier ()
 void
 TAO_Notify_PushSupplier::init (CosEventComm::PushSupplier_ptr push_supplier ACE_ENV_ARG_DECL)
 {
-  ACE_ASSERT (push_supplier != 0 && this->push_supplier_.in() == 0);
-
+  // TODO: verify single init call
+  // push_supplier is optional
   this->push_supplier_ = CosEventComm::PushSupplier::_duplicate (push_supplier);
 
   ACE_TRY
@@ -39,23 +41,25 @@ TAO_Notify_PushSupplier::release (void)
   delete this;
   //@@ inform factory
 }
-bool
-TAO_Notify_PushSupplier::get_ior (ACE_CString & iorstr) const
+
+ACE_CString
+TAO_Notify_PushSupplier::get_ior (void) const
 {
-  bool result = false;
+  ACE_CString result;
   CORBA::ORB_var orb = TAO_Notify_PROPERTIES::instance()->orb();
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
   {
     CORBA::String_var ior = orb->object_to_string(this->push_supplier_.in() ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
-    iorstr = static_cast<const char *> (ior.in ());
-    result = true;
+    result = static_cast<const char*> (ior.in ());
   }
   ACE_CATCHANY
   {
-    ACE_ASSERT(0);
+    result.fast_clear();
   }
   ACE_ENDTRY;
   return result;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

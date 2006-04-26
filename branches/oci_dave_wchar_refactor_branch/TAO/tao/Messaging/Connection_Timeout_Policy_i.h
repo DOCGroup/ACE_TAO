@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file   Connection_Timeout_Policy_i.h
@@ -11,6 +12,7 @@
 
 #ifndef TAO_CONNECTION_TIMEOUT_POLICY_I_H
 #define TAO_CONNECTION_TIMEOUT_POLICY_I_H
+
 #include /**/ "ace/pre.h"
 
 #include "tao/orbconf.h"
@@ -19,7 +21,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "TAO_ExtC.h"
+#include "tao/Messaging/TAO_ExtC.h"
 #include "tao/LocalObject.h"
 
 #if defined(_MSC_VER)
@@ -30,6 +32,8 @@
 
 #if (TAO_HAS_CONNECTION_TIMEOUT_POLICY == 1)
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /*
  * @class TAO_ConnectionTimeoutPolicy
  *
@@ -38,7 +42,7 @@
  *  This policy controls the connection timeout time while
  *  establishing connections. This policy is proprietary to TAO.
  */
-class TAO_Messaging_Export TAO_ConnectionTimeoutPolicy
+class TAO_ConnectionTimeoutPolicy
   : public TAO::ConnectionTimeoutPolicy,
     public TAO_Local_RefCounted_Object
 {
@@ -89,6 +93,8 @@ private:
   TimeBase::TimeT relative_expiry_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
 
 #if defined(_MSC_VER)
@@ -96,4 +102,5 @@ private:
 #endif /* _MSC_VER */
 
 #include /**/ "ace/post.h"
-#endif /*TAO_CONNECTION_TIMEOUT_POLICY_I_H*/
+
+#endif  /* TAO_CONNECTION_TIMEOUT_POLICY_I_H */

@@ -16,7 +16,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "portablegroup_export.h"
+#include "orbsvcs/PortableGroup/portablegroup_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -25,6 +25,8 @@
 #include "orbsvcs/PortableGroupS.h"
 
 #include "tao/IORManipulation/IORManip_Loader.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -114,6 +116,7 @@ namespace TAO
   };
 } //namespace TAO
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

@@ -1,3 +1,4 @@
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -21,6 +22,8 @@
 
 #include "ace/ACE_export.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_OS_Thread_Adapter
  *
@@ -42,7 +45,7 @@ public:
   /// Constructor.
   ACE_OS_Thread_Adapter (ACE_THR_FUNC user_func,
                          void *arg,
-                         ACE_THR_C_FUNC entry_point = (ACE_THR_C_FUNC) ace_thread_adapter
+                         ACE_THR_C_FUNC entry_point = (ACE_THR_C_FUNC) ACE_THREAD_ADAPTER_NAME
 # if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
                          , ACE_SEH_EXCEPT_HANDLER selector = 0
                          , ACE_SEH_EXCEPT_HANDLER handler = 0
@@ -56,15 +59,14 @@ public:
    */
   virtual ACE_THR_FUNC_RETURN invoke (void);
 
-private:
-  /// Ensure that this object must be allocated on the heap.
+protected:
+
+  /// Ensure that this object is allocated on the heap.
   ~ACE_OS_Thread_Adapter (void);
 
-private:
-  /// Friend declaration to avoid compiler warning:  only defines a private
-  /// destructor and has no friends.
-  friend class ACE_Thread_Adapter_Has_Private_Destructor;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* ACE_THREAD_ADAPTER_H */

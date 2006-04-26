@@ -1,3 +1,5 @@
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file    Base_Thread_Adapter.h
@@ -25,13 +27,20 @@
 #include "os_include/sys/os_time.h"
 #endif // ACE_USES_GPROF
 
+#if (defined (ACE_HAS_VERSIONED_NAMESPACE) && ACE_HAS_VERSIONED_NAMESPACE == 1)
+# define ACE_THREAD_ADAPTER_NAME ACE_PREPROC_CONCATENATE(ACE_VERSIONED_NAMESPACE_NAME, _ace_thread_adapter)
+#endif  /* ACE_HAS_VERSIONED_NAMESPACE == 1 */
+
 // Run the thread entry point for the ACE_Thread_Adapter.  This must
 // be an extern "C" to make certain compilers happy...
+
 #if defined (ACE_PSOS)
-extern "C" void ace_thread_adapter (unsigned long args);
+extern "C" void ACE_THREAD_ADAPTER_NAME (unsigned long args);
 #else /* ! defined (ACE_PSOS) */
-extern "C" ACE_Export ACE_THR_FUNC_RETURN ace_thread_adapter (void *args);
+extern "C" ACE_Export ACE_THR_FUNC_RETURN ACE_THREAD_ADAPTER_NAME (void *args);
 #endif /* ACE_PSOS */
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_OS_Thread_Descriptor
@@ -108,7 +117,7 @@ protected:
   /// Constructor.
   ACE_Base_Thread_Adapter (ACE_THR_FUNC user_func,
                            void *arg,
-                           ACE_THR_C_FUNC entry_point = (ACE_THR_C_FUNC) ace_thread_adapter,
+                           ACE_THR_C_FUNC entry_point = (ACE_THR_C_FUNC) ACE_THREAD_ADAPTER_NAME,
                            ACE_OS_Thread_Descriptor *td = 0
 # if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
                            , ACE_SEH_EXCEPT_HANDLER selector = 0
@@ -163,10 +172,9 @@ protected:
   struct itimerval itimer_;
 #endif // ACE_USES_GPROF
 
-  /// Friend declaration to avoid compiler warning:  only defines a private
-  /// destructor and has no friends.
-  friend class ACE_Thread_Adapter_Has_Private_Destructor;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 # if defined (ACE_HAS_INLINED_OSCALLS)
 #   if defined (ACE_INLINE)

@@ -79,9 +79,3 @@ HTTP_SCode::~HTTP_SCode (void)
 #   include "HTTPU/http_status.i"
 # endif /* ACE_HAS_INLINED_OSCALLS */
 
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Singleton<HTTP_SCode, ACE_Thread_Mutex>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Singleton<HTTP_SCode, ACE_Thread_Mutex>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

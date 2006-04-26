@@ -1,9 +1,9 @@
 // $Id$
 
-#include "EC_Priority_Dispatching.h"
-#include "EC_Dispatching_Task.h"
-#include "EC_Event_Channel_Base.h"
-#include "EC_QOS_Info.h"
+#include "orbsvcs/Event/EC_Priority_Dispatching.h"
+#include "orbsvcs/Event/EC_Dispatching_Task.h"
+#include "orbsvcs/Event/EC_Event_Channel_Base.h"
+#include "orbsvcs/Event/EC_QOS_Info.h"
 
 #include "orbsvcs/Event_Service_Constants.h"
 #include "orbsvcs/RtecSchedulerC.h"
@@ -11,6 +11,8 @@
 #include "ace/Sched_Params.h"
 
 ACE_RCSID(Event, EC_Priority_Dispatching, "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_Priority_Dispatching::TAO_EC_Priority_Dispatching (TAO_EC_Event_Channel_Base *ec)
   :  ntasks_ (0),
@@ -135,3 +137,5 @@ TAO_EC_Priority_Dispatching::push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
 
   this->tasks_[i]->push (proxy, consumer, event ACE_ENV_ARG_PARAMETER);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

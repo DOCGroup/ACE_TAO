@@ -38,6 +38,8 @@ ACE_RCSID (ace,
 
 #include "ace/Auto_Event.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /// Process-wide ACE_Proactor.
 ACE_Proactor *ACE_Proactor::proactor_ = 0;
 
@@ -136,7 +138,7 @@ ACE_Proactor_Timer_Handler::svc (void)
           if (absolute_time > cur_time)
             relative_time = absolute_time - cur_time;
           else
-            relative_time = 0;
+            relative_time = ACE_Time_Value::zero;
 
           // Block for relative time.
           result = this->timer_event_.wait (&relative_time, 0);
@@ -235,7 +237,8 @@ ACE_Proactor_Handle_Timeout_Upcall::timeout (TIMER_QUEUE &,
   auto_ptr<ACE_Asynch_Result_Impl> safe_asynch_timer (asynch_timer);
 
   // Post a completion.
-  if (asynch_timer->post_completion (this->proactor_->implementation ()) == -1)
+  if (-1 == safe_asynch_timer->post_completion
+      (this->proactor_->implementation ()))
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_LIB_TEXT ("Failure in dealing with timers: ")
                        ACE_LIB_TEXT ("PostQueuedCompletionStatus failed\n")),
@@ -1106,95 +1109,15 @@ ACE_Proactor::implementation (ACE_Proactor_Impl *implementation)
   this->implementation_ = implementation;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Timer_Queue_T<ACE_Handler *,
-  ACE_Proactor_Handle_Timeout_Upcall,
-  ACE_SYNCH_RECURSIVE_MUTEX>;
-template class ACE_Timer_Queue_Iterator_T<ACE_Handler *,
-  ACE_Proactor_Handle_Timeout_Upcall,
-  ACE_SYNCH_RECURSIVE_MUTEX>;
-template class ACE_Timer_List_T<ACE_Handler *,
-  ACE_Proactor_Handle_Timeout_Upcall,
-  ACE_SYNCH_RECURSIVE_MUTEX>;
-template class ACE_Timer_List_Iterator_T<ACE_Handler *,
-  ACE_Proactor_Handle_Timeout_Upcall,
-  ACE_SYNCH_RECURSIVE_MUTEX>;
-template class ACE_Timer_Node_T<ACE_Handler *>;
-template class ACE_Unbounded_Set<ACE_Timer_Node_T<ACE_Handler *> *>;
-template class ACE_Unbounded_Set_Iterator<ACE_Timer_Node_T<ACE_Handler *> *>;
-template class ACE_Node <ACE_Timer_Node_T<ACE_Handler *> *>;
-template class ACE_Free_List<ACE_Timer_Node_T<ACE_Handler *> >;
-template class ACE_Locked_Free_List<ACE_Timer_Node_T<ACE_Handler *>, ACE_Null_Mutex>;
-template class ACE_Timer_Heap_T<ACE_Handler *,
-  ACE_Proactor_Handle_Timeout_Upcall,
-  ACE_SYNCH_RECURSIVE_MUTEX>;
-template class ACE_Timer_Heap_Iterator_T<ACE_Handler *,
-  ACE_Proactor_Handle_Timeout_Upcall,
-  ACE_SYNCH_RECURSIVE_MUTEX>;
-template class ACE_Timer_Wheel_T<ACE_Handler *,
-  ACE_Proactor_Handle_Timeout_Upcall,
-  ACE_SYNCH_RECURSIVE_MUTEX>;
-template class ACE_Timer_Wheel_Iterator_T<ACE_Handler *,
-  ACE_Proactor_Handle_Timeout_Upcall,
-  ACE_SYNCH_RECURSIVE_MUTEX>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Timer_Queue_T<ACE_Handler *,\
-  ACE_Proactor_Handle_Timeout_Upcall,\
-  ACE_SYNCH_RECURSIVE_MUTEX>
-#pragma instantiate ACE_Timer_Queue_Iterator_T<ACE_Handler *,\
-  ACE_Proactor_Handle_Timeout_Upcall,\
-  ACE_SYNCH_RECURSIVE_MUTEX>
-#pragma instantiate ACE_Timer_List_T<ACE_Handler *,\
-  ACE_Proactor_Handle_Timeout_Upcall,\
-  ACE_SYNCH_RECURSIVE_MUTEX>
-#pragma instantiate ACE_Timer_List_Iterator_T<ACE_Handler *,\
-  ACE_Proactor_Handle_Timeout_Upcall,\
-  ACE_SYNCH_RECURSIVE_MUTEX>
-#pragma instantiate ACE_Timer_Node_T<ACE_Handler *>
-#pragma instantiate ACE_Unbounded_Set<ACE_Timer_Node_T<ACE_Handler *> *>
-#pragma instantiate ACE_Unbounded_Set_Iterator<ACE_Timer_Node_T<ACE_Handler *> *>
-#pragma instantiate ACE_Node <ACE_Timer_Node_T<ACE_Handler *> *>
-#pragma instantiate ACE_Free_List<ACE_Timer_Node_T<ACE_Handler *> >
-#pragma instantiate ACE_Locked_Free_List<ACE_Timer_Node_T<ACE_Handler *>,\
-   ACE_Null_Mutex>
-#pragma instantiate ACE_Timer_Heap_T<ACE_Handler *,\
-  ACE_Proactor_Handle_Timeout_Upcall,\
-  ACE_SYNCH_RECURSIVE_MUTEX>
-#pragma instantiate ACE_Timer_Heap_Iterator_T<ACE_Handler *,\
-  ACE_Proactor_Handle_Timeout_Upcall,\
-  ACE_SYNCH_RECURSIVE_MUTEX>
-#pragma instantiate ACE_Timer_Wheel_T<ACE_Handler *,\
-  ACE_Proactor_Handle_Timeout_Upcall,\
-  ACE_SYNCH_RECURSIVE_MUTEX>
-#pragma instantiate ACE_Timer_Wheel_Iterator_T<ACE_Handler *,\
-  ACE_Proactor_Handle_Timeout_Upcall,\
-  ACE_SYNCH_RECURSIVE_MUTEX>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Framework_Component_T<ACE_Proactor>;
-#  if defined (ACE_LACKS_AUTO_PTR) \
-      || !(defined (ACE_HAS_STANDARD_CPP_LIBRARY) \
-           && (ACE_HAS_STANDARD_CPP_LIBRARY != 0))
-template class ACE_Auto_Basic_Ptr<ACE_Asynch_Result_Impl>;
-#  endif  /* ACE_LACKS_AUTO_PTR */
-template class auto_ptr<ACE_Asynch_Result_Impl>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Framework_Component_T<ACE_Proactor>
-#  if defined (ACE_LACKS_AUTO_PTR) \
-      || !(defined (ACE_HAS_STANDARD_CPP_LIBRARY) \
-           && (ACE_HAS_STANDARD_CPP_LIBRARY != 0))
-#pragma instantiate ACE_Auto_Basic_Ptr<ACE_Asynch_Result_Impl>
-#  endif  /* ACE_LACKS_AUTO_PTR */
-#pragma instanstiate auto_ptr<ACE_Asynch_Result_Impl>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #else /* !ACE_WIN32 || !ACE_HAS_AIO_CALLS */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_Proactor *
-ACE_Proactor::instance (size_t threads)
+ACE_Proactor::instance (size_t /* threads */)
 {
-  ACE_UNUSED_ARG (threads);
   return 0;
 }
 
@@ -1235,5 +1158,7 @@ ACE_Proactor::event_loop_done (void)
 {
   return sig_atomic_t (1);
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_WIN32 || ACE_HAS_AIO_CALLS*/

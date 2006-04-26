@@ -89,9 +89,9 @@ class TAO_IDL_FE_Export FE_InterfaceHeader
 public:
   FE_InterfaceHeader (UTL_ScopedName *n,
                       UTL_NameList *inherits,
-                      idl_bool is_local,
-                      idl_bool is_abstract,
-                      idl_bool compile_now);
+                      bool is_local,
+                      bool is_abstract,
+                      bool compile_now);
 
   virtual ~FE_InterfaceHeader (void);
 
@@ -102,11 +102,14 @@ public:
   AST_Interface **inherits_flat (void) const;
   long n_inherits_flat (void) const;
 
-  idl_bool is_local (void) const;
+  bool is_local (void) const;
   // See if we are a local interface.
 
-  idl_bool is_abstract (void) const;
+  bool is_abstract (void) const;
   // See if we are an abstract interface.
+
+  void destroy (void);
+  // Destroy anything allocated for this class.
 
   // Data.
 protected:
@@ -120,8 +123,8 @@ protected:
   AST_Interface  **pd_inherits_flat;
   long pd_n_inherits_flat;
 
-  idl_bool pd_is_local;
-  idl_bool pd_is_abstract;
+  bool pd_is_local;
+  bool pd_is_abstract;
 
   // Operations.
 
@@ -129,24 +132,24 @@ protected:
   // interface inherits from.
 protected:
   void compile_inheritance (UTL_NameList *ifaces,
-                            idl_bool for_valuetype);
+                            bool for_valuetype);
 
   void compile_one_inheritance (AST_Interface *i);
 
   // Called from compile_inheritance().
   int check_inherit (AST_Interface *i,
-                     idl_bool for_valuetype);
+                     bool for_valuetype);
 };
 
 class TAO_IDL_FE_Export FE_OBVHeader : public FE_InterfaceHeader
 {
 public:
 
-  FE_OBVHeader (UTL_ScopedName *n, 
-                UTL_NameList *inherits, 
+  FE_OBVHeader (UTL_ScopedName *n,
+                UTL_NameList *inherits,
                 UTL_NameList *supports,
-                idl_bool truncatable,
-                idl_bool is_eventtype = I_FALSE);
+                bool truncatable,
+                bool is_eventtype = false);
   virtual ~FE_OBVHeader (void);
 
   // Data Accessors.
@@ -154,7 +157,7 @@ public:
   long n_supports (void) const;
   AST_ValueType *inherits_concrete (void) const;
   AST_Interface *supports_concrete (void) const;
-  idl_bool truncatable (void) const;
+  bool truncatable (void) const;
 
 protected:
   // Supported interfaces.
@@ -165,38 +168,38 @@ protected:
   AST_Interface *pd_supports_concrete;
 
   // Currently ignored.
-  idl_bool pd_truncatable;
+  bool pd_truncatable;
 
 protected:
   void compile_inheritance (UTL_NameList *vtypes,
-                            idl_bool is_eventtype);
+                            bool is_eventtype);
   void compile_supports (UTL_NameList *supports);
-  idl_bool check_concrete_supported_inheritance (AST_Interface *d);
+  bool check_concrete_supported_inheritance (AST_Interface *d);
 };
 
 class TAO_IDL_FE_Export FE_EventHeader : public FE_OBVHeader
 {
 public:
 
-  FE_EventHeader (UTL_ScopedName *n, 
-                  UTL_NameList *inherits, 
+  FE_EventHeader (UTL_ScopedName *n,
+                  UTL_NameList *inherits,
                   UTL_NameList *supports,
-                  idl_bool truncatable);
+                  bool truncatable);
   virtual ~FE_EventHeader (void);
 };
 
 // Unlike value types, a component's supported interfaces are simply
 // added to the inheritance list in generated code, so we use the
-// existing base class mechanism for managing the inheritance list 
+// existing base class mechanism for managing the inheritance list
 // to manage the derived class's supported interface list.
 class TAO_IDL_FE_Export FE_ComponentHeader : public FE_InterfaceHeader
 {
 public:
 
-  FE_ComponentHeader (UTL_ScopedName *n, 
-                      UTL_ScopedName *base_component, 
+  FE_ComponentHeader (UTL_ScopedName *n,
+                      UTL_ScopedName *base_component,
                       UTL_NameList *supports,
-                      idl_bool compile_now);
+                      bool compile_now);
   virtual ~FE_ComponentHeader (void);
 
   // Data Accessors.
@@ -205,7 +208,7 @@ public:
   long n_supports (void) const;
   AST_Interface **supports_flat (void) const;
   long n_supports_flat (void) const;
-  
+
 protected:
   void compile_inheritance (UTL_ScopedName *base_component);
   void compile_supports (UTL_NameList *supports);
@@ -223,8 +226,8 @@ class TAO_IDL_FE_Export FE_HomeHeader : public FE_ComponentHeader
 {
 public:
 
-  FE_HomeHeader (UTL_ScopedName *n, 
-                 UTL_ScopedName *base_home, 
+  FE_HomeHeader (UTL_ScopedName *n,
+                 UTL_ScopedName *base_home,
                  UTL_NameList *supports,
                  UTL_ScopedName *managed_component,
                  UTL_ScopedName *primary_key);

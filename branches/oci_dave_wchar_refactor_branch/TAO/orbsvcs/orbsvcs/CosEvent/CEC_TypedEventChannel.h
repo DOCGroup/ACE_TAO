@@ -1,10 +1,12 @@
-// $Id$
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file   CEC_TypedEventChannel.h
  *
  *  @author Jon Astle (jon@astle45.fsnet.co.uk)
+ *
+ *  $Id$
  *
  * A new implementation of the COS Typed Event Channel, based on
  * the untyped version by Carlos O'Ryan (coryan@cs.wustl.edu)
@@ -16,17 +18,17 @@
 #define TAO_CEC_TYPEDEVENTCHANNEL_H_
 #include /**/ "ace/pre.h"
 
-#include "event_serv_export.h"
+#include "orbsvcs/CosEvent/event_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "CEC_Defaults.h"
+#include "orbsvcs/CosEvent/CEC_Defaults.h"
 
 #include "orbsvcs/CosTypedEventChannelAdminS.h"
 
-#include "CEC_Factory.h"
+#include "orbsvcs/CosEvent/CEC_Factory.h"
 
 #include "tao/IFR_Client/IFR_BasicC.h"
 #include "tao/AnyTypeCode/NVList.h"
@@ -34,6 +36,8 @@
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Null_Mutex.h"
 #include "ace/SString.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_CEC_TypedEventChannel_Attributes
@@ -374,9 +378,10 @@ private:
   TAO_CEC_Param * parameters_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "CEC_TypedEventChannel.i"
+#include "orbsvcs/CosEvent/CEC_TypedEventChannel.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

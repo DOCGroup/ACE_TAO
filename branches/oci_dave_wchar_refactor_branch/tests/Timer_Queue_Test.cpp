@@ -34,6 +34,7 @@
 #include "ace/Recursive_Thread_Mutex.h"
 #include "ace/Null_Mutex.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/Containers_T.h"
 
 ACE_RCSID(tests, Timer_Queue_Test, "$Id$")
 
@@ -475,6 +476,65 @@ test_performance (ACE_Timer_Queue *tq,
   delete [] times;
 }
 
+// This test function was contributed with Bugzilla #2447 to test validity
+// of ACE_Timer_Heap timer IDs around the boundary of having to enlarge
+// the heap.
+static void
+test_unique_timer_heap_ids (void)
+{
+  Example_Handler eh;
+  ACE_Timer_Heap timer_heap (44);
+  ACE_Time_Value anytime(1);
+  ACE_Bounded_Set<long> timer_ids (max_iterations);
+  long timer_id = -1;
+  bool all_unique = true;
+
+  for (int i = 0; i < 100; ++i)
+    {
+      timer_id = timer_heap.schedule (&eh, 0, anytime);
+      if (timer_id == -1)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Schedule timer %d %p\n"),
+                      i,
+                      ACE_TEXT ("test_unique_timer_heap_ids")));
+          continue;
+        }
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("Schedule timer %d. Timer id = %d\n"),
+                  i,
+                  timer_id));
+      if (1 == timer_ids.insert (timer_id))
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Pass %d, id %d is not unique\n"),
+                      i,
+                      timer_id));
+          all_unique = false;
+        }
+
+      if (i == 0 || i == 1 || i == 47 || i == 48)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("Free Timer %d. Timer Id = %d\n"),
+                      i,
+                      timer_id));
+          timer_heap.cancel (timer_id);
+          if (timer_id == -1)
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("%p\n"),
+                        ACE_TEXT ("Failed to cancel timer")));
+
+          timer_ids.remove (timer_id);
+        }
+    }
+
+  if (all_unique)
+    ACE_DEBUG ((LM_INFO, ACE_TEXT ("All timer ids were unique.\n")));
+
+  return;
+}
+
 class Timer_Queue_Stack
 {
   // = TITLE
@@ -600,9 +660,20 @@ run_main (int argc, ACE_TCHAR *argv[])
       tq_ptr = tq_ptr->next_;
       delete temp;
     }
-
   delete [] timer_ids;
+
+  ACE_DEBUG
+    ((LM_DEBUG,
+      ACE_TEXT ("**** starting unique IDs test for ACE_Timer_Heap\n")));
+  test_unique_timer_heap_ids ();
 
   ACE_END_TEST;
   return 0;
 }
+
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Bounded_Set<long>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Bounded_Set<long>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

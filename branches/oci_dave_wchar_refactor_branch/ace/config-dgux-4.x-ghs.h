@@ -41,7 +41,7 @@
 //#define ACE_HAS_REENTRANT_FUNCTIONS
 
 // Platform has POSIX terminal interface.
-#define ACE_HAS_TERMIOS 
+#define ACE_HAS_TERMIOS
 
 // Compiler/platform correctly calls init()/fini() for shared libraries.
 #define ACE_HAS_AUTOMATIC_INIT_FINI
@@ -187,7 +187,6 @@
 #define ACE_TEMPLATES_REQUIRE_SOURCE
 
 #define ACE_HAS_UCONTEXT_T
-#define ACE_LACKS_SYSTIME_H
 #define ACE_HAS_NONCONST_GETBY
 #define ACE_LACKS_MADVISE
 

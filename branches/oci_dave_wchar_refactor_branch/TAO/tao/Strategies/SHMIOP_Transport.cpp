@@ -1,12 +1,11 @@
-// This may look like C, but it's really -*- C++ -*-
 // $Id$
 
-#include "SHMIOP_Transport.h"
+#include "tao/Strategies/SHMIOP_Transport.h"
 
 #if defined (TAO_HAS_SHMIOP) && (TAO_HAS_SHMIOP != 0)
 
-#include "SHMIOP_Connection_Handler.h"
-#include "SHMIOP_Profile.h"
+#include "tao/Strategies/SHMIOP_Connection_Handler.h"
+#include "tao/Strategies/SHMIOP_Profile.h"
 #include "tao/Timeprobe.h"
 #include "tao/CDR.h"
 #include "tao/Transport_Mux_Strategy.h"
@@ -19,6 +18,9 @@
 #include "tao/GIOP_Message_Lite.h"
 
 ACE_RCSID (Strategies, SHMIOP_Transport, "$Id$")
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_SHMIOP_Transport::TAO_SHMIOP_Transport (TAO_SHMIOP_Connection_Handler *handler,
                                             TAO_ORB_Core *orb_core,
@@ -43,7 +45,7 @@ TAO_SHMIOP_Transport::TAO_SHMIOP_Transport (TAO_SHMIOP_Connection_Handler *handl
     {
       // Use the normal GIOP object
       ACE_NEW (this->messaging_object_,
-               TAO_GIOP_Message_Base (orb_core));
+               TAO_GIOP_Message_Base (orb_core, this));
     }
 //@@ MESSAGING_SPL_COMMENT_HOOK_END
 }
@@ -135,31 +137,65 @@ TAO_SHMIOP_Transport::recv (char *buf,
   return n;
 }
 
-
 int
-TAO_SHMIOP_Transport::consolidate_message (ACE_Message_Block &incoming,
-                                           ssize_t missing_data,
-                                           TAO_Resume_Handle &rh,
-                                           ACE_Time_Value *max_wait_time)
+TAO_SHMIOP_Transport::handle_input (TAO_Resume_Handle &rh, 
+                                    ACE_Time_Value *max_wait_time, 
+                                    int)
 {
-  // Calculate the actual length of the load that we are supposed to
-  // read which is equal to the <missing_data> + length of the buffer
-  // that we have..
-  size_t payload = missing_data + incoming.length ();
+  if (TAO_debug_level > 3)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t) - SHMIOP_Transport[%d]::handle_input\n",
+                  this->id ()));
+    }
 
-  // Grow the buffer to the size of the message
-  ACE_CDR::grow (&incoming,
-                 payload);
+   // The buffer on the stack which will be used to hold the input
+  // messages, compensate shrink due to alignment
+  char buf [TAO_MAXBUFSIZE + ACE_CDR::MAX_ALIGNMENT];
+
+
+#if defined (ACE_INITIALIZE_MEMORY_BEFORE_USE)
+  (void) ACE_OS::memset (buf,
+                         '\0',
+                         sizeof buf);
+#endif /* ACE_INITIALIZE_MEMORY_BEFORE_USE */
+
+  // Create a data block
+  ACE_Data_Block db (sizeof (buf),
+                     ACE_Message_Block::MB_DATA,
+                     buf,
+                     this->orb_core_->input_cdr_buffer_allocator (),
+                     this->orb_core_->locking_strategy (),
+                     ACE_Message_Block::DONT_DELETE,
+                     this->orb_core_->input_cdr_dblock_allocator ());
+
+  // Create a message block
+  ACE_Message_Block message_block (&db,
+                                   ACE_Message_Block::DONT_DELETE,
+                                   this->orb_core_->input_cdr_msgblock_allocator ());
+
+
+  // Align the message block
+  ACE_CDR::mb_align (&message_block);
+
+  const size_t missing_header_data = this->messaging_object ()->header_length ();
+
+  if (missing_header_data == 0) 
+    {
+      return -1;
+    }
 
   // .. do a read on the socket again.
   ssize_t bytes = 0;
 
   // As this used for transports where things are available in one
   // shot this looping should not create any problems.
-  for (size_t n = missing_data;
-       n != 0;
-       n -= bytes)
+  for (size_t m = missing_header_data;
+       m != 0;
+       m -= bytes)
     {
+      bytes = 0; // reset
+
       // We would have liked to use something like a recv_n ()
       // here. But at the time when the code was written, the MEM_Stream
       // classes had poor support  for recv_n (). Till a day when we
@@ -167,7 +203,77 @@ TAO_SHMIOP_Transport::consolidate_message (ACE_Message_Block &incoming,
       // argument that can be said against this is that, this is the
       // bad layer in which this is being done ie. recv_n is
       // simulated. But...
-      bytes = this->recv (incoming.wr_ptr (),
+      bytes = this->recv (message_block.wr_ptr (),
+                          m,
+                          max_wait_time);
+
+      if (bytes == 0 ||
+          bytes == -1)
+        {
+          return -1;
+        }
+
+      message_block.wr_ptr (bytes);
+    }
+
+    TAO_Queued_Data qd (&message_block);
+    size_t mesg_length; // not used
+
+    // Parse the incoming message for validity. The check needs to be
+    // performed by the messaging objects.
+    if (this->messaging_object ()->parse_next_message (message_block,
+                                                       qd,
+                                                       mesg_length) == -1)
+      return -1;
+
+    if (qd.missing_data_ == TAO_MISSING_DATA_UNDEFINED) 
+      {
+        // parse/marshal error happened
+        return -1;
+      }
+
+    if (message_block.length () > mesg_length)
+      {
+        // we read too much data
+        return -1;
+      }
+    
+    if (message_block.space () < qd.missing_data_)
+      {
+        const size_t message_size = message_block.length ()
+                                  + qd.missing_data_;
+
+        // reallocate buffer with correct size on heap
+	if (ACE_CDR::grow (&message_block, message_size) == -1)
+          {
+            if (TAO_debug_level > 0)
+              {
+                ACE_ERROR ((LM_ERROR,
+                 "TAO (%P|%t) - SHMIOP_Transport[%d]::handle_input, "
+                 "error growing message buffer\n",
+                 this->id () ));
+              }
+            return -1;
+          }
+
+      }
+
+    // As this used for transports where things are available in one
+    // shot this looping should not create any problems.
+    for (size_t n = qd.missing_data_;
+       n != 0;
+       n -= bytes)
+    {
+        bytes = 0; // reset
+
+      // We would have liked to use something like a recv_n ()
+      // here. But at the time when the code was written, the MEM_Stream
+      // classes had poor support  for recv_n (). Till a day when we
+      // get proper recv_n (), let us stick with this. The other
+      // argument that can be said against this is that, this is the
+      // bad layer in which this is being done ie. recv_n is
+      // simulated. But...
+        bytes = this->recv (message_block.wr_ptr (),
                           n,
                           max_wait_time);
 
@@ -177,20 +283,23 @@ TAO_SHMIOP_Transport::consolidate_message (ACE_Message_Block &incoming,
           return -1;
         }
 
-      incoming.wr_ptr (bytes);
+        message_block.wr_ptr (bytes);
+
     }
 
-  TAO_Queued_Data pqd (&incoming);
-
-  // With SHMIOP we would not have any missing data...
-  pqd.missing_data_ = 0;
-
-  this->messaging_object ()->get_message_data (&pqd);
+  qd.missing_data_ = 0;
 
   // Now we have a full message in our buffer. Just go ahead and
   // process that
-  return this->process_parsed_messages (&pqd, rh);
+  if (this->process_parsed_messages (&qd, rh) == -1)
+    {
+      return -1;
+    }
+  
+  return 0;
 }
+
+
 
 int
 TAO_SHMIOP_Transport::send_request (TAO_Stub *stub,
@@ -257,5 +366,7 @@ TAO_SHMIOP_Transport::messaging_init (CORBA::Octet major,
                                  minor);
   return 1;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_SHMIOP && TAO_HAS_SHMIOP != 0 */

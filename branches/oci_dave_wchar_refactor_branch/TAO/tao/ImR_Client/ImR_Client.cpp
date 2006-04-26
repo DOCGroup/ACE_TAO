@@ -1,6 +1,6 @@
 // $Id$
 
-#include "ImR_Client.h"
+#include "tao/ImR_Client/ImR_Client.h"
 
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
@@ -14,6 +14,8 @@
 ACE_RCSID (ImR_Client,
            ImR_Client,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -247,16 +249,20 @@ namespace TAO
 
       return ACE_Service_Config::process_directive (ace_svc_desc_ImR_Client_Adapter_Impl);
     }
-
-    ACE_STATIC_SVC_DEFINE (
-        ImR_Client_Adapter_Impl,
-        ACE_TEXT ("Concrete_ImR_Client_Adapter"),
-        ACE_SVC_OBJ_T,
-        &ACE_SVC_NAME (ImR_Client_Adapter_Impl),
-        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
-        0
-      )
-
-    ACE_FACTORY_DEFINE (TAO_IMR_Client, ImR_Client_Adapter_Impl)
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+ACE_STATIC_SVC_DEFINE (
+  ImR_Client_Adapter_Impl,
+  ACE_TEXT ("Concrete_ImR_Client_Adapter"),
+  ACE_SVC_OBJ_T,
+  &ACE_SVC_NAME (ImR_Client_Adapter_Impl),
+  ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
+  0)
+
+ACE_FACTORY_NAMESPACE_DEFINE (
+  TAO_IMR_Client,
+  ImR_Client_Adapter_Impl,
+  TAO::ImR_Client::ImR_Client_Adapter_Impl)

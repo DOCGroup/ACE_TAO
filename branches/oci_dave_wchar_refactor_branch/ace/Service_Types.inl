@@ -1,7 +1,10 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
 
 #include "ace/ACE.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE void *
 ACE_Service_Type_Impl::object (void) const
@@ -25,3 +28,5 @@ ACE_Service_Type_Impl::name (const ACE_TCHAR *n)
   ACE::strdelete (const_cast<ACE_TCHAR*> (this->name_));
   this->name_ = ACE::strnew (n);
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

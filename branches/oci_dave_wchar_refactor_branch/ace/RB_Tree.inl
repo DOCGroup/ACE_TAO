@@ -6,6 +6,8 @@
 #include "ace/Malloc_Base.h"
 #include "ace/Log_Msg.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /////////////////////////////////////////////////////
 // template class ACE_RB_Tree_Node<EXT_ID, INT_ID> //
 /////////////////////////////////////////////////////
@@ -653,7 +655,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::find (const EXT_ID &k)
                          this->lock_,
                          reinterpret_cast<INT_ID*> (0L));
 
-  ACE_RB_Tree_Node<EXT_ID, INT_ID> *entry;
+  ACE_RB_Tree_Node<EXT_ID, INT_ID> *entry = 0;
   int result = this->find_i (k, entry);
   return (result == 0) ? &(entry->item ()) : 0;
 }
@@ -1151,3 +1153,5 @@ ACE_RB_Tree_Reverse_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::next (ACE_
 
   return 0;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

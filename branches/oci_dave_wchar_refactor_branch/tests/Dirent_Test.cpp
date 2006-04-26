@@ -10,7 +10,7 @@
 //
 // = DESCRIPTION
 //     This is a test of the opendir and readdir emulation provided by the
-//     class ACE_OS_Dirent.  It is used to ensure that the emulation code
+//     class ACE_Dirent.  It is used to ensure that the emulation code
 //     works properly on platforms that don't support this capability
 //     natively.  As the emulation code is not compiled in other
 //     platforms, this test also ensures that there is no impact to
@@ -37,7 +37,7 @@ ACE_RCSID (tests,
            "$Id Dirent_Test.cpp,v 4.10 2003/05/18 19:17:34 dhinton Exp$")
 
 
-#if defined (VXWORKS) || defined(CHORUS)
+#if defined (ACE_VXWORKS) || defined(CHORUS)
 #define TEST_DIR "log"
 #define DIR_DOT "."
 #define DIR_DOT_DOT ".."
@@ -61,13 +61,13 @@ static const int RECURSION_INDENT = 3;
 static int entrycount = 0;
 
 static int
-selector (const dirent *d)
+selector (const ACE_DIRENT *d)
 {
   return ACE_OS::strcmp (d->d_name, TEST_ENTRY) == 0;
 }
 
 static int
-comparator (const dirent **d1, const dirent **d2)
+comparator (const ACE_DIRENT **d1, const ACE_DIRENT **d2)
 {
   return ACE_OS::strcmp ((*d1)->d_name, (*d2)->d_name);
 }
@@ -121,7 +121,7 @@ dirent_test (void)
 {
   ACE_Dirent dir (ACE_TEXT (TEST_DIR));
 
-  for (dirent *directory;
+  for (ACE_DIRENT *directory;
        (directory = dir.read ()) != 0;
        entrycount++)
     ACE_DEBUG ((LM_DEBUG,
@@ -192,15 +192,15 @@ dirent_count (const ACE_TCHAR *dir_path,
 
   int entry_count = 0;
 
-  for (dirent *directory; (directory = dir.read ()) != 0;)
+  for (ACE_DIRENT *directory; (directory = dir.read ()) != 0;)
     {
       // Skip the ".." and "." files.
       if (ACE_OS::strcmp (directory->d_name, DIR_DOT) == 0
           || ACE_OS::strcmp (directory->d_name, DIR_DOT_DOT) == 0)
         continue;
-      entry_count++;
+      ++entry_count;
 
-#if !defined (ACE_LACKS_STRUCT_DIR)
+#if !defined (ACE_LACKS_STRUCT_DIR) && !defined (__BORLANDC__)
       ACE_OS::strncpy (tname,
                        ACE_TEXT_TO_TCHAR_IN (directory->d_name),
                        maxnamlen);
@@ -220,7 +220,7 @@ dirent_count (const ACE_TCHAR *dir_path,
       switch (stat_buf.st_mode & S_IFMT)
         {
         case S_IFREG: // Either a regular file or an executable.
-          file_count++;
+          ++file_count;
           break;
 
         case S_IFLNK: // Either a file or directory link, so let's find out.
@@ -232,9 +232,9 @@ dirent_count (const ACE_TCHAR *dir_path,
 
           if ((stat_buf.st_mode & S_IFMT) == S_IFDIR)
             // Don't recurse through symbolic directory links!
-            dir_count++;
+            ++dir_count;
           else
-            file_count++;
+            ++file_count;
           break;
 
         case S_IFDIR:
@@ -255,7 +255,7 @@ dirent_count (const ACE_TCHAR *dir_path,
                   tname,
                   local_file_count,
                   local_dir_count));
-              dir_count++;
+              ++dir_count;
 
 #if !defined (ACE_LACKS_CHDIR)
 # if defined (ACE_VXWORKS)

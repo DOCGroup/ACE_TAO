@@ -68,7 +68,7 @@ ifr_adding_visitor_exception::visit_scope (UTL_Scope *node)
 
           AST_Type *ft = (*f)->field_type ();
 
-          idl_bool defined_here = ft->is_child (this->scope_);
+          bool defined_here = ft->is_child (this->scope_);
 
           // If the struct member is defined in the struct, we have to
           // do some visiting - otherwise we can just look up the entry.

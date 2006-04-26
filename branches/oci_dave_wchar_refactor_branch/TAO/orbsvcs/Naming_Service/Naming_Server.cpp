@@ -6,6 +6,8 @@
 #include "orbsvcs/Shutdown_Utilities.h"
 #include "tao/debug.h"
 
+#include "tao/ImR_Client/ImR_Client.h"
+
 class Naming_Svc_Shutdown : public Shutdown_Functor
 {
 public:

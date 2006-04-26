@@ -27,6 +27,8 @@
 #include "ace/SString.h"
 #include "ace/Functor_String.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_CapEntry
  *
@@ -133,7 +135,7 @@ class ACE_Export ACE_Capabilities
 {
 public:
 
-  typedef  ACE_Hash_Map_Manager_Ex<ACE_TString, ACE_CapEntry *, ACE_Hash<ACE_TString>, ACE_Equal_To<ACE_TString>, ACE_Null_Mutex> MAP;
+  typedef  ACE_Hash_Map_Manager_Ex<ACE_TString, ACE_CapEntry *, ACE_Hash<ACE_TString>, ACE_Equal_To<ACE_TString>, ACE_Null_Mutex> CAPABILITIES_MAP;
 
   /// The Constructor
   ACE_Capabilities (void);
@@ -180,7 +182,7 @@ protected:
 private:
 
   /// This is the set of ACE_CapEntry.
-  MAP caps_;
+  CAPABILITIES_MAP caps_;
 
 };
 
@@ -189,7 +191,7 @@ int
 is_empty (const ACE_TCHAR *line)
 {
   while (*line && isspace (*line))
-    line++;
+    ++line;
 
   return *line == ACE_LIB_TEXT ('\0') || *line == ACE_LIB_TEXT ('#');
 }
@@ -198,11 +200,13 @@ int
 is_line (const ACE_TCHAR *line)
 {
   while (*line && isspace (*line))
-    line++;
+    ++line;
 
   return *line != ACE_LIB_TEXT ('\0');
 }
 #endif /* ACE_IS_SPLITTING */
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Capabilities.inl"

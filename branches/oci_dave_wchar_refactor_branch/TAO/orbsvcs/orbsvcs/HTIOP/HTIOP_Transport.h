@@ -1,6 +1,5 @@
-
-// This may look like C, but it's really -*- C++ -*-
 // -*- C++ -*-
+
 // ===================================================================
 /**
  *  @file   HTIOP_Transport.h
@@ -16,7 +15,7 @@
 #define TAO_HTIOP_TRANSPORT_H
 #include /**/ "ace/pre.h"
 
-#include "HTIOP_Export.h"
+#include "orbsvcs/HTIOP/HTIOP_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -32,18 +31,20 @@
 #include "ace/Svc_Handler.h"
 //#include "HTIOP/HTIOPC.h"
 
+# if defined (ACE_HAS_TEMPLATE_TYPEDEFS)
+#   define ACE_HTBP_STREAM ACE::HTBP::Stream
+# else /* If TEMPLATES are broken in some form or another */
+#   define ACE_HTBP_STREAM ACE::HTBP::Stream, ACE::HTBP::Addr
+#endif /* ACE_HAS_TEMPLATE_TYPEDEFS */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Forward decls.
 class TAO_ORB_Core;
 class TAO_Operation_Details;
 class TAO_Pluggable_Messaging;
 class TAO_Acceptor;
 class TAO_Adapter;
-
-# if defined (ACE_HAS_TEMPLATE_TYPEDEFS)
-#   define ACE_HTBP_STREAM ACE::HTBP::Stream
-# else /* If TEMPLATES are broken in some form or another */
-#   define ACE_HTBP_STREAM ACE::HTBP::Stream, ACE::HTBP::Addr
-#endif /* ACE_HAS_TEMPLATE_TYPEDEFS */
 
 namespace TAO
 {
@@ -160,6 +161,8 @@ namespace TAO
     };
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif  /* TRANSPORT_H */

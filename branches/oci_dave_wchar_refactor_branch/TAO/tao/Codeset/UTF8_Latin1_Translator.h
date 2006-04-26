@@ -22,10 +22,13 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Codeset/codeset_export.h"
+#include "tao/Versioned_Namespace.h"
 #include "ace/CDR_Stream.h"
-#include "codeset_export.h"
 
 // ****************************************************************
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class UTF8_Latin1_Translator
@@ -78,9 +81,9 @@ private:
   ACE_CDR::Boolean write_char_i (ACE_OutputCDR &,
                                  ACE_CDR::Char);
 
-private:
-
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* UTF8_LATIN1_TRANSLATOR_H */

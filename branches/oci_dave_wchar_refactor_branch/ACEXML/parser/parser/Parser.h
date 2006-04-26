@@ -215,8 +215,8 @@ protected:
    *  Parse a content declaration.
    *
    */
-  int parse_content (const ACEXML_Char* startname, const ACEXML_Char* ns_uri,
-                     const ACEXML_Char* ns_lname
+  int parse_content (const ACEXML_Char* startname, const ACEXML_Char*& ns_uri,
+                     const ACEXML_Char*& ns_lname, int ns_flag
                      ACEXML_ENV_ARG_DECL)
     ACE_THROW_SPEC ((ACEXML_SAXException));
 
@@ -692,9 +692,8 @@ private:
    * @param start 1 => startPrefixMapping 0 => endPrefixMapping
    */
   void prefix_mapping (const ACEXML_Char* prefix,
-                              const ACEXML_Char* uri,
-                              const ACEXML_Char* name,
-                              int start ACEXML_ENV_ARG_DECL)
+                       const ACEXML_Char* uri,
+                       int start ACEXML_ENV_ARG_DECL)
     ACE_THROW_SPEC ((ACEXML_SAXException));
   /**
    *  Parse a keyword.

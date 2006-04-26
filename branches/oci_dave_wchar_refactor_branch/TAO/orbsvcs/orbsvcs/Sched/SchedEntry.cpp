@@ -16,15 +16,17 @@
 //
 // ============================================================================
 
-#include "SchedEntry.h"
+#include "orbsvcs/Sched/SchedEntry.h"
 #include "ace/SString.h"
 #include "ace/OS_NS_stdio.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "SchedEntry.i"
+#include "orbsvcs/Sched/SchedEntry.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(Sched, SchedEntry, "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 Task_Entry::Task_Entry (void)
   : rt_info_ (0),
@@ -932,3 +934,5 @@ TimeLine_Entry::TimeLine_Entry (Dispatch_Entry &dispatch_entry,
     prev_ (prev)
 {
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

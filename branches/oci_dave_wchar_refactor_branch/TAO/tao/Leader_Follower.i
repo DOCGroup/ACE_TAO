@@ -1,10 +1,13 @@
 // -*- C++ -*-
+//
 // $Id$
 
 // ****************************************************************
 
 #include "tao/ORB_Core_TSS_Resources.h"
 #include "tao/ORB_Core.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 TAO_Leader_Follower::TAO_Leader_Follower (TAO_ORB_Core* orb_core,
@@ -220,3 +223,5 @@ TAO_LF_Client_Leader_Thread_Helper::~TAO_LF_Client_Leader_Thread_Helper (void)
 {
   this->leader_follower_.reset_client_leader_thread ();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

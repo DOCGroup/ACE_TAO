@@ -1,4 +1,5 @@
 // -*- C++ -*-
+//
 // $Id$
 
 #include "ace/OS_NS_macros.h"
@@ -18,6 +19,8 @@
 #  include "ace/OS_Memory.h"
 #  include "ace/OS_NS_string.h"
 #endif /* ACE_USES_ASM_SYMBOL_IN_DLSYM */
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE int
 ACE_OS::dlclose (ACE_SHLIB_HANDLE handle)
@@ -91,7 +94,7 @@ ACE_OS::dlerror (void)
 #   else
   return const_cast <char *> (err);
 #   endif /* ACE_USES_WCHAR */
-# elif defined (__hpux) || defined (VXWORKS)
+# elif defined (__hpux) || defined (ACE_VXWORKS)
   ACE_OSCALL_RETURN (::strerror(errno), char *, 0);
 # elif defined (ACE_WIN32)
   static ACE_TCHAR buf[128];
@@ -112,32 +115,23 @@ ACE_OS::dlerror (void)
 # endif /* ACE_HAS_SVR4_DYNAMIC_LINKING */
 }
 
-# if defined (ACE_HAS_CHARPTR_DL)
-typedef ACE_TCHAR * ACE_DL_TYPE;
-# else
-typedef const ACE_TCHAR * ACE_DL_TYPE;
-# endif /* ACE_HAS_CHARPTR_DL */
-
 ACE_INLINE ACE_SHLIB_HANDLE
 ACE_OS::dlopen (const ACE_TCHAR *fname,
                 int mode)
 {
   ACE_OS_TRACE ("ACE_OS::dlopen");
 
-  // Get the correct OS type.
-  ACE_DL_TYPE filename = const_cast<ACE_DL_TYPE> (fname);
-
 # if defined (ACE_HAS_SVR4_DYNAMIC_LINKING)
   void *handle;
 #   if defined (ACE_HAS_SGIDLADD)
   ACE_OSCALL
-    (::sgidladd (ACE_TEXT_TO_CHAR_IN (filename), mode), void *, 0, handle);
+    (::sgidladd (ACE_TEXT_TO_CHAR_IN (fname), mode), void *, 0, handle);
 #   elif defined (_M_UNIX)
   ACE_OSCALL
-    (::_dlopen (ACE_TEXT_TO_CHAR_IN (filename), mode), void *, 0, handle);
+    (::_dlopen (ACE_TEXT_TO_CHAR_IN (fname), mode), void *, 0, handle);
 #   else
   ACE_OSCALL
-    (::dlopen (ACE_TEXT_TO_CHAR_IN (filename), mode), void *, 0, handle);
+    (::dlopen (ACE_TEXT_TO_CHAR_IN (fname), mode), void *, 0, handle);
 #   endif /* ACE_HAS_SGIDLADD */
 #   if !defined (ACE_HAS_AUTOMATIC_INIT_FINI)
   if (handle != 0)
@@ -160,18 +154,18 @@ ACE_OS::dlopen (const ACE_TCHAR *fname,
 # elif defined (ACE_WIN32)
   ACE_UNUSED_ARG (mode);
 
-  ACE_WIN32CALL_RETURN (ACE_TEXT_LoadLibrary (filename), ACE_SHLIB_HANDLE, 0);
+  ACE_WIN32CALL_RETURN (ACE_TEXT_LoadLibrary (fname), ACE_SHLIB_HANDLE, 0);
 # elif defined (__hpux)
 
 #   if defined(__GNUC__) || __cplusplus >= 199707L
-  ACE_OSCALL_RETURN (::shl_load(filename, mode, 0L), ACE_SHLIB_HANDLE, 0);
+  ACE_OSCALL_RETURN (::shl_load(fname, mode, 0L), ACE_SHLIB_HANDLE, 0);
 #   else
-  ACE_OSCALL_RETURN (::cxxshl_load(filename, mode, 0L), ACE_SHLIB_HANDLE, 0);
+  ACE_OSCALL_RETURN (::cxxshl_load(fname, mode, 0L), ACE_SHLIB_HANDLE, 0);
 #   endif  /* aC++ vs. Hp C++ */
-# elif defined (VXWORKS)
-  MODULE* handle;
+# elif defined (ACE_VXWORKS) && !defined (__RTP__)
+  MODULE* handle = 0;
   // Open readonly
-  ACE_HANDLE filehandle = ACE_OS::open (filename,
+  ACE_HANDLE filehandle = ACE_OS::open (fname,
                                         O_RDONLY,
                                         ACE_DEFAULT_FILE_PERMS);
 
@@ -185,8 +179,8 @@ ACE_OS::dlopen (const ACE_TCHAR *fname,
       if ( (loaderror != 0) && (handle != 0) )
         {
           // ouch something went wrong most likely unresolved externals
-		  if (handle)
-          	::unldByModuleId ( handle, 0 );
+          if (handle)
+            ::unldByModuleId ( handle, 0 );
           handle = 0;
         }
     }
@@ -197,7 +191,7 @@ ACE_OS::dlopen (const ACE_TCHAR *fname,
     }
   return handle;
 # else
-  ACE_UNUSED_ARG (filename);
+  ACE_UNUSED_ARG (fname);
   ACE_UNUSED_ARG (mode);
   ACE_NOTSUP_RETURN (0);
 # endif /* ACE_HAS_SVR4_DYNAMIC_LINKING */
@@ -257,7 +251,7 @@ ACE_OS::dlsym (ACE_SHLIB_HANDLE handle,
   ACE_OSCALL (::shl_findsym(&_handle, symbolname, TYPE_UNDEFINED, &value), int, -1, status);
   return status == 0 ? value : 0;
 
-# elif defined (VXWORKS)
+# elif defined (ACE_VXWORKS) && !defined (__RTP__)
 
   // For now we use the VxWorks global symbol table
   // which resolves the most recently loaded symbols .. which resolve mostly what we want..
@@ -277,3 +271,5 @@ ACE_OS::dlsym (ACE_SHLIB_HANDLE handle,
 
 # endif /* ACE_HAS_SVR4_DYNAMIC_LINKING */
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

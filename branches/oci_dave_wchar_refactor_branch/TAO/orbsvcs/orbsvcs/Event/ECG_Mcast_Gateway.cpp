@@ -1,13 +1,13 @@
 // $Id$
 
-#include "ECG_Mcast_Gateway.h"
+#include "orbsvcs/Event/ECG_Mcast_Gateway.h"
 
-#include "EC_Lifetime_Utils_T.h"
-#include "ECG_Simple_Address_Server.h"
-#include "ECG_Complex_Address_Server.h"
-#include "ECG_Simple_Mcast_EH.h"
-#include "ECG_Mcast_EH.h"
-#include "ECG_UDP_EH.h"
+#include "orbsvcs/Event/EC_Lifetime_Utils_T.h"
+#include "orbsvcs/Event/ECG_Simple_Address_Server.h"
+#include "orbsvcs/Event/ECG_Complex_Address_Server.h"
+#include "orbsvcs/Event/ECG_Simple_Mcast_EH.h"
+#include "orbsvcs/Event/ECG_Mcast_EH.h"
+#include "orbsvcs/Event/ECG_UDP_EH.h"
 
 #include "orbsvcs/Event_Utilities.h"
 
@@ -17,10 +17,13 @@
 #include "ace/OS_NS_strings.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "ECG_Mcast_Gateway.i"
+#include "orbsvcs/Event/ECG_Mcast_Gateway.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(Event, ECG_Mcast_Gateway, "$Id$")
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 typedef TAO_EC_Shutdown_Command<TAO_EC_Servant_Var<TAO_ECG_UDP_Sender> >
 UDP_Sender_Shutdown;
@@ -688,6 +691,8 @@ TAO_ECG_Mcast_Gateway::run (CORBA::ORB_ptr orb,
   receiver_shutdown.disallow_command ();
   sender_shutdown.disallow_command ();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 // ****************************************************************
 

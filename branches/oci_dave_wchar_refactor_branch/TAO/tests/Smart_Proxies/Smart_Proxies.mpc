@@ -8,6 +8,7 @@ project(*Server): taoserver, smart_proxies {
 }
 
 project(*Client): taoclient, portableserver, smart_proxies {
+  after += *Server
   Source_Files {
     testC.cpp
     Smart_Proxy_Impl.cpp

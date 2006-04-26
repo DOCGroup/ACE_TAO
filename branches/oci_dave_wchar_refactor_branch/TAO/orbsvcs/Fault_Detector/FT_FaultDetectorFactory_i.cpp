@@ -14,6 +14,7 @@
 #include "Fault_Detector_i.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/Auto_Ptr.h"
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/PortableGroup/PG_Property_Set.h"
 
@@ -41,6 +42,8 @@
       ));                     \
     return /* value goes here */
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 //////////////////////////////////////////////////////
 // FT_FaultDetectorFactory_i  Construction/destruction
@@ -708,3 +711,4 @@ CORBA::Boolean TAO::FT_FaultDetectorFactory_i::is_alive (ACE_ENV_SINGLE_ARG_DECL
     1;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

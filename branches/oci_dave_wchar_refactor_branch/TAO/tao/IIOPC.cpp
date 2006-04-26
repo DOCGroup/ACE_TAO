@@ -29,8 +29,10 @@
 // be\be_codegen.cpp:288
 
 
-#include "IIOPC.h"
+#include "tao/IIOPC.h"
 #include "tao/CDR.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:70
@@ -41,10 +43,10 @@ namespace TAO
 }
 
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_structure/structure_cs.cpp:66
 
-void 
+void
 IIOP::ListenPoint::_tao_any_destructor (
     void *_tao_void_pointer
   )
@@ -54,7 +56,7 @@ IIOP::ListenPoint::_tao_any_destructor (
   delete _tao_tmp_pointer;
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_IIOP_LISTENPOINTLIST_CS_)
@@ -66,7 +68,7 @@ IIOP::ListenPointList::ListenPointList (void)
 IIOP::ListenPointList::ListenPointList (
     CORBA::ULong max
   )
-  : TAO_Unbounded_Sequence<
+  : TAO::unbounded_value_sequence<
         ListenPoint
       >
     (max)
@@ -78,7 +80,7 @@ IIOP::ListenPointList::ListenPointList (
     IIOP::ListenPoint * buffer,
     CORBA::Boolean release
   )
-  : TAO_Unbounded_Sequence<
+  : TAO::unbounded_value_sequence<
         ListenPoint
       >
     (max, length, buffer, release)
@@ -87,7 +89,7 @@ IIOP::ListenPointList::ListenPointList (
 IIOP::ListenPointList::ListenPointList (
     const ListenPointList &seq
   )
-  : TAO_Unbounded_Sequence<
+  : TAO::unbounded_value_sequence<
         ListenPoint
       >
     (seq)
@@ -107,10 +109,10 @@ void IIOP::ListenPointList::_tao_any_destructor (
 
 #endif /* end #if !defined */
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_structure/structure_cs.cpp:66
 
-void 
+void
 IIOP::BiDirIIOPServiceContext::_tao_any_destructor (
     void *_tao_void_pointer
   )
@@ -154,22 +156,7 @@ CORBA::Boolean operator<< (
     const IIOP::ListenPointList &_tao_sequence
   )
 {
-  const CORBA::ULong _tao_seq_len = _tao_sequence.length ();
-  
-  if (strm << _tao_seq_len)
-    {
-      // Encode all elements.
-      CORBA::Boolean _tao_marshal_flag = true;
-      
-      for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
-        {
-          _tao_marshal_flag = (strm << _tao_sequence[i]);
-        }
-      
-      return _tao_marshal_flag;
-    }
-  
-  return false;
+  return TAO::marshal_sequence(strm, _tao_sequence);
 }
 
 CORBA::Boolean operator>> (
@@ -177,40 +164,7 @@ CORBA::Boolean operator>> (
     IIOP::ListenPointList &_tao_sequence
   )
 {
-  CORBA::ULong _tao_seq_len;
-  
-  if (strm >> _tao_seq_len)
-    {
-      // Add a check to the length of the sequence
-      // to make sure it does not exceed the length
-      // of the stream. (See bug 58.)
-      if (_tao_seq_len > strm.length ())
-        {
-          return false;
-        }
-      
-      // Set the length of the sequence.
-      _tao_sequence.length (_tao_seq_len);
-      
-      // If length is 0 we return true.
-      if (0 >= _tao_seq_len) 
-        {
-          return true;
-        }
-      
-      // Retrieve all the elements.
-      CORBA::Boolean _tao_marshal_flag = true;
-      
-      for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
-        {
-          _tao_marshal_flag = (strm >> _tao_sequence[i]);
-        }
-      
-      return _tao_marshal_flag;
-    
-    }
-  
-  return false;
+  return TAO::demarshal_sequence(strm, _tao_sequence);
 }
 
 #endif /* _TAO_CDR_OP_IIOP_ListenPointList_CPP_ */
@@ -235,3 +189,5 @@ CORBA::Boolean operator>> (
   return
     (strm >> _tao_aggregate.listen_points);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

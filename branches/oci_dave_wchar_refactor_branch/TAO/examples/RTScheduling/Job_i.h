@@ -16,7 +16,12 @@
 #include "JobS.h"
 #include "Task_Stats.h"
 #include "ace/SString.h"
+
 #include "ace/Arg_Shifter.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+//class ACE_TArg_Shifter<char>;
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 class DT_Creator;
 

@@ -55,35 +55,34 @@
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:49
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace CORBA
 {
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_sequence/sequence_ch.cpp:101
 
 #if !defined (_CORBA_DOUBLESEQ_CH_)
 #define _CORBA_DOUBLESEQ_CH_
-  
+
   class DoubleSeq;
-  
+
   typedef
     TAO_FixedSeq_Var_T<
-        DoubleSeq,
-        CORBA::Double
+        DoubleSeq
       >
     DoubleSeq_var;
-  
+
   typedef
     TAO_Seq_Out_T<
-        DoubleSeq,
-        DoubleSeq_var,
-        CORBA::Double
+        DoubleSeq
       >
     DoubleSeq_out;
-  
+
   class TAO_Export DoubleSeq
     : public
-        TAO_Unbounded_Sequence<
+        TAO::unbounded_value_sequence<
             CORBA::Double
           >
   {
@@ -93,14 +92,14 @@ namespace CORBA
     DoubleSeq (
         ::CORBA::ULong max,
         ::CORBA::ULong length,
-        ::CORBA::Double* buffer, 
-        ::CORBA::Boolean release = 0
+        ::CORBA::Double* buffer,
+        ::CORBA::Boolean release = false
       );
     DoubleSeq (const DoubleSeq &);
     ~DoubleSeq (void);
-    
+
     static void _tao_any_destructor (void *);
-    
+
     typedef DoubleSeq_var _var_type;
   };
 
@@ -138,6 +137,8 @@ TAO_Export ::CORBA::Boolean operator>> (
 
 // TAO_IDL - Generated from
 // be\be_codegen.cpp:1040
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

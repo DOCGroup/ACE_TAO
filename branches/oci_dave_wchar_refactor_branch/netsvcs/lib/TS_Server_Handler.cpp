@@ -11,32 +11,6 @@
 
 ACE_RCSID(lib, TS_Server_Handler, "$Id$")
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Accept_Strategy<ACE_TS_Server_Handler, ACE_SOCK_ACCEPTOR>;
-template class ACE_Acceptor<ACE_TS_Server_Handler, ACE_SOCK_ACCEPTOR>;
-template class ACE_Concurrency_Strategy<ACE_TS_Server_Handler>;
-template class ACE_Creation_Strategy<ACE_TS_Server_Handler>;
-template class ACE_Schedule_All_Reactive_Strategy<ACE_TS_Server_Handler>;
-template class ACE_Scheduling_Strategy<ACE_TS_Server_Handler>;
-template class ACE_Strategy_Acceptor<ACE_TS_Server_Handler, ACE_SOCK_ACCEPTOR>;
-#if defined (ACE_HAS_STREAM_PIPES)
-template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
-// #else the instantiation in is Client_Logging_Handler.cpp
-#endif /* ACE_HAS_STREAM_PIPES */
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Accept_Strategy<ACE_TS_Server_Handler, ACE_SOCK_ACCEPTOR>
-#pragma instantiate ACE_Acceptor<ACE_TS_Server_Handler, ACE_SOCK_ACCEPTOR>
-#pragma instantiate ACE_Concurrency_Strategy<ACE_TS_Server_Handler>
-#pragma instantiate ACE_Creation_Strategy<ACE_TS_Server_Handler>
-#pragma instantiate ACE_Schedule_All_Reactive_Strategy<ACE_TS_Server_Handler>
-#pragma instantiate ACE_Scheduling_Strategy<ACE_TS_Server_Handler>
-#pragma instantiate ACE_Strategy_Acceptor<ACE_TS_Server_Handler, ACE_SOCK_ACCEPTOR>
-#if defined (ACE_HAS_STREAM_PIPES)
-#pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
-// #else the instantiation in is Client_Logging_Handler.cpp
-#endif /* ACE_HAS_STREAM_PIPES */
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 int
 ACE_TS_Server_Acceptor::parse_args (int argc, ACE_TCHAR *argv[])
 {
@@ -136,7 +110,7 @@ ACE_TS_Server_Handler::open (void *)
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("get_remote_addr")),
                       -1);
-  
+
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) accepted connection from host %s on fd %d\n"),
               client_addr.get_host_name (),

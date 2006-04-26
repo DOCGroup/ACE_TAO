@@ -29,12 +29,14 @@
 // be\be_codegen.cpp:277
 
 
-#include "Messaging_No_ImplC.h"
+#include "tao/Messaging/Messaging_No_ImplC.h"
 #include "tao/CDR.h"
 #include "ace/OS_NS_string.h"
 
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:70
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Arg traits specializations.
 namespace TAO
@@ -60,7 +62,7 @@ TAO::Objref_Traits<Messaging::RebindPolicy>::release (
     Messaging::RebindPolicy_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 Messaging::RebindPolicy_ptr
@@ -109,18 +111,18 @@ Messaging::RebindPolicy::_unchecked_narrow (
 Messaging::RebindPolicy_ptr
 Messaging::RebindPolicy::_duplicate (RebindPolicy_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void
 Messaging::RebindPolicy::_tao_release (RebindPolicy_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 ::CORBA::Boolean
@@ -167,10 +169,10 @@ Messaging::RebindPolicy::marshal (TAO_OutputCDR &)
   return false;
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_structure/structure_cs.cpp:66
 
-void 
+void
 Messaging::PriorityRange::_tao_any_destructor (
     void *_tao_void_pointer
   )
@@ -198,7 +200,7 @@ TAO::Objref_Traits<Messaging::RequestPriorityPolicy>::release (
     Messaging::RequestPriorityPolicy_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 Messaging::RequestPriorityPolicy_ptr
@@ -247,18 +249,18 @@ Messaging::RequestPriorityPolicy::_unchecked_narrow (
 Messaging::RequestPriorityPolicy_ptr
 Messaging::RequestPriorityPolicy::_duplicate (RequestPriorityPolicy_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void
 Messaging::RequestPriorityPolicy::_tao_release (RequestPriorityPolicy_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 ::CORBA::Boolean
@@ -323,7 +325,7 @@ TAO::Objref_Traits<Messaging::ReplyPriorityPolicy>::release (
     Messaging::ReplyPriorityPolicy_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 Messaging::ReplyPriorityPolicy_ptr
@@ -372,18 +374,18 @@ Messaging::ReplyPriorityPolicy::_unchecked_narrow (
 Messaging::ReplyPriorityPolicy_ptr
 Messaging::ReplyPriorityPolicy::_duplicate (ReplyPriorityPolicy_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void
 Messaging::ReplyPriorityPolicy::_tao_release (ReplyPriorityPolicy_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 ::CORBA::Boolean
@@ -448,7 +450,7 @@ TAO::Objref_Traits<Messaging::RequestStartTimePolicy>::release (
     Messaging::RequestStartTimePolicy_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 Messaging::RequestStartTimePolicy_ptr
@@ -497,18 +499,18 @@ Messaging::RequestStartTimePolicy::_unchecked_narrow (
 Messaging::RequestStartTimePolicy_ptr
 Messaging::RequestStartTimePolicy::_duplicate (RequestStartTimePolicy_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void
 Messaging::RequestStartTimePolicy::_tao_release (RequestStartTimePolicy_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 ::CORBA::Boolean
@@ -573,7 +575,7 @@ TAO::Objref_Traits<Messaging::RequestEndTimePolicy>::release (
     Messaging::RequestEndTimePolicy_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 Messaging::RequestEndTimePolicy_ptr
@@ -622,18 +624,18 @@ Messaging::RequestEndTimePolicy::_unchecked_narrow (
 Messaging::RequestEndTimePolicy_ptr
 Messaging::RequestEndTimePolicy::_duplicate (RequestEndTimePolicy_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void
 Messaging::RequestEndTimePolicy::_tao_release (RequestEndTimePolicy_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 ::CORBA::Boolean
@@ -698,7 +700,7 @@ TAO::Objref_Traits<Messaging::ReplyStartTimePolicy>::release (
     Messaging::ReplyStartTimePolicy_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 Messaging::ReplyStartTimePolicy_ptr
@@ -747,18 +749,18 @@ Messaging::ReplyStartTimePolicy::_unchecked_narrow (
 Messaging::ReplyStartTimePolicy_ptr
 Messaging::ReplyStartTimePolicy::_duplicate (ReplyStartTimePolicy_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void
 Messaging::ReplyStartTimePolicy::_tao_release (ReplyStartTimePolicy_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 ::CORBA::Boolean
@@ -823,7 +825,7 @@ TAO::Objref_Traits<Messaging::ReplyEndTimePolicy>::release (
     Messaging::ReplyEndTimePolicy_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 Messaging::ReplyEndTimePolicy_ptr
@@ -872,18 +874,18 @@ Messaging::ReplyEndTimePolicy::_unchecked_narrow (
 Messaging::ReplyEndTimePolicy_ptr
 Messaging::ReplyEndTimePolicy::_duplicate (ReplyEndTimePolicy_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void
 Messaging::ReplyEndTimePolicy::_tao_release (ReplyEndTimePolicy_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 ::CORBA::Boolean
@@ -948,7 +950,7 @@ TAO::Objref_Traits<Messaging::RelativeRequestTimeoutPolicy>::release (
     Messaging::RelativeRequestTimeoutPolicy_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 Messaging::RelativeRequestTimeoutPolicy_ptr
@@ -997,18 +999,18 @@ Messaging::RelativeRequestTimeoutPolicy::_unchecked_narrow (
 Messaging::RelativeRequestTimeoutPolicy_ptr
 Messaging::RelativeRequestTimeoutPolicy::_duplicate (RelativeRequestTimeoutPolicy_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void
 Messaging::RelativeRequestTimeoutPolicy::_tao_release (RelativeRequestTimeoutPolicy_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 ::CORBA::Boolean
@@ -1055,10 +1057,10 @@ Messaging::RelativeRequestTimeoutPolicy::marshal (TAO_OutputCDR &)
   return false;
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_structure/structure_cs.cpp:66
 
-void 
+void
 Messaging::RoutingTypeRange::_tao_any_destructor (
     void *_tao_void_pointer
   )
@@ -1086,7 +1088,7 @@ TAO::Objref_Traits<Messaging::RoutingPolicy>::release (
     Messaging::RoutingPolicy_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 Messaging::RoutingPolicy_ptr
@@ -1135,18 +1137,18 @@ Messaging::RoutingPolicy::_unchecked_narrow (
 Messaging::RoutingPolicy_ptr
 Messaging::RoutingPolicy::_duplicate (RoutingPolicy_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void
 Messaging::RoutingPolicy::_tao_release (RoutingPolicy_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 ::CORBA::Boolean
@@ -1211,7 +1213,7 @@ TAO::Objref_Traits<Messaging::MaxHopsPolicy>::release (
     Messaging::MaxHopsPolicy_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 Messaging::MaxHopsPolicy_ptr
@@ -1260,18 +1262,18 @@ Messaging::MaxHopsPolicy::_unchecked_narrow (
 Messaging::MaxHopsPolicy_ptr
 Messaging::MaxHopsPolicy::_duplicate (MaxHopsPolicy_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void
 Messaging::MaxHopsPolicy::_tao_release (MaxHopsPolicy_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 ::CORBA::Boolean
@@ -1336,7 +1338,7 @@ TAO::Objref_Traits<Messaging::QueueOrderPolicy>::release (
     Messaging::QueueOrderPolicy_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 Messaging::QueueOrderPolicy_ptr
@@ -1385,18 +1387,18 @@ Messaging::QueueOrderPolicy::_unchecked_narrow (
 Messaging::QueueOrderPolicy_ptr
 Messaging::QueueOrderPolicy::_duplicate (QueueOrderPolicy_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void
 Messaging::QueueOrderPolicy::_tao_release (QueueOrderPolicy_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 ::CORBA::Boolean
@@ -1488,3 +1490,5 @@ Messaging::QueueOrderPolicy::marshal (TAO_OutputCDR &)
     (strm >> _tao_aggregate.min) &&
     (strm >> _tao_aggregate.max);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

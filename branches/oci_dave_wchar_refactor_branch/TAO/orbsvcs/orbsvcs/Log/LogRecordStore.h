@@ -23,7 +23,9 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/DsLogAdminC.h"
-#include "log_serv_export.h"
+#include "orbsvcs/Log/log_serv_export.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_LogRecordStore
@@ -87,14 +89,23 @@ class TAO_Log_Serv_Export TAO_LogRecordStore
     set_interval (const DsLogAdmin::TimeInterval& interval
 		  ACE_ENV_ARG_DECL)				= 0;
   
-  /// Gets the log full action
+  /// Get the log full action
   virtual DsLogAdmin::LogFullActionType
     get_log_full_action (ACE_ENV_SINGLE_ARG_DECL) const		= 0;
   
-  /// Sets the log full action
+  /// Set the log full action
   virtual void
     set_log_full_action(DsLogAdmin::LogFullActionType action
 			ACE_ENV_ARG_DECL)			= 0;
+
+  /// Get the list of the QoS properties supported by the log.
+  virtual DsLogAdmin::QoSList*
+    get_log_qos (ACE_ENV_SINGLE_ARG_DECL) const			= 0;
+
+  /// Set the list of the QoS properties supported by the log.
+  virtual void
+    set_log_qos (const DsLogAdmin::QoSList& qos
+		 ACE_ENV_ARG_DECL)				= 0;
 
   /// Gets the max record life
   virtual CORBA::ULong
@@ -112,6 +123,15 @@ class TAO_Log_Serv_Export TAO_LogRecordStore
   /// Set the max size of log data. size == 0, => infinite.
   virtual void
     set_max_size (CORBA::ULongLong size
+		  ACE_ENV_ARG_DECL)				= 0;
+
+  /// Get the weekly scheduling parameters
+  virtual DsLogAdmin::WeekMask*
+    get_week_mask (ACE_ENV_SINGLE_ARG_DECL)			= 0;
+  
+  /// Set the weekly scheduling parameters.
+  virtual void
+    set_week_mask (const DsLogAdmin::WeekMask& masks
 		  ACE_ENV_ARG_DECL)				= 0;
 
   
@@ -209,7 +229,9 @@ class TAO_Log_Serv_Export TAO_LogRecordStore
   virtual CORBA::ULong
     remove_old_records (ACE_ENV_SINGLE_ARG_DECL)		= 0;
 
-
+  /// Read-Write Lock
+  virtual ACE_SYNCH_RW_MUTEX& lock()				= 0;
+    
 protected:
   /// Constructor.
   TAO_LogRecordStore (void);
@@ -217,6 +239,8 @@ protected:
   
 private:
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /*TAO_LOG_RECORD_STORE_H*/

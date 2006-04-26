@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -13,23 +13,25 @@
 
 #ifndef ACE_QTREACTOR_H
 #define ACE_QTREACTOR_H
+
 #include /**/ "ace/pre.h"
 
-
-#include "ace/Select_Reactor.h"
 #include "ace/ACE_QtReactor_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Select_Reactor.h"
 #include "ace/Map_Manager.h"
 
-// Qttoolkit specific includes.
+// QT toolkit specific includes.
 #include /**/ <qapplication.h>
 #include /**/ <qobject.h>
 #include /**/ <qsocketnotifier.h>
 #include /**/ <qtimer.h>
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_QtReactor
@@ -79,7 +81,9 @@
  * it is not clear if the leak is introduced by  QtReactor, or rather incorrect
  * memory management in QtReactor_Test.
  */
-class ACE_QtReactor_Export ACE_QtReactor : public QObject, public ACE_Select_Reactor
+class ACE_QtReactor_Export ACE_QtReactor
+  : public QObject,
+    public ACE_Select_Reactor
 {
 
     Q_OBJECT
@@ -211,6 +215,8 @@ private slots:
     /// Dispach a timeout event
     void timeout_event (void);
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* ACE_QTREACTOR_H */

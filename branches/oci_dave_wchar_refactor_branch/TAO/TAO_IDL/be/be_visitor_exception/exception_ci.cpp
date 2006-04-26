@@ -54,6 +54,6 @@ int be_visitor_exception_ci::visit_exception (be_exception *node)
                         -1);
     }
 
-  node->cli_inline_gen (I_TRUE);
+  node->cli_inline_gen (true);
   return 0;
 }

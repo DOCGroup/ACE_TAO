@@ -586,7 +586,7 @@ client (void *arg)
 
   command = "read";
   command_len = ACE_OS::strlen (command);
-  int bytes_read = 0;
+  ssize_t bytes_read = 0;
 
   if (connector.connect (stream, server_addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,

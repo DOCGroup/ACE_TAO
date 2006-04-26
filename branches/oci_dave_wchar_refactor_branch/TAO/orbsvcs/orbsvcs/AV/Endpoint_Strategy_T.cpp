@@ -1,18 +1,21 @@
 // $Id$
 
-#ifndef TAO_AV_ENDPOINT_STRATEGY_T_C
-#define TAO_AV_ENDPOINT_STRATEGY_T_C
+#ifndef TAO_AV_ENDPOINT_STRATEGY_T_CPP
+#define TAO_AV_ENDPOINT_STRATEGY_T_CPP
 
-#include "Endpoint_Strategy_T.h"
+#include "orbsvcs/AV/Endpoint_Strategy_T.h"
 
 #include "tao/debug.h"
 
 #include "ace/Process_Semaphore.h"
+#include "ace/OS_NS_unistd.h"
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // ----------------------------------------------------------------------
 // TAO_AV_Endpoint_Reactive_Strategy
 // ----------------------------------------------------------------------
-
 
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_VDev, T_MediaCtrl>::TAO_AV_Endpoint_Reactive_Strategy (void)
@@ -829,4 +832,6 @@ TAO_AV_Child_Process_B<T_StreamEndpoint, T_VDev, T_MediaCtrl>::~TAO_AV_Child_Pro
 {
 }
 
-#endif /* TAO_AV_ENDPOINT_STRATEGY_T_C */
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* TAO_AV_ENDPOINT_STRATEGY_T_CPP */

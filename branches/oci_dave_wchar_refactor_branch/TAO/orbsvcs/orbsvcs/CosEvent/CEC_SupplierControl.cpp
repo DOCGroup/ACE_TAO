@@ -1,8 +1,10 @@
 // $Id$
 
-#include "CEC_SupplierControl.h"
+#include "orbsvcs/CosEvent/CEC_SupplierControl.h"
 
 ACE_RCSID(CosEvent, CEC_SupplierControl, "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_CEC_SupplierControl::TAO_CEC_SupplierControl (void)
 {
@@ -62,3 +64,4 @@ TAO_CEC_SupplierControl::successful_transmission (PortableServer::ServantBase*)
 {
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

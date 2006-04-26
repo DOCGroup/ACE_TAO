@@ -1,3 +1,5 @@
+// -*- C++ -*-
+
 // $Id$
 
 #ifndef ACE_CONFIG_SCHEDULER_H
@@ -14,13 +16,15 @@
 #include "orbsvcs/RtecSchedulerS.h"
 #include "orbsvcs/Event_Service_Constants.h"
 
-#include "sched_export.h"
+#include "orbsvcs/Sched/sched_export.h"
 
 #if defined (TAO_USES_STRATEGY_SCHEDULER)
 #include "orbsvcs/Sched/Strategy_Scheduler.h"
 #else
 #include "orbsvcs/Sched/Scheduler_Generic.h"
 #endif /* defined (TAO_USES_STRATEGY_SCHEDULER) */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_RTSched_Export ACE_Config_Scheduler
 : public POA_RtecScheduler::Scheduler
@@ -307,15 +311,8 @@ private:
 
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #include /**/ "ace/post.h"
 
 #endif /* ACE_CONFIG_SCHEDULER_H */
-
-
-
-
-
-
-
-
-

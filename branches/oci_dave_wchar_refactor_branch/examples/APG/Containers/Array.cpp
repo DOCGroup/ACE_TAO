@@ -39,12 +39,3 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
 }
 // Listing 1
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Array <DataElement*>;
-template class ACE_Array_Base<DataElement*>;
-template class ACE_Array_Iterator<DataElement*>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Array <DataElement*>
-#pragma instantiate ACE_Array_Base<DataElement*>
-#pragma instantiate ACE_Array_Iterator<DataElement*>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION*/

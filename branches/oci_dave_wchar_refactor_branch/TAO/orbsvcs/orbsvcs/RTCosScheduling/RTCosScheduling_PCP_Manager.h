@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -37,6 +37,7 @@
 #endif /* __BORLANDC__ */
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO {
 
@@ -294,11 +295,12 @@ public:
 
 };
 
-
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "RTCosScheduling_PCP_Manager.i"
+#include "orbsvcs/RTCosScheduling/RTCosScheduling_PCP_Manager.i"
 #endif /* __ACE_INLINE__ */
 
 

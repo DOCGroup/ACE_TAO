@@ -4,10 +4,13 @@
  */
 //@@ TAO_ENDPOINT_SPL_COPY_HOOK_START
 
-#include "IIOP_Endpoint.h"
-#include "IOP_IORC.h"
-#include "debug.h"
-#include "ORB_Core.h"
+#include "tao/IIOP_Endpoint.h"
+
+#if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
+
+#include "tao/IOP_IORC.h"
+#include "tao/debug.h"
+#include "tao/ORB_Core.h"
 
 #include "ace/Log_Msg.h"
 #include "ace/Guard_T.h"
@@ -31,6 +34,8 @@ ACE_RCSID (tao,
 #include "ace/Sock_Connect.h"
 
 //@@ TAO_ENDPOINT_SPL_COPY_HOOK_END
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 //@@ TAO_ENDPOINT_SPL_COPY_HOOK_START
 TAO_IIOP_Endpoint::TAO_IIOP_Endpoint (const ACE_INET_Addr &addr,
@@ -512,3 +517,7 @@ TAO_IIOP_Endpoint::preferred_network (void) const
 }
 
 //@@ TAO_ENDPOINT_SPL_COPY_HOOK_END
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* TAO_HAS_IIOP && TAO_HAS_IIOP != 0 */

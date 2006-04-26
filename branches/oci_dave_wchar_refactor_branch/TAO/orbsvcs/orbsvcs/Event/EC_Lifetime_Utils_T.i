@@ -1,4 +1,8 @@
+// -*- C++ -*-
+//
 // $Id$
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class T>
 ACE_INLINE
@@ -109,10 +113,14 @@ TAO_EC_Shutdown_Command<T>::execute (ACE_ENV_SINGLE_ARG_DECL)
 //***************************************************************************
 
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 // Life would be much easier if _add_ref() and _remove_ref()
 // had throw specs of "throw ()"
 
 #include <algorithm>
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class T>
 ACE_INLINE TAO_EC_Servant_Var<T>::
@@ -328,3 +336,5 @@ operator!=(TAO_EC_Servant_Var<X> const & x,
 {
   return x.in() != y.in();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

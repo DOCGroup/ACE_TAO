@@ -17,6 +17,8 @@
 
 ACE_RCSID(ace, ATM_Addr, "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_ALLOC_HOOK_DEFINE(ACE_ATM_Addr)
 
 #if defined (ACE_HAS_FORE_ATM_XTI) || defined (ACE_HAS_FORE_ATM_WS2)
@@ -321,7 +323,7 @@ ACE_ATM_Addr::string_to_addr (const ACE_TCHAR sap[])
         == SOCKET_ERROR) {
      ACE_OS::printf ("Error: WSALookupServiceBeginW failed! %d\n",
                      ::WSAGetLastError ());
-	   return -1;
+           return -1;
    }
 
    dwValue = sizeof (WSAQUERYSETW);
@@ -331,7 +333,7 @@ ACE_ATM_Addr::string_to_addr (const ACE_TCHAR sap[])
      if (WSAGetLastError () != WSA_E_NO_MORE) {
        ACE_OS::printf ("Error: WSALookupServiceNextW failed! %d\n",
                        ::WSAGetLastError ());
-	     return -1;
+             return -1;
      }
    }
 
@@ -398,11 +400,11 @@ ACE_ATM_Addr::addr_to_string (ACE_TCHAR addr[],
   int i;
 
   if (addrlen < ATM_ADDR_SIZE + 1)
-	  return -1;
+          return -1;
 
   for (i = 0; i < ATM_ADDR_SIZE; i++) {
     buffer[ i * 3 ] = '\0';
-	  ACE_OS::sprintf (buffer, ACE_LIB_TEXT ("%s%02x."),
+          ACE_OS::sprintf (buffer, ACE_LIB_TEXT ("%s%02x."),
                      buffer,
                      atm_addr_.satm_number.Addr[ i ]);
   }
@@ -514,5 +516,7 @@ ACE_ATM_Addr::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_ATM */

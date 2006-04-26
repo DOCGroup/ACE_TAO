@@ -1,11 +1,13 @@
-#include "RequestProcessingPolicy.h"
-#include "PortableServer.h"
+#include "tao/PortableServer/RequestProcessingPolicy.h"
+#include "tao/PortableServer/PortableServer.h"
 
 ACE_RCSID (PortableServer,
            RequestProcessingPolicy,
            "$Id$")
 
 #if (TAO_HAS_MINIMUM_POA == 0)
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -65,5 +67,7 @@ namespace TAO
 
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */

@@ -13,10 +13,16 @@
 
 ACE_RCSID(ace, QoS_Session_Impl, "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_ALLOC_HOOK_DEFINE(ACE_QoS_Session_Impl)
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_HAS_RAPI)
 #include "rapi_err.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int ACE_RAPI_Session::rsvp_error = 0;
 
@@ -24,30 +30,22 @@ int ACE_RAPI_Session::rsvp_error = 0;
 // function translates the RAPI QoS parameters into the more generic
 // ACE_QoS parameters for the underlying RAPI session.
 int
-rsvp_callback (rapi_sid_t sid,
+rsvp_callback (rapi_sid_t /* sid */,
                rapi_eventinfo_t eventype,
-               int style_id,
+               int /* style_id */,
                int errcode,
                int errvalue,
                sockaddr * errnode,
-               u_char errflags,
-               int filter_spec_no,
-               rapi_filter_t *filter_spec_list,
+               u_char /* errflags */,
+               int /* filter_spec_no */,
+               rapi_filter_t * /* filter_spec_list */,
                int flow_spec_no,
                rapi_flowspec_t *flow_spec_list,
-               int ad_spec_no,
-               rapi_adspec_t *ad_spec_list,
+               int /* ad_spec_no */,
+               rapi_adspec_t * /* ad_spec_list */,
                void *args
                )
 {
-  ACE_UNUSED_ARG (sid);
-  ACE_UNUSED_ARG (style_id);
-  ACE_UNUSED_ARG (filter_spec_no);
-  ACE_UNUSED_ARG (filter_spec_list);
-  ACE_UNUSED_ARG (ad_spec_no);
-  ACE_UNUSED_ARG (ad_spec_list);
-  ACE_UNUSED_ARG (errflags);
-
   if (args == 0)
     ACE_DEBUG ((LM_DEBUG,
                 "Argument in the call back function is null\n\n"));
@@ -56,7 +54,7 @@ rsvp_callback (rapi_sid_t sid,
 
   qos_flowspecx_t *csxp = 0;
   
-  if(!flow_spec_list)
+  if (!flow_spec_list)
     {
       ACE_DEBUG ((LM_DEBUG,
 		  "(%N|%l) Null flow_spec_list\n"));
@@ -313,12 +311,10 @@ ACE_RAPI_Session::rsvp_event_type (ACE_QoS_Session::RSVP_Event_Type event_type)
 }
 
 int
-ACE_RAPI_Session::qos (ACE_SOCK *socket,
-                       ACE_QoS_Manager *qos_manager,
+ACE_RAPI_Session::qos (ACE_SOCK * /* socket */,
+                       ACE_QoS_Manager * /* qos_manager */,
                        const ACE_QoS &ace_qos)
 {
-  ACE_UNUSED_ARG (socket);
-  ACE_UNUSED_ARG (qos_manager);
 
   // If sender : call sending_qos ()
   // If receiver : call receiving_qos ()
@@ -631,7 +627,11 @@ ACE_RAPI_Session::init_flowspec_simplified(const ACE_Flow_Spec &flow_spec)
   return flowsp;
 }
 
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 #endif /* ACE_HAS_RAPI */
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // This is a GQoS session ID generator.
 int ACE_GQoS_Session::GQoS_session_id = 0;
@@ -720,3 +720,5 @@ ACE_GQoS_Session::rsvp_event_type (ACE_QoS_Session::RSVP_Event_Type event_type)
 {
   this->rsvp_event_type_ = event_type;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

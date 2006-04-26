@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 /**
  *  @file   ESF_Immediate_Changes.h
  *
@@ -12,11 +12,13 @@
 #ifndef TAO_ESF_IMMEDIATE_CHANGES_H
 #define TAO_ESF_IMMEDIATE_CHANGES_H
 
-#include "ESF_Proxy_Collection.h"
+#include "orbsvcs/ESF/ESF_Proxy_Collection.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_ESF_Immediate_Changes
@@ -50,12 +52,14 @@ private:
 
 // ****************************************************************
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "ESF_Immediate_Changes.i"
+#include "orbsvcs/ESF/ESF_Immediate_Changes.i"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ESF_Immediate_Changes.cpp"
+#include "orbsvcs/ESF/ESF_Immediate_Changes.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

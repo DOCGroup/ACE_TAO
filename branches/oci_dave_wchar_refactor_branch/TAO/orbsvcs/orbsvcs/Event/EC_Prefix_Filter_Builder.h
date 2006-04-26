@@ -16,11 +16,14 @@
 #define TAO_EC_PREFIX_FILTER_BUILDER_H
 #include /**/ "ace/pre.h"
 
-#include "EC_Filter_Builder.h"
+#include "orbsvcs/Event/EC_Filter_Builder.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_EC_Filter;
 class TAO_EC_Event_Channel_Base;
@@ -59,8 +62,10 @@ private:
   TAO_EC_Event_Channel_Base* event_channel_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "EC_Prefix_Filter_Builder.i"
+#include "orbsvcs/Event/EC_Prefix_Filter_Builder.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

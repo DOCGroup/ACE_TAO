@@ -41,6 +41,7 @@
 #include "be_extern.h"
 #include "utl_identifier.h"
 #include "idl_defines.h"
+#include "ace/Log_Msg.h"
 
 #include <string>
 
@@ -69,6 +70,8 @@ be_visitor_arg_traits::visit_root (be_root *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
+  *os << be_global->core_versioning_begin () << be_nl;
+
   *os << be_nl << be_nl
       << "// Arg traits specializations." << be_nl
       << "namespace TAO" << be_nl
@@ -84,6 +87,8 @@ be_visitor_arg_traits::visit_root (be_root *node)
 
   *os << be_uidt_nl
       << "}" << be_nl;
+
+  *os << be_global->core_versioning_end () << be_nl;
 
   return 0;
 }
@@ -158,7 +163,7 @@ be_visitor_arg_traits::visit_interface (be_interface *node)
                         -1);
     }
 
-  this->generated (node, I_TRUE);
+  this->generated (node, true);
   return 0;
 }
 
@@ -183,7 +188,7 @@ be_visitor_arg_traits::visit_interface_fwd (be_interface_fwd *node)
                         -1);
     }
 
-  this->generated (node, I_TRUE);
+  this->generated (node, true);
   return 0;
 }
 
@@ -233,7 +238,7 @@ be_visitor_arg_traits::visit_valuebox (be_valuebox *node)
       os.gen_endif ();
     }
 
-  this->generated (node, I_TRUE);
+  this->generated (node, true);
   return 0;
 }
 
@@ -291,7 +296,7 @@ be_visitor_arg_traits::visit_valuetype (be_valuetype *node)
                         -1);
     }
 
-  this->generated (node, I_TRUE);
+  this->generated (node, true);
   return 0;
 }
 
@@ -318,7 +323,7 @@ be_visitor_arg_traits::visit_valuetype_fwd (be_valuetype_fwd *node)
                         -1);
     }
 
-  this->generated (node, I_TRUE);
+  this->generated (node, true);
   return 0;
 }
 
@@ -364,11 +369,11 @@ be_visitor_arg_traits::visit_operation (be_operation *node)
           *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
               << "// " << __FILE__ << ":" << __LINE__;
 
-          idl_bool wide = (str->width () != 1);
+          bool wide = (str->width () != 1);
 
           *os << be_nl << be_nl;
 
-          idl_bool const skel =
+          bool const skel =
             (this->ctx_->state () == TAO_CodeGen::TAO_ROOT_SS);
 
           // Avoid generating a duplicate structure in the skeleton
@@ -415,7 +420,7 @@ be_visitor_arg_traits::visit_operation (be_operation *node)
                         -1);
     }
 
-  this->generated (node, I_TRUE);
+  this->generated (node, true);
   return 0;
 }
 
@@ -446,7 +451,7 @@ be_visitor_arg_traits::visit_attribute (be_attribute *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
-  idl_bool wide = (st->width () != 1);
+  bool wide = (st->width () != 1);
 
   // It is legal IDL to declare a bounded (w)string as an operation
   // parameter type. There could be any number of identical
@@ -457,7 +462,7 @@ be_visitor_arg_traits::visit_attribute (be_attribute *node)
 
   *os << be_nl;
 
-  idl_bool const skel =
+  bool const skel =
     (this->ctx_->state () == TAO_CodeGen::TAO_ROOT_SS);
 
   // Avoid generating a duplicate structure in the skeleton when
@@ -491,7 +496,7 @@ be_visitor_arg_traits::visit_attribute (be_attribute *node)
       << "{" << be_nl
       << "};";
 
-  this->generated (node, I_TRUE);
+  this->generated (node, true);
   return 0;
 }
 
@@ -527,7 +532,7 @@ be_visitor_arg_traits::visit_argument (be_argument *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
-  idl_bool wide = (st->width () != 1);
+  bool wide = (st->width () != 1);
 
   // It is legal IDL to declare a bounded (w)string as an operation
   // parameter type. There could be any number of identical
@@ -537,7 +542,7 @@ be_visitor_arg_traits::visit_argument (be_argument *node)
   // parameter for Arg_Traits<>.
   *os << be_nl << be_nl;
 
-  idl_bool const skel =
+  bool const skel =
     (this->ctx_->state () == TAO_CodeGen::TAO_ROOT_SS);
 
   // Avoid generating a duplicate structure in the skeleton when
@@ -571,7 +576,7 @@ be_visitor_arg_traits::visit_argument (be_argument *node)
       << "{" << be_nl
       << "};";
 
-  this->generated (node, I_TRUE);
+  this->generated (node, true);
   return 0;
 }
 
@@ -613,7 +618,7 @@ be_visitor_arg_traits::visit_sequence (be_sequence *node)
 
   os->gen_endif ();
 
-  this->generated (node, I_TRUE);
+  this->generated (node, true);
   return 0;
 }
 
@@ -637,7 +642,7 @@ be_visitor_arg_traits::visit_string (be_string *node)
       return 0;
     }
 
-  idl_bool wide = (node->width () != 1);
+  bool wide = (node->width () != 1);
 
   TAO_OutStream *os = this->ctx_->stream ();
 
@@ -680,7 +685,7 @@ be_visitor_arg_traits::visit_string (be_string *node)
       delete [] bound_string;
     }
 
-  idl_bool const skel =
+  bool const skel =
     (this->ctx_->state () == TAO_CodeGen::TAO_ROOT_SS);
 
   // Avoid generating a duplicate structure in the skeleton when
@@ -739,7 +744,7 @@ be_visitor_arg_traits::visit_string (be_string *node)
 
   os->gen_endif ();
 
-  this->generated (node, I_TRUE);
+  this->generated (node, true);
   return 0;
 }
 
@@ -828,7 +833,7 @@ be_visitor_arg_traits::visit_array (be_array *node)
 
   os->gen_endif ();
 
-  this->generated (node, I_TRUE);
+  this->generated (node, true);
   return 0;
 }
 
@@ -868,7 +873,7 @@ be_visitor_arg_traits::visit_enum (be_enum *node)
 
   os->gen_endif ();
 
-  this->generated (node, I_TRUE);
+  this->generated (node, true);
   return 0;
 }
 
@@ -936,7 +941,7 @@ be_visitor_arg_traits::visit_structure (be_structure *node)
      will not cause infinite recursion in this visitor.
   */
 
-  this->generated (node, I_TRUE);
+  this->generated (node, true);
 
   if (this->visit_scope (node) != 0)
     {
@@ -969,7 +974,7 @@ be_visitor_arg_traits::visit_field (be_field *node)
   // field *type* may not have been reached yet) and return.
   if (bt->base_node_type () == AST_Decl::NT_valuetype)
     {
-      node->cli_traits_gen (I_TRUE);
+      node->cli_traits_gen (true);
       return 0;
     }
 
@@ -982,8 +987,8 @@ be_visitor_arg_traits::visit_field (be_field *node)
                         -1);
     }
 
-  this->generated (node, I_TRUE);
-  this->generated (bt, I_TRUE);
+  this->generated (node, true);
+  this->generated (bt, true);
   return 0;
 }
 
@@ -1053,7 +1058,7 @@ be_visitor_arg_traits::visit_union (be_union *node)
      will not cause infinite recursion in this visitor.
   */
 
-  this->generated (node, I_TRUE);
+  this->generated (node, true);
 
   int status = this->visit_scope (node);
 
@@ -1091,7 +1096,7 @@ be_visitor_arg_traits::visit_union_branch (be_union_branch *node)
                         -1);
     }
 
-  this->generated (node, I_TRUE);
+  this->generated (node, true);
   return 0;
 }
 
@@ -1113,11 +1118,11 @@ be_visitor_arg_traits::visit_typedef (be_typedef *node)
     }
 
   this->ctx_->alias (0);
-  this->generated (node, I_TRUE);
+  this->generated (node, true);
   return 0;
 }
 
-idl_bool
+bool
 be_visitor_arg_traits::generated (be_decl *node) const
 {
   if (ACE_OS::strcmp (this->S_, "") == 0)
@@ -1138,24 +1143,24 @@ be_visitor_arg_traits::generated (be_decl *node) const
 
 void
 be_visitor_arg_traits::generated (be_decl *node,
-                                  idl_bool )
+                                  bool )
 {
   if (ACE_OS::strcmp (this->S_, "") == 0)
     {
       switch (this->ctx_->state ())
         {
           case TAO_CodeGen::TAO_ROOT_CS:
-            node->cli_arg_traits_gen (I_TRUE);
+            node->cli_arg_traits_gen (true);
             return;
           case TAO_CodeGen::TAO_ROOT_SS:
-            node->srv_arg_traits_gen (I_TRUE);
+            node->srv_arg_traits_gen (true);
             return;
           default:
             return;
         }
     }
 
-  node->srv_sarg_traits_gen (I_TRUE);
+  node->srv_sarg_traits_gen (true);
 }
 
 int

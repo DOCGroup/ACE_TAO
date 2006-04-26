@@ -44,9 +44,9 @@
 #ifndef TAO_CORBA_POLICY_PIDL
 #define TAO_CORBA_POLICY_PIDL
 
-#include <UShortSeq.pidl>
-#include <Current.pidl>
-#include <Policy_Forward.pidl>
+#include "tao/UShortSeq.pidl"
+#include "tao/Current.pidl"
+#include "tao/Policy_Forward.pidl"
 
 #pragma prefix "omg.org"
 

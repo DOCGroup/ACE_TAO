@@ -4,6 +4,8 @@
 
 #include "ace/OS_NS_string.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 template <class T> ACE_INLINE T *
 ACE_Cached_Mem_Pool_Node<T>::addr (void)
 {
@@ -59,7 +61,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::release (int close)
   ACE_GUARD_RETURN (ACE_LOCK, ace_mon, *this->lock_, -1);
   if (this->cb_ptr_ != 0)
     {
-      int retv = --this->cb_ptr_->ref_counter_;
+      int const retv = --this->cb_ptr_->ref_counter_;
 
 #if 0
       ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("(%P) ACE_Malloc_T::release ->%d\n"),
@@ -167,7 +169,6 @@ ACE_Malloc_FIFO_Iterator<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Malloc_FIFO_Iterator (AC
 }
 
 
-
 #if 0
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> ACE_INLINE void
 ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::init_malloc_header_ptr (void* ptr)
@@ -178,4 +179,6 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::init_malloc_header_ptr (void* pt
   ACE_UNUSED_ARG (ptr);
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
 }
-#endif
+#endif  /* 0 */
+
+ACE_END_VERSIONED_NAMESPACE_DECL

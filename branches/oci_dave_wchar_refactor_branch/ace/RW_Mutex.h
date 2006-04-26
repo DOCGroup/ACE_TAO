@@ -28,6 +28,8 @@
 
 #include "ace/OS_NS_Thread.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_RW_Mutex
  *
@@ -125,6 +127,8 @@ private:
   void operator= (const ACE_RW_Mutex &);
   ACE_RW_Mutex (const ACE_RW_Mutex &);
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/RW_Mutex.inl"

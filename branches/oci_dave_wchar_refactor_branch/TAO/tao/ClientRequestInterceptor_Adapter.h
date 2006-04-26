@@ -20,7 +20,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "TAO_Export.h"
+#include "tao/TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -30,6 +30,8 @@
 #include "tao/SystemException.h"
 #include "tao/Invocation_Utils.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_ClientRequestInfo;
 
 namespace PortableInterceptor
@@ -38,6 +40,11 @@ namespace PortableInterceptor
   typedef ClientRequestInterceptor *ClientRequestInterceptor_ptr;
 
   typedef CORBA::Short ReplyStatus;
+}
+
+namespace CORBA
+{
+  class PolicyList;
 }
 
 namespace TAO
@@ -93,6 +100,12 @@ namespace TAO
       PortableInterceptor::ClientRequestInterceptor_ptr interceptor
       ACE_ENV_ARG_DECL) = 0;
 
+    /// Register an interceptor with policies.
+    virtual void add_interceptor (
+      PortableInterceptor::ClientRequestInterceptor_ptr interceptor,
+      const CORBA::PolicyList& policies
+      ACE_ENV_ARG_DECL) = 0;
+
     virtual void destroy_interceptors (ACE_ENV_SINGLE_ARG_DECL) = 0;
 
     /// Convert TAO Invocation status to a PI status
@@ -101,6 +114,9 @@ namespace TAO
   };
 
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #include /**/ "ace/post.h"
 
 #endif /* TAO_CLIENT_REQUEST_INTERCEPTOR_ADAPTER_H */

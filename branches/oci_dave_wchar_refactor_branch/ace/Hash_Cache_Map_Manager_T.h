@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -13,6 +13,7 @@
 
 #ifndef HASH_CACHE_MAP_MANAGER_T_H
 #define HASH_CACHE_MAP_MANAGER_T_H
+
 #include /**/ "ace/pre.h"
 
 #include "ace/Hash_Map_Manager_T.h"
@@ -23,6 +24,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Null_Mutex.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward declaration.
 class ACE_Allocator;
@@ -191,6 +194,8 @@ protected:
   typedef ACE_CACHE_MAP_MANAGER ACE_HCMM_BASE;
 };
 
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 
 #if defined (__ACE_INLINE__)
 #include "ace/Hash_Cache_Map_Manager_T.inl"
@@ -205,4 +210,5 @@ protected:
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
+
 #endif /* HASH_CACHE_MAP_MANAGER_T_H */

@@ -2,6 +2,7 @@
 //
 // $Id$
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE ACE_TCHAR**
 ACE_Argv_Type_Converter::get_TCHAR_argv (void)
@@ -43,3 +44,5 @@ ACE_Argv_Type_Converter::get_argc (void)
 {
   return this->saved_argc_;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

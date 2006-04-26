@@ -2,13 +2,15 @@
 
 //$Id$
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_INLINE CORBA::ULong
 TAO_GIOP_Message_State::message_size (void) const
 {
   CORBA::ULong len =
     this->message_size_ + TAO_GIOP_MESSAGE_HEADER_LEN;
 
-  return len;
+  return len; 
 }
 
 ACE_INLINE CORBA::ULong
@@ -29,7 +31,6 @@ TAO_GIOP_Message_State::reset (void)
   this->message_type_ = 0;
   this->message_size_ = 0;
   this->more_fragments_ = 0;
-  this->request_id_ = 0;
   this->missing_data_ = 0;
 }
 
@@ -52,3 +53,5 @@ TAO_GIOP_Message_State::header_received (void) const
 }
 
 #endif
+
+TAO_END_VERSIONED_NAMESPACE_DECL

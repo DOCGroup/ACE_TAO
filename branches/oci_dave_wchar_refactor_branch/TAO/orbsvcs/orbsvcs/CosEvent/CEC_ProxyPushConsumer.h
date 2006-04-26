@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file   CEC_ProxyPushConsumer.h
@@ -16,13 +17,15 @@
 #include /**/ "ace/pre.h"
 
 #include "orbsvcs/CosEventChannelAdminS.h"
-#include "event_serv_export.h"
+#include "orbsvcs/CosEvent/event_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/ESF/ESF_Worker.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_CEC_EventChannel;
 class TAO_CEC_Dispatching;
@@ -41,7 +44,7 @@ class TAO_CEC_ProxyPushSupplier;
  * The object commits suicide when disconnect_push_consumer() is
  * called.
  */
-class TAO_Event_Serv_Export TAO_CEC_ProxyPushConsumer 
+class TAO_Event_Serv_Export TAO_CEC_ProxyPushConsumer
   : public POA_CosEventChannelAdmin::ProxyPushConsumer
 {
 public:
@@ -64,7 +67,7 @@ public:
   virtual void deactivate (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  /// Return 0 if no supplier is connected...
+  /// Return false if no supplier is connected...
   CORBA::Boolean is_connected (void) const;
 
   /// Return the consumer object reference. It returns nil() if it has
@@ -131,9 +134,9 @@ private:
   /// The supplier....
   CosEventComm::PushSupplier_var supplier_;
 
-  /// If the flag is not zero then we are connected, notice that the
+  /// If the flag is true then we are connected, notice that the
   /// supplier can be nil.
-  int connected_;
+  bool connected_;
 
   /// Store the default POA.
   PortableServer::POA_var default_POA_;
@@ -163,8 +166,8 @@ public:
   /// Destructor
   ~TAO_CEC_ProxyPushConsumer_Guard (void);
 
-  /// Returns 1 if the reference count successfully acquired
-  int locked (void) const;
+  /// Returns true if the reference count successfully acquired
+  bool locked (void) const;
 
 private:
   /// The lock used to protect the reference count
@@ -179,13 +182,15 @@ private:
   /// The proxy whose lifetime is controlled by the reference count
   TAO_CEC_ProxyPushConsumer *proxy_;
 
-  /// This flag is set to 1 if the reference count was successfully
+  /// This flag is set to true if the reference count was successfully
   /// acquired.
-  int locked_;
+  bool locked_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "CEC_ProxyPushConsumer.i"
+#include "orbsvcs/CosEvent/CEC_ProxyPushConsumer.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

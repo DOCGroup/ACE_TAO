@@ -1,5 +1,5 @@
-#include "LB_ServerRequestInterceptor.h"
-#include "LB_LoadAlert.h"
+#include "orbsvcs/LoadBalancing/LB_ServerRequestInterceptor.h"
+#include "orbsvcs/LoadBalancing/LB_LoadAlert.h"
 
 #include "tao/debug.h"
 
@@ -10,6 +10,7 @@ ACE_RCSID (LoadBalancing,
            LB_ServerRequestInterceptor,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_LB_ServerRequestInterceptor::TAO_LB_ServerRequestInterceptor (
   TAO_LB_LoadAlert & load_alert)
@@ -177,3 +178,5 @@ TAO_LB_ServerRequestInterceptor::send_other (
                     ACE_TEXT ("LOCATION FORWARDED\n")));
     }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

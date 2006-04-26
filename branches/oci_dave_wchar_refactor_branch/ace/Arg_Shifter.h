@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -20,6 +20,8 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_Arg_Shifter
@@ -202,7 +204,12 @@ private:
 
 typedef ACE_TArg_Shifter< ACE_TCHAR > ACE_Arg_Shifter;
 
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+#if defined (__ACE_INLINE__)
 #include "ace/Arg_Shifter.inl"
+#endif /* __ACE_INLINE__ */
+
 
 #include /**/ "ace/post.h"
 

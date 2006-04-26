@@ -1,14 +1,16 @@
 // $Id$
 
-#include "ServantRetentionStrategyRetainFactoryImpl.h"
-#include "ServantRetentionStrategy.h"
-#include "ServantRetentionStrategyRetain.h"
+#include "tao/PortableServer/ServantRetentionStrategyRetainFactoryImpl.h"
+#include "tao/PortableServer/ServantRetentionStrategy.h"
+#include "tao/PortableServer/ServantRetentionStrategyRetain.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/Log_Msg.h"
 
 ACE_RCSID (PortableServer,
            ServantRetentionStrategyRetainFactoryImpl,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -47,17 +49,20 @@ namespace TAO
 
       delete strategy;
     }
-
-    ACE_STATIC_SVC_DEFINE (
-        ServantRetentionStrategyRetainFactoryImpl,
-        ACE_TEXT ("ServantRetentionStrategyRetainFactory"),
-        ACE_SVC_OBJ_T,
-        &ACE_SVC_NAME (ServantRetentionStrategyRetainFactoryImpl),
-        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
-        0
-      )
-
-    ACE_FACTORY_DEFINE (ACE_Local_Service, ServantRetentionStrategyRetainFactoryImpl)
   }
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+ACE_STATIC_SVC_DEFINE (
+  ServantRetentionStrategyRetainFactoryImpl,
+  ACE_TEXT ("ServantRetentionStrategyRetainFactory"),
+  ACE_SVC_OBJ_T,
+  &ACE_SVC_NAME (ServantRetentionStrategyRetainFactoryImpl),
+  ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
+  0)
+
+ACE_FACTORY_NAMESPACE_DEFINE (
+  ACE_Local_Service,
+  ServantRetentionStrategyRetainFactoryImpl,
+  TAO::Portable_Server::ServantRetentionStrategyRetainFactoryImpl)

@@ -21,7 +21,10 @@
 #include "activity_export.h"
 #include "ace/Arg_Shifter.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Barrier;
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 class Task_Stats;
 
 /**

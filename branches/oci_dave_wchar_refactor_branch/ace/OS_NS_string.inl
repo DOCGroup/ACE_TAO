@@ -7,6 +7,8 @@
 #include "ace/OS_NS_wchar.h"
 #include "ace/os_include/os_string.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_INLINE const void *
 ACE_OS::memchr (const void *s, int c, size_t len)
 {
@@ -80,7 +82,7 @@ ACE_OS::strchr (const char *s, int c)
 }
 
 ACE_INLINE const wchar_t *
-ACE_OS::strchr (const wchar_t *s, wint_t c)
+ACE_OS::strchr (const wchar_t *s, wchar_t c)
 {
 #  if defined (ACE_LACKS_WCSCHR)
   return ACE_OS::wcschr_emulation (s, c);
@@ -96,10 +98,10 @@ ACE_OS::strchr (char *s, int c)
 }
 
 ACE_INLINE wchar_t *
-ACE_OS::strchr (wchar_t *s, wint_t c)
+ACE_OS::strchr (wchar_t *s, wchar_t c)
 {
   return
-    const_cast<wchar_t *> (ACE_OS::strchr (static_cast<const wchar_t *> (s),
+    const_cast<wchar_t *> (ACE_OS::strchr (const_cast<const wchar_t *> (s),
                                            c));
 }
 
@@ -273,7 +275,7 @@ ACE_INLINE wchar_t *
 ACE_OS::strpbrk (wchar_t *s, const wchar_t *t)
 {
   return const_cast<wchar_t *> (ACE_OS::strpbrk (
-                                  static_cast<const wchar_t *> (s), t));
+                                  const_cast<const wchar_t *> (s), t));
 }
 
 ACE_INLINE const char *
@@ -287,12 +289,12 @@ ACE_OS::strrchr (const char *s, int c)
 }
 
 ACE_INLINE const wchar_t *
-ACE_OS::strrchr (const wchar_t *s, wint_t c)
+ACE_OS::strrchr (const wchar_t *s, wchar_t c)
 {
 #if defined (ACE_LACKS_WCSRCHR)
   return ACE_OS::wcsrchr_emulation (s, c);
 #else /* ! ACE_LACKS_WCSRCHR */
-  return (const wchar_t *) ::wcsrchr (s, c);
+  return const_cast <const wchar_t *> (::wcsrchr (s, c));
 #endif /* ! ACE_LACKS_WCSRCHR */
 }
 
@@ -307,10 +309,10 @@ ACE_OS::strrchr (char *s, int c)
 }
 
 ACE_INLINE wchar_t *
-ACE_OS::strrchr (wchar_t *s, wint_t c)
+ACE_OS::strrchr (wchar_t *s, wchar_t c)
 {
   return const_cast<wchar_t *> (ACE_OS::strrchr (
-                     static_cast<const wchar_t *> (s), c));
+                     const_cast<const wchar_t *> (s), c));
 }
 
 ACE_INLINE size_t
@@ -345,9 +347,9 @@ ACE_OS::strstr (const wchar_t *s, const wchar_t *t)
 #  if defined (ACE_LACKS_WCSSTR)
   return ACE_OS::wcsstr_emulation (s, t);
 #  elif defined (HPUX)
-  return (const wchar_t *) ::wcswcs (s, t);
+  return const_cast <const wchar_t *> (::wcswcs (s, t));
 #  else /* ACE_LACKS_WCSSTR */
-  return (const wchar_t *) ::wcsstr (s, t);
+  return const_cast <const wchar_t *> (::wcsstr (s, t));
 #  endif /* ACE_LACKS_WCSSTR */
 }
 
@@ -414,3 +416,6 @@ ACE_OS::strtok_r (wchar_t *s, const wchar_t *tokens, wchar_t **lasts)
 #  endif /* ACE_HAS_3_PARAM_WCSTOK */
 #endif  /* ACE_LACKS_WCSTOK */
 }
+
+
+ACE_END_VERSIONED_NAMESPACE_DECL

@@ -1,4 +1,4 @@
-#include "SSLIOP_Credentials.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Credentials.h"
 
 #include "tao/ORB_Constants.h"
 
@@ -11,9 +11,10 @@ ACE_RCSID (SSLIOP,
 
 
 #if !defined (__ACE_INLINE__)
-# include "SSLIOP_Credentials.inl"
+# include "orbsvcs/SSLIOP/SSLIOP_Credentials.inl"
 #endif /* __ACE_INLINE__ */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::SSLIOP_Credentials::SSLIOP_Credentials (::X509 *cert, ::EVP_PKEY *evp)
   : x509_ (TAO::SSLIOP::OpenSSL_traits< ::X509 >::_duplicate (cert)),
@@ -263,3 +264,4 @@ tao_TAO_SSLIOP_Credentials_upcast (void *src)
   return *tmp;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

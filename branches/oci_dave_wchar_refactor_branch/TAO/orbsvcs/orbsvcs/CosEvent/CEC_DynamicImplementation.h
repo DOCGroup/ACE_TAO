@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file   CEC_DynamicImplementation.h
@@ -13,11 +14,14 @@
 #ifndef TAO_CEC_DYNAMICIMPLEMENTATION_H
 #define TAO_CEC_DYNAMICIMPLEMENTATION_H
 
-#include "CEC_TypedProxyPushConsumer.h"
-#include "CEC_TypedEventChannel.h"
+#include "orbsvcs/CosEvent/CEC_TypedProxyPushConsumer.h"
+#include "orbsvcs/CosEvent/CEC_TypedEventChannel.h"
 #include "tao/DynamicInterface/Server_Request.h"
 #include "tao/DynamicInterface/Dynamic_Implementation.h"
 #include "tao/ORB.h"
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_CEC_DynamicImplementationServer : public TAO_DynamicImplementation
 {
@@ -71,8 +75,10 @@ private:
   CORBA::RepositoryId repository_id_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined(__ACE_INLINE__)
-#include "CEC_DynamicImplementation.i"
+#include "orbsvcs/CosEvent/CEC_DynamicImplementation.i"
 #endif /* __ACE_INLINE__ */
 
 #endif /* TAO_CEC_DYNAMICIMPLEMENTATION_H */

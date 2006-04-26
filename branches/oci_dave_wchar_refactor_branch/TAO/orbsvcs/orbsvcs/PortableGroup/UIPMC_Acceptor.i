@@ -1,5 +1,9 @@
 // -*- C++ -*-
+//
 // $Id$
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE const ACE_INET_Addr&
 TAO_UIPMC_Acceptor::address (void) const
@@ -21,3 +25,5 @@ TAO_UIPMC_Acceptor::endpoints (void)
 
   return this->addrs_;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

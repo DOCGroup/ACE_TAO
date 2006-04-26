@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file   FT_Policy_i.h
@@ -21,6 +22,9 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_FT_Request_Duration_Policy
  *
@@ -36,7 +40,7 @@
  * to keep trying to connect to server object groups under certain
  * conditions.
  */
-class TAO_FT_Export TAO_FT_Request_Duration_Policy
+class TAO_FT_Request_Duration_Policy
   : public FT::RequestDurationPolicy,
     public TAO_Local_RefCounted_Object
 {
@@ -198,12 +202,14 @@ private:
   CORBA::Boolean heartbeat_enabled_value_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
 #if defined (__ACE_INLINE__)
-#include "FT_Policy_i.inl"
+#include "orbsvcs/FaultTolerance/FT_Policy_i.inl"
 #endif /* __ACE_INLINE__ */
 
 

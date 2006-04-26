@@ -100,6 +100,10 @@ endif
 # look for the rt library in the usual places
 LIBS += $(shell test "`ls -L /usr/lib/librt.so* /lib/librt.so*`" && echo -lrt)
 
+ifeq ($(optimize),1)
+  SOFLAGS += -Wl,-O3
+endif
+
 PLATFORM_QT_CPPFLAGS ?= -I$(QTDIR)/include
 PLATFORM_QT_LIBS ?= -lqt-mt
 PLATFORM_QT_LDFLAGS ?= -L$(QTDIR)/lib

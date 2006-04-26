@@ -29,11 +29,11 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv [])
 			     ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      CORBA::Object_ptr manager_obj = orb->resolve_initial_references ("RTSchedulerManager"
+      CORBA::Object_var manager_obj = orb->resolve_initial_references ("RTSchedulerManager"
 								       ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
 
-      TAO_RTScheduler_Manager_var manager = TAO_RTScheduler_Manager::_narrow (manager_obj
+      TAO_RTScheduler_Manager_var manager = TAO_RTScheduler_Manager::_narrow (manager_obj.in ()
 									      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -41,14 +41,15 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv [])
       ACE_NEW_RETURN (scheduler,
 		      TAO_Scheduler (orb.in ()),
 		      -1);
-  
+      RTScheduling::Scheduler_var safe_scheduler = scheduler;
+
       manager->rtscheduler (scheduler);
 
-      CORBA::Object_ptr current_obj = orb->resolve_initial_references ("RTScheduler_Current"
+      CORBA::Object_var current_obj = orb->resolve_initial_references ("RTScheduler_Current"
 								       ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       
-      current = RTScheduling::Current::_narrow (current_obj
+      current = RTScheduling::Current::_narrow (current_obj.in ()
 						ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       
@@ -101,11 +102,12 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv [])
       
       //Initialize data to be passed to the Thread_Action::do method
       Data spawn_data;
-      spawn_data.data = CORBA::string_dup ("Harry Potter");
+      spawn_data.data = "Harry Potter";
       spawn_data.current = RTScheduling::Current::_duplicate (current.in ());
       
       ACE_DEBUG ((LM_DEBUG,
 		  "Spawning a new DT...\n"));
+      RTScheduling::DistributableThread_var dt =
       current->spawn (&thread_action,
 		      &spawn_data,
 		      "Chamber of Secrets",

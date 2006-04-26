@@ -1,4 +1,4 @@
-#include "SSLIOP_Util.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Util.h"
 
 
 ACE_RCSID (SSLIOP,
@@ -6,12 +6,14 @@ ACE_RCSID (SSLIOP,
            "$Id$")
 
 
-#include "SSLIOP_Connection_Handler.h"
-#include "SSLIOP_Current.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Current.h"
 
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::SSLIOP::Current_ptr
 TAO::SSLIOP::Util::current (
@@ -52,3 +54,5 @@ TAO::SSLIOP::Util::current (
 
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

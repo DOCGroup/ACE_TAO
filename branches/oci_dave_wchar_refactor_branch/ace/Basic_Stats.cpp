@@ -7,7 +7,11 @@
 #include "ace/Basic_Stats.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(ace, Basic_Stats, "$Id$")
+ACE_RCSID(ace,
+          Basic_Stats,
+          "$Id$")
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
 ACE_Basic_Stats::accumulate (const ACE_Basic_Stats &rhs)
@@ -28,7 +32,7 @@ ACE_Basic_Stats::accumulate (const ACE_Basic_Stats &rhs)
       if (this->min_ > rhs.min_)
         {
           this->min_ = rhs.min_;
-          this->min_at_ = rhs.min_at_;          
+          this->min_at_ = rhs.min_at_;
         }
       if (this->max_ < rhs.max_)
         {
@@ -96,3 +100,5 @@ ACE_Basic_Stats::dump_results (const wchar_t *msg,
 
 #endif /* ACE_NLOGGING */
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

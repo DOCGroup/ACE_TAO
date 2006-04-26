@@ -15,7 +15,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "portableserver_export.h"
+#include "tao/PortableServer/portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -24,12 +24,12 @@
 #include "tao/Object_Loader.h"
 #include "ace/Service_Config.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_PortableServer_Export TAO_POA_Current_Factory
   : public TAO_Object_Loader
 {
 public:
-  /// Constructor
-  TAO_POA_Current_Factory (void);
 
   /// Creates a PICurrent and returns it.
   virtual CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
@@ -38,6 +38,8 @@ public:
                                            ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE (TAO_POA_Current_Factory)
 ACE_FACTORY_DECLARE (TAO_PortableServer, TAO_POA_Current_Factory)

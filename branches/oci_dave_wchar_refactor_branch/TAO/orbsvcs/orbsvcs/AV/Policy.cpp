@@ -1,25 +1,25 @@
 // $Id$
 
-#include "FlowSpec_Entry.h"
+#include "orbsvcs/AV/FlowSpec_Entry.h"
 #include "tao/debug.h"
-#include "Policy.h"
+#include "orbsvcs/AV/Policy.h"
 
 #if !defined(__ACE_INLINE__)
-#include "Policy.i"
+#include "orbsvcs/AV/Policy.i"
 #endif /* __ACE_INLINE__ */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_AV_Policy::TAO_AV_Policy (CORBA::ULong type)
   :type_ (type)
 {
 }
 
-
 TAO_AV_SSRC_Policy::TAO_AV_SSRC_Policy (CORBA::ULong ssrc)
   :TAO_AV_Policy (TAO_AV_SSRC_POLICY),
    ssrc_ (ssrc)
 {
 }
-
 
 TAO_AV_Payload_Type_Policy::TAO_AV_Payload_Type_Policy (int payload_type)
   :TAO_AV_Policy (TAO_AV_PAYLOAD_TYPE_POLICY),
@@ -146,3 +146,5 @@ TAO_AV_Callback::schedule_timer (void)
 {
   return this->handler_->schedule_timer ();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

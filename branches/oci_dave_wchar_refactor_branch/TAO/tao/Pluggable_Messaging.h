@@ -26,6 +26,12 @@
 
 #include "tao/Basic_Types.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+class ACE_Time_Value;
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace CORBA
 {
   class Exception;
@@ -39,8 +45,7 @@ class TAO_Operation_Details;
 class TAO_Target_Specification;
 class TAO_OutputCDR;
 class TAO_Queued_Data;
-
-class ACE_Time_Value;
+class TAO_GIOP_Fragmentation_Strategy;
 
 // @@ The more I think I about this class, I feel that this class need
 // not be a ABC as it is now. Instead we have these options
@@ -58,7 +63,7 @@ class ACE_Time_Value;
 /**
  * @class TAO_Pluggable_Messaging
  *
- * @brief Generic definitions  Messaging class.
+ * @brief Generic definitions Messaging class.
  *
  * This interface tries to define generic methods that could be
  * different messaging protocols
@@ -102,15 +107,8 @@ public:
       TAO_OutputCDR &cdr,
       TAO_Pluggable_Reply_Params_Base &params) = 0;
 
-  /**
-   * This method reads the message on the connection. Returns 0 when
-   * there is short read on the connection. Returns 1 when the full
-   * message is read and handled. Returns -1 on errors. If @a block is
-   * 1, then reply is read in a blocking manner.
-   */
-  virtual int read_message (TAO_Transport *transport,
-                            int block = 0,
-                            ACE_Time_Value *max_wait_time = 0) = 0;
+  virtual int generate_fragment_header (TAO_OutputCDR & cdr,
+                                        CORBA::ULong request_id) = 0;
 
   /// Format the message in the @a cdr. May not be needed in
   /// general.
@@ -120,24 +118,25 @@ public:
   virtual void init (CORBA::Octet major,
                      CORBA::Octet minor) = 0;
 
-  /// Parse the incoming messages..
-  virtual int parse_incoming_messages (ACE_Message_Block &message_block) = 0;
+  /// Parse the details of the next message from the @a incoming
+  /// and initializes attributes of @a qd. Returns 0 if the message
+  /// header could not be parsed completely, returns a 1 if the message
+  /// header could be parsed completely and returns -1 on error. As the
+  /// parsed data is stored directly in @a qd, no state must be stored
+  /// in instance of implementation.
+  virtual int parse_next_message (ACE_Message_Block &incoming,
+                                  TAO_Queued_Data &qd,        /* out */
+                                  size_t &mesg_length) = 0;   /* out */
 
-  /// Calculate the amount of data that is missing in the @a incoming
-  /// message block.
-  virtual ssize_t missing_data (ACE_Message_Block &incoming) = 0;
-
-  /// Get the details of the message parsed through the @a qd.
-  virtual void get_message_data (TAO_Queued_Data *qd) = 0;
-
-  /* Extract the details of the next message from the @a incoming
-   * through @a qd. Returns 1 if there are more messages and returns a
-   * 0 if there are no more messages in @a incoming.
-  */
+  /// Extract the details of the next message from the @a incoming
+  /// through @a qd. Returns 0 if the message header could not be
+  /// parsed completely, returns a 1 if the message header could be
+  /// parsed completely and returns -1 on error.
   virtual int extract_next_message (ACE_Message_Block &incoming,
                                     TAO_Queued_Data *&qd) = 0;
 
-  /// Check whether the node @a qd needs consolidation from @a incoming
+  /// Check whether the node @a qd needs consolidation from @a incoming,
+  /// @r 0 on success, -1 on error
   virtual int consolidate_node (TAO_Queued_Data *qd,
                                 ACE_Message_Block &incoming) = 0;
 
@@ -176,7 +175,35 @@ public:
 
   /// Accessor for the output CDR stream
   virtual TAO_OutputCDR &out_stream (void) = 0;
+
+  /// Consolidate newly received fragment with previously arrived
+  /// associated fragments to achieve consolidated message.  All
+  /// fragments having been received previously are being managed
+  /// within implementation.  If reliable transport is used (like TCP)
+  /// this operation will be invoked with fragments being received
+  /// partially ordered, last fragment being received last. Otherwise
+  /// If un-reliable transport is used (like UDP) fragments may be
+  /// received dis-ordered, and must be ordered before consolidation
+  /// within implementation.  @return 0 on success and @a con_msg
+  /// points to consolidated message, 1 if there are still fragmens
+  /// outstanding, in case of error -1 is being returned. The
+  /// implementation is responsible to release @a qd.
+  virtual int consolidate_fragmented_message (TAO_Queued_Data *qd,
+                                              TAO_Queued_Data *&con_msg) = 0;
+
+  /// Discard all fragments associated to request-id encoded in
+  /// cancel_request.  Transport implementaion guarantees that this
+  /// operation will never be invoked // concurrently by multiplpe
+  /// threads nor concurrently to consolidate_fragmented_message
+  /// @return -1 on failure, 0 on success, 1 no fragment on stack
+  /// relating to CancelRequest.
+  virtual int discard_fragmented_message (const TAO_Queued_Data *cancel_request) = 0;
+
+  /// Outgoing GIOP message fragmentation strategy.
+  virtual TAO_GIOP_Fragmentation_Strategy * fragmentation_strategy (void) = 0;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ../bin/mwc.pl -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/config -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/templates -type automake -noreldefs TAO.mwc
+## ../bin/mwc.pl -type automake -noreldefs TAO.mwc
 
 ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
@@ -16,7 +16,7 @@ TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
-## Makefile.echo_client.am
+## Makefile.echo_IDL.am
 
 BUILT_SOURCES = \
   EchoC.cpp \
@@ -44,8 +44,14 @@ CLEANFILES = \
 EchoC.cpp EchoC.h EchoC.inl EchoS.cpp EchoS.h EchoS.inl EchoS_T.cpp EchoS_T.h EchoS_T.inl: Echo-stamp
 
 Echo-stamp: $(srcdir)/Echo.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/Echo.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Echo.idl
 	@touch $@
+
+
+noinst_HEADERS = \
+  Echo.idl
+
+## Makefile.echo_client.am
 
 noinst_PROGRAMS = client
 
@@ -60,15 +66,9 @@ client_CPPFLAGS = \
 client_SOURCES = \
   ../Simple_util.cpp \
   EchoC.cpp \
-  EchoS.cpp \
   Echo_Client_i.cpp \
   client.cpp \
   ../Simple_util.h \
-  EchoC.h \
-  EchoC.inl \
-  EchoS.h \
-  EchoS_T.h \
-  EchoS_T.inl \
   Echo_Client_i.h
 
 client_LDADD = \
@@ -83,35 +83,6 @@ client_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.echo_server.am
-
-BUILT_SOURCES += \
-  EchoC.cpp \
-  EchoC.h \
-  EchoC.inl \
-  EchoS.cpp \
-  EchoS.h \
-  EchoS.inl \
-  EchoS_T.cpp \
-  EchoS_T.h \
-  EchoS_T.inl
-
-CLEANFILES += \
-  Echo-stamp \
-  EchoC.cpp \
-  EchoC.h \
-  EchoC.inl \
-  EchoS.cpp \
-  EchoS.h \
-  EchoS.inl \
-  EchoS_T.cpp \
-  EchoS_T.h \
-  EchoS_T.inl
-
-EchoC.cpp EchoC.h EchoC.inl EchoS.cpp EchoS.h EchoS.inl EchoS_T.cpp EchoS_T.h EchoS_T.inl: Echo-stamp
-
-Echo-stamp: $(srcdir)/Echo.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/Echo.idl
-	@touch $@
 
 noinst_PROGRAMS += server
 
@@ -130,11 +101,6 @@ server_SOURCES = \
   Echo_i.cpp \
   server.cpp \
   ../Simple_util.h \
-  EchoC.h \
-  EchoC.inl \
-  EchoS.h \
-  EchoS_T.h \
-  EchoS_T.inl \
   Echo_i.h
 
 server_LDADD = \

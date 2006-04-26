@@ -38,7 +38,9 @@
 # define ACE_LACKS_ACE_IOSTREAM  /* MVME lacks signed and unsigned char */
 # define ACE_LACKS_FLOATING_POINT
 #else  /* ! __GNUG__ && ! ghs */
-# error unsupported compiler for ACE on Chorus
+#  ifdef __cplusplus  /* Let it slide for C compilers. */
+#   error unsupported compiler for ACE on Chorus
+#  endif  /* __cplusplus */
 #endif /* ! __GNUG__ && ! ghs */
 
 // OS-specific configuration
@@ -88,6 +90,7 @@
 #define ACE_HAS_STRDUP_EMULATION
 #define ACE_HAS_STRERROR
 #define ACE_HAS_TSS_EMULATION
+#define ACE_LACKS_ALARM
 #define ACE_LACKS_CONDATTR_PSHARED
 #define ACE_LACKS_FORK
 #define ACE_LACKS_GETHOSTENT
@@ -96,6 +99,14 @@
 #define ACE_LACKS_SETPGID
 #define ACE_LACKS_SETREGID
 #define ACE_LACKS_SETREUID
+#define ACE_LACKS_SETEGID
+#define ACE_LACKS_SETUID
+#define ACE_LACKS_SETEUID
+#define ACE_LACKS_SETGID
+#define ACE_LACKS_GETEUID
+#define ACE_LACKS_GETUID
+#define ACE_LACKS_GETEGID
+#define ACE_LACKS_GETGID
 #define ACE_LACKS_MADVISE
 #define ACE_LACKS_MALLOC_H
 #define ACE_LACKS_MEMORY_H
@@ -112,12 +123,18 @@
 #define ACE_LACKS_SIGSET
 #define ACE_LACKS_STRRECVFD
 #define ACE_LACKS_SYS_MSG_H
+#define ACE_LACKS_SYSTEM
 #define ACE_LACKS_SYSV_SHMEM
 #define ACE_LACKS_UNIX_SIGNALS
 #define ACE_LACKS_UTSNAME_T
+#define ACE_LACKS_UNAME
 #define ACE_LACKS_WRITEV
 #define ACE_LACKS_WAIT
 #define ACE_PAGE_SIZE 4096
+#define ACE_LACKS_KILL
+#define ACE_LACKS_SIGACTION
+#define ACE_LACKS_GETPROTOBYNUMBER
+#define ACE_LACKS_GETPROTOBYNAME
 
 // Chorus has syslog, but doesn't have setlogmask()
 #define ACE_LACKS_SETLOGMASK

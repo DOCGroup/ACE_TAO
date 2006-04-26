@@ -1,7 +1,10 @@
 // -*- C++ -*-
+//
 // $Id$
 
 #include "ace/OS_NS_errno.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Accessors to PWD file.
 
@@ -114,3 +117,5 @@ ACE_OS::setpwent (void)
   ::setpwent ();
 #endif /* ! ACE_LACKS_PWD_FUNCTIONS */
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

@@ -1,11 +1,11 @@
 // $Id$
 
-#include "EC_Null_Scheduling.h"
-#include "EC_QOS_Info.h"
-#include "EC_Supplier_Filter.h"
+#include "orbsvcs/Event/EC_Null_Scheduling.h"
+#include "orbsvcs/Event/EC_QOS_Info.h"
+#include "orbsvcs/Event/EC_Supplier_Filter.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "EC_Null_Scheduling.i"
+#include "orbsvcs/Event/EC_Null_Scheduling.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(Event, EC_Null_Scheduling, "$Id$")

@@ -6,7 +6,8 @@
  *
  *  $Id$
  *
- *  @authors Jeff Parsons and Carlos O'Ryan
+ *  @author Jeff Parsons
+ *  @author Carlos O'Ryan
  */
 //=============================================================================
 
@@ -20,6 +21,8 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -145,6 +148,8 @@ namespace TAO
     typedef UB_String_Tag                                    idl_tag;
   };
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "tao/UB_String_Argument_T.inl"

@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 // $Id$
 
 // ============================================================================
@@ -20,19 +21,21 @@
 #ifndef TAO_COMPONENTCONTAINER_I_H
 #define TAO_COMPONENTCONTAINER_I_H
 
-#include "Container_i.h"
-#include "ifr_service_export.h"
+#include "orbsvcs/IFRService/Container_i.h"
+#include "orbsvcs/IFRService/ifr_service_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "IFR_ComponentsS.h"
+#include "orbsvcs/IFRService/IFR_ComponentsS.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_IFRService_Export TAO_ComponentContainer_i
   : public virtual TAO_Container_i
@@ -130,6 +133,9 @@ public:
 protected:
   static const char *tmp_name_holder_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

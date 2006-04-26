@@ -9,6 +9,8 @@ ACE_RCSID (ace,
            CDR_Size,
            "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_CDR::Boolean
 ACE_SizeCDR::write_wchar (ACE_CDR::WChar x)
 {
@@ -241,3 +243,5 @@ operator<< (ACE_SizeCDR &ss, const ACE_CString &x)
   ss.write_string (x);
   return ss.good_bit ();
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

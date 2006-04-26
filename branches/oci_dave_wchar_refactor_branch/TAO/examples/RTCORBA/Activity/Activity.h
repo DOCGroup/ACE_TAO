@@ -24,7 +24,10 @@
 #include "activity_export.h"
 #include "ace/Null_Mutex.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Barrier;
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 class Job_i;
 class Periodic_Task;
 class Builder;

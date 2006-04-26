@@ -1,6 +1,10 @@
 // $Id$
 
 #include "Notify_Service.h"
+
+// Must include this file to get a static initializer
+#include "tao/Valuetype/Valuetype_Adapter_Impl.h"
+
 #include "ace/OS_main.h"
 
 #include "orbsvcs/Shutdown_Utilities.h"

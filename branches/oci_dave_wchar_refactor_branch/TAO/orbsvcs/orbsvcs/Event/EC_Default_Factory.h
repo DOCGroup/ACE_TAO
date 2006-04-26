@@ -17,17 +17,19 @@
 
 #include /**/ "ace/pre.h"
 
-#include "EC_Factory.h"
+#include "orbsvcs/Event/EC_Factory.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "EC_Defaults.h"
+#include "orbsvcs/Event/EC_Defaults.h"
 
 #include "ace/Service_Config.h"
 #include "ace/SString.h"
 #include "ace/Time_Value.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_EC_Queue_Full_Service_Object;
 
@@ -185,8 +187,10 @@ protected:
   int consumer_validate_connection_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "EC_Default_Factory.i"
+#include "orbsvcs/Event/EC_Default_Factory.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_STATIC_SVC_DECLARE (TAO_EC_Default_Factory)

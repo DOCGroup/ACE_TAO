@@ -35,11 +35,6 @@
 #include "ace/Sock_Connect.h"
 #include "ace/Default_Constants.h"
 
-// Forward declarations.
-class ACE_Time_Value;
-class ACE_Message_Block;
-class ACE_Handle_Set;
-
 #if defined (CYGWIN32)
 // Include math.h. math.h defines a macro log2 that conflicts with ACE::log2()
 // which seems to only cause a problem on cygwin.  Insuring that math.h is
@@ -59,6 +54,13 @@ class ACE_Handle_Set;
 #endif
 #define ACE_EXPORT_MACRO ACE_Export
 
+// Open versioned namespace, if enabled by the user.
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
+// Forward declarations.
+class ACE_Time_Value;
+class ACE_Message_Block;
+class ACE_Handle_Set;
 
 /**
  * @namespace ACE
@@ -98,7 +100,7 @@ namespace ACE
   /// Check if error indicates the process being out of handles (file
   /// descriptors).
   extern ACE_Export int out_of_handles (int error);
- 
+
   /// Simple wildcard matching function supporting '*' and '?'
   /// return true if string s matches pattern.
   extern ACE_Export bool wild_match(const char* s, const char* pattern, bool case_sensitive = true);
@@ -415,7 +417,7 @@ namespace ACE
   extern ACE_Export char *strnew (const char *s);
 
   /// Delete the memory allocated by @c strnew.
-  extern ACE_Export void strdelete (char *s);
+  ACE_NAMESPACE_INLINE_FUNCTION void strdelete (char *s);
 
   /// Create a fresh new copy of @a str, up to @a n chars long.  Uses
   /// @c ACE_OS::malloc to allocate the new string.
@@ -429,7 +431,7 @@ namespace ACE
 
   extern ACE_Export wchar_t *strnew (const wchar_t *s);
 
-  extern ACE_Export void strdelete (wchar_t *s);
+  ACE_NAMESPACE_INLINE_FUNCTION void strdelete (wchar_t *s);
 
   extern ACE_Export wchar_t *strndup (const wchar_t *str, size_t n);
 
@@ -492,7 +494,10 @@ namespace ACE
    * if @a avoid_zombies == 0 call @c ACE_OS::fork directly, else
    * create an orphan process that's inherited by the init process;
    * init cleans up when the orphan process terminates so we don't
-   * create zombies.
+   * create zombies.  Returns -1 on failure and either the child PID
+   * on success if @a avoid_zombies == 0 or 1 on success if @a
+   * avoid_zombies != 0 (this latter behavior is a known bug that
+   * needs to be fixed).
    */
   extern ACE_Export pid_t fork (
     const ACE_TCHAR *program_name = ACE_LIB_TEXT ("<unknown>"),
@@ -815,6 +820,9 @@ namespace ACE
                                        size_t *bytes_transferred);
 
 }
+
+// Close versioned namespace, if enabled by the user.
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/ACE.inl"

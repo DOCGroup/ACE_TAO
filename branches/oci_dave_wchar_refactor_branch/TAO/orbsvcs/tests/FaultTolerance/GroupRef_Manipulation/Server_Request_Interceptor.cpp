@@ -24,6 +24,14 @@ Server_Request_Interceptor::~Server_Request_Interceptor (void)
 }
 
 void
+Server_Request_Interceptor::reset (ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  this->request_count_ = 0;
+  this->forward_request_thrown_ = false;
+}
+
+void
 Server_Request_Interceptor::forward_references (
   CORBA::Object_ptr obj1,
   CORBA::Object_ptr obj2
@@ -37,8 +45,22 @@ Server_Request_Interceptor::forward_references (
                    EINVAL),
                  CORBA::COMPLETED_NO));
 
-  this->obj_[0] = CORBA::Object::_duplicate (obj1);
-  this->obj_[1] = CORBA::Object::_duplicate (obj2);
+  char *argv[] = {NULL};
+  int   argc = 0;
+  
+  // Fetch the ORB having been initialized in main()
+  CORBA::ORB_var orb =
+    CORBA::ORB_init (argc, argv, "Server ORB" ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  CORBA::String_var str1 = orb->object_to_string (obj1 ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  CORBA::String_var str2 = orb->object_to_string (obj2 ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  this->obj_[0] = orb->string_to_object (str1.in () ACE_ENV_ARG_PARAMETER);
+  this->obj_[1] = orb->string_to_object (str2.in () ACE_ENV_ARG_PARAMETER);
 }
 
 char *

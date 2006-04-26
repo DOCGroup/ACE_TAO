@@ -1,7 +1,10 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
 
 #include "ace/OS_NS_errno.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE_OS {
 
@@ -228,7 +231,7 @@ t_open (char *path, int oflag, struct t_info *info)
 }
 
 ACE_INLINE int
-t_optmgmt (ACE_HANDLE handle, struct t_optmgmt *req, struct t_optmgmt *ret)
+t_optmgmt (ACE_HANDLE handle, ACE_TOPTMGMT *req, ACE_TOPTMGMT *ret)
 {
 #if defined (ACE_HAS_TLI)
   ACE_OSCALL_RETURN (::t_optmgmt (handle, req, ret), int, -1);
@@ -383,3 +386,5 @@ t_unbind (ACE_HANDLE handle)
 }
 
 }  /* end namespace ACE_OS */
+
+ACE_END_VERSIONED_NAMESPACE_DECL

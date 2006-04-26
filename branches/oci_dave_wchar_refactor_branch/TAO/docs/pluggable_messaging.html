@@ -59,8 +59,14 @@
           mapped on to TCP/IP he would load IIOP_Lite using the
           svc.conf file. The format is given below </P>
           
-          <P>dynamic IIOP_Lite_Factory Service_Object * TAO:_make_TAO_IIOP_Lite_Protocol_Factory() ""</P>
-          <P>static Resource_Factory "-ORBProtocolFactory IIOP_Lite_Factory". </P>
+          <P><code>dynamic IIOP_Lite_Factory Service_Object * TAO:_make_TAO_IIOP_Lite_Protocol_Factory() ""</code></P>
+          <P><code>static Resource_Factory "-ORBProtocolFactory IIOP_Lite_Factory". </code></P>
+
+          <P>At the moment the TAO Strategies library is used the 
+          svc.conf file should contain: </P>
+
+          <P><code>dynamic IIOP_Lite_Factory Service_Object * TAO:_make_TAO_IIOP_Lite_Protocol_Factory() ""</code></P>
+          <P><code>static Advanced_Resource_Factory "-ORBProtocolFactory IIOP_Lite_Factory". </code></P>
 
           <P>Please see the documentation of the pluggable protocol
           framework for exact meaning of the above syntax. The same

@@ -1,10 +1,10 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file   Notify_Constraint_Visitors.h
  *
  *  $Id$
- *
  *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
@@ -18,6 +18,7 @@
 #include /**/ "ace/pre.h"
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Unbounded_Queue.h"
+#include "ace/Null_Mutex.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -27,7 +28,9 @@
 #include "orbsvcs/ETCL/ETCL_Constraint.h"
 #include "orbsvcs/CosNotificationC.h"
 
-#include "notify_serv_export.h"
+#include "orbsvcs/Notify/notify_serv_export.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Notify_Property_Constraint;
 
@@ -110,17 +113,32 @@ protected:
   /// Storage for the type of implicit id the component has (if any).
   structured_event_field implicit_id_;
 
+  /// Size of implicit_ids_ hash map.
+  /// @note A fixed set of 9 keys are stored in this map.  In the absence
+  /// of a minimal perfect hash, ACE's default hash_pjw() and a hash size
+  /// of 27 ensures each element is hashed to a unique bucket.
+  /// TODO: define inline once VC6 support is deprecated.
+  static const size_t implicit_ids_size_;
+
   /// Lookup table for the implicit ids, to avoid string comparisons in
   /// derived visitors.
-  ACE_Hash_Map_Manager <ACE_CString, structured_event_field, TAO_SYNCH_MUTEX>
+  ACE_Hash_Map_Manager <ACE_CString, structured_event_field, ACE_Null_Mutex>
     implicit_ids_;
 
-    /// Used to lookup names and values in the event's 'filterable_data' field.
-  ACE_Hash_Map_Manager <ACE_CString, CORBA::Any *, TAO_SYNCH_MUTEX>
+  /// Size of filterable_data_ hash map.
+  /// TODO: define inline once VC6 support is deprecated.
+  static const size_t filterable_data_size_;
+
+  /// Used to lookup names and values in the event's 'filterable_data' field.
+  ACE_Hash_Map_Manager <ACE_CString, CORBA::Any, ACE_Null_Mutex>
     filterable_data_;
 
-    /// Used to lookup names and values in the event's 'variable_header' field.
-  ACE_Hash_Map_Manager <ACE_CString, CORBA::Any *, TAO_SYNCH_MUTEX>
+  /// Size of variable_header_ hash map.
+  /// TODO: define inline once VC6 support is deprecated.
+  static const size_t variable_header_size_;
+
+  /// Used to lookup names and values in the event's 'variable_header' field.
+  ACE_Hash_Map_Manager <ACE_CString, CORBA::Any, ACE_Null_Mutex>
     variable_header_;
 
   /// Storage for string names under the structured event's
@@ -143,6 +161,8 @@ protected:
   /// variable_header, or filterable_data.
   CORBA::String_var current_name_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* NOTIFY_CONSTRAINT_VISITORS_H */

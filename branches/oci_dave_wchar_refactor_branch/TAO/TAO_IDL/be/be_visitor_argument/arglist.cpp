@@ -18,8 +18,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_argument, 
-           arglist, 
+ACE_RCSID (be_visitor_argument,
+           arglist,
            "$Id$")
 
 
@@ -218,9 +218,9 @@ int be_visitor_args_arglist::visit_predefined_type (be_predefined_type *node)
            || pt == AST_PredefinedType::PT_object)
     {
       // The only PT_pseudo that doesn't take a _ptr suffix.
-      idl_bool is_tckind =
+      bool is_tckind =
         (ACE_OS::strcmp (node->local_name ()->get_string (), "TCKind") == 0);
-        
+
       switch (this->direction ())
         {
         case AST_Argument::dir_IN:

@@ -11,6 +11,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use strict;
 use Cwd;
 use File::Basename;
+use Sys::Hostname;
 
 if ( $^O eq 'VMS' ) {
   require VMS::Filespec;
@@ -110,10 +111,9 @@ sub getExecutePath {
 
 sub getDefaultDomain {
   my($domain) = undef;
-  my($host)   = `hostname`;
+  my($host)   = hostname();
 
   if (defined $host) {
-    chop($host);
     ## First try the hostname
     if ($host =~ /[^\.]+\.(.*)/) {
       $domain = $1;
@@ -270,7 +270,8 @@ my($status, $error, $unknown) = $editor->edit($file, @dirs);
 if (defined $unknown) {
   my(@uarray) = @$unknown;
   if ($#uarray >= 0) {
-    print "WARNING: The following files are unknown to CVS:\n";
+    print "WARNING: The following files are unknown to the ",
+          "revsion control system:\n";
     foreach my $unk (@uarray) {
       print "$unk\n";
     }

@@ -1,5 +1,5 @@
-#include "LB_Component.h"
-#include "LB_ORBInitializer.h"
+#include "orbsvcs/LoadBalancing/LB_Component.h"
+#include "orbsvcs/LoadBalancing/LB_ORBInitializer.h"
 
 #include "tao/ORB_Constants.h"
 #include "tao/ORBInitializer_Registry.h"
@@ -8,6 +8,8 @@
 ACE_RCSID (LoadBalancing,
            LB_Component,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
 TAO_LB_Component::init (int argc, ACE_TCHAR * argv[])
@@ -131,6 +133,7 @@ TAO_LB_Component::register_orb_initializer (
   return 0;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (TAO_LB_Component,
                        ACE_TEXT ("LB_Component"),

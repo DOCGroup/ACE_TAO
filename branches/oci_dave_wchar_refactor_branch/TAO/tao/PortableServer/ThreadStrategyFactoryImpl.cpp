@@ -1,13 +1,15 @@
 // $Id$
 
-#include "ThreadStrategyFactoryImpl.h"
-#include "ThreadStrategy.h"
+#include "tao/PortableServer/ThreadStrategyFactoryImpl.h"
+#include "tao/PortableServer/ThreadStrategy.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/Log_Msg.h"
 
 ACE_RCSID (PortableServer,
            ThreadStrategyFactoryImpl,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -80,17 +82,21 @@ namespace TAO
         }
       }
     }
-
-    ACE_STATIC_SVC_DEFINE (
-        ThreadStrategyFactoryImpl,
-        ACE_TEXT ("ThreadStrategyFactory"),
-        ACE_SVC_OBJ_T,
-        &ACE_SVC_NAME (ThreadStrategyFactoryImpl),
-        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
-        0
-      )
-
-    ACE_FACTORY_DEFINE (ACE_Local_Service, ThreadStrategyFactoryImpl)
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+ACE_STATIC_SVC_DEFINE (
+  ThreadStrategyFactoryImpl,
+  ACE_TEXT ("ThreadStrategyFactory"),
+  ACE_SVC_OBJ_T,
+  &ACE_SVC_NAME (ThreadStrategyFactoryImpl),
+  ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
+  0)
+
+ACE_FACTORY_NAMESPACE_DEFINE (
+  ACE_Local_Service,
+  ThreadStrategyFactoryImpl,
+  TAO::Portable_Server::ThreadStrategyFactoryImpl)
 

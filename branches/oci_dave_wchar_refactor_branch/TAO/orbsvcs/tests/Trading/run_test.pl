@@ -11,14 +11,18 @@ use PerlACE::Run_Test;
 $ior = PerlACE::LocalFile ("trading.ior");
 $ready_file = PerlACE::LocalFile ("export_test_ready");
 $sleeptime = 20;
+$port = PerlACE::random_port();
 
 unlink $ior;
 unlink $ready_file;
 
+## Specify and endpoint so that we may test the corbaloc in the
+## -ORBInitRef.  We retain one -ORBInitRef using the file just to test
+## both ways.
 $TS = new PerlACE::Process ("../../Trading_Service/Trading_Service",
-                            "-TSdumpior $ior");
+                            "-ORBEndpoint iiop://:$port -TSdumpior $ior");
 $E = new PerlACE::Process ("export_test",
-                           "-ORBInitRef TradingService=file://$ior -quiet");
+                           "-ORBInitRef TradingService=corbaloc:::$port/TradingService -quiet");
 $I = new PerlACE::Process ("import_test",
                            "-ORBInitRef TradingService=file://$ior -quiet");
 

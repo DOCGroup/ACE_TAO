@@ -5,7 +5,7 @@
 #include "ace/SString.h"
 
 #if !defined(__ACE_INLINE__)
-#include "ECG_UDP_Receiver.i"
+#include "orbsvcs/Event/ECG_UDP_Receiver.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (Event,
@@ -14,6 +14,8 @@ ACE_RCSID (Event,
 
 
 // ****************************************************************
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_ECG_UDP_Receiver::~TAO_ECG_UDP_Receiver (void)
 {
@@ -244,3 +246,5 @@ TAO_ECG_UDP_Receiver::handle_input (ACE_SOCK_Dgram& dgram)
   ACE_ENDTRY;
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

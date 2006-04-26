@@ -10,6 +10,7 @@ project(*Server): messaging, taoserver {
 }
 
 project(*Client): messaging, taoexe, portableserver {
+  after += *Server
   Source_Files {
     TestC.cpp
     Client_Task.cpp

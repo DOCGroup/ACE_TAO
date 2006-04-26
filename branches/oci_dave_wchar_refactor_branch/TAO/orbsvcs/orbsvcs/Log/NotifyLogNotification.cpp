@@ -7,8 +7,13 @@ ACE_RCSID (Log,
            NotifyLogNotification,
            "$Id$")
 
-TAO_NotifyLogNotification::TAO_NotifyLogNotification (CosNotifyChannelAdmin::EventChannel_ptr ec)
-: TAO_LogNotification (), event_channel_ (CosNotifyChannelAdmin::EventChannel::_duplicate (ec))
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+TAO_NotifyLogNotification::TAO_NotifyLogNotification (
+  CosNotifyChannelAdmin::EventChannel_ptr ec)
+  : TAO_LogNotification (),
+    event_channel_ (CosNotifyChannelAdmin::EventChannel::_duplicate (ec))
 {
   ACE_DECLARE_NEW_CORBA_ENV;
   
@@ -79,3 +84,5 @@ TAO_NotifyLogNotification::disconnect_push_supplier
 
   this->proxy_consumer_->disconnect_push_consumer(ACE_ENV_SINGLE_ARG_PARAMETER);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

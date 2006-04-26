@@ -14,16 +14,18 @@
 #define TAO_SERVANTRETENTIONSTRATEGY_H
 #include /**/ "ace/pre.h"
 
-#include "Policy_Strategy.h"
+#include "tao/PortableServer/Policy_Strategy.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Servant_Location.h"
-#include "Servant_Upcall.h"
-#include "ServantRetentionPolicyC.h"
-#include "PortableServer.h"
+#include "tao/PortableServer/Servant_Location.h"
+#include "tao/PortableServer/Servant_Upcall.h"
+#include "tao/PortableServer/ServantRetentionPolicyC.h"
+#include "tao/PortableServer/PortableServer.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Root_POA;
 class TAO_Active_Object_Map;
@@ -51,6 +53,11 @@ namespace TAO
         const PortableServer::ObjectId &system_id,
         TAO::Portable_Server::Servant_Upcall &servant_upcall,
         TAO::Portable_Server::POA_Current_Impl &poa_current_impl
+        ACE_ENV_ARG_DECL) = 0;
+
+      virtual int find_servant_priority (
+        const PortableServer::ObjectId &system_id,
+        CORBA::Short &priority
         ACE_ENV_ARG_DECL) = 0;
 
       virtual PortableServer::ObjectId *activate_object (
@@ -150,6 +157,8 @@ namespace TAO
     };
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_SERVANTRETENTIONSTRATEGY_H */

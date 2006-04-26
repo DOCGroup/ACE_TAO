@@ -24,6 +24,8 @@
 #include "ace/Default_Constants.h"
 #include "ace/os_include/os_stddef.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_Free_List
  *
@@ -96,14 +98,14 @@ public:
   /// Returns the current size of the free list.
   virtual size_t size (void);
 
-  /// Resizes the free list to <newsize>.
+  /// Resizes the free list to @a newsize.
   virtual void resize (size_t newsize);
 
 protected:
-  /// Allocates <n> extra nodes for the freelist.
+  /// Allocates @a n extra nodes for the freelist.
   virtual void alloc (size_t n);
 
-  /// Removes and frees <n> nodes from the freelist.
+  /// Removes and frees @a n nodes from the freelist.
   virtual void dealloc (size_t n);
 
   /// Free list operation mode, either ACE_FREE_LIST_WITH_POOL or
@@ -125,7 +127,7 @@ protected:
   /// Keeps track of the size of the list.
   size_t size_;
 
-  /// Synchronization variable for <ACE_Timer_Queue>.
+  /// Synchronization variable for ACE_Timer_Queue.
   ACE_LOCK mutex_;
 
 private:
@@ -133,6 +135,8 @@ private:
   ACE_UNIMPLEMENTED_FUNC (ACE_Locked_Free_List (const ACE_Locked_Free_List<T, ACE_LOCK> &))
   ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Locked_Free_List<T, ACE_LOCK> &))
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Free_List.cpp"

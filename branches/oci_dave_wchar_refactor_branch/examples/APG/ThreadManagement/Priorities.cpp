@@ -21,7 +21,7 @@ public:
                 name_));
 
     ACE_OS::sleep (2);
-    ACE_Message_Block *mb;
+    ACE_Message_Block *mb = 0;
     while (this->getq (mb) != -1)
       {
         if (mb->msg_type () == ACE_Message_Block::MB_BREAK)

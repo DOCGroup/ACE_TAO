@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -15,9 +15,10 @@
 #define TAO_CONSTRAINT_NODES_H
 #include /**/ "ace/pre.h"
 
-#include "Constraint_Tokens.h"
+#include "orbsvcs/Trader/Constraint_Tokens.h"
 
 #include "tao/Basic_Types.h"
+#include "tao/String_Manager_T.h"
 
 #include "orbsvcs/Trader/trading_serv_export.h"
 
@@ -26,10 +27,10 @@
 #pragma warning (disable:4250)
 #endif /* _MSC_VER */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_Constraint_Visitor;
 typedef unsigned short TAO_Expression_Type;
-
-class TAO_String_Manager;
 
 namespace CORBA
 {
@@ -293,7 +294,7 @@ class TAO_Trading_Serv_Export TAO_Literal_Constraint : public TAO_Constraint
                 const TAO_Literal_Constraint& right);
 
   friend bool
-    operator== (const TAO_String_Manager& left,
+    operator== (const TAO::String_Manager& left,
                 const TAO_Literal_Constraint& right);
 
   // = Arithmetic operators.
@@ -346,6 +347,8 @@ class TAO_Trading_Serv_Export TAO_Literal_Constraint : public TAO_Constraint
   TAO_Expression_Type type_;
 
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

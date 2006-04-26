@@ -76,7 +76,7 @@ HTML_HEADER           =
 HTML_FOOTER           =
 HTML_STYLESHEET       =
 HTML_ALIGN_MEMBERS    = YES
-GENERATE_HTMLHELP     = NO
+GENERATE_HTMLHELP     = YES
 
 #---------------------------------------------------------------------------
 # configuration options related to the LaTeX output
@@ -120,10 +120,17 @@ SEARCH_INCLUDES       = YES
 INCLUDE_PATH          = TAO . ACEXML
 PREDEFINED            =
 EXPAND_AS_DEFINED     = ACE_RCSID \
-			ACE_UNIMPLEMENTED_FUNC \
+                        ACE_UNIMPLEMENTED_FUNC \
                         ACE_CACHE_MAP_MANAGER \
                         ACE_THROW_SPEC \
-                        TAO_NAMESPACE \
+                        ACE_ENV_ARG_DECL_NOT_USED \
+                        ACE_ENV_SINGLE_ARG_DECL_NOT_USED \
+                        ACE_ENV_ARG_DECL_WITH_DEFAULTS \
+                        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS \
+                        ACE_ENV_ARG_DECL \
+                        ACE_ENV_SINGLE_ARG_DECL \
+                        ACE_ENV_SINGLE_ARG_PARAMETER \
+                        ACE_ENV_ARG_PARAMETER \
                         CIAO_NAMESPACE
 
 #---------------------------------------------------------------------------
@@ -158,6 +165,7 @@ COLLABORATION_GRAPH   = YES
 INCLUDE_GRAPH         = YES
 INCLUDED_BY_GRAPH     = YES
 GRAPHICAL_HIERARCHY   = YES
+DOT_MULTI_TARGETS     = YES
 # The tag DOT_PATH can be used to specify the path where the dot tool can be
 # found. If left blank, it is assumed the dot tool can be found on the path.
 DOT_PATH              =
@@ -168,5 +176,5 @@ MAX_DOT_GRAPH_HEIGHT  = 1024
 # Configuration::addtions related to the search engine
 #---------------------------------------------------------------------------
 
-SEARCHENGINE          = NO
+SEARCHENGINE          = YES
 

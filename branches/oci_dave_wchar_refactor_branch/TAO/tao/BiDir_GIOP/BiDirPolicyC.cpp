@@ -29,7 +29,7 @@
 // be\be_codegen.cpp:291
 
 
-#include "BiDirGIOP.h"
+#include "tao/BiDir_GIOP/BiDirGIOP.h"
 #include "tao/CDR.h"
 #include "ace/OS_NS_string.h"
 
@@ -39,6 +39,8 @@
 
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:69
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Arg traits specializations.
 namespace TAO
@@ -64,7 +66,7 @@ TAO::Objref_Traits<BiDirPolicy::BidirectionalPolicy>::release (
     BiDirPolicy::BidirectionalPolicy_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 BiDirPolicy::BidirectionalPolicy_ptr
@@ -98,10 +100,10 @@ BiDirPolicy::BidirectionalPolicy::_narrow (
     {
       return BidirectionalPolicy::_nil ();
     }
-  
+
   BidirectionalPolicy_ptr proxy =
     dynamic_cast<BidirectionalPolicy_ptr> (_tao_objref);
-  
+
   return BidirectionalPolicy::_duplicate (proxy);
 }
 
@@ -115,28 +117,28 @@ BiDirPolicy::BidirectionalPolicy::_unchecked_narrow (
     {
       return BidirectionalPolicy::_nil ();
     }
-  
+
   BidirectionalPolicy_ptr proxy =
     dynamic_cast<BidirectionalPolicy_ptr> (_tao_objref);
-  
+
   return BidirectionalPolicy::_duplicate (proxy);
 }
 
 BiDirPolicy::BidirectionalPolicy_ptr
 BiDirPolicy::BidirectionalPolicy::_duplicate (BidirectionalPolicy_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void
 BiDirPolicy::BidirectionalPolicy::_tao_release (BidirectionalPolicy_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean
@@ -182,3 +184,5 @@ BiDirPolicy::BidirectionalPolicy::marshal (TAO_OutputCDR &)
 {
   return false;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

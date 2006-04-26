@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -17,7 +17,7 @@
 #define TAO_RT_ORB_LOADER_H
 #include /**/ "ace/pre.h"
 
-#include "rtcorba_export.h"
+#include "tao/RTCORBA/rtcorba_export.h"
 
 #include "tao/orbconf.h"
 
@@ -30,13 +30,13 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_ORB_Core;
 
 class TAO_RTCORBA_Export TAO_RT_ORB_Loader : public ACE_Service_Object
 {
 public:
-  /// Constructor.
-  TAO_RT_ORB_Loader (void);
 
   /// Destructor.
   virtual ~TAO_RT_ORB_Loader (void);
@@ -45,6 +45,8 @@ public:
   virtual int init (int argc,
                     ACE_TCHAR* []);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_RTCORBA, TAO_RT_ORB_Loader)
 ACE_FACTORY_DECLARE (TAO_RTCORBA, TAO_RT_ORB_Loader)

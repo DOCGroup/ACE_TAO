@@ -1,8 +1,12 @@
 // -*- C++ -*-
+//
 // $Id$
 
 #include "ace/os_include/os_ctype.h"
 #include "ace/os_include/os_wctype.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 
 ACE_INLINE int
 ACE_OS::ace_tolower (int c)
@@ -38,3 +42,5 @@ ACE_OS::ace_towupper (wint_t c)
   #endif
 }
 
+
+ACE_END_VERSIONED_NAMESPACE_DECL

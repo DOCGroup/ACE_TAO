@@ -44,6 +44,7 @@ extern "C"
   typedef struct evp_pkey_st EVP_PKEY;
 }
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -142,6 +143,7 @@ namespace TAO
   } // End SSLIOP namespace
 }  // End TAO namespace
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

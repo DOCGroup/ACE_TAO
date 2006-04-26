@@ -27,12 +27,14 @@
 #include "orbsvcs/DsNotifyLogAdminS.h"
 #include "orbsvcs/Log/Log_i.h"
 
-#include "notifylog_serv_export.h"
+#include "orbsvcs/Log/notifylog_serv_export.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_LogMgr_i;
 class TAO_NotifyLog_i;
@@ -104,6 +106,8 @@ protected:
   /// and whose events are to be logged.
   TAO_NotifyLog_i *log_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

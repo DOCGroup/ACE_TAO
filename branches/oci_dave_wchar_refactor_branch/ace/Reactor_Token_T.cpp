@@ -3,9 +3,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/Reactor_Token_T.h"
 
-ACE_RCSID (ace,
-	   Reactor_Token_T,
-	   "$Id$")
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class ACE_TOKEN_TYPE> void
 ACE_Reactor_Token_T<ACE_TOKEN_TYPE>::dump (void) const
@@ -68,3 +66,5 @@ ACE_Reactor_Token_T<ACE_TOKEN_TYPE>::sleep_hook (void)
                 ACE_LIB_TEXT ("%p\n"),
                 ACE_LIB_TEXT ("sleep_hook failed")));
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

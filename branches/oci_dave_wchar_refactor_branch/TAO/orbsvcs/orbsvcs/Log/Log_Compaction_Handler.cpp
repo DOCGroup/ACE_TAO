@@ -6,6 +6,9 @@ ACE_RCSID (Log,
            Log_Compaction_Handler,
            "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_Log_Compaction_Handler::TAO_Log_Compaction_Handler (ACE_Reactor* reactor,
                                                         TAO_Log_i* log,
                                                         const ACE_Time_Value& interval)
@@ -59,3 +62,5 @@ TAO_Log_Compaction_Handler::handle_timeout (const ACE_Time_Value&,
   
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

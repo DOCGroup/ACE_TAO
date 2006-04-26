@@ -2,6 +2,8 @@
 //
 // $Id$
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 template<typename S, typename to_S, typename from_S, typename Insert_Policy>
 ACE_INLINE
 TAO::In_Special_Basic_Argument_T<S,to_S,from_S,Insert_Policy>::In_Special_Basic_Argument_T (
@@ -85,3 +87,4 @@ TAO::Ret_Special_Basic_Argument_T<S,to_S,from_S,Insert_Policy>::retn (void)
   return this->x_;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -10,9 +10,9 @@
 class Thread_Task : public ACE_Task <ACE_SYNCH>
 {
  public:
+  Thread_Task (CORBA::ORB_ptr orb);
 
-  int activate_task (CORBA::ORB_ptr orb,
-		     int thr_count);
+  int activate_task (int thr_count);
 
   ~Thread_Task (void);
   

@@ -16,7 +16,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "security_export.h"
+#include "orbsvcs/Security/security_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -25,6 +25,8 @@
 #include "orbsvcs/SecurityLevel2C.h"
 
 #include "tao/LocalObject.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -49,7 +51,7 @@ namespace TAO
      * appropriate Security::EstablishTrust structure (inserted into a
      * CORBA::Any).
      */
-    class TAO_Security_Export EstablishTrustPolicy
+    class EstablishTrustPolicy
       : public virtual SecurityLevel2::EstablishTrustPolicy,
         public virtual TAO_Local_RefCounted_Object
     {
@@ -90,12 +92,14 @@ namespace TAO
 
       /// Quality of protection which can be specified for an object
       /// reference and used to protect messages.
-      ::Security::EstablishTrust trust_;
+      ::Security::EstablishTrust const trust_;
 
     };
 
   } // End Security namespace
 }  // End TAO namespace
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

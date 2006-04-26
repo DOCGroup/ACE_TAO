@@ -1,9 +1,9 @@
 // $Id$
 
-#include "HTIOP_Connection_Handler.h"
+#include "orbsvcs/HTIOP/HTIOP_Connection_Handler.h"
 
-#include "HTIOP_Transport.h"
-#include "HTIOP_Endpoint.h"
+#include "orbsvcs/HTIOP/HTIOP_Transport.h"
+#include "orbsvcs/HTIOP/HTIOP_Endpoint.h"
 
 #include "ace/HTBP/HTBP_Stream.h"
 #include "ace/HTBP/HTBP_Session.h"
@@ -24,6 +24,9 @@
 ACE_RCSID (HTIOP,
            TAO_HTIOP_Connection_Handler,
            "$Id$")
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::HTIOP::Connection_Handler::Connection_Handler (ACE_Thread_Manager *t)
   : SVC_HANDLER (t,0,0),
@@ -277,7 +280,10 @@ TAO::HTIOP::Connection_Handler::process_listen_point_list
 }
 
 int
-TAO::HTIOP::Connection_Handler::set_dscp_codepoint (CORBA::Boolean /*enable_network_priority*/)
+TAO::HTIOP::Connection_Handler::set_dscp_codepoint (
+  CORBA::Boolean /*enable_network_priority*/)
 {
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

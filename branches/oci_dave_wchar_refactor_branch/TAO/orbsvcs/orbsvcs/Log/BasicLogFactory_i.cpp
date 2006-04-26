@@ -5,6 +5,8 @@ ACE_RCSID (Log,
            BasicLogFactory_i,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_BasicLogFactory_i::TAO_BasicLogFactory_i (void)
 {
 }
@@ -118,7 +120,7 @@ TAO_BasicLogFactory_i::create_with_id (DsLogAdmin::LogId id,
 CORBA::RepositoryId
 TAO_BasicLogFactory_i::create_repositoryid ()
 {
-  return CORBA::string_dup("IDL:omg.org/DsLogAdmin:BasicLog:1.0");
+  return CORBA::string_dup ("IDL:omg.org/DsLogAdmin:BasicLog:1.0");
 }
 
 PortableServer::ServantBase*
@@ -141,3 +143,5 @@ TAO_BasicLogFactory_i::create_log_servant (DsLogAdmin::LogId id
 
   return basic_log_i;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

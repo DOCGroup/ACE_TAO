@@ -1,9 +1,11 @@
 // $Id$
 
-#include "CEC_Dispatching.h"
-#include "CEC_ProxyPushSupplier.h"
+#include "orbsvcs/CosEvent/CEC_Dispatching.h"
+#include "orbsvcs/CosEvent/CEC_ProxyPushSupplier.h"
 
 ACE_RCSID(CosEvent, CEC_Dispatching, "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_CEC_Dispatching::~TAO_CEC_Dispatching (void)
 {
@@ -58,3 +60,5 @@ TAO_CEC_Reactive_Dispatching::invoke_nocopy (TAO_CEC_ProxyPushSupplier* proxy,
   proxy->reactive_invoke_to_consumer (typed_event ACE_ENV_ARG_PARAMETER);
 }
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
+
+TAO_END_VERSIONED_NAMESPACE_DECL

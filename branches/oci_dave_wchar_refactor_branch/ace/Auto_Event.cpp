@@ -6,8 +6,11 @@
 #include "ace/Auto_Event.inl"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID (ace,
+           Auto_Event,
+           "$Id$")
 
-ACE_RCSID(ace, Auto_Event, "$Id$")
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_Auto_Event::ACE_Auto_Event (int initial_state,
                                 int type,
@@ -40,3 +43,5 @@ ACE_Auto_Event::dump (void) const
   ACE_Event::dump ();
 #endif /* ACE_HAS_DUMP */
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

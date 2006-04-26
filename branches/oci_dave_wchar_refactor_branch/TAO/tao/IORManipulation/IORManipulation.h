@@ -19,23 +19,26 @@
 
 #ifndef TAO_IOR_MANIPULATION_H
 #define TAO_IOR_MANIPULATION_H
+
 #include /**/ "ace/pre.h"
 
 #include "tao/LocalObject.h"
-#include "IORManip_Loader.h"
+#include "tao/IORManipulation/IORManip_Loader.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "IORC.h"
+#include "tao/IORManipulation/IORC.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class TAO_IORManip_Export TAO_IOR_Manipulation_impl
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+class TAO_IOR_Manipulation_impl
   : public TAO_IOP::TAO_IOR_Manipulation,
     public TAO_Local_RefCounted_Object
 {
@@ -49,9 +52,6 @@ public:
 
   TAO_IOR_Manipulation_impl (void);
   // constructor
-
-  ~TAO_IOR_Manipulation_impl (void);
-  // destructor
 
   virtual CORBA::Object_ptr merge_iors (
     const TAO_IOP::TAO_IOR_Manipulation::IORList & iors
@@ -153,13 +153,20 @@ public:
         CORBA::SystemException,
         TAO_IOP::EmptyProfileList
       ));
-private:
+
+protected:
+
+  ~TAO_IOR_Manipulation_impl (void);
+  // destructor
 
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
 #include /**/ "ace/post.h"
+
 #endif /* TAO_IOR_MANIPULATION_H */

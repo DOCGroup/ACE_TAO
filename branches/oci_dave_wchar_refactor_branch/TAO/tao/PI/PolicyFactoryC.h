@@ -26,10 +26,10 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// .\be\be_codegen.cpp:153
+// be\be_codegen.cpp:154
 
-#ifndef _TAO_IDL_ORIG_POLICYFACTORYC_H_
-#define _TAO_IDL_ORIG_POLICYFACTORYC_H_
+#ifndef _TAO_IDL_POLICYFACTORYC_H_
+#define _TAO_IDL_POLICYFACTORYC_H_
 
 #include /**/ "ace/pre.h"
 
@@ -41,13 +41,13 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/PI/pi_export.h"
-#include "tao/AnyTypeCode/TypeCode_Constants.h"
-#include "tao/AnyTypeCode/Any.h"
-#include "tao/AnyTypeCode/TypeCode.h"
 #include "tao/ORB.h"
 #include "tao/SystemException.h"
 #include "tao/Environment.h"
 #include "tao/Object.h"
+#include "tao/AnyTypeCode/TypeCode.h"
+#include "tao/AnyTypeCode/TypeCode_Constants.h"
+#include "tao/AnyTypeCode/Any.h"
 #include "tao/Objref_VarOut_T.h"
 
 #include "tao/PolicyC.h"
@@ -57,23 +57,16 @@
 #endif
 #define TAO_EXPORT_MACRO TAO_PI_Export
 
-#if defined(_MSC_VER)
-#pragma warning(push)
-#pragma warning(disable:4250)
-#endif /* _MSC_VER */
-
-#if defined (__BORLANDC__)
-#pragma option push -w-rvl -w-rch -w-ccc -w-inl
-#endif /* __BORLANDC__ */
-
 // TAO_IDL - Generated from
-// c:\ace\latest\ace_wrappers\tao\tao_idl\be\be_visitor_module/module_ch.cpp:48
+// be\be_visitor_module/module_ch.cpp:49
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace PortableInterceptor
 {
 
   // TAO_IDL - Generated from
-  // .\be\be_interface.cpp:598
+  // be\be_interface.cpp:646
 
 #if !defined (_PORTABLEINTERCEPTOR_POLICYFACTORY__VAR_OUT_CH_)
 #define _PORTABLEINTERCEPTOR_POLICYFACTORY__VAR_OUT_CH_
@@ -96,13 +89,13 @@ namespace PortableInterceptor
 #endif /* end #if !defined */
 
   // TAO_IDL - Generated from
-  // c:\ace\latest\ace_wrappers\tao\tao_idl\be\be_visitor_interface/interface_ch.cpp:54
+  // be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_PORTABLEINTERCEPTOR_POLICYFACTORY_CH_)
 #define _PORTABLEINTERCEPTOR_POLICYFACTORY_CH_
 
   class TAO_PI_Export PolicyFactory
-    : public virtual CORBA::Object
+    : public virtual ::CORBA::Object
   {
   public:
     typedef PolicyFactory_ptr _ptr_type;
@@ -114,12 +107,12 @@ namespace PortableInterceptor
     static void _tao_release (PolicyFactory_ptr obj);
 
     static PolicyFactory_ptr _narrow (
-        CORBA::Object_ptr obj
+        ::CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     static PolicyFactory_ptr _unchecked_narrow (
-        CORBA::Object_ptr obj
+        ::CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
@@ -128,10 +121,10 @@ namespace PortableInterceptor
       return static_cast<PolicyFactory_ptr> (0);
     }
 
-    static void _tao_any_destructor (void *);
+
 
     // TAO_IDL - Generated from
-    // c:\ace\latest\ace_wrappers\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:46
+    // be\be_visitor_operation/operation_ch.cpp:46
 
     virtual ::CORBA::Policy_ptr create_policy (
         ::CORBA::PolicyType type,
@@ -139,7 +132,7 @@ namespace PortableInterceptor
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
+        ::CORBA::SystemException,
         ::CORBA::PolicyError
       )) = 0;
 
@@ -154,15 +147,15 @@ namespace PortableInterceptor
       ));
 
     // TAO_IDL - Generated from
-    // c:\ace\latest\ace_wrappers\tao\tao_idl\be\be_visitor_interface/interface_ch.cpp:210
+    // be\be_visitor_interface/interface_ch.cpp:210
 
-    virtual CORBA::Boolean _is_a (
+    virtual ::CORBA::Boolean _is_a (
         const char *type_id
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
     virtual const char* _interface_repository_id (void) const;
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
+    virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
 
   protected:
     // Abstract or local interface only.
@@ -179,13 +172,8 @@ namespace PortableInterceptor
 
 #endif /* end #if !defined */
 
-  // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
-
-  extern TAO_PI_Export ::CORBA::TypeCode_ptr const _tc_PolicyFactory;
-
 // TAO_IDL - Generated from
-// be\be_visitor_module/module_ch.cpp:66
+// be\be_visitor_module/module_ch.cpp:78
 
 } // module PortableInterceptor
 
@@ -196,8 +184,8 @@ namespace PortableInterceptor
 namespace TAO
 {
 
-#if !defined (_PORTABLEINTERCEPTOR_POLICYFACTORY__TRAITS_CH_)
-#define _PORTABLEINTERCEPTOR_POLICYFACTORY__TRAITS_CH_
+#if !defined (_PORTABLEINTERCEPTOR_POLICYFACTORY__TRAITS_)
+#define _PORTABLEINTERCEPTOR_POLICYFACTORY__TRAITS_
 
   template<>
   struct TAO_PI_Export Objref_Traits< ::PortableInterceptor::PolicyFactory>
@@ -209,7 +197,7 @@ namespace TAO
         ::PortableInterceptor::PolicyFactory_ptr
       );
     static ::PortableInterceptor::PolicyFactory_ptr nil (void);
-    static CORBA::Boolean marshal (
+    static ::CORBA::Boolean marshal (
         ::PortableInterceptor::PolicyFactory_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -219,22 +207,9 @@ namespace TAO
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_ch.cpp:52
+// be\be_codegen.cpp:1040
 
-TAO_PI_Export void operator<<= (CORBA::Any &, PortableInterceptor::PolicyFactory_ptr); // copying
-TAO_PI_Export void operator<<= (CORBA::Any &, PortableInterceptor::PolicyFactory_ptr *); // non-copying
-TAO_PI_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableInterceptor::PolicyFactory_ptr &);
-
-// TAO_IDL - Generated from
-// be\be_codegen.cpp:955
-
-#if defined(_MSC_VER)
-#pragma warning(pop)
-#endif /* _MSC_VER */
-
-#if defined (__BORLANDC__)
-#pragma option pop
-#endif /* __BORLANDC__ */
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 // ===================================================================
 /**
@@ -17,21 +17,21 @@
 
 #include "tao/orbconf.h"
 
-#if defined (TAO_HAS_DIOP) && (TAO_HAS_DIOP != 0)
-
-#include "ace/Reactor.h"
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Acceptor.h"
+#if defined (TAO_HAS_DIOP) && (TAO_HAS_DIOP != 0)
 
+#include "tao/Strategies/strategies_export.h"
 #include "tao/Wait_Strategy.h"
 #include "tao/Connection_Handler.h"
-#include "DIOP_Transport.h"
+#include "tao/Strategies/DIOP_Transport.h"
 #include "ace/SOCK_Dgram.h"
-#include "strategies_export.h"
+#include "ace/Reactor.h"
+#include "ace/Acceptor.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward Decls
 class TAO_Pluggable_Messaging;
@@ -46,11 +46,9 @@ class TAO_Pluggable_Messaging;
  * The Connection handler which is common for the Acceptor and
  * the Connector
  */
-
-
-class TAO_Strategies_Export TAO_DIOP_Connection_Handler :
-  public TAO_DIOP_SVC_HANDLER,
-  public TAO_Connection_Handler
+class TAO_Strategies_Export TAO_DIOP_Connection_Handler
+  : public TAO_DIOP_SVC_HANDLER
+  , public TAO_Connection_Handler
 {
 
 public:
@@ -159,6 +157,8 @@ private:
   /// Stores the type of service value.
   int dscp_codepoint_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_DIOP && TAO_HAS_DIOP != 0 */
 

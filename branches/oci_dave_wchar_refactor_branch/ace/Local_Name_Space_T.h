@@ -27,18 +27,28 @@
 #include "ace/Local_Name_Space.h"
 #include "ace/Null_Mutex.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /// A short-hand name for our set of name/value/type tuples passed back
 /// to callers.
 typedef ACE_Unbounded_Set<ACE_NS_WString> ACE_WSTRING_SET;
 
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 // Simplify later usage by defining typedefs.
 #if (1)
 # include "ace/Hash_Map_Manager_T.h"
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 typedef ACE_Hash_Map_Manager_Ex<ACE_NS_String, ACE_NS_Internal, ACE_Hash<ACE_NS_String>, ACE_Equal_To<ACE_NS_String>, ACE_Null_Mutex> MAP_MANAGER;
+ACE_END_VERSIONED_NAMESPACE_DECL
 #else
 # include "ace/Map_Manager.h"
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 typedef ACE_Map_Manager<ACE_NS_String, ACE_NS_Internal, ACE_Null_Mutex> MAP_MANAGER;
+ACE_END_VERSIONED_NAMESPACE_DECL
 #endif /* 0 */
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// @deprecated Deprecated typedefs.  Use the map's traits instead.
 typedef MAP_MANAGER::ITERATOR MAP_ITERATOR;
@@ -255,6 +265,8 @@ private:
   /// Synchronization variable.
   ACE_LOCK *lock_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Local_Name_Space_T.cpp"

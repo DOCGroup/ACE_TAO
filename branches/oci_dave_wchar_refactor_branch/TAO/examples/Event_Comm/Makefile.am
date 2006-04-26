@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ../bin/mwc.pl -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/config -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/templates -type automake -noreldefs TAO.mwc
+## ../bin/mwc.pl -type automake -noreldefs TAO.mwc
 
 ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
@@ -16,7 +16,7 @@ TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
-## Makefile.Event_Comm_Consumer.am
+## Makefile.Event_Comm_IDL.am
 
 BUILT_SOURCES = \
   Event_CommC.cpp \
@@ -44,8 +44,14 @@ CLEANFILES = \
 Event_CommC.cpp Event_CommC.h Event_CommC.inl Event_CommS.cpp Event_CommS.h Event_CommS.inl Event_CommS_T.cpp Event_CommS_T.h Event_CommS_T.inl: Event_Comm-stamp
 
 Event_Comm-stamp: $(srcdir)/Event_Comm.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/Event_Comm.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Event_Comm.idl
 	@touch $@
+
+
+noinst_HEADERS = \
+  Event_Comm.idl
+
+## Makefile.Event_Comm_Consumer.am
 
 noinst_PROGRAMS = consumer
 
@@ -66,11 +72,6 @@ consumer_SOURCES = \
   consumer.cpp \
   Consumer_Handler.h \
   Consumer_Input_Handler.h \
-  Event_CommC.h \
-  Event_CommC.inl \
-  Event_CommS.h \
-  Event_CommS_T.h \
-  Event_CommS_T.inl \
   Event_Comm_i.h
 
 consumer_LDADD = \
@@ -81,35 +82,6 @@ consumer_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Event_Comm_Notifier.am
-
-BUILT_SOURCES += \
-  Event_CommC.cpp \
-  Event_CommC.h \
-  Event_CommC.inl \
-  Event_CommS.cpp \
-  Event_CommS.h \
-  Event_CommS.inl \
-  Event_CommS_T.cpp \
-  Event_CommS_T.h \
-  Event_CommS_T.inl
-
-CLEANFILES += \
-  Event_Comm-stamp \
-  Event_CommC.cpp \
-  Event_CommC.h \
-  Event_CommC.inl \
-  Event_CommS.cpp \
-  Event_CommS.h \
-  Event_CommS.inl \
-  Event_CommS_T.cpp \
-  Event_CommS_T.h \
-  Event_CommS_T.inl
-
-Event_CommC.cpp Event_CommC.h Event_CommC.inl Event_CommS.cpp Event_CommS.h Event_CommS.inl Event_CommS_T.cpp Event_CommS_T.h Event_CommS_T.inl: Event_Comm-stamp
-
-Event_Comm-stamp: $(srcdir)/Event_Comm.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/Event_Comm.idl
-	@touch $@
 
 noinst_PROGRAMS += notifier
 
@@ -127,11 +99,6 @@ notifier_SOURCES = \
   Event_Comm_i.cpp \
   Notifier_Server.cpp \
   notifier.cpp \
-  Event_CommC.h \
-  Event_CommC.inl \
-  Event_CommS.h \
-  Event_CommS_T.h \
-  Event_CommS_T.inl \
   Event_Comm_i.h \
   Notifier_Server.h \
   notifier.h
@@ -147,35 +114,6 @@ notifier_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Event_Comm_Supplier.am
-
-BUILT_SOURCES += \
-  Event_CommC.cpp \
-  Event_CommC.h \
-  Event_CommC.inl \
-  Event_CommS.cpp \
-  Event_CommS.h \
-  Event_CommS.inl \
-  Event_CommS_T.cpp \
-  Event_CommS_T.h \
-  Event_CommS_T.inl
-
-CLEANFILES += \
-  Event_Comm-stamp \
-  Event_CommC.cpp \
-  Event_CommC.h \
-  Event_CommC.inl \
-  Event_CommS.cpp \
-  Event_CommS.h \
-  Event_CommS.inl \
-  Event_CommS_T.cpp \
-  Event_CommS_T.h \
-  Event_CommS_T.inl
-
-Event_CommC.cpp Event_CommC.h Event_CommC.inl Event_CommS.cpp Event_CommS.h Event_CommS.inl Event_CommS_T.cpp Event_CommS_T.h Event_CommS_T.inl: Event_Comm-stamp
-
-Event_Comm-stamp: $(srcdir)/Event_Comm.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/Event_Comm.idl
-	@touch $@
 
 noinst_PROGRAMS += supplier
 
@@ -194,11 +132,6 @@ supplier_SOURCES = \
   Notifier_Handler.cpp \
   Supplier_Input_Handler.cpp \
   supplier.cpp \
-  Event_CommC.h \
-  Event_CommC.inl \
-  Event_CommS.h \
-  Event_CommS_T.h \
-  Event_CommS_T.inl \
   Event_Comm_i.h \
   Notifier_Handler.h \
   Supplier_Input_Handler.h \

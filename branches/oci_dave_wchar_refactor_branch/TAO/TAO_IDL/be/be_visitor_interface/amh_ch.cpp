@@ -98,6 +98,6 @@ be_visitor_amh_interface_ch::visit_interface (be_interface *node)
                          "codegen for scope failed\n"), -1);
     }
 
-  node->cli_hdr_gen (I_TRUE);
+  node->cli_hdr_gen (true);
   return 0;
 }

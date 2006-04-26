@@ -14,16 +14,19 @@
 
 #include /**/ "ace/pre.h"
 
-#include "../notify_serv_export.h"
+#include "orbsvcs/Notify/notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "../Event.h"
-#include "../EventType.h"
+#include "orbsvcs/Notify/Event.h"
+#include "orbsvcs/Notify/EventType.h"
 
 #include "orbsvcs/CosNotificationC.h"
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Notify_Consumer;
 class TAO_Notify_AnyEvent;
@@ -81,14 +84,15 @@ protected:
 
 protected:
 
-  /// Any Event
+  // This must be a pointer rather than a reference, because the derived
+  // class needs to redirect it to a new copy
   const CORBA::Any* event_;
 
   /// Our event type.
   static TAO_Notify_EventType event_type_;
 };
 
-/*****************************************************************************************************/
+/****************************************************************************/
 
 /**
  * @class TAO_Notify_AnyEvent
@@ -109,6 +113,8 @@ protected:
   /// Copy of the Event.
   CORBA::Any any_copy_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

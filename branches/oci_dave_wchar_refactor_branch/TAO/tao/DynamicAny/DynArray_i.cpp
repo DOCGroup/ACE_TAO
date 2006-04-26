@@ -1,8 +1,7 @@
-/* -*- C++ -*- */
 // $Id$
 
-#include "DynArray_i.h"
-#include "DynAnyFactory.h"
+#include "tao/DynamicAny/DynArray_i.h"
+#include "tao/DynamicAny/DynAnyFactory.h"
 #include "tao/AnyTypeCode/Marshal.h"
 #include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
 #include "tao/CDR.h"
@@ -11,6 +10,7 @@ ACE_RCSID (DynamicAny,
            DynArray_i,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_DynArray_i::TAO_DynArray_i (void)
 {
@@ -659,3 +659,5 @@ TAO_DynArray_i::current_component (ACE_ENV_SINGLE_ARG_DECL)
             this->da_members_[index].in ()
           );
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

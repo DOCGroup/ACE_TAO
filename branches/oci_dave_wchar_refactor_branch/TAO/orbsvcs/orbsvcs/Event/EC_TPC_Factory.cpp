@@ -1,10 +1,10 @@
 // $Id$
 
-#include "EC_TPC_Factory.h"
+#include "orbsvcs/Event/EC_TPC_Factory.h"
 
-#include "EC_TPC_Dispatching.h"
-#include "EC_TPC_ProxySupplier.h"
-#include "EC_TPC_ProxyConsumer.h"
+#include "orbsvcs/Event/EC_TPC_Dispatching.h"
+#include "orbsvcs/Event/EC_TPC_ProxySupplier.h"
+#include "orbsvcs/Event/EC_TPC_ProxyConsumer.h"
 
 #include "tao/ORB_Core.h"
 
@@ -13,6 +13,8 @@
 #include "ace/OS_NS_strings.h"
 
 ACE_RCSID(Event, EC_TPC_Factory, "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 unsigned long EC_TPC_debug_level;
 
@@ -106,6 +108,7 @@ TAO_EC_TPC_Factory::create_proxy_push_consumer (TAO_EC_Event_Channel_Base *ec)
   return new TAO_EC_TPC_ProxyPushConsumer (ec);
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 // ****************************************************************
 

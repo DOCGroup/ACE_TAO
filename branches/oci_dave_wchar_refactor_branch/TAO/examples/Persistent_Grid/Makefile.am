@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ../bin/mwc.pl -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/config -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/templates -type automake -noreldefs TAO.mwc
+## ../bin/mwc.pl -type automake -noreldefs TAO.mwc
 
 ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
@@ -16,126 +16,10 @@ TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
-## Makefile.Persistent_Grid_Client.am
+
+## Makefile.Persistent_Grid_IDL.am
 
 BUILT_SOURCES = \
-  GridC.cpp \
-  GridC.h \
-  GridC.inl \
-  GridS.h \
-  GridS.inl \
-  GridS_T.cpp \
-  GridS_T.h \
-  GridS_T.inl
-
-CLEANFILES = \
-  Grid-stamp \
-  GridC.cpp \
-  GridC.h \
-  GridC.inl \
-  GridS.h \
-  GridS.inl \
-  GridS_T.cpp \
-  GridS_T.h \
-  GridS_T.inl
-
-GridC.cpp GridC.h GridC.inl GridS.h GridS.inl GridS_T.cpp GridS_T.h GridS_T.inl: Grid-stamp
-
-Grid-stamp: $(srcdir)/Grid.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Grid.idl
-	@touch $@
-
-noinst_PROGRAMS = client
-
-client_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR)
-
-client_SOURCES = \
-  GridC.cpp \
-  Grid_Client_i.cpp \
-  Simple_util.cpp \
-  client.cpp \
-  GridC.h \
-  GridC.inl \
-  GridS.h \
-  GridS_T.h \
-  GridS_T.inl \
-  Grid_Client_i.h \
-  Simple_util.h
-
-client_LDADD = \
-  $(TAO_BUILDDIR)/tao/libTAO_Utils.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
-  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
-  $(TAO_BUILDDIR)/tao/libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
-
-## Makefile.Persistent_Grid_Persistent_Client.am
-
-BUILT_SOURCES += \
-  GridC.cpp \
-  GridC.h \
-  GridC.inl \
-  GridS.h \
-  GridS.inl \
-  GridS_T.cpp \
-  GridS_T.h \
-  GridS_T.inl
-
-CLEANFILES += \
-  Grid-stamp \
-  GridC.cpp \
-  GridC.h \
-  GridC.inl \
-  GridS.h \
-  GridS.inl \
-  GridS_T.cpp \
-  GridS_T.h \
-  GridS_T.inl
-
-GridC.cpp GridC.h GridC.inl GridS.h GridS.inl GridS_T.cpp GridS_T.h GridS_T.inl: Grid-stamp
-
-Grid-stamp: $(srcdir)/Grid.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Grid.idl
-	@touch $@
-
-noinst_PROGRAMS += persistent_client
-
-persistent_client_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR)
-
-persistent_client_SOURCES = \
-  GridC.cpp \
-  Persistent_Client_i.cpp \
-  Simple_util.cpp \
-  persistent_client.cpp \
-  GridC.h \
-  GridC.inl \
-  GridS.h \
-  GridS_T.h \
-  GridS_T.inl \
-  Simple_util.h
-
-persistent_client_LDADD = \
-  $(TAO_BUILDDIR)/tao/libTAO_Utils.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
-  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
-  $(TAO_BUILDDIR)/tao/libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
-
-## Makefile.Persistent_Grid_Server.am
-
-BUILT_SOURCES += \
   GridC.cpp \
   GridC.h \
   GridC.inl \
@@ -146,7 +30,7 @@ BUILT_SOURCES += \
   GridS_T.h \
   GridS_T.inl
 
-CLEANFILES += \
+CLEANFILES = \
   Grid-stamp \
   GridC.cpp \
   GridC.h \
@@ -161,8 +45,69 @@ CLEANFILES += \
 GridC.cpp GridC.h GridC.inl GridS.cpp GridS.h GridS.inl GridS_T.cpp GridS_T.h GridS_T.inl: Grid-stamp
 
 Grid-stamp: $(srcdir)/Grid.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Grid.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Grid.idl
 	@touch $@
+
+
+noinst_HEADERS = \
+  Grid.idl
+
+## Makefile.Persistent_Grid_Client.am
+
+noinst_PROGRAMS = client
+
+client_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR)
+
+client_SOURCES = \
+  GridC.cpp \
+  Grid_Client_i.cpp \
+  Simple_util.cpp \
+  client.cpp \
+  Grid_Client_i.h \
+  Simple_util.h
+
+client_LDADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_Utils.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+## Makefile.Persistent_Grid_Persistent_Client.am
+
+noinst_PROGRAMS += persistent_client
+
+persistent_client_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR)
+
+persistent_client_SOURCES = \
+  GridC.cpp \
+  Persistent_Client_i.cpp \
+  Simple_util.cpp \
+  persistent_client.cpp \
+  Simple_util.h
+
+persistent_client_LDADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_Utils.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+## Makefile.Persistent_Grid_Server.am
+
+if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS += server
 
@@ -178,11 +123,6 @@ server_SOURCES = \
   Grid_i.cpp \
   Simple_util.cpp \
   server.cpp \
-  GridC.h \
-  GridC.inl \
-  GridS.h \
-  GridS_T.h \
-  GridS_T.inl \
   Grid_i.h \
   Simple_util.h
 
@@ -194,6 +134,8 @@ server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
+
+endif !BUILD_ACE_FOR_TAO
 
 ## Clean up template repositories, etc.
 clean-local:

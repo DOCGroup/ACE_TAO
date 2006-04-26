@@ -1,17 +1,18 @@
-// UPIPE_Stream.cpp
 // $Id$
 
 #include "ace/UPIPE_Stream.h"
-#include "ace/OS_NS_string.h"
 
 ACE_RCSID(ace, UPIPE_Stream, "$Id$")
 
 #if defined (ACE_HAS_THREADS)
 
+#include "ace/OS_NS_string.h"
+
 #if !defined (__ACE_INLINE__)
 #include "ace/UPIPE_Stream.inl"
 #endif /* __ACE_INLINE__ */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_UPIPE_Stream)
 
@@ -225,5 +226,6 @@ ACE_UPIPE_Stream::recv_n (char *buf,
   return bytes_read;
 }
 
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_THREADS */

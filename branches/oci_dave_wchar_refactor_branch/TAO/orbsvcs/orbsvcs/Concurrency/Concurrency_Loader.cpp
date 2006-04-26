@@ -13,20 +13,20 @@
 //   Jaiganesh Balasubramanian <jai@doc.ece.uci.edu>
 // ================================================================
 
-#include "Concurrency_Loader.h"
+#include "orbsvcs/Concurrency/Concurrency_Loader.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID (Concurrency, Concurrency_Loader, "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_Concurrency_Loader::TAO_Concurrency_Loader (void)
 {
-  // Constructor
 }
 
 TAO_Concurrency_Loader::~TAO_Concurrency_Loader (void)
 {
-  // Destructor
 }
 
 int
@@ -86,4 +86,6 @@ TAO_Concurrency_Loader::create_object (CORBA::ORB_ptr orb,
   return this->concurrency_server_.init (orb, poa.in ());
 }
 
-ACE_FACTORY_DEFINE (TAO_Concurrency, TAO_Concurrency_Loader)
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+ACE_FACTORY_DEFINE (TAO_Concurrency_Serv, TAO_Concurrency_Loader)

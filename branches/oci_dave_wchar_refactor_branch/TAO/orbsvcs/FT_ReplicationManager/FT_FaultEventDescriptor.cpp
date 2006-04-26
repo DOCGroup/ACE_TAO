@@ -23,6 +23,8 @@ ACE_RCSID (FT_FaultEventDescriptor,
            FT_FaultEventDescriptor,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Default constructor.
 TAO::FT_FaultEventDescriptor::FT_FaultEventDescriptor ()
   : all_at_location_failed (0)
@@ -86,3 +88,5 @@ void TAO::FT_FaultEventDescriptor::dump ()
     ));
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

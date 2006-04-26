@@ -2,5 +2,6 @@
 // $Id$
 
 project: taoserver {
+  avoids += ace_for_tao
   exename = create_reference
 }

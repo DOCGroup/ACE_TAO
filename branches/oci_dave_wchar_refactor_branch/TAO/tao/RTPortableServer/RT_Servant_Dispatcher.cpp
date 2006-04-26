@@ -1,27 +1,31 @@
-#include "RT_Servant_Dispatcher.h"
+
+#include "tao/RTPortableServer/RT_Servant_Dispatcher.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
-#include "RT_POA.h"
-#include "tao/RTCORBA/Thread_Pool.h"
+#include "tao/RTPortableServer/RT_POA.h"
+
 #include "tao/ORB_Core.h"
 #include "tao/ORB_Core_TSS_Resources.h"
 #include "tao/TAO_Server_Request.h"
 #include "tao/Transport.h"
-#include "tao/IIOP_Transport.h"
-#include "tao/IIOP_Connection_Handler.h"
+#include "tao/Connection_Handler.h"
 #include "tao/Service_Context.h"
 #include "tao/Protocols_Hooks.h"
 #include "tao/debug.h"
 #include "tao/CDR.h"
 
+#include "tao/RTCORBA/Thread_Pool.h"
+
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
-
 
 ACE_RCSID (RTPortableServer,
            RT_Servant_Dispatcher,
            "$Id$")
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_RT_Servant_Dispatcher::~TAO_RT_Servant_Dispatcher (void)
 {
@@ -79,7 +83,7 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
   TAO_Protocols_Hooks *tph =
     poa.orb_core ().get_protocols_hooks ();
 
-  const char *priority_model;
+  const char *priority_model = 0;
   RTCORBA::Priority target_priority = TAO_INVALID_PRIORITY;
 
   // NOT_SPECIFIED PriorityModel processing.
@@ -358,7 +362,7 @@ TAO_RT_Servant_Dispatcher::post_invoke (TAO_Root_POA &poa,
         {
           // Eat up the exception.
           ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                               "Exception caught: TAO (%P|%t) - "
+                               "Exception caught: TAO - "
                                "Priority_Model_Processing::"
                                "~Priority_Model_Processing");
         }
@@ -393,5 +397,7 @@ TAO_RT_Servant_Dispatcher::create_Root_POA (const ACE_CString &name,
 
   return poa;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */

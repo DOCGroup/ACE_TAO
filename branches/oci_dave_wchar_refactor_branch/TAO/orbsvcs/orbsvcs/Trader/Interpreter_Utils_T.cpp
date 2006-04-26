@@ -7,6 +7,8 @@
 #include "orbsvcs/Trader/Constraint_Visitors.h"
 #include "tao/DynamicAny/DynSequence_i.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 template <class OPERAND_TYPE> CORBA::Boolean
 TAO_find (const CORBA::Any& sequence, const OPERAND_TYPE& element)
 {
@@ -44,5 +46,7 @@ TAO_find (const CORBA::Any& sequence, const OPERAND_TYPE& element)
 
   return return_value;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_INTERPRETER_UTILS_CPP */

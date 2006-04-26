@@ -15,13 +15,19 @@
 #define TAO_IIOP_LITE_FACTORY_H
 
 #include /**/ "ace/pre.h"
-#include "ace/Service_Config.h"
+
+#include "tao/orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
+
 #include "tao/Protocol_Factory.h"
+#include "ace/Service_Config.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Acceptor;
 class TAO_Connector;
@@ -56,12 +62,16 @@ public:
 private:
   /// Changing the version number can be used to provide backwards
   /// compatibility with old clients.
-  int major_;
-  int minor_;
+  int const major_;
+  int const minor_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_IIOP_Lite_Protocol_Factory)
 ACE_FACTORY_DECLARE (TAO, TAO_IIOP_Lite_Protocol_Factory)
+
+#endif /* TAO_HAS_IIOP && TAO_HAS_IIOP != 0 */
 
 #include /**/ "ace/post.h"
 #endif /* TAO_IIOP_Lite_factory_H */

@@ -33,13 +33,15 @@
 
 #include /**/ "ace/pre.h"
 
-#include "portableserver_export.h"
-#include "ForwardRequestC.h"
+#include "tao/PortableServer/portableserver_export.h"
+#include "tao/PortableServer/ForwardRequestC.h"
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:59
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace PortableServer
 {
@@ -61,6 +63,8 @@ TAO_PortableServer_Export void operator<<= (CORBA::Any &, const PortableServer::
 TAO_PortableServer_Export void operator<<= (CORBA::Any &, PortableServer::ForwardRequest*); // noncopying version
 TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableServer::ForwardRequest *&); // deprecated
 TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, const PortableServer::ForwardRequest *&);
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 

@@ -19,6 +19,9 @@
 #ifndef ACE_TEST_CONFIG_H
 #define ACE_TEST_CONFIG_H
 
+// This first #undef protects against command-line definitions.
+#undef ACE_NDEBUG
+
 #include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -30,8 +33,6 @@
 #undef ACE_NLOGGING
 #endif /* ACE_NLOGGING */
 
-// This first #undef protects against command-line definitions.
-#undef ACE_NDEBUG
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/Log_Msg.h"

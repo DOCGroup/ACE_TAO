@@ -1,9 +1,9 @@
-#include "MCAST_Parser.h"
-#include "default_ports.h"
-#include "ORB_Core.h"
-#include "ORB.h"
-#include "Environment.h"
-#include "debug.h"
+#include "tao/MCAST_Parser.h"
+#include "tao/default_ports.h"
+#include "tao/ORB_Core.h"
+#include "tao/ORB.h"
+#include "tao/Environment.h"
+#include "tao/debug.h"
 
 #include "ace/SOCK_Acceptor.h"
 #include "ace/SOCK_Dgram.h"
@@ -11,7 +11,7 @@
 #include "ace/OS_NS_string.h"
 
 #if !defined(__ACE_INLINE__)
-#include "MCAST_Parser.i"
+#include "tao/MCAST_Parser.i"
 #endif /* __ACE_INLINE__ */
 
 
@@ -22,10 +22,12 @@ ACE_RCSID (tao,
 
 static const char mcast_prefix[] = "mcast:";
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_MCAST_Parser::~TAO_MCAST_Parser (void)
 {
 }
-
 
 int
 TAO_MCAST_Parser::match_prefix (const char *ior_string) const
@@ -52,7 +54,7 @@ TAO_MCAST_Parser::parse_string (const char *ior,
    */
   CORBA::Object_ptr object = CORBA::Object::_nil ();
 
-  CORBA::UShort port =
+  CORBA::UShort const port =
     (CORBA::UShort) ACE_OS::atoi (this->mcast_port_.in ());
 
   ACE_Time_Value *timeout = orb->get_timeout ();
@@ -89,14 +91,14 @@ TAO_MCAST_Parser::multicast_to_service (const char *service_name,
     CORBA::Object::_nil ();
 
   // Use UDP multicast to locate the  service.
-  int result = this->multicast_query (ior,
-                                      service_name,
-                                      port,
-                                      mcast_address,
-                                      mcast_ttl,
-                                      mcast_nic,
-                                      timeout,
-                                      orb);
+  int const result = this->multicast_query (ior,
+                                            service_name,
+                                            port,
+                                            mcast_address,
+                                            mcast_ttl,
+                                            mcast_nic,
+                                            timeout,
+                                            orb);
 
   // If the IOR didn't fit into <buf>, memory for it was dynamically
   // allocated - make sure it gets deallocated.
@@ -507,6 +509,8 @@ TAO_MCAST_Parser::assign_to_variables (const char * &mcast_name)
                                   mcast_name_cstring.length()
                                   -1).c_str ();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (TAO_MCAST_Parser,
                        ACE_TEXT ("MCAST_Parser"),

@@ -22,6 +22,7 @@
 
 #include "tao/PortableServer/Servant_Base.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class FT_ProxyAdmin_Base
 {
@@ -46,7 +47,7 @@ protected:
   FtRtecEventComm::ObjectId object_id_;
 };
 
-
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif

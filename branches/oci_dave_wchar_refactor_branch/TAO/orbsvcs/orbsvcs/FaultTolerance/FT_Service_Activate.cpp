@@ -1,7 +1,7 @@
-#include "FT_Service_Activate.h"
-#include "FT_Service_Callbacks.h"
-#include "FT_ORBInitializer.h"
-#include "FT_Endpoint_Selector_Factory.h"
+#include "orbsvcs/FaultTolerance/FT_Service_Activate.h"
+#include "orbsvcs/FaultTolerance/FT_Service_Callbacks.h"
+#include "orbsvcs/FaultTolerance/FT_ORBInitializer.h"
+#include "orbsvcs/FaultTolerance/FT_Endpoint_Selector_Factory.h"
 #include "tao/ORB_Core.h"
 #include "tao/Service_Callbacks.h"
 #include "ace/Dynamic_Service.h"
@@ -10,6 +10,8 @@ ACE_RCSID(FaultTolerance, FT_Service_Activate, "$Id$")
 
 static bool initialized = false;
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_FT_Service_Activate::TAO_FT_Service_Activate (void)
 {
 }
@@ -17,7 +19,6 @@ TAO_FT_Service_Activate::TAO_FT_Service_Activate (void)
 TAO_FT_Service_Activate::~TAO_FT_Service_Activate (void)
 {
 }
-
 
 TAO_Service_Callbacks *
 TAO_FT_Service_Activate::activate_services (TAO_ORB_Core *orb_core)
@@ -65,6 +66,8 @@ TAO_FT_Service_Activate::Initializer (void)
 
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_FACTORY_DEFINE (TAO_FT,TAO_FT_Service_Activate)
 

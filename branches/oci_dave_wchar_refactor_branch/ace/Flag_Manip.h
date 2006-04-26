@@ -31,6 +31,7 @@
 #endif
 #define ACE_EXPORT_MACRO ACE_Export
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
 {
@@ -46,6 +47,8 @@ namespace ACE
   /// Return the current setting of flags associated with @a handle.
   ACE_NAMESPACE_INLINE_FUNCTION int get_flags (ACE_HANDLE handle);
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Flag_Manip.inl"

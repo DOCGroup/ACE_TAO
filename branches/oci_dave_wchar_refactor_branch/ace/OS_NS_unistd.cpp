@@ -1,4 +1,3 @@
-// -*- C++ -*-
 // $Id$
 
 #include "ace/OS_NS_unistd.h"
@@ -17,11 +16,7 @@ ACE_RCSID(ace, OS_NS_unistd, "$Id$")
 #include "ace/OS_NS_Thread.h"
 #include "ace/Object_Manager_Base.h"
 #include "ace/os_include/sys/os_pstat.h"
-
-#if defined(__FreeBSD__) || defined(__NetBSD__) || defined(__OpenBSD__) || defined(__APPLE__)
-// for sysctl(), used by ACE_OS::num_processors()
-#include <sys/sysctl.h>
-#endif
+#include "ace/os_include/sys/os_sysctl.h"
 
 #if defined (ACE_NEEDS_FTRUNCATE)
 extern "C" int
@@ -38,6 +33,8 @@ ftruncate (ACE_HANDLE handle, long len)
 #endif /* ACE_NEEDS_FTRUNCATE */
 
 /*****************************************************************************/
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
 ACE_OS::argv_to_string (ACE_TCHAR **argv,
@@ -301,17 +298,17 @@ ACE_OS::num_processors (void)
 
 #if defined (ACE_HAS_PHARLAP)
   return 1;
-#elif defined (ACE_WIN32) || defined (ACE_WIN64)
+#elif defined (ACE_WIN32)
   SYSTEM_INFO sys_info;
   ::GetSystemInfo (&sys_info);
   return sys_info.dwNumberOfProcessors;
-#elif defined (linux) || defined (sun) || defined (DIGITAL_UNIX) || defined (CYGWIN32)
+#elif defined (_SC_NPROCESSORS_CONF)
   return ::sysconf (_SC_NPROCESSORS_CONF);
-#elif defined(__FreeBSD__) || defined (__NetBSD__) || defined(__OpenBSD__) || defined(__APPLE__)
+#elif defined (ACE_HAS_SYSCTL)
   int num_processors;
   int mib[2] = { CTL_HW, HW_NCPU };
   size_t len = sizeof (num_processors);
-  
+
   sysctl(mib, 2, &num_processors, &len, NULL, 0);
   return num_processors;
 #else
@@ -326,25 +323,25 @@ ACE_OS::num_processors_online (void)
 
 #if defined (ACE_HAS_PHARLAP)
   return 1;
-#elif defined (ACE_WIN32) || defined (ACE_WIN64)
+#elif defined (ACE_WIN32)
   SYSTEM_INFO sys_info;
   ::GetSystemInfo (&sys_info);
   return sys_info.dwNumberOfProcessors;
-#elif defined (linux) || defined (sun) || defined (DIGITAL_UNIX) || defined (CYGWIN32)
+#elif defined (_SC_NPROCESSORS_ONLN)
   return ::sysconf (_SC_NPROCESSORS_ONLN);
+#elif defined (ACE_HAS_SYSCTL)
+  int num_processors;
+  int mib[2] = { CTL_HW, HW_NCPU };
+  size_t len = sizeof (num_processors);
+
+  sysctl(mib, 2, &num_processors, &len, NULL, 0);
+  return num_processors;
 #elif defined (__hpux)
   struct pst_dynamic psd;
   if (::pstat_getdynamic (&psd, sizeof (psd), (size_t) 1, 0) != -1)
     return psd.psd_proc_cnt;
   else
     return -1;
-#elif defined(__FreeBSD__) || defined (__NetBSD__) || defined(__OpenBSD__) || defined(__APPLE__)
-  int num_processors;
-  int mib[2] = { CTL_HW, HW_NCPU };
-  size_t len = sizeof (num_processors);
-  
-  sysctl(mib, 2, &num_processors, &len, NULL, 0);
-  return num_processors;
 #else
   ACE_NOTSUP_RETURN (-1);
 #endif
@@ -647,3 +644,4 @@ ACE_OS::write_n (ACE_HANDLE handle,
   return bytes_transferred;
 }
 
+ACE_END_VERSIONED_NAMESPACE_DECL

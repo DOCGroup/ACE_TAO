@@ -1,4 +1,4 @@
-#include "LB_ClientRequestInterceptor.h"
+#include "orbsvcs/LoadBalancing/LB_ClientRequestInterceptor.h"
 
 #include "orbsvcs/CosLoadBalancingC.h"
 
@@ -7,6 +7,7 @@ ACE_RCSID (LoadBalancing,
            TAO_LB_ClientRequestInterceptor,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 char *
 TAO_LB_ClientRequestInterceptor::name (
@@ -109,3 +110,5 @@ TAO_LB_ClientRequestInterceptor::receive_other (
                    PortableInterceptor::ForwardRequest))
 {
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

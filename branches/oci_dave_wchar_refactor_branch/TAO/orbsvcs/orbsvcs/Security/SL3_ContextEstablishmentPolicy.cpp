@@ -1,12 +1,13 @@
 // $Id$
 
-#include "SL3_ContextEstablishmentPolicy.h"
+#include "orbsvcs/Security/SL3_ContextEstablishmentPolicy.h"
 
 
 ACE_RCSID (Security,
            SL3_ContextEstablishmentPolicy,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::SL3::ContextEstablishmentPolicy::ContextEstablishmentPolicy (
   SecurityLevel3::CredsDirective             creds_directive,
@@ -121,3 +122,5 @@ TAO::SL3::ContextEstablishmentPolicy::destroy (
   this->use_confidentiality_ = SecurityLevel3::FD_UseDefault;
   this->use_integrity_       = SecurityLevel3::FD_UseDefault;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

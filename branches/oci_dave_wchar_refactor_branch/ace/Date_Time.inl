@@ -1,12 +1,13 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
-
-// Date_Time.i
 
 #include "ace/Global_Macros.h"
 #include "ace/Time_Value.h"
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_time.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE void
 ACE_Date_Time::update (const ACE_Time_Value& timevalue)
@@ -214,3 +215,5 @@ ACE_Date_Time::weekday (long wday)
   ACE_TRACE ("ACE_Date_Time::weekday");
   wday_ = wday;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

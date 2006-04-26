@@ -1,4 +1,4 @@
-#include "SCIOP_Connection_Handler.h"
+#include "tao/Strategies/SCIOP_Connection_Handler.h"
 
 #if TAO_HAS_SCIOP == 1
 
@@ -19,8 +19,8 @@
 #include "tao/ORB.h"
 #include "tao/CDR.h"
 #include "tao/Server_Strategy_Factory.h"
-#include "SCIOP_Transport.h"
-#include "SCIOP_Endpoint.h"
+#include "tao/Strategies/SCIOP_Transport.h"
+#include "tao/Strategies/SCIOP_Endpoint.h"
 #include "tao/Transport_Cache_Manager.h"
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/Base_Transport_Property.h"
@@ -31,6 +31,8 @@
 ACE_RCSID (tao,
            SCIOP_Connection_Handler,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_SCIOP_Connection_Handler::TAO_SCIOP_Connection_Handler (ACE_Thread_Manager *t)
   : TAO_SCIOP_SVC_HANDLER (t, 0 , 0),
@@ -203,7 +205,7 @@ TAO_SCIOP_Connection_Handler::open (void*)
     return -1;
 
   this->state_changed (TAO_LF_Event::LFS_SUCCESS,
-		       this->orb_core ()->leader_follower ());
+                       this->orb_core ()->leader_follower ());
 
   return 0;
 }
@@ -229,7 +231,7 @@ TAO_SCIOP_Connection_Handler::handle_input (ACE_HANDLE h)
 int
 TAO_SCIOP_Connection_Handler::handle_output (ACE_HANDLE handle)
 {
-  int result =
+  int const result =
     this->handle_output_eh (handle, this);
 
   if (result == -1)
@@ -302,7 +304,7 @@ TAO_SCIOP_Connection_Handler::process_listen_point_list (
     IIOP::ListenPointList &listen_list)
 {
   // Get the size of the list
-  CORBA::ULong len = listen_list.length ();
+  CORBA::ULong const len = listen_list.length ();
 
   for (CORBA::ULong i = 0; i < len; ++ i)
     {
@@ -330,7 +332,7 @@ TAO_SCIOP_Connection_Handler::process_listen_point_list (
 
       // The property for this handler has changed. Recache the
       // handler with this property
-      int retval = this->transport ()->recache_transport (&prop);
+      int const retval = this->transport ()->recache_transport (&prop);
       if (retval == -1)
         return retval;
 
@@ -359,10 +361,10 @@ TAO_SCIOP_Connection_Handler::set_dscp_codepoint (CORBA::Boolean set_network_pri
 
   if (tos != this->dscp_codepoint_)
     {
-      int result = this->peer ().set_option (IPPROTO_IP,
-                                             IP_TOS,
-                                             (int *) &tos ,
-                                             (int) sizeof (tos));
+      int const result = this->peer ().set_option (IPPROTO_IP,
+                                                   IP_TOS,
+                                                   (int *) &tos ,
+                                                   (int) sizeof (tos));
 
       if (TAO_debug_level)
         {
@@ -382,5 +384,7 @@ TAO_SCIOP_Connection_Handler::set_dscp_codepoint (CORBA::Boolean set_network_pri
 
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_SCIOP == 1 */

@@ -26,19 +26,17 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:291
+// be\be_codegen.cpp:277
 
 
-#include "InterceptorC.h"
+#include "tao/PI/InterceptorC.h"
 #include "tao/CDR.h"
 #include "ace/OS_NS_string.h"
 
-#if defined (__BORLANDC__)
-#pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
-#endif /* __BORLANDC__ */
-
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:70
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Arg traits specializations.
 namespace TAO
@@ -64,7 +62,7 @@ TAO::Objref_Traits<PortableInterceptor::Interceptor>::release (
     PortableInterceptor::Interceptor_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 PortableInterceptor::Interceptor_ptr
@@ -73,13 +71,13 @@ TAO::Objref_Traits<PortableInterceptor::Interceptor>::nil (void)
   return PortableInterceptor::Interceptor::_nil ();
 }
 
-CORBA::Boolean
+::CORBA::Boolean
 TAO::Objref_Traits<PortableInterceptor::Interceptor>::marshal (
     PortableInterceptor::Interceptor_ptr p,
     TAO_OutputCDR & cdr
   )
 {
-  return CORBA::Object::marshal (p, cdr);
+  return ::CORBA::Object::marshal (p, cdr);
 }
 
 PortableInterceptor::Interceptor::Interceptor (void)
@@ -88,17 +86,9 @@ PortableInterceptor::Interceptor::Interceptor (void)
 PortableInterceptor::Interceptor::~Interceptor (void)
 {}
 
-void 
-PortableInterceptor::Interceptor::_tao_any_destructor (void *_tao_void_pointer)
-{
-  Interceptor *_tao_tmp_pointer =
-    static_cast<Interceptor *> (_tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
-}
-
 PortableInterceptor::Interceptor_ptr
 PortableInterceptor::Interceptor::_narrow (
-    CORBA::Object_ptr _tao_objref
+    ::CORBA::Object_ptr _tao_objref
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
@@ -109,7 +99,7 @@ PortableInterceptor::Interceptor::_narrow (
 
 PortableInterceptor::Interceptor_ptr
 PortableInterceptor::Interceptor::_unchecked_narrow (
-    CORBA::Object_ptr _tao_objref
+    ::CORBA::Object_ptr _tao_objref
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
@@ -121,21 +111,21 @@ PortableInterceptor::Interceptor::_unchecked_narrow (
 PortableInterceptor::Interceptor_ptr
 PortableInterceptor::Interceptor::_duplicate (Interceptor_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void
 PortableInterceptor::Interceptor::_tao_release (Interceptor_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
-CORBA::Boolean
+::CORBA::Boolean
 PortableInterceptor::Interceptor::_is_a (
     const char *value
     ACE_ENV_ARG_DECL_NOT_USED
@@ -169,8 +159,10 @@ const char* PortableInterceptor::Interceptor::_interface_repository_id (void) co
   return "IDL:omg.org/PortableInterceptor/Interceptor:1.0";
 }
 
-CORBA::Boolean
+::CORBA::Boolean
 PortableInterceptor::Interceptor::marshal (TAO_OutputCDR &)
 {
   return false;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

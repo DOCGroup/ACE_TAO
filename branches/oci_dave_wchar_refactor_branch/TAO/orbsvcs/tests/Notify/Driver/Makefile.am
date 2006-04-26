@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ../bin/mwc.pl -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/config -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/templates -type automake -noreldefs TAO.mwc
+## ../bin/mwc.pl -type automake -noreldefs TAO.mwc
 
 ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
@@ -16,6 +16,7 @@ TAO_ROOT = $(top_srcdir)
 
 ## Makefile.Notify_Test_Driver.am
 
+if BUILD_CORBA_MESSAGING
 if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS = Notify_Tests_Driver
@@ -35,6 +36,13 @@ Notify_Tests_Driver_SOURCES = \
 
 Notify_Tests_Driver_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/tests/Notify/lib/libTAO_NotifyTests.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosEvent_Serv.la \
+  $(TAO_BUILDDIR)/tao/libTAO_IFR_Client.la \
+  $(TAO_BUILDDIR)/tao/libTAO_DynamicInterface.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Serv.la \
   $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
@@ -50,6 +58,7 @@ Notify_Tests_Driver_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_MINIMUM_CORBA
+endif BUILD_CORBA_MESSAGING
 
 ## Clean up template repositories, etc.
 clean-local:

@@ -1,8 +1,8 @@
 // -*- C++ -*-
 
-#include "RequestProcessingStrategyServantManager.h"
-#include "ServantManagerC.h"
-#include "Root_POA.h"
+#include "tao/PortableServer/RequestProcessingStrategyServantManager.h"
+#include "tao/PortableServer/ServantManagerC.h"
+#include "tao/PortableServer/Root_POA.h"
 #include "tao/ORB_Constants.h"
 
 ACE_RCSID (PortableServer,
@@ -10,6 +10,8 @@ ACE_RCSID (PortableServer,
            "$Id$")
 
 #if (TAO_HAS_MINIMUM_POA == 0)
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -93,6 +95,8 @@ namespace TAO
     }
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 

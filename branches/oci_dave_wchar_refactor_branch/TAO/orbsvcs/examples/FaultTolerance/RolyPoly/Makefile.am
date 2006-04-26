@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ../bin/mwc.pl -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/config -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/templates -type automake -noreldefs TAO.mwc
+## ../bin/mwc.pl -type automake -noreldefs TAO.mwc
 
 ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
@@ -50,12 +50,16 @@ RolyPoly-stamp: $(srcdir)/RolyPoly.idl $(TAO_IDL_DEP)
 	@touch $@
 
 
+noinst_HEADERS = \
+  RolyPoly.idl
+
 ## Makefile.RolyPoly_Client.am
 
 if BUILD_ACE_UUID
 if BUILD_CORBA_MESSAGING
 if BUILD_EXCEPTIONS
 if BUILD_INTERCEPTORS
+if !BUILD_ACE_FOR_TAO
 if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS += client
@@ -102,6 +106,7 @@ client_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_MINIMUM_CORBA
+endif !BUILD_ACE_FOR_TAO
 endif BUILD_INTERCEPTORS
 endif BUILD_EXCEPTIONS
 endif BUILD_CORBA_MESSAGING
@@ -114,6 +119,7 @@ if BUILD_CORBA_MESSAGING
 if BUILD_EXCEPTIONS
 if BUILD_INTERCEPTORS
 if BUILD_THREADS
+if !BUILD_ACE_FOR_TAO
 if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS += server
@@ -163,6 +169,7 @@ server_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_MINIMUM_CORBA
+endif !BUILD_ACE_FOR_TAO
 endif BUILD_THREADS
 endif BUILD_INTERCEPTORS
 endif BUILD_EXCEPTIONS

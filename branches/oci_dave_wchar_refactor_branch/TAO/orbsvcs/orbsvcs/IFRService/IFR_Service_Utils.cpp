@@ -1,9 +1,9 @@
 // $Id$
 
-#include "IFR_Service_Utils.h"
-#include "IDLType_i.h"
-#include "Container_i.h"
-#include "Contained_i.h"
+#include "orbsvcs/IFRService/IFR_Service_Utils.h"
+#include "orbsvcs/IFRService/IDLType_i.h"
+#include "orbsvcs/IFRService/Container_i.h"
+#include "orbsvcs/IFRService/Contained_i.h"
 #include "orbsvcs/IFRService/ComponentRepository_i.h"
 #include "orbsvcs/IFRService/Options.h"
 #include "orbsvcs/IFRService/IFR_ComponentsS.h"
@@ -20,6 +20,8 @@
 ACE_RCSID (IFR_Service,
            IFR_Service,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Repository_i *TAO_IFR_Service_Utils::repo_ = 0;
 
@@ -423,7 +425,7 @@ TAO_IFR_Server::init_multicast_server (ACE_ENV_SINGLE_ARG_DECL)
         ACE_OS::getenv ("InterfaceRepoServicePort");
 
       if (port_number != 0)
-        port = ACE_OS::atoi (port_number);
+        port = static_cast<u_short> (ACE_OS::atoi (port_number));
     }
 
   // Port wasn't specified on the command-line or in environment -
@@ -587,7 +589,7 @@ TAO_IFR_Service_Utils::valid_container (
 void
 TAO_IFR_Service_Utils::pre_exist (
     const char *id,
-    TAO_IFR_Service_Utils::name_clash_checker checker,
+    name_clash_checker checker,
     ACE_Configuration_Section_Key &key,
     TAO_Repository_i *repo,
     CORBA::DefinitionKind kind
@@ -626,7 +628,7 @@ TAO_IFR_Service_Utils::id_exists (const char *id,
 
 void
 TAO_IFR_Service_Utils::name_exists (
-    TAO_IFR_Service_Utils::name_clash_checker checker,
+    name_clash_checker checker,
     ACE_Configuration_Section_Key &key,
     TAO_Repository_i *repo,
     CORBA::DefinitionKind kind
@@ -634,9 +636,10 @@ TAO_IFR_Service_Utils::name_exists (
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  int index = 0;
   int status = 0;
   ACE_TString section_name;
+  u_int count = 0;
+  char *stringified = 0;
 
   // Check the members defined elsewhere, if any.
   ACE_Configuration_Section_Key refs_key;
@@ -648,14 +651,17 @@ TAO_IFR_Service_Utils::name_exists (
 
   if (status == 0)
     {
-      while (repo->config ()->enumerate_sections (refs_key,
-                                                  index++,
-                                                  section_name)
-              == 0)
+      repo->config ()->get_integer_value (refs_key,
+                                          "count",
+                                          count);
+
+      for (CORBA::ULong i = 0; i < count; ++i)
         {
           ACE_Configuration_Section_Key member_key;
+          stringified = TAO_IFR_Service_Utils::int_to_string (i);
+
           repo->config ()->open_section (refs_key,
-                                         section_name.c_str (),
+                                         stringified,
                                          0,
                                          member_key);
 
@@ -681,16 +687,17 @@ TAO_IFR_Service_Utils::name_exists (
                                    defns_key);
   if (status == 0)
     {
-      index = 0;
+      repo->config ()->get_integer_value (defns_key,
+                                          "count",
+                                          count);
 
-      while (repo->config ()->enumerate_sections (defns_key,
-                                                  index++,
-                                                  section_name)
-              == 0)
+      for (CORBA::ULong i = 0; i < count; ++i)
         {
           ACE_Configuration_Section_Key defn_key;
+          stringified = TAO_IFR_Service_Utils::int_to_string (i);
+
           repo->config ()->open_section (defns_key,
-                                         section_name.c_str (),
+                                         stringified,
                                          0,
                                          defn_key);
 
@@ -823,7 +830,7 @@ TAO_IFR_Service_Utils::valid_creation (
     CORBA::DefinitionKind container_kind,
     CORBA::DefinitionKind contained_kind,
     const char *id,
-    TAO_IFR_Service_Utils::name_clash_checker checker,
+    name_clash_checker checker,
     ACE_Configuration_Section_Key &key,
     TAO_Repository_i *repo
     ACE_ENV_ARG_DECL
@@ -1002,7 +1009,7 @@ TAO_IFR_Service_Utils::set_exceptions (
   for (CORBA::ULong i = 0; i < length; ++i)
     {
       type_path =
-        TAO_IFR_Service_Utils::reference_to_path (exceptions[i].in ());
+        TAO_IFR_Service_Utils::reference_to_path (exceptions[i]);
 
       char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
       config->set_string_value (excepts_key,
@@ -1087,9 +1094,11 @@ TAO_IFR_Service_Utils::gen_valuetype_tc_r (
 
   CORBA::ValueMemberSeq vm_seq;
   vm_seq.length (0);
-//  this->fill_vm_seq (vm_seq
-//                     ACE_ENV_ARG_PARAMETER);
-//  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+  TAO_IFR_Service_Utils::fill_valuemember_seq (vm_seq,
+                                               key,
+                                               repo
+                                               ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
   return
     repo->tc_factory ()->create_value_tc (id.c_str (),
@@ -1154,8 +1163,8 @@ TAO_IFR_Service_Utils::fill_valuemember_seq (
                                          "version",
                                          holder);
       vm_seq[i].version = holder.fast_rep ();
-      repo->config ()->get_string_value (repo->repo_ids_key (),
-                                         vm_seq[i].id.in (),
+      repo->config ()->get_string_value (member_key,
+                                         "type_path",
                                          holder);
       TAO_IDLType_i *impl =
         TAO_IFR_Service_Utils::path_to_idltype (holder,
@@ -1433,3 +1442,4 @@ TAO_IFR_Service_Utils::oid_to_string (PortableServer::ObjectId &oid)
   return oid_string;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

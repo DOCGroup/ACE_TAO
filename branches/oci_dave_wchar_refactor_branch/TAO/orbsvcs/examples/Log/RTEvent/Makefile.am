@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ../bin/mwc.pl -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/config -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/templates -type automake -noreldefs TAO.mwc
+## ../bin/mwc.pl -type automake -noreldefs TAO.mwc
 
 ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
@@ -35,12 +35,6 @@ RTEvent_Consumer_SOURCES = \
 
 RTEvent_Consumer_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTEventLogAdmin.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTSched.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_DsLogAdmin_Serv.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Utils.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_ETCL.la \
-  $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_DsLogAdmin_Skel.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_DsLogAdmin.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTEvent_Skel.la \
@@ -77,12 +71,6 @@ RTEvent_Supplier_SOURCES = \
 
 RTEvent_Supplier_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTEventLogAdmin.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTSched.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_DsLogAdmin_Serv.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Utils.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_ETCL.la \
-  $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_DsLogAdmin_Skel.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_DsLogAdmin.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTEvent_Skel.la \

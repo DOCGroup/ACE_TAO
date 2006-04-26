@@ -1,3 +1,5 @@
+// -*- C++ -*-
+
 // $Id$
 //=============================================================================
 /**
@@ -7,20 +9,14 @@
  *
  *  @author  Jason Cohen, Lockheed Martin ATL  <jcohen@atl.lmco.com>
  *  @author  Keith O'Hara, Lockheed Martin ATL
- *  @author  based on IIOP_Connector by
- *  @author  Fred Kuhns <fredk@cs.wustl.edu>
- *  @author  Ossama Othman <ossama@uci.edu>
- *  @author  Balachandran Natarajan <bala@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #ifndef TAO_SCIOP_CONNECTOR_H
 #define TAO_SCIOP_CONNECTOR_H
 
 #include /**/ "ace/pre.h"
 #include "tao/orbconf.h"
-#include "ace/SOCK_SEQPACK_Connector.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -28,12 +24,15 @@
 
 #if TAO_HAS_SCIOP == 1
 
-class TAO_SCIOP_Endpoint;
-
-#include "ace/Connector.h"
 #include "tao/Transport_Connector.h"
 #include "tao/Connector_Impl.h"
-#include "SCIOP_Connection_Handler.h"
+#include "tao/Strategies/SCIOP_Connection_Handler.h"
+#include "ace/SOCK_SEQPACK_Connector.h"
+#include "ace/Connector.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+class TAO_SCIOP_Endpoint;
 
 // ****************************************************************
 
@@ -124,6 +123,8 @@ private:
   /// The connector initiating connection requests for SCIOP.
   TAO_SCIOP_BASE_CONNECTOR base_connector_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_SCIOP == 1 */
 

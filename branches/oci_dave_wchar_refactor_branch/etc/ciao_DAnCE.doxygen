@@ -75,7 +75,7 @@ HTML_HEADER           =
 HTML_FOOTER           =
 HTML_STYLESHEET       =
 HTML_ALIGN_MEMBERS    = YES
-GENERATE_HTMLHELP     = NO
+GENERATE_HTMLHELP     = YES
 
 #---------------------------------------------------------------------------
 # configuration options related to the LaTeX output
@@ -119,27 +119,34 @@ SEARCH_INCLUDES       = YES
 INCLUDE_PATH          = TAO . ACEXML TAO/tao/IORTable
 PREDEFINED            =
 EXPAND_AS_DEFINED     = ACE_RCSID \
-			ACE_UNIMPLEMENTED_FUNC \
+                        ACE_UNIMPLEMENTED_FUNC \
                         ACE_CACHE_MAP_MANAGER \
                         ACE_THROW_SPEC \
-                        TAO_NAMESPACE \
+                        ACE_ENV_ARG_DECL_WITH_DEFAULTS \
+                        ACE_ENV_ARG_DECL_NOT_USED \
+                        ACE_ENV_SINGLE_ARG_DECL_NOT_USED \
+                        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS \
+                        ACE_ENV_ARG_DECL \
+                        ACE_ENV_SINGLE_ARG_DECL \
+                        ACE_ENV_SINGLE_ARG_PARAMETER \
+                        ACE_ENV_ARG_PARAMETER \
                         CIAO_NAMESPACE
 
 #---------------------------------------------------------------------------
 # Configuration::addtions related to external references
 #---------------------------------------------------------------------------
 
-TAGFILES              = html/ace/ACE.tag=../../../../ace \
-                        html/tao/TAO.tag=../../.. \
-                        html/ace/ssl/ACE_SSL.tag=../../../../ace/ssl \
-                        html/tao/portableserver/TAO_PortableServer.tag=../../../portableserver \
-                        html/tao/iortable/TAO_IORTable.tag=../../../iortable \
-                        html/tao/rtcorba/TAO_RTCORBA.tag=../../../rtcorba \
-                        html/tao/security/TAO_Security.tag=../../../security \
-                        html/acexml/ACEXML.tag=../../../../acexml \
-                        html/tao/rtportableserver/TAO_RTPortableServer.tag=../../../rtportableserver \
-                        html/tao/cosnaming/TAO_CosNaming.tag=../../../cosnaming \
-                        html/tao/ifr/TAO_IFR.tag=../../../ifr
+TAGFILES              = html/ace/ACE.tag=../../../ace \
+                        html/tao/TAO.tag=../.. \
+                        html/ace/ssl/ACE_SSL.tag=../../../ace/ssl \
+                        html/tao/portableserver/TAO_PortableServer.tag=../../portableserver \
+                        html/tao/iortable/TAO_IORTable.tag=../../iortable \
+                        html/tao/rtcorba/TAO_RTCORBA.tag=../../rtcorba \
+                        html/tao/security/TAO_Security.tag=../../security \
+                        html/acexml/ACEXML.tag=../../../acexml \
+                        html/tao/rtportableserver/TAO_RTPortableServer.tag=../../rtportableserver \
+                        html/tao/cosnaming/TAO_CosNaming.tag=../../cosnaming \
+                        html/tao/ifr/TAO_IFR.tag=../../ifr
 GENERATE_TAGFILE      = html/tao/ciao/DAnCE.tag
 ALLEXTERNALS          = NO
 PERL_PATH             = /usr/bin/perl
@@ -157,6 +164,7 @@ COLLABORATION_GRAPH   = YES
 INCLUDE_GRAPH         = YES
 INCLUDED_BY_GRAPH     = YES
 GRAPHICAL_HIERARCHY   = YES
+DOT_MULTI_TARGETS     = YES
 # The tag DOT_PATH can be used to specify the path where the dot tool can be
 # found. If left blank, it is assumed the dot tool can be found on the path.
 DOT_PATH              =
@@ -167,4 +175,4 @@ MAX_DOT_GRAPH_HEIGHT  = 1024
 # Configuration::addtions related to the search engine
 #---------------------------------------------------------------------------
 
-SEARCHENGINE          = NO
+SEARCHENGINE          = YES

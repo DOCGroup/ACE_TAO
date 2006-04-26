@@ -1,11 +1,12 @@
 // $Id$
 
-
 #include "tao/CDR.h"
 
 #ifndef __ACE_INLINE__
 # include "tao/AnyTypeCode/Recursive_Type_TypeCode.inl"
 #endif  /* __ACE_INLINE__ */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class TypeCodeBase, typename TypeCodeType, typename MemberArrayType>
 bool
@@ -129,10 +130,12 @@ TAO::TypeCode::Recursive_Type<TypeCodeBase,
 
   // Top-level TypeCode case.
   if (!(this->in_recursion_))
-    return this->ACE_NESTED_CLASS (CORBA, TypeCode)::tao_marshal_kind (cdr);
+    return this->::CORBA::TypeCode::tao_marshal_kind (cdr);
 
   // Recursive/indirected TypeCode case.
   CORBA::ULong const indirection_kind = 0xffffffff;
 
   return (cdr << indirection_kind);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

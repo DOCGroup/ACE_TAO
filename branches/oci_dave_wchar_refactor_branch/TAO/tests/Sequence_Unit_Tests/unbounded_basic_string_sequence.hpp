@@ -14,6 +14,8 @@
 #include "generic_sequence.hpp"
 #include "string_sequence_element.hpp"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
 namespace details
@@ -102,4 +104,5 @@ private:
 } // namespace details
 } // namespace TAO
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 #endif // guard_unbounded_basic_string_sequence_hpp

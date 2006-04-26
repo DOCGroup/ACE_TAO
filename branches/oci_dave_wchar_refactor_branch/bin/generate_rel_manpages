@@ -13,9 +13,9 @@ require Cwd;
 ##########
 my $hostname;
 chomp ($hostname = $ENV{'HOSTNAME'}  ||  `uname -n`);
-unless ("$hostname" eq 'tao') {
+unless ("$hostname" eq 'naboo') {
   #### For efficiency sake . . .
-  die "$0: must run on host tao.dre.vanderbilt.edu\n";
+  die "$0: must run on host naboo.dre.vanderbilt.edu\n";
 }
 my  $perl_path = '/usr/bin/perl';
 
@@ -30,7 +30,7 @@ my $dot_path = '/usr/bin';
 
 my  $doxy_path = '/usr/bin';
 
-my $doxy_version = '1.4.1';
+my $doxy_version = '1.4.6-4';
 
 &can_run($doxy_path.'/doxygen --version | grep '.$doxy_version.' >/dev/null') ||
   die "$0: doxygen path or version incorrect, please fix the script\n";

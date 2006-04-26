@@ -26,19 +26,17 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// .\be\be_codegen.cpp:291
+// be\be_codegen.cpp:277
 
 
-#include "PolicyFactoryC.h"
+#include "tao/PI/PolicyFactoryC.h"
 #include "tao/CDR.h"
 #include "ace/OS_NS_string.h"
 
-#if defined (__BORLANDC__)
-#pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
-#endif /* __BORLANDC__ */
-
 // TAO_IDL - Generated from
-// .\be\be_visitor_arg_traits.cpp:69
+// be\be_visitor_arg_traits.cpp:70
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Arg traits specializations.
 namespace TAO
@@ -47,7 +45,7 @@ namespace TAO
 
 
 // TAO_IDL - Generated from
-// c:\ace\latest\ace_wrappers\tao\tao_idl\be\be_visitor_interface/interface_cs.cpp:60
+// be\be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for PortableInterceptor::PolicyFactory.
 
@@ -64,7 +62,7 @@ TAO::Objref_Traits<PortableInterceptor::PolicyFactory>::release (
     PortableInterceptor::PolicyFactory_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 PortableInterceptor::PolicyFactory_ptr
@@ -73,13 +71,13 @@ TAO::Objref_Traits<PortableInterceptor::PolicyFactory>::nil (void)
   return PortableInterceptor::PolicyFactory::_nil ();
 }
 
-CORBA::Boolean
+::CORBA::Boolean
 TAO::Objref_Traits<PortableInterceptor::PolicyFactory>::marshal (
     PortableInterceptor::PolicyFactory_ptr p,
     TAO_OutputCDR & cdr
   )
 {
-  return CORBA::Object::marshal (p, cdr);
+  return ::CORBA::Object::marshal (p, cdr);
 }
 
 PortableInterceptor::PolicyFactory::PolicyFactory (void)
@@ -88,66 +86,46 @@ PortableInterceptor::PolicyFactory::PolicyFactory (void)
 PortableInterceptor::PolicyFactory::~PolicyFactory (void)
 {}
 
-void 
-PortableInterceptor::PolicyFactory::_tao_any_destructor (void *_tao_void_pointer)
-{
-  PolicyFactory *_tao_tmp_pointer =
-    static_cast<PolicyFactory *> (_tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
-}
-
 PortableInterceptor::PolicyFactory_ptr
 PortableInterceptor::PolicyFactory::_narrow (
-    CORBA::Object_ptr _tao_objref
+    ::CORBA::Object_ptr _tao_objref
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return PolicyFactory::_nil ();
-    }
-  
-  PolicyFactory_ptr proxy =
-    dynamic_cast<PolicyFactory_ptr> (_tao_objref);
-  
-  return PolicyFactory::_duplicate (proxy);
+  return PolicyFactory::_duplicate (
+      dynamic_cast<PolicyFactory_ptr> (_tao_objref)
+    );
 }
 
 PortableInterceptor::PolicyFactory_ptr
 PortableInterceptor::PolicyFactory::_unchecked_narrow (
-    CORBA::Object_ptr _tao_objref
+    ::CORBA::Object_ptr _tao_objref
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return PolicyFactory::_nil ();
-    }
-  
-  PolicyFactory_ptr proxy =
-    dynamic_cast<PolicyFactory_ptr> (_tao_objref);
-  
-  return PolicyFactory::_duplicate (proxy);
+  return PolicyFactory::_duplicate (
+      dynamic_cast<PolicyFactory_ptr> (_tao_objref)
+    );
 }
 
 PortableInterceptor::PolicyFactory_ptr
 PortableInterceptor::PolicyFactory::_duplicate (PolicyFactory_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void
 PortableInterceptor::PolicyFactory::_tao_release (PolicyFactory_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
-CORBA::Boolean
+::CORBA::Boolean
 PortableInterceptor::PolicyFactory::_is_a (
     const char *value
     ACE_ENV_ARG_DECL_NOT_USED
@@ -181,7 +159,7 @@ const char* PortableInterceptor::PolicyFactory::_interface_repository_id (void) 
   return "IDL:omg.org/PortableInterceptor/PolicyFactory:1.0";
 }
 
-CORBA::Boolean
+::CORBA::Boolean
 PortableInterceptor::PolicyFactory::marshal (TAO_OutputCDR &)
 {
   return false;
@@ -198,3 +176,5 @@ PortableInterceptor::PolicyFactory::_create_policy (CORBA::PolicyType
                     CORBA::Policy::_nil ());
 }
 
+
+TAO_END_VERSIONED_NAMESPACE_DECL

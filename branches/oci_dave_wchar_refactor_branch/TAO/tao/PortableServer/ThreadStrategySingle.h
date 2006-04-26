@@ -14,13 +14,16 @@
 #define TAO_THREADSTRATEGYSINGLE_H
 #include /**/ "ace/pre.h"
 
-#include "portableserver_export.h"
+#include "tao/PortableServer/portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ThreadStrategy.h"
+#include "tao/PortableServer/ThreadStrategy.h"
+
+#include "tao/orbconf.h"
+
 #include "ace/Service_Config.h"
 
 // Locking
@@ -29,9 +32,10 @@
 #include "ace/Recursive_Thread_Mutex.h"
 #include "ace/Null_Mutex.h"
 
-#include "tao/orbconf.h"
 
 #if (TAO_HAS_MINIMUM_POA == 0)
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -49,11 +53,13 @@ namespace TAO
     private:
       TAO_SYNCH_RECURSIVE_MUTEX lock_;
     };
-
-    ACE_STATIC_SVC_DECLARE_EXPORT (TAO_PortableServer, ThreadStrategySingle)
-    ACE_FACTORY_DECLARE (TAO_PortableServer, ThreadStrategySingle)
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+ACE_STATIC_SVC_DECLARE_EXPORT (TAO_PortableServer, ThreadStrategySingle)
+ACE_FACTORY_DECLARE (TAO_PortableServer, ThreadStrategySingle)
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 

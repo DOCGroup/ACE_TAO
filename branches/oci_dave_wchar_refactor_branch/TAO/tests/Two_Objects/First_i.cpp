@@ -7,8 +7,9 @@
 #include "tao/debug.h"
 #include "tao/Transport_Cache_Manager.h"
 #include "ace/Synch.h"
+#include "ace/Auto_Event.h"
 
-ACE_RCSID(Test, Test, "$Id$")
+ACE_RCSID(Test, First_i, "$Id$")
 
 First_i::First_i (CORBA::ORB_ptr orb, ACE_Auto_Event &two_way_done)
   : orb_ (CORBA::ORB::_duplicate (orb)),

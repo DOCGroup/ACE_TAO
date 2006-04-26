@@ -14,27 +14,29 @@
 
 #include /**/ "ace/pre.h"
 
-#include "notify_serv_export.h"
+#include "orbsvcs/Notify/notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Topology_Object.h"
-#include "Topology_Factory.h"
-#include "Reconnection_Registry.h"
-#include "Routing_Slip.h"
+#include "orbsvcs/Notify/Topology_Object.h"
+#include "orbsvcs/Notify/Topology_Factory.h"
+#include "orbsvcs/Notify/Reconnection_Registry.h"
+#include "orbsvcs/Notify/Routing_Slip.h"
 
 #include "orbsvcs/CosNotifyChannelAdminS.h"
 #include "orbsvcs/NotifyExtS.h"
 
-class TAO_Notify_EventChannel;
-template <class TYPE> class TAO_Notify_Container_T;
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
+
+class TAO_Notify_EventChannel;
+template <class TYPE> class TAO_Notify_Container_T;
 
 /**
  * @class TAO_Notify_EventChannelFactory
@@ -193,6 +195,8 @@ private:
   virtual void release (void);
 
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

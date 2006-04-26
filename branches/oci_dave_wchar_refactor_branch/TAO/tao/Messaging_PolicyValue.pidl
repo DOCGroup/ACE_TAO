@@ -23,8 +23,8 @@
 #ifndef TAO_MESSAGING_POLICYVALUE_PIDL
 #define TAO_MESSAGING_POLICYVALUE_PIDL
 
-#include <IOP_IOR.pidl>
-#include <Policy_Forward.pidl>
+#include "tao/IOP_IOR.pidl"
+#include "tao/Policy_Forward.pidl"
 
 #pragma prefix "omg.org"
 

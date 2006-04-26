@@ -264,7 +264,7 @@ public:
 
   int start_server_template_skeletons (const char *fname);
   // Set the server template skeletons stream.
-  
+
   int start_anyop_header (const char *fname);
   // Set the anyop header stream.
 
@@ -272,11 +272,20 @@ public:
   // Set the anyop source stream.
 
   int end_client_header (void);
-  // Generate code at the end such as the <<= and >>= operators alongwith the
-  // ending #endif statement.
+  // Generate code at the end such as the <<= and >>= operators along
+  // with the ending #endif statement.
+
+  /// Generate necessary code at end of client inline file.
+  void end_client_inline (void);
+
+  /// Generate necessary code at end of client stub file.
+  void end_client_stubs (void);
 
   int end_server_header (void);
   // Put a last #endif in the server header.
+
+  /// Generate necessary code at end of server inline file.
+  void end_server_inline (void);
 
   int end_implementation_header (const char *fname);
   // Put a last #endif in the server header.
@@ -295,7 +304,7 @@ public:
 
   int end_server_skeletons (void);
   // Put a last #endif in the server skeletons.
-  
+
   int end_anyop_header (void);
   // Put a last #endif in the anyop header.
 
@@ -337,7 +346,7 @@ public:
 
   TAO_OutStream *anyop_header (void);
   // Get the anyop header stream.
-  
+
   TAO_OutStream *anyop_source (void);
   // Get the anyop source stream.
 
@@ -435,7 +444,7 @@ private:
 
   TAO_OutStream *server_template_inline_;
   // Server side template inline file.
-  
+
   TAO_OutStream *anyop_header_;
   // Anyop header file.
 

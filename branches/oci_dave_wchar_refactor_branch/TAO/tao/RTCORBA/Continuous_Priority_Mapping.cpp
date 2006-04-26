@@ -1,12 +1,14 @@
 // $Id$
 
-#include "Continuous_Priority_Mapping.h"
+#include "tao/RTCORBA/Continuous_Priority_Mapping.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
 #include "ace/Sched_Params.h"
 
 ACE_RCSID(RTCORBA, Continuous_Priority_Mapping, "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Continuous_Priority_Mapping::TAO_Continuous_Priority_Mapping (int policy)
   :  policy_ (policy)
@@ -45,7 +47,7 @@ TAO_Continuous_Priority_Mapping::to_native (RTCORBA::Priority corba_priority,
       current_native_priority = next_native_priority;
     }
 
-  native_priority = current_native_priority;
+  native_priority = static_cast<RTCORBA::NativePriority> (current_native_priority);
   return 1;
 
 #else
@@ -127,5 +129,7 @@ TAO_Continuous_Priority_Mapping::to_CORBA (RTCORBA::NativePriority native_priori
 #endif /* ACE_WIN32 */
 
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */

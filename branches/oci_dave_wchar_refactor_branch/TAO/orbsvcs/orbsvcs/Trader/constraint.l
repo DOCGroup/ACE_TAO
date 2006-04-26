@@ -4,7 +4,7 @@
 //
 // = LIBRARY
 //    orbsvcs
-// 
+//
 // = FILENAME
 //    constraint.l
 //
@@ -17,6 +17,8 @@
 #include "Constraint_Interpreter.h"
 #include "Constraint_Nodes.h"
 #include "Constraint_Tokens.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 static TAO_Literal_Constraint* extract_string(const char*);
 
@@ -33,8 +35,8 @@ white_space     [ \t]
 letter		[a-zA-Z]
 digit		[0-9]
 alpha_num	({letter}|{digit})
-integer		[-+]?{digit}+ 
-float		({digit}*\.{digit}+)([eE][-+]?{digit}+)? 
+integer		[-+]?{digit}+
+float		({digit}*\.{digit}+)([eE][-+]?{digit}+)?
 string		'(([^'\\]*)|([^'\\]*\\')|([^'\\]*\\\\))*'
 ident		{letter}({alpha_num}|[_])*
 newline		\n
@@ -65,37 +67,37 @@ in		{ TAO_YY_LEX_DEBUG; return TAO_IN; }
 "!="		{ TAO_YY_LEX_DEBUG; return TAO_NE; }
 "("             { TAO_YY_LEX_DEBUG; return TAO_LPAREN; }
 ")"             { TAO_YY_LEX_DEBUG; return TAO_RPAREN; }
-TRUE		{ 
-		  yylval.constraint_ = 
-		    new TAO_Literal_Constraint((CORBA::Boolean) 1);
+TRUE		{
+		  yylval.constraint_ =
+                    new TAO_Literal_Constraint(true);
 		  TAO_YY_LEX_DEBUG; return TAO_BOOLEAN;
 		}
-FALSE		{ 
-		  yylval.constraint_ = 
-		    new TAO_Literal_Constraint((CORBA::Boolean) 0);
+FALSE		{
+		  yylval.constraint_ =
+                    new TAO_Literal_Constraint(false);
 		  TAO_YY_LEX_DEBUG; return TAO_BOOLEAN;
 		}
-{integer}	{ 
-		  yylval.constraint_ = 
+{integer}	{
+		  yylval.constraint_ =
 		    new TAO_Literal_Constraint((yytext[0] == '-' ?
                     (CORBA::Long)atoi(yytext) : (CORBA::ULong)atoi(yytext)));
-		  TAO_YY_LEX_DEBUG; return TAO_NUMBER; 
+		  TAO_YY_LEX_DEBUG; return TAO_NUMBER;
 		}
-{float}		{ 
-		  yylval.constraint_ = 
+{float}		{
+		  yylval.constraint_ =
 		    new TAO_Literal_Constraint((CORBA::Double)atof(yytext));
-		  TAO_YY_LEX_DEBUG; return TAO_NUMBER; 
+		  TAO_YY_LEX_DEBUG; return TAO_NUMBER;
 		}
-{string}	{ 
+{string}	{
 		  yylval.constraint_ = extract_string(yytext);
-		  TAO_YY_LEX_DEBUG; return TAO_STRING; 
+		  TAO_YY_LEX_DEBUG; return TAO_STRING;
 		}
-{ident}		{ 
-		  yylval.constraint_ = 
+{ident}		{
+		  yylval.constraint_ =
 		    new TAO_Property_Constraint(yytext);
-		  TAO_YY_LEX_DEBUG; return TAO_IDENT; 
+		  TAO_YY_LEX_DEBUG; return TAO_IDENT;
 		}
-{unknown}       { 
+{unknown}       {
                   TAO_YY_LEX_DEBUG; return TAO_UNKNOWN;
                 }
 %%
@@ -103,7 +105,7 @@ FALSE		{
 TAO_Literal_Constraint*
 extract_string(const char* total)
 {
-  int prev_slash = 0, 
+  int prev_slash = 0,
     ctr = 0;
   char str[BUFSIZ],
    *tmp = (char*) total + 1;
@@ -130,3 +132,5 @@ extract_string(const char* total)
   str[ctr - 1] = '\0';
   return new TAO_Literal_Constraint(str);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

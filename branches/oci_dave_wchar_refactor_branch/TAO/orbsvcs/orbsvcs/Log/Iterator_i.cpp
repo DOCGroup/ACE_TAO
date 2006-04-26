@@ -4,6 +4,9 @@ ACE_RCSID (Log,
            Iterator_i,
            "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // iterator inactivity timeout
 ACE_Time_Value
 TAO_Iterator_i::timeout_(60 * 60);
@@ -66,3 +69,5 @@ TAO_Iterator_i::handle_timeout(const ACE_Time_Value&, const void*)
 
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

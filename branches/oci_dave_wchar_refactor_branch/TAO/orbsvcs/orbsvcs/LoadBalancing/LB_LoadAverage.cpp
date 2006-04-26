@@ -1,6 +1,6 @@
-#include "LB_LoadAverage.h"
-#include "LB_LoadMap.h"
-#include "LB_Random.h"
+#include "orbsvcs/LoadBalancing/LB_LoadAverage.h"
+#include "orbsvcs/LoadBalancing/LB_LoadMap.h"
+#include "orbsvcs/LoadBalancing/LB_Random.h"
 
 #include "orbsvcs/PortableGroup/PG_conf.h"
 
@@ -17,9 +17,10 @@ ACE_RCSID (LoadBalancing,
 
 
 #if !defined (__ACE_INLINE__)
-#include "LB_LoadAverage.inl"
+#include "orbsvcs/LoadBalancing/LB_LoadAverage.inl"
 #endif /* defined INLINE */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_LB_LoadAverage::TAO_LB_LoadAverage (PortableServer::POA_ptr poa)
   : poa_ (PortableServer::POA::_duplicate (poa)),
@@ -449,3 +450,5 @@ TAO_LB_LoadAverage::extract_float_property (
     ACE_THROW (PortableGroup::InvalidProperty (property.nam,
                                                property.val));
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

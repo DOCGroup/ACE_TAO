@@ -95,12 +95,12 @@
 # define ACE_HAS_STANDARD_CPP_LIBRARY 1
 # define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 0
 
-# define ACE_HAS_USING_KEYWORD
-
 # define ACE_TEMPLATES_REQUIRE_SOURCE
 
 #else  /* ! __GNUG__ && ! ghs && !__DCC__ */
-# error unsupported compiler on VxWorks
+#  ifdef __cplusplus  /* Let it slide for C compilers. */
+#    error unsupported compiler on VxWorks
+#  endif  /* __cplusplus */
 #endif /* ! __GNUG__ && ! ghs */
 
 // OS-specific configuration
@@ -152,6 +152,9 @@
 #define ACE_LACKS_FPUTWS
 #define ACE_LACKS_FSYNC
 #define ACE_LACKS_GETHOSTENT
+#define ACE_LACKS_GETOPT
+#define ACE_LACKS_GETPID
+#define ACE_LACKS_GETPPID
 #define ACE_LACKS_GETSERVBYNAME
 #define ACE_LACKS_KEY_T
 #define ACE_LACKS_LSTAT
@@ -164,6 +167,11 @@
 #define ACE_LACKS_MMAP
 #define ACE_LACKS_MPROTECT
 #define ACE_LACKS_MSYNC
+#define ACE_LACKS_NUMERIC_LIMITS
+#define ACE_LACKS_GETPROTOBYNAME
+#define ACE_LACKS_GETPROTOBYNUMBER
+#define ACE_LACKS_GETHOSTBYADDR
+#define ACE_LACKS_GETHOSTBYNAME
 #define ACE_LACKS_NETDB_REENTRANT_FUNCTIONS
 #define ACE_LACKS_SYS_PARAM_H
 #define ACE_LACKS_PWD_FUNCTIONS
@@ -182,7 +190,8 @@
 #define ACE_LACKS_STRCASECMP
 #define ACE_LACKS_STRRECVFD
 #define ACE_LACKS_SYSCALL
-#define ACE_LACKS_SYSTIME_H
+#define ACE_LACKS_SYSCONF
+#define ACE_LACKS_SYS_SYSCTL_H
 #define ACE_LACKS_SYSV_SHMEM
 #define ACE_LACKS_TELLDIR
 #define ACE_LACKS_TEMPNAM
@@ -191,11 +200,15 @@
 #define ACE_LACKS_UCONTEXT_H
 #define ACE_LACKS_UMASK
 #define ACE_LACKS_UTSNAME_T
+#define ACE_LACKS_UNAME
 #define ACE_LACKS_NATIVE_STRPTIME
 #define ACE_LACKS_WAIT
 #define ACE_LACKS_WAITPID
 #define ACE_LACKS_WCTYPE_H
 #define ACE_LACKS_DUP2
+#define ACE_LACKS_DUP
+#define ACE_LACKS_SUSECONDS_T
+#define ACE_LACKS_USECONDS_T
 #define ACE_PAGE_SIZE 4096
 #define ACE_THR_PRI_FIFO_DEF 101
 #define ACE_THR_PRI_OTHER_DEF ACE_THR_PRI_FIFO_DEF
@@ -205,6 +218,21 @@
 # define ACE_VXWORKS_SPARE spare4
 #endif /* ! ACE_VXWORKS_SPARE */
 
+#define ACE_LACKS_SETEGID
+#define ACE_LACKS_SETPGID
+#define ACE_LACKS_SETREGID
+#define ACE_LACKS_SETREUID
+#define ACE_LACKS_SETSID
+#define ACE_LACKS_SETUID
+#define ACE_LACKS_SETEUID
+#define ACE_LACKS_GETEGID
+#define ACE_LACKS_GETGID
+#define ACE_LACKS_GETEUID
+#define ACE_LACKS_GETUID
+#define ACE_LACKS_SETGID
+#define ACE_LACKS_GETPGID
+
+#define ACE_LACKS_PIPE
 #define ACE_LACKS_STDINT_H
 #define ACE_LACKS_INTTYPES_H
 #define ACE_LACKS_UNISTD_H
@@ -224,6 +252,7 @@
 #define ACE_LACKS_STRINGS_H
 #define ACE_LACKS_TERMIOS_H
 #define ACE_LACKS_POLL_H
+#define ACE_LACKS_WCTYPE_H
 
 // Not sure if these should always be defined.
 #define ACE_LACKS_SYS_UN_H
@@ -252,7 +281,11 @@
 #define ACE_LACKS_WCSTOL
 #define ACE_LACKS_WCSTOUL
 #define ACE_LACKS_WCSDUP
+
 #define ACE_LACKS_SYMLINKS
+#define ACE_LACKS_FGETWC
+#define ACE_LACKS_FGETWS
+#define ACE_LACKS_FPUTWS
 
 // It is possible to enable pthread support with VxWorks, when the user decides
 // to use this, we need some more defines

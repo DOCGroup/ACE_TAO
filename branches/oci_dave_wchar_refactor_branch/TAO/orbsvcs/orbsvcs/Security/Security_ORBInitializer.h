@@ -20,7 +20,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "security_export.h"
+#include "orbsvcs/Security/security_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -29,7 +29,7 @@
 #include "tao/PI/PI.h"
 #include "tao/LocalObject.h"
 
-#include "Security_PolicyFactory.h"
+#include "orbsvcs/Security/Security_PolicyFactory.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
@@ -37,6 +37,8 @@
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// Security ORB initializer.
 namespace TAO
@@ -92,6 +94,8 @@ namespace TAO
 
   } // End Security namespace
 }  // End TAO namespace
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

@@ -21,6 +21,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   /**
@@ -116,7 +118,7 @@ namespace TAO
   };
 
   /**
-   * @struct Basic_Tag
+   * @struct Var_Size_Tag
    *
    * @brief Struct for fixed size IDL type arguments id tag.
    *
@@ -146,6 +148,8 @@ namespace TAO
     typedef Var_Size_Tag                                idl_tag;
   };
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "tao/Var_Size_Argument_T.inl"

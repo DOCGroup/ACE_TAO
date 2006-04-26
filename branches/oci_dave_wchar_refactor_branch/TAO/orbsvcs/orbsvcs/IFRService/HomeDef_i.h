@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 // $Id$
 
 // ============================================================================
@@ -20,19 +21,22 @@
 #ifndef TAO_HOMEDEF_I_H
 #define TAO_HOMEDEF_I_H
 
-#include "ExtInterfaceDef_i.h"
-#include "ifr_service_export.h"
+#include "orbsvcs/IFRService/ExtInterfaceDef_i.h"
+#include "orbsvcs/IFRService/ifr_service_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "IFR_ComponentsS.h"
+#include "orbsvcs/IFRService/IFR_ComponentsS.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_IFRService_Export TAO_HomeDef_i
   : public virtual TAO_ExtInterfaceDef_i
@@ -273,12 +277,10 @@ private:
                        ACE_ENV_ARG_DECL);
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
 #endif /* TAO_HOMEDEF_I_H */
-
-
-
-

@@ -29,6 +29,10 @@ NOTE: Within the GNUACE project type, setting sharedname to empty and
 setting staticname to the static library name will result in a project
 that will generate only static libraries.
 
+The default generation mode for the GNUACE project type is named targets.
+The environment variable MPC_GNUACE_DIRECTORY_DEPS can be set to get the
+directory based build that was used up until April of 2006.
+
 For more information about MPC, see the README and USAGE files in the
 MPC directory.
 

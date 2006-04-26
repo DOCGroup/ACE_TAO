@@ -1,8 +1,13 @@
+// -*- C++ -*-
+//
 // $Id$
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<typename S, typename Insert_Policy>
 ACE_INLINE
-TAO::In_UB_String_Argument_T<S,Insert_Policy>::In_UB_String_Argument_T (const S * x)
+TAO::In_UB_String_Argument_T<S,Insert_Policy>::In_UB_String_Argument_T (
+  const S * x)
   : x_ (x)
 {}
 
@@ -77,3 +82,4 @@ TAO::Ret_UB_String_Argument_T<S,S_var,Insert_Policy>::retn (void)
   return this->x_._retn ();
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

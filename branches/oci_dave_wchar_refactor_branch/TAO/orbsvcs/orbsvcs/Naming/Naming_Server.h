@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -11,7 +11,7 @@
  *
  *  @author Nagarajan Surendran (naga@cs.wustl.edu)
  *  @author Matt Braun <mjb2@cs.wustl.edu>
- *  @author and Douglas C. Schmidt <schmidt@cs.wustl.edu>.
+ *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>.
  */
 //=============================================================================
 
@@ -23,8 +23,10 @@
 #include "tao/ORB.h"
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/IOR_Multicast.h"
-#include "Naming_Context_Interface.h"
-#include "nsconf.h"
+#include "orbsvcs/Naming/Naming_Context_Interface.h"
+#include "orbsvcs/Naming/nsconf.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward decl;
 class TAO_Persistent_Context_Index;
@@ -230,6 +232,8 @@ protected:
   int round_trip_timeout_;
   int use_round_trip_timeout_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_NAMING_SERVER_H */

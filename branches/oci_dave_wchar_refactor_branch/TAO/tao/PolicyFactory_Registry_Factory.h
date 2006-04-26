@@ -19,7 +19,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Versioned_Namespace.h"
 #include "ace/Service_Object.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -38,5 +41,7 @@ public:
   virtual TAO::PolicyFactory_Registry_Adapter* create (void) = 0;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #include /**/ "ace/post.h"
-#endif /* TAO_OBJECT_LOADER_H */
+#endif /* TAO_POLICYFACTORY_REGISTRY_FACTORY_H */

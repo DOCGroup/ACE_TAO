@@ -2,7 +2,7 @@
 //
 // $Id$
 
-project(SSLIOP) : orbsvcslib, core, security, ssl, pi_server, interceptors {
+project(SSLIOP) : orbsvcslib, core, security, ssl, pi_server, interceptors, tao_versioning_idl_defaults {
   sharedname   = TAO_SSLIOP
   idlflags    += -Wb,export_macro=TAO_SSLIOP_Export -Wb,export_include=orbsvcs/SSLIOP/SSLIOP_Export.h
   dynamicflags = TAO_SSLIOP_BUILD_DLL
@@ -30,5 +30,9 @@ project(SSLIOP) : orbsvcslib, core, security, ssl, pi_server, interceptors {
   }
 
   Template_Files {
+  }
+
+  Pidl_Files {
+    SSLIOP
   }
 }

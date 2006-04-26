@@ -1,15 +1,15 @@
 // $Id$
 
-#include "Name_Value_Pair.h"
-#include "Property_T.h"
+#include "orbsvcs/Notify/Name_Value_Pair.h"
+#include "orbsvcs/Notify/Property_T.h"
 #include "ace/OS_String.h"
 #include "ace/OS_NS_stdio.h"
 
 namespace
 {
-  ACE_UINT64 string_to_uint64(const char * s)
+  ACE_UINT64 string_to_uint64 (const char * s)
   {
-    size_t len = ACE_OS::strlen (s);
+    size_t const len = ACE_OS::strlen (s);
     if (len == 0)
       return 0;
     if (! isdigit(s[0]))
@@ -28,6 +28,8 @@ namespace
     return t;
   }
 }
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify
 {
@@ -205,8 +207,10 @@ namespace TAO_Notify
 
   const NVP& NVPList::operator[](size_t ndx) const
   {
-    ACE_ASSERT(ndx < list_.size());
+    ACE_ASSERT (ndx < list_.size());
     return list_[ndx];
   }
 
 } // namespace TAO_Notify
+
+TAO_END_VERSIONED_NAMESPACE_DECL

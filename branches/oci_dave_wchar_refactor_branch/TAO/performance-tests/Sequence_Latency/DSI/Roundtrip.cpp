@@ -3,7 +3,7 @@
 //
 
 #include "TestC.h"
-#include "tao/AnyTypeCode/TC_Constants_Forward.h"
+#include "tao/AnyTypeCode/TypeCode_Constants.h"
 #include "tao/AnyTypeCode/NVList.h"
 #include "tao/AnyTypeCode/SystemExceptionA.h"
 #include "Roundtrip.h"

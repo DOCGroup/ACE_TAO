@@ -17,33 +17,25 @@
 
 #include /**/ "ace/pre.h"
 
-#include "portableserver_export.h"
+#include "tao/PortableServer/portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/SString.h"
-#include "ace/Hash_Map_Manager_T.h"
-#include "ace/Array_Base.h"
-#include "ace/Synch_Traits.h"
-#include "ace/Thread_Mutex.h"
-#include "ace/Recursive_Thread_Mutex.h"
-#include "ace/Null_Mutex.h"
-
 // Object Adapter
-#include "Object_Adapter.h"
+#include "tao/PortableServer/Object_Adapter.h"
 
 // POA Policy Set
-#include "POA_Policy_Set.h"
+#include "tao/PortableServer/POA_Policy_Set.h"
 
 // Cached POA Policies
-#include "POA_Cached_Policies.h"
-#include "Active_Policy_Strategies.h"
+#include "tao/PortableServer/POA_Cached_Policies.h"
+#include "tao/PortableServer/Active_Policy_Strategies.h"
 
-#include "ORT_Adapter.h"
+#include "tao/PortableServer/ORT_Adapter.h"
 
-#include "PortableServer.h"
+#include "tao/PortableServer/PortableServer.h"
 
 // Object_Key
 #include "tao/Object_KeyC.h"
@@ -57,12 +49,22 @@
 // OctetSeq
 #include "tao/OctetSeqC.h"
 
+#include "ace/SString.h"
+#include "ace/Hash_Map_Manager_T.h"
+#include "ace/Array_Base.h"
+#include "ace/Synch_Traits.h"
+#include "ace/Thread_Mutex.h"
+#include "ace/Recursive_Thread_Mutex.h"
+#include "ace/Null_Mutex.h"
+
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward Declaration
 class TAO_Acceptor_Filter;
@@ -504,6 +506,19 @@ public:
         TAO::Portable_Server::POA_Current_Impl &poa_current_impl
         ACE_ENV_ARG_DECL);
 
+  /**
+   * Find the the servant with ObjectId <system_id>, and retrieve
+   * its priority.Usually used in RT CORBA with SERVER_DECLARED
+   * priority model.
+   *
+   * @return -1 if servant does not exist, else 0 indicating the
+   * servant exists and priority successfully retrieved.
+   */
+  int find_servant_priority (
+        const PortableServer::ObjectId &system_id,
+        CORBA::Short &priority
+        ACE_ENV_ARG_DECL);
+
   int unbind_using_user_id (const PortableServer::ObjectId &user_id);
 
   void cleanup_servant (
@@ -560,6 +575,25 @@ public:
   virtual CORBA::ORB_ptr _get_orb (
       ACE_ENV_SINGLE_ARG_DECL
     );
+
+  /// These hooks are needed by the CSD strategy to override
+  /// and no-ops by default.
+
+  /// Hook - The POA has been (or is being) activated.
+  virtual void poa_activated_hook ();
+
+  /// Hook - The POA has been deactivated.
+  virtual void poa_deactivated_hook ();
+
+  /// Hook - A servant has been activated.
+  virtual void servant_activated_hook (PortableServer::Servant servant,
+                               const PortableServer::ObjectId& oid
+                               ACE_ENV_ARG_DECL);
+
+  /// Hook - A servant has been deactivated.
+  virtual void servant_deactivated_hook (PortableServer::Servant servant,
+                                 const PortableServer::ObjectId& oid
+                                 ACE_ENV_ARG_DECL);
 
 protected:
 
@@ -989,6 +1023,8 @@ private:
   static TAO_POA_Static_Resources* initialization_reference_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 // ****************************************************************
 
 #if defined(_MSC_VER)
@@ -996,7 +1032,7 @@ private:
 #endif /* _MSC_VER */
 
 #if defined (__ACE_INLINE__)
-# include "Root_POA.inl"
+# include "tao/PortableServer/Root_POA.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

@@ -1,7 +1,7 @@
 // $Id$
 
-#include "NativeDef_i.h"
-#include "Repository_i.h"
+#include "orbsvcs/IFRService/NativeDef_i.h"
+#include "orbsvcs/IFRService/Repository_i.h"
 
 #include "ace/SString.h"
 
@@ -10,6 +10,8 @@ ACE_RCSID (IFRService,
            NativeDef_i,
            "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_NativeDef_i::TAO_NativeDef_i (TAO_Repository_i *repo)
   : TAO_IRObject_i (repo),
@@ -60,3 +62,5 @@ TAO_NativeDef_i::type_i (ACE_ENV_SINGLE_ARG_DECL)
                                                        name.c_str ()
                                                        ACE_ENV_ARG_PARAMETER);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

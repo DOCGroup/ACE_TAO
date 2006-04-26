@@ -1,9 +1,9 @@
 // $Id$
 
-#include "CosNotify_Service.h"
-#include "Properties.h"
-#include "Default_Factory.h"
-#include "Builder.h"
+#include "orbsvcs/Notify/CosNotify_Service.h"
+#include "orbsvcs/Notify/Properties.h"
+#include "orbsvcs/Notify/Default_Factory.h"
+#include "orbsvcs/Notify/Builder.h"
 #include "ace/Sched_Params.h"
 #include "ace/Arg_Shifter.h"
 #include "ace/Dynamic_Service.h"
@@ -14,6 +14,8 @@
 ACE_RCSID (Notify,
            TAO_CosNotify_Service,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_CosNotify_Service::TAO_CosNotify_Service (void)
 {
@@ -32,10 +34,8 @@ TAO_CosNotify_Service::init (int argc, ACE_TCHAR *argv[])
 
   // Default to an all reactive system.
   int ec_threads = 0;
-  int dispatching_threads = 0;
-  int listener_threads = 0;
-  int source_threads = 0;
-  int lookup_threads = 0;
+  int consumer_threads = 0;
+  int supplier_threads = 0;
 
   int task_per_proxy = 0;
 
@@ -45,58 +45,52 @@ TAO_CosNotify_Service::init (int argc, ACE_TCHAR *argv[])
     {
       if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-MTDispatching")) == 0)
         {
-          // If Dispatching Threads are initalized, the option is implicit.
           arg_shifter.consume_arg ();
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) The -MTDispatching option has been deprecated, use -DispatchingThreads \n")));
         }
-      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-DispatchingThreads"))))
+      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-DispatchingThreads"))))
         {
-          dispatching_threads = ACE_OS::atoi (current_arg);
+          consumer_threads += ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
         }
       else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-MTSourceEval")) == 0)
         {
-          // If Source Threads are initalized, the option is implicit.
           arg_shifter.consume_arg ();
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) The -MTSourceEval option has been deprecated, use -SourceThreads \n")));
         }
-      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-SourceThreads"))))
+      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-SourceThreads"))))
         {
-          source_threads = ACE_OS::atoi (current_arg);
+          supplier_threads += ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
         }
       else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-MTLookup")) == 0)
         {
-          // If Lookup Threads are initalized, the option is implicit.
           arg_shifter.consume_arg ();
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) The -MTLookup option has been deprecated, use -SourceThreads \n")));
         }
-      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-LookupThreads"))))
+      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-LookupThreads"))))
         {
-          // Since this option is always either added to source_threads
-          // or ignored, we'll deprecate it in favor of that option.
-          lookup_threads = ACE_OS::atoi (current_arg);
+          supplier_threads += ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) The -LookupThreads option has been deprecated, use -SourceThreads \n")));
         }
       else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-MTListenerEval")) == 0)
         {
-          // If Listener Threads are initalized, the option is implicit.
           arg_shifter.consume_arg ();
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) The -MTListenerEval option has been deprecated, use -DispatchingThreads \n")));
         }
-      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-ListenerThreads"))))
+      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-ListenerThreads"))))
         {
-          // Since this option is always added to dispatching_threads, we'll
+          // Since this option is always added to consumer_threads, we'll
           // deprecate it in favor of that option.
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) The -ListenerThreads option has been deprecated, use -DispatchingThreads \n")));
-          listener_threads = ACE_OS::atoi (current_arg);
+          consumer_threads += ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
         }
       else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-AsynchUpdates")) == 0)
@@ -142,15 +136,19 @@ TAO_CosNotify_Service::init (int argc, ACE_TCHAR *argv[])
     {
       // Set the per ConsumerAdmin QoS
       {
+        if (consumer_threads > 0)
+          ACE_DEBUG((LM_DEBUG, "Using %d threads for each ConsumerAdmin.\n", consumer_threads));
         CosNotification::QoSProperties qos;
-        this->set_threads (qos, dispatching_threads + listener_threads);
+        this->set_threads (qos, consumer_threads);
         properties->default_consumer_admin_qos_properties (qos);
       }
 
       // Set the per SupplierAdmin QoS
       {
+        if (supplier_threads > 0)
+          ACE_DEBUG((LM_DEBUG, "Using %d threads for each SupplierAdmin.\n", supplier_threads));
         CosNotification::QoSProperties qos;
-        this->set_threads (qos, lookup_threads + source_threads);
+        this->set_threads (qos, supplier_threads);
         properties->default_supplier_admin_qos_properties (qos);
       }
     }
@@ -158,15 +156,19 @@ TAO_CosNotify_Service::init (int argc, ACE_TCHAR *argv[])
     {
       // Set the per ProxyConsumer QoS
       {
+        if (supplier_threads > 0)
+          ACE_DEBUG((LM_DEBUG, "Using %d threads for each Supplier.\n", supplier_threads));
         CosNotification::QoSProperties qos;
-        this->set_threads (qos, source_threads); // lookup thread per proxy doesn't make sense.
+        this->set_threads (qos, supplier_threads); // lookup thread per proxy doesn't make sense.
         properties->default_proxy_consumer_qos_properties (qos);
       }
 
       // Set the per ProxySupplier QoS
       {
+        if (consumer_threads > 0)
+          ACE_DEBUG((LM_DEBUG, "Using %d threads for each Consumer.\n", consumer_threads));
         CosNotification::QoSProperties qos;
-        this->set_threads (qos, dispatching_threads + listener_threads);
+        this->set_threads (qos, consumer_threads);
         properties->default_proxy_supplier_qos_properties (qos);
       }
     }
@@ -223,14 +225,14 @@ TAO_CosNotify_Service::init_i (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
 
     // Init the factory
     this->factory_.reset (this->create_factory (ACE_ENV_SINGLE_ARG_PARAMETER));
+    ACE_CHECK;
     ACE_ASSERT( this->factory_.get() != 0 );
     TAO_Notify_PROPERTIES::instance()->factory (this->factory_.get());
-    ACE_CHECK;
 
     this->builder_.reset (this->create_builder (ACE_ENV_SINGLE_ARG_PARAMETER));
+    ACE_CHECK;
     ACE_ASSERT( this->builder_.get() != 0 );
     TAO_Notify_PROPERTIES::instance()->builder (this->builder_.get());
-    ACE_CHECK;
 }
 
 TAO_Notify_Factory*
@@ -240,9 +242,9 @@ TAO_CosNotify_Service::create_factory (ACE_ENV_SINGLE_ARG_DECL)
   if (factory == 0)
     {
        ACE_NEW_THROW_EX (factory,
-                      TAO_Notify_Default_Factory (),
-                      CORBA::NO_MEMORY ());
-       ACE_CHECK_RETURN(0);
+                         TAO_Notify_Default_Factory (),
+                         CORBA::NO_MEMORY ());
+       ACE_CHECK_RETURN (0);
     }
   return factory;
 }
@@ -254,7 +256,7 @@ TAO_CosNotify_Service::create_builder (ACE_ENV_SINGLE_ARG_DECL)
   ACE_NEW_THROW_EX (builder,
                     TAO_Notify_Builder (),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN(0);
+  ACE_CHECK_RETURN (0);
 
   return builder;
 }
@@ -284,6 +286,8 @@ TAO_CosNotify_Service::builder (void)
   ACE_ASSERT( this->builder_.get() != 0 );
   return *this->builder_;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 
 /*********************************************************************************************************************/

@@ -15,6 +15,8 @@
 
 #include "ace/Copy_Disabled.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_AMH_Response_Handler::TAO_AMH_Response_Handler ()
   : mesg_base_ (0)
   , request_id_ (0)
@@ -48,25 +50,25 @@ TAO_AMH_Response_Handler::~TAO_AMH_Response_Handler (void)
       {
         return;
       }
-
-    // If sending the exception to the client fails, then we just give
-    // up, release the transport and return.
-    ACE_DECLARE_NEW_CORBA_ENV;
-    ACE_TRY
-      {
-        CORBA::NO_RESPONSE ex (CORBA::SystemException::_tao_minor_code
-                               (TAO_AMH_REPLY_LOCATION_CODE,
-                                EFAULT),
-                               CORBA::COMPLETED_NO);
-        this->_tao_rh_send_exception (ex ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
-      }
-    ACE_CATCHALL
-      {
-      }
-    ACE_ENDTRY;
-    ACE_CHECK;
   }
+
+  // If sending the exception to the client fails, then we just give
+  // up, release the transport and return.
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+    {
+      CORBA::NO_RESPONSE ex (CORBA::SystemException::_tao_minor_code
+                             (TAO_AMH_REPLY_LOCATION_CODE,
+                              EFAULT),
+                             CORBA::COMPLETED_NO);
+      this->_tao_rh_send_exception (ex ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHALL
+    {
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
 }
 
 void
@@ -186,10 +188,10 @@ TAO_AMH_Response_Handler::_tao_rh_send_exception (CORBA::Exception &ex
     if (this->reply_status_ != TAO_RS_UNINITIALIZED)
       {
         ACE_THROW (CORBA::BAD_INV_ORDER (
-                                         CORBA::SystemException::_tao_minor_code (
-                                                                                  TAO_AMH_REPLY_LOCATION_CODE,
-                                                                                  ENOTSUP),
-                                         CORBA::COMPLETED_YES));
+          CORBA::SystemException::_tao_minor_code (
+            TAO_AMH_REPLY_LOCATION_CODE,
+            ENOTSUP),
+          CORBA::COMPLETED_YES));
       }
     this->reply_status_ = TAO_RS_SENDING;
   }
@@ -239,9 +241,9 @@ TAO_AMH_Response_Handler::_remove_ref (void)
 
   if (this->allocator_)
     {
-      TAO::TAO_Buffer_Allocator<TAO_AMH_Response_Handler, TAO_AMH_BUFFER_ALLOCATOR> allocator (allocator_);
+      TAO::TAO_Buffer_Allocator<TAO_AMH_Response_Handler, TAO_AMH_BUFFER_ALLOCATOR> allocator (this->allocator_);
 
-      allocator.release(this);
+      allocator.release (this);
     }
   else
     {
@@ -260,3 +262,4 @@ namespace TAO
   }
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

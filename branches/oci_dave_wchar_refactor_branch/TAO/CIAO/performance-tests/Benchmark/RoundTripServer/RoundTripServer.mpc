@@ -1,5 +1,5 @@
 // $Id$
-project (RoundTripServer) : strategies, ciao_server_dnc {
+project (RoundTripServer) : strategies, ciao_component_dnc {
   after += Benchmark_svnt
   libs    += Benchmark_stub Benchmark_svnt
   libpaths += ..

@@ -1,7 +1,7 @@
 // $Id$
 
-#ifndef ACE_HASH_CACHE_MAP_MANAGER_T_C
-#define ACE_HASH_CACHE_MAP_MANAGER_T_C
+#ifndef ACE_HASH_CACHE_MAP_MANAGER_T_CPP
+#define ACE_HASH_CACHE_MAP_MANAGER_T_CPP
 
 #include "ace/Hash_Cache_Map_Manager_T.h"
 
@@ -13,7 +13,7 @@
 #include "ace/Hash_Cache_Map_Manager_T.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(ace, Hash_Cache_Map_Manager_T, "$Id$")
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Hash_Cache_Map_Manager)
 
@@ -224,7 +224,9 @@ ACE_Hash_Cache_Map_Manager<ACE_T2>::unbind (CACHE_ENTRY *entry)
   return unbind_result;
 }
 
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 #undef ACE_T1
 #undef ACE_T2
 
-#endif /* ACE_HASH_CACHE_MAP_MANAGER_T_C */
+#endif /* ACE_HASH_CACHE_MAP_MANAGER_T_CPP */

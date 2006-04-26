@@ -64,7 +64,7 @@ namespace CIAO
             this->t_ == Port_Activator::Facet)
           {
             CORBA::Object_var tmp =
-              this->comp_serv_->get_facet_executor (this->name_);
+              this->comp_serv_->get_facet_executor (this->name_.in ());
 
             this->executor_ = EXEC::_narrow (tmp.in ());
           }

@@ -23,11 +23,13 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "SSLIOP_OpenSSL_st_T.h"
+#include "orbsvcs/SSLIOP/SSLIOP_OpenSSL_st_T.h"
 
 #include <openssl/ssl.h>
 #include <openssl/crypto.h>
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -76,6 +78,7 @@ namespace TAO
   }  // End SSLIOP namespace.
 }  // End TAO namespace.
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

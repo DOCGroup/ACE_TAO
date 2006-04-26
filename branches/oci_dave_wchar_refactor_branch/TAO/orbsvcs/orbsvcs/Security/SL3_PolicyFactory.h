@@ -29,6 +29,8 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   namespace SL3
@@ -71,6 +73,7 @@ namespace TAO
   }  // End SL3 namespace.
 }  // End TAO namespace.
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

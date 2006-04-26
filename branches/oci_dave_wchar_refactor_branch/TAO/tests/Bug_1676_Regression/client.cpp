@@ -33,8 +33,6 @@ parse_args (int argc, char *argv[])
   return 0;
 }
 
-void get_stringList2(Test::Hello_var hello);
-
 int
 main (int argc, char *argv[])
 {
@@ -65,7 +63,7 @@ main (int argc, char *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "\n(%P|%t) - get_stringList\n"));
 
-      Test::StringList_var seq =
+	  Test::StringList_var seq =
         hello->get_stringList (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -73,7 +71,7 @@ main (int argc, char *argv[])
         CORBA::String_var the_string = CORBA::string_dup ((*seq)[i]);
         ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%s>\n",
                   the_string.in ()));
-      }
+	  }
 
       ACE_DEBUG ((LM_DEBUG, "\n(%P|%t) - get_stringList2 with initialization\n"));
 
@@ -85,11 +83,18 @@ main (int argc, char *argv[])
         CORBA::String_var the_string = seq2.in()[i];
         ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%s>\n",
                   the_string.in ()));
-      }
+	  }
 
       ACE_DEBUG ((LM_DEBUG, "\n(%P|%t) - get_stringList2 without initialization\n"));
 
-      get_stringList2(hello);
+      hello->get_stringList2(false, seq2.out());
+      ACE_TRY_CHECK;
+
+      for (CORBA::ULong i = 0; i<seq2->length(); i++) {
+        CORBA::String_var the_string = seq2.in()[i];
+        ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%s>\n",
+                  the_string.in ()));
+	  }
 
       ACE_DEBUG ((LM_DEBUG, "\n(%P|%t) - mod_stringList\n"));
 
@@ -117,35 +122,4 @@ main (int argc, char *argv[])
   ACE_ENDTRY;
 
   return 0;
-}
-
-void get_stringList2(Test::Hello_var hello)
-{
-    Test::StringList_var seq2;
-
-  ACE_TRY_NEW_ENV
-    {
-      // Shutdown the ORB and block until the shutdown is complete.
-      hello->get_stringList2(false, seq2.out());
-      ACE_TRY_CHECK;
-
-      for (CORBA::ULong i = 0; i<seq2->length(); i++) {
-        CORBA::String_var the_string = seq2.in()[i];
-        ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%s>\n",
-                  the_string.in ()));
-	  }
-    }
-  ACE_CATCH(CORBA::BAD_PARAM, ex)
-    {
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) - catched expected exception BAD_PARAM\n"));
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "get_stringList2");
-    }
-  ACE_ENDTRY;
-
-
-    return;
 }

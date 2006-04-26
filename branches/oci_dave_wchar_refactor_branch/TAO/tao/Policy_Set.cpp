@@ -1,12 +1,12 @@
 // $Id$
 
-#include "Policy_Set.h"
-#include "Environment.h"
-#include "SystemException.h"
-#include "debug.h"
+#include "tao/Policy_Set.h"
+#include "tao/Environment.h"
+#include "tao/SystemException.h"
+#include "tao/debug.h"
 
 #if !defined (__ACE_INLINE__)
-# include "Policy_Set.i"
+# include "tao/Policy_Set.i"
 #endif /* ! __ACE_INLINE__ */
 
 
@@ -14,6 +14,15 @@ ACE_RCSID (tao,
            Policy_Set,
            "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+TAO_Policy_Set::TAO_Policy_Set (TAO_Policy_Scope scope)
+  : scope_ (scope)
+{
+  for (unsigned int i = 0; i < TAO_CACHED_POLICY_MAX_CACHED; ++i)
+    this->cached_policies_[i] = 0;
+}
 
 TAO_Policy_Set::~TAO_Policy_Set (void)
 {
@@ -111,7 +120,7 @@ TAO_Policy_Set::copy_from (TAO_Policy_Set *source
         policy->copy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
-      CORBA::ULong length = this->policy_list_.length ();
+      CORBA::ULong const length = this->policy_list_.length ();
       this->policy_list_.length (length + 1);
 
       // Add the "cacheable" policies into the cache.
@@ -171,16 +180,9 @@ TAO_Policy_Set::set_policy_overrides (const CORBA::PolicyList &policies,
 
   for (CORBA::ULong i = 0; i < plen; ++i)
     {
-#if defined (__INTEL_COMPILER) && defined (_MSC_VER) && (_MSC_VER <= 1200)
-      // The XICL6 compiler (Intel C++ 7.1 in Visual C++ compatible
-      // mode) has a bug and can't handle the normal construct
-      CORBA::Policy_ptr temp = policies[i];
-      CORBA::Policy_var policy = CORBA::Policy::_duplicate (temp);
-#else
-      CORBA::Policy_var policy = policies[i];
-#endif
+      CORBA::Policy_ptr policy = policies[i];
 
-      if (CORBA::is_nil (policy.in ()))
+      if (CORBA::is_nil (policy))
         {
           continue;
         }
@@ -205,14 +207,14 @@ TAO_Policy_Set::set_policy_overrides (const CORBA::PolicyList &policies,
           server_protocol_set = true;
         }
 
-      this->set_policy (policy.in () ACE_ENV_ARG_PARAMETER);
+      this->set_policy (policy ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 }
 
 void
 TAO_Policy_Set::set_policy (const CORBA::Policy_ptr policy
-                                     ACE_ENV_ARG_DECL)
+                            ACE_ENV_ARG_DECL)
 {
   if (! this->compatible_scope (policy->_tao_scope()))
     {
@@ -310,7 +312,7 @@ TAO_Policy_Set::get_policy_overrides (const CORBA::PolicyTypeSeq &types
             }
 
           policy_list[n++] =
-            CORBA::Policy::_duplicate (this->policy_list_[i].in ());
+            CORBA::Policy::_duplicate (this->policy_list_[i]);
           break;
         }
     }
@@ -337,7 +339,7 @@ TAO_Policy_Set::get_policy (CORBA::PolicyType type
           continue;
         }
 
-      return CORBA::Policy::_duplicate (this->policy_list_[i].in ());
+      return CORBA::Policy::_duplicate (this->policy_list_[i]);
     }
 
   return CORBA::Policy::_nil ();
@@ -367,3 +369,5 @@ TAO_Policy_Set::get_cached_policy (TAO_Cached_Policy_Type type
 
   return CORBA::Policy::_nil ();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

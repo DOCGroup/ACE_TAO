@@ -1,6 +1,6 @@
+// -*- C++ -*-
 //
 // $Id$
-//
 
 #ifndef MT_BIDIR_RECEIVER_H
 #define MT_BIDIR_RECEIVER_H
@@ -8,7 +8,9 @@
 
 #include "SenderS.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Manual_Event;
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 /**
  * Simply print count how many bytes were received.

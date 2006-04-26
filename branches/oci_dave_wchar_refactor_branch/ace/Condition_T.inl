@@ -1,5 +1,8 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<class MUTEX> ACE_INLINE int
 ACE_Condition<MUTEX>::remove (void)
@@ -79,3 +82,5 @@ ACE_Condition<MUTEX>::broadcast (void)
 #endif /* CHORUS */
   return ACE_OS::cond_broadcast (&this->cond_);
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

@@ -13,8 +13,10 @@
 //
 // ============================================================================
 
-#include "Persistent_Entries.h"
+#include "orbsvcs/Naming/Persistent_Entries.h"
 #include "ace/SString.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Persistent_IntId::TAO_Persistent_IntId (void)
   : ref_ (0),
@@ -202,3 +204,5 @@ TAO_Persistent_Index_ExtId::hash (void) const
   ACE_CString temp (poa_id_);
   return temp.hash ();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

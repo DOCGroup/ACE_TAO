@@ -22,6 +22,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_Argv_Type_Converter
@@ -102,6 +103,8 @@ private:
   /// TRUE indicates char type argv has been passed.
   bool char_passed_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Argv_Type_Converter.inl"

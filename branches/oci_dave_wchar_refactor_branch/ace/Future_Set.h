@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -25,6 +25,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined (ACE_HAS_THREADS)
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_Future_Set
@@ -74,17 +76,17 @@ public:
   /**
    * Wait up to <tv> time to get the <value>.  Note that <tv> must be
    * specified in absolute time rather than relative time.); get the
-   * next <ACE_Future> that is readable.  If <tv> = 0, the will block
+   * next ACE_Future that is readable.  If <tv> = 0, the will block
    * forever.
    *
    * If a readable future becomes available, then the input
-   * <ACE_Future> object param will be assigned with it and 1 will
-   * be returned.  If the <ACE_Future_Set> is empty (i.e. see definition
-   * of <ACE_Future_Set::is_empty>), then 0 is returned.
+   * ACE_Future object param will be assigned with it and 1 will
+   * be returned.  If the ACE_Future_Set is empty (i.e. see definition
+   * of ACE_Future_Set::is_empty()), then 0 is returned.
    *
-   * When a readable <ACE_Future> object is retrieved via the
-   * <ACE_Future_Set::next_readable> method, the <ACE_Future_Set> will
-   * remove that <ACE_Future> object from its list of subjects.
+   * When a readable ACE_Future object is retrieved via the
+   * ACE_Future_Set::next_readable() method, the ACE_Future_Set will
+   * remove that ACE_Future object from its list of subjects.
    */
   int next_readable (ACE_Future<T> &result,
                      ACE_Time_Value *tv = 0);
@@ -115,7 +117,7 @@ private:
                                   FUTURE_HOLDER *,
                                   FUTURE_REP_HASH,
                                   FUTURE_REP_COMPARE,
-			          ACE_Null_Mutex> FUTURE_HASH_MAP;
+                                  ACE_Null_Mutex> FUTURE_HASH_MAP;
 
   /// Map of <ACE_Futures>, subjects, which have not been written to by
   /// client's writer thread.
@@ -128,6 +130,8 @@ private:
   /// Keeps track of whether we need to delete the message queue.
   int delete_queue_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Future_Set.cpp"

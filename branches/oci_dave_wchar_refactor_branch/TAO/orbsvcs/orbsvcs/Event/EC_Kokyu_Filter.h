@@ -16,14 +16,14 @@
 #define TAO_EC_KOKYU_FILTER_H
 #include /**/ "ace/pre.h"
 
-#include "EC_Filter.h"
+#include "orbsvcs/Event/EC_Filter.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/RtecSchedulerC.h"
-#include "rtkokyu_event_export.h"
+#include "orbsvcs/Event/rtkokyu_event_export.h"
 #include "ace/SString.h"
 
 //#define EC_KOKYU_LOGGING
@@ -87,10 +87,8 @@ public:
                              ACE_ENV_ARG_DECL);
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (TAO_EC_Kokyu_Filter
-                              (const TAO_EC_Kokyu_Filter&))
-  ACE_UNIMPLEMENTED_FUNC (TAO_EC_Kokyu_Filter& operator=
-                              (const TAO_EC_Kokyu_Filter&))
+  TAO_EC_Kokyu_Filter (const TAO_EC_Kokyu_Filter&);
+  TAO_EC_Kokyu_Filter& operator= (const TAO_EC_Kokyu_Filter&);
 
   /// Initialize our RT_Info handle and dependencies
   void init_rt_info (ACE_ENV_SINGLE_ARG_DECL);

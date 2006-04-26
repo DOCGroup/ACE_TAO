@@ -53,6 +53,6 @@ int be_visitor_structure_ci::visit_structure (be_structure *node)
                         -1);
     }
 
-  node->cli_inline_gen (I_TRUE);
+  node->cli_inline_gen (true);
   return 0;
 }

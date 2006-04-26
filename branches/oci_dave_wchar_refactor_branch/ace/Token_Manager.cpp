@@ -1,15 +1,18 @@
 #include "ace/Token_Manager.h"
+
+#if defined (ACE_HAS_TOKENS_LIBRARY)
+
 #include "ace/Object_Manager.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Token_Manager.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_HAS_TOKENS_LIBRARY)
-
 ACE_RCSID (ace,
            Token_Manager,
            "$Id$")
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // singleton token manager
 ACE_Token_Manager *ACE_Token_Manager::token_manager_ = 0;
@@ -265,18 +268,6 @@ ACE_Token_Manager::dump (void) const
 #endif /* ACE_HAS_DUMP */
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Map_Manager <ACE_Token_Name, ACE_Tokens *, ACE_Null_Mutex>;
-template class ACE_Map_Iterator_Base<ACE_Token_Name, ACE_Tokens *, ACE_Null_Mutex>;
-template class ACE_Map_Iterator<ACE_Token_Name, ACE_Tokens *, ACE_Null_Mutex>;
-template class ACE_Map_Reverse_Iterator<ACE_Token_Name, ACE_Tokens *, ACE_Null_Mutex>;
-template class ACE_Map_Entry <ACE_Token_Name, ACE_Tokens *>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Map_Manager <ACE_Token_Name, ACE_Tokens *, ACE_Null_Mutex>
-#pragma instantiate ACE_Map_Iterator_Base<ACE_Token_Name, ACE_Tokens *, ACE_Null_Mutex>
-#pragma instantiate ACE_Map_Iterator<ACE_Token_Name, ACE_Tokens *, ACE_Null_Mutex>
-#pragma instantiate ACE_Map_Reverse_Iterator<ACE_Token_Name, ACE_Tokens *, ACE_Null_Mutex>
-#pragma instantiate ACE_Map_Entry <ACE_Token_Name, ACE_Tokens *>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_TOKENS_LIBRARY */

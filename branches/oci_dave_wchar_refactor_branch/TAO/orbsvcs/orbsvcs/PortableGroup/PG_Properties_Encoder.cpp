@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 //=============================================================================
 /**
  *  @file    PG_Properties_Encoder.cpp
@@ -11,12 +10,14 @@
  *  @author Dale Wilson <wilson_d@ociweb.com>
  */
 //=============================================================================
-#include "PG_Properties_Encoder.h"
+#include "orbsvcs/PortableGroup/PG_Properties_Encoder.h"
 
 
 #if ! defined (__ACE_INLINE__)
-#include "PG_Properties_Encoder.inl"
+#include "orbsvcs/PortableGroup/PG_Properties_Encoder.inl"
 #endif /* !  __ACE_INLINE__ */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 //////////
 // Properties_Encoder
@@ -62,3 +63,5 @@ void TAO_PG::Properties_Encoder::encode (
     // nc.kind defaults to empty.  Leave it that way (for now)
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

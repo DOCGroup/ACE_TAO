@@ -34,11 +34,11 @@ make_wstring (const char *str)
   if (str == 0)
     return 0;
 
-  int len = strlen (str) + 1;
+  size_t len = strlen (str) + 1;
   wchar_t *wstr = new wchar_t[len];
   ACE_DEBUG ((LM_DEBUG,
               "make_wstring: str = %s\n",str));
-  for (int i = 0; i < len; i++)
+  for (size_t i = 0; i < len; i++)
     {
       char *t = const_cast<char *> (str);
       wstr[i] = static_cast<wchar_t> (*(t + i));
@@ -92,7 +92,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       const char *any_string = "Any World";
       CORBA::Any inarg;
-      inarg <<= CORBA::string_dup (any_string);
+      inarg <<= any_string;
       CORBA::Any_var outarg;
 
       // Invoke the call.
@@ -122,10 +122,15 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           ++error_count;
         }
 
+#if defined (ACE_HAS_WCHAR)
       wchar_t *wide_string = ACE_OS::strdup(ACE_TEXT_TO_WCHAR_IN ("Wide String"));
       wchar_t *wide_reply = server->op2 (wide_string);
       ACE_DEBUG ((LM_DEBUG,
                   "sent %W, got %W\n", wide_string, wide_reply));
+
+      ACE_OS::free (wide_string);
+      CORBA::wstring_free (wide_reply);
+#endif /* ACE_HAS_WCHAR */
     }
   ACE_CATCHANY
     {

@@ -1,12 +1,14 @@
 // $Id$
 
-#include "IdUniquenessStrategyUniqueFactoryImpl.h"
-#include "IdUniquenessStrategyUnique.h"
+#include "tao/PortableServer/IdUniquenessStrategyUniqueFactoryImpl.h"
+#include "tao/PortableServer/IdUniquenessStrategyUnique.h"
 #include "ace/Dynamic_Service.h"
 
 ACE_RCSID (PortableServer,
            IdUniquenessStrategyUniqueFactoryImpl,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -46,16 +48,21 @@ namespace TAO
       delete strategy;
     }
 
-    ACE_STATIC_SVC_DEFINE (
-        IdUniquenessStrategyUniqueFactoryImpl,
-        ACE_TEXT ("IdUniquenessStrategyUniqueFactory"),
-        ACE_SVC_OBJ_T,
-        &ACE_SVC_NAME (IdUniquenessStrategyUniqueFactoryImpl),
-        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
-        0
-      )
-
-    ACE_FACTORY_DEFINE (ACE_Local_Service, IdUniquenessStrategyUniqueFactoryImpl)
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+ACE_STATIC_SVC_DEFINE (
+  IdUniquenessStrategyUniqueFactoryImpl,
+  ACE_TEXT ("IdUniquenessStrategyUniqueFactory"),
+  ACE_SVC_OBJ_T,
+  &ACE_SVC_NAME (IdUniquenessStrategyUniqueFactoryImpl),
+  ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
+  0)
+
+ACE_FACTORY_NAMESPACE_DEFINE (
+  ACE_Local_Service,
+  IdUniquenessStrategyUniqueFactoryImpl,
+  TAO::Portable_Server::IdUniquenessStrategyUniqueFactoryImpl)
 

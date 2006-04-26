@@ -1,30 +1,31 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file Method_Request_Event.h
  *
  *  $Id$
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_METHOD_REQUEST_EVENT_H
 #define TAO_Notify_METHOD_REQUEST_EVENT_H
 #include /**/ "ace/pre.h"
 
-#include "notify_serv_export.h"
+#include "orbsvcs/Notify/notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Method_Request.h"
-#include "Event.h"
-#include "ProxySupplier.h"
+#include "orbsvcs/Notify/Method_Request.h"
+#include "orbsvcs/Notify/Event.h"
+#include "orbsvcs/Notify/ProxySupplier.h"
 #include "tao/Basic_Types.h"
 #include "ace/CORBA_macros.h"
-#include "Delivery_Request.h"
+#include "orbsvcs/Notify/Delivery_Request.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Notify_Method_Request_Event
@@ -83,7 +84,7 @@ public:
   /// exceptions from the constructor if it's necessary to copy the event.
   TAO_Notify_Method_Request_Event_Queueable (
     const TAO_Notify_Method_Request_Event & prev_request,
-    const TAO_Notify_Event::Ptr & event_var);
+    const TAO_Notify_Event::Ptr & event);
 
   TAO_Notify_Method_Request_Event_Queueable (
     TAO_Notify::Delivery_Request_Ptr & request);
@@ -96,6 +97,8 @@ public:
 private:
   TAO_Notify_Event::Ptr event_var_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_Notify_METHOD_REQUEST_EVENT_H */

@@ -1,5 +1,8 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 ACE_Condition_Attributes::ACE_Condition_Attributes (int type)
@@ -67,3 +70,5 @@ ACE_Process_Condition<MUTEX>::ACE_Process_Condition (MUTEX &m,
 // ACE_TRACE ("ACE_Process_Condition<MUTEX>::ACE_Process_Condition");
 }
 #endif /* 0 */
+
+ACE_END_VERSIONED_NAMESPACE_DECL

@@ -162,7 +162,7 @@ ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK>::dump (void) const
   ACE_Timer_Node_T<TYPE>* n = this->get_first_i();
   if (n != 0) {
     for (; n != this->head_; n = n->get_next()) {
-      count++;
+      ++count;
     }
   }
 

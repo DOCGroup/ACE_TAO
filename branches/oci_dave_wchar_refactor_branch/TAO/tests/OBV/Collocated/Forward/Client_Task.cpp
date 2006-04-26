@@ -79,14 +79,14 @@ Client_Task::svc (void)
       // Now build simple graph (tree in our case).
 
       TreeController_var tc;
-      ACE_NEW_RETURN (tc,
+      ACE_NEW_RETURN (tc.inout (),
                       OBV_TreeController,
                       1);
 
       // Create the root node.
       {
         StringNode_var sn;
-        ACE_NEW_RETURN (sn,
+        ACE_NEW_RETURN (sn.inout (),
                         OBV_StringNode,
                         1);
         sn->name ((const char*)("RootNode"));
@@ -95,7 +95,7 @@ Client_Task::svc (void)
         // Create the left leaf.
         {
           StringNode_var dummy;
-          ACE_NEW_RETURN (dummy,
+          ACE_NEW_RETURN (dummy.inout (),
                           OBV_StringNode,
                           1);
           dummy->name ((const char*)("LeftNode"));
@@ -105,7 +105,7 @@ Client_Task::svc (void)
         // Create the right leaf.
         {
           StringNode_var dummy;
-          ACE_NEW_RETURN (dummy,
+          ACE_NEW_RETURN (dummy.inout (),
                           OBV_StringNode,
                           1);
           dummy->name ((const char*)("RightNode"));
@@ -118,14 +118,14 @@ Client_Task::svc (void)
       // Make copy
 
       TreeController_var tc_copy;
-      ACE_NEW_RETURN (tc_copy,
+      ACE_NEW_RETURN (tc_copy.inout (),
                       OBV_TreeController,
                       1);
 
       // Create the root node.
       {
         StringNode_var sn;
-        ACE_NEW_RETURN (sn,
+        ACE_NEW_RETURN (sn.inout (),
                         OBV_StringNode,
                         1);
         sn->name ((const char*)("RootNode"));
@@ -134,7 +134,7 @@ Client_Task::svc (void)
         // Create the left leaf.
         {
           StringNode_var dummy;
-          ACE_NEW_RETURN (dummy,
+          ACE_NEW_RETURN (dummy.inout (),
                           OBV_StringNode,
                           1);
           dummy->name ((const char*)("LeftNode"));
@@ -144,7 +144,7 @@ Client_Task::svc (void)
         // Create the right leaf.
         {
           StringNode_var dummy;
-          ACE_NEW_RETURN (dummy,
+          ACE_NEW_RETURN (dummy.inout (),
                           OBV_StringNode,
                           1);
           dummy->name ((const char*)("RightNode"));
@@ -164,7 +164,7 @@ Client_Task::svc (void)
       TreeController_var tc_result =
         test->reflect (tc.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      
+
       // The following two ifs will fail until bug 1390 is fixed.
       if (is_equal_tree (tc.in (), tc_result.in ()))
         {

@@ -59,7 +59,7 @@ extern "C"
   char *strtok_r (char *s, const char *delim, char **save_ptr);
 #endif  /* ACE_LACKS_STRTOK_R_PROTOTYPE */
 
-#if defined (__BORLANDC__)
+#if defined (__BORLANDC__) && (__BORLANDC__ < 0x560)
 #  define _stricmp stricmp
 #  define _strnicmp strnicmp
 #endif /* __BORLANDC__ */

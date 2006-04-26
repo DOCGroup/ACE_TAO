@@ -1,9 +1,10 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
 
-// IO_SAP.i
-
 #include "ace/OS_NS_stropts.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 ACE_IO_SAP::~ACE_IO_SAP (void)
@@ -38,4 +39,4 @@ ACE_IO_SAP::control (int cmd, void *arg) const
   return ACE_OS::ioctl (this->handle_, cmd, arg);
 }
 
-
+ACE_END_VERSIONED_NAMESPACE_DECL

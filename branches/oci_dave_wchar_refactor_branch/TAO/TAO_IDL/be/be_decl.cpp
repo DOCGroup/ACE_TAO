@@ -52,49 +52,49 @@ ACE_RCSID (be,
 be_decl::be_decl (void)
   : COMMON_Base (),
     AST_Decl (),
-    cli_hdr_gen_ (I_FALSE),
-    cli_stub_gen_ (I_FALSE),
-    cli_inline_gen_ (I_FALSE),
-    srv_hdr_gen_ (I_FALSE),
-    impl_hdr_gen_ (I_FALSE),
-    srv_skel_gen_ (I_FALSE),
-    impl_skel_gen_ (I_FALSE),
-    srv_inline_gen_ (I_FALSE),
-    cli_hdr_any_op_gen_ (I_FALSE),
-    cli_stub_any_op_gen_ (I_FALSE),
-    cli_hdr_cdr_op_gen_ (I_FALSE),
-    cli_stub_cdr_op_gen_ (I_FALSE),
-    cli_inline_cdr_op_gen_ (I_FALSE),
-    cli_inline_cdr_decl_gen_ (I_FALSE),
-    cli_hdr_serializer_op_gen_ (I_FALSE),
-    cli_stub_serializer_op_gen_ (I_FALSE),
-    cli_inline_serializer_op_gen_ (I_FALSE),
-    cli_inline_serializer_decl_gen_ (I_FALSE),
-    cli_traits_gen_ (I_FALSE),
-    cli_arg_traits_gen_ (I_FALSE),
-    srv_arg_traits_gen_ (I_FALSE),
-    srv_sarg_traits_gen_ (I_FALSE),
-    cli_tmpl_class_gen_ (I_FALSE),
-    cli_pragma_inst_gen_ (I_FALSE),
-    cli_inarg_tmpl_class_gen_ (I_FALSE),
-    cli_inarg_pragma_inst_gen_ (I_FALSE),
-    cli_inoutarg_tmpl_class_gen_ (I_FALSE),
-    cli_inoutarg_pragma_inst_gen_ (I_FALSE),
-    cli_outarg_tmpl_class_gen_ (I_FALSE),
-    cli_outarg_pragma_inst_gen_ (I_FALSE),
-    cli_retarg_tmpl_class_gen_ (I_FALSE),
-    cli_retarg_pragma_inst_gen_ (I_FALSE),
-    srv_tmpl_class_gen_ (I_FALSE),
-    srv_pragma_inst_gen_ (I_FALSE),
-    srv_inarg_tmpl_class_gen_ (I_FALSE),
-    srv_inarg_pragma_inst_gen_ (I_FALSE),
-    srv_inoutarg_tmpl_class_gen_ (I_FALSE),
-    srv_inoutarg_pragma_inst_gen_ (I_FALSE),
-    srv_outarg_tmpl_class_gen_ (I_FALSE),
-    srv_outarg_pragma_inst_gen_ (I_FALSE),
-    srv_retarg_tmpl_class_gen_ (I_FALSE),
-    srv_retarg_pragma_inst_gen_ (I_FALSE),
-    ccm_pre_proc_gen_ (I_FALSE)
+    cli_hdr_gen_ (false),
+    cli_stub_gen_ (false),
+    cli_inline_gen_ (false),
+    srv_hdr_gen_ (false),
+    impl_hdr_gen_ (false),
+    srv_skel_gen_ (false),
+    impl_skel_gen_ (false),
+    srv_inline_gen_ (false),
+    cli_hdr_any_op_gen_ (false),
+    cli_stub_any_op_gen_ (false),
+    cli_hdr_cdr_op_gen_ (false),
+    cli_stub_cdr_op_gen_ (false),
+    cli_inline_cdr_op_gen_ (false),
+    cli_inline_cdr_decl_gen_ (false),
+    cli_hdr_serializer_op_gen_ (false),
+    cli_stub_serializer_op_gen_ (false),
+    cli_inline_serializer_op_gen_ (false),
+    cli_inline_serializer_decl_gen_ (false),
+    cli_traits_gen_ (false),
+    cli_arg_traits_gen_ (false),
+    srv_arg_traits_gen_ (false),
+    srv_sarg_traits_gen_ (false),
+    cli_tmpl_class_gen_ (false),
+    cli_pragma_inst_gen_ (false),
+    cli_inarg_tmpl_class_gen_ (false),
+    cli_inarg_pragma_inst_gen_ (false),
+    cli_inoutarg_tmpl_class_gen_ (false),
+    cli_inoutarg_pragma_inst_gen_ (false),
+    cli_outarg_tmpl_class_gen_ (false),
+    cli_outarg_pragma_inst_gen_ (false),
+    cli_retarg_tmpl_class_gen_ (false),
+    cli_retarg_pragma_inst_gen_ (false),
+    srv_tmpl_class_gen_ (false),
+    srv_pragma_inst_gen_ (false),
+    srv_inarg_tmpl_class_gen_ (false),
+    srv_inarg_pragma_inst_gen_ (false),
+    srv_inoutarg_tmpl_class_gen_ (false),
+    srv_inoutarg_pragma_inst_gen_ (false),
+    srv_outarg_tmpl_class_gen_ (false),
+    srv_outarg_pragma_inst_gen_ (false),
+    srv_retarg_tmpl_class_gen_ (false),
+    srv_retarg_pragma_inst_gen_ (false),
+    ccm_pre_proc_gen_ (false)
 {
 }
 
@@ -104,49 +104,49 @@ be_decl::be_decl (AST_Decl::NodeType type,
   : COMMON_Base (),
     AST_Decl (type,
               n),
-    cli_hdr_gen_ (I_FALSE),
-    cli_stub_gen_ (I_FALSE),
-    cli_inline_gen_ (I_FALSE),
-    srv_hdr_gen_ (I_FALSE),
-    impl_hdr_gen_ (I_FALSE),
-    srv_skel_gen_ (I_FALSE),
-    impl_skel_gen_ (I_FALSE),
-    srv_inline_gen_ (I_FALSE),
-    cli_hdr_any_op_gen_ (I_FALSE),
-    cli_stub_any_op_gen_ (I_FALSE),
-    cli_hdr_cdr_op_gen_ (I_FALSE),
-    cli_stub_cdr_op_gen_ (I_FALSE),
-    cli_inline_cdr_op_gen_ (I_FALSE),
-    cli_inline_cdr_decl_gen_ (I_FALSE),
-    cli_hdr_serializer_op_gen_ (I_FALSE),
-    cli_stub_serializer_op_gen_ (I_FALSE),
-    cli_inline_serializer_op_gen_ (I_FALSE),
-    cli_inline_serializer_decl_gen_ (I_FALSE),
-    cli_traits_gen_ (I_FALSE),
-    cli_arg_traits_gen_ (I_FALSE),
-    srv_arg_traits_gen_ (I_FALSE),
-    srv_sarg_traits_gen_ (I_FALSE),
-    cli_tmpl_class_gen_ (I_FALSE),
-    cli_pragma_inst_gen_ (I_FALSE),
-    cli_inarg_tmpl_class_gen_ (I_FALSE),
-    cli_inarg_pragma_inst_gen_ (I_FALSE),
-    cli_inoutarg_tmpl_class_gen_ (I_FALSE),
-    cli_inoutarg_pragma_inst_gen_ (I_FALSE),
-    cli_outarg_tmpl_class_gen_ (I_FALSE),
-    cli_outarg_pragma_inst_gen_ (I_FALSE),
-    cli_retarg_tmpl_class_gen_ (I_FALSE),
-    cli_retarg_pragma_inst_gen_ (I_FALSE),
-    srv_tmpl_class_gen_ (I_FALSE),
-    srv_pragma_inst_gen_ (I_FALSE),
-    srv_inarg_tmpl_class_gen_ (I_FALSE),
-    srv_inarg_pragma_inst_gen_ (I_FALSE),
-    srv_inoutarg_tmpl_class_gen_ (I_FALSE),
-    srv_inoutarg_pragma_inst_gen_ (I_FALSE),
-    srv_outarg_tmpl_class_gen_ (I_FALSE),
-    srv_outarg_pragma_inst_gen_ (I_FALSE),
-    srv_retarg_tmpl_class_gen_ (I_FALSE),
-    srv_retarg_pragma_inst_gen_ (I_FALSE),
-    ccm_pre_proc_gen_ (I_FALSE)
+    cli_hdr_gen_ (false),
+    cli_stub_gen_ (false),
+    cli_inline_gen_ (false),
+    srv_hdr_gen_ (false),
+    impl_hdr_gen_ (false),
+    srv_skel_gen_ (false),
+    impl_skel_gen_ (false),
+    srv_inline_gen_ (false),
+    cli_hdr_any_op_gen_ (false),
+    cli_stub_any_op_gen_ (false),
+    cli_hdr_cdr_op_gen_ (false),
+    cli_stub_cdr_op_gen_ (false),
+    cli_inline_cdr_op_gen_ (false),
+    cli_inline_cdr_decl_gen_ (false),
+    cli_hdr_serializer_op_gen_ (false),
+    cli_stub_serializer_op_gen_ (false),
+    cli_inline_serializer_op_gen_ (false),
+    cli_inline_serializer_decl_gen_ (false),
+    cli_traits_gen_ (false),
+    cli_arg_traits_gen_ (false),
+    srv_arg_traits_gen_ (false),
+    srv_sarg_traits_gen_ (false),
+    cli_tmpl_class_gen_ (false),
+    cli_pragma_inst_gen_ (false),
+    cli_inarg_tmpl_class_gen_ (false),
+    cli_inarg_pragma_inst_gen_ (false),
+    cli_inoutarg_tmpl_class_gen_ (false),
+    cli_inoutarg_pragma_inst_gen_ (false),
+    cli_outarg_tmpl_class_gen_ (false),
+    cli_outarg_pragma_inst_gen_ (false),
+    cli_retarg_tmpl_class_gen_ (false),
+    cli_retarg_pragma_inst_gen_ (false),
+    srv_tmpl_class_gen_ (false),
+    srv_pragma_inst_gen_ (false),
+    srv_inarg_tmpl_class_gen_ (false),
+    srv_inarg_pragma_inst_gen_ (false),
+    srv_inoutarg_tmpl_class_gen_ (false),
+    srv_inoutarg_pragma_inst_gen_ (false),
+    srv_outarg_tmpl_class_gen_ (false),
+    srv_outarg_pragma_inst_gen_ (false),
+    srv_retarg_tmpl_class_gen_ (false),
+    srv_retarg_pragma_inst_gen_ (false),
+    ccm_pre_proc_gen_ (false)
 {
 }
 
@@ -186,7 +186,7 @@ be_decl::compute_full_name  (const char *prefix,
   else
     {
       // Get scope name.
-      be_decl *parent = 
+      be_decl *parent =
         be_scope::narrow_from_scope (this->defined_in ())->decl ();
 
       if (parent == 0)
@@ -288,7 +288,7 @@ be_decl::destroy (void)
 }
 
 void
-be_decl::set_local (idl_bool val)
+be_decl::set_local (bool val)
 {
   this->is_local_ = val;
 }
@@ -343,259 +343,259 @@ be_decl::scope (void)
 }
 
 // Boolean methods to test if code was already generated.
-idl_bool
+bool
 be_decl::cli_hdr_gen (void)
 {
   return this->cli_hdr_gen_;
 }
 
-idl_bool
+bool
 be_decl::cli_stub_gen (void)
 {
   return this->cli_stub_gen_;
 }
 
-idl_bool
+bool
 be_decl::cli_hdr_any_op_gen (void)
 {
   return this->cli_hdr_any_op_gen_;
 }
 
-idl_bool
+bool
 be_decl::cli_stub_any_op_gen (void)
 {
   return this->cli_stub_any_op_gen_;
 }
 
-idl_bool
+bool
 be_decl::cli_hdr_cdr_op_gen (void)
 {
   return this->cli_hdr_cdr_op_gen_;
 }
 
-idl_bool
+bool
 be_decl::cli_stub_cdr_op_gen (void)
 {
   return this->cli_stub_cdr_op_gen_;
 }
 
-idl_bool
+bool
 be_decl::cli_inline_cdr_op_gen (void)
 {
   return this->cli_inline_cdr_op_gen_;
 }
 
-idl_bool
+bool
 be_decl::cli_inline_cdr_decl_gen (void)
 {
   return this->cli_inline_cdr_decl_gen_;
 }
 
-idl_bool
+bool
 be_decl::cli_hdr_serializer_op_gen (void)
 {
   return this->cli_hdr_serializer_op_gen_;
 }
 
-idl_bool
+bool
 be_decl::cli_stub_serializer_op_gen (void)
 {
   return this->cli_stub_serializer_op_gen_;
 }
 
-idl_bool
+bool
 be_decl::cli_inline_serializer_op_gen (void)
 {
   return this->cli_inline_serializer_op_gen_;
 }
 
-idl_bool
+bool
 be_decl::cli_inline_serializer_decl_gen (void)
 {
   return this->cli_inline_cdr_decl_gen_;
 }
 
-idl_bool
+bool
 be_decl::cli_traits_gen (void)
 {
   return this->cli_traits_gen_;
 }
 
-idl_bool
+bool
 be_decl::cli_arg_traits_gen (void)
 {
   return this->cli_arg_traits_gen_;
 }
 
-idl_bool
+bool
 be_decl::srv_arg_traits_gen (void)
 {
   return this->srv_arg_traits_gen_;
 }
 
-idl_bool
+bool
 be_decl::srv_sarg_traits_gen (void)
 {
   return this->srv_sarg_traits_gen_;
 }
 
-idl_bool
+bool
 be_decl::cli_tmpl_class_gen (void)
 {
   return this->cli_tmpl_class_gen_;
 }
 
-idl_bool
+bool
 be_decl::cli_pragma_inst_gen (void)
 {
   return this->cli_pragma_inst_gen_;
 }
 
-idl_bool
+bool
 be_decl::cli_inarg_tmpl_class_gen (void)
 {
   return this->cli_inarg_tmpl_class_gen_;
 }
 
-idl_bool
+bool
 be_decl::cli_inarg_pragma_inst_gen (void)
 {
   return this->cli_inarg_pragma_inst_gen_;
 }
 
-idl_bool
+bool
 be_decl::cli_inoutarg_tmpl_class_gen (void)
 {
   return this->cli_inoutarg_tmpl_class_gen_;
 }
 
-idl_bool
+bool
 be_decl::cli_inoutarg_pragma_inst_gen (void)
 {
   return this->cli_inoutarg_pragma_inst_gen_;
 }
 
-idl_bool
+bool
 be_decl::cli_outarg_tmpl_class_gen (void)
 {
   return this->cli_outarg_tmpl_class_gen_;
 }
 
-idl_bool
+bool
 be_decl::cli_outarg_pragma_inst_gen (void)
 {
   return this->cli_outarg_pragma_inst_gen_;
 }
 
-idl_bool
+bool
 be_decl::cli_retarg_tmpl_class_gen (void)
 {
   return this->cli_retarg_tmpl_class_gen_;
 }
 
-idl_bool
+bool
 be_decl::cli_retarg_pragma_inst_gen (void)
 {
   return this->cli_retarg_pragma_inst_gen_;
 }
 
-idl_bool
+bool
 be_decl::srv_tmpl_class_gen (void)
 {
   return this->srv_tmpl_class_gen_;
 }
 
-idl_bool
+bool
 be_decl::srv_pragma_inst_gen (void)
 {
   return this->srv_pragma_inst_gen_;
 }
 
-idl_bool
+bool
 be_decl::srv_inarg_tmpl_class_gen (void)
 {
   return this->srv_inarg_tmpl_class_gen_;
 }
 
-idl_bool
+bool
 be_decl::srv_inarg_pragma_inst_gen (void)
 {
   return this->srv_inarg_pragma_inst_gen_;
 }
 
-idl_bool
+bool
 be_decl::srv_inoutarg_tmpl_class_gen (void)
 {
   return this->srv_inoutarg_tmpl_class_gen_;
 }
 
-idl_bool
+bool
 be_decl::srv_inoutarg_pragma_inst_gen (void)
 {
   return this->srv_inoutarg_pragma_inst_gen_;
 }
 
-idl_bool
+bool
 be_decl::srv_outarg_tmpl_class_gen (void)
 {
   return this->srv_outarg_tmpl_class_gen_;
 }
 
-idl_bool
+bool
 be_decl::srv_outarg_pragma_inst_gen (void)
 {
   return this->srv_outarg_pragma_inst_gen_;
 }
 
-idl_bool
+bool
 be_decl::srv_retarg_tmpl_class_gen (void)
 {
   return this->srv_retarg_tmpl_class_gen_;
 }
 
-idl_bool
+bool
 be_decl::srv_retarg_pragma_inst_gen (void)
 {
   return this->cli_retarg_pragma_inst_gen_;
 }
 
-idl_bool
+bool
 be_decl::cli_inline_gen (void)
 {
   return this->cli_inline_gen_;
 }
 
-idl_bool
+bool
 be_decl::srv_hdr_gen (void)
 {
   return this->srv_hdr_gen_;
 }
 
-idl_bool
+bool
 be_decl::impl_hdr_gen (void)
 {
   return this->impl_hdr_gen_;
 }
 
-idl_bool
+bool
 be_decl::srv_skel_gen (void)
 {
   return this->srv_skel_gen_;
 }
 
-idl_bool
+bool
 be_decl::impl_skel_gen (void)
 {
   return this->impl_skel_gen_;
 }
 
-idl_bool
+bool
 be_decl::srv_inline_gen (void)
 {
   return this->srv_inline_gen_;
 }
 
-idl_bool
+bool
 be_decl::ccm_pre_proc_gen (void)
 {
   return this->ccm_pre_proc_gen_;
@@ -603,254 +603,254 @@ be_decl::ccm_pre_proc_gen (void)
 
 // Set the flag indicating that code generation is done.
 void
-be_decl::cli_hdr_gen (idl_bool val)
+be_decl::cli_hdr_gen (bool val)
 {
   this->cli_hdr_gen_ = val;
 }
 
 void
-be_decl::cli_stub_gen (idl_bool val)
+be_decl::cli_stub_gen (bool val)
 {
   this->cli_stub_gen_ = val;
 }
 
 void
-be_decl::cli_hdr_any_op_gen (idl_bool val)
+be_decl::cli_hdr_any_op_gen (bool val)
 {
   this->cli_hdr_any_op_gen_ = val;
 }
 
 void
-be_decl::cli_stub_any_op_gen (idl_bool val)
+be_decl::cli_stub_any_op_gen (bool val)
 {
   this->cli_stub_any_op_gen_ = val;
 }
 
 void
-be_decl::cli_hdr_cdr_op_gen (idl_bool val)
+be_decl::cli_hdr_cdr_op_gen (bool val)
 {
   this->cli_hdr_cdr_op_gen_ = val;
 }
 
 void
-be_decl::cli_stub_cdr_op_gen (idl_bool val)
+be_decl::cli_stub_cdr_op_gen (bool val)
 {
   this->cli_stub_cdr_op_gen_ = val;
 }
 
 void
-be_decl::cli_inline_cdr_op_gen (idl_bool val)
+be_decl::cli_inline_cdr_op_gen (bool val)
 {
   this->cli_inline_cdr_op_gen_ = val;
 }
 
 void
-be_decl::cli_inline_cdr_decl_gen (idl_bool val)
+be_decl::cli_inline_cdr_decl_gen (bool val)
 {
   this->cli_inline_cdr_decl_gen_ = val;
 }
 
 void
-be_decl::cli_hdr_serializer_op_gen (idl_bool val)
+be_decl::cli_hdr_serializer_op_gen (bool val)
 {
   this->cli_hdr_serializer_op_gen_ = val;
 }
 
 void
-be_decl::cli_stub_serializer_op_gen (idl_bool val)
+be_decl::cli_stub_serializer_op_gen (bool val)
 {
   this->cli_stub_serializer_op_gen_ = val;
 }
 
 void
-be_decl::cli_inline_serializer_op_gen (idl_bool val)
+be_decl::cli_inline_serializer_op_gen (bool val)
 {
   this->cli_inline_serializer_op_gen_ = val;
 }
 
 void
-be_decl::cli_inline_serializer_decl_gen (idl_bool val)
+be_decl::cli_inline_serializer_decl_gen (bool val)
 {
   this->cli_inline_serializer_decl_gen_ = val;
 }
 
 void
-be_decl::cli_inline_gen (idl_bool val)
+be_decl::cli_inline_gen (bool val)
 {
   this->cli_inline_gen_ = val;
 }
 
 void
-be_decl::cli_traits_gen (idl_bool val)
+be_decl::cli_traits_gen (bool val)
 {
   this->cli_traits_gen_ = val;
 }
 
 void
-be_decl::cli_arg_traits_gen (idl_bool val)
+be_decl::cli_arg_traits_gen (bool val)
 {
   this->cli_arg_traits_gen_ = val;
 }
 
 void
-be_decl::srv_arg_traits_gen (idl_bool val)
+be_decl::srv_arg_traits_gen (bool val)
 {
   this->srv_arg_traits_gen_ = val;
 }
 
 void
-be_decl::srv_sarg_traits_gen (idl_bool val)
+be_decl::srv_sarg_traits_gen (bool val)
 {
   this->srv_sarg_traits_gen_ = val;
 }
 
 void
-be_decl::cli_tmpl_class_gen (idl_bool val)
+be_decl::cli_tmpl_class_gen (bool val)
 {
   this->cli_tmpl_class_gen_ = val;
 }
 
 void
-be_decl::cli_pragma_inst_gen (idl_bool val)
+be_decl::cli_pragma_inst_gen (bool val)
 {
   this->cli_pragma_inst_gen_ = val;
 }
 
 void
-be_decl::cli_inarg_tmpl_class_gen (idl_bool val)
+be_decl::cli_inarg_tmpl_class_gen (bool val)
 {
   this->cli_inarg_tmpl_class_gen_ = val;
 }
 
 void
-be_decl::cli_inarg_pragma_inst_gen (idl_bool val)
+be_decl::cli_inarg_pragma_inst_gen (bool val)
 {
   this->cli_inarg_pragma_inst_gen_ = val;
 }
 
 void
-be_decl::cli_inoutarg_tmpl_class_gen (idl_bool val)
+be_decl::cli_inoutarg_tmpl_class_gen (bool val)
 {
   this->cli_inoutarg_tmpl_class_gen_ = val;
 }
 
 void
-be_decl::cli_inoutarg_pragma_inst_gen (idl_bool val)
+be_decl::cli_inoutarg_pragma_inst_gen (bool val)
 {
   this->cli_inoutarg_pragma_inst_gen_ = val;
 }
 
 void
-be_decl::cli_outarg_tmpl_class_gen (idl_bool val)
+be_decl::cli_outarg_tmpl_class_gen (bool val)
 {
   this->cli_outarg_tmpl_class_gen_ = val;
 }
 
 void
-be_decl::cli_outarg_pragma_inst_gen (idl_bool val)
+be_decl::cli_outarg_pragma_inst_gen (bool val)
 {
   this->cli_outarg_pragma_inst_gen_ = val;
 }
 
 void
-be_decl::cli_retarg_tmpl_class_gen (idl_bool val)
+be_decl::cli_retarg_tmpl_class_gen (bool val)
 {
   this->cli_retarg_tmpl_class_gen_ = val;
 }
 
 void
-be_decl::cli_retarg_pragma_inst_gen (idl_bool val)
+be_decl::cli_retarg_pragma_inst_gen (bool val)
 {
   this->cli_retarg_pragma_inst_gen_ = val;
 }
 
 void
-be_decl::srv_tmpl_class_gen (idl_bool val)
+be_decl::srv_tmpl_class_gen (bool val)
 {
   this->srv_tmpl_class_gen_ = val;
 }
 
 void
-be_decl::srv_pragma_inst_gen (idl_bool val)
+be_decl::srv_pragma_inst_gen (bool val)
 {
   this->srv_pragma_inst_gen_ = val;
 }
 
 void
-be_decl::srv_inarg_tmpl_class_gen (idl_bool val)
+be_decl::srv_inarg_tmpl_class_gen (bool val)
 {
   this->srv_inarg_tmpl_class_gen_ = val;
 }
 
 void
-be_decl::srv_inarg_pragma_inst_gen (idl_bool val)
+be_decl::srv_inarg_pragma_inst_gen (bool val)
 {
   this->srv_inarg_pragma_inst_gen_ = val;
 }
 
 void
-be_decl::srv_inoutarg_tmpl_class_gen (idl_bool val)
+be_decl::srv_inoutarg_tmpl_class_gen (bool val)
 {
   this->srv_inoutarg_tmpl_class_gen_ = val;
 }
 
 void
-be_decl::srv_inoutarg_pragma_inst_gen (idl_bool val)
+be_decl::srv_inoutarg_pragma_inst_gen (bool val)
 {
   this->srv_inoutarg_pragma_inst_gen_ = val;
 }
 
 void
-be_decl::srv_outarg_tmpl_class_gen (idl_bool val)
+be_decl::srv_outarg_tmpl_class_gen (bool val)
 {
   this->srv_outarg_tmpl_class_gen_ = val;
 }
 
 void
-be_decl::srv_outarg_pragma_inst_gen (idl_bool val)
+be_decl::srv_outarg_pragma_inst_gen (bool val)
 {
   this->srv_outarg_pragma_inst_gen_ = val;
 }
 
 void
-be_decl::srv_retarg_tmpl_class_gen (idl_bool val)
+be_decl::srv_retarg_tmpl_class_gen (bool val)
 {
   this->srv_retarg_tmpl_class_gen_ = val;
 }
 
 void
-be_decl::srv_retarg_pragma_inst_gen (idl_bool val)
+be_decl::srv_retarg_pragma_inst_gen (bool val)
 {
   this->srv_retarg_pragma_inst_gen_ = val;
 }
 
 void
-be_decl::srv_hdr_gen (idl_bool val)
+be_decl::srv_hdr_gen (bool val)
 {
   this->srv_hdr_gen_ = val;
 }
 
 void
-be_decl::impl_hdr_gen (idl_bool val)
+be_decl::impl_hdr_gen (bool val)
 {
   this->impl_hdr_gen_ = val;
 }
 
 
 void
-be_decl::srv_skel_gen (idl_bool val)
+be_decl::srv_skel_gen (bool val)
 {
   this->srv_skel_gen_ = val;
 }
 
 void
-be_decl::srv_inline_gen (idl_bool val)
+be_decl::srv_inline_gen (bool val)
 {
   this->srv_inline_gen_ = val;
 }
 
 void
-be_decl::ccm_pre_proc_gen (idl_bool val)
+be_decl::ccm_pre_proc_gen (bool val)
 {
   this->ccm_pre_proc_gen_ = val;
 }

@@ -4,7 +4,7 @@
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
-#include "Linear_Priority_Mapping.h"
+#include "tao/RTCORBA/Linear_Priority_Mapping.h"
 #include "tao/debug.h"
 #include "ace/Sched_Params.h"
 #include "ace/Log_Msg.h"
@@ -13,11 +13,14 @@ ACE_RCSID (RTCORBA,
            Linear_Priority_Mapping,
            "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_Linear_Priority_Mapping::TAO_Linear_Priority_Mapping (long policy)
   : policy_ (policy)
+  , min_ (ACE_Sched_Params::priority_min (this->policy_))
+  , max_ (ACE_Sched_Params::priority_max (this->policy_))
 {
-  this->min_ = ACE_Sched_Params::priority_min (this->policy_);
-  this->max_ = ACE_Sched_Params::priority_max (this->policy_);
 }
 
 TAO_Linear_Priority_Mapping::~TAO_Linear_Priority_Mapping (void)
@@ -25,8 +28,9 @@ TAO_Linear_Priority_Mapping::~TAO_Linear_Priority_Mapping (void)
 }
 
 CORBA::Boolean
-TAO_Linear_Priority_Mapping::to_native (RTCORBA::Priority corba_priority,
-                                        RTCORBA::NativePriority &native_priority)
+TAO_Linear_Priority_Mapping::to_native (
+  RTCORBA::Priority corba_priority,
+  RTCORBA::NativePriority &native_priority)
 {
   if (corba_priority < RTCORBA::minPriority
            // The line below will always be false unless the value of
@@ -56,11 +60,11 @@ TAO_Linear_Priority_Mapping::to_native (RTCORBA::Priority corba_priority,
        / (RTCORBA::maxPriority - RTCORBA::minPriority));
 
   // Now, find the value corresponding to this index.
-  native_priority = this->min_;
+  native_priority = static_cast<RTCORBA::NativePriority> (this->min_);
   for (int i = 2; i <= native_priority_index; ++i)
     {
-      native_priority = ACE_Sched_Params::next_priority (this->policy_,
-                                                         native_priority);
+      native_priority = static_cast<RTCORBA::NativePriority> 
+	(ACE_Sched_Params::next_priority (this->policy_, native_priority));
     }
   return 1;
 
@@ -110,10 +114,9 @@ TAO_Linear_Priority_Mapping::to_CORBA (RTCORBA::NativePriority native_priority,
   int delta = total - 1;
   if (delta != 0)
     {
-      corba_priority =
-        RTCORBA::minPriority
-        + ((RTCORBA::maxPriority - RTCORBA::minPriority)
-           * (native_priority_index - 1) / delta);
+      corba_priority = static_cast<RTCORBA::Priority> (RTCORBA::minPriority
+          + ((RTCORBA::maxPriority - RTCORBA::minPriority)
+          * (native_priority_index - 1) / delta));
     }
   else
     {
@@ -159,5 +162,7 @@ TAO_Linear_Priority_Mapping::to_CORBA (RTCORBA::NativePriority native_priority,
 
 #endif /* ACE_WIN32 */
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */

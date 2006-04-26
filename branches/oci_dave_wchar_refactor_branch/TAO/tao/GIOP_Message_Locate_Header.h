@@ -25,6 +25,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_GIOP_Locate_Request_Header
  *
@@ -69,6 +71,8 @@ private:
   /// Incoming CDR stream
   TAO_InputCDR *incoming_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "tao/GIOP_Message_Locate_Header.i"

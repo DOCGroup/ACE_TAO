@@ -1,9 +1,11 @@
-#include "ValueFactory.h"
+#include "tao/Valuetype/ValueFactory.h"
 #include "ace/Guard_T.h"
 
 ACE_RCSID (Valuetype,
            ValueFactory,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Static operations in namespace CORBA.
 
@@ -81,3 +83,5 @@ namespace TAO
     CORBA::remove_ref (p);
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

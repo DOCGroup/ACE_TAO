@@ -29,12 +29,14 @@
 // be\be_codegen.cpp:288
 
 
-#include "ServicesC.h"
+#include "tao/ServicesC.h"
 #include "tao/CDR.h"
 #include "tao/ORB_Core.h"
 
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:70
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Arg traits specializations.
 namespace TAO
@@ -42,7 +44,7 @@ namespace TAO
 }
 
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_CORBA_SERVICEOPTIONSEQ_CS_)
@@ -54,7 +56,7 @@ CORBA::ServiceOptionSeq::ServiceOptionSeq (void)
 CORBA::ServiceOptionSeq::ServiceOptionSeq (
     CORBA::ULong max
   )
-  : TAO_Unbounded_Sequence<
+  : TAO::unbounded_value_sequence<
         ServiceOption
       >
     (max)
@@ -66,7 +68,7 @@ CORBA::ServiceOptionSeq::ServiceOptionSeq (
     CORBA::ULong * buffer,
     CORBA::Boolean release
   )
-  : TAO_Unbounded_Sequence<
+  : TAO::unbounded_value_sequence<
         ServiceOption
       >
     (max, length, buffer, release)
@@ -75,7 +77,7 @@ CORBA::ServiceOptionSeq::ServiceOptionSeq (
 CORBA::ServiceOptionSeq::ServiceOptionSeq (
     const ServiceOptionSeq &seq
   )
-  : TAO_Unbounded_Sequence<
+  : TAO::unbounded_value_sequence<
         ServiceOption
       >
     (seq)
@@ -95,10 +97,10 @@ void CORBA::ServiceOptionSeq::_tao_any_destructor (
 
 #endif /* end #if !defined */
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_structure/structure_cs.cpp:66
 
-void 
+void
 CORBA::ServiceDetail::_tao_any_destructor (
     void *_tao_void_pointer
   )
@@ -108,7 +110,7 @@ CORBA::ServiceDetail::_tao_any_destructor (
   delete _tao_tmp_pointer;
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_CORBA_SERVICEDETAILSEQ_CS_)
@@ -120,7 +122,7 @@ CORBA::ServiceDetailSeq::ServiceDetailSeq (void)
 CORBA::ServiceDetailSeq::ServiceDetailSeq (
     CORBA::ULong max
   )
-  : TAO_Unbounded_Sequence<
+  : TAO::unbounded_value_sequence<
         ServiceDetail
       >
     (max)
@@ -132,7 +134,7 @@ CORBA::ServiceDetailSeq::ServiceDetailSeq (
     CORBA::ServiceDetail * buffer,
     CORBA::Boolean release
   )
-  : TAO_Unbounded_Sequence<
+  : TAO::unbounded_value_sequence<
         ServiceDetail
       >
     (max, length, buffer, release)
@@ -141,7 +143,7 @@ CORBA::ServiceDetailSeq::ServiceDetailSeq (
 CORBA::ServiceDetailSeq::ServiceDetailSeq (
     const ServiceDetailSeq &seq
   )
-  : TAO_Unbounded_Sequence<
+  : TAO::unbounded_value_sequence<
         ServiceDetail
       >
     (seq)
@@ -161,10 +163,10 @@ void CORBA::ServiceDetailSeq::_tao_any_destructor (
 
 #endif /* end #if !defined */
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_structure/structure_cs.cpp:66
 
-void 
+void
 CORBA::ServiceInformation::_tao_any_destructor (
     void *_tao_void_pointer
   )
@@ -185,15 +187,7 @@ CORBA::Boolean operator<< (
     const CORBA::ServiceOptionSeq &_tao_sequence
   )
 {
-  const CORBA::ULong _tao_seq_len = _tao_sequence.length ();
-  
-  if (strm << _tao_seq_len)
-    {
-      // Encode all elements.
-      return strm.write_ulong_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
-    }
-  
-  return false;
+  return TAO::marshal_sequence(strm, _tao_sequence);
 }
 
 CORBA::Boolean operator>> (
@@ -201,33 +195,7 @@ CORBA::Boolean operator>> (
     CORBA::ServiceOptionSeq &_tao_sequence
   )
 {
-  CORBA::ULong _tao_seq_len;
-  
-  if (strm >> _tao_seq_len)
-    {
-      // Add a check to the length of the sequence
-      // to make sure it does not exceed the length
-      // of the stream. (See bug 58.)
-      if (_tao_seq_len > strm.length ())
-        {
-          return false;
-        }
-      
-      // Set the length of the sequence.
-      _tao_sequence.length (_tao_seq_len);
-      
-      // If length is 0 we return true.
-      if (0 >= _tao_seq_len) 
-        {
-          return true;
-        }
-      
-      // Retrieve all the elements.
-      return strm.read_ulong_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
-    
-    }
-  
-  return false;
+  return TAO::demarshal_sequence(strm, _tao_sequence);
 }
 
 #endif /* _TAO_CDR_OP_CORBA_ServiceOptionSeq_CPP_ */
@@ -266,22 +234,7 @@ CORBA::Boolean operator<< (
     const CORBA::ServiceDetailSeq &_tao_sequence
   )
 {
-  const CORBA::ULong _tao_seq_len = _tao_sequence.length ();
-  
-  if (strm << _tao_seq_len)
-    {
-      // Encode all elements.
-      CORBA::Boolean _tao_marshal_flag = true;
-      
-      for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
-        {
-          _tao_marshal_flag = (strm << _tao_sequence[i]);
-        }
-      
-      return _tao_marshal_flag;
-    }
-  
-  return false;
+  return TAO::marshal_sequence(strm, _tao_sequence);
 }
 
 CORBA::Boolean operator>> (
@@ -289,40 +242,7 @@ CORBA::Boolean operator>> (
     CORBA::ServiceDetailSeq &_tao_sequence
   )
 {
-  CORBA::ULong _tao_seq_len;
-  
-  if (strm >> _tao_seq_len)
-    {
-      // Add a check to the length of the sequence
-      // to make sure it does not exceed the length
-      // of the stream. (See bug 58.)
-      if (_tao_seq_len > strm.length ())
-        {
-          return false;
-        }
-      
-      // Set the length of the sequence.
-      _tao_sequence.length (_tao_seq_len);
-      
-      // If length is 0 we return true.
-      if (0 >= _tao_seq_len) 
-        {
-          return true;
-        }
-      
-      // Retrieve all the elements.
-      CORBA::Boolean _tao_marshal_flag = true;
-      
-      for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
-        {
-          _tao_marshal_flag = (strm >> _tao_sequence[i]);
-        }
-      
-      return _tao_marshal_flag;
-    
-    }
-  
-  return false;
+  return TAO::demarshal_sequence(strm, _tao_sequence);
 }
 
 #endif /* _TAO_CDR_OP_CORBA_ServiceDetailSeq_CPP_ */
@@ -349,3 +269,5 @@ CORBA::Boolean operator>> (
     (strm >> _tao_aggregate.service_options) &&
     (strm >> _tao_aggregate.service_details);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

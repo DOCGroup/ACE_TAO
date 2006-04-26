@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -24,13 +24,15 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Object_KeyC.h"
-#include "HTIOP_Endpoint.h"
+#include "orbsvcs/HTIOP/HTIOP_Endpoint.h"
 
 #include "ace/Synch.h"
 
 #if !defined (OCI_TAG_HTIOP_PROFILE)
 # define OCI_TAG_HTIOP_PROFILE 0x4f434902U
 #endif
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -142,6 +144,8 @@ namespace TAO
     };
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif  /* HTIOP_PROFILE_H */

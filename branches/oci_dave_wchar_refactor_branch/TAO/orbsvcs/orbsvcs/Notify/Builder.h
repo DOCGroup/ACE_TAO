@@ -14,7 +14,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "notify_serv_export.h"
+#include "orbsvcs/Notify/notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -23,11 +23,12 @@
 #include "orbsvcs/CosNotifyChannelAdminC.h"
 #include "orbsvcs/NotifyExtC.h"
 
-#include "AdminProperties.h"
-#include "Topology_Object.h"
+#include "orbsvcs/Notify/AdminProperties.h"
+#include "orbsvcs/Notify/Topology_Object.h"
 
 #include "tao/PortableServer/PortableServer.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Notify_EventChannelFactory;
 class TAO_Notify_EventChannel;
@@ -166,6 +167,8 @@ public:
       ACE_ENV_ARG_DECL
     );
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

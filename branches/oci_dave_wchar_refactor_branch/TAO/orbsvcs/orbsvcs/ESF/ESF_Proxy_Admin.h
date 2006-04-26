@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file   ESF_Proxy_Admin.h
  *
@@ -12,12 +13,14 @@
 #ifndef TAO_ESF_PROXY_ADMIN_H
 #define TAO_ESF_PROXY_ADMIN_H
 
-#include "ESF_Proxy_Collection.h"
-#include "ESF_Worker.h"
+#include "orbsvcs/ESF/ESF_Proxy_Collection.h"
+#include "orbsvcs/ESF/ESF_Worker.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_ESF_Proxy_Admin
@@ -73,7 +76,7 @@ public:
                  ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-  // @TODO We should use INTERFACE::_ptr_type or PROXY::_ptr_type, but
+  // @todo We should use INTERFACE::_ptr_type or PROXY::_ptr_type, but
   // the MSVC compiler (v6.0) gets confused when we do so.  So we have
   // to choose for the lesser evil.  The code works because TAO uses
   // pointers to implement the _ptr types, and that is OK because this
@@ -147,12 +150,14 @@ private:
 
 // ****************************************************************
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "ESF_Proxy_Admin.i"
+#include "orbsvcs/ESF/ESF_Proxy_Admin.i"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ESF_Proxy_Admin.cpp"
+#include "orbsvcs/ESF/ESF_Proxy_Admin.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

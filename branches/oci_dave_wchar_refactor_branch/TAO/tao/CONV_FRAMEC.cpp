@@ -29,11 +29,13 @@
 // be\be_codegen.cpp:288
 
 
-#include "CONV_FRAMEC.h"
+#include "tao/CONV_FRAMEC.h"
 #include "tao/CDR.h"
 
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:70
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Arg traits specializations.
 namespace TAO
@@ -41,7 +43,7 @@ namespace TAO
 }
 
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_CONV_FRAME_CODESETIDSEQ_CS_)
@@ -53,7 +55,7 @@ CONV_FRAME::CodeSetIdSeq::CodeSetIdSeq (void)
 CONV_FRAME::CodeSetIdSeq::CodeSetIdSeq (
     CORBA::ULong max
   )
-  : TAO_Unbounded_Sequence<
+  : TAO::unbounded_value_sequence<
         CodeSetId
       >
     (max)
@@ -65,7 +67,7 @@ CONV_FRAME::CodeSetIdSeq::CodeSetIdSeq (
     CORBA::ULong * buffer,
     CORBA::Boolean release
   )
-  : TAO_Unbounded_Sequence<
+  : TAO::unbounded_value_sequence<
         CodeSetId
       >
     (max, length, buffer, release)
@@ -74,7 +76,7 @@ CONV_FRAME::CodeSetIdSeq::CodeSetIdSeq (
 CONV_FRAME::CodeSetIdSeq::CodeSetIdSeq (
     const CodeSetIdSeq &seq
   )
-  : TAO_Unbounded_Sequence<
+  : TAO::unbounded_value_sequence<
         CodeSetId
       >
     (seq)
@@ -94,10 +96,10 @@ void CONV_FRAME::CodeSetIdSeq::_tao_any_destructor (
 
 #endif /* end #if !defined */
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_structure/structure_cs.cpp:66
 
-void 
+void
 CONV_FRAME::CodeSetComponent::_tao_any_destructor (
     void *_tao_void_pointer
   )
@@ -107,10 +109,10 @@ CONV_FRAME::CodeSetComponent::_tao_any_destructor (
   delete _tao_tmp_pointer;
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_structure/structure_cs.cpp:66
 
-void 
+void
 CONV_FRAME::CodeSetComponentInfo::_tao_any_destructor (
     void *_tao_void_pointer
   )
@@ -120,10 +122,10 @@ CONV_FRAME::CodeSetComponentInfo::_tao_any_destructor (
   delete _tao_tmp_pointer;
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_structure/structure_cs.cpp:66
 
-void 
+void
 CONV_FRAME::CodeSetContext::_tao_any_destructor (
     void *_tao_void_pointer
   )
@@ -144,15 +146,7 @@ CORBA::Boolean operator<< (
     const CONV_FRAME::CodeSetIdSeq &_tao_sequence
   )
 {
-  const CORBA::ULong _tao_seq_len = _tao_sequence.length ();
-  
-  if (strm << _tao_seq_len)
-    {
-      // Encode all elements.
-      return strm.write_ulong_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
-    }
-  
-  return false;
+  return TAO::marshal_sequence(strm, _tao_sequence);
 }
 
 CORBA::Boolean operator>> (
@@ -160,33 +154,7 @@ CORBA::Boolean operator>> (
     CONV_FRAME::CodeSetIdSeq &_tao_sequence
   )
 {
-  CORBA::ULong _tao_seq_len;
-  
-  if (strm >> _tao_seq_len)
-    {
-      // Add a check to the length of the sequence
-      // to make sure it does not exceed the length
-      // of the stream. (See bug 58.)
-      if (_tao_seq_len > strm.length ())
-        {
-          return false;
-        }
-      
-      // Set the length of the sequence.
-      _tao_sequence.length (_tao_seq_len);
-      
-      // If length is 0 we return true.
-      if (0 >= _tao_seq_len) 
-        {
-          return true;
-        }
-      
-      // Retrieve all the elements.
-      return strm.read_ulong_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
-    
-    }
-  
-  return false;
+  return TAO::demarshal_sequence(strm, _tao_sequence);
 }
 
 #endif /* _TAO_CDR_OP_CONV_FRAME_CodeSetIdSeq_CPP_ */
@@ -259,3 +227,5 @@ CORBA::Boolean operator>> (
     (strm >> _tao_aggregate.char_data) &&
     (strm >> _tao_aggregate.wchar_data);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -191,32 +191,5 @@ typedef Handle_Thr_Acceptor<CLI_STREAM, THR_ACCEPTOR> HANDLE_THR_ACCEPTOR;
 HANDLE_THR_ACCEPTOR remote_thr_stream;
 ACE_Service_Object_Type rts (&remote_thr_stream, ACE_TEXT("Remote_Thr_Stream"));
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Acceptor<CLI_STREAM, THR_ACCEPTOR>;
-template class ACE_Accept_Strategy<CLI_STREAM, THR_ACCEPTOR>;
-template class ACE_Concurrency_Strategy<CLI_STREAM>;
-template class ACE_Creation_Strategy<CLI_STREAM>;
-template class ACE_Scheduling_Strategy<CLI_STREAM>;
-template class ACE_Strategy_Acceptor<CLI_STREAM, THR_ACCEPTOR>;
-template class ACE_Svc_Handler<THR_STREAM, ACE_MT_SYNCH>;
-template class ACE_Thread_Strategy<CLI_STREAM>;
-template class CLI_Stream <THR_STREAM>;
-template class Handle_Thr_Acceptor<CLI_STREAM, THR_ACCEPTOR>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Acceptor<CLI_STREAM, THR_ACCEPTOR>
-#pragma instantiate ACE_Accept_Strategy<CLI_STREAM, THR_ACCEPTOR>
-#pragma instantiate ACE_Concurrency_Strategy<CLI_STREAM>
-#pragma instantiate ACE_Creation_Strategy<CLI_STREAM>
-#pragma instantiate ACE_Scheduling_Strategy<CLI_STREAM>
-#pragma instantiate ACE_Strategy_Acceptor<CLI_STREAM, THR_ACCEPTOR>
-#pragma instantiate ACE_Svc_Handler<THR_STREAM, ACE_MT_SYNCH>
-#pragma instantiate ACE_Thread_Strategy<CLI_STREAM>
-#pragma instantiate CLI_Stream <THR_STREAM>
-#pragma instantiate Handle_Thr_Acceptor<CLI_STREAM, THR_ACCEPTOR>
-#elif defined (AIX) && (defined (__IBMCPP__) && (__IBMCPP__ >= 500))
-// This works around a bug in Visual Age C++ template auto-instantiate.
-template CLI_Stream<THR_STREAM>::CLI_Stream(ACE_Thread_Manager*);
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 #endif /* ACE_HAS_THREADS */
 #endif /* ACE_HANDLE_THR_STREAM_C */

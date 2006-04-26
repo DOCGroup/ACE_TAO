@@ -3,6 +3,8 @@
 // $Id$
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_INLINE TAO_IIOP_Endpoint *
 TAO_SSLIOP_Endpoint::iiop_endpoint (void) const
 {
@@ -64,3 +66,5 @@ TAO_SSLIOP_Endpoint::credentials_set (void) const
 {
   return this->credentials_set_;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

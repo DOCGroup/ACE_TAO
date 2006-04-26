@@ -26,9 +26,9 @@
 // ******************************************************************
 // Data Section
 // ******************************************************************
-
+const int PER_BATCH = 4;
 static TAO_Notify_Tests_SequencePushSupplier* supplier_1 = 0;
-static int max_events = 2;  // 6 sets of 16
+static int num_batches = 10;
 static const char* ior_output_file = "supplier.ior";
 
 // ******************************************************************
@@ -92,7 +92,7 @@ Supplier_Client::parse_args (int argc, char *argv[])
     switch (c)
   {
     case 'e':
-      max_events = ACE_OS::atoi(get_opts.optarg);
+      num_batches = ACE_OS::atoi(get_opts.optarg);
       break;
 
     case 'o':
@@ -132,12 +132,11 @@ create_supplieradmin (CosNotifyChannelAdmin::EventChannel_ptr ec
 static void
 SendEvents (int id ACE_ENV_ARG_DECL)
 {
-  const int MAX_EVENTS = 15;
-
   static const char* types[] = { "good", "bad", "ugly" };
   CosNotification::EventBatch events;
 
   CosNotification::StructuredEvent event;
+
   event.header.fixed_header.event_type.domain_name =
     CORBA::string_dup("Orbix 2000 Demos");
   event.header.fixed_header.event_type.type_name =
@@ -145,64 +144,44 @@ SendEvents (int id ACE_ENV_ARG_DECL)
 
   event.header.fixed_header.event_name = CORBA::string_dup("test event");
 
-
   event.header.variable_header.length (1);
   event.header.variable_header[0].name =
     CORBA::string_dup(CosNotification::Priority);
-  event.header.variable_header[0].value <<= (CORBA::Short)
-    (id > max_events / 2 ?
-    -id : id);
 
   event.filterable_data.length (3);
   event.filterable_data[0].name = CORBA::string_dup("Number");
-  event.filterable_data[0].value <<= (CORBA::Long)10;
-
   event.filterable_data[1].name = CORBA::string_dup("Index");
-  event.filterable_data[1].value <<= 0;
-
   event.filterable_data[2].name = CORBA::string_dup("enum");
-  event.filterable_data[2].value <<= types[id % 3];
 
-  events.length(16);
-  events[0] = event;
+  events.length(PER_BATCH);
 
-  CosNotification::StructuredEvent revents[15];
-  for(int z = 0; z < MAX_EVENTS; ++z) {
-    revents[z].header.fixed_header.event_type.domain_name =
-      CORBA::string_dup("Orbix 2000 Demos");
-    revents[z].header.fixed_header.event_type.type_name =
-      CORBA::string_dup("Sequence Notification Push Demo Event");
-
-    revents[z].header.fixed_header.event_name = CORBA::string_dup("test revents[z]");
-
-    revents[z].header.variable_header.length (1);
-    revents[z].header.variable_header[0].name =
-      CORBA::string_dup(CosNotification::Priority);
-    revents[z].header.variable_header[0].value <<= (CORBA::Short)
-      (id > max_events / 2 ?
+  for(int z = 0; z < PER_BATCH; ++z) {
+    event.header.variable_header[0].value <<= (CORBA::Short)
+      (id > num_batches / 2 ?
       -id : id);
 
-    revents[z].filterable_data.length (3);
-    revents[z].filterable_data[0].name = CORBA::string_dup("Number");
-
     if (z % 2 == 0) {
-      revents[z].filterable_data[0].value <<= (CORBA::Long)20;
+      event.filterable_data[0].value <<= (CORBA::Long)20;
     } else {
-      revents[z].filterable_data[0].value <<= (CORBA::Long)10;
+      event.filterable_data[0].value <<= (CORBA::Long)10;
     }
 
-    revents[z].filterable_data[1].name = CORBA::string_dup("Index");
-    revents[z].filterable_data[1].value <<= z+1;
+    event.filterable_data[1].value <<= z;
 
-    revents[z].filterable_data[2].name = CORBA::string_dup("enum");
-    revents[z].filterable_data[2].value <<= types[id % 3];
-    events[z + 1] = revents[z];
+    event.filterable_data[2].value <<= types[id % 3];
+    events[z] = event;
   }
 
-  ACE_DEBUG ((LM_DEBUG, "Sending events.\n"));
-
-  supplier_1->send_events(events ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_TRY_NEW_ENV
+  {
+    supplier_1->send_events(events ACE_ENV_ARG_PARAMETER);
+    ACE_TRY_CHECK;
+  }
+  ACE_CATCH (CORBA::Exception, e)
+  {
+    ACE_PRINT_EXCEPTION (e, "Error: Supplier exception: ");
+  }
+  ACE_ENDTRY;
 }
 
 static void
@@ -280,16 +259,18 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 
         sig_impl->wait_for_startup();
 
-        ACE_DEBUG((LM_DEBUG, " 1 supplier sending %d events...\n", max_events));
-        for (int i = 0; i < max_events; ++i)
+        ACE_DEBUG((LM_DEBUG, " 1 supplier sending %d batches of %d events...\n", num_batches, PER_BATCH));
+        for (int i = 0; i < num_batches; ++i)
         {
           ACE_DEBUG((LM_DEBUG, "+"));
           SendEvents (i ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
-        ACE_DEBUG((LM_DEBUG, "\nSupplier sent %d events.\n", max_events));
+        ACE_DEBUG((LM_DEBUG, "\nSupplier waiting for consumer completion...\n"));
 
         sig_impl->wait_for_completion();
+
+        ACE_DEBUG((LM_DEBUG, "\nSupplier finished.\n"));
 
         ACE_OS::unlink (ior_output_file);
 

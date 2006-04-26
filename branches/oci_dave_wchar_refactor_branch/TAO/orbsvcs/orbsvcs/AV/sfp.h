@@ -15,21 +15,27 @@
 #include /**/ "ace/pre.h"
 
 #include "orbsvcs/AV/AV_export.h"
+
+#include "orbsvcs/AV/Policy.h"
+#include "orbsvcs/AV/MCast.h"
+#include "orbsvcs/AV/AVStreams_i.h"
+#include "orbsvcs/AV/UDP.h"
+
 #include "orbsvcs/sfpC.h"
+
+#include "tao/CDR.h"
+
 #include "ace/SOCK_Dgram.h"
 #include "ace/INET_Addr.h"
 
-#include "tao/CDR.h"
-#include "Policy.h"
-#include "MCast.h"
-#include "AVStreams_i.h"
-#include "UDP.h"
 
 #define TAO_SFP_MAGIC_NUMBER_LEN 4
 #define TAO_SFP_MESSAGE_TYPE_OFFSET 5
 #define TAO_SFP_WRITEV_MAX 128
 
 #define TAO_SFP_MAX_PACKET_SIZE ACE_MAX_DGRAM_SIZE
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_SFP_Fragment_Node
@@ -38,9 +44,7 @@
 class TAO_SFP_Fragment_Node
 {
 public:
-  TAO_SFP_Fragment_Node (void)
-    :data_ (0)
-    {}
+  TAO_SFP_Fragment_Node (void) : data_ (0) {}
   flowProtocol::fragment fragment_info_;
   ACE_Message_Block *data_;
   friend bool operator< (const TAO_SFP_Fragment_Node& left,
@@ -103,14 +107,14 @@ class TAO_AV_Export TAO_SFP_Base
 {
 public:
   // default arguments to pass to use for the ORB
-  static const char *TAO_SFP_ORB_ARGUMENTS;
+  static const char TAO_SFP_ORB_ARGUMENTS[];
 
   // SFP magic numbers
-  static const char *TAO_SFP_MAGIC_NUMBER;
-  static const char *TAO_SFP_FRAGMENT_MAGIC_NUMBER;
-  static const char *TAO_SFP_START_MAGIC_NUMBER;
-  static const char *TAO_SFP_CREDIT_MAGIC_NUMBER;
-  static const char *TAO_SFP_STARTREPLY_MAGIC_NUMBER;
+  static const char TAO_SFP_MAGIC_NUMBER[];
+  static const char TAO_SFP_FRAGMENT_MAGIC_NUMBER[];
+  static const char TAO_SFP_START_MAGIC_NUMBER[];
+  static const char TAO_SFP_CREDIT_MAGIC_NUMBER[];
+  static const char TAO_SFP_STARTREPLY_MAGIC_NUMBER[];
 
   // SFP version 1.0
   static const unsigned char TAO_SFP_MAJOR_VERSION;
@@ -292,6 +296,8 @@ public:
                                                         TAO_AV_Flow_Handler *handler,
                                                         TAO_AV_Transport *transport);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE (TAO_AV_SFP_Flow_Factory)
 ACE_FACTORY_DECLARE (TAO_AV, TAO_AV_SFP_Flow_Factory)

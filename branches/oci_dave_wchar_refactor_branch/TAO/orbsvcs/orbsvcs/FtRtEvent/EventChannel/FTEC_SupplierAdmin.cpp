@@ -2,14 +2,15 @@
 
 #include "orbsvcs/Event/EC_ProxySupplier.h"
 #include "orbsvcs/Event/EC_Event_Channel_Base.h"
-#include "FTEC_SupplierAdmin.h"
-#include "FTEC_ProxyConsumer.h"
+#include "orbsvcs/FtRtEvent/EventChannel/FTEC_SupplierAdmin.h"
+#include "orbsvcs/FtRtEvent/EventChannel/FTEC_ProxyConsumer.h"
 #include "tao/Stub.h"
 
 ACE_RCSID (EventChannel,
            TAO_FTEC_SupplierAdmin,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 const FtRtecEventChannelAdmin::OperationType
 TAO_FTEC_SupplierAdmin::OBTAIN_ID = FtRtecEventChannelAdmin::OBTAIN_PUSH_CONSUMER;
@@ -45,7 +46,4 @@ TAO_FTEC_SupplierAdmin::disconnect(RtecEventChannelAdmin::ProxyPushConsumer_ptr 
   ACE_ENDTRY;
 }
 
-
-
-
-
+TAO_END_VERSIONED_NAMESPACE_DECL

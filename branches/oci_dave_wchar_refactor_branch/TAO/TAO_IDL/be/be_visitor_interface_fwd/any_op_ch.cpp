@@ -101,6 +101,8 @@ be_visitor_interface_fwd_any_op_ch::visit_interface_fwd (be_interface_fwd *node)
       *os << "#else\n\n";
     }
 
+  *os << be_global->core_versioning_begin () << be_nl;
+  
   *os << macro << " void"
       << " operator<<= (::CORBA::Any &, " << node->name ()
       << "_ptr); // copying" << be_nl;
@@ -111,6 +113,8 @@ be_visitor_interface_fwd_any_op_ch::visit_interface_fwd (be_interface_fwd *node)
       << " operator>>= (const ::CORBA::Any &, "
       << node->name () << " *&);";
 
+  *os << be_global->core_versioning_end () << be_nl;
+  
   if (module != 0)
     {
       *os << "\n\n#endif";

@@ -1,10 +1,114 @@
 PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 ===========================================================================
 
-PLANNED MAJOR CHANGES TARGETED FOR ACE-5.4.8
+. (Remedy) VxWorks 6.2 support
+
+USER VISIBLE CHANGES BETWEEN ACE-5.5.1 and ACE-5.5.2
 ====================================================
 
-. Subset ACE for TAO and TAO Services
+. Explicit template instantiations support has been removed
+
+. Visual C++ 6.0 and 7.0 support has been removed
+
+. Added a wrapper for the sendfile API
+
+USER VISIBLE CHANGES BETWEEN ACE-5.5 and ACE-5.5.1
+====================================================
+
+. Added support for the --enable-symbol-visibility configure option
+  to the autoconf build infrastructure instead of solely relying on
+  feature tests to enable/disable symbol visibility support.  This
+  avoids build problems with icc, etc.
+
+. Added support for the --enable-fl-reactor configure option to the
+  autoconf build infrastructure to build the ACE_FlReactor library.
+
+. Added support for the --enable-qt-reactor configure option to the
+  autoconf build infrastructure to build the ACE_QtReactor library.
+
+. Added support for the --enable-xt-reactor configure option to the
+  autoconf build infrastructure to build the ACE_XtReactor library.
+
+. Fixed a bug that would cause timer IDs from ACE_Timer_Heap to be
+  improperly duplicated under certain conditions (Bugzilla #2447).
+
+. Fixed ACE_SSL_Context::private_key(), context(), and dh_params() methods
+  to allow retrying a file load after a failed call.
+
+. Fixed ACE_SSL_Asynch_Stream so it can be instantiated; also moved the
+  declarations for ACE_SSL_Asynch_Read_Stream_Result,
+  ACE_SSL_Asynch_Write_Stream_Result, and ACE_SSL_Asynch_Result classes
+  to the ace/SSL/SSL_Asynch_Stream.h file so applications can see them.
+
+. The ACE_Task class's internal lock_ member was changed from an
+  ACE_Thread_Mutex to ACE_Recursive_Thread_Mutex. Additionally, the lock
+  is now held by ACE across the call to a task's close() hook when a thread
+  is shutting down to prevent a race condition where multiple threads may
+  think they are the last thread (Bugzilla #2339).
+
+USER VISIBLE CHANGES BETWEEN ACE-5.4.10 and ACE-5.5
+====================================================
+
+. Added a platform macros option "templates=manual", currently only
+  applies to AIX 5.3 with XL 7 compiler.  It allows the user to tell the
+  compiler to set -qnotempinc and -qnotemplateregistry and works well
+  in static builds.
+
+. ACE and its tests compile error free with GCC 4.1 pre release.
+
+. ACE_Recursive_Thread_Mutex::get_nesting_level() fixed for 64-bit Windows
+  XP on amd64/EM64T hardware.
+
+. Many build-time fixes for Windows Mobile 5 and Windows PocketPC 2003 using
+  Visual Studio .NET 2005 (VC8).
+
+. Added support for the --enable-tk-reactor configure option to the
+  autoconf build infrastructure to build the ACE_TkReactor library.
+
+USER VISIBLE CHANGES BETWEEN ACE-5.4.9 and ACE-5.4.10
+====================================================
+
+. Fixed a bug in ACE_Timer_Heap_T::cancel().
+
+. Improved ACE_Time_Value support for boundary conditions.
+
+. Fixed problems with operator placement delete on certain C++ compilers.
+
+. Fixed a bug with the ACE_SPIPE_Acceptor on Windows.
+
+. Correctly set sockaddr_in.sin_len and sockaddr_in6.sin6_len on
+  platforms that have these fields.
+
+. Avoided problems with namespace pollution for max() macros.
+
+. Many fixes for ACE_LACKS* and ACE_HAS* macros for autoconfig.
+
+USER VISIBLE CHANGES BETWEEN ACE-5.4.8 and ACE-5.4.9
+====================================================
+
+. Added dozens of new ACE_LACKS and ACE_HAS defines which are used to
+  simplify the ACE_OS layer
+
+. Constructors of ACE_Time_Value have been made explicit to prevent
+  implicit conversions.
+
+. Added a shutdown() method to ACE_Barrier. The new method aborts the
+  wait by all threads.
+
+. Changed the behavior of ACE_Message_Queue::enqueue_head() and
+  enqueue_tail(). If the enqueued message block has other blocks
+  chained to it via its next() pointer, the entire chain of blocks
+  will be enqueued at once.
+
+. Improved the support for high-resolution timers with
+  ACE_Timer_Queue_Adapter.
+
+. Make it possible to disable file caching in JAWS.
+
+. Improved ACE_Pipe implementation so that it uses localhost to avoid
+  firewall problems.
+
+. Added Unicode support to the Service Configurator.
 
 USER VISIBLE CHANGES BETWEEN ACE-5.4.7 and ACE-5.4.8
 ====================================================
@@ -16,8 +120,50 @@ USER VISIBLE CHANGES BETWEEN ACE-5.4.7 and ACE-5.4.8
 . TTY_IO overhaul
   - Improved documentation.
   - It is now possible to request infinite timeout in portable manner.
-    This can be achived by setting negative value to readtimeoutmsec.
+    This can be achieved by setting negative value to readtimeoutmsec.
   - Various bugs fixed and portability issues resolved.
+
+. Subset ACE for TAO and TAO Services
+
+. Support for Intel C++ 9.0 on Windows and Linux
+
+. Support for Microsoft Visual Studio 2005 (aka VC8) for Win32 as well
+  as the Windows CE platforms Pocket PC 2003 and Windows Mobile 5.
+  Solution/project files are generated with an appended "_vc8" for
+  Win32 and "_WinCE" for the CE platforms. See
+  ACE_wrappers/docs/CE-status.txt for more information.
+
+. Completed implementation of ACE_Dev_Poll_Reactor using the Linux epoll
+  facility; tested on Red Hat Enterprise Linux 4.
+
+. The in-memory size of an ACE_RB_Tree will be smaller due to rearranged
+  placement of pointers.
+
+. Added an optimization to CDR stream to ignores alignment when marshaling
+  data.  Use this new ACE_LACKS_CDR_ALIGNMENT compile-time option only
+  when the ACE_DISABLE_SWAP_ON_READ macro is enabled.  This new option
+  requires ACE CDR engine to do both marshaling and demarshaling, and
+  when this option is enabled the encoded streams are no longer
+  compliant with the CORBA CDR specification.
+
+. Developed Feature Oriented Customizer (FOCUS) tool to enable
+  specialization of middleware frameworks such as Reactor and Protocol
+  framework.  FOCUS provides an XML based transformation engine, where
+  the transformations to specialize the components are captured in XML
+  file and a weaver specializes the code.
+
+. Added support for unrolling ACE_OS::memcpy copy loop where
+  applicable to improve performance. Autoconf tests empirically
+  determine whether loop unrolling is at least 10% better than default
+  version.
+
+. Added support for an ACE "versioned" namespace.  When enabled, ACE
+  library sources will be placed within a namespace of the user's
+  choice or a namespace of the form ACE_5_4_7 by default, where
+  "5_4_7" is the ACE major, minor and beta versions.  The default may
+  be overridden by defining the ACE_VERSIONED_NAMESPACE_NAME
+  preprocessor symbol.  Enable overall versioned namespace support by
+  adding "versioned_namespace=1" to your MPC default.features file.
 
 USER VISIBLE CHANGES BETWEEN ACE-5.4.6 and ACE-5.4.7
 ====================================================

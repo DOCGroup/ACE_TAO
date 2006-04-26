@@ -12,6 +12,8 @@
 
 ACE_RCSID(ace, Process_Semaphore, "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 void
 ACE_Process_Semaphore::dump (void) const
 {
@@ -40,10 +42,10 @@ ACE_Process_Semaphore::ACE_Process_Semaphore (u_int count,
 // ACE_TRACE ("ACE_Process_Semaphore::ACE_Process_Semaphore");
 }
 
-ACE_Process_Semaphore::~ACE_Process_Semaphore (void)
-{
-  // ACE_TRACE ("ACE_Process_Semaphore::~ACE_Process_Semaphore");
-}
+// ACE_Process_Semaphore::~ACE_Process_Semaphore (void)
+// {
+//   // ACE_TRACE ("ACE_Process_Semaphore::~ACE_Process_Semaphore");
+// }
 
 // Explicitly destroy the semaphore.
 
@@ -111,3 +113,4 @@ ACE_Malloc_Lock_Adapter_T<ACE_Process_Semaphore>::operator () (const ACE_TCHAR *
   return p;
 }
 
+ACE_END_VERSIONED_NAMESPACE_DECL

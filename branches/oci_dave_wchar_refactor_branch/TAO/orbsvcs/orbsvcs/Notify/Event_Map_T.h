@@ -13,7 +13,7 @@
 #define TAO_Notify_EVENT_MAP_T_H
 #include /**/ "ace/pre.h"
 
-#include "notify_serv_export.h"
+#include "orbsvcs/Notify/notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -22,9 +22,11 @@
 #include "ace/Hash_Map_Manager.h"
 #include "ace/CORBA_macros.h"
 
-#include "EventType.h"
-#include "Event_Map_Entry_T.h"
-#include "EventTypeSeq.h"
+#include "orbsvcs/Notify/EventType.h"
+#include "orbsvcs/Notify/Event_Map_Entry_T.h"
+#include "orbsvcs/Notify/EventTypeSeq.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Notify_Event_Map_T
@@ -103,12 +105,14 @@ protected:
   TAO_Notify_EventTypeSeq event_types_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "Event_Map_T.inl"
+#include "orbsvcs/Notify/Event_Map_T.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "Event_Map_T.cpp"
+#include "orbsvcs/Notify/Event_Map_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

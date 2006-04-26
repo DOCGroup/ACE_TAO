@@ -26,6 +26,8 @@
 #include "ace/Log_Msg.h"
 #include "ace/Basic_Stats.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_Stats_Value
  *
@@ -79,6 +81,10 @@ public:
   void dump (void) const;
 
 private:
+
+  ACE_Stats_Value (void) {}
+
+private:
   /// The integer portion of the value.
   ACE_UINT32 whole_;
 
@@ -92,7 +98,6 @@ private:
    */
   u_int precision_;
 
-  ACE_UNIMPLEMENTED_FUNC (ACE_Stats_Value (void))
 };
 
 /**
@@ -188,7 +193,7 @@ public:
   /// Print summary statistics to stdout.
   void dump (void) const;
 
-private:
+protected:
   /// Internal indication of whether there has been overflow.  Contains
   /// the errno corresponding to the cause of overflow.
   u_int overflow_;
@@ -271,6 +276,7 @@ private:
 #endif /* 0 */
 };
 
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "ace/Stats.inl"

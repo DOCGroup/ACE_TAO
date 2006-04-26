@@ -1,12 +1,11 @@
-// This may look like C, but it's really -*- C++ -*-
 // $Id$
 
-#include "UIPMC_Profile.h"
-#include "UIPMC_Transport.h"
-#include "UIPMC_Connection_Handler.h"
-#include "UIPMC_Message_Block_Data_Iterator.h"
-#include "UIPMC_Acceptor.h"
-#include "UIPMC_Wait_Never.h"
+#include "orbsvcs/PortableGroup/UIPMC_Profile.h"
+#include "orbsvcs/PortableGroup/UIPMC_Transport.h"
+#include "orbsvcs/PortableGroup/UIPMC_Connection_Handler.h"
+#include "orbsvcs/PortableGroup/UIPMC_Message_Block_Data_Iterator.h"
+#include "orbsvcs/PortableGroup/UIPMC_Acceptor.h"
+#include "orbsvcs/PortableGroup/UIPMC_Wait_Never.h"
 
 #include "tao/Acceptor_Registry.h"
 #include "tao/operation_details.h"
@@ -59,12 +58,15 @@ ACE_RCSID (PortableGroup,
 
 static const CORBA::Octet miop_magic[4] = { 0x4d, 0x49, 0x4f, 0x50 }; // 'M', 'I', 'O', 'P'
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 struct MIOP_Packet
 {
   iovec iov[ACE_IOV_MAX];
   int iovcnt;
   int length;
 };
+
 
 TAO_UIPMC_Transport::TAO_UIPMC_Transport (TAO_UIPMC_Connection_Handler *handler,
                                           TAO_ORB_Core *orb_core,
@@ -77,6 +79,7 @@ TAO_UIPMC_Transport::TAO_UIPMC_Transport (TAO_UIPMC_Connection_Handler *handler,
   // Use the normal GIOP object
   ACE_NEW (this->messaging_object_,
            TAO_GIOP_Message_Base (orb_core,
+                                  this,
                                   MIOP_MAX_DGRAM_SIZE));
 
   // Replace the default wait strategy with our own
@@ -266,7 +269,7 @@ TAO_UIPMC_Transport::send (iovec *iov, int iovcnt,
          current_fragment->iovcnt > 1)
     {
       // Fill in the packet length header field.
-      *packet_length = current_fragment->length;
+      *packet_length = static_cast<CORBA::UShort> (current_fragment->length);
 
       // If this is the last fragment, set the stop message flag.
       if (num_fragments == 1)
@@ -489,16 +492,34 @@ TAO_UIPMC_Transport::handle_input (TAO_Resume_Handle &rh,
   // Set the write pointer in the stack buffer.
   message_block.wr_ptr (n);
 
+
+  // Make a node of the message block..
+  TAO_Queued_Data qd (&message_block);
+  size_t mesg_length;
+
   // Parse the incoming message for validity. The check needs to be
   // performed by the messaging objects.
-  if (this->parse_incoming_messages (message_block) == -1)
+  if (this->messaging_object ()->parse_next_message (message_block,
+                                                     qd,
+                                                     mesg_length) == -1)
     {
       if (TAO_debug_level)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO: (%P|%t|%N|%l) parse_incoming_messages failed on transport %d after fault %p\n"),
-                      this->id (),
-                      ACE_TEXT ("handle_input_i ()\n")));
+                      ACE_TEXT ("TAO: (%P|%t|%N|%l) handle_input failed on transport %d after fault\n"),
+                      this->id () ));
+        }
+
+      return -1;
+    }
+
+  if (message_block.length () > mesg_length)
+    {
+      if (TAO_debug_level)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("TAO: (%P|%t|%N|%l) handle_input  failed on transport %d after fault\n"),
+                      this->id () ));
         }
 
       return -1;
@@ -507,12 +528,6 @@ TAO_UIPMC_Transport::handle_input (TAO_Resume_Handle &rh,
   // NOTE: We are not performing any queueing nor any checking for
   // missing data. We are assuming that ALL the data would be got in a
   // single read.
-
-  // Make a node of the message block..
-  TAO_Queued_Data qd (&message_block);
-
-  // Extract the data for the node..
-  this->messaging_object ()->get_message_data (&qd);
 
   // Process the message
   return this->process_parsed_messages (&qd, rh);
@@ -586,8 +601,6 @@ TAO_UIPMC_Transport::send_message (TAO_OutputCDR &stream,
   return 1;
 }
 
-
-
 int
 TAO_UIPMC_Transport::messaging_init (CORBA::Octet major,
                                     CORBA::Octet minor)
@@ -596,3 +609,5 @@ TAO_UIPMC_Transport::messaging_init (CORBA::Octet major,
                                  minor);
   return 1;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

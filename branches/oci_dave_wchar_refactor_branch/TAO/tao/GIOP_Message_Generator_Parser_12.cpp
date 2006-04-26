@@ -21,6 +21,8 @@ ACE_RCSID (tao,
 // scope.
 static const size_t TAO_GIOP_MESSAGE_ALIGN_PTR = 8;
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 int
 TAO_GIOP_Message_Generator_Parser_12::write_request_header (
     const TAO_Operation_Details &opdetails,
@@ -247,6 +249,17 @@ TAO_GIOP_Message_Generator_Parser_12::write_locate_reply_mesg (
   return 1;
 }
 
+bool
+TAO_GIOP_Message_Generator_Parser_12::write_fragment_header (
+  TAO_OutputCDR & cdr,
+  CORBA::ULong request_id)
+{
+  return (cdr << request_id);
+
+  // No need to align write pointer to an 8 byte boundary since it
+  // should already be aligned (12 for GIOP messager + 4 for fragment
+  // header = 16 -- a multiple of 8)
+}
 
 int
 TAO_GIOP_Message_Generator_Parser_12::parse_request_header (
@@ -264,7 +277,7 @@ TAO_GIOP_Message_Generator_Parser_12::parse_request_header (
 
   request.request_id (req_id);
 
-  CORBA::Octet response_flags;
+  CORBA::Octet response_flags = CORBA::Octet();
   hdr_status = hdr_status && input.read_octet (response_flags);
 
   request.response_expected ((response_flags > 0));
@@ -566,3 +579,5 @@ TAO_GIOP_Message_Generator_Parser_12::fragment_header_length (void) const
 {
   return TAO_GIOP_MESSAGE_FRAGMENT_HEADER;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

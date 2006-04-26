@@ -1,25 +1,22 @@
 /* -*-C++-*- */
-// $Id$
 #ifndef ASN1
 #define ASN1
-// ============================================================================
-//
-// = LIBRARY
-//    asnmp
-//
-// = FILENAME
-//    asn1.h
-//
-// = DESCRIPTION
-// Abstract Syntax Notation One, ASN.1
-// As defined in ISO/IS 8824 and ISO/IS 8825
-// This implements a subset of the above International Standards that
-// is sufficient to implement SNMP.
-//
-// = AUTHOR
-//   Steve Waldbusser/CMU ?
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    asn1.h
+ *
+ *  $Id$
+ *
+ * Abstract Syntax Notation One, ASN.1
+ * As defined in ISO/IS 8824 and ISO/IS 8825
+ * This implements a subset of the above International Standards that
+ * is sufficient to implement SNMP.
+ *
+ *
+ *  @author Steve Waldbusser/CMU ?
+ */
+//=============================================================================
+
 
 /**********************************************************************
         Copyright 1988, 1989, 1991, 1992 by Carnegie Mellon University
@@ -161,10 +158,13 @@ struct counter64 {
 };
 
 // CMU Interface class for ASN.1 routines
+/**
+ * @class asn1
+ *
+ * @brief Defines the member functions for the asn1 concrete interface class
+ * CMU routines for performing ASN.1 data marshalling / representation
+ */
 class ASNMP_Export asn1
-  // = TITLE
-  //     Defines the member functions for the asn1 concrete interface class
-  //     CMU routines for performing ASN.1 data marshalling / representation
 
 {
 public:
@@ -271,10 +271,13 @@ static unsigned char * build_unsigned_int64( unsigned char *data,
 
 
 // CMU Interface class for SNMPv1, SNMPv2c routines
+/**
+ * @class cmu_snmp
+ *
+ * @brief Defines the static functions for the cmu_snmp concrete class.
+ * These routine create cmu pdu's that can be sent/received on/from agents
+ */
 class ASNMP_Export cmu_snmp
-  // = TITLE
-  //    Defines the static functions for the cmu_snmp concrete class.
-  //    These routine create cmu pdu's that can be sent/received on/from agents
 {
  public:
   static struct snmp_pdu *pdu_create( int command);

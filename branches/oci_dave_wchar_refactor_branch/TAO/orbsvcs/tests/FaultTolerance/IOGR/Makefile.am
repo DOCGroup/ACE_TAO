@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ../bin/mwc.pl -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/config -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/templates -type automake -noreldefs TAO.mwc
+## ../bin/mwc.pl -type automake -noreldefs TAO.mwc
 
 ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
@@ -50,11 +50,15 @@ test-stamp: $(srcdir)/test.idl $(TAO_IDL_DEP)
 	@touch $@
 
 
+noinst_HEADERS = \
+  test.idl
+
 ## Makefile.FaultTolerance_IOGR_Manager.am
 
 if BUILD_ACE_UUID
 if BUILD_CORBA_MESSAGING
 if BUILD_INTERCEPTORS
+if !BUILD_ACE_FOR_TAO
 if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS += Manager
@@ -90,6 +94,7 @@ Manager_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_MINIMUM_CORBA
+endif !BUILD_ACE_FOR_TAO
 endif BUILD_INTERCEPTORS
 endif BUILD_CORBA_MESSAGING
 endif BUILD_ACE_UUID
@@ -99,6 +104,7 @@ endif BUILD_ACE_UUID
 if BUILD_ACE_UUID
 if BUILD_CORBA_MESSAGING
 if BUILD_INTERCEPTORS
+if !BUILD_ACE_FOR_TAO
 if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS += server
@@ -136,6 +142,7 @@ server_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_MINIMUM_CORBA
+endif !BUILD_ACE_FOR_TAO
 endif BUILD_INTERCEPTORS
 endif BUILD_CORBA_MESSAGING
 endif BUILD_ACE_UUID

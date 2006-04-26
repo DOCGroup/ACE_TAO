@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -19,7 +19,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "FT_ClientORB_export.h"
+#include "orbsvcs/FaultTolerance/FT_ClientORB_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -28,6 +28,8 @@
 #include "tao/Invocation_Endpoint_Selectors.h"
 #include "tao/Basic_Types.h"
 #include "tao/ORB_Constants.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Profile;
 
@@ -86,6 +88,8 @@ protected:
 
 
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

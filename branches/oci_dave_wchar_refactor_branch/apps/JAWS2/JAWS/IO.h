@@ -18,10 +18,6 @@
 #ifndef JAWS_IO_H
 #define JAWS_IO_H
 
-class ACE_Message_Block;
-class JAWS_IO_Handler;
-class JAWS_IO_Acceptor;
-
 #include "ace/ACE.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -34,6 +30,15 @@ class JAWS_IO_Acceptor;
 #include "ace/Synch_Traits.h"
 
 #include "JAWS/Export.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+class ACE_Message_Block;
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+class JAWS_IO_Handler;
+class JAWS_IO_Acceptor;
+
+
 
 class JAWS_Export JAWS_IO
   // = TITLE
@@ -233,7 +238,7 @@ protected:
   virtual void send_message (JAWS_IO_Handler *ioh,
                              const char *buffer,
                              unsigned int length,
-                             int act);
+                             long act);
 };
 
 typedef ACE_Singleton<JAWS_Asynch_IO, ACE_SYNCH_MUTEX>

@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -28,6 +28,8 @@
 #include "ace/Cleanup.h"
 #include "ace/os_include/sys/os_types.h"
 #include "ace/os_include/os_signal.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class ACE_Object_Manager;
 class ACE_OS_Object_Manager_Manager;
@@ -247,6 +249,8 @@ public:
   friend class ACE_Log_Msg;
   friend void ACE_OS_Object_Manager_Internal_Exit_Hook ();
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* ACE_OBJECT_MANAGER_BASE_H */

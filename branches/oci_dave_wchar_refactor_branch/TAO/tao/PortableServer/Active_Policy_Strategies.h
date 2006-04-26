@@ -12,16 +12,18 @@
 
 #ifndef TAO_PORTABLESERVER_ACTIVE_POLICY_STRATEGIES_H
 #define TAO_PORTABLESERVER_ACTIVE_POLICY_STRATEGIES_H
+
 #include /**/ "ace/pre.h"
 
-#include "portableserver_export.h"
+#include "tao/Environment.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/CORBA_macros.h"
-#include "tao/Environment.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Root_POA;
 
@@ -49,10 +51,10 @@ namespace TAO
     /**
      * This class stores the active policy strategies used for a certain POA.
      */
-    class TAO_PortableServer_Export Active_Policy_Strategies
+    class Active_Policy_Strategies
     {
     public:
-      Active_Policy_Strategies();
+      Active_Policy_Strategies (void);
 
       void update (Cached_Policies &policies,
                    TAO_Root_POA* poa
@@ -94,9 +96,12 @@ namespace TAO
   }
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-# include "Active_Policy_Strategies.inl"
+# include "tao/PortableServer/Active_Policy_Strategies.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
+
 #endif /* TAO_PORTABLESERVER_ACTIVE_POLICY_STRATEGIES_H */

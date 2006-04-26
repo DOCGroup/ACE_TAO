@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -12,16 +12,23 @@
 
 #ifndef ACE_LOG_PRIORITY_H
 #define ACE_LOG_PRIORITY_H
+
 #include /**/ "ace/pre.h"
 
+#include "ace/config-lite.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
+ * @enum ACE_Log_Priority
+ *
  * @brief This data type indicates the relative priorities of the
- *    logging messages, from lowest to highest priority. 
+ *    logging messages, from lowest to highest priority.
  *
  * These values are defined using powers of two so that it's
  * possible to form a mask to turn them on or off dynamically.
  * We only use 12 bits, however, so users are free to use the
- * remaining 19 bits to define their own priority masks.  
+ * remaining 19 bits to define their own priority masks.
  */
 enum ACE_Log_Priority
 {
@@ -71,6 +78,8 @@ enum ACE_Log_Priority
   /// integral type for this enum is at least 32 bits.
   LM_ENSURE_32_BITS = 0x7FFFFFFF
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* ACE_LOG_PRIORITY_H */

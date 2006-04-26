@@ -5,12 +5,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/OS.h"
+#include "orbsvcs/AV/RTP.h"
+#include "orbsvcs/AV/RTCP_Packet.h"
+
 #include "ace/Message_Block.h"
 #include "ace/SString.h"
 
-#include "RTP.h"
-#include "RTCP_Packet.h"
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class RTCP_Channel_In
@@ -215,6 +216,8 @@ private:
   /// The total numbef of octets sent.
   unsigned int octets_sent_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* RTCP_CHANNEL_INCLUDE */

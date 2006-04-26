@@ -1,12 +1,11 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file Reactive_Task.h
  *
  *  $Id$
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_REACTIVE_TASK_H
@@ -14,23 +13,27 @@
 
 #include /**/ "ace/pre.h"
 
-#include "notify_serv_export.h"
+#include "orbsvcs/Notify/notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Worker_Task.h"
-#include "AdminProperties.h"
-#include "Timer_Reactor.h"
+#include "orbsvcs/Notify/Worker_Task.h"
+#include "orbsvcs/Notify/AdminProperties.h"
+#include "orbsvcs/Notify/Timer_Reactor.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Notify_Reactive_Task
  *
- * @brief A reactive worker task. Simply executes the command in the caller's context.
+ * @brief A reactive worker task. Simply executes the command in the
+ *        caller's context.
  *
  */
-class TAO_Notify_Serv_Export TAO_Notify_Reactive_Task : public TAO_Notify_Worker_Task
+class TAO_Notify_Serv_Export TAO_Notify_Reactive_Task
+  : public TAO_Notify_Worker_Task
 {
 public:
   /// Constuctor
@@ -38,7 +41,6 @@ public:
 
   /// Destructor
   virtual ~TAO_Notify_Reactive_Task ();
-
 
   /// Init the reactive task.
   void init (ACE_ENV_SINGLE_ARG_DECL);
@@ -55,16 +57,19 @@ public:
   /// Returns NULL.
   virtual TAO_Notify_Buffering_Strategy* buffering_strategy (void);
 
-protected:
+private:
   /// The timer.
   TAO_Notify_Timer_Reactor::Ptr timer_;
-private:
+
   /// Release
   virtual void release (void);
 };
 
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
-#include "Reactive_Task.inl"
+#include "orbsvcs/Notify/Reactive_Task.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

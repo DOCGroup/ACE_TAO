@@ -147,7 +147,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>createStockDistributorHome_Servant</string>
+          <string>create_Stock_StockDistributorHome_Servant</string>
         </value>
       </value>
     </execParameter>
@@ -190,7 +190,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>createStockBrokerHome_Servant</string>
+          <string>create_Stock_StockBrokerHome_Servant</string>
         </value>
       </value>
     </execParameter>

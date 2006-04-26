@@ -1,34 +1,37 @@
-#include "Transport_Connector.h"
-#include "Transport.h"
-#include "ORB_Core.h"
-#include "MProfile.h"
-#include "Profile.h"
-#include "Environment.h"
-#include "Thread_Lane_Resources.h"
-#include "debug.h"
-#include "Connect_Strategy.h"
-#include "Client_Strategy_Factory.h"
-#include "Connection_Handler.h"
-#include "Profile_Transport_Resolver.h"
-#include "Wait_Strategy.h"
-#include "SystemException.h"
+#include "tao/Transport_Connector.h"
+#include "tao/Transport.h"
+#include "tao/ORB_Core.h"
+#include "tao/MProfile.h"
+#include "tao/Profile.h"
+#include "tao/Environment.h"
+#include "tao/Thread_Lane_Resources.h"
+#include "tao/debug.h"
+#include "tao/Connect_Strategy.h"
+#include "tao/Client_Strategy_Factory.h"
+#include "tao/Connection_Handler.h"
+#include "tao/Profile_Transport_Resolver.h"
+#include "tao/Wait_Strategy.h"
+#include "tao/SystemException.h"
 
 #include "ace/OS_NS_string.h"
 
 //@@ TAO_CONNECTOR_SPL_INCLUDE_ADD_HOOK
 
 #if !defined (__ACE_INLINE__)
-# include "Transport_Connector.inl"
+# include "tao/Transport_Connector.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (tao,
            Connector,
            "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Connector
 TAO_Connector::TAO_Connector (CORBA::ULong tag)
   : active_connect_strategy_ (0),
-    tag_(tag),
+    tag_ (tag),
     orb_core_ (0)
 {
 }
@@ -173,8 +176,8 @@ TAO_Connector::make_mprofile (const char *string,
   //    `shu/arf'
   //    `1.1@chicken/arf'
 
-  int begin = 0;
-  int end = ior_index - 1;
+  ssize_t begin = 0;
+  ssize_t end = ior_index - 1;
   // Initialize the end of the endpoint index
 
   for (CORBA::ULong j = 0; j < profile_count; ++j)
@@ -190,7 +193,7 @@ TAO_Connector::make_mprofile (const char *string,
           end = objkey_index;  // Handle last endpoint differently
         }
 
-      if (end < static_cast<int> (ior.length ()) && end != ior.npos)
+      if (end < static_cast<ssize_t> (ior.length ()) && end != ior.npos)
         {
           ACE_CString endpoint = ior.substring (begin, end - begin);
 
@@ -527,3 +530,5 @@ TAO_Connector::check_connection_closure (
 }
 
 //@@ TAO_CONNECTOR_SPL_METHODS_ADD_HOOK
+
+TAO_END_VERSIONED_NAMESPACE_DECL

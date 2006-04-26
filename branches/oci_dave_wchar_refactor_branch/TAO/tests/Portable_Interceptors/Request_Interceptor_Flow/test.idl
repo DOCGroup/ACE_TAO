@@ -12,7 +12,7 @@
  */
 //=============================================================================
 
-#include <ULongSeq.pidl>
+#include "tao/ULongSeq.pidl"
 
 interface Test
 {

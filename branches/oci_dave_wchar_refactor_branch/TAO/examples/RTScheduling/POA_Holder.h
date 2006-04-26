@@ -17,9 +17,13 @@
 
 #include "tao/RTCORBA/RTCORBA.h"
 #include "tao/PortableServer/PortableServer.h"
-//#include "activity_export.h"
 #include "ace/SString.h"
+
 #include "ace/Arg_Shifter.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+//class ACE_TArg_Shifter<char>;
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class POA_Holder

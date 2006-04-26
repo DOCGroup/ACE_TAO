@@ -202,46 +202,4 @@ typedef Baseline_Lock_Test<ACE_Token> Baseline_Token_Test;
 ACE_SVC_FACTORY_DECLARE (Baseline_Token_Test)
 ACE_SVC_FACTORY_DEFINE (Baseline_Token_Test)
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class Baseline_Lock_Test<ACE_Thread_Mutex>;
-template class Baseline_Lock_Test<ACE_Process_Mutex>;
-template class Baseline_Lock_Test<ACE_RW_Process_Mutex>;
-template class Baseline_Lock_Test<ACE_RW_Mutex>;
-template class Baseline_Lock_Test<ACE_RW_Thread_Mutex>;
-template class Baseline_Lock_Test<ACE_Null_Mutex>;
-template class ACE_Lock_Adapter<ACE_Null_Mutex>;
-template class Baseline_Lock_Test< ACE_Lock_Adapter<ACE_Null_Mutex> >;
-template class Baseline_Lock_Test<ACE_Recursive_Thread_Mutex>;
-template class ACE_Lock_Adapter<ACE_Thread_Mutex>;
-template class Baseline_Lock_Test< ACE_Lock_Adapter<ACE_Thread_Mutex> >;
-template class ACE_Lock_Adapter<ACE_RW_Mutex>;
-template class Baseline_Lock_Test< ACE_Lock_Adapter<ACE_RW_Mutex> >;
-template class ACE_Lock_Adapter<ACE_Recursive_Thread_Mutex>;
-template class Baseline_Lock_Test< ACE_Lock_Adapter<ACE_Recursive_Thread_Mutex> >;
-template class Baseline_Lock_Test<ACE_Semaphore>;
-template class Baseline_Lock_Test<ACE_Process_Semaphore>;
-template class Baseline_Lock_Test<ACE_Null_Semaphore>;
-template class Baseline_Lock_Test<ACE_Token>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate Baseline_Lock_Test<ACE_Thread_Mutex>
-#pragma instantiate Baseline_Lock_Test<ACE_Process_Mutex>
-#pragma instantiate Baseline_Lock_Test<ACE_RW_Process_Mutex>
-#pragma instantiate Baseline_Lock_Test<ACE_RW_Mutex>
-#pragma instantiate Baseline_Lock_Test<ACE_RW_Thread_Mutex>
-#pragma instantiate Baseline_Lock_Test<ACE_Null_Mutex>
-#pragma instantiate ACE_Lock_Adapter<ACE_Null_Mutex>
-#pragma instantiate Baseline_Lock_Test< ACE_Lock_Adapter<ACE_Null_Mutex> >
-#pragma instantiate Baseline_Lock_Test<ACE_Recursive_Thread_Mutex>
-#pragma instantiate ACE_Lock_Adapter<ACE_Thread_Mutex>
-#pragma instantiate Baseline_Lock_Test< ACE_Lock_Adapter<ACE_Thread_Mutex> >
-#pragma instantiate ACE_Lock_Adapter<ACE_RW_Mutex>
-#pragma instantiate Baseline_Lock_Test< ACE_Lock_Adapter<ACE_RW_Mutex> >
-#pragma instantiate ACE_Lock_Adapter<ACE_Recursive_Thread_Mutex>
-#pragma instantiate Baseline_Lock_Test< ACE_Lock_Adapter<ACE_Recursive_Thread_Mutex> >
-#pragma instantiate Baseline_Lock_Test<ACE_Semaphore>
-#pragma instantiate Baseline_Lock_Test<ACE_Process_Semaphore>
-#pragma instantiate Baseline_Lock_Test<ACE_Null_Semaphore>
-#pragma instantiate Baseline_Lock_Test<ACE_Token>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 #endif  /* ACE_HAS_THREADS */

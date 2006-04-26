@@ -1,6 +1,11 @@
 //$Id$
 
 project (XSC_XML_Handlers) : acelib, xerces {
+
+  verbatim(gnuace, macros) {
+    override no_hidden_visibility = 1
+  }
+
   sharedname    += XSC_XML_Handlers
   dynamicflags  = XSC_XML_HANDLERS_BUILD_DLL
   macros       += XML_USE_PTHREADS
@@ -25,21 +30,25 @@ project (XSC_XML_Handlers) : acelib, xerces {
   }
 }
 
-project (XSC_Config_Handlers) : ciao_deployment_stub, xerces, dynamicany {
-  after += RT_CCM_Config_Handlers XSC_XML_Handlers XSC_DynAny_Handler
+project (XSC_Config_Handlers) : ciao_deployment_stub, xerces, dynamicany, typecodefactory {
+
+  verbatim(gnuace, macros) {
+    override no_hidden_visibility = 1
+  }
+
+  after += CIAO_Events_Handlers RT_CCM_Config_Handlers XSC_XML_Handlers XSC_DynAny_Handler
   sharedname = XSC_Config_Handlers
   dynamicflags   = CONFIG_HANDLERS_BUILD_DLL
   macros   += XML_USE_PTHREADS
   requires += exceptions
   includes += $(CIAO_ROOT)/tools/Config_Handlers
-  libs += CIAO_XML_Utils RT_CCM_Config_Handlers XSC_XML_Handlers XSC_DynAny_Handler
+  libs += CIAO_XML_Utils CIAO_Events_Handlers RT_CCM_Config_Handlers XSC_XML_Handlers XSC_DynAny_Handler
 
   Source_Files {
     DP_Handler.cpp
     CCD_Handler.cpp
     Property_Handler.cpp
     ComponentPropertyDescription_Handler.cpp
-    DP_PCD_Handler.cpp
     CPD_Handler.cpp
     DataType_Handler.cpp
     MDD_Handler.cpp
@@ -64,13 +73,10 @@ project (XSC_Config_Handlers) : ciao_deployment_stub, xerces, dynamicany {
     DnC_Dump.cpp
     DnC_Dump_T.cpp
     Dump_Obj.cpp
-    STD_CID_Handler.cpp
-    STD_CPD_Handler.cpp
-    STD_IAD_Handler.cpp
-    STD_PC_Intf.cpp
-    STD_PCD_Handler.cpp
     PCD_Handler.cpp
     IRDD_Handler.cpp
+    DD_Handler.cpp
+    SatisfierProperty_Handler.cpp
   }
 
   Header_Files {
@@ -79,15 +85,15 @@ project (XSC_Config_Handlers) : ciao_deployment_stub, xerces, dynamicany {
 }
 
 project (XSC_Config_Handlers_Tests) : ciao_component_dnc, ciao_config_handlers, ifr_client {
-  requires += dummy_label
-  includes += $(CIAO_ROOT)/tools/Config_Handlers
-  exename = test
-  dynamicflags   = CONFIG_HANDLERS_BUILD_DLL
-  macros   += XML_USE_PTHREAD/S
+//  requires += dummy_label
+includes += $(CIAO_ROOT)/tools/Config_Handlers
+exename = test
+dynamicflags   = CONFIG_HANDLERS_BUILD_DLL
+macros   += XML_USE_PTHREADS
 
-  Source_Files {
-    test.cpp
-  }
+Source_Files {
+test.cpp
+}
 }
 
 

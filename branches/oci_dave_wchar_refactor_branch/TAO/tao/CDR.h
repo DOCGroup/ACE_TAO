@@ -1,4 +1,5 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file    CDR.h
@@ -42,19 +43,25 @@
 #define TAO_CDR_H
 
 #include /**/ "ace/pre.h"
-#include "ace/CORBA_macros.h"
+
+#include "tao/orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/CDR_Stream.h"
-
 #include "tao/TAO_Export.h"
 #include "tao/Basic_Types.h"
-#include "tao/orbconf.h"
+
+#include "ace/CORBA_macros.h"
+#include "ace/CDR_Stream.h"
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_ORB_Core;
+class TAO_GIOP_Fragmentation_Strategy;
+class TAO_Stub;
 
 namespace CORBA
 {
@@ -117,6 +124,20 @@ public:
                  ACE_CDR::Octet minor_version =
                    TAO_DEF_GIOP_MINOR);
 
+  /// Build a CDR stream with an initial buffer, it will *not* remove
+  /// @a data since it did not allocated it, and enable fragmentation
+  /// support.
+  TAO_OutputCDR (char *data,
+                 size_t size,
+                 int byte_order,
+                 ACE_Allocator* buffer_allocator,
+                 ACE_Allocator* data_block_allocator,
+                 ACE_Allocator* message_block_allocator,
+                 size_t memcpy_tradeoff,
+                 TAO_GIOP_Fragmentation_Strategy * fs,
+                 ACE_CDR::Octet major_version,
+                 ACE_CDR::Octet minor_version);
+
   /// Build a CDR stream with an initial Message_Block chain, it will *not*
   /// remove <data>, since it did not allocate it.
   TAO_OutputCDR (ACE_Message_Block *data,
@@ -137,10 +158,84 @@ public:
   static void throw_stub_exception (int error_num ACE_ENV_ARG_DECL);
   static void throw_skel_exception (int error_num ACE_ENV_ARG_DECL);
 
+  /**
+   * @name Outgoing GIOP Fragment Related Methods
+   *
+   * These methods are only used when fragmenting outgoing GIOP
+   * requests and replies.
+   */
+  //@{
+  /// Fragment this output CDR stream if necessary.
+  /**
+   * Fragmentation will done through GIOP fragments when the length of
+   * the CDR stream length will exceed the configured threshold.
+   */
+  bool fragment_stream (ACE_CDR::ULong pending_alignment,
+                        ACE_CDR::ULong pending_length);
+
+  /// Are there more data fragments to come?
+  bool more_fragments (void) const;
+
+  /// Specify whether there are more data fragments to come.
+  void more_fragments (bool more);
+
+  /// Set fragmented message attributes.
+  void message_attributes (CORBA::ULong request_id,
+                           TAO_Stub * stub,
+                           int message_semantics,
+                           ACE_Time_Value * timeout);
+
+  /// Fragmented message request ID.
+  CORBA::ULong request_id (void) const;
+
+  /// Stub object associated with the request.
+  TAO_Stub * stub (void) const;
+
+  /// Message semantics (twoway, oneway, reply)
+  int message_semantics (void) const;
+
+  /// Maximum time to wait for outgoing message to be sent.
+  ACE_Time_Value * timeout (void) const;
+  //@}
+
 private:
-  /// disallow copying...
+
+  // disallow copying...
   TAO_OutputCDR (const TAO_OutputCDR& rhs);
   TAO_OutputCDR& operator= (const TAO_OutputCDR& rhs);
+
+private:
+
+  /**
+   * @name Outgoing GIOP Fragment Related Attributes
+   *
+   * These attributes are only used when fragmenting outgoing GIOP
+   * requests and replies.
+   */
+  //@{
+  /// Strategy that sends data currently marshaled into this
+  /// TAO_OutputCDR stream if necessary.
+  TAO_GIOP_Fragmentation_Strategy * const fragmentation_strategy_;
+
+  /// Are there more data fragments to come?
+  bool more_fragments_;
+
+  /// Request ID for the request currently being marshaled.
+  CORBA::ULong request_id_;
+
+  /// Stub object associated with the request.
+  TAO_Stub * stub_;
+
+  /// Twoway, oneway, reply?
+  /**
+   * @see TAO_Transport
+   */
+  int message_semantics_;
+
+  /// Request/reply send timeout.
+  ACE_Time_Value * timeout_;
+  //@}
+
 };
 
 /**
@@ -201,7 +296,7 @@ public:
 
   /// Create an input stream from an ACE_Message_Block with an optional lock
   /// used to protect the data.
-  TAO_InputCDR (const ACE_Message_Block *data, 
+  TAO_InputCDR (const ACE_Message_Block *data,
                 ACE_Lock* lock,
                 int byte_order = ACE_CDR_BYTE_ORDER,
                 ACE_CDR::Octet major_version = TAO_DEF_GIOP_MAJOR,
@@ -274,6 +369,8 @@ public:
   /// Accessor
   TAO_ORB_Core *orb_core (void) const;
 
+  ACE_Message_Block::Message_Flags
+    clr_mb_flags( ACE_Message_Block::Message_Flags less_flags );
 
   // = TAO specific methods.
   static void throw_stub_exception (int error_num ACE_ENV_ARG_DECL);
@@ -284,9 +381,13 @@ private:
   TAO_ORB_Core* orb_core_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined(__ACE_INLINE__)
 # include "tao/CDR.i"
 #else
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // CDR output operators for CORBA types
 
@@ -337,6 +438,9 @@ TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &is,
                                       CORBA::Char* &x);
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &is,
                                       CORBA::WChar* &x);
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #endif /* __ACE_INLINE */
 
 #include /**/ "ace/post.h"

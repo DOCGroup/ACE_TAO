@@ -11,6 +11,7 @@
 #include "orbsvcs/Event/ECG_UDP_Sender.h"
 #include "orbsvcs/Event/ECG_UDP_Receiver.h"
 #include "orbsvcs/Event/ECG_UDP_Out_Endpoint.h"
+#include "tao/Strategies/advanced_resource.h"
 #include "tao/ORB_Core.h"
 #include "ace/Get_Opt.h"
 #include "ace/Argv_Type_Converter.h"

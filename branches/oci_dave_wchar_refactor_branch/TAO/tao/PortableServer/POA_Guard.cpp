@@ -1,12 +1,15 @@
 // $Id$
 
-#include "POA_Guard.h"
-#include "Root_POA.h"
+#include "tao/PortableServer/POA_Guard.h"
+#include "tao/PortableServer/Root_POA.h"
 #include "tao/ORB_Constants.h"
 
 ACE_RCSID(PortableServer,
           POA_Guard,
           "$Id$")
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -43,3 +46,4 @@ namespace TAO
   }
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

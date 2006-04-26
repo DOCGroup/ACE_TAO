@@ -1,12 +1,12 @@
 // $Id$
 
-#include "Fault_Detector_Loader.h"
-#include "Fault_Detector_T.h"
-#include "FTEC_Fault_Listener.h"
-#include "SCTP_Fault_Detector.h"
+#include "orbsvcs/FtRtEvent/EventChannel/Fault_Detector_Loader.h"
+#include "orbsvcs/FtRtEvent/EventChannel/Fault_Detector_T.h"
+#include "orbsvcs/FtRtEvent/EventChannel/FTEC_Fault_Listener.h"
+#include "orbsvcs/FtRtEvent/EventChannel/SCTP_Fault_Detector.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/SOCK_Connector.h"
-#include "ConnectionHandler_T.h"
+#include "orbsvcs/FtRtEvent/EventChannel/ConnectionHandler_T.h"
 
 #include "ace/Acceptor.h"
 #include "ace/OS_NS_strings.h"
@@ -14,6 +14,8 @@
 ACE_RCSID (EventChannel,
            Fault_Detector_Loader,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace FTRTEC {
   typedef Fault_Detector_T<
@@ -67,16 +69,22 @@ namespace FTRTEC {
   {
     return detector_.get();
   }
+}
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
   /////////////////////////////////////////////////////////////////////
 
-  ACE_FACTORY_DEFINE (TAO_FTRTEC, Fault_Detector_Loader)
+ACE_FACTORY_NAMESPACE_DEFINE (
+  TAO_FTRTEC,
+  Fault_Detector_Loader,
+  FTRTEC::Fault_Detector_Loader)
 
-  ACE_STATIC_SVC_DEFINE (Fault_Detector_Loader,
-    ACE_TEXT ("FTRTEC_Fault_Detector"),
-    ACE_SVC_OBJ_T,
-    &ACE_SVC_NAME (Fault_Detector_Loader),
-    ACE_Service_Type::DELETE_THIS
-    | ACE_Service_Type::DELETE_OBJ,
-    0)
-}
+ACE_STATIC_SVC_DEFINE (
+  Fault_Detector_Loader,
+  ACE_TEXT ("FTRTEC_Fault_Detector"),
+  ACE_SVC_OBJ_T,
+  &ACE_SVC_NAME (Fault_Detector_Loader),
+  ACE_Service_Type::DELETE_THIS
+  | ACE_Service_Type::DELETE_OBJ,
+  0)

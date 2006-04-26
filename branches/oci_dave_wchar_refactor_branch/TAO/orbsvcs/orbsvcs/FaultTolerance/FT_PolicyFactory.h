@@ -33,12 +33,14 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-#include "fault_tol_export.h"
+#include "orbsvcs/FaultTolerance/fault_tol_export.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// Policy factory for all FTCORBA related policies.
-class TAO_FT_Export TAO_FT_PolicyFactory :
-  public PortableInterceptor::PolicyFactory,
-  public TAO_Local_RefCounted_Object
+class TAO_FT_PolicyFactory
+  : public PortableInterceptor::PolicyFactory
+  , public TAO_Local_RefCounted_Object
 {
 public:
 
@@ -48,6 +50,8 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CORBA::PolicyError));
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

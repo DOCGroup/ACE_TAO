@@ -1,21 +1,23 @@
 // $Id$
 
-#include "Basic_Replication_Strategy.h"
-#include "GroupInfoPublisher.h"
-#include "FTEC_Event_Channel.h"
-#include "Request_Context_Repository.h"
+#include "orbsvcs/FtRtEvent/EventChannel/Basic_Replication_Strategy.h"
+#include "orbsvcs/FtRtEvent/EventChannel/GroupInfoPublisher.h"
+#include "orbsvcs/FtRtEvent/EventChannel/FTEC_Event_Channel.h"
+#include "orbsvcs/FtRtEvent/EventChannel/Request_Context_Repository.h"
 #include "../Utils/Log.h"
 
 ACE_RCSID (EventChannel,
            Basic_Replication_Strategy,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /// The mutex has to be recursive; otherwise, if the second replicate_request() is
 /// called while the first replicate_request() is waiting for reply, we will get
 /// a deadlock.
 Basic_Replication_Strategy::Basic_Replication_Strategy(bool mt)
-: sequence_num_(0)
-, mutex_(mt ? new ACE_SYNCH_RECURSIVE_MUTEX : 0)
+  : sequence_num_(0)
+  , mutex_(mt ? new ACE_SYNCH_RECURSIVE_MUTEX : 0)
 {
 }
 
@@ -152,3 +154,5 @@ int  Basic_Replication_Strategy::release (void)
 {
   return mutex_ ? mutex_->release() : 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

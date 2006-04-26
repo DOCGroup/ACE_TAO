@@ -1,14 +1,17 @@
 //$Id$
-#include "Refcounted_ObjectKey.h"
+#include "tao/Refcounted_ObjectKey.h"
 #include "ace/Log_Msg.h"
 
 #if !defined (__ACE_INLINE__)
-#include "Refcounted_ObjectKey.inl"
+#include "tao/Refcounted_ObjectKey.inl"
 #endif /* defined INLINE */
 
 ACE_RCSID(tao,
           Refcounted_ObjectKey,
           "$Id$")
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::Refcounted_ObjectKey::Refcounted_ObjectKey (const TAO::ObjectKey &key)
   : object_key_ (key)
@@ -20,7 +23,7 @@ TAO::Refcounted_ObjectKey::~Refcounted_ObjectKey (void)
 {
 }
 
-long
+CORBA::ULong
 TAO::Refcounted_ObjectKey::decr_refcount (void)
 {
   if (--this->ref_count_ > 0)
@@ -34,3 +37,5 @@ TAO::Refcounted_ObjectKey::decr_refcount (void)
 
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

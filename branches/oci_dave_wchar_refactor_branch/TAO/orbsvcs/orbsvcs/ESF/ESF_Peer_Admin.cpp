@@ -3,9 +3,9 @@
 #ifndef TAO_ESF_PEER_ADMIN_CPP
 #define TAO_ESF_PEER_ADMIN_CPP
 
-#include "ESF_Peer_Workers.h"
+#include "orbsvcs/ESF/ESF_Peer_Workers.h"
 
-ACE_RCSID(ESF, ESF_Peer_Admin, "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<class EVENT_CHANNEL, class PROXY, class INTERFACE, class PEER>
 TAO_ESF_Peer_Admin<EVENT_CHANNEL,PROXY,INTERFACE,PEER>::
@@ -52,5 +52,7 @@ TAO_ESF_Peer_Admin<EVENT_CHANNEL,PROXY,INTERFACE,PEER>::
 
   this->for_each (&worker ACE_ENV_ARG_PARAMETER);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_ESF_PEER_ADMIN_CPP */

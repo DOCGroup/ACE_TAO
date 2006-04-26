@@ -35,7 +35,7 @@
 
 #include "tao/AnyTypeCode/TypeCode.h"	 
 #include "tao/AnyTypeCode/Any.h"
-#include "PolicyS.h"
+#include "tao/PortableServer/PolicyS.h"
 #include "tao/PortableServer/Operation_Table_Perfect_Hash.h"
 #include "tao/PortableServer/Direct_Collocation_Upcall_Wrapper.h"
 #include "tao/PortableServer/Upcall_Command.h"
@@ -65,6 +65,8 @@
 
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:69
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Arg traits specializations.
 namespace TAO
@@ -1082,3 +1084,5 @@ POA_CORBA::Policy::_this (ACE_ENV_SINGLE_ARG_DECL)
 
 #endif /* ifndef */
 
+
+TAO_END_VERSIONED_NAMESPACE_DECL

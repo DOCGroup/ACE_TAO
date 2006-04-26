@@ -15,6 +15,7 @@ project(*Server): taoserver, messaging {
 
 project(*Scavenger): taoserver, messaging {
   exename = scavenger
+  after += *Server
   Source_Files {
     scavenger.cpp
   }
@@ -22,6 +23,7 @@ project(*Scavenger): taoserver, messaging {
 
 project(*Client): taoserver, messaging {
   exename = client
+  after += *Scavenger
   Source_Files {
     Clock_Ticks.cpp
     Client_Peer.cpp

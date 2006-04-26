@@ -24,6 +24,8 @@
 
 #include "ace/Dynamic_Service.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 //------------------------------------------------------------
 // TAO_AV_Core
 //------------------------------------------------------------
@@ -1167,7 +1169,6 @@ TAO_AV_Core::get_flowname (const char *flow_spec_entry_str)
   return CORBA::string_dup (flow_name.c_str ());
 }
 
-
 ACE_CString
 TAO_AV_Core::get_control_flowname(const char *flowname)
 {
@@ -1181,3 +1182,5 @@ TAO_AV_Core::get_control_flowname(const char *flowname)
 #if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
 template ACE_Singleton<TAO_AV_Core, ACE_Null_Mutex> *ACE_Singleton<TAO_AV_Core, ACE_Null_Mutex>::singleton_;
 #endif /* ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION */
+
+TAO_END_VERSIONED_NAMESPACE_DECL

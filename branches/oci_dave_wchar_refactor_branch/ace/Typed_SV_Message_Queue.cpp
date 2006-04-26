@@ -1,8 +1,7 @@
-// Typed_SV_Message_Queue.cpp
 // $Id$
 
-#ifndef ACE_TYPED_SV_MESSAGE_QUEUE_C
-#define ACE_TYPED_SV_MESSAGE_QUEUE_C
+#ifndef ACE_TYPED_SV_MESSAGE_QUEUE_CPP
+#define ACE_TYPED_SV_MESSAGE_QUEUE_CPP
 
 #include "ace/Typed_SV_Message.h"
 
@@ -17,7 +16,7 @@
 #include "ace/Typed_SV_Message_Queue.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(ace, Typed_SV_Message_Queue, "$Id$")
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Typed_SV_Message_Queue)
 
@@ -52,4 +51,6 @@ ACE_Typed_SV_Message_Queue<T>::~ACE_Typed_SV_Message_Queue (void)
   ACE_TRACE ("ACE_Typed_SV_Message_Queue<T>::~ACE_Typed_SV_Message_Queue");
 }
 
-#endif /* ACE_TYPED_SV_MESSAGE_QUEUE_C */
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* ACE_TYPED_SV_MESSAGE_QUEUE_CPP */

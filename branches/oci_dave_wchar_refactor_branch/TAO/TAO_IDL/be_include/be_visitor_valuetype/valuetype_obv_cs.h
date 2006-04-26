@@ -24,7 +24,7 @@
 #ifndef _BE_VALUETYPE_VALUETYPE_OBV_CS_H_
 #define _BE_VALUETYPE_VALUETYPE_OBV_CS_H_
 
-class be_visitor_valuetype_obv_cs : public be_visitor_scope
+class be_visitor_valuetype_obv_cs : public be_visitor_valuetype
 {
   //
   // = TITLE
@@ -43,8 +43,15 @@ public:
 
   virtual int visit_valuetype (be_valuetype *node);
   virtual int visit_eventtype (be_eventtype *node);
-
   virtual int visit_field (be_field *node);
+  
+private:
+  void gen_obv_init_constructor_inits (be_valuetype *node);
+  // Generate member assignments for the initializing constructor.
+  
+  void gen_obv_init_base_constructor_args (be_valuetype *node,
+                                           unsigned long &index);
+  // Called by method above to generate base class constructor call.
 };
 
 #endif /* _BE_VALUETYPE_VALUETYPE_OBV_CS_H_ */

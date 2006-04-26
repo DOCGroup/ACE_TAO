@@ -14,14 +14,16 @@
 #define TAO_LIFESPANSTRATEGYTRANSIENT_H
 #include /**/ "ace/pre.h"
 
-#include "LifespanStrategy.h"
+#include "tao/PortableServer/LifespanStrategy.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Creation_Time.h"
+#include "tao/PortableServer/Creation_Time.h"
 #include "tao/Object_KeyC.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -61,6 +63,8 @@ namespace TAO
     };
   } /* namespace Portable_Server */
 } /* namespace TAO */
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_LIFESPANSTRATEGYTRANSIENT_H */

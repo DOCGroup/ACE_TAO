@@ -62,20 +62,6 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   return 0;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_TSS<ClientContext>;
-template class ACE_Hash_Map_Entry<const char*,void*>;
-template class ACE_Hash_Map_Manager<const char *,void*,ACE_Null_Mutex>;
-template class ACE_Hash_Map_Manager_Ex<const char*,void*,ACE_Hash<const char*>,ACE_Equal_To<const char*>,ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Base_Ex<const char*,void*,ACE_Hash<const char*>, ACE_Equal_To<const char*>, ACE_Null_Mutex>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_TSS<ClientContext>
-#pragma instantiate ACE_Hash_Map_Entry<const char*,void*>
-#pragma instantiate ACE_Hash_Map_Manager<const char *,void*,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<const char*,void*,ACE_Hash<const char*>,ACE_Equal_To<const char*>,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<const char*,void*,ACE_Hash<const char*>, ACE_Equal_To<const char*>, ACE_Null_Mutex>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 #else
 #include "ace/OS_main.h"
 #include "ace/OS_NS_stdio.h"

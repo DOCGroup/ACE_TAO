@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -21,6 +21,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 //@@ TAO_REACTOR_SPL_COMMENT_HOOK_START
 typedef ACE_Reactor_Token_T<ACE_SELECT_TOKEN> ACE_Select_Reactor_Token;
 
@@ -31,8 +33,8 @@ typedef ACE_Select_Reactor_T<ACE_Select_Reactor_Token> ACE_Select_Reactor;
 /**
  * @class ACE_Guard< ACE_Reactor_Token_T<ACE_Noop_Token> >
  *
- * @brief Template specialization of <ACE_Guard> for the
- * <ACE_Null_Mutex>.
+ * @brief Template specialization of ACE_Guard for the
+ * ACE_Null_Mutex.
  *
  * This specialization is useful since it helps to speedup
  * performance of the "Null_Mutex" considerably.
@@ -54,11 +56,14 @@ public:
   void dump (void) const {}
 
 private:
-  // = Prevent assignment and initialization.
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Guard< ACE_Reactor_Token_T<ACE_Noop_Token> > &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Guard (const ACE_Guard< ACE_Reactor_Token_T<ACE_Noop_Token> > &))
+  // Disallow copying and assignment.
+  ACE_Guard (const ACE_Guard< ACE_Reactor_Token_T<ACE_Noop_Token> > &);
+  void operator= (const ACE_Guard< ACE_Reactor_Token_T<ACE_Noop_Token> > &);
+
 };
 #endif /* ACE_MT_SAFE && ACE_MT_SAFE == 0 */
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* ACE_SELECT_REACTOR_H */

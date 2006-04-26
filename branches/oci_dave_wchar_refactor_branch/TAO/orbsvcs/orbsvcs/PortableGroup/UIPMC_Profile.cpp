@@ -1,9 +1,7 @@
-// This may look like C, but it's really -*- C++ -*-
-//
 // $Id$
 
-#include "UIPMC_Profile.h"
-#include "miopconf.h"
+#include "orbsvcs/PortableGroup/UIPMC_Profile.h"
+#include "orbsvcs/PortableGroup/miopconf.h"
 #include "tao/CDR.h"
 #include "tao/Environment.h"
 #include "tao/ORB.h"
@@ -19,11 +17,13 @@ ACE_RCSID (PortableGroup,
            UIPMC_Profile,
            "$Id$")
 
-static const char prefix_[] = "uipmc";
+static const char the_prefix[] = "uipmc";
 
 // UIPMC doesn't support object keys, so send profiles by default in the GIOP 1.2 target
 // specification.
 static const CORBA::Short default_addressing_mode_ = TAO_Target_Specification::Profile_Addr;
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 const char TAO_UIPMC_Profile::object_key_delimiter_ = '/';
 
@@ -102,6 +102,59 @@ TAO_UIPMC_Profile::TAO_UIPMC_Profile (TAO_ORB_Core *orb_core)
 
 TAO_UIPMC_Profile::~TAO_UIPMC_Profile (void)
 {
+}
+
+int
+TAO_UIPMC_Profile::decode (TAO_InputCDR& cdr)
+{
+  // The following is a selective reproduction of TAO_Profile::decode
+
+  CORBA::ULong encap_len = cdr.length ();
+
+  // Read and verify major, minor versions, ignoring profiles
+  // whose versions we don't understand.
+  if (!(cdr.read_octet (this->version_.major)
+        && this->version_.major == TAO_DEF_GIOP_MAJOR
+        && cdr.read_octet (this->version_.minor)
+        && this->version_.minor <= TAO_DEF_GIOP_MINOR))
+    {
+      if (TAO_debug_level > 0)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("TAO (%P|%t) - Profile::decode - v%d.%d\n"),
+                      this->version_.major,
+                      this->version_.minor));
+        }
+
+      return -1;
+    }
+
+  // Transport specific details
+  if (this->decode_profile (cdr) < 0)
+    {
+      return -1;
+    }
+
+  // UIPMC profiles must have tagged components.
+  if (this->tagged_components_.decode (cdr) == 0)
+    {
+      return -1;
+    }
+
+  if (cdr.length () != 0 && TAO_debug_level)
+    {
+      // If there is extra data in the profile we are supposed to
+      // ignore it, but print a warning just in case...
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("%d bytes out of %d left after profile data\n"),
+                  cdr.length (),
+                  encap_len));
+    }
+
+  // We don't call ::decode_endpoints because it is implemented
+  // as ACE_NOTSUP_RETURN (-1) for this profile
+
+  return 1;
 }
 
 int
@@ -222,7 +275,7 @@ TAO_UIPMC_Profile::parse_string_i (const char *string
   ACE_CString ace_str (string, 0, 0);
 
   // Look for the group domain delimitor.
-  int pos = ace_str.find ('-');
+  ssize_t pos = ace_str.find ('-');
 
   if (pos == ACE_CString::npos)
     {
@@ -243,7 +296,7 @@ TAO_UIPMC_Profile::parse_string_i (const char *string
 
   // Skip past the last '-'.
   pos++;
-  int end_pos = ace_str.find ('-',pos);
+  ssize_t end_pos = ace_str.find ('-',pos);
 
   CORBA::Boolean parse_group_ref_version_flag = 0;
 
@@ -398,7 +451,7 @@ TAO_UIPMC_Profile::to_string (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   // @@ Frank: Update to pull out GroupID information...
 
-  size_t buflen = (ACE_OS::strlen (::prefix_) +
+  size_t buflen = (ACE_OS::strlen (::the_prefix) +
                    3 /* "loc" */ +
                    1 /* colon separator */ +
                    2 /* double-slash separator */ +
@@ -414,7 +467,7 @@ TAO_UIPMC_Profile::to_string (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 
   ACE_OS::sprintf (buf,
                    "corbaloc:%s://1.0@%s:%d",
-                   ::prefix_,
+                   ::the_prefix,
                    this->endpoint_.get_host_addr (),
                    this->endpoint_.port ());
   return buf;
@@ -423,7 +476,7 @@ TAO_UIPMC_Profile::to_string (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 const char *
 TAO_UIPMC_Profile::prefix (void)
 {
-  return ::prefix_;
+  return ::the_prefix;
 }
 
 IOP::TaggedProfile &
@@ -684,7 +737,8 @@ TAO_UIPMC_Profile::extract_group_component (const IOP::TaggedProfile &profile,
 
   // Read and verify major, minor versions, ignoring UIPMC profiles
   // whose versions we don't understand.
-  CORBA::Octet major, minor;
+  CORBA::Octet major;
+  CORBA::Octet minor = CORBA::Octet();
 
   // Read the version. We just read it here. We don't*do any*
   // processing.
@@ -742,3 +796,5 @@ TAO_UIPMC_Profile::extract_group_component (const IOP::TaggedProfile &profile,
 
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

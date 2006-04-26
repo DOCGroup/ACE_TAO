@@ -26,7 +26,7 @@
 // executable and initialized for static builds.
 #include "tao/Strategies/advanced_resource.h"
 
-#if defined (VXWORKS)
+#if defined (ACE_VXWORKS) && !defined (__RTP__)
 # undef ACE_MAIN
 # define ACE_MAIN testClient
 #endif

@@ -26,10 +26,10 @@ versioned_so ?= 0
 # First, extract the OS version number.
 HPVERS_WORDS := $(subst ., ,$(shell uname -r))
 HPMODEL := $(shell uname -m)
-HPUX_VERS	:= $(join $(word 2,$(HPVERS_WORDS)),$(word 3,$(HPVERS_WORDS)))
+HPUX_VERS       := $(join $(word 2,$(HPVERS_WORDS)),$(word 3,$(HPVERS_WORDS)))
 #
-CC		= /bin/cc
-CXX		= aCC
+CC              = /bin/cc
+CXX             = aCC
 
 # Determine compiler version
 CXXVERS_WORDS := $(subst ., , $(shell $(CXX) -V 2>&1))
@@ -57,6 +57,10 @@ ifeq (1,$(stdcpplib))
     # Warning 930 is spurious when new(std::nothrow) is used. Reported to HP
     # as support call 3201224717. (Steve Huston, 23-Nov-2002)
     CCFLAGS += +W930
+    # aCC 3.31 has poor member template support.
+    ifeq (31,$(CXXMINORVERS))
+      CCFLAGS += -DACE_LACKS_MEMBER_TEMPLATES
+    endif
   endif
 # Compile errors using -AA and +noeh together - HP problem report
 # JAGad12608, fix slated for Dec 2001 Release -- Steve Huston, April 10, 2001.
@@ -138,35 +142,35 @@ endif
 ifeq ($(word 2,$(HPVERS_WORDS)), 10)
 CCFLAGS         += +W495,667,829,908
 endif
-DCCFLAGS	+= -g
-DLD		= $(CXX) $(CCFLAGS)
-LD		= $(CXX)
-OCCFLAGS	= -O
-PIC		= +Z
+DCCFLAGS        += -g
+DLD             = $(CXX) $(CCFLAGS)
+LD              = $(CXX)
+OCCFLAGS        = -O
+PIC             = +Z
 
 PRELIB          = $(COMPILE.cc) $^
 AR              = /usr/ccs/bin/ar
-ARFLAGS		= ruv
-RANLIB		= echo
-LDFLAGS		= -Wl,+s -z
-SOFLAGS		+= -b
+ARFLAGS         = ruv
+RANLIB          = echo
+LDFLAGS         = -Wl,+s -z
+SOFLAGS         += -b
 
 ifeq ($(distrib),1)
 
 ifeq ($(word 2,$(HPVERS_WORDS)), 10)
-SOFLAGS		+= -Wl,-x -Wl,+h/usr/lib/$(@F)
+SOFLAGS         += -Wl,-x -Wl,+h/usr/lib/$(@F)
 else
 ifeq ($(buildbits),32)
-SOFLAGS		+= -Wl,-x -Wl,+h$(@F) -Wl,+b/usr/lib
+SOFLAGS         += -Wl,-x -Wl,+h$(@F) -Wl,+b/usr/lib
 endif
 ifeq ($(buildbits),64)
-SOFLAGS		+= -Wl,-x -Wl,+h$(@F) -Wl,+b/usr/lib/pa20_64
+SOFLAGS         += -Wl,-x -Wl,+h$(@F) -Wl,+b/usr/lib/pa20_64
 endif
 endif
 
 endif
 
-SOEXT		= sl
+SOEXT           = sl
 
 ifeq ($(buildbits),32)
   ifeq ($(itanium),1)
@@ -186,7 +190,7 @@ ifeq ($(buildbits),64)
       CCFLAGS += +DA2.0 +DS2.0
     endif
   endif
-LDFLAGS		+= -Wl,+vnocompatwarnings
+LDFLAGS         += -Wl,+vnocompatwarnings
 else
   ifneq ($(itanium),1)
     # HP aCC on Itanium doesn't support this option, defaults to 32bit then.
@@ -210,14 +214,14 @@ ifeq ($(word 2,$(HPVERS_WORDS)), 11)
       LIBS += -L./ -lpthread
     endif
   endif
-  LIBS		+= -lxti -lrt -ldld
+  LIBS          += -lxti -lrt -ldld
 
 else
 
   # 10.x:
-  LIBS		+= -lxti -ldld
+  LIBS          += -lxti -ldld
   ifeq ($(threads),1)
-    LIBS		+= -lcma
+    LIBS                += -lcma
   endif
 
 endif

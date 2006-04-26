@@ -43,8 +43,6 @@ namespace CIAO
     : public virtual POA_Components::CCMHome
   {
   public:
-    explicit Home_Servant_Impl_Base (void);
-
     Home_Servant_Impl_Base (Session_Container * c);
 
     virtual ~Home_Servant_Impl_Base (void);
@@ -64,6 +62,9 @@ namespace CIAO
 
   protected:
     Session_Container *container_;
+  private:
+    /// Not to be used
+    Home_Servant_Impl_Base (void);
   };
 }
 

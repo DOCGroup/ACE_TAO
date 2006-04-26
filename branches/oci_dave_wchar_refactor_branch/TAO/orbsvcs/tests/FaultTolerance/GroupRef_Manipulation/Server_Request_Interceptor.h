@@ -55,6 +55,11 @@ public:
                                    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  /// Reset to initial state, like counter etc, keeps the object-references 
+  virtual void reset (ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+
   /**
    * @name Methods Required by the Server Request Interceptor
    * Interface

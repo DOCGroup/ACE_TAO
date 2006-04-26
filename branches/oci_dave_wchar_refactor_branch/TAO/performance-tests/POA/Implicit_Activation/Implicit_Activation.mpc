@@ -27,7 +27,8 @@ project(*server): taoserver {
 }
 
 project(*client): taoclient {
-  after += *idl
+  avoids += ace_for_tao
+  after  += *idl
 
   Source_Files {
     TestC.cpp
@@ -39,8 +40,8 @@ project(*client): taoclient {
 }
 
 project(*collocated): taoserver {
-  after += *idl
-
+  avoids += ace_for_tao
+  after  += *idl
   exename = collocated
   Source_Files {
     Simple.cpp

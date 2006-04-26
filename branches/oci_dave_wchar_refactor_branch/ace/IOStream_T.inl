@@ -1,8 +1,12 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
 
+#include "ace/Handle_Set.h"
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_sys_select.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class STREAM> ACE_INLINE int
 ACE_IOStream<STREAM>::eof (void) const
@@ -113,3 +117,5 @@ ACE_SOCK_Dgram_SC<STREAM>::get_remote_addr (ACE_INET_Addr &addr) const
   addr = peer_;
   return 0;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

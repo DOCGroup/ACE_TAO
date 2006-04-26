@@ -23,6 +23,9 @@
 #include "ace/Service_Object.h"
 
 #include "tao/TAO_Export.h"
+#include "tao/Versioned_Namespace.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_ORB_Core;
 class TAO_Thread_Lane_Resources;
@@ -81,7 +84,7 @@ public:
 
 protected:
   /// The ORB Core.
-  TAO_ORB_Core *orb_core_;
+  TAO_ORB_Core * const orb_core_;
 
   /// The leader follower strategy
   TAO_LF_Strategy *lf_strategy_;
@@ -104,11 +107,13 @@ public:
   virtual ~TAO_Thread_Lane_Resources_Manager_Factory (void);
 
   /// Factory method.
-  virtual
-  TAO_Thread_Lane_Resources_Manager *
+  virtual TAO_Thread_Lane_Resources_Manager *
   create_thread_lane_resources_manager (TAO_ORB_Core &core) = 0;
 
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 
 #include /**/ "ace/post.h"
 

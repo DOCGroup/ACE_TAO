@@ -26,6 +26,15 @@
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/ACE_export.h"
+
+#if (defined (ACE_HAS_VERSIONED_NAMESPACE) && ACE_HAS_VERSIONED_NAMESPACE == 1)
+# include "ace/Global_Macros.h"
+# define ACE_CLEANUP_DESTROYER_NAME ACE_PREPROC_CONCATENATE(ACE_VERSIONED_NAMESPACE_NAME, _ace_cleanup_destroyer)
+#endif  /* ACE_HAS_VERSIONED_NAMESPACE == 1 */
+
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_Cleanup
  *
@@ -46,7 +55,7 @@ public:
 
 // Adapter for cleanup, used by ACE_Object_Manager.
 extern "C" ACE_Export
-void ace_cleanup_destroyer (ACE_Cleanup *, void *param = 0);
+void ACE_CLEANUP_DESTROYER_NAME (ACE_Cleanup *, void *param = 0);
 
 /**
  * @class ACE_Cleanup_Info
@@ -112,6 +121,8 @@ private:
    */
   ACE_Cleanup_Info_Node *registered_objects_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 # if defined (ACE_HAS_INLINED_OSCALLS)
 #   if defined (ACE_INLINE)

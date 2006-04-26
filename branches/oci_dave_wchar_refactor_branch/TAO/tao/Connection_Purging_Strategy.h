@@ -1,3 +1,5 @@
+// -*- C++ -*-
+
 // ================================================================
 /**
  *  @file   Connection_Purging_Strategy.h
@@ -13,11 +15,15 @@
 
 #include /**/ "ace/pre.h"
 
-#include "TAO_Export.h"
+#include "tao/TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "tao/Versioned_Namespace.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Transport;
 
@@ -51,6 +57,8 @@ private:
   /// The maximum number of cach entries
   int cache_maximum_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "tao/Connection_Purging_Strategy.inl"

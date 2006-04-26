@@ -8,8 +8,8 @@
 #include "utl_err.h"
 #include "global_extern.h"
 
-ACE_RCSID (ast, 
-           ast_component, 
+ACE_RCSID (ast,
+           ast_component,
            "$Id$")
 
 AST_Component::AST_Component (void)
@@ -28,8 +28,8 @@ AST_Component::AST_Component (UTL_ScopedName *n,
                               long n_supports,
                               AST_Interface **supports_flat,
                               long n_supports_flat)
-  : COMMON_Base (I_FALSE,
-                 I_FALSE),
+  : COMMON_Base (false,
+                 false),
     AST_Decl (AST_Decl::NT_component,
               n),
     AST_Type (AST_Decl::NT_component,
@@ -40,8 +40,8 @@ AST_Component::AST_Component (UTL_ScopedName *n,
                    n_supports,
                    supports_flat,
                    n_supports_flat,
-                   I_FALSE,
-                   I_FALSE),
+                   false,
+                   false),
     pd_base_component (base_component)
 {
 }
@@ -75,22 +75,22 @@ AST_Component::redefine (AST_Interface *from)
 
 AST_Decl *
 AST_Component::look_in_inherited (UTL_ScopedName *e,
-                                  idl_bool treat_as_ref)
+                                  bool treat_as_ref)
 {
   AST_Decl *d = 0;
-  
+
   if (this->pd_base_component != 0)
     {
       d = this->pd_base_component->lookup_by_name (e, treat_as_ref);
     }
-  
+
   return d;
 }
 
 // Look through supported interface list.
 AST_Decl *
 AST_Component::look_in_supported (UTL_ScopedName *e,
-                                  idl_bool treat_as_ref)
+                                  bool treat_as_ref)
 {
   AST_Decl *d = 0;
   AST_Interface **is = 0;
@@ -121,7 +121,7 @@ AST_Component::look_in_supported (UTL_ScopedName *e,
           break;
         }
     }
-    
+
   return d;
 }
 
@@ -137,7 +137,7 @@ AST_Component::supports (void) const
   return this->inherits ();
 }
 
-long 
+long
 AST_Component::n_supports (void) const
 {
   return this->n_inherits ();
@@ -223,7 +223,7 @@ AST_Component::ast_accept (ast_visitor *visitor)
   return visitor->visit_component (this);
 }
 
-idl_bool
+bool
 AST_Component::redef_clash (void)
 {
   if (this->AST_Interface::redef_clash ())

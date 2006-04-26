@@ -2,7 +2,6 @@
 // $Id$
 
 project(*Server): taoserver, anytypecode, exceptions {
-  idlflags  = -Ge 0 -Sc -Sa -St
   Source_Files {
     test_i.cpp
     server.cpp
@@ -10,7 +9,7 @@ project(*Server): taoserver, anytypecode, exceptions {
 }
 
 project(*Client): taoclient, anytypecode, exceptions {
-  idlflags  = -Ge 0 -Sc -Sa -St
+  after += *Server
   Source_Files {
     testC.cpp
     client.cpp

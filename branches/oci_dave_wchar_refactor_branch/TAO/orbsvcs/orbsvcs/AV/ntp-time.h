@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 // $Id$
 /*
  * Copyright (c) 1995 The Regents of the University of California.
@@ -31,15 +32,13 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * @(#) $Header$
  */
+
 #ifndef TAO_AV_NTP_TIME_H
 #define TAO_AV_NTP_TIME_H
 #include /**/ "ace/pre.h"
 
-#include "ace/OS.h"
-#include "RTCP.h"
+#include "orbsvcs/AV/RTCP.h"
 
 /*
  * convert microseconds to fraction of second * 2^32 (i.e., the lsw of
@@ -49,8 +48,8 @@
  */
 ACE_INLINE u_int usec2ntp(u_int usec)
 {
-        u_int t = (usec * 1825) >> 5;
-        return ((usec << 12) + (usec << 8) - t);
+  u_int const t = (usec * 1825) >> 5;
+  return ((usec << 12) + (usec << 8) - t);
 }
 
 /*

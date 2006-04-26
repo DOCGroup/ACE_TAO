@@ -2,6 +2,7 @@
 // $Id$
 
 project(*Lib) : acelib {
+  avoids    += ace_for_tao
   sharedname = IPC_Tests_Server
   dynamicflags += ACE_BUILD_SVC_DLL
   Source_Files {
@@ -19,6 +20,7 @@ project(*Lib) : acelib {
 }
 
 project(*test) : aceexe {
+  avoids    += ace_for_tao
   exename = server_test
   after  += Svc_Cfg_IPC_Server_Lib
   libs   += IPC_Tests_Server

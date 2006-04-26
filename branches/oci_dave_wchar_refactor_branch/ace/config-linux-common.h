@@ -110,18 +110,17 @@
 // macros to make prototypes visible.
 # define ACE_LACKS_GETPGID_PROTOTYPE
 
-// NOTE:  the following defines are necessary with glibc 2.0 (0.961212-5)
+// @note  the following defines are necessary with glibc 2.0 (0.961212-5)
 //        on Alpha.  I assume that they're necessary on Intel as well,
 //        but that may depend on the version of glibc that is used.
 //# define ACE_HAS_DLFCN_H_BROKEN_EXTERN_C
 # define ACE_HAS_VOIDPTR_SOCKOPT
-# define ACE_LACKS_SYSTIME_H
 
 // Don't define _POSIX_SOURCE in ACE to make strtok() prototype
 // visible.  ACE shouldn't depend on feature test macros to make
 // prototypes visible.
 # define ACE_LACKS_STRTOK_R_PROTOTYPE
-// NOTE:  end of glibc 2.0 (0.961212-5)-specific configuration.
+// @note  end of glibc 2.0 (0.961212-5)-specific configuration.
 
 // These macros determined by reading <stdio.h> on RH 7.1 and glibc's
 // <features.h>.
@@ -174,11 +173,14 @@
 #if (__GLIBC__  > 2)  || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 3)
 # define ACE_HAS_ISASTREAM_PROTO
 # define ACE_HAS_PTHREAD_SIGMASK_PROTO
+# define ACE_HAS_CPU_SET_T
 #endif /* __GLIBC__ > 2 || __GLIBC__ === 2 && __GLIBC_MINOR__ >= 3) */
 
 // Then the compiler specific parts
 
-#if defined (__GNUG__)
+#if defined (__INTEL_COMPILER)
+# include "ace/config-icc-common.h"
+#elif defined (__GNUG__)
   // config-g++-common.h undef's ACE_HAS_STRING_CLASS with -frepo, so
   // this must appear before its #include.
 # define ACE_HAS_STRING_CLASS
@@ -197,8 +199,6 @@
 #elif defined (__DECCXX)
 # define ACE_CONFIG_INCLUDE_CXX_COMMON
 # include "ace/config-cxx-common.h"
-#elif defined (__INTEL_COMPILER)
-# include "ace/config-icc-common.h"
 #elif defined (__BORLANDC__)
 # undef ACE_HAS_LLSEEK
 # undef ACE_HAS_LSEEK64
@@ -215,8 +215,19 @@
 # define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
 # define ACE_LACKS_SWAB
 # undef ACE_HAS_CLOCK_GETTIME
+#elif defined (__GNUC__)
+/**
+ * GNU C compiler.
+ *
+ * We need to recognize the GNU C compiler since TAO has at least one
+ * C source header and file
+ * (TAO/orbsvcs/orbsvcs/SSLIOP/params_dup.{h,c}) that may indirectly
+ * include this
+ */
 #else  /* ! __GNUG__ && ! __KCC && !__DECCXX && !__INTEL_COMPILER && !__BORLANDC__ && !__PGI */
-# error unsupported compiler in ace/config-linux-common.h
+#  ifdef __cplusplus  /* Let it slide for C compilers. */
+#    error unsupported compiler in ace/config-linux-common.h
+#  endif  /* __cplusplus */
 #endif /* ! __GNUG__ && ! __KCC */
 
 // Completely common part  :-) 
@@ -225,6 +236,8 @@
 # define ACE_HAS_SIGWAIT
 
 # define ACE_HAS_SIGSUSPEND
+
+# define ACE_HAS_UALARM
 
 #if __GLIBC__ >= 2
 #ifndef ACE_HAS_POSIX_REALTIME_SIGNALS
@@ -392,6 +405,9 @@
 
 // Platform has POSIX terminal interface.
 #define ACE_HAS_TERMIOS
+
+// Linux implements sendfile().
+#define ACE_HAS_SENDFILE
 
 #if !defined (ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO)
 // Detect if getsockname() and getpeername() returns random values in

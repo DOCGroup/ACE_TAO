@@ -24,8 +24,10 @@
 
 #include "ace/SString.h"
 
-#include "objectid.h"
-#include "CORBA_String.h"
+#include "tao/objectid.h"
+#include "tao/CORBA_String.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward decls.
 
@@ -37,7 +39,6 @@
 //    footprint by using this container.
 typedef ACE_Unbounded_Queue<ACE_CString> TAO_EndpointSet;
 typedef ACE_Unbounded_Queue_Const_Iterator<ACE_CString> TAO_EndpointSetIterator;
-
 
 // -------------------------------------------------------------------
 
@@ -84,6 +85,10 @@ public:
   int nodelay (void) const;
   void nodelay (int);
 
+  /// Set/Get whether we should set SO_KEEPALIVE on the socket or not.
+  int sock_keepalive (void);
+  void sock_keepalive (int);
+
   /**
    * Octet sequences are marshalled without doing any copies, we
    * simply append a block to the CDR message block chain. When the
@@ -92,6 +97,15 @@ public:
    */
   int cdr_memcpy_tradeoff (void) const;
   void cdr_memcpy_tradeoff (int);
+
+  /**
+   * Maximum size of a GIOP message before outgoing fragmentation
+   * kicks in.
+   */
+  //@{
+  ACE_CDR::ULong max_message_size (void) const;
+  void max_message_size (ACE_CDR::ULong size);
+  //@}
 
   /// The ORB will use the dotted decimal notation for addresses. By
   /// default we use the full ascii names.
@@ -226,9 +240,19 @@ private:
   /// 1 if we're using TCP_NODELAY and 0 otherwise.
   int nodelay_;
 
+  /// 1 if we're using SO_KEEPALIV and 0 otherwise (default 0).
+  int sock_keepalive_;
+
   /// Control the strategy for copying vs. appeding octet sequences in
   /// CDR streams.
   int cdr_memcpy_tradeoff_;
+
+  /// Maximum GIOP message size to be sent over a given transport.
+  /**
+   * Setting a maximum message size will cause outgoing GIOP
+   * fragmentation to be enabled.
+   */
+  ACE_CDR::ULong max_message_size_;
 
   /// For selecting a liteweight version of the GIOP protocol.
   int use_lite_protocol_;
@@ -312,6 +336,8 @@ private:
   /// Enable the use of codeset negotiation
   bool negotiate_codesets_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "tao/params.i"

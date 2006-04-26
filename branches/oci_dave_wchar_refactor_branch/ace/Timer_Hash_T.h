@@ -22,6 +22,8 @@
 
 #include "ace/Free_List.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Forward declaration.
 template <class TYPE, class FUNCTOR, class ACE_LOCK, class BUCKET>
 class ACE_Timer_Hash_T;
@@ -243,7 +245,7 @@ public:
    */
   virtual int expire (const ACE_Time_Value &current_time);
 
-  /// Returns a pointer to this <ACE_Timer_Queue>'s iterator.
+  /// Returns a pointer to this ACE_Timer_Queue's iterator.
   virtual ACE_Timer_Queue_Iterator_T<TYPE, FUNCTOR, ACE_LOCK> &iter (void);
 
   /// Removes the earliest node from the queue and returns it
@@ -311,6 +313,8 @@ private:
   ACE_UNIMPLEMENTED_FUNC (ACE_Timer_Hash_T (const ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET> &))
   ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET> &))
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE) && !defined(ACE_HAS_BROKEN_HPUX_TEMPLATES)
 #include "ace/Timer_Hash_T.cpp"

@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -15,6 +15,12 @@
 #define TAO_AV_TRANSPORT_H
 #include /**/ "ace/pre.h"
 
+
+#include "orbsvcs/AV/FlowSpec_Entry.h"
+#include "orbsvcs/AV/AV_Core.h"
+
+#include "orbsvcs/AV/AV_export.h"
+
 #include "ace/Service_Object.h"
 #include "ace/Acceptor.h"
 #include "ace/SOCK_Acceptor.h"
@@ -22,9 +28,9 @@
 #include "ace/Connector.h"
 #include "ace/Addr.h"
 #include "ace/SOCK_Dgram.h"
-#include "orbsvcs/AV/AV_export.h"
-#include "FlowSpec_Entry.h"
-#include "AV_Core.h"
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward declarations.
 class TAO_AV_Core;
@@ -329,9 +335,10 @@ public:
   int ref_count;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "Transport.i"
+#include "orbsvcs/AV/Transport.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

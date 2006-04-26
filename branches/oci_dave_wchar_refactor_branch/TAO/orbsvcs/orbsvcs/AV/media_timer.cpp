@@ -37,10 +37,12 @@ static const char rcsid[] =
     "@(#) $Header$";
 */
 
-#include "media_timer.h"
+#include "orbsvcs/AV/media_timer.h"
 #include "ace/Time_Value.h"
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_stdlib.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 MediaTimer* MediaTimer::instance_;
 
@@ -89,3 +91,5 @@ ACE_UINT32 MediaTimer::ref_ts()
 {
         return (media_ts());
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

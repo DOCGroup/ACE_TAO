@@ -1,11 +1,13 @@
 //$Id$
-#include "QtResource_Loader.h"
-#include "ORB_Core.h"
-#include "QtResource_Factory.h"
+#include "tao/QtResource_Loader.h"
+#include "tao/ORB_Core.h"
+#include "tao/QtResource_Factory.h"
 
 ACE_RCSID( TAO_QtResource,
            QtResource_Loader,
            "$Id$");
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -23,3 +25,5 @@ namespace TAO
   {
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

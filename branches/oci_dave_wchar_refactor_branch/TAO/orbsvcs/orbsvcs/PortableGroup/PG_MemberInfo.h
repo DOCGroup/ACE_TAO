@@ -25,6 +25,8 @@
 #include "orbsvcs/PortableGroupC.h"
 #include "ace/Unbounded_Set.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_PG_MemberInfo
  *
@@ -51,9 +53,9 @@ struct TAO_PG_MemberInfo
 
 };
 
-
 typedef ACE_Unbounded_Set<TAO_PG_MemberInfo> TAO_PG_MemberInfo_Set;
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

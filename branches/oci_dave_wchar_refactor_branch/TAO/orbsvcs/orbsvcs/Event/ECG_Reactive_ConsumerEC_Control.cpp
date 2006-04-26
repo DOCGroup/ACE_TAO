@@ -1,13 +1,15 @@
 // $Id$
 
-#include "EC_Gateway_IIOP.h"
-#include "ECG_Reactive_ConsumerEC_Control.h"
+#include "orbsvcs/Event/EC_Gateway_IIOP.h"
+#include "orbsvcs/Event/ECG_Reactive_ConsumerEC_Control.h"
 #include "tao/Messaging/Messaging.h"
 #include "tao/ORB_Core.h"
 
 #include "ace/Reactor.h"
 
 ACE_RCSID(Event, ECG_Reactive_ConsumerEventChannelControl, "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_ECG_Reactive_ConsumerEC_Control::
      TAO_ECG_Reactive_ConsumerEC_Control (const ACE_Time_Value &rate,
@@ -248,3 +250,4 @@ TAO_ECG_Reactive_ConsumerEC_Control_Adapter::handle_timeout (
   return 0;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

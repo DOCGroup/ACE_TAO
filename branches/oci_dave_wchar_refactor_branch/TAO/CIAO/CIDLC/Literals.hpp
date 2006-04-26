@@ -23,6 +23,7 @@ namespace StringLiterals
     EXCP_SNGL,
     EXCP_START,
     EXCP_SYS,
+    EXCP_BP,
     EXCP_IS,
     EXCP_AC,
     EXCP_IC,
@@ -41,6 +42,9 @@ namespace StringLiterals
     COMP_EC,
     COMP_SC,
     COMP_CD,
+    COMP_RD,
+    COMP_PD,
+    COMP_ED,
     CIDL_NS,
     TYPE_ID,
     TYPE_PREFIX,
@@ -50,13 +54,15 @@ namespace StringLiterals
     VAR_SIZE,
     EXTRACT,
     EXTRACT_TMP,
-	  ACE_UA,
-	  ACE_CR,
-	  ACE_TR,
-    SIZE
+    ACE_UA,
+    ACE_CK,
+    ACE_CR,
+    ACE_TH,
+    ACE_TR,
+    LIT_SIZE
   };
 
-  extern char const* const STRS[SIZE];
+  extern char const* const STRS[LIT_SIZE];
 }
 
 #endif  // LITERALS_HPP

@@ -1,11 +1,14 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE int
 ACE_Proactor::run_event_loop (void)
 {
   ACE_TRACE ("ACE_Proactor::run_event_loop");
-  ACE_Proactor *p = ACE_Proactor::instance ();
+  ACE_Proactor * const p = ACE_Proactor::instance ();
 
   if (p == 0)
     return -1;
@@ -17,12 +20,12 @@ ACE_INLINE int
 ACE_Proactor::run_event_loop (ACE_Time_Value &tv)
 {
   ACE_TRACE ("ACE_Proactor::run_event_loop (tv)");
-  ACE_Proactor *p = ACE_Proactor::instance ();
+  ACE_Proactor * const p = ACE_Proactor::instance ();
 
   if (p == 0)
     return -1;
 
-  return p->proactor_run_event_loop 
+  return p->proactor_run_event_loop
     (tv, ACE_Proactor::check_reconfiguration);
 }
 
@@ -30,7 +33,7 @@ ACE_INLINE int
 ACE_Proactor::reset_event_loop(void)
 {
   ACE_TRACE ("ACE_Proactor::reset_event_loop");
-  ACE_Proactor *p = ACE_Proactor::instance ();
+  ACE_Proactor * const p = ACE_Proactor::instance ();
 
   if (p == 0)
     return -1;
@@ -42,7 +45,7 @@ ACE_INLINE int
 ACE_Proactor::end_event_loop (void)
 {
   ACE_TRACE ("ACE_Proactor::end_event_loop");
-  ACE_Proactor *p = ACE_Proactor::instance ();
+  ACE_Proactor * const p = ACE_Proactor::instance ();
 
   if (p == 0)
     return -1;
@@ -54,7 +57,7 @@ ACE_INLINE int
 ACE_Proactor::event_loop_done (void)
 {
   ACE_TRACE ("ACE_Proactor::event_loop_done");
-  ACE_Proactor *p = ACE_Proactor::instance ();
+  ACE_Proactor * const p = ACE_Proactor::instance ();
 
   if (p == 0)
     return -1;
@@ -66,10 +69,12 @@ ACE_INLINE int
 ACE_Proactor::post_wakeup_completions (int how_many)
 {
   ACE_TRACE ("ACE_Proactor::post_wakeup_completions");
-  ACE_Proactor *p = ACE_Proactor::instance ();
+  ACE_Proactor * const p = ACE_Proactor::instance ();
 
   if (p == 0)
     return -1;
 
   return p->proactor_post_wakeup_completions (how_many);
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

@@ -1,17 +1,19 @@
 // $Id$
 
-#include "Wait_On_Read.h"
-#include "Transport.h"
-#include "Resume_Handle.h"
-#include "Synch_Reply_Dispatcher.h"
-#include "Client_Strategy_Factory.h"
-#include "ORB_Core.h"
+#include "tao/Wait_On_Read.h"
+#include "tao/Transport.h"
+#include "tao/Resume_Handle.h"
+#include "tao/Synch_Reply_Dispatcher.h"
+#include "tao/Client_Strategy_Factory.h"
+#include "tao/ORB_Core.h"
 #include "ace/Reactor.h"
 #include "ace/Countdown_Time.h"
 
 ACE_RCSID (tao,
            Wait_On_Read,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Constructor.
 TAO_Wait_On_Read::TAO_Wait_On_Read (TAO_Transport *transport)
@@ -86,10 +88,10 @@ TAO_Wait_On_Read::wait (ACE_Time_Value * max_wait_time,
                      ACE_TEXT ("registering handle for cleanup \n"),
                      this->transport_->id ()));
 
-       ACE_Event_Handler *eh =
+       ACE_Event_Handler * const eh =
          this->transport_->event_handler_i ();
 
-       ACE_Reactor *r =
+       ACE_Reactor * const r =
          this->transport_->orb_core ()->reactor ();
 
        if (r->register_handler (eh,
@@ -123,7 +125,7 @@ TAO_Wait_On_Read::register_handler (void)
 bool
 TAO_Wait_On_Read::non_blocking (void) const
 {
-  return 0;
+  return false;
 }
 
 bool
@@ -136,3 +138,5 @@ TAO_Wait_On_Read::can_process_upcalls (void) const
 /*
  * End copy hook.
  */
+
+TAO_END_VERSIONED_NAMESPACE_DECL

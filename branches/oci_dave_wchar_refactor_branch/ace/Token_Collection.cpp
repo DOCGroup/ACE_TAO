@@ -1,19 +1,20 @@
 #include "ace/Token_Collection.h"
 
+#if defined (ACE_HAS_TOKENS_LIBRARY)
+
 #if !defined (__ACE_INLINE__)
 #include "ace/Token_Collection.inl"
 #endif /* __ACE_INLINE__ */
-
-#if defined (ACE_HAS_TOKENS_LIBRARY)
 
 
 ACE_RCSID (ace,
            Token_Collection,
            "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_Token_Collection::ACE_Token_Collection (int debug,
-					    const ACE_TCHAR *name)
+                                            const ACE_TCHAR *name)
 : debug_ (debug)
 {
   ACE_TRACE ("ACE_Token_Collection::ACE_Token_Collection");
@@ -74,8 +75,8 @@ ACE_Token_Collection::is_member (const ACE_Token_Proxy &token)
 
 int
 ACE_Token_Collection::acquire (int notify,
-			       void (*sleep_hook)(void *),
-			       ACE_Synch_Options &options)
+                               void (*sleep_hook)(void *),
+                               ACE_Synch_Options &options)
 {
   ACE_TRACE ("ACE_Token_Collection::acquire");
 
@@ -86,18 +87,18 @@ ACE_Token_Collection::acquire (int notify,
        iterator.advance ())
     {
       if (debug_)
-	ACE_DEBUG ((LM_DEBUG,
+        ACE_DEBUG ((LM_DEBUG,
                     ACE_LIB_TEXT ("collection acquiring %s\n"),
-		    temp->int_id_->name ()));
+                    temp->int_id_->name ()));
       if (temp->int_id_->acquire (notify,
                                   sleep_hook,
                                   options) == -1)
-	{
+        {
           // Save/restore errno.
           ACE_Errno_Guard error (errno);
-	  this->release ();
-	  ACE_RETURN (-1);
-	}
+          this->release ();
+          ACE_RETURN (-1);
+        }
     }
 
   return 0;
@@ -105,9 +106,9 @@ ACE_Token_Collection::acquire (int notify,
 
 int
 ACE_Token_Collection::acquire (const ACE_TCHAR *token_name,
-			       int notify,
-			       void (*sleep_hook)(void *),
-			       ACE_Synch_Options &options)
+                               int notify,
+                               void (*sleep_hook)(void *),
+                               ACE_Synch_Options &options)
 {
   ACE_TRACE ("ACE_Token_Collection::acquire");
   TOKEN_NAME name (token_name);
@@ -124,7 +125,7 @@ ACE_Token_Collection::acquire (const ACE_TCHAR *token_name,
 
 int
 ACE_Token_Collection::tryacquire (const ACE_TCHAR *token_name,
-				  void (*sleep_hook)(void *))
+                                  void (*sleep_hook)(void *))
 {
   ACE_TRACE ("ACE_Token_Collection::tryacquire");
   TOKEN_NAME name (token_name);
@@ -151,11 +152,11 @@ ACE_Token_Collection::tryacquire (void (*sleep_hook)(void *))
        iterator.advance ())
     {
       if (debug_)
-	ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("collection acquiring %s\n"),
-		    temp->int_id_->name ()));
+        ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("collection acquiring %s\n"),
+                    temp->int_id_->name ()));
       // We will fail if _any_ token is not free.
       if (temp->int_id_->tryacquire (sleep_hook) == -1)
-	return -1;
+        return -1;
     }
 
   return 0;
@@ -163,7 +164,7 @@ ACE_Token_Collection::tryacquire (void (*sleep_hook)(void *))
 
 int
 ACE_Token_Collection::renew (int requeue_position,
-			     ACE_Synch_Options &options)
+                             ACE_Synch_Options &options)
 {
   ACE_TRACE ("ACE_Token_Collection::renew");
 
@@ -174,10 +175,10 @@ ACE_Token_Collection::renew (int requeue_position,
        iterator.advance ())
     {
       if (debug_)
-	ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("collection renewing %s\n"),
-		    temp->int_id_->name ()));
+        ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("collection renewing %s\n"),
+                    temp->int_id_->name ()));
       if (temp->int_id_->renew (requeue_position, options) == -1)
-	return -1;
+        return -1;
     }
 
   return 0;
@@ -185,8 +186,8 @@ ACE_Token_Collection::renew (int requeue_position,
 
 int
 ACE_Token_Collection::renew (const ACE_TCHAR *token_name,
-			     int requeue_position,
-			     ACE_Synch_Options &options)
+                             int requeue_position,
+                             ACE_Synch_Options &options)
 {
   ACE_TRACE ("ACE_Token_Collection::renew");
   TOKEN_NAME name (token_name);
@@ -198,8 +199,8 @@ ACE_Token_Collection::renew (const ACE_TCHAR *token_name,
   // Did we find it?
   if (result == -1)
     ACE_ERROR_RETURN ((LM_DEBUG, ACE_LIB_TEXT ("%p %s\n"),
-		       ACE_LIB_TEXT ("not in collection "),
-		       token_name), -1);
+                       ACE_LIB_TEXT ("not in collection "),
+                       token_name), -1);
   // perform the operation
   return temp->renew (requeue_position, options);
 }
@@ -216,8 +217,8 @@ ACE_Token_Collection::release (ACE_Synch_Options &)
        iterator.advance ())
     {
       if (debug_)
-	ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("collection releasing %s\n"),
-		    temp->int_id_->name ()));
+        ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("collection releasing %s\n"),
+                    temp->int_id_->name ()));
       temp->int_id_->release ();
     }
 
@@ -226,7 +227,7 @@ ACE_Token_Collection::release (ACE_Synch_Options &)
 
 int
 ACE_Token_Collection::release (const ACE_TCHAR *token_name,
-			       ACE_Synch_Options &options)
+                               ACE_Synch_Options &options)
 {
   ACE_TRACE ("ACE_Token_Collection::release");
   TOKEN_NAME name (token_name);
@@ -288,18 +289,6 @@ ACE_Token_Collection::dump (void) const
 #endif /* ACE_HAS_DUMP */
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Map_Manager<ACE_Token_Name, ACE_Token_Proxy *, ACE_Null_Mutex>;
-template class ACE_Map_Iterator_Base<ACE_Token_Name, ACE_Token_Proxy *, ACE_Null_Mutex>;
-template class ACE_Map_Iterator<ACE_Token_Name, ACE_Token_Proxy *, ACE_Null_Mutex>;
-template class ACE_Map_Reverse_Iterator<ACE_Token_Name, ACE_Token_Proxy *, ACE_Null_Mutex>;
-template class ACE_Map_Entry<ACE_Token_Name, ACE_Token_Proxy *>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Map_Manager<ACE_Token_Name, ACE_Token_Proxy *, ACE_Null_Mutex>
-#pragma instantiate ACE_Map_Iterator_Base<ACE_Token_Name, ACE_Token_Proxy *, ACE_Null_Mutex>
-#pragma instantiate ACE_Map_Iterator<ACE_Token_Name, ACE_Token_Proxy *, ACE_Null_Mutex>
-#pragma instantiate ACE_Map_Reverse_Iterator<ACE_Token_Name, ACE_Token_Proxy *, ACE_Null_Mutex>
-#pragma instantiate ACE_Map_Entry<ACE_Token_Name, ACE_Token_Proxy *>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_TOKENS_LIBRARY */

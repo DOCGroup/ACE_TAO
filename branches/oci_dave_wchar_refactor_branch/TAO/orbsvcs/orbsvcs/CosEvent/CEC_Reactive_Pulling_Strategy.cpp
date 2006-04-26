@@ -1,23 +1,29 @@
 // $Id$
 
-#include "CEC_ProxyPullConsumer.h"
-#include "CEC_EventChannel.h"
-#include "CEC_SupplierAdmin.h"
-#include "CEC_ConsumerAdmin.h"
-#include "CEC_Reactive_Pulling_Strategy.h"
+#include "orbsvcs/CosEvent/CEC_ProxyPullConsumer.h"
+#include "orbsvcs/CosEvent/CEC_EventChannel.h"
+#include "orbsvcs/CosEvent/CEC_SupplierAdmin.h"
+#include "orbsvcs/CosEvent/CEC_ConsumerAdmin.h"
+#include "orbsvcs/CosEvent/CEC_Reactive_Pulling_Strategy.h"
 
 #include "orbsvcs/Time_Utilities.h"
 
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 #include "tao/Messaging/Messaging.h"
+#endif
+
 #include "tao/ORB_Core.h"
 
 #include "ace/Reactor.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "CEC_Reactive_Pulling_Strategy.i"
+#include "orbsvcs/CosEvent/CEC_Reactive_Pulling_Strategy.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(CosEvent, CEC_Reactive_Pulling_Strategy, "$Id$")
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_CEC_Reactive_Pulling_Strategy::
     TAO_CEC_Reactive_Pulling_Strategy (const ACE_Time_Value &rate,
@@ -195,3 +201,4 @@ TAO_CEC_Pull_Event::work (TAO_CEC_ProxyPullConsumer *consumer
     }
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

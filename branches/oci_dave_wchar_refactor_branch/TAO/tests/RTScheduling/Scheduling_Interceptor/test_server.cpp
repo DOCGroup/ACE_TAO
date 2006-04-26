@@ -116,11 +116,11 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
       poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
       
-      CORBA::Object_ptr current_obj = orb->resolve_initial_references ("RTScheduler_Current"
+      CORBA::Object_var current_obj = orb->resolve_initial_references ("RTScheduler_Current"
 								       ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       
-      RTScheduling::Current_var current = RTScheduling::Current::_narrow (current_obj
+      RTScheduling::Current_var current = RTScheduling::Current::_narrow (current_obj.in ()
 									  ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -159,11 +159,11 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 		  "IOR = %s\n",
 		  ior.in ()));
 
-      CORBA::Object_ptr manager_obj = orb->resolve_initial_references ("RTSchedulerManager"
+      CORBA::Object_var manager_obj = orb->resolve_initial_references ("RTSchedulerManager"
 								       ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      TAO_RTScheduler_Manager_var manager = TAO_RTScheduler_Manager::_narrow (manager_obj
+      TAO_RTScheduler_Manager_var manager = TAO_RTScheduler_Manager::_narrow (manager_obj.in ()
 									      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 

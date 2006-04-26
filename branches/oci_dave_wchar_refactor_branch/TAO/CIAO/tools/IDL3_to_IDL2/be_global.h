@@ -27,8 +27,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "idl_bool.h"
-
 class AST_Generator;
 
 // Defines a class containing all back end global data.
@@ -55,25 +53,25 @@ public:
 
   const char* output_dir (void) const;
   void output_dir (const char* s);
-  
+
   void parse_args (long &i, char **av);
   // Parse args that affect the backend.
-  
+
   void prep_be_arg (char *s);
   // Special BE arg call factored out of DRV_args.
-  
+
   void arg_post_proc (void);
   // Checks made after parsing args.
-  
+
   void usage (void) const;
   // Usage message for backend options.
-  
+
   AST_Generator *generator_init (void);
   // Create an AST node generator.
-  
+
   void destroy (void);
   // Cleanup.
-  
+
 private:
   char *filename_;
   // Name of the IDL file we are processing.

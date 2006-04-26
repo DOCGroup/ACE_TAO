@@ -15,6 +15,18 @@
 #define AVSTREAMS_I_H
 #include /**/ "ace/pre.h"
 
+#include "orbsvcs/AV/AV_Core.h"
+
+#include "orbsvcs/AV/AV_export.h"
+#include "orbsvcs/CosPropertyS.h"
+#include "orbsvcs/AVStreamsS.h"
+#include "orbsvcs/Property/CosPropertyService_i.h"
+#include "orbsvcs/CosNamingC.h"
+#include "orbsvcs/AV/AV_Core.h"
+#include "orbsvcs/AV/Endpoint_Strategy.h"
+#include "orbsvcs/Null_MediaCtrlS.h"
+#include "orbsvcs/AV/FlowSpec_Entry.h"
+
 #include "ace/OS.h"
 #include "ace/SOCK_Dgram_Mcast.h"
 #include "ace/ATM_Addr.h"
@@ -28,18 +40,10 @@
 #include "ace/Svc_Handler.h"
 #include "ace/SOCK_Acceptor.h"
 
-#include "orbsvcs/AV/AV_export.h"
-#include "orbsvcs/CosPropertyS.h"
-#include "orbsvcs/AVStreamsS.h"
-#include "orbsvcs/Property/CosPropertyService_i.h"
-#include "orbsvcs/CosNamingC.h"
-#include "orbsvcs/AV/AV_Core.h"
-#include "orbsvcs/AV/Endpoint_Strategy.h"
-#include "orbsvcs/Null_MediaCtrlS.h"
-#include "orbsvcs/AV/FlowSpec_Entry.h"
-
 #define FLOWSPEC_MAX 5
 // for the Hash_Map helper classes.
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 typedef ACE_Hash_Map_Manager <ACE_CString,AVStreams::FlowEndPoint_var,ACE_Null_Mutex>  FlowEndPoint_Map;
 typedef ACE_Hash_Map_Entry <ACE_CString,AVStreams::FlowEndPoint_var> FlowEndPoint_Map_Entry;
@@ -50,7 +54,6 @@ typedef ACE_Hash_Map_Entry <ACE_CString,TAO_AV_Flow_Handler*> Flow_Handler_Map_E
 typedef ACE_Hash_Map_Iterator <ACE_CString,TAO_AV_Flow_Handler*,ACE_Null_Mutex>  Flow_Handler_Map_Iterator;
 
 
-#include "AV_Core.h"
 
 class TAO_AV_Export AV_Null_MediaCtrl
   : public virtual POA_Null_MediaCtrl
@@ -1518,15 +1521,16 @@ public:
 
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
-#include "Transport.h"
+#include "orbsvcs/AV/Transport.h"
 
 #if defined (__ACE_INLINE__)
 #include "tao/debug.h"
-#include "AVStreams_i.i"
+#include "orbsvcs/AV/AVStreams_i.i"
 #endif /* __ACE_INLINE__ */
 
-#include "Flows_T.h"
+#include "orbsvcs/AV/Flows_T.h"
 
 #include /**/ "ace/post.h"
 #endif /* AVSTREAMS_I_H */

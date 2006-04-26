@@ -1,8 +1,8 @@
 // $Id$
 
-#include "FTRT_ClientORB_Loader.h"
+#include "orbsvcs/FtRtEvent/ClientORB/FTRT_ClientORB_Loader.h"
 
-#include "FTRT_ClientORB_Initializer.h"
+#include "orbsvcs/FtRtEvent/ClientORB/FTRT_ClientORB_Initializer.h"
 
 #include "tao/debug.h"
 #include "tao/ORB_Constants.h"
@@ -13,6 +13,8 @@ ACE_RCSID (ClientORB,
            FTRT_ClientORB_Loader,
            "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_FTRT {
   FTRT_ClientORB_Loader::FTRT_ClientORB_Loader (void)
@@ -82,16 +84,24 @@ namespace TAO_FTRT {
 
       return 0;
   }
+}
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
   /////////////////////////////////////////////////////////////////////
 
-  ACE_FACTORY_DEFINE (TAO_FTRT, FTRT_ClientORB_Loader)
-  ACE_STATIC_SVC_DEFINE (FTRT_ClientORB_Loader,
-    ACE_TEXT ("FTRT_ClientORB_Service"),
-    ACE_SVC_OBJ_T,
-    &ACE_SVC_NAME (FTRT_ClientORB_Loader),
-    ACE_Service_Type::DELETE_THIS
-    | ACE_Service_Type::DELETE_OBJ,
-    0)
-}
+ACE_FACTORY_NAMESPACE_DEFINE (
+  TAO_FTRT,
+  FTRT_ClientORB_Loader,
+  TAO_FTRT::FTRT_ClientORB_Loader)
+
+ACE_STATIC_SVC_DEFINE (
+  FTRT_ClientORB_Loader,
+  ACE_TEXT ("FTRT_ClientORB_Service"),
+  ACE_SVC_OBJ_T,
+  &ACE_SVC_NAME (FTRT_ClientORB_Loader),
+  ACE_Service_Type::DELETE_THIS
+  | ACE_Service_Type::DELETE_OBJ,
+  0)
+
 

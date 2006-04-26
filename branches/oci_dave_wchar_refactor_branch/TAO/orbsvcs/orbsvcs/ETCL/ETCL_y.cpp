@@ -66,9 +66,11 @@
 //
 // ========================================================================
 
-#include "ETCL_y.h"
-#include "ETCL_Constraint.h"
-#include "ETCL_Interpreter.h"
+#include "orbsvcs/ETCL/ETCL_y.h"
+#include "orbsvcs/ETCL/ETCL_Constraint.h"
+#include "orbsvcs/ETCL/ETCL_Interpreter.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 extern int yylex (void);
 extern void yyflush_current_buffer (void);
@@ -79,7 +81,11 @@ static void yyerror (const char *)
   // Ignore error messages
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #include <stdio.h>
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #ifndef __cplusplus
 #ifndef __STDC__
@@ -324,6 +330,8 @@ static const short yycheck[] = {    17,
   It was written by Richard Stallman by simplifying the hairy parser
   used when %semantic_parser is specified.  */
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #ifndef YYSTACK_USE_ALLOCA
 #ifdef alloca
 #define YYSTACK_USE_ALLOCA
@@ -423,6 +431,8 @@ while (0)
 #endif
 #endif /* not YYLSP_NEEDED */
 #endif
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /* If nonreentrant, generate the variables here */
 
@@ -1282,3 +1292,4 @@ yyerrhandle:
 //#line 257 "ETCL/ETCL.yy"
 
 
+TAO_END_VERSIONED_NAMESPACE_DECL

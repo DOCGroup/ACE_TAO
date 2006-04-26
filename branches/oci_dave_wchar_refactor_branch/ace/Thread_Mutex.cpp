@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  * @file Thread_Mutex.cpp
  *
@@ -22,6 +21,8 @@
 #include "ace/Malloc_T.h"
 
 ACE_RCSID(ace, Thread_Mutex, "$Id$")
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Thread_Mutex_Guard)
 
@@ -72,18 +73,6 @@ ACE_Thread_Mutex::ACE_Thread_Mutex (const ACE_TCHAR *name, ACE_mutexattr_t *arg)
                 ACE_LIB_TEXT ("ACE_Thread_Mutex::ACE_Thread_Mutex")));
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-// These are only instantiated with ACE_HAS_THREADS.
-template class ACE_Guard<ACE_Thread_Mutex>;
-template class ACE_Read_Guard<ACE_Thread_Mutex>;
-template class ACE_Write_Guard<ACE_Thread_Mutex>;
-template class ACE_Malloc_Lock_Adapter_T<ACE_Thread_Mutex>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-// These are only instantiated with ACE_HAS_THREADS.
-#pragma instantiate ACE_Guard<ACE_Thread_Mutex>
-#pragma instantiate ACE_Read_Guard<ACE_Thread_Mutex>
-#pragma instantiate ACE_Write_Guard<ACE_Thread_Mutex>
-#pragma instantiate ACE_Malloc_Lock_Adapter_T<ACE_Thread_Mutex>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_THREADS */

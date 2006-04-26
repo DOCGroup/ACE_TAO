@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -14,13 +14,13 @@
 #define TAO_AV_SCTP_SEQ_H
 #include /**/ "ace/pre.h"
 
-#include "ace/OS.h"
+#include "ace/config-all.h"
 
 #if defined (ACE_HAS_SCTP)
 
 #include "ace/Auto_Ptr.h"
 #include "ace/Service_Config.h"
-#include "Protocol_Factory.h"
+#include "orbsvcs/AV/Protocol_Factory.h"
 #include "ace/SOCK_SEQPACK_Association.h"
 #include "ace/SOCK_SEQPACK_Acceptor.h"
 #include "ace/SOCK_SEQPACK_Connector.h"
@@ -29,6 +29,7 @@ extern "C" {
 #include <netinet/sctp.h>
 };
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 typedef ACE_Unbounded_Set <ACE_CString> Interface_Seq;
 typedef ACE_Unbounded_Set_Iterator <ACE_CString> Interface_Seq_Itor;
@@ -290,6 +291,8 @@ public:
                                                 TAO_AV_Flow_Handler *handler,
                                                 TAO_AV_Transport *transport);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE (TAO_AV_SCTP_SEQ_Flow_Factory)
 ACE_FACTORY_DECLARE (TAO_AV, TAO_AV_SCTP_SEQ_Flow_Factory)

@@ -29,7 +29,7 @@
 // be\be_codegen.cpp:277
 
 
-#include "ServantActivatorC.h"
+#include "tao/PortableServer/ServantActivatorC.h"
 #include "tao/CDR.h"
 #include "tao/ORB_Core.h"
 #include "ace/OS_NS_string.h"
@@ -38,6 +38,8 @@
 // be\be_visitor_arg_traits.cpp:70
 
 #if (TAO_HAS_MINIMUM_POA == 0)
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Arg traits specializations.
 namespace TAO
@@ -63,7 +65,7 @@ TAO::Objref_Traits<PortableServer::ServantActivator>::release (
     PortableServer::ServantActivator_ptr p
   )
 {
-  CORBA::release (p);
+  ::CORBA::release (p);
 }
 
 PortableServer::ServantActivator_ptr
@@ -112,18 +114,18 @@ PortableServer::ServantActivator::_unchecked_narrow (
 PortableServer::ServantActivator_ptr
 PortableServer::ServantActivator::_duplicate (ServantActivator_ptr obj)
 {
-  if (! CORBA::is_nil (obj))
+  if (! ::CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
 void
 PortableServer::ServantActivator::_tao_release (ServantActivator_ptr obj)
 {
-  CORBA::release (obj);
+  ::CORBA::release (obj);
 }
 
 CORBA::Boolean
@@ -169,5 +171,7 @@ PortableServer::ServantActivator::marshal (TAO_OutputCDR &)
 {
   return false;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */

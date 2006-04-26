@@ -1,4 +1,5 @@
 // -*- C++ -*-
+
 //==========================================================================
 /**
  *  @file    Module.h
@@ -22,6 +23,8 @@
 
 #include "ace/Task_T.h"
 #include "ace/os_include/os_dirent.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_Module_Base
@@ -72,14 +75,12 @@ template <ACE_SYNCH_DECL>
 class ACE_Module : public ACE_Module_Base
 {
 public:
-  friend class ACE_Shutup_GPlusPlus;  // Turn off g++ warning
-
   // = Initialization and termination methods.
   /// Create an empty Module.
   ACE_Module (void);
 
   /// Shutdown the Module.
-  ~ACE_Module (void);
+  virtual ~ACE_Module (void);
 
   /// Create an initialized module with @a module_name as its identity
   /// and @a reader and @a writer as its tasks.
@@ -116,7 +117,7 @@ public:
   ACE_Task<ACE_SYNCH_USE> *writer (void);
 
   /**
-   * Set the writer task. <flags> can be used to indicate that the
+   * Set the writer task. @a flags can be used to indicate that the
    * module should delete the writer during a call to close or to the
    * destructor. If a previous writer exists, it is closed.  It may
    * also be deleted, depending on the old flags_ value.  Should not
@@ -128,7 +129,7 @@ public:
   ACE_Task<ACE_SYNCH_USE> *reader (void);
 
   /**
-   * Set the reader task. <flags> can be used to indicate that the
+   * Set the reader task. @a flags can be used to indicate that the
    * module should delete the reader during a call to close or to the
    * destructor. If a previous reader exists, it is closed.  It may
    * also be deleted, depending on the old flags_ value.  Should not
@@ -191,6 +192,8 @@ private:
   /// task have to be deleted on exit
   int flags_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Module.inl"

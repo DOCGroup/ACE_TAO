@@ -355,25 +355,11 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
   return st.open (argc, argv);
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Map_Entry<STDIN_Token::TID, ACE_Token_Collection *>;
-template class ACE_Map_Manager<STDIN_Token::TID, ACE_Token_Collection *, ACE_Null_Mutex>;
-template class ACE_Map_Iterator_Base<STDIN_Token::TID, ACE_Token_Collection *, ACE_Null_Mutex>;
-template class ACE_Map_Iterator<STDIN_Token::TID, ACE_Token_Collection *, ACE_Null_Mutex>;
-template class ACE_Map_Reverse_Iterator<STDIN_Token::TID, ACE_Token_Collection *, ACE_Null_Mutex>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Map_Entry<STDIN_Token::TID, ACE_Token_Collection *>
-#pragma instantiate ACE_Map_Manager<STDIN_Token::TID, ACE_Token_Collection *, ACE_Null_Mutex>
-#pragma instantiate ACE_Map_Iterator_Base<STDIN_Token::TID, ACE_Token_Collection *, ACE_Null_Mutex>
-#pragma instantiate ACE_Map_Iterator<STDIN_Token::TID, ACE_Token_Collection *, ACE_Null_Mutex>
-#pragma instantiate ACE_Map_Reverse_Iterator<STDIN_Token::TID, ACE_Token_Collection *, ACE_Null_Mutex>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 #else
-int 
+int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  ACE_ERROR_RETURN ((LM_ERROR, 
+  ACE_ERROR_RETURN ((LM_ERROR,
 		     "threads or ACE_HAS_TOKENS_LIBRARY not supported on this platform\n"), -1);
 }
 #endif /* ACE_HAS_THREADS && ACE_HAS_TOKENS_LIBRARY */
