@@ -1,3 +1,46 @@
+Wed Apr 26 13:10:59 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/PortableServer/Acceptor_Filter_Factory.h:
+        * tao/PortableServer/Acceptor_Filter_Factory.cpp:
+        * tao/PortableServer/Default_Acceptor_Filter.h:
+        * tao/PortableServer/Default_Servant_Dispatcher.h:
+        * tao/PortableServer/Default_Servant_Dispatcher.cpp:
+        * tao/PortableServer/Object_Adapter.h:
+        * tao/PortableServer/Object_Adapter.cpp:
+        * tao/PortableServer/POAManager.h:
+        * tao/PortableServer/POAManager.i:
+        * tao/PortableServer/POAManager.pidl:
+        * tao/PortableServer/POAManager.cpp:
+        * tao/PortableServer/POAManagerC.h:
+        * tao/PortableServer/POAManagerFactory.h:
+        * tao/PortableServer/POAManagerFactory.cpp:
+        * tao/PortableServer/POAManagerFactory.pidl:
+        * tao/PortableServer/POAManagerFactoryC.h:
+        * tao/PortableServer/POAManagerFactoryC.cpp:
+        * tao/PortableServer/PortableServer.h:
+        * tao/PortableServer/PortableServer.pidl:
+        * tao/PortableServer/PortableServerC.h:
+        * tao/PortableServer/Regular_POA.h:
+        * tao/PortableServer/Regular_POA.cpp:
+        * tao/PortableServer/Root_POA.h:
+        * tao/PortableServer/Root_POA.cpp:
+        * tao/PortableServer/Servant_Dispatcher.h:
+
+          These files are new/updated to support the POAManagerFactory,
+          which was added to the CORBA 3.0.2 specification. The PMF is
+          used to allow for the explicit creation of POA Managers which
+          can then be supplied to POAs during POA creation. POA Managers
+          may now also carry policies which will influence all POAs
+          associated with it. This work builds on the effort originally
+          started by Johnny Willemsen back in the pre-1.4.8 era. This
+          commit resolves Bugzilla bug #1785.
+
+        * tests/POA/POAManagerFactory/POAManagerFactory.cpp:
+        * tests/POA/POAManagerFactory/POAManagerFactory.mpc:
+        * tests/POA/POAManagerFactory/run_test.pl:
+
+          This is a new test for the POAManagerFactory.
+
 Wed Apr 26 13:01:48 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/Valuetype/AbstractBase.cpp:
@@ -16,7 +59,7 @@ Wed Apr 26 12:20:51 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
         * tests/AMI/ami_test.idl:
         * tests/AMI/ami_test_i.cpp:
         * tests/AMI/simple_client.cpp:
-	  Reverting earlier test changes. They were causing problems on
+          Reverting earlier test changes. They were causing problems on
           some platforms and I don't have a clear enough memory of the
           original motivation for the change.
 
@@ -249,7 +292,7 @@ Tue Apr 25 15:14:13 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
           the marshaling. This was handled by creating a new ChunkInfo
           type that is created on the stack during the marshaling of a
           valuetype and is passed through all the intermediate marshal
-          methods.
+          methods. This commit resolves Bugzilla #2483
 
         * TAO_IDL/be/be_visitor_valuebox/cdr_op_ch.cpp:
         * TAO_IDL/be/be_visitor_valuebox/cdr_op_cs.cpp:
