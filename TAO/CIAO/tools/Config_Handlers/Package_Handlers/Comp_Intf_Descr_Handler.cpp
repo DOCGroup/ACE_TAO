@@ -16,8 +16,6 @@ namespace CIAO
   {
     namespace Packaging
     {
-      namespace
-      {
         struct Comp_Prop_Handler
         {
           static void handle_cpd (const ComponentPropertyDescription &desc,
@@ -45,7 +43,7 @@ namespace CIAO
                                    ::Deployment::ComponentPropertyDescriptions,
                                    ::Deployment::ComponentPropertyDescription,
                                    Comp_Prop_Handler::handle_cpd > Comp_Prop_Functor;
-      }
+     
 
       void
       Comp_Intf_Descr_Handler::comp_intf_descr (
@@ -96,6 +94,9 @@ namespace CIAO
                        CIAO::Config_Handlers::CPD_Functor (toconfig.port));
 
         toconfig.property.length (cid->count_property ());
+	SEQ_HAND_GCC_BUG_WORKAROUND (Comp_Prop_Handler::handle_cpd,
+				     cid->begin_property (),
+				     toconfig.property);
         std::for_each (cid->begin_property (),
                        cid->end_property (),
                        Comp_Prop_Functor (toconfig.property));
