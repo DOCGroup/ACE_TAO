@@ -103,6 +103,15 @@ ACE_Service_Object_Type::init (int argc, ACE_TCHAR *argv[]) const
   ACE_Service_Object * const so =
     static_cast<ACE_Service_Object *> (obj);
 
+  if (ACE::debug () > 2)
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_LIB_TEXT ("(%P|%t) SOT::init, this=%@, ")
+                ACE_LIB_TEXT ("name=%s, flags=%d, so=%@\n"),
+                this,
+                this->name_,
+                this->flags_,
+                obj));
+
   if (so == 0)
     return -1;
   else
@@ -116,6 +125,15 @@ ACE_Service_Object_Type::fini (void) const
 
   void * const obj = this->object ();
 
+  if (ACE::debug () > 2)
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_LIB_TEXT ("(%P|%t) SOT::fini - this=%@, ")
+                ACE_LIB_TEXT ("name=%s, flags=%d, so=%@\n"),
+                this,
+                this->name_,
+                this->flags_,
+                obj));
+
   ACE_Service_Object * const so =
     static_cast<ACE_Service_Object *> (obj);
 
@@ -123,6 +141,7 @@ ACE_Service_Object_Type::fini (void) const
     {
       so->fini ();
 
+      // @TODO: Why is this disabled?
 #if 0
       if (ACE_BIT_ENABLED (this->flags_,
                            ACE_Service_Type::DELETE_OBJ))
@@ -455,5 +474,6 @@ ACE_Stream_Type::find (const ACE_TCHAR *mod_name) const
   return 0;
 }
 
+// @@@ Eliminated ommented out explicit template instantiation code
 
 ACE_END_VERSIONED_NAMESPACE_DECL

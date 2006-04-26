@@ -57,6 +57,10 @@ public:
    */
   explicit ACE_DLL (int close_handle_on_destruction = 1);
 
+  /// Allow assignment
+  const ACE_DLL& operator= (const ACE_DLL &rhs);
+
+
   /**
    * This constructor performs the actions of open() during construction.
    * @param dll_name  The name or path of the DLL to load.
@@ -156,10 +160,8 @@ private:
               ACE_SHLIB_HANDLE handle = 0);
 
 
-  // Disallow assignment since we don't handle it.
-  void operator= (const ACE_DLL &);
-
-private:
+  //private:
+public:
 
   /// Open mode.
   int open_mode_;

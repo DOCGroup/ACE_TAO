@@ -49,7 +49,8 @@ TAO_Parser_Registry::open (TAO_ORB_Core *orb_core)
   for (size_t i = 0; i != this->size_; ++i)
     {
       this->parsers_[i] =
-        ACE_Dynamic_Service<TAO_IOR_Parser>::instance (names [i]);
+        ACE_Dynamic_Service<TAO_IOR_Parser>::instance (orb_core->configuration (),
+                                                       names [i]);
 
       if (this->parsers_[i] == 0)
         {

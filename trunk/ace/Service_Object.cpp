@@ -26,6 +26,18 @@ ACE_Service_Type::dump (void) const
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Service_Type::dump");
 #endif /* ACE_HAS_DUMP */
+
+
+  // Using printf, since the log facility may not have
+  // been initialized yet
+  ACE_OS::fprintf(stderr,
+                  "// [ST] dump, this=%p, name=%s, type=%p, so=%p, active=%d\n",
+                  this,
+                  this->name_,
+                  this->type_,
+                  (this->type_ != 0) ? this->type_->object () : 0,
+                  this->active_);
+
 }
 
 ACE_Service_Type::ACE_Service_Type (const ACE_TCHAR *n,
@@ -60,7 +72,6 @@ ACE_Service_Type::ACE_Service_Type (const ACE_TCHAR *n,
 ACE_Service_Type::~ACE_Service_Type (void)
 {
   ACE_TRACE ("ACE_Service_Type::~ACE_Service_Type");
-
   this->fini ();
 
   delete [] const_cast <ACE_TCHAR *> (this->name_);
@@ -72,7 +83,15 @@ ACE_Service_Type::fini (void)
   if (!this->fini_already_called_)
     {
       this->fini_already_called_ = 1;
+      if (this->type_ != 0)
       return this->type_->fini ();
+      else
+        return 1; // No implementation was found.
+                  // Currently only makes sense for dummy ST, used to "reserve"
+                  // a spot (kind of like forward-declarations) for a dynamic
+                  // service. This is necessary to help enforce the correct
+                  // finalization order, when such service also has any
+                  // (dependent) static services
     }
   return 0;
 }

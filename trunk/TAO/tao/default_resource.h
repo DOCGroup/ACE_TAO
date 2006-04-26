@@ -17,6 +17,7 @@
 
 #include /**/ "ace/pre.h"
 #include "ace/Service_Config.h"
+#include "ace/Dynamic_Service_Dependency.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -257,6 +258,12 @@ private:
   /// Flag to indicate whether replies should be dropped during ORB
   /// shutdown.
   bool drop_replies_;
+
+  // Makes a dependency on a specific dynamic service ("TAO_Codeset") explicit.
+  // It helps to keep the corresponding DLL around until the last instance
+  // is destroyed. Note that failure to delete the instances will "pin" the
+  // DLL in memory, preventing it from being unloaded on demand.
+  ACE_Dynamic_Service_Dependency *principal_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

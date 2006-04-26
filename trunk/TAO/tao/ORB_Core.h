@@ -316,7 +316,7 @@ public:
    *  Sets the value of gui_resource_factory in TSS. ORB_Core is responsible
    *  for releasing this factory if needed.
    */
-  static void set_gui_resource_factory (TAO::GUIResource_Factory *gui_resource_factory);
+  static void set_gui_resource_factory (TAO::GUIResource_Factory *gui_factory);
 
   /// Sets the value of TAO_ORB_Core::protocols_hooks_
   static void set_protocols_hooks (const char *protocols_hooks_name);
@@ -917,6 +917,9 @@ public:
   (const CORBA::Object_ptr obj,
    const TAO_Service_Context &service_context);
 
+  /// Configuration accessor method
+  ACE_Service_Gestalt* configuration () const;
+
   /// Get outgoing fragmentation strategy.
   auto_ptr<TAO_GIOP_Fragmentation_Strategy>
   fragmentation_strategy (TAO_Transport * transport);
@@ -1259,6 +1262,8 @@ protected:
   /// Code Set Manager - points to service object in the service repo
   TAO_Codeset_Manager *codeset_manager_;
 
+  /// ORB's service configuration
+  ACE_Service_Gestalt *config_;
 };
 
 // ****************************************************************

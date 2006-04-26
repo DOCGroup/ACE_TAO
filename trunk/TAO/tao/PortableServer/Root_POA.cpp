@@ -2515,7 +2515,8 @@ TAO_Root_POA::find_servant_priority (
 TAO::ORT_Adapter_Factory *
 TAO_Root_POA::ORT_adapter_factory (void)
 {
-  return ACE_Dynamic_Service<TAO::ORT_Adapter_Factory>::instance (
+  return ACE_Dynamic_Service<TAO::ORT_Adapter_Factory>::instance
+    (orb_core_.configuration (),
            TAO_Root_POA::ort_adapter_factory_name ());
 }
 

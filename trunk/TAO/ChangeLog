@@ -1,3 +1,246 @@
+Wed Apr 26 20:21:49 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+          The motivation for these changes was to enable support for
+          ORB-local Service Objects. This for instance, makes it possible
+          for differently configured ORBs to coexist within the same
+          proces.
+
+          In order to accomplish this, each orb (core) owns a "Gestalt",
+          i.e. a service object repository instance. There is also a
+          process-wide, or "global" gestalt, which is the default
+          repository where service objects are registered. The latter
+          retains the interface and behavioral compatibility with any
+          existing code. As a consequence of this design choice, any
+          un-named orb(s) will default to using the ubergestalt, which is
+          consistent with the prior behavior.
+
+        * NEWS
+
+          Added an entry to the NEWS file.
+
+        * tao/DLL_Parser.cpp:
+
+          Fixed the parse_string() method to use the correct ORB gestalt
+          when looking up a dynamic service object. That resolves a
+          failure in TAO/tests/Object_Loader test.
+
+        * tao/ORB.cpp:
+
+          Relocated some aging comments about having first to instantiate
+          the singleton manager to the correct place (ORB_init). Added a
+          gestalt parameter to the call to open_services. Edited a few
+          lines to fit within the standard length requirement.
+
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.i:
+        * tao/ORB_Core.cpp:
+
+          Added a member and an accessors for the private service gestalt,
+          owned by the core. Replaced the call to methods that use the
+          implicit ubergestalt with ones that specify the gestalt to use
+          for service objects.
+
+          Added an ACE_Service_Config_Guard to make sure the ORB
+          initialization uses the correct repository.
+
+          Updated more references to process_directive() and instance() to
+          use ACE_TCHAR.  Updated references to process_directive() to use
+          ACE_TCHAR for consistency.
+
+          Added #if !defined(TAO_AS_STATIC_LIBS)/#endif around code, which
+          is only meaningful when TAO is _not_ statically compiled;
+          Updated the service and DLL symbol names used to load the
+          CodecFactory_Loader, PolicyFactory_Loader and
+          TypeCodeFactory_Loader dynamic services, in the cases where
+          those services are not statically linked and TAO supports
+          dynamic linking. (Thanks Ossama, for pointing that out.)  Added
+          code to try and explicitly load an IORInterceptor adapter and
+          Concrete_IORInterceptor_Adapter_Factory, if TAO supports (is
+          built with) dynamic linking;
+
+          Updated the code that loads the IORTable adapter to be exception
+          safe; Edited a few lines to fit within the standard length
+          requirement.
+
+        * tao/Parser_Registry.cpp:
+
+          Updated to explicitly specify the correct gestalt for the ORB.
+
+        * tao/TAO_Internal.h:
+        * tao/TAO_Internal.cpp:
+
+          Refactored the initialization code to separate process-wide
+          aspects of initialization from those having to do with the ORB
+          instance. It is necessary to deal with global initialization
+          because of the large number of use cases, where the first thing
+          a process does is to call ORB_init, and consequently -
+          open_services. There are also cases where a process calls
+          Service_Config::open, initializing the process-wide
+          configuration and only then proceeds to call ORB_init - for
+          example when using Service Configurator to load a DLL that uses
+          an ORB. The close_service is now only responsible for calling
+          close in the ORB's own gestalt, the ACE Object Manager is the
+          one that is clobering the process-wide Service Configuration.
+          Updated to explicitly specify the correct gestalt to be used.
+
+        * tao/default_resource.h:
+        * tao/default_resource.cpp:
+
+          Added the ACE_Dynamic_Service_Dependency member to the default
+          resource factory to expressly maintain the factory's dependance
+          on TAO_Codeset library, because the order of destruction may be
+          reversed in some cases. The member help us keep our access to
+          TAO_Codeset_Manager instances by upping the ref count on
+          TAO_Codeset's DLL. This is far from elegant, but a complete
+          reference counting scheme for the ORB services is a more complex
+          undertaking than what the available resources currently permit.
+
+        * tao/CSD_ThreadPool/CSD_TP_Strategy_Factory.cpp:
+
+          Fixed an (unrelated) issue arising from a call to strcmp() with
+          two different character types - only visible when ACE_USES_WCHAR
+          is in effect.
+
+        * tao/Codeset/Codeset_Manager_i.h:
+        * tao/Codeset/Codeset_Manager_i.cpp:
+
+          (minor) Added void as argument to the ctor and dtor.
+
+        * tao/PI/ORBInitializer_Registry_Impl.h:
+        * tao/PI/ORBInitializer_Registry_Impl.cpp:
+
+          Implemented an init() method, which registers all the static
+          services, usually taken for granted with the loading of
+          TAO_PI. Previously, static initializers were used, however the
+          dependent static services were being registered only globally,
+          which broke the ORBs that needed ORB-local services.
+
+        * tao/PI/PI.h:
+        * tao/PI/PI.cpp:
+        * tao/PI/PolicyFactory_Loader.h:
+        * tao/PI/PolicyFactory_Loader.cpp:
+
+          Removed the static initializers code and made it part of the
+          dynamic service's init method. See the comment above.
+
+        * tao/PortableServer/Root_POA.cpp:
+
+          Explicitly specified the gestalt to be used for registering
+          dynamic services.
+
+        * tests/DLL_ORB/Test_Client_Module.cpp:
+        * tests/DLL_ORB/Test_Server_Module.cpp:
+
+          Provided an ID for the client and server's ORB.  In the future,
+          an option may be devised so that the user can specify if they
+          want any ORB to use its own gestalt, even if it does not have an
+          ID. The reverse would be to force all ORBs to use the global SR,
+          even if they have an ID.  Fixed a a SEGV upon process
+          termination. The first thing a client process does in its main()
+          is to load a dynamic service - Test_Client_Module, using a call
+          to ACE_Service_Config::process_directive(). The service does
+          call ORB_init(), which causes the population of the SR with a
+          number of static and dynamic SOs. At process termination now
+          however, any services registered following the ORB_init () call
+          are destroyed first and will be unavailable when the
+          Test_Client_Module is finalized. Like the Resource Factory, for
+          example.
+
+          The solution is to provide and ORB id for any ORB, which will
+          loaded as part of a dynamic service.  Since the service gestalt
+          is tied to the ORB id, this will cause the new ORBs to create
+          and manage the lifetime of their own Service Repositories. The
+          ORB_init() will be invoked in the context of each distinct SR
+          and any SO an ORB needs will go there. At process termination,
+          the Test_Client_Module will be finalized, which will clobber the
+          ORB's SR and any SO registered there.
+
+        * tests/ORB_Local_Config/ORB_Local_Config.mwc:
+        * tests/ORB_Local_Config/README:
+        * tests/ORB_Local_Config/run_tests_all.pl:
+
+          Added tests and examples of the functionality affected by the
+          introduction of the multiple private (per-ORB) service
+          configuration repositories.
+
+        * tests/ORB_Local_Config/lib/Service_Configuration_Per_ORB.h:
+        * tests/ORB_Local_Config/lib/Service_Configuration_Per_ORB.cpp:
+        * tests/ORB_Local_Config/lib/lib.mpc:
+
+          Common test code.
+
+        * tests/ORB_Local_Config/Bunch/Bunch.mpc:
+        * tests/ORB_Local_Config/Bunch/Service_Config_Test.UTF-16.conf:
+        * tests/ORB_Local_Config/Bunch/Service_Config_Test.UTF-16.conf.xml:
+        * tests/ORB_Local_Config/Bunch/Service_Config_Test.WCHAR_T.conf:
+        * tests/ORB_Local_Config/Bunch/Service_Config_Test.WCHAR_T.conf.xml:
+        * tests/ORB_Local_Config/Bunch/Service_Config_Test.conf:
+        * tests/ORB_Local_Config/Bunch/Service_Config_Test.conf.xml:
+        * tests/ORB_Local_Config/Bunch/Test.cpp:
+        * tests/ORB_Local_Config/Bunch/run_test.pl:
+
+          A collection of miscellaneous tests for compatibility of the new
+          interfaces with the old; Processing of the command-line
+          directives; Loading dynamic services in a local repository;
+          Loading the ORBInitializer_Registry locally; Test the helper
+          components used to implement the temporary substitution of the
+          repository currently used as "global" for the sake of
+          registering static services, which are dependent on a dynamic
+          service;
+
+        * tests/ORB_Local_Config/Limits/Limits.mpc:
+        * tests/ORB_Local_Config/Limits/Test.cpp:
+        * tests/ORB_Local_Config/Limits/run_test.pl:
+
+          Testing the size limits of a gestalt.
+
+        * tests/ORB_Local_Config/Separation/Separation.mpc:
+        * tests/ORB_Local_Config/Separation/Test.cpp:
+        * tests/ORB_Local_Config/Separation/run_test.pl:
+
+          Services registered with separate repositories must remain
+          separate and inaccessible through anyone but the gestalt they
+          were registered with.
+
+        * tests/ORB_Local_Config/Service_Dependency/Service_Config_DLL.h:
+        * tests/ORB_Local_Config/Service_Dependency/Service_Config_DLL.cpp:
+        * tests/ORB_Local_Config/Service_Dependency/Service_Config_DLL_Export.h:
+        * tests/ORB_Local_Config/Service_Dependency/Service_Dependency.mpc:
+        * tests/ORB_Local_Config/Service_Dependency/Test.cpp:
+        * tests/ORB_Local_Config/Service_Dependency/run_test.pl:
+
+          Tests the working of the ACE_Dynamic_Service_Dependency class
+
+        * tests/ORB_Local_Config/Shared/Shared.mpc:
+        * tests/ORB_Local_Config/Shared/Test.cpp:
+        * tests/ORB_Local_Config/Shared/run_test.pl:
+
+          Test that the default repository is available through any
+          Service Gestalt, created with its default ctor.
+
+        * tests/ORB_Local_Config/Simple/Simple.mpc:
+        * tests/ORB_Local_Config/Simple/Test.cpp:
+        * tests/ORB_Local_Config/Simple/run_test.pl:
+
+        * tests/ORB_Local_Config/Two_DLL_ORB/ORB_DLL.h:
+        * tests/ORB_Local_Config/Two_DLL_ORB/ORB_DLL.cpp:
+        * tests/ORB_Local_Config/Two_DLL_ORB/ORB_DLL_Export.h:
+        * tests/ORB_Local_Config/Two_DLL_ORB/Service_Config_ORB_Test.conf:
+        * tests/ORB_Local_Config/Two_DLL_ORB/Service_Config_ORB_Test2.conf:
+        * tests/ORB_Local_Config/Two_DLL_ORB/Test.idl:
+        * tests/ORB_Local_Config/Two_DLL_ORB/Test.cpp:
+        * tests/ORB_Local_Config/Two_DLL_ORB/Test_i.h:
+        * tests/ORB_Local_Config/Two_DLL_ORB/Test_i.cpp:
+        * tests/ORB_Local_Config/Two_DLL_ORB/Two_DLL_ORB.mpc:
+        * tests/ORB_Local_Config/Two_DLL_ORB/client.cpp:
+        * tests/ORB_Local_Config/Two_DLL_ORB/run_test.pl:
+        * tests/ORB_Local_Config/Two_DLL_ORB/server.cpp:
+
+          Testing the loading a dynamic service, which initializes its own
+          ORB. The test is a variant of the Hello test with the twist that
+          both the client and the server are service objects, loaded by
+          the Service Configuration mechanism.
+
 Wed Apr 26 20:09:33 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/EndpointPolicy/EndpointPolicyC.h:

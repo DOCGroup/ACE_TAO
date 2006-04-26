@@ -76,6 +76,17 @@ namespace TAO
         PortableInterceptor::SlotId slotid
         ACE_ENV_ARG_DECL);
 
+  protected:
+
+    // Added to provide registration for the several static service objects,
+    // brought in with this ORBInitializer_Registry implementation. Note that
+    // this is more reliable than using static initializers, since multiple
+    // copies of the dynamic service object will require their own (multiple)
+    // copies of the dependent static service objects. That is just impossible
+    // without registering those static services in the same repo, the dynamic
+    // SO is registered with.
+    virtual int init (int, ACE_TCHAR *[]);
+
   private:
     // Prevent copying
     ORBInitializer_Registry (const ORBInitializer_Registry &);
