@@ -1,3 +1,8 @@
+Wed Apr 26 11:28:28 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * bin/tao_orb_tests.lst:
+          Added TAO/tests/OBV/truncatable.
+
 Wed Apr 26 10:05:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
