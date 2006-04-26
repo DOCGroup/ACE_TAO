@@ -1,3 +1,18 @@
+Wed Apr 26 19:44:36 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * tao/Makefile.am:
+
+          Regenerated.
+
+        * tao/EndpointPolicy.mpc:
+
+          Added Pkgconfig_Files definition.
+
+        * tao/EndpointPolicy/TAO_EndpointPolicy.pc.in:
+
+          New file, pkg-config *.pc template for TAO_EndpointPolicy
+          library.
+
 Wed Apr 26 19:08:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/OBV/Simple/Client_i.h:
