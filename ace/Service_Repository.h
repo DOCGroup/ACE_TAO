@@ -77,7 +77,8 @@ public:
   int fini (void);
 
   /// Get pointer to a process-wide ACE_Service_Repository.
-  static ACE_Service_Repository *instance (int size = ACE_Service_Repository::DEFAULT_SIZE);
+  static ACE_Service_Repository *
+    instance (int size = ACE_Service_Repository::DEFAULT_SIZE);
 
   /// Set pointer to a process-wide ACE_Service_Repository and return
   /// existing pointer.
@@ -88,8 +89,8 @@ public:
 
   // = Search structure operations (all acquire locks as necessary).
 
-  /// Insert a new service record.  Returns -1 when the service repository is full
-  /// and 0 on success.
+  /// Insert a new service record.  Returns -1 when the service repository
+  /// is full and 0 on success.
   int insert (const ACE_Service_Type *);
 
   /**
@@ -102,7 +103,7 @@ public:
    */
   int find (const ACE_TCHAR name[],
             const ACE_Service_Type **srp = 0,
-            int ignore_suspended = 1);
+            int ignore_suspended = 1) const;
 
   /// Remove an existing service record. If @a sr == 0, the service record
   /// is deleted before control is returned to the caller. If @a sr != 0,
@@ -135,7 +136,7 @@ private:
   /// held...
   int find_i (const ACE_TCHAR service_name[],
               const ACE_Service_Type ** = 0,
-              int ignore_suspended = 1);
+              int ignore_suspended = 1) const;
 
   /// Contains all the configured services.
   const ACE_Service_Type **service_vector_;
@@ -154,7 +155,7 @@ private:
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   /// Synchronization variable for the MT_SAFE Repository
-  ACE_Recursive_Thread_Mutex lock_;
+  mutable ACE_Recursive_Thread_Mutex lock_;
 #endif /* ACE_MT_SAFE */
 };
 

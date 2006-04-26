@@ -570,7 +570,7 @@ ACE_Static_Svc_Descriptor ace_svc_desc_##SERVICE_CLASS = { NAME, TYPE, FN, FLAGS
 class ACE_Static_Svc_##SERVICE_CLASS {\
 public:\
   ACE_Static_Svc_##SERVICE_CLASS() { \
-    ACE_Service_Config::static_svcs ()->insert (\
+    ACE_Service_Config::insert (\
          &ace_svc_desc_##SERVICE_CLASS); \
   } \
 };
@@ -583,7 +583,7 @@ ACE_Static_Svc_##SERVICE_CLASS ace_static_svc_##SERVICE_CLASS
 class ACE_Static_Svc_##SERVICE_CLASS {\
 public:\
   ACE_Static_Svc_##SERVICE_CLASS() { \
-    ACE_Service_Config::static_svcs ()->insert (\
+    ACE_Service_Config::insert (\
          &ace_svc_desc_##SERVICE_CLASS); \
     } \
 };\

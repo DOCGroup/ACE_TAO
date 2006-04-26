@@ -25,6 +25,18 @@ ACE_Dynamic_Service<TYPE>::instance (const ACE_TCHAR *name)
   return dynamic_cast<TYPE *> (svc_obj);
 }
 
+
+template <class TYPE> TYPE *
+ACE_Dynamic_Service<TYPE>::instance (const ACE_Service_Gestalt* conf,
+                                     const ACE_TCHAR *name)
+{
+  ACE_Service_Object * svc_obj =
+    static_cast<ACE_Service_Object *> (ACE_Dynamic_Service_Base::instance (conf, name));
+  return dynamic_cast<TYPE *> (svc_obj);
+}
+
+
+
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_DYNAMIC_SERVICE_CPP */

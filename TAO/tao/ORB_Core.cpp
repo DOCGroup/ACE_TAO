@@ -99,7 +99,8 @@ TAO_ORB_Core_Static_Resources* TAO_ORB_Core_Static_Resources::instance_ = 0;
 // Force an instance to be created at module initialization time,
 // since we do not want to worry about double checked locking and
 // the race condition to initialize the lock.
-TAO_ORB_Core_Static_Resources* TAO_ORB_Core_Static_Resources::initialization_reference_ =
+TAO_ORB_Core_Static_Resources*
+TAO_ORB_Core_Static_Resources::initialization_reference_ =
   TAO_ORB_Core_Static_Resources::instance ();
 
 TAO_ORB_Core_Static_Resources*
@@ -126,7 +127,9 @@ TAO_ORB_Core_Static_Resources::TAO_ORB_Core_Static_Resources (void)
     timeout_hook_ (0),
     connection_timeout_hook_ (0),
     endpoint_selector_factory_name_ ("Default_Endpoint_Selector_Factory"),
-    thread_lane_resources_manager_factory_name_ ("Default_Thread_Lane_Resources_Manager_Factory"),
+    thread_lane_resources_manager_factory_name_
+      ("Default_Thread_Lane_Resources_Manager_Factory"),
+
     collocation_resolver_name_ ("Default_Collocation_Resolver"),
     stub_factory_name_ ("Default_Stub_Factory"),
     resource_factory_name_ ("Resource_Factory"),
@@ -136,7 +139,12 @@ TAO_ORB_Core_Static_Resources::TAO_ORB_Core_Static_Resources (void)
     iorinterceptor_adapter_factory_name_ ("IORInterceptor_Adapter_Factory"),
     valuetype_adapter_factory_name_ ("valuetype_Adapter_Factory"),
     poa_factory_name_ ("TAO_Object_Adapter_Factory"),
-    poa_factory_directive_ (ACE_TEXT_ALWAYS_CHAR (ACE_DYNAMIC_SERVICE_DIRECTIVE("TAO_Object_Adapter_Factory", "TAO_PortableServer", "_make_TAO_Object_Adapter_Factory", ""))),
+    poa_factory_directive_
+      (ACE_TEXT_ALWAYS_CHAR
+        (ACE_DYNAMIC_SERVICE_DIRECTIVE("TAO_Object_Adapter_Factory",
+                                       "TAO_PortableServer",
+                                       "_make_TAO_Object_Adapter_Factory",
+                                       ""))),
     alt_connection_timeout_hook_ (0)
 {
 }
@@ -253,6 +261,17 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
   // Initialize the default request dispatcher.
   ACE_NEW (this->request_dispatcher_,
            TAO_Request_Dispatcher);
+
+  /*
+   * @TODO: Get rid of the "magic number" for the Service repository size.
+   * Can this be dynamic container instead?
+   */
+  if (ACE_OS::strnlen (this->orbid_, 1) == 0)
+    // (re)use the default/global getsalt
+    ACE_NEW (this->config_, ACE_Service_Gestalt);
+  else
+    ACE_NEW (this->config_,
+             ACE_Service_Gestalt (ACE_Service_Gestalt::MAX_SERVICES / 4));
 }
 
 TAO_ORB_Core::~TAO_ORB_Core (void)
@@ -289,6 +308,9 @@ TAO_ORB_Core::~TAO_ORB_Core (void)
   orbinitializer_registry_ = 0;
 
   ::CORBA::release (this->orb_);
+
+  delete this->config_;
+  this->config_ = 0;
 }
 
 int
@@ -687,7 +709,8 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
                 (ACE_TEXT("-ORBDefaultInitRef"))))
         {
           // Set the list of prefixes from -ORBDefaultInitRef.
-          this->orb_params ()->default_init_ref (ACE_TEXT_ALWAYS_CHAR(current_arg));
+          this->orb_params ()->default_init_ref
+            (ACE_TEXT_ALWAYS_CHAR(current_arg));
 
           arg_shifter.consume_arg ();
         }
@@ -746,7 +769,8 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
                               CORBA::COMPLETED_NO));
           ACE_CHECK_RETURN (-1);
 
-          output_stream->open (ACE_TEXT_ALWAYS_CHAR (file_name), ios::out | ios::app);
+          output_stream->open (ACE_TEXT_ALWAYS_CHAR (file_name),
+                               ios::out | ios::app);
 
           if (!output_stream->bad ())
             {
@@ -893,10 +917,11 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
           ACE_CString lane (ACE_TEXT_ALWAYS_CHAR (current_arg));
           arg_shifter.consume_arg ();
 
-          if(arg_shifter.is_option_next ())
+          if (arg_shifter.is_option_next ())
             return -1;
 
-          ACE_CString endpoints (ACE_TEXT_ALWAYS_CHAR (arg_shifter.get_current ()));
+          ACE_CString endpoints (ACE_TEXT_ALWAYS_CHAR
+                                  (arg_shifter.get_current ()));
           arg_shifter.consume_arg ();
 
           this->set_endpoint_helper (lane,
@@ -991,7 +1016,8 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
               ACE_DEBUG ((LM_ERROR,
                           ACE_TEXT ("ERROR: Unknown \"-ORB\" option ")
                           ACE_TEXT ("<%s>.\n"),
-                          ((current_arg == 0) ? ACE_TEXT("<NULL>") : current_arg)));
+                          ((current_arg == 0) ? ACE_TEXT("<NULL>")
+                                              : current_arg)));
             }
 
           ACE_THROW_RETURN (CORBA::BAD_PARAM (
@@ -1025,7 +1051,8 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
           if (TAO_debug_level > 0)
             {
               ACE_ERROR ((LM_ERROR,
-                          ACE_TEXT ("ERROR: Environment variable TAO_ORBENDPOINT set to invalid value ")
+                          ACE_TEXT ("ERROR: Environment variable ")
+                          ACE_TEXT ("TAO_ORBENDPOINT set to invalid value ")
                           ACE_TEXT ("<%s>.\n"),
                           env_endpoint));
             }
@@ -1050,6 +1077,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
   // these kinds of applications, anyway?
   (void) ACE_OS::signal (SIGPIPE, (ACE_SignalHandler) SIG_IGN);
 #endif /* SIGPIPE */
+
 
   // Calling the open method here so that the svc.conf file is
   // opened and TAO_default_resource_factory::init () is called by the
@@ -1230,9 +1258,13 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
   this->flushing_strategy_ = trf->create_flushing_strategy ();
 
   // Look in the service repository for an instance of the Protocol Hooks.
+  const ACE_CString &protocols_hooks_name =
+     TAO_ORB_Core_Static_Resources::instance ()->protocols_hooks_name_;
+
   this->protocols_hooks_ =
     ACE_Dynamic_Service<TAO_Protocols_Hooks>::instance
-    (TAO_ORB_Core_Static_Resources::instance ()->protocols_hooks_name_.c_str());
+    (this->configuration (),
+     ACE_TEXT_CHAR_TO_TCHAR (protocols_hooks_name.c_str()));
 
   // Must have valid protocol hooks.
   if (this->protocols_hooks_ == 0)
@@ -1317,7 +1349,7 @@ TAO_ORB_Core::fini (void)
   if (this->thread_lane_resources_manager_ != 0)
     this->thread_lane_resources_manager_->finalize ();
 
-  (void) TAO::ORB::close_services ();
+  (void) TAO::ORB::close_services (this->configuration ());
 
   // Destroy the object_key table
   this->object_key_table_.destroy ();
@@ -1439,9 +1471,13 @@ TAO_ORB_Core::resource_factory (void)
     }
 
   // Look in the service repository for an instance.
+  ACE_CString &resource_factory_name =
+    TAO_ORB_Core_Static_Resources::instance ()->resource_factory_name_;
+
   this->resource_factory_ =
     ACE_Dynamic_Service<TAO_Resource_Factory>::instance
-    (TAO_ORB_Core_Static_Resources::instance ()->resource_factory_name_.c_str());
+      (this->configuration (),
+       ACE_TEXT_CHAR_TO_TCHAR (resource_factory_name.c_str()));
 
   return this->resource_factory_;
 }
@@ -1461,9 +1497,13 @@ TAO_ORB_Core::thread_lane_resources_manager (void)
     return *this->thread_lane_resources_manager_;
 
   // If not, lookup the corresponding factory and ask it to make one.
+  const ACE_CString &thread_lane_resources_manager_factory_name =
+    TAO_ORB_Core_Static_Resources::instance ()->thread_lane_resources_manager_factory_name_;
+
   TAO_Thread_Lane_Resources_Manager_Factory *factory =
     ACE_Dynamic_Service<TAO_Thread_Lane_Resources_Manager_Factory>::instance
-    (TAO_ORB_Core_Static_Resources::instance ()->thread_lane_resources_manager_factory_name_.c_str());
+      (this->configuration (),
+       ACE_TEXT_CHAR_TO_TCHAR (thread_lane_resources_manager_factory_name.c_str()));
 
   this->thread_lane_resources_manager_ =
     factory->create_thread_lane_resources_manager (*this);
@@ -1479,9 +1519,13 @@ TAO_ORB_Core::collocation_resolver (void)
     return *this->collocation_resolver_;
 
   // If not, lookup it up.
+  const ACE_CString &collocation_resolver_name =
+    TAO_ORB_Core_Static_Resources::instance ()->collocation_resolver_name_;
+
   this->collocation_resolver_ =
     ACE_Dynamic_Service<TAO_Collocation_Resolver>::instance
-    (TAO_ORB_Core_Static_Resources::instance ()->collocation_resolver_name_.c_str());
+      (this->configuration (),
+       ACE_TEXT_CHAR_TO_TCHAR (collocation_resolver_name.c_str()));
 
   return *this->collocation_resolver_;
 }
@@ -1491,18 +1535,21 @@ TAO_ORB_Core::policy_factory_registry_i (void)
 {
 
   TAO_PolicyFactory_Registry_Factory *loader =
-    ACE_Dynamic_Service<TAO_PolicyFactory_Registry_Factory>::instance (
-      "PolicyFactory_Loader");
+    ACE_Dynamic_Service<TAO_PolicyFactory_Registry_Factory>::instance
+      (this->configuration (),
+       ACE_TEXT ("PolicyFactory_Loader"));
+
   if (loader == 0)
     {
-      ACE_Service_Config::process_directive (
+      this->configuration ()->process_directive (
         ACE_DYNAMIC_SERVICE_DIRECTIVE("PolicyFactory_Loader",
                                       "TAO_PI",
-                                      "_make_PolicyFactory_Loader",
+                                      "_make_TAO_PolicyFactory_Loader",
                                       ""));
       loader =
-        ACE_Dynamic_Service<TAO_PolicyFactory_Registry_Factory>::instance (
-          "PolicyFactory_Loader");
+        ACE_Dynamic_Service<TAO_PolicyFactory_Registry_Factory>::instance
+          (this->configuration (),
+           ACE_TEXT ("PolicyFactory_Loader"));
     }
 
   if (loader != 0)
@@ -1520,7 +1567,8 @@ TAO_ORB_Core::orbinitializer_registry_i (void)
   // If not, lookup it up.
   this->orbinitializer_registry_ =
     ACE_Dynamic_Service<TAO::ORBInitializer_Registry_Adapter>::instance
-    ("ORBInitializer_Registry");
+      (this->configuration (),
+       ACE_TEXT ("ORBInitializer_Registry"));
 
 #if !defined (TAO_AS_STATIC_LIBS)
       // In case we build shared, try to load the PI Client library, in a
@@ -1528,14 +1576,15 @@ TAO_ORB_Core::orbinitializer_registry_i (void)
       // output an error then.
   if (orbinitializer_registry_ == 0)
     {
-      ACE_Service_Config::process_directive (
+      this->configuration ()->process_directive (
         ACE_DYNAMIC_SERVICE_DIRECTIVE("ORBInitializer_Registry",
                                       "TAO_PI",
                                       "_make_ORBInitializer_Registry",
                                       ""));
       orbinitializer_registry_ =
         ACE_Dynamic_Service<TAO::ORBInitializer_Registry_Adapter>::instance
-          ("ORBInitializer_Registry");
+          (this->configuration (),
+           ACE_TEXT ("ORBInitializer_Registry"));
     }
 #endif /* !TAO_AS_STATIC_LIBS */
 
@@ -1550,9 +1599,13 @@ TAO_ORB_Core::stub_factory (void)
     return this->stub_factory_;
 
   // If not, look in the service repository for an instance.
+  const ACE_CString &stub_factory_name =
+    TAO_ORB_Core_Static_Resources::instance ()->stub_factory_name_;
+
   this->stub_factory_ =
     ACE_Dynamic_Service<TAO_Stub_Factory>::instance
-    (TAO_ORB_Core_Static_Resources::instance ()->stub_factory_name_.c_str());
+      (this->configuration (),
+       ACE_TEXT_CHAR_TO_TCHAR (stub_factory_name.c_str()));
 
   return this->stub_factory_;
 }
@@ -1588,9 +1641,13 @@ TAO_ORB_Core::endpoint_selector_factory (void)
     return this->endpoint_selector_factory_;
 
   // If not, look in the service repository for an instance.
+  const ACE_CString &endpoint_selector_factory_name =
+    TAO_ORB_Core_Static_Resources::instance ()->endpoint_selector_factory_name_;
+
   this->endpoint_selector_factory_ =
     ACE_Dynamic_Service<TAO_Endpoint_Selector_Factory>::instance
-    (TAO_ORB_Core_Static_Resources::instance ()->endpoint_selector_factory_name_.c_str());
+      (this->configuration (),
+       ACE_TEXT_CHAR_TO_TCHAR (endpoint_selector_factory_name.c_str()));
 
   return this->endpoint_selector_factory_;
 }
@@ -1676,7 +1733,9 @@ TAO_ORB_Core::client_factory (void)
     {
       // Look in the service repository for an instance.
       this->client_factory_ =
-        ACE_Dynamic_Service<TAO_Client_Strategy_Factory>::instance ("Client_Strategy_Factory");
+        ACE_Dynamic_Service<TAO_Client_Strategy_Factory>::instance
+          (this->configuration (),
+           ACE_TEXT ("Client_Strategy_Factory"));
     }
 
   return this->client_factory_;
@@ -1689,7 +1748,9 @@ TAO_ORB_Core::server_factory (void)
     {
       // Look in the service repository for an instance.
       this->server_factory_ =
-        ACE_Dynamic_Service<TAO_Server_Strategy_Factory>::instance ("Server_Strategy_Factory");
+        ACE_Dynamic_Service<TAO_Server_Strategy_Factory>::instance
+          (this->configuration (),
+           ACE_TEXT ("Server_Strategy_Factory"));
     }
 
   return this->server_factory_;
@@ -1701,20 +1762,29 @@ TAO_ORB_Core::root_poa (ACE_ENV_SINGLE_ARG_DECL)
   // DCL ..
   if (CORBA::is_nil (this->root_poa_.in ()))
     {
+
+      // Making sure the initialization process in the current thread uses
+      // the correct service repository (ours), instead of the global one.
+      ACE_Service_Config_Guard scg (this->configuration ());
+
+
       TAO_ORB_Core_Static_Resources* static_resources =
         TAO_ORB_Core_Static_Resources::instance ();
 
       TAO_Adapter_Factory *factory =
-        ACE_Dynamic_Service<TAO_Adapter_Factory>::instance (
+        ACE_Dynamic_Service<TAO_Adapter_Factory>::instance
+          (this->configuration (),
           static_resources->poa_factory_name_.c_str());
 
       if (factory == 0)
         {
-          ACE_Service_Config::process_directive (
+          this->configuration()->process_directive (
            ACE_TEXT_CHAR_TO_TCHAR (
              static_resources->poa_factory_directive_.c_str()));
+
           factory =
-            ACE_Dynamic_Service<TAO_Adapter_Factory>::instance (
+            ACE_Dynamic_Service<TAO_Adapter_Factory>::instance
+              (this->configuration (),
               static_resources->poa_factory_name_.c_str());
         }
 
@@ -1833,7 +1903,8 @@ TAO_ORB_Core::load_policy_validators (TAO_Policy_Validator &validator
   if (this->bidir_adapter_ == 0)
     {
       this->bidir_adapter_ =
-        ACE_Dynamic_Service<TAO_BiDir_Adapter>::instance ("BiDirGIOP_Loader");
+        ACE_Dynamic_Service<TAO_BiDir_Adapter>::instance
+          (this->configuration (), ACE_TEXT ("BiDirGIOP_Loader"));
     }
 
   // Call the BiDir library if it has been loaded
@@ -2017,6 +2088,8 @@ TAO_ORB_Core::run (ACE_Time_Value *tv,
                    int perform_work
                    ACE_ENV_ARG_DECL_NOT_USED)
 {
+  ACE_Service_Config_Guard guard (this->configuration());
+
   if (TAO_debug_level > 2)
     {
       ACE_DEBUG ((LM_DEBUG,
@@ -2101,6 +2174,7 @@ TAO_ORB_Core::run (ACE_Time_Value *tv,
           // A timeout, terminate the loop...
           break;
         }
+
       if (perform_work)
         {
           // This is running on behalf of a perform_work() call,
@@ -2205,8 +2279,7 @@ TAO_ORB_Core::destroy (ACE_ENV_SINGLE_ARG_DECL)
   //
 
   // Shutdown the ORB and block until the shutdown is complete.
-  this->shutdown (1
-                  ACE_ENV_ARG_PARAMETER);
+  this->shutdown (1 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // Invoke Interceptor::destroy() on all registered interceptors.
@@ -2235,7 +2308,6 @@ TAO_ORB_Core::check_shutdown (ACE_ENV_SINGLE_ARG_DECL)
 void
 TAO_ORB_Core::destroy_interceptors (ACE_ENV_SINGLE_ARG_DECL)
 {
-
   ACE_TRY
     {
       ACE_GUARD (TAO_SYNCH_MUTEX, monitor, this->lock_);
@@ -2298,19 +2370,28 @@ void
 TAO_ORB_Core::resolve_typecodefactory_i (ACE_ENV_SINGLE_ARG_DECL)
 {
   TAO_Object_Loader *loader =
-    ACE_Dynamic_Service<TAO_Object_Loader>::instance ("TypeCodeFactory_Loader");
+    ACE_Dynamic_Service<TAO_Object_Loader>::instance
+      (this->configuration (),
+       ACE_TEXT ("TypeCodeFactory_Loader"));
+
+#if !defined(TAO_AS_STATIC_LIBS)
   if (loader == 0)
     {
-      ACE_Service_Config::process_directive (
-        ACE_DYNAMIC_SERVICE_DIRECTIVE("TypeCodeFactory_Loader",
+      this->configuration ()->process_directive (
+        ACE_DYNAMIC_SERVICE_DIRECTIVE("TypeCodeFactory",
                                       "TAO_TypeCodeFactory",
                                       "_make_TAO_TypeCodeFactory_Loader",
                                       ""));
       loader =
-        ACE_Dynamic_Service<TAO_Object_Loader>::instance ("TypeCodeFactory_Loader");
+        ACE_Dynamic_Service<TAO_Object_Loader>::instance
+          (this->configuration (),
+           ACE_TEXT ("TypeCodeFactory_Loader"));
+
       if (loader == 0)
         ACE_THROW (CORBA::ORB::InvalidName ());
     }
+#endif /* !defined (TAO_AS_STATIC_LIBS) */
+
   this->typecode_factory_ =
     loader->create_object (this->orb_, 0, 0 ACE_ENV_ARG_PARAMETER);
 }
@@ -2319,17 +2400,26 @@ void
 TAO_ORB_Core::resolve_codecfactory_i (ACE_ENV_SINGLE_ARG_DECL)
 {
   TAO_Object_Loader *loader =
-    ACE_Dynamic_Service<TAO_Object_Loader>::instance ("CodecFactory_Loader");
+    ACE_Dynamic_Service<TAO_Object_Loader>::instance
+      (this->configuration (),
+       ACE_TEXT ("CodecFactory_Loader"));
+
+#if !defined(TAO_AS_STATIC_LIBS)
   if (loader == 0)
     {
-      ACE_Service_Config::process_directive (
-        ACE_DYNAMIC_SERVICE_DIRECTIVE("CodecFactory_Loader",
+    this->configuration()->process_directive (
+        ACE_DYNAMIC_SERVICE_DIRECTIVE("CodecFactory",
                                       "TAO_CodecFactory",
                                       "_make_TAO_CodecFactory_Loader",
                                       ""));
       loader =
-        ACE_Dynamic_Service<TAO_Object_Loader>::instance ("CodecFactory_Loader");
+      ACE_Dynamic_Service<TAO_Object_Loader>::instance
+        (this->configuration (),
+         ACE_TEXT ("CodecFactory_Loader"));
+
     }
+#endif /* !defined (TAO_AS_STATIC_LIBS) */
+
   if (loader != 0)
     {
       this->codec_factory_ =
@@ -2342,17 +2432,29 @@ void
 TAO_ORB_Core::resolve_poa_current_i (ACE_ENV_SINGLE_ARG_DECL)
 {
   TAO_Object_Loader *loader =
-    ACE_Dynamic_Service<TAO_Object_Loader>::instance ("TAO_POA_Current_Factory");
+    ACE_Dynamic_Service<TAO_Object_Loader>::instance
+      (this->configuration(),
+       ACE_TEXT ("TAO_POA_Current_Factory"));
+
+#if !defined(TAO_AS_STATIC_LIBS)
   if (loader == 0)
     {
-      ACE_Service_Config::process_directive (
+    this->configuration()->process_directive (
         ACE_DYNAMIC_SERVICE_DIRECTIVE("TAO_POA_Current_Factory",
                                       "TAO_PortableServer",
                                       "_make_TAO_POA_Current_Factory",
                                       ""));
       loader =
-        ACE_Dynamic_Service<TAO_Object_Loader>::instance ("TAO_POA_Current_Factory");
+      ACE_Dynamic_Service<TAO_Object_Loader>::instance
+        (this->configuration(),
+         ACE_TEXT ("TAO_POA_Current_Factory"));
     }
+
+  if (loader == 0)
+    ACE_THROW (CORBA::ORB::InvalidName ());
+
+#endif /* !defined (TAO_AS_STATIC_LIBS) */
+
   if (loader != 0)
     {
       this->poa_current_ =
@@ -2367,17 +2469,24 @@ void
 TAO_ORB_Core::resolve_picurrent_i (ACE_ENV_SINGLE_ARG_DECL)
 {
   TAO_Object_Loader *loader =
-    ACE_Dynamic_Service<TAO_Object_Loader>::instance ("PICurrent_Loader");
+    ACE_Dynamic_Service<TAO_Object_Loader>::instance
+      (this->configuration (),
+       ACE_TEXT ("PICurrent_Loader"));
+
+#if !defined(TAO_AS_STATIC_LIBS)
   if (loader == 0)
     {
-      ACE_Service_Config::process_directive (
+    this->configuration ()->process_directive (
         ACE_DYNAMIC_SERVICE_DIRECTIVE("PICurrent_Loader",
                                       "TAO_PI",
                                       "_make_TAO_PICurrent_Loader",
                                       ""));
       loader =
-        ACE_Dynamic_Service<TAO_Object_Loader>::instance ("PICurrent_Loader");
+        ACE_Dynamic_Service<TAO_Object_Loader>::instance
+         (this->configuration (),
+          ACE_TEXT ("PICurrent_Loader"));
     }
+#endif /* !defined (TAO_AS_STATIC_LIBS) */
 
   if (loader != 0)
     {
@@ -2396,17 +2505,24 @@ void
 TAO_ORB_Core::resolve_dynanyfactory_i (ACE_ENV_SINGLE_ARG_DECL)
 {
   TAO_Object_Loader *loader =
-    ACE_Dynamic_Service<TAO_Object_Loader>::instance ("DynamicAny_Loader");
+    ACE_Dynamic_Service<TAO_Object_Loader>::instance
+      (this->configuration (),
+       ACE_TEXT ("DynamicAny_Loader"));
+
+#if !defined(TAO_AS_STATIC_LIBS)
   if (loader == 0)
     {
-      ACE_Service_Config::process_directive (
+    this->configuration ()->process_directive (
         ACE_DYNAMIC_SERVICE_DIRECTIVE("DynamicAny_Loader",
                                       "TAO_DynamicAny",
                                       "_make_TAO_DynamicAny_Loader",
                                       ""));
       loader =
-        ACE_Dynamic_Service<TAO_Object_Loader>::instance ("DynamicAny_Loader");
+      ACE_Dynamic_Service<TAO_Object_Loader>::instance
+        (this->configuration (),
+         ACE_TEXT ("DynamicAny_Loader"));
     }
+#endif /* !defined (TAO_AS_STATIC_LIBS) */
 
   if (loader != 0)
     {
@@ -2420,18 +2536,25 @@ void
 TAO_ORB_Core::resolve_iormanipulation_i (ACE_ENV_SINGLE_ARG_DECL)
 {
   TAO_Object_Loader *loader =
-    ACE_Dynamic_Service<TAO_Object_Loader>::instance ("IORManip_Loader");
+    ACE_Dynamic_Service<TAO_Object_Loader>::instance
+      (this->configuration (),
+       ACE_TEXT ("IORManip_Loader"));
 
+#if !defined(TAO_AS_STATIC_LIBS)
   if (loader == 0)
     {
-      ACE_Service_Config::process_directive (
+    this->configuration()->process_directive (
         ACE_DYNAMIC_SERVICE_DIRECTIVE("IORManip_Loader",
                                       "TAO_IORManip",
                                       "_make_TAO_IORManip_Loader",
                                       ""));
       loader =
-        ACE_Dynamic_Service<TAO_Object_Loader>::instance ("IORManip_Loader");
+      ACE_Dynamic_Service<TAO_Object_Loader>::instance
+        (this->configuration (),
+         ACE_TEXT ("IORManip_Loader"));
     }
+#endif /* !defined (TAO_AS_STATIC_LIBS) */
+
   if (loader != 0)
     {
       this->ior_manip_factory_ =
@@ -2444,29 +2567,39 @@ void
 TAO_ORB_Core::resolve_ior_table_i (ACE_ENV_SINGLE_ARG_DECL)
 {
   TAO_Adapter_Factory *factory =
-    ACE_Dynamic_Service<TAO_Adapter_Factory>::instance ("TAO_IORTable");
+    ACE_Dynamic_Service<TAO_Adapter_Factory>::instance
+      (this->configuration (),
+       ACE_TEXT ("TAO_IORTable"));
+
+#if !defined(TAO_AS_STATIC_LIBS)
   if (factory == 0)
     {
-      ACE_Service_Config::process_directive (
+    this->configuration ()->process_directive (
         ACE_DYNAMIC_SERVICE_DIRECTIVE("TAO_IORTable",
                                       "TAO_IORTable",
                                       "_make_TAO_Table_Adapter_Factory",
                                       ""));
       factory =
-        ACE_Dynamic_Service<TAO_Adapter_Factory>::instance ("TAO_IORTable");
+      ACE_Dynamic_Service<TAO_Adapter_Factory>::instance
+        (this->configuration (),
+         ACE_TEXT ("TAO_IORTable"));
     }
+#endif /* !defined (TAO_AS_STATIC_LIBS) */
 
   if (factory != 0)
     {
-      // @@ Not exception safe
-      TAO_Adapter *iortable_adapter = factory->create (this);
-      this->adapter_registry_.insert (iortable_adapter ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
-
+      ACE_Auto_Ptr <TAO_Adapter> iortable_adapter (factory->create (this));
       iortable_adapter->open (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
-      this->ior_table_ = iortable_adapter->root ();
+      CORBA::Object_var tmp_root = iortable_adapter->root ();
+
+      this->adapter_registry_.insert (iortable_adapter.get () ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+
+      // It is now (exception) safe to release ownership from the auto pointers
+      this->ior_table_= tmp_root._retn ();
+      iortable_adapter.release ();
     }
 }
 
@@ -2743,7 +2876,8 @@ TAO_ORB_Core::implrepo_service (void)
 
       ACE_TRY_NEW_ENV
         {
-          CORBA::Object_var temp = this->orb_->resolve_initial_references ("ImplRepoService" ACE_ENV_ARG_PARAMETER);
+          CORBA::Object_var temp =
+            this->orb_->resolve_initial_references ("ImplRepoService" ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, CORBA::Object::_nil ());
@@ -2753,7 +2887,8 @@ TAO_ORB_Core::implrepo_service (void)
         }
       ACE_CATCHANY
         {
-          // Just make sure that we have a null pointer.  Ignore the exception anyway.
+          // Just make sure that we have a null pointer.  Ignore the exception
+          // anyway.
           this->implrepo_service_ = CORBA::Object::_nil ();
         }
       ACE_ENDTRY;
@@ -3087,16 +3222,38 @@ TAO_ORB_Core::ior_interceptor_adapter (void)
           ACE_TRY
             {
               TAO_IORInterceptor_Adapter_Factory * ior_ap_factory =
-                ACE_Dynamic_Service<TAO_IORInterceptor_Adapter_Factory>::instance (
-                    TAO_ORB_Core::iorinterceptor_adapter_factory_name ()
-                  );
+                ACE_Dynamic_Service<TAO_IORInterceptor_Adapter_Factory>::instance
+                  (this->configuration (),
+                   ACE_TEXT_CHAR_TO_TCHAR (TAO_ORB_Core::iorinterceptor_adapter_factory_name ()));
 
-              if (ior_ap_factory)
+#if !defined (TAO_AS_STATIC_LIBS)
+              // In case we build shared, try to load the IOR_Interceptor factory. In a
+              // static build we just can't do this, so don't try it
+              if (ior_ap_factory == 0)
+              {
+                this->configuration()->process_directive
+                  (ACE_DYNAMIC_SERVICE_DIRECTIVE("Concrete_IORInterceptor_Adapter_Factory",
+                                                 "TAO_IORInterceptor",
+                                                 "_make_TAO_IORInterceptor_Adapter_Factory_Impl",
+                                                 ""));
+                ior_ap_factory =
+                  ACE_Dynamic_Service<TAO_IORInterceptor_Adapter_Factory>::instance
+                    (this->configuration (), ACE_TEXT("Concrete_IORInterceptor_Adapter_Factory"));
+              }
+#endif /* !TAO_AS_STATIC_LIBS */
+
+              if (ior_ap_factory == 0)
                 {
-                  this->ior_interceptor_adapter_ =
-                    ior_ap_factory->create (ACE_ENV_SINGLE_ARG_PARAMETER);
-                  ACE_TRY_CHECK;
+                  ACE_ERROR_RETURN ((LM_ERROR,
+                                     ACE_TEXT ("(%P|%t) Unable to get a IORInterceptor factory\n")),
+                                    0);
+                  ACE_THROW (CORBA::INTERNAL ());
                 }
+
+              this->ior_interceptor_adapter_ =
+                ior_ap_factory->create (ACE_ENV_SINGLE_ARG_PARAMETER);
+              ACE_TRY_CHECK;
+
             }
           ACE_CATCHANY
             {
@@ -3130,7 +3287,8 @@ TAO_ORB_Core::add_interceptor (
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%P|%t) %p\n"),
                   ACE_TEXT ("ERROR: ORB Core unable to find the ")
-                  ACE_TEXT ("Client Request Interceptor Adapter Factory instance")));
+                  ACE_TEXT ("Client Request Interceptor Adapter Factory ")
+                  ACE_TEXT ("instance")));
 
       ACE_THROW (CORBA::INTERNAL ());
     }
@@ -3149,9 +3307,9 @@ TAO_ORB_Core::clientrequestinterceptor_adapter_i (void)
       if (this->client_request_interceptor_adapter_ == 0)
         {
           TAO_ClientRequestInterceptor_Adapter_Factory *factory =
-            ACE_Dynamic_Service<TAO_ClientRequestInterceptor_Adapter_Factory>::instance (
-                "ClientRequestInterceptor_Adapter_Factory"
-              );
+            ACE_Dynamic_Service<TAO_ClientRequestInterceptor_Adapter_Factory>::instance
+              (this->configuration (),
+               ACE_TEXT ("ClientRequestInterceptor_Adapter_Factory"));
 
           if (factory)
             {
@@ -3180,7 +3338,8 @@ TAO_ORB_Core::add_interceptor (
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%P|%t) %p\n"),
                   ACE_TEXT ("ERROR: ORB Core unable to find the ")
-                  ACE_TEXT ("Server Request Interceptor Adapter Factory instance")));
+                  ACE_TEXT ("Server Request Interceptor Adapter Factory ")
+                  ACE_TEXT ("instance")));
 
       ACE_THROW (CORBA::INTERNAL ());
     }
@@ -3206,7 +3365,8 @@ TAO_ORB_Core::add_interceptor (
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%P|%t) %p\n"),
                   ACE_TEXT ("ERROR: ORB Core unable to find the ")
-                  ACE_TEXT ("Client Request Interceptor Adapter Factory instance")));
+                  ACE_TEXT ("Client Request Interceptor Adapter Factory ")
+                  ACE_TEXT ("instance")));
 
       ACE_THROW (CORBA::INTERNAL ());
     }
@@ -3232,7 +3392,8 @@ TAO_ORB_Core::add_interceptor (
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%P|%t) %p\n"),
                   ACE_TEXT ("ERROR: ORB Core unable to find the ")
-                  ACE_TEXT ("Server Request Interceptor Adapter Factory instance")));
+                  ACE_TEXT ("Server Request Interceptor Adapter Factory ")
+                  ACE_TEXT ("instance")));
 
       ACE_THROW (CORBA::INTERNAL ());
     }
@@ -3251,9 +3412,9 @@ TAO_ORB_Core::serverrequestinterceptor_adapter_i (void)
       if (this->server_request_interceptor_adapter_ == 0)
         {
           TAO_ServerRequestInterceptor_Adapter_Factory *factory =
-            ACE_Dynamic_Service<TAO_ServerRequestInterceptor_Adapter_Factory>::instance (
-                "ServerRequestInterceptor_Adapter_Factory"
-              );
+            ACE_Dynamic_Service<TAO_ServerRequestInterceptor_Adapter_Factory>::instance
+              (this->configuration (),
+               ACE_TEXT ("ServerRequestInterceptor_Adapter_Factory"));
 
           if (factory)
             {
@@ -3262,6 +3423,11 @@ TAO_ORB_Core::serverrequestinterceptor_adapter_i (void)
             }
         }
     }
+
+  if (TAO_debug_level > 2)
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("(%P|%t) Server request interceptor adapter list at %@\n"),
+                this->server_request_interceptor_adapter_));
 
   return this->server_request_interceptor_adapter_;
 }

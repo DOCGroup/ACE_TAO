@@ -34,13 +34,7 @@ class TAO_PI_Export TAO_PolicyFactory_Loader
 public:
   /// Creates a Codec factory and returns it.
   virtual TAO::PolicyFactory_Registry_Adapter* create (void);
-
-  /// Used to force the initialization of the ORB code.
-  static int Initializer (void);
 };
-
-static int
-TAO_Requires_PolicyFactory_Initializer = TAO_PolicyFactory_Loader::Initializer ();
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

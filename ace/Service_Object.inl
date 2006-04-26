@@ -63,5 +63,10 @@ ACE_Service_Type::fini_called (void) const
   return this->fini_already_called_;
 }
 
+ACE_INLINE const ACE_DLL & ACE_Service_Type::dll () const
+{
+  return this->dll_;
+}
+
 ACE_END_VERSIONED_NAMESPACE_DECL
 

@@ -6,6 +6,7 @@
 #include "tao/Environment.h"
 #include "tao/ORB_Constants.h"
 #include "tao/SystemException.h"
+#include "tao/ORB_Core.h"
 
 #include "ace/Dynamic_Service.h"
 #include "ace/Log_Msg.h"
@@ -44,8 +45,11 @@ TAO_DLL_Parser::parse_string (const char *ior,
   const char *name =
     ior + sizeof (::dll_prefix) - 1;
 
+  TAO_ORB_Core *oc = orb->orb_core ();
+
   TAO_Object_Loader *loader =
-    ACE_Dynamic_Service<TAO_Object_Loader>::instance (name);
+    ACE_Dynamic_Service<TAO_Object_Loader>::instance
+      (oc->configuration(), name);
 
   if (loader == 0)
     {

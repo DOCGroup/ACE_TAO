@@ -24,6 +24,9 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
+class ACE_Service_Gestalt;
+class ACE_Service_Type;
+
 /**
  * @class ACE_Dynamic_Service_Base
  *
@@ -34,13 +37,33 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  */
 class ACE_Export ACE_Dynamic_Service_Base
 {
+
 public:
   /// Dump the current static of the object
   void dump (void) const;
 
 protected:
-  /// Return instance using @a name to search the Service_Repository.
+  /// Return instance using @a name to search the (default) Service_Repository.
   static void* instance (const ACE_TCHAR *name);
+
+  /// Return instance using @a name to search the specific @a repo instance.
+  static void* instance (const ACE_Service_Gestalt* repo,
+                         const ACE_TCHAR *name);
+
+  /// No need to create, or assign instances of this class
+  ACE_Dynamic_Service_Base (void);
+  ~ACE_Dynamic_Service_Base (void);
+  const ACE_Dynamic_Service_Base& operator= (const ACE_Dynamic_Service_Base&);
+
+private:
+  /// Implement the service search policy, i.e. "look for the service first
+  /// locally and then globally"
+  static const ACE_Service_Type *find_i (const ACE_Service_Gestalt* &repo,
+                                         const ACE_TCHAR *name);
+
+  /// The dependency declaration class needs access to the service search
+  /// policy, implemented by find_i()
+  friend class ACE_Dynamic_Service_Dependency;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
