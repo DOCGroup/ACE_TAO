@@ -19,14 +19,14 @@ TAO_CSD_Default_Servant_Dispatcher::~TAO_CSD_Default_Servant_Dispatcher (void)
 
 TAO_Root_POA *
 TAO_CSD_Default_Servant_Dispatcher::create_Root_POA (const ACE_CString &name,
-                                                 TAO_POA_Manager &poa_manager,
+                                                     PortableServer::POAManager_ptr poa_manager,
                                                  const TAO_POA_Policy_Set &policies,
                                                  ACE_Lock &lock,
                                                  TAO_SYNCH_MUTEX &thread_lock,
                                                  TAO_ORB_Core &orb_core,
                                                  TAO_Object_Adapter *object_adapter
                                                  ACE_ENV_ARG_DECL)
-{
+    {
   TAO_CSD_POA *poa = 0;
 
   ACE_NEW_THROW_EX (poa,
