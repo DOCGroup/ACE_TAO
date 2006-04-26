@@ -19,7 +19,7 @@ module A
   {
     exception DidTheRightThing {
       long id;
-      wstring whatDidTheRightThing;
+      string whatDidTheRightThing;
     };
 
     interface AMI_Test

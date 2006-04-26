@@ -46,7 +46,7 @@ AMI_Test_i::foo (CORBA::Long_out out_l,
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Throwing Exception: A::DidTheRightThing\n"));
-      ACE_THROW_RETURN (A::DidTheRightThing(42, L"Hello world"), 0);
+      ACE_THROW_RETURN (A::DidTheRightThing(), 0);
     }
 
   return 931234;
@@ -90,3 +90,4 @@ AMI_Test_i::inout_arg_test (char *&
   // No action, this operation is to test code generation for INOUT
   // args in AMI operations.
 }
+
