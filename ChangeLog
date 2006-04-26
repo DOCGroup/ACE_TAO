@@ -1,3 +1,8 @@
+Wed Apr 26 12:52:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Process_Manager.cpp:
+          Fixed fuzz errors and use const when possible
+
 Wed Apr 26 12:02:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/CDR_Test.cpp:
