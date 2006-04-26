@@ -11,21 +11,26 @@
 
 <h4>Synopsis</h4>
 
-The file explains how to build and install ACE, its Network
-Services, test suite and examples on the various OS platforms and compilers
-that it has been ported to.  Please consult the
-<a href="ChangeLog">ChangeLog</a> file to see whether any recent changes to
-the release will affect your code.  In addition, you should check out our
-<a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/docs/ACE-development-process.html">development
-process</a>.  As you start working with ACE, we suggest you get copies of the
-<a href="http://www.cs.wustl.edu/%7Eschmidt/ACE/book1/">C++NPv1</a>,
-<a href="http://www.cs.wustl.edu/%7Eschmidt/ACE/book2/">C++NPv2</a>, and
-<a href="http://www.riverace.com/acebooks/">APG</a> books
-to help guide you after you've built and installed ACE.  You should
-also consult the <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/docs/ACE-FMM.html">ACE Frequently Made
-Mistakes page</a>.  If you encounter any problems or would like to
-request an enhancement, then use our <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/docs/usage-bugzilla.html">bug tracking system</a> to submit a
-report in accordance with our <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/docs/ACE-bug-process.html">bug
+The file explains how to build and install ACE, its Network Services,
+test suite and examples on the various OS platforms and compilers that
+it has been ported to.  Please consult the <a
+href="ChangeLog">ChangeLog</a> file to see whether any recent changes
+to the release will affect your code.  In addition, you should check
+out our <a
+href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/docs/ACE-development-process.html">development
+process</a>.  As you start working with ACE, we suggest you get copies
+of the <a
+href="http://www.cs.wustl.edu/%7Eschmidt/ACE/book1/">C++NPv1</a>, <a
+href="http://www.cs.wustl.edu/%7Eschmidt/ACE/book2/">C++NPv2</a>, and
+<a href="http://www.riverace.com/acebooks/">APG</a> books to help
+guide you after you've built and installed ACE.  You should also
+consult the <a
+href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/docs/ACE-FMM.html">ACE
+Frequently Made Mistakes page</a>.  If you encounter any problems or
+would like to request an enhancement, then use our <a
+href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/docs/usage-bugzilla.html">bug
+tracking system</a> to submit a report in accordance with our <a
+href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/docs/ACE-bug-process.html">bug
 report process</a>.<p>
 
 </p><h4>Document Index</h4>
@@ -33,13 +38,12 @@ report process</a>.<p>
 <ul>
   <li><a href="#platforms">Platforms, C++ Compilers, and Support</a>
   </li><li><a href="#installpre">Installation prerequisites</a>
-  </li><li><a href="#installnotes">Installation Notes</a>
-  </li><li><a href="#g++">Compiling ACE with GNU g++</a>
-  </li><li><a href="#egcs">Compiling ACE with egcs</a>
   </li><li><a href="#aceinstall">Building and Installing ACE</a>
   </li><li><a href="#svcsinstall">Building and Installing ACE Network Services</a>
   </li><li><a href="#sslinstall">Building and Installing The ACE_SSL Library</a>
   </li><li><a href="#guireactor_install">Building and Using GUI Reactors Libraries</a>
+  </li><li><a href="#installnotes">Installation Notes</a>
+  </li><li><a href="#g++">Compiling ACE with GNU g++</a>
   </li><li><a href="#minimum_build">What Do I Need to Build for TAO?</a>
   </li><li><a href="#resource_requirements">System Resource Requirements</a>
   </li><li><a href="#MPC">General MPC Information</a>
@@ -112,7 +116,7 @@ document</a>.</p><p>
   <tr>
     <th>DOC Group</th>
     <td>Solaris 7, 8, 9, and 10 (many compilers excluding SunC++ 4.x);
-        Windows 2000, XP (MSVC++ 6, and 7.1);
+        Windows 2000, XP (MSVC++ 6, 7.1, and 8);
         many versions of Linux/Intel (many compilers), Linux/IA64 (GCC).
     </td>
     <td>DOC sites at <a href="http://www.dre.vanderbilt.edu/">ISIS</a>,
@@ -143,7 +147,7 @@ document</a>.</p><p>
     <td>Maintains ACE on many platforms required for their ACE and
         TAO service offerings. Besides the standard DOC group platforms
         we also support AIX, Borland C++ Builder 6/2006, CBuilderX 1.0, MinGW,
-        Cygwin, VxWorks 5.5.1 & 6.0, OpenVMS 7.3-2 & 8.2-1, 
+        Cygwin, VxWorks 5.5.1 & 6.x, OpenVMS 7.3-2 & 8.2-1, 
         Tru64, SuSE Linux on Alpha/IA32/EM64T, 
         HPUX 11i v2/v2 32/64 bit on PA-RISC, and
         HPUX 11i v2 on Itanium. The Intel C++ compiler is supported on 
@@ -182,19 +186,24 @@ document</a>.</p><p>
   </tr>
 </tbody></table></p><p>
 
-</p><p>Although the DOC group has provided outstanding, world-class
-support for ACE over the years, ACE's success has greatly increased
-the amount of effort required to keep up with its maintenance, answer
-users' questions, and give design guidance. Riverace offers
-world-class commercial services to support ACE users and OCI and
-Remedy IT offer similar services for TAO, allowing the DOC group's
-primary focus to shift back to their main goal: <em>research</em>. The
-DOC group is fundamentally focused on (and <a href="http://www.cs.wustl.edu/%7Eschmidt/resume-grants.html">funded
+</p><p>Although the DOC group has provided outstanding support for ACE
+over the years, ACE's success has greatly increased the amount of
+effort required to keep up with its maintenance, answer users'
+questions, and give design guidance. Riverace offers world-class
+commercial services to support ACE users.  OCI, PrismTech, and Remedy
+offer similar services for TAO, allowing the DOC group's primary focus
+to shift back to their main goal: <em>research</em>. The DOC group is
+fundamentally focused on (and <a
+href="http://www.cs.wustl.edu/%7Eschmidt/resume-grants.html">funded
 by</a>) advanced R&amp;D projects. The group continues to be
 intimately involved in ACE+TAO development and maintenance, but with
-revised priorities for maintenance. The <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/docs/ACE-bug-process.html">bug fixing policies</a> followed by
-the DOC group are designed to strike a balance between their many <a href="http://www.cs.wustl.edu/%7Eschmidt/research.html">research
-projects</a> and their commitment to the ACE+TAO <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE-users.html">user
+revised priorities for maintenance. The <a
+href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/docs/ACE-bug-process.html">bug
+fixing policies</a> followed by the DOC group are designed to strike a
+balance between their many <a
+href="http://www.cs.wustl.edu/%7Eschmidt/research.html">research
+projects</a> and their commitment to the ACE+TAO <a
+href="http://www.cs.wustl.edu/%7Eschmidt/ACE-users.html">user
 community</a>.  Naturally, we will be happy to accept well-tested
 patches from the ACE+TAO user community for any platforms that aren't
 supported by the DOC group, Riverace, OCI or Remedy IT. </p><p>
@@ -218,727 +227,7 @@ files can be found in <a
 href="bin/MakeProjectCreator/config/global.features">
 global.features</a> file.
 
-<p></p><hr><p>
-</p><h3><a name="installnotes">Installation Notes</a></h3>
-
-<ul>
-  <li><b>Windows (Windows NT, 2000, XP, 2003, etc., and Windows '9x/ME) </b><p>
-
-      All of ACE has been ported to the Win32 API (which includes
-      Windows NT, Windows 2000, and Windows '95/98/ME) and Win64.  The entire
-      release now compiles using the Microsoft Visual C++ 6.0, and
-      7.1 (aka Visual C++ .NET 2003) compilers.  ACE can be built as both
-      a static (LIB) and dynamic (DLL) library, using the Win32 installation
-      process described below.</p><p>
-
-      Please see the <a href="#NonStaticObjectManager">Non-static
-      ACE_Object_Manager</a> discussion below.</p><p>
-
-      We've also added some support for
-      <a href="#mingw">GNU g++ with MinGW</a>,
-      <a href="#cygwin">GNU g++ with Cygwin</a>,
-      <a href="#borland">Borland C++ Builder 6.0,
-      Borland C++ BuilderX, and Borland C++ Builder 2006</a>,
-      <a href="#interix">Interix (Windows Services for Unix)</a>,
-      and IBM's VisualAge C++ compiler.
-      Since we don't have these compilers we rely on the ACE+TAO users
-      community to maintain these ports.  Therefore, please send email
-      to the ACE mailing list if you run into problems. </p><p>
-
-  </p></li><li><b>Windows CE</b><p>
-
-      Take a look at (<a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/docs/CE-status.txt">CE-status.txt</a>) for
-      up-to-date information about ACE on CE.</p><p>
-
-  </p></li><li><b> Solaris 2.6, 7, 8, and 9 using Sun ONE Studio 8 (C++ 5.5)
-       or Sun Studio 9 (C++ 5.6), Centerline C++ 2.x, GNU gcc 2.95 and
-       later.</b><p>
-
-      All the source code and tests should build and run without any
-      problems on Solaris 7, 8, and 9 platforms using the above
-      Sun C++ compilers.
-
-      There are likely to be build problems with older versions or
-      different patchlevels of Sun C++.  Likewise, on
-      Solaris with g++ you may need to use GNU as instead of
-      /usr/ccs/bin/as, if you want -gstabs+ and -pipe support.
-
-      Thanks to Susan Liebeskind &lt;shl@janis.gtri.gatech.edu&gt;
-      for providing the following useful information:</p><p>
-
-      By default, ACE uses both the Solaris and POSIX thread
-      interface.  To disable use of the Solaris thread interface, add
-      <code>-D_POSIX_PTHREAD_SEMANTICS</code> to the
-      <code>CFLAGS</code> in your
-      <code>$(ACE_ROOT)/include/makeinclude/platform_macros.GNU</code>.
-      See the Solaris Intro (3) man page for more information.</p><p>
-
-      To disable ACE thread support completely, build with the
-      <code>threads=0</code> make flag.  See the <a href="#flags">Makefile Flags</a> section below for more
-      information on make flags.</p><p>
-
-      If you use g++ on Solaris 7, you might need to rebuild
-      it on a SunOS 5.7 (Solaris 7) host.  Some versions of g++ and
-      egcs provide replacements for system header files.  The
-      replacements on older SunOS systems are not compatible with the
-      SunOS 5.7 system headers.  See <a href="http://www.cs.wustl.edu/%7Elevine/Hints.html">David Levine's
-      Hints page</a> for instructions on how to build egcs on a SunOS
-      5.7 host, using a g++ or egcs that was built on an older SunOS
-      host. </p><p>
-
-      The Sun/C++ compilers until and including 5.4 has several
-      problems with templates and we don't test very often with them.
-      We regularly use and test with Sun/C++ 5.5.</p>
-
-  </li><li><b>AIX</b><p>
-
-      ACE has been ported to AIX 4.3 and higher using the IBM C/C++
-      Compiler 3.6.6, Visual Age C++ 5 and 6, and g++ 3.2.</p><p>
-
-      To build ACE on AIX with Visual Age C++ 5 in incremental mode
-      (i.e. with the IDE), use the
-      $ACE_ROOT/ace/ace.icc configuration along with the appropriate
-      version-specific config file (e.g. config-aix-4.3.x.h). All of the
-      version-specific config files set the version number macros and
-      include the general config-aix-4.x.h file which has support for all
-      of the OS versions and compilers supported on AIX. Using the general
-      config file is the recommended practice for g++, IBM
-      C/C++, and Visual Age C++ batch mode compilers.</p><p>
-
-      Visual Age C++ 4 has also been supported on ACE 5.1, but is no longer
-      supported. If you are still using this compiler, please use the
-      $ACE_ROOT/ace/ace-dll.icc configuration file, along with the
-      config-aix-4.3.x.h ACE config file. Beware, however, that it hasn't
-      been tested.</p><p>
-
-      The Visual Age 6.0.0.3 and 6.0.0.4 do have some bugs that makes
-      them unusable for building TAO. We have tested with 6.0.0.12 and
-      had no problems with that version.</p><p>
-
-      BTW, here's a technique from Rob Jordan &lt;<a href="mailto:jordan@hursley.ibm.com">jordan@hursley.ibm.com</a>&gt;
-      that can reduce the size of the ACE libraries by about one
-      third, and can also be applied to applications.  It works by
-      optimising the sharing of template functions, which are created
-      in an "unusual" way under AIX. It also speeds up
-      compilation.</p><p>
-
-      Here's how to optimise the ACE library generation:</p><p>
-
-      Look at the <a href="ace/GNUmakefile.ACE">ace/GNUmakefile.ACE</a>
-      in <code>$ACE_ROOT/ace</code>. Create a file called
-      <code>ACE_All_Src.cpp</code>, and add a line to #include
-      each of the source files
-      listed under <code>FILES=</code> in the GNUmakefile. Create a
-      file called <code>ACE_All_Tmp.h</code>
-      and add a line to #include each of the .h files listed under
-      <code>TEMPLATE_FILES=</code> in the GNUmakefile. Now update the
-      GNUmakefile so that
-      <code>FILES=ACE_All_Src</code> and
-      <code>TEMPLATE_FILES=ACE_All_Tmp</code>.</p><p>
-
-  </p></li><li><b><a name="Linux">Linux</a></b><p>
-
-      ACE has been ported to <a href="http://www.cs.wustl.edu/%7Ecleeland/ace/">Linux</a> on
-      Intel, Alpha, and PowerPC platforms.  If you use a RedHat 5.x
-      distribution, it's best to use RedHat 5.1 or later.  ACE works
-      without any modifications on RedHat 5.1 and later, and on
-      Debian 2.1 on both Intel and Alpha.  Use the
-      <code>platform_linux.GNU</code> and <code>ace/config-linux.h</code>
-      in your <code>platform_macros.GNU</code> and
-      <code>config.h</code> files, respectively.  The same
-      files can be used on PowerPC, with LinuxPPC
-      1999 (R5), with glibc 2.1.1.</p><p>
-
-      If you run out of memory, it's easy to add virtual memory on
-      Linux.  Please see the <code>mkswap</code> man page.  You'll
-      need at least 256 to 300 Mb of virtual memory (RAM + swap) to
-      compile all of ACE+TAO.  The <a href="#resource_requirements">System
-      Resource Requirements section</a> has some suggestions on how
-      to reduce the memory requirement.</p><p>
-
-      The glibc 2.0 dynamic loader isn't thread safe. If you want to
-      use the Invocation API you'll have to set
-      <code>LD_BIND_NOW=true</code>. If you want to use
-      <code>dlopen</code>, you should use <code>RTLD_NOW</code>.  The
-      dynamic loader in glibc 2.1 is thread safe.</p><p>
-
-      The ACE <code>Tokens_Test</code> hangs with egcs 1.1b on Linux.
-      It runs properly when built with egcs 1.0.2 and later.  All other
-      ACE tests run properly with these egcs 1.0.2 and later.</p><p>
-
-      <strong>NOTE:</strong> The TAO NameService uses IP multicasting
-      by default, though it is not required.  IP multicast on Linux
-      requires the following:</p><p>
-
-      </p><ul>
-        <li>Enable IP multicast in the Linux kernel.  It is enabled in
-            the default RedHat 5.1 kernel.  In older distributions, you
-            can enable it by rebuilding your kernel with CONFIG_IP_MULTICAST
-            enabled.<p>
-        </p></li><li>Enable IP multicast in ACE.  It is enabled by default in
-            <code>ace/config-linux-common.h</code>.  If you don't use
-            IP multicast, add <code>#define ACE_HAS_IP_MULTICAST 0</code>
-            to your <code>ace/config.h</code> before building ACE.<p>
-        </p></li><li>There must be a network interface that is up and supports
-            multicast.  If you have linuxconf, it's easiest to use that
-            to add a network route for multicast (224.0.0.0) on one of
-            your network interfaces, such as <code>eth0</code>.  If
-            you don't have or use linuxconf, try adding a multicast
-            routing table entry using something like this:<p>
-            </p><pre>             <code># route add -net 224.0.0.0 netmask 240.0.0.0 dev eth0</code>
-            </pre><p>
-      </p></li></ul>
-
-      <strong>NOTE:</strong> Be careful when installing egcs on RedHat
-      systems.  If you don't remove your old gcc and libg++ RPMs, it's
-      best to install egcs in a different directory than
-      <code>/usr</code>, such as <code>/usr/local</code>, and set your
-      <code>PATH</code> and <code>LD_LIBRARY_PATH</code>
-      accordingly.</p><p>
-
-      Some of the ACE tests fail on older, pre-glibc2 Linux platforms,
-      such as RedHat 4.2.  The problems are with threads and
-      thread-specific storage.</p><p>
-
-  </p></li><li><b>SCO UNIX</b><p>
-
-      ACE has been ported to SCO UNIX using the GNU g++ 2.7.2
-      compiler.  Arturo Montes &lt;<a href="mailto:mitosys@colomsat.net.co">mitosys@colomsat.net.co</a>&gt;
-      maintains this code.  In addition, he also maintains a version
-      of <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/FSU-threads.tar.gz">FSU pthreads</a>.</p><p>
-
-  </p></li><li><b>SGI IRIX 5.x and 6.x</b><p>
-
-      ACE used to build fine using the SGI C++ and GNU GCC compilers
-      for IRIX 5.x.  It has been ported to IRIX 6.x using the SGI
-      MipsPro 7.1 C++ compiler; be aware that in IRIX 6.2 there is a
-      number of patches that have to be installed and exceptions
-      appear to fail with the O32 ABI.  Please check the config files
-      for the details.</p><p>
-
-  </p></li><li><b> HP-UX 10.x and 11.x </b> <p>
-
-      HP sells 2 C++ compilers for HP-UX 10.x and 11.00:
-
-      </p><ul>
-        <li>HP C++ - this is CC, HP's cfront-based compiler.  As of ACE 4.4, it
-            can be used, but some people have problems with templates.
-            Caveat emptor.  It's been said that you should run version 10.24,
-            if not later. ACE hasn't been tested with this compiler since
-            the ACE 5.0 timeframe.
-
-        </li><li>HP aC++ - this is aCC, HP's new, ANSI compiler.  It handles ACE
-            very well.  You should use version A.01.27 (or higher) on
-            HP-UX 10.x and version A.03.37 (or higher) on HP-UX 11.
-
-      </li></ul>
-      <p>
-      On HP-UX 10.20, a patch is required to compile ACE. The exact patch
-      number depends on the platform - check with HP's patch database to
-      locate the exact patch or its successor. For 9000 700 series machines
-      it is PHKL_8693 (s700 10.20 sys/time.h fix for select(2)/C++ defects).</p><p>
-
-      Also see further notes on this platform at Riverace's
-      <a href="http://www.riverace.com/FAQ/faq.html">Frequently Asked
-      Questions</a> page.
-      </p><p>
-
-  </p></li><li><b>OSF/1 3.2 and 4.0 (a.k.a. Digital UNIX 4.0)</b> <p>
-
-      The Digital UNIX C++ 5.4 through 5.7 compilers have problems
-      with ACE's templates.  They compile the lib and most of the test
-      programs, although they warn about template usage.  Most tests
-      run, some dump core.  If you use a 5.x version of cxx, be sure
-      to set the CXX_VER variable to CXX_5, either on your make
-      command line or in an environment variable.  The ACE Makefiles
-      assume by default that the cxx version is 6.x or later.</p><p>
-
-      CXX 6.0 and 6.1 are much improved over 5.x: V6.0-020, V6.1-025,
-      and later build all of ACE cleanly.  All of the tests in
-      $(ACE_ROOT)/tests run successfully with CXX 6.0 and CXX 6.1.
-      Please note that problems have been reported with some versions
-      of CXX 6.1, notably versions -021 and earlier.  It's best to use
-      V6.1-022 or later.</p><p>
-
-      NOTE: if you use Digital UNIX 4.0f or later, you <strong>must</strong>
-      use <code>ace/config-tru64.h</code> instead of
-      <code>ace/config-osf1-4.0.h</code>.  <code>ace/config-tru64.h</code>
-      can be used for all supported compilers on any version of
-      Digital UNIX after and include 4.0.  And, with 4.0f and later when
-      using Digital CXX, you <strong>must</strong> use
-      <code>include/makeinclude/platform_tru64_cxx.GNU</code> instead of
-      <code>include/makeinclude/platform_osf1_4.0.GNU</code>.</p>
-
-  </li><li><b> FreeBSD </b><p>
-
-      FreeBSD is a fast evolving platform.  However, it has the
-      advantage of having standard releases.  At this moment, ACE is
-      only perodically tested against -stable (3.1R) and we rely a lot
-      on FreeBSD users' feedbacks.  </p><p>
-
-      Notice that on older FreeBSD, <code>ld.so</code> only looks for
-      so libraries with <b>version number</b> appended.  ACE makefiles
-      create symlinks for most shared libraries if
-      <code>versioned_so</code> is defined to 1 in
-      <code>$ACE_ROOT/ace</code> with appropriate ACE version.
-      However, this does not work for libACE.so itself so you have to
-      create it manually (If you figure out how to do this, please let
-      us know) like this: </p><p>
-
-      <code>ln -sf $ACE_ROOT/ace/libACE.so $ACE_ROOT/ace/libACE.so.4.5</code></p><p>
-
-      On newer FreeBSD (3.0 or later,) this is no longer necessary.</p><p>
-
-  </p></li><li><b>NetBSD</b><p>
-
-      Like older FreeBSD, NetBSD's <code>ld.so</code> also requires
-      versioned .so files.</p><p>
-
-  </p></li><li><b>OpenBSD</b><p>
-
-      ACE has been ported to OpenBSD 3.1 and GNU g++ 2.95.3.</p><p>
-
-      As with FreeBSD and NetBSD, OpenBSD requires versioned .so
-      files.  This is currently handled by the build files and no
-      additional work is needed.</p><p>
-
-      ACE has been ported to OpenBSD with and without pthreads
-      enabled.  When using pthreads, though, C++ exceptions must be
-      disabled.  This is a known problem with the current release of
-      OpenBSD (see www.openbsd.org, bug #1750).  ACE emulated
-      exceptions work fine.</p><p>
-
-      Compiling TAO may require the user data segment size
-      restrictions and possibly other options to be increased.  This
-      is done by modifying the default user class in /etc/login.conf
-      or by adding a new class and modifying the master passwer file
-      accordingly.</p><p>
-
-  </p></li><li><b> UnixWare </b> <p>
-
-      Steve Huston &lt;<a href="mailto:shuston@riverace.com">shuston@riverace.com</a>&gt;
-      has ported ACE to work with UnixWare 2.01 and g++.</p><p>
-
-      Ganesh Pai &lt;<a href="mailto:gpai@voicetek.com">gpai@voicetek.com</a>&gt;
-      subsequently did the port for version 2.1.2, also with g++.</p><p>
-
-      Phil Mesnier &lt;<a href="mailto:mesnier_p@ociweb.com">
-      mesnier_p@ociweb.com</a>&gt; updated the port to support
-      UnixWare 7.1.0, with help from Michael Meissnitzer
-      &lt;<a href="mailto:michael.meissnitzer@siemens.at">
-      michael.meissnitzer@siemens.at</a>&gt;, Christian Klepp &lt;
-      <a href="mailto:christian.klepp@siemens.at">christian.klepp@siemens.at
-      </a>&gt; and Engelbert Staller &lt;<a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/engelbert.staller@siemens.at">
-      engelbert.staller@siemens.at</a>&gt;
-      Building ACE (and TAO) on Unixware 7.1.0 requires a very specific
-      g++ build environment.  In particular, you must build and install
-      g++ 2.95.2, along with binutils 2.9.1. The order (and the declaration
-      of configuration) is extremely important. Using the gcc compiler
-      provided on the Skunkware CD on a pentium system, here is the recipe
-      I used to build a working environment (as root):<br>
-</p><pre>  mkdir /usr/local/newgnu
-&lt; ftp and untar binutils-2.9.1 &gt;
-&lt; ftp and untar gcc-2.95.2 &gt;
-  mkdir -p build/binutils build/gcc
-  cd build/binutils
-  ../../binutils-2.9.1/configure i386-sco-sysv4
-  gmake  # takes a long time
-  gmake install # this creates /usr/local/i386-sco-sysv4/...
-  mkdir /usr/local/i486-pc-sysv5/bin
-  cd /usr/local/i486-pc-sysv5/bin
-  for a in /usr/local/i386-sco-sysv4/bin/*; do ln -s $a .; done
-  #links all the newly installed utilities
-
-  cd /usr/local/newgnu/build/gcc
-  ../../gcc-2.95.2/configure --with-gnu-as --with-gnu-ld
-  gmake bootstrap # takes a long time
-  gmake install
-  mkdir /usr/local/i586-UnixWare7.1.0-sysv5/bin
-  for a in /usr/local/i386-sco-sysv4/bin/*; do ln -s $a .; done
-</pre>
-       Once done, ACE and TAO will successfully build and link.<p>
-
-  </p></li><li><b>Chorus</b> <p>
-
-      Wei Chiang &lt;<a href="mailto:chiang@tele.nokia.fi">chiang@tele.nokia.fi</a>&gt;
-      has ported ACE to Chorus 3.1 using GNU g++ 2.7.2.</p><p>
-
-  </p></li><li><b><a name="LynxOS">LynxOS</a></b><p>
-
-      ACE builds and runs properly on LynxOS 3.0.x, 3.1.x and 4.0.0 for Intel
-      and PowerPC targets. LynxOS 2.5.x is no longer supported.
-      To build ACE on LynxOS 3.0.x you need to update GCC to
-      version 2.9-gnupro-98r2, which can be obtained from
-      <a href="ftp://ftp.lynuxworks.com/compilers/98r2-preview/">
-      ftp://ftp.lynuxworks.com/compilers/98r2-preview/</a></p><p>
-
-      If you run out of memory on LynxOS, these might help:</p><p>
-
-      </p><ul>
-        <li>Increase the limits in <code>/etc/starttab</code>,
-          then reboot system.  We use these limits:
-          <pre># Data, stack, and core file limits (in Kbytes)
-80000
-16000
-102400</pre><p>
-        </p></li><li>Enable or expand virtual memory, with something like:
-          <pre># mkcontig /swap 320
-# prio 17 vmstart /swap</pre>
-          See the <code>mkcontig</code> and <code>vmstart</code>
-          man pages, and <code>/bin/rc</code>.<p>
-      </p></li></ul>
-
-      Please see the comments in the
-      <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/include/makeinclude/platform_lynxos.GNU">ACE
-      platform_lynxos.GNU file</a> for information on, and an
-      example of, tailoring for your particular platform.<p>
-
-      NOTE: if you want to use IP multicast on LynxOS, be sure to add
-      this line to your <code>/net/rc.network</code>, and reboot:</p><p>
-      </p><pre><code>
-        /bin/route add "224.0.0.0" "$my_name"
-      </code></pre>
-
-  </li><li><strong>VxWorks</strong><p>
-
-      <a href="http://www.cs.wustl.edu/%7Elevine/">David Levine</a>
-      &lt;<a href="mailto:levine@cs.wustl.edu">levine@cs.wustl.edu</a>&gt; has
-      ported ACE to VxWorks 5.2/5.3/5.3.1/5.4 with the GreenHills
-      1.8.8/1.8.9, g++ and diab compilers that are distributed with
-      VxWorks/Tornado. It is not possible to use VxWorks 5.4
-      and earlier with ACE anymore because the compilers delivered with
-      5.4 and earlier don't support the C++ features ACE needs.</p><p>
-
-      At this moment <a href="http://www.theaceorb.nl">Remedy IT</a> is upgrading
-      and stabilizing ACE/TAO support for Tornado 2.2/VxWorks 5.5.1.
-      Since the existing support for previous VxWorks version has been unsupported
-      and broken for some time and most (potential) users seem to have upgraded to
-      VxWorks 5.5.1 no backporting effort is done. See also <a href="#vxworks">here</a>.
-      </p><p>
-
-      Tornado 2.2/VxWorks 5.5.1 support IP multicast.  That is not enabled
-      by default in ACE for VxWorks, because it depends on your
-      kernel configuration.  To enable it, add
-      <code>#define ACE_HAS_IP_MULTICAST</code> to your
-      <code>ace/config.h</code>.</p><p>
-
-      NOTE: In order for the ACE Broadcast and Multicast tests to work the VxWorks kernel
-      should receive the packages it sends out locally. By default this is not supported.
-      To enable this behaviour you need to include the IFF_SIMPLEX flag for your required
-      NIC driver. See the following Windriver <a href="https://secure.windriver.com/cgi-bin/windsurf/techtips/public/viewSum.cgi?4542">SPR 4542</a>
-      for more information.</p><p>
-
-      In addition to all of the other benefits of ACE, it helps work
-      around some deficiencies with VxWorks. The problems are:</p>
-
-      <p>
-      </p><ol>
-        <li>The program entry point cannot be called "main" with g++.  ACE
-            renames it to "ace_main" (configurable via ACE_MAIN) on VxWorks.
-            While this may seem trivial, it is important with legacy code.
-            ACE itself ran into this problem.<p>
-
-        </p></li><li>argc/argv isn't used with VxWorks entry points.  ACE provides
-            a wrapper function that transparently converts shell command
-            line arguments to argc/argv form.  See <a href="#spa">below</a>
-            for details.<p>
-
-      </p></li></ol>
-
-      Please note that ACE uses one of the spare fields in the Wind
-      River task control block, spare4, for thread- specific storage.
-      This field is specified in only one place, in ace/OS_NS_Thread.inl, so it
-      can easily be changed to one of the other spare fields, if
-      necessary.</p><p>
-
-      ACE destroys dynamically
-      allocated singletons in the ACE library.  But, they may not
-      properly destroy some static objects.  If you have trouble
-      running a program multiple times, it may be necessary to unload
-      the module, using unld, and reload it between runs.
-      Alternatively, you could try calling <code>cplusDtors</code> and
-      then <code>cplusCtors</code> between runs.</p><p>
-
-  </p></li><li><b>MVS OpenEdition</b> <p>
-
-      All of ACE has been ported to OpenEdition by Chuck Gehr &lt;<a href="mailto:gehr@sweng.stortek.com">gehr@sweng.stortek.com</a>&gt;.
-      The ACE library, all the tests and most of the examples and apps
-      build clean.  There are still some problems that need to be
-      ironed out:</p><p>
-
-      MVS does not support the dynamic linking dl...() calls that the
-      Service Configurator uses to dynamically link services at run
-      time. As a result, all the examples and apps that use a svc.conf
-      file (for dynamically configuring service objects) do not work,
-      however, most of these apps can be built/run statically.  Also,
-      the Svc_Conf_l.cpp and Svc_Conf_y.cpp files are generated using
-      flex and yacc on a ascii (not ebcdic) machine and as a result
-      they don't work very well with ebcdic svc.conf files.  We should
-      be able to regenerate these files on MVS but MVS doesn't have
-      flex.  This is something that needs to be done.</p><p>
-
-      Some of the tests do not execute properly.  This is a minority
-      and over time the goal is to get to 100%.</p><p>
-
-      The make scheme for some of the apps still doesn't work
-      perfectly on MVS.  This is mainly due to the way shared
-      libraries are handled on MVS.  See <a href="#mvs">additional
-      build tips for MVS</a> for more on this.</p><p>
-
-  </p></li><li><strong>QNX Neutrino</strong><p>
-
-      ACE has been ported to <a href="http://www.qnx.com/products/os/neutrino.html">QNX Neutrino
-      2.0</a>.  We cross-compile for Neutrino on a QNX4 host using g++
-      2.8.1, using the <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/ace/config-qnx-neutrino.h">ace/config-qnx-neutrino.h</a>
-      and <a href="include/makeinclude/platform_qnx_neutrino.GNU">include/makeinclude/platform_qnx_neutrino.GNU</a>
-      configuration files.  Many of the ACE tests succeed, though some
-      fail.  As the porting effort progresses, we hope to eliminate
-      these failures.  If you know of fixes, please send them to
-      us.</p><p>
-      </p></li><li><strong>QNX RTP</strong><p>
-
-      ACE has been ported to <a href="http://get.qnx.com/">QNX RTP
-      </a>. We compile for QNX RTP using the GCC compiler shipped with the
-      distribution, using the <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/ace/config-qnx-rtp.h">ace/config-qnx-rtp.h</a>
-      and <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/include/makeinclude/platform_qnx_rtp_gcc.GNU">include/makeinclude/platform_qnx_rtp_gcc.GNU</a>
-      configuration files.
-      Many of the ACE tests succeed, though some
-      fail.  As the porting effort progresses, we hope to eliminate
-      these failures.  If you know of fixes, please send them to
-      us.</p><p>
-      <strong><blink><font color="#ff0000">WARNING:</font></blink></strong>
-      Under the current version of QNX RTP ACE fails if compiled with
-      inline=0 . </p><p>
-
-  </p></li><li><strong>PharLap TNT Embedded ToolSuite (ETS)</strong><p>
-
-      ACE has been ported to <a href="http://www.pharlap.com/">PharLap's</a> TNT Embedded
-      ToolSuite (ETS) version 9.1. The port is being tested with
-      Microsoft Visual C++ 6.</p><p> To build for PharLap, use the
-      ace/config-pharlap.h configuration file, and the instructions
-      for building on Windows. Building the ACE library is the same as
-      for regular Windows platforms, except you choose one of the PharLap
-      ETS configurations to build within Visual C++. Only static
-      library configurations are available for PharLap at this time.
-      For an example of how to build
-      binaries, see the tests directory. The tests_pharlap_msvc.lnk
-      file is a LinkLoc commands file that the ACE tests are built
-      with. It is likely that local sites may need to adjust this file
-      for their target environment.</p><p>
-
-</p></li><li><strong>Mac OS X (10.2.x)</strong><p>
-
-        </p><p>ACE builds and runs on Mac OS X 10.2.x, but the following are
-        needed to build it:</p>
-
-        <p>1. The latest version of the Apple Developer Tools
-        (December 2002)</p>
-        <p>2. The dlcompat library (obtained either through Fink or
-        SourceForge)</p>
-
-        <p>When creating $ACE_ROOT/ace/config.h for Mac OS X, you need
-        to add the following if you obtained dlcompat via Fink:</p>
-
-        <p>#define ACE_NEEDS_DL_UNDERSCORE</p>
-
-        <p>You'll also need to do:</p>
-
-        <p>setenv DYLD_LIBRARY_PATH $ACE_ROOT/ace:$ACE_ROOT/lib</p>
-        <p>setenv MACOSX_DEPLOYMENT_TARGET 10.2</p>
-
-        <p>Currently, all ACE tests pass except Process_Mutex_Test and
-        MEM_Stream_Test.  Also, Mac OS X doesn't yet support *nix
-        aio_* calls, and ACE does not know anything about Mach.</p>
-
-        <p>The work to port ACE to Mac OS X was done by several people,
-        John Zorko
-        &lt;<a href="mailto:j.zorko@att.net">j.zorko@att.net</a>&gt; is
-        only one of them.</p>
-
-</li></ul>
-
-
-<hr>
-<h4><a name="g++">Compiling ACE with GNU g++</a></h4>
-
-If you use the GNU GCC g++ compiler please note the following:
-
-<ul>
-  <li>If you have problems building shared libraries with egcs 1.1 or 1.1.1
-      on SunOS 2.5 or 2.5.1 that look like this:
-      <pre>        /usr/ccs/lib/libgen.a(reg_compile.o): In function `_get_vars_storage':
-        reg_compile.o(.text+0x30): relocation truncated to fit: R_SPARC_GOT13 free
-      </pre>
-      the suggested workaround is to comment out the <code>ACE_HAS_REGEX</code>
-      <code>#define</code> in <code>ace/config-sunos5.5.h</code>.
-      Or better, create an <code>ace/config.h</code> that looks like:
-      <pre>      #ifndef ACE_CONFIG_H
-      // ACE_CONFIG_H is defined by the following #included header.
-
-      #include "ace/config-sunos5.5.h"
-
-      #undef ACE_HAS_REGEX
-
-      #endif /* ACE_CONFIG_H */
-      </pre>
-      We don't know what causes the link problem, though the
-      workaround solves it.<p>
-
-  </p></li><li>ACE/TAO needs g++ 2.95.x or better. Older versions are not usable anymore<p>
-
-  </p></li><li>Make sure to update your gcc <code>config.status</code>
-      file.  This file is produced when installing gcc; it specifies
-      where to install the binary files that gcc uses.  For example,
-      it specifies whether to use Solaris's <code>/usr/ccs/bin</code>
-      binary utils or GNU binary utils.  The
-      <code>config.status</code> file is an output of the gcc
-      <code>configure</code> script; it is preferable to use the
-      <code>--prefix</code> option to <code>configure</code> instead
-      of hacking its output.<p>
-
-  </p></li><li>If you are getting weird link errors when building libACE
-      on Solaris you are probably using the GNU linker.  Try using the
-      Sun linker (/usr/ccs/bin/ld) instead.  Note that gcc first looks
-      for the GNU linker if it is installed along with gcc.  The only
-      way to not use the GNU linker is to delete it from the
-      installation or to build your own compiler with no linker.  Be
-      aware that you still need the libraries and includes of gcc.<p>
-
-      NOTE: if you do use the GNU linker, you might need to change
-      the <code>-G</code> flag to <code>-shared</code> in
-      the <code>SOFLAGS</code> definition in your
-      <code>include/makeinclude/platform_macros.GNU</code>.</p><p>
-
-  </p></li><li>Don't get too confused about contradictory statements in
-      the gcc documentation. It was written by different
-      people...<p>
-
-  </p></li><li>Make sure that the linker invoked by gcc produces code
-      that initializes static objects.  Please see gcc's
-      documentation for using <code>collect2</code>.<p>
-
-</p></li></ul>
-
-
-<p></p><hr>
-<h4><a name="egcs">Compiling ACE with egcs</a></h4>
-<ul>
-  <li>ACE transparently supports egcs, for the most part.  Please see
-      <a href="#g++">Compiling ACE with g++</a> in this document.  And,
-      please use the appropriate g++ config and platform files for the OS on
-      which you will use egcs.<p>
-
-  </p></li><li><strong><blink><font color="#ff0000">WARNING:</font></blink></strong>
-      The default behavior of the ACE Makefiles is to enable native
-      exception support.  To disable exception handling, add
-      <code>exceptions=0</code> to your <code>make</code> command line
-      invocation, or to your
-      <code>$ACE_ROOT/include/makeinclude/platform_macros.GNU</code> file.<p>
-
-  </p></li><li>egcs may have trouble linking some executables, such as the ACE
-      IOStream_Test, if its static libraries are used.  Though
-      <a href="mailto:trose@bridgewatersys.com">Tim Rose</a> reports
-      that egcs 1.1.1 static libraries work just fine on Solaris 2.6
-      with  patches: 105181-12, 105568-13, 105210-19, 105591-05, 105395-04,
-      and 105490-07.<p>
-
-      If you need or want to use egcs' shared libraries, build it
-      with the <code>--enable-shared</code> egcs config option.  The
-      <code>--enable-shared</code> option is <strong>not</strong> an
-      egcs run-time option.  Build egcs in a way similar to the
-      following example:
-      </p><pre><code>
-         $ ./configure --enable-shared
-         $ make bootstrap
-      </code></pre>
-      Be sure to set your <code>LD_LIBRARY_PATH</code> environment
-      variable, if necessary, to pick up those shared libraries.<p>
-
-  </p></li><li>On DEC Alpha, egcs through version 1.03a, at least, may fail
-      to build ACE if debugging (-g) is enabled.  The fix is to
-      edit the egcs gcc/mips-file.c file, at line 976, and change
-      <code>PAGE_SIZE</code> to 8192.  Then rebuild ACE.  Thanks to
-      <a href="mailto:gpai@voicetek.com">Ganesh Pai</a> for this
-      information.<p>
-
-   </p></li><li>Sun OS 5.6 using egcs1.1.2/egcs 2.95 with
-       ld:Software Generation Utilities - Solaris/ELF (3.0)
-       as: WorkShop Compilers 4.X dev 18 Sep 1996<p>
-
-      You could come across weird external symbol linker errors.
-
-      Example:
-
-      </p><pre>      -I/opt/ace/SunOS-1.0 -DACE_HAS_EXCEPTIONS  -o Cached_Accept_Conn_Test
-      .obj/Cached_Accept_Conn_Test.o  -L/opt/ace/SunOS-1.0/ace -L./  -lACE
-      -lsocket -ldl -lgen -lnsl -lposix4 -lthread
-      ld: warning: relocation error: R_SPARC_32: file
-     .obj/Cached_Accept_Conn_Test.o: symbol
-       __t21ACE_Cache_Map_Manager7Zt30ACE_Refcounted_Hash_Recyclable1Z13
-       ACE_INET_AddrZP18Client_Svc_HandlerZt23ACE_Hash_Map_Manager_Ex5Zt
-      30ACE_Refcounted_Hash_Recyclable1Z13ACE_INET_AddrZt8ACE_Pair2ZP18
-      Client_Svc_HandlerZUiZt8ACE_Hash1Zt30...</pre>
-
-      external symbolic relocation against non-allocatable section .stab;
-      cannot be processed at runtime: relocation ignored<p>
-
-      Solution:</p><p>
-
-      Install the "binutils" package from GNU (www.gnu.org); specifically,
-      "as" and "ld".</p><p>
-
-      Conclusion:</p><p>
-
-      Perfect build stats:</p><p>
-
-      OS:
-      Kernel version: SunOS 5.6 Generic 105181-03 December 1999.</p><p>
-
-      compiler:
-      gcc version egcs-2.91.66 19990314 (egcs-1.1.2 release)</p><p>
-
-      loader:
-      GNU ld version 2.9.1 (with BFD 2.9.1)
-      Supported emulations:
-       elf32_sparc</p><p>
-
-      assembler:
-      GNU assembler version 2.9.1 (sparc-sun-solaris2.6), using
-      BFD version 2.9.1</p><p>
-
-      Thanks to <a href="mailto:johng@keck.hawii.edu">John Gathright</a> for providing this
-      information.</p><p>
-
-   </p></li><li>Compiling using the <code>-fsquangle</code> option helps to shorten long
-       symbol names and is a boon to linkers and assemblers which cant
-       grok long names.
-
-       Thanks to <a href="mailto:ssweeney@sanders.com">Skye Sweeney</a> for trying it
-       out and <a href="mailto:ossama@uci.edu">Ossama Othman</a> for discovering the
-       option with egcs.<p>
-
-       Heres a note on how to go about this (contributed by Skye
-       Sweeney):</p><p>
-
-       1) -fsquangle  the name is a combination of squash and mangle!</p><p>
-
-       2) -fsquangle  compresses the mangled names.</p><p>
-
-       3) All libraries must be compiles with the option. You cannot simply
-       compile modules that have large names with it. This includes system
-       libraries and vendor libraries like RogueWave.</p><p>
-
-       4) The "simple" solution is not to add the option to each makefile,
-       but rather recompile the compiler to have the option on by default.
-       This is done by editing the file `gcc/cp/decl2.c', setting
-       `flag_do_squangling = 1', then rebuilding the compiler and
-       libraries.</p><p>
-
-       5) After many false starts and linking snafus, I can recompile my
-       ACE/TAO/RogueWave/Lex/Yacc 100 Meg application.</p><p>
-
-</p></li></ul>
-
+<p></p>
 
 <p></p><hr>
 <h3><a name="aceinstall">Building and Installing ACE</a></h3>
@@ -1031,7 +320,7 @@ c       <pre>       ../configure [options]
         <li><code>--enable-quantify</code> (no): Build with support for
           IBM Rational Quantify.</li>
         <li><code>--enable-repo</code> (no): Enable the GNU g++
-          <code>-frepo</code> option. Only useful for pre-3.0 g++ and egcs.</li>
+          <code>-frepo</code> option. Only useful for pre-3.0 g++.</li>
         <li><code>--enable-rtti</code> (yes): Compile with C++ run-time type
           information RTTI support.</li>
         <li><code>--enable-stdcpplib</code> (yes): Build with support for the
@@ -1056,17 +345,19 @@ c       <pre>       ../configure [options]
           reports at run time.</li>
         <li><code>--enable-trace</code> (no): Enable ACE execution tracing
           support.</li>
-        <li><code>--enable-xt-reactor</code> (no): Enable support for the
-          <code>ACE_XtReactor</code> class.</li>
         <li><code>--enable-fl-reactor</code> (no): Enable support for the
           <code>ACE_FlReactor</code> class.</li>
-        <li><code>--with-gperf</code> (yes): Build the implementation of
+        <li><code>--enable-qt-reactor</code> (no): Enable support for the
+          <code>ACE_QtReactor</code> class.</li>
+        <li><code>--enable-tk-reactor</code> (no): Enable support for the
+          <code>ACE_TkReactor</code> class.</li>
+        <li><code>--enable-xt-reactor</code> (no): Enable support for the
+          <code>ACE_XtReactor</code> class.</li>
+        <li><code>--enable-gperf</code> (yes): Build the implementation of
           gperf that comes with ACE.</li>
-        <li><code>--with-rmcast</code> (yes): Include the ACE_RMCast library
-          when building ACE.</li>
-        <li><code>--with-qos</code> (no): Include the ACE_QoS library when
+        <li><code>--enable-qos</code> (no): Include the ACE_QoS library when
           building ACE.</li>
-        <li><code>--with-ssl</code> (yes): Include the ACE_SSL library when
+        <li><code>--enable-ssl</code> (yes): Include the ACE_SSL library when
           building ACE. Requires the SSL components to be available using the
           compiler's and linker's default search directories.</li>
         <li><code>--with-tli-device</code> (/dev/tcp): Specifies the device
@@ -1255,8 +546,8 @@ to check <a href="#win32nonic">here</a> first. <p>
       <code>set ACE_ROOT=C:\ACE_wrappers</code><br>
       <br>
   </li><li>Set the BCBVER environment vairable to the main version of your Borland C++ compiler.
-      Currently only 6 is supported, 4 and 5 are options but not supported anymore.
-      If BCBVER is not set we default to 6. For example:<br>
+      6 is the value for Borland C++ Builder 6, 8 the value for Borland C++ Builder 2006.
+      4 and 5 are also possible options but not supported anymore.<br>
       <br>
       <code>set BCBVER=6</code><br>
       <br>
@@ -1282,6 +573,11 @@ to check <a href="#win32nonic">here</a> first. <p>
       Codeguard support. Should only be used when DEBUG is also set<br>
       <code>set CODEGUARD=1</code><br>
       <br>
+      Set the environment variable below to build a version of ACE optimized
+      for a certain CPU. For this there are special compiler flags 
+      (-3/-4/-5/-6), see the Borland help for more info.<br>
+      <code>set CPU_FLAG=-6</code><br>
+      <br>
       Set the environment variable below to build a version of ACE using the
       C++BuilderX preview compiler. This compiler isn't supported at this moment
       but by setting this environment variable the new compiler is used and
@@ -1303,7 +599,8 @@ for use
 </li></ol>
 
 These instructions do not cover all possible build configurations. Please
-see <a href="http://www.tenermerx.com/tao_bcb/index.html">http://www.tenermerx.com/tao_bcb/index.html</a>
+see <a href="http://www.tenermerx.com/programming/corba/tao_bcb/index.html">
+http://www.tenermerx.com/programming/corba/tao_bcb/index.html</a>
 for more detailed information on building and using ACE+TAO with Borland C++
 Builder. <p>
 
@@ -1665,7 +962,7 @@ For our build we require the following packages besides the packages the
 setup selects by default:
 <a name="cygwinpacks">
 </a></p><blockquote>
-<a name="cygwinpacks"><b><tt>gcc (version 3.3.3), cygipc, make, perl, binutils</tt></b>.
+<a name="cygwinpacks"><b><tt>gcc (version 3.3.3), cygserver, make, perl, binutils</tt></b>.
 </a></blockquote>
 
 <ol>
@@ -2659,6 +1956,573 @@ libraries.
         <code>x11</code>switch is ignored for this platform.</li>
     </ul>
 
+<hr><p></p><h3><a name="installnotes">Installation Notes</a></h3>
+
+<ul>
+  <li><b>Windows (Windows NT, 2000, XP, 2003, etc., and Windows '9x/ME) </b><p>
+
+      All of ACE has been ported to the Win32 API (which includes
+      Windows NT, Windows 2000, and Windows '95/98/ME) and Win64.  The entire
+      release now compiles using the Microsoft Visual C++ 6.0, and
+      7.1 (aka Visual C++ .NET 2003) compilers.  ACE can be built as both
+      a static (LIB) and dynamic (DLL) library, using the Win32 installation
+      process described below.</p><p>
+
+      Please see the <a href="#NonStaticObjectManager">Non-static
+      ACE_Object_Manager</a> discussion below.</p><p>
+
+      We've also added some support for
+      <a href="#mingw">GNU g++ with MinGW</a>,
+      <a href="#cygwin">GNU g++ with Cygwin</a>,
+      <a href="#borland">Borland C++ Builder 6.0,
+      Borland C++ BuilderX, and Borland C++ Builder 2006</a>,
+      <a href="#interix">Interix (Windows Services for Unix)</a>,
+      and IBM's VisualAge C++ compiler.
+      Since we don't have these compilers we rely on the ACE+TAO users
+      community to maintain these ports.  Therefore, please send email
+      to the ACE mailing list if you run into problems. </p><p>
+
+  </p></li><li><b>Windows CE</b><p>
+
+      Take a look at (<a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/docs/CE-status.txt">CE-status.txt</a>) for
+      up-to-date information about ACE on CE.</p><p>
+
+  </p></li><li><b> Solaris 2.6, 7, 8, and 9 using Sun ONE Studio 8 (C++ 5.5)
+       or Sun Studio 9 (C++ 5.6), Centerline C++ 2.x, GNU gcc 2.95 and
+       later.</b><p>
+
+      All the source code and tests should build and run without any
+      problems on Solaris 7, 8, and 9 platforms using the above
+      Sun C++ compilers.
+
+      There are likely to be build problems with older versions or
+      different patchlevels of Sun C++.  Likewise, on
+      Solaris with g++ you may need to use GNU as instead of
+      /usr/ccs/bin/as, if you want -gstabs+ and -pipe support.
+
+      Thanks to Susan Liebeskind &lt;shl@janis.gtri.gatech.edu&gt;
+      for providing the following useful information:</p><p>
+
+      By default, ACE uses both the Solaris and POSIX thread
+      interface.  To disable use of the Solaris thread interface, add
+      <code>-D_POSIX_PTHREAD_SEMANTICS</code> to the
+      <code>CFLAGS</code> in your
+      <code>$(ACE_ROOT)/include/makeinclude/platform_macros.GNU</code>.
+      See the Solaris Intro (3) man page for more information.</p><p>
+
+      To disable ACE thread support completely, build with the
+      <code>threads=0</code> make flag.  See the <a href="#flags">Makefile Flags</a> section below for more
+      information on make flags.</p><p>
+
+      If you use g++ on Solaris 7, you might need to rebuild
+      it on a SunOS 5.7 (Solaris 7) host.  Some versions of g++ 
+      provide replacements for system header files.  The
+      replacements on older SunOS systems are not compatible with the
+      SunOS 5.7 system headers.  <P>
+
+      The Sun/C++ compilers until and including 5.4 has several
+      problems with templates and we don't test very often with them.
+      We regularly use and test with Sun/C++ 5.5.</p>
+
+  </li><li><b>AIX</b><p>
+
+      ACE has been ported to AIX 4.3 and higher using the IBM C/C++
+      Compiler 3.6.6, Visual Age C++ 5 and 6, and g++ 3.2.</p><p>
+
+      To build ACE on AIX with Visual Age C++ 5 in incremental mode
+      (i.e. with the IDE), use the
+      $ACE_ROOT/ace/ace.icc configuration along with the appropriate
+      version-specific config file (e.g. config-aix-4.3.x.h). All of the
+      version-specific config files set the version number macros and
+      include the general config-aix-4.x.h file which has support for all
+      of the OS versions and compilers supported on AIX. Using the general
+      config file is the recommended practice for g++, IBM
+      C/C++, and Visual Age C++ batch mode compilers.</p><p>
+
+      Visual Age C++ 4 has also been supported on ACE 5.1, but is no longer
+      supported. If you are still using this compiler, please use the
+      $ACE_ROOT/ace/ace-dll.icc configuration file, along with the
+      config-aix-4.3.x.h ACE config file. Beware, however, that it hasn't
+      been tested.</p><p>
+
+      The Visual Age 6.0.0.3 and 6.0.0.4 do have some bugs that makes
+      them unusable for building TAO. We have tested with 6.0.0.12 and
+      had no problems with that version.</p><p>
+
+      BTW, here's a technique from Rob Jordan &lt;<a href="mailto:jordan@hursley.ibm.com">jordan@hursley.ibm.com</a>&gt;
+      that can reduce the size of the ACE libraries by about one
+      third, and can also be applied to applications.  It works by
+      optimising the sharing of template functions, which are created
+      in an "unusual" way under AIX. It also speeds up
+      compilation.</p><p>
+
+      Here's how to optimise the ACE library generation:</p><p>
+
+      Look at the <a href="ace/GNUmakefile.ACE">ace/GNUmakefile.ACE</a>
+      in <code>$ACE_ROOT/ace</code>. Create a file called
+      <code>ACE_All_Src.cpp</code>, and add a line to #include
+      each of the source files
+      listed under <code>FILES=</code> in the GNUmakefile. Create a
+      file called <code>ACE_All_Tmp.h</code>
+      and add a line to #include each of the .h files listed under
+      <code>TEMPLATE_FILES=</code> in the GNUmakefile. Now update the
+      GNUmakefile so that
+      <code>FILES=ACE_All_Src</code> and
+      <code>TEMPLATE_FILES=ACE_All_Tmp</code>.</p><p>
+
+  </p></li><li><b><a name="Linux">Linux</a></b><p>
+
+      ACE has been ported to <a href="http://www.cs.wustl.edu/%7Ecleeland/ace/">Linux</a> on
+      Intel, Alpha, and PowerPC platforms.  If you use a RedHat 5.x
+      distribution, it's best to use RedHat 5.1 or later.  ACE works
+      without any modifications on RedHat 5.1 and later, and on
+      Debian 2.1 on both Intel and Alpha.  Use the
+      <code>platform_linux.GNU</code> and <code>ace/config-linux.h</code>
+      in your <code>platform_macros.GNU</code> and
+      <code>config.h</code> files, respectively.  The same
+      files can be used on PowerPC, with LinuxPPC
+      1999 (R5), with glibc 2.1.1.</p><p>
+
+      If you run out of memory, it's easy to add virtual memory on
+      Linux.  Please see the <code>mkswap</code> man page.  You'll
+      need at least 256 to 300 Mb of virtual memory (RAM + swap) to
+      compile all of ACE+TAO.  The <a href="#resource_requirements">System
+      Resource Requirements section</a> has some suggestions on how
+      to reduce the memory requirement.</p><p>
+
+      The glibc 2.0 dynamic loader isn't thread safe. If you want to
+      use the Invocation API you'll have to set
+      <code>LD_BIND_NOW=true</code>. If you want to use
+      <code>dlopen</code>, you should use <code>RTLD_NOW</code>.  The
+      dynamic loader in glibc 2.1 is thread safe.</p><p>
+
+      <strong>NOTE:</strong> The TAO NameService uses IP multicasting
+      by default, though it is not required.  IP multicast on Linux
+      requires the following:</p><p>
+
+      </p><ul>
+        <li>Enable IP multicast in the Linux kernel.  It is enabled in
+            the default RedHat 5.1 kernel.  In older distributions, you
+            can enable it by rebuilding your kernel with CONFIG_IP_MULTICAST
+            enabled.<p>
+        </p></li><li>Enable IP multicast in ACE.  It is enabled by default in
+            <code>ace/config-linux-common.h</code>.  If you don't use
+            IP multicast, add <code>#define ACE_HAS_IP_MULTICAST 0</code>
+            to your <code>ace/config.h</code> before building ACE.<p>
+        </p></li><li>There must be a network interface that is up and supports
+            multicast.  If you have linuxconf, it's easiest to use that
+            to add a network route for multicast (224.0.0.0) on one of
+            your network interfaces, such as <code>eth0</code>.  If
+            you don't have or use linuxconf, try adding a multicast
+            routing table entry using something like this:<p>
+            </p><pre>             <code># route add -net 224.0.0.0 netmask 240.0.0.0 dev eth0</code>
+            </pre><p>
+      </p></li></ul>
+
+      Some of the ACE tests fail on older, pre-glibc2 Linux platforms,
+      such as RedHat 4.2.  The problems are with threads and
+      thread-specific storage.</p><p>
+
+  </p></li><li><b>SCO UNIX</b><p>
+
+      ACE has been ported to SCO UNIX using the GNU g++ 2.7.2
+      compiler.  Arturo Montes &lt;<a href="mailto:mitosys@colomsat.net.co">mitosys@colomsat.net.co</a>&gt;
+      maintains this code.  In addition, he also maintains a version
+      of <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/FSU-threads.tar.gz">FSU pthreads</a>.</p><p>
+
+  </p></li><li><b>SGI IRIX 5.x and 6.x</b><p>
+
+      ACE used to build fine using the SGI C++ and GNU GCC compilers
+      for IRIX 5.x.  It has been ported to IRIX 6.x using the SGI
+      MipsPro 7.1 C++ compiler; be aware that in IRIX 6.2 there is a
+      number of patches that have to be installed and exceptions
+      appear to fail with the O32 ABI.  Please check the config files
+      for the details.</p><p>
+
+  </p></li><li><b> HP-UX 10.x and 11.x </b> <p>
+
+      HP sells 2 C++ compilers for HP-UX 10.x and 11.00:
+
+      </p><ul>
+        <li>HP C++ - this is CC, HP's cfront-based compiler.  As of ACE 4.4, it
+            can be used, but some people have problems with templates.
+            Caveat emptor.  It's been said that you should run version 10.24,
+            if not later. ACE hasn't been tested with this compiler since
+            the ACE 5.0 timeframe.
+
+        </li><li>HP aC++ - this is aCC, HP's new, ANSI compiler.  It handles ACE
+            very well.  You should use version A.01.27 (or higher) on
+            HP-UX 10.x and version A.03.37 (or higher) on HP-UX 11.
+
+      </li></ul>
+      <p>
+      On HP-UX 10.20, a patch is required to compile ACE. The exact patch
+      number depends on the platform - check with HP's patch database to
+      locate the exact patch or its successor. For 9000 700 series machines
+      it is PHKL_8693 (s700 10.20 sys/time.h fix for select(2)/C++ defects).</p><p>
+
+      Also see further notes on this platform at Riverace's
+      <a href="http://www.riverace.com/FAQ/faq.html">Frequently Asked
+      Questions</a> page.
+      </p><p>
+
+  </p></li><li><b>OSF/1 3.2 and 4.0 (a.k.a. Digital UNIX 4.0)</b> <p>
+
+      The Digital UNIX C++ 5.4 through 5.7 compilers have problems
+      with ACE's templates.  They compile the lib and most of the test
+      programs, although they warn about template usage.  Most tests
+      run, some dump core.  If you use a 5.x version of cxx, be sure
+      to set the CXX_VER variable to CXX_5, either on your make
+      command line or in an environment variable.  The ACE Makefiles
+      assume by default that the cxx version is 6.x or later.</p><p>
+
+      CXX 6.0 and 6.1 are much improved over 5.x: V6.0-020, V6.1-025,
+      and later build all of ACE cleanly.  All of the tests in
+      $(ACE_ROOT)/tests run successfully with CXX 6.0 and CXX 6.1.
+      Please note that problems have been reported with some versions
+      of CXX 6.1, notably versions -021 and earlier.  It's best to use
+      V6.1-022 or later.</p><p>
+
+      NOTE: if you use Digital UNIX 4.0f or later, you <strong>must</strong>
+      use <code>ace/config-tru64.h</code> instead of
+      <code>ace/config-osf1-4.0.h</code>.  <code>ace/config-tru64.h</code>
+      can be used for all supported compilers on any version of
+      Digital UNIX after and include 4.0.  And, with 4.0f and later when
+      using Digital CXX, you <strong>must</strong> use
+      <code>include/makeinclude/platform_tru64_cxx.GNU</code> instead of
+      <code>include/makeinclude/platform_osf1_4.0.GNU</code>.</p>
+
+  </li><li><b> FreeBSD </b><p>
+
+      FreeBSD is a fast evolving platform.  However, it has the
+      advantage of having standard releases.  At this moment, ACE is
+      only perodically tested against -stable (3.1R) and we rely a lot
+      on FreeBSD users' feedbacks.  </p><p>
+
+      Notice that on older FreeBSD, <code>ld.so</code> only looks for
+      so libraries with <b>version number</b> appended.  ACE makefiles
+      create symlinks for most shared libraries if
+      <code>versioned_so</code> is defined to 1 in
+      <code>$ACE_ROOT/ace</code> with appropriate ACE version.
+      However, this does not work for libACE.so itself so you have to
+      create it manually (If you figure out how to do this, please let
+      us know) like this: </p><p>
+
+      <code>ln -sf $ACE_ROOT/ace/libACE.so $ACE_ROOT/ace/libACE.so.4.5</code></p><p>
+
+      On newer FreeBSD (3.0 or later,) this is no longer necessary.</p><p>
+
+  </p></li><li><b>NetBSD</b><p>
+
+      Like older FreeBSD, NetBSD's <code>ld.so</code> also requires
+      versioned .so files.</p><p>
+
+  </p></li><li><b>OpenBSD</b><p>
+
+      ACE has been ported to OpenBSD 3.1 and GNU g++ 2.95.3.</p><p>
+
+      As with FreeBSD and NetBSD, OpenBSD requires versioned .so
+      files.  This is currently handled by the build files and no
+      additional work is needed.</p><p>
+
+      ACE has been ported to OpenBSD with and without pthreads
+      enabled.  When using pthreads, though, C++ exceptions must be
+      disabled.  This is a known problem with the current release of
+      OpenBSD (see www.openbsd.org, bug #1750).  ACE emulated
+      exceptions work fine.</p><p>
+
+      Compiling TAO may require the user data segment size
+      restrictions and possibly other options to be increased.  This
+      is done by modifying the default user class in /etc/login.conf
+      or by adding a new class and modifying the master passwer file
+      accordingly.</p><p>
+
+  </p></li><li><b> UnixWare </b> <p>
+
+      Steve Huston &lt;<a href="mailto:shuston@riverace.com">shuston@riverace.com</a>&gt;
+      has ported ACE to work with UnixWare 2.01 and g++.</p><p>
+
+      Ganesh Pai &lt;<a href="mailto:gpai@voicetek.com">gpai@voicetek.com</a>&gt;
+      subsequently did the port for version 2.1.2, also with g++.</p><p>
+
+      Phil Mesnier &lt;<a href="mailto:mesnier_p@ociweb.com">
+      mesnier_p@ociweb.com</a>&gt; updated the port to support
+      UnixWare 7.1.0, with help from Michael Meissnitzer
+      &lt;<a href="mailto:michael.meissnitzer@siemens.at">
+      michael.meissnitzer@siemens.at</a>&gt;, Christian Klepp &lt;
+      <a href="mailto:christian.klepp@siemens.at">christian.klepp@siemens.at
+      </a>&gt; and Engelbert Staller &lt;<a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/engelbert.staller@siemens.at">
+      engelbert.staller@siemens.at</a>&gt;
+      Building ACE (and TAO) on Unixware 7.1.0 requires a very specific
+      g++ build environment.  In particular, you must build and install
+      g++ 2.95.2, along with binutils 2.9.1. The order (and the declaration
+      of configuration) is extremely important. Using the gcc compiler
+      provided on the Skunkware CD on a pentium system, here is the recipe
+      I used to build a working environment (as root):<br>
+</p><pre>  mkdir /usr/local/newgnu
+&lt; ftp and untar binutils-2.9.1 &gt;
+&lt; ftp and untar gcc-2.95.2 &gt;
+  mkdir -p build/binutils build/gcc
+  cd build/binutils
+  ../../binutils-2.9.1/configure i386-sco-sysv4
+  gmake  # takes a long time
+  gmake install # this creates /usr/local/i386-sco-sysv4/...
+  mkdir /usr/local/i486-pc-sysv5/bin
+  cd /usr/local/i486-pc-sysv5/bin
+  for a in /usr/local/i386-sco-sysv4/bin/*; do ln -s $a .; done
+  #links all the newly installed utilities
+
+  cd /usr/local/newgnu/build/gcc
+  ../../gcc-2.95.2/configure --with-gnu-as --with-gnu-ld
+  gmake bootstrap # takes a long time
+  gmake install
+  mkdir /usr/local/i586-UnixWare7.1.0-sysv5/bin
+  for a in /usr/local/i386-sco-sysv4/bin/*; do ln -s $a .; done
+</pre>
+       Once done, ACE and TAO will successfully build and link.<p>
+
+  </p></li><li><b>Chorus</b> <p>
+
+      Wei Chiang &lt;<a href="mailto:chiang@tele.nokia.fi">chiang@tele.nokia.fi</a>&gt;
+      has ported ACE to Chorus 3.1 using GNU g++ 2.7.2.</p><p>
+
+  </p></li><li><b><a name="LynxOS">LynxOS</a></b><p>
+
+      ACE builds and runs properly on LynxOS 3.0.x, 3.1.x and 4.0.0 for Intel
+      and PowerPC targets. LynxOS 2.5.x is no longer supported.
+      To build ACE on LynxOS 3.0.x you need to update GCC to
+      version 2.9-gnupro-98r2, which can be obtained from
+      <a href="ftp://ftp.lynuxworks.com/compilers/98r2-preview/">
+      ftp://ftp.lynuxworks.com/compilers/98r2-preview/</a></p><p>
+
+      If you run out of memory on LynxOS, these might help:</p><p>
+
+      </p><ul>
+        <li>Increase the limits in <code>/etc/starttab</code>,
+          then reboot system.  We use these limits:
+          <pre># Data, stack, and core file limits (in Kbytes)
+80000
+16000
+102400</pre><p>
+        </p></li><li>Enable or expand virtual memory, with something like:
+          <pre># mkcontig /swap 320
+# prio 17 vmstart /swap</pre>
+          See the <code>mkcontig</code> and <code>vmstart</code>
+          man pages, and <code>/bin/rc</code>.<p>
+      </p></li></ul>
+
+      Please see the comments in the
+      <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/include/makeinclude/platform_lynxos.GNU">ACE
+      platform_lynxos.GNU file</a> for information on, and an
+      example of, tailoring for your particular platform.<p>
+
+      NOTE: if you want to use IP multicast on LynxOS, be sure to add
+      this line to your <code>/net/rc.network</code>, and reboot:</p><p>
+      </p><pre><code>
+        /bin/route add "224.0.0.0" "$my_name"
+      </code></pre>
+
+  </li><li><strong>VxWorks</strong><p>
+
+      <a href="http://www.cs.wustl.edu/%7Elevine/">David Levine</a>
+      &lt;<a href="mailto:levine@cs.wustl.edu">levine@cs.wustl.edu</a>&gt; has
+      ported ACE to VxWorks 5.2/5.3/5.3.1/5.4 with the GreenHills
+      1.8.8/1.8.9, g++ and diab compilers that are distributed with
+      VxWorks/Tornado. It is not possible to use VxWorks 5.4
+      and earlier with ACE anymore because the compilers delivered with
+      5.4 and earlier don't support the C++ features ACE needs.</p><p>
+
+      At this moment <a href="http://www.theaceorb.nl">Remedy IT</a> is upgrading
+      and stabilizing ACE/TAO support for Tornado 2.2/VxWorks 5.5.1.
+      Since the existing support for previous VxWorks version has been unsupported
+      and broken for some time and most (potential) users seem to have upgraded to
+      VxWorks 5.5.1 no backporting effort is done. See also <a href="#vxworks">here</a>.
+      </p><p>
+
+      Tornado 2.2/VxWorks 5.5.1 support IP multicast.  That is not enabled
+      by default in ACE for VxWorks, because it depends on your
+      kernel configuration.  To enable it, add
+      <code>#define ACE_HAS_IP_MULTICAST</code> to your
+      <code>ace/config.h</code>.</p><p>
+
+      NOTE: In order for the ACE Broadcast and Multicast tests to work the VxWorks kernel
+      should receive the packages it sends out locally. By default this is not supported.
+      To enable this behaviour you need to include the IFF_SIMPLEX flag for your required
+      NIC driver. See the following Windriver <a href="https://secure.windriver.com/cgi-bin/windsurf/techtips/public/viewSum.cgi?4542">SPR 4542</a>
+      for more information.</p><p>
+
+      In addition to all of the other benefits of ACE, it helps work
+      around some deficiencies with VxWorks. The problems are:</p>
+
+      <p>
+      </p><ol>
+        <li>The program entry point cannot be called "main" with g++.  ACE
+            renames it to "ace_main" (configurable via ACE_MAIN) on VxWorks.
+            While this may seem trivial, it is important with legacy code.
+            ACE itself ran into this problem.<p>
+
+        </p></li><li>argc/argv isn't used with VxWorks entry points.  ACE provides
+            a wrapper function that transparently converts shell command
+            line arguments to argc/argv form.  See <a href="#spa">below</a>
+            for details.<p>
+
+      </p></li></ol>
+
+      Please note that ACE uses one of the spare fields in the Wind
+      River task control block, spare4, for thread- specific storage.
+      This field is specified in only one place, in ace/OS_NS_Thread.inl, so it
+      can easily be changed to one of the other spare fields, if
+      necessary.</p><p>
+
+      ACE destroys dynamically
+      allocated singletons in the ACE library.  But, they may not
+      properly destroy some static objects.  If you have trouble
+      running a program multiple times, it may be necessary to unload
+      the module, using unld, and reload it between runs.
+      Alternatively, you could try calling <code>cplusDtors</code> and
+      then <code>cplusCtors</code> between runs.</p><p>
+
+  </p></li><li><b>MVS OpenEdition</b> <p>
+
+      All of ACE has been ported to OpenEdition by Chuck Gehr &lt;<a href="mailto:gehr@sweng.stortek.com">gehr@sweng.stortek.com</a>&gt;.
+      The ACE library, all the tests and most of the examples and apps
+      build clean.  There are still some problems that need to be
+      ironed out:</p><p>
+
+      MVS does not support the dynamic linking dl...() calls that the
+      Service Configurator uses to dynamically link services at run
+      time. As a result, all the examples and apps that use a svc.conf
+      file (for dynamically configuring service objects) do not work,
+      however, most of these apps can be built/run statically.  Also,
+      the Svc_Conf_l.cpp and Svc_Conf_y.cpp files are generated using
+      flex and yacc on a ascii (not ebcdic) machine and as a result
+      they don't work very well with ebcdic svc.conf files.  We should
+      be able to regenerate these files on MVS but MVS doesn't have
+      flex.  This is something that needs to be done.</p><p>
+
+      Some of the tests do not execute properly.  This is a minority
+      and over time the goal is to get to 100%.</p><p>
+
+      The make scheme for some of the apps still doesn't work
+      perfectly on MVS.  This is mainly due to the way shared
+      libraries are handled on MVS.  See <a href="#mvs">additional
+      build tips for MVS</a> for more on this.</p><p>
+
+  </p></li><li><strong>QNX Neutrino</strong><p>
+
+      ACE has been ported to <a href="http://www.qnx.com/products/os/neutrino.html">QNX Neutrino
+      2.0</a>.  We cross-compile for Neutrino on a QNX4 host using g++
+      2.8.1, using the <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/ace/config-qnx-neutrino.h">ace/config-qnx-neutrino.h</a>
+      and <a href="include/makeinclude/platform_qnx_neutrino.GNU">include/makeinclude/platform_qnx_neutrino.GNU</a>
+      configuration files.  Many of the ACE tests succeed, though some
+      fail.  As the porting effort progresses, we hope to eliminate
+      these failures.  If you know of fixes, please send them to
+      us.</p><p>
+      </p></li><li><strong>QNX RTP</strong><p>
+
+      ACE has been ported to <a href="http://get.qnx.com/">QNX RTP
+      </a>. We compile for QNX RTP using the GCC compiler shipped with the
+      distribution, using the <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/ace/config-qnx-rtp.h">ace/config-qnx-rtp.h</a>
+      and <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/include/makeinclude/platform_qnx_rtp_gcc.GNU">include/makeinclude/platform_qnx_rtp_gcc.GNU</a>
+      configuration files.
+      Many of the ACE tests succeed, though some
+      fail.  As the porting effort progresses, we hope to eliminate
+      these failures.  If you know of fixes, please send them to
+      us.</p><p>
+      <strong><blink><font color="#ff0000">WARNING:</font></blink></strong>
+      Under the current version of QNX RTP ACE fails if compiled with
+      inline=0 . </p><p>
+
+  </p></li><li><strong>PharLap TNT Embedded ToolSuite (ETS)</strong><p>
+
+      ACE has been ported to <a href="http://www.pharlap.com/">PharLap's</a> TNT Embedded
+      ToolSuite (ETS) version 9.1. The port is being tested with
+      Microsoft Visual C++ 6.</p><p> To build for PharLap, use the
+      ace/config-pharlap.h configuration file, and the instructions
+      for building on Windows. Building the ACE library is the same as
+      for regular Windows platforms, except you choose one of the PharLap
+      ETS configurations to build within Visual C++. Only static
+      library configurations are available for PharLap at this time.
+      For an example of how to build
+      binaries, see the tests directory. The tests_pharlap_msvc.lnk
+      file is a LinkLoc commands file that the ACE tests are built
+      with. It is likely that local sites may need to adjust this file
+      for their target environment.</p><p>
+
+</p></li><li><strong>Mac OS X (10.2.x)</strong><p>
+
+        </p><p>ACE builds and runs on Mac OS X 10.2.x, but the following are
+        needed to build it:</p>
+
+        <p>1. The latest version of the Apple Developer Tools
+        (December 2002)</p>
+        <p>2. The dlcompat library (obtained either through Fink or
+        SourceForge)</p>
+
+        <p>When creating $ACE_ROOT/ace/config.h for Mac OS X, you need
+        to add the following if you obtained dlcompat via Fink:</p>
+
+        <p>#define ACE_NEEDS_DL_UNDERSCORE</p>
+
+        <p>You'll also need to do:</p>
+
+        <p>setenv DYLD_LIBRARY_PATH $ACE_ROOT/ace:$ACE_ROOT/lib</p>
+        <p>setenv MACOSX_DEPLOYMENT_TARGET 10.2</p>
+
+        <p>Currently, all ACE tests pass except Process_Mutex_Test and
+        MEM_Stream_Test.  Also, Mac OS X doesn't yet support *nix
+        aio_* calls, and ACE does not know anything about Mach.</p>
+
+        <p>The work to port ACE to Mac OS X was done by several people,
+        John Zorko
+        &lt;<a href="mailto:j.zorko@att.net">j.zorko@att.net</a>&gt; is
+        only one of them.</p>
+
+</li></ul>
+
+
+<hr>
+<h4><a name="g++">Compiling ACE with GNU g++</a></h4>
+
+If you use the GNU GCC g++ compiler please note the following:
+
+<ul>
+  </p></li><li>ACE/TAO needs g++ 2.95.x or better. Older versions are not usable anymore<p>
+
+  </p></li><li>Make sure to update your gcc <code>config.status</code>
+      file.  This file is produced when installing gcc; it specifies
+      where to install the binary files that gcc uses.  For example,
+      it specifies whether to use Solaris's <code>/usr/ccs/bin</code>
+      binary utils or GNU binary utils.  The
+      <code>config.status</code> file is an output of the gcc
+      <code>configure</code> script; it is preferable to use the
+      <code>--prefix</code> option to <code>configure</code> instead
+      of hacking its output.<p>
+
+  </p></li><li>If you are getting weird link errors when building libACE
+      on Solaris you are probably using the GNU linker.  Try using the
+      Sun linker (/usr/ccs/bin/ld) instead.  Note that gcc first looks
+      for the GNU linker if it is installed along with gcc.  The only
+      way to not use the GNU linker is to delete it from the
+      installation or to build your own compiler with no linker.  Be
+      aware that you still need the libraries and includes of gcc.<p>
+
+      NOTE: if you do use the GNU linker, you might need to change
+      the <code>-G</code> flag to <code>-shared</code> in
+      the <code>SOFLAGS</code> definition in your
+      <code>include/makeinclude/platform_macros.GNU</code>.</p><p>
+
+  </p></li><li>Don't get too confused about contradictory statements in
+      the gcc documentation. It was written by different
+      people...<p>
+
+  </p></li><li>Make sure that the linker invoked by gcc produces code
+      that initializes static objects.  Please see gcc's
+      documentation for using <code>collect2</code>.<p>
+
+</p></li></ul>
+
+
 <hr><p>
 </p><h3><a name="minimum_build">What Do I Need to Build for TAO?</a></h3>
 Toshio Hori &lt;toshi@etl.go.jp&gt; provided these suggestions on building
@@ -3021,8 +2885,7 @@ probe            Enable ACE_Timeprobes.
 profile          Enable profiling; see PCFLAGS and PCCFLAGS.
 purify           Purify all executables.
 quantify         Quantify all executables.
-repo             Use GNU template repository (g++ with repo patches and
-                   egcs only).
+repo             Use GNU template repository (g++ with repo patches only).
 rtti             Enable run-time type identification.  On some platforms,
                    it is enabled by default, so this is ignored.
 shared_libs      Build shared libraries. Ignored if static_libs_only is set.
@@ -3056,7 +2919,6 @@ show_uninit        Lists all uninitialized in object files built for
                      current directory.  Only supported for g++.
 
 </pre>
-<hr><p>
 
 </p><hr><p>
 </p><h3><a name="power">Building from anonymous CVS</a></h3>
@@ -3108,7 +2970,7 @@ from
 <EM><br> -->
 
 <!-- hhmts start -->
-Last modified: Thu Jul 21 08:33:33 CDT 2005
+Last modified: Mon Mar 20 08:58:22 CST 2006
 <!-- hhmts end -->
 
 
