@@ -29,4 +29,7 @@ project : taolib, core, portableserver, pi {
   IDL_Files {
   }
 
+  Pkgconfig_Files {
+    EndpointPolicy/TAO_EndpointPolicy.pc.in
+  } 
 }
