@@ -1,3 +1,9 @@
+Wed Apr 26 07:21:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_vxworks5.5.x.GNU:
+          Increased template-depth to 50, hopefully this is large enough to
+          also build CIAO
+
 Tue Apr 25 16:44:04 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ace/CDR_Stream.h:
