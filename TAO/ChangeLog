@@ -1,3 +1,17 @@
+Wed Apr 26 11:46:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/AVStreams/Pluggable/ftp.cpp:
+        * orbsvcs/tests/AVStreams/Multicast/ftp.cpp:
+          Fixed a bug in these tests, in the test code for element 0 of
+          a string sequence was set and after that the length was set to 1.
+          The setting of 0 is possible because the OMG doesn't define
+          exceptions for this so it is allowed, then setting the length to
+          1 does reinitialize element 0 so that we don't get old values.
+          This was not done with the old sequences, then just the old
+          value was returned and things worked then. The multicast test
+          works now fine, the pluggable seems now to encounter another
+          bug.
+
 Wed Apr 26 10:41:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Unbounded_Sequence_CDR_T.h:
