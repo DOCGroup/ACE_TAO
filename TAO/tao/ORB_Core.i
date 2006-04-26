@@ -7,6 +7,12 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+ACE_INLINE ACE_Service_Gestalt*
+TAO_ORB_Core::configuration (void) const
+{
+  return this->config_;
+}
+
 ACE_INLINE CORBA::ULong
 TAO_ORB_Core::_incr_refcnt (void)
 {
@@ -250,23 +256,6 @@ TAO_ORB_Core::orb_params(void)
   return &(this->orb_params_);
 }
 
-ACE_INLINE TAO_Codeset_Manager *
-TAO_ORB_Core::codeset_manager()
-{
-  if (this->orb_params()->negotiate_codesets() == 0)
-    return 0;
-  if (this->codeset_manager_ == 0)
-    {
-      // This causes a factory to be loaded which will call
-      // the codeset_manager setter in this thread.
-      this->codeset_manager_ =
-        this->resource_factory()->codeset_manager();
-      if (this->codeset_manager_ == 0)
-        this->orb_params()->negotiate_codesets(false);
-    }
-  return this->codeset_manager_;
-}
-
 #define TAO_OC_RETRIEVE(member) \
 ((this->member##_ == 0) \
   ? (this->member##_ = this->resource_factory ()->get_##member ()) \
@@ -445,6 +434,23 @@ ACE_INLINE const char *
 TAO_ORB_Core::server_id (void) const
 {
   return this->server_id_.c_str();
+}
+
+ACE_INLINE TAO_Codeset_Manager *
+TAO_ORB_Core::codeset_manager()
+{
+  if (this->orb_params()->negotiate_codesets() == 0)
+    return 0;
+  if (this->codeset_manager_ == 0)
+    {
+      // This causes a factory to be loaded which will call
+      // the codeset_manager setter in this thread.
+      this->codeset_manager_ =
+        this->resource_factory()->codeset_manager();
+      if (this->codeset_manager_ == 0)
+        this->orb_params()->negotiate_codesets(false);
+    }
+  return this->codeset_manager_;
 }
 
 ACE_INLINE TAO::ORBInitializer_Registry_Adapter *

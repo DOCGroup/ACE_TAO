@@ -46,6 +46,33 @@ ACE_DLL::ACE_DLL (const ACE_DLL &rhs)
                   this->error ()));
 }
 
+// Assignment operator
+
+const ACE_DLL &
+ACE_DLL::operator= (const ACE_DLL &rhs)
+{
+  ACE_TRACE ("ACE_DLL::operator= (const ACE_DLL &)");
+
+  open_mode_ = 0;
+  dll_name_ = 0;
+  close_handle_on_destruction_=0;
+  dll_handle_=0;
+  error_=0;
+
+  if (rhs.dll_name_
+      // This will automatically up the refcount and initialize *this
+      && this->open (rhs.dll_name_,
+                     rhs.open_mode_,
+                     rhs.close_handle_on_destruction_) != 0
+      && ACE::debug ())
+      ACE_ERROR ((LM_ERROR,
+                  ACE_LIB_TEXT ("ACE_DLL::operator=: error: %s\n"),
+                  this->error ()));
+
+  return *this;
+}
+
+
 // If the library name and the opening mode are specified than on
 // object creation the library is implicitly opened.
 

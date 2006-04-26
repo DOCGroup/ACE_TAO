@@ -11,6 +11,7 @@ ACE_RCSID (ace,
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
+
 void
 ACE_Dynamic_Service_Base::dump (void) const
 {
@@ -23,24 +24,74 @@ ACE_Dynamic_Service_Base::dump (void) const
 #endif /* ACE_HAS_DUMP */
 }
 
-// Get the instance using <name>.
+// Get the instance using <name> for the current global
+// service configuration repository.
 
 void *
 ACE_Dynamic_Service_Base::instance (const ACE_TCHAR *name)
 {
   ACE_TRACE ("ACE_Dynamic_Service_Base::instance");
-  const ACE_Service_Type *svc_rec;
+  return instance (ACE_Service_Config::current (), name);
+}
 
-  if (ACE_Service_Repository::instance ()->find (name,
-                                                 &svc_rec) == -1)
-    return 0;
 
-  const ACE_Service_Type_Impl *type = svc_rec->type ();
+// Find a service registration
 
-  if (type == 0)
-    return 0;
+const ACE_Service_Type *
+ACE_Dynamic_Service_Base::find_i (const ACE_Service_Gestalt* &repo,
+                                  const ACE_TCHAR *name)
+{
+  ACE_TRACE ("ACE_Dynamic_Service_Base::find_i");
+  const ACE_Service_Type *svc_rec = 0;
 
-  void * const obj = type->object ();
+  ACE_Service_Gestalt* global = ACE_Service_Config::global ();
+
+  for ( ; repo->find (name, &svc_rec) == -1; repo = global)
+  {
+    // Check the static repo, too if different
+    if (repo == global)
+      break;
+  }
+
+  return svc_rec;
+}
+
+
+// Get the instance using <name> for specific configuration repository.
+
+void *
+ACE_Dynamic_Service_Base::instance (const ACE_Service_Gestalt* repo,
+                                    const ACE_TCHAR *name)
+{
+  ACE_TRACE ("ACE_Dynamic_Service_Base::instance");
+
+  void *obj = 0;
+  const ACE_Service_Type_Impl *type = 0;
+
+  const ACE_Service_Gestalt* repo_found = repo;
+
+  const ACE_Service_Type *svc_rec = find_i (repo_found, name);
+  if (svc_rec != 0)
+  {
+    type = svc_rec->type ();
+    if (type != 0)
+      obj = type->object ();
+  }
+
+  if (ACE::debug ())
+  {
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_LIB_TEXT ("(%P|%t) DSB::instance, repo=%@, name=%s, type=%@ => %@"),
+                repo->repo_, name, type, obj));
+
+    if (repo->repo_ != repo_found->repo_)
+      ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT (" [in repo=%@]\n"),
+                  repo_found->repo_));
+    else
+      ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\n")));
+
+  }
+
   return obj;
 }
 

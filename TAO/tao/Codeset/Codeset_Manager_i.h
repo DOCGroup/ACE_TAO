@@ -19,15 +19,15 @@
 
 #include "tao/CONV_FRAMEC.h"
 #include "tao/Codeset_Manager.h"
+#include "tao/Codeset/codeset_export.h"
+#include "tao/Codeset/Codeset_Descriptor.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Unbounded_Set.h"
-#include "tao/Codeset/codeset_export.h"
-#include "tao/Codeset/Codeset_Descriptor.h"
-
+#include "ace/Dynamic_Service_Dependency.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -70,8 +70,8 @@ public:
   /// to provide a non-compliant default wchar codeset may do so.
   static CONV_FRAME::CodeSetId default_wchar_codeset;
 
-  TAO_Codeset_Manager_i ();
-  ~TAO_Codeset_Manager_i ();
+  TAO_Codeset_Manager_i (void);
+  ~TAO_Codeset_Manager_i (void);
 
   /// Called by an object of TAO_Acceptor to set NCS and CCS values
   /// for Char/Wchar in to the Object Reference.
