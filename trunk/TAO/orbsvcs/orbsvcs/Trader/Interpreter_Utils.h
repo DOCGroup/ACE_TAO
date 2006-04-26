@@ -60,10 +60,6 @@ public:
   }
 };
 
-#if defined ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT
-  template class TAO_Trading_Serv_Export TAO::String_var <char>;
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT */
-
 typedef ACE_Hash_Map_Manager_Ex<CORBA::String_var,
                                 int,
                                 ACE_Hash<CORBA::String_var>,
