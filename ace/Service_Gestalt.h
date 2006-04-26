@@ -49,10 +49,8 @@ private:
   /**
    * Not implemented to enforce no copying
    */
-  ACE_UNIMPLEMENTED_FUNC (ACE_Service_Gestalt(const ACE_Service_Gestalt&));
-
-  ACE_UNIMPLEMENTED_FUNC
-    (ACE_Service_Gestalt& operator=(const ACE_Service_Gestalt&));
+  ACE_UNIMPLEMENTED_FUNC (ACE_Service_Gestalt(const ACE_Service_Gestalt&))
+  ACE_UNIMPLEMENTED_FUNC (ACE_Service_Gestalt& operator=(const ACE_Service_Gestalt&))
 
 public:
   enum
