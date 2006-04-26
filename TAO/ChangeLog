@@ -1,3 +1,8 @@
+Wed Apr 26 07:24:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Trader/Interpreter_Utils.h:
+          Removed invalid template export
+
 Wed Apr 26 03:46:16 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/Valuetype/AbstractBase.cpp:
