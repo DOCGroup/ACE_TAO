@@ -45,11 +45,11 @@ public:
   virtual void synch_options (ACE_Time_Value *val,
                               ACE_Synch_Options &opt);
 
-  virtual int wait (TAO_Connection_Handler *ch,
+protected:
+  virtual int wait_i (TAO_LF_Event *ev,
+                      TAO_Transport *t,
                      ACE_Time_Value *val);
 
-  virtual int wait (TAO_Transport *t,
-                     ACE_Time_Value *val);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

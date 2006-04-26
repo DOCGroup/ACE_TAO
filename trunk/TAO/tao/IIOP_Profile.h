@@ -84,7 +84,10 @@ public:
    */
   void remove_endpoint (TAO_IIOP_Endpoint *endp);
 
-  void remove_generic_endpoint (TAO_Endpoint *ep);
+  virtual void remove_generic_endpoint (TAO_Endpoint *ep);
+
+  /// Add an endpoint when the specific endpoint type is unknown
+  virtual void add_generic_endpoint (TAO_Endpoint *ep);
 
   //@@ TAO_PROFILE_SPL_PUBLIC_METHODS_COPY_HOOK_END
 

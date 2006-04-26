@@ -15,7 +15,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Transport_Descriptor_Interface::~TAO_Transport_Descriptor_Interface (void)
 {
-  if (this->endpoint_from_heap_)
+  if (this->release_)
     {
       delete this->endpoint_;
     }

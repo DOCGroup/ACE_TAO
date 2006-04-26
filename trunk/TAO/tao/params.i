@@ -218,6 +218,30 @@ TAO_ORB_Parameters::single_read_optimization (int x)
   this->single_read_optimization_ = x;
 }
 
+ACE_INLINE bool
+TAO_ORB_Parameters::use_parallel_connects (void) const
+{
+  return this->use_parallel_connects_;
+}
+
+ACE_INLINE void
+TAO_ORB_Parameters::use_parallel_connects (bool x)
+{
+  this->use_parallel_connects_ = x;
+}
+
+ACE_INLINE unsigned long
+TAO_ORB_Parameters::parallel_connect_delay (void) const
+{
+  return this->parallel_connect_delay_;
+}
+
+ACE_INLINE void
+TAO_ORB_Parameters::parallel_connect_delay (unsigned long x)
+{
+  this->parallel_connect_delay_ = x;
+}
+
 ACE_INLINE int
 TAO_ORB_Parameters::shared_profile (void) const
 {

@@ -65,12 +65,15 @@ public:
    * method is used to bind the waiting thread to the event, in order
    * to let the event signal any important state changes.
    *
+   * This is virtual to allow the LF_Multi_Event derived type share
+   * the follower with all the subordinate LF_CH_Events.
+   *
    * @return -1 if the LF_Event is already bound, 0 otherwise
    */
-  int bind (TAO_LF_Follower *follower);
+  virtual int bind (TAO_LF_Follower *follower);
 
   /// Unbind the follower
-  int unbind (void);
+  virtual int unbind (void);
 
   //@{
   /** @name State management

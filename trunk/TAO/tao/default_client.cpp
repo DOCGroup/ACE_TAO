@@ -331,6 +331,12 @@ TAO_Default_Client_Strategy_Factory::create_wait_strategy (TAO_Transport *transp
   return ws;
 }
 
+TAO_Client_Strategy_Factory::Connect_Strategy
+TAO_Default_Client_Strategy_Factory::connect_strategy (void) const
+{
+  return this->connect_strategy_;
+}
+
 TAO_Connect_Strategy *
 TAO_Default_Client_Strategy_Factory::create_connect_strategy (TAO_ORB_Core *orb_core)
 {

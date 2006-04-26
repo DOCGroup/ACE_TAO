@@ -41,6 +41,7 @@ class TAO_ORB_Core;
 class TAO_Connect_Strategy;
 class TAO_Transport;
 class TAO_Connection_Handler;
+class TAO_LF_Multi_Event;
 
 namespace TAO
 {
@@ -121,6 +122,14 @@ public:
       ACE_Time_Value *timeout
       ACE_ENV_ARG_DECL);
 
+  /// A variation on connect that will try simultanious connections
+  /// on all endpoints listed in the desc.
+  virtual TAO_Transport* parallel_connect (
+      TAO::Profile_Transport_Resolver *r,
+      TAO_Transport_Descriptor_Interface *desc,
+      ACE_Time_Value *timeout
+      ACE_ENV_ARG_DECL);
+
   /// Create a profile for this protocol and initialize it based on the
   /// encapsulation in @a cdr
   virtual TAO_Profile *create_profile (
@@ -137,6 +146,10 @@ public:
   //@@ TAO_CONNECTOR_SPL_PUBLIC_METHODS_ADD_HOOK
 
 protected:
+  /// A flag indicating the actual connector supports parallel connection
+  /// attempts. The base implementation alwayse returns 0. Override to return
+  /// non-zero if parallel connection attempts may be tried.
+  virtual int supports_parallel_connects (void) const;
 
   /// Create a profile with a given endpoint.
   virtual TAO_Profile *make_profile (ACE_ENV_SINGLE_ARG_DECL) = 0;
@@ -150,6 +163,13 @@ protected:
       TAO::Profile_Transport_Resolver *r,
       TAO_Transport_Descriptor_Interface &desc,
       ACE_Time_Value *timeout) = 0;
+
+  /// Make a connection using - not a pure virtual since not all
+  /// protocols support this.
+  virtual TAO_Transport* make_parallel_connection (
+      TAO::Profile_Transport_Resolver *r,
+      TAO_Transport_Descriptor_Interface &desc,
+      ACE_Time_Value *timeout);
 
   /// Cancel the passed cvs handler from the connector
   virtual int cancel_svc_handler (
@@ -173,6 +193,17 @@ protected:
   virtual bool wait_for_connection_completion(
       TAO::Profile_Transport_Resolver *r,
       TAO_Transport *&transport,
+      ACE_Time_Value *timeout);
+
+  /// In the case of a parallel connection attempt, we take an array of
+  /// transports, and wait on any of them. When the first one completes,
+  /// the rest are closed.
+  virtual bool wait_for_connection_completion(
+      TAO::Profile_Transport_Resolver *r,
+      TAO_Transport *&the_winner,
+      TAO_Transport **transport,
+      unsigned int count,
+      TAO_LF_Multi_Event *mev,
       ACE_Time_Value *timeout);
 
   /// Set the ORB Core pointer

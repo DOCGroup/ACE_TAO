@@ -244,6 +244,70 @@ TAO_IIOP_Endpoint::next (void)
 }
 
 TAO_Endpoint *
+TAO_IIOP_Endpoint::next_filtered (TAO_ORB_Core * orb_core, TAO_Endpoint *root)
+{
+  bool want_ipv6 = false;
+  bool ipv6_only = false;
+  bool prefer_ipv6 = false;
+#if defined (ACE_HAS_IPV6)
+  want_ipv6 = 1;
+  ipv6_only = orb_core->orb_params()->connect_ipv6_only();
+  prefer_ipv6 = orb_core->orb_params()->prefer_ipv6_interfaces();
+#else
+  ACE_UNUSED_ARG (orb_core);
+#endif /* ACE_HAS_IPV6 */
+  return
+    this->next_filtered_i (static_cast<TAO_IIOP_Endpoint *>(root),
+                           ipv6_only,
+                           prefer_ipv6,
+                           want_ipv6);
+}
+
+TAO_IIOP_Endpoint*
+TAO_IIOP_Endpoint::next_filtered_i (TAO_IIOP_Endpoint *root,
+                                    bool ipv6_only,
+                                    bool prefer_ipv6,
+                                    bool want_ipv6)
+{
+  TAO_IIOP_Endpoint *candidate = (root == 0) ? this : next_;
+
+#if defined (ACE_HAS_IPV6)
+  if (ipv6_only)
+    {
+      if (candidate == 0 || candidate->is_ipv6_decimal())
+        return candidate;
+      const ACE_INET_Addr &addr = candidate->object_addr ();
+      bool allowed = addr.get_type () == AF_INET6 &&
+        !addr.is_ipv4_mapped_ipv6();
+
+      return allowed ? candidate :
+        candidate->next_filtered_i(root, ipv6_only, prefer_ipv6, true);
+    }
+  if (prefer_ipv6)
+    {
+      if (candidate == 0)
+        return !want_ipv6 ? candidate :
+          candidate->next_filtered_i(root, ipv6_only, prefer_ipv6, false);
+
+      if (want_ipv6 == candidate->is_ipv6_decimal())
+        return candidate;
+
+      const ACE_INET_Addr &addr = candidate->object_addr ();
+      bool really_ipv6 = addr.get_type () == AF_INET6 &&
+                         !addr.is_ipv4_mapped_ipv6();
+      return (want_ipv6 == really_ipv6) ? candidate :
+        candidate->next_filtered_i(root, ipv6_only, prefer_ipv6, want_ipv6);
+    }
+#else
+  ACE_UNUSED_ARG (want_ipv6);
+  ACE_UNUSED_ARG (ipv6_only);
+  ACE_UNUSED_ARG (prefer_ipv6);
+#endif
+
+  return candidate;
+}
+
+TAO_Endpoint *
 TAO_IIOP_Endpoint::duplicate (void)
 {
   TAO_IIOP_Endpoint *endpoint = 0;
