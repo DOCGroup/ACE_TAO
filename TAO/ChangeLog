@@ -1,3 +1,9 @@
+Wed Apr 26 16:30:56 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/PortableServer/POAManagerFactory.cpp:
+
+          Correct a bug found by the Borland compiler.
+
 Wed Apr 26 13:47:28 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/EndpointPolicy.mpc:
@@ -35,11 +41,14 @@ Wed Apr 26 13:47:28 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
         * tao/EndpointPolicy/IIOPEndpointValue_i.cpp:
 
           The EndpointPolicy is a new, TAO-specific policy that is applied
-          to POAManagers via the POAManagerFactory. The Endpoint policy
-          acts as a filter for constraining the final endpoints or
-          profiles listed in an IOR when it is created by a POA associated
-          with the POAManager containing the policy. The EndpointPolicy
-          value is a sequence, allow multiple endpoints to be published.
+          to POAManagers via the POAManagerFactory. This commit resolves
+          Bugzilla bug #2484.
+
+          The Endpoint policy acts as a filter for constraining the final
+          endpoints or profiles listed in an IOR when it is created by a
+          POA associated with the POAManager containing the policy. The
+          EndpointPolicy value is a sequence, allow multiple endpoints to
+          be published.
 
           The way this works is that the ORB is initialized with all the
           -ORBEndpoint options it needs to provide access to all the

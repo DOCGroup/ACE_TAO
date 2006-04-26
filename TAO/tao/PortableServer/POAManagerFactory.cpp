@@ -42,13 +42,15 @@ TAO_POAManager_Factory::create_POAManager (
                      ::CORBA::PolicyError))
 {
   if (policies.length () > 1
-    || (policies.length () == 1 && policies[0]->policy_type () != EndpointPolicy::ENDPOINT_POLICY_TYPE))
+    || (policies.length () == 1 &&
+        policies[0]->policy_type () != EndpointPolicy::ENDPOINT_POLICY_TYPE))
   {
     ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY),
                       ::PortableServer::POAManager::_nil ());
   }
 
-  PortableServer::POAManager_var poamanager = PortableServer::POAManager::_nil ();
+  PortableServer::POAManager_var poamanager =
+    PortableServer::POAManager::_nil ();
   if (id != 0)
   {
     poamanager = this->find (id ACE_ENV_ARG_PARAMETER);
@@ -63,13 +65,18 @@ TAO_POAManager_Factory::create_POAManager (
       }
   }
 
-  ACE_NEW_THROW_EX (poamanager,
-                    TAO_POA_Manager (object_adapter_, id, policies, this),
-                    CORBA::NO_MEMORY (
-                      CORBA::SystemException::_tao_minor_code (0,
-                                                                ENOMEM),
-                      CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (::PortableServer::POAManager::_nil ());
+  // this indirection brought to you by borland's compiler and its refusal
+  // to directly assign the newly crated TAO_POA_Manager to a POAManager_var.
+  {
+    PortableServer::POAManager_ptr pm = 0;
+    ACE_NEW_THROW_EX (pm,
+                      TAO_POA_Manager (object_adapter_, id, policies, this),
+                      CORBA::NO_MEMORY
+                      (CORBA::SystemException::_tao_minor_code (0, ENOMEM),
+                       CORBA::COMPLETED_NO));
+    ACE_CHECK_RETURN (::PortableServer::POAManager::_nil ());
+    poamanager = pm;
+  }
 
   this->register_poamanager (poamanager.in ());
 
