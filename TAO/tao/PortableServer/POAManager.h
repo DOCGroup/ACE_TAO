@@ -42,7 +42,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 // Forward decl.
 class TAO_Root_POA;
 class TAO_Object_Adapter;
+class TAO_POAManager_Factory;
 
+namespace PortableServer
+{
+  class POAManagerFactory;
+  typedef POAManagerFactory *POAManagerFactory_ptr;
+}
 
 class TAO_PortableServer_Export TAO_POA_Manager :
   public PortableServer::POAManager,
@@ -80,11 +86,15 @@ public:
   PortableServer::POAManager::State get_state (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  TAO_POA_Manager (TAO_Object_Adapter &object_adapter);
+  char *get_id (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  TAO_POA_Manager (TAO_Object_Adapter &object_adapter,
+                   const char * id,
+                   const ::CORBA::PolicyList & policies,
+                   PortableServer::POAManagerFactory_ptr poa_manager_factory);
 
   ~TAO_POA_Manager (void);
-
-  PortableInterceptor::AdapterManagerId get_manager_id (ACE_ENV_SINGLE_ARG_DECL);
 
   /// Check the state of this POA manager
   void check_state (ACE_ENV_SINGLE_ARG_DECL);
@@ -95,6 +105,8 @@ public:
   virtual CORBA::ORB_ptr _get_orb (
       ACE_ENV_SINGLE_ARG_DECL
     );
+
+  CORBA::PolicyList& get_policies ();
 
 protected:
 
@@ -134,13 +146,6 @@ protected:
 
   int register_poa (TAO_Root_POA *poa);
 
-  /**
-   * Generate an AdapterManagerId for this POAManager.
-   * @return A value that uniquely identifies the POAManager within a
-   *         given process.
-   */
-  PortableInterceptor::AdapterManagerId generate_manager_id (void) const;
-
 protected:
 
   PortableServer::POAManager::State state_;
@@ -153,8 +158,21 @@ protected:
 
   TAO_Object_Adapter &object_adapter_;
 
-  PortableInterceptor::AdapterManagerId poa_manager_id_;
+  CORBA::String_var id_;
 
+  TAO_POAManager_Factory& poa_manager_factory_;
+
+  CORBA::PolicyList policies_;
+
+private :
+
+  /**
+   * Generate an id for this POAManager.
+   * @return A value that uniquely identifies the POAManager within a
+   *         given process.
+   * @note: The id_ has the ownership of the memory allocated in this method.
+   */
+  char* generate_manager_id (void) const;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

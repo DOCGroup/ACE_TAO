@@ -11,6 +11,7 @@
 #include "tao/PortableServer/Default_Servant_Dispatcher.h"
 #include "tao/PortableServer/Collocated_Object_Proxy_Broker.h"
 #include "tao/PortableServer/POAManager.h"
+#include "tao/PortableServer/POAManagerFactory.h"
 #include "tao/PortableServer/Servant_Base.h"
 
 // -- ACE Include --
@@ -591,13 +592,16 @@ TAO_Object_Adapter::open (ACE_ENV_SINGLE_ARG_DECL)
                TAO_Default_Servant_Dispatcher);
     }
 
-  TAO_POA_Manager *poa_manager;
-  ACE_NEW_THROW_EX (poa_manager,
-                    TAO_POA_Manager (*this),
+  ACE_NEW_THROW_EX (this->poa_manager_factory_,
+                    TAO_POAManager_Factory (*this),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK;
 
-  PortableServer::POAManager_var safe_poa_manager = poa_manager;
+  ::CORBA::PolicyList policy;
+  PortableServer::POAManager_var poa_manager
+    = poa_manager_factory_->create_POAManager (TAO_DEFAULT_ROOTPOAMANAGER_NAME,
+                                              policy
+                                              ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
   // This makes sure that the default resources are open when the Root
   // POA is created.
@@ -639,7 +643,7 @@ TAO_Object_Adapter::open (ACE_ENV_SINGLE_ARG_DECL)
   TAO_Root_POA::String root_poa_name (TAO_DEFAULT_ROOTPOA_NAME);
   this->root_ =
     this->servant_dispatcher_->create_Root_POA (root_poa_name,
-                                                *poa_manager,
+                                                poa_manager.in (),
                                                 policies,
                                                 this->lock (),
                                                 this->thread_lock (),
@@ -662,11 +666,6 @@ TAO_Object_Adapter::open (ACE_ENV_SINGLE_ARG_DECL)
   // for this servant.
   this->root_->establish_components (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
-
-  // Release the POA_Manager_var since we got here without error.  The
-  // TAO_POA object takes ownership of the POA_Manager object
-  // (actually it shares the ownership with its peers).
-  (void) safe_poa_manager._retn ();
 }
 
 void
@@ -684,14 +683,18 @@ TAO_Object_Adapter::close (int wait_for_completion
   // destroyed. In the case of the POA, this means that all object
   // etherealizations have finished and root POA has been destroyed
   // (implying that all descendent POAs have also been destroyed).
-
   TAO_Root_POA *root = 0;
+  TAO_POAManager_Factory* factory = 0;
   {
     ACE_GUARD (ACE_Lock, ace_mon, this->lock ());
     if (this->root_ == 0)
       return;
     root = this->root_;
     this->root_ = 0;
+    if (this->poa_manager_factory_ == 0)
+      return;
+    factory = this->poa_manager_factory_;
+    this->poa_manager_factory_ = 0;
   }
   CORBA::Boolean etherealize_objects = 1;
   root->destroy (etherealize_objects,
@@ -699,6 +702,7 @@ TAO_Object_Adapter::close (int wait_for_completion
                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   ::CORBA::release (root);
+  ::CORBA::release (factory);
 }
 
 void

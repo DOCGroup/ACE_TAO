@@ -50,6 +50,7 @@ class TAO_POA_Manager;
 class TAO_TSS_Resources;
 class TAO_Transport;
 class TAO_Servant_Dispatcher;
+class TAO_POAManager_Factory;
 
 namespace TAO
 {
@@ -492,6 +493,9 @@ private:
 
   /// The Root POA
   TAO_Root_POA *root_;
+
+  /// The POAManager factory.
+  TAO_POAManager_Factory *poa_manager_factory_;
 
   /// The default validator and the beginning of the chain of
   /// policy validators.
