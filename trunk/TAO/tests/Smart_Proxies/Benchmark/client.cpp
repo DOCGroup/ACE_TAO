@@ -148,8 +148,6 @@ main (int argc, char *argv[])
                           Smart_Test_Factory,
                           -1);
 
-          // To make KAI Compiler happy as it considers <test_factory> to be
-          // an unused variable.
           ACE_UNUSED_ARG (test_factory);
         }
 
