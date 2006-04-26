@@ -481,7 +481,7 @@ run_main (int argc, ACE_TCHAR *argv[])
     }
 
   // Sanity checks.
-  ACE_ASSERT (sizeof (ACE_CDR::Boolean)    == 1);
+  ACE_ASSERT (sizeof (ACE_CDR::Boolean)    >= 1);
   ACE_ASSERT (sizeof (ACE_CDR::Octet)      == 1);
   ACE_ASSERT (sizeof (ACE_CDR::WChar)      >= 2);
   ACE_ASSERT (sizeof (ACE_CDR::Short)      == 2);
