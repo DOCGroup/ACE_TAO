@@ -26,7 +26,7 @@
 #define ECHO_CLIENT_I_H
 
 #include "OBVC.h"
-#include "Simple_Util.h"
+#include "Simple_util.h"
 
 class Checkpoint_Client_i
 {
