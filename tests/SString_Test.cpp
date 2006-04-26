@@ -26,7 +26,6 @@
 ACE_RCSID(tests, SString_Test, "$Id$")
 
 static int testConcatenation() {
-#ifdef ACE_HAS_WCHAR
   ACE_WString s1;
   s1 += L'H';
   if (s1 != ACE_WString(L"H")) {
@@ -62,7 +61,6 @@ static int testConcatenation() {
     ACE_ERROR((LM_ERROR, "Concat wchar_t 2\n"));
     return 1;
   }
-#endif /* ACE_HAS_WCHAR */
   return 0;
 }
 
@@ -211,7 +209,7 @@ run_main (int, ACE_TCHAR *[])
     ACE_NS_WString s5 = s1 + " " + s2;
     ACE_NS_WString s6 = ("hella"); // Same length as s1, off by one char.
 
-    ACE_WCHAR_T single_character = 'z';
+    wchar_t single_character = 'z';
     ACE_NS_WString single_character_string (single_character);
 
     ACE_NS_WString empty_string;

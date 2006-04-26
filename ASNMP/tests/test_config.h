@@ -99,8 +99,8 @@ do {\
 #define ACE_INIT_LOG(NAME) \
   char temp[BUFSIZ]; \
   ACE_OS::sprintf (temp, "%s%s%s", \
-                   ACE_TEXT_ALWAYS_CHAR (ACE_LOG_DIRECTORY), \
-                   ACE_TEXT_ALWAYS_CHAR (ACE::basename (NAME, ACE_DIRECTORY_SEPARATOR_CHAR)), \
+                   ACE_TEXT_TO_CHAR_IN (ACE_LOG_DIRECTORY), \
+                   ACE_TEXT_TO_CHAR_IN (ACE::basename (NAME, ACE_DIRECTORY_SEPARATOR_CHAR)), \
                    ".log"); \
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Deleting old log file %C (if any)\n\n"), temp)); \
   ACE_OS::unlink (temp);
@@ -146,8 +146,8 @@ ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
   // Ignore the error value since the directory may already exist.
   ACE_OS::mkdir (ACE_LOG_DIRECTORY);
   ACE_OS::sprintf (temp, "%s%s%s",
-                   ACE_TEXT_ALWAYS_CHAR (ACE_LOG_DIRECTORY),
-                   ACE_TEXT_ALWAYS_CHAR (ACE::basename (filename, ACE_DIRECTORY_SEPARATOR_CHAR)),
+                   ACE_TEXT_TO_CHAR_IN (ACE_LOG_DIRECTORY),
+                   ACE_TEXT_TO_CHAR_IN (ACE::basename (filename, ACE_DIRECTORY_SEPARATOR_CHAR)),
                    ".log");
 
   this->output_file_.open (temp, ios::out | (append ? ios::app : ios::trunc));

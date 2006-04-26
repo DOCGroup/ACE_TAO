@@ -20,14 +20,16 @@
 #include "tao/ORB.h"
 #include "orbsvcs/FT_CORBA_ORBC.h"
 #include "orbsvcs/FaultTolerance/FT_IOGR_Property.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID(IOGRManipluation,
           IOGRTest,
           "$Id$")
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
 
   ACE_DEBUG ((LM_DEBUG, "---------------------------------------------\n"));
   ACE_DEBUG ((LM_DEBUG, "Running the IOGRManipulation Tests.\n"));
@@ -36,8 +38,7 @@ main (int argc, char *argv[])
   ACE_TRY
     {
       // Retrieve the ORB.
-      CORBA::ORB_var orb_ = CORBA::ORB_init (argc,
-                                             argv,
+      CORBA::ORB_var orb_ = CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(),
                                              0
                                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;

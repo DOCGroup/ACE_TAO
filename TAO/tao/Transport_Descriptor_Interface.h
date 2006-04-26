@@ -73,7 +73,7 @@ protected:
 
   /// Constructor
   TAO_Transport_Descriptor_Interface (TAO_Endpoint *endpoint,
-                                      CORBA::Boolean take_ownership = 0);
+                                      CORBA::Boolean flag = 0);
 
   /// The base property of the connection ie. the peer's endpoint
   TAO_Endpoint *endpoint_;
@@ -83,7 +83,7 @@ protected:
 
   /// Is the endpoint allocated on the heap? If so, we will have to
   /// delete it when we destruct ourselves.
-  CORBA::Boolean release_;
+  CORBA::Boolean endpoint_from_heap_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

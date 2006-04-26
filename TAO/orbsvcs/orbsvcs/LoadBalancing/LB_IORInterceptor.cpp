@@ -95,7 +95,7 @@ TAO_LB_IORInterceptor::components_established (
 
 void
 TAO_LB_IORInterceptor::adapter_manager_state_changed (
-    const char *,
+    PortableInterceptor::AdapterManagerId,
     PortableInterceptor::AdapterState state
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))

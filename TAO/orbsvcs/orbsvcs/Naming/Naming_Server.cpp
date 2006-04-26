@@ -171,7 +171,7 @@ int
 TAO_Naming_Server::parse_args (int argc,
                                ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("b:do:p:s:f:m:u:r:z:"));
+  ACE_Get_Arg_Opt<ACE_TCHAR> get_opts (argc, argv, ACE_TEXT("b:do:p:s:f:m:u:r:z:"));
 
   int c;
   int size, result;
@@ -208,9 +208,9 @@ TAO_Naming_Server::parse_args (int argc,
           this->context_size_ = size;
         break;
       case 'b':
-        result = ::sscanf (ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ()),
+        result = ::sscanf (ACE_TEXT_TO_CHAR_IN (get_opts.opt_arg ()),
 #if ACE_SIZEOF_VOID_P == ACE_SIZEOF_LONG_LONG
-                           ACE_INT64_FORMAT_SPECIFIER,
+                           ACE_UINT64_FORMAT_SPECIFIER_A,
 #else
                            "%ld",
 #endif /* ACE_SIZEOF_VOID_P */

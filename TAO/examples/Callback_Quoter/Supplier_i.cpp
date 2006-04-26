@@ -86,7 +86,7 @@ Supplier::read_ior (char *filename)
 int
 Supplier::parse_args (void)
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "dn:f:i:xk:xs");
+  ACE_Get_Arg_Opt<char> get_opts (argc_, argv_, "dn:f:i:xk:xs");
 
   int c;
   int result;
@@ -335,7 +335,7 @@ Supplier::reactor_used (void) const
 int
 Supplier::read_file (char *filename)
 {
-  f_ptr_ = ACE_OS::fopen (filename, "r");
+  f_ptr_ = ACE_OS::fopen (filename, ACE_TEXT("r"));
 
   ACE_DEBUG ((LM_DEBUG,
               "filename = %s\n",filename));

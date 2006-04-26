@@ -89,8 +89,6 @@ TAO_IIOP_Connection_Handler::open (void*)
     this->orb_core ()->orb_params ()->nodelay ();
   protocol_properties.keep_alive_ =
     this->orb_core ()->orb_params ()->sock_keepalive ();
-  protocol_properties.dont_route_ =
-   this->orb_core ()->orb_params ()->sock_dontroute ();
 
   TAO_Protocols_Hooks *tph =
     this->orb_core ()->get_protocols_hooks ();
@@ -150,21 +148,6 @@ TAO_IIOP_Connection_Handler::open (void*)
         }
     }
 
-#if !defined (ACE_LACKS_SO_DONTROUTE)
-  if (protocol_properties.dont_route_)
-    {
-      if (this->peer ().
-          set_option (SOL_SOCKET,
-                      SO_DONTROUTE,
-                      (void *) &protocol_properties.dont_route_,
-                      sizeof (protocol_properties.dont_route_)) == -1
-          && errno != ENOTSUP)
-        {
-          return -1;
-        }
-    }
-#endif /* ! ACE_LACKS_SO_DONTROUTE */
-
   if (this->transport ()->wait_strategy ()->non_blocking ()
       || this->transport ()->opened_as () == TAO::TAO_SERVER_ROLE)
     {
@@ -186,9 +169,8 @@ TAO_IIOP_Connection_Handler::open (void*)
   if (TAO_debug_level > 2)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT("TAO (%P|%t) - IIOP_Connection_Handler::open, ")
-                ACE_TEXT("The local addr is <%s:%d> \n"),
-                local_addr.get_host_addr (),
-                local_addr.get_port_number()));
+                ACE_TEXT("The local addr is <%s> \n"),
+                local_addr. get_host_addr ()));
 
   if (local_addr == remote_addr)
     {
@@ -398,7 +380,7 @@ TAO_IIOP_Connection_Handler::process_listen_point_list (
                       ACE_TEXT("process_listen_point_list, ")
                       ACE_TEXT("Listening port [%d] on [%s]\n"),
                       listen_point.port,
-                      ACE_TEXT_CHAR_TO_TCHAR(listen_point.host.in ())));
+                      ACE_TEXT_TO_TCHAR_IN(listen_point.host.in ())));
         }
 
       // Construct an  IIOP_Endpoint object using the host as provided
@@ -496,31 +478,6 @@ TAO_IIOP_Connection_Handler::set_dscp_codepoint (CORBA::Boolean set_network_prio
 
   return 0;
 }
-
-void
-TAO_IIOP_Connection_Handler::abort (void)
-{
-      struct linger lval;
-      lval.l_onoff = 1;
-      lval.l_linger = 0;
-
-      if (this->peer ().set_option(SOL_SOCKET,
-                                   SO_LINGER,
-                                   (void*) &lval,
-                                   sizeof (lval)) == -1)
-        {
-          if (TAO_debug_level)
-            {
-              ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("TAO (%P|%t) Unable to set ")
-                          ACE_TEXT ("SO_LINGER on %d\n"),
-                          this->peer ().get_handle ()));
-            }
-        }
-}
-
-
-
 //@@ CONNECTION_HANDLER_SPL_COPY_HOOK_END
 /*
  * End copy hook

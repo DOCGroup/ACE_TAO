@@ -17,6 +17,8 @@
 #ifndef RTEVENT_LOGGING_SERVICE_H
 #define RTEVENT_LOGGING_SERVICE_H
 
+#include "ace/SString.h"
+
 #include "orbsvcs/RtecEventChannelAdminS.h"
 #include "orbsvcs/RtecSchedulerS.h"
 
@@ -37,24 +39,24 @@ public:
   RTEvent_Logging_Service (void);
   virtual ~RTEvent_Logging_Service (void);
 
-  int run (int argc, char* argv[]);
+  int run (int argc, ACE_TCHAR* argv[]);
   // Run the event service.
 
 private:
-  int parse_args (int argc, char* argv[]);
+  int parse_args (int argc, ACE_TCHAR* argv[]);
   // parse the command line args
 
 private:
   POA_RtecScheduler::Scheduler *sched_impl_;
   // The Scheduler implementation.
 
-  const char* service_name_;
+  ACE_CString service_name_;
   // The name we use to bind with the NameService
 
-  const char* ior_file_name_;
+  ACE_CString ior_file_name_;
   // The name of the file were we output the Event_Service IOR.
 
-  const char* pid_file_name_;
+  ACE_CString pid_file_name_;
   // The name of a file where the process stores its pid
 
   int global_scheduler_;

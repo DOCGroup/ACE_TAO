@@ -28,6 +28,8 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+class TAO_Connector;
+
 /**
  * @class TAO_Reactive_Connect_Strategy
  *
@@ -51,8 +53,12 @@ public:
   virtual void synch_options (ACE_Time_Value *val,
                               ACE_Synch_Options &opt);
 
-protected:
-  virtual int wait_i (TAO_LF_Event *ch, TAO_Transport *, ACE_Time_Value *val);
+  virtual int wait (TAO_Connection_Handler *ch,
+                     ACE_Time_Value *val);
+
+
+  virtual int wait (TAO_Transport *t,
+                     ACE_Time_Value *val);
 
 };
 

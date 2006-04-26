@@ -6,6 +6,7 @@ project(TAO_IDL_EXE) : aceexe, core, tao_output, crosscompile {
   libs        += TAO_IDL_BE TAO_IDL_FE
   install      = $(ACE_ROOT)/bin
   after       += TAO_IDL_BE TAO_IDL_FE gperf
+  avoids      += uses_wchar
 
   specific (automake) {
     includes    += $(srcdir)/include $(srcdir)/be_include $(srcdir)/fe

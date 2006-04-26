@@ -19,6 +19,7 @@
 
 #include <ace/Get_Opt.h>
 #include <ace/OS_NS_stdio.h>
+#include "ace/Argv_Type_Converter.h"
 
 FTAPP::FT_Creator::FT_Creator ()
   : creator_ ()
@@ -43,7 +44,7 @@ FTAPP::FT_Creator::parse_args (int argc, char *argv[])
 {
   int result = 0;
 
-  ACE_Get_Opt get_opts (argc, argv, "r:ignf:u:p:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "r:ignf:u:p:");
   int c;
 
   while (result == 0 && (c = get_opts ()) != -1)
@@ -255,15 +256,17 @@ int FTAPP::FT_Creator::fini ()
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   int result = 0;
   ACE_TRY_NEW_ENV
   {
-    CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
+    CORBA::ORB_var orb = CORBA::ORB_init(convert.get_argc(), convert.get_ASCII_argv());
     ACE_TRY_CHECK;
     FTAPP::FT_Creator app;
-    result = app.parse_args(argc, argv);
+    result = app.parse_args(convert.get_argc(), convert.get_ASCII_argv());
     if (result == 0)
     {
       result = app.init (orb.in () ACE_ENV_ARG_PARAMETER);

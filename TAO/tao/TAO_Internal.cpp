@@ -102,7 +102,7 @@ TAO::ORB::open_services (int &argc, ACE_TCHAR **argv)
 
   if (argc > 0 && argv != 0)
     {
-      argv0 = ACE_TEXT_ALWAYS_CHAR (argv[0]);
+      argv0 = ACE_TEXT_TO_CHAR_OUT (argv[0]);
     }
 
   CORBA::ULong len = 0;
@@ -193,7 +193,7 @@ TAO::ORB::open_services (int &argc, ACE_TCHAR **argv)
           // configuration information rather than using a svc.conf
           // file.  Pass the "-S" to the service configurator.
           svc_config_argv[len] = CORBA::string_dup ("-S");
-          svc_config_argv[len + 1] = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(current_arg));
+          svc_config_argv[len + 1] = CORBA::string_dup (current_arg);
 
           arg_shifter.consume_arg ();
         }
@@ -227,7 +227,7 @@ TAO::ORB::open_services (int &argc, ACE_TCHAR **argv)
           svc_config_argv.length (len + 2);  // 2 arguments to add
 
           svc_config_argv[len] = CORBA::string_dup ("-f");
-          svc_config_argv[len + 1] = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(current_arg));
+          svc_config_argv[len + 1] = CORBA::string_dup (current_arg);
 
           arg_shifter.consume_arg();
         }
@@ -237,7 +237,7 @@ TAO::ORB::open_services (int &argc, ACE_TCHAR **argv)
           svc_config_argv.length (len + 2);  // 2 arguments to add
 
           svc_config_argv[len] = CORBA::string_dup ("-k");
-          svc_config_argv[len + 1] = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(current_arg));
+          svc_config_argv[len + 1] = CORBA::string_dup (current_arg);
 
           arg_shifter.consume_arg ();
         }
@@ -423,19 +423,19 @@ namespace
     if (resource_factory_args != 0)
       {
         ACE_Service_Config::process_directive (
-          ACE_TEXT_CHAR_TO_TCHAR (resource_factory_args));
+          ACE_TEXT_TO_TCHAR_IN (resource_factory_args));
       }
 
     if (client_strategy_factory_args != 0)
       {
         ACE_Service_Config::process_directive (
-          ACE_TEXT_CHAR_TO_TCHAR (client_strategy_factory_args));
+          ACE_TEXT_TO_TCHAR_IN (client_strategy_factory_args));
       }
 
     if (server_strategy_factory_args != 0)
       {
         ACE_Service_Config::process_directive (
-          ACE_TEXT_CHAR_TO_TCHAR (server_strategy_factory_args));
+          ACE_TEXT_TO_TCHAR_IN (server_strategy_factory_args));
       }
 
     return result;

@@ -333,7 +333,7 @@ lookup_all_subtypes (const char* type,
 
       for (CORBA::ULong j = 0; j < num_super_types; j++)
         {
-          if (ACE_OS::strcmp (type_struct->super_types[j], type) == 0)
+          if (ACE_OS::strcmp (static_cast<const char*>(type_struct->super_types[j]), type) == 0)
             {
               // Egads, a subtype! This type has the type passed
               // to query in its list of super_types.
@@ -1686,7 +1686,7 @@ add_link (const char *name,
     ACE_THROW (CosTrading::Link::IllegalLinkName (name));
 
   // Ensure this isn't a duplicate link name.
-  CORBA::String_var link_name (name);
+  TAO_String_Hash_Key link_name (name);
   if (this->links_.find (link_name) == 0)
     ACE_THROW (CosTrading::Link::DuplicateLinkName (name));
 
@@ -1736,7 +1736,7 @@ remove_link (const char *name
     ACE_THROW (CosTrading::Link::IllegalLinkName (name));
 
   // Ensure this isn't a duplicate link name.
-  CORBA::String_var link_name (name);
+  TAO_String_Hash_Key link_name (name);
   if (this->links_.find (link_name) == -1)
     ACE_THROW (CosTrading::Link::UnknownLinkName (name));
 
@@ -1758,7 +1758,7 @@ TAO_Link<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::describe_link (const char *name
 
   // Ensure this isn't a duplicate link name.
   ACE_TYPENAME Links::ENTRY* link_entry = 0;
-  CORBA::String_var link_name (name);
+  TAO_String_Hash_Key link_name (name);
   if (this->links_.find (link_name, link_entry) == -1)
     ACE_THROW_RETURN (CosTrading::Link::UnknownLinkName (name),
                       0);
@@ -1827,7 +1827,7 @@ modify_link (const char *name,
 
   // Ensure this isn't a duplicate link name.
   ACE_TYPENAME Links::ENTRY* link_entry = 0;
-  CORBA::String_var link_name (name);
+  TAO_String_Hash_Key link_name (name);
   if (this->links_.find (link_name, link_entry) == -1)
     ACE_THROW (CosTrading::Link::UnknownLinkName (name));
 

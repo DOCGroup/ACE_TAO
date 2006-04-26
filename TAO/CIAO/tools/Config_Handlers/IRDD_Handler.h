@@ -68,4 +68,3 @@ throw (Config_Error);
 
 #include /**/ "ace/post.h"
 #endif /* CIAO_CONFIG_HANDLERS_IRDD_Handler_H */
-

@@ -20,7 +20,6 @@ project(BMDevice_DnC_stub): ciao_events_base_dnc {
 }
 
 project(BMDevice_DnC_svnt) : ciao_servant_dnc {
-  avoids += ace_for_tao
   after += BMDevice_DnC_stub BasicSP_DnC_stub
   sharedname  = BMDevice_svnt
   libs    += BMDevice_stub BasicSP_stub BasicSP_svnt
@@ -45,7 +44,6 @@ project(BMDevice_DnC_svnt) : ciao_servant_dnc {
 
 
 project(BMDevice_DnC_exec) : ciao_component_dnc {
-  avoids += ace_for_tao
   after += BMDevice_DnC_svnt
   sharedname = BMDevice_exec
   libs      += BMDevice_stub BMDevice_svnt BasicSP_stub BasicSP_svnt

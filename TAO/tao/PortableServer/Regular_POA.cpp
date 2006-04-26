@@ -12,7 +12,7 @@ ACE_RCSID (PortableServer,
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Regular_POA::TAO_Regular_POA (const TAO_Root_POA::String &name,
-                                  PortableServer::POAManager_ptr poa_manager,
+                  TAO_POA_Manager &poa_manager,
                   const TAO_POA_Policy_Set &policies,
                   TAO_Root_POA *parent,
                   ACE_Lock &lock,

@@ -4,6 +4,7 @@
 #include "tao/Codeset/Codeset.h"
 #include "testC.h"
 #include "ace/OS_NS_string.h"
+#include "ace/Argv_Type_Converter.h"
 
 #include "ace/Log_Msg.h"
 
@@ -64,8 +65,8 @@ verify_data (Foo::Bar *original, Foo::Bar *extracted)
   if (original->A != extracted->A
       || original->B != extracted->B
       || original->C != extracted->C
-      || (ACE_OS::strcmp (original->D, extracted->D) != 0)
-      || (ACE_OS::strcmp (original->E, extracted->E) != 0))
+      || (ACE_OS::strcmp (original->D.in(), extracted->D.in()) != 0)
+      || (ACE_OS::strcmp (original->E.in(), extracted->E.in()) != 0))
     return -1;
 
   return 0;
@@ -182,15 +183,19 @@ test_codec (IOP::Codec_ptr codec)
 }
 
 int
-main (int argc, char *argv[])
+//main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   int retval = 0;
+
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc,
-                         argv,
+        CORBA::ORB_init (convert.get_argc(),
+                         convert.get_ASCII_argv(),
                          "my_orb"
                          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;

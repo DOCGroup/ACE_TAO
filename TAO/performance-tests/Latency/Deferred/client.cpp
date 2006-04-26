@@ -30,7 +30,7 @@ int do_dump_history = 0;
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "hxk:i:b:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "hxk:i:b:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -74,7 +74,7 @@ parse_args (int argc, char *argv[])
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   int priority =
     (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO)

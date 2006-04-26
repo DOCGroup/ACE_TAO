@@ -123,11 +123,11 @@ run_service_command (Activator_Options& opts)
 #if defined (ACE_WIN32)
   SERVICE::instance()->name (IMR_ACTIVATOR_SERVICE_NAME, IMR_ACTIVATOR_DISPLAY_NAME);
 
-  if (opts.service_command () == Activator_Options::SC_INSTALL ||
-    opts.service_command () == Activator_Options::SC_INSTALL_NO_LOCATOR)
-      {
-        const DWORD MAX_PATH_LENGTH = 4096;
-        char pathname[MAX_PATH_LENGTH];
+  if (opts.service_command() == Activator_Options::SC_INSTALL ||
+    opts.service_command() == Activator_Options::SC_INSTALL_NO_LOCATOR)
+    {
+      const DWORD MAX_PATH_LENGTH = 4096;
+      ACE_TCHAR pathname[MAX_PATH_LENGTH];
 
         DWORD length = ACE_TEXT_GetModuleFileName(NULL, pathname, MAX_PATH_LENGTH);
         if (length == 0 || length >= MAX_PATH_LENGTH - sizeof(" -s"))
@@ -141,7 +141,7 @@ run_service_command (Activator_Options& opts)
         int ret = -1;
         if (opts.service_command () == Activator_Options::SC_INSTALL)
           {
-            const char* DEPENDS_ON = "TAOImR"; // Must match Locator_NT_Service.h
+            const ACE_TCHAR* DEPENDS_ON = ACE_TEXT("TAOImR"); // Must match Locator_NT_Service.h
 
             ret =  SERVICE::instance ()->insert (SERVICE_DEMAND_START,
                                                 SERVICE_ERROR_NORMAL,
@@ -192,7 +192,7 @@ run_service_command (Activator_Options& opts)
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   Activator_Options opts;
 
@@ -213,4 +213,3 @@ main (int argc, char *argv[])
 
   return run_standalone (opts);
 }
-

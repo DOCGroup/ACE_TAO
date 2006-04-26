@@ -2,6 +2,7 @@
 // $Id$
 
 project(*idl): taoidldefaults {
+  avoids += uses_wchar
   IDL_Files {
     MCast.idl
   }
@@ -10,6 +11,7 @@ project(*idl): taoidldefaults {
 
 project(*server): namingexe, iortable, svc_utils {
   exename = server
+  avoids += uses_wchar
 
   after += *idl
   Source_Files {
@@ -25,6 +27,7 @@ project(*server): namingexe, iortable, svc_utils {
 
 project(*client): namingexe, iortable, svc_utils {
   exename = client
+  avoids += uses_wchar
 
   after += *idl
   Source_Files {

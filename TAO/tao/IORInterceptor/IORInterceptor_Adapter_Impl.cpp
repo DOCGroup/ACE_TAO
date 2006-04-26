@@ -109,7 +109,7 @@ TAO_IORInterceptor_Adapter_Impl::establish_components (
                   ACE_DEBUG ((LM_WARNING,
                               "(%P|%t) Exception thrown while processing "
                               "IORInterceptor \"%s\">\n",
-                              ACE_TEXT_CHAR_TO_TCHAR (name.in ())));
+                              ACE_TEXT_TO_TCHAR_IN (name.in ())));
                 }
 
               ACE_PRINT_TAO_EXCEPTION (ACE_ANY_EXCEPTION,
@@ -220,7 +220,7 @@ TAO_IORInterceptor_Adapter_Impl::adapter_state_changed (
 
 void
 TAO_IORInterceptor_Adapter_Impl::adapter_manager_state_changed (
-      const char * id,
+      PortableInterceptor::AdapterManagerId id,
       PortableInterceptor::AdapterState state
       ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))

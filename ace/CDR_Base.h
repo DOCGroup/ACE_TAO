@@ -38,6 +38,7 @@
 
 #include "ace/Basic_Types.h"
 #include "ace/Default_Constants.h"
+#include "ace/If_Then_Else.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -167,10 +168,18 @@ public:
    * avoid complaints from all compilers is to define them all.
    */
   //@{
-  typedef bool Boolean;
+  typedef ACE::If_Then_Else<(sizeof (bool) == 1),
+                            bool,
+                            unsigned char>::result_type Boolean;
+
+# if !defined (ACE_CDR_WCHAR_OVERRIDE) || defined(ACE_USES_WCHAR)
+#  undef ACE_CDR_WCHAR_OVERRIDE
+#  define ACE_CDR_WCHAR_OVERRIDE wchar_t
+# endif
+
   typedef unsigned char Octet;
   typedef char Char;
-  typedef ACE_WCHAR_T WChar;
+  typedef ACE_CDR_WCHAR_OVERRIDE WChar;
   typedef ACE_INT16 Short;
   typedef ACE_UINT16 UShort;
   typedef ACE_INT32 Long;

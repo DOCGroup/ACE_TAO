@@ -47,7 +47,7 @@ public:
   void add_callback (Control &);
   // Adds the callbacks to the GUI underneath.....
 
-  void parse_args (int argc, char *argv[]
+  void parse_args (int argc, ACE_TCHAR *argv[]
                    ACE_ENV_ARG_DECL);
 private:
 

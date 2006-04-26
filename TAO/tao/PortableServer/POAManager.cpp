@@ -1,7 +1,6 @@
 // $Id$
 
 #include "tao/PortableServer/POAManager.h"
-#include "tao/PortableServer/POAManagerFactory.h"
 #include "tao/PortableServer/Root_POA.h"
 #include "tao/PortableServer/poa_macros.h"
 #include "tao/Server_Strategy_Factory.h"
@@ -18,36 +17,23 @@ ACE_RCSID (PortableServer,
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_POA_Manager::TAO_POA_Manager (
-  TAO_Object_Adapter &object_adapter,
-  const char * id,
-  const ::CORBA::PolicyList &policies,
-  PortableServer::POAManagerFactory_ptr poa_manager_factory)
+TAO_POA_Manager::TAO_POA_Manager (TAO_Object_Adapter &object_adapter)
   : state_ (PortableServer::POAManager::HOLDING),
     lock_ (object_adapter.lock ()),
     poa_collection_ (),
     object_adapter_ (object_adapter),
-    id_ (id == 0 ? this->generate_manager_id () : CORBA::string_dup (id)),
-    poa_manager_factory_ (* (dynamic_cast <TAO_POAManager_Factory*> (poa_manager_factory))),
-    policies_ (policies)
+    poa_manager_id_ (this->generate_manager_id ())
 {
-  poa_manager_factory->_add_ref ();
 }
 
 TAO_POA_Manager::~TAO_POA_Manager (void)
 {
-  if (TAO_debug_level > 0)
-    {
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t)~TAO_POA_Manager : %s\n", this->id_.in ()));
-    }
-  poa_manager_factory_._remove_ref ();
 }
 
-char *
-TAO_POA_Manager::get_id (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+PortableInterceptor::AdapterManagerId
+TAO_POA_Manager::get_manager_id (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
-  return CORBA::string_dup (this->id_.in ());
+  return this->poa_manager_id_;
 }
 
 void
@@ -176,7 +162,7 @@ TAO_POA_Manager::adapter_manager_state_changed (PortableServer::POAManager::Stat
 
   if (ior_adapter)
     {
-      ior_adapter->adapter_manager_state_changed (this->id_.in (),
+      ior_adapter->adapter_manager_state_changed (TAO_POA_Manager::poa_manager_id_,
                                                   adapter_state
                                                   ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
@@ -317,7 +303,7 @@ TAO_POA_Manager::remove_poa (TAO_Root_POA *poa)
     {
       if (this->poa_collection_.is_empty ())
         {
-          this->poa_manager_factory_.remove_poamanager (this);
+          ::CORBA::release (this);
         }
     }
 

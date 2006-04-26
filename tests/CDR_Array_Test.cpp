@@ -897,7 +897,7 @@ run_main (int argc, ACE_TCHAR *argv[])
               ACE::minor_version(),
               ACE::beta_version()));
 
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("d:f:q:w:h:c:t:n:"));
+  ACE_Get_Arg_Opt<ACE_TCHAR>  get_opt (argc, argv, ACE_TEXT ("d:f:q:w:h:c:t:n:"));
   int dtotal = 0;
   int ftotal = 0;
   int qtotal = 0;
@@ -1002,3 +1002,26 @@ run_main (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class CDR_Test<ACE_CDR::Double, DoubleHelper>;
+template class CDR_Test<ACE_CDR::Float, FloatHelper>;
+#if !defined (ACE_LACKS_LONGLONG_T)
+ template class CDR_Test<ACE_CDR::LongLong, LongLongHelper>;
+#endif /* ! ACE_LACKS_LONGLONG_T */
+template class CDR_Test<ACE_CDR::Long, LongHelper>;
+template class CDR_Test<ACE_CDR::Short, ShortHelper>;
+template class CDR_Test<ACE_CDR::Char, CharHelper>;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate CDR_Test<ACE_CDR::Double, DoubleHelper>
+#pragma instantiate CDR_Test<ACE_CDR::Float, FloatHelper>
+#if !defined (ACE_LACKS_LONGLONG_T)
+# pragma instantiate CDR_Test<ACE_CDR::LongLong, LongLongHelper>
+#endif /* ! ACE_LACKS_LONGLONG_T */
+#pragma instantiate CDR_Test<ACE_CDR::Long, LongHelper>
+#pragma instantiate CDR_Test<ACE_CDR::Short, ShortHelper>
+#pragma instantiate CDR_Test<ACE_CDR::Char, CharHelper>
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

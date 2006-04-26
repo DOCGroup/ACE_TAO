@@ -621,10 +621,10 @@ private:
   TAO_Offer_Modifier (const TAO_Offer_Modifier&);
   TAO_Offer_Modifier& operator= (const TAO_Offer_Modifier&);
 
-  typedef ACE_Hash_Map_Manager_Ex <CORBA::String_var,
+  typedef ACE_Hash_Map_Manager_Ex <TAO_String_Hash_Key,
                                    CosTrading::Property *,
-                                   ACE_Hash<CORBA::String_var>,
-                                   ACE_Equal_To<CORBA::String_var>,
+                                   ACE_Hash<TAO_String_Hash_Key>,
+                                   ACE_Equal_To<TAO_String_Hash_Key>,
                                    ACE_Null_Mutex>
           Property_Table;
 
@@ -639,8 +639,7 @@ private:
 
   /// The set of readonly and mandatory property names in the offer's
   /// type.
-  TAO_String_Set readonly_;
-  TAO_String_Set mandatory_;
+  TAO_String_Set readonly_, mandatory_;
 
   /// A reference to the offer undergoing change.
   CosTrading::Offer* offer_;

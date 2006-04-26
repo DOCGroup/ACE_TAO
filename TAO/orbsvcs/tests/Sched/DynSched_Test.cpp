@@ -2,6 +2,7 @@
 
 #include "orbsvcs/Sched/Strategy_Scheduler.h"
 #include "orbsvcs/Time_Utilities.h"
+#include "ace/Argv_Type_Converter.h"
 #if defined (ACE_HAS_QUANTIFY)
 # include <quantify.h>
 #endif /* ACE_HAS_QUANTIFY */
@@ -258,7 +259,7 @@ DynSched_Test::run_schedule (ACE_Scheduler_Strategy &strategy,
 }
 
 int
-main (int, char *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   int result = 0;
 

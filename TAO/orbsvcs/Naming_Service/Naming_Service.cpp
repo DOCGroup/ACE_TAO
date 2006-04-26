@@ -70,7 +70,7 @@ int
 TAO_Naming_Service::parse_args (int &argc,
                                 ACE_TCHAR* argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("-t:"));
+  ACE_Get_Arg_Opt<ACE_TCHAR> get_opts (argc, argv, ACE_TEXT("-t:"));
   int c;
 
   while ((c = get_opts ()) != -1)

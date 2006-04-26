@@ -40,7 +40,7 @@ class TAO_CSD_FW_Export TAO_CSD_POA
 public:
   //Constructor 
   TAO_CSD_POA (const String &name,
-               PortableServer::POAManager_ptr poa_manager,
+              TAO_POA_Manager &poa_manager,
               const TAO_POA_Policy_Set &policies,
               TAO_Root_POA *parent,
               ACE_Lock &lock,
@@ -80,7 +80,7 @@ public:
 
   ///Method for creating new CSD POA.
   TAO_Root_POA * new_POA (const String &name,
-                          PortableServer::POAManager_ptr poa_manager,
+                          TAO_POA_Manager &poa_manager,
                           const TAO_POA_Policy_Set &policies,
                           TAO_Root_POA *parent,
                           ACE_Lock &lock,

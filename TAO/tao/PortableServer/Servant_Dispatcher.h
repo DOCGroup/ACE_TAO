@@ -36,12 +36,6 @@ class TAO_Root_POA;
 class TAO_ORB_Core;
 class TAO_ServerRequest;
 
-namespace PortableServer
-{
-  class POAManager;
-  typedef POAManager *POAManager_ptr;
-}
-
 /**
  * @class TAO_Servant_Dispatcher
  *
@@ -76,7 +70,7 @@ public:
   /// Factory method for creating new POA's.
   virtual TAO_Root_POA *create_Root_POA (
       const ACE_CString &name,
-      PortableServer::POAManager_ptr poa_manager,
+      TAO_POA_Manager &poa_manager,
       const TAO_POA_Policy_Set &policies,
       ACE_Lock &lock,
       TAO_SYNCH_MUTEX &thread_lock,

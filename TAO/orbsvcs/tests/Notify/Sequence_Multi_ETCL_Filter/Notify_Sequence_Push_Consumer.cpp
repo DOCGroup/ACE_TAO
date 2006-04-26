@@ -72,15 +72,15 @@ Notify_Sequence_Push_Consumer::push_structured_events (
   this->count_ += events.length();
 
   if (this->count_ > this->high_)
-  {
-    this->client_.consumer_done (this);
-    ACE_ERROR ((LM_ERROR,
-      ACE_TEXT ("Sequence Consumer (%P|%t): ERROR: too "
-      "many events received.\n")));
-    ACE_THROW (CORBA::INTERNAL ());
-  }
-  else if (this->count_ >= this->low_)
-  {
-    this->client_.consumer_done (this);
-  }
+    {
+      this->client_.consumer_done (this);
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Sequence Consumer (%P|%t): ERROR: too ")
+                  ACE_TEXT ("many events received.\n")));
+      ACE_THROW (CORBA::INTERNAL ());
+    }
+  else if (this->count_ == this->low_)
+    {
+      this->client_.consumer_done (this);
+    }
 }

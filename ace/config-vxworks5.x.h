@@ -36,6 +36,11 @@
 
 # define ACE_LACKS_LINEBUFFERED_STREAMBUF
 
+// ACE WChar support
+#define ACE_SIZEOF_WCHAR 4
+#define ACE_WCHAR_MAX    0xFFFFFFFF
+#undef ACE_LACKS_BUILTIN_WCHAR_T
+
 // An explicit check for Tornado 2.1, which had very limited release.
 // See include/makeinclude/platform_vxworks5.x_g++.GNU for details
 // on version conventions used by ACE for VxWorks.
@@ -140,8 +145,11 @@
 #define ACE_LACKS_ACCESS
 #define ACE_LACKS_EXEC
 #define ACE_LACKS_FCNTL
+#define ACE_LACKS_FGETWC
+#define ACE_LACKS_FGETWS
 #define ACE_LACKS_FILELOCKS
 #define ACE_LACKS_FORK
+#define ACE_LACKS_FPUTWS
 #define ACE_LACKS_FSYNC
 #define ACE_LACKS_GETHOSTENT
 #define ACE_LACKS_GETOPT
@@ -196,6 +204,7 @@
 #define ACE_LACKS_NATIVE_STRPTIME
 #define ACE_LACKS_WAIT
 #define ACE_LACKS_WAITPID
+#define ACE_LACKS_WCTYPE_H
 #define ACE_LACKS_DUP2
 #define ACE_LACKS_DUP
 #define ACE_LACKS_SUSECONDS_T

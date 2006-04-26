@@ -136,8 +136,7 @@ TAO_ORB_Core_Static_Resources::TAO_ORB_Core_Static_Resources (void)
     iorinterceptor_adapter_factory_name_ ("IORInterceptor_Adapter_Factory"),
     valuetype_adapter_factory_name_ ("valuetype_Adapter_Factory"),
     poa_factory_name_ ("TAO_Object_Adapter_Factory"),
-    poa_factory_directive_ (ACE_TEXT_ALWAYS_CHAR (ACE_DYNAMIC_SERVICE_DIRECTIVE("TAO_Object_Adapter_Factory", "TAO_PortableServer", "_make_TAO_Object_Adapter_Factory", ""))),
-    alt_connection_timeout_hook_ (0)
+    poa_factory_directive_ (ACE_TEXT_TO_CHAR_IN (ACE_DYNAMIC_SERVICE_DIRECTIVE("TAO_Object_Adapter_Factory", "TAO_PortableServer", "_make_TAO_Object_Adapter_Factory", "")))
 {
 }
 
@@ -339,9 +338,6 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
   // Use SO_KEEPALIVE (default 0).
   int so_keepalive = 0;
 
-  // Use SO_DONTROUTE (default 0)
-  int so_dontroute = 0;
-
   // Use dotted decimal addresses
   // @@ This option will be treated as a suggestion to each loaded
   //    protocol to use a character representation for the numeric
@@ -362,8 +358,6 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
 #endif /* TAO_STD_PROFILE_COMPONENTS */
 
   int linger = -1;
-
-  int use_parallel_connects = 0;
 
   // Copy command line parameter not to use original.
   ACE_Argv_Type_Converter command_line (argc, argv);
@@ -438,7 +432,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
           // If there is a '@' also, it means that the network
           // interface name is specified.
           this->orb_params ()->mcast_discovery_endpoint (
-            ACE_TEXT_ALWAYS_CHAR(current_arg));
+            ACE_TEXT_TO_CHAR_IN(current_arg));
 
           arg_shifter.consume_arg ();
         }
@@ -456,15 +450,6 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
         {
           // Use SO_KEEPALIVE or not.
           so_keepalive =
-            ACE_OS::atoi (current_arg);
-
-          arg_shifter.consume_arg ();
-        }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter
-                (ACE_LIB_TEXT("-ORBDontRoute"))))
-        {
-          // Use SO_DONTROUTE or not.
-          so_dontroute =
             ACE_OS::atoi (current_arg);
 
           arg_shifter.consume_arg ();
@@ -590,7 +575,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
                 (ACE_TEXT("-ORBPreferredInterfaces"))))
         {
           if (this->orb_params ()->preferred_interfaces (
-                ACE_TEXT_ALWAYS_CHAR (current_arg)) == false)
+                ACE_TEXT_TO_CHAR_IN (current_arg)) == false)
             ACE_THROW_RETURN (CORBA::INTERNAL (
                                   CORBA::SystemException::_tao_minor_code (
                                     TAO_ORB_CORE_INIT_LOCATION_CODE,
@@ -663,9 +648,9 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
                                   CORBA::COMPLETED_NO),
                                 -1);
             }
-          ACE_CString object_id (ACE_TEXT_ALWAYS_CHAR(current_arg),
+          ACE_CString object_id (ACE_TEXT_TO_CHAR_IN(current_arg),
                                  pos - current_arg);
-          ACE_CString IOR (ACE_TEXT_ALWAYS_CHAR(pos + 1));
+          ACE_CString IOR (ACE_TEXT_TO_CHAR_IN(pos + 1));
           if (!this->init_ref_map_.insert (
                  std::make_pair (InitRefMap::key_type (object_id),
                                  InitRefMap::data_type (IOR))).second)
@@ -687,7 +672,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
                 (ACE_TEXT("-ORBDefaultInitRef"))))
         {
           // Set the list of prefixes from -ORBDefaultInitRef.
-          this->orb_params ()->default_init_ref (ACE_TEXT_ALWAYS_CHAR(current_arg));
+          this->orb_params ()->default_init_ref (ACE_TEXT_TO_CHAR_IN(current_arg));
 
           arg_shifter.consume_arg ();
         }
@@ -746,7 +731,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
                               CORBA::COMPLETED_NO));
           ACE_CHECK_RETURN (-1);
 
-          output_stream->open (ACE_TEXT_ALWAYS_CHAR (file_name), ios::out | ios::app);
+          output_stream->open (ACE_TEXT_TO_CHAR_IN (file_name), ios::out | ios::app);
 
           if (!output_stream->bad ())
             {
@@ -824,7 +809,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
           // The this->server_id_ is to uniquely identify a server to
           // an IMR.
           // Fill in later.
-          this->server_id_.set(ACE_TEXT_ALWAYS_CHAR(current_arg));
+          this->server_id_.set(ACE_TEXT_TO_CHAR_IN(current_arg));
 
           arg_shifter.consume_arg ();
         }
@@ -858,7 +843,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
           // All endpoint strings should be of the above form(s).
 
           this->set_endpoint_helper (TAO_DEFAULT_LANE,
-                                     ACE_TEXT_ALWAYS_CHAR (current_arg)
+                                     ACE_TEXT_TO_CHAR_IN (current_arg)
                                      ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (-1);
 
@@ -873,7 +858,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
           // used.
 
           this->set_endpoint_helper (TAO_DEFAULT_LANE,
-                                     ACE_TEXT_ALWAYS_CHAR (current_arg)
+                                     ACE_TEXT_TO_CHAR_IN (current_arg)
                                      ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (-1);
 
@@ -890,13 +875,13 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
           if (arg_shifter.is_option_next ())
             return -1;
 
-          ACE_CString lane (ACE_TEXT_ALWAYS_CHAR (current_arg));
+          ACE_CString lane (ACE_TEXT_TO_CHAR_IN (current_arg));
           arg_shifter.consume_arg ();
 
           if(arg_shifter.is_option_next ())
             return -1;
 
-          ACE_CString endpoints (ACE_TEXT_ALWAYS_CHAR (arg_shifter.get_current ()));
+          ACE_CString endpoints (ACE_TEXT_TO_CHAR_IN (arg_shifter.get_current ()));
           arg_shifter.consume_arg ();
 
           this->set_endpoint_helper (lane,
@@ -929,20 +914,6 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
                  (ACE_TEXT("-ORBNegotiateCodesets"))))
          {
            negotiate_codesets =
-             (ACE_OS::atoi (current_arg));
-
-           arg_shifter.consume_arg ();
-         }
-       else if ((current_arg = arg_shifter.get_the_parameter
-                 (ACE_LIB_TEXT("-ORBUseParallelConnects"))))
-         {
-           use_parallel_connects = ACE_OS::atoi (current_arg);
-           arg_shifter.consume_arg ();
-         }
-       else if ((current_arg = arg_shifter.get_the_parameter
-                 (ACE_LIB_TEXT("-ORBParallelConnectDelay"))))
-         {
-           this->orb_params ()->parallel_connect_delay
              (ACE_OS::atoi (current_arg));
            arg_shifter.consume_arg ();
          }
@@ -1184,14 +1155,9 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
   this->orb_params ()->cache_incoming_by_dotted_decimal_address
                                             (no_server_side_name_lookups
                                              || dotted_decimal_addresses);
-
-  this->orb_params ()->use_parallel_connects
-    (use_parallel_connects != 0);
-
   this->orb_params ()->linger (linger);
   this->orb_params ()->nodelay (nodelay);
   this->orb_params ()->sock_keepalive (so_keepalive);
-  this->orb_params ()->sock_dontroute (so_dontroute);
   if (rcv_sock_size >= 0)
     this->orb_params ()->sock_rcvbuf_size (rcv_sock_size);
   if (snd_sock_size >= 0)
@@ -1300,7 +1266,7 @@ TAO_ORB_Core::fini (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("Destroying ORB <%s>\n"),
-                  ACE_TEXT_CHAR_TO_TCHAR (this->orbid_)));
+                  ACE_TEXT_TO_TCHAR_IN (this->orbid_)));
     }
 
   // Finalize lane resources.
@@ -1711,7 +1677,7 @@ TAO_ORB_Core::root_poa (ACE_ENV_SINGLE_ARG_DECL)
       if (factory == 0)
         {
           ACE_Service_Config::process_directive (
-           ACE_TEXT_CHAR_TO_TCHAR (
+           ACE_TEXT_TO_TCHAR_IN (
              static_resources->poa_factory_directive_.c_str()));
           factory =
             ACE_Dynamic_Service<TAO_Adapter_Factory>::instance (
@@ -2481,7 +2447,7 @@ TAO_ORB_Core::set_endpoint_helper (const ACE_CString &lane,
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%P|%t)\n")
                   ACE_TEXT ("Invalid endpoint(s) specified:\n%s\n"),
-                  ACE_TEXT_CHAR_TO_TCHAR(endpoints.c_str ())));
+                  ACE_TEXT_TO_TCHAR_IN(endpoints.c_str ())));
       ACE_THROW_RETURN (CORBA::BAD_PARAM (
                            CORBA::SystemException::_tao_minor_code (
                               TAO_ORB_CORE_INIT_LOCATION_CODE,
@@ -2837,77 +2803,15 @@ TAO_ORB_Core::call_timeout_hook (TAO_Stub *stub,
       return;
     }
   (*timeout_hook) (this, stub, has_timeout, time_value);
-
-  Timeout_Hook alt_connection_timeout_hook =
-    TAO_ORB_Core_Static_Resources::instance ()->alt_connection_timeout_hook_;
-
-  if (alt_connection_timeout_hook == 0)
-    return;
-
-  if (!has_timeout || time_value == ACE_Time_Value::zero )
-    {
-      (*alt_connection_timeout_hook) (this, stub, has_timeout,time_value);
-      return;
-    }
-
-  // At this point, both the primary and alternate hooks are defined, and
-  // the primary did indeed set a value
-  ACE_Time_Value tv1;
-  bool ht1;
-  (*alt_connection_timeout_hook) (this, stub, ht1,tv1);
-  if (ht1 && tv1 > ACE_Time_Value::zero && tv1 < time_value)
-    time_value = tv1;
 }
 
 void
 TAO_ORB_Core::set_timeout_hook (Timeout_Hook hook)
 {
   // Saving the hook pointer so that we can use it later when needed.
-  // For now there are only two entry points that may supply a connection
-  // timeout hook. But there might be future entry points, so this should
-  // probably be addressed by a more sophisticated mechanism.
+  TAO_ORB_Core_Static_Resources::instance ()->timeout_hook_ = hook;
 
-#define TOCSRi TAO_ORB_Core_Static_Resources::instance ()
-
-  // A consern was raised that since this function is called by two
-  // different initializers there may be a race condition that might
-  // require a lock. We are not using a lock at this time because of
-  // two callers, one happens only during service directive processing
-  // and the other only during ORB Initialization time. The former
-  // happens when the OC_Endpoint_Selector_Factory is loaded, the
-  // latter is part of the messaging library. The messaging library
-  // calls this function as part of pre_init processing, and this call
-  // happes for every ORB instance. This was the case before these The
-  // latter call occurs when the messaging library is loaded. The
-  // redundant calls occured then as well. Second, it isn't clear how
-  // a lock in this static method would react in the face of windows
-  // dlls, shared memory segments, etc. Therefore we are continuing to
-  // keep this code lockless as it always was, assuming no
-  // simultanious overwrite will occur.
-
-  if (TOCSRi->connection_timeout_hook_ == 0)
-    {
-      if (TAO_debug_level > 2)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT("TAO (%P|%t) setting primary hook\n")));
-      TOCSRi->connection_timeout_hook_ = hook;
-    }
-  else if (TOCSRi->connection_timeout_hook_ != hook &&
-           TOCSRi->alt_connection_timeout_hook_ == 0)
-    {
-      if (TAO_debug_level > 2)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT("TAO (%P|%t) setting alternate hook\n")));
-      TOCSRi->alt_connection_timeout_hook_ = hook;
-    }
-  else
-    if (TAO_debug_level > 2)
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) not overwriting alternate hook.")
-                  ACE_TEXT (" Is it still null? %d\n"),
-                  TOCSRi->alt_connection_timeout_hook_ == 0));
-
-#undef TOCSRi
+  return;
 }
 
 void

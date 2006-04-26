@@ -19,10 +19,10 @@
 #include "ace/SString.h"
 #include "JobC.h"
 #include "activity_export.h"
+#include "ace/Arg_Shifter.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Barrier;
-class ACE_Arg_Shifter;
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 class Task_Stats;
@@ -41,13 +41,13 @@ class activity_Export Periodic_Task : public ACE_Task <ACE_SYNCH>
   ~Periodic_Task ();
 
   /// Init the state of this object.
-  int init_task (ACE_Arg_Shifter& arg_shifter);
+  int init_task (ACE_TArg_Shifter<char>& arg_shifter);
 
   /// Activate this task, synch on the given barrier.
   virtual int activate_task (ACE_Barrier* barrier, RTCORBA::PriorityMapping *priority_mapping) = 0;
 
   /// Dump the stats collected.
-  void dump_stats (ACE_TCHAR* msg);
+  void dump_stats (char* msg);
 
   /// = Job get/set
   /// Returns the name of the Job exec'ed by this Task.

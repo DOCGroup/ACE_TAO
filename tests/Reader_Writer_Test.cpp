@@ -76,7 +76,7 @@ print_usage_and_die (void)
 static void
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("r:w:n:"));
+  ACE_Get_Arg_Opt<ACE_TCHAR>  get_opt (argc, argv, ACE_TEXT ("r:w:n:"));
 
   int c;
 
@@ -245,6 +245,20 @@ writer (void *)
     }
   return 0;
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Atomic_Op<ACE_Thread_Mutex, int>;
+template class ACE_Atomic_Op_Ex<ACE_Thread_Mutex, int>;
+template class ACE_Read_Guard<ACE_RW_Mutex>;
+template class ACE_Write_Guard<ACE_RW_Mutex>;
+template class ACE_Guard<ACE_RW_Mutex>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Atomic_Op<ACE_Thread_Mutex, int>
+#pragma instantiate ACE_Atomic_Op_Ex<ACE_Thread_Mutex, int>
+#pragma instantiate ACE_Read_Guard<ACE_RW_Mutex>
+#pragma instantiate ACE_Write_Guard<ACE_RW_Mutex>
+#pragma instantiate ACE_Guard<ACE_RW_Mutex>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #endif /* ACE_HAS_THREADS */
 

@@ -32,14 +32,16 @@ namespace {
     CORBA::Long id = 0;
     for (size_t i = 0; i < attrs->getLength (); ++i)
     {
-      const char * name = attrs->getQName (i);
-      const char * value = attrs->getValue (i);
+      const ACE_TCHAR * name = attrs->getQName (i);
+      const ACE_TCHAR * value = attrs->getValue (i);
       if (ACE_OS::strcmp (name,
-                         TAO_VERSIONED_NAMESPACE_NAME::TAO_Notify::TOPOLOGY_ID_NAME) == 0)
+                          //TOPOLOGY_ID_NAME) == 0)
+                          TAO_VERSIONED_NAMESPACE_NAME::TAO_Notify::TOPOLOGY_ID_NAME) == 0)
       {
         id = ACE_OS::atoi (value);
       }
-      nvp.push_back (NVP (name, value));
+      nvp.push_back (NVP (ACE_TEXT_TO_CHAR_IN(name),
+                          ACE_TEXT_TO_CHAR_IN(value)));
     }
     return id;
   }
@@ -81,7 +83,7 @@ namespace TAO_Notify
       ACEXML_FileCharStream* fstm = new ACEXML_FileCharStream;
       // xml input source will take ownership
 
-      if (fstm->open (this->file_name_.c_str ()) == 0)
+      if (fstm->open (ACE_TEXT_TO_TCHAR_IN(this->file_name_.c_str ())) == 0)
       {
         // InputSource takes ownership
         ACEXML_InputSource input (fstm);
@@ -132,7 +134,7 @@ namespace TAO_Notify
     ACEXML_FileCharStream* fstm = new ACEXML_FileCharStream;
     // xml input source will take ownership
 
-    if (fstm->open (this->file_name_.c_str ()) == 0)
+    if (fstm->open (ACE_TEXT_TO_TCHAR_IN(this->file_name_.c_str ())) == 0)
     {
       // InputSource takes ownership
       ACEXML_InputSource input (fstm);
@@ -194,7 +196,7 @@ namespace TAO_Notify
             name
             ));
 
-          ACE_CString cname (name);
+          ACE_CString cname (ACE_TEXT_TO_CHAR_IN(name));
           Topology_Object* next = cur->load_child (
             cname, id, attrs ACE_ENV_ARG_PARAMETER);
           ACE_ASSERT(next != 0);
@@ -203,7 +205,8 @@ namespace TAO_Notify
         }
         ACE_CATCHANY
         {
-          ACEXML_THROW (ACEXML_SAXException (ACE_ANY_EXCEPTION._info ().c_str ()));
+          ACEXML_THROW (ACEXML_SAXException (ACE_TEXT_TO_TCHAR_IN(
+                            ACE_ANY_EXCEPTION._info ().c_str ())));
         }
         ACE_ENDTRY;
       }

@@ -22,20 +22,20 @@ TAO_Notify_Tests_Periodic_Supplier_Command::~TAO_Notify_Tests_Periodic_Supplier_
 {
 }
 
-const char*
+const ACE_TCHAR*
 TAO_Notify_Tests_Periodic_Supplier_Command::get_name (void)
 {
   return TAO_Notify_Tests_Periodic_Supplier_Command::name ();
 }
 
-const char*
+const ACE_TCHAR*
 TAO_Notify_Tests_Periodic_Supplier_Command::name (void)
 {
   return TAO_Notify_Tests_Name::periodic_supplier_command;
 }
 
 void
-TAO_Notify_Tests_Periodic_Supplier_Command::init (ACE_Arg_Shifter& arg_shifter)
+TAO_Notify_Tests_Periodic_Supplier_Command::init (ACE_TArg_Shifter< char >& arg_shifter)
 {
   if (arg_shifter.is_anything_left ())
     {

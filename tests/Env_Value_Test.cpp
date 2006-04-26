@@ -110,9 +110,29 @@ run_main (int argc, ACE_TCHAR * [], ACE_TCHAR *envp[])
       const ACE_TCHAR *defstr = ACE_TEXT ("Sarah Cleeland is Two!");
       ACE_Env_Value<const ACE_TCHAR *> sval (ACE_TEXT ("This_Shouldnt_Be_Set_Hopefully"),
                                   defstr);
-      ACE_ASSERT (ACE_OS::strcmp (sval, defstr) == 0);
+      ACE_ASSERT (ACE_OS::strcmp (static_cast<const ACE_TCHAR *>(sval), defstr) == 0);
       ACE_END_TEST;
     }
   return 0;
 }
-
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+  template class ACE_Env_Value<const char*>;
+# if !defined (ACE_LACKS_FLOATING_POINT)
+    template class ACE_Env_Value<double>;
+# endif /* ! ACE_LACKS_FLOATING_POINT */
+  template class ACE_Env_Value<int>;
+  template class ACE_Env_Value<long>;
+  template class ACE_Env_Value<short>;
+  template class ACE_Env_Value<unsigned short>;
+  template class ACE_Env_Value<unsigned long>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate  ACE_Env_Value<const char*>
+# if !defined (ACE_LACKS_FLOATING_POINT)
+#   pragma instantiate  ACE_Env_Value<double>
+# endif /* ! ACE_LACKS_FLOATING_POINT */
+# pragma instantiate  ACE_Env_Value<int>
+# pragma instantiate  ACE_Env_Value<long>
+# pragma instantiate  ACE_Env_Value<short>
+# pragma instantiate  ACE_Env_Value<unsigned short>
+# pragma instantiate  ACE_Env_Value<unsigned long>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

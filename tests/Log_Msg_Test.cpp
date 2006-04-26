@@ -373,7 +373,7 @@ test_ostream (void)
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
   // Create a persistent store.
   const ACE_TCHAR *filename = ACE_TEXT ("output");
-  ofstream myostream (ACE_TEXT_ALWAYS_CHAR (filename), ios::out | ios::trunc);
+  ofstream myostream (ACE_TEXT_TO_CHAR_IN (filename), ios::out | ios::trunc);
 
   // Check for errors.
   if (myostream.bad ())
@@ -605,3 +605,16 @@ run_main (int argc, ACE_TCHAR *argv[])
   return status;
 }
 
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+// Not necessary here, because it's instantiated in
+// ace/Memory_Pool.cpp.
+// template class ACE_Auto_Basic_Array_Ptr<ACE_CDR::Char>;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+// Not necessary here, because it's instantiated in
+// ace/Memory_Pool.cpp.
+// #pragma instantiate ACE_Auto_Basic_Array_Ptr<ACE_CDR::Char>
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

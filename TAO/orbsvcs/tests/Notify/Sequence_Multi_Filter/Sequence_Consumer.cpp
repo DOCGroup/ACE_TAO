@@ -5,6 +5,7 @@
 // ******************************************************************
 
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "ace/OS_NS_unistd.h"
 
 #include "orbsvcs/CosNotifyCommC.h"
@@ -37,7 +38,7 @@ public:
 int
 Consumer_Client::parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:l:h:d:c:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "k:l:h:d:c:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -114,14 +115,20 @@ create_consumers (CosNotifyChannelAdmin::ConsumerAdmin_ptr admin,
 // Main Section
 // ******************************************************************
 
-int main (int argc, char* argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
+  int status = 0;
+
   ACE_TRY_NEW_ENV
   {
     Consumer_Client client;
 
-    int status = client.init (argc, argv ACE_ENV_ARG_PARAMETER);
+    //int status = client.init (argc, argv ACE_ENV_ARG_PARAMETER);
+    status = client.init (convert.get_argc(), convert.get_ASCII_argv() ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
+
     ACE_ASSERT(status == 0);
     ACE_UNUSED_ARG(status);
 
@@ -163,6 +170,7 @@ int main (int argc, char* argv[])
       constraint_list[0].constraint_expr = CORBA::string_dup(constraintString);
 
       filter->add_constraints (constraint_list ACE_ENV_ARG_PARAMETER);
+
       ACE_TRY_CHECK;
 
       admin->add_filter(filter.in());

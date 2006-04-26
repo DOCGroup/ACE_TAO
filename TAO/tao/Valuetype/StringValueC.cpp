@@ -112,12 +112,6 @@ CORBA::StringValue::_tao_obv_repository_id (void) const
   return this->_tao_obv_static_repository_id ();
 }
 
-void
-CORBA::StringValue::_tao_obv_truncatable_repo_ids (Repository_Id_List& ids) const
-{
-  ids.push_back (this->_tao_obv_static_repository_id ());
-}
-
 CORBA::Boolean
 CORBA::StringValue::_tao_unmarshal (
     TAO_InputCDR &strm,
@@ -199,12 +193,6 @@ const char *
 CORBA::WStringValue::_tao_obv_repository_id (void) const
 {
   return this->_tao_obv_static_repository_id ();
-}
-
-void
-CORBA::WStringValue::_tao_obv_truncatable_repo_ids (Repository_Id_List& ids) const
-{
-  ids.push_back (this->_tao_obv_static_repository_id ());
 }
 
 CORBA::Boolean
@@ -365,7 +353,7 @@ operator>>= (
 CORBA::Boolean
 operator<< (
     TAO_OutputCDR &strm,
-    CORBA::StringValue *_tao_valuebox
+    const CORBA::StringValue *_tao_valuebox
   )
 {
   return
@@ -393,7 +381,7 @@ operator>> (
 CORBA::Boolean
 operator<< (
     TAO_OutputCDR &strm,
-    CORBA::WStringValue *_tao_valuebox
+    const CORBA::WStringValue *_tao_valuebox
   )
 {
   return

@@ -2,4 +2,6 @@
 // $Id$
 
 workspace {
+  cmdline += -base no_wchar
 }
+

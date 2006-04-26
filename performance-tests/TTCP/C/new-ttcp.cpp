@@ -215,7 +215,7 @@ char *title = 0;
 int new_line = 0;
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_SOCK_Stream connection_stream;
   unsigned long addr_tmp;

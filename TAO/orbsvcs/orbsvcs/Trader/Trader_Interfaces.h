@@ -921,10 +921,10 @@ private:
 
   typedef ACE_Hash_Map_Manager_Ex
   <
-  CORBA::String_var,
+  TAO_String_Hash_Key,
   CosTrading::Link::LinkInfo,
-  ACE_Hash<CORBA::String_var>,
-  ACE_Equal_To<CORBA::String_var>,
+  ACE_Hash<TAO_String_Hash_Key>,
+  ACE_Equal_To<TAO_String_Hash_Key>,
   MAP_LOCK_TYPE
   >
   Links;

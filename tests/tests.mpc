@@ -102,9 +102,6 @@ project(ACE Init Test) : acetest {
   Source_Files {
     ACE_Init_Test.cpp
   }
-  Resource_Files {
-    ACE_Init_Test.rc
-  }
 }
 
 project(ACE Test) : acetest {
@@ -196,13 +193,6 @@ project(Bug_1576_Regression_Test) : acetest {
   exename = Bug_1576_Regression_Test
   Source_Files {
     Bug_1576_Regression_Test.cpp
-  }
-}
-
-project(Bug_2368_Regression_Test) : acetest {
-  exename = Bug_2368_Regression_Test
-  Source_Files {
-    Bug_2368_Regression_Test.cpp
   }
 }
 
@@ -1314,6 +1304,13 @@ project(Based Pointer Test) : acetest {
   exename = Based_Pointer_Test
   Source_Files {
     Based_Pointer_Test.cpp
+  }
+}
+
+project(WChar_Conversion) : acetest {
+  exename = WChar_Conversion
+  Source_Files {
+    WChar_Conversion.cpp
   }
 }
 

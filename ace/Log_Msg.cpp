@@ -919,8 +919,8 @@ ACE_Log_Msg::open (const ACE_TCHAR *prog_name,
  *   'X': print as a hex number
  *   'w': print a wide character
  *   'W': print out a wide character string.
- *   'z': print an ACE_OS::WChar character
- *   'Z': print an ACE_OS::WChar character string
+ *   'z': print an wchar_t character
+ *   'Z': print an wchar_t character string
  *   '%': format a single percent sign, '%'
  */
 ssize_t
@@ -942,7 +942,6 @@ ACE_Log_Msg::log (ACE_Log_Priority log_priority,
   return result;
 }
 
-#if defined (ACE_HAS_WCHAR)
 /**
  * Since this is the ANTI_TCHAR version, we need to convert
  * the format string over.
@@ -958,14 +957,13 @@ ACE_Log_Msg::log (ACE_Log_Priority log_priority,
 
   va_start (argp, format_str);
 
-  ssize_t result = this->log (ACE_TEXT_ANTI_TO_TCHAR (format_str),
+  ssize_t result = this->log (ACE_TEXT_TO_TCHAR_IN (format_str),
                               log_priority,
                               argp);
   va_end (argp);
 
   return result;
 }
-#endif /* ACE_HAS_WCHAR */
 
 ssize_t
 ACE_Log_Msg::log (const ACE_TCHAR *format_str,
@@ -1200,12 +1198,12 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                   if (can_check)
                     this_len = ACE_OS::snprintf (bp, bspace, format,
                                                  this->file () ?
-                                                 ACE_TEXT_CHAR_TO_TCHAR (this->file ())
+                                                 ACE_TEXT_TO_TCHAR_IN (this->file ())
                                                  : ACE_LIB_TEXT ("<unknown file>"));
                   else
                     this_len = ACE_OS::sprintf (bp, format,
                                                 this->file () ?
-                                                ACE_TEXT_CHAR_TO_TCHAR (this->file ())
+                                                ACE_TEXT_TO_TCHAR_IN (this->file ())
                                                 : ACE_LIB_TEXT ("<unknown file>"));
                   ACE_UPDATE_COUNT (bspace, this_len);
                   break;
@@ -1261,11 +1259,11 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                         if (can_check)
                           this_len = ACE_OS::snprintf
                             (bp, bspace, format, va_arg (argp, ACE_TCHAR *),
-                             ACE_TEXT_CHAR_TO_TCHAR (msg));
+                             ACE_TEXT_TO_TCHAR_IN (msg));
                         else
                           this_len = ACE_OS::sprintf
                             (bp, format, va_arg (argp, ACE_TCHAR *),
-                             ACE_TEXT_CHAR_TO_TCHAR (msg));
+                             ACE_TEXT_TO_TCHAR_IN (msg));
 #if defined (ACE_WIN32)
                       }
                     else
@@ -1369,10 +1367,10 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
 #endif
                         if (can_check)
                           this_len = ACE_OS::snprintf
-                            (bp, bspace, format, ACE_TEXT_CHAR_TO_TCHAR (msg));
+                            (bp, bspace, format, ACE_TEXT_TO_TCHAR_IN (msg));
                         else
                           this_len = ACE_OS::sprintf
-                            (bp, format, ACE_TEXT_CHAR_TO_TCHAR (msg));
+                            (bp, format, ACE_TEXT_TO_TCHAR_IN (msg));
 #if defined (ACE_WIN32)
                       }
                     else
@@ -1716,26 +1714,30 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
 # else /* ACE_USES_WCHAR */
                     ACE_OS::strcpy (fp, ACE_LIB_TEXT ("S"));
 # endif /* ACE_USES_WCHAR */
+
                     if (can_check)
                       this_len = ACE_OS::snprintf
                         (bp, bspace, format, wstr ? wstr : ACE_LIB_TEXT ("(null)"));
                     else
                       this_len = ACE_OS::sprintf
                         (bp, format, wstr ? wstr : ACE_LIB_TEXT ("(null)"));
-#elif defined (ACE_HAS_WCHAR)
+
+#else
                     wchar_t *wchar_str = va_arg (argp, wchar_t *);
+
 # if defined (HPUX)
                     ACE_OS::strcpy (fp, ACE_LIB_TEXT ("S"));
 # else
                     ACE_OS::strcpy (fp, ACE_LIB_TEXT ("ls"));
 # endif /* HPUX */
+
                     if (can_check)
                       this_len = ACE_OS::snprintf
                         (bp, bspace, format, wchar_str);
                     else
                       this_len = ACE_OS::sprintf
                         (bp, format, wchar_str);
-#endif /* ACE_WIN32 / ACE_HAS_WCHAR */
+#endif /* ACE_WIN32 */
                     ACE_UPDATE_COUNT (bspace, this_len);
                   }
                   break;
@@ -1777,7 +1779,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                   ACE_UPDATE_COUNT (bspace, this_len);
                   break;
 
-                case 'z':              // ACE_OS::WChar character
+                case 'z':              // wchar_t character
                   {
                     // On some platforms sizeof (wchar_t) can be 2
                     // on the others 4 ...
@@ -1806,14 +1808,14 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                     break;
                   }
 
-                 case 'Z':              // ACE_OS::WChar character string
+                 case 'Z':              // wchar_t character string
                   {
-                    ACE_OS::WChar *wchar_str = va_arg (argp, ACE_OS::WChar*);
+                    wchar_t *wchar_str = va_arg (argp, wchar_t*);
                     if (wchar_str == 0)
                       break;
 
                     wchar_t *wchar_t_str = 0;
-                    if (sizeof (ACE_OS::WChar) != sizeof (wchar_t))
+                    if (sizeof (wchar_t) != sizeof (wchar_t))
                       {
                         size_t len = ACE_OS::wslen (wchar_str) + 1;
                         ACE_NEW_NORETURN(wchar_t_str, wchar_t[len]);
@@ -1836,19 +1838,19 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
 # else /* ACE_USES_WCHAR */
                   ACE_OS::strcpy (fp, ACE_LIB_TEXT ("S"));
 # endif /* ACE_USES_WCHAR */
-#elif defined (ACE_HAS_WCHAR)
+#else
 # if defined (HPUX)
                   ACE_OS::strcpy (fp, ACE_LIB_TEXT ("S"));
 # else
                   ACE_OS::strcpy (fp, ACE_LIB_TEXT ("ls"));
 # endif /* HPUX */
-#endif /* ACE_WIN32 / ACE_HAS_WCHAR */
+#endif /* ACE_WIN32 */
                   if (can_check)
                     this_len = ACE_OS::snprintf
                       (bp, bspace, format, wchar_t_str);
                   else
                     this_len = ACE_OS::sprintf (bp, format, wchar_t_str);
-                  if(sizeof(ACE_OS::WChar) != sizeof(wchar_t))
+                  if(sizeof(wchar_t) != sizeof(wchar_t))
                     {
                       delete wchar_t_str;
                     }
@@ -2581,7 +2583,6 @@ ACE_Log_Msg::log_priority_enabled (ACE_Log_Priority log_priority,
   return this->log_priority_enabled (log_priority);
 }
 
-#if defined (ACE_USES_WCHAR)
 int
 ACE_Log_Msg::log_priority_enabled (ACE_Log_Priority log_priority,
                                    const wchar_t *,
@@ -2589,7 +2590,6 @@ ACE_Log_Msg::log_priority_enabled (ACE_Log_Priority log_priority,
 {
   return this->log_priority_enabled (log_priority);
 }
-#endif /* ACE_USES_WCHAR */
 
 // ****************************************************************
 

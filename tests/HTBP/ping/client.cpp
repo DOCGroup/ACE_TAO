@@ -30,7 +30,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 
   ACE::HTBP::ID_Requestor req (&env);
-  ACE::HTBP::Addr local(ACE_TEXT_ALWAYS_CHAR(req.get_HTID()));
+  ACE::HTBP::Addr local(ACE_TEXT_TO_CHAR_IN(req.get_HTID()));
 
   unsigned remote_port = 8088;
   const ACE_TCHAR * remote_host = argv[1];
@@ -49,7 +49,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     }
 
   ACE_INET_Addr proxy(proxy_port,proxy_host.c_str());
-  ACE::HTBP::Addr remote (remote_port,ACE_TEXT_ALWAYS_CHAR(remote_host));
+  ACE::HTBP::Addr remote (remote_port,ACE_TEXT_TO_CHAR_IN(remote_host));
 
   ACE::HTBP::Session session(remote,
                            local,

@@ -230,7 +230,7 @@
 #  endif  /* __cplusplus */
 #endif /* ! __GNUG__ && ! __KCC */
 
-// Completely common part :-)
+// Completely common part  :-) 
 
 // Platform/compiler has the sigwait(2) prototype
 # define ACE_HAS_SIGWAIT
@@ -286,6 +286,12 @@
 #define ACE_HAS_GETRUSAGE_PROTOTYPE
 
 #define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES
+
+// ACE WChar support
+#define ACE_SIZEOF_WCHAR 4
+#define ACE_WCHAR_MAX    0x7FFFFFFF
+#define ACE_LACKS_BUILTIN_WCHAR_T
+
 
 // Optimize ACE_Handle_Set for select().
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
@@ -384,9 +390,12 @@
 #if defined (__ia64) || defined(__alpha) || defined (__x86_64__)
 // On 64 bit platforms, the "long" type is 64-bits.  Override the
 // default 32-bit platform-specific format specifiers appropriately.
-# define ACE_UINT64_FORMAT_SPECIFIER ACE_LIB_TEXT ("%lu")
-# define ACE_SSIZE_T_FORMAT_SPECIFIER ACE_LIB_TEXT ("%ld")
-# define ACE_SIZE_T_FORMAT_SPECIFIER ACE_LIB_TEXT ("%lu")
+# define ACE_UINT64_FORMAT_SPECIFIER_A "%lu"
+# define ACE_UINT64_FORMAT_SPECIFIER ACE_LIB_TEXT (ACE_UINT64_FORMAT_SPECIFIER_A)
+# define ACE_SSIZE_T_FORMAT_SPECIFIER_A "%ld"
+# define ACE_SSIZE_T_FORMAT_SPECIFIER ACE_LIB_TEXT (ACE_SSIZE_T_FORMAT_SPECIFIER_A)
+# define ACE_SIZE_T_FORMAT_SPECIFIER_A "%lu"
+# define ACE_SIZE_T_FORMAT_SPECIFIER ACE_LIB_TEXT (ACE_SIZE_T_FORMAT_SPECIFIER_A)
 #endif /* __ia64 */
 
 #define ACE_SIZEOF_WCHAR 4
@@ -415,3 +424,4 @@
 #include /**/ "ace/post.h"
 
 #endif /* ACE_LINUX_COMMON_H */
+

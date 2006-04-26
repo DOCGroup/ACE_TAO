@@ -90,16 +90,14 @@ TAO_IORInfo::add_ior_component_to_profile (
   ACE_CHECK;
 }
 
-char *
+PortableInterceptor::AdapterManagerId
 TAO_IORInfo::manager_id (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->check_validity (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  PortableServer::POAManager_var poa_manager = this->poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
-  return poa_manager->get_id (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->poa_->get_manager_id (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 PortableInterceptor::AdapterState

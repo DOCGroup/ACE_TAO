@@ -224,7 +224,7 @@ FtEventServiceInterceptor::receive_request (PortableInterceptor::ServerRequestIn
   CORBA::String_var operation = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
   if (ACE_OS::strcmp(operation.in(), "push") == 0) {
-    TAO_FTRTEC::Log(3, "Received push command\n");
+    TAO_FTRTEC::Log(3, ACE_TEXT("Received push command\n"));
     return;
   }
 

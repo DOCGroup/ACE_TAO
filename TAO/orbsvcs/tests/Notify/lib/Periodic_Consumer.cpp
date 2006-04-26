@@ -3,6 +3,7 @@
 #include "Periodic_Consumer.h"
 
 #include "ace/Arg_Shifter.h"
+#include "ace/Argv_Type_Converter.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Task.h"
 #include "tao/debug.h"
@@ -41,13 +42,13 @@ TAO_Notify_Tests_Periodic_Consumer::task_callback (TAO_Notify_Tests_Task_Callbac
 }
 
 int
-TAO_Notify_Tests_Periodic_Consumer::init_state (ACE_Arg_Shifter& arg_shifter)
+TAO_Notify_Tests_Periodic_Consumer::init_state (ACE_TArg_Shifter< char >& arg_shifter)
 {
   // First, let the base class look for options.
   if (TAO_Notify_Tests_StructuredPushConsumer::init_state (arg_shifter) == -1)
     return -1;
 
-  const ACE_TCHAR *current_arg = 0;
+  const char *current_arg = 0;
 
   while (arg_shifter.is_anything_left ())
     {
@@ -257,7 +258,7 @@ TAO_Notify_Tests_Periodic_Consumer::push_structured_event (const CosNotification
 }
 
 void
-TAO_Notify_Tests_Periodic_Consumer::dump_stats (ACE_TCHAR* msg, int dump_samples)
+TAO_Notify_Tests_Periodic_Consumer::dump_stats (const ACE_TCHAR* msg, int dump_samples)
 {
   char buf[BUFSIZ];
   ACE_OS::sprintf (buf, "%s.dat", this->name_.c_str ());

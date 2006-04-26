@@ -102,10 +102,10 @@ public:
 
   typedef ACE_Hash_Map_Manager_Ex
     <
-    CORBA::String_var,
+    TAO_String_Hash_Key,
     Offer_Map_Entry*,
-    ACE_Hash<CORBA::String_var>,
-    ACE_Equal_To<CORBA::String_var>,
+    ACE_Hash<TAO_String_Hash_Key>,
+    ACE_Equal_To<TAO_String_Hash_Key>,
     ACE_Null_Mutex
     >
     Offer_Database;

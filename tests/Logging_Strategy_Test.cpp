@@ -338,7 +338,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Specifications:\n")));
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("s:i:m:f:N:ow"));
+  ACE_Get_Arg_Opt<ACE_TCHAR>  get_opt (argc, argv, ACE_TEXT ("s:i:m:f:N:ow"));
   int c;
 
   while ((c = get_opt ()) != EOF)

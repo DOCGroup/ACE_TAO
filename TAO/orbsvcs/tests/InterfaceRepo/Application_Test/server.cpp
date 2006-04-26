@@ -3,6 +3,7 @@
 
 #include "test_i.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID(Application_Test, server, "$Id$")
 
@@ -11,7 +12,7 @@ static const char *ior_output_file = "iorfile";
 static int
 write_ior_to_file (const char *ior)
 {
-  FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
+  FILE *output_file = ACE_OS::fopen (ior_output_file, ACE_TEXT("w"));
 
   if (output_file == 0)
     {
@@ -39,12 +40,13 @@ write_ior_to_file (const char *ior)
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
         ACE_TRY_NEW_ENV
           {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv,
+      CORBA::ORB_var orb = CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(),
                                             ""
                                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;

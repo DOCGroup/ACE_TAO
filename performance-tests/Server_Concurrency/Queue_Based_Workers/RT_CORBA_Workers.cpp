@@ -396,7 +396,7 @@ Output_Task::put (ACE_Message_Block *mb, ACE_Time_Value *)
 static int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("m:s:t:d:"));
+  ACE_Get_Arg_Opt<ACE_TCHAR> get_opt (argc, argv, ACE_TEXT ("m:s:t:d:"));
   int c;
 
   while ((c = get_opt ()) != -1)
@@ -577,7 +577,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 #else /*ACE_HAS_THREADS*/
 
 int
-main (int, char *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Not supported in single threaded builds \n"));

@@ -13,6 +13,7 @@
 #include "FT_ReplicaFactory_i.h"
 #include "FT_TestReplica_i.h"
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "ace/OS_NS_unistd.h"
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/PortableGroupC.h"
@@ -141,7 +142,7 @@ void FT_ReplicaFactory_i::shutdown_i()
 int FT_ReplicaFactory_i::write_ior(const char * outputFile, const char * ior)
 {
   int result = -1;
-  FILE* out = ACE_OS::fopen (outputFile, "w");
+  FILE* out = ACE_OS::fopen (outputFile, ACE_TEXT("w"));
   if (out)
   {
     ACE_OS::fprintf (out, "%s", ior);
@@ -162,7 +163,7 @@ int FT_ReplicaFactory_i::write_ior(const char * outputFile, const char * ior)
 
 int FT_ReplicaFactory_i::parse_args (int argc, char * argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:n:f:i:l:t:qu");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "o:n:f:i:l:t:qu");
   int c;
 
   while ((c = get_opts ()) != -1)

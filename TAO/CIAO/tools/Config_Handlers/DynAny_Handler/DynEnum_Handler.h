@@ -46,4 +46,3 @@ namespace CIAO
 
 #include /**/ "ace/post.h"
 #endif /* CIAO_CONFIG_HANDLERS_DYNENUM_HANDLER_H*/
-

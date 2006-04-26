@@ -46,7 +46,7 @@ public:
   virtual ~TAO_EC_RTCORBA_Factory (void);
 
   // Decorated methods...
-  virtual int init (int argc, char* argv[]);
+  virtual int init (int argc, ACE_TCHAR* argv[]);
   virtual int fini (void);
   virtual TAO_EC_Dispatching*
       create_dispatching (TAO_EC_Event_Channel_Base*);

@@ -31,7 +31,7 @@ AMH_Servant::parse_args (int &argc, char **argv)
 {
   // *** To get correct behaviour, SET POSIXLY_CORECT=1 on Linux
   // systems!!! ***
-  ACE_Get_Opt get_opts (argc, argv, "s:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "s:");
   int c;
 
   int count_argv = 0;

@@ -17,13 +17,13 @@ TAO_Notify_Tests_ConsumerAdmin_Command::~TAO_Notify_Tests_ConsumerAdmin_Command 
 {
 }
 
-const char*
+const ACE_TCHAR*
 TAO_Notify_Tests_ConsumerAdmin_Command::get_name (void)
 {
   return TAO_Notify_Tests_ConsumerAdmin_Command::name ();
 }
 
-const char*
+const ACE_TCHAR*
 TAO_Notify_Tests_ConsumerAdmin_Command::name (void)
 {
   return TAO_Notify_Tests_Name::consumer_admin_command;
@@ -96,7 +96,7 @@ TAO_Notify_Tests_ConsumerAdmin_Command::handle_status (ACE_ENV_SINGLE_ARG_DECL_N
 }
 
 void
-TAO_Notify_Tests_ConsumerAdmin_Command::init (ACE_Arg_Shifter& arg_shifter)
+TAO_Notify_Tests_ConsumerAdmin_Command::init (ACE_TArg_Shifter< char >& arg_shifter)
 {
   if (arg_shifter.is_anything_left ())
     {

@@ -43,7 +43,7 @@ HTTP_URL::send_request (void)
 
   ACE_OS::sprintf (cmd_ptr.get (),
                    "GET /%s HTTP/1.1\r\n",
-                   ACE_TEXT_ALWAYS_CHAR (this->url_addr ().get_path_name ()));
+                   ACE_TEXT_TO_CHAR_IN (this->url_addr ().get_path_name ()));
 
   // Send the GET command to the connected server.
   if (this->stream ().send_n (cmd_ptr.get (),

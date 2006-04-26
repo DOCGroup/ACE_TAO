@@ -1,6 +1,7 @@
 #include "Basic_Log_Test.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_main.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID (Basic_Log_Test,
            client,
@@ -9,11 +10,13 @@ ACE_RCSID (Basic_Log_Test,
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   BasicLog_Test log_test;
 
   ACE_DEBUG((LM_DEBUG, "\nBasic Log test \n\n"));
 
-  if (log_test.init(argc, argv) == -1)
+  if (log_test.init(convert.get_argc(), convert.get_ASCII_argv()) == -1)
     {
       ACE_ERROR_RETURN((LM_ERROR,
 			    "xx - Failed initializing BasicLog_Test.\n"),-1);

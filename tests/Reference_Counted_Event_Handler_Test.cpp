@@ -890,7 +890,7 @@ test<REACTOR_IMPLEMENTATION>::test (void)
 static int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("a:b:c:f:g:h:i:k:l:m:z:"));
+  ACE_Get_Arg_Opt<ACE_TCHAR>  get_opt (argc, argv, ACE_TEXT ("a:b:c:f:g:h:i:k:l:m:z:"));
 
   int cc;
   while ((cc = get_opt ()) != -1)
@@ -1013,3 +1013,16 @@ run_main (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class test<ACE_Select_Reactor>;
+template class test<ACE_TP_Reactor>;
+#if defined (ACE_WIN32)
+template class test<ACE_WFMO_Reactor>;
+#endif /* ACE_WIN32 */
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate test<ACE_Select_Reactor>
+#pragma instantiate test<ACE_TP_Reactor>
+#if defined (ACE_WIN32)
+#pragma instantiate test<ACE_WFMO_Reactor>
+#endif /* ACE_WIN32 */
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -20,11 +20,10 @@ project(Stock_Base_Distributor_stub): ciao_events_base_dnc {
 }
 
 project(Stock_Base_Distributor_svnt) : ciao_servant_dnc {
-  avoids += ace_for_tao
   after += Stock_Base_svnt Stock_Base_Distributor_stub
   sharedname  = Distributor_svnt
   libs    += Distributor_stub Stock_Base_stub Stock_Base_svnt
-  
+
   idlflags  +=  -Wb,export_macro=DISTRIBUTOR_SVNT_Export -Wb,export_include=Distributor_svnt_export.h
   dynamicflags = DISTRIBUTOR_SVNT_BUILD_DLL
 
@@ -45,27 +44,25 @@ project(Stock_Base_Distributor_svnt) : ciao_servant_dnc {
 
 
 project(Stock_Base_Distributor_exec) : ciao_component_dnc {
-  avoids += ace_for_tao
   after   += Stock_Base_Distributor_svnt
   sharedname = Distributor_exec
   libs      += Distributor_stub Distributor_svnt Stock_Base_stub Stock_Base_svnt
-  
+
   idlflags  +=  -Wb,export_macro=DISTRIBUTOR_EXEC_Export -Wb,export_include=Distributor_exec_export.h
   dynamicflags   = DISTRIBUTOR_EXEC_BUILD_DLL
 
   IDL_Files {
-    
+
   }
 
   Source_Files {
-    
+
     Distributor_exec.cpp
   }
 }
 
 
 project (Stock_Distributor) : ciao_client_dnc, valuetype{
-  avoids += ace_for_tao
   exename = Distributor
   after += Stock_Base_Distributor_stub
   libs += Distributor_stub Stock_Base_stub
@@ -77,4 +74,3 @@ project (Stock_Distributor) : ciao_client_dnc, valuetype{
     Distributor.cpp
   }
 }
-

@@ -54,11 +54,11 @@ void CBindDialog::OnViewior()
   try
   {
     UpdateData();
-    m_Object = m_pORB->string_to_object(ACE_TEXT_ALWAYS_CHAR (m_IOR));
+    m_Object = m_pORB->string_to_object(ACE_TEXT_TO_CHAR_IN (m_IOR));
   }
   catch(CORBA::Exception& ex)
   {
-    MessageBox(ACE_TEXT_CHAR_TO_TCHAR (ex._rep_id()), ACE_TEXT ("CORBA::Exception"));
+    MessageBox(ACE_TEXT_TO_TCHAR_IN (ex._rep_id()), ACE_TEXT ("CORBA::Exception"));
     return;
   }
   ViewIORDialog Dialog(m_pORB, m_Object);
@@ -87,15 +87,15 @@ void CBindDialog::OnOK()
 	// TODO: Add extra validation here
 	UpdateData();
   m_Name.length(1);
-  m_Name[0].id = CORBA::string_dup(ACE_TEXT_ALWAYS_CHAR (m_ID));
-  m_Name[0].kind = CORBA::string_dup(ACE_TEXT_ALWAYS_CHAR (m_Kind));
+  m_Name[0].id = CORBA::string_dup(m_ID);
+  m_Name[0].kind = CORBA::string_dup(m_Kind);
   try
   {
-    m_Object = m_pORB->string_to_object(ACE_TEXT_ALWAYS_CHAR (m_IOR));
+    m_Object = m_pORB->string_to_object(ACE_TEXT_TO_CHAR_IN (m_IOR));
   }
   catch(CORBA::Exception& ex)
   {
-    MessageBox(ACE_TEXT_CHAR_TO_TCHAR (ex._rep_id()), ACE_TEXT ("Invalid IOR"));
+    MessageBox(ACE_TEXT_TO_TCHAR_IN (ex._rep_id()), ACE_TEXT ("Invalid IOR"));
     return;
   }
   CDialog::OnOK();

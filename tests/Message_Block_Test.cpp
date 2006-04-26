@@ -124,7 +124,7 @@ Worker_Task::svc (void)
       // message here.
       else if (length > 0)
         {
-          int current_count = ACE_OS::atoi (ACE_TEXT_CHAR_TO_TCHAR (mb->rd_ptr ()));
+          int current_count = ACE_OS::atoi (ACE_TEXT_TO_TCHAR_IN (mb->rd_ptr ()));
           int i;
 
           ACE_ASSERT (count == current_count);
@@ -166,7 +166,9 @@ Worker_Task::svc (void)
             {
               int deqresult = this->msg_queue ()->dequeue_head (dup);
               ACE_ASSERT (deqresult != -1);
-              ACE_ASSERT (count == ACE_OS::atoi (ACE_TEXT_CHAR_TO_TCHAR (dup->rd_ptr ())));
+              //ACE_ASSERT (this->msg_queue ()->dequeue_head (dup) != -1);
+              ACE_ASSERT (count == ACE_OS::atoi (ACE_TEXT_TO_TCHAR_IN (dup->rd_ptr ())));
+
               ACE_ASSERT (ACE_OS::strcmp (mb->rd_ptr (), dup->rd_ptr ()) == 0);
               ACE_ASSERT (dup->msg_priority () == ACE_DEFAULT_MESSAGE_BLOCK_PRIORITY + 1);
               dup->release ();
@@ -284,6 +286,24 @@ alloc_struct_type alloc_struct[ACE_ALLOC_STRATEGY_NO] =
   { 0, ACE_TEXT ("Default"), {0,0,0} },
   { &mem_allocator, ACE_TEXT ("Cached Memory"), {0,0,0} }
 };
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
+    (defined (ACE_HAS_GNU_REPO) && !defined (ACE_VXWORKS))
+  // The explicit instantiations are necessary with g++ 2.91.66
+  // with -frepo, because it misses some of them.
+template class ACE_Cached_Allocator<MEMORY_CHUNK, ACE_SYNCH_MUTEX>;
+template class ACE_Cached_Mem_Pool_Node<MEMORY_CHUNK>;
+template class ACE_Locked_Free_List<ACE_Cached_Mem_Pool_Node<MEMORY_CHUNK>, ACE_SYNCH_MUTEX>;
+template class ACE_Free_List<ACE_Cached_Mem_Pool_Node<MEMORY_CHUNK> >;
+template class ACE_Lock_Adapter<ACE_SYNCH_MUTEX>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Cached_Allocator<MEMORY_CHUNK, ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Cached_Mem_Pool_Node<MEMORY_CHUNK>
+#pragma instantiate ACE_Locked_Free_List<ACE_Cached_Mem_Pool_Node<MEMORY_CHUNK>, ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Free_List<ACE_Cached_Mem_Pool_Node<MEMORY_CHUNK> >
+#pragma instantiate ACE_Lock_Adapter<ACE_SYNCH_MUTEX>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 
 #endif /* ACE_HAS_THREADS */
 

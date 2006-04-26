@@ -7,9 +7,9 @@ project(EC_DnC_stub): ciao_events_base_dnc {
 
   sharedname = EC_stub
 
-  idlflags += -Wb,stub_export_macro=EC_STUB_Export 
-  idlflags += -Wb,stub_export_include=EC_stub_export.h 
-  idlflags += -Wb,skel_export_macro=EC_SVNT_Export 
+  idlflags += -Wb,stub_export_macro=EC_STUB_Export
+  idlflags += -Wb,stub_export_include=EC_stub_export.h
+  idlflags += -Wb,skel_export_macro=EC_SVNT_Export
   idlflags += -Wb,skel_export_include=EC_svnt_export.h
 
   dynamicflags   = EC_STUB_BUILD_DLL
@@ -26,13 +26,12 @@ project(EC_DnC_stub): ciao_events_base_dnc {
 }
 
 project(EC_DnC_svnt) : ciao_servant_dnc {
-  avoids += ace_for_tao
   after     += BasicSP_DnC_svnt EC_DnC_stub
   sharedname = EC_svnt
 
   libpaths  += ..
 
-  idlflags  += -Wb,export_macro=EC_SVNT_Export 
+  idlflags  += -Wb,export_macro=EC_SVNT_Export
   idlflags  += -Wb,export_include=EC_svnt_export.h
 
   dynamicflags = EC_SVNT_BUILD_DLL
@@ -56,7 +55,6 @@ project(EC_DnC_svnt) : ciao_servant_dnc {
 
 
 project(EC_DnC_exec) : ciao_component_dnc {
-  avoids += ace_for_tao
   after    += EC_DnC_svnt
   sharedname = EC_exec
 
@@ -64,7 +62,7 @@ project(EC_DnC_exec) : ciao_component_dnc {
 
   libpaths += ..
 
-  idlflags +=  -Wb,export_macro=EC_EXEC_Export 
+  idlflags +=  -Wb,export_macro=EC_EXEC_Export
   idlflags += -Wb,export_include=EC_exec_export.h
 
   dynamicflags   = EC_EXEC_BUILD_DLL
@@ -82,7 +80,6 @@ project(EC_DnC_exec) : ciao_component_dnc {
 
 
 project (EC_DnC_client) : ciao_client_dnc, valuetype {
-  avoids += ace_for_tao
   exename = client
   after += EC_DnC_stub
   libs += EC_stub BasicSP_stub

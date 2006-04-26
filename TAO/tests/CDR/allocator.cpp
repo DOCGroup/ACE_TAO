@@ -26,6 +26,7 @@
 
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID(CDR, allocator, "$Id$")
 
@@ -65,10 +66,12 @@ private:
 };
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   CORBA::ORB_var orb =
-    CORBA::ORB_init (argc, argv);
+    CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv());
 
   int tss = 0;
   int iterations = 500;
@@ -80,7 +83,7 @@ main (int argc, char *argv[])
   int quiet = 0;
   ACE_RANDR_TYPE seed = time(0);
 
-  ACE_Get_Opt get_opt (argc, argv, "tn:f:m:s:a:b:r:q");
+  ACE_Get_Arg_Opt<char> get_opt (convert.get_argc(), convert.get_ASCII_argv(), "tn:f:m:s:a:b:r:q");
   int opt;
 
   while ((opt = get_opt ()) != EOF)

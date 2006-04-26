@@ -4,6 +4,7 @@
 
 #include "StubFaultAnalyzer.h"
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "orbsvcs/PortableGroup/PG_Properties_Encoder.h"
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
@@ -25,7 +26,7 @@ StubFaultAnalyzer::~StubFaultAnalyzer ()
 int StubFaultAnalyzer::parse_args (int argc, char * argv[])
 {
   int optionError = 0;
-  ACE_Get_Opt get_opts (argc, argv, "o:r:d:n:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "o:r:d:n:");
   int c;
   while ((c = get_opts ()) != -1)
   {
@@ -228,7 +229,7 @@ int StubFaultAnalyzer::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
 
     if (result == 0 && this->readyFile_ != 0)
     {
-	  FILE *ready = ACE_OS::fopen (this->readyFile_, "w");
+	  FILE *ready = ACE_OS::fopen (this->readyFile_, ACE_TEXT("w"));
 	  if ( ready )
 	  {
 		ACE_OS::fprintf (ready, "ready\n");

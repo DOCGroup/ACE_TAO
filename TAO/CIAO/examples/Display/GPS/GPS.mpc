@@ -9,7 +9,7 @@ project(GPS_DnC_stub): ciao_events_base_dnc {
   libpaths+=..
   libs += HUDisplay_DnC_stub
   dynamicflags   = GPS_STUB_BUILD_DLL
-  
+
   IDL_Files {
     GPS.idl
   }
@@ -20,7 +20,6 @@ project(GPS_DnC_stub): ciao_events_base_dnc {
 }
 
 project(GPS_DnC_svnt) : ciao_servant_dnc {
-  avoids += ace_for_tao
   after += GPS_DnC_svnt GPS_DnC_stub HUDisplay_DnC_svnt
   sharedname  = GPS_DnC_svnt
   libs    += GPS_DnC_stub HUDisplay_DnC_stub HUDisplay_DnC_svnt
@@ -45,7 +44,6 @@ project(GPS_DnC_svnt) : ciao_servant_dnc {
 
 
 project(GPS_DnC_exec) : ciao_component_dnc {
-  avoids += ace_for_tao
   after   += GPS_DnC_svnt
   sharedname = GPS_DnC_exec
   libs      += GPS_DnC_stub GPS_DnC_svnt HUDisplay_DnC_stub HUDisplay_DnC_svnt
@@ -58,12 +56,9 @@ project(GPS_DnC_exec) : ciao_component_dnc {
   }
 
   Source_Files {
-    
+
     GPSEIC.cpp
 
     GPS_exec.cpp
   }
 }
-
-
-

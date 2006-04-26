@@ -10,6 +10,7 @@
 #include "tao/debug.h"
 
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Sched_Params.h"
 

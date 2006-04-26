@@ -168,7 +168,7 @@ test (ACE_Reactor_Impl *impl)
       else
         ACE_DEBUG ((LM_INFO,
                     ACE_TEXT ("%p\n"),
-                    ACE_TEXT_CHAR_TO_TCHAR (hosts[i])));
+                    ACE_TEXT_TO_TCHAR_IN (hosts[i])));
     }
 
   ACE_Reactor reactor (impl,
@@ -237,7 +237,7 @@ test (ACE_Reactor_Impl *impl)
 static int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("a:b:c:"));
+  ACE_Get_Arg_Opt<ACE_TCHAR>  get_opt (argc, argv, ACE_TEXT ("a:b:c:"));
 
   int cc;
   while ((cc = get_opt ()) != -1)
@@ -317,3 +317,14 @@ run_main (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
+template class ACE_Connector_Base<Svc_Handler>;
+template class ACE_Connector<Svc_Handler, ACE_SOCK_CONNECTOR>;
+template class ACE_NonBlocking_Connect_Handler<Svc_Handler>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
+#pragma instantiate ACE_Connector_Base<Svc_Handler>
+#pragma instantiate ACE_Connector<Svc_Handler, ACE_SOCK_CONNECTOR>
+#pragma instantiate ACE_NonBlocking_Connect_Handler<Svc_Handler>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

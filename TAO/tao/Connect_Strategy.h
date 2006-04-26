@@ -34,8 +34,6 @@ class TAO_ORB_Core;
 class TAO_Connector;
 class TAO_Connection_Handler;
 class TAO_Transport;
-class TAO_LF_Multi_Event;
-class TAO_LF_Event;
 
 /**
  * @class TAO_Connect_Strategy
@@ -74,23 +72,13 @@ public:
   /* If the connection establishment fails the state within the
    * connection handler is set appropriately.
    */
-  int wait (TAO_Connection_Handler *ch, ACE_Time_Value *val);
+  virtual int wait (TAO_Connection_Handler *ch,
+                    ACE_Time_Value *val) = 0;
 
-  int wait (TAO_Transport *t, ACE_Time_Value *val);
-
-  /// Wait for one of many connections to complete. Returns when one
-  /// succeeds or all fail.
-  int wait (TAO_LF_Multi_Event *ev, ACE_Time_Value *val);
-
-  /// Do a quick check to see if any connections are complete. This
-  /// does the same as the wait with an explicit time value of 0.
-  int poll (TAO_LF_Multi_Event *ev);
+  virtual int wait (TAO_Transport *t,
+                    ACE_Time_Value *val) = 0;
 
 protected:
-  /// This is the method that does all the real interesting stuff.
-  virtual int wait_i (TAO_LF_Event *ev,
-                      TAO_Transport *t,
-                      ACE_Time_Value *val) = 0;
 
   /// Cached copy of the ORB core pointer
   TAO_ORB_Core * const orb_core_;

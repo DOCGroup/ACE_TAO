@@ -2,6 +2,7 @@
 
 #include "receiver.h"
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "ace/High_Res_Timer.h"
 
 int endstream = 0;
@@ -57,7 +58,7 @@ Receiver_Callback::flowname (const char* flow_name)
 
   // Make sure we have a valid <output_file>
   this->output_file_ = ACE_OS::fopen (this->flowname_.c_str (),
-                                      "w");
+                                      ACE_TEXT("w"));
   if (this->output_file_ == 0)
     ACE_ERROR ((LM_DEBUG,
                 "Cannot open output file %s\n",
@@ -139,11 +140,10 @@ Receiver::protocol_object (TAO_AV_Protocol_Object *object)
 }
 
 int
-Receiver::parse_args (int argc,
-                      char **argv)
+Receiver::parse_args (int argc, char **argv)
 {
   // Parse command line arguments
-  ACE_Get_Opt opts (argc, argv, "f:r:d");
+  ACE_Get_Arg_Opt<char> opts (argc, argv, "f:r:d");
 
   int c;
   while ((c= opts ()) != -1)
@@ -229,16 +229,17 @@ Receiver::protocol_object (void)
 }
 
 int
-main (int argc,
-      char **argv)
+ACE_TMAIN (int argc,
+     ACE_TCHAR **argv)
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       // Initialize the ORB first.
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc,
-                         argv,
+        CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(),
                          0
                          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -268,8 +269,7 @@ main (int argc,
       ACE_TRY_CHECK;
 
       int result =
-        RECEIVER::instance ()->init (argc,
-                                     argv
+        RECEIVER::instance ()->init (convert.get_argc(), convert.get_ASCII_argv()
                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 

@@ -110,7 +110,7 @@ spawn (void)
 #endif /* ACE_HAS_THREADS */
     }
 #if !defined (ACE_WIN32)
-  else if (ACE_OS::fork (ACE_TEXT_CHAR_TO_TCHAR (Options::instance ()->program_name ())) == 0)
+  else if (ACE_OS::fork (ACE_TEXT_TO_TCHAR_IN (Options::instance ()->program_name ())) == 0)
     {
       if (Options::instance ()->exec_slave ())
         {

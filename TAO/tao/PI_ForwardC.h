@@ -100,9 +100,8 @@ namespace PortableInterceptor
   // TAO_IDL - Generated from
   // be\be_visitor_typedef/typedef_ch.cpp:379
 
-  typedef char * AdapterManagerId;
-  typedef CORBA::String_var AdapterManagerId_var;
-  typedef CORBA::String_out AdapterManagerId_out;
+  typedef CORBA::Long AdapterManagerId;
+  typedef CORBA::Long_out AdapterManagerId_out;
 
   // TAO_IDL - Generated from
   // be\be_visitor_typedef/typedef_ch.cpp:379

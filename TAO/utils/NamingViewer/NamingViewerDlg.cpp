@@ -219,7 +219,7 @@ void CNamingViewerDlg::OnSelectNs()
   }
   try
   {
-    CORBA::Object_var Object = m_pORB->string_to_object(ACE_TEXT_ALWAYS_CHAR (Dialog.GetIOR()));
+    CORBA::Object_var Object = m_pORB->string_to_object(ACE_TEXT_TO_CHAR_IN (Dialog.GetIOR()));
     m_RootContext = CosNaming::NamingContext::_narrow(Object);
     m_Server = Dialog.GetName();
     UpdateData(FALSE);
@@ -227,7 +227,7 @@ void CNamingViewerDlg::OnSelectNs()
   }
   catch(CORBA::Exception& ex)
   {
-    MessageBox(ACE_TEXT_CHAR_TO_TCHAR (ex._rep_id()), ACE_TEXT ("CORBA::Exception"));
+    MessageBox(ACE_TEXT_TO_TCHAR_IN (ex._rep_id()), ACE_TEXT ("CORBA::Exception"));
   }
 }
 

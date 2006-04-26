@@ -13,7 +13,7 @@ void print_arg (int argc, char *argv[])
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
    int priority = 20;
    // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.

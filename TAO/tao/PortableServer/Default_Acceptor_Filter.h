@@ -46,7 +46,7 @@ public:
   TAO_Default_Acceptor_Filter (void);
 
   /// Populate @a mprofile with all available endpoints.
-  virtual int fill_profile (const TAO::ObjectKey &object_key,
+  int fill_profile (const TAO::ObjectKey &object_key,
                     TAO_MProfile &mprofile,
                     TAO_Acceptor **acceptors_begin,
                     TAO_Acceptor **acceptors_end,

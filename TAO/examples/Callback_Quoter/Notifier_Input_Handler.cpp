@@ -99,7 +99,7 @@ Notifier_Input_Handler::init_naming_service (ACE_ENV_SINGLE_ARG_DECL)
 int
 Notifier_Input_Handler::parse_args (void)
 {
-  ACE_Get_Opt get_opts (this->argc_, this->argv_, "df:s ");
+  ACE_Get_Arg_Opt<char> get_opts (this->argc_, this->argv_, "df:s ");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -110,7 +110,7 @@ Notifier_Input_Handler::parse_args (void)
         break;
 
       case 'f':  // output the IOR toi a file.
-        this->ior_output_file_ = ACE_OS::fopen (get_opts.opt_arg (), "w");
+        this->ior_output_file_ = ACE_OS::fopen (get_opts.opt_arg (), ACE_TEXT("w"));
         if (this->ior_output_file_ == 0)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to open %s for writing: %p\n",

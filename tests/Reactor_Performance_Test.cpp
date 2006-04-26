@@ -315,7 +315,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 {
   ACE_START_TEST (ACE_TEXT ("Reactor_Performance_Test"));
 
-  ACE_Get_Opt getopt (argc, argv, ACE_TEXT ("dswc:l:"), 1);
+  ACE_Get_Arg_Opt<ACE_TCHAR>  getopt (argc, argv, ACE_TEXT ("dswc:l:"), 1);
   for (int c; (c = getopt ()) != -1; )
     switch (c)
       {
@@ -402,6 +402,34 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_END_TEST;
   return status;
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Connector_Base<Write_Handler>;
+template class ACE_Connector<Write_Handler, ACE_SOCK_CONNECTOR>;
+template class ACE_Acceptor<Read_Handler, ACE_SOCK_ACCEPTOR>;
+template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_SYNCH>;
+template class auto_ptr<ACE_Reactor>;
+template class ACE_Auto_Basic_Ptr<ACE_Reactor>;
+template class auto_ptr<ACE_Reactor_Impl>;
+template class ACE_Auto_Basic_Ptr<ACE_Reactor_Impl>;
+template class ACE_NonBlocking_Connect_Handler<Write_Handler>;
+template class ACE_Auto_Basic_Array_Ptr <Write_Handler *>;
+template class ACE_Auto_Basic_Array_Ptr <ACE_INET_Addr>;
+template class ACE_Auto_Array_Ptr <ACE_INET_Addr>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Connector_Base<Write_Handler>
+#pragma instantiate ACE_Connector<Write_Handler, ACE_SOCK_CONNECTOR>
+#pragma instantiate ACE_Acceptor<Read_Handler, ACE_SOCK_ACCEPTOR>
+#pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_SYNCH>
+#pragma instantiate auto_ptr<ACE_Reactor>
+#pragma instantiate ACE_Auto_Basic_Ptr<ACE_Reactor>
+#pragma instantiate auto_ptr<ACE_Reactor_Impl>
+#pragma instantiate ACE_Auto_Basic_Ptr<ACE_Reactor_Impl>
+#pragma instantiate ACE_NonBlocking_Connect_Handler<Write_Handler>
+#pragma instantiate ACE_Auto_Basic_Array_Ptr <Write_Handler *>
+#pragma instantiate ACE_Auto_Basic_Array_Ptr <ACE_INET_Addr>
+#pragma instantiate ACE_Auto_Array_Ptr <ACE_INET_Addr>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #else
 int

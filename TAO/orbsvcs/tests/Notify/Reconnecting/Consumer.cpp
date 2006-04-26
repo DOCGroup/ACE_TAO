@@ -7,6 +7,7 @@
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_stdio.h"
 #include "tao/AnyTypeCode/Any.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID (Notify_Tests, Consumer_Main, "$Id$")
 
@@ -163,7 +164,7 @@ StructuredPushConsumer_i::push_structured_event (
   }
   if (notification.filterable_data.length () > 0)
   {
-    if (0 == ACE_OS::strcmp (notification.filterable_data[0].name, "serial_number"))
+    if (0 == ACE_OS::strcmp (notification.filterable_data[0].name.in(), "serial_number"))
     {
       const CORBA::Any & data = notification.filterable_data[0].value;
 
@@ -189,8 +190,8 @@ StructuredPushConsumer_i::push_structured_event (
         ));
     }
   }
-  else if (0 == ACE_OS::strcmp (notification.header.fixed_header.event_type.type_name, "%ANY")
-    && 0 == strcmp (notification.header.fixed_header.event_type.domain_name, ""))
+  else if (0 == ACE_OS::strcmp (notification.header.fixed_header.event_type.type_name.in(), "%ANY")
+    && 0 == strcmp (notification.header.fixed_header.event_type.domain_name.in(), ""))
   {
     const CORBA::Any * any;
     if (notification.remainder_of_body >>= any)
@@ -398,7 +399,7 @@ SequencePushConsumer_i::push_structured_events (
     const CosNotification::StructuredEvent & notification = notifications[nevent];
     if (notification.filterable_data.length () > 0)
     {
-      if (0 == ACE_OS::strcmp (notification.filterable_data[0].name, "serial_number"))
+      if (0 == ACE_OS::strcmp (notification.filterable_data[0].name.in(), "serial_number"))
       {
         const CORBA::Any & data = notification.filterable_data[0].value;
 
@@ -424,8 +425,8 @@ SequencePushConsumer_i::push_structured_events (
           ));
       }
     }
-    else if (0 == ACE_OS::strcmp (notification.header.fixed_header.event_type.type_name, "%ANY")
-        && 0 == strcmp (notification.header.fixed_header.event_type.domain_name, ""))
+    else if (0 == ACE_OS::strcmp (notification.header.fixed_header.event_type.type_name.in(), "%ANY")
+        && 0 == strcmp (notification.header.fixed_header.event_type.domain_name.in(), ""))
     {
       CORBA::ULong seq = 0;
       if (notification.remainder_of_body >>= seq)
@@ -619,7 +620,7 @@ AnyPushConsumer_i::push (
     {
       if (notification->filterable_data.length () > 0)
       {
-        if (0 == ACE_OS::strcmp (notification->filterable_data[0].name, "serial_number"))
+        if (0 == ACE_OS::strcmp (notification->filterable_data[0].name.in(), "serial_number"))
         {
           const CORBA::Any & data = notification->filterable_data[0].value;
 
@@ -1040,7 +1041,7 @@ void
 Consumer_Main::save_ids()
 {
   FILE *idf =
-    ACE_OS::fopen (this->id_file_.c_str (), "w");
+    ACE_OS::fopen (this->id_file_.c_str (), ACE_TEXT("w"));
 
   if (idf != 0)
   {
@@ -1064,7 +1065,7 @@ Consumer_Main::load_ids()
 {
   bool ok = false;
   FILE *idf =
-    ACE_OS::fopen (this->id_file_.c_str (), "r");
+    ACE_OS::fopen (this->id_file_.c_str (), ACE_TEXT("r"));
 
   if (idf != 0)
   {
@@ -1267,7 +1268,7 @@ Consumer_Main::init_event_channel (ACE_ENV_SINGLE_ARG_DECL)
   // try to read from it
   if (!ok && this->channel_file_.length () > 0)
   {
-    FILE * chf = ACE_OS::fopen (this->channel_file_.c_str (), "r");
+    FILE * chf = ACE_OS::fopen (this->channel_file_.c_str (), ACE_TEXT("r"));
     if (chf != 0)
     {
       char buffer[100];
@@ -1359,7 +1360,7 @@ Consumer_Main::init_event_channel (ACE_ENV_SINGLE_ARG_DECL)
   // save channel id
   if (ok && this->channel_file_.length() > 0)
   {
-    FILE * chf = ACE_OS::fopen (this->channel_file_.c_str (), "w");
+    FILE * chf = ACE_OS::fopen (this->channel_file_.c_str (), ACE_TEXT("w"));
     if (chf != 0)
     {
       ACE_OS::fprintf (chf, "%d\n", static_cast<int> (this->ec_id_));
@@ -1874,13 +1875,15 @@ int Consumer_Main::run (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   int result = -1;
   Consumer_Main app;
   ACE_TRY_NEW_ENV
   {
-    result = app.init(argc, argv ACE_ENV_ARG_PARAMETER);
+    result = app.init(convert.get_argc(), convert.get_ASCII_argv() ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK
 
     if (result == 0)

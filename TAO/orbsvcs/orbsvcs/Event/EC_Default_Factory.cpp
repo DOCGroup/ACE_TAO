@@ -93,7 +93,7 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
               else if (ACE_OS::strcasecmp (opt, ACE_TEXT("mt")) == 0)
                 this->dispatching_ = 1;
               else
-                  this->unsupported_option_value ("-ECDispatching", opt);
+                  this->unsupported_option_value ("-ECDispatching", ACE_TEXT_TO_CHAR_IN(opt));
               arg_shifter.consume_arg ();
             }
         }
@@ -124,7 +124,7 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
               else if (ACE_OS::strcasecmp (opt, ACE_TEXT("prefix")) == 0)
                 this->filtering_ = 2;
               else
-                  this->unsupported_option_value ("-ECFiltering", opt);
+                  this->unsupported_option_value ("-ECFiltering", ACE_TEXT_TO_CHAR_IN(opt));
               arg_shifter.consume_arg ();
             }
         }
@@ -143,7 +143,7 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
               else if (ACE_OS::strcasecmp (opt, ACE_TEXT("per-supplier")) == 0)
                 this->supplier_filtering_ = 1;
               else
-                  this->unsupported_option_value ("-ECSupplierFilter", opt);
+                  this->unsupported_option_value ("-ECSupplierFilter", ACE_TEXT_TO_CHAR_IN(opt));
               arg_shifter.consume_arg ();
             }
         }
@@ -158,7 +158,7 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
               if (ACE_OS::strcasecmp (opt, ACE_TEXT("reactive")) == 0)
                 this->timeout_ = 0;
               else
-                  this->unsupported_option_value ("-ECTimeout", opt);
+                  this->unsupported_option_value ("-ECTimeout", ACE_TEXT_TO_CHAR_IN(opt));
               arg_shifter.consume_arg ();
             }
         }
@@ -177,7 +177,7 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
               else if (ACE_OS::strcasecmp (opt, ACE_TEXT("reactive")) == 0)
                 this->observer_ = 2;
               else
-                  this->unsupported_option_value ("-ECObserver", opt);
+                  this->unsupported_option_value ("-ECObserver", ACE_TEXT_TO_CHAR_IN(opt));
               arg_shifter.consume_arg ();
             }
         }
@@ -194,7 +194,7 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
               else if (ACE_OS::strcasecmp (opt, ACE_TEXT("group")) == 0)
                 this->scheduling_ = 1;
               else
-                  this->unsupported_option_value ("-ECScheduling", opt);
+                  this->unsupported_option_value ("-ECScheduling", ACE_TEXT_TO_CHAR_IN(opt));
               arg_shifter.consume_arg ();
             }
         }
@@ -303,7 +303,7 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
               else if (ACE_OS::strcasecmp (opt, ACE_TEXT("recursive")) == 0)
                 this->consumer_lock_ = 2;
               else
-                this->unsupported_option_value ("-ECProxyConsumerLock", opt);
+                this->unsupported_option_value ("-ECProxyConsumerLock", ACE_TEXT_TO_CHAR_IN(opt));
               arg_shifter.consume_arg ();
             }
         }
@@ -322,7 +322,7 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
               else if (ACE_OS::strcasecmp (opt, ACE_TEXT("recursive")) == 0)
                 this->supplier_lock_ = 2;
               else
-                this->unsupported_option_value ("-ECProxySupplierLock", opt);
+                this->unsupported_option_value ("-ECProxySupplierLock", ACE_TEXT_TO_CHAR_IN(opt));
               arg_shifter.consume_arg ();
             }
         }
@@ -334,7 +334,7 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
           if (arg_shifter.is_parameter_next ())
             {
               // Save argument for later use
-              this->orbid_ = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ());
+              this->orbid_ = ACE_TEXT_TO_CHAR_IN(arg_shifter.get_current ());
               arg_shifter.consume_arg ();
             }
         }
@@ -351,7 +351,7 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
               else if (ACE_OS::strcasecmp (opt, ACE_TEXT("reactive")) == 0)
                 this->consumer_control_ = 1;
               else
-                this->unsupported_option_value ("-ECConsumerControl", opt);
+                this->unsupported_option_value ("-ECConsumerControl", ACE_TEXT_TO_CHAR_IN(opt));
               arg_shifter.consume_arg ();
             }
         }
@@ -368,7 +368,7 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
               else if (ACE_OS::strcasecmp (opt, ACE_TEXT("reactive")) == 0)
                 this->supplier_control_ = 1;
               else
-                this->unsupported_option_value ("-ECSupplierControl", opt);
+                this->unsupported_option_value ("-ECSupplierControl", ACE_TEXT_TO_CHAR_IN(opt));
               arg_shifter.consume_arg ();
             }
         }
@@ -448,8 +448,8 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
           arg_shifter.consume_arg ();
           if (arg_shifter.is_parameter_next ())
             {
-              const char* opt = arg_shifter.get_current ();
-              this->queue_full_service_object_name_.set(opt);
+              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              this->queue_full_service_object_name_.set (ACE_TEXT_TO_CHAR_IN (opt));
               arg_shifter.consume_arg ();
             }
         }

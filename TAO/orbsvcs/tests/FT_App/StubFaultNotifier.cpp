@@ -4,6 +4,7 @@
 
 #include "StubFaultNotifier.h"
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "ace/OS_NS_stdio.h"
 #include "orbsvcs/PortableGroup/PG_Properties_Encoder.h"
 // FUZZ: disable check_for_streams_include
@@ -35,7 +36,7 @@ PortableServer::ObjectId StubFaultNotifier::objectId()const
 int StubFaultNotifier::parse_args (int argc, char * argv[])
 {
   int optionError = 0;
-  ACE_Get_Opt get_opts (argc, argv, "o:r:d:n:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "o:r:d:n:");
   int c;
   while ((c = get_opts ()) != -1)
   {
@@ -324,7 +325,7 @@ int StubFaultNotifier::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
 int StubFaultNotifier::write_ior_file()
 {
   int result = -1;
-  FILE* out = ACE_OS::fopen (this->ior_output_file_, "w");
+  FILE* out = ACE_OS::fopen (this->ior_output_file_, ACE_TEXT("w"));
   if (out)
   {
     ACE_OS::fprintf (out, "%s", this->ior_.in ());

@@ -84,7 +84,7 @@ static int req_delay = 50;
 static void
 parse_arg (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt getopt (argc, argv, ACE_TEXT ("r:s:c:d:i:n:"));
+  ACE_Get_Arg_Opt<ACE_TCHAR>  getopt (argc, argv, ACE_TEXT ("r:s:c:d:i:n:"));
 
   int c;
 
@@ -375,6 +375,26 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_END_TEST;
   return 0;
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Accept_Strategy<Request_Handler, ACE_SOCK_ACCEPTOR>;
+template class ACE_Concurrency_Strategy<Request_Handler>;
+template class ACE_Creation_Strategy<Request_Handler>;
+template class ACE_Scheduling_Strategy<Request_Handler>;
+template class ACE_Acceptor<Request_Handler, ACE_SOCK_ACCEPTOR>;
+template class ACE_Strategy_Acceptor<Request_Handler, ACE_SOCK_ACCEPTOR>;
+template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_MT_SYNCH>;
+template class ACE_Lock_Adapter<ACE_SYNCH_MUTEX>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate  ACE_Accept_Strategy<Request_Handler, ACE_SOCK_ACCEPTOR>
+#pragma instantiate  ACE_Concurrency_Strategy<Request_Handler>
+#pragma instantiate  ACE_Creation_Strategy<Request_Handler>
+#pragma instantiate  ACE_Scheduling_Strategy<Request_Handler>
+#pragma instantiate  ACE_Acceptor<Request_Handler, ACE_SOCK_ACCEPTOR>
+#pragma instantiate  ACE_Strategy_Acceptor<Request_Handler, ACE_SOCK_ACCEPTOR>
+#pragma instantiate  ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_MT_SYNCH>
+#pragma instantiate ACE_Lock_Adapter<ACE_SYNCH_MUTEX>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #else
 int

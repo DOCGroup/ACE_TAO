@@ -19,7 +19,7 @@ namespace CIAO
       IDREF_Base<CORBA::ULong> SID_Handler::IDREF;
 
       void
-      SID_Handler::handle_sub_comp_inst_descr (const SubcomponentInstantiationDescription &desc,
+      SID_Handler::sub_comp_inst_descr (const SubcomponentInstantiationDescription &desc,
                                          ::Deployment::SubcomponentInstantiationDescription &toconfig)
       {
         CIAO_TRACE ("SID_Handler::sub_comp_inst_descr");
@@ -28,7 +28,7 @@ namespace CIAO
         if (desc.basePackage_p ())
           {
             toconfig.basePackage.length (1);
-            CPD_Handler::handle_component_package_descr (desc.basePackage (),
+            CPD_Handler::component_package_descr (desc.basePackage (),
                                                   toconfig.basePackage[0]);
           }
         else if (desc.specializedConfig_p ())

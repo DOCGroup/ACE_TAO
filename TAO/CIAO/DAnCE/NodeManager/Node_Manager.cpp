@@ -26,7 +26,7 @@ int spawn_delay = 1;
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:c:m:s:d:na:p:z:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "o:c:m:s:d:na:p:z:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -158,7 +158,7 @@ register_with_ns (const char * name_context,
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_TRY_NEW_ENV
     {

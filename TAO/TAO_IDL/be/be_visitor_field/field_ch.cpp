@@ -603,5 +603,3 @@ be_visitor_field_ch::visit_eventtype_fwd (
 {
   return this->visit_valuetype_fwd (node);
 }
-
-

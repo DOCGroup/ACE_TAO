@@ -353,7 +353,6 @@ ACE::hash_pjw (const char *str)
   return ACE::hash_pjw (str, ACE_OS::strlen (str));
 }
 
-#if defined (ACE_HAS_WCHAR)
 u_long
 ACE::hash_pjw (const wchar_t *str, size_t len)
 {
@@ -383,7 +382,6 @@ ACE::hash_pjw (const wchar_t *str)
 {
   return ACE::hash_pjw (str, ACE_OS::strlen (str));
 }
-#endif /* ACE_HAS_WCHAR */
 
 #if !defined (ACE_HAS_WINCE)
 ACE_TCHAR *
@@ -3330,7 +3328,6 @@ ACE::strndup (const char *str, size_t n)
   return ACE_OS::strsncpy (s, str, len + 1);
 }
 
-#if defined (ACE_HAS_WCHAR)
 wchar_t *
 ACE::strndup (const wchar_t *str, size_t n)
 {
@@ -3352,7 +3349,6 @@ ACE::strndup (const wchar_t *str, size_t n)
                         0);
   return ACE_OS::strsncpy (s, str, len + 1);
 }
-#endif /* ACE_HAS_WCHAR */
 
 char *
 ACE::strnnew (const char *str, size_t n)
@@ -3375,7 +3371,6 @@ ACE::strnnew (const char *str, size_t n)
   return ACE_OS::strsncpy (s, str, len + 1);
 }
 
-#if defined (ACE_HAS_WCHAR)
 wchar_t *
 ACE::strnnew (const wchar_t *str, size_t n)
 {
@@ -3396,7 +3391,6 @@ ACE::strnnew (const wchar_t *str, size_t n)
                   0);
   return ACE_OS::strsncpy (s, str, len + 1);
 }
-#endif /* ACE_HAS_WCHAR */
 
 const char *
 ACE::strend (const char *s)
@@ -3407,7 +3401,6 @@ ACE::strend (const char *s)
   return s;
 }
 
-#if defined ACE_HAS_WCHAR
 const wchar_t *
 ACE::strend (const wchar_t *s)
 {
@@ -3416,7 +3409,6 @@ ACE::strend (const wchar_t *s)
 
   return s;
 }
-#endif
 
 char *
 ACE::strnew (const char *s)
@@ -3433,7 +3425,6 @@ ACE::strnew (const char *s)
     return ACE_OS::strcpy (t, s);
 }
 
-#if defined (ACE_HAS_WCHAR)
 wchar_t *
 ACE::strnew (const wchar_t *s)
 {
@@ -3448,7 +3439,6 @@ ACE::strnew (const wchar_t *s)
   else
     return ACE_OS::strcpy (t, s);
 }
-#endif /* ACE_HAS_WCHAR */
 
 inline static bool equal_char(char a, char b, bool case_sensitive)
 {

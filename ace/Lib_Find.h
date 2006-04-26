@@ -88,7 +88,6 @@ namespace ACE
                                       const char *token,
                                       char *&next_start);
 
-#if defined (ACE_HAS_WCHAR)
   /// As strrepl, but for wide characters.
   extern ACE_Export size_t strrepl (wchar_t *s,
                                     wchar_t search,
@@ -98,7 +97,6 @@ namespace ACE
   extern ACE_Export wchar_t *strsplit_r (wchar_t *s,
                                          const wchar_t *token,
                                          wchar_t *&next_start);
-#endif /* ACE_HAS_WCHAR */
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

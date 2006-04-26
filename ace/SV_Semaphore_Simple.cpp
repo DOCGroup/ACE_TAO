@@ -188,7 +188,6 @@ ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple (const char *name,
                 ACE_LIB_TEXT ("ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple")));
 }
 
-#if defined (ACE_HAS_WCHAR)
 ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple (const wchar_t *name,
                                                   short flags,
                                                   int initial_value,
@@ -196,7 +195,7 @@ ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple (const wchar_t *name,
                                                   mode_t perms)
 {
   ACE_TRACE ("ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple(wchar_t)");
-  if (this->open (ACE_Wide_To_Ascii (name).char_rep (),
+  if (this->open (ACE_TEXT_TO_CHAR_IN (name),
                   flags,
                   initial_value,
                   nsems,
@@ -205,7 +204,6 @@ ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple (const wchar_t *name,
                 ACE_LIB_TEXT ("%p\n"),
                 ACE_LIB_TEXT ("ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple")));
 }
-#endif /* ACE_HAS_WCHAR */
 
 ACE_SV_Semaphore_Simple::~ACE_SV_Semaphore_Simple (void)
 {

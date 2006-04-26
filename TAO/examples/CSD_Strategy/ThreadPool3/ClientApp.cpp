@@ -18,7 +18,7 @@ ClientApp::~ClientApp()
 int
 ClientApp::run(int argc, char* argv[] ACE_ENV_ARG_DECL)
 {
-  CORBA::ORB_var orb 
+  CORBA::ORB_var orb
     = CORBA::ORB_init(argc, argv, "" ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
@@ -32,7 +32,7 @@ ClientApp::run(int argc, char* argv[] ACE_ENV_ARG_DECL)
       return result;
     }
 
-  CORBA::Object_var obj 
+  CORBA::Object_var obj
     = orb->string_to_object(this->ior_.c_str() ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
@@ -81,7 +81,7 @@ ClientApp::run(int argc, char* argv[] ACE_ENV_ARG_DECL)
       {
         ACE_DEBUG((LM_DEBUG,
                   "(%P|%t) ===> Caught FooException - as expected.\n"));
-        
+
       }
       ACE_ENDTRY;
     }
@@ -139,4 +139,3 @@ ClientApp::usage_statement()
              "\t[-?]\n\n",
              this->exe_name_.c_str()));
 }
-

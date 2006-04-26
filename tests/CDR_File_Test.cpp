@@ -330,7 +330,7 @@ run_main (int argc, ACE_TCHAR *argv[])
               ACE::minor_version (),
               ACE::beta_version ()));
 
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("f:rw"));
+  ACE_Get_Arg_Opt<ACE_TCHAR>  get_opt (argc, argv, ACE_TEXT ("f:rw"));
   int opt;
   int reading = 1;
   int writing = 1;
@@ -441,6 +441,20 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_END_TEST;
   return 0;
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+// Not necessary here, because it's instantiated in
+// ace/Memory_Pool.cpp.
+// template class ACE_Auto_Basic_Array_Ptr<ACE_CDR::Char>;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+// Not necessary here, because it's instantiated in
+// ace/Memory_Pool.cpp.
+// #pragma instantiate ACE_Auto_Basic_Array_Ptr<ACE_CDR::Char>
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #else  /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 

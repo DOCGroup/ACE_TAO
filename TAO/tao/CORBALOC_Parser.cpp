@@ -180,7 +180,7 @@ TAO_CORBALOC_Parser::parse_string (const char * ior,
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT("(%P|%t) TAO_CORBALOC_Parser::parse_string ")
                       ACE_TEXT("could not parse from %s"),
-                      ACE_TEXT_CHAR_TO_TCHAR(ior)));
+                      ACE_TEXT_TO_TCHAR_IN(ior)));
         ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 10,
                                             CORBA::COMPLETED_NO),
                           CORBA::Object::_nil ());
@@ -212,7 +212,7 @@ TAO_CORBALOC_Parser::parse_string (const char * ior,
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT("(%P|%t) TAO_CORBALOC_Parser::parse_string ")
                   ACE_TEXT("could not parse from %s"),
-                  ACE_TEXT_CHAR_TO_TCHAR(ior)));
+                  ACE_TEXT_TO_TCHAR_IN(ior)));
     ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 10,
                                         CORBA::COMPLETED_NO),
                       CORBA::Object::_nil ());
@@ -233,8 +233,7 @@ TAO_CORBALOC_Parser::parse_string (const char * ior,
       const char * str = full_ep.c_str();
       endpoints[i].profile_->parse_string (str ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (CORBA::Object::_nil ());
-      int share = orb->orb_core()->orb_params()->shared_profile();
-      if (mprofile.give_profile(endpoints[i].profile_, share) != -1)
+      if (mprofile.give_profile(endpoints[i].profile_) != -1)
         endpoints[i].profile_ = 0;
       else
         {

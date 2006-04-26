@@ -83,9 +83,6 @@ public:
                    const ACE_CString &rhs) const;
 };
 
-
-#if defined (ACE_USES_WCHAR)
-
 /**
  * @class ACE_Equal_To<ACE_WString>
  *
@@ -129,7 +126,6 @@ public:
                    const ACE_WString &rhs) const;
 };
 
-#endif /*ACE_USES_WCHAR*/
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

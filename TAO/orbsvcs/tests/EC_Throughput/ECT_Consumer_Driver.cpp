@@ -11,6 +11,7 @@
 #include "tao/debug.h"
 
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Sched_Params.h"
 #include "ace/OS_NS_errno.h"
@@ -21,10 +22,12 @@ ACE_RCSID (EC_Throughput,
            "$Id$")
 
 int
-main (int argc, char *argv [])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ECT_Consumer_Driver driver;
-  return driver.run (argc, argv);
+  return driver.run (convert.get_argc(), convert.get_ASCII_argv());
 }
 
 // ****************************************************************
@@ -95,7 +98,7 @@ ECT_Consumer_Driver::run (int argc, char* argv[])
 
       if (this->pid_file_name_ != 0)
         {
-          FILE* pid = ACE_OS::fopen (this->pid_file_name_, "w");
+          FILE* pid = ACE_OS::fopen (this->pid_file_name_, ACE_TEXT("w"));
           if (pid != 0)
             {
               ACE_OS::fprintf (pid, "%ld\n",
@@ -295,9 +298,9 @@ ECT_Consumer_Driver::disconnect_consumers (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 int
-ECT_Consumer_Driver::parse_args (int argc, char *argv [])
+ECT_Consumer_Driver::parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, "xdc:s:h:p:");
+  ACE_Get_Arg_Opt<char> get_opt (argc, argv, "xdc:s:h:p:");
   int opt;
 
   while ((opt = get_opt ()) != EOF)

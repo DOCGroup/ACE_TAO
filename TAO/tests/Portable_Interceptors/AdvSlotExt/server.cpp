@@ -6,6 +6,7 @@
 
 #include "tao/PI/PI.h"
 #include "tao/PI_Server/PI_Server.h"
+#include "tao/CORBA_String.h"
 
 #include "ace/OS_NS_stdio.h"
 

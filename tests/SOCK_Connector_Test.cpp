@@ -93,7 +93,7 @@ find_another_host (ACE_TCHAR other_host[])
         ACE_OS::strcpy (other_host, ACE_LOCALHOST);
       else
         // Use me if can't find another
-        ACE_OS::strcpy (other_host, ACE_TEXT_CHAR_TO_TCHAR (h->h_name));
+        ACE_OS::strcpy (other_host, ACE_TEXT_TO_TCHAR_IN (h->h_name));
 
       // @@ We really need to add wrappers for these hostent methods.
 
@@ -114,7 +114,7 @@ find_another_host (ACE_TCHAR other_host[])
       while ((h = gethostent ()) != 0)
         {
           if (ACE_OS::strcmp (h->h_name,
-                              ACE_TEXT_ALWAYS_CHAR (ACE_DEFAULT_SERVER_HOST)) == 0)
+                              ACE_TEXT_TO_CHAR_IN (ACE_DEFAULT_SERVER_HOST)) == 0)
             continue;
           // AIX just _has_ to be different
           if (ACE_OS::strcmp (h->h_name, "loopback") == 0)
@@ -122,11 +122,11 @@ find_another_host (ACE_TCHAR other_host[])
 
           // If not me.
           if (ACE_OS::strcmp
-                (h->h_name, ACE_TEXT_ALWAYS_CHAR (other_host)) != 0
+                (h->h_name, ACE_TEXT_TO_CHAR_IN (other_host)) != 0
               && ACE_OS::strcmp (h->h_name, un.nodename) != 0)
             {
                ACE_OS::strcpy (candidate[candidate_count].host_name,
-                               ACE_TEXT_CHAR_TO_TCHAR (h->h_name));
+                               ACE_TEXT_TO_TCHAR_IN (h->h_name));
                if (++candidate_count >= MAX_CANDIDATES)
                  break;
             }

@@ -187,7 +187,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 
 #else
 int
-main (int, char *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
   return 0;

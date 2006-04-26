@@ -60,7 +60,7 @@ ACE_Test_Output::~ACE_Test_Output (void)
   if (this->output_file_ == log_msg_stream)
     delete this->output_file_;
   // else something else changed the stream and hence should
-  // have closed and deleted the output_file_
+  // have closed and deleted the output_file_ 
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 }
 
@@ -101,7 +101,7 @@ ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
     test_dir = 0;
   else
     {
-      ACE_OS::strcpy (tempenv, ACE_TEXT_CHAR_TO_TCHAR (test_dir_n));
+      ACE_OS::strcpy (tempenv, ACE_TEXT_TO_TCHAR_IN (test_dir_n));
       test_dir = tempenv;
     }
 #  endif /* ACE_WIN32 || !ACE_USES_WCHAR */
@@ -145,7 +145,7 @@ ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
 # endif /* ! VXWORKS */
 
 # if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
-  this->output_file_->open (ACE_TEXT_ALWAYS_CHAR (temp),
+  this->output_file_->open (ACE_TEXT_TO_CHAR_IN (temp),
                             ios::out | (append ? ios::app : ios::trunc));
   if (this->output_file_->bad ())
     return -1;
@@ -171,7 +171,7 @@ void
 ACE_Test_Output::close (void)
 {
   if (this->output_file_ &&
-      (this->output_file_ == ACE_LOG_MSG->msg_ostream ()))
+      (this->output_file_ == ACE_LOG_MSG->msg_ostream ())) 
   {
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
     this->output_file_->flush ();
@@ -185,7 +185,7 @@ ACE_Test_Output::close (void)
     ACE_LOG_MSG->msg_ostream (this->output_file_, 0);
   }
   // else something else changed the stream and hence should
-  // have closed and deleted the output_file_
+  // have closed and deleted the output_file_ 
 }
 
 ACE_Test_Output*
@@ -250,3 +250,8 @@ randomize (int array[], size_t size)
     }
 }
 
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+   template class ACE_Framework_Component_T<ACE_Test_Output>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#  pragma instantiate ACE_Framework_Component_T<ACE_Test_Output>;
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

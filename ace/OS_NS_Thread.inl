@@ -331,24 +331,20 @@ ACE_OS::cond_init (ACE_cond_t *cv,
 # endif /* ACE_HAS_THREADS */
 }
 
-#if defined (ACE_HAS_WCHAR)
 ACE_INLINE int
 ACE_OS::cond_init (ACE_cond_t *cv,
                    ACE_condattr_t &attributes,
                    const wchar_t *name,
                    void *arg)
 {
-  return ACE_OS::cond_init (cv, attributes, ACE_Wide_To_Ascii (name).char_rep (), arg);
+  return ACE_OS::cond_init (cv, attributes, ACE_TEXT_TO_CHAR_IN (name), arg);
 }
-#endif /* ACE_HAS_WCHAR */
 
-#if defined (ACE_HAS_WCHAR)
 ACE_INLINE int
 ACE_OS::cond_init (ACE_cond_t *cv, short type, const wchar_t *name, void *arg)
 {
-  return ACE_OS::cond_init (cv, type, ACE_Wide_To_Ascii (name).char_rep (), arg);
+  return ACE_OS::cond_init (cv, type, ACE_TEXT_TO_CHAR_IN (name), arg);
 }
-#endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE int
 ACE_OS::cond_signal (ACE_cond_t *cv)
@@ -525,7 +521,6 @@ ACE_OS::mutex_lock (ACE_mutex_t *m,
   return timeout == 0 ? ACE_OS::mutex_lock (m) : ACE_OS::mutex_lock (m, *timeout);
 }
 
-#if defined (ACE_HAS_WCHAR)
 ACE_INLINE int
 ACE_OS::event_init (ACE_event_t *event,
                     int manual_reset,
@@ -554,12 +549,11 @@ ACE_OS::event_init (ACE_event_t *event,
                              manual_reset,
                              initial_state,
                              type,
-                             ACE_Wide_To_Ascii (name).char_rep (),
+                             ACE_TEXT_TO_CHAR_IN (name),
                              arg,
                              sa);
 #endif /* ACE_WIN32 */
 }
-#endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE long
 ACE_OS::priority_control (ACE_idtype_t idtype, ACE_id_t identifier, int cmd, void *arg)
@@ -1466,13 +1460,13 @@ ACE_OS::sema_init (ACE_sema_t *s,
   if (type == USYNC_PROCESS)
     {
       // Let's see if it already exists.
-      ACE_HANDLE fd = ACE_OS::shm_open (ACE_TEXT_CHAR_TO_TCHAR (name),
+      ACE_HANDLE fd = ACE_OS::shm_open (ACE_TEXT_TO_TCHAR_IN(name),
                                         O_RDWR | O_CREAT | O_EXCL,
                                         ACE_DEFAULT_FILE_PERMS);
       if (fd == ACE_INVALID_HANDLE)
         {
           if (errno == EEXIST)
-            fd = ACE_OS::shm_open (ACE_TEXT_CHAR_TO_TCHAR (name),
+            fd = ACE_OS::shm_open (ACE_TEXT_TO_TCHAR_IN(name),
                                    O_RDWR | O_CREAT,
                                    ACE_DEFAULT_FILE_PERMS);
           else
@@ -1581,7 +1575,7 @@ ACE_OS::sema_init (ACE_sema_t *s,
   s->fd_[0] = s->fd_[1] = ACE_INVALID_HANDLE;
   bool creator = false;
 
-  if (ACE_OS::mkfifo (ACE_TEXT_CHAR_TO_TCHAR (name), mode) < 0)
+  if (ACE_OS::mkfifo (ACE_TEXT_TO_TCHAR_IN(name), mode) < 0)
     {
       if (errno != EEXIST)    /* already exists OK else ERR */
         return -1;
@@ -1759,7 +1753,6 @@ ACE_OS::sema_init (ACE_sema_t *s,
 #endif /* ACE_HAS_POSIX_SEM */
 }
 
-#if defined (ACE_HAS_WCHAR)
 ACE_INLINE int
 ACE_OS::sema_init (ACE_sema_t *s,
                    u_int count,
@@ -1824,10 +1817,9 @@ ACE_OS::sema_init (ACE_sema_t *s,
 #   endif /* ACE_USES_WINCE_SEMA_SIMULATION */
 # else /* ACE_HAS_WTHREADS */
   // Just call the normal char version.
-  return ACE_OS::sema_init (s, count, type, ACE_Wide_To_Ascii (name).char_rep (), arg, max, sa);
+  return ACE_OS::sema_init (s, count, type, ACE_TEXT_TO_CHAR_IN (name), arg, max, sa);
 # endif /* ACE_HAS_WTHREADS */
 }
-#endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE int
 ACE_OS::sema_post (ACE_sema_t *s)
@@ -3603,7 +3595,6 @@ ACE_OS::thread_mutex_init (ACE_thread_mutex_t *m,
 #endif /* ACE_HAS_THREADS */
 }
 
-#if defined (ACE_HAS_WCHAR)
 ACE_INLINE int
 ACE_OS::thread_mutex_init (ACE_thread_mutex_t *m,
                            int lock_type,
@@ -3637,7 +3628,6 @@ ACE_OS::thread_mutex_init (ACE_thread_mutex_t *m,
 
 #endif /* ACE_HAS_THREADS */
 }
-#endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE int
 ACE_OS::thread_mutex_lock (ACE_thread_mutex_t *m)

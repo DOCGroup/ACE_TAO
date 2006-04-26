@@ -26,6 +26,7 @@
 
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"
+#include "ace/Argv_Type_Converter.h"
 #include "tao/AnyTypeCode/Any.h"
 
 class hello_i : public virtual POA_hello
@@ -85,14 +86,16 @@ struct something_handler : public POA_bug_1985_c::d::AMI_somethingHandler
 };
 
 int
-main (int argc , char *argv[])
+ACE_TMAIN (int argc , ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   int error_count = 0;
 
   ACE_TRY_NEW_ENV
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv,
+      CORBA::ORB_var orb = CORBA::ORB_init (convert.get_argc(),
+                                            convert.get_ASCII_argv(),
                                             ""
                                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;

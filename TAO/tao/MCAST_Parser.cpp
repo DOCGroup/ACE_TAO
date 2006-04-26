@@ -190,7 +190,7 @@ TAO_MCAST_Parser::multicast_query (char *&buf,
       else
         {
           // Set NIC
-          dgram.set_nic (ACE_TEXT_CHAR_TO_TCHAR (mcast_nic),
+          dgram.set_nic (ACE_TEXT_TO_TCHAR_IN (mcast_nic),
                          multicast_addr.get_type ());
 
           // Set TTL
@@ -329,7 +329,7 @@ TAO_MCAST_Parser::multicast_query (char *&buf,
                           else if (TAO_debug_level > 0)
                             ACE_DEBUG ((LM_DEBUG,
                                         ACE_TEXT ("%N: service resolved to IOR <%s>\n"),
-                                        ACE_TEXT_CHAR_TO_TCHAR (buf)));
+                                        ACE_TEXT_TO_TCHAR_IN (buf)));
                         }
                     }
                 }
@@ -339,7 +339,7 @@ TAO_MCAST_Parser::multicast_query (char *&buf,
           {
             ACE_ERROR ((LM_ERROR,
                         ACE_TEXT("\nmulticast discovery of %s failed.\n"),
-                        ACE_TEXT_CHAR_TO_TCHAR (service_name)));
+                        ACE_TEXT_TO_TCHAR_IN (service_name)));
 
             if (ACE_OS::strcasecmp (service_name,
                                     "NameService") == 0)

@@ -103,7 +103,7 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
 
       // Parse the options, check if we should bind with the naming
       // service and under what name...
-      ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("n:o:p:xrtd"));
+      ACE_Get_Arg_Opt<ACE_TCHAR> get_opt (argc, argv, ACE_TEXT("n:o:p:xrtd"));
       int opt;
       const ACE_TCHAR *service_name = ACE_TEXT("CosEventService");
       const ACE_TCHAR *ior_file = 0;
@@ -160,10 +160,10 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
                           ACE_TEXT ("-n service_name ")
                           ACE_TEXT ("-o ior_file_name ")
                           ACE_TEXT ("-p pid_file_name ")
-                          ACE_TEXT ("-x [disable naming service bind]")
+                          ACE_TEXT ("-x [disable naming service bind] ")
                           ACE_TEXT ("-r [rebind, no AlreadyBound failures] ")
-                          ACE_TEXT ("-t [enable typed event channel]")
-                          ACE_TEXT ("-d [destroy typed event channelon shutdown] ")
+                          ACE_TEXT ("-t [enable typed event channel] ")
+                          ACE_TEXT ("-d [destroy typed event channel on shutdown] ")
                           ACE_TEXT ("\n"),
                           argv[0]));
 #else
@@ -266,7 +266,7 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
           ACE_TRY_CHECK;
 
           this->channel_name_.length (1);
-          this->channel_name_[0].id = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(service_name));
+          this->channel_name_[0].id = CORBA::string_dup (service_name);
 
           if (use_rebind)
             {

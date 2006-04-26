@@ -26,20 +26,19 @@ namespace CIAO
     bool
     parse_args (int argc, char *argv[])
     {
-      ACE_Get_Opt get_opts (argc, argv, "o:m:i:n:p");
+      ACE_Get_Arg_Opt<char> get_opts (argc, argv, "o:m:i:n:p");
       int c;
       while ((c = get_opts ()) != -1)
         switch (c)
           {
           case 'o':
-            write_to_ior_ = true;
             ior_file_name_ = get_opts.opt_arg ();
             break;
           case 'i':
             init_file_name = get_opts.opt_arg ();
             break;
           case 'n':
-            register_with_ns_ = true;
+            register_with_ns_ = 1;
             break;
           case 'p':
             pid_file_name_ = get_opts.opt_arg ();
@@ -117,11 +116,12 @@ namespace CIAO
         CosNaming::NamingContext::_narrow (naming_context_object.in ());
 
       // Initialize the Naming Sequence
-      CosNaming::Name name (1);
-      name.length (1);
+      CosNaming::Name name (2);
+      name.length (2);
 
       // String dup required for MSVC6
-      name[0].id = CORBA::string_dup ("ExecutionManager");
+      name[0].id = CORBA::string_dup ("CIAO");
+      name[1].id = CORBA::string_dup ("ExecutionManager");
 
       // Register the servant with the Naming Service
       try
@@ -201,8 +201,7 @@ namespace CIAO
                                   ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
             }
-          
-          if (write_to_ior_)
+          else
             {
               retval =
                 write_ior_file (orb.in (),
@@ -267,7 +266,7 @@ namespace CIAO
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   return CIAO::Execution_Manager::run_main (argc,
                                             argv);

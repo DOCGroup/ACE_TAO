@@ -23,7 +23,7 @@ TAO_EC_RTCORBA_Factory::~TAO_EC_RTCORBA_Factory (void)
 
 
 int
-TAO_EC_RTCORBA_Factory::init (int argc, char* argv[])
+TAO_EC_RTCORBA_Factory::init (int argc, ACE_TCHAR* argv[])
 {
   return this->body_->init (argc, argv);
 }

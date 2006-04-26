@@ -189,7 +189,7 @@ CORBA::ORB::destroy (ACE_ENV_SINGLE_ARG_DECL)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("CORBA::ORB::destroy() has been called on ORB <%s>.\n"),
-                  ACE_TEXT_CHAR_TO_TCHAR (this->orb_core ()->orbid ())));
+                  ACE_TEXT_TO_TCHAR_IN (this->orb_core ()->orbid ())));
     }
 
   this->orb_core ()->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -1279,6 +1279,7 @@ TAO::ORB::init_orb_globals (ACE_ENV_SINGLE_ARG_DECL)
       ++orb_init_count;
     }
 
+#if defined (ACE_HAS_EXCEPTIONS)
   // This must be done after the system TypeCodes and Exceptions have
   // been initialized.  An unexpected exception will cause TAO's
   // unexpected exception handler to be called.  That handler
@@ -1292,6 +1293,39 @@ TAO::ORB::init_orb_globals (ACE_ENV_SINGLE_ARG_DECL)
    */
   TAO_Singleton_Manager::instance ()->_set_unexpected (
     ::TAO_unexpected_exception_handler);
+#endif /* ACE_HAS_EXCEPTIONS */
+
+  // Verify some of the basic implementation requirements.  This test
+  // gets optimized away by a decent compiler (or else the rest of the
+  // routine does).
+  //
+  // NOTE:  we still "just" assume that native floating point is IEEE.
+  if (   sizeof (CORBA::Boolean)    != 1
+      || sizeof (CORBA::Short)      != 2
+      || sizeof (CORBA::Long)       != 4
+      || sizeof (CORBA::LongLong)   != 8
+      || sizeof (CORBA::Float)      != 4
+      || sizeof (CORBA::Double)     != 8
+      || sizeof (CORBA::LongDouble) != 16
+      || sizeof (CORBA::WChar)      < 2
+      || sizeof (void *)            != ACE_SIZEOF_VOID_P)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "%N; ERROR: unexpected basic type size; "
+                  "b:%d s:%d l:%d ll:%d f:%d d:%d ld:%d wc:%d v:%d\n"
+                  "please reconfigure TAO\n",
+                  sizeof (CORBA::Boolean),
+                  sizeof (CORBA::Short),
+                  sizeof (CORBA::Long),
+                  sizeof (CORBA::LongLong),
+                  sizeof (CORBA::Float),
+                  sizeof (CORBA::Double),
+                  sizeof (CORBA::LongDouble),
+                  sizeof (CORBA::WChar),
+                  sizeof (void *)));
+
+      ACE_THROW (CORBA::INITIALIZE ());
+    }
 }
 
 const ACE_CString &
@@ -1419,7 +1453,7 @@ CORBA::ORB_init (int &argc,
               if (arg_shifter.is_parameter_next ())
                 {
                   orbid_string =
-                    ACE_TEXT_ALWAYS_CHAR (arg_shifter.get_current ());
+                    ACE_TEXT_TO_CHAR_IN (arg_shifter.get_current ());
                   arg_shifter.consume_arg ();
                 }
             }
@@ -1431,9 +1465,9 @@ CORBA::ORB_init (int &argc,
               // but we should skip an optional space...
               if (current_arg[orbid_len] == ' ')
                 orbid_string =
-                  ACE_TEXT_ALWAYS_CHAR (current_arg + orbid_len + 1);
+                  ACE_TEXT_TO_CHAR_IN (current_arg + orbid_len + 1);
               else
-                orbid_string = ACE_TEXT_ALWAYS_CHAR (current_arg + orbid_len);
+                orbid_string = ACE_TEXT_TO_CHAR_IN (current_arg + orbid_len);
             }
           else
             arg_shifter.ignore_arg ();
@@ -1529,7 +1563,7 @@ CORBA::ORB_init (int &argc,
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT("TAO (%P|%t) created new ORB <%s>\n"),
-                  ACE_TEXT_CHAR_TO_TCHAR (orbid_string.c_str ())));
+                  ACE_TEXT_TO_TCHAR_IN (orbid_string.c_str ())));
     }
 
   // Before returning remember to store the ORB into the table...

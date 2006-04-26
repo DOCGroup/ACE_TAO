@@ -1323,7 +1323,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
   if (argc == 1) // no arguments , so one button test
     return 0;
 
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("f:csh:p:u"));
+  ACE_Get_Arg_Opt<ACE_TCHAR>  get_opt (argc, argv, ACE_TEXT ("f:csh:p:u"));
   int c;
 
   while ((c = get_opt ()) != EOF)
@@ -1466,6 +1466,14 @@ run_main (int argc, ACE_TCHAR *argv[])
 
   return success;
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Asynch_Acceptor<Receiver>;
+template class ACE_Asynch_Connector<Sender>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Asynch_Acceptor<Receiver>
+#pragma instantiate ACE_Asynch_Connector<Sender>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #else
 int

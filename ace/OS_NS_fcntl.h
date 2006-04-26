@@ -71,14 +71,12 @@ namespace ACE_OS {
                    int mode,
                    int perms = ACE_DEFAULT_OPEN_PERMS,
                    LPSECURITY_ATTRIBUTES sa = 0);
-#if defined (ACE_HAS_WCHAR)
+
   extern ACE_Export
   ACE_HANDLE open (const wchar_t *filename,
                    int mode,
                    int perms = ACE_DEFAULT_OPEN_PERMS,
                    LPSECURITY_ATTRIBUTES sa = 0);
-#endif /* ACE_HAS_WCHAR */
-
 } /* namespace ACE_OS */
 
 ACE_END_VERSIONED_NAMESPACE_DECL
