@@ -1,3 +1,12 @@
+Wed Apr 26 08:42:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ObjRefTemplate/ObjectReferenceTemplateC.h:
+        * tao/ObjRefTemplate/Default_ORTC.h:
+        * tao/Messaging/ExceptionHolderC.h:
+          Include the Valuetype_Adapter_Factory_Impl.h so that the
+          Valuetype library gets linked in a static build, this is
+          already updated earlier in the IDL compiler
+
 Wed Apr 26 08:17:12 UTC 2006  Kees van Marle  <kvmarle@remedy.nl>
 
         * tests/Bug_1676_Regression/client.cpp:
