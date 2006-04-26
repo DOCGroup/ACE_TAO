@@ -1,3 +1,8 @@
+Wed Apr 26 10:41:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Unbounded_Sequence_CDR_T.h:
+          Added missing include of SystemException
+
 Wed Apr 26 10:03:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/OBV/Simple/*:
