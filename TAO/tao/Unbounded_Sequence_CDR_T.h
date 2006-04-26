@@ -363,6 +363,8 @@ namespace TAO {
 namespace TAO {
   template <typename stream>
   bool marshal_sequence(stream & strm, const TAO::unbounded_value_sequence <CORBA::Short> & source) {
+    if (0 == &source)
+      ACE_THROW_RETURN (::CORBA::BAD_PARAM(0, CORBA::COMPLETED_MAYBE), false);
     ::CORBA::ULong const length = source.length ();
     if (!(strm << length)) {
       return false;
@@ -372,6 +374,8 @@ namespace TAO {
 
   template <typename stream>
   bool marshal_sequence(stream & strm, const TAO::unbounded_value_sequence <CORBA::Long> & source) {
+    if (0 == &source)
+      ACE_THROW_RETURN (::CORBA::BAD_PARAM(0, CORBA::COMPLETED_MAYBE), false);
     ::CORBA::ULong const length = source.length ();
     if (!(strm << length)) {
       return false;
@@ -381,6 +385,8 @@ namespace TAO {
 
   template <typename stream>
   bool marshal_sequence(stream & strm, const TAO::unbounded_value_sequence <CORBA::ULong> & source) {
+    if (0 == &source)
+      ACE_THROW_RETURN (::CORBA::BAD_PARAM(0, CORBA::COMPLETED_MAYBE), false);
     ::CORBA::ULong const length = source.length ();
     if (!(strm << length)) {
       return false;
@@ -390,6 +396,8 @@ namespace TAO {
 
   template <typename stream>
   bool marshal_sequence(stream & strm, const TAO::unbounded_value_sequence <CORBA::UShort> & source) {
+    if (0 == &source)
+      ACE_THROW_RETURN (::CORBA::BAD_PARAM(0, CORBA::COMPLETED_MAYBE), false);
     ::CORBA::ULong const length = source.length ();
     if (!(strm << length)) {
       return false;
@@ -400,6 +408,8 @@ namespace TAO {
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
   template <typename stream>
   bool marshal_sequence(stream & strm, const TAO::unbounded_value_sequence <CORBA::Octet> & source) {
+    if (0 == &source)
+      ACE_THROW_RETURN (::CORBA::BAD_PARAM(0, CORBA::COMPLETED_MAYBE), false);
     ::CORBA::ULong const length = source.length ();
     if (!(strm << length)) {
       return false;
@@ -412,6 +422,8 @@ namespace TAO {
 #else
   template <typename stream>
   bool marshal_sequence(stream & strm, const TAO::unbounded_value_sequence <CORBA::Octet> & source) {
+    if (0 == &source)
+      ACE_THROW_RETURN (::CORBA::BAD_PARAM(0, CORBA::COMPLETED_MAYBE), false);
     ::CORBA::ULong const length = source.length ();
     if (!(strm << length)) {
       return false;
@@ -422,6 +434,8 @@ namespace TAO {
 
   template <typename stream>
   bool marshal_sequence(stream & strm, const TAO::unbounded_value_sequence <CORBA::Char> & source) {
+    if (0 == &source)
+      ACE_THROW_RETURN (::CORBA::BAD_PARAM(0, CORBA::COMPLETED_MAYBE), false);
     ::CORBA::ULong const length = source.length ();
     if (!(strm << length)) {
       return false;
@@ -432,6 +446,8 @@ namespace TAO {
 # if defined (ACE_HAS_WCHAR) || defined (ACE_HAS_XPG4_MULTIBYTE_CHAR)
   template <typename stream>
   bool marshal_sequence(stream & strm, const TAO::unbounded_value_sequence <CORBA::WChar> & source) {
+    if (0 == &source)
+      ACE_THROW_RETURN (::CORBA::BAD_PARAM(0, CORBA::COMPLETED_MAYBE), false);
     ::CORBA::ULong const length = source.length ();
     if (!(strm << length)) {
       return false;
@@ -442,6 +458,8 @@ namespace TAO {
 
   template <typename stream>
   bool marshal_sequence(stream & strm, const TAO::unbounded_value_sequence <CORBA::Float> & source) {
+    if (0 == &source)
+      ACE_THROW_RETURN (::CORBA::BAD_PARAM(0, CORBA::COMPLETED_MAYBE), false);
     ::CORBA::ULong const length = source.length ();
     if (!(strm << length)) {
       return false;
@@ -451,6 +469,8 @@ namespace TAO {
 
   template <typename stream>
   bool marshal_sequence(stream & strm, const TAO::unbounded_value_sequence <CORBA::Double> & source) {
+    if (0 == &source)
+      ACE_THROW_RETURN (::CORBA::BAD_PARAM(0, CORBA::COMPLETED_MAYBE), false);
     ::CORBA::ULong const length = source.length ();
     if (!(strm << length)) {
       return false;
@@ -460,6 +480,8 @@ namespace TAO {
 
   template <typename stream>
   bool marshal_sequence(stream & strm, const TAO::unbounded_value_sequence <CORBA::ULongLong> & source) {
+    if (0 == &source)
+      ACE_THROW_RETURN (::CORBA::BAD_PARAM(0, CORBA::COMPLETED_MAYBE), false);
     ::CORBA::ULong const length = source.length ();
     if (!(strm << length)) {
       return false;
@@ -469,6 +491,8 @@ namespace TAO {
 
   template <typename stream>
   bool marshal_sequence(stream & strm, const TAO::unbounded_value_sequence <CORBA::LongDouble> & source) {
+    if (0 == &source)
+      ACE_THROW_RETURN (::CORBA::BAD_PARAM(0, CORBA::COMPLETED_MAYBE), false);
     ::CORBA::ULong const length = source.length ();
     if (!(strm << length)) {
       return false;
@@ -478,6 +502,8 @@ namespace TAO {
 
   template <typename stream>
   bool marshal_sequence(stream & strm, const TAO::unbounded_value_sequence <CORBA::Boolean> & source) {
+    if (0 == &source)
+      ACE_THROW_RETURN (::CORBA::BAD_PARAM(0, CORBA::COMPLETED_MAYBE), false);
     ::CORBA::ULong const length = source.length ();
     if (!(strm << length)) {
       return false;
@@ -487,6 +513,8 @@ namespace TAO {
 
   template <typename stream, typename value_t>
   bool marshal_sequence(stream & strm, const TAO::unbounded_value_sequence <value_t> & source) {
+    if (0 == &source)
+      ACE_THROW_RETURN (::CORBA::BAD_PARAM(0, CORBA::COMPLETED_MAYBE), false);
     ::CORBA::ULong const length = source.length ();
     if (!(strm << length)) {
       return false;
@@ -501,6 +529,8 @@ namespace TAO {
 
   template <typename stream, typename charT>
   bool marshal_sequence(stream & strm, const TAO::details::unbounded_basic_string_sequence <charT> & source) {
+    if (0 == &source)
+      ACE_THROW_RETURN (::CORBA::BAD_PARAM(0, CORBA::COMPLETED_MAYBE), false);
     ::CORBA::ULong const length = source.length ();
     if (!(strm << length)) {
       return false;
@@ -516,6 +546,8 @@ namespace TAO {
   template <typename stream, typename object_t, typename object_t_var>
   bool marshal_sequence(stream & strm, const TAO::unbounded_object_reference_sequence<object_t, object_t_var> & source) {
     typedef typename TAO::unbounded_object_reference_sequence<object_t, object_t_var>::object_type objec_t;
+    if (0 == &source)
+      ACE_THROW_RETURN (::CORBA::BAD_PARAM(0, CORBA::COMPLETED_MAYBE), false);
     ::CORBA::ULong const length = source.length ();
     if (!(strm << length)) {
       return false;
