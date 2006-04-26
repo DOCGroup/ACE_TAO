@@ -1,3 +1,9 @@
+Wed Apr 26 08:17:12 UTC 2006  Kees van Marle  <kvmarle@remedy.nl>
+
+        * tests/Bug_1676_Regression/client.cpp:
+          Extended this test to explicitly test for BAD_PARAM exception
+          when the server not initializes an out argument
+
 Wed Apr 26 07:24:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Trader/Interpreter_Utils.h:
