@@ -364,4 +364,19 @@ TAO_MProfile::policy_list (ACE_ENV_SINGLE_ARG_DECL)
   return ret_val;
 }
 
+int
+TAO_MProfile::give_shared_profile (TAO_Profile *pfile)
+{
+  for (unsigned i = 0; i < this->last_; i++)
+    if (pfile->tag() == this->pfiles_[i]->tag() &&
+        pfile->compare_key(this->pfiles_[i]))
+      {
+        this->pfiles_[i]->add_generic_endpoint(pfile->endpoint());
+        pfile->_decr_refcnt();
+        return i;
+      }
+  return this->give_profile(pfile,0);
+}
+
+
 TAO_END_VERSIONED_NAMESPACE_DECL

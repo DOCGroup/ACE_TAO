@@ -99,6 +99,7 @@ public:
   virtual void select_endpoint (TAO::Profile_Transport_Resolver *r,
                                 ACE_Time_Value *val
                                 ACE_ENV_ARG_DECL);
+
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

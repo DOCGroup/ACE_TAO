@@ -142,8 +142,10 @@ TAO_MProfile::rewind (void)
   current_ = 0;
 }
 ACE_INLINE int
-TAO_MProfile::give_profile (TAO_Profile *pfile)
+TAO_MProfile::give_profile (TAO_Profile *pfile, int share)
 {
+  if (share)
+    return this->give_shared_profile(pfile);
   // skip by the used slots
   if (last_ == size_) // full!
     return -1;

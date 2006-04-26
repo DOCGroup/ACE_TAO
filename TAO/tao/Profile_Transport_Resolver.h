@@ -130,12 +130,26 @@ namespace TAO
     /// released back to the cache.
     void transport_released (void) const;
 
-    /// This is a callback method used by the endpoint selectors, to
+    /// This is a callback method used by the endpoint selectors to
     /// delegate the responsibility of reserving a transport from the
-    /// connection cache for this invocation.
+    /// connection cache for this invocation. When the descriptor
+    /// contains more than one endpoint (as part of a linked list) and
+    /// the parallel flag is true then the connector will look for a
+    /// connection on any of the endpoints if it supports that
+    /// behavior, otherwise an ENOTSUP errno will be set and the
+    /// method will return false.
     bool try_connect (TAO_Transport_Descriptor_Interface *desc,
                       ACE_Time_Value *val
                       ACE_ENV_ARG_DECL);
+
+    bool try_parallel_connect (TAO_Transport_Descriptor_Interface *desc,
+                               ACE_Time_Value *val
+                               ACE_ENV_ARG_DECL);
+
+    /// This method wraps a call to the orb core to see if parallel
+    /// connection attempts are even desired. This is controlled by
+    /// the -ORBUseParallelConnects 1|0 commandline option.
+    bool use_parallel_connect (void) const;
 
     /// Initialize the inconsistent policy list that this object has
     /// cached.
@@ -152,6 +166,10 @@ namespace TAO
     bool get_connection_timeout (ACE_Time_Value &max_wait_time);
 
   private:
+    bool try_connect_i (TAO_Transport_Descriptor_Interface *desc,
+                        ACE_Time_Value *val,
+                        bool parallel
+                        ACE_ENV_ARG_DECL);
 
     /// Target object
     mutable CORBA::Object *obj_;

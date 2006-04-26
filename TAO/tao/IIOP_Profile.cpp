@@ -202,13 +202,16 @@ TAO_IIOP_Profile::parse_string_i (const char *ior
     {
       // A port number or port name was specified.
       CORBA::ULong length_port = okd - cp_pos - 1;
-
       CORBA::String_var tmp = CORBA::string_alloc (length_port);
 
       ACE_OS::strncpy (tmp.inout (), cp_pos + 1, length_port);
       tmp[length_port] = '\0';
-
-      if (ACE_OS::strspn (tmp.in (), "1234567890") == length_port)
+      if (length_port == 0)
+        {
+          this->endpoint_.port_ = 2809; // default IIOP port for
+          // parsing corbaloc strings
+        }
+      else if (ACE_OS::strspn (tmp.in (), "1234567890") == length_port)
         {
           this->endpoint_.port_ =
             static_cast<CORBA::UShort> (ACE_OS::atoi (tmp.in ()));
@@ -424,6 +427,18 @@ void
 TAO_IIOP_Profile::remove_generic_endpoint (TAO_Endpoint *ep)
 {
   this->remove_endpoint(dynamic_cast<TAO_IIOP_Endpoint *>(ep));
+}
+
+void
+TAO_IIOP_Profile::add_generic_endpoint (TAO_Endpoint *endp)
+{
+  TAO_IIOP_Endpoint *iep = dynamic_cast<TAO_IIOP_Endpoint *>(endp);
+  if (iep != 0)
+    {
+      TAO_IIOP_Endpoint *clone;
+      ACE_NEW (clone, TAO_IIOP_Endpoint(*iep));
+      this->add_endpoint(clone);
+    }
 }
 
 char *

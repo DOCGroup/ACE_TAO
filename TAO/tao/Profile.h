@@ -206,7 +206,7 @@ public:
   virtual int encode_alternate_endpoints (void);
 
   /**
-   * Return pointer to this profile's endpoint.  If the profile
+   * Return a pointer to this profile's endpoint.  If the profile
    * contains more than one endpoint, i.e., a list, the method returns
    * the head of the list.
    */
@@ -214,6 +214,19 @@ public:
 
   /// Return how many endpoints this profile contains.
   virtual CORBA::ULong endpoint_count (void) const = 0;
+
+  /**
+   * Return the first endpoint in the list that matches some filtering
+   * constraint, such as IPv6 compatibility for IIOP endpoints. This
+   * method is implemented in terms of TAO_Endpoint;:next_filtered().
+   */
+  TAO_Endpoint *first_filtered_endpoint (void);
+
+  /// Return the next filtered endpoint in the list after the one
+  /// passed in. This method is implemented in terms of
+  /// TAO_Endpoint;:next_filtered(). If the supplied source endpoint
+  /// is null, this returns the first filtered endpoint.
+  TAO_Endpoint *next_filtered_endpoint (TAO_Endpoint *source);
 
   /**
    * Remove the provided endpoint from the profile. Some
@@ -226,6 +239,9 @@ public:
    */
   virtual void remove_generic_endpoint (TAO_Endpoint *ep);
 
+  /// Add a protocol-agnostic endpoint
+  virtual void add_generic_endpoint (TAO_Endpoint *ep);
+
   /// Verify profile equivalance.
   /**
    * Two profiles are equivalent if their tag, object_key, version
@@ -237,6 +253,12 @@ public:
    * @return @c true if this profile is equivalent to @c other_profile.
    */
   CORBA::Boolean is_equivalent (const TAO_Profile* other_profile);
+
+  /**
+   * Compare the object key for this profile with that of
+   * another. This is weaker than is_equivalent
+   */
+  CORBA::Boolean compare_key (const TAO_Profile *other) const;
 
   /// Return a hash value for this object.
   virtual CORBA::ULong hash (CORBA::ULong max

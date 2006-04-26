@@ -175,6 +175,16 @@ public:
   int shared_profile (void) const;
   void shared_profile (int x);
 
+  /// Want to use parallel connection attempts when profiles have multiple
+  /// endpoints.
+  bool  use_parallel_connects(void) const;
+  void use_parallel_connects (bool x);
+
+  /// The milliseconds delay used to stagger individual connection starts
+  /// when using parallel connects.
+  unsigned long parallel_connect_delay (void) const;
+  void parallel_connect_delay (unsigned long x);
+
   /// Mutators and accessors for rt_collocation_resolver
   bool disable_rt_collocation_resolver (void) const;
   void disable_rt_collocation_resolver (bool);
@@ -303,6 +313,16 @@ private:
 
   /// Shared Profile - Use the same profile for multiple endpoints
   int shared_profile_;
+
+  /// Use Parallel Connects - Try to connect to all endpoints in a
+  /// shared profile at once, use the first to complete.
+  int use_parallel_connects_;
+
+  /// When using parallel connects, this delay is used to stagger connection
+  /// attempts. This gives a trade-off between opening more potential
+  /// connections than necessary vs increasing the potential time before
+  /// a good connection is discovered. Time is expressed in milliseconds.
+  unsigned long parallel_connect_delay_;
 
   /// Preferred network interfaces as a string
   ACE_CString pref_network_;

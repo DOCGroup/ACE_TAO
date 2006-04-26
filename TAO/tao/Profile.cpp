@@ -10,6 +10,7 @@
 #include "tao/CDR.h"
 #include "tao/SystemException.h"
 #include "tao/PolicyC.h"
+#include "tao/Endpoint.h"
 
 #include "ace/ACE.h"
 #include "ace/OS_NS_string.h"
@@ -254,8 +255,8 @@ TAO_Profile::decode (TAO_InputCDR& cdr)
                   encap_len));
     }
 
-  // Decode any additional endpoints per profile.  (At the present,
-  // only RTCORBA takes advantage of this feature.)
+  // Decode any additional endpoints per profile. This is used by RTCORBA
+  // and by IIOP when TAG_ALTERNATE_IIOP_ADDRESS components are present.
   if (this->decode_endpoints () == -1)
     {
       return -1;
@@ -728,6 +729,36 @@ TAO_Profile::is_equivalent (const TAO_Profile *other)
   return result;
 }
 
+CORBA::Boolean
+TAO_Profile::compare_key (const TAO_Profile *other) const
+{
+  return (this->ref_object_key_ == other->ref_object_key_) ||
+    ((this->ref_object_key_ != 0 &&
+      other->ref_object_key_ != 0 &&
+      this->ref_object_key_->object_key() ==
+      other->ref_object_key_->object_key()));
+}
+
+TAO_Endpoint *
+TAO_Profile::first_filtered_endpoint (void)
+{
+  return this->endpoint()->next_filtered(this->orb_core_,0);
+}
+
+TAO_Endpoint *
+TAO_Profile::next_filtered_endpoint (TAO_Endpoint *source)
+{
+  if (source == 0)
+    return this->first_filtered_endpoint();
+  return this->endpoint()->next_filtered(this->orb_core_,this->endpoint());
+}
+
+void
+TAO_Profile::add_generic_endpoint (TAO_Endpoint *)
+{
+  // noop for the base type
+}
+
 TAO_Service_Callbacks::Profile_Equivalence
 TAO_Profile::is_equivalent_hook (const TAO_Profile *other)
 {
@@ -903,6 +934,8 @@ TAO_Unknown_Profile::create_profile_body (TAO_OutputCDR &) const
   // No idea about the profile body! Just return
   return;
 }
+
+
 
 // *************************************************************
 // Operators for TAO_opaque encoding and decoding
