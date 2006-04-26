@@ -339,6 +339,9 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
   // Use SO_KEEPALIVE (default 0).
   int so_keepalive = 0;
 
+  // Use SO_DONTROUTE (default 0)
+  int so_dontroute = 0;
+
   // Use dotted decimal addresses
   // @@ This option will be treated as a suggestion to each loaded
   //    protocol to use a character representation for the numeric
@@ -453,6 +456,15 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
         {
           // Use SO_KEEPALIVE or not.
           so_keepalive =
+            ACE_OS::atoi (current_arg);
+
+          arg_shifter.consume_arg ();
+        }
+      else if (0 != (current_arg = arg_shifter.get_the_parameter
+                (ACE_LIB_TEXT("-ORBDontRoute"))))
+        {
+          // Use SO_DONTROUTE or not.
+          so_dontroute =
             ACE_OS::atoi (current_arg);
 
           arg_shifter.consume_arg ();
@@ -1179,6 +1191,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
   this->orb_params ()->linger (linger);
   this->orb_params ()->nodelay (nodelay);
   this->orb_params ()->sock_keepalive (so_keepalive);
+  this->orb_params ()->sock_dontroute (so_dontroute);
   if (rcv_sock_size >= 0)
     this->orb_params ()->sock_rcvbuf_size (rcv_sock_size);
   if (snd_sock_size >= 0)

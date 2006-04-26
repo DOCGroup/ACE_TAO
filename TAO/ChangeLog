@@ -1,3 +1,22 @@
+Wed Apr 26 19:13:02 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/IIOP_Connection_Handler.cpp:
+        * tao/ORB_Core.cpp:
+        * tao/params.h:
+        * tao/params.i:
+        * tao/params.cpp:
+
+          This change was of OCI by David.Gibbs@igindex.co.uk. He had
+          previously requested the addition of support for SO_KEEPALIVE
+          and as a result we found that the framework existed for
+          communicating a value of SO_DONTROUTE, so it was decided that we
+          go ahead and add the feature. I consider this change provisional
+          in that it isn't strictly required and so if someone strongly
+          objects to its existence it can be pulled. Otherwise it is
+          simply completing what someone else had started a while ago by
+          adding configuration values for socket options to IIOP protocol
+          properties definition.
+
 Wed Apr 26 18:47:23 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/ORB_Core.cpp:

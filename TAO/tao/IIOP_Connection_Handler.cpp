@@ -89,6 +89,8 @@ TAO_IIOP_Connection_Handler::open (void*)
     this->orb_core ()->orb_params ()->nodelay ();
   protocol_properties.keep_alive_ =
     this->orb_core ()->orb_params ()->sock_keepalive ();
+  protocol_properties.dont_route_ =
+   this->orb_core ()->orb_params ()->sock_dontroute ();
 
   TAO_Protocols_Hooks *tph =
     this->orb_core ()->get_protocols_hooks ();
@@ -147,6 +149,21 @@ TAO_IIOP_Connection_Handler::open (void*)
           return -1;
         }
     }
+
+#if !defined (ACE_LACKS_SO_DONTROUTE)
+  if (protocol_properties.dont_route_)
+    {
+      if (this->peer ().
+          set_option (SOL_SOCKET,
+                      SO_DONTROUTE,
+                      (void *) &protocol_properties.dont_route_,
+                      sizeof (protocol_properties.dont_route_)) == -1
+          && errno != ENOTSUP)
+        {
+          return -1;
+        }
+    }
+#endif /* ! ACE_LACKS_SO_DONTROUTE */
 
   if (this->transport ()->wait_strategy ()->non_blocking ()
       || this->transport ()->opened_as () == TAO::TAO_SERVER_ROLE)

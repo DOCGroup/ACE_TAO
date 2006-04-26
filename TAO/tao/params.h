@@ -89,6 +89,10 @@ public:
   int sock_keepalive (void);
   void sock_keepalive (int);
 
+  /// Set/Get whether we should set SO_DONTROUTE on the socket or not.
+  int sock_dontroute (void);
+  void sock_dontroute (int);
+
   /**
    * Octet sequences are marshalled without doing any copies, we
    * simply append a block to the CDR message block chain. When the
@@ -250,8 +254,11 @@ private:
   /// 1 if we're using TCP_NODELAY and 0 otherwise.
   int nodelay_;
 
-  /// 1 if we're using SO_KEEPALIV and 0 otherwise (default 0).
+  /// 1 if we're using SO_KEEPALIVE and 0 otherwise (default 0).
   int sock_keepalive_;
+
+  /// 1 if we're using SO_DONTROUTE and 0 otherwise (default 0).
+  int sock_dontroute_;
 
   /// Control the strategy for copying vs. appeding octet sequences in
   /// CDR streams.
