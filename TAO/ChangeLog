@@ -1,3 +1,9 @@
+Thu Apr 27 21:09:51 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/Profile.cpp:
+          Fix a problem that caused the endpoint selector to spin when
+          using shared profiles and none of the endpoints were valid.
+
 Thu Apr 27 15:03:08 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tests/ORB_Local_Config/Bunch/Test.cpp:
