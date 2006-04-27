@@ -1,3 +1,11 @@
+Thu Apr 27 14:20:02 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/IIOP_Endpoint.cpp:
+          Fixed a recursion problem with the IPv6 endpoint selection.
+
+        * tao/PortableServer/POAManagerFactory.cpp:
+          Cleaned up compiler warnings.
+
 Thu Apr 27 06:55:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/ORB_Local_Config/lib/lib.mpc:
