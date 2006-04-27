@@ -1,0 +1,15 @@
+// -*- MPC -*-
+// $Id$
+
+
+project(*) : ../../../tests/acetest, taoserver {
+  after += lib
+  exename = Test
+  includes += ../lib
+  libpaths += ../lib
+  libs += lib
+  Source_Files {
+    Test.cpp
+  }
+}
+
