@@ -1,0 +1,15 @@
+// -*- MPC -*-
+// $Id$
+
+
+project(*) : acelib {
+
+  Source_Files {
+    Service_Configuration_Per_ORB.cpp
+  }
+
+  Header_Files {
+    Service_Configuration_Per_ORB.h
+  }
+}
+
