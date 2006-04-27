@@ -1,3 +1,11 @@
+Thu Apr 27 02:58:23 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/EndpointPolicy/Endpoint_Value_Impl.cpp:
+        * tao/EndpointPolicy/Endpoint_Value_Impl.h:
+
+          Added a virtual destructor to this otherwise abstract base
+          class.
+
 Wed Apr 26 21:24:54 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * NEWS:
