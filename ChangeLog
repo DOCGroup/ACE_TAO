@@ -1,3 +1,8 @@
+Thu Apr 27 14:00:18 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Sock_Connect.cpp:
+          Implemented get_ip_interfaces for OpenVMS
+
 Thu Apr 27 11:19:18 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Array_Map.h:
