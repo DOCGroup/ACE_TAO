@@ -834,6 +834,13 @@ project(Semaphore Test) : acetest {
   }
 }
 
+project(Sendfile Test) : acetest {
+  exename = Sendfile_Test
+  Source_Files {
+    Sendfile_Test.cpp
+  }
+}
+
 project(Signal Test) : acetest {
   exename = Signal_Test
   Source_Files {
