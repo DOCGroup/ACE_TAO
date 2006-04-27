@@ -200,8 +200,8 @@ public:
  * @brief Provides an interface to timers.
  *
  * This is an abstract base class that provides hook for
- * implementing specialized policies such as <ACE_Timer_List>
- * and <ACE_Timer_Heap>.
+ * implementing specialized policies such as ACE_Timer_List
+ * and ACE_Timer_Heap.
  */
 template <class TYPE, class FUNCTOR, class ACE_LOCK>
 class ACE_Timer_Queue_T
