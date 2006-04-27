@@ -1,3 +1,11 @@
+Thu Apr 27 18:33:18 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Aio_Platform_Test.cpp:
+          When AIO is not available, just print an info message and exit
+
+        * tests/run_test.lst:
+          Added Aio_Platform_Test, it was not in this file at all
+
 Thu Apr 27 14:57:10 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * ace/Svc_Conf.y:
