@@ -35,6 +35,8 @@ static ACE_Module_Type *ace_get_module (const ACE_Service_Type *sr,
 // Force the pretty debugging code to compile.
 // #define YYDEBUG 1
 
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 %}
 
 %token ACE_DYNAMIC ACE_STATIC ACE_SUSPEND ACE_RESUME ACE_REMOVE ACE_USTREAM
@@ -308,6 +310,9 @@ pathname
   ;
 
 %%
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Prints the error string to standard output.  Cleans up the error
 // messages.
 

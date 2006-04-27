@@ -126,6 +126,8 @@ static ACE_Module_Type *ace_get_module (const ACE_Service_Type *sr,
 // Force the pretty debugging code to compile.
 // #define ACE_YYDEBUG 1
 
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 
 
 /* Enabling traces.  */
@@ -339,11 +341,11 @@ static const ace_yysigned_char ace_yyrhs[] =
 /* ACE_YYRLINE[ACE_YYN] -- source line where rule number ACE_YYN was defined.  */
 static const unsigned short int ace_yyrline[] =
 {
-       0,    60,    60,    69,    73,    77,    78,    79,    80,    81,
-      82,    86,    96,   103,   110,   117,   124,   128,   128,   135,
-     138,   145,   144,   153,   157,   165,   169,   194,   208,   217,
-     226,   248,   255,   259,   264,   270,   274,   278,   285,   289,
-     293,   300,   301,   305,   306,   307
+       0,    62,    62,    71,    75,    79,    80,    81,    82,    83,
+      84,    88,    98,   105,   112,   119,   126,   130,   130,   137,
+     140,   147,   146,   155,   159,   167,   171,   196,   210,   219,
+     228,   250,   257,   261,   266,   272,   276,   280,   287,   291,
+     295,   302,   303,   307,   308,   309
 };
 #endif
 
@@ -1639,6 +1641,9 @@ ace_yyreturn:
 
 
 
+
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Prints the error string to standard output.  Cleans up the error
 // messages.

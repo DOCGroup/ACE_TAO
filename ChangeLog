@@ -1,3 +1,16 @@
+Thu Apr 27 14:57:10 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/Svc_Conf.y:
+        * ace/Svc_Conf_Tokens.h:
+        * ace/Svc_Conf_y.cpp:
+
+          Fixed fuzz complaint about #include inside a versioned namespace
+          in Svc_Conf_y.cpp. It was due to a code that Bison generates a
+          part of the parser, from Svc_Conf.y. Changed the versioned
+          namespace to encloses the non-generated code only, while the
+          rest of the parser seems to be designed so that multiple parses
+          can coexist without name clashes.
+
 Thu Apr 27 14:29:07 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * ace/Dynamic_Service_Dependency.h:
