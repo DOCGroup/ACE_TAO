@@ -1,3 +1,18 @@
+Thu Apr 27 15:03:08 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tests/ORB_Local_Config/Bunch/Test.cpp:
+        * tests/ORB_Local_Config/Limits/Test.cpp:
+        * tests/ORB_Local_Config/Simple/Test.cpp:
+        * tests/ORB_Local_Config/Two_DLL_ORB/Test.cpp:
+
+          Fixed fuzz issues (unmatched ACE_TRACE)
+
+        * tests/ORB_Local_Config/Service_Dependency/Service_Config_DLL.cpp:
+        * tests/ORB_Local_Config/Service_Dependency/Service_Dependency.mpc:
+
+          Modified to change the DLL name to avoid name conflict with the
+          one in ACE_ROOT/tests.
+
 Thu Apr 27 14:20:02 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/IIOP_Endpoint.cpp:

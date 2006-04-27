@@ -11,8 +11,6 @@
 int
 run_main (int , ACE_TCHAR *argv[])
 {
-  ACE_TRACE ("testORBBasedService");
-
   ACE_ARGV new_argv;
 
   ACE_DEBUG ((LM_DEBUG, "Looking for conf file %s\n", file_Service_Config_ORB_Test ()));
