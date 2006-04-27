@@ -2,7 +2,7 @@
 // $Id$
 
 
-project(*) :  {
+project(*) : acelib {
 
   Source_Files {
     Service_Configuration_Per_ORB.cpp
