@@ -112,7 +112,7 @@ public:
    * Returns a reference to the underlying <ACE_LOCK>.  This makes it
    * possible to acquire the lock explicitly, which can be useful in
    * some cases if you instantiate the <ACE_Atomic_Op_Ex> with an
-   * <ACE_Recursive_Mutex> or <ACE_Process_Mutex>.  @note the right
+   * ACE_Recursive_Mutex or ACE_Process_Mutex.  @note the right
    * name would be lock_, but HP/C++ will choke on that!
    */
   ACE_LOCK &mutex (void);
@@ -211,8 +211,8 @@ public:
   /**
    * Returns a reference to the underlying <ACE_LOCK>.  This makes it
    * possible to acquire the lock explicitly, which can be useful in
-   * some cases if you instantiate the <ACE_Atomic_Op> with an
-   * <ACE_Recursive_Mutex> or <ACE_Process_Mutex>.
+   * some cases if you instantiate the ACE_Atomic_Op with an
+   * ACE_Recursive_Mutex or ACE_Process_Mutex.
    *
    * @deprecated This member function is deprecated and so may go away in
    * the future. If you need access to the underlying mutex, consider

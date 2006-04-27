@@ -62,7 +62,7 @@ public:
   virtual ACE_Timer_Node_T<TYPE>* item (void);
 
 protected:
-  /// Pointer to the <ACE_Timer_List> that we are iterating over.
+  /// Pointer to the ACE_Timer_List that we are iterating over.
   Wheel& timer_wheel_;
 
   /// Current position in the timing wheel

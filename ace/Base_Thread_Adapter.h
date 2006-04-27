@@ -127,7 +127,7 @@ protected:
 # endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
                       );
   /// Inherit the logging features if the parent thread has an
-  /// <ACE_Log_Msg>.
+  /// ACE_Log_Msg.
   void inherit_log_msg (void);
 
 private:
