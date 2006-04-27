@@ -10,8 +10,6 @@
 int
 run_main (int , ACE_TCHAR *[])
 {
-  ACE_TRACE ("testTooMany");
-
   ACE_Service_Gestalt one(1); // Room for just one ...
   ACE_ASSERT (0 == one.process_directive (ace_svc_desc_TAO_CORBANAME_Parser));
   ACE_ASSERT (-1 == one.process_directive (ace_svc_desc_TAO_CORBALOC_Parser));

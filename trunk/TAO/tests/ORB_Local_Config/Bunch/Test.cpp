@@ -44,7 +44,7 @@ testCompatibility (int , ACE_TCHAR *[])
 
     ACE_DEBUG ((LM_DEBUG, "\tglobal.services_count () -> %d\n",
                 one.services_count ()));
-    ACE_ASSERT (32 == one.services_count ());
+    ACE_ASSERT (33 == one.services_count ());
 
     // Exiting this scope should fini all services ...
   }
