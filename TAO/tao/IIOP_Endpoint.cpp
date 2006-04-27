@@ -250,7 +250,7 @@ TAO_IIOP_Endpoint::next_filtered (TAO_ORB_Core * orb_core, TAO_Endpoint *root)
   bool ipv6_only = false;
   bool prefer_ipv6 = false;
 #if defined (ACE_HAS_IPV6)
-  want_ipv6 = 1;
+  want_ipv6 = true;
   ipv6_only = orb_core->orb_params()->connect_ipv6_only();
   prefer_ipv6 = orb_core->orb_params()->prefer_ipv6_interfaces();
 #else
@@ -269,7 +269,12 @@ TAO_IIOP_Endpoint::next_filtered_i (TAO_IIOP_Endpoint *root,
                                     bool prefer_ipv6,
                                     bool want_ipv6)
 {
+  // the candidate is nominally the next entry in the list, but since
+  // the list may loop back on itself, the root of the list needs to be
+  // initialized.
   TAO_IIOP_Endpoint *candidate = (root == 0) ? this : next_;
+  if (root == 0)
+    root = this;
 
 #if defined (ACE_HAS_IPV6)
   if (ipv6_only)
@@ -287,7 +292,7 @@ TAO_IIOP_Endpoint::next_filtered_i (TAO_IIOP_Endpoint *root,
     {
       if (candidate == 0)
         return !want_ipv6 ? candidate :
-          candidate->next_filtered_i(root, ipv6_only, prefer_ipv6, false);
+          root->next_filtered_i(root, ipv6_only, prefer_ipv6, false);
 
       if (want_ipv6 == candidate->is_ipv6_decimal())
         return candidate;
