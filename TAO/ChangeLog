@@ -1,3 +1,11 @@
+Thu Apr 27 03:46:34 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/EndpointPolicy/Endpoint_Acceptor_Filter.cpp:
+
+          Found the trouble that was crashing the endpoint test. It was
+          nothing wierd with the new sequence code, it was merely an
+          incorrect index variable - i should have been j.
+
 Thu Apr 27 03:05:31 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/params.cpp:
@@ -7,7 +15,7 @@ Thu Apr 27 03:05:31 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
           should be the default, since it generates more compact IORs. It
           has been that way for years in the OCI version of TAO, but I am
           keeping the default 0 here for tradition. This value is
-          overridden by using -ORBUseSharedProfiles [0|1] ORB_init option.
+          overridden by using -ORBUseSharedProfile [0|1] ORB_init option.
 
 Thu Apr 27 02:58:23 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 

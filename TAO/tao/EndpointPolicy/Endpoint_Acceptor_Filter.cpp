@@ -29,13 +29,6 @@ TAO_Endpoint_Acceptor_Filter::fill_profile (const TAO::ObjectKey &object_key,
 {
   CORBA::ULong num_endpoints = endpoints_->length ();
 
-  if (TAO_debug_level > 2)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT("(%P|%t) EndpointPolicy filtering acceptors")
-                ACE_TEXT(" - mprofile has %d profiles,")
-                ACE_TEXT(" endpoint list has %d entries\n"),
-                mprofile.profile_count(), num_endpoints));
-
   for (TAO_Acceptor** acceptor = acceptors_begin;
        acceptor != acceptors_end;
        ++acceptor)
@@ -54,9 +47,18 @@ TAO_Endpoint_Acceptor_Filter::fill_profile (const TAO::ObjectKey &object_key,
         return -1;
     }
 
-  for (TAO_PHandle i = 0; i < mprofile.profile_count (); ++i)
+  if (TAO_debug_level > 2)
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT("(%P|%t) EndpointPolicy filtering acceptors")
+                ACE_TEXT(" - mprofile has %d profiles,")
+                ACE_TEXT(" endpoint list has %d entries\n"),
+                mprofile.profile_count(), num_endpoints));
+
+  for (TAO_PHandle pfile_ndx = 0;
+       pfile_ndx < mprofile.profile_count ();
+       ++pfile_ndx)
     {
-      TAO_Profile *pfile =mprofile.get_profile (i);
+      TAO_Profile *pfile =mprofile.get_profile (pfile_ndx);
 
       TAO_Endpoint *ep_in_pfile = pfile->endpoint ();
 
@@ -64,7 +66,7 @@ TAO_Endpoint_Acceptor_Filter::fill_profile (const TAO::ObjectKey &object_key,
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT("(%P|%t) Testing profile %d - ")
                     ACE_TEXT("it contains %d endpoints\n"),
-                    i, pfile->endpoint_count()));
+                    pfile_ndx, pfile->endpoint_count()));
 
       bool first_endpoint = true;
       // Iterate the endpoints in the profile.
@@ -72,14 +74,15 @@ TAO_Endpoint_Acceptor_Filter::fill_profile (const TAO::ObjectKey &object_key,
         {
           // Iterate the endpoints in the endpoint policy to see if the endpoint
           // in the profile matches.
-          CORBA::ULong j = 0;
+          CORBA::ULong ep_ndx = 0;
           bool epmatch = false;
-          for (j = 0; !epmatch && j < num_endpoints; ++j)
+          for (ep_ndx = 0; !epmatch && ep_ndx < num_endpoints; ++ep_ndx)
             {
-              if (endpoints_[j]->protocol_tag() != pfile->tag())
+              if (endpoints_[ep_ndx]->protocol_tag() != pfile->tag())
                 continue;
 
-              const EndpointPolicy::EndpointValueBase *evb = endpoints_[i];
+              const EndpointPolicy::EndpointValueBase *evb =
+                endpoints_[ep_ndx];
 
               const TAO_Endpoint_Value_Impl *evi =
                 dynamic_cast <const TAO_Endpoint_Value_Impl*>(evb);
@@ -102,6 +105,10 @@ TAO_Endpoint_Acceptor_Filter::fill_profile (const TAO::ObjectKey &object_key,
             }
           else
             {
+              if (TAO_debug_level > 2)
+                ACE_DEBUG ((LM_DEBUG,
+                            ACE_TEXT ("(%P|%t) EndpointPolicy filter ")
+                            ACE_TEXT ("Endpoint matched policy value\n")));
               ep_in_pfile = ep_in_pfile->next();
               first_endpoint = false;
             }
@@ -112,19 +119,36 @@ TAO_Endpoint_Acceptor_Filter::fill_profile (const TAO::ObjectKey &object_key,
         {
           if (TAO_debug_level > 2)
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT("(%P|%t) EndpointPolicy filter removing profile\n")));
+                        ACE_TEXT("(%P|%t) EndpointPolicy filter ")
+                        ACE_TEXT("removing profile\n")));
           mprofile.remove_profile (pfile);
-          --i; // step back one, since we've just shifted the profile list.
+          --pfile_ndx; // step back one, we've just shifted the profile list.
+        }
+      else
+        {
+          if (TAO_debug_level > 2)
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT("(%P|%t) EndpointPolicy filter ")
+                        ACE_TEXT("profile retained with %d endpoints\n"),
+                        pfile->endpoint_count()));
         }
     }
 
   if (mprofile.profile_count () == 0) {
-    if (TAO_debug_level > 2)
+    if (TAO_debug_level > 0)
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT("(%P|%t) EndpointPolicy filter eliminated all profiles\n")));
+                  ACE_TEXT("(%P|%t) EndpointPolicy filter ")
+                  ACE_TEXT("eliminated all profiles\n")));
 
     return -1;
   }
+
+  if (TAO_debug_level > 2)
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT("(%P|%t) EndpointPolicy filter returning mprofile ")
+                ACE_TEXT("with %d profiles\n"),
+                mprofile.profile_count()));
+
   return 0;
 }
 
