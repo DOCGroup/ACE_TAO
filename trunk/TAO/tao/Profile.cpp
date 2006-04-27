@@ -750,7 +750,7 @@ TAO_Profile::next_filtered_endpoint (TAO_Endpoint *source)
 {
   if (source == 0)
     return this->first_filtered_endpoint();
-  return this->endpoint()->next_filtered(this->orb_core_,this->endpoint());
+  return source->next_filtered(this->orb_core_,this->endpoint());
 }
 
 void
