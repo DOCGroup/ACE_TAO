@@ -64,9 +64,6 @@ private:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (__ACE_INLINE__)
-#include "ace/Dynamic_Service_Dependency.inl"
-#endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 
