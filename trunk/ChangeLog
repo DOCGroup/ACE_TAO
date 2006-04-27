@@ -1,3 +1,14 @@
+Thu Apr 27 14:29:07 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/Dynamic_Service_Dependency.h:
+        * ace/Dynamic_Service_Dependency.cpp:
+
+          Updated to remove an empty inl file.
+
+        * ace/Dynamic_Service_Dependency.inl:
+
+          Removed this file.
+
 Thu Apr 27 14:00:18 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Sock_Connect.cpp:
@@ -29,20 +40,20 @@ Thu Apr 27 11:19:18 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Apr 27 01:49:18 UTC 2006  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/OS_NS_sys_sendfile.h (sendfile, sendfile_emulation):
-	* ace/OS_NS_sys_sendfile.cpp (sendfile_emulation):
+        * ace/OS_NS_sys_sendfile.h (sendfile, sendfile_emulation):
+        * ace/OS_NS_sys_sendfile.cpp (sendfile_emulation):
 
-	  ACE_LOFF_T -> off_t.  Expected ACE_LOFF_T behavior is still
-	  under scrutiny.
+          ACE_LOFF_T -> off_t.  Expected ACE_LOFF_T behavior is still
+          under scrutiny.
 
-	* ace/OS_NS_sys_sendfile.inl:
+        * ace/OS_NS_sys_sendfile.inl:
 
-	  Added missing <sys/sendfile.h> include directive.  Addresses
-	  infinite recursion at run-time when ACE_HAS_SENDFILE is defined.
+          Added missing <sys/sendfile.h> include directive.  Addresses
+          infinite recursion at run-time when ACE_HAS_SENDFILE is defined.
 
-	  (sendfile):
+          (sendfile):
 
-	  ACE_LOFF_T -> off_t, as above.
+          ACE_LOFF_T -> off_t, as above.
 
 Wed Apr 26 22:00:21 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
