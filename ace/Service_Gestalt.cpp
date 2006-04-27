@@ -98,7 +98,13 @@ ACE_Service_Type_Forward_Declaration_Guard::~ACE_Service_Type_Forward_Declaratio
   int ret = this->repo_->find (this->name_, &tmp, 0);
 
   // We inserted it (as inactive), so we expect to find it, right?
-  ACE_ASSERT (ret = -2 || ret >= 0);
+  if (ret < 0 && ret != -2)
+  {
+    ACE_ERROR ((LM_WARNING,
+                ACE_LIB_TEXT ("(%P|%t) FWDCL::end - Failed (%d) to find %s\n"),
+                ret, this->name_));
+    ACE_ASSERT (ret == -2 || ret >= 0);
+  }
 
   if (tmp != 0 && tmp->type () != 0)
   {

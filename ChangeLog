@@ -1,3 +1,10 @@
+Thu Apr 27 20:14:52 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/Service_Gestalt.cpp:
+
+          Fixed a complaint from a ACE_NDEBUG builds about unrefrenced
+          variable (only used in ACE_ASSERT).
+
 Thu Apr 27 18:33:18 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Aio_Platform_Test.cpp:
