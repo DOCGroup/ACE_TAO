@@ -1,3 +1,14 @@
+Thu Apr 27 03:05:31 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/params.cpp:
+
+          One of my patches inadvertently flipped the sense of the
+          share_profiles default from 0 to 1. However, I think that 1
+          should be the default, since it generates more compact IORs. It
+          has been that way for years in the OCI version of TAO, but I am
+          keeping the default 0 here for tradition. This value is
+          overridden by using -ORBUseSharedProfiles [0|1] ORB_init option.
+
 Thu Apr 27 02:58:23 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/EndpointPolicy/Endpoint_Value_Impl.cpp:
