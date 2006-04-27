@@ -1,3 +1,27 @@
+Thu Apr 27 11:19:18 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Array_Map.h:
+        * ace/ATM_Addr.h:
+        * ace/Atomic_Op_T.h:
+        * ace/Base_Thread_Adapter.h:
+        * ace/Cached_Connect_Strategy_T.h:
+        * ace/Capabilities.h:
+        * ace/Default_Constants.h:
+        * ace/Hash_Map_Manager_T.h:
+        * ace/Log_Msg_Callback.h:
+        * ace/Log_Msg_IPC.h:
+        * ace/Map_Manager.h:
+        * ace/POSIX_Asynch_IO.h:
+        * ace/POSIX_Proactor.h:
+        * ace/RB_Tree.h:
+        * ace/Strategies_T.h:
+        * ace/Timer_Heap_T.h:
+        * ace/Timer_List_T.h:
+        * ace/Timer_Queue_Adapters.h:
+        * ace/Timer_Queue_T.h:
+        * ace/Timer_Wheel_T.h:
+          Fixed doxygen warnings
+
 Thu Apr 27 01:49:18 UTC 2006  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/OS_NS_sys_sendfile.h (sendfile, sendfile_emulation):
