@@ -1,3 +1,8 @@
+Thu Apr 27 06:55:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/ORB_Local_Config/lib/lib.mpc:
+          Added base project, this would at least get our builds running again
+
 Thu Apr 27 03:46:34 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/EndpointPolicy/Endpoint_Acceptor_Filter.cpp:
