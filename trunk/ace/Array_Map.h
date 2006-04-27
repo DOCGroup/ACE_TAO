@@ -219,7 +219,7 @@ public:
 
   /// Remove range of elements [@a first, @a last) from the map.
   /**
-   * @note [@a first, @last) must be valid range within the map.
+   * @note [@a first, @a last) must be valid range within the map.
    */
   void erase (iterator first, iterator last);
 

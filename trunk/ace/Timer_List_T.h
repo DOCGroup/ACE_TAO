@@ -75,11 +75,11 @@ protected:
  * expiring timers is O(K) (where K is the total number of timers
  * that are < the current time of day).
  * More clever implementations could use a delta-list, a heap,
- * or timing wheels, etc.  For instance, <ACE_Timer_Heap>
- * is a subclass of <ACE_Timer_List> that implements a
+ * or timing wheels, etc.  For instance, ACE_Timer_Heap
+ * is a subclass of ACE_Timer_List that implements a
  * heap-based callout queue.  For most applications, the
- * <ACE_Timer_Heap> will perform substantially faster than the
- * <ACE_Timer_List>.
+ * ACE_Timer_Heap will perform substantially faster than the
+ * ACE_Timer_List.
  */
 template <class TYPE, class FUNCTOR, class ACE_LOCK>
 class ACE_Timer_List_T : public ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>

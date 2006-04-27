@@ -82,18 +82,18 @@ private:
   /// Perform the logic to compute the new ualarm(2) setting.
   virtual int schedule_ualarm (void);
 
-  /// Called back by <SIGALRM> handler.
+  /// Called back by @c SIGALRM handler.
   virtual int handle_signal (int signum, siginfo_t *, ucontext_t *);
 
-  /// Handler for the <SIGALRM> signal, so that we can access our state
+  /// Handler for the @c SIGALRM signal, so that we can access our state
   /// without requiring any global variables.
   ACE_Sig_Handler sig_handler_;
 
-  /// Implementation of the timer queue (e.g., <ACE_Timer_List>,
-  /// <ACE_Timer_Heap>, etc.).
+  /// Implementation of the timer queue (e.g., ACE_Timer_List,
+  /// ACE_Timer_Heap, etc.).
   TQ timer_queue_;
 
-  /// Mask of signals to be blocked when we're servicing <SIGALRM>.
+  /// Mask of signals to be blocked when we're servicing @c SIGALRM.
   ACE_Sig_Set mask_;
 };
 

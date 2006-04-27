@@ -151,18 +151,17 @@ protected:
 /**
  * @class ACE_POSIX_Asynch_Operation
  *
- * @brief This class implements <ACE_Asynch_Operation> for all
+ * @brief This class implements ACE_Asynch_Operation for all
  * implementations of Proactor (AIOCB, SIG, SUN)
- * Specific future implementations
- * can derive from this class.
+ * Specific future implementations can derive from this class.
  */
 class ACE_Export ACE_POSIX_Asynch_Operation : public virtual ACE_Asynch_Operation_Impl
 {
 public:
   /**
    * Initializes the factory with information which will be used with
-   * each asynchronous call.  If (<handle> == ACE_INVALID_HANDLE),
-   * <ACE_Handler::handle> will be called on the <handler> to get the
+   * each asynchronous call.  If (@a handle == ACE_INVALID_HANDLE),
+   * @c ACE_Handler::handle will be called on the handler to get the
    * correct handle. No need for the Proactor since the sub classes
    * will know the correct implementation Proactor class, since this
    * Operation class itself was created by the correct implementation
@@ -173,7 +172,7 @@ public:
             const void *completion_key,
             ACE_Proactor *proactor = 0);
 
-  /// Check the documentation for <ACE_Asynch_Operation::cancel>.
+  /// Check the documentation for ACE_Asynch_Operation::cancel.
   int cancel (void);
 
   // = Access methods.
@@ -192,7 +191,7 @@ protected:
   virtual ~ACE_POSIX_Asynch_Operation (void);
 
   // This call is for the POSIX implementation. This method is used by
-  // <ACE_Asynch_Operation> to store some information with the
+  // ACE_Asynch_Operation to store some information with the
   // Proactor after an <aio_> call is issued, so that the Proactor can
   // retreve this information to do <aio_return> and <aio_error>.
   // Passing a '0' ptr returns the status, indicating whether there
@@ -587,11 +586,11 @@ private:
  * @class ACE_POSIX_Asynch_Accept_Result
  *
  * @brief This is that class which will be passed back to the
- *     <handler> when the asynchronous accept completes.
+ *     handler when the asynchronous accept completes.
  *
  *
  *     This class has all the information necessary for the
- *     <handler> to uniquiely identify the completion of the
+ *     handler to uniquiely identify the completion of the
  *     asynchronous accept.
  */
 class ACE_Export ACE_POSIX_Asynch_Accept_Result : public virtual ACE_Asynch_Accept_Result_Impl,

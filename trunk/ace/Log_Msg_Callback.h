@@ -42,7 +42,7 @@ class ACE_Log_Record;
  *
  *     Remember that there is one Log_Msg object per thread.
  *     Therefore, you may need to register your callback object with
- *     many <ACE_Log_Msg> objects (and have the correct
+ *     many ACE_Log_Msg objects (and have the correct
  *     synchronization in the <log> method) or have a separate
  *     callback object per Log_Msg object.  Moreover,
  *     <ACE_Log_Msg_Callbacks> are not inherited when a new thread
