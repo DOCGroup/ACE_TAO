@@ -16,6 +16,7 @@
 
 #include /**/ "ace/pre.h"
 
+#include "tao/Basic_Types.h"
 #include "tao/EndpointPolicy/EndpointPolicy_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -41,6 +42,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_EndpointPolicy_Export  TAO_Endpoint_Value_Impl
 {
 public:
+  virtual ~TAO_Endpoint_Value_Impl(void);
 
   /// This method is used to compare a candidate IOR endpoint with the
   /// endpoint defined by this policy value.
