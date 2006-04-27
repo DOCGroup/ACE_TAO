@@ -2,7 +2,7 @@
 // $Id$
 
 project(*) : ../../../tests/acetest, taoserver {
-  after += lib Service_Config_DLL TAO
+  after += lib Service_Config_Dependent_DLL TAO
   exename = Test
   includes += ../lib
   libpaths += ../lib
@@ -12,8 +12,8 @@ project(*) : ../../../tests/acetest, taoserver {
   }
 }
 
-project(Service Config DLL) : acelib {
-  sharedname   = Service_Config_DLL
+project(Service Config Dependent DLL) : acelib {
+  sharedname   = Service_Config_Dependent_DLL
   dynamicflags = SERVICE_CONFIG_DLL_BUILD_DLL
 
   Source_Files {

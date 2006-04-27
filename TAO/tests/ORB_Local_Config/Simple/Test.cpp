@@ -13,8 +13,6 @@
 int
 run_main (int , ACE_TCHAR *[])
 {
-  ACE_TRACE ("testSimple");
-
   ACE_Service_Gestalt_Test one; // Use the ACE_Service_Repository::instance ()
 
   one.process_directive (ace_svc_desc_TAO_CORBANAME_Parser);
