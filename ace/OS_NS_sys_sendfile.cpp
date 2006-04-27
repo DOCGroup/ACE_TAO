@@ -14,7 +14,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ssize_t
 ACE_OS::sendfile_emulation (ACE_HANDLE out_fd,
                             ACE_HANDLE in_fd,
-                            ACE_LOFF_T * offset,
+                            off_t * offset,
                             size_t count)
 {
   // @@ We may want set up a signal lease (or oplock) if supported by
@@ -28,7 +28,7 @@ ACE_OS::sendfile_emulation (ACE_HANDLE out_fd,
   (void) ACE_OS::munmap (buf, count);
 
   if (r > 0)
-    *offset += static_cast<ACE_LOFF_T> (r);
+    *offset += static_cast<off_t> (r);
 
   return r;
 }

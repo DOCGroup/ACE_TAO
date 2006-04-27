@@ -1,3 +1,20 @@
+Thu Apr 27 01:49:18 UTC 2006  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/OS_NS_sys_sendfile.h (sendfile, sendfile_emulation):
+	* ace/OS_NS_sys_sendfile.cpp (sendfile_emulation):
+
+	  ACE_LOFF_T -> off_t.  Expected ACE_LOFF_T behavior is still
+	  under scrutiny.
+
+	* ace/OS_NS_sys_sendfile.inl:
+
+	  Added missing <sys/sendfile.h> include directive.  Addresses
+	  infinite recursion at run-time when ACE_HAS_SENDFILE is defined.
+
+	  (sendfile):
+
+	  ACE_LOFF_T -> off_t, as above.
+
 Wed Apr 26 22:00:21 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * ace/Parse_Node.h:

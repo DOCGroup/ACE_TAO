@@ -21,7 +21,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/os_include/sys/os_types.h"
+#include "ace/Basic_Types.h"  /* For ssize_t and off_t. */
 
 #if defined (ACE_EXPORT_MACRO)
 #  undef ACE_EXPORT_MACRO
@@ -33,17 +33,17 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE_OS
 {
-  /// Sendfile wrapper.
+  /// Finds the length of a string (char version).
   ACE_NAMESPACE_INLINE_FUNCTION
   ssize_t sendfile (ACE_HANDLE out_fd,
                     ACE_HANDLE in_fd,
-                    ACE_LOFF_T * offset,
+                    off_t * offset,
                     size_t count);
 
 #ifndef ACE_HAS_SENDFILE
   extern ssize_t sendfile_emulation (ACE_HANDLE out_fd,
                                      ACE_HANDLE in_fd,
-                                     ACE_LOFF_T * offset,
+                                     off_t * offset,
                                      size_t count);
 #endif  /* !ACE_HAS_SENDFILE */
 
