@@ -1,3 +1,12 @@
+Fri Apr 28 14:51:20 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tao/TAO_Internal.cpp:
+
+          Fixed an error, that prevented the initialization of static
+          services during Service_Config::open, The override for the
+          default argument (ignore_static_svcs = 1) was missed during the
+          refactoring.
+
 Fri Apr 28 13:46:43 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tests/ORB_Local_Config/Bunch/Test.cpp:
