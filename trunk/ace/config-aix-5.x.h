@@ -1,6 +1,6 @@
 // $Id$
 //
-// Config file for AIX 5.1 and 5.2.
+// Config file for AIX 5.1 and higher.
 
 #ifndef ACE_CONFIG_AIX_5_X_H
 #define ACE_CONFIG_AIX_5_X_H
@@ -50,7 +50,7 @@
 #undef ACE_LACKS_NETINET_TCP_H
 
 #define ACE_HAS_POSIX_GETPWNAM_R
-
+#define ACE_HAS_SIGSUSPEND
 #define ACE_HAS_TIMEZONE  /* Call tzset() to set timezone */
 
 #endif /* ACE_CONFIG_AIX_5_X_H */
