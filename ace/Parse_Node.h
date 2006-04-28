@@ -98,11 +98,8 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-  ACE_UNIMPLEMENTED_FUNC
-    (ACE_Suspend_Node (const ACE_Suspend_Node&))
-
-  ACE_UNIMPLEMENTED_FUNC
-    (ACE_Suspend_Node& operator= (const ACE_Suspend_Node&))
+  ACE_UNIMPLEMENTED_FUNC (ACE_Suspend_Node (const ACE_Suspend_Node&))
+  ACE_UNIMPLEMENTED_FUNC (ACE_Suspend_Node& operator= (const ACE_Suspend_Node&))
 };
 
 /**
@@ -230,11 +227,8 @@ private:
   ACE_Auto_Ptr<const ACE_Service_Type_Factory> factory_;
 
 private:
-  ACE_UNIMPLEMENTED_FUNC
-    (ACE_Dynamic_Node (const ACE_Dynamic_Node&))
-
-  ACE_UNIMPLEMENTED_FUNC
-    (ACE_Dynamic_Node& operator= (const ACE_Dynamic_Node&))
+  ACE_UNIMPLEMENTED_FUNC (ACE_Dynamic_Node (const ACE_Dynamic_Node&))
+  ACE_UNIMPLEMENTED_FUNC (ACE_Dynamic_Node& operator= (const ACE_Dynamic_Node&))
 };
 
 /**
@@ -355,11 +349,8 @@ protected:
   void *symbol_;
 
 private:
-  ACE_UNIMPLEMENTED_FUNC
-    (ACE_Location_Node (const ACE_Location_Node&))
-
-  ACE_UNIMPLEMENTED_FUNC
-    (ACE_Location_Node& operator= (const ACE_Location_Node&))
+  ACE_UNIMPLEMENTED_FUNC (ACE_Location_Node (const ACE_Location_Node&))
+  ACE_UNIMPLEMENTED_FUNC (ACE_Location_Node& operator= (const ACE_Location_Node&))
 };
 
 /**
@@ -446,11 +437,8 @@ private:
   const ACE_TCHAR *function_name_;
 
 private:
-  ACE_UNIMPLEMENTED_FUNC
-    (ACE_Function_Node (const ACE_Function_Node&))
-
-  ACE_UNIMPLEMENTED_FUNC
-    (ACE_Function_Node& operator= (const ACE_Function_Node&))
+  ACE_UNIMPLEMENTED_FUNC (ACE_Function_Node (const ACE_Function_Node&))
+  ACE_UNIMPLEMENTED_FUNC (ACE_Function_Node& operator= (const ACE_Function_Node&))
 };
 
 /**
@@ -484,11 +472,8 @@ private:
   const ACE_TCHAR *function_name_;
 
 private:
-  ACE_UNIMPLEMENTED_FUNC
-    (ACE_Static_Function_Node (const ACE_Static_Function_Node&))
-
-  ACE_UNIMPLEMENTED_FUNC
-    (ACE_Static_Function_Node& operator= (const ACE_Static_Function_Node&))
+  ACE_UNIMPLEMENTED_FUNC (ACE_Static_Function_Node (const ACE_Static_Function_Node&))
+  ACE_UNIMPLEMENTED_FUNC (ACE_Static_Function_Node& operator= (const ACE_Static_Function_Node&))
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
