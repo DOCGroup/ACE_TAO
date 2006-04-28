@@ -119,13 +119,21 @@ run_main (int argc, ACE_TCHAR *argv[])
       }
 
   if (args.opt_ind () == argc - 1)
-    {     // child process: sleep & exit
+    {
+      // child process: sleep & exit
+      ACE_TCHAR lognm[MAXPATHLEN];
+      int mypid (ACE_OS::getpid ());
+      ACE_OS::sprintf(lognm, ACE_TEXT ("Process_Manager_Test-child-%d"), mypid);
+
+      ACE_START_TEST (lognm);
       int secs = ACE_OS::atoi (argv[args.opt_ind ()]);
       ACE_OS::sleep (secs ? secs : 1);
       if (debug_test)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("%T: pid %P about to exit with code %d\n"),
                     secs));
+      ACE_END_LOG;
+
       return secs;
     }
 
