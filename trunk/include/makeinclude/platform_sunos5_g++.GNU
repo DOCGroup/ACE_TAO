@@ -35,6 +35,10 @@ endif
 DLD             = $(CXX)
 LD              = $(CXX)
 LDFLAGS         +=
+ifeq ($(shell /bin/uname -r),5.9)
+  # Solaris 9 puts sendfile() in a separate library.
+  LIBS          += -lsendfile
+endif
 LIBS            += -lsocket -ldl -lgen -lnsl -lposix4 -lthread
 OCFLAGS         += -O3
 PIC             = -fPIC
