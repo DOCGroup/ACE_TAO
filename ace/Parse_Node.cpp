@@ -15,14 +15,14 @@ ACE_RCSID (ace,
            "$Id$")
 
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+  ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE (ACE_Stream_Node)
 
 // Provide the class hierarchy that defines the parse tree of Service
 // Nodes.
 
-void
+  void
 ACE_Stream_Node::dump (void) const
 {
 #if defined (ACE_HAS_DUMP)
@@ -50,7 +50,7 @@ ACE_Stream_Node::apply (ACE_Service_Gestalt *config, int &yyerrno)
 
 ACE_ALLOC_HOOK_DEFINE (ACE_Parse_Node)
 
-void
+  void
 ACE_Parse_Node::dump (void) const
 {
 #if defined (ACE_HAS_DUMP)
@@ -83,12 +83,12 @@ ACE_Stream_Node::ACE_Stream_Node (const ACE_Static_Node *str_ops,
                                   const ACE_Parse_Node *str_mods)
 #if defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS)
   : ACE_Parse_Node (str_ops == 0 ? static_cast<ACE_TCHAR *> (ACE_LIB_TEXT ("<unknown>"))
-                                 : static_cast<ACE_TCHAR *> (str_ops->name ())),
+        : static_cast<ACE_TCHAR *> (str_ops->name ())),
 #else
-  : ACE_Parse_Node ((str_ops == 0 ? ACE_LIB_TEXT ("<unknown>") : str_ops->name ())),
+    : ACE_Parse_Node ((str_ops == 0 ? ACE_LIB_TEXT ("<unknown>") : str_ops->name ())),
 #endif /* defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
-    node_ (str_ops),
-    mods_ (str_mods)
+      node_ (str_ops),
+      mods_ (str_mods)
 {
   ACE_TRACE ("ACE_Stream_Node::ACE_Stream_Node");
 }
@@ -141,7 +141,7 @@ ACE_Parse_Node::~ACE_Parse_Node (void)
 
 ACE_ALLOC_HOOK_DEFINE (ACE_Suspend_Node)
 
-void
+  void
 ACE_Suspend_Node::dump (void) const
 {
 #if defined (ACE_HAS_DUMP)
@@ -161,7 +161,7 @@ ACE_Suspend_Node::~ACE_Suspend_Node (void)
 
 ACE_ALLOC_HOOK_DEFINE (ACE_Resume_Node)
 
-void
+  void
 ACE_Resume_Node::dump (void) const
 {
 #if defined (ACE_HAS_DUMP)
@@ -215,7 +215,7 @@ ACE_Resume_Node::apply (ACE_Service_Gestalt *config, int &yyerrno)
 
 ACE_ALLOC_HOOK_DEFINE (ACE_Remove_Node)
 
-void
+  void
 ACE_Remove_Node::dump (void) const
 {
 #if defined (ACE_HAS_DUMP)
@@ -281,7 +281,7 @@ ACE_Dynamic_Node::apply (ACE_Service_Gestalt *config, int &yyerrno)
 
 ACE_ALLOC_HOOK_DEFINE (ACE_Dynamic_Node)
 
-void
+  void
 ACE_Dynamic_Node::dump (void) const
 {
 #if defined (ACE_HAS_DUMP)
@@ -296,7 +296,7 @@ ACE_Dynamic_Node::~ACE_Dynamic_Node (void)
 
 ACE_ALLOC_HOOK_DEFINE (ACE_Static_Node)
 
-void
+  void
 ACE_Static_Node::dump (void) const
 {
 #if defined (ACE_HAS_DUMP)
@@ -336,7 +336,7 @@ ACE_Static_Node::apply (ACE_Service_Gestalt *config, int &yyerrno)
 {
   ACE_TRACE ("ACE_Static_Node::apply");
   if (config->initialize (this->name (),
-                                      this->parameters ()) == -1)
+        this->parameters ()) == -1)
     ++yyerrno;
 
 #ifndef ACE_NLOGGING
@@ -357,7 +357,7 @@ ACE_Static_Node::~ACE_Static_Node (void)
 
 ACE_ALLOC_HOOK_DEFINE (ACE_Location_Node)
 
-void
+  void
 ACE_Location_Node::dump (void) const
 {
 #if defined (ACE_HAS_DUMP)
@@ -445,7 +445,7 @@ ACE_Location_Node::set_symbol (void *s)
 
 ACE_ALLOC_HOOK_DEFINE (ACE_Object_Node)
 
-void
+  void
 ACE_Object_Node::dump (void) const
 {
 #if defined (ACE_HAS_DUMP)
@@ -502,7 +502,7 @@ ACE_Object_Node::~ACE_Object_Node (void)
 
 ACE_ALLOC_HOOK_DEFINE (ACE_Function_Node)
 
-void
+  void
 ACE_Function_Node::dump (void) const
 {
 #if defined (ACE_HAS_DUMP)
@@ -556,7 +556,7 @@ ACE_Function_Node::make_func_name (ACE_TCHAR const * func_name)
       size_t const len =
         ACE_OS::strlen (func_name)
         + versioned_namespace_name_len;
-        // + 1;  // Null terminator.
+      // + 1;  // Null terminator.
 
       ACE_TCHAR * mangled_func_name;
       ACE_NEW_RETURN (mangled_func_name,
@@ -612,7 +612,7 @@ ACE_Function_Node::symbol (ACE_Service_Gestalt *,
                           ACE_LIB_TEXT ("%s\n"),
                           function_name,
                           errmsg ? errmsg :
-                                   ACE_LIB_TEXT ("no error reported")));
+        ACE_LIB_TEXT ("no error reported")));
 #endif /* ACE_NLOGGING */
 
               return 0;
@@ -644,7 +644,7 @@ ACE_Function_Node::~ACE_Function_Node (void)
 
 ACE_ALLOC_HOOK_DEFINE (ACE_Dummy_Node)
 
-void
+  void
 ACE_Dummy_Node::dump (void) const
 {
 #if defined (ACE_HAS_DUMP)
@@ -686,7 +686,7 @@ ACE_Dummy_Node::~ACE_Dummy_Node (void)
 
 ACE_ALLOC_HOOK_DEFINE (ACE_Static_Function_Node)
 
-void
+  void
 ACE_Static_Function_Node::dump (void) const
 {
 #if defined (ACE_HAS_DUMP)
@@ -715,12 +715,13 @@ ACE_Static_Function_Node::symbol (ACE_Service_Gestalt *config,
 
   ACE_Static_Svc_Descriptor *ssd = 0;
   if (config->find_static_svc_descriptor (this->function_name_, &ssd) == -1)
-  {
-    yyerrno++;
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("(%P|%t) No static service registered for function %s\n"),
-                       this->function_name_),
-                      0);
+    {
+      yyerrno++;
+      ACE_ERROR_RETURN ((LM_ERROR,
+       ACE_LIB_TEXT ("(%P|%t) No static service ")
+       ACE_LIB_TEXT ("registered for function %s\n"),
+       this->function_name_),
+      0);
     }
 
   if (ssd->alloc_ == 0)
@@ -735,7 +736,7 @@ ACE_Static_Function_Node::symbol (ACE_Service_Gestalt *config,
                              ACE_LIB_TEXT ("(%P|%t) No static service factory ")
                              ACE_LIB_TEXT ("function registered for function %s\n"),
                              this->function_name_),
-                             0);
+          0);
         }
     }
 

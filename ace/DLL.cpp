@@ -11,7 +11,7 @@
 
 ACE_RCSID(ace, DLL, "$Id$")
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+  ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Default constructor. Also, by default, the object will be closed
 // before it is destroyed.
@@ -41,9 +41,9 @@ ACE_DLL::ACE_DLL (const ACE_DLL &rhs)
                      rhs.open_mode_,
                      rhs.close_handle_on_destruction_) != 0
       && ACE::debug ())
-      ACE_ERROR ((LM_ERROR,
-                  ACE_LIB_TEXT ("ACE_DLL::copy_ctor: error: %s\n"),
-                  this->error ()));
+    ACE_ERROR ((LM_ERROR,
+    ACE_LIB_TEXT ("ACE_DLL::copy_ctor: error: %s\n"),
+    this->error ()));
 }
 
 // Assignment operator
@@ -65,9 +65,9 @@ ACE_DLL::operator= (const ACE_DLL &rhs)
                      rhs.open_mode_,
                      rhs.close_handle_on_destruction_) != 0
       && ACE::debug ())
-      ACE_ERROR ((LM_ERROR,
-                  ACE_LIB_TEXT ("ACE_DLL::operator=: error: %s\n"),
-                  this->error ()));
+    ACE_ERROR ((LM_ERROR,
+    ACE_LIB_TEXT ("ACE_DLL::operator=: error: %s\n"),
+    this->error ()));
 
   return *this;
 }
@@ -148,7 +148,7 @@ ACE_DLL::open_i (const ACE_TCHAR *dll_filename,
         ACE_ERROR ((LM_ERROR,
                     ACE_LIB_TEXT ("ACE_DLL::open_i: dll_name is %s\n"),
                     this->dll_name_ == 0 ? ACE_LIB_TEXT ("(null)")
-                                         : this->dll_name_));
+        : this->dll_name_));
       return -1;
     }
 

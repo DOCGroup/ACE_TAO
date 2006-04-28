@@ -16,7 +16,7 @@ ACE_RCSID (ace,
            Service_Types,
            "$Id$")
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+  ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 typedef ACE_Stream<ACE_SYNCH> MT_Stream;
 typedef ACE_Module<ACE_SYNCH> MT_Module;
@@ -24,7 +24,7 @@ typedef ACE_Task<ACE_SYNCH> MT_Task;
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Service_Type_Impl)
 
-void
+  void
 ACE_Service_Type_Impl::dump (void) const
 {
 #if defined (ACE_HAS_DUMP)
@@ -180,7 +180,7 @@ ACE_Service_Object_Type::info (ACE_TCHAR **str, size_t len) const
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Module_Type)
 
-void
+  void
 ACE_Module_Type::dump (void) const
 {
 #if defined (ACE_HAS_DUMP)
@@ -307,7 +307,7 @@ ACE_Module_Type::link (void) const
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Stream_Type)
 
-void
+  void
 ACE_Stream_Type::dump (void) const
 {
 #if defined (ACE_HAS_DUMP)

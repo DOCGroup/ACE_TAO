@@ -1,4 +1,3 @@
-// Shared_Object.cpp
 // $Id$
 
 #include "ace/Shared_Object.h"
@@ -16,7 +15,7 @@ ACE_RCSID (ace,
            Shared_Object,
            "$Id$")
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+  ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Initializes object when dynamic linking occurs.
 

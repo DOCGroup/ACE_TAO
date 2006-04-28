@@ -18,7 +18,7 @@ ACE_RCSID (ace,
            Service_Config,
            "$Id$")
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+  ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 
 ///
@@ -32,10 +32,10 @@ ACE_Service_Config_Guard::ACE_Service_Config_Guard (ACE_Service_Gestalt * psg)
                 psg->repo_));
 
   if (saved_ != psg)
-  {
-    // Modify the TSS - no locking needed
-    (void)ACE_Service_Config::current (psg);
-  }
+    {
+      // Modify the TSS - no locking needed
+      (void)ACE_Service_Config::current (psg);
+    }
 }
 
 ///
@@ -55,7 +55,7 @@ ACE_ALLOC_HOOK_DEFINE (ACE_Service_Config)
 
 // A thread-specific storage to keep a pointer to the (current) global
 // configuration.
-ACE_TSS_TYPE (ACE_TSS_Type_Adapter <ACE_Service_Gestalt*>)
+  ACE_TSS_TYPE (ACE_TSS_Type_Adapter <ACE_Service_Gestalt*>)
   ACE_Service_Config::current_ (0);
 
 // Set the signal handler to point to the handle_signal() function.
@@ -163,18 +163,18 @@ ACE_Service_Config::open_i (const ACE_TCHAR program_name[],
 
   // Write process id to file.
   if (this->pid_file_name_ != 0)
-  {
-    FILE* pidf = ACE_OS::fopen (this->pid_file_name_,
-                                ACE_LIB_TEXT("w"));
-
-    if (pidf != 0)
     {
-      ACE_OS::fprintf (pidf,
-                       "%ld\n",
-                       static_cast<long> (ACE_OS::getpid()));
-      ACE_OS::fclose (pidf);
-    }
+      FILE* pidf = ACE_OS::fopen (this->pid_file_name_,
+          ACE_LIB_TEXT("w"));
+
+      if (pidf != 0)
+  {
+    ACE_OS::fprintf (pidf,
+         "%ld\n",
+         static_cast<long> (ACE_OS::getpid()));
+    ACE_OS::fclose (pidf);
   }
+    }
 
   u_long flags = log_msg->flags ();
 
@@ -197,35 +197,35 @@ ACE_Service_Config::open_i (const ACE_TCHAR program_name[],
                      key) == -1)
     result = -1;
   else
-  {
-    if (ACE::debug ())
-      ACE_DEBUG ((LM_STARTUP,
-                  ACE_LIB_TEXT ("starting up daemon %n\n")));
-
-    // Initialize the Service Repository (this will still work if
-    // user forgets to define an object of type ACE_Service_Config).
-    ACE_Service_Repository::instance (ACE_Service_Config::MAX_SERVICES);
-
-    // Initialize the ACE_Reactor (the ACE_Reactor should be the
-    // same size as the ACE_Service_Repository).
-    ACE_Reactor::instance ();
-
-    // There's no point in dealing with this on NT since it doesn't
-    // really support signals very well...
-#if !defined (ACE_LACKS_UNIX_SIGNALS)
-    // Only attempt to register a signal handler for positive
-    // signal numbers.
-    if (ACE_Service_Config::signum_ > 0)
     {
-      ACE_Sig_Set ss;
-      ss.sig_add (ACE_Service_Config::signum_);
-      if (ACE_Reactor::instance ()->register_handler
-             (ss, ACE_Service_Config::signal_handler_) == -1)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_LIB_TEXT ("can't register signal handler\n")));
-    }
-#endif /* ACE_LACKS_UNIX_SIGNALS */
+      if (ACE::debug ())
+  ACE_DEBUG ((LM_STARTUP,
+        ACE_LIB_TEXT ("starting up daemon %n\n")));
+
+      // Initialize the Service Repository (this will still work if
+      // user forgets to define an object of type ACE_Service_Config).
+      ACE_Service_Repository::instance (ACE_Service_Config::MAX_SERVICES);
+
+      // Initialize the ACE_Reactor (the ACE_Reactor should be the
+      // same size as the ACE_Service_Repository).
+      ACE_Reactor::instance ();
+
+      // There's no point in dealing with this on NT since it doesn't
+      // really support signals very well...
+#if !defined (ACE_LACKS_UNIX_SIGNALS)
+      // Only attempt to register a signal handler for positive
+      // signal numbers.
+      if (ACE_Service_Config::signum_ > 0)
+  {
+    ACE_Sig_Set ss;
+    ss.sig_add (ACE_Service_Config::signum_);
+    if (ACE_Reactor::instance ()->register_handler
+        (ss, ACE_Service_Config::signal_handler_) == -1)
+      ACE_ERROR ((LM_ERROR,
+      ACE_LIB_TEXT ("can't register signal handler\n")));
   }
+#endif /* ACE_LACKS_UNIX_SIGNALS */
+    }
 
   if (result == -1)
     return -1;
@@ -236,36 +236,36 @@ ACE_Service_Config::open_i (const ACE_TCHAR program_name[],
   // Check if the default file exists before attempting to queue it
   // for processing
   if (!ignore_default_svc_conf_file)
-  {
+    {
       FILE *fp = ACE_OS::fopen (ACE_DEFAULT_SVC_CONF,
-                            ACE_LIB_TEXT ("r"));
+        ACE_LIB_TEXT ("r"));
       ignore_default_svc_conf_file = (fp == 0);
       if (fp != 0)
         ACE_OS::fclose (fp);
-  }
+    }
 
   if (!ignore_default_svc_conf_file
       && this->svc_conf_file_queue_->is_empty ())
-  {
-    // Load the default "svc.conf" entry here if there weren't
-    // overriding -f arguments in <parse_args>.
-    if (this->svc_conf_file_queue_->enqueue_tail (ACE_TString (ACE_DEFAULT_SVC_CONF)) == -1)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_LIB_TEXT ("%p\n"),
-                         ACE_LIB_TEXT ("enqueuing ")
-                         ACE_DEFAULT_SVC_CONF
-                         ACE_LIB_TEXT(" file")),
-                        -1);
-    }
+      // Load the default "svc.conf" entry here if there weren't
+      // overriding -f arguments in <parse_args>.
+      if (this->svc_conf_file_queue_->enqueue_tail
+    (ACE_TString (ACE_DEFAULT_SVC_CONF)) == -1)
+  {
+    ACE_ERROR_RETURN ((LM_ERROR,
+           ACE_LIB_TEXT ("%p\n"),
+           ACE_LIB_TEXT ("enqueuing ")
+           ACE_DEFAULT_SVC_CONF
+           ACE_LIB_TEXT(" file")),
+          -1);
   }
+    }
 
-  return ACE_Service_Gestalt::open_i (program_name,
-                                      logger_key,
-                                      ignore_static_svcs,
-                                      ignore_default_svc_conf_file,
-                                      ignore_debug_flag);
-
+   return ACE_Service_Gestalt::open_i (program_name,
+               logger_key,
+               ignore_static_svcs,
+               ignore_default_svc_conf_file,
+               ignore_debug_flag);
 }
 
 /// Return the global configuration instance. Allways returns the same
@@ -283,20 +283,20 @@ ACE_Service_Config::instance (void)
   return  ACE_Service_Config::current ();
 }
 
-/// Return the configuration instance, considered "global" in
-/// the current thread. This may be the same as instance(), but on some
-/// occasions, it may be a different one. For example, ACE_Service_Config_Guard
-/// provides a way of temporarily replacing the "current" configuration
-/// instance in the context of a thread.
+/// Return the configuration instance, considered "global" in the
+/// current thread. This may be the same as instance(), but on some
+/// occasions, it may be a different one. For example,
+/// ACE_Service_Config_Guard provides a way of temporarily replacing
+/// the "current" configuration instance in the context of a thread.
 ACE_Service_Gestalt *
 ACE_Service_Config::current (void)
 {
   ACE_Service_Gestalt *tmp = ACE_Service_Config::global ();
 
   // If the Object_Manager is in transient state, the
-  // ACE_Service_Gestalt::current_ instance may not have been constructed
-  // yet (or may have been already destroyed). Either way there
-  // are no other threads.
+  // ACE_Service_Gestalt::current_ instance may not have been
+  // constructed yet (or may have been already destroyed). Either way
+  // there are no other threads.
   if (ACE_Object_Manager::starting_up () || ACE_Object_Manager::shutting_down ())
     return tmp;
 
@@ -319,12 +319,14 @@ ACE_Service_Config::current (ACE_Service_Gestalt *newcurrent)
 }
 
 
-// Changed the interface of this method to return the gestalt instead of
-// the container, underlying the service repository and defined
-// ACE_Service_Gestalt::insert (ACE_Static_Svc_Descriptor*). This way the
-// existing source code can keep using ACE_Service_Config::static_svcs(),
-// however now it is not necessary to expose the repository storage *and*
-// it is much easier to debug service registration problems.
+// This method has changed to return the gestalt instead of the
+// container, underlying the service repository and defined
+// ACE_Service_Gestalt::insert (ACE_Static_Svc_Descriptor*). This way
+// the existing source code can keep using
+// ACE_Service_Config::static_svcs(), however now it is not necessary
+// to expose the repository storage *and* it is much easier to debug
+// service registration problems.
+
 ACE_Service_Gestalt *
 ACE_Service_Config::static_svcs (void)
 {
@@ -461,6 +463,7 @@ ACE_Service_Config::ACE_Service_Config (const ACE_TCHAR program_name[],
   if (this->open (program_name,
                   logger_key) == -1
       && errno != ENOENT)
+
     // Only print out an error if it wasn't the svc.conf file that was
     // missing.
     ACE_ERROR ((LM_ERROR,

@@ -9,7 +9,7 @@ ACE_RCSID (ace,
            Dynamic_Service_Base,
            "$Id$")
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+  ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 
 void
@@ -47,11 +47,11 @@ ACE_Dynamic_Service_Base::find_i (const ACE_Service_Gestalt* &repo,
   ACE_Service_Gestalt* global = ACE_Service_Config::global ();
 
   for ( ; repo->find (name, &svc_rec) == -1; repo = global)
-  {
-    // Check the static repo, too if different
-    if (repo == global)
-      break;
-  }
+    {
+      // Check the static repo, too if different
+      if (repo == global)
+  break;
+    }
 
   return svc_rec;
 }
@@ -72,25 +72,26 @@ ACE_Dynamic_Service_Base::instance (const ACE_Service_Gestalt* repo,
 
   const ACE_Service_Type *svc_rec = find_i (repo_found, name);
   if (svc_rec != 0)
-  {
-    type = svc_rec->type ();
-    if (type != 0)
-      obj = type->object ();
-  }
+    {
+      type = svc_rec->type ();
+      if (type != 0)
+  obj = type->object ();
+    }
 
   if (ACE::debug ())
-  {
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_LIB_TEXT ("(%P|%t) DSB::instance, repo=%@, name=%s, type=%@ => %@"),
-                repo->repo_, name, type, obj));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+      ACE_LIB_TEXT ("(%P|%t) DSB::instance, repo=%@, name=%s, ")
+      ACE_LIB_TEXT ("type=%@ => %@"),
+      repo->repo_, name, type, obj));
 
-    if (repo->repo_ != repo_found->repo_)
-      ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT (" [in repo=%@]\n"),
-                  repo_found->repo_));
-    else
-      ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\n")));
+      if (repo->repo_ != repo_found->repo_)
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT (" [in repo=%@]\n"),
+        repo_found->repo_));
+      else
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\n")));
 
-  }
+    }
 
   return obj;
 }
