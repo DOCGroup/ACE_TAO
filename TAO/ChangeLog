@@ -1,3 +1,15 @@
+Fri Apr 28 13:46:43 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tests/ORB_Local_Config/Bunch/Test.cpp:
+        * tests/ORB_Local_Config/Limits/Test.cpp:
+        * tests/ORB_Local_Config/Service_Dependency/Test.cpp:
+        * tests/ORB_Local_Config/Shared/Test.cpp:
+        * tests/ORB_Local_Config/Simple/Test.cpp:
+        * tests/ORB_Local_Config/Two_DLL_ORB/Test.cpp:
+
+          Updated to shut up unused variable warnings on builds where
+          ACE_NDEBUG has been defined.
+
 Thu Apr 27 21:09:51 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/Profile.cpp:
