@@ -36,10 +36,15 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 /**
  * @class ACE_Async_Timer_Queue_Adapter
  *
- * @brief Adapts a <TQ> to be run asynchronously.
+ * @brief Adapts an ACE timer queue to be driven asynchronously using signals.
  *
- * This implementation uses the <ualarm> call, which generates
+ * This implementation uses the ACE_OS::ualarm call, to generate
  * the SIGARLM signal that is caught by this class.
+ *
+ * @note This adapter only works on platforms that support ualarm().
+ * POSIX platforms generally do; Windows and some others do not.
+ *
+ * @todo This adapter does not automatically reschedule repeating timers.
  */
 template <class TQ>
 class ACE_Async_Timer_Queue_Adapter : public ACE_Event_Handler
@@ -71,11 +76,11 @@ public:
   /// passed in.
   int cancel (long timer_id, const void **act = 0);
 
-  /// Dispatch all timers whose values are <= cur_time.  Returns the
-  /// number of timers canceled.
+  /// Dispatch all timers with expiry time at or before the current time.
+  /// Returns the number of timers expired.
   int expire (void);
 
-  /// Access the underlying <TIMER_QUEUE>.
+  /// Return a reference to the underlying timer queue.
   TQ &timer_queue (void);
 
 private:
@@ -100,11 +105,11 @@ private:
 /**
  * @class ACE_Thread_Timer_Queue_Adapter
  *
- * @brief Adapts a Timer_Queue using a separate thread for dispatching.
+ * @brief Adapts an ACE timer queue using a separate thread for dispatching.
  *
- * This implementation of a Timer_Queue uses a separate thread to
- * dispatch the timers. The base queue need not be thread safe,
- * this class takes all the necessary locks.
+ * This implementation uses a separate thread to dispatch the timers.
+ * The base queue need not be thread safe; this class takes all the
+ * necessary locks.
  *
  * @note This is a case where template parameters will be useful, but
  * (IMHO) the effort and portability problems discourage their
