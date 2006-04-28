@@ -1,3 +1,10 @@
+Fri Apr 28 22:31:52 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/Service_Gestalt.cpp:
+
+          Removed an ';' after ACE_TRACE, which was confusing GCC4 with
+          "hidden visibility" enabled.
+
 Fri Apr 28 21:22:53 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * ace/Service_Config.cpp:
