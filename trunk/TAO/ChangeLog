@@ -1,3 +1,16 @@
+Fri Apr 28 22:25:57 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tests/ORB_Local_Config/Bunch/Test.cpp:
+        * tests/ORB_Local_Config/Limits/Test.cpp:
+        * tests/ORB_Local_Config/Separation/Test.cpp:
+        * tests/ORB_Local_Config/Service_Dependency/Test.cpp:
+        * tests/ORB_Local_Config/Shared/Test.cpp:
+        * tests/ORB_Local_Config/Simple/Test.cpp:
+        * tests/ORB_Local_Config/Two_DLL_ORB/Test.cpp:
+
+          Modified to eliminate warnings about unised variables on
+          ACE_NDEBUG builds.
+
 Fri Apr 28 22:04:50 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tests/ORB_Local_Config/Bug_1459/Bug_1459.mpc:

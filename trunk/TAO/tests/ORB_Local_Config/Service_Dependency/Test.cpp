@@ -1,5 +1,10 @@
 // $Id$
 
+/// It's a test - we need ACE_ASSERT
+#ifdef ACE_NDEBUG
+#  undef ACE_NDEBUG
+#endif
+
 #include "tao/Codeset_Descriptor_Base.h"
 #include "tao/Codeset_Manager_Factory_Base.h"
 #include "tao/Codeset_Manager.h"
