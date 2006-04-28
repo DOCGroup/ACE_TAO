@@ -19,8 +19,6 @@
 #  define ACE_HAS_TIMEZONE
 #endif
 
-#define ACE_HAS_SENDFILE
-
 // The range of thread priorities for 5.8 differs from 5.7 in the
 // minimum priority for the SCHED_OTHER policy (i.e.,
 // ACE_THR_PRI_OTHER_MIN)
