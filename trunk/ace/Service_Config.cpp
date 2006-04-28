@@ -149,7 +149,7 @@ ACE_Service_Config::open_i (const ACE_TCHAR program_name[],
   // The base class open_i increments this and we are
   // forwarding to it, so we don't have to increment here.
   if (this->is_opened_ != 0)
-     return 0;
+    return 0;
 
   // Check for things we need to do on a per-process basis and which
   // may not be safe, or wise to do an a per instance basis
@@ -261,10 +261,10 @@ ACE_Service_Config::open_i (const ACE_TCHAR program_name[],
   }
 
   return ACE_Service_Gestalt::open_i (program_name,
-                                        logger_key,
-                                        ignore_static_svcs,
-                                        ignore_default_svc_conf_file,
-                                        ignore_debug_flag);
+                                      logger_key,
+                                      ignore_static_svcs,
+                                      ignore_default_svc_conf_file,
+                                      ignore_debug_flag);
 
 }
 
