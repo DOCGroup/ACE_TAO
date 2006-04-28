@@ -247,5 +247,6 @@ run_main(int argc, ACE_TCHAR *argv[])
   testServiceDependency (argc, argv);
   testOpenDynamicServices (argc, argv);
   testORBInitializer_Registry(argc, argv);
+  return 0;
 }
 
