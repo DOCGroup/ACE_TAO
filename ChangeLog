@@ -1,3 +1,11 @@
+Fri Apr 28 14:31:48 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/Service_Gestalt.h: Removed extraneous ';' from
+          ACE_UNIMPLEMENTED_FUNC usage.
+
+        * m4/ace.m4: Fixed incorrect variable referenced in case during
+          --enable-uses-wchar.
+
 Fri Apr 28 14:03:50 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * ace/Dynamic_Service.h:
@@ -33,13 +41,13 @@ Fri Apr 28 13:23:57 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 Fri Apr 28 13:21:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Process_Mutex_Test.cpp:
-          When spawn failes log an error and exit instead of using an assert
+          When spawn fails log an error and exit instead of using an assert
           which causes an abort of the exe
 
 Fri Apr 28 13:15:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Pipe_Test.cpp:
-          When spawn failes log an error and exit instead of using an assert
+          When spawn fails log an error and exit instead of using an assert
           which causes an abort of the exe
 
 Fri Apr 28 12:49:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
