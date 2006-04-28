@@ -14,6 +14,6 @@ run_main (int , ACE_TCHAR *[])
   ACE_ASSERT (0 == one.process_directive (ace_svc_desc_TAO_CORBANAME_Parser));
   ACE_ASSERT (-1 == one.process_directive (ace_svc_desc_TAO_CORBALOC_Parser));
   ACE_ASSERT (ENOSPC == errno);
-  ACE_DEBUG ((LM_DEBUG, "%p\n", "\tReporting an expected error: "));
+  ACE_DEBUG ((LM_DEBUG, "%p\n", "\tAttempt to overfill returned: "));
   return 0;
 }
