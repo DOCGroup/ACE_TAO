@@ -144,13 +144,17 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #      endif /* __SUNPRO_CC < 0x500 */
 #  elif defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB)
 #    include /**/ <new>
-#    define ACE_bad_alloc std::bad_alloc
+#    if !defined (ACE_bad_alloc)
+#      define ACE_bad_alloc std::bad_alloc
+#    endif
 #    define ACE_nothrow   std::nothrow
 #    define ACE_nothrow_t std::nothrow_t
 #    define ACE_throw_bad_alloc throw ACE_bad_alloc ()
 #  else
 #    include /**/ <new>
-#    define ACE_bad_alloc bad_alloc
+#    if !defined (ACE_bad_alloc)
+#      define ACE_bad_alloc bad_alloc
+#    endif
 #    define ACE_nothrow   nothrow
 #    define ACE_nothrow_t nothrow_t
 #    define ACE_throw_bad_alloc throw ACE_bad_alloc ()
