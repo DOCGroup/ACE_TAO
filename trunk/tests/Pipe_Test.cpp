@@ -130,10 +130,19 @@ run_main (int argc, ACE_TCHAR *argv[])
         {
           ACE_Process server;
 
-          ACE_ASSERT (server.spawn (options) != -1);
-
-          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Server forked with pid = %d.\n"),
-                      server.getpid ()));
+          if (server.spawn (options) == -1)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("%p\n"),
+                                 ACE_TEXT ("spawn failed")),
+                                -1);
+            }
+          else
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("Server forked with pid = %d.\n"),
+                          server.getpid ()));
+            }
 
           // Wait for the process we just created to exit.
           server.wait (&status);
