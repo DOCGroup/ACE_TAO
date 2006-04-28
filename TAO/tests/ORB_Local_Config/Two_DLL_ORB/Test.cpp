@@ -27,6 +27,7 @@ run_main (int , ACE_TCHAR *argv[])
   // Since the loaded services start their own threads, wait until all of them
   // are done to avoid pulling the rug under their feet.
   ACE_Thread_Manager::instance ()->wait ();
+  ACE_UNUSED_ARG (argv);
   return 0;
 }
 
