@@ -1,3 +1,10 @@
+Fri Apr 28 21:22:53 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/Service_Config.cpp:
+        * ace/Service_Gestalt.cpp:
+
+          More re-formatting to weed out those pesky tabs.
+
 Fri Apr 28 20:57:19 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * ace/config-sunos5.8.h:
