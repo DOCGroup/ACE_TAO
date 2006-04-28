@@ -1,24 +1,7 @@
-Thu Apr 27 21:04:08 UTC 2006  Steve Huston  <shuston@riverace.com>
+Fri Apr 28 15:26:53 UTC 2006  Steve Huston  <shuston@riverace.com>
 
-        * ace/OS_Memory.h: Allow configs to set ACE_bad_alloc to avoid
-          extending the if-elif chain here further.
-
-        * ace/config-win32-msvc.h: Regardless of MSVC version, MFC changes
-          operator new to throw CMemoryException on out-of-memory condition.
-          Version-specific settings still control the setting of
-          ACE_HAS_NEW_NOTHROW. Thanks to Mohit Kapoor <Mohit dot Kapoor at
-          siemens dot com> for this fix.
-
-        * ace/Select_Reactor_T.cpp (handle_error): HACK ALERT! Some Linux
-          kernels will return from select() with an "invalid" errno value,
-          ERESTARTNOHAND, when compiled with profiling enabled. This works
-          around the problem. This is a known kernel bug; see Red Hat Bugzilla
-          https://bugzilla.redhat.com/bugzilla/show_bug.cgi?id=161468 and
-          https://bugzilla.redhat.com/bugzilla/show_bug.cgi?id=123648 as well
-          as Riverace support issue #167 and Riverace's complaint to Red Hat,
-          support issue #17841808.
-
-        * THANKS: Added Mohit Kapoor to the Hall of Fame.
+        * ace/Timer_Queue_Adapters.h: Clarified the use and restrictions with
+          ACE_Async_Timer_Queue_Adapter.
 
 Fri Apr 28 15:22:35 UTC 2006  Steve Huston  <shuston@riverace.com>
 
@@ -122,6 +105,28 @@ Fri Apr 28 08:04:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Sendfile_Test.cpp:
           Added missing include
+
+Thu Apr 27 21:04:08 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS_Memory.h: Allow configs to set ACE_bad_alloc to avoid
+          extending the if-elif chain here further.
+
+        * ace/config-win32-msvc.h: Regardless of MSVC version, MFC changes
+          operator new to throw CMemoryException on out-of-memory condition.
+          Version-specific settings still control the setting of
+          ACE_HAS_NEW_NOTHROW. Thanks to Mohit Kapoor <Mohit dot Kapoor at
+          siemens dot com> for this fix.
+
+        * ace/Select_Reactor_T.cpp (handle_error): HACK ALERT! Some Linux
+          kernels will return from select() with an "invalid" errno value,
+          ERESTARTNOHAND, when compiled with profiling enabled. This works
+          around the problem. This is a known kernel bug; see Red Hat Bugzilla
+          https://bugzilla.redhat.com/bugzilla/show_bug.cgi?id=161468 and
+          https://bugzilla.redhat.com/bugzilla/show_bug.cgi?id=123648 as well
+          as Riverace support issue #167 and Riverace's complaint to Red Hat,
+          support issue #17841808.
+
+        * THANKS: Added Mohit Kapoor to the Hall of Fame.
 
 Thu Apr 27 20:14:52 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
