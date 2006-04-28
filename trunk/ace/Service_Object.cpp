@@ -15,12 +15,12 @@ ACE_RCSID (ace,
            Service_Object,
            "$Id$")
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+  ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Service_Object)
-ACE_ALLOC_HOOK_DEFINE(ACE_Service_Type)
+  ACE_ALLOC_HOOK_DEFINE(ACE_Service_Type)
 
-void
+  void
 ACE_Service_Type::dump (void) const
 {
 #if defined (ACE_HAS_DUMP)
@@ -84,7 +84,7 @@ ACE_Service_Type::fini (void)
     {
       this->fini_already_called_ = 1;
       if (this->type_ != 0)
-      return this->type_->fini ();
+  return this->type_->fini ();
       else
         return 1; // No implementation was found.
                   // Currently only makes sense for dummy ST, used to "reserve"

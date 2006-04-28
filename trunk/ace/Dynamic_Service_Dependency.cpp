@@ -7,7 +7,7 @@ ACE_RCSID (ace,
            "$Id$")
 
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+  ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 
 ACE_Dynamic_Service_Dependency::ACE_Dynamic_Service_Dependency (const ACE_TCHAR *principal)
@@ -36,11 +36,11 @@ ACE_Dynamic_Service_Dependency::init (const ACE_Service_Gestalt *cfg,
 {
   const ACE_Service_Type* st = ACE_Dynamic_Service_Base::find_i (cfg, principal);
   if (ACE::debug () > 1)
-  {
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%P|%t) DSD, this=%@ - creating dependency on "), this));
-    st->dump ();
-  }
+    {
+      ACE_DEBUG ((LM_DEBUG,
+      ACE_TEXT ("(%P|%t) DSD, this=%@ - creating dependency on "), this));
+      st->dump ();
+    }
   this->tracker_ = st->dll ();
 }
 

@@ -42,7 +42,7 @@ ACE_RCSID (ace,
 
 
 // Open versioned namespace, if enabled by the user.
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+  ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
 {
@@ -403,19 +403,19 @@ Examples:
 Source               NT                    UNIX
 ==================================================================
 netsvc               netsvc.dll            libnetsvc.so
-                     (PATH will be         (LD_LIBRARY_PATH
-                      evaluated)            evaluated)
+(PATH will be         (LD_LIBRARY_PATH
+evaluated)            evaluated)
 
 libnetsvc.dll        libnetsvc.dll         libnetsvc.dll + warning
 netsvc.so            netsvc.so + warning   libnetsvc.so
 
 ..\../libs/netsvc    ..\..\libs\netsvc.dll ../../libs/netsvc.so
-                     (absolute path used)  (absolute path used)
+(absolute path used)  (absolute path used)
 
 */
 
-const ACE_TCHAR *
-ACE::basename (const ACE_TCHAR *pathname, ACE_TCHAR delim)
+  const ACE_TCHAR *
+  ACE::basename (const ACE_TCHAR *pathname, ACE_TCHAR delim)
 {
   ACE_TRACE ("ACE::basename");
   const ACE_TCHAR *temp = ACE_OS::strrchr (pathname, delim);
@@ -2480,34 +2480,34 @@ ACE::timestamp (ACE_TCHAR date_and_time[],
     }
 
 #if defined (WIN32)
-   // Emulate Unix.  Win32 does NOT support all the UNIX versions
-   // below, so DO we need this ifdef.
+  // Emulate Unix.  Win32 does NOT support all the UNIX versions
+  // below, so DO we need this ifdef.
   static const ACE_TCHAR *day_of_week_name[] =
-  {
-    ACE_LIB_TEXT ("Sun"),
-    ACE_LIB_TEXT ("Mon"),
-    ACE_LIB_TEXT ("Tue"),
-    ACE_LIB_TEXT ("Wed"),
-    ACE_LIB_TEXT ("Thu"),
-    ACE_LIB_TEXT ("Fri"),
-    ACE_LIB_TEXT ("Sat")
-  };
+    {
+      ACE_LIB_TEXT ("Sun"),
+      ACE_LIB_TEXT ("Mon"),
+      ACE_LIB_TEXT ("Tue"),
+      ACE_LIB_TEXT ("Wed"),
+      ACE_LIB_TEXT ("Thu"),
+      ACE_LIB_TEXT ("Fri"),
+      ACE_LIB_TEXT ("Sat")
+    };
 
   static const ACE_TCHAR *month_name[] =
-  {
-    ACE_LIB_TEXT ("Jan"),
-    ACE_LIB_TEXT ("Feb"),
-    ACE_LIB_TEXT ("Mar"),
-    ACE_LIB_TEXT ("Apr"),
-    ACE_LIB_TEXT ("May"),
-    ACE_LIB_TEXT ("Jun"),
-    ACE_LIB_TEXT ("Jul"),
-    ACE_LIB_TEXT ("Aug"),
-    ACE_LIB_TEXT ("Sep"),
-    ACE_LIB_TEXT ("Oct"),
-    ACE_LIB_TEXT ("Nov"),
-    ACE_LIB_TEXT ("Dec")
-  };
+    {
+      ACE_LIB_TEXT ("Jan"),
+      ACE_LIB_TEXT ("Feb"),
+      ACE_LIB_TEXT ("Mar"),
+      ACE_LIB_TEXT ("Apr"),
+      ACE_LIB_TEXT ("May"),
+      ACE_LIB_TEXT ("Jun"),
+      ACE_LIB_TEXT ("Jul"),
+      ACE_LIB_TEXT ("Aug"),
+      ACE_LIB_TEXT ("Sep"),
+      ACE_LIB_TEXT ("Oct"),
+      ACE_LIB_TEXT ("Nov"),
+      ACE_LIB_TEXT ("Dec")
+    };
 
   SYSTEMTIME local;
   ::GetLocalTime (&local);
@@ -2673,7 +2673,7 @@ ACE::handle_timed_complete (ACE_HANDLE h,
 # if defined (ACE_HAS_POLL) && defined (ACE_HAS_LIMITED_SELECT)
     need_to_check = (fds.revents & POLLIN) && !(fds.revents & POLLOUT);
 # else
-    need_to_check = rd_handles.is_set (h) && !wr_handles.is_set (h);
+  need_to_check = rd_handles.is_set (h) && !wr_handles.is_set (h);
 # endif /* ACE_HAS_POLL && ACE_HAS_LIMITED_SELECT */
 
   else
@@ -3349,7 +3349,7 @@ ACE::strndup (const wchar_t *str, size_t n)
   wchar_t *s;
   ACE_ALLOCATOR_RETURN (s,
                         static_cast<wchar_t *> (
-                          ACE_OS::malloc ((len + 1) * sizeof (wchar_t))),
+            ACE_OS::malloc ((len + 1) * sizeof (wchar_t))),
                         0);
   return ACE_OS::strsncpy (s, str, len + 1);
 }
@@ -3470,35 +3470,35 @@ ACE::wild_match(const char* str, const char* pat, bool case_sensitive)
   const char* s = str;
   const char* p = pat;
   while (*s != '\0')
+    {
+      if (*p == '*')
   {
-    if (*p == '*')
-    {
-      star = true;
-      pat = p;
-      while (*++pat == '*');
+    star = true;
+    pat = p;
+    while (*++pat == '*');
 
-      if (*pat == '\0')
-        return true;
-      p = pat;
-    }
-    else if (*p == '?')
-    {
-      ++s;
-      ++p;
-    }
-    else if (! equal_char(*s, *p, case_sensitive))
-    {
-      if (!star)
-        return false;
-      s = ++str;
-      p = pat;
-    }
-    else
-    {
-      ++s;
-      ++p;
-    }
+    if (*pat == '\0')
+      return true;
+    p = pat;
   }
+      else if (*p == '?')
+  {
+    ++s;
+    ++p;
+  }
+      else if (! equal_char(*s, *p, case_sensitive))
+  {
+    if (!star)
+      return false;
+    s = ++str;
+    p = pat;
+  }
+      else
+  {
+    ++s;
+    ++p;
+  }
+    }
   if (*p == '*')
     while (*++p == '*');
 

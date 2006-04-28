@@ -32,7 +32,7 @@ ACE_RCSID (ace,
            Service_Gestalt,
            "$Id$")
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+  ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // This is here, in the implementation, because it depends on the ACE_DLL type,
 // which would be unnecessary to introduuce all over the place, had we declared
@@ -99,65 +99,65 @@ ACE_Service_Type_Forward_Declaration_Guard::~ACE_Service_Type_Forward_Declaratio
 
   // We inserted it (as inactive), so we expect to find it, right?
   if (ret < 0 && ret != -2)
-  {
-    ACE_ERROR ((LM_WARNING,
-                ACE_LIB_TEXT ("(%P|%t) FWDCL::end - Failed (%d) to find %s\n"),
-                ret, this->name_));
-    ACE_ASSERT (ret == -2 || ret >= 0);
-  }
+    {
+      ACE_ERROR ((LM_WARNING,
+      ACE_LIB_TEXT ("(%P|%t) FWDCL::end - Failed (%d) to find %s\n"),
+      ret, this->name_));
+      ACE_ASSERT (ret == -2 || ret >= 0);
+    }
 
   if (tmp != 0 && tmp->type () != 0)
-  {
-    // Something has registered a proper (non-forward-decl) service with
-    // the same name as our dummy. The ACE_Service_Gestalt::insert() modifies
-    // the memory for the previous ACE_Service_Type instance. It has in fact
-    // taken ownership and deleted the instance when it replaced it with the
-    // actual implementation, so nothing is left to do. We are hereby giving
-    // up any ownership claims.
-    this->dummy_ = 0;
-
-    if(ACE::debug ())
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_LIB_TEXT ("(%P|%t) FWDCL::end, repo=%@ - ")
-                  ACE_LIB_TEXT ("Found different decl - "),
-                  this->repo_,
-                  this->name_));
-      tmp->dump ();
-    }
+      // Something has registered a proper (non-forward-decl) service with
+      // the same name as our dummy. The ACE_Service_Gestalt::insert() modifies
+      // the memory for the previous ACE_Service_Type instance. It has in fact
+      // taken ownership and deleted the instance when it replaced it with the
+      // actual implementation, so nothing is left to do. We are hereby giving
+      // up any ownership claims.
+      this->dummy_ = 0;
 
+      if(ACE::debug ())
+  {
+    ACE_DEBUG ((LM_DEBUG,
+          ACE_LIB_TEXT ("(%P|%t) FWDCL::end, repo=%@ - ")
+          ACE_LIB_TEXT ("Found different decl - "),
+          this->repo_,
+          this->name_));
+    tmp->dump ();
   }
+
+    }
   else
+    {
+      if(ACE::debug ())
   {
-    if(ACE::debug ())
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_LIB_TEXT ("(%P|%t) FWDCL::end, repo=%@ - ")
-                  ACE_LIB_TEXT ("Removing incomplete decl - "),
-                  this->repo_,
-                  this->name_));
-      this->dummy_->dump ();
-    }
-
-    // The (dummy) forward declaration is still there and is
-    // the same, which means that no actual declaration was
-    // provided inside the guarded scope. Therefore, the forward
-    // declaration is no longer necessary.
-    if (this->repo_->remove (this->name_,
-                             const_cast< ACE_Service_Type**> (&this->dummy_)) == 0)
-    {
-      delete this->dummy_;
-    }
-    else
-    {
-         ACE_ERROR ((LM_ERROR,
-                    ACE_LIB_TEXT ("(%P|%t) FWDCL::end, repo=%@ - ")
-                    ACE_LIB_TEXT ("Failed to remove incomplete decl"),
-                    this->repo_,
-                    this->name_));
-         this->dummy_->dump ();
-    }
+    ACE_DEBUG ((LM_DEBUG,
+          ACE_LIB_TEXT ("(%P|%t) FWDCL::end, repo=%@ - ")
+          ACE_LIB_TEXT ("Removing incomplete decl - "),
+          this->repo_,
+          this->name_));
+    this->dummy_->dump ();
   }
+
+      // The (dummy) forward declaration is still there and is
+      // the same, which means that no actual declaration was
+      // provided inside the guarded scope. Therefore, the forward
+      // declaration is no longer necessary.
+      if (this->repo_->remove (this->name_,
+             const_cast< ACE_Service_Type**> (&this->dummy_)) == 0)
+  {
+    delete this->dummy_;
+  }
+      else
+  {
+    ACE_ERROR ((LM_ERROR,
+          ACE_LIB_TEXT ("(%P|%t) FWDCL::end, repo=%@ - ")
+          ACE_LIB_TEXT ("Failed to remove incomplete decl"),
+          this->repo_,
+          this->name_));
+    this->dummy_->dump ();
+  }
+    }
 
 
   // Clean up
@@ -247,15 +247,15 @@ ACE_Service_Gestalt::find_static_svc_descriptor (const ACE_TCHAR* name,
   for (ACE_STATIC_SVCS_ITERATOR iter ( *this->static_svcs_);
        iter.next (ssdp) != 0;
        iter.advance ())
-  {
-    if (ACE_OS::strcmp ((*ssdp)->name_, name) == 0)
     {
-      if (ssd != 0)
-        *ssd = *ssdp;
+      if (ACE_OS::strcmp ((*ssdp)->name_, name) == 0)
+  {
+    if (ssd != 0)
+      *ssd = *ssdp;
 
-      return 0;
-    }
+    return 0;
   }
+    }
   return -1;
 
 } /* find_static_svc_descriptor () */
@@ -265,18 +265,19 @@ int
 ACE_Service_Gestalt::insert (ACE_Static_Svc_Descriptor *stsd)
 {
   if (ACE::debug () > 1)
-  {
-    // If called during static initialization ACE_Log_Msg may not have
-    // been initialized yet, so use printf intead.
-    ACE_OS::fprintf (stderr,
-                     "// (%d|0) SG::insert"
-                     " repo=%p, name=%s - Static_Svc_Descriptor: active=%d, opened=%d.\n",
-                     ACE_OS::getpid (),
-                     this->repo_,
-                     stsd->name_,
-                     stsd->active_,
-                     this->is_opened_);
-  }
+    {
+      // If called during static initialization ACE_Log_Msg may not have
+      // been initialized yet, so use printf intead.
+      ACE_OS::fprintf (stderr,
+           "// (%d|0) SG::insert"
+           " repo=%p, name=%s - queuing a Static_Svc_Descriptor:"
+           " active=%d, repo opened=%d.\n",
+           ACE_OS::getpid (),
+           this->repo_,
+           stsd->name_,
+           stsd->active_,
+           this->is_opened_);
+    }
 
   // Inserting a service after teh Gestalt has been opened makes it
   // impossible to activate it later. Perhaps open came too soon?
@@ -289,7 +290,7 @@ ACE_Service_Gestalt::insert (ACE_Static_Svc_Descriptor *stsd)
 ACE_ALLOC_HOOK_DEFINE (ACE_Service_Gestalt)
 
 
-void
+  void
 ACE_Service_Gestalt::dump (void) const
 {
 #if defined (ACE_HAS_DUMP)
@@ -301,14 +302,14 @@ ACE_Service_Gestalt::dump (void) const
 
 ACE_ALLOC_HOOK_DEFINE (ACE_Service_Type_Factory)
 
-ACE_Service_Type_Factory::ACE_Service_Type_Factory (ACE_TCHAR const *name,
-                                                    int type,
-                                                    ACE_Location_Node *location,
-                                                    int active)
-  : name_ (name)
-  , type_ (type)
-  , location_ (location)
-  , is_active_ (active)
+  ACE_Service_Type_Factory::ACE_Service_Type_Factory (ACE_TCHAR const *name,
+                  int type,
+                  ACE_Location_Node *location,
+                  int active)
+    : name_ (name)
+    , type_ (type)
+    , location_ (location)
+    , is_active_ (active)
 {
   ACE_TRACE ("ACE_Service_Type_Factory::ACE_Service_Type_Factory");
 };
@@ -333,29 +334,29 @@ ACE_Service_Type_Factory::make_service_type (ACE_Service_Gestalt *cfg) const
   void *sym = this->location_->symbol (cfg, yyerrno, &gobbler);
 
   if (sym != 0)
-  {
-    ACE_Service_Type_Impl *stp
-      = ACE_Service_Config::create_service_type_impl (this->name (),
-                                                      this->type_,
-                                                      sym,
-                                                      flags,
-                                                      gobbler);
-    if (stp == 0)
-      ++yyerrno;
+    {
+      ACE_Service_Type_Impl *stp
+  = ACE_Service_Config::create_service_type_impl (this->name (),
+              this->type_,
+              sym,
+              flags,
+              gobbler);
+      if (stp == 0)
+  ++yyerrno;
 
-    return new ACE_Service_Type (this->name (),
-                                 stp,
-                                 this->location_->dll (),
-                                 this->is_active_);
-  }
+      return new ACE_Service_Type (this->name (),
+           stp,
+           this->location_->dll (),
+           this->is_active_);
+    }
   else
-  {
-    ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("Unable to find service: %s\n"),
-                this->name ()));
-    ++yyerrno;
-    return 0;
-  }
+    {
+      ACE_ERROR ((LM_ERROR,
+      ACE_LIB_TEXT ("Unable to find service: %s\n"),
+      this->name ()));
+      ++yyerrno;
+      return 0;
+    }
 }
 
 ACE_TCHAR const*
@@ -375,43 +376,44 @@ ACE_Service_Gestalt::initialize (const ACE_TCHAR *svc_name,
   ACE_ARGV args (parameters);
 
   if (ACE::debug () > 1)
-  {
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_LIB_TEXT ("(%P|%t) SG::initialize - () repo=%@, looking up static ")
-                ACE_LIB_TEXT ("service \'%s\' to initialize\n"),
-                this->repo_,
-                svc_name));
-  }
+    {
+      ACE_DEBUG ((LM_DEBUG,
+      ACE_LIB_TEXT ("(%P|%t) SG::initialize - () repo=%@, ")
+      ACE_LIB_TEXT ("looking up static ")
+      ACE_LIB_TEXT ("service \'%s\' to initialize\n"),
+      this->repo_,
+      svc_name));
+    }
 
   const ACE_Service_Type *srp = 0;
   if (this->repo_->find (svc_name, &srp) == -1)
-  {
-    // Since we're searching by name, the service may be in the
-    // process-wide repository, so check that before reporting
-    // failure.
-    if (this->repo_ == ACE_Service_Repository::instance ()
-        || ACE_Service_Repository::instance ()->find (svc_name, &srp) == -1)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_LIB_TEXT ("(%P|%t) SG::initialize - service \'%s\'")
-                         ACE_LIB_TEXT (" was not located.\n"),
-                         svc_name),
-                        -1);
-    }
+      // Since we're searching by name, the service may be in the
+      // process-wide repository, so check that before reporting
+      // failure.
+      if (this->repo_ == ACE_Service_Repository::instance ()
+    || ACE_Service_Repository::instance ()->find (svc_name, &srp) == -1)
+  {
+    ACE_ERROR_RETURN ((LM_ERROR,
+           ACE_LIB_TEXT ("(%P|%t) SG::initialize - service \'%s\'")
+           ACE_LIB_TEXT (" was not located.\n"),
+           svc_name),
+          -1);
   }
+    }
 
   /// If initialization fails ...
   if (srp->type ()->init (args.argc (),
                           args.argv ()) == -1)
-  {
-    // ... report and remove this entry.
-    ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("(%P|%t) SG::initialize - static init of \'%s\'")
-                ACE_LIB_TEXT (" failed (%p)\n"),
-                svc_name));
-    this->repo_->remove (svc_name);
-    return -1;
-  }
+    {
+      // ... report and remove this entry.
+      ACE_ERROR ((LM_ERROR,
+      ACE_LIB_TEXT ("(%P|%t) SG::initialize - static init of \'%s\'")
+      ACE_LIB_TEXT (" failed (%p)\n"),
+      svc_name));
+      this->repo_->remove (svc_name);
+      return -1;
+    }
 
   // If everything is ok, activate it
   const_cast<ACE_Service_Type *>(srp)->active (1);
@@ -481,12 +483,12 @@ ACE_Service_Gestalt::initialize (const ACE_Service_Type_Factory *stf,
 
   if (tmp.get () != 0 &&
       this->initialize_i (tmp.get (), parameters) == 0)
-  {
-    // All good the ACE_Service_Type instance is now owned by the repository
-    // and we should make sure it is not destroyed upon exit from this method.
-    (void)tmp.release ();
-    return 0;
-  }
+    {
+      // All good the ACE_Service_Type instance is now owned by the repository
+      // and we should make sure it is not destroyed upon exit from this method.
+      (void)tmp.release ();
+      return 0;
+    }
 
   // Something went wrong ...
   ACE_ERROR_RETURN ((LM_ERROR,
@@ -660,8 +662,8 @@ ACE_Service_Gestalt::process_directives_i (ACE_Svc_Conf_Param *param)
   // here which will be reported as a memory leak for some reason.
   ACE_NO_HEAP_CHECK
 
-  // Were we called in the context of the current instance?
-  ACE_ASSERT (this == param->config);
+    // Were we called in the context of the current instance?
+    ACE_ASSERT (this == param->config);
 
   // Temporarily (for the duration of this call) make sure that *any* static
   // service registrations will happen with this instance. Such registrations
@@ -677,18 +679,18 @@ ACE_Service_Gestalt::process_directives_i (ACE_Svc_Conf_Param *param)
                 ACE_LIB_TEXT ("repo=%@ - %s\n"),
                 this->repo_,
                 (param->type == ACE_Svc_Conf_Param::SVC_CONF_FILE)
-                                 ? ACE_TEXT ("<from file>")
-                                 : param->source.directive));
+    ? ACE_TEXT ("<from file>")
+    : param->source.directive));
 
 
   ::ace_yyparse (param);
 
   if (param->yyerrno > 0)
-  {
-    // This is a hack, better errors should be provided...
-    errno = EINVAL;
-    return param->yyerrno;
-  }
+    {
+      // This is a hack, better errors should be provided...
+      errno = EINVAL;
+      return param->yyerrno;
+    }
   else
     return 0;
 }
@@ -732,13 +734,13 @@ ACE_Service_Gestalt::process_file (const ACE_TCHAR file[])
   // to see if it is not already being processed by searching for a dummy
   // service with a matching name.
   if (this->repo_->find (file, 0, 0) >=0)
-  {
-    ACE_DEBUG ((LM_WARNING,
-                ACE_TEXT ("(%P|%t) Configuration file %s has not finished")
-                ACE_TEXT (" processing yet. Ignoring.\n"),
-                file));
-    return 0;
-  }
+    {
+      ACE_DEBUG ((LM_WARNING,
+      ACE_TEXT ("(%P|%t) Configuration file %s has not finished")
+      ACE_TEXT (" processing yet. Ignoring.\n"),
+      file));
+      return 0;
+    }
 
   // Register a dummy service as a forward decl, using the file name as name.
   // The entry will be automaticaly removed once the thread exits this block.
@@ -834,14 +836,14 @@ int
 ACE_Service_Gestalt::init_svc_conf_file_queue (void)
 {
   if (this->svc_conf_file_queue_ == 0)
-  {
-    ACE_SVC_QUEUE *tmp = 0;
-    ACE_NEW_RETURN (tmp,
-                    ACE_SVC_QUEUE,
-                    -1);
-    delete this->svc_conf_file_queue_;
-    this->svc_conf_file_queue_ = tmp;
-  }
+    {
+      ACE_SVC_QUEUE *tmp = 0;
+      ACE_NEW_RETURN (tmp,
+          ACE_SVC_QUEUE,
+          -1);
+      delete this->svc_conf_file_queue_;
+      this->svc_conf_file_queue_ = tmp;
+    }
 
   if (ACE::debug () > 1)
     ACE_DEBUG ((LM_DEBUG,
@@ -880,30 +882,30 @@ ACE_Service_Gestalt::open_i (const ACE_TCHAR /*program_name*/[],
   // if the singleton gestalt (ubergestalt) was already open,
   // do not open it again...
   if (this->is_opened_++ != 0)
-     return 0;
+    return 0;
 
   if (ignore_debug_flag == 0)
-  {
-    // If -d was included as a startup parameter, the user wants debug
-    // information printed during service initialization.
-    if (ACE::debug ())
-      ACE_Log_Msg::enable_debug_messages ();
-    else
-      // The user has requested no debugging info.
-      ACE_Log_Msg::disable_debug_messages ();
-  }
+    {
+      // If -d was included as a startup parameter, the user wants debug
+      // information printed during service initialization.
+      if (ACE::debug ())
+  ACE_Log_Msg::enable_debug_messages ();
+      else
+  // The user has requested no debugging info.
+  ACE_Log_Msg::disable_debug_messages ();
+    }
 
   // See if we need to load the static services.
   if (this->no_static_svcs_ == 0
       && this->load_static_svcs () == -1)
     result = -1;
   else
-  {
-    if (this->process_commandline_directives () == -1)
-      result = -1;
-    else
-      result = this->process_directives ();
-  }
+    {
+      if (this->process_commandline_directives () == -1)
+  result = -1;
+      else
+  result = this->process_directives ();
+    }
 
 
   // Reset debugging back to the way it was when we came into
@@ -913,10 +915,10 @@ ACE_Service_Gestalt::open_i (const ACE_TCHAR /*program_name*/[],
     ACE_Errno_Guard error (errno);
 
     if (ignore_debug_flag == 0)
-    {
-      log_msg->priority_mask (old_process_mask, ACE_Log_Msg::PROCESS);
-      log_msg->priority_mask (old_thread_mask, ACE_Log_Msg::THREAD);
-    }
+      {
+  log_msg->priority_mask (old_process_mask, ACE_Log_Msg::PROCESS);
+  log_msg->priority_mask (old_thread_mask, ACE_Log_Msg::THREAD);
+      }
   }
 
   return result;
@@ -939,16 +941,16 @@ ACE_Service_Gestalt::process_commandline_directives (void)
       for (ACE_SVC_QUEUE_ITERATOR iter (*this->svc_queue_);
            iter.next (sptr) != 0;
            iter.advance ())
+  {
+    // Process just a single directive.
+    if (this->process_directive ((sptr->fast_rep ())) != 0)
       {
-        // Process just a single directive.
-        if (this->process_directive ((sptr->fast_rep ())) != 0)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      ACE_LIB_TEXT ("%p\n"),
-                      ACE_LIB_TEXT ("process_directive")));
-          result = -1;
-        }
+        ACE_ERROR ((LM_ERROR,
+        ACE_LIB_TEXT ("%p\n"),
+        ACE_LIB_TEXT ("process_directive")));
+        result = -1;
       }
+  }
 
       delete this->svc_queue_;
       this->svc_queue_ = 0;
@@ -1006,11 +1008,11 @@ ACE_Service_Gestalt::parse_args_i (int argc, ACE_TCHAR *argv[])
         break;
       case 'S':
         if (this->svc_queue_ == 0)
-        {
-          ACE_NEW_RETURN (this->svc_queue_,
-                          ACE_SVC_QUEUE,
-                          -1);
-        }
+    {
+      ACE_NEW_RETURN (this->svc_queue_,
+          ACE_SVC_QUEUE,
+          -1);
+    }
 
         if (this->svc_queue_->enqueue_tail (ACE_TString (getopt.opt_arg ())) == -1)
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -1040,25 +1042,25 @@ ACE_Service_Gestalt::process_directives (void)
   int result = 0;
 
   if (this->svc_conf_file_queue_ != 0)
-  {
-    ACE_TString *sptr = 0;
-
-    // Iterate through all the svc.conf files.
-    for (ACE_SVC_QUEUE_ITERATOR iter (*this->svc_conf_file_queue_);
-         iter.next (sptr) != 0;
-         iter.advance ())
     {
-      int r = this->process_file (sptr->fast_rep ());
+      ACE_TString *sptr = 0;
 
-      if (r < 0)
+      // Iterate through all the svc.conf files.
+      for (ACE_SVC_QUEUE_ITERATOR iter (*this->svc_conf_file_queue_);
+     iter.next (sptr) != 0;
+     iter.advance ())
+  {
+    int r = this->process_file (sptr->fast_rep ());
+
+    if (r < 0)
       {
         result = r;
         break;
       }
 
-      result += r;
-    }
+    result += r;
   }
+    }
 
   return result;
 

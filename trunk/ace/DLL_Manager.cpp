@@ -20,7 +20,7 @@ ACE_RCSID (ace,
 
 /******************************************************************/
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+  ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 sig_atomic_t ACE_DLL_Handle::open_called_ = 0;
 
@@ -252,9 +252,9 @@ ACE_DLL_Handle::close (int unload)
       ACE_Framework_Repository * frPtr= ACE_Framework_Repository::instance ();
 
       if (frPtr)
-      {
-         frPtr->remove_dll_components (this->dll_name_);
-      }
+  {
+    frPtr->remove_dll_components (this->dll_name_);
+  }
 
       retval = ACE_OS::dlclose (this->handle_);
       this->handle_ = ACE_SHLIB_INVALID_HANDLE;

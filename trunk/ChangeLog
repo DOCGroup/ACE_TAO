@@ -1,3 +1,21 @@
+Fri Apr 28 18:03:11 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/ACE.cpp:
+        * ace/DLL.cpp:
+        * ace/DLL_Manager.cpp:
+        * ace/Dynamic_Service_Base.cpp:
+        * ace/Dynamic_Service_Dependency.cpp:
+        * ace/Parse_Node.cpp:
+        * ace/Service_Config.inl:
+        * ace/Service_Config.cpp:
+        * ace/Service_Gestalt.cpp:
+        * ace/Service_Object.cpp:
+        * ace/Service_Repository.cpp:
+        * ace/Service_Types.cpp:
+        * ace/Shared_Object.cpp:
+
+          Applied formatting style consistent with ACE convention.
+
 Fri Apr 28 15:48:25 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * ace/Service_Config.cpp (open_i): ACE_DEFAULT_SVC_CONF shouldn't
