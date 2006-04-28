@@ -165,15 +165,15 @@ ACE_Service_Config::open_i (const ACE_TCHAR program_name[],
   if (this->pid_file_name_ != 0)
     {
       FILE* pidf = ACE_OS::fopen (this->pid_file_name_,
-          ACE_LIB_TEXT("w"));
+                                  ACE_LIB_TEXT("w"));
 
       if (pidf != 0)
-  {
-    ACE_OS::fprintf (pidf,
-         "%ld\n",
-         static_cast<long> (ACE_OS::getpid()));
-    ACE_OS::fclose (pidf);
-  }
+        {
+          ACE_OS::fprintf (pidf,
+                           "%ld\n",
+                           static_cast<long> (ACE_OS::getpid()));
+          ACE_OS::fclose (pidf);
+        }
     }
 
   u_long flags = log_msg->flags ();
@@ -199,8 +199,8 @@ ACE_Service_Config::open_i (const ACE_TCHAR program_name[],
   else
     {
       if (ACE::debug ())
-  ACE_DEBUG ((LM_STARTUP,
-        ACE_LIB_TEXT ("starting up daemon %n\n")));
+        ACE_DEBUG ((LM_STARTUP,
+                    ACE_LIB_TEXT ("starting up daemon %n\n")));
 
       // Initialize the Service Repository (this will still work if
       // user forgets to define an object of type ACE_Service_Config).
@@ -216,14 +216,14 @@ ACE_Service_Config::open_i (const ACE_TCHAR program_name[],
       // Only attempt to register a signal handler for positive
       // signal numbers.
       if (ACE_Service_Config::signum_ > 0)
-  {
-    ACE_Sig_Set ss;
-    ss.sig_add (ACE_Service_Config::signum_);
-    if (ACE_Reactor::instance ()->register_handler
-        (ss, ACE_Service_Config::signal_handler_) == -1)
-      ACE_ERROR ((LM_ERROR,
-      ACE_LIB_TEXT ("can't register signal handler\n")));
-  }
+        {
+          ACE_Sig_Set ss;
+          ss.sig_add (ACE_Service_Config::signum_);
+          if (ACE_Reactor::instance ()->register_handler
+              (ss, ACE_Service_Config::signal_handler_) == -1)
+            ACE_ERROR ((LM_ERROR,
+                        ACE_LIB_TEXT ("can't register signal handler\n")));
+        }
 #endif /* ACE_LACKS_UNIX_SIGNALS */
     }
 
@@ -238,7 +238,7 @@ ACE_Service_Config::open_i (const ACE_TCHAR program_name[],
   if (!ignore_default_svc_conf_file)
     {
       FILE *fp = ACE_OS::fopen (ACE_DEFAULT_SVC_CONF,
-        ACE_LIB_TEXT ("r"));
+                                ACE_LIB_TEXT ("r"));
       ignore_default_svc_conf_file = (fp == 0);
       if (fp != 0)
         ACE_OS::fclose (fp);
@@ -250,22 +250,22 @@ ACE_Service_Config::open_i (const ACE_TCHAR program_name[],
       // Load the default "svc.conf" entry here if there weren't
       // overriding -f arguments in <parse_args>.
       if (this->svc_conf_file_queue_->enqueue_tail
-    (ACE_TString (ACE_DEFAULT_SVC_CONF)) == -1)
-  {
-    ACE_ERROR_RETURN ((LM_ERROR,
-           ACE_LIB_TEXT ("%p\n"),
-           ACE_LIB_TEXT ("enqueuing ")
-           ACE_DEFAULT_SVC_CONF
-           ACE_LIB_TEXT(" file")),
-          -1);
-  }
+          (ACE_TString (ACE_DEFAULT_SVC_CONF)) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_LIB_TEXT ("%p\n"),
+                             ACE_LIB_TEXT ("enqueuing ")
+                             ACE_DEFAULT_SVC_CONF
+                             ACE_LIB_TEXT(" file")),
+                            -1);
+        }
     }
 
-   return ACE_Service_Gestalt::open_i (program_name,
-               logger_key,
-               ignore_static_svcs,
-               ignore_default_svc_conf_file,
-               ignore_debug_flag);
+  return ACE_Service_Gestalt::open_i (program_name,
+                                      logger_key,
+                                      ignore_static_svcs,
+                                      ignore_default_svc_conf_file,
+                                      ignore_debug_flag);
 }
 
 /// Return the global configuration instance. Allways returns the same

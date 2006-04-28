@@ -1074,10 +1074,10 @@ ACE_Service_Gestalt::close (void)
 {
   ACE_TRACE ("ACE_Service_Gestalt::close");
 
-  if (ACE::debug () > 1)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_LIB_TEXT ("(%P|%t) SG::close - this=%@, repo=%@, is_opened=%d\n"),
-                this, this->repo_, this->is_opened_));
+//   if (ACE::debug () > 1)
+//     ACE_DEBUG ((LM_DEBUG,
+//                 ACE_LIB_TEXT ("(%P|%t) SG::close - this=%@, repo=%@, is_opened=%d\n"),
+//                this, this->repo_, this->is_opened_));
 
   this->is_opened_--;
   if (this->is_opened_ > 0)
