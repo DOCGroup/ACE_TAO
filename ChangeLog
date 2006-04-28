@@ -1,3 +1,10 @@
+Fri Apr 28 13:29:08 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * bin/tao_orb_tests.lst:
+
+          Updated the conditions for running the ORB-specific service
+          repository tests.
+
 Fri Apr 28 13:23:57 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * ace/Service_Config.h:
