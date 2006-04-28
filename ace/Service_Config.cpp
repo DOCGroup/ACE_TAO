@@ -226,7 +226,7 @@ ACE_Service_Config::open_i (const ACE_TCHAR program_name[],
     }
 #endif /* ACE_LACKS_UNIX_SIGNALS */
   }
-  
+
   if (result == -1)
     return -1;
 
@@ -243,7 +243,7 @@ ACE_Service_Config::open_i (const ACE_TCHAR program_name[],
       if (fp != 0)
         ACE_OS::fclose (fp);
   }
-    
+
   if (!ignore_default_svc_conf_file
       && this->svc_conf_file_queue_->is_empty ())
   {
@@ -254,7 +254,7 @@ ACE_Service_Config::open_i (const ACE_TCHAR program_name[],
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_LIB_TEXT ("%p\n"),
                          ACE_LIB_TEXT ("enqueuing ")
-                         ACE_LIB_TEXT (ACE_DEFAULT_SVC_CONF)
+                         ACE_DEFAULT_SVC_CONF
                          ACE_LIB_TEXT(" file")),
                         -1);
     }
