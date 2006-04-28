@@ -12,4 +12,6 @@
 // #include the SunOS 5.8 config, then add any SunOS 5.9 updates below.
 #include "ace/config-sunos5.8.h"
 
+#define ACE_HAS_SENDFILE
+
 #endif /* ACE_CONFIG_H */

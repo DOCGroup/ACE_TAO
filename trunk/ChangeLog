@@ -1,3 +1,10 @@
+Fri Apr 28 20:57:19 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-sunos5.8.h:
+        * ace/config-sunos5.9.h: Moved ACE_HAS_SENDFILE from Solaris 8 to
+          Solaris 9. Solaris 8 supports sendfilev[64] but not sendfile,
+          at least not without some patches I don't know about.
+
 Fri Apr 28 20:13:41 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * include/makeinclude/platform_sunos5_g++.GNU:
