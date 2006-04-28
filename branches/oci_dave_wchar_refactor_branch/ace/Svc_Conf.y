@@ -12,6 +12,8 @@
 #include "ace/OS_NS_string.h"
 
 
+#include "ace/ace_wchar.h"
+
 ACE_RCSID (ace,
            Svc_Conf_y,
            "$Id$")
@@ -19,17 +21,21 @@ ACE_RCSID (ace,
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Prototypes.
-static ACE_Module_Type *ace_get_module (ACE_Static_Node *str_rec,
-                                        ACE_Static_Node *svc_type,
-                                        int & yyerrno);
-static ACE_Module_Type *ace_get_module (ACE_Static_Node *str_rec,
+
+static ACE_Module_Type *ace_get_module (const ACE_Service_Type *sr,
+                                         const ACE_Service_Type *sv,
+                                         int & ace_yyerrno);
+
+static ACE_Module_Type *ace_get_module (const ACE_Service_Type *sr,
                                         const ACE_TCHAR *svc_name,
-                                        int & yyerrno);
+                                         int & ace_yyerrno);
 
 #define YYDEBUG_LEXER_TEXT (yytext[yyleng] = '\0', yytext)
 
 // Force the pretty debugging code to compile.
 // #define YYDEBUG 1
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 %}
 
@@ -57,7 +63,8 @@ svc_config_entries
     {
       if ($2 != 0)
       {
-        $2->apply (ACE_SVC_CONF_PARAM->yyerrno); delete $2;
+        $2->apply (ACE_SVC_CONF_PARAM->config, ACE_SVC_CONF_PARAM->yyerrno); 
+        delete $2;
       }
       ACE_SVC_CONF_PARAM->obstack.release ();
     }
@@ -170,11 +177,11 @@ module
           ACE_Static_Node *module = $<static_node_>-1;
 
           ACE_ARGV args (svc_type->parameters ());
-          ACE_Module_Type *mt = ace_get_module (module,
-                                                svc_type,
+          ACE_Module_Type *mt = ace_get_module (module->record (ACE_SVC_CONF_PARAM->config),
+                                                svc_type->record (ACE_SVC_CONF_PARAM->config),
                                                 ACE_SVC_CONF_PARAM->yyerrno);
           ACE_Stream_Type *st =
-            dynamic_cast<ACE_Stream_Type *> (const_cast<ACE_Service_Type_Impl *> (module->record ()->type ()));
+            dynamic_cast<ACE_Stream_Type *> (const_cast<ACE_Service_Type_Impl *> (module->record (ACE_SVC_CONF_PARAM->config)->type ()));
 
           if (mt->init (args.argc (), args.argv ()) == -1
               || st->push (mt) == -1)
@@ -188,11 +195,12 @@ module
     }
   | static
     {
-      ACE_Module_Type *mt = ace_get_module ($<static_node_>-1,
+      ACE_Static_Node *sn = $<static_node_>-1;
+      ACE_Module_Type *mt = ace_get_module (sn->record (ACE_SVC_CONF_PARAM->config),
                                             $<static_node_>1->name (),
                                             ACE_SVC_CONF_PARAM->yyerrno);
 
-      if (((ACE_Stream_Type *) ($<static_node_>-1)->record ()->type ())->push (mt) == -1)
+      if (((ACE_Stream_Type *) sn->record (ACE_SVC_CONF_PARAM->config)->type ())->push (mt) == -1)
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_LIB_TEXT ("Problem with static\n")));
@@ -201,15 +209,17 @@ module
     }
   | suspend
     {
-      ACE_Module_Type *mt = ace_get_module ($<static_node_>-1,
-                                            $<static_node_>1->name (),
+      ACE_Static_Node *sn = $<static_node_>-1;
+      ACE_Module_Type *mt = ace_get_module (sn->record (ACE_SVC_CONF_PARAM->config),
+                                            sn->name (),
                                             ACE_SVC_CONF_PARAM->yyerrno);
       if (mt != 0)
         mt->suspend ();
     }
   | resume
     {
-      ACE_Module_Type *mt = ace_get_module ($<static_node_>-1,
+      ACE_Static_Node *sn = $<static_node_>-1;
+      ACE_Module_Type *mt = ace_get_module (sn->record (ACE_SVC_CONF_PARAM->config),
                                             $<static_node_>1->name (),
                                             ACE_SVC_CONF_PARAM->yyerrno);
       if (mt != 0)
@@ -219,12 +229,12 @@ module
     {
       ACE_Static_Node *stream = $<static_node_>-1;
       ACE_Static_Node *module = $<static_node_>1;
-      ACE_Module_Type *mt = ace_get_module (stream,
+      ACE_Module_Type *mt = ace_get_module (stream->record (ACE_SVC_CONF_PARAM->config),
                                             module->name (),
                                             ACE_SVC_CONF_PARAM->yyerrno);
 
       ACE_Stream_Type *st =
-        dynamic_cast<ACE_Stream_Type *> (const_cast<ACE_Service_Type_Impl *> (stream->record ()->type ()));
+        dynamic_cast<ACE_Stream_Type *> (const_cast<ACE_Service_Type_Impl *> (stream->record (ACE_SVC_CONF_PARAM->config)->type ()));
       if (mt != 0 && st->remove (mt) == -1)
         {
           ACE_ERROR ((LM_ERROR,
@@ -239,37 +249,7 @@ module
 svc_location
   : ACE_IDENT type svc_initializer status
     {
-      u_int flags
-        = ACE_Service_Type::DELETE_THIS
-        | ($3->dispose () == 0 ? 0 : ACE_Service_Type::DELETE_OBJ);
-      ACE_Service_Object_Exterminator gobbler = 0;
-      void *sym = $3->symbol (ACE_SVC_CONF_PARAM->yyerrno, &gobbler);
-
-      if (sym != 0)
-        {
-          ACE_Service_Type_Impl *stp
-            = ACE_Service_Config::create_service_type_impl ($1,
-                                                            $2,
-                                                            sym,
-                                                            flags,
-                                                            gobbler);
-          if (stp == 0)
-            ++ACE_SVC_CONF_PARAM->yyerrno;
-
-          $$ = new ACE_Service_Type ($1,
-                                     stp,
-                                     $3->dll (),
-                                     $4);
-        }
-      else
-        {
-          ACE_ERROR ((LM_ERROR,
-                      ACE_LIB_TEXT ("Unable to find service: %s\n"),
-                      $1));
-          ++ACE_SVC_CONF_PARAM->yyerrno;
-          $$ = 0;
-        }
-      delete $3;
+      $$ = new ACE_Service_Type_Factory ($1, $2, $3, $4);
     }
   ;
 
@@ -330,6 +310,9 @@ pathname
   ;
 
 %%
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Prints the error string to standard output.  Cleans up the error
 // messages.
 
@@ -353,11 +336,10 @@ yyerror (int yyerrno, int yylineno, const char *s)
 // record.
 
 static ACE_Module_Type *
-ace_get_module (ACE_Static_Node *str_rec,
+ace_get_module (const ACE_Service_Type *sr,
                 const ACE_TCHAR *svc_name,
                 int & yyerrno)
 {
-  const ACE_Service_Type *sr = str_rec->record ();
   const ACE_Service_Type_Impl *type = sr->type ();
   ACE_Stream_Type *st = sr == 0
     ? 0
@@ -369,7 +351,7 @@ ace_get_module (ACE_Static_Node *str_rec,
       ACE_ERROR ((LM_ERROR,
                   ACE_LIB_TEXT ("cannot locate Module_Type %s in STREAM_Type %s\n"),
                   svc_name,
-                  str_rec->name ()));
+                  sr->name ()));
       yyerrno++;
     }
 
@@ -377,24 +359,23 @@ ace_get_module (ACE_Static_Node *str_rec,
 }
 
 static ACE_Module_Type *
-ace_get_module (ACE_Static_Node *str_rec,
-                ACE_Static_Node *svc_type,
+ace_get_module (const ACE_Service_Type *sr,
+                const ACE_Service_Type *sv,
                 int & yyerrno)
 {
-  const ACE_Service_Type *sr = str_rec->record ();
   const ACE_Service_Type_Impl *type = sr->type ();
   ACE_Stream_Type *st = sr == 0 ? 0 : (ACE_Stream_Type *) type;
-  const ACE_Service_Type *sv = svc_type->record ();
+
   type = sv->type ();
   ACE_Module_Type *mt = (ACE_Module_Type *) type;
-  const ACE_TCHAR *module_type_name = svc_type->name ();
+  const ACE_TCHAR *module_type_name = sr->name ();
 
   if (sr == 0 || st == 0 || mt == 0)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_LIB_TEXT ("cannot locate Module_Type %s or STREAM_Type %s\n"),
                   module_type_name,
-                  str_rec->name ()));
+                  sr->name ()));
       yyerrno++;
     }
 

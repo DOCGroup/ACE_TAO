@@ -128,7 +128,7 @@ TAO_POAManager_Factory::find (
         (*iterator)->get_id (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (::PortableServer::POAManager::_nil());
 
-      if (ACE_OS::strcmp (id, poamanagerid) == 0)
+      if (ACE_OS::strcmp (id, poamanagerid.in()) == 0)
         {
           poamanager = PortableServer::POAManager::_duplicate (*iterator);
           break;

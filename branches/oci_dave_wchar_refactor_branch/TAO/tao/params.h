@@ -89,6 +89,10 @@ public:
   int sock_keepalive (void);
   void sock_keepalive (int);
 
+  /// Set/Get whether we should set SO_DONTROUTE on the socket or not.
+  int sock_dontroute (void);
+  void sock_dontroute (int);
+
   /**
    * Octet sequences are marshalled without doing any copies, we
    * simply append a block to the CDR message block chain. When the
@@ -175,6 +179,16 @@ public:
   int shared_profile (void) const;
   void shared_profile (int x);
 
+  /// Want to use parallel connection attempts when profiles have multiple
+  /// endpoints.
+  bool  use_parallel_connects(void) const;
+  void use_parallel_connects (bool x);
+
+  /// The milliseconds delay used to stagger individual connection starts
+  /// when using parallel connects.
+  unsigned long parallel_connect_delay (void) const;
+  void parallel_connect_delay (unsigned long x);
+
   /// Mutators and accessors for rt_collocation_resolver
   bool disable_rt_collocation_resolver (void) const;
   void disable_rt_collocation_resolver (bool);
@@ -240,8 +254,11 @@ private:
   /// 1 if we're using TCP_NODELAY and 0 otherwise.
   int nodelay_;
 
-  /// 1 if we're using SO_KEEPALIV and 0 otherwise (default 0).
+  /// 1 if we're using SO_KEEPALIVE and 0 otherwise (default 0).
   int sock_keepalive_;
+
+  /// 1 if we're using SO_DONTROUTE and 0 otherwise (default 0).
+  int sock_dontroute_;
 
   /// Control the strategy for copying vs. appeding octet sequences in
   /// CDR streams.
@@ -303,6 +320,16 @@ private:
 
   /// Shared Profile - Use the same profile for multiple endpoints
   int shared_profile_;
+
+  /// Use Parallel Connects - Try to connect to all endpoints in a
+  /// shared profile at once, use the first to complete.
+  int use_parallel_connects_;
+
+  /// When using parallel connects, this delay is used to stagger connection
+  /// attempts. This gives a trade-off between opening more potential
+  /// connections than necessary vs increasing the potential time before
+  /// a good connection is discovered. Time is expressed in milliseconds.
+  unsigned long parallel_connect_delay_;
 
   /// Preferred network interfaces as a string
   ACE_CString pref_network_;

@@ -20,8 +20,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_valuetype, 
-           cdr_op_ch, 
+ACE_RCSID (be_visitor_valuetype,
+           cdr_op_ch,
            "$Id$")
 
 be_visitor_valuetype_cdr_op_ch::be_visitor_valuetype_cdr_op_ch (
@@ -52,7 +52,7 @@ be_visitor_valuetype_cdr_op_ch::visit_valuetype (be_valuetype *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                        "(%N:%l) be_visitor_valuetype_cdr_op_ch::"
                          "visit_valuetype - "
-                         "codegen for helper functions failed\n"), 
+                         "codegen for helper functions failed\n"),
                         -1);
     }
 
@@ -61,7 +61,7 @@ be_visitor_valuetype_cdr_op_ch::visit_valuetype (be_valuetype *node)
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << be_global->core_versioning_begin () << be_nl;
-  
+
   *os << be_global->stub_export_macro () << " "
       << "::CORBA::Boolean operator<< (TAO_OutputCDR &, const "
       << node->full_name () << " *);" << be_nl;
@@ -71,7 +71,7 @@ be_visitor_valuetype_cdr_op_ch::visit_valuetype (be_valuetype *node)
       << node->full_name () << " *&);";
 
   *os << be_global->core_versioning_end () << be_nl;
-  
+
   // Set the substate as generating code for the types defined in our scope.
   this->ctx_->sub_state (TAO_CodeGen::TAO_CDR_SCOPE);
 
@@ -80,7 +80,7 @@ be_visitor_valuetype_cdr_op_ch::visit_valuetype (be_valuetype *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_cdr_op_ch::"
                          "visit_valuetype - "
-                         "codegen for scope failed\n"), 
+                         "codegen for scope failed\n"),
                         -1);
     }
 
@@ -101,5 +101,3 @@ be_visitor_valuetype_cdr_op_ch::visit_eventtype (be_eventtype *node)
 {
   return this->visit_valuetype (node);
 }
-
-

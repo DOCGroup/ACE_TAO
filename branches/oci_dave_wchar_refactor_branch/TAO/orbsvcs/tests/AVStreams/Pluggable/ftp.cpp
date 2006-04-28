@@ -265,8 +265,8 @@ Client::init (int argc,
   entry.set_peer_addr (peer_addr);
 
   AVStreams::flowSpec flow_spec (1);
-  flow_spec [0] = CORBA::string_dup (entry.entry_to_string ());
   flow_spec.length (1);
+  flow_spec [0] = CORBA::string_dup (entry.entry_to_string ());
 
   AVStreams::MMDevice_var client_mmdevice =
     this->client_mmdevice_._this (ACE_ENV_SINGLE_ARG_PARAMETER);

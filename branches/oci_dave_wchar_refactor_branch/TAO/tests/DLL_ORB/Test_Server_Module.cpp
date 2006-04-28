@@ -91,7 +91,7 @@ Test_Server_Module::init (int argc, char *argv[])
       // Initialize the ORB.
       this->orb_ = CORBA::ORB_init (new_argc,
                                     new_argv.get_buffer (),
-                                    0
+                                    "SERVER"
                                     ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -169,24 +169,8 @@ Test_Server_Module::init (int argc, char *argv[])
 int
 Test_Server_Module::fini (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
-    {
-      // Make sure the ORB is destroyed.
-      if (!CORBA::is_nil (this->orb_.in ()))
-        {
-          this->orb_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-        }
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_TEXT ("Test_Server_Module::fini"));
-      return -1;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
+  ACE_DEBUG ((LM_INFO,
+              "Server is being finalized.\n"));
 
   // ------------------------------------------------------------
   // Pre-Test_Server_Module termination steps.
@@ -211,6 +195,24 @@ Test_Server_Module::svc (void)
       // Run the ORB event loop in its own thread.
       this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
+
+      ACE_DEBUG ((LM_INFO,
+                  "Server is being destroyed.\n"));
+
+      // Make sure the ORB is destroyed here - before the thread
+      // exits, because it may be holding global resources, owned by
+      // the Object Manager (thru its core, which is in turn owned by
+      // the ORB table; which is owned by the Object Manager).
+      // Otherwise the Object Manager will have clobbered them by the
+      // time it gets to destroy the ORB Table, which calls our
+      // fini(). Had we destroyed the ORB in our fini(), its core
+      // fininalization would have required access to those already
+      // deleted resources.
+      if (!CORBA::is_nil (this->orb_.in ()))
+        {
+          this->orb_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
     }
   ACE_CATCHANY
     {

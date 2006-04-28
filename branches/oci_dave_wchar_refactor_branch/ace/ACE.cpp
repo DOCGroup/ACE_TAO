@@ -164,7 +164,8 @@ ACE::compiler_beta_version (void)
 char
 ACE::debug (void)
 {
-  return ACE::debug_;
+  static const char* debug = ACE_OS::getenv ("ACE_DEBUG");
+  return ACE::debug_ != 0 ? ACE::debug_ : (debug != 0 ? (*debug - '0'): 0);
 }
 
 void

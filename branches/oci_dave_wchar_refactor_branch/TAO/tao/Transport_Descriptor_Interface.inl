@@ -7,10 +7,10 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_INLINE
 TAO_Transport_Descriptor_Interface::TAO_Transport_Descriptor_Interface (
   TAO_Endpoint *endpoint,
-  CORBA::Boolean flag)
+  CORBA::Boolean take_ownership)
   : endpoint_ (endpoint),
     bidir_flag_ (false),
-    endpoint_from_heap_ (flag)
+    release_ (take_ownership)
 {
 }
 
@@ -18,7 +18,7 @@ ACE_INLINE
 TAO_Transport_Descriptor_Interface::TAO_Transport_Descriptor_Interface (void)
   : endpoint_ (0),
     bidir_flag_ (false),
-    endpoint_from_heap_ (false)
+    release_ (false)
 {
 }
 

@@ -414,13 +414,13 @@ protected:
  * @class ACE_Process_Strategy
  *
  * @brief Defines the interface for specifying a concurrency strategy
- * for a <SVC_HANDLER> based on multiprocessing.
+ * for a @c SVC_HANDLER based on multiprocessing.
  *
  * This class provides a strategy that manages the creation of
  * processes to handle requests from clients concurrently using a
  * process-per-connection model.  It behaves as a "process factory",
- * using <ACE::fork> to fork threads "on-demand" to run the service
- * specified by a user-supplied <SVC_HANDLER> in a separate process.
+ * using @c ACE::fork() to fork threads "on-demand" to run the service
+ * specified by a user-supplied @c SVC_HANDLER in a separate process.
  */
 template <class SVC_HANDLER>
 class ACE_Process_Strategy : public ACE_Concurrency_Strategy<SVC_HANDLER>
@@ -432,15 +432,15 @@ public:
 
   // = Intialization and termination methods.
 
-  /// Initialize the strategy.  If <avoid_zombies> is non-0 then set a
-  /// flag to <ACE::fork> to avoid zombies.
+  /// Initialize the strategy.  If @a avoid_zombies is non-0 then set a
+  /// flag to ACE::fork() to avoid zombies.
   ACE_Process_Strategy (size_t n_processes = 1,
                         ACE_Event_Handler *acceptor = 0,
                         ACE_Reactor * = 0,
                         int avoid_zombies = 0);
 
-  /// Initialize the strategy.  If <avoid_zombies> is non-0 then set a
-  /// flag to <ACE::fork> to avoid zombies.
+  /// Initialize the strategy.  If @a avoid_zombies is non-0 then set a
+  /// flag to ACE::fork() to avoid zombies.
   virtual int open (size_t n_processes = 1,
                     ACE_Event_Handler *acceptor = 0,
                     ACE_Reactor * = 0,
@@ -450,9 +450,9 @@ public:
 
   // = Factory method.
   /**
-   * Activate the <svc_handler> with an appropriate concurrency
+   * Activate the @a svc_handler with an appropriate concurrency
    * strategy.  This method activates the SVC_HANDLER by first forking
-   * and then calling the <open> method of the SVC_HANDLER in the
+   * and then calling the @c open() method of the SVC_HANDLER in the
    * child.
    */
   virtual int activate_svc_handler (SVC_HANDLER *svc_handler,
@@ -471,15 +471,15 @@ protected:
   size_t n_processes_;
 
   /**
-   * This is the <Acceptor> in the parent is listening on.  We need to
+   * This is the @c Acceptor in the parent is listening on.  We need to
    * make sure that we remove it from the Reactor and close it down in
    * the child.
    */
   ACE_Event_Handler *acceptor_;
 
   /**
-   * This is the <Reactor> the child is using in conjunction with the
-   * <Acceptor>.  We need to remove the <Acceptor> from this <Reactor>
+   * This is the reactor the child is using in conjunction with the
+   * acceptor.  We need to remove the acceptor from this reactor
    * in the child.
    */
   ACE_Reactor *reactor_;
@@ -509,13 +509,13 @@ public:
   /// Default constructor.
   ACE_Accept_Strategy (ACE_Reactor *reactor = ACE_Reactor::instance ());
 
-  /// Initialize the <peer_acceptor_> with <local_addr>.
+  /// Initialize the @c peer_acceptor_ with @a local_addr.
   ACE_Accept_Strategy (const ACE_PEER_ACCEPTOR_ADDR &local_addr,
                        int restart = 0,
                        ACE_Reactor *reactor = ACE_Reactor::instance ());
 
-  /// Initialize the <peer_acceptor_> with <local_addr>, indicating
-  /// whether to <reuse_addr> if it's already in use.
+  /// Initialize the <peer_acceptor_> with @a local_addr, indicating
+  /// whether to @a reuse_addr if it's already in use.
   virtual int open (const ACE_PEER_ACCEPTOR_ADDR &local_addr,
                     int reuse_addr = 0);
 
@@ -822,7 +822,7 @@ protected:
  * subsequent re-use of unused, but available, connections.
  *
  * <ACE_Cached_Connect_Strategy> is intended to be used as a
- * plug-in connection strategy for <ACE_Strategy_Connector>.
+ * plug-in connection strategy for ACE_Strategy_Connector.
  * It's added value is re-use of established connections.
  */
 template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class MUTEX>

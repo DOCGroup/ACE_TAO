@@ -142,8 +142,6 @@ CORBA::StringValue::_tao_marshal_v (TAO_OutputCDR & strm) const
   return (strm << this->_pd_value);
 }
 
-
-
 // TAO_IDL - Generated from
 // c:\projects\ace_cvs\ace_wrappers\tao\tao_idl\be\be_visitor_valuebox/valuebox_ci.cpp:60
 ACE_INLINE const char*
@@ -158,7 +156,12 @@ CORBA::StringValue::_tao_unmarshal_v (TAO_InputCDR & )
   return 1;
 }
 
-
+ACE_INLINE CORBA::Boolean
+CORBA::StringValue::_tao_match_formal_type (ptrdiff_t formal_type_id) const
+{
+  return formal_type_id ==
+    reinterpret_cast<ptrdiff_t> (&CORBA::StringValue::_downcast);
+}
 
 // TAO_IDL - Generated from
 // c:\projects\ace_cvs\ace_wrappers\tao\tao_idl\be\be_visitor_valuebox/valuebox_ci.cpp:332
@@ -290,5 +293,11 @@ CORBA::WStringValue::_tao_unmarshal_v (TAO_InputCDR & )
   return 1;
 }
 
+ACE_INLINE CORBA::Boolean
+CORBA::WStringValue::_tao_match_formal_type (ptrdiff_t formal_type_id) const
+{
+  return formal_type_id ==
+    reinterpret_cast<ptrdiff_t> (&CORBA::WStringValue::_downcast);
+}
 
 TAO_END_VERSIONED_NAMESPACE_DECL

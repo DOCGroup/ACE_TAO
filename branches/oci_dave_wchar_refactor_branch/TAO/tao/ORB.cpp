@@ -36,6 +36,7 @@ ACE_RCSID (tao,
 #endif /* ! __ACE_INLINE__ */
 
 #include "ace/Dynamic_Service.h"
+#include "ace/Service_Config.h"
 #include "ace/Arg_Shifter.h"
 #include "ace/Reactor.h"
 #include "ace/Argv_Type_Converter.h"
@@ -188,7 +189,7 @@ CORBA::ORB::destroy (ACE_ENV_SINGLE_ARG_DECL)
   if (TAO_debug_level > 2)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("CORBA::ORB::destroy() has been called on ORB <%s>.\n"),
+                  ACE_TEXT ("CORBA::ORB::destroy() called on ORB <%s>.\n"),
                   ACE_TEXT_TO_TCHAR_IN (this->orb_core ()->orbid ())));
     }
 
@@ -1074,7 +1075,8 @@ CORBA::ORB::resolve_initial_references (const char *name,
     }
   else if (ACE_OS::strcmp (name, TAO_OBJID_POACURRENT) == 0)
     {
-      result = this->orb_core ()->resolve_poa_current (ACE_ENV_SINGLE_ARG_PARAMETER);
+      result = this->orb_core ()->resolve_poa_current
+        (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (CORBA::Object::_nil ());
     }
   else if (ACE_OS::strcmp (name, TAO_OBJID_POLICYMANAGER) == 0)
@@ -1087,33 +1089,39 @@ CORBA::ORB::resolve_initial_references (const char *name,
     }
   else if (ACE_OS::strcmp (name, TAO_OBJID_IORMANIPULATION) == 0)
     {
-      result = this->orb_core ()->resolve_ior_manipulation (ACE_ENV_SINGLE_ARG_PARAMETER);
+      result = this->orb_core ()->resolve_ior_manipulation
+        (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (CORBA::Object::_nil ());
     }
   else if (ACE_OS::strcmp (name, TAO_OBJID_IORTABLE) == 0)
     {
-      result = this->orb_core ()->resolve_ior_table (ACE_ENV_SINGLE_ARG_PARAMETER);
+      result = this->orb_core ()->resolve_ior_table
+        (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (CORBA::Object::_nil ());
     }
   else if (ACE_OS::strcmp (name, TAO_OBJID_DYNANYFACTORY) == 0)
     {
-      result = this->orb_core ()->resolve_dynanyfactory (ACE_ENV_SINGLE_ARG_PARAMETER);
+      result = this->orb_core ()->resolve_dynanyfactory
+        (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (CORBA::Object::_nil ());
     }
   else if (ACE_OS::strcmp (name, TAO_OBJID_TYPECODEFACTORY) == 0)
     {
-      result = this->orb_core ()->resolve_typecodefactory (ACE_ENV_SINGLE_ARG_PARAMETER);
+      result = this->orb_core ()->resolve_typecodefactory
+        (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (CORBA::Object::_nil ());
     }
   else if (ACE_OS::strcmp (name, TAO_OBJID_CODECFACTORY) == 0)
     {
-      result = this->orb_core ()->resolve_codecfactory (ACE_ENV_SINGLE_ARG_PARAMETER);
+      result = this->orb_core ()->resolve_codecfactory
+        (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (CORBA::Object::_nil ());
     }
 #if TAO_HAS_INTERCEPTORS == 1
   else if (ACE_OS::strcmp (name, TAO_OBJID_PICurrent) == 0)
     {
-      result = this->orb_core ()->resolve_picurrent (ACE_ENV_SINGLE_ARG_PARAMETER);
+      result = this->orb_core ()->resolve_picurrent
+        (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (CORBA::Object::_nil ());
     }
 #endif
@@ -1151,7 +1159,7 @@ CORBA::ORB::resolve_initial_references (const char *name,
   // Look for an environment variable called "<name>IOR".
   //
   CORBA::String_var ior_env_var_name =
-    CORBA::string_alloc (static_cast <CORBA::ULong> (ACE_OS::strlen (name) + 3));
+    CORBA::string_alloc (static_cast<CORBA::ULong> (ACE_OS::strlen (name) + 3));
 
   ACE_OS::strcpy (ior_env_var_name.inout (),
                   name);
@@ -1279,7 +1287,6 @@ TAO::ORB::init_orb_globals (ACE_ENV_SINGLE_ARG_DECL)
       ++orb_init_count;
     }
 
-#if defined (ACE_HAS_EXCEPTIONS)
   // This must be done after the system TypeCodes and Exceptions have
   // been initialized.  An unexpected exception will cause TAO's
   // unexpected exception handler to be called.  That handler
@@ -1293,39 +1300,6 @@ TAO::ORB::init_orb_globals (ACE_ENV_SINGLE_ARG_DECL)
    */
   TAO_Singleton_Manager::instance ()->_set_unexpected (
     ::TAO_unexpected_exception_handler);
-#endif /* ACE_HAS_EXCEPTIONS */
-
-  // Verify some of the basic implementation requirements.  This test
-  // gets optimized away by a decent compiler (or else the rest of the
-  // routine does).
-  //
-  // NOTE:  we still "just" assume that native floating point is IEEE.
-  if (   sizeof (CORBA::Boolean)    != 1
-      || sizeof (CORBA::Short)      != 2
-      || sizeof (CORBA::Long)       != 4
-      || sizeof (CORBA::LongLong)   != 8
-      || sizeof (CORBA::Float)      != 4
-      || sizeof (CORBA::Double)     != 8
-      || sizeof (CORBA::LongDouble) != 16
-      || sizeof (CORBA::WChar)      < 2
-      || sizeof (void *)            != ACE_SIZEOF_VOID_P)
-    {
-      ACE_ERROR ((LM_ERROR,
-                  "%N; ERROR: unexpected basic type size; "
-                  "b:%d s:%d l:%d ll:%d f:%d d:%d ld:%d wc:%d v:%d\n"
-                  "please reconfigure TAO\n",
-                  sizeof (CORBA::Boolean),
-                  sizeof (CORBA::Short),
-                  sizeof (CORBA::Long),
-                  sizeof (CORBA::LongLong),
-                  sizeof (CORBA::Float),
-                  sizeof (CORBA::Double),
-                  sizeof (CORBA::LongDouble),
-                  sizeof (CORBA::WChar),
-                  sizeof (void *)));
-
-      ACE_THROW (CORBA::INITIALIZE ());
-    }
 }
 
 const ACE_CString &
@@ -1361,15 +1335,6 @@ CORBA::ORB_init (int &argc,
                  char *argv[],
                  const char *orb_name)
 {
-  // Make sure TAO's singleton manager is initialized.
-  //
-  // We need to initialize before TAO_default_environment() is called
-  // since that call instantiates a TAO_TSS_Singleton.
-  if (TAO_Singleton_Manager::instance ()->init () == -1)
-    {
-      return CORBA::ORB::_nil ();
-    }
-
   return CORBA::ORB_init (argc,
                           argv,
                           orb_name,
@@ -1400,6 +1365,8 @@ CORBA::ORB_init (int &argc,
                               CORBA::ORB::_nil ()));
 
     // Make sure TAO's singleton manager is initialized.
+    // We need to initialize before TAO_default_environment() is called
+    // since that call instantiates a TAO_TSS_Singleton.
     if (TAO_Singleton_Manager::instance ()->init () == -1)
       {
         return CORBA::ORB::_nil ();
@@ -1434,6 +1401,8 @@ CORBA::ORB_init (int &argc,
                           CORBA::COMPLETED_NO),
                         CORBA::ORB::_nil ());
     }
+
+
 
   if (orbid_string.length () == 0)
     {
@@ -1503,10 +1472,33 @@ CORBA::ORB_init (int &argc,
       oc.reset (tmp);
     }
 
+
+  // Having the ORB's default static services be shared among all ORBs
+  // is tempting from the point of view of reducing the dynamic
+  // footprint. However, if the ORB in a DLL and the rest of that
+  // application most likely neither cares, nor wishes to know about
+  // them. Furthermore, if the ORB DLL gets unloaded, the static
+  // services it had registered globaly will no longer be accesible,
+  // which will have disastrous consequences at the process
+  // shutdown. Hence, the ACE_Service_Config_Guard ensures that for
+  // the current thread, any references to the global
+  // ACE_Service_Config will be forwarded to the ORB's.
+
+  // Making sure the initialization process in the current thread uses
+  // the correct service repository (ours), instead of the global one.
+  ACE_Service_Config_Guard scg (oc->configuration ());
+
+  /*
+   * Currently I choose to make the ORB an owner of its configuration,
+   * which in general is not quite correct because it is very common ORBs to
+   * need to share the same configuration.
+   */
+
   // Initialize the Service Configurator.  This must occur before the
   // ORBInitializer::pre_init() method is invoked on each registered
   // ORB initializer.
-  int result = TAO::ORB::open_services (command_line.get_argc (),
+  int result = TAO::ORB::open_services (oc->configuration (),
+                                        command_line.get_argc (),
                                         command_line.get_TCHAR_argv ());
 
   // Check for errors returned from <TAO_Internal::open_services>.

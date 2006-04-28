@@ -65,7 +65,8 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
       *os << "OBV_";
     }
 
-  *os << node->local_name () << " (void)" << be_nl
+  *os << node->local_name () << " (void)" << be_nl;
+  *os << ": require_truncation_ (false)" << be_nl
       << "{}" << be_nl << be_nl;
 
   // Initializing constructor.
@@ -85,6 +86,7 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
 
       *os << be_uidt_nl
           << ")" << be_uidt << be_uidt_nl
+          << ": require_truncation_ (false)" << be_nl
           << "{" << be_idt;
 
       this->gen_obv_init_constructor_inits (node);
@@ -112,17 +114,17 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
       *os << be_nl << be_nl << "::CORBA::Boolean" << be_nl
           << node->full_obv_skel_name ()
           << "::_tao_marshal__" << node->flat_name ()
-          <<    " (TAO_OutputCDR &strm) const" << be_nl
+          <<    " (TAO_OutputCDR &strm, TAO_ChunkInfo& ci) const" << be_nl
           << "{" << be_idt_nl
-          << "return _tao_marshal_state (strm);" << be_uidt_nl
+          << "return _tao_marshal_state (strm, ci);" << be_uidt_nl
           << "}" << be_nl << be_nl;
 
       *os << "::CORBA::Boolean" << be_nl
           << node->full_obv_skel_name ()
           << "::_tao_unmarshal__" << node->flat_name ()
-          << " (TAO_InputCDR &strm)" << be_nl
+          << " (TAO_InputCDR &strm, TAO_ChunkInfo& ci)" << be_nl
           << "{" << be_idt_nl
-          << "return _tao_unmarshal_state (strm);" << be_uidt_nl
+          << "return _tao_unmarshal_state (strm, ci);" << be_uidt_nl
           << "}";
 
       if (this->visit_scope (node) == -1)
@@ -201,7 +203,7 @@ be_visitor_valuetype_obv_cs::gen_obv_init_base_constructor_args (
         be_valuetype::narrow_from_decl (parent);
       this->gen_obv_init_base_constructor_args (be_parent, index);
     }
-    
+
   for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
        !si.is_done ();
        si.next())
@@ -209,14 +211,14 @@ be_visitor_valuetype_obv_cs::gen_obv_init_base_constructor_args (
       // be_attribute doesn't inherit from be_field (unlike the
       // AST_* counterparts, so this screens attributes and operations.
       be_field *f = be_field::narrow_from_decl (si.item ());
-      
+
       if (f == 0)
         {
           continue;
         }
-        
+
       *os << (index++ != 0 ? "," : "") << be_nl
-          << "_tao_init_" << f->local_name ();          
+          << "_tao_init_" << f->local_name ();
     }
 }
 
@@ -234,24 +236,22 @@ be_visitor_valuetype_obv_cs::gen_obv_init_constructor_inits (
       be_valuetype *be_parent = be_valuetype::narrow_from_decl (parent);
       this->gen_obv_init_constructor_inits (be_parent);
     }
-    
+
   for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
        !si.is_done ();
        si.next())
     {
       be_field *f = be_field::narrow_from_decl (si.item ());
-      
+
       // be_attribute doesn't inherit from be_field (unlike the
       // AST_* counterparts, so this screens attributes and operations.
       if (f == 0)
         {
           continue;
         }
-        
+
       *os << be_nl
           << f->local_name () << " (_tao_init_" << f->local_name ()
           << ");";
     }
 }
-
-

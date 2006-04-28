@@ -80,7 +80,7 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void adapter_manager_state_changed (
-      PortableInterceptor::AdapterManagerId id,
+      const char * id,
       PortableInterceptor::AdapterState state
       ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));

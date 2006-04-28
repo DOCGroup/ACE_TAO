@@ -62,7 +62,7 @@ TAO_Codeset_Manager_i::default_char_codeset = TAO_DEFAULT_CHAR_CODESET_ID;
 CONV_FRAME::CodeSetId
 TAO_Codeset_Manager_i::default_wchar_codeset = TAO_DEFAULT_WCHAR_CODESET_ID;
 
-TAO_Codeset_Manager_i::TAO_Codeset_Manager_i ()
+TAO_Codeset_Manager_i::TAO_Codeset_Manager_i (void)
   : codeset_info_ (),
     char_descriptor_ (),
     wchar_descriptor_ ()
@@ -72,9 +72,10 @@ TAO_Codeset_Manager_i::TAO_Codeset_Manager_i ()
 
   wchar_descriptor_.ncs(TAO_Codeset_Manager_i::default_wchar_codeset);
   wchar_descriptor_.add_translator (ACE_TEXT ("UTF16_BOM_Factory"));
+
 }
 
-TAO_Codeset_Manager_i::~TAO_Codeset_Manager_i ()
+TAO_Codeset_Manager_i::~TAO_Codeset_Manager_i (void)
 {
 }
 

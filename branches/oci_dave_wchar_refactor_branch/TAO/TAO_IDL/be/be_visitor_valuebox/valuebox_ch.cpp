@@ -89,6 +89,9 @@ be_visitor_valuebox_ch::visit_valuebox (be_valuebox *node)
   *os << "virtual const char* "
       << "_tao_obv_repository_id (void) const;"
       << be_nl << be_nl
+      << "virtual void "
+      << "_tao_obv_truncatable_repo_ids (Repository_Id_List &) const;"
+      << be_nl << be_nl
       << "static const char* "
       << "_tao_obv_static_repository_id (void);" << be_nl << be_nl;
 
@@ -125,6 +128,8 @@ be_visitor_valuebox_ch::visit_valuebox (be_valuebox *node)
       << "_tao_marshal_v (TAO_OutputCDR &) const;" << be_nl;
   *os << "virtual ::CORBA::Boolean "
       << "_tao_unmarshal_v (TAO_InputCDR &);" << be_nl;
+  *os << "virtual ::CORBA::Boolean "
+      << "_tao_match_formal_type (ptrdiff_t ) const;" << be_nl;
 
   // Private unimplemented default assignment operator
   *os << be_uidt_nl << "private:" << be_idt_nl;

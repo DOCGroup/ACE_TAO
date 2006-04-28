@@ -61,7 +61,7 @@ public:
   virtual ACE_Timer_Node_T<TYPE> *item (void);
 
 protected:
-  /// Pointer to the <ACE_Timer_Heap> that we are iterating over.
+  /// Pointer to the ACE_Timer_Heap that we are iterating over.
   ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK> &timer_heap_;
 
   /// Position in the array where the iterator is at

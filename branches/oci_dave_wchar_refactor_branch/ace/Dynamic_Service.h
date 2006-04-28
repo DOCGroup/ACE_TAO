@@ -17,6 +17,7 @@
 #include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
+#include "ace/Global_Macros.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -44,8 +45,27 @@ public:
   /// Return instance using @a name to search the Service_Repository.
   static TYPE* instance (const char *name);
 
+  static TYPE* instance (const ACE_Service_Gestalt* repo,
+                         const ACE_TCHAR *name);
+
+#if defined (ACE_USES_WCHAR)
+
   /// Return instance using @a name to search the Service_Repository.
-  static TYPE* instance (const wchar_t *name);
+  static TYPE* instance (const ACE_ANTI_TCHAR *name);
+
+  static TYPE* instance (const ACE_Service_Gestalt* repo,
+                         const ACE_ANTI_TCHAR *name);
+#endif  // ACE_USES_WCHAR
+
+private:
+  ACE_UNIMPLEMENTED_FUNC
+    (ACE_Dynamic_Service ());
+
+  ACE_UNIMPLEMENTED_FUNC
+    (ACE_Dynamic_Service (const ACE_Dynamic_Service&));
+
+  ACE_UNIMPLEMENTED_FUNC
+    (ACE_Dynamic_Service& operator= (const ACE_Dynamic_Service&));
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

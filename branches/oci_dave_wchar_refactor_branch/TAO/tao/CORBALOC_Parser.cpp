@@ -233,7 +233,8 @@ TAO_CORBALOC_Parser::parse_string (const char * ior,
       const char * str = full_ep.c_str();
       endpoints[i].profile_->parse_string (str ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (CORBA::Object::_nil ());
-      if (mprofile.give_profile(endpoints[i].profile_) != -1)
+      int share = orb->orb_core()->orb_params()->shared_profile();
+      if (mprofile.give_profile(endpoints[i].profile_, share) != -1)
         endpoints[i].profile_ = 0;
       else
         {

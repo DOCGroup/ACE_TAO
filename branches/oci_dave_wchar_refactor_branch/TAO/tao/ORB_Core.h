@@ -316,7 +316,7 @@ public:
    *  Sets the value of gui_resource_factory in TSS. ORB_Core is responsible
    *  for releasing this factory if needed.
    */
-  static void set_gui_resource_factory (TAO::GUIResource_Factory *gui_resource_factory);
+  static void set_gui_resource_factory (TAO::GUIResource_Factory *gui_factory);
 
   /// Sets the value of TAO_ORB_Core::protocols_hooks_
   static void set_protocols_hooks (const char *protocols_hooks_name);
@@ -508,6 +508,30 @@ public:
                            ACE_Time_Value &time_value);
 
   /// Define the Timeout_Hook signature
+  /**
+   * The connection timeout hook was originally defined to allow the
+   * TAO Messaging code to be factored out of the core TAO library and
+   * placed in to an optional library. Since then, a new invocation
+   * endpoint selector, the optimised connection endpoint selector
+   * (see Strategies/OC_Endpoint_Selector.h) reused this connection
+   * timeout hook. However, this set up a problem when both the
+   * Messaging library and OCES are being used in the same
+   * application.
+   *
+   * The solution was to add a new connection timeout hook attribute
+   * (see alt_connection_timeout_hook_ below). This method now checks
+   * to see if the connection timeout hook is already set, and if so
+   * assigns the supplied hook value to the alternate connection
+   * timeout hook.  This functionality has a side-effect of assuming
+   * that hooks are NEVER unloaded or actively replaced. IOW, no one
+   * will call this method with a 0 or some other pointer value to
+   * replace an existing hook.
+   *
+   * If such functionality as unloading a hook pointer is required,
+   * then this method must be extended to give some kind of identity
+   * for the hook. Additional changes to the definition of the hook
+   * will also be necessary to support such identity and manipulation.
+   */
   static void connection_timeout_hook (Timeout_Hook hook);
 
   void call_sync_scope_hook (TAO_Stub *stub,
@@ -893,6 +917,9 @@ public:
   (const CORBA::Object_ptr obj,
    const TAO_Service_Context &service_context);
 
+  /// Configuration accessor method
+  ACE_Service_Gestalt* configuration () const;
+
   /// Get outgoing fragmentation strategy.
   auto_ptr<TAO_GIOP_Fragmentation_Strategy>
   fragmentation_strategy (TAO_Transport * transport);
@@ -1235,6 +1262,8 @@ protected:
   /// Code Set Manager - points to service object in the service repo
   TAO_Codeset_Manager *codeset_manager_;
 
+  /// ORB's service configuration
+  ACE_Service_Gestalt *config_;
 };
 
 // ****************************************************************
@@ -1378,6 +1407,9 @@ public:
    * poa_factory_name_ dynamically.
    */
   ACE_CString poa_factory_directive_;
+
+  /// An alternative hook to be set for the ConnectionTimeoutPolicy
+  TAO_ORB_Core::Timeout_Hook alt_connection_timeout_hook_;
 
 private:
 

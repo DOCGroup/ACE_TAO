@@ -109,6 +109,22 @@ TAO_IIOP_Endpoint::TAO_IIOP_Endpoint (const char *host,
 //@@ TAO_ENDPOINT_SPL_COPY_HOOK_END
 
 
+TAO_IIOP_Endpoint &
+TAO_IIOP_Endpoint::operator= (const TAO_IIOP_Endpoint &other)
+{
+  this->host_ = other.host_;
+  this->port_ = other.port_;
+#if defined (ACE_HAS_IPV6)
+  this->is_ipv6_decimal_ = other.is_ipv6_decimal_;
+#endif /* ACE_HAS_IPV6 */
+  this->is_encodable_  = other.is_encodable_;
+  this->object_addr_set_ = other.object_addr_set_;
+  this->object_addr_ = other.object_addr_;
+  this->preferred_path_ = other.preferred_path_;
+  this->next_ = 0; // do not copy list membership, since we are only cloning the values
+  return *this;
+}
+
 TAO_IIOP_Endpoint::~TAO_IIOP_Endpoint (void)
 {
 }
@@ -225,6 +241,75 @@ TAO_Endpoint *
 TAO_IIOP_Endpoint::next (void)
 {
   return this->next_;
+}
+
+TAO_Endpoint *
+TAO_IIOP_Endpoint::next_filtered (TAO_ORB_Core * orb_core, TAO_Endpoint *root)
+{
+  bool want_ipv6 = false;
+  bool ipv6_only = false;
+  bool prefer_ipv6 = false;
+#if defined (ACE_HAS_IPV6)
+  want_ipv6 = true;
+  ipv6_only = orb_core->orb_params()->connect_ipv6_only();
+  prefer_ipv6 = orb_core->orb_params()->prefer_ipv6_interfaces();
+#else
+  ACE_UNUSED_ARG (orb_core);
+#endif /* ACE_HAS_IPV6 */
+  return
+    this->next_filtered_i (static_cast<TAO_IIOP_Endpoint *>(root),
+                           ipv6_only,
+                           prefer_ipv6,
+                           want_ipv6);
+}
+
+TAO_IIOP_Endpoint*
+TAO_IIOP_Endpoint::next_filtered_i (TAO_IIOP_Endpoint *root,
+                                    bool ipv6_only,
+                                    bool prefer_ipv6,
+                                    bool want_ipv6)
+{
+  // the candidate is nominally the next entry in the list, but since
+  // the list may loop back on itself, the root of the list needs to be
+  // initialized.
+  TAO_IIOP_Endpoint *candidate = (root == 0) ? this : next_;
+  if (root == 0)
+    root = this;
+
+#if defined (ACE_HAS_IPV6)
+  if (ipv6_only)
+    {
+      if (candidate == 0 || candidate->is_ipv6_decimal())
+        return candidate;
+      const ACE_INET_Addr &addr = candidate->object_addr ();
+      bool allowed = addr.get_type () == AF_INET6 &&
+        !addr.is_ipv4_mapped_ipv6();
+
+      return allowed ? candidate :
+        candidate->next_filtered_i(root, ipv6_only, prefer_ipv6, true);
+    }
+  if (prefer_ipv6)
+    {
+      if (candidate == 0)
+        return !want_ipv6 ? candidate :
+          root->next_filtered_i(root, ipv6_only, prefer_ipv6, false);
+
+      if (want_ipv6 == candidate->is_ipv6_decimal())
+        return candidate;
+
+      const ACE_INET_Addr &addr = candidate->object_addr ();
+      bool really_ipv6 = addr.get_type () == AF_INET6 &&
+                         !addr.is_ipv4_mapped_ipv6();
+      return (want_ipv6 == really_ipv6) ? candidate :
+        candidate->next_filtered_i(root, ipv6_only, prefer_ipv6, want_ipv6);
+    }
+#else
+  ACE_UNUSED_ARG (want_ipv6);
+  ACE_UNUSED_ARG (ipv6_only);
+  ACE_UNUSED_ARG (prefer_ipv6);
+#endif
+
+  return candidate;
 }
 
 TAO_Endpoint *

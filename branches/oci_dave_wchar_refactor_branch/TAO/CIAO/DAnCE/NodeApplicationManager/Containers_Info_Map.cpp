@@ -272,9 +272,11 @@ namespace CIAO
     // For svnt/exec artifacts
     for (CORBA::ULong j = 0; j < artifact_num; ++j)
       {
-        const Deployment::ArtifactDeploymentDescription & arti =
+        Deployment::ArtifactDeploymentDescription arti =
           this->plan_.artifact[ impl.artifactRef[j] ];
 
+	// @Stoyan:  Is there any particular reason the repository
+	// manager should only work on Windows? -Will
 #if defined (ACE_WIN32) || defined (ACE_WIN64)
         for (size_t loc_num = 0;
              loc_num < arti.location.length ();
@@ -292,8 +294,11 @@ namespace CIAO
                          "Containers_Info_Map::insert_instance_into_container -"
                          "ERROR: Unable to resolve HTTP ref to location[%d] of %s\n",
                          loc_num, arti.name.in ()));
-
-                    arti.location[loc_num] = CORBA::string_dup ("HTTP_failure");
+		    
+		    // @Stoyan:  This is an inappropriate response to
+		    // this type of failure.  Please throw an
+		    // exception, Deployment::UnknownImplId would be appropriate.
+                    arti.location[loc_num] = "HTTP_failure";
                   }
                 else
                   {

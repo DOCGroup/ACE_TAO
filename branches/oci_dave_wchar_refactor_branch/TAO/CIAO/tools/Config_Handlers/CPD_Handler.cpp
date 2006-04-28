@@ -10,7 +10,7 @@ namespace CIAO
   namespace Config_Handlers
   {
     void
-    CPD_Handler::component_port_description (
+    CPD_Handler::handle_component_port_description (
                                              const ComponentPortDescription& desc,
                                              Deployment::ComponentPortDescription& toconfig)
     {

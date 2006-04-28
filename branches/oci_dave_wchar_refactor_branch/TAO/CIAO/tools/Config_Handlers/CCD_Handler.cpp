@@ -70,8 +70,8 @@ namespace CIAO
            pstart != pend;
            ++pstart)
         {
-          Property_Handler::get_property (*pstart,
-                                          toconfig.configProperty [pos++]);
+          Property_Handler::handle_property (*pstart,
+						 toconfig.configProperty [pos++]);
         }
 
       pos = 0;
@@ -81,8 +81,7 @@ namespace CIAO
            port != desc.end_port ();
            ++port)
         {
-          CPD_Handler::component_port_description (
-                                                   *port,
+          CPD_Handler::handle_component_port_description (*port,
                                                    toconfig.port[pos++]);
         }
 
@@ -105,9 +104,8 @@ namespace CIAO
             infoProp != desc.end_infoProperty();
             infoProp++)
         {
-          Property_Handler::get_property (
-                                          *infoProp,
-                                          toconfig.infoProperty[pos]);
+          Property_Handler::handle_property (*infoProp,
+						 toconfig.infoProperty[pos]);
         }
     }
 

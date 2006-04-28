@@ -118,6 +118,12 @@ PortableInterceptor::ObjectReferenceFactory::_tao_obv_repository_id (void) const
 }
 
 void
+PortableInterceptor::ObjectReferenceFactory::_tao_obv_truncatable_repo_ids (Repository_Id_List& ids) const
+{
+  ids.push_back (this->_tao_obv_static_repository_id ());
+}
+
+void
 PortableInterceptor::ObjectReferenceFactory::_tao_any_destructor (void *_tao_void_pointer)
 {
   ObjectReferenceFactory *_tao_tmp_pointer =
@@ -128,47 +134,30 @@ PortableInterceptor::ObjectReferenceFactory::_tao_any_destructor (void *_tao_voi
 PortableInterceptor::ObjectReferenceFactory::~ObjectReferenceFactory (void)
 {}
 
-CORBA::Boolean PortableInterceptor::ObjectReferenceFactory::_tao_unmarshal (
+CORBA::Boolean
+PortableInterceptor::ObjectReferenceFactory::_tao_unmarshal (
     TAO_InputCDR &strm,
     ObjectReferenceFactory *&new_object
   )
 {
   CORBA::ValueBase *base = 0;
-  CORBA::ValueFactory_var factory;
   CORBA::Boolean retval =
     CORBA::ValueBase::_tao_unmarshal_pre (
         strm,
-        factory.out (),
         base,
         ObjectReferenceFactory::_tao_obv_static_repository_id ()
       );
 
   if (retval == 0)
-    {
       return 0;
-    }
 
-  if (factory.in () != 0)
-    {
-      base = factory->create_for_unmarshal ();
-
-      if (base == 0)
-        {
-          return 0;  // %! except.?
-        }
-
-      retval = base->_tao_unmarshal_v (strm);
-
-      if (retval == 0)
-        {
+  if (base != 0 && ! base->_tao_unmarshal_v (strm))
           return 0;
-        }
-    }
 
   // Now base must be null or point to the unmarshaled object.
   // Align the pointer to the right subobject.
   new_object = ObjectReferenceFactory::_downcast (base);
-  return retval;
+  return 1;
 }
 
 // TAO_IDL - Generated from
@@ -211,6 +200,12 @@ PortableInterceptor::ObjectReferenceTemplate::_tao_obv_repository_id (void) cons
 }
 
 void
+PortableInterceptor::ObjectReferenceTemplate::_tao_obv_truncatable_repo_ids (Repository_Id_List& ids) const
+{
+  ids.push_back (this->_tao_obv_static_repository_id ());
+}
+
+void
 PortableInterceptor::ObjectReferenceTemplate::_tao_any_destructor (void *_tao_void_pointer)
 {
   ObjectReferenceTemplate *_tao_tmp_pointer =
@@ -227,41 +222,30 @@ CORBA::Boolean PortableInterceptor::ObjectReferenceTemplate::_tao_unmarshal (
   )
 {
   CORBA::ValueBase *base = 0;
-  CORBA::ValueFactory_var factory;
   CORBA::Boolean retval =
     CORBA::ValueBase::_tao_unmarshal_pre (
         strm,
-        factory.out (),
         base,
         ObjectReferenceTemplate::_tao_obv_static_repository_id ()
       );
 
   if (retval == 0)
-    {
-      return 0;
-    }
+    return 0;
 
-  if (factory.in () != 0)
-    {
-      base = factory->create_for_unmarshal ();
-
-      if (base == 0)
-        {
-          return 0;  // %! except.?
-        }
-
-      retval = base->_tao_unmarshal_v (strm);
-
-      if (retval == 0)
-        {
-          return 0;
-        }
-    }
+  if (base != 0 && ! base->_tao_unmarshal_v (strm))
+    return 0;
 
   // Now base must be null or point to the unmarshaled object.
   // Align the pointer to the right subobject.
   new_object = ObjectReferenceTemplate::_downcast (base);
-  return retval;
+  return 1;
+}
+
+CORBA::Boolean
+PortableInterceptor::ObjectReferenceFactory::_tao_match_formal_type (ptrdiff_t formal_type_id) const
+{
+  return formal_type_id ==
+    reinterpret_cast<ptrdiff_t>(&PortableInterceptor::ObjectReferenceFactory::_downcast);
 }
 
 // TAO_IDL - Generated from

@@ -35,6 +35,7 @@
 #include "ace/Thread_Mutex.h"
 #include "ace/Atomic_Op.h"
 #include "ace/Null_Mutex.h"
+#include "ace/Vector_T.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -42,6 +43,66 @@
 #define TAO_EXPORT_MACRO TAO_Valuetype_Export
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+class TAO_Valuetype_Export TAO_ChunkInfo
+{
+public:
+  TAO_ChunkInfo(CORBA::Boolean do_chunking = 0, CORBA::Long init_level = 0);
+
+  /// Methods to support chunking.
+  /// Note: These methods are called for both chunking and non-chunking
+  ///       valuetype. These methods checks the chunking_ flag. If it's
+  ///       set to be false the methods return true rightaway.
+
+  /// Methods for marshalling a valuetype.
+
+  /// This is called in the _tao_marshal_state (). This method reserves
+  /// space for the chunk size of the next chunk and also increments the
+  /// nesting level. The reservasion actually occurs the first time that
+  /// the start_chunk is called if there are multiple continuous start_chunk()
+  /// calls without the close_chunk() called in between.
+  CORBA::Boolean start_chunk(TAO_OutputCDR &strm);
+
+  /// This is called in the _tao_marshal_state (). This method writes the
+  /// actual chunk size to the reserved chunk size space and writes an end
+  /// tag with the negation value of current nesting level. A start_chunk()
+  /// needs an end_chunk() to close the current chunk. It's also needed for
+  /// writing the outmost endtag to the stream.
+  CORBA::Boolean end_chunk(TAO_OutputCDR &strm);
+
+  /// Methods for unmarshalling a valuetype.
+
+  /// This is called in the _tao_unmarshal_state () to read the chunk
+  /// size or an end tag.
+  CORBA::Boolean handle_chunking (TAO_InputCDR &strm);
+  /// This is called in the _tao_unmarshal_state () to skip the rest
+  /// chunks until the outmost endtag (-1) if the value is truncated
+  /// to its truncatable parent.
+  CORBA::Boolean skip_chunks (TAO_InputCDR &strm);
+  /// This is called in end_chunk(). It writes the actual chunk size to the
+  /// reserved chunk size space.
+  CORBA::Boolean write_previous_chunk_size(TAO_OutputCDR &strm);
+  /// Reserve space for chunk size. The memory in the stream will be
+  /// overwritten after all the chunk data is written. This method
+  /// only allows the reservasion being made once if the reserved
+  /// space has not been overwritten.
+  CORBA::Boolean reserve_chunk_size(TAO_OutputCDR &strm);
+
+  /// A flag to indicate that this instance is actually involved in a chunked
+  /// or truncatable valuetype.
+  CORBA::Boolean chunking_;
+
+  /// The level of nesting valuetypes.
+  CORBA::Long value_nesting_level_;
+  /// The starting position of the size of current chunk.
+  char* chunk_size_pos_;
+  /// The length of CDR stream from the begining to the current
+  /// chunk data starting position.  Used to calculate the chunk size
+  /// across multiple chained ACE_Message_Blocks.
+  size_t length_to_chunk_octets_pos_;
+  /// The end position of current chunk.
+  char* chunk_octets_end_pos_;
+};
 
 namespace CORBA
 {
@@ -63,8 +124,12 @@ namespace CORBA
   class TAO_Valuetype_Export ValueBase
   {
   public:
+    friend class TAO_ChunkInfo;
+
     typedef ValueBase* _ptr_type;
     typedef ValueBase_var _var_type;
+    typedef ACE_Vector < ACE_CString > Repository_Id_List;
+
 
     // reference counting
     /// %! virtual CORBA::ValueBase* _copy_value (void) = 0;
@@ -79,7 +144,16 @@ namespace CORBA
     static void _tao_any_destructor (void *);
 
     /// TAO extension
-    virtual const char* _tao_obv_repository_id (void) const = 0;
+
+    /// Return the repository id of this valuetype.
+    virtual const char * _tao_obv_repository_id (void) const = 0;
+
+    /// Give the list of the RepositoryIds in the valuetype "truncatable"
+    /// inheritance hierarchy. List the id of this valuetype as first
+    /// RepositoryID and go up the "truncatable" derivation hierarchy.
+    /// Note the truncatable repo ids only list the truncatable base types
+    /// to which this type is safe to truncate, not all its parents.
+    virtual void _tao_obv_truncatable_repo_ids (Repository_Id_List &) const = 0;
 
     // TAO internal --------------------------
 
@@ -101,9 +175,9 @@ namespace CORBA
 
     /// Both used internally and are called from T::_tao_unmarshal ()
     static CORBA::Boolean _tao_unmarshal_pre (TAO_InputCDR &strm,
-                                              ValueFactory &,
                                               ValueBase *&,
                                               const char * const repo_id);
+
     CORBA::Boolean _tao_unmarshal_post (TAO_InputCDR &strm);
 
     /// Check repository id for value box type against what is
@@ -121,10 +195,48 @@ namespace CORBA
     /// called after obtaining the fresh object from create_for_unmarshal ()
     virtual CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &) = 0;
 
+    /// Notify the truncated parent valuetype to skip the rest of the chunks
+    /// when unmarshalling a value from its derived valuetype.
+    /// This is called when the factory for the most derived valuetype (in
+    /// the repository id list) does not exist and a truncated parent factory
+    /// is registered.
+    virtual void truncation_hook ();
+
   protected:
     ValueBase (void);
     ValueBase (const ValueBase&);
     virtual ~ValueBase (void);
+
+    /// This flag is set to be true when the valuetype defined
+    /// in the idl has the truncatable parent.
+    CORBA::Boolean         is_truncatable_;
+
+    /// This flag is set to be true when marshalling uses chunking.
+    /// According to spec, the truncatable valuetype should use chunking
+    /// and it can be used for marshalling large valuetype. In current
+    /// implementation, we just use chunking for the truncatable valuetype.
+    CORBA::Boolean chunking_;
+
+    /// Compare the supplied formal type identifier with our actual type.
+    /// This is used during marshaling of valuetypes to detect when it is
+    /// appropriate to not explicitly marshal the typecode for the value.
+    virtual CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const = 0;
+
+  private:
+    /// Write some special values such as null value or indirection value.
+    static CORBA::Boolean write_special_value(TAO_OutputCDR &strm, const CORBA::ValueBase * value);
+    /// Write whole value.
+    static CORBA::Boolean write_value(TAO_OutputCDR &strm,
+                                      const CORBA::ValueBase * value,
+                                      ptrdiff_t formal_type_id);
+
+    /// Write the header of the value which includes the valuetag, number of
+    /// repository ids and list of repository ids.
+    CORBA::Boolean write_value_header(TAO_OutputCDR &strm,
+                                      ptrdiff_t formal_type_id) const;
+
+    /// Read the repository ids from the CDR input stream.
+    static CORBA::Boolean read_repository_ids(ACE_InputCDR& strm, Repository_Id_List& ids);
 
   private:
     ValueBase & operator= (const ValueBase &);
@@ -192,25 +304,28 @@ namespace CORBA
  */
 namespace TAO_OBV_GIOP_Flags
 {
-  const CORBA::ULong Value_tag_base    = 0x7fffff00L;
-  const CORBA::ULong Value_tag_sigbits = 0xffffff00L;
-  const CORBA::ULong Codebase_url      = 1;
-  const CORBA::ULong Type_info_sigbits = 0x00000006L;
-  const CORBA::ULong Type_info_none    = 0;
-  const CORBA::ULong Type_info_single  = 2;
-  const CORBA::ULong Type_info_list    = 6;
+  const CORBA::Long Value_tag_base    = 0x7fffff00L;
+  const CORBA::Long Value_tag_sigbits = 0xffffff00L;
+  const CORBA::Long Codebase_url      = 1;
+  const CORBA::Long Type_info_sigbits = 0x00000006L;
+  const CORBA::Long Type_info_none    = 0;
+  const CORBA::Long Type_info_single  = 2;
+  const CORBA::Long Type_info_list    = 6;
+  const CORBA::Long Chunking_tag_sigbits = 0x00000008L;
+  const CORBA::Long Indirection_tag   = 0x7fffffffL;
+  const CORBA::Long Null_tag          = 0x00000000L;
 
-  TAO_NAMESPACE_INLINE_FUNCTION CORBA::Boolean is_null_ref          (CORBA::ULong);
-  TAO_NAMESPACE_INLINE_FUNCTION CORBA::Boolean is_value_tag         (CORBA::ULong);
-  TAO_NAMESPACE_INLINE_FUNCTION CORBA::Boolean has_codebase_url     (CORBA::ULong);
-  TAO_NAMESPACE_INLINE_FUNCTION CORBA::Boolean has_no_type_info     (CORBA::ULong);
-  TAO_NAMESPACE_INLINE_FUNCTION CORBA::Boolean has_single_type_info (CORBA::ULong);
-  TAO_NAMESPACE_INLINE_FUNCTION CORBA::Boolean has_list_type_info   (CORBA::ULong);
-  TAO_NAMESPACE_INLINE_FUNCTION CORBA::Boolean is_chunked           (CORBA::ULong);
-  TAO_NAMESPACE_INLINE_FUNCTION CORBA::Boolean is_indirection_tag   (CORBA::ULong);
-  TAO_NAMESPACE_INLINE_FUNCTION CORBA::Boolean is_indirection       (CORBA::ULong);
-  TAO_NAMESPACE_INLINE_FUNCTION CORBA::Boolean is_block_size        (CORBA::ULong);
-  TAO_NAMESPACE_INLINE_FUNCTION CORBA::Boolean is_end_tag           (CORBA::ULong);
+  TAO_NAMESPACE_INLINE_FUNCTION CORBA::Boolean is_null_ref          (CORBA::Long);
+  TAO_NAMESPACE_INLINE_FUNCTION CORBA::Boolean is_value_tag         (CORBA::Long);
+  TAO_NAMESPACE_INLINE_FUNCTION CORBA::Boolean has_codebase_url     (CORBA::Long);
+  TAO_NAMESPACE_INLINE_FUNCTION CORBA::Boolean has_no_type_info     (CORBA::Long);
+  TAO_NAMESPACE_INLINE_FUNCTION CORBA::Boolean has_single_type_info (CORBA::Long);
+  TAO_NAMESPACE_INLINE_FUNCTION CORBA::Boolean has_list_type_info   (CORBA::Long);
+  TAO_NAMESPACE_INLINE_FUNCTION CORBA::Boolean is_chunked           (CORBA::Long);
+  TAO_NAMESPACE_INLINE_FUNCTION CORBA::Boolean is_indirection_tag   (CORBA::Long);
+  TAO_NAMESPACE_INLINE_FUNCTION CORBA::Boolean is_indirection       (CORBA::Long);
+  TAO_NAMESPACE_INLINE_FUNCTION CORBA::Boolean is_block_size        (CORBA::Long);
+  TAO_NAMESPACE_INLINE_FUNCTION CORBA::Boolean is_end_tag           (CORBA::Long);
 }
 
 TAO_Valuetype_Export CORBA::Boolean

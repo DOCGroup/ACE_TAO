@@ -1,4 +1,5 @@
 #include "tao/LF_Connect_Strategy.h"
+#include "tao/LF_Multi_Event.h"
 #include "tao/Connection_Handler.h"
 #include "tao/LF_Follower.h"
 #include "tao/Leader_Follower.h"
@@ -41,41 +42,26 @@ TAO_LF_Connect_Strategy::synch_options (ACE_Time_Value *timeout,
 }
 
 int
-TAO_LF_Connect_Strategy::wait (TAO_Connection_Handler *ch,
+TAO_LF_Connect_Strategy::wait_i (TAO_LF_Event *ev,
+                                 TAO_Transport *transport,
                                ACE_Time_Value *max_wait_time)
 {
-  ACE_ASSERT (ch != 0);
-
-  return this->wait (ch->transport (),
-                     max_wait_time);
-}
-
-int
-TAO_LF_Connect_Strategy::wait (TAO_Transport *transport,
-                               ACE_Time_Value *max_wait_time)
-{
-  // Basically the connection was EINPROGRESS, but before we could
-  // wait for it some other thread detected a failure and cleaned up
-  // the connection handler.
   if (transport == 0)
     return -1;
-
-  TAO_Connection_Handler *ch =
-    transport->connection_handler ();
 
   TAO_Leader_Follower &leader_follower =
     this->orb_core_->leader_follower ();
 
   int result =
-    leader_follower.wait_for_event (ch,
+    leader_follower.wait_for_event (ev,
                                     transport,
                                     max_wait_time);
 
-  // Set the result.
-  if (ch->error_detected () && result != -1)
+  if (ev->error_detected () && result != -1)
     result = -1;
 
   return result;
 }
+
 
 TAO_END_VERSIONED_NAMESPACE_DECL

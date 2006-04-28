@@ -7,6 +7,13 @@ ACE_RCSID(Trader, Trader_Utils, "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+bool
+operator== (CORBA::String_var const & lhs,
+            CORBA::String_var const & rhs)
+{
+  return (ACE_OS::strcmp (lhs.in (), rhs.in ()) == 0);
+}
+
 TAO_Policy_Creator::TAO_Policy_Creator (int num_policies)
   : policies_ (num_policies),
     num_policies_ (0)
@@ -348,7 +355,7 @@ TAO_Property_Evaluator_By_Name (const CosTrading::PropertySeq& properties
       if (! TAO_Trader_Base::is_valid_property_name (prop.name))
         ACE_THROW (CosTrading::IllegalPropertyName (prop.name));
 
-      TAO_String_Hash_Key prop_name = prop.name.in ();
+      CORBA::String_var prop_name = prop.name.in ();
       if (this->table_.bind (prop_name, i))
         ACE_THROW (CosTrading::DuplicatePropertyName (prop.name));
     }
@@ -363,7 +370,7 @@ TAO_Property_Evaluator_By_Name(CosTrading::Offer& offer,
 
   for (int i = 0; i < length; i++)
     {
-      TAO_String_Hash_Key prop_name = (const char*) this->props_[i].name;
+      CORBA::String_var prop_name = (const char*) this->props_[i].name;
       this->table_.bind (prop_name, i);
     }
 }
@@ -374,7 +381,7 @@ is_dynamic_property(const char* property_name)
 {
   int predicate = 0;
   int index = 0;
-  TAO_String_Hash_Key prop_name (property_name);
+  CORBA::String_var prop_name (property_name);
 
   // If the property name is in the map, delegate evaluation to our
   // superclass. Otherwise, throw an exception.
@@ -391,7 +398,7 @@ TAO_Property_Evaluator_By_Name::property_value (const char* property_name
 {
   int index = 0;
   CORBA::Any* prop_value = 0;
-  TAO_String_Hash_Key prop_name (property_name);
+  CORBA::String_var prop_name (property_name);
 
   // If the property name is in the map, delegate evaluation to our
   // superclass. Otherwise, throw an exception.
@@ -410,7 +417,7 @@ CORBA::TypeCode_ptr
 TAO_Property_Evaluator_By_Name::property_type (const char* property_name)
 {
   int index = 0;
-  TAO_String_Hash_Key prop_name (property_name);
+  CORBA::String_var prop_name (property_name);
   CORBA::TypeCode_ptr prop_type = CORBA::TypeCode::_nil();
 
   // If the property name is in the map, delegate evaluation to our
@@ -426,7 +433,7 @@ TAO_Property_Evaluator_By_Name::get_property (const char* property_name)
 {
   int index = 0;
   CosTrading::Property* property = 0;
-  TAO_String_Hash_Key prop_name (property_name);
+  CORBA::String_var prop_name (property_name);
 
   if (this->table_.find (prop_name, index) == 0)
     property = (CosTrading::Property *) &this->props_[index];
@@ -1050,7 +1057,7 @@ TAO_Offer_Modifier (const char* type_name,
   // Create a mapping of property names to their types.
   for (i = 0; i < pstructs_length; i++)
     {
-      TAO_String_Hash_Key prop_name = pstructs[i].name.in ();
+      CORBA::String_var prop_name = pstructs[i].name.in ();
       CORBA::TypeCode_ptr type_code =
         CORBA::TypeCode::_duplicate (pstructs[i].value_type.in ());
       this->prop_types_.bind (prop_name, type_code);
@@ -1064,13 +1071,13 @@ TAO_Offer_Modifier (const char* type_name,
       if (pstructs[i].mode ==
           CosTradingRepos::ServiceTypeRepository::PROP_MANDATORY)
         {
-          TAO_String_Hash_Key prop_name (pname);
+          CORBA::String_var prop_name (pname);
           this->mandatory_.insert (prop_name);
         }
       else if (pstructs[i].mode ==
                CosTradingRepos::ServiceTypeRepository::PROP_READONLY)
         {
-          TAO_String_Hash_Key prop_name (pname);
+          CORBA::String_var prop_name (pname);
           this->readonly_.insert (prop_name);
         }
     }
@@ -1078,7 +1085,7 @@ TAO_Offer_Modifier (const char* type_name,
   // Insert the indices of the offer properties into a map.
   for (i = 0; i < props_length; i++)
     {
-      TAO_String_Hash_Key prop_name =
+      CORBA::String_var prop_name =
         static_cast<const char*> (prop_seq[i].name);
       this->props_.bind (prop_name, &prop_seq[i]);
     }
@@ -1116,7 +1123,7 @@ delete_properties (const CosTrading::PropertyNameSeq& deletes
         ACE_THROW (CosTrading::IllegalPropertyName (dname));
       else
         {
-          TAO_String_Hash_Key prop_name (dname);
+          CORBA::String_var prop_name (dname);
           if (this->mandatory_.find (prop_name) == 0)
             ACE_THROW (CosTrading::Register::MandatoryProperty (this->type_, dname));
           else if (delete_me.insert (prop_name) == 1)
@@ -1129,7 +1136,7 @@ delete_properties (const CosTrading::PropertyNameSeq& deletes
   // Delete those properties from the offer.
   for (i = 0; i < length; i++)
     {
-      TAO_String_Hash_Key prop_name =
+      CORBA::String_var prop_name =
         static_cast<const char *> (deletes[i]);
       this->props_.unbind (prop_name);
     }
@@ -1156,7 +1163,7 @@ merge_properties (const CosTrading::PropertySeq& modifies
       const char* mname = modifies[i].name;
       if (TAO_Trader_Base::is_valid_property_name (mname))
         {
-          TAO_String_Hash_Key prop_name (mname);
+          CORBA::String_var prop_name (mname);
           if (this->readonly_.find (prop_name) == 0)
             {
               // Can't assign a dynamic property to a property with
@@ -1213,7 +1220,7 @@ TAO_Offer_Modifier::affect_change (const CosTrading::PropertySeq& modifies)
   for (i = 0; i < merge_length; i++)
     {
       Property_Table::ENTRY* entry = 0;
-      TAO_String_Hash_Key prop_name = modifies[i].name.in ();
+      CORBA::String_var prop_name = modifies[i].name.in ();
 
       CosTrading::Property* prop =
         const_cast<CosTrading::Property*> (&modifies[i]);
@@ -1237,7 +1244,7 @@ TAO_Offer_Modifier::affect_change (const CosTrading::PropertySeq& modifies)
     {
       CosTrading::Property* prop_value = 0;
       const char* name = this->offer_->properties[i].name;
-      TAO_String_Hash_Key prop_name (name);
+      CORBA::String_var prop_name (name);
       if (this->props_.unbind (prop_name, prop_value) == 0)
         prop_seq[num_modified++] = *prop_value;
     }
@@ -1246,7 +1253,7 @@ TAO_Offer_Modifier::affect_change (const CosTrading::PropertySeq& modifies)
     {
       CosTrading::Property* prop_value = 0;
       const char* name = modifies[i].name;
-      TAO_String_Hash_Key prop_name (name);
+      CORBA::String_var prop_name (name);
       if (this->props_.unbind (prop_name, prop_value) == 0)
         prop_seq[num_modified++] = *prop_value;
     }
@@ -1282,7 +1289,7 @@ TAO_Offer_Filter::TAO_Offer_Filter (TAO_Policies& policies
 
   if (exact_type_match == 1)
     {
-      TAO_String_Hash_Key exact_match
+      CORBA::String_var exact_match
         (TAO_Policies::POLICY_NAMES[TAO_Policies::EXACT_TYPE_MATCH]);
       this->limits_.insert (exact_match);
     }
@@ -1303,7 +1310,7 @@ configure_type (CosTradingRepos::ServiceTypeRepository::TypeStruct* type_struct)
       if (mode == CosTradingRepos::ServiceTypeRepository::PROP_MANDATORY_READONLY ||
           mode == CosTradingRepos::ServiceTypeRepository::PROP_READONLY)
         {
-          TAO_String_Hash_Key prop_name ((const char*) prop_seq[i].name);
+          CORBA::String_var prop_name ((const char*) prop_seq[i].name);
           this->not_mod_props_.insert (prop_name);
         }
     }
@@ -1312,9 +1319,9 @@ configure_type (CosTradingRepos::ServiceTypeRepository::TypeStruct* type_struct)
 CORBA::Boolean
 TAO_Offer_Filter::ok_to_consider (CosTrading::Offer* offer)
 {
-  TAO_String_Hash_Key use_mods =
+  CORBA::String_var use_mods =
     TAO_Policies::POLICY_NAMES[TAO_Policies::USE_MODIFIABLE_PROPERTIES];
-  TAO_String_Hash_Key use_dyns =
+  CORBA::String_var use_dyns =
     TAO_Policies::POLICY_NAMES[TAO_Policies::USE_DYNAMIC_PROPERTIES];
   CORBA::Boolean return_value = 1;
   TAO_Property_Evaluator prop_eval (*offer);
@@ -1333,7 +1340,7 @@ TAO_Offer_Filter::ok_to_consider (CosTrading::Offer* offer)
             {
               // Determine if this property name is found in the set
               // of modifiable properties for the type being considered.
-              TAO_String_Hash_Key prop_name ((const char*) offer->properties[i].name);
+              CORBA::String_var prop_name ((const char*) offer->properties[i].name);
               if (this->not_mod_props_.find (prop_name) == -1)
                 {
                   this->limits_.insert (use_mods);
@@ -1363,7 +1370,7 @@ TAO_Offer_Filter::ok_to_consider (CosTrading::Offer* offer)
       this->search_card_--;
       if (this->search_card_ == 0)
         {
-          TAO_String_Hash_Key search_card =
+          CORBA::String_var search_card =
             TAO_Policies::POLICY_NAMES[TAO_Policies::SEARCH_CARD];
           this->limits_.insert (search_card);
         }
@@ -1386,14 +1393,14 @@ TAO_Offer_Filter::matched_offer (void)
 
   if (this->match_card_ == 0)
     {
-      TAO_String_Hash_Key match_card =
+      CORBA::String_var match_card =
         TAO_Policies::POLICY_NAMES[TAO_Policies::MATCH_CARD];
       this->limits_.insert (match_card);
     }
 
   if (this->return_card_ == 0)
     {
-      TAO_String_Hash_Key return_card =
+      CORBA::String_var return_card =
         TAO_Policies::POLICY_NAMES[TAO_Policies::MATCH_CARD];
       this->limits_.insert (return_card);
     }
@@ -1423,7 +1430,7 @@ TAO_Offer_Filter::limits_applied (void)
        ! p_iter.done ();
        p_iter.advance ())
     {
-      TAO_String_Hash_Key* policy_name_ptr = 0;
+      CORBA::String_var* policy_name_ptr = 0;
       p_iter.next (policy_name_ptr);
       temp[i++] = CORBA::string_dup (policy_name_ptr->in ());
     }
@@ -1451,7 +1458,7 @@ TAO_Property_Filter (const SPECIFIED_PROPS& desired_props
           // Check for errors or duplicates
           if (TAO_Trader_Base::is_valid_property_name (pname))
             {
-              TAO_String_Hash_Key prop_name (pname);
+              CORBA::String_var prop_name (pname);
               if (this->props_.insert (prop_name) == 1)
                 ACE_THROW (CosTrading::DuplicatePropertyName (pname));
             }
@@ -1497,7 +1504,7 @@ TAO_Property_Filter::filter_offer (CosTrading::Offer* source,
           else
             {
               const char* p_name = s_props[i].name;
-              TAO_String_Hash_Key prop_name (p_name);
+              CORBA::String_var prop_name (p_name);
 
               // Save those property that match.
               if (this->props_.find (prop_name) == 0)

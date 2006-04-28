@@ -60,8 +60,6 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
                       Test_Smart_Factory,
                       -1);
 
-      // To make KAI Compiler happy as it considers <test_factory> to be
-      // an unused variable.
       ACE_UNUSED_ARG (test_factory);
 
       Test_var server =

@@ -74,9 +74,12 @@ module PortableServer
   const CORBA::PolicyType SERVANT_RETENTION_POLICY_ID     = 21;
   const CORBA::PolicyType REQUEST_PROCESSING_POLICY_ID    = 22;
 
-  // Forward declaration
+  // Forward declaration POAManager interface.
   local interface POAManager;
 
+  // Forward declaration POAManagerFactory interface.
+  local interface POAManagerFactory;
+  
   // Forward declaration AdapterActivator interface.
   local interface AdapterActivator;
 
@@ -146,6 +149,7 @@ module PortableServer
     readonly attribute POA          the_parent;
     readonly attribute POAList      the_children;
     readonly attribute POAManager   the_POAManager;
+    readonly attribute POAManagerFactory   the_POAManagerFactory;
     attribute AdapterActivator      the_activator;
 
     // Servant Manager registration:

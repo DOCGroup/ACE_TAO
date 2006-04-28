@@ -109,6 +109,11 @@ public:
 
   virtual int open_handler (void *);
 
+  /// This is used during a canceled connection attempt. Force the
+  /// SO_LINGER timeout to 0 so that when the peer is closed, it won't
+  /// hang around.
+  void abort (void);
+
 protected:
 
   /// Constructor that could be used by the derived classes.

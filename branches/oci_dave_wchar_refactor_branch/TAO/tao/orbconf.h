@@ -735,7 +735,9 @@ enum TAO_Cached_Policy_Type
 
   TAO_CACHED_POLICY_BIDIRECTIONAL_GIOP,
 
-  TAO_CACHED_POLICY_MAX_CACHED
+  TAO_CACHED_POLICY_MAX_CACHED,
+
+  TAO_CACHED_POLICY_ENDPOINT
 };
 
 // This enum provides a mask that represent the scope at which a given

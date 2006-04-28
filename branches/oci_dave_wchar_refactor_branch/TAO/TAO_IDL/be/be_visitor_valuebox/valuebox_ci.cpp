@@ -65,6 +65,16 @@ be_visitor_valuebox_ci::visit_valuebox (be_valuebox *node)
       << "return \"" << node->repoID () << "\";" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
+  // _tao_match_formal_type method.  Generated because ValueBase interface
+  // requires it. Since value boxes do not support inheritence, this can
+  // simply return true.
+  *os << "ACE_INLINE ::CORBA::Boolean " << be_nl
+      << node->name ()
+      << "::_tao_match_formal_type (ptrdiff_t ) const" << be_nl
+      << "{" << be_idt_nl
+      << "return true;" << be_uidt_nl
+      << "}" << be_nl << be_nl;
+
   // Indicate that code is already generated for this node.
   node->cli_inline_gen (true);
 

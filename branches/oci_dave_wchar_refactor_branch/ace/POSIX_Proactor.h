@@ -614,8 +614,8 @@ protected:
  * @class ACE_POSIX_Asynch_Timer
  *
  * @brief This class is posted to the completion port when a timer
- * expires. When the <complete method> of this object is
- * called, the <handler>'s <handle_timeout> method will be
+ * expires. When the @c complete() method of this object is
+ * called, the handler's @c handle_timeout() method will be
  * called.
  */
 class ACE_Export ACE_POSIX_Asynch_Timer : public ACE_POSIX_Asynch_Result
@@ -640,7 +640,7 @@ protected:
   /// Destructor.
   virtual ~ACE_POSIX_Asynch_Timer (void) {}
 
-  /// This method calls the <handler>'s handle_timeout method.
+  /// This method calls the handler's handle_timeout method.
   virtual void complete (size_t bytes_transferred,
                          int success,
                          const void *completion_key,

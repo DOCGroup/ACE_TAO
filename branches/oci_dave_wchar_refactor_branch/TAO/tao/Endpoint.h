@@ -29,6 +29,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+class TAO_ORB_Core;
+
 /*
  * Includes and forward decls for specializing TAO's
  * endpoint implementation.
@@ -79,11 +81,28 @@ public:
    */
   virtual CORBA::Boolean is_equivalent (const TAO_Endpoint *other_endpoint) = 0;
 
-  /// Endpoints can be stringed in a list.
+  /// Endpoints can be linked in a list.
   /**
    * @return The next endpoint in the list, if any.
    */
   virtual TAO_Endpoint *next (void) = 0;
+
+  /**
+   * Return the next endpoint in the list, but use protocol-specific
+   * filtering to constrain the value. The orb core is needed to supply
+   * any sort of filter arguments, and the root endpoint is needed in case
+   * the algorithm needs to rewind. If the supplied root is 0, then this
+   * is assumed to be the candidate next endpoint.
+   *
+   * To use this, the caller starts off the change with root == 0. This
+   * is a bit of a violation in logic, a more correct implementation would
+   * accept this == 0 and a non-null root.
+   * To do iteration using next_filtered, do:
+   *   for (TAO_Endpoint *ep = root_endpoint->next_filtered (orb_core, 0);
+   *        ep != 0;
+   *        ep = ep->next_filtered(orb_core, root_endpoint)) { }
+   */
+  virtual TAO_Endpoint *next_filtered (TAO_ORB_Core *, TAO_Endpoint *root);
 
   /// Return a string representation for the address.
   /**

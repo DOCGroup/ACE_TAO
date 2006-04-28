@@ -82,7 +82,7 @@ ORT_test_IORInterceptor::components_established (
 
 void
 ORT_test_IORInterceptor::adapter_manager_state_changed (
-    PortableInterceptor::AdapterManagerId,
+    const char * id,
     PortableInterceptor::AdapterState
     ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))

@@ -1272,6 +1272,99 @@ Wed Feb  1 21:21:35 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
 
 Wed Feb  1 20:42:42 UTC 2006  William Otte  <wotte@dre.vanderbilt.edu>
 
+        * tools/Config_Handlers/Config_Handlers.mpc
+        * tools/Config_Handlers/Property_Handler.h
+        * tools/Config_Handlers/SatisfierProperty_Handler.h
+        * tools/Config_Handlers/Package_Handlers/CAD_Handler.cpp
+        * tools/Config_Handlers/Package_Handlers/CID_Handler.cpp
+        * tools/Config_Handlers/Package_Handlers/CPD_Handler.cpp
+        * tools/Config_Handlers/Package_Handlers/Comp_Intf_Descr_Handler.cpp
+        * tools/Config_Handlers/Package_Handlers/IAD_Handler.cpp
+        * tools/Config_Handlers/Package_Handlers/Package_Handlers.mpc
+        * tools/Config_Handlers/Utils/Functors.h
+
+          Introduced a workaround for a ICE in GCC 4.0.22.
+
+Wed Apr 26 13:10:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tools/Config_Handlers/DP_Handler.cpp:
+        * tools/Config_Handlers/XML_File_Intf.cpp:
+        * tools/Config_Handlers/Package_Handlers/PC_Intf.cpp:
+        * tools/Config_Handlers/XSCRT/XMLSchema.hpp:
+        * tools/Config_Handlers/XSCRT/Elements.hpp:
+        * tools/Config_Handlers/XSCRT/XML.hpp:
+          Removed workarounds for vc6 again
+
+        * tools/Config_Handlers/Package_Handlers/NIA_Handler.h:
+          Added missing post.h
+
+        * tools/Config_Handlers/Package_Handlers/CPD_Handler.h:
+        * tools/Config_Handlers/Package_Handlers/PC_Intf.h:
+          Fixed incorrect file tags
+
+Wed Apr 26 08:46:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/TargetManager/DomainDataManager.h:
+          Fixed compile problem in gcc4 build
+
+Tue Apr 25 21:27:05 UTC 2006  William R. Otte <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/TargetManager/TargetManager.mpc
+
+          Linking problems for Borland.
+
+        * tools/Config_Handlers/Package_Handlers/PCD_Handler.cpp
+        * tools/Config_Handlers/Package_Handlers/SID_Handler.cpp
+
+          More compile fixes for Borland.
+Tue Apr 25 20:12:25 UTC 2006  William R. Otte <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp
+        * DAnCE/NodeApplication/NodeApplication_Impl.h
+        * DAnCE/NodeApplicationManager/Containers_Info_Map.cpp
+        * DAnCE/NodeApplicationManager/Containers_Info_Map.h
+        * ciao/Deployment_Core.idl
+        * tools/Config_Handlers/ADD_Handler.cpp
+        * tools/Config_Handlers/CCD_Handler.cpp
+        * tools/Config_Handlers/CEPE_Handler.cpp
+        * tools/Config_Handlers/CEPE_Handler.h
+        * tools/Config_Handlers/CPD_Handler.cpp
+        * tools/Config_Handlers/CPD_Handler.h
+        * tools/Config_Handlers/DP_Handler.cpp
+        * tools/Config_Handlers/Deployment.hpp
+        * tools/Config_Handlers/ERE_Handler.cpp
+        * tools/Config_Handlers/ERE_Handler.h
+        * tools/Config_Handlers/MDD_Handler.cpp
+        * tools/Config_Handlers/PCD_Handler.cpp
+        * tools/Config_Handlers/PCD_Handler.h
+        * tools/Config_Handlers/Property_Handler.cpp
+        * tools/Config_Handlers/Property_Handler.h
+        * tools/Config_Handlers/Req_Handler.cpp
+        * tools/Config_Handlers/Req_Handler.h
+        * tools/Config_Handlers/SatisfierProperty_Handler.cpp
+        * tools/Config_Handlers/SatisfierProperty_Handler.h
+        * tools/Config_Handlers/cdp.hpp
+        * tools/Config_Handlers/toplevel.hpp
+        * tools/Config_Handlers/Package_Handlers/CAD_Handler.cpp
+        * tools/Config_Handlers/Package_Handlers/CID_Handler.cpp
+        * tools/Config_Handlers/Package_Handlers/CPD_Handler.cpp
+        * tools/Config_Handlers/Package_Handlers/CPD_Handler.h
+        * tools/Config_Handlers/Package_Handlers/Comp_Intf_Descr_Handler.cpp
+        * tools/Config_Handlers/Package_Handlers/NIA_Handler.h
+        * tools/Config_Handlers/Package_Handlers/PCD_Handler.cpp
+        * tools/Config_Handlers/Package_Handlers/SID_Handler.cpp
+        * tools/Config_Handlers/Package_Handlers/SID_Handler.h
+
+        Compilation fixes for borland, some cosmetic fixes as well.
+
+Tue Apr 25 09:00:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tools/Config_Handlers/CPD_Handler.h:
+          ComponentPortDescription is a struct, so also forward declare it
+          as a struct
+
+Mon Apr 24 18:53:22 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
+
         * CIDLC/ServantSourceGenerator.cpp
 
           Fixed a code generation problem caused by careless merging.

@@ -201,10 +201,9 @@ namespace CIAO
        * @param available The available Properties
        */
 
-        void CIAO::DomainDataManager::
-        match_properties (
-                          ::Deployment::Properties deployed,
-                          ::Deployment::SatisfierProperties& available);
+      void match_properties (
+                        ::Deployment::Properties deployed,
+                        ::Deployment::SatisfierProperties& available);
 
 
         /// The different actiona that can take place

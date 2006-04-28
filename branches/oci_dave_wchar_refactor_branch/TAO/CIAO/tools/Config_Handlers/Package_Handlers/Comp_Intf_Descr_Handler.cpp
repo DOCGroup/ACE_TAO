@@ -16,11 +16,9 @@ namespace CIAO
   {
     namespace Packaging
     {
-      namespace
-      {
         struct Comp_Prop_Handler
         {
-          static void get_cpd (const ComponentPropertyDescription &desc,
+          static void handle_cpd (const ComponentPropertyDescription &desc,
                                ::Deployment::ComponentPropertyDescription &toconfig)
           {
             CIAO_TRACE ("Comp_Prop_Handler::get_cpd");
@@ -44,8 +42,8 @@ namespace CIAO
         typedef Sequence_Handler < ComponentPropertyDescription,
                                    ::Deployment::ComponentPropertyDescriptions,
                                    ::Deployment::ComponentPropertyDescription,
-                                   Comp_Prop_Handler::get_cpd > Comp_Prop_Functor;
-      }
+                                   Comp_Prop_Handler::handle_cpd > Comp_Prop_Functor;
+     
 
       void
       Comp_Intf_Descr_Handler::comp_intf_descr (
@@ -96,6 +94,9 @@ namespace CIAO
                        CIAO::Config_Handlers::CPD_Functor (toconfig.port));
 
         toconfig.property.length (cid->count_property ());
+	SEQ_HAND_GCC_BUG_WORKAROUND (Comp_Prop_Handler::handle_cpd,
+				     cid->begin_property (),
+				     toconfig.property);
         std::for_each (cid->begin_property (),
                        cid->end_property (),
                        Comp_Prop_Functor (toconfig.property));

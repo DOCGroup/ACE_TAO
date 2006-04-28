@@ -7,11 +7,14 @@
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/debug.h"
 #include "tao/Connect_Strategy.h"
+#include "tao/LF_Multi_Event.h"
 #include "tao/Client_Strategy_Factory.h"
 #include "tao/Connection_Handler.h"
 #include "tao/Profile_Transport_Resolver.h"
 #include "tao/Wait_Strategy.h"
 #include "tao/SystemException.h"
+#include "tao/Endpoint.h"
+#include "tao/Base_Transport_Property.h"
 
 #include "ace/OS_NS_string.h"
 
@@ -242,6 +245,81 @@ TAO_Connector::make_mprofile (const char *string,
   return 0;  // Success
 }
 
+int
+TAO_Connector::supports_parallel_connects(void) const
+{
+  return 0; // by default, we don't support parallel connection attempts;
+}
+
+TAO_Transport*
+TAO_Connector::make_parallel_connection (TAO::Profile_Transport_Resolver *,
+                                         TAO_Transport_Descriptor_Interface &,
+                                         ACE_Time_Value *)
+{
+  return 0;
+}
+
+
+TAO_Transport*
+TAO_Connector::parallel_connect (TAO::Profile_Transport_Resolver *r,
+                                 TAO_Transport_Descriptor_Interface *desc,
+                                 ACE_Time_Value *timeout
+                                 ACE_ENV_ARG_DECL_NOT_USED)
+{
+  if (this->supports_parallel_connects() == 0)
+    {
+      errno = ENOTSUP;
+      return 0;
+    }
+
+  errno = 0; // need to clear errno to ensure a stale enotsup is not set
+  if (desc == 0)
+    return 0;
+  unsigned int endpoint_count = 0;
+  TAO_Endpoint *root_ep = desc->endpoint();
+  for (TAO_Endpoint *ep = root_ep->next_filtered (this->orb_core(),0);
+       ep != 0;
+       ep = ep->next_filtered(this->orb_core(),root_ep))
+    if (this->set_validate_endpoint (ep) == 0)
+      ++endpoint_count;
+  if (endpoint_count == 0)
+    return 0;
+
+  TAO_Transport *base_transport = 0;
+
+  TAO::Transport_Cache_Manager &tcm =
+    this->orb_core ()->lane_resources ().transport_cache ();
+
+  // Iterate through the endpoints. Since find_transport takes a
+  // Transport Descriptor rather than an endpoint, we must create a
+  // local TDI for each endpoint. The first one found will be used.
+  for (TAO_Endpoint *ep = root_ep->next_filtered (this->orb_core(),0);
+       ep != 0;
+       ep = ep->next_filtered(this->orb_core(),root_ep))
+    {
+      TAO_Base_Transport_Property desc2(ep,0);
+      if (tcm.find_transport (&desc2,
+                              base_transport) == 0)
+        {
+          if (TAO_debug_level)
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("(%P|%t) TAO_Connector::parallel_connect: ")
+                        ACE_TEXT ("found a transport [%d]\n"),
+                        base_transport->id()));
+          return base_transport;
+        }
+    }
+
+  // Now we have searched the cache on all endpoints and come up
+  // empty. We need to initiate connections on each of the
+  // endpoints. Presumably only one will have a route and will succeed,
+  // and the rest will fail. This requires the use of asynch
+  // connection establishment. Maybe a custom wait strategy is needed
+  // at this point to register several potential transports so that
+  // when one succeeds the rest are cancelled or closed.
+
+  return this->make_parallel_connection (r,*desc,timeout);
+}
 
 TAO_Transport*
 TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
@@ -280,8 +358,8 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
 
       if (TAO_debug_level > 4)
         ACE_DEBUG ((LM_DEBUG,
-                    "TAO (%P|%t) - Transport_Connector::connect, "
-                    "opening Transport[%d] in TAO_CLIENT_ROLE\n",
+                    ACE_TEXT("(%P|%t) Transport_Connector::connect, ")
+                    ACE_TEXT("opening Transport[%d] in TAO_CLIENT_ROLE\n"),
                     t->id ()));
 
       // Call post connect hook. If the post_connect_hook () returns
@@ -315,10 +393,13 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
                   "TAO_UNSPECIFIED_ROLE" ));
     }
 
-  // If connected return..
+  // If connected return.
   if (base_transport->is_connected ())
     return base_transport;
 
+  // It it possible to get a transport from the cache that is not
+  // connected? If not, then the following code is bogus. We cannot
+  // wait for a connection to complete on a transport in the cache.
   if (!this->wait_for_connection_completion (r,
                                              base_transport,
                                              timeout))
@@ -432,10 +513,100 @@ TAO_Connector::wait_for_connection_completion (
         }
     }
 
+  // Connection not ready yet but we can use this transport, if
+  // we need a connected one we will block later to make sure
+  // it is connected
+  return true;
+}
+
+bool
+TAO_Connector::wait_for_connection_completion (
+    TAO::Profile_Transport_Resolver *r,
+    TAO_Transport *&the_winner,
+    TAO_Transport **transport,
+    unsigned int count,
+    TAO_LF_Multi_Event *mev,
+    ACE_Time_Value *timeout)
+{
+  if (TAO_debug_level > 2)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT("(%P|%t) Transport_Connector::")
+                  ACE_TEXT("wait_for_connection_completion, ")
+                  ACE_TEXT("waiting for connection completion on ")
+                  ACE_TEXT("%d transports, ["),
+                  count));
+      for (unsigned int i = 0; i < count; i++)
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT("%d%s"),transport[i]->id(),
+                    (i < (count -1) ? ", " : "]\n")));
+    }
+
+  // If we don't need to block for a transport just set the timeout to
+  // be zero.
+  ACE_Time_Value tmp_zero (ACE_Time_Value::zero);
+  if (!r->blocked_connect ())
+    {
+      timeout = &tmp_zero;
+    }
+
+  int result = this->active_connect_strategy_->wait (mev,timeout);
+  the_winner = 0;
+
+  if (result != -1)
+    {
+      the_winner = mev->winner()->transport();
+      if (TAO_debug_level > 2)
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT("(%P|%t) Transport_Connector::")
+                    ACE_TEXT("wait_for_connection_completion, ")
+                    ACE_TEXT("transport [%d]\n"),
+                    the_winner->id ()));
+    }
+  else if (errno == ETIME)
+    {
+      // this is the most difficult case. In this situation, there is no
+      // nominated by the Multi_Event. The best we can do is pick one of
+      // the pending connections.
+      // Of course, this shouldn't happen in any case, since the wait
+      // strategy is called with a timeout value of 0.
+      for (unsigned int i = 0; i < count; i++)
+        if (!transport[i]->connection_handler()->is_closed())
+          {
+            the_winner = transport[i];
+            break;
+          }
+    }
+
+  // It is possible that we have more than one connection that happened
+  // to complete, or that none completed. Therefore we need to traverse
+  // the list and ensure that all of the losers are closed.
+  for (unsigned int i = 0; i < count; i++)
+    {
+      if (transport[i] != the_winner)
+        this->check_connection_closure (transport[i]->connection_handler());
+      // since we are doing this on may connections, the result isn't
+      // particularly important.
+    }
+
+  // In case of errors.
+  if (the_winner == 0)
+    {
+      // Report that making the connection failed, don't print errno
+      // because we touched the reactor and errno could be changed
+      if (TAO_debug_level > 2)
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("(%P|%t) Transport_Connector::")
+                    ACE_TEXT ("wait_for_connection_completion, failed\n")
+                    ));
+
+      return false;
+    }
+
   // Fix for a subtle problem. What happens if we are supposed to do
   // blocked connect but the transport is NOT connected? Force close
   // the connections
-  if (r->blocked_connect () && !transport->is_connected ())
+  if (r->blocked_connect () && !the_winner->is_connected ())
     {
       if (TAO_debug_level > 2)
         ACE_DEBUG ((LM_DEBUG,
@@ -446,8 +617,8 @@ TAO_Connector::wait_for_connection_completion (
 
       // Forget the return value. We are busted anyway. Try our best
       // here.
-      (void) this->cancel_svc_handler (transport->connection_handler ());
-      transport = 0;
+      (void) this->cancel_svc_handler (the_winner->connection_handler ());
+      the_winner = 0;
       return false;
     }
 

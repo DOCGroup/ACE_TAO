@@ -31,19 +31,21 @@ ACE_Stream_Node::dump (void) const
 }
 
 void
-ACE_Stream_Node::apply (int & yyerrno)
+ACE_Stream_Node::apply (ACE_Service_Gestalt *config, int &yyerrno)
 {
   ACE_TRACE ("ACE_Stream_Node::apply");
 
-  if (ACE_Service_Config::initialize (this->node_->record (),
-                                      this->node_->parameters ()) == -1)
+  if (config->initialize (this->node_->record (config),
+                          this->node_->parameters ()) == -1)
     ++yyerrno;
 
+#ifndef ACE_NLOGGING
   if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
-                ACE_LIB_TEXT ("did stream on %s, error = %d\n"),
+                ACE_LIB_TEXT ("(%P|%t) Did stream on %s, error = %d\n"),
                 this->node_->name (),
                 yyerrno));
+#endif /* ACE_NLOGGING */
 }
 
 ACE_ALLOC_HOOK_DEFINE (ACE_Parse_Node)
@@ -178,32 +180,37 @@ ACE_Resume_Node::~ACE_Resume_Node (void)
 }
 
 void
-ACE_Suspend_Node::apply (int & yyerrno)
+ACE_Suspend_Node::apply (ACE_Service_Gestalt *config, int &yyerrno)
 {
   ACE_TRACE ("ACE_Suspend_Node::apply");
 
-  if (ACE_Service_Config::suspend (this->name ()) == -1)
+  if (config->suspend (this->name ()) == -1)
     ++yyerrno;
 
+#ifndef ACE_NLOGGING
   if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
                 ACE_LIB_TEXT ("did suspend on %s, error = %d\n"),
                 this->name (),
                 yyerrno));
+#endif /* ACE_NLOGGING */
 }
 
 void
-ACE_Resume_Node::apply (int & yyerrno)
+ACE_Resume_Node::apply (ACE_Service_Gestalt *config, int &yyerrno)
 {
   ACE_TRACE ("ACE_Resume_Node::apply");
-  if (ACE_Service_Config::resume (this->name ()) == -1)
+
+  if (config->resume (this->name ()) == -1)
     ++yyerrno;
 
+#ifndef ACE_NLOGGING
   if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
                 ACE_LIB_TEXT ("did resume on %s, error = %d\n"),
                 this->name (),
                 yyerrno));
+#endif /* ACE_NLOGGING */
 }
 
 ACE_ALLOC_HOOK_DEFINE (ACE_Remove_Node)
@@ -227,48 +234,49 @@ ACE_Remove_Node::~ACE_Remove_Node (void)
 }
 
 void
-ACE_Remove_Node::apply (int & yyerrno)
+ACE_Remove_Node::apply (ACE_Service_Gestalt *config, int &yyerrno)
 {
   ACE_TRACE ("ACE_Remove_Node::apply");
-  if (ACE_Service_Config::remove (this->name ()) == -1)
+
+  if (config->remove (this->name ()) == -1)
     ++yyerrno;
 
+#ifndef ACE_NLOGGING
   if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
-                ACE_LIB_TEXT ("did remove on %s, error = %d\n"),
+                ACE_LIB_TEXT ("(%P|%t) ACE_Remove_Node::apply")
+                ACE_LIB_TEXT (" - did remove on %s, error = %d\n"),
                 this->name (),
                 yyerrno));
+#endif /* ACE_NLOGGING */
 }
 
-ACE_Dynamic_Node::ACE_Dynamic_Node (const ACE_Service_Type *sr,
+
+ACE_Dynamic_Node::ACE_Dynamic_Node (ACE_Service_Type_Factory const *stf,
                                     ACE_TCHAR *parms)
-  : ACE_Static_Node (sr->name (), parms),
-    record_ (sr)
+  : ACE_Static_Node (stf->name (), parms)
+  , factory_ (stf)
 {
   ACE_TRACE ("ACE_Dynamic_Node::ACE_Dynamic_Node");
 }
 
-const ACE_Service_Type *
-ACE_Dynamic_Node::record (void) const
-{
-  ACE_TRACE ("ACE_Dynamic_Node::record");
-  return this->record_;
-}
-
 void
-ACE_Dynamic_Node::apply (int & yyerrno)
+ACE_Dynamic_Node::apply (ACE_Service_Gestalt *config, int &yyerrno)
 {
   ACE_TRACE ("ACE_Dynamic_Node::apply");
 
-  if (ACE_Service_Config::initialize (this->record (),
-                                      this->parameters ()) == -1)
+  if (config->initialize (this->factory_.get (),
+                          this->parameters ()) == -1)
     ++yyerrno;
 
+#ifndef ACE_NLOGGING
   if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
-                ACE_LIB_TEXT ("did dynamic on %s, error = %d\n"),
+                ACE_LIB_TEXT ("(%P|%t) ACE_Dynamic_Node::apply")
+                ACE_LIB_TEXT (" - did dynamic on %s, error = %d\n"),
                 this->name (),
                 yyerrno));
+#endif /* ACE_NLOGGING */
 }
 
 ACE_ALLOC_HOOK_DEFINE (ACE_Dynamic_Node)
@@ -305,17 +313,15 @@ ACE_Static_Node::ACE_Static_Node (const ACE_TCHAR *nm,
 }
 
 const ACE_Service_Type *
-ACE_Static_Node::record (void) const
+ACE_Static_Node::record (const ACE_Service_Gestalt *config) const
 {
   ACE_TRACE ("ACE_Static_Node::record");
   ACE_Service_Type *sr = 0;
 
-  if (ACE_Service_Repository::instance()->find
-      (this->name (),
-       (const ACE_Service_Type **) &sr) == -1)
+  if (config->find (this->name (), (const ACE_Service_Type **) &sr) == -1)
     return 0;
-  else
-    return sr;
+
+  return sr;
 }
 
 ACE_TCHAR *
@@ -326,18 +332,20 @@ ACE_Static_Node::parameters (void) const
 }
 
 void
-ACE_Static_Node::apply (int & yyerrno)
+ACE_Static_Node::apply (ACE_Service_Gestalt *config, int &yyerrno)
 {
   ACE_TRACE ("ACE_Static_Node::apply");
-  if (ACE_Service_Config::initialize (this->name (),
+  if (config->initialize (this->name (),
                                       this->parameters ()) == -1)
     ++yyerrno;
 
+#ifndef ACE_NLOGGING
   if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
                 ACE_LIB_TEXT ("did static on %s, error = %d\n"),
                 this->name (),
                 yyerrno));
+#endif /* ACE_NLOGGING */
 }
 
 ACE_Static_Node::~ACE_Static_Node (void)
@@ -345,6 +353,7 @@ ACE_Static_Node::~ACE_Static_Node (void)
   ACE_TRACE ("ACE_Static_Node::~ACE_Static_Node");
   delete[] this->parameters_;
 }
+
 
 ACE_ALLOC_HOOK_DEFINE (ACE_Location_Node)
 
@@ -389,13 +398,6 @@ ACE_Location_Node::pathname (const ACE_TCHAR *p)
   this->pathname_ = p;
 }
 
-void
-ACE_Location_Node::set_symbol (void *s)
-{
-  ACE_TRACE ("ACE_Location_Node::set_symbol");
-  this->symbol_ = s;
-}
-
 int
 ACE_Location_Node::dispose (void) const
 {
@@ -408,15 +410,37 @@ ACE_Location_Node::open_dll (int & yyerrno)
 {
   ACE_TRACE ("ACE_Location_Node::open_dll");
 
+#ifndef ACE_NLOGGING
+  if (ACE::debug ())
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_LIB_TEXT ("(%P|%t) LN::open_dll - path=%s\n"),
+                this->pathname ()));
+#endif /* ACE_NLOGGING */
+
   if (-1 == this->dll_.open (this->pathname ()))
     {
       ++yyerrno;
+
+#ifndef ACE_NLOGGING
+      ACE_TCHAR *errmsg = this->dll_.error ();
+      ACE_ERROR ((LM_ERROR,
+                  ACE_LIB_TEXT ("(%P|%t) LN - DLL::open failed for %s: %s\n"),
+                  this->pathname (),
+                  errmsg ? errmsg : ACE_LIB_TEXT ("no error reported")));
+#endif /* ACE_NLOGGING */
 
       return -1;
     }
 
   return 0;
 
+}
+
+void
+ACE_Location_Node::set_symbol (void *s)
+{
+  ACE_TRACE ("ACE_Location_Node::set_symbol");
+  this->symbol_ = s;
 }
 
 ACE_ALLOC_HOOK_DEFINE (ACE_Object_Node)
@@ -439,7 +463,8 @@ ACE_Object_Node::ACE_Object_Node (const ACE_TCHAR *path,
 }
 
 void *
-ACE_Object_Node::symbol (int & yyerrno,
+ACE_Object_Node::symbol (ACE_Service_Gestalt *,
+                         int &yyerrno,
                          ACE_Service_Object_Exterminator *)
 {
   ACE_TRACE ("ACE_Object_Node::symbol");
@@ -455,7 +480,7 @@ ACE_Object_Node::symbol (int & yyerrno,
 #ifndef ACE_NLOGGING
           ACE_TCHAR *errmsg = this->dll_.error ();
           ACE_ERROR ((LM_ERROR,
-                      ACE_LIB_TEXT ("ACE_DLL::symbol failed for object %s: %s\n"),
+                      ACE_LIB_TEXT ("DLL::symbol failed for object %s: %s\n"),
                       object_name,
                       errmsg ? errmsg : ACE_LIB_TEXT ("no error reported")));
 #endif /* ACE_NLOGGING */
@@ -555,7 +580,8 @@ ACE_Function_Node::make_func_name (ACE_TCHAR const * func_name)
 }
 
 void *
-ACE_Function_Node::symbol (int & yyerrno,
+ACE_Function_Node::symbol (ACE_Service_Gestalt *,
+                           int &yyerrno,
                            ACE_Service_Object_Exterminator *gobbler)
 {
   typedef ACE_Service_Object *(*ACE_Service_Factory_Ptr)
@@ -582,7 +608,8 @@ ACE_Function_Node::symbol (int & yyerrno,
 #ifndef ACE_NLOGGING
               ACE_TCHAR *errmsg = this->dll_.error ();
               ACE_ERROR ((LM_ERROR,
-                          ACE_LIB_TEXT ("ACE_DLL::symbol failed for function %s: %s\n"),
+                          ACE_LIB_TEXT ("DLL::symbol failed for function %s: ")
+                          ACE_LIB_TEXT ("%s\n"),
                           function_name,
                           errmsg ? errmsg :
                                    ACE_LIB_TEXT ("no error reported")));
@@ -635,7 +662,7 @@ ACE_Dummy_Node::ACE_Dummy_Node (const ACE_Static_Node *static_node,
 }
 
 void
-ACE_Dummy_Node::apply (int & yyerrno)
+ACE_Dummy_Node::apply (ACE_Service_Gestalt *, int &yyerrno)
 {
   ACE_TRACE ("ACE_Dummy_Node::apply");
 
@@ -645,8 +672,6 @@ ACE_Dummy_Node::apply (int & yyerrno)
                 ACE_LIB_TEXT ("did operations on stream %s, error = %d\n"),
                 this->name (),
                 yyerrno));
-#else
-  ACE_UNUSED_ARG (yyerrno);
 #endif /* ACE_NLOGGING */
 }
 
@@ -677,32 +702,28 @@ ACE_Static_Function_Node::ACE_Static_Function_Node (const ACE_TCHAR *func_name)
 }
 
 void *
-ACE_Static_Function_Node::symbol (int & yyerrno,
+ACE_Static_Function_Node::symbol (ACE_Service_Gestalt *config,
+                                  int &yyerrno,
                                   ACE_Service_Object_Exterminator *gobbler)
 {
   ACE_TRACE ("ACE_Static_Function_Node::symbol");
 
-  void *(*func)(ACE_Service_Object_Exterminator *) = 0;
   this->symbol_ = 0;
 
   // Locate the factory function <function_name> in the statically
   // linked svcs.
 
-  ACE_Static_Svc_Descriptor **ssdp = 0;
-  ACE_STATIC_SVCS &svcs = *ACE_Service_Config::static_svcs ();
-  ACE_TCHAR *function_name = const_cast<ACE_TCHAR *> (this->function_name_);
-
-  for (ACE_STATIC_SVCS_ITERATOR iter (svcs);
-       iter.next (ssdp) != 0;
-       iter.advance ())
-    {
-      ACE_Static_Svc_Descriptor *ssd = *ssdp;
-      if (ACE_OS::strcmp (ssd->name_,
-                          function_name) == 0)
-        func = (void *(*)(ACE_Service_Object_Exterminator*)) ssd->alloc_;
+  ACE_Static_Svc_Descriptor *ssd = 0;
+  if (config->find_static_svc_descriptor (this->function_name_, &ssd) == -1)
+  {
+    yyerrno++;
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_LIB_TEXT ("(%P|%t) No static service registered for function %s\n"),
+                       this->function_name_),
+                      0);
     }
 
-  if (func == 0)
+  if (ssd->alloc_ == 0)
     {
       yyerrno++;
 
@@ -711,14 +732,15 @@ ACE_Static_Function_Node::symbol (int & yyerrno,
           ++yyerrno;
 
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_LIB_TEXT ("no static service registered for function %s\n"),
-                             function_name),
+                             ACE_LIB_TEXT ("(%P|%t) No static service factory ")
+                             ACE_LIB_TEXT ("function registered for function %s\n"),
+                             this->function_name_),
                              0);
         }
     }
 
   // Invoke the factory function and record it's return value.
-  this->symbol_ = (*func) (gobbler);
+  this->symbol_ = (*ssd->alloc_) (gobbler);
 
   if (this->symbol_ == 0)
     {

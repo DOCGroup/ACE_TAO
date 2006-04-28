@@ -24,9 +24,12 @@
 #include "ace/Event_Handler.h"
 #include "ace/DLL.h"
 
+#include "ace/Service_Gestalt.h"
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #define ACE_Component ACE_Service_Object
+
 /**
  * @class ACE_Service_Object
  *
@@ -38,7 +41,9 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * ACE_Event_Handler, as well as being dynamically linked by
  * the ACE_Service_Config (due to the <ACE_Shared_Object>).
  */
-class ACE_Export ACE_Service_Object : public ACE_Event_Handler, public ACE_Shared_Object
+class ACE_Export ACE_Service_Object
+  : public ACE_Event_Handler,
+    public ACE_Shared_Object
 {
 public:
   // = Initialization and termination methods.
@@ -101,8 +106,10 @@ public:
   void name (const ACE_TCHAR *);
 
   const ACE_Service_Type_Impl *type (void) const;
-  void type (const ACE_Service_Type_Impl *,
-             int active = 1);
+  void type (const ACE_Service_Type_Impl *, int active = 1);
+
+  // Is this just a stub for the real thing?
+  bool is_forward_declaration (void) const;
 
   int suspend (void) const;
   int resume (void) const;
@@ -118,6 +125,9 @@ public:
   /// Dump the state of an object.
   void dump (void) const;
 
+  /// Get to the DLL's implentation
+  const ACE_DLL & dll () const;
+
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
@@ -128,7 +138,8 @@ private:
   /// Pointer to C++ object that implements the svc.
   const ACE_Service_Type_Impl *type_;
 
-  /// ACE_DLL representing the shared object file (non-zero if dynamically linked).
+  /// ACE_DLL representing the shared object file (non-zero if
+  /// dynamically linked).
   mutable ACE_DLL dll_;
 
   /// 1 if svc is currently active, otherwise 0.

@@ -38,8 +38,8 @@ TAO_GOA::create_id_for_reference (CORBA::Object_ptr the_ref
                                                       ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  PortableServer::ObjectId_var obj_id = this->reference_to_id (obj_ref.in ()
-                                                                ACE_ENV_ARG_PARAMETER);
+  PortableServer::ObjectId_var obj_id =
+    this->reference_to_id (obj_ref.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   // Associate the object reference with the group reference.
@@ -102,23 +102,23 @@ TAO_GOA::disassociate_reference_with_id (CORBA::Object_ptr ref,
 
 
 TAO_GOA::TAO_GOA (const TAO_Root_POA::String &name,
-                        TAO_POA_Manager &poa_manager,
-                        const TAO_POA_Policy_Set &policies,
-                        TAO_Root_POA *parent,
-                        ACE_Lock &lock,
-                        TAO_SYNCH_MUTEX &thread_lock,
-                        TAO_ORB_Core &orb_core,
-                        TAO_Object_Adapter *object_adapter
-                        ACE_ENV_ARG_DECL)
+                  PortableServer::POAManager_ptr poa_manager,
+                  const TAO_POA_Policy_Set &policies,
+                  TAO_Root_POA *parent,
+                  ACE_Lock &lock,
+                  TAO_SYNCH_MUTEX &thread_lock,
+                  TAO_ORB_Core &orb_core,
+                  TAO_Object_Adapter *object_adapter
+                  ACE_ENV_ARG_DECL)
   : TAO_Regular_POA (name,
-             poa_manager,
-             policies,
-             parent,
-             lock,
-             thread_lock,
-             orb_core,
-             object_adapter
-             ACE_ENV_ARG_PARAMETER)
+                     poa_manager,
+                     policies,
+                     parent,
+                     lock,
+                     thread_lock,
+                     orb_core,
+                     object_adapter
+                     ACE_ENV_ARG_PARAMETER)
 {
 }
 
@@ -128,27 +128,27 @@ TAO_GOA::~TAO_GOA (void)
 
 TAO_Root_POA *
 TAO_GOA::new_POA (const String &name,
-                     TAO_POA_Manager &poa_manager,
-                     const TAO_POA_Policy_Set &policies,
-                     TAO_Root_POA *parent,
-                     ACE_Lock &lock,
-                     TAO_SYNCH_MUTEX &thread_lock,
-                     TAO_ORB_Core &orb_core,
-                     TAO_Object_Adapter *object_adapter
-                     ACE_ENV_ARG_DECL)
+                  PortableServer::POAManager_ptr poa_manager,
+                  const TAO_POA_Policy_Set &policies,
+                  TAO_Root_POA *parent,
+                  ACE_Lock &lock,
+                  TAO_SYNCH_MUTEX &thread_lock,
+                  TAO_ORB_Core &orb_core,
+                  TAO_Object_Adapter *object_adapter
+                  ACE_ENV_ARG_DECL)
 {
   TAO_GOA *poa = 0;
 
   ACE_NEW_THROW_EX (poa,
                     TAO_GOA (name,
-                                poa_manager,
-                                policies,
-                                parent,
-                                lock,
-                                thread_lock,
-                                orb_core,
-                                object_adapter
-                                ACE_ENV_ARG_PARAMETER),
+                             poa_manager,
+                             policies,
+                             parent,
+                             lock,
+                             thread_lock,
+                             orb_core,
+                             object_adapter
+                             ACE_ENV_ARG_PARAMETER),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
 

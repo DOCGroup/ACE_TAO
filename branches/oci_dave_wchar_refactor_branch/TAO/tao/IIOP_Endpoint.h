@@ -85,6 +85,23 @@ public:
 
   virtual TAO_Endpoint *next (void);
 
+  /**
+   * Return the next endpoint in the list, but use protocol-specific
+   * filtering to constrain the value. The orb core is needed to supply
+   * any sort of filter arguments, and the root endpoint is needed in case
+   * the algorithm needs to rewind. If the supplied root is 0, then this
+   * is assumed to be the candidate next endpoint.
+   *
+   * To use this, the caller starts off the change with root == 0. This
+   * is a bit of a violation in logic, a more correct implementation would
+   * accept this == 0 and a non-null root.
+   * To do iteration using next_filtered, do:
+   *   for (TAO_Endpoint *ep = root_endpoint->next_filtered (orb_core, 0);
+   *        ep != 0;
+   *        ep = ep->next_filtered(orb_core, root_endpoint)) { }
+   */
+  virtual TAO_Endpoint *next_filtered (TAO_ORB_Core *, TAO_Endpoint *root);
+
   virtual int addr_to_string (char *buffer, size_t length);
 
   /// Makes a copy of @c this
@@ -135,7 +152,17 @@ public:
 
   //@@ TAO_ENDPOINT_SPL_PUBLIC_METHODS_COPY_HOOK_END
 
+
+  /// Need to have an assignment operator since the IIOP_Profile class may
+  /// have to reorder its list of endpoints based on filtering by the EndpointPolicy.
+  TAO_IIOP_Endpoint & operator= (const TAO_IIOP_Endpoint& other);
+
 private:
+  TAO_IIOP_Endpoint *next_filtered_i (TAO_IIOP_Endpoint *root,
+                                      bool ipv6_only,
+                                      bool prefer_ipv6,
+                                      bool want_ipv6);
+
 
   //@@ TAO_ENDPOINT_SPL_PRIVATE_DATA_COPY_HOOK_START
 

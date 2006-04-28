@@ -39,7 +39,7 @@ class TAO_PortableServer_Export TAO_Regular_POA
 {
 public:
   TAO_Regular_POA (const String &name,
-                   TAO_POA_Manager &poa_manager,
+                   PortableServer::POAManager_ptr poa_manager,
                    const TAO_POA_Policy_Set &policies,
                    TAO_Root_POA *parent,
                    ACE_Lock &lock,

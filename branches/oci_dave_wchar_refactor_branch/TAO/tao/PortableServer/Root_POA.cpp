@@ -19,6 +19,7 @@
 #include "tao/PortableServer/AdapterActivatorC.h"
 #include "tao/PortableServer/Non_Servant_Upcall.h"
 #include "tao/PortableServer/POAManager.h"
+#include "tao/PortableServer/POAManagerFactory.h"
 #include "tao/PortableServer/ServantManagerC.h"
 #include "tao/PortableServer/poa_macros.h"
 #include "tao/PortableServer/POA_Guard.h"
@@ -30,6 +31,7 @@
 #include "tao/PortableServer/ServantRetentionStrategy.h"
 #include "tao/PortableServer/ImplicitActivationStrategy.h"
 #include "tao/PortableServer/ThreadStrategy.h"
+#include "tao/PortableServer/Acceptor_Filter_Factory.h"
 
 #include "tao/StringSeqC.h"
 #include "tao/PortableInterceptorC.h"
@@ -199,7 +201,7 @@ TAO_Root_POA::set_obj_ref_factory (
 }
 
 TAO_Root_POA::TAO_Root_POA (const TAO_Root_POA::String &name,
-                            TAO_POA_Manager &poa_manager,
+                            PortableServer::POAManager_ptr poa_manager,
                             const TAO_POA_Policy_Set &policies,
                             TAO_Root_POA *parent,
                             ACE_Lock &lock,
@@ -208,7 +210,8 @@ TAO_Root_POA::TAO_Root_POA (const TAO_Root_POA::String &name,
                             TAO_Object_Adapter *object_adapter
                             ACE_ENV_ARG_DECL)
   : name_ (name),
-    poa_manager_ (poa_manager),
+    poa_manager_ (* (dynamic_cast <TAO_POA_Manager*> (poa_manager))),
+    poa_manager_factory_ (* (object_adapter->poa_manager_factory_)),
     tagged_component_ (),
     tagged_component_id_ (),
     profile_id_array_ (0),
@@ -232,6 +235,7 @@ TAO_Root_POA::TAO_Root_POA (const TAO_Root_POA::String &name,
     wait_for_completion_pending_ (0),
     waiting_destruction_ (0),
     servant_deactivation_condition_ (thread_lock),
+    filter_factory_ (0),
     caller_key_to_object_ (0),
     servant_for_key_to_object_ (0)
 {
@@ -311,6 +315,10 @@ TAO_Root_POA::TAO_Root_POA (const TAO_Root_POA::String &name,
 
 TAO_Root_POA::~TAO_Root_POA (void)
 {
+  if (TAO_debug_level > 0)
+    {
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t)~TAO_Root_POA : %s\n", this->the_name ()));
+    }
 }
 
 void
@@ -399,41 +407,53 @@ TAO_Root_POA::create_POA_i (const char *adapter_name,
   // created and associated with the new POA. Otherwise, the specified
   // POAManager object is associated with the new POA. The POAManager
   // object can be obtained using the attribute name the_POAManager.
-  TAO_POA_Manager* tao_poa_manager = 0;
-  PortableServer::POAManager_var safe_poa_manager;
+
+  PortableServer::POAManager_var the_poa_manager;
+
   if (CORBA::is_nil (poa_manager))
     {
-      ACE_NEW_THROW_EX (tao_poa_manager,
-                        TAO_POA_Manager (this->object_adapter ()),
-                        CORBA::NO_MEMORY ());
+      PortableServer::POA_var poa = PortableServer::POA::_duplicate (this);
+      PortableServer::POA_var root_poa;
+
+      // Find the RootPOA by traversing the POA hierarchy until the
+      // RootPOA is reached.  The RootPOA has no parent.
+      while (!CORBA::is_nil (poa.in ()))
+      {
+        root_poa = poa;
+        poa = poa->the_parent (ACE_ENV_SINGLE_ARG_PARAMETER);
+        ACE_CHECK_RETURN (PortableServer::POA::_nil ());
+      }
+
+      // Get the POAManagerFactory instance owned by RootPOA.
+      PortableServer::POAManagerFactory_var tao_poa_manager_factory
+        = root_poa->the_POAManagerFactory ();
+
+      CORBA::PolicyList empty_policies;
+      // The POAManager name will be generated when the POAManager instance
+      // is created.
+      the_poa_manager
+        = tao_poa_manager_factory->create_POAManager (0,
+                                                      empty_policies
+                                                      ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (PortableServer::POA::_nil ());
-      safe_poa_manager = tao_poa_manager;
     }
   else
     {
-      // This is the POAManager that was passed in.  Do not put it in the
-      // safe_poa_manager as we do not want it to be destroyed in case
-      // an exception is thrown during the create_POA_i() method.
-      tao_poa_manager = dynamic_cast<TAO_POA_Manager *> (poa_manager);
+      the_poa_manager = PortableServer::POAManager::_duplicate (poa_manager);
     }
 
   PortableServer::POA_var poa = this->create_POA_i (adapter_name,
-                                                    *tao_poa_manager,
+                                                    the_poa_manager.in (),
                                                     tao_policies
                                                     ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (PortableServer::POA::_nil ());
-
-  // Release the POA_Manager_var since we got here without error.  The
-  // TAO_Regular_POA object takes ownership of the POA_Manager object
-  // (actually it shares the ownership with its peers).
-  (void) safe_poa_manager._retn ();
 
   return poa._retn ();
 }
 
 TAO_Root_POA *
 TAO_Root_POA::new_POA (const String &name,
-                       TAO_POA_Manager &poa_manager,
+                       PortableServer::POAManager_ptr poa_manager,
                        const TAO_POA_Policy_Set &policies,
                        TAO_Root_POA *parent,
                        ACE_Lock &lock,
@@ -462,7 +482,7 @@ TAO_Root_POA::new_POA (const String &name,
 
 PortableServer::POA_ptr
 TAO_Root_POA::create_POA_i (const TAO_Root_POA::String &adapter_name,
-                            TAO_POA_Manager &poa_manager,
+                            PortableServer::POAManager_ptr poa_manager,
                             const TAO_POA_Policy_Set &policies
                             ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
@@ -2252,13 +2272,22 @@ TAO_Root_POA::key_to_stub_i (const TAO::ObjectKey &key,
                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  TAO_Default_Acceptor_Filter filter;
+  if (this->filter_factory_ == 0)
+    this->filter_factory_
+      = ACE_Dynamic_Service<TAO_Acceptor_Filter_Factory>::instance ("TAO_Acceptor_Filter_Factory");
+
+  TAO_Acceptor_Filter* filter =
+    this->filter_factory_->create_object (this->poa_manager_);
+
+  // Give ownership to the auto pointer.
+  auto_ptr<TAO_Acceptor_Filter> new_filter (filter);
+
   TAO_Stub *data =
     this->create_stub_object (
       key,
       type_id,
       client_exposed_policies._retn (),
-      &filter,
+      filter,
       this->orb_core_.lane_resources ().acceptor_registry ()
       ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
@@ -2486,7 +2515,8 @@ TAO_Root_POA::find_servant_priority (
 TAO::ORT_Adapter_Factory *
 TAO_Root_POA::ORT_adapter_factory (void)
 {
-  return ACE_Dynamic_Service<TAO::ORT_Adapter_Factory>::instance (
+  return ACE_Dynamic_Service<TAO::ORT_Adapter_Factory>::instance
+    (orb_core_.configuration (),
            TAO_Root_POA::ort_adapter_factory_name ());
 }
 
@@ -2532,8 +2562,8 @@ TAO_Root_POA::ORT_adapter_i (void)
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Cannot initialize the "
-                           "object_reference_template_adapter");
+                           "(%P|%t) Cannot initialize the "
+                           "object_reference_template_adapter\n");
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
@@ -2862,12 +2892,13 @@ TAO_Root_POA::the_POAManager (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   return PortableServer::POAManager::_duplicate (&this->poa_manager_);
 }
 
-PortableInterceptor::AdapterManagerId
-TAO_Root_POA::get_manager_id (ACE_ENV_SINGLE_ARG_DECL)
+PortableServer::POAManagerFactory_ptr
+TAO_Root_POA::the_POAManagerFactory (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return this->poa_manager_.get_manager_id (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return PortableServer::POAManagerFactory::_duplicate (&this->poa_manager_factory_);
 }
+
 
 CORBA::ORB_ptr
 TAO_Root_POA::_get_orb (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)

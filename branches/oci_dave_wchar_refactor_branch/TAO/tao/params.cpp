@@ -14,7 +14,6 @@ ACE_RCSID (tao,
            params,
            "$Id$")
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_ORB_Parameters::TAO_ORB_Parameters (void)
@@ -25,6 +24,7 @@ TAO_ORB_Parameters::TAO_ORB_Parameters (void)
   , sock_sndbuf_size_ (ACE_DEFAULT_MAX_SOCKET_BUFSIZ)
   , nodelay_ (1)
   , sock_keepalive_ (0)
+  , sock_dontroute_ (0)
   , cdr_memcpy_tradeoff_ (ACE_DEFAULT_CDR_MEMCPY_TRADEOFF)
   , max_message_size_ (0) // Disable outgoing GIOP fragments by default
   , use_lite_protocol_ (0)
@@ -37,6 +37,8 @@ TAO_ORB_Parameters::TAO_ORB_Parameters (void)
   , scope_policy_ (THR_SCOPE_PROCESS)
   , single_read_optimization_ (1)
   , shared_profile_ (0)
+  , use_parallel_connects_ (false)
+  , parallel_connect_delay_ (0)
   , pref_network_ ()
   , disable_rt_collocation_resolver_ (false)
   , enforce_preferred_interfaces_ (false)

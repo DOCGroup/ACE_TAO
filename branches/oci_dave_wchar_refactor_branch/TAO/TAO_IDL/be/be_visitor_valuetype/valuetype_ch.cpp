@@ -204,6 +204,9 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
       << "virtual const char* "
       << "_tao_obv_repository_id (void) const;"
       << be_nl << be_nl
+      << "virtual void "
+      << "_tao_obv_truncatable_repo_ids (Repository_Id_List &) const;"
+      << be_nl << be_nl
       << "static const char* "
       << "_tao_obv_static_repository_id (void);" << be_nl << be_nl;
 
@@ -274,6 +277,8 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
           << "_tao_marshal_v (TAO_OutputCDR &) const;" << be_nl;
       *os << "virtual ::CORBA::Boolean "
           << "_tao_unmarshal_v (TAO_InputCDR &);" << be_nl;
+      *os << "virtual ::CORBA::Boolean "
+          << "_tao_match_formal_type (ptrdiff_t ) const;" << be_nl;
     }
 
   // Private member:
@@ -304,7 +309,9 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
       *os << "::CORBA::Boolean "
           << "_tao_marshal_state (TAO_OutputCDR &) const;" << be_nl
           << "::CORBA::Boolean "
-          << "_tao_unmarshal_state (TAO_InputCDR &);"
+          << "_tao_unmarshal_state (TAO_InputCDR &);" << be_nl
+          << "virtual void "
+          << "truncation_hook (void);"
           << be_uidt_nl << be_nl;
       *os << "private:" << be_idt_nl;
 
@@ -320,21 +327,21 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
             {
               *os << "virtual ::CORBA::Boolean" << be_nl
                   << "_tao_marshal__" << node->flat_name ()
-                  << " (TAO_OutputCDR &) const;"
+                  << " (TAO_OutputCDR &, TAO_ChunkInfo &) const;"
                   << be_nl << be_nl;
               *os << "virtual ::CORBA::Boolean" << be_nl
                   << "_tao_unmarshal__" << node->flat_name ()
-                  << " (TAO_InputCDR &);";
+                  << " (TAO_InputCDR &, TAO_ChunkInfo &);";
             }
           else
             {
               *os << "virtual ::CORBA::Boolean" << be_nl
                   << "_tao_marshal__" << node->flat_name ()
-                  << " (TAO_OutputCDR &) const = 0;"
+                  << " (TAO_OutputCDR &, TAO_ChunkInfo &) const = 0;"
                   << be_nl << be_nl;
               *os << "virtual ::CORBA::Boolean" << be_nl
                   << "_tao_unmarshal__" << node->flat_name ()
-                  << " (TAO_InputCDR &) = 0;";
+                  << " (TAO_InputCDR &, TAO_ChunkInfo &) = 0;";
             }
         }
     }
@@ -534,4 +541,3 @@ be_visitor_valuetype_ch::gen_supported_ops (be_interface *,
 
   return 0;
 }
-

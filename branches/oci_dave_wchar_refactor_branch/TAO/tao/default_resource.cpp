@@ -62,11 +62,14 @@ TAO_Default_Resource_Factory::TAO_Default_Resource_Factory (void)
   , wchar_codeset_descriptor_ (0)
   , resource_usage_strategy_ (TAO_Resource_Factory::TAO_EAGER)
   , drop_replies_ (true)
+  , principal_(0)
 {
 #if TAO_USE_LAZY_RESOURCE_USAGE_STRATEGY == 1
   this->resource_usage_strategy_ =
     TAO_Resource_Factory::TAO_LAZY;
 #endif /*TAO_USE_LAZY_RESOURCE_USAGE_STRATEGY*/
+
+
 }
 
 TAO_Default_Resource_Factory::~TAO_Default_Resource_Factory (void)
@@ -90,6 +93,8 @@ TAO_Default_Resource_Factory::~TAO_Default_Resource_Factory (void)
 
   delete codeset_manager_;
   codeset_manager_ = 0;
+
+  delete principal_;
 }
 
 int
@@ -102,7 +107,8 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
   // are useless
   if (this->factory_disabled_) {
     ACE_DEBUG ((LM_WARNING,
-                ACE_TEXT ("TAO (%P|%t) Warning: Resource_Factory options ignored\n")
+                ACE_TEXT ("TAO (%P|%t) Warning: Resource_Factory options ")
+                ACE_TEXT ("ignored\n")
                 ACE_TEXT ("Default Resource Factory is disabled\n")));
     return 0;
   }
@@ -171,7 +177,8 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
                             -1);
             if (pset->insert (item) == -1)
               ACE_ERROR ((LM_ERROR,
-                          ACE_TEXT ("(%P|%t) Unable to add protocol factories for %s: %m\n"),
+                          ACE_TEXT ("(%P|%t) Unable to add protocol factories ")
+                          ACE_TEXT ("for %s: %m\n"),
                           argv[curarg]));
           }
       }
@@ -239,7 +246,8 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
         // note is being written during 1.2.3 timeframe.
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("(%P|%t) This option would be deprecated \n")
-                    ACE_TEXT ("(%P|%t) Please use -ORBConnectionPurgingStrategy instead \n")));
+                    ACE_TEXT ("(%P|%t) Please use -ORBConnectionPurgingStrategy ")
+                    ACE_TEXT ("instead \n")));
 
         if (curarg < argc)
           {
@@ -1184,6 +1192,9 @@ TAO_Default_Resource_Factory::codeset_manager(void)
                                        ""));
       factory =
         ACE_Dynamic_Service<TAO_Codeset_Manager_Factory_Base>::instance ("TAO_Codeset");
+
+      principal_ = new ACE_Dynamic_Service_Dependency (ACE_TEXT ("TAO_Codeset"));
+
 #endif
     }
   if (factory == 0)

@@ -43,7 +43,7 @@ namespace CIAO
         }
 
       public:
-        static void sub_comp_inst_descr (const SubcomponentInstantiationDescription &desc,
+        static void handle_sub_comp_inst_descr (const SubcomponentInstantiationDescription &desc,
                                          ::Deployment::SubcomponentInstantiationDescription &toconfig);
 
         static SubcomponentInstantiationDescription
@@ -61,7 +61,7 @@ namespace CIAO
       typedef Sequence_Handler < SubcomponentInstantiationDescription,
                                  ::Deployment::SubcomponentInstantiationDescriptions,
                                  ::Deployment::SubcomponentInstantiationDescription,
-                                 SID_Handler::sub_comp_inst_descr > SID_Functor;
+	SID_Handler::handle_sub_comp_inst_descr > SID_Functor;
 
     }
   }
