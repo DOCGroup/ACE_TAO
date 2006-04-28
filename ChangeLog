@@ -1,3 +1,10 @@
+Fri Apr 28 20:13:41 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * include/makeinclude/platform_sunos5_g++.GNU:
+        * include/makeinclude/platform_sunos5_sunc++.GNU:
+          Solaris 9 puts sendfile() is a separate library, so LIBS needs
+          -lsendfile on Solaris 9.
+
 Fri Apr 28 18:03:11 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * ace/ACE.cpp:
