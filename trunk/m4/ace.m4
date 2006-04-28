@@ -883,7 +883,7 @@ dnl    fi
  AC_ARG_ENABLE([uses-wchar],
                AS_HELP_STRING([--enable-uses-wchar],
                             [enable use of wide characters [[no]]]),
-               [case "${withval}" in
+               [case "${enableval}" in
                  yes)
                   AC_DEFINE([ACE_USES_WCHAR])
                   ace_user_enable_wide_char=yes
