@@ -55,6 +55,9 @@ $PerlACE::Process::WAIT_DELAY_FACTOR = $ENV{"ACE_RUNTEST_DELAY"};
 if ($OSNAME eq "MSWin32") {
 	require PerlACE::Process_Win32;
 }
+elsif ($OSNAME eq "VMS") {
+        require PerlACE::Process_VMS;
+}
 else {
 	require PerlACE::Process_Unix;
 }
