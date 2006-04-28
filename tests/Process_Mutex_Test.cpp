@@ -173,11 +173,19 @@ run_main (int argc, ACE_TCHAR *argv[])
            i++)
         {
           // Spawn the child process.
-          int result = children[i].spawn (options);
-          ACE_ASSERT (result != -1);
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("Parent spawned child process with pid = %d.\n"),
-                      children[i].getpid ()));
+          if (children[i].spawn (options) == -1)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("spawn of client %d failed\n"),
+                                 i),
+                                 -1);
+            }
+          else
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("Parent spawned child process with pid = %d.\n"),
+                          children[i].getpid ()));
+            }
 
           // Give the newly spawned child process a chance to start...
           // David Levine thinks this sleep() is required because
