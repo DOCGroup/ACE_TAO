@@ -1,3 +1,9 @@
+Fri Apr 28 15:48:25 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/Service_Config.cpp (open_i): ACE_DEFAULT_SVC_CONF shouldn't
+          be enclosed in ACE_LIB_TEXT since it's defined in terms of
+          ACE_LIB_TEXT already.
+
 Fri Apr 28 15:49:21 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ace/Makefile.am:
