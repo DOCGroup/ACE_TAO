@@ -1,3 +1,9 @@
+Fri Apr 28 14:54:04 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-macros.h: HP aC++ needs to see the statement in
+          ACE_NOTREACHED up to the version 6 series (Integrity). Also see
+          Tue Apr 11 13:12:36 UTC 2006  Simon McQueen  <sm@prismtech.com>
+
 Fri Apr 28 14:31:48 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * ace/Service_Gestalt.h: Removed extraneous ';' from
