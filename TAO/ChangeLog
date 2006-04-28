@@ -1,3 +1,26 @@
+Fri Apr 28 22:04:50 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tests/ORB_Local_Config/Bug_1459/Bug_1459.mpc:
+        * tests/ORB_Local_Config/Bug_1459/README:
+        * tests/ORB_Local_Config/Bug_1459/Test.cpp:
+        * tests/ORB_Local_Config/Bug_1459/a.conf:
+        * tests/ORB_Local_Config/Bug_1459/b.conf:
+        * tests/ORB_Local_Config/Bug_1459/m.conf:
+        * tests/ORB_Local_Config/Bug_1459/m1.conf:
+        * tests/ORB_Local_Config/Bug_1459/run_test.pl:
+        * tests/ORB_Local_Config/Bug_1459/server_cert.pem:
+        * tests/ORB_Local_Config/Bug_1459/server_key.pem:
+
+          Added a test I borrowed from bugzilla 1459. It tests the ability
+          to have two differently configured ORBs in the same process.
+
+        * examples/Simple/time-date/Time_Date.cpp:
+
+          Provided an ID for the ORB, initialized in a code that was
+          loaded from the DLL. The ORB-specific Service Repo changes
+          eliminated the need to make TAO_Singleton_Manager not register
+          with the Object Manager, when initialized from a DLL.
+
 Fri Apr 28 15:14:04 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tests/ORB_Local_Config/Bunch/Service_Config_Test.UTF-16.conf:
