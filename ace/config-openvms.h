@@ -19,6 +19,9 @@
 //#pragma message disable LONGEXTERN
 #pragma message disable UNSCOMZER
 
+// Use a signed int to match POSIX
+#define __SIGNED_INT_TIME_T
+
 #define ACE_OPENVMS 0x0821
 
 #define ACE_DLL_SUFFIX ACE_LIB_TEXT("")
