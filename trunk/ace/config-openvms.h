@@ -142,6 +142,7 @@
 #define ACE_HAS_SIG_C_FUNC 1
                                         /*Compiler requires extern "C"
                                         functions for signals.*/
+#define ACE_HAS_SIGISMEMBER_BUG
 #define ACE_HAS_STRNLEN 1
                                         /*Platform supports strnlen(3).*/
 #define ACE_HAS_STREAMS 1

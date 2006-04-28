@@ -9,10 +9,13 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 if (defined $ENV{ACE_ROOT}) {
   use lib "$ENV{ACE_ROOT}/bin";
+} else {
+  use lib '../bin';
 }
 if (defined $ENV{top_srcdir}) {
   use lib "$ENV{top_srcdir}/bin";
 }
+
 use PerlACE::Run_Test;
 
 use Cwd;
