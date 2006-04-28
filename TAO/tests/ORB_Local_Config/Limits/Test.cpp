@@ -1,5 +1,10 @@
 // $Id$
 
+/// It's a test - we need ACE_ASSERT
+#ifdef ACE_NDEBUG
+#  undef ACE_NDEBUG
+#endif
+
 #include "tao/CORBANAME_Parser.h"
 #include "tao/CORBALOC_Parser.h"
 
