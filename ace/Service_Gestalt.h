@@ -412,11 +412,8 @@ private:
   /**
    * Not implemented to enforce no copying
    */
-  ACE_UNIMPLEMENTED_FUNC
-    (ACE_Service_Type_Factory(const ACE_Service_Type_Factory&));
-
-  ACE_UNIMPLEMENTED_FUNC
-    (ACE_Service_Type_Factory& operator=(const ACE_Service_Type_Factory&));
+  ACE_UNIMPLEMENTED_FUNC (ACE_Service_Type_Factory(const ACE_Service_Type_Factory&))
+  ACE_UNIMPLEMENTED_FUNC (ACE_Service_Type_Factory& operator=(const ACE_Service_Type_Factory&))
 
 private:
   ACE_TString name_;
