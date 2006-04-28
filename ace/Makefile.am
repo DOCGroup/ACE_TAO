@@ -270,6 +270,7 @@ libACE_la_SOURCES = \
   Select_Reactor_Base.cpp \
   Semaphore.cpp \
   Service_Config.cpp \
+  Service_Gestalt.cpp \
   Service_Manager.cpp \
   Service_Object.cpp \
   Service_Repository.cpp \
@@ -908,6 +909,8 @@ nobase_include_HEADERS += \
   Semaphore.inl \
   Service_Config.h \
   Service_Config.inl \
+  Service_Gestalt.h \
+  Service_Gestalt.inl \
   Service_Manager.h \
   Service_Object.h \
   Service_Object.inl \
