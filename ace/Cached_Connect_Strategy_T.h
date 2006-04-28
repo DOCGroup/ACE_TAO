@@ -40,7 +40,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * subsequent re-use of unused, but available, connections.
  *
  * <Cached_Connect_Strategy> is intended to be used as a
- * plug-in connection strategy for <ACE_Strategy_Connector>.
+ * plug-in connection strategy for ACE_Strategy_Connector.
  * It's added value is re-use of established connections and
  * tweaking the role of the cache as per the caching strategy.
  */
@@ -191,7 +191,7 @@ protected:
  *     maximum size.
  *
  *       <Bounded_Cached_Connect_Strategy> is intended to be used as a
- *     plug-in connection strategy for <ACE_Strategy_Connector>.
+ *     plug-in connection strategy for ACE_Strategy_Connector.
  *     It's added value is re-use of established connections and
  *     tweaking the role of the cache as per the caching strategy.
  *     Thanks to Edan Ayal  <edana@bandwiz.com> for contributing this

@@ -130,6 +130,7 @@ libTAO_la_SOURCES = \
   LF_Follower_Auto_Adder.cpp \
   LF_Follower_Auto_Ptr.cpp \
   LF_Invocation_Event.cpp \
+  LF_Multi_Event.cpp \
   LF_Strategy.cpp \
   LF_Strategy_Complete.cpp \
   LRU_Connection_Purging_Strategy.cpp \
@@ -276,6 +277,7 @@ nobase_include_HEADERS = \
   Any_Insert_Policy_T.h \
   Arg_Traits_T.h \
   Argument.h \
+  Array_Traits_T.h \
   Array_VarOut_T.cpp \
   Array_VarOut_T.h \
   Array_VarOut_T.inl \
@@ -301,6 +303,16 @@ nobase_include_HEADERS = \
   BooleanSeq.pidl \
   BooleanSeqC.h \
   BooleanSeqS.h \
+  Bounded_Array_Allocation_Traits.h \
+  Bounded_Array_Sequence_T.h \
+  Bounded_Basic_String_Sequence_T.h \
+  Bounded_Object_Reference_Sequence_T.h \
+  Bounded_Reference_Allocation_Traits.h \
+  Bounded_Sequence_CDR_T.h \
+  Bounded_String_Sequence_T.h \
+  Bounded_Value_Allocation_Traits_T.h \
+  Bounded_Value_Sequence_T.h \
+  Bounded_Wstring_Sequence_T.h \
   Buffer_Allocator_T.cpp \
   Buffer_Allocator_T.h \
   Buffering_Constraint_Policy.h \
@@ -405,6 +417,7 @@ nobase_include_HEADERS = \
   GIOP_Message_Version.inl \
   GIOP_Utils.h \
   GUIResource_Factory.h \
+  Generic_Sequence_T.h \
   IFR_Client_Adapter.h \
   IIOP.pidl \
   IIOPC.h \
@@ -461,6 +474,7 @@ nobase_include_HEADERS = \
   LF_Follower_Auto_Ptr.h \
   LF_Follower_Auto_Ptr.inl \
   LF_Invocation_Event.h \
+  LF_Multi_Event.h \
   LF_Strategy.h \
   LF_Strategy_Complete.h \
   LRU_Connection_Purging_Strategy.h \
@@ -518,6 +532,9 @@ nobase_include_HEADERS = \
   Object_Proxy_Broker.h \
   Object_Ref_Table.h \
   Object_Ref_Table.inl \
+  Object_Reference_Sequence_Element_T.h \
+  Object_Reference_Traits_Base_T.h \
+  Object_Reference_Traits_T.h \
   Object_T.cpp \
   Object_T.h \
   Objref_VarOut_T.cpp \
@@ -570,6 +587,7 @@ nobase_include_HEADERS = \
   Pseudo_VarOut_T.h \
   Pseudo_VarOut_T.inl \
   Queued_Message.h \
+  Range_Checking_T.h \
   Reactive_Connect_Strategy.h \
   Reactive_Flushing_Strategy.h \
   Refcounted_ObjectKey.h \
@@ -588,6 +606,7 @@ nobase_include_HEADERS = \
   Seq_Var_T.cpp \
   Seq_Var_T.h \
   Seq_Var_T.inl \
+  Sequence_T.h \
   ServerRequestInterceptor_Adapter.h \
   ServerRequestInterceptor_Adapter_Factory.h \
   Server_Strategy_Factory.h \
@@ -609,6 +628,10 @@ nobase_include_HEADERS = \
   StringSeqC.h \
   StringSeqS.h \
   String_Alloc.h \
+  String_Manager_T.h \
+  String_Sequence_Element_T.h \
+  String_Traits_Base_T.h \
+  String_Traits_T.h \
   Stub.h \
   Stub.i \
   Stub_Factory.h \
@@ -672,8 +695,20 @@ nobase_include_HEADERS = \
   UShortSeq.pidl \
   UShortSeqC.h \
   UShortSeqS.h \
+  Unbounded_Array_Allocation_Traits_T.h \
+  Unbounded_Array_Sequence_T.h \
+  Unbounded_Basic_String_Sequence_T.h \
+  Unbounded_Object_Reference_Sequence_T.h \
+  Unbounded_Octet_Sequence_T.h \
+  Unbounded_Reference_Allocation_Traits_T.h \
+  Unbounded_Sequence_CDR_T.h \
+  Unbounded_String_Sequence_T.h \
+  Unbounded_Value_Allocation_Traits_T.h \
+  Unbounded_Value_Sequence_T.h \
+  Unbounded_Wstring_Sequence_T.h \
   UserException.h \
   UserException.inl \
+  Value_Traits_T.h \
   Valuetype_Adapter.h \
   Valuetype_Adapter_Factory.h \
   VarOut_T.cpp \
@@ -1302,6 +1337,7 @@ libTAO_PortableServer_la_CPPFLAGS = \
   -DTAO_PORTABLESERVER_BUILD_DLL
 
 libTAO_PortableServer_la_SOURCES = \
+  PortableServer/Acceptor_Filter_Factory.cpp \
   PortableServer/Active_Object_Map.cpp \
   PortableServer/Active_Object_Map_Entry.cpp \
   PortableServer/Active_Policy_Strategies.cpp \
@@ -1360,6 +1396,8 @@ libTAO_PortableServer_la_SOURCES = \
   PortableServer/Operation_Table_Perfect_Hash.cpp \
   PortableServer/POAManager.cpp \
   PortableServer/POAManagerC.cpp \
+  PortableServer/POAManagerFactory.cpp \
+  PortableServer/POAManagerFactoryC.cpp \
   PortableServer/POA_Cached_Policies.cpp \
   PortableServer/POA_Current.cpp \
   PortableServer/POA_Current_Factory.cpp \
@@ -1429,6 +1467,7 @@ libTAO_PortableServer_la_LIBADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 nobase_include_HEADERS += \
+  PortableServer/Acceptor_Filter_Factory.h \
   PortableServer/Active_Object_Map.h \
   PortableServer/Active_Object_Map.i \
   PortableServer/Active_Object_Map_Entry.h \
@@ -1525,6 +1564,9 @@ nobase_include_HEADERS += \
   PortableServer/POAManager.i \
   PortableServer/POAManager.pidl \
   PortableServer/POAManagerC.h \
+  PortableServer/POAManagerFactory.h \
+  PortableServer/POAManagerFactory.pidl \
+  PortableServer/POAManagerFactoryC.h \
   PortableServer/POA_Cached_Policies.h \
   PortableServer/POA_Cached_Policies.i \
   PortableServer/POA_Current.h \
@@ -2240,6 +2282,74 @@ endif BUILD_CORBA_MESSAGING
 EXTRA_DIST += \
   DynamicInterface/TAO_DynamicInterface.pc.in \
   DynamicInterface/TAO_DynamicInterface.rc
+
+
+## Makefile.EndpointPolicy.am
+
+lib_LTLIBRARIES += libTAO_EndpointPolicy.la
+
+libTAO_EndpointPolicy_la_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR) \
+  -DTAO_ENDPOINTPOLICY_BUILD_DLL
+
+libTAO_EndpointPolicy_la_SOURCES = \
+  EndpointPolicy/EndpointPolicy.cpp \
+  EndpointPolicy/EndpointPolicyA.cpp \
+  EndpointPolicy/EndpointPolicyC.cpp \
+  EndpointPolicy/EndpointPolicyTypeA.cpp \
+  EndpointPolicy/EndpointPolicyTypeC.cpp \
+  EndpointPolicy/EndpointPolicy_Factory.cpp \
+  EndpointPolicy/EndpointPolicy_ORBInitializer.cpp \
+  EndpointPolicy/EndpointPolicy_i.cpp \
+  EndpointPolicy/Endpoint_Acceptor_Filter.cpp \
+  EndpointPolicy/Endpoint_Acceptor_Filter_Factory.cpp \
+  EndpointPolicy/IIOPEndpointValueA.cpp \
+  EndpointPolicy/IIOPEndpointValueC.cpp \
+  EndpointPolicy/IIOPEndpointValue_i.cpp
+
+libTAO_EndpointPolicy_la_LDFLAGS = \
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+
+libTAO_EndpointPolicy_la_LIBADD = \
+  libTAO_PI.la \
+  libTAO_CodecFactory.la \
+  libTAO_PortableServer.la \
+  libTAO_AnyTypeCode.la \
+  libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+nobase_include_HEADERS += \
+  EndpointPolicy/EndpointPolicy.h \
+  EndpointPolicy/EndpointPolicyA.h \
+  EndpointPolicy/EndpointPolicyC.h \
+  EndpointPolicy/EndpointPolicyC.inl \
+  EndpointPolicy/EndpointPolicyTypeA.h \
+  EndpointPolicy/EndpointPolicyTypeC.h \
+  EndpointPolicy/EndpointPolicy_Export.h \
+  EndpointPolicy/EndpointPolicy_Factory.h \
+  EndpointPolicy/EndpointPolicy_ORBInitializer.h \
+  EndpointPolicy/EndpointPolicy_i.h \
+  EndpointPolicy/Endpoint_Acceptor_Filter.h \
+  EndpointPolicy/Endpoint_Acceptor_Filter_Factory.h \
+  EndpointPolicy/Endpoint_Value_Impl.h \
+  EndpointPolicy/IIOPEndpointValueA.h \
+  EndpointPolicy/IIOPEndpointValueC.h \
+  EndpointPolicy/IIOPEndpointValue_i.h
+
+pkgconfig_DATA += \
+  TAO_EndpointPolicy.pc
+
+CLEANFILES += \
+  TAO_EndpointPolicy.pc
+
+TAO_EndpointPolicy.pc: ${top_builddir}/config.status ${srcdir}/EndpointPolicy/TAO_EndpointPolicy.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/EndpointPolicy/TAO_EndpointPolicy.pc.in
+
+EXTRA_DIST += \
+  EndpointPolicy/TAO_EndpointPolicy.pc.in
 
 
 ## Makefile.ObjRefTemplate.am

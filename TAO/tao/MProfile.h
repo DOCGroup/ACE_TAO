@@ -140,7 +140,7 @@ public:
 
   /// Return the index of this entry or -1 if it can not be added.
   /// this object assumes ownership of this profile!!
-  int give_profile (TAO_Profile *pfile);
+  int give_profile (TAO_Profile *pfile, int share = 0);
 
   /// append the profiles in pfiles to this object.  The count
   /// will be incremented on the individual profile objects.
@@ -216,6 +216,12 @@ protected:
 private:
   /// Helper method to implement the destructor
   void cleanup (void);
+
+  /// A helper to give_profile to be used when share is true. This
+  /// method is used primarily to help the corbaloc parser create a
+  /// single profile with multiple endpoints rather than constructing
+  /// multiple profiles with 1 endpoint per.
+  int give_shared_profile (TAO_Profile *pfile);
 
 private:
 

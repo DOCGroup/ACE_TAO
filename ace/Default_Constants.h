@@ -457,7 +457,7 @@
 #endif /* ACE_MAX_DEFAULT_PORT */
 
 // Default number of ACE_Event_Handlers supported by
-// <ACE_Timer_Heap>.
+// ACE_Timer_Heap.
 # if !defined (ACE_DEFAULT_TIMERS)
 #   define ACE_DEFAULT_TIMERS _POSIX_TIMER_MAX
 # endif /* ACE_DEFAULT_TIMERS */

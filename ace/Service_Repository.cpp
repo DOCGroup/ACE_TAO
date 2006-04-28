@@ -10,6 +10,7 @@
 #include "ace/Object_Manager.h"
 #include "ace/Log_Msg.h"
 #include "ace/ACE.h"
+#include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_string.h"
 
@@ -67,6 +68,7 @@ ACE_Service_Repository::instance (int size /* = ACE_Service_Repository::DEFAULT_
         }
     }
 
+  //  ACE_ASSERT (ACE_Service_Repository::svc_rep_ != 0);
   return ACE_Service_Repository::svc_rep_;
 }
 
@@ -149,16 +151,28 @@ ACE_Service_Repository::fini (void)
       // order.
 
       for (int i = this->current_size_ - 1; i >= 0; i--)
+      {
+        ACE_Service_Type *s =
+          const_cast<ACE_Service_Type *> (this->service_vector_[i]);
+
+        if (ACE::debug ())
         {
-          if (ACE::debug ())
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_LIB_TEXT ("finalizing %s\n"),
-                        this->service_vector_[i]->name ()));
-          ACE_Service_Type *s =
-            const_cast<ACE_Service_Type *> (this->service_vector_[i]);
-          // Collect errors.
-          retval += s->fini ();
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_LIB_TEXT ("(%P|%t) SR::fini, %@ [%d] (%d): "),
+                      this, i, this->total_size_));
+          s->dump();
         }
+
+        // Collect any errors.
+        int ret = s->fini ();
+        if (ACE::debug ()>1)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_LIB_TEXT ("(%P|%t) SR::fini, returned %d\n"),
+                      ret));
+        }
+        retval += ret;
+      }
     }
 
   return (retval == 0) ? 0 : -1;
@@ -180,8 +194,22 @@ ACE_Service_Repository::close (void)
       // compaction.  However, the common case is not to remove
       // services, so typically they are deleted in reverse order.
 
+      if(ACE::debug ())
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_LIB_TEXT ("(%P|%t) SR::close, this=%@, size=%d\n"),
+                    this,
+                    this->current_size_));
+
       for (int i = this->current_size_ - 1; i >= 0; i--)
         {
+          if(ACE::debug ())
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_LIB_TEXT ("(%P|%t) SR::close, this=%@, delete so[%d]=%@ (%s)\n"),
+                        this,
+                        i,
+                        this->service_vector_[i],
+                        this->service_vector_[i]->name ()));
+
           ACE_Service_Type *s = const_cast<ACE_Service_Type *> (this->service_vector_[i]);
           --this->current_size_;
           delete s;
@@ -198,6 +226,8 @@ ACE_Service_Repository::close (void)
 ACE_Service_Repository::~ACE_Service_Repository (void)
 {
   ACE_TRACE ("ACE_Service_Repository::~ACE_Service_Repository");
+  if(ACE::debug ())
+    ACE_DEBUG ((LM_DEBUG, "(%P|%t) SR::<dtor>, this=%@\n", this));
   this->close ();
 }
 
@@ -211,7 +241,7 @@ ACE_Service_Repository::~ACE_Service_Repository (void)
 int
 ACE_Service_Repository::find_i (const ACE_TCHAR name[],
                                 const ACE_Service_Type **srp,
-                                int ignore_suspended)
+                                int ignore_suspended) const
 {
   ACE_TRACE ("ACE_Service_Repository::find_i");
   int i;
@@ -244,7 +274,7 @@ ACE_Service_Repository::find_i (const ACE_TCHAR name[],
 int
 ACE_Service_Repository::find (const ACE_TCHAR name[],
                               const ACE_Service_Type **srp,
-                              int ignore_suspended)
+                              int ignore_suspended) const
 {
   ACE_TRACE ("ACE_Service_Repository::find");
   ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, this->lock_, -1));
@@ -254,16 +284,20 @@ ACE_Service_Repository::find (const ACE_TCHAR name[],
 
 
 // Insert the ACE_Service_Type SR into the repository.  Note that
-// services may be inserted either resumed or suspended.
+// services may be inserted either resumed or suspended. Using same name
+// as in an existing service causes the delete () to be called for the old one,
+// i.e. make sure @code sr is allocated on the heap!
 
 int
 ACE_Service_Repository::insert (const ACE_Service_Type *sr)
 {
   ACE_TRACE ("ACE_Service_Repository::insert");
+
   int return_value = -1;
   ACE_Service_Type *s = 0;
 
   {
+    // @TODO: Do we need a recursive mutex here?
     ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, this->lock_, -1));
     int i;
 
@@ -275,38 +309,49 @@ ACE_Service_Repository::insert (const ACE_Service_Type *sr)
 
     // Replacing an existing entry
     if (i < this->current_size_)
+    {
+      return_value = 0;
+      // Check for self-assignment...
+      if (sr != this->service_vector_[i])
       {
-        // Check for self-assignment...
-        if (sr == this->service_vector_[i])
-          {
-            return_value = 0;
-          }
-        else
-          {
-            s = const_cast<ACE_Service_Type *> (this->service_vector_[i]);
-            this->service_vector_[i] = sr;
-            return_value = 0;
-          }
+        s = const_cast<ACE_Service_Type *> (this->service_vector_[i]);
+        this->service_vector_[i] = sr;
       }
+    }
     // Adding a new entry.
     else if (i < this->total_size_)
-      {
-        this->service_vector_[i] = sr;
-        this->current_size_++;
-        return_value = 0;
-      }
+    {
+      this->service_vector_[i] = sr;
+      this->current_size_++;
+      return_value = 0;
+    }
+
+    if (ACE::debug ())
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%P|%t) SR::insert, repo=%@ [%d] (size=%d): ",
+                  this,
+                  i,
+                  this->total_size_));
+      sr->dump();
+    }
   }
 
-  // delete outside the lock
+  // Delete outside the lock
   if (s != 0)
+  {
+    if (ACE::debug () > 1)
     {
-      delete s;
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%P|%t) SR::insert, repo=%@ - destroying : ",
+                  this));
+      s->dump();
     }
+    delete s;
+  }
 
   if (return_value == -1)
-    {
-      ACE_OS::last_error (ENOSPC);
-    }
+    ACE_OS::last_error (ENOSPC);
 
   return return_value;
 }
@@ -345,11 +390,21 @@ ACE_Service_Repository::suspend (const ACE_TCHAR name[],
   return this->service_vector_[i]->suspend ();
 }
 
-// Completely remove a <name> entry from the Repository and
-// dynamically unlink it if it was originally dynamically linked.
-// Since the order of services in the Respository does not matter, we
-// simply overwrite the entry being deleted with the final entry in
-// the array and decrement the <current_size> by 1.
+
+/**
+ * @brief Completely remove a <name> entry from the Repository and
+ * dynamically unlink it if it was originally dynamically linked.
+ *
+ * Since the order of services in the Respository matters, we can't
+ * simply overwrite the entry being deleted with the last and
+ * decrement the <current_size> by 1 - we must "pack" the array.  A
+ * good example of why the order matters is a dynamic service, in
+ * whose DLL there is at least one static service. In order to prevent
+ * SEGV during finalization, those static services must be finalized
+ * _before_the dynamic service that owns them. Otherwice the TEXT
+ * segment, containing the code for the static service's desructor may
+ * be unloaded with the DLL.
+ */
 
 int
 ACE_Service_Repository::remove (const ACE_TCHAR name[], ACE_Service_Type **ps)
@@ -360,16 +415,19 @@ ACE_Service_Repository::remove (const ACE_TCHAR name[], ACE_Service_Type **ps)
     ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, this->lock_, -1));
     int i = this->find_i (name, 0, 0);
 
+    // Not found
     if (i == -1)
       return -1;
 
+    // We need the old ptr to be delete outside the lock
     s = const_cast<ACE_Service_Type *> (this->service_vector_[i]);
-    --this->current_size_;
 
-    if (this->current_size_ >= 1)
-      this->service_vector_[i]
-        = this->service_vector_[this->current_size_];
+    // Pack the array
+    --this->current_size_;
+    for (int j = i; j < this->current_size_; j++)
+      this->service_vector_[j] = this->service_vector_[j+1];
   }
+
   if (ps != 0)
     *ps = s;
   else

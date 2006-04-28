@@ -19,7 +19,7 @@ namespace CIAO
     }
 
     void
-    Property_Handler::get_property (
+    Property_Handler::handle_property (
                                     const Property& desc,
                                     Deployment::Property& toconfig)
     {

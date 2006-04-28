@@ -24,13 +24,13 @@ namespace CIAO
            erep_b != erep_e;
            ++erep_b)
         {
-          ERE_Handler::external_ref_endpoint ((*erep_b),
+          ERE_Handler::handle_external_ref_endpoint ((*erep_b),
                                               dest[pos++]);
         }
     }
 
     void
-    ERE_Handler::external_ref_endpoint (
+    ERE_Handler::handle_external_ref_endpoint (
                                         const ExternalReferenceEndpoint &src,
                                         Deployment::ExternalReferenceEndpoint &dest)
     {

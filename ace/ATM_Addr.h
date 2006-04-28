@@ -74,7 +74,7 @@ public:
                 u_char selector = DEFAULT_SELECTOR);
 
   /**
-   * Creates an <ACE_ATM_Addr> from an ATMSAPAddress structure. This
+   * Creates an ACE_ATM_Addr from an ATMSAPAddress structure. This
    * is vendor specific (FORE systems). May need to change when other
    * vendors are supported.
    */
@@ -82,7 +82,7 @@ public:
                 u_char selector = DEFAULT_SELECTOR);
 
   /**
-   * Initializes an <ACE_ATM_Addr> from the <sap> which can be
+   * Initializes an ACE_ATM_Addr from the <sap> which can be
    * "atm-address" (e.g.,
    * "47.0005.80.ffe100.0000.f20f.2200.0020480694f9.00") or "hostname"
    * (e.g., "frisbee.cs.wustl.edu").
@@ -98,12 +98,12 @@ public:
   /// t_atm_sap_addr.SVE_tag_addr, t_atm_sap_addr.SVE_tag_selector)
   void init (u_char selector = DEFAULT_SELECTOR);
 
-  /// Initializes from another <ACE_ATM_Addr>.
+  /// Initializes from another ACE_ATM_Addr.
   int set (const ACE_ATM_Addr &,
            u_char selector = DEFAULT_SELECTOR);
 
   /**
-   * Initializes an <ACE_ATM_Addr> from an ATMSAPAddress/sockaddr_atm
+   * Initializes an ACE_ATM_Addr from an ATMSAPAddress/sockaddr_atm
    * structure. This is vendor specific (FORE systems). May need to
    * change when other vendors are supported.
    */
@@ -111,7 +111,7 @@ public:
            u_char selector = DEFAULT_SELECTOR);
 
   /**
-   * Initializes an <ACE_ATM_Addr> from the <sap> which can be
+   * Initializes an ACE_ATM_Addr from the <sap> which can be
    * "atm-address" (e.g.,
    * "47.0005.80.ffe100.0000.f20f.2200.0020480694f9.00") or "hostname"
    * (e.g., "frisbee.cs.wustl.edu").
@@ -120,7 +120,7 @@ public:
            u_char selector = DEFAULT_SELECTOR);
 
   /**
-   * Initializes an <ACE_ATM_Addr> from the <sap> which can be
+   * Initializes an ACE_ATM_Addr from the <sap> which can be
    * "atm-address" (e.g.,
    * "47.0005.80.ffe100.0000.f20f.2200.0020480694f9.00") or "hostname"
    * (e.g., "frisbee.cs.wustl.edu").

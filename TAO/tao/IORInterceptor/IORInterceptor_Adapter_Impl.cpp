@@ -220,7 +220,7 @@ TAO_IORInterceptor_Adapter_Impl::adapter_state_changed (
 
 void
 TAO_IORInterceptor_Adapter_Impl::adapter_manager_state_changed (
-      PortableInterceptor::AdapterManagerId id,
+      const char * id,
       PortableInterceptor::AdapterState state
       ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))

@@ -84,7 +84,7 @@ TAO_POA_Manager::get_state (ACE_ENV_SINGLE_ARG_DECL)
   return this->get_state_i ();
 }
 
-ACE_INLINE PortableInterceptor::AdapterManagerId
+ACE_INLINE char*
 TAO_POA_Manager::generate_manager_id (void) const
 {
   // The AdapterManagerId must be unique across all Adapter Managers
@@ -101,7 +101,7 @@ TAO_POA_Manager::generate_manager_id (void) const
   // shifting of 64 bit addresses is performed since the
   // TAO_POA_Manager object is not large enough to allow that trick.
 
-  PortableInterceptor::AdapterManagerId id = 0;
+  CORBA::Long id = 0;
 
   // Note that we reinterpret_cast to an "unsigned long" instead of
   // CORBA::ULong since we need to first cast to an integer large
@@ -109,14 +109,10 @@ TAO_POA_Manager::generate_manager_id (void) const
   // 64-bit platforms.
 
   if (sizeof (this) == 4)       // 32 bit address
-    id =
-      static_cast <PortableInterceptor::AdapterManagerId>
-                       (reinterpret_cast <ptrdiff_t> (this));
+    id = reinterpret_cast <ptrdiff_t> (this);
 
   else if (sizeof (this) == 8)  // 64 bit address -- use lower 32 bits
-    id =
-      static_cast <PortableInterceptor::AdapterManagerId>
-                       (reinterpret_cast <ptrdiff_t> (this) & 0xFFFFFFFFu);
+    id = reinterpret_cast <ptrdiff_t> (this) & 0xFFFFFFFFu;
 
   // @@ If we ever hit a platform where neither of the above cases are
   //    satisfied, we're up the creek!
@@ -126,7 +122,16 @@ TAO_POA_Manager::generate_manager_id (void) const
 //     // ORB, or perhaps specific to the process.
 //     id = ...GENERATE_ID_ATOMICALLY...;  // Fallback
 
-  return id;
+  char* buf = new char [25];
+  ACE_OS::sprintf (buf, "POAManager%d", id);
+  return buf;
 }
+
+ACE_INLINE 
+CORBA::PolicyList& TAO_POA_Manager::get_policies ()
+{
+  return this->policies_;
+}
+
 
 TAO_END_VERSIONED_NAMESPACE_DECL

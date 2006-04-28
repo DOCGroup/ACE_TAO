@@ -92,6 +92,12 @@ TAO_Default_ORT::ObjectReferenceTemplate::_tao_obv_repository_id (void) const
 }
 
 void
+TAO_Default_ORT::ObjectReferenceTemplate::_tao_obv_truncatable_repo_ids (Repository_Id_List& ids) const
+{
+  ids.push_back (this->_tao_obv_static_repository_id ());
+}
+
+void
 TAO_Default_ORT::ObjectReferenceTemplate::_tao_any_destructor (void *_tao_void_pointer)
 {
   ObjectReferenceTemplate *_tao_tmp_pointer =
@@ -112,53 +118,42 @@ CORBA::Boolean TAO_Default_ORT::ObjectReferenceTemplate::_tao_unmarshal_v (TAO_I
   return this->_tao_unmarshal__TAO_Default_ORT_ObjectReferenceTemplate (strm);
 }
 
+CORBA::Boolean TAO_Default_ORT::ObjectReferenceTemplate::_tao_match_formal_type (ptrdiff_t formal_type_id) const
+{
+  return formal_type_id ==
+    reinterpret_cast<ptrdiff_t>(&TAO_Default_ORT::ObjectReferenceTemplate::_downcast);
+}
+
 CORBA::Boolean TAO_Default_ORT::ObjectReferenceTemplate::_tao_unmarshal (
     TAO_InputCDR &strm,
     ObjectReferenceTemplate *&new_object
   )
 {
   CORBA::ValueBase *base = 0;
-  CORBA::ValueFactory_var factory;
   CORBA::Boolean retval =
     CORBA::ValueBase::_tao_unmarshal_pre (
         strm,
-        factory.out (),
         base,
         ObjectReferenceTemplate::_tao_obv_static_repository_id ()
       );
-  
+
   if (retval == 0)
-    {
       return 0;
-    }
-  
-  if (factory.in () != 0)
-    {
-      base = factory->create_for_unmarshal ();
-      
-      if (base == 0)
-        {
-          return 0;  // %! except.?
-        }
-      
-      retval = base->_tao_unmarshal_v (strm);
-      
-      if (retval == 0)
-        {
+
+  if (base != 0 && ! base->_tao_unmarshal_v (strm))
           return 0;
-        }
-    }
-  
+
   // Now base must be null or point to the unmarshaled object.
   // Align the pointer to the right subobject.
   new_object = ObjectReferenceTemplate::_downcast (base);
-  return retval;
+  return 1;
 }
 
 // TAO_IDL - Generated from
 // be\be_visitor_valuetype/valuetype_obv_cs.cpp:58
 
 OBV_TAO_Default_ORT::ObjectReferenceTemplate::ObjectReferenceTemplate (void)
+: require_truncation_ (false)
 {}
 
 OBV_TAO_Default_ORT::ObjectReferenceTemplate::~ObjectReferenceTemplate (void)
@@ -240,6 +235,12 @@ OBV_TAO_Default_ORT::ObjectReferenceTemplate::_tao_unmarshal_state (TAO_InputCDR
   return (
     true
   );
+}
+
+void
+OBV_TAO_Default_ORT::ObjectReferenceTemplate::truncation_hook (void)
+{
+  this->require_truncation_ = true;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

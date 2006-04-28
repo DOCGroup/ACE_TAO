@@ -9,6 +9,14 @@
 #
 # NOTE: This file contains tests only for TAO's ORB. Please do not
 # include things like performance-tests, and examples here.
+
+TAO/tests/ORB_Local_Config/Bunch/run_test.pl: !MINIMUM !ST
+TAO/tests/ORB_Local_Config/Limits/run_test.pl: !MINIMUM !ST
+TAO/tests/ORB_Local_Config/Separation/run_test.pl: !MINIMUM !ST
+TAO/tests/ORB_Local_Config/Service_Dependency/run_test.pl: !MINIMUM !ST
+TAO/tests/ORB_Local_Config/Shared/run_test.pl: !MINIMUM !ST
+TAO/tests/ORB_Local_Config/Simple/run_test.pl: !MINIMUM !ST
+TAO/tests/ORB_Local_Config/Two_DLL_ORB/run_test.pl: !MINIMUM !ST
 TAO/tests/Param_Test/run_test.pl: !MINIMUM
 TAO/tests/Param_Test/run_test_dii.pl: !MINIMUM
 TAO/tests/AMI/run_test.pl: !MINIMUM
@@ -88,6 +96,8 @@ TAO/tests/OBV/Factory/run_test.pl:
 TAO/tests/OBV/Forward/run_test.pl:
 TAO/tests/OBV/TC_Alignment/run_test.pl:
 TAO/tests/OBV/ValueBox/run_test.pl:
+TAO/tests/OBV/Truncatable/run_test.pl:
+TAO/tests/OBV/Simple/run_test.pl:
 TAO/tests/Hello/run_test.pl:
 TAO/tests/IPV6/run_test.pl: IPV6
 TAO/tests/AlternateIIOP/run_test.pl: !DISABLE_ToFix_LynxOS_x86
@@ -129,11 +139,14 @@ TAO/tests/POA/Default_Servant/run_test.pl: !MINIMUM
 TAO/tests/POA/Single_Threaded_POA/run_test.pl: !MINIMUM !ST
 TAO/tests/POA/Non_Servant_Upcalls/run_test.pl: !SUNCC5_1
 TAO/tests/POA/MT_Servant_Locator/run_test.pl: !MINIMUM !ST
+TAO/tests/POA/Bug_2511_Regression/run_test.pl: !MINIMUM
 TAO/tests/POA/Nested_Non_Servant_Upcalls/run_test.pl: !MINIMUM !ST
 TAO/tests/POA/Deactivate_Object/run_test.pl
 TAO/tests/POA/Reference_Counting/run_test.pl
 TAO/tests/POA/Current/run_test.pl:
 TAO/tests/POA/wait_for_completion/run_test.pl:
+TAO/tests/POA/POAManagerFactory/run_test.pl:
+TAO/tests/POA/EndpointPolicy/run_test.pl:
 TAO/tests/IORManipulation/run_test.pl:
 TAO/tests/Policies/run_test.pl: !MINIMUM !ST
 TAO/tests/Timeout/run_test.pl: !MINIMUM
@@ -176,6 +189,7 @@ TAO/tests/InterOp-Naming/run_test.pl: !MINIMUM
 TAO/tests/Multiple/run_test.pl: !VxWorks !SUNCC5_1
 TAO/tests/Exposed_Policies/run_test.pl: !MINIMUM !ST
 TAO/tests/Portable_Interceptors/Bug_1559/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
+TAO/tests/Portable_Interceptors/Bug_2510_Regression/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
 TAO/tests/Portable_Interceptors/Collocated/Dynamic/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS !ST
 TAO/tests/Portable_Interceptors/Processing_Mode_Policy/Collocated/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS !ST
 TAO/tests/Portable_Interceptors/Processing_Mode_Policy/Remote/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS !ST
@@ -237,3 +251,4 @@ TAO/tests/CSD_Strategy_Tests/TP_Test_4/run_test.pl big: !ST !VxWorks
 TAO/tests/CSD_Strategy_Tests/TP_Test_Dynamic/run_test.pl: !STATIC !ST !VxWorks
 TAO/tests/CSD_Strategy_Tests/TP_Test_Static/run_test.pl: !ST !VxWorks
 TAO/tests/Permanent_Forward/run_test.pl:
+TAO/tests/Parallel_Connect_Strategy/run_test.pl:

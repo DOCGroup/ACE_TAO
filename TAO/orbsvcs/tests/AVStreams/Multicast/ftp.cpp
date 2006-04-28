@@ -281,8 +281,8 @@ Client::run (void)
                                         flow_protocol_str,
                                         this->protocol_,
                                         &addr);
-      flow_spec [0] = entry.entry_to_string ();
       flow_spec.length (1);
+      flow_spec [0] = entry.entry_to_string ();
       ACE_DEBUG ((LM_DEBUG, "(%N,%l) Flowspec: %s\n", entry.entry_to_string() ));
 
       AVStreams::MMDevice_var client_mmdevice

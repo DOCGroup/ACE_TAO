@@ -24,6 +24,11 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+/// Forward declaration
+class ACE_Service_Gestalt;
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
@@ -38,13 +43,14 @@ namespace TAO
    */
   namespace ORB
   {
-    /// Extract ACE Service Configurator arguments from the given
-    /// argument vector, and initialize the ACE Service Configurator.
     /**
+     * Extract ACE Service Configurator arguments from the given
+     * argument vector, and initialize the ACE Service Configurator.
+     *
      * @note This method should be called before the ORB Core is
      *       initialized, and before any ORBInitializers are invoked.
      */
-    int open_services (int& argc, ACE_TCHAR** argv);
+    int open_services (ACE_Service_Gestalt* cfg, int& argc, ACE_TCHAR** argv);
 
     /**
      * The complement to @c open_services(), this will perform
@@ -52,13 +58,16 @@ namespace TAO
      * should be called as many times as @c open_services(), and will
      * only actually close things down on the last call.  It is fully
      * thread-safe.
+     *
      * @return @c 0 if successful, @c -1 with @c errno set if
      *         failure.
      */
-    int close_services (void);
+    int close_services (ACE_Service_Gestalt* pcfg);
 
-    /// Set default @c `svc.conf' content.  This call has no effect if
-    /// This function must be called before first ORB initialization.
+    /**
+     * Set default @c `svc.conf' content.
+     * This function must be called before first ORB initialization.
+     */
     void default_svc_conf_entries (char const * rf_args,
                                    char const * ssf_args,
                                    char const * csf_args);

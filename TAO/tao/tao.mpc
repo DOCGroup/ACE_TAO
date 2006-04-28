@@ -113,6 +113,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     LF_Follower_Auto_Adder.cpp
     LF_Follower_Auto_Ptr.cpp
     LF_Invocation_Event.cpp
+    LF_Multi_Event.cpp
     LF_Strategy.cpp
     LF_Strategy_Complete.cpp
     LocalObject.cpp
@@ -235,6 +236,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
   }
 
   Header_Files {
+    Array_Traits_T.h
     Abstract_Servant_Base.h
     Acceptor_Filter.h
     Acceptor_Impl.h
@@ -262,6 +264,16 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Block_Flushing_Strategy.h
     BooleanSeqC.h
     BooleanSeqS.h
+    Bounded_Array_Allocation_Traits.h
+    Bounded_Array_Sequence_T.h
+    Bounded_Basic_String_Sequence_T.h
+    Bounded_Object_Reference_Sequence_T.h
+    Bounded_Reference_Allocation_Traits.h
+    Bounded_Sequence_CDR_T.h
+    Bounded_String_Sequence_T.h
+    Bounded_Value_Allocation_Traits_T.h
+    Bounded_Value_Sequence_T.h
+    Bounded_Wstring_Sequence_T.h
     Buffer_Allocator_T.h
     Buffering_Constraint_Policy.h
     Cache_Entries.h
@@ -326,6 +338,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     FloatSeqC.h
     FloatSeqS.h
     Flushing_Strategy.h
+    Generic_Sequence_T.h
     GIOPC.h
     GIOP_Message_Base.h
     GIOP_Message_Generator_Parser_10.h
@@ -402,7 +415,10 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Object_Proxy_Broker.h
     Object_Ref_Table.h
     Object_T.h
+    Object_Reference_Sequence_Element_T.h
     Objref_VarOut_T.h
+    Object_Reference_Traits_Base_T.h
+    Object_Reference_Traits_T.h
     OctetSeqC.h
     OctetSeqS.h
     operation_details.h
@@ -444,6 +460,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Protocols_Hooks.h
     Pseudo_VarOut_T.h
     Queued_Message.h
+    Range_Checking_T.h
     Reactive_Connect_Strategy.h
     Reactive_Flushing_Strategy.h
     Refcounted_ObjectKey.h
@@ -455,6 +472,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Resume_Handle.h
     Seq_Out_T.h
     Seq_Var_T.h
+    Sequence_T.h
     Server_Strategy_Factory.h
     Service_Callbacks.h
     Service_Context.h
@@ -468,6 +486,10 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     StringSeqC.h
     StringSeqS.h
     String_Alloc.h
+    String_Manager_T.h
+    String_Sequence_Element_T.h
+    String_Traits_Base_T.h
+    String_Traits_T.h
     Stub_Factory.h
     Stub.h
     Synch_Invocation.h
@@ -508,9 +530,22 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     ULongLongSeqS.h
     ULongSeqC.h
     ULongSeqS.h
+    Unbounded_Array_Allocation_Traits_T.h
+    Unbounded_Array_Sequence_T.h
+    Unbounded_Basic_String_Sequence_T.h
+    Unbounded_Object_Reference_Sequence_T.h
+    Unbounded_Octet_Sequence_T.h
+    Unbounded_Octet_Sequence_T.h
+    Unbounded_Reference_Allocation_Traits_T.h
+    Unbounded_Sequence_CDR_T.h
+    Unbounded_String_Sequence_T.h
+    Unbounded_Value_Allocation_Traits_T.h
+    Unbounded_Value_Sequence_T.h
+    Unbounded_Wstring_Sequence_T.h
     UserException.h
     UShortSeqC.h
     UShortSeqS.h
+    Value_Traits_T.h
     Valuetype_Adapter.h
     Valuetype_Adapter_Factory.h
     Var_Array_Argument_T.h

@@ -90,6 +90,12 @@ Messaging::ExceptionHolder::_tao_obv_repository_id (void) const
 }
 
 void
+Messaging::ExceptionHolder::_tao_obv_truncatable_repo_ids (Repository_Id_List& ids) const
+{
+  ids.push_back (this->_tao_obv_static_repository_id ());
+}
+
+void
 Messaging::ExceptionHolder::_tao_any_destructor (void *_tao_void_pointer)
 {
   ExceptionHolder *_tao_tmp_pointer =
@@ -100,57 +106,49 @@ Messaging::ExceptionHolder::_tao_any_destructor (void *_tao_void_pointer)
 Messaging::ExceptionHolder::~ExceptionHolder (void)
 {}
 
-::CORBA::Boolean Messaging::ExceptionHolder::_tao_marshal_v (TAO_OutputCDR & strm) const
+::CORBA::Boolean
+Messaging::ExceptionHolder::_tao_marshal_v (TAO_OutputCDR & strm) const
 {
   return this->_tao_marshal__Messaging_ExceptionHolder (strm);
 }
 
-::CORBA::Boolean Messaging::ExceptionHolder::_tao_unmarshal_v (TAO_InputCDR & strm)
+::CORBA::Boolean
+Messaging::ExceptionHolder::_tao_unmarshal_v (TAO_InputCDR & strm)
 {
   return this->_tao_unmarshal__Messaging_ExceptionHolder (strm);
 }
 
-::CORBA::Boolean Messaging::ExceptionHolder::_tao_unmarshal (
+::CORBA::Boolean
+Messaging::ExceptionHolder::_tao_match_formal_type (ptrdiff_t formal_type_id) const
+{
+  return formal_type_id ==
+    reinterpret_cast<ptrdiff_t>(&Messaging::ExceptionHolder::_downcast);
+}
+
+::CORBA::Boolean
+Messaging::ExceptionHolder::_tao_unmarshal (
     TAO_InputCDR &strm,
     ExceptionHolder *&new_object
   )
 {
   ::CORBA::ValueBase *base = 0;
-  ::CORBA::ValueFactory_var factory;
   ::CORBA::Boolean retval =
     ::CORBA::ValueBase::_tao_unmarshal_pre (
         strm,
-        factory.out (),
         base,
         ExceptionHolder::_tao_obv_static_repository_id ()
       );
 
   if (retval == 0)
-    {
       return 0;
-    }
 
-  if (factory.in () != 0)
-    {
-      base = factory->create_for_unmarshal ();
-
-      if (base == 0)
-        {
-          return 0;  // %! except.?
-        }
-
-      retval = base->_tao_unmarshal_v (strm);
-
-      if (retval == 0)
-        {
+  if (base != 0 && !base->_tao_unmarshal_v (strm))
           return 0;
-        }
-    }
 
   // Now base must be null or point to the unmarshaled object.
   // Align the pointer to the right subobject.
   new_object = ExceptionHolder::_downcast (base);
-  return retval;
+  return 1;
 }
 
 // TAO_IDL - Generated from

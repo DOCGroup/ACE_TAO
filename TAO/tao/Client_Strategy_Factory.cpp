@@ -40,6 +40,12 @@ TAO_Client_Strategy_Factory::create_wait_strategy (TAO_Transport *)
   return 0;
 }
 
+TAO_Client_Strategy_Factory::Connect_Strategy
+TAO_Client_Strategy_Factory::connect_strategy (void) const
+{
+  return TAO_BLOCKED_CONNECT;
+}
+
 TAO_Connect_Strategy *
 TAO_Client_Strategy_Factory::create_connect_strategy (TAO_ORB_Core *)
 {

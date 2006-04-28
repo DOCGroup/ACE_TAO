@@ -68,9 +68,11 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward Declaration
 class TAO_Acceptor_Filter;
+class TAO_Acceptor_Filter_Factory;
 class TAO_Acceptor_Registry;
 class TAO_IORInfo;
 class TAO_Regular_POA;
+class TAO_POAManager_Factory;
 
 namespace PortableInterceptor
 {
@@ -208,11 +210,8 @@ public:
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  /// @todo At the moment to POAManagerFactory is implemented and the
-  /// POAManager has the get_id method this can be zapped, IORInfo can
-  /// then just call get_id
-  PortableInterceptor::AdapterManagerId get_manager_id (
-      ACE_ENV_SINGLE_ARG_DECL)
+  PortableServer::POAManagerFactory_ptr the_POAManagerFactory (
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// This method returns the adapter_name as a sequence of strings of
@@ -359,7 +358,7 @@ public:
     );
 
   TAO_Root_POA (const String &name,
-                TAO_POA_Manager &poa_manager,
+                PortableServer::POAManager_ptr poa_manager,
                 const TAO_POA_Policy_Set &policies,
                 TAO_Root_POA *parent,
                 ACE_Lock &lock,
@@ -605,7 +604,7 @@ protected:
 
   /// Template method for creating new POA's of this type.
   virtual TAO_Root_POA *new_POA (const String &name,
-                            TAO_POA_Manager &poa_manager,
+                            PortableServer::POAManager_ptr poa_manager,
                             const TAO_POA_Policy_Set &policies,
                             TAO_Root_POA *parent,
                             ACE_Lock &lock,
@@ -625,7 +624,7 @@ protected:
                      PortableServer::POA::InvalidPolicy));
 
   PortableServer::POA_ptr create_POA_i (const String &adapter_name,
-                                        TAO_POA_Manager &poa_manager,
+                                        PortableServer::POAManager_ptr poa_manager,
                                         const TAO_POA_Policy_Set &policies
                                         ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
@@ -879,8 +878,10 @@ protected:
 
   String name_;
 
-  /// The POA Manager belonging to this POA
+  /// Reference to the POAManager that this poa assicuates with.
   TAO_POA_Manager &poa_manager_;
+  /// Reference to the POAManagerFactory that generate the POAManager.
+  TAO_POAManager_Factory& poa_manager_factory_;
 
   IOP::TaggedComponentList tagged_component_;
 
@@ -941,6 +942,8 @@ protected:
   CORBA::Boolean waiting_destruction_;
 
   TAO_SYNCH_CONDITION servant_deactivation_condition_;
+
+  TAO_Acceptor_Filter_Factory * filter_factory_;
 
 public:
     // @todo Temporarily for servant retention

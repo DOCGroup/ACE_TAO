@@ -42,7 +42,7 @@
 
 #include "tao/ObjRefTemplate/ort_export.h"
 #include "tao/Valuetype/ValueBase.h"
-#include "tao/Valuetype/Valuetype_Adapter_Impl.h"
+#include "tao/Valuetype/Valuetype_Adapter_Factory_Impl.h"
 #include "tao/ORB.h"
 #include "tao/SystemException.h"
 #include "tao/Environment.h"
@@ -71,22 +71,22 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Default_ORT
 {
-  
+
   // TAO_IDL - Generated from
   // be\be_valuetype.cpp:524
-  
-  
+
+
 
 #if !defined (_TAO_DEFAULT_ORT_OBJECTREFERENCETEMPLATE__VAR_OUT_CH_)
 #define _TAO_DEFAULT_ORT_OBJECTREFERENCETEMPLATE__VAR_OUT_CH_
-  
+
   class ObjectReferenceTemplate;
   typedef
     TAO_Value_Var_T<
         ObjectReferenceTemplate
       >
     ObjectReferenceTemplate_var;
-  
+
   typedef
     TAO_Value_Out_T<
         ObjectReferenceTemplate
@@ -94,61 +94,64 @@ namespace TAO_Default_ORT
     ObjectReferenceTemplate_out;
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_valuetype/valuetype_ch.cpp:56
 
 #if !defined (_TAO_DEFAULT_ORT_OBJECTREFERENCETEMPLATE_CH_)
 #define _TAO_DEFAULT_ORT_OBJECTREFERENCETEMPLATE_CH_
-  
+
   class TAO_ORT_Export ObjectReferenceTemplate
     : public virtual PortableInterceptor::ObjectReferenceTemplate
   {
   public:
     typedef ObjectReferenceTemplate_var _var_type;
-    
+
     static ObjectReferenceTemplate* _downcast (CORBA::ValueBase *);
-    
+
     // (TAO extensions or internals)
     static CORBA::Boolean _tao_unmarshal (
         TAO_InputCDR &,
         ObjectReferenceTemplate *&
       );
-    
+
     virtual const char* _tao_obv_repository_id (void) const;
-    
+
+    virtual void _tao_obv_truncatable_repo_ids (Repository_Id_List &) const;
+
     static const char* _tao_obv_static_repository_id (void);
-    
+
     static void _tao_any_destructor (void *);
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_valuetype/valuetype_ch.cpp:246
-  
+
   protected:
     ObjectReferenceTemplate (void);
-    
+
     virtual ~ObjectReferenceTemplate (void);
-    
+
     virtual CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
     virtual CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
-    
+    virtual CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const;
+
   private:
     ObjectReferenceTemplate (const ObjectReferenceTemplate &);
     void operator= (const ObjectReferenceTemplate &);
-    
+
   protected:
     virtual CORBA::Boolean
     _tao_marshal__TAO_Default_ORT_ObjectReferenceTemplate (TAO_OutputCDR &) const = 0;
-    
+
     virtual CORBA::Boolean
     _tao_unmarshal__TAO_Default_ORT_ObjectReferenceTemplate (TAO_InputCDR &) = 0;
   };
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
-  
+
   extern TAO_ORT_Export ::CORBA::TypeCode_ptr const _tc_ObjectReferenceTemplate;
 
 // TAO_IDL - Generated from
@@ -161,35 +164,37 @@ namespace TAO_Default_ORT
 
 namespace OBV_TAO_Default_ORT
 {
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_valuetype/valuetype_obv_ch.cpp:58
 
 #if !defined (_TAO_DEFAULT_ORT_OBJECTREFERENCETEMPLATE___OBV_CH_)
 #define _TAO_DEFAULT_ORT_OBJECTREFERENCETEMPLATE___OBV_CH_
-  
+
   // OBV_ class
   class TAO_ORT_Export ObjectReferenceTemplate
     : public virtual TAO_Default_ORT::ObjectReferenceTemplate
   {
   public:
-    
+
   protected:
     ObjectReferenceTemplate (void);
     virtual ~ObjectReferenceTemplate (void);
-    
+
   protected:
     virtual CORBA::Boolean
     _tao_marshal__TAO_Default_ORT_ObjectReferenceTemplate (TAO_OutputCDR &) const;
-    
+
     virtual CORBA::Boolean
     _tao_unmarshal__TAO_Default_ORT_ObjectReferenceTemplate (TAO_InputCDR &);
-    
+
     CORBA::Boolean _tao_marshal_state (TAO_OutputCDR &) const;
     CORBA::Boolean _tao_unmarshal_state (TAO_InputCDR &);
-  
+    virtual void truncation_hook (void);
+
   private:
-  };
+    CORBA::Boolean require_truncation_;
+};
 
 #endif /* end #if !defined */
 }
@@ -203,7 +208,7 @@ namespace TAO
 
 #if !defined (_TAO_DEFAULT_ORT_OBJECTREFERENCETEMPLATE__TRAITS_CH_)
 #define _TAO_DEFAULT_ORT_OBJECTREFERENCETEMPLATE__TRAITS_CH_
-  
+
   template<>
   struct TAO_ORT_Export Value_Traits<TAO_Default_ORT::ObjectReferenceTemplate>
   {
@@ -257,5 +262,3 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #include /**/ "ace/post.h"
 
 #endif /* ifndef */
-
-

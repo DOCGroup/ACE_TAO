@@ -400,6 +400,12 @@ CORBA::AbstractBase::_tao_unmarshal_v (TAO_InputCDR &)
   return false;
 }
 
+CORBA::Boolean
+CORBA::AbstractBase::_tao_match_formal_type (ptrdiff_t ) const
+{
+  return 0;
+}
+
 CORBA::ValueBase *
 CORBA::AbstractBase::_tao_to_value (void)
 {

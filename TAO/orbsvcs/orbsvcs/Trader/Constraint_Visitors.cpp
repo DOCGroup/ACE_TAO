@@ -243,7 +243,7 @@ visit_exist (TAO_Unary_Constraint* unary_exist)
 {
   TAO_Property_Constraint* operand =
     (TAO_Property_Constraint*) unary_exist->operand ();
-  TAO_String_Hash_Key property_name ((const char*) operand->name ());
+  CORBA::String_var property_name ((const char*) operand->name ());
 
   // Determine if a property is defined on this offer.
 
@@ -1151,7 +1151,7 @@ TAO_Constraint_Validator::extract_type (TAO_Constraint* expr,
   if (type == TAO_IDENT)
     {
       TAO_Property_Constraint* prop = (TAO_Property_Constraint*) expr;
-      TAO_String_Hash_Key prop_name (prop->name ());
+      CORBA::String_var prop_name (prop->name ());
 
       if (this->type_map_.find (prop_name, return_value) == 0)
         type = TAO_Literal_Constraint::comparable_type (return_value);

@@ -45,7 +45,7 @@
 
 #include "tao/ObjRefTemplate/ort_export.h"
 #include "tao/Valuetype/ValueBase.h"
-#include "tao/Valuetype/Valuetype_Adapter_Impl.h"
+#include "tao/Valuetype/Valuetype_Adapter_Factory_Impl.h"
 #include "tao/ORB.h"
 #include "tao/SystemException.h"
 #include "tao/Environment.h"
@@ -127,6 +127,8 @@ namespace PortableInterceptor
 
     static const char* _tao_obv_static_repository_id (void);
 
+    virtual void _tao_obv_truncatable_repo_ids (Repository_Id_List& ids) const;
+
     static void _tao_any_destructor (void *);
 
     // TAO_IDL - Generated from
@@ -145,6 +147,7 @@ namespace PortableInterceptor
 
     virtual ~ObjectReferenceFactory (void);
 
+    virtual CORBA::Boolean _tao_match_formal_type(ptrdiff_t ) const;
 
   private:
     ObjectReferenceFactory (const ObjectReferenceFactory &);
@@ -203,6 +206,8 @@ namespace PortableInterceptor
       );
 
     virtual const char* _tao_obv_repository_id (void) const;
+
+    virtual void _tao_obv_truncatable_repo_ids (Repository_Id_List &) const;
 
     static const char* _tao_obv_static_repository_id (void);
 
@@ -440,5 +445,3 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #include /**/ "ace/post.h"
 
 #endif /* ifndef */
-
-

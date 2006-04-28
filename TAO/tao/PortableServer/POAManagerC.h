@@ -248,6 +248,13 @@ namespace PortableServer
         CORBA::SystemException
       )) = 0;
 
+    virtual char * get_id (
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
+      ACE_THROW_SPEC ((
+        ::CORBA::SystemException
+      )) = 0;
+
     // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_ch.cpp:210
 

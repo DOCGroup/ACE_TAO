@@ -18,7 +18,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Implementation skeleton constructor
 TAO_CSD_POA::TAO_CSD_POA (const String &name,
-                   TAO_POA_Manager &poa_manager,
+                          PortableServer::POAManager_ptr poa_manager,
                    const TAO_POA_Policy_Set &policies,
                    TAO_Root_POA *parent,
                    ACE_Lock &lock,
@@ -66,7 +66,7 @@ void TAO_CSD_POA::set_csd_strategy (
 
 TAO_Root_POA *
 TAO_CSD_POA::new_POA (const String &name,
-                      TAO_POA_Manager &poa_manager,
+                      PortableServer::POAManager_ptr poa_manager,
                       const TAO_POA_Policy_Set &policies,
                       TAO_Root_POA *parent,
                       ACE_Lock &lock,

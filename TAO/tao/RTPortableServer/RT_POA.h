@@ -256,7 +256,7 @@ public:
                                                       ACE_ENV_ARG_DECL);
 
   TAO_RT_POA (const String &name,
-              TAO_POA_Manager &poa_manager,
+              PortableServer::POAManager_ptr poa_manager,
               const TAO_POA_Policy_Set &policies,
               TAO_Root_POA *parent,
               ACE_Lock &lock,
@@ -273,7 +273,7 @@ protected:
 
   /// Template method for creating new POA's of this type.
   virtual TAO_Root_POA *new_POA (const String &name,
-                            TAO_POA_Manager &poa_manager,
+                                 PortableServer::POAManager_ptr poa_manager,
                             const TAO_POA_Policy_Set &policies,
                             TAO_Root_POA *parent,
                             ACE_Lock &lock,

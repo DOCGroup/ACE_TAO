@@ -42,7 +42,7 @@
 
 #include "tao/Messaging/messaging_export.h"
 #include "tao/Valuetype/ValueBase.h"
-#include "tao/Valuetype/Valuetype_Adapter_Impl.h"
+#include "tao/Valuetype/Valuetype_Adapter_Factory_Impl.h"
 #include "tao/ORB.h"
 #include "tao/SystemException.h"
 #include "tao/Environment.h"
@@ -109,6 +109,8 @@ namespace Messaging
 
     virtual const char* _tao_obv_repository_id (void) const;
 
+    virtual void _tao_obv_truncatable_repo_ids (Repository_Id_List &) const;
+
     static const char* _tao_obv_static_repository_id (void);
 
     static void _tao_any_destructor (void *);
@@ -160,6 +162,7 @@ namespace Messaging
 
     virtual ::CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
     virtual ::CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
+    virtual ::CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const;
 
   private:
     ExceptionHolder (const ExceptionHolder &);
@@ -295,5 +298,3 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #include /**/ "ace/post.h"
 
 #endif /* ifndef */
-
-

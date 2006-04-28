@@ -847,17 +847,6 @@ value_header :
         {
 // value_header : value_decl inheritance_spec
           idl_global->set_parse_state (IDL_GlobalData::PS_InheritSpecSeen);
-
-          if ($2 != 0 && $2->truncatable ())
-            {
-              ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("warning in %s line %d\n"),
-                          idl_global->filename ()->get_string (),
-                          idl_global->lineno ()));
-              ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("truncatable modifier not supported ")
-                          ACE_TEXT ("and is ignored\n")));
-            }
         }
         supports_spec
         {
@@ -5185,17 +5174,6 @@ event_rest_of_header :
         {
 // event_rest_of_header : inheritance_spec
           idl_global->set_parse_state (IDL_GlobalData::PS_InheritSpecSeen);
-
-          if ($1 != 0 && $1->truncatable ())
-            {
-              ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("warning in %s line %d\n"),
-                          idl_global->filename ()->get_string (),
-                          idl_global->lineno ()));
-              ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("truncatable modifier not supported ")
-                          ACE_TEXT ("and is ignored\n")));
-            }
         }
         supports_spec
         {

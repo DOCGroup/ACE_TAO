@@ -1224,6 +1224,7 @@ TAO_Transport::send_asynchronous_message_i (TAO_Stub *stub,
 
   if (this->queue_message_i(message_block) == -1)
   {
+    if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
        ACE_TEXT ("TAO (%P|%t) - Transport[%d]::send_asynchronous_message_i, ")
        ACE_TEXT ("cannot queue message for ")
@@ -2335,7 +2336,6 @@ TAO_Transport::post_open (size_t id)
                       ace_mon,
                       *this->handler_lock_,
                       false);
-
     this->is_connected_ = true;
   }
 

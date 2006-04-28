@@ -15,7 +15,7 @@ TAO_Default_Servant_Dispatcher::~TAO_Default_Servant_Dispatcher (void)
 
 TAO_Root_POA *
 TAO_Default_Servant_Dispatcher::create_Root_POA (const ACE_CString &name,
-                                                 TAO_POA_Manager &poa_manager,
+                                                 PortableServer::POAManager_ptr poa_manager,
                                                  const TAO_POA_Policy_Set &policies,
                                                  ACE_Lock &lock,
                                                  TAO_SYNCH_MUTEX &thread_lock,

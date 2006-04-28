@@ -21,7 +21,7 @@ namespace CIAO
       {
         struct SPE_Handler
         {
-          static void get_spe (const SubcomponentPortEndpoint &desc,
+          static void handle_spe (const SubcomponentPortEndpoint &desc,
                                ::Deployment::SubcomponentPortEndpoint &toconfig)
           {
             CIAO_TRACE("SPE_Handler::get_spe");
@@ -50,11 +50,11 @@ namespace CIAO
         typedef Sequence_Handler < SubcomponentPortEndpoint,
                                    ::Deployment::SubcomponentPortEndpoints,
                                    ::Deployment::SubcomponentPortEndpoint,
-                                   SPE_Handler::get_spe > SPE_Functor;
+                                   SPE_Handler::handle_spe > SPE_Functor;
 
         struct ACD_Handler
         {
-          static void get_acd (const AssemblyConnectionDescription &desc,
+          static void handle_acd (const AssemblyConnectionDescription &desc,
                                ::Deployment::AssemblyConnectionDescription &toconfig)
           {
             CIAO_TRACE("ACD_Handler::get_acd");
@@ -67,6 +67,9 @@ namespace CIAO
                            Requirement_Functor (toconfig.deployRequirement));
 
             toconfig.internalEndpoint.length (desc.count_internalEndpoint ());
+	    SEQ_HAND_GCC_BUG_WORKAROUND (SPE_Handler::handle_spe,
+					 desc.begin_internalEndpoint (),
+					 toconfig.internalEndpoint);
             std::for_each (desc.begin_internalEndpoint (),
                            desc.end_internalEndpoint (),
                            SPE_Functor (toconfig.internalEndpoint));
@@ -113,12 +116,12 @@ namespace CIAO
         typedef Sequence_Handler < AssemblyConnectionDescription,
                                    ::Deployment::AssemblyConnectionDescriptions,
                                    ::Deployment::AssemblyConnectionDescription,
-                                   ACD_Handler::get_acd > ACD_Functor;
+                                   ACD_Handler::handle_acd > ACD_Functor;
 
 
         struct SPR_Handler
         {
-          static void get_spr (const SubcomponentPropertyReference &desc,
+          static void handle_spr (const SubcomponentPropertyReference &desc,
                                ::Deployment::SubcomponentPropertyReference &toconfig)
           {
             CIAO_TRACE("SPR_Handler::get_spr");
@@ -149,11 +152,11 @@ namespace CIAO
         typedef Sequence_Handler < SubcomponentPropertyReference,
                                    ::Deployment::SubcomponentPropertyReferences,
                                    ::Deployment::SubcomponentPropertyReference,
-                                   SPR_Handler::get_spr > SPR_Functor;
+                                   SPR_Handler::handle_spr > SPR_Functor;
 
         struct APM_Handler
         {
-          static void get_apm (const AssemblyPropertyMapping &desc,
+          static void handle_apm (const AssemblyPropertyMapping &desc,
                                ::Deployment::AssemblyPropertyMapping &toconfig)
           {
             CIAO_TRACE("APM_Handler::get_apm");
@@ -162,6 +165,9 @@ namespace CIAO
             toconfig.externalName = desc.externalName ().c_str ();
 
             toconfig.delegatesTo.length (desc.count_delegatesTo ());
+	    SEQ_HAND_GCC_BUG_WORKAROUND (SPR_Handler::handle_spr,
+					 desc.begin_delegatesTo (),
+					 toconfig.delegatesTo);
             std::for_each (desc.begin_delegatesTo (),
                            desc.end_delegatesTo (),
                            SPR_Functor (toconfig.delegatesTo));
@@ -185,7 +191,7 @@ namespace CIAO
         typedef Sequence_Handler < AssemblyPropertyMapping,
                                    ::Deployment::AssemblyPropertyMappings,
                                    ::Deployment::AssemblyPropertyMapping,
-                                   APM_Handler::get_apm > APM_Functor;
+                                   APM_Handler::handle_apm > APM_Functor;
       }
 
 
@@ -204,11 +210,17 @@ namespace CIAO
         /* @@ MAJO: Implement Locality */
 
         toconfig.connection.length (desc.count_connection ());
+	SEQ_HAND_GCC_BUG_WORKAROUND (ACD_Handler::handle_acd,
+				     desc.begin_connection (),
+				     toconfig.connection);
         std::for_each (desc.begin_connection (),
                        desc.end_connection (),
                        ACD_Functor (toconfig.connection));
 
         toconfig.externalProperty.length (desc.count_externalProperty ());
+	SEQ_HAND_GCC_BUG_WORKAROUND (APM_Handler::handle_apm,
+				     desc.begin_externalProperty (),
+				     toconfig.externalProperty);
         std::for_each (desc.begin_externalProperty (),
                        desc.end_externalProperty (),
                        APM_Functor (toconfig.externalProperty));

@@ -53,7 +53,7 @@ namespace CIAO
       ///This method takes a <Deployment::PlanConnectionDescription>
       ///and maps the values from the passed in XSC
       ///PlanConnectionDescription to its members.
-      static void get_PlanConnectionDescription (const PlanConnectionDescription& desc,
+      static void handle_PlanConnectionDescription (const PlanConnectionDescription& desc,
                                           Deployment::PlanConnectionDescription& toconfig);
 
       //This method takes a <Deployment::PlanConnectionDescription>
@@ -66,7 +66,7 @@ namespace CIAO
     typedef Sequence_Handler < PlanConnectionDescription,
                                ::Deployment::PlanConnectionDescriptions,
                                ::Deployment::PlanConnectionDescription,
-                               PCD_Handler::get_PlanConnectionDescription > PCD_Functor;
+                               PCD_Handler::handle_PlanConnectionDescription > PCD_Functor;
     
   }
 }

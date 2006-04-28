@@ -1,3 +1,550 @@
+Thu Apr 27 18:33:18 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Aio_Platform_Test.cpp:
+          When AIO is not available, just print an info message and exit
+
+        * tests/run_test.lst:
+          Added Aio_Platform_Test, it was not in this file at all
+
+Thu Apr 27 14:57:10 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/Svc_Conf.y:
+        * ace/Svc_Conf_Tokens.h:
+        * ace/Svc_Conf_y.cpp:
+
+          Fixed fuzz complaint about #include inside a versioned namespace
+          in Svc_Conf_y.cpp. It was due to a code that Bison generates a
+          part of the parser, from Svc_Conf.y. Changed the versioned
+          namespace to encloses the non-generated code only, while the
+          rest of the parser seems to be designed so that multiple parses
+          can coexist without name clashes.
+
+Thu Apr 27 14:29:07 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/Dynamic_Service_Dependency.h:
+        * ace/Dynamic_Service_Dependency.cpp:
+
+          Updated to remove an empty inl file.
+
+        * ace/Dynamic_Service_Dependency.inl:
+
+          Removed this file.
+
+Thu Apr 27 14:00:18 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Sock_Connect.cpp:
+          Implemented get_ip_interfaces for OpenVMS
+
+Thu Apr 27 11:19:18 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Array_Map.h:
+        * ace/ATM_Addr.h:
+        * ace/Atomic_Op_T.h:
+        * ace/Base_Thread_Adapter.h:
+        * ace/Cached_Connect_Strategy_T.h:
+        * ace/Capabilities.h:
+        * ace/Default_Constants.h:
+        * ace/Hash_Map_Manager_T.h:
+        * ace/Log_Msg_Callback.h:
+        * ace/Log_Msg_IPC.h:
+        * ace/Map_Manager.h:
+        * ace/POSIX_Asynch_IO.h:
+        * ace/POSIX_Proactor.h:
+        * ace/RB_Tree.h:
+        * ace/Strategies_T.h:
+        * ace/Timer_Heap_T.h:
+        * ace/Timer_List_T.h:
+        * ace/Timer_Queue_Adapters.h:
+        * ace/Timer_Queue_T.h:
+        * ace/Timer_Wheel_T.h:
+          Fixed doxygen warnings
+
+Thu Apr 27 01:49:18 UTC 2006  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+        * ace/OS_NS_sys_sendfile.h (sendfile, sendfile_emulation):
+        * ace/OS_NS_sys_sendfile.cpp (sendfile_emulation):
+
+          ACE_LOFF_T -> off_t.  Expected ACE_LOFF_T behavior is still
+          under scrutiny.
+
+        * ace/OS_NS_sys_sendfile.inl:
+
+          Added missing <sys/sendfile.h> include directive.  Addresses
+          infinite recursion at run-time when ACE_HAS_SENDFILE is defined.
+
+          (sendfile):
+
+          ACE_LOFF_T -> off_t, as above.
+
+Wed Apr 26 22:00:21 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/Parse_Node.h:
+        * ace/Service_Gestalt.h:
+
+          Correcting a build problem, caused by the extraneous semicolons
+          after ACE_UNIMPLEMENTED_FUNC
+
+Wed Apr 26 20:21:49 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+          The motivation for these changes was to enable support in ACE
+          for multiple instances of Service Configuration Repository, or
+          more appropriately - "Gestalt" (from the German word, meaning
+          something that's more than the sum of its parts).  This is
+          feature is necessary to enable support for ORB-specific, or more
+          generally - service-specific sets of services, i.e. to be able
+          to have dynamically loaded services to use their own private set
+          of service objects. In the context of the implementation I will
+          use "gestalt" as a synonym for service configuration context or
+          service configuration repository.
+
+          In order to accomplish this, the "instance"-related
+          functionality of the former ACE_Service_Config class has been
+          moved to another class - ACE_Service_Gestalt. The
+          ACE_Service_Config retains all static interfaces and those
+          members, pertaining to the concept of process-wide configuration
+          state. The service config, as known today has been retained as a
+          concept, but in its specialized semantics as holding a
+          process-wide configuration state. The primary concept expressing
+          an instance of configuration context is the gestalt. The
+          implementation actually uses a specialization of
+          ACE_Service_Gestalt in order to implement ACE_Service_Config as
+          a singleton, special case of configuration context.
+
+          The static methods in ACE_Service_Config provide access to
+          process-wide gestalt (ubergestalt, anyone?) instance.
+
+          For more details, here is the history of all included changes,
+          with their motivation and explanation. It is ordered
+          alphabetically, by the names of the changed files:
+
+        * ace/ACE.cpp:
+
+          Added to the condition evaluating ACE::debug() to include a
+          check if environmental variable ACE_DEBUG has been set.
+
+          Updated the debug() function to call getenv() only once by using
+          a method-local static variable to hold the value from the
+          environment.
+
+        * ace/DLL.h:
+        * ace/DLL.cpp:
+
+          Implemented an operator=, needed in order to implement the
+          ACE_Service_Configuration_Guard class.
+
+        * ace/DLL_Manager.cpp:
+
+          Improved the error diagnostics so that a "file not found" would
+          not mask a "symbol not defined" error when loading a DLL.
+
+        * ace/Dynamic_Service.h:
+
+          "Privatized" copy ctor and operator= for ACE_Dynamic_Service
+          objects since it is not designed for such operations.
+
+        * ace/Dynamic_Service.inl:
+
+          Added overloaded method instance() for ACE_ANTI_TCHAR.
+
+        * ace/Dynamic_Service.cpp:
+
+          Changes to enable instantiation of a service, based on the
+          registration in a particular service repository. Adding a method
+          that takes ACE_Service_Gestalt* additional parameter.
+
+        * ace/Dynamic_Service_Base.h:
+        * ace/Dynamic_Service_Base.cpp:
+
+          Factored out a find_i() method to be used by the friend
+          ACE_Dynamic_Service_Dependency class. It implements the specific
+          lookup policy that extends the search to the global repository
+          if the named service object can not be found locally.
+
+          Added instance method, allowing the caller to explicitly specify
+          the gestalt.
+
+        * ace/Dynamic_Service_Dependency.h:
+        * ace/Dynamic_Service_Dependency.inl:
+        * ace/Dynamic_Service_Dependency.cpp:
+
+          A newly introduced class, whose instances are designed to be
+          embedded inside instances of other classes, typically created by
+          DLL-based factories (service objects). This provides a way to
+          declare dependency on a specific service, thus avoiding order of
+          initialization issues with objects whose implementation code
+          resides in dynamically loaded services.
+
+          It is disastrous to have dynamically loadable services create
+          and give away ownership of objects and then be unloaded before
+          all those instances have been deleted. Normally the code for
+          such objects classes resides within the TEXT segment of the DLL,
+          which implements the service. If a service gets removed, its DLL
+          may be unmapped from memory and then any attempt to invoke a
+          method on the said objects will cause SEGV.
+
+          Such instances must contain a member of
+          ACE_Dynamic_Service_Dependency initialized with the service they
+          depend on. @code ACE_Dynamic_Service_Dependency's constructor
+          and destructor are "magical" - they work by maintaining the
+          underlying dynamic service's DLL reference count.
+
+          The problem was not present before because the one Service
+          Repository outlived any other user objects. Now that an
+          un-loadable service can own its configuration, the sequence of
+          service finalization has been reversed.
+
+          Updated the implementation of ACE_Dynamic_Service_Dependency
+          class to ease debugging. ACE_Dynamic_Service_Dependency gets
+          initialized whenever a dependent service gets loaded, to help us
+          keep our access to dependent instances after their DLL is gone
+          (by upping the ref count on the DLL).
+
+          Updated usage of gestalt's instance() to current(). Removed
+          unnecessary comments.
+
+        * ace/Global_Macros.h:
+
+          Changed the ACE_STATIC_SVC_DEFINE to use the new
+          ACE_Service_Config::insert () method, which allows to streamline
+          the Service Configuration interface and promote hiding the
+          storage used for the static service descriptors.
+
+        * ace/Parse_Node.h:
+        * ace/Parse_Node.cpp:
+
+          Changes to aid in keeping track of the gestalt, while deep in
+          the guts of the svc.conf parser.
+
+          Replaced the ACE_Service_Gestalt & in the method signatures with
+          ACE_Service_Gestalt * to unify the interfaces.
+
+          Updated the static function node's logic to use only
+          ACE_Service_Gestalt public members and to no longer rely on
+          knowledge about the internal storage representation of service
+          repository.
+
+          Removed a static_cast<> in ACE_Static_Function_Node::symbol()
+          that was causing problems on some platforms. It was not even
+          necessary as both sides were of the same type.
+
+        * ace/Service_Config.{h,inl,cpp}:
+
+          This separates the responsibilities between the service gestalt,
+          which represents an _instance_ of configuration information, and
+          the service config, which represents a special, process-wide,
+          global configuration repository. Since both these entities
+          represent the same concept - service configuration state, but
+          from different aspects, the ACE_Service_Config now inherits
+          (publicly) from ACE_Service_Gestalt.
+
+          Lots of instance-related code moved to ACE_Service_Gestalt
+          Replaced the use of char with ACE_ANTI_TCHAR and the appropriate
+          ACE_TEXT_* macros.
+
+          Moved the parsing of command-line options, pertaining to the
+          process as a whole, here - in the parse_args_i () (protected,
+          virtual).
+
+          In order to resolve a problem caused by the inability of a
+          dependent static service to determine which gestalt they need to
+          register with, the concept of "current" was separated from the
+          "global" gestalt. The current gestalt is pointed to by a
+          pointer, stored in thread-specific storage (TSS) and manipulated
+          by the ACE_Service_Config_Guard class that implements the
+          "resource acquisition is initialization" idiom.
+
+          Fixed an error in the separation of responsibilities between the
+          instance gestalt and the global (ubergestalt), during
+          initialization.  The bug can cause infinite recursion, when
+          initializing an ORB, housed in a dynamic service. The singleton
+          gestalt (i.e. ACE_Service_Config) must be initialized through
+          open_i(), before open_i() can proceed initializing the specific
+          gestalt instance. The difficulty is in that some use cases
+          reverse the order of initialization by calling
+          ACE_Service_Config::open () first and then, at some point call
+          the instance gestalt open_i(). The solution is to use the
+          is_initialized_ member together with an explicit call to
+          ACE_Service_Config::global()->open_i().  To ease debugging of
+          the process of registering static service, I have changes the
+          ACE_Service_Config::static_svcs() to return
+          ACE_Service_Gestalt::instance (), instead. Thus all the
+          ACE_STATIC_SVC* macros are still working (no need to change
+          existing code), but now there is a convenient place to debug -
+          see the newly added ACE_Service_Gestalt::insert () method.  The
+          header file no longer declares ACE_STATIC_SVCS,
+          ACE_STATIC_SVCS_ITERATOR, ACE_SVC_QUEUE and
+          ACE_SVC_QUEUE_ITERATOR. Those are now protected typedefs in
+          ACE_Service_Gestalt, where they are actually used.
+
+          Added new insert () method to use instead of the sequence
+          static_svc ()->insert () which unnecessary exposes the internal
+          storage structure of Service Configurator.  Made no_static_svcs_
+          an instance member, instead of a class (static) member, thus
+          providing for ability to set it per instance, not globally.
+
+          Added default values for open_i() and declared private copy ctor
+          and assignment operator for ACE_Service_Config_Guard, since it
+          is not intended to be copied.
+
+          Similarly, moved the parts of the open_i() functionality that
+          did not belong in every instance of the gestalt.
+          ACE_Service_Config is again a process-wide Singleton,registered
+          with ACE_Object_Manager.
+
+          Eliminated old #if 0-ed code in Service_Config.cpp.
+
+        * ace/Service_Gestalt.h:
+        * ace/Service_Gestalt.inl:
+        * ace/Service_Gestalt.cpp:
+
+          Encapsulates the idea of Service Configuration repository, or
+          configuration context.
+
+          Changed open_i to be able to detect if it is working on the
+          special, process-wide instance (ubergestalt) or a "plain"
+          gestalt instance, since there are things that must only be done
+          once per process - like signal handler, logging key and
+          daemon-ization of the whole process.
+
+          Added an ignore_static_svcs parameter to
+          ACE_Service_Gestalt::open_i in order to preserve the prior
+          behavior of the singleton ACE_Service_Gestalt instance. Even
+          though its no_static_svcs_ member was being initialized with 1,
+          some clients (TAO) needs to be able to override it. Since now a
+          call to open_i on an instance gestalt may precede in time the
+          call to open_i on the ubergestalt, we need a mechanism to allow
+          the no_static_svcs_ value to be overridden.
+
+          Added the insert()'s implementation (described above).  Added a
+          singleton() method to return the process-wide gestalt singleton
+          (or ubergestalt?:). Used in open_i() to account for the fact
+          that now a Service Gestalt may be called to open () prior to
+          open () on the singleton instance, which would typically contain
+          the bulk of the static service object descriptors.
+
+          There was a problem with "hybrid" service objects, i.e. dynamic
+          SO which contains static SO (dependent services).  The dependent
+          services are typically registered via static ctor or static
+          initializer at the point of loading of the dynamic SO's DLL.  As
+          such, they end up registering before the dynamic SO.  Upon
+          finalization of the service repository, the dynamic SO is
+          finalized first, thus unloading its DLL and unmapping the TEXT
+          segment, where the dependent static services code is.  When
+          next, the static SO is to be finalized its memory is no longer
+          at valid address.  The change ensures the dynamic service is
+          registered *before* its dependent static services and will
+          therefore be finalized last.  The solution is based upon the
+          concept of forward declaring a dynamic service, named after the
+          configuration file being processed.  Before processing a file,
+          we simply check for an existing service with the same name and
+          "pass" if we find one.
+
+          Fixed the ACE_Service_Config_Guard's detection of the case where
+          the forward service declaration was not replaced by a proper
+          declaration as expected. It now properly removes the forward
+          decl, not the "good" instance.
+
+          Cleared up the TSS management issue, causing executable to crash
+          on startup. The problem was due to an order-of-instantiation
+          issue, involving the TSS-based pointer to the current
+          gestalt. Used ACE_Object_Manager's shutting_down and starting_up
+          methods to determine if it is safe to use the static ACE_TSS
+          instance.
+
+          Added const-ness for find().  Removed prototypes for initialize,
+          resume, suspend and remove that used plain char type and
+          conditionally compiled in only for WinCE and
+          ACE_USES_WCHAR. Service_Config still declares and defines these
+          (using ACE_ANTI_TCHAR). Updated to resolve problems when built
+          with ACE_USES_WCHAR.
+
+          Declared private copy ctor and assignment operator for
+          ACE_Service_Gestalt and ACE_Service_Type_Factory, since their
+          instances are not intended to be copied.  Added an
+          ACE_UNIMPLEMENTED_FUNC macro for the copy-ctor and assignment
+          operator of ACE_Service_Type_Factory.
+
+          Reorganized to streamline the header file and remove unnecessary
+          declarations and to add a decl for find_static_svc_descriptor().
+
+          Changed the open() method's implementation to incorporate the
+          additional parameter for open_i().
+
+          Added the new find_static_svc_descriptor() member, which allows
+          ACE_Static_Function_Node to not need to know how the static
+          services are registered in the service repository.
+
+        * ace/Service_Object.h:
+        * ace/Service_Object.inl:
+        * ace/Service_Object.cpp:
+
+          Exposed the dll_ member through dll () const method because the
+          reference is needed by the new ACE_Dynamic_Service_Dependency
+          class. Fixed the dump () method.
+
+        * ace/Service_Repository.h:
+        * ace/Service_Repository.cpp:
+
+          Added const-ness for the find* () methods. Added debugging.  The
+          remove method changes the order of services registrations in the
+          repository, which may break the Service Repository's invariant,
+          imposed by the need to correctly finalize dynamic services with
+          their own static services.
+
+          For example, consider a case where a static service (S0) is
+          registered in the repository. Then a DLL-based service (D1)
+          registers its own static service (S1). So far the order is
+          "finalization-compatible": S0 < D1 < S1, i.e. services will be
+          finalized in reverse order and D1's DLL will still be available
+          when finalizing S1.  Now let's remove (S0). Currently, after
+          this operation the repository end up in this order: S1 < D1,
+          which is trivially not finalization-compatible.
+
+          Instead of replacing the pointer with the last ptr to a svc in
+          the array (repository) and then decrementing the current size of
+          the repo, the solution actually shifts left the rest of the
+          array.
+
+        * ace/Service_Types.cpp:
+        * ace/Shared_Object.cpp:
+
+          Removed some and updated existing debug statements. Eliminated
+          dead partial instantiation code.
+
+        * ace/Svc_Conf.y:
+        * ace/Svc_Conf.h:
+        * ace/Svc_Conf_Tokens.h:
+        * ace/Svc_Conf_y.cpp:
+
+          Changed to allow propagation of the knowledge about which
+          gestalt is currently being used for service registrations.
+
+          Factored the ACE_Svc_Conf_Param class out in its own translation
+          unit.
+
+        * ace/Svc_Conf_Param.h:
+
+          Replaced the ACE_Service_Gestalt & in the method signatures with
+          ACE_Service_Gestalt *
+
+        * ace/svcconf.mpb:
+
+          Updated the svcconf.mpb rule to allow building with Bison 2.0
+          and up. The change adds #ifdef/#endif around the generated
+          header file. A YYSTYPE_IS_DECLARED define is added in order to
+          make sure the token declarations from the Svc_Conf_Tokens.h are
+          used instead of those generated in the Svc_Conf_y.cpp file.
+
+          Added the new Dynamic_Service_Dependency.* files.
+
+        * bin/tao_orb_tests.lst:
+
+          Adding the new tests to the automated test suite to run during
+          the nightly builds.
+
+Wed Apr 26 17:13:57 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * bin/tao_orb_tests.lst:
+          Added test for Parallel_Connect_Strategy. This test will take
+          about 9 minutes to run to completion.
+
+Wed Apr 26 14:22:31 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * bin/tao_orb_tests.lst:
+          Added tests for new POA features.
+
+        * bin/MakeProjectCreator/config/endpointpolicy.mpb:
+          Applications wishing to use the TAO EndpointPolicy should add
+          this base project to their MPC files. This will include
+          libTAO_EndpointPolicy in their link lines.
+
+Wed Apr 26 14:10:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_hpux_kcc.GNU:
+        * include/makeinclude/platform_irix6.x_kcc.GNU:
+        * include/makeinclude/platform_linux_kcc.GNU:
+        * include/makeinclude/platform_osf1_4.x_kcc.GNU:
+        * include/makeinclude/platform_sunos5_kcc.GNU:
+        * include/makeinclude/platform_tru64_kcc.GNU:
+          Removed these files which are for the KAI C++ compiler. This
+          compiler doesn't exist anymore and full support for KAI C++
+          has been removed now from ACE/TAO. See bugzilla bug 2007
+
+Wed Apr 26 13:03:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Added TAO/tests/POA/Bug_2511_Regression
+
+Wed Apr 26 12:52:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Process_Manager.cpp:
+          Fixed fuzz errors and use const when possible
+
+Wed Apr 26 12:02:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/CDR_Test.cpp:
+          Boolean is now size 1 or bigger, the marshaling code will take
+          care that a Boolean is marshaled as octet of size 1
+
+Wed Apr 26 11:28:28 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * bin/tao_orb_tests.lst:
+          Added TAO/tests/OBV/truncatable.
+
+Wed Apr 26 10:05:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Added TAO/tests/OBV
+
+Wed Apr 26 09:56:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Added TAO/tests/Portable_Interceptors/Bug_2510_Regression
+
+Wed Apr 26 07:21:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_vxworks5.5.x.GNU:
+          Increased template-depth to 50, hopefully this is large enough to
+          also build CIAO
+
+Tue Apr 25 16:44:04 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/CDR_Stream.h:
+        * ace/CDR_Stream.cpp:
+          Added code to support rewinding the output CDR to some previous
+          location and updating a value there. This is required to support
+          marshaling offset values were the target of the offset is not
+          known until the final offset target is actually reached.
+
+Tue Apr 25 13:50:12 UTC 2006  Martin Corino  <mcorino@remedy.nl>
+
+        * tests/Signal_Test.cpp:
+          Fixed this test for (modern) Linux and Solaris at least.
+          The crux is blocking signals before calling sigwait() when doing
+          synchronous signal handling.
+
+Tue Apr 25 09:35:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Base_Thread_Adapter.h:
+        * ace/Cleanup.h:
+          Fixed some errors I made
+
+Tue Apr 25 09:23:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE-INSTALL.html:
+          Updated supported platforms and use vc8 for the MPC examples
+
+Tue Apr 25 08:49:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/CDR_Base.h:
+          Always use bool for Boolean, see bugzilla 2514 for more info
+
+Tue Apr 25 06:33:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Log_Msg.h:
+          Put back ACE_TSS_CLEANUP_NAME that got lost by accident with the
+          vc6 cleanup. Thanks to Olli Savia for reporting this.
+
 Mon Apr 24 17:39:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/run_test.lst:

@@ -70,49 +70,50 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace CORBA
 {
-  
+
   // TAO_IDL - Generated from
   // c:\projects\ace_cvs\ace_wrappers\tao\tao_idl\be\be_visitor_valuebox/valuebox_ch.cpp:52
 
 #if !defined (_CORBA_STRINGVALUE_CH_)
 #define _CORBA_STRINGVALUE_CH_
-  
+
   class StringValue;
-  
+
   typedef
     TAO_Value_Var_T<
         StringValue
       >
     StringValue_var;
-  
+
   typedef
     TAO_Value_Out_T<
         StringValue
       >
     StringValue_out;
-  
+
   class TAO_Valuetype_Export StringValue
     : public virtual CORBA::DefaultValueRefCountBase
   {
   public:
-    
+
     static StringValue* _downcast (CORBA::ValueBase *);
     CORBA::ValueBase * _copy_value (void);
-    
+
     virtual const char* _tao_obv_repository_id (void) const;
-    
+    virtual void _tao_obv_truncatable_repo_ids (Repository_Id_List &) const;
+
     static const char* _tao_obv_static_repository_id (void);
-    
+
     static CORBA::Boolean _tao_unmarshal (
         TAO_InputCDR &,
         StringValue *&
       );
-    
-    
-    
+
+
+
     // TAO_IDL - Generated from
     // c:\projects\ace_cvs\ace_wrappers\tao\tao_idl\be\be_visitor_valuebox/valuebox_ch.cpp:403
-    
+
     // constructors
     StringValue (void);
     StringValue (CORBA::Char * val);
@@ -121,95 +122,97 @@ namespace CORBA
     StringValue (const StringValue& val);
     // assignment operators
     StringValue& operator= (CORBA::Char * val);
-    
+
     StringValue& operator= (const CORBA::Char * val);
-    
+
     StringValue& operator= (const CORBA::String_var& var);
-    
+
     // accessor
     const CORBA::Char * _value (void) const;
-    
+
     // modifiers
     void _value (CORBA::Char * val);
     void _value (const CORBA::Char * val);
     void _value (const CORBA::String_var& var);
-    
+
     // access to the boxed value for method signatures
     const CORBA::Char * _boxed_in (void) const;
     CORBA::Char *& _boxed_inout (void);
     CORBA::Char *& _boxed_out (void);
     // allows access and modification using a slot.
     char & operator[] (CORBA::ULong slot);
-    
+
     // allows only accessing thru a slot.
     char operator[] (CORBA::ULong slot) const;
-    
+
   private:
     CORBA::String_var _pd_value;
-    
-    
+
+
     // TAO_IDL - Generated from
     // c:\projects\ace_cvs\ace_wrappers\tao\tao_idl\be\be_visitor_valuebox/valuebox_ch.cpp:115
-  
+
   protected:
     virtual ~StringValue (void);
     virtual CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
     virtual CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
-    
+    virtual CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const;
+
   private:
     void operator= (const StringValue & val);
-    
+
   };
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // c:\projects\ace_cvs\ace_wrappers\tao\tao_idl\be\be_visitor_typecode/typecode_decl.cpp:44
-  
+
   extern TAO_Valuetype_Export ::CORBA::TypeCode_ptr const _tc_StringValue;
-  
+
   // TAO_IDL - Generated from
   // c:\projects\ace_cvs\ace_wrappers\tao\tao_idl\be\be_visitor_valuebox/valuebox_ch.cpp:52
 
 #if !defined (_CORBA_WSTRINGVALUE_CH_)
 #define _CORBA_WSTRINGVALUE_CH_
-  
+
   class WStringValue;
-  
+
   typedef
     TAO_Value_Var_T<
         WStringValue
       >
     WStringValue_var;
-  
+
   typedef
     TAO_Value_Out_T<
         WStringValue
       >
     WStringValue_out;
-  
+
   class TAO_Valuetype_Export WStringValue
     : public virtual CORBA::DefaultValueRefCountBase
   {
   public:
-    
+
     static WStringValue* _downcast (CORBA::ValueBase *);
     CORBA::ValueBase * _copy_value (void);
-    
+
     virtual const char* _tao_obv_repository_id (void) const;
-    
+    virtual void _tao_obv_truncatable_repo_ids (Repository_Id_List &) const;
+
     static const char* _tao_obv_static_repository_id (void);
-    
+
     static CORBA::Boolean _tao_unmarshal (
         TAO_InputCDR &,
         WStringValue *&
       );
-    
-    
-    
+
+
+
     // TAO_IDL - Generated from
     // c:\projects\ace_cvs\ace_wrappers\tao\tao_idl\be\be_visitor_valuebox/valuebox_ch.cpp:403
-    
+
     // constructors
     WStringValue (void);
     WStringValue (CORBA::WChar * val);
@@ -218,51 +221,52 @@ namespace CORBA
     WStringValue (const WStringValue& val);
     // assignment operators
     WStringValue& operator= (CORBA::WChar * val);
-    
+
     WStringValue& operator= (const CORBA::WChar * val);
-    
+
     WStringValue& operator= (const CORBA::WString_var& var);
-    
+
     // accessor
     const CORBA::WChar * _value (void) const;
-    
+
     // modifiers
     void _value (CORBA::WChar * val);
     void _value (const CORBA::WChar * val);
     void _value (const CORBA::WString_var& var);
-    
+
     // access to the boxed value for method signatures
     const CORBA::WChar * _boxed_in (void) const;
     CORBA::WChar *& _boxed_inout (void);
     CORBA::WChar *& _boxed_out (void);
     // allows access and modification using a slot.
     CORBA::WChar & operator[] (CORBA::ULong slot);
-    
+
     // allows only accessing thru a slot.
     CORBA::WChar operator[] (CORBA::ULong slot) const;
-    
+
   private:
     CORBA::WString_var _pd_value;
-    
-    
+
+
     // TAO_IDL - Generated from
     // c:\projects\ace_cvs\ace_wrappers\tao\tao_idl\be\be_visitor_valuebox/valuebox_ch.cpp:115
-  
+
   protected:
     virtual ~WStringValue (void);
     virtual CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
     virtual CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
-    
+    virtual CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const;
+
   private:
     void operator= (const WStringValue & val);
-    
+
   };
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // c:\projects\ace_cvs\ace_wrappers\tao\tao_idl\be\be_visitor_typecode/typecode_decl.cpp:44
-  
+
   extern TAO_Valuetype_Export ::CORBA::TypeCode_ptr const _tc_WStringValue;
 
 // TAO_IDL - Generated from
@@ -324,5 +328,3 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #include /**/ "ace/post.h"
 
 #endif /* ifndef */
-
-

@@ -113,6 +113,20 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
       << "return this->_tao_obv_static_repository_id ();" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
+  *os << "void" << be_nl
+      << node->name () << "::_tao_obv_truncatable_repo_ids (Repository_Id_List& ids) const" << be_nl
+      << "{" << be_idt_nl
+      << "ids.push_back (this->_tao_obv_static_repository_id ());";
+
+  if (node->truncatable ())
+    {
+      *os << be_nl;
+      *os << node->inherits_concrete ()->name () << "::_tao_obv_truncatable_repo_ids (ids);" << be_uidt_nl;
+      *os << "}" << be_nl << be_nl;
+    }
+  else
+    *os << be_uidt_nl << "}" << be_nl << be_nl;
+
   if (be_global->any_support ())
     {
       *os << "void" << be_nl
@@ -143,10 +157,12 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
   if (!node->is_abstract () && !is_an_amh_exception_holder)
     {
       // The virtual _tao_marshal_v method.
-      *os << "::CORBA::Boolean " << node->name ()
-          << "::_tao_marshal_v (TAO_OutputCDR & strm) const"
-          << be_nl
+      *os << "::CORBA::Boolean " << be_nl
+          << node->name ()
+          << "::_tao_marshal_v (TAO_OutputCDR & strm) const" << be_nl
           << "{" << be_idt_nl
+          << "TAO_ChunkInfo ci(this->is_truncatable_ || this->chunking_);"
+          << be_nl
           << "return ";
 
       if (node->opt_accessor ())
@@ -156,21 +172,24 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
 
           *os << scope->name () << "::"
               << node->local_name ()
-              << "::_tao_marshal_state (strm);" << be_uidt_nl;
+              << "::_tao_marshal_state (strm, ci);" << be_uidt_nl;
         }
       else
         {
           *os << "this->_tao_marshal__" << node->flat_name ()
-              << " (strm);" << be_uidt_nl;
+              << " (strm, ci);" << be_uidt_nl;
         }
 
       *os << "}" << be_nl << be_nl;
 
       // The virtual _tao_unmarshal_v method.
-      *os << "::CORBA::Boolean " << node->name ()
+      *os << "::CORBA::Boolean " << be_nl
+          << node->name ()
           << "::_tao_unmarshal_v (TAO_InputCDR & strm)"
           << be_nl
           << "{" << be_idt_nl
+          << "TAO_ChunkInfo ci(this->is_truncatable_ || this->chunking_ ,1);"
+          << be_nl
           << "return ";
 
       if (node->opt_accessor ())
@@ -180,15 +199,25 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
 
           *os << scope->name () << "::"
               << node->local_name ()
-              <<"::_tao_unmarshal_state (strm);" << be_uidt_nl;
+              <<"::_tao_unmarshal_state (strm,ci);" << be_uidt_nl;
         }
       else
         {
           *os << "this->_tao_unmarshal__" << node->flat_name ()
-              << " (strm);" << be_uidt_nl;
+              << " (strm,ci);" << be_uidt_nl;
         }
 
       *os << "}" << be_nl << be_nl;
+
+      *os << "::CORBA::Boolean " << be_nl
+          << node->name ()
+          << "::_tao_match_formal_type (ptrdiff_t formal_type_id) const"
+          << be_nl
+          << "{" << be_idt_nl
+          << "return formal_type_id == reinterpret_cast<ptrdiff_t> ("
+          << node->name() << "::_downcast);" << be_uidt_nl
+          << "}" << be_nl << be_nl;
+
     }
   else if (is_an_amh_exception_holder)
     {
@@ -213,19 +242,28 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
           << "return true;" << be_uidt_nl
           << "}" << be_nl << be_nl;
 
+      // The virtual _tao_match_formal_type method.
+      *os << "::CORBA::Boolean " << be_nl
+          << node->name ()
+          << "::_tao_match_formal_type (ptrdiff_t ) const"
+          << be_nl
+          << "{" << be_idt_nl
+          << "return 0;"<< be_uidt_nl
+          << "}" << be_nl << be_nl;
+
 
       if (!node->opt_accessor () && !node->is_abstract ())
         {
           *os << "::CORBA::Boolean" << be_nl
               << node->name () << "::_tao_marshal__" << node->flat_name ()
-              << " (TAO_OutputCDR &) const" << be_nl
+              << " (TAO_OutputCDR &, TAO_ChunkInfo&) const" << be_nl
               << "{" << be_idt_nl
               << "return true;" << be_uidt_nl
               << "}" << be_nl << be_nl;
 
           *os << "::CORBA::Boolean" << be_nl
               << node->name () << "::_tao_unmarshal__" << node->flat_name ()
-              << " (TAO_InputCDR &)" << be_nl
+              << " (TAO_InputCDR &, TAO_ChunkInfo&)" << be_nl
               << "{" << be_idt_nl
               << "return true;" << be_uidt_nl
               << "}" << be_nl << be_nl;
@@ -241,35 +279,20 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
       << "::CORBA::ValueBase *base = 0;" << be_nl
-      << "::CORBA::ValueFactory_var factory;" << be_nl
       << "::CORBA::Boolean retval =" << be_idt_nl
       << "::CORBA::ValueBase::_tao_unmarshal_pre (" << be_idt << be_idt_nl
       << "strm," << be_nl
-      << "factory.out ()," << be_nl
       << "base," << be_nl
       << node->local_name () << "::_tao_obv_static_repository_id ()" << be_uidt_nl
       << ");" << be_uidt << be_uidt_nl << be_nl
-      << "if (retval == false)" << be_idt_nl
-      << "{" << be_idt_nl
-      << "return false;" << be_uidt_nl
-      << "}" << be_uidt_nl << be_nl
-      << "if (factory.in () != 0)" << be_idt_nl
-      << "{" << be_idt_nl
-      << "base = factory->create_for_unmarshal ();" << be_nl << be_nl
-      << "if (base == 0)" << be_idt_nl
-      << "{" << be_idt_nl
-      << "return false;  // %! except.?" << be_uidt_nl
-      << "}" << be_uidt_nl << be_nl
-      << "retval = base->_tao_unmarshal_v (strm);" << be_nl << be_nl
-      << "if (retval == false)" << be_idt_nl
-      << "{" << be_idt_nl
-      << "return false;" << be_uidt_nl
-      << "}" << be_uidt << be_uidt_nl
-      << "}" << be_uidt_nl << be_nl
+      << "if (!retval)" << be_idt_nl
+      << "return false;" << be_uidt_nl << be_nl
+      << "if (base != 0 && ! base->_tao_unmarshal_v (strm))" << be_idt_nl
+      << "return false;" << be_uidt_nl << be_nl
       << "// Now base must be null or point to the unmarshaled object." << be_nl
       << "// Align the pointer to the right subobject." << be_nl
       << "new_object = " << node->local_name () << "::_downcast (base);" << be_nl
-      << "return retval;" << be_uidt_nl
+      << "return true;" << be_uidt_nl
       << "}";
 
   // If we inherit from CORBA::Object and/or CORBA::AbstractBase

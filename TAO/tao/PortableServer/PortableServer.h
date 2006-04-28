@@ -41,6 +41,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #include "tao/PortableServer/PortableServerC.h"
 #undef TAO_PORTABLESERVER_SAFE_INCLUDE
 #include "tao/PortableServer/POAManagerC.h"
+#include "tao/PortableServer/POAManagerFactoryC.h"
 #include "tao/PortableServer/PS_CurrentC.h"
 #include "tao/PortableServer/PortableServer_Functions.h"
 #include "tao/PortableServer/PortableServer_WFunctions.h"

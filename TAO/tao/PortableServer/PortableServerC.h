@@ -197,6 +197,25 @@ namespace PortableServer
 
 #endif /* end #if !defined */
 
+#if !defined (_PORTABLESERVER_POAMANAGERFACTORY__VAR_OUT_CH_)
+#define _PORTABLESERVER_POAMANAGERFACTORY__VAR_OUT_CH_
+  
+  class POAManagerFactory;
+  typedef POAManagerFactory *POAManagerFactory_ptr;
+  
+  typedef
+    TAO_Objref_Var_T<
+        POAManagerFactory
+      >
+    POAManagerFactory_var;
+  
+  typedef
+    TAO_Objref_Out_T<
+        POAManagerFactory
+      >
+    POAManagerFactory_out;
+
+#endif /* end #if !defined */
   // TAO_IDL - Generated from
   // be\be_interface.cpp:598
 
@@ -972,6 +991,13 @@ namespace PortableServer
     // be\be_visitor_operation/operation_ch.cpp:46
 
     virtual ::PortableServer::POAManager_ptr the_POAManager (
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
+
+    virtual ::PortableServer::POAManagerFactory_ptr the_POAManagerFactory (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((

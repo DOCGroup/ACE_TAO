@@ -29,18 +29,8 @@ namespace XMLSchema
   typedef XSCRT::FundamentalType<ACE_INT32> int_;
   typedef XSCRT::FundamentalType<ACE_UINT32> unsignedInt;
 
-  //@@ VC6
-#if defined (_MSC_VER) && (_MSC_VER < 1300)
-
-  typedef XSCRT::FundamentalType<__int64> long_;
-  typedef XSCRT::FundamentalType<unsigned __int64> unsignedLong;
-
-#else
-
   typedef XSCRT::FundamentalType<ACE_INT64> long_;
   typedef XSCRT::FundamentalType<ACE_UINT64> unsignedLong;
-
-#endif
 
   //@@ It would be nice to use some arbitrary-length integer class.
   //

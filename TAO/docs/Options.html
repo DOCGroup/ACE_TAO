@@ -531,11 +531,18 @@ is <code>0</code>. This option is disabled (<code>0</code>) by default.</td>
             Note: If none of the preferred interfaces apply to an outgoing connection
             then they will not be enforced.  For this option to have
             any effect, therefore, the connection through a legal preferred interface must fail.
-        </tr>
+      </tr>
       <tr>
         <td><code>-ORBKeepalive</code> <em>boolean (0|1)</em></td>
-        <td><a name="-ORBKeepalive"></a>This option allows users to
-        specify that the SO_KEEPALIVE option is set on TCP sockets.
+        <td><a name="-ORBKeepalive"></a>This option allows users to specify
+        that the SO_KEEPALIVE option is set on TCP sockets used by IIOP.
+        The default is <code>0</code> (false).
+        </td>
+      </tr>
+      <tr>
+        <td><code>-ORBDontRoute</code> <em>boolean (0|1)</em></td>
+        <td><a name="-ORBDontRoute"></a>This option allows users to specify
+        that the SO_DONTROUTE option is set on TCP sockets used by IIOP.
         The default is <code>0</code> (false).
         </td>
       </tr>
@@ -694,6 +701,16 @@ listen endpoints should be encoded into IORs when <code>-ORBUseIMR</code>
 is set. The default is true. </td>
       </tr>
       <tr>
+        <td><code>-ORBUseParallelConnects</code> <em>boolean (0|1)</em></td>
+        <td><a name="-ORBUseParallelConnects"></a>This option allows users to
+        specify the ORB attempt to connect simultaniously to all endpoints
+        listed in profiles, rather than stepping through individual endpoints,
+        trying and possibly failing, before moving on to the next. For this
+        feature to work, the server must be using shared profiles.
+        The default is <code>0</code> (false).
+        </td>
+      </tr>
+      <tr>
         <td><code>-ORBUseSharedProfile</code> <em>boolean (0|1)</em></td>
         <td><a name="-ORBUseSharedProfile"></a>
           This option allows multiple implicit or explicit endpoints to be
@@ -704,6 +721,18 @@ is set. The default is true. </td>
           priority banded connections will continue to generate Profiles with
           <code>TAO_TAG_IIOP_ENDPOINT</code> components.
           This options is disabled by default.
+        </td>
+      </tr>
+      <tr>
+        <td><code>-ORBParallelConnectDelay</code> <em>unsigned long msec</em></td>
+        <td><a name="-ORBParallelConnectDelay"></a>When using parallel
+        connection attempts, this option defines the number of milliseconds to
+        delay when polling previously started connection attempts. If a server
+        is likely to be busy, this client side option will help avoid creating
+        redundant connections that must be accepted, only to be closed a moment
+        later. However, if the first reachable endpoint is far down the list,
+        this option will increase the delay before that endpoint is reached.
+        The default is <code>0</code>.
         </td>
       </tr>
       <tr>

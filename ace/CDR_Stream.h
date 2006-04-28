@@ -219,6 +219,11 @@ public:
   ACE_CDR::Boolean write_double (const ACE_CDR::Double &x);
   ACE_CDR::Boolean write_longdouble (const ACE_CDR::LongDouble &x);
 
+  // Overwrite the stream at the specified location that is previously
+  // written as a long type placeholder. There is no alignment required
+  // since the alignment is done before writing the long type placeholder.
+  ACE_CDR::Boolean replace (ACE_CDR::Long x, char* loc);
+
   /// For string we offer methods that accept a precomputed length.
   ACE_CDR::Boolean write_string (const ACE_CDR::Char *x);
   ACE_CDR::Boolean write_string (ACE_CDR::ULong len,
@@ -393,7 +398,13 @@ public:
   /// Set the underlying GIOP version..
   int get_version (ACE_CDR::Octet &major,
                    ACE_CDR::Octet &minor);
+
 private:
+
+  // Find the message block in the chain of message blocks
+  // that the provide location locates.
+  ACE_Message_Block* find (char* loc);
+
   /// disallow copying...
   ACE_OutputCDR (const ACE_OutputCDR& rhs);
   ACE_OutputCDR& operator= (const ACE_OutputCDR& rhs);

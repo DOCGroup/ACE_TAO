@@ -613,6 +613,30 @@ ACE_OutputCDR::write_array (const void *x,
   return false;
 }
 
+
+ACE_CDR::Boolean
+ACE_OutputCDR::replace (ACE_CDR::Long x, char* loc)
+{
+  if (this->find (loc) == 0)
+    return false;
+
+#if !defined (ACE_ENABLE_SWAP_ON_WRITE)
+  *reinterpret_cast<ACE_CDR::Long*> (loc) = x;
+#else
+  if (!strm->do_byte_swap ())
+  {
+    *reinterpret_cast<ACE_CDR::Long *> (loc) = x;
+  }
+  else
+  {
+    ACE_CDR::swap_4 (reinterpret_cast<const char*> (&x), loc);
+  }
+#endif /* ACE_ENABLE_SWAP_ON_WRITE */
+
+  return true;
+}
+
+
 ACE_CDR::Boolean
 ACE_OutputCDR::write_boolean_array (const ACE_CDR::Boolean* x,
                                     ACE_CDR::ULong length)
@@ -631,6 +655,23 @@ ACE_OutputCDR::write_boolean_array (const ACE_CDR::Boolean* x,
 
   return this->good_bit ();
 }
+
+
+ACE_Message_Block*
+ACE_OutputCDR::find (char* loc)
+{
+  ACE_Message_Block* mb = 0;
+  for (mb = &this->start_; mb != 0; mb = mb->cont ())
+  {
+    if (loc <= mb->wr_ptr () && loc >= mb->rd_ptr ())
+    {
+      break;
+    }
+  }
+
+  return mb;
+}
+
 
 // ****************************************************************
 
