@@ -1,3 +1,12 @@
+Fri Apr 28 14:03:50 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/Dynamic_Service.h:
+        * ace/Parse_Node.h:
+
+          Fixed the usage of ACE_UNIMPLEMENTED_FUNC to remove the trailing
+          semicolon. It was causing build errors on compilers that define
+          the macro as empty.
+
 Fri Apr 28 13:55:01 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * ace/Service_Gestalt.h:
