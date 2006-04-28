@@ -1,3 +1,9 @@
+Fri Apr 28 12:23:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-openvms.h:
+          Removed comments, macros are documented in generally, added
+          ACE_LACKS_PERFECT_MULTICAST_FILTERING
+
 Fri Apr 28 11:11:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/PerlACE/Process_VMS.pm:
