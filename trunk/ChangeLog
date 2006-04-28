@@ -1,3 +1,11 @@
+Fri Apr 28 13:23:57 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/Service_Config.h:
+
+          Updated the declaration of current_ to match the definition in
+          its use of ACE_TSS_TYPE macro, as they are not equivalent for
+          a single-threaded builds.
+
 Fri Apr 28 13:21:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Process_Mutex_Test.cpp:
