@@ -234,7 +234,8 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 namespace
 {
 
-  ///
+  /// Open services, belonging to all gestalt instances within the
+  /// process
 
   int
   open_global_services_i (ACE_Service_Gestalt * theone,
@@ -267,14 +268,23 @@ namespace
       int global_svc_config_argc = global_svc_config_argv.length ();
       if (!skip_service_config_open)
       {
+        bool ignore_default_svc_conf_file = false;
+#if defined (TAO_PLATFORM_SVC_CONF_FILE_NOTSUP)
+        ignore_default_svc_conf_file = true;
+#endif /* TAO_PLATFORM_SVC_CONF_FILE_NOTSUP */
+
         return theone->open (global_svc_config_argc,
-                             global_svc_config_argv.get_buffer ());
+                             global_svc_config_argv.get_buffer (),
+                             ACE_DEFAULT_LOGGER_KEY,
+                             0, // Don't ignore static services.
+                             ignore_default_svc_conf_file);
       }
       return 0;
   }
 
 
-  ///
+
+  /// Open services, belonging to the gestalt instance
 
   int
   open_private_services_i (ACE_Service_Gestalt * pcfg,
@@ -282,14 +292,14 @@ namespace
                            ACE_TCHAR ** argv,
                            bool skip_service_config_open)
   {
-#if defined (TAO_PLATFORM_SVC_CONF_FILE_NOTSUP)
-    bool ignore_default_svc_conf_file = true;
-#else
-    bool ignore_default_svc_conf_file = false;
-#endif /* TAO_PLATFORM_SVC_CONF_FILE_NOTSUP */
 
     if (skip_service_config_open)
       return 0;
+
+    bool ignore_default_svc_conf_file = false;
+#if defined (TAO_PLATFORM_SVC_CONF_FILE_NOTSUP)
+    ignore_default_svc_conf_file = true;
+#endif /* TAO_PLATFORM_SVC_CONF_FILE_NOTSUP */
 
     return pcfg->open (argc,
                        argv,
