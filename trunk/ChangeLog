@@ -1,3 +1,8 @@
+Fri Apr 28 08:06:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/run_test.lst:
+          Added Sendfile_Test
+
 Fri Apr 28 08:04:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Sendfile_Test.cpp:
