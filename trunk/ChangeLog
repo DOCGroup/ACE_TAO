@@ -1,3 +1,8 @@
+Fri Apr 28 15:49:21 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/Makefile.am:
+          Added new Service_Gestalt files to the appropriate lists.
+
 Fri Apr 28 15:42:59 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ace/Service_Config.cpp:
