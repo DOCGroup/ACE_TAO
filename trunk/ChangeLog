@@ -1,3 +1,9 @@
+Fri Apr 28 12:49:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-openvms.h:
+          Added __SIGNED_INT_TIME_T so that we get a signed time_t that
+          matches the POSIX spec that ACE expects.
+
 Fri Apr 28 12:23:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-openvms.h:
