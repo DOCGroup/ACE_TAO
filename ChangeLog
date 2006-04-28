@@ -1,3 +1,25 @@
+Thu Apr 27 21:04:08 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS_Memory.h: Allow configs to set ACE_bad_alloc to avoid
+          extending the if-elif chain here further.
+
+        * ace/config-win32-msvc.h: Regardless of MSVC version, MFC changes
+          operator new to throw CMemoryException on out-of-memory condition.
+          Version-specific settings still control the setting of
+          ACE_HAS_NEW_NOTHROW. Thanks to Mohit Kapoor <Mohit dot Kapoor at
+          siemens dot com> for this fix.
+
+        * ace/Select_Reactor_T.cpp (handle_error): HACK ALERT! Some Linux
+          kernels will return from select() with an "invalid" errno value,
+          ERESTARTNOHAND, when compiled with profiling enabled. This works
+          around the problem. This is a known kernel bug; see Red Hat Bugzilla
+          https://bugzilla.redhat.com/bugzilla/show_bug.cgi?id=161468 and
+          https://bugzilla.redhat.com/bugzilla/show_bug.cgi?id=123648 as well
+          as Riverace support issue #167 and Riverace's complaint to Red Hat,
+          support issue #17841808.
+
+        * THANKS: Added Mohit Kapoor to the Hall of Fame.
+
 Fri Apr 28 15:22:35 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * apps/JAWS2/JAWS/Concurrency.cpp: Removed unused variables.
@@ -190,7 +212,6 @@ Thu Apr 27 01:49:18 UTC 2006  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
           ACE_LOFF_T -> off_t, as above.
 
->>>>>>> 4.10215
 Wed Apr 26 22:00:21 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * ace/Parse_Node.h:
