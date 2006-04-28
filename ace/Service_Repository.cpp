@@ -18,12 +18,12 @@ ACE_RCSID (ace,
            Service_Repository,
            "$Id$")
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+  ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Service_Repository)
 
 // Process-wide Service Repository.
-ACE_Service_Repository *ACE_Service_Repository::svc_rep_ = 0;
+  ACE_Service_Repository *ACE_Service_Repository::svc_rep_ = 0;
 
 // Controls whether the Service_Repository is deleted when we shut
 // down (we can only delete it safely if we created it)!
@@ -151,28 +151,28 @@ ACE_Service_Repository::fini (void)
       // order.
 
       for (int i = this->current_size_ - 1; i >= 0; i--)
+  {
+    ACE_Service_Type *s =
+      const_cast<ACE_Service_Type *> (this->service_vector_[i]);
+
+    if (ACE::debug ())
       {
-        ACE_Service_Type *s =
-          const_cast<ACE_Service_Type *> (this->service_vector_[i]);
-
-        if (ACE::debug ())
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_LIB_TEXT ("(%P|%t) SR::fini, %@ [%d] (%d): "),
-                      this, i, this->total_size_));
-          s->dump();
-        }
-
-        // Collect any errors.
-        int ret = s->fini ();
-        if (ACE::debug ()>1)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_LIB_TEXT ("(%P|%t) SR::fini, returned %d\n"),
-                      ret));
-        }
-        retval += ret;
+        ACE_DEBUG ((LM_DEBUG,
+        ACE_LIB_TEXT ("(%P|%t) SR::fini, %@ [%d] (%d): "),
+        this, i, this->total_size_));
+        s->dump();
       }
+
+    // Collect any errors.
+    int ret = s->fini ();
+    if (ACE::debug ()>1)
+      {
+        ACE_DEBUG ((LM_DEBUG,
+        ACE_LIB_TEXT ("(%P|%t) SR::fini, returned %d\n"),
+        ret));
+      }
+    retval += ret;
+  }
     }
 
   return (retval == 0) ? 0 : -1;
@@ -309,46 +309,46 @@ ACE_Service_Repository::insert (const ACE_Service_Type *sr)
 
     // Replacing an existing entry
     if (i < this->current_size_)
-    {
-      return_value = 0;
-      // Check for self-assignment...
-      if (sr != this->service_vector_[i])
       {
-        s = const_cast<ACE_Service_Type *> (this->service_vector_[i]);
-        this->service_vector_[i] = sr;
-      }
+  return_value = 0;
+  // Check for self-assignment...
+  if (sr != this->service_vector_[i])
+    {
+      s = const_cast<ACE_Service_Type *> (this->service_vector_[i]);
+      this->service_vector_[i] = sr;
     }
+      }
     // Adding a new entry.
     else if (i < this->total_size_)
-    {
-      this->service_vector_[i] = sr;
-      this->current_size_++;
-      return_value = 0;
-    }
+      {
+  this->service_vector_[i] = sr;
+  this->current_size_++;
+  return_value = 0;
+      }
 
     if (ACE::debug ())
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) SR::insert, repo=%@ [%d] (size=%d): ",
-                  this,
-                  i,
-                  this->total_size_));
-      sr->dump();
-    }
+      {
+  ACE_DEBUG ((LM_DEBUG,
+        "(%P|%t) SR::insert, repo=%@ [%d] (size=%d): ",
+        this,
+        i,
+        this->total_size_));
+  sr->dump();
+      }
   }
 
   // Delete outside the lock
   if (s != 0)
-  {
-    if (ACE::debug () > 1)
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) SR::insert, repo=%@ - destroying : ",
-                  this));
-      s->dump();
-    }
-    delete s;
+      if (ACE::debug () > 1)
+  {
+    ACE_DEBUG ((LM_DEBUG,
+          "(%P|%t) SR::insert, repo=%@ - destroying : ",
+          this));
+    s->dump();
   }
+      delete s;
+    }
 
   if (return_value == -1)
     ACE_OS::last_error (ENOSPC);
@@ -437,7 +437,7 @@ ACE_Service_Repository::remove (const ACE_TCHAR name[], ACE_Service_Type **ps)
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Service_Repository_Iterator)
 
-void
+  void
 ACE_Service_Repository_Iterator::dump (void) const
 {
 #if defined (ACE_HAS_DUMP)
@@ -450,8 +450,8 @@ ACE_Service_Repository_Iterator::dump (void) const
 // perform destructive operations on elements during this iteration...
 
 ACE_Service_Repository_Iterator::ACE_Service_Repository_Iterator
-  (ACE_Service_Repository &sr,
-   int ignr_suspended)
+(ACE_Service_Repository &sr,
+ int ignr_suspended)
   : svc_rep_ (sr),
     next_ (-1),
     ignore_suspended_ (ignr_suspended)
@@ -495,8 +495,8 @@ ACE_Service_Repository_Iterator::advance (void)
 
   for (++this->next_;
        this->next_ < this->svc_rep_.current_size_
-       && this->ignore_suspended_
-       && this->svc_rep_.service_vector_[this->next_]->active () == 0;
+   && this->ignore_suspended_
+   && this->svc_rep_.service_vector_[this->next_]->active () == 0;
        this->next_++)
     continue;
 

@@ -18,10 +18,10 @@ ACE_Service_Config::open (const ACE_TCHAR program_name[],
 {
   ACE_TRACE ("ACE_Service_Config::open");
   return ACE_Service_Config::current()->open (program_name,
-                                     logger_key,
+                logger_key,
                                               ignore_static_svcs,
-                                     ignore_default_svc_conf,
-                                     ignore_debug_flag);
+                ignore_default_svc_conf,
+                ignore_debug_flag);
 }
 
 
@@ -36,10 +36,10 @@ ACE_Service_Config::open (int argc,
   ACE_TRACE ("ACE_Service_Config::open");
   return ACE_Service_Config::current()->open (argc,
                                               argv,
-                                       logger_key,
+                logger_key,
                                               ignore_static_svcs,
-                                       ignore_default_svc_conf,
-                                       ignore_debug_flag);
+                ignore_default_svc_conf,
+                ignore_debug_flag);
 }
 
 // Handle the command-line options intended for the
@@ -121,7 +121,7 @@ ACE_Service_Config::process_directive (const ACE_Static_Svc_Descriptor &ssd,
 
 
 #if defined (ACE_HAS_WINCE) && defined (ACE_USES_WCHAR)
-  // We must provide these function to bridge Svc_Conf parser with ACE.
+// We must provide these function to bridge Svc_Conf parser with ACE.
 
 ACE_INLINE int
 ACE_Service_Config::initialize (const ACE_Service_Type *sp, ACE_ANTI_TCHAR parameters[])
