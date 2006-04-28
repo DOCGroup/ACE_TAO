@@ -145,7 +145,7 @@ public:
  * Another facet of ACE_Service_Config is that for a given thread,
  * it provides access to its current, process-global
  * ACE_Service_Gestalt instance through its curent() method.
- * 
+ *
  * @note The signal_handler_ static member is allocated by the
  * ACE_Object_Manager.  The ACE_Service_Config constructor
  * uses signal_handler_.  Therefore, if the program has any
@@ -181,14 +181,14 @@ public:
   /// memory.
   virtual ~ACE_Service_Config (void);
 
-  
+
 protected:
-  
+
   /**
    * Performs an open without parsing command-line arguments.
    * Implements whats different in the opening sequence
    * for this class, as opposed to the base class.
-   * 
+   *
    * The @a logger_key indicates where to write the logging output, which
    * is typically either a STREAM pipe or a socket address.  If
    * @a ignore_default_svc_conf_file is non-0 then the "svc.conf" file
@@ -210,11 +210,11 @@ protected:
   virtual int parse_args_i (int argc, ACE_TCHAR *argv[]);
 
 
-  
+
   /// = Static interfaces
 
 
-  
+
 protected:
 
   /// Mutator to set the (TSS) global instance. Intended for use by helper
@@ -223,7 +223,7 @@ protected:
   /// global from the point of view of the static initializers in DLLs.
   static int current (ACE_Service_Gestalt*);
 
-  
+
 public:
 
   /// If not yet initialized, creates a process-wide instance
@@ -245,7 +245,7 @@ public:
   /// service repository, for instance when dynamically loading a
   /// service from a DLL, which in turn, contains its own static services.
   static  ACE_Service_Gestalt* instance (void);
-  
+
   /**
    * Performs an open without parsing command-line arguments.  The
    * @a logger_key indicates where to write the logging output, which
@@ -351,17 +351,17 @@ public:
   // semantics for the Reactor, Service_Repository, Thread_Manager,
   // and Acceptor/Connector Strategy factory.  Other portions of the
   // system may need to access them at some point or another...
-  
+
   // = This is not strictly needed, anymore since the service configurator
   // has been refactored to allow multiple service configuration
   // instances (called gestalts). The interfaces, however were retained in for
   // the sake of maintaining source-code compatibility.
 
-  
+
   // = Accessors and mutators for process-wide Singletons.
 
   /// Returns a pointer to the list of statically linked services.
-  /// 
+  ///
   /// @deprecated - Same as instance(), but still useful in legacy code,
   /// (notably, one that can not be easily modified) which uses the following
   /// idiom for registering static services:
@@ -513,7 +513,7 @@ protected:
   /// ACE_Service_Repository.
   static int load_static_svcs (void);
 
-  
+
 private:
 
   /// True if reconfiguration occurred.
@@ -548,12 +548,12 @@ private:
   /// deallocated, but the global service repository will still "think"
   /// it must finalize the (DLL's) static services - with disastrous
   /// consequences, occurring in the post-main code (at_exit()).
-  static ACE_TSS< ACE_TSS_Type_Adapter <ACE_Service_Gestalt*> > current_;
+  static ACE_TSS_TYPE (ACE_TSS_Type_Adapter <ACE_Service_Gestalt*>) current_;
 
   /// This class needs the intimate access to be able to swap the
   /// current TSS pointer for the global Gestalt.
   friend class ACE_Service_Config_Guard;
-  
+
 };
 
 /**
