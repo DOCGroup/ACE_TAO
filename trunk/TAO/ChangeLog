@@ -1,3 +1,27 @@
+Fri Apr 28 15:14:04 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tests/ORB_Local_Config/Bunch/Service_Config_Test.UTF-16.conf:
+        * tests/ORB_Local_Config/Bunch/Service_Config_Test.UTF-16.conf.xml:
+        * tests/ORB_Local_Config/Bunch/Service_Config_Test.WCHAR_T.conf:
+        * tests/ORB_Local_Config/Bunch/Service_Config_Test.WCHAR_T.conf.xml:
+        * tests/ORB_Local_Config/Bunch/Service_Config_Test.conf:
+        * tests/ORB_Local_Config/Bunch/Service_Config_Test.conf.xml:
+
+          Moved these files to Service_Dependency, which also received the
+          code that uses these.
+
+        * tests/ORB_Local_Config/Service_Dependency/Service_Config_Test.UTF-16.conf:
+        * tests/ORB_Local_Config/Service_Dependency/Service_Config_Test.UTF-16.conf.xml:
+        * tests/ORB_Local_Config/Service_Dependency/Service_Config_Test.WCHAR_T.conf:
+        * tests/ORB_Local_Config/Service_Dependency/Service_Config_Test.WCHAR_T.conf.xml:
+        * tests/ORB_Local_Config/Service_Dependency/Service_Config_Test.conf:
+        * tests/ORB_Local_Config/Service_Dependency/Service_Config_Test.conf.xml:
+        * tests/ORB_Local_Config/Service_Dependency/Test.cpp:
+
+          Moved here the config files from the Bunch test as it may be run
+          in single threaded builds and the code that uses these config
+          files requires multiple threads.
+
 Fri Apr 28 14:51:20 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tao/TAO_Internal.cpp:
