@@ -311,13 +311,11 @@ ACE_Service_Type_Factory::ACE_Service_Type_Factory (ACE_TCHAR const *name,
   , location_ (location)
   , is_active_ (active)
 {
-  ACE_TRACE ("ACE_Service_Type_Factory::ACE_Service_Type_Factory")
 }
 
 
 ACE_Service_Type_Factory::~ACE_Service_Type_Factory (void)
 {
-  ACE_TRACE ("ACE_Service_Type_Factory::~ACE_Service_Type_Factory")
 }
 
 
@@ -337,24 +335,24 @@ ACE_Service_Type_Factory::make_service_type (ACE_Service_Gestalt *cfg) const
   if (sym != 0)
     {
       ACE_Service_Type_Impl *stp
-  = ACE_Service_Config::create_service_type_impl (this->name (),
-              this->type_,
-              sym,
-              flags,
-              gobbler);
+        = ACE_Service_Config::create_service_type_impl (this->name (),
+                                                        this->type_,
+                                                        sym,
+                                                        flags,
+                                                        gobbler);
       if (stp == 0)
-  ++yyerrno;
+        ++yyerrno;
 
       return new ACE_Service_Type (this->name (),
-           stp,
-           this->location_->dll (),
-           this->is_active_);
+                                   stp,
+                                   this->location_->dll (),
+                                   this->is_active_);
     }
   else
     {
       ACE_ERROR ((LM_ERROR,
-      ACE_LIB_TEXT ("Unable to find service: %s\n"),
-      this->name ()));
+                  ACE_LIB_TEXT ("Unable to find service: %s\n"),
+                  this->name ()));
       ++yyerrno;
       return 0;
     }
@@ -379,11 +377,11 @@ ACE_Service_Gestalt::initialize (const ACE_TCHAR *svc_name,
   if (ACE::debug () > 1)
     {
       ACE_DEBUG ((LM_DEBUG,
-      ACE_LIB_TEXT ("(%P|%t) SG::initialize - () repo=%@, ")
-      ACE_LIB_TEXT ("looking up static ")
-      ACE_LIB_TEXT ("service \'%s\' to initialize\n"),
-      this->repo_,
-      svc_name));
+                  ACE_LIB_TEXT ("(%P|%t) SG::initialize - () repo=%@, ")
+                  ACE_LIB_TEXT ("looking up static ")
+                  ACE_LIB_TEXT ("service \'%s\' to initialize\n"),
+                  this->repo_,
+                  svc_name));
     }
 
   const ACE_Service_Type *srp = 0;
@@ -393,14 +391,14 @@ ACE_Service_Gestalt::initialize (const ACE_TCHAR *svc_name,
       // process-wide repository, so check that before reporting
       // failure.
       if (this->repo_ == ACE_Service_Repository::instance ()
-    || ACE_Service_Repository::instance ()->find (svc_name, &srp) == -1)
-  {
-    ACE_ERROR_RETURN ((LM_ERROR,
-           ACE_LIB_TEXT ("(%P|%t) SG::initialize - service \'%s\'")
-           ACE_LIB_TEXT (" was not located.\n"),
-           svc_name),
-          -1);
-  }
+          || ACE_Service_Repository::instance ()->find (svc_name, &srp) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_LIB_TEXT ("(%P|%t) SG::initialize - service \'%s\'")
+                             ACE_LIB_TEXT (" was not located.\n"),
+                             svc_name),
+                            -1);
+        }
     }
 
   /// If initialization fails ...
@@ -870,6 +868,7 @@ ACE_Service_Gestalt::open_i (const ACE_TCHAR /*program_name*/[],
   // Record the current log setting upon entering this thread.
   u_long old_process_mask = log_msg->priority_mask
     (ACE_Log_Msg::PROCESS);
+
   u_long old_thread_mask = log_msg->priority_mask
     (ACE_Log_Msg::THREAD);
 
@@ -890,10 +889,10 @@ ACE_Service_Gestalt::open_i (const ACE_TCHAR /*program_name*/[],
       // If -d was included as a startup parameter, the user wants debug
       // information printed during service initialization.
       if (ACE::debug ())
-  ACE_Log_Msg::enable_debug_messages ();
+        ACE_Log_Msg::enable_debug_messages ();
       else
-  // The user has requested no debugging info.
-  ACE_Log_Msg::disable_debug_messages ();
+        // The user has requested no debugging info.
+        ACE_Log_Msg::disable_debug_messages ();
     }
 
   // See if we need to load the static services.
@@ -903,9 +902,9 @@ ACE_Service_Gestalt::open_i (const ACE_TCHAR /*program_name*/[],
   else
     {
       if (this->process_commandline_directives () == -1)
-  result = -1;
+        result = -1;
       else
-  result = this->process_directives ();
+        result = this->process_directives ();
     }
 
 
@@ -917,8 +916,8 @@ ACE_Service_Gestalt::open_i (const ACE_TCHAR /*program_name*/[],
 
     if (ignore_debug_flag == 0)
       {
-  log_msg->priority_mask (old_process_mask, ACE_Log_Msg::PROCESS);
-  log_msg->priority_mask (old_thread_mask, ACE_Log_Msg::THREAD);
+        log_msg->priority_mask (old_process_mask, ACE_Log_Msg::PROCESS);
+        log_msg->priority_mask (old_thread_mask, ACE_Log_Msg::THREAD);
       }
   }
 
@@ -1009,11 +1008,11 @@ ACE_Service_Gestalt::parse_args_i (int argc, ACE_TCHAR *argv[])
         break;
       case 'S':
         if (this->svc_queue_ == 0)
-    {
-      ACE_NEW_RETURN (this->svc_queue_,
-          ACE_SVC_QUEUE,
-          -1);
-    }
+          {
+            ACE_NEW_RETURN (this->svc_queue_,
+                            ACE_SVC_QUEUE,
+                            -1);
+          }
 
         if (this->svc_queue_->enqueue_tail (ACE_TString (getopt.opt_arg ())) == -1)
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -1048,19 +1047,19 @@ ACE_Service_Gestalt::process_directives (void)
 
       // Iterate through all the svc.conf files.
       for (ACE_SVC_QUEUE_ITERATOR iter (*this->svc_conf_file_queue_);
-     iter.next (sptr) != 0;
-     iter.advance ())
-  {
-    int r = this->process_file (sptr->fast_rep ());
+           iter.next (sptr) != 0;
+           iter.advance ())
+        {
+          int r = this->process_file (sptr->fast_rep ());
 
-    if (r < 0)
-      {
-        result = r;
-        break;
-      }
+          if (r < 0)
+            {
+              result = r;
+              break;
+            }
 
-    result += r;
-  }
+          result += r;
+        }
     }
 
   return result;
@@ -1074,11 +1073,6 @@ int
 ACE_Service_Gestalt::close (void)
 {
   ACE_TRACE ("ACE_Service_Gestalt::close");
-
-//   if (ACE::debug () > 1)
-//     ACE_DEBUG ((LM_DEBUG,
-//                 ACE_LIB_TEXT ("(%P|%t) SG::close - this=%@, repo=%@, is_opened=%d\n"),
-//                this, this->repo_, this->is_opened_));
 
   this->is_opened_--;
   if (this->is_opened_ > 0)
@@ -1111,7 +1105,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #if !defined (__ACE_INLINE__)
 #include "ace/Service_Gestalt.inl"
 #endif /* __ACE_INLINE__ */
-
 
 // Allocate a Service Manager.
 ACE_FACTORY_DEFINE (ACE, ACE_Service_Manager)

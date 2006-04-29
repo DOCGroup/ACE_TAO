@@ -1,3 +1,8 @@
+Sat Apr 29 13:58:28 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/Service_Gestalt.cpp:
+          More fuzz cleanup.
+
 Sat Apr 29 13:17:24 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ace/ACE.cpp:
