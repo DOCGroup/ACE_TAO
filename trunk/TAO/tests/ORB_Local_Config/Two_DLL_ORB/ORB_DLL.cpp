@@ -105,7 +105,9 @@ Service_Config_ORB_DLL::svc (void)
                 this->argv_->argc (),
                 this->argv_->buf ()));
 
-    int ret = this->worker_->main (this->argv_->argc (), this->argv_->argv () ACE_ENV_ARG_PARAMETER);
+    int ret = this->worker_->test_main (this->argv_->argc (),
+                                        this->argv_->argv ()
+                                        ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     ACE_DEBUG ((LM_DEBUG,
@@ -129,6 +131,3 @@ Service_Config_ORB_DLL::svc (void)
 
 // Define our service for using with the Service Configurator
 ACE_FACTORY_DEFINE (Service_Config_ORB_DLL, Service_Config_ORB_DLL)
-
-
-

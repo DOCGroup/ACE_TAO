@@ -45,7 +45,7 @@ Client_Worker::parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-Client_Worker::main (int argc, ACE_TCHAR *argv[] ACE_ENV_ARG_DECL)
+Client_Worker::test_main (int argc, ACE_TCHAR *argv[] ACE_ENV_ARG_DECL)
 {
 
   ACE_Argv_Type_Converter cvt (argc, argv);
