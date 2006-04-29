@@ -1,3 +1,9 @@
+Sat Apr 29 13:13:20 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/ORB_Local_Config/Bug_1459/Test.cpp:
+        * tests/ORB_Local_Config/Service_Dependency/Test.cpp:
+          Fuzz cleanup.
+
 Sat Apr 29 02:26:49 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/EndpointPolicy/EndpointPolicy_i.cpp:

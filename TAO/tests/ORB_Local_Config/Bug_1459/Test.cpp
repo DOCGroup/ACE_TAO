@@ -9,8 +9,8 @@
 //in the multiple orb scenarios AB b isnt prompted for a new certificate
 //password, MA ssliop isnt loaded at all etc
 
-#include <tao/corba.h>
-#include <ace/ARGV.h>
+#include "tao/corba.h"
+#include "ace/ARGV.h"
 #include <iostream>
 
 #define MORB_MA
