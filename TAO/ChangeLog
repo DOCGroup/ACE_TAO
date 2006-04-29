@@ -1,3 +1,8 @@
+Sat Apr 29 02:26:49 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/EndpointPolicy/EndpointPolicy_i.cpp:
+          Removed the apparently redundant ACE_NESTED_CLASS macros.
+
 Fri Apr 28 22:25:57 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tests/ORB_Local_Config/Bunch/Test.cpp:
