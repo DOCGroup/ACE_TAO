@@ -1,3 +1,11 @@
+Sat Apr 29 13:17:24 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/ACE.cpp:
+          Fuzz cleanup.
+
+        * THANKS:
+          Added credits.
+
 Fri Apr 28 22:31:52 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * ace/Service_Gestalt.cpp:
