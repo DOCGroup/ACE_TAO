@@ -44,8 +44,8 @@ testOpenDynamicServices (int , ACE_TCHAR *[])
 
   ACE_ASSERT (5 == daemon.services_count ());
 
-  // Since the loaded services start their own threads, wait until all of them
-  // are done to avoid pulling the rug under their feet.
+  // Since the loaded services start their own threads, wait until all
+  // of them are done to avoid pulling the rug under their feet.
   ACE_Thread_Manager::instance ()->wait ();
   return 0;
 }
@@ -61,13 +61,14 @@ testORBInitializer_Registry (int , ACE_TCHAR *[])
 {
   ACE_TRACE ("testORBInitializer_Registry");
 
-  ACE_Service_Gestalt_Test glob;      // The global service registrations are here
+  ACE_Service_Gestalt_Test glob;      // for global service registrations
   ACE_Service_Gestalt_Test one (10);  // Localized ones go here
 
   size_t glob_size = glob.services_count ();
   size_t loca_size = one.services_count ();
 
-  // It is expected to be empty at this point since it is not using the global repo
+  // It is expected to be empty at this point since it is not using
+  // the global repo
   ACE_ASSERT (loca_size == 0);
 
   // Lookup it up.
@@ -124,7 +125,9 @@ testORBInitializer_Registry (int , ACE_TCHAR *[])
   ACE_ASSERT (loca_size != one.services_count ());
   ACE_ASSERT (5 == one.services_count ());
 
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) try global dynamic service on ORBInitializer_Registry ...\n"));
+  ACE_DEBUG ((LM_DEBUG,
+              "(%P|%t) try global dynamic service"
+              " on ORBInitializer_Registry ...\n"));
 
   // Try to instantiate the dynamic service from the global repository ...
   TAO::ORBInitializer_Registry_Adapter* oir1 =
@@ -133,7 +136,9 @@ testORBInitializer_Registry (int , ACE_TCHAR *[])
 
   ACE_ASSERT ((oir1 == 0)); // Right! It should not have been global.
 
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) try local dynamic service on ORBInitializer_Registry ...\n"));
+  ACE_DEBUG ((LM_DEBUG,
+              "(%P|%t) try local dynamic service"
+              " on ORBInitializer_Registry ...\n"));
 
   // Try to instantiate the dynamic service from the local repository ...
   TAO::ORBInitializer_Registry_Adapter* oir2 =
@@ -193,13 +198,14 @@ testServiceDependency (int , ACE_TCHAR *[])
   ACE_TRACE ("testServiceDependency");
 
   ACE_DEBUG ((LM_DEBUG, "sizeof (ACE_DLL) == %d\n", sizeof (ACE_DLL)));
-  ACE_DEBUG ((LM_DEBUG, "sizeof (ACE_Dynamic_Service_Dependency) == %d\n", sizeof (ACE_Dynamic_Service_Dependency)));
+  ACE_DEBUG ((LM_DEBUG, "sizeof (ACE_Dynamic_Service_Dependency) == %d\n",
+              sizeof (ACE_Dynamic_Service_Dependency)));
 
   TAO_Codeset_Manager *codeset_manager = 0;
   ACE_Dynamic_Service_Dependency *pdep = 0;
 
   {
-    /// Start a block to limit the lifespan of a gestalt
+    // Start a block to limit the lifespan of a gestalt
     ACE_Service_Gestalt_Test one (10);
 
     int result = one.process_directive
@@ -211,7 +217,8 @@ testServiceDependency (int , ACE_TCHAR *[])
     ACE_UNUSED_ARG (result);
 
     TAO_Codeset_Manager_Factory_Base *factory =
-      ACE_Dynamic_Service<TAO_Codeset_Manager_Factory_Base>::instance (&one, "TAO_Codeset");
+      ACE_Dynamic_Service<TAO_Codeset_Manager_Factory_Base>::instance
+      (&one, "TAO_Codeset");
     ACE_ASSERT (factory != 0);
 
     codeset_manager = factory->create ();
@@ -226,15 +233,17 @@ testServiceDependency (int , ACE_TCHAR *[])
 
     pdep = new ACE_Dynamic_Service_Dependency (&one, "TAO_Codeset");
 
-    /// This would ordinarily cause the dynamic services to get unloaded and their DLL's
-    /// unmapped ...
+    // This would ordinarily cause the dynamic services to get
+    // unloaded and their DLL's unmapped ...
   }
 
-  // ... therefore the following code would crash miserably because it needs the
-  // ~TAO_Codeset_Manager()'s code, which is in the (unlodaed) DLL's text segment ...
+  // ... therefore the following code would crash miserably because it
+  // needs the ~TAO_Codeset_Manager()'s code, which is in the
+  // (unlodaed) DLL's text segment ...
   delete codeset_manager;
 
-  // ... unless of course we used the magic dependency statement, above - [1]
+  // ... unless of course we used the magic dependency statement,
+  // above - [1]
   delete pdep;
 
   return 0;

@@ -53,7 +53,7 @@ Server_Worker::parse_args (int argc, ACE_TCHAR *argv[])
 
 //
 int
-Server_Worker::main (int argc, ACE_TCHAR *argv[] ACE_ENV_ARG_DECL)
+Server_Worker::test_main (int argc, ACE_TCHAR *argv[] ACE_ENV_ARG_DECL)
 {
   ACE_Argv_Type_Converter cvt (argc, argv);
   CORBA::ORB_var orb = CORBA::ORB_init (cvt.get_argc (), cvt.get_ASCII_argv () ACE_ENV_ARG_PARAMETER);

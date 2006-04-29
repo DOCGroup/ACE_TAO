@@ -1,3 +1,23 @@
+Sat Apr 29 15:34:15 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/PortableServer/POAManagerFactory.cpp:
+
+        * tests/ORB_Local_Config/Bug_1459/Test.cpp:
+
+        * tests/ORB_Local_Config/Service_Dependency/Service_Config_Test.conf:
+        * tests/ORB_Local_Config/Service_Dependency/Test.cpp:
+
+        * tests/ORB_Local_Config/Two_DLL_ORB/ORB_DLL.h:
+        * tests/ORB_Local_Config/Two_DLL_ORB/ORB_DLL.cpp:
+        * tests/ORB_Local_Config/Two_DLL_ORB/client.cpp:
+        * tests/ORB_Local_Config/Two_DLL_ORB/server.cpp:
+
+        * tests/ORT/ORT_test_IORInterceptor.cpp:
+
+        * tests/POA/EndpointPolicy/server.cpp:
+
+          Fixes for various build-specific errors/warnings.
+
 Sat Apr 29 14:17:32 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tests/ORB_Local_Config/Bug_1459/Test.cpp:

@@ -63,13 +63,17 @@ testBug14559 (int , ACE_TCHAR *[])
     ACE_ARGV arg0(argAM);
     int n = arg0.argc();
     CORBA::ORB_var ORBA = CORBA::ORB_init(n,arg0.argv());
-#endif
+#else
+    ACE_UNUSED_ARG (argAM);
+#endif /* SORB_AM */
 
 #ifdef SORB_MA
     ACE_ARGV arg0(argMA);
     int n = arg0.argc();
     CORBA::ORB_var ORBA = CORBA::ORB_init(n,arg0.argv());
-#endif
+#else
+    ACE_UNUSED_ARG (argMA);
+#endif /* SORB_MA */
 
 #ifdef MORB_AB
     ACE_ARGV arg0(argA);
@@ -78,7 +82,10 @@ testBug14559 (int , ACE_TCHAR *[])
     ACE_ARGV arg1(argB);
     n = arg1.argc();
     CORBA::ORB_var ORBB = CORBA::ORB_init(n,arg1.argv());
-#endif
+#else
+    ACE_UNUSED_ARG (argA);
+    ACE_UNUSED_ARG (argB);
+#endif /* MORB_AB */
 
 #ifdef MORB_AM
     ACE_ARGV arg0(argA);
@@ -87,7 +94,10 @@ testBug14559 (int , ACE_TCHAR *[])
     ACE_ARGV arg1(argM);
     n = arg1.argc();
     CORBA::ORB_var ORBB = CORBA::ORB_init(n,arg1.argv());
-#endif
+#else
+    ACE_UNUSED_ARG (argA);
+    ACE_UNUSED_ARG (argM);
+#endif /* MORB_AM */
 
 #ifdef MORB_MA
     int n = 0;
@@ -98,7 +108,11 @@ testBug14559 (int , ACE_TCHAR *[])
     ACE_ARGV arg1(argA);
     n = arg1.argc();
     CORBA::ORB_var ORBB = CORBA::ORB_init(n, arg1.argv());
-#endif
+#else
+    ACE_UNUSED_ARG (argM);
+    ACE_UNUSED_ARG (argA);
+#endif /* MORB_MA */
+
   }
   catch(const CORBA::Exception& ex)
     {
