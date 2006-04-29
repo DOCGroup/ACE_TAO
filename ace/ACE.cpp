@@ -414,8 +414,8 @@ netsvc.so            netsvc.so + warning   libnetsvc.so
 
 */
 
-  const ACE_TCHAR *
-  ACE::basename (const ACE_TCHAR *pathname, ACE_TCHAR delim)
+const ACE_TCHAR *
+ACE::basename (const ACE_TCHAR *pathname, ACE_TCHAR delim)
 {
   ACE_TRACE ("ACE::basename");
   const ACE_TCHAR *temp = ACE_OS::strrchr (pathname, delim);
