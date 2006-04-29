@@ -17,10 +17,10 @@ TAO_EndpointPolicy_i::TAO_EndpointPolicy_i (const EndpointPolicy::EndpointList &
 }
 
 TAO_EndpointPolicy_i::TAO_EndpointPolicy_i (const TAO_EndpointPolicy_i &rhs)
-  : ACE_NESTED_CLASS (CORBA, Object) ()
-  , ACE_NESTED_CLASS (CORBA, Policy) ()
-  , ACE_NESTED_CLASS (EndpointPolicy, Policy) ()
-  , ACE_NESTED_CLASS (CORBA, LocalObject) ()
+  : ::CORBA::Object ()
+  , ::CORBA::Policy ()
+  , ::EndpointPolicy::Policy ()
+  , ::CORBA::LocalObject ()
   , TAO_Local_RefCounted_Object ()
   , value_ (rhs.value_)
 {
