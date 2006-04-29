@@ -1,3 +1,9 @@
+Sat Apr 29 14:17:32 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tests/ORB_Local_Config/Bug_1459/Test.cpp:
+
+          Removed references  to <iostream> and unreferenced variables.
+
 Sat Apr 29 13:13:20 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/ORB_Local_Config/Bug_1459/Test.cpp:
