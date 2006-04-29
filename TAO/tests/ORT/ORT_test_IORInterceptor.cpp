@@ -88,7 +88,7 @@ ORT_test_IORInterceptor::adapter_manager_state_changed (
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
-              "The AdapterManager state has changed.\n"));
+              "The AdapterManager [id=%s] state has changed.\n", id));
 }
 
 void

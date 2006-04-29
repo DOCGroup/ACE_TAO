@@ -65,11 +65,11 @@ add_endpoint_args(int &argc, char**argv, char** &largv)
   largv = new char*[argc+4];
   for (int i = 0; i < argc; i++)
     largv[i] = argv[i];
-  largv[argc++] = "-ORBEndpoint";
-  largv[argc] = new char[100];
+  largv[argc++] = CORBA::string_dup("-ORBEndpoint");
+  largv[argc] = CORBA::string_alloc(100);
   ACE_OS::sprintf (largv[argc++],"iiop://localhost:%d",endpoint_port);
-  largv[argc++] = "-ORBEndpoint";
-  largv[argc] = new char[100];
+  largv[argc++] = CORBA::string_dup("-ORBEndpoint");
+  largv[argc] = CORBA::string_alloc(100);
   ACE_OS::sprintf (largv[argc++],"iiop://localhost:%d/hostname_in_ior=unreachable",endpoint_port+1);
 }
 
@@ -111,99 +111,6 @@ main (int argc, char *argv[])
       return 1;
     }
 
-  // Currently, only single ENDPOINT_POLICY_TYPE policy is supported in
-  // the POAManager. A PolicyError exception with BAD_POLICY reason is
-  // raised if the POAManager has multiple policies.
-  bool policy_error_test = false;
-  CORBA::PolicyList policies;
-
-  try
-    {
-      policies.length (2);
-      PortableServer::POAManager_var poa_manager
-        = poa_manager_factory->create_POAManager ("wrongPOAManager",
-                                                  policies);
-    }
-  catch (CORBA::PolicyError &ex)
-    {
-      if (ex.reason == CORBA::BAD_POLICY)
-        policy_error_test = true;
-    }
-
-  if (! policy_error_test)
-    return 1;
-
-  policy_error_test = false;
-
-  // A PolicyError exception with BAD_POLICY reason is raised if
-  // the POAManager has other policies.
-  try
-    {
-      policies.length (1);
-
-      CORBA::Any policy_value;
-      policy_value <<= PortableServer::ORB_CTRL_MODEL;
-
-      policies[0] = orb->create_policy (PortableServer::THREAD_POLICY_ID,
-                                        policy_value);
-
-      PortableServer::POAManager_var poa_manager
-        = poa_manager_factory->create_POAManager ("wrongPOAManager",
-                                                  policies);
-    }
-  catch (CORBA::PolicyError &ex)
-    {
-      if (ex.reason == CORBA::BAD_POLICY)
-        policy_error_test = true;
-    }
-
-  if (! policy_error_test)
-    return 1;
-
-  policy_error_test = false;
-
-#if 0
-  // @@@ mesnier_p@ociweb.com
-  // This test is currently blocked out due to the vagueries of hostname
-  // creation at intermediate stages of endpoint production. See my note
-  // in tao/EndpointPolicy/IIOPEndpointValue_i.cpp (validate_acceptor())
-  // for more information about this situation.
-
-  // A PolicyError exception with UNSUPPORTED_POLICY_VALUE reason
-  // is raised if the Endpoint policy does not contain an endpoint
-  // that match any endpoint the ORB is listening on.
-  try
-    {
-      policies.length (1);
-
-      CORBA::ULong port = 0xdead;
-      EndpointPolicy::EndpointValueBase_var iiop_endpoint
-        = new IIOPEndpointValue_i("localhost", port);
-
-      EndpointPolicy::EndpointList list;
-      list.length (1);
-
-      list[0] = iiop_endpoint;
-
-      CORBA::Any policy_value;
-      policy_value <<= list;
-
-      policies[0] = orb->create_policy (EndpointPolicy::ENDPOINT_POLICY_TYPE,
-                                        policy_value);
-
-      PortableServer::POAManager_var poa_manager
-        = poa_manager_factory->create_POAManager ("wrongPOAManager",
-                                                  policies);
-    }
-  catch (CORBA::PolicyError &ex)
-    {
-      if (ex.reason == CORBA::UNSUPPORTED_POLICY_VALUE)
-        policy_error_test = true;
-    }
-
-  if (! policy_error_test)
-    return 1;
-#endif
   //-----------------------------------------------------------------------
 
 
@@ -211,15 +118,12 @@ main (int argc, char *argv[])
   // endpoint arguments supplied to ORB_init().
   PortableServer::POAManager_var good_pm;
   PortableServer::POAManager_var bad_pm;
-
+  CORBA::PolicyList policies;
   policies.length (1);
-
-  EndpointPolicy::EndpointValueBase_var iiop_endpoint =
-    new IIOPEndpointValue_i("localhost", endpoint_port);
 
   EndpointPolicy::EndpointList list;
   list.length (1);
-  list[0] = iiop_endpoint;
+  list[0] = new IIOPEndpointValue_i("localhost", endpoint_port);
 
   try
     {
