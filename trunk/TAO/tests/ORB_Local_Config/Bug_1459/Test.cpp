@@ -9,9 +9,14 @@
 //in the multiple orb scenarios AB b isnt prompted for a new certificate
 //password, MA ssliop isnt loaded at all etc
 
+
+/// It's a test - we need ACE_ASSERT
+#ifdef ACE_NDEBUG
+#  undef ACE_NDEBUG
+#endif
+
 #include "tao/corba.h"
 #include "ace/ARGV.h"
-#include <iostream>
 
 #define MORB_MA
 
@@ -31,7 +36,7 @@ testBug14559 (int , ACE_TCHAR *[])
   //dynamic SSLIOP_Factory Service_Object * TAO_SSLIOP:_make_TAO_SSLIOP_Protocol_Factory() "-SSLAuthenticate SERVER_AND_CLIENT -SSLPrivateKey PEM:server_key.pem -SSLCertificate PEM:server_cert.pem";
   //static Resource_Factory "-ORBProtocolFactory SSLIOP_Factory"
 
-  const char argB[] = "-ORBSvcConf b.conf";
+  //  const char argB[] = "-ORBSvcConf b.conf";
 
   //dynamic SSLIOP_Factory Service_Object * TAO_SSLIOP:_make_TAO_SSLIOP_Protocol_Factory() "-SSLAuthenticate SERVER_AND_CLIENT -SSLPrivateKey PEM:client_key.pem -SSLCertificate PEM:client_cert.pem"
   //static Resource_Factory "-ORBProtocolFactory SSLIOP_Factory"
@@ -43,11 +48,11 @@ testBug14559 (int , ACE_TCHAR *[])
 //#static PortableGroup_Loader ""
 //dynamic PortableGroup_Loader Service_Object * TAO_PortableGroup:_make_TAO_PortableGroup_Loader() ""
 
-  const char argAM[] = "-ORBSvcConf am.conf";
+//  const char argAM[] = "-ORBSvcConf am.conf";
 
 //combination of A followed by M (above)
 
-  const char argMA[] = "-ORBSvcConf ma.conf";
+//  const char argMA[] = "-ORBSvcConf ma.conf";
 
 //combination of M followed by A (above)
 
@@ -96,15 +101,14 @@ testBug14559 (int , ACE_TCHAR *[])
 #endif
   }
   catch(const CORBA::Exception& ex)
-  {
-    std::cerr << ex._info().c_str() << std::endl;
-    return -1;
-  }
+    {
+      ACE_PRINT_EXCEPTION (ex, "Unhandled exception caught");
+      return -1;
+    }
   catch(...)
-  {
-    std::cerr << "unhandled exception" <<std::endl;
-    return -1;
-  }
+    {
+      ACE_ERROR ((LM_ERROR, "Uhandled exception\n"));
+    }
   return 0;
 }
 
