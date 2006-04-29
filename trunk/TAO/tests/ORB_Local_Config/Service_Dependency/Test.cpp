@@ -57,7 +57,7 @@ testOpenDynamicServices (int , ACE_TCHAR *[])
 // @brief Try loading the ORBInitializer_Registry locally
 
 int
-testORBInitializer_Registry(int, ACE_TCHAR *[])
+testORBInitializer_Registry (int , ACE_TCHAR *[])
 {
   ACE_TRACE ("testORBInitializer_Registry");
 
@@ -190,7 +190,7 @@ testORBInitializer_Registry(int, ACE_TCHAR *[])
 int
 testServiceDependency (int , ACE_TCHAR *[])
 {
-  ACE_TRACE ("testDependency");
+  ACE_TRACE ("testServiceDependency");
 
   ACE_DEBUG ((LM_DEBUG, "sizeof (ACE_DLL) == %d\n", sizeof (ACE_DLL)));
   ACE_DEBUG ((LM_DEBUG, "sizeof (ACE_Dynamic_Service_Dependency) == %d\n", sizeof (ACE_Dynamic_Service_Dependency)));
@@ -254,4 +254,3 @@ run_main(int argc, ACE_TCHAR *argv[])
   testORBInitializer_Registry(argc, argv);
   return 0;
 }
-
