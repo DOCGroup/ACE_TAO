@@ -5,8 +5,6 @@
 project(*) : ../../../tests/acetest, taoserver {
   exename = Test
   includes += ../lib
-  libpaths += ../lib
-  libs += lib
   Source_Files {
     Test.cpp
   }

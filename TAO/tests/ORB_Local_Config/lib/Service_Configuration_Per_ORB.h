@@ -7,6 +7,8 @@
 #include "ace/Trace.h"
 #include "ace/Service_Config.h"
 
+//#include "CfgPer_ORB_Export.h"
+
 /// We need this wrapper to "break" the encapsulation and test
 /// the internals of the class. The class also does a complete
 /// teardown on the service repository used. So, do not expect
@@ -72,11 +74,11 @@ private:
 /// The various config files have the same effect of loading 5
 /// new service objects.
 
-const ACE_TCHAR* file_Service_Config_Test ();
+/* const ACE_TCHAR* file_Service_Config_Test (); */
 
-// Return the name of the service configuration file, for the ORB-based
-// service object test
+/* // Return the name of the service configuration file, for the ORB-based */
+/* // service object test */
 
-const ACE_TCHAR* file_Service_Config_ORB_Test ();
+/* const ACE_TCHAR* file_Service_Config_ORB_Test (); */
 
 #endif /* SERVICE_CONFIGURATION_PER_ORB_H */
