@@ -1,3 +1,11 @@
+Sun Apr 30 14:24:20 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * TAO/tao/Profile_Transport_Resolver.cpp:
+          Removed invalid semicolons.
+
+        * TAO/tests/ORB_Local_Config/Two_DLL_ORB/Two_DLL_ORB.mpc:
+          Fixed the dynamic flag for windows builds.
+
 Sun Apr 30 04:54:25 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tests/ORB_Local_Config/Bug_1459/Test.cpp:
