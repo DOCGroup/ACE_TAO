@@ -10,6 +10,17 @@
 
 #include "Service_Configuration_Per_ORB.h"
 
+const ACE_TCHAR*
+file_Service_Config_ORB_Test ()
+{
+  // ASCII (UTF-8) encoded Service Configurator file.
+  static const ACE_TCHAR svc_conf[] =
+    ACE_TEXT ("Service_Config_ORB_Test")
+    ACE_TEXT (ACE_DEFAULT_SVC_CONF_EXT);
+
+  return svc_conf;
+}
+
 // @brief Loading a dynamic services in a local repository, which
 // initializes its own ORB
 
