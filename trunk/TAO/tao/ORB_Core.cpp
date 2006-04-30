@@ -2972,6 +2972,30 @@ TAO_ORB_Core::call_timeout_hook (TAO_Stub *stub,
       return;
     }
   (*timeout_hook) (this, stub, has_timeout, time_value);
+}
+
+void
+TAO_ORB_Core::set_timeout_hook (Timeout_Hook hook)
+{
+  // Saving the hook pointer so that we can use it later when needed.
+  TAO_ORB_Core_Static_Resources::instance ()->timeout_hook_ = hook;
+}
+
+void
+TAO_ORB_Core::connection_timeout (TAO_Stub *stub,
+                                  bool &has_timeout,
+                                  ACE_Time_Value &time_value)
+{
+  Timeout_Hook connection_timeout_hook =
+    TAO_ORB_Core_Static_Resources::instance ()->connection_timeout_hook_;
+
+  if (connection_timeout_hook == 0)
+    {
+      has_timeout = false;
+      return;
+    }
+
+  (*connection_timeout_hook) (this, stub, has_timeout, time_value);
 
   Timeout_Hook alt_connection_timeout_hook =
     TAO_ORB_Core_Static_Resources::instance ()->alt_connection_timeout_hook_;
@@ -2995,7 +3019,7 @@ TAO_ORB_Core::call_timeout_hook (TAO_Stub *stub,
 }
 
 void
-TAO_ORB_Core::set_timeout_hook (Timeout_Hook hook)
+TAO_ORB_Core::connection_timeout_hook (Timeout_Hook hook)
 {
   // Saving the hook pointer so that we can use it later when needed.
   // For now there are only two entry points that may supply a connection
@@ -3043,30 +3067,6 @@ TAO_ORB_Core::set_timeout_hook (Timeout_Hook hook)
                   TOCSRi->alt_connection_timeout_hook_ == 0));
 
 #undef TOCSRi
-}
-
-void
-TAO_ORB_Core::connection_timeout (TAO_Stub *stub,
-                                  bool &has_timeout,
-                                  ACE_Time_Value &time_value)
-{
-  Timeout_Hook connection_timeout_hook =
-    TAO_ORB_Core_Static_Resources::instance ()->connection_timeout_hook_;
-
-  if (connection_timeout_hook == 0)
-    {
-      has_timeout = false;
-      return;
-    }
-
-  (*connection_timeout_hook) (this, stub, has_timeout, time_value);
-}
-
-void
-TAO_ORB_Core::connection_timeout_hook (Timeout_Hook hook)
-{
-  // Saving the hook pointer so that we can use it later when needed.
-  TAO_ORB_Core_Static_Resources::instance ()->connection_timeout_hook_ = hook;
 }
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)

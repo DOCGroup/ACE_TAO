@@ -1,3 +1,13 @@
+Sun Apr 30 22:53:37 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/ORB_Core.cpp:
+          Somehow when I applied my patch for the alternate connection
+          timeout hook, used allow either or both the AMI connection
+          timeout policy or the optimized connection endpoint selector to
+          set the connection timeout hook, I managed to apply my change to
+          the relative round trip timeout hook. This change addresses that
+          and fixes the AMI_Timeout test.
+
 Sun Apr 30 20:24:39 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tests/ORB_Local_Config/Bug_1459/Bug_1459.mpc:
