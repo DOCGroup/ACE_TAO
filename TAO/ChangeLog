@@ -1,3 +1,10 @@
+Sun Apr 30 15:36:21 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * examples/CSD_Strategy/ThreadPool4/ClientTask.cpp:
+        * examples/CSD_Strategy/ThreadPool5/ClientTask.cpp:
+          Fixed the assignment to the sequence to hand a buffer the
+          sequence can properly release.
+
 Sun Apr 30 14:24:20 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * TAO/tao/Profile_Transport_Resolver.cpp:
