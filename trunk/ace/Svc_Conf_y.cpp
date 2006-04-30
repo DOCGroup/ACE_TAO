@@ -813,12 +813,6 @@ ace_yydestruct (ace_yymsg, ace_yytype, ace_yyvaluep)
     ace_yymsg = "Deleting";
   ACE_YY_SYMBOL_PRINT (ace_yymsg, ace_yytype, ace_yyvaluep, ace_yylocationp);
 
-  switch (ace_yytype)
-    {
-
-      default:
-        break;
-    }
 }
 
 
@@ -870,6 +864,12 @@ int ace_yychar;
 
 /* The semantic value of the look-ahead symbol.  */
 ACE_YYSTYPE ace_yylval;
+
+#if defined (ACE_YYSTYPE_IS_TRIVIAL)
+  ace_yylval = 0;
+#else
+  ace_yylval.type_ = 0;
+#endif /* ACE_YYSTYPE_IS_TRIVIAL */
 
 /* Number of syntax errors so far.  */
 int ace_yynerrs;
@@ -1547,7 +1547,7 @@ ace_yyerrlab:
 `---------------------------------------------------*/
 ace_yyerrorlab:
 
-#ifdef __GNUC__
+#ifdef __GNUC__  || defined (ACE_WIN32)
   /* Pacify GCC when the user code never invokes ACE_YYERROR and the label
      ace_yyerrorlab therefore never appears in user code.  */
   if (0)
@@ -1746,4 +1746,3 @@ main (int argc, char *argv[])
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif  /* ACE_USES_CLASSIC_SVC_CONF == 1 */
-
