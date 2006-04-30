@@ -128,7 +128,7 @@ namespace TAO
      )
   {
     return this->try_connect_i (desc,max_time_value,0 ACE_ENV_ARG_PARAMETER);
-  };
+  }
 
   bool
   Profile_Transport_Resolver::try_parallel_connect (
@@ -138,7 +138,7 @@ namespace TAO
      )
   {
     return this->try_connect_i (desc,max_time_value,1 ACE_ENV_ARG_PARAMETER);
-  };
+  }
 
 
   bool
