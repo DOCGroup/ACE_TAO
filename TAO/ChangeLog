@@ -1,3 +1,9 @@
+Sun Apr 30 04:54:25 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tests/ORB_Local_Config/Bug_1459/Test.cpp:
+
+          Cleaned up the test a bit to clarify the intent.
+
 Sun Apr 30 00:47:10 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/ORB_Local_Config/Bug_1459/Test.cpp:
