@@ -1,3 +1,12 @@
+Sun Apr 30 02:21:16 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/Svc_Conf_y.cpp:
+          Eliminating more warnings from the scoreboard. I'm not sure the
+          best way to add this patch to ace/svcconf.mpb, since it affects
+          more than just gnuace targets. The easiest would be to store the
+          diff between this commit and the previous version and run patch,
+          but I'm not sure how to integrate that solution.
+
 Sat Apr 29 13:58:28 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * ace/Service_Gestalt.cpp:
