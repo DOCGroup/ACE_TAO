@@ -52,8 +52,6 @@ project(*) : ../../../tests/acetest, taoserver {
   after += lib ORB_DLL_Client ORB_DLL_Server
   exename = Test
   includes += ../lib
-  libpaths += ../lib
-  libs += lib
   Source_Files {
     Test.cpp
   }

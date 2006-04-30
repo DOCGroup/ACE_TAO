@@ -1,3 +1,24 @@
+Sun Apr 30 20:24:39 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tests/ORB_Local_Config/Bug_1459/Bug_1459.mpc:
+        * tests/ORB_Local_Config/Bunch/Bunch.mpc:
+        * tests/ORB_Local_Config/Limits/Limits.mpc:
+        * tests/ORB_Local_Config/Separation/Separation.mpc:
+        * tests/ORB_Local_Config/Service_Dependency/Service_Dependency.mpc:
+        * tests/ORB_Local_Config/Service_Dependency/Test.cpp:
+        * tests/ORB_Local_Config/Shared/Shared.mpc:
+        * tests/ORB_Local_Config/Simple/Simple.mpc:
+        * tests/ORB_Local_Config/Two_DLL_ORB/Test.cpp:
+        * tests/ORB_Local_Config/Two_DLL_ORB/Two_DLL_ORB.mpc:
+        * tests/ORB_Local_Config/lib/Service_Configuration_Per_ORB.h:
+
+          Updated to simplify the tests and the build process
+
+        * tests/ORB_Local_Config/lib/Service_Configuration_Per_ORB.cpp:
+        * tests/ORB_Local_Config/lib/lib.mpc:
+
+          Removed these files.
+
 Sun Apr 30 15:36:21 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * examples/CSD_Strategy/ThreadPool4/ClientTask.cpp:
