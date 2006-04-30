@@ -808,11 +808,11 @@ ace_yydestruct (ace_yymsg, ace_yytype, ace_yyvaluep)
 {
   /* Pacify ``unused variable'' warnings.  */
   (void) ace_yyvaluep;
+  (void) ace_yytype;
 
   if (!ace_yymsg)
     ace_yymsg = "Deleting";
   ACE_YY_SYMBOL_PRINT (ace_yymsg, ace_yytype, ace_yyvaluep, ace_yylocationp);
-
 }
 
 
@@ -1547,7 +1547,7 @@ ace_yyerrlab:
 `---------------------------------------------------*/
 ace_yyerrorlab:
 
-#ifdef __GNUC__  || defined (ACE_WIN32)
+#if defined (__GNUC__)  || defined (ACE_WIN32)
   /* Pacify GCC when the user code never invokes ACE_YYERROR and the label
      ace_yyerrorlab therefore never appears in user code.  */
   if (0)

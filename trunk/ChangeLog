@@ -1,3 +1,8 @@
+Sun Apr 30 04:21:37 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/Svc_Conf_y.cpp:
+          What I meant to commit last time.
+
 Sun Apr 30 02:21:16 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ace/Svc_Conf_y.cpp:
