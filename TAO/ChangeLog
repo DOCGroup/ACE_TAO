@@ -1,3 +1,12 @@
+Sun Apr 30 00:47:10 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/ORB_Local_Config/Bug_1459/Test.cpp:
+          Undoing the damage caused by my too-hasty previous checkin.
+
+        * examples/CSD_Strategy/ThreadPool4/ClientTask.cpp:
+        * examples/CSD_Strategy/ThreadPool5/ClientTask.cpp:
+          Addressing some more compiler warnings
+
 Sat Apr 29 15:34:15 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/PortableServer/POAManagerFactory.cpp:
