@@ -36,8 +36,6 @@ testBug14559 (int , ACE_TCHAR *[])
   //dynamic SSLIOP_Factory Service_Object * TAO_SSLIOP:_make_TAO_SSLIOP_Protocol_Factory() "-SSLAuthenticate SERVER_AND_CLIENT -SSLPrivateKey PEM:server_key.pem -SSLCertificate PEM:server_cert.pem";
   //static Resource_Factory "-ORBProtocolFactory SSLIOP_Factory"
 
-  //  const char argB[] = "-ORBSvcConf b.conf";
-
   //dynamic SSLIOP_Factory Service_Object * TAO_SSLIOP:_make_TAO_SSLIOP_Protocol_Factory() "-SSLAuthenticate SERVER_AND_CLIENT -SSLPrivateKey PEM:client_key.pem -SSLCertificate PEM:client_cert.pem"
   //static Resource_Factory "-ORBProtocolFactory SSLIOP_Factory"
 
@@ -48,34 +46,30 @@ testBug14559 (int , ACE_TCHAR *[])
 //#static PortableGroup_Loader ""
 //dynamic PortableGroup_Loader Service_Object * TAO_PortableGroup:_make_TAO_PortableGroup_Loader() ""
 
-//  const char argAM[] = "-ORBSvcConf am.conf";
-
-//combination of A followed by M (above)
-
-//  const char argMA[] = "-ORBSvcConf ma.conf";
-
-//combination of M followed by A (above)
-
   try
   {
 
 #ifdef SORB_AM
+    const char argAM[] = "-ORBSvcConf am.conf";
+    // combination of A followed by M (above)
+
     ACE_ARGV arg0(argAM);
     int n = arg0.argc();
     CORBA::ORB_var ORBA = CORBA::ORB_init(n,arg0.argv());
-#else
-    ACE_UNUSED_ARG (argAM);
 #endif /* SORB_AM */
 
 #ifdef SORB_MA
+    const char argMA[] = "-ORBSvcConf ma.conf";
+    // combination of M followed by A (above)
+
     ACE_ARGV arg0(argMA);
     int n = arg0.argc();
     CORBA::ORB_var ORBA = CORBA::ORB_init(n,arg0.argv());
-#else
-    ACE_UNUSED_ARG (argMA);
 #endif /* SORB_MA */
 
 #ifdef MORB_AB
+    const char argB[] = "-ORBSvcConf b.conf";
+
     ACE_ARGV arg0(argA);
     int n = arg0.argc();
     CORBA::ORB_var ORBA = CORBA::ORB_init(n,arg0.argv());
@@ -84,7 +78,6 @@ testBug14559 (int , ACE_TCHAR *[])
     CORBA::ORB_var ORBB = CORBA::ORB_init(n,arg1.argv());
 #else
     ACE_UNUSED_ARG (argA);
-    ACE_UNUSED_ARG (argB);
 #endif /* MORB_AB */
 
 #ifdef MORB_AM
