@@ -1,3 +1,9 @@
+Mon May  1 06:53:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_sunos5_g++.GNU:
+        * include/makeinclude/platform_sunos5_sunc++.GNU:
+          Also for solaris 10 link the sendfile lib
+
 Sun Apr 30 04:21:37 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ace/Svc_Conf_y.cpp:
