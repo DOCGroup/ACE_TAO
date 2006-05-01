@@ -5,11 +5,13 @@
 #  undef ACE_NDEBUG
 #endif
 
-#include "tao/CORBANAME_Parser.h"
+// The following is required to be able to access
+// ace_svc_desc_TAO_*_Parser, below
 #include "tao/CORBALOC_Parser.h"
-#include "tao/IIOP_Factory.h"
+#include "tao/CORBANAME_Parser.h"
 
 #include "ace/ARGV.h"
+#include "ace/Service_Config.h"
 #include "ace/Dynamic_Service.h"
 
 ACE_RCSID (tests, server, "$Id$")
@@ -37,12 +39,12 @@ testCompatibility (int , ACE_TCHAR *[])
     // This uses the same default ACE_Service_Repository
     ACE_Service_Gestalt_Test one;
 
-    TAO_CORBANAME_Parser* p20 =
-      ACE_Dynamic_Service<TAO_CORBANAME_Parser>::instance (&one, "CORBANAME_Parser");
+    ACE_Service_Object* p20 =
+      ACE_Dynamic_Service<ACE_Service_Object>::instance (&one, "CORBANAME_Parser");
     ACE_ASSERT ((p20 != 0));
 
-    TAO_CORBALOC_Parser* p21 =
-      ACE_Dynamic_Service<TAO_CORBALOC_Parser>::instance (&one, "CORBALOC_Parser");
+    ACE_Service_Object* p21 =
+      ACE_Dynamic_Service<ACE_Service_Object>::instance (&one, "CORBALOC_Parser");
     ACE_ASSERT ((p21 != 0));
 
     ACE_DEBUG ((LM_DEBUG, "\tglobal.services_count () -> %d\n",
@@ -52,20 +54,12 @@ testCompatibility (int , ACE_TCHAR *[])
     // Exiting this scope should fini all services ...
   }
 
-  TAO_CORBANAME_Parser* p20 =
-    ACE_Dynamic_Service<TAO_CORBANAME_Parser>::instance ("CORBANAME_Parser");
+  ACE_Service_Object* p20 =
+    ACE_Dynamic_Service<ACE_Service_Object>::instance (&glob, "CORBANAME_Parser");
   ACE_ASSERT ((p20 == 0));
 
-  TAO_CORBALOC_Parser* p21 =
-    ACE_Dynamic_Service<TAO_CORBALOC_Parser>::instance ("CORBALOC_Parser");
-  ACE_ASSERT ((p21 == 0));
-
-
-
-  p20 = ACE_Dynamic_Service<TAO_CORBANAME_Parser>::instance (&glob, "CORBANAME_Parser");
-  ACE_ASSERT ((p20 == 0));
-
-  p21 =ACE_Dynamic_Service<TAO_CORBALOC_Parser>::instance (&glob, "CORBALOC_Parser");
+  ACE_Service_Object* p21 =
+    ACE_Dynamic_Service<ACE_Service_Object>::instance (&glob, "CORBALOC_Parser");
   ACE_ASSERT ((p21 == 0));
 
   return 0;
