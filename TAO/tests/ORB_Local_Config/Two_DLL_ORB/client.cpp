@@ -60,7 +60,8 @@ Client_Worker::test_main (int argc, ACE_TCHAR *argv[] ACE_ENV_ARG_DECL)
   for (int attempts_left=5; co == 0 && attempts_left > 0; --attempts_left)
   {
     ACE_DEBUG ((LM_DEBUG, "(%P|%t) Delaying the client to give the server a chance to start ...\n"));
-    ACE_OS::sleep (5);
+    ACE_OS::sleep (7);
+    ACE_DEBUG ((LM_DEBUG, "(%P|%t) Client is ready to proceed.\n"));
 
     ACE_TRY
     {
@@ -71,6 +72,9 @@ Client_Worker::test_main (int argc, ACE_TCHAR *argv[] ACE_ENV_ARG_DECL)
     {
       if (!attempts_left)
         ACE_RE_THROW;
+      else
+        ACE_DEBUG ((LM_DEBUG, "(%P|%t) Client is retrying.\n"));
+
     }
     ACE_ENDTRY;
   }
