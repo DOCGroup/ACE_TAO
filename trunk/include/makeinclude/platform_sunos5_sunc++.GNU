@@ -262,6 +262,10 @@ ifeq ($(shell /bin/uname -r),5.9)
   # Solaris 9 puts sendfile() in a separate library.
   LIBS          += -lsendfile
 endif
+ifeq ($(shell /bin/uname -r),5.10)
+  # Solaris 10 puts sendfile() in a separate library.
+  LIBS          += -lsendfile
+endif
 LIBS            += -lsocket -ldl -lnsl -lgen -lposix4 -ladm
 
 LDFLAGS         += -xildoff
