@@ -515,7 +515,7 @@ namespace CORBA
 
 TAO_AnyTypeCode_Export
 CORBA::Boolean operator<< (TAO_OutputCDR & cdr,
-                           CORBA::TypeCode_ptr tc);
+                           const CORBA::TypeCode_ptr tc);
 
 TAO_AnyTypeCode_Export
 CORBA::Boolean operator>> (TAO_InputCDR & cdr,
