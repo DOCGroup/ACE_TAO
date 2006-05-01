@@ -20,7 +20,7 @@ $corbaloc = "corbaloc::126.0.0.123:10200,:localhost:10201,:126.0.0.124:10202/pcs
 $SV_ALT_IIOP = new PerlACE::Process ("server", "-ORBUseSharedProfile 1 -o $iorfile $bogus_eps[0] $valid_ep $bogus_eps[1]");
 
 $CL_LF = new PerlACE::Process ("client", "-ORBuseParallelConnects 1 -k file://$iorfile");
-$CL_CORBALOC = new PerlACE::Process ("client", "-ORBuseParallelConnects 1 -k $corbaloc");
+$CL_CORBALOC = new PerlACE::Process ("client", "-ORBUseSharedProfile 1 -ORBuseParallelConnects 1 -k $corbaloc");
 $CL_Reactive = new PerlACE::Process ("client", "-ORBSvcConf reactive.conf -ORBuseParallelConnects 1 -k file://$iorfile");
 $CL_Blocked = new PerlACE::Process ("client", "-ORBSvcConf blocked.conf -ORBuseParallelConnects 1 -k file://$iorfile");
 $CL_None = new PerlACE::Process ("client", "-ORBuseParallelConnects 0 -k file://$iorfile");

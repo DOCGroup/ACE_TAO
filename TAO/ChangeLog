@@ -1,3 +1,9 @@
+Mon May  1 03:43:57 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/Parallel_Connect_Strategy/run_test.pl:
+          The fix for this test was to ensure the CORBALOC parser put all
+          the listed endpoints into a single Profile.
+
 Sun Apr 30 22:53:37 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/ORB_Core.cpp:
