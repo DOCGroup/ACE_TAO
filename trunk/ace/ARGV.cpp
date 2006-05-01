@@ -66,9 +66,9 @@ ACE_ARGV::argv_to_string (ACE_TCHAR **argv, ACE_TCHAR *&buf)
 }
 
 ACE_ARGV::ACE_ARGV (const ACE_TCHAR buf[],
-                    int substitute_env_args)
+                    bool substitute_env_args)
   : substitute_env_args_ (substitute_env_args),
-    state_ (TO_PTR_ARRAY),
+    iterative_ (false),
     argc_ (0),
     argv_ (0),
     buf_ (0),
@@ -93,9 +93,9 @@ ACE_ARGV::ACE_ARGV (const ACE_TCHAR buf[],
 }
 
 ACE_ARGV::ACE_ARGV (ACE_TCHAR *argv[],
-                    int substitute_env_args)
+                    bool substitute_env_args)
   : substitute_env_args_ (substitute_env_args),
-    state_ (TO_STRING),
+    iterative_ (false),
     argc_ (0),
     argv_ (0),
     buf_ (0),
@@ -112,9 +112,9 @@ ACE_ARGV::ACE_ARGV (ACE_TCHAR *argv[],
 
 ACE_ARGV::ACE_ARGV (ACE_TCHAR *first_argv[],
                     ACE_TCHAR *second_argv[],
-                    int substitute_env_args)
+                    bool substitute_env_args)
   : substitute_env_args_ (substitute_env_args),
-    state_ (TO_STRING),
+    iterative_ (false),
     argc_ (0),
     argv_ (0),
     buf_ (0),
@@ -159,9 +159,9 @@ ACE_ARGV::ACE_ARGV (ACE_TCHAR *first_argv[],
 }
 
 
-ACE_ARGV::ACE_ARGV (int substitute_env_args)
+ACE_ARGV::ACE_ARGV (bool substitute_env_args)
   : substitute_env_args_ (substitute_env_args),
-    state_ (ITERATIVE),
+    iterative_ (true),
     argc_ (0),
     argv_ (0),
     buf_ (0),
@@ -178,7 +178,7 @@ ACE_ARGV::add (const ACE_TCHAR *next_arg)
 {
   // Only allow this to work in the "iterative" verion -- the
   // ACE_ARGVs created with the one argument constructor.
-  if (this->state_ != ITERATIVE)
+  if (!this->iterative_)
     {
       errno = EINVAL;
       return -1;
