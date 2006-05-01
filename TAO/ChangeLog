@@ -1,3 +1,13 @@
+Mon May  1 12:04:17 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/OBV/Truncatable/client.cpp:
+        * tests/POA/POAManagerFactory/POAManagerFactory.cpp:
+          The Borland BCB6 compiler has trouble with var types and const
+          vs. non-const assignment or comparisons. These changes are an
+          attempt to address this trouble. I don't like the nature of
+          these changes as they are moving away from the built-in type
+          safety C++ is supposed to provide.
+
 Mon May  1 03:43:57 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/Parallel_Connect_Strategy/run_test.pl:
