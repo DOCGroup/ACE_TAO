@@ -1,3 +1,8 @@
+Mon May  1 19:39:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/OBV/Simple/OBV_Simple.mpc:
+          This test isn't dependent on minimum_corba
+
 Mon May  1 18:55:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/AnyTypeCode/TypeCode.{h,cpp}:
