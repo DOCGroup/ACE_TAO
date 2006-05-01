@@ -226,12 +226,13 @@ main (int argc, char **argv)
                         ACE_TEXT_CHAR_TO_TCHAR(name.in())));
           pretest = fail;
 
+          const PortableServer::POAManager_ptr tmp_pm = managers[i];
           if ((ACE_OS::strcmp (name.in (), "RootPOAManager") == 0
-            && managers[i] == root_poa_manager.in ())
+            && tmp_pm == root_poa_manager.in ())
             || (ACE_OS::strcmp (name.in (), "POAManager1") == 0
-            && managers[i] == poa_manager_1.in ())
+            && tmp_pm == poa_manager_1.in ())
             || (ACE_OS::strcmp (name.in (), poa_manager_2_name.in ()) == 0
-            && managers[i] == poa_manager_2.in ()))
+            && tmp_pm == poa_manager_2.in ()))
             {
               if (verbose)
                 ACE_DEBUG ((LM_DEBUG, ACE_TEXT("passed\n")));
