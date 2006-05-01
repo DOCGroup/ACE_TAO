@@ -163,11 +163,14 @@ main (int argc, char *argv[])
         }
 
       CORBA::String_var desc;;
-      { //issolate the scope of objects to avoid using wrong values
+      { //isolate the scope of objects to avoid using wrong values
         OBV_TruncatableTest::TValue1_var v1;
-        ACE_NEW_RETURN (v1,
+        OBV_OBV_TruncatableTest::TValue1 *tmp_v1;
+        ACE_NEW_RETURN (tmp_v1,
                         OBV_OBV_TruncatableTest::TValue1,
                         1);
+        v1 = tmp_v1;
+        tmp_v1 = 0;
         v1->basic_data (9);
         v1->data1 (99);
 
@@ -189,11 +192,14 @@ main (int argc, char *argv[])
                       (pretest == fail) ? ACE_TEXT ("passed") : ACE_TEXT ("failed")));
       }
 
-      { //issolate the scope of objects to avoid using wrong values
+      { //isolate the scope of objects to avoid using wrong values
         OBV_TruncatableTest::TValue2_var v2;
-        ACE_NEW_RETURN (v2,
+        OBV_OBV_TruncatableTest::TValue2 *tmp_v2;
+        ACE_NEW_RETURN (tmp_v2,
                         OBV_OBV_TruncatableTest::TValue2,
                         1);
+        v2 = tmp_v2;
+        tmp_v2 = 0;
         v2->basic_data (9);
         v2->data1 (99);
         v2->data2 (99 * 2);
@@ -232,11 +238,14 @@ main (int argc, char *argv[])
                       (pretest == fail) ? ACE_TEXT ("passed") : ACE_TEXT ("failed")));
       }
 
-      { //issolate the scope of objects to avoid using wrong values
+      { //isolate the scope of objects to avoid using wrong values
         OBV_TruncatableTest::TValue1_var itv1b;
-        ACE_NEW_RETURN (itv1b,
+        OBV_OBV_TruncatableTest::TValue1 *tmp_v1;
+        ACE_NEW_RETURN (tmp_v1,
                         OBV_OBV_TruncatableTest::TValue1,
                         1);
+        itv1b = tmp_v1;
+        tmp_v1 = 0;
         itv1b->basic_data(7);
         itv1b->data1(8);
         OBV_TruncatableTest::TValue1_var otv1b;
@@ -257,11 +266,14 @@ main (int argc, char *argv[])
                       (pretest == fail) ? ACE_TEXT ("passed") : ACE_TEXT ("failed")));
       }
 
-      { //issolate the scope of objects to avoid using wrong values
+      { //isolate the scope of objects to avoid using wrong values
         OBV_TruncatableTest::TValue3_var v3;
-        ACE_NEW_RETURN (v3,
+        OBV_OBV_TruncatableTest::TValue3 *tmp_v3;
+        ACE_NEW_RETURN (tmp_v3,
                         OBV_OBV_TruncatableTest::TValue3,
                         1);
+        v3 = tmp_v3;
+        tmp_v3 = 0;
         v3->basic_data (9);
         v3->data1 (99);
         v3->data3 (99 * 3);
@@ -293,17 +305,24 @@ main (int argc, char *argv[])
           }
       } //end marshaling exception test.
 
-      { //issolate the scope of objects to avoid using wrong values
+      { //isolate the scope of objects to avoid using wrong values
         OBV_TruncatableTest::NestedValue_var nv;
-        ACE_NEW_RETURN (nv,
+        OBV_OBV_TruncatableTest::NestedValue *tmp_nv;
+        ACE_NEW_RETURN (tmp_nv,
                         OBV_OBV_TruncatableTest::NestedValue,
                         1);
+        nv = tmp_nv;
+        tmp_nv = 0;
         nv->data (2);
 
         OBV_TruncatableTest::TValue5_var v5;
-        ACE_NEW_RETURN (v5,
+        OBV_OBV_TruncatableTest::TValue5 *tmp_v5;
+        ACE_NEW_RETURN (tmp_v5,
                         OBV_OBV_TruncatableTest::TValue5,
                         1);
+        v5 = tmp_v5;
+        tmp_v5 = 0;
+
         v5->basic_data (9);
         v5->nv4 (nv.in ());
         v5->data4 (99 * 4);
@@ -345,11 +364,15 @@ main (int argc, char *argv[])
                       (pretest == fail) ? ACE_TEXT ("passed") : ACE_TEXT ("failed")));
       }
 
-      { //issolate the scope of objects to avoid using wrong values
+      { //isolate the scope of objects to avoid using wrong values
         OBV_TruncatableTest::TValue6_var iv;
-        ACE_NEW_RETURN (iv,
+        OBV_OBV_TruncatableTest::TValue6 *tmp_iv;
+        ACE_NEW_RETURN (tmp_iv,
                         OBV_OBV_TruncatableTest::TValue6,
                         1);
+        iv = tmp_iv;
+        tmp_iv = 0;
+
         iv->basic_data (9);
 
         OBV_TruncatableTest::BaseValue_var ov;
@@ -369,40 +392,54 @@ main (int argc, char *argv[])
                       (pretest == fail) ? ACE_TEXT ("passed") : ACE_TEXT ("failed")));
       }
 
-      { //issolate the scope of objects to avoid using wrong values
+      { //isolate the scope of objects to avoid using wrong values
         OBV_TruncatableTest::TValue1_var v1;
-        ACE_NEW_RETURN (v1,
+        OBV_TruncatableTest::TValue1 *tmp_v1;
+        ACE_NEW_RETURN (tmp_v1,
                         OBV_OBV_TruncatableTest::TValue1,
                         1);
+        v1 = tmp_v1;
+        tmp_v1 = 0;
+
         v1->basic_data (8);
         v1->data1 (88);
 
 
         OBV_TruncatableTest::TValue1_var v4;
-        ACE_NEW_RETURN (v4,
+        OBV_OBV_TruncatableTest::TValue1 *tmp_v4;
+        ACE_NEW_RETURN (tmp_v4,
                         OBV_OBV_TruncatableTest::TValue1,
                         1);
+        v4 = tmp_v4;
         v4->basic_data (9);
         v4->data1 (99);
 
         OBV_TruncatableTest::NestedValue_var nv;
-        ACE_NEW_RETURN (nv,
+        OBV_OBV_TruncatableTest::NestedValue *tmp_nv;
+        ACE_NEW_RETURN (tmp_nv,
                         OBV_OBV_TruncatableTest::NestedValue,
                         1);
+        nv = tmp_nv;
         nv->data (2);
 
         OBV_TruncatableTest::TValue4_var v2;
-        ACE_NEW_RETURN (v2,
+        OBV_OBV_TruncatableTest::TValue4 *tmp_v2;
+        ACE_NEW_RETURN (tmp_v2,
                         OBV_OBV_TruncatableTest::TValue4,
                         1);
+        v2 = tmp_v2;
+
         v2->basic_data (7);
         v2->nv4 (nv.in ());
         v2->data4 (77);
 
         OBV_TruncatableTest::TValue4_var v3;
-        ACE_NEW_RETURN (v3,
+        OBV_OBV_TruncatableTest::TValue4 *tmp_v3;
+        ACE_NEW_RETURN (tmp_v3,
                         OBV_OBV_TruncatableTest::TValue4,
                         1);
+        v3 = tmp_v3;
+
         v3->basic_data (6);
         v3->nv4 (nv.in ());
         v3->data4 (66);
