@@ -64,7 +64,7 @@ namespace ACE_OS
   extern ACE_Export
   int argv_to_string (ACE_TCHAR **argv,
                       ACE_TCHAR *&buf,
-                      int substitute_env_args = 1);
+                      bool substitute_env_args = true);
 
 #if !defined (ACE_LACKS_CHDIR)
   ACE_NAMESPACE_INLINE_FUNCTION
@@ -298,7 +298,7 @@ namespace ACE_OS
   int string_to_argv (ACE_TCHAR *buf,
                       int &argc,
                       ACE_TCHAR **&argv,
-                      int substitute_env_args = 1);
+                      bool substitute_env_args = true);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   void swab (const void *src, void *dest, ssize_t n);

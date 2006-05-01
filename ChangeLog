@@ -1,3 +1,19 @@
+Mon May  1 19:49:45 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/ARGV.{h i cpp}: Filled out more of the documentation in this
+          class, specifically mentioning that the class will enforce the
+          "whitespace separates tokens, except when quoted" rule of command
+          line parsing that's consistent with ACE_Get_Opt, etc. Also removed
+          documentation of non-existant restrictions such as after using
+          add(), can't use buf().
+          Removed the State enum since the only value ever used was ITERATIVE,
+          and changed "int state_" to "bool iterative_" (and removed the
+          state() accessor). Changed substitute_env_args_ from int to bool.
+
+        * ace/OS_NS_unistd.{h cpp} (argv_to_string, string_to_argv): Changed
+          the substitute_env_args parameter from "int" to "bool" to better
+          reflect what it is, a yes/no indicator.
+
 Mon May  1 06:53:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_sunos5_g++.GNU:
@@ -96,6 +112,7 @@ Fri Apr 28 15:42:59 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
         * ace/Service_Gestalt.h:
           Cleaned up the long-lines of the UNIMPLEMENTED functions.
 
+>>>>>>> 4.10246
 Fri Apr 28 15:26:53 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * ace/Timer_Queue_Adapters.h: Clarified the use and restrictions with
