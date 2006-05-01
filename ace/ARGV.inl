@@ -14,21 +14,13 @@ ACE_ARGV::argc (void) const
   return this->argc_;
 }
 
-// Return the state of this ACE_ARGV
-ACE_INLINE int
-ACE_ARGV::state(void) const
-{
-  ACE_TRACE ("ACE_ARGV::state");
-  return this->state_;
-}
-
 // Return the arguments in a space-separated string
 ACE_INLINE const ACE_TCHAR *
 ACE_ARGV::buf (void)
 {
   ACE_TRACE ("ACE_ARGV::buf");
 
-  if (this->buf_ == 0 && this->state_ == ITERATIVE)
+  if (this->buf_ == 0 && this->iterative_)
     this->create_buf_from_queue ();
 
   return (const ACE_TCHAR *) this->buf_;
@@ -44,7 +36,7 @@ ACE_ARGV::argv (void)
   // Try to create the argv_ if it isn't there
   if (this->argv_ == 0)
     {
-      if (this->state_ == ITERATIVE && this->buf_ == 0)
+      if (this->iterative_ && this->buf_ == 0)
         this->create_buf_from_queue ();
 
       // Convert buf_ to argv_

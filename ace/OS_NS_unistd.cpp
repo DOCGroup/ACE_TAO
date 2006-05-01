@@ -39,7 +39,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 int
 ACE_OS::argv_to_string (ACE_TCHAR **argv,
                         ACE_TCHAR *&buf,
-                        int substitute_env_args)
+                        bool substitute_env_args)
 {
   if (argv == 0 || argv[0] == 0)
     return 0;
@@ -620,7 +620,7 @@ int
 ACE_OS::string_to_argv (ACE_TCHAR *buf,
                         int &argc,
                         ACE_TCHAR **&argv,
-                        int substitute_env_args)
+                        bool substitute_env_args)
 {
   // Reset the number of arguments
   argc = 0;

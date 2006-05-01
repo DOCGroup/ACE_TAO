@@ -30,121 +30,167 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * @class ACE_ARGV
  *
  * @brief Builds a counted argument vector (ala argc/argv) from either
- * a string or a set of separate tokens. Can substitute environment
- * variable values for tokens that are environment variable references.
+ * a string or a set of separate tokens. This class preserves whitespace
+ * within tokens only if the whitespace-containing token is enclosed in
+ * either single (') or double (") quotes. This is consistent with the
+ * expected behavior if an argument vector obtained using this class is
+ * passed to, for example, ACE_Get_Opt.
+ *
+ * This class can substitute environment variable values for tokens that
+ * are environment variable references (e.g., @c $VAR). This only works
+ * if the token is an environment variable reference and nothing else; it
+ * doesn't substitute environment variable references within a token.
+ * For example, @c $HOME/file will not substitute the value of the HOME
+ * environment variable.
  */
 class ACE_Export ACE_ARGV
 {
 public:
   // = Initialization and termination.
   /**
-   * Splits the specified string into an argument vector, split at whitespace.
+   * Splits the specified string into an argument vector. Arguments in the
+   * string are delimited by whitespace. Whitespace-containing arguments
+   * must be enclosed in quotes, either single (') or double (").
    *
-   * @param buf   An ACE_TCHAR array to split into tokens for the vector.
+   * @param buf   A nul-terminated ACE_TCHAR array to split into arguments
+   *              for the vector.
    *
    * @param substitute_env_args  If non-zero, any token that is an
-   *              an environment variable reference ($VAR) will have
+   *              environment variable reference (e.g., @c $VAR) will have
    *              its environment variable value in the resultant vector
-   *              in place of the environment variable name. This only works
-   *              if the token is an environment variable reference and
-   *              nothing else; it doesn't substitute environment variable
-   *              references within a token. For example, @c $HOME/file will
-   *              not substitute the value of the HOME environment variable.
+   *              in place of the environment variable name.
    */
   ACE_ARGV (const ACE_TCHAR buf[],
-            int substitute_env_args = 1);
+            bool substitute_env_args = true);
 
   /**
-   * Converts @a argv into a linear string.  If @a substitute_env_args
-   * is enabled then we'll substitute the environment variables for
-   * each $ENV encountered in the string.  The <buf> operation is not
-   * allowed on an ACE_ARGV created this way.
+   * Initializes the argument vector from a set of arguments. Any environment
+   * variable references are translated (if applicable) during execution of
+   * this method.
+   *
+   * @param argv  An array of tokens to initialize the object with. The
+   *              array must be terminated with a 0 pointer. All needed
+   *              data is copied from @a argv during this call; the pointers
+   *              in @a argv are not needed after this call, and the memory
+   *              referred to by @a argv is not referenced by this object.
+   *
+   * @param substitute_env_args  If non-zero, any element of @a argv that is
+   *              an environment variable reference (e.g., @c $VAR) will have
+   *              its environment variable value in the resultant vector
+   *              in place of the environment variable name.
    */
   ACE_ARGV (ACE_TCHAR *argv[],
-            int substitute_env_args = 1);
+            bool substitute_env_args = true);
 
   /**
-   * Creates an ACE_ARGV which is the concatenation of the first_argv
-   * and the second argv. The argv arguments should be null pointer
-   * terminated.
+   * Initializes the argument vector from two combined argument vectors.
+   *
+   * @param first_argv   An array of tokens to initialize the object with.
+   *                     The array must be terminated with a 0 pointer.
+   * @param second_argv  An array of tokens that is concatenated with the
+   *                     the tokens in @a first_argv. The array must be
+   *                     terminated with a 0 pointer.
+   * @param substitute_env_args  If non-zero, any element of @a first_argv
+   *              or @a second_argv that is an environment variable
+   *              reference (e.g., @c $VAR) will have its environment
+   *              variable value in the resultant vector in place
+   *              of the environment variable name.
    */
   ACE_ARGV (ACE_TCHAR *first_argv[],
             ACE_TCHAR *second_argv[],
-            int substitute_env_args =1);
+            bool substitute_env_args = true);
 
   /**
-   * Entry point for creating an ACE_TCHAR *[] command line
-   * iteratively via the <add> method.  When this constructor is used,
-   * the <ITERATIVE> state is enabled.  The <argv> and <buf> methods
-   * are allowed, and the result is recreated when called multiple
-   * times.  The subscript operator is not allowed.
+   * Initialize this object so arguments can be added later using one
+   * of the add methods. This is referred to as the @i iterative method
+   * of adding arguments to this object.
    */
-  ACE_ARGV (int substitute_env_args = 1);
+  ACE_ARGV (bool substitute_env_args = true);
 
   /// Destructor.
   ~ACE_ARGV (void);
 
-  // = Accessor arguments.
-  /// Returns the <index>th string in the ARGV array.
+  /** @name Accessor methods
+   *
+   * These methods access the argument vector contained in this object.
+   */
+  //@{
+  /**
+   * Returns the specified element of the current argument vector.
+   *
+   * @param index   Index to the desired element.
+   *
+   * @retval   Pointer to the indexed string.
+   * @retval   0 if @a index is out of bounds.
+   */
   const ACE_TCHAR *operator[] (size_t index);
 
   /**
-   * Returns the @c argv array.  Caller should not delete this memory
-   * since the ACE_ARGV destructor will delete it.  If the caller
-   * modifies the array in the iterative mode, the changes are not
-   * saved to the queue.
+   * Returns the current argument vector. The returned pointers are to data
+   * maintained internally to this class. Do not change or delete either the
+   * pointers or the memory to which they refer.
    */
   ACE_TCHAR **argv (void);
 
-  /// Returns @c argc.
+  /// Returns the current number of arguments.
   int argc (void) const;
 
-  /// Returns the @c buf.  Caller should not delete this memory since
-  /// the ACE_ARGV destructor will delete it.
+  /**
+   * Returns a single string form of the current arguments. The returned
+   * pointer refers to memory maintained internally to this class. Do not
+   * change or delete it.
+   */
   const ACE_TCHAR *buf (void);
 
-  /// Dump the state of an object.
+  //@}
+
+  /// Dump the state of this object.
   void dump (void) const;
 
-  /// Declare the dynamic allocation hooks.
+  // Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
-  /// Add another argument.  This only works in the <ITERATIVE> state.
-  /// Note that this method does not copy <next_arg>, nor does it
-  /// assume ownership of managing its memory, i.e., the caller is
-  /// responsible for memory management.  Returns -1 on failure and 0
-  /// on success.
+  /**
+   * Add another argument. This only works in the iterative mode.
+   *
+   * @note This method copies the specified pointer, but not the data
+   *       contained in the referenced memory. Thus, if the content of
+   *       the memory referred to by @a next_arg are changed after this
+   *       method returns, the results are undefined.
+   *
+   * @param next_arg    Pointer to the next argument to add to the vector.
+   *
+   * @retval 0 on success; -1 on failure. Most likely @c errno values are:
+   *       - EINVAL: This object is not in iterative mode.
+   *       - ENOMEM: Not enough memory available to save @a next_arg.
+   */
   int add (const ACE_TCHAR *next_arg);
 
   /**
-   * Add another @a argv array.  The @a argv parameter must be NULL
-   * terminated.  This only works in the <ITERATIVE> state.  Returns
-   * -1 on failure and 0 on success.
+   * Add an array of arguments. This only works in the iterative mode.
+   *
+   * @note This method copies the specified pointers, but not the data
+   *       contained in the referenced memory. Thus, if the content of
+   *       the memory referred to by any of the @a argv elements is
+   *       changed after this method returns, the results are undefined.
+   *
+   * @param argv    Pointers to the arguments to add to the vector.
+   *                @a argv must be terminated by a 0 pointer.
+   *
+   * @retval 0 on success; -1 on failure. Most likely @c errno values are:
+   *       - EINVAL: This object is not in iterative mode.
+   *       - ENOMEM: Not enough memory available to save @a next_arg.
    */
   int add (ACE_TCHAR *argv[]);
 
-  /// What state is this ACE_ARGV in?
-  int state (void) const;
-
-  // These are the states possible via the different constructors.
-  enum States
-  {
-    /// ACE_ARGV converts buf[] to ACE_TCHAR *argv[]
-    TO_STRING = 1,
-    /// ACE_ARGV converts ACE_TCHAR *argv[] to buf[]
-    TO_PTR_ARRAY = 2,
-    /// Builds buf[] or ACE_TCHAR *argv[] iteratively with <add>.
-    ITERATIVE = 3
-  };
-
 private:
-  /// Copy Constructor not implemented
+  /// Copy constructor not implemented.
   ACE_ARGV (const ACE_ARGV&);
 
-  /// Assignment '=' operator not implemented
+  /// Assignment operator not implemented.
   ACE_ARGV operator= (const ACE_ARGV&);
 
-  /// Creates buf_ from the queue, deletes previous buf_.
+  /// Creates buf_ from the queue of added args, deletes previous buf_.
   int create_buf_from_queue (void);
 
   /// Converts buf_ into the ACE_TCHAR *argv[] format.
@@ -155,10 +201,9 @@ private:
   int argv_to_string (ACE_TCHAR **argv, ACE_TCHAR *&buf);
 
   /// Replace args with environment variable values?
-  int substitute_env_args_;
+  bool substitute_env_args_;
 
-  /// Current state marker.
-  int state_;
+  bool iterative_;
 
   /// Number of arguments in the ARGV array.
   int argc_;
