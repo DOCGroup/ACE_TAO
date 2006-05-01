@@ -112,7 +112,6 @@ Fri Apr 28 15:42:59 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
         * ace/Service_Gestalt.h:
           Cleaned up the long-lines of the UNIMPLEMENTED functions.
 
->>>>>>> 4.10246
 Fri Apr 28 15:26:53 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * ace/Timer_Queue_Adapters.h: Clarified the use and restrictions with
