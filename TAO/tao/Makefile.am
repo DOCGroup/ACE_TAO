@@ -303,7 +303,7 @@ nobase_include_HEADERS = \
   BooleanSeq.pidl \
   BooleanSeqC.h \
   BooleanSeqS.h \
-  Bounded_Array_Allocation_Traits.h \
+  Bounded_Array_Allocation_Traits_T.h \
   Bounded_Array_Sequence_T.h \
   Bounded_Basic_String_Sequence_T.h \
   Bounded_Object_Reference_Sequence_T.h \
