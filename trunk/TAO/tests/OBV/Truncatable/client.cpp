@@ -164,15 +164,9 @@ main (int argc, char *argv[])
 
       CORBA::String_var desc;;
       { //isolate the scope of objects to avoid using wrong values
-        OBV_TruncatableTest::TValue1_var v1;
-        OBV_OBV_TruncatableTest::TValue1 *tmp_v1;
-        ACE_NEW_RETURN (tmp_v1,
-                        OBV_OBV_TruncatableTest::TValue1,
-                        1);
-        v1 = tmp_v1;
-        tmp_v1 = 0;
-        v1->basic_data (9);
-        v1->data1 (99);
+        OBV_OBV_TruncatableTest::TValue1 v1;
+        v1.basic_data (9);
+        v1.data1 (99);
 
         OBV_TruncatableTest::BaseValue_var ov1;
 
@@ -182,27 +176,26 @@ main (int argc, char *argv[])
                       ACE_TEXT_CHAR_TO_TCHAR(desc.in())));
         pretest = fail;
 
-        test->op1 ("case1", v1.in (), ov1.out (), desc.inout () ACE_ENV_ARG_PARAMETER);
+        test->op1 ("case1", &v1, ov1.out (), desc.inout ()
+                   ACE_ENV_ARG_PARAMETER);
+
         ACE_TRY_CHECK;
 
-        VERIFY (! ACE_OS::strcmp (desc.in (), "case1: A<-tB, truncate B to A"));
-        VERIFY (v1->basic_data () == ov1->basic_data ());
+        VERIFY (! ACE_OS::strcmp (desc.in (),
+                                  "case1: A<-tB, truncate B to A"));
+        VERIFY (v1.basic_data () == ov1->basic_data ());
         if (verbose)
           ACE_DEBUG ((LM_DEBUG,ACE_TEXT ("%s\n"),
-                      (pretest == fail) ? ACE_TEXT ("passed") : ACE_TEXT ("failed")));
+                      (pretest == fail) ?
+                      ACE_TEXT ("passed") : ACE_TEXT ("failed")));
       }
 
       { //isolate the scope of objects to avoid using wrong values
-        OBV_TruncatableTest::TValue2_var v2;
-        OBV_OBV_TruncatableTest::TValue2 *tmp_v2;
-        ACE_NEW_RETURN (tmp_v2,
-                        OBV_OBV_TruncatableTest::TValue2,
-                        1);
-        v2 = tmp_v2;
-        tmp_v2 = 0;
-        v2->basic_data (9);
-        v2->data1 (99);
-        v2->data2 (99 * 2);
+        OBV_OBV_TruncatableTest::TValue2 v2;
+
+        v2.basic_data (9);
+        v2.data1 (99);
+        v2.data2 (99 * 2);
 
         OBV_TruncatableTest::BaseValue_var ov2;
         desc = CORBA::string_dup ("A<-tB<-tC, truncate C to A");
@@ -211,14 +204,17 @@ main (int argc, char *argv[])
                       ACE_TEXT_CHAR_TO_TCHAR(desc.in())));
         pretest = fail;
 
-        test->op1 ("case2", v2.in (), ov2.out (), desc.inout () ACE_ENV_ARG_PARAMETER);
+        test->op1 ("case2", &v2, ov2.out (), desc.inout ()
+                   ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
-        VERIFY (! ACE_OS::strcmp (desc.in (), "case2: A<-tB<-tC, truncate C to A"));
-        VERIFY (v2->basic_data () == ov2->basic_data ());
+        VERIFY (! ACE_OS::strcmp (desc.in (),
+                                  "case2: A<-tB<-tC, truncate C to A"));
+        VERIFY (v2.basic_data () == ov2->basic_data ());
         if (verbose)
           ACE_DEBUG ((LM_DEBUG,ACE_TEXT ("%s\n"),
-                      (pretest == fail) ? ACE_TEXT ("passed") : ACE_TEXT ("failed")));
+                      (pretest == fail) ?
+                      ACE_TEXT ("passed") : ACE_TEXT ("failed")));
 
         OBV_TruncatableTest::TValue1_var otv1;
         desc = CORBA::string_dup ("A<-tB<-tC, truncate C to B");
@@ -227,27 +223,25 @@ main (int argc, char *argv[])
                       ACE_TEXT_CHAR_TO_TCHAR(desc.in())));
         pretest = fail;
 
-        test->op2 (v2.in (), "case3", otv1.out (), desc.inout () ACE_ENV_ARG_PARAMETER);
+        test->op2 (&v2, "case3", otv1.out (), desc.inout ()
+                   ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
-        VERIFY (! ACE_OS::strcmp (desc.in (), "case3: A<-tB<-tC, truncate C to B"));
-        VERIFY (v2->basic_data () == otv1->basic_data ());
-        VERIFY (v2->data1 () == otv1->data1 ());
+        VERIFY (! ACE_OS::strcmp (desc.in (),
+                                  "case3: A<-tB<-tC, truncate C to B"));
+        VERIFY (v2.basic_data () == otv1->basic_data ());
+        VERIFY (v2.data1 () == otv1->data1 ());
         if (verbose)
           ACE_DEBUG ((LM_DEBUG,ACE_TEXT ("%s\n"),
-                      (pretest == fail) ? ACE_TEXT ("passed") : ACE_TEXT ("failed")));
+                      (pretest == fail) ?
+                      ACE_TEXT ("passed") : ACE_TEXT ("failed")));
       }
 
       { //isolate the scope of objects to avoid using wrong values
-        OBV_TruncatableTest::TValue1_var itv1b;
-        OBV_OBV_TruncatableTest::TValue1 *tmp_v1;
-        ACE_NEW_RETURN (tmp_v1,
-                        OBV_OBV_TruncatableTest::TValue1,
-                        1);
-        itv1b = tmp_v1;
-        tmp_v1 = 0;
-        itv1b->basic_data(7);
-        itv1b->data1(8);
+        OBV_OBV_TruncatableTest::TValue1 itv1b;
+
+        itv1b.basic_data(7);
+        itv1b.data1(8);
         OBV_TruncatableTest::TValue1_var otv1b;
         desc = CORBA::string_dup ("A<-tB, truncatable but no truncation");
         if (verbose)
@@ -255,41 +249,40 @@ main (int argc, char *argv[])
                       ACE_TEXT_CHAR_TO_TCHAR(desc.in())));
         pretest = fail;
 
-        test->op2 (itv1b, "case3b", otv1b.out (), desc.inout () ACE_ENV_ARG_PARAMETER);
+        test->op2 (&itv1b, "case3b", otv1b.out (), desc.inout ()
+                   ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
-        VERIFY (! ACE_OS::strcmp (desc.in (), "case3b: A<-tB, truncatable but no truncation"));
-        VERIFY (itv1b->basic_data () == otv1b->basic_data ());
-        VERIFY (itv1b->data1 () == otv1b->data1 ());
+        VERIFY (! ACE_OS::strcmp (desc.in (),
+                "case3b: A<-tB, truncatable but no truncation"));
+        VERIFY (itv1b.basic_data () == otv1b->basic_data ());
+        VERIFY (itv1b.data1 () == otv1b->data1 ());
         if (verbose)
           ACE_DEBUG ((LM_DEBUG,ACE_TEXT ("%s\n"),
-                      (pretest == fail) ? ACE_TEXT ("passed") : ACE_TEXT ("failed")));
+                      (pretest == fail) ?
+                      ACE_TEXT ("passed") : ACE_TEXT ("failed")));
       }
 
       { //isolate the scope of objects to avoid using wrong values
-        OBV_TruncatableTest::TValue3_var v3;
-        OBV_OBV_TruncatableTest::TValue3 *tmp_v3;
-        ACE_NEW_RETURN (tmp_v3,
-                        OBV_OBV_TruncatableTest::TValue3,
-                        1);
-        v3 = tmp_v3;
-        tmp_v3 = 0;
-        v3->basic_data (9);
-        v3->data1 (99);
-        v3->data3 (99 * 3);
+        OBV_OBV_TruncatableTest::TValue3 v3;
+        v3.basic_data (9);
+        v3.data1 (99);
+        v3.data3 (99 * 3);
 
         bool caught_expected_exception = false;
         ACE_TRY_EX (value3)
           {
             OBV_TruncatableTest::BaseValue_var ov3;
-            desc = CORBA::string_dup ("A<-tB<-C, try truncate C to A, MARSHAL exception");
+            desc = CORBA::string_dup
+              ("A<-tB<-C, try truncate C to A, MARSHAL exception");
             if (verbose)
               ACE_DEBUG ((LM_DEBUG,ACE_TEXT("Case 4: %s: "),
                           ACE_TEXT_CHAR_TO_TCHAR(desc.in())));
-            test->op1 ("case4", v3.in (), ov3.out (), desc.inout () ACE_ENV_ARG_PARAMETER);
+            test->op1 ("case4", &v3, ov3.out (), desc.inout ()
+                       ACE_ENV_ARG_PARAMETER);
             ACE_TRY_CHECK_EX (value3);
           }
-        ACE_CATCH (CORBA::MARSHAL, ex)
+        ACE_CATCH (CORBA::MARSHAL, v3ex)
           {
             if (verbose)
               ACE_DEBUG ((LM_DEBUG,ACE_TEXT ("passed\n")));
@@ -306,74 +299,62 @@ main (int argc, char *argv[])
       } //end marshaling exception test.
 
       { //isolate the scope of objects to avoid using wrong values
-        OBV_TruncatableTest::NestedValue_var nv;
-        OBV_OBV_TruncatableTest::NestedValue *tmp_nv;
-        ACE_NEW_RETURN (tmp_nv,
-                        OBV_OBV_TruncatableTest::NestedValue,
-                        1);
-        nv = tmp_nv;
-        tmp_nv = 0;
-        nv->data (2);
+        OBV_OBV_TruncatableTest::NestedValue nv;
+        nv.data (2);
 
-        OBV_TruncatableTest::TValue5_var v5;
-        OBV_OBV_TruncatableTest::TValue5 *tmp_v5;
-        ACE_NEW_RETURN (tmp_v5,
-                        OBV_OBV_TruncatableTest::TValue5,
-                        1);
-        v5 = tmp_v5;
-        tmp_v5 = 0;
+        OBV_OBV_TruncatableTest::TValue5 v5;
 
-        v5->basic_data (9);
-        v5->nv4 (nv.in ());
-        v5->data4 (99 * 4);
-        v5->str1 ("str1");
-        v5->data5 (99 * 5);
-        v5->nv5 (nv.in ());
-        v5->str2 ("str2");
+        v5.basic_data (9);
+        v5.nv4 (&nv);
+        v5.data4 (99 * 4);
+        v5.str1 ("str1");
+        v5.data5 (99 * 5);
+        v5.nv5 (&nv);
+        v5.str2 ("str2");
 
         OBV_TruncatableTest::BaseValue_var ov5;
-        desc = CORBA::string_dup ("A<-tB<-tC, B & C have nested value type, truncate C to A");
+        desc = CORBA::string_dup
+          ("A<-tB<-tC, B & C have nested value type, truncate C to A");
         if (verbose)
           ACE_DEBUG ((LM_DEBUG,ACE_TEXT("Case 5: %s: "),
                       ACE_TEXT_CHAR_TO_TCHAR(desc.in())));
         pretest = fail;
-        test->op1 ("case5", v5.in (), ov5.out (), desc.inout () ACE_ENV_ARG_PARAMETER);
+        test->op1 ("case5", &v5, ov5.out (), desc.inout ()
+                   ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
-        VERIFY (! ACE_OS::strcmp (desc.in (), "case5: A<-tB<-tC, B & C have nested value type, truncate C to A"));
-        VERIFY (v5->basic_data () == ov5->basic_data ());
+        VERIFY (! ACE_OS::strcmp (desc.in (),
+          "case5: A<-tB<-tC, B & C have nested value type, truncate C to A"));
+        VERIFY (v5.basic_data () == ov5->basic_data ());
         if (verbose)
           ACE_DEBUG ((LM_DEBUG,ACE_TEXT ("%s\n"),
-                      (pretest == fail) ? ACE_TEXT ("passed") : ACE_TEXT ("failed")));
+                      (pretest == fail) ?
+                      ACE_TEXT ("passed") : ACE_TEXT ("failed")));
 
         OBV_TruncatableTest::TValue4_var otv4;
-        desc = CORBA::string_dup ("A<-tB<-tC, B & C have nested value type, truncate C to B");
+        desc = CORBA::string_dup
+          ("A<-tB<-tC, B & C have nested value type, truncate C to B");
         if (verbose)
           ACE_DEBUG ((LM_DEBUG,ACE_TEXT("Case 6: %s: "),
                       ACE_TEXT_CHAR_TO_TCHAR(desc.in())));
         pretest = fail;
-        test->op3 ("case6", v5.in (), otv4.out (), desc.inout () ACE_ENV_ARG_PARAMETER);
+        test->op3 ("case6", &v5, otv4.out (), desc.inout ()
+                   ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
-        VERIFY (! ACE_OS::strcmp (desc.in (), "case6: A<-tB<-tC, B & C have nested value type, truncate C to B"));
-        VERIFY (v5->basic_data () == otv4->basic_data ());
-        VERIFY (v5->nv4 ()->data () == otv4->nv4 ()->data ());
-        VERIFY (v5->data4 () == otv4->data4 ());
+        VERIFY (! ACE_OS::strcmp (desc.in (),
+           "case6: A<-tB<-tC, B & C have nested value type, truncate C to B"));
+        VERIFY (v5.basic_data () == otv4->basic_data ());
+        VERIFY (v5.nv4 ()->data () == otv4->nv4 ()->data ());
+        VERIFY (v5.data4 () == otv4->data4 ());
         if (verbose)
           ACE_DEBUG ((LM_DEBUG,ACE_TEXT ("%s\n"),
                       (pretest == fail) ? ACE_TEXT ("passed") : ACE_TEXT ("failed")));
       }
 
       { //isolate the scope of objects to avoid using wrong values
-        OBV_TruncatableTest::TValue6_var iv;
-        OBV_OBV_TruncatableTest::TValue6 *tmp_iv;
-        ACE_NEW_RETURN (tmp_iv,
-                        OBV_OBV_TruncatableTest::TValue6,
-                        1);
-        iv = tmp_iv;
-        tmp_iv = 0;
-
-        iv->basic_data (9);
+        OBV_OBV_TruncatableTest::TValue6 iv;
+        iv.basic_data (9);
 
         OBV_TruncatableTest::BaseValue_var ov;
 
@@ -382,83 +363,64 @@ main (int argc, char *argv[])
           ACE_DEBUG ((LM_DEBUG,ACE_TEXT("Case 7: %s: "),
                       ACE_TEXT_CHAR_TO_TCHAR(desc.in())));
         pretest = fail;
-        test->op1 ("case7", iv.in (), ov.out (), desc.inout () ACE_ENV_ARG_PARAMETER);
+        test->op1 ("case7", &iv, ov.out (), desc.inout ()
+                   ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
-        VERIFY (! ACE_OS::strcmp (desc.in (), "case7: A<-tB, B has no data, truncate B to A"));
-        VERIFY (iv->basic_data () == ov->basic_data ());
+        VERIFY (! ACE_OS::strcmp (desc.in (),
+                "case7: A<-tB, B has no data, truncate B to A"));
+        VERIFY (iv.basic_data () == ov->basic_data ());
         if (verbose)
           ACE_DEBUG ((LM_DEBUG,ACE_TEXT ("%s\n"),
-                      (pretest == fail) ? ACE_TEXT ("passed") : ACE_TEXT ("failed")));
+                      (pretest == fail) ?
+                      ACE_TEXT ("passed") : ACE_TEXT ("failed")));
       }
 
       { //isolate the scope of objects to avoid using wrong values
-        OBV_TruncatableTest::TValue1_var v1;
-        OBV_TruncatableTest::TValue1 *tmp_v1;
-        ACE_NEW_RETURN (tmp_v1,
-                        OBV_OBV_TruncatableTest::TValue1,
-                        1);
-        v1 = tmp_v1;
-        tmp_v1 = 0;
+        OBV_OBV_TruncatableTest::TValue1 v1;
+        v1.basic_data (8);
+        v1.data1 (88);
 
-        v1->basic_data (8);
-        v1->data1 (88);
+        OBV_OBV_TruncatableTest::TValue1 v4;
+        v4.basic_data (9);
+        v4.data1 (99);
 
+        OBV_OBV_TruncatableTest::NestedValue nv;
+        nv.data (2);
 
-        OBV_TruncatableTest::TValue1_var v4;
-        OBV_OBV_TruncatableTest::TValue1 *tmp_v4;
-        ACE_NEW_RETURN (tmp_v4,
-                        OBV_OBV_TruncatableTest::TValue1,
-                        1);
-        v4 = tmp_v4;
-        v4->basic_data (9);
-        v4->data1 (99);
+        OBV_OBV_TruncatableTest::TValue4 v2;
 
-        OBV_TruncatableTest::NestedValue_var nv;
-        OBV_OBV_TruncatableTest::NestedValue *tmp_nv;
-        ACE_NEW_RETURN (tmp_nv,
-                        OBV_OBV_TruncatableTest::NestedValue,
-                        1);
-        nv = tmp_nv;
-        nv->data (2);
+        v2.basic_data (7);
+        v2.nv4 (&nv);
+        v2.data4 (77);
 
-        OBV_TruncatableTest::TValue4_var v2;
-        OBV_OBV_TruncatableTest::TValue4 *tmp_v2;
-        ACE_NEW_RETURN (tmp_v2,
-                        OBV_OBV_TruncatableTest::TValue4,
-                        1);
-        v2 = tmp_v2;
+        OBV_OBV_TruncatableTest::TValue4 v3;
+        v3.basic_data (6);
+        v3.nv4 (&nv);
+        v3.data4 (66);
 
-        v2->basic_data (7);
-        v2->nv4 (nv.in ());
-        v2->data4 (77);
-
-        OBV_TruncatableTest::TValue4_var v3;
-        OBV_OBV_TruncatableTest::TValue4 *tmp_v3;
-        ACE_NEW_RETURN (tmp_v3,
-                        OBV_OBV_TruncatableTest::TValue4,
-                        1);
-        v3 = tmp_v3;
-
-        v3->basic_data (6);
-        v3->nv4 (nv.in ());
-        v3->data4 (66);
-
-        desc = CORBA::string_dup ("multiple IN truncatable valuetype parameters and return truncatable valuetype");
+        desc = CORBA::string_dup
+          ("multiple IN truncatable valuetype parameters"
+           " and return truncatable valuetype");
         if (verbose)
           ACE_DEBUG ((LM_DEBUG,ACE_TEXT("Case 8: %s: "),
                       ACE_TEXT_CHAR_TO_TCHAR(desc.in())));
         pretest = fail;
         OBV_TruncatableTest::BaseValue_var ov
-          = test->op4 ("case8", v1.in (), 5, v2.in (), v3.in (), v4.in (), desc.inout () ACE_ENV_ARG_PARAMETER);
+          = test->op4 ("case8", &v1, 5, &v2, &v3, &v4, desc.inout ()
+                       ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
-        VERIFY (! ACE_OS::strcmp (desc.in (), "case8: multiple IN truncatable valuetype parameters and return truncatable valuetype"));
-        CORBA::ULong total = 5 * (v1->basic_data () + v2->basic_data () + v3->basic_data () + v4->basic_data ());
+        VERIFY (! ACE_OS::strcmp (desc.in (),
+                 "case8: multiple IN truncatable valuetype parameters"
+                        " and return truncatable valuetype"));
+        CORBA::ULong total = 5 * (v1.basic_data () + v2.basic_data () +
+                                  v3.basic_data () + v4.basic_data ());
         VERIFY (ov->basic_data () == total);
         if (verbose)
           ACE_DEBUG ((LM_DEBUG,ACE_TEXT ("%s\n"),
-                      (pretest == fail) ? ACE_TEXT ("passed") : ACE_TEXT ("failed")));
+                      (pretest == fail) ?
+                      ACE_TEXT ("passed") : ACE_TEXT ("failed")));
       }
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - shutdown orb \n"));

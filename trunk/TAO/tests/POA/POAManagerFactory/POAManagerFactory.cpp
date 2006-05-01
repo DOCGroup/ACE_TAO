@@ -149,7 +149,7 @@ main (int argc, char **argv)
                                                    ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK_EX (create);
       }
-      ACE_CATCH (PortableServer::POAManagerFactory::ManagerAlreadyExists, ex)
+      ACE_CATCH (PortableServer::POAManagerFactory::ManagerAlreadyExists, mae)
       {
         got_expected_exception = true;
       }

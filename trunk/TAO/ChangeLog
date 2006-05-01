@@ -1,3 +1,18 @@
+Mon May  1 15:33:00 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/OBV/Truncatable/client.cpp:
+          This is an improvment to what I committed earlier. Since the
+          valuetypes are passed by value, it is perfectly reasonable to
+          allocate them on the stack locally. That way I could get away
+          from the use of the var to store a reference to the local value
+          instance, and also avoid the awkward initialization code used to
+          avoid the ambiguity BCB6 was complaining about.
+
+        * tests/POA/POAManagerFactory/POAManagerFactory.cpp:
+          Changed the name of an internal catch value. I'm not sure, but I
+          suspect this is what was causing the BCB compiler to complain at
+          the point of ACE_CATCHANY.
+
 Mon May  1 12:04:17 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/OBV/Truncatable/client.cpp:
