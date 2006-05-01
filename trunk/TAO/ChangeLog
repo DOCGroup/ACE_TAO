@@ -1,11 +1,25 @@
+Mon May  1 21:54:05 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tests/ORB_Local_Config/Bunch/Test.cpp:
+
+          Modified the test not to require the ability to fully
+          instantiate TAO_CORBANAME_Parser, etc. which is a class in
+          another library and it is not declared so that it is "visible"
+          outside of it. The test does not require that in order to be
+          functional - using the base class ACE_Service_Object.
+
+        * tests/ORB_Local_Config/Two_DLL_ORB/client.cpp:
+
+          Added some more logging.
+
 Mon May  1 20:03:59 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * tao/Makefile.am:
-        
+
           Regenerated.
 
         * tao/tao.mpc:
-        
+
           Fix typo.
 
 Mon May  1 19:39:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
