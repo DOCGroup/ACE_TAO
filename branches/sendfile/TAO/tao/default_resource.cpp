@@ -829,7 +829,10 @@ typedef ACE_New_Allocator LOCKED_ALLOCATOR_NO_POOL;
 void
 TAO_Default_Resource_Factory::use_local_memory_pool (bool flag)
 {
-  use_local_memory_pool_ = flag;
+  this->use_local_memory_pool_ = flag;
+
+  if (this->output_cdr_allocator_type_ == DEFAULT)
+    this->output_cdr_allocator_type_ == LOCAL_MEMORY_POOL;
 }
 
 ACE_Allocator *

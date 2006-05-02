@@ -94,9 +94,11 @@ TAO_IIOP_Transport::send (iovec *iov, int iovcnt,
 
 #ifdef ACE_HAS_SENDFILE
 ssize_t
-TAO_IIOP_Transport::sendfile (ACE_Message_Block const *data,
+TAO_IIOP_Transport::sendfile (TAO_MMAP_Allocator * allocator,
+                              iovec * iov,
+                              int iovcnt,
                               size_t &bytes_transferred,
-                              ACE_Time_Value const *timeout)
+                              ACE_Time_Value const * timeout)
 {
   // @@ We should probably set the TCP_CORK socket option to minimize
   //    network operations.  It may also be useful to adjust the
@@ -104,67 +106,56 @@ TAO_IIOP_Transport::sendfile (ACE_Message_Block const *data,
 
   ssize_t retval = -1;
 
-  for (ACE_Message_Block const * message_block = data;
-       message_block != 0;
-       message_block = message_block->cont ())
+  if (allocator == 0)
+    return retval;  // Can't use sendfile().
+
+  ACE_HANDLE const in_fd = allocator->handle ();
+
+  if (in_fd == ACE_INVALID_HANDLE)
+    return retval;
+
+  ACE_HANDLE const out_fd =
+    this->connection_handler_->peer ().get_handle ();
+
+  iovec * const begin = iov;
+  iovec * const end   = iov + iovcnt;
+  for (iovec * i = begin; i != end; ++i)
     {
-      size_t const mb_length = message_block->length ();
+      off_t offset = allocator->offset (i->iov_base);
 
-      // Check if this block has any data to be sent.
-      if (mb_length > 0)
+      if (timeout)
         {
-          // @@ How costly is this dynamic_cast<>.
-          TAO_MMAP_Allocator * const allocator =
-            dynamic_cast<TAO_MMAP_Allocator *> (
-              message_block->data_block ()->allocator_strategy ());
-
-          if (allocator == 0)
-            return 0;  // Can't use sendfile().
-
-          ACE_HANDLE const in_fd = allocator->handle ();
-
-          if (in_fd == ACE_INVALID_HANDLE)
+          int val = 0;
+          if (ACE::enter_send_timedwait (out_fd, timeout, val) == -1)
             return retval;
-
-          ACE_HANDLE const out_fd =
-            this->connection_handler_->peer ().get_handle ();
-
-          ACE_LOFF_T offset =
-            allocator->offset (message_block->rd_ptr ());
-
-          if (timeout)
-            {
-              int val = 0;
-              if (ACE::enter_send_timedwait (out_fd, timeout, val) == -1)
-                return retval;
-              else
-                {
-                  retval =
-                    ACE_OS::sendfile (out_fd, in_fd, &offset, mb_length);
-                  ACE::restore_non_blocking_mode (out_fd, val);
-
-                }
-            }
           else
             {
-              retval = ACE_OS::sendfile (out_fd, in_fd, &offset, mb_length);
-            }
+              retval =
+                ACE_OS::sendfile (out_fd, in_fd, &offset, i->iov_len);
+              ACE::restore_non_blocking_mode (out_fd, val);
 
-          if (retval <= 0)  // Report errors below.
-            break;
+            }
         }
+      else
+        {
+          retval = ACE_OS::sendfile (out_fd, in_fd, &offset, i->iov_len);
+        }
+
+      if (retval <= 0)  // Report errors below.
+        break;
+
+      bytes_transferred += static_cast<size_t> (retval);
     }
 
-  if (retval > 0)
-    bytes_transferred = static_cast<size_t> (retval);
-  else if (TAO_debug_level > 4)
+
+  if (retval <= 0 && TAO_debug_level > 4)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - IIOP_Transport[%d]::sendfile, ")
                   ACE_TEXT ("sendfile failure - %m (errno: %d)\n"),
-                  this->id (), errno));
+                  this->id (),
+                  errno));
     }
-
 
   return retval;
 }

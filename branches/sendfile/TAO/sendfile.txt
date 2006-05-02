@@ -1,3 +1,19 @@
+Tue May  2 05:54:05 2006 UTC  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+        * tao/IIOP_Transport.cpp:
+        * tao/IIOP_Transport.h:
+        * tao/Transport.cpp:
+        * tao/Transport.h:
+
+	  Integrated sendfile() call into queue draining loop.  Allows
+	  sendfile() to be used in the same types of requests and replies
+	  that the usual send() is used.
+
+        * tao/default_resource.cpp (use_local_memory_pool):
+
+	  If an output CDR buffer allocator type has not been configured,
+	  set the allocator type to the local memory pool type.
+
 Fri Apr  7 13:02:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Transport.{h,cpp} (sendfile):

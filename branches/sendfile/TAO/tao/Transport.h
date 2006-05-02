@@ -46,6 +46,7 @@ class TAO_Queued_Message;
 class TAO_Synch_Queued_Message;
 class TAO_Resume_Handle;
 class TAO_Stub;
+class TAO_MMAP_Allocator;
 
 namespace TAO
 {
@@ -397,14 +398,21 @@ public:
                         const ACE_Time_Value *timeout = 0) = 0;
 
 #ifdef ACE_HAS_SENDFILE
-  /// Send data through zero-copy write mechanism.
+  /// Send data through zero-copy write mechanism, if available.
   /**
-   * This method sends the message block chain through the platform
-   * sendfile() function to perform a zero-copy write.
+   * This method sends the data in the I/O vector through the platform
+   * sendfile() function to perform a zero-copy write, if available.
+   * Otherwise, the default fallback implementation simply delegates
+   * to the TAO_Transport::send() method.
+   *
+   * @note This method is best used when sending very large blocks of
+   *       data.
    */
-  virtual ssize_t sendfile (ACE_Message_Block const *data,
+  virtual ssize_t sendfile (TAO_MMAP_Allocator * allocator,
+                            iovec * iov,
+                            int iovcnt,
                             size_t &bytes_transferred,
-                            ACE_Time_Value const *timeout = 0);
+                            ACE_Time_Value const * timeout = 0);
 #endif  /* ACE_HAS_SENDFILE */
 
 
@@ -768,11 +776,7 @@ private:
   int drain_queue (void);
 
   /// Implement drain_queue() assuming the lock is held
-  /**
-   * @note If @a raw_data is non-zero, attempt to send data using
-   *       alternative method (e.g. sendfile()).
-   */
-  int drain_queue_i (const ACE_Message_Block *raw_data = 0);
+  int drain_queue_i (void);
 
   /// This class needs priviledged access to
   /// - queue_is_empty_i()
@@ -1041,6 +1045,15 @@ private:
 
   /// Holds the partial GIOP message (if there is one)
   ACE_Message_Block* partial_message_;
+
+#ifdef ACE_HAS_SENDFILE
+  /// mmap()-based allocator used to allocator output CDR buffers.
+  /**
+   * If this pointer is non-zero, sendfile() will be used to send data
+   * in a TAO_OutputCDR stream instance.
+   */
+  TAO_MMAP_Allocator * const mmap_allocator_;
+#endif  /* ACE_HAS_SENDFILE */
 
   /*
    * specialization hook to add class members from concrete

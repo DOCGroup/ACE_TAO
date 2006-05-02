@@ -21,6 +21,7 @@
 #include "tao/debug.h"
 #include "tao/CDR.h"
 #include "tao/ORB_Core.h"
+#include "tao/MMAP_Allocator.h"
 
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_stdio.h"
@@ -138,6 +139,16 @@ TAO_Transport::TAO_Transport (CORBA::ULong tag,
   , tcs_set_ (0)
   , first_request_ (1)
   , partial_message_ (0)
+#ifdef ACE_HAS_SENDFILE
+    // The ORB has been configured to use the MMAP allocator, meaning
+    // we could/should use sendfile() to send data.  Cast once rather
+    // here rather than during each send.  This assumes that all
+    // TAO_OutputCDR instances are using the same TAO_MMAP_Allocator
+    // instance as the underlying output CDR buffer allocator.
+  , mmap_allocator_ (
+      dynamic_cast<TAO_MMAP_Allocator *> (
+        orb_core->resource_factory ()->output_cdr_buffer_allocator ()))
+#endif  /* ACE_HAS_SENDFILE */
 {
   TAO_Client_Strategy_Factory *cf =
     this->orb_core_->client_factory ();
@@ -315,11 +326,20 @@ TAO_Transport::register_handler (void)
 
 #ifdef ACE_HAS_SENDFILE
 ssize_t
-TAO_Transport::sendfile (ACE_Message_Block const * /* data */,
-                         size_t & /* bytes_transferred */,
-                         ACE_Time_Value const * /* timeout */)
+TAO_Transport::sendfile (TAO_MMAP_Allocator * /* allocator */,
+                         iovec * iov,
+                         int iovcnt,
+                         size_t &bytes_transferred,
+                         ACE_Time_Value const * timeout)
 {
-  return 0;
+  // Concrete pluggable transport doesn't implement sendfile().
+  // Fallback on TAO_Transport::send().
+
+  // @@ We can probably refactor the TAO_IIOP_Transport::sendfile()
+  //    implementation to this base class method, and leave any TCP
+  //    specific configuration out of this base class method.
+  //      -Ossama
+  return this->send (iov, iovcnt, bytes_transferred, timeout);
 }
 #endif  /* ACE_HAS_SENDFILE */
 
@@ -772,8 +792,18 @@ TAO_Transport::drain_queue_helper (int &iovcnt, iovec iov[])
   size_t byte_count = 0;
 
   // ... send the message ...
-  ssize_t const retval =
-    this->send (iov, iovcnt, byte_count);
+
+  ssize_t retval = -1;
+
+#ifdef ACE_HAS_SENDFILE
+  if (this->mmap_allocator_)
+    retval = this->sendfile (this->mmap_allocator_,
+                             iov,
+                             iovcnt,
+                             byte_count);
+  else
+#endif  /* ACE_HAS_SENDFILE */
+    retval = this->send (iov, iovcnt, byte_count);
 
   if (TAO_debug_level == 5)
     {
@@ -834,24 +864,8 @@ TAO_Transport::drain_queue_helper (int &iovcnt, iovec iov[])
 }
 
 int
-TAO_Transport::drain_queue_i (const ACE_Message_Block *raw_data)
+TAO_Transport::drain_queue_i (void)
 {
-#ifdef ACE_HAS_SENDFILE
-  size_t bytes_transferred = 0;
-
-  // If we've been given raw data and the queue is empty, perform a
-  // zero-copy write.
-  if (raw_data
-      && this->queue_is_empty_i ()
-      && this->sendfile (raw_data, bytes_transferred) == -1)
-    {
-      return -1;
-    }
-  this->sent_byte_count_ += bytes_transferred;
-#else
-  ACE_UNUSED_ARG (raw_data);
-#endif  /* ACE_HAS_SENDFILE */
-
   // This is the vector used to send data, it must be declared outside
   // the loop because after the loop there may still be data to be
   // sent
