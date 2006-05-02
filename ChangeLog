@@ -1,3 +1,11 @@
+Tue May  2 10:34:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-WinCE.h:
+          Added ACE_LACKS_GETCWD, ACE_LACKS_ASCTIME, ACE_LACKS_ASCTIME_R,
+          ACE_LACKS_GMTIME, ACE_LACKS_GMTIME_R, ACE_LACKS_LOCALTIME and
+          ACE_LACKS_STRFTIME. These macros are new and will be used soon
+          in the ACE_OS layer.
+
 Mon May  1 19:49:45 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * ace/ARGV.{h i cpp}: Filled out more of the documentation in this
