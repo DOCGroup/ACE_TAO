@@ -1,3 +1,24 @@
+Tue May  2 03:59:17 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/IIOP_Connector.h:
+        * tao/IIOP_Connector.cpp:
+        * tao/Transport_Descriptor_Interface.h:
+        * tao/Transport_Descriptor_Interface.cpp:
+
+          This fix resolves a problem exposed by the
+          performance-tests/RTCorba/Oneway/Reliable test. That failure was
+          showing up as a pure virtual function call, but the root cause
+          was related to the changes to the IIOP_Connector in how it
+          cached new transports. I was creating a new transport descriptor
+          out of the successful endpoint, but using creating a new
+          Base_Transport_Descriptor rather than reusing the supplied
+          transport descriptor. This broke RT tests in that subsequent
+          invocations would fail to find the cached endpoint since the
+          type was different. I've resolved that by adding the new
+          reset_endpoint method on the Transport_Descriptor_Interface
+          which allows the transport connector to set a new endpoint to
+          the existing transport descriptor before caching the value.
+
 Mon May  1 21:54:05 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tests/ORB_Local_Config/Bunch/Test.cpp:
@@ -36,7 +57,7 @@ Mon May  1 18:55:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 Mon May  1 15:33:00 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/OBV/Truncatable/client.cpp:
-          This is an improvment to what I committed earlier. Since the
+          This is an improvement to what I committed earlier. Since the
           valuetypes are passed by value, it is perfectly reasonable to
           allocate them on the stack locally. That way I could get away
           from the use of the var to store a reference to the local value
