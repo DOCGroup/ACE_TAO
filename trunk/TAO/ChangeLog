@@ -1,3 +1,12 @@
+Tue May  2 11:47:55 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tests/ORB_Local_Config/Separation/Test.cpp:
+        * tests/ORB_Local_Config/Shared/Test.cpp:
+        * tests/ORB_Local_Config/Simple/Test.cpp:
+
+          The test don't need more specialized type than the base
+          ACE_Service_Object, in order to demonstrate the intent.
+
 Tue May  2 08:05:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/driver/drv_preproc.cpp:
