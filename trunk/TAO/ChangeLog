@@ -1,3 +1,12 @@
+Tue May  2 22:01:51 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/ORB_Local_Config/Two_DLL_ORB/Two_DLL_ORB.mpc:
+          Added the portableserver base project to both the client lib and
+          server lib projects, since both require client and server
+          behavior. This is required for windows builds where apparently
+          DLLs must have all symbols fully resolved at link time, unlike
+          .so's where they only need to be satisfied at runtime.
+
 Tue May  2 19:08:18 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tests/ORB_Local_Config/Two_DLL_ORB/ORB_DLL.h:
