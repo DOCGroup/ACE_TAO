@@ -1,3 +1,10 @@
+Tue May  2 13:24:26 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/tao.mpc:
+          Reverted J.T.'s change from Mon May  1 20:03:59 UTC 2006
+          to flush out the cvs conflict markers and reapplied just his
+          typo fix.
+
 Tue May  2 11:47:55 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tests/ORB_Local_Config/Separation/Test.cpp:
