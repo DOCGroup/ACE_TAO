@@ -9,6 +9,7 @@
 #include "tao/CORBALOC_Parser.h"
 #include "tao/IIOP_Factory.h"
 
+#include "ace/Service_Config.h"
 #include "ace/Dynamic_Service.h"
 
 #include "Service_Configuration_Per_ORB.h"
@@ -38,21 +39,21 @@ run_main(int , ACE_TCHAR *[])
   ACE_ASSERT ((p11 == 0));
 
 
-  TAO_CORBANAME_Parser* p20 =
-    ACE_Dynamic_Service<TAO_CORBANAME_Parser>::instance (&one, "CORBANAME_Parser");
+  ACE_Service_Object* p20 =
+    ACE_Dynamic_Service<ACE_Service_Object>::instance (&one, "CORBANAME_Parser");
   ACE_ASSERT ((p20 != 0));
 
-  TAO_CORBALOC_Parser* p21 =
-    ACE_Dynamic_Service<TAO_CORBALOC_Parser>::instance (&one, "CORBALOC_Parser");
+  ACE_Service_Object* p21 =
+    ACE_Dynamic_Service<ACE_Service_Object>::instance (&one, "CORBALOC_Parser");
   ACE_ASSERT ((p21 == 0));
 
 
-  TAO_CORBALOC_Parser* p30 =
-    ACE_Dynamic_Service<TAO_CORBALOC_Parser>::instance (&two, "CORBALOC_Parser");
+  ACE_Service_Object* p30 =
+    ACE_Dynamic_Service<ACE_Service_Object>::instance (&two, "CORBALOC_Parser");
   ACE_ASSERT ((p30 != 0));
 
-  TAO_CORBANAME_Parser* p31 =
-    ACE_Dynamic_Service<TAO_CORBANAME_Parser>::instance (&two, "CORBANAME_Parser");
+  ACE_Service_Object* p31 =
+    ACE_Dynamic_Service<ACE_Service_Object>::instance (&two, "CORBANAME_Parser");
   ACE_ASSERT ((p31 == 0));
 
   return 0;
