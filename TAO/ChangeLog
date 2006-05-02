@@ -1,3 +1,10 @@
+Tue May  2 08:05:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/driver/drv_preproc.cpp:
+          When we can't remove the input or output file use %p to print
+          the error so that the info from the OS why this couldn't be
+          done is also reported to the user.
+
 Tue May  2 03:59:17 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/IIOP_Connector.h:
