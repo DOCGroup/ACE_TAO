@@ -1,3 +1,8 @@
+Tue May  2 12:06:12 2006 UTC  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/default_resource.cpp (use_local_memory_pool):
+          Fixed bug, use assignment
+
 Tue May  2 05:54:05 2006 UTC  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
         * tao/IIOP_Transport.cpp:
