@@ -21,4 +21,22 @@ TAO_Transport_Descriptor_Interface::~TAO_Transport_Descriptor_Interface (void)
     }
 }
 
+CORBA::Boolean
+TAO_Transport_Descriptor_Interface::reset_endpoint (TAO_Endpoint *ep)
+{
+  // calling on a dynamically allocation descriptor is not allowed.
+  if (this->release_)
+    return 0;
+
+  for (TAO_Endpoint *ptr = this->endpoint_; ptr != 0; ptr = ptr->next())
+
+    if (ptr == ep)
+      {
+        this->endpoint_ = ep;
+        return 1;
+      }
+  return 0;
+}
+
+
 TAO_END_VERSIONED_NAMESPACE_DECL

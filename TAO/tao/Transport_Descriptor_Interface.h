@@ -64,6 +64,13 @@ public:
   /// Return the underlying endpoint object
   TAO_Endpoint *endpoint (void);
 
+  /// Reset the endpoint pointer to point to another, if that one is
+  /// part of the chain based by the current endpoint. Although this
+  /// method is public it should only be used by the protocol specific
+  /// connector, right before caching, and only when a parallel
+  /// connect was attempted with more than one possible endpoints.
+  CORBA::Boolean reset_endpoint (TAO_Endpoint *ep);
+
   /// Set the BiDir flag
   void set_bidir_flag (CORBA::Boolean flag);
 
