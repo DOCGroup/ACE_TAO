@@ -141,6 +141,7 @@ private:
   /// of many transports, and when once completes it will cancel the rest.
   /// The winning transport is returned.
   TAO_Transport *complete_connection (int result,
+                                      TAO_Transport_Descriptor_Interface &desc,
                                       TAO_IIOP_Connection_Handler **&sh_list,
                                       TAO_IIOP_Endpoint **ep_list,
                                       unsigned count,

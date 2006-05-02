@@ -205,7 +205,9 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
   TAO_IIOP_Endpoint **ep_ptr = &iiop_endpoint;
   TAO_LF_Multi_Event mev;
   mev.add_event(svc_handler);
-  return this->complete_connection (result, sh_ptr, ep_ptr, 1U, r, &mev,  timeout);
+  return this->complete_connection (result, desc,
+                                    sh_ptr, ep_ptr,
+                                    1U, r, &mev,  timeout);
 }
 
 TAO_Transport *
@@ -231,7 +233,7 @@ TAO_IIOP_Connector::make_parallel_connection (TAO::Profile_Transport_Resolver *r
                 ACE_TEXT ("to %d endpoints\n"), max_count));
   TAO_IIOP_Endpoint **eplist = 0;
   TAO_IIOP_Connection_Handler **shlist = 0;
-  ACE_NEW_RETURN (shlist,TAO_IIOP_Connection_Handler *[max_count], 0);
+  ACE_NEW_RETURN (shlist, TAO_IIOP_Connection_Handler *[max_count], 0);
   ACE_NEW_RETURN (eplist, TAO_IIOP_Endpoint *[max_count], 0);
 
   TAO_LF_Multi_Event mev;
@@ -282,7 +284,8 @@ TAO_IIOP_Connector::make_parallel_connection (TAO::Profile_Transport_Resolver *r
 
   TAO_Transport *winner = 0;
   if (count > 0) // only complete if at least one pending or success
-    winner = this->complete_connection (result,shlist,eplist,count,r,&mev,timeout);
+    winner = this->complete_connection (result,desc,
+                                        shlist,eplist,count,r,&mev,timeout);
   delete [] shlist; // reference reductions should have been done already
   delete [] eplist;
   return winner;
@@ -364,6 +367,7 @@ TAO_IIOP_Connector::begin_connection (TAO_IIOP_Connection_Handler *&svc_handler,
 
 TAO_Transport *
 TAO_IIOP_Connector::complete_connection (int result,
+                                         TAO_Transport_Descriptor_Interface &desc,
                                          TAO_IIOP_Connection_Handler **&sh_list,
                                          TAO_IIOP_Endpoint **ep_list,
                                          unsigned count,
@@ -476,12 +480,14 @@ TAO_IIOP_Connector::complete_connection (int result,
                 svc_handler->peer ().get_handle ()));
     }
 
-  TAO_Base_Transport_Property desc(iiop_endpoint,0);
   // Add the handler to Cache
-  int retval =
-    this->orb_core ()->lane_resources ().transport_cache ().cache_transport (
-      &desc,
-      transport);
+  int retval = -1;
+  if (count == 1U || desc.reset_endpoint(iiop_endpoint))
+    {
+      retval = this->orb_core ()->
+        lane_resources ().transport_cache ().cache_transport (&desc,
+                                                              transport);
+    }
 
   // Failure in adding to cache.
   if (retval != 0)
