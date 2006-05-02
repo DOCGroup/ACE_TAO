@@ -31,13 +31,13 @@ run_main(int , ACE_TCHAR *[])
 
     ACE_ASSERT ((p1 == 0));
 
-    TAO_CORBANAME_Parser* p2 =
-      ACE_Dynamic_Service<TAO_CORBANAME_Parser>::instance (&one, "CORBANAME_Parser");
+    ACE_Service_Object* p2 =
+      ACE_Dynamic_Service<ACE_Service_Object>::instance (&one, "CORBANAME_Parser");
 
     ACE_ASSERT ((p2 != 0));
 
-    TAO_CORBALOC_Parser* p3 =
-      ACE_Dynamic_Service<TAO_CORBALOC_Parser>::instance (&one, "CORBALOC_Parser");
+    ACE_Service_Object* p3 =
+      ACE_Dynamic_Service<ACE_Service_Object>::instance (&one, "CORBALOC_Parser");
 
     ACE_ASSERT ((p3 != 0));
 
@@ -46,8 +46,8 @@ run_main(int , ACE_TCHAR *[])
 
   ACE_Service_Gestalt_Test two; // Use the ACE_Service_Repository::instance ()
 
-  TAO_CORBANAME_Parser* p2 =
-    ACE_Dynamic_Service<TAO_CORBANAME_Parser>::instance (&two, "CORBANAME_Parser");
+  ACE_Service_Object* p2 =
+    ACE_Dynamic_Service<ACE_Service_Object>::instance (&two, "CORBANAME_Parser");
 
   ACE_ASSERT ((p2 != 0)); // You should be able to find the same stuff here, too
 
