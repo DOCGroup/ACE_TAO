@@ -832,7 +832,7 @@ TAO_Default_Resource_Factory::use_local_memory_pool (bool flag)
   this->use_local_memory_pool_ = flag;
 
   if (this->output_cdr_allocator_type_ == DEFAULT)
-    this->output_cdr_allocator_type_ == LOCAL_MEMORY_POOL;
+    this->output_cdr_allocator_type_ = LOCAL_MEMORY_POOL;
 }
 
 ACE_Allocator *

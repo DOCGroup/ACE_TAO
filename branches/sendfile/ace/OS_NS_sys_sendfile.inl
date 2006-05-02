@@ -6,13 +6,12 @@
 # include <sys/sendfile.h>
 #endif  /* ACE_HAS_SENDFILE */
 
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE ssize_t
 ACE_OS::sendfile (ACE_HANDLE out_fd,
                   ACE_HANDLE in_fd,
-                  ACE_LOFF_T * offset,
+                  off_t * offset,
                   size_t count)
 {
 #ifdef ACE_HAS_SENDFILE

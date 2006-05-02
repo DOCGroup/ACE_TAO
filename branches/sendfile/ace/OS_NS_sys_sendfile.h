@@ -37,13 +37,13 @@ namespace ACE_OS
   ACE_NAMESPACE_INLINE_FUNCTION
   ssize_t sendfile (ACE_HANDLE out_fd,
                     ACE_HANDLE in_fd,
-                    ACE_LOFF_T * offset,
+                    off_t * offset,
                     size_t count);
 
 #ifndef ACE_HAS_SENDFILE
   extern ssize_t sendfile_emulation (ACE_HANDLE out_fd,
                                      ACE_HANDLE in_fd,
-                                     ACE_LOFF_T * offset,
+                                     off_t * offset,
                                      size_t count);
 #endif  /* !ACE_HAS_SENDFILE */
 
