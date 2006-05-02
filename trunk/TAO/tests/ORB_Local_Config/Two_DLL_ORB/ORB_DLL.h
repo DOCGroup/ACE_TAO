@@ -98,8 +98,8 @@ public:
 
 private:
   signed char is_server_;
-  auto_ptr<Abstract_Worker> worker_;
-  auto_ptr<ACE_ARGV> argv_;
+  ACE_Auto_Ptr<Abstract_Worker> worker_;
+  ACE_Auto_Ptr<ACE_ARGV> argv_;
 };
 
 
