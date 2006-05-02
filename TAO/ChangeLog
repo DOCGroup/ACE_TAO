@@ -1,3 +1,11 @@
+Tue May  2 19:08:18 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tests/ORB_Local_Config/Two_DLL_ORB/ORB_DLL.h:
+
+        Changing auto_ptr to ACE_Auto_Ptr, because some platforms
+        (WinXP64_Intel90_64bit) provide an auto_ptr<> without the reset
+        method.
+
 Tue May  2 15:30:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Sequence_Unit_Tests/bounded_sequence_cdr_ut.cpp:
