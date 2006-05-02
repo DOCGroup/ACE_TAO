@@ -1148,7 +1148,7 @@ DRV_pre_proc (const char *myfile)
   if (yyin == NULL)
     {
       ACE_ERROR ((LM_ERROR,
-                  "%s: Could not open cpp output file \"%s\"\n",
+                  "%s: Could not open cpp output file: %p\n",
                   idl_global->prog_name (),
                   t_file));
 
@@ -1166,7 +1166,7 @@ DRV_pre_proc (const char *myfile)
       if (preproc == 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      "%s: Could not open cpp output file: %s\n",
+                      "%s: Could not open cpp output file: %p\n",
                       idl_global->prog_name (),
                       t_file));
 
@@ -1201,7 +1201,7 @@ DRV_pre_proc (const char *myfile)
   if (ACE_OS::unlink (t_ifile) == -1)
     {
       ACE_ERROR ((LM_ERROR,
-                  "%s: Could not remove cpp input file \"%s\"\n",
+                  "%s: Could not remove cpp input file: %p\n",
                   idl_global->prog_name (),
                   t_ifile));
 
@@ -1212,7 +1212,7 @@ DRV_pre_proc (const char *myfile)
   if (ACE_OS::unlink (t_file) == -1)
     {
       ACE_ERROR ((LM_ERROR,
-                  "%s: Could not remove cpp output file \"%s\"\n",
+                  "%s: Could not remove cpp output file: %p\n",
                   idl_global->prog_name (),
                   t_file));
 
