@@ -15,24 +15,6 @@ void print_arg (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
-   int priority = 20;
-   // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
-
-  if (ACE_OS::sched_params (ACE_Sched_Params (ACE_SCHED_RR,
-                                              priority,
-                                              ACE_SCOPE_PROCESS)) != 0)
-    {
-      if (errno == EPERM)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      "server (%P|%t): user is not superuser, "
-                      "test runs in time-shared class\n"));
-        }
-      else
-        ACE_ERROR ((LM_ERROR,
-                    "server (%P|%t): sched_params failed\n"));
-    }
-
   ACE_TRY_NEW_ENV
     {
       ACE_DEBUG ((LM_DEBUG, "*** Starting NodeApplication\n"));
