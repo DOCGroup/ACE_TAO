@@ -1,3 +1,9 @@
+Tue May  2 03:04:50 UTC 2006  Nishanth Shankaran  <nshankar@dre.vanderbilt.edu>
+
+        * DAnCE/NodeApplication/NodeApplication.cpp:  Removed the code
+          snippet that bootstraps the NodeApplication process at a
+          specific OS priority.
+
 Wed Apr 26 21:25:26 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tools/Config_Handlers/Config_Handlers.mpc
@@ -10,9 +16,9 @@ Wed Apr 26 21:25:26 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
         * tools/Config_Handlers/Package_Handlers/IAD_Handler.cpp
         * tools/Config_Handlers/Package_Handlers/Package_Handlers.mpc
         * tools/Config_Handlers/Utils/Functors.h
-        
+
           Introduced a workaround for a ICE in GCC 4.0.22.
-        
+
 Wed Apr 26 13:10:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tools/Config_Handlers/DP_Handler.cpp:
