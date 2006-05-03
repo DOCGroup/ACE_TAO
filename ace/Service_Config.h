@@ -532,6 +532,10 @@ private:
   /// Handles the reconfiguration signals.
   static ACE_Sig_Adapter *signal_handler_;
 
+  /// Typedef for syntactic convenience
+  typedef ACE_TSS_TYPE (ACE_TSS_Type_Adapter< ACE_Service_Gestalt* >)
+    ACE_Service_Gestalt_TSS_Ptr;
+
   /// Pointer to the Singleton (ACE_Cleanup) Gestalt instance.
   /// There is thread-specific global instance pointer, which is used to
   /// temporarily change which Gestalt instance is used for static service
@@ -548,12 +552,11 @@ private:
   /// deallocated, but the global service repository will still "think"
   /// it must finalize the (DLL's) static services - with disastrous
   /// consequences, occurring in the post-main code (at_exit()).
-  static ACE_TSS_TYPE (ACE_TSS_Type_Adapter <ACE_Service_Gestalt*>) current_;
+  static ACE_Service_Gestalt_TSS_Ptr *current_;
 
   /// This class needs the intimate access to be able to swap the
   /// current TSS pointer for the global Gestalt.
   friend class ACE_Service_Config_Guard;
-
 };
 
 /**
