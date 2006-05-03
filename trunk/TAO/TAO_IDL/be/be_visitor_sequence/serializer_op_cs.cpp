@@ -1101,7 +1101,10 @@ switch (this->ctx_->sub_state ())
             if (str->max_size ()->ev ()->u.ulval == 0)
               {
                 // Unbounded.
-                *os << "_tao_marshal_flag = (strm >> _tao_sequence[i].out ());"
+                *os << node->name () 
+                    << "::value_type * buffer = _tao_sequence.get_buffer();" 
+                    << be_idt_nl;;
+                *os << "_tao_marshal_flag = (strm >> buffer[i]);"
                     << be_uidt_nl;
               }
             else
@@ -1233,14 +1236,16 @@ switch (this->ctx_->sub_state ())
           break;
         case AST_Decl::NT_interface:
         case AST_Decl::NT_interface_fwd:
-          *os << "//DCPS does not support interfaces and value types";
+          *os << "//DCPS does not support interfaces";
 
           break;
         case AST_Decl::NT_string:
         case AST_Decl::NT_wstring:
+          *os << "_tao_marshal_flag = (strm << _tao_sequence[i]);";
+          break;
         case AST_Decl::NT_valuetype:
         case AST_Decl::NT_valuetype_fwd:
-          *os << "_tao_marshal_flag = (strm << _tao_sequence[i].in ());";
+          *os << "//DCPS does not support value types;\";
 
           break;
         case AST_Decl::NT_pre_defined:
