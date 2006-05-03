@@ -41,10 +41,11 @@ namespace ACE_OS
                     size_t count);
 
 #ifndef ACE_HAS_SENDFILE
-  extern ssize_t sendfile_emulation (ACE_HANDLE out_fd,
-                                     ACE_HANDLE in_fd,
-                                     off_t * offset,
-                                     size_t count);
+  extern ACE_Export
+  ssize_t sendfile_emulation (ACE_HANDLE out_fd,
+                              ACE_HANDLE in_fd,
+                              off_t * offset,
+                              size_t count);
 #endif  /* !ACE_HAS_SENDFILE */
 
 }
