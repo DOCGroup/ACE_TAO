@@ -1,3 +1,8 @@
+Wed May  3 10:39:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Mem_Map.{h,cpp,inl}:
+          Made close_handle_ a bool
+
 Wed May  3 08:56:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-macros.h:
