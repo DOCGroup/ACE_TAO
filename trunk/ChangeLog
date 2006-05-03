@@ -1,3 +1,9 @@
+Wed May  3 08:14:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_sys_sendfile.h:
+          Export sendfile_emulation to resolve link problems in the
+          windows builds
+
 Wed May  3 03:36:23 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ace/Svc_Conf_y.cpp:
