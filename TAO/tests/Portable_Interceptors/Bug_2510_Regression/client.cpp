@@ -100,7 +100,7 @@ main (int argc, char *argv[])
         ACE_Thread::join (threadHandle);
         ACE_TRY_CHECK;
 
-        //server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
+        server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
         ACE_TRY_CHECK;
     }
 
