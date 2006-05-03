@@ -127,7 +127,7 @@ ACE_Mem_Map::unmap (ssize_t len)
     {
       // Write back the contents of the shared memory object to the
       // file.
-      const off_t filesize = ACE_OS::filesize (handle_);
+      off_t const filesize = ACE_OS::filesize (handle_);
       writeback_result =
         ACE_OS::lseek (handle_, 0, 0) != -1
         && ACE_OS::write (handle_,
@@ -137,8 +137,8 @@ ACE_Mem_Map::unmap (ssize_t len)
 #endif /* ACE_HAS_LYNXOS_BROKEN_MMAP */
   if (this->base_addr_ != MAP_FAILED)
     {
-      int result = ACE_OS::munmap (this->base_addr_,
-                                   len < 0 ? this->length_ : len);
+      int const result = ACE_OS::munmap (this->base_addr_,
+                                         len < 0 ? this->length_ : len);
       this->base_addr_ = MAP_FAILED;
       return result;
     }
@@ -164,7 +164,7 @@ ACE_Mem_Map::unmap (void *addr, ssize_t len)
   if (write_enabled_)
     {
       // Write back the contents of the shared memory object to the file.
-      const off_t filesize = ACE_OS::filesize (handle_);
+      off_t const filesize = ACE_OS::filesize (handle_);
       writeback_result =
         ACE_OS::lseek (handle_, 0, 0) != -1
         && ACE_OS::write (handle_,
