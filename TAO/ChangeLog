@@ -1,3 +1,10 @@
+Wed May  3 15:42:14 UTC 2006  Yan Dai  <dai_y@ociweb.com>
+
+        * TAO_IDL/be/be_visitor_sequence/serializer_op_cs.cpp:
+
+          Fixed the DDS compilation errors due to the recent
+          unbounded string sequence implementation changes.
+
 Wed May  3 13:03:03 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * tao/Makefile.am:
