@@ -11,10 +11,10 @@
       <xsd:element name="UUID" type="xsd:string" minOccurs="0" />       
       <xsd:element name="label" type="xsd:string" minOccurs="0" />
       <xsd:element name="node" type="Deployment:Node" maxOccurs="unbounded"/>
-      <xsd:element name="interconnect" type="Deployment:Interconnect"/>
-      <xsd:element name="bridge" type="Deployment:Bridge"/>
-      <xsd:element name="sharedResource" type="Deployment:SharedResource" minOccurs="0"/>
-      <xsd:element name="infoProperty" type="Deployment:Property" minOccurs="0"/>
+      <xsd:element name="interconnect" type="Deployment:Interconnect" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="bridge" type="Deployment:Bridge" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="sharedResource" type="Deployment:SharedResource" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="infoProperty" type="Deployment:Property" minOccurs="0" maxOccurs="unbounded"/>
     </xsd:sequence>
   </xsd:complexType>
 
