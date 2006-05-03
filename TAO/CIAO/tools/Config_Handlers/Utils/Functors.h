@@ -20,7 +20,7 @@ namespace CIAO
     template <typename Source,
               typename Dest,
               typename Dest_Type,
-              void (&Func)(const Source &, Dest_Type &)>
+              void (Func)(const Source &, Dest_Type &)>
     struct Sequence_Handler
     {
       Sequence_Handler (Dest &dest, CORBA::ULong pos = 0)
@@ -42,7 +42,7 @@ namespace CIAO
     /*
      * This is a workaround for a GCC bug that for some reason causes
      * functions that appear ONLY in a Sequence_Handler typedef to not
-     * be present in the compiled object file. 
+     * be present in the compiled object file.
      * This bug was first observed in GCC 4.02.
      *
      * W: The function we want to be defined
@@ -53,8 +53,8 @@ namespace CIAO
     while(0) { \
       W (*X, Y[0]);  \
     }
-      
-      
+
+
     template <typename Dest, typename Dest_Type>
     struct String_Seq_Handler
     {
