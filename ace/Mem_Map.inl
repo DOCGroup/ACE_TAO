@@ -250,7 +250,7 @@ ACE_Mem_Map::close_handle (void)
 
   if (this->close_handle_)
     {
-      this->close_handle_ = 0;
+      this->close_handle_ = false;
       result = ACE_OS::close (this->handle_);
       this->handle_ = ACE_INVALID_HANDLE;
     }
