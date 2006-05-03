@@ -147,7 +147,7 @@ TAO_Transport::TAO_Transport (CORBA::ULong tag,
     // instance as the underlying output CDR buffer allocator.
   , mmap_allocator_ (
       dynamic_cast<TAO_MMAP_Allocator *> (
-        orb_core->resource_factory ()->output_cdr_buffer_allocator ()))
+        orb_core->output_cdr_buffer_allocator ()))
 #endif  /* ACE_HAS_SENDFILE */
 {
   TAO_Client_Strategy_Factory *cf =
@@ -940,7 +940,7 @@ TAO_Transport::drain_queue_i (void)
       if (this->flush_timer_pending ())
         {
           ACE_Event_Handler *eh = this->event_handler_i ();
-          ACE_Reactor *reactor = eh->reactor ();
+          ACE_Reactor * const reactor = eh->reactor ();
           reactor->cancel_timer (this->flush_timer_id_);
           this->reset_flush_timer ();
         }
