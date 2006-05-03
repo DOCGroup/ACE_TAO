@@ -1,3 +1,8 @@
+Wed May  3 09:56:10 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Portable_Interceptors/Bug_2510_Regression/client.cpp:
+          At the end of the test shutdown the server
+
 Wed May  3 03:35:10 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/LF_Multi_Event.h:
