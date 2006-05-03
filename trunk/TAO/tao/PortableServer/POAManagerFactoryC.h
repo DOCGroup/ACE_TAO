@@ -63,24 +63,26 @@
 // TAO_IDL - Generated from
 // be/be_visitor_module/module_ch.cpp:49
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace PortableServer
 {
-  
+
   // TAO_IDL - Generated from
   // be/be_interface.cpp:640
 
 #if !defined (_PORTABLESERVER_POAMANAGER__VAR_OUT_CH_)
 #define _PORTABLESERVER_POAMANAGER__VAR_OUT_CH_
-  
+
   class POAManager;
   typedef POAManager *POAManager_ptr;
-  
+
   typedef
     TAO_Objref_Var_T<
         POAManager
       >
     POAManager_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         POAManager
@@ -88,22 +90,22 @@ namespace PortableServer
     POAManager_out;
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // be/be_interface.cpp:640
 
 #if !defined (_PORTABLESERVER_POAMANAGERFACTORY__VAR_OUT_CH_)
 #define _PORTABLESERVER_POAMANAGERFACTORY__VAR_OUT_CH_
-  
+
   class POAManagerFactory;
   typedef POAManagerFactory *POAManagerFactory_ptr;
-  
+
   typedef
     TAO_Objref_Var_T<
         POAManagerFactory
       >
     POAManagerFactory_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         POAManagerFactory
@@ -111,62 +113,62 @@ namespace PortableServer
     POAManagerFactory_out;
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // be/be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_PORTABLESERVER_POAMANAGERFACTORY_CH_)
 #define _PORTABLESERVER_POAMANAGERFACTORY_CH_
-  
+
   class TAO_PortableServer_Export POAManagerFactory
     : public virtual ::CORBA::Object
   {
   public:
     typedef POAManagerFactory_ptr _ptr_type;
     typedef POAManagerFactory_var _var_type;
-    
+
     // The static operations.
     static POAManagerFactory_ptr _duplicate (POAManagerFactory_ptr obj);
-    
+
     static void _tao_release (POAManagerFactory_ptr obj);
-    
+
     static POAManagerFactory_ptr _narrow (
         ::CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static POAManagerFactory_ptr _unchecked_narrow (
         ::CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static POAManagerFactory_ptr _nil (void)
     {
       return static_cast<POAManagerFactory_ptr> (0);
     }
-    
-    
-    
+
+
+
     // TAO_IDL - Generated from
     // be/be_visitor_sequence/sequence_ch.cpp:101
 
 #if !defined (_PORTABLESERVER_POAMANAGERFACTORY_POAMANAGERSEQ_CH_)
 #define _PORTABLESERVER_POAMANAGERFACTORY_POAMANAGERSEQ_CH_
-    
+
     class POAManagerSeq;
-    
+
     typedef
       TAO_VarSeq_Var_T<
           POAManagerSeq
         >
       POAManagerSeq_var;
-    
+
     typedef
       TAO_Seq_Out_T<
           POAManagerSeq
         >
       POAManagerSeq_out;
-    
+
     class TAO_PortableServer_Export POAManagerSeq
       : public
           TAO::unbounded_object_reference_sequence<
@@ -180,47 +182,47 @@ namespace PortableServer
       POAManagerSeq (
           ::CORBA::ULong max,
           ::CORBA::ULong length,
-          PortableServer::POAManager_ptr* buffer, 
+          PortableServer::POAManager_ptr* buffer,
           ::CORBA::Boolean release = false
         );
       POAManagerSeq (const POAManagerSeq &);
       ~POAManagerSeq (void);
-      
+
       static void _tao_any_destructor (void *);
-      
+
       typedef POAManagerSeq_var _var_type;
     };
 
 #endif /* end #if !defined */
-    
+
     // TAO_IDL - Generated from
     // be/be_visitor_typecode/typecode_decl.cpp:49
-    
+
     static ::CORBA::TypeCode_ptr const _tc_POAManagerSeq;
-    
+
     // TAO_IDL - Generated from
     // be/be_visitor_exception/exception_ch.cpp:53
 
 #if !defined (_PORTABLESERVER_POAMANAGERFACTORY_MANAGERALREADYEXISTS_CH_)
 #define _PORTABLESERVER_POAMANAGERFACTORY_MANAGERALREADYEXISTS_CH_
-    
+
     class TAO_PortableServer_Export ManagerAlreadyExists : public ::CORBA::UserException
     {
     public:
-      
+
       ManagerAlreadyExists (void);
       ManagerAlreadyExists (const ManagerAlreadyExists &);
       ~ManagerAlreadyExists (void);
 
       ManagerAlreadyExists &operator= (const ManagerAlreadyExists &);
-      
+
       static void _tao_any_destructor (void *);
-      
+
       static ManagerAlreadyExists *_downcast ( ::CORBA::Exception *);
       static const ManagerAlreadyExists *_downcast ( ::CORBA::Exception const *);
-      
+
       static ::CORBA::Exception *_alloc (void);
-      
+
       virtual ::CORBA::Exception *_tao_duplicate (void) const;
 
       virtual void _raise (void) const;
@@ -229,25 +231,25 @@ namespace PortableServer
           TAO_OutputCDR &cdr
           ACE_ENV_ARG_DECL
         ) const;
-      
+
       virtual void _tao_decode (
           TAO_InputCDR &cdr
           ACE_ENV_ARG_DECL
         );
-      
+
       virtual ::CORBA::TypeCode_ptr _tao_type (void) const;
     };
-    
+
     // TAO_IDL - Generated from
     // be/be_visitor_typecode/typecode_decl.cpp:49
-    
+
     static ::CORBA::TypeCode_ptr const _tc_ManagerAlreadyExists;
 
 #endif /* end #if !defined */
-    
+
     // TAO_IDL - Generated from
     // be/be_visitor_operation/operation_ch.cpp:46
-    
+
     virtual ::PortableServer::POAManager_ptr create_POAManager (
         const char * id,
         const ::CORBA::PolicyList & policies
@@ -258,20 +260,20 @@ namespace PortableServer
         ::PortableServer::POAManagerFactory::ManagerAlreadyExists,
         ::CORBA::PolicyError
       )) = 0;
-    
+
     // TAO_IDL - Generated from
     // be/be_visitor_operation/operation_ch.cpp:46
-    
+
     virtual ::PortableServer::POAManagerFactory::POAManagerSeq * list (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
       )) = 0;
-    
+
     // TAO_IDL - Generated from
     // be/be_visitor_operation/operation_ch.cpp:46
-    
+
     virtual ::PortableServer::POAManager_ptr find (
         const char * id
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -279,36 +281,36 @@ namespace PortableServer
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
       )) = 0;
-    
+
     // TAO_IDL - Generated from
     // be/be_visitor_interface/interface_ch.cpp:210
-    
+
     virtual ::CORBA::Boolean _is_a (
         const char *type_id
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Abstract or local interface only.
     POAManagerFactory (void);
-    
+
     virtual ~POAManagerFactory (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     POAManagerFactory (const POAManagerFactory &);
-    
+
     void operator= (const POAManagerFactory &);
   };
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // be/be_visitor_typecode/typecode_decl.cpp:49
-  
+
   extern TAO_PortableServer_Export ::CORBA::TypeCode_ptr const _tc_POAManagerFactory;
 
 // TAO_IDL - Generated from
@@ -318,9 +320,6 @@ namespace PortableServer
 
 // TAO_IDL - Generated from
 // be/be_visitor_traits.cpp:63
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-
 
 // Traits specializations.
 namespace TAO
@@ -328,7 +327,7 @@ namespace TAO
 
 #if !defined (_PORTABLESERVER_POAMANAGER__TRAITS_)
 #define _PORTABLESERVER_POAMANAGER__TRAITS_
-  
+
   template<>
   struct TAO_PortableServer_Export Objref_Traits< ::PortableServer::POAManager>
   {
@@ -349,7 +348,7 @@ namespace TAO
 
 #if !defined (_PORTABLESERVER_POAMANAGERFACTORY__TRAITS_)
 #define _PORTABLESERVER_POAMANAGERFACTORY__TRAITS_
-  
+
   template<>
   struct TAO_PortableServer_Export Objref_Traits< ::PortableServer::POAManagerFactory>
   {
@@ -368,8 +367,8 @@ namespace TAO
 
 #endif /* end #if !defined */
 }
-TAO_END_VERSIONED_NAMESPACE_DECL
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 
 // TAO_IDL - Generated from
@@ -377,5 +376,3 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #include /**/ "ace/post.h"
 
 #endif /* ifndef */
-
-

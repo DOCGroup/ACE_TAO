@@ -21,6 +21,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Forward decls
 class TAO_Connection_Handler;
 class TAO_Transport;
@@ -91,6 +93,8 @@ private:
   mutable TAO_Connection_Handler * winner_;
 
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

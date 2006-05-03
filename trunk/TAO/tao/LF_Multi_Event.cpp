@@ -6,6 +6,9 @@ ACE_RCSID(tao,
           LF_Multi_Event,
           "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+
 TAO_LF_Multi_Event::TAO_LF_Multi_Event (void)
   : TAO_LF_Event (),
     events_ (0),
@@ -116,3 +119,5 @@ TAO_LF_Multi_Event::is_state_final (void)
       result = 0;
   return result;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
