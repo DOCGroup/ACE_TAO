@@ -1,3 +1,10 @@
+Wed May  3 14:05:12 2006 UTC  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Transport.cpp:
+          Get the output_cdr_buffer_allocator from the orb core, not from the
+          resource factory, else we get multiple allocators when just having
+          one lane.
+
 Tue May  2 12:06:12 2006 UTC  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/default_resource.cpp (use_local_memory_pool):
