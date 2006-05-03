@@ -214,7 +214,7 @@ private:
 
   /// Keeps track of whether we need to close the handle.  This is set
   /// if we opened the file.
-  int close_handle_;
+  bool close_handle_;
 
 };
 

@@ -264,7 +264,7 @@ ACE_Mem_Map::open (const ACE_TCHAR *file_name,
                         file_name,
                         MAXPATHLEN);
 
-      this->close_handle_ = 1;
+      this->close_handle_ = true;
       return 0;
     }
 }
@@ -303,7 +303,7 @@ ACE_Mem_Map::ACE_Mem_Map (void)
     length_ (0),
     handle_ (ACE_INVALID_HANDLE),
     file_mapping_ (ACE_INVALID_HANDLE),
-    close_handle_ (0)
+    close_handle_ (false)
 {
   ACE_TRACE ("ACE_Mem_Map::ACE_Mem_Map");
   ACE_OS::memset (this->filename_, 0, sizeof this->filename_);
@@ -324,7 +324,7 @@ ACE_Mem_Map::ACE_Mem_Map (const ACE_TCHAR *file_name,
     length_ (0),
     handle_ (ACE_INVALID_HANDLE),
     file_mapping_ (ACE_INVALID_HANDLE),
-    close_handle_ (0)
+    close_handle_ (false)
 {
   ACE_TRACE ("ACE_Mem_Map::ACE_Mem_Map");
   if (this->map (file_name,
@@ -355,7 +355,7 @@ ACE_Mem_Map::ACE_Mem_Map (ACE_HANDLE handle,
     length_ (0),
     handle_ (ACE_INVALID_HANDLE),
     file_mapping_ (ACE_INVALID_HANDLE),
-    close_handle_ (0)
+    close_handle_ (false)
 {
   ACE_TRACE ("ACE_Mem_Map::ACE_Mem_Map");
 
