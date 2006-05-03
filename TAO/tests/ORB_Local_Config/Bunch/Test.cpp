@@ -133,7 +133,7 @@ testTSSGestalt (int , ACE_TCHAR *[])
 // @brief the main driver
 
 int
-run_main(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   testCompatibility (argc, argv);
   testCommandLineDirectives (argc, argv);

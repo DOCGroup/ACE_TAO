@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*) : ../../../tests/acetest, taoserver {
+project(*) : taoserver {
   after += Service_Config_Dependent_DLL TAO
   exename = Test
   includes += ../lib

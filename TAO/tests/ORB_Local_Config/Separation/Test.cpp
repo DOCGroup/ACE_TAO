@@ -18,7 +18,7 @@
 // and inaccesible through anyone but the one they were gegistered with
 
 int
-run_main(int , ACE_TCHAR *[])
+testSeparation(int , ACE_TCHAR *[])
 {
   ACE_TRACE ("testSeparation");
 
@@ -58,4 +58,11 @@ run_main(int , ACE_TCHAR *[])
 
   return 0;
 }
+
+int
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+{
+  return testSeparation (argc, argv);
+}
+
 

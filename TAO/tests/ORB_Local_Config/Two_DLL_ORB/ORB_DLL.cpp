@@ -85,7 +85,7 @@ Service_Config_ORB_DLL::init (int argc, ACE_TCHAR *argv[])
   // loaded.
   return this->activate ();
 #else
-  ACE_ERROR_RETURN (("(%P|%t) Threading support is required for this test. Aborting."), -1);
+  ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t) Threading support is required for this test. Aborting.")), -1);
 #endif  /* ACE_HAS_THREADS */
 }
 

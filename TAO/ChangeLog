@@ -1,3 +1,32 @@
+Wed May  3 16:06:56 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tests/ORB_Local_Config/Bug_1459/Bug_1459.mpc:
+        * tests/ORB_Local_Config/Bunch/Bunch.mpc:
+        * tests/ORB_Local_Config/Limits/Limits.mpc:
+        * tests/ORB_Local_Config/Separation/Separation.mpc:
+        * tests/ORB_Local_Config/Service_Dependency/Service_Dependency.mpc:
+        * tests/ORB_Local_Config/Shared/Shared.mpc:
+        * tests/ORB_Local_Config/Simple/Simple.mpc:
+        * tests/ORB_Local_Config/Two_DLL_ORB/Two_DLL_ORB.mpc:
+
+          Removed the dependency on ACE test_output library to make it
+          possible to build the TAO tests without having to build ACE
+          tests. This is often the case on embedded platforms (VxWorks),
+          where part of the tests run outside the host platform. Thanks to
+          Johnny Willemsen for pointing that out.
+
+        * tests/ORB_Local_Config/Bug_1459/Test.cpp:
+        * tests/ORB_Local_Config/Bunch/Test.cpp:
+        * tests/ORB_Local_Config/Limits/Test.cpp:
+        * tests/ORB_Local_Config/Separation/Test.cpp:
+        * tests/ORB_Local_Config/Service_Dependency/Test.cpp:
+        * tests/ORB_Local_Config/Shared/Test.cpp:
+        * tests/ORB_Local_Config/Simple/Test.cpp:
+        * tests/ORB_Local_Config/Two_DLL_ORB/ORB_DLL.cpp:
+        * tests/ORB_Local_Config/Two_DLL_ORB/Test.cpp:
+
+          Updated the code to use its own ACE_MAIN and fixed some typos.
+
 Wed May  3 15:42:14 UTC 2006  Yan Dai  <dai_y@ociweb.com>
 
         * TAO_IDL/be/be_visitor_sequence/serializer_op_cs.cpp:

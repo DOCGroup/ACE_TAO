@@ -16,7 +16,7 @@
 // The One Global Configuration
 
 int
-run_main(int , ACE_TCHAR *[])
+testReusingGlobals (int , ACE_TCHAR *[])
 {
   ACE_TRACE ("testReusingGlobals");
 
@@ -52,5 +52,11 @@ run_main(int , ACE_TCHAR *[])
   ACE_ASSERT ((p2 != 0)); // You should be able to find the same stuff here, too
 
   return 0;
+}
+
+int
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+{
+  return testReusingGlobals (argc, argv);
 }
 
