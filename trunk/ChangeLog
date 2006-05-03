@@ -1,3 +1,21 @@
+Wed May  3 16:02:10 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/Service_Config.h:
+        * ace/Service_Config.cpp:
+
+          Fixed a problem due to an attempt to access current_ before it
+          has been initialized (a static ACE_TSS instance). The current_
+          is now just a pointer to an ACE_TSS instance, which gets
+          dynamicaly allocated upon invoking the current() method. The
+          deallocation of that instance is left up to the Object Manager
+          with whoom the dynamic ACE_TSS instance is registered.
+
+        * ace/TSS_T.h:
+
+          Addes a ACE_TSS_SET () to complete the set of TSS access
+          operations, which should work regardless of threading, TSS
+          emulation and TSS availability.
+
 Wed May  3 11:52:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Mem_Map.inl:

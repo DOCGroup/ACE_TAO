@@ -12,14 +12,13 @@
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/Get_Opt.h"
-#include "ace/Service_Gestalt.h"
+#include "ace/Service_Config.h"
 
 ACE_RCSID (ace,
            Service_Config,
            "$Id$")
 
   ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 
 ///
 ACE_Service_Config_Guard::ACE_Service_Config_Guard (ACE_Service_Gestalt * psg)
@@ -52,11 +51,11 @@ ACE_Service_Config_Guard::~ACE_Service_Config_Guard (void)
 
 ACE_ALLOC_HOOK_DEFINE (ACE_Service_Config)
 
-
 // A thread-specific storage to keep a pointer to the (current) global
-// configuration.
-  ACE_TSS_TYPE (ACE_TSS_Type_Adapter <ACE_Service_Gestalt*>)
-  ACE_Service_Config::current_ (0);
+// configuration. Using a pointer to avoid the order of initialization
+// debacle possible when using static class instances. The memory is
+// dynamicaly allocated and leaked from current()
+ACE_Service_Config::ACE_Service_Gestalt_TSS_Ptr *ACE_Service_Config::current_ (0);
 
 // Set the signal handler to point to the handle_signal() function.
 ACE_Sig_Adapter *ACE_Service_Config::signal_handler_ = 0;
@@ -291,6 +290,8 @@ ACE_Service_Config::instance (void)
 ACE_Service_Gestalt *
 ACE_Service_Config::current (void)
 {
+
+  // There is always one (ubergestalt) available per-process
   ACE_Service_Gestalt *tmp = ACE_Service_Config::global ();
 
   // If the Object_Manager is in transient state, the
@@ -300,8 +301,22 @@ ACE_Service_Config::current (void)
   if (ACE_Object_Manager::starting_up () || ACE_Object_Manager::shutting_down ())
     return tmp;
 
-  if (ACE_Service_Config::current_.ts_object () != 0)
-    return ACE_TSS_GET (current_, ACE_Service_Gestalt);
+  if (ACE_Service_Config::current_ == 0)
+    {
+      // Gotta make sure this piece of memory does not get leaked at process exi
+      ACE_Cleanup_Adapter< ACE_Service_Gestalt_TSS_Ptr > *tmp = 0;
+      ACE_NEW_RETURN (tmp, ACE_Cleanup_Adapter< ACE_Service_Gestalt_TSS_Ptr >, 0);
+
+      // Register the instance for destruction at program termination.
+      ACE_Object_Manager::at_exit (tmp);
+
+      // Now just use the object, wrapped inside the cleanup adapter
+      ACE_Service_Config::current_ = &tmp->object ();
+    }
+
+  ACE_Service_Gestalt *stored = ACE_TSS_GET (*current_, ACE_Service_Gestalt);
+  if (stored != 0)
+    return stored;
 
   // Stash a pointer to the global configuration, so it can be returned out
   // of TSS the next time a thread asks for it
@@ -314,7 +329,7 @@ ACE_Service_Config::current (void)
 int
 ACE_Service_Config::current (ACE_Service_Gestalt *newcurrent)
 {
-  *ACE_Service_Config::current_ = newcurrent;
+  ACE_TSS_SET (*ACE_Service_Config::current_, ACE_Service_Gestalt*, newcurrent);
   return 0;
 }
 
