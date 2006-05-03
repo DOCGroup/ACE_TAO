@@ -307,7 +307,7 @@ nobase_include_HEADERS = \
   Bounded_Array_Sequence_T.h \
   Bounded_Basic_String_Sequence_T.h \
   Bounded_Object_Reference_Sequence_T.h \
-  Bounded_Reference_Allocation_Traits.h \
+  Bounded_Reference_Allocation_Traits_T.h \
   Bounded_Sequence_CDR_T.h \
   Bounded_String_Sequence_T.h \
   Bounded_Value_Allocation_Traits_T.h \

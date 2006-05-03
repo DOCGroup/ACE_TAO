@@ -1,3 +1,13 @@
+Wed May  3 13:03:03 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * tao/Makefile.am:
+
+          Regenerated.
+
+        * tao/tao.mpc:
+
+          Fix yet another typo.
+
 Wed May  3 09:56:10 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Portable_Interceptors/Bug_2510_Regression/client.cpp:
