@@ -129,7 +129,6 @@ static ACE_Module_Type *ace_get_module (const ACE_Service_Type *sr,
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 
-
 /* Enabling traces.  */
 #ifndef ACE_YYDEBUG
 # define ACE_YYDEBUG 0
@@ -816,6 +815,8 @@ ace_yydestruct (ace_yymsg, ace_yytype, ace_yyvaluep)
 }
 
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /* Prevent warnings from -Wmissing-prototypes.  */
 
 #ifdef ACE_YYPARSE_PARAM
@@ -831,10 +832,6 @@ int ace_yyparse (void);
 int ace_yyparse ();
 #endif
 #endif /* ! ACE_YYPARSE_PARAM */
-
-
-
-
 
 
 /*----------.
@@ -1638,12 +1635,6 @@ ace_yyreturn:
 #endif
   return ace_yyresult;
 }
-
-
-
-
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Prints the error string to standard output.  Cleans up the error
 // messages.

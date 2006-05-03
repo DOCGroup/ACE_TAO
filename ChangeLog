@@ -1,3 +1,8 @@
+Wed May  3 03:36:23 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/Svc_Conf_y.cpp:
+          Moved the changelog macro to include ace_yyparse.
+
 Tue May  2 09:34:54 Pacific Daylight Time 2006    <ossama_othman at symantec dot com>
 
         * ace/OS_NS_sys_sendfile.inl (sendfile):
