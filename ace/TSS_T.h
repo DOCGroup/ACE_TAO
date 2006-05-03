@@ -27,12 +27,15 @@
 #   define ACE_TSS_TYPE(T) ACE_TSS< T >
 #   if defined (ACE_HAS_BROKEN_CONVERSIONS)
 #     define ACE_TSS_GET(I, T) (*(I))
+#     define ACE_TSS_SET(I, T, V) (*(I) = (V))
 #   else
 #     define ACE_TSS_GET(I, T) ((I)->operator T * ())
+#     define ACE_TSS_SET(I, T, V) ((I)->operator T & () = (V))
 #   endif /* ACE_HAS_BROKEN_CONVERSIONS */
 # else
 #   define ACE_TSS_TYPE(T) T
 #   define ACE_TSS_GET(I, T) (I)
+#   define ACE_TSS_SET(I, T, V) ((I)=(V))
 # endif /* ACE_HAS_THREADS && (ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATION) */
 
 #include "ace/Thread_Mutex.h"
