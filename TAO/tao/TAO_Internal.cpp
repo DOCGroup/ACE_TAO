@@ -79,6 +79,8 @@ namespace
    *       do so.
    */
   void register_global_services_i (ACE_Service_Gestalt * pcfg);
+  void register_additional_services_i (ACE_Service_Gestalt * pcfg);
+
   int open_global_services_i (ACE_Service_Gestalt* theone,
                               int & argc,
                               char ** argv,
@@ -184,6 +186,7 @@ TAO::ORB::open_services (ACE_Service_Gestalt* pcfg,
                             -1);
         return -1;
       }
+      register_additional_services_i (theone);
     }
 
     int svc_config_argc = svc_config_argv.length ();
@@ -342,6 +345,11 @@ namespace
     pcfg->process_directive (ace_svc_desc_TAO_Default_Thread_Lane_Resources_Manager_Factory);
     pcfg->process_directive (ace_svc_desc_TAO_Default_Collocation_Resolver);
 
+  } /* register_global_services_i */
+
+  void
+  register_additional_services_i (ACE_Service_Gestalt * pcfg)
+  {
     // @@ What the heck do these things do and do we need to avoid
     //    calling them if we're not invoking the svc.conf file?
     // @@ They are needed for platforms that have no file system,

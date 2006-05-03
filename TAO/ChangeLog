@@ -1,3 +1,14 @@
+Wed May  3 21:26:07 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/TAO_Internal.cpp:
+          The order of initialization of static services was modified as
+          multi-orb configuration feature implementation. Somehow during 
+          that refactoring some services that are required to be initialized
+          ended up having that done before the svc.conf file is processed.
+          For instance RT_ORB_Loader. This change breaks up the loading of
+          and initializing of these services to ensure that svc.conf always
+          gets processed first before doing any default initialization.
+
 Wed May  3 19:14:12 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tests/ORB_Local_Config/Two_DLL_ORB/Two_DLL_ORB.mpc:
