@@ -1,3 +1,8 @@
+Wed May  3 11:52:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Mem_Map.inl:
+          Small const improvements
+
 Wed May  3 10:39:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Mem_Map.{h,cpp,inl}:
