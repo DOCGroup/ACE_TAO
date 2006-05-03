@@ -34,6 +34,8 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_PortableServer_Export TAO_POAManager_Factory :
   public ::PortableServer::POAManagerFactory,
   public TAO_Local_RefCounted_Object
@@ -71,6 +73,7 @@ private:
   POAMANAGERSET poamanager_set_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

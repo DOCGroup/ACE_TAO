@@ -10,6 +10,7 @@ ACE_RCSID (PortableServer,
            POAManagerFactory,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_POAManager_Factory::TAO_POAManager_Factory (TAO_Object_Adapter &object_adapter) :
   object_adapter_ (object_adapter)
@@ -160,3 +161,6 @@ TAO_POAManager_Factory::register_poamanager (
   return this->poamanager_set_.insert (
     PortableServer::POAManager::_duplicate (poamanager));
 }
+
+
+TAO_END_VERSIONED_NAMESPACE_DECL
