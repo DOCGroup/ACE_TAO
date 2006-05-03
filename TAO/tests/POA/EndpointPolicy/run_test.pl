@@ -18,17 +18,17 @@ unlink $badiorfile;
 $port = 12345;
 
 if (PerlACE::is_vxworks_test()) {
-    $sharedSV = new PerlACE::ProcessVX ("server", "-ORBUseSharedProfile 1 -g $goodiorfile -b $badiorfile -p $port");
+    $sharedSV = new PerlACE::ProcessVX ("server", "-ORBDottedDecimalAddresses 0 -ORBUseSharedProfile 1 -g $goodiorfile -b $badiorfile -p $port");
 }
 else {
-    $sharedSV = new PerlACE::Process ("server", "-ORBUseSharedProfile 1 -g $goodiorfile -b $badiorfile -p $port");
+    $sharedSV = new PerlACE::Process ("server", "-ORBDottedDecimalAddresses 0 -ORBUseSharedProfile 1 -g $goodiorfile -b $badiorfile -p $port");
 }
 
 if (PerlACE::is_vxworks_test()) {
-    $multiSV = new PerlACE::ProcessVX ("server", "-ORBUseSharedProfile 0 -g $goodiorfile -b $badiorfile -p $port");
+    $multiSV = new PerlACE::ProcessVX ("server", "-ORBDottedDecimalAddresses 0 -ORBUseSharedProfile 0 -g $goodiorfile -b $badiorfile -p $port");
 }
 else {
-    $multiSV = new PerlACE::Process ("server", "-ORBUseSharedProfile 0 -g $goodiorfile -b $badiorfile -p $port");
+    $multiSV = new PerlACE::Process ("server", "-ORBDottedDecimalAddresses 0 -ORBUseSharedProfile 0 -g $goodiorfile -b $badiorfile -p $port");
 }
 
 $goodCL = new PerlACE::Process ("client", " -k file://$goodiorfile");
