@@ -1,3 +1,9 @@
+Wed May  3 16:54:41 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * TAO_IDL/be/be_visitor_sequence/serializer_op_cs.cpp:
+
+          Fix an apparent typo introduced the previous commit.
+
 Wed May  3 16:06:56 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tests/ORB_Local_Config/Bug_1459/Bug_1459.mpc:
