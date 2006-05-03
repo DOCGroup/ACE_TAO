@@ -1,3 +1,15 @@
+Wed May  3 18:32:29 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/POA/EndpointPolicy/run_test.pl:
+          The test was failing on Windows because TAO apparently gets
+          built with -ORBDottedDecimalAddresses defaulted to 1. The
+          current version of the endpoint policy is very simple in that it
+          uses literal string comparisons for determining the suitability
+          of a given candidate profile endpoint. The test is specificly
+          trying to match "localhost" but fails when the server
+          substitutes "127.0.0.1" Perhaps an alternative solution would be
+          to test both literal strings.
+
 Wed May  3 16:54:41 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * TAO_IDL/be/be_visitor_sequence/serializer_op_cs.cpp:
