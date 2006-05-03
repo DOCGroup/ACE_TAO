@@ -13,7 +13,7 @@
 // @brief The size of a repository is pre-determined and can not be exceeded
 
 int
-run_main (int , ACE_TCHAR *[])
+testLimits (int , ACE_TCHAR *[])
 {
   ACE_Service_Gestalt one(1); // Room for just one ...
   ACE_ASSERT (0 == one.process_directive (ace_svc_desc_TAO_CORBANAME_Parser));
@@ -21,4 +21,10 @@ run_main (int , ACE_TCHAR *[])
   ACE_ASSERT (ENOSPC == errno);
   ACE_DEBUG ((LM_DEBUG, "%p\n", "\tAttempt to overfill returned: "));
   return 0;
+}
+
+int
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+{
+  return testLimits (argc, argv);
 }
