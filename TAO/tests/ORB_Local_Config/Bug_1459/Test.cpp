@@ -132,7 +132,8 @@ testBug1459 (int , ACE_TCHAR *[])
 // @brief the main driver
 
 int
-run_main(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   return testBug1459(argc, argv);
 }
+

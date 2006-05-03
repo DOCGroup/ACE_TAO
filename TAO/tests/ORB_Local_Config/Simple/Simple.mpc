@@ -2,7 +2,7 @@
 // $Id$
 
 
-project(*) : ../../../tests/acetest, taoserver {
+project(*) : taoserver {
   exename = Test
   includes += ../lib
   Source_Files {

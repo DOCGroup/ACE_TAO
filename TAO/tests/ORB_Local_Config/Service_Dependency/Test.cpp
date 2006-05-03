@@ -290,13 +290,8 @@ testServiceDependency (int , ACE_TCHAR *[])
 }
 
 
-
-
-
-
-
-  int
-run_main(int argc, ACE_TCHAR *argv[])
+int
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   testServiceDependency (argc, argv);
   testOpenDynamicServices (argc, argv);

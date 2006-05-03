@@ -25,7 +25,7 @@ file_Service_Config_ORB_Test ()
 // initializes its own ORB
 
 int
-run_main (int , ACE_TCHAR *argv[])
+testLoadingTwoOrbs (int , ACE_TCHAR *argv[])
 {
   ACE_ARGV new_argv;
 
@@ -46,3 +46,8 @@ run_main (int , ACE_TCHAR *argv[])
   return 0;
 }
 
+int
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+{
+  return testLoadingTwoOrbs (argc, argv);
+}

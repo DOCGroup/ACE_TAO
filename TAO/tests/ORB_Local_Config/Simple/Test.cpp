@@ -16,7 +16,7 @@
 // @brief Dynamic services loading
 
 int
-run_main (int , ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_Service_Gestalt_Test one; // Use the ACE_Service_Repository::instance ()
 
