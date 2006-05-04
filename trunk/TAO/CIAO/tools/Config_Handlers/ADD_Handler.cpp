@@ -3,7 +3,7 @@
 #include "cdp.hpp"
 #include "ciao/Deployment_DataC.h"
 #include "Property_Handler.h"
-
+#include "ace/UUID.h"
 
 ACE_RCSID (DAnCE,
            ADD_Handler,
@@ -158,6 +158,19 @@ namespace CIAO
           {
             add.add_execParameter (Property_Handler::get_property (src.execParameter[k]));
           }
+        
+        // Generate a UUID to use for the IDREF.
+        ACE_Utils::UUID uuid;
+        ACE_Utils::UUID_GENERATOR::instance ()->generateUUID (uuid);
+        ACE_CString add_id ("_");
+        add_id += *uuid.to_string ();
+        
+        XMLSchema::ID< ACE_TCHAR > xml_id (add_id.c_str ());
+        
+        // Bind the ref and set it in the IDD
+        ADD_Handler::IDREF.bind_next_available (add_id);
+
+        add.id (xml_id);
 
         return add;
       }
