@@ -193,7 +193,6 @@ void PC_Updater::clear_list ()
         ACE_CString loc (this->server_path_);
         loc += name;
         loc += iad.location[0];
-        loc += ext;
 
         iad.location[0] = CORBA::string_dup (loc.c_str ());
 
