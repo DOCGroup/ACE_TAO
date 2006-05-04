@@ -1,3 +1,9 @@
+Thu May  4 00:45:45 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * tao/Makefile.am:
+        
+          Removed EndpointPolicy/EndpointPolicyC.inl.
+
 Wed May  3 21:26:07 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/TAO_Internal.cpp:
