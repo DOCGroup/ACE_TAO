@@ -1,3 +1,11 @@
+Thu May  4 13:36:00 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tests/ORB_Local_Config/Service_Dependency/Test.cpp:
+
+          Eliminated a "magic" constant, used for the number of expected
+          services, because it can vary dependent on the particular TAO
+          configuration, like mincorba, static, etc.
+
 Thu May  4 08:53:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PI/ClientRequestInfo.cpp:
