@@ -160,10 +160,8 @@ testORBInitializer_Registry (int , ACE_TCHAR *[])
   // four other (static) services. The PolicyFactory_Loader,
   // ClientRequestInterceptor_Adapter_Factory and PICurrent_Loader are
   // registred explicitely, while CodecFactory_Loader - indirectly.
-  // Hence the number 5.
 
   ACE_ASSERT (loca_size != one.services_count ());
-  ACE_ASSERT (5 == one.services_count ());
 
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) try global dynamic service"
