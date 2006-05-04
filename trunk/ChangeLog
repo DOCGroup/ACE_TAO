@@ -1,3 +1,16 @@
+Thu May  4 08:50:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        Reverted the change below, broke the sendfile test and Steve
+        Huston changed things in such a way that sendfile is only
+        used on Solaris 9 and newer
+
+        Tue May  2 09:34:54 Pacific Daylight Time 2006    <ossama_othman at symantec dot com>
+        * ace/OS_NS_sys_sendfile.inl (sendfile):
+          Removed "::" global scope qualifier from platform sendfile()
+          call.  It caused problem on Solaris 8.  Thanks to Simon Massey
+          and Johnny Willemsen for analyzing the problem and suggesting
+          this fix.
+
 Thu May  4 08:36:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/ace_for_tao.mpc:
