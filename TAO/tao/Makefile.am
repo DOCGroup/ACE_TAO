@@ -2325,7 +2325,6 @@ nobase_include_HEADERS += \
   EndpointPolicy/EndpointPolicy.h \
   EndpointPolicy/EndpointPolicyA.h \
   EndpointPolicy/EndpointPolicyC.h \
-  EndpointPolicy/EndpointPolicyC.inl \
   EndpointPolicy/EndpointPolicyTypeA.h \
   EndpointPolicy/EndpointPolicyTypeC.h \
   EndpointPolicy/EndpointPolicy_Export.h \
