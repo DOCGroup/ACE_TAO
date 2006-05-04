@@ -791,7 +791,7 @@ public:
 
 protected:
   /// Internal release implementation
-  ACE_Data_Block *release_i (void);
+  virtual ACE_Data_Block *release_i (void);
 
   /// Internal get the current reference count.
   int reference_count_i (void) const;
