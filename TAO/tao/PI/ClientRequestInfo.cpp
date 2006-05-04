@@ -52,20 +52,23 @@ TAO_ClientRequestInfo::setup_picurrent (void)
       // Retrieve the thread scope current.
       TAO::PICurrent_Impl *tsc = pi_current->tsc ();
 
-      // Logically copy the TSC's slot table to the RSC.
-      this->rs_pi_current_.lc_slot_table (tsc);
+      if (tsc != 0)
+        {
+          // Logically copy the TSC's slot table to the RSC.
+          this->rs_pi_current_.lc_slot_table (tsc);
 
-      // PICurrent will potentially have to call back on the request
-      // scope current so that it can deep copy the contents of the
-      // thread scope current if the contents of the thread scope
-      // current are about to be modified.  It is necessary to do this
-      // deep copy once in order to completely isolate the request
-      // scope current from the thread scope current.  This is only
-      // necessary, if the thread scope current is modified after its
-      // contents have been *logically* copied to the request scope
-      // current.
-      this->copy_callback_.src_and_dst (tsc, &this->rs_pi_current_);
-      tsc->copy_callback (&this->copy_callback_);
+          // PICurrent will potentially have to call back on the request
+          // scope current so that it can deep copy the contents of the
+          // thread scope current if the contents of the thread scope
+          // current are about to be modified.  It is necessary to do this
+          // deep copy once in order to completely isolate the request
+          // scope current from the thread scope current.  This is only
+          // necessary, if the thread scope current is modified after its
+          // contents have been *logically* copied to the request scope
+          // current.
+          this->copy_callback_.src_and_dst (tsc, &this->rs_pi_current_);
+          tsc->copy_callback (&this->copy_callback_);
+       }
     }
 }
 
