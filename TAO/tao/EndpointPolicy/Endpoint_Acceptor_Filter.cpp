@@ -81,7 +81,7 @@ TAO_Endpoint_Acceptor_Filter::fill_profile (const TAO::ObjectKey &object_key,
               if (endpoints_[ep_ndx]->protocol_tag() != pfile->tag())
                 continue;
 
-              const EndpointPolicy::EndpointValueBase *evb =
+              const EndpointPolicy::EndpointValueBase_ptr evb =
                 endpoints_[ep_ndx];
 
               const TAO_Endpoint_Value_Impl *evi =
