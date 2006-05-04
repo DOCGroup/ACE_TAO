@@ -1,8 +1,9 @@
 Thu May  4 08:53:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PI/ClientRequestInfo.cpp:
-          Fixed bug 2510, if the TSC is 0 then there is no need to do
-          a copy. Thanks to Martin Cornelius
+          Fixed bug 2510 in such a way that TAO doesn't crash but it seems
+          we then miss some functionalify. The reporter will extend the test
+          to detect the missing functionality. Thanks to Martin Cornelius
           <Martin dot Cornelius at smiths-heimann dot com>
           for reporting this bug and providing a regression test
 
