@@ -1,3 +1,9 @@
+Thu May  4 22:11:06 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/Message_Block.h: Made ACE_Data_Block::release_i() virtual.
+          Thanks to Gary Fernandez <gary dot fernandez at ironmountain dot
+          com> for this change.
+
 Thu May  4 21:07:10 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * ace/SPIPE_Acceptor.cpp (create_new_instance, close): Have to use
