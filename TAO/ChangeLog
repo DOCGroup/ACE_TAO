@@ -1,3 +1,10 @@
+Thu May  4 16:22:42 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tests/ORB_Local_Config/Two_DLL_ORB/ORB_DLL_Export.h:
+
+          Regenerated the file to fix a problem with building the test in
+          static builds.
+
 Thu May  4 13:36:00 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tests/ORB_Local_Config/Service_Dependency/Test.cpp:

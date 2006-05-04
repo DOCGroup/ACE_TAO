@@ -9,6 +9,10 @@
 
 #include "ace/config-all.h"
 
+#if defined (ACE_AS_STATIC_LIBS) && !defined (SERVICE_CONFIG_ORB_DLL_HAS_DLL)
+#  define SERVICE_CONFIG_ORB_DLL_HAS_DLL 0
+#endif /* ACE_AS_STATIC_LIBS && SERVICE_CONFIG_ORB_DLL_HAS_DLL */
+
 #if !defined (SERVICE_CONFIG_ORB_DLL_HAS_DLL)
 #  define SERVICE_CONFIG_ORB_DLL_HAS_DLL 1
 #endif /* ! SERVICE_CONFIG_ORB_DLL_HAS_DLL */
