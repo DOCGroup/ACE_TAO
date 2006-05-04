@@ -1,3 +1,12 @@
+Thu May  4 21:07:10 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/SPIPE_Acceptor.cpp (create_new_instance, close): Have to use
+          ACE_TEXT_ALWAYS_CHAR to pass pipe name on wide-char w/
+          ACE_HAS_STREAM_PIPES. Thanks to Gary Fernandez <gary dot
+          fernandez at ironmountain dot com> for this fix.
+
+        * THANKS: Added Gary Fernandez to the Hall of Fame.
+
 Thu May  4 08:50:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         Reverted the change below, broke the sendfile test and Steve
@@ -32,11 +41,11 @@ Wed May  3 16:02:10 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
           is now just a pointer to an ACE_TSS instance, which gets
           dynamicaly allocated upon invoking the current() method. The
           deallocation of that instance is left up to the Object Manager
-          with whoom the dynamic ACE_TSS instance is registered.
+          with which the dynamic ACE_TSS instance is registered.
 
         * ace/TSS_T.h:
 
-          Addes a ACE_TSS_SET () to complete the set of TSS access
+          Added a ACE_TSS_SET () to complete the set of TSS access
           operations, which should work regardless of threading, TSS
           emulation and TSS availability.
 
