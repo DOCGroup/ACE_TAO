@@ -95,6 +95,7 @@ libACE_la_SOURCES = \
   Dump.cpp \
   Dynamic.cpp \
   Dynamic_Service_Base.cpp \
+  Dynamic_Service_Dependency.cpp \
   Encoding_Converter.cpp \
   Encoding_Converter_Factory.cpp \
   Event.cpp \
@@ -487,6 +488,7 @@ nobase_include_HEADERS += \
   Dynamic_Service.h \
   Dynamic_Service.inl \
   Dynamic_Service_Base.h \
+  Dynamic_Service_Dependency.h \
   Encoding_Converter.h \
   Encoding_Converter_Factory.h \
   Env_Value_T.cpp \
