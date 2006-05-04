@@ -641,9 +641,9 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
   TAO_OutputCDR output (repbuf,
                         sizeof repbuf,
                         TAO_ENCAP_BYTE_ORDER,
-                        this->orb_core_->input_cdr_buffer_allocator (),
-                        this->orb_core_->input_cdr_dblock_allocator (),
-                        this->orb_core_->input_cdr_msgblock_allocator (),
+                        this->orb_core_->output_cdr_buffer_allocator (), // TODO
+                        this->orb_core_->output_cdr_dblock_allocator (),
+                        this->orb_core_->output_cdr_msgblock_allocator (),
                         this->orb_core_->orb_params ()->cdr_memcpy_tradeoff (),
                         qd->major_version_,
                         qd->minor_version_);

@@ -1,3 +1,15 @@
+Thu May  4 15:13:12 2006 UTC  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/GIOP_Message_Base.cpp:
+          Temporarily pass a zero pointer as buffer to the outstream so that
+          we get a buffer from the mmap allocator in case of sendfile. For the
+          output cdr for the reply also use the output allocators. Both
+          changes should get improved but this is just to see if sendfile
+          now works under all use cases.
+
+        * tao/GIOP_Message_State.cpp:
+          Improved debug message
+
 Wed May  3 14:05:12 2006 UTC  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Transport.cpp:
