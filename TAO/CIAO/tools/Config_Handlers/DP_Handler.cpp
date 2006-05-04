@@ -214,6 +214,7 @@ ACE_RCSID (Config_Handlers,
         // Clear IDREF tables
         IDD_Handler::IDREF.unbind_refs ();
         MDD_Handler::IDREF.unbind_refs ();
+        ADD_Handler::IDREF.unbind_refs ();
 
 
         size_t len; //Used for checking the length of struct data members
