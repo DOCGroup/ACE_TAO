@@ -1,7 +1,12 @@
+Thu May  4 08:36:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ace_for_tao.mpc:
+          Added OS_NS_sys_sendfile
+
 Thu May  4 00:43:32 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * ace/Makefile.am:
-        
+
           Add Dynamic_Service_Dependency.{cpp,h} to appropriate lists.
 
 Wed May  3 16:02:10 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
