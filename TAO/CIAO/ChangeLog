@@ -1,3 +1,8 @@
+Thu May  4 08:33:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/RepositoryManager/PC_Updater.cpp:
+          Fixed compilation error
+
 Wed May  3 22:11:32 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * docs/schema/Basic_Deployment_Data.xsd
@@ -9,9 +14,9 @@ Wed May  3 22:11:32 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
         * docs/schema/iad.xsd
         * docs/schema/pcd.xsd
         * docs/schema/toplevel.xsd
-        
-          Schema propagated from the ARMS repo. 
-        
+
+          Schema propagated from the ARMS repo.
+
 Wed May  3 12:53:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * Config_Handlers/Utils/Functors.h:
