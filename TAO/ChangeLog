@@ -1,14 +1,19 @@
+Thu May  4 07:54:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/EndpointPolicy/Endpoint_Acceptor_Filter.cpp:
+          Fixed warning in VxWorks 5.5.1 builds
+
 Thu May  4 00:45:45 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * tao/Makefile.am:
-        
+
           Removed EndpointPolicy/EndpointPolicyC.inl.
 
 Wed May  3 21:26:07 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/TAO_Internal.cpp:
           The order of initialization of static services was modified as
-          multi-orb configuration feature implementation. Somehow during 
+          multi-orb configuration feature implementation. Somehow during
           that refactoring some services that are required to be initialized
           ended up having that done before the svc.conf file is processed.
           For instance RT_ORB_Loader. This change breaks up the loading of
