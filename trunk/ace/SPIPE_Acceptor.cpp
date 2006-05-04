@@ -91,8 +91,9 @@ ACE_SPIPE_Acceptor::create_new_instance (int perms)
                           I_PUSH,
                           module) == -1)
     return -1;
-  else if (ACE_OS::fattach (spipe[0],
-                            this->local_addr_.get_path_name ()) == -1)
+  else if (-1 == ACE_OS::fattach
+	           (spipe[0],
+		    ACE_TEXT_ALWAYS_CHAR (this->local_addr_.get_path_name ())))
     return -1;
 
   this->set_duplex_handle (spipe[0]);
@@ -200,7 +201,7 @@ ACE_SPIPE_Acceptor::close (void)
   this->set_handle (ACE_INVALID_HANDLE);
 
 #if defined (ACE_HAS_STREAM_PIPES)
-  ACE_OS::fdetach (this->local_addr_.get_path_name ());
+  ACE_OS::fdetach (ACE_TEXT_ALWAYS_CHAR (this->local_addr_.get_path_name ()));
 #elif (defined (ACE_WIN32) && defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0))
 
   // open () started the Connect in asynchronous mode, and accept() restarts
