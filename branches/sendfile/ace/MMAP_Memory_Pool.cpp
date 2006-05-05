@@ -164,7 +164,7 @@ ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool (const ACE_TCHAR *backing_store_name,
 
       // If requested an unique filename, use mktemp to get a random file.
       if (options->unique_)
-        ACE_OS::mktemp(this->backing_store_name_)
+        ACE_OS::mktemp(this->backing_store_name_);
 
 #endif /* ACE_DEFAULT_BACKING_STORE */
     }
