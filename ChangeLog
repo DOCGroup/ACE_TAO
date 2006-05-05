@@ -1,3 +1,18 @@
+Fri May  5 07:42:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Base_Thread_Adapter.h:
+        * ace/SPIPE_Connector.cpp:
+        * ace/SOCK_Dgram.cpp:
+        * ace/Select_Reactor_T.cpp:
+        * ace/Handle_Set.cpp:
+          Removed code for psos, support for this platform will be removed
+
+        * ace/CDR_Base.h:
+          Removed check for KCC compiler
+
+        * ace/Malloc_Allocator.h:
+          Doxygen improvement
+
 Thu May  4 22:11:06 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * ace/Message_Block.h: Made ACE_Data_Block::release_i() virtual.
