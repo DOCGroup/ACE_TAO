@@ -71,7 +71,8 @@ public:
                                 u_int flags = 0,
                                 int guess_on_fault = 1,
                                 LPSECURITY_ATTRIBUTES sa = 0,
-                                mode_t file_mode = ACE_DEFAULT_FILE_PERMS);
+                                mode_t file_mode = ACE_DEFAULT_FILE_PERMS,
+                                bool unique = false);
 
   /// Base address of the memory-mapped backing store.
   const void *base_addr_;
@@ -112,6 +113,9 @@ public:
 
   /// File mode for mmaped file, if it is created.
   mode_t file_mode_;
+
+  /// Create a random unique mmap filename?
+  bool unique_;
 
 private:
   // Prevent copying
