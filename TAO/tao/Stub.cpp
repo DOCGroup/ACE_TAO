@@ -17,6 +17,7 @@
 #include "tao/debug.h"
 #include "tao/Policy_Manager.h"
 #include "tao/SystemException.h"
+#include "tao/CDR.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Stub.i"

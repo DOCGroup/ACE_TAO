@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef LOG_MESSAGE_RECEIVER_H
 #define LOG_MESSAGE_RECEIVER_H
 
@@ -41,7 +40,6 @@
 //  2: There must exist a public destructor.
 //  3: There must exist a public copy constructor.
 //  4: There must exist a default constructor. (for now)
-//
 //
 //  The semantics are also simple. A log message receiver should
 //  behave as an accessor object (smart pointer or envelope class).
@@ -179,7 +177,6 @@ private:
 template<ACE_SYNCH_DECL>
 class Log_Message_Receiver_Impl
 {
-
   friend class ACE_Shutup_GPlusPlus;  // Turn off g++ warning
 public:
   // Methods for handling reference count and instance lifetime
