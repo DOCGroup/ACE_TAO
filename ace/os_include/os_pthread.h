@@ -345,11 +345,7 @@ extern "C" pthread_t pthread_self (void);
 #    undef THR_DAEMON
 
 #    define THR_BOUND               0x00000001
-#    if defined (CHORUS)
-#      define THR_NEW_LWP             0x00000000
-#    else
-#      define THR_NEW_LWP             0x00000002
-#    endif /* CHORUS */
+#    define THR_NEW_LWP             0x00000002
 #    define THR_DETACHED            0x00000040
 #    define THR_SUSPENDED           0x00000080
 #    define THR_DAEMON              0x00000100

@@ -66,11 +66,7 @@ extern "C"
 /* Also define a default 'mode' for loading a library - the names and values */
 /* differ between OSes, so if you write code that uses the mode, be careful */
 /* of the platform differences. */
-#if defined (ACE_PSOS)
-   typedef ACE_HANDLE ACE_SHLIB_HANDLE;
-#  define ACE_SHLIB_INVALID_HANDLE ACE_INVALID_HANDLE
-#  define ACE_DEFAULT_SHLIB_MODE 0
-#elif defined (ACE_WIN32)
+#if defined (ACE_WIN32)
    // Dynamic loading-related types - used for dlopen and family.
    typedef HINSTANCE ACE_SHLIB_HANDLE;
 #  define ACE_SHLIB_INVALID_HANDLE 0
@@ -78,22 +74,18 @@ extern "C"
 #elif defined (ACE_HAS_SVR4_DYNAMIC_LINKING)
    typedef void *ACE_SHLIB_HANDLE;
 #  define ACE_SHLIB_INVALID_HANDLE 0
-#  if defined (__KCC) && defined(RTLD_GROUP) && defined(RTLD_NODELETE)
-#    define ACE_DEFAULT_SHLIB_MODE RTLD_LAZY | RTLD_GROUP | RTLD_NODELETE
-#  else
-     // This is needed to for dynamic_cast to work properly on objects passed to
-     // libraries.
-#    define ACE_DEFAULT_SHLIB_MODE RTLD_LAZY | RTLD_GLOBAL
-#  endif /* KCC */
+   // This is needed to for dynamic_cast to work properly on objects passed to
+   // libraries.
+#  define ACE_DEFAULT_SHLIB_MODE RTLD_LAZY | RTLD_GLOBAL
 #elif defined (__hpux)
    typedef shl_t ACE_SHLIB_HANDLE;
 #  define ACE_SHLIB_INVALID_HANDLE 0
 #  define ACE_DEFAULT_SHLIB_MODE BIND_DEFERRED
-#else /* !ACE_PSOS && !ACE_WIN32 && !ACE_HAS_SVR4_DYNAMIC_LINKING && !__hpux */
+#else /* !ACE_WIN32 && !ACE_HAS_SVR4_DYNAMIC_LINKING && !__hpux */
    typedef void *ACE_SHLIB_HANDLE;
 #  define ACE_SHLIB_INVALID_HANDLE 0
 #  define ACE_DEFAULT_SHLIB_MODE RTLD_LAZY
-#endif /* ACE_PSOS */
+#endif /* ACE_WIN32 */
 
 #if !defined (RTLD_LAZY)
 #define RTLD_LAZY 1

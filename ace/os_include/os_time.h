@@ -53,7 +53,7 @@ using std::timezone;
 using std::difftime;
 # endif /* ACE_USES_STD_NAMESPACE_FOR_STDC_LIB */
 
-# if !defined (ACE_HAS_POSIX_TIME) && !defined (ACE_PSOS)
+# if !defined (ACE_HAS_POSIX_TIME)
 // Definition per POSIX.
 typedef struct timespec
 {
@@ -97,18 +97,6 @@ extern "C"
 #if defined (ACE_LACKS_STRPTIME_PROTOTYPE) && !defined (_XOPEN_SOURCE)
    extern char *strptime (const char *s, const char *fmt, struct tm *tp);
 #endif  /* ACE_LACKS_STRPTIME_PROTOTYPE */
-
-#if defined (ACE_PSOS) && !defined (USER_INCLUDE_SYS_TIME_TM)
-#  if defined (ACE_PSOS_DIAB_PPC)
-     typedef struct timespec timespec_t;
-#  else /* ! defined (ACE_PSOS_DIAB_PPC) */
-     typedef struct timespec
-     {
-       time_t tv_sec; // Seconds
-       long tv_nsec; // Nanoseconds
-     } timespec_t;
-#  endif /* defined (ACE_PSOS_DIAB_PPC) */
-#endif /*  defined (ACE_PSOS) && !defined (USER_INCLUDE_SYS_TIME_TM) */
 
 #if defined (ACE_LACKS_CONST_TIMESPEC_PTR)
 typedef struct timespec * ACE_TIMESPEC_PTR;

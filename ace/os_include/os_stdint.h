@@ -37,7 +37,6 @@ extern "C"
 // BSD style types
 #if defined (ACE_LACKS_SYS_TYPES_H) \
        || (defined (__GLIBC__) && !defined (_BSD_SOURCE))
-#  if ! defined (ACE_PSOS)
       typedef unsigned char u_char;
       typedef unsigned short u_short;
       typedef unsigned int u_int;
@@ -47,28 +46,7 @@ extern "C"
       typedef unsigned short ushort_t;
       typedef unsigned int  uint_t;
       typedef unsigned long ulong_t;
-#  endif /* ! defined (ACE_PSOS) */
 #endif  /* ACE_LACKS_SYS_TYPES_H */
-
-#if !defined (ACE_PSOSIM) && defined (ACE_PSOS_CANT_USE_SYS_TYPES)
-   // these are missing from the pSOS types.h file, and the compiler
-   // supplied types.h file collides with the pSOS version.
-#  if !defined (ACE_SHOULD_NOT_DEFINE_SYS_TYPES)
-     typedef unsigned char     u_char;
-     typedef unsigned short    u_short;
-#  endif /* ACE_SHOULD_NOT_DEFINE_SYS_TYPES */
-   typedef unsigned int      u_int;
-#  if !defined (ACE_SHOULD_NOT_DEFINE_SYS_TYPES)
-     typedef unsigned long     u_long;
-#  endif /* ACE_SHOULD_NOT_DEFINE_SYS_TYPES */
-   // These are defined in types.h included by (among others) pna.h
-#  if 0
-     typedef unsigned char     uchar_t;
-     typedef unsigned short    ushort_t;
-     typedef unsigned int      uint_t;
-     typedef unsigned long     ulong_t;
-#  endif /* 0 */
-#endif /* ACE_PSOS_CANT_USE_SYS_TYPES */
 
 /* Define required types if missing */
 
