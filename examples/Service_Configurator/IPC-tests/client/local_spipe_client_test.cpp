@@ -13,30 +13,30 @@ ACE_RCSID(client, local_spipe_client_test, "$Id$")
 
 #if defined (ACE_HAS_STREAM_PIPES)
 
-static char *program_name;
+static ACE_TCHAR *program_name;
 
 // debug state on or off
 static int debug = 0;
 
-static const char *rendezvous_spipe = "/tmp/foo_spipe";
+static const ACE_TCHAR *rendezvous_spipe = ACE_TEXT ("/tmp/foo_spipe");
 
 // Name of file to send.
-static const char *file_name = "./local_data";
+static const ACE_TCHAR *file_name = ACE_TEXT ("./local_data");
 
 static void
 print_usage_and_die (void)
 {
   ACE_ERROR ((LM_ERROR,
-              "usage: %s [-d] [-r rendezvous_spipe]\n",
+              ACE_TEXT ("usage: %s [-d] [-r rendezvous_spipe]\n"),
 	      program_name));
   ACE_OS::exit (1);
 }
 
 static void
-parse_arguments (int argc, char *argv[])
+parse_arguments (int argc, ACE_TCHAR *argv[])
 {
   program_name = argv[0];
-  ACE_Get_Opt get_opt (argc, argv, "dr:");
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("dr:"));
 
   for (int c; (c = get_opt ()) != -1; )
     switch (c)
@@ -53,7 +53,7 @@ parse_arguments (int argc, char *argv[])
   }
   if (debug)
     ACE_DEBUG ((LM_DEBUG,
-                "rendezvous_spipe = %s\n",
+                ACE_TEXT ("rendezvous_spipe = %s\n"),
 		rendezvous_spipe));
 }
 
@@ -68,9 +68,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   if (con.connect (spipe,
                    ACE_SPIPE_Addr (rendezvous_spipe)) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-		       "Cannot open %s for requesting a new communication channel"
-		       " in local_spipe_client_test.\n",
-                       rendezvous_spipe),
+		       ACE_TEXT ("Cannot open %s for requesting a new ")
+		       ACE_TEXT ("communication channel in %p\n"),
+                       rendezvous_spipe,
+		       ACE_TEXT ("local_spipe_client_test")),
                       -1);
 
   ACE_Mem_Map mmap (file_name);
@@ -78,8 +79,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   if (mmap (cp) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "mmap"),
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("mmap")),
                       -1);
 
   // Next, send the file's contents.
@@ -88,8 +89,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   if (spipe.send ((ACE_Str_Buf *) 0, &msg) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "send"),
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("send")),
                       -1);
   return 0;
 }
@@ -99,7 +100,7 @@ int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR,
-                     "This feature is not supported\n"),
+                     ACE_TEXT ("This feature is not supported\n")),
                     -1);
 }
 #endif /* ACE_HAS_STREAM_PIPES */
