@@ -1,3 +1,9 @@
+Fri May  5 15:36:47 2006  Douglas C. Schmidt  <schmidt@cse.wustl.edu>
+
+	* docs: Added documentation for the CIDL compiler.  Thanks to Boris for contributing this.
+  
+	* docs/index.html: Fixed some broken links to the tutorials.
+
 Fri May  5 16:58:17 UTC 2006  Nishanth Shankaran  <nshankar@dre.vanderbilt.edu>
 
         * DAnCE/ExecutionManager/Execution_Manager.cpp (CIAO): Fixed the

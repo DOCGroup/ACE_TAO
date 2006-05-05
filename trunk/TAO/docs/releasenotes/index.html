@@ -791,7 +791,7 @@ object. Each profile for an object may encode information pertaining to
 QoS, network and transport protocols, addresses or routes.</li>
 
 <li>
-<b>Example Transport protocols</b> - Aside from IIOP, five additional transport
+<b>Example Transport protocols</b> - Aside from IIOP, the following transport
 protocols are distributed with TAO:</li>
 
 <ol>
@@ -802,13 +802,16 @@ UIOP: GIOP over local IPC (UNIX domain sockets)</li>
 SHMIOP: GIOP over shared memory</li>
 
 <li>
-SSLIOP: IIOP over SSL (Secure Socket Layer)</li>
+SSLIOP: GIOP over SSL (Secure Socket Layer)</li>
 
 <li>
-DIOP: GIOP over UDP/IP</li>
+SCIOP: GIOP over SCTP</LI>
 
 <li>
-MIOP: GIOP over unreliable multicast</li>
+DIOP: GIOP over UDP/IP unicast</li>
+
+<li>
+MIOP: GIOP over UDP/IP multicast</li>
 </ol>
 Other interesting transport protocols could be for ATM, Buses (VME or PCI),
 TP4, and GSMP. TAO users have also created their own pluggable transport

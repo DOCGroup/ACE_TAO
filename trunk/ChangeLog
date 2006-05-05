@@ -1,3 +1,10 @@
+Tue Apr 25 10:22:16 2006  Douglas C. Schmidt  <schmidt@cse.wustl.edu>
+
+	* ace/OS_NS_string.cpp (strerror): Do a sanity check to make sure
+	  errnum >= 0 and < _sys_nerr and set errno to EINAVL if things
+ 	  are not sane.  Thanks to Aleksandar Vukajlovic <vukajlo at
+ 	  finsoft dot co dot yu> for this fix.
+  
 Fri May  5 19:37:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Default_Constants.h:
