@@ -28,8 +28,8 @@ TAO_GIOP_Message_Base::TAO_GIOP_Message_Base (TAO_ORB_Core * orb_core,
                                               size_t /* input_cdr_size */)
   : orb_core_ (orb_core)
   , message_state_ ()
-  , out_stream_ (0,//this->buffer_, /* TODO */
-                 ACE_CDR::DEFAULT_BUFSIZE, // sizeof this->buffer_, /* ACE_CDR::DEFAULT_BUFSIZE */
+  , out_stream_ (this->buffer_, /* TODO */
+                 sizeof this->buffer_, /* ACE_CDR::DEFAULT_BUFSIZE */
                  TAO_ENCAP_BYTE_ORDER,
                  orb_core->output_cdr_buffer_allocator (),
                  orb_core->output_cdr_dblock_allocator (),
@@ -641,9 +641,9 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
   TAO_OutputCDR output (repbuf,
                         sizeof repbuf,
                         TAO_ENCAP_BYTE_ORDER,
-                        this->orb_core_->output_cdr_buffer_allocator (), // TODO
-                        this->orb_core_->output_cdr_dblock_allocator (),
-                        this->orb_core_->output_cdr_msgblock_allocator (),
+                        this->orb_core_->input_cdr_buffer_allocator (),
+                        this->orb_core_->input_cdr_dblock_allocator (),
+                        this->orb_core_->input_cdr_msgblock_allocator (),
                         this->orb_core_->orb_params ()->cdr_memcpy_tradeoff (),
                         qd->major_version_,
                         qd->minor_version_);

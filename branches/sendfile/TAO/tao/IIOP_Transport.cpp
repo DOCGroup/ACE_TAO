@@ -104,10 +104,22 @@ TAO_IIOP_Transport::sendfile (TAO_MMAP_Allocator * allocator,
   //    network operations.  It may also be useful to adjust the
   //    socket send buffer size accordingly.
 
-  ssize_t retval = -1;
-
+  // If we don't have an allocator, fallback to the regular way of sending
+  // data
   if (allocator == 0)
-    return retval;  // Can't use sendfile().
+    return this->send (iov, iovcnt, bytes_transferred, timeout);
+
+  // We can only use sendfile when all data is coming from the mmap allocator,
+  // if not, we just fallback to to the regular way of sending data
+  iovec * const off_check_begin = iov;
+  iovec * const off_check_end   = iov + iovcnt;
+  for (iovec * index = off_check_begin; index != off_check_end; ++index)
+    {
+      if (-1 == allocator->offset (index->iov_base))
+        return this->send (iov, iovcnt, bytes_transferred, timeout)
+    }
+
+  ssize_t retval = -1;
 
   ACE_HANDLE const in_fd = allocator->handle ();
 
@@ -121,7 +133,7 @@ TAO_IIOP_Transport::sendfile (TAO_MMAP_Allocator * allocator,
   iovec * const end   = iov + iovcnt;
   for (iovec * i = begin; i != end; ++i)
     {
-      off_t offset = allocator->offset (i->iov_base);
+      off_t const offset = allocator->offset (i->iov_base);
 
       if (timeout)
         {
@@ -146,7 +158,6 @@ TAO_IIOP_Transport::sendfile (TAO_MMAP_Allocator * allocator,
 
       bytes_transferred += static_cast<size_t> (retval);
     }
-
 
   if (retval <= 0 && TAO_debug_level > 4)
     {
