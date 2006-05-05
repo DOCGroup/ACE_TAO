@@ -56,7 +56,8 @@ public:
   /// Return backing store handle.
   ACE_HANDLE handle (void);
 
-  /// Return offset in backing store file for memory address @a p.
+  /// Return offset in backing store file for memory address @a p. If @a p
+  /// is not coming from this allocator -1 is returned.
   off_t offset (void * p);
 
 private:
