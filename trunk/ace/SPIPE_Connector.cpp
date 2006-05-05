@@ -62,9 +62,7 @@ ACE_SPIPE_Connector::connect (ACE_SPIPE_Stream &new_io,
 {
   ACE_TRACE ("ACE_SPIPE_Connector::connect");
   // Make darn sure that the O_CREAT flag is not set!
-#if ! defined (ACE_PSOS_DIAB_MIPS)
   ACE_CLR_BITS (flags, O_CREAT);
-# endif /* !ACE_PSOS_DIAB_MIPS */
 
   ACE_HANDLE handle;
 

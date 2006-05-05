@@ -89,7 +89,7 @@ ACE_SOCK_Dgram::recv (iovec *io_vec,
   int inlen;
 
   if (ACE_OS::ioctl (this->get_handle (),
-                     FIONREAD, 
+                     FIONREAD,
 		     &inlen) == -1)
     return -1;
   else if (inlen > 0)
@@ -616,12 +616,7 @@ ACE_SOCK_Dgram::make_multicast_ifaddr (ip_mreq *ret_mreq,
 #else
       ifreq if_address;
 
-#if defined (ACE_PSOS)
-      // Look up the interface by number, not name.
-      if_address.ifr_ifno = ACE_OS::atoi (net_if);
-#else
       ACE_OS::strcpy (if_address.ifr_name, ACE_TEXT_ALWAYS_CHAR (net_if));
-#endif /* defined (ACE_PSOS) */
 
       if (ACE_OS::ioctl (this->get_handle (),
                          SIOCGIFADDR,
