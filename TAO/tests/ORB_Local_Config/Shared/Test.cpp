@@ -1,10 +1,5 @@
 // $Id$
 
-/// It's a test - we need ACE_ASSERT
-#ifdef ACE_NDEBUG
-#  undef ACE_NDEBUG
-#endif
-
 #include "tao/CORBANAME_Parser.h"
 #include "tao/CORBALOC_Parser.h"
 #include "tao/Protocol_Factory.h"
@@ -26,30 +21,59 @@ testReusingGlobals (int , ACE_TCHAR *[])
     one.process_directive (ace_svc_desc_TAO_CORBANAME_Parser);
     one.process_directive (ace_svc_desc_TAO_CORBALOC_Parser);
 
+    const ACE_TCHAR *svcname = ACE_TEXT ("IIOP_Factory");
     TAO_Protocol_Factory* p1 =
-      ACE_Dynamic_Service<TAO_Protocol_Factory>::instance (&one, "IIOP_Factory");
+      ACE_Dynamic_Service<TAO_Protocol_Factory>::instance (&one, svcname);
 
-    ACE_ASSERT ((p1 == 0));
+    if (p1 != 0)
+      {
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Not expected to find %s locally\n"), svcname));
+        return -1;
+      }
 
+    svcname = ACE_TEXT ("CORBANAME_Parser");
     ACE_Service_Object* p2 =
-      ACE_Dynamic_Service<ACE_Service_Object>::instance (&one, "CORBANAME_Parser");
+      ACE_Dynamic_Service<ACE_Service_Object>::instance (&one, svcname);
 
-    ACE_ASSERT ((p2 != 0));
+    if (p2 == 0)
+      {
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Expected to find %s localy\n"), svcname));
+        return -1;
+      }
 
+    svcname = ACE_TEXT ("CORBALOC_Parser");
     ACE_Service_Object* p3 =
-      ACE_Dynamic_Service<ACE_Service_Object>::instance (&one, "CORBALOC_Parser");
+      ACE_Dynamic_Service<ACE_Service_Object>::instance (&one, svcname);
 
-    ACE_ASSERT ((p3 != 0));
-
+    if (p3 == 0)
+      {
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Expected to find %s locally\n"), svcname));
+        return -1;
+      }
   }
 
 
   ACE_Service_Gestalt_Test two; // Use the ACE_Service_Repository::instance ()
 
-  ACE_Service_Object* p2 =
-    ACE_Dynamic_Service<ACE_Service_Object>::instance (&two, "CORBANAME_Parser");
+  const ACE_TCHAR *svcname = ACE_TEXT ("IIOP_Factory");
+  TAO_Protocol_Factory* p1 =
+    ACE_Dynamic_Service<TAO_Protocol_Factory>::instance (&two, svcname);
 
-  ACE_ASSERT ((p2 != 0)); // You should be able to find the same stuff here, too
+  if (p1 != 0)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Not expected to find %s in the global repo\n"), svcname));
+      return -1;
+    }
+
+  svcname = ACE_TEXT ("CORBANAME_Parser");
+  ACE_Service_Object* p2 =
+    ACE_Dynamic_Service<ACE_Service_Object>::instance (&two, svcname);
+
+  if (p2 == 0) // You should be able to find the same stuff here, too
+      {
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Not expected to find %s in the global repo\n"), svcname));
+        return -1;
+      }
 
   return 0;
 }

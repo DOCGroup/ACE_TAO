@@ -1,10 +1,5 @@
 // $Id$
 
-/// It's a test - we need ACE_ASSERT
-#ifdef ACE_NDEBUG
-#  undef ACE_NDEBUG
-#endif
-
 #include "tao/Codeset_Descriptor_Base.h"
 #include "tao/Codeset_Manager_Factory_Base.h"
 #include "tao/Codeset_Manager.h"
@@ -67,22 +62,34 @@ testOpenDynamicServices (int , ACE_TCHAR *[])
   ACE_ARGV new_argv;
 
   // Process the Service Configurator directives in this test's
-  ACE_ASSERT (new_argv.add (ACE_TEXT ("bogus")) != -1
-              && new_argv.add (ACE_TEXT ("-f")) != -1
-              && new_argv.add (file_Service_Config_Test ()) != -1);
+  if (false == (new_argv.add (ACE_TEXT ("bogus")) != -1
+                && new_argv.add (ACE_TEXT ("-f")) != -1
+                && new_argv.add (file_Service_Config_Test ()) != -1))
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Failed to build an argv\n")));
+      return -1;
+    }
 
   // We need this scope to make sure that the destructor for the
   // <ACE_Service_Config> gets called.
   ACE_Service_Gestalt_Test daemon(10);
 
-  ACE_ASSERT (daemon.open (new_argv.argc (),
-                           new_argv.argv ()) != -1 || errno == ENOENT);
+  if (daemon.open (new_argv.argc (),
+                   new_argv.argv ()) == -1 && errno == ENOENT)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to open service config\n")));
+      return -1;
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               "\tdaemon.services_count () -> %d\n",
               daemon.services_count ()));
 
-  ACE_ASSERT (5 == daemon.services_count ());
+  if (5 != daemon.services_count ())
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Expected %d service, but found %d instead\n"), 5, daemon.services_count ()));
+      return -1;
+    }
 
   // Since the loaded services start their own threads, wait until all
   // of them are done to avoid pulling the rug under their feet.
@@ -109,7 +116,11 @@ testORBInitializer_Registry (int , ACE_TCHAR *[])
 
   // It is expected to be empty at this point since it is not using
   // the global repo
-  ACE_ASSERT (loca_size == 0);
+  if (loca_size != 0)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Expected empty repository\n")));
+      return -1;
+    }
 
   // Lookup it up.
   TAO::ORBInitializer_Registry_Adapter* oir =
@@ -117,9 +128,17 @@ testORBInitializer_Registry (int , ACE_TCHAR *[])
       (&one, "ORBInitializer_Registry");
 
 #if defined (TAO_AS_STATIC_LIBS)
-  ACE_ASSERT ((oir != 0));
+  if ((oir == 0))
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Expected to find staticaly linked ORBInitializer_Registry\n")));
+      return -1;
+    }
 #else
-  ACE_ASSERT ((oir == 0));
+  if (oir != 0)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Not expected to find ORBInitializer_Registry\n")));
+      return -1;
+    }
 #endif
 
 
@@ -138,21 +157,22 @@ testORBInitializer_Registry (int , ACE_TCHAR *[])
         ACE_Dynamic_Service<TAO::ORBInitializer_Registry_Adapter>::instance
           (&one, "ORBInitializer_Registry");
     }
-  ACE_ASSERT ((oir != 0));
+  if (oir == 0)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Expected to find ORBInitializer_Registry\n")));
+      return -1;
+    }
 #endif
 
 
-  ACE_DEBUG ((LM_DEBUG,
-              "Expected %d global static service registrations, found %d\n",
+  if (glob_size != glob.services_count ())
+    {
+      ACE_ERROR ((LM_ERROR,
+              "Expected %d local static service registrations, found %d\n",
               glob_size,
               glob.services_count ()));
-
-  ACE_ASSERT (glob_size == glob.services_count ());
-
-  ACE_DEBUG ((LM_DEBUG,
-              "Expected %d local static service registrations, found %d\n",
-              5,
-              one.services_count ()));
+      return -1;
+    }
 
   // The local repository must have asquired also the static services
   // registered within the dynamic service we just loaded. As of this
@@ -161,7 +181,11 @@ testORBInitializer_Registry (int , ACE_TCHAR *[])
   // ClientRequestInterceptor_Adapter_Factory and PICurrent_Loader are
   // registred explicitely, while CodecFactory_Loader - indirectly.
 
-  ACE_ASSERT (loca_size != one.services_count ());
+  if (loca_size == one.services_count ())
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Expected to find additional services present\n")));
+      return -1;
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) try global dynamic service"
@@ -172,7 +196,12 @@ testORBInitializer_Registry (int , ACE_TCHAR *[])
     ACE_Dynamic_Service<TAO::ORBInitializer_Registry_Adapter>::instance
       ("ORBInitializer_Registry");
 
-  ACE_ASSERT ((oir1 == 0)); // Right! It should not have been global.
+
+// Right! It should not have been global.
+  if (oir1 != 0)
+    ACE_ERROR_RETURN((LM_ERROR,
+                      ACE_TEXT ("Unexpected to find ORBInitializer_Registry\n")),
+                     -1);
 
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) try local dynamic service"
@@ -183,7 +212,11 @@ testORBInitializer_Registry (int , ACE_TCHAR *[])
     ACE_Dynamic_Service<TAO::ORBInitializer_Registry_Adapter>::instance
       (&one, "ORBInitializer_Registry");
 
-  ACE_ASSERT ((oir2 != 0)); // Right! That's local.
+  // Right! That's local.
+  if (oir2 == 0)
+    ACE_ERROR_RETURN((LM_ERROR,
+                      ACE_TEXT ("Expected to find ORBInitializer_Registry locally\n")),
+                     -1);
 
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Explicitely initialize ORBInitializer_Registry"
@@ -203,8 +236,11 @@ testORBInitializer_Registry (int , ACE_TCHAR *[])
               "dependent static service (CodecFactory_Loader) ...\n"));
 
   // ... and also one of the dependent static services
-  ACE_ASSERT (0 != ACE_Dynamic_Service <ACE_Service_Object>::instance
-                      (&one, "CodecFactory_Loader"));
+  if (0 == ACE_Dynamic_Service <ACE_Service_Object>::instance
+                      (&one, "CodecFactory_Loader"))
+    ACE_ERROR_RETURN((LM_ERROR,
+                      ACE_TEXT ("Expected to find CodecFactory_Loader locally\n")),
+                     -1);
 
 
   ACE_DEBUG ((LM_DEBUG,
@@ -217,8 +253,13 @@ testORBInitializer_Registry (int , ACE_TCHAR *[])
                                    "_make_TAO_PolicyFactory_Loader",
                                    ""));
 
-  ACE_ASSERT (0 != ACE_Dynamic_Service <ACE_Service_Object>::instance
-                      (&one, "PolicyFactory_Loader"));
+
+  if (0 == ACE_Dynamic_Service <ACE_Service_Object>::instance
+      (&one, "PolicyFactory_Loader"))
+    ACE_ERROR_RETURN((LM_ERROR,
+                      ACE_TEXT ("Expected to find PolicyFactory_Loader locally\n")),
+                     -1);
+
 
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) We're done testing.\n"));
@@ -251,16 +292,22 @@ testServiceDependency (int , ACE_TCHAR *[])
                                      "TAO_Codeset",
                                      "_make_TAO_Codeset_Manager_Factory",
                                      ""));
-    ACE_ASSERT (result == 0);
-    ACE_UNUSED_ARG (result);
+    if (result != 0)
+      ACE_ERROR_RETURN((LM_ERROR,
+                        ACE_TEXT ("Expected to register TAO_Codeset successfuly\n")),
+                       -1);
 
     TAO_Codeset_Manager_Factory_Base *factory =
       ACE_Dynamic_Service<TAO_Codeset_Manager_Factory_Base>::instance
       (&one, "TAO_Codeset");
-    ACE_ASSERT (factory != 0);
+
+    if (factory == 0)
+      ACE_ERROR_RETURN((LM_ERROR,
+                        ACE_TEXT ("Expected to obtain an instance successfuly\n")),
+                       -1);
 
     codeset_manager = factory->create ();
-    ACE_ASSERT (codeset_manager != 0);
+    if (codeset_manager == 0)
 
     ACE_DEBUG ((LM_DEBUG, "Creating dependency ...\n"));
 
