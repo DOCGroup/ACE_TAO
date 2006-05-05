@@ -1,10 +1,5 @@
 // $Id$
 
-/// It's a test - we need ACE_ASSERT
-#ifdef ACE_NDEBUG
-#  undef ACE_NDEBUG
-#endif
-
 #include "tao/CORBANAME_Parser.h"
 #include "tao/CORBALOC_Parser.h"
 #include "tao/Protocol_Factory.h"
@@ -26,17 +21,20 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   TAO_Protocol_Factory* p1 =
     ACE_Dynamic_Service<TAO_Protocol_Factory>::instance (&one, "IIOP_Factory");
 
-  ACE_ASSERT ((p1 == 0));
+  if (p1 != 0)
+      ACE_ERROR_RETURN ((LM_DEBUG, ACE_TEXT("Unexpected to find IIOP_Factory\n")), -1);
 
   ACE_Service_Object* p2 =
     ACE_Dynamic_Service<ACE_Service_Object>::instance (&one, "CORBANAME_Parser");
 
-  ACE_ASSERT ((p2 != 0));
+  if (p2 == 0)
+      ACE_ERROR_RETURN ((LM_DEBUG, ACE_TEXT("Expected to find CORBANAME_Parser\n")), -1);
 
   ACE_Service_Object* p3 =
     ACE_Dynamic_Service<ACE_Service_Object>::instance (&one, "CORBALOC_Parser");
 
-  ACE_ASSERT ((p3 != 0));
+  if (p3 == 0)
+      ACE_ERROR_RETURN ((LM_DEBUG, ACE_TEXT("Expected to find CORBALOC_Parser\n")), -1);
 
   return 0;
 }

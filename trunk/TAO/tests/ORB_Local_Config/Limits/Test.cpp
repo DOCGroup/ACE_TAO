@@ -1,10 +1,5 @@
 // $Id$
 
-/// It's a test - we need ACE_ASSERT
-#ifdef ACE_NDEBUG
-#  undef ACE_NDEBUG
-#endif
-
 #include "tao/CORBANAME_Parser.h"
 #include "tao/CORBALOC_Parser.h"
 
@@ -16,9 +11,19 @@ int
 testLimits (int , ACE_TCHAR *[])
 {
   ACE_Service_Gestalt one(1); // Room for just one ...
-  ACE_ASSERT (0 == one.process_directive (ace_svc_desc_TAO_CORBANAME_Parser));
-  ACE_ASSERT (-1 == one.process_directive (ace_svc_desc_TAO_CORBALOC_Parser));
-  ACE_ASSERT (ENOSPC == errno);
+  if (0 != one.process_directive (ace_svc_desc_TAO_CORBANAME_Parser))
+      ACE_ERROR_RETURN ((LM_DEBUG, ACE_TEXT("Unable to register the first service\n")), -1);
+
+  if (-1 != one.process_directive (ace_svc_desc_TAO_CORBALOC_Parser))
+      ACE_ERROR_RETURN ((LM_DEBUG, ACE_TEXT("Unexped to be able to add more\n")), -1);
+
+  if (ENOSPC != errno)
+    ACE_ERROR_RETURN ((LM_DEBUG,
+                       ACE_TEXT("Expected error code %d (ENOSPC), but got %d\n"),
+                       ENOSPC,
+                       errno),
+                      -1);
+
   ACE_DEBUG ((LM_DEBUG, "%p\n", "\tAttempt to overfill returned: "));
   return 0;
 }

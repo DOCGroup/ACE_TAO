@@ -1,10 +1,5 @@
 // $Id$
 
-/// It's a test - we need ACE_ASSERT
-#ifdef ACE_NDEBUG
-#  undef ACE_NDEBUG
-#endif
-
 #include "ace/ARGV.h"
 #include "ace/Thread_Manager.h"
 
@@ -32,13 +27,24 @@ testLoadingTwoOrbs (int , ACE_TCHAR *argv[])
   ACE_DEBUG ((LM_DEBUG, "Looking for conf file %s\n", file_Service_Config_ORB_Test ()));
 
   // Process the Service Configurator directives in this test's
-  ACE_ASSERT (new_argv.add (argv) != -1
-              && new_argv.add (ACE_TEXT ("-f")) != -1
-              && new_argv.add (file_Service_Config_ORB_Test ()) != -1);
+    if (new_argv.add (argv) == -1
+      || new_argv.add (ACE_TEXT ("-f")) == -1
+      || new_argv.add (file_Service_Config_ORB_Test ()) == -1)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT("ARGV initialization failed\n")));
+      return -1;
+    }
 
-  ACE_ASSERT (ACE_Service_Config::instance() ->open (new_argv.argc (),
-                                                     new_argv.argv ()) != -1 || errno == ENOENT);
+  if (ACE_Service_Config::instance() ->open (new_argv.argc (),
+                                             new_argv.argv ()) == -1)
+    {
+      if (errno == ENOENT)
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("No service config file found\n")));
+      else
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Service Config open failed: %m\n")));
 
+      return -1;
+    }
 
   // Since the loaded services start their own threads, wait until all of them
   // are done to avoid pulling the rug under their feet.

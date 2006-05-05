@@ -1,10 +1,5 @@
 // $Id$
 
-/// It's a test - we need ACE_ASSERT
-#ifdef ACE_NDEBUG
-#  undef ACE_NDEBUG
-#endif
-
 // The following is required to be able to access
 // ace_svc_desc_TAO_*_Parser, below
 #include "tao/CORBALOC_Parser.h"
@@ -30,37 +25,50 @@ testCompatibility (int , ACE_TCHAR *[])
   ACE_Service_Gestalt_Test glob;
 
   // Use the "old" interface
-  ACE_ASSERT (0 == ACE_Service_Config::process_directive
-                     (ace_svc_desc_TAO_CORBANAME_Parser));
-  ACE_ASSERT (0 == ACE_Service_Config::process_directive
-                     (ace_svc_desc_TAO_CORBALOC_Parser));
+  if (0 != ACE_Service_Config::process_directive
+      (ace_svc_desc_TAO_CORBANAME_Parser))
+    ACE_ERROR_RETURN ((LM_DEBUG, ACE_TEXT("Failed to process %s\n"), ace_svc_desc_TAO_CORBANAME_Parser), -1);
+
+  if(0 != ACE_Service_Config::process_directive
+     (ace_svc_desc_TAO_CORBALOC_Parser))
+    ACE_ERROR_RETURN ((LM_DEBUG, ACE_TEXT("Failed to process %s\n"), ace_svc_desc_TAO_CORBALOC_Parser), -1);
+
+  const ACE_TCHAR * svcname = 0;
 
   {
     // This uses the same default ACE_Service_Repository
     ACE_Service_Gestalt_Test one;
 
+    svcname = "CORBANAME_Parser";
+
     ACE_Service_Object* p20 =
-      ACE_Dynamic_Service<ACE_Service_Object>::instance (&one, "CORBANAME_Parser");
-    ACE_ASSERT ((p20 != 0));
+      ACE_Dynamic_Service<ACE_Service_Object>::instance (&one, svcname);
+    if ((p20 == 0))
+      ACE_ERROR_RETURN ((LM_DEBUG, ACE_TEXT("Expected %s locally, in one\n"), svcname), -1);
+
+    svcname = "CORBALOC_Parser";
 
     ACE_Service_Object* p21 =
-      ACE_Dynamic_Service<ACE_Service_Object>::instance (&one, "CORBALOC_Parser");
-    ACE_ASSERT ((p21 != 0));
+      ACE_Dynamic_Service<ACE_Service_Object>::instance (&one, svcname);
+    if ((p21 == 0))
+      ACE_ERROR_RETURN ((LM_DEBUG, ACE_TEXT("Expected %s locally, in one\n"), svcname), -1);
 
-    ACE_DEBUG ((LM_DEBUG, "\tglobal.services_count () -> %d\n",
-                one.services_count ()));
-    ACE_ASSERT (one.services_count () > 2);
-
-    // Exiting this scope should fini all services ...
+    // Exiting this scope should fini all services in the glob ...
   }
 
+  svcname = "CORBANAME_Parser";
+
   ACE_Service_Object* p20 =
-    ACE_Dynamic_Service<ACE_Service_Object>::instance (&glob, "CORBANAME_Parser");
-  ACE_ASSERT ((p20 == 0));
+    ACE_Dynamic_Service<ACE_Service_Object>::instance (&glob, svcname);
+  if ((p20 != 0))
+    ACE_ERROR_RETURN ((LM_DEBUG, ACE_TEXT("Expected %s globally, too\n"), svcname), -1);
+
+  svcname = "CORBALOC_Parser";
 
   ACE_Service_Object* p21 =
-    ACE_Dynamic_Service<ACE_Service_Object>::instance (&glob, "CORBALOC_Parser");
-  ACE_ASSERT ((p21 == 0));
+    ACE_Dynamic_Service<ACE_Service_Object>::instance (&glob, svcname);
+  if ((p21 != 0))
+    ACE_ERROR_RETURN ((LM_DEBUG, ACE_TEXT("Expected %s globally, too\n"), svcname), -1);
 
   return 0;
 }
@@ -74,25 +82,35 @@ testCommandLineDirectives (int , ACE_TCHAR *[])
   ACE_TRACE ("testCommandLineDirectives");
 
   ACE_ARGV new_argv;
-  ACE_ASSERT (new_argv.add (ACE_TEXT ("-f")) != -1
-              && new_argv.add (ACE_TEXT ("-S")) != -1
-              && new_argv.add (ACE_TEXT ("d1")) != -1
-              && new_argv.add (ACE_TEXT ("-S")) != -1
-              && new_argv.add (ACE_TEXT ("d2")) != -1);
+  if (new_argv.add (ACE_TEXT ("-f")) == -1
+      || new_argv.add (ACE_TEXT ("-S")) == -1
+      || new_argv.add (ACE_TEXT ("d1")) == -1
+      || new_argv.add (ACE_TEXT ("-S")) == -1
+      || new_argv.add (ACE_TEXT ("d2")) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_DEBUG, ACE_TEXT("Unable to create an argv\n")), -1);
+    }
 
   ACE_Service_Gestalt_Test g(5);
-  ACE_ASSERT (g.parse_args (new_argv.argc (),
-                            new_argv.argv ()) != -1
-              || errno == ENOENT);
+  if (g.parse_args (new_argv.argc (),
+                    new_argv.argv ()) == -1
+      && errno != ENOENT)
+    {
+      ACE_ERROR_RETURN ((LM_DEBUG, ACE_TEXT("Failed to parse the argv\n")), -1);
+    }
 
   ACE_DEBUG ((LM_DEBUG, "\tg.command_line_directives_count () -> %d\n",
               g.command_line_directives_count ()));
 
-  ACE_ASSERT (2 == g.command_line_directives_count ());
+  if (2 != g.command_line_directives_count ())
+    ACE_ERROR_RETURN ((LM_DEBUG,
+                       ACE_TEXT("Expected %d, but found %d command line directives\n"),
+                       2,
+                       g.command_line_directives_count ()),
+                      -1);
+
   return 0;
 }
-
-
 
 
 
@@ -110,20 +128,30 @@ testTSSGestalt (int , ACE_TCHAR *[])
 
   ACE_Service_Gestalt *global_instance = ACE_Service_Config::instance ();
 
-  ACE_ASSERT (global_instance == ACE_Service_Config::instance ());
-  ACE_ASSERT (global_instance != &one);
+  // Sanity check
+  if (global_instance == &one);
+      ACE_ERROR_RETURN ((LM_DEBUG, ACE_TEXT("Invalid global gestalt\n")), -1);
 
   {
+    // Make one be the ACE_Service_Config::instance () ...
     ACE_Service_Config_Guard temporary (&one);
 
     ACE_Service_Gestalt *global_instance2 = ACE_Service_Config::instance ();
 
-    ACE_ASSERT (global_instance != global_instance2);
-    ACE_ASSERT (global_instance2 == &one);
+    if (global_instance == global_instance2)
+      ACE_ERROR_RETURN ((LM_DEBUG, ACE_TEXT("Expected to see a different global from before\n")), -1);
+
+    if (global_instance2 != &one)
+      ACE_ERROR_RETURN ((LM_DEBUG, ACE_TEXT("Expected one to be the global gestalt instance\n")), -1);
+
+    // The guard is dead! Long live the global gestalt that was previously global!
   }
 
-  ACE_ASSERT (global_instance == ACE_Service_Config::instance ());
-  ACE_ASSERT (global_instance != &one);
+  if (global_instance != ACE_Service_Config::instance ());
+      ACE_ERROR_RETURN ((LM_DEBUG, ACE_TEXT("Expected the original global gestalt\n")), -1);
+
+  if (global_instance == &one);
+      ACE_ERROR_RETURN ((LM_DEBUG, ACE_TEXT("Found the wrong instance is still being global\n")), -1);
 
   return 0;
 }
@@ -135,10 +163,10 @@ testTSSGestalt (int , ACE_TCHAR *[])
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  testCompatibility (argc, argv);
-  testCommandLineDirectives (argc, argv);
-  testTSSGestalt(argc, argv);
-  return 0;
+  return
+    testCompatibility (argc, argv)
+    && testCommandLineDirectives (argc, argv)
+    && testTSSGestalt(argc, argv);
 }
 
 
