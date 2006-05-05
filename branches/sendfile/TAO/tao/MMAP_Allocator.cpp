@@ -79,11 +79,15 @@ TAO_MMAP_Allocator::handle (void)
 off_t
 TAO_MMAP_Allocator::offset (void * p)
 {
-  // TODO Check explicitly if p is in the mmap area, if not, return -1
   ACE_Mem_Map const & m = this->alloc ().memory_pool ().mmap ();
 
   ptrdiff_t const off  = reinterpret_cast<ptrdiff_t> (p);
   ptrdiff_t const base = reinterpret_cast<ptrdiff_t> (m.addr ());
+  ptrdiff_t const end  = base + m.size ();
+
+  // Check if p is in the range of the mmap pool, if not we return -1
+  if (off < base || off > end)
+    return -1;
 
   off_t const the_offset = static_cast<off_t> (off - base);
 
