@@ -49,24 +49,6 @@ extern "C"
 {
 #endif /* __cplusplus */
 
-#if defined (ACE_PSOS)
-   struct  hostent {
-     char    *h_name;        /* official name of host */
-     char    **h_aliases;    /* alias list */
-     int     h_addrtype;     /* host address type */
-     int     h_length;       /* address length */
-     char    **h_addr_list;  /* (first, only) address from name server */
-#    define h_addr h_addr_list[0]   /* the first address */
-   };
-
-  struct  servent {
-    char     *s_name;    /* official service name */
-    char    **s_aliases; /* alias list */
-    int       s_port;    /* port # */
-    char     *s_proto;   /* protocol to use */
-  };
-#endif /* ACE_PSOS */
-
 #if defined (ACE_HAS_STRUCT_NETDB_DATA)
    typedef char ACE_HOSTENT_DATA[sizeof(struct hostent_data)];
    typedef char ACE_SERVENT_DATA[sizeof(struct servent_data)];

@@ -45,13 +45,6 @@ extern "C"
 #  define MAXNAMLEN NAME_MAX
 #endif /* !MAXNAMLEN */
 
-# if defined (ACE_PSOS)
-// pHILE+ calls the DIR struct XDIR instead
-#    if !defined (ACE_PSOS_DIAB_PPC)
-typedef XDIR ACE_DIR;
-#    endif /* !defined (ACE_PSOS_DIAB_PPC) */
-# endif /* ACE_PSOS */
-
 // At least compile on some of the platforms without <ACE_DIR> info yet.
 #if !defined (ACE_HAS_DIRENT)
 typedef int ACE_DIR;
@@ -88,20 +81,6 @@ struct ACE_DIR {
   /// A flag to remember if we started reading already.
   int started_reading_;
 };
-#elif defined (ACE_PSOS) && !defined (ACE_PSOS_DIAB_PPC)
-// Create our own definition of the DIR struct, like what
-// is available in the newer DIAB PPC header files
-struct ACE_DIR
-{
-  /// The directory handle
-  XDIR            xdir;
-
-  /// The directory entry
-  struct dirent   dirent;
-};
-
-#define ACE_DIRENT dirent
-
 #elif defined (ACE_WIN32) && (__BORLANDC__) && defined (ACE_USES_WCHAR)
 #define ACE_DIRENT wdirent
 typedef wDIR ACE_DIR;
