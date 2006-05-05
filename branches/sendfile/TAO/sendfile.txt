@@ -1,3 +1,27 @@
+Fri May  5 08:54:12 2006 UTC  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/MMAP_Allocator.h:
+          Documented that offset returns -1 if the pointer is outside the mmap
+          area.
+
+        * tao/IIOP_Transport.cpp (sendfile):
+          If we don't have an allocator or when the data is not coming from
+          the mmap area, just call the regular send method. This way we
+          fallback correctly to the regular way of sending data.
+
+        * tao/GIOP_Message_Base.cpp:
+          Reverted buffer changes of yesterday, with changes above when the
+          buffer is coming from the stack, we fallback to regular send.
+          Earlier tests of Ossama showed that sendfile is faster with buffers
+          bigger then 16k, so if using sendfile it is a good idea to increase
+          ACE_CDR::DEFAULT_BUFSIZE
+
+        * tao/MMAP_Allocator.cpp:
+          The ACE_MMAP_Memory_Pool has been extended with an unique flag, if
+          this is set to true (default to false) it will create an unique
+          filename using mktemp. This way each mmap used for sendfile will
+          have its own file and don't interfere with other processes.
+
 Thu May  4 15:13:12 2006 UTC  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/GIOP_Message_Base.cpp:
