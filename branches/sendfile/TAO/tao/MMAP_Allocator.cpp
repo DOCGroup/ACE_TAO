@@ -33,7 +33,8 @@ namespace
                 // file in order for sendfile() to be able to read it.
     1,
     0,
-    /* 0 */ ACE_DEFAULT_FILE_PERMS);
+    /* 0 */ ACE_DEFAULT_FILE_PERMS,
+    true); // Generate for each mmap an unqiue pool
 }
 
 

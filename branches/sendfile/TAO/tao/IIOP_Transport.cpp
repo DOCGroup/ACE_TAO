@@ -116,7 +116,7 @@ TAO_IIOP_Transport::sendfile (TAO_MMAP_Allocator * allocator,
   for (iovec * index = off_check_begin; index != off_check_end; ++index)
     {
       if (-1 == allocator->offset (index->iov_base))
-        return this->send (iov, iovcnt, bytes_transferred, timeout)
+        return this->send (iov, iovcnt, bytes_transferred, timeout);
     }
 
   ssize_t retval = -1;
@@ -133,7 +133,7 @@ TAO_IIOP_Transport::sendfile (TAO_MMAP_Allocator * allocator,
   iovec * const end   = iov + iovcnt;
   for (iovec * i = begin; i != end; ++i)
     {
-      off_t const offset = allocator->offset (i->iov_base);
+      off_t offset = allocator->offset (i->iov_base);
 
       if (timeout)
         {
