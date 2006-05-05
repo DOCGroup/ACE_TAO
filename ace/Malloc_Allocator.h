@@ -92,7 +92,7 @@ private:
  * time <malloc>/<calloc> is called, it simply moves an internal
  * index forward and returns a pointer to the requested chunk.
  * All memory is allocated statically (typically via the
- * <ACE_Static_Allocator> template) and <free> is a no-op.  This
+ * ACE_Static_Allocator template) and <free> is a no-op.  This
  * behavior is useful for use-cases where all the memory
  * allocation needs are known in advance and no deletions ever
  * occur.

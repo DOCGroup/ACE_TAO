@@ -36,11 +36,7 @@
 // Run the thread entry point for the ACE_Thread_Adapter.  This must
 // be an extern "C" to make certain compilers happy...
 
-#if defined (ACE_PSOS)
-extern "C" void ACE_THREAD_ADAPTER_NAME (unsigned long args);
-#else /* ! defined (ACE_PSOS) */
 extern "C" ACE_Export ACE_THR_FUNC_RETURN ACE_THREAD_ADAPTER_NAME (void *args);
-#endif /* ACE_PSOS */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
