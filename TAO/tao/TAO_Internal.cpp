@@ -17,6 +17,8 @@
 #include "tao/Default_Protocols_Hooks.h"
 #include "tao/Default_Thread_Lane_Resources_Manager.h"
 #include "tao/Default_Collocation_Resolver.h"
+#include "tao/Codeset_Manager_Factory_Base.h"
+#include "tao/Codeset_Manager.h"
 #include "tao/debug.h"
 #include "tao/StringSeqC.h"
 
@@ -125,6 +127,12 @@ namespace
     TAO_DEFAULT_SERVER_STRATEGY_FACTORY_ARGS;
   char const * client_strategy_factory_args =
     TAO_DEFAULT_CLIENT_STRATEGY_FACTORY_ARGS;
+
+#if (TAO_NEGOTIATE_CODESETS == 1)
+  bool negotiate_codesets = true;
+#else
+  bool negotiate_codesets = false;
+#endif /* TAO_NEGOTIATE_CODESETS */
 }
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -320,6 +328,37 @@ namespace
   void
   register_global_services_i (ACE_Service_Gestalt * pcfg)
   {
+    // This has to be done before intializing the resource factory. Codesets is a special
+    // library since its configuration is optional and it may be linked statically.
+    if (negotiate_codesets)
+      {
+        TAO_Codeset_Manager_Factory_Base *factory =
+          ACE_Dynamic_Service<TAO_Codeset_Manager_Factory_Base>::instance ("TAO_Codeset");
+        if (factory == 0 || factory->is_default())
+          {
+#if !defined (TAO_AS_STATIC_LIBS)
+            // only for dynamic libs, check to see if default factory and if so,
+            // remove it
+            ACE_Service_Config::process_directive
+              (ACE_REMOVE_SERVICE_DIRECTIVE("TAO_Codeset"));
+            ACE_Service_Config::process_directive
+              (ACE_DYNAMIC_SERVICE_DIRECTIVE("TAO_Codeset",
+                                             "TAO_Codeset",
+                                             "_make_TAO_Codeset_Manager_Factory",
+                                             ""));
+            factory =
+              ACE_Dynamic_Service<TAO_Codeset_Manager_Factory_Base>::instance ("TAO_Codeset");
+#endif
+          }
+        if (factory == 0)
+          {
+            if (TAO_debug_level > 0)
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT("(%P|%t) ORB_Core: ")
+                          ACE_TEXT("Unable to initialize Codeset Manager\n")));
+          }
+      }
+
     pcfg->process_directive (ace_svc_desc_TAO_Default_Resource_Factory);
     pcfg->process_directive (ace_svc_desc_TAO_Default_Client_Strategy_Factory);
     pcfg->process_directive (ace_svc_desc_TAO_Default_Server_Strategy_Factory);
@@ -359,6 +398,7 @@ namespace
     //    calling them if we're not invoking the svc.conf file?
     // @@ They are needed for platforms that have no file system,
     //    like VxWorks.
+
     if (resource_factory_args != 0)
     {
       pcfg->process_directive
@@ -573,6 +613,14 @@ namespace
         ACE::debug (1);
         arg_shifter.consume_arg ();
       }
+      else if (0 != (current_arg = arg_shifter.get_the_parameter
+                     (ACE_TEXT ("-ORBNegotiateCodesets"))))
+        {
+           negotiate_codesets =
+             (ACE_OS::atoi (current_arg));
+        // don't consume, the ORB_Core::init will use it again.
+
+        }
       else if (0 != (current_arg = arg_shifter.get_the_parameter
                      (ACE_TEXT ("-ORBDebugLevel"))))
       {

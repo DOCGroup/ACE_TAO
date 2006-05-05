@@ -1171,41 +1171,11 @@ TAO_Default_Resource_Factory::disable_factory (void)
 TAO_Codeset_Manager *
 TAO_Default_Resource_Factory::codeset_manager(void)
 {
-  static int initialized = 0;
-  if (this->codeset_manager_ || initialized)
+   if (this->codeset_manager_)
     return this->codeset_manager_;
 
-  initialized = 1;
   TAO_Codeset_Manager_Factory_Base *factory =
     ACE_Dynamic_Service<TAO_Codeset_Manager_Factory_Base>::instance ("TAO_Codeset");
-  if (factory == 0 || factory->is_default())
-    {
-#if !defined (TAO_AS_STATIC_LIBS)
-      // only for dynamic libs, check to see if default factory and if so,
-      // remove it
-      ACE_Service_Config::process_directive
-        (ACE_REMOVE_SERVICE_DIRECTIVE("TAO_Codeset"));
-      ACE_Service_Config::process_directive
-        (ACE_DYNAMIC_SERVICE_DIRECTIVE("TAO_Codeset",
-                                       "TAO_Codeset",
-                                       "_make_TAO_Codeset_Manager_Factory",
-                                       ""));
-      factory =
-        ACE_Dynamic_Service<TAO_Codeset_Manager_Factory_Base>::instance ("TAO_Codeset");
-
-      principal_ = new ACE_Dynamic_Service_Dependency (ACE_TEXT ("TAO_Codeset"));
-
-#endif
-    }
-  if (factory == 0)
-    {
-      if (TAO_debug_level > 0)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT("(%P|%t) ORB_Core: ")
-                    ACE_TEXT("Unable to initialize Codeset Manager\n")));
-      return 0;
-    }
-
   this->codeset_manager_ = factory->create ();
 
   return this->codeset_manager_;
