@@ -83,7 +83,7 @@ public:
     , release_ (false)
     , mb_(0) {
     // Get the message block flags.
-    ACE_Message_Block::Message_Flags flg = mb->self_flags ();
+    ACE_Message_Block::Message_Flags const flg = mb->self_flags ();
 
     // If the DONT_DELETE flag is disabled just a duplicate would
     // help. If the DONT_DELETE flag is enabled a deep copy is needed as
@@ -287,7 +287,7 @@ bool
 operator== (const TAO::unbounded_value_sequence<CORBA::Octet> & lhs,
             const TAO::unbounded_value_sequence<CORBA::Octet> & rhs)
 {
-  const CORBA::ULong rlen = rhs.length ();
+  CORBA::ULong const rlen = rhs.length ();
 
   if (rlen != lhs.length ())
     {

@@ -93,10 +93,6 @@ namespace CORBA
     /// does not implement Contexts, this will always be 0.
     CORBA::ContextList_ptr contexts (void);
 
-    // @deprecated  Return the <Environment> for this request.
-    // CORBA::Environment_ptr env (void);
-
-
     /**
      * @name Argument manipulation helper functions.
      *
