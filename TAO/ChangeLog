@@ -1,3 +1,15 @@
+Fri May  5 16:12:17 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tao/ORB_Core.cpp:
+        * tao/TAO_Internal.cpp:
+
+          The initialization of the additional services, which runs right
+          after the global repository initialization (open()) was supposed
+          to execute in the context of that same global repository. This
+          is necessary in case the initialization causes additional
+          services to be registered. Fixes a problem with
+          $TAO_ROOT/tests/RTCORBA/ORB_init.
+
 Fri May  5 11:26:42 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Asynch_Queued_Message.{h,cpp}:

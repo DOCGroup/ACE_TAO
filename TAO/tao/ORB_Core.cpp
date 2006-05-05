@@ -2088,7 +2088,11 @@ TAO_ORB_Core::run (ACE_Time_Value *tv,
                    int perform_work
                    ACE_ENV_ARG_DECL_NOT_USED)
 {
-  ACE_Service_Config_Guard guard (this->configuration());
+  // ORB::run may be called from a thread, different from the one that
+  // did the ORB_init, consequently we must establish the Service
+  // Gestalt, this thread will consider "global"
+
+  ACE_Service_Config_Guard use_orbs (this->configuration());
 
   if (TAO_debug_level > 2)
     {

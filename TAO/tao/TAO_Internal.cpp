@@ -176,7 +176,14 @@ TAO::ORB::open_services (ACE_Service_Gestalt* pcfg,
     ACE_Service_Gestalt * theone = ACE_Service_Config::global ();
     if (pcfg != theone)
     {
-      int status = open_global_services_i (theone, argc, argv, skip_service_config_open);
+      ACE_Service_Config_Guard guard (theone);
+
+      int status =
+        open_global_services_i (theone,
+                                argc,
+                                argv,
+                                skip_service_config_open);
+
       if (status == -1)
       {
         if (TAO_debug_level > 0)
@@ -204,7 +211,6 @@ TAO::ORB::open_services (ACE_Service_Gestalt* pcfg,
                           -1);
       return -1;
     }
-
     return 0;
   }
 }
@@ -265,7 +271,6 @@ namespace
       if (parse_global_args_i (argc, argv, global_svc_config_argv) == -1)
         return -1;
 
-      ACE_Service_Config_Guard guard (theone);
       register_global_services_i (theone);
 
       int global_svc_config_argc = global_svc_config_argv.length ();
