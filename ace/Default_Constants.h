@@ -396,6 +396,10 @@
 #  define ACE_DEFAULT_CDR_BUFSIZE 512
 #endif /* ACE_DEFAULT_CDR_BUFSIZE */
 
+#if (ACE_DEFAULT_CDR_BUFSIZE == 0)
+# error: ACE_DEFAULT_CDR_BUFSIZE should be bigger then 0
+#endif
+
 /// Stop exponential growth of CDR buffers to avoid overallocation
 #if !defined (ACE_DEFAULT_CDR_EXP_GROWTH_MAX)
 #  define ACE_DEFAULT_CDR_EXP_GROWTH_MAX 65536
