@@ -1,3 +1,8 @@
+Fri May  5 11:42:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Reactor_Token_T.h:
+          Removed workaround for vc6
+
 Fri May  5 08:38:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/MMAP_Memory_Pool.{h,cpp}:
