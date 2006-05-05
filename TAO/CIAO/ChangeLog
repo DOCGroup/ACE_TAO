@@ -1,9 +1,14 @@
+Fri May  5 16:58:17 UTC 2006  Nishanth Shankaran  <nshankar@dre.vanderbilt.edu>
+
+        * DAnCE/ExecutionManager/Execution_Manager.cpp (CIAO): Fixed the
+          parsing of command line options.
+
 Thu May  4 21:35:01 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tools/Config_Handlers/ADD_Handler.cpp
         * tools/Config_Handlers/DP_Handler.cpp
-        
-        Fixed a reverse handler bug. 
+
+        Fixed a reverse handler bug.
 
 Thu May  4 08:33:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
