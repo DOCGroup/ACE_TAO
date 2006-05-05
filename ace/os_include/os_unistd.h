@@ -91,14 +91,6 @@ extern "C"
 #   define F_OK    0       /* Test for existence of File. */
 # endif /* F_OK */
 
-#if defined (CHORUS)
-  int      getgid          __((void));
-  int      getuid          __((void));
-  char*    getcwd          __((char* buf, size_t size));
-  int      pipe            __((int* fildes));
-  int      gethostname     __((char*, size_t));
-#endif /* CHORUS */
-
 #if defined (ACE_LACKS_UALARM_PROTOTYPE)
    u_int ualarm (u_int usecs, u_int interval);
 #endif /* ACE_LACKS_UALARM_PROTOTYPE */
@@ -144,15 +136,6 @@ extern "C"
 #  endif
 #  define _isatty isatty
 #endif /* __BORLANDC__ */
-
-#if defined (ACE_PSOS_SNARFS_HEADER_INFO)
-   // Header information snarfed from compiler provided header files
-   // that are not included because there is already an identically
-   // named file provided with pSOS, which does not have this info
-   // from compiler supplied header
-   int getopt(int, char *const *, const char *);
-   int isatty (int h);
-#endif /* ACE_PSOS_SNARFS_HEADER_INFO */
 
 # if defined (ACE_LACKS_TIMEDWAIT_PROTOTYPES)
 

@@ -52,13 +52,6 @@
 #  include /**/ <sigLib.h>
 #endif /* ACE_VXWORKS */
 
-// should this be extern "C" {}?
-#if defined (CHORUS)
-#     if  !defined(CHORUS_4)
-typedef void (*__sighandler_t)(int); // keep Signal compilation happy
-#     endif
-#endif /* CHORUS */
-
 // Place all additions (especially function declarations) within extern "C" {}
 #ifdef __cplusplus
 extern "C"
@@ -146,27 +139,15 @@ extern "C"
 #endif /* SIGALRM */
 
 #if !defined (SIG_DFL)
-#  if defined (ACE_PSOS_DIAB_MIPS) || defined (ACE_PSOS_DIAB_PPC)
-#    define SIG_DFL ((void *) 0)
-#  else
-#    define SIG_DFL ((__sighandler_t) 0)
-#  endif
+#  define SIG_DFL ((__sighandler_t) 0)
 #endif /* SIG_DFL */
 
 #if !defined (SIG_IGN)
-#  if defined (ACE_PSOS_DIAB_MIPS) || defined (ACE_PSOS_DIAB_PPC)
-#    define SIG_IGN ((void *) 1)     /* ignore signal */
-#  else
-#    define SIG_IGN ((__sighandler_t) 1)     /* ignore signal */
-#  endif
+#  define SIG_IGN ((__sighandler_t) 1)     /* ignore signal */
 #endif /* SIG_IGN */
 
 #if !defined (SIG_ERR)
-#  if defined (ACE_PSOS_DIAB_MIPS) || defined (ACE_PSOS_DIAB_PPC)
-#    define SIG_ERR ((void *) -1)    /* error return from signal */
-#  else
-#    define SIG_ERR ((__sighandler_t) -1)    /* error return from signal */
-#  endif
+#  define SIG_ERR ((__sighandler_t) -1)    /* error return from signal */
 #endif /* SIG_ERR */
 
 // These are used by the <ACE_IPC_SAP::enable> and
@@ -178,23 +159,9 @@ extern "C"
 # define ACE_SIGURG -2
 # define ACE_CLOEXEC -3
 
-#if defined (ACE_PSOS)
-#  if !defined (ACE_PSOSIM)
-     typedef void (* ACE_SignalHandler) (void);
-     typedef void (* ACE_SignalHandlerV) (void);
-#    if !defined(SIG_DFL)
-#      define SIG_DFL (ACE_SignalHandler) 0
-#    endif  /* philabs */
-#  endif /* !ACE_PSOSIM */
-#  if ! defined (NSIG)
-#    define NSIG 32
-#  endif /* NSIG */
-#endif /* ACE_PSOS && !ACE_PSOSIM */
-
-#if defined (VXWORKS)
+#if defined (ACE_VXWORKS)
 #  define ACE_NSIG (_NSIGS + 1)
 #elif defined (__Lynx__)
-   // LynxOS Neutrino sets NSIG to the highest-numbered signal.
 #  define ACE_NSIG (NSIG + 1)
 #elif defined (__rtems__)
 #  define ACE_NSIG (SIGRTMAX)
@@ -211,10 +178,8 @@ extern "C"
   //#  if defined (ACE_HAS_SIG_C_FUNC)
   //   extern "C" {
   //#  endif /* ACE_HAS_SIG_C_FUNC */
-#  if !defined (ACE_PSOS)
-     typedef void (*ACE_SignalHandler)(int);
-     typedef void (*ACE_SignalHandlerV)(int);
-#  endif /* !defined (ACE_PSOS) */
+  typedef void (*ACE_SignalHandler)(int);
+  typedef void (*ACE_SignalHandlerV)(int);
   //#  if defined (ACE_HAS_SIG_C_FUNC)
   //   }
   //#  endif /* ACE_HAS_SIG_C_FUNC */
@@ -296,10 +261,6 @@ extern "C"
      // <::_Psigwait> works with cxx -pthread.  g++ does _not_ need
      // it.
      int _Psigwait __((const sigset_t *set, int *sig));
-#  elif defined (__KCC)
-#    undef sigwait
-     inline int sigwait (const sigset_t* set, int* sig)
-       { return _Psigwait (set, sig); }
 #  endif /* __DECCXX_VER */
 #elif !defined (ACE_HAS_SIGWAIT)
 #  if defined(__rtems__)

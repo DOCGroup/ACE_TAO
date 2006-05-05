@@ -1,3 +1,20 @@
+Fri May  5 07:59:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_sys_utsname.cpp:
+        * ace/OS.h
+          Removed psos and chorus support
+
+        * ace/OS_NS_fcntl.cpp:
+        * ace/Lib_Find.cpp:
+        * ace/OS_NS_netdb.inl:
+          Removed psos support
+
+        * ace/Mem_Map.cpp:
+          Removed chorus support
+
+        * ace/IOStream.h:
+          Removed checks for KCC compiler
+
 Fri May  5 07:42:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Base_Thread_Adapter.h:

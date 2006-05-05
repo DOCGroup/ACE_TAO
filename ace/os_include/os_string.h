@@ -64,14 +64,6 @@ extern "C"
 #  define _strnicmp strnicmp
 #endif /* __BORLANDC__ */
 
-#if defined (ACE_PSOS_SNARFS_HEADER_INFO)
-   // Header information snarfed from compiler provided header files
-   // that are not included because there is already an identically
-   // named file provided with pSOS, which does not have this info
-   // from compiler supplied header
-   char *strdup (const char *);  // string.h
-#endif /* ACE_PSOS_SNARFS_HEADER_INFO */
-
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
