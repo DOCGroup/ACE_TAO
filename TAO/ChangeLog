@@ -1,3 +1,22 @@
+Fri May  5 18:48:45 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/TAO_Internal.cpp:
+        * tao/default_resource.cpp:
+          In addtion to the reorganization Iliyan did, it was discovered
+          that the codeset library was not getting properly
+          initialized. When the codeset negotiation feature was made
+          optional for footprint considerations, the loading of the
+          codeset library was put into the default Resource
+          Factory. However now that we have the potential for multiple
+          service repositories, it was no longer sufficient do such late
+          initialization of the codeset library. Doing so put it codeset
+          manager and default translators in the configuration context of
+          the first ORB, not in the global configuration context. Moving
+          the bootstrap loading of the Codeset library to TAO internals
+          resolves that. The -ORBNegotiateCodeset flag is still evaluated
+          making codeset loading optional. It will be loaded to the global
+          configuration context by the first ORB that needs it.
+
 Fri May  5 18:05:04 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tests/ORB_Local_Config/Bug_1459/Test.cpp:
