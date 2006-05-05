@@ -110,33 +110,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/os_include/sys/os_wait.h"
 
 
-# if defined (ACE_PSOS)
-#   include /**/ "ace/sys_conf.h" /* system configuration file */
-#   include /**/ <pna.h>      /* pNA+ TCP/IP Network Manager calls */
-#   if defined (ACE_PSOSIM)
-#     include /**/ <psos.h>         /* pSOS+ system calls                */
-    /*   include <rpc.h>       pRPC+ Remote Procedure Call Library calls   */
-    /*                         are not supported by pSOSim                 */
-    /*                                                                     */
-    /*   include <phile.h>     pHILE+ file system calls are not supported  */
-    /*                         by pSOSim *so*, for the time being, we make */
-    /*                         use of UNIX file system headers and then    */
-    /*                         when we have time, we wrap UNIX file system */
-    /*                         calls w/ pHILE+ wrappers, and modify ACE to */
-    /*                         use the wrappers under pSOSim               */
-#   else
-#     include /**/ <configs.h>   /* includes all pSOS headers */
-//    #include /**/ <psos.h>    /* pSOS system calls */
-#     include /**/ <phile.h>     /* pHILE+ file system calls */
-//    #include /**/ <prepccfg.h>     /* pREPC+ file system calls */
-#     if defined (ACE_PSOS_DIAB_MIPS)
-#       if !defined (ACE_PSOS_USES_DIAB_SYS_CALLS)
-#         include /**/ <prepc.h>
-#       endif /* ACE_PSOS_USES_DIAB_SYS_CALLS */
-#     endif /* ACE_PSOS_DIAB_MIPS */
-#   endif /* defined (ACE_PSOSIM) */
-# endif /* defined (ACE_PSOS) **********************************************/
-
 // This needs to go here *first* to avoid problems with AIX.
 # if defined (ACE_HAS_PTHREADS)
 #   include "ace/os_include/os_pthread.h"
@@ -231,24 +204,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 # else /* !defined (ACE_WIN32) && !defined (ACE_PSOS) */
 
-#   if defined (CHORUS)
-#     include /**/ <chorus.h>
-#     if !defined(CHORUS_4)
-#       include /**/ <cx/select.h>
-#     else
-#       include "ace/os_include/os_stdio.h"
-#     endif
-#     include "ace/os_include/sys/os_uio.h"
-#     include "ace/os_include/os_time.h"
-#     include /**/ <stdfileio.h>
-#     include /**/ <am/afexec.h>
-#     include "ace/os_include/sys/os_types.h"
-#     include "ace/os_include/os_signal.h"  // <sys/signal.h>
-#     include "ace/os_include/sys/os_wait.h"
-#     include "ace/os_include/os_pwd.h"
-#     include /**/ <timer/chBench.h>
-
-#   elif defined (CYGWIN32)
+#   if defined (CYGWIN32)
 #     include "ace/os_include/sys/os_uio.h"
 #     include "ace/os_include/os_fcntl.h"  // <sys/file.h>
 #     include "ace/os_include/sys/os_time.h"

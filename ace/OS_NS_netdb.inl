@@ -81,15 +81,7 @@ ACE_OS::gethostbyaddr_r (const char *addr,
                          int *h_errnop)
 {
   ACE_OS_TRACE ("ACE_OS::gethostbyaddr_r");
-# if defined (ACE_PSOS)
-  ACE_UNUSED_ARG (addr);
-  ACE_UNUSED_ARG (length);
-  ACE_UNUSED_ARG (type);
-  ACE_UNUSED_ARG (result);
-  ACE_UNUSED_ARG (buffer);
-  ACE_UNUSED_ARG (h_errnop);
-  ACE_NOTSUP_RETURN (0);
-# elif defined (ACE_HAS_REENTRANT_FUNCTIONS) && !defined (UNIXWARE)
+# if defined (ACE_HAS_REENTRANT_FUNCTIONS) && !defined (UNIXWARE)
 #   if defined (AIX) || defined (DIGITAL_UNIX) || defined (HPUX_10)
   ACE_OS::memset (buffer, 0, sizeof (ACE_HOSTENT_DATA));
 
@@ -292,12 +284,7 @@ ACE_INLINE struct hostent *
 ACE_OS::getipnodebyname (const char *name, int family, int flags)
 {
   ACE_OS_TRACE ("ACE_OS::getipnodebyname");
-# if defined (ACE_PSOS)
-  ACE_UNUSED_ARG (name);
-  ACE_UNUSED_ARG (family);
-  ACE_UNUSED_ARG (flags);
-  ACE_NOTSUP_RETURN (0);
-# elif defined (ACE_HAS_IPV6) && !defined (ACE_WIN32)
+# if defined (ACE_HAS_IPV6) && !defined (ACE_WIN32)
 #   if defined (ACE_LACKS_GETIPNODEBYNAME)
   ACE_UNUSED_ARG (flags);
 #     if defined (ACE_HAS_NONCONST_GETBY)
