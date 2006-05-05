@@ -37,16 +37,10 @@ ACE_FIFO::open (const ACE_TCHAR *r, int flags, mode_t perms,
   ACE_TRACE ("ACE_FIFO::open");
   ACE_OS::strsncpy (this->rendezvous_, r, MAXPATHLEN);
 
-#if defined (ACE_PSOS_DIAB_MIPS)
-  if ( ACE_OS::mkfifo (this->rendezvous_, perms) == -1
-      && !(errno == EEXIST))
-    return -1;
-#else
   if ((flags & O_CREAT) != 0
       && ACE_OS::mkfifo (this->rendezvous_, perms) == -1
       && !(errno == EEXIST))
     return -1;
-#endif
 
   this->set_handle (ACE_OS::open (this->rendezvous_, flags, 0, sa));
   return this->get_handle () == ACE_INVALID_HANDLE ? -1 : 0;
