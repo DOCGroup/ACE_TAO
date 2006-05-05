@@ -1,3 +1,14 @@
+Fri May  5 13:11:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/FIFO.cpp:
+        * ace/os_include/os_stddef.h:
+          Removed psos support
+
+        * ace/config-WinCE.h:
+        * ace/os_include/os_stddef.h:
+          Moved setting of ACE_LACKS_STDDEF_H and ACE_LACKS_PTRDIFF_T to the
+          WinCE file
+
 Fri May  5 13:08:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_openvms.GNU:
