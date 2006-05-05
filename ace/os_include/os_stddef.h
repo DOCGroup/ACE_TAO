@@ -26,15 +26,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-// @todo move this to a windows config file
-// Add new macro ACE_LACKS_STDDEF_H
-#if defined (ACE_HAS_WINCE) && _WIN32_WCE < 400
-#  if !defined (ACE_LACKS_STDDEF_H)
-#    define ACE_LACKS_STDDEF_H
-#    define ACE_LACKS_PTRDIFF_T
-#  endif /* !ACE_LACKS_STDDEF_H */
-#endif /* ACE_HAS_WINCE && _WIN32_WCE < 400 */
-
 #if !defined (ACE_LACKS_STDDEF_H)
 #  include /**/ <stddef.h>
 #endif /* !ACE_LACKS_STDDEF_H */
@@ -95,11 +86,6 @@ extern "C"
 #  endif /* !ACE_SIZE_T_TYPE */
    typedef ACE_SIZE_T_TYPE size_t;
 #endif /* ACE_LACKS_SIZE_T */
-
-#if defined (ACE_PSOS_DIAB_MIPS)
-#  undef size_t
-   typedef unsigned int size_t;
-#endif
 
 #ifdef __cplusplus
 }
