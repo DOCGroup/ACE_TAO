@@ -1,3 +1,24 @@
+Fri May  5 08:09:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/os_dirent.h:
+        * ace/os_include/os_errno.h:
+        * ace/os_include/os_netdb.h:
+        * ace/os_include/os_stdint.h:
+        * ace/os_include/os_time.h:
+        * ace/os_include/os_string.h:
+        * ace/os_include/os_stdlib.h:
+          Removed psos support
+
+        * ace/os_include/os_dlfcn.h:
+        * ace/os_include/os_signal.h:
+          Removed psos and kcc support
+
+        * ace/os_include/os_pthread.h:
+          Removed chorus support
+
+        * ace/os_include/os_unistd.h:
+          Removed chorus and psos support
+
 Fri May  5 07:59:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_sys_utsname.cpp:
