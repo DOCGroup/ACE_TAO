@@ -107,7 +107,7 @@ ACE_Mem_Map::map_it (ACE_HANDLE handle,
 #if defined (ACE_LACKS_AUTO_MMAP_REPLACEMENT)
   // If the system does not replace any previous mappings, then
   // unmap() before (potentially) mapping to the same location.
-  int unmap_result = this->unmap ();
+  int const unmap_result = this->unmap ();
   if (unmap_result != 0)
     return unmap_result;
 #endif /* ACE_LACKS_AUTO_MMAP_REPLACEMENT */
@@ -115,18 +115,7 @@ ACE_Mem_Map::map_it (ACE_HANDLE handle,
   this->base_addr_ = addr;
   this->handle_ = handle;
 
-#if defined (CHORUS)
-  // Chorus does not support filesize on a shared memory handle.  We
-  // assume that <length_> = 0 when <ACE_Mem_Map> is initially
-  // constructed (i.e., before <map_it> is called with a valid
-  // <len_request>).
-  long result = this->length_;
-
-  if (result == -1)
-    return -1;
-#else
   off_t result = ACE_OS::filesize (this->handle_);
-#endif /* CHORUS */
 
   // At this point we know <result> is not negative...
   size_t current_file_length = static_cast<size_t> (result);
@@ -166,7 +155,6 @@ ACE_Mem_Map::map_it (ACE_HANDLE handle,
   // Check if we need to extend the backing store.
   if (extend_backing_store)
     {
-#if !defined (CHORUS)
       // Remember than write increases the size by one.
       off_t null_byte_position;
       if (requested_file_length > 0)
@@ -182,20 +170,6 @@ ACE_Mem_Map::map_it (ACE_HANDLE handle,
                           1,
                           null_byte_position) == -1)
         return -1;
-#else
-      // This nonsense is to make this code similar to the above code.
-      size_t actual_file_length;
-      if (requested_file_length > 0)
-        // This will make the file size <requested_file_length>
-        actual_file_length = requested_file_length;
-      else
-        // This will make the file size 1
-        actual_file_length = 1;
-
-      if (ACE_OS::ftruncate (this->handle_,
-                             actual_file_length) == -1)
-        return -1;
-#endif /* !CHORUS */
     }
 
 #if defined (ACE_HAS_LYNXOS_BROKEN_MMAP)
@@ -217,14 +191,14 @@ ACE_Mem_Map::map_it (ACE_HANDLE handle,
                        max_mapping_name_length + 1);
 
       this->base_addr_ = ACE_OS::mmap (this->base_addr_,
-          this->length_,
-          prot,
-          share,
-          this->handle_,
-          offset,
-          &this->file_mapping_,
-          sa,
-          file_mapping_name);
+                                       this->length_,
+                                       prot,
+                                       share,
+                                       this->handle_,
+                                       offset,
+                                       &this->file_mapping_,
+                                       sa,
+                                       file_mapping_name);
     }
   else
 #endif /* ACE_USE_MAPPING_NAME */
@@ -385,7 +359,7 @@ ACE_Mem_Map::remove (void)
   this->close ();
 
   if (this->filename_[0] != '\0')
-#if defined (CHORUS) || defined (__QNXNTO__)
+#if defined (__QNXNTO__)
   return ACE_OS::shm_unlink (this->filename_);
 #else
   return ACE_OS::unlink (this->filename_);
