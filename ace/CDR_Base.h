@@ -184,7 +184,7 @@ public:
 #   elif defined(__TANDEM)
       typedef long long LongLong;
 #   elif ACE_SIZEOF_LONG_LONG == 8 && !defined (ACE_LACKS_LONGLONG_T)
-#     if defined (sun) && !defined (ACE_LACKS_U_LONGLONG_T) && !defined (__KCC)
+#     if defined (sun) && !defined (ACE_LACKS_U_LONGLONG_T)
               // sun #defines   u_longlong_t, maybe other platforms do also.
               // Use it, at least with g++, so that its -pedantic doesn't
               // complain about no ANSI C++ long long.

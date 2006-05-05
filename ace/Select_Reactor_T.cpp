@@ -784,13 +784,8 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::handle_error (void)
   else
     return this->check_handles ();
 #else
-#  if defined (ACE_PSOS)
-  else if (errno == EBADS)
-    return this->check_handles ();
-#  else
   else if (errno == EBADF)
     return this->check_handles ();
-#  endif /* ACE_PSOS */
   else
     return -1;
 #endif  /* __MVS__ || ACE_WIN32 */
@@ -1450,10 +1445,10 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::check_handles (void)
 {
   ACE_TRACE ("ACE_Select_Reactor_T::check_handles");
 
-#if defined (ACE_WIN32) || defined (__MVS__) || defined (ACE_PSOS) || defined (VXWORKS)
+#if defined (ACE_WIN32) || defined (__MVS__) || defined (ACE_VXWORKS)
   ACE_Time_Value time_poll = ACE_Time_Value::zero;
   ACE_Handle_Set rd_mask;
-#endif /* ACE_WIN32 || MVS || ACE_PSOS || VXWORKS */
+#endif /* ACE_WIN32 || MVS || ACE_VXWORKS */
 
   int result = 0;
 
@@ -1477,7 +1472,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::check_handles (void)
   while ((h = check_iter ()) != ACE_INVALID_HANDLE)
     {
 
-#if defined (ACE_WIN32) || defined (__MVS__) || defined (ACE_PSOS) || defined (VXWORKS)
+#if defined (ACE_WIN32) || defined (__MVS__) || defined (VXWORKS)
       // Win32 needs to do the check this way because fstat won't work on
       // a socket handle.  MVS Open Edition needs to do it this way because,
       // even though the docs say to check a handle with either select or
@@ -1504,7 +1499,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::check_handles (void)
           this->remove_handler_i (h, ACE_Event_Handler::ALL_EVENTS_MASK);
         }
       rd_mask.clr_bit (h);
-#else /* !ACE_WIN32 && !MVS && !ACE_PSOS && !VXWORKS */
+#else /* !ACE_WIN32 && !MVS && !VXWORKS */
       struct stat temp;
 
       if (ACE_OS::fstat (h, &temp) == -1)
@@ -1512,7 +1507,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::check_handles (void)
           result = 1;
           this->remove_handler_i (h, ACE_Event_Handler::ALL_EVENTS_MASK);
         }
-#endif /* ACE_WIN32 || MVS || ACE_PSOS */
+#endif /* ACE_WIN32 || MVS */
     }
 
   return result;
