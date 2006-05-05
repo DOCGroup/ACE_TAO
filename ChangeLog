@@ -1,3 +1,10 @@
+Fri May  5 17:01:32 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * examples/Service_Configurator/IPC-tests/client/local_spipe_client_test.cpp:
+        * examples/Service_Configurator/IPC-tests/client/remote_thr_stream_client_test.cpp:
+        * examples/Service_Configurator/IPC-tests/server/Handle_L_SPIPE.{cpp i}:
+          Wide-char corrections.
+
 Fri May  5 13:11:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/FIFO.cpp:

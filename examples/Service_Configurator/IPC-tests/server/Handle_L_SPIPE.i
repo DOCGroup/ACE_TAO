@@ -29,15 +29,16 @@ Handle_L_SPIPE::open (const ACE_SPIPE_Addr &rendezvous_spipe)
 }
 
 ACE_INLINE int
-Handle_L_SPIPE::info (char **strp, size_t length) const
+Handle_L_SPIPE::info (ACE_TCHAR **strp, size_t length) const
 {
-  char       buf[BUFSIZ];
+  ACE_TCHAR      buf[BUFSIZ];
   ACE_SPIPE_Addr sa;
 
   if (ACE_SPIPE_Acceptor::get_local_addr (sa) == -1)
     return -1;
 
-  ACE_OS::sprintf (buf, "%s %s", sa.get_path_name (), "# tests local STREAM pipe\n");
+  ACE_OS::strcpy (buf, sa.get_path_name ());
+  ACE_OS::strcat (buf, ACE_TEXT (" # tests local STREAM pipe\n"));
 
   if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
     return -1;
@@ -47,11 +48,11 @@ Handle_L_SPIPE::info (char **strp, size_t length) const
 }
 
 ACE_INLINE int
-Handle_L_SPIPE::init (int argc, char *argv[])
+Handle_L_SPIPE::init (int argc, ACE_TCHAR *argv[])
 {
   ACE_SPIPE_Addr susp;
-  const char     *rendezvous = Handle_L_SPIPE::DEFAULT_RENDEZVOUS;
-  ACE_Get_Opt    get_opt (argc, argv, "r:", 0);
+  const ACE_TCHAR *rendezvous = Handle_L_SPIPE::DEFAULT_RENDEZVOUS;
+  ACE_Get_Opt    get_opt (argc, argv, ACE_TEXT ("r:"), 0);
 
   for (int c; (c = get_opt ()) != -1; )
      switch (c)
@@ -66,10 +67,13 @@ Handle_L_SPIPE::init (int argc, char *argv[])
   ACE_OS::unlink (rendezvous);
   susp.set (rendezvous);
   if (this->open (susp) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("open")), -1);
   else if (ACE_Reactor::instance ()->register_handler
            (this, ACE_Event_Handler::ACCEPT_MASK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "registering service with ACE_Reactor\n"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+		       ACE_TEXT ("%p\n"),
+		       ACE_TEXT ("registering service with ACE_Reactor")),
+		      -1);
   return 0;
 }
 
@@ -103,8 +107,9 @@ Handle_L_SPIPE::handle_input (int)
 
       new_spipe.get_remote_addr (sa);
 
-      ACE_DEBUG ((LM_INFO, "accepted request from %s (gid = %d, uid = %d)\n",
-                 sa.get_path_name (), sa.group_id (), sa.user_id ()));
+      ACE_DEBUG ((LM_INFO,
+		  ACE_TEXT ("accepted request from %s (gid = %d, uid = %d)\n"),
+		  sa.get_path_name (), sa.group_id (), sa.user_id ()));
     }
 
   while (new_spipe.recv ((ACE_Str_Buf *) 0, &msg, &flags) >= 0)
