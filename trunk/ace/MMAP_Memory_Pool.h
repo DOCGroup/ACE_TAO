@@ -105,7 +105,7 @@ public:
    * parameter is ignored on platforms that know the faulting address
    * (UNIX with SI_ADDR and Win32).
    */
-  int guess_on_fault_;
+  bool guess_on_fault_;
 
   /// Pointer to a security attributes object.  Only used on NT.
   LPSECURITY_ATTRIBUTES sa_;

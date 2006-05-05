@@ -109,7 +109,7 @@ ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool (const ACE_TCHAR *backing_store_name,
 
 #if (defined (ACE_HAS_SIGINFO_T) && !defined (ACE_LACKS_SI_ADDR)) || defined (ACE_WIN32)
       // For plaforms that give the faulting address.
-      guess_on_fault_ = 0;
+      guess_on_fault_ = false;
 #else
       // For plaforms that do NOT give the faulting address, let the
       // options decide whether to guess or not.
@@ -117,7 +117,7 @@ ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool (const ACE_TCHAR *backing_store_name,
         guess_on_fault_ = options->guess_on_fault_;
       else
         // If no options are specified, default to true.
-        guess_on_fault_ = 1;
+        guess_on_fault_ = true;
 #endif /* (defined (ACE_HAS_SIGINFO_T) && !defined (ACE_LACKS_SI_ADDR)) || defined (ACE_WIN32) */
 
   // Only change the defaults if <options> != 0.
