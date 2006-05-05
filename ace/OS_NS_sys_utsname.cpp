@@ -222,23 +222,6 @@ ACE_OS::uname (ACE_utsname *name)
   ACE_OS::strcpy (name->machine, sysModel ());
 
   return ACE_OS::hostname (name->nodename, maxnamelen);
-#elif defined (CHORUS)
-  size_t maxnamelen = sizeof name->nodename;
-  ACE_OS::strcpy (name->sysname, "CHORUS/ClassiX");
-  ACE_OS::strcpy (name->release, "???");
-  ACE_OS::strcpy (name->version, "???");
-  ACE_OS::strcpy (name->machine, "???");
-
-  return ACE_OS::hostname (name->nodename, maxnamelen);
-#elif defined (ACE_PSOS)
-  const unsigned long buflen(64);
-  char buf[buflen];
-  unsigned long len;
-  sys_info(PSOS_VERSION,(void *)buf,buflen,&len);
-  ACE_OS::strcpy (name->sysname, "pSOS");
-  ACE_OS::strcpy (name->release, "???");
-  ACE_OS::strcpy (name->version, buf);
-  ACE_OS::strcpy (name->machine, "PPC 405");  // a bit of a hack
 #elif defined (INTEGRITY)
   if(!name) {
     errno = EFAULT;

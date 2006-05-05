@@ -27,7 +27,6 @@ ACE_RCSID(ace, Lib_Find, "$Id$")
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-#if ! defined (ACE_PSOS_DIAB_MIPS)
 int
 ACE::ldfind (const ACE_TCHAR* filename,
              ACE_TCHAR pathname[],
@@ -598,7 +597,6 @@ ACE::open_temp_file (const ACE_TCHAR *name, int mode, int perm)
     return handle;
 #endif /* ACE_WIN32 */
 }
-#endif /* ! ACE_PSOS_DIAB_MIPS */
 
 size_t
 ACE::strrepl (char *s, char search, char replace)
