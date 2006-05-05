@@ -1,3 +1,10 @@
+Fri May  5 19:37:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Default_Constants.h:
+          Added a compile time check that ACE_DEFAULT_CDR_BUFSIZE must be
+          defined to a value bigger then 0, it is 0 we get in a never ending
+          loop in the CDR code
+
 Fri May  5 17:01:32 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * examples/Service_Configurator/IPC-tests/client/local_spipe_client_test.cpp:
