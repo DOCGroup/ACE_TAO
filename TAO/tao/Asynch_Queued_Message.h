@@ -47,7 +47,7 @@ public:
   TAO_Asynch_Queued_Message (const ACE_Message_Block *contents,
                              TAO_ORB_Core *oc,
                              ACE_Allocator *alloc = 0,
-                             int is_heap_allocated = 0);
+                             bool is_heap_allocated = false);
 
 
   /// Destructor

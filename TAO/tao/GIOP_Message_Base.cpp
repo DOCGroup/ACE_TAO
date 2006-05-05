@@ -668,7 +668,7 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
   char repbuf[ACE_CDR::DEFAULT_BUFSIZE];
 #endif /* ACE_INITIALIZE_MEMORY_BEFORE_USE */
 
-  // Initialze an output CDR on the stack
+  // Initialize an output CDR on the stack
   // NOTE: Don't jump to a conclusion as to why we are using the
   // input_cdr and hence the  global pool here. These pools will move
   // to the lanes anyway at some point of time. Further, it would have
