@@ -26,7 +26,7 @@ namespace CIAO
     bool
     parse_args (int argc, char *argv[])
     {
-      ACE_Get_Opt get_opts (argc, argv, "o:m:i:n:p");
+      ACE_Get_Opt get_opts (argc, argv, "o:i:np:");
       int c;
       while ((c = get_opts ()) != -1)
         switch (c)
@@ -51,6 +51,7 @@ namespace CIAO
                                "-o <ior_output_file>\n"
                                "-i <installation data filename>\n"
                                "-n <use naming service>\n"
+                               "-p <filename to output the process id>\n"
                                "\n",
                                argv [0]),
                               false);
@@ -201,7 +202,7 @@ namespace CIAO
                                   ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
             }
-          
+
           if (write_to_ior_)
             {
               retval =
