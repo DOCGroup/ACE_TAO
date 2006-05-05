@@ -20,7 +20,7 @@ TAO_Asynch_Queued_Message::TAO_Asynch_Queued_Message (
   const ACE_Message_Block *contents,
   TAO_ORB_Core *oc,
   ACE_Allocator *alloc,
-  int is_heap_allocated)
+  bool is_heap_allocated)
   : TAO_Queued_Message (oc, alloc, is_heap_allocated)
   , size_ (contents->total_length ())
   , offset_ (0)
