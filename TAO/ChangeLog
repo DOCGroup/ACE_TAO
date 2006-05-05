@@ -1,3 +1,24 @@
+Fri May  5 18:05:04 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tests/ORB_Local_Config/Bug_1459/Test.cpp:
+        * tests/ORB_Local_Config/Bunch/Test.cpp:
+        * tests/ORB_Local_Config/Limits/Test.cpp:
+        * tests/ORB_Local_Config/Separation/Test.cpp:
+        * tests/ORB_Local_Config/Service_Dependency/Test.cpp:
+        * tests/ORB_Local_Config/Shared/Test.cpp:
+        * tests/ORB_Local_Config/Simple/Test.cpp:
+        * tests/ORB_Local_Config/Two_DLL_ORB/Test.cpp:
+
+          Eliminating the use of ACE_ASSERT and replacing with if's and
+          ACE_ERROR. The ACE_ASSERT may cause an abort(), which will cause
+          resources to not be cleaned correctly on embedded targets like
+          VxWorks. Thanks to Johnny Willemsen <jwillemsen@remedy.nl> for
+          clarifying this.
+
+        * tests/ORB_Local_Config/lib/Service_Configuration_Per_ORB.h:
+
+          A little cleanup.
+
 Fri May  5 16:12:17 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tao/ORB_Core.cpp:

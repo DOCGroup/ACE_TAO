@@ -11,11 +11,6 @@
 // ssliop isnt loaded at all etc
 
 
-/// It's a test - we need ACE_ASSERT
-#ifdef ACE_NDEBUG
-#  undef ACE_NDEBUG
-#endif
-
 #include "tao/corba.h"
 #include "ace/ARGV.h"
 #include "ace/Dynamic_Service.h"
@@ -88,32 +83,33 @@ testBug1459 (int , ACE_TCHAR *[])
     ACE_ARGV arg0(argM);
     n = arg0.argc();
     CORBA::ORB_var ORBA = CORBA::ORB_init(n, arg0.argv());
-    ACE_ASSERT (ORBA.in () != 0);
+    if (ORBA.in () == 0)
+      ACE_ERROR_RETURN ((LM_DEBUG, ACE_TEXT("Expected to get an ORB\n")), -1);
 
     ACE_ARGV arg1(argA);
     n = arg1.argc();
     CORBA::ORB_var ORBB = CORBA::ORB_init(n, arg1.argv());
-    ACE_ASSERT (ORBB.in () != 0);
+    if (ORBB.in () == 0)
+      ACE_ERROR_RETURN ((LM_DEBUG, ACE_TEXT("Expected to get a second ORB\n")), -1);
 
-    ACE_ASSERT (ORBA.in () != ORBB.in ());
-
+    if (ORBA.in () == ORBB.in ())
+      ACE_ERROR_RETURN ((LM_DEBUG, ACE_TEXT("Unexpected to find the two ORBs the same\n")), -1);
 
     // Look ma!! No ... services?!
 
     ACE_Service_Object *so = 0;
     so = ACE_Dynamic_Service<ACE_Service_Object>::instance ("SSLIOP_Factory");
-    ACE_ASSERT (so == 0);
+    if (so != 0)
+      ACE_ERROR_RETURN ((LM_DEBUG, ACE_TEXT("Unexpected to find SSLIOP_Factory, globally\n")), -1);
 
     so = ACE_Dynamic_Service<ACE_Service_Object>::instance ("UIPMC_Factory");
-    ACE_ASSERT (so == 0);
+    if (so != 0)
+      ACE_ERROR_RETURN ((LM_DEBUG, ACE_TEXT("Unexpected to find UIPMC_Factory, globally\n")), -1);
 
     // Since each svc conf file causes the ORB to load the services in
     // its own service space no services are reachable through the
     // global service repo
 
-#else
-    ACE_UNUSED_ARG (argM);
-    ACE_UNUSED_ARG (argA);
 #endif /* MORB_MA */
 
   }
@@ -124,8 +120,9 @@ testBug1459 (int , ACE_TCHAR *[])
     }
   catch(...)
     {
-      ACE_ERROR ((LM_ERROR, "Uhandled exception\n"));
+      ACE_ERROR_RETURN ((LM_DEBUG, ACE_TEXT("Unexpected exception\n")), -1);
     }
+
   return 0;
 }
 
