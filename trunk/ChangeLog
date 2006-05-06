@@ -1,3 +1,9 @@
+Sat May  6 09:52:06 2006  Douglas C. Schmidt  <schmidt@cse.wustl.edu>
+
+	* examples/DLL/test_dll.cpp: Renamed the DLLs and removed the "./"
+	  from the pathname.  Thanks to Sam and Roopa for reporting this
+ 	  and tracking it down, respectively.
+
 Sat May  6 10:23:13 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * include/makeinclude/platform_sunos5_sunc++.GNU: Add -lrt -laio to
