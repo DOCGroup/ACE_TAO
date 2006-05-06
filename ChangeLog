@@ -1,3 +1,11 @@
+Sat May  6 18:08:13 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+
+          Add feature tests for ACE_LACKS_ASCTIME, ACE_LACKS_ACSTIME_R,
+          ACE_LACKS_GETCWD, ACE_LACKS_GMTIME, ACE_LACKS_GMTIME_R,
+          ACE_LACKS_LOCALTIME, and ACE_LACKS_STRFTIME.
+
 Sat May  6 09:52:06 2006  Douglas C. Schmidt  <schmidt@cse.wustl.edu>
 
 	* examples/DLL/test_dll.cpp: Renamed the DLLs and removed the "./"

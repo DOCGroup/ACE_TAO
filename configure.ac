@@ -3436,6 +3436,10 @@ esac
 
 ACE_CHECK_LACKS_FUNCS(access)
 
+ACE_CHECK_LACKS_FUNCS(asctime)
+
+ACE_CHECK_LACKS_FUNCS(asctime_r)
+
 ACE_CHECK_LACKS_FUNCS(alarm)
 
 ACE_CHECK_LACKS_FUNCS(bsearch)
@@ -3462,6 +3466,8 @@ if test "$ac_cv_func_execv" != yes &&
 fi
 
 ACE_CHECK_LACKS_FUNCS(fgetwc fcntl fork fsync)
+
+ACE_CHECK_LACKS_FUNCS(getcwd)
 
 ACE_CHECK_LACKS_FUNCS(gethostent)
 
@@ -3530,6 +3536,10 @@ fi
 
 ACE_CHECK_LACKS_FUNCS(getuid)
 
+ACE_CHECK_LACKS_FUNCS(gmtime)
+
+ACE_CHECK_LACKS_FUNCS(gmtime_r)
+
 ACE_CHECK_LACKS_FUNCS(inet_aton)
 
 ACE_CHECK_LACKS_FUNCS(isatty)
@@ -3547,6 +3557,8 @@ case "$host" in
 esac
 
 ACE_CHECK_LACKS_FUNCS(kill)
+
+ACE_CHECK_LACKS_FUNCS(localtime)
 
 ACE_CHECK_LACKS_FUNCS(lstat)
 
@@ -3661,6 +3673,8 @@ ACE_CHECK_LACKS_FUNCS(strchr)
 # feature test macros are currently used.
 ACE_CHECK_HAS_FUNCS(strerror)
 ACE_CHECK_LACKS_FUNCS(strerror)
+
+ACE_CHECK_LACKS_FUNCS(strftime)
 
 ACE_CHECK_LACKS_FUNCS(strpbrk)
 
