@@ -1,7 +1,13 @@
+Sat May  6 10:23:13 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * include/makeinclude/platform_sunos5_sunc++.GNU: Add -lrt -laio to
+          the LIBS. The Proactor framework needs this; I'm not sure why it
+          never showed up until static builds were run.
+
 Tue Apr 25 10:22:16 2006  Douglas C. Schmidt  <schmidt@cse.wustl.edu>
 
 	* ace/OS_NS_string.cpp (strerror): Do a sanity check to make sure
-	  errnum >= 0 and < _sys_nerr and set errno to EINAVL if things
+	  errnum >= 0 and < _sys_nerr and set errno to EINVAL if things
  	  are not sane.  Thanks to Aleksandar Vukajlovic <vukajlo at
  	  finsoft dot co dot yu> for this fix.
   
