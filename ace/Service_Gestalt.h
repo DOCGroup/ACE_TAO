@@ -58,13 +58,14 @@ public:
     MAX_SERVICES = ACE_DEFAULT_SERVICE_REPOSITORY_SIZE
   };
 
-  /// Default constructor - associates the instance with the process-wide
-  /// singleton instance of ACE_Service_Repository.
-  ACE_Service_Gestalt (void);
+//   /// Default constructor - associates the instance with the process-wide
+//   /// singleton instance of ACE_Service_Repository.
+//   ACE_Service_Gestalt (void);
 
-  /// Creates an instance with a specified repository size. Takes ownership
-  /// of the repository.
-  ACE_Service_Gestalt (size_t size);
+//   /// Creates an instance with a specified repository size. Takes ownership
+//   /// of the repository.
+//   ACE_Service_Gestalt (size_t size);
+  ACE_Service_Gestalt (size_t size, bool svc_repo_is_owned = true, bool no_static_svcs = true);
 
   /// Perform user-specified close activities and remove dynamic
   /// memory.
@@ -349,12 +350,9 @@ protected:
 
 protected:
 
-  /// The service repository to hold the services.
-  ACE_Service_Repository* const repo_;
-
   /// Do we own the service repository instance or have only been given a ptr
   /// to the singleton one?
-  bool repo_is_owned_;
+  bool svc_repo_is_owned_;
 
   /// Keep track of the number of times the instance has been
   /// initialized (opened). "If so, we can't allow <yyparse> to be called since
@@ -364,23 +362,26 @@ protected:
   /// <ACE_Service_Gestalt::close> method.
   int is_opened_;
 
-  /** Queue of svc.conf files specified on the command-line.
-   * @@ This should probably be made to handle unicode filenames...
-   */
-  ACE_SVC_QUEUE* svc_conf_file_queue_;
-
-  /// Repository of statically linked services.
-  ACE_STATIC_SVCS* static_svcs_;
-
-  /// Queue of services specified on the command-line.
-  ACE_SVC_QUEUE* svc_queue_;
-
   /// Indicates where to write the logging output.  This is typically
   /// either a STREAM pipe or a socket
   const ACE_TCHAR *logger_key_;
 
   /// Should we avoid loading the static services?
   int no_static_svcs_;
+
+  /// Queue of services specified on the command-line.
+  ACE_SVC_QUEUE* svc_queue_;
+
+  /** Queue of svc.conf files specified on the command-line.
+   * @@ This should probably be made to handle unicode filenames...
+   */
+  ACE_SVC_QUEUE* svc_conf_file_queue_;
+
+  /// The service repository to hold the services.
+  ACE_Service_Repository* repo_;
+
+  /// Repository of statically linked services.
+  ACE_STATIC_SVCS* static_svcs_;
 
 }; /* class ACE_Service_Gestalt */
 
