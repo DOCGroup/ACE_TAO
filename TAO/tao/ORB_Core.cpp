@@ -262,16 +262,20 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
   ACE_NEW (this->request_dispatcher_,
            TAO_Request_Dispatcher);
 
-  /*
-   * @TODO: Get rid of the "magic number" for the Service repository size.
-   * Can this be dynamic container instead?
-   */
+  // @TODO: Can this be dynamic container instead?
   if (ACE_OS::strnlen (this->orbid_, 1) == 0)
-    // (re)use the default/global getsalt
-    ACE_NEW (this->config_, ACE_Service_Gestalt);
+    {
+      ACE_NEW_NORETURN (this->config_,
+                        ACE_Service_Gestalt
+                          (ACE_Service_Gestalt::MAX_SERVICES,
+                           false)); // (Re)use the process-global gestalt
+    }
   else
-    ACE_NEW (this->config_,
-             ACE_Service_Gestalt (ACE_Service_Gestalt::MAX_SERVICES / 4));
+    {
+      ACE_NEW_NORETURN (this->config_,
+                        ACE_Service_Gestalt
+                          (ACE_Service_Gestalt::MAX_SERVICES / 4));
+    }
 }
 
 TAO_ORB_Core::~TAO_ORB_Core (void)
