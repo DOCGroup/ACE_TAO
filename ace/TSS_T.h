@@ -22,20 +22,21 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-// This should probably go somewhere else, but it's only used here and in Thread_Manager.
+// This should probably go somewhere else, but it's only used here and
+// in Thread_Manager.
+// Note there is no ACE_TSS_SET because one would typicaly do
+// 'ACE_TSS_GET()->xyz_ = value', so the macro would have been too
+// complicated.
 # if defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION))
 #   define ACE_TSS_TYPE(T) ACE_TSS< T >
 #   if defined (ACE_HAS_BROKEN_CONVERSIONS)
 #     define ACE_TSS_GET(I, T) (*(I))
-#     define ACE_TSS_SET(I, T, V) (*(I) = (V))
 #   else
 #     define ACE_TSS_GET(I, T) ((I)->operator T * ())
-#     define ACE_TSS_SET(I, T, V) ((I)->operator T & () = (V))
 #   endif /* ACE_HAS_BROKEN_CONVERSIONS */
 # else
 #   define ACE_TSS_TYPE(T) T
 #   define ACE_TSS_GET(I, T) (I)
-#   define ACE_TSS_SET(I, T, V) ((I)=(V))
 # endif /* ACE_HAS_THREADS && (ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATION) */
 
 #include "ace/Thread_Mutex.h"
@@ -59,6 +60,15 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * allow a built-in type, others won't).  See template class
  * ACE_TSS_Type_Adapter, below, for adapting built-in types to work
  * with ACE_TSS.
+ *  
+ * @note Beware when creating static instances of this type
+ * (as with any other, btw). The unpredictable order of initialization
+ * across different platforms may cause a situation where you'd use
+ * the instance, before it is fully initialized. That's why typically
+ * instances of this type are dynamicaly allocated. On the stack it is
+ * typically allocated inside the ACE_Thread::svc() method which
+ * limits its lifetime appropriately.
+ *
  */
 template <class TYPE>
 class ACE_TSS
@@ -73,6 +83,7 @@ public:
    * thread will return this value.  This is useful since it enables
    * us to assign objects to thread-specific data that have
    * arbitrarily complex constructors.
+   *
    */
   ACE_TSS (TYPE *ts_obj = 0);
 
@@ -117,7 +128,7 @@ protected:
 
   /// Factors out common code for initializing TSS.  This must NOT be
   /// called with the lock held...
-  int ts_init (void) const;
+  int ts_init (void);
 
 #if !(defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION)))
   /// This implementation only works for non-threading systems...

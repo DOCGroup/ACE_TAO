@@ -1,16 +1,34 @@
+Sun May  7 21:03:30 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/Service_Config.{h,cpp}:
+
+          Weeding out the remaining issues with single threaded
+          builds. The implementation now relies on the ACE_TSS_* macros to
+          abstract from the differences among build styles and platform
+          support for TSS.
+
+        * ace/Service_Gestalt.{h,cpp}:
+
+          Eliminated commented out code. Minor reformatting in places.
+
+        * ace/TSS_T.{h,inl,cpp}:
+
+          Added some comments to help others avoid a few pitfalls. Made
+          ts_init() a non-const, which eliminates a few const_cast's.
+
 Sun May  7 07:02:51 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * ace/Service_Config.h:
         * ace/Service_Config.cpp:
 
           Refactored the TSS usage (again) to fix a nasty
- 	  order-of-initialization problem. The gist of which is that, if
- 	  the ptr (to a template class instance) is a static member, in
- 	  static builds, it will be initialized by the process prologue
- 	  code *after* another static initializer has had the chance to
- 	  use and assign it a value. The solution was to use a method
- 	  scope static instance, which C++ guarantees to be initialized by
- 	  the (first) exit from that method.
+          order-of-initialization problem. The gist of which is that, if
+          the ptr (to a template class instance) is a static member, in
+          static builds, it will be initialized by the process prologue
+          code *after* another static initializer has had the chance to
+          use and assign it a value. The solution was to use a method
+          scope static instance, which C++ guarantees to be initialized by
+          the (first) exit from that method.
 
         * ace/Service_Gestalt.h:
         * ace/Service_Gestalt.cpp:
