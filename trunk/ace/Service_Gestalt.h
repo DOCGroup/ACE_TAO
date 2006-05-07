@@ -58,14 +58,12 @@ public:
     MAX_SERVICES = ACE_DEFAULT_SERVICE_REPOSITORY_SIZE
   };
 
-//   /// Default constructor - associates the instance with the process-wide
-//   /// singleton instance of ACE_Service_Repository.
-//   ACE_Service_Gestalt (void);
-
-//   /// Creates an instance with a specified repository size. Takes ownership
-//   /// of the repository.
-//   ACE_Service_Gestalt (size_t size);
-  ACE_Service_Gestalt (size_t size, bool svc_repo_is_owned = true, bool no_static_svcs = true);
+  /// Constructor either associates the instance with the process-wide
+  /// singleton instance of ACE_Service_Repository, or creates and
+  /// manages its own instance of the specified size.
+  ACE_Service_Gestalt (size_t size, 
+                       bool svc_repo_is_owned = true, 
+                       bool no_static_svcs = true);
 
   /// Perform user-specified close activities and remove dynamic
   /// memory.

@@ -59,21 +59,21 @@ private:
 };
 
 ACE_Service_Type_Forward_Declaration_Guard::ACE_Service_Type_Forward_Declaration_Guard
-(ACE_Service_Repository *r, const ACE_TCHAR *name)
-  : repo_ (r)
-  , name_ (name)
+  (ACE_Service_Repository *r, const ACE_TCHAR *name)
+    : repo_ (r)
+    , name_ (name)
 {
   ACE_ASSERT (this->repo_ != 0); // No repository specified?
   ACE_ASSERT (this->name_ != 0); // No name?
-
+  
   ACE_NEW_NORETURN (this->dummy_, // Allocate the forward declaration ...
                     ACE_Service_Type (this->name_,  // ... use the same name
                                       0,            // ... inactive
                                       this->dummy_dll_, // ... bogus ACE_DLL
                                       0));              // ... no type_impl
-
+  
   ACE_ASSERT (this->dummy_ != 0); // No memory?
-
+  
   if(ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
                 ACE_LIB_TEXT ("(%P|%t) FWDCL::start, repo=%@, \'%s\' ")
@@ -81,7 +81,7 @@ ACE_Service_Type_Forward_Declaration_Guard::ACE_Service_Type_Forward_Declaration
                 this->repo_,
                 this->name_,
                 this->dummy_));
-
+  
   // Note that the dummy_'s memory can disaper between invoking
   // the ctor and dtor, if the expected "real" dynamic service is
   // inserted in the repository.
@@ -100,12 +100,13 @@ ACE_Service_Type_Forward_Declaration_Guard::~ACE_Service_Type_Forward_Declaratio
   // We inserted it (as inactive), so we expect to find it, right?
   if (ret < 0 && ret != -2)
     {
-      ACE_ERROR ((LM_WARNING,
-      ACE_LIB_TEXT ("(%P|%t) FWDCL::end - Failed (%d) to find %s\n"),
-      ret, this->name_));
-      ACE_ASSERT (ret == -2 || ret >= 0);
+      if(ACE::debug ())
+        ACE_ERROR ((LM_WARNING,
+                    ACE_LIB_TEXT ("(%P|%t) FWDCL::end - Failed (%d) to find %s\n"),
+                    ret, this->name_));
+      return;
     }
-
+  
   if (tmp != 0 && tmp->type () != 0)
     {
       // Something has registered a proper (non-forward-decl) service with
@@ -115,51 +116,53 @@ ACE_Service_Type_Forward_Declaration_Guard::~ACE_Service_Type_Forward_Declaratio
       // actual implementation, so nothing is left to do. We are hereby giving
       // up any ownership claims.
       this->dummy_ = 0;
-
+      
       if(ACE::debug ())
-  {
-    ACE_DEBUG ((LM_DEBUG,
-          ACE_LIB_TEXT ("(%P|%t) FWDCL::end, repo=%@ - ")
-          ACE_LIB_TEXT ("Found different decl - "),
-          this->repo_,
-          this->name_));
-    tmp->dump ();
-  }
-
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_LIB_TEXT ("(%P|%t) FWDCL::end, repo=%@ - ")
+                      ACE_LIB_TEXT ("Found different decl - "),
+                      this->repo_,
+                      this->name_));
+          tmp->dump ();
+        }
+      
     }
   else
     {
       if(ACE::debug ())
-  {
-    ACE_DEBUG ((LM_DEBUG,
-          ACE_LIB_TEXT ("(%P|%t) FWDCL::end, repo=%@ - ")
-          ACE_LIB_TEXT ("Removing incomplete decl - "),
-          this->repo_,
-          this->name_));
-    this->dummy_->dump ();
-  }
-
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_LIB_TEXT ("(%P|%t) FWDCL::end, repo=%@ - ")
+                      ACE_LIB_TEXT ("Removing incomplete decl - "),
+                      this->repo_,
+                      this->name_));
+          this->dummy_->dump ();
+        }
+      
       // The (dummy) forward declaration is still there and is
       // the same, which means that no actual declaration was
       // provided inside the guarded scope. Therefore, the forward
       // declaration is no longer necessary.
       if (this->repo_->remove (this->name_,
-             const_cast< ACE_Service_Type**> (&this->dummy_)) == 0)
-  {
-    delete this->dummy_;
-  }
+                               const_cast< ACE_Service_Type**> (&this->dummy_)) == 0)
+        {
+          delete this->dummy_;
+        }
       else
-  {
-    ACE_ERROR ((LM_ERROR,
-          ACE_LIB_TEXT ("(%P|%t) FWDCL::end, repo=%@ - ")
-          ACE_LIB_TEXT ("Failed to remove incomplete decl"),
-          this->repo_,
-          this->name_));
-    this->dummy_->dump ();
-  }
+        {
+          if(ACE::debug ())
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_LIB_TEXT ("(%P|%t) FWDCL::end, repo=%@ - ")
+                          ACE_LIB_TEXT ("Failed to remove incomplete decl"),
+                          this->repo_,
+                          this->name_));
+              this->dummy_->dump ();
+            }
+        }
     }
-
-
+  
   // Clean up
   this->dummy_ = 0;
   this->repo_ = 0;
@@ -198,35 +201,6 @@ ACE_Service_Gestalt::ACE_Service_Gestalt (size_t size, bool svc_repo_is_owned, b
                     ACE_STATIC_SVCS);
 }
 
-// ACE_Service_Gestalt::ACE_Service_Gestalt (size_t size)
-//   : svc_repo_is_owned_ (true)
-//   , is_opened_ (0)
-//   , logger_key_ (ACE_DEFAULT_LOGGER_KEY)
-//   , no_static_svcs_ (1)
-//   , svc_queue_ (0)
-//   , svc_conf_file_queue_ (0)
-// {
-//   ACE_NEW_NORETURN (this->repo_,
-//                     ACE_Service_Repository (size));
-
-//   ACE_NEW_NORETURN (this->static_svcs_,
-//                     ACE_STATIC_SVCS);
-// }
-
-// ACE_Service_Gestalt::ACE_Service_Gestalt (void)
-//   : svc_repo_is_owned_ (false)
-//   , is_opened_ (0)
-//   , logger_key_ (ACE_DEFAULT_LOGGER_KEY)
-//   , no_static_svcs_ (1)
-//   , svc_queue_ (0)
-//   , svc_conf_file_queue_ (0)
-// {
-//   this->repo_ = ACE_Service_Repository::instance ();
-
-//   ACE_NEW_NORETURN (this->static_svcs_,
-//                     ACE_STATIC_SVCS);
-// }
-
 // Add the default statically-linked services to the Service
 // Repository.
 
@@ -261,25 +235,25 @@ ACE_Service_Gestalt::find_static_svc_descriptor (const ACE_TCHAR* name,
                                                  ACE_Static_Svc_Descriptor **ssd) const
 {
   ACE_TRACE ("ACE_Service_Gestalt::find_static_svc_descriptor");
-
+  
   if (this->static_svcs_ == 0)
     return -1;
-
+  
   ACE_Static_Svc_Descriptor **ssdp = 0;
   for (ACE_STATIC_SVCS_ITERATOR iter ( *this->static_svcs_);
        iter.next (ssdp) != 0;
        iter.advance ())
     {
       if (ACE_OS::strcmp ((*ssdp)->name_, name) == 0)
-  {
-    if (ssd != 0)
-      *ssd = *ssdp;
-
-    return 0;
-  }
+        {
+          if (ssd != 0)
+            *ssd = *ssdp;
+          
+          return 0;
+        }
     }
   return -1;
-
+  
 } /* find_static_svc_descriptor () */
 
 
