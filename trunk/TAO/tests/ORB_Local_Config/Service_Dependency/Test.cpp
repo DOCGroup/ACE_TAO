@@ -338,8 +338,8 @@ testServiceDependency (int , ACE_TCHAR *[])
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  testServiceDependency (argc, argv);
-  testOpenDynamicServices (argc, argv);
-  testORBInitializer_Registry(argc, argv);
-  return 0;
+  return
+    testServiceDependency (argc, argv)
+    && testOpenDynamicServices (argc, argv)
+    && testORBInitializer_Registry(argc, argv);
 }

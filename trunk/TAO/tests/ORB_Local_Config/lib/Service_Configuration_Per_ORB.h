@@ -23,7 +23,7 @@ class ACE_Service_Gestalt_Test : public ACE_Service_Gestalt
     };
 
   ACE_Service_Gestalt_Test ()
-    : ACE_Service_Gestalt ()
+    : ACE_Service_Gestalt (ACE_Service_Repository::DEFAULT_SIZE)
     , teardown_ (true)
     {
     };

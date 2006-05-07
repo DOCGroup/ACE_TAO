@@ -16,8 +16,7 @@ testReusingGlobals (int , ACE_TCHAR *[])
   ACE_TRACE ("testReusingGlobals");
 
   {
-    ACE_Service_Gestalt/*_Test*/ one; // The ACE_Service_Gestalt_Test will teardown all!
-
+    ACE_Service_Gestalt/*_Test*/ one (10, false) ; // The ACE_Service_Gestalt_Test will teardown all!
     one.process_directive (ace_svc_desc_TAO_CORBANAME_Parser);
     one.process_directive (ace_svc_desc_TAO_CORBALOC_Parser);
 
