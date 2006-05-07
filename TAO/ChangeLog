@@ -1,3 +1,9 @@
+Sun May  7 21:39:30 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tests/ORB_Local_Config/Bunch/Test.cpp:
+
+          Removed a misplaced semicolon.
+
 Sun May  7 14:56:20 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tests/ORB_Local_Config/Bunch/Test.cpp:
