@@ -1,3 +1,10 @@
+Sun May  7 14:56:20 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tests/ORB_Local_Config/Bunch/Test.cpp:
+
+          Removed semicolons after if() - cleaning the residue from
+          replacing the ACE_ASSERTs.
+
 Sun May  7 06:59:54 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tao/ORB_Core.cpp:
