@@ -4,13 +4,13 @@ Sun May  7 07:02:51 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
         * ace/Service_Config.cpp:
 
           Refactored the TSS usage (again) to fix a nasty
-          order-of-initialization problem. The gist of which is that, if
-          the ptr (to a template class instance) is a static member, in
-          static builds, it will be initialized by the process pologue
-          code *after* another static initializer has had the chance to
-          use and assign it a value. The solution was to use a method
-          scope static instance, which C++ guarantees to be initialized by
-          the (first) exit from that method.
+ 	  order-of-initialization problem. The gist of which is that, if
+ 	  the ptr (to a template class instance) is a static member, in
+ 	  static builds, it will be initialized by the process prologue
+ 	  code *after* another static initializer has had the chance to
+ 	  use and assign it a value. The solution was to use a method
+ 	  scope static instance, which C++ guarantees to be initialized by
+ 	  the (first) exit from that method.
 
         * ace/Service_Gestalt.h:
         * ace/Service_Gestalt.cpp:
