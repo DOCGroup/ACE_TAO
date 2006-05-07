@@ -129,7 +129,7 @@ testTSSGestalt (int , ACE_TCHAR *[])
   ACE_Service_Gestalt *global_instance = ACE_Service_Config::instance ();
 
   // Sanity check
-  if (global_instance == &one);
+  if (global_instance == &one)
       ACE_ERROR_RETURN ((LM_DEBUG, ACE_TEXT("Invalid global gestalt\n")), -1);
 
   {
@@ -147,7 +147,7 @@ testTSSGestalt (int , ACE_TCHAR *[])
     // The guard is dead! Long live the global gestalt that was previously global!
   }
 
-  if (global_instance != ACE_Service_Config::instance ());
+  if (global_instance != ACE_Service_Config::instance ())
       ACE_ERROR_RETURN ((LM_DEBUG, ACE_TEXT("Expected the original global gestalt\n")), -1);
 
   if (global_instance == &one);
