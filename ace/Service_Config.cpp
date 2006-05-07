@@ -49,12 +49,6 @@ ACE_Service_Config_Guard::~ACE_Service_Config_Guard (void)
 
 ACE_ALLOC_HOOK_DEFINE (ACE_Service_Config)
 
-// A thread-specific storage to keep a pointer to the (current) global
-// configuration. Using a pointer to avoid the order of initialization
-// debacle possible when using static class instances. The memory is
-// dynamicaly allocated and leaked from current()
-
-
 // Set the signal handler to point to the handle_signal() function.
 ACE_Sig_Adapter *ACE_Service_Config::signal_handler_ = 0;
 
@@ -282,10 +276,15 @@ ACE_Service_Config::instance (void)
 }
 
 
+// A thread-specific storage to keep a pointer to the (current) global
+// configuration. Using a pointer to avoid the order of initialization
+// debacle possible when using static class instances. The memory is
+// dynamicaly allocated and leaked from current()
+
 /// Provides access to the static ptr, containing the TSS
 /// accessor. Ensures the desired order of initialization, even when
 /// other static initializers need the value.
-ACE_TSS< ACE_Service_Config::TSS_Resources > *& ACE_Service_Config::impl_ (void)
+ACE_Service_Config::TSS_Service_Gestalt_Ptr *& ACE_Service_Config::impl_ (void)
 {
   /// A "straight" static ptr does not work in static builds, because
   /// some static initializer may call current() method and assign
@@ -295,7 +294,7 @@ ACE_TSS< ACE_Service_Config::TSS_Resources > *& ACE_Service_Config::impl_ (void)
   /// static guarantees that the first time the method is invoked, the
   /// instance_ will be initialized before returning.
 
-  static ACE_TSS< ACE_Service_Config::TSS_Resources > *instance_ = 0;
+  static TSS_Service_Gestalt_Ptr *instance_ = 0;
 
   return instance_;
 }
@@ -313,10 +312,10 @@ ACE_Service_Config::current (void)
     {
       // TSS already initialized, but a new thread may need its own
       // ptr to the process-wide gestalt.
-      if ((*ACE_Service_Config::impl_ ())->ptr_ == 0)
+      if (ACE_TSS_GET (ACE_Service_Config::impl_ (), TSS_Resources)->ptr_ == 0)
         return current_i (global ());
 
-      return (*ACE_Service_Config::impl_ ())->ptr_;
+      return ACE_TSS_GET (ACE_Service_Config::impl_ (), TSS_Resources)->ptr_;
     }
   else
     {
@@ -329,10 +328,10 @@ ACE_Service_Config::current (void)
         {
           // Another thread snuck in and initialized the TSS, but we
           // still need ow own ptr to the process-wide gestalt.
-          if ((*ACE_Service_Config::impl_ ())->ptr_ == 0)
+          if (ACE_TSS_GET (ACE_Service_Config::impl_ (), TSS_Resources)->ptr_ == 0)
             return current_i (global ());
 
-          return (*ACE_Service_Config::impl_ ())->ptr_;
+          return ACE_TSS_GET (ACE_Service_Config::impl_ (), TSS_Resources)->ptr_;
         }
 
       return current_i (global ());
@@ -356,10 +355,10 @@ ACE_Service_Config::current_i (ACE_Service_Gestalt *newcurrent)
 {
   if (ACE_Service_Config::impl_ () == 0)
     {
-      ACE_NEW_RETURN (ACE_Service_Config::impl_ (), ACE_TSS < TSS_Resources >, 0);
+      ACE_NEW_RETURN (ACE_Service_Config::impl_ (), TSS_Service_Gestalt_Ptr, 0);
     }
 
-  (*ACE_Service_Config::impl_ ())->ptr_ = newcurrent;
+  ACE_TSS_GET (ACE_Service_Config::impl_ (), TSS_Resources)->ptr_ = newcurrent;
   return newcurrent;
 }
 

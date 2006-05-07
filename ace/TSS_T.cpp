@@ -92,16 +92,16 @@ ACE_TSS<TYPE>::cleanup (void *ptr)
 }
 
 template <class TYPE> int
-ACE_TSS<TYPE>::ts_init (void) const
+ACE_TSS<TYPE>::ts_init (void) 
 {
   // Ensure that we are serialized!
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, (ACE_Thread_Mutex &) this->keylock_, 0);
+  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->keylock_, 0);
 
   // Use the Double-Check pattern to make sure we only create the key
   // once!
   if (this->once_ == 0)
     {
-      if (ACE_Thread::keycreate (const_cast<ACE_thread_key_t *> (&this->key_),
+      if (ACE_Thread::keycreate (&this->key_,
 #if defined (ACE_HAS_THR_C_DEST)
                                  &ACE_TSS_C_cleanup,
 #else
@@ -111,9 +111,8 @@ ACE_TSS<TYPE>::ts_init (void) const
         return -1; // Major problems, this should *never* happen!
       else
         {
-          // This *must* come last to avoid race conditions!  Note that
-          // we need to "cast away const..."
-          * const_cast<int*> (&this->once_) = 1;
+          // This *must* come last to avoid race conditions!
+          this->once_ = 1;
           return 0;
         }
     }
@@ -184,7 +183,7 @@ ACE_TSS<TYPE>::ts_get (void) const
   if (this->once_ == 0)
     {
       // Create and initialize thread-specific ts_obj.
-      if (this->ts_init () == -1)
+      if (const_cast< ACE_TSS < TYPE > * >(this)->ts_init () == -1)
         // Seriously wrong..
         return 0;
     }

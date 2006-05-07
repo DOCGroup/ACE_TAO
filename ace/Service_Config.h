@@ -227,10 +227,15 @@ private:
     ACE_Service_Gestalt *ptr_;
   };
 
+  /// A type for the TSS-stored resources. The typedef helps to
+  /// abstract from the particularities of single-threaded vs
+  /// multi-threaded environments.
+  typedef ACE_TSS_TYPE (ACE_Service_Config::TSS_Resources) TSS_Service_Gestalt_Ptr;
+
   /// Provides access to the static ptr, containing the TSS
   /// accessor. Ensures the desired order of initialization, even when
   /// other static initializers need the value.
-  static ACE_TSS< ACE_Service_Config::TSS_Resources > * & impl_ (void);
+  static TSS_Service_Gestalt_Ptr * & impl_ (void);
 
 protected:
 
