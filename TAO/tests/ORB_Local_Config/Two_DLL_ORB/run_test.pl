@@ -29,7 +29,7 @@ sub test($)
 {
     (my $executable, my $arguments) = @_;
     my $t1 = new PerlACE::Process ($executable, ($arguments ? $arguments : ""));
-    my $status = $t1->SpawnWaitKill (10);
+    my $status = $t1->SpawnWaitKill (120);
     if ($status != 0) {
         print STDERR "ERROR: test failed, status=$status\n";
     }
