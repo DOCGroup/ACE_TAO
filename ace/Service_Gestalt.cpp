@@ -173,37 +173,59 @@ ACE_Service_Gestalt::~ACE_Service_Gestalt (void)
 {
   ACE_ASSERT (this->repo_ != 0);
 
-  if (this->repo_is_owned_)
+  if (this->svc_repo_is_owned_)
     delete this->repo_;
 }
 
-ACE_Service_Gestalt::ACE_Service_Gestalt (size_t size)
-  : repo_ (new ACE_Service_Repository (size))
-  , repo_is_owned_ (true)
+ACE_Service_Gestalt::ACE_Service_Gestalt (size_t size, bool svc_repo_is_owned, bool no_static_svcs)
+  : svc_repo_is_owned_ (svc_repo_is_owned)
   , is_opened_ (0)
-  , svc_conf_file_queue_ (0)
-  , static_svcs_ (new ACE_STATIC_SVCS)
-  , svc_queue_ (0)
   , logger_key_ (ACE_DEFAULT_LOGGER_KEY)
-  , no_static_svcs_ (1)
+  , no_static_svcs_ (no_static_svcs)
+  , svc_queue_ (0)
+  , svc_conf_file_queue_ (0)
 {
-  ACE_ASSERT (this->repo_ != 0);
+  if (svc_repo_is_owned)
+    ACE_NEW_NORETURN (this->repo_,
+                      ACE_Service_Repository (size));
+  else
+    {
+      (void)ACE_Service_Repository::instance (size);
+      this->repo_ = ACE_Service_Repository::instance ();
+    }
+
+  ACE_NEW_NORETURN (this->static_svcs_,
+                    ACE_STATIC_SVCS);
 }
 
-ACE_Service_Gestalt::ACE_Service_Gestalt (void)
-  : repo_ (ACE_Service_Repository::instance ())
-  , repo_is_owned_ (false)
-  , is_opened_ (0)
-  , svc_conf_file_queue_ (0)
-  , static_svcs_ (new ACE_STATIC_SVCS)
-  , svc_queue_ (0)
-  , logger_key_ (ACE_DEFAULT_LOGGER_KEY)
-  , no_static_svcs_ (1)
-{
-  ACE_ASSERT (this->repo_ != 0);
-}
+// ACE_Service_Gestalt::ACE_Service_Gestalt (size_t size)
+//   : svc_repo_is_owned_ (true)
+//   , is_opened_ (0)
+//   , logger_key_ (ACE_DEFAULT_LOGGER_KEY)
+//   , no_static_svcs_ (1)
+//   , svc_queue_ (0)
+//   , svc_conf_file_queue_ (0)
+// {
+//   ACE_NEW_NORETURN (this->repo_,
+//                     ACE_Service_Repository (size));
 
+//   ACE_NEW_NORETURN (this->static_svcs_,
+//                     ACE_STATIC_SVCS);
+// }
 
+// ACE_Service_Gestalt::ACE_Service_Gestalt (void)
+//   : svc_repo_is_owned_ (false)
+//   , is_opened_ (0)
+//   , logger_key_ (ACE_DEFAULT_LOGGER_KEY)
+//   , no_static_svcs_ (1)
+//   , svc_queue_ (0)
+//   , svc_conf_file_queue_ (0)
+// {
+//   this->repo_ = ACE_Service_Repository::instance ();
+
+//   ACE_NEW_NORETURN (this->static_svcs_,
+//                     ACE_STATIC_SVCS);
+// }
 
 // Add the default statically-linked services to the Service
 // Repository.
@@ -343,15 +365,19 @@ ACE_Service_Type_Factory::make_service_type (ACE_Service_Gestalt *cfg) const
       if (stp == 0)
         ++yyerrno;
 
-      return new ACE_Service_Type (this->name (),
-                                   stp,
-                                   this->location_->dll (),
-                                   this->is_active_);
+      ACE_Service_Type *tmp = 0;
+      ACE_NEW_RETURN (tmp,
+                      ACE_Service_Type (this->name (),
+                                        stp,
+                                        this->location_->dll (),
+                                        this->is_active_),
+                      0);
+      return tmp;
     }
   else
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_LIB_TEXT ("Unable to find service: %s\n"),
+                  ACE_LIB_TEXT ("(%P|%t) Unable to find service \'%s\'\n"),
                   this->name ()));
       ++yyerrno;
       return 0;

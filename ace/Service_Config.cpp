@@ -30,11 +30,9 @@ ACE_Service_Config_Guard::ACE_Service_Config_Guard (ACE_Service_Gestalt * psg)
                 this->saved_->repo_,
                 psg->repo_));
 
+  // Modify the TSS - no locking needed
   if (saved_ != psg)
-    {
-      // Modify the TSS - no locking needed
       (void)ACE_Service_Config::current (psg);
-    }
 }
 
 ///
@@ -55,7 +53,7 @@ ACE_ALLOC_HOOK_DEFINE (ACE_Service_Config)
 // configuration. Using a pointer to avoid the order of initialization
 // debacle possible when using static class instances. The memory is
 // dynamicaly allocated and leaked from current()
-ACE_Service_Config::ACE_Service_Gestalt_TSS_Ptr *ACE_Service_Config::current_ (0);
+
 
 // Set the signal handler to point to the handle_signal() function.
 ACE_Sig_Adapter *ACE_Service_Config::signal_handler_ = 0;
@@ -275,11 +273,31 @@ ACE_Service_Config::global (void)
   return ACE_Singleton<ACE_Service_Config, ACE_SYNCH_MUTEX>::instance ();
 }
 
+
 ///
 ACE_Service_Gestalt *
 ACE_Service_Config::instance (void)
 {
   return  ACE_Service_Config::current ();
+}
+
+
+/// Provides access to the static ptr, containing the TSS
+/// accessor. Ensures the desired order of initialization, even when
+/// other static initializers need the value.
+ACE_TSS< ACE_Service_Config::TSS_Resources > *& ACE_Service_Config::impl_ (void)
+{
+  /// A "straight" static ptr does not work in static builds, because
+  /// some static initializer may call current() method and assign
+  /// value to instance_ *before* the startup code has had a chance to
+  /// initialize it . This results in instance_ being "zeroed" out
+  /// after it was assigned the correct value. Having a method scoped
+  /// static guarantees that the first time the method is invoked, the
+  /// instance_ will be initialized before returning.
+
+  static ACE_TSS< ACE_Service_Config::TSS_Resources > *instance_ = 0;
+
+  return instance_;
 }
 
 /// Return the configuration instance, considered "global" in the
@@ -291,46 +309,58 @@ ACE_Service_Gestalt *
 ACE_Service_Config::current (void)
 {
 
-  // There is always one (ubergestalt) available per-process
-  ACE_Service_Gestalt *tmp = ACE_Service_Config::global ();
-
-  // If the Object_Manager is in transient state, the
-  // ACE_Service_Gestalt::current_ instance may not have been
-  // constructed yet (or may have been already destroyed). Either way
-  // there are no other threads.
-  if (ACE_Object_Manager::starting_up () || ACE_Object_Manager::shutting_down ())
-    return tmp;
-
-  if (ACE_Service_Config::current_ == 0)
+  if (ACE_Service_Config::impl_ () != 0)
     {
-      // Gotta make sure this piece of memory does not get leaked at process exi
-      ACE_Cleanup_Adapter< ACE_Service_Gestalt_TSS_Ptr > *tmp = 0;
-      ACE_NEW_RETURN (tmp, ACE_Cleanup_Adapter< ACE_Service_Gestalt_TSS_Ptr >, 0);
+      // TSS already initialized, but a new thread may need its own
+      // ptr to the process-wide gestalt.
+      if ((*ACE_Service_Config::impl_ ())->ptr_ == 0)
+        return current_i (global ());
 
-      // Register the instance for destruction at program termination.
-      ACE_Object_Manager::at_exit (tmp);
-
-      // Now just use the object, wrapped inside the cleanup adapter
-      ACE_Service_Config::current_ = &tmp->object ();
+      return (*ACE_Service_Config::impl_ ())->ptr_;
     }
+  else
+    {
+      // TSS not initialized yet - first thread to hit this, so doing
+      // the double-checked locking thing
+      ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
+                                *ACE_Static_Object_Lock::instance (), 0));
 
-  ACE_Service_Gestalt *stored = ACE_TSS_GET (*current_, ACE_Service_Gestalt);
-  if (stored != 0)
-    return stored;
+      if (ACE_Service_Config::impl_ () != 0)
+        {
+          // Another thread snuck in and initialized the TSS, but we
+          // still need ow own ptr to the process-wide gestalt.
+          if ((*ACE_Service_Config::impl_ ())->ptr_ == 0)
+            return current_i (global ());
 
-  // Stash a pointer to the global configuration, so it can be returned out
-  // of TSS the next time a thread asks for it
-  ACE_Service_Config::current (tmp);
+          return (*ACE_Service_Config::impl_ ())->ptr_;
+        }
 
-  return tmp;
+      return current_i (global ());
+    }
 }
 
 /// A mutator to set the "current" (TSS) gestalt instance.
-int
+ACE_Service_Gestalt*
 ACE_Service_Config::current (ACE_Service_Gestalt *newcurrent)
 {
-  ACE_TSS_SET (*ACE_Service_Config::current_, ACE_Service_Gestalt*, newcurrent);
-  return 0;
+   ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
+                             *ACE_Static_Object_Lock::instance (), 0));
+
+  return current_i (newcurrent);
+}
+
+/// A private, non-locking mutator to set the "current" (TSS) gestalt instance.
+/// Make sure to call with the proper locks held!
+ACE_Service_Gestalt*
+ACE_Service_Config::current_i (ACE_Service_Gestalt *newcurrent)
+{
+  if (ACE_Service_Config::impl_ () == 0)
+    {
+      ACE_NEW_RETURN (ACE_Service_Config::impl_ (), ACE_TSS < TSS_Resources >, 0);
+    }
+
+  (*ACE_Service_Config::impl_ ())->ptr_ = newcurrent;
+  return newcurrent;
 }
 
 
@@ -397,19 +427,20 @@ ACE_Service_Config::resume (const ACE_TCHAR svc_name[])
 ACE_Service_Config::ACE_Service_Config (int ignore_static_svcs,
                                         size_t size,
                                         int signum)
+  : ACE_Service_Gestalt (size, false, ignore_static_svcs)
 {
   ACE_TRACE ("ACE_Service_Config::ACE_Service_Config");
 
-  this->no_static_svcs_ = (ignore_static_svcs);
+  //  this->no_static_svcs_ = (ignore_static_svcs);
 
   ACE_Service_Config::signum_ = signum;
 
   // Initialize the Service Repository.
-  ACE_Service_Repository::instance (static_cast<int> (size));
+  //  ACE_Service_Repository::instance (static_cast<int> (size));
 
   // Initialize the ACE_Reactor (the ACE_Reactor should be the same
   // size as the ACE_Service_Repository).
-  ACE_Reactor::instance ();
+  (void)ACE_Reactor::instance ();
 }
 
 
@@ -472,18 +503,20 @@ ACE_Service_Config::create_service_type_impl (const ACE_TCHAR *name,
 
 ACE_Service_Config::ACE_Service_Config (const ACE_TCHAR program_name[],
                                         const ACE_TCHAR *logger_key)
+  : ACE_Service_Gestalt (ACE_Service_Repository::DEFAULT_SIZE, false)
 {
   ACE_TRACE ("ACE_Service_Config::ACE_Service_Config");
 
   if (this->open (program_name,
-                  logger_key) == -1
-      && errno != ENOENT)
+                  logger_key) == -1 && errno != ENOENT)
+    {
 
-    // Only print out an error if it wasn't the svc.conf file that was
-    // missing.
-    ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("%p\n"),
-                program_name));
+      // Only print out an error if it wasn't the svc.conf file that was
+      // missing.
+      ACE_ERROR ((LM_ERROR,
+                  ACE_LIB_TEXT ("(%P|%t) SC failed to open: %p\n"),
+                  program_name));
+    }
 }
 
 // Signal handling API to trigger dynamic reconfiguration.

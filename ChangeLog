@@ -1,3 +1,24 @@
+Sun May  7 07:02:51 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/Service_Config.h:
+        * ace/Service_Config.cpp:
+
+          Refactored the TSS usage (again) to fix a nasty
+          order-of-initialization problem. The gist of which is that, if
+          the ptr (to a template class instance) is a static member, in
+          static builds, it will be initialized by the process pologue
+          code *after* another static initializer has had the chance to
+          use and assign it a value. The solution was to use a method
+          scope static instance, which C++ guarantees to be initialized by
+          the (first) exit from that method.
+
+        * ace/Service_Gestalt.h:
+        * ace/Service_Gestalt.cpp:
+
+          Refactored the construction to avoid using straight new in
+          constructor initializer lists. Replaced new with ACE_NEW_* where
+          appropriate.
+
 Sat May  6 18:08:13 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * configure.ac:
@@ -8,9 +29,9 @@ Sat May  6 18:08:13 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
 Sat May  6 09:52:06 2006  Douglas C. Schmidt  <schmidt@cse.wustl.edu>
 
-	* examples/DLL/test_dll.cpp: Renamed the DLLs and removed the "./"
-	  from the pathname.  Thanks to Sam and Roopa for reporting this
- 	  and tracking it down, respectively.
+        * examples/DLL/test_dll.cpp: Renamed the DLLs and removed the "./"
+          from the pathname.  Thanks to Sam and Roopa for reporting this
+          and tracking it down, respectively.
 
 Sat May  6 10:23:13 UTC 2006  Steve Huston  <shuston@riverace.com>
 
@@ -20,11 +41,11 @@ Sat May  6 10:23:13 UTC 2006  Steve Huston  <shuston@riverace.com>
 
 Tue Apr 25 10:22:16 2006  Douglas C. Schmidt  <schmidt@cse.wustl.edu>
 
-	* ace/OS_NS_string.cpp (strerror): Do a sanity check to make sure
-	  errnum >= 0 and < _sys_nerr and set errno to EINVAL if things
- 	  are not sane.  Thanks to Aleksandar Vukajlovic <vukajlo at
- 	  finsoft dot co dot yu> for this fix.
-  
+        * ace/OS_NS_string.cpp (strerror): Do a sanity check to make sure
+          errnum >= 0 and < _sys_nerr and set errno to EINVAL if things
+          are not sane.  Thanks to Aleksandar Vukajlovic <vukajlo at
+          finsoft dot co dot yu> for this fix.
+
 Fri May  5 19:37:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Default_Constants.h:

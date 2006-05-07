@@ -121,6 +121,7 @@ public:
   bool operator!= (ACE_Static_Svc_Descriptor &) const;
 };
 
+
 #define ACE_Component_Config ACE_Service_Config
 
 /**
@@ -156,6 +157,7 @@ public:
  */
 class ACE_Export ACE_Service_Config: public ACE_Service_Gestalt
 {
+
 public:
 
   // = Initialization and termination methods.
@@ -213,7 +215,22 @@ protected:
 
   /// = Static interfaces
 
+private:
 
+  /// A private, non-locking mutator to set the "current" (TSS) gestalt instance.
+  /// Make sure to call with the proper locks held!
+  static ACE_Service_Gestalt* current_i (ACE_Service_Gestalt *newcurrent);
+
+  /// A Wrapper for the TSS-stored pointer.
+  struct TSS_Resources {
+    TSS_Resources (void) : ptr_ (0) {};
+    ACE_Service_Gestalt *ptr_;
+  };
+
+  /// Provides access to the static ptr, containing the TSS
+  /// accessor. Ensures the desired order of initialization, even when
+  /// other static initializers need the value.
+  static ACE_TSS< ACE_Service_Config::TSS_Resources > * & impl_ (void);
 
 protected:
 
@@ -221,7 +238,7 @@ protected:
   /// classes, like ACE_Service_Config_Guard which when instantiated on the
   /// stack, can temporarily change which gestalt instance is viewed as
   /// global from the point of view of the static initializers in DLLs.
-  static int current (ACE_Service_Gestalt*);
+  static ACE_Service_Gestalt* current (ACE_Service_Gestalt*);
 
 
 public:
@@ -532,10 +549,6 @@ private:
   /// Handles the reconfiguration signals.
   static ACE_Sig_Adapter *signal_handler_;
 
-  /// Typedef for syntactic convenience
-  typedef ACE_TSS_TYPE (ACE_TSS_Type_Adapter< ACE_Service_Gestalt* >)
-    ACE_Service_Gestalt_TSS_Ptr;
-
   /// Pointer to the Singleton (ACE_Cleanup) Gestalt instance.
   /// There is thread-specific global instance pointer, which is used to
   /// temporarily change which Gestalt instance is used for static service
@@ -552,7 +565,6 @@ private:
   /// deallocated, but the global service repository will still "think"
   /// it must finalize the (DLL's) static services - with disastrous
   /// consequences, occurring in the post-main code (at_exit()).
-  static ACE_Service_Gestalt_TSS_Ptr *current_;
 
   /// This class needs the intimate access to be able to swap the
   /// current TSS pointer for the global Gestalt.
