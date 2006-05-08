@@ -1,3 +1,4 @@
+
 /* -*- C++ -*- */
 
 //========================================================================
@@ -51,45 +52,45 @@ public:
   /// A whole slew of overloaded routines for different IDL
   /// data types part of the PackageConfiguration.
 
-  bool update (const ::Deployment::PackageConfiguration &pc);
+  bool update (::Deployment::PackageConfiguration &pc);
 
-  void update (const ::Deployment::Property &property);
+  void update (::Deployment::Property &property);
 
-  void update (const ::Deployment::AssemblyConnectionDescription &acd);
+  void update (::Deployment::AssemblyConnectionDescription &acd);
 
-  void update (const ::Deployment::AssemblyPropertyMapping &apm);
+  void update (::Deployment::AssemblyPropertyMapping &apm);
 
-  void update (const ::Deployment::ComponentPackageDescription &comppkgdesc);
+  void update (::Deployment::ComponentPackageDescription &comppkgdesc);
 
-  void update (const ::Deployment::MonolithicImplementationDescription &mid);
+  void update (::Deployment::MonolithicImplementationDescription &mid);
 
-  void update (const ::Deployment::PackagedComponentImplementation &pci);
+  void update (::Deployment::PackagedComponentImplementation &pci);
 
-  void update (const ::Deployment::SubcomponentPortEndpoint &spe);
+  void update (::Deployment::SubcomponentPortEndpoint &spe);
 
-  void update (const ::Deployment::Requirement &requirement);
+  void update (::Deployment::Requirement &requirement);
 
-  void update (const ::Deployment::ComponentExternalPortEndpoint &cepe);
+  void update (::Deployment::ComponentExternalPortEndpoint &cepe);
 
-  void update (const ::Deployment::ComponentPackageReference &cpr);
+  void update (::Deployment::ComponentPackageReference &cpr);
 
-  void update (const ::Deployment::ComponentImplementationDescription &cid);
+  void update (::Deployment::ComponentImplementationDescription &cid);
 
-  void update (const ::Deployment::SubcomponentInstantiationDescription &sid);
+  void update (::Deployment::SubcomponentInstantiationDescription &sid);
 
-  void update (const ::Deployment::NamedImplementationArtifact &named_implementation);
+  void update (::Deployment::NamedImplementationArtifact &named_implementation);
 
-  void update (const ::Deployment::ComponentInterfaceDescription &cid);
+  void update (::Deployment::ComponentInterfaceDescription &cid);
 
-  void update (const ::Deployment::Capability &capability);
+  void update (::Deployment::Capability &capability);
 
-  void update (const ::Deployment::ImplementationArtifactDescription &iad);
+  void update (::Deployment::ImplementationArtifactDescription &iad);
 
-  void update (const ::Deployment::ImplementationRequirement &ir);
+  void update (::Deployment::ImplementationRequirement &ir);
 
-  void update(const Deployment::ImplementationDependency &id);
+  void update (::Deployment::ImplementationDependency &id);
 
-  void update (const ::Deployment::ComponentAssemblyDescription& cad);
+  void update (::Deployment::ComponentAssemblyDescription& cad);
 
 protected:
 

@@ -1,3 +1,4 @@
+
 /* -*- C++ -*- */
 
 /***
@@ -202,6 +203,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       return -1;
     }
   ACE_ENDTRY;
+
+  //char a;
+  //cin >> a;
 
   return 0;
 }

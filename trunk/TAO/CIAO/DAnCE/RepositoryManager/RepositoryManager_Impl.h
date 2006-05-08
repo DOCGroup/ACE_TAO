@@ -1,3 +1,4 @@
+
 /* -*- C++ -*- */
 
 //======================================================================
@@ -30,6 +31,7 @@
 //uncomment this line to turn on the code that relates to interface types
 //#define ASSEMBLY_INTERFACE_SUPPORT 1
 
+
 #include "RepositoryManagerDaemonS.h"
 
 #include "ace/Hash_Map_Manager.h"      //for the ACE_Hash_Map_Manager
@@ -47,7 +49,7 @@ namespace
   /// Directory where the packages will be stored locally
   const static char* INSTALL_PATH = "RepositoryDir";
 
-  const static size_t TEMP_LEN = 512;
+  const static size_t TEMP_LEN = 1024;
 
   const static char* PC_EXTENSION = ".epc";
 }
@@ -58,7 +60,7 @@ class  CIAO_RepositoryManagerDaemon_i :
 public:
   /// Constructor
   CIAO_RepositoryManagerDaemon_i (CORBA::ORB_ptr the_orb,
-                  const char* server = "http://localhost:5432/");
+                  const char* server = "localhost:5432");
 
   /// Destructor
   virtual ~CIAO_RepositoryManagerDaemon_i (void);
@@ -260,10 +262,10 @@ public:
   typedef CIMap::iterator CIMap_Iterator;
   typedef ACE_Hash_Map_Entry <ACE_CString,ACE_CString> CIEntry;
   typedef ACE_Hash_Map_Bucket_Iterator<ACE_CString,
-                     ACE_CString,
-                     ACE_Hash<ACE_CString>,
-                     ACE_Equal_To<ACE_CString>,
-                     ACE_RW_Mutex> CIBucket_Iterator;
+                                       ACE_CString,
+                                       ACE_Hash<ACE_CString>,
+                                       ACE_Equal_To<ACE_CString>,
+                                       ACE_RW_Mutex> CIBucket_Iterator;
 
   //a hash map that associates the names of
   //PackageConfigurations with their location

@@ -135,7 +135,7 @@ bool RM_Helper::write_to_disk (
 
 
 bool RM_Helper::write_pc_to_disk (
-                   const char* full_path,
+                  const char* full_path,
                   ACE_Message_Block& mb,
                   bool replace
                  )
@@ -246,7 +246,7 @@ ACE_Message_Block* RM_Helper::read_pc_from_disk (
   mb->length (file_info.st_size);
 
   // Close the file handle
-    ACE_OS::close (handle);
+  ACE_OS::close (handle);
 
   length = file_info.st_size;
   return mb;
