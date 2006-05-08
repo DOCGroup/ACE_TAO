@@ -40,7 +40,7 @@ for locating a service: <P>
 TAO uses the ACE_Hash_Map_Manager
 to keep track of the ObjectID:IOR mappings specified on the
 command-line. The IOR could be in <CODE>IOR</CODE>, <CODE>iiop</CODE>,
-or <CODE>corbaloc</CODE> format.  If the ORB fails to resolve the IOR
+or <CODE><A href="#corbaloc">corbaloc</A></CODE> format.  If the ORB fails to resolve the IOR
 using the command-line parameters or the default settings, it uses UDP
 multicast to resolve the service. <P>
 
@@ -101,14 +101,14 @@ The ORB default initial reference argument assists in resolution of
 
 <HR align=left width=80% ><P>
 
-<H4>corbaloc: IOR format</H4>
+<H4><A NAME="corbaloc">corbaloc: IOR format</A></H4>
 The <CODE>CORBA::ORB::string_to_object</CODE> now understands the <CODE>corbaloc:</CODE>
 format IORs (previously called iioploc). These are user-friendly multiple end-point IORs. For
 example - <p>
  <img width=50 height=5
 src="http://www.cs.wustl.edu/~schmidt/gifs/space.gif">corbaloc:iiop:tango.cs.wustl.edu:9999,iiop:merengue.cs.wustl.edu:9999/SimpleKey <p>
 
-Each of the end-points can use any transport protocols ex: iiop, rir. 
+Each of the end-points can use any transport protocols ex: iiop, rir.
 The corbaloc:rir URL is defined to allow access to the ORB's
 configured initial references through an URL. Each of the end-points
 is converted into a Profile. These profiles are used to construct the
@@ -126,6 +126,18 @@ All default TAO Object keys are preceded by a special sequence of
 octets ^t^a^o/0. This is taken care of by the POA when it generates
 the Object key for the IOR. The sequence is useful for the ORB to
 distinguish a simple key from the usual TAO object key. <p>
+
+The corbaloc::iiop URL also supports the IPv6 decimal address for the
+host field using the same format as for <A HREF="ORBEndpoint.html#IIOP">IIOP endpoint</A> definitions:
+<P><CODE>corbaloc:iiop:1.2@[01ef::1]:123/KeyName</CODE>
+<P>
+TAO only supports IPv6 endpoints in GIOP/IIOP >= 1.2.
+Since the CORBA spec requires (and such is implemented in TAO) that
+by default when no version is specified the version will be 1.0 the
+version has been explicitly set or not the result is that for
+corbalocs the version needs to be explicitly set.<BR>
+If not set the corbaloc parser will report an error for encountering
+an unresolvable hostname.
 
 <HR align=left width=80% ><P>
 

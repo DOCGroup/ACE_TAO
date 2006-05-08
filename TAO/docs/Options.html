@@ -469,7 +469,7 @@ resolution of initial references not explicitly specified with
 <CODE>-ORBInitRef</CODE>. It requires a URL prefix that, after appending a slash '/'
 ('|' for the UIOP pluggable protocol) and a simple object key, forms a
 new URL to identify an initial object reference. The URL prefix format
-currently supported is based on the standard <code>corbaloc</code>
+currently supported is based on the standard <code><A href="INS.html#corbaloc">corbaloc</A></code>
 mechanism in the CORBA <a href="INS.html">Interoperable Naming
 Service. </a></td>
       </tr>
@@ -654,7 +654,7 @@ listening on for multicast requests. By default, the <code>TAO_DEFAULT_IMPLREPO_
 arbitrary object reference for an initial service. The IOR could be in
 any one of the following formats: OMG <code>IOR</code>, <code>URL</code>,
         <code>corbaloc</code> (including <code>uioploc</code>) or <code>file</code>.
-        <code>corbaloc</code> is a multiple end-point IOR understood by
+        <code><A href="INS.html#corbaloc">corbaloc</A></code> is a multiple end-point IOR understood by
         <code>ORB::string_to_object()</code> and used as a
 boot-strapping mechanism by the <code>ORB::resolve_initial_references()</code>.
 The mappings specified through this argument override the ORB
