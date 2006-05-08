@@ -1,0 +1,194 @@
+// -*- IDL -*-
+
+//=============================================================================
+/**
+ *  @file    FtRtecEventChannelAdmin.idl
+ *
+ *  $Id$
+ *
+ *  @author Huang-Ming Huang
+ */
+//=============================================================================
+
+#ifndef TAO_FTRTEC_EVENTCHANNELADMIN_IDL
+#define TAO_FTRTEC_EVENTCHANNELADMIN_IDL
+
+#include "orbsvcs/RtecEventChannelAdmin.idl"
+#include "FTRT.idl"
+#include "FTRT_GroupManager.idl"
+#include "FtRtecEventComm.idl"
+
+module FtRtecEventChannelAdmin
+{
+  typedef FtRtecEventComm::ObjectId ObjectId;
+
+  struct ProxyPushConsumerConnectionInfo
+  {
+    RtecEventComm::PushSupplier push_supplier;
+    RtecEventChannelAdmin::SupplierQOS qos;
+  };
+
+  union ProxyPushConsumerConnectionParamter switch (boolean)
+  {
+  case FALSE:
+  case TRUE:
+    ProxyPushConsumerConnectionInfo info;
+  };
+
+  struct ProxyPushConsumerStat
+  {
+    ObjectId object_id;
+    ProxyPushConsumerConnectionParamter parameter;
+  };
+
+
+  struct ProxyPushSupplierConnectionInfo
+  {
+    RtecEventComm::PushConsumer push_consumer;
+    RtecEventChannelAdmin::ConsumerQOS qos;
+  };
+
+  union ProxyPushSupplierConnectionParamter switch (boolean)
+  {
+  case FALSE:
+  case TRUE:
+    ProxyPushSupplierConnectionInfo info;
+  };
+
+  struct ProxyPushSupplierStat
+  {
+    ObjectId object_id;
+    boolean suspended;
+    ProxyPushSupplierConnectionParamter parameter;
+  };
+
+  typedef sequence<ProxyPushConsumerStat> ProxyConsumerStates;
+  typedef sequence<ProxyPushSupplierStat> ProxySupplierStates;
+
+  struct ConsumerAdminState
+  {
+    ProxySupplierStates proxies;
+  };
+
+  struct SupplierAdminState
+  {
+    ProxyConsumerStates proxies;
+  };
+
+  struct CachedResult
+  {
+    long  retention_id;
+    any   result;
+  };
+
+
+  struct CacheEntry
+  {
+    string client_id;
+    CachedResult cached_result;
+  };
+
+  typedef sequence<CacheEntry> CachedOptionResults;
+
+  struct EventChannelState
+  {
+    CachedOptionResults cached_operation_results;
+    SupplierAdminState supplier_admin_state;
+    ConsumerAdminState consumer_admin_state;
+  };
+
+  struct Connect_push_consumer_param
+  {
+    RtecEventComm::PushConsumer push_consumer;
+    RtecEventChannelAdmin::ConsumerQOS qos;
+  };
+
+  struct Connect_push_supplier_param
+  {
+    RtecEventComm::PushSupplier push_supplier;
+    RtecEventChannelAdmin::SupplierQOS qos;
+  };
+
+  enum OperationType {
+    OBTAIN_PUSH_SUPPLIER,
+    OBTAIN_PUSH_CONSUMER,
+    DISCONNECT_PUSH_SUPPLIER,
+    DISCONNECT_PUSH_CONSUMER,
+    SUSPEND_CONNECTION,
+    RESUME_CONNECTION,
+    CONNECT_PUSH_SUPPLIER,
+    CONNECT_PUSH_CONSUMER
+  };
+
+  union OperationParam switch(OperationType) {
+  case CONNECT_PUSH_SUPPLIER:
+    Connect_push_supplier_param connect_supplier_param;
+  case CONNECT_PUSH_CONSUMER:
+    Connect_push_consumer_param connect_consumer_param;
+  };
+
+
+  struct Operation {
+     ObjectId object_id;
+    OperationParam param;
+  };
+
+  interface EventChannelFacade : FtRtecEventComm::PushConsumer {
+    /**
+     *  Directly connect to push consumer. This method is
+     *  equivalent to the effect of executing the following
+     *  3 methods.
+     *
+     *  consumer_admin = ec->for_consumers();
+     *  proxy_supplier = consumer_admin->obtain_push_supplier();
+     *  proxy_supplier->connect_push_consumer(push_consumer,
+     *                                         qos);
+     *
+     * @returns the ObjectId of proxy_push_supplier
+     */
+    ObjectId connect_push_consumer(
+      in RtecEventComm::PushConsumer push_consumer,
+      in RtecEventChannelAdmin::ConsumerQOS qos)
+        raises(RtecEventChannelAdmin::TypeError);
+
+    /**
+     *  Directly connect to push supplier. This method is
+     *  equivalent to the effect of executing the following
+     *  3 methods.
+     *
+     *  supplier_admin = ec->for_suppliers();
+     *  push_consumer = supplier_admin->obtain_push_supplier();
+     *  push_consumer->connect_push_consumer(proxy_supplier,
+     *                                         qos);
+     *
+     * @returns the ObjectId of proxy_push_consumer
+     */
+    ObjectId connect_push_supplier(
+      in RtecEventComm::PushSupplier push_supplier,
+      in RtecEventChannelAdmin::SupplierQOS qos);
+
+    void disconnect_push_supplier(in ObjectId oid)
+      raises(FtRtecEventComm::InvalidObjectID);
+    void disconnect_push_consumer(in ObjectId oid)
+      raises(FtRtecEventComm::InvalidObjectID);
+    void suspend_push_supplier(in ObjectId oid)
+      raises(FtRtecEventComm::InvalidObjectID);
+    void resume_push_supplier(in ObjectId oid)
+      raises(FtRtecEventComm::InvalidObjectID);
+  };
+
+  exception InvalidState{};
+
+  interface EventChannel : RtecEventChannelAdmin::EventChannel
+    , EventChannelFacade
+    , FTRT::Updateable
+    , FTRT::ObjectGroupManager
+  {
+  };
+
+  typedef sequence<EventChannel> EventChannelList;
+
+};
+
+#endif
+

@@ -1,0 +1,7 @@
+// -*- MPC -*-
+// $Id$
+
+project : orbsvcslib, ciao_container_dnc, ciao_client_dnc {
+  libs     += CIAO_DnC_Events_Base
+  after    += CIAO_DnC_Events_Base
+}
