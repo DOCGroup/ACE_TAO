@@ -1,3 +1,12 @@
+Mon May  8 15:52:31 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be_visitor_union_branch/cdr_op_cs.cpp (visit_enum):
+
+          Added code generation to initialize an enum member of a
+          union when it is declared for demarshaling. This change
+          eliminates warnings in gcc 4.0.2 and possibly other
+          compilers.
+
 Mon May  8 10:06:12 UTC 2006  Martin Corino  <mcorino@remedy.nl>
 
         * docs/Options.html:
