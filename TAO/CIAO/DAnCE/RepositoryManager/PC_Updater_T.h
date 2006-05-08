@@ -24,7 +24,7 @@
 namespace PC_Updater_T
 {
   template <typename SEQUENCE>
-  static void update_sequence (const SEQUENCE &seq);
+  static void update_sequence (SEQUENCE &seq);
 }
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

@@ -1,10 +1,56 @@
+Mon May  8 15:33:58 UTC 2006  Stoyan Paunov  <spaunov@isis.vanderbilt.edu>
+
+        * DAnCE/RepositoryManager/HTTP_Client.h:
+        * DAnCE/RepositoryManager/HTTP_Client.cpp:
+        * DAnCE/RepositoryManager/HTTP_Handler.h:
+        * DAnCE/RepositoryManager/HTTP_Handler.cpp:
+        * DAnCE/RepositoryManager/Options.h:
+        * DAnCE/RepositoryManager/Options.cpp:
+        * DAnCE/RepositoryManager/PC_Updater.h:
+        * DAnCE/RepositoryManager/PC_Updater.cpp:
+        * DAnCE/RepositoryManager/PC_Updater_T.h:
+        * DAnCE/RepositoryManager/PC_Updater_T.cpp:
+        * DAnCE/RepositoryManager/README.txt:
+        * DAnCE/RepositoryManager/RM_Helper.h:
+        * DAnCE/RepositoryManager/RM_Helper.cpp:
+        * DAnCE/RepositoryManager/RMadmin.cpp:
+        * DAnCE/RepositoryManager/RepositoryManager.cpp:
+        * DAnCE/RepositoryManager/RepositoryManagerDaemon.idl:
+        * DAnCE/RepositoryManager/RepositoryManager_Impl.h:
+        * DAnCE/RepositoryManager/RepositoryManager_Impl.cpp:
+        * DAnCE/RepositoryManager/URL_Parser.h:
+        * DAnCE/RepositoryManager/URL_Parser.cpp:
+        * DAnCE/RepositoryManager/ZIP_Wrapper.h:
+        * DAnCE/RepositoryManager/ZIP_Wrapper.cpp:
+
+        Updating the RepositoryManager with the latest changes from the
+        escher repository. Adding my newest changes. Adding some new
+        minor features.
+
+        * bin/PerlCIAO/TestUtils.base:
+        * bin/PerlCIAO/TestUtils.pm:
+        * bin/PerlCIAO/TestUtils_Base.pm:
+        * bin/PerlCIAO/generate_container.pl:
+        * bin/PerlCIAO/perlciao.mpc:
+
+        This is a set of test utilities tailored towards testing CIAO components.
+        It provides a nice and quick interface provising the common functionality
+        necessary to run a CIAO test and perform clean-up on failure. This utils
+        are a wrapper around the $ACE_ROOT/bin/PerlACE/ utilities. I will check in
+        an example of how test utils are used shortly.
+
+        * tools/Config_Handlers/IDD_Handler.cpp:
+
+        Fixing a bug in the PackageConfiguration reverse handler.
+
+
 Fri May  5 15:36:47 2006  Douglas C. Schmidt  <schmidt@cse.wustl.edu>
 
-	* docs/cidlc.html Added documentation for the CIDL compiler.
-  	  Thanks to Boris for contributing this.
-	
-	* docs/index.html: Fixed some broken links to the tutorials and added
-	  a link to Ming's tutorial example that shows how to use CoSMIC.
+        * docs/cidlc.html Added documentation for the CIDL compiler.
+          Thanks to Boris for contributing this.
+
+        * docs/index.html: Fixed some broken links to the tutorials and added
+          a link to Ming's tutorial example that shows how to use CoSMIC.
 
 Fri May  5 16:58:17 UTC 2006  Nishanth Shankaran  <nshankar@dre.vanderbilt.edu>
 
