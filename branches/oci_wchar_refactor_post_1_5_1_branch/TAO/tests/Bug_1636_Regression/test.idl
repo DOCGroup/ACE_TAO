@@ -1,0 +1,26 @@
+//
+// $Id$
+//
+module UnionIecs
+{
+  enum E_type_num
+  {
+    E_type_num_called_party_number,
+    E_type_num_calling_party_number,
+    E_type_num_inconnu
+  };
+
+  typedef octet T_champ_num;
+
+  struct S_i_num
+  {
+    E_type_num type_num;
+    T_champ_num nature;
+  };
+
+  union S_num switch (boolean)
+  {
+  case TRUE :
+    S_i_num num;
+  } ;
+};
