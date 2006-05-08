@@ -3,6 +3,7 @@
 #include "Client_i.h"
 #include "testC.h"
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "ace/Read_Buffer.h"
 #include "ace/OS_NS_fcntl.h"
 #include "ace/OS_NS_unistd.h"
@@ -31,7 +32,7 @@ TAO_IOP::TAO_IOR_Manipulation_var iorm = 0;
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "a:k:b:l:c:sm");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "a:k:b:l:c:sm");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -75,9 +76,11 @@ parse_args (int argc, char *argv[])
 
 
 int
-main (int argc,
-      char *argv[])
+ACE_TMAIN (int argc,
+      ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_DECLARE_NEW_CORBA_ENV;
 
   Manager manager;
@@ -85,13 +88,12 @@ main (int argc,
   ACE_TRY
     {
       // Initilaize the ORB, POA etc.
-      manager.init (argc,
-                    argv
+      manager.init (convert.get_argc(), convert.get_ASCII_argv()
                     ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // the command line arguments
-      if (parse_args (argc, argv) == -1)
+      if (parse_args (convert.get_argc(), convert.get_ASCII_argv()) == -1)
         return -1;
 
       // Merge the different IORS
@@ -138,8 +140,7 @@ Manager::init (int argc,
                char *argv[]
                ACE_ENV_ARG_DECL)
 {
-  this->orb_ = CORBA::ORB_init (argc,
-                                argv,
+  this->orb_ = CORBA::ORB_init (argc, argv,
                                 0
                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
@@ -286,7 +287,7 @@ Manager::write_to_file (void)
 
   if (ior_output_file != 0)
     {
-      FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
+      FILE *output_file= ACE_OS::fopen (ior_output_file, ACE_TEXT("w"));
       if (output_file == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open output file for writing IOR: %s",
@@ -360,8 +361,8 @@ int run_remote_test (Simple_Server_ptr server, const char* execute_key)
   if (ACE_OS::strcmp (expected, received))
   {
       ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("... FAIL\n"
-                    "CLIENT>          received: '%s'\n"),
+              ACE_TEXT ("... FAIL\n")
+              ACE_TEXT ("CLIENT>          received: '%s'\n"),
               received));
       return -1;
   }
@@ -419,8 +420,8 @@ int run_abort_test (Simple_Server_ptr server,
   if (ACE_OS::strcmp (expected, received))
     {
       ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("... FAIL\n"
-                    "CLIENT>          received: '%s'\n"),
+              ACE_TEXT ("... FAIL\n")
+              ACE_TEXT ("CLIENT>          received: '%s'\n"),
               received));
       return -1;
     }
@@ -470,8 +471,8 @@ int run_shutdown_test (Simple_Server_ptr server,
   if (ACE_OS::strcmp (expected, received))
     {
       ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("... FAIL\n"
-                    "CLIENT>          received: '%s'\n"),
+              ACE_TEXT ("... FAIL\n")
+              ACE_TEXT ("CLIENT>          received: '%s'\n"),
               received));
       return -1;
     }
@@ -573,8 +574,7 @@ Client_i::init (ACE_ENV_SINGLE_ARG_DECL)
 
   int argc = 0;
   char **argv = 0;
-  this->orb_ = CORBA::ORB_init (argc,
-                                argv,
+  this->orb_ = CORBA::ORB_init (argc, argv,
                                 0
                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);

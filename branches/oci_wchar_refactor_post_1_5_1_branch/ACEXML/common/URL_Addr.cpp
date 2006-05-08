@@ -33,7 +33,7 @@ ACEXML_URL_Addr::addr_to_string (ACEXML_Char *s,
   else
     {
       ACE_OS::sprintf (s, ACE_TEXT ("%s:%d/%s"),
-                       ACE_TEXT_CHAR_TO_TCHAR (ipaddr_format == 0
+                       ACE_TEXT_TO_TCHAR_IN (ipaddr_format == 0
                                                ? this->get_host_name ()
                                                : this->get_host_addr ()),
                        this->get_port_number (),
@@ -55,7 +55,7 @@ ACEXML_URL_Addr::addr_to_string (int ipaddr_format)
     }
   ACE_OS::sprintf (this->addr_string_,
                    ACE_TEXT ("%s:%d/%s"),
-                   ACE_TEXT_CHAR_TO_TCHAR (ipaddr_format == 0
+                   ACE_TEXT_TO_TCHAR_IN (ipaddr_format == 0
                                            ? this->get_host_name ()
                                           : this->get_host_addr ()),
                    this->get_port_number (),
@@ -67,7 +67,7 @@ ACEXML_URL_Addr::addr_to_string (int ipaddr_format)
 int
 ACEXML_URL_Addr::string_to_addr (const char* s)
 {
-  return this->string_to_addr (ACE_TEXT_CHAR_TO_TCHAR (s));
+  return this->string_to_addr (ACE_TEXT_TO_TCHAR_IN (s));
 }
 #endif /* ACE_USES_WCHAR */
 

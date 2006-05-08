@@ -1324,6 +1324,13 @@ project(Based Pointer Test) : acetest {
   }
 }
 
+project(WChar_Conversion) : acetest {
+  exename = WChar_Conversion
+  Source_Files {
+    WChar_Conversion.cpp
+  }
+}
+
 project(Library Unload) {
   exename = UnloadLibACE
   staticflags += ACE_AS_STATIC_LIBS

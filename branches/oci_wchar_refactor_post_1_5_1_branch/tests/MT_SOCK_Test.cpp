@@ -236,8 +236,9 @@ server (void *arg)
           ++num_clients_connected;
 
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) server: Client %C connected from %d\n"),
-                      cli_addr.get_host_name (),
+
+        ACE_TEXT ("(%P|%t) server: Client %s connected from %d\n"),
+                      ACE_TEXT_TO_TCHAR_IN(cli_addr.get_host_name ()),
                       cli_addr.get_port_number ()));
 
           // Enable non-blocking I/O.

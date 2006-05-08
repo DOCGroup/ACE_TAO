@@ -189,8 +189,9 @@ run_main (int, ACE_TCHAR *[])
                 "ACE_HAS_AIO_CALLS can be defined for this platform\n"
                 "Further tests at $ACE_ROOT/examples/Reactor/Proactor\n"));
   else
-    ACE_ERROR ((LM_INFO,
-                "AIO not supported on this platform\n"));
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "AIO not found.Test failed\n"),
+                      -1);
 
   ACE_END_TEST;
 

@@ -2,6 +2,7 @@
 // $Id$
 
 project(*Server): taoserver, ami {
+  exename = server
   Source_Files {
     timeout_i.cpp
     timeout_client.cpp

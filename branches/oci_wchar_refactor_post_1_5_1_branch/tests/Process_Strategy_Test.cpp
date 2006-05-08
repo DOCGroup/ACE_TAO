@@ -64,8 +64,8 @@ ACE_RCSID(tests, Process_Strategy_Test, "$Id$")
 
 #if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
 
-template ACE_Singleton<Options, ACE_Null_Mutex> *
-  ACE_Singleton<Options, ACE_Null_Mutex>::singleton_;
+  template ACE_Singleton<Options, ACE_Null_Mutex> *
+ACE_Singleton<Options, ACE_Null_Mutex>::singleton_;
 
 #endif /* ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION */
 
@@ -169,7 +169,7 @@ Options::~Options (void)
 int
 Options::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("p:c:f:"));
+  ACE_Get_Arg_Opt<ACE_TCHAR>  get_opt (argc, argv, ACE_TEXT ("p:c:f:"));
 
   // - 26 is for the "process_strategy_test_temp" that is appended
   if (ACE::get_temp_dir (this->filename_, MAXPATHLEN - 26) == -1)
@@ -416,7 +416,7 @@ Counting_Service::handle_input (ACE_HANDLE)
                   bytes,
                   this->peer ().get_handle (),
                   bytes,
-                  ACE_TEXT_CHAR_TO_TCHAR (buf)));
+                  ACE_TEXT_TO_TCHAR_IN (buf)));
       // Read and return the current value in the file.
       if (ACE_OS::strncmp (buf,
                            "read",
@@ -581,7 +581,7 @@ client (void *arg)
       // the call to ACE_OS::strrchr ().
       buf [bytes_read] = '\0';
 
-      size_t count = ACE_OS::atoi (ACE_OS::strrchr (ACE_TEXT_CHAR_TO_TCHAR (buf),
+      size_t count = ACE_OS::atoi (ACE_OS::strrchr (ACE_TEXT_TO_TCHAR_IN (buf),
                                                     ACE_TEXT (' ')));
 
       ACE_DEBUG ((LM_DEBUG,

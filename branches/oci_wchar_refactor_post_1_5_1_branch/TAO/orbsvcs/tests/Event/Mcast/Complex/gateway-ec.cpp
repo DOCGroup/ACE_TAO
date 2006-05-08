@@ -1,12 +1,15 @@
 // $Id$
 
 #include "Gateway_EC.h"
+#include "ace/Argv_Type_Converter.h"
 
 int 
-main (int argc, char ** argv)
+ACE_TMAIN (int argc, ACE_TCHAR ** argv)
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   Gateway_EC test;
-  if (test.run (argc, argv) == -1)
+  if (test.run (convert.get_argc(), convert.get_ASCII_argv()) == -1)
     return 1;
 
   return 0;

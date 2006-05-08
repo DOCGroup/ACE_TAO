@@ -14,7 +14,7 @@
 ACE_RCSID(EC_Tests_Basic, Schedule, "$Id$")
 
 int
-main (int argc, char *argv [])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   EC_Schedule driver;
   return driver.run (argc, argv);
@@ -28,7 +28,7 @@ EC_Schedule::EC_Schedule (void)
 }
 
 int
-EC_Schedule::parse_args (int& argc, char* argv[])
+EC_Schedule::parse_args (int& argc, ACE_TCHAR* argv[])
 {
   if (this->EC_Driver::parse_args (argc, argv) != 0)
     return -1;

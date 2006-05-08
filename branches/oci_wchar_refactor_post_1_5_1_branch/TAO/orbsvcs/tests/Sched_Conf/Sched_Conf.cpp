@@ -5,6 +5,7 @@
 
 #include "ace/Sched_Params.h"
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/Scheduler_Factory.h"
@@ -24,9 +25,9 @@ const char* format_string = " {%-12s, %d, %d, %d, %d, %8d, "
   "static_cast<RtecScheduler::Info_Type_t> (%d)}\n";
 
 int
-parse_args (int argc, char *argv [])
+parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, "n:");
+  ACE_Get_Arg_Opt<char> get_opt (argc, argv, "n:");
   int opt;
 
   while ((opt = get_opt ()) != EOF)
@@ -51,9 +52,10 @@ parse_args (int argc, char *argv [])
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  if (parse_args (argc, argv) != 0)
+  ACE_Argv_Type_Converter convert (argc, argv);
+  if (parse_args (convert.get_argc(), convert.get_ASCII_argv()) != 0)
   {
     return 1;
   }
@@ -340,7 +342,7 @@ main (int argc, char *argv[])
     {
       // Initialize ORB.
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "internet" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(), "internet" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =

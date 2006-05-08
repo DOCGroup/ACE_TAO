@@ -330,7 +330,7 @@ run_main (int argc, ACE_TCHAR *argv[])
               ACE::minor_version (),
               ACE::beta_version ()));
 
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("f:rw"));
+  ACE_Get_Arg_Opt<ACE_TCHAR>  get_opt (argc, argv, ACE_TEXT ("f:rw"));
   int opt;
   int reading = 1;
   int writing = 1;

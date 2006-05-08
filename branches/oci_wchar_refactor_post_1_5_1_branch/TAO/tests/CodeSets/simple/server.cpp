@@ -24,6 +24,7 @@
 #include "ace/streams.h"
 
 #include "ace/OS_NS_stdio.h"
+#include "ace/Argv_Type_Converter.h"
 
 // ------------------------------------------------------------
 // Servant for associated CORBA object
@@ -67,14 +68,15 @@ public:
 // ------------------------------------------------------------
 // Main routine
 // ------------------------------------------------------------
-int main(int argc, char *argv[])
+int ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
 
   ACE_TRY_NEW_ENV
     {
       // Init the orb
-      CORBA::ORB_var orb= CORBA::ORB_init (argc,
-                                           argv,
+      CORBA::ORB_var orb= CORBA::ORB_init (convert.get_argc(),
+                                           convert.get_ASCII_argv(),
                                            ""
                                            ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -119,7 +121,7 @@ int main(int argc, char *argv[])
                                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      FILE *output_file= ACE_OS::fopen ("server.ior", "w");
+      FILE *output_file= ACE_OS::fopen ("server.ior", ACE_TEXT("w"));
       if (output_file == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open output file for writing IOR: %s",

@@ -2,6 +2,7 @@
 // $Id$
 
 project(*Consumer) : event_skel, orbsvcsexe, portableserver, naming {
+  exename = Consumer
   requires += ec_typed_events
   source_files {
     Consumer.cpp
@@ -10,6 +11,7 @@ project(*Consumer) : event_skel, orbsvcsexe, portableserver, naming {
 }
 
 project(*Supplier) : event_skel, orbsvcsexe, portableserver, naming {
+  exename = Supplier
   requires += ec_typed_events
   after    += CosEC_TypedSimple_Consumer
   idl_files {

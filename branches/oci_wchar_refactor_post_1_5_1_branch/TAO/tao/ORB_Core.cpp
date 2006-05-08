@@ -140,7 +140,7 @@ TAO_ORB_Core_Static_Resources::TAO_ORB_Core_Static_Resources (void)
     valuetype_adapter_factory_name_ ("valuetype_Adapter_Factory"),
     poa_factory_name_ ("TAO_Object_Adapter_Factory"),
     poa_factory_directive_
-      (ACE_TEXT_ALWAYS_CHAR
+      (ACE_TEXT_TO_CHAR_IN
         (ACE_DYNAMIC_SERVICE_DIRECTIVE("TAO_Object_Adapter_Factory",
                                        "TAO_PortableServer",
                                        "_make_TAO_Object_Adapter_Factory",
@@ -464,7 +464,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
           // If there is a '@' also, it means that the network
           // interface name is specified.
           this->orb_params ()->mcast_discovery_endpoint (
-            ACE_TEXT_ALWAYS_CHAR(current_arg));
+            ACE_TEXT_TO_CHAR_IN(current_arg));
 
           arg_shifter.consume_arg ();
         }
@@ -616,7 +616,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
                 (ACE_TEXT("-ORBPreferredInterfaces"))))
         {
           if (this->orb_params ()->preferred_interfaces (
-                ACE_TEXT_ALWAYS_CHAR (current_arg)) == false)
+                ACE_TEXT_TO_CHAR_IN (current_arg)) == false)
             ACE_THROW_RETURN (CORBA::INTERNAL (
                                   CORBA::SystemException::_tao_minor_code (
                                     TAO_ORB_CORE_INIT_LOCATION_CODE,
@@ -689,9 +689,9 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
                                   CORBA::COMPLETED_NO),
                                 -1);
             }
-          ACE_CString object_id (ACE_TEXT_ALWAYS_CHAR(current_arg),
+          ACE_CString object_id (ACE_TEXT_TO_CHAR_IN(current_arg),
                                  pos - current_arg);
-          ACE_CString IOR (ACE_TEXT_ALWAYS_CHAR(pos + 1));
+          ACE_CString IOR (ACE_TEXT_TO_CHAR_IN(pos + 1));
           if (!this->init_ref_map_.insert (
                  std::make_pair (InitRefMap::key_type (object_id),
                                  InitRefMap::data_type (IOR))).second)
@@ -713,8 +713,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
                 (ACE_TEXT("-ORBDefaultInitRef"))))
         {
           // Set the list of prefixes from -ORBDefaultInitRef.
-          this->orb_params ()->default_init_ref
-            (ACE_TEXT_ALWAYS_CHAR(current_arg));
+          this->orb_params ()->default_init_ref (ACE_TEXT_TO_CHAR_IN(current_arg));
 
           arg_shifter.consume_arg ();
         }
@@ -773,8 +772,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
                               CORBA::COMPLETED_NO));
           ACE_CHECK_RETURN (-1);
 
-          output_stream->open (ACE_TEXT_ALWAYS_CHAR (file_name),
-                               ios::out | ios::app);
+          output_stream->open (ACE_TEXT_TO_CHAR_IN (file_name), ios::out | ios::app);
 
           if (!output_stream->bad ())
             {
@@ -852,7 +850,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
           // The this->server_id_ is to uniquely identify a server to
           // an IMR.
           // Fill in later.
-          this->server_id_.set(ACE_TEXT_ALWAYS_CHAR(current_arg));
+          this->server_id_.set(ACE_TEXT_TO_CHAR_IN(current_arg));
 
           arg_shifter.consume_arg ();
         }
@@ -886,7 +884,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
           // All endpoint strings should be of the above form(s).
 
           this->set_endpoint_helper (TAO_DEFAULT_LANE,
-                                     ACE_TEXT_ALWAYS_CHAR (current_arg)
+                                     ACE_TEXT_TO_CHAR_IN (current_arg)
                                      ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (-1);
 
@@ -901,7 +899,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
           // used.
 
           this->set_endpoint_helper (TAO_DEFAULT_LANE,
-                                     ACE_TEXT_ALWAYS_CHAR (current_arg)
+                                     ACE_TEXT_TO_CHAR_IN (current_arg)
                                      ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (-1);
 
@@ -918,14 +916,13 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
           if (arg_shifter.is_option_next ())
             return -1;
 
-          ACE_CString lane (ACE_TEXT_ALWAYS_CHAR (current_arg));
+          ACE_CString lane (ACE_TEXT_TO_CHAR_IN (current_arg));
           arg_shifter.consume_arg ();
 
           if (arg_shifter.is_option_next ())
             return -1;
 
-          ACE_CString endpoints (ACE_TEXT_ALWAYS_CHAR
-                                  (arg_shifter.get_current ()));
+          ACE_CString endpoints (ACE_TEXT_TO_CHAR_IN (arg_shifter.get_current ()));
           arg_shifter.consume_arg ();
 
           this->set_endpoint_helper (lane,
@@ -1336,7 +1333,7 @@ TAO_ORB_Core::fini (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("Destroying ORB <%s>\n"),
-                  ACE_TEXT_CHAR_TO_TCHAR (this->orbid_)));
+                  ACE_TEXT_TO_TCHAR_IN (this->orbid_)));
     }
 
   // Finalize lane resources.
@@ -1782,8 +1779,7 @@ TAO_ORB_Core::root_poa (ACE_ENV_SINGLE_ARG_DECL)
 
       if (factory == 0)
         {
-          this->configuration()->process_directive (
-           ACE_TEXT_CHAR_TO_TCHAR (
+          this->configuration()->process_directive (ACE_TEXT_TO_TCHAR_IN (
              static_resources->poa_factory_directive_.c_str()));
 
           factory =
@@ -2622,7 +2618,7 @@ TAO_ORB_Core::set_endpoint_helper (const ACE_CString &lane,
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%P|%t)\n")
                   ACE_TEXT ("Invalid endpoint(s) specified:\n%s\n"),
-                  ACE_TEXT_CHAR_TO_TCHAR(endpoints.c_str ())));
+                  ACE_TEXT_TO_TCHAR_IN(endpoints.c_str ())));
       ACE_THROW_RETURN (CORBA::BAD_PARAM (
                            CORBA::SystemException::_tao_minor_code (
                               TAO_ORB_CORE_INIT_LOCATION_CODE,

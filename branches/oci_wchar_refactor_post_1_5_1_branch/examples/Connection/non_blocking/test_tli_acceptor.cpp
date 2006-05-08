@@ -16,7 +16,7 @@ typedef Svc_Handler<ACE_TLI_STREAM> SVC_HANDLER;
 typedef IPC_Server<SVC_HANDLER, ACE_TLI_ACCEPTOR> IPC_SERVER;
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   // Perform Service_Config initializations
   ACE_Service_Config daemon (argv[0]);

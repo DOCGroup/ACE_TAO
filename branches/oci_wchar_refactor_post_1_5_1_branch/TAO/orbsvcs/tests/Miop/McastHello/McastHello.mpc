@@ -9,6 +9,7 @@ project(*idl): taoidldefaults {
 }
 
 project(*server): orbsvcsexe, portablegroup, portableserver {
+  exename = server
   after += *idl
   Source_Files {
     McastHello.cpp
@@ -21,6 +22,7 @@ project(*server): orbsvcsexe, portablegroup, portableserver {
 }
 
 project(*client): orbsvcsexe, portablegroup, portableserver {
+  exename = client
   after += *idl
   Source_Files {
     TestC.cpp

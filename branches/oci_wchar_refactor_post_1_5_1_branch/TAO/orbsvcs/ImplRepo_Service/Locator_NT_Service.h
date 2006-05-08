@@ -24,9 +24,11 @@
 #include "ace/Synch.h"
 #include "tao/orbconf.h"
 
-static const char * IMR_LOCATOR_SERVICE_NAME = "TAOImR";
-static const char * IMR_LOCATOR_DISPLAY_NAME = "TAO Implementation Repository";
-static const char * IMR_LOCATOR_DESCRIPTION = "Implementation Repository Locator service for TAO";
+static const ACE_TCHAR * IMR_LOCATOR_SERVICE_NAME = ACE_TEXT("TAOImR");
+static const ACE_TCHAR * IMR_LOCATOR_DISPLAY_NAME =
+ACE_TEXT("TAO Implementation Repository");
+static const ACE_TCHAR * IMR_LOCATOR_DESCRIPTION =
+ACE_TEXT("Implementation Repository Locator service for TAO");
 
 /**
  * @class Locator_NT_Service
@@ -58,5 +60,3 @@ typedef ACE_Singleton<Locator_NT_Service, ACE_Mutex> SERVICE;
 #endif /* ACE_WIN32 */
 
 #endif /* Locator_NT_Service_H */
-
-

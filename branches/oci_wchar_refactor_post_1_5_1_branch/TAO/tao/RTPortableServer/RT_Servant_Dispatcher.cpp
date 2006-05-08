@@ -173,8 +173,8 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
                       ACE_TEXT ("(%P|%t): %s processing using %s ")
                       ACE_TEXT ("original thread CORBA/native priority %d/%d ")
                       ACE_TEXT ("not changed\n"),
-                      ACE_TEXT_CHAR_TO_TCHAR (priority_model),
-                      ACE_TEXT_CHAR_TO_TCHAR (thread_pool_id),
+                      ACE_TEXT_TO_TCHAR_IN (priority_model),
+                      ACE_TEXT_TO_TCHAR_IN (thread_pool_id),
                       pre_invoke_state.original_CORBA_priority_,
                       pre_invoke_state.original_native_priority_));
 
@@ -186,8 +186,8 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
                       ACE_TEXT ("(%P|%t): %s processing using %s ")
                       ACE_TEXT ("original thread CORBA/native priority ")
                       ACE_TEXT ("not changed\n"),
-                      ACE_TEXT_CHAR_TO_TCHAR (priority_model),
-                      ACE_TEXT_CHAR_TO_TCHAR (thread_pool_id)));
+                      ACE_TEXT_TO_TCHAR_IN (priority_model),
+                      ACE_TEXT_TO_TCHAR_IN (thread_pool_id)));
 
 #endif /* ACE_HAS_THREADS */
 
@@ -227,8 +227,8 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
                           ACE_TEXT ("%s processing using %s ")
                           ACE_TEXT ("(%P|%t): original thread CORBA/native priority %d/%d ")
                           ACE_TEXT ("temporarily changed to CORBA/native priority %d/%d\n"),
-                          ACE_TEXT_CHAR_TO_TCHAR (priority_model),
-                          ACE_TEXT_CHAR_TO_TCHAR (thread_pool_id),
+                          ACE_TEXT_TO_TCHAR_IN (priority_model),
+                          ACE_TEXT_TO_TCHAR_IN (thread_pool_id),
                           pre_invoke_state.original_CORBA_priority_,
                           pre_invoke_state.original_native_priority_,
                           target_priority,
@@ -244,8 +244,8 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
                           ACE_TEXT ("%s processing using %s ")
                           ACE_TEXT ("(%P|%t): original thread CORBA/native priority %d/%d ")
                           ACE_TEXT ("is the same as the target priority\n"),
-                          ACE_TEXT_CHAR_TO_TCHAR (priority_model),
-                          ACE_TEXT_CHAR_TO_TCHAR (thread_pool_id),
+                          ACE_TEXT_TO_TCHAR_IN (priority_model),
+                          ACE_TEXT_TO_TCHAR_IN (thread_pool_id),
                           pre_invoke_state.original_CORBA_priority_,
                           pre_invoke_state.original_native_priority_));
             }

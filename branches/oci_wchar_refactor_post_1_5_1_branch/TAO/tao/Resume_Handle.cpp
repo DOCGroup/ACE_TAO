@@ -1,6 +1,5 @@
 #include "tao/Resume_Handle.h"
 #include "tao/ORB_Core.h"
-#include "debug.h"
 
 #include "ace/Reactor.h"
 
@@ -47,35 +46,35 @@ TAO_Resume_Handle::handle_input_return_value_hook (int& return_value)
        this->orb_core_ &&
        this->orb_core_->reactor ()->resumable_handler () &&
        this->handle_ != ACE_INVALID_HANDLE)
-  {
-    // a return value of "1" means "call me back immediately;
-    // but we can't "call me back immediately" on an
-    // already-resumed handle
-    return_value = 0;
-
-    if (TAO_debug_level > 6)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      // a return value of "1" means "call me back immediately;
+      // but we can't "call me back immediately" on an
+      // already-resumed handle
+      return_value = 0;
+
+      if (TAO_debug_level > 6)
+        {
+          ACE_DEBUG ((LM_DEBUG,
                   "TAO (%P|%t) - Resume_Handle::handle_input_return_value_hook, "
-                  "overriding return value of 1 with retval = %d\n",
-                  return_value));
+                      "overriding return value of 1 with retval = %d\n",
+                      return_value));
+        }
     }
-  }
   else if ( return_value == -1 )
-  {
-    // this covers the "connection close" case, where you want
-    // to leave the handle suspended if you're return -1 to
-    // remove the handle from the Reactor. (See ChangeLog entry
-    // Fri Dec 16 14:40:54 2005)
-    this->flag_ = TAO_HANDLE_LEAVE_SUSPENDED;
-
-    if (TAO_debug_level > 6)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      // this covers the "connection close" case, where you want
+      // to leave the handle suspended if you're return -1 to
+      // remove the handle from the Reactor. (See ChangeLog entry
+      // Fri Dec 16 14:40:54 2005)
+      this->flag_ = TAO_HANDLE_LEAVE_SUSPENDED;
+
+      if (TAO_debug_level > 6)
+        {
+          ACE_DEBUG ((LM_DEBUG,
                   "TAO (%P|%t) - Resume_Handle::handle_input_return_value_hook, "
-                  "handle_input returning -1, so handle is not resumed.\n"));
+                      "handle_input returning -1, so handle is not resumed.\n"));
+        }
     }
-  }
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

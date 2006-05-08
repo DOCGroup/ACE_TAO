@@ -7,16 +7,19 @@
 #include "orbsvcs/Event_Utilities.h"
 #include "ace/Sched_Params.h"
 #include "ace/Arg_Shifter.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID (EC_Tests_Performance,
            Inversion,
            "$Id$")
 
 int
-main (int argc, char *argv [])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   EC_Inversion driver;
-  return driver.run (argc, argv);
+  return driver.run (convert.get_argc(), convert.get_ASCII_argv());
 }
 
 // ****************************************************************
@@ -27,9 +30,9 @@ EC_Inversion::EC_Inversion (void)
 }
 
 int
-EC_Inversion::parse_args (int &argc, char *argv [])
+EC_Inversion::parse_args (int &argc, char *argv[])
 {
-  ACE_Arg_Shifter arg_shifter (argc, argv);
+  ACE_TArg_Shifter< char > arg_shifter (argc, argv);
 
   while (arg_shifter.is_anything_left ())
     {

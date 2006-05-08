@@ -9,6 +9,7 @@ project(*IDL) : taoidldefaults, amh {
 }
 
 project(*st_server): taoexe, strategies, valuetype, amh, portableserver {
+  exename = st_server
   after += *IDL
   Source_Files {
     st_server.cpp
@@ -23,6 +24,7 @@ project(*st_server): taoexe, strategies, valuetype, amh, portableserver {
 }
 
 project(*mt_server): taoexe, strategies, valuetype, amh, portableserver  {
+  exename = mt_server
   after += *IDL
   Source_Files {
     mt_server.cpp
@@ -38,6 +40,7 @@ project(*mt_server): taoexe, strategies, valuetype, amh, portableserver  {
 }
 
 project(*client): taoexe, strategies, valuetype, amh, portableserver  {
+  exename = client
   after += *IDL
   Source_Files {
     Client_Task.cpp

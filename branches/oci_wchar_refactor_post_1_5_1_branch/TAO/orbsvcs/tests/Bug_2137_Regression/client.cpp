@@ -2,6 +2,7 @@
 // $Id$
 
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "orbsvcs/FaultTolerance/FT_ClientService_Activate.h"
 #include "tao/corba.h"
 #include "tao/PI/PI.h"
@@ -11,7 +12,7 @@ CORBA::ORB_var orb = CORBA::ORB::_nil ();
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -73,16 +74,18 @@ check_is_equivalent (const char* ior1, const char * ior2, CORBA::Boolean expecte
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   CORBA::Boolean result = 0;
   ACE_TRY_NEW_ENV
     {
       orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(), "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (convert.get_argc(), convert.get_ASCII_argv()) != 0)
         return 1;
 
       // ep1 is equivalent to no other IORs - it is not an IOGR, and ep2 is a different endpoint.

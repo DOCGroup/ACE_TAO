@@ -1272,7 +1272,6 @@ namespace ACE_OS {
                  const char *name = 0,
                  void *arg = 0);
 
-# if defined (ACE_HAS_WCHAR)
 #   if defined (ACE_LACKS_COND_T) && ! defined (ACE_PSOS_DIAB_MIPS)
   extern ACE_Export
 #   else
@@ -1292,7 +1291,6 @@ namespace ACE_OS {
                  ACE_condattr_t &attributes,
                  const wchar_t *name,
                  void *arg = 0);
-# endif /* ACE_HAS_WCHAR */
 
 #if defined (ACE_LACKS_COND_T) && ! defined (ACE_PSOS_DIAB_MIPS)
   extern ACE_Export
@@ -1351,7 +1349,6 @@ namespace ACE_OS {
                   void *arg = 0,
                   LPSECURITY_ATTRIBUTES sa = 0);
 
-# if defined (ACE_HAS_WCHAR)
   ACE_NAMESPACE_INLINE_FUNCTION
   int event_init (ACE_event_t *event,
                   int manual_reset,
@@ -1360,7 +1357,6 @@ namespace ACE_OS {
                   const wchar_t *name,
                   void *arg = 0,
                   LPSECURITY_ATTRIBUTES sa = 0);
-# endif /* ACE_HAS_WCHAR */
 
   extern ACE_Export
   int event_pulse (ACE_event_t *event);
@@ -1401,7 +1397,6 @@ namespace ACE_OS {
                   LPSECURITY_ATTRIBUTES sa = 0,
                   int lock_type = 0);
 
-#if defined (ACE_HAS_WCHAR)
   extern ACE_Export
   int mutex_init (ACE_mutex_t *m,
                   int lock_scope,
@@ -1409,7 +1404,6 @@ namespace ACE_OS {
                   ACE_mutexattr_t *arg = 0,
                   LPSECURITY_ATTRIBUTES sa = 0,
                   int lock_type = 0);
-#endif /* ACE_HAS_WCHAR */
 
   /// Win32 note: Abandoned mutexes are not treated differently. 0 is
   /// returned since the calling thread does get the ownership.
@@ -1566,7 +1560,6 @@ namespace ACE_OS {
                  int max = 0x7fffffff,
                  LPSECURITY_ATTRIBUTES sa = 0);
 
-# if defined (ACE_HAS_WCHAR)
   ACE_NAMESPACE_INLINE_FUNCTION
   int sema_init (ACE_sema_t *s,
                  u_int count,
@@ -1575,7 +1568,6 @@ namespace ACE_OS {
                  void *arg = 0,
                  int max = 0x7fffffff,
                  LPSECURITY_ATTRIBUTES sa = 0);
-# endif /* ACE_HAS_WCHAR */
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int sema_post (ACE_sema_t *s);
@@ -1887,13 +1879,11 @@ namespace ACE_OS {
                          const char *name = 0,
                          ACE_mutexattr_t *arg = 0);
 
-#if defined (ACE_HAS_WCHAR)
   ACE_NAMESPACE_INLINE_FUNCTION
   int thread_mutex_init (ACE_thread_mutex_t *m,
                          int lock_type,
                          const wchar_t *name,
                          ACE_mutexattr_t *arg = 0);
-#endif /* ACE_HAS_WCHAR */
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int thread_mutex_lock (ACE_thread_mutex_t *m);
@@ -1926,12 +1916,12 @@ namespace ACE_OS {
   void unique_name (const void *object,
                     char *name,
                     size_t length);
-#if defined (ACE_USES_WCHAR)
+
   extern ACE_Export
   void unique_name (const void *object,
                     wchar_t *name,
                     size_t length);
-#endif /* ACE_USES_WCHAR */
+
 } /* namespace ACE_OS */
 
 ACE_END_VERSIONED_NAMESPACE_DECL

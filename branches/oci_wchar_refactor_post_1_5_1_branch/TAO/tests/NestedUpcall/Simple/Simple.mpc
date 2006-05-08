@@ -2,6 +2,7 @@
 // $Id$
 
 project(*Nested_Upcall_Server): taoexe, portableserver {
+  exename = server
   Source_Files {
     server_i.cpp
     server.cpp
@@ -9,6 +10,7 @@ project(*Nested_Upcall_Server): taoexe, portableserver {
 }
 
 project(*Nested_Upcall_Client): taoexe, portableserver {
+  exename = client
   after += *Nested_Upcall_Server
   Source_Files {
     client_i.cpp

@@ -32,7 +32,7 @@
 
 ACE_RCSID(TAO_PERF_RTEC_Colocated_Roundtrip, driver, "$Id$")
 
-int main (int argc, char *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   const CORBA::Long experiment_id = 1;
 

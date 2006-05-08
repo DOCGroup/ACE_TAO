@@ -3,6 +3,7 @@
 #include "Command_Builder.h"
 #include "ace/Arg_Shifter.h"
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "Command.h"
 #include "Command_Factory.h"
 #include "Name.h"
@@ -19,11 +20,11 @@ TAO_Notify_Tests_Command_Builder::~TAO_Notify_Tests_Command_Builder ()
 }
 
 int
-TAO_Notify_Tests_Command_Builder::init (int argc, char *argv[])
+TAO_Notify_Tests_Command_Builder::init (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Arg_Shifter arg_shifter (argc, argv);
+  ACE_TArg_Shifter< ACE_TCHAR > arg_shifter (argc, argv);
 
-  ACE_CString current_arg;
+  ACE_TString current_arg;
   TAO_Notify_Tests_Command_Factory* factory = 0;
 
   if (arg_shifter.is_anything_left ())
@@ -65,7 +66,7 @@ TAO_Notify_Tests_Command_Builder::fini (void)
 }
 
 void
-TAO_Notify_Tests_Command_Builder::_register (ACE_CString command_factory_name, TAO_Notify_Tests_Command_Factory* command_factory)
+TAO_Notify_Tests_Command_Builder::_register (ACE_TString command_factory_name, TAO_Notify_Tests_Command_Factory* command_factory)
 {
   if (this->factory_map_.bind (command_factory_name, command_factory) == -1)
     ACE_DEBUG ((LM_DEBUG, "Failed to register command factory for %s\n", command_factory_name.c_str ()));

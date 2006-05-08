@@ -36,6 +36,7 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_string.h"
+#include "ace/Argv_Type_Converter.h"
 
 #include "ace/os_include/os_ctype.h"
 
@@ -137,7 +138,7 @@ Logging_Supplier::load_schedule_data
       FILE *input_file;
 
       int scan_count = 0;
-      input_file = ACE_OS::fopen(this->input_file_name_, "r");
+      input_file = ACE_OS::fopen(this->input_file_name_, ACE_TEXT("r"));
 
       if (input_file)
         {
@@ -410,7 +411,7 @@ Logging_Supplier::insert_event_data (CORBA::Any &data,
 unsigned int
 Logging_Supplier::get_options (int argc, char *argv [])
 {
-  ACE_Get_Opt get_opt (argc, argv, "f:m:d:s");
+  ACE_Get_Arg_Opt<char> get_opt (argc, argv, "f:m:d:s");
   int opt;
   int temp;
 
@@ -489,15 +490,17 @@ Logging_Supplier::get_options (int argc, char *argv [])
 // function main
 
 int
-main (int argc, char *argv [])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_TRY_NEW_ENV
     {
       // Initialize ORB.
       TAO_ORB_Manager orb_Manager;
 
-      orb_Manager.init (argc,
-                        argv
+      orb_Manager.init (convert.get_argc(),
+                        convert.get_ASCII_argv()
                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -506,7 +509,7 @@ main (int argc, char *argv [])
       Logging_Supplier *event_Supplier_ptr;
 
       ACE_NEW_RETURN (event_Supplier_ptr,
-                      Logging_Supplier(argc, argv),
+                      Logging_Supplier(convert.get_argc(), convert.get_ASCII_argv()),
                       -1);
 
       // Initialize everthing

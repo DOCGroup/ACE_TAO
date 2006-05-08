@@ -21,7 +21,7 @@
 #include "ace/OS_NS_wchar.h"
 
 ACE_RCSID (Param_Test,
-           ub_wstring, 
+           ub_wstring,
            "$Id$")
 
 // ************************************************************************
@@ -107,7 +107,9 @@ Test_Unbounded_WString::init_parameters (Param_Test_ptr
   this->ret_ = 0;
 
   this->in_ = gen->gen_wstring ();
+
   this->inout_ = CORBA::wstring_dup (this->in_);
+
   return 0;
 }
 

@@ -2,6 +2,7 @@
 // $Id$
 
 project(*Server): strategies, rt_server {
+  exename = server
   Source_Files {
     Policy_Tester.cpp
     Policy_Verifier.cpp

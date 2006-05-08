@@ -54,7 +54,6 @@
 // Let the config-win32.h file do its thing
 #undef ACE_CONFIG_H
 #include "ace/config-win32.h"
-#undef ACE_HAS_WCHAR
 
 #include /**/ <embkern.h>
 #if defined (ACE_HAS_PHARLAP_RT)

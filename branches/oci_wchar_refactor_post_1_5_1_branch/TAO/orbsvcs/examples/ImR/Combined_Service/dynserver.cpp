@@ -63,7 +63,7 @@ DynServer_Loader::DynServer_Loader(void)
 }
 
 int
-DynServer_Loader::init (int argc, ACE_TCHAR* argv[] ACE_ENV_ARG_DECL)
+DynServer_Loader::init (int argc, char* argv[] ACE_ENV_ARG_DECL)
 {
   try {
 

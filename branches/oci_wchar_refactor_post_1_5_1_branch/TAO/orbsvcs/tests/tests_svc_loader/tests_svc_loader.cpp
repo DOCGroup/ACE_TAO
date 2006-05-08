@@ -29,6 +29,7 @@
 #include "ace/Service_Config.h"
 #include "ace/Log_Msg.h"
 #include "ace/CORBA_macros.h"
+#include "ace/Argv_Type_Converter.h"
 
 
 ACE_RCSID (tests_svc_loader,
@@ -36,15 +37,16 @@ ACE_RCSID (tests_svc_loader,
            "$Id$")
 
 
-int main (int argc, char *argv [])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
 
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       // First initialize the ORB, that will remove some arguments...
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, 0 ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(), 0 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // There must be at least one argument, the file that has to be
@@ -60,7 +62,7 @@ int main (int argc, char *argv [])
 
       // Use the first argument to create the object reference.
       CORBA::Object_var object =
-        orb->string_to_object (argv[1] ACE_ENV_ARG_PARAMETER);
+        orb->string_to_object (convert.get_ASCII_argv()[1] ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Check if this object reference is a valid one..

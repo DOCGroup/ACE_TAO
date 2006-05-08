@@ -27,6 +27,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Log_Msg.h"
+#include "ace/String_Base.h"
+
 #include "tao/Utils/ORB_Manager.h"
 #include "orbsvcs/Concurrency/Concurrency_Utils.h"
 #include "orbsvcs/Naming/Naming_Client.h"
@@ -74,10 +76,10 @@ private:
   int use_naming_service_;
   // Flag to tell wheter the naming service will be used.
 
-  const char *ior_file_name_;
+  ACE_CString ior_file_name_;
   // The name of the file where we output the IOR.
 
-  const char *pid_file_name_;
+  ACE_CString pid_file_name_;
   // The name of a file where the process stores its pid.
 
   TAO_ORB_Manager orb_manager_;

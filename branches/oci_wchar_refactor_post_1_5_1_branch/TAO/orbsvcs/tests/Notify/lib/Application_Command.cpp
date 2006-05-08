@@ -11,6 +11,8 @@ ACE_RCSID(lib, TAO_Application_Command, "$Id$")
 #include "Driver_Base.h"
 #include "Priority_Mapping.h"
 
+#include "ace/Arg_Shifter.h"
+
 TAO_Notify_Tests_Application_Command::TAO_Notify_Tests_Application_Command (void)
   : dump_samples_ (0)
 {
@@ -20,20 +22,20 @@ TAO_Notify_Tests_Application_Command::~TAO_Notify_Tests_Application_Command ()
 {
 }
 
-const char*
+const ACE_TCHAR*
 TAO_Notify_Tests_Application_Command::get_name (void)
 {
   return TAO_Notify_Tests_Application_Command::name ();
 }
 
-const char*
+const ACE_TCHAR*
 TAO_Notify_Tests_Application_Command::name (void)
 {
   return TAO_Notify_Tests_Name::application_command;
 }
 
 void
-TAO_Notify_Tests_Application_Command::init (ACE_Arg_Shifter& arg_shifter)
+TAO_Notify_Tests_Application_Command::init (ACE_TArg_Shifter< char >& arg_shifter)
 {
   if (arg_shifter.is_anything_left ())
     {

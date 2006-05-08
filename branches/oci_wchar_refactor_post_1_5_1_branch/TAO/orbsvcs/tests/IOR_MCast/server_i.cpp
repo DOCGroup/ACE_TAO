@@ -10,6 +10,7 @@
 #include "tao/debug.h"
 
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "ace/Read_Buffer.h"
 
 Server_i::Server_i (void)
@@ -159,9 +160,9 @@ Server_i::enable_multicast (const char *ior)
 }
 
 int
-Server_i::parse_args (int argc, char *argv [])
+Server_i::parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "a:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "a:");
   int c;
 
   while ((c = get_opts ()) != -1)

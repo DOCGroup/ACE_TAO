@@ -1,3 +1,1921 @@
+Fri May  5 15:47:05 2006  Ciju John  <john_c@ociweb.com>
+
+          This entry deals with the refactoring work on the ACE wide char
+          support specifically how it affects the TAO & orbservices. See
+          entry
+          Fri May  5 14:33:29 UTC 2006  Ciju John  <john_c@ociweb.com>
+
+          The most significant change was the addition of string_dup's
+          that perform conversion. Much of the char type points of
+          transition are between narrow TAO services and TCHAR-as-wide Orb
+          Services.
+
+          The orbservices were NOT redesigned to be specifically char,
+          wchar, or ACE_TCHAR. Changes were made solely to make
+          ACE_USES_WCHAR work. Conversions were added in the appropriate
+          places. All mains are now ACE_TMAINS.
+
+
+        * TAO/CIAO/CCF/Example/CIDL/LocalExecutorMapping/cidlc.cpp:
+
+        * TAO/CIAO/CIDLC/cidlc.cpp:
+
+        * TAO/CIAO/DAnCE/ExecutionManager/Execution_Manager.cpp:
+
+        * TAO/CIAO/DAnCE/NodeApplication/NodeApplication.cpp:
+
+        * TAO/CIAO/DAnCE/NodeManager/Node_Manager.cpp:
+
+        * TAO/CIAO/DAnCE/Plan_Launcher/Plan_Launcher.cpp:
+
+        * TAO/CIAO/DAnCE/RTNodeApplication/RTNodeApplication.cpp:
+
+        * TAO/CIAO/DAnCE/tests/NodeApplicationTest/NodeAppTest.mpc:
+        * TAO/CIAO/DAnCE/tests/NodeApplicationTest/NodeApp_test_client.cpp:
+        * TAO/CIAO/DAnCE/tests/NodeApplicationTest/NodeApp_test_client_ex.cpp:
+        * TAO/CIAO/DAnCE/tests/NodeApplicationTest/NodeApp_test_client_simple.cpp:
+
+        * TAO/CIAO/docs/tutorials/Quoter/Simple/Broker/Broker.cpp:
+
+        * TAO/CIAO/docs/tutorials/Quoter/Simple/Distributor/Distributor.cpp:
+
+        * TAO/CIAO/examples/BasicSP/EC/client.cpp:
+        * TAO/CIAO/examples/BasicSP/EC/controller.cpp:
+
+        * TAO/CIAO/examples/Display/RateGen/controller.cpp:
+
+        * TAO/CIAO/examples/Hello/Sender/starter.cpp:
+
+        * TAO/CIAO/examples/Swapping/Sender/starter.cpp:
+
+        * TAO/CIAO/performance-tests/Benchmark/Multi_Threaded/client.cpp:
+
+        * TAO/CIAO/performance-tests/Benchmark/RoundTrip/client.cpp:
+
+        * TAO/CIAO/performance-tests/Benchmark/RoundTripClient/client.cpp:
+
+        * TAO/CIAO/performance-tests/Benchmark/RoundTripServer/server.cpp:
+
+        * TAO/CIAO/performance-tests/Benchmark/server.cpp:
+
+        * TAO/CIAO/performance-tests/Protocols/Controller/Controller.cpp:
+
+        * TAO/CIAO/tools/Config_Handlers/RT-CCM/test.cpp:
+
+        * TAO/CIAO/tools/Config_Handlers/test.cpp:
+
+        * TAO/TAO_IDL/ast/ast_generator.cpp:
+
+        * TAO/TAO_IDL/fe/fe_init.cpp:
+
+        * TAO/TAO_IDL/tao_idl.mpc:
+        * TAO/TAO_IDL/tao_idl.cpp:
+
+        * TAO/docs/tutorials/Quoter/AMI/client.cpp:
+        * TAO/docs/tutorials/Quoter/AMI/server.cpp:
+
+        * TAO/docs/tutorials/Quoter/Event_Service/client.cpp:
+        * TAO/docs/tutorials/Quoter/Event_Service/server.cpp:
+
+        * TAO/docs/tutorials/Quoter/Naming_Service/client.cpp:
+        * TAO/docs/tutorials/Quoter/Naming_Service/server.cpp:
+
+        * TAO/docs/tutorials/Quoter/On_Demand_Activation/client.cpp:
+        * TAO/docs/tutorials/Quoter/On_Demand_Activation/server.cpp:
+
+        * TAO/docs/tutorials/Quoter/RT_Event_Service/client.cpp:
+        * TAO/docs/tutorials/Quoter/RT_Event_Service/server.cpp:
+
+        * TAO/docs/tutorials/Quoter/Simple/Client/client.cpp:
+
+        * TAO/docs/tutorials/Quoter/Simple/Impl-Repo/client.cpp:
+        * TAO/docs/tutorials/Quoter/Simple/Impl-Repo/server.cpp:
+
+        * TAO/docs/tutorials/Quoter/Simple/ImprovedServer/server.cpp:
+
+        * TAO/docs/tutorials/Quoter/Simple/Persistent/client.cpp:
+        * TAO/docs/tutorials/Quoter/Simple/Persistent/server.cpp:
+
+        * TAO/docs/tutorials/Quoter/Simple/Server/server.cpp:
+
+        * TAO/examples/AMH/Sink_Server/AMH_Servant.cpp:
+        * TAO/examples/AMH/Sink_Server/Base_Server.cpp:
+        * TAO/examples/AMH/Sink_Server/Client_Task.cpp:
+        * TAO/examples/AMH/Sink_Server/MT_AMH_Server.cpp:
+        * TAO/examples/AMH/Sink_Server/client.cpp:
+        * TAO/examples/AMH/Sink_Server/mt_server.cpp:
+        * TAO/examples/AMH/Sink_Server/st_server.cpp:
+
+        * TAO/examples/AMI/FL_Callback/peer.cpp:
+        * TAO/examples/AMI/FL_Callback/progress.cpp:
+
+        * TAO/examples/Advanced/ch_12/client.cpp:
+        * TAO/examples/Advanced/ch_12/server.cpp:
+
+        * TAO/examples/Advanced/ch_18/client.cpp:
+        * TAO/examples/Advanced/ch_18/server.cpp:
+
+        * TAO/examples/Advanced/ch_21/client.cpp:
+        * TAO/examples/Advanced/ch_21/server.cpp:
+
+        * TAO/examples/Advanced/ch_3/client.cpp:
+        * TAO/examples/Advanced/ch_3/server.cpp:
+
+        * TAO/examples/Advanced/ch_8_and_10/client.cpp:
+        * TAO/examples/Advanced/ch_8_and_10/server.cpp:
+
+        * TAO/examples/Buffered_AMI/client.cpp:
+        * TAO/examples/Buffered_AMI/server.cpp:
+
+        * TAO/examples/Buffered_Oneways/client.cpp:
+        * TAO/examples/Buffered_Oneways/server.cpp:
+
+        * TAO/examples/CSD_Strategy/ThreadPool3/ClientApp.cpp:
+
+        * TAO/examples/Callback_Quoter/Consumer_Handler.cpp:
+        * TAO/examples/Callback_Quoter/Notifier_Input_Handler.cpp:
+        * TAO/examples/Callback_Quoter/Supplier_i.cpp:
+        * TAO/examples/Callback_Quoter/consumer.cpp:
+        * TAO/examples/Callback_Quoter/notifier.cpp:
+        * TAO/examples/Callback_Quoter/supplier.cpp:
+        * TAO/examples/Content_Server/AMI_Iterator/Content_Iterator_i.cpp:
+        * TAO/examples/Content_Server/AMI_Iterator/client.cpp:
+        * TAO/examples/Content_Server/AMI_Iterator/server.cpp:
+
+        * TAO/examples/Content_Server/AMI_Observer/Callback_Handler.cpp:
+        * TAO/examples/Content_Server/AMI_Observer/client.cpp:
+        * TAO/examples/Content_Server/AMI_Observer/server.cpp:
+
+        * TAO/examples/Content_Server/SMI_Iterator/Content_Iterator_i.cpp:
+        * TAO/examples/Content_Server/SMI_Iterator/client.cpp:
+        * TAO/examples/Content_Server/SMI_Iterator/server.cpp:
+
+        * TAO/examples/Event_Comm/consumer.cpp:
+        * TAO/examples/Event_Comm/notifier.cpp:
+        * TAO/examples/Event_Comm/supplier.cpp:
+
+        * TAO/examples/Kokyu_dsrt_schedulers/Task_Stats.h:
+        * TAO/examples/Kokyu_dsrt_schedulers/Task_Stats.cpp:
+
+        * TAO/examples/Kokyu_dsrt_schedulers/fp_example/client.cpp:
+        * TAO/examples/Kokyu_dsrt_schedulers/fp_example/server.cpp:
+
+        * TAO/examples/Kokyu_dsrt_schedulers/mif_example/client.cpp:
+        * TAO/examples/Kokyu_dsrt_schedulers/mif_example/server.cpp:
+
+        * TAO/examples/Kokyu_dsrt_schedulers/muf_example/client.cpp:
+        * TAO/examples/Kokyu_dsrt_schedulers/muf_example/server.cpp:
+
+        * TAO/examples/Load_Balancing/Identity_Client.cpp:
+        * TAO/examples/Load_Balancing/Identity_Server.cpp:
+        * TAO/examples/Load_Balancing/Load_Balancing_Service.cpp:
+
+        * TAO/examples/Load_Balancing_persistent/Identity_Client.cpp:
+        * TAO/examples/Load_Balancing_persistent/Identity_Server.cpp:
+        * TAO/examples/Load_Balancing_persistent/Load_Balancer_i.cpp:
+        * TAO/examples/Load_Balancing_persistent/Load_Balancing_Service.cpp:
+
+        * TAO/examples/Logging/Logger_i.cpp:
+        * TAO/examples/Logging/Logging_Service.cpp:
+        * TAO/examples/Logging/Logging_Service_i.cpp:
+        * TAO/examples/Logging/Logging_Test.cpp:
+        * TAO/examples/Logging/Logging_Test_i.cpp:
+
+        * TAO/examples/OBV/Simple_util.cpp:
+
+        * TAO/examples/OBV/Typed_Events/Client_i.cpp:
+        * TAO/examples/OBV/Typed_Events/client.cpp:
+        * TAO/examples/OBV/Typed_Events/server.cpp:
+
+        * TAO/examples/POA/Adapter_Activator/server.cpp:
+
+        * TAO/examples/POA/DSI/client.cpp:
+        * TAO/examples/POA/DSI/server.cpp:
+
+        * TAO/examples/POA/Default_Servant/client.cpp:
+        * TAO/examples/POA/Default_Servant/server.cpp:
+
+        * TAO/examples/POA/Explicit_Activation/server.cpp:
+
+        * TAO/examples/POA/FindPOA/FindPOA.cpp:
+
+        * TAO/examples/POA/Forwarding/client.cpp:
+        * TAO/examples/POA/Forwarding/server.cpp:
+
+        * TAO/examples/POA/Generic_Servant/client.cpp:
+
+        * TAO/examples/POA/Loader/Servant_Activator.cpp:
+        * TAO/examples/POA/Loader/Servant_Locator.cpp:
+        * TAO/examples/POA/Loader/Server_Manager.cpp:
+        * TAO/examples/POA/Loader/server.cpp:
+
+        * TAO/examples/POA/NewPOA/NewPOA.cpp:
+
+        * TAO/examples/POA/On_Demand_Activation/server.cpp:
+
+        * TAO/examples/POA/On_Demand_Loading/Servant_Manager.cpp:
+        * TAO/examples/POA/On_Demand_Loading/Server_Manager.cpp:
+        * TAO/examples/POA/On_Demand_Loading/server.cpp:
+
+        * TAO/examples/POA/POA_BiDir/POA_BiDir.cpp:
+
+        * TAO/examples/POA/Reference_Counted_Servant/server.cpp:
+
+        * TAO/examples/POA/RootPOA/RootPOA.cpp:
+
+        * TAO/examples/POA/TIE/client.cpp:
+        * TAO/examples/POA/TIE/server.cpp:
+
+        * TAO/examples/Persistent_Grid/Grid_Client_i.cpp:
+        * TAO/examples/Persistent_Grid/Grid_i.cpp:
+        * TAO/examples/Persistent_Grid/Persistent_Client_i.cpp:
+        * TAO/examples/Persistent_Grid/Simple_util.cpp:
+        * TAO/examples/Persistent_Grid/client.cpp:
+        * TAO/examples/Persistent_Grid/persistent_client.cpp:
+        * TAO/examples/Persistent_Grid/server.cpp:
+
+        * TAO/examples/PluggableUDP/tests/Basic/UDP_Client_i.cpp:
+        * TAO/examples/PluggableUDP/tests/Basic/client.cpp:
+        * TAO/examples/PluggableUDP/tests/Basic/server.cpp:
+
+        * TAO/examples/PluggableUDP/tests/Performance/UDP_PerformanceClient.cpp:
+        * TAO/examples/PluggableUDP/tests/Performance/client.cpp:
+        * TAO/examples/PluggableUDP/tests/Performance/server.cpp:
+
+        * TAO/examples/PluggableUDP/tests/SimplePerformance/client.cpp:
+        * TAO/examples/PluggableUDP/tests/SimplePerformance/server.cpp:
+
+        * TAO/examples/Quoter/Factory_Finder.cpp:
+        * TAO/examples/Quoter/Generic_Factory.cpp:
+        * TAO/examples/Quoter/client.cpp:
+        * TAO/examples/Quoter/server.cpp:
+
+        * TAO/examples/RTCORBA/Activity/Activity.cpp:
+        * TAO/examples/RTCORBA/Activity/Builder.h:
+        * TAO/examples/RTCORBA/Activity/Builder.cpp:
+        * TAO/examples/RTCORBA/Activity/Job_i.h:
+        * TAO/examples/RTCORBA/Activity/Job_i.cpp:
+        * TAO/examples/RTCORBA/Activity/POA_Holder.h:
+        * TAO/examples/RTCORBA/Activity/POA_Holder.cpp:
+        * TAO/examples/RTCORBA/Activity/Periodic_Task.h:
+        * TAO/examples/RTCORBA/Activity/Periodic_Task.cpp:
+        * TAO/examples/RTCORBA/Activity/Task_Stats.h:
+        * TAO/examples/RTCORBA/Activity/Task_Stats.cpp:
+
+        * TAO/examples/RTScheduling/DT_Creator.h:
+        * TAO/examples/RTScheduling/DT_Creator.cpp:
+
+        * TAO/examples/RTScheduling/Fixed_Priority_Scheduler/FP_Scheduler.cpp:
+        * TAO/examples/RTScheduling/Fixed_Priority_Scheduler/test.cpp:
+
+        * TAO/examples/RTScheduling/Job_i.h:
+        * TAO/examples/RTScheduling/Job_i.cpp:
+
+        * TAO/examples/RTScheduling/MIF_Scheduler/MIF_Task.cpp:
+        * TAO/examples/RTScheduling/MIF_Scheduler/test.cpp:
+
+        * TAO/examples/RTScheduling/POA_Holder.h:
+        * TAO/examples/RTScheduling/POA_Holder.cpp:
+        * TAO/examples/RTScheduling/Starter.cpp:
+        * TAO/examples/RTScheduling/Task_Stats.h:
+        * TAO/examples/RTScheduling/Task_Stats.cpp:
+        * TAO/examples/RTScheduling/Thread_Task.cpp:
+
+        * TAO/examples/Simple/Simple_util.cpp:
+
+        * TAO/examples/Simple/bank/client.cpp:
+        * TAO/examples/Simple/bank/server.cpp:
+
+        * TAO/examples/Simple/chat/Client_i.cpp:
+        * TAO/examples/Simple/chat/Server_i.cpp:
+        * TAO/examples/Simple/chat/client.cpp:
+        * TAO/examples/Simple/chat/server.cpp:
+
+        * TAO/examples/Simple/echo/client.cpp:
+        * TAO/examples/Simple/echo/server.cpp:
+
+        * TAO/examples/Simple/grid/Grid_Client_i.cpp:
+        * TAO/examples/Simple/grid/client.cpp:
+        * TAO/examples/Simple/grid/server.cpp:
+
+        * TAO/examples/Simple/time-date/Time_Date.cpp:
+        * TAO/examples/Simple/time-date/client.cpp:
+        * TAO/examples/Simple/time-date/server.cpp:
+
+        * TAO/examples/Simple/time/Time_Client_i.cpp:
+        * TAO/examples/Simple/time/client.cpp:
+        * TAO/examples/Simple/time/server.cpp:
+
+        * TAO/examples/Simulator/Event_Supplier/DualEC_Sup.cpp:
+        * TAO/examples/Simulator/Event_Supplier/Event_Con.cpp:
+        * TAO/examples/Simulator/Event_Supplier/Event_Sup.cpp:
+        * TAO/examples/Simulator/Event_Supplier/Logging_Sup.cpp:
+
+        * TAO/examples/TypeCode_Creation/main.cpp:
+
+        * TAO/examples/ior_corbaloc/client.cpp:
+        * TAO/examples/ior_corbaloc/corbaname_client.cpp:
+        * TAO/examples/ior_corbaloc/server.cpp:
+
+        * TAO/examples/mfc/client.cpp:
+
+        * TAO/interop-tests/wchar/client.cpp:
+        * TAO/interop-tests/wchar/server.cpp:
+        * TAO/interop-tests/wchar/wchar_reference.h:
+        * TAO/interop-tests/wchar/wchar_reference.cpp:
+
+        * TAO/orbsvcs/Concurrency_Service/Concurrency_Service.h:
+        * TAO/orbsvcs/Concurrency_Service/Concurrency_Service.cpp:
+
+        * TAO/orbsvcs/Event_Service/Event_Service.cpp:
+
+        * TAO/orbsvcs/FTRT_Event_Service/Event_Service/FT_EventService.cpp:
+
+        * TAO/orbsvcs/FTRT_Event_Service/Factory_Service/EventChannelFactory_i.cpp:
+        * TAO/orbsvcs/FTRT_Event_Service/Factory_Service/FTRTEC_Factory_Service.cpp:
+
+        * TAO/orbsvcs/FTRT_Event_Service/Gateway_Service/FTRTEC_Gateway_Service.cpp:
+
+        * TAO/orbsvcs/FT_ReplicationManager/FT_DefaultFaultAnalyzer.cpp:
+        * TAO/orbsvcs/FT_ReplicationManager/FT_FaultConsumer.cpp:
+        * TAO/orbsvcs/FT_ReplicationManager/FT_FaultEventDescriptor.cpp:
+        * TAO/orbsvcs/FT_ReplicationManager/FT_ReplicationManager.cpp:
+        * TAO/orbsvcs/FT_ReplicationManager/FT_ReplicationManagerFaultAnalyzer.cpp:
+
+        * TAO/orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.cpp:
+
+        * TAO/orbsvcs/Fault_Notifier/FT_Notifier_i.cpp:
+
+        * TAO/orbsvcs/IFR_Service/IFR_Server.cpp:
+        * TAO/orbsvcs/IFR_Service/IFR_Service.mpc:
+
+        * TAO/orbsvcs/ImplRepo_Service/Activator_NT_Service.h:
+        * TAO/orbsvcs/ImplRepo_Service/Activator_Options.h:
+        * TAO/orbsvcs/ImplRepo_Service/Activator_Options.cpp:
+
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Activator.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Locator.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/Locator_NT_Service.h:
+        * TAO/orbsvcs/ImplRepo_Service/Locator_Options.h:
+        * TAO/orbsvcs/ImplRepo_Service/Locator_Options.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/Locator_Repository.h:
+        * TAO/orbsvcs/ImplRepo_Service/Locator_Repository.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/Locator_XMLHandler.h:
+        * TAO/orbsvcs/ImplRepo_Service/Locator_XMLHandler.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/tao_imr_i.h:
+        * TAO/orbsvcs/ImplRepo_Service/tao_imr_i.cpp:
+
+        * TAO/orbsvcs/LifeCycle_Service/Criteria_Evaluator.cpp:
+        * TAO/orbsvcs/LifeCycle_Service/LifeCycle_Service.cpp:
+
+        * TAO/orbsvcs/LoadBalancer/LoadManager.cpp:
+        * TAO/orbsvcs/LoadBalancer/LoadMonitor.cpp:
+
+        * TAO/orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.h:
+        * TAO/orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.cpp:
+
+        * TAO/orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.h:
+        * TAO/orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.cpp:
+
+        * TAO/orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.h:
+        * TAO/orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.cpp:
+
+        * TAO/orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.h:
+        * TAO/orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.cpp:
+
+        * TAO/orbsvcs/Naming_Service/NT_Naming_Server.cpp:
+        * TAO/orbsvcs/Naming_Service/NT_Naming_Service.h:
+        * TAO/orbsvcs/Naming_Service/NT_Naming_Service.cpp:
+        * TAO/orbsvcs/Naming_Service/Naming_Service.cpp:
+
+        * TAO/orbsvcs/Notify_Service/NT_Notify_Server.cpp:
+        * TAO/orbsvcs/Notify_Service/NT_Notify_Service.h:
+        * TAO/orbsvcs/Notify_Service/NT_Notify_Service.cpp:
+        * TAO/orbsvcs/Notify_Service/Notify_Service.h:
+        * TAO/orbsvcs/Notify_Service/Notify_Service.cpp:
+
+        * TAO/orbsvcs/PSS/psdl_tao.cpp:
+
+        * TAO/orbsvcs/Scheduling_Service/Scheduling_Service.cpp:
+
+        * TAO/orbsvcs/Time_Service/Clerk_i.cpp:
+        * TAO/orbsvcs/Time_Service/Server_i.cpp:
+
+        * TAO/orbsvcs/examples/CosEC/Factory/FactoryClient.cpp:
+        * TAO/orbsvcs/examples/CosEC/Factory/FactoryDriver.h:
+        * TAO/orbsvcs/examples/CosEC/Factory/FactoryDriver.cpp:
+        * TAO/orbsvcs/examples/CosEC/Factory/main.cpp:
+
+        * TAO/orbsvcs/examples/CosEC/RtEC_Based/bin/RtEC_Based_CosEC.h:
+        * TAO/orbsvcs/examples/CosEC/RtEC_Based/bin/RtEC_Based_CosEC.cpp:
+
+        * TAO/orbsvcs/examples/CosEC/RtEC_Based/tests/Basic/Basic.cpp:
+
+        * TAO/orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/Consumer.h:
+        * TAO/orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/Consumer.cpp:
+        * TAO/orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/Multiple.h:
+        * TAO/orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/Multiple.cpp:
+        * TAO/orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/Supplier.h:
+        * TAO/orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/Supplier.cpp:
+
+        * TAO/orbsvcs/examples/CosEC/Simple/Consumer.cpp:
+        * TAO/orbsvcs/examples/CosEC/Simple/Service.cpp:
+        * TAO/orbsvcs/examples/CosEC/Simple/Supplier.cpp:
+
+        * TAO/orbsvcs/examples/CosEC/TypedSimple/Consumer.cpp:
+        * TAO/orbsvcs/examples/CosEC/TypedSimple/Supplier.cpp:
+
+        * TAO/orbsvcs/examples/FaultTolerance/RolyPoly/client.cpp:
+        * TAO/orbsvcs/examples/FaultTolerance/RolyPoly/server.cpp:
+
+        * TAO/orbsvcs/examples/ImR/Advanced/TestClient.cpp:
+        * TAO/orbsvcs/examples/ImR/Advanced/TestServer.cpp:
+        * TAO/orbsvcs/examples/ImR/Advanced/client_main.cpp:
+        * TAO/orbsvcs/examples/ImR/Advanced/manager_main.cpp:
+        * TAO/orbsvcs/examples/ImR/Advanced/server_main.cpp:
+
+        * TAO/orbsvcs/examples/ImR/Combined_Service/combined.cpp:
+        * TAO/orbsvcs/examples/ImR/Combined_Service/controller.cpp:
+        * TAO/orbsvcs/examples/ImR/Combined_Service/dynserver.h:
+        * TAO/orbsvcs/examples/ImR/Combined_Service/dynserver.cpp:
+        * TAO/orbsvcs/examples/ImR/Combined_Service/test.cpp:
+        * TAO/orbsvcs/examples/ImR/Combined_Service/test_server.cpp:
+
+        * TAO/orbsvcs/examples/LoadBalancing/client.cpp:
+        * TAO/orbsvcs/examples/LoadBalancing/server.cpp:
+
+        * TAO/orbsvcs/examples/Log/Basic/TLS_Client.h:
+        * TAO/orbsvcs/examples/Log/Basic/TLS_Client.cpp:
+        * TAO/orbsvcs/examples/Log/Basic/main.cpp:
+
+        * TAO/orbsvcs/examples/Log/Event/Event_Consumer.cpp:
+        * TAO/orbsvcs/examples/Log/Event/Event_Supplier.cpp:
+
+        * TAO/orbsvcs/examples/Log/Notify/Notify_Consumer.cpp:
+        * TAO/orbsvcs/examples/Log/Notify/Notify_Supplier.cpp:
+
+        * TAO/orbsvcs/examples/Log/RTEvent/RTEvent_Consumer.cpp:
+        * TAO/orbsvcs/examples/Log/RTEvent/RTEvent_Supplier.cpp:
+
+        * TAO/orbsvcs/examples/Notify/Federation/Agent/Agent.cpp:
+
+        * TAO/orbsvcs/examples/Notify/Federation/SpaceCraft/SpaceCraft.cpp:
+
+        * TAO/orbsvcs/examples/Notify/Filter/Filter.h:
+        * TAO/orbsvcs/examples/Notify/Filter/Filter.cpp:
+        * TAO/orbsvcs/examples/Notify/Filter/main.cpp:
+
+        * TAO/orbsvcs/examples/Notify/Lanes/Consumer_Client.cpp:
+        * TAO/orbsvcs/examples/Notify/Lanes/Supplier_Client.cpp:
+
+        * TAO/orbsvcs/examples/Notify/Subscribe/Subscribe.h:
+        * TAO/orbsvcs/examples/Notify/Subscribe/Subscribe.cpp:
+        * TAO/orbsvcs/examples/Notify/Subscribe/main.cpp:
+
+        * TAO/orbsvcs/examples/Notify/ThreadPool/Consumer_Client.cpp:
+        * TAO/orbsvcs/examples/Notify/ThreadPool/Supplier_Client.cpp:
+
+        * TAO/orbsvcs/examples/ORT/client.cpp:
+        * TAO/orbsvcs/examples/ORT/gateway_server.cpp:
+        * TAO/orbsvcs/examples/ORT/server.cpp:
+
+        * TAO/orbsvcs/examples/PSS/Simple_Naming.cpp:
+        * TAO/orbsvcs/examples/PSS/client.cpp:
+        * TAO/orbsvcs/examples/PSS/server.cpp:
+
+        * TAO/orbsvcs/examples/RtEC/IIOPGateway/Consumer.cpp:
+        * TAO/orbsvcs/examples/RtEC/IIOPGateway/EC.cpp:
+        * TAO/orbsvcs/examples/RtEC/IIOPGateway/Gateway.cpp:
+        * TAO/orbsvcs/examples/RtEC/IIOPGateway/Supplier.cpp:
+
+        * TAO/orbsvcs/examples/RtEC/Kokyu/Service.cpp:
+
+        * TAO/orbsvcs/examples/RtEC/MCast/MCast.cpp:
+
+        * TAO/orbsvcs/examples/RtEC/Schedule/Service.cpp:
+
+        * TAO/orbsvcs/examples/RtEC/Simple/Consumer.cpp:
+        * TAO/orbsvcs/examples/RtEC/Simple/Service.cpp:
+        * TAO/orbsvcs/examples/RtEC/Simple/Supplier.cpp:
+
+        * TAO/orbsvcs/examples/Security/SecurityLevel1/client.cpp:
+        * TAO/orbsvcs/examples/Security/SecurityLevel1/server.cpp:
+
+        * TAO/orbsvcs/examples/Security/Send_File/client.cpp:
+        * TAO/orbsvcs/examples/Security/Send_File/server.cpp:
+
+        * TAO/orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
+        * TAO/orbsvcs/orbsvcs/AV/Endpoint_Strategy.cpp:
+        * TAO/orbsvcs/orbsvcs/AV/FlowSpec_Entry.cpp:
+        * TAO/orbsvcs/orbsvcs/AV/QoS_UDP.cpp:
+        * TAO/orbsvcs/orbsvcs/AV/TCP.cpp:
+        * TAO/orbsvcs/orbsvcs/AV/UDP.cpp:
+
+        * TAO/orbsvcs/orbsvcs/Concurrency/Concurrency_Loader.h:
+        * TAO/orbsvcs/orbsvcs/Concurrency/Concurrency_Loader.cpp:
+
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.cpp:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.cpp:
+
+        * TAO/orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.cpp:
+        * TAO/orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
+        * TAO/orbsvcs/orbsvcs/Event/EC_Dispatching_Task.h:
+        * TAO/orbsvcs/orbsvcs/Event/EC_Dispatching_Task.cpp:
+        * TAO/orbsvcs/orbsvcs/Event/EC_Gateway_IIOP_Factory.h:
+        * TAO/orbsvcs/orbsvcs/Event/EC_Gateway_IIOP_Factory.cpp:
+        * TAO/orbsvcs/orbsvcs/Event/EC_RTCORBA_Factory.h:
+        * TAO/orbsvcs/orbsvcs/Event/EC_RTCORBA_Factory.cpp:
+        * TAO/orbsvcs/orbsvcs/Event/EC_TPC_Factory.h:
+        * TAO/orbsvcs/orbsvcs/Event/EC_TPC_Factory.cpp:
+
+        * TAO/orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.cpp:
+
+        * TAO/orbsvcs/orbsvcs/FtRtEvent/ClientORB/FTRT_ClientORB_Loader.cpp:
+
+        * TAO/orbsvcs/orbsvcs/FtRtEvent/EventChannel/AMI_Primary_Replication_Strategy.cpp:
+        * TAO/orbsvcs/orbsvcs/FtRtEvent/EventChannel/Basic_Replication_Strategy.cpp:
+        * TAO/orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_Group_Manager.cpp:
+        * TAO/orbsvcs/orbsvcs/FtRtEvent/EventChannel/Fault_Detector.cpp:
+        * TAO/orbsvcs/orbsvcs/FtRtEvent/EventChannel/Fault_Detector_T.cpp:
+        * TAO/orbsvcs/orbsvcs/FtRtEvent/EventChannel/ForwardCtrlServerInterceptor.cpp:
+        * TAO/orbsvcs/orbsvcs/FtRtEvent/EventChannel/FtEventServiceInterceptor.cpp:
+        * TAO/orbsvcs/orbsvcs/FtRtEvent/EventChannel/GroupInfoPublisher.cpp:
+        * TAO/orbsvcs/orbsvcs/FtRtEvent/EventChannel/Identification_Service.cpp:
+        * TAO/orbsvcs/orbsvcs/FtRtEvent/EventChannel/Replication_Service.cpp:
+
+        * TAO/orbsvcs/orbsvcs/FtRtEvent/Utils/Log.inl:
+        * TAO/orbsvcs/orbsvcs/FtRtEvent/Utils/Log.cpp:
+
+        * TAO/orbsvcs/orbsvcs/HTIOP/HTIOP_Acceptor.cpp:
+        * TAO/orbsvcs/orbsvcs/HTIOP/HTIOP_Connection_Handler.cpp:
+        * TAO/orbsvcs/orbsvcs/HTIOP/HTIOP_Connector.cpp:
+        * TAO/orbsvcs/orbsvcs/HTIOP/HTIOP_Factory.cpp:
+
+        * TAO/orbsvcs/orbsvcs/IFRService/Options.cpp:
+
+        * TAO/orbsvcs/orbsvcs/IOR_Multicast.cpp:
+
+        * TAO/orbsvcs/orbsvcs/LoadBalancing/LB_Component.cpp:
+
+        * TAO/orbsvcs/orbsvcs/Log/Hash_LogRecordStore.cpp:
+
+        * TAO/orbsvcs/orbsvcs/Naming/Flat_File_Persistence.cpp:
+        * TAO/orbsvcs/orbsvcs/Naming/Naming_Server.cpp:
+        * TAO/orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp:
+        * TAO/orbsvcs/orbsvcs/Naming/Storable_Naming_Context_Activator.cpp:
+
+        * TAO/orbsvcs/orbsvcs/Notify/CosNotify_Service.cpp:
+        * TAO/orbsvcs/orbsvcs/Notify/EventType.cpp:
+        * TAO/orbsvcs/orbsvcs/Notify/Name_Value_Pair.cpp:
+        * TAO/orbsvcs/orbsvcs/Notify/Topology_Object.h:
+        * TAO/orbsvcs/orbsvcs/Notify/XML_Loader.cpp:
+        * TAO/orbsvcs/orbsvcs/Notify/XML_Saver.cpp:
+        * TAO/orbsvcs/orbsvcs/Notify/XML_Topology_Factory.cpp:
+
+        * TAO/orbsvcs/orbsvcs/PortableGroup/PG_FactoryRegistry.cpp:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/Portable_Group_Map.cpp:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/UIPMC_Factory.h:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/UIPMC_Factory.cpp:
+
+        * TAO/orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp:
+
+        * TAO/orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.h:
+        * TAO/orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp:
+
+        * TAO/orbsvcs/orbsvcs/Sched/DynSched.cpp:
+
+        * TAO/orbsvcs/orbsvcs/Scheduler_Factory.cpp:
+
+        * TAO/orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp:
+        * TAO/orbsvcs/orbsvcs/Trader/Trader_Utils.cpp:
+
+        * TAO/orbsvcs/performance-tests/LoadBalancing/LBPerf/CPU/client.cpp:
+        * TAO/orbsvcs/performance-tests/LoadBalancing/LBPerf/CPU/server.cpp:
+
+        * TAO/orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/client.cpp:
+        * TAO/orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/server.cpp:
+
+        * TAO/orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/compare_histo.cpp:
+        * TAO/orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/driver.cpp:
+
+        * TAO/orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/client.cpp:
+        * TAO/orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/server.cpp:
+
+        * TAO/orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/client.cpp:
+        * TAO/orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/server.cpp:
+
+        * TAO/orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/client.cpp:
+        * TAO/orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/server.cpp:
+
+        * TAO/orbsvcs/performance-tests/RTEvent/Roundtrip/client.cpp:
+        * TAO/orbsvcs/performance-tests/RTEvent/Roundtrip/server.cpp:
+
+        * TAO/orbsvcs/performance-tests/RTEvent/TCP_Baseline/client.cpp:
+        * TAO/orbsvcs/performance-tests/RTEvent/TCP_Baseline/server.cpp:
+
+        * TAO/orbsvcs/performance-tests/RTEvent/lib/Client_Options.h:
+        * TAO/orbsvcs/performance-tests/RTEvent/lib/Client_Options.cpp:
+
+        * TAO/orbsvcs/performance-tests/perf.mwc:
+
+        * TAO/orbsvcs/tests/AVStreams/Asynch_Three_Stage/Connection_Manager.cpp:
+        * TAO/orbsvcs/tests/AVStreams/Asynch_Three_Stage/distributer.cpp:
+        * TAO/orbsvcs/tests/AVStreams/Asynch_Three_Stage/receiver.cpp:
+        * TAO/orbsvcs/tests/AVStreams/Asynch_Three_Stage/sender.cpp:
+
+        * TAO/orbsvcs/tests/AVStreams/Bidirectional_Flows/receiver.cpp:
+        * TAO/orbsvcs/tests/AVStreams/Bidirectional_Flows/sender.cpp:
+
+        * TAO/orbsvcs/tests/AVStreams/Component_Switching/distributer.cpp:
+        * TAO/orbsvcs/tests/AVStreams/Component_Switching/receiver.cpp:
+        * TAO/orbsvcs/tests/AVStreams/Component_Switching/sender.cpp:
+
+        * TAO/orbsvcs/tests/AVStreams/Full_Profile/ftp.h:
+        * TAO/orbsvcs/tests/AVStreams/Full_Profile/ftp.cpp:
+        * TAO/orbsvcs/tests/AVStreams/Full_Profile/server.h:
+        * TAO/orbsvcs/tests/AVStreams/Full_Profile/server.cpp:
+
+        * TAO/orbsvcs/tests/AVStreams/Latency/control.cpp:
+        * TAO/orbsvcs/tests/AVStreams/Latency/ping.cpp:
+        * TAO/orbsvcs/tests/AVStreams/Latency/pong.cpp:
+
+        * TAO/orbsvcs/tests/AVStreams/Modify_QoS/receiver.cpp:
+        * TAO/orbsvcs/tests/AVStreams/Modify_QoS/sender.cpp:
+
+        * TAO/orbsvcs/tests/AVStreams/Multicast/ftp.h:
+        * TAO/orbsvcs/tests/AVStreams/Multicast/ftp.cpp:
+        * TAO/orbsvcs/tests/AVStreams/Multicast/server.h:
+        * TAO/orbsvcs/tests/AVStreams/Multicast/server.cpp:
+
+        * TAO/orbsvcs/tests/AVStreams/Multicast_Full_Profile/ftp.h:
+        * TAO/orbsvcs/tests/AVStreams/Multicast_Full_Profile/ftp.cpp:
+        * TAO/orbsvcs/tests/AVStreams/Multicast_Full_Profile/server.h:
+        * TAO/orbsvcs/tests/AVStreams/Multicast_Full_Profile/server.cpp:
+
+        * TAO/orbsvcs/tests/AVStreams/Multiple_Flows/receiver.cpp:
+        * TAO/orbsvcs/tests/AVStreams/Multiple_Flows/sender.cpp:
+
+        * TAO/orbsvcs/tests/AVStreams/Pluggable/ftp.h:
+        * TAO/orbsvcs/tests/AVStreams/Pluggable/ftp.cpp:
+        * TAO/orbsvcs/tests/AVStreams/Pluggable/server.cpp:
+
+        * TAO/orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/receiver.cpp:
+        * TAO/orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/sender.cpp:
+
+        * TAO/orbsvcs/tests/AVStreams/Simple_Three_Stage/distributer.cpp:
+        * TAO/orbsvcs/tests/AVStreams/Simple_Three_Stage/receiver.cpp:
+        * TAO/orbsvcs/tests/AVStreams/Simple_Three_Stage/sender.cpp:
+
+        * TAO/orbsvcs/tests/AVStreams/Simple_Two_Stage/receiver.cpp:
+        * TAO/orbsvcs/tests/AVStreams/Simple_Two_Stage/sender.cpp:
+
+        * TAO/orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/receiver.cpp:
+        * TAO/orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/sender.cpp:
+
+        * TAO/orbsvcs/tests/BiDir_CORBALOC/TimeServer.cpp:
+
+        * TAO/orbsvcs/tests/Bug_1334_Regression/client.cpp:
+
+        * TAO/orbsvcs/tests/Bug_1393_Regression/client.cpp:
+
+        * TAO/orbsvcs/tests/Bug_1395_Regression/client.cpp:
+        * TAO/orbsvcs/tests/Bug_1395_Regression/server.cpp:
+
+        * TAO/orbsvcs/tests/Bug_1630_Regression/testclient.cpp:
+
+        * TAO/orbsvcs/tests/Bug_2137_Regression/client.cpp:
+
+        * TAO/orbsvcs/tests/Bug_2247_Regression/Manager.cpp:
+        * TAO/orbsvcs/tests/Bug_2247_Regression/server.cpp:
+
+        * TAO/orbsvcs/tests/Bug_2248_Regression/Bug_2248_Regression.mpc:
+        * TAO/orbsvcs/tests/Bug_2248_Regression/client.cpp:
+        * TAO/orbsvcs/tests/Bug_2248_Regression/server.cpp:
+
+        * TAO/orbsvcs/tests/Concurrency/CC_client.h:
+        * TAO/orbsvcs/tests/Concurrency/CC_client.cpp:
+
+        * TAO/orbsvcs/tests/CosEvent/Basic/Disconnect.cpp:
+        * TAO/orbsvcs/tests/CosEvent/Basic/MT_Disconnect.cpp:
+        * TAO/orbsvcs/tests/CosEvent/Basic/Pull_Push_Event.cpp:
+        * TAO/orbsvcs/tests/CosEvent/Basic/Push_Event.cpp:
+        * TAO/orbsvcs/tests/CosEvent/Basic/Random.cpp:
+        * TAO/orbsvcs/tests/CosEvent/Basic/Shutdown.cpp:
+
+        * TAO/orbsvcs/tests/EC_Custom_Marshal/ECM_Consumer.cpp:
+        * TAO/orbsvcs/tests/EC_Custom_Marshal/ECM_Supplier.cpp:
+
+        * TAO/orbsvcs/tests/EC_MT_Mcast/Consumer.cpp:
+        * TAO/orbsvcs/tests/EC_MT_Mcast/MCast.cpp:
+        * TAO/orbsvcs/tests/EC_MT_Mcast/Supplier.cpp:
+
+        * TAO/orbsvcs/tests/EC_Mcast/EC_Mcast.cpp:
+
+        * TAO/orbsvcs/tests/EC_Multiple/EC_Multiple.cpp:
+
+        * TAO/orbsvcs/tests/EC_Throughput/ECT_Consumer.cpp:
+        * TAO/orbsvcs/tests/EC_Throughput/ECT_Consumer_Driver.cpp:
+        * TAO/orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp:
+        * TAO/orbsvcs/tests/EC_Throughput/ECT_Supplier_Driver.cpp:
+        * TAO/orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp:
+
+        * TAO/orbsvcs/tests/Event/Basic/Atomic_Reconnect.cpp:
+        * TAO/orbsvcs/tests/Event/Basic/BCast.cpp:
+        * TAO/orbsvcs/tests/Event/Basic/Bitmask.cpp:
+        * TAO/orbsvcs/tests/Event/Basic/Complex.cpp:
+        * TAO/orbsvcs/tests/Event/Basic/Control.cpp:
+        * TAO/orbsvcs/tests/Event/Basic/Disconnect.cpp:
+        * TAO/orbsvcs/tests/Event/Basic/Gateway.cpp:
+        * TAO/orbsvcs/tests/Event/Basic/MT_Disconnect.cpp:
+        * TAO/orbsvcs/tests/Event/Basic/Negation.cpp:
+        * TAO/orbsvcs/tests/Event/Basic/Observer.h:
+        * TAO/orbsvcs/tests/Event/Basic/Observer.cpp:
+        * TAO/orbsvcs/tests/Event/Basic/Random.cpp:
+        * TAO/orbsvcs/tests/Event/Basic/Reconnect.cpp:
+        * TAO/orbsvcs/tests/Event/Basic/Schedule.h:
+        * TAO/orbsvcs/tests/Event/Basic/Schedule.cpp:
+        * TAO/orbsvcs/tests/Event/Basic/Shutdown.cpp:
+        * TAO/orbsvcs/tests/Event/Basic/Timeout.cpp:
+        * TAO/orbsvcs/tests/Event/Basic/Wildcard.cpp:
+
+        * TAO/orbsvcs/tests/Event/Mcast/Common/Gateway_EC.cpp:
+
+        * TAO/orbsvcs/tests/Event/Mcast/Complex/consumer.cpp:
+        * TAO/orbsvcs/tests/Event/Mcast/Complex/gateway-ec.cpp:
+        * TAO/orbsvcs/tests/Event/Mcast/Complex/supplier.cpp:
+
+        * TAO/orbsvcs/tests/Event/Mcast/Simple/consumer.cpp:
+        * TAO/orbsvcs/tests/Event/Mcast/Simple/gateway-ec.cpp:
+        * TAO/orbsvcs/tests/Event/Mcast/Simple/supplier.cpp:
+
+        * TAO/orbsvcs/tests/Event/Mcast/Two_Way/application.cpp:
+        * TAO/orbsvcs/tests/Event/Mcast/Two_Way/gateway-ec.cpp:
+
+        * TAO/orbsvcs/tests/Event/Performance/Connect.cpp:
+        * TAO/orbsvcs/tests/Event/Performance/Inversion.cpp:
+        * TAO/orbsvcs/tests/Event/Performance/Latency.cpp:
+        * TAO/orbsvcs/tests/Event/Performance/Latency_Server.cpp:
+        * TAO/orbsvcs/tests/Event/Performance/Throughput.cpp:
+
+        * TAO/orbsvcs/tests/Event/lib/Driver.cpp:
+
+        * TAO/orbsvcs/tests/FT_App/FTAPP_Analyzer_Main.cpp:
+        * TAO/orbsvcs/tests/FT_App/FTAPP_FactoryRegistry_Main.cpp:
+        * TAO/orbsvcs/tests/FT_App/FTAPP_FaultConsumer_Main.cpp:
+        * TAO/orbsvcs/tests/FT_App/FTAPP_Notifier_Main.cpp:
+        * TAO/orbsvcs/tests/FT_App/FT_Client.cpp:
+        * TAO/orbsvcs/tests/FT_App/FT_Creator.cpp:
+        * TAO/orbsvcs/tests/FT_App/FT_Replica.cpp:
+        * TAO/orbsvcs/tests/FT_App/FT_ReplicaFactory_i.cpp:
+        * TAO/orbsvcs/tests/FT_App/FT_ReplicationManagerController.cpp:
+        * TAO/orbsvcs/tests/FT_App/FT_TestReplica_i.cpp:
+        * TAO/orbsvcs/tests/FT_App/ReplicationManagerFaultConsumerAdapter.cpp:
+        * TAO/orbsvcs/tests/FT_App/StubBatchConsumer.cpp:
+        * TAO/orbsvcs/tests/FT_App/StubFaultAnalyzer.cpp:
+        * TAO/orbsvcs/tests/FT_App/StubFaultConsumer.cpp:
+        * TAO/orbsvcs/tests/FT_App/StubFaultNotifier.cpp:
+        * TAO/orbsvcs/tests/FT_App/TAO_Object_Group_Creator.cpp:
+
+        * TAO/orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/client.cpp:
+        * TAO/orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/server.cpp:
+
+        * TAO/orbsvcs/tests/FaultTolerance/IOGR/Manager.cpp:
+        * TAO/orbsvcs/tests/FaultTolerance/IOGR/server.cpp:
+
+        * TAO/orbsvcs/tests/FaultTolerance/IOGRManipulation/IOGRTest.cpp:
+
+        * TAO/orbsvcs/tests/FtRtEvent/consumer.cpp:
+        * TAO/orbsvcs/tests/FtRtEvent/supplier.cpp:
+
+        * TAO/orbsvcs/tests/HTIOP/AMI/Test_Output.cpp:
+        * TAO/orbsvcs/tests/HTIOP/AMI/client.cpp:
+        * TAO/orbsvcs/tests/HTIOP/AMI/server.cpp:
+        * TAO/orbsvcs/tests/HTIOP/AMI/simple_client.cpp:
+
+        * TAO/orbsvcs/tests/HTIOP/BiDirectional/Test_Output.cpp:
+        * TAO/orbsvcs/tests/HTIOP/BiDirectional/client.cpp:
+        * TAO/orbsvcs/tests/HTIOP/BiDirectional/server.cpp:
+
+        * TAO/orbsvcs/tests/HTIOP/Hello/Test_Output.cpp:
+        * TAO/orbsvcs/tests/HTIOP/Hello/client.cpp:
+        * TAO/orbsvcs/tests/HTIOP/Hello/server.cpp:
+
+        * TAO/orbsvcs/tests/HTIOP/test_config.h:
+
+        * TAO/orbsvcs/tests/IOR_MCast/IOR_MCast.mpc:
+        * TAO/orbsvcs/tests/IOR_MCast/client.cpp:
+        * TAO/orbsvcs/tests/IOR_MCast/ior_mcast_client_i.cpp:
+        * TAO/orbsvcs/tests/IOR_MCast/server.cpp:
+        * TAO/orbsvcs/tests/IOR_MCast/server_i.cpp:
+
+        * TAO/orbsvcs/tests/ImplRepo/ImplRepo.mpc:
+
+        * TAO/orbsvcs/tests/ImplRepo/NameService/test.cpp:
+
+        * TAO/orbsvcs/tests/ImplRepo/airplane_client.cpp:
+        * TAO/orbsvcs/tests/ImplRepo/airplane_client_i.cpp:
+        * TAO/orbsvcs/tests/ImplRepo/airplane_server.cpp:
+        * TAO/orbsvcs/tests/ImplRepo/airplane_server_i.cpp:
+        * TAO/orbsvcs/tests/ImplRepo/nestea_client.cpp:
+        * TAO/orbsvcs/tests/ImplRepo/nestea_client_i.cpp:
+        * TAO/orbsvcs/tests/ImplRepo/nestea_i.cpp:
+        * TAO/orbsvcs/tests/ImplRepo/nestea_server.cpp:
+        * TAO/orbsvcs/tests/ImplRepo/nestea_server_i.cpp:
+
+        * TAO/orbsvcs/tests/ImplRepo/scale/client.cpp:
+        * TAO/orbsvcs/tests/ImplRepo/scale/server.cpp:
+        * TAO/orbsvcs/tests/ImplRepo/scale/server_i.cpp:
+
+        * TAO/orbsvcs/tests/InterfaceRepo/Application_Test/client.cpp:
+        * TAO/orbsvcs/tests/InterfaceRepo/Application_Test/ifr_dii_client.cpp:
+        * TAO/orbsvcs/tests/InterfaceRepo/Application_Test/server.cpp:
+
+        * TAO/orbsvcs/tests/InterfaceRepo/IDL3_Test/client.cpp:
+        * TAO/orbsvcs/tests/InterfaceRepo/IDL3_Test/idl3_client.cpp:
+
+        * TAO/orbsvcs/tests/InterfaceRepo/IFR_Test/Admin_Client.cpp:
+        * TAO/orbsvcs/tests/InterfaceRepo/IFR_Test/client.cpp:
+
+        * TAO/orbsvcs/tests/InterfaceRepo/Latency_Test/Latency_Query_Client.cpp:
+        * TAO/orbsvcs/tests/InterfaceRepo/Latency_Test/client.cpp:
+
+        * TAO/orbsvcs/tests/InterfaceRepo/Persistence_Test/Ptest.cpp:
+        * TAO/orbsvcs/tests/InterfaceRepo/Persistence_Test/test.cpp:
+
+        * TAO/orbsvcs/tests/Interoperable_Naming/client.cpp:
+        * TAO/orbsvcs/tests/Interoperable_Naming/ncontextext_client_i.cpp:
+
+        * TAO/orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/LB_server.cpp:
+        * TAO/orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/client.cpp:
+        * TAO/orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/server.cpp:
+
+        * TAO/orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/LB_server.cpp:
+        * TAO/orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/client.cpp:
+        * TAO/orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/server.cpp:
+
+        * TAO/orbsvcs/tests/LoadBalancing/GenericFactory/Manage_Object_Group/server.cpp:
+
+        * TAO/orbsvcs/tests/LoadBalancing/LoadMonitor/CPU/client.cpp:
+
+        * TAO/orbsvcs/tests/Log/Basic_Log_Test/Basic_Log_Test.cpp:
+        * TAO/orbsvcs/tests/Log/Basic_Log_Test/client.cpp:
+
+        * TAO/orbsvcs/tests/Miop/McastHello/client.cpp:
+        * TAO/orbsvcs/tests/Miop/McastHello/server.cpp:
+
+        * TAO/orbsvcs/tests/Notify/Basic/AdminProperties.cpp:
+        * TAO/orbsvcs/tests/Notify/Basic/ConnectDisconnect.h:
+        * TAO/orbsvcs/tests/Notify/Basic/ConnectDisconnect.cpp:
+        * TAO/orbsvcs/tests/Notify/Basic/Events.h:
+        * TAO/orbsvcs/tests/Notify/Basic/Events.cpp:
+        * TAO/orbsvcs/tests/Notify/Basic/Filter.h:
+        * TAO/orbsvcs/tests/Notify/Basic/Filter.cpp:
+        * TAO/orbsvcs/tests/Notify/Basic/IdAssignment.cpp:
+        * TAO/orbsvcs/tests/Notify/Basic/LifeCycle.cpp:
+        * TAO/orbsvcs/tests/Notify/Basic/MultiTypes.h:
+        * TAO/orbsvcs/tests/Notify/Basic/MultiTypes.cpp:
+        * TAO/orbsvcs/tests/Notify/Basic/Sequence.h:
+        * TAO/orbsvcs/tests/Notify/Basic/Sequence.cpp:
+        * TAO/orbsvcs/tests/Notify/Basic/Simple.h:
+        * TAO/orbsvcs/tests/Notify/Basic/Simple.cpp:
+        * TAO/orbsvcs/tests/Notify/Basic/Updates.h:
+        * TAO/orbsvcs/tests/Notify/Basic/Updates.cpp:
+        * TAO/orbsvcs/tests/Notify/Basic/run_test.pl:
+
+        * TAO/orbsvcs/tests/Notify/Blocking/Notify_Structured_Push_Consumer.cpp:
+        * TAO/orbsvcs/tests/Notify/Blocking/Structured_Consumer.cpp:
+        * TAO/orbsvcs/tests/Notify/Blocking/Structured_Supplier.cpp:
+
+        * TAO/orbsvcs/tests/Notify/Destroy/main.cpp:
+
+        * TAO/orbsvcs/tests/Notify/Discarding/Notify_Structured_Push_Consumer.cpp:
+        * TAO/orbsvcs/tests/Notify/Discarding/Sequence_Consumer.cpp:
+        * TAO/orbsvcs/tests/Notify/Discarding/Sequence_Supplier.cpp:
+        * TAO/orbsvcs/tests/Notify/Discarding/Structured_Consumer.cpp:
+        * TAO/orbsvcs/tests/Notify/Discarding/Structured_Supplier.cpp:
+
+        * TAO/orbsvcs/tests/Notify/Driver/main.cpp:
+
+        * TAO/orbsvcs/tests/Notify/MT_Dispatching/Structured_Consumer.cpp:
+        * TAO/orbsvcs/tests/Notify/MT_Dispatching/Structured_Supplier.cpp:
+
+        * TAO/orbsvcs/tests/Notify/Ordering/Sequence_Consumer.cpp:
+        * TAO/orbsvcs/tests/Notify/Ordering/Sequence_Supplier.cpp:
+        * TAO/orbsvcs/tests/Notify/Ordering/Structured_Consumer.cpp:
+        * TAO/orbsvcs/tests/Notify/Ordering/Structured_Supplier.cpp:
+
+        * TAO/orbsvcs/tests/Notify/PluggableTopology/main.cpp:
+
+        * TAO/orbsvcs/tests/Notify/RT_lib/RT_POA_Command.h:
+        * TAO/orbsvcs/tests/Notify/RT_lib/RT_POA_Command.cpp:
+
+        * TAO/orbsvcs/tests/Notify/Reconnecting/Consumer.cpp:
+        * TAO/orbsvcs/tests/Notify/Reconnecting/Supplier.cpp:
+
+        * TAO/orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Notify_Sequence_Push_Consumer.cpp:
+        * TAO/orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Sequence_Consumer.cpp:
+        * TAO/orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Sequence_Supplier.cpp:
+
+        * TAO/orbsvcs/tests/Notify/Sequence_Multi_Filter/Notify_Sequence_Push_Consumer.cpp:
+        * TAO/orbsvcs/tests/Notify/Sequence_Multi_Filter/Sequence_Consumer.cpp:
+        * TAO/orbsvcs/tests/Notify/Sequence_Multi_Filter/Sequence_Supplier.cpp:
+
+        * TAO/orbsvcs/tests/Notify/Structured_Filter/Structured_Consumer.cpp:
+        * TAO/orbsvcs/tests/Notify/Structured_Filter/Structured_Supplier.cpp:
+
+        * TAO/orbsvcs/tests/Notify/Structured_Multi_Filter/Structured_Consumer.cpp:
+        * TAO/orbsvcs/tests/Notify/Structured_Multi_Filter/Structured_Supplier.cpp:
+
+        * TAO/orbsvcs/tests/Notify/Test_Filter/RT_Test_Filter.cpp:
+
+        * TAO/orbsvcs/tests/Notify/XML_Persistence/main.cpp:
+
+        * TAO/orbsvcs/tests/Notify/lib/Activation_Manager.h:
+        * TAO/orbsvcs/tests/Notify/lib/Activation_Manager.cpp:
+        * TAO/orbsvcs/tests/Notify/lib/Application_Command.h:
+        * TAO/orbsvcs/tests/Notify/lib/Application_Command.cpp:
+        * TAO/orbsvcs/tests/Notify/lib/Command.h:
+        * TAO/orbsvcs/tests/Notify/lib/Command.cpp:
+        * TAO/orbsvcs/tests/Notify/lib/Command_Builder.h:
+        * TAO/orbsvcs/tests/Notify/lib/Command_Builder.cpp:
+        * TAO/orbsvcs/tests/Notify/lib/ConsumerAdmin_Command.h:
+        * TAO/orbsvcs/tests/Notify/lib/ConsumerAdmin_Command.cpp:
+        * TAO/orbsvcs/tests/Notify/lib/Driver.h:
+        * TAO/orbsvcs/tests/Notify/lib/Driver.cpp:
+        * TAO/orbsvcs/tests/Notify/lib/EventChannel_Command.h:
+        * TAO/orbsvcs/tests/Notify/lib/EventChannel_Command.cpp:
+        * TAO/orbsvcs/tests/Notify/lib/Filter_Command.h:
+        * TAO/orbsvcs/tests/Notify/lib/Filter_Command.cpp:
+        * TAO/orbsvcs/tests/Notify/lib/Name.h:
+        * TAO/orbsvcs/tests/Notify/lib/Name.cpp:
+        * TAO/orbsvcs/tests/Notify/lib/Notify_Test_Client.h:
+        * TAO/orbsvcs/tests/Notify/lib/Notify_Test_Client.cpp:
+        * TAO/orbsvcs/tests/Notify/lib/Options_Parser.h:
+        * TAO/orbsvcs/tests/Notify/lib/Options_Parser.cpp:
+        * TAO/orbsvcs/tests/Notify/lib/Peer.h:
+        * TAO/orbsvcs/tests/Notify/lib/Peer.cpp:
+        * TAO/orbsvcs/tests/Notify/lib/Peer_T.cpp:
+        * TAO/orbsvcs/tests/Notify/lib/Periodic_Consumer.h:
+        * TAO/orbsvcs/tests/Notify/lib/Periodic_Consumer.cpp:
+        * TAO/orbsvcs/tests/Notify/lib/Periodic_Consumer_Command.h:
+        * TAO/orbsvcs/tests/Notify/lib/Periodic_Consumer_Command.cpp:
+        * TAO/orbsvcs/tests/Notify/lib/Periodic_Supplier.h:
+        * TAO/orbsvcs/tests/Notify/lib/Periodic_Supplier.cpp:
+        * TAO/orbsvcs/tests/Notify/lib/Periodic_Supplier_Command.h:
+        * TAO/orbsvcs/tests/Notify/lib/Periodic_Supplier_Command.cpp:
+        * TAO/orbsvcs/tests/Notify/lib/SupplierAdmin_Command.h:
+        * TAO/orbsvcs/tests/Notify/lib/SupplierAdmin_Command.cpp:
+        * TAO/orbsvcs/tests/Notify/lib/Task_Stats.h:
+        * TAO/orbsvcs/tests/Notify/lib/Task_Stats.cpp:
+
+        * TAO/orbsvcs/tests/Notify/performance-tests/Filter/Sequence_Consumer.cpp:
+        * TAO/orbsvcs/tests/Notify/performance-tests/Filter/Sequence_Supplier.cpp:
+        * TAO/orbsvcs/tests/Notify/performance-tests/Filter/Structured_Consumer.cpp:
+        * TAO/orbsvcs/tests/Notify/performance-tests/Filter/Structured_Supplier.cpp:
+
+        * TAO/orbsvcs/tests/Notify/performance-tests/RedGreen/RedGreen_Test.h:
+        * TAO/orbsvcs/tests/Notify/performance-tests/RedGreen/RedGreen_Test.cpp:
+        * TAO/orbsvcs/tests/Notify/performance-tests/RedGreen/main.cpp:
+
+        * TAO/orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.h:
+        * TAO/orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.cpp:
+
+        * TAO/orbsvcs/tests/Property/client.h:
+        * TAO/orbsvcs/tests/Property/client.cpp:
+        * TAO/orbsvcs/tests/Property/main.cpp:
+        * TAO/orbsvcs/tests/Property/server.cpp:
+
+        * TAO/orbsvcs/tests/RTCosScheduling/client.cpp:
+        * TAO/orbsvcs/tests/RTCosScheduling/server.cpp:
+
+        * TAO/orbsvcs/tests/Redundant_Naming/client.cpp:
+
+        * TAO/orbsvcs/tests/Sched/DynSched_Test.cpp:
+
+        * TAO/orbsvcs/tests/Sched_Conf/Sched_Conf.cpp:
+        * TAO/orbsvcs/tests/Sched_Conf/Sched_Conf_Anomalies.cpp:
+        * TAO/orbsvcs/tests/Sched_Conf/Sched_Conf_Runtime.cpp:
+
+        * TAO/orbsvcs/tests/Security/BiDirectional/client.cpp:
+        * TAO/orbsvcs/tests/Security/BiDirectional/server.cpp:
+
+        * TAO/orbsvcs/tests/Security/Big_Request/client.cpp:
+        * TAO/orbsvcs/tests/Security/Big_Request/server.cpp:
+
+        * TAO/orbsvcs/tests/Security/Callback/client.cpp:
+        * TAO/orbsvcs/tests/Security/Callback/server.cpp:
+
+        * TAO/orbsvcs/tests/Security/Crash_Test/client.cpp:
+        * TAO/orbsvcs/tests/Security/Crash_Test/server.cpp:
+
+        * TAO/orbsvcs/tests/Security/MT_IIOP_SSL/client.cpp:
+        * TAO/orbsvcs/tests/Security/MT_IIOP_SSL/server.cpp:
+
+        * TAO/orbsvcs/tests/Security/MT_SSLIOP/client.cpp:
+        * TAO/orbsvcs/tests/Security/MT_SSLIOP/run_test_harsh.pl:
+        * TAO/orbsvcs/tests/Security/MT_SSLIOP/server.cpp:
+
+        * TAO/orbsvcs/tests/Security/Secure_Invocation/client.cpp:
+        * TAO/orbsvcs/tests/Security/Secure_Invocation/server.cpp:
+
+        * TAO/orbsvcs/tests/Security/ssliop_corbaloc/client.cpp:
+
+        * TAO/orbsvcs/tests/Simple_Naming/Simple_Naming.mpc:
+        * TAO/orbsvcs/tests/Simple_Naming/client.cpp:
+
+        * TAO/orbsvcs/tests/Time/Client_i.cpp:
+        * TAO/orbsvcs/tests/Time/client.cpp:
+
+        * TAO/orbsvcs/tests/Trading/Offer_Importer.cpp:
+        * TAO/orbsvcs/tests/Trading/TT_Info.h:
+        * TAO/orbsvcs/tests/Trading/TT_Info.cpp:
+        * TAO/orbsvcs/tests/Trading/colocated_test.cpp:
+        * TAO/orbsvcs/tests/Trading/export_test.cpp:
+        * TAO/orbsvcs/tests/Trading/import_test.cpp:
+
+        * TAO/orbsvcs/tests/ior_corbaname/client.cpp:
+        * TAO/orbsvcs/tests/ior_corbaname/ior_corbaname_client_i.cpp:
+        * TAO/orbsvcs/tests/ior_corbaname/server.cpp:
+
+        * TAO/orbsvcs/tests/tests_svc_loader/tests_svc_loader.cpp:
+
+        * TAO/performance-tests/Anyop/anyop.cpp:
+
+        * TAO/performance-tests/Callback/client.cpp:
+        * TAO/performance-tests/Callback/server.cpp:
+
+        * TAO/performance-tests/Cubit/TAO/DII_Cubit/client.cpp:
+
+        * TAO/performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp:
+        * TAO/performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Server.cpp:
+        * TAO/performance-tests/Cubit/TAO/IDL_Cubit/client.cpp:
+        * TAO/performance-tests/Cubit/TAO/IDL_Cubit/collocation_test.cpp:
+        * TAO/performance-tests/Cubit/TAO/IDL_Cubit/server.cpp:
+
+        * TAO/performance-tests/Cubit/TAO/MT_Cubit/Globals.cpp:
+        * TAO/performance-tests/Cubit/TAO/MT_Cubit/Task_Client.cpp:
+        * TAO/performance-tests/Cubit/TAO/MT_Cubit/client.cpp:
+        * TAO/performance-tests/Cubit/TAO/MT_Cubit/server.cpp:
+
+        * TAO/performance-tests/Latency/AMH_Single_Threaded/client.cpp:
+        * TAO/performance-tests/Latency/AMH_Single_Threaded/server.cpp:
+
+        * TAO/performance-tests/Latency/AMI/client.cpp:
+        * TAO/performance-tests/Latency/AMI/server.cpp:
+
+        * TAO/performance-tests/Latency/Collocation/Collocated_Test.cpp:
+
+        * TAO/performance-tests/Latency/DII/client.cpp:
+        * TAO/performance-tests/Latency/DII/server.cpp:
+
+        * TAO/performance-tests/Latency/DSI/client.cpp:
+        * TAO/performance-tests/Latency/DSI/server.cpp:
+
+        * TAO/performance-tests/Latency/Deferred/client.cpp:
+        * TAO/performance-tests/Latency/Deferred/server.cpp:
+
+        * TAO/performance-tests/Latency/Single_Threaded/client.cpp:
+        * TAO/performance-tests/Latency/Single_Threaded/server.cpp:
+
+        * TAO/performance-tests/Latency/Thread_Per_Connection/client.cpp:
+        * TAO/performance-tests/Latency/Thread_Per_Connection/server.cpp:
+
+        * TAO/performance-tests/Latency/Thread_Pool/client.cpp:
+        * TAO/performance-tests/Latency/Thread_Pool/server.cpp:
+
+        * TAO/performance-tests/Memory/IORsize/client.cpp:
+        * TAO/performance-tests/Memory/IORsize/server.cpp:
+
+        * TAO/performance-tests/Memory/Single_Threaded/client.cpp:
+        * TAO/performance-tests/Memory/Single_Threaded/server.cpp:
+
+        * TAO/performance-tests/POA/Create_Reference/create_reference.cpp:
+
+        * TAO/performance-tests/POA/Demux/client.cpp:
+        * TAO/performance-tests/POA/Demux/demux_stats.cpp:
+        * TAO/performance-tests/POA/Demux/demux_test_client.cpp:
+        * TAO/performance-tests/POA/Demux/demux_test_server.cpp:
+        * TAO/performance-tests/POA/Demux/server.cpp:
+        * TAO/performance-tests/POA/Demux/write_names.cpp:
+
+        * TAO/performance-tests/POA/Implicit_Activation/client.cpp:
+        * TAO/performance-tests/POA/Implicit_Activation/collocated.cpp:
+        * TAO/performance-tests/POA/Implicit_Activation/server.cpp:
+
+        * TAO/performance-tests/POA/Object_Creation_And_Registration/registration.cpp:
+
+        * TAO/performance-tests/Pluggable/PP_Test_Client.cpp:
+        * TAO/performance-tests/Pluggable/PP_Test_Server.cpp:
+        * TAO/performance-tests/Pluggable/client.cpp:
+        * TAO/performance-tests/Pluggable/server.cpp:
+
+        * TAO/performance-tests/Protocols/distributor.cpp:
+        * TAO/performance-tests/Protocols/receiver.cpp:
+        * TAO/performance-tests/Protocols/sender.cpp:
+
+        * TAO/performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/client.cpp:
+        * TAO/performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/server.cpp:
+
+        * TAO/performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/client.cpp:
+        * TAO/performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/server.cpp:
+
+        * TAO/performance-tests/RTCorba/Oneways/Reliable/client.cpp:
+        * TAO/performance-tests/RTCorba/Oneways/Reliable/server.cpp:
+
+        * TAO/performance-tests/RTCorba/Thread_Pool/client.cpp:
+        * TAO/performance-tests/RTCorba/Thread_Pool/server.cpp:
+
+        * TAO/performance-tests/Sequence_Latency/AMH_Single_Threaded/client.cpp:
+        * TAO/performance-tests/Sequence_Latency/AMH_Single_Threaded/server.cpp:
+
+        * TAO/performance-tests/Sequence_Latency/AMI/client.cpp:
+        * TAO/performance-tests/Sequence_Latency/AMI/server.cpp:
+
+        * TAO/performance-tests/Sequence_Latency/DII/client.cpp:
+        * TAO/performance-tests/Sequence_Latency/DII/server.cpp:
+
+        * TAO/performance-tests/Sequence_Latency/DSI/client.cpp:
+        * TAO/performance-tests/Sequence_Latency/DSI/server.cpp:
+
+        * TAO/performance-tests/Sequence_Latency/Deferred/client.cpp:
+        * TAO/performance-tests/Sequence_Latency/Deferred/server.cpp:
+
+        * TAO/performance-tests/Sequence_Latency/Single_Threaded/client.cpp:
+        * TAO/performance-tests/Sequence_Latency/Single_Threaded/server.cpp:
+
+        * TAO/performance-tests/Sequence_Latency/Thread_Per_Connection/client.cpp:
+        * TAO/performance-tests/Sequence_Latency/Thread_Per_Connection/server.cpp:
+
+        * TAO/performance-tests/Sequence_Latency/Thread_Pool/client.cpp:
+        * TAO/performance-tests/Sequence_Latency/Thread_Pool/server.cpp:
+
+        * TAO/performance-tests/Throughput/client.cpp:
+        * TAO/performance-tests/Throughput/server.cpp:
+
+        * TAO/performance-tests/perf.mwc:
+
+        * TAO/tao/Acceptor_Registry.cpp:
+
+        * TAO/tao/AnyTypeCode/Any.cpp:
+        * TAO/tao/AnyTypeCode/NVList.cpp:
+
+        * TAO/tao/CORBALOC_Parser.cpp:
+
+        * TAO/tao/Codeset/Codeset_Descriptor.cpp:
+        * TAO/tao/Codeset/Codeset_Manager_i.cpp:
+
+        * TAO/tao/Connector_Registry.cpp:
+        * TAO/tao/DLL_Parser.h:
+
+        * TAO/tao/DynamicAny/DynAny_i.cpp:
+        * TAO/tao/DynamicAny/DynCommon.cpp:
+
+        * TAO/tao/Environment.cpp:
+        * TAO/tao/Exception.h:
+        * TAO/tao/Exception.cpp:
+        * TAO/tao/FILE_Parser.cpp:
+        * TAO/tao/GIOP_Message_Base.cpp:
+        * TAO/tao/GIOP_Message_Lite.cpp:
+        * TAO/tao/IIOP_Acceptor.cpp:
+        * TAO/tao/IIOP_Connection_Handler.cpp:
+        * TAO/tao/IIOP_Connector.cpp:
+
+        * TAO/tao/IORInterceptor/IORInterceptor_Adapter_Impl.cpp:
+
+        * TAO/tao/ImR_Client/ImR_Client.cpp:
+
+        * TAO/tao/MCAST_Parser.cpp:
+        * TAO/tao/ORB.cpp:
+        * TAO/tao/ORB_Core.cpp:
+        * TAO/tao/Object_Ref_Table.cpp:
+
+        * TAO/tao/PortableServer/Operation_Table_Perfect_Hash.cpp:
+        * TAO/tao/PortableServer/PortableServer_WFunctions.cpp:
+        * TAO/tao/PortableServer/Root_POA.cpp:
+
+        * TAO/tao/RTCORBA/RT_ORBInitializer.cpp:
+
+        * TAO/tao/RTPortableServer/RT_Servant_Dispatcher.cpp:
+
+        * TAO/tao/RTScheduling/Request_Interceptor.cpp:
+
+        * TAO/tao/Resume_Handle.cpp:
+
+        * TAO/tao/Strategies/DIOP_Acceptor.cpp:
+        * TAO/tao/Strategies/DIOP_Connection_Handler.cpp:
+        * TAO/tao/Strategies/DIOP_Transport.cpp:
+        * TAO/tao/Strategies/SCIOP_Acceptor.cpp:
+        * TAO/tao/Strategies/SCIOP_Connection_Handler.cpp:
+        * TAO/tao/Strategies/SCIOP_Connector.cpp:
+        * TAO/tao/Strategies/SHMIOP_Acceptor.cpp:
+        * TAO/tao/Strategies/SHMIOP_Connector.cpp:
+        * TAO/tao/Strategies/advanced_resource.cpp:
+
+        * TAO/tao/Synch_Invocation.cpp:
+        * TAO/tao/SystemException.cpp:
+        * TAO/tao/TAO_Internal.cpp:
+        * TAO/tao/Transport.cpp:
+        * TAO/tao/Transport_Connector.cpp:
+
+        * TAO/tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
+
+        * TAO/tao/default_resource.cpp:
+
+        * TAO/tests/AMH_Exceptions/AMH_Exceptions.mpc:
+        * TAO/tests/AMH_Exceptions/client.cpp:
+        * TAO/tests/AMH_Exceptions/server.cpp:
+
+        * TAO/tests/AMH_Oneway/AMH_Oneway.mpc:
+        * TAO/tests/AMH_Oneway/client.cpp:
+        * TAO/tests/AMH_Oneway/server.cpp:
+
+        * TAO/tests/AMI/AMI.mpc:
+        * TAO/tests/AMI/client.cpp:
+        * TAO/tests/AMI/server.cpp:
+        * TAO/tests/AMI/simple_client.cpp:
+
+        * TAO/tests/AMI_Buffering/admin.cpp:
+        * TAO/tests/AMI_Buffering/client.cpp:
+        * TAO/tests/AMI_Buffering/server.cpp:
+
+        * TAO/tests/AMI_Timeouts/AMI_Timeouts.mpc:
+        * TAO/tests/AMI_Timeouts/client.cpp:
+        * TAO/tests/AMI_Timeouts/server.cpp:
+
+        * TAO/tests/Abstract_Interface/client.cpp:
+        * TAO/tests/Abstract_Interface/server.cpp:
+
+        * TAO/tests/Any/Recursive/client.cpp:
+        * TAO/tests/Any/Recursive/server.cpp:
+
+        * TAO/tests/BiDirectional/client.cpp:
+        * TAO/tests/BiDirectional/server.cpp:
+
+        * TAO/tests/BiDirectional_MultipleORB/destroy.cpp:
+
+        * TAO/tests/BiDirectional_NestedUpcall/BiDir_NestedUpcall.mpc:
+        * TAO/tests/BiDirectional_NestedUpcall/client.cpp:
+        * TAO/tests/BiDirectional_NestedUpcall/server.cpp:
+
+        * TAO/tests/Big_AMI/client.cpp:
+        * TAO/tests/Big_AMI/server.cpp:
+
+        * TAO/tests/Big_Oneways/Big_Oneways.mpc:
+        * TAO/tests/Big_Oneways/client.cpp:
+        * TAO/tests/Big_Oneways/server.cpp:
+
+        * TAO/tests/Big_Reply/client.cpp:
+        * TAO/tests/Big_Reply/server.cpp:
+
+        * TAO/tests/Big_Request_Muxing/client.cpp:
+        * TAO/tests/Big_Request_Muxing/server.cpp:
+
+        * TAO/tests/Big_Twoways/Big_Twoways.mpc:
+        * TAO/tests/Big_Twoways/client.cpp:
+        * TAO/tests/Big_Twoways/server.cpp:
+
+        * TAO/tests/Blocking_Sync_None/client.cpp:
+        * TAO/tests/Blocking_Sync_None/server.cpp:
+
+        * TAO/tests/Bug_1020_Basic_Regression/client.cpp:
+        * TAO/tests/Bug_1020_Basic_Regression/server.cpp:
+
+        * TAO/tests/Bug_1020_Regression/Bug_1020_Regression.mpc:
+        * TAO/tests/Bug_1020_Regression/client.cpp:
+        * TAO/tests/Bug_1020_Regression/server.cpp:
+
+        * TAO/tests/Bug_1269_Regression/client.cpp:
+        * TAO/tests/Bug_1269_Regression/server.cpp:
+        * TAO/tests/Bug_1269_Regression/shutdown.cpp:
+
+        * TAO/tests/Bug_1270_Regression/Bug_1270_Regression.mpc:
+        * TAO/tests/Bug_1270_Regression/client.cpp:
+        * TAO/tests/Bug_1270_Regression/server.cpp:
+        * TAO/tests/Bug_1270_Regression/shutdown.cpp:
+
+        * TAO/tests/Bug_1330_Regression/client.cpp:
+        * TAO/tests/Bug_1330_Regression/server.cpp:
+
+        * TAO/tests/Bug_1361_Regression/Bug_1361_Regression.mpc:
+        * TAO/tests/Bug_1361_Regression/client.cpp:
+        * TAO/tests/Bug_1361_Regression/server.cpp:
+        * TAO/tests/Bug_1361_Regression/shutdown.cpp:
+
+        * TAO/tests/Bug_1476_Regression/client.cpp:
+        * TAO/tests/Bug_1476_Regression/server.cpp:
+
+        * TAO/tests/Bug_1482_Regression/client.cpp:
+        * TAO/tests/Bug_1482_Regression/server.cpp:
+
+        * TAO/tests/Bug_1495_Regression/Server_Task.cpp:
+        * TAO/tests/Bug_1495_Regression/Threaded_Client.cpp:
+        * TAO/tests/Bug_1495_Regression/Threaded_Server.cpp:
+
+        * TAO/tests/Bug_1535_Regression/bug_1535_regression.cpp:
+
+        * TAO/tests/Bug_1551_Regression/client.cpp:
+        * TAO/tests/Bug_1551_Regression/server.cpp:
+
+        * TAO/tests/Bug_1568_Regression/client.cpp:
+        * TAO/tests/Bug_1568_Regression/server.cpp:
+
+        * TAO/tests/Bug_1627_Regression/client.cpp:
+        * TAO/tests/Bug_1627_Regression/server.cpp:
+
+        * TAO/tests/Bug_1635_Regression/client.cpp:
+
+        * TAO/tests/Bug_1636_Regression/client.cpp:
+
+        * TAO/tests/Bug_1639_Regression/struct_client.cpp:
+
+        * TAO/tests/Bug_1670_Regression/client.cpp:
+        * TAO/tests/Bug_1670_Regression/server.cpp:
+
+        * TAO/tests/Bug_1693_Test/client.cpp:
+
+        * TAO/tests/Bug_1812_Regression/test.cpp:
+
+        * TAO/tests/Bug_1813_Regression/test.cpp:
+
+        * TAO/tests/Bug_2122_Regression/test.cpp:
+
+        * TAO/tests/Bug_2124_Regression/test.cpp:
+
+        * TAO/tests/Bug_2126_Regression/test.cpp:
+
+        * TAO/tests/Bug_2144_Regression/test.cpp:
+
+        * TAO/tests/Bug_2174_Regression/client.cpp:
+        * TAO/tests/Bug_2174_Regression/server.cpp:
+
+        * TAO/tests/Bug_2183_Regression/client.cpp:
+        * TAO/tests/Bug_2183_Regression/server.cpp:
+
+        * TAO/tests/Bug_2222_Regression/test.cpp:
+
+        * TAO/tests/Bug_2234_Regression/client.cpp:
+        * TAO/tests/Bug_2234_Regression/server.cpp:
+
+        * TAO/tests/CDR/alignment.cpp:
+        * TAO/tests/CDR/allocator.cpp:
+        * TAO/tests/CDR/basic_types.cpp:
+        * TAO/tests/CDR/growth.cpp:
+        * TAO/tests/CDR/octet_sequence.cpp:
+        * TAO/tests/CDR/tc.cpp:
+
+        * TAO/tests/Cache_Growth_Test/client.cpp:
+        * TAO/tests/Cache_Growth_Test/server.cpp:
+
+        * TAO/tests/CallbackTest/client.cpp:
+        * TAO/tests/CallbackTest/server.cpp:
+
+        * TAO/tests/Client_Leaks/Process_Factory.cpp:
+        * TAO/tests/Client_Leaks/child.cpp:
+        * TAO/tests/Client_Leaks/client.cpp:
+        * TAO/tests/Client_Leaks/server.cpp:
+
+        * TAO/tests/CodeSets/simple/client.cpp:
+        * TAO/tests/CodeSets/simple/server.cpp:
+
+        * TAO/tests/Codec/client.cpp:
+
+        * TAO/tests/Collocation/Collocation.cpp:
+
+        * TAO/tests/Collocation_Exception_Test/Collocated_Test.cpp:
+        * TAO/tests/Collocation_Exception_Test/Server_Task.cpp:
+
+        * TAO/tests/Collocation_Oneway_Tests/Collocated_Test.cpp:
+        * TAO/tests/Collocation_Oneway_Tests/Server_Task.cpp:
+
+        * TAO/tests/Collocation_Opportunities/Collocation_Opportunities.cpp:
+
+        * TAO/tests/Collocation_Tests/Collocated_Test.cpp:
+        * TAO/tests/Collocation_Tests/Server_Task.cpp:
+
+        * TAO/tests/Connect_Strategy_Test/client.cpp:
+        * TAO/tests/Connect_Strategy_Test/server.cpp:
+
+        * TAO/tests/Connection_Failure/client.cpp:
+
+        * TAO/tests/Connection_Purging/client.cpp:
+        * TAO/tests/Connection_Purging/server.cpp:
+
+        * TAO/tests/Connection_Timeout/client.cpp:
+
+        * TAO/tests/Crash_On_Write/client.cpp:
+        * TAO/tests/Crash_On_Write/server.cpp:
+
+        * TAO/tests/Crashed_Callback/client.cpp:
+        * TAO/tests/Crashed_Callback/server.cpp:
+
+        * TAO/tests/DLL_ORB/DLL_ORB.mpc:
+        * TAO/tests/DLL_ORB/Test_Client_Module.h:
+        * TAO/tests/DLL_ORB/Test_Client_Module.cpp:
+        * TAO/tests/DLL_ORB/Test_Server_Module.h:
+        * TAO/tests/DLL_ORB/Test_Server_Module.cpp:
+        * TAO/tests/DLL_ORB/client.cpp:
+        * TAO/tests/DLL_ORB/server.cpp:
+
+        * TAO/tests/DSI_Gateway/DSI_Gateway.mpc:
+        * TAO/tests/DSI_Gateway/client.cpp:
+        * TAO/tests/DSI_Gateway/gateway.cpp:
+        * TAO/tests/DSI_Gateway/server.cpp:
+
+        * TAO/tests/DynAny_Test/driver.cpp:
+        * TAO/tests/DynAny_Test/test_dynsequence.cpp:
+        * TAO/tests/DynAny_Test/test_dynstruct.cpp:
+
+        * TAO/tests/Explicit_Event_Loop/client.cpp:
+        * TAO/tests/Explicit_Event_Loop/server.cpp:
+
+        * TAO/tests/Exposed_Policies/Exposed_Policies.mpc:
+        * TAO/tests/Exposed_Policies/Policy_Tester.cpp:
+        * TAO/tests/Exposed_Policies/Policy_Verifier.cpp:
+        * TAO/tests/Exposed_Policies/RT_Properties.cpp:
+        * TAO/tests/Exposed_Policies/client.cpp:
+        * TAO/tests/Exposed_Policies/server.cpp:
+
+        * TAO/tests/FL_Cube/client.cpp:
+        * TAO/tests/FL_Cube/server.cpp:
+
+        * TAO/tests/Faults/Faults.mpc:
+        * TAO/tests/Faults/client.cpp:
+        * TAO/tests/Faults/middle.cpp:
+        * TAO/tests/Faults/ping.cpp:
+        * TAO/tests/Faults/pong.cpp:
+        * TAO/tests/Faults/server.cpp:
+
+        * TAO/tests/File_IO/client.cpp:
+        * TAO/tests/File_IO/server.cpp:
+
+        * TAO/tests/Forwarding/client.cpp:
+        * TAO/tests/Forwarding/server.cpp:
+
+        * TAO/tests/GIOP_Fragments/Java_Big_Reply/client.cpp:
+
+        * TAO/tests/GIOP_Fragments/Java_Big_Request/server.cpp:
+
+        * TAO/tests/GIOP_Fragments/PMB_With_Fragments/server.cpp:
+
+        * TAO/tests/Hang_Shutdown/client.cpp:
+        * TAO/tests/Hang_Shutdown/server.cpp:
+
+        * TAO/tests/Hello/client.cpp:
+        * TAO/tests/Hello/server.cpp:
+
+        * TAO/tests/ICMG_Any_Bug/client.cpp:
+        * TAO/tests/ICMG_Any_Bug/server.cpp:
+
+        * TAO/tests/IDL_Test/main.cpp:
+
+        * TAO/tests/IORManipulation/IORTest.cpp:
+
+        * TAO/tests/IOR_Endpoint_Hostnames/generate_ior.cpp:
+        * TAO/tests/IOR_Endpoint_Hostnames/list_interfaces.cpp:
+
+        * TAO/tests/IPV6/client.cpp:
+        * TAO/tests/IPV6/server.cpp:
+
+        * TAO/tests/InterOp-Naming/INS_test_client.cpp:
+        * TAO/tests/InterOp-Naming/INS_test_server.cpp:
+        * TAO/tests/InterOp-Naming/Server_i.h:
+        * TAO/tests/InterOp-Naming/Server_i.cpp:
+
+        * TAO/tests/Leader_Followers/client.cpp:
+        * TAO/tests/Leader_Followers/server.cpp:
+
+        * TAO/tests/LongUpcalls/LongUpcalls.mpc:
+        * TAO/tests/LongUpcalls/ami_client.cpp:
+        * TAO/tests/LongUpcalls/ami_server.cpp:
+        * TAO/tests/LongUpcalls/blocking_client.cpp:
+        * TAO/tests/LongUpcalls/blocking_server.cpp:
+
+        * TAO/tests/MProfile/client.cpp:
+        * TAO/tests/MProfile/server.cpp:
+
+        * TAO/tests/MProfile_Connection_Timeout/client.cpp:
+        * TAO/tests/MProfile_Connection_Timeout/server.cpp:
+
+        * TAO/tests/MProfile_Forwarding/Manager.cpp:
+        * TAO/tests/MProfile_Forwarding/client.cpp:
+        * TAO/tests/MProfile_Forwarding/server.cpp:
+
+        * TAO/tests/MT_BiDir/MT_BiDir.mpc:
+        * TAO/tests/MT_BiDir/client.cpp:
+        * TAO/tests/MT_BiDir/server.cpp:
+
+        * TAO/tests/MT_Client/client.cpp:
+        * TAO/tests/MT_Client/orb_creation.cpp:
+        * TAO/tests/MT_Client/server.cpp:
+
+        * TAO/tests/MT_Server/client.cpp:
+        * TAO/tests/MT_Server/server.cpp:
+
+        * TAO/tests/MT_Timeout/MT_Timeout.mpc:
+        * TAO/tests/MT_Timeout/client.cpp:
+        * TAO/tests/MT_Timeout/server.cpp:
+
+        * TAO/tests/Multiple/Multiple.mpc:
+        * TAO/tests/Multiple/client.cpp:
+        * TAO/tests/Multiple/server.cpp:
+
+        * TAO/tests/Multiple_Inheritance/client.cpp:
+        * TAO/tests/Multiple_Inheritance/server.cpp:
+
+        * TAO/tests/Muxed_GIOP_Versions/client.cpp:
+        * TAO/tests/Muxed_GIOP_Versions/server.cpp:
+
+        * TAO/tests/Muxing/client.cpp:
+        * TAO/tests/Muxing/server.cpp:
+
+        * TAO/tests/Native_Exceptions/client.cpp:
+        * TAO/tests/Native_Exceptions/server.cpp:
+
+        * TAO/tests/NestedUpcall/MT_Client_Test/MT_Client_Test.mpc:
+        * TAO/tests/NestedUpcall/MT_Client_Test/client.h:
+        * TAO/tests/NestedUpcall/MT_Client_Test/client.cpp:
+        * TAO/tests/NestedUpcall/MT_Client_Test/local_server.h:
+        * TAO/tests/NestedUpcall/MT_Client_Test/local_server.cpp:
+        * TAO/tests/NestedUpcall/MT_Client_Test/server.h:
+        * TAO/tests/NestedUpcall/MT_Client_Test/server.cpp:
+
+        * TAO/tests/NestedUpcall/Simple/Simple.mpc:
+        * TAO/tests/NestedUpcall/Simple/client.cpp:
+        * TAO/tests/NestedUpcall/Simple/server.cpp:
+        * TAO/tests/NestedUpcall/Simple/simple-client.cpp:
+
+        * TAO/tests/NestedUpcall/Triangle_Test/TT.mpc:
+        * TAO/tests/NestedUpcall/Triangle_Test/initiator.h:
+        * TAO/tests/NestedUpcall/Triangle_Test/initiator.cpp:
+        * TAO/tests/NestedUpcall/Triangle_Test/server_A.h:
+        * TAO/tests/NestedUpcall/Triangle_Test/server_A.cpp:
+        * TAO/tests/NestedUpcall/Triangle_Test/server_B.h:
+        * TAO/tests/NestedUpcall/Triangle_Test/server_B.cpp:
+
+        * TAO/tests/Nested_Event_Loop/Nested_Event_Loop.mpc:
+        * TAO/tests/Nested_Event_Loop/client.cpp:
+        * TAO/tests/Nested_Event_Loop/server.cpp:
+
+        * TAO/tests/Nested_Upcall_Crash/client.cpp:
+        * TAO/tests/Nested_Upcall_Crash/scavenger.cpp:
+        * TAO/tests/Nested_Upcall_Crash/server.cpp:
+
+        * TAO/tests/No_Server_MT_Connect_Test/client.cpp:
+        * TAO/tests/No_Server_MT_Connect_Test/server.cpp:
+
+        * TAO/tests/OBV/Any/OBV_Any.mpc:
+        * TAO/tests/OBV/Any/client.cpp:
+        * TAO/tests/OBV/Any/server.cpp:
+
+        * TAO/tests/OBV/Collocated/Forward/Collocated_Test.cpp:
+        * TAO/tests/OBV/Collocated/Forward/Server_Task.cpp:
+
+        * TAO/tests/OBV/Factory/client.cpp:
+        * TAO/tests/OBV/Factory/server.cpp:
+
+        * TAO/tests/OBV/Forward/client.cpp:
+        * TAO/tests/OBV/Forward/server.cpp:
+
+        * TAO/tests/OBV/Supports/Supports_Test_impl.h:
+        * TAO/tests/OBV/Supports/client.cpp:
+        * TAO/tests/OBV/Supports/server.cpp:
+
+        * TAO/tests/OBV/TC_Alignment/client.cpp:
+        * TAO/tests/OBV/TC_Alignment/server.cpp:
+
+        * TAO/tests/OBV/ValueBox/client.cpp:
+        * TAO/tests/OBV/ValueBox/server.cpp:
+
+        * TAO/tests/ORB_destroy/ORB_destroy.cpp:
+
+        * TAO/tests/ORB_init/ORB_init.cpp:
+
+        * TAO/tests/ORB_init/Portspan/server.cpp:
+
+        * TAO/tests/ORB_shutdown/server.cpp:
+
+        * TAO/tests/ORT/ServerRequestInterceptor.cpp:
+        * TAO/tests/ORT/client.cpp:
+        * TAO/tests/ORT/server.cpp:
+
+        * TAO/tests/Object_Loader/Loader.h:
+        * TAO/tests/Object_Loader/Loader.cpp:
+        * TAO/tests/Object_Loader/Object_Loader.mpc:
+        * TAO/tests/Object_Loader/driver.cpp:
+
+        * TAO/tests/Objref_Sequence_Test/client.cpp:
+        * TAO/tests/Objref_Sequence_Test/server.cpp:
+
+        * TAO/tests/OctetSeq/OctetSeq.cpp:
+        * TAO/tests/OctetSeq/client.cpp:
+        * TAO/tests/OctetSeq/server.cpp:
+
+        * TAO/tests/Oneway_Buffering/Oneway_Buffering.mpc:
+        * TAO/tests/Oneway_Buffering/admin.cpp:
+        * TAO/tests/Oneway_Buffering/client.cpp:
+        * TAO/tests/Oneway_Buffering/server.cpp:
+
+        * TAO/tests/Oneways_Invoking_Twoways/Oneways_Invoking_Twoways.mpc:
+        * TAO/tests/Oneways_Invoking_Twoways/client.cpp:
+        * TAO/tests/Oneways_Invoking_Twoways/server.cpp:
+
+        * TAO/tests/POA/Current/Current.cpp:
+
+        * TAO/tests/POA/Deactivate_Object/server.cpp:
+
+        * TAO/tests/POA/Default_Servant/Default_Servant.cpp:
+
+        * TAO/tests/POA/Etherealization/Etherealization.cpp:
+
+        * TAO/tests/POA/Excessive_Object_Deactivations/Excessive_Object_Deactivations.mpc:
+        * TAO/tests/POA/Excessive_Object_Deactivations/Excessive_Object_Deactivations.cpp:
+
+        * TAO/tests/POA/Identity/Identity.cpp:
+
+        * TAO/tests/POA/MT_Servant_Locator/MT_Servant_Locator.cpp:
+        * TAO/tests/POA/MT_Servant_Locator/MT_Servant_Locator.mpc:
+
+        * TAO/tests/POA/Nested_Non_Servant_Upcalls/Nested_Non_Servant_Upcalls.cpp:
+        * TAO/tests/POA/Nested_Non_Servant_Upcalls/Nested_Non_Servant_Upcalls.mpc:
+
+        * TAO/tests/POA/Non_Servant_Upcalls/Non_Servant_Upcalls.cpp:
+        * TAO/tests/POA/Non_Servant_Upcalls/Non_Servant_Upcalls.mpc:
+
+        * TAO/tests/POA/Object_Reactivation/Object_Reactivation.cpp:
+        * TAO/tests/POA/Object_Reactivation/Object_Reactivation.mpc:
+
+        * TAO/tests/POA/POA_Destruction/POA_Destruction.cpp:
+        * TAO/tests/POA/POA_Destruction/POA_Destruction.mpc:
+
+        * TAO/tests/POA/Persistent_ID/client.cpp:
+        * TAO/tests/POA/Persistent_ID/server.cpp:
+
+        * TAO/tests/POA/Policies/Policies.cpp:
+        * TAO/tests/POA/Policies/Policies.mpc:
+
+        * TAO/tests/POA/Reference_Counting/test.cpp:
+
+        * TAO/tests/POA/Single_Threaded_POA/Single_Threaded_POA.mpc:
+        * TAO/tests/POA/Single_Threaded_POA/Single_Threaded_POA.cpp:
+
+        * TAO/tests/POA/wait_for_completion/wait_for_completion.cpp:
+
+        * TAO/tests/Param_Test/anyop.cpp:
+        * TAO/tests/Param_Test/bd_str_seq.cpp:
+        * TAO/tests/Param_Test/complex_any.cpp:
+        * TAO/tests/Param_Test/driver.cpp:
+        * TAO/tests/Param_Test/helper.cpp:
+        * TAO/tests/Param_Test/nested_struct.cpp:
+        * TAO/tests/Param_Test/objref_struct.cpp:
+        * TAO/tests/Param_Test/options.cpp:
+        * TAO/tests/Param_Test/param_test_i.cpp:
+        * TAO/tests/Param_Test/server.cpp:
+        * TAO/tests/Param_Test/ub_str_seq.cpp:
+        * TAO/tests/Param_Test/ub_wstring.cpp:
+        * TAO/tests/Param_Test/var_struct.cpp:
+
+        * TAO/tests/Policies/Manipulation.cpp:
+
+        * TAO/tests/Portable_Interceptors/AMI/client.cpp:
+        * TAO/tests/Portable_Interceptors/AMI/server.cpp:
+
+        * TAO/tests/Portable_Interceptors/AdvSlot/server.cpp:
+
+        * TAO/tests/Portable_Interceptors/AdvSlotDblCpy/server.cpp:
+
+        * TAO/tests/Portable_Interceptors/AdvSlotExt/server.cpp:
+
+        * TAO/tests/Portable_Interceptors/Benchmark/Interceptor_Type.cpp:
+        * TAO/tests/Portable_Interceptors/Benchmark/client.cpp:
+        * TAO/tests/Portable_Interceptors/Benchmark/marker.cpp:
+        * TAO/tests/Portable_Interceptors/Benchmark/server.cpp:
+
+        * TAO/tests/Portable_Interceptors/Bug_1559/client.cpp:
+        * TAO/tests/Portable_Interceptors/Bug_1559/server.cpp:
+
+        * TAO/tests/Portable_Interceptors/Bug_2088/client.cpp:
+
+        * TAO/tests/Portable_Interceptors/Collocated/Dynamic/Collocated_Test.cpp:
+        * TAO/tests/Portable_Interceptors/Collocated/Dynamic/Server_Task.cpp:
+
+        * TAO/tests/Portable_Interceptors/Collocated/Service_Context_Manipulation/Collocated_Test.cpp:
+        * TAO/tests/Portable_Interceptors/Collocated/Service_Context_Manipulation/Server_Task.cpp:
+
+        * TAO/tests/Portable_Interceptors/Dynamic/client.cpp:
+        * TAO/tests/Portable_Interceptors/Dynamic/server.cpp:
+
+        * TAO/tests/Portable_Interceptors/ForwardRequest/Client_ORBInitializer.cpp:
+        * TAO/tests/Portable_Interceptors/ForwardRequest/client.cpp:
+        * TAO/tests/Portable_Interceptors/ForwardRequest/server.cpp:
+
+        * TAO/tests/Portable_Interceptors/IORInterceptor/client.cpp:
+        * TAO/tests/Portable_Interceptors/IORInterceptor/server.cpp:
+
+        * TAO/tests/Portable_Interceptors/ORB_Shutdown/client.cpp:
+        * TAO/tests/Portable_Interceptors/ORB_Shutdown/server.cpp:
+
+        * TAO/tests/Portable_Interceptors/PICurrent/client.cpp:
+        * TAO/tests/Portable_Interceptors/PICurrent/server.cpp:
+
+        * TAO/tests/Portable_Interceptors/PolicyFactory/server.cpp:
+
+        * TAO/tests/Portable_Interceptors/Recursive_ORBInitializer/client.cpp:
+
+        * TAO/tests/Portable_Interceptors/Register_Initial_References/server.cpp:
+
+        * TAO/tests/Portable_Interceptors/Request_Interceptor_Flow/client.cpp:
+        * TAO/tests/Portable_Interceptors/Request_Interceptor_Flow/server.cpp:
+
+        * TAO/tests/Portable_Interceptors/Service_Context_Manipulation/client.cpp:
+        * TAO/tests/Portable_Interceptors/Service_Context_Manipulation/server.cpp:
+
+        * TAO/tests/QtTests/client.h:
+        * TAO/tests/QtTests/client.cpp:
+        * TAO/tests/QtTests/server.cpp:
+
+        * TAO/tests/Queued_Message_Test/Queued_Message_Test.cpp:
+
+        * TAO/tests/RTCORBA/Activate_Object_Multiple_ORBs/test.cpp:
+
+        * TAO/tests/RTCORBA/Banded_Connections/RTCORBA_Banded_Conn.mpc:
+        * TAO/tests/RTCORBA/Banded_Connections/client.cpp:
+        * TAO/tests/RTCORBA/Banded_Connections/server.cpp:
+
+        * TAO/tests/RTCORBA/Client_Propagated/RTCORBA_Client_Propagated.mpc:
+        * TAO/tests/RTCORBA/Client_Propagated/client.cpp:
+        * TAO/tests/RTCORBA/Client_Propagated/server.cpp:
+
+        * TAO/tests/RTCORBA/Client_Protocol/RTCORBA_Client_Protocol.mpc:
+        * TAO/tests/RTCORBA/Client_Protocol/client.cpp:
+        * TAO/tests/RTCORBA/Client_Protocol/server.cpp:
+
+        * TAO/tests/RTCORBA/Collocation/Collocation.cpp:
+        * TAO/tests/RTCORBA/Collocation/RTCORBA_Collocation.mpc:
+
+        * TAO/tests/RTCORBA/Destroy_Thread_Pool/Destroy_Thread_Pool.cpp:
+        * TAO/tests/RTCORBA/Destroy_Thread_Pool/RTCORBA_Destroy_Thread_Pool.mpc:
+
+        * TAO/tests/RTCORBA/Diffserv/RTCORBA_Diffserv.mpc:
+        * TAO/tests/RTCORBA/Diffserv/client.cpp:
+        * TAO/tests/RTCORBA/Diffserv/server.cpp:
+
+        * TAO/tests/RTCORBA/Dynamic_Thread_Pool/RT_Dynamic_Thread_Pool.mpc:
+
+        * TAO/tests/RTCORBA/Explicit_Binding/RTCORBA_Explicit_Binding.mpc:
+        * TAO/tests/RTCORBA/Explicit_Binding/client.cpp:
+        * TAO/tests/RTCORBA/Explicit_Binding/server.cpp:
+
+        * TAO/tests/RTCORBA/Linear_Priority/RTCORBA_Linear_Priority.mpc:
+        * TAO/tests/RTCORBA/Linear_Priority/client.cpp:
+        * TAO/tests/RTCORBA/Linear_Priority/server.cpp:
+
+        * TAO/tests/RTCORBA/MT_Client_Protocol_Priority/RTCORBA_MT_Client_Proto_Prio.mpc:
+        * TAO/tests/RTCORBA/MT_Client_Protocol_Priority/client.cpp:
+        * TAO/tests/RTCORBA/MT_Client_Protocol_Priority/server.cpp:
+
+        * TAO/tests/RTCORBA/ORB_init/ORB_init.cpp:
+
+        * TAO/tests/RTCORBA/Persistent_IOR/RTCORBA_Persistent_IOR.mpc:
+        * TAO/tests/RTCORBA/Persistent_IOR/client.cpp:
+        * TAO/tests/RTCORBA/Persistent_IOR/server.cpp:
+
+        * TAO/tests/RTCORBA/Policies/Policies.cpp:
+        * TAO/tests/RTCORBA/Policies/Policies.mpc:
+
+        * TAO/tests/RTCORBA/Policy_Combinations/RTCORBA_Policy_Combinations.mpc:
+        * TAO/tests/RTCORBA/Policy_Combinations/client.cpp:
+        * TAO/tests/RTCORBA/Policy_Combinations/server.cpp:
+
+        * TAO/tests/RTCORBA/Priority_Inversion_With_Bands/Priority_Inversion_With_Bands.mpc:
+        * TAO/tests/RTCORBA/Priority_Inversion_With_Bands/client.cpp:
+        * TAO/tests/RTCORBA/Priority_Inversion_With_Bands/server.cpp:
+
+        * TAO/tests/RTCORBA/Private_Connection/RTCORBA_Private_Connection.mpc:
+        * TAO/tests/RTCORBA/Private_Connection/client.cpp:
+        * TAO/tests/RTCORBA/Private_Connection/server.cpp:
+
+        * TAO/tests/RTCORBA/Profile_And_Endpoint_Selection/PaE_Selection.mpc:
+        * TAO/tests/RTCORBA/Profile_And_Endpoint_Selection/client.cpp:
+        * TAO/tests/RTCORBA/Profile_And_Endpoint_Selection/server.cpp:
+
+        * TAO/tests/RTCORBA/RTMutex/RTCORBA_RTMutex.mpc:
+        * TAO/tests/RTCORBA/RTMutex/server.cpp:
+
+        * TAO/tests/RTCORBA/Server_Declared/RTCORBA_Server_Declared.mpc:
+        * TAO/tests/RTCORBA/Server_Declared/client.cpp:
+        * TAO/tests/RTCORBA/Server_Declared/server.cpp:
+
+        * TAO/tests/RTCORBA/Server_Protocol/RTCORBA_Server_Protocol.mpc:
+        * TAO/tests/RTCORBA/Server_Protocol/client.cpp:
+        * TAO/tests/RTCORBA/Server_Protocol/server.cpp:
+
+        * TAO/tests/RTCORBA/Thread_Pool/RTCORBA_Thread_Pool.mpc:
+        * TAO/tests/RTCORBA/Thread_Pool/client.cpp:
+        * TAO/tests/RTCORBA/Thread_Pool/server.cpp:
+
+        * TAO/tests/RTCORBA/common_args.cpp:
+
+        * TAO/tests/RTScheduling/Current/test.cpp:
+
+        * TAO/tests/RTScheduling/DT_Spawn/Thread_Action.h:
+        * TAO/tests/RTScheduling/DT_Spawn/test.cpp:
+
+        * TAO/tests/RTScheduling/Scheduler.cpp:
+
+        * TAO/tests/RTScheduling/Scheduling_Interceptor/test_client.cpp:
+        * TAO/tests/RTScheduling/Scheduling_Interceptor/test_server.cpp:
+
+        * TAO/tests/RTScheduling/Thread_Cancel/test.cpp:
+
+        * TAO/tests/RTScheduling/VoidData/test_client.cpp:
+
+        * TAO/tests/Reliable_Oneways/Reliable_Oneways.mpc:
+        * TAO/tests/Reliable_Oneways/client.cpp:
+        * TAO/tests/Reliable_Oneways/server.cpp:
+
+        * TAO/tests/Sequence_Unit_Tests/Bounded_Simple_Types.cpp:
+        * TAO/tests/Sequence_Unit_Tests/Bounded_String.cpp:
+        * TAO/tests/Sequence_Unit_Tests/Unbounded_Simple_Types.cpp:
+
+        * TAO/tests/Servant_To_Reference_Test/Servant_to_Reference.mpc:
+        * TAO/tests/Servant_To_Reference_Test/server.cpp:
+
+        * TAO/tests/Server_Connection_Purging/client.cpp:
+        * TAO/tests/Server_Connection_Purging/server.cpp:
+
+        * TAO/tests/Server_Leaks/client.cpp:
+        * TAO/tests/Server_Leaks/server.cpp:
+
+        * TAO/tests/Server_Port_Zero/server.cpp:
+
+        * TAO/tests/Single_Read/client.cpp:
+        * TAO/tests/Single_Read/server.cpp:
+
+        * TAO/tests/Smart_Proxies/Benchmark/client.cpp:
+        * TAO/tests/Smart_Proxies/Benchmark/server.cpp:
+
+        * TAO/tests/Smart_Proxies/Collocation/main.cpp:
+
+        * TAO/tests/Smart_Proxies/On_Demand/client.cpp:
+        * TAO/tests/Smart_Proxies/On_Demand/server.cpp:
+
+        * TAO/tests/Smart_Proxies/Policy/client.cpp:
+        * TAO/tests/Smart_Proxies/Policy/server.cpp:
+
+        * TAO/tests/Smart_Proxies/client.cpp:
+
+        * TAO/tests/Smart_Proxies/dtor/client.cpp:
+        * TAO/tests/Smart_Proxies/dtor/server.cpp:
+
+        * TAO/tests/Smart_Proxies/server.cpp:
+
+        * TAO/tests/Stack_Recursion/client.cpp:
+        * TAO/tests/Stack_Recursion/server.cpp:
+
+        * TAO/tests/Strategies/client.cpp:
+        * TAO/tests/Strategies/server.cpp:
+
+        * TAO/tests/Timed_Buffered_Oneways/Timed_Buffered_Oneways.mpc:
+        * TAO/tests/Timed_Buffered_Oneways/client.cpp:
+        * TAO/tests/Timed_Buffered_Oneways/server.cpp:
+
+        * TAO/tests/Timeout/client.cpp:
+        * TAO/tests/Timeout/server.cpp:
+
+        * TAO/tests/Two_Objects/client.cpp:
+        * TAO/tests/Two_Objects/server.cpp:
+
+        * TAO/tests/Typedef_String_Array/client.cpp:
+        * TAO/tests/Typedef_String_Array/server.cpp:
+
+        * TAO/tests/UNKNOWN_Exception/client.cpp:
+        * TAO/tests/UNKNOWN_Exception/server.cpp:
+
+        * TAO/tests/Xt_Stopwatch/Client.h:
+        * TAO/tests/Xt_Stopwatch/client.cpp:
+        * TAO/tests/Xt_Stopwatch/server.cpp:
+
+        * TAO/utils/NamingViewer/BindDialog.cpp:
+        * TAO/utils/NamingViewer/BindNewContext.cpp:
+        * TAO/utils/NamingViewer/NamingTreeCtrl.cpp:
+        * TAO/utils/NamingViewer/NamingViewer.cpp:
+        * TAO/utils/NamingViewer/NamingViewerDlg.cpp:
+        * TAO/utils/NamingViewer/ViewIORDialog.cpp:
+
+        * TAO/utils/catior/catior.cpp:
+
+        * TAO/utils/nslist/nsadd.cpp:
+        * TAO/utils/nslist/nsdel.cpp:
+        * TAO/utils/nslist/nslist.cpp:
+
+          Apply the new wchar macros.
+          Remove ACE_HAS_WCHAR usage. wchar_t will always get defined.
+          Using template ACE_Get_Arg_Opt.
+          Replaced main() with ACE_TMAIN().
+          Using ACE_Argv_Type_Converter to match argv type to varying API.
+
 Mon May  8 15:52:31 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be_visitor_union_branch/cdr_op_cs.cpp (visit_enum):

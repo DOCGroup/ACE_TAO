@@ -2,12 +2,14 @@
 // $Id$
 
 project(*client) : taoexe, portableserver, amh {
+  exename = client
   source_files {
     client.cpp
   }
 }
 
 project(*server) : taoserver, amh, strategies {
+  exename = server
   after += *client
   source_files {
     server.cpp

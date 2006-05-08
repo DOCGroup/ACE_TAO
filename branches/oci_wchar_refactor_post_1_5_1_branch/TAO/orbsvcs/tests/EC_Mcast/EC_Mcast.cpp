@@ -12,6 +12,7 @@
 #include "tao/ORB_Core.h"
 
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Sched_Params.h"
 #include "ace/Read_Buffer.h"
@@ -121,7 +122,7 @@ ECM_Driver::run (int argc, char* argv[])
 
       if (this->pid_filename_ != 0)
         {
-          FILE* pid = ACE_OS::fopen (this->pid_filename_, "w");
+          FILE* pid = ACE_OS::fopen (this->pid_filename_, ACE_TEXT("w"));
           if (pid != 0)
             {
               ACE_OS::fprintf (pid, "%ld\n",
@@ -339,9 +340,9 @@ ECM_Driver::dump_results (void)
 // ****************************************************************
 
 int
-ECM_Driver::parse_args (int argc, char *argv [])
+ECM_Driver::parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, "l:p:c:n:t:f:");
+  ACE_Get_Arg_Opt<char> get_opt (argc, argv, "l:p:c:n:t:f:");
   int opt;
 
   while ((opt = get_opt ()) != EOF)
@@ -414,7 +415,7 @@ ECM_Driver::parse_config_file (void)
 {
   FILE* cfg = 0;
   if (this->config_filename_ != 0)
-    cfg = ACE_OS::fopen (this->config_filename_, "r");
+    cfg = ACE_OS::fopen (this->config_filename_, ACE_TEXT("r"));
   else
     cfg = stdin;
 
@@ -1150,10 +1151,12 @@ ECM_Local_Federation::subscribed_bit (int i) const
 }
 
 int
-main (int argc, char *argv [])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   TAO_EC_Default_Factory::init_svcs ();
 
   ECM_Driver driver;
-  return driver.run (argc, argv);
+  return driver.run (convert.get_argc(), convert.get_ASCII_argv());
 }

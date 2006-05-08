@@ -521,7 +521,7 @@ ACE_Throughput_Stats::accumulate (const ACE_Throughput_Stats &rhs)
 }
 
 void
-ACE_Throughput_Stats::dump_results (const ACE_TCHAR* msg,
+ACE_Throughput_Stats::dump_results (const char* msg,
                                     ACE_UINT32 sf)
 {
   if (this->samples_count () == 0u)
@@ -584,7 +584,56 @@ ACE_Throughput_Stats::dump_results (const ACE_TCHAR* msg,
 }
 
 void
-ACE_Throughput_Stats::dump_throughput (const ACE_TCHAR *msg,
+ACE_Throughput_Stats::dump_results (const wchar_t* msg,
+                                    ACE_UINT32 sf)
+{
+  if (this->samples_count () == 0u)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_LIB_TEXT ("%s : no data collected\n"), msg));
+      return;
+    }
+
+  this->ACE_Basic_Stats::dump_results (msg, sf);
+
+  ACE_Throughput_Stats::dump_throughput (msg, sf,
+                                         this->throughput_last_,
+                                         this->samples_count ());
+}
+
+void
+ACE_Throughput_Stats::dump_throughput (const char *msg,
+                                       ACE_UINT32 sf,
+                                       ACE_UINT64 elapsed_time,
+                                       ACE_UINT32 samples_count)
+{
+#ifndef ACE_NLOGGING
+  double seconds =
+# if defined ACE_LACKS_LONGLONG_T
+    elapsed_time / sf;
+#elif  defined (ACE_LACKS_UNSIGNEDLONGLONG_T)
+    static_cast<double> (ACE_UINT64_DBLCAST_ADAPTER (
+                           ACE_U_LongLong(elapsed_time / sf)));
+# else  /* ! ACE_LACKS_LONGLONG_T */
+    static_cast<double> (ACE_UINT64_DBLCAST_ADAPTER (elapsed_time / sf));
+# endif /* ! ACE_LACKS_LONGLONG_T */
+  seconds /= ACE_HR_SCALE_CONVERSION;
+
+  const double t_avg = samples_count / seconds;
+
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_LIB_TEXT ("%s throughput: %.2f (events/second)\n"),
+              msg, t_avg));
+#else
+  ACE_UNUSED_ARG (msg);
+  ACE_UNUSED_ARG (sf);
+  ACE_UNUSED_ARG (elapsed_time);
+  ACE_UNUSED_ARG (samples_count);
+#endif /* ACE_NLOGGING */
+}
+
+void
+ACE_Throughput_Stats::dump_throughput (const wchar_t *msg,
                                        ACE_UINT32 sf,
                                        ACE_UINT64 elapsed_time,
                                        ACE_UINT32 samples_count)

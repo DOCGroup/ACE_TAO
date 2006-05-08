@@ -3,6 +3,7 @@
 #include "test_i.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/Argv_Type_Converter.h"
 
 namespace Test
 {
@@ -39,8 +40,7 @@ namespace Test
                             1);
 
         PortableServer::POAManager_var poa_manager =
-          root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+          root_poa->the_POAManager ();
 
         test_i *test_impl;
         ACE_NEW_RETURN (test_impl,
@@ -49,8 +49,7 @@ namespace Test
         PortableServer::ServantBase_var owner_transfer (test_impl);
 
         Hang_var test =
-          test_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+          test_impl->_this ();
 
         CORBA::String_var ior =
           orb->object_to_string (test.in ()
@@ -58,7 +57,7 @@ namespace Test
         ACE_TRY_CHECK;
 
         // If the ior_output_file exists, output the ior to it
-        FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
+        FILE *output_file= ACE_OS::fopen (ior_output_file, ACE_TEXT("w"));
         if (output_file == 0)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Cannot open output file for writing IOR: %s",
@@ -98,7 +97,9 @@ namespace Test
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  return Test::try_main (argc, argv);
+  ACE_Argv_Type_Converter convert (argc, argv);
+
+  return Test::try_main (convert.get_argc(), convert.get_ASCII_argv());
 }

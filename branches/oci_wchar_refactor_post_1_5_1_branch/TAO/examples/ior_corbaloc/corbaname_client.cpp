@@ -14,17 +14,19 @@
 
 #include "corbalocC.h"
 #include "ace/Log_Msg.h"
+#include "ace/Argv_Type_Converter.h"
 
-int main (int argc, char *argv [])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
     {
       // First initialize the ORB, that will remove some arguments...
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc,
-                         argv,
+        CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(),
                          "" /* the ORB name, it can be anything! */
                          ACE_ENV_ARG_PARAMETER);
 
@@ -38,7 +40,7 @@ int main (int argc, char *argv [])
 
       // Get an object reference using a corbaname: style URL
       CORBA::Object_var obj =
-        orb->string_to_object (argv[1]
+        orb->string_to_object (convert.get_ASCII_argv()[1]
                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 

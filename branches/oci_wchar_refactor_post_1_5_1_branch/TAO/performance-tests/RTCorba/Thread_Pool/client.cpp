@@ -64,7 +64,7 @@ struct Synchronizers
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv,
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv,
                         "c:e:g:hi:k:m:p:q:r:t:u:v:w:x:y:z:" //client options
                         "b:f:hl:n:o:s:" // server options
                         );
@@ -1161,7 +1161,7 @@ Task::svc (void)
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_TRY_NEW_ENV
     {

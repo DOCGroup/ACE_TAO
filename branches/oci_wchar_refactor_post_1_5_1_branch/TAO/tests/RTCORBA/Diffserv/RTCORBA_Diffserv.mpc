@@ -2,6 +2,7 @@
 // $Id$
 
 project(*client) : taoexe, portableserver, rtcorba, minimum_corba {
+  exename = client
   source_files {
     client.cpp
     Custom_Network_Priority_Mapping.cpp
@@ -9,6 +10,7 @@ project(*client) : taoexe, portableserver, rtcorba, minimum_corba {
 }
 
 project(*server) : taoexe, rtportableserver, rtcorba, minimum_corba {
+  exename = server
   after += *client
   source_files {
     server.cpp

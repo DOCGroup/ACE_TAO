@@ -21,6 +21,7 @@
 
 #include "ace/OS_NS_sys_socket.h"
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "ace/Task.h"
 
 #include "ami_testC.h"
@@ -36,7 +37,7 @@ int debug = 0;
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "dk:i:x");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "dk:i:x");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -155,8 +156,10 @@ public:
 };
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_START_TEST (ACE_TEXT ("HTIOP_AMI_simple_client"));
 
   ACE_DECLARE_NEW_CORBA_ENV;
@@ -164,7 +167,7 @@ main (int argc, char *argv[])
   ACE_TRY
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(), "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var object_var =
@@ -182,7 +185,7 @@ main (int argc, char *argv[])
       poa_manager_var->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (convert.get_argc(), convert.get_ASCII_argv()) != 0)
         return 1;
 
       // We reuse the object_var smart pointer!

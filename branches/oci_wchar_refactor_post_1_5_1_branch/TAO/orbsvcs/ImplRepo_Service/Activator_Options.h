@@ -43,7 +43,7 @@ public:
   Activator_Options ();
 
   /// Parse the command-line arguments and initialize the options.
-  int init (int argc, char *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]);
   /// This version should only be used when run as an nt service.
   int init_from_registry();
 
@@ -66,13 +66,13 @@ public:
   /// Save the command line arguments as registry settings. (Windows only)
   int save_registry_options ();
 
-  const char* cmdline(void) const;
+  const ACE_TCHAR* cmdline(void) const;
 
   const ACE_CString& name(void) const;
 
 private:
   /// Parses and pulls out arguments for the ImR
-  int parse_args (int &argc, char *argv[]);
+  int parse_args (int &argc, ACE_TCHAR *argv[]);
 
   /// Print the usage information.
   void print_usage (void) const;
@@ -83,7 +83,7 @@ private:
 private:
 
   /// Our extra command line arguments
-  ACE_CString cmdline_;
+  ACE_TString cmdline_;
 
   /// Debug level.
   unsigned int debug_;

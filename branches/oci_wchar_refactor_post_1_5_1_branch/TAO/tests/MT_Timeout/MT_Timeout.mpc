@@ -2,6 +2,7 @@
 // $Id$
 
 project(*Server): messaging, taoserver {
+  exename = server
   Source_Files {
     Sleep_Service.cpp
     Server_Task.cpp
@@ -10,6 +11,7 @@ project(*Server): messaging, taoserver {
 }
 
 project(*Client): messaging, taoexe, portableserver {
+  exename = client
   after += *Server
   Source_Files {
     TestC.cpp

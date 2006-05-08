@@ -7,6 +7,7 @@
 #include "tao/RTScheduling/RTScheduler_Manager.h"
 #include "testC.h"
 #include "MIF_Scheduler.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID(MT_Server, client, "$Id$")
 
@@ -52,7 +53,7 @@ private:
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "xk:i:ds");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "xk:i:ds");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -95,8 +96,9 @@ parse_args (int argc, char *argv[])
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
   MIF_Scheduler* scheduler=0;
   RTScheduling::Current_var current;
   int prio;
@@ -141,10 +143,10 @@ main (int argc, char *argv[])
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(), "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (convert.get_argc(), convert.get_ASCII_argv()) != 0)
         return 1;
 
       CORBA::Object_var object =

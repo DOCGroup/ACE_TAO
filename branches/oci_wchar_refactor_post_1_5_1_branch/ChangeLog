@@ -1,3 +1,727 @@
+Fri May  5 14:33:29 UTC 2006  Ciju John  <john_c@ociweb.com>
+
+          This entry deals with the refactoring work on the ACE wide char
+          support. The forces that drove the design are as follows:
+
+          - Provide ACE a singular wchar_t type that can be used in
+          conjunction with system services.
+          - Allow CDR to use its own wchar type that can deviate from
+          wchar_t.
+          - Keep ACE interfaces consistent and backwards compatible.
+          - Provide optimized conversion functions for all known use
+          cases.
+
+          ACE now uses wchar_t on all its wide-char interfaces. The type
+          wchar_t could be defined by a platform's compiler, system headers,
+          or the appropriate ACE platform configuration file. The extraneous
+          wchar types ACE_WCHAR_T, ACE_WCHAR_TYPE, and ACE_OS::WChar have
+          been removed. ACE_HAS_WCHAR is deprecated. A wchar_t type will
+          always be defined.
+
+          Since a wchar_t type is always defined we then always expose
+          ACE's public wchar interfaces regardless of private
+          implementation. If ACE_LACKS_XXXX defined for a function then
+          either emulate or return <not supported>. This greatly cleans up the
+          headers and eliminates the dependency on the symbol ACE_HAS_WCHAR.
+
+          A pattern has been created for the few methods of ACE that CDR
+          requires. The pattern allows for the compiler to emulate a
+          function with any wchar type, provide a narrow-char specialization,
+          a wchar specialization and defaults to the emulator if the wchar
+          specialization is not possible (due to ACE_LACKS_XXXX). The pattern
+          can easily be applied to other ACE methods and classes.
+
+          The design and intent of ACE_USES_WCHAR has not been
+          changed. Many cases of inconsistent use has been fixed. The
+          fixes included simply changing types of local variables,
+          expanding an interface to override on char and wchar_t, and
+          forcing certain classes/functions to be templated and NOT based
+          on ACE_TCHAR.
+
+        * ACEXML/common/HttpCharStream.cpp:
+        * ACEXML/common/URL_Addr.cpp:
+        * ACEXML/common/XML_Types.h:
+
+        * ACEXML/examples/SAXPrint/main.cpp:
+
+        * ASNMP/agent/main.cpp:
+        * ASNMP/agent/snmp_agent.cpp:
+
+        * ASNMP/asnmp/sagent.cpp:
+
+        * ASNMP/examples/get/get.cpp:
+        * ASNMP/examples/get/get_async.cpp:
+
+        * ASNMP/examples/next/next.cpp:
+
+        * ASNMP/examples/set/set.cpp:
+
+        * ASNMP/examples/trap/trap.cpp:
+
+        * ASNMP/examples/walk/walk.cpp:
+
+        * ASNMP/tests/test_config.h:
+
+        * Kokyu/tests/EDF/test.cpp:
+
+        * Kokyu/tests/FIFO/test.cpp:
+
+        * ace/ACE.h:
+        * ace/ACE.inl:
+        * ace/ACE.cpp:
+
+        * ace/Auto_Event.h:
+        * ace/Auto_Event.cpp:
+
+        * ace/CE_Screen_Output.cpp:
+        * ace/Default_Constants.h:
+        * ace/Dev_Poll_Reactor.cpp:
+        * ace/Dynamic_Service.h:
+        * ace/Dynamic_Service.inl:
+        * ace/Env_Value_T.inl:
+        * ace/FILE_Connector.cpp:
+        * ace/Functor.h:
+        * ace/Functor.inl:
+        * ace/Functor_String.h:
+        * ace/Functor_String.inl:
+
+        * ace/Global_Macros.h:
+        * ace/High_Res_Timer.h:
+        * ace/High_Res_Timer.cpp:
+        * ace/INET_Addr.h:
+        * ace/INET_Addr.inl:
+        * ace/INET_Addr.cpp:
+        * ace/Lib_Find.h:
+        * ace/Lib_Find.cpp:
+        * ace/Local_Name_Space.h:
+        * ace/Local_Name_Space.cpp:
+        * ace/Local_Name_Space_T.cpp:
+        * ace/Log_Msg.h:
+        * ace/Log_Msg.cpp:
+        * ace/Log_Msg_UNIX_Syslog.cpp:
+        * ace/Log_Record.cpp:
+        * ace/Logging_Strategy.cpp:
+        * ace/MEM_Connector.cpp:
+        * ace/Malloc_T.h:
+        * ace/Malloc_T.cpp:
+        * ace/Manual_Event.h:
+        * ace/Manual_Event.cpp:
+        * ace/Multihomed_INET_Addr.h:
+        * ace/Multihomed_INET_Addr.cpp:
+        * ace/Mutex.h:
+        * ace/NT_Service.h:
+        * ace/Name_Request_Reply.h:
+        * ace/Name_Request_Reply.cpp:
+        * ace/Naming_Context.cpp:
+        * ace/OS_NS_Thread.h:
+        * ace/OS_NS_Thread.inl:
+        * ace/OS_NS_Thread.cpp:
+        * ace/OS_NS_dirent.inl:
+
+        * ace/OS_NS_fcntl.h:
+        * ace/OS_NS_fcntl.cpp:
+        * ace/OS_NS_stdio.h:
+        * ace/OS_NS_stdio.inl:
+        * ace/OS_NS_stdio.cpp:
+
+        * ace/OS_NS_stdlib.h:
+        * ace/OS_NS_stdlib.inl:
+        * ace/OS_NS_stdlib.cpp:
+
+        * ace/OS_NS_strings.h:
+        * ace/OS_NS_strings.inl:
+        * ace/OS_NS_sys_mman.inl:
+        * ace/OS_NS_sys_stat.h:
+        * ace/OS_NS_sys_stat.inl:
+        * ace/OS_NS_time.inl:
+
+        * ace/OS_main.cpp:
+        * ace/Object_Manager.h:
+        * ace/Object_Manager_Base.cpp:
+        * ace/Process.h:
+        * ace/Process.inl:
+        * ace/Process.cpp:
+        * ace/Process_Mutex.h:
+        * ace/Process_Mutex.cpp:
+        * ace/Process_Semaphore.cpp:
+
+        * ace/QoS/SOCK_Dgram_Mcast_QoS.cpp:
+
+        * ace/Registry_Name_Space.cpp:
+        * ace/Remote_Name_Space.cpp:
+        * ace/SOCK_Dgram.cpp:
+        * ace/SOCK_Dgram_Bcast.cpp:
+        * ace/SOCK_Dgram_Mcast.cpp:
+
+        * ace/SSL/SSL_Asynch_Stream.cpp:
+        * ace/SSL/SSL_Context.cpp:
+        * ace/SSL/SSL_SOCK_Stream.cpp:
+
+        * ace/SString.cpp:
+        * ace/SStringfwd.h:
+        * ace/SV_Semaphore_Simple.h:
+        * ace/SV_Semaphore_Simple.inl:
+        * ace/SV_Semaphore_Simple.cpp:
+        * ace/Service_Config.h:
+        * ace/Service_Config.inl:
+        * ace/Service_Config.cpp:
+        * ace/Service_Manager.cpp:
+        * ace/Shared_Memory_Pool.cpp:
+        * ace/Singleton.cpp:
+        * ace/Sock_Connect.cpp:
+
+        * ace/Svc_Conf_y.cpp:
+        * ace/UNIX_Addr.h:
+        * ace/UNIX_Addr.inl:
+        * ace/UNIX_Addr.cpp:
+
+        * ace/os_include/os_stddef.h:
+
+        * apps/FaCE/FaCE.h:
+        * apps/FaCE/FaCE.cpp:
+
+        * apps/Gateway/Gateway/Config_Files.cpp:
+        * apps/Gateway/Gateway/Options.cpp:
+
+        * apps/Gateway/Peer/Options.cpp:
+
+        * apps/JAWS/clients/Blobby/Blob_Handler.cpp:
+        * apps/JAWS/clients/Blobby/Options.cpp:
+
+        * apps/JAWS/clients/Caching/http_client.cpp:
+        * apps/JAWS/clients/Caching/http_handler.cpp:
+        * apps/JAWS/clients/Caching/test_URL.cpp:
+
+        * apps/JAWS/server/HTTP_Server.cpp:
+        * apps/JAWS/server/main.cpp:
+
+        * apps/JAWS/stress_testing/benchd.cpp:
+        * apps/JAWS/stress_testing/http_tester.cpp:
+
+        * apps/JAWS2/JAWS/Server.cpp:
+
+        * apps/JAWS2/main.cpp:
+
+        * apps/JAWS3/bench/mkfiles.cpp:
+        * apps/JAWS3/bench/rqfiles.cpp:
+
+        * apps/JAWS3/http/HTTP_Service_Handler.cpp:
+
+        * apps/JAWS3/jaws3/main.cpp:
+
+        * apps/JAWS3/small/SS_Service_Handler.cpp:
+
+        * apps/drwho/Options.cpp:
+        * apps/drwho/client.cpp:
+        * apps/drwho/server.cpp:
+
+        * apps/gperf/src/Options.cpp:
+        * apps/gperf/src/gperf.cpp:
+
+        * apps/soreduce/Library.cpp:
+        * apps/soreduce/soreduce.cpp:
+
+        * bin/MakeProjectCreator/config/no_wchar.mpb:
+
+        * bin/sandbox.cpp:
+
+        * contrib/utility/Example/CommandLine/Foo/foo.cpp:
+
+        * examples/APG/Config/ARGV_Example.cpp:
+        * examples/APG/Config/Get_Opt.cpp:
+        * examples/APG/Config/Get_Opt_Long.cpp:
+        * examples/APG/Config/HA_Status.cpp:
+
+        * examples/APG/Logging/Callback-2.h:
+
+        * examples/APG/Svc_Config/HA_Status_Dynamic.cpp:
+        * examples/APG/Svc_Config/HA_Status_Static.cpp:
+
+        * examples/ASX/Event_Server/Event_Server/Options.cpp:
+
+        * examples/ASX/Event_Server/Transceiver/transceiver.cpp:
+
+        * examples/ASX/Message_Queue/buffer_stream.cpp:
+
+        * examples/ASX/UPIPE_Event_Server/Options.cpp:
+        * examples/ASX/UPIPE_Event_Server/Peer_Router.cpp:
+
+        * examples/C++NPv1/Iterative_Logging_Server.cpp:
+        * examples/C++NPv1/Logging_Client.cpp:
+        * examples/C++NPv1/Logging_Handler.cpp:
+        * examples/C++NPv1/Logging_Server.cpp:
+        * examples/C++NPv1/Process_Per_Connection_Logging_Server.cpp:
+        * examples/C++NPv1/RT_Thread_Per_Connection_Logging_Server.cpp:
+        * examples/C++NPv1/Reactive_Logging_Server.cpp:
+        * examples/C++NPv1/Reactive_Logging_Server_Ex.cpp:
+        * examples/C++NPv1/Thread_Per_Connection_Logging_Server.cpp:
+
+        * examples/C++NPv2/AC_Client_Logging_Daemon.cpp:
+        * examples/C++NPv2/AIO_Client_Logging_Daemon.cpp:
+        * examples/C++NPv2/Client_Logging_Daemon.cpp:
+        * examples/C++NPv2/Logging_Event_Handler.cpp:
+        * examples/C++NPv2/Reactor_Logging_Server.cpp:
+        * examples/C++NPv2/Reactor_Logging_Server_Adapter.cpp:
+        * examples/C++NPv2/Select_Reactor_Logging_Server.cpp:
+        * examples/C++NPv2/Service_Reporter.cpp:
+        * examples/C++NPv2/TP_Logging_Server.h:
+        * examples/C++NPv2/TP_Reactor_Logging_Server.cpp:
+        * examples/C++NPv2/WFMO_Reactor_Logging_Server.cpp:
+        * examples/C++NPv2/display_logfile.cpp:
+
+        * examples/Connection/blocking/SPIPE-acceptor.cpp:
+        * examples/Connection/blocking/SPIPE-connector.cpp:
+        * examples/Connection/blocking/test_spipe_acceptor.cpp:
+
+        * examples/Connection/misc/test_upipe.cpp:
+
+        * examples/Connection/non_blocking/test_tli_acceptor.cpp:
+        * examples/Connection/non_blocking/test_tli_connector.cpp:
+
+        * examples/IPC_SAP/SOCK_SAP/C-inclient.cpp:
+        * examples/IPC_SAP/SOCK_SAP/CPP-inclient.cpp:
+        * examples/IPC_SAP/SOCK_SAP/CPP-inserver-fancy.cpp:
+
+        * examples/IPC_SAP/SSL_SAP/SSL-client-simple.cpp:
+        * examples/IPC_SAP/SSL_SAP/SSL-client.cpp:
+        * examples/IPC_SAP/SSL_SAP/SSL-server-fancy.cpp:
+        * examples/IPC_SAP/SSL_SAP/SSL-server-poll.cpp:
+        * examples/IPC_SAP/SSL_SAP/SSL-server-simple.cpp:
+        * examples/IPC_SAP/SSL_SAP/SSL-server.cpp:
+
+        * examples/IPC_SAP/TLI_SAP/CPP-ATM-client.cpp:
+        * examples/IPC_SAP/TLI_SAP/CPP-ATM-server.cpp:
+        * examples/IPC_SAP/TLI_SAP/CPP-client.cpp:
+        * examples/IPC_SAP/TLI_SAP/CPP-server.cpp:
+        * examples/IPC_SAP/TLI_SAP/db-client.cpp:
+        * examples/IPC_SAP/TLI_SAP/db-server.cpp:
+        * examples/IPC_SAP/TLI_SAP/ftp-client.cpp:
+        * examples/IPC_SAP/TLI_SAP/ftp-server.cpp:
+
+        * examples/Logger/Acceptor-server/server_loggerd.cpp:
+
+        * examples/Logger/simple-server/Logging_Handler.cpp:
+        * examples/Logger/simple-server/server_loggerd.cpp:
+
+        * examples/Mem_Map/IO-tests/test_io.cpp:
+
+        * examples/Misc/test_get_opt.cpp:
+
+        * examples/NT_Service/main.cpp:
+
+        * examples/OS/Process/imore.cpp:
+        * examples/OS/Process/process.cpp:
+
+        * examples/QOS/Change_Receiver_FlowSpec/QoS_Util.cpp:
+
+        * examples/QOS/Change_Sender_TSpec/QoS_Util.cpp:
+
+        * examples/QOS/Simple/QoS_Util.cpp:
+
+        * examples/Reactor/Misc/notification.cpp:
+        * examples/Reactor/Misc/pingpong.cpp:
+        * examples/Reactor/Misc/test_reactors.cpp:
+        * examples/Reactor/Misc/test_signals_2.cpp:
+        * examples/Reactor/Misc/test_time_value.cpp:
+
+        * examples/Reactor/Multicast/Log_Wrapper.cpp:
+        * examples/Reactor/Multicast/client.cpp:
+        * examples/Reactor/Multicast/server.cpp:
+
+        * examples/Reactor/Ntalker/ntalker.cpp:
+
+        * examples/Reactor/Proactor/Aio_Platform_Test_C.cpp:
+        * examples/Reactor/Proactor/post_completions.cpp:
+        * examples/Reactor/Proactor/simple_test_proactor.cpp:
+        * examples/Reactor/Proactor/test_aiocb.cpp:
+        * examples/Reactor/Proactor/test_aiocb_ace.cpp:
+        * examples/Reactor/Proactor/test_aiosig.cpp:
+        * examples/Reactor/Proactor/test_aiosig_ace.cpp:
+        * examples/Reactor/Proactor/test_cancel.cpp:
+        * examples/Reactor/Proactor/test_end_event_loop.cpp:
+        * examples/Reactor/Proactor/test_multiple_loops.cpp:
+        * examples/Reactor/Proactor/test_proactor.cpp:
+        * examples/Reactor/Proactor/test_proactor2.cpp:
+        * examples/Reactor/Proactor/test_proactor3.cpp:
+        * examples/Reactor/Proactor/test_timeout.cpp:
+        * examples/Reactor/Proactor/test_udp_proactor.cpp:
+
+        * examples/Reactor/WFMO_Reactor/Handle_Close.cpp:
+        * examples/Reactor/WFMO_Reactor/Multithreading.cpp:
+        * examples/Reactor/WFMO_Reactor/Talker.cpp:
+
+        * examples/Service_Configurator/IPC-tests/client/broadcast_client_test.cpp:
+        * examples/Service_Configurator/IPC-tests/client/local_dgram_client_test.cpp:
+        * examples/Service_Configurator/IPC-tests/client/local_fifo_client_test.cpp:
+        * examples/Service_Configurator/IPC-tests/client/local_pipe_client_test.cpp:
+        * examples/Service_Configurator/IPC-tests/client/local_spipe_client_test.cpp:
+        * examples/Service_Configurator/IPC-tests/client/local_stream_client_test.cpp:
+        * examples/Service_Configurator/IPC-tests/client/remote_dgram_client_test.cpp:
+        * examples/Service_Configurator/IPC-tests/client/remote_service_directory_test.cpp:
+        * examples/Service_Configurator/IPC-tests/client/remote_stream_client_test.cpp:
+        * examples/Service_Configurator/IPC-tests/client/remote_thr_stream_client_test.cpp:
+
+        * examples/Service_Configurator/IPC-tests/server/Handle_Broadcast.i:
+        * examples/Service_Configurator/IPC-tests/server/Handle_L_CODgram.i:
+        * examples/Service_Configurator/IPC-tests/server/Handle_L_Dgram.i:
+        * examples/Service_Configurator/IPC-tests/server/Handle_L_FIFO.i:
+        * examples/Service_Configurator/IPC-tests/server/Handle_L_Pipe.i:
+        * examples/Service_Configurator/IPC-tests/server/Handle_L_SPIPE.i:
+        * examples/Service_Configurator/IPC-tests/server/Handle_L_Stream.i:
+        * examples/Service_Configurator/IPC-tests/server/Handle_R_Dgram.i:
+        * examples/Service_Configurator/IPC-tests/server/Handle_R_Stream.i:
+        * examples/Service_Configurator/IPC-tests/server/Handle_Thr_Stream.cpp:
+        * examples/Service_Configurator/IPC-tests/server/Handle_Timeout.i:
+
+        * examples/Shared_Malloc/Options.cpp:
+        * examples/Shared_Malloc/test_malloc.cpp:
+        * examples/Shared_Malloc/test_position_independent_malloc.cpp:
+
+        * examples/Synch/proc_sema.cpp:
+
+        * examples/System_V_IPC/SV_Message_Queues/MQ_Client.cpp:
+        * examples/System_V_IPC/SV_Message_Queues/MQ_Server.cpp:
+        * examples/System_V_IPC/SV_Message_Queues/TMQ_Server.cpp:
+
+        * examples/System_V_IPC/SV_Semaphores/Semaphores_1.cpp:
+        * examples/System_V_IPC/SV_Semaphores/Semaphores_2.cpp:
+
+        * examples/TMCast/Member/member.cpp:
+
+        * examples/Threads/process_manager.cpp:
+        * examples/Threads/reader_writer.cpp:
+        * examples/Threads/recursive_mutex.cpp:
+        * examples/Threads/task_one.cpp:
+
+        * examples/Web_Crawler/Command_Processor.cpp:
+        * examples/Web_Crawler/HTTP_URL.cpp:
+        * examples/Web_Crawler/Options.cpp:
+        * examples/Web_Crawler/URL_Addr.cpp:
+        * examples/Web_Crawler/URL_Visitor.cpp:
+
+        * netsvcs/clients/Naming/Client/Client_Test.cpp:
+
+        * netsvcs/clients/Naming/Dump_Restore/Dump_Restore.cpp:
+        * netsvcs/clients/Naming/Dump_Restore/createfile.cpp:
+
+        * netsvcs/clients/Tokens/collection/collection.cpp:
+        * netsvcs/clients/Tokens/collection/rw_locks.cpp:
+
+        * netsvcs/clients/Tokens/deadlock/deadlock_detection_test.cpp:
+
+        * netsvcs/clients/Tokens/invariant/invariant.cpp:
+
+        * netsvcs/clients/Tokens/manual/manual.cpp:
+
+        * netsvcs/clients/Tokens/mutex/test_mutex.cpp:
+
+        * netsvcs/clients/Tokens/rw_lock/rw_locks.cpp:
+
+        * netsvcs/lib/Client_Logging_Handler.cpp:
+        * netsvcs/lib/Name_Handler.cpp:
+        * netsvcs/lib/Server_Logging_Handler_T.cpp:
+        * netsvcs/lib/TS_Clerk_Handler.cpp:
+        * netsvcs/lib/TS_Server_Handler.cpp:
+        * netsvcs/lib/Token_Handler.cpp:
+
+        * performance-tests/Misc/basic_perf.cpp:
+        * performance-tests/Misc/childbirth_time.cpp:
+        * performance-tests/Misc/context_switch_time.cpp:
+        * performance-tests/Misc/preempt.cpp:
+        * performance-tests/Misc/test_guard.cpp:
+
+        * performance-tests/RPC/client.cpp:
+
+        * performance-tests/SCTP/Options_Manager.cpp:
+        * performance-tests/SCTP/SOCK_SEQPACK_clt.cpp:
+        * performance-tests/SCTP/SOCK_SEQPACK_srv.cpp:
+        * performance-tests/SCTP/SOCK_STREAM_clt.cpp:
+        * performance-tests/SCTP/SOCK_STREAM_srv.cpp:
+
+        * performance-tests/Server_Concurrency/Leader_Follower/RT_CORBA_Leader_Follower.cpp:
+        * performance-tests/Server_Concurrency/Leader_Follower/leader_follower.cpp:
+
+        * performance-tests/Server_Concurrency/Queue_Based_Workers/RT_CORBA_Workers.cpp:
+        * performance-tests/Server_Concurrency/Queue_Based_Workers/workers.cpp:
+
+        * performance-tests/Synch-Benchmarks/Base_Test/Baseline_Test.cpp:
+
+        * performance-tests/Synch-Benchmarks/Perf_Test/Performance_Test_Options.cpp:
+        * performance-tests/Synch-Benchmarks/Perf_Test/guard_test.cpp:
+
+        * performance-tests/TCP/tcp_test.cpp:
+
+        * performance-tests/TTCP/ACE-C++/wrapper-new-ttcp.cpp:
+
+        * performance-tests/TTCP/C/new-ttcp.cpp:
+
+        * performance-tests/UDP/udp_test.cpp:
+
+        * protocols/ace/HTBP/HTBP_Addr.cpp:
+        * protocols/ace/HTBP/HTBP_ID_Requestor.cpp:
+        * protocols/ace/HTBP/HTBP_Session.cpp:
+
+        * tests/ACE_Init_Test.cpp:
+        * tests/ARGV_Test.cpp:
+        * tests/Aio_Platform_Test.cpp:
+        * tests/Auto_Event_Test.cpp:
+        * tests/Basic_Types_Test.cpp:
+        * tests/Bound_Ptr_Test.cpp:
+        * tests/CDR_Array_Test.cpp:
+        * tests/CDR_File_Test.cpp:
+        * tests/CDR_Test.cpp:
+        * tests/Cache_Map_Manager_Test.cpp:
+        * tests/Cached_Accept_Conn_Test.cpp:
+        * tests/Cached_Conn_Test.cpp:
+        * tests/Config_Test.cpp:
+        * tests/Conn_Test.cpp:
+        * tests/Dirent_Test.cpp:
+        * tests/Enum_Interfaces_Test.cpp:
+        * tests/Env_Value_Test.cpp:
+        * tests/Get_Opt_Test.cpp:
+
+        * tests/HTBP/Reactor_Tests/client.cpp:
+        * tests/HTBP/Reactor_Tests/test_config.h:
+
+        * tests/HTBP/Send_Large_Msg/client.cpp:
+
+        * tests/HTBP/Send_Recv_Tests/SendRecv_Test.cpp:
+
+        * tests/HTBP/ping/client.cpp:
+
+        * tests/Hash_Map_Bucket_Iterator_Test.cpp:
+        * tests/High_Res_Timer_Test.cpp:
+        * tests/INET_Addr_Test_IPV6.cpp:
+        * tests/IOStream_Test.cpp:
+        * tests/Log_Msg_Test.cpp:
+        * tests/Logging_Strategy_Test.cpp:
+        * tests/MEM_Stream_Test.cpp:
+        * tests/MT_Reactor_Upcall_Test.cpp:
+        * tests/MT_Reference_Counted_Event_Handler_Test.cpp:
+        * tests/MT_Reference_Counted_Notify_Test.cpp:
+        * tests/MT_SOCK_Test.cpp:
+        * tests/Manual_Event_Test.cpp:
+        * tests/Message_Block_Test.cpp:
+        * tests/Multicast_Test.cpp:
+        * tests/Multicast_Test_IPV6.cpp:
+        * tests/Multihomed_INET_Addr_Test_IPV6.cpp:
+        * tests/Network_Adapters_Test.cpp:
+        * tests/NonBlocking_Conn_Test.cpp:
+        * tests/Notify_Performance_Test.cpp:
+        * tests/OS_Test.cpp:
+        * tests/Pipe_Test.cpp:
+        * tests/Priority_Reactor_Test.cpp:
+        * tests/Proactor_Scatter_Gather_Test.cpp:
+        * tests/Proactor_Test.cpp:
+        * tests/Proactor_Test_IPV6.cpp:
+        * tests/Proactor_Timer_Test.cpp:
+        * tests/Process_Manager_Test.cpp:
+        * tests/Process_Manual_Event_Test.cpp:
+        * tests/Process_Mutex_Test.cpp:
+        * tests/Process_Semaphore_Test.cpp:
+        * tests/Process_Strategy_Test.cpp:
+        * tests/Reactor_Dispatch_Order_Test.cpp:
+        * tests/Reactor_Performance_Test.cpp:
+        * tests/Reactor_Timer_Test.cpp:
+        * tests/Reader_Writer_Test.cpp:
+        * tests/Refcounted_Auto_Ptr_Test.cpp:
+        * tests/Reference_Counted_Event_Handler_Test.cpp:
+        * tests/SOCK_Connector_Test.cpp:
+        * tests/SOCK_Dgram_Bcast_Test.cpp:
+        * tests/SOCK_Send_Recv_Test.cpp:
+        * tests/SOCK_Send_Recv_Test_IPV6.cpp:
+        * tests/SOCK_Test.cpp:
+        * tests/SOCK_Test_IPv6.cpp:
+        * tests/SString_Test.cpp:
+        * tests/Semaphore_Test.cpp:
+        * tests/Signal_Test.cpp:
+        * tests/Svc_Handler_Test.cpp:
+        * tests/TP_Reactor_Test.cpp:
+        * tests/Test_Output.cpp:
+        * tests/Thread_Pool_Reactor_Resume_Test.cpp:
+        * tests/Thread_Pool_Reactor_Test.cpp:
+        * tests/Timer_Queue_Reference_Counting_Test.cpp:
+        * tests/Upgradable_RW_Test.cpp:
+        * apps/mkcsregdb/mkcsregdb.cpp:
+
+          Apply the new conversion macros.
+          Remove ACE_HAS_WCHAR usage. wchar_t will always get defined.
+          Using template ACE_Get_Arg_Opt to properly handle argv input.
+          Replaced main() with ACE_TMAIN().
+          Using ACE_Argv_Type_Converter to convert argv to match API declarations.
+
+
+        * ace/ARGV.h:
+        * ace/ARGV.inl:
+        * ace/ARGV.cpp:
+
+          Convert class ACE_ARGV into template ACE_TARGV
+
+
+        * ace/Arg_Shifter.h:
+        * ace/Arg_Shifter.inl:
+        * ace/Arg_Shifter.cpp:
+
+          Convert class ACE_Arg_Shifter into template ACE_TArg_Shifter
+
+
+        * ace/Argv_Type_Converter.h:
+        * ace/Argv_Type_Converter.inl:
+        * ace/Argv_Type_Converter.cpp:
+
+          Use ACE::String_Conversion templates to manage local memory
+          allocation/deallocation. Use the same for type conversions. Get
+          rid of macro ACE_USES_WCHAR usage.
+
+
+        * ace/Basic_Stats.h:
+        * ace/Basic_Stats.cpp:
+
+          Add wide variant of method ACE_Basic_Stats::dump_results()
+
+
+        * ace/Basic_Types.h:
+
+          Check for ACE_SIZEOF_WCHAR & ACE_WCHAR_MAX to be predefined. This
+          frees us from making assumptions on the underlying wchar_t type.
+
+
+        * ace/CDR_Base.h:
+
+          The requirement for CDR customized wchar type is now isolated to
+          CDR. ACE_CDR_WCHAR_OVERRIDE is used to force CDR to deviate from
+          wchar_t. No other services in ACE deviates from wchar_t.
+
+
+        * ace/Get_Opt.h:
+        * ace/Get_Opt.inl:
+        * ace/Get_Opt.cpp:
+
+          Convert class ACE_Get_Opt into template ACE_Get_Arg_Opt
+
+
+        * ace/OS_NS_ctype.h:
+        * ace/OS_NS_ctype.inl:
+        * ace/OS_NS_ctype_T.inl:
+
+          Templated most of the functions. Add new file to hold the inlined
+          template definitions.
+
+
+        * ace/OS_NS_dlfcn.inl:
+
+          Use ACE::String_Conversion templates to handle the wide char
+          conversions across platforms.
+
+
+        * ace/OS_NS_stdlib_base.h:
+        * ace/OS_NS_stdlib_base.inl:
+        * ace/OS_NS_stdlib_base.cpp:
+        * ace/OS_NS_string_base.h:
+        * ace/OS_NS_string_base.inl:
+        * ace/OS_NS_string_base.cpp:
+
+          Extracted a number of methods from OS_NS_stdlib to maintain
+          backwards compatibility and have the string conversion classes
+          reuse exising functions (not reimplement). The string conversion
+          classes have to be declared in the configuration layer for
+          backwards compatibility. Users will not have to change/add #include
+          to access the conversion services.
+
+
+        * ace/OS_NS_string.h:
+        * ace/OS_NS_string.inl:
+        * ace/OS_NS_string.cpp:
+
+          Define/implement wide variant of functions for platforms that lack them.
+
+
+        * ace/OS_NS_unistd.h:
+        * ace/OS_NS_unistd.inl:
+        * ace/OS_NS_unistd.cpp:
+        * ace/OS_NS_unistd_T.inl:
+
+          Templated string_to_argv. Moved definition to new file.
+
+
+        * ace/OS_NS_wchar.h:
+        * ace/OS_NS_wchar.inl:
+        * ace/OS_NS_wchar.cpp:
+
+          Changed APIs to use type wchar_t instead of WChar. There was no
+          reason for using another defined type when wchar_t could be used directly.
+
+
+        * ace/Stats.h:
+        * ace/Stats.cpp:
+
+          Define/implement wide variant of dump_results() & dump_throughput()
+
+
+        * ace/String_Conversion_T.h:
+        * ace/String_Conversion_T.inl:
+        * ace/String_Conversion_T.cpp:
+
+          The new string conversion namespace includes a set of functions
+          and stack based classes to aid where ACE/TAO has to translate
+          between char and wchar_t. See the ACE test wchar_conversion for
+          usage.
+
+
+        * ace/ace_wchar.h:
+        * ace/ace_wchar.inl:
+
+          Configuration level files which include wchar support files or
+          construct the various wchar types.
+
+
+        * ace/ace_wchar_win32_defs.h:
+
+          Support for Windows specific API's. These were mostly if not all
+          ripped out from ace_wchar.h. ace_wchar.h includes the file.
+
+
+        * ace/config-all.h:
+        * ace/config-borland-common.h:
+        * ace/config-doxygen.h:
+        * ace/config-freebsd.h:
+        * ace/config-hpux-11.00.h:
+        * ace/config-linux-common.h:
+        * ace/config-lynxos.h:
+        * ace/config-macosx-panther.h:
+        * ace/config-macosx-tiger.h:
+        * ace/config-macosx.h:
+        * ace/config-netbsd.h:
+        * ace/config-pharlap.h:
+        * ace/config-rtems.h:
+        * ace/config-tandem-nsk-mips-v2.h:
+        * ace/config-vxworks5.x.h:
+        * ace/config-win32-common.h:
+        * ace/config-win32-dmc.h:
+        * ace/config-win32-ghs.h:
+        * ace/config-win32-mingw.h:
+        * ace/config-win32-msvc-7.h:
+        * ace/config-win32-msvc-8.h:
+        * ace/config-win32-msvc.h:
+        * ace/config-win32-visualage.h:
+
+          Added new wchar configurations. The ACE_SIZEOF_WCHAR and
+          ACE_WCHAR_MAX need to be defined in the configuration files.
+
+
+        * apps/gperf/tests/tests.mpc:
+
+          Avoid gperf build when doing a ACE_USES_WCHAR build.
+
+        * tests/WChar_Conversion.cpp:
+
+          wchar conversion test.
+
+
+        * tests/tests.mpc:
+
+          Add the wchar conversion test.
+
 Sun May  7 21:03:30 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * ace/Service_Config.{h,cpp}:

@@ -2,6 +2,7 @@
 // $Id$
 
 project(*Server): taoexe, portableserver, minimum_corba {
+  exename = server
    libs += Generic_Servant
    after += POA_Generic_Servant_Lib
 

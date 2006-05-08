@@ -11,6 +11,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/os_include/os_netdb.h"
+#include "ace/Argv_Type_Converter.h"
 
 static ACE_CString getHostName ()
 {
@@ -117,35 +118,35 @@ ImR_Activator_i::init_with_orb (CORBA::ORB_ptr orb, const Activator_Options& opt
     {
       CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      ACE_ASSERT (! CORBA::is_nil (obj.in ()));
+      ACE_ASSERT (! CORBA::is_nil(obj.in()));
       this->root_poa_ = PortableServer::POA::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      ACE_ASSERT (! CORBA::is_nil(this->root_poa_.in ()));
+      ACE_ASSERT (! CORBA::is_nil(this->root_poa_.in()));
 
       // The activator must use a persistent POA so that it can be started before the
       // locator in some scenarios, such as when the locator persists its database, and
       // wants to reconnect to running activators to auto_start some servers.
-      this->imr_poa_ = createPersistentPOA (this->root_poa_.in (),
-        "ImR_Activator" ACE_ENV_ARG_PARAMETER);
+      this->imr_poa_ = createPersistentPOA (this->root_poa_.in(),
+                                            "ImR_Activator" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      ACE_ASSERT (! CORBA::is_nil(this->imr_poa_.in ()));
+      ACE_ASSERT (! CORBA::is_nil(this->imr_poa_.in()));
 
       // Activate ourself
       PortableServer::ObjectId_var id = PortableServer::string_to_ObjectId ("ImR_Activator");
-      this->imr_poa_->activate_object_with_id (id.in (), this ACE_ENV_ARG_PARAMETER);
+      this->imr_poa_->activate_object_with_id(id.in(), this ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      obj = this->imr_poa_->id_to_reference (id.in () ACE_ENV_ARG_PARAMETER);
+      obj = this->imr_poa_->id_to_reference (id.in() ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       ImplementationRepository::Activator_var activator =
-        ImplementationRepository::Activator::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
+        ImplementationRepository::Activator::_narrow(obj.in() ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      ACE_ASSERT(! CORBA::is_nil (activator.in ()));
+      ACE_ASSERT(! CORBA::is_nil(activator.in()));
 
-      CORBA::String_var ior = this->orb_->object_to_string (activator.in () ACE_ENV_ARG_PARAMETER);
+      CORBA::String_var ior = this->orb_->object_to_string(activator.in() ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (this->debug_ > 0)
-        ACE_DEBUG((LM_DEBUG, "ImR Activator: Starting %s\n", name_.c_str ()));
+        ACE_DEBUG((LM_DEBUG, "ImR Activator: Starting %s\n", name_.c_str()));
 
       // initialize our process manager.
       // This requires a reactor that has signal handling.
@@ -155,11 +156,11 @@ ImR_Activator_i::init_with_orb (CORBA::ORB_ptr orb, const Activator_Options& opt
           if (this->process_mgr_.open (ACE_Process_Manager::DEFAULT_SIZE, reactor) == -1)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
-                "The ACE_Process_Manager didnt get initialized\n"), -1);
+                                 "The ACE_Process_Manager didnt get initialized\n"), -1);
             }
         }
 
-      this->register_with_imr (activator.in ()); // no throw
+      this->register_with_imr(activator.in()); // no throw
 
       PortableServer::POAManager_var poaman =
         this->root_poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -170,23 +171,23 @@ ImR_Activator_i::init_with_orb (CORBA::ORB_ptr orb, const Activator_Options& opt
       if (this->debug_ > 1)
         {
           ACE_DEBUG ((LM_DEBUG,
-            "ImR Activator: The Activator IOR is: <%s>\n", ior.in ()));
+                      "ImR Activator: The Activator IOR is: <%s>\n", ior.in ()));
         }
 
       // The last thing we do is write out the ior so that a test program can assume
       // that the activator is ready to go as soon as the ior is written.
-      if (opts.ior_filename ().length () > 0)
+      if (opts.ior_filename().length() > 0)
         {
-          FILE* fp = ACE_OS::fopen (opts.ior_filename ().c_str (), "w");
+          FILE* fp = ACE_OS::fopen(opts.ior_filename().c_str(), ACE_TEXT("w"));
           if (fp == 0)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
-                "ImR Activator: Could not open file: %s\n", opts.ior_filename ().c_str ()), -1);
+                                 "ImR Activator: Could not open file: %s\n", opts.ior_filename().c_str()), -1);
             }
-          ACE_OS::fprintf (fp, "%s", ior.in ());
-          ACE_OS::fclose (fp);
+          ACE_OS::fprintf(fp, "%s", ior.in());
+          ACE_OS::fclose(fp);
         }
-    }
+  }
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "ImR_Activator_i::init_with_orb");
@@ -200,15 +201,19 @@ ImR_Activator_i::init_with_orb (CORBA::ORB_ptr orb, const Activator_Options& opt
 int
 ImR_Activator_i::init (Activator_Options& opts ACE_ENV_ARG_DECL)
 {
-  ACE_CString cmdline = opts.cmdline();
+  ACE_TString cmdline = opts.cmdline();
   // Must use IOR style objrefs, because URLs sometimes get mangled when passed
   // to ACE_Process::spawn().
-  cmdline += "-ORBUseImR 0 -ORBObjRefStyle IOR ";
-  ACE_ARGV av (cmdline.c_str ());
-  int argc = av.argc ();
+
+  cmdline += ACE_TEXT("-ORBUseImR 0 -ORBObjRefStyle IOR ");
+  ACE_ARGV av(cmdline.c_str());
+  int argc = av.argc();
+
+  ACE_Argv_Type_Converter convert (argc, av.argv());
 
   CORBA::ORB_var orb =
-    CORBA::ORB_init (argc, av.argv (), "TAO_ImR_Activator" ACE_ENV_ARG_PARAMETER);
+    CORBA::ORB_init(convert.get_argc(), convert.get_ASCII_argv(), "TAO_ImR_Activator" ACE_ENV_ARG_PARAMETER);
+
   ACE_CHECK_RETURN(-1);
 
   int ret = this->init_with_orb(orb.in (), opts ACE_ENV_ARG_PARAMETER);
@@ -315,17 +320,18 @@ ImR_Activator_i::start_server(const char* name,
   // handles. This includes stdin, stdout, logs, etc.
   proc_opts.handle_inheritence (0);
 
-  proc_opts.setenv ("TAO_USE_IMR", "1");
-  if (!CORBA::is_nil (this->locator_.in ()))
-    {
-      CORBA::String_var ior = orb_->object_to_string (locator_.in ());
-      proc_opts.setenv ("ImplRepoServiceIOR", ior.in());
-    }
+  proc_opts.setenv(ACE_TEXT("TAO_USE_IMR"), ACE_TEXT("1"));
 
-  for (CORBA::ULong i = 0; i < env.length (); ++i)
-    {
-      proc_opts.setenv (env[i].name.in (), env[i].value.in ());
-    }
+  if (!CORBA::is_nil (this->locator_.in ()))
+  {
+    CORBA::String_var ior = orb_->object_to_string(locator_.in());
+    proc_opts.setenv(ACE_TEXT("ImplRepoServiceIOR"), ior.in());
+  }
+
+  for (CORBA::ULong i = 0; i < env.length(); ++i) {
+    proc_opts.setenv (ACE_TEXT_TO_TCHAR_IN(env[i].name.in()),
+                      ACE_TEXT_TO_TCHAR_IN(env[i].value.in()));
+  }
 
   int pid = this->process_mgr_.spawn (proc_opts);
   if (pid == ACE_INVALID_PID)

@@ -2,6 +2,7 @@
 // $Id$
 
 project(*Server): namingexe, portableserver, bidir_giop, utils {
+  exename = TimeServer
   Source_Files {
     TimeServer.cpp
   }

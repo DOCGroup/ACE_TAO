@@ -69,7 +69,7 @@ Policy_Tester::init (int argc,
   // Here we parse the command line paramether passed
   // to the application.
 
-  ACE_Arg_Shifter arg_shifter (argc, argv);
+  ACE_TArg_Shifter<char> arg_shifter (argc, argv);
 
   while (arg_shifter.is_anything_left ())
     {
@@ -138,7 +138,7 @@ Policy_Tester::check_reference (CORBA::Object_ptr object,
 {
   if (CORBA::is_nil (object))
     {
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT (msg)));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT_TO_TCHAR_IN (msg)));
       return 0;
     }
   return 1;
@@ -233,7 +233,7 @@ Policy_Tester::create_objects (ACE_ENV_SINGLE_ARG_DECL)
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Activated as <%s>\n"), ior.in ()));
 
-  FILE *output_file = ACE_OS::fopen (this->rt_poa_properties_->ior_source (), "w");
+  FILE *output_file = ACE_OS::fopen (this->rt_poa_properties_->ior_source (), ACE_TEXT("w"));
   if (output_file == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("Cannot open output file for writing IOR: %s"),
@@ -278,7 +278,7 @@ Policy_Tester::create_objects (ACE_ENV_SINGLE_ARG_DECL)
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Activated as <%s>\n"), o_ior.in ()));
 
-  output_file = ACE_OS::fopen (this->rt_object_properties_->ior_source (), "w");
+  output_file = ACE_OS::fopen (this->rt_object_properties_->ior_source (), ACE_TEXT("w"));
 
   if (output_file == 0)
     ACE_ERROR_RETURN ((LM_ERROR,

@@ -3,6 +3,7 @@
 #include "Client_Task.h"
 #include "Server_Task.h"
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "tao/Messaging/Messaging.h"
 #include "tao/Transport_Cache_Manager.h"
 #include "tao/Transport.h"
@@ -20,7 +21,7 @@ int number_of_client_tasks = 2;
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:n:c:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "k:n:c:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -51,12 +52,14 @@ parse_args (int argc, char *argv[])
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(), "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =
@@ -105,7 +108,7 @@ main (int argc, char *argv[])
       policies[0]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (convert.get_argc(), convert.get_ASCII_argv()) != 0)
         return 1;
 
       // Get the sender reference..

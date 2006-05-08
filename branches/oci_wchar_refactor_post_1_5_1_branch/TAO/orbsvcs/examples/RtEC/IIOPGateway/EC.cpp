@@ -8,6 +8,7 @@
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/Event/EC_Gateway.h"
 #include "ace/Arg_Shifter.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID (EC_Examples,
            Supplier,
@@ -16,11 +17,13 @@ ACE_RCSID (EC_Examples,
 static const char* ecname = 0;
 
 int
-main (int argc, char* argv[])
+ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   EC channel;
 
-  return channel.run (argc, argv);
+  return channel.run (convert.get_argc(), convert.get_ASCII_argv());
 }
 
 // ****************************************************************
@@ -138,7 +141,7 @@ EC::run (int argc, char* argv[])
 int
 EC::parse_args (int argc, char *argv[])
 {
-  ACE_Arg_Shifter arg_shifter (argc, argv);
+  ACE_TArg_Shifter<char> arg_shifter (argc, argv);
 
   while (arg_shifter.is_anything_left ())
     {

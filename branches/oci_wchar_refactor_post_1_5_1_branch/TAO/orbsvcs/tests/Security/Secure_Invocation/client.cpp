@@ -1,6 +1,7 @@
 // -*- C++ -*-
 
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 
 #include "FooC.h"
 #include "orbsvcs/SecurityC.h"
@@ -112,7 +113,7 @@ secure_invocation_test (CORBA::Object_ptr object
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "k:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -135,19 +136,21 @@ parse_args (int argc, char *argv[])
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_TRY_NEW_ENV
     {
-      ACE_TString env ("SSL_CERT_FILE=");
-      env += cert_file;
+      ACE_TString env (ACE_TEXT("SSL_CERT_FILE="));
+      env += ACE_TEXT_TO_TCHAR_IN(cert_file);
       ACE_OS::putenv (env.c_str ());
 
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(), "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (convert.get_argc(), convert.get_ASCII_argv()) != 0)
         return 1;
 
       CORBA::Object_var object =

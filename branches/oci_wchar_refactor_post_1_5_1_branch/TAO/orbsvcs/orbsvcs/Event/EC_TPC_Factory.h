@@ -43,7 +43,7 @@ public:
   static int init_svcs (void);
 
   // = The Service_Object entry points
-  virtual int init (int argc, char* argv[]);
+  virtual int init (int argc, ACE_TCHAR* argv[]);
 
   // = The EC_Factory methods
   virtual TAO_EC_Dispatching*

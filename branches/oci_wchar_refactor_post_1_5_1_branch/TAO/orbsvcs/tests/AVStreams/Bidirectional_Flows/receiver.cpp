@@ -2,6 +2,7 @@
 
 #include "receiver.h"
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "ace/High_Res_Timer.h"
 
 static FILE *output_file = 0;
@@ -159,11 +160,10 @@ Receiver::protocol_object (TAO_AV_Protocol_Object *object)
 }
 
 int
-Receiver::parse_args (int argc,
-                      char **argv)
+Receiver::parse_args (int argc, char **argv)
 {
   // Parse command line arguments
-  ACE_Get_Opt opts (argc, argv, "f:r:d");
+  ACE_Get_Arg_Opt<char> opts (argc, argv, "f:r:d");
 
   int c;
   while ((c= opts ()) != -1)
@@ -209,7 +209,7 @@ Receiver::init (int argc,
   // Open file to read.
   this->input_file_ =
     ACE_OS::fopen (this->filename_.c_str (),
-                   "r");
+                   ACE_TEXT("r"));
 
   if (this->input_file_ == 0)
     ACE_ERROR_RETURN ((LM_DEBUG,
@@ -268,16 +268,17 @@ Receiver::input_file (void)
 }
 
 int
-main (int argc,
-      char **argv)
+ACE_TMAIN (int argc,
+      ACE_TCHAR **argv)
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       // Initialize the ORB first.
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc,
-                         argv,
+        CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(),
                          0
                          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -306,7 +307,7 @@ main (int argc,
 
       // Make sure we have a valid <output_file>
       output_file = ACE_OS::fopen (output_file_name,
-                                   "w");
+                                   ACE_TEXT("w"));
       if (output_file == 0)
         ACE_ERROR_RETURN ((LM_DEBUG,
                            "Cannot open output file %s\n",
@@ -318,8 +319,7 @@ main (int argc,
                     "Output File Opened Successfully\n"));
 
       int result =
-        RECEIVER::instance ()->init (argc,
-                                     argv
+        RECEIVER::instance ()->init (convert.get_argc(), convert.get_ASCII_argv()
                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 

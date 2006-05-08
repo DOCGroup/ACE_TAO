@@ -74,10 +74,8 @@ run_main (int, ACE_TCHAR *[])
 
   errors += check (ACE_TEXT ("ACE_SIZEOF_CHAR: %u%s"),
                    sizeof (char), ACE_SIZEOF_CHAR);
-#if defined (ACE_HAS_WCHAR)
   errors += check (ACE_TEXT ("ACE_SIZEOF_WCHAR: %u%s"),
                    sizeof (wchar_t), ACE_SIZEOF_WCHAR);
-#endif /* ACE_HAS_WCHAR */
   errors += check (ACE_TEXT ("ACE_SIZEOF_SHORT: %u%s"),
                    sizeof (short), ACE_SIZEOF_SHORT);
   errors += check (ACE_TEXT ("ACE_SIZEOF_INT: %u%s"),

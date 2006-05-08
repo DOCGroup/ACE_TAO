@@ -76,7 +76,7 @@ Server_Task::svc (void)
       // If the ior_output_file exists, output the ior to it
       if (output_ != 0)
         {
-          FILE *output_file= ACE_OS::fopen (this->output_, "w");
+          FILE *output_file= ACE_OS::fopen (this->output_, ACE_TEXT("w"));
           if (output_file == 0)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "Cannot open output file for writing IOR: %s",

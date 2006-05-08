@@ -29,7 +29,7 @@ static const char *test_type = "PACED";
 static int
 parse_args (int argc, char **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "a:b:c:d:e:i:m:p:r:s:t:u:v:w:x:y:z:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "a:b:c:d:e:i:m:p:r:s:t:u:v:w:x:y:z:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -150,7 +150,7 @@ parse_args (int argc, char **argv)
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {

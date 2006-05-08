@@ -289,7 +289,6 @@ TAO_CosNotify_Service::builder (void)
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-
 /*********************************************************************************************************************/
 
 ACE_STATIC_SVC_DEFINE (TAO_Notify_Default_EMO_Factory_OLD,

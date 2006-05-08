@@ -1,4 +1,5 @@
 // $Id$
 project: ifr_client {
+  exename = client
   avoids += ace_for_tao
 }

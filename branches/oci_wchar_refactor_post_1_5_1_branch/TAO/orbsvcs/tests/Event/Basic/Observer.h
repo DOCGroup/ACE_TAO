@@ -49,7 +49,7 @@ public:
   EC_Observer* channel (int i) const;
 
 private:
-  int parse_args (int &argc, char *argv []);
+  int parse_args (int &argc, char *argv[]);
 
 private:
   /// The seed

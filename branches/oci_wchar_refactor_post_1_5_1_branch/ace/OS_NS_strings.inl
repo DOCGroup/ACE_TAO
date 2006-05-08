@@ -2,9 +2,7 @@
 //
 // $Id$
 
-#if defined (ACE_HAS_WCHAR)
 #  include "ace/OS_NS_wchar.h"
-#endif /* ACE_HAS_WCHAR */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -20,7 +18,6 @@ ACE_OS::strcasecmp (const char *s, const char *t)
 #endif /* ACE_LACKS_STRCASECMP */
 }
 
-#if defined (ACE_HAS_WCHAR)
 ACE_INLINE int
 ACE_OS::strcasecmp (const wchar_t *s, const wchar_t *t)
 {
@@ -30,7 +27,6 @@ ACE_OS::strcasecmp (const wchar_t *s, const wchar_t *t)
   return ::_wcsicmp (s, t);
 #  endif /* ACE_LACKS_WCSICMP */
 }
-#endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE int
 ACE_OS::strncasecmp (const char *s, const char *t, size_t len)
@@ -44,7 +40,6 @@ ACE_OS::strncasecmp (const char *s, const char *t, size_t len)
 #endif /* ACE_LACKS_STRCASECMP */
 }
 
-#if defined (ACE_HAS_WCHAR)
 ACE_INLINE int
 ACE_OS::strncasecmp (const wchar_t *s, const wchar_t *t, size_t len)
 {
@@ -54,6 +49,5 @@ ACE_OS::strncasecmp (const wchar_t *s, const wchar_t *t, size_t len)
   return ::_wcsnicmp (s, t, len);
 #endif /* ACE_LACKS_WCSNICMP */
 }
-#endif /* ACE_HAS_WCHAR */
 
 ACE_END_VERSIONED_NAMESPACE_DECL

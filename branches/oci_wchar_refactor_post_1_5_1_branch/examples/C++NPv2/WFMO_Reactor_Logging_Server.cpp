@@ -119,7 +119,7 @@ typedef Reactor_Logging_Server<Logging_Acceptor_WFMO>
         Server_Logging_Daemon;
 
 
-int main (int argc, char *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   const size_t N_THREADS = 4;
   ACE_WFMO_Reactor wfmo_reactor;
@@ -138,7 +138,7 @@ int main (int argc, char *argv[])
 }
 
 #else /* !ACE_WIN32 */
-int main (int, char *[])
+int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   return 0;
 }

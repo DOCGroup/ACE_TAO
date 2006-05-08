@@ -9,6 +9,7 @@ project(*IDL): taoidldefaults, strategies {
 }
 
 project(*server): taoexe, utils, portableserver, strategies {
+  exename = server
   after += *IDL
 
   Source_Files {
@@ -26,6 +27,7 @@ project(*server): taoexe, utils, portableserver, strategies {
 }
 
 project(*client): taoexe, utils, portableserver, strategies {
+  exename = client
   after += *IDL
 
   Source_Files {

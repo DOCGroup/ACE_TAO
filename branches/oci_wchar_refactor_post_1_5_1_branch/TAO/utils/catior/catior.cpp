@@ -460,7 +460,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
   CORBA::Boolean have_argument = 0;
   int opt;
 
-  ACE_Get_Opt get_opt (argcon.get_argc (), argcon.get_TCHAR_argv (),
+  ACE_Get_Arg_Opt<ACE_TCHAR> get_opt (argcon.get_argc (), argcon.get_TCHAR_argv (),
                        ACE_TEXT ("f:n:x"));
 
   while ((opt = get_opt ()) != EOF)
@@ -650,7 +650,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                         get_opt.opt_arg ()));
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
-            ifstream ifstr (get_opt.opt_arg ());
+            ifstream ifstr (ACE_TEXT_TO_CHAR_IN(get_opt.opt_arg ()));
 
             if (!ifstr.good ())
               {

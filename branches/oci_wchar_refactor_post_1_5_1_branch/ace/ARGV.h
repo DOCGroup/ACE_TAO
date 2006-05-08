@@ -27,7 +27,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
- * @class ACE_ARGV
+ * @class ACE_TARGV
  *
  * @brief Builds a counted argument vector (ala argc/argv) from either
  * a string or a set of separate tokens. This class preserves whitespace
@@ -43,7 +43,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * For example, @c $HOME/file will not substitute the value of the HOME
  * environment variable.
  */
-class ACE_Export ACE_ARGV
+template < typename CHAR_TYPE = char >
+class ACE_Export ACE_TARGV
 {
 public:
   // = Initialization and termination.
@@ -60,7 +61,7 @@ public:
    *              its environment variable value in the resultant vector
    *              in place of the environment variable name.
    */
-  ACE_ARGV (const ACE_TCHAR buf[],
+  ACE_TARGV (const CHAR_TYPE buf[],
             bool substitute_env_args = true);
 
   /**
@@ -79,7 +80,7 @@ public:
    *              its environment variable value in the resultant vector
    *              in place of the environment variable name.
    */
-  ACE_ARGV (ACE_TCHAR *argv[],
+  ACE_TARGV (CHAR_TYPE *argv[],
             bool substitute_env_args = true);
 
   /**
@@ -96,8 +97,8 @@ public:
    *              variable value in the resultant vector in place
    *              of the environment variable name.
    */
-  ACE_ARGV (ACE_TCHAR *first_argv[],
-            ACE_TCHAR *second_argv[],
+  ACE_TARGV (CHAR_TYPE *first_argv[],
+            CHAR_TYPE *second_argv[],
             bool substitute_env_args = true);
 
   /**
@@ -105,10 +106,10 @@ public:
    * of the add methods. This is referred to as the @i iterative method
    * of adding arguments to this object.
    */
-  ACE_ARGV (bool substitute_env_args = true);
+  ACE_TARGV (bool substitute_env_args = true);
 
   /// Destructor.
-  ~ACE_ARGV (void);
+  ~ACE_TARGV (void);
 
   /** @name Accessor methods
    *
@@ -123,14 +124,14 @@ public:
    * @retval   Pointer to the indexed string.
    * @retval   0 if @a index is out of bounds.
    */
-  const ACE_TCHAR *operator[] (size_t index);
+  const CHAR_TYPE *operator[] (size_t index);
 
   /**
    * Returns the current argument vector. The returned pointers are to data
    * maintained internally to this class. Do not change or delete either the
    * pointers or the memory to which they refer.
    */
-  ACE_TCHAR **argv (void);
+  CHAR_TYPE **argv (void);
 
   /// Returns the current number of arguments.
   int argc (void) const;
@@ -140,7 +141,7 @@ public:
    * pointer refers to memory maintained internally to this class. Do not
    * change or delete it.
    */
-  const ACE_TCHAR *buf (void);
+  const CHAR_TYPE *buf (void);
 
   //@}
 
@@ -164,7 +165,7 @@ public:
    *       - EINVAL: This object is not in iterative mode.
    *       - ENOMEM: Not enough memory available to save @a next_arg.
    */
-  int add (const ACE_TCHAR *next_arg);
+  int add (const CHAR_TYPE *next_arg);
 
   /**
    * Add an array of arguments. This only works in the iterative mode.
@@ -181,24 +182,24 @@ public:
    *       - EINVAL: This object is not in iterative mode.
    *       - ENOMEM: Not enough memory available to save @a next_arg.
    */
-  int add (ACE_TCHAR *argv[]);
+  int add (CHAR_TYPE *argv[]);
 
 private:
-  /// Copy constructor not implemented.
-  ACE_ARGV (const ACE_ARGV&);
+  /// Copy Constructor not implemented
+  ACE_TARGV (const ACE_TARGV&);
 
-  /// Assignment operator not implemented.
-  ACE_ARGV operator= (const ACE_ARGV&);
+  /// Assignment '=' operator not implemented
+  ACE_TARGV operator= (const ACE_TARGV&);
 
   /// Creates buf_ from the queue of added args, deletes previous buf_.
   int create_buf_from_queue (void);
 
-  /// Converts buf_ into the ACE_TCHAR *argv[] format.
+  /// Converts buf_ into the CHAR_TYPE *argv[] format.
   int string_to_argv (void);
 
   /// Returns the string created from argv in buf and
   /// returns the number of arguments.
-  int argv_to_string (ACE_TCHAR **argv, ACE_TCHAR *&buf);
+  int argv_to_string (CHAR_TYPE **argv, CHAR_TYPE *&buf);
 
   /// Replace args with environment variable values?
   bool substitute_env_args_;
@@ -209,10 +210,10 @@ private:
   int argc_;
 
   /// The array of string arguments.
-  ACE_TCHAR **argv_;
+  CHAR_TYPE **argv_;
 
   /// Buffer containing the <argv> contents.
-  ACE_TCHAR *buf_;
+  CHAR_TYPE *buf_;
 
   /// Total length of the arguments in the queue, not counting
   /// separating spaces
@@ -220,8 +221,10 @@ private:
 
   /// Queue which keeps user supplied arguments.  This is only
   /// active in the "iterative" mode.
-  ACE_Unbounded_Queue<ACE_TCHAR *> queue_;
+  ACE_Unbounded_Queue<CHAR_TYPE *> queue_;
 };
+
+typedef ACE_TARGV<ACE_TCHAR> ACE_ARGV;
 
 // Close versioned namespace, if enabled by the user.
 ACE_END_VERSIONED_NAMESPACE_DECL
@@ -229,6 +232,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #if defined (__ACE_INLINE__)
 #include "ace/ARGV.inl"
 #endif /* __ACE_INLINE__ */
+
 
 #include /**/ "ace/post.h"
 #endif /* ACE_ARGUMENT_VECTOR_H */

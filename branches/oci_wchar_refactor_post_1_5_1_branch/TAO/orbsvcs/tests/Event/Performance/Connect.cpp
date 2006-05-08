@@ -5,6 +5,7 @@
 #include "Supplier.h"
 #include "orbsvcs/Event/EC_Event_Channel.h"
 #include "ace/Arg_Shifter.h"
+#include "ace/Argv_Type_Converter.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/OS_NS_strings.h"
 
@@ -13,10 +14,12 @@ ACE_RCSID (EC_Tests_Performance,
            "$Id$")
 
 int
-main (int argc, char *argv [])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   EC_Connect driver;
-  return driver.run (argc, argv);
+  return driver.run (convert.get_argc(), convert.get_ASCII_argv());
 }
 
 // ****************************************************************
@@ -38,7 +41,7 @@ EC_Connect::parse_args (int& argc, char* argv[])
   if (this->EC_Driver::parse_args (argc, argv) != 0)
     return -1;
 
-  ACE_Arg_Shifter arg_shifter (argc, argv);
+  ACE_TArg_Shifter< char > arg_shifter (argc, argv);
 
   while (arg_shifter.is_anything_left ())
     {

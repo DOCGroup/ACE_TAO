@@ -20,16 +20,18 @@
 // ============================================================================
 
 #include "ior_corbaname_client_i.h"
+#include "ace/Argv_Type_Converter.h"
 
-int main (int argc, char *argv [])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
 
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       IOR_corbaname_Client_i client;
 
-      if (client.init (argc, argv) == -1)
+      if (client.init (convert.get_argc(), convert.get_ASCII_argv()) == -1)
         return 1;
       else
         {

@@ -317,7 +317,7 @@ TAO_IIOP_Connector::begin_connection (TAO_IIOP_Connection_Handler *&svc_handler,
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("TAO (%P|%t) - IIOP_Connector::begin_connection, ")
                 ACE_TEXT ("to <%s:%d> which should %s\n"),
-                ACE_TEXT_CHAR_TO_TCHAR(iiop_endpoint->host()),
+                ACE_TEXT_TO_TCHAR_IN(iiop_endpoint->host()),
                 iiop_endpoint->port(),
                 r->blocked_connect () ? ACE_TEXT("block") : ACE_TEXT("nonblock")));
 

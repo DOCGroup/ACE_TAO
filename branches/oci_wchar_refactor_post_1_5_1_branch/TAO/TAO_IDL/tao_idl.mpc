@@ -6,6 +6,7 @@ project(TAO_IDL_EXE) : aceexe, core, tao_output, crosscompile {
   libs        += TAO_IDL_BE TAO_IDL_FE
   install      = $(ACE_ROOT)/bin
   after       += TAO_IDL_BE TAO_IDL_FE gperf
+  avoids      += uses_wchar
 
   specific (automake) {
     includes    += $(srcdir)/include $(srcdir)/be_include $(srcdir)/fe
@@ -54,6 +55,7 @@ project(TAO_IDL_BE) : acelib, conv_lib, tao_output, crosscompile {
   libs        += TAO_IDL_FE
   dynamicflags = TAO_IDL_BE_BUILD_DLL
   after       += TAO_IDL_FE
+  avoids      += uses_wchar
 
   specific (automake) {
     includes    += $(srcdir)/include $(srcdir)/be_include $(srcdir)/fe
@@ -82,6 +84,7 @@ project(TAO_IDL_BE) : acelib, conv_lib, tao_output, crosscompile {
 project(TAO_IDL_FE) : acelib, conv_lib, tao_output, crosscompile {
   sharedname   = TAO_IDL_FE
   dynamicflags = TAO_IDL_FE_BUILD_DLL
+  avoids      += uses_wchar
 
   specific (automake) {
     includes    += $(srcdir)/include $(srcdir)/fe

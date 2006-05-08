@@ -2,12 +2,14 @@
 // $Id$
 
 project(*Server): strategies, rt_server {
+  exename = server
   Source_Files {
     server.cpp
   }
 }
 
 project(*Client): strategies, rt_client {
+  exename = client
   after += *Server
   Source_Files {
     testC.cpp

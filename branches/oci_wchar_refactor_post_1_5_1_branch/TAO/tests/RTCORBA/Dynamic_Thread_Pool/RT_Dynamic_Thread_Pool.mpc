@@ -2,6 +2,7 @@
 // $Id$
 
 project(*Server): strategies, rt_server, minimum_corba {
+  exename = server
   Source_Files {
     test_i.cpp
     server.cpp
@@ -9,6 +10,7 @@ project(*Server): strategies, rt_server, minimum_corba {
 }
 
 project(*Client): strategies, rt_client, minimum_corba {
+  exename = client
   after += *Server
   Source_Files {
     testC.cpp

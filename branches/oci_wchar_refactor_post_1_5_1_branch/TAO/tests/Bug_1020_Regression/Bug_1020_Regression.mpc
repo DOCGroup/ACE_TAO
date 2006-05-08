@@ -2,6 +2,7 @@
 // $Id$
 
 project(*Server): taoserver, messaging {
+  exename = server
   Source_Files {
     ORB_Task.cpp
     Server_i.cpp
@@ -11,6 +12,7 @@ project(*Server): taoserver, messaging {
 }
 
 project(*Client): taoexe, messaging {
+  exename = client
   Source_Files {
     Echo.cpp
     ORB_Task.cpp

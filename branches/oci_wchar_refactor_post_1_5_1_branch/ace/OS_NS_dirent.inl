@@ -64,7 +64,7 @@ opendir (const ACE_TCHAR *filename)
 #    elif defined (ACE_HAS_NONCONST_OPENDIR)
   return ::opendir (const_cast<char *> (filename));
 #    else /* ! ACE_WIN32 && ACE_LACKS_OPENDIR */
-  return ::opendir (ACE_TEXT_ALWAYS_CHAR (filename));
+  return ::opendir (ACE_TEXT_TO_CHAR_IN (filename));
 #    endif /* ACE_WIN32 && ACE_LACKS_OPENDIR */
 #  endif /* ACE_PSOS */
 #else
@@ -182,7 +182,7 @@ scandir (const ACE_TCHAR *dirname,
                                     const struct ACE_DIRENT **f2))
 {
 #if defined (ACE_HAS_SCANDIR)
-  return ::scandir (ACE_TEXT_ALWAYS_CHAR (dirname),
+  return ::scandir (ACE_TEXT_TO_CHAR_IN (dirname),
                     namelist,
                     selector,
 #  if defined (ACE_SCANDIR_CMP_USES_VOIDPTR)

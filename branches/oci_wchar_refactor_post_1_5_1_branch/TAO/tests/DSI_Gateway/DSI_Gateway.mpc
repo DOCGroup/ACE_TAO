@@ -2,6 +2,7 @@
 // $Id$
 
 project(*Server): taoserver, messaging, minimum_corba, dynamicinterface {
+  exename = server
   Source_Files {
     test_i.cpp
     server.cpp
@@ -9,6 +10,7 @@ project(*Server): taoserver, messaging, minimum_corba, dynamicinterface {
 }
 
 project(*Client): taoclient, messaging, minimum_corba, dynamicinterface {
+  exename = client
   after += *Server
   Source_Files {
     testC.cpp
@@ -17,6 +19,7 @@ project(*Client): taoclient, messaging, minimum_corba, dynamicinterface {
 }
 
 project(*Gateway): taoexe, portableserver, messaging, minimum_corba, dynamicinterface {
+  exename = gateway
   after += *Client
   Source_Files {
     test_dsi.cpp

@@ -119,7 +119,7 @@ HTML_Body_Validation_Strategy::execute (void)
   char temp[BUFSIZ + 1];
   ACE_CString prev_location (temp);
 
-  prev_location.set (ACE_TEXT_ALWAYS_CHAR (this->url_.url_addr ().get_path_name ()),
+  prev_location.set (ACE_TEXT_TO_CHAR_IN (this->url_.url_addr ().get_path_name ()),
                      ACE_OS::strlen (this->url_.url_addr ().get_path_name ()),
                      1);
   int index = prev_location.rfind ('/', prev_location.length ());
@@ -164,7 +164,7 @@ HTML_Body_Validation_Strategy::execute (void)
                       ACE_URL_Addr,
                       0);
       Auto_Destroyer<ACE_URL_Addr> url_addr_ptr (url_addr);
-      if (url_addr_ptr->string_to_addr (ACE_TEXT_CHAR_TO_TCHAR (url.c_str ())) == 0)
+      if (url_addr_ptr->string_to_addr (ACE_TEXT_TO_TCHAR_IN (url.c_str ())) == 0)
         {
           HTTP_URL *http_url;
           ACE_NEW_RETURN (http_url,

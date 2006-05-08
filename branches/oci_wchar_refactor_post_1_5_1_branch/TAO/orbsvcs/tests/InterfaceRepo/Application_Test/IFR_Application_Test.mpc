@@ -2,6 +2,7 @@
 // $Id$
 
 project(*server): taoexe, portableserver, ifr_client, minimum_corba {
+  exename = server
 
   Source_Files {
     test_i.cpp
@@ -10,6 +11,7 @@ project(*server): taoexe, portableserver, ifr_client, minimum_corba {
 }
 
 project(*client): taoexe, portableserver, ifr_client, dynamicinterface, minimum_corba {
+  exename = client
 
   IDL_Files {
   }

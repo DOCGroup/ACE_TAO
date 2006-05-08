@@ -32,7 +32,7 @@ Server<Servant>::~Server (void)
 template <class Servant> int
 Server<Servant>::parse_args (void)
 {
-  ACE_Get_Opt get_opts (this->argc_, this->argv_, "do:m:");
+  ACE_Get_Arg_Opt<char> get_opts (this->argc_, this->argv_, "do:m:");
   int c = 0;
 
   while ((c = get_opts ()) != -1)
@@ -42,7 +42,7 @@ Server<Servant>::parse_args (void)
         TAO_debug_level++;
         break;
       case 'o':  // output the IOR to a file.
-        this->ior_output_file_ = ACE_OS::fopen (get_opts.opt_arg (), "w");
+        this->ior_output_file_ = ACE_OS::fopen (get_opts.opt_arg (), ACE_TEXT("w"));
         if (this->ior_output_file_ == 0)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to open %s for writing: %p\n",
@@ -205,7 +205,7 @@ Client<InterfaceObj, Var>::read_ior (char *filename)
 template <class InterfaceObj, class Var> int
 Client<InterfaceObj, Var>::parse_args (void)
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "df:k:x");
+  ACE_Get_Arg_Opt<char> get_opts (argc_, argv_, "df:k:x");
   int c = 0;
   int result = 0;
 

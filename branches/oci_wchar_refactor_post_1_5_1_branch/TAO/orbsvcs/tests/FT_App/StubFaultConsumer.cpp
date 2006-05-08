@@ -4,6 +4,7 @@
 
 #include "StubFaultConsumer.h"
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "orbsvcs/PortableGroup/PG_Properties_Encoder.h"
 
 StubFaultConsumer::StubFaultConsumer ()
@@ -40,7 +41,7 @@ int StubFaultConsumer::parse_args (int argc, char * argv[])
   ACE_UNUSED_ARG (argc);
   ACE_UNUSED_ARG (argv);
 #else // NO_ARGS_FOR_NOW
-  ACE_Get_Opt get_opts (argc, argv, "");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "");
   int c;
   while ((c = get_opts ()) != -1)
   {

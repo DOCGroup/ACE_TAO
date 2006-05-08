@@ -180,7 +180,7 @@ TAO_CORBALOC_Parser::parse_string (const char * ior,
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT("(%P|%t) TAO_CORBALOC_Parser::parse_string ")
                       ACE_TEXT("could not parse from %s"),
-                      ACE_TEXT_CHAR_TO_TCHAR(ior)));
+                      ACE_TEXT_TO_TCHAR_IN(ior)));
         ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 10,
                                             CORBA::COMPLETED_NO),
                           CORBA::Object::_nil ());
@@ -212,7 +212,7 @@ TAO_CORBALOC_Parser::parse_string (const char * ior,
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT("(%P|%t) TAO_CORBALOC_Parser::parse_string ")
                   ACE_TEXT("could not parse from %s"),
-                  ACE_TEXT_CHAR_TO_TCHAR(ior)));
+                  ACE_TEXT_TO_TCHAR_IN(ior)));
     ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 10,
                                         CORBA::COMPLETED_NO),
                       CORBA::Object::_nil ());

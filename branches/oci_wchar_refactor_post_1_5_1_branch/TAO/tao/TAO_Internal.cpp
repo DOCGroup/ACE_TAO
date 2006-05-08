@@ -152,7 +152,7 @@ TAO::ORB::open_services (ACE_Service_Gestalt* pcfg,
 
   if (argc > 0 && argv != 0)
     {
-      argv0 = ACE_TEXT_ALWAYS_CHAR (argv[0]);
+      argv0 = ACE_TEXT_TO_CHAR_OUT (argv[0]);
     }
 
   svc_config_argv.length (1);
@@ -214,8 +214,8 @@ TAO::ORB::open_services (ACE_Service_Gestalt* pcfg,
     {
       if (TAO_debug_level > 0)
         ACE_ERROR_RETURN ((LM_DEBUG,
-                           ACE_LIB_TEXT ("TAO (%P|%t) Failed to ")
-                           ACE_LIB_TEXT("open orb service configuration\n")),
+                           ACE_TEXT ("TAO (%P|%t) Failed to ")
+                           ACE_TEXT("open orb service configuration\n")),
                           -1);
       return -1;
     }

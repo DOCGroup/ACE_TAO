@@ -2,6 +2,7 @@
 // $Id$
 
 project(*Server): taoserver, messaging {
+  exename = server
   Source_Files {
     Server_Thread_Pool.cpp
     Echo_Caller.cpp
@@ -11,6 +12,7 @@ project(*Server): taoserver, messaging {
 }
 
 project(*Client): taoclient, messaging {
+  exename = client
   after += *Server
   Source_Files {
     Echo.cpp
@@ -20,6 +22,7 @@ project(*Client): taoclient, messaging {
 }
 
 project(*Shutdown): taoexe, messaging {
+  exename = shutdown
   after += *Client
   Source_Files {
     shutdown.cpp

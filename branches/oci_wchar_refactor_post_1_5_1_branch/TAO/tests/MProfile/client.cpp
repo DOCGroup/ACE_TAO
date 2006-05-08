@@ -4,6 +4,7 @@
 #include "ace/SString.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/Argv_Type_Converter.h"
 #include "testC.h"
 
 ACE_RCSID(MT_Server, client, "$Id$")
@@ -16,7 +17,7 @@ const char *name = "file://amba.ior";
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "xk:m:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "xk:m:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -53,17 +54,19 @@ run_test (Simple_Server_ptr server
           ACE_ENV_ARG_DECL);
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(), "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (convert.get_argc(), convert.get_ASCII_argv()) != 0)
         return 1;
 
       // Primary server

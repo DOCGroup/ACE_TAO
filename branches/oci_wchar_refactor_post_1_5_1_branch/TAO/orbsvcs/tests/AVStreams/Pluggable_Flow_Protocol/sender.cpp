@@ -3,6 +3,7 @@
 #include "sender.h"
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "ace/High_Res_Timer.h"
 
 // Create a singleton instance of the Sender.
@@ -54,11 +55,10 @@ Sender::protocol_object (TAO_AV_Protocol_Object *object)
 }
 
 int
-Sender::parse_args (int argc,
-                    char **argv)
+Sender::parse_args (int argc, char **argv)
 {
   // Parse command line arguments
-  ACE_Get_Opt opts (argc, argv, "f:p:r:d");
+  ACE_Get_Arg_Opt<char> opts (argc, argv, "f:p:r:d");
 
   int c;
   while ((c= opts ()) != -1)
@@ -141,7 +141,7 @@ Sender::init (int argc,
   // Open file to read.
   this->input_file_ =
     ACE_OS::fopen (this->filename_.c_str (),
-                   "r");
+                   ACE_TEXT("r"));
 
   if (this->input_file_ == 0)
     ACE_ERROR_RETURN ((LM_DEBUG,
@@ -343,9 +343,11 @@ Sender::pace_data (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 int
-main (int argc,
-      char **argv)
+ACE_TMAIN (int argc,
+     ACE_TCHAR **argv)
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
@@ -353,8 +355,7 @@ main (int argc,
       ACE_High_Res_Timer::global_scale_factor ();
 
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc,
-                         argv,
+        CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(),
                          0
                          ACE_ENV_ARG_PARAMETER);
 
@@ -384,8 +385,7 @@ main (int argc,
 
       // Initialize the Sender.
       int result = 0;
-      result = SENDER::instance ()->init (argc,
-                                          argv
+      result = SENDER::instance ()->init (convert.get_argc(), convert.get_ASCII_argv()
                                           ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 

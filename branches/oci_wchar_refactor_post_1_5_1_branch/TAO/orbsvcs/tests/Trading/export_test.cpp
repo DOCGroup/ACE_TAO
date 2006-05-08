@@ -13,16 +13,18 @@ ACE_RCSID (Trading,
            "$Id$")
 
 int
-main (int argc, char** argv)
+ACE_TMAIN (int argc, ACE_TCHAR** argv)
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_TRY_NEW_ENV
     {
       TAO_ORB_Manager orb_manager;
-      orb_manager.init (argc, argv ACE_ENV_ARG_PARAMETER);
+      orb_manager.init (convert.get_argc(), convert.get_ASCII_argv() ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Command line argument interpretation.
-      TT_Parse_Args parse_args (argc, argv);
+      TT_Parse_Args parse_args (convert.get_argc(), convert.get_ASCII_argv());
 
       // Init the orb and bootstrap to the trading service.
       CORBA::ORB_var orb = orb_manager.orb ();
@@ -129,14 +131,14 @@ main (int argc, char** argv)
 
       size_t offset = 0;
       char file[1024];
-      ACE_OS::strcpy(file, argv[0]);
+      ACE_OS::string_copy(file, argv[0], sizeof(file)/sizeof(file[0]));
       if ((offset = (size_t)ACE_OS::strrchr(file, '/')) != 0) {
         offset -= ((size_t)file - 1);
       }
       ACE_OS::strcpy(file + offset, "export_test_ready");
 
       FILE *ready_file =
-        ACE_OS::fopen (file, "w");
+        ACE_OS::fopen (file, ACE_TEXT("w"));
       if (ready_file != 0) {
         ACE_OS::fprintf (ready_file, "The export test is ready\n");
         ACE_OS::fclose (ready_file);

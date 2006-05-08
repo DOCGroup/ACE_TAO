@@ -3,6 +3,7 @@
 
 #include "Supplier.h"
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 
 Supplier::Supplier ()
   : event_count_ (1)
@@ -11,9 +12,9 @@ Supplier::Supplier ()
 }
 
 int
-Supplier::parse_args (int argc, char *argv [])
+Supplier::parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, "n:c:");
+  ACE_Get_Arg_Opt<char> get_opt (argc, argv, "n:c:");
   int opt;
 
   while ((opt = get_opt ()) != EOF)
@@ -170,11 +171,13 @@ Supplier::run (void)
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   Supplier supp;
 
-  if (supp.init (argc, argv) == -1)
+  if (supp.init (convert.get_argc(), convert.get_ASCII_argv()) == -1)
     return 1;
 
   supp.run ();

@@ -3,6 +3,7 @@
 #include "distributer.h"
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "orbsvcs/AV/Protocol_Factory.h"
 #include "orbsvcs/AV/FlowSpec_Entry.h"
 
@@ -267,11 +268,10 @@ Distributer::connection_manager (void)
 }
 
 int
-Distributer::parse_args (int argc,
-                         char **argv)
+Distributer::parse_args (int argc, char **argv)
 {
   /// Parse command line arguments
-  ACE_Get_Opt opts (argc, argv, "s:r:");
+  ACE_Get_Arg_Opt<char> opts (argc, argv, "s:r:");
 
   int c;
   while ((c= opts ()) != -1)
@@ -426,16 +426,17 @@ Distributer::done (int done)
 }
 
 int
-main (int argc,
-      char **argv)
+ACE_TMAIN (int argc,
+      ACE_TCHAR **argv)
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       /// Initialize the ORB first.
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc,
-                         argv,
+        CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(),
                          0
                          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -466,8 +467,7 @@ main (int argc,
 
       /// Initialize the Distributer
       int result =
-        DISTRIBUTER::instance ()->init (argc,
-                                        argv
+        DISTRIBUTER::instance ()->init (convert.get_argc(), convert.get_ASCII_argv()
                                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
