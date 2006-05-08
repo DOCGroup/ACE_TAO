@@ -1,5 +1,4 @@
 // $Id$
-
 #ifndef PC_UPDATER_T_C
 #define PC_UPDATER_T_C
 #include "PC_Updater.h"
@@ -9,7 +8,7 @@ namespace PC_Updater_T
 {
   /// Dumps a sequence
   template <typename SEQUENCE>
-  void update_sequence (const SEQUENCE &seq, PC_Updater* updater)
+  void update_sequence (SEQUENCE &seq, PC_Updater* updater)
   {
     const CORBA::ULong size = seq.length ();
 

@@ -112,7 +112,12 @@ namespace CIAO
       //Get all the string/IDREFs
       XMLSchema::string < ACE_TCHAR > name ((src.name));
       XMLSchema::string < ACE_TCHAR > node ((src.node));
-      XMLSchema::string < ACE_TCHAR > source ((src.source[0]));
+      XMLSchema::string < ACE_TCHAR > source ("");
+      if (src.source.length () > 0)
+      {
+         XMLSchema::string < ACE_TCHAR > source_detail (src.source[0]);
+         source = source_detail;
+    }
       ACE_CString temp;
       MDD_Handler::IDREF.find_ref(src.implementationRef, temp);
       XMLSchema::IDREF< ACE_TCHAR > implementation ((temp.c_str()));

@@ -1,3 +1,4 @@
+
 /* -*- C++ -*- */
 
 //======================================================================
@@ -20,17 +21,24 @@
 #include "ace/streams.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Task.h"
-using namespace std;
+#include "ace/Get_Opt.h"
+#include "ace/SString.h"
 
-namespace
+namespace CIAO
 {
-/// Name of the file holding the IOR of the RM
-const char * rm_ior = "RepositoryManagerDeamon.ior";
+  namespace RepositoryManager
+  {
+    /// Name of the file holding the IOR of the RM
+    const char * RMior = "RepositoryManagerDeamon.ior";
 
-/// Default number of worker threads to run in the multi-threaded RM
-unsigned int nthreads = 3;
+    /// Default number of worker threads to run in the multi-threaded RM
+    static unsigned int nthreads = 3;
+    static ACE_CString HTTPserver = "127.0.0.1:5432";
+  }
 }
 
+//forward declaration
+bool parse_args (int argc, char *argv[]);
 
 /**
  * @class Worker
@@ -63,6 +71,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     //init the ORB
     CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
 
+    if (!parse_args (argc, argv))
+       return -1;
+
     //Get the root POA object
     CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA");
 
@@ -75,10 +86,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     //create a servant
     CIAO_RepositoryManagerDaemon_i* repo;
-    ACE_NEW_RETURN (repo, CIAO_RepositoryManagerDaemon_i (orb.in ()), 1);
+    ACE_NEW_RETURN (repo,
+                    CIAO_RepositoryManagerDaemon_i (
+                          orb.in (),
+                          CIAO::RepositoryManager::HTTPserver.c_str ()),
+                    1);
 
     //trasfer ownership to the POA
-    PortableServer::ServantBase_var distributor_owner_transfer(repo);
+    PortableServer::ServantBase_var owner_transfer(repo);
 
     //register and implicitly activate servant
     CIAO::RepositoryManagerDaemon_var RepositoryManagerDeamon = repo->_this ();
@@ -87,22 +102,20 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     CORBA::String_var ior = orb->object_to_string (RepositoryManagerDeamon.in ());
 
     //output the IOR to a file
-    FILE* ior_out = ACE_OS::fopen (rm_ior, "w");
+    FILE* ior_out = ACE_OS::fopen (CIAO::RepositoryManager::RMior, "w");
 
     if (ior_out == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open output file for writing IOR: %s",
-                           rm_ior),
-                              1);
+                            CIAO::RepositoryManager::RMior),
+                            1);
 
     ACE_OS::fprintf (ior_out, "%s", ior.in ());
     ACE_OS::fclose (ior_out);
 
-    if (argc > 1)
-      nthreads = ACE_OS::atoi (argv[1]);
-
     Worker worker (orb.in ());
-    if (worker.activate (THR_NEW_LWP | THR_JOINABLE, nthreads) != 0)
+    if (worker.activate (THR_NEW_LWP | THR_JOINABLE,
+                         CIAO::RepositoryManager::nthreads) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot activate worker threads\n"),
                            1);
@@ -134,6 +147,40 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   return 0;
 }
+
+
+// ****************************************************************
+
+///Code to parse the arguments
+
+    bool
+    parse_args (int argc, char *argv[])
+    {
+      ACE_Get_Opt get_opts (argc, argv, "s:n:");
+      int c;
+      while ((c = get_opts ()) != -1)
+        switch (c)
+          {
+          case 's':
+            CIAO::RepositoryManager::HTTPserver = get_opts.opt_arg ();
+            break;
+          case 'n':
+            CIAO::RepositoryManager::nthreads = ACE_OS::atoi (get_opts.opt_arg ());
+            break;
+          case '?':  // display help for use of the server.
+            ACE_DEBUG ((LM_INFO,
+                        "usage:  %s\n"
+                        "-s <IP:PORT for HTTP server>\n"
+                        "-n <number of threads>\n",
+                        argv [0]));
+            return false;
+            break;
+          default:
+            ;
+          }
+
+      return true;
+    }
 
 
 
