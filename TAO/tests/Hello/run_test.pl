@@ -9,15 +9,22 @@ use lib '../../../bin';
 use PerlACE::Run_Test;
 
 $status = 0;
+$debug_level = '0';
+
+foreach $i (@ARGV) {
+    if ($i eq '-debug') {
+        $debug_level = '10';
+    } 
+}
 
 $iorfile = PerlACE::LocalFile ("server.ior");
 unlink $iorfile;
 
 if (PerlACE::is_vxworks_test()) {
-    $SV = new PerlACE::ProcessVX ("server", "-o server.ior");
+    $SV = new PerlACE::ProcessVX ("server", "-ORBDebuglevel $debug_level -o server.ior");
 }
 else {
-    $SV = new PerlACE::Process ("server", "-o $iorfile");
+    $SV = new PerlACE::Process ("server", "-ORBdebuglevel $debug_level -o $iorfile");
 }
 $CL = new PerlACE::Process ("client", " -k file://$iorfile");
     
