@@ -6,6 +6,7 @@
 #include "ace/streams.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/Argv_Type_Converter.h"
 
 // A simple class for building a client that "controls' the
 // Replication Manager (right now it just shuts it down).
@@ -89,9 +90,8 @@ int TAO_FT_ReplicationManagerController::init (int & argc, char * argv[])
       if (CORBA::is_nil (this->replication_manager_.in()))
       {
         ACE_ERROR ((LM_ERROR,
-          ACE_TEXT (
-            "TAO_FT_ReplicationManagerController::init: "
-            "Could not get Replication Manager's IOR.\n")
+          ACE_TEXT ("TAO_FT_ReplicationManagerController::init: ")
+          ACE_TEXT ("Could not get Replication Manager's IOR.\n")
         ));
         result = -1;
       }
@@ -116,7 +116,7 @@ int TAO_FT_ReplicationManagerController::parse_args (int & argc, char * argv[])
 {
   int result = 0;
 
-  ACE_Get_Opt get_opts (argc, argv, "k:x");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "k:x");
   int c;
 
   while (result == 0 && (c = get_opts ()) != -1)
@@ -186,11 +186,13 @@ int TAO_FT_ReplicationManagerController::run ()
   return result;
 }
 
-int main (int argc, char * argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR * argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   int result = 0;
   TAO_FT_ReplicationManagerController rmctrl;
-  result = rmctrl.init (argc, argv);
+  result = rmctrl.init (convert.get_argc(), convert.get_ASCII_argv());
   if (result == 0)
   {
     result = rmctrl.run ();

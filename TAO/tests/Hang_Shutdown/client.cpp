@@ -5,6 +5,7 @@
 #include "ace/OS.h"
 #include "ace/Task.h"
 #include "ace/Profile_Timer.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID(Hello, client, "$Id$")
 
@@ -12,29 +13,29 @@ namespace Test
 {
   const char *ior = "file://server.ior";
 
-  ACE_Profile_Timer profile_timer;
-  bool blocked = false;
+    ACE_Profile_Timer profile_timer;
+    bool blocked = false;
 
-  bool
-  parse_args (int argc, char *argv[])
-  {
-    ACE_Get_Opt get_opts (argc, argv, "b:k:");
-    int c;
+    bool
+    parse_args (int argc, char *argv[])
+    {
+      ACE_Get_Arg_Opt<char> get_opts (argc, argv, "b:k:");
+      int c;
 
-    while ((c = get_opts ()) != -1)
-      switch (c)
-        {
-        case 'b':
+      while ((c = get_opts ()) != -1)
+        switch (c)
           {
-            int tmp =
-              ACE_OS::atoi (get_opts.opt_arg ());
+          case 'b':
+            {
+              int tmp =
+                ACE_OS::atoi (get_opts.opt_arg ());
 
-            if (tmp)
-              blocked = true;
-            else
-              blocked = false;
-          }
-          break;
+              if (tmp)
+                blocked = true;
+              else
+                blocked = false;
+            }
+            break;
         case 'k':
           {
             ior = get_opts.opt_arg ();
@@ -261,7 +262,9 @@ namespace Test
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  return Test::try_main (argc, argv);
+  ACE_Argv_Type_Converter convert (argc, argv);
+
+  return Test::try_main (convert.get_argc(), convert.get_ASCII_argv());
 }

@@ -36,6 +36,7 @@ project(*Distributor): rt_server {
 project(*Sender): rt_client {
   avoids += ace_for_tao
   after += *IDL
+  exename = sender
 
   specific (automake ) {
     includes += $(srcdir)/../../tests/RTCORBA/Diffserv

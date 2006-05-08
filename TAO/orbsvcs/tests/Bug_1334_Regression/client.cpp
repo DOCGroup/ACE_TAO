@@ -2,6 +2,7 @@
 // $Id$
 //
 #include "tao/corba.h"
+#include "ace/Argv_Type_Converter.h"
 
 // Attempts to resolve the NameService.
 // Returns:
@@ -9,11 +10,13 @@
 //    1  if the NameService could not be resolved
 //    2  if something else went wrong
 //
-int main( int argc, char *argv[] )
+int ACE_TMAIN( int argc, ACE_TCHAR *argv[] )
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_TRY_NEW_ENV
     {
-      CORBA::ORB_var orb = CORBA::ORB_init( argc, argv, 0 ACE_ENV_ARG_PARAMETER ) ;
+      CORBA::ORB_var orb = CORBA::ORB_init( convert.get_argc(), convert.get_ASCII_argv(), 0 ACE_ENV_ARG_PARAMETER ) ;
       ACE_TRY_CHECK;
 
       ACE_TRY_EX (nested)

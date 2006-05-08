@@ -31,7 +31,7 @@ Object_B_Server::Object_B_Server (void)
 int
 Object_B_Server::parse_args (void)
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "do:");
+  ACE_Get_Arg_Opt<char> get_opts (argc_, argv_, "do:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -41,7 +41,7 @@ Object_B_Server::parse_args (void)
         TAO_debug_level++;
         break;
       case 'o': // output the IOR to a file.
-        this->ior_output_file_ = ACE_OS::fopen (get_opts.opt_arg (), "w");
+        this->ior_output_file_ = ACE_OS::fopen (get_opts.opt_arg (), ACE_TEXT("w"));
         if (this->ior_output_file_ == 0)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to open %s for writing: %p\n",
@@ -118,8 +118,10 @@ Object_B_Server::~Object_B_Server (void)
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   Object_B_Server object_B_Server;
 
   ACE_DEBUG ((LM_DEBUG,
@@ -128,7 +130,7 @@ main (int argc, char *argv[])
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      int retval = object_B_Server.init (argc, argv ACE_ENV_ARG_PARAMETER);
+      int retval = object_B_Server.init (convert.get_argc(), convert.get_ASCII_argv() ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (retval == -1)

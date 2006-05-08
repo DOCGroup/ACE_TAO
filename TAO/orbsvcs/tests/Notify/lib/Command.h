@@ -21,6 +21,7 @@
 
 #include "tao/orbconf.h"
 #include "ace/Arg_Shifter.h"
+#include "ace/Argv_Type_Converter.h"
 #include "ace/CORBA_macros.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -47,16 +48,16 @@ public:
   virtual ~TAO_Notify_Tests_Command ();
 
   /// Parse args and populate options.
-  virtual void init (ACE_Arg_Shifter& arg_shifter);
+  virtual void init (ACE_TArg_Shifter< ACE_TCHAR >& arg_shifter);
 
     /// Implement command execution.
   virtual void execute_i (ACE_ENV_SINGLE_ARG_DECL) = 0;
 
   /// Return the name of this command.
-  virtual const char* get_name (void)= 0;
+  virtual const ACE_TCHAR* get_name (void)= 0;
 
   ///= Each derived type must also implement the following signature:
-  // static const char* name (void);
+  // static const ACE_TCHAR* name (void);
 
 protected:
   /// Next command after this one.

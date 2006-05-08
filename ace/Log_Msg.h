@@ -425,7 +425,6 @@ public:
                             const char *,
                             ...);
 
-#if defined (ACE_USES_WCHAR)
   // We are not using ACE_TCHAR for this since ACE_HEX_DUMP
   // doesn't take in a ACE_TCHAR.  log_hexdump takes in a char
   // string, so this must be able to take in a char string even
@@ -434,7 +433,6 @@ public:
   int log_priority_enabled (ACE_Log_Priority log_priority,
                             const wchar_t *,
                             ...);
-#endif /* ACE_USES_WCHAR */
 
   /// Optimize reading of the pid (avoids a system call if the value is
   /// cached...).
@@ -504,15 +502,13 @@ public:
    *  - 'W': print a wide character string
    *  - 'x': print as a hex number
    *  - 'X': print as a hex number
-   *  - 'z': print an ACE_OS::WChar character
-   *  - 'Z': print an ACE_OS::WChar character string
+   *  - 'z': print an wchar_t character
+   *  - 'Z': print an wchar_t character string
    *  - '%': print out a single percent sign, '%'
    */
-  ssize_t log (ACE_Log_Priority priority, const ACE_TCHAR *format, ...);
+  ssize_t log (ACE_Log_Priority priority, const char *format, ...);
 
-#if defined (ACE_HAS_WCHAR)
-  ssize_t log (ACE_Log_Priority priority, const ACE_ANTI_TCHAR *format, ...);
-#endif /* ACE_HAS_WCHAR */
+  ssize_t log (ACE_Log_Priority priority, const wchar_t *format, ...);
 
   /**
    * An alternative logging mechanism that makes it possible to

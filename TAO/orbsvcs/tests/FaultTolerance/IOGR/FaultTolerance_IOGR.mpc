@@ -9,6 +9,7 @@ project(*idl): taoidldefaults {
 }
 
 project(*server): portableserver, orbsvcsexe, iormanip, ftorb, messaging {
+  exename = server
   after += *idl
   Source_Files {
     test_i.cpp
@@ -21,6 +22,7 @@ project(*server): portableserver, orbsvcsexe, iormanip, ftorb, messaging {
 }
 
 project(*Manager): portableserver, orbsvcsexe, iormanip, ftorb {
+  exename = Manager
   after += *idl
   Source_Files {
     testC.cpp

@@ -3,6 +3,7 @@
 
 #include "Consumer.h"
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 
 Consumer::Consumer ()
   :event_count_ (1)
@@ -11,9 +12,9 @@ Consumer::Consumer ()
 }
 
 int
-Consumer::parse_args (int argc, char *argv [])
+Consumer::parse_args (int argc, char *argv[])
 {
- ACE_Get_Opt get_opt (argc, argv, "n:c:");
+ ACE_Get_Arg_Opt<char> get_opt (argc, argv, "n:c:");
   int opt;
 
   while ((opt = get_opt ()) != EOF)
@@ -176,11 +177,13 @@ Consumer::init_Consumer (void)
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   Consumer cons;
 
-  if (cons.init (argc, argv) == -1)
+  if (cons.init (convert.get_argc(), convert.get_ASCII_argv()) == -1)
     return 1;
 
   if (cons.init_Consumer () == -1)

@@ -17,11 +17,12 @@
 
 #include "tao/RTCORBA/RTCORBA.h"
 #include "tao/PortableServer/PortableServer.h"
-//#include "activity_export.h"
 #include "ace/SString.h"
 
+#include "ace/Arg_Shifter.h"
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-class ACE_Arg_Shifter;
+//class ACE_TArg_Shifter<char>;
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 /**
@@ -38,7 +39,7 @@ public:
 
   /// The arg_shifter options are read in the following manner:
   ///-POA <name> -PriorityModel <CLIENT|SERVER> <priority> -Lanes <count> (-Lane <priority> ,<static_threads> <dynamic_threads>)* -Bands <count> (-Band <low> <high>)*
-  int init (ACE_Arg_Shifter& arg_shifter);
+  int init (ACE_TArg_Shifter<char>& arg_shifter);
 
   /// Activate the new POA using the parameters initialized before.
   void activate (RTCORBA::RTORB_ptr rt_orb, PortableServer::POA_ptr parent_poa

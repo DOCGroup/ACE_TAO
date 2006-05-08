@@ -1072,7 +1072,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
       return 0;
     }
 
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("i:n:p:d:h:s:v:ub"));
+  ACE_Get_Arg_Opt<ACE_TCHAR>  get_opt (argc, argv, ACE_TEXT ("i:n:p:d:h:s:v:ub"));
   int c;
 
   while ((c = get_opt ()) != EOF)

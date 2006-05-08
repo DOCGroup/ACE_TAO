@@ -31,7 +31,7 @@ TestClient::~TestClient()
 
 int TestClient::parseCommands(int argc, char* argv[])
 {
-  ACE_Get_Opt get_opts(argc, argv, "s:t:i:r:x:e:z:");
+  ACE_Get_Arg_Opt<char> get_opts(argc, argv, "s:t:i:r:x:e:z:");
   int c;
   while ((c = get_opts()) != -1)
   {

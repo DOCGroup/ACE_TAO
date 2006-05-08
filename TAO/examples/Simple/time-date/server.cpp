@@ -21,15 +21,18 @@
 #include "ace/Service_Config.h"
 #include "ace/Reactor.h"
 #include "ace/Log_Msg.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID (time_date,
            server,
            "$Id$")
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  if (ACE_Service_Config::open (argc, argv) == -1
+  ACE_Argv_Type_Converter convert (argc, argv);
+
+  if (ACE_Service_Config::open (convert.get_argc(), convert.get_TCHAR_argv()) == -1
       && errno != ENOENT)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),

@@ -1,6 +1,7 @@
 // $Id$
 
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "tao/ORB_Core.h"
 #include "tao/RTCORBA/Thread_Pool.h"
 #include "tao/RTPortableServer/RTPortableServer.h"
@@ -98,7 +99,7 @@ test_i::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 static int
 parse_args (int argc, char **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "b:d:l:o:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "b:d:l:o:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -151,7 +152,7 @@ write_iors_to_file (CORBA::Object_ptr object,
   ior_file_count++;
 
   FILE *file =
-    ACE_OS::fopen (filename, "w");
+    ACE_OS::fopen (filename, ACE_TEXT("w"));
   ACE_ASSERT (file != 0);
 
   CORBA::String_var ior =
@@ -390,19 +391,21 @@ Task::svc (void)
 }
 
 int
-main (int argc, char **argv)
+ACE_TMAIN (int argc, ACE_TCHAR **argv)
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc,
-                         argv,
+        CORBA::ORB_init (convert.get_argc(),
+                         convert.get_ASCII_argv(),
                          0
                          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       int result =
-        parse_args (argc, argv);
+        parse_args (convert.get_argc(), convert.get_ASCII_argv());
       if (result != 0)
         return result;
 

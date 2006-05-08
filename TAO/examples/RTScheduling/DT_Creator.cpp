@@ -8,10 +8,12 @@
 #include "DT_Creator.h"
 #include "tao/RTScheduling/Current.h"
 
+#include "ace/Arg_Shifter.h"
+
 ACE_Atomic_Op<TAO_SYNCH_MUTEX, long> guid_counter;
 
 int
-DT_Creator::dt_task_init (ACE_Arg_Shifter& arg_shifter)
+DT_Creator::dt_task_init (ACE_TArg_Shifter<char>& arg_shifter)
 {
   static int dt_index = 0;
   int start_time = 0;
@@ -20,7 +22,7 @@ DT_Creator::dt_task_init (ACE_Arg_Shifter& arg_shifter)
   int importance = 0;
   char *job_name = 0;
   int dist = 0;
-  const ACE_TCHAR* current_arg = 0;
+  const char* current_arg = 0;
   if (arg_shifter.cur_arg_strncasecmp ("-Importance") == 0)
     {
       arg_shifter.consume_arg ();
@@ -70,9 +72,9 @@ DT_Creator::init (int argc, char *argv [])
   active_job_count_ = 0;
   ACE_NEW_RETURN (log, char*[BUFSIZ * 100],-1);
 
-  ACE_Arg_Shifter arg_shifter (argc, argv);
+  ACE_TArg_Shifter<char> arg_shifter (argc, argv);
 
-  const ACE_TCHAR* current_arg = 0;
+  const char* current_arg = 0;
 
   dt_count_ = 0;
   poa_count_ = 0;
@@ -136,7 +138,7 @@ DT_Creator::init (int argc, char *argv [])
 	      delete this->job_list_[job_count];
 	      return -1;
 	    }
-	  else 
+	  else
 	    job_count++;
 	}
       else if ((current_arg = arg_shifter.get_the_parameter ("-OutFile")))
@@ -216,10 +218,10 @@ DT_Creator::register_synch_obj (ACE_ENV_SINGLE_ARG_DECL)
   ACE_DEBUG ((LM_DEBUG,
 	      "Synch Name %s\n",
 	      synch_name.c_str ()));
-  
+
   ACE_NEW (synch_,
 	   Synch_i);
-  
+
   Synch_var synch = synch_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
@@ -274,7 +276,7 @@ DT_Creator::activate_poa_list (ACE_ENV_SINGLE_ARG_DECL)
 				 ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
-  
+
   for (int i = 0; i < poa_count_; ++i)
     {
       poa_list_[i]->activate (this->rt_orb_.in(), this->root_poa_.in ()
@@ -454,13 +456,13 @@ DT_Creator::create_distributable_threads (RTScheduling::Current_ptr current
 
   ACE_DEBUG ((LM_DEBUG,
               "Waiting to Synch\n"));
-  
+
   while (!this->synch ()->synched ())
     {
       this->orb_->perform_work (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
     }
-  
+
   CORBA::Policy_var sched_param;
   sched_param = CORBA::Policy::_duplicate (this->sched_param (100));
   const char * name = 0;
@@ -587,7 +589,7 @@ DT_Creator::check_ifexit (void)
 
 	    shutdown = 1;
 
-	    FILE* log_file = ACE_OS::fopen (log_file_name_, "w");
+	    FILE* log_file = ACE_OS::fopen (log_file_name_, ACE_TEXT("w"));
 
 	    if (log_file != NULL)
 	      {

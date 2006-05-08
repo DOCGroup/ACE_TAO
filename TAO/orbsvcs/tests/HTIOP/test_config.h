@@ -43,7 +43,7 @@
 #undef ACE_NDEBUG
 
 #undef ACE_TEXT
-#define ACE_TEXT ACE_LIB_TEXT
+#define ACE_TEXT ACE_TEXT
 
 #if defined (ACE_HAS_WINCE)
 // Note that Pocket PC 2002 will NOT create a directory if it does not start with a leading '\'.
@@ -251,7 +251,7 @@ ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
 # endif /* ! VXWORKS */
 
 # if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
-  this->output_file_->open (ACE_TEXT_ALWAYS_CHAR (temp),
+  this->output_file_->open (ACE_TEXT_TO_CHAR_IN (temp),
                             ios::out | (append ? ios::app : ios::trunc));
   if (this->output_file_->bad ())
     return -1;

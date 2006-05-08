@@ -7,6 +7,8 @@
 #include "ace/OS_NS_string.h"
 #include "ace/SString.h"
 
+#include "tao/RTScheduling/RTSchedulerC.h"
+
 class Data
 {
  public:

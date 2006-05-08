@@ -185,7 +185,7 @@ Grid_Factory_i::make_grid (CORBA::Short width,
 
   // Get a memory pool
   ACE_NEW_THROW_EX (pool_t_,
-                    pool_t (pool_name_),
+                    pool_t (ACE_TEXT_TO_TCHAR_IN(pool_name_)),
                     CORBA::NO_MEMORY ());
 
   //  pool_t_ = new pool_t (pool_name_);

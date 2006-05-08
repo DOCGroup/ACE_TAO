@@ -12,7 +12,7 @@ ACE_RCSID(TLI_SAP, db_client, "$Id$")
 const int MAXLINE = 255;
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   if (argc < 2)
     ACE_ERROR_RETURN ((LM_ERROR,

@@ -7,6 +7,7 @@ project(*idl): taoidldefaults {
 }
 
 project(*Server): loadbalancing {
+  exename = server
   after += *idl
   Source_Files {
     server.cpp
@@ -23,6 +24,7 @@ project(*Server): loadbalancing {
 }
 
 project(*Client): loadbalancing {
+  exename = client
   after += *idl
   Source_Files {
     TestC.cpp

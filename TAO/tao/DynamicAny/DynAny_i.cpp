@@ -513,7 +513,7 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs
               }
           }
 
-        return ACE_OS::wscmp (rhs_v, lhs_v) == 0;
+        return ACE_OS::strcmp (rhs_v, lhs_v) == 0;
       }
     default:
       break; // Cannot happen...

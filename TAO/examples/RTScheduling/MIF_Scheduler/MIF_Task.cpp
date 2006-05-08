@@ -92,7 +92,7 @@ MIF_Task::perform_task (void)
       char msg [BUFSIZ];
       ACE_OS::sprintf (msg,
                        "MIF_Task::perform_task "
-                       ACE_SIZE_T_FORMAT_SPECIFIER
+                       ACE_SIZE_T_FORMAT_SPECIFIER_A
                        "\n",
                        count_);
       dt_creator_->log_msg (msg);

@@ -20,22 +20,22 @@ TAO_Notify_Tests_RT_POA_Command::~TAO_Notify_Tests_RT_POA_Command ()
 {
 }
 
-const char*
+const ACE_TCHAR*
 TAO_Notify_Tests_RT_POA_Command::get_name (void)
 {
   return TAO_Notify_Tests_RT_POA_Command::name ();
 }
 
-const char*
+const ACE_TCHAR*
 TAO_Notify_Tests_RT_POA_Command::name (void)
 {
   return TAO_Notify_Tests_Name::poa_command;
 }
 
 void
-TAO_Notify_Tests_RT_POA_Command::init (ACE_Arg_Shifter& arg_shifter)
+TAO_Notify_Tests_RT_POA_Command::init (ACE_TArg_Shifter< char >& arg_shifter)
 {
-  const ACE_TCHAR *current_arg = 0;
+  const char *current_arg = 0;
 
   if (arg_shifter.is_anything_left ())
     {

@@ -167,10 +167,16 @@ public:
    * avoid complaints from all compilers is to define them all.
    */
   //@{
+
+# if !defined (ACE_CDR_WCHAR_OVERRIDE) || defined(ACE_USES_WCHAR)
+#  undef ACE_CDR_WCHAR_OVERRIDE
+#  define ACE_CDR_WCHAR_OVERRIDE wchar_t
+# endif
+
   typedef bool Boolean;
   typedef unsigned char Octet;
   typedef char Char;
-  typedef ACE_WCHAR_T WChar;
+  typedef ACE_CDR_WCHAR_OVERRIDE WChar;
   typedef ACE_INT16 Short;
   typedef ACE_UINT16 UShort;
   typedef ACE_INT32 Long;

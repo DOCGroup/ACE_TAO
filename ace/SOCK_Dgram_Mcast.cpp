@@ -273,7 +273,7 @@ ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
           while (intf[index].if_index != 0 || intf[index].if_name != 0)
             {
               if (this->join (mcast_addr, reuse_addr,
-                              ACE_TEXT_CHAR_TO_TCHAR(intf[index].if_name)) == 0)
+                              ACE_TEXT_TO_TCHAR_IN(intf[index].if_name)) == 0)
                 ++nr_subscribed;
 
               ++index;
@@ -314,7 +314,7 @@ ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
           while (pAddrs)
             {
               if (this->join (mcast_addr, reuse_addr,
-                              ACE_TEXT_CHAR_TO_TCHAR(pAddrs->AdapterName)) == 0)
+                              ACE_TEXT_TO_TCHAR_IN(pAddrs->AdapterName)) == 0)
                 ++nr_subscribed;
 
               pAddrs = pAddrs->Next;
@@ -365,8 +365,7 @@ ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
                     continue;
                   if (this->subscribe (mcast_addr,
                                        reuse_addr,
-                                       ACE_TEXT_CHAR_TO_TCHAR
-                                   (if_addrs[if_cnt].get_host_addr ())) == 0)
+                                       ACE_TEXT_TO_TCHAR_IN(if_addrs[if_cnt].get_host_addr ())) == 0)
                     ++nr_subscribed;
                 }
             }
@@ -416,8 +415,7 @@ ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
                 continue;
               if (this->subscribe (mcast_addr,
                                    reuse_addr,
-                                   ACE_TEXT_CHAR_TO_TCHAR
-                                     (if_addrs[if_cnt].get_host_addr ())) == 0)
+                                   ACE_TEXT_TO_TCHAR_IN (if_addrs[if_cnt].get_host_addr ())) == 0)
                 ++nr_subscribed;
             }
         }
@@ -657,7 +655,7 @@ ACE_SOCK_Dgram_Mcast::unsubscribe_ifs (const ACE_INET_Addr &mcast_addr,
           int index = 0;
           while (intf[index].if_index != 0 || intf[index].if_name != 0)
             {
-              if (this->leave (mcast_addr, ACE_TEXT_CHAR_TO_TCHAR(intf[index].if_name)) == 0)
+              if (this->leave (mcast_addr, ACE_TEXT_TO_TCHAR_IN(intf[index].if_name)) == 0)
                 ++nr_unsubscribed;
 
               ++index;
@@ -697,7 +695,7 @@ ACE_SOCK_Dgram_Mcast::unsubscribe_ifs (const ACE_INET_Addr &mcast_addr,
 
           while (pAddrs)
             {
-              if (this->leave (mcast_addr, ACE_TEXT_CHAR_TO_TCHAR(pAddrs->AdapterName)) == 0)
+              if (this->leave (mcast_addr, ACE_TEXT_TO_TCHAR_IN(pAddrs->AdapterName)) == 0)
                 ++nr_unsubscribed;
 
               pAddrs = pAddrs->Next;
@@ -750,8 +748,7 @@ ACE_SOCK_Dgram_Mcast::unsubscribe_ifs (const ACE_INET_Addr &mcast_addr,
                   if (if_addrs[if_cnt].get_type () != AF_INET || if_addrs[if_cnt].is_loopback ())
                     continue;
                   if (this->leave (mcast_addr,
-                                   ACE_TEXT_CHAR_TO_TCHAR
-                                   (if_addrs[if_cnt].get_host_addr ())) == 0)
+                                   ACE_TEXT_TO_TCHAR_IN (if_addrs[if_cnt].get_host_addr ())) == 0)
                     ++nr_unsubscribed;
                 }
             }
@@ -799,8 +796,7 @@ ACE_SOCK_Dgram_Mcast::unsubscribe_ifs (const ACE_INET_Addr &mcast_addr,
               if (if_addrs[if_cnt].is_loopback ())
                 continue;
               if (this->leave (mcast_addr,
-                               ACE_TEXT_CHAR_TO_TCHAR
-                               (if_addrs[if_cnt].get_host_addr ())) == 0)
+                               ACE_TEXT_TO_TCHAR_IN (if_addrs[if_cnt].get_host_addr ())) == 0)
                 ++nr_unsubscribed;
             }
         }

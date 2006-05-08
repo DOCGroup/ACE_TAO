@@ -13,6 +13,7 @@
 
 #include "ace/Sched_Params.h"
 #include "ace/Arg_Shifter.h"
+#include "ace/Argv_Type_Converter.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Stats.h"
 #include "ace/OS_NS_errno.h"
@@ -106,7 +107,7 @@ EC_Driver::run_init (int &argc, char* argv[]
 
   if (this->pid_file_name_ != 0)
     {
-      FILE* pid = ACE_OS::fopen (this->pid_file_name_, "w");
+      FILE* pid = ACE_OS::fopen (this->pid_file_name_, ACE_TEXT("w"));
       if (pid != 0)
         {
           ACE_OS::fprintf (pid, "%ld\n",
@@ -727,9 +728,9 @@ EC_Driver::dump_results (void)
 }
 
 int
-EC_Driver::parse_args (int &argc, char *argv [])
+EC_Driver::parse_args (int &argc, char *argv[])
 {
-  ACE_Arg_Shifter arg_shifter (argc, argv);
+  ACE_TArg_Shifter< char > arg_shifter (argc, argv);
 
   while (arg_shifter.is_anything_left ())
     {

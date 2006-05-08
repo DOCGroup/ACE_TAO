@@ -53,7 +53,7 @@ ACE_RCSID(Misc, pingpong, "$Id$")
 class Ping_Pong : public ACE_Test_and_Set<ACE_Null_Mutex, sig_atomic_t>
 {
 public:
-  Ping_Pong (char b[], ACE_HANDLE f);
+  Ping_Pong (const char* b, ACE_HANDLE f);
   virtual ACE_HANDLE get_handle (void) const;
   virtual int handle_input (ACE_HANDLE);
   virtual int handle_output (ACE_HANDLE);
@@ -75,7 +75,7 @@ private:
   // Open handle.
 };
 
-Ping_Pong::Ping_Pong (char b[], ACE_HANDLE f)
+Ping_Pong::Ping_Pong (const char* b, ACE_HANDLE f)
   : buflen_ (ACE_OS::strlen (b) + 1 + (2 * sizeof (int))),
     pid_ (ACE_OS::getpid ()),
     handle_ (f)
@@ -198,7 +198,7 @@ run_svc (ACE_HANDLE handle)
 {
   Ping_Pong *callback = 0;
   ACE_NEW (callback,
-           Ping_Pong (ACE_TEXT_ALWAYS_CHAR (string_name),
+           Ping_Pong (ACE_TEXT_TO_CHAR_IN (string_name),
                       handle));
 
   ACE_Reactor reactor;

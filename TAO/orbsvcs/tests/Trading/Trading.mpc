@@ -24,6 +24,7 @@ project(*Test Lib): orbsvcslib, trading_serv, naming, utils, pi, codecfactory {
 }
 
 project(*export test): namingexe, trading_serv, utils {
+  exename = export_test
   after   += Trading_Test_Lib
   libs    += TTest
 
@@ -36,6 +37,7 @@ project(*export test): namingexe, trading_serv, utils {
 }
 
 project(*import test): namingexe, trading_serv, utils {
+  exename = import_test
   after   += Trading_Test_Lib
   libs    += TTest
 
@@ -48,6 +50,7 @@ project(*import test): namingexe, trading_serv, utils {
 }
 
 project(*colocated test): namingexe, trading_serv, utils {
+  exename = colocated_test
   after   += Trading_Test_Lib
   libs    += TTest
 

@@ -45,7 +45,7 @@ Client_i::~Client_i (void)
 int
 Client_i::parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "n:f:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "n:f:");
   int c;
 
   while ((c = get_opts ()) != -1)

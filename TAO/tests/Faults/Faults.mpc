@@ -2,6 +2,7 @@
 // $Id$
 
 project(*Server): taoserver, minimum_corba {
+  exename = server
   IDL_Files {
     test.idl
   }
@@ -15,6 +16,7 @@ project(*Server): taoserver, minimum_corba {
 }
 
 project(*Middle): taoexe, portableserver, minimum_corba {
+  exename = middle
   after += *Server
   IDL_Files {
     test.idl
@@ -29,6 +31,7 @@ project(*Middle): taoexe, portableserver, minimum_corba {
 }
 
 project(*Client): taoexe, portableserver, minimum_corba {
+  exename = client
   after += *Middle
   IDL_Files {
     test.idl
@@ -43,6 +46,7 @@ project(*Client): taoexe, portableserver, minimum_corba {
 }
 
 project(*Ping): taoexe, portableserver, minimum_corba {
+  exename = ping
   IDL_Files {
     ping.idl
   }
@@ -56,6 +60,7 @@ project(*Ping): taoexe, portableserver, minimum_corba {
 }
 
 project(*Pong): taoexe, portableserver, minimum_corba {
+  exename = pong
   after += *Ping
   IDL_Files {
     ping.idl

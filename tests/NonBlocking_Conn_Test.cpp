@@ -168,7 +168,7 @@ test (ACE_Reactor_Impl *impl)
       else
         ACE_DEBUG ((LM_INFO,
                     ACE_TEXT ("%p\n"),
-                    ACE_TEXT_CHAR_TO_TCHAR (hosts[i])));
+                    ACE_TEXT_TO_TCHAR_IN (hosts[i])));
     }
 
   ACE_Reactor reactor (impl,
@@ -237,7 +237,7 @@ test (ACE_Reactor_Impl *impl)
 static int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("a:b:c:"));
+  ACE_Get_Arg_Opt<ACE_TCHAR>  get_opt (argc, argv, ACE_TEXT ("a:b:c:"));
 
   int cc;
   while ((cc = get_opt ()) != -1)
@@ -316,4 +316,3 @@ run_main (int argc, ACE_TCHAR *argv[])
 
   return 0;
 }
-

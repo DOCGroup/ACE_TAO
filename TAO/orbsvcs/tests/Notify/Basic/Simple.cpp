@@ -2,6 +2,7 @@
 
 #include "ace/Arg_Shifter.h"
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "tao/debug.h"
 #include "Simple.h"
 
@@ -124,10 +125,9 @@ Simple_Test::init (int argc,
 }
 
 int
-Simple_Test::parse_args (int argc,
-                         char *argv[])
+Simple_Test::parse_args (int argc, char *argv[])
 {
-    ACE_Arg_Shifter arg_shifter (argc,
+    ACE_TArg_Shifter< char > arg_shifter (argc,
                                  argv);
 
     const char *current_arg = 0;
@@ -238,19 +238,20 @@ Simple_Test::check_results (void)
 //***************************************************************************
 
 int
-main (int argc, char* argv[])
+ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   Simple_Test events;
 
-  if (events.parse_args (argc, argv) == -1)
+  if (events.parse_args (convert.get_argc(), convert.get_ASCII_argv()) == -1)
     {
       return 1;
     }
 
   ACE_TRY_NEW_ENV
     {
-      events.init (argc,
-                   argv
+      events.init (convert.get_argc(), convert.get_ASCII_argv()
                    ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 

@@ -939,7 +939,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
       return 0;
     }
 
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("b:p:t:w:"));
+  ACE_Get_Arg_Opt<ACE_TCHAR>  get_opt (argc, argv, ACE_TEXT ("b:p:t:w:"));
   int c, counter = 0;
   ACE_INET_Addr b_temp_addr;
   ACE_TCHAR *token = 0;

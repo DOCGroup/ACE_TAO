@@ -3,6 +3,7 @@
 #include "testS.h"
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
+#include "ace/Argv_Type_Converter.h"
 #include "tao/RTCORBA/RTCORBA.h"
 #include "tao/RTPortableServer/RTPortableServer.h"
 #include "../check_supported_priorities.cpp"
@@ -134,7 +135,7 @@ const char *ior_output_file2 = "test2.ior";
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "b:o:n:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "b:o:n:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -174,7 +175,7 @@ get_priority_bands (RTCORBA::PriorityBands &bands)
   // Read bands from a file.
   //
   FILE* file =
-    ACE_OS::fopen (bands_file, "r");
+    ACE_OS::fopen (bands_file, ACE_TEXT("r"));
 
   if (file == 0)
     return -1;
@@ -257,7 +258,7 @@ create_object (PortableServer::POA_ptr poa,
   if (filename != 0)
     {
       FILE *output_file =
-        ACE_OS::fopen (filename, "w");
+        ACE_OS::fopen (filename, ACE_TEXT("w"));
       if (output_file == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open output file for writing IOR: %s",
@@ -344,24 +345,25 @@ poa_creation_exception_test (PortableServer::POA_ptr root_poa,
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   CORBA::ORB_var orb;
 
   ACE_TRY_NEW_ENV
     {
       // Initialize ORB.
       orb =
-        CORBA::ORB_init (argc,
-                         argv,
+        CORBA::ORB_init (convert.get_argc(),
+                         convert.get_ASCII_argv(),
                          ""
                          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Parse arguments.
       int result =
-        parse_args (argc,
-                    argv);
+        parse_args (convert.get_argc(), convert.get_ASCII_argv());
       if (result != 0)
         return result;
 

@@ -96,7 +96,7 @@ ACE_Service_Manager::init (int argc, ACE_TCHAR *argv[])
 {
   ACE_TRACE ("ACE_Service_Manager::init");
   ACE_INET_Addr local_addr (ACE_Service_Manager::DEFAULT_PORT_);
-  ACE_Get_Opt getopt (argc, argv, ACE_LIB_TEXT ("dp:s:"), 0); // Start at argv[0]
+  ACE_Get_Arg_Opt<ACE_TCHAR> getopt (argc, argv, ACE_LIB_TEXT ("dp:s:"), 0); // Start at argv[0]
 
   for (int c; (c = getopt ()) != -1; )
      switch (c)
@@ -301,7 +301,7 @@ ACE_Service_Manager::handle_input (ACE_HANDLE)
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_LIB_TEXT ("accepted from host %s at port %d\n"),
-                  ACE_TEXT_CHAR_TO_TCHAR (sa.get_host_name ()),
+                  ACE_TEXT_TO_TCHAR_IN (sa.get_host_name ()),
                   sa.get_port_number ()));
     }
 

@@ -375,7 +375,7 @@ Test_DynStruct::run_test (void)
 
       CORBA::ULong index = 2;
 
-      if (ACE_OS::strcmp (gm[index].id, "es"))
+      if (ACE_OS::strcmp (gm[index].id.in(), "es"))
         {
           ++this->error_count_;
         }

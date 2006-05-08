@@ -80,7 +80,7 @@ $Naming = new PerlACE::Process ("../../../Naming_Service/Naming_Service",
 unlink $namingior;
 
 $naming_spawn = $Naming->Spawn ();
-if ($naming_spawn != 0) 
+if ($naming_spawn != 0)
   {
     exit 1;
   }
@@ -101,20 +101,20 @@ for $config (@test_configs)
                                           "-ORBSvcConf $config");
     unlink $notifyior;
     $Notification->Spawn ();
-    
+
     if (PerlACE::waitforfile_timed ($notifyior, $startup_timeout) == -1) {
       print STDERR "ERROR: waiting for the notify service to start\n";
       $Notification->Kill ();
       $Naming->Kill ();
       exit 1;
     }
-    
+
     for $name (@tests)
       {
         ## The MaxQueueLength and MaxEventsPerConsumer are not supported in the Reactive
         ## configuration, so we skip this test for now.
         ## The Notification should actually throw an exception for the property not supported.
-        if ($name->{name} eq "AdminProperties" 
+        if ($name->{name} eq "AdminProperties"
             && ($config eq "notify.reactive.conf" || $config eq "notify.rt.conf"))
           {
             next;
@@ -125,7 +125,7 @@ for $config (@test_configs)
                                       "-ORBInitRef NameService=file://$namingior " .
                                       "$name->{args} ");
         $test_spawn = $test->Spawn ();
-        if ($test_spawn != 0) 
+        if ($test_spawn != 0)
           {
             break;
           }
@@ -134,13 +134,13 @@ for $config (@test_configs)
                                    (defined $name->{extra} ?
                                             $name->{extra} : 0));
 
-        if ($status != 0) 
+        if ($status != 0)
           {
             print STDERR "ERROR: $name->{name} returned $status\n";
             break;
           }
       }
-    
+
     $Notification->Kill ();
   }
 

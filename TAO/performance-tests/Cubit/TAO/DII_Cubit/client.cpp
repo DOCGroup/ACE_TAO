@@ -261,7 +261,7 @@ DII_Cubit_Client::init (int argc, char **argv)
 int
 DII_Cubit_Client::parse_args (void)
 {
-  ACE_Get_Opt opts (argc_, argv_, "dn:i:f:x");
+  ACE_Get_Arg_Opt<char> opts (argc_, argv_, "dn:i:f:x");
   int c;
   int result;
 
@@ -849,7 +849,7 @@ DII_Cubit_Client::run (void)
 
 // Start the test.
 
-int main (int argc, char *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   DII_Cubit_Client cubit_client;
 

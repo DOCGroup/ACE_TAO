@@ -143,7 +143,9 @@ Handler::handle_input (ACE_HANDLE fd)
   ACE_ASSERT (result == ssize_t (ACE_OS::strlen (message)));
   buffer[result] = '\0';
 
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Handler::handle_input: %C\n"), buffer));
+  ACE_DEBUG ((LM_DEBUG,
+              "Handler::handle_input: %s\n",
+              ACE_TEXT_TO_TCHAR_IN (buffer)));
 
   ACE_ASSERT (ACE_OS::strcmp (buffer,
                               message) == 0);

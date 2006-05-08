@@ -3,6 +3,7 @@
 #include "orbsvcs/CosLoadBalancingC.h"
 #include "orbsvcs/PortableGroup/PG_Operators.h"
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "ace/OS_NS_unistd.h"
 
 ACE_RCSID (CPU,
@@ -18,7 +19,7 @@ const CosLoadBalancing::LoadId LOAD_ID = CosLoadBalancing::LoadAverage;
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "l:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "l:");
 
   int c;
 
@@ -62,14 +63,15 @@ check_loads (const CosLoadBalancing::LoadList & loads
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc,
-                         argv,
+        CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(),
                          ""
                          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;

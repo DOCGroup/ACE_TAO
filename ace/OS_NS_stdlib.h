@@ -74,10 +74,8 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   int atoi (const char *s);
 
-# if defined (ACE_HAS_WCHAR)
   ACE_NAMESPACE_INLINE_FUNCTION
   int atoi (const wchar_t *s);
-# endif /* ACE_HAS_WCHAR */
 
   // atop not in spec
 # if defined (atop)
@@ -87,10 +85,8 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   void *atop (const char *s);
 
-# if defined (ACE_HAS_WCHAR)
   ACE_NAMESPACE_INLINE_FUNCTION
   void *atop (const wchar_t *s);
-# endif /* ACE_HAS_WCHAR */
 
   ACE_NAMESPACE_INLINE_FUNCTION
   void *bsearch (const void *key,
@@ -111,10 +107,8 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   char *getenv (const char *symbol);
 
-#   if defined (ACE_HAS_WCHAR) && defined (ACE_WIN32)
   ACE_NAMESPACE_INLINE_FUNCTION
   wchar_t *getenv (const wchar_t *symbol);
-#   endif /* ACE_HAS_WCHAR && ACE_WIN32 */
 
   // not in spec
   extern ACE_Export
@@ -125,11 +119,9 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   char *itoa (int value, char *string, int radix);
 
-#if defined (ACE_HAS_WCHAR)
   /// Converts an integer to a string.
   ACE_NAMESPACE_INLINE_FUNCTION
   wchar_t *itoa (int value, wchar_t *string, int radix);
-#endif /* ACE_HAS_WCHAR */
 
 #if !defined (ACE_HAS_ITOA)
   /// Emulated itoa - Converts an integer to a string.
@@ -137,11 +129,11 @@ namespace ACE_OS {
   char *itoa_emulation (int value, char *string, int radix);
 #endif /* !ACE_HAS_ITOA */
 
-#if defined (ACE_HAS_WCHAR) && defined (ACE_LACKS_ITOW)
+#if defined (ACE_LACKS_ITOW)
   /// Emulated itow - Converts an integer to a string.
   extern ACE_Export
   wchar_t *itow_emulation (int value, wchar_t *string, int radix);
-#endif /* ACE_HAS_WCHAR && ACE_LACKS_ITOW */
+#endif /* ACE_LACKS_ITOW */
 
   extern ACE_Export
   void *malloc (size_t);
@@ -149,40 +141,31 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   ACE_HANDLE mkstemp (char *s);
 
-#  if defined (ACE_HAS_WCHAR)
   ACE_NAMESPACE_INLINE_FUNCTION
   ACE_HANDLE mkstemp (wchar_t *s);
-#  endif /* ACE_HAS_WCHAR */
 
 #if defined (ACE_LACKS_MKSTEMP)
   extern ACE_Export
   ACE_HANDLE mkstemp_emulation (ACE_TCHAR * s);
 #endif /* ACE_LACKS_MKSTEMP */
 
-#if !defined (ACE_LACKS_MKTEMP)
   ACE_NAMESPACE_INLINE_FUNCTION
   char *mktemp (char *s);
 
-#  if defined (ACE_HAS_WCHAR)
   ACE_NAMESPACE_INLINE_FUNCTION
   wchar_t *mktemp (wchar_t *s);
-#  endif /* ACE_HAS_WCHAR */
-#else
-  extern ACE_Export
-  ACE_TCHAR *mktemp (ACE_TCHAR *s);
-#endif /* !ACE_LACKS_MSTEMP */
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int putenv (const char *string);
 
-#if defined (ACE_HAS_WCHAR) && defined (ACE_WIN32)
+#if defined (ACE_WIN32)
   // Windows is the only platform that supports a wchar_t environment.
   // Since other platforms make @a string part of the environment, it's
   // a certain memory leak to copy and transform wchar_t to char for
   // emulating this, so it's not attempted.
   ACE_NAMESPACE_INLINE_FUNCTION
   int putenv (const wchar_t *string);
-#endif /* ACE_HAS_WCHAR && ACE_WIN32 */
+#endif /* ACE_WIN32 */
 
   ACE_NAMESPACE_INLINE_FUNCTION
   void qsort (void *base,
@@ -207,10 +190,8 @@ namespace ACE_OS {
 #  endif /* !ACE_LACKS_REALPATH */
   char *realpath (const char *file_name, char *resolved_name);
 
-#  if defined (ACE_HAS_WCHAR)
   ACE_NAMESPACE_INLINE_FUNCTION
   wchar_t *realpath (const wchar_t *file_name, wchar_t *resolved_name);
-#  endif /* ACE_HAS_WCHAR */
 #endif /* ACE_HAS_WINCE */
 
   // exit_hook and set_exit_hook not in spec
@@ -234,21 +215,17 @@ namespace ACE_OS {
   double strtod (const char *s, char **endptr);
 #endif /* !ACE_LACKS_STRTOD */
 
-#if defined (ACE_HAS_WCHAR) && !defined (ACE_LACKS_WCSTOD)
   /// Converts a string to a double value (wchar_t version).
   ACE_NAMESPACE_INLINE_FUNCTION
   double strtod (const wchar_t *s, wchar_t **endptr);
-#endif /* ACE_HAS_WCHAR && !ACE_LACKS_WCSTOD */
 
   /// Converts a string to a long value (char version).
   ACE_NAMESPACE_INLINE_FUNCTION
   long strtol (const char *s, char **ptr, int base);
 
-#if defined (ACE_HAS_WCHAR) && !defined (ACE_LACKS_WCSTOL)
   /// Converts a string to a long value (wchar_t version).
   ACE_NAMESPACE_INLINE_FUNCTION
   long strtol (const wchar_t *s, wchar_t **ptr, int base);
-#endif /* ACE_HAS_WCHAR && !ACE_LACKS_WCSTOL */
 
 #if defined (ACE_LACKS_STRTOL)
   extern ACE_Export
@@ -259,11 +236,9 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   unsigned long strtoul (const char *s, char **ptr, int base);
 
-#if defined (ACE_HAS_WCHAR) && !defined (ACE_LACKS_WCSTOUL)
   /// Converts a string to an unsigned long value (wchar_t version).
   ACE_NAMESPACE_INLINE_FUNCTION
   unsigned long strtoul (const wchar_t *s, wchar_t **ptr, int base);
-#endif /* ACE_HAS_WCHAR && !ACE_LACKS_WCSTOUL */
 
 #if defined (ACE_LACKS_STRTOUL)
   extern ACE_Export
@@ -278,6 +253,8 @@ namespace ACE_OS {
 } /* namespace ACE_OS */
 
 ACE_END_VERSIONED_NAMESPACE_DECL
+
+#include "ace/OS_NS_stdlib_base.inl"
 
 # if defined (ACE_HAS_INLINED_OSCALLS)
 #   if defined (ACE_INLINE)

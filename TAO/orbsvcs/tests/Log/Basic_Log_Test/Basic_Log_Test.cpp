@@ -3,6 +3,7 @@
 #include "tao/debug.h"
 
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "ace/Log_Msg.h"
 #include "ace/SString.h"
 #include "ace/OS_NS_stdio.h"
@@ -34,8 +35,7 @@ BasicLog_Test::init (int argc, char *argv[])
   ACE_TRY
     {
       // Initialize the ORB
-      orb_ = CORBA::ORB_init (argc,
-                              argv,
+      orb_ = CORBA::ORB_init (argc, argv,
                               "internet"
                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -542,7 +542,7 @@ BasicLog_Test::test_query(CORBA::ULong numberOfRecordsToWrite)
 int
 BasicLog_Test::parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "di");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "di");
   int c;
 
   while ((c = get_opts ()) != -1)

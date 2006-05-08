@@ -480,9 +480,7 @@ public:
                    const char *rhs) const;
 };
 
-#if defined (ACE_HAS_WCHAR)
-
-#  if ! defined (ACE_LACKS_NATIVE_WCHAR_T)
+#  if ! defined (ACE_LACKS_BUILTIN_WCHAR_T)
 /**
  * @class ACE_Hash<wchar_t>
  *
@@ -495,7 +493,7 @@ public:
   /// Simply returns t
   unsigned long operator () (wchar_t t) const;
 };
-#  endif /* ACE_LACKS_NATIVE_WCHAR_T */
+#  endif /* ACE_LACKS_BUILTIN_WCHAR_T */
 /**
  * @class ACE_Hash<const wchar_t *>
  *
@@ -581,7 +579,6 @@ public:
                    const wchar_t *rhs) const;
 };
 
-#endif  // ACE_HAS_WCHAR
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

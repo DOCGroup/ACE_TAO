@@ -89,7 +89,7 @@ ACE_OS::dlerror (void)
 #   if defined (ACE_USES_WCHAR)
   const size_t BufLen = 256;
   static wchar_t buf[BufLen];
-  ACE_OS::strncpy (buf, ACE_TEXT_CHAR_TO_TCHAR (err), BufLen);
+  ACE_OS::string_copy (buf, err, BufLen);
   return buf;
 #   else
   return const_cast <char *> (err);
@@ -125,13 +125,13 @@ ACE_OS::dlopen (const ACE_TCHAR *fname,
   void *handle;
 #   if defined (ACE_HAS_SGIDLADD)
   ACE_OSCALL
-    (::sgidladd (ACE_TEXT_ALWAYS_CHAR (fname), mode), void *, 0, handle);
+    (::sgidladd (ACE_TEXT_TO_CHAR_IN (fname), mode), void *, 0, handle);
 #   elif defined (_M_UNIX)
   ACE_OSCALL
-    (::_dlopen (ACE_TEXT_ALWAYS_CHAR (fname), mode), void *, 0, handle);
+    (::_dlopen (ACE_TEXT_TO_CHAR_IN (fname), mode), void *, 0, handle);
 #   else
   ACE_OSCALL
-    (::dlopen (ACE_TEXT_ALWAYS_CHAR (fname), mode), void *, 0, handle);
+    (::dlopen (ACE_TEXT_TO_CHAR_IN (fname), mode), void *, 0, handle);
 #   endif /* ACE_HAS_SGIDLADD */
 #   if !defined (ACE_HAS_AUTOMATIC_INIT_FINI)
   if (handle != 0)
@@ -210,24 +210,15 @@ ACE_OS::dlsym (ACE_SHLIB_HANDLE handle,
 #endif /* ACE_HAS_DLSYM_SEGFAULT_ON_INVALID_HANDLE */
 
   // Get the correct OS type.
+  // Define symbolname
 #if defined (ACE_HAS_WINCE)
-  // CE (at least thru Pocket PC 2003) offers GetProcAddressW, not ...A, so
-  // we always need a wide-char string.
-  const wchar_t *symbolname = 0;
-#  if defined (ACE_USES_WCHAR)
-  symbolname = sname;
-#  else
-  ACE_Ascii_To_Wide sname_xlate (sname);
-  symbolname = sname_xlate.wchar_rep ();
-#  endif /* ACE_USES_WCHAR */
-#elif defined (ACE_USES_WCHAR)
-  // WinCE is WCHAR always; other platforms need a char * symbol name
-  ACE_Wide_To_Ascii w_sname (sname);
-  char *symbolname = w_sname.char_rep ();
-#elif defined (ACE_VXWORKS)
-  char *symbolname = const_cast<char *> (sname);
+  // WinCE expects a wchar
+  ACE::String_Conversion::Convert_In< wchar_t, char > convert (sname);
+  const wchar_t *symbolname = convert.c_str();
 #else
-  const char *symbolname = sname;
+  // Otherwise we make certain we have an ANSI char version
+  ACE::String_Conversion::Convert_In< char, wchar_t > convert (sname);
+  const char *symbolname = convert.c_str();
 #endif /* ACE_HAS_WINCE */
 
 # if defined (ACE_HAS_SVR4_DYNAMIC_LINKING)

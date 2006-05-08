@@ -98,7 +98,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_LOG_MSG->open (argv[0]);
 
-  ACE_Get_Opt getopt (argc, argv, ACE_TEXT ("C:c:bdH:i:L:l:M:nS:s:t:T:v"));
+  ACE_Get_Arg_Opt<ACE_TCHAR> getopt (argc, argv, ACE_TEXT ("C:c:bdH:i:L:l:M:nS:s:t:T:v"));
   int c;
 
   while ((c = getopt ()) != -1)
@@ -170,27 +170,20 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
 		   "\t[-s supplier port]\n"
 		   "\t[-t number of threads]\n"
 		   "\t[-v] (verbose) \n",
-		   ACE_TEXT_ALWAYS_CHAR (argv[0]));
+		   ACE_TEXT_TO_CHAR_IN (argv[0]));
 	::exit (1);
 	/* NOTREACHED */
 	break;
       }
 
-  // HACK! This needs to be done to avoid the mismatch from ACE_LIB_TEXT
-  // in ACE_SIZE_T_FORMAT_SPECIFIER to narrow-char on wide-char builds.
-  // It only works because it's at the end of the file.
-# if defined (ACE_LIB_TEXT)
-#  undef ACE_LIB_TEXT
-# endif
-# define ACE_LIB_TEXT(X) X
   if (this->verbose ())
     ACE_OS::printf ("%8d = initial concurrency hint\n"
-	      ACE_SIZE_T_FORMAT_SPECIFIER " = total iterations\n"
-	      ACE_SIZE_T_FORMAT_SPECIFIER " = thread count\n"
-	      ACE_SIZE_T_FORMAT_SPECIFIER " = low water mark\n"
-	      ACE_SIZE_T_FORMAT_SPECIFIER " = high water mark\n"
-	      ACE_SIZE_T_FORMAT_SPECIFIER " = message_size\n"
-	      ACE_SIZE_T_FORMAT_SPECIFIER " = initial queue length\n"
+	      ACE_SIZE_T_FORMAT_SPECIFIER_A " = total iterations\n"
+	      ACE_SIZE_T_FORMAT_SPECIFIER_A " = thread count\n"
+	      ACE_SIZE_T_FORMAT_SPECIFIER_A " = low water mark\n"
+	      ACE_SIZE_T_FORMAT_SPECIFIER_A " = high water mark\n"
+	      ACE_SIZE_T_FORMAT_SPECIFIER_A " = message_size\n"
+	      ACE_SIZE_T_FORMAT_SPECIFIER_A " = initial queue length\n"
 	      "%8d = THR_BOUND\n"
 	      "%8d = THR_NEW_LWP\n",
 	      ACE_OS::thr_getconcurrency (),

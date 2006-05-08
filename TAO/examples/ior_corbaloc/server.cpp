@@ -4,15 +4,18 @@
 #include "status_i.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "orbsvcs/CosNamingC.h"
+#include "ace/Argv_Type_Converter.h"
 
-int main (int argc, char* argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       // First initialize the ORB, that will remove some arguments...
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv,
+        CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(),
                          "" /* the ORB name, it can be anything! */
                          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -43,7 +46,7 @@ int main (int argc, char* argv[])
 
       // Create the servant
       corbaloc_Status_i status_i;
-      status_i.set_name (argv[1]);
+      status_i.set_name (convert.get_ASCII_argv()[1]);
       // Activate it to obtain the reference
       corbaloc::Status_var status =
         status_i._this ();

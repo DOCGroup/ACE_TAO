@@ -87,7 +87,7 @@ static const char *lanes_file = "empty-file";
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv,
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv,
                         "b:f:hl:n:o:s:" // server options
                         "c:e:g:hi:j:k:m:p:q:r:t:u:v:w:x:y:z:" // client options
                         );
@@ -419,7 +419,7 @@ Task::svc (void)
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_TRY_NEW_ENV
     {

@@ -2,6 +2,7 @@
 // $Id$
 
 project(*Server): taoexe, portableserver, minimum_corba, bidir_giop {
+  exename = server
   Source_Files {
     ReceiverC.cpp
     SenderC.cpp
@@ -13,6 +14,7 @@ project(*Server): taoexe, portableserver, minimum_corba, bidir_giop {
 }
 
 project(*Client): taoexe, portableserver, minimum_corba, bidir_giop {
+  exename = client
   after += *Server
   Source_Files {
     ReceiverC.cpp

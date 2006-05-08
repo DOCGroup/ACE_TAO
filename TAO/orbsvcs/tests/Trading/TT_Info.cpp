@@ -272,7 +272,7 @@ TT_Parse_Args::TT_Parse_Args (int& argc, char** argv)
     quiet_ (0),
     ior_ (0)
 {
-  ACE_Arg_Shifter arg_shifter (argc, argv);
+  ACE_TArg_Shifter< char > arg_shifter (argc, argv);
 
   while (arg_shifter.is_anything_left ())
     {
@@ -299,7 +299,7 @@ TT_Parse_Args::TT_Parse_Args (int& argc, char** argv)
           if (arg_shifter.is_parameter_next ())
             {
               const char* file_name = arg_shifter.get_current ();
-              ior_file = ACE_OS::fopen (file_name, "r");
+              ior_file = ACE_OS::fopen (file_name, ACE_TEXT("r"));
 
               if (ior_file == 0)
                 ACE_ERROR ((LM_ERROR,
@@ -309,7 +309,7 @@ TT_Parse_Args::TT_Parse_Args (int& argc, char** argv)
               arg_shifter.consume_arg ();
             }
           else
-            ior_file = ACE_OS::fdopen (ACE_STDIN, "r");
+            ior_file = ACE_OS::fdopen (ACE_STDIN, ACE_TEXT("r"));
 
           if (ior_file != 0)
             {

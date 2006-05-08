@@ -13,7 +13,7 @@ ACE_RCSID(TLI_SAP, CPP_client, "$Id$")
 
 /* ACE_TLI Client */
 
-int main (int argc, char *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   const char *host = argc > 1 ? argv[1] : ACE_DEFAULT_SERVER_HOST;
   u_short r_port = argc > 2 ? ACE_OS::atoi (argv[2]) : ACE_DEFAULT_SERVER_PORT;

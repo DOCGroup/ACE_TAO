@@ -26,7 +26,7 @@ namespace CIAO
     bool
     parse_args (int argc, char *argv[])
     {
-      ACE_Get_Opt get_opts (argc, argv, "o:i:np:");
+      ACE_Get_Arg_Opt<char> get_opts (argc, argv, "o:i:n:p");
       int c;
       while ((c = get_opts ()) != -1)
         switch (c)
@@ -268,7 +268,7 @@ namespace CIAO
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   return CIAO::Execution_Manager::run_main (argc,
                                             argv);

@@ -17,7 +17,7 @@ unsigned int Log::log_level_;
     if (log_level_ >= log_level) {
       va_list p;
       va_start(p, format);
-      char str[1024];
+      ACE_TCHAR str[1024];
       ACE_OS::vsprintf(str, format, p);
       ACE_DEBUG((LM_DEBUG, str));
       va_end(p);

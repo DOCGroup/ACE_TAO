@@ -6,6 +6,7 @@
 
 #include "ace/Auto_Ptr.h"
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 
 #include "tao/ORB_Core.h"
 
@@ -82,7 +83,7 @@ public:
 int
 Supplier_Client::parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:e:d");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "o:e:d");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -173,14 +174,16 @@ create_suppliers (CosNotifyChannelAdmin::SupplierAdmin_ptr admin,
 // Main Section
 // ******************************************************************
 
-int main (int argc, char* argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   int status = 0;
   ACE_Auto_Ptr< sig_i > sig_impl;
   ACE_TRY_NEW_ENV
   {
     Supplier_Client client;
-    status = client.init (argc, argv ACE_ENV_ARG_PARAMETER);
+    status = client.init (convert.get_argc(), convert.get_ASCII_argv() ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     if (status == 0)
@@ -203,7 +206,7 @@ int main (int argc, char* argv[])
       // If the ior_output_file exists, output the ior to it
       if (ior_output_file != 0)
       {
-        FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
+        FILE *output_file= ACE_OS::fopen (ior_output_file, ACE_TEXT("w"));
         if (output_file == 0)
           ACE_ERROR_RETURN ((LM_ERROR,
           "Cannot open output file for "

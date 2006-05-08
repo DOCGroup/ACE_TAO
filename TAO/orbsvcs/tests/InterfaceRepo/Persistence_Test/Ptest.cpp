@@ -3,6 +3,7 @@
 
 #include "Ptest.h"
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "ace/OS_NS_string.h"
 
 ACE_RCSID(Persistence_Test, Ptest, "$Id$")
@@ -18,19 +19,16 @@ Ptest::~Ptest (void)
 }
 
 int
-Ptest::init (int argc,
-                    char *argv[])
+Ptest::init (int argc, char *argv[])
 {
   ACE_TRY_NEW_ENV
     {
-      this->orb_ = CORBA::ORB_init (argc,
-                                    argv,
+      this->orb_ = CORBA::ORB_init (argc, argv,
                                     0
                                     ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      int retval = this->parse_args (argc,
-                                     argv);
+      int retval = this->parse_args (argc, argv);
 
       if (retval != 0)
         return retval;
@@ -102,10 +100,9 @@ Ptest::run (void)
 }
 
 int
-Ptest::parse_args (int argc,
-                   char *argv[])
+Ptest::parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt opts (argc, argv, "dq");
+  ACE_Get_Arg_Opt<char> opts (argc, argv, "dq");
   int c;
 
   while ((c = opts ()) != -1)
@@ -252,11 +249,11 @@ Ptest::query (ACE_ENV_SINGLE_ARG_DECL)
 
       if (i == length - 1)
         {
-          ACE_ASSERT (ACE_OS::strcmp (out_members[i].name, "my_enum") == 0);
+          ACE_ASSERT (ACE_OS::strcmp (out_members[i].name.in(), "my_enum") == 0);
         }
       else
         {
-          ACE_ASSERT (ACE_OS::strcmp (out_members[i].name, members[i]) == 0);
+          ACE_ASSERT (ACE_OS::strcmp (out_members[i].name.in(), members[i]) == 0);
         }
     }
 

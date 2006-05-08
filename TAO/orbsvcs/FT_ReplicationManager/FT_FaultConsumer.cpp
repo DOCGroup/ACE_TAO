@@ -145,9 +145,8 @@ int TAO::FT_FaultConsumer::fini (ACE_ENV_SINGLE_ARG_DECL)
       if (TAO_debug_level > 1)
       {
         ACE_DEBUG ((LM_DEBUG,
-          ACE_TEXT (
-            "TAO::FT_FaultConsumer::fini: "
-            "Disconnecting consumer from FaultNotifier.\n")
+          ACE_TEXT ("TAO::FT_FaultConsumer::fini: ")
+          ACE_TEXT ("Disconnecting consumer from FaultNotifier.\n")
         ));
       }
 
@@ -158,9 +157,8 @@ int TAO::FT_FaultConsumer::fini (ACE_ENV_SINGLE_ARG_DECL)
       if (TAO_debug_level > 1)
       {
         ACE_DEBUG ((LM_DEBUG,
-          ACE_TEXT (
-            "TAO::FT_FaultConsumer::fini: "
-            "Deactivating from POA.\n")
+          ACE_TEXT ("TAO::FT_FaultConsumer::fini: ")
+          ACE_TEXT ("Deactivating from POA.\n")
         ));
       }
 
@@ -173,9 +171,8 @@ int TAO::FT_FaultConsumer::fini (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CATCHANY
   {
     ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-      ACE_TEXT (
-        "TAO::FT_FaultConsumer::fini: "
-        "Error disconnecting from notifier (ignored).\n")
+      ACE_TEXT ("TAO::FT_FaultConsumer::fini: ")
+      ACE_TEXT ("Error disconnecting from notifier (ignored).\n")
     );
   }
   ACE_ENDTRY;
@@ -184,9 +181,8 @@ int TAO::FT_FaultConsumer::fini (ACE_ENV_SINGLE_ARG_DECL)
   if (TAO_debug_level > 1)
   {
     ACE_DEBUG ((LM_DEBUG,
-      ACE_TEXT (
-        "TAO::FT_FaultConsumer::fini: "
-        "Setting our object reference to nil.\n")
+      ACE_TEXT ("TAO::FT_FaultConsumer::fini: ")
+      ACE_TEXT ("Setting our object reference to nil.\n")
     ));
   }
 
@@ -234,9 +230,8 @@ void TAO::FT_FaultConsumer::push_structured_event (
   if (TAO_debug_level > 1)
   {
     ACE_DEBUG ((LM_DEBUG,
-      ACE_TEXT (
-        "TAO::FT_FaultConsumer::push_structured_event: "
-        "Received Fault notification(%d):\n"),
+      ACE_TEXT ("TAO::FT_FaultConsumer::push_structured_event: ")
+      ACE_TEXT ("Received Fault notification(%d):\n"),
       static_cast<unsigned int> (this->notifications_)
     ));
   }
@@ -250,9 +245,8 @@ void TAO::FT_FaultConsumer::push_structured_event (
     if (result != 0)
     {
       ACE_ERROR ((LM_ERROR,
-        ACE_TEXT (
-          "TAO::FT_FaultConsumer::push_structured_event: "
-          "Received invalid fault event type.\n")
+        ACE_TEXT ("TAO::FT_FaultConsumer::push_structured_event: ")
+        ACE_TEXT ("Received invalid fault event type.\n")
       ));
     }
   }
@@ -264,9 +258,8 @@ void TAO::FT_FaultConsumer::push_structured_event (
     if (result != 0)
     {
       ACE_ERROR ((LM_ERROR,
-        ACE_TEXT (
-          "TAO::FT_FaultConsumer::push_structured_event: "
-          "Could not analyze fault event.\n")
+        ACE_TEXT ("TAO::FT_FaultConsumer::push_structured_event: ")
+        ACE_TEXT ("Could not analyze fault event.\n")
       ));
     }
   }
@@ -295,8 +288,8 @@ void TAO::FT_FaultConsumer::disconnect_structured_push_consumer (
 {
   //TODO: For now, we are just ignoring the disconnect callback.
   ACE_DEBUG ((LM_DEBUG,
-    ACE_TEXT("TAO::FT_FaultConsumer::disconnect_structured_push_consumer() "
-             "call ignored.\n")
+    ACE_TEXT ("TAO::FT_FaultConsumer::disconnect_structured_push_consumer() ")
+    ACE_TEXT ("call ignored.\n")
     ));
 }
 

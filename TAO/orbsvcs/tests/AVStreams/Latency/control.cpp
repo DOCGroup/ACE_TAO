@@ -6,7 +6,9 @@
 #include "tao/Strategies/advanced_resource.h"
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "ace/INET_Addr.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID (Latency,
            ping,
@@ -23,7 +25,7 @@ int milliseconds = 30000;
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "f:g:s:r:t:p:d");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "f:g:s:r:t:p:d");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -77,14 +79,15 @@ parse_args (int argc, char *argv[])
   return 0;
 }
 
-int main (int argc, char *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_TRY_NEW_ENV
     {
 
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv);
-      parse_args (argc, argv);
+      CORBA::ORB_var orb = CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv());
+      parse_args (convert.get_argc(), convert.get_ASCII_argv());
 
       CORBA::Object_var obj
         = orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);

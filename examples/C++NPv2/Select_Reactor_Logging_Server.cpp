@@ -87,7 +87,7 @@ static ACE_THR_FUNC_RETURN controller (void *arg) {
 }
 
 
-int main (int argc, char *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_Select_Reactor select_reactor;
   ACE_Reactor reactor (&select_reactor);

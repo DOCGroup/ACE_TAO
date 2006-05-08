@@ -242,7 +242,7 @@ Filter::put (ACE_Message_Block *mb,
 
       // Prepend the line count in front of the buffer.
       ACE_OS::sprintf (mb->rd_ptr (),
-                       ACE_SIZE_T_FORMAT_SPECIFIER
+                       ACE_SIZE_T_FORMAT_SPECIFIER_A
                        ": %s",
                        this->count_++,
                        buf);
@@ -302,7 +302,7 @@ ACE_TMAIN (int, ACE_TCHAR *argv[])
 }
 #else
 int
-main (int, char *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_ERROR ((LM_ERROR,
               ACE_TEXT ("threads not supported on this platform\n")));

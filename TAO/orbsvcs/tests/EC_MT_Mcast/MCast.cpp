@@ -14,6 +14,7 @@
 #include "tao/Strategies/advanced_resource.h"
 #include "tao/ORB_Core.h"
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "ace/OS_NS_unistd.h"
 
 ACE_RCSID (EC_MT_Mcast,
@@ -68,8 +69,10 @@ run_orb_within_thread (void *)
 int parse_args (int argc, char *argv[]);
 
 int
-main (int argc, char* argv[])
+ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   // Register the default factory in the Service Configurator.
   // If your platform supports static constructors then you can
   // simply using the ACE_STATIC_SVC_DEFINE() macro, unfortunately TAO
@@ -83,13 +86,13 @@ main (int argc, char* argv[])
       // **************** HERE IS THE ORB SETUP
 
       // Create the ORB, pass the argv list for parsing.
-      orb = CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+      orb = CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(), "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Parse the arguments, you usually want to do this after
       // invoking ORB_init() because ORB_init() will remove all the
       // -ORB options from the command line.
-      if (parse_args (argc, argv) == -1)
+      if (parse_args (convert.get_argc(), convert.get_ASCII_argv()) == -1)
         {
           ACE_ERROR ((LM_ERROR,
                       "Usage: Service [-m udp_mcast_addr]\n"));
@@ -399,7 +402,7 @@ main (int argc, char* argv[])
 
 int parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "m:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "m:");
   int c;
 
   while ((c = get_opts ()) != -1)

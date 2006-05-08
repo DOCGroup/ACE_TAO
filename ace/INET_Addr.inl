@@ -120,7 +120,6 @@ ACE_INET_Addr::operator < (const ACE_INET_Addr &rhs) const
         && this->get_port_number () < rhs.get_port_number ());
 }
 
-#if defined (ACE_HAS_WCHAR)
 ACE_INLINE int
 ACE_INET_Addr::set (u_short port_number,
                     const wchar_t host_name[],
@@ -128,7 +127,7 @@ ACE_INET_Addr::set (u_short port_number,
                     int address_family)
 {
   return this->set (port_number,
-                    ACE_Wide_To_Ascii (host_name).char_rep (),
+                    ACE_TEXT_TO_CHAR_IN (host_name),
                     encode,
                     address_family);
 }
@@ -138,9 +137,9 @@ ACE_INET_Addr::set (const wchar_t port_name[],
                     const wchar_t host_name[],
                     const wchar_t protocol[])
 {
-  return this->set (ACE_Wide_To_Ascii (port_name).char_rep (),
-                    ACE_Wide_To_Ascii (host_name).char_rep (),
-                    ACE_Wide_To_Ascii (protocol).char_rep ());
+  return this->set (ACE_TEXT_TO_CHAR_IN (port_name),
+                    ACE_TEXT_TO_CHAR_IN (host_name),
+                    ACE_TEXT_TO_CHAR_IN (protocol));
 }
 
 ACE_INLINE int
@@ -148,18 +147,16 @@ ACE_INET_Addr::set (const wchar_t port_name[],
                     ACE_UINT32 ip_addr,
                     const wchar_t protocol[])
 {
-  return this->set (ACE_Wide_To_Ascii (port_name).char_rep (),
+  return this->set (ACE_TEXT_TO_CHAR_IN (port_name),
                     ip_addr,
-                    ACE_Wide_To_Ascii (protocol).char_rep ());
+                    ACE_TEXT_TO_CHAR_IN (protocol));
 }
 
 ACE_INLINE int
 ACE_INET_Addr::set (const wchar_t addr[])
 {
-  return this->set (ACE_Wide_To_Ascii (addr).char_rep ());
+  return this->set (ACE_TEXT_TO_CHAR_IN (addr));
 }
-
-#endif /* ACE_HAS_WCHAR */
 
 // Return @c true if the IP address is INADDR_ANY or IN6ADDR_ANY.
 ACE_INLINE bool

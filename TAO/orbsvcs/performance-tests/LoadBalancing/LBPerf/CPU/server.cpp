@@ -22,7 +22,7 @@ int num_threads = 1;
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:s:r:c:d:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "o:s:r:c:d:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -236,7 +236,7 @@ join_object_group (CORBA::ORB_ptr orb,
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
         
   int priority =

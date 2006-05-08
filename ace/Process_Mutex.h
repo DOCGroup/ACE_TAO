@@ -90,8 +90,6 @@ public:
   ACE_Process_Mutex (const char *name = 0,
                      void *arg = 0,
                      mode_t mode = ACE_DEFAULT_FILE_PERMS);
-
-#if defined (ACE_HAS_WCHAR)
   /**
    * Create a Process_Mutex, passing in the optional @c name. (@c wchar_t
    * version)
@@ -109,7 +107,6 @@ public:
   ACE_Process_Mutex (const wchar_t *name,
                      void *arg = 0,
                      mode_t mode = ACE_DEFAULT_FILE_PERMS);
-#endif /* ACE_HAS_WCHAR */
 
   ~ACE_Process_Mutex (void);
 

@@ -315,7 +315,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 {
   ACE_START_TEST (ACE_TEXT ("Reactor_Performance_Test"));
 
-  ACE_Get_Opt getopt (argc, argv, ACE_TEXT ("dswc:l:"), 1);
+  ACE_Get_Arg_Opt<ACE_TCHAR>  getopt (argc, argv, ACE_TEXT ("dswc:l:"), 1);
   for (int c; (c = getopt ()) != -1; )
     switch (c)
       {

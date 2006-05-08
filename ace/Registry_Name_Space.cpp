@@ -82,7 +82,7 @@ ACE_Registry_Name_Space::bind (const ACE_NS_WString &name,
 #else
   return this->context_.bind (name.char_rep(),
                               object);
-#endif /* ACE_HAS_WCHAR */
+#endif /* ACE_USES_WCHAR */
 }
 
 

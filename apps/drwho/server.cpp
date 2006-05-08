@@ -86,7 +86,7 @@ do_drwho (SMR_Server &smr_server)
 // debugging!
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_OS::signal (SIGTERM, (ACE_SignalHandler)exit_server);
   ACE_OS::signal (SIGINT, (ACE_SignalHandler)exit_server);

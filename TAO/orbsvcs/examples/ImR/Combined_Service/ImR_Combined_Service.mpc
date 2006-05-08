@@ -32,6 +32,7 @@ project(*Controller) : orbsvcsexe, exceptions {
 
 // A client that uses corba to test out basic imr functionality
 project(*Test) : orbsvcsexe, exceptions {
+  exename = test
   after += *IDL
   source_files {
     test.cpp
@@ -43,6 +44,7 @@ project(*Test) : orbsvcsexe, exceptions {
 
 // A server to use with the imr
 project(*TestServer) : orbsvcsexe, portableserver, iortable, exceptions {
+  exename = test_server
   after += *IDL
   // The gnuace specific portion is to prevent invalid object files from
   // IDL generated files being compiled simultaneously with parallel builds.

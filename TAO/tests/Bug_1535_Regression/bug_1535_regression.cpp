@@ -5,6 +5,7 @@
 #include "tao/Utils/RIR_Narrow.h"
 #include "tao/Utils/PolicyList_Destroyer.h"
 #include "tao/Utils/Servant_Var.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID (Bug_1535_Regression,
            bug_1535_regression,
@@ -177,15 +178,17 @@ test_create_object_before_POA_reactivation(
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc,
-                         argv,
+        CORBA::ORB_init (convert.get_argc(),
+                         convert.get_ASCII_argv(),
                          ""
                          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;

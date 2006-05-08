@@ -2,6 +2,7 @@
 // $Id$
 
 project(*Server): strategies, taoexe, portableserver {
+  exename = server
   Source_Files {
     test_i.cpp
     server.cpp
@@ -9,6 +10,7 @@ project(*Server): strategies, taoexe, portableserver {
 }
 
 project(*Client): strategies, taoexe, portableserver {
+  exename = client
   after += *Server
   Source_Files {
     test_i.cpp

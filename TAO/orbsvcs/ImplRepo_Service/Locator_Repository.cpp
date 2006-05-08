@@ -11,20 +11,20 @@
 
 ACE_RCSID (ImplRepo_Service, Locator_Repository, "$Id$")
 
-static const char* STARTUP_COMMAND = "StartupCommand";
-static const char* WORKING_DIR = "WorkingDir";
-static const char* ENVIRONMENT = "Environment";
-static const char* ACTIVATION = "Activation";
-static const char* PARTIAL_IOR = "Location";
-static const char* IOR = "IOR";
-static const char* START_LIMIT = "StartLimit";
-static const char* ACTIVATOR = "Activator";
-static const char* SERVERS_ROOT_KEY = "Servers";
-static const char* ACTIVATORS_ROOT_KEY = "Activators";
-static const char* TOKEN = "Token";
+  static const ACE_TCHAR* STARTUP_COMMAND = ACE_TEXT("StartupCommand");
+static const ACE_TCHAR* WORKING_DIR = ACE_TEXT("WorkingDir");
+static const ACE_TCHAR* ENVIRONMENT = ACE_TEXT("Environment");
+static const ACE_TCHAR* ACTIVATION = ACE_TEXT("Activation");
+static const ACE_TCHAR* PARTIAL_IOR = ACE_TEXT("Location");
+static const ACE_TCHAR* IOR = ACE_TEXT("IOR");
+static const ACE_TCHAR* START_LIMIT = ACE_TEXT("StartLimit");
+static const ACE_TCHAR* ACTIVATOR = ACE_TEXT("Activator");
+static const ACE_TCHAR* SERVERS_ROOT_KEY = ACE_TEXT("Servers");
+static const ACE_TCHAR* ACTIVATORS_ROOT_KEY = ACE_TEXT("Activators");
+static const ACE_TCHAR* TOKEN = ACE_TEXT("Token");
 
 #if defined (ACE_WIN32)
-static const char* WIN32_REG_KEY = "Software\\TAO\\ImplementationRepository";
+static const ACE_TCHAR* WIN32_REG_KEY = ACE_TEXT("Software\\TAO\\ImplementationRepository");
 #endif
 
 static ACE_CString lcase (const ACE_CString& s)
@@ -44,22 +44,26 @@ static void loadActivatorsAsBinary (ACE_Configuration& config, Locator_Repositor
   if (err == 0)
     {
       int index = 0;
-      ACE_CString name;
+      ACE_TString name;
       while (config.enumerate_sections (root, index, name) == 0)
         {
-          ACE_CString ior;
+          ACE_TString ior;
           u_int token;
 
           ACE_Configuration_Section_Key key;
 
           // Can't fail, because we're enumerating
-          config.open_section (root, name.c_str(), 0, key);
+          config.open_section(root, name.c_str(), 0, key);
 
           config.get_string_value (key, IOR, ior);
-          config.get_integer_value (key, TOKEN, token);
+          config.get_integer_value(key, TOKEN, token);
 
-          Activator_Info_Ptr info (new Activator_Info (name, token, ior));
-          map.bind (lcase (name), info);
+          ACE_CString name2(ACE_TEXT_TO_CHAR_IN(name.fast_rep()));
+          Activator_Info_Ptr info(new Activator_Info(
+                                                     name2,
+                                                     token,
+                                                     ACE_TEXT_TO_CHAR_IN(ior.fast_rep())));
+          map.bind (lcase(name2), info);
           index++;
         }
     }
@@ -72,17 +76,17 @@ static void loadServersAsBinary(ACE_Configuration& config, Locator_Repository::S
   if (err == 0)
     {
       int index = 0;
-      ACE_CString name;
+      ACE_TString name;
       while (config.enumerate_sections (root, index, name) == 0)
         {
-          ACE_CString cmdline, dir, envstr, partial_ior, ior, aname;
+          ACE_TString cmdline, dir, envstr, partial_ior, ior, aname;
           u_int amodeint = ImplementationRepository::MANUAL;
           u_int start_limit;
 
           ACE_Configuration_Section_Key key;
 
           // Can't fail, because we're enumerating
-          config.open_section (root, name.c_str (), 0, key);
+          config.open_section(root, name.c_str(), 0, key);
 
           // Ignore any missing values. Server name is enough on its own.
           config.get_string_value (key, ACTIVATOR, aname);
@@ -98,11 +102,19 @@ static void loadServersAsBinary(ACE_Configuration& config, Locator_Repository::S
             static_cast <ImplementationRepository::ActivationMode> (amodeint);
 
           ImplementationRepository::EnvironmentList env_vars =
-            ImR_Utils::parseEnvList (envstr);
+            ImR_Utils::parseEnvList(ACE_TEXT_TO_CHAR_IN(envstr.fast_rep()));
 
-          Server_Info_Ptr info (new Server_Info(name, aname, cmdline,
-            env_vars, dir, amode, start_limit, partial_ior, ior));
-          map.bind (name, info);
+          ACE_CString name2(ACE_TEXT_TO_CHAR_IN(name.fast_rep()));
+          Server_Info_Ptr info(new Server_Info(
+                                               name2,
+                                               ACE_TEXT_TO_CHAR_IN(aname.fast_rep()),
+                                               ACE_TEXT_TO_CHAR_IN(cmdline.fast_rep()),
+                                               env_vars,
+                                               ACE_TEXT_TO_CHAR_IN(dir.fast_rep()),
+                                               amode, start_limit,
+                                               ACE_TEXT_TO_CHAR_IN(partial_ior.fast_rep()),
+                                               ACE_TEXT_TO_CHAR_IN(ior.fast_rep())));
+          map.bind (name2, info);
           index++;
         }
     }
@@ -136,10 +148,10 @@ public:
   {
   }
   virtual void next_server (const ACE_CString& name,
-    const ACE_CString& aname, const ACE_CString& cmdline,
-    const Locator_XMLHandler::EnvList& envlst, const ACE_CString& dir,
-    const ACE_CString& amodestr, int start_limit,
-    const ACE_CString& partial_ior, const ACE_CString& ior)
+                            const ACE_CString& aname, const ACE_CString& cmdline,
+                            const Locator_XMLHandler::EnvList& envlst, const ACE_CString& dir,
+                            const ACE_CString& amodestr, int start_limit,
+                            const ACE_CString& partial_ior, const ACE_CString& ior)
   {
     ImplementationRepository::ActivationMode amode =
       ImR_Utils::parseActivationMode (amodestr);
@@ -150,13 +162,13 @@ public:
     int limit = start_limit < 1 ? 1 : start_limit;
 
     Server_Info_Ptr si (new Server_Info (name, aname, cmdline,
-      env_vars, dir, amode, limit, partial_ior, ior));
+                                         env_vars, dir, amode, limit, partial_ior, ior));
 
     this->repo_.servers ().bind (name, si);
   }
   virtual void next_activator (const ACE_CString& aname,
-    long token,
-    const ACE_CString& ior)
+                               long token,
+                               const ACE_CString& ior)
   {
     Activator_Info_Ptr si (new Activator_Info (aname, token, ior));
     this->repo_.activators ().bind (lcase (aname), si);
@@ -165,11 +177,11 @@ private:
   Locator_Repository& repo_;
 };
 
-static int loadAsXML (const ACE_CString& fname, Locator_Repository& repo)
-{
+static int loadAsXML(const ACE_TString& fname, Locator_Repository& repo) {
+
   ACEXML_FileCharStream* fstm = new ACEXML_FileCharStream; // xml input source will take ownership
 
-  if (fstm->open (fname.c_str()) != 0)
+  if (fstm->open(ACE_TEXT_TO_TCHAR_IN(fname.c_str())) != 0)
     {
       // This is not a real error. The xml file may not exist yet.
       delete fstm;
@@ -206,9 +218,9 @@ static int loadAsXML (const ACE_CString& fname, Locator_Repository& repo)
 }
 
 // Note : Would pass servers by const&, but ACE hash map const_iterator is broken.
-static void saveAsXML (const ACE_CString& fname, Locator_Repository& repo)
-{
-  FILE* fp = ACE_OS::fopen (fname.c_str (), "w");
+static void saveAsXML(const ACE_TString& fname, Locator_Repository& repo) {
+  FILE* fp = ACE_OS::fopen (fname.c_str(), ACE_TEXT("w"));
+
   if (fp == 0)
     {
       ACE_ERROR ((LM_ERROR, "Couldn't write to file %s\n", fname.c_str()));
@@ -219,40 +231,41 @@ static void saveAsXML (const ACE_CString& fname, Locator_Repository& repo)
 
   // Save servers
   Locator_Repository::SIMap::ENTRY* sientry = 0;
-  Locator_Repository::SIMap::ITERATOR siit (repo.servers ());
-  for (; siit.next (sientry); siit.advance() )
+
+  Locator_Repository::SIMap::ITERATOR siit(repo.servers());
+  for (; siit.next(sientry); siit.advance())
     {
       Server_Info_Ptr& info = sientry->int_id_;
 
-      ACE_CString name = ACEXML_escape_string (info->name);
-      ACE_CString activator = ACEXML_escape_string (info->activator);
-      ACE_CString cmdline = ACEXML_escape_string (info->cmdline);
-      ACE_CString wdir = ACEXML_escape_string (info->dir);
-      ACE_CString partial_ior = ACEXML_escape_string (info->partial_ior);
-      ACE_CString ior = ACEXML_escape_string (info->ior);
+      ACE_TString name = ACEXML_escape_string(ACE_TEXT_TO_TCHAR_IN(info->name.fast_rep()));
+      ACE_TString activator = ACEXML_escape_string(ACE_TEXT_TO_TCHAR_IN(info->activator.fast_rep()));
+      ACE_TString cmdline = ACEXML_escape_string(ACE_TEXT_TO_TCHAR_IN(info->cmdline.fast_rep()));
+      ACE_TString wdir = ACEXML_escape_string(ACE_TEXT_TO_TCHAR_IN(info->dir.fast_rep()));
+      ACE_TString partial_ior = ACEXML_escape_string(ACE_TEXT_TO_TCHAR_IN(info->partial_ior.fast_rep()));
+      ACE_TString ior = ACEXML_escape_string(ACE_TEXT_TO_TCHAR_IN(info->ior.fast_rep()));
 
-      ACE_OS::fprintf (fp,"\t<%s", Locator_XMLHandler::SERVER_INFO_TAG);
-      ACE_OS::fprintf (fp," name=\"%s\"", name.c_str ());
-      ACE_OS::fprintf (fp," activator=\"%s\"", activator.c_str ());
-      ACE_OS::fprintf (fp," command_line=\"%s\"", cmdline.c_str ());
-      ACE_OS::fprintf (fp," working_dir=\"%s\"", wdir.c_str ());
-      ACE_CString amodestr = ImR_Utils::activationModeToString (info->activation_mode);
-      ACE_OS::fprintf (fp," activation_mode=\"%s\"", amodestr.c_str ());
-      ACE_OS::fprintf (fp," start_limit=\"%d\"", info->start_limit);
-      ACE_OS::fprintf (fp," partial_ior=\"%s\"", partial_ior.c_str ());
-      ACE_OS::fprintf (fp," ior=\"%s\"", ior.c_str ());
-      ACE_OS::fprintf (fp,">\n");
+      ACE_OS::fprintf(fp,"\t<%s", Locator_XMLHandler::SERVER_INFO_TAG);
+      ACE_OS::fprintf(fp," name=\"%s\"", name.c_str());
+      ACE_OS::fprintf(fp," activator=\"%s\"", activator.c_str());
+      ACE_OS::fprintf(fp," command_line=\"%s\"", cmdline.c_str());
+      ACE_OS::fprintf(fp," working_dir=\"%s\"", wdir.c_str());
+      ACE_CString amodestr = ImR_Utils::activationModeToString(info->activation_mode);
+      ACE_OS::fprintf(fp," activation_mode=\"%s\"", amodestr.c_str());
+      ACE_OS::fprintf(fp," start_limit=\"%d\"", info->start_limit);
+      ACE_OS::fprintf(fp," partial_ior=\"%s\"", partial_ior.c_str());
+      ACE_OS::fprintf(fp," ior=\"%s\"", ior.c_str());
+      ACE_OS::fprintf(fp,">\n");
 
-      for (CORBA::ULong i = 0; i < info->env_vars.length (); ++i)
+      for (CORBA::ULong i = 0; i < info->env_vars.length(); ++i)
         {
-          ACE_OS::fprintf (fp,"\t\t<%s", Locator_XMLHandler::ENVIRONMENT_TAG);
-          ACE_OS::fprintf (fp," name=\"%s\"", info->env_vars[i].name.in ());
-          ACE_CString val = ACEXML_escape_string (info->env_vars[i].value.in ());
-          ACE_OS::fprintf (fp," value=\"%s\"", val.c_str ());
-          ACE_OS::fprintf (fp,"/>\n");
+          ACE_OS::fprintf(fp,"\t\t<%s", Locator_XMLHandler::ENVIRONMENT_TAG);
+          ACE_OS::fprintf(fp," name=\"%s\"", info->env_vars[i].name.in());
+          ACE_TString val = ACEXML_escape_string(ACE_TEXT_TO_TCHAR_IN(info->env_vars[i].value.in()));
+          ACE_OS::fprintf(fp," value=\"%s\"", val.c_str());
+          ACE_OS::fprintf(fp,"/>\n");
         }
 
-      ACE_OS::fprintf (fp,"\t</%s>\n", Locator_XMLHandler::SERVER_INFO_TAG);
+      ACE_OS::fprintf(fp,ACE_TEXT("\t</%s>\n"), Locator_XMLHandler::SERVER_INFO_TAG);
     }
 
   // Save Activators
@@ -274,8 +287,8 @@ static void saveAsXML (const ACE_CString& fname, Locator_Repository& repo)
 }
 
 Locator_Repository::Locator_Repository ()
-: rmode_ (Options::REPO_NONE)
-, config_ (0)
+  : rmode_ (Options::REPO_NONE)
+  , config_ (0)
 {
 }
 
@@ -295,16 +308,16 @@ Locator_Repository::init(const Options& opts)
     case Options::REPO_HEAP_FILE:
       {
         if (opts.repository_erase ())
-        {
-          ACE_OS::unlink ( this->fname_.c_str () );
-        }
+          {
+            ACE_OS::unlink ( this->fname_.c_str () );
+          }
         ACE_Configuration_Heap* heap = new ACE_Configuration_Heap ();
         this->config_.reset (heap);
         err = heap->open (this->fname_.c_str ());
         if (err == 0)
-        {
-          loadAsBinary (*this->config_, *this);
-        }
+          {
+            loadAsBinary (*this->config_, *this);
+          }
         break;
       }
     case Options::REPO_REGISTRY:
@@ -314,8 +327,12 @@ Locator_Repository::init(const Options& opts)
           {
             ACE_Configuration_Win32Registry config ( HKEY_LOCAL_MACHINE );
             ACE_Configuration_Section_Key root;
-            config.open_section (config.root_section(), "Software\\TAO", 0, root);
-            config.remove_section (root, "ImplementationRepository", 1);
+            config.open_section( config.root_section(), ACE_TEXT("Software\\TAO"), 0, root );
+            config.remove_section( root, ACE_TEXT("ImplementationRepository"), 1 );
+            /*
+              config.open_section (config.root_section(), "Software\\TAO", 0, root);
+              config.remove_section (root, "ImplementationRepository", 1);
+            */
           }
         HKEY root = ACE_Configuration_Win32Registry::
           resolve_key (HKEY_LOCAL_MACHINE, WIN32_REG_KEY);
@@ -323,7 +340,7 @@ Locator_Repository::init(const Options& opts)
         loadAsBinary (*this->config_, *this);
 #else
         ACE_ERROR ((LM_ERROR, "Registry persistence is only "
-                              "supported on Windows\n"));
+                    "supported on Windows\n"));
         err = -1;
 #endif
         break;
@@ -350,19 +367,19 @@ Locator_Repository::init(const Options& opts)
 
 int
 Locator_Repository::add_server (const ACE_CString& name,
-                        const ACE_CString& aname,
-                        const ACE_CString& startup_command,
-                        const ImplementationRepository::EnvironmentList& env_vars,
-                        const ACE_CString& working_dir,
-                        ImplementationRepository::ActivationMode activation,
-                        int start_limit,
-                        const ACE_CString& partial_ior,
-                        const ACE_CString& ior,
-                        ImplementationRepository::ServerObject_ptr svrobj)
+                                const ACE_CString& aname,
+                                const ACE_CString& startup_command,
+                                const ImplementationRepository::EnvironmentList& env_vars,
+                                const ACE_CString& working_dir,
+                                ImplementationRepository::ActivationMode activation,
+                                int start_limit,
+                                const ACE_CString& partial_ior,
+                                const ACE_CString& ior,
+                                ImplementationRepository::ServerObject_ptr svrobj)
 {
   int limit = start_limit < 1 ? 1 : start_limit;
   Server_Info_Ptr info(new Server_Info (name, aname, startup_command,
-    env_vars, working_dir, activation, limit, partial_ior, ior, svrobj));
+                                        env_vars, working_dir, activation, limit, partial_ior, ior, svrobj));
 
   int err = servers ().bind (name, info);
   if (err != 0)
@@ -375,9 +392,9 @@ Locator_Repository::add_server (const ACE_CString& name,
 
 int
 Locator_Repository::add_activator (const ACE_CString& name,
-                        const CORBA::Long token,
-                        const ACE_CString& ior,
-                        ImplementationRepository::Activator_ptr act)
+                                   const CORBA::Long token,
+                                   const ACE_CString& ior,
+                                   ImplementationRepository::Activator_ptr act)
 {
   Activator_Info_Ptr info (new Activator_Info (name, token, ior, act));
 
@@ -407,7 +424,8 @@ Locator_Repository::update_server (const Server_Info& info)
           ACE_ERROR ((LM_ERROR, "Unable to open config section:%s\n", SERVERS_ROOT_KEY));
           return err;
         }
-      err = cfg.open_section (root, info.name.c_str (), 1, key);
+
+      err = cfg.open_section (root, ACE_TEXT_TO_TCHAR_IN(info.name.c_str()), 1, key);
       if (err != 0)
         {
           ACE_ERROR((LM_ERROR, "Unable to open config section:%s\n", info.name.c_str()));
@@ -416,19 +434,20 @@ Locator_Repository::update_server (const Server_Info& info)
 
       ACE_CString envstr = ImR_Utils::envListToString(info.env_vars);
 
-      cfg.set_string_value (key, ACTIVATOR, info.activator.c_str ());
-      cfg.set_string_value (key, STARTUP_COMMAND, info.cmdline.c_str ());
-      cfg.set_string_value (key, WORKING_DIR, info.dir.c_str ());
-      cfg.set_string_value (key, ENVIRONMENT, envstr);
+      cfg.set_string_value (key, ACTIVATOR, ACE_TEXT_TO_TCHAR_IN(info.activator.c_str()));
+      cfg.set_string_value (key, STARTUP_COMMAND, ACE_TEXT_TO_TCHAR_IN(info.cmdline.c_str()));
+      cfg.set_string_value (key, WORKING_DIR, ACE_TEXT_TO_TCHAR_IN(info.dir.c_str()));
+      cfg.set_string_value (key, ENVIRONMENT, ACE_TEXT_TO_TCHAR_IN(envstr.c_str()));
       cfg.set_integer_value (key, ACTIVATION, info.activation_mode);
       cfg.set_integer_value (key, START_LIMIT, info.start_limit);
-      cfg.set_string_value (key, PARTIAL_IOR, info.partial_ior.c_str ());
-      cfg.set_string_value (key, IOR, info.ior.c_str());
+      cfg.set_string_value (key, PARTIAL_IOR, ACE_TEXT_TO_TCHAR_IN(info.partial_ior.c_str()));
+      cfg.set_string_value (key, IOR, ACE_TEXT_TO_TCHAR_IN(info.ior.c_str()));
     }
   else if (rmode_ == Options::REPO_XML_FILE)
     {
-      saveAsXML (this->fname_, *this);
+      saveAsXML(this->fname_, *this);
     }
+
   return 0;
 }
 
@@ -449,7 +468,8 @@ Locator_Repository::update_activator (const Activator_Info& info)
           ACE_ERROR((LM_ERROR, "Unable to open config section:%s\n", ACTIVATORS_ROOT_KEY));
           return err;
         }
-      err = cfg.open_section (root, info.name.c_str (), 1, key);
+      //err = cfg.open_section (root, info.name.c_str (), 1, key);
+      err = cfg.open_section (root, ACE_TEXT_TO_TCHAR_IN(info.name.c_str()), 1, key);
       if (err != 0)
         {
           ACE_ERROR((LM_ERROR, "Unable to open config section:%s\n", info.name.c_str()));
@@ -457,12 +477,13 @@ Locator_Repository::update_activator (const Activator_Info& info)
         }
 
       cfg.set_integer_value (key, TOKEN, info.token);
-      cfg.set_string_value (key, IOR, info.ior.c_str ());
+      cfg.set_string_value (key, IOR, ACE_TEXT_TO_TCHAR_IN(info.ior.c_str()));
     }
   else if (rmode_ == Options::REPO_XML_FILE)
     {
-      saveAsXML( this->fname_, *this);
+      saveAsXML(this->fname_, *this);
     }
+
   return 0;
 }
 
@@ -508,7 +529,8 @@ Locator_Repository::remove_server (const ACE_CString& name)
         {
           return 0; // Already gone.
         }
-      ret = cfg.remove_section (root, name.c_str (), 1);
+
+      ret = cfg.remove_section (root, ACE_TEXT_TO_TCHAR_IN(name.c_str()), 1);
     }
   else if (rmode_ == Options::REPO_XML_FILE)
     {
@@ -533,15 +555,16 @@ Locator_Repository::remove_activator (const ACE_CString& name)
       ACE_Configuration_Section_Key root;
       int err = cfg.open_section (cfg.root_section (), ACTIVATORS_ROOT_KEY, 0, root);
       if (err != 0)
-      {
-        return 0; // Already gone.
-      }
-      ret = cfg.remove_section (root, name.c_str (), 1);
+        {
+          return 0; // Already gone.
+        }
+
+      ret = cfg.remove_section (root, ACE_TEXT_TO_TCHAR_IN(name.c_str()), 1);
     }
   else if (rmode_ == Options::REPO_XML_FILE)
-  {
-    saveAsXML (this->fname_, *this);
-  }
+    {
+      saveAsXML (this->fname_, *this);
+    }
   return ret;
 }
 
@@ -557,18 +580,18 @@ Locator_Repository::activators (void)
   return activator_infos_;
 }
 
-const char*
-Locator_Repository::repo_mode ()
+const ACE_TCHAR*
+Locator_Repository::repo_mode()
 {
   switch (rmode_)
-  {
-  case Options::REPO_XML_FILE:
-  case Options::REPO_HEAP_FILE:
-    return fname_.c_str ();
-  case Options::REPO_REGISTRY:
-    return "Registry";
-  case Options::REPO_NONE:
-    return "Disabled";
-  }
-  return "Disabled";
+    {
+    case Options::REPO_XML_FILE:
+    case Options::REPO_HEAP_FILE:
+      return fname_.c_str ();
+    case Options::REPO_REGISTRY:
+      return ACE_TEXT("Registry");
+    case Options::REPO_NONE:
+      return ACE_TEXT("Disabled");
+    }
+  return ACE_TEXT("Disabled");
 }

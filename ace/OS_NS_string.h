@@ -24,9 +24,6 @@
 # if !defined (ACE_LACKS_PRAGMA_ONCE)
 #  pragma once
 # endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "ace/Basic_Types.h" // to get ACE_WCHAR_T,
-                            // should be in os_stddef.h or not used like this.
 #include "ace/ACE_export.h"
 
 #if defined (ACE_EXPORT_MACRO)
@@ -91,97 +88,74 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   char *strcat (char *s, const char *t);
 
-#if defined (ACE_HAS_WCHAR)
   /// Appends a string to another string (wchar_t version).
   ACE_NAMESPACE_INLINE_FUNCTION
   wchar_t *strcat (wchar_t *s, const wchar_t *t);
-#endif /* ACE_HAS_WCHAR */
 
   /// Finds the first occurance of a character in a string (const char
   /// version).
   ACE_NAMESPACE_INLINE_FUNCTION
   const char *strchr (const char *s, int c);
 
-#if defined (ACE_HAS_WCHAR)
   /// Finds the first occurance of a character in a string (const wchar_t
   /// version).
   ACE_NAMESPACE_INLINE_FUNCTION
+
   const wchar_t *strchr (const wchar_t *s, wchar_t c);
-#endif /* ACE_HAS_WCHAR */
 
   /// Finds the first occurance of a character in a string (char version).
   ACE_NAMESPACE_INLINE_FUNCTION
   char *strchr (char *s, int c);
 
-#if defined (ACE_HAS_WCHAR)
   /// Finds the first occurance of a character in a string (wchar_t version).
   ACE_NAMESPACE_INLINE_FUNCTION
+
   wchar_t *strchr (wchar_t *s, wchar_t c);
-#endif /* ACE_HAS_WCHAR */
-
-  /// Compares two strings (char version).
-  ACE_NAMESPACE_INLINE_FUNCTION
-  int strcmp (const char *s, const char *t);
-
-  /// Compares two strings (wchar_t version).
-  ACE_NAMESPACE_INLINE_FUNCTION
-  int strcmp (const ACE_WCHAR_T *s, const ACE_WCHAR_T *t);
 
   /// Copies a string (char version).
   ACE_NAMESPACE_INLINE_FUNCTION
   char *strcpy (char *s, const char *t);
 
-#if defined (ACE_HAS_WCHAR)
   /// Copies a string (wchar_t version).
   ACE_NAMESPACE_INLINE_FUNCTION
   wchar_t *strcpy (wchar_t *s, const wchar_t *t);
-#endif /* ACE_HAS_WCHAR */
 
   /// Searches for the first substring without any of the specified
   /// characters and returns the size of the substring (char version).
   ACE_NAMESPACE_INLINE_FUNCTION
   size_t strcspn (const char *s, const char *reject);
 
-#if defined (ACE_HAS_WCHAR)
   /// Searches for the first substring without any of the specified
   /// characters and returns the size of the substring (wchar_t version).
   ACE_NAMESPACE_INLINE_FUNCTION
   size_t strcspn (const wchar_t *s, const wchar_t *reject);
-#endif /* ACE_HAS_WCHAR */
 
   /// Returns a malloced duplicated string (char version).
-  ACE_NAMESPACE_INLINE_FUNCTION
+  //ACE_NAMESPACE_INLINE_FUNCTION
+  extern ACE_Export
   char *strdup (const char *s);
+  /*
+    #if (defined (ACE_LACKS_STRDUP) && !defined(ACE_STRDUP_EQUIVALENT)) \
+    || defined (ACE_HAS_STRDUP_EMULATION)
+    extern ACE_Export
+    char *strdup_emulation (const char *s);
+    #endif
+  */
 
-#if (defined (ACE_LACKS_STRDUP) && !defined(ACE_STRDUP_EQUIVALENT)) \
-  || defined (ACE_HAS_STRDUP_EMULATION)
-  extern ACE_Export
-  char *strdup_emulation (const char *s);
-#endif
-
-#if defined (ACE_HAS_WCHAR)
   /// Returns a malloced duplicated string (wchar_t version).
-  ACE_NAMESPACE_INLINE_FUNCTION
-  wchar_t *strdup (const wchar_t *s);
-
-#if (defined (ACE_LACKS_WCSDUP) && !defined(ACE_WCSDUP_EQUIVALENT)) \
-  || defined (ACE_HAS_WCSDUP_EMULATION)
+  //ACE_NAMESPACE_INLINE_FUNCTION
   extern ACE_Export
-  wchar_t *strdup_emulation (const wchar_t *s);
-#endif
-#endif /* ACE_HAS_WCHAR */
+  wchar_t *strdup (const wchar_t *s);
 
   /// Copies a string, but returns a pointer to the end of the
   /// copied region (char version).
   extern ACE_Export
   char *strecpy (char *des, const char *src);
 
-#if defined (ACE_HAS_WCHAR)
   /// Copies a string, but returns a pointer to the end of the
   /// copied region (wchar_t version).
   extern ACE_Export
   wchar_t *strecpy (wchar_t *s, const wchar_t *t);
-#endif /* ACE_HAS_WCHAR */
 
   /*
   ** Returns a system error message. If the supplied errnum is out of range,
@@ -197,39 +171,33 @@ namespace ACE_OS {
   char *strerror_emulation (int errnum);
 #endif /* ACE_LACKS_STRERROR */
 
-  /// Finds the length of a string (char version).
-  ACE_NAMESPACE_INLINE_FUNCTION
-  size_t strlen (const char *s);
-
-  /// Finds the length of a string (ACE_WCHAR_T version).
-  ACE_NAMESPACE_INLINE_FUNCTION
-  size_t strlen (const ACE_WCHAR_T *s);
-
   /// Appends part of a string to another string (char version).
   ACE_NAMESPACE_INLINE_FUNCTION
   char *strncat (char *s, const char *t, size_t len);
 
   /// Appends part of a string to another string (wchar_t version).
   ACE_NAMESPACE_INLINE_FUNCTION
-  ACE_WCHAR_T *strncat (ACE_WCHAR_T *s, const ACE_WCHAR_T *t, size_t len);
+  wchar_t *strncat (wchar_t *s, const wchar_t *t, size_t len);
 
   /// Finds the first occurance of a character in an array (const char
   /// version).
   extern ACE_Export
   const char *strnchr (const char *s, int c, size_t len);
 
-  /// Finds the first occurance of a character in an array (const ACE_WCHAR_T
+  /// Finds the first occurance of a character in an array (const wchar_t
   /// version).
   extern ACE_Export
-  const ACE_WCHAR_T *strnchr (const ACE_WCHAR_T *s, ACE_WCHAR_T c, size_t len);
+
+  const wchar_t *strnchr (const wchar_t *s, wint_t c, size_t len);
 
   /// Finds the first occurance of a character in an array (char version).
   ACE_NAMESPACE_INLINE_FUNCTION
   char *strnchr (char *s, int c, size_t len);
 
-  /// Finds the first occurance of a character in an array (ACE_WCHAR_T version).
+  /// Finds the first occurance of a character in an array (wchar_t version).
   ACE_NAMESPACE_INLINE_FUNCTION
-  ACE_WCHAR_T *strnchr (ACE_WCHAR_T *s, ACE_WCHAR_T c, size_t len);
+
+  wchar_t *strnchr (wchar_t *s, wint_t c, size_t len);
 
   /// Compares two arrays (char version).
   ACE_NAMESPACE_INLINE_FUNCTION
@@ -237,15 +205,7 @@ namespace ACE_OS {
 
   /// Compares two arrays (wchar_t version).
   ACE_NAMESPACE_INLINE_FUNCTION
-  int strncmp (const ACE_WCHAR_T *s, const ACE_WCHAR_T *t, size_t len);
-
-  /// Copies an array (char version)
-  ACE_NAMESPACE_INLINE_FUNCTION
-  char *strncpy (char *s, const char *t, size_t len);
-
-  /// Copies an array (ACE_WCHAR_T version)
-  ACE_NAMESPACE_INLINE_FUNCTION
-  ACE_WCHAR_T *strncpy (ACE_WCHAR_T *s, const ACE_WCHAR_T *t, size_t len);
+  int strncmp (const wchar_t *s, const wchar_t *t, size_t len);
 
   /// Finds the length of a limited-length string (char version).
   /**
@@ -259,7 +219,7 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   size_t strnlen (const char *s, size_t maxlen);
 
-  /// Finds the length of a limited-length string (ACE_WCHAR_T version).
+  /// Finds the length of a limited-length string (wchar_t version).
   /**
    * @param s       The character string to find the length of.
    * @param maxlen  The maximum number of characters that will be
@@ -269,7 +229,7 @@ namespace ACE_OS {
    *         is located, else @arg maxlen.
    */
   ACE_NAMESPACE_INLINE_FUNCTION
-  size_t strnlen (const ACE_WCHAR_T *s, size_t maxlen);
+  size_t strnlen (const wchar_t *s, size_t maxlen);
 
   /// Finds the first occurance of a substring in an array (const char
   /// version).
@@ -279,8 +239,8 @@ namespace ACE_OS {
   /// Finds the first occurance of a substring in an array (const wchar_t
   /// version).
   extern ACE_Export
-  const ACE_WCHAR_T *strnstr (const ACE_WCHAR_T *s,
-                              const ACE_WCHAR_T *t,
+  const wchar_t *strnstr (const wchar_t *s,
+                              const wchar_t *t,
                               size_t len);
 
   /// Finds the first occurance of a substring in an array (char version).
@@ -289,27 +249,23 @@ namespace ACE_OS {
 
   /// Finds the first occurance of a substring in an array (wchar_t version).
   ACE_NAMESPACE_INLINE_FUNCTION
-  ACE_WCHAR_T *strnstr (ACE_WCHAR_T *s, const ACE_WCHAR_T *t, size_t len);
+  wchar_t *strnstr (wchar_t *s, const wchar_t *t, size_t len);
 
   /// Searches for characters in a string (const char version).
   ACE_NAMESPACE_INLINE_FUNCTION
   const char *strpbrk (const char *s1, const char *s2);
 
-#if defined (ACE_HAS_WCHAR)
   /// Searches for characters in a string (const wchar_t version).
   ACE_NAMESPACE_INLINE_FUNCTION
   const wchar_t *strpbrk (const wchar_t *s1, const wchar_t *s2);
-#endif /* ACE_HAS_WCHAR */
 
   /// Searches for characters in a string (char version).
   ACE_NAMESPACE_INLINE_FUNCTION
   char *strpbrk (char *s1, const char *s2);
 
-#if defined (ACE_HAS_WCHAR)
   /// Searches for characters in a string (wchar_t version).
   ACE_NAMESPACE_INLINE_FUNCTION
   wchar_t *strpbrk (wchar_t *s1, const wchar_t *s2);
-#endif /* ACE_HAS_WCHAR */
 
 #if defined (ACE_LACKS_STRPBRK)
   /// Emulated strpbrk - Searches for characters in a string.
@@ -323,22 +279,20 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   const char *strrchr (const char *s, int c);
 
-#if defined (ACE_HAS_WCHAR)
   /// Finds the last occurance of a character in a string (const wchar_t
   /// version).
   ACE_NAMESPACE_INLINE_FUNCTION
+
   const wchar_t *strrchr (const wchar_t *s, wchar_t c);
-#endif /* ACE_HAS_WCHAR */
 
   /// Finds the last occurance of a character in a string (char version).
   ACE_NAMESPACE_INLINE_FUNCTION
   char *strrchr (char *s, int c);
 
-#if defined (ACE_HAS_WCHAR)
   /// Finds the last occurance of a character in a string (wchar_t version).
   ACE_NAMESPACE_INLINE_FUNCTION
+
   wchar_t *strrchr (wchar_t *s, wchar_t c);
-#endif /* ACE_HAS_WCHAR */
 
 #if defined (ACE_LACKS_STRRCHR)
   /// Emulated strrchr (char version) - Finds the last occurance of a
@@ -390,8 +344,8 @@ namespace ACE_OS {
    * strncpy() is needed.
    */
   extern ACE_Export
-  ACE_WCHAR_T *strsncpy (ACE_WCHAR_T *dst,
-                         const ACE_WCHAR_T *src,
+  wchar_t *strsncpy (wchar_t *dst,
+                         const wchar_t *src,
                          size_t maxlen);
 
   /// Searches for the first substring containing only the specified
@@ -399,12 +353,10 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   size_t strspn (const char *s1, const char *s2);
 
-#if defined (ACE_HAS_WCHAR)
   /// Searches for the first substring containing only the specified
   /// characters and returns the size of the substring (wchar_t version).
   ACE_NAMESPACE_INLINE_FUNCTION
   size_t strspn (const wchar_t *s1, const wchar_t *s2);
-#endif /* ACE_HAS_WCHAR */
 
 #if defined (ACE_LACKS_STRSPN)
   /// Emulated wcsspn.
@@ -418,32 +370,26 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   const char *strstr (const char *s, const char *t);
 
-#if defined (ACE_HAS_WCHAR)
   /// Finds the first occurance of a substring in a string (const wchar_t
   /// version).
   ACE_NAMESPACE_INLINE_FUNCTION
   const wchar_t *strstr (const wchar_t *s, const wchar_t *t);
-#endif /* ACE_HAS_WCHAR */
 
   /// Finds the first occurance of a substring in a string (char version).
   ACE_NAMESPACE_INLINE_FUNCTION
   char *strstr (char *s, const char *t);
 
-#if defined (ACE_HAS_WCHAR)
   /// Finds the first occurance of a substring in a string (wchar_t version).
   ACE_NAMESPACE_INLINE_FUNCTION
   wchar_t *strstr (wchar_t *s, const wchar_t *t);
-#endif /* ACE_HAS_WCHAR */
 
   /// Finds the next token in a string (char version).
   ACE_NAMESPACE_INLINE_FUNCTION
   char *strtok (char *s, const char *tokens);
 
-#if defined (ACE_HAS_WCHAR) && !defined (ACE_LACKS_WCSTOK)
   /// Finds the next token in a string (wchar_t version).
   ACE_NAMESPACE_INLINE_FUNCTION
   wchar_t *strtok (wchar_t *s, const wchar_t *tokens);
-#endif /* ACE_HAS_WCHAR && !ACE_LACKS_WCSTOK */
 
   //@}
 
@@ -451,11 +397,9 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   char *strtok_r (char *s, const char *tokens, char **lasts);
 
-#if defined (ACE_HAS_WCHAR)
   /// Finds the next token in a string (wchar_t version).
   ACE_NAMESPACE_INLINE_FUNCTION
-  wchar_t *strtok_r (ACE_WCHAR_T *s, const ACE_WCHAR_T *tokens, ACE_WCHAR_T **lasts);
-#endif  // ACE_HAS_WCHAR
+  wchar_t *strtok_r (wchar_t *s, const wchar_t *tokens, wchar_t **lasts);
 
 #if !defined (ACE_HAS_REENTRANT_FUNCTIONS)
   /// Emulated strtok_r.
@@ -463,13 +407,14 @@ namespace ACE_OS {
   char *strtok_r_emulation (char *s, const char *tokens, char **lasts);
 #endif /* !ACE_HAS_REENTRANT_FUNCTIONS */
 
-# if defined (ACE_HAS_WCHAR) && defined(ACE_LACKS_WCSTOK)
+# if defined(ACE_LACKS_WCSTOK)
   /// Emulated strtok_r (wchar_t version).
   extern ACE_Export
-  wchar_t *strtok_r_emulation (ACE_WCHAR_T *s, const ACE_WCHAR_T *tokens, ACE_WCHAR_T **lasts);
-# endif  // ACE_HAS_WCHAR && ACE_LACKS_WCSTOK
+  wchar_t *strtok_r_emulation (wchar_t *s, const wchar_t *tokens, wchar_t **lasts);
+# endif  // ACE_LACKS_WCSTOK
 
 } /* namespace ACE_OS */
+
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

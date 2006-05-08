@@ -1,14 +1,17 @@
 // $Id$
 
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "Client_ORBInitializer.h"
 #include "tao/ORBInitializer_Registry.h"
 
 ACE_RCSID(Interceptors, client, "$Id$")
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   Client_ORBInitializer* initializer1 = 0;
   Client_ORBInitializer* initializer2 = 0;
   bool caught_exception = false;
@@ -38,7 +41,7 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(), "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
     }

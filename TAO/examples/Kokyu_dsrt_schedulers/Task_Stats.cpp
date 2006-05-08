@@ -57,10 +57,10 @@ Task_Stats::end_time (ACE_hrtime_t time)
 }
 
 void
-Task_Stats::dump_samples (const ACE_TCHAR *file_name, const ACE_TCHAR *msg,
+Task_Stats::dump_samples (const char *file_name, const char *msg,
                           ACE_UINT32)
 {
-  FILE* output_file = ACE_OS::fopen (file_name, "w");
+  FILE* output_file = ACE_OS::fopen (file_name, ACE_TEXT("w"));
 
   if (output_file == 0)
     {
@@ -70,7 +70,7 @@ Task_Stats::dump_samples (const ACE_TCHAR *file_name, const ACE_TCHAR *msg,
     }
 
   // first dump what the caller has to say.
-  ACE_OS::fprintf (output_file, "%s\n",msg);
+  ACE_OS::fprintf (output_file, ACE_TEXT("%s\n"),msg);
 
   // next, compose and dump what we want to say.
   ACE_UINT32 val_1;

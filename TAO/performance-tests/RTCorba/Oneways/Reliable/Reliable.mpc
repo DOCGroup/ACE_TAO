@@ -8,6 +8,7 @@ project(*oneways idl RT): taoidldefaults {
 }
 
 project(*oneways server RT): rt_server, messaging, minimum_corba {
+  exename = server
   after += *oneways_idl_RT
   Source_Files {
     test_i.cpp
@@ -20,6 +21,7 @@ project(*oneways server RT): rt_server, messaging, minimum_corba {
 }
 
 project(*oneways client RT): rt_client, messaging, minimum_corba {
+  exename = client
   after += *oneways_idl_RT
   Source_Files {
     testC.cpp

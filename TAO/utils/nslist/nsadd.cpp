@@ -104,7 +104,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
       CORBA::Object_var obj;
       if (ior)
         {
-          obj = orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (ior) ACE_ENV_ARG_PARAMETER);
+          obj = orb->string_to_object (ACE_TEXT_TO_CHAR_IN (ior) ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 
@@ -122,7 +122,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
           return 1;
         }
       char buf[BUFSIZ];
-      ACE_OS::strcpy (buf, ACE_TEXT_ALWAYS_CHAR (name));
+      ACE_OS::strcpy (buf, ACE_TEXT_TO_CHAR_IN (name));
       char *bp = &buf[0];
       char *cp = 0;
       int ntoks = 0;

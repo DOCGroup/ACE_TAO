@@ -62,7 +62,7 @@ private:
   int period_in_usecs_;
 };
 
-int main (int argc, char *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   RT_Class rt_class;
 
@@ -280,7 +280,7 @@ Measuring_Task::svc ()
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "H:L:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "H:L:");
   int c;
 
   while ((c = get_opts ()) != -1)

@@ -43,7 +43,7 @@ Base_Server::parse_args (void)
 {
   // *** To get correct behaviour, set ** POSIXLY_CORECT=1 ** on Linux
   // systems!!! ***
-  ACE_Get_Opt get_opts (this->argc_, this->argv_, "o:");
+  ACE_Get_Arg_Opt<char> get_opts (this->argc_, this->argv_, "o:");
   int c;
   int count_argv = 0;
 
@@ -210,7 +210,7 @@ Base_Server::write_ior_to_file (const char * ior)
 {
   // If the ior_output_file exists, output the ior to it
   FILE *output_file =
-    ACE_OS::fopen (this->ior_output_file_, "w");
+    ACE_OS::fopen (this->ior_output_file_, ACE_TEXT("w"));
 
   if (output_file == 0)
     {

@@ -16,13 +16,13 @@ void get_interceptor_type (int argc, char *argv[],
     {
       if (ACE_OS_String::strcmp (argv[i], "-r") == 0)
         {
-          if (ACE_OS_String::strcmp (argv[i+1], ACE_TEXT ("none")) == 0)
+          if (ACE_OS_String::strcmp (argv[i+1], "none") == 0)
             interceptor_type = IT_NONE;
-          if (ACE_OS_String::strcmp (argv[i+1], ACE_TEXT ("noop")) == 0)
+          if (ACE_OS_String::strcmp (argv[i+1], "noop") == 0)
             interceptor_type = IT_NOOP;
-          if (ACE_OS_String::strcmp (argv[i+1], ACE_TEXT ("context")) == 0)
+          if (ACE_OS_String::strcmp (argv[i+1], "context") == 0)
             interceptor_type = IT_CONTEXT;
-          if (ACE_OS_String::strcmp (argv[i+1], ACE_TEXT ("dynamic")) == 0)
+          if (ACE_OS_String::strcmp (argv[i+1], "dynamic") == 0)
             interceptor_type = IT_DYNAMIC;
         }
     }

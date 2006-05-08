@@ -164,7 +164,7 @@ TestServer::~TestServer()
 //
 int TestServer::parseCommands(int argc, char* argv[])
 {
-  ACE_Get_Opt get_opts(argc, argv, "w:e:d:t:o:s:c:a:r:p:n:x:z:q:b:");
+  ACE_Get_Arg_Opt<char> get_opts(argc, argv, "w:e:d:t:o:s:c:a:r:p:n:x:z:q:b:");
   int c;
   while ((c = get_opts()) != -1)
   {

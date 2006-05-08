@@ -33,6 +33,7 @@ project(*Server) : taoexe {
 }
 
 project(*Client): taoexe {
+  exename = client
   IDL_Files {
   }
 

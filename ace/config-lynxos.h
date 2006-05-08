@@ -21,6 +21,11 @@
 # define ACE_NEEDS_IPC_1C_H
 #endif /* ACE_LYNXOS_MAJOR */
 
+// Describe the native wchar_t
+#define ACE_SIZEOF_WCHAR 4
+#define ACE_WCHAR_MAX 0x7fffffff
+#define ACE_LACKS_BUILTIN_WCHAR_T
+
 #if defined (__x86__)
 # define ACE_HAS_PENTIUM
 #elif defined (__powerpc__)
@@ -100,6 +105,32 @@
 #define ACE_LACKS_TIMESPEC_T
 #define ACE_LACKS_UCONTEXT_H
 #define ACE_LACKS_WCHAR_H
+#define ACE_LACKS_WCSLEN
+#define ACE_LACKS_WCSNCPY
+#define ACE_LACKS_WCSTOUL
+#define ACE_LACKS_WCSTOL
+#define ACE_LACKS_WCSTOD
+#define ACE_LACKS_ITOW
+#define ACE_LACKS_WCSTOK
+#define ACE_LACKS_WCSSTR
+#define ACE_LACKS_WCSSPN
+#define ACE_LACKS_WCSRCHR
+#define ACE_LACKS_WCSPBRK
+#define ACE_LACKS_WCSNCMP
+#define ACE_LACKS_WCSNCAT
+#define ACE_LACKS_WCSCSPN
+#define ACE_LACKS_WCSCPY
+#define ACE_LACKS_WCSCMP
+#define ACE_LACKS_WCSCHR
+#define ACE_LACKS_WCSCAT
+#define ACE_LACKS_TOWLOWER
+#define ACE_LACKS_TOWUPPER
+#define ACE_LACKS_FGETWC
+#define ACE_LACKS_UNGETWC
+#define ACE_LACKS_FGETWS
+#define ACE_LACKS_FPUTWS
+#define ACE_LACKS_WCSICMP
+#define ACE_LACKS_WCSNICMP
 #define ACE_LACKS_SUSECONDS_T
 #define ACE_LACKS_USECONDS_T
 #define ACE_MALLOC_ALIGN 8

@@ -49,10 +49,8 @@ namespace ACE_OS
   ACE_NAMESPACE_INLINE_FUNCTION
   int access (const char *path, int amode);
 
-#if defined (ACE_HAS_WCHAR)
   ACE_NAMESPACE_INLINE_FUNCTION
   int access (const wchar_t *path, int amode);
-#endif /* ACE_HAS_WCHAR */
 
   ACE_NAMESPACE_INLINE_FUNCTION
   unsigned int alarm (u_int secs);
@@ -70,19 +68,15 @@ namespace ACE_OS
   ACE_NAMESPACE_INLINE_FUNCTION
   int chdir (const char *path);
 
-#if defined (ACE_HAS_WCHAR)
   ACE_NAMESPACE_INLINE_FUNCTION
   int chdir (const wchar_t *path);
-#endif /* ACE_HAS_WCHAR */
 #endif /* ACE_LACKS_CHDIR */
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int rmdir (const char *path);
 
-#if defined (ACE_HAS_WCHAR)
   ACE_NAMESPACE_INLINE_FUNCTION
   int rmdir (const wchar_t *path);
-#endif /* ACE_HAS_WCHAR */
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int close (ACE_HANDLE handle);
@@ -144,10 +138,8 @@ namespace ACE_OS
   ACE_NAMESPACE_INLINE_FUNCTION
   char *getcwd (char *, size_t);
 
-#if defined (ACE_HAS_WCHAR)
   ACE_NAMESPACE_INLINE_FUNCTION
   wchar_t *getcwd (wchar_t *, size_t);
-#endif /* ACE_HAS_WCHAR */
 
   ACE_NAMESPACE_INLINE_FUNCTION
   gid_t getgid (void);
@@ -183,11 +175,9 @@ namespace ACE_OS
   int hostname (char *name,
                 size_t maxnamelen);
 
-#if defined (ACE_HAS_WCHAR)
   ACE_NAMESPACE_INLINE_FUNCTION
   int hostname (wchar_t *name,
                 size_t maxnamelen);
-#endif /* ACE_HAS_WCHAR */
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int isatty (int handle);
@@ -294,10 +284,10 @@ namespace ACE_OS
   int sleep (const ACE_Time_Value &tv);
 
   // used by ARGV::string_to_argv
-  extern ACE_Export
-  int string_to_argv (ACE_TCHAR *buf,
+  template <typename CHAR_TYPE>
+  int string_to_argv (CHAR_TYPE *buf,
                       int &argc,
-                      ACE_TCHAR **&argv,
+                      CHAR_TYPE **&argv,
                       bool substitute_env_args = true);
 
   ACE_NAMESPACE_INLINE_FUNCTION
@@ -326,10 +316,8 @@ namespace ACE_OS
   ACE_NAMESPACE_INLINE_FUNCTION
   int unlink (const char *path);
 
-#if defined (ACE_HAS_WCHAR)
   ACE_NAMESPACE_INLINE_FUNCTION
   int unlink (const wchar_t *path);
-#endif /* ACE_HAS_WCHAR */
 
   ACE_NAMESPACE_INLINE_FUNCTION
   ssize_t write (ACE_HANDLE handle,
@@ -366,6 +354,8 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #   define ACE_INLINE inline
 #   include "ace/OS_NS_unistd.inl"
 # endif /* ACE_HAS_INLINED_OSCALLS */
+
+#include "ace/OS_NS_unistd_T.inl"
 
 # include /**/ "ace/post.h"
 #endif /* ACE_OS_NS_UNISTD_H */

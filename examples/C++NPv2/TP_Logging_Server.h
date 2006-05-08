@@ -107,7 +107,7 @@ public:
     ACE_Auto_Array_Ptr<char *> char_argv (array);
 
     for (i = 0; i < argc; ++i)
-      char_argv[i] = ACE::strnew (ACE_TEXT_ALWAYS_CHAR (argv[i]));
+      char_argv[i] = ACE::strnew (ACE_TEXT_TO_CHAR_IN (argv[i]));
     ACE_NEW_NORETURN
       (logging_dispatcher_,
        TP_Logging_Server::LOGGING_DISPATCHER

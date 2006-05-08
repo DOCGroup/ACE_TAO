@@ -5,6 +5,7 @@
 #include "Supplier.h"
 #include "orbsvcs/Event/EC_Event_Channel.h"
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "ace/High_Res_Timer.h"
 
 ACE_RCSID (EC_Tests_Basic,
@@ -12,10 +13,12 @@ ACE_RCSID (EC_Tests_Basic,
            "$Id$")
 
 int
-main (int argc, char *argv [])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   EC_Reconnect driver;
-  return driver.run (argc, argv);
+  return driver.run (convert.get_argc(), convert.get_ASCII_argv());
 }
 
 // ****************************************************************
@@ -33,7 +36,7 @@ EC_Reconnect::parse_args (int& argc, char* argv[])
   if (this->EC_Driver::parse_args (argc, argv) != 0)
     return -1;
 
-  ACE_Get_Opt get_opt (argc, argv, "scd:");
+  ACE_Get_Arg_Opt<char> get_opt (argc, argv, "scd:");
   int opt;
 
   while ((opt = get_opt ()) != EOF)

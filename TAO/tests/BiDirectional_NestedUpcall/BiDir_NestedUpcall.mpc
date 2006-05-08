@@ -2,6 +2,7 @@
 // $Id$
 
 project(*Server): taoserver, minimum_corba, bidir_giop {
+  exename = server
   Source_Files {
     test_i.cpp
     server.cpp
@@ -9,6 +10,7 @@ project(*Server): taoserver, minimum_corba, bidir_giop {
 }
 
 project(*Client): taoexe, portableserver, minimum_corba, bidir_giop {
+  exename = client
   after += *Server
   Source_Files {
     test_i.cpp

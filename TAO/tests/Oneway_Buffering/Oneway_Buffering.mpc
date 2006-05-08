@@ -2,6 +2,7 @@
 // $Id$
 
 project(*Server): messaging, taoexe, portableserver {
+  exename = server
   Source_Files {
     Oneway_Buffering.cpp
     server.cpp
@@ -17,6 +18,7 @@ project(*Server): messaging, taoexe, portableserver {
 // only one process is allowed to compile Test.idl and thus the build
 // succeeds.
 project(*Client): messaging, taoexe, portableserver {
+  exename = client
   requires += corba_messaging
   after += *Server
 
@@ -27,6 +29,7 @@ project(*Client): messaging, taoexe, portableserver {
 }
 
 project(*Admin): messaging, taoexe, portableserver {
+  exename = admin
   after += *Client
   Source_Files {
     Oneway_Buffering_Admin.cpp

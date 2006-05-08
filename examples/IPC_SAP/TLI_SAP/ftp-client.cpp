@@ -12,7 +12,7 @@ ACE_RCSID(TLI_SAP, ftp_client, "$Id$")
 #if defined (ACE_HAS_TLI)
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   if (argc < 2)
     ACE_OS::fprintf (stderr, "Usage: %s filename [server-host port-number]\n", argv[0]), ACE_OS::exit (1);

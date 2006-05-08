@@ -49,7 +49,7 @@ HTTP_Server::parse_args (int argc, ACE_TCHAR *argv[])
   this->throttle_ = 0;
   this->caching_ = true;
 
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("p:n:t:i:b:c:"));
+  ACE_Get_Arg_Opt<ACE_TCHAR> get_opt (argc, argv, ACE_TEXT ("p:n:t:i:b:c:"));
 
   while ((c = get_opt ()) != -1)
     switch (c)

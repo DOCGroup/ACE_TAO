@@ -17,6 +17,8 @@
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   TAO::Utils::Server_Main<TAO::PG_FactoryRegistry> server_main("FactoryRegistry");
   return server_main.run(argc, argv);
 }
