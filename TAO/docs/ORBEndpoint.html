@@ -14,7 +14,6 @@
     <UL>
       <LI><A HREF="#Overview">Overview</A></LI>
       <LI><A HREF="#Options">Endpoint-Specific Options</A></LI>
-      <LI><A HREF="#Common Options">Common Endpoint-Specific Options</A></LI>
       <LI><A HREF="#IIOP">IIOP Endpoints</A></LI>
       <LI><A HREF="#SHMIOP">SHMIOP Endpoints</A></LI>
       <LI><A HREF="#UIOP">UIOP Endpoints</A></LI>
@@ -234,6 +233,41 @@
       would interpret <CODE>1234</CODE> as a hostname associated with
       a given network interface.
 
+    <P>
+    <P>
+      The hostname part of an endpoint can also be specified as a literal
+      IP address in 'dotted decimal address' form for IPv4 addresses:
+    <BLOCKQUOTE>
+      <P>
+        <CODE>
+          -ORBEndpoint iiop://192.168.10.24:1234
+        </CODE>
+    </BLOCKQUOTE>
+
+      For IPv6 addresses a special form is required to specify decimal IP
+      addresses since the decimal separator for IPv6 addresses is identical
+      to the separator used for port numbers; i.e. a colon (':').
+      To be able to distinguish an endpoint specification for host 01ef::1
+      and port 123 and one for host 01ef::1:123 and no port number IPv6
+      decimal addresses need to enclosed by square brackets ('[' and ']'):
+    <BLOCKQUOTE>
+      <P>
+        <CODE>
+          -ORBEndpoint iiop://[01ef::1]:123
+          -ORBEndpoint iiop://[01ef::1:123]
+        </CODE>
+    </BLOCKQUOTE>
+
+      <B>NOTE:</B>
+      Since IPv6 endpoint are supported only for GIOP/IIOP versions >= 1.2
+      it is <FONT color='RED'>illegal</FONT> to combine version numbers
+      &lt; 1.2 and IPv6 decimal addresses:
+    <BLOCKQUOTE>
+      <P>
+        <CODE>
+          -ORBEndpoint iiop://1.1@[01ef::1]:123 <B><FONT color='RED'>--> ILLEGAL</FONT></B>
+        </CODE>
+    </BLOCKQUOTE>
     <P>
     <h3>IIOP Endpoint-Specific Options</h3>
     <P>
