@@ -51,7 +51,8 @@ ACE_OutputCDR::ACE_OutputCDR (size_t size,
   this->current_ = &this->start_;
 }
 
-ACE_OutputCDR::ACE_OutputCDR (char *data, size_t size,
+ACE_OutputCDR::ACE_OutputCDR (char *data,
+                              size_t size,
                               int byte_order,
                               ACE_Allocator *buffer_allocator,
                               ACE_Allocator *data_block_allocator,

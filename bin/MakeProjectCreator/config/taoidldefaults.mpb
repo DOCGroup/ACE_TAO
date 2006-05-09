@@ -24,7 +24,7 @@ project {
 
     // Inline related options
     optional(inline_outputext) {
-      commandflags(!-SS && !-Ssi || !-Sci || !-Sc) += .inl, .i
+      commandflags(!-SS && !-Ssi || !-Sci || -GT) += .inl, .i
     }
     optional(inline_pre_extension) {
       commandflags(!-SS && !-Ssi) += S
@@ -33,7 +33,7 @@ project {
       commandflags(!-Sci) += C
     }
     optional(inline_pre_extension) {
-      commandflags(!-Sc && !-SS) += S_T
+      commandflags(-GT && !-SS) += S_T
     }
 
     // Source related options
@@ -46,10 +46,10 @@ project {
 
     // Other
     optional(template_outputext) {
-      commandflags(!-Sc && !-SS) += S_T.cpp, S_T.cxx, S_T.cc, S_T.C
+      commandflags(-GT && !-SS) += S_T.cpp, S_T.cxx, S_T.cc, S_T.C
     }
     optional(header_pre_extension) {
-      commandflags(!-Sc && !-SS) += S_T
+      commandflags(-GT && !-SS) += S_T
     }
     optional(header_pre_extension) {
       commandflags(-GA) += A

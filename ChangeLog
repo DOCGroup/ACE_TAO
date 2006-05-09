@@ -1,3 +1,26 @@
+Tue May  9 07:25:30 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Condition_T.{h,cpp,inl}:
+        * ace/Local_Name_Space_T.cpp:
+        * ace/Configuration.cpp:
+        * ace/Sched_Params.cpp:
+        * ace/Mutex.{h,cpp,inl}:
+        * ace/Select_Reactor_T.cpp:
+        * ace/Signal.cpp:
+          Removed Chorus support
+
+        * ace/CDR_Stream.cpp:
+          Small layout change
+
+        * ace/Event_Handler.cpp:
+          Removed psos support
+
+        * ace/Message_Block.h:
+          Doxygen improvements
+
+        * ace/Message_Block.cpp:
+          Const improvement
+
 Sun May  7 21:03:30 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * ace/Service_Config.{h,cpp}:
