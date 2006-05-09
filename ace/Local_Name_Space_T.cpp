@@ -421,15 +421,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager_i (void)
   ACE_OS::strcat (this->context_file_, ACE_DIRECTORY_SEPARATOR_STR);
   ACE_OS::strcat (this->context_file_, database);
 
-#if !defined (CHORUS)
   ACE_MEM_POOL_OPTIONS options (this->name_options_->base_address ());
-#else
-  // Use base address == 0, don't use a fixed address.
-  ACE_MEM_POOL_OPTIONS options (0,
-                                0,
-                                0,
-                                ACE_CHORUS_LOCAL_NAME_SPACE_T_SIZE);
-#endif /* CHORUS */
 
   ACE_TCHAR lock_name_for_local_name_space [MAXNAMELEN + MAXPATHLEN];
   ACE_TCHAR lock_name_for_backing_store [MAXPATHLEN + MAXNAMELEN];

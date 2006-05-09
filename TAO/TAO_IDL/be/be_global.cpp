@@ -84,7 +84,7 @@ BE_GlobalData::BE_GlobalData (void)
     opt_tc_ (false),
     ami_call_back_ (false),
     gen_amh_classes_ (false),
-    gen_tie_classes_ (true),
+    gen_tie_classes_ (false),
     gen_smart_proxies_ (false),
     gen_inline_constants_ (true),
     gen_dcps_type_support_ (false),
@@ -1557,6 +1557,11 @@ BE_GlobalData::parse_args (long &i, char **av)
             // AMI with Call back.
             be_global->ami_call_back (true);
           }
+        else if (av[i][2] == 'T')
+          {
+            // Generate tie classes and files
+            be_global->gen_tie_classes (true);
+          }
         else if (av[i][2] == 'H')
           {
             // AMH classes.
@@ -1775,11 +1780,6 @@ BE_GlobalData::parse_args (long &i, char **av)
               {
                 // no client inline
                 be_global->gen_client_inline (false);
-              }
-            else
-              {
-                // suppress generating tie classes and files
-                be_global->gen_tie_classes (0);
               }
           }
         else if (av[i][2] == 'm')
@@ -2174,6 +2174,11 @@ BE_GlobalData::usage (void) const
     ));
   ACE_DEBUG ((
       LM_DEBUG,
+      ACE_TEXT (" -GT\t\t\tgenerate tie class (and file)")
+      ACE_TEXT (" generation (disabled by default)\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
       ACE_TEXT ("    \t\t\tNo effect if TypeCode generation is suppressed\n")
     ));
   ACE_DEBUG ((
@@ -2271,11 +2276,6 @@ BE_GlobalData::usage (void) const
       LM_DEBUG,
       ACE_TEXT (" -St\t\t\tsuppress TypeCode support")
       ACE_TEXT (" (support enabled by default)\n")
-    ));
-  ACE_DEBUG ((
-      LM_DEBUG,
-      ACE_TEXT (" -Sc\t\t\tsuppress tie class (and file)")
-      ACE_TEXT (" generation (enabled by default)\n")
     ));
   ACE_DEBUG ((
       LM_DEBUG,

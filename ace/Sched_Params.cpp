@@ -102,9 +102,7 @@ ACE_Sched_Params::priority_min (const Policy policy,
             return ACE_THR_PRI_FIFO_MIN;
           case ACE_SCHED_RR:
             return ACE_THR_PRI_RR_MIN;
-#if !defined (CHORUS)   // SCHED_OTHRE and SCHED_RR have same value
-           case ACE_SCHED_OTHER:
-#endif /* CHORUS */
+          case ACE_SCHED_OTHER:
           default:
             return ACE_THR_PRI_OTHER_MIN;
         }
@@ -117,9 +115,7 @@ ACE_Sched_Params::priority_min (const Policy policy,
             return ACE_PROC_PRI_FIFO_MIN;
           case ACE_SCHED_RR:
             return ACE_PROC_PRI_RR_MIN;
-#if !defined (CHORUS)   // SCHED_OTHRE and SCHED_RR have same value
-           case ACE_SCHED_OTHER:
-#endif /* CHORUS */
+          case ACE_SCHED_OTHER:
           default:
             return ACE_PROC_PRI_OTHER_MIN;
         }
@@ -206,9 +202,7 @@ ACE_Sched_Params::priority_max (const Policy policy,
             return ACE_THR_PRI_FIFO_MAX;
           case ACE_SCHED_RR:
             return ACE_THR_PRI_RR_MAX;
-#if !defined (CHORUS)   // SCHED_OTHRE and SCHED_RR have same value
-           case ACE_SCHED_OTHER:
-#endif /* CHORUS */
+          case ACE_SCHED_OTHER:
           default:
             return ACE_THR_PRI_OTHER_MAX;
         }
@@ -221,9 +215,7 @@ ACE_Sched_Params::priority_max (const Policy policy,
             return ACE_PROC_PRI_FIFO_MAX;
           case ACE_SCHED_RR:
             return ACE_PROC_PRI_RR_MAX;
-#if !defined (CHORUS)   // SCHED_OTHRE and SCHED_RR have same value
-           case ACE_SCHED_OTHER:
-#endif /* CHORUS */
+          case ACE_SCHED_OTHER:
           default:
             return ACE_PROC_PRI_OTHER_MAX;
         }
