@@ -2,7 +2,7 @@ Mon May  8 20:41:43 UTC 2006  Stoyan Paunov  <spaunov@isis.vanderbilt.edu>
 
         * bin/PerlCIAO/perlciao.mpc:
 
-        Fixing a fuzz build error due to a missing $Id$ string
+        Fixing a fuzz build error due to a missing Id tag
 
 Mon May  8 15:33:58 UTC 2006  Stoyan Paunov  <spaunov@isis.vanderbilt.edu>
 
