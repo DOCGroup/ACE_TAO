@@ -1,3 +1,9 @@
+Tue May  9 11:38:30 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/orbsvcslib.mpb:
+          Add -GT to the idlflags, all orbsvcs then do generate the TIE files,
+          if people then use them, they get them out of the box.
+
 Tue May  9 07:36:30 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/taoidldefaults.mpb:
