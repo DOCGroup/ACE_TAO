@@ -1,3 +1,28 @@
+Tue May  9 16:32:01 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tao/ORB_Core.cpp:
+
+          Added a clarifying comment.
+
+        * tao/TAO_Internal.cpp:
+
+          Fixing a problem in processing -ORBSvcConf command-line
+          options. Both the process-wide and the ORB-local service
+          gestalts were processing configuration files. This was causing
+          the loading of the default svc.conf file, even when another one
+          had been specified by -ORBSvcConf. The fix is to give the
+          process-wide gestalt a chance to load the svc conf file, if it
+          is being initialized for the first time.
+
+        * tests/ORB_Local_Config/Bug_1459/Test.cpp:
+
+          Minor updates.
+
+        * tests/ORB_Local_Config/Two_DLL_ORB/client.cpp:
+
+          Updated the tests to eliminate some possibilities for TRANSIENT
+          exceptions.
+
 Tue May  9 11:37:30 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/tutorials/Quoter/idl/Quoter_idl.mpc:

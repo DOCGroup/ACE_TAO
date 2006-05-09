@@ -57,52 +57,57 @@ Client_Worker::test_main (int argc, ACE_TCHAR *argv[] ACE_ENV_ARG_DECL)
 
   // Doing this dance to allow the server some time to come up.
   CORBA::Object_ptr co = 0;
-  for (int attempts_left=5; co == 0 && attempts_left > 0; --attempts_left)
+  for (int attempts_left=5; attempts_left > 0; --attempts_left)
   {
-    ACE_DEBUG ((LM_DEBUG, "(%P|%t) Delaying the client to give the server a chance to start ...\n"));
-    ACE_OS::sleep (7);
     ACE_DEBUG ((LM_DEBUG, "(%P|%t) Client is ready to proceed.\n"));
 
     ACE_TRY
     {
       co = orb->string_to_object(ior_file_.c_str () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
+
+      ACE_ASSERT (co != 0);
+      CORBA::Object_var tmp (co);
+
+      Test::Hello_var hello =
+        Test::Hello::_narrow(tmp.in () ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      if (CORBA::is_nil (hello.in ()))
+        {
+          ACE_ERROR_RETURN ((LM_DEBUG,
+                             "(%P|%t) Nil Test::Hello reference <%s>\n",
+                             ior_file_.c_str ()),
+                            1);
+        }
+
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Successfuly narrowed the Hello interface\n"));
+
+      CORBA::String_var the_string =
+        hello->get_string (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned from the server <%s>\n",
+                  the_string.in ()));
+
+      hello->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      attempts_left = 0; // We're done here
+
     }
     ACE_CATCH (CORBA::TRANSIENT, ex)
     {
       if (!attempts_left)
         ACE_RE_THROW;
-      else
-        ACE_DEBUG ((LM_DEBUG, "(%P|%t) Client is retrying.\n"));
 
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%P|%t) Client is too quick - retrying, "
+                  "while the server completes writing out its IOR.\n"));
+      ACE_OS::sleep (5);
     }
     ACE_ENDTRY;
   }
-
-  ACE_ASSERT (co != 0);
-  CORBA::Object_var tmp (co);
-
-  Test::Hello_var hello =
-    Test::Hello::_narrow(tmp.in () ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
-
-  if (CORBA::is_nil (hello.in ()))
-  {
-    ACE_ERROR_RETURN ((LM_DEBUG,
-                       "(%P|%t) Nil Test::Hello reference <%s>\n",
-                       ior_file_.c_str ()),
-                      1);
-  }
-
-  CORBA::String_var the_string =
-    hello->get_string (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_TRY_CHECK;
-
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned from the server <%s>\n",
-              the_string.in ()));
-
-  hello->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_TRY_CHECK;
 
   orb->shutdown (0 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
