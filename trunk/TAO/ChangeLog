@@ -1,3 +1,25 @@
+Tue May  9 07:36:30 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_global.cpp:
+          Don't generate the TIE files (_S.*) by default anymore. The
+          commandline option -Sc has been removed, this suppressed the
+          generation of these files. The new option -GT has been added,
+          if you need the TIE files, use the -GT option when compiling
+          your idl files. This safes disk space on all systems and on
+          slower machines the builds run then faster. Fixes bug 2525
+
+        * docs/compiler.html:
+          Removed -Sc, added -GT
+
+        * NEWS:
+          Mention the TIE behaviour change
+
+        * examples/POA/TIE/POA_TIE.mpc:
+          Added -GT to the idlflags
+
+        * tao/*.pidl:
+          Removed the -Sc flag in the regeneration instructions
+
 Mon May  8 15:52:31 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be_visitor_union_branch/cdr_op_cs.cpp (visit_enum):

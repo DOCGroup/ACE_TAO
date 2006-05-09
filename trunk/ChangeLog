@@ -1,3 +1,8 @@
+Tue May  9 07:36:30 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/taoidldefaults.mpb:
+          Removed -Sc, added -GT, see bugzilla bug 2525 for more info
+
 Tue May  9 07:25:30 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Condition_T.{h,cpp,inl}:
