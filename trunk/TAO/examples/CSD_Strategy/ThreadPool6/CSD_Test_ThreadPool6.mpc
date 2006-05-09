@@ -3,7 +3,7 @@
 
 project(*Server): csd_threadpool, taoserver, minimum_corba, pi {
   exename = server_main
-  idlflags -= -Sc
+  idlflags += -GT
 
   Source_Files {
     Foo_i.cpp
