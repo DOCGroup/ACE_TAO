@@ -456,16 +456,16 @@ public:
   /// Get the read pointer.
   char *rd_ptr (void) const;
 
-  /// Set the read pointer to <ptr>.
+  /// Set the read pointer to @a ptr.
   void rd_ptr (char *ptr);
 
-  /// Set the read pointer ahead <n> bytes.
+  /// Set the read pointer ahead @a n bytes.
   void rd_ptr (size_t n);
 
   /// Get the write pointer.
   char *wr_ptr (void) const;
 
-  /// Set the write pointer to <ptr>.
+  /// Set the write pointer to @a ptr.
   void wr_ptr (char *ptr);
 
   /// Set the write pointer ahead <n> bytes.  This is used to compute

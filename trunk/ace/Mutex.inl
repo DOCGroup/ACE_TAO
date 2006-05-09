@@ -11,10 +11,10 @@ ACE_INLINE int
 ACE_Mutex::acquire_read (void)
 {
 // ACE_TRACE ("ACE_Mutex::acquire_read");
-#if defined (CHORUS) || defined (ACE_HAS_PTHREADS) || defined(ACE_HAS_STHREADS)
+#if defined (ACE_HAS_PTHREADS) || defined(ACE_HAS_STHREADS)
    if (this->process_lock_)
      return ACE_OS::mutex_lock (this->process_lock_);
-#endif /* CHORUS || ACE_HAS_PTHREADS || ACE_HAS_STHREADS */
+#endif /* ACE_HAS_PTHREADS || ACE_HAS_STHREADS */
   return ACE_OS::mutex_lock (&this->lock_);
 }
 
@@ -22,10 +22,10 @@ ACE_INLINE int
 ACE_Mutex::acquire_write (void)
 {
 // ACE_TRACE ("ACE_Mutex::acquire_write");
-#if defined (CHORUS) || defined (ACE_HAS_PTHREADS) || defined(ACE_HAS_STHREADS)
+#if defined (ACE_HAS_PTHREADS) || defined(ACE_HAS_STHREADS)
    if (this->process_lock_)
      return ACE_OS::mutex_lock (this->process_lock_);
-#endif /* CHORUS || ACE_HAS_PTHREADS || ACE_HAS_STHREADS */
+#endif /* ACE_HAS_PTHREADS || ACE_HAS_STHREADS */
   return ACE_OS::mutex_lock (&this->lock_);
 }
 
@@ -33,10 +33,10 @@ ACE_INLINE int
 ACE_Mutex::tryacquire_read (void)
 {
 // ACE_TRACE ("ACE_Mutex::tryacquire_read");
-#if defined (CHORUS) || defined (ACE_HAS_PTHREADS) || defined(ACE_HAS_STHREADS)
+#if defined (ACE_HAS_PTHREADS) || defined(ACE_HAS_STHREADS)
    if (this->process_lock_)
      return ACE_OS::mutex_trylock (this->process_lock_);
-#endif /* CHORUS || ACE_HAS_PTHREADS || ACE_HAS_STHREADS */
+#endif /* ACE_HAS_PTHREADS || ACE_HAS_STHREADS */
   return ACE_OS::mutex_trylock (&this->lock_);
 }
 
@@ -44,10 +44,10 @@ ACE_INLINE const ACE_mutex_t &
 ACE_Mutex::lock (void) const
 {
 // ACE_TRACE ("ACE_Mutex::lock");
-#if defined (CHORUS) || defined (ACE_HAS_PTHREADS) || defined(ACE_HAS_STHREADS)
+#if defined (ACE_HAS_PTHREADS) || defined(ACE_HAS_STHREADS)
   if (this->process_lock_)
     return *this->process_lock_;
-#endif /* CHORUS || ACE_HAS_PTHREADS || ACE_HAS_STHREADS */
+#endif /* ACE_HAS_PTHREADS || ACE_HAS_STHREADS */
   return this->lock_;
 }
 
@@ -55,10 +55,10 @@ ACE_INLINE int
 ACE_Mutex::tryacquire_write (void)
 {
 // ACE_TRACE ("ACE_Mutex::tryacquire_write");
-#if defined (CHORUS) || defined (ACE_HAS_PTHREADS) || defined(ACE_HAS_STHREADS)
+#if defined (ACE_HAS_PTHREADS) || defined(ACE_HAS_STHREADS)
    if (this->process_lock_)
      return ACE_OS::mutex_trylock (this->process_lock_);
-#endif /* CHORUS || ACE_HAS_PTHREADS || ACE_HAS_STHREADS */
+#endif /* ACE_HAS_PTHREADS || ACE_HAS_STHREADS */
   return ACE_OS::mutex_trylock (&this->lock_);
 }
 
@@ -73,10 +73,10 @@ ACE_INLINE int
 ACE_Mutex::acquire (void)
 {
 // ACE_TRACE ("ACE_Mutex::acquire");
-#if defined (CHORUS) || defined (ACE_HAS_PTHREADS) || defined(ACE_HAS_STHREADS)
+#if defined (ACE_HAS_PTHREADS) || defined(ACE_HAS_STHREADS)
    if (this->process_lock_)
      return ACE_OS::mutex_lock (this->process_lock_);
-#endif /* CHORUS || ACE_HAS_PTHREADS || ACE_HAS_STHREADS */
+#endif /* ACE_HAS_PTHREADS || ACE_HAS_STHREADS */
   return ACE_OS::mutex_lock (&this->lock_);
 }
 
@@ -84,20 +84,20 @@ ACE_INLINE int
 ACE_Mutex::acquire (ACE_Time_Value &tv)
 {
   // ACE_TRACE ("ACE_Mutex::acquire");
- #if defined (CHORUS) || defined (ACE_HAS_PTHREADS) || defined(ACE_HAS_STHREADS)
+ #if defined (ACE_HAS_PTHREADS) || defined(ACE_HAS_STHREADS)
    if (this->process_lock_)
      return ACE_OS::mutex_lock (this->process_lock_, tv);
-#endif /* CHORUS || ACE_HAS_PTHREADS || ACE_HAS_STHREADS*/
+#endif /* ACE_HAS_PTHREADS || ACE_HAS_STHREADS*/
   return ACE_OS::mutex_lock (&this->lock_, tv);
 }
 
 ACE_INLINE int
 ACE_Mutex::acquire (ACE_Time_Value *tv)
 {
- #if defined (CHORUS) || defined (ACE_HAS_PTHREADS) || defined(ACE_HAS_STHREADS)
+ #if defined (ACE_HAS_PTHREADS) || defined(ACE_HAS_STHREADS)
    if (this->process_lock_)
      return ACE_OS::mutex_lock (this->process_lock_, tv);
-#endif /* CHORUS || ACE_HAS_PTHREADS || ACE_HAS_STHREADS*/
+#endif /* ACE_HAS_PTHREADS || ACE_HAS_STHREADS*/
   return ACE_OS::mutex_lock (&this->lock_, tv);
 }
 
@@ -105,10 +105,10 @@ ACE_INLINE int
 ACE_Mutex::tryacquire (void)
 {
 // ACE_TRACE ("ACE_Mutex::tryacquire");
-#if defined (CHORUS) || defined (ACE_HAS_PTHREADS) || defined(ACE_HAS_STHREADS)
+#if defined (ACE_HAS_PTHREADS) || defined(ACE_HAS_STHREADS)
    if (this->process_lock_)
      return ACE_OS::mutex_trylock (this->process_lock_);
-#endif /* CHORUS || ACE_HAS_PTHREADS || ACE_HAS_STHREADS */
+#endif /* ACE_HAS_PTHREADS || ACE_HAS_STHREADS */
   return ACE_OS::mutex_trylock (&this->lock_);
 }
 
@@ -116,10 +116,10 @@ ACE_INLINE int
 ACE_Mutex::release (void)
 {
 // ACE_TRACE ("ACE_Mutex::release");
-#if defined (CHORUS) || defined (ACE_HAS_PTHREADS) || defined(ACE_HAS_STHREADS)
+#if defined (ACE_HAS_PTHREADS) || defined(ACE_HAS_STHREADS)
    if (this->process_lock_)
      return ACE_OS::mutex_unlock (this->process_lock_);
-#endif /* CHORUS || ACE_HAS_PTHREADS || ACE_HAS_STHREADS */
+#endif /* ACE_HAS_PTHREADS || ACE_HAS_STHREADS */
   return ACE_OS::mutex_unlock (&this->lock_);
 }
 
@@ -128,7 +128,7 @@ ACE_Mutex::remove (void)
 {
 // ACE_TRACE ("ACE_Mutex::remove");
   int result = 0;
-#if defined (CHORUS) || defined (ACE_HAS_PTHREADS) || defined (ACE_HAS_STHREADS)
+#if defined (ACE_HAS_PTHREADS) || defined (ACE_HAS_STHREADS)
   // In the case of a interprocess mutex, the owner is the first
   // process that created the shared memory object. In this case, the
   // lockname_ pointer will be non-zero (points to allocated memory
@@ -159,16 +159,16 @@ ACE_Mutex::remove (void)
     }
   else
   {
-#else /* !CHORUS && !ACE_HAS_PTHREADS && !ACE_HAS_STHREADS */
+#else /* !ACE_HAS_PTHREADS && !ACE_HAS_STHREADS */
     if (this->removed_ == 0)
       {
         this->removed_ = 1;
         result = ACE_OS::mutex_destroy (&this->lock_);
       }
-#endif /* CHORUS || ACE_HAS_PTHREADS || ACE_HAS_STHREADS */
-#if defined (CHORUS) || defined (ACE_HAS_PTHREADS) || defined (ACE_HAS_STHREADS)
+#endif /* ACE_HAS_PTHREADS || ACE_HAS_STHREADS */
+#if defined (ACE_HAS_PTHREADS) || defined (ACE_HAS_STHREADS)
   }
-#endif /* CHORUS || ACE_HAS_PTHREADS || ACE_HAS_STHREADS */
+#endif /* ACE_HAS_PTHREADS || ACE_HAS_STHREADS */
   return result;
 }
 

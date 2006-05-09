@@ -169,7 +169,7 @@ configured using TAO's IDL compiler <A HREF="#options">options</A>.<P>
 <h3>AMI support</h3>
 
 The TAO_IDL compiler generates AMI stubs and skeletons as
-described in the CORBA 3.0.3 specification. 
+described in the CORBA 3.0.3 specification.
 
 <hr><p>
 <h3><a name="collocation-stubs">Collocation Strategies</a></h3>
@@ -734,6 +734,14 @@ also receives other options that are specific to it.<p>
     <td>&nbsp;</td>
   </tr>
 
+  <tr><a name="GT">
+    <td><tt>-GT</tt></td>
+
+    <td>Enable generation of the TIE classes, and the *S_T.* files that
+    contain them.</td>
+    <td>&nbsp;</td>
+  </tr>
+
   <tr><a name="Sa">
     <td><tt>-Sa</tt></td>
 
@@ -762,13 +770,6 @@ also receives other options that are specific to it.<p>
 
     <td>Also suppresses the generation of the Any operators, since they need the
         associated typecode.</td>
-  </tr>
-
-  <tr><a name="Sc">
-    <td><tt>-Sc</tt></td>
-
-    <td>Suppress generation of the tie classes, and the *S_T.* files that contain them.</td>
-    <td>&nbsp;</td>
   </tr>
 
   <tr><a name="Sm">

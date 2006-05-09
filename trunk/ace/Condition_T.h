@@ -104,18 +104,6 @@ public:
   // Declare the dynamic allocation hooks.
 
 protected:
-#if defined (CHORUS)
-  /// This condition resides in shared memory.
-  ACE_cond_t *process_cond_;
-
-  /**
-   * Remember the name of the condition if we created it so we can
-   * unlink it when we go away (only the actor that initialized the
-   * memory can destroy it).
-   */
-  const ACE_TCHAR *condname_;
-#endif /* CHORUS */
-
   /// Condition variable.
   ACE_cond_t cond_;
 

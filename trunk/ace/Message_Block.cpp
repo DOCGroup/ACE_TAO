@@ -126,7 +126,7 @@ ACE_Message_Block::crunch (void)
       if (this->rd_ptr_ > this->wr_ptr_)
         return -1;
 
-      size_t len = this->length ();
+      size_t const len = this->length ();
       (void) ACE_OS::memmove (this->base (),
                               this->rd_ptr (),
                               len);

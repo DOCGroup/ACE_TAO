@@ -151,7 +151,7 @@ public:
 
   // = This should be protected but some C++ compilers complain...
 public:
-#if defined (CHORUS) || defined (ACE_HAS_PTHREADS) || defined(ACE_HAS_STHREADS)
+#if defined (ACE_HAS_PTHREADS) || defined(ACE_HAS_STHREADS)
   /// This lock resides in shared memory.
   ACE_mutex_t *process_lock_;
 
@@ -161,7 +161,7 @@ public:
    * can destroy it).
    */
   const ACE_TCHAR *lockname_;
-#endif /* CHORUS || ACE_HAS_PTHREADS */
+#endif /* ACE_HAS_PTHREADS */
 
   /// Mutex type supported by the OS.
   ACE_mutex_t lock_;
