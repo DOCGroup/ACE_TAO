@@ -263,6 +263,8 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
            TAO_Request_Dispatcher);
 
   // @TODO: Can this be dynamic container instead?
+  // @TODO: In the global case, the ACE_Service_Config::current ()
+  // should probably be used to simplify initialization?
   if (ACE_OS::strnlen (this->orbid_, 1) == 0)
     {
       ACE_NEW_NORETURN (this->config_,

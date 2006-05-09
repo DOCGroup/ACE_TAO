@@ -64,6 +64,21 @@ namespace
                        CORBA::StringSeq &svc_config_argv);
 
   /**
+   * Parses the supplied command-line arguments to extract any that
+   * specify a Service Configurator file (-ORBSvcConf). This is done
+   * separately, because depending on the context, the configuration
+   * file may apply to the process-wide service repository, or to the
+   * orb-specific (private) one.
+   *
+   * @brief Modifies the argc to reflect any arguments it has
+   * "consumed"
+   */
+  int
+  parse_svcconf_args_i (int &argc,
+                       char **argv,
+                       CORBA::StringSeq &svc_config_argv);
+
+  /**
    * Initialize the ACE Service Configurator with the process-global
    * services (available to any ORB).
    *
@@ -82,11 +97,6 @@ namespace
    */
   void register_global_services_i (ACE_Service_Gestalt * pcfg);
   void register_additional_services_i (ACE_Service_Gestalt * pcfg);
-
-  int open_global_services_i (ACE_Service_Gestalt* theone,
-                              int & argc,
-                              char ** argv,
-                              bool skip_service_config_open);
 
   /**
    * Parses the supplied command-line arguments to extract any
@@ -111,7 +121,8 @@ namespace
   int open_private_services_i (ACE_Service_Gestalt* pcfg,
                                int & argc,
                                char ** argv,
-                               bool skip_service_config_open = false);
+                               bool skip_service_config_open = false,
+                               bool ignore_default_svc_conf_file = false);
 
   /**
    * Number of times open_services() has been called.  Incremented by
@@ -149,30 +160,29 @@ TAO::ORB::open_services (ACE_Service_Gestalt* pcfg,
   // Be certain to copy the program name so that service configurator
   // has something to skip!
   ACE_CString argv0 ("");
-
   if (argc > 0 && argv != 0)
     {
       argv0 = ACE_TEXT_ALWAYS_CHAR (argv[0]);
     }
-
   svc_config_argv.length (1);
   svc_config_argv[0] = argv0.c_str ();
 
   // Should we skip the ACE_Service_Config::open() method, e.g., if we
   // already being configured by the ACE Service Configurator.
   //
-  //   @@ This is no longer needed since the Service Configurator is
-  //      now reentrant.
-  //         -Ossama
+  // @@ This is no longer needed since the Service Configurator is now
+  // reentrant.(-Ossama)
+  // @@ Leaving it in, since the -ORBSkipServiceConfigOpen is still
+  // available. (-Iliyan)
   bool skip_service_config_open = false;
 
   // Extract any ORB options from the argument vector.
- if (parse_private_args_i (argc,
-                           argv,
-                           svc_config_argv,
-                           skip_service_config_open) == -1)
+  if (parse_private_args_i (argc,
+                            argv,
+                            svc_config_argv,
+                            skip_service_config_open) == -1)
     return -1;
-  else
+
   {
     ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX,
                               guard,
@@ -180,47 +190,88 @@ TAO::ORB::open_services (ACE_Service_Gestalt* pcfg,
                               -1));
 
     service_open_count++;
+  }
 
-    ACE_Service_Gestalt * theone = ACE_Service_Config::global ();
-    if (pcfg != theone)
+  ACE_Service_Gestalt * theone = ACE_Service_Config::global ();
+  if (service_open_count == 1)
     {
-      ACE_Service_Config_Guard guard (theone);
+      ACE_Service_Config_Guard config_guard (theone);
 
+      if (TAO_debug_level > 2)
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_LIB_TEXT ("TAO (%P|%t) Initializing the ")
+                    ACE_LIB_TEXT("process-wide services\n")));
+
+      ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX,
+                                guard,
+                                *ACE_Static_Object_Lock::instance (),
+                                -1));
+
+      register_global_services_i (theone);
+
+      // Construct an argument vector specific to the process-wide
+      // (global) Service Configurator instance.
+      CORBA::StringSeq global_svc_config_argv;
+
+      // Be certain to copy the program name so that service configurator
+      // has something to skip!
+      ACE_CString argv0 ("");
+      if (argc > 0 && argv != 0)
+        {
+          argv0 = ACE_TEXT_ALWAYS_CHAR (argv[0]);
+        }
+      global_svc_config_argv.length (1);
+      global_svc_config_argv[0] = argv0.c_str ();
+
+      if (parse_global_args_i (argc, argv, global_svc_config_argv) == -1)
+        return -1;
+
+      if (parse_svcconf_args_i (argc, argv, global_svc_config_argv) == -1)
+        return -1;
+
+      int global_svc_config_argc = global_svc_config_argv.length ();
       int status =
-        open_global_services_i (theone,
-                                argc,
-                                argv,
-                                skip_service_config_open);
+        open_private_services_i (theone,
+                                 global_svc_config_argc,
+                                 global_svc_config_argv.get_buffer (),
+                                 skip_service_config_open);
 
       if (status == -1)
-      {
-        if (TAO_debug_level > 0)
-          ACE_ERROR_RETURN ((LM_DEBUG,
-                             ACE_LIB_TEXT ("TAO (%P|%t) Failed to ")
-                             ACE_LIB_TEXT("open process-wide service configuration\n")),
-                            -1);
-        return -1;
-      }
+        {
+          if (TAO_debug_level > 0)
+            ACE_ERROR_RETURN ((LM_DEBUG,
+                               ACE_LIB_TEXT ("TAO (%P|%t) Failed to ")
+                               ACE_LIB_TEXT("open process-wide service configuration\n")),
+                              -1);
+          return -1;
+        }
+
       register_additional_services_i (theone);
     }
 
-    int svc_config_argc = svc_config_argv.length ();
-    int status =
-      open_private_services_i (pcfg,
-                               svc_config_argc,
-                               svc_config_argv.get_buffer (),
-                               skip_service_config_open);
-    if (status == -1)
-    {
-      if (TAO_debug_level > 0)
-        ACE_ERROR_RETURN ((LM_DEBUG,
-                           ACE_LIB_TEXT ("TAO (%P|%t) Failed to ")
-                           ACE_LIB_TEXT("open orb service configuration\n")),
-                          -1);
-      return -1;
-    }
+  if (TAO_debug_level > 2)
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_LIB_TEXT ("TAO (%P|%t) Initializing the ")
+                ACE_LIB_TEXT("orb-specific services\n")));
+
+  if (parse_svcconf_args_i (argc, argv, svc_config_argv) == -1)
+    return -1;
+
+  int svc_config_argc = svc_config_argv.length ();
+  int status =
+    open_private_services_i (pcfg,
+                             svc_config_argc,
+                             svc_config_argv.get_buffer (),
+                             skip_service_config_open);
+  if (status >= 0)
     return 0;
-  }
+
+  if (TAO_debug_level > 0)
+    ACE_ERROR_RETURN ((LM_DEBUG,
+                       ACE_LIB_TEXT ("TAO (%P|%t) Failed to ")
+                       ACE_LIB_TEXT("open orb service configuration\n")),
+                      -1);
+  return -1;
 }
 
 int
@@ -251,68 +302,19 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 namespace
 {
 
-  /// Open services, belonging to all gestalt instances within the
-  /// process
-
-  int
-  open_global_services_i (ACE_Service_Gestalt * theone,
-                          int & argc,
-                          ACE_TCHAR ** argv,
-                          bool skip_service_config_open)
-  {
-      // Construct an argument vector specific to the process-wide
-      // (global) Service Configurator instance.
-      CORBA::StringSeq global_svc_config_argv;
-
-      // Be certain to copy the program name so that service configurator
-      // has something to skip!
-      ACE_CString argv0 ("");
-
-      if (argc > 0 && argv != 0)
-      {
-        argv0 = ACE_TEXT_ALWAYS_CHAR (argv[0]);
-      }
-
-      global_svc_config_argv.length (1);
-      global_svc_config_argv[0] = argv0.c_str ();
-
-      if (parse_global_args_i (argc, argv, global_svc_config_argv) == -1)
-        return -1;
-
-      register_global_services_i (theone);
-
-      int global_svc_config_argc = global_svc_config_argv.length ();
-      if (!skip_service_config_open)
-      {
-        bool ignore_default_svc_conf_file = false;
-#if defined (TAO_PLATFORM_SVC_CONF_FILE_NOTSUP)
-        ignore_default_svc_conf_file = true;
-#endif /* TAO_PLATFORM_SVC_CONF_FILE_NOTSUP */
-
-        return theone->open (global_svc_config_argc,
-                             global_svc_config_argv.get_buffer (),
-                             ACE_DEFAULT_LOGGER_KEY,
-                             0, // Don't ignore static services.
-                             ignore_default_svc_conf_file);
-      }
-      return 0;
-  }
-
-
-
   /// Open services, belonging to the gestalt instance
 
   int
   open_private_services_i (ACE_Service_Gestalt * pcfg,
                            int & argc,
                            ACE_TCHAR ** argv,
-                           bool skip_service_config_open)
+                           bool skip_service_config_open,
+                           bool ignore_default_svc_conf_file)
   {
 
     if (skip_service_config_open)
       return 0;
 
-    bool ignore_default_svc_conf_file = false;
 #if defined (TAO_PLATFORM_SVC_CONF_FILE_NOTSUP)
     ignore_default_svc_conf_file = true;
 #endif /* TAO_PLATFORM_SVC_CONF_FILE_NOTSUP */
@@ -323,6 +325,8 @@ namespace
                        0, // Don't ignore static services.
                        ignore_default_svc_conf_file);
   }
+
+
 
   /// @brief registers all process-wide (global) services, available to all ORBs
   void
@@ -390,6 +394,8 @@ namespace
     pcfg->process_directive (ace_svc_desc_TAO_Default_Collocation_Resolver);
 
   } /* register_global_services_i */
+
+
 
   void
   register_additional_services_i (ACE_Service_Gestalt * pcfg)
@@ -473,6 +479,72 @@ namespace
   } /* register_additional_services_i */
 
 
+
+
+  int
+  parse_svcconf_args_i (int &argc,
+                        char **argv,
+                       CORBA::StringSeq &svc_config_argv)
+  {
+    // Extract the Service Configurator ORB options from the argument
+    // vector.
+    ACE_Arg_Shifter arg_shifter (argc, argv);
+
+    CORBA::ULong len = 0;
+    while (arg_shifter.is_anything_left ())
+    {
+      const ACE_TCHAR *current_arg = 0;
+
+      if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-ORBSvcConf"))))
+      {
+        // Specify the name of the svc.conf file to be used.
+
+        // Proceeds only if the configuration file exists.
+        FILE * const conf_file = ACE_OS::fopen (current_arg, ACE_TEXT ("r"));
+
+        if (conf_file == 0)
+        {
+          // Assigning EINVAL to errno to make an exception
+          // thrown.  calling code does not throw an exception if
+          // the errno is set to ENOENT for some reason.
+          errno = EINVAL;
+
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("TAO (%P|%t) Service Configurator ")
+                             ACE_TEXT ("unable to open file %s\n"),
+                             current_arg),
+                            -1);
+
+        }
+        else
+        {
+          ACE_OS::fclose (conf_file);
+        }
+
+        len = svc_config_argv.length ();
+        svc_config_argv.length (len + 2);  // 2 arguments to add
+
+        svc_config_argv[len] = CORBA::string_dup ("-f");
+        svc_config_argv[len + 1] = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(current_arg));
+
+        arg_shifter.consume_arg();
+      }
+      // Can't interpret this argument.  Move on to the next argument.
+      else
+      {
+        // Any arguments that don't match are ignored so that the
+        // caller can still use them.
+        arg_shifter.ignore_arg ();
+      }
+    }
+
+    return 0;
+
+  } /* parse_svcconf_args_i */
+
+
+
+
   int
   parse_private_args_i (int &argc,
                         char **argv,
@@ -511,40 +583,6 @@ namespace
 
         arg_shifter.consume_arg ();
       }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-ORBSvcConf"))))
-      {
-        // Specify the name of the svc.conf file to be used.
-
-        // Proceeds only if the configuration file exists.
-        FILE * const conf_file = ACE_OS::fopen (current_arg, ACE_TEXT ("r"));
-
-        if (conf_file == 0)
-        {
-          // Assigning EINVAL to errno to make an exception
-          // thrown.  calling code does not throw an exception if
-          // the errno is set to ENOENT for some reason.
-          errno = EINVAL;
-
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("TAO (%P|%t) Service Configurator ")
-                             ACE_TEXT ("unable to open file %s\n"),
-                             current_arg),
-                            -1);
-
-        }
-        else
-        {
-          ACE_OS::fclose (conf_file);
-        }
-
-        len = svc_config_argv.length ();
-        svc_config_argv.length (len + 2);  // 2 arguments to add
-
-        svc_config_argv[len] = CORBA::string_dup ("-f");
-        svc_config_argv[len + 1] = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(current_arg));
-
-        arg_shifter.consume_arg();
-      }
       else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-ORBServiceConfigLoggerKey"))))
       {
         len = svc_config_argv.length ();
@@ -567,6 +605,8 @@ namespace
     return 0;
 
   } /* parse_private_args_i */
+
+
 
   int
   parse_global_args_i (int &argc,
