@@ -22,20 +22,19 @@ CORBA::string_dup (const char *str)
       return 0;
     }
 
-  const size_t len = ACE_OS::strlen (str);
+  size_t const len = ACE_OS::strlen (str);
 
   // This allocates an extra byte for the '\0';
   char * copy = CORBA::string_alloc (static_cast<CORBA::ULong> (len));
 
-  // The memcpy() below assumes that the destination is a valid buffer.
-  if (copy == 0)
+  if (copy != 0)
     {
-      return 0;
+      // The memcpy() assumes that the destination is a valid buffer.
+      ACE_OS::memcpy (copy,
+                      str,
+                      len + 1);
     }
 
-  ACE_OS::memcpy (copy,
-                  str,
-                  len + 1);
   return copy;
 }
 
@@ -43,7 +42,6 @@ char *
 CORBA::string_alloc (CORBA::ULong len)
 {
   // Allocate 1 + strlen to accomodate the null terminating character.
-
   char *s = 0;
   ACE_NEW_RETURN (s,
                   char[size_t (len + 1)],
