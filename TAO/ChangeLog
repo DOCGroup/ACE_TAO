@@ -1,6 +1,9 @@
 Tue May  9 11:37:30 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/tutorials/Quoter/idl/Quoter_idl.mpc:
+        * orbsvcs/orbsvcs/Makefile.am:
+        * examples/POA/TIE/Makefile.am:
+        * docs/tutorials/Quoter/idl/Makefile.am:
           Add -GT to the idlflags
 
 Tue May  9 07:46:30 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
