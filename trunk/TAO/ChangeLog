@@ -1,3 +1,9 @@
+Tue May  9 19:05:30 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/CSD_Strategy/ThreadPool6/CSD_Test_ThreadPool6.mpc:
+        * examples/CSD_Strategy/ThreadPool6/Makefile.am:
+          Added -GT to the idlflags
+
 Tue May  9 16:32:01 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tao/ORB_Core.cpp:
