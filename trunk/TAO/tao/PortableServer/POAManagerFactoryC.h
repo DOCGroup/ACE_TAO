@@ -60,10 +60,11 @@
 #endif
 #define TAO_EXPORT_MACRO TAO_PortableServer_Export
 
+// should be generated, maybe by be_visitor_module/module_ch.cpp
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // TAO_IDL - Generated from
 // be/be_visitor_module/module_ch.cpp:49
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace PortableServer
 {
@@ -318,8 +319,12 @@ namespace PortableServer
 
 } // module PortableServer
 
+// should be generated, maybe by be_visitor_module/module_ch.cpp
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 // TAO_IDL - Generated from
 // be/be_visitor_traits.cpp:63
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Traits specializations.
 namespace TAO
@@ -367,7 +372,6 @@ namespace TAO
 
 #endif /* end #if !defined */
 }
-
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 

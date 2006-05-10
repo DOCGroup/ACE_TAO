@@ -30,10 +30,10 @@
 #include "ace/Service_Object.h"
 #include "ace/Service_Config.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_POA_Manager;
 class TAO_Acceptor_Filter;
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Acceptor_Filter_Factory
