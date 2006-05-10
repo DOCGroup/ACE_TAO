@@ -45,7 +45,7 @@ int CIAO::MonitorCB::update_data (::Deployment::Domain& data)
       }
     target_mgr_->updateDomain (elements , domain , update_kind);
   }
-  catch (CORBA::Exception& ex)
+  catch (CORBA::Exception& )
     {
       //ACE_DEBUG ((LM_DEBUG, "CIAO::NM::MonitorCB::Unknown Exception\n"));
       //ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "NM::MonitorCB::updateDomain");
