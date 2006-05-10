@@ -23,10 +23,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_Endpoint;
 class TAO_Acceptor;
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class Endpoint_Value_Impl
