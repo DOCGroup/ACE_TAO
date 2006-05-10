@@ -13,6 +13,10 @@ ACE_RCSID (PI,
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+
+// This initializer is very similar to the ORBInitializer_Registry::init.
+// This one is used during static initialization while the other is used
+// when PI is a shared library.
 int
 TAO_PI_Init::Initializer (void)
 {
