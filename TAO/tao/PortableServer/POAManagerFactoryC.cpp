@@ -55,8 +55,6 @@ namespace TAO
 {
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 
 
 // TAO_IDL - Generated from
@@ -95,7 +93,7 @@ TAO::Objref_Traits<PortableServer::POAManagerFactory>::marshal (
   return ::CORBA::Object::marshal (p, cdr);
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be/be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_PORTABLESERVER_POAMANAGERFACTORY_POAMANAGERSEQ_CS_)
@@ -168,8 +166,6 @@ namespace PortableServer
 #ifndef _TAO_TYPECODE_PortableServer_POAManagerFactory_POAManagerSeq_GUARD
 #define _TAO_TYPECODE_PortableServer_POAManagerFactory_POAManagerSeq_GUARD
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 namespace TAO
 {
   namespace TypeCode
@@ -180,10 +176,10 @@ namespace TAO
         ::CORBA::tk_sequence,
         &PortableServer::_tc_POAManager,
         0U);
-      
+
     ::CORBA::TypeCode_ptr const tc_PortableServer_POAManagerFactory_POAManagerSeq_0 =
       &PortableServer_POAManagerFactory_POAManagerSeq_0;
-    
+
   }
 }
 
@@ -201,11 +197,11 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:omg.org/PortableServer/POAManagerFactory/POAManagerSeq:2.3",
     "POAManagerSeq",
     &TAO::TypeCode::tc_PortableServer_POAManagerFactory_POAManagerSeq_0);
-  
+
 ::CORBA::TypeCode_ptr const PortableServer::POAManagerFactory::_tc_POAManagerSeq =
   &_tao_tc_PortableServer_POAManagerFactory_POAManagerSeq;
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be/be_visitor_exception/exception_cs.cpp:63
 
 PortableServer::POAManagerFactory::ManagerAlreadyExists::ManagerAlreadyExists (void)
@@ -314,7 +310,7 @@ static TAO::TypeCode::Struct<char const *,
     "ManagerAlreadyExists",
     _tao_fields_PortableServer_POAManagerFactory_ManagerAlreadyExists,
     0);
-  
+
 ::CORBA::TypeCode_ptr const PortableServer::POAManagerFactory::_tc_ManagerAlreadyExists =
   &_tao_tc_PortableServer_POAManagerFactory_ManagerAlreadyExists;
 
@@ -353,7 +349,7 @@ PortableServer::POAManagerFactory::_duplicate (POAManagerFactory_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -412,12 +408,9 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_local_interface,
     "IDL:omg.org/PortableServer/POAManagerFactory:2.3",
     "POAManagerFactory");
-  
+
 namespace PortableServer
 {
   ::CORBA::TypeCode_ptr const _tc_POAManagerFactory =
     &_tao_tc_PortableServer_POAManagerFactory;
 }
-
-
-
