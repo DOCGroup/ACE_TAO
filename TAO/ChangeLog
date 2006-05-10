@@ -1,3 +1,10 @@
+Wed May 10 17:21:26 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/EndpointPolicy/Endpoint_Value_Impl.h:
+
+          I missed committing this with the other versioned namespace
+          changes.
+
 Wed May 10 11:49:10 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/PortableServer/Acceptor_Filter_Factory.h:
