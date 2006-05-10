@@ -87,6 +87,11 @@
 # define ACE_LACKS_ACE_IOSTREAM
 # endif /* ! ACE_USES_OLD_IOSTREAMS */
 
+// Starting with MSVC 7.1, std::new throws std::bad_alloc on out-of-memory.
+// Since we don't support MSVC 7.0, don't test for it.
+# define ACE_NEW_THROWS_EXCEPTIONS
+# define ACE_HAS_NEW_NOTHROW
+
 #else
 
 // iostream header lacks ipfx (), isfx (), etc., declarations
