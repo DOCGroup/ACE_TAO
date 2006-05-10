@@ -44,37 +44,47 @@ namespace TAO
   class ORBInitializer_Registry
     : public ORBInitializer_Registry_Adapter
   {
-    public:
-      ORBInitializer_Registry (void);
+  public:
+    ORBInitializer_Registry (void);
 
-      /// Service config fini method, release all ORBInitializers at this
-      /// moment
-      virtual int fini (void);
+    /// Added to provide registration for the several static service
+    /// objects, brought in with this ORBInitializer_Registry
+    /// implementation. Note that this is more reliable than using
+    /// static initializers, since multiple copies of the dynamic
+    /// service object will require their own (multiple) copies of the
+    /// dependent static service objects. That is just impossible
+    /// without registering those static services in the same repo, the
+    /// dynamic SO is registered with.
+    virtual int init (int, ACE_TCHAR *[]);
 
-      /// Register an ORBInitializer with the underlying ORBInitializer
-      /// array.
-      virtual void register_orb_initializer (
-        PortableInterceptor::ORBInitializer_ptr init
-        ACE_ENV_ARG_DECL);
+    /// Service config fini method, release all ORBInitializers at this
+    /// moment
+    virtual int fini (void);
 
-      /// Begin initialization of all registered ORBInitializers before
-      /// the ORB itself is initialized.
-      virtual size_t pre_init (
-        TAO_ORB_Core *orb_core,
-        int argc,
-        char *argv[],
-        PortableInterceptor::SlotId &slotid
-        ACE_ENV_ARG_DECL);
+    /// Register an ORBInitializer with the underlying ORBInitializer
+    /// array.
+    virtual void register_orb_initializer (
+                   PortableInterceptor::ORBInitializer_ptr init
+                   ACE_ENV_ARG_DECL);
 
-      /// Complete initialization of all registered ORBInitializers after
-      /// the ORB has been initialized.
-      virtual void post_init (
-        size_t pre_init_count,
-        TAO_ORB_Core *orb_core,
-        int argc,
-        char *argv[],
-        PortableInterceptor::SlotId slotid
-        ACE_ENV_ARG_DECL);
+    /// Begin initialization of all registered ORBInitializers before
+    /// the ORB itself is initialized.
+    virtual size_t pre_init (
+                             TAO_ORB_Core *orb_core,
+                             int argc,
+                             char *argv[],
+                             PortableInterceptor::SlotId &slotid
+                             ACE_ENV_ARG_DECL);
+
+    /// Complete initialization of all registered ORBInitializers after
+    /// the ORB has been initialized.
+    virtual void post_init (
+                            size_t pre_init_count,
+                            TAO_ORB_Core *orb_core,
+                            int argc,
+                            char *argv[],
+                            PortableInterceptor::SlotId slotid
+                            ACE_ENV_ARG_DECL);
 
   private:
     // Prevent copying
