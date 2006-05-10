@@ -1,3 +1,26 @@
+Wed May 10 04:26:14 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/ORB_Core.cpp:
+
+          Removed the agressive loading of the IORInterceptor adaptor
+          factory. It truely is optional, thus its failure to load is not
+          an error. At least not an error in the ORB core.
+
+        * tao/PI/ORBInitializer_Registry_Impl.h:
+        * tao/PI/ORBInitializer_Registry_Impl.cpp:
+        * tao/PI/PI.h:
+        * tao/PI/PI.cpp:
+        * tao/PI/PolicyFactory_Loader.h:
+        * tao/PI/PolicyFactory_Loader.cpp:
+
+          Reverted most of the changes used to resolve a circular
+          dependency problem with the PI initialization. The problem is
+          that the initial fix then broke the static builds. The solution
+          of using TAO_AS_STATIC_BUILDS is a reasonable compromise as it
+          allows dynamic builds to not get caught in a circular
+          initialization situation, but lets static builds get the
+          initialization they need.
+
 Tue May  9 19:05:30 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/CSD_Strategy/ThreadPool6/CSD_Test_ThreadPool6.mpc:

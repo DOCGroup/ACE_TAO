@@ -3236,34 +3236,12 @@ TAO_ORB_Core::ior_interceptor_adapter (void)
                   (this->configuration (),
                    ACE_TEXT_CHAR_TO_TCHAR (TAO_ORB_Core::iorinterceptor_adapter_factory_name ()));
 
-#if !defined (TAO_AS_STATIC_LIBS)
-              // In case we build shared, try to load the IOR_Interceptor factory. In a
-              // static build we just can't do this, so don't try it
-              if (ior_ap_factory == 0)
-              {
-                this->configuration()->process_directive
-                  (ACE_DYNAMIC_SERVICE_DIRECTIVE("Concrete_IORInterceptor_Adapter_Factory",
-                                                 "TAO_IORInterceptor",
-                                                 "_make_TAO_IORInterceptor_Adapter_Factory_Impl",
-                                                 ""));
-                ior_ap_factory =
-                  ACE_Dynamic_Service<TAO_IORInterceptor_Adapter_Factory>::instance
-                    (this->configuration (), ACE_TEXT("Concrete_IORInterceptor_Adapter_Factory"));
-              }
-#endif /* !TAO_AS_STATIC_LIBS */
-
-              if (ior_ap_factory == 0)
+              if (ior_ap_factory)
                 {
-                  ACE_ERROR_RETURN ((LM_ERROR,
-                                     ACE_TEXT ("(%P|%t) Unable to get a IORInterceptor factory\n")),
-                                    0);
-                  ACE_THROW (CORBA::INTERNAL ());
+                  this->ior_interceptor_adapter_ =
+                    ior_ap_factory->create (ACE_ENV_SINGLE_ARG_PARAMETER);
+                  ACE_TRY_CHECK;
                 }
-
-              this->ior_interceptor_adapter_ =
-                ior_ap_factory->create (ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_TRY_CHECK;
-
             }
           ACE_CATCHANY
             {
