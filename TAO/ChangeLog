@@ -1,3 +1,16 @@
+Wed May 10 20:13:45 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/PI/ORBInitializer_Registry_Impl.h:
+        * tao/PI/ORBInitializer_Registry_Impl.cpp:
+        * tao/PI/PI.cpp:
+
+          My change from last night (04:26:14 UTC) swung the pendulum too
+          far back in the other direction. I discovered that once again
+          some dynamic PI tests were breaking. I've rectified this by
+          putting Iliyan's code back in ORBInitialiser_Registry_Impl but
+          with a !TAO_AS_STATIC_LIBS guard around the code to avoid the
+          redundant processing that might occur with static libs.
+
 Wed May 10 17:21:26 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/EndpointPolicy/Endpoint_Value_Impl.h:
