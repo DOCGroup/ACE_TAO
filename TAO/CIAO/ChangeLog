@@ -1,3 +1,11 @@
+Wed May 10 14:04:57 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/NodeManager/MonitorCB.cpp
+        * DAnCE/TargetManager/CmpClient.cpp
+        * DAnCE/TargetManager/DomainDataManager.cpp
+
+        Fixes for warnings.
+        
 Mon May  8 20:41:43 UTC 2006  Stoyan Paunov  <spaunov@isis.vanderbilt.edu>
 
         * bin/PerlCIAO/perlciao.mpc:
