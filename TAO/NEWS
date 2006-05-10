@@ -21,8 +21,6 @@ PLANNED MAJOR CHANGES TARGETED FOR TAO-1.5.2
 . (Remedy/Ossama) Add the ability to use the sendfile API to send out data
   on the transport
 
-. (OCI) Make TAO compilable when ACE_USES_WCHAR is set
-
 USER VISIBLE CHANGES BETWEEN TAO-1.5.1 and TAO-1.5.2
 ====================================================
 
