@@ -25,6 +25,26 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+/**
+ * @class TAO_PI_Init
+ *
+ */
+class TAO_PI_Export TAO_PI_Init
+{
+public:
+
+  /// Used to force the initialization of the ORB code.
+  static int Initializer (void);
+};
+
+#if defined (TAO_AS_STATIC_LIBS)
+// only do this for static builds, it causes a circular
+// dependency for dynamic builds.
+static int
+TAO_Requires_PI_Initializer =
+  TAO_PI_Init::Initializer ();
+#endif /* TAO_AS_STATIC_LIBS */
+
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"

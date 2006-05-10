@@ -14,6 +14,9 @@
 #include "tao/PI/PolicyFactory_Loader.h"
 #include "tao/PI/PolicyFactory_Registry.h"
 
+#include "tao/ORB.h"
+#include "tao/debug.h"
+
 ACE_RCSID (PI,
            PolicyFactory_Loader,
            "$Id$")
@@ -28,6 +31,12 @@ TAO_PolicyFactory_Loader::create (void)
                   TAO_PolicyFactory_Registry,
                   0);
   return obj;
+}
+
+int
+TAO_PolicyFactory_Loader::Initializer (void)
+{
+  return ACE_Service_Config::process_directive (ace_svc_desc_TAO_PolicyFactory_Loader);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
