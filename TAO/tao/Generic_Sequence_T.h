@@ -178,7 +178,8 @@ public:
       return;
     }
 
-    generic_sequence tmp(length); tmp.length_ = length;
+    generic_sequence tmp(length);
+    tmp.length_ = length;
     element_traits::copy_range(
         buffer_, buffer_ + length_, tmp.buffer_);
     element_traits::initialize_range(
