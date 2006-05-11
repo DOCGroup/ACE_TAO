@@ -1,3 +1,16 @@
+Thu May 11 07:19:12 UTC 2006  Kees van Marle  <kvmarle@remedy.nl>
+
+        * tests/Bug_1254_Regression/*
+          New regression for bug 1254
+
+        * tao/Unbounded_Octet_Sequence_T.h:
+          Fixed a bug in the octet sequence when used as inout argument and
+          when shrinking the lenght while a message block was being used
+          the full message block was send back, not the smaller length.
+          We now do a copy of the data to really make sure we don't
+          modify the mb incorrectly. Thanks to Peter van Merkerk
+          <merkerk at deadspam dot com> and Marc Walrave for reporting this.
+
 Wed May 10 20:13:45 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/PI/ORBInitializer_Registry_Impl.h:
