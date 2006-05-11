@@ -64,7 +64,20 @@ namespace TAO
     // We make the lock global, so that it won't  be deleted when shared.
     // For instance, see Any_Basic_Impl::extract() which copies the insides
     // from an Unknown_IDL_Type to an Any_Basic_Impl.
-    static ACE_Auto_Ptr<ACE_Lock> lock_;
+
+    // [Iliyan] However, having a global static makes this a subject
+    // to the whim of the specific compiler implentation. It is the
+    // one deciding the order in which our instance is initialized and
+    // destroyed and that is boundto be a problem
+    // somewhere. Typically, it becomes a problem when a code that
+    // depends on that instance finds that the runtime has already
+    // destroyed it. The scenario plays allmost always in the process
+    // shutdown code, after main() exits, having to debug which is a
+    // lot of fun :) ...  Bottom line, use a static function, which
+    // encapsulates a local static initializer, guaranteed to be
+    // initialized at the first invocation.
+    static ACE_Lock *lock_i (void);
+
     mutable TAO_InputCDR cdr_;
   };
 }
