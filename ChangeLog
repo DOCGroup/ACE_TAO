@@ -1,3 +1,8 @@
+Thu May 11 12:37:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Message_Block.h:
+          Doxygen improvements
+
 Thu May 11 11:15:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Dev_Poll_Reactor.cpp:
