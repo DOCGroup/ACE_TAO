@@ -86,10 +86,13 @@ public:
   /// the message.
   virtual int format_message (TAO_OutputCDR &cdr);
 
-  /// Parse the details of the next message from the @a incoming
-  /// and initializes attributes of @a qd. Returns 0 if the message
-  /// header could not be parsed completely, returns a 1 if the message
-  /// header could be parsed completely and returns -1 on error.
+  /**
+   * Parse the details of the next message from the @a incoming
+   * and initializes attributes of @a qd.
+   * @retval 0 If the message header could not be parsed completely,
+   * @retval 1 If the message header could be parsed completely
+   * @retval -1 On error.
+   */
   virtual int parse_next_message (ACE_Message_Block &incoming,
                                   TAO_Queued_Data &qd,       /* out */
                                   size_t &mesg_length);      /* out */
