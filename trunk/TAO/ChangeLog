@@ -1,7 +1,18 @@
+Thu May 11 19:21:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        Reverted the change below, it breaks some gcc builds, have to figure
+        out another change.
+
+        Thu May 11 13:23:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+        * tao/Unbounded_Octet_Sequence_T.h:
+          Moved equal and not equal operators for the octet sequence to
+          the TAO namespace, this fixes the build error in the vc71
+          namespace build.
+
 Thu May 11 09:22:10 2006  Douglas C. Schmidt  <schmidt@cse.wustl.edu>
 
 	* performance-tests/Throughput/Receiver.cpp (done),
-	* performance-tests/Throughput/client.cpp (main): Changed 
+	* performance-tests/Throughput/client.cpp (main): Changed
 	  division by 10000000 to division by 1000000.  Thanks to
 	  Jason Zhao <jason.zhao at lmco dot com>.
 
