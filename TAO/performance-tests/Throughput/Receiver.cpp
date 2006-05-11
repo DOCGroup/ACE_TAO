@@ -75,7 +75,7 @@ Receiver::done (ACE_ENV_SINGLE_ARG_DECL)
             (1000000.0 * this->byte_count_) / usecs;
           double kbytes = bytes / 1024;
           double mbytes = kbytes / 1024;
-          double mbits  = bytes * 8 / 10000000;
+          double mbits  = bytes * 8 / 1000000;
 
           ACE_DEBUG ((LM_DEBUG,
                       "Receiver %f (bytes/sec), %f (Kb/sec)\n"
