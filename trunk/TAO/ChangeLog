@@ -9,7 +9,8 @@ Thu May 11 07:19:12 UTC 2006  Kees van Marle  <kvmarle@remedy.nl>
           the full message block was send back, not the smaller length.
           We now do a copy of the data to really make sure we don't
           modify the mb incorrectly. Thanks to Peter van Merkerk
-          <merkerk at deadspam dot com> and Marc Walrave for reporting this.
+          <Peter dot van dot Merkerk at meco dot nl> and
+          Marc Walrave <marc dot walrave at meco dot nl> for reporting this.
 
 Wed May 10 20:13:45 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
