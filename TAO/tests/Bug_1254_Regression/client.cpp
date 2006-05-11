@@ -1,4 +1,4 @@
-#include "TestC.h"
+#include "testC.h"
 #include "ace/Get_Opt.h"
 
 ACE_RCSID(Hello, client, "$Id$")
