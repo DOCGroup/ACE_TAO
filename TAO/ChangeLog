@@ -11,6 +11,7 @@ Thu May 11 07:19:12 UTC 2006  Kees van Marle  <kvmarle@remedy.nl>
           modify the mb incorrectly. Thanks to Peter van Merkerk
           <Peter dot van dot Merkerk at meco dot nl> and
           Marc Walrave <marc dot walrave at meco dot nl> for reporting this.
+          This fixes bugzilla bug 1254.
 
 Wed May 10 20:13:45 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
