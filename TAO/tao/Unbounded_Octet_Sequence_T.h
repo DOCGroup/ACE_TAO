@@ -107,8 +107,8 @@ public:
                                             ACE_CDR::MAX_ALIGNMENT);
 
         // Get the read and write displacements in the incoming stream
-        size_t rd_pos = mb->rd_ptr () - start;
-        size_t wr_pos = mb->wr_ptr () - start;
+        size_t const rd_pos = mb->rd_ptr () - start;
+        size_t const wr_pos = mb->wr_ptr () - start;
 
         this->mb_ = ACE_Message_Block::duplicate (&msgb);
 
@@ -127,22 +127,33 @@ public:
   }
   inline void length(CORBA::ULong length) {
     if (length <= maximum_ || length <= length_)
-    {
-      if (length_ < length)
       {
-        // TODO This code does not provide the strong-exception
-        //      guarantee, but it does provide the weak-exception
-        //      guarantee.  The problem would appear when
-        //      initialize_range() raises an exception after several
-        //      elements have been modified.  One could argue that
-        //      this problem is irrelevant, as the elements already
-        //      modified are unreachable to conforming applications.
-        element_traits::initialize_range(
-            buffer_ + length_, buffer_ + length);
+        if (this->mb_ == 0)
+          {
+            if (length_ < length)
+            {
+              // TODO This code does not provide the strong-exception
+              //      guarantee, but it does provide the weak-exception
+              //      guarantee.  The problem would appear when
+              //      initialize_range() raises an exception after several
+              //      elements have been modified.  One could argue that
+              //      this problem is irrelevant, as the elements already
+              //      modified are unreachable to conforming applications.
+              element_traits::initialize_range(
+                  buffer_ + length_, buffer_ + length);
+            }
+            length_ = length;
+          }
+        else
+          {
+            unbounded_value_sequence<CORBA::Octet> tmp(length);
+            tmp.length_ = length;
+            element_traits::copy_range(
+              buffer_, buffer_ + length, tmp.buffer_);
+            swap(tmp);
+          }
+        return;
       }
-      length_ = length;
-      return;
-    }
 
     unbounded_value_sequence<CORBA::Octet> tmp(length);
     tmp.length_ = length;
