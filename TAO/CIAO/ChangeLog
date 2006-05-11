@@ -1,3 +1,33 @@
+Thu May 11 21:24:45 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CIDLC/Literals.cpp:
+        * CIDLC/Literals.hpp:
+        * CIDLC/ServantHeaderGenerator.cpp:
+        * CIDLC/ServantHeaderGenerator.hpp:
+        * CIDLC/ServantSourceGenerator.cpp:
+        * CIDLC/ServantSourceGenerator.hpp:
+        * CIDLC/UtilityTypeNameEmitters.cpp:
+        * CIDLC/UtilityTypeNameEmitters.hpp:
+
+          Change code generation for facet servant classes to be
+          defined in a special namespace created from a prefix
+          and a flattened version of the name of the scope
+          containing the interface that supports the facet. This
+          change enables facets in the same translation unit
+          using the same interface to use a single source code
+          definition (an internal check in the CIDL compiler
+          guarantees that the facet servant class is generated
+          once per interface per translation unit). The fact
+          that the actual facet servant class type is an instantiation
+          of a template class ensures that the same interface type
+          used as a facet in multiple translation units in a build
+          will not produce multiple-definition link errors,
+          although in this case there will be duplicated code.
+          Thanks to James Hill <j.hill@vanderbilt.edu> for providing
+          the multiple-facet-single-translation-unit use case
+          and to Nanbor Wang <nanbor@txcorp.com> for his comments
+          on the proposed solution.
+
 Wed May 10 14:04:57 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/NodeManager/MonitorCB.cpp
@@ -5,7 +35,7 @@ Wed May 10 14:04:57 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
         * DAnCE/TargetManager/DomainDataManager.cpp
 
         Fixes for warnings.
-        
+
 Mon May  8 20:41:43 UTC 2006  Stoyan Paunov  <spaunov@isis.vanderbilt.edu>
 
         * bin/PerlCIAO/perlciao.mpc:

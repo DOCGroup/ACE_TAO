@@ -415,6 +415,11 @@ namespace
     {
       if (i.context ().count ("facet_src_gen")) return;
 
+      /// Open a namespace made from the interface scope's name.
+      os << "namespace " << STRS[FACET_PREFIX]
+         << regex::perl_s (i.scoped_name ().scope_name ().str (), "/::/_/")
+         << "{";
+
       os << "template <typename T>" << endl
          << i.name () << "_Servant_T<T>::" << i.name ()
          << "_Servant_T (" << endl
@@ -511,6 +516,9 @@ namespace
          << "}"
          << STRS[ACE_TR] << " ( ::CORBA::INTERNAL (), 0);" << endl
          << "}" << endl;
+
+      // Close the facet servant's namespace.
+      os << "}";
 
       i.context ().set ("facet_src_gen", true);
     }
@@ -1108,32 +1116,6 @@ namespace
     virtual void
     pre (Type& t)
     {
-      // CIAO has facet classes outside the context and servant classes.
-      // We launch it here to generate the classes at the top of the file,
-      // like the original hand-crafted examples, for easier checking.
-      // This can be moved later to ServantEmitter::pre() or out on its own.
-      {
-        Traversal::Component component_emitter;
-
-        Traversal::Inherits inherits;
-        inherits.node_traverser (component_emitter);
-
-        Traversal::Defines defines;
-        component_emitter.edge_traverser (defines);
-        component_emitter.edge_traverser (inherits);
-
-        Traversal::Provider provider;
-        defines.node_traverser (provider);
-
-        Traversal::Belongs belongs;
-        provider.edge_traverser (belongs);
-
-        FacetEmitter facet_emitter (ctx);
-        belongs.node_traverser (facet_emitter);
-
-        component_emitter.traverse (t);
-      }
-
       os << t.name () << "_Context::"
          << t.name () << "_Context (" << endl
          << "::Components::CCMHome_ptr h," << endl
@@ -1855,6 +1837,7 @@ namespace
           simple_type_name_emitter_ (c),
           servant_type_name_emitter_ (c),
           enclosing_type_name_emitter_ (c),
+          facet_enclosing_type_name_emitter_ (c),
           repo_id_emitter_ (c),
           scope_ (scope)
       {
@@ -1862,6 +1845,9 @@ namespace
         simple_belongs_.node_traverser (simple_type_name_emitter_);
         servant_belongs_.node_traverser (servant_type_name_emitter_);
         enclosing_belongs_.node_traverser (enclosing_type_name_emitter_);
+        facet_enclosing_belongs_.node_traverser (
+            facet_enclosing_type_name_emitter_
+          );
         repo_id_belongs_.node_traverser (repo_id_emitter_);
       }
 
@@ -1953,8 +1939,12 @@ namespace
            << "return ret;"
            << "}";
 
-        os << "CIAO::Port_Activator_T<" << endl
-           << "    ";
+        os << "::CIAO::Port_Activator_T<" << endl
+           << "    ::" << STRS[FACET_PREFIX];
+
+        Traversal::ProviderData::belongs (p, facet_enclosing_belongs_);
+
+        os << "::";
 
         Traversal::ProviderData::belongs (p, servant_belongs_);
 
@@ -1971,8 +1961,12 @@ namespace
            << "    ::Components::CCMContext," << endl
            << "    " << scope_.name () << "_Servant" << endl
            << "  > *tmp = 0;" << endl
-           << "typedef CIAO::Port_Activator_T<" << endl
-           << "    ";
+           << "typedef ::CIAO::Port_Activator_T<" << endl
+           << "    ::" << STRS[FACET_PREFIX];
+
+        Traversal::ProviderData::belongs (p, facet_enclosing_belongs_);
+
+        os << "::";
 
         Traversal::ProviderData::belongs (p, servant_belongs_);
 
@@ -2049,11 +2043,13 @@ namespace
       SimpleTypeNameEmitter simple_type_name_emitter_;
       ServantTypeNameEmitter servant_type_name_emitter_;
       EnclosingTypeNameEmitter enclosing_type_name_emitter_;
+      FacetEnclosingTypeNameEmitter facet_enclosing_type_name_emitter_;
       RepoIdEmitter repo_id_emitter_;
       Traversal::Belongs belongs_;
       Traversal::Belongs simple_belongs_;
       Traversal::Belongs servant_belongs_;
       Traversal::Belongs enclosing_belongs_;
+      Traversal::Belongs facet_enclosing_belongs_;
       Traversal::Belongs repo_id_belongs_;
       SemanticGraph::Component& scope_;
     };
@@ -4261,42 +4257,16 @@ ServantSourceEmitter::ServantSourceEmitter (std::ostream& os_,
 {}
 
 void
-ServantSourceEmitter::pre (TranslationUnit&)
-{
-  os << COPYRIGHT;
-
-  string file_name ("");
-
-  if (! file_.empty ())
-    {
-      file_name = file_.leaf ();
-    }
-
-  string file_suffix = cl_.get_value ("svnt-hdr-file-suffix",
-                                      "_svnt.h");
-
-  file_name = regex::perl_s (file_name,
-                             "/^(.+?)(\\.(idl|cidl|cdl))?$/$1"
-                             + file_suffix
-                             + "/");
-
-  string swap_option = cl_.get_value ("custom-container", "");
-  bool swapping = (swap_option == "upgradeable");
-
-  os << "#include \"" << file_name << "\"" << endl
-     << "#include \"Cookies.h\"" << endl
-     << "#include \"ciao/Servant_Activator.h\"" << endl
-     << (swapping ? "#include \"ciao/Dynamic_Component_Activator.h\"\n" : "")
-     << "#include \"ciao/Port_Activator_T.h\"" << endl
-     << "#include \"ace/SString.h\"" << endl << endl;
-}
-
-void
 ServantSourceEmitter::generate (TranslationUnit& u)
 {
   pre (u);
 
   Context c (os, export_macro_, cl_);
+
+  /// CIAO has facet classes outside the context and servant classes.
+  /// We launch it here to generate the classes inside namespaces
+  /// constructed to be unique for each interface type used in a facet.
+  generate_facets (u, c);
 
   Traversal::TranslationUnit unit;
 
@@ -4319,7 +4289,6 @@ ServantSourceEmitter::generate (TranslationUnit& u)
 
   //--
   Traversal::Root root;
-  //  includes.node_traverser (region);
   contains_root.node_traverser (root);
 
   // Layer 3
@@ -4363,3 +4332,116 @@ ServantSourceEmitter::generate (TranslationUnit& u)
   unit.traverse (u);
 }
 
+void
+ServantSourceEmitter::pre (TranslationUnit&)
+{
+  os << COPYRIGHT;
+
+  string file_name ("");
+
+  if (! file_.empty ())
+    {
+      file_name = file_.leaf ();
+    }
+
+  string file_suffix = cl_.get_value ("svnt-hdr-file-suffix",
+                                      "_svnt.h");
+
+  file_name = regex::perl_s (file_name,
+                             "/^(.+?)(\\.(idl|cidl|cdl))?$/$1"
+                             + file_suffix
+                             + "/");
+
+  string swap_option = cl_.get_value ("custom-container", "");
+  bool swapping = (swap_option == "upgradeable");
+
+  os << "#include \"" << file_name << "\"" << endl
+     << "#include \"Cookies.h\"" << endl
+     << "#include \"ciao/Servant_Activator.h\"" << endl
+     << (swapping ? "#include \"ciao/Dynamic_Component_Activator.h\"\n" : "")
+     << "#include \"ciao/Port_Activator_T.h\"" << endl
+     << "#include \"ace/SString.h\"" << endl << endl;
+}
+
+void
+ServantSourceEmitter::generate_facets (TranslationUnit& u, Context& c)
+{
+  Traversal::TranslationUnit unit;
+
+  // Layer 1
+  //
+  Traversal::ContainsPrincipal contains_principal;
+  unit.edge_traverser (contains_principal);
+
+  //--
+  Traversal::TranslationRegion region;
+  contains_principal.node_traverser (region);
+
+  // Layer 2
+  //
+  Traversal::ContainsRoot contains_root;
+  Traversal::Includes includes;
+
+  region.edge_traverser (includes);
+  region.edge_traverser (contains_root);
+
+  //--
+  Traversal::Root root;
+  //  includes.node_traverser (region);
+  contains_root.node_traverser (root);
+
+  // Layer 3
+  //
+  Traversal::Defines defines;
+  root.edge_traverser (defines);
+
+  //--
+  Traversal::Module module;
+  Traversal::Composition composition;
+  defines.node_traverser (module);
+  defines.node_traverser (composition);
+
+  // Layer 4
+  //
+  Traversal::Defines composition_defines;
+  composition.edge_traverser (composition_defines);
+
+  //--
+  Traversal::ComponentExecutor component_executor;
+  Traversal::HomeExecutor home_executor;
+  composition_defines.node_traverser (component_executor);
+  composition_defines.node_traverser (home_executor);
+
+  module.edge_traverser (defines);
+
+  // Layer 5
+  //
+  Traversal::Implements implements;
+  component_executor.edge_traverser (implements);
+  home_executor.edge_traverser (implements);
+
+  // Layer 6
+  //
+  Traversal::Component component_emitter;
+  implements.node_traverser (component_emitter);
+
+  Traversal::Inherits component_inherits;
+  component_inherits.node_traverser (component_emitter);
+
+  Traversal::Defines component_defines;
+  component_emitter.edge_traverser (component_defines);
+  component_emitter.edge_traverser (component_inherits);
+
+  // Layer 7
+  //
+  Traversal::Provider provider;
+  component_defines.node_traverser (provider);
+
+  Traversal::Belongs belongs;
+  provider.edge_traverser (belongs);
+
+  FacetEmitter facet_emitter (c);
+  belongs.node_traverser (facet_emitter);
+
+  unit.traverse (u);
+}
