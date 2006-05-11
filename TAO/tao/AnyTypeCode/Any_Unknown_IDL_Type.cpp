@@ -17,14 +17,20 @@ ACE_RCSID (tao,
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_Auto_Ptr<ACE_Lock> TAO::Unknown_IDL_Type::lock_(new ACE_Lock_Adapter<TAO_SYNCH_MUTEX>());
+
+ACE_Lock *
+TAO::Unknown_IDL_Type::lock_i (void)
+{
+  static ACE_Auto_Ptr<ACE_Lock> lock_ (new ACE_Lock_Adapter<TAO_SYNCH_MUTEX>());
+  return lock_.get ();
+}
 
 TAO::Unknown_IDL_Type::Unknown_IDL_Type (
     CORBA::TypeCode_ptr tc,
     TAO_InputCDR &cdr
   )
   : TAO::Any_Impl (0, tc, true)
-  , cdr_ (static_cast<ACE_Message_Block*>(0), lock_.get())
+  , cdr_ (static_cast<ACE_Message_Block*>(0), lock_i ())
 {
   ACE_TRY_NEW_ENV
     {
@@ -41,7 +47,7 @@ TAO::Unknown_IDL_Type::Unknown_IDL_Type (
     CORBA::TypeCode_ptr tc
   )
   : TAO::Any_Impl (0, tc, true)
-  , cdr_ (static_cast<ACE_Message_Block*>(0), lock_.get())
+  , cdr_ (static_cast<ACE_Message_Block*>(0), lock_i ())
 {
 }
 
@@ -227,7 +233,7 @@ TAO::Unknown_IDL_Type::to_value (CORBA::ValueBase *&val) const
           return 0;
         }
 
-	  TAO_ORB_Core *orb_core = this->cdr_.orb_core ();
+    TAO_ORB_Core *orb_core = this->cdr_.orb_core ();
       if (orb_core == 0)
         {
           orb_core = TAO_ORB_Core_instance ();
@@ -277,7 +283,7 @@ TAO::Unknown_IDL_Type::to_abstract_base (CORBA::AbstractBase_ptr &obj) const
           return 0;
         }
 
-	  TAO_ORB_Core *orb_core = this->cdr_.orb_core ();
+    TAO_ORB_Core *orb_core = this->cdr_.orb_core ();
       if (orb_core == 0)
         {
           orb_core = TAO_ORB_Core_instance ();
