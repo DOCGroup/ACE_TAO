@@ -49,8 +49,7 @@ class TAO_Export TAO_GIOP_Message_Base : public TAO_Pluggable_Messaging
 {
 public:
   /// Constructor
-  TAO_GIOP_Message_Base (TAO_ORB_Core *orb_core,
-                         size_t input_cdr_size = ACE_CDR::DEFAULT_BUFSIZE);
+  TAO_GIOP_Message_Base (TAO_ORB_Core *orb_core);
 
   /// Dtor
   virtual ~TAO_GIOP_Message_Base (void);
@@ -88,12 +87,12 @@ public:
   virtual int format_message (TAO_OutputCDR &cdr);
 
   /// Parse the details of the next message from the @a incoming
-  /// and initializes attributes of @a qd. Returns 0 if the message 
-  /// header could not be parsed completely, returns a 1 if the message 
+  /// and initializes attributes of @a qd. Returns 0 if the message
+  /// header could not be parsed completely, returns a 1 if the message
   /// header could be parsed completely and returns -1 on error.
   virtual int parse_next_message (ACE_Message_Block &incoming,
-                                  TAO_Queued_Data &qd,       /* out */ 
-                                  size_t &mesg_length);      /* out */ 
+                                  TAO_Queued_Data &qd,       /* out */
+                                  size_t &mesg_length);      /* out */
 
   /// Extract the details of the next message from the @a incoming
   /// through @a qd. Returns 0 if the message header could not be
@@ -143,7 +142,7 @@ public:
   /// consolidated message, 1 if there are still fragmens outstanding,
   /// in case of error -1 is being returned. In any case @a qd must be
   /// released by method implementation.
-  virtual int consolidate_fragmented_message (TAO_Queued_Data *qd, 
+  virtual int consolidate_fragmented_message (TAO_Queued_Data *qd,
                                               TAO_Queued_Data *&msg);
 
   /// Discard all fragments associated to request-id encoded in
