@@ -291,42 +291,39 @@ private:
 
 } // namespace TAO
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #endif
 
-namespace TAO
+inline
+bool
+operator== (const TAO::unbounded_value_sequence<CORBA::Octet> & lhs,
+            const TAO::unbounded_value_sequence<CORBA::Octet> & rhs)
 {
-  inline
-  bool
-  operator== (const unbounded_value_sequence< ::CORBA::Octet> & lhs,
-              const unbounded_value_sequence< ::CORBA::Octet> & rhs)
-  {
-    ::CORBA::ULong const rlen = rhs.length ();
+  ::CORBA::ULong const rlen = rhs.length ();
 
-    if (rlen != lhs.length ())
-      {
-        return false;
-      }
+  if (rlen != lhs.length ())
+    {
+      return false;
+    }
 
-    for (::CORBA::ULong i = 0; i < rlen; ++i)
-      {
-        if (rhs[i] != lhs[i])
-          {
-            return false;
-          }
-      }
+  for (::CORBA::ULong i = 0; i < rlen; ++i)
+    {
+      if (rhs[i] != lhs[i])
+        {
+          return false;
+        }
+    }
 
-    return true;
-  }
-
-  inline
-  bool
-  operator!= (const unbounded_value_sequence< ::CORBA::Octet> & lhs,
-              const unbounded_value_sequence< ::CORBA::Octet> & rhs)
-  {
-    return !(lhs == rhs);
-  }
+  return true;
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
+inline
+bool
+operator!= (const TAO::unbounded_value_sequence<CORBA::Octet> & lhs,
+            const TAO::unbounded_value_sequence<CORBA::Octet> & rhs)
+{
+  return !(lhs == rhs);
+}
 
 #endif // guard_unbounded_octet_sequence_hpp
