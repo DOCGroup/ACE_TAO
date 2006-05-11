@@ -1,3 +1,8 @@
+Thu May 11 07:19:12 UTC 2006  Kees van Marle  <kvmarle@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Added Bug_1254_Regression
+
 Wed May 10 14:10:02 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * ace/config-win32-msvc-7.h: MSVC 7.1 operator new throws an exception
