@@ -1648,7 +1648,7 @@ ACE_Dev_Poll_Reactor::register_handler (const ACE_Sig_Set &sigset,
 
   int result = 0;
 
-#if (ACE_NSIG > 0)  &&  !defined (CHORUS)
+#if (ACE_NSIG > 0)
 
   for (int s = 1; s < ACE_NSIG; ++s)
     if ((sigset.is_member (s) == 1)
@@ -1657,13 +1657,13 @@ ACE_Dev_Poll_Reactor::register_handler (const ACE_Sig_Set &sigset,
                                                     new_disp) == -1)
       result = -1;
 
-#else  /* ACE_NSIG <= 0  ||  CHORUS */
+#else  /* ACE_NSIG <= 0 */
 
   ACE_UNUSED_ARG (sigset);
   ACE_UNUSED_ARG (new_sh);
   ACE_UNUSED_ARG (new_disp);
 
-#endif /* ACE_NSIG <= 0  ||  CHORUS */
+#endif /* ACE_NSIG <= 0  */
 
   return result;
 }
@@ -1769,18 +1769,18 @@ ACE_Dev_Poll_Reactor::remove_handler (const ACE_Sig_Set &sigset)
 
   int result = 0;
 
-#if (ACE_NSIG > 0)  &&  !defined (CHORUS)
+#if (ACE_NSIG > 0)
 
   for (int s = 1; s < ACE_NSIG; ++s)
     if ((sigset.is_member (s) == 1)
         && this->signal_handler_->remove_handler (s) == -1)
       result = -1;
 
-#else  /* ACE_NSIG <= 0  ||  CHORUS */
+#else  /* ACE_NSIG <= 0 */
 
   ACE_UNUSED_ARG (sigset);
 
-#endif /* ACE_NSIG <= 0  ||  CHORUS */
+#endif /* ACE_NSIG <= 0 */
 
   return result;
 }
