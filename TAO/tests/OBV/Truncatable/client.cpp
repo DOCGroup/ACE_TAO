@@ -307,10 +307,10 @@ main (int argc, char *argv[])
         v5.basic_data (9);
         v5.nv4 (&nv);
         v5.data4 (99 * 4);
-        v5.str1 ("str1");
+        v5.str1 (CORBA::string_dup ("str1"));
         v5.data5 (99 * 5);
         v5.nv5 (&nv);
-        v5.str2 ("str2");
+        v5.str2 (CORBA::string_dup ("str2"));
 
         OBV_TruncatableTest::BaseValue_var ov5;
         desc = CORBA::string_dup
