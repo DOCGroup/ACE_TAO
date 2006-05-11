@@ -126,7 +126,7 @@ main (int argc, char *argv[])
             (1000000.0 * message_count * message_size) / usecs;
           double kbytes = bytes / 1024;
           double mbytes = kbytes / 1024;
-          double mbits  = bytes * 8 / 10000000;
+          double mbits  = bytes * 8 / 1000000;
 
           ACE_DEBUG ((LM_DEBUG,
                       "Sender[%d] %f (bytes/sec), "
