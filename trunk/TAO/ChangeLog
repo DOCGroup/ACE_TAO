@@ -1,3 +1,10 @@
+Thu May 11 09:22:10 2006  Douglas C. Schmidt  <schmidt@cse.wustl.edu>
+
+	* performance-tests/Throughput/Receiver.cpp (done),
+	* performance-tests/Throughput/client.cpp (main): Changed 
+	  division by 10000000 to division by 1000000.  Thanks to
+	  Jason Zhao <jason.zhao at lmco dot com>.
+
 Thu May 11 13:49:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_1254_Regression/BlobServer.h:
