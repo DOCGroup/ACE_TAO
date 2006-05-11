@@ -3,6 +3,7 @@
 // cvs-id    : $Id$
 
 #include "UtilityTypeNameEmitters.hpp"
+#include "CCF/CodeGenerationKit/Regex.hpp"
 
 FullTypeNameEmitter::FullTypeNameEmitter (Context& c)
   : EmitterBase (c)
@@ -53,5 +54,18 @@ StrippedTypeNameEmitter::traverse (SemanticGraph::Type& t)
 {
   ScopedName scoped (t.scoped_name ());
   os << Name (scoped.begin () + 1, scoped.end ());
+}
+
+// ===================================================
+
+FacetEnclosingTypeNameEmitter::FacetEnclosingTypeNameEmitter (Context& c)
+  : EmitterBase (c)
+{
+}
+
+void
+FacetEnclosingTypeNameEmitter::traverse (SemanticGraph::Type& t)
+{
+  os << regex::perl_s (t.scoped_name ().scope_name ().str (), "/::/_/");
 }
 

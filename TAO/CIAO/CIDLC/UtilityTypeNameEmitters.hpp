@@ -53,4 +53,14 @@ struct StrippedTypeNameEmitter : Traversal::Type,
   traverse (SemanticGraph::Type&);
 };
 
+// Emits scoped name in flat form for use with a prefix.
+struct FacetEnclosingTypeNameEmitter : Traversal::Type,
+                                       EmitterBase
+{
+  FacetEnclosingTypeNameEmitter (Context&);
+
+  virtual void
+  traverse (SemanticGraph::Type&);
+};
+
 #endif  // UTILITYTYPENAMEEMITTERS_HPP

@@ -46,6 +46,7 @@ namespace StringLiterals
     COMP_PD,
     COMP_ED,
     CIDL_NS,
+    FACET_PREFIX,
     TYPE_ID,
     TYPE_PREFIX,
     REPO_ID,
