@@ -457,7 +457,7 @@ TAO_Transport::handle_output (void)
   // The flushing strategy (potentially via the Reactor) wants to send
   // more data, first check if there is a current message that needs
   // more sending...
-  int retval = this->drain_queue ();
+  int const retval = this->drain_queue ();
 
   if (TAO_debug_level > 3)
     {
