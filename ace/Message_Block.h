@@ -162,7 +162,7 @@ public:
    * this this block ceases to exist; this object will not free @a data on
    * destruction.  If @a locking_strategy is non-0 then this is used
    * to protect regions of code that access shared state (e.g.,
-   * reference counting) from  race conditions.  Note that the @c size
+   * reference counting) from race conditions.  Note that the @c size
    * of the ACE_Message_Block will be @a size, but the @c length will be 0
    * until the write pointer is set. The @a data_block_allocator is used to
    * allocate the data blocks while the @a allocator_strategy is used
@@ -197,34 +197,34 @@ public:
    * align the data block if it is created afresh. If the incoming
    * <mb> has a data block has a data block allocated from the heap,
    * then this constructor just duplicates (ie. a shallow copy) the
-   * data block of the incoming <mb>.
+   * data block of the incoming @a mb.
    */
   ACE_Message_Block (const ACE_Message_Block &mb,
                      size_t align);
 
   /**
-   * Create a Message Block that assumes it has ownership of <data>,
+   * Create a Message Block that assumes it has ownership of @a data,
    * but in reality it doesnt (i.e., cannot delete it since it didn't
-   * malloc it!).  Note that the  <size> of the <Message_Block> will
-   * be <size>, but the <length>  will be 0 until <wr_ptr> is set.
+   * malloc it!).  Note that the @c size of the Message_Block will
+   * be @a size, but the <length>  will be 0 until <wr_ptr> is set.
    */
   int init (const char *data,
             size_t size = 0);
 
   /**
-   * Create an initialized message of type <type> containing <size>
-   * bytes.  The <cont> argument initializes the continuation field in
-   * the <Message_Block>.  If <data> == 0 then we create and own the
-   * <data>, using <allocator> to get the data if it's non-0.  If
-   * <data> != 0 we assume that we have ownership of the <data> till
+   * Create an initialized message of type @a type containing @a size
+   * bytes.  The @a cont argument initializes the continuation field in
+   * the <Message_Block>.  If @a data == 0 then we create and own the
+   * @a data, using @a allocator_strategy to get the data if it's non-0.  If
+   * @a data != 0 we assume that we have ownership of the @a data till
    * this object ceases to exist  (and don't delete it during
-   * destruction).  If <locking_strategy> is non-0 then this is used
+   * destruction).  If @a locking_strategy is non-0 then this is used
    * to protect regions of code that access shared state (e.g.,
    * reference counting) from race conditions.  Note that the <size>
-   * of the <Message_Block> will be <size>, but the <length> will be 0
-   * until  <wr_ptr> is set. The <data_block_allocator> is use to
-   * allocate the data blocks while the <allocator_strategy> is used
-   * to allocate the buffers  contained by those.
+   * of the <Message_Block> will be @a size, but the <length> will be 0
+   * until  <wr_ptr> is set. The @a data_block_allocator is use to
+   * allocate the data blocks while the @a allocator_strategy is used
+   * to allocate the buffers contained by those.
    */
   int init (size_t size,
             ACE_Message_Type type = MB_DATA,
@@ -258,15 +258,15 @@ public:
   int is_data_msg (void) const;
 
   /// Find out what class of message this is (there are two classes,
-  /// <normal> messages and <high-priority> messages).
+  /// @c normal messages and @c high-priority messages).
   ACE_Message_Type msg_class (void) const;
 
   // = Message flag accessors and mutators.
-  /// Bitwise-or the <more_flags> into the existing message flags and
+  /// Bitwise-or the @a more_flags into the existing message flags and
   /// return the new value.
   Message_Flags set_flags (Message_Flags more_flags);
 
-  /// Clear the message flag bits specified in <less_flags> and return
+  /// Clear the message flag bits specified in @a less_flags and return
   /// the new value.
   Message_Flags clr_flags (Message_Flags less_flags);
 
@@ -283,7 +283,7 @@ public:
    */
   Message_Flags set_self_flags (ACE_Message_Block::Message_Flags more_flags);
 
-  /// Clear the message flag bits specified in <less_flags> and return
+  /// Clear the message flag bits specified in @a less_flags and return
   /// the new value.
   Message_Flags clr_self_flags (ACE_Message_Block::Message_Flags less_flags);
 
