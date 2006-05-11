@@ -1,3 +1,33 @@
+Thu May 11 21:13:22 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tao/AnyTypeCode/Any_Unknown_IDL_Type.h:
+        * tao/AnyTypeCode/Any_Unknown_IDL_Type.cpp:
+
+          Having a lock_ as a global static makes this code subject to the
+          whim of the specific compiler implementation and library
+          ordering. It is up to the compiler to decide the order in which
+          our instance is initialized and destroyed. Typically, this
+          becomes a problem when a code that depends on that instance
+          finds that the runtime has already destroyed it. The scenario
+          plays almost always in the process shutdown code, after main()
+          exits (which is a lot of fun to debug :).  The change replaces
+          the static class member with static-local variable, defined
+          within a static member function. C++ guarantees that the local
+          static variable will be initialized at the first method
+          invocation.
+
+        * tao/ORB_Core.cpp:
+
+          Reversing a changes, introduced by this:
+          Wed Apr 26 20:21:49 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+          I had incorrectly assumed that the same pattern of dynamic
+          loading of factories applies to all factories. In fact many of
+          them are optional and their usage is predicated on having a svc
+          conf file, having their library statically linked. This change
+          removes the overly aggressive attempts to load such services and
+          the incorrect usage of TAO_AS_STATIC_LIBS macro..
+
 Thu May 11 19:21:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         Reverted the change below, it breaks some gcc builds, have to figure
@@ -11,10 +41,10 @@ Thu May 11 19:21:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu May 11 09:22:10 2006  Douglas C. Schmidt  <schmidt@cse.wustl.edu>
 
-	* performance-tests/Throughput/Receiver.cpp (done),
-	* performance-tests/Throughput/client.cpp (main): Changed
-	  division by 10000000 to division by 1000000.  Thanks to
-	  Jason Zhao <jason.zhao at lmco dot com>.
+        * performance-tests/Throughput/Receiver.cpp (done),
+        * performance-tests/Throughput/client.cpp (main): Changed
+          division by 10000000 to division by 1000000.  Thanks to
+          Jason Zhao <jason.zhao at lmco dot com>.
 
 Thu May 11 13:49:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
