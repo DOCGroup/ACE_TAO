@@ -8,6 +8,8 @@
 #include <string>
 #include <iosfwd>
 
+#include "EmitterContext.hpp"
+
 #include "CCF/CodeGenerationKit/CommandLine.hpp"
 
 #include "CCF/CIDL/SemanticGraph.hpp"
@@ -23,11 +25,19 @@ public:
 
   virtual ~ServantHeaderEmitter () {}
 
+  /// Called by the backend driver.
+  virtual void
+  generate (CCF::CIDL::SemanticGraph::TranslationUnit& u);
+
+private:
+  /// Called from generate().
+
   virtual void
   pre (CCF::CIDL::SemanticGraph::TranslationUnit& u);
 
   virtual void
-  generate (CCF::CIDL::SemanticGraph::TranslationUnit& u);
+  generate_facets (CCF::CIDL::SemanticGraph::TranslationUnit& u,
+                   Context& c);
 
   virtual void
   post (CCF::CIDL::SemanticGraph::TranslationUnit& u);

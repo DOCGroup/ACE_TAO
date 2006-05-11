@@ -43,6 +43,11 @@ namespace
       ScopedName scoped (i.scoped_name ());
       Name stripped (scoped.begin () + 1, scoped.end ());
 
+      /// Open a namespace made from the interface scope's name.
+      os << "namespace " << STRS[FACET_PREFIX]
+         << regex::perl_s (scoped.scope_name ().str (), "/::/_/")
+         << "{";
+
       os << "template <typename T>" << endl
          << "class " << i.name () << "_Servant_T" << endl
          << ": public virtual POA_" << stripped << endl
@@ -120,6 +125,9 @@ namespace
 
       os << "typedef " << i.name () << "_Servant_T<int> "
          << i.name () << "_Servant;";
+
+      // Close the facet servant's namespace.
+      os << "}";
 
       i.context ().set ("facet_hdr_gen", true);
     }
@@ -411,32 +419,6 @@ namespace
     virtual void
     pre (Type& t)
     {
-      // CIAO has facet classes outside the context and servant classes.
-      // We launch it here to generate the classes at the top of the file,
-      // like the original hand-crafted examples, for easier checking.
-      // This can be moved later to ServantEmitter::pre() or out on its own.
-      {
-        Traversal::Component component_emitter;
-
-        Traversal::Inherits component_inherits;
-        component_inherits.node_traverser (component_emitter);
-
-        Traversal::Defines defines;
-        component_emitter.edge_traverser (defines);
-        component_emitter.edge_traverser (component_inherits);
-
-        Traversal::Provider provider;
-        defines.node_traverser (provider);
-
-        Traversal::Belongs belongs;
-        provider.edge_traverser (belongs);
-
-        FacetEmitter facet_emitter (ctx);
-        belongs.node_traverser (facet_emitter);
-
-        component_emitter.traverse (t);
-      }
-
       os << "class " << t.name () << "_Servant;" << endl;
 
       string swap_option = cl_.get_value ("custom-container", "");
@@ -1622,6 +1604,84 @@ ServantHeaderEmitter::ServantHeaderEmitter (std::ostream& os_,
 {}
 
 void
+ServantHeaderEmitter::generate (TranslationUnit& u)
+{
+  pre (u);
+
+  Context c (os, export_macro_, cl_);
+
+  /// CIAO has facet classes outside the context and servant classes.
+  /// We launch it here to generate the classes inside namespaces
+  /// constructed to be unique for each interface type used in a facet.
+  generate_facets (u, c);
+
+  Traversal::TranslationUnit unit;
+
+  // Layer 1
+  //
+  Traversal::ContainsPrincipal contains_principal;
+  unit.edge_traverser (contains_principal);
+
+  //--
+  Traversal::TranslationRegion region;
+  contains_principal.node_traverser (region);
+
+  // Layer 2
+  //
+  Traversal::ContainsRoot contains_root;
+  Traversal::Includes includes;
+
+  region.edge_traverser (includes);
+  region.edge_traverser (contains_root);
+
+  //--
+  Traversal::Root root;
+  contains_root.node_traverser (root);
+
+  // Layer 3
+  //
+  Traversal::Defines defines;
+  root.edge_traverser (defines);
+
+  //--
+  ModuleEmitter module (c);
+  CompositionEmitter composition (c);
+  defines.node_traverser (module);
+  defines.node_traverser (composition);
+
+  // Layer 4
+  //
+  Traversal::Defines composition_defines;
+  composition.edge_traverser (composition_defines);
+
+  module.edge_traverser (defines);
+
+  //--
+  Traversal::ComponentExecutor component_executor;
+  Traversal::HomeExecutor home_executor;
+  composition_defines.node_traverser (component_executor);
+  composition_defines.node_traverser (home_executor);
+
+  // Layer 5
+  //
+  Traversal::Implements implements;
+  component_executor.edge_traverser (implements);
+  home_executor.edge_traverser (implements);
+
+  //--
+  ContextEmitter context_emitter (c, cl_);
+  ServantEmitter servant_emitter (c);
+  HomeEmitter home_emitter (c, cl_);
+  implements.node_traverser (context_emitter);
+  implements.node_traverser (servant_emitter);
+  implements.node_traverser (home_emitter);
+
+  unit.traverse (u);
+
+  post (u);
+}
+
+void
 ServantHeaderEmitter::pre (TranslationUnit&)
 {
   os << COPYRIGHT;
@@ -1708,12 +1768,8 @@ ServantHeaderEmitter::pre (TranslationUnit&)
 }
 
 void
-ServantHeaderEmitter::generate (TranslationUnit& u)
+ServantHeaderEmitter::generate_facets (TranslationUnit& u, Context& c)
 {
-  pre (u);
-
-  Context c (os, export_macro_, cl_);
-
   Traversal::TranslationUnit unit;
 
   // Layer 1
@@ -1729,8 +1785,8 @@ ServantHeaderEmitter::generate (TranslationUnit& u)
   //
   Traversal::TranslationRegion included_region;
 
-  // Inclusion handling is somewhat tricky because we want
-  // to print only top-level #includes.
+  /// Includes are handled here so they will all be present
+  /// before the facet servants (if any) are generated.
 
   Traversal::ContainsRoot contains_root;
   Traversal::QuoteIncludes quote_includes;
@@ -1744,7 +1800,6 @@ ServantHeaderEmitter::generate (TranslationUnit& u)
 
   included_region.edge_traverser (quote_includes);
   included_region.edge_traverser (bracket_includes);
-//  included_region.edge_traverser (contains_root);
 
   //--
   Traversal::Root root;
@@ -1755,21 +1810,21 @@ ServantHeaderEmitter::generate (TranslationUnit& u)
 
   // Layer 3
   //
-  Traversal::Defines defines;
-  root.edge_traverser (defines);
+  Traversal::Defines root_defines;
+  root.edge_traverser (root_defines);
 
   //--
-  ModuleEmitter module (c);
-  CompositionEmitter composition (c);
-  defines.node_traverser (module);
-  defines.node_traverser (composition);
+  Traversal::Module module;
+  Traversal::Composition composition;
+  root_defines.node_traverser (module);
+  root_defines.node_traverser (composition);
 
   // Layer 4
   //
   Traversal::Defines composition_defines;
   composition.edge_traverser (composition_defines);
 
-  module.edge_traverser (defines);
+  module.edge_traverser (composition_defines);
 
   //--
   Traversal::ComponentExecutor component_executor;
@@ -1783,17 +1838,30 @@ ServantHeaderEmitter::generate (TranslationUnit& u)
   component_executor.edge_traverser (implements);
   home_executor.edge_traverser (implements);
 
-  //--
-  ContextEmitter context_emitter (c, cl_);
-  ServantEmitter servant_emitter (c);
-  HomeEmitter home_emitter (c, cl_);
-  implements.node_traverser (context_emitter);
-  implements.node_traverser (servant_emitter);
-  implements.node_traverser (home_emitter);
+  // Layer 6
+  //
+  Traversal::Component component_emitter;
+  implements.node_traverser (component_emitter);
+
+  Traversal::Inherits component_inherits;
+  component_inherits.node_traverser (component_emitter);
+
+  Traversal::Defines component_defines;
+  component_emitter.edge_traverser (component_defines);
+  component_emitter.edge_traverser (component_inherits);
+
+  // Layer 7
+  //
+  Traversal::Provider provider;
+  component_defines.node_traverser (provider);
+
+  Traversal::Belongs belongs;
+  provider.edge_traverser (belongs);
+
+  FacetEmitter facet_emitter (c);
+  belongs.node_traverser (facet_emitter);
 
   unit.traverse (u);
-
-  post (u);
 }
 
 void
