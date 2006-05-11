@@ -120,9 +120,6 @@ public:
                             int message_semantics = TAO_Transport::TAO_TWOWAY_REQUEST,
                             ACE_Time_Value *max_time_wait = 0);
 
-  /*virtual int send_reply (TAO_OutputCDR &stream,
-                          TAO_Adapter *poa = 0);*/
-
   virtual int generate_request_header (TAO_Operation_Details &opdetails,
                                        TAO_Target_Specification &spec,
                                        TAO_OutputCDR &msg);
