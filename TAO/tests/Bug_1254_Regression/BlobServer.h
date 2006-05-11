@@ -6,7 +6,7 @@
 #define BLOBSERVER_H
 #include /**/ "ace/pre.h"
 
-#include "TestS.h"
+#include "testS.h"
 
 class BlobServerImpl
   : public virtual POA_BlobServer
@@ -17,7 +17,7 @@ public:
 
   // = The skeleton methods
     virtual void test(
-        BlobType1& blob1, 
+        BlobType1& blob1,
         BlobType2& blob2
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
