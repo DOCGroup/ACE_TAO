@@ -1,3 +1,9 @@
+Fri May 12 07:29:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tools/Config_Handlers/XSCRT/Elements.hpp:
+          The work around is needed for < gcc 3.3 and also BCB6, so make
+          it a little bit more easier to handle this.
+
 Thu May 11 21:24:45 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/Literals.cpp:
