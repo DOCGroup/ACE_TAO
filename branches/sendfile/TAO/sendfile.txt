@@ -1,3 +1,12 @@
+Fri May 12 09:00:12 2006 UTC  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/GIOP_Message_Base.{h,cpp}:
+          Don't use the stack based buffer anymore, just always get the memory
+          for the stream from the allocator. For sendfile we always need the
+          mmap allocator, having the first message block from the stack
+          complicated things a lot. Because this is a one time allocation per
+          transport it will not impact performance in the critical path
+
 Thu May 11 13:40:12 2006 UTC  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/GIOP_Message_Base.{h,cpp}:
