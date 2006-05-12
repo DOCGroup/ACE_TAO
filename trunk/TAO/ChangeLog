@@ -1,3 +1,14 @@
+Fri May 12 14:00:17 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tests/ORB_Local_Config/Two_DLL_ORB/client.cpp:
+        * tests/ORB_Local_Config/Two_DLL_ORB/run_test.pl:
+        * tests/ORB_Local_Config/Two_DLL_ORB/server.cpp:
+
+          Updated the test to account for the case where the server may
+          not have completed writing out its IOR, by the time the client
+          tries to use it to get an object reference. Added ACE_TEXT where
+          appropriate.
+
 Thu May 11 21:13:22 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tao/AnyTypeCode/Any_Unknown_IDL_Type.h:
