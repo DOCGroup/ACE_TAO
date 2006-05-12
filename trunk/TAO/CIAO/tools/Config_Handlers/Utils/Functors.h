@@ -20,7 +20,11 @@ namespace CIAO
     template <typename Source,
               typename Dest,
               typename Dest_Type,
+#if defined (__BORLANDC__) && (__BORLANDC__ == 0x564)
               void (Func)(const Source &, Dest_Type &)>
+#else
+              void (&Func)(const Source &, Dest_Type &)>
+#endif
     struct Sequence_Handler
     {
       Sequence_Handler (Dest &dest, CORBA::ULong pos = 0)
