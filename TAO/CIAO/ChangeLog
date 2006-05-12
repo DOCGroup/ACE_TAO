@@ -1,3 +1,9 @@
+Fri May 12 07:36:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tools/Config_Handlers/Utils/Functors.h:
+          Added a workaround for specific for BCB6, should fix the gcc4
+          internal compiler errors
+
 Fri May 12 07:29:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tools/Config_Handlers/XSCRT/Elements.hpp:
