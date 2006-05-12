@@ -1,3 +1,11 @@
+Fri May 12 11:26:12 2006 UTC  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/GIOP_Message_Base.{h,cpp}:
+          Added the input_cdr_size constructor argument and then also use it,
+          after removing the argument things like the DIOP_Transport doesn't
+          build anymore. This argument is passed with another value, so it
+          it.
+
 Fri May 12 09:00:12 2006 UTC  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/GIOP_Message_Base.{h,cpp}:
