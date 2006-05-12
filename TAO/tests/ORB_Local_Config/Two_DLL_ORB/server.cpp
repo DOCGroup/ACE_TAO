@@ -17,7 +17,6 @@ ACE_RCSID (Hello,
 Server_Worker::Server_Worker ()
   : Abstract_Worker ("test.ior")
 {
-  //  ACE_DEBUG ((LM_DEBUG, "(%P|%t) %@ Server::<ctor>\n", this));
 }
 
 //
@@ -55,6 +54,8 @@ Server_Worker::parse_args (int argc, ACE_TCHAR *argv[])
 int
 Server_Worker::test_main (int argc, ACE_TCHAR *argv[] ACE_ENV_ARG_DECL)
 {
+  ACE_OS::unlink (ior_file_.c_str ());
+
   ACE_Argv_Type_Converter cvt (argc, argv);
   CORBA::ORB_var orb = CORBA::ORB_init (cvt.get_argc (), cvt.get_ASCII_argv () ACE_ENV_ARG_PARAMETER);
   ACE_TRY_CHECK;
@@ -69,7 +70,7 @@ Server_Worker::test_main (int argc, ACE_TCHAR *argv[] ACE_ENV_ARG_DECL)
 
   if (CORBA::is_nil (root_poa.in ()))
     ACE_ERROR_RETURN ((LM_ERROR,
-                       " (%P|%t) Panic: nil RootPOA\n"),
+                       ACE_TEXT ("(%P|%t) Panic: nil RootPOA\n")),
                       1);
 
   PortableServer::POAManager_var poa_manager =
@@ -93,25 +94,27 @@ Server_Worker::test_main (int argc, ACE_TCHAR *argv[] ACE_ENV_ARG_DECL)
     orb->object_to_string (hello.in () ACE_ENV_ARG_PARAMETER);
   ACE_TRY_CHECK;
 
+  poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_TRY_CHECK;
+
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Server activated POA manager\n")));
+
   // Output the IOR to the <ior_output_file>
   FILE *output_file= ACE_OS::fopen (ior_file_.c_str (), "w");
   if (output_file == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%P|%t) Cannot open output file for writing IOR: %s",
+                       ACE_TEXT ("(%P|%t) Cannot open output file for writing IOR: %s"),
                        ior_file_.c_str ()),
                       1);
   ACE_OS::fprintf (output_file, "%s", ior.in ());
   ACE_OS::fclose (output_file);
 
-  poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_TRY_CHECK;
-
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - entering event loop\n"));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Server entering the event loop\n")));
 
   orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_TRY_CHECK;
 
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Server exiting the event loop\n")));
 
   root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
   ACE_TRY_CHECK;

@@ -3,7 +3,6 @@
 #include "Test_i.h"
 #include "ORB_DLL.h"
 
-//#include "TestC.h"
 #include "ace/Get_Opt.h"
 #include "ace/Argv_Type_Converter.h"
 #include "ace/OS_NS_unistd.h"
@@ -53,20 +52,29 @@ Client_Worker::test_main (int argc, ACE_TCHAR *argv[] ACE_ENV_ARG_DECL)
   ACE_TRY_CHECK;
 
   if (parse_args (cvt.get_argc (), cvt.get_ASCII_argv ()) != 0)
-    return 1;
+    ACE_ERROR_RETURN ((LM_DEBUG,
+                       ACE_TEXT ("(%P|%t) Could not parse the arguments\n")),
+                      1);
 
   // Doing this dance to allow the server some time to come up.
   CORBA::Object_ptr co = 0;
   for (int attempts_left=5; attempts_left > 0; --attempts_left)
   {
-    ACE_DEBUG ((LM_DEBUG, "(%P|%t) Client is ready to proceed.\n"));
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("(%P|%t) Client is ready to proceed - awaiting the server ...\n")));
+    ACE_OS::sleep (1);
 
     ACE_TRY
     {
       co = orb->string_to_object(ior_file_.c_str () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      ACE_ASSERT (co != 0);
+      if (co == 0)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) Unable to obtain object reference yet. Retrying.\n")));
+          continue;
+        }
       CORBA::Object_var tmp (co);
 
       Test::Hello_var hello =
@@ -75,25 +83,27 @@ Client_Worker::test_main (int argc, ACE_TCHAR *argv[] ACE_ENV_ARG_DECL)
 
       if (CORBA::is_nil (hello.in ()))
         {
-          ACE_ERROR_RETURN ((LM_DEBUG,
-                             "(%P|%t) Nil Test::Hello reference <%s>\n",
-                             ior_file_.c_str ()),
-                            1);
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) Nil Test::Hello reference <%s>. Retrying.\n"),
+                      ior_file_.c_str ()));
+          continue;
         }
 
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Successfuly narrowed the Hello interface\n"));
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%P|%t) Successfuly narrowed the Hello interface\n")));
 
       CORBA::String_var the_string =
         hello->get_string (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned from the server <%s>\n",
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%P|%t) String returned from the server <%s>\n"),
                   the_string.in ()));
 
       hello->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      attempts_left = 0; // We're done here
+      attempts_left = 0; // We're done here!
 
     }
     ACE_CATCH (CORBA::TRANSIENT, ex)
@@ -101,9 +111,11 @@ Client_Worker::test_main (int argc, ACE_TCHAR *argv[] ACE_ENV_ARG_DECL)
       if (!attempts_left)
         ACE_RE_THROW;
 
+      ACE_PRINT_EXCEPTION (ex, "Temporary problem encountered");
+
       ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) Client is too quick - retrying, "
-                  "while the server completes writing out its IOR.\n"));
+                  ACE_TEXT ("(%P|%t) Client was too quick. Pausing ")
+                  ACE_TEXT ("while the server gets ready.\n")));
       ACE_OS::sleep (5);
     }
     ACE_ENDTRY;
