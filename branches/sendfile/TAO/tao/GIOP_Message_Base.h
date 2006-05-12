@@ -16,12 +16,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/Pluggable_Messaging.h"
+#include "tao/TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Pluggable_Messaging.h"
 #include "tao/Pluggable_Messaging_Utils.h"
 #include "tao/GIOP_Message_Generator_Parser_Impl.h"
 #include "tao/GIOP_Utils.h"
@@ -266,10 +267,6 @@ private:
   TAO::Incoming_Message_Stack fragment_stack_;
 
 protected:
-  /// Buffer used for both the output and input CDR streams, this is
-  /// "safe" because we only one of the streams at a time.
-  char buffer_[ACE_CDR::DEFAULT_BUFSIZE];
-
   /// Buffer where the request is placed.
   TAO_OutputCDR out_stream_;
 
