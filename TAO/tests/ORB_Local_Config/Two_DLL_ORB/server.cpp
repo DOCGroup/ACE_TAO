@@ -54,10 +54,18 @@ Server_Worker::parse_args (int argc, ACE_TCHAR *argv[])
 int
 Server_Worker::test_main (int argc, ACE_TCHAR *argv[] ACE_ENV_ARG_DECL)
 {
-  ACE_OS::unlink (ior_file_.c_str ());
+  // Making sure there are no stale ior files to confuse a client
+  FILE *of= ACE_OS::fopen (ior_file_.c_str (), "w");
+  if (of == 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("(%P|%t) Cannot open output file for writing IOR: %s"),
+                       ior_file_.c_str ()),
+                      1);
+  ACE_OS::fclose (of);
 
   ACE_Argv_Type_Converter cvt (argc, argv);
-  CORBA::ORB_var orb = CORBA::ORB_init (cvt.get_argc (), cvt.get_ASCII_argv () ACE_ENV_ARG_PARAMETER);
+  CORBA::ORB_var orb = CORBA::ORB_init (cvt.get_argc (),
+                                        cvt.get_ASCII_argv () ACE_ENV_ARG_PARAMETER);
   ACE_TRY_CHECK;
 
   CORBA::Object_var poa_object =
