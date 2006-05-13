@@ -1,3 +1,12 @@
+Sat May 13 14:34:23 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tests/ORB_Local_Config/Two_DLL_ORB/server.cpp:
+
+          Removing the use of ACE_OS::unlink() since it is causing
+          unresolved link errors on windoze. Using alternative IOR file
+          truncation method to get rid of "stale" IOR files from previous
+          executions.
+
 Fri May 12 14:00:17 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tests/ORB_Local_Config/Two_DLL_ORB/client.cpp:
