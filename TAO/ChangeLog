@@ -1,3 +1,18 @@
+Sun May 14 13:32:33 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/AMI_Buffering/client.cpp:
+        * tests/Oneway_Buffering/client.cpp:
+
+          Minor change to insert a pause after killing the server but
+          before killing the admin. This gives the server a moment to
+          flush out any messages it wants to send to the admin. Without
+          this pause, the test occasionally reports spurious comm failures
+          that cause the scoreboard to count the test as failed.
+
+        * tests/Connection_Timeout/client.cpp:
+
+          Added more information to failure output.
+
 Sat May 13 22:07:04 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/LF_CH_Event.h:

@@ -208,7 +208,7 @@ main (int argc, char *argv[])
 
       oneway_buffering->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
-
+      ACE_OS::sleep(1);
       oneway_buffering_admin->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
