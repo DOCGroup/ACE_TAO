@@ -1,3 +1,44 @@
+Sat May 13 22:07:04 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/LF_CH_Event.h:
+        * tao/LF_CH_Event.cpp:
+        * tao/Transport_Connector.cpp:
+
+          This is a fix for intermittent timeout problems when using
+          asynch connections. Some tests, most notably the AMI_Buffering
+          timeout test, randomly fail in that the client seems to just
+          stop dead. I found that this failure occured when using
+          nonblocking connects with at least 2 threads, one of which is
+          invoking ORB::run while the other is trying to connect.
+
+          The problem is that an asynch connection might cause the
+          transport to cached in an unconnected state, relying on a
+          subsequent connection request to enter the connection wait
+          strategy and complete the connection. When using the leader
+          follower wait strategy, a non-blocking connect will "poll" by
+          setting the timeout value to be ACE_Time_Value::zero. A race
+          could occur when the other thread actually handles the
+          connection completion, but after the interested thread starts to
+          enter the leader-follower. In this case the timeout of zero
+          causes the LF to change the connection handler's state to
+          TIMEOUT, but this was not detected as an error condition. Thus
+          the LF_Event relating to the connection completion was never
+          successful or an error and the waiting thread became the leader
+          and was then stuck.
+
+          This fix works by first treating the TIMEOUT state as an error,
+          to break out of the LF loop, then the connector will reset the
+          timeout state if that is appropriate. Finally, a second error in
+          the connector is fixed where the transport's register_handler
+          method return value was incorrectly tested.
+
+        * tests/AMI_Buffering/client.cpp:
+
+          Adjusted the timeout values a bit. On a sufficiently fast
+          computer, it is possible for the sender to overflow the TCP
+          buffers thus taking too long to flush and spuriously reporting
+          errors.
+
 Sat May 13 14:34:23 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tests/ORB_Local_Config/Two_DLL_ORB/server.cpp:
