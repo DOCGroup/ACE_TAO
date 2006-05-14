@@ -21,11 +21,11 @@ int run_buffer_size_test = 0;
 
 const int PAYLOAD_LENGTH = 1024;
 const int BUFFERED_MESSAGES_COUNT = 50;
-const unsigned int TIMEOUT_MILLISECONDS = 50;
+const unsigned int TIMEOUT_MILLISECONDS = 25;
 const int BUFFER_SIZE = 64 * PAYLOAD_LENGTH;
 
 /// Allow a larger timeout to occur due to scheduler differences
-const unsigned int TIMEOUT_TOLERANCE = 4 * TIMEOUT_MILLISECONDS;
+const unsigned int TIMEOUT_TOLERANCE = 20 * TIMEOUT_MILLISECONDS;
 
 /// Check that no more than 10% of the messages are not sent.
 const double LIVENESS_TOLERANCE = 0.9;
@@ -375,6 +375,8 @@ run_liveness_test (CORBA::ORB_ptr orb,
   ACE_CHECK_RETURN (-1);
 
   int liveness_test_iterations = int(send_count);
+  ACE_DEBUG ((LM_DEBUG, " liveness_test_iterations = %d\n",
+              liveness_test_iterations));
 
   Test::Payload payload (PAYLOAD_LENGTH);
   payload.length (PAYLOAD_LENGTH);
@@ -630,7 +632,7 @@ run_timeout (CORBA::ORB_ptr orb,
                           "DEBUG: Iteration %d no flush past "
                           "timeout threshold. "
                           "Elapsed = %d, Timeout = %d msecs\n",
-                          i,
+                           i,
                           elapsed.msec (), TIMEOUT_TOLERANCE));
               break;
             }
@@ -706,7 +708,6 @@ run_timeout_reactive (CORBA::ORB_ptr orb,
                       "DEBUG: Iteration %d message lost (%u != %u)\n",
                       i, initial_receive_count, send_count));
         }
-
       ACE_Time_Value start = ACE_OS::gettimeofday ();
       for (int j = 0; j != 20; ++j)
         {

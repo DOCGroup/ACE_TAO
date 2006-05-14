@@ -61,10 +61,6 @@ public:
   /// event
   int error_detected (void) const;
 
-
-  /// Reset the state, irrespective of the previous states
-  void reset_state (int new_state);
-
 protected:
 
   /// Check whether we have reached the final state..

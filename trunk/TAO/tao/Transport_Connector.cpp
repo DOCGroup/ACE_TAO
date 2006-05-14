@@ -413,7 +413,7 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
     }
 
   if (base_transport->is_connected () &&
-      base_transport->wait_strategy ()->register_handler () != 0)
+      base_transport->wait_strategy ()->register_handler () == 0)
     {
       // Registration failures.
 
@@ -449,7 +449,6 @@ TAO_Connector::wait_for_connection_completion (
                   "going to wait for connection completion on transport"
                   "[%d]\n",
                   transport->id ()));
-
   // If we don't need to block for a transport just set the timeout to
   // be zero.
   ACE_Time_Value tmp_zero (ACE_Time_Value::zero);
@@ -467,7 +466,8 @@ TAO_Connector::wait_for_connection_completion (
 
   if (TAO_debug_level > 2)
     ACE_DEBUG ((LM_DEBUG,
-                "TAO (%P|%t) - Transport_Connector::wait_for_connection_completion, "
+                "TAO (%P|%t) - Transport_Connector::"
+                "wait_for_connection_completion, "
                 "transport [%d], wait done result = %d\n",
                 transport->id (), result));
 
@@ -482,6 +482,14 @@ TAO_Connector::wait_for_connection_completion (
     {
       if (!r->blocked_connect () && errno == ETIME)
         {
+          if (TAO_debug_level > 2)
+            ACE_DEBUG ((LM_DEBUG,
+                        "TAO (%P|%t) - Transport_Connector::"
+                        "wait_for_connection_completion, "
+                        "transport [%d], timeout, resetting state.\n",
+                        transport->id ()));
+          transport->connection_handler()->
+            reset_state(TAO_LF_Event::LFS_CONNECTION_WAIT);
           // If we did a non blocking connect, just ignore
           // any timeout errors
           result = 0;

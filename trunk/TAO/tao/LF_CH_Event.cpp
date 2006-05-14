@@ -82,7 +82,7 @@ TAO_LF_CH_Event::error_detected (void) const
   if (this->prev_state_ == TAO_LF_Event::LFS_CONNECTION_WAIT)
     return this->state_ == TAO_LF_Event::LFS_CONNECTION_CLOSED;
 
-  return 0;
+  return this->state_ == TAO_LF_Event::LFS_TIMEOUT;
 }
 
 void
