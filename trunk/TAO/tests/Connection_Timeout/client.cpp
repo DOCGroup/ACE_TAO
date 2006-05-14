@@ -88,17 +88,28 @@ test_timeout (CORBA::Object_ptr object ACE_ENV_ARG_DECL)
       if (el.real_time > 200000)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%P|%t) ERROR: Too long to timeout \n"),
+                             "(%P|%t) ERROR: Too long to timeout: %u \n",
+                             el.real_time),
                              1);
         }
+      else
+        ACE_DEBUG ((LM_DEBUG,
+                    "(%P|%t) Success, timeout: %u \n",
+                    el.real_time));
 #else
       // The elapsed time is in secs
       if (el.real_time > 0.200)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%P|%t) ERROR: Too long to timeout \n"),
+                             "(%P|%t) ERROR: Too long to timeout: %F \n",
+                             el.real_time),
                              1);
         }
+      else
+        ACE_DEBUG ((LM_DEBUG,
+                    "(%P|%t) Success, timeout: %F \n",
+                    el.real_time));
+
 #endif /* ACE_LACKS_FLOATING_POINT == 1*/
     }
   ACE_ENDTRY;
