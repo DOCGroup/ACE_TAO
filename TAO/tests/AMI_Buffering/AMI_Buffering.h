@@ -32,11 +32,33 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
+  /// internal implementation of shutdown. This
+  void try_shutdown (ACE_ENV_SINGLE_ARG_DECL);
+
+  class Nest_Guard
+    {
+    public:
+      Nest_Guard (AMI_Buffering &);
+      ~Nest_Guard (void);
+    private:
+      AMI_Buffering &target_;
+    };
+
   /// Use an ORB reference to shutdown the application.
   CORBA::ORB_var orb_;
 
   /// Report request progress to this interface
   Test::AMI_Buffering_Admin_var admin_;
+
+  /// nesting depth count for receive_data processing
+  int nest_;
+
+  /// maximum nesting depth reached during run
+  int max_nest_;
+
+  /// flag indicating that a shutdown is required as soon
+  /// as the nest count reaches 0.
+  bool must_shutdown_;
 };
 
 #include /**/ "ace/post.h"
