@@ -1,3 +1,8 @@
+Mon May 15 22:25:23 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/Bounded_Sequence_CDR_T.h:
+          Added explicit include to satisfy the HP compiler.
+
 Mon May 15 18:17:23 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/Codeset_Manager_Factory_Base.h:
