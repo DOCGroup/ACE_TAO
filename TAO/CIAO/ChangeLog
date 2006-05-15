@@ -1,3 +1,15 @@
+Mon May 15 20:48:52 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CIDLC/ServantSourceGenerator.cpp (generate):
+
+          Removed commented-out code.
+
+        * CIDLC/ServantHeaderGenerator.cpp (generate_facets):
+
+          Fixed cut-and-paste error that was causing facet servant
+          class declaration to get skipped when the composition is
+          defined inside one or more IDL modules.
+
 Fri May 12 07:36:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tools/Config_Handlers/Utils/Functors.h:
