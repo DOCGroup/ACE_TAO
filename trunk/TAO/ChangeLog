@@ -1,3 +1,15 @@
+Mon May 15 18:17:23 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/Codeset_Manager_Factory_Base.h:
+        * tao/Codeset_Manager_Factory_Base.cpp:
+        * tao/PortableServer/Acceptor_Filter_Factory.h:
+        * tao/PortableServer/Acceptor_Filter_Factory.cpp:
+
+          Moved the static initializer from inside the .cpp to the header
+          file. This change was necesitated by the VC7.1 static build that
+          was apparently skipping over the static initializer if it wasn't
+          in the .h.
+
 Mon May 15 13:28:01 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/AMI_Buffering/AMI_Buffering.h:

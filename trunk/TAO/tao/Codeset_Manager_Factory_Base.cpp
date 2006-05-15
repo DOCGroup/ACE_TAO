@@ -36,9 +36,11 @@ TAO_Codeset_Manager_Factory_Base::initialize (void)
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
+#if 0
 static int
 TAO_Requires_Codeset_Manager_Factory_Base =
 TAO_Codeset_Manager_Factory_Base::initialize ();
+#endif
 
 ACE_FACTORY_DEFINE (TAO, TAO_Codeset_Manager_Factory_Base)
 ACE_STATIC_SVC_DEFINE (TAO_Codeset_Manager_Factory_Base,

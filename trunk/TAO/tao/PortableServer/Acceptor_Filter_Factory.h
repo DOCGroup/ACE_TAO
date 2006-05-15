@@ -58,6 +58,11 @@ public:
 
 };
 
+
+static int
+TAO_Requires_Acceptor_Filter_Factory =
+TAO_Acceptor_Filter_Factory::initialize ();
+
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE (TAO_Acceptor_Filter_Factory)
