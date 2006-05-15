@@ -293,12 +293,12 @@ private:
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-#endif
+#endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
 
 inline
 bool
-operator== (const TAO::unbounded_value_sequence<CORBA::Octet> & lhs,
-            const TAO::unbounded_value_sequence<CORBA::Octet> & rhs)
+operator== (const TAO_VERSIONED_NAMESPACE_NAME::TAO::unbounded_value_sequence<CORBA::Octet> & lhs,
+            const TAO_VERSIONED_NAMESPACE_NAME::TAO::unbounded_value_sequence<CORBA::Octet> & rhs)
 {
   ::CORBA::ULong const rlen = rhs.length ();
 
@@ -320,10 +320,54 @@ operator== (const TAO::unbounded_value_sequence<CORBA::Octet> & lhs,
 
 inline
 bool
-operator!= (const TAO::unbounded_value_sequence<CORBA::Octet> & lhs,
-            const TAO::unbounded_value_sequence<CORBA::Octet> & rhs)
+operator!= (const TAO_VERSIONED_NAMESPACE_NAME::TAO::unbounded_value_sequence<CORBA::Octet> & lhs,
+            const TAO_VERSIONED_NAMESPACE_NAME::TAO::unbounded_value_sequence<CORBA::Octet> & rhs)
 {
   return !(lhs == rhs);
 }
+
+#if defined (ACE_HAS_VERSIONED_NAMESPACE)
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
+inline
+bool
+operator== (const TAO_VERSIONED_NAMESPACE_NAME::TAO::unbounded_value_sequence<CORBA::Octet> & lhs,
+            const TAO_VERSIONED_NAMESPACE_NAME::TAO::unbounded_value_sequence<CORBA::Octet> & rhs)
+{
+  return ::operator==(lhs,rhs);
+}
+
+inline
+bool
+operator!= (const TAO_VERSIONED_NAMESPACE_NAME::TAO::unbounded_value_sequence<CORBA::Octet> & lhs,
+            const TAO_VERSIONED_NAMESPACE_NAME::TAO::unbounded_value_sequence<CORBA::Octet> & rhs)
+{
+  return ::operator!=(lhs,rhs);
+}
+
+ACE_END_VERSIONED_NAMESPACE_DECL
+#endif /* ACE_HAS_VERSIONED_NAMESPACE */
+
+#if defined (TAO_HAS_VERSIONED_NAMESPACE)
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+inline
+bool
+operator== (const TAO::unbounded_value_sequence<CORBA::Octet> & lhs,
+            const TAO::unbounded_value_sequence<CORBA::Octet> & rhs)
+{
+  return ::operator==(lhs,rhs);
+}
+
+inline
+bool
+operator!= (const TAO::unbounded_value_sequence<CORBA::Octet> & lhs,
+            const TAO::unbounded_value_sequence<CORBA::Octet> & rhs)
+{
+  return ::operator!=(lhs,rhs);
+}
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+#endif /* TAO_HAS_VERSIONED_NAMESPACE */
 
 #endif // guard_unbounded_octet_sequence_hpp
