@@ -13,6 +13,7 @@
 
 #include "tao/orbconf.h"
 #include "tao/SystemException.h"
+#include "tao/Bounded_Basic_String_Sequence_T.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
