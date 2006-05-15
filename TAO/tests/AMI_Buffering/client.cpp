@@ -7,7 +7,6 @@
 #include "tao/AnyTypeCode/TAOA.h"
 #include "tao/AnyTypeCode/Any.h"
 #include "ace/Get_Opt.h"
-#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID(AMI_Buffering, client, "$Id$")
 
@@ -240,9 +239,6 @@ main (int argc, char *argv[])
       client_task.thr_mgr ()->wait ();
 
       ami_buffering->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      ACE_OS::sleep(1);
-      ami_buffering_admin->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
