@@ -1,3 +1,25 @@
+Mon May 15 13:28:01 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/AMI_Buffering/AMI_Buffering.h:
+        * tests/AMI_Buffering/AMI_Buffering.cpp:
+        * tests/AMI_Buffering/client.cpp:
+
+          The tests still fail on a lot of machines with a series of
+          COMM_FAIL exceptions being reported. These are due to a nesting
+          problem within the server, since it is receiving requests from
+          the client and also making requests to the admin. What happens
+          is that with the asynchronous calls, a whole bunch of requests
+          are sent to the server, and before it gets a chance to receive
+          all the replies from the admin, the client sends a shutdown.
+          This immediately closes the server's client-side connection to
+          the admin, and if any replies were pending, those are lost,
+          causing the comm fails. I've also added a log message reporting
+          the maximum nesting level attained by the server.
+
+          The client now delegates responsibility of shutting down the
+          admin to the server as another way of eliminating any races that
+          might cause spurious error reports.
+
 Mon May 15 12:58:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Unbounded_Octet_Sequence_T.h:
