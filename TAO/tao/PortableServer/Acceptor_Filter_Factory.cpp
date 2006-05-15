@@ -36,10 +36,6 @@ TAO_Acceptor_Filter_Factory::initialize (void)
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-static int
-TAO_Requires_Acceptor_Filter_Factory =
-TAO_Acceptor_Filter_Factory::initialize ();
-
 ACE_FACTORY_DEFINE (TAO_PortableServer, TAO_Acceptor_Filter_Factory)
 ACE_STATIC_SVC_DEFINE (TAO_Acceptor_Filter_Factory,
                        ACE_TEXT ("TAO_Acceptor_Filter_Factory"),

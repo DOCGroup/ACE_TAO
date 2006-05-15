@@ -63,6 +63,10 @@ public:
   static int initialize (void);
 };
 
+static int
+TAO_Requires_Base_Codeset_Initializer =
+  TAO_Codeset_Manager_Factory_Base::initialize ();
+
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE (TAO_Codeset_Manager_Factory_Base)
