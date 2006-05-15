@@ -1,3 +1,9 @@
+Mon May 15 12:58:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Unbounded_Octet_Sequence_T.h:
+          Fixed compile problem when TAO_NO_COPY_OCTET_SEQUENCES is defined
+          to 0
+
 Mon May 15 09:59:56 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/Unbounded_Octet_Sequence_T.h:
