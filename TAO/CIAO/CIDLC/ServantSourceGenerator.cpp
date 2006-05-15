@@ -4387,7 +4387,6 @@ ServantSourceEmitter::generate_facets (TranslationUnit& u, Context& c)
 
   //--
   Traversal::Root root;
-  //  includes.node_traverser (region);
   contains_root.node_traverser (root);
 
   // Layer 3

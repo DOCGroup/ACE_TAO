@@ -1783,30 +1783,19 @@ ServantHeaderEmitter::generate_facets (TranslationUnit& u, Context& c)
 
   // Layer 2
   //
-  Traversal::TranslationRegion included_region;
 
   /// Includes are handled here so they will all be present
   /// before the facet servants (if any) are generated.
 
   Traversal::ContainsRoot contains_root;
-  Traversal::QuoteIncludes quote_includes;
-  Traversal::BracketIncludes bracket_includes;
   IncludesEmitter includes_emitter (c);
 
   principal_region.edge_traverser (includes_emitter);
-  principal_region.edge_traverser (quote_includes);
-  principal_region.edge_traverser (bracket_includes);
   principal_region.edge_traverser (contains_root);
-
-  included_region.edge_traverser (quote_includes);
-  included_region.edge_traverser (bracket_includes);
 
   //--
   Traversal::Root root;
-
   contains_root.node_traverser (root);
-  quote_includes.node_traverser (included_region);
-  bracket_includes.node_traverser (included_region);
 
   // Layer 3
   //
@@ -1819,12 +1808,12 @@ ServantHeaderEmitter::generate_facets (TranslationUnit& u, Context& c)
   root_defines.node_traverser (module);
   root_defines.node_traverser (composition);
 
+  module.edge_traverser (root_defines);
+
   // Layer 4
   //
   Traversal::Defines composition_defines;
   composition.edge_traverser (composition_defines);
-
-  module.edge_traverser (composition_defines);
 
   //--
   Traversal::ComponentExecutor component_executor;
