@@ -1,3 +1,27 @@
+Tue May 16 13:02:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Log_Msg.cpp:
+        * ace/OS_NS_arpa_inet.{h,cpp,inl}:
+        * ace/OS_NS_dirent.inl:
+          Removed psos support
+
+        * ace/INET_Addr.cpp:
+        * ace/config-macros.h:
+          Removed chorus support
+
+        * ace/Unbounded_Queue.h:
+          Removed remark about chorus
+
+        * ace/config-cray.h:
+          Removed explicit template instantiation define, we don't have that
+          anymore
+
+        * ace/config-hpux-11.00.h:
+        * ace/config-sunos5.7.h:
+        * ace/config-rtems.h:
+        * ace/config-osf1-4.0.h:
+          Removed kcc support
+
 Mon May 15 11:30:14 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * bin/tao_other_tests.lst:
