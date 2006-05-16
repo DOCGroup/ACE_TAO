@@ -64,14 +64,11 @@
 # define ACE_HAS_STDCPP_STL_INCLUDES
 # define ACE_HAS_TEMPLATE_SPECIALIZATION
 # define ACE_HAS_TYPENAME_KEYWORD
-#elif defined (__KCC)
-# define ACE_HAS_STRING_CLASS
-# include "ace/config-kcc-common.h"
 #else
 #  ifdef __cplusplus  /* Let it slide for C compilers. */
 #   error unsupported compiler on Digital Unix
 #  endif  /* __cplusplus */
-#endif /* ! __GNUG__ && ! __DECCXX && ! __rational__ && !_KCC */
+#endif /* ! __GNUG__ && ! __DECCXX && ! __rational__ */
 
 #if (DIGITAL_UNIX >= 0x400) && (DIGITAL_UNIX < 0x500)
 #define ACE_LACKS_PREAD_PROTOTYPE

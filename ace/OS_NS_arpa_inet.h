@@ -44,11 +44,7 @@ namespace ACE_OS {
   int inet_aton (const char *strptr,
                  struct in_addr *addr);
 
-#if !defined (ACE_PSOS)
   ACE_NAMESPACE_INLINE_FUNCTION
-#else
-  extern ACE_Export
-#endif /* ACE_PSOS */
   char *inet_ntoa (const struct in_addr addr);
 
   ACE_NAMESPACE_INLINE_FUNCTION

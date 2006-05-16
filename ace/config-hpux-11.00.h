@@ -39,7 +39,7 @@
 // The following configuration section is designed to work for HP
 // platforms running HP/UX 11.x with either of the HP C++ compilers.
 // There isn't a predefined macro for all cases of the compilers that
-// can be used to tell them apart from other compilers (e.g. __KCC, etc.)
+// can be used to tell them apart from other compilers
 // only to tell C++ from aC++, using the value of __cplusplus.
 //
 // NOTE - HP advises people on 11.x to use aC++ since the older C++ doesn't
@@ -75,7 +75,7 @@
 // macro is not set until A.03.13. If it's not set, set it - it won't be an
 // HP-advertised value, but we don't check the value/version - just whether
 // it's set or not.
-#    if !defined (__KCC) && !defined (__HP_aCC)
+#    if !defined (__HP_aCC)
 #      define __HP_aCC
 #    endif /* __HP_aCC */
 
@@ -159,12 +159,6 @@
 #  define ACE_LACKS_SIGNED_CHAR
 
 #endif /* __GNUG__, HP */
-
-// KCC Specific Section
-#if defined(__KCC)
-#  include "ace/config-kcc-common.h"
-#  undef ACE_CC_PREPROCESSOR_ARGS
-#endif
 
 //*********************************************************************
 //

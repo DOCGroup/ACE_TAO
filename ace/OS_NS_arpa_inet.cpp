@@ -50,23 +50,4 @@ ACE_OS::inet_aton (const char *host_name, struct in_addr *addr)
 #endif  /* ACE_LACKS_INET_ATON */
 }
 
-// All other platforms have this inlined in OS_NS_arpa_inet.inl
-#if defined (ACE_PSOS)
-char *
-ACE_OS::inet_ntoa (const struct in_addr addr)
-{
-  ACE_OS_TRACE ("ACE_OS::inet_ntoa");
-
-  static char addrstr[INET_ADDRSTRLEN + 1] = { 0 };
-  ACE_UINT32 ipaddr = ntohl (addr.s_addr);
-  //printf("Socket address %X, IP address %X.\n",addr.s_addr,ipaddr);
-  sprintf(addrstr, "%d.%d.%d.%d",
-          ((ipaddr & 0xff000000) >> 24) & 0x000000ff,
-          (ipaddr & 0x00ff0000) >> 16,
-          (ipaddr & 0x0000ff00) >> 8,
-          (ipaddr & 0x000000ff));
-  return addrstr;
-}
-#endif /* defined (ACE_PSOS) */
-
 ACE_END_VERSIONED_NAMESPACE_DECL

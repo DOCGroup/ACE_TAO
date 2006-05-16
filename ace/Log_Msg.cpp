@@ -2100,7 +2100,7 @@ ACE_Log_Msg::log (ACE_Log_Record &log_record,
 #if !defined (ACE_WIN32)
       // Make this block signal-safe.
       ACE_Log_Msg_Sig_Guard sb;
-#endif /* !ACE_WIN32 && !ACE_PSOS */
+#endif /* !ACE_WIN32 */
 
       // Do the callback, if needed, before acquiring the lock
       // to avoid holding the lock during the callback so we don't
@@ -2616,14 +2616,6 @@ ACE_Log_Msg::init_hook (ACE_OS_Log_Msg_Attributes &attributes
     }
 }
 
-#if defined (ACE_THREADS_DONT_INHERIT_LOG_MSG)  || \
-    defined (ACE_HAS_MINIMAL_ACE_OS)
-# if defined (ACE_PSOS)
-// Unique file identifier
-static int ACE_PSOS_unique_file_id = 0;
-# endif /* ACE_PSOS */
-#endif /* ACE_THREADS_DONT_INHERIT_LOG_MSG) || ACE_HAS_MINIMAL_ACE_OS */
-
 void
 ACE_Log_Msg::inherit_hook (ACE_OS_Thread_Descriptor *thr_desc,
                            ACE_OS_Log_Msg_Attributes &attributes)
@@ -2660,20 +2652,6 @@ ACE_Log_Msg::inherit_hook (ACE_OS_Thread_Descriptor *thr_desc,
     new_log->thr_desc (static_cast<ACE_Thread_Descriptor *> (thr_desc));
   // Block the thread from proceeding until
   // thread manager has thread descriptor ready.
-
-# else  /* Don't inherit Log Msg */
-#  if defined (ACE_PSOS)
-  // Create a special name for each thread...
-  char new_name[MAXPATHLEN]={"Ace_thread-"};
-  char new_id[2]={0,0};  //Now it's pre-terminated!
-
-  new_id[0] = '0' + (ACE_PSOS_unique_file_id++);  //Unique identifier
-  ACE_OS::strcat(new_name, new_id);
-
-  // Initialize the task specific logger
-  ACE_LOG_MSG->open(new_name);
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("(%P|%t) starting %s thread at %D\n"),new_name));
-#  endif /* ACE_PSOS */
 #endif /* ! ACE_THREADS_DONT_INHERIT_LOG_MSG  &&  ! ACE_HAS_MINIMAL_ACE_OS */
 }
 

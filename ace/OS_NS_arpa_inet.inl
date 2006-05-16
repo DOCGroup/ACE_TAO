@@ -11,48 +11,13 @@ ACE_INLINE unsigned long
 ACE_OS::inet_addr (const char *name)
 {
   ACE_OS_TRACE ("ACE_OS::inet_addr");
-#if defined (ACE_PSOS)
-
-  u_long ret = 0;
-  u_int segment;
-  u_int valid = 1;
-
-  for (u_int i = 0; i < 4; ++i)
-    {
-      ret <<= 8;
-      if (*name != '\0')
-        {
-          segment = 0;
-
-          while (*name >= '0'  &&  *name <= '9')
-            {
-              segment *= 10;
-              segment += *name++ - '0';
-            }
-          if (*name != '.' && *name != '\0')
-            {
-              valid = 0;
-              break;
-            }
-
-          ret |= segment;
-
-          if (*name == '.')
-            {
-              ++name;
-            }
-        }
-    }
-  return valid ? htonl (ret) : INADDR_NONE;
-#elif defined (ACE_HAS_NONCONST_GETBY)
+#if defined (ACE_HAS_NONCONST_GETBY)
   return ::inet_addr (const_cast <char*> (name));
 #else
   return ::inet_addr (name);
 #endif /* ACE_HAS_NONCONST_GETBY */
 }
 
-// For pSOS, this function is in OS.cpp
-#if !defined (ACE_PSOS)
 ACE_INLINE char *
 ACE_OS::inet_ntoa (const struct in_addr addr)
 {
@@ -61,7 +26,6 @@ ACE_OS::inet_ntoa (const struct in_addr addr)
                      char *,
                      0);
 }
-#endif /* defined (ACE_PSOS) */
 
 ACE_INLINE const char *
 ACE_OS::inet_ntop (int family, const void *addrptr, char *strptr, size_t len)
