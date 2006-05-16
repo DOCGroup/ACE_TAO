@@ -121,7 +121,7 @@ TAO_DIOP_Endpoint::set (const ACE_INET_Addr &addr,
 int
 TAO_DIOP_Endpoint::addr_to_string (char *buffer, size_t length)
 {
-  size_t actual_len =
+  size_t const actual_len =
     ACE_OS::strlen (this->host_.in ()) // chars in host name
     + sizeof (':')                     // delimiter
     + ACE_OS::strlen ("65536")         // max port

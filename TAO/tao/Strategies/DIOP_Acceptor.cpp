@@ -84,7 +84,7 @@ TAO_DIOP_Acceptor::create_new_profile (const TAO::ObjectKey &object_key,
                                        CORBA::Short priority)
 {
   // Adding this->endpoint_count_ to the TAO_MProfile.
-  int count = mprofile.profile_count ();
+  int const count = mprofile.profile_count ();
   if ((mprofile.size () - count) < this->endpoint_count_
       && mprofile.grow (count + this->endpoint_count_) == -1)
     return -1;
@@ -399,7 +399,7 @@ TAO_DIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
   this->connection_handler_->open_server ();
 
   // Register only with a valid handle
-  int result =
+  int const result =
     reactor->register_handler (this->connection_handler_,
                                ACE_Event_Handler::READ_MASK);
   if (result == -1)
@@ -426,7 +426,7 @@ TAO_DIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
   // interface then the endpoint created on each interface will be on
   // the same port.  This is how a wildcard socket bind() is supposed
   // to work.
-  u_short port = address.get_port_number ();
+  u_short const port = address.get_port_number ();
   for (size_t j = 0; j < this->endpoint_count_; ++j)
     this->addrs_[j].set_port_number (port, 1);
 
