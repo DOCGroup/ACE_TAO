@@ -8,11 +8,11 @@
 //     cos
 //
 // = FILENAME
-//     CosPropertyService.idl
+//     CosProperty.idl
 //
 // = DESCRITION
 //     The property service, downloaded from
-//     ftp://ftp.omg.org/pub/docs/1995/95-06-01.ps 
+//     ftp://ftp.omg.org/pub/docs/1995/95-06-01.ps
 //
 // = AUTHOR
 //     Alexander Babu Arulanthu <alex@cs.wustl.edu>
@@ -110,7 +110,7 @@ module CosPropertyService
       ExceptionReason reason;
       PropertyName failing_property_name;
   };
-  
+
   typedef sequence<PropertyException> PropertyExceptions;
 
   exception MultipleExceptions
