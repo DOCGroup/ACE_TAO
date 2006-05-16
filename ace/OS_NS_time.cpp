@@ -53,180 +53,6 @@ namespace
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-# if defined (ACE_PSOS)
-
-// bit masks and shifts for prying info out of the pSOS time encoding
-const u_long ACE_PSOS_Time_t::year_mask     = 0x0000FFFFul;
-const u_long ACE_PSOS_Time_t::month_mask    = 0x000000FFul;
-const u_long ACE_PSOS_Time_t::day_mask      = 0x000000FFul;
-const u_long ACE_PSOS_Time_t::hour_mask     = 0x0000FFFFul;
-const u_long ACE_PSOS_Time_t::minute_mask   = 0x000000FFul;
-const u_long ACE_PSOS_Time_t::second_mask   = 0x000000FFul;
-const int ACE_PSOS_Time_t::year_shift   = 16;
-const int ACE_PSOS_Time_t::month_shift  = 8;
-const int ACE_PSOS_Time_t::hour_shift   = 16;
-const int ACE_PSOS_Time_t::minute_shift = 8;
-const int ACE_PSOS_Time_t::year_origin = 1900;
-const int ACE_PSOS_Time_t::month_origin = 1;
-
-// maximum number of clock ticks supported
-const u_long ACE_PSOS_Time_t::max_ticks = ~0UL;
-
-ACE_PSOS_Time_t::ACE_PSOS_Time_t (void)
-  : date_ (0),
-    time_ (0),
-    ticks_ (0)
-{
-}
-
-// default ctor: date, time, and ticks all zeroed
-
-ACE_PSOS_Time_t::ACE_PSOS_Time_t (const timespec_t& t)
-{
-  struct tm* tm_struct = ACE_OS::gmtime (&(t.tv_sec));
-
-  // Encode date values from tm struct into pSOS date bit array.
-  date_ = (ACE_PSOS_Time_t::year_mask &
-           static_cast <u_long>
-                            (tm_struct->tm_year + ACE_PSOS_Time_t::year_origin)) <<
-    ACE_PSOS_Time_t::year_shift;
-  date_ |= (ACE_PSOS_Time_t::month_mask &
-            static_cast<u_long> (tm_struct->tm_mon + ACE_PSOS_Time_t::month_origin)) <<
-    ACE_PSOS_Time_t::month_shift;
-  date_ |= ACE_PSOS_Time_t::day_mask &
-    static_cast<u_long> (tm_struct->tm_mday);
-  // Encode time values from tm struct into pSOS time bit array.
-  time_ = (ACE_PSOS_Time_t::hour_mask  &
-            static_cast<u_long> (tm_struct->tm_hour)) <<
-    ACE_PSOS_Time_t::hour_shift;
-  time_ |= (ACE_PSOS_Time_t::minute_mask &
-            static_cast<u_long> (tm_struct->tm_min)) <<
-    ACE_PSOS_Time_t::minute_shift;
-  time_ |= ACE_PSOS_Time_t::second_mask &
-    static_cast<u_int> (tm_struct->tm_sec);
-
-  // encode nanoseconds as system clock ticks
-  ticks_ = static_cast<u_long> (((static_cast<double> (t.tv_nsec) *
-                              static_cast<double> (KC_TICKS2SEC)) /
-                             static_cast<double> (1000000000)));
-
-}
-
-// ctor from a timespec_t
-
-ACE_PSOS_Time_t::operator timespec_t (void)
-{
-  struct tm tm_struct;
-
-  // Decode date and time bit arrays and fill in fields of tm_struct.
-
-  tm_struct.tm_year =
-    static_cast<int> ((ACE_PSOS_Time_t::year_mask &
-                           (date_ >> ACE_PSOS_Time_t::year_shift))) -
-    ACE_PSOS_Time_t::year_origin;
-  tm_struct.tm_mon =
-    static_cast<int> ((ACE_PSOS_Time_t::month_mask &
-                           (date_ >> ACE_PSOS_Time_t::month_shift))) -
-    ACE_PSOS_Time_t::month_origin;
-  tm_struct.tm_mday =
-    static_cast<int> ((ACE_PSOS_Time_t::day_mask & date_));
-  tm_struct.tm_hour =
-    static_cast<int> ((ACE_PSOS_Time_t::hour_mask &
-                           (time_ >> ACE_PSOS_Time_t::hour_shift)));
-  tm_struct.tm_min =
-    static_cast<int> ((ACE_PSOS_Time_t::minute_mask &
-                           (time_ >> ACE_PSOS_Time_t::minute_shift)));
-  tm_struct.tm_sec =
-    static_cast<int> ((ACE_PSOS_Time_t::second_mask & time_));
-
-  // Indicate values we don't know as negative numbers.
-  tm_struct.tm_wday  = -1;
-  tm_struct.tm_yday  = -1;
-  tm_struct.tm_isdst = -1;
-
-  timespec_t t;
-
-  // Convert calendar time to time struct.
-  t.tv_sec = ACE_OS::mktime (&tm_struct);
-
-  // Encode nanoseconds as system clock ticks.
-  t.tv_nsec = static_cast<long> (((static_cast<double> (ticks_) *
-                                 static_cast<double> (1000000000)) /
-                                static_cast<double> (KC_TICKS2SEC)));
-  return t;
-}
-
-// type cast operator (to a timespec_t)
-
-u_long
-ACE_PSOS_Time_t::get_system_time (ACE_PSOS_Time_t& t)
-{
-  u_long ret_val = 0;
-
-#   if defined (ACE_PSOSIM) // system time is broken in simulator.
-  timeval tv;
-  int result = 0;
-  ACE_OSCALL (::gettimeofday (&tv, 0), int, -1, result);
-  if (result == -1)
-    return 1;
-
-  ACE_Time_Value atv (tv);
-  timespec ts = atv;
-  ACE_PSOS_Time_t pt (ts);
-  t.date_ = pt.date_;
-  t.time_ = pt.time_;
-  t.ticks_ = pt.ticks_;
-#   else
-  ret_val = tm_get (&(t.date_), &(t.time_), &(t.ticks_));
-#   endif  /* ACE_PSOSIM */
-  return ret_val;
-}
-
-// Static member function to get current system time.
-
-u_long
-ACE_PSOS_Time_t::set_system_time (const ACE_PSOS_Time_t& t)
-{
-  return tm_set (t.date_, t.time_, t.ticks_);
-}
-
-// Static member function to set current system time.
-
-#   if defined (ACE_PSOSIM)
-
-u_long
-ACE_PSOS_Time_t::init_simulator_time (void)
-{
-  // This is a hack using a direct UNIX system call, because the
-  // appropriate ACE_OS method ultimately uses the pSOS tm_get
-  // function, which would fail because the simulator's system time is
-  // uninitialized (chicken and egg).
-  timeval t;
-  int result = 0;
-  ACE_OSCALL (::gettimeofday (&t, 0),
-              int,
-              -1,
-              result);
-
-  if (result == -1)
-    return 1;
-  else
-    {
-      ACE_Time_Value tv (t);
-      timespec ts = tv;
-      ACE_PSOS_Time_t pt (ts);
-      u_long ret_val =
-        ACE_PSOS_Time_t::set_system_time (pt);
-      return ret_val;
-
-    }
-}
-
-// Static member function to initialize system time, using UNIX calls.
-
-#   endif /* ACE_PSOSIM */
-# endif /* ACE_PSOS && ! ACE_PSOS_DIAB_MIPS */
-
 # if defined (ACE_HAS_WINCE)
 ACE_TCHAR *
 ACE_OS::ctime_r (const time_t *clock, ACE_TCHAR *buf, int buflen)
@@ -408,7 +234,7 @@ ACE_OS::localtime_r (const time_t *t, struct tm *res)
 # else
   ACE_OSCALL_RETURN (::localtime_r (t, res), struct tm *, 0);
 # endif /* DIGITAL_UNIX */
-#elif !defined (ACE_HAS_WINCE) && !defined(ACE_PSOS) || defined (ACE_PSOS_HAS_TIME)
+#elif !defined (ACE_HAS_WINCE)
   ACE_OS_GUARD
 
   ACE_UNUSED_ARG (res);
@@ -483,10 +309,7 @@ time_t
 ACE_OS::mktime (struct tm *t)
 {
   ACE_OS_TRACE ("ACE_OS::mktime");
-#   if defined (ACE_PSOS) && ! defined (ACE_PSOS_HAS_TIME)
-  ACE_UNUSED_ARG (t);
-  ACE_NOTSUP_RETURN (-1);
-#   elif defined (ACE_HAS_WINCE)
+#   if defined (ACE_HAS_WINCE)
   SYSTEMTIME t_sys;
   FILETIME t_file;
   t_sys.wSecond = t->tm_sec;
@@ -506,7 +329,7 @@ ACE_OS::mktime (struct tm *t)
 #     endif /* ACE_HAS_THREADS  &&  ! ACE_HAS_MT_SAFE_MKTIME */
 
   ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::mktime (t), time_t, (time_t) -1);
-#   endif /* ACE_PSOS && ! ACE_PSOS_HAS_TIME */
+#   endif /* ACE_HAS_WINCE */
 }
 
 #if defined (ACE_HAS_POWERPC_TIMER) && defined (ghs)
