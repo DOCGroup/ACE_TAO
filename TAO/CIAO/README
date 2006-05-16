@@ -4,7 +4,7 @@ BUILDING CIAO
 
 * Supported platform:
 
-  We have tried CIAO examples on Win32 using MSVC 6.0 and above and on
+  We have tried CIAO examples on Win32 using MSVC 7.1 and above and on
   Linux.
 
 * Documentation:
@@ -86,12 +86,7 @@ and also the libraries they depends on.
         $ $(ACE_ROOT)/bin/mwc.pl
         $ make
 
-  To regenerate VC6 dsp files, do:
-
-        > cd $CIAO_ROOT/ciao/
-        > $(ACE_ROOT)/bin/mwc.pl -type vc6
-
-  Likewise, to regenerate VC7.1.NET project files, do:
+  To regenerate VC7.1.NET project files, do:
 
         > cd $CIAO_ROOT/ciao
         > $(ACE_ROOT)/bin/mwc.pl -type vc71
@@ -102,7 +97,7 @@ and also the libraries they depends on.
   developing and deploying components. Pleas see
   $CIAO_ROOT/CIDLC/README.html for instructions on how to build and
   use CIDLC.
-  
+
 * Now you can play with the examples:
 
   - $CIAO_ROOT/examples/Hello
