@@ -151,6 +151,9 @@ public:
   /// Get the message data of the <Log_Record>.
   const ACE_TCHAR *msg_data (void) const;
 
+  /// Set the message data pointer 
+  void set_msg_data_ptr (ACE_TCHAR *data);
+
   /// Set the message data of the <Log_Record>.
   void msg_data (const ACE_TCHAR *data);
 
@@ -187,9 +190,17 @@ private:
   ACE_UINT32 pid_;
 
   /// Logging record data
-  ACE_TCHAR* msg_data_; // Add one for NUL-terminator.
+  ACE_TCHAR *msg_data_; // Add one for NUL-terminator.
 
 };
+
+// Forward decls.
+class ACE_InputCDR;
+class ACE_OutputCDR;
+
+// iostream operators for ACE_Log_Record.
+int operator>> (ACE_InputCDR &cdr, ACE_Log_Record &log_record);
+int operator<< (ACE_OutputCDR &cdr, const ACE_Log_Record &log_record);
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
