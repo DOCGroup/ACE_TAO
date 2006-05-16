@@ -334,7 +334,7 @@ TAO_AV_TCP_Base_Connector::connector_open (TAO_AV_TCP_Connector *connector,
 int
 TAO_AV_TCP_Base_Connector::make_svc_handler (TAO_AV_TCP_Flow_Handler *&tcp_handler)
 {
-  int result =
+  int const result =
     this->connector_->make_svc_handler (tcp_handler);
   if (result < 0)
     return result;
@@ -346,8 +346,9 @@ int
 TAO_AV_TCP_Base_Connector::connector_connect (TAO_AV_TCP_Flow_Handler *&handler,
                                               const ACE_INET_Addr &remote_addr)
 {
-  int result = ACE_Connector <TAO_AV_TCP_Flow_Handler,ACE_SOCK_CONNECTOR>::connect (handler,
-                                                                                    remote_addr);
+  int const result =
+    ACE_Connector <TAO_AV_TCP_Flow_Handler,ACE_SOCK_CONNECTOR>::connect (handler,
+                                                                         remote_addr);
   if (result < 0)
     ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_TCP_Base_Connector::connect failed\n"),-1);
   return 0;
@@ -419,7 +420,7 @@ TAO_AV_TCP_Connector::connect (TAO_FlowSpec_Entry *entry,
   this->flowname_ = entry->flowname ();
   ACE_Addr *remote_addr = entry->address ();
   ACE_INET_Addr *inet_addr = dynamic_cast<ACE_INET_Addr *> (remote_addr);
-  TAO_AV_TCP_Flow_Handler *handler;
+  TAO_AV_TCP_Flow_Handler *handler = 0;
   int result = this->connector_.connector_connect (handler,
                                                    *inet_addr);
   if (result < 0)
@@ -449,7 +450,8 @@ TAO_AV_TCP_Base_Acceptor::acceptor_open (TAO_AV_TCP_Acceptor *acceptor,
   this->reactor_ = reactor;
   this->entry_ = entry;
 
-  int result = ACE_Acceptor <TAO_AV_TCP_Flow_Handler,ACE_SOCK_ACCEPTOR>::open (local_addr,reactor);
+  int const result =
+    ACE_Acceptor <TAO_AV_TCP_Flow_Handler,ACE_SOCK_ACCEPTOR>::open (local_addr,reactor);
   if (result < 0)
     ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_TCP_Base_Connector::open failed\n"),-1);
   return 0;
@@ -458,7 +460,7 @@ TAO_AV_TCP_Base_Acceptor::acceptor_open (TAO_AV_TCP_Acceptor *acceptor,
 int
 TAO_AV_TCP_Base_Acceptor::make_svc_handler (TAO_AV_TCP_Flow_Handler *&handler)
 {
-  int result = this->acceptor_->make_svc_handler (handler);
+  int const result = this->acceptor_->make_svc_handler (handler);
   if (result < 0)
     return result;
   handler->reactor (this->reactor_);
@@ -575,7 +577,7 @@ TAO_AV_TCP_Acceptor::open_default (TAO_Base_StreamEndPoint *endpoint,
   else
   this->flowname_ = entry->flowname ();
 
-  ACE_INET_Addr *address;
+  ACE_INET_Addr *address = 0;
   ACE_NEW_RETURN (address,
                   ACE_INET_Addr ("0"),
                   -1);

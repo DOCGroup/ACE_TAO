@@ -1087,7 +1087,7 @@ int
 TAO_SFP_Object::set_policies (const TAO_AV_PolicyList& policies)
 {
   TAO_AV_Policy *policy = 0;
-  for (u_int i=0;i<policies.length ();i++)
+  for (CORBA::ULong i=0;i<policies.length ();i++)
     {
       policy = policies[i];
       switch (policies[i]->type ())

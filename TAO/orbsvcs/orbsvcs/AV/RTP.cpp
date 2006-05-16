@@ -658,7 +658,7 @@ int
 TAO_AV_RTP_Object::set_policies (const TAO_AV_PolicyList &policy_list)
 {
   this->policy_list_ = policy_list;
-  u_int num_policies = this->policy_list_.length ();
+  CORBA::ULong const num_policies = this->policy_list_.length ();
   TAO_AV_Policy *policy = 0;
 
   for (u_int i=0; i< num_policies;i++)
