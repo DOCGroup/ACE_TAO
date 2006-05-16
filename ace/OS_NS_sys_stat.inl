@@ -18,14 +18,6 @@ namespace ACE_OS
     ACE_OS_TRACE ("ACE_OS::creat");
 #if defined (ACE_WIN32)
     return ACE_OS::open (filename, O_CREAT|O_TRUNC|O_WRONLY, mode);
-#elif defined(ACE_PSOS)
-    ACE_OSCALL_RETURN(::create_f((char *)filename, 1024,
-                                 S_IRUSR | S_IWUSR | S_IXUSR),
-                      ACE_HANDLE, ACE_INVALID_HANDLE);
-#elif defined(ACE_PSOS_TM) || defined (ACE_PSOS)
-    ACE_UNUSED_ARG (filename);
-    ACE_UNUSED_ARG (mode);
-    ACE_NOTSUP_RETURN (-1);
 #else
     ACE_OSCALL_RETURN (::creat (ACE_TEXT_ALWAYS_CHAR (filename), mode),
                        ACE_HANDLE, ACE_INVALID_HANDLE);
@@ -38,27 +30,19 @@ namespace ACE_OS
   fstat (ACE_HANDLE handle, ACE_stat *stp)
   {
     ACE_OS_TRACE ("ACE_OS::fstat");
-#if defined (ACE_PSOS_LACKS_PHILE)
-    ACE_UNUSED_ARG (handle);
-    ACE_UNUSED_ARG (stp);
-    ACE_NOTSUP_RETURN (-1);
-#elif defined (ACE_PSOS)
-    ACE_OSCALL_RETURN (::fstat_f (handle, stp), int, -1);
-#else
-# if defined (ACE_HAS_X86_STAT_MACROS)
+#if defined (ACE_HAS_X86_STAT_MACROS)
     // Solaris for intel uses an macro for fstat(), this is a wrapper
     // for _fxstat() use of the macro.
     // causes compile and runtime problems.
     ACE_OSCALL_RETURN (::_fxstat (_STAT_VER, handle, stp), int, -1);
-# elif defined (ACE_WIN32)
+#elif defined (ACE_WIN32)
     ACE_OSCALL_RETURN (::_fstat (handle, stp), int, -1);
-# else
-#  if defined (ACE_OPENVMS)
+#else
+# if defined (ACE_OPENVMS)
     ::fsync(handle);
-#  endif
+# endif
     ACE_OSCALL_RETURN (::fstat (handle, stp), int, -1);
 # endif /* !ACE_HAS_X86_STAT_MACROS */
-#endif /* ACE_PSOS_LACKS_PHILE */
   }
 
 #else /* ACE_WIN32 */
@@ -170,46 +154,7 @@ namespace ACE_OS
   ACE_INLINE int
   mkdir (const char *path, mode_t mode)
   {
-#if defined (ACE_PSOS_LACKS_PHILE)
-    ACE_UNUSED_ARG (path);
-    ACE_UNUSED_ARG (mode);
-    ACE_NOTSUP_RETURN (-1);
-#elif defined (ACE_PSOS)
-    //The pSOS make_dir fails if the last character is a '/'
-    int location;
-    char *phile_path;
-
-    phile_path = (char *)ACE_OS::malloc (strlen (path+1));
-    if (phile_path == 0)
-      {
-        ACE_OS::printf ("malloc in make_dir failed: [%X]\n",
-                        errno);
-        return -1;
-      }
-    else
-      ACE_OS::strcpy (phile_path, path);
-
-    location = ACE_OS::strlen(phile_path);
-    if(phile_path[location-1] == '/')
-      {
-        phile_path[location-1] = 0;
-      }
-
-    u_long result;
-    result = ::make_dir ((char *) phile_path, mode);
-    if (result == 0x2011)  // Directory already exists
-      {
-        result = 0;
-      }
-    else if (result != 0)
-      {
-        result = -1;
-      }
-
-    ACE_OS::free(phile_path);
-    return result;
-
-#elif defined (ACE_WIN32) && defined (__IBMCPP__) && (__IBMCPP__ >= 400)
+#if defined (ACE_WIN32) && defined (__IBMCPP__) && (__IBMCPP__ >= 400)
     ACE_UNUSED_ARG (mode);
     ACE_OSCALL_RETURN (::_mkdir (const_cast <char *> (path)), int, -1);
 #elif defined (ACE_HAS_WINCE)
@@ -222,7 +167,7 @@ namespace ACE_OS
     ACE_OSCALL_RETURN (::mkdir (path), int, -1);
 #else
     ACE_OSCALL_RETURN (::mkdir (path, mode), int, -1);
-#endif /* ACE_PSOS_LACKS_PHILE */
+#endif
   }
 
 #if defined (ACE_HAS_WCHAR)
@@ -264,12 +209,6 @@ namespace ACE_OS
     ACE_OS_TRACE ("ACE_OS::stat");
 #if defined (ACE_HAS_NONCONST_STAT)
     ACE_OSCALL_RETURN (::stat (const_cast <char *> (file), stp), int, -1);
-#elif defined (ACE_PSOS_LACKS_PHILE)
-    ACE_UNUSED_ARG (file);
-    ACE_UNUSED_ARG (stp);
-    ACE_NOTSUP_RETURN (-1);
-#elif defined (ACE_PSOS)
-    ACE_OSCALL_RETURN (::stat_f (const_cast <char *> (file), stp), int, -1);
 #elif defined (ACE_HAS_WINCE)
     ACE_TEXT_WIN32_FIND_DATA fdata;
 

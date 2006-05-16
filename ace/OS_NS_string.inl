@@ -230,14 +230,9 @@ ACE_OS::strncat (ACE_WCHAR_T *s, const ACE_WCHAR_T *t, size_t len)
 ACE_INLINE char *
 ACE_OS::strnchr (char *s, int c, size_t len)
 {
-#if defined ACE_PSOS_DIAB_PPC  /* Compiler problem Diab 4.2b */
-  const char *const_char_s = s;
-  return const_cast<char *> (ACE_OS::strnchr (const_char_s, c, len));
-#else
   return const_cast<char *> (ACE_OS::strnchr (static_cast<const char *> (s),
                                               c,
                                               len));
-#endif
 }
 
 ACE_INLINE ACE_WCHAR_T *
@@ -313,12 +308,7 @@ ACE_OS::strnlen (const ACE_WCHAR_T *s, size_t maxlen)
 ACE_INLINE char *
 ACE_OS::strnstr (char *s, const char *t, size_t len)
 {
-#if defined ACE_PSOS_DIAB_PPC  /* Compiler problem Diab 4.2b */
-  const char *const_char_s=s;
-  return (char *) ACE_OS::strnstr (const_char_s, t, len);
-#else
   return (char *) ACE_OS::strnstr ((const char *) s, t, len);
-#endif
 }
 
 ACE_INLINE ACE_WCHAR_T *
