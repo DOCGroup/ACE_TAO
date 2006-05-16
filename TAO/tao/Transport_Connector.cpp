@@ -393,6 +393,7 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
                   "TAO_UNSPECIFIED_ROLE" ));
     }
 
+
   // If connected return.
   if (base_transport->is_connected ())
     return base_transport;
@@ -400,6 +401,14 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
   // It it possible to get a transport from the cache that is not
   // connected? If not, then the following code is bogus. We cannot
   // wait for a connection to complete on a transport in the cache.
+  //
+  // (mesnier_p@ociweb.com) It is indeed possible to reach this point.
+  // The AMI_Buffering test does. When using non-blocking connects and
+  // the first request(s) are asynch and may be queued, the connection
+  // establishment may not be completed by the time the invocation is
+  // done with it. In that case it is up to a subsequent invocation to
+  // handle the connection completion.
+
   if (!this->wait_for_connection_completion (r,
                                              base_transport,
                                              timeout))
@@ -445,7 +454,8 @@ TAO_Connector::wait_for_connection_completion (
 {
   if (TAO_debug_level > 2)
       ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) - Transport_Connector::wait_for_connection_completion, "
+                  "TAO (%P|%t) - Transport_Connector::"
+                  "wait_for_connection_completion, "
                   "going to wait for connection completion on transport"
                   "[%d]\n",
                   transport->id ()));
@@ -514,7 +524,10 @@ TAO_Connector::wait_for_connection_completion (
                         "transport [%d], wait for completion failed\n",
                         transport->id()));
 
-          // Set transport to zero, it is not usable
+
+          // Set transport to zero, it is not usable, and the reference
+          // count we added above was decremented by the base connector
+          // handling the connection failure.
           transport = 0;
 
           return false;
@@ -679,6 +692,7 @@ TAO_Connector::check_connection_closure (
       // assured that the connector will no longer open/close this
       // handler.
       closed = connection_handler->is_closed ();
+
 
       // If closed, there is nothing to do here.  If not closed,
       // it was either opened or is still pending.
