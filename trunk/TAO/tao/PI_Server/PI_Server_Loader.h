@@ -18,6 +18,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/PI/PI.h"
 #include "tao/Versioned_Namespace.h"
 #include "ace/Service_Object.h"
 #include "ace/Service_Config.h"

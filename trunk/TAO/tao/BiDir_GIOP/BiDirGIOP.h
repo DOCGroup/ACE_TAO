@@ -23,6 +23,8 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "tao/PI/PI.h"
 #include "tao/BiDir_Adapter.h"
 #include "ace/Service_Config.h"
 
