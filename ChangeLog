@@ -6,13 +6,13 @@ Tue May 16 22:23:55 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
         * ace/Log_Record.inl
         * netsvcs/lib/Client_Logging_Handler.cpp
         * netsvcs/lib/Server_Logging_Handler_T.cpp
-        
-          A number of fixes for the logging service, which was
-          fundamentally broken.  Thanks to Doug Schmidt for debugging and
-          writing the reimplementation.  
-        
-          These changes are currently a hack at best, and will be
-          refactored by Doug in the next few days.
+
+          Fixed some problems that stemmed from changing ACE_Log_Msg
+          msg_data_ from a fixed-size array to a dynamically-sized array.
+          Thanks to Keith Muzzioli <Keith_W_Muzzioli at raytheon dot com>,
+          John Black <John_K_Black at Raytheon dot com>, and Mitsuo
+          Fukasawa <fukasawa_mitsuo at nifty dot com> for reporting this
+          and to Will Otte for helping to fix it!
 
 Tue May 16 13:20:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
