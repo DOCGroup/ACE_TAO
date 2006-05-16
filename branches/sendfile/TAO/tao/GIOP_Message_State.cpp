@@ -115,7 +115,7 @@ TAO_GIOP_Message_State::parse_magic_bytes (char *buf)
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) - ")
-                    ACE_TEXT ("TAO_GIOP_Message_State::parse_magic_bytes")
+                    ACE_TEXT ("TAO_GIOP_Message_State::parse_magic_bytes, ")
                     ACE_TEXT ("bad header: ")
                     ACE_TEXT ("magic word [%02x,%02x,%02x,%02x]\n"),
                     buf[0],
