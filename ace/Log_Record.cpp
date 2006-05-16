@@ -6,6 +6,7 @@
 #include "ace/ACE.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_time.h"
+#include "ace/CDR_Stream.h"
 
 #if !defined (__ACE_INLINE__)
 # include "ace/Log_Record.inl"
@@ -131,7 +132,8 @@ ACE_Log_Record::ACE_Log_Record (ACE_Log_Priority lp,
     type_ (ACE_UINT32 (lp)),
     secs_ (ts_sec),
     usecs_ (0),
-    pid_ (ACE_UINT32 (p))
+    pid_ (ACE_UINT32 (p)),
+    msg_data_ (0)
 {
   // ACE_TRACE ("ACE_Log_Record::ACE_Log_Record");
   ACE_NEW_NORETURN (this->msg_data_, ACE_TCHAR[MAXLOGMSGLEN]);
@@ -144,7 +146,8 @@ ACE_Log_Record::ACE_Log_Record (ACE_Log_Priority lp,
     type_ (ACE_UINT32 (lp)),
     secs_ ((ACE_UINT32) ts.sec ()),
     usecs_ ((ACE_UINT32) ts.usec ()),
-    pid_ (ACE_UINT32 (p))
+    pid_ (ACE_UINT32 (p)),
+    msg_data_ (0)
 {
   // ACE_TRACE ("ACE_Log_Record::ACE_Log_Record");
   ACE_NEW_NORETURN (this->msg_data_, ACE_TCHAR[MAXLOGMSGLEN]);
@@ -155,8 +158,7 @@ ACE_Log_Record::round_up (void)
 {
   // ACE_TRACE ("ACE_Log_Record::round_up");
   // Determine the length of the payload.
-  size_t len = (sizeof (*this) - MAXLOGMSGLEN)
-    + (sizeof (ACE_TCHAR) * ((ACE_OS::strlen (this->msg_data_) + 1)));
+  size_t len = sizeof (*this) + (sizeof (ACE_TCHAR) * ((ACE_OS::strlen (this->msg_data_) + 1)));
 
   // Round up to the alignment.
   len = ((len + ACE_Log_Record::ALIGN_WORDB - 1)
@@ -169,7 +171,8 @@ ACE_Log_Record::ACE_Log_Record (void)
     type_ (0),
     secs_ (0),
     usecs_ (0),
-    pid_ (0)
+    pid_ (0),
+    msg_data_ (0)
 {
   // ACE_TRACE ("ACE_Log_Record::ACE_Log_Record");
   ACE_NEW_NORETURN (this->msg_data_, ACE_TCHAR[MAXLOGMSGLEN]);
@@ -256,8 +259,8 @@ ACE_Log_Record::print (const ACE_TCHAR host_name[],
                        u_long verbose_flag,
                        FILE *fp)
 {
-  ACE_TCHAR* verbose_msg = 0;
-  ACE_NEW_RETURN (verbose_msg,ACE_TCHAR[MAXVERBOSELOGMSGLEN], -1);
+  ACE_TCHAR *verbose_msg = 0;
+  ACE_NEW_RETURN (verbose_msg, ACE_TCHAR[MAXVERBOSELOGMSGLEN], -1);
 
   int result = this->format_msg (host_name,
                                  verbose_flag,
@@ -269,8 +272,9 @@ ACE_Log_Record::print (const ACE_TCHAR host_name[],
         {
           int verbose_msg_len =
             static_cast<int> (ACE_OS::strlen (verbose_msg));
-          int fwrite_result = ACE_OS::fprintf (fp, ACE_LIB_TEXT ("%s"), verbose_msg);
-
+          int fwrite_result = ACE_OS::fprintf (fp,
+                                               ACE_LIB_TEXT ("%s"),
+                                               verbose_msg);
           // We should have written everything
           if (fwrite_result != verbose_msg_len)
             result = -1;
@@ -279,9 +283,53 @@ ACE_Log_Record::print (const ACE_TCHAR host_name[],
         }
     }
 
-  delete[] verbose_msg;
+  delete [] verbose_msg;
 
   return result;
+}
+
+int 
+operator<< (ACE_OutputCDR &cdr,
+            const ACE_Log_Record &log_record)
+{
+  size_t msglen = log_record.msg_data_len ();
+  // The ACE_Log_Record::msg_data () function is non-const, since it
+  // returns a non-const pointer to internal class members. Since we
+  // know that no members are modified here, we can safely const_cast
+  // the log_record parameter without violating the interface
+  // contract.
+  ACE_Log_Record &nonconst_record = (const_cast<ACE_Log_Record&> (log_record));
+  // Insert each field from <log_record> into the output CDR stream.
+  cdr << ACE_CDR::Long (log_record.type ());
+  cdr << ACE_CDR::Long (log_record.pid ());
+  cdr << ACE_CDR::Long (log_record.time_stamp ().sec ());
+  cdr << ACE_CDR::Long (log_record.time_stamp ().usec ());
+  cdr << ACE_CDR::ULong (msglen);
+  cdr.write_char_array (nonconst_record.msg_data (), msglen);
+  return cdr.good_bit ();
+}
+
+int 
+operator>> (ACE_InputCDR &cdr,
+            ACE_Log_Record &log_record)
+{
+  ACE_CDR::Long type;
+  ACE_CDR::Long pid;
+  ACE_CDR::Long sec, usec;
+  ACE_CDR::ULong buffer_len;
+
+  // Extract each field from input CDR stream into <log_record>.
+  if ((cdr >> type) && (cdr >> pid) && (cdr >> sec) && (cdr >> usec)
+      && (cdr >> buffer_len)) {
+    ACE_TCHAR *log_msg = new ACE_TCHAR[buffer_len];
+    log_record.type (type);
+    log_record.pid (pid);
+    log_record.time_stamp (ACE_Time_Value (sec, usec));
+    cdr.read_char_array (log_msg, buffer_len);
+    log_msg[buffer_len] = '\0';
+    log_record.set_msg_data_ptr (log_msg);
+  }
+  return cdr.good_bit ();
 }
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
@@ -292,7 +340,7 @@ ACE_Log_Record::print (const ACE_TCHAR host_name[],
                        ACE_OSTREAM_TYPE &s)
 {
   ACE_TCHAR* verbose_msg = 0;
-  ACE_NEW_RETURN (verbose_msg,ACE_TCHAR[MAXVERBOSELOGMSGLEN], -1);
+  ACE_NEW_RETURN (verbose_msg, ACE_TCHAR[MAXVERBOSELOGMSGLEN], -1);
 
   int const result = this->format_msg (host_name, verbose_flag, verbose_msg);
 
@@ -303,7 +351,7 @@ ACE_Log_Record::print (const ACE_TCHAR host_name[],
       s.flush ();
     }
 
-  delete[] verbose_msg;
+  delete [] verbose_msg;
 
   return result;
 }

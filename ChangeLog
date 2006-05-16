@@ -1,3 +1,19 @@
+Tue May 16 22:23:55 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ace/Log_Msg_IPC.cpp
+        * ace/Log_Record.cpp
+        * ace/Log_Record.h
+        * ace/Log_Record.inl
+        * netsvcs/lib/Client_Logging_Handler.cpp
+        * netsvcs/lib/Server_Logging_Handler_T.cpp
+        
+          A number of fixes for the logging service, which was
+          fundamentally broken.  Thanks to Doug Schmidt for debugging and
+          writing the reimplementation.  
+        
+          These changes are currently a hack at best, and will be
+          refactored by Doug in the next few days.
+
 Tue May 16 13:20:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_sys_time.inl:
