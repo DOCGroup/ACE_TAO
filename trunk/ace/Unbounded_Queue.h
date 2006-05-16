@@ -20,7 +20,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-// For size_t under Chorus
 #include "ace/os_include/os_stddef.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

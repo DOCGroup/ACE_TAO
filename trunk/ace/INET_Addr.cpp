@@ -322,7 +322,7 @@ ACE_INET_Addr::set (u_short port_number,
                       encode);
   else
     {
-#  if (defined (ACE_VXWORKS) && defined (ACE_LACKS_GETHOSTBYNAME)) || defined (CHORUS)
+#  if defined (ACE_VXWORKS) && defined (ACE_LACKS_GETHOSTBYNAME)
       hostent *hp = ACE_OS::gethostbyname (host_name);
 #  else
       hostent hentry;
@@ -795,7 +795,7 @@ ACE_INET_Addr::get_host_name_i (char hostname[], size_t len) const
           return -1;
         }
 #else
-#  if defined (CHORUS) || (defined (DIGITAL_UNIX) && defined (__GNUC__))
+#  if defined (DIGITAL_UNIX) && defined (__GNUC__)
       hostent *hp = ACE_OS::gethostbyaddr ((char *)this->ip_addr_pointer (),
                                            this->ip_addr_size (),
                                            this->get_type ());
@@ -810,7 +810,7 @@ ACE_INET_Addr::get_host_name_i (char hostname[], size_t len) const
                                  &hentry,
                                  buf,
                                  &h_error);
-#  endif /* CHORUS */
+#  endif /* DIGITAL_UNIX */
 
       if (hp == 0 || hp->h_name == 0)
         return -1;

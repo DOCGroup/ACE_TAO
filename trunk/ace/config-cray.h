@@ -41,9 +41,6 @@
 
 #define ACE_HAS_CPLUSPLUS_HEADERS
 
-// using cray's autoinstantiation gives C++ prelinker: error: instantiation loop
-#define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
-
 #define ACE_HAS_TEMPLATE_SPECIALIZATION
 
 #define ACE_HAS_SSIZE_T

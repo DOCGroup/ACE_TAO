@@ -13,26 +13,16 @@ ACE_INLINE void
 closedir (ACE_DIR *d)
 {
 #if defined (ACE_HAS_DIRENT)
-# if defined (ACE_PSOS)
-
-  u_long result = ::close_dir (&(d->xdir));
-  delete d;
-  if (result != 0)
-    errno = result;
-
-# else /* ! ACE_PSOS */
-
-#   if defined (ACE_WIN32) && defined (ACE_LACKS_CLOSEDIR)
+# if defined (ACE_WIN32) && defined (ACE_LACKS_CLOSEDIR)
   ACE_OS::closedir_emulation (d);
   delete [] d->directory_name_;
   delete d;
-#  elif defined (ACE_HAS_WCLOSEDIR) && defined (ACE_USES_WCHAR)
+# elif defined (ACE_HAS_WCLOSEDIR) && defined (ACE_USES_WCHAR)
   ::wclosedir (d);
-#   else /* ACE_WIN32 && ACE_LACKS_CLOSEDIR */
+# else /* ACE_WIN32 && ACE_LACKS_CLOSEDIR */
   ::closedir (d);
-#   endif /* ACE_WIN32 && ACE_LACKS_CLOSEDIR */
+# endif /* ACE_WIN32 && ACE_LACKS_CLOSEDIR */
 
-# endif /* ACE_PSOS */
 #else /* ACE_HAS_DIRENT */
   ACE_UNUSED_ARG (d);
 #endif /* ACE_HAS_DIRENT */
@@ -42,21 +32,6 @@ ACE_INLINE ACE_DIR *
 opendir (const ACE_TCHAR *filename)
 {
 #if defined (ACE_HAS_DIRENT)
-#  if defined (ACE_PSOS)
-  // The pointer to the <ACE_DIR> buffer *must* be passed to
-  // <ACE_OS::closedir> to free it and avoid a memory leak.
-  ACE_DIR *dir = 0;
-  u_long result;
-  ACE_NEW_RETURN (dir, ACE_DIR, 0);
-  result = ::open_dir (const_cast<ACE_TCHAR *> (filename), &dir->xdir);
-  if (result == 0)
-    return dir;
-  else
-    {
-      errno = result;
-      return 0;
-    }
-#  else /* ! ACE_PSOS */
 #    if defined (ACE_WIN32) && defined (ACE_LACKS_OPENDIR)
   return ::ACE_OS::opendir_emulation (filename);
 #  elif defined (ACE_HAS_WOPENDIR) && defined (ACE_USES_WCHAR)
@@ -66,7 +41,6 @@ opendir (const ACE_TCHAR *filename)
 #    else /* ! ACE_WIN32 && ACE_LACKS_OPENDIR */
   return ::opendir (ACE_TEXT_ALWAYS_CHAR (filename));
 #    endif /* ACE_WIN32 && ACE_LACKS_OPENDIR */
-#  endif /* ACE_PSOS */
 #else
   ACE_UNUSED_ARG (filename);
   ACE_NOTSUP_RETURN (0);
@@ -78,18 +52,6 @@ struct ACE_DIRENT *
 readdir (ACE_DIR *d)
 {
 #if defined (ACE_HAS_DIRENT)
-#  if defined (ACE_PSOS)
-
-  u_long result = ::read_dir (&d->xdir, &d->dirent);
-  if (0 == result)
-    return &d->dirent;
-  else
-    {
-      errno = result;
-      return 0;
-    }
-
-#  else /* ! ACE_PSOS */
 #    if defined (ACE_WIN32) && defined (ACE_LACKS_READDIR)
   return ACE_OS::readdir_emulation (d);
 #  elif defined (ACE_HAS_WREADDIR) && defined (ACE_USES_WCHAR)
@@ -97,7 +59,6 @@ readdir (ACE_DIR *d)
 #    else /* ACE_WIN32 && ACE_LACKS_READDIR */
   return ::readdir (d);
 #    endif /* ACE_WIN32 && ACE_LACKS_READDIR */
-#  endif /* ACE_PSOS */
 #else
   ACE_UNUSED_ARG (d);
   ACE_NOTSUP_RETURN (0);
