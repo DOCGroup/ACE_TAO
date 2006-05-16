@@ -1,3 +1,8 @@
+Tue May 16 14:03:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/CosProperty.idl:
+          Corrected incorrect filename in the header of this file
+
 Tue May 16 12:36:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Asynch_Queued_Message.cpp:
