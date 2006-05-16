@@ -40,12 +40,10 @@
 # undef ACE_HAS_PROC_FS
 # undef ACE_HAS_PRUSAGE_T
 
-#elif defined (__KCC)
-typedef unsigned long long uint64_t;
 #elif defined (__SUNPRO_CC) && (__SUNPRO_CC <= 0x530)
   // Wide character methods are in std:: when using SunCC 5.3
 # define ACE_WCHAR_IN_STD_NAMESPACE
-#endif /* __GNUG__ || ghs || __KCC */
+#endif /* __GNUG__ || ghs */
 
 // SunOS 5.7 supports SCHED_FIFO and SCHED_RR, as well as SCHED_OTHER.
 #undef ACE_HAS_ONLY_SCHED_OTHER
