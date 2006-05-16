@@ -1,3 +1,10 @@
+Tue May 16 14:15:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Strategies/Strategies.mpc:
+        * tests/Bug_2134_Regression/Bug_2134_Regression.mpc:
+        * tests/Bug_2494_Regression/Bug_2494_Regression.mpc:
+          Simplified these mpc files
+
 Tue May 16 14:09:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/AV/TCP.cpp:
