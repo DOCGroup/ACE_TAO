@@ -25,7 +25,6 @@ ACE_RCSID (tao,
            Profile,
            "$Id$")
 
-
 // ****************************************************************
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -166,7 +165,6 @@ TAO_Profile::encode (TAO_OutputCDR &stream) const
   this->create_profile_body (encap);
 
   // write the encapsulation as an octet sequence...
-
   stream << CORBA::ULong (encap.total_length ());
   stream.write_octet_array_mb (encap.begin ());
 
@@ -176,7 +174,7 @@ TAO_Profile::encode (TAO_OutputCDR &stream) const
 int
 TAO_Profile::decode (TAO_InputCDR& cdr)
 {
-  size_t encap_len = cdr.length ();
+  size_t const encap_len = cdr.length ();
 
   // Read and verify major, minor versions, ignoring profiles
   // whose versions we don't understand.
@@ -290,7 +288,7 @@ TAO_Profile::create_tagged_profile (void)
       // Create the profile body
       this->create_profile_body (encap);
 
-      CORBA::ULong length =
+      CORBA::ULong const length =
         static_cast <CORBA::ULong> (encap.total_length ());
 
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
@@ -319,7 +317,7 @@ TAO_Profile::create_tagged_profile (void)
 void
 TAO_Profile::set_tagged_components (TAO_OutputCDR &out_cdr)
 {
-  CORBA::ULong length = static_cast <CORBA::ULong> (out_cdr.total_length ());
+  CORBA::ULong const length = static_cast <CORBA::ULong> (out_cdr.total_length ());
 
   IOP::TaggedComponent tagged_component;
   tagged_component.tag = TAO_TAG_ENDPOINTS;
@@ -331,7 +329,7 @@ TAO_Profile::set_tagged_components (TAO_OutputCDR &out_cdr)
        iterator != 0;
        iterator = iterator->cont ())
     {
-      size_t i_length = iterator->length ();
+      size_t const i_length = iterator->length ();
       ACE_OS::memcpy (buf, iterator->rd_ptr (), i_length);
 
       buf += i_length;
@@ -418,7 +416,7 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list
        iterator != 0;
        iterator = iterator->cont ())
     {
-      size_t i_length = iterator->length ();
+      size_t const i_length = iterator->length ();
       ACE_OS::memcpy (buf, iterator->rd_ptr (), i_length);
 
       buf += i_length;
@@ -427,7 +425,7 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list
   // Eventually we add the TaggedComponent to the TAO_TaggedComponents
   // member variable.
   tagged_components_.set_component (tagged_component);
-  this->are_policies_parsed_ = 1;
+  this->are_policies_parsed_ = true;
 
 #else /* TAO_HAS_CORBA_MESSAGING == 1 */
 
@@ -484,7 +482,7 @@ TAO_Profile::get_policies (CORBA::PolicyList& pl
           // and we convert those into the proper CORBA::Policy
 
           CORBA::Policy_var policy;
-          CORBA::ULong length = policy_value_seq.length ();
+          CORBA::ULong const length = policy_value_seq.length ();
 
           // Set the policy list length.
           pl.length (length);
@@ -506,7 +504,6 @@ TAO_Profile::get_policies (CORBA::PolicyList& pl
                       TAO_InputCDR in_cdr (
                         reinterpret_cast <const char*>  (buf),
                         policy_value_seq[i].pvalue.length ());
-
 
                       if (!(in_cdr >> ACE_InputCDR::to_boolean (byte_order)))
                         ACE_TRY_THROW (CORBA::INV_OBJREF ());
@@ -944,7 +941,7 @@ TAO_Unknown_Profile::create_profile_body (TAO_OutputCDR &) const
 CORBA::Boolean
 operator<< (TAO_OutputCDR& cdr, const TAO_opaque& x)
 {
-  CORBA::ULong length = x.length ();
+  CORBA::ULong const length = x.length ();
   cdr.write_ulong (length);
 
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
