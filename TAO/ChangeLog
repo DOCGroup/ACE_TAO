@@ -1,3 +1,12 @@
+Tue May 16 14:09:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/AV/TCP.cpp:
+          Const improvments and initialise some pointers with 0
+
+        * orbsvcs/orbsvcs/AV/RTP.cpp:
+        * orbsvcs/orbsvcs/AV/sfp.cpp:
+          Use a CORBA::ULong to iterate through the TAO_AV_PolicyList
+
 Tue May 16 14:03:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/CosProperty.idl:
