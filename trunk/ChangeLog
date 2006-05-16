@@ -1,3 +1,13 @@
+Tue May 16 13:09:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_sys_wait.{h,inl}:
+          Remove chorus support
+
+        * ace/OS_NS_stropts.inl:
+        * ace/OS_NS_sys_stat.inl:
+        * ace/OS_NS_string.inl:
+          Removed psos support
+
 Tue May 16 13:02:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Log_Msg.cpp:
