@@ -13,6 +13,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_sys_socket.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/CDR_Stream.h"
 
 ACE_RCSID(lib, Client_Logging_Handler, "$Id$")
 
@@ -69,11 +70,9 @@ ACE_Client_Logging_Handler::open (void *)
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("get_remote_addr")),
                       -1);
-#if 0
   ACE_DEBUG ((LM_DEBUG,
 	      ACE_TEXT ("connected to client on handle %u\n"),
 	      this->peer ().get_handle ()));
-#endif /* 0 */
   return 0;
 }
 
@@ -106,6 +105,7 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
                       -1);
   ACE_Log_Record log_record;
 #if defined (ACE_HAS_STREAM_PIPES)
+  @@ To Do
   // We're getting a logging message from a local application.
 
   ACE_Str_Buf msg ((void *) &log_record,
@@ -140,18 +140,23 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
       return 0;
     }
 #else
-  ACE_INT32 length;
 
   // We need to use the old two-read trick here since TCP sockets
-  // don't support framing natively.  Note that the first call is just
-  // a "peek" -- we don't actually remove the data until the second
-  // call.  Note that this code is portable as long as ACE_UNIT32 is
-  // always 32 bits on both the sender and receiver side.
+  // don't support framing natively.  Allocate a message block for the
+  // payload; initially at least large enough to hold the header, but
+  // needs some room for alignment.
+  ACE_Message_Block *payload = 0;
+  ACE_Message_Block *header =
+    new ACE_Message_Block (ACE_DEFAULT_CDR_BUFSIZE);
+  // Align the Message Block for a CDR stream
+  ACE_CDR::mb_align (header);
 
-  ssize_t count = ACE_OS::recv (handle,
-                                (char *) &length,
-                                sizeof length,
-                                MSG_PEEK);
+  ACE_CDR::Boolean byte_order;
+  ACE_CDR::ULong length;
+
+  ssize_t count = ACE::recv_n (handle,
+			       header->wr_ptr (),
+			       8);
   switch (count)
     {
       // Handle shutdown and error cases.
@@ -171,14 +176,17 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
         this->peer ().close ();
       else
         ACE_OS::closesocket (handle);
+      // Release the memory to prevent a leak.
+      header->release ();
+      header = 0;
 #if 0
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("client closing down\n")));
-#endif /* 0 */
+#endif
       return 0;
       /* NOTREACHED */
 
-    case sizeof length:
+    case 8:
 #if defined (ACE_WIN32)
       // This is a special-case sent from near line 610 in
       // Log_Msg.cpp.  Without this code Win32 sockets are never
@@ -203,61 +211,70 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
           return 0;
         }
 #endif /* ACE_WIN32 */
+      header->wr_ptr (8); // Reflect addition of 8 bytes.
 
-      ssize_t retrieved = ACE_OS::recv (handle,
-                                        (char *) &log_record,
-                                        (int) length);
+      // Create a CDR stream to parse the 8-byte header.
+      ACE_InputCDR cdr (header);
 
-      // We got a ``short-read.''  Try once more, then abandon all
-      // hope on this socket.  Note that if we were trying to write a
-      // totally "bullet-proof" app that couldn't lose any data
-      // unnecessarily we might want to put the socket into
-      // non-blocking model and loop until we either get all the bytes
-      // or something else happens to convince us that we won't get
-      // the remainder of the data.  In this case, however, we're in
-      // "loopback" mode, so a failure to get all the data by the
-      // second try is probably an indication that something is
-      // seriously wrong, so shutting down the connection is probably
-      // the best solution.
-      if (retrieved != length)
+      // Extract the byte-order and use helper methods to disambiguate
+      // octet, booleans, and chars.
+      cdr >> ACE_InputCDR::to_boolean (byte_order);
+
+      // Set the byte-order on the stream...
+      cdr.reset_byte_order (byte_order);
+
+      // Extract the length
+      cdr >> length;
+
+      payload =	new ACE_Message_Block (length);
+      // Ensure there's sufficient room for log record payload.
+      ACE_CDR::grow (payload, 8 + ACE_CDR::MAX_ALIGNMENT + length);
+
+      // Use <recv_n> to obtain the contents.
+      if (ACE::recv_n (handle, payload->wr_ptr (), length) > 0) 
+        payload->wr_ptr (length);   // Reflect additional bytes
+      else
         {
-#if 0
-          ACE_DEBUG ((LM_DEBUG,
-                       ACE_TEXT ("partial message retrieved, attempting second try...\n")));
-#endif /* 0 */
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("%p\n"),
+                      ACE_TEXT ("recv")));
 
-          int remainder = length - retrieved;
+          if (ACE_Reactor::instance ()->remove_handler
+              (handle,
+               ACE_Event_Handler::READ_MASK
+               | ACE_Event_Handler::EXCEPT_MASK
+               | ACE_Event_Handler::DONT_CALL) == -1)
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("%n: %p\n"),
+                        ACE_TEXT ("remove_handler")));
 
-          ssize_t secondtry = ACE_OS::recv (handle,
-                                            ((char *) &log_record) + retrieved,
-                                            remainder);
-          if (secondtry != remainder)
-            {
-              ACE_ERROR ((LM_ERROR,
-                          ACE_TEXT ("%p\n"),
-                          ACE_TEXT ("recv")));
-
-              if (ACE_Reactor::instance ()->remove_handler
-                  (handle,
-                   ACE_Event_Handler::READ_MASK
-                   | ACE_Event_Handler::EXCEPT_MASK
-                   | ACE_Event_Handler::DONT_CALL) == -1)
-                ACE_ERROR ((LM_ERROR,
-                            ACE_TEXT ("%n: %p\n"),
-                            ACE_TEXT ("remove_handler")));
-
-              ACE_OS::closesocket (handle);
-              return 0;
-            }
+          ACE_OS::closesocket (handle);
+          // Release the memory to prevent a leak.
+          payload->release ();
+          payload = 0;
+	  header->release ();
+	  header = 0;
+          return 0;
         }
     }
 #endif /* ACE_HAS_STREAM_PIPES */
+
+  ACE_InputCDR cdr (payload);
+  cdr.reset_byte_order (byte_order);
+  cdr >> log_record;  // Finally extract the <ACE_log_record>.
+
+  log_record.length (length);
 
   // Forward the logging record to the server.
   if (this->send (log_record) == -1)
     ACE_ERROR ((LM_ERROR,
 		ACE_TEXT ("%p\n"),
 		ACE_TEXT ("send")));
+  // Release the memory to prevent a leak.
+  payload->release ();
+  payload = 0;
+  header->release ();
+  header = 0;
   return 0;
 }
 
@@ -299,6 +316,7 @@ ACE_Client_Logging_Handler::send (ACE_Log_Record &log_record)
   // This logic must occur before we do the encode() on <log_record>
   // since otherwise the values of the <log_record> fields will be in
   // network byte order.
+
   if (orig_ostream)
     log_record.print (ACE_TEXT ("<localhost>"),
                       ACE_Log_Msg::instance ()->flags (),
@@ -310,6 +328,57 @@ ACE_Client_Logging_Handler::send (ACE_Log_Record &log_record)
                       stderr);
   else
     {
+      // Serialize the log record using a CDR stream, allocate enough
+      // space for the complete <ACE_Log_Record>.
+      const size_t max_payload_size =
+	4 // type()
+	+ 8 // timestamp
+	+ 4 // process id
+	+ 4 // data length
+	+ ACE_Log_Record::MAXLOGMSGLEN // data
+	+ ACE_CDR::MAX_ALIGNMENT; // padding;
+
+      // Insert contents of <log_record> into payload stream.
+      ACE_OutputCDR payload (max_payload_size);
+      payload << log_record;
+
+      // Get the number of bytes used by the CDR stream.
+      ACE_CDR::ULong length = payload.total_length ();
+
+      // Send a header so the receiver can determine the byte order and
+      // size of the incoming CDR stream.
+      ACE_OutputCDR header (ACE_CDR::MAX_ALIGNMENT + 8);
+      header << ACE_OutputCDR::from_boolean (ACE_CDR_BYTE_ORDER);
+
+      // Store the size of the payload that follows
+      header << ACE_CDR::ULong (length);
+
+      // Use an iovec to send both buffer and payload simultaneously.
+      iovec iov[2];
+      iov[0].iov_base = header.begin ()->rd_ptr ();
+      iov[0].iov_len  = 8;
+      iov[1].iov_base = payload.begin ()->rd_ptr ();
+      iov[1].iov_len  = length;
+
+      // We're running over sockets, so send header and payload
+      // efficiently using "gather-write".  
+      if (ACE::sendv_n (this->logging_output_,iov, 2) == -1)
+	{
+	  ACE_DEBUG ((LM_DEBUG, "WILL: Something about the sending failed.  Switching to stderr\n"));
+	  if (ACE_Log_Msg::instance ()->msg_ostream () == 0)
+	    // Switch over to logging to stderr for now.  At some point,
+	    // we'll improve the implementation to queue up the message,
+	    // try to reestablish a connection, and then send the queued
+	    // data once we've reconnect to the logging server.  If
+	    // you'd like to implement this functionality and contribute
+	    // it back to ACE that would be great!
+	    this->logging_output_ = ACE_STDERR;
+	}
+      else
+	{
+	  ACE_DEBUG ((LM_DEBUG, "WILL: Sent logging message successfully!\n"));
+	}
+#if 0
       long len = log_record.length ();
       log_record.encode ();
 
@@ -324,6 +393,7 @@ ACE_Client_Logging_Handler::send (ACE_Log_Record &log_record)
           // you'd like to implement this functionality and contribute
           // it back to ACE that would be great!
           this->logging_output_ = ACE_STDERR;
+#endif 
     }
 
   return 0;

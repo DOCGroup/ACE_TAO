@@ -2,6 +2,7 @@
 
 #include "ace/Log_Msg_IPC.h"
 #include "ace/Log_Record.h"
+#include "ace/CDR_Stream.h"
 
 ACE_RCSID(ace, Log_Msg_IPC, "$Id$")
 
@@ -50,24 +51,55 @@ ACE_Log_Msg_IPC::close (void)
 int
 ACE_Log_Msg_IPC::log (ACE_Log_Record &log_record)
 {
-#if defined (ACE_HAS_STREAM_PIPES)
+  // Serialize the log record using a CDR stream, allocate enough
+  // space for the complete <ACE_Log_Record>.
+  const size_t max_payload_size =
+    4 // type()
+    + 8 // timestamp
+    + 4 // process id
+    + 4 // data length
+    + ACE_Log_Record::MAXLOGMSGLEN // data
+    + ACE_CDR::MAX_ALIGNMENT; // padding;
+
+  // Insert contents of <log_record> into payload stream.
+  ACE_OutputCDR payload (max_payload_size);
+  payload << log_record;
+
+  // Get the number of bytes used by the CDR stream.
+  ACE_CDR::ULong length = payload.total_length ();
+
+  // Send a header so the receiver can determine the byte order and
+  // size of the incoming CDR stream.
+  ACE_OutputCDR header (ACE_CDR::MAX_ALIGNMENT + 8);
+  header << ACE_OutputCDR::from_boolean (ACE_CDR_BYTE_ORDER);
+
+  // Store the size of the payload that follows
+  header << ACE_CDR::ULong (length);
+
+  // Use an iovec to send both buffer and payload simultaneously.
+  iovec iov[2];
+  iov[0].iov_base = header.begin ()->rd_ptr ();
+  iov[0].iov_len  = 8;
+  iov[1].iov_base = payload.begin ()->rd_ptr ();
+  iov[1].iov_len  = length;
+
+#if !defined (ACE_HAS_STREAM_PIPES)
+  // We're running over sockets, so send header and payload
+  // efficiently using "gather-write".  
+  return this->message_queue_.sendv_n (iov, 2);
+#else
+  @@ To Do for STREAM PIPES.
   ACE_Str_Buf log_msg (static_cast<void *> (&log_record),
                        static_cast<int> (log_record.length ()));
 
-  // Try to use the <putpmsg> API if possible in order to
-  // ensure correct message queueing according to priority.
+  // Try to use the <putpmsg> API if possible in order to ensure
+  // correct message queueing according to priority.
   return
     this->message_queue_.send
-      (static_cast<const ACE_Str_Buf *> (0),
-       &log_msg,
-       static_cast<int> (log_record.priority ()),
-       MSG_BAND);
-#else
-  // We're running over sockets, so we'll need to indicate the
-  // number of bytes to send.
-  return
-    this->message_queue_.send_n ((void *) &log_record,
-                                  log_record.length ());
+    (static_cast<const ACE_Str_Buf *> (0),
+     &log_msg,
+     static_cast<int> (log_record.priority ()),
+     MSG_BAND);
 #endif /* ACE_HAS_STREAM_PIPES */
 }
 
