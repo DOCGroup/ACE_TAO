@@ -114,8 +114,10 @@ TAO_GIOP_Message_State::parse_magic_bytes (char *buf)
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) - bad header, ")
-                    ACE_TEXT ("magic word [%2.2x,%2.2x,%2.2x,%2.2x]\n"),
+                    ACE_TEXT ("TAO (%P|%t) - ")
+                    ACE_TEXT ("TAO_GIOP_Message_State::parse_magic_bytes, ")
+                    ACE_TEXT ("bad header: ")
+                    ACE_TEXT ("magic word [%02x,%02x,%02x,%02x]\n"),
                     buf[0],
                     buf[1],
                     buf[2],
@@ -230,7 +232,7 @@ TAO_GIOP_Message_State::get_payload_size (char *rd_ptr)
 }
 
 CORBA::ULong
-TAO_GIOP_Message_State::read_ulong (const char *rd_ptr) const 
+TAO_GIOP_Message_State::read_ulong (const char *rd_ptr) const
 {
   CORBA::ULong x = 0;
 

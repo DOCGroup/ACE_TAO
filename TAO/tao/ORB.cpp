@@ -1633,7 +1633,7 @@ CORBA::ORB::object_to_string (CORBA::Object_ptr obj
 
       const size_t total_len = cdr.total_length ();
 
-      char *cp;
+      char *cp = 0;
       ACE_ALLOCATOR_RETURN (cp,
                             CORBA::string_alloc (
                               sizeof ior_prefix

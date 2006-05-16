@@ -31,7 +31,7 @@ TAO_GIOP_Message_Generator_Parser_10::write_request_header (
   // The request ID
   msg << opdetails.request_id ();
 
-  const CORBA::Octet response_flags = opdetails.response_flags ();
+  CORBA::Octet const response_flags = opdetails.response_flags ();
 
   // Write the response flags
   if (response_flags == TAO_TWOWAY_RESPONSE_FLAG)
@@ -206,7 +206,7 @@ TAO_GIOP_Message_Generator_Parser_10::write_reply_header (
       // @@ Much of this code is GIOP 1.1 specific and should be
       ptrdiff_t target = reply.dsi_nvlist_align_;
 
-      ptrdiff_t current =
+      ptrdiff_t const current =
         ptrdiff_t (output.current_alignment ()) % ACE_CDR::MAX_ALIGNMENT;
 
       CORBA::ULong pad = 0;
@@ -418,7 +418,7 @@ TAO_GIOP_Message_Generator_Parser_10::parse_locate_header (
   // Get the stream
   TAO_InputCDR &msg = request.incoming_stream ();
 
-  CORBA::Boolean hdr_status = 1;
+  CORBA::Boolean hdr_status = true;
 
   // Get the request id
   CORBA::ULong req_id = 0;
