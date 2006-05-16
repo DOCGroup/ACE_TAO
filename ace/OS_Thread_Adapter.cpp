@@ -87,12 +87,7 @@ ACE_OS_Thread_Adapter::invoke (void)
           else
             {
               // Call thread entry point.
-#if defined (ACE_PSOS)
-              (*func) (arg);
-              status = 0;
-#else /* ! ACE_PSOS */
               status = (*func) (arg);
-#endif /* ACE_PSOS */
             }
         }
 
@@ -150,25 +145,6 @@ ACE_OS_Thread_Adapter::invoke (void)
 #   endif /* ACE_HAS_MFC && ACE_HAS_MFS != 0*/
 # endif /* ACE_WIN32 */
 #endif /* ACE_WIN32 || ACE_HAS_TSS_EMULATION */
-
-#if defined (ACE_PSOS)
-      // This sequence of calls is documented by ISI as the proper way to
-      // clean up a pSOS task. They affect different components, so only
-      // try the ones for components that are built with ACE.
-#  if defined (SC_PREPC) && (SC_PREPC == YES)
-      ::fclose (0);   // Return pREPC+ resources
-#  endif /* SC_PREPC */
-#  if defined (SC_PHILE) && (SC_PHILE == YES)
-      ::close_f (0);  // Return pHILE+ resources
-#  endif /* SC_PHILE */
-#  if defined (SC_PNA) && (SC_PNA == YES)
-      ::close (0);    // Return pNA+ resources
-#  endif /* SC_PNA */
-#  if defined (SC_SC_PREPC) && (SC_PREPC == YES)
-      ::free (-1);    // Return pREPC+ memory
-#  endif /* SC_PREPC */
-      status = ::t_delete (0); // Suicide - only returns on error
-#endif /* ACE_PSOS */
     }
 
   return status;
