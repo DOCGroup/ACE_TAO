@@ -42,6 +42,24 @@ USER VISIBLE CHANGES BETWEEN TAO-1.5.1 and TAO-1.5.2
   IDL compiler. If you need these for your project, add -GT to the
   idl compiler flags.
 
+. Added support for CORBA specified truncatable valuetypes.
+
+. Added support for CORBA specified POAManagerFactory.
+
+. Added TAO-proprietary EndpointPolicy. This is used as a filter to limit
+  which of an ORBs endpoints are inserted into an object reference. The
+  endpoint policy is applied to POAManagers created via the POAManagerFactory
+  and affect all POAs associated with that POAManager.
+
+. Added a client-side connection optimization, the Parallel Connect Strategy
+  This strategy makes the client evaluate all endpoints in profile at the same
+  time when trying to connect to the server. For this to work the server must
+  be run with -ORBUseSharedProfile 1 and the client must be run with
+  -ORBUseParallelConnect 1.
+
+. Fixed several bugs related to asynchronous connection establishment. These
+  are represented by the AMI_Buffering tests and bug 2417's regression test.
+
 USER VISIBLE CHANGES BETWEEN TAO-1.5 and TAO-1.5.1
 ====================================================
 

@@ -1797,8 +1797,8 @@ create_i (const char *entry_point,
   auto_ptr<TAO_Reconfig_Scheduler_Entry> new_sched_entry_ptr (new_sched_entry);
 
   // Maintain the size of the entry pointer array.
-  ::maintain_scheduling_array (entry_ptr_array_, entry_ptr_array_size_,
-                               handle ACE_ENV_ARG_PARAMETER);
+  maintain_scheduling_array (entry_ptr_array_, entry_ptr_array_size_,
+                             handle ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
 
@@ -1914,10 +1914,10 @@ set_i (TAO_RT_Info_Ex *rt_info,
             }
 
           // Maintain the size of the entry pointer array.
-          ::maintain_scheduling_array (tuple_ptr_array_,
-                                       tuple_ptr_array_size_,
-                                       rt_info_tuple_count_
-                                       ACE_ENV_ARG_PARAMETER);
+          maintain_scheduling_array (tuple_ptr_array_,
+                                     tuple_ptr_array_size_,
+                                     rt_info_tuple_count_
+                                     ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
 
           // Store the new tuple in the tuple pointer array.
@@ -3156,4 +3156,3 @@ TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::init_rt_info (RtecSch
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_RECONFIG_SCHEDULER_T_C */
-
