@@ -13,14 +13,13 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_INLINE char *
 ACE_OS::asctime (const struct tm *t)
 {
-#if !defined (ACE_HAS_WINCE) && !defined(ACE_PSOS) || defined (ACE_PSOS_HAS_TIME)
   ACE_OS_TRACE ("ACE_OS::asctime");
-  ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::asctime (t), char *, 0);
-#else
-  // @@ WinCE doesn't have gmtime also.
+#if defined (ACE_LACKS_ASCTIME)
   ACE_UNUSED_ARG (t);
   ACE_NOTSUP_RETURN (0);
-#endif /*  !ACE_HAS_WINCE && !ACE_PSOS || ACE_PSOS_HAS_TIME */
+#else
+  ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::asctime (t), char *, 0);
+#endif /* ACE_LACKS_ASCTIME */
 }
 
 ACE_INLINE char *
@@ -46,18 +45,16 @@ ACE_OS::asctime_r (const struct tm *t, char *buf, int buflen)
   ACE_OSCALL_RETURN (::asctime_r (t, buf, buflen), char *, 0);
 #   endif /* HPUX_10 */
 # endif /* ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R */
-#elif ! defined (ACE_HAS_WINCE) && !defined(ACE_PSOS) || defined (ACE_PSOS_HAS_TIME)
-  char *result;
-  ACE_OSCALL (ACE_STD_NAMESPACE::asctime (t), char *, 0, result);
-  ACE_OS::strsncpy (buf, result, buflen);
-  return buf;
-#else
-  // @@ Same as ACE_OS::asctime (), you need to implement it
-  //    yourself.
+#elif defined (ACE_LACKS_ASCTIME_R)
   ACE_UNUSED_ARG (t);
   ACE_UNUSED_ARG (buf);
   ACE_UNUSED_ARG (buflen);
   ACE_NOTSUP_RETURN (0);
+#else
+  char *result = 0;
+  ACE_OSCALL (ACE_STD_NAMESPACE::asctime (t), char *, 0, result);
+  ACE_OS::strsncpy (buf, result, buflen);
+  return buf;
 #endif /* ACE_HAS_REENTRANT_FUNCTIONS */
 }
 
@@ -67,12 +64,6 @@ ACE_OS::clock_gettime (clockid_t clockid, struct timespec *ts)
   ACE_OS_TRACE ("ACE_OS::clock_gettime");
 #if defined (ACE_HAS_CLOCK_GETTIME)
   ACE_OSCALL_RETURN (::clock_gettime (clockid, ts), int, -1);
-# elif defined (ACE_PSOS) && ! defined (ACE_PSOS_DIAB_MIPS)
-  ACE_UNUSED_ARG (clockid);
-  ACE_PSOS_Time_t pt;
-  int result = ACE_PSOS_Time_t::get_system_time (pt);
-  *ts = static_cast<struct timespec> (pt);
-  return result;
 #else
   ACE_UNUSED_ARG (clockid);
   ACE_UNUSED_ARG (ts);
@@ -105,8 +96,6 @@ ACE_OS::ctime (const time_t *t)
   ACE_OS_TRACE ("ACE_OS::ctime");
 #if defined (ACE_HAS_BROKEN_CTIME)
   ACE_OSCALL_RETURN (::asctime (::localtime (t)), char *, 0);
-#elif defined(ACE_PSOS) && ! defined (ACE_PSOS_HAS_TIME)
-  return "ctime-return";
 #elif defined (ACE_HAS_WINCE)
   static ACE_TCHAR buf [ctime_buf_size];
   return ACE_OS::ctime_r (t,
@@ -186,10 +175,6 @@ ACE_OS::ctime_r (const time_t *t, ACE_TCHAR *buf, int buflen)
 #   endif /* ACE_USES_WCHAR */
 
 #else /* ACE_HAS_REENTRANT_FUNCTIONS */
-#   if defined(ACE_PSOS) && ! defined (ACE_PSOS_HAS_TIME)
-  ACE_OS::strsncpy (buf, "ctime-return", buflen);
-  return buf;
-#   else /* ACE_PSOS && !ACE_PSOS_HAS_TIME */
   if (buflen < ctime_buf_size)
     {
       errno = ERANGE;
@@ -205,7 +190,6 @@ ACE_OS::ctime_r (const time_t *t, ACE_TCHAR *buf, int buflen)
   if (result != 0)
     ACE_OS::strsncpy (buf, result, buflen);
   return buf;
-#   endif /* ACE_PSOS && !ACE_PSOS_HAS_TIME */
 #endif /* ACE_HAS_REENTRANT_FUNCTIONS */
 }
 #endif /* !ACE_HAS_WINCE */
@@ -297,38 +281,6 @@ ACE_OS::gethrtime (const ACE_HRTimer_Op op)
   return freq.QuadPart;
 #  endif //ACE_LACKS_LONGLONG_T
 
-#elif defined (CHORUS)
-  if (op == ACE_OS::ACE_HRTIMER_GETTIME)
-    {
-      struct timespec ts;
-
-      ACE_OS::clock_gettime (CLOCK_REALTIME, &ts);
-
-      // Carefully create the return value to avoid arithmetic overflow
-      // if ACE_hrtime_t is ACE_U_LongLong.
-      ACE_hrtime_t now = ts.tv_sec;
-      now *= ACE_U_ONE_SECOND_IN_NSECS;
-      now += ts.tv_nsec;
-
-      return now;
-    }
-  else
-    {
-      // Use the sysBench timer on Chorus.  On MVME177, at least, it only
-      // has 32 bits.  Be careful, because using it disables interrupts!
-      ACE_UINT32 now;
-      if (::sysBench (op, (int *) &now) == K_OK)
-        {
-          now *= 1000u /* nanoseconds/microsecond */;
-          return (ACE_hrtime_t) now;
-        }
-      else
-        {
-          // Something went wrong.  Just return 0.
-          return (ACE_hrtime_t) 0;
-        }
-    }
-
 #elif defined (ACE_HAS_POWERPC_TIMER) && (defined (ghs) || defined (__GNUG__))
   // PowerPC w/ GreenHills or g++.
 
@@ -355,7 +307,7 @@ ACE_OS::gethrtime (const ACE_HRTimer_Op op)
   return 0x100000000llu * most  +  least;
 #endif /* ! ACE_LACKS_LONGLONG_T */
 
-#elif defined (ACE_HAS_CLOCK_GETTIME) || defined (ACE_PSOS)
+#elif defined (ACE_HAS_CLOCK_GETTIME)
   // e.g., VxWorks (besides POWERPC && GreenHills) . . .
   ACE_UNUSED_ARG (op);
   struct timespec ts;
@@ -385,14 +337,13 @@ ACE_OS::gethrtime (const ACE_HRTimer_Op op)
 ACE_INLINE struct tm *
 ACE_OS::gmtime (const time_t *t)
 {
-#if !defined (ACE_HAS_WINCE) && !defined (ACE_PSOS) || defined (ACE_PSOS_HAS_TIME)
   ACE_OS_TRACE ("ACE_OS::gmtime");
-  ACE_OSCALL_RETURN (::gmtime (t), struct tm *, 0);
-#else
-  // @@ WinCE doesn't have gmtime also.
+#if defined (ACE_LACKS_GMTIME)
   ACE_UNUSED_ARG (t);
   ACE_NOTSUP_RETURN (0);
-#endif /* ACE_HAS_WINCE && !ACE_PSOS || ACE_PSOS_HAS_TIME */
+#else
+  ACE_OSCALL_RETURN (::gmtime (t), struct tm *, 0);
+#endif /* ACE_LACKS_GMTIME */
 }
 
 ACE_INLINE struct tm *
@@ -402,38 +353,32 @@ ACE_OS::gmtime_r (const time_t *t, struct tm *res)
 #if defined (ACE_HAS_REENTRANT_FUNCTIONS)
 # if defined (DIGITAL_UNIX)
   ACE_OSCALL_RETURN (::_Pgmtime_r (t, res), struct tm *, 0);
-# elif defined (HPUX_10)
-  return (::gmtime_r (t, res) == 0 ? res : (struct tm *) 0);
 # else
   ACE_OSCALL_RETURN (::gmtime_r (t, res), struct tm *, 0);
 # endif /* DIGITAL_UNIX */
-#elif !defined (ACE_HAS_WINCE) && !defined(ACE_PSOS) || defined (ACE_PSOS_HAS_TIME)
+#elif defined (ACE_LACKS_GMTIME_R)
+  ACE_UNUSED_ARG (t);
+  ACE_UNUSED_ARG (res);
+  ACE_NOTSUP_RETURN (0);
+#else
   struct tm *result;
   ACE_OSCALL (::gmtime (t), struct tm *, 0, result) ;
   if (result != 0)
     *res = *result;
   return res;
-#else
-  // @@ Same as ACE_OS::gmtime (), you need to implement it
-  //    yourself.
-  ACE_UNUSED_ARG (t);
-  ACE_UNUSED_ARG (res);
-  ACE_NOTSUP_RETURN (0);
 #endif /* ACE_HAS_REENTRANT_FUNCTIONS */
 }
 
 ACE_INLINE struct tm *
 ACE_OS::localtime (const time_t *t)
 {
-#if !defined (ACE_HAS_WINCE) && !defined (ACE_PSOS) || defined (ACE_PSOS_HAS_TIME)
   ACE_OS_TRACE ("ACE_OS::localtime");
-  ACE_OSCALL_RETURN (::localtime (t), struct tm *, 0);
-#else
-  // @@ Don't you start wondering what kind of functions
-  //    does WinCE really support?
+#if defined (ACE_LACKS_LOCALTIME)
   ACE_UNUSED_ARG (t);
   ACE_NOTSUP_RETURN (0);
-#endif /* ACE_HAS_WINCE && !ACE_PSOS || ACE_PSOS_HAS_TIME */
+#else
+  ACE_OSCALL_RETURN (::localtime (t), struct tm *, 0);
+#endif /* ACE_LACKS_LOCALTIME */
 }
 
 ACE_INLINE int
@@ -494,31 +439,23 @@ ACE_INLINE size_t
 ACE_OS::strftime (char *s, size_t maxsize, const char *format,
                   const struct tm *timeptr)
 {
-#if !defined (ACE_HAS_WINCE) && !defined(ACE_PSOS) || defined (ACE_PSOS_HAS_TIME)
-  return ACE_STD_NAMESPACE::strftime (s, maxsize, format, timeptr);
-#else
+#if defined (ACE_LACKS_STRFTIME)
   ACE_UNUSED_ARG (s);
   ACE_UNUSED_ARG (maxsize);
   ACE_UNUSED_ARG (format);
   ACE_UNUSED_ARG (timeptr);
   ACE_NOTSUP_RETURN (0);
-#endif /* !ACE_HAS_WINCE && !ACE_PSOS || ACE_PSOS_HAS_TIME */
+#else
+  return ACE_STD_NAMESPACE::strftime (s, maxsize, format, timeptr);
+#endif /* ACE_LACKS_STRFTIME */
 }
 
 ACE_INLINE time_t
 ACE_OS::time (time_t *tloc)
 {
-#if !defined (ACE_HAS_WINCE)
   ACE_OS_TRACE ("ACE_OS::time");
-#  if defined (ACE_PSOS) && ! defined (ACE_PSOS_HAS_TIME)
-        unsigned long d_date, d_time, d_tick;
-        tm_get(&d_date, &d_time, &d_tick); // get current time
-        if (tloc)
-                *tloc = d_time; // set time as time_t
-        return d_time;
-#  else
+#if !defined (ACE_HAS_WINCE)
   ACE_OSCALL_RETURN (::time (tloc), time_t, (time_t) -1);
-#  endif /* ACE_PSOS && ! ACE_PSOS_HAS_TIME */
 #else
   time_t retv = ACE_OS::gettimeofday ().sec ();
   if (tloc)
@@ -547,7 +484,7 @@ ACE_OS::timezone (void)
 ACE_INLINE void
 ACE_OS::tzset (void)
 {
-#if !defined (ACE_HAS_WINCE) && !defined (VXWORKS) && !defined (ACE_PSOS) && !defined(__rtems__) && !defined (ACE_HAS_DINKUM_STL)
+#if !defined (ACE_HAS_WINCE) && !defined (VXWORKS) && !defined(__rtems__) && !defined (ACE_HAS_DINKUM_STL)
 #   if defined (ACE_WIN32)
   ::_tzset ();  // For Win32.
 #   else
