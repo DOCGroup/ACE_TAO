@@ -190,7 +190,7 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
       // connect completed unsuccessfully
       svc_handler->remove_reference();
        // Give users a clue to the problem.
-      if (TAO_debug_level > 3)
+      if (TAO_debug_level > 1)
         {
           ACE_DEBUG ((LM_ERROR,
                       ACE_TEXT ("(%P|%t) IIOP_Connector::make_connection, ")
@@ -395,58 +395,63 @@ TAO_IIOP_Connector::complete_connection (int result,
     }
   else
     {
-          if (count == 1)
+      if (count == 1)
         {
-              transport = tlist[0];
+          transport = tlist[0];
           if (!this->wait_for_connection_completion (r,
                                                      transport,
                                                      timeout))
             {
               if (TAO_debug_level > 2)
-                    ACE_ERROR ((LM_ERROR,
-                                ACE_TEXT ("TAO (%P|%t) - IIOP_Connector::")
-                                ACE_TEXT ("complete_connection, wait for completion ")
-                                ACE_TEXT ("failed for 1 pending connect\n")));
+                ACE_ERROR ((LM_ERROR,
+                            ACE_TEXT ("TAO (%P|%t) - IIOP_Connector::")
+                            ACE_TEXT ("complete_connection, wait for completion ")
+                            ACE_TEXT ("failed for 1 pending connect\n")));
             }
         }
       else
         {
-              if (!this->wait_for_connection_completion (r,
-                                                         transport,
-                                                         tlist,
-                                                         count,
-                                                         mev,
-                                                         timeout))
-                {
-                  if (TAO_debug_level > 2)
-                    ACE_ERROR ((LM_ERROR,
-                                ACE_TEXT ("TAO (%P|%t) - IIOP_Connector::")
-                                ACE_TEXT ("complete_connection, wait for completion ")
-                                ACE_TEXT ("failed for %d pending connects\n"),
-                                count));
-                }
+          if (!this->wait_for_connection_completion (r,
+                                                     transport,
+                                                     tlist,
+                                                     count,
+                                                     mev,
+                                                     timeout))
+            {
+              if (TAO_debug_level > 2)
+                ACE_ERROR ((LM_ERROR,
+                            ACE_TEXT ("TAO (%P|%t) - IIOP_Connector::")
+                            ACE_TEXT ("complete_connection, wait for completion ")
+                            ACE_TEXT ("failed for %d pending connects\n"),
+                            count));
             }
         }
+    }
   // At this point, the connection has be successfully created
   // connected or not connected, but we have a connection.
   TAO_IIOP_Connection_Handler *svc_handler = 0;
   TAO_IIOP_Endpoint *iiop_endpoint = 0;
 
   if (transport != 0)
-        {
+    {
       for (unsigned i = 0; i < count; i++)
         {
           if (transport == tlist[i])
             {
               svc_handler = sh_list[i];
+              if (transport->connection_handler()->keep_waiting())
+                {
+                  svc_handler->add_reference();
+                }
               iiop_endpoint = ep_list[i];
               break;
-        }
+            }
         }
     }
 
 
-  // Done with the transport list
+  // Done with the transport list. It was a temporary that did not
+  // affect the reference count.
   delete [] tlist;
 
   // In case of errors transport is zero
@@ -631,7 +636,7 @@ TAO_IIOP_Connector::cancel_svc_handler (
   if (handler)
     {
       handler->abort();
-    return this->base_connector_.cancel (handler);
+      return this->base_connector_.cancel (handler);
     }
 
   return -1;

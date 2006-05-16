@@ -500,23 +500,23 @@ TAO_IIOP_Connection_Handler::set_dscp_codepoint (CORBA::Boolean set_network_prio
 void
 TAO_IIOP_Connection_Handler::abort (void)
 {
-      struct linger lval;
-      lval.l_onoff = 1;
-      lval.l_linger = 0;
+  struct linger lval;
+  lval.l_onoff = 1;
+  lval.l_linger = 0;
 
-      if (this->peer ().set_option(SOL_SOCKET,
-                                   SO_LINGER,
-                                   (void*) &lval,
-                                   sizeof (lval)) == -1)
+  if (this->peer ().set_option(SOL_SOCKET,
+                               SO_LINGER,
+                               (void*) &lval,
+                               sizeof (lval)) == -1)
+    {
+      if (TAO_debug_level)
         {
-          if (TAO_debug_level)
-            {
-              ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("TAO (%P|%t) Unable to set ")
-                          ACE_TEXT ("SO_LINGER on %d\n"),
-                          this->peer ().get_handle ()));
-            }
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("TAO (%P|%t) Unable to set ")
+                      ACE_TEXT ("SO_LINGER on %d\n"),
+                      this->peer ().get_handle ()));
         }
+    }
 }
 
 
@@ -529,4 +529,3 @@ TAO_IIOP_Connection_Handler::abort (void)
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_IIOP && TAO_HAS_IIOP != 0 */
-

@@ -1,3 +1,47 @@
+Tue May 16 05:22:15 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/IIOP_Connector.cpp:
+
+          This is a potential fix for the Bug 2417 flaw. The problem is
+          that when using nonblocking connects, in conjunction with asynch
+          invocations, it is possible for a transport to be returned by
+          the connector even though the network connection has not
+          completed. For asynchronous invocations using the SYNCH_NONE
+          policy, this is appropriate, as request messages may be queued
+          for delivery if/when the connection completes.
+
+          Bug 2417 describes a scenario where such a nonblocking
+          connection attempt fails, but the actual failure happens after
+          the transport has already been returned to the caller. This
+          causes a problem because the underlying ACE connector framework
+          relies on "borrowing" the reference to the connection handler
+          during the time it is waiting for connections to complete or
+          fail. For blocked connects this is fine because either the
+          transport will be returned to the caller associated with a
+          completely established connection, or a failure will occur.
+
+          The issue for nonblocking connects is that when a transport is
+          returned associated with a pending connection, the existing
+          transport connector and protocol-specific connector end up
+          associating to referrers to the same connection handler, without
+          incrementing the reference count. The two are the transport
+          being returned and the ACE_NonBlock_Connection_Handler that is
+          actually registered with the reactor waiting for success or
+          failure on the pending connection.
+
+          When a connection completes OK, the NBCH surrenders its
+          reference to the connection handler, thus restoring parity, as
+          the transport and/or cache entry will still hold the remaining
+          references, and the count is OK. But when the connection fails,
+          the base connector ends up calling close() on the connection
+          handler which in turn decrements the reference count. This then
+          sets the stage for a later crash from an apparent double delete.
+
+        * tao/IIOP_Connection_Handler.cpp:
+        * tao/Transport_Connector.cpp:
+
+          Added some comments and cleaned up some whitespace.
+
 Mon May 15 22:25:23 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/Bounded_Sequence_CDR_T.h:
