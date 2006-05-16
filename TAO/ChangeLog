@@ -1,3 +1,44 @@
+Tue May 16 19:08:49 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * NEWS:
+          Add decription of new features/fixes.
+
+        * tao/BiDir_GIOP/BiDirGIOP.h:
+        * tao/CSD_Framework/CSD_Object_Adapter_Factory.h:
+        * tao/EndpointPolicy/EndpointPolicy.h:
+        * tao/EndpointPolicy/EndpointPolicy.cpp:
+        * tao/Messaging/Messaging_Loader.h:
+        * tao/PI_Server/PI_Server_Loader.h:
+        * tao/RTScheduling/RTScheduler_Loader.h:
+
+          Fix for certain static builds, notably VC71 on WinXP, for
+          libraries that depend on the Portable Interceptors library for
+          registering ORB Initializers.
+
+        * tests/Bug_2417_Regression/publisher_impl.cpp:
+
+          This test runs very long for what it is demonstrating. With the
+          underlying reference counting problem resolved, the server now
+          runs to completion. Since the test is using asynch connection
+          establishment and SYNCH_NONE oneways, there is no way for the
+          publisher to detect that the subscriber is gone until it makes a
+          synchronizing twoway call. The period between synch tests was so
+          long that on a slow machine the test would time out.
+
+        * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.cpp:
+        * orbsvcs/orbsvcs/Trader/Interpreter_Utils.h:
+        * tao/OctetSeqC.cpp:
+        * tao/OctetSeqC.h:
+        * tao/diffs/OctetSeq.diff:
+
+          Applying fixes to the problems still remaining in the versioned
+          namespace builds. Not all compilers found the problem in
+          Reconfig_Scheduler_T.cpp, but gcc 3.3.1 did. The OctetSeq change
+          might represent a candidate for a change to the IDL compiler,
+          but for now I think not, as octet sequences are treated as a
+          special case, having an explicit template instanciation provided
+          along with explicit equality operators.
+
 Tue May 16 14:15:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Strategies/Strategies.mpc:

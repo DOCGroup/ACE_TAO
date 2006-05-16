@@ -25,7 +25,7 @@
 
 #include "orbsvcs/Trader/trading_serv_export.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<>
 class TAO_Trading_Serv_Export ACE_Hash<CORBA::String_var>
@@ -73,6 +73,8 @@ typedef ACE_Hash_Map_Manager_Ex<CORBA::String_var,
                                 ACE_Null_Mutex>
   TAO_Typecode_Table;
 
+ACE_END_VERSIONED_NAMESPACE_DECL
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // *************************************************************
 // TAO_Sequence_Extracter_Base
