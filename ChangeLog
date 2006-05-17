@@ -1,3 +1,21 @@
+Wed May 17 20:31:11 UTC 2006 Roopa Pundaleeka <roopa@txcorp.com>
+        
+        * ace/DLL_Manager.cpp: 
+        * ace/DLL_Manager.h: 
+          The dll handle is added to the to the
+          handle_vector_ only after the library is opened
+          successfully. This way, the vector does not have redundant
+          handles.
+        
+        * ace/Object_Manager.cpp:        
+          ACE_DLL_Manager::close_singleton is called explicitly from the
+          ACE_Object_Manager to make sure ACE_DLL_Manager gets cleaned up,
+          even if there was an error while opening a lib file.
+
+          Thanks to Timo Kuosmanen <ttkuosma at cc dot jyu dot fi> for
+          reporting this.
+        
+
 Wed May 17 14:07:33 2006  Douglas C. Schmidt  <schmidt@cse.wustl.edu>
 
 	* netsvcs/lib/Server_Logging_Handler_T.cpp: Improved the code so
