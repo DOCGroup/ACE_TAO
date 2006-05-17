@@ -97,6 +97,15 @@ public:
   /// orb-perform_work () abstraction
   virtual void run_event_loop ();
 
+  /// do post-run cleanup. This is necessary here because the servant
+  /// supplied to regiser_servant happens to be allocated on the
+  /// stack, and done after the instance of ST_AMH_Server is
+  /// created. This leads to the servant being destroyed before this
+  /// class's destructor. And alternative solution would be allocate
+  /// the servant on the stack and rely on the reference count to
+  /// delete it.
+  virtual void cleanup ();
+
 public:
   /// Accesor method (for servants) to the initialised ORB
   CORBA::ORB_ptr orb () { return this->orb_.in (); }
@@ -125,6 +134,11 @@ ST_AMH_Server::ST_AMH_Server (int* argc, char **argv)
 }
 
 ST_AMH_Server::~ST_AMH_Server ()
+{
+}
+
+void
+ST_AMH_Server::cleanup ()
 {
   ACE_TRY_NEW_ENV
     {
@@ -262,6 +276,8 @@ main (int argc, char *argv[])
   amh_server.register_servant (&servant);
 
   amh_server.run_event_loop ();
+
+  amh_server.cleanup ();
 
   return 0;
 }
