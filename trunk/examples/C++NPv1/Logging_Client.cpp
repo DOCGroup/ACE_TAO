@@ -43,7 +43,6 @@ int operator<< (ACE_OutputCDR &cdr, const ACE_Log_Record &log_record)
   return cdr.good_bit ();
 }
 
-
 class Logging_Client {
 private:
   ACE_SOCK_Stream logging_peer_;
