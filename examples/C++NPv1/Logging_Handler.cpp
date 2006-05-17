@@ -38,7 +38,6 @@ int operator>> (ACE_InputCDR &cdr, ACE_Log_Record &log_record)
   return cdr.good_bit ();
 }
 
-
 int Logging_Handler::recv_log_record (ACE_Message_Block *&mblk)
 {
   // Put <logging_peer>'s hostname in new message block.
@@ -93,8 +92,8 @@ int Logging_Handler::recv_log_record (ACE_Message_Block *&mblk)
   return -1;
 }
 
-
-int Logging_Handler::write_log_record (ACE_Message_Block *mblk)
+int 
+Logging_Handler::write_log_record (ACE_Message_Block *mblk)
 {
   // Peer hostname is in the <mblk> and the log record data
   // is in its continuation.
