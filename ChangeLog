@@ -1,3 +1,12 @@
+Wed May 17 17:56:49 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * examples/C++NPv1/Logging_Client.cpp
+        * examples/C++NPv1/Logging_Handler.cpp
+        * examples/C++NPv2/Logging_Handler.cpp
+        
+          Removed now-redundant CDR insertion/extration operators now
+          defined in ace/Log_Record.{h,cpp}
+        
 Wed May 17 09:35:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/os_include/sys/os_ipc.h:
