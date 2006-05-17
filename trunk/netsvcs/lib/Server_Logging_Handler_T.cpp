@@ -81,27 +81,16 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::ha
     default:
     case -1:
     case 0:
-      if (ACE_Reactor::instance ()->remove_handler
-            (this->peer ().get_handle (),
-              ACE_Event_Handler::READ_MASK
-              | ACE_Event_Handler::EXCEPT_MASK
-              | ACE_Event_Handler::DONT_CALL) == -1)
-         ACE_ERROR_RETURN ((LM_ERROR,
-                            ACE_TEXT ("%n: %p\n"),
-                            ACE_TEXT ("remove_handler")),
-                            0);
-      if (this->peer ().get_handle ()  == this->peer ().get_handle ())
-        this->peer ().close ();
-      else
-        ACE_OS::closesocket (this->peer ().get_handle ());
+
       // Release the memory to prevent a leak.
       header->release ();
       header = 0;
 
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("client closing down\n")));
+                  ACE_TEXT ("server logging daemon closing down at host %s\n"),
+                  this->host_name ()));
 
-      return 0;
+      return -1;
       /* NOTREACHED */
 
     case 8:
@@ -131,24 +120,14 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::ha
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("%p\n"),
-                      ACE_TEXT ("recv")));
+                      ACE_TEXT ("recv_n()")));
 
-          if (ACE_Reactor::instance ()->remove_handler
-              (this->peer ().get_handle (), 
-               ACE_Event_Handler::READ_MASK
-               | ACE_Event_Handler::EXCEPT_MASK
-               | ACE_Event_Handler::DONT_CALL) == -1)
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("%n: %p\n"),
-                        ACE_TEXT ("remove_handler")));
-
-          ACE_OS::closesocket (this->peer ().get_handle ());
           // Release the memory to prevent a leak.
           payload->release ();
           payload = 0;
 	  header->release ();
 	  header = 0;
-          return 0;
+          return -1;
         }
     }
 
