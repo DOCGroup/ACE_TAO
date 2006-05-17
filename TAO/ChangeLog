@@ -1,3 +1,18 @@
+Wed May 17 14:11:35 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+        
+          Added generation of an anonymous namespace inside the
+          TAO::TypeCode namespaces already generated, for
+          typecodes ggenerated for anonymous types (sequences,
+          arrays, and bounded (w)stringts). This change prevents
+          a multiple definition link error with a typecode
+          generated for an identical type in another translation
+          unit. The exisiting generated ifdef guards prevent
+          the same error within the same translation unit.
+          Thanks to Ossmama Othman <ossama.othman@symantec.com>
+          for suggesting the fix. This fix closes [BUGID:2521].
+
 Wed May 17 12:10:58 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/Bounded_Sequence_CDR_T.h:
