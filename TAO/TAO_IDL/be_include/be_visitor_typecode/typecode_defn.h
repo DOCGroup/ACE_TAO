@@ -49,25 +49,8 @@ public:
   ~be_visitor_typecode_defn (void);
   // destructor
 
-  //virtual int visit_members (AST_Structure *node);
-  // for use with structs, exceptions, and unions.
-
-//   virtual int visit_members (be_valuetype *node);
-  // for use with valuetypes.
-
-//   virtual int visit_type (be_type *node);
-  // visit a generic be_type node
-
-  // =visit methods on all types. They call the generic visit_type
-
   virtual int visit_array (be_array *node);
   // visit a array
-
-//   virtual int visit_enum (be_enum *node);
-  // visit an enum
-
-//   virtual int visit_exception (be_exception *node);
-  // visit an exception
 
   virtual int visit_interface (be_interface *node);
   // visit interface
@@ -77,9 +60,6 @@ public:
 
   virtual int visit_component (be_component *node);
   // visit component
-
-//   virtual int visit_predefined_type (be_predefined_type *node);
-  // visit predefined types
 
   virtual int visit_sequence (be_sequence *node);
   // visit a sequence
@@ -102,18 +82,6 @@ public:
   virtual int visit_eventtype (be_eventtype * node);
   // visit a valuetype
 
-
-  // = visit methods for the scope elements
-
-//   virtual int visit_enum_val (be_enum_val *node);
-//   // visit the enumeration values
-
-//   virtual int visit_field (be_field *node);
-  // visit the field (struct and exception member)
-
-//   virtual int visit_union_branch (be_union_branch *node);
-  // visit the union member
-
   // = special methods
 
   virtual int gen_nested_namespace_begin (be_module *node);
@@ -121,140 +89,6 @@ public:
 
   virtual int gen_nested_namespace_end (be_module *node);
   // generate the nested namespace ends
-
-  // = methods for generating typecodes
-
-//   int gen_typecode (be_array *node);
-
-//   int gen_typecode (be_enum *node);
-
-//   int gen_typecode (be_exception *node);
-
-//   int gen_typecode (be_interface *node);
-
-//   int gen_typecode (be_interface_fwd *node);
-
-//   int gen_typecode (be_predefined_type *node);
-
-//   int gen_typecode (be_sequence *node);
-
-//   int gen_typecode (be_string *node);
-
-//   int gen_typecode (be_structure *node);
-
-//   int gen_typecode (be_typedef *node);
-
-//   int gen_typecode (be_union *node);
-
-//   int gen_typecode (be_valuetype *node);
-
-  // = methods to generate encapsulations for typecodes
-
-//   int gen_encapsulation (be_array *node);
-
-//   int gen_encapsulation (be_enum *node);
-
-//   int gen_encapsulation (be_enum_val *node);
-
-//   int gen_encapsulation (be_exception *node);
-
-//   int gen_encapsulation (be_field *node);
-
-//   int gen_encapsulation (be_interface *node);
-
-//   int gen_encapsulation (be_interface_fwd *node);
-
-//   int gen_encapsulation (be_predefined_type *node);
-
-//   int gen_encapsulation (be_sequence *node);
-
-//   int gen_encapsulation (be_string *node);
-
-//   int gen_encapsulation (be_structure *node);
-
-//   int gen_encapsulation (be_typedef *node);
-
-//   int gen_encapsulation (be_union *node);
-
-//   int gen_encapsulation (be_union_branch *node);
-
-//   int gen_encapsulation (be_valuetype *node);
-
-  // = methods for computing typecode sizes
-
-//   ACE_CDR::Long compute_tc_size (be_array *node);
-
-//   ACE_CDR::Long compute_tc_size (be_enum *node);
-
-//   ACE_CDR::Long compute_tc_size (be_exception *node);
-
-//   ACE_CDR::Long compute_tc_size (be_interface *node);
-
-//   ACE_CDR::Long compute_tc_size (be_interface_fwd *node);
-
-//   ACE_CDR::Long compute_tc_size (be_predefined_type *node);
-
-//   ACE_CDR::Long compute_tc_size (be_sequence *node);
-
-//   ACE_CDR::Long compute_tc_size (be_string *node);
-
-//   ACE_CDR::Long compute_tc_size (be_structure *node);
-
-//   ACE_CDR::Long compute_tc_size (be_typedef *node);
-
-//   ACE_CDR::Long compute_tc_size (be_union *node);
-
-//   ACE_CDR::Long compute_tc_size (be_valuetype *node);
-
-  // methods for computing the encapsulation length
-
-//   ACE_CDR::Long compute_encap_length (be_array *node);
-
-//   ACE_CDR::Long compute_encap_length (be_enum *node);
-
-//   ACE_CDR::Long compute_encap_length (be_enum_val *node);
-
-//   ACE_CDR::Long compute_encap_length (be_exception *node);
-
-//   ACE_CDR::Long compute_encap_length (be_field *node);
-
-//   ACE_CDR::Long compute_encap_length (be_interface *node);
-
-//   ACE_CDR::Long compute_encap_length (be_interface_fwd *node);
-
-//   ACE_CDR::Long compute_encap_length (be_predefined_type *node);
-
-//   ACE_CDR::Long compute_encap_length (be_sequence *node);
-
-//   ACE_CDR::Long compute_encap_length (be_string *node);
-
-//   ACE_CDR::Long compute_encap_length (be_structure *node);
-
-//   ACE_CDR::Long compute_encap_length (be_typedef *node);
-
-//   ACE_CDR::Long compute_encap_length (be_union *node);
-
-//   ACE_CDR::Long compute_encap_length (be_union_branch *node);
-
-//   ACE_CDR::Long compute_encap_length (be_valuetype *node);
-
-  // helpers to generate the repoID and name
-
-//   void gen_repoID (be_decl *node);
-
-//   void gen_name (be_decl *node);
-
-  // helpers to generate encap len of the repoID and name
-
-//   ACE_CDR::ULong repoID_encap_len (be_decl *node);
-
-//   ACE_CDR::ULong name_encap_len (be_decl *node);
-
-  // helper to get an array of long from a name
-
-//   int tc_name2long (const char *name,
-//                     ACE_CDR::ULong *&larr,
-//                     ACE_CDR::ULong &arrlen);
 
   // processing for scopes
 
@@ -296,6 +130,14 @@ protected:
    * to generate a TypeCode for its members or content type.
    */
   bool is_typecode_generation_required (be_type * node);
+  
+  /// Generate nested namespaces for anonymous type typecodes.
+  /**
+   * Utility methods to generate enclosing namespaces for
+   * typecodes of bounded (w)strings, sequences and arrays.
+   */
+  void gen_begin_NS_for_anon (void);
+  void gen_end_NS_for_anon (void);
 
 protected:
 
