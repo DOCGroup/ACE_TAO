@@ -185,6 +185,7 @@ class ACE_Export ACE_DLL_Manager
 {
 public:
   friend class ACE_Framework_Repository;
+  friend class ACE_Object_Manager;
 
   enum
   {

@@ -525,37 +525,44 @@ ACE_DLL_Manager::open_dll (const ACE_TCHAR *dll_name,
   ACE_TRACE ("ACE_DLL_Manager::open_dll");
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, 0));
 
+  ACE_DLL_Handle *temp_handle = 0;
   ACE_DLL_Handle *dll_handle = this->find_dll (dll_name);
   if (!dll_handle)
     {
       if (this->current_size_ < this->total_size_)
         {
-          ACE_NEW_RETURN (dll_handle,
+          ACE_NEW_RETURN (temp_handle,
                           ACE_DLL_Handle,
                           0);
 
-          this->handle_vector_[this->current_size_] = dll_handle;
-          this->current_size_++;
+	  dll_handle = temp_handle;
         }
     }
 
   if (dll_handle)
     {
       if (dll_handle->open (dll_name, open_mode, handle) != 0)
-        {
-          // Don't worry about freeing the memory right now, since
-          // the handle_vector_ will be cleaned up automatically
-          // later.
-
+	{
+	  // Error while openind dll. Free temp handle
           if (ACE::debug ())
             ACE_ERROR ((LM_ERROR,
                         ACE_LIB_TEXT ("ACE_DLL_Manager::open_dll: Could not ")
                         ACE_LIB_TEXT ("open dll %s.\n"),
                         dll_name));
 
+	  delete temp_handle;
           return 0;
         }
+      
+      // Add the handle to the vector only if the dll is successfully
+      // opened.
+      if (temp_handle != NULL)
+	{
+	  this->handle_vector_[this->current_size_] = dll_handle;
+          this->current_size_++;
+	}
     }
+
   return dll_handle;
 }
 
@@ -719,7 +726,7 @@ ACE_DLL_Manager::unload_dll (ACE_DLL_Handle *dll_handle, int force_unload)
   else
     {
       if (ACE::debug ())
-        ACE_ERROR ((LM_ERROR,
+        ACE_ERROR ((LM_ERROR, 
                     ACE_LIB_TEXT ("ACE_DLL_Manager::unload_dll called with ")
                     ACE_LIB_TEXT ("null pointer.\n")));
 

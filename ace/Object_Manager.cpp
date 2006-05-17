@@ -15,6 +15,7 @@
 #include "ace/Malloc.h"
 #include "ace/Signal.h"
 #include "ace/Framework_Component.h"
+#include "ace/DLL_Manager.h"
 #include "ace/Atomic_Op.h"
 #include "ace/OS_NS_sys_time.h"
 
@@ -632,6 +633,7 @@ ACE_Object_Manager::fini (void)
       // This must come after closing ACE_Service_Config, since it will
       // close down it's dlls--it manages ACE_DLL_Manager.
       ACE_Framework_Repository::close_singleton ();
+      ACE_DLL_Manager::close_singleton ();
 
 #  if ! defined (ACE_THREAD_MANAGER_LACKS_STATICS)
       ACE_Thread_Manager::close_singleton ();
