@@ -1,3 +1,9 @@
+Wed May 17 14:07:33 2006  Douglas C. Schmidt  <schmidt@cse.wustl.edu>
+
+	* netsvcs/lib/Server_Logging_Handler_T.cpp: Improved the code so
+ 	  that it should compile and run properly on Windows.  Thanks to
+ 	  Phil Mesnier for reporting this.
+
 Wed May 17 19:07:43 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * ace/Dynamic_Service_Dependency.h: Doxygen correction; use @c to
