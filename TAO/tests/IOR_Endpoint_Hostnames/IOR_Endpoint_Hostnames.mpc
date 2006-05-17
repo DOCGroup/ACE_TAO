@@ -9,7 +9,8 @@ project(list_interfaces) : aceexe {
   }
 }
 
-project(generate_ior) : taoexe, portableserver {
+project(generate_ior) : taoserver {
+  exename = generate_ior
   Source_Files {
     generate_ior.cpp
     bogus_i.cpp
