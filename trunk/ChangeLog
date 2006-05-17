@@ -1,3 +1,10 @@
+Wed May 17 02:23:31 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/Log_Msg_IPC.cpp:
+
+          Fix typo exposed on systems with ACE_HAS_STREAM_PIPES defined.
+          I'll leave it to Will & Doug to do whatever the TO DO said to do.
+
 Tue May 16 22:23:55 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ace/Log_Msg_IPC.cpp
