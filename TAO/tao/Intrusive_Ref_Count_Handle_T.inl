@@ -49,13 +49,8 @@ ACE_INLINE
 TAO_Intrusive_Ref_Count_Handle<T>&
 TAO_Intrusive_Ref_Count_Handle<T>::operator=(T* p)
 {
-  if (this->ptr_ != p)
-    {
-      this->drop();
-      this->ptr_ = p;
-    }
-
-  return *this;
+  TAO_Intrusive_Ref_Count_Handle<T> tmp (p);
+  return this->operator= (tmp);
 }
 
 
