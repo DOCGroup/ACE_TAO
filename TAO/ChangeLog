@@ -1,3 +1,8 @@
+Wed May 17 11:34:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_traits.cpp:
+          Added extra newline so that the zero method is on its own line
+
 Wed May 17 09:48:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/IOR_Endpoint_Hostnames/IOR_Endpoint_Hostnames.mpc:
