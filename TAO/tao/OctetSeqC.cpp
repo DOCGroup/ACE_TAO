@@ -121,7 +121,7 @@ CORBA::Boolean operator>> (
 
 #if (TAO_HAS_VERSIONED_NAMESPACE || ACE_HAS_VERSIONED_NAMESPACE)
 
-CORBA::Boolean
+bool
 operator==(const CORBA::OctetSeq &lhs, const CORBA::OctetSeq &rhs)
 {
   return ::operator==
@@ -129,7 +129,7 @@ operator==(const CORBA::OctetSeq &lhs, const CORBA::OctetSeq &rhs)
      static_cast<const TAO::unbounded_value_sequence< CORBA::Octet > &>(rhs));
 }
 
-CORBA::Boolean
+bool
 operator!=(const CORBA::OctetSeq &lhs, const CORBA::OctetSeq &rhs)
 {
   return !::operator==

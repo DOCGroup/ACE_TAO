@@ -167,10 +167,8 @@ TAO_Export CORBA::Boolean operator>> (
 // Added to handle the namespace resolution.
 #if (TAO_HAS_VERSIONED_NAMESPACE || ACE_HAS_VERSIONED_NAMESPACE)
 
-TAO_Export CORBA::Boolean operator== (const CORBA::OctetSeq &lhs,
-                                      const CORBA::OctetSeq &rhs);
-TAO_Export CORBA::Boolean operator!= (const CORBA::OctetSeq &lhs,
-                                      const CORBA::OctetSeq &rhs);
+TAO_Export bool operator== (const CORBA::OctetSeq &, const CORBA::OctetSeq &);
+TAO_Export bool operator!= (const CORBA::OctetSeq &, const CORBA::OctetSeq &);
 
 #endif /* TAO_HAS_VERSIONED_NAMESPACE || ACE_HAS_VERSIONED_NAMESPACE */
 
