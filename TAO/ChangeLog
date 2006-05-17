@@ -1,3 +1,26 @@
+Wed May 17 18:47:22 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/AMH_Oneway/server.cpp:
+
+          Fix for an error in the construction of the test. This error is
+          a result of using a stack based servant, as well as a stack
+          based helper ORB-running helper class. The main for this test
+          instantiated the helper on the stack first, then the servant. It
+          was done in this order so that the servant could obtain a
+          reference to the helper's ORB. However, stack based objects are
+          destroyed in reverse order, meaning that the servant instance
+          was destroyed before the helper's instance. Thus the POA in the
+          helper ended up with a stale pointer to a prematurely deleted
+          servant when it came time to do an orderly shutdown.
+
+          There were several options for cleaning this up, the servant
+          could have been allocated on the stack and have all reference
+          but the POA's removed, the servant's destructor could have
+          deactivated itself from the POA, or an explicit cleanup method
+          could be added to the helper class so the main could force the
+          proper order of desctruction. I chose this last option since the
+          main was in charge of determining the order of creation.
+
 Wed May 17 16:34:44 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/AMI_Buffering/AMI_Buffering.h:
