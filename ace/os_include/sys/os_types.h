@@ -108,11 +108,6 @@ typedef double ACE_timer_t;
    typedef char *caddr_t;
 #endif /* ACE_WIN32 */
 
-#if defined (ACE_PSOS_TM)
-   typedef long long longlong_t;
-   typedef long      id_t;
-#endif /* ACE_PSOS_TM */
-
 #if defined (ACE_LACKS_KEY_T)
 #  if defined (ACE_WIN32)
    // Win32 doesn't use numeric values to name its semaphores, it uses
@@ -147,14 +142,7 @@ typedef double ACE_timer_t;
 
 #if defined (ACE_WIN32) && !defined(__MINGW32__)
    typedef long pid_t;
-#elif defined (ACE_PSOS) && (!defined (ACE_PSOSIM) && defined (ACE_PSOS_CANT_USE_SYS_TYPES))
-#  if defined (ACE_PSOS_DIAB_PPC)
-#    define ACE_INVALID_PID ((pid_t) ~0)
-#  else /* !defined (ACE_PSOS_DIAB_PPC) */
-     typedef long pid_t;
-#  endif /* defined (ACE_PSOS_DIAB_PPC) */
-   typedef char* caddr_t;
-#endif /* ACE_PSOS_CANT_USE_SYS_TYPES */
+#endif /* ACE_WIN32 */
 
 # if !defined (ACE_INVALID_PID)
 # define ACE_INVALID_PID ((pid_t) -1)

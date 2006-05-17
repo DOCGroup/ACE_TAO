@@ -96,18 +96,6 @@ extern "C"
 #  endif /* ACE_LACKS_CMSG_DATA_MACRO */
 #endif /* ACE_HAS_4_4BSD_SENDMSG_RECVMSG */
 
-#if defined (ACE_PSOS)
-   // Some versions have missing preprocessor definitions
-#  if !defined (AF_UNIX)
-#    define AF_UNIX 0x1
-#  endif /* AF_UNIX */
-#  define PF_UNIX AF_UNIX
-#  define PF_INET AF_INET
-#  if !defined (AF_MAX)
-#    define AF_MAX AF_INET
-#  endif /* AF_MAX */
-#endif /* ACE_PSOS */
-
 // Increase the range of "address families".  Please note that this
 // must appear _after_ the include of sys/socket.h, for the AF_FILE
 // definition on Linux/glibc2.

@@ -30,13 +30,6 @@
 #  include /**/ <direct.h>
 #endif /* ACE_WIN32 && !ACE_HAS_WINCE */
 
-// This collides with phile.h on PSOS
-#if defined (ACE_PSOS)
-#  if !defined (ACE_LACKS_SYS_STAT_H)
-#    define ACE_LACKS_SYS_STAT_H
-#  endif /* !ACE_LACKS_SYS_STAT_H */
-#endif /* ACE_PSOS */
-
 #if !defined (ACE_LACKS_SYS_STAT_H)
 #  include /**/ <sys/stat.h>
 #endif /* !ACE_LACKS_SYS_STAT_H */
@@ -135,16 +128,6 @@ extern "C"
 #    define _fstat fstat
 #  endif
 #endif /* __BORLANDC__ */
-
-#if defined (ACE_PSOS_SNARFS_HEADER_INFO)
-   // Header information snarfed from compiler provided header files
-   // that are not included because there is already an identically
-   // named file provided with pSOS, which does not have this info
-   // from compiler supplied header
-   mode_t umask (mode_t);
-   int mkfifo (const char *, mode_t);
-   int mkdir (const char *, mode_t);
-#endif /* ACE_PSOS_SNARFS_HEADER_INFO */
 
 #ifdef __cplusplus
 }
