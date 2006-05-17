@@ -1,8 +1,16 @@
+Wed May 17 16:34:44 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/AMI_Buffering/AMI_Buffering.h:
+
+          Fix scoping for new nested class used to avoid spurious comm
+          fail exceptions. This fix resolves build fails that only affect
+          the BCB compiler.
+
 Wed May 17 14:11:35 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
         * TAO_IDL/be_include/be_visitor_typecode/typecode_defn.h:
-        
+
           Added generation of an anonymous namespace inside the
           TAO::TypeCode namespaces already generated, for
           typecodes ggenerated for anonymous types (sequences,
@@ -13,7 +21,7 @@ Wed May 17 14:11:35 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
           the same error within the same translation unit.
           Thanks to Ossmama Othman <ossama.othman@symantec.com>
           for suggesting the fix. This fix closes [BUGID:2521].
-          
+
           Also removed many lines of commented out code from
           this file.
 
