@@ -24,25 +24,6 @@
 #  include <string>
 #endif
 
-int operator<< (ACE_OutputCDR &cdr, const ACE_Log_Record &log_record)
-{
-  size_t msglen = log_record.msg_data_len ();
-  // The ACE_Log_Record::msg_data () function is non-const, since it
-  // returns a non-const pointer to internal class members. Since we
-  // know that no members are modified here, we can safely const_cast
-  // the log_record parameter without violating the interface
-  // contract.
-  ACE_Log_Record &nonconst_record = (const_cast<ACE_Log_Record&> (log_record));
-  // Insert each field from <log_record> into the output CDR stream.
-  cdr << ACE_CDR::Long (log_record.type ());
-  cdr << ACE_CDR::Long (log_record.pid ());
-  cdr << ACE_CDR::Long (log_record.time_stamp ().sec ());
-  cdr << ACE_CDR::Long (log_record.time_stamp ().usec ());
-  cdr << ACE_CDR::ULong (msglen);
-  cdr.write_char_array (nonconst_record.msg_data (), msglen);
-  return cdr.good_bit ();
-}
-
 class Logging_Client {
 private:
   ACE_SOCK_Stream logging_peer_;
