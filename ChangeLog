@@ -1,3 +1,9 @@
+Wed May 17 19:07:43 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/Dynamic_Service_Dependency.h: Doxygen correction; use @c to
+          set a word in "typewriter" font, but for known class names, there's
+          no need to do this.
+
 Wed May 17 17:56:49 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * examples/C++NPv1/Logging_Client.cpp
