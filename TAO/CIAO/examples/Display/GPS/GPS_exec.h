@@ -1,135 +1,140 @@
-// $Id$
-
 /**
  * @file GPS_exec.h
+ * $Id$
+ * Header file for the GPS component implementation.
  *
- * Header file for the actual GPS and GPSHome component
- * implementations.  These classes are the implementations of local
- * interfaces defined in GPSEI.idl.
- *
- * @author Nanbor Wang <nanbor@cse.wustl.edu>
  */
 
 #ifndef GPS_EXEC_H
 #define GPS_EXEC_H
 
-#include "GPSEIC.h"
+#include "GPS_exec_export.h"
+#include "GPSEC.h"
+#include "CIAO_common.h"
+#include "ace/OS_NS_time.h"
 #include "tao/LocalObject.h"
 
-// The namespace name for the actual implementation classes doesn't
-// really matter.  Since there may be several different
-// implementations for a component, they can very well be in different
-// namespaces.
+#define DISPLACEMENT 256
+
 namespace MyImpl
 {
-  /**
+ /**
    * @class GPS_exec_i
    *
-   * An example RateGen executor implementation class.
+   * GPS executor implementation class.
    */
   class GPS_EXEC_Export GPS_exec_i :
-    public virtual HUDisplay::GPS_Exec,
-    // CIAO container implementation depends on correct reference
-    // counting of local interfaces, so we take a short cut to
+    public virtual CIDL_GPS_Impl::GPS_exec,
     public virtual TAO_Local_RefCounted_Object
   {
+
   public:
     /// Default constructor.
     GPS_exec_i ();
 
     /// Default destructor.
     ~GPS_exec_i ();
-
+    
     // Operations from HUDisplay::GPS
-
-    virtual HUDisplay::CCM_position_ptr
-    get_MyLocation (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    HUDisplay::CCM_position_ptr get_MyLocation (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException));
-
-    virtual void
-    push_Refresh (HUDisplay::tick *ev
-                  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    
+    void push_Refresh (HUDisplay::tick * ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     // Operations from HUDisplay::position
-
-    virtual CORBA::Long
-    posx (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    CORBA::Long posx (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual CORBA::Long
-    posy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    CORBA::Long posy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     // Operations from Components::SessionComponent
-
-    virtual void
-    set_session_context (Components::SessionContext_ptr ctx
-                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    void set_session_context (Components::SessionContext_ptr ctx
+			      ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException,
-                       Components::CCMException));
+		       Components::CCMException));
 
-    virtual void
-    ciao_preactivate (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    void ciao_preactivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException,
-                       Components::CCMException));
+		       Components::CCMException));
 
-    virtual void
-    ccm_activate (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    void ccm_activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException,
-                       Components::CCMException));
-    virtual void
-    ciao_postactivate (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       Components::CCMException));
+		       Components::CCMException));
 
-    virtual void
-    ccm_passivate (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    void ciao_postactivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException,
-                       Components::CCMException));
+		       Components::CCMException));
 
-    virtual void
-    ccm_remove (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    void ccm_passivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException,
-                       Components::CCMException));
-  protected:
-    CORBA::Long positionx_;
-    CORBA::Long positiony_;
+		       Components::CCMException));
 
-    /// Copmponent specific context
+    void ccm_remove (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+		       Components::CCMException));
+	
+   protected:
+    // Component specific context
     HUDisplay::CCM_GPS_Context_var context_;
+
+   private:
+    CORBA::Long positionx_, positiony_;
   };
+
 
   /**
    * @class GPSHome_exec_i
    *
    * GPS home executor implementation class.
    */
-  class GPS_EXEC_Export GPSHome_exec_i :
+    class GPS_EXEC_Export GPSHome_exec_i :
     public virtual HUDisplay::CCM_GPSHome,
-    public virtual TAO_Local_RefCounted_Object
+      public virtual TAO_Local_RefCounted_Object
   {
   public:
     /// Default ctor.
     GPSHome_exec_i ();
-
+    
     /// Default dtor.
     ~GPSHome_exec_i ();
 
-    // Explicit home operations.
+    // Explicit home operations
+/*     virtual ::Components::EnterpriseComponent_ptr */
+/*       new_GPS (ACE_ENV_SINGLE_ARG_DECL_NOT_USED) */
+/*       ACE_THROW_SPEC ((CORBA::SystemException)); */
 
-    // Implicit home operations.
-
+    // Implicit home operations
     virtual ::Components::EnterpriseComponent_ptr
-    create (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      create (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException,
-                       Components::CCMException));
+		       Components::CCMException));
+  };
+
+
+ class Position_Impl : public virtual HUDisplay::CCM_position,
+                       public virtual TAO_Local_RefCounted_Object
+  {
+  public:
+    Position_Impl (GPS_exec_i& component)
+        : component_ (component)
+    {
+    }
+
+    // Operations from HUDisplay::position
+    CORBA::Long posx (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    CORBA::Long posy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  private:
+    GPS_exec_i& component_;
   };
 
 }
 
-// Executor DLL entry point.  CIAO's deployment and assembly framework
-// invokes this function on the resulting DLL to get the home executor.
 extern "C" GPS_EXEC_Export ::Components::HomeExecutorBase_ptr
 createGPSHome_Impl (void);
 
