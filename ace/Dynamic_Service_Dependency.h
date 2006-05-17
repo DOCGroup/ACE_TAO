@@ -41,9 +41,9 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * If a service gets removed, its DLL may be unmapped from memory and then
  * any attempt to invoke a method on the said objects will cause SEGV.
  *
- * Such instances must contain a member of @code ACE_Dynamic_Service_Dependency
+ * Such instances must contain a member of ACE_Dynamic_Service_Dependency
  * initialized with the service they depend on.
- * @code ACE_Dynamic_Service_Dependency's constructor and destructor are
+ * ACE_Dynamic_Service_Dependency's constructor and destructor are
  * "magical" - they work by maintaining the underlying dynamic service's
  * DLL reference count.
  */
