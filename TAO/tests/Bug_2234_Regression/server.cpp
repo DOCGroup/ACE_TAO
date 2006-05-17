@@ -136,7 +136,7 @@ public:
     newret.val= static_cast<CORBA::Long>( 7 );
 
     Test::MyNonVarStruct *newval_p;
-    ACE_NEW_RETURN( newval_p, Test::MyNonVarStruct(), newret );
+    ACE_NEW_RETURN( newval_p, Test::MyNonVarStruct, newret );
     Test::MyNonVarStruct_var
       newval= newval_p;
 
