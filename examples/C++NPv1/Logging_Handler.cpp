@@ -17,27 +17,6 @@
 
 #include "ace/os_include/os_netdb.h"
 
-int operator>> (ACE_InputCDR &cdr, ACE_Log_Record &log_record)
-{
-  ACE_CDR::Long type;
-  ACE_CDR::Long pid;
-  ACE_CDR::Long sec, usec;
-  ACE_CDR::ULong buffer_len;
-
-  // Extract each field from input CDR stream into <log_record>.
-  if ((cdr >> type) && (cdr >> pid) && (cdr >> sec) && (cdr >> usec)
-      && (cdr >> buffer_len)) {
-    ACE_TCHAR log_msg[ACE_Log_Record::MAXLOGMSGLEN+1];
-    log_record.type (type);
-    log_record.pid (pid);
-    log_record.time_stamp (ACE_Time_Value (sec, usec));
-    cdr.read_char_array (log_msg, buffer_len);
-    log_msg[buffer_len] = '\0';
-    log_record.msg_data (log_msg);
-  }
-  return cdr.good_bit ();
-}
-
 int Logging_Handler::recv_log_record (ACE_Message_Block *&mblk)
 {
   // Put <logging_peer>'s hostname in new message block.
