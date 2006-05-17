@@ -31,7 +31,6 @@ public:
   virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-private:
   /// internal implementation of shutdown. This
   void try_shutdown (ACE_ENV_SINGLE_ARG_DECL);
 
