@@ -304,51 +304,13 @@ TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
   if (this->parse_options (options) == -1)
     return -1;
 
+  ACE_CString specified_hostname;
   ACE_INET_Addr addr;
 
-  const char *port_separator_loc = ACE_OS::strchr (address, ':');
-  const char *specified_hostname = 0;
-  char tmp_host[MAXHOSTNAMELEN + 1];
+  if (this->parse_address (address, addr, specified_hostname) == -1)
+    return -1;
 
-#if defined (ACE_HAS_IPV6)
-  // IPv6 numeric address in host string?
-  bool ipv6_in_host = false;
-
-
-  // Check if this is a (possibly) IPv6 supporting profile containing a
-  // numeric IPv6 address representation.
-  if ((this->version_.major > TAO_MIN_IPV6_IIOP_MAJOR ||
-        this->version_.minor >= TAO_MIN_IPV6_IIOP_MINOR) &&
-      address[0] == '[')
-    {
-      // In this case we have to find the end of the numeric address and
-      // start looking for the port separator from there.
-      const char *cp_pos = ACE_OS::strchr(address, ']');
-      if (cp_pos == 0)
-        {
-          // No valid IPv6 address specified.
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("TAO (%P|%t) - ")
-                             ACE_TEXT ("IIOP_Acceptor::open, ")
-                             ACE_TEXT ("Invalid IPv6 decimal address specified\n\n")),
-                            -1);
-        }
-      else
-        {
-          if (cp_pos[1] == ':')    // Look for a port
-            port_separator_loc = cp_pos + 1;
-          else
-            port_separator_loc = 0;
-          // Extract out just the host part of the address.
-          const size_t len = cp_pos - (address + 1);
-          ACE_OS::memcpy (tmp_host, address + 1, len);
-          tmp_host[len] = '\0';
-          ipv6_in_host = true; // host string contains full IPv6 numeric address
-        }
-    }
-#endif /* ACE_HAS_IPV6 */
-
-  if (port_separator_loc == address)
+  if (specified_hostname.length() == 0)
     {
       // The address is a port number or port name.  No hostname was
       // specified.  The hostname for each network interface and the
@@ -358,70 +320,7 @@ TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
       if (this->probe_interfaces (orb_core) == -1)
         return -1;
 
-      // First convert the port into a usable form.
-      if (addr.set (address + sizeof (':')) != 0)
-        return -1;
-
-      this->default_address_.set_port_number (addr.get_port_number ());
-
-      // Now reset the port and set the host.
-      if (addr.set (this->default_address_) != 0)
-        return -1;
-
-      return this->open_i (addr,
-                           reactor);
-    }
-  else if (port_separator_loc == 0)
-    {
-      // The address is a hostname.  No port was specified, so assume
-      // port zero (port will be chosen for us).
-#if defined (ACE_HAS_IPV6)
-      if (ipv6_in_host)
-        {
-          if (addr.set ((unsigned short) 0, tmp_host) != 0)
-            return -1;
-
-          specified_hostname = tmp_host;
-        }
-      else
-        {
-#endif /* ACE_HAS_IPV6 */
-          if (addr.set ((unsigned short) 0, address) != 0)
-            return -1;
-
-          specified_hostname = address;
-#if defined (ACE_HAS_IPV6)
-        }
-#endif /* ACE_HAS_IPV6 */
-    }
-  else
-    {
-
-      // Host and port were specified.
-#if defined (ACE_HAS_IPV6)
-      if (ipv6_in_host)
-        {
-          u_short port =
-            static_cast<u_short> (ACE_OS::atoi (port_separator_loc + sizeof (':')));
-
-          if (addr.set (port, tmp_host) != 0)
-            return -1;
-        }
-      else
-        {
-#endif /* ACE_HAS_IPV6 */
-          if (addr.set (address) != 0)
-            return -1;
-
-          // Extract out just the host part of the address.
-          const size_t len = port_separator_loc - address;
-          ACE_OS::memcpy (tmp_host, address, len);
-          tmp_host[len] = '\0';
-#if defined (ACE_HAS_IPV6)
-        }
-#endif /* ACE_HAS_IPV6 */
-
-      specified_hostname = tmp_host;
+      return this->open_i (addr, reactor);
     }
 
 #if defined (ACE_HAS_IPV6)
@@ -444,7 +343,7 @@ TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - ")
                   ACE_TEXT ("IIOP_Acceptor::open, specified host=%s:%d\n"),
-                  (specified_hostname == 0 ? "<null>" : specified_hostname),
+                  (specified_hostname.length() == 0 ? "<null>" : specified_hostname.c_str()),
                   addr.get_port_number ()));
     }
 
@@ -476,7 +375,7 @@ TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
   if (this->hostname (orb_core,
                       addr,
                       this->hosts_[0],
-                      specified_hostname) != 0)
+                      specified_hostname.c_str()) != 0)
     return -1;
 
   // Copy the addr.  The port is (re)set in
@@ -740,6 +639,126 @@ TAO_IIOP_Acceptor::hostname (TAO_ORB_Core *orb_core,
 
   return 0;
 }
+
+
+int
+TAO_IIOP_Acceptor::parse_address (const char *address,
+                                  ACE_INET_Addr &addr,
+                                  ACE_CString &specified_hostname)
+{
+  {
+    ACE_INET_Addr tmp;
+    addr.set (tmp);
+    specified_hostname.clear();
+  }
+
+  const char *port_separator_loc = ACE_OS::strchr (address, ':');
+  char tmp_host[MAXHOSTNAMELEN + 1];
+
+#if defined (ACE_HAS_IPV6)
+  // IPv6 numeric address in host string?
+  bool ipv6_in_host = false;
+
+
+  // Check if this is a (possibly) IPv6 supporting profile containing a
+  // numeric IPv6 address representation.
+  if ((this->version_.major > TAO_MIN_IPV6_IIOP_MAJOR ||
+        this->version_.minor >= TAO_MIN_IPV6_IIOP_MINOR) &&
+      address[0] == '[')
+    {
+      // In this case we have to find the end of the numeric address and
+      // start looking for the port separator from there.
+      const char *cp_pos = ACE_OS::strchr(address, ']');
+      if (cp_pos == 0)
+        {
+          // No valid IPv6 address specified.
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("TAO (%P|%t) - ")
+                             ACE_TEXT ("IIOP_Acceptor::open, ")
+                             ACE_TEXT ("Invalid IPv6 decimal address specified\n\n")),
+                            -1);
+        }
+      else
+        {
+          if (cp_pos[1] == ':')    // Look for a port
+            port_separator_loc = cp_pos + 1;
+          else
+            port_separator_loc = 0;
+          // Extract out just the host part of the address.
+          const size_t len = cp_pos - (address + 1);
+          ACE_OS::memcpy (tmp_host, address + 1, len);
+          tmp_host[len] = '\0';
+          ipv6_in_host = true; // host string contains full IPv6 numeric address
+        }
+    }
+#endif /* ACE_HAS_IPV6 */
+
+  if (port_separator_loc == address)
+    {
+      // First convert the port into a usable form.
+      if (addr.set (address + sizeof (':')) != 0)
+        return -1;
+
+      this->default_address_.set_port_number (addr.get_port_number ());
+
+      // Now reset the port and set the host.
+      if (addr.set (this->default_address_) != 0)
+        return -1;
+    }
+  else if (port_separator_loc == 0)
+    {
+      // The address is a hostname.  No port was specified, so assume
+      // port zero (port will be chosen for us).
+#if defined (ACE_HAS_IPV6)
+      if (ipv6_in_host)
+        {
+          if (addr.set ((unsigned short) 0, tmp_host) != 0)
+            return -1;
+
+          specified_hostname = tmp_host;
+        }
+      else
+      {
+#endif /* ACE_HAS_IPV6 */
+        if (addr.set ((unsigned short) 0, address) != 0)
+          return -1;
+
+        specified_hostname = address;
+#if defined (ACE_HAS_IPV6)
+      }
+#endif /* ACE_HAS_IPV6 */
+    }
+  else
+    {
+      // Host and port were specified.
+#if defined (ACE_HAS_IPV6)
+      if (ipv6_in_host)
+        {
+          u_short port =
+            static_cast<u_short> (ACE_OS::atoi (port_separator_loc + sizeof (':')));
+
+          if (addr.set (port, tmp_host) != 0)
+            return -1;
+        }
+      else
+        {
+#endif /* ACE_HAS_IPV6 */
+          if (addr.set (address) != 0)
+            return -1;
+
+          // Extract out just the host part of the address.
+          const size_t len = port_separator_loc - address;
+          ACE_OS::memcpy (tmp_host, address, len);
+          tmp_host[len] = '\0';
+#if defined (ACE_HAS_IPV6)
+        }
+#endif /* ACE_HAS_IPV6 */
+      specified_hostname = tmp_host;
+    }
+
+  return 1;
+}
+
 
 int
 TAO_IIOP_Acceptor::dotted_decimal_address (ACE_INET_Addr &addr,

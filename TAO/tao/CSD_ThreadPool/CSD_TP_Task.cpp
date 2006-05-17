@@ -175,12 +175,6 @@ TAO::CSD::TP_Task::svc()
           // There is no need to visit the queue if it is empty.
           if (!this->queue_.is_empty())
             {
-              // Reset the visitor since we use it over and over.  This
-              // will cause the visitor to drop any reference to
-              // a request that it may still be holding from a prior
-              // call to accept_visitor().
-              dispatchable_visitor.reset();
-
               // Visit the requests in the queue in hopes of
               // locating the first "dispatchable" (ie, not busy) request.
               // If a dispatchable request is located, it is extracted
@@ -224,6 +218,11 @@ TAO::CSD::TP_Task::svc()
         request->mark_as_ready();
         this->work_available_.signal();
       }
+
+      // Reset the visitor since we use it over and over.  This
+      // will cause the visitor to drop any reference to
+      // the dispatched request.
+      dispatchable_visitor.reset();
 
       // Note that the request will be "released" here when the request
       // handle falls out of scope and its destructor performs the

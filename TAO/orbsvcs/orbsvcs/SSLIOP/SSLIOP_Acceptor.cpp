@@ -377,6 +377,11 @@ TAO::SSLIOP::Acceptor::open (TAO_ORB_Core *orb_core,
                                          minor) != 0)
     return -1;
 
+  ACE_INET_Addr addr;
+  ACE_CString specified_hostname;
+  if (this->parse_address (address, addr, specified_hostname) == -1)
+    return -1;
+
   // Open the non-SSL enabled endpoints, then open the SSL enabled
   // endpoints.
   if (this->IIOP_SSL_Acceptor::open (orb_core,
@@ -389,8 +394,7 @@ TAO::SSLIOP::Acceptor::open (TAO_ORB_Core *orb_core,
 
   // The SSL port is set in the parse_options() method. All we have
   // to do is call open_i()
-  ACE_INET_Addr addr (this->ssl_component_.port,
-                      this->addrs_[0].get_host_addr ());
+  addr.set_port_number (this->ssl_component_.port);
 
   return this->ssliop_open_i (orb_core,
                               addr,
