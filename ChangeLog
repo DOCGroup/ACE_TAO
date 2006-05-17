@@ -1,3 +1,15 @@
+Wed May 17 09:35:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/sys/os_ipc.h:
+        * ace/os_include/sys/os_socket.h:
+        * ace/os_include/sys/os_stat.h:
+        * ace/os_include/sys/os_types.h:
+          Removed psos support
+
+        * ace/os_include/sys/os_mman.h:
+          Removed madvice prototype and ACE_LACKS_MADVISE_PROTOTYPE, it
+          is not set in any config file
+
 Wed May 17 02:23:31 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ace/Log_Msg_IPC.cpp:
