@@ -451,7 +451,7 @@ be_visitor_traits::visit_array (be_array *node)
       << "const " << name << "_slice * _tao_from"
       << be_uidt_nl
       << ");" << be_uidt_nl
-      << "static " << name << "_slice * alloc (void);"
+      << "static " << name << "_slice * alloc (void);" << be_nl
       << "static void zero (" << be_idt << be_idt_nl
       << name << "_slice * _tao_slice"
       << be_uidt_nl
