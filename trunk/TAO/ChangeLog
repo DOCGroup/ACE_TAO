@@ -1,3 +1,48 @@
+Wed May 17 19:09:36 UTC 2006  Yan Dai  <dai_y@ociweb.com>
+
+        Merged OCI's changes         
+          "Fri May 12 21:59:41 UTC 2006  Yan Dai  <dai_y@ociweb.com>"
+
+        * TAO/tao/Intrusive_Ref_Count_Handle_T.inl:
+        
+          Fixed a potential memory leaks in operator==(T*) function.
+          The memory leak could happen when this assignment operator
+          is used to assign the same instance.
+
+        * TAO/tao/CSD_ThreadPool/CSD_TP_Task.cpp:
+        
+          Made the TP_Dispatchable_Visitor object reset() called after 
+          the request is dispatched. This would avoid the delay deletion
+          of the request and its referenced objects.
+        
+        * tao/CSD_Framework/CSD_FW_Server_Request_Wrapper.cpp:
+        
+          Made the transport object in TAO_ServerRequest be reference
+          counted by the CSD. Increment the reference counter when the
+          TAO_ServerRequest is cloned, and decrement the reference counter
+          when the server request is destroyed. This would avoid crash 
+          when the transport object is destroyed but CSD has not finished
+          dispatching the request.
+
+        Merged OCI's changes         
+          "Thu Apr 20 13:29:44 2006  Ciju John  <john_c@ociweb.com>"
+
+          Made an SSLIOP endpoint value of 'iiop://:/ssl_port=xyz' listen 
+          on all available network interfaces instead of listening on a 
+          specific IP address. These changes make the 'iiop://:/ssl_port=xyz' 
+          and 'iiop:///ssl_port=xyz' have same semantics.
+
+        * tao/IIOP_Acceptor.h :
+        * tao/IIOP_Acceptor.cpp :
+
+          Refactored the address parsing code into a new method
+          'parse_address'.
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp (open):
+
+          Use TAO_IIOP_Acceptor::parse_address() to initialize
+          ACE_INET_Addr.
+
 Wed May 17 18:47:22 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/AMH_Oneway/server.cpp:

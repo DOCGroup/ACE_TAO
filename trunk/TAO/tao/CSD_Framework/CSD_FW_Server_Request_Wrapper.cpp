@@ -43,6 +43,10 @@ TAO::CSD::FW_Server_Request_Wrapper::~FW_Server_Request_Wrapper()
           delete [] opname;
           delete this->request_->operation_details_;
         }
+     
+      if (this->request_->transport_ != 0)
+        this->request_->transport_->remove_reference ();
+
       delete this->request_;
     }
 }
@@ -180,6 +184,8 @@ TAO::CSD::FW_Server_Request_Wrapper::clone (TAO_ServerRequest*& request)
   // TYPE: TAO_Transport*
   // ACTION: Assuming that a shallow-copy is ok here.
   clone_obj->transport_ = request->transport_;
+  if (clone_obj->transport_ != 0)
+    clone_obj->transport_->add_reference ();
 
   // TYPE: CORBA::Boolean
   // ACTION: Primitive data type assignment.

@@ -132,6 +132,16 @@ public:
 protected:
 
   /**
+   * Helper method
+   * Clear out 'addr' & 'specified_hostname' and initialize them
+   * based upon 'address'.
+   */
+  int
+  parse_address (const char *address,
+                 ACE_INET_Addr &addr,
+                 ACE_CString &specified_hostname);
+
+  /**
    * Set the host name for the given address using the dotted decimal
    * format.
    */
