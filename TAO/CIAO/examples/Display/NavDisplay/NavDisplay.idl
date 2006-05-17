@@ -11,7 +11,7 @@
 #ifndef NAVDISPLAY_IDL
 #define NAVDISPLAY_IDL
 
-#include "../HUDisplay.idl"
+#include "../Display_Base/Display_Base.idl"
 
 module HUDisplay
 {

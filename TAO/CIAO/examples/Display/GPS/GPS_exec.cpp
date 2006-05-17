@@ -1,12 +1,27 @@
 // $Id$
 
-
 #include "GPS_exec.h"
 #include "CIAO_common.h"
 
 #include "ace/OS_NS_time.h"
 
 #define DISPLACEMENT 256
+
+// Operations from HUDisplay::position
+CORBA::Long
+MyImpl::Position_Impl::posx (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  return component_.posx();
+}
+
+CORBA::Long
+MyImpl::Position_Impl::posy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  return component_.posy();
+}
+
 
 /// Default constructor.
 MyImpl::GPS_exec_i::GPS_exec_i ()
@@ -22,19 +37,23 @@ MyImpl::GPS_exec_i::~GPS_exec_i ()
 }
 
 // Operations from HUDisplay::GPS
-
-HUDisplay::CCM_position_ptr
-MyImpl::GPS_exec_i::get_MyLocation (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  return HUDisplay::CCM_position::_duplicate (this);
-}
+  HUDisplay::CCM_position_ptr
+  MyImpl::GPS_exec_i::get_MyLocation (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+  {
+//     ACE_DEBUG ((LM_DEBUG,
+//                 "GPS_exec::get_MyLocation called\n "));
+    return (new Position_Impl (*this));
+  }
 
 void
 MyImpl::GPS_exec_i::push_Refresh (HUDisplay::tick *
                                   ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+//   ACE_DEBUG ((LM_DEBUG,
+// 	      ACE_TEXT ("GPS: Received Refresh Event\n")));
+
   // Refresh position
   this->positionx_ += ACE_OS::rand () % DISPLACEMENT - (DISPLACEMENT/2);
   this->positiony_ += ACE_OS::rand () % DISPLACEMENT - (DISPLACEMENT/2);
@@ -45,8 +64,6 @@ MyImpl::GPS_exec_i::push_Refresh (HUDisplay::tick *
   this->context_->push_Ready (event
                               ACE_ENV_ARG_PARAMETER);
 }
-
-// Operations from HUDisplay::position
 
 CORBA::Long
 MyImpl::GPS_exec_i::posx (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
@@ -61,6 +78,7 @@ MyImpl::GPS_exec_i::posy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   return this->positiony_;
 }
+
 
 // Operations from Components::SessionComponent
 void
@@ -149,5 +167,5 @@ MyImpl::GPSHome_exec_i::create (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 extern "C" GPS_EXEC_Export ::Components::HomeExecutorBase_ptr
 createGPSHome_Impl (void)
 {
-  return new MyImpl::GPSHome_exec_i;
+  return new MyImpl::GPSHome_exec_i();
 }

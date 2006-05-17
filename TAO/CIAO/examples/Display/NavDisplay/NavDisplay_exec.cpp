@@ -22,6 +22,9 @@ MyImpl::NavDisplay_exec_impl::push_Refresh (HUDisplay::tick *ev
 {
   ACE_UNUSED_ARG (ev);
 
+//   ACE_DEBUG ((LM_DEBUG,
+// 	      ACE_TEXT ("NAVDISPLAY: Received Refresh Event\n")));
+
   // Refresh position
   HUDisplay::position_var loc =
     this->context_->get_connection_GPSLocation (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -38,7 +41,7 @@ MyImpl::NavDisplay_exec_impl::push_Refresh (HUDisplay::tick *ev
   CORBA::Long y = loc->posy (ACE_ENV_SINGLE_ARG_PARAMETER) % 300;
   ACE_CHECK;
 
-  ACE_DEBUG ((LM_DEBUG, "DISPLAY: Current Location is: (%d, %d)\n",
+  ACE_DEBUG ((LM_DEBUG, "NAVDISPLAY: Current Location is: (%d, %d)\n",
               x,
               y));
 }
