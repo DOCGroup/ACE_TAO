@@ -1,6 +1,7 @@
 Wed May 17 14:11:35 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+        * TAO_IDL/be_include/be_visitor_typecode/typecode_defn.h:
         
           Added generation of an anonymous namespace inside the
           TAO::TypeCode namespaces already generated, for
