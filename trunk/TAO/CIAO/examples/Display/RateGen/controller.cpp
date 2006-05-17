@@ -44,7 +44,7 @@ parse_args (int argc, char *argv[])
                               "usage:  %s\n"
                               "-o (Turn on the rate generator)\n"
                               "-f (Turn off the rate generator)\n"
-                              "-k <RateGen IOR> (default is file://rategen.ior)\n"
+                              "-k <RateGen IOR> (default is file://RateGen.ior)\n"
                               "-r <rate in hertz> (default is 3)\n"
                               "\n",
                               argv [0]),

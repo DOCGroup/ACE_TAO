@@ -1,7 +1,7 @@
 // $Id$
 
 /**
- * @file HUDisplay.idl
+ * @file Display_Base.idl
  *
  * Definition of events, and common interfaces used in HUDisplay module.
  *
@@ -21,9 +21,7 @@ module HUDisplay
   interface opmode
   {
     void start ();
-
     void stop ();
-
     boolean active ();
   };
 

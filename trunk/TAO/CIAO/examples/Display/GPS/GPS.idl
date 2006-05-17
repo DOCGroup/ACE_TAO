@@ -7,8 +7,10 @@
  *
  * @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
+#ifndef GPS_IDL
+#define GPS_IDL
 
-#include "../HUDisplay.idl"
+#include "../Display_Base/Display_Base.idl"
 
 module HUDisplay
 {
@@ -23,3 +25,5 @@ module HUDisplay
   {
   };
 };
+
+#endif /* GPS_IDL */

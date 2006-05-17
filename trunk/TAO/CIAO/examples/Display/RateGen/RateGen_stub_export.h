@@ -9,6 +9,10 @@
 
 #include "ace/config-all.h"
 
+#if defined (ACE_AS_STATIC_LIBS) && !defined (RATEGEN_STUB_HAS_DLL)
+#  define RATEGEN_STUB_HAS_DLL 0
+#endif /* ACE_AS_STATIC_LIBS && RATEGEN_STUB_HAS_DLL */
+
 #if !defined (RATEGEN_STUB_HAS_DLL)
 #  define RATEGEN_STUB_HAS_DLL 1
 #endif /* ! RATEGEN_STUB_HAS_DLL */

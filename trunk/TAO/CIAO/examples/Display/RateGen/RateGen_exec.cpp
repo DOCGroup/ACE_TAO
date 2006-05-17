@@ -283,11 +283,11 @@ MyImpl::RateGen_exec_i::pulse (void)
 {
   ACE_TRY_NEW_ENV
     {
-      if (CIAO::debug_level () > 0)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("Pushing HUDisplay::tick event!\n")));
-        }
+//       if (CIAO::debug_level () > 0)
+//         {
+//           ACE_DEBUG ((LM_DEBUG,
+//                       ACE_TEXT ("Pushing HUDisplay::tick event!\n")));
+//         }
 
       HUDisplay::tick_var ev = new OBV_HUDisplay::tick ();
 

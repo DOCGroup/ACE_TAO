@@ -1,5 +1,8 @@
 // $Id$  -*- IDL -*-
 
+#ifndef GPS_CIDL
+#define GPS_CIDL
+
 #include "GPS.idl"
 
 composition session GPS_Impl
@@ -11,3 +14,6 @@ composition session GPS_Impl
   };
 };
 
+#endif /* GPS_CIDL */
+
+//$Id$
