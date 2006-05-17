@@ -36,11 +36,11 @@ extern "C"
 {
 #endif /* __cplusplus */
 
-#if defined (ACE_WIN32) && !defined (ACE_PSOS)
+#if defined (ACE_WIN32)
 #  define ACE_INVALID_SEM_KEY 0
 #else /* !ACE_WIN32 */
 #  define ACE_INVALID_SEM_KEY -1
-#endif /* ACE_WIN32 && !ACE_PSOS */
+#endif /* ACE_WIN32 */
 
 #if !defined (IPC_PRIVATE)
 #  define IPC_PRIVATE ACE_INVALID_SEM_KEY
