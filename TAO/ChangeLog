@@ -1,35 +1,55 @@
+Wed May 17 19:35:09 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_valuebox/valuebox_ci.cpp:
+
+          In the generated code for setting the member value,
+          removed the parentheses from the constructor call in
+          ACE_NEW, if the member type is a fixed-size IDL struct.
+          These parens were producing a warning on one of the
+          scoreboard's VC 7.1 builds, due to a behavior change
+          in the compiler. This behavior change is to initialize
+          PODs (for which an IDL fixed struct qualifies) to the
+          default value without requiring the parens denoting
+          a default constructor call.
+
+        * tests/Bug_2234_Regression/server.cpp:
+        * tests/OBV/ValueBox/client.cpp:
+
+          Made changes in hand-written client and server code in TAO/tests
+          similar to the changes in IDL compiler generated code above.
+
 Wed May 17 19:09:36 UTC 2006  Yan Dai  <dai_y@ociweb.com>
 
-        Merged OCI's changes         
+        Merged OCI's changes
           "Fri May 12 21:59:41 UTC 2006  Yan Dai  <dai_y@ociweb.com>"
 
         * TAO/tao/Intrusive_Ref_Count_Handle_T.inl:
-        
+
           Fixed a potential memory leaks in operator==(T*) function.
           The memory leak could happen when this assignment operator
           is used to assign the same instance.
 
         * TAO/tao/CSD_ThreadPool/CSD_TP_Task.cpp:
-        
-          Made the TP_Dispatchable_Visitor object reset() called after 
+
+          Made the TP_Dispatchable_Visitor object reset() called after
           the request is dispatched. This would avoid the delay deletion
           of the request and its referenced objects.
-        
+
         * tao/CSD_Framework/CSD_FW_Server_Request_Wrapper.cpp:
-        
+
           Made the transport object in TAO_ServerRequest be reference
           counted by the CSD. Increment the reference counter when the
           TAO_ServerRequest is cloned, and decrement the reference counter
-          when the server request is destroyed. This would avoid crash 
+          when the server request is destroyed. This would avoid crash
           when the transport object is destroyed but CSD has not finished
           dispatching the request.
 
-        Merged OCI's changes         
+        Merged OCI's changes
           "Thu Apr 20 13:29:44 2006  Ciju John  <john_c@ociweb.com>"
 
-          Made an SSLIOP endpoint value of 'iiop://:/ssl_port=xyz' listen 
-          on all available network interfaces instead of listening on a 
-          specific IP address. These changes make the 'iiop://:/ssl_port=xyz' 
+          Made an SSLIOP endpoint value of 'iiop://:/ssl_port=xyz' listen
+          on all available network interfaces instead of listening on a
+          specific IP address. These changes make the 'iiop://:/ssl_port=xyz'
           and 'iiop:///ssl_port=xyz' have same semantics.
 
         * tao/IIOP_Acceptor.h :

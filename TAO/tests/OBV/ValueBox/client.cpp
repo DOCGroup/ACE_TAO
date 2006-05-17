@@ -716,7 +716,7 @@ int test_boxed_struct (void)
 
     Fixed_Struct1 *fixed_struct_a = 0;
     ACE_NEW_RETURN (fixed_struct_a,
-                    Fixed_Struct1 (),
+                    Fixed_Struct1,
                     1);
     fixed_struct_a->l = 3233;
     fixed_struct_a->abstruct.s1 = 73;
@@ -751,7 +751,7 @@ int test_boxed_struct (void)
 
     Fixed_Struct1 *fixed_struct_b = 0;
     ACE_NEW_RETURN (fixed_struct_b,
-                    Fixed_Struct1 (),
+                    Fixed_Struct1,
                     1);
     fixed_struct_b->l = 7372;
     fixed_struct_b->abstruct.s1 = 11;

@@ -686,6 +686,8 @@ be_visitor_valuebox_ci::emit_default_constructor_alloc (be_decl *node)
 
   // Retrieve the node being visited by this be_visitor_valuebox_ci
   be_decl * vb_node = this->ctx_->node ();
+  bool node_not_pod =
+    be_type::narrow_from_decl (node)->size_type () == AST_Type::VARIABLE;
 
   // Public default constructor
   *os << "ACE_INLINE " << be_nl
@@ -694,7 +696,8 @@ be_visitor_valuebox_ci::emit_default_constructor_alloc (be_decl *node)
       << node->full_name () << "* p = 0;" << be_nl
       << "ACE_NEW (" << be_idt_nl
       << "p," << be_nl
-      << node->full_name () << " ());" << be_uidt_nl
+      << node->full_name ()
+      << (node_not_pod ? " ()" : "") << ");" << be_uidt_nl
       << "this->_pd_value = p;" << be_uidt_nl
       << "}" << be_nl << be_nl;
 }
