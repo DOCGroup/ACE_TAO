@@ -1198,7 +1198,7 @@ AC_CHECK_TYPE([ucontext_t],
 AC_CHECK_TYPE([u_longlong_t],
 	      [],
 	      [AC_DEFINE([ACE_LACKS_U_LONGLONG_T], 1,
-			 [Define to 1 if the system lacks the type `u_long_long'.])],
+			 [Define to 1 if the system lacks the type `u_long_long_t'.])],
 	      [#include <sys/types.h>])
 
 AC_CHECK_TYPE([wchar_t],
@@ -1209,8 +1209,20 @@ AC_CHECK_TYPE([wchar_t],
 #include <wchar.h>
 ])
 
-ACE_CHECK_TYPE([socklen_t],[sys/socket.h],[AC_DEFINE([ACE_HAS_SOCKLEN_T])],
-  [
+AC_CHECK_TYPE([socklen_t],
+	      [AC_DEFINE([ACE_HAS_SOCKLEN_T], 1,
+			 [Define to 1 if the system has the type `socklen_t'.])],
+	      [],
+[
+#ifndef ACE_LACKS_SYS_TYPES_H
+#include <sys/types.h>
+#endif
+#ifndef ACE_LACKS_SYS_SOCKET_H
+#include <sys/socket.h>
+#endif
+])
+
+if test $ac_cv_type_socklen_t = no; then
    dnl The compiler in linux just issues a warning, and the test
    dnl passes!!!
 
@@ -1225,7 +1237,9 @@ ACE_CHECK_TYPE([socklen_t],[sys/socket.h],[AC_DEFINE([ACE_HAS_SOCKLEN_T])],
 #ifndef ACE_LACKS_SYS_TYPES_H
 # include <sys/types.h>
 #endif
-#include <sys/socket.h>
+#ifndef ACE_LACKS_SYS_SOCKET_H
+# include <sys/socket.h>
+#endif
          ]],[[
           int s = 0;
           struct sockaddr* addr = 0;
@@ -1240,7 +1254,9 @@ ACE_CHECK_TYPE([socklen_t],[sys/socket.h],[AC_DEFINE([ACE_HAS_SOCKLEN_T])],
 #ifndef ACE_LACKS_SYS_TYPES_H
 # include <sys/types.h>
 #endif
-#include <sys/socket.h>
+#ifndef ACE_LACKS_SYS_SOCKET_H
+# include <sys/socket.h>
+#endif
             ]],
             [[
              int s = 0;
@@ -1257,8 +1273,7 @@ ACE_CHECK_TYPE([socklen_t],[sys/socket.h],[AC_DEFINE([ACE_HAS_SOCKLEN_T])],
          ])
       ],[AC_DEFINE([ACE_HAS_SIZET_SOCKET_LEN])],)
     ])
-  ])
-
+fi
 
 
 dnl SECTION 7: checks for structures
