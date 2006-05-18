@@ -1,3 +1,13 @@
+Thu May 18 15:21:33 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * NEWS:
+        * ace/Task.{h inl cpp}: Reverted the changes from:
+          Fri Apr 14 15:53:21 UTC 2006  Steve Huston  <shuston@riverace.com>
+          Tasks that delete themselves from within close() would invalidate
+          the lock that ACE_Task held across the close() call and perform
+          undefined and illegal actions on the deleted lock upon return.
+          Bugzilla #2339 remains unresolved.
+
 Wed May 17 20:31:11 UTC 2006 Roopa Pundaleeka <roopa@txcorp.com>
 
         * ace/DLL_Manager.cpp:
