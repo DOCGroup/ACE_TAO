@@ -1,3 +1,14 @@
+Thu May 18 17:33:57 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+        * m4/config_h.m4:
+
+          Changed feature test for socklen_t to #include <sys/types.h>
+          before <sys/socket.h>.  Use cannonical AC_CHECK_TYPE and
+          AC_DEFINE with a third argument instead of a AH_TEMPLATE for
+          ACE_HAS_SOCKLEN_T.  Fixes configuration on OpenBSD.  Thanks to
+          Vladimir Panov <gbr at voidland dot org> for reporting this bug.
+
 Thu May 18 15:15:16 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * bin/tao_orb_tests.lst:
