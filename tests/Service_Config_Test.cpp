@@ -117,8 +117,8 @@ Test_Singleton::~Test_Singleton (void)
     }
 }
 
-static void
-run_test (int argc, ACE_TCHAR *argv[])
+void
+testLoadingServiceConfFile (int argc, ACE_TCHAR *argv[])
 {
   ACE_ARGV new_argv;
 
@@ -164,6 +164,61 @@ run_test (int argc, ACE_TCHAR *argv[])
   ACE_Time_Value tv (argc > 1 ? ACE_OS::atoi (argv[1]) : 2);
 
   ACE_ASSERT (ACE_Reactor::instance()->run_reactor_event_loop (tv) == 0);
+
+  // Wait for all threads to complete.
+  ACE_Thread_Manager::instance ()->wait ();
+}
+
+
+// @brief The size of a repository is pre-determined and can not be exceeded
+void
+testLimits (int , ACE_TCHAR *[])
+{
+  static ACE_TCHAR *svc_desc =
+    ACE_TEXT ("dynamic Test_Object_1 Service_Object * ")
+    ACE_TEXT ("  Service_Config_DLL:_make_Service_Config_DLL() \"2 3\"");
+
+  ACE_Service_Gestalt one(1); // Room for just one ...
+  if (0 != one.process_directive (svc_desc))
+    {
+      ++error;
+      ACE_DEBUG ((LM_ERROR, ACE_TEXT("Unable to register the first service\n")));
+    }
+
+  if (-1 != one.process_directive (svc_desc))
+    {
+      ++error;
+      ACE_DEBUG ((LM_ERROR, ACE_TEXT("Unexped to be able to add more\n")));
+    }
+
+  if (ENOSPC != errno)
+    {
+      ++error;
+      ACE_DEBUG ((LM_ERROR,
+                  ACE_TEXT("Expected error code %d (ENOSPC), but got %d\n"),
+                  ENOSPC,
+                  errno));
+    }
+
+  ACE_DEBUG ((LM_DEBUG, "Attempt to overfill the gestalt returned: %m\n"));
+}
+
+
+// @brief ??
+void
+testOrderlyInstantialtion (int , ACE_TCHAR *[])
+{
+  for (u_int i = 0; i < VARIETIES; ++i)
+    {
+      Test_Singleton *s = Test_Singleton::instance (i);
+
+      if (s == 0)
+        {
+          ++error;
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("instance () allocate failed!\n")));
+        }
+    }
 }
 
 int
@@ -171,20 +226,11 @@ run_main (int argc, ACE_TCHAR *argv[])
 {
   ACE_START_TEST (ACE_TEXT ("Service_Config_Test"));
 
-  for (u_int i = 0; i < VARIETIES; ++i)
-    {
-      Test_Singleton *s = Test_Singleton::instance (i);
+  testOrderlyInstantialtion (argc, argv);
 
-      if (s == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("instance () allocate failed!\n")),
-                          1);
-    }
+  testLoadingServiceConfFile (argc, argv);
 
-  run_test (argc, argv);
-
-  // Wait for all threads to complete.
-  ACE_Thread_Manager::instance ()->wait ();
+  testLimits (argc, argv);
 
   ACE_END_TEST;
   return error == 0 ? 0 : 1;
