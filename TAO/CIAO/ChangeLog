@@ -1,3 +1,11 @@
+Thu May 18 20:28:00 UTC 2006 Roopa Pundaleeka <roopa@txcorp.com>
+
+        * examples/Display/GPS/GPS_Impl.ccd:
+        * examples/Display/NavDisplay/NavDisplay_Impl.ccd:
+        * examples/Display/RateGen/RateGen_Impl.ccd:
+
+        Removed these generated files from CVS.
+
 Thu May 18 11:28:52 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
 
