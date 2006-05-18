@@ -1,3 +1,18 @@
+Thu May 18 11:28:52 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+
+        * examples/Display/Display_Base/GNUmakefile:
+        * examples/Display/Display_Base/GNUmakefile.Display_Base_stub:
+        * examples/Display/Display_Base/GNUmakefile.Display_Base_svnt:
+
+          Removed these files from CVS.
+
+Wed May 17 21:20:46 UTC 2006 Roopa Pundaleeka <roopa@txcorp.com>
+
+        * TAO/CIAO/examples/Display:
+          Ported the Display example to use the new CIAO framework
+
+
 Tue May 16 12:10:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * README:
