@@ -1,3 +1,35 @@
+Thu May 18 17:16:30 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/Logging_Service/
+	* orbsvcs/Logging_Service/Basic_Logging_Service/Makefile.am:
+	* orbsvcs/Logging_Service/Notify_Logging_Service/Makefile.am:
+
+          Regenerated.
+
+          NB: The reason the Makefile.am's for the Event and RTEvent
+          Logging Services were not changed is because currently the
+          automake config are generated with the typed event channel
+          support enabled, which also requires valuetype.
+
+        * orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.mpc:
+	* orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.mpc:
+	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.mpc:
+	* orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.mpc:
+
+          Changed to inherit from the valuetype base project.
+
+          This is required in the case the event / log record embeds a
+          valuetype.  A event or log record contains one or more CORBA
+          anys.  The current implementation demarshals the any before
+          touching any app code.  Thus if the any were to contain a
+          valuetype, the valuetype library will be called upon to
+          demarshal the data.
+
+          The same change was made for the Notification Service in:
+                Mon Jul 18 13:12:15 2005  Ciju John  <john_c@ociweb.com>
+
+          This fixes bugzilla issue #2524.
+
 Thu May 18 15:10:50 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tests/ORB_Local_Config/run_tests_all.pl:

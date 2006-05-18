@@ -1,5 +1,5 @@
 // $Id$
 
-project: namingexe, iortable, core, dslogadmin_serv {
+project: namingexe, iortable, core, dslogadmin_serv, valuetype {
   exename   = Basic_Logging_Service
 }
