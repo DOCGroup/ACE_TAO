@@ -1,3 +1,17 @@
+Thu May 18 15:10:50 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tests/ORB_Local_Config/run_tests_all.pl:
+
+          Updated to remove the Limits test from the list. The
+          functionality has been moved to the Service_Config_Test under
+          ACE.
+
+        * tests/ORB_Local_Config/Limits/Limits.mpc:
+        * tests/ORB_Local_Config/Limits/Test.cpp:
+        * tests/ORB_Local_Config/Limits/run_test.pl:
+
+          Removed these files.
+
 Thu May 18 13:52:58 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tests/ORB_Local_Config/Two_DLL_ORB/server.cpp:
