@@ -35,6 +35,7 @@ Notify_Logging_Service_SOURCES = \
   Notify_Logging_Service.h
 
 Notify_Logging_Service_LDADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_DsNotifyLogAdmin_Serv.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Serv.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_DsLogAdmin_Serv.la \
