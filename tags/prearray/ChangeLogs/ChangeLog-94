@@ -1,0 +1,1027 @@
+Fri Dec 23 01:50:50 1994  Douglas C. Schmidt  (schmidt@tango)
+
+        * libsrc/ASX: Changed the behavior of Map_Manager::Map_Manager()
+          to allocate a default-sized buffer.
+
+        * libsrc/Reactor/Reactor.C (dispatch): Made the poll-based Reactor
+          smarter about detecting POLLERR error conditions.  When POLLERR
+          is detected, the Reactor now shutdown down that fd...
+
+Wed Dec 21 18:29:15 1994  Douglas C. Schmidt  (schmidt@tango)
+
+        * libsrc/IPC_SAP/SPIPE_SAP: Changed the name of class SPIPE_Msg to
+          SPIPE_IO to reflect the fact that I/O over named pipes need not
+          be message-oriented...
+
+        * Changed all occurrences of {SOCK,TLI,SPIPE}_Listener to
+          {SOCK,TLI,SPIPE}_Acceptor.  This is a more accurate name for the
+          function these classes perform.  In addition, it is easier to
+          explain in the context of the Acceptor and Connector patterns.
+          Note that the *.h files are also changed, as well.
+
+        * Changed the implementation of {SOCK,TLI,SPIPE}_SAP so that there
+          is now a *_Connector class to go along with the *_Acceptor
+          class.  The *_Connector is a factory that produces *_Stream
+          objects *actively*, in a similar way to how the *_Acceptor is a
+          factory that produces *_Stream objects *passively*.  This makes
+          everything much more orthogonal, though it will break existing
+          code...  The easiest way to fix existing code is to do the
+          following:
+          
+          1. Find places in the code that define objects of 
+             type SOCK_Stream, LSOCK_Stream, TLI_Stream,
+             or SPIPE_Msg (now called SPIPE_IO).
+          
+          2. Replace #include "SOCK_Stream.h" with
+             #include "SOCK_Connector.h" (or whatever
+             C++ wrapper you have).
+
+          3. Replace definitions of the form:
+
+          INET_Addr addr (port, host);
+          SOCK_Stream foo (addr);
+          
+          with
+          
+          INET_Addr addr (port, host);
+          SOCK_Stream foo;
+          SOCK_Connector con (foo, addr);
+
+          If you don't want to have an extra variable named "con",
+          you can replace this with:
+
+          INET_Addr addr (port, host);
+          SOCK_Stream foo;
+          SOCK_Connector (foo, addr); // Calls the constructor.
+          
+Tue Dec 20 21:34:10 1994  Douglas C. Schmidt  (schmidt@tango)
+
+        * Renamed the ./{libsrc,tests}/{Semaphores,Message_Queues}
+          directories to SV_Semaphores and SV_Message_Queues to better
+          reflect their true behavior and in order to prevent clashes with
+          the new ASX names.
+
+        * libsrc/ASX: Renamed Queue to Task to better reflect its true
+          functionality.  In addition, renamed Message_List to
+          Message_Queue.
+
+Mon Dec 19 23:04:52 1994  Douglas C. Schmidt  (schmidt@tango)
+
+        * Changed "private" to "protected" in ASX/Message_List.h at the
+          request of Troy Warner (tnw1@core01.osi.com).
+
+Mon Dec 12 23:47:01 1994  Douglas C. Schmidt  (schmidt@tango)
+
+        * libsrc/IPC_SAP/SOCK_SAP: changed the name of the global utility
+          function "bind_port()" to ace_bind_port() to avoid polluting the
+          global symbol namespace.
+
+        * Fixed a descriptor leak in SOCK_Dgram::shared_open() and
+          SOCK_CODgram::shared_open().  The original version didn't
+          automatically close down the socket descriptor if bind failed.
+          The new version does close the descriptor down.
+
+Sat Dec 10 00:53:20 1994  Douglas C. Schmidt  (schmidt@tango)
+
+        * libsrc/Reactor/Reactor.C (mask_ops): Fixed a stupid bug...  The
+          test should have been
+
+            if (this->invalid_handle (handle) || 
+                this->poll_handles_[handle].fd == -1)
+
+          rather than:
+
+            if (this->invalid_handle (handle) || 
+                this->poll_handles_[handle].fd != -1)
+
+        * libsrc/Reactor/Reactor: Modified the semantics of
+          Reactor::remove_handler() such that calling it with a value of
+          Event_Handler::DONT_CALL or'd into the Reactor_Mask instructs
+          the Reactor to remove the handler *without* calling the object's
+          handle_close() method!
+
+Fri Dec  9 12:53:31 1994  Douglas C. Schmidt  (schmidt@tango)
+
+        * include/Synch: some C++ compilers (e.g., Centerline) barf when
+          the see the following in an inline function:
+          
+          if (foo == bar)
+            {
+               errno = result;
+               return -1;
+            }
+          result result;
+
+          I fixed this by doing the following:
+
+          if (foo == bar)
+            {
+               errno = result;
+               result = -1;
+            }
+          result result;
+
+Wed Dec  7 22:23:47 1994  Douglas C. Schmidt  (schmidt@tango)
+
+        * include/Synch.h: Added additional methods in the Null_Mutex
+          class in order to be consistent with the RW_Mutex interfaces...
+
+        * libsrc/ASX/Message_List: Added new a set of methods called
+          "try_enqueue_head" and "try_enqueue_tail" that will only insert
+          a message into the queue if it is not already full.  If it is
+          full, return EWOULDBLOCK.
+
+Tue Dec  6 13:58:28 1994  Douglas C. Schmidt  (schmidt@tango)
+
+        * libsrc/Reactor/Event_Handler: added default values of -1 to the
+          handle_input(), handle_output(), and handle_exception() methods.
+
+Mon Dec  5 23:30:28 1994  Douglas C. Schmidt  (schmidt@tango)
+
+        * libsrc/ASX/Message_List: Added a new method called set_length to
+          Message_Block.  This method sets the length of the "active"
+          portion of the message.  This is defined as the offset from
+          RD_PTR to WR_PTR.
+
+Sat Dec  3 20:40:53 1994  Douglas C. Schmidt  (schmidt@tango)
+
+        * libsrc/Threads/Synch: Added two new class called Write_Guard and
+          Read_Guard, which provide functionality a la the Guard class,
+          only that they acquire and release readers/writer locks.
+
+        * libsrc/Threads/Synch: For interface uniformity with other
+          synchronization wrappers I added an acquire() method.  This is
+          implemented as a write-lock to be on the safe-side...
+
+Fri Dec  2 13:33:39 1994  Douglas C. Schmidt  (schmidt@tango)
+
+        * include/Synch.i (Mutex::tryacquire): Modified the behavior of
+          Mutex::tryacquire so that it will return -1 and set errno to the
+          appropriate return value of tryacquire(3T) if various types of
+          "problems" occur (such as the Mutex already being held).
+
+        * include/Message_List.i: Rearranged the order of the
+          Message_Block::get_rd_ptr and Message_Block::set_wr_ptr methods
+          to deal with inlining problems that some cfront-based C++
+          compilers have...
+
+        * libsrc/Reactor/Signal.[hi]: Changed set_handler/get_handler to
+          "handler" to avoid a collision with Rogue Wave libraries.  This
+          new version is more consistent with other usage in ACE anyhow...
+
+        * Modified the behavior of Service_Config::Service_Config() so
+          that it makes the initialize size of the Reactor be the same
+          size as the Service_Repository.  This was done at the suggestion
+          of Bob Sayle and Steve Warwick at ARINC Research.
+
+Sun Nov 20 00:59:06 1994  Douglas C. Schmidt  (schmidt@tango)
+
+        * libsrc/ASX/Message_List: Added two new methods
+          (is_full() and is_empty()) to the public interface
+          of Message_List.  These methods check whether the queue is full
+          or empty *while holding the lock*.
+
+        * libsrc/ASX/Queue.h: Made the svc() method a pure virtual
+          function.  This is much cleaner than not doing it, particularly
+          when we've already got to define open(), close(), and put()...
+
+        * Added a new method to the IPC_SAP/Addr inheritance hierarchy.
+          The method is called addr_to_string() and it converts the
+          address of a subclass (e.g., either UNIX domain or Internet
+          domain) into a string.  This functionality is particularly
+          useful in parameterized types (such as Acceptor), which should
+          be oblivious of the type of communication domain they are
+          using...
+
+        * Reorganized the ./apps/Logger/Service_Configurator_Logger
+          directory in order to reuse more code.  Now, all the Acceptor
+          pattern classes have been moved to a new subdirectory called
+          ./libsrc/Acceptor.  In addition, this code has been generalized
+          to work with the ASX framework!
+
+Sat Nov 19 15:19:19 1994  Douglas C. Schmidt  (schmidt@tango)
+
+        * Released version 2.15.5 (added a couple of minor fixes and some
+          additional software to the release.  In particular, I've added
+          the RPC++ C++ wrappers for Sun RPC.  See the README file for
+          more info on this.
+
+        * apps/Synch-Benchmarks: Reorganized all the synchronization tests
+          so that they would be easier to understand and extend.
+
+        * include/sysincludes.h (ACE_NONBLOCK): Fixed a stupid typo in the
+          ./include/makeinclude/wrapper_macros.GNU file that accidentally
+          used ACE_NONBLOCKING instead of ACE_NONBLOCK...  Jaysus
+
+        * Fixed up the Service_Config.[Chi] source so that it no longer
+          allocates statically linked services via static variables.
+          Stacy Mahlon (mcs@contour.mayo.edu) recommended this change to
+          workaround bugs in compilers that fail to initialize static
+          objects appropriately.
+
+Tue Nov 15 11:55:03 1994  Douglas C. Schmidt  (schmidt@tango)
+
+        * Fixed a portability problem in the ./libsrc/Service_Configurator
+          that was caused by certain compilers failing to initialize
+          global variables correctly.  In particular, the Obstack object
+          ace_obstack is now a pointer that is allocated dynamically by
+          Service_Config.process_directive().  Thanks to Stacy Mahlon
+          (mcs@contour.mayo.edu) for noticing this!
+
+Mon Nov 14 12:16:14 1994  Douglas C. Schmidt  (schmidt@tango)
+
+        * libsrc/Threads/Thread.h: added C++ wrappers for
+          thr_getconcurrency() and thr_setconcurrency().
+
+        * Fixed a dumb typo in ./tests/IPC_SAP/SOCK_SAP/CPP-nbclient.C
+          that failed to conditionally compile for different variants of
+          siginfo...
+
+        * Added some test programs that benchmark the performance of
+          Solaris synchronization mechanisms.  See ./apps/Synch-Benchmarks
+          for details...
+
+        * Extended the methods of the Queue class to take advantage of the
+          new Message_List methods that perform timed waits!  This
+          involves changing many of the existing methods in this class to
+          add an extra parameter of type timestruc_t *, which defaults to
+          0.
+
+        * Added some new comments in the
+          ./include/makeinclude/wrapper_macros.GNU file that indicate what
+          the various macros defined by the Makefile scheme actually mean.
+          This should help people who are porting to a new system...
+
+        * Fixed a dumb bug in ./tests/Shared_Memory that directly included
+          system header files.  Everything in ACE should include
+          "sysincludes.h" instead...  Thanks to Stacy Mahlon
+          (mcs@contour.mayo.edu) for noticing this!
+
+        * include/Memory_Pool.i (round_up): Fixed a typo where PAGESIZE
+          should have been ACE_PAGE_SIZE.
+
+Sat Nov 12 01:32:52 1994  Douglas C. Schmidt  (schmidt@tango)
+
+        * Generalized the Shared_Memory_Pool class for Malloc so that it
+          doesn't require the base addresses for multiple processes to all
+          start at the same location.
+
+        * libsrc/Service_Configurator/Thread_Spawn.i (Thread_Spawn):
+
+          Fixed a stupid bug in the constructor.  Note that we should
+          be checking if this->tm_ == 0, rather than != 0...
+
+Fri Nov 11 00:11:41 1994  Douglas C. Schmidt  (schmidt@tango)
+
+        * Released version 2.15.4 (added a couple of minor fixes).
+
+        * Added a new test program in the ./tests/ASX/Message_List
+          directory.  This program illustrates how thread-safe
+          Message_Lists work using ASX.
+
+        * libsrc/Threads/Thr_Manager.i: Added a new method called
+          insert_thr() to Thr_Manager that is used in conjunction with
+          Thr_Cntl::Thr_Cntl to make sure that a thread is added to the
+          Thr_Manager's table correctly.
+
+Thu Nov 10 20:14:11 1994  Douglas C. Schmidt  (schmidt@tango)
+
+        * libsrc/Log_Msg/Log_Record.C (print): Fixed the following very
+          subtle (and very stupid) bug:
+
+              return ::fprintf (fp, this->msg_data_);
+
+          if this->msg_data_ contains '%', then this call will
+          fail since fprintf tries to treat the percent sign as
+          a format code.  The obvious fix is:
+
+              return ::fprintf (fp, "%s", this->msg_data_);
+
+        * libsrc/ASX/Message_List.i (is_empty): Fixed a braino that failed
+          to check if there was a 0-sized buffer in the list.  It is now
+          possible to enqueue a 0-sized buffer, which is helpful for
+          things like signaling end of transmission by a producer.
+
+        * libsrc/ASX/Message_List.C: Improved the robustness of the
+          Message_List abstraction by detecting the case where the newly
+          inserted Message_Block is a NULL pointer.  Before, this would
+          crash the program, where now it returns -1 from the
+          enqueue_head() or enqueue_tail() methods.
+
+        * libsrc/Threads/Synch.h: added timedwait_signal() and timedwait()
+          methods to class Condition.  These are wrappers around the
+          cond_t cond_timedwait() function.
+
+        * Improved the documentation of the class interfaces in the
+          Synch.h C++ wrapper for Solaris 2.x threads mechanisms.
+
+        * Changed the name of class Condition methods wait_signal() and
+          timedwait_signal() to wait_alert() and timedwait_alert() to
+          remove confusion with UNIX signals and the regular condition
+          variable signal.
+
+Wed Nov  9 23:49:24 1994  Douglas C. Schmidt  (schmidt@tango)
+
+        * libsrc/IPC_SAP/Addr/UNIX_Addr.i (UNIX_Addr): Fixed another
+          couple brainos in UNIX_Addr.i (thanks for Irfan
+          (ip1@cs.wustl.edu) for noticing this).
+
+        * libsrc/IPC_SAP/SOCK_SAP/SOCK.i (get_local_addr): Fixed a braino
+          that didn't reset the Addr size after a call to getsockname().
+
+Tue Nov  8 00:25:02 1994  Douglas C. Schmidt  (schmidt@tango)
+
+        * libsrc/Service_Configurator/Svc_Conf.y (create_service_type):
+          Fixed a bug on lines 323 and 324, and 330 and 331.  The "#if
+          defined" needs to be INSIDE the "case" statements.  Thanks to
+          mcs@contour.mayo.edu for finding this!
+
+        * Improved the interfaces for all the synchronization wrappers so
+          that they can be given all the parameters for the underlying
+          SunOS 5.x *_init calls.  Default values are given to keep the
+          normal usage concise...
+
+Mon Nov  7 21:41:13 1994  Douglas C. Schmidt  (schmidt@tango)
+
+        * Changed all occurrences of Mutex_Rec to Recursive_Lock.  This is
+          much more descriptive since by using templates, the recursive
+          logic applies to a number of synchronization mechanisms (e.g.,
+          Semaphores, RW_Mutex, Mutex, Null_Mutex, etc.)  rather than just
+          the Mutex class.
+
+        * Changed all occurrences of Mutex_Block to Guard.  This is more
+          standard terminology and reflects Booch's terms more closely, as
+          well.
+
+Sun Nov  6 14:31:44 1994  Douglas C. Schmidt  (schmidt@tango)
+
+        * Majorly improved the modularity and structure of the Reactor
+          class.  Much duplicate code has been coalesced and several new
+          features have been added.
+
+        * Changed the name of the Reactor method set_ready() to
+          ready_ops().  Added a new method called mask_ops().  These
+          methods make it possible to manipulate the "dispatch masks" and
+          the "ready masks" (e.g., READ_MASK, WRITE_MASK, etc.) at a much
+          finer level of granularity without loss of efficiency or
+          correctness.
+
+Sat Nov  5 16:48:55 1994  Douglas C. Schmidt  (schmidt@tango)
+
+        * Changed the name of three methods in the Semaphore class to
+          mirror the terms used for Mutex and RW_Mutex.  This will help
+          support the use of semaphores along with templates (e.g.,
+          Rec_Lock) much better...  The old names were "wait", "trywait",
+          and "signal".  The new names are "acquire", "tryacquire", and
+          "release."
+
+        * Added a new class called Signal_Block in Signal.[hiC] This class
+          operates similar to Mutex_Block, in that it holds a set of
+          signals over the duration of a C++ statement block.  The
+          constructor masks out the signals and the destructor restores
+          the signals.
+
+        * Changed the name of files Signal_Handler.[hiC] to Signal.[hiC]
+          to reflect a broadening of the functionality of the ACE wrappers
+          for Signals.  For example, the new C++ classes wrap the sigset_t
+          API, as well as the struct sigaction structure.
+
+Fri Nov  4 00:41:48 1994  Douglas C. Schmidt  (schmidt@tango)
+
+        * Yow, got the new Shared_Malloc/Malloc class to work correctly on
+          SunOS 4.x, as well as SunOS 5.x.  It's a bit more clunky on
+          SunOS 4.x since we have to use System V semaphores rather than
+          Solaris synchronization mechanisms.  However, it now seems to
+          function correctly!
+
+        * Added a new method called "tryacquire" to Semaphore_Complex and
+          Semaphore_Simple.  This method provides the same "non-blocking"
+          semantics as it does in the Mutex, Semaphore, and RW_Mutex
+          classes.
+
+        * Added a new method called "remove()" to all the C++ wrappers in
+          the Synch.[hi] file.  This improves the symmetry with the System
+          V semaphore wrappers, and also gets around a nasty bug with
+          cfront 3.x and its handling of templates and explicitly called
+          destructors...
+
+        * Added a new C++ wrapper class for Threads (Thread.h).  The
+          eventual purpose of this class is to hide the differences
+          between POSIX pthreads and Solaris threads.
+
+        * Added new parameters to Thr_Manager::spawn to enable the stack
+          and stack_size to be passed in.
+
+        * Modified the Synch.h file so that the Null_Mutex and Mutex_Block
+          classes will both be compiled, even if we are building ACE on a
+          platform that doesn't support threads!
+
+        * Added a timed event-loop method to the public interface of the
+          Service_Config class.  This basically forwards the request to
+          the underlying Reactor->handle_events method.  Thanks to Brad
+          Needham (bneedham@arinc.com) of ARINC research for the
+          suggestion!
+
+Wed Nov  2 14:47:25 1994  Douglas C. Schmidt  (schmidt@tango)
+
+        * Changed the interface for one of the Reactor's
+          {register,remove}_handler methods.  These methods
+          had previously taken a sigset_t &, but for some reason the Sun
+          C++ 3.0 compiler can't seem to recognize that this is different
+          from an int!  Therefore, I changed the interface to take a
+          sigset_t *.
+
+        * Fixed some portability bugs that crept into the SunOS 4 version
+          of ACE, particularly with the siginfo_t extended signal handler
+          stuff.
+
+Tue Nov  1 21:46:07 1994  Douglas C. Schmidt  (schmidt@tango)
+
+        * libsrc/Log_Msg/Log_Msg.C (log): Fixed a braino on line 175.
+          "int sig" was undefined outside the conditional (duhhh ;-)).
+
+Thu Oct 27 17:23:37 1994  Douglas C. Schmidt  (schmidt@tango)
+
+        * Fixed up some problems with Semaphore_Complex and
+          Semaphore_Simple.  The new design should be more functional,
+          particularly for Semaphore_Complex, which now generalizes to
+          arrays of semaphores.
+
+Wed Oct 26 16:38:42 1994  Douglas C. Schmidt  (schmidt@tango)
+
+        * libsrc/Shared_Malloc/: Created a .i file for Malloc and
+          Memory_Pool to handle inlines.
+
+        * Fixed a fence-post error in Mem_Map::map_it().  The new version
+          should correctly set the length of the file *and* also do the
+          appropriate memory mapping.
+
+        * bin/clone.C: Fixed the clone program so that it now compiles
+          with the C++ compiler rather than the C compiler.
+
+Tue Oct 11 20:01:16 1994  Douglas C. Schmidt  (schmidt@tango)
+
+        * libsrc/Reactor/Reactor.h (Reactor): Changed the order of the
+          arguments to the Reactor's register_handler() method used to
+          register signal handler objects.  The new order puts both "new"
+          components first, and any
+          (optional) old components following this.  This is
+          a more natural set of default values...
+
+        * libsrc/Shared_Malloc: split out the Local and Shared memory
+          pools for class Malloc into the Memory_Pool.[hC] files.
+
+Mon Oct 10 22:54:53 1994  Douglas C. Schmidt  (schmidt@tango)
+
+        * libsrc/Threads/Synch.i: Reworked the Thread_Mutex and
+          Process_Mutex classes to inherit their interface and
+          implementation code from Mutex...  Thanks to Irfan Payrali for
+          the suggestion!
+
+Wed Sep 28 11:26:34 1994  Douglas C. Schmidt  (schmidt@tango)
+
+        * Moved some of the tests directories around to better reflect
+          precisely which ACE components are being tested.  In particular,
+          the {client,server} directories that were originally under the
+          ./tests/Reactor subtree are now located in the
+          ./tests/Service_Configurator subtree.
+
+Tue Sep 27 23:05:32 1994  Douglas C. Schmidt  (schmidt@tango)
+
+        * Added a bunch of constructors/destructors for
+          ./tests/Reactor/server to make g++ happy.
+
+        * libsrc/Service_Configurator/Service_Object.[ih]
+          (Service_Object): Added a constructor and destructor to
+          Service_Object to make g++ happy.  Also, removed the #if for
+          broken versions of g++ 2.5.8.
+
+        * include/Reactor: Added a constructor and destructor for
+          Null_Callback to make G++ happy...
+
+        * libsrc/Message_Queues/: Added support for G++ templates.
+
+        * Changed the handling of _sys_siglist in the sysincludes.h file
+          to try and handle the weird SunOS 4 header file problems...
+
+        * libsrc/IPC_SAP/SOCK_SAP/SOCK_Dgram_Brdcast.C (mk_broadcast):
+          Removed the "struct" from new struct ifnode in order to
+          compile...
+
+Tue Sep 20 11:17:23 1994  Douglas C. Schmidt  (schmidt@tango)
+
+        * Fixed a couple of minor typos in the Windows NT C++ wrappers for
+          sockets.
+
+        * Released version 2.15.2 so that Mark Frutig could have access to
+          the latest source in order to write man pages!
+
+Thu Sep 15 20:47:36 1994  Douglas C. Schmidt  (schmidt@tango)
+
+        * Extended the Event_Handler interface to support the additional
+          siginfo_t-style parameters for extended SVR4 signal handling.
+          Note that for backwards compatibility, this new interface only
+          enabled if the -DACE_HAS_SIGINFO flag is set in the
+          wrapper_macros.GNU config file.  Making this change affected
+          several of the existing ACE classes such as Service_Config and
+          Signal_Handler.
+          
+Mon Sep 12 17:07:10 1994  Douglas C. Schmidt  (schmidt@tango)
+
+        * Improved the modularity of the Reactor by creating a new class
+          called Signal_Handler.  This new class basically encapsulates
+          the signal handling mechanism provided by UNIX within a nice OO
+          abstraction.  The new arrangement is particularly useful since
+          the Signal_Handler class may be used in applications
+          (e.g., the Malloc class abstraction) that do not require the
+          other features of the Reactor.
+
+Sun Sep 11 14:40:06 1994  Douglas C. Schmidt  (schmidt@tango)
+
+        * Changed the default value for Semaphore_Simple and
+          Semaphore_Complex from OPEN to CREATE.  This is more closely
+          related to how SunOS thread synchronization variables work.
+
+        * Changed the methods of the Semaphore_Simple class to be
+          syntactically equivalent to the Process_Mutex and Thread_Mutex
+          classes.  This makes it easier to write code that uses
+          parameterized types to instantiate the appropriate type of
+          synchronization primitive.
+
+        * include/makeinclude/rules.local.GNU (OBJDIRS): Fixed the
+          "depend" target so that it generates the correct dependencies
+          for remaking .so files after they are changed.
+
+        * Added a new pair of methods to the Reactor so that it is now
+          possible to register/remove a sigset_t of signals in one
+          operation.
+
+Sat Sep 10 03:11:34 1994  Douglas C. Schmidt  (schmidt@tango)
+
+        * libsrc/Mem_Map/Mem_Map.i (map_it): Fixed a few minor bugs with
+          how the Mem_Map::map() method handles lseek()'s.
+
+        * Changed the name of the Mem_Map::open() methods to
+          Mem_Map::map().  This seems like a more reasonable name!  Also,
+          removed the close() method.  This is trivial to implement via
+          ::close (mmap.get_fd ());
+
+Fri Sep  9 22:04:25 1994  Douglas C. Schmidt  (schmidt@tango)
+
+        * Provided a new implementation of a flexible memory allocation
+          scheme (Shared_Malloc/Malloc.[HiC]).  This memory allocation can
+          be parameterized by the following:
+          
+          1. The pool from which memory is allocated (e.g.,
+             local memory vs. shared memory).
+
+          2. The type of synchronization used when allocating
+             the memory (e.g., no synchronization, thread-based
+             synchronization, process-based synchronization).
+
+        * libsrc/Threads/Synch.i (Proc_Mutex): Added new classes to the
+          Synchronization library.  These classes are wrappers around the
+          USYNC_PROCESS and USYNC_THREAD flags to mutex_init().
+
+Wed Sep  7 20:29:00 1994  Douglas C. Schmidt  (schmidt@tango)
+
+        * include/sysincludes.h (MT): Added check to see if _REENTRANT was
+          already defined, and if so, avoid redefining it!
+
+Sun Sep  4 16:23:17 1994  Douglas C. Schmidt  (schmidt@tango)
+
+        * Released version 2.15.1 to the world...
+
+        * Added support for the Windows NT version of SOCK_SAP.
+
+        * Fixed a few minor bugs involved with the order of linking
+          libraries.
+
+        * Fixed an oversight in ./testsReactor/server/server_test.C where
+          I was still including the "Server_Test.h" file (ugh).
+
+Wed Aug 31 13:27:10 1994  Douglas C. Schmidt  (schmidt@tango)
+
+        * libsrc/IPC_SAP/SOCK_SAP/SOCK_Stream.C (open): Fixed a bug
+          whereby the I/O descriptor wasn't being closed if connect()
+          failed.  Thanks to Charles Eads
+          (eads@synoptics.com) for reporting this.
+
+
+        * Recompiled everything on SunOS 4.x using SunC++ 3.x and SunOS
+          5.x using SunC++ 3.x and 4.x.  Everything seems to compile fine
+          now.
+          
+        * Released version 2.15
+
+Mon Aug 29 00:14:04 1994  Douglas C. Schmidt  (schmidt@tango)
+
+        * Finished up a preliminary set of tests for ASX.  See the
+          $WRAPPER_ROOT/tests/ASX/Event_Server directory for more details.
+
+        * wrapper_macros.GNU (CC): Removed the ARCHFLAG from the CCFLAGS
+          macro in the Makefile system.  Henceforth, all conditional
+          compilation should be performed on a "per-feature" basis, rather
+          than a "per-platform" basis...
+
+        * libsrc/IPC_SAP/SOCK_SAP/SOCK_Dgram_Brdcast.C (send):
+          Automatically convert the port number to htons format before
+          using it to initialize the sin_port field of the addressing
+          structure.  This is consistent with the behavior of other parts
+          of IPC_SAP (particularly INET_Addr::set()).
+
+Sun Aug 28 00:02:53 1994  Douglas C. Schmidt  (schmidt@tango)
+
+        * Changed version number of 2.15 to reflect all the major
+          modifications to the structure of ACE.
+
+        * include/sysincludes.h: Started to fix up the conditional
+          compilation scheme to be much smarter about the features that
+          are available from both the compiler and the OS environment.
+
+        * Added a fix suggested by Leslee Xu (lxu@ics.uci.edu) to better
+          handle the normalization of Timer_Values.
+
+        * Continued to make ACE coding conventions more consistent by
+          removing get_/set_ prefix from all the accessor/manipulator
+          methods.  Also, added an underbar at the end of all class and
+          object instance variables.
+
+Sat Aug 27 20:28:13 1994  Douglas C. Schmidt  (schmidt@tango)
+
+        * Continued to improve error handling by replacing all uses of
+          perror with the Log_Msg macros.
+
+        * include/sysincludes.h: Continued to improve the namespace
+          utilization in ACE by prefixing stand-along Misc functions with
+          ace_.
+
+        * include/FD_Set.h: Changed the name FD_Set_Iter to
+          FD_Set_Iterator.
+
+        * typedef'd int to HANDLE in Event_Handler.h in preparation for
+          merging in the Windows NT support along with the regular ACE
+          package.  I need to update all the other code in the entire
+          release to be consist with this!
+
+Thu Aug 25 19:49:57 1994  Douglas C. Schmidt  (schmidt@tango)
+
+        * Fixed a bug with Thr_Manager.i that occurred if a thread created
+          by ::thr_create() exits prior to the acquisition of the lock and
+          the subsequent bookkeeping.
+
+Wed Aug 24 17:34:49 1994  Douglas C. Schmidt  (schmidt@tango)
+
+        * Updated SOCK_Dgram_Brdcast to return the average number of bytes
+          sent.  This isn't necessarily the most useful info, but it
+          doesn't hurt either.  Thanks to Mark Frutig (mfrutig@fnbc.com)
+          for the suggestion.
+
+Mon Aug 22 01:18:14 1994  Douglas C. Schmidt  (schmidt@tango)
+
+        * Added a new test for the Service Configurator framework.  This
+          test illustrates the dynamic configuration of an entire stream
+          of Modules.
+
+Sun Aug 21 03:16:00 1994  Douglas C. Schmidt  (schmidt@tango)
+
+        * Cleaned up the ./tests/Reactor/server example to be more robust.
+          In particular, it doesn't really make sense to have the same
+          object be configured both statically and dynamically *at the
+          same time*!  This was causing problems since each constructor
+          was getting called twice for the same object -- once when it was
+          created statically, and again when it was linked in
+          dynamically...  Things work much better now.
+
+Sat Aug 20 01:07:24 1994  Douglas C. Schmidt  (schmidt@tango)
+
+        * Heavily revised the structure of the ./apps/Logger
+          subdirectories to test out the new Makefile scheme.  Everything
+          is working fine on Solaris!
+
+        * Updated all the ./apps/Logger subdirectories to use the Acceptor
+          name rather than the Client_Listener name.  This is consistent
+          with recent papers...
+
+        * Fixed all the Makefiles to utilize the new simplified build
+          strategy.  The Makefiles are *far* more automated now!
+
+        * Added support to all the libsrc Makefiles to produce both shared
+          libraries (*.so) and traditional archives
+          (*.a).
+
+Fri Aug 19 16:13:42 1994  Douglas C. Schmidt  (schmidt@tango)
+
+        * Majorly improved the Makefile support for building shared
+          objects that will be dynamically linked explicitly.  No longer
+          will we have to do the horrible hack of compiling all the source
+          code using -pic.  Instead, only that code that will be linked
+          dynamically must be compiled with -pic!  Note that this only
+          works if the shared object is entirely self contained (i.e., it
+          does *not* reference any statically linked symbols that are not
+          defined in itself)!
+
+        * Started to add changes to the source code to make its
+          configation driven by features rather than by OS.  This should
+          make everything much more portable soon!
+          
+        * Fixed IPC_SAP.h so that the constructor is protected (prevents
+          accidental definition of an instance of this class).
+
+Thu Aug 11 08:31:33 1994  Douglas C. Schmidt  (schmidt at valentine.ics.uci.edu)
+
+        * Fixed Reactor::schedule_timer() so that it will unblock the
+          Reactor if it is currently blocked.  This is necessary so that
+          the Reactor will recompute the amount of time that it needs to
+          wait before dispatching timer-based events.  Thanks to Todd Hoff
+          for noticing this...
+
+        * Fixed a stupid bug in the handle_input() method of
+          Client_Listener in both the Reactor and Service_Configurator
+          version of the Server Logging Daemon.  This routine was not
+          explicitly returning 0 when it worked..., which might cause the
+          Reactor to deregister the listener handler!
+
+        * Added casts to the ::select() call in the Reactor to ensure that
+          the FD_Set * -> fd_set * conversion operators are properly
+          involved.  Thanks to Todd Hoff for this fix (thm@ictv.com).
+          Todd noticed that the DCE pthreads implementation on AIX was
+          confusing the compiler...
+
+Mon Aug  8 18:11:03 1994  Douglas C. Schmidt  (schmidt at tango.ics.uci.edu)
+
+        * Added a new constructor for the FD_Set class that will convert
+          an fd_set into an FD_Set.
+          
+        * Removed the default value for the Service_Repository constructor
+          since this was ambiguous with the default constructor.
+
+Tue Aug  2 18:25:28 1994  Douglas C. Schmidt  (schmidt at tango.ics.uci.edu)
+
+        * Fixed a bunch of minor "warning-causing" nits that were caused
+          by #endif __INLINE__ in certain header files...
+
+        * Added a new set of interfaces to the Reactor to retrieve a
+          registered handler.  These interfaces are also useful for
+          checking whether a handler is registered at a particular fd.
+
+Sun Jul 10 17:43:19 1994  Douglas C. Schmidt  (schmidt at tango.ics.uci.edu)
+
+        * Improved the implementation of the Profile_Timer and
+          High_Res_Timer classes.  In particular, the High_Res_Timer class
+          now works quite nicely using SunC++ 4.0.
+
+Mon Jul  4 12:49:14 1994  Douglas C. Schmidt  (schmidt at tango.ics.uci.edu)
+
+        * Changed the order of the base class inheritance list for the
+          Service_Object class as a workaround for a bug in SunC++ 4.0's
+          handling of pointers to member functions (ugh).
+
+Sun Jul  3 18:07:16 1994  Douglas C. Schmidt  (schmidt at tango.ics.uci.edu)
+
+        * Added a bunch of changes (courtesy of
+          george@truffula.fp.trw.com).  These changes fix minor
+          portability problems with the new SunC++ 4.0 compiler.
+
+Fri Jun 24 08:59:02 1994  Douglas C. Schmidt  (schmidt at tango.ics.uci.edu)
+
+        * Removed operator() from all the IPC_SAP listener classes.
+          Defining this operator was causing more trouble than it is worth
+          since C++ doesn't allow operator() to have default arguments
+          (ugh).  The "right" thing to do is to simply use the accept()
+          method in those classes instead of operator().
+
+Wed Jun 22 16:54:05 1994  Douglas C. Schmidt  (schmidt at tango.ics.uci.edu)
+
+        * Fixed some problems with TLI_Listener that involved lax scoping
+          of nested classes with cfront 3.x-based C++ compilers.
+
+Tue Jun 14 11:56:56 1994  Douglas C. Schmidt  (schmidt at tango.ics.uci.edu)
+
+        * Added a bunch of changes to get portions of ACE up and running
+          on SCO UNIX, on HP-UX, and on OSF/1.
+
+Tue Jun  7 14:32:50 1994  Douglas C. Schmidt  (schmidt at tango.ics.uci.edu)
+
+        * Added support for FLEX's <<EOF>> symbol to properly cleanup when
+          a configuration file has been parsed by the Service
+          Configurator's lexer/parser.
+          
+Sun May 22 10:37:14 1994  Douglas C. Schmidt  (schmidt at valentine.ics.uci.edu)
+
+        * Modified the semantics of explicit dynamic linking on SunOS 4.x.
+          Now, if there is no _init or _fini function defined in a shared
+          library, it isn't an error (we simply don't call the function!).
+
+Mon May  9 07:58:35 1994  Douglas C. Schmidt  (schmidt at tango.ics.uci.edu)
+
+        * Included more fixes for GNU G++ courtesy of Aniruddha Gokhale
+          <gokhale@cs.wustl.edu>.
+
+Thu May  5 16:47:25 1994  Douglas C. Schmidt  (schmidt at tango.ics.uci.edu)
+
+        * Reimplemented the ./apps/Logger/Reactor_Logger to provide an
+          illustration of how the Reactor works.
+
+        * Added finishing touches to the new version of the Service
+          Configurator framework.  This framework now permits completely
+          automated configuration and reconfiguration of Service_Objects
+          and Streams.  The next step is to add some more complete
+          examples that illustrate how these features are used...
+
+Tue May  3 10:17:12 1994  Douglas C. Schmidt  (schmidt at tango.ics.uci.edu)
+
+        * Fixed a bug in the Service Repository that would cause an
+          extraneous dlclose on a shared library handle under some
+          circumstances...
+
+Mon May  2 11:07:52 1994  Douglas C. Schmidt  (schmidt at tango.ics.uci.edu)
+
+        * Modified the semantics of Service_Object_Type in the Service
+          Configurator framework so that it does not automagically
+          register the service object with the instance of the Reactor.
+          The original behavior involved too much "over-specification" of
+          the behavior of Service Objects.  Moreover, I can finally omit
+          the crazy semantics of DONT_REGISTER_SVC and REGISTER_SVC!
+
+        * Fixed some subtle bugs involved with pop'ing a remove'ing a
+          Module from a Stream.  Note that we need to use Module::link
+          rather than Module::set_next in order to ensure that all the
+          necessary pointers get rearranged....
+
+        * Fixed a couple of minor problems with deleting const objects in
+          the Service_Repository.i file.  These were caught by G++, but
+          not caught by SunC++!
+
+Sun May  1 11:43:52 1994  Douglas C. Schmidt  (schmidt at tango.ics.uci.edu)
+
+        * Fixed subtle bug in Server_Config::run_event_loop().  This bug
+          prevented reconfiguration from occurring under certain
+          circumstances.
+
+        * Added a new feature to the Service_Manager class in the Service
+          Configurator framework.  This new feature enables the Service
+          Configurator to be reconfigured remotely by clients.
+        
+        * Fixed a bug in Service_Manager that caused the Service
+          Configurator to crash if SIGPIPE occurred if a client closed
+          down ungracefully while retrieving information on active
+          services.
+
+        * Added a new argument to the Reactor::register_handler() method
+          that is used to register signal handling Event_Handlers.  This
+          new argument returns the current Event_Handler (if any) that is
+          registered for this signal.
+
+        * Fixed a potential bug in Service_Config::process_directives that
+          behaved improperly when there was no svc.conf file present in a
+          directory.
+
+Wed Apr 27 12:55:46 1994  Douglas C. Schmidt  (schmidt at mabillon.ics.uci.edu)
+
+        * Changed the name of Service_Directory to Service_Manager to
+          reflect its intended functionality
+
+Mon Apr 25 10:53:01 1994  Douglas C. Schmidt  (schmidt at tango.ics.uci.edu)
+
+        * Updated the Service Configurator framework to use the new signal
+          handling facilities provided by the Reactor.  This cleans up a
+          lot of the code in Service_Config.i and removes the need for
+          ugly non-reentrant static class variables.
+
+        * Released version 2.14
+
+Sat Apr 23 14:29:11 1994  Douglas C. Schmidt  (schmidt at tango.ics.uci.edu)
+
+        * Changed the representation of the select()-based Reactor to be
+          more similar with the poll()-based Reactor.  In particular,
+          there is only one array of Event_Handlers rather than three...
+
+Sun Mar 13 16:49:59 1994  Douglas C. Schmidt  (schmidt at tango.ics.uci.edu)
+
+        * Fixed a bug with the select-based version of the Reactor.  This
+          bug caused problems when dispatching the handle_output() member
+          function.
+
+        * Fixed a bug with the select-based version of the Reactor.  This
+          bug resulted in a failure to call the handle_close() member
+          function on the write_fds and except_fds.
+
+        * Changed the interface for Event_Handler::handle_close() so that
+          the second parameter is a Reactor_Mask.  This allows the
+          call-back routine to determine which side of a connection (i.e.,
+          read-side vs. write-side or both) to close down.  Be careful
+          since this change may break existing code that used the original
+          1 argument handle_close() member function.
+          
+        * Changed the location of the Reactor_Mask.  It was originally an
+          enum in Reactor.h.  It is now a typedef in Event_Handler.  This
+          change will break existing code but it easily spotted since the
+          compiler will give an error!
+
+Sat Mar 12 15:16:59 1994  Douglas C. Schmidt  (schmidt at tango.ics.uci.edu)
+
+        * Continued to modify the grammar of the svc.conf file language.
+          The latest version (illustrated in configuration files in the
+          ./tests/Reactor/server and
+          ./apps/Logger/Service_Configurator_Logger file) is both easier
+          to read and to parse automatically.
+
+Tue Mar  8 10:19:40 1994  Douglas C. Schmidt  (schmidt at tango.ics.uci.edu)
+
+        * Changed the behavior of the Get_Opt class so that it will
+          perform option processing starting from argv[0] rather than
+          argv[1] if the SKIP argument to the constructor is set to 0.
+          Note that the default value is 1, so the behavior is the same
+          for backwards compatibility.  Incidentally, this new change is
+          necessary to support the Service Configurator stuff...
+
+        * Changed the names of some of the Service_Record member functions
+          to conform to the new idiom for naming get/set-style of member
+          function accessors...
+
+Sun Mar  6 12:47:03 1994  Douglas C. Schmidt  (schmidt at tango.ics.uci.edu)
+
+        * Removed libGet_Opt.a and merged it in with libMisc.a
+
+Sat Mar  5 18:37:43 1994  Douglas C. Schmidt  (schmidt at tango.ics.uci.edu)
+
+        * Updated the Service_Config class to use a flex/yacc based parser
+          rather than an ad hoc parser and lexer.  This is useful since
+          the new syntax for configuring a complete Stream into a Service
+          Configurator-based application is more complicated...
+
+        * Made a small change to the syntax of a svc.conf file.  Now any
+          parameters that are passed to the Service_Object::init() member
+          function of a dynamically linked service must be enclosed inside
+          of double quotes.  In other words, service config entries such
+          as
+
+          dynamic ./dev_adapter.so:_alloc () Device_Adapter -p 3000
+
+          now become
+
+          dynamic ./dev_adapter.so:_alloc () Device_Adapter "-p 3000"
+
+          This change makes it easier to parse the input using flex/yacc.
+
+Sat Feb 12 18:53:14 1994  Douglas C. Schmidt  (schmidt@net4.ics.uci.edu)
+
+        * Modified the Reactor so that it now also demultiplexes signals,
+          as well as timer events and I/O events.  This required making a
+          few sections of the Reactor code signal-safe, as well as
+          thread-safe.
+
+        * Changing the Reactor to handle signals also required a slight
+          change to its interface.  For example, it is now mandatory to
+          give the Event_Handler::{READ_MASK,WRITE_MASK,EXCEPT_MASK} when
+          registering a handler...
+
+Sat Feb  5 12:10:53 1994  Douglas C. Schmidt  (schmidt@net4.ics.uci.edu)
+
+        * Changed the Condition and Monitor classes to use templates that
+          parameterize them with the appropriate type of Mutex (i.e.,
+          either Mutex or Mutex_Rec).  This greatly cleans up the code...
+          Made a number of changes in other files
+          (such as the Reactor) to account for the changes.
+
+        * Added a new class called Mutex_Rec which implements a recursive
+          Mutex abstraction on SunOS 5.x.  Recursive Mutexes may be
+          acquired multiple times from a single thread.  Basically, this
+          supports an efficient and clean way of handling nested locking
+          conditions.
+
+Thu Feb  3 12:37:34 1994  Douglas C. Schmidt  (schmidt@net4.ics.uci.edu)
+
+        * Fixed a bug in Service_Config.i that was causing SIGHUP-driven
+          reconfiguration not to work correctly.
+
+        * Added a set of new member functions to the Reactor class to
+          suspend() and resume() an event handler.  Also added suspend()
+          and resume() member functions to the Server_Object class to take
+          advantage of these new facilities automagically...
+
+Mon Jan 31 09:47:06 1994  Douglas C. Schmidt  (schmidt@net4.ics.uci.edu)
+
+        * Modified the no-args constructor for the Reactor to initialize
+          it to the DEFAULT_SIZE.  The prior behavior was *not* to
+          initialize it at all, which seems rather dumb in retrospect...
+
+        * Improved the Reactor's support for multi-threading by adding a
+          pipe() call that is used to force the Reactor to reconfigure
+          itself everytime a new handler is registered or removed.
+          Previously, any new changes wouldn't take place until the
+          Reactor was triggered by some external event.  This old behavior
+          was too non-deterministic...
+
+Sun Jan  2 12:35:39 1994  Douglas C. Schmidt  (schmidt@net4.ics.uci.edu)
+
+        * Modified the inheritance hierarchy for Service_Object so that it
+          derives from both Shared_Object and Event_Handler.
+          Shared_Object is a new abstract base class the provides an
+          interface for dynamic linking of objects.  When RTTI is widely
+          available for C++ the Service Configurator will be much more
+          functional since we can automatically figure out whether an
+          object is a Service_Object or just a Shared_Object and do the
+          right thing with it!
+

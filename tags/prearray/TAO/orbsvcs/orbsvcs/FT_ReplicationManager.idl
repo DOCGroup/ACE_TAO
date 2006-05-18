@@ -1,0 +1,75 @@
+/* -*- IDL -*- */
+//=============================================================================
+/**
+ *  @file    FT_ReplicationManager.idl
+ *
+ *  $Id$
+ *
+ *  This file is part of Fault Tolerant CORBA.
+ *  This was original part of the OMG FT.idl file
+ *
+ *  @author Curt Hibbs <hibbs_c@ociweb.com>
+ */
+//=============================================================================
+
+#ifndef _FT_REPLICATION_MANAGER_IDL_
+#define _FT_REPLICATION_MANAGER_IDL_
+
+#include "orbsvcs/PortableGroup.idl"
+#include "orbsvcs/FT_CORBA.idl"
+#include "orbsvcs/FT_Replica.idl"
+#include "orbsvcs/FT_Notifier.idl"
+
+#pragma prefix "omg.org"
+
+module FT
+{
+  exception InterfaceNotFound {};
+
+  // Specification of ReplicationManager Interface
+  interface ReplicationManager : ::PortableGroup::PropertyManager,
+                                 FTObjectGroupManager,
+                                 ::PortableGroup::GenericFactory
+  {
+
+    /**
+    * Registers the Fault Notifier with the Replication Manager.
+    * @param fault_notifier where to send the fault information.
+    */
+    void register_fault_notifier(in FaultNotifier fault_notifier);
+
+    /**
+    * Returns the reference of the Fault Notifier.
+    * @returns the reference of the Fault Notifier.
+    */
+    FaultNotifier get_fault_notifier()
+      raises (InterfaceNotFound);
+
+     /**
+     * Find a registry for factories that create fault tolerant replicas.
+     *
+     * TAO-specific operation
+     *
+     * Factories in this registry will be used by the
+     * ReplicationManager's implementation of
+     * GenericFactory::create_object when infrastructure controlled
+     * membership is specified.
+     *
+     * The factory registry may also be used by applications that
+     * control their own membership but don't wish to address the
+     * issue of finding factories for replicas.
+     *
+     * @param selection_criteria to be used to choose among alternate registries (future enhancement.)
+     * @returns an implementation of FactoryRegistry
+     */
+    ::PortableGroup::FactoryRegistry get_factory_registry (in ::PortableGroup::Criteria selection_criteria);
+
+    /**
+    * TAO-specific shutdown operation.
+    */
+    oneway void shutdown ();
+  };
+};
+
+
+#endif // _FT_REPLICATION_MANAGER_IDL_

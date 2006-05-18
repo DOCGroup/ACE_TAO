@@ -1,0 +1,24 @@
+// -*- MPC -*-
+// $Id$
+
+project(*Server): taoserver {
+  idlflags += -Gd
+
+  Source_Files {
+    Multiple_Impl.cpp
+    Collocation_Tester.cpp
+    server.cpp
+  }
+}
+
+project(*Client): taoexe, portableserver {
+  idlflags += -Gd
+  after += *Server
+
+  Source_Files {
+    Multiple_Impl.cpp
+    Collocation_Tester.cpp
+    client.cpp
+  }
+}
+
