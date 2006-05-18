@@ -31,6 +31,7 @@ Basic_Logging_Service_SOURCES = \
   Basic_Logging_Service.h
 
 Basic_Logging_Service_LDADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_DsLogAdmin_Serv.la \
   $(TAO_BUILDDIR)/tao/libTAO_Utils.la \
   $(TAO_BUILDDIR)/tao/libTAO_PI.la \
