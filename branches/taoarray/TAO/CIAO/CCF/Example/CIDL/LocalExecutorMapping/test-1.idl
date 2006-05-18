@@ -1,0 +1,23 @@
+// file      : CCF/Example/CIDL/LocalExecutorMapping/test-1.idl
+// author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
+// cvs-id    : $Id$
+
+#include <Components.idl>
+#include "test-0.idl"
+
+module M1
+{
+  interface Blah;
+  interface Fool {};
+
+  component C1
+  {
+    provides M::I i;
+    readonly attribute long l;
+  };
+
+  home H1 manages C1
+  {
+    attribute M::I i;
+  };
+};
