@@ -1,3 +1,13 @@
+Thu May 18 17:42:09 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * bin/diff-builds.pl:
+        
+          Contributing a little tool to find the difference in the failing
+          tests between two dates, on the same build. Or between two
+          builds, on a particular date. Thanks to Johnny Willemsen
+          <jwillemsen@remedy.nl> for mining and hosting the data used by
+          this script.
+
 Thu May 18 17:33:57 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * configure.ac:
