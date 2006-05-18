@@ -45,7 +45,6 @@ sub test($)
 my $status = 0;
 $status += test("Bug_1459");
 $status += test("Bunch");
-$status += test("Limits");
 $status += test("Separation");
 $status += test("Service_Dependency");
 $status += test("Shared");
