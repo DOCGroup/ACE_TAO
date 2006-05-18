@@ -6,6 +6,7 @@
 
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_unistd.h"
 #include "ace/Argv_Type_Converter.h"
 
 
@@ -55,13 +56,7 @@ int
 Server_Worker::test_main (int argc, ACE_TCHAR *argv[] ACE_ENV_ARG_DECL)
 {
   // Making sure there are no stale ior files to confuse a client
-  FILE *of= ACE_OS::fopen (ior_file_.c_str (), "w");
-  if (of == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) Cannot open output file for writing IOR: %s"),
-                       ior_file_.c_str ()),
-                      1);
-  ACE_OS::fclose (of);
+  ACE_OS::unlink (ior_file_.c_str ());
 
   ACE_Argv_Type_Converter cvt (argc, argv);
   CORBA::ORB_var orb = CORBA::ORB_init (cvt.get_argc (),
@@ -92,10 +87,21 @@ Server_Worker::test_main (int argc, ACE_TCHAR *argv[] ACE_ENV_ARG_DECL)
   ACE_NEW_RETURN (hello_impl,
                   Hello (orb.in ()),
                   1);
+
   PortableServer::ServantBase_var owner_transfer(hello_impl);
 
+  PortableServer::ObjectId_var id =
+    root_poa->activate_object (hello_impl ACE_ENV_ARG_PARAMETER);
+  ACE_TRY_CHECK;
+
+  CORBA::Object_var hello_obj =
+    root_poa->id_to_reference (id.in ()
+                               ACE_ENV_ARG_PARAMETER);
+  ACE_TRY_CHECK;
+
   Test::Hello_var hello =
-    hello_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+    Test::Hello::_narrow (hello_obj.in ()
+                          ACE_ENV_ARG_PARAMETER);
   ACE_TRY_CHECK;
 
   CORBA::String_var ior =
