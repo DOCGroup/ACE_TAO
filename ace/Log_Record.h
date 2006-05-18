@@ -199,8 +199,8 @@ class ACE_InputCDR;
 class ACE_OutputCDR;
 
 // iostream operators for ACE_Log_Record.
-int operator>> (ACE_InputCDR &cdr, ACE_Log_Record &log_record);
-int operator<< (ACE_OutputCDR &cdr, const ACE_Log_Record &log_record);
+ACE_Export int operator>> (ACE_InputCDR &cdr, ACE_Log_Record &log_record);
+ACE_Export int operator<< (ACE_OutputCDR &cdr, const ACE_Log_Record &log_record);
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
