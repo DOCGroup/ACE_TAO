@@ -92,7 +92,7 @@ int
 ACE_Task_Base::suspend (void)
 {
   ACE_TRACE ("ACE_Task_Base::suspend");
-  ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, this->lock_, -1));
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
   if (this->thr_count_ > 0)
     return this->thr_mgr_->suspend_task (this);
 
@@ -104,7 +104,7 @@ int
 ACE_Task_Base::resume (void)
 {
   ACE_TRACE ("ACE_Task_Base::resume");
-  ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, this->lock_, -1));
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
   if (this->thr_count_ > 0)
     return this->thr_mgr_->resume_task (this);
 
@@ -126,7 +126,7 @@ ACE_Task_Base::activate (long flags,
   ACE_TRACE ("ACE_Task_Base::activate");
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-  ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, this->lock_, -1);
+  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);
 
   // If the task passed in is zero, we will use <this>
   if (task == 0)
@@ -216,13 +216,9 @@ ACE_Task_Base::cleanup (void *object, void *)
 {
   ACE_Task_Base *t = (ACE_Task_Base *) object;
 
-  // The thread count decrement and close must be done atomically
-  // so that thr_count checks from within close are correct.
-  ACE_MT (ACE_GUARD (ACE_Recursive_Thread_Mutex, ace_mon, t->lock_));
-
   // The thread count must be decremented first in case the <close>
   // hook does something crazy like "delete this".
-  --(t->thr_count_);
+  t->thr_count_dec ();
 
   // @@ Is it possible to pass in the exit status somehow?
   t->close ();
