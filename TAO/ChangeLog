@@ -1,3 +1,16 @@
+Thu May 18 13:52:58 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tests/ORB_Local_Config/Two_DLL_ORB/server.cpp:
+
+          Replaced servant activation using _this() with one explicitly
+          referencing the desired POA, using activate_object(). As usual,
+          using _this() outside the scope of an upcall yields surprising
+          results, because it is using the first ORB in the orb table, no
+          matter which one that is. Within a single process, it is
+          possible for the server's servant to get activated in the client
+          ORB's POA and then the client will fail to communicate with it,
+          because the client POA is not active.
+
 Wed May 17 23:07:10 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/OctetSeqC.h:
