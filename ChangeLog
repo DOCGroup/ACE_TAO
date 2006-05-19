@@ -1,3 +1,14 @@
+Fri May 19 20:08:29 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-sunos5.6.h:
+        * ace/os_include/sys/os_mman.h: Moved the declaration of ::madvise()
+          from config-sunos5.6.h to os_mman.h, to be compiled only when
+          ACE_LACKS_MADVISE_PROTOTYPE is defined. Set
+          ACE_LACKS_MADVISE_PROTOTYPE in config-sunos5.6.h where it used to
+          declare madvise(). This allows autoconf-detected
+          ACE_LACKS_MADVISE_PROTOTYPE platforms (such as Solaris 9) to
+          compile correctly.
+
 Fri May 19 17:53:51 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * ace/Service_Gestalt.cpp:

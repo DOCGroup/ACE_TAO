@@ -25,8 +25,7 @@
 # endif /* POSIX_C_SOURCE >= 199506L */
 # define ACE_HAS_SIGWAIT
 // Hack 'cuz _POSIX_C_SOURCE > 2 and -DEXTENSIONS hides this.
-# include <sys/types.h>
-  extern "C" int madvise(caddr_t, size_t, int);
+# define ACE_LACKS_MADVISE_PROTOTYPE
 #endif /* _POSIX_C_SOURCE > 2  ||  __EXTENSIONS__ */
 
 // Support for the SunC++ 5.2 compiler.
