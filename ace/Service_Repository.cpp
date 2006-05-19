@@ -310,30 +310,30 @@ ACE_Service_Repository::insert (const ACE_Service_Type *sr)
     // Replacing an existing entry
     if (i < this->current_size_)
       {
-  return_value = 0;
-  // Check for self-assignment...
-  if (sr != this->service_vector_[i])
-    {
-      s = const_cast<ACE_Service_Type *> (this->service_vector_[i]);
-      this->service_vector_[i] = sr;
-    }
+        return_value = 0;
+        // Check for self-assignment...
+        if (sr != this->service_vector_[i])
+          {
+            s = const_cast<ACE_Service_Type *> (this->service_vector_[i]);
+            this->service_vector_[i] = sr;
+          }
       }
     // Adding a new entry.
     else if (i < this->total_size_)
       {
-  this->service_vector_[i] = sr;
-  this->current_size_++;
-  return_value = 0;
+        this->service_vector_[i] = sr;
+        this->current_size_++;
+        return_value = 0;
       }
 
     if (ACE::debug ())
       {
-  ACE_DEBUG ((LM_DEBUG,
-        "(%P|%t) SR::insert, repo=%@ [%d] (size=%d): ",
-        this,
-        i,
-        this->total_size_));
-  sr->dump();
+        ACE_DEBUG ((LM_DEBUG,
+                    "(%P|%t) SR::insert, repo=%@ [%d] (size=%d): ",
+                    this,
+                    i,
+                    this->total_size_));
+        sr->dump();
       }
   }
 
@@ -341,12 +341,12 @@ ACE_Service_Repository::insert (const ACE_Service_Type *sr)
   if (s != 0)
     {
       if (ACE::debug () > 1)
-  {
-    ACE_DEBUG ((LM_DEBUG,
-          "(%P|%t) SR::insert, repo=%@ - destroying : ",
-          this));
-    s->dump();
-  }
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "(%P|%t) SR::insert, repo=%@ - destroying : ",
+                      this));
+          s->dump();
+        }
       delete s;
     }
 

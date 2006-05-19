@@ -181,7 +181,9 @@ ACE_Service_Gestalt::~ACE_Service_Gestalt (void)
   delete this->static_svcs_;
 }
 
-ACE_Service_Gestalt::ACE_Service_Gestalt (size_t size, bool svc_repo_is_owned, bool no_static_svcs)
+ACE_Service_Gestalt::ACE_Service_Gestalt (size_t size,
+                                          bool svc_repo_is_owned,
+                                          bool no_static_svcs)
   : svc_repo_is_owned_ (svc_repo_is_owned)
   , is_opened_ (0)
   , logger_key_ (ACE_DEFAULT_LOGGER_KEY)
@@ -351,9 +353,11 @@ ACE_Service_Type_Factory::make_service_type (ACE_Service_Gestalt *cfg) const
     }
   else
     {
+#ifndef ACE_NLOGGING
       ACE_ERROR ((LM_ERROR,
                   ACE_LIB_TEXT ("(%P|%t) Unable to find service \'%s\'\n"),
                   this->name ()));
+#endif
       ++yyerrno;
       return 0;
     }
@@ -375,6 +379,7 @@ ACE_Service_Gestalt::initialize (const ACE_TCHAR *svc_name,
   ACE_TRACE ("ACE_Service_Gestalt_Base::initialize (repo)");
   ACE_ARGV args (parameters);
 
+#ifndef ACE_NLOGGING
   if (ACE::debug () > 1)
     {
       ACE_DEBUG ((LM_DEBUG,
@@ -384,6 +389,7 @@ ACE_Service_Gestalt::initialize (const ACE_TCHAR *svc_name,
                   this->repo_,
                   svc_name));
     }
+#endif
 
   const ACE_Service_Type *srp = 0;
   if (this->repo_->find (svc_name, &srp) == -1)
@@ -427,12 +433,14 @@ ACE_Service_Gestalt::initialize (const ACE_Service_Type_Factory *stf,
 {
   ACE_TRACE ("ACE_Service_Gestalt::initialize");
 
+#ifndef ACE_NLOGGING
   if (ACE::debug () > 1)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_LIB_TEXT ("(%P|%t) SG::initialize - repo=%@, looking up dynamic ")
                 ACE_LIB_TEXT ("service \'%s\' to initialize\n"),
                 this->repo_,
                 stf->name ()));
+#endif
 
   ACE_Service_Type *srp = 0;
   int retv = this->repo_->find (stf->name (),
@@ -441,11 +449,17 @@ ACE_Service_Gestalt::initialize (const ACE_Service_Type_Factory *stf,
   // If there is an active service already, it must first be removed,
   // before it could be re-installed.
   if (retv >= 0)
-    ACE_ERROR_RETURN ((LM_WARNING,
-                       ACE_LIB_TEXT ("(%P|%t) \'%s\' already installed.")
-                       ACE_LIB_TEXT (" Must be removes before re-installing\n"),
-                       stf->name ()),
-                      0);
+    {
+#ifndef ACE_NLOGGING
+      if (ACE::debug ())
+        ACE_ERROR_RETURN ((LM_WARNING,
+                           ACE_LIB_TEXT ("(%P|%t) \'%s\' already installed.")
+                           ACE_LIB_TEXT (" Must be removes before re-installing\n"),
+                           stf->name ()),
+                          0);
+#endif
+        return 0;
+    }
 
   // There is an inactive service by that name, so it may have been
   // either inactivated, or just a forward declaration for a service,
@@ -491,10 +505,15 @@ ACE_Service_Gestalt::initialize (const ACE_Service_Type_Factory *stf,
     }
 
   // Something went wrong ...
-  ACE_ERROR_RETURN ((LM_ERROR,
-                     ACE_LIB_TEXT ("(%P|%t) Error initializing \'%s\'\n"),
-                     stf->name()),
-                    -1);
+#ifndef ACE_NLOGGING
+  if (ACE::debug ())
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_LIB_TEXT ("(%P|%t) Error initializing %s: %m\n"),
+                       stf->name()),
+                      -1);
+#endif
+
+  return -1;
 }
 
 
@@ -547,10 +566,15 @@ ACE_Service_Gestalt::initialize_i (const ACE_Service_Type *sr,
   if (sr->type ()->init (args.argc (),
                          args.argv ()) == -1)
     {
-      ACE_ERROR ((LM_ERROR,
-                  ACE_LIB_TEXT ("(%P|%t) SG - dynamic initialization ")
-                  ACE_LIB_TEXT ("failed for \'%s\'\n"),
-                  sr->name ()));
+#ifndef ACE_NLOGGING
+      if (ACE::debug ())
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_LIB_TEXT ("(%P|%t) SG - initialize_i ")
+                           ACE_LIB_TEXT ("failed for %s: %m\n"),
+                           sr->name ()),
+                          -1);
+#endif
+        return -1;
 
       ACE_Service_Type *ps = 0;
       this->repo_->remove (sr->name (), &ps);
@@ -560,11 +584,18 @@ ACE_Service_Gestalt::initialize_i (const ACE_Service_Type *sr,
     }
 
   if (this->repo_->insert (sr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("(%P|%t) SG - inserting service")
-                       ACE_LIB_TEXT (" description failed, %p\n"),
-                       sr->name ()),
-                      -1);
+    {
+#ifndef ACE_NLOGGING
+      if (ACE::debug ())
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_LIB_TEXT ("(%P|%t) SG - repository insert ")
+                           ACE_LIB_TEXT ("failed for %s: %m\n"),
+                           sr->name ()),
+                          -1);
+#endif
+        return -1;
+    }
+
   return 0;
 }
 
@@ -606,6 +637,7 @@ int
 ACE_Service_Gestalt::process_directive (const ACE_Static_Svc_Descriptor &ssd,
                                         int force_replace)
 {
+#ifndef ACE_NLOGGING
   if (ACE::debug () > 2)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_LIB_TEXT ("(%P|%t) SG::process_directive, ")
@@ -613,6 +645,7 @@ ACE_Service_Gestalt::process_directive (const ACE_Static_Svc_Descriptor &ssd,
                 this->repo_,
                 force_replace,
                 ssd.name_));
+#endif
 
   if (!force_replace)
     {
@@ -673,6 +706,7 @@ ACE_Service_Gestalt::process_directives_i (ACE_Svc_Conf_Param *param)
   // will be performed in the correct order, i.e. prior to finalizing the DLL
   ACE_Service_Config_Guard guard (this);
 
+#ifndef ACE_NLOGGING
   if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
                 ACE_LIB_TEXT ("(%P|%t) SG::process_directives_i, ")
@@ -681,14 +715,16 @@ ACE_Service_Gestalt::process_directives_i (ACE_Svc_Conf_Param *param)
                 (param->type == ACE_Svc_Conf_Param::SVC_CONF_FILE)
     ? ACE_TEXT ("<from file>")
     : param->source.directive));
-
+#endif
 
   ::ace_yyparse (param);
 
+  // This is a hack, better errors should be provided...
   if (param->yyerrno > 0)
     {
-      // This is a hack, better errors should be provided...
-      errno = EINVAL;
+      if (ACE_OS::last_error () == 0)
+        ACE_OS::last_error (EINVAL);
+
       return param->yyerrno;
     }
   else
