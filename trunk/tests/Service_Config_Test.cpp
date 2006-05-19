@@ -17,6 +17,7 @@
 
 #include "test_config.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_errno.h"
 #include "ace/Log_Msg.h"
 #include "ace/Object_Manager.h"
 #include "ace/Service_Config.h"
@@ -174,34 +175,35 @@ testLoadingServiceConfFile (int argc, ACE_TCHAR *argv[])
 void
 testLimits (int , ACE_TCHAR *[])
 {
-  static const ACE_TCHAR *svc_desc =
-    ACE_TEXT ("dynamic Test_Object_1 Service_Object * ")
-    ACE_TEXT ("  Service_Config_DLL:_make_Service_Config_DLL() \"2 3\"");
+  static const ACE_TCHAR *svc_desc1 =
+    ACE_TEXT ("dynamic Test_Object_1_More Service_Object * ")
+    ACE_TEXT ("  Service_Config_DLL:_make_Service_Config_DLL() \"Test_Object_1_More\"");
 
-  ACE_Service_Gestalt one (1); // Room for just one ...
+  static const ACE_TCHAR *svc_desc2 =
+    ACE_TEXT ("dynamic Test_Object_2_More Service_Object * ")
+    ACE_TEXT ("  Service_Config_DLL:_make_Service_Config_DLL() \"Test_Object_2_More\"");
 
-  if (0 != one.process_directive (svc_desc))
+  // Ensure enough room for just one ...
+  ACE_Service_Gestalt one(1, true);
+  if (0 != one.process_directive (svc_desc1))
     {
       ++error;
-      ACE_DEBUG ((LM_ERROR, ACE_TEXT("Unable to register the first service\n")));
+      ACE_DEBUG ((LM_ERROR, ACE_TEXT("Unable to register the first service: %m\n")));
     }
 
-  if (-1 != one.process_directive (svc_desc))
+  if (0 == one.process_directive (svc_desc2))
     {
       ++error;
-      ACE_DEBUG ((LM_ERROR, ACE_TEXT("Unexped to be able to add more\n")));
+      ACE_DEBUG ((LM_ERROR, ACE_TEXT("Being able to add more was unexpected\n")));
     }
-
-  if (ENOSPC != errno)
+  else if (ENOSPC != ACE_OS::last_error ())
     {
       ++error;
       ACE_DEBUG ((LM_ERROR,
-                  ACE_TEXT("Expected error code %d (ENOSPC), but got %d\n"),
+                  ACE_TEXT("Expected error code %d (ENOSPC), but got %d (%m)\n"),
                   ENOSPC,
-                  errno));
+                  ACE_OS::last_error ()));
     }
-
-  ACE_DEBUG ((LM_DEBUG, "Attempt to overfill the gestalt returned: %m\n"));
 }
 
 
@@ -228,9 +230,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_START_TEST (ACE_TEXT ("Service_Config_Test"));
 
   testOrderlyInstantialtion (argc, argv);
-
   testLoadingServiceConfFile (argc, argv);
-
   testLimits (argc, argv);
 
   ACE_END_TEST;

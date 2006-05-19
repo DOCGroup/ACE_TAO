@@ -65,7 +65,7 @@ Service_Config_DLL::init (int argc, ACE_TCHAR *argv[])
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%P|%t) Service_Config_DLL::init() - ")
                     ACE_TEXT ("process_directive() failed for:\n")
-                    ACE_TEXT ("\"%s\"\n"),
+                    ACE_TEXT ("\"%s\": %m\n"),
                     this->directive_[0]));
 
 #if defined (ACE_HAS_THREADS)
@@ -81,7 +81,8 @@ Service_Config_DLL::init (int argc, ACE_TCHAR *argv[])
   else if (argc == 1)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("Service_Config_DLL::init () - %s\n"),
+                  ACE_TEXT ("Service_Config_DLL::init () %@ - %s\n"),
+                  this,
                   argv[0]));
     }
   else
@@ -187,6 +188,27 @@ ACE_STATIC_SVC_DEFINE (Final_Object,
                        ACE_Service_Type::DELETE_THIS
                        | ACE_Service_Type::DELETE_OBJ,
                        0)
+
+// -----------------------------------------------------------------
+
+ACE_STATIC_SVC_DEFINE (Test_Object_1_More,
+                       ACE_TEXT ("Test_Object_1_More"),
+                       ACE_SVC_OBJ_T,
+                       &ACE_SVC_NAME (Service_Config_DLL),
+                       ACE_Service_Type::DELETE_THIS
+                       | ACE_Service_Type::DELETE_OBJ,
+                       0)
+
+// -----------------------------------------------------------------
+
+ACE_STATIC_SVC_DEFINE (Test_Object_2_More,
+                       ACE_TEXT ("Test_Object_2_More"),
+                       ACE_SVC_OBJ_T,
+                       &ACE_SVC_NAME (Service_Config_DLL),
+                       ACE_Service_Type::DELETE_THIS
+                       | ACE_Service_Type::DELETE_OBJ,
+                       0)
+
 
 // -----------------------------------------------------------------
 
