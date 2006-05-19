@@ -65,15 +65,15 @@ ACE_Service_Type_Forward_Declaration_Guard::ACE_Service_Type_Forward_Declaration
 {
   ACE_ASSERT (this->repo_ != 0); // No repository specified?
   ACE_ASSERT (this->name_ != 0); // No name?
-  
+
   ACE_NEW_NORETURN (this->dummy_, // Allocate the forward declaration ...
                     ACE_Service_Type (this->name_,  // ... use the same name
                                       0,            // ... inactive
                                       this->dummy_dll_, // ... bogus ACE_DLL
                                       0));              // ... no type_impl
-  
+
   ACE_ASSERT (this->dummy_ != 0); // No memory?
-  
+
   if(ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
                 ACE_LIB_TEXT ("(%P|%t) FWDCL::start, repo=%@, \'%s\' ")
@@ -81,7 +81,7 @@ ACE_Service_Type_Forward_Declaration_Guard::ACE_Service_Type_Forward_Declaration
                 this->repo_,
                 this->name_,
                 this->dummy_));
-  
+
   // Note that the dummy_'s memory can disaper between invoking
   // the ctor and dtor, if the expected "real" dynamic service is
   // inserted in the repository.
@@ -106,7 +106,7 @@ ACE_Service_Type_Forward_Declaration_Guard::~ACE_Service_Type_Forward_Declaratio
                     ret, this->name_));
       return;
     }
-  
+
   if (tmp != 0 && tmp->type () != 0)
     {
       // Something has registered a proper (non-forward-decl) service with
@@ -116,7 +116,7 @@ ACE_Service_Type_Forward_Declaration_Guard::~ACE_Service_Type_Forward_Declaratio
       // actual implementation, so nothing is left to do. We are hereby giving
       // up any ownership claims.
       this->dummy_ = 0;
-      
+
       if(ACE::debug ())
         {
           ACE_DEBUG ((LM_DEBUG,
@@ -126,7 +126,7 @@ ACE_Service_Type_Forward_Declaration_Guard::~ACE_Service_Type_Forward_Declaratio
                       this->name_));
           tmp->dump ();
         }
-      
+
     }
   else
     {
@@ -139,7 +139,7 @@ ACE_Service_Type_Forward_Declaration_Guard::~ACE_Service_Type_Forward_Declaratio
                       this->name_));
           this->dummy_->dump ();
         }
-      
+
       // The (dummy) forward declaration is still there and is
       // the same, which means that no actual declaration was
       // provided inside the guarded scope. Therefore, the forward
@@ -162,7 +162,7 @@ ACE_Service_Type_Forward_Declaration_Guard::~ACE_Service_Type_Forward_Declaratio
             }
         }
     }
-  
+
   // Clean up
   this->dummy_ = 0;
   this->repo_ = 0;
@@ -178,6 +178,7 @@ ACE_Service_Gestalt::~ACE_Service_Gestalt (void)
 
   if (this->svc_repo_is_owned_)
     delete this->repo_;
+  delete this->static_svcs_;
 }
 
 ACE_Service_Gestalt::ACE_Service_Gestalt (size_t size, bool svc_repo_is_owned, bool no_static_svcs)
@@ -235,10 +236,10 @@ ACE_Service_Gestalt::find_static_svc_descriptor (const ACE_TCHAR* name,
                                                  ACE_Static_Svc_Descriptor **ssd) const
 {
   ACE_TRACE ("ACE_Service_Gestalt::find_static_svc_descriptor");
-  
+
   if (this->static_svcs_ == 0)
     return -1;
-  
+
   ACE_Static_Svc_Descriptor **ssdp = 0;
   for (ACE_STATIC_SVCS_ITERATOR iter ( *this->static_svcs_);
        iter.next (ssdp) != 0;
@@ -248,12 +249,12 @@ ACE_Service_Gestalt::find_static_svc_descriptor (const ACE_TCHAR* name,
         {
           if (ssd != 0)
             *ssd = *ssdp;
-          
+
           return 0;
         }
     }
   return -1;
-  
+
 } /* find_static_svc_descriptor () */
 
 
