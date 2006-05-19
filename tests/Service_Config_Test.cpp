@@ -174,11 +174,12 @@ testLoadingServiceConfFile (int argc, ACE_TCHAR *argv[])
 void
 testLimits (int , ACE_TCHAR *[])
 {
-  static ACE_TCHAR *svc_desc =
+  static const ACE_TCHAR *svc_desc =
     ACE_TEXT ("dynamic Test_Object_1 Service_Object * ")
     ACE_TEXT ("  Service_Config_DLL:_make_Service_Config_DLL() \"2 3\"");
 
-  ACE_Service_Gestalt one(1); // Room for just one ...
+  ACE_Service_Gestalt one (1); // Room for just one ...
+
   if (0 != one.process_directive (svc_desc))
     {
       ++error;
