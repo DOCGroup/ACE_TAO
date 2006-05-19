@@ -1,3 +1,25 @@
+Fri May 19 17:53:51 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/Service_Gestalt.cpp:
+
+          Fixed a defect in process_directive () which was replacing the
+          ENOSPC errno with EINVAL. Added #ifndef ACE_NLOGGING / #endif
+          around logging statements.
+
+        * ace/Service_Repository.cpp:
+
+          Minor reformating.
+
+        * tests/Service_Config_DLL.cpp:
+
+          Added two independent service objects, to be used in the
+          testLimits test. See testLimits().
+
+        * tests/Service_Config_Test.cpp:
+
+          Reworked the testLimits() to avoid printing the word "error",
+          which confuses the test driver into thinking the test failed.
+
 Fri May 19 17:51:33 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ace/Service_Gestalt.cpp:
