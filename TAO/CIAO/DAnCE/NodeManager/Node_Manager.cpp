@@ -16,7 +16,7 @@ const char *ior_file_name_ = "nodedaemon.ior";
 char *default_svcconf_ = 0;
 char *svcconf_config_ = 0;
 char *nodeapp_location_ = 0;
-char *nodeapp_options_ = 0;
+const char *nodeapp_options_ = 0;
 const char *pid_file_name_ = 0;
 int write_to_ior_ = 0;
 int register_with_ns_ = 0;
@@ -30,67 +30,70 @@ parse_args (int argc, char *argv[])
   int c;
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'z':
-        nodeapp_options_ = "-ORBDebugLevel 10";
-        break;
+    {
+      switch (c)
+        {
+          case 'z':
+            nodeapp_options_ = "-ORBDebugLevel 10";
+            break;
 
-      case 'o':  // get the file name to write to
-        ior_file_name_ = get_opts.opt_arg ();
-        write_to_ior_ = 1;
-        break;
+          case 'o':  // Get the file name to write to.
+            ior_file_name_ = get_opts.opt_arg ();
+            write_to_ior_ = 1;
+            break;
 
-      case 'c':  // get the default svc.conf filename
-        default_svcconf_ = get_opts.opt_arg ();
-        break;
+          case 'c':  // Get the default svc.conf filename.
+            default_svcconf_ = get_opts.opt_arg ();
+            break;
 
-      case 'm':  // get the svc.conf map configuration filename
-        svcconf_config_ = get_opts.opt_arg ();
-        break;
+          case 'm':  // Get the svc.conf map configuration filename.
+            svcconf_config_ = get_opts.opt_arg ();
+            break;
 
-      case 's': //get the location to spawn the NodeApplication
-        nodeapp_location_ = get_opts.opt_arg ();
-        nodeapp_loc_ = 1;
-        break;
+          case 's': // Get the location to spawn the NodeApplication.
+            nodeapp_location_ = get_opts.opt_arg ();
+            nodeapp_loc_ = 1;
+            break;
 
-      case 'a': // Nodeapplication arguments
-        nodeapp_options_ = get_opts.opt_arg ();
-        break;
+          case 'a': // Nodeapplication arguments.
+            nodeapp_options_ = get_opts.opt_arg ();
+            break;
 
-      case 'd': //get the spawn delay argument
-        spawn_delay = ACE_OS::atoi (get_opts.opt_arg ());
-        break;
+          case 'd': // Get the spawn delay argument.
+            spawn_delay = ACE_OS::atoi (get_opts.opt_arg ());
+            break;
 
-      case 'n':
-        register_with_ns_ = 1;
-        break;
+          case 'n':
+            register_with_ns_ = 1;
+            break;
 
-      case 'p':
-        pid_file_name_ = get_opts.opt_arg ();
-        break;
+          case 'p':
+            pid_file_name_ = get_opts.opt_arg ();
+            break;
 
-      case '?':  // display help for use of the server.
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s\n"
-                           "-o <ior_output_file>\n"
-                           "-c <svc.conf file>\n"
-                           "-n <use naming service>\n"
-                           "-s <NodeApplication executable path>\n"
-                           "-a <arguments to NodeApplication>\n"
-                           "-d <spawn delay for nodeapplication>\n"
-                           "-p <pid file>\n"
-                           "\n",
-                           argv [0]),
-                          -1);
-      }
+          case '?':  // Display help for use of the server.
+          default:
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "usage:  %s\n"
+                               "-o <ior_output_file>\n"
+                               "-c <svc.conf file>\n"
+                               "-n <use naming service>\n"
+                               "-s <NodeApplication executable path>\n"
+                               "-a <arguments to NodeApplication>\n"
+                               "-d <spawn delay for nodeapplication>\n"
+                               "-p <pid file>\n"
+                               "\n",
+                               argv [0]),
+                              -1);
+             break;
+        }
+    }
 
   return 0;
 }
 
 int
-write_IOR(const char* ior)
+write_IOR (const char* ior)
 {
   FILE* ior_output_file_ =
     ACE_OS::fopen (ior_file_name_, "w");
@@ -110,7 +113,9 @@ void
 write_pid (void)
 {
   if (pid_file_name_ == 0)
-    return;
+    {
+      return;
+    }
 
   FILE* pid_file = ACE_OS::fopen (pid_file_name_, "w");
 
@@ -205,7 +210,9 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (adapter.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR, "Nil IORTable\n"), -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR, "Nil IORTable\n"), -1);
+        }
 
       // Create and install the CIAO NodeManager servant
       CIAO::NodeManager_Impl *node_manager_servant = 0;
@@ -237,10 +244,13 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       if (write_to_ior_)
-        write_IOR (str.in ());
+        {
+          write_IOR (str.in ());
+        }
       else if (register_with_ns_)
         {
           char name [MAXHOSTNAMELEN + 1];
+
           if (ACE_OS::hostname (name, 100) == -1)
             {
               ACE_ERROR ((LM_ERROR,

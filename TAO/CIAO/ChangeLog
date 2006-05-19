@@ -1,3 +1,12 @@
+Fri May 19 16:49:32 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * DAnCE/NodeApplicationManager/Containers_Info_Map.cpp:
+        * DAnCE/NodeApplicationManager/URL_Parser.cpp:
+        * DAnCE/NodeManager/Node_Manager.cpp:
+
+          Minor changes to eliminate scoreboard warnings, and to bring
+          code in line with the ACE style guidelines.
+
 Thu May 18 20:28:00 UTC 2006 Roopa Pundaleeka <roopa@txcorp.com>
 
         * examples/Display/GPS/GPS_Impl.ccd:
