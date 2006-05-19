@@ -275,8 +275,8 @@ namespace CIAO
         Deployment::ArtifactDeploymentDescription arti =
           this->plan_.artifact[ impl.artifactRef[j] ];
 
-	// @Stoyan:  Is there any particular reason the repository
-	// manager should only work on Windows? -Will
+  // @Stoyan:  Is there any particular reason the repository
+  // manager should only work on Windows? -Will
 #if defined (ACE_WIN32) || defined (ACE_WIN64)
         for (size_t loc_num = 0;
              loc_num < arti.location.length ();
@@ -294,10 +294,10 @@ namespace CIAO
                          "Containers_Info_Map::insert_instance_into_container -"
                          "ERROR: Unable to resolve HTTP ref to location[%d] of %s\n",
                          loc_num, arti.name.in ()));
-		    
-		    // @Stoyan:  This is an inappropriate response to
-		    // this type of failure.  Please throw an
-		    // exception, Deployment::UnknownImplId would be appropriate.
+
+        // @Stoyan:  This is an inappropriate response to
+        // this type of failure.  Please throw an
+        // exception, Deployment::UnknownImplId would be appropriate.
                     arti.location[loc_num] = "HTTP_failure";
                   }
                 else
@@ -478,29 +478,34 @@ is_shared_component (ACE_CString & name)
   {
 
     ACE_DEBUG ((LM_INFO,
-               "Attempting to download %s\n",
-               location));
+                "Attempting to download %s\n",
+                location));
 
-    //figure out the file name
+    // Figure out the file name.
     char* name = const_cast<char*> (location);
-    char* p = NULL;
-    while (1)
-    {
-      if (p = ACE_OS::strstr (name, "/"))
-      {
-        name = ++p;
-        continue;
-      }
-      else if (p = ACE_OS::strstr (name, "\\"))
-      {
-        name = ++p;
-        continue;
-      }
-      else
-        break;
-    }
+    char* p = 0;
 
-    //get the file
+    while (true)
+      {
+        p = ACE_OS::strstr (name, "/");
+
+        if (0 == p)
+          {
+            p = ACE_OS::strstr (name, "\\");
+          }
+
+        if (0 == p)
+          {
+            break;
+          }
+        else
+          {
+            name = ++p;
+            continue;
+          }
+      }
+
+    // Get the file.
     ACE_Message_Block* mb = 0;
     ACE_NEW_RETURN (mb, ACE_Message_Block (0,0), false);
 
