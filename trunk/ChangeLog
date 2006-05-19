@@ -1,7 +1,14 @@
+Fri May 19 17:09:51 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/Service_Config_Test.cpp:
+
+          Fixed a warning due to assignment of a string literal to a
+          non-const variable.
+
 Thu May 18 17:42:09 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * bin/diff-builds.pl:
-        
+
           Contributing a little tool to find the difference in the failing
           tests between two dates, on the same build. Or between two
           builds, on a particular date. Thanks to Johnny Willemsen
@@ -60,8 +67,8 @@ Wed May 17 20:31:11 UTC 2006 Roopa Pundaleeka <roopa@txcorp.com>
 Wed May 17 14:07:33 2006  Douglas C. Schmidt  <schmidt@cse.wustl.edu>
 
         * netsvcs/lib/Server_Logging_Handler_T.cpp: Improved the code so
- 	  that it should compile and run properly on Windows.  Thanks to
- 	  Phil Mesnier for reporting this.
+     that it should compile and run properly on Windows.  Thanks to
+     Phil Mesnier for reporting this.
 
 Wed May 17 19:07:43 UTC 2006  Steve Huston  <shuston@riverace.com>
 
