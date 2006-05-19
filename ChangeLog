@@ -1,3 +1,9 @@
+Fri May 19 17:51:33 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/Service_Gestalt.cpp:
+
+          Elminated memory leak found by valgrind.
+
 Fri May 19 17:09:51 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/Service_Config_Test.cpp:
