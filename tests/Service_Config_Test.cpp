@@ -196,14 +196,8 @@ testLimits (int , ACE_TCHAR *[])
       ++error;
       ACE_DEBUG ((LM_ERROR, ACE_TEXT("Being able to add more was unexpected\n")));
     }
-  else if (ENOSPC != ACE_OS::last_error ())
-    {
-      ++error;
-      ACE_DEBUG ((LM_ERROR,
-                  ACE_TEXT("Expected error code %d (ENOSPC), but got %d (%m)\n"),
-                  ENOSPC,
-                  ACE_OS::last_error ()));
-    }
+
+  ACE_ASSERT (ENOSPC == ACE_OS::last_error ());
 }
 
 
