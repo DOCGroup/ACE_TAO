@@ -54,9 +54,16 @@ static sig_atomic_t shut_down = 0;
 static int
 handle_signal (int signum)
 {
+  // ACE_DEBUG / ACE_ERROR invocations have been #if'd out because
+  // they are "unsafe" when handler is invoked asynchronously.  On
+  // NetBSD 3.X, calls to change the thread's signal mask block as
+  // a lock seems to be held by the signal trampoline code.
+
+#if 0
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) received signal %S\n"),
               signum));
+#endif
 
   switch (signum)
     {
@@ -71,9 +78,11 @@ handle_signal (int signum)
       /* FALLTHRU */
     case SIGTERM:
       // Shut down our thread using <ACE_Thread_Manager::exit>.
+#if 0
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) shutting down due to %S\n"),
                   signum));
+#endif
 
       // Signal to the worker thread to shut down.
       shut_down = 1;
@@ -86,9 +95,11 @@ handle_signal (int signum)
       {
         // Shutdown the child.
 
+#if 0
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("(%P|%t) killing child pid %d \n"),
                     child_pid));
+#endif
         int result = ACE_OS::kill (child_pid,
                                    SIGTERM);
         ACE_ASSERT (result != -1);
@@ -97,16 +108,20 @@ handle_signal (int signum)
       }
       /* NOTREACHED */
     case -1:
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("(%P|%t) %p\n"),
-                         "sigwait"),
-                        -1);
+#if 0
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) %p\n"),
+                  "sigwait"));
+#endif
+      return -1;
       /* NOTREACHED */
     default:
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("(%P|%t) signal %S unexpected\n"),
-                         signum),
-                        -1);
+#if 0
+      ACE_ERROR ((LM_ERROR,
+                 ACE_TEXT ("(%P|%t) signal %S unexpected\n"),
+                 signum));
+#endif
+      return -1;
       /* NOTREACHED */
     }
 }
@@ -126,12 +141,6 @@ synchronous_signal_handler (void *)
     }
   else
     sigset.sig_add (SIGHUP);
-
-  // block signal to prevent delivery to default handler
-  // (at least necessary on linux and solaris; POSIX spec also
-  //  states that signal(s) should be blocked before call to
-  //  sigwait())
-  ACE_Sig_Guard hupguard (&sigset);
 
   for (;;)
     {
@@ -317,43 +326,34 @@ run_test (ACE_THR_FUNC worker,
   if (handle_signals_synchronously)
     {
       int result;
-      {
-        // Block all signals before spawning the threads.  Then,
-        // unblock these signals as the scope is exited.
-        ACE_Sig_Guard guard;
 
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P|%t) spawning worker thread\n")));
-        result = ACE_Thread_Manager::instance ()->spawn
-          (worker,
-           reinterpret_cast <void *> (handle_signals_synchronously),
-           THR_DETACHED);
-        ACE_ASSERT (result != -1);
+      ACE_DEBUG ((LM_DEBUG,
+		  ACE_TEXT ("(%P|%t) spawning worker thread\n")));
+      result = ACE_Thread_Manager::instance ()->spawn
+	(worker,
+	 reinterpret_cast <void *> (handle_signals_synchronously),
+	 THR_DETACHED);
+      ACE_ASSERT (result != -1);
 
-        if (handle_signals_in_separate_thread)
-          {
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("(%P|%t) spawning signal handler thread\n")));
+      if (handle_signals_in_separate_thread)
+	{
+	  ACE_DEBUG ((LM_DEBUG,
+		      ACE_TEXT ("(%P|%t) spawning signal handler thread\n")));
 
-            result = ACE_Thread_Manager::instance ()->spawn
-              (synchronous_signal_handler,
-               0,
-               THR_DETACHED);
-            ACE_ASSERT (result != -1);
-
-            // Wait for the other threads to finish.
-            result = ACE_Thread_Manager::instance ()->wait ();
-            ACE_ASSERT (result != -1);
-          }
-      }
-      if (handle_signals_in_separate_thread == 0)
+	  result = ACE_Thread_Manager::instance ()->spawn
+	    (synchronous_signal_handler,
+	     0,
+	     THR_DETACHED);
+	  ACE_ASSERT (result != -1);
+        }
+      else
         {
           synchronous_signal_handler (0);
-
-          // Wait for the other thread to finish.
-          result = ACE_Thread_Manager::instance ()->wait ();
-          ACE_ASSERT (result != -1);
         }
+
+      // Wait for the thread(s) to finish.
+      result = ACE_Thread_Manager::instance ()->wait ();
+      ACE_ASSERT (result != -1);
     }
   else
 #else
@@ -413,6 +413,30 @@ run_main (int argc, ACE_TCHAR *argv[])
       ACE_APPEND_LOG (ACE_TEXT ("Signal_Test-child"));
       parse_args (argc, argv);
 
+#if defined (ACE_HAS_THREADS)
+      // For the synchronous signal tests, block signals to prevent
+      // asynchronous delivery to default handler (at least necessary
+      // on linux and solaris; POSIX spec also states that signal(s)
+      // should be blocked before call to sigwait())
+      //
+      // NB: We skip this on systems where !ACE_HAS_THREADS, in that
+      // case the asynchronous test is run instead of the sync tests.
+      if (test_number == 1 || test_number == 2) 
+        {
+	  ACE_Sig_Set sigset(true);
+  
+#  if defined (ACE_LACKS_PTHREAD_THR_SIGSETMASK)
+	  ACE_OS::sigprocmask (SIG_BLOCK,
+			       (sigset_t *) sigset,
+			       (sigset_t *) 0);
+#  else
+	  ACE_OS::thr_sigsetmask (SIG_BLOCK,
+				  (sigset_t *) sigset,
+				  (sigset_t *) 0);
+#endif
+        }
+#endif
+      
       if (test_number == 1)
         {
           ACE_DEBUG ((LM_DEBUG,
