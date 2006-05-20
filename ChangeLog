@@ -1,3 +1,19 @@
+Sat May 20 15:10:55 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * tests/Signal_Test.cpp:
+        
+          Changed synchronous tests to block signals at the top level.
+          This had been done with a ACE_Sig_Guard, but that lead to a race
+          condition between when the guard was release and the delivery of
+          the SIGINT the client sends to itself.  The SIGINT would then be
+          handled by the default handler, which terminated the process 
+          before the "Ending" message was written to the log.
+        
+          #if'd out the ACE_DEBUG, etc. invocations from handle_signal().
+          These result in signal-unsafe functions being called when the
+          handler is called asynchronously.  A braver person would have
+          just removed them entirely.
+
 Fri May 19 20:08:29 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * ace/config-sunos5.6.h:
