@@ -191,13 +191,14 @@ testLimits (int , ACE_TCHAR *[])
       ACE_DEBUG ((LM_ERROR, ACE_TEXT("Unable to register the first service: %m\n")));
     }
 
+  // We simply rely on the fact that subsequent insertion
+  // fails. Currently there is no easy way of getting detailed error
+  // information from the yacc parser.
   if (0 == one.process_directive (svc_desc2))
     {
       ++error;
       ACE_DEBUG ((LM_ERROR, ACE_TEXT("Being able to add more was unexpected\n")));
     }
-
-  ACE_ASSERT (ENOSPC == ACE_OS::last_error ());
 }
 
 
