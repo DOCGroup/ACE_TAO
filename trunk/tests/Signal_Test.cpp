@@ -232,13 +232,16 @@ worker_child (void *arg)
 
   if (handle_signals_synchronously)
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%P|%t) sending SIGINT to ourselves\n")));
-      // We need to do this to dislodge the signal handling thread if
-      // it hasn't shut down on its own accord yet.
-      int result = ACE_OS::kill (ACE_OS::getpid (),
-                                 SIGINT);
-      ACE_ASSERT (result != -1);
+      if (!shut_down) 
+	{
+	  ACE_DEBUG ((LM_DEBUG,
+		      ACE_TEXT ("(%P|%t) sending SIGINT to ourselves\n")));
+	  // We need to do this to dislodge the signal handling thread if
+	  // it hasn't shut down on its own accord yet.
+	  int result = ACE_OS::kill (ACE_OS::getpid (),
+				     SIGINT);
+	  ACE_ASSERT (result != -1);
+	}
     }
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) finished running child\n")));
@@ -325,6 +328,12 @@ run_test (ACE_THR_FUNC worker,
 #if defined (ACE_HAS_THREADS)
   if (handle_signals_synchronously)
     {
+      // For the synchronous signal tests, block signals to prevent
+      // asynchronous delivery to default handler (at least necessary
+      // on linux and solaris; POSIX spec also states that signal(s)
+      // should be blocked before call to sigwait())
+      ACE_Sig_Guard guard;
+
       int result;
 
       ACE_DEBUG ((LM_DEBUG,
@@ -413,30 +422,6 @@ run_main (int argc, ACE_TCHAR *argv[])
       ACE_APPEND_LOG (ACE_TEXT ("Signal_Test-child"));
       parse_args (argc, argv);
 
-#if defined (ACE_HAS_THREADS)
-      // For the synchronous signal tests, block signals to prevent
-      // asynchronous delivery to default handler (at least necessary
-      // on linux and solaris; POSIX spec also states that signal(s)
-      // should be blocked before call to sigwait())
-      //
-      // NB: We skip this on systems where !ACE_HAS_THREADS, in that
-      // case the asynchronous test is run instead of the sync tests.
-      if (test_number == 1 || test_number == 2) 
-        {
-	  ACE_Sig_Set sigset(true);
-  
-#  if defined (ACE_LACKS_PTHREAD_THR_SIGSETMASK)
-	  ACE_OS::sigprocmask (SIG_BLOCK,
-			       (sigset_t *) sigset,
-			       (sigset_t *) 0);
-#  else
-	  ACE_OS::thr_sigsetmask (SIG_BLOCK,
-				  (sigset_t *) sigset,
-				  (sigset_t *) 0);
-#endif
-        }
-#endif
-      
       if (test_number == 1)
         {
           ACE_DEBUG ((LM_DEBUG,
