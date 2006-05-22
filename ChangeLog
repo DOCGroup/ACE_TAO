@@ -1,3 +1,16 @@
+Mon May 22 04:53:29 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * tests/Signal_Test.cpp:
+
+          The change:
+          Sat May 20 15:10:55 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+          Was not enough to get this test working on all platforms.
+
+          Revert to using ACE_Sig_Guard in worker_child().  Handle the
+          SIGINT race condition by raising it if and only if the child
+          was not shut down by the parent.
+
 Sun May 21 13:46:49 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tests/Service_Config_Test.cpp:
