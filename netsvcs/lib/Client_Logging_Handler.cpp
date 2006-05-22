@@ -105,7 +105,7 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
                       -1);
   ACE_Log_Record log_record;
 #if defined (ACE_HAS_STREAM_PIPES)
-  @@ To Do
+  // @@ To Do
   // We're getting a logging message from a local application.
 
   ACE_Str_Buf msg ((void *) &log_record,
