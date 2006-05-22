@@ -116,6 +116,22 @@ Thu May 18 17:33:57 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
           ACE_HAS_SOCKLEN_T.  Fixes configuration on OpenBSD.  Thanks to
           Vladimir Panov <gbr at voidland dot org> for reporting this bug.
 
+Thu May 18 16:37:46 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * configure.ac: Set a ACE_VERSION_NAME variable with the version
+          string (canonical major.minor.beta), which may include a fix kit id.
+
+        * bin/MakeProjectCreator/config/acedefaults.mpb: Change am_version from
+          libtool's -version-info format (current:revision:age) to the ACE
+          release number format (major.minor.beta) and rename it am_release.
+          This is intended for use with the libtool's -release option and will
+          result in library names that correspond to the ACE kit number.
+          The -version-info option uses interface numbers meant to indicate a
+          series of public API numbers. However, with ACE, things change
+          pretty often. Rather than try to come up with a way of managing
+          interface numbers, just use the release numbering that users know
+          and are used to.
+
 Thu May 18 15:15:16 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * bin/tao_orb_tests.lst:

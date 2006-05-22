@@ -14,7 +14,7 @@ project: zlib, zzip, ipv6 {
   }
 
   specific(automake) {
-    am_version = @ACE_MAJOR@:@ACE_MINOR@:@ACE_BETA@
+    am_release = @ACE_VERSION_NAME@
     includes += $(ACE_BUILDDIR)
   }
 
