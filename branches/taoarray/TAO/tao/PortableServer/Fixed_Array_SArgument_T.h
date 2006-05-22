@@ -36,8 +36,8 @@ namespace TAO
   template<typename S,
            typename S_slice,
            typename S_forany,
-           typename Insert_Policy>
-  class In_Fixed_Array_SArgument_T : public InArgument, private Insert_Policy
+           template <typename> class Insert_Policy>
+  class In_Fixed_Array_SArgument_T : public InArgument
   {
   public:
     In_Fixed_Array_SArgument_T (void);
@@ -62,7 +62,7 @@ namespace TAO
   template<typename S,
            typename S_slice,
            typename S_forany,
-           typename Insert_Policy>
+           template <typename> class Insert_Policy>
   class Inout_Fixed_Array_SArgument_T :
     public InoutArgument,
     private Insert_Policy
@@ -91,8 +91,8 @@ namespace TAO
   template<typename S,
            typename S_slice,
            typename S_forany,
-           typename Insert_Policy>
-  class Out_Fixed_Array_SArgument_T : public OutArgument, private Insert_Policy
+           template <typename> class Insert_Policy>
+  class Out_Fixed_Array_SArgument_T : public OutArgument
   {
   public:
     Out_Fixed_Array_SArgument_T (void);
@@ -116,8 +116,8 @@ namespace TAO
   template<typename S_slice,
            typename S_var,
            typename S_forany,
-           typename Insert_Policy>
-  class Ret_Fixed_Array_SArgument_T : public RetArgument, private Insert_Policy
+           template <typename> class Insert_Policy>
+  class Ret_Fixed_Array_SArgument_T : public RetArgument
   {
   public:
     Ret_Fixed_Array_SArgument_T (void);
@@ -142,7 +142,7 @@ namespace TAO
            typename T_slice,
            typename T_var,
            typename T_forany,
-           typename Insert_Policy>
+           template <typename> class Insert_Policy>
   struct Fixed_Array_SArg_Traits_T
   {
     typedef T_slice *                                    ret_type;

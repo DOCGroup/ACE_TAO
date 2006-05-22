@@ -39,7 +39,7 @@ namespace TAO
     : public UB_String_Arg_Traits_T<CORBA::Char,
                                     CORBA::String_var,
                                     CORBA::String_out,
-                                    TAO::Any_Insert_Policy_AnyTypeCode_Adapter <CORBA::Char const *> >
+                                    TAO::Any_Insert_Policy_AnyTypeCode_Adapter>
   {
   };
 
@@ -48,7 +48,7 @@ namespace TAO
     : public UB_String_Arg_Traits_T<CORBA::WChar,
                                     CORBA::WString_var,
                                     CORBA::WString_out,
-                                    TAO::Any_Insert_Policy_AnyTypeCode_Adapter <CORBA::WChar const *> >
+                                    TAO::Any_Insert_Policy_AnyTypeCode_Adapter>
   {
   };
 }

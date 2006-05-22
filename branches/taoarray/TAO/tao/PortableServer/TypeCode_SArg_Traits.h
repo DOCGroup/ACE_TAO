@@ -48,9 +48,7 @@ namespace TAO
     : public Object_SArg_Traits_T<CORBA::TypeCode_ptr,
                                   CORBA::TypeCode_var,
                                   CORBA::TypeCode_out,
-                                  TAO::Any_Insert_Policy_Stream <
-                                    CORBA::TypeCode_ptr
-                                  >
+                                  TAO::Any_Insert_Policy_Stream
                                  >
   {
   };

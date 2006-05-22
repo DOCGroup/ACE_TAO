@@ -39,8 +39,8 @@ namespace TAO
            typename to_S,
            typename from_S,
            size_t BOUND,
-           typename Insert_Policy>
-  class In_BD_String_Argument_T : public InArgument, private Insert_Policy
+           template <typename> class Insert_Policy>
+  class In_BD_String_Argument_T : public InArgument
   {
   public:
     In_BD_String_Argument_T (const S * x);
@@ -69,8 +69,8 @@ namespace TAO
            typename to_S,
            typename from_S,
            size_t BOUND,
-           typename Insert_Policy>
-  class Inout_BD_String_Argument_T : public InoutArgument, private Insert_Policy
+           template <typename> class Insert_Policy>
+  class Inout_BD_String_Argument_T : public InoutArgument
   {
   public:
     Inout_BD_String_Argument_T (S *& x);
@@ -97,8 +97,8 @@ namespace TAO
            typename to_S,
            typename from_S,
            size_t BOUND,
-           typename Insert_Policy>
-  class Out_BD_String_Argument_T : public OutArgument, private Insert_Policy
+           template <typename> class Insert_Policy>
+  class Out_BD_String_Argument_T : public OutArgument
   {
   public:
     Out_BD_String_Argument_T (S_out x);
@@ -124,8 +124,8 @@ namespace TAO
            typename to_S,
            typename from_S,
            size_t BOUND,
-           typename Insert_Policy>
-  class Ret_BD_String_Argument_T : public RetArgument, private Insert_Policy
+           template <typename> class Insert_Policy>
+  class Ret_BD_String_Argument_T : public RetArgument
   {
   public:
     Ret_BD_String_Argument_T (void);
@@ -142,7 +142,6 @@ namespace TAO
   private:
 
     S_var x_;
-
   };
 
   /**
@@ -165,7 +164,7 @@ namespace TAO
            typename to_T,
            typename from_T,
            size_t BOUND,
-           typename Insert_Policy>
+           template <typename> class Insert_Policy>
   struct BD_String_Arg_Traits_T
   {
     typedef T *                                   ret_type;

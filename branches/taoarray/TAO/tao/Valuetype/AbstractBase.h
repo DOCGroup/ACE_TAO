@@ -162,7 +162,7 @@ namespace TAO
                                  CORBA::AbstractBase_var,
                                  CORBA::AbstractBase_out,
                                  TAO::Objref_Traits<CORBA::AbstractBase>,
-                                 TAO::Any_Insert_Policy_Stream <CORBA::AbstractBase_ptr>
+                                 TAO::Any_Insert_Policy_Stream
                                 >
   {
   };

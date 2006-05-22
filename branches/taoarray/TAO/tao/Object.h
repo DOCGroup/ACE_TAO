@@ -424,7 +424,7 @@ namespace TAO
                                  CORBA::Object_var,
                                  CORBA::Object_out,
                                  TAO::Objref_Traits<CORBA::Object>,
-                                 TAO::Any_Insert_Policy_CORBA_Object <CORBA::Object_ptr> >
+                                 TAO::Any_Insert_Policy_CORBA_Object>
   {
   };
 

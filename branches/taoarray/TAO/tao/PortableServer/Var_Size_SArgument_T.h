@@ -31,8 +31,8 @@ namespace TAO
    *
    */
   template<typename S,
-           typename Insert_Policy>
-  class In_Var_Size_SArgument_T : public InArgument, private Insert_Policy
+           template <typename> class Insert_Policy>
+  class In_Var_Size_SArgument_T : public InArgument
   {
   public:
 
@@ -53,8 +53,8 @@ namespace TAO
    *
    */
   template<typename S,
-           typename Insert_Policy>
-  class Inout_Var_Size_SArgument_T : public InoutArgument, private Insert_Policy
+           template <typename> class Insert_Policy>
+  class Inout_Var_Size_SArgument_T : public InoutArgument
   {
   public:
     Inout_Var_Size_SArgument_T (void);
@@ -78,8 +78,8 @@ namespace TAO
    */
   template<typename S,
            typename S_var,
-           typename Insert_Policy>
-  class Out_Var_Size_SArgument_T : public OutArgument, private Insert_Policy
+           template <typename> class Insert_Policy>
+  class Out_Var_Size_SArgument_T : public OutArgument
   {
   public:
     Out_Var_Size_SArgument_T (void);
@@ -102,8 +102,8 @@ namespace TAO
    */
   template<typename S,
            typename S_var,
-           typename Insert_Policy>
-  class Ret_Var_Size_SArgument_T : public RetArgument, private Insert_Policy
+           template <typename> class Insert_Policy>
+  class Ret_Var_Size_SArgument_T : public RetArgument
   {
   public:
     Ret_Var_Size_SArgument_T (void);
@@ -128,7 +128,7 @@ namespace TAO
   template<typename T,
            typename T_var,
            typename T_out,
-           typename Insert_Policy>
+           template <typename> class Insert_Policy>
   struct Var_Size_SArg_Traits_T
   {
     typedef T *                                             ret_type;

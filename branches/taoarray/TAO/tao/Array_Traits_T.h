@@ -16,32 +16,92 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+/*namespace TAO {
+  namespace details {
+  template <typename BASE_TYPE, CORBA::ULong N>
+  struct primitive_type_array_traits {
+    typedef BASE_TYPE array_type[N];
+    typedef BASE_TYPE array_slice;
+    typedef BASE_TYPE slice_type;
+    typedef BASE_TYPE value_type;
+    struct array_traits
+    {
+      typedef BASE_TYPE slice_type;
+      typedef BASE_TYPE value_type;
+    };
+    typedef TAO_Array_Forany_T<array_traits> forany_type;
+    typedef TAO_FixedArray_Var_T<array_traits> var_type;
+
+    inline static void copy (slice_type * _tao_to, const slice_type * _tao_from)
+    {
+      TAO::Array_Traits<value_type,slice_type,tag_type>::copy (_tao_to, _tao_from);
+    }
+
+    inline static void free (slice_type * value)
+    {
+      TAO::Array_Traits<value_type,slice_type,tag_type>::free (value);
+    }
+
+    inline static slice_type * alloc (void)
+    {
+      return TAO::Array_Traits<value_type,slice_type,tag_type>::alloc ();
+    }
+
+    inline static slice_type * dup(
+        const slice_type * value)
+    {
+      return TAO::Array_Traits<value_type,slice_type,tag_type>::dup (value);
+    }
+  };
+}}*/
+
 namespace TAO
 {
 namespace details
 {
 
-template <typename T_array, typename T_slice, typename T_tag>
+template <typename T_array_traits>
 struct array_traits
 {
-  typedef T_array value_type;
-  typedef T_array const const_value_type;
+  typedef typename T_array_traits::value_type value_type;
+  typedef typename T_array_traits::value_type const const_value_type;
 
-  typedef T_slice slice_type;
-  typedef T_tag TAG;
+  typedef typename T_array_traits::slice_type slice_type;
+  typedef typename T_array_traits::tag_type tag_type;
+
+  inline static void copy (slice_type * _tao_to, const slice_type * _tao_from)
+  {
+    TAO::Array_Traits<value_type,slice_type,tag_type>::copy (_tao_to, _tao_from);
+  }
+
+  inline static void free (slice_type * value)
+  {
+    TAO::Array_Traits<value_type,slice_type,tag_type>::free (value);
+  }
+
+  inline static slice_type * alloc (void)
+  {
+    return TAO::Array_Traits<value_type,slice_type,tag_type>::alloc ();
+  }
+
+  inline static slice_type * dup(
+      const slice_type * value)
+  {
+    return TAO::Array_Traits<value_type,slice_type,tag_type>::dup (value);
+  }
 
   inline static void zero_range(
       value_type * begin, value_type * end)
   {
     std::for_each(
-        begin, end, &TAO::Array_Traits<value_type,slice_type,TAG>::zero);
+        begin, end, &TAO::Array_Traits<value_type,slice_type,tag_type>::zero);
   }
 
   inline static void initialize_range(
       value_type * begin, value_type * end)
   {
     std::for_each(
-        begin, end, &TAO::Array_Traits<value_type,slice_type,TAG>::zero);
+        begin, end, &TAO::Array_Traits<value_type,slice_type,tag_type>::zero);
   }
 
   inline static void copy_range(
@@ -49,15 +109,8 @@ struct array_traits
   {
     for(value_type * i = begin; i != end; ++i, ++dst)
     {
-      TAO::Array_Traits<value_type,slice_type,TAG>::copy(*dst, *i);
+      TAO::Array_Traits<value_type,slice_type,tag_type>::copy(*dst, *i);
     }
-  }
-
-  inline static void release_range(
-      value_type * begin, value_type * end, value_type *dst)
-  {
-    std::for_each(
-        begin, end, &TAO::Array_Traits<value_type,slice_type,TAG>::zero);
   }
 };
 

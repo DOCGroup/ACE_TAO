@@ -9,7 +9,7 @@ template<typename S,
          typename to_S,
          typename from_S,
          size_t BOUND,
-         typename Insert_Policy>
+         template <typename> class Insert_Policy>
 ACE_INLINE
 TAO::In_BD_String_SArgument_T<S,S_var,to_S,from_S,BOUND,Insert_Policy>::
 In_BD_String_SArgument_T (void)
@@ -20,7 +20,7 @@ template<typename S,
          typename to_S,
          typename from_S,
          size_t BOUND,
-         typename Insert_Policy>
+         template <typename> class Insert_Policy>
 ACE_INLINE
 const S *
 TAO::In_BD_String_SArgument_T<S,S_var,to_S,from_S,BOUND,Insert_Policy>::
@@ -36,7 +36,7 @@ template<typename S,
          typename to_S,
          typename from_S,
          size_t BOUND,
-         typename Insert_Policy>
+         template <typename> class Insert_Policy>
 ACE_INLINE
 TAO::Inout_BD_String_SArgument_T<S,S_var,to_S,from_S,BOUND,Insert_Policy>::
 Inout_BD_String_SArgument_T (void)
@@ -47,7 +47,7 @@ template<typename S,
          typename to_S,
          typename from_S,
          size_t BOUND,
-         typename Insert_Policy>
+         template <typename> class Insert_Policy>
 ACE_INLINE
 S *&
 TAO::Inout_BD_String_SArgument_T<S,S_var,to_S,from_S,BOUND,Insert_Policy>::
@@ -64,7 +64,7 @@ template<typename S,
          typename to_S,
          typename from_S,
          size_t BOUND,
-         typename Insert_Policy>
+         template <typename> class Insert_Policy>
 ACE_INLINE
 TAO::Out_BD_String_SArgument_T<S,S_var,S_out,to_S,from_S,BOUND,Insert_Policy>::
 Out_BD_String_SArgument_T (void)
@@ -76,7 +76,7 @@ template<typename S,
          typename to_S,
          typename from_S,
          size_t BOUND,
-         typename Insert_Policy>
+         template <typename> class Insert_Policy>
 ACE_INLINE
 S *&
 TAO::Out_BD_String_SArgument_T<S,S_var,S_out,to_S,from_S,BOUND,Insert_Policy>::
@@ -92,7 +92,7 @@ template<typename S,
          typename to_S,
          typename from_S,
          size_t BOUND,
-         typename Insert_Policy>
+         template <typename> class Insert_Policy>
 ACE_INLINE
 TAO::Ret_BD_String_SArgument_T<S,S_var,to_S,from_S,BOUND,Insert_Policy>::
 Ret_BD_String_SArgument_T (void)
@@ -103,7 +103,7 @@ template<typename S,
          typename to_S,
          typename from_S,
          size_t BOUND,
-         typename Insert_Policy>
+         template <typename> class Insert_Policy>
 ACE_INLINE
 S *&
 TAO::Ret_BD_String_SArgument_T<S,S_var,to_S,from_S,BOUND,Insert_Policy>::

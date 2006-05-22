@@ -34,8 +34,8 @@ namespace TAO
   template<typename S,
            typename S_slice,
            typename S_forany,
-           typename Insert_Policy>
-  class In_Var_Array_Argument_T : public InArgument, private Insert_Policy
+           template <typename> class Insert_Policy>
+  class In_Var_Array_Argument_T : public InArgument
   {
   public:
     In_Var_Array_Argument_T (const S_slice * x);
@@ -59,8 +59,8 @@ namespace TAO
   template<typename S,
            typename S_slice,
            typename S_forany,
-           typename Insert_Policy>
-  class Inout_Var_Array_Argument_T : public InoutArgument, private Insert_Policy
+           template <typename> class Insert_Policy>
+  class Inout_Var_Array_Argument_T : public InoutArgument
   {
   public:
     Inout_Var_Array_Argument_T (S_slice *&x);
@@ -88,8 +88,8 @@ namespace TAO
            typename S_out,
            typename S_forany,
            typename S_tag,
-           typename Insert_Policy>
-  class Out_Var_Array_Argument_T : public OutArgument, private Insert_Policy
+           template <typename> class Insert_Policy>
+  class Out_Var_Array_Argument_T : public OutArgument
   {
   public:
     Out_Var_Array_Argument_T (S_out x);
@@ -115,8 +115,8 @@ namespace TAO
            typename S_var,
            typename S_forany,
            typename S_tag,
-           typename Insert_Policy>
-  class Ret_Var_Array_Argument_T : public RetArgument, private Insert_Policy
+           template <typename> class Insert_Policy>
+  class Ret_Var_Array_Argument_T : public RetArgument
   {
   public:
     Ret_Var_Array_Argument_T (void);
@@ -132,6 +132,9 @@ namespace TAO
 
   private:
     S_var x_;
+#if TAO_HAS_INTERCEPTORS == 1
+    Insert_Policy <S> insert_policy_;
+#endif /* TAO_HAS_INTERCEPTORS == 1 */
   };
 
   /**
@@ -154,7 +157,7 @@ namespace TAO
            typename T_out,
            typename T_forany,
            typename T_tag,
-           typename Insert_Policy>
+           template <typename> class Insert_Policy>
   struct Var_Array_Arg_Traits_T
   {
     typedef T_slice *                                   ret_type;

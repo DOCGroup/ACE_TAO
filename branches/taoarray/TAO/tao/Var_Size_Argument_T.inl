@@ -5,7 +5,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<typename S,
-         typename Insert_Policy>
+         template <typename> class Insert_Policy>
 ACE_INLINE
 TAO::In_Var_Size_Argument_T<S,Insert_Policy>::In_Var_Size_Argument_T (S const & x)
   : x_ (&x)
@@ -13,7 +13,7 @@ TAO::In_Var_Size_Argument_T<S,Insert_Policy>::In_Var_Size_Argument_T (S const & 
 }
 
 template<typename S,
-         typename Insert_Policy>
+         template <typename> class Insert_Policy>
 ACE_INLINE
 const S &
 TAO::In_Var_Size_Argument_T<S,Insert_Policy>::arg (void) const
@@ -24,7 +24,7 @@ TAO::In_Var_Size_Argument_T<S,Insert_Policy>::arg (void) const
 // ==========================================================================
 
 template<typename S,
-         typename Insert_Policy>
+         template <typename> class Insert_Policy>
 ACE_INLINE
 TAO::Inout_Var_Size_Argument_T<S,Insert_Policy>::Inout_Var_Size_Argument_T (S & x)
   : x_ (&x)
@@ -32,7 +32,7 @@ TAO::Inout_Var_Size_Argument_T<S,Insert_Policy>::Inout_Var_Size_Argument_T (S & 
 }
 
 template<typename S,
-         typename Insert_Policy>
+         template <typename> class Insert_Policy>
 ACE_INLINE
 S &
 TAO::Inout_Var_Size_Argument_T<S,Insert_Policy>::arg (void)
@@ -44,7 +44,7 @@ TAO::Inout_Var_Size_Argument_T<S,Insert_Policy>::arg (void)
 
 template<typename S,
          typename S_out,
-         typename Insert_Policy>
+         template <typename> class Insert_Policy>
 ACE_INLINE
 TAO::Out_Var_Size_Argument_T<S,S_out,Insert_Policy>::Out_Var_Size_Argument_T (S_out x)
   : x_ (x.ptr ())
@@ -52,7 +52,7 @@ TAO::Out_Var_Size_Argument_T<S,S_out,Insert_Policy>::Out_Var_Size_Argument_T (S_
 
 template<typename S,
          typename S_out,
-         typename Insert_Policy>
+         template <typename> class Insert_Policy>
 ACE_INLINE
 S *&
 TAO::Out_Var_Size_Argument_T<S,S_out,Insert_Policy>::arg (void)
@@ -64,7 +64,7 @@ TAO::Out_Var_Size_Argument_T<S,S_out,Insert_Policy>::arg (void)
 
 template<typename S,
          typename S_var,
-         typename Insert_Policy>
+         template <typename> class Insert_Policy>
 ACE_INLINE
 TAO::Ret_Var_Size_Argument_T<S,S_var,Insert_Policy>::Ret_Var_Size_Argument_T (void)
 {
@@ -72,7 +72,7 @@ TAO::Ret_Var_Size_Argument_T<S,S_var,Insert_Policy>::Ret_Var_Size_Argument_T (vo
 
 template<typename S,
          typename S_var,
-         typename Insert_Policy>
+         template <typename> class Insert_Policy>
 ACE_INLINE
 S *&
 TAO::Ret_Var_Size_Argument_T<S,S_var,Insert_Policy>::arg (void)
@@ -82,7 +82,7 @@ TAO::Ret_Var_Size_Argument_T<S,S_var,Insert_Policy>::arg (void)
 
 template<typename S,
          typename S_var,
-         typename Insert_Policy>
+         template <typename> class Insert_Policy>
 ACE_INLINE
 S *
 TAO::Ret_Var_Size_Argument_T<S,S_var,Insert_Policy>::excp (void)
@@ -92,7 +92,7 @@ TAO::Ret_Var_Size_Argument_T<S,S_var,Insert_Policy>::excp (void)
 
 template<typename S,
          typename S_var,
-         typename Insert_Policy>
+         template <typename> class Insert_Policy>
 ACE_INLINE
 S *
 TAO::Ret_Var_Size_Argument_T<S,S_var,Insert_Policy>::retn (void)

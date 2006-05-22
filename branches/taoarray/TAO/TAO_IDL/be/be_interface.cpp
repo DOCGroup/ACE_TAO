@@ -1663,8 +1663,13 @@ be_interface::gen_gperf_lookup_methods (const char *flat_name)
     }
 
   // Open the temp file.
+#if defined (ACE_OPENVMS)
+  ACE_HANDLE input = ::open(tao_cg->gperf_input_filename(), O_RDONLY,
+                            "shr=get,put,upd", "ctx=rec", "fop=dfw");
+#else
   ACE_HANDLE input = ACE::open_temp_file (tao_cg->gperf_input_filename (),
                                           O_RDONLY);
+#endif /* ACE_OPENVMS */
 
   if (input == ACE_INVALID_HANDLE)
     {

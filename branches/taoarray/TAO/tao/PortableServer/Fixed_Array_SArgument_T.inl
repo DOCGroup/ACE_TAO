@@ -7,7 +7,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 template<typename S,
          typename S_slice,
          typename S_forany,
-         typename Insert_Policy>
+         template <typename> class Insert_Policy>
 ACE_INLINE
 TAO::In_Fixed_Array_SArgument_T<S,
                                 S_slice,
@@ -19,7 +19,7 @@ TAO::In_Fixed_Array_SArgument_T<S,
 template<typename S,
          typename S_slice,
          typename S_forany,
-         typename Insert_Policy>
+         template <typename> class Insert_Policy>
 ACE_INLINE
 S_slice const *
 TAO::In_Fixed_Array_SArgument_T<S,
@@ -36,7 +36,7 @@ TAO::In_Fixed_Array_SArgument_T<S,
 template<typename S,
          typename S_slice,
          typename S_forany,
-         typename Insert_Policy>
+         template <typename> class Insert_Policy>
 ACE_INLINE
 TAO::Inout_Fixed_Array_SArgument_T<S,
                                    S_slice,
@@ -49,7 +49,7 @@ Inout_Fixed_Array_SArgument_T (void)
 template<typename S,
          typename S_slice,
          typename S_forany,
-         typename Insert_Policy>
+         template <typename> class Insert_Policy>
 ACE_INLINE
 S_slice *
 TAO::Inout_Fixed_Array_SArgument_T<S,
@@ -66,7 +66,7 @@ TAO::Inout_Fixed_Array_SArgument_T<S,
 template<typename S,
          typename S_slice,
          typename S_forany,
-         typename Insert_Policy>
+         template <typename> class Insert_Policy>
 ACE_INLINE
 TAO::Out_Fixed_Array_SArgument_T<S,
                                  S_slice,
@@ -79,7 +79,7 @@ Out_Fixed_Array_SArgument_T (void)
 template<typename S,
          typename S_slice,
          typename S_forany,
-         typename Insert_Policy>
+         template <typename> class Insert_Policy>
 ACE_INLINE
 S_slice *
 TAO::Out_Fixed_Array_SArgument_T<S,
@@ -96,7 +96,7 @@ TAO::Out_Fixed_Array_SArgument_T<S,
 template<typename S_slice,
          typename S_var,
          typename S_forany,
-         typename Insert_Policy>
+         template <typename> class Insert_Policy>
 ACE_INLINE
 TAO::Ret_Fixed_Array_SArgument_T<S_slice,
                                  S_var,
@@ -109,7 +109,7 @@ Ret_Fixed_Array_SArgument_T (void)
 template<typename S_slice,
          typename S_var,
          typename S_forany,
-         typename Insert_Policy>
+         template <typename> class Insert_Policy>
 ACE_INLINE
 S_slice *&
 TAO::Ret_Fixed_Array_SArgument_T<S_slice,

@@ -146,8 +146,7 @@ be_visitor_arg_traits::visit_interface (be_interface *node)
             << "TAO::Objref_Traits<" << node->name () << ">";
         }
 
-      *os << "," << be_nl << this->insert_policy() << " <"
-          << node->name () << "_ptr>" << be_uidt_nl
+      *os << "," << be_nl << this->insert_policy() << be_uidt_nl
           << ">" << be_uidt << be_uidt << be_uidt << be_uidt_nl
           << "{" << be_nl
           << "};";
@@ -229,8 +228,7 @@ be_visitor_arg_traits::visit_valuebox (be_valuebox *node)
              << "TAO::Value_Traits<" << node->name () << ">";
         }
 
-      os << "," << be_nl << this->insert_policy() << " <"
-         << node->name () << "*>" << be_uidt_nl
+      os << "," << be_nl << this->insert_policy() << be_uidt_nl
          << ">" << be_uidt << be_uidt << be_uidt << be_uidt_nl
          << "{" << be_nl
          << "};";
@@ -279,8 +277,7 @@ be_visitor_arg_traits::visit_valuetype (be_valuetype *node)
              << "TAO::Value_Traits<" << node->name () << ">";
         }
 
-      os << "," << be_nl << this->insert_policy() << " <"
-         << node->name () << "*>" << be_uidt_nl
+      os << "," << be_nl << this->insert_policy() << be_uidt_nl
          << ">" << be_uidt << be_uidt << be_uidt << be_uidt_nl
          << "{" << be_nl
          << "};";
@@ -399,10 +396,7 @@ be_visitor_arg_traits::visit_operation (be_operation *node)
               << "ACE_InputCDR::to_" << (wide ? "w" : "") << "string," << be_nl
               << "ACE_OutputCDR::from_" << (wide ? "w" : "") << "string," << be_nl
               << bound << "," << be_nl
-              << this->insert_policy() << " <" << be_idt_nl
-              << "ACE_OutputCDR::from_" << (wide ? "w" : "") << "string" << be_uidt_nl
-              << ">"
-              << be_uidt_nl
+              << this->insert_policy() << be_uidt_nl
               << ">"
               << be_uidt << be_uidt << be_uidt_nl
               << "{" << be_nl
@@ -487,10 +481,7 @@ be_visitor_arg_traits::visit_attribute (be_attribute *node)
       << "ACE_InputCDR::to_" << (wide ? "w" : "") << "string," << be_nl
       << "ACE_OutputCDR::from_" << (wide ? "w" : "") << "string," << be_nl
       << bound << "," << be_nl
-      << this->insert_policy() << " <" << be_idt_nl
-      << "ACE_OutputCDR::from_" << (wide ? "w" : "") << "string" << be_uidt_nl
-      << ">"
-      << be_uidt_nl
+      << this->insert_policy() << be_uidt_nl
       << ">"
       << be_uidt << be_uidt << be_uidt_nl
       << "{" << be_nl
@@ -567,10 +558,7 @@ be_visitor_arg_traits::visit_argument (be_argument *node)
       << "ACE_InputCDR::to_" << (wide ? "w" : "") << "string," << be_nl
       << "ACE_OutputCDR::from_" << (wide ? "w" : "") << "string," << be_nl
       << bound << "," << be_nl
-      << this->insert_policy() << " <" << be_idt_nl
-      << "ACE_OutputCDR::from_" << (wide ? "w" : "") << "string" << be_uidt_nl
-      << ">"
-      << be_uidt_nl
+      << this->insert_policy() << be_uidt_nl
       << ">"
       << be_uidt << be_uidt << be_uidt_nl
       << "{" << be_nl
@@ -611,7 +599,7 @@ be_visitor_arg_traits::visit_sequence (be_sequence *node)
       << alias->name () << "," << be_nl
       << alias->name () << "_var," << be_nl
       << alias->name () << "_out," << be_nl
-      << this->insert_policy() << " <" << alias->name () << ">" << be_uidt_nl
+      << this->insert_policy() << be_uidt_nl
       << ">" << be_uidt << be_uidt << be_uidt << be_uidt_nl
       << "{" << be_nl
       << "};";
@@ -733,10 +721,7 @@ be_visitor_arg_traits::visit_string (be_string *node)
       << "ACE_InputCDR::to_" << (wide ? "w" : "") << "string," << be_nl
       << "ACE_OutputCDR::from_" << (wide ? "w" : "") << "string," << be_nl
       << bound << "," << be_nl
-      << this->insert_policy() << " <" << be_idt_nl
-      << "ACE_OutputCDR::from_" << (wide ? "w" : "") << "string" << be_uidt_nl
-      << ">"
-      << be_uidt_nl
+      << this->insert_policy() << be_uidt_nl
       << ">"
       << be_uidt << be_uidt << be_uidt_nl
       << "{" << be_nl
@@ -823,8 +808,7 @@ be_visitor_arg_traits::visit_array (be_array *node)
           << node->name () << "_tag";
     }
 
-  *os << "," << be_nl << this->insert_policy() << " <" << node->name ()
-      << "_forany" << ">";
+  *os << "," << be_nl << this->insert_policy() ;
 
   *os << be_uidt_nl
       << ">" << be_uidt << be_uidt << be_uidt << be_uidt_nl
@@ -866,7 +850,7 @@ be_visitor_arg_traits::visit_enum (be_enum *node)
 
   *os << "Basic_" << this->S_ << "Arg_Traits_T<" << be_idt << be_idt_nl
       << node->name () << "," << be_nl
-      << this->insert_policy() << " <" << node->name () << ">" << be_uidt_nl
+      << this->insert_policy() << be_uidt_nl
       << ">" << be_uidt << be_uidt << be_uidt << be_uidt_nl
       << "{" << be_nl
       << "};";
@@ -917,8 +901,7 @@ be_visitor_arg_traits::visit_structure (be_structure *node)
           << node->name () << "_out";
     }
 
-  *os << "," << be_nl << this->insert_policy() << " <"
-      << node->name () << ">" << be_uidt_nl
+  *os << "," << be_nl << this->insert_policy() << be_uidt_nl
       << ">" << be_uidt << be_uidt << be_uidt << be_uidt_nl
       << "{" << be_nl
       << "};";
@@ -1032,8 +1015,7 @@ be_visitor_arg_traits::visit_union (be_union *node)
           << node->name () << "_out";
     }
 
-  *os << "," << be_nl << this->insert_policy() << " <"
-      << node->name () << ">";
+  *os << "," << be_nl << this->insert_policy();
 
   *os << be_uidt_nl
       << ">" << be_uidt << be_uidt << be_uidt << be_uidt_nl
