@@ -246,6 +246,25 @@ int be_visitor_array_ci::visit_array (be_array *node)
     unsigned long ndims = node->n_dims ();
     be_array *primitive_type = 0;
 
+    if (bt->node_type () == AST_Decl::NT_typedef)
+      {
+        // Base type of the array node is a typedef. We need to make sure that
+        // this typedef is not to another array type. If it is, then we cannot
+        // assign an array to another. We will have to invoke the underlying
+        // array type's copy method for every array dimension.
+
+        // There may be more than one level of typedef.
+        be_type *tmp = bt;
+
+        while (tmp->node_type () == AST_Decl::NT_typedef)
+          {
+            be_typedef *tdef = be_typedef::narrow_from_decl (tmp);
+            tmp = be_type::narrow_from_decl (tdef->base_type ());
+          }
+
+        primitive_type = be_array::narrow_from_decl (tmp);
+      }
+
     *os << "// Zero each individual element." << be_nl;
 
     // Generate nested loops for as many dimensions as there are.
@@ -286,6 +305,8 @@ int be_visitor_array_ci::visit_array (be_array *node)
         // we use the base type's copy method.
         *os << "// call the underlying _zero" << be_nl;
 
+        * os << "TAO::Array_Traits< ";
+
         if (bt->accept (this) == -1)
           {
             ACE_ERROR_RETURN ((LM_ERROR,
@@ -295,7 +316,31 @@ int be_visitor_array_ci::visit_array (be_array *node)
                               -1);
           }
 
-        *os << "_zero (_tao_slice";
+        * os << ", ";
+
+        if (bt->accept (this) == -1)
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "be_visitor_array_cs::"
+                               "visit_array - "
+                               "base type decl failed\n"),
+                              -1);
+          }
+
+        * os << "_slice, ";
+
+        if (bt->accept (this) == -1)
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "be_visitor_array_cs::"
+                               "visit_array - "
+                               "base type decl failed\n"),
+                              -1);
+          }
+
+        * os << "_tag>::";
+
+        *os << "zero (_tao_slice";
 
         for (i = 0; i < ndims; ++i)
           {
