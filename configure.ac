@@ -148,10 +148,12 @@ IFS="$ace_save_ifs"
 ACE_MAJOR=$2
 ACE_MINOR=$3
 ACE_BETA=$4
+ACE_VERSION_NAME=ACE_VERSION
 
 AC_SUBST([ACE_MAJOR])
 AC_SUBST([ACE_MINOR])
 AC_SUBST([ACE_BETA])
+AC_SUBST([ACE_VERSION_NAME])
 
 dnl Do the usual install settings; don't forget to include a
 dnl `install-sh' script, in case there is no BSD compatible `install'
@@ -3949,9 +3951,9 @@ ACE_CHECK_LACKS_FUNCS(socketpair)
 
 AC_CHECK_FUNC([strptime],
   [
-   AC_DEFINE([ACE_HAS_STRPTIME])
-   dnl Check if _XOPEN_SOURCE macro is needed to make the strptime()
-   dnl prototype visible.
+   dnl strptime() is available, but its prototype is not always visible to
+   dnl the compiler. Check if _XOPEN_SOURCE macro is needed to make the
+   dnl strptime() prototype visible.
    ACE_CACHE_CHECK([for strptime prototype],
      [ace_cv_lib_has_strptime_prototype],
      [
@@ -3970,7 +3972,7 @@ AC_CHECK_FUNC([strptime],
      ],,[AC_DEFINE([ACE_LACKS_STRPTIME_PROTOTYPE])])
   ],
   [
-   AC_DEFINE([ACE_LACKS_NATIVE_STRPTIME])
+   AC_DEFINE([ACE_LACKS_STRPTIME])
   ])
 
 if test "$ac_cv_type_wchar_t" = yes; then
