@@ -305,7 +305,11 @@ operator<< (ACE_OutputCDR &cdr,
   cdr << ACE_CDR::Long (log_record.time_stamp ().sec ());
   cdr << ACE_CDR::Long (log_record.time_stamp ().usec ());
   cdr << ACE_CDR::ULong (msglen);
+#if defined (ACE_USES_WCHAR)
+  cdr.write_wchar_array (nonconst_record.msg_data (), msglen);
+#else
   cdr.write_char_array (nonconst_record.msg_data (), msglen);
+#endif /* ACE_USES_WCHAR */
   return cdr.good_bit ();
 }
 
@@ -325,7 +329,11 @@ operator>> (ACE_InputCDR &cdr,
     log_record.type (type);
     log_record.pid (pid);
     log_record.time_stamp (ACE_Time_Value (sec, usec));
+#if defined (ACE_USES_WCHAR)
+    cdr.read_wchar_array (log_msg, buffer_len);
+#else
     cdr.read_char_array (log_msg, buffer_len);
+#endif /* ACE_USES_WCHAR */
     log_msg[buffer_len] = '\0';
     log_record.set_msg_data_ptr (log_msg);
   }
