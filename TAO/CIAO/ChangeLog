@@ -1,3 +1,11 @@
+Mon May 22 18:49:14 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ciao/Container_Base.cpp(ciao_install_home):
+
+          Changed C-style casts of DLL entrypoints to static_cast<>s
+          to the appropriate pointer to function. This change is
+          intended to eliminate warnings from gcc 4.0.
+
 Fri May 19 16:49:32 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * DAnCE/NodeApplicationManager/Containers_Info_Map.cpp:

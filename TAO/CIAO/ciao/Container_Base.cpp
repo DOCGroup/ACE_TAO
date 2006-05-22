@@ -403,11 +403,10 @@ namespace CIAO
                 error.c_str ()), Components::CCMHome::_nil ());
           }
 
-        // @@ (OO) Please use a static_cast<> here instead of a C-style
-        //         cast.  ANSI C++ casts are the preferred (and modern)
-        //         way of casting in ACE/TAO/CIAO.
-        hcreator = (HomeFactory) executor_dll.symbol (exe_entrypt);
-        screator = (ServantFactory) servant_dll.symbol (sv_entrypt);
+        hcreator =
+          static_cast<HomeFactory> (executor_dll.symbol (exe_entrypt));
+        screator =
+          static_cast<ServantFactory> (servant_dll.symbol (sv_entrypt));
       }
     else
       {
