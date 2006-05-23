@@ -417,6 +417,8 @@ parse_args (int argc, ACE_TCHAR *argv[])
 int
 run_main (int argc, ACE_TCHAR *argv[])
 {
+  ACE_OS::signal(SIGHUP, SIG_DFL);
+
   if (argc > 1)
     {
       ACE_APPEND_LOG (ACE_TEXT ("Signal_Test-child"));
