@@ -59,20 +59,6 @@ parse_args (int argc, char *argv[])
   return 0;
 }
 
-void
-add_endpoint_args(int &argc, char**argv, char** &largv)
-{
-  largv = new char*[argc+4];
-  for (int i = 0; i < argc; i++)
-    largv[i] = argv[i];
-  largv[argc++] = CORBA::string_dup("-ORBEndpoint");
-  largv[argc] = CORBA::string_alloc(100);
-  ACE_OS::sprintf (largv[argc++],"iiop://localhost:%d",endpoint_port);
-  largv[argc++] = CORBA::string_dup("-ORBEndpoint");
-  largv[argc] = CORBA::string_alloc(100);
-  ACE_OS::sprintf (largv[argc++],"iiop://localhost:%d/hostname_in_ior=unreachable",endpoint_port+1);
-}
-
 int
 main (int argc, char *argv[])
 {
@@ -82,12 +68,30 @@ main (int argc, char *argv[])
   PortableServer::POA_var root_poa;
   PortableServer::POAManagerFactory_var poa_manager_factory;
 
+  if (parse_args (argc, argv) != 0)
+    return 1;
+  char *extra[4];
+  extra[0] = CORBA::string_dup("-ORBEndpoint");
+  extra[1] = CORBA::string_alloc(100);
+  ACE_OS::sprintf (extra[1],
+                   "iiop://localhost:%d",
+                   endpoint_port);
+  extra[2] = CORBA::string_dup("-ORBEndpoint");
+  extra[3] = CORBA::string_alloc(100);
+  ACE_OS::sprintf (extra[3],
+                   "iiop://localhost:%d/hostname_in_ior=unreachable",
+                   endpoint_port+1);
+
+  char **largv = new char *[argc+4];
+  int i = 0;
+  for (i = 0; i < argc; i++)
+    largv[i] = argv[i];
+  for (i = 0; i < 4; i++)
+    largv[argc+i] = extra[i];
+  argc += 4;
+
   try
     {
-      if (parse_args (argc, argv) != 0)
-        return 1;
-      char **largv;
-      add_endpoint_args(argc,argv, largv);
       orb =
         CORBA::ORB_init (argc, largv, "EndpointPolicy");
 
@@ -110,6 +114,12 @@ main (int argc, char *argv[])
       ex._tao_print_exception("initialization error ");
       return 1;
     }
+
+  for (i = 0; i < 4; i++)
+    delete[] extra[i];
+
+  delete [] largv;
+
 
   //-----------------------------------------------------------------------
 

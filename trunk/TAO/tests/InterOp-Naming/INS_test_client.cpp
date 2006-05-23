@@ -82,10 +82,12 @@ main (int argc, char *argv[])
                                                  ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
+              CORBA::String_var iorstr =
+                orb->object_to_string (server.in ());
               ACE_DEBUG ((LM_DEBUG,
                           "Resolved IOR for %s : %s\n",
                           argv[i],
-                          orb->object_to_string (server.in ())));
+                          iorstr.in()));
 
               CORBA::String_var test_ins_result =
                 server->test_ins (ACE_ENV_SINGLE_ARG_PARAMETER);
