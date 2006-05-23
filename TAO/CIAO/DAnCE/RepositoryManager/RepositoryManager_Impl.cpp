@@ -49,6 +49,9 @@
 
 #include "ace/Configuration_Import_Export.h"
 
+#include "Config_Handlers/DnC_Dump.h"
+#include "Deployment.hpp"
+
 #include <iostream>
 using namespace std;
 
@@ -57,17 +60,19 @@ using namespace std;
 //
 //-----------------------------------------------------------------
 
-CIAO_RepositoryManagerDaemon_i::CIAO_RepositoryManagerDaemon_i (CORBA::ORB_ptr the_orb, const char* server)
+CIAO_RepositoryManagerDaemon_i::CIAO_RepositoryManagerDaemon_i
+  (CORBA::ORB_ptr the_orb, const char* server, char* install_dir)
   : the_orb_ (CORBA::ORB::_duplicate (the_orb)),
     install_root_ (""),
-    HTTP_server_ ("http://")
+    HTTP_server_ ("http://"),
+    install_path (install_dir)
 {
   //form the path
   this->HTTP_server_ += server;
   this->HTTP_server_ += "/";
 
   //create directory in which the packages will be stored
-  ACE_OS::mkdir(INSTALL_PATH);
+  ACE_OS::mkdir(install_path.c_str ());
   //if dir already exists a -1 is returned
   //we ignore this, just need to make sure the directory exists
 
@@ -75,31 +80,56 @@ CIAO_RepositoryManagerDaemon_i::CIAO_RepositoryManagerDaemon_i (CORBA::ORB_ptr t
 
   this->install_root_ = this->cwd_;
   this->install_root_ += "/";
-  this->install_root_ += INSTALL_PATH;
-
+  this->install_root_ += install_path;
 
   // Install the configuration files to get the names, UUIDs, & types info.
-  //ACE_Configuration_Heap cfg;
-  //cfg.open ();
-  //ACE_Configuration_Section_Key root = cfg.root_section ();
+  ACE_Configuration_Heap cfg;
+  cfg.open ();
+  ACE_Configuration_Section_Key root = cfg.root_section ();
 
-  //ACE_Registry_ImpExp config_importer (cfg);
-  //config_importer.import_config ("jss.txt");
+  ACE_Registry_ImpExp config_importer (cfg);
+  ACE_OS::chdir (install_path.c_str ());
+  config_importer.import_config (RM_RECORD_FILE);
+  ACE_OS::chdir (this->cwd_);
 
-  //ACE_Configuration_Section_Key NameSection;
-  //cfg.open_section (root, ACE_TEXT ("name"), 1, NameSection);
+  ACE_CString name;
+  ACE_Configuration::VALUETYPE type;
+  ACE_CString path;
 
-  //size_t num_entries;
-  //cfg.get_integer_value (NameSection, "names_length", num_entries);
+  ACE_Configuration_Section_Key NameSection;
+  cfg.open_section (root, RM_RECORD_NAME_SECTION, 1, NameSection);
+  u_int index = 0;
+  while (!cfg.enumerate_values (NameSection, index, name, type))
+  {
+    cfg.get_string_value (NameSection, name.c_str (), path);
+    this->names_.bind (name, path);
 
-  //void *names_bak = new PCMap ();
-  ////cfg.get_binary_value (NameSection, "name", names_bak, num_entries);
+    ++index;
+  }
 
-  ////this->names_ = static_cast<PCMap *> (names_bak);
+  ACE_Configuration_Section_Key UUIDSection;
+  cfg.open_section (root, RM_RECORD_UUID_SECTION, 1, UUIDSection);
+  index = 0;
+  while (!cfg.enumerate_values (UUIDSection, index, name, type))
+  {
+    cfg.get_string_value (UUIDSection, name.c_str (), path);
+    this->uuids_.bind (name, path);
 
-  //PCEntry *entry = 0;
-  //if (this->names_.find ("RACE", entry) == 0)
-  //  ACE_THROW (Deployment::NameExists ());
+    ++index;
+  }
+
+#if defined ASSEMBLY_INTERFACE_SUPPORT
+  ACE_Configuration_Section_Key TypeSection;
+  cfg.open_section (root, RM_RECORD_TYPE_SECTION, 1, TypeSection);
+  index = 0;
+  while (!cfg.enumerate_values (TypeSection, index, name, type))
+  {
+    cfg.get_string_value (TypeSection, name.c_str (), path);
+    this->types_.bind (name, path);
+
+    ++index;
+  }
+# endif
 }
 
 //-----------------------------------------------------------------
@@ -124,41 +154,49 @@ void CIAO_RepositoryManagerDaemon_i::shutdown ()
                                 CORBA::SystemException
                                 ))
 {
-  //// Save the names, UUIDs, & types info to the configuration files.
-  //ACE_Configuration_Heap cfg;
-  //cfg.open ();
-  //ACE_Configuration_Section_Key root = cfg.root_section ();
-  //ACE_Configuration_Section_Key NameSection;
-  //cfg.open_section (root, ACE_TEXT ("Names"), 1, NameSection);
+  // Save the names, UUIDs, & types info to the configuration files.
+  ACE_Configuration_Heap cfg;
+  cfg.open ();
+  ACE_Configuration_Section_Key root = cfg.root_section ();
 
-  //ACE_CString package_name = "";
-  //ACE_CString package_dir = "";
+  ACE_Configuration_Section_Key NameSection;
+  cfg.open_section (root, RM_RECORD_NAME_SECTION, 1, NameSection);
+  for (PCMap_Iterator iter = this->names_.begin ();
+    iter != this->names_.end ();
+    ++iter)
+  {
+    PCEntry& element = *iter;
+    cfg.set_string_value (NameSection, element.ext_id_.c_str (), element.int_id_.c_str ());
+  }
 
-  //CORBA::ULong index = 0;
-  //for (PCMap_Iterator iter = this->names_.begin ();
-  //  iter != this->names_.end ();
-  //  ++iter, ++index)
-  //{
-  //  PCEntry& element = *iter;
+  ACE_Configuration_Section_Key UUIDSection;
+  cfg.open_section (root, RM_RECORD_UUID_SECTION, 1, UUIDSection);
+  for (PCMap_Iterator iter = this->uuids_.begin ();
+    iter != this->uuids_.end ();
+    ++iter)
+  {
+    PCEntry& element = *iter;
+    cfg.set_string_value (UUIDSection, element.ext_id_.c_str (), element.int_id_.c_str ());
+  }
 
-  //  char *s;
-  //  sprintf(s, "%d", index);
+#if defined ASSEMBLY_INTERFACE_SUPPORT
+  ACE_Configuration_Section_Key TypeSection;
+  cfg.open_section (root, RM_RECORD_TYPE_SECTION, 1, TypeSection);
+  for (PCMap_Iterator iter = this->types_.begin ();
+    iter != this->types_.end ();
+    ++iter)
+  {
+    PCEntry& element = *iter;
+    cfg.set_string_value (TypeSection, element.ext_id_.c_str (), element.int_id_.c_str ());
+  }
+# endif
 
-  //  ACE_CString pc_name (s); 
-  //  pc_name = "package_name_"+pc_name;
-  //  package_name = CORBA::string_dup (element.ext_id_.c_str ());
-  //  cfg.set_string_value (NameSection, pc_name.c_str (), package_name);
-  //  
-  //  ACE_CString pc_dir (s); 
-  //  pc_dir = "package_dir_"+pc_dir;
-  //  package_dir = CORBA::string_dup (element.int_id_.c_str ());
-  //  cfg.set_string_value (NameSection, pc_dir.c_str (), package_dir);
-  //}
+  ACE_Registry_ImpExp exporter (cfg);
+  ACE_OS::chdir (install_path.c_str ());
+  exporter.export_config (RM_RECORD_FILE);
+  ACE_OS::chdir (this->cwd_);
 
-  //ACE_Registry_ImpExp exporter (cfg);
-  //exporter.export_config ("jss.txt");
-
-
+  // Release resource.
   this->names_.unbind_all ();
   this->uuids_.unbind_all ();
 
@@ -593,6 +631,13 @@ CIAO_RepositoryManagerDaemon_i::findPackageByName (const char * name)
   if(!RM_Helper::reincarnate (pc, pc_path.c_str ()))
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
+  //Deployment::DnC_Dump::dump (pc);
+
+  //xercesc::DOMDocument* the_xsc (CIAO::Config_Handlers::XML_HELPER->create_dom
+  //  ("Deployment:packageConfiguration", "http://www.omg.org/Deployment"));
+  //CIAO::Config_Handlers::packageConfiguration(pc, the_xsc);
+  //CIAO::Config_Handlers::XML_HELPER->write_DOM(the_xsc, "test.xml");
+
   ACE_DEBUG ((LM_INFO, "Successfully looked up \'%s\'.\n", name));
 
   return pc._retn ();
@@ -1016,13 +1061,13 @@ CIAO_RepositoryManagerDaemon_i::retrieve_PC_from_descriptors (const char* pc_nam
   //change the working dir
   ACE_OS::chdir (descriptor_dir);
 
-  Deployment::PackageConfiguration* pc = new Deployment::PackageConfiguration ();
+  Deployment::PackageConfiguration_var pc = new Deployment::PackageConfiguration ();
   //parse the PCD to make sure that there are no package errors
   ACE_TRY
     {
       //CIAO::Config_Handlers::STD_PC_Intf intf (pc_name);
       //pc = intf.get_PC ();
-      if (xercesc::DOMDocument *doc = CIAO::Config_Handlers::XML_HELPER->create_dom (pc_name))
+      //if (xercesc::DOMDocument *doc = CIAO::Config_Handlers::XML_HELPER->create_dom (pc_name))
       {
         //Read in the XSC type structure from the DOMDocument
 
@@ -1048,7 +1093,8 @@ CIAO_RepositoryManagerDaemon_i::retrieve_PC_from_descriptors (const char* pc_nam
 
   //change back the the old working dir
   ACE_OS::chdir (this->cwd_);
-  return pc;
+  
+  return pc._retn ();
 }
 
 
@@ -1365,4 +1411,3 @@ void CIAO_RepositoryManagerDaemon_i::dump (void)
 
 #endif /* ACE_HAS_DUMP */
 }
-

@@ -81,7 +81,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       else if (options->register_with_ns_)
       {
         if (options->repoman_name_ != "")
-          RMname_service = options->repoman_name_;
+          RMname_service = const_cast<char*> (options->repoman_name_.c_str ());
 
         // Naming Service related operations
         CORBA::Object_var naming_context_object =
@@ -207,9 +207,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         char cwd [1024];
         ACE_OS::getcwd (cwd, 1024);
         ACE_CString descriptor_dir (cwd);
-        descriptor_dir += "/packageDescriptors/";
-        descriptor_dir += options->name_;
-        descriptor_dir += "/descriptors/";
+        descriptor_dir += "/packageDescriptors/RACE/descriptors/";
         ACE_OS::chdir (descriptor_dir.c_str ());
 
         Deployment::PackageConfiguration *pc = new Deployment::PackageConfiguration ();
@@ -261,13 +259,13 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       {
         Deployment::PackageConfiguration_var pc = rm->findPackageByName (options->name_.c_str ());
         cout << "The package was found!" << endl;
-        Deployment::DnC_Dump::dump (pc);
+        //Deployment::DnC_Dump::dump (pc);
       }
       else
       {
         Deployment::PackageConfiguration_var pc = rm->findPackageByUUID (options->uuid_.c_str ());
         cout << "The package was found!" << endl;
-        Deployment::DnC_Dump::dump (pc);
+        //Deployment::DnC_Dump::dump (pc);
       }
     }
 
