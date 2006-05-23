@@ -249,7 +249,7 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
                            length);
 
   // We've got a framed IPC mechanism, so we can just do a <recv>.
-  int result = spipe.recv ((ACE_Str_Buf *) 0
+  int result = spipe.recv ((ACE_Str_Buf *) 0,
                            &payload_msg,
                            &flags);
 
