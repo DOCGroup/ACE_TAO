@@ -64,6 +64,15 @@ namespace
                        CORBA::StringSeq &svc_config_argv);
 
   /**
+   * When multiple ORBs are being configured, the global options are
+   * only processed for the first ORB loaded. However subsequent ORBs
+   * may be supplied with some of these options, so they need to be
+   * eliminated as though they were processed
+   */
+  int
+  skip_global_args_i (int &argc, char **argv);
+
+  /**
    * Parses the supplied command-line arguments to extract any that
    * specify a Service Configurator file (-ORBSvcConf). This is done
    * separately, because depending on the context, the configuration
@@ -199,8 +208,8 @@ TAO::ORB::open_services (ACE_Service_Gestalt* pcfg,
 
       if (TAO_debug_level > 2)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_LIB_TEXT ("TAO (%P|%t) Initializing the ")
-                    ACE_LIB_TEXT("process-wide services\n")));
+                    ACE_TEXT ("TAO (%P|%t) Initializing the ")
+                    ACE_TEXT("process-wide services\n")));
 
       ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX,
                                 guard,
@@ -240,19 +249,27 @@ TAO::ORB::open_services (ACE_Service_Gestalt* pcfg,
         {
           if (TAO_debug_level > 0)
             ACE_ERROR_RETURN ((LM_DEBUG,
-                               ACE_LIB_TEXT ("TAO (%P|%t) Failed to ")
-                               ACE_LIB_TEXT("open process-wide service configuration\n")),
+                               ACE_TEXT ("TAO (%P|%t) Failed to ")
+                               ACE_TEXT("open process-wide service configuration\n")),
                               -1);
           return -1;
         }
 
       register_additional_services_i (theone);
     }
+  else
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("TAO (%P|%t) Skipping the process-wide service")
+                  ACE_TEXT (" configuration, service_open_count = %d\n"),
+                  service_open_count));
+      int status = skip_global_args_i(argc, argv);
+    }
 
   if (TAO_debug_level > 2)
     ACE_DEBUG ((LM_DEBUG,
-                ACE_LIB_TEXT ("TAO (%P|%t) Initializing the ")
-                ACE_LIB_TEXT("orb-specific services\n")));
+                ACE_TEXT ("TAO (%P|%t) Initializing the ")
+                ACE_TEXT("orb-specific services\n")));
 
   if (parse_svcconf_args_i (argc, argv, svc_config_argv) == -1)
     return -1;
@@ -268,8 +285,8 @@ TAO::ORB::open_services (ACE_Service_Gestalt* pcfg,
 
   if (TAO_debug_level > 0)
     ACE_ERROR_RETURN ((LM_DEBUG,
-                       ACE_LIB_TEXT ("TAO (%P|%t) Failed to ")
-                       ACE_LIB_TEXT("open orb service configuration\n")),
+                       ACE_TEXT ("TAO (%P|%t) Failed to ")
+                       ACE_TEXT("open orb service configuration\n")),
                       -1);
   return -1;
 }
@@ -328,12 +345,14 @@ namespace
 
 
 
-  /// @brief registers all process-wide (global) services, available to all ORBs
+  /// @brief registers all process-wide (global) services, available
+  /// to all ORBs
   void
   register_global_services_i (ACE_Service_Gestalt * pcfg)
   {
-    // This has to be done before intializing the resource factory. Codesets is a special
-    // library since its configuration is optional and it may be linked statically.
+    // This has to be done before intializing the resource
+    // factory. Codesets is a special library since its configuration
+    // is optional and it may be linked statically.
     if (negotiate_codesets)
       {
         TAO_Codeset_Manager_Factory_Base *factory =
@@ -341,8 +360,8 @@ namespace
         if (factory == 0 || factory->is_default())
           {
 #if !defined (TAO_AS_STATIC_LIBS)
-            // only for dynamic libs, check to see if default factory and if so,
-            // remove it
+            // only for dynamic libs, check to see if default factory
+            // and if so, remove it
             ACE_Service_Config::process_directive
               (ACE_REMOVE_SERVICE_DIRECTIVE("TAO_Codeset"));
             ACE_Service_Config::process_directive
@@ -544,7 +563,6 @@ namespace
 
 
 
-
   int
   parse_private_args_i (int &argc,
                         char **argv,
@@ -693,6 +711,67 @@ namespace
 
   } /* parse_global_args_i */
 
+  int
+  skip_global_args_i (int &argc, char **argv)
+  {
+
+#if defined (TAO_DEBUG) && !defined (ACE_HAS_WINCE)
+  // Make it a little easier to debug programs using this code.
+  {
+    TAO_debug_level = ACE_Env_Value<u_int> ("TAO_ORB_DEBUG", 0);
+
+    char * const value = ACE_OS::getenv ("TAO_ORB_DEBUG");
+
+    if (value != 0)
+      {
+        TAO_debug_level = ACE_OS::atoi (value);
+
+        if (TAO_debug_level <= 0)
+          {
+            TAO_debug_level = 1;
+          }
+
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("TAO_debug_level == %d\n"),
+                    TAO_debug_level));
+      }
+  }
+#endif  /* TAO_DEBUG && !ACE_HAS_WINCE */
+
+
+    // Extract the Service Configurator ORB options from the argument
+    // vector.
+    ACE_Arg_Shifter arg_shifter (argc, argv);
+    CORBA::ULong len = 0;
+
+    while (arg_shifter.is_anything_left ())
+    {
+      const ACE_TCHAR *current_arg = 0;
+      if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT ("-ORBDebug")) == 0)
+      {
+        arg_shifter.consume_arg ();
+      }
+      else if (0 != (current_arg = arg_shifter.get_the_parameter
+                     (ACE_TEXT ("-ORBDebugLevel"))))
+      {
+        arg_shifter.consume_arg ();
+      }
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT ("-ORBDaemon")) == 0)
+      {
+        arg_shifter.consume_arg ();
+      }
+      // Can't interpret this argument.  Move on to the next argument.
+      else
+      {
+        // Any arguments that don't match are ignored so that the
+        // caller can still use them.
+        arg_shifter.ignore_arg ();
+      }
+    }
+
+    return 0;
+
+  } /* skip_global_args_i */
 
 }
 // TAO_BEGIN_VERSIONED_NAMESPACE_DECL -- ended prior to anonymous namespace.

@@ -315,10 +315,6 @@ TAO_Root_POA::TAO_Root_POA (const TAO_Root_POA::String &name,
 
 TAO_Root_POA::~TAO_Root_POA (void)
 {
-  if (TAO_debug_level > 0)
-    {
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t)~TAO_Root_POA : %s\n", this->the_name ()));
-    }
 }
 
 void
