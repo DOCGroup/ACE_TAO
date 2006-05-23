@@ -1,3 +1,23 @@
+Tue May 23 16:09:05 UTC 2006  Adam Mitz  <mitza@ociweb.com>
+
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Acceptor.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Endpoint.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Factory.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp:
+        * tao/ORB_Constants.h:
+
+          See bugzilla #2500.  Around the time of TAO 1.4.7 the tags for UIPMC
+          (multicast) changed from TAO-assigned to OMG-assigned.  The
+          ComponentID and the ProfileID were added to tao/IOP_IORC.h but the
+          change to the new ProfileID was never completed, since code still
+          referred to the value in tao/ORB_Constants.h.  This change eliminates
+          the old ProfileID and changes all uses to the new one.  This causes a
+          break in multicast interoperability between applications using TAO
+          before this change and TAO after this change, but should enable
+          multicast interoperability between TAO and a different ORB.
+
 Tue May 23 13:05:43 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/ORB_Core.cpp:

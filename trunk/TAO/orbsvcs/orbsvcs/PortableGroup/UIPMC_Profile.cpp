@@ -35,7 +35,7 @@ TAO_UIPMC_Profile::object_key_delimiter (void) const
 
 
 TAO_UIPMC_Profile::TAO_UIPMC_Profile (TAO_ORB_Core *orb_core)
-  : TAO_Profile (TAO_TAG_UIPMC_PROFILE,
+  : TAO_Profile (IOP::TAG_UIPMC,
                  orb_core,
                  TAO_GIOP_Message_Version (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR)),
     endpoint_ (),
@@ -47,7 +47,7 @@ TAO_UIPMC_Profile::TAO_UIPMC_Profile (TAO_ORB_Core *orb_core)
 
 TAO_UIPMC_Profile::TAO_UIPMC_Profile (const ACE_INET_Addr &addr,
                                       TAO_ORB_Core *orb_core)
-  : TAO_Profile (TAO_TAG_UIPMC_PROFILE,
+  : TAO_Profile (IOP::TAG_UIPMC,
                  orb_core,
                  TAO_GIOP_Message_Version (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR)),
     endpoint_ (addr),
@@ -60,7 +60,7 @@ TAO_UIPMC_Profile::TAO_UIPMC_Profile (const ACE_INET_Addr &addr,
 TAO_UIPMC_Profile::TAO_UIPMC_Profile (const CORBA::Octet class_d_address[4],
                                       CORBA::UShort port,
                                       TAO_ORB_Core *orb_core)
-  : TAO_Profile (TAO_TAG_UIPMC_PROFILE,
+  : TAO_Profile (IOP::TAG_UIPMC,
                  orb_core,
                  TAO_GIOP_Message_Version (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR)),
     endpoint_ (class_d_address, port),
@@ -486,7 +486,7 @@ TAO_UIPMC_Profile::create_tagged_profile (void)
   if (this->tagged_profile_.profile_data.length () == 0)
     {
       // As we have not created we will now create the TaggedProfile
-      this->tagged_profile_.tag = TAO_TAG_UIPMC_PROFILE;
+      this->tagged_profile_.tag = IOP::TAG_UIPMC;
 
       // Create the encapsulation....
       TAO_OutputCDR encap;
