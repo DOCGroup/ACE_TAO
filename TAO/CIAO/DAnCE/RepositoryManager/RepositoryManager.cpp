@@ -24,6 +24,8 @@
 #include "ace/Get_Opt.h"
 #include "ace/SString.h"
 
+#include "orbsvcs/CosNamingC.h"
+
 namespace CIAO
 {
   namespace RepositoryManager
@@ -31,9 +33,18 @@ namespace CIAO
     /// Name of the file holding the IOR of the RM
     const char * RMior = "RepositoryManagerDeamon.ior";
 
+    // Name of Naming service
+    char * repoman_name_;
+
+    //Name service of the RM
+    char * RMname_service = "RepositoryManager";
+
     /// Default number of worker threads to run in the multi-threaded RM
     static unsigned int nthreads = 3;
     static ACE_CString HTTPserver = "127.0.0.1:5432";
+
+    static bool register_with_ns_ = false;
+    static bool write_to_ior_ = true;
   }
 }
 
@@ -60,6 +71,62 @@ private:
   CORBA::ORB_var orb_;
 };
 
+bool
+write_ior_file (CORBA::ORB_ptr orb,
+                CIAO::RepositoryManagerDaemon_ptr obj
+                ACE_ENV_ARG_DECL)
+{
+  CORBA::String_var ior =
+    orb->object_to_string (obj
+    ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (false);
+
+  FILE* RMior_file =
+    ACE_OS::fopen (CIAO::RepositoryManager::RMior, "w");
+
+  if (RMior_file)
+  {
+    ACE_OS::fprintf (RMior_file,
+      "%s",
+      ior.in ());
+    ACE_OS::fclose (RMior_file);
+  }
+  else
+    return false;
+
+  return true;
+}
+
+bool
+register_with_ns (CORBA::ORB_ptr orb,
+                  CIAO::RepositoryManagerDaemon_ptr obj
+                  ACE_ENV_ARG_DECL)
+{
+  if (CIAO::RepositoryManager::repoman_name_ != "")
+    CIAO::RepositoryManager::RMname_service = 
+      CIAO::RepositoryManager::repoman_name_;
+
+  // Naming Service related operations
+  CORBA::Object_var naming_context_object =
+    orb->resolve_initial_references ("NameService"
+    ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (false);
+
+  CosNaming::NamingContext_var naming_context =
+    CosNaming::NamingContext::_narrow (naming_context_object.in ());
+
+  // Initialize the Naming Sequence
+  CosNaming::Name name (1);
+  name.length (1);
+
+  // String dup required for MSVC6
+  name[0].id = CORBA::string_dup (CIAO::RepositoryManager::RMname_service);
+
+  // Register the servant with the Naming Service
+  naming_context->rebind (name, obj);
+ 
+  return true;
+}
 
 ///Main function
 
@@ -98,20 +165,28 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     //register and implicitly activate servant
     CIAO::RepositoryManagerDaemon_var RepositoryManagerDeamon = repo->_this ();
 
-    //convert the IOR to string
-    CORBA::String_var ior = orb->object_to_string (RepositoryManagerDeamon.in ());
+    bool retval = false;
 
-    //output the IOR to a file
-    FILE* ior_out = ACE_OS::fopen (CIAO::RepositoryManager::RMior, "w");
+    if (CIAO::RepositoryManager::write_to_ior_)
+    {
+      retval =
+        write_ior_file (orb.in (),
+        RepositoryManagerDeamon.in ()
+        ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+    }
+    else if (CIAO::RepositoryManager::register_with_ns_)
+    {
+      retval =
+        register_with_ns (orb.in (),
+        RepositoryManagerDeamon.in ()
+        ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+    }
 
-    if (ior_out == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot open output file for writing IOR: %s",
-                            CIAO::RepositoryManager::RMior),
-                            1);
+    if (!retval)
+      return -1;
 
-    ACE_OS::fprintf (ior_out, "%s", ior.in ());
-    ACE_OS::fclose (ior_out);
 
     Worker worker (orb.in ());
     if (worker.activate (THR_NEW_LWP | THR_JOINABLE,
@@ -156,11 +231,20 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     bool
     parse_args (int argc, char *argv[])
     {
-      ACE_Get_Opt get_opts (argc, argv, "s:n:");
+      ACE_Get_Opt get_opts (argc, argv, "ov:s:n:");
       int c;
       while ((c = get_opts ()) != -1)
         switch (c)
           {
+          case 'o':
+            CIAO::RepositoryManager::write_to_ior_ = true;
+            CIAO::RepositoryManager::register_with_ns_ = false;
+            break;
+          case 'v':
+            CIAO::RepositoryManager::write_to_ior_ = false;
+            CIAO::RepositoryManager::register_with_ns_ = true;
+            CIAO::RepositoryManager::repoman_name_ = get_opts.opt_arg ();
+            break;
           case 's':
             CIAO::RepositoryManager::HTTPserver = get_opts.opt_arg ();
             break;
@@ -170,6 +254,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           case '?':  // display help for use of the server.
             ACE_DEBUG ((LM_INFO,
                         "usage:  %s\n"
+                        "-o <using ior file>\n"
+                        "-v <name of naming service>\n"
                         "-s <IP:PORT for HTTP server>\n"
                         "-n <number of threads>\n",
                         argv [0]));

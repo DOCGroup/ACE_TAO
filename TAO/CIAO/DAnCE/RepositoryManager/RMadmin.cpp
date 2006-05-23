@@ -27,10 +27,17 @@ using namespace std;
 #include "tao/CDR.h"          //for TAO CDR classes
 #include "ace/Message_Block.h"      //for ACE_Message_Block
 
+#include "Config_Handlers/Utils/XML_Helper.h"
+#include "Config_Handlers/Package_Handlers/PCD_Handler.h"
+
+#include "orbsvcs/CosNamingC.h"
 
 
 //IOR file of the RM
-const char * ior = "file://RepositoryManagerDeamon.ior";
+const char *ior = "file://RepositoryManagerDeamon.ior";
+
+//Name service of the RM
+char *RMname_service;
 
 
 ///=============================COUPLE OF HELPER METHORS==================================
@@ -59,11 +66,45 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       ACE_TRY_CHECK;
 
+      Options* options = TheOptions::instance ();
+      if (!options->parse_args (argc, argv))
+        return -1;
 
-      CORBA::Object_var obj =
-        orb->string_to_object (ior
-                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CORBA::Object_var obj;
+
+      if (options->write_to_ior_)
+      {
+        obj = orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+      }
+
+      else if (options->register_with_ns_)
+      {
+        if (options->repoman_name_ != "")
+          RMname_service = options->repoman_name_;
+
+        // Naming Service related operations
+        CORBA::Object_var naming_context_object =
+          orb->resolve_initial_references ("NameService"
+          ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK_RETURN (false);
+
+        CosNaming::NamingContext_var naming_context =
+          CosNaming::NamingContext::_narrow (naming_context_object.in ());
+        ACE_TRY_CHECK;
+
+        // Initialize the Naming Sequence
+        CosNaming::Name name (1);
+        name.length (1);
+
+        // String dup required for MSVC6
+        name[0].id = CORBA::string_dup (RMname_service);
+
+        // Resolve object from name		
+        obj = naming_context->resolve (name);
+        ACE_TRY_CHECK;
+      }    
+
 
     CIAO::RepositoryManagerDaemon_var rm =
       CIAO::RepositoryManagerDaemon::_narrow (obj.in ()
@@ -76,11 +117,6 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                              "Unable to acquire RepositoryManagerDaemon's objref\n"),
                             -1);
         }
-
-
-    Options* options = TheOptions::instance ();
-    if (!options->parse_args (argc, argv))
-       return -1;
 
     if (options->shutdown_)
     {
@@ -137,7 +173,6 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         cout << "\nException caught!" << ex << "\n";
         return 0;
       }
-
     }
     else if (options->install_)
     {
@@ -162,6 +197,49 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       catch (CORBA::Exception &)
       {
         cout << "\nError! Package not found!" << endl;
+      }
+    }
+    else if (options->create_)
+    {
+      try
+      {
+        //change the working dir
+        char cwd [1024];
+        ACE_OS::getcwd (cwd, 1024);
+        ACE_CString descriptor_dir (cwd);
+        descriptor_dir += "/packageDescriptors/";
+        descriptor_dir += options->name_;
+        descriptor_dir += "/descriptors/";
+        ACE_OS::chdir (descriptor_dir.c_str ());
+
+        Deployment::PackageConfiguration *pc = new Deployment::PackageConfiguration ();
+        //parse the PCD to make sure that there are no package errors
+        ACE_TRY
+        {
+          if (xercesc::DOMDocument *doc = CIAO::Config_Handlers::XML_HELPER->create_dom 
+            ("default.pcd"))
+          {            
+            CIAO::Config_Handlers::Packaging::PCD_Handler::package_config 
+              ("default.pcd", *pc);
+          }
+        }
+        ACE_CATCHALL
+        {
+          ACE_ERROR ((LM_ERROR,
+            "(%P|%t) [RM::retrieve_PC_from_descriptors] Error parsing the PCD\n"));
+
+          ACE_THROW (Deployment::PackageError ());
+        }
+        ACE_ENDTRY;
+
+        ACE_OS::chdir (cwd);
+
+        rm->createPackage (options->name_.c_str (), *pc, options->path_.c_str (), false);
+      }
+      catch (CORBA::Exception & ex)
+      {
+        cout << "\nException caught!" << ex << "\n";
+        return 0;
       }
     }
     else if (options->delete_)

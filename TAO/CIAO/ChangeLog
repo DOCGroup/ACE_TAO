@@ -1,3 +1,14 @@
+Tue May 23 14:31:11 UTC 2006  jiang,shanshan <shanshan.jiang@vanderbilt.edu>
+
+        * DAnCE/RepositoryManager/Options.cpp
+        * DAnCE/RepositoryManager/Options.h
+        * DAnCE/RepositoryManager/RMadmin.cpp
+        * DAnCE/RepositoryManager/RepositoryManager_Impl.cpp
+        * DAnCE/RepositoryManager/RepositoryManager.cpp
+
+          Added the naming service & the implementation of createPackage
+          function to RepoMan.
+
 Mon May 22 18:49:14 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ciao/Container_Base.cpp(ciao_install_home):
