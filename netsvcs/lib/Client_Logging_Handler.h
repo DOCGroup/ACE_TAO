@@ -64,7 +64,7 @@ public:
   /// (called by the <ACE_Client_Logging_Acceptor>).
   virtual int open (void * = 0);
 
-  /// Return the handle of the <ACE_SPIPE_Stream>;
+  /// Return the handle of the IPC endpoint.
   virtual ACE_HANDLE get_handle (void) const;
 
   /// Called when object is removed from the <ACE_Reactor>.
