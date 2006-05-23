@@ -71,7 +71,7 @@ struct MIOP_Packet
 TAO_UIPMC_Transport::TAO_UIPMC_Transport (TAO_UIPMC_Connection_Handler *handler,
                                           TAO_ORB_Core *orb_core,
                                           CORBA::Boolean /*flag*/)
-  : TAO_Transport (TAO_TAG_UIPMC_PROFILE,
+  : TAO_Transport (IOP::TAG_UIPMC,
                    orb_core)
   , connection_handler_ (handler)
   , messaging_object_ (0)
