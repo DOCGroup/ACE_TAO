@@ -59,15 +59,21 @@ template <ACE_PEER_STREAM_1, class COUNTER, ACE_SYNCH_DECL, class LMR> int
 ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::handle_logging_record ()
 {
   ACE_Log_Record log_record;
+
   // We need to use the old two-read trick here since TCP sockets
   // don't support framing natively.  Allocate a message block for the
   // payload; initially at least large enough to hold the header, but
   // needs some room for alignment.
-  ACE_Message_Block *payload = 0;
-  ACE_Message_Block *header =
-    new ACE_Message_Block (ACE_DEFAULT_CDR_BUFSIZE);
+  ACE_Message_Block *payload_p = 0;
+  ACE_Message_Block *header_p = 0;
+  ACE_NEW_RETURN (header_p,
+                  ACE_Message_Block (ACE_DEFAULT_CDR_BUFSIZE),
+                  -1);
+
+  auto_ptr <ACE_Message_Block> header (header_p);
+
   // Align the Message Block for a CDR stream
-  ACE_CDR::mb_align (header);
+  ACE_CDR::mb_align (header.get ());
 
   ACE_CDR::Boolean byte_order;
   ACE_CDR::ULong length;
@@ -82,10 +88,6 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::ha
     case -1:
     case 0:
 
-      // Release the memory to prevent a leak.
-      header->release ();
-      header = 0;
-
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("server logging daemon closing down at host %s\n"),
                   this->host_name ()));
@@ -94,51 +96,76 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::ha
       /* NOTREACHED */
 
     case 8:
-      header->wr_ptr (8); // Reflect addition of 8 bytes.
-
-      // Create a CDR stream to parse the 8-byte header.
-      ACE_InputCDR cdr (header);
-
-      // Extract the byte-order and use helper methods to disambiguate
-      // octet, booleans, and chars.
-      cdr >> ACE_InputCDR::to_boolean (byte_order);
-
-      // Set the byte-order on the stream...
-      cdr.reset_byte_order (byte_order);
-
-      // Extract the length
-      cdr >> length;
-
-      payload =	new ACE_Message_Block (length);
-      // Ensure there's sufficient room for log record payload.
-      ACE_CDR::grow (payload, 8 + ACE_CDR::MAX_ALIGNMENT + length);
-
-      // Use <recv_n> to obtain the contents.
-      if (ACE::recv_n (this->peer ().get_handle (),  payload->wr_ptr (), length) > 0) 
-        payload->wr_ptr (length);   // Reflect additional bytes
-      else
+#if 0 // defined (ACE_WIN32)
+      // This is a special-case sent from near line 610 in
+      // Log_Msg.cpp.  Without this code Win32 sockets are never
+      // closed, so this server will quickly run out of handles.
+      if (length == ~0)
         {
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("%p\n"),
-                      ACE_TEXT ("recv_n()")));
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("client closing down on Windows\n")));
+          if (ACE_Reactor::instance ()->remove_handler
+              (handle,
+               ACE_Event_Handler::READ_MASK
+               | ACE_Event_Handler::EXCEPT_MASK
+               | ACE_Event_Handler::DONT_CALL) == -1)
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("%n: %p\n"),
+                               ACE_TEXT ("remove_handler")),
+                              0);
 
-          // Release the memory to prevent a leak.
-          payload->release ();
-          payload = 0;
-	  header->release ();
-	  header = 0;
-          return -1;
+          ACE_OS::closesocket (handle);
+          return 0;
         }
+#endif /* ACE_WIN32 */
+
+      // Just fall through in this case..
+      break;
     }
 
-  ACE_InputCDR cdr (payload);
-  cdr.reset_byte_order (byte_order);
-  cdr >> log_record;  // Finally extract the <ACE_log_record>.
+  header->wr_ptr (8); // Reflect addition of 8 bytes.
+
+  // Create a CDR stream to parse the 8-byte header.
+  ACE_InputCDR header_cdr (header.get ());
+
+  // Extract the byte-order and use helper methods to disambiguate
+  // octet, booleans, and chars.
+  header_cdr >> ACE_InputCDR::to_boolean (byte_order);
+
+  // Set the byte-order on the stream...
+  header_cdr.reset_byte_order (byte_order);
+
+  // Extract the length
+  header_cdr >> length;
+  
+  ACE_NEW_RETURN (payload_p,
+                  ACE_Message_Block (length),
+                  -1);
+  auto_ptr <ACE_Message_Block> payload (payload_p);
+
+  // Ensure there's sufficient room for log record payload.
+  ACE_CDR::grow (payload.get (), 8 + ACE_CDR::MAX_ALIGNMENT + length);
+
+  // Use <recv_n> to obtain the contents.
+  if (ACE::recv_n (this->peer ().get_handle (),
+                   payload->wr_ptr (),
+                   length) <= 0) 
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("recv_n()")));
+      return -1;
+    }
+
+  payload->wr_ptr (length);   // Reflect additional bytes
+
+  ACE_InputCDR payload_cdr (payload.get ());
+  payload_cdr.reset_byte_order (byte_order);
+  payload_cdr >> log_record;  // Finally extract the <ACE_log_record>.
 
   log_record.length (length);
 
-  // Send the log record to the log message receiver for
-  // processing.
+  // Send the log record to the log message receiver for processing.
   if (ACE_BIT_ENABLED (ACE_Log_Msg::instance ()->flags (),
 		       ACE_Log_Msg::STDERR))
     receiver ().log_record (this->host_name (),
@@ -147,12 +174,6 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::ha
   receiver ().log_output (this->host_name (),
 			  log_record,
 			  orig_ostream);
-
-  // Release the memory to prevent a leak.
-  payload->release ();
-  payload = 0;
-  header->release ();
-  header = 0;
   return 0;
 
 #if 0
@@ -220,8 +241,8 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::ha
             // processing.
             if (ACE_BIT_ENABLED (ACE_Log_Msg::instance ()->flags (),
                                  ACE_Log_Msg::STDERR))
-                receiver ().log_record (this->host_name (),
-                                        lp);
+              receiver ().log_record (this->host_name (),
+                                      lp);
             ostream *orig_ostream = ACE_Log_Msg::instance ()->msg_ostream ();
             receiver ().log_output (this->host_name (),
                                     lp,
@@ -229,16 +250,16 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::ha
           }
         else
           ACERROR ((LM_ERROR,
-                      ACE_TEXT ("error, lp.length = %d, n = %d\n"),
-                      lp.length (),
-                      n));
+                    ACE_TEXT ("error, lp.length = %d, n = %d\n"),
+                    lp.length (),
+                    n));
         return n;
       }
     }
 #endif 
 
   ACE_NOTREACHED (return -1;)
-}
+    }
 
 // Hook called by Server_Logging_Acceptor when connection is
 // established.
