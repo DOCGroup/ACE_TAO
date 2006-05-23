@@ -87,14 +87,14 @@ ACE_Log_Msg_IPC::log (ACE_Log_Record &log_record)
   // Use the <putpmsg> API if supported to ensure correct message
   // queueing according to priority.
 
-  ACE_Str_Buf header (static_cast<void *> (header.begin ()->rd_ptr ()),
-                      static_cast<int> (8));
+  ACE_Str_Buf header_msg (static_cast<void *> (header.begin ()->rd_ptr ()),
+                          static_cast<int> (8));
 
-  ACE_Str_Buf payload (static_cast<void *> (payload.begin ()->rd_ptr ()),
-                      static_cast<int> (length));
+  ACE_Str_Buf payload_msg (static_cast<void *> (payload.begin ()->rd_ptr ()),
+                           static_cast<int> (length));
 
-  return this->message_queue_.send (&header,
-                                    &payload,
+  return this->message_queue_.send (&header_msg,
+                                    &payload_msg,
                                     static_cast<int> (log_record.priority ()),
                                     MSG_BAND);
 #else
