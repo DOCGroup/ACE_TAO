@@ -46,12 +46,16 @@
 
 namespace
 {
-  /// Directory where the packages will be stored locally
-  const static char* INSTALL_PATH = "RepositoryDir";
-
   const static size_t TEMP_LEN = 1024;
 
   const static char* PC_EXTENSION = ".epc";
+
+  const static char *RM_RECORD_FILE = "RM_record";
+  const static char *RM_RECORD_NAME_SECTION = "Names";
+  const static char *RM_RECORD_UUID_SECTION = "UUIDs";
+#if defined ASSEMBLY_INTERFACE_SUPPORT
+  const static char *RM_RECORD_TYPE_SECTION = "Types";
+# endif
 }
 
 class  CIAO_RepositoryManagerDaemon_i :
@@ -60,7 +64,8 @@ class  CIAO_RepositoryManagerDaemon_i :
 public:
   /// Constructor
   CIAO_RepositoryManagerDaemon_i (CORBA::ORB_ptr the_orb,
-                  const char* server = "localhost:5432");
+                  const char* server = "localhost:5432",
+                  char* install_dir = "RepositoryManager");
 
   /// Destructor
   virtual ~CIAO_RepositoryManagerDaemon_i (void);
@@ -285,10 +290,9 @@ public:
   CORBA::ORB_var the_orb_;
 
   char cwd_ [TEMP_LEN];      //will hold the current working directory
-  ACE_CString  install_root_;    //full path for the install directory
+  ACE_CString install_root_;    //full path for the install directory
   ACE_CString HTTP_server_;    //location of the server
-
+  ACE_CString install_path; //directory where the packages will be stored locally
 };
 
 #endif /* REPOSITORYMANAGER_H_  */
-

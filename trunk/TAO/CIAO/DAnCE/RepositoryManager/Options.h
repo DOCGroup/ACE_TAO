@@ -83,7 +83,7 @@ public:
   bool write_to_ior_;
 
   // Name of RepoMan
-  char *repoman_name_;
+  ACE_CString repoman_name_;
 
 protected:
   //usage function

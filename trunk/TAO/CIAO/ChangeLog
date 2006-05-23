@@ -1,3 +1,15 @@
+Tue May 23 22:46:58 UTC 2006  jiang,shanshan <shanshan.jiang@vanderbilt.edu>
+
+        * DAnCE/RepositoryManager/Options.cpp
+        * DAnCE/RepositoryManager/Options.h
+        * DAnCE/RepositoryManager/RMadmin.cpp
+        * DAnCE/RepositoryManager/RepositoryManager_Impl.h
+        * DAnCE/RepositoryManager/RepositoryManager_Impl.cpp
+        * DAnCE/RepositoryManager/RepositoryManager.cpp
+
+          Added the code to save the state of the RepoMan at exit and
+          load the state of it at start.
+
 Tue May 23 14:31:11 UTC 2006  jiang,shanshan <shanshan.jiang@vanderbilt.edu>
 
         * DAnCE/RepositoryManager/Options.cpp
