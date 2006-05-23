@@ -249,9 +249,9 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
                            length);
 
   // We've got a framed IPC mechanism, so we can just do a <recv>.
-  int result = spipe.recv ((ACE_Str_Buf *) 0,
-                           &payload_msg,
-                           &flags);
+  result = spipe.recv ((ACE_Str_Buf *) 0,
+                       &payload_msg,
+                       &flags);
 
   if (result < 0 || payload_msg.len == 0)
     {
@@ -527,7 +527,7 @@ ACE_Client_Logging_Acceptor::init (int argc, ACE_TCHAR *argv[])
   // We'll log *our* error and debug messages to stderr!
   if (ACE_LOG_MSG->open (ACE_TEXT ("Client Logging Service")) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Can't open Log_Msg\n")),
+                       ACE_TEXT ("Can't open ACE_Log_Msg\n")),
                       -1);
 
   // Use the options hook to parse the command line arguments and set
@@ -549,8 +549,26 @@ ACE_Client_Logging_Acceptor::init (int argc, ACE_TCHAR *argv[])
   ACE_SOCK_Stream stream;
   ACE_INET_Addr server_addr;
 
+#if defined (ACE_HAS_STREAM_PIPES)
+  ACE_SPIPE_Addr lserver_addr;
+
   // Figure out what local port we're really bound to.
-  if (this->acceptor ().get_local_addr (server_addr) == -1)
+  if (this->acceptor ().get_local_addr (lserver_addr) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("get_local_addr")),
+                      -1);
+
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("starting up Client Logging Daemon, ")
+              ACE_TEXT ("bounded to STREAM addr %s on handle %u\n"),
+              lserver_addr.get_path_name (),
+              this->acceptor ().get_handle ()));
+#else
+  ACE_INET_Addr lserver_addr;
+
+  // Figure out what local port we're really bound to.
+  if (this->acceptor ().get_local_addr (lserver_addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("get_local_addr")),
@@ -559,8 +577,9 @@ ACE_Client_Logging_Acceptor::init (int argc, ACE_TCHAR *argv[])
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("starting up Client Logging Daemon, ")
               ACE_TEXT ("bounded to local port %d on handle %u\n"),
-              server_addr.get_port_number (),
+              lserver_addr.get_port_number (),
               this->acceptor ().get_handle ()));
+#endif /* ACE_HAS_STREAM_PIPES */
 
   if (con.connect (stream,
                    this->server_addr_) == -1)
