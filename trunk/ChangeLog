@@ -1,4 +1,4 @@
-Tue May 23 15:05:03 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+Tue May 23 10:55:59 2006  Douglas C. Schmidt  <schmidt@cse.wustl.edu>
 
 	* netsvcs/lib/Client_Logging_Handler.cpp (handle_input): 
 	* netsvcs/lib/Server_Logging_Handler_T.cpp

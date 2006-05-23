@@ -88,7 +88,7 @@ ACE_Log_Msg_IPC::log (ACE_Log_Record &log_record)
   // queueing according to priority.
 
   ACE_Str_Buf header (static_cast<void *> (header.begin ()->rd_ptr ()),
-                      static_cast<int> (8);
+                      static_cast<int> (8));
 
   ACE_Str_Buf payload (static_cast<void *> (payload.begin ()->rd_ptr ()),
                       static_cast<int> (length));
