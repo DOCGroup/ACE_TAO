@@ -33,8 +33,8 @@ namespace CIAO
     /// Name of the file holding the IOR of the RM
     const char * RMior = "RepositoryManagerDeamon.ior";
 
-    // Name of Naming service
-    char * repoman_name_;
+    // Name of RepoMan
+    char * repoman_name_ = "RepositoryManager";
 
     //Name service of the RM
     char * RMname_service = "RepositoryManager";
@@ -156,7 +156,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     ACE_NEW_RETURN (repo,
                     CIAO_RepositoryManagerDaemon_i (
                           orb.in (),
-                          CIAO::RepositoryManager::HTTPserver.c_str ()),
+                          CIAO::RepositoryManager::HTTPserver.c_str (),
+                          CIAO::RepositoryManager::repoman_name_),
                     1);
 
     //trasfer ownership to the POA
