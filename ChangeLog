@@ -1,3 +1,13 @@
+Tue May 23 15:05:03 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+	* netsvcs/lib/Client_Logging_Handler.cpp (handle_input): 
+	* netsvcs/lib/Server_Logging_Handler_T.cpp
+	  (handle_logging_record): Cleaned up the code so that it should
+	  have no memory leaks and will also build cleanly on all the OS
+	  platforms.
+
+	* ace/Log_Msg_IPC.cpp: Fix support for ACE_HAS_STREAM_PIPES.
+
 Tue May 23 13:05:03 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ace/Log_Msg.cpp:
