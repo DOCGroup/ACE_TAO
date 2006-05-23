@@ -47,6 +47,8 @@
 
 #include "PC_Updater.h"           //A visitor class to walk through the elements of the PC
 
+#include "ace/Configuration_Import_Export.h"
+
 #include <iostream>
 using namespace std;
 
@@ -74,6 +76,30 @@ CIAO_RepositoryManagerDaemon_i::CIAO_RepositoryManagerDaemon_i (CORBA::ORB_ptr t
   this->install_root_ = this->cwd_;
   this->install_root_ += "/";
   this->install_root_ += INSTALL_PATH;
+
+
+  // Install the configuration files to get the names, UUIDs, & types info.
+  //ACE_Configuration_Heap cfg;
+  //cfg.open ();
+  //ACE_Configuration_Section_Key root = cfg.root_section ();
+
+  //ACE_Registry_ImpExp config_importer (cfg);
+  //config_importer.import_config ("jss.txt");
+
+  //ACE_Configuration_Section_Key NameSection;
+  //cfg.open_section (root, ACE_TEXT ("name"), 1, NameSection);
+
+  //size_t num_entries;
+  //cfg.get_integer_value (NameSection, "names_length", num_entries);
+
+  //void *names_bak = new PCMap ();
+  ////cfg.get_binary_value (NameSection, "name", names_bak, num_entries);
+
+  ////this->names_ = static_cast<PCMap *> (names_bak);
+
+  //PCEntry *entry = 0;
+  //if (this->names_.find ("RACE", entry) == 0)
+  //  ACE_THROW (Deployment::NameExists ());
 }
 
 //-----------------------------------------------------------------
@@ -98,6 +124,40 @@ void CIAO_RepositoryManagerDaemon_i::shutdown ()
                                 CORBA::SystemException
                                 ))
 {
+  //// Save the names, UUIDs, & types info to the configuration files.
+  //ACE_Configuration_Heap cfg;
+  //cfg.open ();
+  //ACE_Configuration_Section_Key root = cfg.root_section ();
+  //ACE_Configuration_Section_Key NameSection;
+  //cfg.open_section (root, ACE_TEXT ("Names"), 1, NameSection);
+
+  //ACE_CString package_name = "";
+  //ACE_CString package_dir = "";
+
+  //CORBA::ULong index = 0;
+  //for (PCMap_Iterator iter = this->names_.begin ();
+  //  iter != this->names_.end ();
+  //  ++iter, ++index)
+  //{
+  //  PCEntry& element = *iter;
+
+  //  char *s;
+  //  sprintf(s, "%d", index);
+
+  //  ACE_CString pc_name (s); 
+  //  pc_name = "package_name_"+pc_name;
+  //  package_name = CORBA::string_dup (element.ext_id_.c_str ());
+  //  cfg.set_string_value (NameSection, pc_name.c_str (), package_name);
+  //  
+  //  ACE_CString pc_dir (s); 
+  //  pc_dir = "package_dir_"+pc_dir;
+  //  package_dir = CORBA::string_dup (element.int_id_.c_str ());
+  //  cfg.set_string_value (NameSection, pc_dir.c_str (), package_dir);
+  //}
+
+  //ACE_Registry_ImpExp exporter (cfg);
+  //exporter.export_config ("jss.txt");
+
 
   this->names_.unbind_all ();
   this->uuids_.unbind_all ();
@@ -342,7 +402,159 @@ void CIAO_RepositoryManagerDaemon_i::createPackage (
                                     ::Deployment::PackageError
                                    ))
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT ());
+  ::Deployment::PackageConfiguration pc = package;
+
+  // Find if there is a PackageConfiguration with the same name.
+  PCEntry *entry = 0;
+  if (this->names_.find (ACE_CString (installationName), entry) == 0)
+    ACE_THROW (Deployment::NameExists ());
+
+  // Find if there is a PackageConfiguration with the same uuid.
+  if (this->uuids_.find (ACE_CString (pc.UUID), entry) == 0)
+    ACE_THROW (Deployment::NameExists ());
+
+  // Find if the PackageConfiguration has a basePackage.
+  // NOTE: ComponentPackageReferences are currently NOT supported.
+  if (!(pc.basePackage.length () > 0))
+    ACE_THROW (CORBA::NO_IMPLEMENT ());
+
+  // Form the path for the local file
+  ACE_CString path (this->install_root_);
+  path += "/";
+  path += installationName;
+
+  ACE_CString package_path (path);
+  package_path += ".cpk";        //package extension
+
+  ACE_CString pc_path (path);
+  pc_path += PC_EXTENSION;      //external PackageConfiguration extension
+
+  // Check if URL or local file, download or load into memory
+  size_t length = 0;
+  if (ACE_OS::strstr (baseLocation, "http://"))
+  {
+    //TODO: how can I incorporate a Auto_Ptr is explicit release is needed
+    ACE_Message_Block* mb;
+    ACE_NEW_THROW_EX (mb, ACE_Message_Block (), CORBA::INTERNAL ());
+    ACE_CHECK_RETURN (0);
+
+    //get the remote file
+    if (!HTTP_Get (baseLocation, *mb))
+    {
+      mb->release ();
+      ACE_THROW (CORBA::INTERNAL ());
+    }
+
+    // Write file to designated location on disk
+    if (!RM_Helper::write_to_disk (package_path.c_str (), *mb))
+    {
+      mb->release ();
+      ACE_THROW (CORBA::INTERNAL ());
+    }
+
+    mb->release ();
+  }
+  else
+  {
+    CORBA::Octet* file = 0;
+
+    //read the package from disk and store in the RM directory
+    //see if you can substiture this with a memory mapped file
+    //for better perofrmance (mimic zero copy here)
+    file = RM_Helper::read_from_disk (baseLocation, length);
+
+    if (!file)
+      ACE_THROW (CORBA::INTERNAL ());
+
+    //Store the package in the local RM dir for future retrieval
+    if (!RM_Helper::write_to_disk (package_path.c_str (), file, length))
+    {
+      delete file;
+      ACE_THROW (CORBA::INTERNAL ());
+    }
+
+    //NOTE: MEMORY LEAK UNLESS delete file; change to Auto_Ptr
+    delete file;
+  }
+
+  ZIP_Wrapper::uncompress (const_cast<char*> (package_path.c_str ()),
+    const_cast<char*> (this->install_root_.c_str ()),
+    false //not verbose
+    );
+
+  // Form the server path info
+  ACE_CString server_path (this->HTTP_server_);
+  server_path += installationName;
+
+  // Update the newly installed package configration informantion.
+  PC_Updater updater (server_path, package_path);
+
+  if (!updater.update (pc))
+  {
+    ACE_DEBUG ((LM_ERROR, "[RM] problem updating the PackageConfiguration!\n"));
+    //clean the extracted files
+    remove_extracted_package (package_path.c_str (), path.c_str ());
+    //remove the package
+    remove (package_path.c_str ());
+    ACE_THROW (Deployment::PackageError ());
+  }
+  
+  // Externalize the PackageConfiguration, so that we can access it later on
+  // without having to do the whole parsing again.
+  // NOTE: Order here is important. Do not populate maps before the externalization!
+  RM_Helper::externalize (pc, pc_path.c_str ());
+
+  // Insert the name of the package.
+  if (this->names_.bind (ACE_CString (installationName), path) == -1)
+  {
+    ACE_DEBUG ((LM_ERROR,
+                 "[RM] could not bind %s.\n",
+                 installationName));
+
+    //clean the extracted files
+    remove_extracted_package (package_path.c_str (), path.c_str ());
+    //remove the package
+    remove (package_path.c_str ());
+    //remove the PackageConfiguration externalization
+    remove (pc_path.c_str ());
+
+    //throw exception
+    ACE_THROW (CORBA::INTERNAL ());
+  }
+
+  // Insert the UUID of the package.
+  if (this->uuids_.bind (ACE_CString (pc.UUID), path) == -1)
+  {
+     ACE_DEBUG ((LM_ERROR,
+                 "[RM] could not bind %s.\n",
+                 pc.UUID));
+
+     //unbind the name
+     this->names_.unbind (installationName);
+
+     //clean the extracted files
+     remove_extracted_package (package_path.c_str (), path.c_str ());
+     //remove the package
+     remove (package_path.c_str ());
+     //remove the PackageConfiguration externalization
+     remove (pc_path.c_str ());
+
+     //throw exception
+     ACE_THROW (CORBA::INTERNAL ());
+  }
+
+#if defined ASSEMBLY_INTERFACE_SUPPORT
+  //now add the type interface
+  //TODO: CHECK if successful
+  if(!this->add_type (pc, installationName))
+    ACE_DEBUG ((LM_ERROR, "Failed to add the type\n"));
+#endif
+
+  this->dump ();
+
+  ACE_DEBUG ((LM_INFO,
+    "Created PackageConfiguration \n  directory: %s \n  name: %s \n  uuid: %s\n",
+    path.c_str (), installationName, pc.UUID));
 }
 
 

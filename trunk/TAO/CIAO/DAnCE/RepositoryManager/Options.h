@@ -46,6 +46,9 @@ public:
   /// Name of package
   ACE_CString uuid_;
 
+  /// Type of package
+  ACE_CString type_;
+
   /// specifies the local path for install
   ACE_CString path_;
 
@@ -54,6 +57,9 @@ public:
 
   /// installs the name_
   bool install_;
+
+  /// creates the name_
+  bool create_;
 
   /// finds the name_
   bool find_;
@@ -69,6 +75,15 @@ public:
 
   /// shutdown the RepositoryManagerDemon
   bool shutdown_;
+
+  // use naming service
+  bool register_with_ns_;
+
+  // use ior file
+  bool write_to_ior_;
+
+  // Name of RepoMan
+  char *repoman_name_;
 
 protected:
   //usage function
