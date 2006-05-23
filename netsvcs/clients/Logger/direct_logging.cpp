@@ -13,9 +13,9 @@
 
 ACE_RCSID(Logger, direct_logging, "$Id$")
 
-  static u_short LOGGER_PORT = ACE_DEFAULT_SERVER_PORT;
+static u_short LOGGER_PORT = ACE_DEFAULT_SERVER_PORT;
 static const ACE_TCHAR *const LOGGER_HOST = ACE_DEFAULT_SERVER_HOST;
-static const ACE_TCHAR *const DATA = ACE_TEXT("hello world\n");
+static const ACE_TCHAR *const DATA = ACE_TEXT ("hello world\n");
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
@@ -68,5 +68,17 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "send"), -1);
   else if (logger.close () == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "close"), -1);
+
+#if defined (ACE_WIN32)
+  // !!Important, Winsock is broken in that if you don't close
+  // down the connection before exiting main, you'll lose data.
+  // More over, your server might get "Access Violation" from
+  // within Winsock functions.
+
+  // Here we close down the connection to Logger by redirecting
+  // the logging destination back to stderr.
+  ACE_LOG_MSG->open (0, ACE_Log_Msg::STDERR, 0);
+#endif /* ACE_WIN32 */
+
   return 0;
 }

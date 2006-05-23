@@ -111,7 +111,7 @@ public:
    *           DEBUG, INFO, WARNING, NOTICE, ERROR, CRITICAL, ALERT,
    *           EMERGENCY) or to disable (e.g., ~DEBUG, ~INFO, ~WARNING,
    *           ~NOTICE, ~ERROR, ~CRITICAL, ~ALERT, ~EMERGENCY).
-   * @arg '-s' Ensure that the OSTREAM flag is set.
+   * @arg '-s' Ensure that the OSTREAM flag is set and log to the <filename>.
    * @arg '-t' Pass in the thread-wide priorities to either enable (e.g.,
    *           DEBUG, INFO, WARNING, NOTICE, ERROR, CRITICAL, ALERT,
    *           EMERGENCY) or to disable (e.g., ~DEBUG, ~INFO, ~WARNING,
