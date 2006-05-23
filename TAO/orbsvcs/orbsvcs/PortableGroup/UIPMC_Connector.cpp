@@ -18,7 +18,7 @@ ACE_RCSID (PortableGroup,
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_UIPMC_Connector::TAO_UIPMC_Connector (CORBA::Boolean)
-  : TAO_Connector (TAO_TAG_UIPMC_PROFILE)
+  : TAO_Connector (IOP::TAG_UIPMC)
 {
 }
 
@@ -57,7 +57,7 @@ TAO_UIPMC_Connector::close (void)
 int
 TAO_UIPMC_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
 {
-  if (endpoint->tag () != TAO_TAG_UIPMC_PROFILE)
+  if (endpoint->tag () != IOP::TAG_UIPMC)
     return -1;
 
   TAO_UIPMC_Endpoint *uipmc_endpoint =

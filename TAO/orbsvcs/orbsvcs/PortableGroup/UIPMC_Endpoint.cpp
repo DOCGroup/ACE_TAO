@@ -1,6 +1,7 @@
 // $Id$
 
 #include "orbsvcs/PortableGroup/UIPMC_Endpoint.h"
+#include "orbsvcs/PortableGroup/UIPMC_Profile.h"
 
 #include "tao/debug.h"
 #include "ace/Guard_T.h"
@@ -21,7 +22,7 @@ ACE_RCSID (tao,
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_UIPMC_Endpoint::TAO_UIPMC_Endpoint (void)
-  : TAO_Endpoint (TAO_TAG_UIPMC_PROFILE),
+  : TAO_Endpoint (IOP::TAG_UIPMC),
     object_addr_ (),
     next_ (0)
 {
@@ -29,7 +30,7 @@ TAO_UIPMC_Endpoint::TAO_UIPMC_Endpoint (void)
 
 
 TAO_UIPMC_Endpoint::TAO_UIPMC_Endpoint (const ACE_INET_Addr &addr)
-  : TAO_Endpoint (TAO_TAG_UIPMC_PROFILE),
+  : TAO_Endpoint (IOP::TAG_UIPMC),
     object_addr_ (addr),
     next_ (0)
 {
@@ -38,7 +39,7 @@ TAO_UIPMC_Endpoint::TAO_UIPMC_Endpoint (const ACE_INET_Addr &addr)
 
 TAO_UIPMC_Endpoint::TAO_UIPMC_Endpoint (const CORBA::Octet class_d_address[4],
                                         CORBA::UShort port)
-  : TAO_Endpoint (TAO_TAG_UIPMC_PROFILE),
+  : TAO_Endpoint (IOP::TAG_UIPMC),
     port_ (port),
     next_ (0)
 {
