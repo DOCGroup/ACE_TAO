@@ -70,6 +70,8 @@ TAO_IIOP_Acceptor::~TAO_IIOP_Acceptor (void)
     CORBA::string_free (this->hosts_[i]);
 
   delete [] this->hosts_;
+
+  delete [] this->hostname_in_ior_;
 }
 
 //@@ TAO_ACCEPTOR_SPL_COPY_HOOK_START

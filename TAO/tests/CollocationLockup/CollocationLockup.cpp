@@ -39,9 +39,9 @@ public:
   virtual A_ptr
   makeA () ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    A_i* servant = new A_i;
-    g_pPoa->activate_object (servant);
-    CORBA::Object_var obj = g_pPoa->servant_to_reference (servant);
+    PortableServer::ServantBase_var servant = new A_i;
+    g_pPoa->activate_object (servant.in());
+    CORBA::Object_var obj = g_pPoa->servant_to_reference (servant.in());
     return A::_narrow (obj.in ());
   }
 };
@@ -82,9 +82,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_Thread::spawn (OrbRunThread, 0, THR_NEW_LWP | THR_DETACHED);
 
       // Setup
-      B_i* servant = new B_i;
-      g_pPoa->activate_object (servant);
-      CORBA::Object_var b = g_pPoa->servant_to_reference (servant);
+      PortableServer::ServantBase_var servant = new B_i;
+      g_pPoa->activate_object (servant.in());
+      CORBA::Object_var b = g_pPoa->servant_to_reference (servant.in());
 
       g_pNameService->bind (b.in ());
 

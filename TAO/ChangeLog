@@ -1,8 +1,34 @@
+Tue May 23 13:05:43 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/ORB_Core.cpp:
+          Fixed a typo in a service name.
+
+        * tao/TAO_Internal.cpp:
+
+          Added a function to address the situation where a second ORB is
+          initialized with arguments that are global and expected to be
+          removed from argv before ORB_Core::init starts parsing args.
+
+          Since the first initialized ORB is the default ORB, it is also
+          the one that sets global options, such as debug level, and
+          daemonization. In situations where multiple ORBs are initialized
+          indeterminately, such as via dynamically loaded service objects,
+          an application wanting a concrete set of global options should
+          explicitly initialize a default ORB.
+
+        * tao/IIOP_Acceptor.cpp:
+        * tao/PortableServer/Root_POA.cpp:
+        * tests/CollocationLockup/CollocationLockup.cpp:
+        * tests/InterOp-Naming/INS_test_client.cpp:
+        * tests/POA/EndpointPolicy/server.cpp:
+          Fixed memory leaks.
+
+
 Thu May 18 17:16:30 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/Logging_Service/
-	* orbsvcs/Logging_Service/Basic_Logging_Service/Makefile.am:
-	* orbsvcs/Logging_Service/Notify_Logging_Service/Makefile.am:
+        * orbsvcs/Logging_Service/Basic_Logging_Service/Makefile.am:
+        * orbsvcs/Logging_Service/Notify_Logging_Service/Makefile.am:
 
           Regenerated.
 
@@ -12,9 +38,9 @@ Thu May 18 17:16:30 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
           support enabled, which also requires valuetype.
 
         * orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.mpc:
-	* orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.mpc:
-	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.mpc:
-	* orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.mpc:
+        * orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.mpc:
+        * orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.mpc:
+        * orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.mpc:
 
           Changed to inherit from the valuetype base project.
 
