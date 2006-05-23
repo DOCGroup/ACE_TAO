@@ -2223,6 +2223,7 @@ ACE_Log_Msg::log_hexdump (ACE_Log_Priority log_priority,
              buf);
 
   delete [] msg_buf;
+  delete [] buf;
   return 0;
 }
 
