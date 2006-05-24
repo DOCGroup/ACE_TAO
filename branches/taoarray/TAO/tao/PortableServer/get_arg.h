@@ -83,7 +83,7 @@ namespace TAO
     }
 
     /// Get "out" argument.
-    template<typename T, typename OUT_ARG_TYPE>
+    template<typename T>
     typename TAO::SArg_Traits<T>::out_arg_type
     get_out_arg (TAO_Operation_Details const * details,
                  TAO::Argument * const * skel_args,

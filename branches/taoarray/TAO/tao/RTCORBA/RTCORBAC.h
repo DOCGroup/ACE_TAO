@@ -599,8 +599,7 @@ namespace RTCORBA
 
   typedef
     TAO_Out_T<
-        Protocol,
-        Protocol_var
+        Protocol
       >
     Protocol_out;
 

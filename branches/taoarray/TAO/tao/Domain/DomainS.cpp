@@ -451,7 +451,7 @@ namespace POA_CORBA
           this->args_);
 
       TAO::SArg_Traits< ::CORBA::PolicyType>::in_arg_type arg_1 =
-        TAO::Portable_Server::get_in_arg< ::CORBA::PolicyType>::in_arg_type> (
+        TAO::Portable_Server::get_in_arg< ::CORBA::PolicyType> (
           this->operation_details_,
           this->args_,
           1);

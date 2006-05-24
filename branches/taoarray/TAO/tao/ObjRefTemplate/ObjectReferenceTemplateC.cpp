@@ -69,7 +69,7 @@ namespace TAO
             CORBA::StringSeq,
             CORBA::StringSeq_var,
             CORBA::StringSeq_out,
-            TAO::Any_Insert_Policy_Stream <CORBA::StringSeq>
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
