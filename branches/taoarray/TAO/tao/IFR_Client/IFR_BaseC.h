@@ -504,8 +504,7 @@ namespace CORBA
 
     typedef
       TAO_Out_T<
-          Description,
-          Description_var
+          Description
         >
       Description_out;
 
@@ -1486,8 +1485,7 @@ namespace CORBA
 
   typedef
     TAO_Out_T<
-        StructMember,
-        StructMember_var
+        StructMember
       >
     StructMember_out;
 
@@ -1572,8 +1570,7 @@ namespace CORBA
 
   typedef
     TAO_Out_T<
-        Initializer,
-        Initializer_var
+        Initializer
       >
     Initializer_out;
 
@@ -1657,8 +1654,7 @@ namespace CORBA
 
   typedef
     TAO_Out_T<
-        ExceptionDescription,
-        ExceptionDescription_var
+        ExceptionDescription
       >
     ExceptionDescription_out;
 
@@ -1745,8 +1741,7 @@ namespace CORBA
 
   typedef
     TAO_Out_T<
-        ExtInitializer,
-        ExtInitializer_var
+        ExtInitializer
       >
     ExtInitializer_out;
 
@@ -1831,8 +1826,7 @@ namespace CORBA
 
   typedef
     TAO_Out_T<
-        UnionMember,
-        UnionMember_var
+        UnionMember
       >
     UnionMember_out;
 
@@ -2039,8 +2033,7 @@ namespace CORBA
 
     typedef
       TAO_Out_T<
-          Description,
-          Description_var
+          Description
         >
       Description_out;
 
@@ -2605,8 +2598,7 @@ namespace CORBA
 
   typedef
     TAO_Out_T<
-        TypeDescription,
-        TypeDescription_var
+        TypeDescription
       >
     TypeDescription_out;
 

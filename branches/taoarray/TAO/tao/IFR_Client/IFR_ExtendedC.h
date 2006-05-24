@@ -253,8 +253,7 @@ namespace CORBA
 
   typedef
     TAO_Out_T<
-        ValueMember,
-        ValueMember_var
+        ValueMember
       >
     ValueMember_out;
 
@@ -724,8 +723,7 @@ namespace CORBA
 
     typedef
       TAO_Out_T<
-          FullValueDescription,
-          FullValueDescription_var
+          FullValueDescription
         >
       FullValueDescription_out;
 
@@ -881,8 +879,7 @@ namespace CORBA
 
   typedef
     TAO_Out_T<
-        ValueDescription,
-        ValueDescription_var
+        ValueDescription
       >
     ValueDescription_out;
 
@@ -1004,8 +1001,7 @@ namespace CORBA
 
     typedef
       TAO_Out_T<
-          ExtFullValueDescription,
-          ExtFullValueDescription_var
+          ExtFullValueDescription
         >
       ExtFullValueDescription_out;
 

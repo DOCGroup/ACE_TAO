@@ -43,7 +43,7 @@ namespace TAO
             CORBA::Any,
             CORBA::Any_var,
             CORBA::Any_out,
-            TAO::Any_Insert_Policy_Stream <CORBA::Any>
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };

@@ -776,8 +776,7 @@ namespace CORBA
 
     typedef
       TAO_Out_T<
-          ProvidesDescription,
-          ProvidesDescription_var
+          ProvidesDescription
         >
       ProvidesDescription_out;
 
@@ -966,8 +965,7 @@ namespace CORBA
 
     typedef
       TAO_Out_T<
-          UsesDescription,
-          UsesDescription_var
+          UsesDescription
         >
       UsesDescription_out;
 
@@ -1147,8 +1145,7 @@ namespace CORBA
 
     typedef
       TAO_Out_T<
-          EventPortDescription,
-          EventPortDescription_var
+          EventPortDescription
         >
       EventPortDescription_out;
 
@@ -1865,8 +1862,7 @@ namespace CORBA
 
     typedef
       TAO_Out_T<
-          ComponentDescription,
-          ComponentDescription_var
+          ComponentDescription
         >
       ComponentDescription_out;
 
@@ -2332,8 +2328,7 @@ namespace CORBA
 
     typedef
       TAO_Out_T<
-          HomeDescription,
-          HomeDescription_var
+          HomeDescription
         >
       HomeDescription_out;
 

@@ -588,8 +588,7 @@ namespace CORBA
 
   typedef
     TAO_Out_T<
-        ModuleDescription,
-        ModuleDescription_var
+        ModuleDescription
       >
     ModuleDescription_out;
 
@@ -787,8 +786,7 @@ namespace CORBA
 
   typedef
     TAO_Out_T<
-        ConstantDescription,
-        ConstantDescription_var
+        ConstantDescription
       >
     ConstantDescription_out;
 
@@ -2455,8 +2453,7 @@ namespace CORBA
 
   typedef
     TAO_Out_T<
-        AttributeDescription,
-        AttributeDescription_var
+        AttributeDescription
       >
     AttributeDescription_out;
 
@@ -2494,8 +2491,7 @@ namespace CORBA
 
   typedef
     TAO_Out_T<
-        ExtAttributeDescription,
-        ExtAttributeDescription_var
+        ExtAttributeDescription
       >
     ExtAttributeDescription_out;
 
@@ -2713,8 +2709,7 @@ namespace CORBA
 
   typedef
     TAO_Out_T<
-        ParameterDescription,
-        ParameterDescription_var
+        ParameterDescription
       >
     ParameterDescription_out;
 
@@ -3085,8 +3080,7 @@ namespace CORBA
 
   typedef
     TAO_Out_T<
-        OperationDescription,
-        OperationDescription_var
+        OperationDescription
       >
     OperationDescription_out;
 
@@ -3418,8 +3412,7 @@ namespace CORBA
 
     typedef
       TAO_Out_T<
-          FullInterfaceDescription,
-          FullInterfaceDescription_var
+          FullInterfaceDescription
         >
       FullInterfaceDescription_out;
 
@@ -3553,8 +3546,7 @@ namespace CORBA
 
   typedef
     TAO_Out_T<
-        InterfaceDescription,
-        InterfaceDescription_var
+        InterfaceDescription
       >
     InterfaceDescription_out;
 
@@ -3650,8 +3642,7 @@ namespace CORBA
 
     typedef
       TAO_Out_T<
-          ExtFullInterfaceDescription,
-          ExtFullInterfaceDescription_var
+          ExtFullInterfaceDescription
         >
       ExtFullInterfaceDescription_out;
 

@@ -450,7 +450,7 @@ namespace POA_CORBA
     virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
     {
       TAO::SArg_Traits< ::CORBA::PolicyType>::ret_arg_type retval =
-        TAO::Portable_Server::get_ret_arg< ::CORBA::PolicyType>::ret_arg_type> (
+        TAO::Portable_Server::get_ret_arg< ::CORBA::PolicyType> (
           this->operation_details_,
           this->args_);
 
