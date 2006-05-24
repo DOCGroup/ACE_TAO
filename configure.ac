@@ -3949,29 +3949,27 @@ ACE_CHECK_HAS_FUNCS(sigsuspend sigtimedwait)
 
 ACE_CHECK_LACKS_FUNCS(socketpair)
 
-ACE_CHECK_LACKS_FUNCS(strptime)
+AC_CHECK_FUNC(strptime)
 if test "$ac_cv_func_strptime" == yes; then
-   dnl strptime() is available, but its prototype is not always visible to
-   dnl the compiler. Check if _XOPEN_SOURCE macro is needed to make the
-   dnl strptime() prototype visible.
-   ACE_CACHE_CHECK([for strptime prototype],
-     [ace_cv_lib_has_strptime_prototype],
-     [
-      ace_save_CPPFLAGS="$CPPFLAGS"
-      ace_no_xopen="-U_XOPEN_SOURCE"
-      CPPFLAGS="$CPPFLAGS $ace_no_xopen"
-      AC_EGREP_HEADER([[^_]+strptime],[time.h],
-        [
-         ace_cv_lib_has_strptime_prototype=yes
-        ],
-        [
-         ace_cv_lib_has_strptime_prototype=no
-        ])
-      dnl Reset the compiler flags
-      CPPFLAGS="$ace_save_CPPFLAGS"
-     ],,[AC_DEFINE([ACE_LACKS_STRPTIME_PROTOTYPE])])
-   AH_TEMPLATE([ACE_LACKS_STRPTIME_PROTOTYPE],
-   [Define to 1 if platform lacks strptime() declaration in <time.h>.])
+  dnl strptime() is available, but its prototype is not always visible to
+  dnl the compiler. Check if _XOPEN_SOURCE macro is needed to make the
+  dnl strptime() prototype visible.
+  ace_save_CPPFLAGS="$CPPFLAGS"
+  ace_no_xopen="-U_XOPEN_SOURCE"
+  CPPFLAGS="$CPPFLAGS $ace_no_xopen"
+  AC_CHECK_DECL([strptime],
+		[],
+		[AC_DEFINE([ACE_LACKS_STRPTIME_PROTOTYPE], 1,
+			   [Define to 1 if platform lacks the declaration
+			     of strptime().])],
+		[#include <time.h>])
+  dnl Reset the compiler flags
+  CPPFLAGS="$ace_save_CPPFLAGS"
+else
+  dnl As of this writing, ACE does not follow standard conventions for
+  dnl strptime() feature test macros.
+  AC_DEFINE([ACE_LACKS_NATIVE_STRPTIME], 1,
+	    [Define to 1 if platform lacks strptime().])
 fi
 
 if test "$ac_cv_type_wchar_t" = yes; then
