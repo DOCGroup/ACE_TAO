@@ -1,3 +1,13 @@
+Wed May 24 18:27:13 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
+
+          Along with the /FORCE:MULTIPLE link option that is added by
+          MPC specifically for em3, nmake, vc6, and vc71 builds, added
+          the /INCREMENTAL:NO link option since the above option is
+          incompatible with incremental linking, and produces warnings
+          on the platforms where it is in force.
+
 Wed May 24 16:00:03 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/TAO_Internal.cpp:
