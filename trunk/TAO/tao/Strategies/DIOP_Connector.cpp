@@ -148,12 +148,12 @@ TAO_DIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
 TAO_Profile *
 TAO_DIOP_Connector::create_profile (TAO_InputCDR& cdr)
 {
-  TAO_Profile *pfile;
+  TAO_Profile *pfile = 0;
   ACE_NEW_RETURN (pfile,
                   TAO_DIOP_Profile (this->orb_core ()),
                   0);
 
-  int r = pfile->decode (cdr);
+  int const r = pfile->decode (cdr);
   if (r == -1)
     {
       pfile->_decr_refcnt ();
@@ -193,10 +193,10 @@ TAO_DIOP_Connector::check_prefix (const char *endpoint)
 
   const char *protocol[] = { "diop", "dioploc" };
 
-  size_t slot = ACE_OS::strchr (endpoint, ':') - endpoint;
+  size_t const slot = ACE_OS::strchr (endpoint, ':') - endpoint;
 
-  size_t len0 = ACE_OS::strlen (protocol[0]);
-  size_t len1 = ACE_OS::strlen (protocol[1]);
+  size_t const len0 = ACE_OS::strlen (protocol[0]);
+  size_t const len1 = ACE_OS::strlen (protocol[1]);
 
   // Check for the proper prefix in the IOR.  If the proper prefix
   // isn't in the IOR then it is not an IOR we can use.
@@ -226,9 +226,6 @@ TAO_DIOP_Connector::remote_endpoint (TAO_Endpoint *endpoint)
 
   TAO_DIOP_Endpoint *diop_endpoint =
     dynamic_cast<TAO_DIOP_Endpoint *> (endpoint );
-
-  if (diop_endpoint == 0)
-    return 0;
 
   return diop_endpoint;
 }
