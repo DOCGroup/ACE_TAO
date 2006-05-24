@@ -157,7 +157,7 @@ ACE_Remote_Token_Proxy::request_reply (ACE_Token_Request &request,
   ACE_SOCK_Stream *peer = ACE_Token_Connections::instance ()->get_connection ();
 
   if (peer == 0)
-    return -1;
+    ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p\n", "BIG PROBLEMS with get_connection"), -1);
 
   // Transmit request via a blocking send.
 
@@ -177,7 +177,7 @@ ACE_Remote_Token_Proxy::request_reply (ACE_Token_Request &request,
 
       errno = int (reply.errnum ());
       if (errno != 0)
-        ACE_RETURN (-1);
+        return -1;
       else
         return 0;
     }

@@ -104,7 +104,7 @@ ACE_Token_Request::options (const ACE_Synch_Options &opt)
   if (transfer_.use_timeout_ == 1)
     {
       transfer_.usec_ = options->timeout ().usec ();
-      if (options->timeout ().sec () > ACE_UINT32_MAX)
+      if (options->timeout ().sec () > (time_t) ACE_UINT32_MAX)
         transfer_.sec_ = ACE_UINT32_MAX;
       else
         transfer_.sec_ = static_cast<ACE_UINT32> (options->timeout ().sec ());
