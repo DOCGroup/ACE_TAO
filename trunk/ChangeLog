@@ -1,3 +1,10 @@
+Wed May 24 13:08:08 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+	* ace/Message_Queue.h: Added #include "ace/Thread_Mutex.h" on platforms
+	  that have ACE_Message_Queue_NT available; that class has a
+	  ACE_Thread_Mutex member so the include is needed to see the class.
+          Thanks to Guy Peleg <guype at amdocs dot com> for this fix.
+
 Wed May 24 17:39:47 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/Remote_Tokens.cpp (request_reply): Added a helpful error
