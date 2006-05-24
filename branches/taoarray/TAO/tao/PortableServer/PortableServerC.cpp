@@ -58,7 +58,7 @@ namespace TAO
             PortableServer::AdapterActivator_var,
             PortableServer::AdapterActivator_out,
             TAO::Objref_Traits<PortableServer::AdapterActivator>,
-            TAO::Any_Insert_Policy_Stream <PortableServer::AdapterActivator_ptr>
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };

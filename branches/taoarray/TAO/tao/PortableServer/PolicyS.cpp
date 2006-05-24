@@ -33,7 +33,7 @@
 #define _TAO_IDL_ORIG_POLICYS_CPP_
 
 
-#include "tao/AnyTypeCode/TypeCode.h"	 
+#include "tao/AnyTypeCode/TypeCode.h"
 #include "tao/AnyTypeCode/Any.h"
 #include "tao/PortableServer/PolicyS.h"
 #include "tao/PortableServer/Operation_Table_Perfect_Hash.h"
@@ -82,7 +82,7 @@ namespace TAO
             CORBA::Policy_ptr,
             CORBA::Policy_var,
             CORBA::Policy_out,
-            TAO::Any_Insert_Policy_Stream <CORBA::Policy_ptr>
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -109,7 +109,7 @@ namespace TAO
             CORBA::Policy_var,
             CORBA::Policy_out,
             TAO::Objref_Traits<CORBA::Policy>,
-            TAO::Any_Insert_Policy_Stream <CORBA::Policy_ptr>
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
