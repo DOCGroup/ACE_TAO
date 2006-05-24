@@ -1567,8 +1567,11 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
 
   // @note This header should not go first.  See the discussion above
   //       regarding non-dependent template names.
-  this->gen_standard_include (this->client_header_,
-                              "tao/ORB.h");
+  this->gen_cond_file_include (
+      be_global->gen_orb_h_include (),
+      "tao/ORB.h",
+      this->client_header_
+    );
 
   this->gen_cond_file_include (
       idl_global->operation_seen_ || idl_global->valuefactory_seen_

@@ -449,7 +449,10 @@ public:
   bool gen_dcps_type_support (void) const;
   // Return the flag.
 
-  bool gen_tmplinst (void) const;
+  void gen_orb_h_include (bool value);
+  // Set the flag.
+
+  bool gen_orb_h_include (void) const;
   // Return the flag.
 
   void lookup_strategy (LOOKUP_STRATEGY s);
@@ -672,6 +675,10 @@ private:
   bool gen_dcps_type_support_;
   // Flag to indicate whether we are supporting DDS DCPS type definitions.
   // Includes Serializer operators (like TAO_Input/OutuptCDR).
+
+  bool gen_orb_h_include_;
+  // Flag to indicate whether ORB.h include should be generated, needed for
+  // regenerating the pidl files.
 
   LOOKUP_STRATEGY lookup_strategy_;
   // The enumerated value indicating the lookup strategy.

@@ -201,23 +201,10 @@ be_visitor_typedef_ch::visit_array (be_array *node)
           << " " << tdef->nested_type_name (scope, "_out") << ";" << be_nl;
       *os << "typedef " << bt->nested_type_name (scope, "_tag")
           << " " << tdef->nested_type_name (scope, "_tag") << ";" << be_nl;
-      *os << "struct " << tdef->nested_type_name (scope, "_traits") << be_nl << "{" << be_idt_nl;
-      *os << "typedef " << tdef->nested_type_name (scope, "_slice") << " slice_type;" << be_nl;
-      *os << "typedef " << tdef->nested_type_name (scope) << " value_type;" << be_nl;
-      *os << "typedef " << tdef->nested_type_name (scope, "_tag") << " tag_type;" << be_nl
-//          << "static void free (slice_type * value);" << be_nl
-  //        << "static void zero (slice_type * value);" << be_nl
-    //      << "static slice_type * alloc (void);" << be_nl
-      //    << "static void copy (slice_type *_tao_to, const slice_type *_tao_from);" << be_nl
-//          << "static slice_type * dup (const slice_type * value);"
-          << be_uidt_nl
-          << "};" << be_nl;
-      // Generate _forany decl.
-      *os << "typedef" << be_idt_nl
-          << "TAO_Array_Forany_T<" << be_idt << be_idt_nl
-          << tdef->nested_type_name (scope, "_traits") << be_uidt_nl
-          << ">" << be_uidt_nl;
-      *os << tdef->nested_type_name (scope, "_forany") << ";" << be_uidt_nl;
+      *os << "typedef " << bt->nested_type_name (scope, "_forany")
+          << " " << tdef->nested_type_name (scope, "_forany") << ";" << be_nl;
+      *os << "typedef " << bt->nested_type_name (scope, "_traits")
+          << " " << tdef->nested_type_name (scope, "_traits") << ";" << be_nl;
 
       // The _alloc, _dup, copy, and free methods
 

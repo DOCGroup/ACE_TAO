@@ -72,8 +72,8 @@ be_visitor_array_cdr_op_ch::visit_array (be_array *node)
   // If the array is an anonymous member and if its element type
   // is a declaration (not a reference), we must generate code for
   // the declaration.
-  if (this->ctx_->alias () == 0 // Not a typedef.
-      && bt->is_child (this->ctx_->scope ()))
+  if (this->ctx_->alias () == 0 && // Not a typedef.
+      bt->is_child (this->ctx_->scope ()))
     {
       int status = 0;
       be_visitor_context ctx (*this->ctx_);

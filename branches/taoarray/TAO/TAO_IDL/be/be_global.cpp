@@ -88,6 +88,7 @@ BE_GlobalData::BE_GlobalData (void)
     gen_smart_proxies_ (false),
     gen_inline_constants_ (true),
     gen_dcps_type_support_ (false),
+    gen_orb_h_include_ (true),
     lookup_strategy_ (TAO_PERFECT_HASH),
     void_type_ (0),
     ccmobject_ (0),
@@ -1041,6 +1042,7 @@ BE_GlobalData::gen_inline_constants (void) const
 {
   return this->gen_inline_constants_;
 }
+
 void
 BE_GlobalData::gen_dcps_type_support (bool val)
 {
@@ -1051,6 +1053,18 @@ bool
 BE_GlobalData::gen_dcps_type_support (void) const
 {
   return this->gen_dcps_type_support_;
+}
+
+void
+BE_GlobalData::gen_orb_h_include (bool val)
+{
+  this->gen_orb_h_include_ = val;
+}
+
+bool
+BE_GlobalData::gen_orb_h_include (void) const
+{
+  return this->gen_orb_h_include_;
 }
 
 void
@@ -2305,6 +2319,11 @@ BE_GlobalData::usage (void) const
   ACE_DEBUG ((
       LM_DEBUG,
       ACE_TEXT (" -Ssi\t\t\tsuppress generating server inline file")
+      ACE_TEXT (" (disabled by default)\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Sorb\t\t\tsuppress generating include of ORB.h")
       ACE_TEXT (" (disabled by default)\n")
     ));
 }

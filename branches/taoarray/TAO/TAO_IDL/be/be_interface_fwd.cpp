@@ -64,15 +64,6 @@ be_interface_fwd::~be_interface_fwd (void)
 }
 
 void
-be_interface_fwd::seq_elem_tmplinst (bool val)
-{
-  this->be_type::seq_elem_tmplinst (val);
-  be_interface *fd =
-    be_interface::narrow_from_decl (this->full_definition ());
-  fd->seq_elem_tmplinst (val);
-}
-
-void
 be_interface_fwd::seen_in_sequence (bool val)
 {
   this->be_type::seen_in_sequence (val);

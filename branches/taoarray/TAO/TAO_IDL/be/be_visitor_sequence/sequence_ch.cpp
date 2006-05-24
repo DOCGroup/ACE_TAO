@@ -174,7 +174,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
       << ");" << be_uidt_nl;
   *os << node->local_name () << " (const " << node->local_name ()
       << " &);" << be_nl;
-  *os << "~" << node->local_name () << " (void);";
+  *os << "virtual ~" << node->local_name () << " (void);";
 
   if (be_global->any_support () && !node->anonymous ())
     {
