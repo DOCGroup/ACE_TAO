@@ -1,3 +1,8 @@
+Wed May 24 17:35:53 UTC 2006  Nanbor Wang  <nanbor@exothermic.txcorp.com>
+
+        * examples/Display/RateGen/RateGen.mpc: Fixed the project
+          dependency for controller.  
+
 Tue May 23 22:46:58 UTC 2006  jiang,shanshan <shanshan.jiang@vanderbilt.edu>
 
         * DAnCE/RepositoryManager/Options.cpp
