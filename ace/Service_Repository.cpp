@@ -23,7 +23,7 @@ ACE_RCSID (ace,
 ACE_ALLOC_HOOK_DEFINE(ACE_Service_Repository)
 
 // Process-wide Service Repository.
-  ACE_Service_Repository *ACE_Service_Repository::svc_rep_ = 0;
+ACE_Service_Repository *ACE_Service_Repository::svc_rep_ = 0;
 
 // Controls whether the Service_Repository is deleted when we shut
 // down (we can only delete it safely if we created it)!
@@ -46,7 +46,7 @@ ACE_Service_Repository::ACE_Service_Repository (void)
 }
 
 ACE_Service_Repository *
-ACE_Service_Repository::instance (int size /* = ACE_Service_Repository::DEFAULT_SIZE */)
+ACE_Service_Repository::instance (size_t size /* = ACE_Service_Repository::DEFAULT_SIZE */)
 {
   ACE_TRACE ("ACE_Service_Repository::instance");
 
@@ -106,7 +106,7 @@ ACE_Service_Repository::close_singleton (void)
 // Initialize the Repository to a clean slate.
 
 int
-ACE_Service_Repository::open (int size)
+ACE_Service_Repository::open (size_t size)
 {
   ACE_TRACE ("ACE_Service_Repository::open");
 
@@ -121,7 +121,7 @@ ACE_Service_Repository::open (int size)
   return 0;
 }
 
-ACE_Service_Repository::ACE_Service_Repository (int size)
+ACE_Service_Repository::ACE_Service_Repository (size_t size)
   : current_size_ (0)
 {
   ACE_TRACE ("ACE_Service_Repository::ACE_Service_Repository");
@@ -244,7 +244,7 @@ ACE_Service_Repository::find_i (const ACE_TCHAR name[],
                                 int ignore_suspended) const
 {
   ACE_TRACE ("ACE_Service_Repository::find_i");
-  int i;
+  size_t i;
 
   for (i = 0; i < this->current_size_; i++)
     if (ACE_OS::strcmp (name,
@@ -299,7 +299,7 @@ ACE_Service_Repository::insert (const ACE_Service_Type *sr)
   {
     // @TODO: Do we need a recursive mutex here?
     ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, this->lock_, -1));
-    int i;
+    size_t i;
 
     // Check to see if this is a duplicate.
     for (i = 0; i < this->current_size_; i++)
@@ -424,7 +424,7 @@ ACE_Service_Repository::remove (const ACE_TCHAR name[], ACE_Service_Type **ps)
 
     // Pack the array
     --this->current_size_;
-    for (int j = i; j < this->current_size_; j++)
+    for (size_t j = i; j < this->current_size_; j++)
       this->service_vector_[j] = this->service_vector_[j+1];
   }
 
@@ -437,7 +437,7 @@ ACE_Service_Repository::remove (const ACE_TCHAR name[], ACE_Service_Type **ps)
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Service_Repository_Iterator)
 
-  void
+void
 ACE_Service_Repository_Iterator::dump (void) const
 {
 #if defined (ACE_HAS_DUMP)
@@ -450,13 +450,13 @@ ACE_Service_Repository_Iterator::dump (void) const
 // perform destructive operations on elements during this iteration...
 
 ACE_Service_Repository_Iterator::ACE_Service_Repository_Iterator
-(ACE_Service_Repository &sr,
- int ignr_suspended)
+  (ACE_Service_Repository &sr, int ignr_suspended)
   : svc_rep_ (sr),
-    next_ (-1),
+    next_ (0),
     ignore_suspended_ (ignr_suspended)
 {
-  this->advance ();
+  while (!(done() || valid()))
+    this->next_++;
 }
 
 // Obtains a pointer to the next valid service in the table.  If there
@@ -466,21 +466,12 @@ int
 ACE_Service_Repository_Iterator::next (const ACE_Service_Type *&sr)
 {
   ACE_TRACE ("ACE_Service_Repository_Iterator::next");
-  if (this->next_ < this->svc_rep_.current_size_)
-    {
-      sr = this->svc_rep_.service_vector_[this->next_];
-      return 1;
-    }
-  else
+
+  if (done ())
     return 0;
-}
 
-int
-ACE_Service_Repository_Iterator::done (void) const
-{
-  ACE_TRACE ("ACE_Service_Repository_Iterator::done");
-
-  return this->next_ >= this->svc_rep_.current_size_;
+  sr = this->svc_rep_.service_vector_[this->next_];
+  return 1;
 }
 
 // Advance the iterator by the proper amount.  If we are ignoring
@@ -493,14 +484,19 @@ ACE_Service_Repository_Iterator::advance (void)
 {
   ACE_TRACE ("ACE_Service_Repository_Iterator::advance");
 
-  for (++this->next_;
-       this->next_ < this->svc_rep_.current_size_
-   && this->ignore_suspended_
-   && this->svc_rep_.service_vector_[this->next_]->active () == 0;
-       this->next_++)
-    continue;
+  if (done()) return 0;
 
-  return this->next_ < this->svc_rep_.current_size_;
+  do this->next_++; while (!(done () || valid ()));
+
+  return !done();
+}
+
+bool
+ACE_Service_Repository_Iterator::valid (void) const
+{
+  ACE_TRACE ("ACE_Service_Repository_Iterator::valid");
+  return (this->ignore_suspended_ == 0
+          || this->svc_rep_.service_vector_[this->next_]->active ());
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL
