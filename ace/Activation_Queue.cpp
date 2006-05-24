@@ -52,6 +52,27 @@ ACE_Activation_Queue::ACE_Activation_Queue (ACE_Message_Queue<ACE_SYNCH> *new_qu
     }
 }
 
+void
+ACE_Activation_Queue::queue (ACE_Message_Queue<ACE_SYNCH> *q)
+{
+  // Destroy the internal queue if one exist.
+  if (this->delete_queue_ != 0)
+    {
+      // Destroy the current queue.
+      delete this->queue_;
+ 
+      // Set the flag to false.  NOTE that the delete_queue_ flag is a
+      // flag used to only indicate whether or not if an internal
+      // ACE_Message_Queue has been created, therefore, it will not
+      // affect the user if the user decided to replace the queue with
+      // their own queue no matter how many time they call on this
+      // function.
+      this->delete_queue_ = 0;
+    }
+ 
+  queue_ = q;
+}
+
 ACE_Activation_Queue::~ACE_Activation_Queue (void)
 {
   if (this->delete_queue_ != 0)
