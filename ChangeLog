@@ -1,3 +1,10 @@
+Wed May 24 09:07:53 2006  Douglas C. Schmidt  <schmidt@cse.wustl.edu>
+
+        * ace/Activation_Queue.cpp,
+        * ace/Activation_Queue.inl: Fixed the queue() "setter" method
+          so that it doesn't leak memory.  Thanks to David Chu <beyonddc
+          dot storage at gmail dot com> for providing this fix.
+
 Wed May 24 14:00:43 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * ace/Service_Gestalt.cpp:
