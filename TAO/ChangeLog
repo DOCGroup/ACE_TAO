@@ -1,3 +1,10 @@
+Wed May 24 09:09:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/performance.html:
+          Added ACE_NLOGGING=1 as one of the options that can be used to
+          reduce footprint. Adding this to the footprint build resulted in
+          a footprint drop of about 10% for the Hello client.
+
 Wed May 24 08:53:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Bounded_Sequence_CDR_T.h:
