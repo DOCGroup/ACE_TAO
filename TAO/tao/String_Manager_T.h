@@ -45,12 +45,14 @@ public:
   }
 
   /// Copy constructor
-  inline String_Manager_T (const String_Manager_T<charT> &rhs) : ptr_ (s_traits::duplicate (rhs.ptr_))
+  inline String_Manager_T (const String_Manager_T<charT> &rhs) :
+    ptr_ (s_traits::duplicate (rhs.ptr_))
   {
   }
 
   /// Constructor from const char* makes a copy.
-  inline String_Manager_T (const character_type *s) : ptr_ (s_traits::duplicate (s))
+  inline String_Manager_T (const character_type *s) :
+    ptr_ (s_traits::duplicate (s))
   {
   }
 
@@ -112,14 +114,14 @@ public:
   /// for out parameter.
   inline character_type *&out (void) {
     s_traits::release (this->ptr_);
-    this->ptr_ = s_traits::default_initializer();
+    this->ptr_ = 0;
     return this->ptr_;
   }
 
   /// For string of return type.
   inline character_type *_retn (void) {
     character_type *temp = this->ptr_;
-    this->ptr_ = s_traits::default_initializer();
+    this->ptr_ = 0;
     return temp;
   }
 
