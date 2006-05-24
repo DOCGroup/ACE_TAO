@@ -181,7 +181,7 @@ ACE_Service_Gestalt::~ACE_Service_Gestalt (void)
   delete this->static_svcs_;
 }
 
-ACE_Service_Gestalt::ACE_Service_Gestalt (size_t size,
+ACE_Service_Gestalt::ACE_Service_Gestalt (size_t usize,
                                           bool svc_repo_is_owned,
                                           bool no_static_svcs)
   : svc_repo_is_owned_ (svc_repo_is_owned)
@@ -191,6 +191,7 @@ ACE_Service_Gestalt::ACE_Service_Gestalt (size_t size,
   , svc_queue_ (0)
   , svc_conf_file_queue_ (0)
 {
+  int size (static_cast<int>(usize)); // To please 64bit compilers
   if (svc_repo_is_owned)
     ACE_NEW_NORETURN (this->repo_,
                       ACE_Service_Repository (size));
