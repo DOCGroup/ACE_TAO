@@ -100,8 +100,10 @@ project(ImR_Locator_Service) : orbsvcsexe, install_bin, minimum_corba, iortable,
   // Static Debug builds on Windows will not link properly due
   // to a linker bug.  It complains that the ACEXML library duplicates
   // a couple of template instantiations from the TAO_ImR_Locator library.
-  // This option works around that bug.  Unfortunately, there is no way to
-  // narrow the options down to only static debug builds.
+  // The FORCE:MULTIPLE option works around that bug.  Unfortunately,
+  // there is no way to narrow the options down to only static debug builds.
+  // Incremental linking has also been turned off since it is
+  // incompatible with this option, producing warnings at link time.
   specific(em3, nmake, vc6, vc71) {
     link_options += /FORCE:MULTIPLE /INCREMENTAL:NO
   }
