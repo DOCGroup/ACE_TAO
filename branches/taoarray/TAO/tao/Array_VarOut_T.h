@@ -87,7 +87,7 @@ class TAO_FixedArray_Var_T: public TAO_Array_Var_Base_T<array_traits>
 {
 public:
   typedef typename array_traits::slice_type slice_type;
-  typedef typename slice_type *  _out_type;
+  typedef typename array_traits::slice_type *_out_type;
 
   TAO_FixedArray_Var_T (void);
   TAO_FixedArray_Var_T (slice_type *);
@@ -113,7 +113,7 @@ class TAO_VarArray_Var_T : public TAO_Array_Var_Base_T<array_traits>
 {
 public:
   typedef typename array_traits::slice_type slice_type;
-  typedef typename slice_type *&  _out_type;
+  typedef typename array_traits::slice_type *&_out_type;
 
   TAO_VarArray_Var_T (void);
   TAO_VarArray_Var_T (slice_type *);
