@@ -1,3 +1,14 @@
+Wed May 24 19:43:16 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/Portable_Interceptors/Collocated/Service_Context_Manipulation/Server_Task.cpp:
+          My fix for the servant reference counting used a ServantBase_var
+          as the owner of the pointer to the servant instance, but that
+          cannot be used as a target within ACE_NEW_RETURN macros on
+          windows because the MSVC compiler doesn't appropriately map the
+          post-assignment equality test. This minor change is to use a
+          servant type pointer for initialization with ACE_NEW, then
+          assign the result to a ServantBase_var for reference management.
+
 Wed May 24 18:27:13 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
