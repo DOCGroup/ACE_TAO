@@ -1,3 +1,25 @@
+Wed May 24 03:01:14 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/PortableServer/POAManager.cpp:
+        * tao/PortableServer/POAManagerFactory.cpp:
+
+          Cleaned up redundant debug messages.
+
+        * tests/Portable_Interceptors/Collocated/Service_Context_Manipulation/Client_Task.cpp:
+        * tests/Portable_Interceptors/Collocated/Service_Context_Manipulation/Server_Task.cpp:
+        * tests/Portable_Interceptors/Collocated/Service_Context_Manipulation/interceptors.cpp:
+        * tests/Portable_Interceptors/Collocated/Service_Context_Manipulation/test.idl:
+        * tests/Portable_Interceptors/Collocated/Service_Context_Manipulation/test_i.cpp:
+
+          Add (%P|%t) to many debug lines to improve ability to track
+          thread behavior during collocated calls. Also switched the
+          servant to using the modern reference counting method of using a
+          ServantBase_var to manage the local reference to the servant
+          rather than using an explicit call to _remove_ref() from within
+          the shutdown operation. Finally, added a slight delay after
+          orb->run() and before orb->destroy() to avoid thread races. See
+          bugzilla bug #2538 for more information about this race.
+
 Tue May 23 16:09:05 UTC 2006  Adam Mitz  <mitza@ociweb.com>
 
         * orbsvcs/orbsvcs/PortableGroup/UIPMC_Acceptor.cpp:

@@ -43,6 +43,9 @@ Client_Task::svc (void)
 
       server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
+
+      this->corb_->destroy();
+      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {

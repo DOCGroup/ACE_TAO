@@ -42,7 +42,7 @@ module Test_Interceptors
     void system ();
     // thows a system exception.
 
-   oneway void shutdown ();
+    oneway void shutdown ();
     // shutdown the ORB
   };
 };

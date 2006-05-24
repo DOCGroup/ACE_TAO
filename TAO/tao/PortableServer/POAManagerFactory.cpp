@@ -19,11 +19,6 @@ TAO_POAManager_Factory::TAO_POAManager_Factory (TAO_Object_Adapter &object_adapt
 
 TAO_POAManager_Factory::~TAO_POAManager_Factory (void)
 {
-  if (TAO_debug_level > 0)
-    {
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t)~TAO_POAManager_Factory \n"));
-    }
-
   for (POAMANAGERSET::iterator iterator = this->poamanager_set_.begin ();
         iterator != this->poamanager_set_.end ();
         ++iterator)

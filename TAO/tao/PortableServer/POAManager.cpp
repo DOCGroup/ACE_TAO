@@ -36,10 +36,6 @@ TAO_POA_Manager::TAO_POA_Manager (
 
 TAO_POA_Manager::~TAO_POA_Manager (void)
 {
-  if (TAO_debug_level > 0)
-    {
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t)~TAO_POA_Manager : %s\n", this->id_.in ()));
-    }
   poa_manager_factory_._remove_ref ();
 }
 
