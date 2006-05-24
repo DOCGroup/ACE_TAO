@@ -103,7 +103,7 @@ project(ImR_Locator_Service) : orbsvcsexe, install_bin, minimum_corba, iortable,
   // This option works around that bug.  Unfortunately, there is no way to
   // narrow the options down to only static debug builds.
   specific(em3, nmake, vc6, vc71) {
-    link_options += /FORCE:MULTIPLE
+    link_options += /FORCE:MULTIPLE /INCREMENTAL:NO
   }
 
   Source_Files {
