@@ -232,7 +232,7 @@ worker_child (void *arg)
 
   if (handle_signals_synchronously)
     {
-      if (!shut_down) 
+      if (!shut_down)
 	{
 	  ACE_DEBUG ((LM_DEBUG,
 		      ACE_TEXT ("(%P|%t) sending SIGINT to ourselves\n")));
@@ -463,7 +463,7 @@ run_main (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) **** test 1: handle signals synchronously in a separate thread\n")));
 
-      test_number++;
+      ++test_number;
       // Run the parent logic for the signal test, first by handling
       // signals synchronously in a separate thread.
       run_test (worker_parent, 1L, 1L);
@@ -471,14 +471,14 @@ run_main (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) **** test 2: handle signals synchronously in this thread\n")));
 
-      test_number++;
+      ++test_number;
       // And next by handling synchronously signals in this thread.
       run_test (worker_parent, 0L, 1L);
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) **** test 3: handle signals asynchronously in this thread\n")));
 
-      test_number++;
+      ++test_number;
       // And finally by handling asynchronously signals in this thread.
       run_test (worker_parent, 0L, 0L);
 
