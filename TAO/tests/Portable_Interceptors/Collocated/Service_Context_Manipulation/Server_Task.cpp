@@ -44,8 +44,9 @@ Server_Task::svc (void)
      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
      ACE_TRY_CHECK;
 
-     PortableServer::ServantBase_var server_impl;
-     ACE_NEW_RETURN (server_impl, Visual_i (sorb_.in ()), 1);
+     Visual_i *vi = 0;
+     ACE_NEW_RETURN (vi, Visual_i (sorb_.in ()), 1);
+     PortableServer::ServantBase_var server_impl = vi;
 
      PortableServer::ObjectId_var id =
        root_poa->activate_object (server_impl.in()
