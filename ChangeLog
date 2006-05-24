@@ -1,3 +1,15 @@
+Wed May 24 17:22:31 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+        
+          Change feature test to define ACE_LACKS_NATIVE_STRPTIME if
+          system doesn't support strptime(), as it seems ACE doesn't
+          follow its feature test macro naming conventions when it comes
+          to strptime().
+        
+          Changed ACE_LACKS_STRPTIME_PROTOTYPE feature test to use
+          AC_CHECK_DECL instead of AC_EGREP_HEADER.
+           
 Wed May 24 16:33:59 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * configure.ac:
