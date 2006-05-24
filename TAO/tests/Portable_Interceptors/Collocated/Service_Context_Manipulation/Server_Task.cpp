@@ -3,7 +3,7 @@
 //
 #include "Server_Task.h"
 #include "test_i.h"
-
+#include "ace/OS_NS_time.h"
 #include "ace/Manual_Event.h"
 
 Server_Task::Server_Task (const char *output,
@@ -44,11 +44,11 @@ Server_Task::svc (void)
      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
      ACE_TRY_CHECK;
 
-     Visual_i * server_impl;
+     PortableServer::ServantBase_var server_impl;
      ACE_NEW_RETURN (server_impl, Visual_i (sorb_.in ()), 1);
 
      PortableServer::ObjectId_var id =
-       root_poa->activate_object (server_impl
+       root_poa->activate_object (server_impl.in()
                                   ACE_ENV_ARG_PARAMETER);
      ACE_TRY_CHECK;
 
@@ -85,7 +85,9 @@ Server_Task::svc (void)
      sorb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
      ACE_TRY_CHECK;
 
-     ACE_DEBUG ((LM_DEBUG, "server task - event loop finished\n"));
+     struct timespec ts = {0,250000000}; // quarter second
+     ACE_OS::nanosleep (&ts);
+     ACE_DEBUG ((LM_DEBUG, "(%P|%t) server task - event loop finished\n"));
 
      root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
      ACE_TRY_CHECK;
