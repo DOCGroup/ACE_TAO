@@ -57,20 +57,20 @@ namespace
    *
    * @brief Modifies the argc to reflect any arguments it has
    * "consumed"
+   *
+   * When multiple ORBs are being configured, the global options are
+   * only processed for the first ORB loaded. However subsequent ORBs
+   * may be supplied with some of these options, so they need to be
+   * eliminated as though they were processed. For this reason,
+   * this function is called for every ORB, but only the first call
+   * sets apply_values to true
+   *
    */
   int
   parse_global_args_i (int &argc,
                        char **argv,
-                       CORBA::StringSeq &svc_config_argv);
-
-  /**
-   * When multiple ORBs are being configured, the global options are
-   * only processed for the first ORB loaded. However subsequent ORBs
-   * may be supplied with some of these options, so they need to be
-   * eliminated as though they were processed
-   */
-  int
-  skip_global_args_i (int &argc, char **argv);
+                       CORBA::StringSeq &svc_config_argv,
+                       bool apply_values);
 
   /**
    * Parses the supplied command-line arguments to extract any that
@@ -201,6 +201,10 @@ TAO::ORB::open_services (ACE_Service_Gestalt* pcfg,
     service_open_count++;
   }
 
+  // Construct an argument vector specific to the process-wide
+  // (global) Service Configurator instance.
+  CORBA::StringSeq global_svc_config_argv;
+
   ACE_Service_Gestalt * theone = ACE_Service_Config::global ();
   if (service_open_count == 1)
     {
@@ -218,10 +222,6 @@ TAO::ORB::open_services (ACE_Service_Gestalt* pcfg,
 
       register_global_services_i (theone);
 
-      // Construct an argument vector specific to the process-wide
-      // (global) Service Configurator instance.
-      CORBA::StringSeq global_svc_config_argv;
-
       // Be certain to copy the program name so that service configurator
       // has something to skip!
       ACE_CString argv0 ("");
@@ -232,7 +232,7 @@ TAO::ORB::open_services (ACE_Service_Gestalt* pcfg,
       global_svc_config_argv.length (1);
       global_svc_config_argv[0] = argv0.c_str ();
 
-      if (parse_global_args_i (argc, argv, global_svc_config_argv) == -1)
+      if (parse_global_args_i (argc, argv, global_svc_config_argv, true) == -1)
         return -1;
 
       if (parse_svcconf_args_i (argc, argv, global_svc_config_argv) == -1)
@@ -259,11 +259,13 @@ TAO::ORB::open_services (ACE_Service_Gestalt* pcfg,
     }
   else
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) Skipping the process-wide service")
-                  ACE_TEXT (" configuration, service_open_count = %d\n"),
-                  service_open_count));
-      int status = skip_global_args_i(argc, argv);
+      int status =
+        parse_global_args_i(argc, argv,global_svc_config_argv, false);
+      if (TAO_debug_level > 2)
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("TAO (%P|%t) Skipping the process-wide service")
+                    ACE_TEXT (" configuration, service_open_count = %d, status = %d\n"),
+                    service_open_count, status));
     }
 
   if (TAO_debug_level > 2)
@@ -625,34 +627,37 @@ namespace
   } /* parse_private_args_i */
 
 
-
   int
   parse_global_args_i (int &argc,
                        char **argv,
-                       CORBA::StringSeq &svc_config_argv)
+                       CORBA::StringSeq &svc_config_argv,
+                       bool apply_values)
   {
-
+    // NOTE: When adding new global arguments, ensure they are only
+    // applied when apply_values is true, but that they are always
+    // consumed, if they need to be consumed.
 #if defined (TAO_DEBUG) && !defined (ACE_HAS_WINCE)
-  // Make it a little easier to debug programs using this code.
-  {
-    TAO_debug_level = ACE_Env_Value<u_int> ("TAO_ORB_DEBUG", 0);
-
-    char * const value = ACE_OS::getenv ("TAO_ORB_DEBUG");
-
-    if (value != 0)
+    // Make it a little easier to debug programs using this code.
+    if (apply_values)
       {
-        TAO_debug_level = ACE_OS::atoi (value);
+        TAO_debug_level = ACE_Env_Value<u_int> ("TAO_ORB_DEBUG", 0);
 
-        if (TAO_debug_level <= 0)
+        char * const value = ACE_OS::getenv ("TAO_ORB_DEBUG");
+
+        if (value != 0)
           {
-            TAO_debug_level = 1;
-          }
+            TAO_debug_level = ACE_OS::atoi (value);
 
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO_debug_level == %d\n"),
-                    TAO_debug_level));
+            if (TAO_debug_level <= 0)
+              {
+                TAO_debug_level = 1;
+              }
+
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("TAO_debug_level == %d\n"),
+                        TAO_debug_level));
+          }
       }
-  }
 #endif  /* TAO_DEBUG && !ACE_HAS_WINCE */
 
 
@@ -666,36 +671,40 @@ namespace
       const ACE_TCHAR *current_arg = 0;
       if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT ("-ORBDebug")) == 0)
       {
-        // later, replace all of these
-        // warning this turns on a daemon
-        ACE::debug (1);
+        if (apply_values)
+          // later, replace all of these
+          // warning this turns on a daemon
+          ACE::debug (1);
         arg_shifter.consume_arg ();
       }
       else if (0 != (current_arg = arg_shifter.get_the_parameter
                      (ACE_TEXT ("-ORBNegotiateCodesets"))))
         {
-           negotiate_codesets =
-             (ACE_OS::atoi (current_arg));
-        // don't consume, the ORB_Core::init will use it again.
+          if (apply_values)
+            negotiate_codesets =
+              (ACE_OS::atoi (current_arg));
+          // don't consume, the ORB_Core::init will use it again.
 
         }
       else if (0 != (current_arg = arg_shifter.get_the_parameter
                      (ACE_TEXT ("-ORBDebugLevel"))))
       {
-        TAO_debug_level =
-          ACE_OS::atoi (current_arg);
+        if (apply_values)
+          TAO_debug_level =
+            ACE_OS::atoi (current_arg);
 
         arg_shifter.consume_arg ();
       }
       else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT ("-ORBDaemon")) == 0)
       {
         // Be a daemon
+        if (apply_values)
+          {
+            len = svc_config_argv.length ();
+            svc_config_argv.length (len + 1);
 
-        len = svc_config_argv.length ();
-        svc_config_argv.length (len + 1);
-
-        svc_config_argv[len] = CORBA::string_dup ("-b");
-
+            svc_config_argv[len] = CORBA::string_dup ("-b");
+          }
         arg_shifter.consume_arg ();
       }
       // Can't interpret this argument.  Move on to the next argument.
@@ -710,68 +719,6 @@ namespace
     return 0;
 
   } /* parse_global_args_i */
-
-  int
-  skip_global_args_i (int &argc, char **argv)
-  {
-
-#if defined (TAO_DEBUG) && !defined (ACE_HAS_WINCE)
-  // Make it a little easier to debug programs using this code.
-  {
-    TAO_debug_level = ACE_Env_Value<u_int> ("TAO_ORB_DEBUG", 0);
-
-    char * const value = ACE_OS::getenv ("TAO_ORB_DEBUG");
-
-    if (value != 0)
-      {
-        TAO_debug_level = ACE_OS::atoi (value);
-
-        if (TAO_debug_level <= 0)
-          {
-            TAO_debug_level = 1;
-          }
-
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO_debug_level == %d\n"),
-                    TAO_debug_level));
-      }
-  }
-#endif  /* TAO_DEBUG && !ACE_HAS_WINCE */
-
-
-    // Extract the Service Configurator ORB options from the argument
-    // vector.
-    ACE_Arg_Shifter arg_shifter (argc, argv);
-    CORBA::ULong len = 0;
-
-    while (arg_shifter.is_anything_left ())
-    {
-      const ACE_TCHAR *current_arg = 0;
-      if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT ("-ORBDebug")) == 0)
-      {
-        arg_shifter.consume_arg ();
-      }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter
-                     (ACE_TEXT ("-ORBDebugLevel"))))
-      {
-        arg_shifter.consume_arg ();
-      }
-      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT ("-ORBDaemon")) == 0)
-      {
-        arg_shifter.consume_arg ();
-      }
-      // Can't interpret this argument.  Move on to the next argument.
-      else
-      {
-        // Any arguments that don't match are ignored so that the
-        // caller can still use them.
-        arg_shifter.ignore_arg ();
-      }
-    }
-
-    return 0;
-
-  } /* skip_global_args_i */
 
 }
 // TAO_BEGIN_VERSIONED_NAMESPACE_DECL -- ended prior to anonymous namespace.
