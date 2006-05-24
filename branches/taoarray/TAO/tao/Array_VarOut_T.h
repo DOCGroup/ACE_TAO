@@ -46,8 +46,8 @@ class TAO_Array_Var_Base_T
 {
 public:
   typedef typename array_traits::slice_type slice_type;
-  typedef typename slice_type const & const_subscript_type;
-  typedef typename slice_type & subscript_type;
+  typedef typename array_traits::slice_type const & const_subscript_type;
+  typedef typename array_traits::slice_type & subscript_type;
 
   TAO_Array_Var_Base_T (void);
   TAO_Array_Var_Base_T (slice_type *);
