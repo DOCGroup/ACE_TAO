@@ -21,6 +21,9 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/IO_Cntl_Msg.h"
+#if defined (ACE_WIN32) && (ACE_HAS_WINNT4 != 0)
+# include "ace/Thread_Mutex.h"   /* Needed in ACE_Message_Queue_NT */
+#endif
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
