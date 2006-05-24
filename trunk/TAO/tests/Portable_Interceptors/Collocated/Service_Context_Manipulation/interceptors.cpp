@@ -299,6 +299,7 @@ Echo_Server_Request_Interceptor::Echo_Server_Request_Interceptor (void)
 
 Echo_Server_Request_Interceptor::~Echo_Server_Request_Interceptor (void)
 {
+  ACE_DEBUG ((LM_DEBUG,"(%P|%t) ~Echo_Server_Request_Interceptor\n"));
 }
 
 char *
@@ -325,7 +326,7 @@ Echo_Server_Request_Interceptor::receive_request_service_contexts (
   ACE_CHECK;
 
   ACE_DEBUG ((LM_DEBUG,
-              "%s.receive_request_service_contexts from "
+              "(%P|%t)%s.receive_request_service_contexts from "
               "\"%s\"\n",
               this->myname_,
               operation.in ()));
@@ -338,7 +339,7 @@ Echo_Server_Request_Interceptor::receive_request_service_contexts (
   const char *buf =
     reinterpret_cast<const char *> (sc->context_data.get_buffer ());
   ACE_DEBUG ((LM_DEBUG,
-              "  Received service context: %s\n",
+              "(%P|%t)  Received service context: %s\n",
               buf));
 
   if (ACE_OS::strcmp (buf, request_msg) != 0)
@@ -388,7 +389,7 @@ Echo_Server_Request_Interceptor::send_reply (
   ACE_CHECK;
 
   ACE_DEBUG ((LM_DEBUG,
-              "%s.send_reply from \"%s\"\n",
+              "(%P|%t)%s.send_reply from \"%s\"\n",
               this->myname_,
               operation.in ()));
 
@@ -399,7 +400,7 @@ Echo_Server_Request_Interceptor::send_reply (
 
   const char *buf = reinterpret_cast<const char *> (sc->context_data.get_buffer ());
   ACE_DEBUG ((LM_DEBUG,
-              "  Reply service context: %s\n",
+              "(%P|%t)  Reply service context: %s\n",
               buf));
 
   if (ACE_OS::strcmp (buf, reply_msg) != 0)
@@ -440,7 +441,7 @@ Echo_Server_Request_Interceptor::send_exception (
   ACE_CHECK;
 
   ACE_DEBUG ((LM_DEBUG,
-              "%s.send_exception from \"%s\"\n",
+              "(%P|%t)%s.send_exception from \"%s\"\n",
               this->myname_,
               operation.in ()));
 
@@ -451,7 +452,7 @@ Echo_Server_Request_Interceptor::send_exception (
 
   const char *buf = reinterpret_cast<const char *> (sc->context_data.get_buffer ());
   ACE_DEBUG ((LM_DEBUG,
-              "  Reply service context: %s\n",
+              "(%P|%t)  Reply service context: %s\n",
               buf));
 
   if (ACE_OS::strcmp (buf, reply_msg) != 0)
