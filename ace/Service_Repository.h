@@ -59,10 +59,10 @@ public:
   ACE_Service_Repository (void);
 
   /// Initialize the repository.
-  ACE_Service_Repository (int size);
+  ACE_Service_Repository (size_t size);
 
   /// Initialize the repository.
-  int open (int size = DEFAULT_SIZE);
+  int open (size_t size = DEFAULT_SIZE);
 
   /// Close down the repository and free up dynamically allocated
   /// resources.
@@ -77,8 +77,8 @@ public:
   int fini (void);
 
   /// Get pointer to a process-wide ACE_Service_Repository.
-  static ACE_Service_Repository *
-    instance (int size = ACE_Service_Repository::DEFAULT_SIZE);
+  static ACE_Service_Repository * instance
+    (size_t size = ACE_Service_Repository::DEFAULT_SIZE);
 
   /// Set pointer to a process-wide ACE_Service_Repository and return
   /// existing pointer.
@@ -120,10 +120,10 @@ public:
   int suspend (const ACE_TCHAR[], const ACE_Service_Type ** = 0);
 
   /// Return the current size of the repository.
-  int current_size (void) const;
+  size_t current_size (void) const;
 
   /// Return the total size of the repository.
-  int total_size (void) const;
+  size_t total_size (void) const;
 
   /// Dump the state of an object.
   void dump (void) const;
@@ -142,10 +142,10 @@ private:
   const ACE_Service_Type **service_vector_;
 
   /// Current number of services.
-  int current_size_;
+  size_t current_size_;
 
   /// Maximum number of services.
-  int total_size_;
+  size_t total_size_;
 
   /// Pointer to a process-wide ACE_Service_Repository.
   static ACE_Service_Repository *svc_rep_;
@@ -198,11 +198,15 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
+  bool valid (void) const;
+  ACE_Service_Repository_Iterator (const ACE_Service_Repository_Iterator&);
+
+private:
   /// Reference to the Service Repository we are iterating over.
   ACE_Service_Repository &svc_rep_;
 
   /// Next index location that we haven't yet seen.
-  int next_;
+  size_t next_;
 
   /// Are we ignoring suspended services?
   int ignore_suspended_;
