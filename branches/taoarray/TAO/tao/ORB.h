@@ -33,6 +33,7 @@
 #include "tao/Seq_Out_T.h"
 #include "tao/Sequence_T.h"
 #include "tao/Policy_ForwardC.h"
+#include "tao/ServicesC.h"
 
 #include "ace/Thread_Mutex.h"
 #include "ace/Guard_T.h"
@@ -102,7 +103,7 @@ namespace CORBA
       >
     ORB_ObjectIdList_out;
 
-  struct ServiceInformation;
+/*  struct ServiceInformation;
 
   typedef
     TAO_Var_Var_T<
@@ -112,10 +113,9 @@ namespace CORBA
 
   typedef
     TAO_Out_T<
-        ServiceInformation,
-        ServiceInformation_var
+        ServiceInformation
       >
-    ServiceInformation_out;
+    ServiceInformation_out;*/
 
   class ValueFactoryBase;
   typedef ValueFactoryBase *ValueFactory;

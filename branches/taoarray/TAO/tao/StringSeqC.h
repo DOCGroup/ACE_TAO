@@ -90,7 +90,7 @@ namespace CORBA
     StringSeq (
         CORBA::ULong max,
         CORBA::ULong length,
-        char ** buffer,
+        ::CORBA::Char ** buffer,
         CORBA::Boolean release = false
       );
     StringSeq (const StringSeq &);

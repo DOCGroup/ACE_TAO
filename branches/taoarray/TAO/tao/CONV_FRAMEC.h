@@ -130,8 +130,7 @@ namespace CONV_FRAME
 
   typedef
     TAO_Out_T<
-        CodeSetComponent,
-        CodeSetComponent_var
+        CodeSetComponent
       >
     CodeSetComponent_out;
 
@@ -160,8 +159,7 @@ namespace CONV_FRAME
 
   typedef
     TAO_Out_T<
-        CodeSetComponentInfo,
-        CodeSetComponentInfo_var
+        CodeSetComponentInfo
       >
     CodeSetComponentInfo_out;
 

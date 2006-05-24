@@ -84,8 +84,7 @@ namespace TAO
 
   typedef
     TAO_Out_T<
-        IIOP_Endpoint_Info,
-        IIOP_Endpoint_Info_var
+        IIOP_Endpoint_Info
       >
     IIOP_Endpoint_Info_out;
 
@@ -95,6 +94,7 @@ namespace TAO
   struct TAO_Export IIOP_Endpoint_Info
   {
     typedef IIOP_Endpoint_Info_var _var_type;
+    typedef IIOP_Endpoint_Info_out _out_type;
 
     static void _tao_any_destructor (void *);
     TAO::String_Manager host;

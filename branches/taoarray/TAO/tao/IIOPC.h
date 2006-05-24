@@ -80,8 +80,7 @@ namespace IIOP
 
   typedef
     TAO_Out_T<
-        ListenPoint,
-        ListenPoint_var
+        ListenPoint
       >
     ListenPoint_out;
 
@@ -91,6 +90,7 @@ namespace IIOP
   struct TAO_Export ListenPoint
   {
     typedef ListenPoint_var _var_type;
+    typedef ListenPoint_out _out_type;
 
     static void _tao_any_destructor (void *);
     TAO::String_Manager host;
@@ -155,8 +155,7 @@ namespace IIOP
 
   typedef
     TAO_Out_T<
-        BiDirIIOPServiceContext,
-        BiDirIIOPServiceContext_var
+        BiDirIIOPServiceContext
       >
     BiDirIIOPServiceContext_out;
 

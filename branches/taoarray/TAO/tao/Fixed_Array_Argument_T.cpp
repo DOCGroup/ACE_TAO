@@ -33,7 +33,7 @@ void
 TAO::In_Fixed_Array_Argument_T<S,S_slice,S_forany,Insert_Policy>::
   interceptor_value (CORBA::Any *any) const
 {
-  Insert_Policy<S>::any_insert (any, this->x_);
+  Insert_Policy<S_forany>::any_insert (any, this->x_);
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
@@ -74,7 +74,7 @@ void
 TAO::Inout_Fixed_Array_Argument_T<S,S_slice,S_forany,Insert_Policy>::
   interceptor_value (CORBA::Any *any) const
 {
-  Insert_Policy<S>::any_insert (any, this->x_);
+  Insert_Policy<S_forany>::any_insert (any, this->x_);
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
@@ -102,7 +102,7 @@ void
 TAO::Out_Fixed_Array_Argument_T<S,S_slice,S_forany,Insert_Policy>::
   interceptor_value (CORBA::Any *any) const
 {
-  Insert_Policy<S>::any_insert (any, this->x_);
+  Insert_Policy<S_forany>::any_insert (any, this->x_);
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
@@ -141,7 +141,7 @@ void
 TAO::Ret_Fixed_Array_Argument_T<S,S_slice,S_var,S_forany,S_tag,Insert_Policy>::
 interceptor_value (CORBA::Any *any) const
 {
-  Insert_Policy<S>::any_insert (any, S_forany (this->x_.ptr ()));
+  Insert_Policy<S_forany>::any_insert (any, S_forany (this->x_.ptr ()));
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */

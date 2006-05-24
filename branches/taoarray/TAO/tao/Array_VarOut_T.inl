@@ -22,7 +22,7 @@ TAO_Array_Var_Base_T<array_traits>::TAO_Array_Var_Base_T (
     const TAO_Array_Var_Base_T & p
   )
 {
-  this->ptr_ = array_traits::dup (p.in ());
+  this->ptr_ = TAO::details::array_traits<array_traits>::dup (p.in ());
 }
 
 template<typename array_traits>
@@ -78,7 +78,7 @@ ACE_INLINE
 typename TAO_Array_Var_Base_T<array_traits>::_retn_arg_type
 TAO_Array_Var_Base_T<array_traits>::_retn_arg (void)
 {
-  array_traits::free (this->ptr_);
+  TAO::details::array_traits<array_traits>::free (this->ptr_);
   this->ptr_ = 0;
   return this->ptr_;
 }
@@ -184,7 +184,7 @@ ACE_INLINE
 TAO_Array_Out_T<array_traits>::TAO_Array_Out_T (value_type & p)
   : ptr_ (p.out ())
 {
-  array_traits::free (this->ptr_);
+  TAO::details::array_traits<array_traits>::free (this->ptr_);
   this->ptr_ = 0;
 }
 
@@ -311,7 +311,7 @@ TAO_Array_Forany_T<array_traits>::operator slice_type *& ()
 
 template<typename array_traits>
 ACE_INLINE
-const TAO_Array_Forany_T<array_traits>::slice_type &
+const typename TAO_Array_Forany_T<array_traits>::slice_type &
 TAO_Array_Forany_T<array_traits>::operator[] (CORBA::ULong index) const
 {
   const slice_type & tmp = this->ptr_[index];
@@ -368,7 +368,7 @@ TAO_Array_Forany_T<array_traits>::nocopy (void) const
 
 template<typename array_traits>
 ACE_INLINE
-TAO_Array_Forany_T<array_traits>::slice_type *
+typename TAO_Array_Forany_T<array_traits>::slice_type *
 TAO_Array_Forany_T<array_traits>::ptr (void) const
 {
   return this->ptr_;

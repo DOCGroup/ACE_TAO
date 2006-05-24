@@ -16,45 +16,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-/*namespace TAO {
-  namespace details {
-  template <typename BASE_TYPE, CORBA::ULong N>
-  struct primitive_type_array_traits {
-    typedef BASE_TYPE array_type[N];
-    typedef BASE_TYPE array_slice;
-    typedef BASE_TYPE slice_type;
-    typedef BASE_TYPE value_type;
-    struct array_traits
-    {
-      typedef BASE_TYPE slice_type;
-      typedef BASE_TYPE value_type;
-    };
-    typedef TAO_Array_Forany_T<array_traits> forany_type;
-    typedef TAO_FixedArray_Var_T<array_traits> var_type;
-
-    inline static void copy (slice_type * _tao_to, const slice_type * _tao_from)
-    {
-      TAO::Array_Traits<value_type,slice_type,tag_type>::copy (_tao_to, _tao_from);
-    }
-
-    inline static void free (slice_type * value)
-    {
-      TAO::Array_Traits<value_type,slice_type,tag_type>::free (value);
-    }
-
-    inline static slice_type * alloc (void)
-    {
-      return TAO::Array_Traits<value_type,slice_type,tag_type>::alloc ();
-    }
-
-    inline static slice_type * dup(
-        const slice_type * value)
-    {
-      return TAO::Array_Traits<value_type,slice_type,tag_type>::dup (value);
-    }
-  };
-}}*/
-
 namespace TAO
 {
 namespace details
