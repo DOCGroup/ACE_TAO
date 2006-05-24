@@ -960,9 +960,6 @@ AH_TEMPLATE([ACE_LACKS_THREAD_STACK_SIZE],
 AH_TEMPLATE([ACE_LACKS_TIMESPEC_T],
 [Platform does not define timepec_t as a typedef for struct timespec.])
 
-AH_TEMPLATE([ACE_LACKS_STRPTIME_PROTOTYPE],
-[Platform/compiler lacks the strptime() prototype])
-
 AH_TEMPLATE([ACE_LACKS_STRTOK_R_PROTOTYPE],
 [Platform/compiler lacks the strtok_r() prototype])
 
