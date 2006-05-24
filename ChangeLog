@@ -1,3 +1,13 @@
+Wed May 24 16:33:59 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+        * m4/config_h.m4:
+        
+          Changed ACE_LACKS_STRPTIME and ACE_LACKS_STRPTIME_PROTOTYPE
+          feature tests to use the same idiom as similar tests.  This
+          Avoids requiring an AH_TEMPLATE for each feature test macro 
+          in config_h.m4.
+        
 Wed May 24 09:07:53 2006  Douglas C. Schmidt  <schmidt@cse.wustl.edu>
 
         * ace/Activation_Queue.cpp,

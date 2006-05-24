@@ -3949,8 +3949,8 @@ ACE_CHECK_HAS_FUNCS(sigsuspend sigtimedwait)
 
 ACE_CHECK_LACKS_FUNCS(socketpair)
 
-AC_CHECK_FUNC([strptime],
-  [
+ACE_CHECK_LACKS_FUNCS(strptime)
+if test "$ac_cv_func_strptime" == yes; then
    dnl strptime() is available, but its prototype is not always visible to
    dnl the compiler. Check if _XOPEN_SOURCE macro is needed to make the
    dnl strptime() prototype visible.
@@ -3970,10 +3970,9 @@ AC_CHECK_FUNC([strptime],
       dnl Reset the compiler flags
       CPPFLAGS="$ace_save_CPPFLAGS"
      ],,[AC_DEFINE([ACE_LACKS_STRPTIME_PROTOTYPE])])
-  ],
-  [
-   AC_DEFINE([ACE_LACKS_STRPTIME])
-  ])
+   AH_TEMPLATE([ACE_LACKS_STRPTIME_PROTOTYPE],
+   [Define to 1 if platform lacks strptime() declaration in <time.h>.])
+fi
 
 if test "$ac_cv_type_wchar_t" = yes; then
   AC_CHECK_FUNC([wcslen],
