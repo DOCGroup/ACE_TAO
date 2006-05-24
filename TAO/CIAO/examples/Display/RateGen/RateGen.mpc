@@ -62,7 +62,7 @@ project(Display_Base_RateGen_exec) : ciao_component_dnc {
 
 project (RateGen_DnC_controller) : ciao_client_dnc, valuetype {
   exename = controller
-  after += RateGen_stub
+  after += Display_Base_RateGen_stub
   libs += RateGen_stub Display_Base_stub
   libpaths += ../Display_Base
 
