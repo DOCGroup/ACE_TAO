@@ -1,19 +1,27 @@
+Wed May 24 14:00:43 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/Service_Gestalt.cpp:
+
+          Added a cast from size_t to int in the ctor to match the
+          interface of ::instance() and to quiet the 64bit compilers,
+          complaining about loss of precision in the implicit conversion.
+
 Tue May 23 19:21:55 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * tests/Signal_Test.cpp:
-        
-          Reset SIGHUP handler to SIG_DFL to support cases where SIGHUP 
+
+          Reset SIGHUP handler to SIG_DFL to support cases where SIGHUP
           is ignored (running under nohup(1), etc.).
 
 Tue May 23 10:55:59 2006  Douglas C. Schmidt  <schmidt@cse.wustl.edu>
 
-	* netsvcs/lib/Client_Logging_Handler.cpp (handle_input): 
-	* netsvcs/lib/Server_Logging_Handler_T.cpp
-	  (handle_logging_record): Cleaned up the code so that it should
-	  have no memory leaks and will also build cleanly on all the OS
-	  platforms.
+        * netsvcs/lib/Client_Logging_Handler.cpp (handle_input):
+        * netsvcs/lib/Server_Logging_Handler_T.cpp
+          (handle_logging_record): Cleaned up the code so that it should
+          have no memory leaks and will also build cleanly on all the OS
+          platforms.
 
-	* ace/Log_Msg_IPC.cpp: Fix support for ACE_HAS_STREAM_PIPES.
+        * ace/Log_Msg_IPC.cpp: Fix support for ACE_HAS_STREAM_PIPES.
 
 Tue May 23 13:05:03 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
