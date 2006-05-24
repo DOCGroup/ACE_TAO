@@ -1,3 +1,8 @@
+Wed May 24 17:39:47 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Remote_Tokens.cpp (request_reply): Added a helpful error
+          message to make it easy to track down problems with TSS.
+
 Wed May 24 17:22:31 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * configure.ac:
