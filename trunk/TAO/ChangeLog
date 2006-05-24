@@ -1,3 +1,11 @@
+Wed May 24 12:40:57 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/EndpointPolicy/IIOPEndpointValue_i.h:
+          Fixed memory leak. Unlike servants, local objects are not
+          intrinsically reference counted. Therefore it is still necessary
+          to explicitly inherit from TAO_RefCount_LocalObject rather than
+          from CORBA::LocalObject.
+
 Wed May 24 10:36:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/String_Manager_T.h (out, _retn):
