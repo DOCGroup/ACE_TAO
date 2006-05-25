@@ -1,3 +1,13 @@
+Thu May 25 23:12:56 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/TAO_Internal.cpp:
+
+          Fixed logic in open_services() to eliminate an unused local
+          variable warning (which happened when the TAO debug level
+          was less than 3) and made many cosmetic changes to the
+          whole file to bring the code into line with the ACE
+          style guidelines.
+
 Thu May 25 03:27:44 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/OctetSeqC.h:
