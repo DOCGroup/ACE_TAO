@@ -1,3 +1,8 @@
+Thu May 25 04:58:44 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * tests/Tokens_Test.cpp (run_main): Don't try to spawn the
+          netsvcs/server/main if it's not built.
+
 Thu May 25 03:53:47 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * m4/config_h.m4:
