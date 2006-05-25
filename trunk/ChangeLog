@@ -1,3 +1,10 @@
+Thu May 25 03:53:47 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * m4/config_h.m4:
+
+          Removed AH_TEMPLATE for ACE_LACKS_TCP_H.  This was replaced
+          with ACE_LACKS_NETINET_TCP_H long ago.
+
 Wed May 24 22:19:43 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * ace/Service_Repository.{h, inl, cpp}:
