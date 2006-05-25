@@ -119,26 +119,6 @@ CORBA::Boolean operator>> (
   return TAO::demarshal_sequence(strm, _tao_sequence);
 }
 
-#if (TAO_HAS_VERSIONED_NAMESPACE || ACE_HAS_VERSIONED_NAMESPACE)
-
-bool
-operator==(const CORBA::OctetSeq &lhs, const CORBA::OctetSeq &rhs)
-{
-  return ::operator==
-    (static_cast<const TAO::unbounded_value_sequence< CORBA::Octet > &>(lhs),
-     static_cast<const TAO::unbounded_value_sequence< CORBA::Octet > &>(rhs));
-}
-
-bool
-operator!=(const CORBA::OctetSeq &lhs, const CORBA::OctetSeq &rhs)
-{
-  return !::operator==
-    (static_cast<const TAO::unbounded_value_sequence< CORBA::Octet > &>(lhs),
-     static_cast<const TAO::unbounded_value_sequence< CORBA::Octet > &>(rhs));
-}
-
-#endif /* TAO_HAS_VERSIONED_NAMESPACE || ACE_HAS_VERSIONED_NAMESPACE */
-
 #endif /* _TAO_CDR_OP_CORBA_OctetSeq_CPP_ */
 
 TAO_END_VERSIONED_NAMESPACE_DECL
