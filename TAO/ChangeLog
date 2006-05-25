@@ -1,3 +1,17 @@
+Thu May 25 03:27:44 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/OctetSeqC.h:
+        * tao/OctetSeqC.cpp:
+        * tao/diffs/OctetSeq.diff:
+          Reverted change from Tue May 16 19:08:49 UTC 2006 Phil Mesnier
+          <mesnier_p@ociweb.com>
+
+        * tao/Unbounded_Octet_Sequence_T.h:
+          Moved the equality operations into the octet sequence class,
+          making them member functions. This seems to resolve the
+          namespace related problems.
+
+
 Wed May 24 19:43:16 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/Portable_Interceptors/Collocated/Service_Context_Manipulation/Server_Task.cpp:

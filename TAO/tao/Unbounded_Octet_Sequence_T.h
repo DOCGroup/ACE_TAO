@@ -207,6 +207,35 @@ public:
 
     return tmp.buffer_;
   }
+
+  // moved inside the class to resolve namespace lookup issues.
+  // This is a replacement for the commented block below.
+
+  inline bool operator== (const unbounded_value_sequence<CORBA::Octet> & rhs) const
+{
+  ::CORBA::ULong const rlen = rhs.length ();
+
+  if (rlen != this->length ())
+    {
+      return false;
+    }
+
+  for (::CORBA::ULong i = 0; i < rlen; ++i)
+    {
+      if (rhs[i] != this->buffer_[i])
+        {
+          return false;
+        }
+    }
+
+  return true;
+}
+
+  inline bool operator!= (const unbounded_value_sequence<CORBA::Octet> & rhs) const
+{
+  return !this->operator==(rhs);
+}
+
   inline void swap(unbounded_value_sequence & rhs) throw() {
     std::swap (mb_, rhs.mb_);
     std::swap (maximum_, rhs.maximum_);
@@ -296,6 +325,11 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
 
+#if 0
+// This doesn't work for an unexplained reason. At least
+// PortableServer::Active_Object_Map.cpp fails to compile.
+// But I'm keeping this in for the moment so that it may be
+// resurrected if need be
 inline
 bool
 operator== (const TAO_VERSIONED_NAMESPACE_NAME::TAO::unbounded_value_sequence<CORBA::Octet> & lhs,
@@ -326,49 +360,6 @@ operator!= (const TAO_VERSIONED_NAMESPACE_NAME::TAO::unbounded_value_sequence<CO
 {
   return !(lhs == rhs);
 }
-
-#if defined (ACE_HAS_VERSIONED_NAMESPACE)
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
-inline
-bool
-operator== (const TAO_VERSIONED_NAMESPACE_NAME::TAO::unbounded_value_sequence<CORBA::Octet> & lhs,
-            const TAO_VERSIONED_NAMESPACE_NAME::TAO::unbounded_value_sequence<CORBA::Octet> & rhs)
-{
-  return ::operator==(lhs,rhs);
-}
-
-inline
-bool
-operator!= (const TAO_VERSIONED_NAMESPACE_NAME::TAO::unbounded_value_sequence<CORBA::Octet> & lhs,
-            const TAO_VERSIONED_NAMESPACE_NAME::TAO::unbounded_value_sequence<CORBA::Octet> & rhs)
-{
-  return ::operator!=(lhs,rhs);
-}
-
-ACE_END_VERSIONED_NAMESPACE_DECL
-#endif /* ACE_HAS_VERSIONED_NAMESPACE */
-
-#if defined (TAO_HAS_VERSIONED_NAMESPACE)
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-inline
-bool
-operator== (const TAO::unbounded_value_sequence<CORBA::Octet> & lhs,
-            const TAO::unbounded_value_sequence<CORBA::Octet> & rhs)
-{
-  return ::operator==(lhs,rhs);
-}
-
-inline
-bool
-operator!= (const TAO::unbounded_value_sequence<CORBA::Octet> & lhs,
-            const TAO::unbounded_value_sequence<CORBA::Octet> & rhs)
-{
-  return ::operator!=(lhs,rhs);
-}
-
-TAO_END_VERSIONED_NAMESPACE_DECL
-#endif /* TAO_HAS_VERSIONED_NAMESPACE */
+#endif /* 0 */
 
 #endif // guard_unbounded_octet_sequence_hpp

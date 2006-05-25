@@ -164,14 +164,6 @@ TAO_Export CORBA::Boolean operator>> (
 // TAO_IDL - Generated from
 // be\be_codegen.cpp:1062
 
-// Added to handle the namespace resolution.
-#if (TAO_HAS_VERSIONED_NAMESPACE || ACE_HAS_VERSIONED_NAMESPACE)
-
-TAO_Export bool operator== (const CORBA::OctetSeq &, const CORBA::OctetSeq &);
-TAO_Export bool operator!= (const CORBA::OctetSeq &, const CORBA::OctetSeq &);
-
-#endif /* TAO_HAS_VERSIONED_NAMESPACE || ACE_HAS_VERSIONED_NAMESPACE */
-
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
