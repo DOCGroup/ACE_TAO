@@ -404,9 +404,9 @@ namespace CIAO
           }
 
         hcreator =
-          static_cast<HomeFactory> (executor_dll.symbol (exe_entrypt));
+          reinterpret_cast<HomeFactory> (executor_dll.symbol (exe_entrypt));
         screator =
-          static_cast<ServantFactory> (servant_dll.symbol (sv_entrypt));
+          reinterpret_cast<ServantFactory> (servant_dll.symbol (sv_entrypt));
       }
     else
       {
