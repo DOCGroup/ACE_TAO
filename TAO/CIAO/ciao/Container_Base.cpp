@@ -403,10 +403,16 @@ namespace CIAO
                 error.c_str ()), Components::CCMHome::_nil ());
           }
 
-        hcreator =
-          reinterpret_cast<HomeFactory> (executor_dll.symbol (exe_entrypt));
-        screator =
-          reinterpret_cast<ServantFactory> (servant_dll.symbol (sv_entrypt));
+        // We have to do this casting in two steps because the C++
+        // standard forbids casting a pointer-to-object (including
+        // void*) directly to a pointer-to-function.
+        void *void_ptr = executor_dll.symbol (exe_entrypt);
+        ptrdiff_t tmp_ptr = reinterpret_cast<ptrdiff_t> (void_ptr);
+        hcreator = reinterpret_cast<HomeFactory> (tmp_ptr);
+
+        void_ptr = servant_dll.symbol (sv_entrypt);
+        tmp_ptr = reinterpret_cast<ptrdiff_t> (void_ptr);
+        screator = reinterpret_cast<ServantFactory> (tmp_ptr);
       }
     else
       {
