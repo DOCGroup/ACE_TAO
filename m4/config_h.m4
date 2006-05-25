@@ -947,8 +947,6 @@ AH_TEMPLATE([ACE_LACKS_STRRECVFD],[Platform doesn't define struct strrecvfd.])
 
 AH_TEMPLATE([ACE_LACKS_T_ERRNO],[Header files lack t_errno for TLI])
 
-AH_TEMPLATE([ACE_LACKS_TCP_H],[Platform doesn't have netinet/tcp.h])
-
 AH_TEMPLATE([ACE_LACKS_TCP_NODELAY],[OS does not support TCP_NODELAY])
 
 AH_TEMPLATE([ACE_LACKS_THREAD_PROCESS_SCOPING],
