@@ -227,79 +227,93 @@ run_main (int, ACE_TCHAR *[])
 
   run_test (A, B, R, W);
 
-  const ACE_TCHAR * cl =
+  const ACE_TCHAR *token_exe =
     ACE_TEXT ("..") ACE_DIRECTORY_SEPARATOR_STR
     ACE_TEXT ("netsvcs") ACE_DIRECTORY_SEPARATOR_STR
     ACE_TEXT ("servers") ACE_DIRECTORY_SEPARATOR_STR
-    ACE_TEXT ("main") ACE_PLATFORM_EXE_SUFFIX
-    ACE_TEXT (" -f ") ACE_PLATFORM
-    ACE_TEXT ("tokens.conf");
+    ACE_TEXT ("main") ACE_PLATFORM_EXE_SUFFIX;
 
-  ACE_Process_Options options;
-  options.command_line (cl);
-
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Forking Token Service.\n")));
-
-  // Start up the token server for the remote test.
-  ACE_Process new_process;
-  if (new_process.spawn (options) == -1)
-    ACE_ERROR ((LM_DEBUG,
-                ACE_TEXT ("%n; %p (%s), will not run remote test.\n"),
-                ACE_TEXT ("Server fork failed"),
-                cl));
+  int status = ACE_OS::access (token_exe, F_OK);
+  if (status == -1)
+    ACE_ERROR ((LM_ERROR, 
+                ACE_TEXT ("%p\n"),
+                token_exe));
   else
     {
+      const ACE_TCHAR *cl =
+        ACE_TEXT ("..") ACE_DIRECTORY_SEPARATOR_STR
+        ACE_TEXT ("netsvcs") ACE_DIRECTORY_SEPARATOR_STR
+        ACE_TEXT ("servers") ACE_DIRECTORY_SEPARATOR_STR
+        ACE_TEXT ("main") ACE_PLATFORM_EXE_SUFFIX
+        ACE_TEXT (" -f ") ACE_PLATFORM
+        ACE_TEXT ("tokens.conf");
+
+      ACE_Process_Options options;
+      options.command_line (cl);
+
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("Server forked with pid = %d.\n"),
-                  new_process.getpid ()));
+                  ACE_TEXT ("Forking Token Service.\n")));
 
-      // Wait for the server to start.
-      ACE_OS::sleep (3);
+      // Start up the token server for the remote test.
+      ACE_Process new_process;
+      if (new_process.spawn (options) == -1)
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("%n; %p (%s), will not run remote test.\n"),
+                    ACE_TEXT ("Server fork failed"),
+                    cl));
+      else
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("Server forked with pid = %d.\n"),
+                      new_process.getpid ()));
 
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("Using Token Server on %s at port %d.\n"),
-                  server_host,
-                  server_port));
-      ACE_Remote_Mutex::set_server_address (ACE_INET_Addr (server_port,
-                                                           server_host));
+          // Wait for the server to start.
+          ACE_OS::sleep (3);
 
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("Using Token Server on %s at port %d.\n"),
+                      server_host,
+                      server_port));
+          ACE_Remote_Mutex::set_server_address (ACE_INET_Addr (server_port,
+                                                               server_host));
+
+          delete A;
+          delete B;
+          delete R;
+          delete W;
+
+          ACE_NEW_RETURN (A,
+                          ACE_Remote_Mutex (ACE_TEXT ("R Mutex A"), 0, 1),
+                          -1);
+          ACE_NEW_RETURN (B,
+                          ACE_Remote_Mutex (ACE_TEXT ("R Mutex B"), 0, 1),
+                          -1);
+          ACE_NEW_RETURN (R,
+                          ACE_Remote_RLock (ACE_TEXT ("R Reader Lock"), 0, 1),
+                          -1);
+          ACE_NEW_RETURN (W,
+                          ACE_Remote_WLock (ACE_TEXT ("R Writer Lock"), 0, 1),
+                          -1);
+
+          run_test (A, B, R, W);
+
+          // Wait for the server to finish.
+          ACE_OS::sleep (3);
+
+          // Kill the token server.
+          if (new_process.terminate () == -1)
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("Kill failed.\n")),
+                              -1);
+        }
+
+      delete thread_start;
+      thread_start = 0;
       delete A;
       delete B;
       delete R;
       delete W;
-
-      ACE_NEW_RETURN (A,
-                      ACE_Remote_Mutex (ACE_TEXT ("R Mutex A"), 0, 1),
-                      -1);
-      ACE_NEW_RETURN (B,
-                      ACE_Remote_Mutex (ACE_TEXT ("R Mutex B"), 0, 1),
-                      -1);
-      ACE_NEW_RETURN (R,
-                      ACE_Remote_RLock (ACE_TEXT ("R Reader Lock"), 0, 1),
-                      -1);
-      ACE_NEW_RETURN (W,
-                      ACE_Remote_WLock (ACE_TEXT ("R Writer Lock"), 0, 1),
-                      -1);
-
-      run_test (A, B, R, W);
-
-      // Wait for the server to finish.
-      ACE_OS::sleep (3);
-
-      // Kill the token server.
-      if (new_process.terminate () == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Kill failed.\n")),
-                          -1);
     }
-
-  delete thread_start;
-  thread_start = 0;
-  delete A;
-  delete B;
-  delete R;
-  delete W;
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) main thread exiting.\n")));
