@@ -21,7 +21,7 @@ if (!defined $svcconf_ext) {
 }
 
 # Default timeout.  NSCORBA needs more time for process start up.
-$wait_interval_for_process_creation = ($^O eq "nonstop_kernel") ? 10 : (($^O eq "lynxos") ? 12 : ($PerlACE::VxWorks_Test ? 60 : 5));
+$wait_interval_for_process_creation = (($^O eq "lynxos") ? 12 : ($PerlACE::VxWorks_Test ? 60 : 10));
 
 # Turn on autoflush
 $| = 1;
