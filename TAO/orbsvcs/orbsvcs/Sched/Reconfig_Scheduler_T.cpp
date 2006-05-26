@@ -730,7 +730,25 @@ set_seq (const RtecScheduler::RT_Info_Set& infos
           rt_info_ptr->enabled_state (RtecScheduler::RT_INFO_ENABLED);
         }
 
+#if defined (__BORLANDC__) && (__BORLANDC__ <= 0x582) && defined (NDEBUG)
+      // BCB2006 and BCB6 get an internal backend error when building this
+      // code in release mode, reported to Borland as QC27961
       // Call the internal set method.
+      RtecScheduler::RT_Info info = infos[i];
+
+      this->set_i (rt_info_ptr,
+                   info.criticality,
+                   info.worst_case_execution_time,
+                   info.typical_execution_time,
+                   info.cached_execution_time,
+                   info.period,
+                   info.importance,
+                   info.quantum,
+                   info.threads,
+                   info.info_type
+                   ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+#else
       this->set_i (rt_info_ptr,
                    infos[i].criticality,
                    infos[i].worst_case_execution_time,
@@ -742,7 +760,7 @@ set_seq (const RtecScheduler::RT_Info_Set& infos
                    infos[i].threads,
                    infos[i].info_type
                    ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+#endif
     }
 
   // Update stability flags.  For now, just mark everything as unstable.
@@ -818,6 +836,26 @@ reset_seq (const RtecScheduler::RT_Info_Set& infos
           ACE_THROW (RtecScheduler::INTERNAL ());
         }
 
+#if defined (__BORLANDC__) && (__BORLANDC__ <= 0x582) && defined (NDEBUG)
+      // BCB2006 and BCB6 get an internal backend error when building this
+      // code in release mode, reported to Borland as QC27961
+      // Call the internal set method.
+      RtecScheduler::RT_Info info = infos[i];
+
+      // Call the internal set method.
+      this->set_i (rt_info_ptr,
+                   info.criticality,
+                   info.worst_case_execution_time,
+                   info.typical_execution_time,
+                   info.cached_execution_time,
+                   info.period,
+                   info.importance,
+                   info.quantum,
+                   info.threads,
+                   info.info_type
+                   ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+#else
       // Call the internal set method.
       this->set_i (rt_info_ptr,
                    infos[i].criticality,
@@ -831,6 +869,7 @@ reset_seq (const RtecScheduler::RT_Info_Set& infos
                    infos[i].info_type
                    ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
+#endif
     }
 
   // Update stability flags.  For now, just mark everything as unstable.
@@ -920,6 +959,26 @@ replace_seq (const RtecScheduler::RT_Info_Set& infos
           rt_info_ptr->enabled_state (RtecScheduler::RT_INFO_ENABLED);
         }
 
+#if defined (__BORLANDC__) && (__BORLANDC__ <= 0x582) && defined (NDEBUG)
+      // BCB2006 and BCB6 get an internal backend error when building this
+      // code in release mode, reported to Borland as QC27961
+      // Call the internal set method.
+      RtecScheduler::RT_Info info = infos[i];
+
+      // Call the internal set method.
+      this->set_i (rt_info_ptr,
+                   info.criticality,
+                   info.worst_case_execution_time,
+                   info.typical_execution_time,
+                   info.cached_execution_time,
+                   info.period,
+                   info.importance,
+                   info.quantum,
+                   info.threads,
+                   info.info_type
+                   ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+#else
       // Call the internal set method.
       this->set_i (rt_info_ptr,
                    infos[i].criticality,
@@ -933,6 +992,7 @@ replace_seq (const RtecScheduler::RT_Info_Set& infos
                    infos[i].info_type
                    ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
+#endif
     }
 
   // Update stability flags.  For now, just mark everything as unstable.
