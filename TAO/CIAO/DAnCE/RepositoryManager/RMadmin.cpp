@@ -100,10 +100,10 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         // String dup required for MSVC6
         name[0].id = CORBA::string_dup (RMname_service);
 
-        // Resolve object from name		
+        // Resolve object from name
         obj = naming_context->resolve (name);
         ACE_TRY_CHECK;
-      }    
+      }
 
 
     CIAO::RepositoryManagerDaemon_var rm =
@@ -203,7 +203,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       try
       {
-        //change the working dir
+        // Change the working dir.
         char cwd [1024];
         ACE_OS::getcwd (cwd, 1024);
         ACE_CString descriptor_dir (cwd);
@@ -211,19 +211,24 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         ACE_OS::chdir (descriptor_dir.c_str ());
 
         Deployment::PackageConfiguration *pc = new Deployment::PackageConfiguration ();
-        //parse the PCD to make sure that there are no package errors
+
+        // Parse the PCD to make sure that there are no package errors.
         ACE_TRY
         {
-          if (xercesc::DOMDocument *doc = CIAO::Config_Handlers::XML_HELPER->create_dom 
-            ("default.pcd"))
-          {            
-            CIAO::Config_Handlers::Packaging::PCD_Handler::package_config 
-              ("default.pcd", *pc);
-          }
+          xercesc::DOMDocument *doc =
+            CIAO::Config_Handlers::XML_HELPER->create_dom ("default.pcd");
+
+          if (0 != doc)
+            {
+              CIAO::Config_Handlers::Packaging::PCD_Handler::package_config (
+                "default.pcd",
+                *pc);
+            }
         }
         ACE_CATCHALL
         {
-          ACE_ERROR ((LM_ERROR,
+          ACE_ERROR ((
+            LM_ERROR,
             "(%P|%t) [RM::retrieve_PC_from_descriptors] Error parsing the PCD\n"));
 
           ACE_THROW (Deployment::PackageError ());
@@ -280,13 +285,8 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
   ACE_ENDTRY;
 
-  //char a;
-  //cin >> a;
-
   return 0;
 }
-
-
 
 CORBA::Octet* read_from_disk (
   const char* full_path,

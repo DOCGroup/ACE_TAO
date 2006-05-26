@@ -1,3 +1,9 @@
+Fri May 26 13:57:38 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * DAnCE/RepositoryManager/RMAdmin.cpp(ACE_TMAIN):
+
+          Fixed unused variable warning, cosmetic changes.
+
 Fri May 26 12:59:03 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * DAnCE/NodeManager/NAM_Map.cpp:
