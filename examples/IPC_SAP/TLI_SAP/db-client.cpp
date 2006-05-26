@@ -11,18 +11,17 @@ ACE_RCSID(TLI_SAP, db_client, "$Id$")
 #if defined (ACE_HAS_TLI)
 const int MAXLINE = 255;
 
-int
-main (int argc, char *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   if (argc < 2)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Usage: %s employee_id [server-host port-number]\n",
-		      argv[0]),
+                       ACE_TEXT ("Usage: %s employee_id [server-host port-number]\n"),
+		       argv[0]),
                       -1);
 
-  const char *emp_num = argv[1];
-  const char *host_name = argc < 3 ? ACE_DEFAULT_SERVER_HOST : argv[2];
-  unsigned   short port	= argc < 4 ? ACE_DEFAULT_SERVER_PORT : ACE_OS::atoi (argv[3]);
+  const ACE_TCHAR *emp_num = argv[1];
+  const ACE_TCHAR *host_name = argc < 3 ? ACE_DEFAULT_SERVER_HOST : argv[2];
+  unsigned short port	= argc < 4 ? ACE_DEFAULT_SERVER_PORT : ACE_OS::atoi (argv[3]);
   int n;
   char buf[MAXLINE];
 
@@ -32,7 +31,7 @@ main (int argc, char *argv[])
   if (con.connect (client, ACE_INET_Addr (port, host_name)) == -1)
     ACE_OS::t_error ((char *) host_name), ACE_OS::exit (1);
 
-  ACE_OS::strcpy (buf, emp_num);
+  ACE_OS::strcpy (buf, ACE_TEXT_ALWAYS_CHAR (emp_num));
   n = ACE_OS::strlen (buf);
 
   if (client.send_n (buf, n) != n)

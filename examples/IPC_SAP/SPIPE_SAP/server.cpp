@@ -34,7 +34,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   if (argc > 1)
     rendezvous = argv[1];
 
-  ACE_OS::fdetach (rendezvous);
+  ACE_OS::fdetach (ACE_TEXT_ALWAYS_CHAR (rendezvous));
   ACE_SPIPE_Addr addr (rendezvous);
 
   ACE_HANDLE s_handle = peer_acceptor.open (addr);

@@ -29,7 +29,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     rendezvous = argv[1];
 
   ACE_OS::unlink (rendezvous);
-  ACE_OS::fdetach (rendezvous);
+  ACE_OS::fdetach (ACE_TEXT_ALWAYS_CHAR (rendezvous));
 
   if (peer_acceptor.open (ACE_SPIPE_Addr (rendezvous)) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), 1);
