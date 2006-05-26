@@ -27,7 +27,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     rendezvous = argv[1];
 
   ACE_OS::unlink (rendezvous);
-  ACE_OS::fdetach (rendezvous);
+  ACE_OS::fdetach (ACE_TEXT_ALWAYS_CHAR (rendezvous));
 
   ACE_SPIPE_Addr addr (rendezvous);
   ACE_Time_Value timeout (ACE_DEFAULT_TIMEOUT);

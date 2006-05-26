@@ -1,3 +1,17 @@
+Fri May 26 22:02:48 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * examples/IPC_SAP/SPIPE_SAP/consumer_msg.cpp:
+        * examples/IPC_SAP/SPIPE_SAP/consumer_read.cpp:
+        * examples/IPC_SAP/SPIPE_SAP/server.cpp: Wide-char fixes; there's no
+          wide-char variant for ACE_OS::fdetach().
+
+        * examples/IPC_SAP/TLI_SAP/CPP-client.cpp:
+        * examples/IPC_SAP/TLI_SAP/db-client.cpp:
+        * examples/IPC_SAP/TLI_SAP/ftp-client.cpp:
+        * examples/Connection/non_blocking/test_tli_acceptor.cpp:
+        * examples/Connection/non_blocking/test_tli_connector.cpp:
+          Wide-char/narrow-char fixes.
+
 Fri May 26 21:47:56 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * netsvcs/lib/Client_Logging_Handler.cpp,

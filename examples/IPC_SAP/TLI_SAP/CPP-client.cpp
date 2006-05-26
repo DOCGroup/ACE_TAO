@@ -13,9 +13,9 @@ ACE_RCSID(TLI_SAP, CPP_client, "$Id$")
 
 /* ACE_TLI Client */
 
-int main (int argc, char *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  const char *host = argc > 1 ? argv[1] : ACE_DEFAULT_SERVER_HOST;
+  const ACE_TCHAR *host = argc > 1 ? argv[1] : ACE_DEFAULT_SERVER_HOST;
   u_short r_port = argc > 2 ? ACE_OS::atoi (argv[2]) : ACE_DEFAULT_SERVER_PORT;
   int timeout = argc > 3 ? ACE_OS::atoi (argv[3]) : ACE_DEFAULT_TIMEOUT;
   u_short l_port = argc > 4 ? ACE_OS::atoi (argv[4]) : ACE_DEFAULT_LOCAL_PORT;
@@ -27,8 +27,7 @@ int main (int argc, char *argv[])
   ACE_INET_Addr remote_addr (r_port, host);
   ACE_INET_Addr local_addr (l_port);
 
-  ACE_DEBUG ((LM_DEBUG,
-              "starting non-blocking connect\n"));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("starting non-blocking connect\n")));
 
   // Initiate timed, non-blocking connection with server.
   ACE_TLI_Connector con;
@@ -41,12 +40,11 @@ int main (int argc, char *argv[])
     {
       if (errno != EWOULDBLOCK)
 	ACE_ERROR_RETURN ((LM_ERROR,
-                           "%p\n",
-                           "connection failed"),
+                           ACE_TEXT ("%p\n"),
+                           ACE_TEXT ("connection failed")),
                           1);
 
-      ACE_DEBUG ((LM_DEBUG,
-                  "starting timed connect\n"));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("starting timed connect\n")));
 
       // Check if non-blocking connection is in progress, and wait up
       // to timeout seconds for it to complete.
@@ -56,12 +54,12 @@ int main (int argc, char *argv[])
                         &remote_addr,
                         &tv) == -1)
 	ACE_ERROR_RETURN ((LM_ERROR,
-                           "%p\n",
-                           "connection failed"),
+                           ACE_TEXT ("%p\n"),
+                           ACE_TEXT ("connection failed")),
                           1);
       else
 	ACE_DEBUG ((LM_DEBUG,
-                    "connected to %s\n",
+                    ACE_TEXT ("connected to %s\n"),
 		    remote_addr.get_host_name ()));
     }
 
@@ -74,15 +72,15 @@ int main (int argc, char *argv[])
                            r_bytes,
                            0) == -1)
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "%p\n",
-                         "send_n"),
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("send_n")),
                         1);
 
   // Explicitly close the connection.
   if (cli_stream.close () == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "close"),
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("close")),
                       -1);
   return 0;
 }
@@ -90,7 +88,7 @@ int main (int argc, char *argv[])
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR,
-		     "your platform isn't configured to support TLI\n"),
+		     ACE_TEXT ("your platform isn't configured to support TLI\n")),
                     1);
 }
 #endif /* ACE_HAS_TLI */
