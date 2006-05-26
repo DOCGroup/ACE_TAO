@@ -73,7 +73,7 @@ static void  TestCounter()
    int i = INT_MAX, ni = INT_MIN;
    unsigned int ui = UINT_MAX;
    unsigned short us = 10;
-   short si = 65535;
+   short si = static_cast<short> (65535);
 
    // constructors
    Counter32 c1;
