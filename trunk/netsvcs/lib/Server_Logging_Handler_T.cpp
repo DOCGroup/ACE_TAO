@@ -96,29 +96,6 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::ha
       /* NOTREACHED */
 
     case 8:
-#if 0 // defined (ACE_WIN32)
-      // This is a special-case sent from near line 610 in
-      // Log_Msg.cpp.  Without this code Win32 sockets are never
-      // closed, so this server will quickly run out of handles.
-      if (length == ~0)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("client closing down on Windows\n")));
-          if (ACE_Reactor::instance ()->remove_handler
-              (handle,
-               ACE_Event_Handler::READ_MASK
-               | ACE_Event_Handler::EXCEPT_MASK
-               | ACE_Event_Handler::DONT_CALL) == -1)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("%n: %p\n"),
-                               ACE_TEXT ("remove_handler")),
-                              0);
-
-          ACE_OS::closesocket (handle);
-          return 0;
-        }
-#endif /* ACE_WIN32 */
-
       // Just fall through in this case..
       break;
     }
