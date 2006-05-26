@@ -92,7 +92,7 @@ sub load_failed_tests_list ($$)
     print "Build times for $file on $date are " 
         . join (', ', @timestamps) . "\n" unless !$debugging;
 
-    die "No builds for $file on $date. The closest ealier date is " 
+    die "No builds for $file on $date. The closest earlier date is " 
         . find_closest_earlier ($file, $date) . "\n" 
         unless ($#timestamps > -1);
 
