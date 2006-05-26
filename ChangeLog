@@ -1,3 +1,11 @@
+Fri May 26 09:53:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/Run_Test.pm:
+          Increased wait_interval_for_process_creation from 5 to 10 seconds.
+          On the slower systems some tests failed because the startup time
+          is longer then 5 seconds, especially if several configuration files
+          are read and saved during startup
+
 Fri May 26 08:21:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/diff-builds.pl:
