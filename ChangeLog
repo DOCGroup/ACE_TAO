@@ -1,3 +1,14 @@
+Fri May 26 21:47:56 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * netsvcs/lib/Client_Logging_Handler.cpp,
+        * netsvcs/lib/Server_Logging_Handler_T.cpp,
+        * ace/Log_Msg_IPC.cpp: Removed the special case code for Windows
+          since it seems like ACE (or Windows) now handles this properly.
+
+Fri May 26 21:20:35 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Log_Record.cpp (operator>>): Add one when allocating the buffer.
+
 Fri May 26 13:16:48 UTC 2006  Nanbor Wang  <nanbor@exothermic.txcorp.com>
 
         * ace/DLL_Manager.cpp:
