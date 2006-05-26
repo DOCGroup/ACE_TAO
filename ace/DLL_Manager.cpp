@@ -121,7 +121,7 @@ ACE_DLL_Handle::open (const ACE_TCHAR *dll_name,
           ACE_TString *name = 0;
           while (name_iter.next (name))
             {
-              if (ACE::debug () > 1)
+              if (ACE::debug ())
                 ACE_DEBUG ((LM_DEBUG,
                             ACE_LIB_TEXT ("(%P|%t) ACE_DLL_Handle::open: ")
                             ACE_LIB_TEXT ("calling dlopen on ")
@@ -163,7 +163,7 @@ ACE_DLL_Handle::open (const ACE_TCHAR *dll_name,
                   ACE_OS::strcat (aix_pathname, ACE_LIB_TEXT ("(shr.o)"));
                   open_mode |= RTLD_MEMBER;
 
-                  if (ACE::debug () > 1)
+                  if (ACE::debug ())
                     ACE_DEBUG ((LM_DEBUG,
                                 ACE_LIB_TEXT ("(%P|%t) ACE_DLL_Handle::open: ")
                                 ACE_LIB_TEXT ("calling dlopen on ")
@@ -229,7 +229,7 @@ ACE_DLL_Handle::close (int unload)
   else
     this->refcount_ = 0;
 
-  if (ACE::debug () > 2)
+  if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
                 ACE_LIB_TEXT ("(%P|%t) DLL_Handle::close: ")
                 ACE_LIB_TEXT ("closing %s (%d), refcount is down to %d\n"),
@@ -241,7 +241,7 @@ ACE_DLL_Handle::close (int unload)
       this->handle_ != ACE_SHLIB_INVALID_HANDLE &&
       unload == 1)
     {
-      if (ACE::debug () > 1)
+      if (ACE::debug ())
         ACE_DEBUG ((LM_DEBUG,
                     ACE_LIB_TEXT ("(%P|%t) DLL_Handle::close: ")
                     ACE_LIB_TEXT ("Unloading %s (%d)\n"),
@@ -318,7 +318,7 @@ ACE_DLL_Handle::get_handle (int become_owner)
 
   if (this->refcount_ == 0 && become_owner != 0)
     {
-      if (ACE::debug () > 1)
+      if (ACE::debug ())
         ACE_ERROR ((LM_ERROR,
                     ACE_LIB_TEXT ("(%P|%t) DLL_Handle::get_handle: ")
                     ACE_LIB_TEXT ("cannot become owner, refcount == 0.\n")));
@@ -334,7 +334,7 @@ ACE_DLL_Handle::get_handle (int become_owner)
         this->handle_ = ACE_SHLIB_INVALID_HANDLE;
     }
 
-  if (ACE::debug () > 1)
+  if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
                 ACE_LIB_TEXT ("ACE_DLL_Handle::get_handle: ")
                 ACE_LIB_TEXT ("post call: handle %s, refcount %d\n"),
