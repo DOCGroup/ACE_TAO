@@ -1,3 +1,11 @@
+Fri May 26 11:42:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Runtime_Scheduler.cpp:
+        * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.cpp:
+          Applied workarounds for BCB2006 and BCB6 in release mode, the
+          code results in the original form in an internal backend
+          error, reported this to Borland as QC27961.
+
 Thu May 25 23:12:56 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/TAO_Internal.cpp:
