@@ -32,11 +32,6 @@ ACE_Log_Msg_IPC::reset (void)
     {
       // If we don't do this, handles aren't reused on Win32 and the
       // server eventually crashes!
-#if defined (ACE_WIN32)
-      ACE_INT32 dummy = ~0;
-      this->message_queue_.send_n ((const void *) &dummy,
-                                    sizeof (ACE_INT32));
-#endif /* ACE_WIN32 */
       return this->close ();
     }
   return 0;
