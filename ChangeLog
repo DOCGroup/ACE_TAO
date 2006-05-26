@@ -1,3 +1,9 @@
+Fri May 26 12:42:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Naming_Test.cpp:
+          Replaced assert with if statement, resolved argument not used
+          warning in BCB6 release builds
+
 Fri May 26 10:26:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_1890_Regression_Test.cpp:
