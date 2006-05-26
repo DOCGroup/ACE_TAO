@@ -1,3 +1,11 @@
+Fri May 26 22:09:09 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/Valuetype/ValueBase.cpp:
+          Fixed a memory leak introduced by the refactoring of
+          _tao_unmarshal_pre. The ValueFactory reference was moved into
+          the unmarshal_pre method directly, and in doing so inadvertently
+          got its _var status stripped.
+
 Fri May 26 11:42:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Runtime_Scheduler.cpp:

@@ -198,7 +198,9 @@ CORBA::ValueBase::_tao_unmarshal_pre (TAO_InputCDR &strm,
                                       CORBA::ValueBase *&valuetype,
                                       const char * const repo_id)
 {
-  CORBA::ValueFactory factory = 0;
+  // Value factories are reference counted, when we get a new value factory
+  // from the ORB, its reference count is increased.
+  CORBA::ValueFactory_var factory;
 
   // %! yet much to do ... look for +++ !
 
