@@ -41,11 +41,11 @@ print_time (ACE_Profile_Timer &timer,
   timer.stop ();
   timer.elapsed_time (et);
 
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n     *****  %s  *****     \n"), test));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("     *****  %s  *****     \n"), test));
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("real time = %f secs, user time = %f secs, system time = %f secs\n"),
               et.real_time, et.user_time, et.system_time));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("time per call = %f usecs\n\n"),
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("time per call = %f usecs\n"),
               (et.real_time / double (ACE_NS_MAX_ENTRIES)) * 1000000));
 }
 
@@ -153,8 +153,11 @@ test_find (ACE_Naming_Context &ns_context, int sign, int result)
       char *type_out = 0;
       ACE_NS_WString val (temp_val);
 
-      int resolve_result = ns_context.resolve (w_name, w_value, type_out);
-      ACE_ASSERT (resolve_result == result);
+      int const resolve_result = ns_context.resolve (w_name, w_value, type_out);
+      if (resolve_result != result)
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("Error, resolve result not equal to resutlt (%d != %d)\n"),
+                    resolve_result, result));
 
       char *l_value = w_value.char_rep ();
 
