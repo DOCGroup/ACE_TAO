@@ -1,3 +1,8 @@
+Fri May 26 08:21:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/diff-builds.pl:
+          Fixed typo in comment
+
 Thu May 25 04:58:44 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * tests/Tokens_Test.cpp (run_main): Don't try to spawn the
