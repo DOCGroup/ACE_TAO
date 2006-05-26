@@ -1,3 +1,13 @@
+Fri May 26 10:26:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_1890_Regression_Test.cpp:
+        * tests/Bug_2540_Regression_Test.cpp:
+          New tests made by Carlos O'Ryan for the given bug numbers.
+
+        * tests/run_test.lst:
+        * tests/tests.mpc:
+          Added the new tests above
+
 Fri May 26 09:53:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/PerlACE/Run_Test.pm:
