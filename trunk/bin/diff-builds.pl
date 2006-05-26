@@ -226,7 +226,7 @@ if ($#builds == -1 && $#dates == 0)
 else
 {
 
-    die "More than one date or buld name are required" 
+    die "More than one date or build name are required" 
         unless ($#dates + $#builds ge 1);
     
     print "dates=@dates ($#dates)\n"
