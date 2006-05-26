@@ -294,12 +294,12 @@ void add_histogram(HIST dest, HIST source) {
    set_variance(dest, get_variance(source));
 }
 
-double histfloor(double x) {
+double histfloor (double x) {
 
 #ifdef WIN32
   return floor(x);
 #else
-  return((long long)x);
+  return static_cast<double> (static_cast<long long> (x)));
 #endif
 
 }
