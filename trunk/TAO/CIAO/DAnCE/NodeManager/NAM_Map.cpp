@@ -44,13 +44,9 @@ namespace CIAO
          i != this->map_.end ();
          ++i)
       {
-        if ((*i).int_id_ == oid)
+        if ((*i).int_id_.in() == oid)
           return this->map_.unbind ((*i).ext_id_) == 0;
       }
     return false;
   }
 }
-
-
-
-

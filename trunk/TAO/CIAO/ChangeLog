@@ -1,3 +1,9 @@
+Fri May 26 12:59:03 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * DAnCE/NodeManager/NAM_Map.cpp:
+          Make the equality test explicit to work with the revised octet
+          sequence implementation.
+
 Thu May 25 19:02:52 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ciao/Container_Base.cpp(ciao_install_home):
