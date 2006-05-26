@@ -325,7 +325,7 @@ operator>> (ACE_InputCDR &cdr,
   // Extract each field from input CDR stream into <log_record>.
   if ((cdr >> type) && (cdr >> pid) && (cdr >> sec) && (cdr >> usec)
       && (cdr >> buffer_len)) {
-    ACE_TCHAR *log_msg = new ACE_TCHAR[buffer_len];
+    ACE_TCHAR *log_msg = new ACE_TCHAR[buffer_len + 1];
     log_record.type (type);
     log_record.pid (pid);
     log_record.time_stamp (ACE_Time_Value (sec, usec));
