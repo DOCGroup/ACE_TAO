@@ -11,14 +11,17 @@ ACE_RCSID(TLI_SAP, ftp_client, "$Id$")
 
 #if defined (ACE_HAS_TLI)
 
-int
-main (int argc, char *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   if (argc < 2)
-    ACE_OS::fprintf (stderr, "Usage: %s filename [server-host port-number]\n", argv[0]), ACE_OS::exit (1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+		       ACE_TEXT ("Usage: %s filename ")
+		       ACE_TEXT ("[server-host port-number]\n"),
+		       argv[0]),
+		      1);
 
-  const char *filename  = argv[1];
-  const char *host_name = argc < 3 ? ACE_DEFAULT_SERVER_HOST : argv[2];
+  const ACE_TCHAR *filename  = argv[1];
+  const ACE_TCHAR *host_name = argc < 3 ? ACE_DEFAULT_SERVER_HOST : argv[2];
   u_short port = argc < 4 ? ACE_DEFAULT_SERVER_PORT : ACE_OS::atoi (argv[3]);
 
   ACE_TLI_Stream client;
@@ -45,7 +48,7 @@ main (int argc, char *argv[])
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR,
-                     "your platform isn't configured to support TLI\n"),
+                     ACE_TEXT ("your platform isn't configured to support TLI\n")),
                     1);
 }
 #endif /* ACE_HAS_TLI */
