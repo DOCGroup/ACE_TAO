@@ -998,25 +998,28 @@ TAO_Log_i::delete_records (const char *grammar,
 					ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  if (avail_status_.log_full && count > 0)
+  if (count > 0) 
     {
-      const CORBA::ULongLong current_size =
-        this->recordstore_->get_current_size (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+      if (avail_status_.log_full)
+	{
+	  const CORBA::ULongLong current_size =
+	    this->recordstore_->get_current_size (ACE_ENV_SINGLE_ARG_PARAMETER);
+	  ACE_CHECK_RETURN (0);
 
-      const CORBA::ULongLong max_size =
-        this->recordstore_->get_max_size (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+	  const CORBA::ULongLong max_size =
+	    this->recordstore_->get_max_size (ACE_ENV_SINGLE_ARG_PARAMETER);
+	  ACE_CHECK_RETURN (0);
 
-      if (current_size < max_size)
-        {
-          avail_status_.log_full = 0;
-        }
+	  if (current_size < max_size)
+	    {
+	      avail_status_.log_full = 0;
+	    }
+	}
+
+      this->reset_capacity_alarm_threshold (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (0);
     }
-
-  this->reset_capacity_alarm_threshold (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
-
+  
   return count;
 }
 
@@ -1036,24 +1039,27 @@ TAO_Log_i::delete_records_by_id (const DsLogAdmin::RecordIdList &ids
     this->recordstore_->delete_records_by_id (ids ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  if (avail_status_.log_full && count > 0)
+  if (count > 0)
     {
-      const CORBA::ULongLong current_size =
-        this->recordstore_->get_current_size (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+      if (avail_status_.log_full)
+	{
+	  const CORBA::ULongLong current_size =
+	    this->recordstore_->get_current_size (ACE_ENV_SINGLE_ARG_PARAMETER);
+	  ACE_CHECK_RETURN (0);
 
-      const CORBA::ULongLong max_size =
-        this->recordstore_->get_max_size (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+	  const CORBA::ULongLong max_size =
+	    this->recordstore_->get_max_size (ACE_ENV_SINGLE_ARG_PARAMETER);
+	  ACE_CHECK_RETURN (0);
 
-      if (current_size < max_size)
-        {
-          avail_status_.log_full = 0;
-        }
+	  if (current_size < max_size)
+	    {
+	      avail_status_.log_full = 0;
+	    }
+	}
+
+      this->reset_capacity_alarm_threshold (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (0);
     }
-
-  this->reset_capacity_alarm_threshold (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   return count;
 }
@@ -1454,24 +1460,27 @@ TAO_Log_i::remove_old_records (ACE_ENV_SINGLE_ARG_DECL)
     this->recordstore_->remove_old_records (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  if (avail_status_.log_full && count > 0)
+  if (count > 0)
     {
-      const CORBA::ULongLong current_size =
-        this->recordstore_->get_current_size (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      if (avail_status_.log_full)
+	{
+	  const CORBA::ULongLong current_size =
+	    this->recordstore_->get_current_size (ACE_ENV_SINGLE_ARG_PARAMETER);
+	  ACE_CHECK;
 
-      const CORBA::ULongLong max_size =
-        this->recordstore_->get_max_size (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+	  const CORBA::ULongLong max_size =
+	    this->recordstore_->get_max_size (ACE_ENV_SINGLE_ARG_PARAMETER);
+	  ACE_CHECK;
 
-      if (current_size < max_size)
-        {
-          avail_status_.log_full = 0;
-        }
+	  if (current_size < max_size)
+	    {
+	      avail_status_.log_full = 0;
+	    }
+	}
+
+      this->reset_capacity_alarm_threshold (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
     }
-
-  this->reset_capacity_alarm_threshold (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void

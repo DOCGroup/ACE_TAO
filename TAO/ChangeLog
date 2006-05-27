@@ -1,3 +1,10 @@
+Sat May 27 22:00:08 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/Log/Log_i.cpp:
+
+          Don't invoke reset_capacity_thresholds() if no log records were
+          actually removed.
+
 Fri May 26 22:09:09 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/Valuetype/ValueBase.cpp:
