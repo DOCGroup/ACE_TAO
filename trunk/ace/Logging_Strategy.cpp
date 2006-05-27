@@ -14,11 +14,9 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
 
-
 ACE_RCSID (ace,
            Logging_Strategy,
            "$Id$")
-
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -229,20 +227,20 @@ ACE_Logging_Strategy::parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 ACE_Logging_Strategy::ACE_Logging_Strategy (void)
-  : thread_priority_mask_ (0)
-  , process_priority_mask_ (0)
-  , flags_ (0)
-  , filename_ (0)
-  , logger_key_ (0)
-  , program_name_ (0)
-  , wipeout_logfile_ (false)
-  , fixed_number_ (false)
-  , order_files_ (false)
-  , count_ (0)
-  , max_file_number_ (1) // 2 files by default (max file number + 1)
-  , interval_ (ACE_DEFAULT_LOGFILE_POLL_INTERVAL)
-  , max_size_ (0)
-  , log_msg_ (ACE_Log_Msg::instance ())
+  : thread_priority_mask_ (0),
+    process_priority_mask_ (0),
+    flags_ (0),
+    filename_ (0),
+    logger_key_ (0),
+    program_name_ (0),
+    wipeout_logfile_ (false),
+    fixed_number_ (false),
+    order_files_ (false),
+    count_ (0),
+    max_file_number_ (1), // 2 files by default (max file number + 1)
+    interval_ (ACE_DEFAULT_LOGFILE_POLL_INTERVAL),
+    max_size_ (0),
+    log_msg_ (ACE_Log_Msg::instance ())
 {
 #if defined (ACE_DEFAULT_LOGFILE)
   this->filename_ = ACE::strnew (ACE_DEFAULT_LOGFILE);
@@ -274,8 +272,8 @@ ACE_Logging_Strategy::fini (void)
   delete [] this->logger_key_;
   delete [] this->program_name_;
 
-  if (this->reactor () &&
-      this->interval_ > 0 && this->max_size_ > 0)
+  if (this->reactor () 
+      && this->interval_ > 0 && this->max_size_ > 0)
     this->reactor ()->cancel_timer (this);
 
   return 0;
@@ -311,12 +309,12 @@ ACE_Logging_Strategy::init (int argc, ACE_TCHAR *argv[])
     {
       // Clear all flags
       this->log_msg_->clr_flags (ACE_Log_Msg::STDERR
-                                | ACE_Log_Msg::LOGGER
-                                | ACE_Log_Msg::OSTREAM
-                                | ACE_Log_Msg::VERBOSE
-                                | ACE_Log_Msg::VERBOSE_LITE
-                                | ACE_Log_Msg::SILENT
-                                | ACE_Log_Msg::SYSLOG);
+                                 | ACE_Log_Msg::LOGGER
+                                 | ACE_Log_Msg::OSTREAM
+                                 | ACE_Log_Msg::VERBOSE
+                                 | ACE_Log_Msg::VERBOSE_LITE
+                                 | ACE_Log_Msg::SILENT
+                                 | ACE_Log_Msg::SYSLOG);
       // Check if OSTREAM bit is set
       if (ACE_BIT_ENABLED (this->flags_,
                            ACE_Log_Msg::OSTREAM))

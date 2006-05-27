@@ -1101,8 +1101,6 @@ ACE_Service_Gestalt::process_directives (void)
 
 } /* process_directives () */
 
-
-
 // Tidy up and perform last rites on a terminating ACE_Service_Gestalt.
 int
 ACE_Service_Gestalt::close (void)
