@@ -439,16 +439,16 @@ u_long ACE_Log_Msg::default_priority_mask_ = 0;
 /// Default per-process priority mask
 /// By default, all priorities are enabled.
 u_long ACE_Log_Msg::process_priority_mask_ = LM_SHUTDOWN
-                                           | LM_TRACE
-                                           | LM_DEBUG
-                                           | LM_INFO
-                                           | LM_NOTICE
-                                           | LM_WARNING
-                                           | LM_STARTUP
-                                           | LM_ERROR
-                                           | LM_CRITICAL
-                                           | LM_ALERT
-                                           | LM_EMERGENCY;
+                                             | LM_TRACE
+                                             | LM_DEBUG
+                                             | LM_INFO
+                                             | LM_NOTICE
+                                             | LM_WARNING
+                                             | LM_STARTUP
+                                             | LM_ERROR
+                                             | LM_CRITICAL
+                                             | LM_ALERT
+                                             | LM_EMERGENCY;
 
 void
 ACE_Log_Msg::close (void)
@@ -602,14 +602,16 @@ ACE_Log_Msg::priority_mask (u_long n_mask, MASK_TYPE mask_type)
 {
   u_long o_mask;
 
-  if (mask_type == THREAD) {
-    o_mask = this->priority_mask_;
-    this->priority_mask_ = n_mask;
-  }
-  else {
-    o_mask = ACE_Log_Msg::process_priority_mask_;
-        ACE_Log_Msg::process_priority_mask_ = n_mask;
-  }
+  if (mask_type == THREAD) 
+    {
+      o_mask = this->priority_mask_;
+      this->priority_mask_ = n_mask;
+    }
+  else 
+    {
+      o_mask = ACE_Log_Msg::process_priority_mask_;
+      ACE_Log_Msg::process_priority_mask_ = n_mask;
+    }
 
   return o_mask;
 }
@@ -617,15 +619,16 @@ ACE_Log_Msg::priority_mask (u_long n_mask, MASK_TYPE mask_type)
 u_long
 ACE_Log_Msg::priority_mask (MASK_TYPE mask_type)
 {
-  return mask_type == THREAD  ?  this->priority_mask_
-                              :  ACE_Log_Msg::process_priority_mask_;
+  return mask_type == THREAD 
+    ? this->priority_mask_
+    :  ACE_Log_Msg::process_priority_mask_;
 }
 
 int
 ACE_Log_Msg::log_priority_enabled (ACE_Log_Priority log_priority)
 {
   return ACE_BIT_ENABLED (this->priority_mask_ |
-                            ACE_Log_Msg::process_priority_mask_,
+                          ACE_Log_Msg::process_priority_mask_,
                           log_priority);
 }
 
@@ -999,7 +1002,9 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                this->msg_ostream (),
                this->msg_callback ());
 
-  // Logging is a benign activity, so don't inadvertently smash errno.
+  // Logging is supposed to be a benign activity (i.e., not interfer
+  // with normal application operations), so don't inadvertently smash
+  // errno!
   ACE_Errno_Guard guard (errno);
 
   ACE_Log_Record log_record (log_priority,

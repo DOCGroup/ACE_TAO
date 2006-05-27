@@ -172,7 +172,7 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
     case -1:
     case 0:
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("client closing down unexpectedly\n")));
+                  ACE_TEXT ("client closing down\n")));
 
       if (ACE_Reactor::instance ()->remove_handler
           (handle,

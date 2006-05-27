@@ -1,3 +1,26 @@
+Sat May 27 15:03:07 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * netsvcs/servers/main.cpp (ACE_TMAIN): Removed the following code:
+  
+          if (ACE::debug () == 0)
+            ACE_LOG_MSG->priority_mask (~LM_DEBUG, ACE_Log_Msg::PROCESS);
+
+          since (1) it makes debugging hard and (2) it's simply wrong
+          since it's blowing away anything that's set by the
+          ACE_Logging_Strategy in the svc.conf file.
+
+
+Sat May 27 14:37:14 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Log_Record.cpp (print): Only print out the log records if the
+          corresponding type is enabled for logging.
+
+Sat May 27 14:35:21 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * netsvcs/servers/main.cpp: Enable the ignore_debug_flag in the
+          ACE_Service_Config::open() call so that we can override the
+          default ACE_Log_Priority settings in the svc.conf file.
+
 Sat May 27 11:36:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * performance-tests/SCTP/hist.cpp:
