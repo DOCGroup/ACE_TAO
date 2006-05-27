@@ -299,7 +299,7 @@ double histfloor (double x) {
 #ifdef WIN32
   return floor(x);
 #else
-  return static_cast<double> (static_cast<long long> (x)));
+  return static_cast<double> (static_cast<long long> (x));
 #endif
 
 }
