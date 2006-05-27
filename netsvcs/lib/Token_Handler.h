@@ -6,10 +6,10 @@
  *
  *  $Id$
  *
- *  @author Douglas C. Schmidt (schmidt@cs.wustl.edu) Tim Harrison (harrison@cs.wustl.edu)
+ *  @author Douglas C. Schmidt (schmidt@cs.wustl.edu) 
+ *          Tim Harrison (harrison@cs.wustl.edu)
  */
 //=============================================================================
-
 
 #ifndef ACE_TOKEN_HANDLER_H
 #define ACE_TOKEN_HANDLER_H

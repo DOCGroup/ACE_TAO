@@ -72,7 +72,7 @@ public:
 
 
   /// Write the contents of the logging record to the appropriate
-  /// <FILE>.
+  /// <FILE> iff the corresponding type is enabled.
   int print (const ACE_TCHAR host_name[],
              u_long verbose_flag,
 #if !defined (ACE_HAS_WINCE)
@@ -83,7 +83,7 @@ public:
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
   /// Write the contents of the logging record to the appropriate
-  /// <ostream>.
+  /// <ostream> iff the corresponding type is enabled.
   int print (const ACE_TCHAR host_name[],
              u_long verbose_flag,
              ACE_OSTREAM_TYPE &stream);

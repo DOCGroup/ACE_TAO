@@ -15,13 +15,15 @@ int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
 
-  // Try to link in the svc.conf entries dynamically.
+  // Try to link in the svc.conf entries dynamically, enabling the
+  // "ignore_debug_flag" as the last parameter so that we can override
+  // the default ACE_Log_Priority settings in the svc.conf file.
   //
   // Warning - do not try to move the ACE_Reactor signal handling work
   // up to before this call - if the user specified -b (be a daemon),
   // all handles will be closed, including the Reactor's pipe.
 
-  if (ACE_Service_Config::open (argc, argv) == -1)
+  if (ACE_Service_Config::open (argc, argv, ACE_DEFAULT_LOGGER_KEY, 1, 0, 1) == -1)
     {
       if (errno != ENOENT)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -150,10 +152,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
   else // Use dynamic linking.
     {
-      if (ACE::debug () == 0)
-        ACE_LOG_MSG->priority_mask (~LM_DEBUG,
-                                    ACE_Log_Msg::PROCESS);
-
       // Run forever, performing the configured services until we are
       // shut down by a SIGINT/SIGQUIT signal.
       // Create an adapter to end the event loop.

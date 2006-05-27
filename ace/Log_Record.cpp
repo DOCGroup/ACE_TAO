@@ -259,33 +259,38 @@ ACE_Log_Record::print (const ACE_TCHAR host_name[],
                        u_long verbose_flag,
                        FILE *fp)
 {
-  ACE_TCHAR *verbose_msg = 0;
-  ACE_NEW_RETURN (verbose_msg, ACE_TCHAR[MAXVERBOSELOGMSGLEN], -1);
-
-  int result = this->format_msg (host_name,
-                                 verbose_flag,
-                                 verbose_msg);
-
-  if (result == 0)
+  if (ACE_LOG_MSG->log_priority_enabled (ACE_Log_Priority (this->type_)))
     {
-      if (fp != 0)
+      ACE_TCHAR *verbose_msg = 0;
+      ACE_NEW_RETURN (verbose_msg, ACE_TCHAR[MAXVERBOSELOGMSGLEN], -1);
+
+      int result = this->format_msg (host_name,
+                                     verbose_flag,
+                                     verbose_msg);
+
+      if (result == 0)
         {
-          int verbose_msg_len =
-            static_cast<int> (ACE_OS::strlen (verbose_msg));
-          int fwrite_result = ACE_OS::fprintf (fp,
-                                               ACE_LIB_TEXT ("%s"),
-                                               verbose_msg);
-          // We should have written everything
-          if (fwrite_result != verbose_msg_len)
-            result = -1;
-          else
-            ACE_OS::fflush (fp);
+          if (fp != 0)
+            {
+              int verbose_msg_len =
+                static_cast<int> (ACE_OS::strlen (verbose_msg));
+              int fwrite_result = ACE_OS::fprintf (fp,
+                                                   ACE_LIB_TEXT ("%s"),
+                                                   verbose_msg);
+              // We should have written everything
+              if (fwrite_result != verbose_msg_len)
+                result = -1;
+              else
+                ACE_OS::fflush (fp);
+            }
         }
+
+      delete [] verbose_msg;
+
+      return result;
     }
-
-  delete [] verbose_msg;
-
-  return result;
+  else 
+    return 0;
 }
 
 int 
@@ -347,21 +352,25 @@ ACE_Log_Record::print (const ACE_TCHAR host_name[],
                        u_long verbose_flag,
                        ACE_OSTREAM_TYPE &s)
 {
-  ACE_TCHAR* verbose_msg = 0;
-  ACE_NEW_RETURN (verbose_msg, ACE_TCHAR[MAXVERBOSELOGMSGLEN], -1);
-
-  int const result = this->format_msg (host_name, verbose_flag, verbose_msg);
-
-  if (result == 0)
+  if (ACE_LOG_MSG->log_priority_enabled (ACE_Log_Priority (this->type_)))
     {
-      // Since ostream expects only chars, we cannot pass wchar_t's
-      s << ACE_TEXT_ALWAYS_CHAR (verbose_msg);
-      s.flush ();
+      ACE_TCHAR* verbose_msg = 0;
+      ACE_NEW_RETURN (verbose_msg, ACE_TCHAR[MAXVERBOSELOGMSGLEN], -1);
+
+      int const result = this->format_msg (host_name, verbose_flag, verbose_msg);
+
+      if (result == 0)
+        {
+          // Since ostream expects only chars, we cannot pass wchar_t's
+          s << ACE_TEXT_ALWAYS_CHAR (verbose_msg);
+          s.flush ();
+        }
+
+      delete [] verbose_msg;
+
+      return result;
     }
-
-  delete [] verbose_msg;
-
-  return result;
+  return 0;
 }
 
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
