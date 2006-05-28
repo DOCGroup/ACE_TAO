@@ -1469,10 +1469,10 @@ say CTRL-C to get back to the prompt.</li>
 <a NAME="log"></a>CORBA Telecom Log Service</h3>
 
 <h4>
-Last updated: Mon Oct 14 13:03:21 CDT 2002</h4>
-Point of contact: <a href="mailto:d.hanvey@qub.ac.uk">D A Hanvey</a>
-<p>The CORBA <a href="http://www.omg.org/cgi-bin/doc?telecom/99-05-01">Telecom
-Log Service </a>prototype was updated in TAO 1.3.
+Last updated: Sun May 28 15:42:44 PDT 2006</h4>
+Point of contact: <a href="mailto:jtc@acorntoolworks.com">J.T. Conklin</a>
+<p>The CORBA <a href="ftp://ftp.omg.org/docs/formal/03-07-01.pdf">Telecom
+Log Service</a> was updated in TAO 1.5.
 <h3>
 Features supported in the current version:</h3>
 
@@ -1512,21 +1512,30 @@ Event_Logging_Service <tt>$TAO_ROOT/orbsvcs/Logging_Service/Event_Logging_Servic
 Notify_Logging_Service <tt>$TAO_ROOT/orbsvcs/Logging_Service/Notify_Logging_Service</tt></li>
 
 <li>
-RTEvent_Logging_Service <tt>$TAO_ROOT/orbsvcs/Logging_Service/RTEvent_Logging_Service</tt></li>
-</ul>
-Each service registers with the Naming Service as "BasicLogFactory", "EventLogFactory",
-"NotifyLogFactory" and "RTEventLogFactory" respectively.
+RTEvent_Logging_Service <tt>$TAO_ROOT/orbsvcs/Logging_Service/RTEvent_Logging_Service</tt></li></ul>
+
+<li>
+Each service registers with the Naming Service as 
+"BasicLogFactory", "EventLogFactory", "NotifyLogFactory" and 
+"RTEventLogFactory" respectively.</li>
+
+<li>
+Each service registers with the Interoperable Naming Service as 
+"BasicLogService", "EventLogService", "NotifyLogService" and 
+"RTEventLogService" respectively.</li>
+
+<li>
+The Log Service uses a dynamically loaded "plug-in" Strategy for storing and 
+querying log records.  The default Strategy stores Log records in memory and 
+supports the Extended Trader Constraint Language (ETCL) Query Language.</li>
+
 <li>
 There are now examples that demonstrate simple usage of the Log Services.
 These are found in <tt>$TAO_ROOT/orbsvcs/examples/Log</tt> and the relevant
 sub-directories.</li>
 
 <br>A thorough test <tt>$TAO_ROOT/orbsvcs/tests/Log/Basic_Log_Test</tt>
-tests most of the features of the basic logging service.
-<li>
-The Query Language supported at present is "ETCL". The Log record id and
-Log record time are treated as properties of the log and can be referenced
-in a query as "id" and "time" respectively.</li>
+tests most of the features of the basic logging service.</li>
 </ul>
 
 <h3>
@@ -1534,12 +1543,11 @@ Future work and enhancements:</h3>
 
 <ul>
 <li>
-Currently all Log records are stored in memory, later we could add support
-for persistant storage.</li>
+Provide Strategies that support persistent storage of log records.</li>
 
 <li>
-Use Red-Black trees to optimize lookup on frequently used query keys -
-namely record id's and time.</li>
+Change default Strategy to use Red-Black trees to optimize lookup on
+frequently used query keys - namely record id's and time.</li>
 </ul>
 
 <hr WIDTH="100%">

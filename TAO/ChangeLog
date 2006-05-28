@@ -1,3 +1,10 @@
+Sun May 28 23:10:03 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * docs/releasenotes/index.html:
+
+          Update for changes to the telecom logging service that have been
+          made over the last few months.
+
 Sun May 28 16:24:24 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/Valuetype/ValueBase.cpp:
