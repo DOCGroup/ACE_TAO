@@ -9,7 +9,6 @@ Sat May 27 15:03:07 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
           since it's blowing away anything that's set by the
           ACE_Logging_Strategy in the svc.conf file.
 
-
 Sat May 27 14:37:14 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/Log_Record.cpp (print): Only print out the log records if the
