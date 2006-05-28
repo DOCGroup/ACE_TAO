@@ -292,7 +292,7 @@ CORBA::ValueBase::_tao_unmarshal_pre (TAO_InputCDR &strm,
   for (CORBA::ULong i = 0; i < num_ids; ++i)
     {
       factory = orb_core->orb ()->lookup_value_factory (ids[i].c_str ());
-      if (factory != 0)
+      if (factory.in() != 0)
         {
           if (i != 0 && chunking)
             {
@@ -302,7 +302,7 @@ CORBA::ValueBase::_tao_unmarshal_pre (TAO_InputCDR &strm,
         }
     }
 
-  if (factory == 0)
+  if (factory.in() == 0)
     {
       if (TAO_debug_level > 0)
         {
