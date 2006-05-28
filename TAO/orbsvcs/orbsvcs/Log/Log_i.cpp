@@ -1142,7 +1142,6 @@ TAO_Log_i::write_recordlist (const DsLogAdmin::RecordList &reclist
     }
 
   CORBA::Short num_written (0);
-  DsLogAdmin::LogRecord record;
 
   for (CORBA::ULong i = 0; i < reclist.length (); i++)
     {
