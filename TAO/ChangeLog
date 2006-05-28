@@ -1,3 +1,11 @@
+Sun May 28 23:15:51 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/Log/Log_i.cpp:
+
+          Reworked checks for the log being full.  Just log the record,
+          the LogRecordStore will return an error if it is full.  This
+          avoids extra conditions in the write hot path.
+
 Sun May 28 23:10:03 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * docs/releasenotes/index.html:
