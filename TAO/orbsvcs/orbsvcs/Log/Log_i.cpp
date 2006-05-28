@@ -1123,12 +1123,7 @@ TAO_Log_i::write_recordlist (const DsLogAdmin::RecordList &reclist
     this->get_availability_status_i (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  if (avail_stat.log_full == 1
-      && log_full_action == DsLogAdmin::halt)
-    {
-      ACE_THROW (DsLogAdmin::LogFull (0));
-    }
-  else if (admin_state == DsLogAdmin::locked)
+  if (admin_state == DsLogAdmin::locked)
     {
       ACE_THROW (DsLogAdmin::LogLocked ());
     }
@@ -1145,47 +1140,43 @@ TAO_Log_i::write_recordlist (const DsLogAdmin::RecordList &reclist
 
   for (CORBA::ULong i = 0; i < reclist.length (); i++)
     {
-      // Check if the log is full.
-      if (avail_status_.log_full == 1
-          && log_full_action == DsLogAdmin::halt)
-        {
-          ACE_THROW (DsLogAdmin::LogFull (num_written));
-        }
-      else
-        {
-          // retval == 1 => log store reached max size.
-
-          int retval = this->recordstore_->log (reclist[i] ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
-
-          if (retval == 1)
-            {
-              // The Log is full . check what the policy is
-              // and take appropriate action.
-              if (log_full_action == DsLogAdmin::halt)
-                avail_status_.log_full = 1;
-              else // the policy is to wrap. for this we need to delete
-              {  // a few records. let the record store decide how many.
-
-                if (this->recordstore_->purge_old_records (ACE_ENV_SINGLE_ARG_PARAMETER) == -1)
-                  ACE_THROW (CORBA::PERSIST_STORE ());
-              }
-              // Now, we want to attempt to write the same record again
-              // so decrement the index to balance the inc. in the for loop.
-              --i;
-            }
-          else
-            if (retval == 0)
-              num_written++;
-            else
-              ACE_THROW (CORBA::PERSIST_STORE ());
-        } // else
-
-      this->check_capacity_alarm_threshold (ACE_ENV_SINGLE_ARG_PARAMETER);
+      // retval == 1 => log store reached max size.
+      
+      int retval = this->recordstore_->log (reclist[i] ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
-    } // for
+      if (retval == 1)
+	{
+	  // The Log is full . check what the policy is and take
+	  // appropriate action.
+	  if (log_full_action == DsLogAdmin::halt)
+	    {
+	      avail_status_.log_full = 1;
+	      ACE_THROW (DsLogAdmin::LogFull (num_written));
+	    }
 
+	  // the policy is to wrap. for this we need to delete a few
+	  // records. let the record store decide how many.
+
+	  if (this->recordstore_->purge_old_records (ACE_ENV_SINGLE_ARG_PARAMETER) == -1)
+	    ACE_THROW (CORBA::PERSIST_STORE ());
+	
+	  // Now, we want to attempt to write the same record again
+	  // so decrement the index to balance the inc. in the for loop.
+	  --i;
+	}
+      else if (retval == 0)
+	{
+	  num_written++;
+	    
+	  this->check_capacity_alarm_threshold (ACE_ENV_SINGLE_ARG_PARAMETER);
+	  ACE_CHECK;
+	}
+      else
+	{
+	  ACE_THROW (CORBA::PERSIST_STORE ());
+	}
+    } // for
 }
 
 void
