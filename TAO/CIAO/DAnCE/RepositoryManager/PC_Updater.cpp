@@ -174,35 +174,37 @@ void PC_Updater::clear_list ()
     //create an interator
     ACE_Double_Linked_List_Iterator<ZIP_File_Info> iter (this->file_list_);
 
-    //construct search string
-    char str [TEMP_LEN + 2];
-    str[TEMP_LEN + 1] = '\0'; //let's make this safe for printing
-    ACE_OS::strncpy (str, "implementations/", TEMP_LEN);
-    ACE_OS::strncat (str, iad.location[0],
-                     TEMP_LEN - 16 ); //ACE_OS::strlen ("implementations/") = 16
-
     //find the correct path and return
     while (!iter.done ())
     {
       const char* full_path = iter.next ()->name_.c_str ();
       //weird. Need to call next to get current ?!?!
 
-      //compare them
-      const char* name = ACE_OS::strstr (full_path, str);
-
+      //is it an implementation artifact?
+      const char* name = ACE_OS::strstr (full_path, "implementations/");
       if (name)
       {
-        ACE_CString loc (this->server_path_);
-        loc += "/";
-        loc += full_path;
+        //now check if the name matches
+        name = ACE_OS::strstr (full_path, iad.location[0]);
 
-        iad.location[0] = CORBA::string_dup (loc.c_str ());
+        if (name)
+        {
+          ACE_CString loc (this->server_path_);
+          loc += "/";
+          loc += full_path;
 
-        //cout << "location: " << iad.location[0].in () << endl << endl;
-        return;
+          iad.location[0] = CORBA::string_dup (loc.c_str ());
+
+          //cout << "Location after update: " << iad.location[0] << endl << endl;
+          return;
+        }
       }
       iter++;
     }
+
+    ACE_ERROR ((LM_ERROR,
+               "[PC_Updater::update] Unable to update: %s!\n",
+                iad.location[0]));
 
     this->success_ = false;
   }
