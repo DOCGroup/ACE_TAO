@@ -29,13 +29,20 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                       -1);
   Magazine_Creator mc;
 
-  mc = (Magazine_Creator) dll.symbol (ACE_TEXT("create_magazine"));
+  // Cast the void* to non-pointer type first - it's not legal to
+  // cast a pointer-to-object directly to a pointer-to-function.
+  void *void_ptr = dll.symbol (ACE_TEXT ("create_magazine"));
+  ptrdiff_t tmp = reinterpret_cast<ptrdiff_t> (void_ptr);
+  mc = reinterpret_cast<Magazine_Creator> (tmp);
 
   if (mc == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p",
-                      "dll.symbol"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p",
+                         "dll.symbol"),
+                        -1);
+    }
+
   {
     auto_ptr <Magazine> magazine (mc ());
 
@@ -46,21 +53,30 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   // The other library is now loaded on demand.
 
-  retval = dll.open (ACE_DLL_PREFIX ACE_TEXT("DLL_Newsweek"));
+  retval = dll.open (ACE_DLL_PREFIX ACE_TEXT ("DLL_Newsweek"));
 
   if (retval != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p",
-                       "dll.open"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p",
+                         "dll.open"),
+                        -1);
+    }
 
-  mc = (Magazine_Creator) dll.symbol (ACE_TEXT("create_magazine"));
+  // Cast the void* to non-pointer type first - it's not legal to
+  // cast a pointer-to-object directly to a pointer-to-function.
+  void_ptr = dll.symbol (ACE_TEXT ("create_magazine"));
+  tmp = reinterpret_cast<ptrdiff_t> (void_ptr);
+  mc = reinterpret_cast<Magazine_Creator> (tmp);
 
   if (mc == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                      "%p",
-                       "dll.symbol"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p",
+                         "dll.symbol"),
+                        -1);
+    }
+
   {
     auto_ptr <Magazine> magazine (mc ());
 
