@@ -17,14 +17,11 @@
 #include "MonitorCB.h"
 #include "CIAO_common.h"
 
-
 #include "ace/Log_Msg.h"
 #include "ace/DLL.h"
 #include "ace/SString.h"
 
 #include "NodeManager_Impl.h"
-
-
 
 namespace CIAO
 {
@@ -40,11 +37,12 @@ namespace CIAO
   static const char* factory_func = "createMonitor";
 }
 
-CIAO::MonitorController::MonitorController (CORBA::ORB_ptr orb,
-                                            ::Deployment::Domain& domain,
-                                            ::Deployment::TargetManager_ptr target,
-                                            ::CIAO::NodeManager_Impl_Base* node_mgr
-                                            )
+CIAO::MonitorController::MonitorController (
+    ::CORBA::ORB_ptr orb,
+    ::Deployment::Domain& domain,
+    ::Deployment::TargetManager_ptr target,
+    ::CIAO::NodeManager_Impl_Base* node_mgr
+  )
   : target_facet_i_ (::Deployment::TargetManager::_duplicate (target)),
     terminate_flag_ (0),
     orb_ (orb),
@@ -55,43 +53,49 @@ CIAO::MonitorController::MonitorController (CORBA::ORB_ptr orb,
 {
 }
 
-int CIAO::MonitorController::svc (void)
+int
+CIAO::MonitorController::svc (void)
 {
   ACE_DLL dll;
 
-  // forming the library name
+  // Forming the library name.
   ACE_CString lib_name = ACE_DLL_PREFIX;
   lib_name  += monitor_lib_name;
-
-  int retval
-    = dll.open (lib_name.c_str ());
+  int retval = dll.open (lib_name.c_str ());
 
   if (retval != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p",
-                       "dll.open"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p",
+                         "dll.open"),
+                        -1);
+    }
 
-
-  MonitorFactory factory =
-    (MonitorFactory) dll.symbol (factory_func);
+  // Cast the void* to non-pointer type first - it's not legal to
+  // cast a pointer-to-object directly to a pointer-to-function.
+  void *void_ptr = dll.symbol (factory_func);
+  ptrdiff_t tmp = reinterpret_cast<ptrdiff_t> (void_ptr);
+  MonitorFactory factory = reintepret_cast<MonitorFactory> (tmp);
 
   if (factory == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p",
-                       "dll.symbol"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p",
+                         "dll.symbol"),
+                        -1);
+    }
+
   {
     ACE_TRACE ((LM_DEBUG, "Inside the init call\n"));
 
-    // here creating the monitor object
+    // Creating the monitor object.
     monitor_.reset ((MonitorBase*) factory ());
     monitor_->initialize_params (initial_domain_,
                                  target_facet_i_.in (),
                                  interval);
 
 
-    // Start the Monitor
+    // Start the Monitor.
     monitor_->start (orb_);
     auto_ptr <CIAO::MonitorCB> monitor_callback (new CIAO::MonitorCB (orb_,
                                                                      target_facet_i_.in (),
@@ -183,6 +187,7 @@ int CIAO::MonitorController::svc (void)
         ACE_OS::sleep (interval);
 
       }
+
     monitor_->stop ();
   }
 
@@ -197,6 +202,7 @@ int CIAO::MonitorController::svc (void)
     {
       ACE_DEBUG ((LM_DEBUG , "CIAO::Monitor::Terminating Monitor\n"));
     }
+
   return 0;
 }
 
@@ -206,23 +212,24 @@ CIAO::MonitorController::~MonitorController ()
   wait ();
 }
 
-void CIAO::MonitorController::terminate ()
+void
+CIAO::MonitorController::terminate ()
 {
   // make the terminate flag false
   ACE_GUARD (ACE_SYNCH_MUTEX,
              guard,
-             lock_
-             );
-  //ACE_DEBUG ((LM_DEBUG , "WITHIN TERMINATE CALL  ......\n"));
+             lock_);
+
   terminate_flag_=1;
 }
 
-bool CIAO::MonitorController::terminating ()
+bool
+CIAO::MonitorController::terminating ()
 {
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
                     guard,
                     lock_,
-                    0
-                    );
+                    0);
+
   return terminate_flag_;
 }

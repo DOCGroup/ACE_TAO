@@ -1,3 +1,15 @@
+Mon May 29 19:07:54 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * DAnCE/NodeApplication/Configurator_Factory.cpp:
+        * DAnCE/NodeManager/MonitorController.cpp:
+        * examples/Swapping/Sender/Sender_exec.cpp:
+
+          Changed C-style casts from void* to pointer-to-function
+          to two-step reinterpret_cast<>s, with ptrdiff_t as a
+          temporary intermediate. C++ forbids casting directly
+          between pointer-to-object and pointer-to-function, and
+          some the newer compilers are catching it.
+
 Mon May 29 17:44:01 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * examples/Display/Display_Base/Display_Base.mpc:
