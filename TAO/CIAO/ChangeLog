@@ -1,3 +1,14 @@
+Mon May 29 15:32:38 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * examples/Display/NavDisplay/NavDisplay.mpc:
+
+          Cosmetic changes (shortened long lines).
+
+        * examples/Display/NavDisplayGUI_exec/NavDisplayGUI.mpc:
+
+          Changed 'after +=' and 'libs +=' lines to reflect recent
+          changes to other examples/Display projects.
+
 Fri May 26 13:57:38 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * DAnCE/RepositoryManager/RMAdmin.cpp(ACE_TMAIN):
