@@ -782,9 +782,11 @@ Thu May  4 21:07:10 UTC 2006  Steve Huston  <shuston@riverace.com>
         * ace/SPIPE_Acceptor.cpp (create_new_instance, close): Have to use
           ACE_TEXT_ALWAYS_CHAR to pass pipe name on wide-char w/
           ACE_HAS_STREAM_PIPES. Thanks to Gary Fernandez <gary dot
-          fernandez at ironmountain dot com> for this fix.
+          fernandez at ironmountain dot com> for this fix and to Yasser
+          Zabuair <yzabuair at hotmail dot com> for also reporting it.  This
+          fixes bugid 2541.
 
-        * THANKS: Added Gary Fernandez to the Hall of Fame.
+        * THANKS: Added Gary and Yasser to the Hall of Fame.
 
 Thu May  4 08:50:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
