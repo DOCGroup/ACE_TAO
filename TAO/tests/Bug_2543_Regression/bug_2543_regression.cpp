@@ -1,10 +1,10 @@
 // $Id$
 
 #include "TestC.h"
-#include <tao/CodecFactory/CodecFactory.h>
+#include "tao/CodecFactory/CodecFactory.h"
 
-ACE_RCSID (Bug_2542_Regression,
-           bug_2542_regression,
+ACE_RCSID (Bug_2543_Regression,
+           bug_2543_regression,
            "$Id$")
 
 int main (int argc, char* argv[])

@@ -1,3 +1,13 @@
+Mon May 29 08:05:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2542_Regression/*:
+          New regression for Bug_2542. Thanks to <sdjiangwei at sina dot com>
+          for creating this regression.
+
+        * tests/Bug_2543_Regression/*:
+          New regression for Bug_2543. Thanks to <sdjiangwei at sina dot com>
+          for creating this regression.
+
 Sun May 28 23:15:51 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/orbsvcs/Log/Log_i.cpp:
