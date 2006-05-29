@@ -1,3 +1,13 @@
+Mon May 29 17:44:01 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * examples/Display/Display_Base/Display_Base.mpc:
+
+          Changed the base project of Display_Base_stub from
+          ciao_client_dnc to ciao_events_base_dnc, in order to pull
+          in a needed dependency on CIAO_DnC_Container. Thanks to
+          Ming Xiong <mxiong@dre.vanderbilt.edu> for supplying the
+          fix.
+
 Mon May 29 15:32:38 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * examples/Display/NavDisplay/NavDisplay.mpc:
