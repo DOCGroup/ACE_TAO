@@ -139,8 +139,6 @@ namespace CIDL_Sender_Impl
   SenderSwap_exec_i::incarnate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    // return new Sender_exec_i;
-
     ExecFactory first_exec_creator = 0;
     ExecFactory second_exec_creator = 0;
     ACE_DLL first_dll, second_dll;
@@ -153,7 +151,7 @@ namespace CIDL_Sender_Impl
       }
 
     if (second_dll.open (second_exe_dll_name,
-                        ACE_DEFAULT_SHLIB_MODE, 0) != 0)
+                         ACE_DEFAULT_SHLIB_MODE, 0) != 0)
       {
         ACE_DEBUG ((LM_DEBUG, "Could not open the DLL %s\n",
                   second_exe_dll_name));
@@ -166,18 +164,30 @@ namespace CIDL_Sender_Impl
         return 0;
       }
 
-    if (this->count_ == 0)
+    void *void_ptr = 0;
+    ptrdiff_t tmp = 0;
+
+    if (0 == this->count_)
       {
-        first_exec_creator = (ExecFactory) first_dll.symbol (first_exe_entrypt);
+        // Cast the void* to non-pointer type first - it's not legal to
+        // cast a pointer-to-object directly to a pointer-to-function.
+        void_ptr = first_dll.symbol (first_exe_entrypt);
+        tmp = reinterpret_cast<ptrdiff_t> (void_ptr);
+        first_exec_creator = reinterpret_cast<ExecFactory> (tmp);
+
         Components::EnterpriseComponent_var first_executor =
           first_exec_creator (this);
         count_++;
         return first_executor._retn ();
       }
-    else if (count_ == 1)
+    else if (-1 == count_)
       {
-        second_exec_creator = (ExecFactory)
-          second_dll.symbol (second_exe_entrypt);
+        // Cast the void* to non-pointer type first - it's not legal to
+        // cast a pointer-to-object directly to a pointer-to-function.
+        void_ptr = second_dll.symbol (second_exe_entrypt);
+        tmp = reinterpret_cast<ptrdiff_t> (void_ptr);
+        second_exec_creator = reinterpret_cast<ExecFactory> (tmp);
+
         Components::EnterpriseComponent_var second_executor =
           second_exec_creator (this);
         --count_;
@@ -191,7 +201,6 @@ namespace CIDL_Sender_Impl
   SenderSwap_exec_i::etherealize (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    // return new Sender_exec_i;
     return 0;
   }
 
@@ -202,7 +211,6 @@ namespace CIDL_Sender_Impl
   {
     ACE_DEBUG ((LM_DEBUG, "%P|%t) creating SenderHome \n"));
     return new SenderSwap_exec_i;
-    //return new Sender_exec_i;
   }
 
   extern "C" SENDER_EXEC_Export ::Components::HomeExecutorBase_ptr
