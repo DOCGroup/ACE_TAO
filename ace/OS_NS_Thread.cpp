@@ -2219,20 +2219,20 @@ ACE_OS::mutex_lock (ACE_mutex_t *m)
 {
   case USYNC_PROCESS:
     switch (::WaitForSingleObject (m->proc_mutex_, INFINITE))
-    {
-      //
-          // Timeout can't occur, so don't bother checking...
-      //
+      {
+        //
+        // Timeout can't occur, so don't bother checking...
+        //
       case WAIT_OBJECT_0:
       case WAIT_ABANDONED:
-          // We will ignore abandonments in this method
-          // Note that we still hold the lock
+        // We will ignore abandonments in this method
+        // Note that we still hold the lock
         return 0;
       default:
-          // This is a hack, we need to find an appropriate mapping...
+        // This is a hack, we need to find an appropriate mapping...
         ACE_OS::set_errno_to_last_error ();
         return -1;
-    }
+      }
   case USYNC_THREAD:
     return ACE_OS::thread_mutex_lock (&m->thr_mutex_);
   default:
@@ -2355,21 +2355,6 @@ ACE_OS::mutex_lock (ACE_mutex_t *m,
       return -1;
   }
   /* NOTREACHED */
-
-#  elif defined (ACE_PSOS)
-
-  // Note that we must convert between absolute time (which is
-  // passed as a parameter) and relative time (which is what
-  // the system call expects).
-  ACE_Time_Value relative_time (timeout - ACE_OS::gettimeofday ());
-
-  u_long ticks = relative_time.sec() * KC_TICKS2SEC +
-      relative_time.usec () * KC_TICKS2SEC /
-      ACE_ONE_SECOND_IN_USECS;
-  if (ticks == 0)
-    ACE_OSCALL_RETURN (::sm_p (*m, SM_NOWAIT, 0), int, -1); // no timeout
-  else
-    ACE_OSCALL_RETURN (::sm_p (*m, SM_WAIT, ticks), int, -1);
 
 #  elif defined (VXWORKS)
 

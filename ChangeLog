@@ -1,3 +1,17 @@
+Mon May 29 21:12:50 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/OS_NS_Thread.inl (recursive_mutex_lock): Added a const_cast
+          for ACE_Time_Value * to make the compiler happy when passing the
+          timeout parameter to ACE_OS::cond_timed_wait().  Thanks to Olli
+          Savia for helping here.
+  
+Mon May 29 20:30:44 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * We recently added the 2100th contributor to ACE+TAO+CIAO!!!  The
+          2000th contributor was added in August of 2005, this means that
+          over 100 different people have contributed to the project in the
+          past 9 months!
+  
 Mon May 29 19:50:54 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * examples/Service_Configurator/IPC-tests/server/server_test.cpp (ACE_TMAIN): 
