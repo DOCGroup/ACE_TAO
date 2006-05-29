@@ -172,27 +172,38 @@ class TAO_Log_Serv_Export TAO_Hash_LogRecordStore
   virtual int
     log (const DsLogAdmin::LogRecord &rec ACE_ENV_ARG_DECL);
 
-  /// Set rec to the pointer to the LogRecord with the given
-  /// id. Returns 0 on success, -1 on failure.
-  virtual int
-    retrieve (DsLogAdmin::RecordId id,
-	      DsLogAdmin::LogRecord &rec
-	      ACE_ENV_ARG_DECL);
-
-  /// Update into storage. Returns 0 on success -1 on failure.
-  virtual int
-    update (DsLogAdmin::LogRecord &rec
-	    ACE_ENV_ARG_DECL);
-
-  /// Remove the record with id <id> from the LogRecordStore.
-  /// Returns 0 on success, -1 on failure.
-  virtual int
-    remove (DsLogAdmin::RecordId id
-	    ACE_ENV_ARG_DECL);
-
   /// Deletes "old" records from the store.
   virtual int
     purge_old_records (ACE_ENV_SINGLE_ARG_DECL);
+
+  /// Set single record attributes.
+  virtual void
+    set_record_attribute (DsLogAdmin::RecordId id,
+			  const DsLogAdmin::NVList & attr_list
+			  ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     DsLogAdmin::InvalidRecordId,
+                     DsLogAdmin::InvalidAttribute));
+
+  /// Set the attributes of all records that matches the
+  /// constraints with same attr_list.
+  virtual CORBA::ULong
+    set_records_attribute (const char * grammar,
+			   const char * c,
+			   const DsLogAdmin::NVList & attr_list
+			   ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     DsLogAdmin::InvalidGrammar,
+                     DsLogAdmin::InvalidConstraint,
+                     DsLogAdmin::InvalidAttribute));
+
+  /// Get the attributes of the record with id <id>. Raises
+  /// DsLogAdmin::InvalidRecordId
+  virtual DsLogAdmin::NVList*
+    get_record_attribute (DsLogAdmin::RecordId id
+			  ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+		     DsLogAdmin::InvalidRecordId));
 
   /// Ensure changes have been flushed to persistent media
   /// Returns 0 on success, -1 on failure.
@@ -265,6 +276,21 @@ class TAO_Log_Serv_Export TAO_Hash_LogRecordStore
   typedef LOG_RECORD_HASH_MAP_ENTRY LOG_RECORD_STORE_ENTRY;
 
 protected:
+  /// Set rec to the pointer to the LogRecord with the given
+  /// id. Returns 0 on success, -1 on failure.
+  int retrieve (DsLogAdmin::RecordId id,
+		DsLogAdmin::LogRecord &rec
+		ACE_ENV_ARG_DECL);
+
+  /// Update into storage. Returns 0 on success -1 on failure.
+  int update (DsLogAdmin::LogRecord &rec
+	      ACE_ENV_ARG_DECL);
+
+  /// Remove the record with id <id> from the LogRecordStore.
+  /// Returns 0 on success, -1 on failure.
+  int remove (DsLogAdmin::RecordId id
+	      ACE_ENV_ARG_DECL);
+
   DsLogAdmin::RecordList* query_i (const char *constraint,
                                    DsLogAdmin::Iterator_out &iter_out,
                                    CORBA::ULong how_many

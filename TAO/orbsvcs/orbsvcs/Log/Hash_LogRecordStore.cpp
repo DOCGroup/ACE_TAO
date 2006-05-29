@@ -210,6 +210,115 @@ TAO_Hash_LogRecordStore::purge_old_records (ACE_ENV_SINGLE_ARG_DECL)
   return count;
 }
 
+void
+TAO_Hash_LogRecordStore::set_record_attribute (DsLogAdmin::RecordId id,
+					      const DsLogAdmin::NVList
+					      &attr_list
+					      ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   DsLogAdmin::InvalidRecordId,
+                   DsLogAdmin::InvalidAttribute))
+{
+  // TODO: validate attributes here.
+
+  DsLogAdmin::LogRecord rec;
+  if (this->retrieve (id, rec ACE_ENV_ARG_PARAMETER) == -1)
+    {
+      ACE_THROW (DsLogAdmin::InvalidRecordId ());
+    }
+
+  rec.attr_list = attr_list;
+
+  if (this->update (rec ACE_ENV_ARG_PARAMETER) == -1)
+    {
+      ACE_THROW (CORBA::PERSIST_STORE ());
+    }
+}
+
+CORBA::ULong
+TAO_Hash_LogRecordStore::set_records_attribute (const char *grammar,
+						const char *constraint,
+						const DsLogAdmin::NVList
+						&attr_list ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     DsLogAdmin::InvalidGrammar,
+                     DsLogAdmin::InvalidConstraint,
+                     DsLogAdmin::InvalidAttribute))
+{
+  // TODO: validate attributes here.
+
+  DsLogAdmin::Iterator_var iter_out;
+
+  DsLogAdmin::RecordList_var rec_list =
+    this->query (grammar,
+		 constraint,
+		 iter_out
+		 ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  CORBA::ULong count = rec_list->length ();
+
+  for (CORBA::ULong i = 0; i < count; ++i)
+    {
+      this->set_record_attribute (rec_list[i].id,
+				  attr_list
+				  ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (0);
+    }
+
+  // if iterator is not nil, process remainder of sequence
+  if (!CORBA::is_nil (iter_out.in ()))
+    {
+      CORBA::ULong len;
+      do
+        {
+	  rec_list = iter_out->get (count, 0 ACE_ENV_ARG_PARAMETER);
+	  ACE_CHECK_RETURN (0);
+
+	  len = rec_list->length ();
+	  for (CORBA::ULong i = 0; i < len; ++i)
+	    {
+	      this->set_record_attribute (rec_list[i].id,
+					  attr_list
+					  ACE_ENV_ARG_PARAMETER);
+	      ACE_CHECK_RETURN (0);
+	    }
+
+	  count += len;
+	}
+      while (len != 0);
+    }
+
+  return count;
+}
+
+DsLogAdmin::NVList*
+TAO_Hash_LogRecordStore::get_record_attribute (DsLogAdmin::RecordId id
+                             ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   DsLogAdmin::InvalidRecordId))
+{
+  DsLogAdmin::LogRecord rec;
+
+  int retval = this->retrieve (id, rec ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  if (retval == -1)
+    {
+      ACE_THROW_RETURN (DsLogAdmin::InvalidRecordId (),
+                        0);
+    }
+
+  DsLogAdmin::NVList* nvlist = 0;
+  ACE_NEW_THROW_EX (nvlist,
+                    DsLogAdmin::NVList (rec.attr_list),
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (0);
+
+  return nvlist;
+}
+
+
 int
 TAO_Hash_LogRecordStore::flush (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
