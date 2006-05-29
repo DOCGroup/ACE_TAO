@@ -1,7 +1,17 @@
+Mon May 29 18:27:08 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * examples/DLL/test_dll.cpp:
+
+          Changed instances of a C-style cast from void* to
+          pointer-to-function to a two-step reinterpret_cast
+          using ptrdiff_t as an intermediate. C++ forbids casting
+          directly between pointer-to-object and pointer-to-function,
+          and some of the newer compilers are catching it.
+
 Sat May 27 15:03:07 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * netsvcs/servers/main.cpp (ACE_TMAIN): Removed the following code:
-  
+
           if (ACE::debug () == 0)
             ACE_LOG_MSG->priority_mask (~LM_DEBUG, ACE_Log_Msg::PROCESS);
 
