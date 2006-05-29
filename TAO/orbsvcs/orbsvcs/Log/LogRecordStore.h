@@ -152,28 +152,38 @@ class TAO_Log_Serv_Export TAO_LogRecordStore
   virtual int
     log (const DsLogAdmin::LogRecord &rec ACE_ENV_ARG_DECL)	= 0;
 
-  /// Set rec to the pointer to the LogRecord with the given
-  /// id. Returns 0 on success, -1 on failure.
-  virtual int
-    retrieve (DsLogAdmin::RecordId id, 
-	      DsLogAdmin::LogRecord &rec
-	      ACE_ENV_ARG_DECL)					= 0;
-
-  /// Update into storage. 
-  /// Returns 0 on success -1 on failure.
-  virtual int
-    update (DsLogAdmin::LogRecord &rec
-	    ACE_ENV_ARG_DECL)					= 0;
-
-  /// Remove the record with id <id> from the LogRecordStore. 
-  /// Returns 0 on success, -1 on failure.
-  virtual int
-    remove (DsLogAdmin::RecordId id
-	    ACE_ENV_ARG_DECL)					= 0;
-
   /// Deletes "old" records from the store.
   virtual int
     purge_old_records (ACE_ENV_SINGLE_ARG_DECL)			= 0;
+
+  /// Set single record attributes.
+  virtual void
+    set_record_attribute (DsLogAdmin::RecordId id,
+                          const DsLogAdmin::NVList & attr_list
+                          ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     DsLogAdmin::InvalidRecordId,
+                     DsLogAdmin::InvalidAttribute))		= 0;
+
+  /// Set the attributes of all records that matches the
+  /// constraints with same attr_list.
+  virtual CORBA::ULong
+    set_records_attribute (const char * grammar,
+                           const char * c,
+                           const DsLogAdmin::NVList & attr_list
+                           ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     DsLogAdmin::InvalidGrammar,
+                     DsLogAdmin::InvalidConstraint,
+                     DsLogAdmin::InvalidAttribute))		= 0;
+
+  /// Get the attributes of the record with id <id>. Raises
+  /// DsLogAdmin::InvalidRecordId
+  virtual DsLogAdmin::NVList*
+    get_record_attribute (DsLogAdmin::RecordId id
+                          ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     DsLogAdmin::InvalidRecordId))		= 0;
 
   /// Ensure changes have been flushed to persistent media
   /// Returns 0 on success, -1 on failure
