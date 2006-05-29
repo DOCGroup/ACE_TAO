@@ -1,3 +1,19 @@
+Mon May 29 21:58:18 UTC 2006  Stoyan Paunov  <spaunov@isis.vanderbilt.edu>
+
+        * DAnCE/NodeApplicationManager/Containers_Info_Map.cpp:
+
+          Got rid of the code that updates the loader path for the
+          libraries downloaded via HTTP. Now this has to be done 
+          manually.
+
+        * DAnCE/RepositoryManager/PC_Updater.cpp:
+        * DAnCE/RepositoryManager/README.txt:
+        * DAnCE/RepositoryManager/RepositoryManager_Impl.cpp:
+
+          Changing the way library names are matched to be more general.
+          Some additions to the README
+          A minor change to one of the functions
+
 Mon May 29 19:07:54 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * DAnCE/NodeApplication/Configurator_Factory.cpp:

@@ -27,7 +27,7 @@ namespace CIAO
     char* temp = ACE_OS::getenv ("CIAO_ROOT");
     HTTP_DOWNLOAD_PATH += temp;
 
-#if defined (ACE_WIN32) || defined (ACE_WIN64)
+#if defined (ACE_WIN32)
     HTTP_DOWNLOAD_PATH += "\\";
 #else
     HTTP_DOWNLOAD_PATH += "/";
@@ -38,11 +38,6 @@ namespace CIAO
     ACE_OS::mkdir(HTTP_DOWNLOAD_PATH.c_str ());
     //if dir already exists a -1 is returned
     //we ignore this, just need to make sure the directory exists
-
-    //now lets update the loader path to include
-    //the HTTP_DOWNLOAD_PATH
-    this->update_loader_path ();
-
 
     this->initialize_map ();
     this->build_map ();
@@ -275,9 +270,6 @@ namespace CIAO
         Deployment::ArtifactDeploymentDescription arti =
           this->plan_.artifact[ impl.artifactRef[j] ];
 
-  // @Stoyan:  Is there any particular reason the repository
-  // manager should only work on Windows? -Will
-#if defined (ACE_WIN32) || defined (ACE_WIN64)
         for (size_t loc_num = 0;
              loc_num < arti.location.length ();
              ++loc_num)
@@ -295,9 +287,9 @@ namespace CIAO
                          "ERROR: Unable to resolve HTTP ref to location[%d] of %s\n",
                          loc_num, arti.name.in ()));
 
-        // @Stoyan:  This is an inappropriate response to
-        // this type of failure.  Please throw an
-        // exception, Deployment::UnknownImplId would be appropriate.
+                    //No need to throw an exception here!
+                    //Actually it is not desirable.
+                    //This is handled in a different part of DAnCE
                     arti.location[loc_num] = "HTTP_failure";
                   }
                 else
@@ -307,7 +299,6 @@ namespace CIAO
                   }
               }
           }
-#endif
 
         ACE_CString tmp = arti.name.in ();
         ssize_t pos;
@@ -435,7 +426,7 @@ is_shared_component (ACE_CString & name)
   void
   CIAO::Containers_Info_Map::update_loader_path (void)
   {
-#if defined (ACE_WIN32) || defined (ACE_WIN64)
+#if defined (ACE_WIN32)
     char* path = ACE_OS::getenv ("PATH");
 #else
     char* path = ACE_OS::getenv ("LD_LIBRARY_PATH");
@@ -444,7 +435,7 @@ is_shared_component (ACE_CString & name)
     if (ACE_OS::strstr (path, this->HTTP_DOWNLOAD_PATH.c_str ()))
        return;
 
-#if defined (ACE_WIN32) || defined (ACE_WIN64)
+#if defined (ACE_WIN32)
     ACE_CString new_path = "PATH=";
 #else
     ACE_CString new_path = "LD_LIBRARY_PATH=";
@@ -452,7 +443,7 @@ is_shared_component (ACE_CString & name)
 
     new_path += this->HTTP_DOWNLOAD_PATH;
 
-#if defined (ACE_WIN32) || defined (ACE_WIN64)
+#if defined (ACE_WIN32)
     new_path += ";";
 #else
     new_path += ":";
@@ -460,11 +451,7 @@ is_shared_component (ACE_CString & name)
 
     new_path += path;
 
-//turn off the HTTP feature for Linux until
-//I discover what the problem with Linux is
-#if defined (ACE_WIN32) || defined (ACE_WIN64)
-    ACE_OS::putenv (new_path.c_str ());
-#endif
+   ACE_OS::putenv (new_path.c_str ());
 
   }
 

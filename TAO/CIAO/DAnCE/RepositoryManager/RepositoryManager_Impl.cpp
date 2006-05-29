@@ -833,8 +833,8 @@ CIAO_RepositoryManagerDaemon_i::getAllNames ()
 
   CORBA::ULong num_entries = 0;
 
-  for (PCMap_Iterator i = this->names_.begin ();
-       i != this->names_.end ();
+  for (CIMap_Iterator i = this->types_.begin ();
+       i != this->types_.end ();
        ++i)
      ++num_entries;
 

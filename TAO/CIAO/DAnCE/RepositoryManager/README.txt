@@ -28,3 +28,26 @@ to compile the idl with the tao_idl compiler:
 
 tao_idl -GI new_RepositoryManager.idl -I%TAO_ROOT% -I%TAO_ROOT%\tao -I%TAO_ROOT%\orbsvcs -I%CIAO_ROOT%\DAnCE\ciao
 
+
+
+Be sure to set JAWS_DOCUMENT_ROOT to the installation path of the RepoMan.
+Also when you start JAWS make sure that the line that is uncommented in the svc.conf file is:
+
+static HTTP_Server "HTTP_Server -p 5432 -n 20 -i SYNCH -t POOL -b 50 -f THR_NEW_LWP -c NO_CACHE"
+
+in order to start JAWS with the NO_CACHE option.
+
+
+How do the PackageHandlers work?
+
+See $CIAO_ROOOT/tools/Config_Handlers/Package_Handlers/test.cpp
+
+It gives an example of how to use them. The code implementing them is also in the 
+See $CIAO_ROOOT/tools/Config_Handlers/Package_Handlers/ directory as well as its parent.
+
+In the RepoMan this code is used in:
+
+CIAO_RepositoryManagerDaemon_i::retrieve_PC_from_descriptors()
+
+
+
