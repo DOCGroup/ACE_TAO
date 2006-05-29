@@ -405,7 +405,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
     case 'h':
     default:
       ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) usage:\n"
+                  ACE_TEXT ("(%P|%t) usage:\n")
 		  ACE_TEXT ("-i <iterations>\n")
 		  ACE_TEXT ("-c\n")
 		  ACE_TEXT ("-p <parent_pid>\n")
