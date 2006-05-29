@@ -117,24 +117,6 @@ ACE_Recursive_Thread_Mutex::ACE_Recursive_Thread_Mutex (const ACE_Recursive_Thre
 {
 }
 
-int
-ACE_Recursive_Thread_Mutex::acquire (void)
-{
-  return ACE_OS::recursive_mutex_lock (&this->lock_);
-}
-
-int
-ACE_Recursive_Thread_Mutex::release (void)
-{
-  return ACE_OS::recursive_mutex_unlock (&this->lock_);
-}
-
-int
-ACE_Recursive_Thread_Mutex::tryacquire (void)
-{
-  return ACE_OS::recursive_mutex_trylock (&this->lock_);
-}
-
 void
 ACE_Recursive_Thread_Mutex::dump (void) const
 {

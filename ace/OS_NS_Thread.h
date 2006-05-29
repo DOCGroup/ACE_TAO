@@ -1429,7 +1429,10 @@ namespace ACE_OS {
    * returns -1 with an <ETIME> errno on platforms that actually
    * support timed mutexes.  The timeout should be an absolute time.
    * Note that the mutex should not be a recursive one, i.e., it
-   * should only be a standard mutex or an error checking mutex.
+   * should only be a standard mutex or an error checking mutex since
+   * some implementations of this method don't support recursive
+   * mutexes.  If you want to use a recursive mutex see the methods
+   * below.
    */
   extern ACE_Export
   int mutex_lock (ACE_mutex_t *m,
@@ -1442,7 +1445,9 @@ namespace ACE_OS {
    * -1 with an <ETIME> errno on platforms that actually support timed
    * mutexes.  The timeout should be an absolute time.  Note that the
    * mutex should not be a recursive one, i.e., it should only be a
-   * standard mutex or an error checking mutex.
+   * standard mutex or an error checking mutex since some
+   * implementations of this method don't support recursive mutexes.
+   * If you want to use a recursive mutex see the methods below.
    */
   ACE_NAMESPACE_INLINE_FUNCTION
   int mutex_lock (ACE_mutex_t *m,
@@ -1500,6 +1505,14 @@ namespace ACE_OS {
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int recursive_mutex_lock (ACE_recursive_thread_mutex_t *m);
+
+  ACE_NAMESPACE_INLINE_FUNCTION
+  int recursive_mutex_lock (ACE_recursive_thread_mutex_t *m,
+                            const ACE_Time_Value &timeout);
+ 
+  ACE_NAMESPACE_INLINE_FUNCTION
+  int recursive_mutex_lock (ACE_recursive_thread_mutex_t *m,
+                            const ACE_Time_Value *timeout);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int recursive_mutex_trylock (ACE_recursive_thread_mutex_t *m);
