@@ -112,7 +112,7 @@ namespace TAO
     typename sequence::value_type * buffer = tmp.get_buffer();
     for(CORBA::ULong i = 0; i < new_length; ++i) {
       forany tmp (array_traits::alloc ());
-      bool _tao_marshal_flag = (strm >> tmp);
+      bool const _tao_marshal_flag = (strm >> tmp);
       if (_tao_marshal_flag) {
         array_traits::copy (buffer[i], tmp.in ());
       }
