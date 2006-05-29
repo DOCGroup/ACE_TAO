@@ -32,6 +32,36 @@ ACE_Recursive_Thread_Mutex::set_thread_id (ACE_thread_t t)
 }
 
 ACE_INLINE int
+ACE_Recursive_Thread_Mutex::acquire (void)
+{
+  return ACE_OS::recursive_mutex_lock (&this->lock_);
+}
+
+ACE_INLINE int
+ACE_Recursive_Thread_Mutex::release (void)
+{
+  return ACE_OS::recursive_mutex_unlock (&this->lock_);
+}
+
+ACE_INLINE int
+ACE_Recursive_Thread_Mutex::tryacquire (void)
+{
+  return ACE_OS::recursive_mutex_trylock (&this->lock_);
+}
+
+ACE_INLINE int
+ACE_Recursive_Thread_Mutex::acquire (ACE_Time_Value &tv)
+{
+  return ACE_OS::recursive_mutex_lock (&this->lock_, tv);
+}
+
+ACE_INLINE int
+ACE_Recursive_Thread_Mutex::acquire (ACE_Time_Value *tv)
+{
+  return ACE_OS::recursive_mutex_lock (&this->lock_, tv);
+}
+
+ACE_INLINE int
 ACE_Recursive_Thread_Mutex::acquire_read (void)
 {
   return this->acquire ();
