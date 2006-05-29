@@ -911,7 +911,6 @@ TAO_Log_i::set_week_mask (const DsLogAdmin::WeekMask &masks
     }
 }
 
-
 DsLogAdmin::RecordList*
 TAO_Log_i::query (const char *grammar,
                   const char *constraint,
@@ -933,7 +932,6 @@ TAO_Log_i::query (const char *grammar,
 				    ACE_ENV_ARG_PARAMETER);
 }
 
-
 DsLogAdmin::RecordList*
 TAO_Log_i::retrieve (DsLogAdmin::TimeT from_time,
                      CORBA::Long how_many,
@@ -952,7 +950,6 @@ TAO_Log_i::retrieve (DsLogAdmin::TimeT from_time,
 				       iter_out
 				       ACE_ENV_ARG_PARAMETER);
 }
-
 
 CORBA::ULong
 TAO_Log_i::match (const char* grammar,
@@ -976,7 +973,6 @@ TAO_Log_i::match (const char* grammar,
 
   return count;
 }
-
 
 CORBA::ULong
 TAO_Log_i::delete_records (const char *grammar,
@@ -1023,7 +1019,6 @@ TAO_Log_i::delete_records (const char *grammar,
   return count;
 }
 
-
 CORBA::ULong
 TAO_Log_i::delete_records_by_id (const DsLogAdmin::RecordIdList &ids
                                  ACE_ENV_ARG_DECL)
@@ -1063,7 +1058,6 @@ TAO_Log_i::delete_records_by_id (const DsLogAdmin::RecordIdList &ids
 
   return count;
 }
-
 
 void
 TAO_Log_i::write_records (const DsLogAdmin::Anys &records
@@ -1193,20 +1187,8 @@ TAO_Log_i::set_record_attribute (DsLogAdmin::RecordId id,
 			    CORBA::INTERNAL ());
   ACE_CHECK;
 
-  // TODO: validate attributes here.
-
-  DsLogAdmin::LogRecord rec;
-  if (this->recordstore_->retrieve (id, rec ACE_ENV_ARG_PARAMETER) == -1)
-    {
-      ACE_THROW (DsLogAdmin::InvalidRecordId ());
-    }
-
-  rec.attr_list = attr_list;
-
-  if (this->recordstore_->update (rec ACE_ENV_ARG_PARAMETER) == -1)
-    {
-      ACE_THROW (CORBA::PERSIST_STORE ());
-    }
+  this->recordstore_->set_record_attribute (id, attr_list
+					    ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::ULong
@@ -1223,51 +1205,12 @@ TAO_Log_i::set_records_attribute (const char *grammar,
 			    guard,
 			    this->recordstore_->lock (),
 			    CORBA::INTERNAL ());
-  ACE_CHECK;
-
-  DsLogAdmin::Iterator_var iter_out;
-
-  DsLogAdmin::RecordList_var rec_list =
-    this->query (grammar,
-		 constraint,
-		 iter_out
-		 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  CORBA::ULong count = rec_list->length ();
-
-  for (CORBA::ULong i = 0; i < count; ++i)
-    {
-      this->set_record_attribute (rec_list[i].id,
-				  attr_list
-				  ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
-    }
-
-  // if iterator is not nil, process remainder of sequence
-  if (!CORBA::is_nil (iter_out.in ()))
-    {
-      CORBA::ULong len;
-      do
-        {
-	  rec_list = iter_out->get (count, 0 ACE_ENV_ARG_PARAMETER);
-	  ACE_CHECK_RETURN (0);
-
-	  len = rec_list->length ();
-	  for (CORBA::ULong i = 0; i < len; ++i)
-	    {
-	      this->set_record_attribute (rec_list[i].id,
-					  attr_list
-					  ACE_ENV_ARG_PARAMETER);
-	      ACE_CHECK_RETURN (0);
-	    }
-
-	  count += len;
-	}
-      while (len != 0);
-    }
-
-  return count;
+  return this->recordstore_->set_records_attribute (grammar,
+						    constraint,
+						    attr_list
+						    ACE_ENV_ARG_PARAMETER);
 }
 
 DsLogAdmin::NVList*
@@ -1281,25 +1224,10 @@ TAO_Log_i::get_record_attribute (DsLogAdmin::RecordId id
                            this->recordstore_->lock (),
                            CORBA::INTERNAL ());
   ACE_CHECK_RETURN (0);
+  
 
-  DsLogAdmin::LogRecord rec;
-
-  int retval = this->recordstore_->retrieve (id, rec ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
-
-  if (retval == -1)
-    {
-      ACE_THROW_RETURN (DsLogAdmin::InvalidRecordId (),
-                        0);
-    }
-
-  DsLogAdmin::NVList* nvlist = 0;
-  ACE_NEW_THROW_EX (nvlist,
-                    DsLogAdmin::NVList (rec.attr_list),
-                    CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
-
-  return nvlist;
+  return this->recordstore_->get_record_attribute (id
+						   ACE_ENV_ARG_PARAMETER);
 }
 
 void

@@ -1,3 +1,21 @@
+Mon May 29 14:28:17 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * NEWS:
+
+          Document changes.
+
+        * orbsvcs/orbsvcs/Log/Hash_LogRecordStore.cpp:
+        * orbsvcs/orbsvcs/Log/Hash_LogRecordStore.h:
+        * orbsvcs/orbsvcs/Log/LogRecordStore.h:
+        * orbsvcs/orbsvcs/Log/Log_i.cpp:
+
+          Changed plug-in Strategy interface.  Added get_record_attribute(),
+          set_record_attribute(), and set_records_attribute(); removed
+          retrieve(), update(), and remove().
+
+          This will allow plug-in Strategies to handle these high-level
+          operations more efficiently.
+
 Mon May 29 08:05:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_2542_Regression/*:
