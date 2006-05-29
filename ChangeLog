@@ -1,3 +1,18 @@
+Mon May 29 19:50:54 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * examples/Service_Configurator/IPC-tests/server/server_test.cpp (ACE_TMAIN): 
+          Changed 
+          
+          ACE_Reactor::instance ()->run_reactor_event_loop () 
+  
+          to
+          
+          ACE_Reactor::run_event_loop ()
+  
+          so that reconfiguration happens properly after a SIGHUP or
+          SIGINT occurs.  Thanks to Kevin Hu <Xiaotao dot Hu at ge dot
+          com> for motivating this.
+  
 Mon May 29 18:10:50 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * tests/Signal_Test.cpp:

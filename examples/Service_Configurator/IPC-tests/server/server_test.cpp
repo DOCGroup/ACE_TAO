@@ -45,7 +45,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // Run forever, performing the configured services until we are shut
   // down by a SIGINT/SIGQUIT signal.
 
-  ACE_Reactor::instance ()->run_reactor_event_loop ();
+  // We use this version of the event loop so that reconfigurations
+  // are triggered properly.
+  ACE_Reactor::run_event_loop ();
 
   return 0;
 }
