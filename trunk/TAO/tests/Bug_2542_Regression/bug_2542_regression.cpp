@@ -1,7 +1,7 @@
 // $Id$
 
 #include "TestC.h"
-#include <tao/CodecFactory/CodecFactory.h>
+#include "tao/CodecFactory/CodecFactory.h"
 
 ACE_RCSID (Bug_2542_Regression,
            bug_2542_regression,
