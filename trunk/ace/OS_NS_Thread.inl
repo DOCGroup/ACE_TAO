@@ -878,7 +878,7 @@ ACE_OS::recursive_mutex_lock (ACE_recursive_thread_mutex_t *m,
             {
               result = ACE_OS::cond_timedwait (&m->lock_available_,
                                                &m->nesting_mutex_,
-                                               &timeout);
+                                               const_cast <ACE_Time_Value *> &timeout);
  
               // the mutex is reacquired even in the case of a timeout
               // release the mutex to prevent a deadlock
