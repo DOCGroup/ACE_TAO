@@ -8,7 +8,8 @@
  *
  *   Moved from Synch.h.
  *
- *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu> and
+ *          Abdullah Sowayan <abdullah.sowayan@lmco.com>
  */
 //==========================================================================
 
@@ -60,6 +61,25 @@ public:
    * than once).
    */
   int acquire (void);
+
+  /**
+   * Block the thread until we acquire the mutex or until @a tv times
+   * out, in which case -1 is returned with <errno> == <ETIME>.  Note
+   * that @a tv is assumed to be in "absolute" rather than "relative"
+   * time.  The value of @a tv is updated upon return to show the
+   * actual (absolute) acquisition time.
+   */
+  int acquire (ACE_Time_Value &tv);
+
+  /**
+   * If <tv> == 0 the call <acquire()> directly.  Otherwise, Block the
+   * thread until we acquire the mutex or until <tv> times out, in
+   * which case -1 is returned with <errno> == <ETIME>.  Note that
+   * <*tv> is assumed to be in "absolute" rather than "relative" time.
+   * The value of <*tv> is updated upon return to show the actual
+   * (absolute) acquisition time.
+   */
+  int acquire (ACE_Time_Value *tv);
 
   /**
    * Conditionally acquire a recursive mutex (i.e., won't block).
@@ -124,7 +144,9 @@ public:
    * Return the nesting level of the recursion.  When a thread has
    * acquired the mutex for the first time, the nesting level == 1.
    * The nesting level is incremented every time the thread acquires
-   * the mutex recursively.
+   * the mutex recursively.  Note that if the ACE_HAS_RECURSIVE_MUTEXES
+   * macro is enabled then this method may return -1 on platforms that
+   * do not expose the internal count.
    */
   int get_nesting_level (void);
 

@@ -1,3 +1,33 @@
+Mon May 29 18:44:05 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * tests/Recursive_Mutex_Test.cpp: Enhanced this test to exercise
+          the new timed feature of ACE_Recursive_Thread_Mutex.
+
+Mon May 29 18:16:31 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Recursive_Thread_Mutex.h: Clarified that get_nesting_level()
+          may return -1 on some platforms when ACE_HAS_RECURSIVE_MUTEXES
+          is enabled.
+
+Mon May 29 17:45:02 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Recursive_Thread_Mutex.inl: Moved some of the short accessor
+          methods from the Recursive_Thread_Mutex.cpp file to here.
+
+        * ace/Recursive_Thread_Mutex.h,
+          ace/Recursive_Thread_Mutex.inl: Added support for time recursive
+          mutexes, thanks also to Abdullah.
+
+        * ace/OS_NS_Thread.h,
+        * ace/OS_NS_Thread.inl: Added support for timed recursive mutexes.
+          Thanks to Abdullah Sowayan <abdullah dot sowayan at lmco dot
+          com> for contributing this.
+
+Mon May 29 17:30:52 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/OS_NS_Thread.h: Updated the documentation to clarify why
+          recursive mutexes can't be used for ACE_OS::mutex_lock().
+
 Mon May 29 18:27:08 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * examples/DLL/test_dll.cpp:

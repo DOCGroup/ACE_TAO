@@ -14,7 +14,7 @@
 //     command line arguments are needed to run the test.
 //
 // = AUTHOR
-//    Prashant Jain <pjain@cs.wustl.edu> and Doug Schmidt <schmidt@cs.wustl.edu>
+//    Prashant Jain <pjain@cs.wustl.edu> and Douglas C. Schmidt <schmidt@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -35,10 +35,10 @@ ACE_RCSID(tests, Thread_Mutex_Test, "$Id$")
 // timed thread mutexes, use ACE_Process_Mutex.
 #if defined (ACE_HAS_WTHREADS)
 # include "ace/Process_Mutex.h"
-# define ACE_TEST_MUTEX  ACE_Process_Mutex
+  typedef ACE_Process_Mutex ACE_TEST_MUTEX;
 #else
 # include "ace/Thread_Mutex.h"
-# define ACE_TEST_MUTEX  ACE_Thread_Mutex
+  typedef ACE_Thread_Mutex ACE_TEST_MUTEX;
 #endif
 
 #if !defined (ACE_HAS_MUTEX_TIMEOUTS)

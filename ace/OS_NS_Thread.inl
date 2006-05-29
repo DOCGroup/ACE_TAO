@@ -849,6 +849,82 @@ ACE_OS::recursive_mutex_lock (ACE_recursive_thread_mutex_t *m)
 }
 
 ACE_INLINE int
+ACE_OS::recursive_mutex_lock (ACE_recursive_thread_mutex_t *m,
+                              const ACE_Time_Value &timeout)
+{
+#if defined (ACE_HAS_THREADS)
+#if defined (ACE_HAS_RECURSIVE_MUTEXES)
+  return ACE_OS::thread_mutex_lock (m, timeout);
+#else
+  ACE_thread_t t_id = ACE_OS::thr_self ();
+  int result = 0;
+
+  // Acquire the guard.
+  if (ACE_OS::thread_mutex_lock (&m->nesting_mutex_, timeout) == -1)
+    result = -1;
+  else
+    {
+      // If there's no contention, just grab the lock immediately
+      // (since this is the common case we'll optimize for it).
+      if (m->nesting_level_ == 0)
+        m->owner_id_ = t_id;
+      // If we already own the lock, then increment the nesting level
+      // and return.
+      else if (ACE_OS::thr_equal (t_id, m->owner_id_) == 0)
+        {
+          // Wait until the nesting level has dropped to zero, at
+          // which point we can acquire the lock.
+          while (m->nesting_level_ > 0)
+            {
+              result = ACE_OS::cond_timedwait (&m->lock_available_,
+                                               &m->nesting_mutex_,
+                                               &timeout);
+ 
+              // the mutex is reacquired even in the case of a timeout
+              // release the mutex to prevent a deadlock
+              if (result == -1)
+                {
+                  {
+                    // Save/restore errno.
+                    ACE_Errno_Guard error (errno);
+                    ACE_OS::thread_mutex_unlock (&m->nesting_mutex_);
+                  }
+             
+                  return result;
+                }
+            }
+ 
+          // At this point the nesting_mutex_ is held...
+          m->owner_id_ = t_id;
+        }
+ 
+      // At this point, we can safely increment the nesting_level_ no
+      // matter how we got here!
+      m->nesting_level_++;
+    }
+  {
+    // Save/restore errno.
+    ACE_Errno_Guard error (errno);
+    ACE_OS::thread_mutex_unlock (&m->nesting_mutex_);
+  }
+  return result;
+#endif /* ACE_HAS_RECURSIVE_MUTEXES */
+#else
+  ACE_UNUSED_ARG (m);
+  ACE_NOTSUP_RETURN (-1);
+#endif /* ACE_HAS_THREADS */
+}
+
+ACE_INLINE int
+ACE_OS::recursive_mutex_lock (ACE_recursive_thread_mutex_t *m,
+                              const ACE_Time_Value *timeout)
+{
+  return timeout == 0
+    ? ACE_OS::recursive_mutex_lock (m)
+    : ACE_OS::recursive_mutex_lock (m, *timeout);
+}
+
+ACE_INLINE int
 ACE_OS::recursive_mutex_trylock (ACE_recursive_thread_mutex_t *m)
 {
 #if defined (ACE_HAS_THREADS)
