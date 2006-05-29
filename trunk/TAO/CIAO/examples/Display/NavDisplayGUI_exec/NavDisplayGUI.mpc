@@ -1,32 +1,32 @@
 // $Id$
 project(NavDisplayGUI_DnC_exec) : ciao_events_base_dnc, qt {
-  after   += NavDisplay_DnC_exec
+  after   += Display_Base_NavDisplay_svnt
   requires += qt
   sharedname = NavDisplayGUI_DnC_exec
-  libs      += NavDisplay_DnC_stub NavDisplay_DnC_svnt HUDisplay_DnC_stub HUDisplay_DnC_svnt
+  libs      += NavDisplay_stub \
+               NavDisplay_svnt
   libpaths  += .. ../NavDisplay
   dynamicflags   = NAVDISPLAY_EXEC_BUILD_DLL QT_DLL
   includes  += ../NavDisplay
   includes  += /usr/include/qt3
-  idlflags  +=  -I ../NavDisplay -Wb,export_macro=NAVDISPLAY_EXEC_Export -Wb,export_include=NavDisplay_exec_export.h
+  idlflags  +=  -I ../NavDisplay \
+                -Wb,export_macro=NAVDISPLAY_EXEC_Export \
+                -Wb,export_include=NavDisplay_exec_export.h
 
   IDL_Files {
-
-
   }
 
   Source_Files {
-
-        AddNavUnitCmd.cpp
-        DetailView.cpp
-        MapView.cpp
-        NavUnit.cpp
-        NodeItem.cpp
-        QuitCmd.cpp
-        RootPanel.cpp
-        UpdatePositionCmd.cpp
-        Worker.cpp
-        NavDisplayGUI_exec.cpp
+    AddNavUnitCmd.cpp
+    DetailView.cpp
+    MapView.cpp
+    NavUnit.cpp
+    NodeItem.cpp
+    QuitCmd.cpp
+    RootPanel.cpp
+    UpdatePositionCmd.cpp
+    Worker.cpp
+    NavDisplayGUI_exec.cpp
   }
 
   MOC_Files {
@@ -35,11 +35,11 @@ project(NavDisplayGUI_DnC_exec) : ciao_events_base_dnc, qt {
     NodeItem.h
     RootPanel.h
   }
+
   Source_Files {
     DetailView_moc.cpp
     MapView_moc.cpp
     NodeItem_moc.cpp
     RootPanel_moc.cpp
   }
-
 }
