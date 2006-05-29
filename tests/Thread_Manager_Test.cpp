@@ -123,9 +123,9 @@ worker (int iterations)
               if (thr_mgr->testcancel (ACE_Thread::self ()) != 0)
                 {
                   ACE_DEBUG ((LM_DEBUG,
-                              ACE_TEXT ("(%t) has been cancelled "
-                                         "before iteration %d!\n"),
-                              i));
+                              ACE_TEXT ("(%t) has been cancelled ")
+			      ACE_TEXT ("before iteration %d!\n"),
+			      i));
                   break;
                 }
             }
