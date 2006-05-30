@@ -16,12 +16,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/Pluggable_Messaging.h"
+#include "tao/TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Pluggable_Messaging.h"
 #include "tao/Pluggable_Messaging_Utils.h"
 #include "tao/GIOP_Message_Generator_Parser_Impl.h"
 #include "tao/GIOP_Utils.h"
@@ -31,7 +32,6 @@
 #include "tao/Incoming_Message_Stack.h"
 
 #include "ace/Auto_Ptr.h"
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -94,10 +94,13 @@ public:
   /// the message.
   virtual int format_message (TAO_OutputCDR &cdr);
 
-  /// Parse the details of the next message from the @a incoming
-  /// and initializes attributes of @a qd. Returns 0 if the message
-  /// header could not be parsed completely, returns a 1 if the message
-  /// header could be parsed completely and returns -1 on error.
+  /**
+   * Parse the details of the next message from the @a incoming
+   * and initializes attributes of @a qd.
+   * @retval 0 If the message header could not be parsed completely,
+   * @retval 1 If the message header could be parsed completely
+   * @retval -1 On error.
+   */
   virtual int parse_next_message (ACE_Message_Block &incoming,
                                   TAO_Queued_Data &qd,       /* out */
                                   size_t &mesg_length);      /* out */
@@ -282,11 +285,6 @@ private:
   TAO::Incoming_Message_Stack fragment_stack_;
 
 protected:
-
-  /// Buffer used for both the output and input CDR streams, this is
-  /// "safe" because we only one of the streams at a time.
-  char buffer_[ACE_CDR::DEFAULT_BUFSIZE];
-
   /**
    * @name Outgoing GIOP Fragment Related Attributes
    *
