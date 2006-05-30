@@ -1,3 +1,8 @@
+Tue May 30 11:45:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Recursive_Mutex_Test.cpp:
+          Fixed compile error
+
 Tue May 30 11:11:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/os_include/os_stdio.h:
