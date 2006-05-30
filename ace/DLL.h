@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_DLL_H
 #define ACE_DLL_H
 #include /**/ "ace/pre.h"
@@ -36,8 +35,8 @@ class ACE_DLL_Handle;
  *
  * This class is a wrapper over the various methods for utilizing
  * a dynamically linked library (DLL), which is called a shared
- * library on some platforms.  Operations open(), close(), and
- * symbol() have been implemented to help opening/closing and
+ * library on some platforms.  Operations @c open(), @c close(), and
+ * @c symbol() have been implemented to help opening/closing and
  * extracting symbol information from a DLL, respectively.
  */
 class ACE_Export ACE_DLL
@@ -89,7 +88,16 @@ public:
 
   /**
    * This method opens and dynamically links a specified DLL.
-   * @param dll_name  The name or path of the DLL to load.
+   * @param dll_name  The filename or path of the DLL to load.
+   *        If a filename is given to @c open(), the @c ACE::ldfind() is used
+   *        to locate DLLs via the following algorithms: (1) DLL filename
+   *        expansion: @c ACE::ldfind() determines the name of the DLL by
+   *        adding the appropriate prefix and suffix, e.g., it adds the @c lib
+   *        prefix and @c .so suffix for Solaris and the @c .dll suffix for
+   *        Windows and (2) DLL search path: @c ACE::ldfind() will also search
+   *        for the designated DLL using the platform's DLL search path
+   *        environment variable, e.g., it searches for DLLs using @c
+   *        LD_LIBRARY_PATH on many UNIX systems and @c PATH on Windows.
    * @param open_mode  Flags to alter the actions taken when loading the DLL.
    *        The possible values are:
    *        @li @c RTLD_LAZY (this the default): loads identifier symbols but
