@@ -105,7 +105,7 @@ be_visitor_valuetype_marshal_cs::visit_valuetype (be_valuetype *node)
     {
       *os << "if (! ci.start_chunk (strm))" << be_idt_nl;
       *os << "return false;" << be_uidt_nl << be_nl;
-      *os << "CORBA::Boolean ret = " << be_idt << be_idt_nl;
+      *os << "CORBA::Boolean const ret = " << be_idt << be_idt_nl;
 
   // All we have to do is to visit the scope and generate code.
   this->gen_fields (node,
@@ -189,7 +189,7 @@ be_visitor_valuetype_marshal_cs::visit_valuetype (be_valuetype *node)
     {
       *os << "if (! ci.handle_chunking (strm))" << be_idt_nl;
       *os << "return false;" << be_uidt_nl << be_nl;
-      *os << "CORBA::Boolean ret = " << be_idt << be_idt_nl;
+      *os << "CORBA::Boolean const ret = " << be_idt << be_idt_nl;
 
   // All we have to do is to visit the scope and generate code.
   this->gen_fields (node,
