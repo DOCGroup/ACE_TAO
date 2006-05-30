@@ -226,15 +226,9 @@ ACE_Log_Record::format_msg (const ACE_TCHAR host_name[],
   if (ACE_BIT_ENABLED (verbose_flag,
                        ACE_Log_Msg::VERBOSE))
     {
-# if defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS)
-      const ACE_TCHAR *lhost_name =  (const ACE_TCHAR *) ((host_name == 0)
-                                                            ? ((char *) ACE_LIB_TEXT ("<local_host>"))
-                                                            : ((char *) host_name));
-# else /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
       const ACE_TCHAR *lhost_name = ((host_name == 0)
                                       ? ACE_LIB_TEXT ("<local_host>")
                                       : host_name);
-# endif /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
       ACE_OS::sprintf (verbose_msg,
                        verbose_fmt,
                        timestamp,
@@ -289,11 +283,11 @@ ACE_Log_Record::print (const ACE_TCHAR host_name[],
 
       return result;
     }
-  else 
+  else
     return 0;
 }
 
-int 
+int
 operator<< (ACE_OutputCDR &cdr,
             const ACE_Log_Record &log_record)
 {
@@ -318,7 +312,7 @@ operator<< (ACE_OutputCDR &cdr,
   return cdr.good_bit ();
 }
 
-int 
+int
 operator>> (ACE_InputCDR &cdr,
             ACE_Log_Record &log_record)
 {

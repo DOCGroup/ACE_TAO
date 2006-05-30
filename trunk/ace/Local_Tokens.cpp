@@ -191,15 +191,9 @@ ACE_TSS_TPQ_Entry::dump (void) const
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_TSS_TPQ_Entry::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-#if defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS)
-  ACE_DEBUG ((LM_DEBUG,  (char *) "ACE_TSS_TPQ_Entry::dump:\n"
-                        " client_id_ = %s\n",
-                        (char *) client_id_ == 0 ? (char *) "0" : (char *) client_id_));
-#else /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("ACE_TSS_TPQ_Entry::dump:\n")
                         ACE_LIB_TEXT (" client_id_ = %s\n"),
                         client_id_ == 0 ? ACE_LIB_TEXT ("0") : client_id_));
-#endif /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("base:\n")));
   ACE_TPQ_ENTRY::dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
@@ -1514,15 +1508,9 @@ ACE_Token_Name::dump (void) const
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Token_Name::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-#if defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS)
-  ACE_DEBUG ((LM_DEBUG,  (char *) "ACE_Token_Name::dump:\n"
-                        " token_name_ = %s\n",
-              (char *) token_name_ == 0 ? (char *) "no name" : (char *) token_name_));
-#else /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("ACE_Token_Name::dump:\n")
                         ACE_LIB_TEXT (" token_name_ = %s\n"),
               token_name_ == 0 ? ACE_LIB_TEXT ("no name") : token_name_));
-#endif /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }

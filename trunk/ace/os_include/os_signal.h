@@ -58,10 +58,6 @@ extern "C"
 {
 #endif /* __cplusplus */
 
-#if defined (ACE_SIGINFO_IS_SIGINFO_T)
-  typedef struct siginfo siginfo_t;
-#endif /* ACE_LACKS_SIGINFO_H */
-
 #if defined (ACE_LACKS_SIGSET)
   typedef u_int sigset_t;
 #endif /* ACE_LACKS_SIGSET */
