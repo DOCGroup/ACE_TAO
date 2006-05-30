@@ -9,6 +9,9 @@ Tue May 30 14:24:07 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
         * TAO_IDL/be/be_visitor_operation/amh_rh_ss.cpp:
           Fixed 64bit conversion warning
 
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+          Const improvement to generated code and use false instead of 0
+
 Tue May 30 14:10:07 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/AnyTypeCode/Marshal.cpp:
