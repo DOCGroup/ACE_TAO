@@ -18,7 +18,7 @@ int main (int argc, char* argv[])
                orb->resolve_initial_references("CodecFactory");
 
        IOP::CodecFactory_var codec_factory =
-               IOP::CodecFactory::_narrow(object);
+               IOP::CodecFactory::_narrow(object.in ());
        IOP::Encoding e = {IOP::ENCODING_CDR_ENCAPS,1,2};
 
        IOP::Codec_var codec = codec_factory->create_codec(e);
