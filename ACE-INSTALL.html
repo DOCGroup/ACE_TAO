@@ -2026,28 +2026,25 @@ libraries.
 
   </li><li><b>AIX</b><p>
 
-      ACE has been ported to AIX 4.3 and higher using the IBM C/C++
-      Compiler 3.6.6, Visual Age C++ 5 and 6, and g++ 3.2.</p><p>
+      ACE is currently supported on AIX 5.2 and higher using IBM's
+      Visual Age C++ 6 and XL C++ 7 compilers as well as g++ 3.2.</p><p>
 
-      To build ACE on AIX with Visual Age C++ 5 in incremental mode
-      (i.e. with the IDE), use the
-      $ACE_ROOT/ace/ace.icc configuration along with the appropriate
-      version-specific config file (e.g. config-aix-4.3.x.h). All of the
-      version-specific config files set the version number macros and
-      include the general config-aix-4.x.h file which has support for all
-      of the OS versions and compilers supported on AIX. Using the general
-      config file is the recommended practice for g++, IBM
-      C/C++, and Visual Age C++ batch mode compilers.</p><p>
-
-      Visual Age C++ 4 has also been supported on ACE 5.1, but is no longer
-      supported. If you are still using this compiler, please use the
-      $ACE_ROOT/ace/ace-dll.icc configuration file, along with the
-      config-aix-4.3.x.h ACE config file. Beware, however, that it hasn't
-      been tested.</p><p>
+      The <code>ace/config-aix-5.x.h</code> file is recommended for all
+      compilers on all AIX 5L versions. The Asynchronous I/O functionality
+      is disabled by default because its use requires the system administrator
+      to explicitly enable it in the kernel using SMIT. If this has been
+      done and you want to enable asynchronous I/O support in ACE, add:
+      <code>#define ACE_HAS_AIO_CALLS</code> to your <code>config.h</code>
+      file before including <code>ace/config-aix-5.x.h</code>.</p><p>
 
       The Visual Age 6.0.0.3 and 6.0.0.4 do have some bugs that makes
-      them unusable for building TAO. We have tested with 6.0.0.12 and
+      them unusable for building TAO. TAO has been tested with 6.0.0.12 and
       had no problems with that version.</p><p>
+
+      For your <code>platform_macros.GNU</code> file, you should use
+      <code>platform_aix_ibm.GNU</code> when building ACE with any of the
+      IBM compilers and <code>platform_aix_g++.GNU</code> when building ACE
+      with g++.</p><p>
 
       BTW, here's a technique from Rob Jordan &lt;<a href="mailto:jordan@hursley.ibm.com">jordan@hursley.ibm.com</a>&gt;
       that can reduce the size of the ACE libraries by about one
