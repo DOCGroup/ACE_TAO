@@ -47,9 +47,7 @@ using std::strftime;
 #   include /**/ <cstring>
 # else
 #   if defined (ACE_LACKS_MEMORY_H)
-#     if !defined (ACE_PSOS_DIAB_MIPS)
-#       include "ace/os_include/os_string.h"
-#     endif /* ACE_PSOS_DIAB_MIPS */
+#     include "ace/os_include/os_string.h"
 #   else
 #     include /**/ <memory.h>
 #   endif /* ACE_LACKS_MEMORY_H */

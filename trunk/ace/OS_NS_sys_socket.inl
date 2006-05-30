@@ -31,21 +31,6 @@ ACE_OS::accept (ACE_HANDLE handle,
                 int *addrlen)
 {
   ACE_OS_TRACE ("ACE_OS::accept");
-#if defined (ACE_PSOS)
-#  if !defined (ACE_PSOS_DIAB_PPC)
-  ACE_SOCKCALL_RETURN (::accept ((ACE_SOCKET) handle,
-                                 (struct sockaddr_in *) addr,
-                                 (ACE_SOCKET_LEN *) addrlen),
-                       ACE_HANDLE,
-                       ACE_INVALID_HANDLE);
-#  else
-  ACE_SOCKCALL_RETURN (::accept ((ACE_SOCKET) handle,
-                                 (struct sockaddr *) addr,
-                                 (ACE_SOCKET_LEN *) addrlen),
-                       ACE_HANDLE,
-                       ACE_INVALID_HANDLE);
-#  endif /* defined ACE_PSOS_DIAB_PPC */
-#else
   // On a non-blocking socket with no connections to accept, this
   // system call will return EWOULDBLOCK or EAGAIN, depending on the
   // platform.  UNIX 98 allows either errno, and they may be the same
@@ -56,14 +41,14 @@ ACE_OS::accept (ACE_HANDLE handle,
   // this function needs to be reviewed.  On Win32, the regular macros
   // can be used, as this is not an issue.
 
-#  if defined (ACE_WIN32)
+#if defined (ACE_WIN32)
   ACE_SOCKCALL_RETURN (::accept ((ACE_SOCKET) handle,
                                  addr,
                                  (ACE_SOCKET_LEN *) addrlen),
                        ACE_HANDLE,
                        ACE_INVALID_HANDLE);
-#  else
-#    if defined (ACE_HAS_BROKEN_ACCEPT_ADDR)
+#else
+#  if defined (ACE_HAS_BROKEN_ACCEPT_ADDR)
   // Apparently some platforms like VxWorks can't correctly deal with
   // a NULL addr.
 
@@ -78,7 +63,7 @@ ACE_OS::accept (ACE_HANDLE handle,
        addr = (sockaddr *) &fake_addr;
        *addrlen = sizeof fake_addr;
      }
-#    endif /* ACE_HAS_BROKEN_ACCEPT_ADDR */
+#  endif /* ACE_HAS_BROKEN_ACCEPT_ADDR */
   ACE_HANDLE ace_result = ::accept ((ACE_SOCKET) handle,
                                     addr,
                                     (ACE_SOCKET_LEN *) addrlen);
@@ -101,24 +86,16 @@ ACE_OS::accept (ACE_HANDLE handle,
 
   return ace_result;
 
-#  endif /* defined (ACE_WIN32) */
-#endif /* defined (ACE_PSOS) */
+#endif /* defined (ACE_WIN32) */
 }
 
 ACE_INLINE int
 ACE_OS::bind (ACE_HANDLE handle, struct sockaddr *addr, int addrlen)
 {
   ACE_OS_TRACE ("ACE_OS::bind");
-#if defined (ACE_PSOS) && !defined (ACE_PSOS_DIAB_PPC)
-  ACE_SOCKCALL_RETURN (::bind ((ACE_SOCKET) handle,
-                               (struct sockaddr_in *) addr,
-                               (ACE_SOCKET_LEN) addrlen),
-                       int, -1);
-#else /* !defined (ACE_PSOS) || defined (ACE_PSOS_DIAB_PPC) */
   ACE_SOCKCALL_RETURN (::bind ((ACE_SOCKET) handle,
                                addr,
                                (ACE_SOCKET_LEN) addrlen), int, -1);
-#endif /* defined (ACE_PSOS) && !defined (ACE_PSOS_DIAB_PPC) */
 }
 
 ACE_INLINE int
@@ -128,8 +105,6 @@ ACE_OS::closesocket (ACE_HANDLE handle)
 #if defined (ACE_WIN32)
   ACE_OS::shutdown (handle, ACE_SHUTDOWN_WRITE);
   ACE_SOCKCALL_RETURN (::closesocket ((SOCKET) handle), int, -1);
-#elif defined (ACE_PSOS_DIAB_PPC)
-  ACE_OSCALL_RETURN (::pna_close (handle), int, -1);
 #else
   ACE_OSCALL_RETURN (::close (handle), int, -1);
 #endif /* ACE_WIN32 */
@@ -141,16 +116,9 @@ ACE_OS::connect (ACE_HANDLE handle,
                  int addrlen)
 {
   ACE_OS_TRACE ("ACE_OS::connect");
-#if defined (ACE_PSOS) && !defined (ACE_PSOS_DIAB_PPC)
-  ACE_SOCKCALL_RETURN (::connect ((ACE_SOCKET) handle,
-                                  (struct sockaddr_in *) addr,
-                                  (ACE_SOCKET_LEN) addrlen),
-                       int, -1);
-#else  /* !defined (ACE_PSOS) || defined (ACE_PSOS_DIAB_PPC) */
   ACE_SOCKCALL_RETURN (::connect ((ACE_SOCKET) handle,
                                   addr,
                                   (ACE_SOCKET_LEN) addrlen), int, -1);
-#endif /* defined (ACE_PSOS)  && !defined (ACE_PSOS_DIAB_PPC) */
 }
 
 ACE_INLINE int
@@ -183,21 +151,12 @@ ACE_OS::getpeername (ACE_HANDLE handle, struct sockaddr *addr,
 #if defined (ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO) \
          && (ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO == 1)
   int result;
-#  if defined (ACE_PSOS) && !defined ACE_PSOS_DIAB_PPC
-  ACE_SOCKCALL (::getpeername ((ACE_SOCKET) handle,
-                               (struct sockaddr_in *) addr,
-                               (ACE_SOCKET_LEN *) addrlen),
-                int,
-                -1,
-                result);
-#  else
   ACE_SOCKCALL (::getpeername ((ACE_SOCKET) handle,
                                addr,
                                (ACE_SOCKET_LEN *) addrlen),
                int,
                 -1,
                 result);
-#  endif /* defined (ACE_PSOS) */
 
   // Some platforms, like older versions of the Linux kernel, do not
   // initialize the sin_zero field since that field is generally only
@@ -218,19 +177,11 @@ ACE_OS::getpeername (ACE_HANDLE handle, struct sockaddr *addr,
 
   return result;
 #else
-#  if defined (ACE_PSOS) && !defined ACE_PSOS_DIAB_PPC
-  ACE_SOCKCALL_RETURN (::getpeername ((ACE_SOCKET) handle,
-                                      (struct sockaddr_in *) addr,
-                                      (ACE_SOCKET_LEN *) addrlen),
-                       int,
-                       -1);
-#  else
   ACE_SOCKCALL_RETURN (::getpeername ((ACE_SOCKET) handle,
                                       addr,
                                       (ACE_SOCKET_LEN *) addrlen),
                        int,
                        -1);
-#  endif /* defined (ACE_PSOS) */
 #endif /* ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO */
 }
 
@@ -243,19 +194,10 @@ ACE_OS::getsockname (ACE_HANDLE handle,
 #if defined (ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO) \
          && (ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO == 1)
   int result;
-#  if defined (ACE_PSOS) && !defined (ACE_PSOS_DIAB_PPC)
-  ACE_SOCKCALL (::getsockname ((ACE_SOCKET) handle,
-                               (struct sockaddr_in *) addr,
-                               (ACE_SOCKET_LEN *) addrlen),
-                int,
-                -1,
-                result);
-#  else
   ACE_SOCKCALL (::getsockname ((ACE_SOCKET) handle,
                                addr,
                                (ACE_SOCKET_LEN *) addrlen),
                int, -1, result);
-#  endif /* defined (ACE_PSOS) */
 
   // Some platforms, like older versions of the Linux kernel, do not
   // initialize the sin_zero field since that field is generally only
@@ -276,17 +218,10 @@ ACE_OS::getsockname (ACE_HANDLE handle,
 
   return result;
 #else
-#  if defined (ACE_PSOS) && !defined (ACE_PSOS_DIAB_PPC)
-  ACE_SOCKCALL_RETURN (::getsockname ((ACE_SOCKET) handle,
-                                      (struct sockaddr_in *) addr,
-                                      (ACE_SOCKET_LEN *) addrlen),
-                       int, -1);
-#  else
   ACE_SOCKCALL_RETURN (::getsockname ((ACE_SOCKET) handle,
                                       addr,
                                       (ACE_SOCKET_LEN *) addrlen),
                        int, -1);
-#  endif /* defined (ACE_PSOS) */
 #endif /* ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO */
 }
 
@@ -364,17 +299,7 @@ ACE_OS::recvfrom (ACE_HANDLE handle,
                   int *addrlen)
 {
   ACE_OS_TRACE ("ACE_OS::recvfrom");
-#if defined (ACE_PSOS)
-#  if !defined ACE_PSOS_DIAB_PPC
-  ACE_SOCKCALL_RETURN (::recvfrom ((ACE_SOCKET) handle, buf, len, flags,
-                                   (struct sockaddr_in *) addr, (ACE_SOCKET_LEN *) addrlen),
-                       ssize_t, -1);
-#  else
-  ACE_SOCKCALL_RETURN (::recvfrom ((ACE_SOCKET) handle, buf, len, flags,
-                                   (struct sockaddr *) addr, (ACE_SOCKET_LEN *) addrlen),
-                       ssize_t, -1);
-#  endif /* defined ACE_PSOS_DIAB_PPC */
-#elif defined (ACE_WIN32)
+#if defined (ACE_WIN32)
   int shortened_len = static_cast<int> (len);
   int result = ::recvfrom ((ACE_SOCKET) handle,
                            buf,
@@ -559,12 +484,7 @@ ACE_OS::send (ACE_HANDLE handle, const char *buf, size_t len, int flags)
                                static_cast<int> (len),
                                flags), ssize_t, -1);
 #else
-  ssize_t ace_result_;
-#  if defined (ACE_PSOS)
-  ace_result_ = ::send ((ACE_SOCKET) handle, const_cast <char *> (buf), len, flags);
-#  else
-  ace_result_ = ::send ((ACE_SOCKET) handle, buf, len, flags);
-#  endif /* ACE_PSOS */
+  ssize_t const ace_result_ = ::send ((ACE_SOCKET) handle, buf, len, flags);
 
 # if !(defined (EAGAIN) && defined (EWOULDBLOCK) && EAGAIN == EWOULDBLOCK)
   // Optimize this code out if we can detect that EAGAIN ==
@@ -645,16 +565,6 @@ ACE_OS::sendto (ACE_HANDLE handle,
                                  const_cast<struct sockaddr *> (addr),
                                  addrlen),
                        ssize_t, -1);
-#elif defined (ACE_PSOS)
-#  if !defined (ACE_PSOS_DIAB_PPC)
-  ACE_SOCKCALL_RETURN (::sendto ((ACE_SOCKET) handle, (char *) buf, len, flags,
-                                 (struct sockaddr_in *) addr, addrlen),
-                       ssize_t, -1);
-#  else
-  ACE_SOCKCALL_RETURN (::sendto ((ACE_SOCKET) handle, (char *) buf, len, flags,
-                                 (struct sockaddr *) addr, addrlen),
-                       ssize_t, -1);
-#  endif /*defined ACE_PSOS_DIAB_PPC */
 #else
 #  if defined (ACE_WIN32)
   ACE_SOCKCALL_RETURN (::sendto ((ACE_SOCKET) handle,
@@ -860,7 +770,7 @@ ACE_OS::setsockopt (ACE_HANDLE handle,
                 result);
 #if defined (WSAEOPNOTSUPP)
   if (result == -1 && errno == WSAEOPNOTSUPP)
-#else 
+#else
   if (result == -1)
 #endif /* WSAEOPNOTSUPP */
     errno = ENOTSUP;

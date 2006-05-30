@@ -53,11 +53,11 @@ public:
   ~ACE_System_Time (void);
 
   /// Get the local system time, i.e., the value returned by
-  /// <ACE_OS::time>.
+  /// ACE_OS::time().
   static int get_local_system_time (ACE_UINT32 &time_out);
 
   /// Get the local system time, i.e., the value returned by
-  /// <ACE_OS::time>.
+  /// ACE_OS::time().
   static int get_local_system_time (ACE_Time_Value &time_out);
 
   /// Get the system time of the central time server.
