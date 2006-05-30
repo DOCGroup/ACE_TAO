@@ -75,7 +75,7 @@ CIAO::MonitorController::svc (void)
   // cast a pointer-to-object directly to a pointer-to-function.
   void *void_ptr = dll.symbol (factory_func);
   ptrdiff_t tmp = reinterpret_cast<ptrdiff_t> (void_ptr);
-  MonitorFactory factory = reintepret_cast<MonitorFactory> (tmp);
+  MonitorFactory factory = reinterpret_cast<MonitorFactory> (tmp);
 
   if (factory == 0)
     {
