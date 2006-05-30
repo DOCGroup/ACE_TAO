@@ -1093,10 +1093,10 @@ protected:
    */
   ACE_Double_Linked_List<ACE_Thread_Descriptor> thr_list_;
 
-#if !defined (VXWORKS)
+#if !defined (ACE_VXWORKS)
   /// Collect terminated but not yet joined thread entries.
   ACE_Double_Linked_List<ACE_Thread_Descriptor_Base> terminated_thr_list_;
-#endif /* VXWORKS */
+#endif /* ACE_VXWORKS */
 
   /// Collect pointers to thread descriptors of threads to be removed later.
   ACE_Unbounded_Queue<ACE_Thread_Descriptor*> thr_to_be_removed_;

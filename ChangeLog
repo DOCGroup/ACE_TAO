@@ -1,6 +1,89 @@
+Tue May 30 10:48:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/CDR_Stream.cpp:
+          Use true/false, when demarshaling a string, check the result of the
+          demarshaling of the length of the string, if that failed, just return
+          directly instead of trying to demarshal a random lenght string
+
+        * ace/Task.h:
+        * ace/System_Time.h:
+          Doxygen improvement
+
+        * ace/ACE.cpp:
+        * ace/SOCK_Dgram_Bcast.cpp:
+        * ace/Sock_Connect.cpp:
+        * ace/Process.cpp:
+        * ace/OS_NS_unistd.cpp:
+        * ace/Mem_Map.cpp:
+          Removed chorus support
+
+        * ace/config-fsu-pthread.h:
+          Removed this file, this configuration isn't supported and used for
+          ages
+
+        * ace/Condition_Thread_Mutex.cpp:
+        * ace/Recursive_Thread_Mutex.cpp:
+          Removed fsu pthread support
+
+        * ace/Process_Manager.cpp:
+          Const improvement
+
+        * ace/OS.inl:
+        * ace/OS_NS_sys_socket.inl:
+        * ace/OS_NS_stdlib.cpp:
+        * ace/OS_NS_stdlib.inl:
+        * ace/OS_NS_Thread.cpp:
+          Removed psos support
+
+        * ace/OS_NS_unistd.inl:
+        * ace/OS_NS_stdio.{h,cpp,inl}:
+        * ace/Handle_Set.h:
+        * ace/OS_NS_Thread.{h,inl}:
+          Removed psos and chorus support
+
+        * ace/Thread_Manager.{h,cpp,inl}:
+          Made terminated_ a real bool, removed chorus support, check for
+          ACE_VXWORKS instead of VXWORKS
+
+        * ace/OS_NS_sys_time.inl:
+          Check for ACE_VXWORKS instead of VXWORKS
+
+        * ace/MMAP_Memory_Pool.{h,cpp}:
+          Removed chorus support, use bool internally and added an option to
+          get each time an unique mmap filename
+
+        * ace/config-linux-common.h:
+          Added ACE_HAS_VOIDPTR_MMAP and removed KCC support
+
+        * ace/ace_wchar.inl
+        * ace/Default_Constants.h
+        * ace/INET_Addr.h
+        * ace/IPC_SAP.cpp
+        * ace/Message_Queue.cpp
+        * ace/Message_Queue.h
+        * ace/Message_Queue.inl
+        * ace/Message_Queue_T.cpp
+        * ace/Message_Queue_T.h
+        * ace/OS.h
+        * ace/OS_NS_macros.h
+        * ace/OS_NS_stdio.h
+        * ace/OS_NS_stdio.inl
+        * ace/OS_NS_stdlib.inl
+        * ace/OS_NS_Thread.cpp
+        * ace/OS_NS_Thread.h
+        * ace/OS_NS_Thread.inl
+        * ace/OS_NS_time.inl
+        * ace/Recursive_Thread_Mutex.cpp
+        * ace/Sched_Params.cpp
+        * ace/Select_Reactor_T.cpp
+        * ace/SOCK_Dgram_Bcast.cpp
+        * ace/Thread_Manager.h
+        * ace/Token.h
+          Check for ACE_VXWORKS instead of VXWORKS
+
 Mon May 29 22:08:50 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
-        * ace/OS_NS_Thread.inl (recursive_mutex_lock): *Really* make the compiler 
+        * ace/OS_NS_Thread.inl (recursive_mutex_lock): *Really* make the compiler
           happy now.  Thanks Olli!
 
 Mon May 29 21:12:50 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
@@ -9,29 +92,29 @@ Mon May 29 21:12:50 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
           for ACE_Time_Value * to make the compiler happy when passing the
           timeout parameter to ACE_OS::cond_timed_wait().  Thanks to Olli
           Savia for helping here.
-  
+
 Mon May 29 20:30:44 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * We recently added the 2100th contributor to ACE+TAO+CIAO!!!  The
           2000th contributor was added in August of 2005, this means that
           over 100 different people have contributed to the project in the
           past 9 months!
-  
+
 Mon May 29 19:50:54 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
-        * examples/Service_Configurator/IPC-tests/server/server_test.cpp (ACE_TMAIN): 
-          Changed 
-          
-          ACE_Reactor::instance ()->run_reactor_event_loop () 
-  
+        * examples/Service_Configurator/IPC-tests/server/server_test.cpp (ACE_TMAIN):
+          Changed
+
+          ACE_Reactor::instance ()->run_reactor_event_loop ()
+
           to
-          
+
           ACE_Reactor::run_event_loop ()
-  
+
           so that reconfiguration happens properly after a SIGHUP or
           SIGINT occurs.  Thanks to Kevin Hu <Xiaotao dot Hu at ge dot
           com> for motivating this.
-  
+
 Mon May 29 18:10:50 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * tests/Signal_Test.cpp:

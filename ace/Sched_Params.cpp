@@ -225,7 +225,7 @@ ACE_Sched_Params::priority_max (const Policy policy,
   ACE_UNUSED_ARG (policy);
   ACE_UNUSED_ARG (scope);
   return THREAD_PRIORITY_TIME_CRITICAL;
-#elif defined (VXWORKS)
+#elif defined (ACE_VXWORKS)
   ACE_UNUSED_ARG (policy);
   ACE_UNUSED_ARG (scope);
   return 0;
@@ -241,7 +241,7 @@ ACE_Sched_Params::next_priority (const Policy policy,
                                  const int priority,
                                  const int scope)
 {
-#if defined (VXWORKS)
+#if defined (ACE_VXWORKS)
   return priority > priority_max (policy, scope)
            ?  priority - 1
            :  priority_max (policy, scope);
@@ -286,7 +286,7 @@ ACE_Sched_Params::previous_priority (const Policy policy,
                                      const int priority,
                                      const int scope)
 {
-#if defined (VXWORKS)
+#if defined (ACE_VXWORKS)
   return priority < priority_min (policy, scope)
            ?  priority + 1
            :  priority_min (policy, scope);

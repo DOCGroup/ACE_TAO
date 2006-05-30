@@ -472,7 +472,7 @@ ACE_OS::cuserid (char *user, size_t maxlen)
   // Hackish because of missing buffer size!
   ACE_UNUSED_ARG (maxlen);
   ACE_OSCALL_RETURN (::ace_cuserid(user), char*, 0);
-#endif /* VXWORKS */
+#endif /* ACE_VXWORKS */
 }
 
 #if defined (ACE_HAS_WCHAR)
@@ -565,13 +565,13 @@ ACE_INLINE int
 ACE_OS::fflush (FILE *fp)
 {
   ACE_OS_TRACE ("ACE_OS::fflush");
-#if defined (VXWORKS)
+#if defined (ACE_VXWORKS)
   if (fp == 0)
     {
       // Do not allow fflush(0) on VxWorks
       return 0;
     }
-#endif /* VXWORKS */
+#endif /* ACE_VXWORKS */
 
   ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::fflush (fp), int, -1);
 }

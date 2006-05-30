@@ -27,7 +27,7 @@ ACE_Message_Queue_Base::state (void)
   return this->state_;
 }
 
-#if defined (VXWORKS)
+#if defined (ACE_VXWORKS)
 
 ////////////////////////////////
 // class ACE_Message_Queue_Vx //
@@ -377,7 +377,7 @@ ACE_Message_Queue_Vx::peek_dequeue_head (ACE_Message_Block *&,
 }
 #endif /* ! ACE_NEEDS_FUNC_DEFINITIONS */
 
-#endif /* VXWORKS */
+#endif /* ACE_VXWORKS */
 
 #if defined (ACE_WIN32) && (ACE_HAS_WINNT4 != 0)
 

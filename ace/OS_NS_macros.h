@@ -45,11 +45,11 @@
 // return errno rather than -1) so that they return -1 and set errno.
 // This is more consistent with the rest of ACE_OS and enables us to
 // use the ACE_OSCALL* macros.
-# if defined (VXWORKS)
+# if defined (ACE_VXWORKS)
 #   define ACE_ADAPT_RETVAL(OP,RESULT) ((RESULT = (OP)) != OK ? (errno = RESULT, -1) : 0)
 # else
 #   define ACE_ADAPT_RETVAL(OP,RESULT) ((RESULT = (OP)) != 0 ? (errno = RESULT, -1) : 0)
-# endif /* VXWORKS */
+# endif /* ACE_VXWORKS */
 
 #else /* ACE_WIN32 */
 

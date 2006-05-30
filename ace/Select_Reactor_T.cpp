@@ -776,7 +776,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::handle_error (void)
   if (errno == EINTR)
     return this->restart_;
 #endif /* linux && ERESTARTNOHAND */
-#if defined (__MVS__) || defined (ACE_WIN32) || defined (VXWORKS)
+#if defined (__MVS__) || defined (ACE_WIN32) || defined (ACE_VXWORKS)
   // On MVS Open Edition and Win32, there can be a number of failure
   // codes on a bad socket, so check_handles on anything other than
   // EINTR.  VxWorks doesn't even bother to always set errno on error
@@ -1472,7 +1472,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::check_handles (void)
   while ((h = check_iter ()) != ACE_INVALID_HANDLE)
     {
 
-#if defined (ACE_WIN32) || defined (__MVS__) || defined (VXWORKS)
+#if defined (ACE_WIN32) || defined (__MVS__) || defined (ACE_VXWORKS)
       // Win32 needs to do the check this way because fstat won't work on
       // a socket handle.  MVS Open Edition needs to do it this way because,
       // even though the docs say to check a handle with either select or

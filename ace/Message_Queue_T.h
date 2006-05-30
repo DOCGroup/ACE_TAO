@@ -24,9 +24,9 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-#if defined (VXWORKS)
+#if defined (ACE_VXWORKS)
 class ACE_Message_Queue_Vx;
-#endif /* defined (VXWORKS) */
+#endif /* defined (ACE_VXWORKS) */
 
 #if defined (ACE_WIN32) && (ACE_HAS_WINNT4 != 0)
 class ACE_Message_Queue_NT;
@@ -924,14 +924,14 @@ public:
                                  u_long dynamic_priority_offset =  0x200000UL); // 2^(22-1)
 
 
-#if defined (VXWORKS)
+#if defined (ACE_VXWORKS)
 
   /// Factory method for a wrapped VxWorks message queue
   static ACE_Message_Queue_Vx *
     create_Vx_message_queue (size_t max_messages, size_t max_message_length,
                              ACE_Notification_Strategy *ns = 0);
 
-#endif /* defined (VXWORKS) */
+#endif /* defined (ACE_VXWORKS) */
 
 #if defined (ACE_WIN32) && (ACE_HAS_WINNT4 != 0)
 

@@ -144,7 +144,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #     endif /* ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB */
 #   endif /* ! ACE_LACKS_NEW_H */
 
-#   if !defined (ACE_PSOS_DIAB_MIPS)  &&  !defined (VXWORKS)
+#   if !defined (ACE_PSOS_DIAB_MIPS)  &&  !defined (ACE_VXWORKS)
 #   define ACE_DONT_INCLUDE_ACE_SIGNAL_H
 #     include "ace/os_include/os_signal.h"
 #   undef ACE_DONT_INCLUDE_ACE_SIGNAL_H
@@ -229,7 +229,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #     include "ace/os_include/sys/os_wait.h"
 #     include "ace/os_include/os_pwd.h"
 
-#   elif ! defined (VXWORKS) && ! defined (INTEGRITY)
+#   elif ! defined (ACE_VXWORKS) && ! defined (INTEGRITY)
 #     include "ace/os_include/sys/os_uio.h"
 #     include "ace/os_include/sys/os_ipc.h"
 #     if !defined(ACE_LACKS_SYSV_SHMEM)
