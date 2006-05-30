@@ -43,7 +43,7 @@ TAO_Marshal_Object::perform_skip (CORBA::TypeCode_ptr tc,
                                   TAO_InputCDR *stream
                                   ACE_ENV_ARG_DECL)
 {
-  CORBA::ULong kind = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::ULong const kind = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
 
   switch (kind)
