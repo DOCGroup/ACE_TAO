@@ -77,7 +77,7 @@ inline char *ace_cuserid(char *user)
 #endif /* !ACE_LACKS_CUSERID && !ACE_HAS_ALT_CUSERID && ... */
 
 # if defined (ACE_LACKS_FILELOCKS)
-#   if ! defined (VXWORKS) && ! defined (ACE_PSOS) && ! defined (__rtems__) && !defined (INTEGRITY)
+#   if ! defined (VXWORKS) && ! defined (__rtems__) && !defined (INTEGRITY)
 // VxWorks defines struct flock in sys/fcntlcom.h.  But it doesn't
 // appear to support flock ().  RTEMS defines struct flock but
 // currently does not support locking.
@@ -120,12 +120,6 @@ namespace ACE_OS {
 
     /// Handle to the underlying file.
     ACE_HANDLE handle_;
-
-# if defined (CHORUS)
-    /// This is the mutex that's stored in shared memory.  It can only
-    /// be destroyed by the actor that initialized it.
-    ACE_mutex_t *process_lock_;
-# endif /* CHORUS */
   };
 
 # if defined (ACE_USES_WCHAR)

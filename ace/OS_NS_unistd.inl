@@ -125,15 +125,6 @@ ACE_OS::chdir (const char *path)
 #if defined (ACE_HAS_NONCONST_CHDIR)
   ACE_OSCALL_RETURN (::chdir (const_cast<char *> (path)), int, -1);
 
-#elif defined (ACE_PSOS_LACKS_PHILE)
-  ACE_UNUSED_ARG (path);
-  ACE_NOTSUP_RETURN (-1);
-
-#elif defined (ACE_PSOS)
-  int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::change_dir (const_cast<char *> (path)), result),
-                     int, -1);
-
 #elif defined (ACE_WIN32) && defined (__IBMCPP__) && (__IBMCPP__ >= 400)
   ACE_OSCALL_RETURN (::_chdir (const_cast<char *> (path)), int, -1);
 
@@ -163,42 +154,7 @@ ACE_OS::chdir (const wchar_t *path)
 ACE_INLINE int
 ACE_OS::rmdir (const char *path)
 {
-#if defined (ACE_PSOS_LACKS_PHILE)
-  ACE_UNUSED_ARG (path);
-  ACE_NOTSUP_RETURN (-1);
-#elif defined (ACE_PSOS)
-  //The pSOS remove_dir fails if the last character is a '/'
-  int location;
-  char *phile_path;
-
-  phile_path = (char *) ACE_OS::malloc (strlen (path));
-  if (phile_path == 0)
-    {
-      return -1;
-    }
-  else
-    {
-      ACE_OS::strcpy (phile_path, path);
-    }
-
-  location = ACE_OS::strlen (phile_path);
-  if (phile_path[location-1] == '/')
-    {
-      phile_path[location-1] = 0;
-    }
-
-  unsigned long result;
-  result = ::remove_dir ((char *) phile_path);
-  if (result != 0)
-    {
-      result = -1;
-    }
-
-  ACE_OS::free (phile_path);
-
-  return (int) result;
-
-#elif defined (ACE_WIN32) && defined (__IBMCPP__) && (__IBMCPP__ >= 400)
+#if defined (ACE_WIN32) && defined (__IBMCPP__) && (__IBMCPP__ >= 400)
   ACE_OSCALL_RETURN (::_rmdir ((char *) path), int, -1);
 #elif defined (ACE_HAS_WINCE)
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::RemoveDirectory (ACE_TEXT_CHAR_TO_TCHAR (path)),
@@ -206,7 +162,7 @@ ACE_OS::rmdir (const char *path)
                         int, -1);
 #else
   ACE_OSCALL_RETURN (::rmdir (path), int, -1);
-#endif /* ACE_PSOS_LACKS_PHILE */
+#endif /* ACE_WIN32 */
 }
 
 #if defined (ACE_HAS_WCHAR)
@@ -236,14 +192,6 @@ ACE_OS::close (ACE_HANDLE handle)
   ACE_OS_TRACE ("ACE_OS::close");
 #if defined (ACE_WIN32)
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::CloseHandle (handle), ace_result_), int, -1);
-#elif defined (ACE_PSOS) && ! defined (ACE_PSOS_LACKS_PHILE)
-  u_long result = ::close_f (handle);
-  if (result != 0)
-    {
-      errno = result;
-      return static_cast<int> (-1);
-    }
-  return static_cast<int> (0);
 #else
   ACE_OSCALL_RETURN (::close (handle), int, -1);
 #endif /* ACE_WIN32 */
@@ -301,12 +249,6 @@ ACE_OS::execv (const char *path,
   ACE_UNUSED_ARG (argv);
 
   ACE_NOTSUP_RETURN (-1);
-#elif defined (CHORUS)
-  KnCap cactorcap;
-  int result = ::afexecv (path, &cactorcap, 0, argv);
-  if (result != -1)
-    ACE_OS::actorcaps_[result] = cactorcap;
-  return result;
 #elif defined (ACE_WIN32)
 # if defined (__BORLANDC__) /* VSB */
   return ::execv (path, argv);
@@ -337,12 +279,6 @@ ACE_OS::execve (const char *path,
   ACE_UNUSED_ARG (envp);
 
   ACE_NOTSUP_RETURN (-1);
-#elif defined(CHORUS)
-  KnCap cactorcap;
-  int result = ::afexecve (path, &cactorcap, 0, argv, envp);
-  if (result != -1)
-    ACE_OS::actorcaps_[result] = cactorcap;
-  return result;
 #elif defined (ACE_WIN32)
 # if defined (__BORLANDC__) /* VSB */
   return ::execve (path, argv, envp);
@@ -371,12 +307,6 @@ ACE_OS::execvp (const char *file,
   ACE_UNUSED_ARG (argv);
 
   ACE_NOTSUP_RETURN (-1);
-#elif defined(CHORUS)
-  KnCap cactorcap;
-  int result = ::afexecvp (file, &cactorcap, 0, argv);
-  if (result != -1)
-    ACE_OS::actorcaps_[result] = cactorcap;
-  return result;
 #elif defined (ACE_WIN32)
 # if defined (__BORLANDC__) /* VSB */
   return ::execvp (file, argv);
@@ -430,12 +360,6 @@ ACE_OS::ftruncate (ACE_HANDLE handle, off_t offset)
   else
     ACE_FAIL_RETURN (-1);
   /* NOTREACHED */
-#elif defined (ACE_PSOS_LACKS_PHILE)
-  ACE_UNUSED_ARG (handle);
-  ACE_UNUSED_ARG (offset);
-  ACE_NOTSUP_RETURN (-1);
-#elif defined (ACE_PSOS)
-  ACE_OSCALL_RETURN (::ftruncate_f (handle, offset), int, -1);
 #else
   ACE_OSCALL_RETURN (::ftruncate (handle, offset), int, -1);
 #endif /* ACE_WIN32 */
@@ -445,91 +369,7 @@ ACE_INLINE char *
 ACE_OS::getcwd (char *buf, size_t size)
 {
   ACE_OS_TRACE ("ACE_OS::getcwd");
-#if defined (ACE_PSOS_LACKS_PHILE)
-  ACE_UNUSED_ARG (buf);
-  ACE_UNUSED_ARG (size);
-  ACE_NOTSUP_RETURN ( (char*)-1);
-#elif defined (ACE_PSOS)
-
-  static char pathbuf [BUFSIZ];
-
-  // blank the path buffer
-  ACE_OS::memset (pathbuf, '\0', BUFSIZ);
-
-  // the following was suggested in the documentation for get_fn ()
-  u_long result;
-  char cur_dir_name [BUFSIZ] = ".";
-
-  u_long cur_dir = 0, prev_dir = 0;
-  while ((ACE_OS::strlen (pathbuf) < BUFSIZ) &&
-         (ACE_OS::strlen (cur_dir_name) < BUFSIZ - ACE_OS::strlen ("/..")))
-  {
-    // get the current directory handle
-    result = ::get_fn (cur_dir_name, &cur_dir);
-
-    // check whether we're at the root: this test is
-    // really lame, but the get_fn documentation says
-    // *either* condition indicates you're trying to
-    // move above the root.
-    if ((result != 0) || ( cur_dir == prev_dir))
-    {
-      break;
-    }
-
-    // change name to the parent directory
-    ACE_OS::strcat (cur_dir_name, "/..");
-
-    // open the parent directory
-    XDIR xdir;
-    result = ::open_dir (cur_dir_name, &xdir);
-    if (result != 0)
-    {
-      return 0;
-    }
-
-    // look for an entry that matches the current directory handle
-    struct dirent dir_entry;
-    while (1)
-    {
-      // get the next directory entry
-      result = ::read_dir (&xdir, &dir_entry);
-      if (result != 0)
-      {
-        return 0;
-      }
-
-      // check for a match
-      if (dir_entry.d_filno == cur_dir)
-      {
-        // prefix the previous path with the entry's name and break
-        if (ACE_OS::strlen (pathbuf) + ACE_OS::strlen (dir_entry.d_name) < BUFSIZ)
-        {
-          ACE_OS::strcpy (pathbuf + ACE_OS::strlen (dir_entry.d_name), pathbuf);
-          ACE_OS::strcpy (pathbuf, dir_entry.d_name);
-          break;
-        }
-        else
-        {
-          // we're out of room in the buffer
-          return 0;
-        }
-      }
-    }
-
-    // close the parent directory
-    result = ::close_dir (&xdir);
-    if (result != 0)
-    {
-      return 0;
-    }
-
-    // save the current directory handle as the previous
-    prev_dir =  cur_dir;
-  }
-
-  // return the path, if there is one
-  return (ACE_OS::strlen (pathbuf) > 0) ? pathbuf : (char *) 0;
-#elif defined (ACE_HAS_WINCE)
+#if defined (ACE_LACKS_GETCWD)
   ACE_UNUSED_ARG (buf);
   ACE_UNUSED_ARG (size);
   ACE_NOTSUP_RETURN (0);
@@ -537,7 +377,7 @@ ACE_OS::getcwd (char *buf, size_t size)
   return ::getcwd (buf, static_cast<int> (size));
 #else
   ACE_OSCALL_RETURN (::getcwd (buf, size), char *, 0);
-#endif /* ACE_PSOS_LACKS_PHILE */
+#endif /* ACE_LACKS_GETCWD */
 }
 
 #if defined (ACE_HAS_WCHAR)
@@ -621,15 +461,13 @@ ACE_INLINE pid_t
 ACE_OS::getpid (void)
 {
   // ACE_OS_TRACE ("ACE_OS::getpid");
-#if defined (ACE_WIN32)
-  return ::GetCurrentProcessId ();
-#elif defined (ACE_LACKS_GETPID)
+#if defined (ACE_LACKS_GETPID)
   ACE_NOTSUP_RETURN (-1);
-#elif defined (CHORUS)
-  return (pid_t) (::agetId ());
+#elif defined (ACE_WIN32)
+  return ::GetCurrentProcessId ();
 #else
   ACE_OSCALL_RETURN (::getpid (), int, -1);
-#endif /* ACE_WIN32 */
+#endif /* ACE_LACKS_GETPID */
 }
 
 ACE_INLINE pid_t
@@ -694,20 +532,6 @@ ACE_OS::hostname (char name[], size_t maxnamelen)
                                             LPDWORD (&maxnamelen)),
                                             ace_result_), int, -1);
   }
-#elif defined (CHORUS)
-  if (::gethostname (name, maxnamelen) == -1)
-    return -1;
-  else
-    {
-      if (ACE_OS::strlen (name) == 0)
-        {
-          // Try the HOST environment variable.
-          ACE_TCHAR *const hostenv = ::getenv (ACE_LIB_TEXT ("HOST"));
-          if (hostenv)
-            ACE_OS::strsncpy (name, hostenv, maxnamelen);
-        }
-      return 0;
-    }
 #else /* ACE_HAS_PHARLAP */
   ACE_utsname host_info;
 
@@ -748,14 +572,13 @@ ACE_OS::hostname (wchar_t name[], size_t maxnamelen)
 ACE_INLINE int
 ACE_OS::isatty (int handle)
 {
+  ACE_OS_TRACE ("ACE_OS::isatty");
 #if defined (ACE_LACKS_ISATTY)
   ACE_UNUSED_ARG (handle);
   return 0;
 # elif defined (ACE_WIN32)
-  ACE_OS_TRACE ("ACE_OS::isatty");
   return ::_isatty (handle);
 # else
-  ACE_OS_TRACE ("ACE_OS::isatty");
   ACE_OSCALL_RETURN (::isatty (handle), int, -1);
 # endif /* ACE_LACKS_ISATTY */
 }
@@ -772,7 +595,7 @@ ACE_OS::isatty (ACE_HANDLE handle)
    int fd = ::_open_osfhandle (long (handle), 0);
 # else
    int fd = ::_open_osfhandle (intptr_t (handle), 0);
-#endif
+# endif
   int status = ::_isatty (fd);
   ::_close (fd);
   return status;
@@ -809,30 +632,6 @@ ACE_OS::lseek (ACE_HANDLE handle, off_t offset, int whence)
     ACE_FAIL_RETURN (static_cast<off_t> (-1));
   else
     return result;
-#elif defined (ACE_PSOS)
-# if defined (ACE_PSOS_LACKS_PHILE)
-  ACE_UNUSED_ARG (handle);
-  ACE_UNUSED_ARG (offset);
-  ACE_UNUSED_ARG (whence);
-  ACE_NOTSUP_RETURN (static_cast<off_t> (-1));
-# else
-  unsigned long oldptr, newptr, result;
-  // seek to the requested position
-  result = ::lseek_f (handle, whence, offset, &oldptr);
-  if (result != 0)
-    {
-      errno = result;
-      return static_cast<off_t> (-1);
-    }
-  // now do a dummy seek to the current position to obtain the position
-  result = ::lseek_f (handle, SEEK_CUR, 0, &newptr);
-  if (result != 0)
-    {
-      errno = result;
-      return static_cast<off_t> (-1);
-    }
-  return static_cast<off_t> (newptr);
-# endif /* defined (ACE_PSOS_LACKS_PHILE */
 #else
   ACE_OSCALL_RETURN (::lseek (handle, offset, whence), off_t, -1);
 #endif /* ACE_WIN32 */
@@ -876,20 +675,6 @@ ACE_OS::read (ACE_HANDLE handle, void *buf, size_t len)
     return (ssize_t) ok_len;
   else
     ACE_FAIL_RETURN (-1);
-#elif defined (ACE_PSOS)
-# if defined (ACE_PSOS_LACKS_PHILE)
-  ACE_UNUSED_ARG (handle);
-  ACE_UNUSED_ARG (buf);
-  ACE_UNUSED_ARG (len);
-  ACE_NOTSUP_RETURN (-1);
-# else
-  u_long count;
-  u_long result = ::read_f (handle, buf, len, &count);
-  if (result != 0)
-    return static_cast<ssize_t> (-1);
-  else
-    return static_cast<ssize_t> (count == len ? count : 0);
-# endif /* defined (ACE_PSOS_LACKS_PHILE */
 #else
 
   ssize_t result;
@@ -1095,11 +880,6 @@ ACE_OS::sleep (u_int seconds)
   rqtp.tv_sec = seconds;
   rqtp.tv_nsec = 0L;
   ACE_OSCALL_RETURN (::nanosleep (&rqtp, 0), int, -1);
-#elif defined (ACE_PSOS)
-  timeval wait;
-  wait.tv_sec = seconds;
-  wait.tv_usec = 0;
-  ACE_OSCALL_RETURN (::select (0, 0, 0, 0, &wait), int, -1);
 #else
   ACE_OSCALL_RETURN (::sleep (seconds), int, -1);
 #endif /* ACE_WIN32 */
@@ -1271,13 +1051,6 @@ ACE_OS::unlink (const char *path)
   ACE_OS_TRACE ("ACE_OS::unlink");
 # if defined (ACE_HAS_NONCONST_UNLINK)
   ACE_OSCALL_RETURN (::unlink (const_cast<char *> (path)), int, -1);
-# elif defined (ACE_PSOS) && ! defined (ACE_PSOS_LACKS_PHILE)
-  ACE_OSCALL_RETURN (::remove_f (const_char <char *> (path)), int , -1);
-# elif defined (ACE_PSOS) && defined (ACE_PSOS_HAS_C_LIBRARY)
-  int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::remove (const_char <char *> (path)),
-                                       result),
-                     int, -1);
 # elif defined (ACE_HAS_WINCE)
   // @@ The problem is, DeleteFile is not actually equals to unlink. ;(
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::DeleteFile (ACE_TEXT_CHAR_TO_TCHAR (path)), ace_result_),
@@ -1322,26 +1095,12 @@ ACE_OS::write (ACE_HANDLE handle, const void *buf, size_t nbyte)
     return (ssize_t) bytes_written;
   else
     ACE_FAIL_RETURN (-1);
-#elif defined (ACE_PSOS)
-# if defined (ACE_PSOS_LACKS_PHILE)
-  ACE_UNUSED_ARG (handle);
-  ACE_UNUSED_ARG (buf);
-  ACE_UNUSED_ARG (nbyte);
-  ACE_NOTSUP_RETURN (-1);
-# else
-  if(::write_f (handle, (void *) buf, nbyte) == 0)
-    return (ssize_t) nbyte;
-  else
-    return -1;
-# endif /* defined (ACE_PSOS_LACKS_PHILE) */
 #else
-# if defined (ACE_PSOS)
-  ACE_OSCALL_RETURN (::write_f(handle, const_cast <void *> (buf), nbyte), ssize_t, -1);
-# elif defined (ACE_HAS_CHARPTR_SOCKOPT)
+# if defined (ACE_HAS_CHARPTR_SOCKOPT)
   ACE_OSCALL_RETURN (::write (handle, static_cast <char *> (const_cast <void *> (buf)), nbyte), ssize_t, -1);
 # else
   ACE_OSCALL_RETURN (::write (handle, buf, nbyte), ssize_t, -1);
-# endif /* ACE_PSOS */
+# endif /* ACE_HAS_CHARPTR_SOCKOPT */
 #endif /* ACE_WIN32 */
 }
 

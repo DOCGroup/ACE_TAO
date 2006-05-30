@@ -9,9 +9,9 @@
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_stdio.h"
 
-#if defined (sparc) && ! defined (CHORUS)
+#if defined (sparc)
 #  include "ace/OS_NS_fcntl.h"
-#endif  // sparc && !CHORUS
+#endif  // sparc
 
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_string.h"
@@ -421,7 +421,7 @@ ACE::get_bcast_addr (ACE_UINT32 &bcast_addr,
 #endif /* ! _UNICOS */
     }
 
-#if !defined(CHORUS_4) && !defined(AIX) && !defined (__QNX__) && !defined (__FreeBSD__) && !defined(__NetBSD__)
+#if !defined(AIX) && !defined (__QNX__) && !defined (__FreeBSD__) && !defined(__NetBSD__)
   for (int n = ifc.ifc_len / sizeof (struct ifreq) ; n > 0;
        n--, ifr++)
 #else
@@ -434,7 +434,7 @@ ACE::get_bcast_addr (ACE_UINT32 &bcast_addr,
             ifr = (struct ifreq *)
               ((caddr_t) &ifr->ifr_addr + ifr->ifr_addr.sa_len)) :
           (nbytes -= sizeof (struct ifreq), ifr++)))
-#endif /* !defined(CHORUS_4) && !defined(AIX) && !defined (__QNX__) && !defined (__FreeBSD__) && !defined(__NetBSD__) */
+#endif /* !defined(AIX) && !defined (__QNX__) && !defined (__FreeBSD__) && !defined(__NetBSD__) */
     {
       struct sockaddr_in if_addr;
 
@@ -1216,7 +1216,7 @@ ACE::get_ip_interfaces (size_t &count,
 #endif /* ! _UNICOS */
         }
 
-#if !defined(CHORUS_4) && !defined(AIX) && !defined (__QNX__) && !defined (__FreeBSD__) && !defined(__NetBSD__)
+#if !defined(AIX) && !defined (__QNX__) && !defined (__FreeBSD__) && !defined(__NetBSD__)
       ++pcur;
 #else
       if (pcur->ifr_addr.sa_len <= sizeof (struct sockaddr))
@@ -1228,7 +1228,7 @@ ACE::get_ip_interfaces (size_t &count,
            pcur = (struct ifreq *)
                (pcur->ifr_addr.sa_len + (caddr_t) &pcur->ifr_addr);
         }
-#endif /* !defined(CHORUS_4) && !defined(AIX) && !defined (__QNX__) && !defined (__FreeBSD__) && !defined(__NetBSD__) */
+#endif /* !defined(AIX) && !defined (__QNX__) && !defined (__FreeBSD__) && !defined(__NetBSD__) */
     }
 
 # if defined (ACE_HAS_IPV6)
@@ -1430,7 +1430,7 @@ ACE::count_interfaces (ACE_HANDLE handle, size_t &how_many)
         break;
 
       if_count++;
-#if !defined(CHORUS_4) && !defined(AIX) && !defined (__QNX__) && !defined (__FreeBSD__) && !defined(__NetBSD__)
+#if !defined(AIX) && !defined (__QNX__) && !defined (__FreeBSD__) && !defined(__NetBSD__)
       p_ifs++;
 #else
      if (p_ifs->ifr_addr.sa_len <= sizeof (struct sockaddr))
@@ -1442,7 +1442,7 @@ ACE::count_interfaces (ACE_HANDLE handle, size_t &how_many)
           p_ifs = (struct ifreq *)
               (p_ifs->ifr_addr.sa_len + (caddr_t) &p_ifs->ifr_addr);
        }
-#endif /* !defined(CHORUS_4) && !defined(AIX) && !defined (__QNX__) && !defined (__FreeBSD__) && !defined(__NetBSD__) */
+#endif /* !defined(AIX) && !defined (__QNX__) && !defined (__FreeBSD__) && !defined(__NetBSD__) */
     }
 
   ACE_OS::free (ifcfg.ifc_req);
@@ -1477,7 +1477,7 @@ ACE::get_handle (void)
 {
   // Solaris 2.x
   ACE_HANDLE handle = ACE_INVALID_HANDLE;
-#if defined (sparc) && ! defined (CHORUS)
+#if defined (sparc)
   handle = ACE_OS::open ("/dev/udp", O_RDONLY);
 #elif defined (__unix) || defined (__unix__) || defined (__Lynx__) || defined (_AIX) || (defined (ACE_VXWORKS) && (ACE_VXWORKS >= 0x600)) || defined (ACE_OPENVMS)
   // Note: DEC CXX doesn't define "unix" BSD compatible OS: HP UX,

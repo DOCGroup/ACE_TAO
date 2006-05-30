@@ -354,7 +354,7 @@ private:
 
 #if !defined(ACE_USE_ONE_SHOT_AT_THREAD_EXIT)
   /// Keep track of termination status.
-  int terminated_;
+  bool terminated_;
 #endif  /* !ACE_USE_ONE_SHOT_AT_THREAD_EXIT */
 };
 

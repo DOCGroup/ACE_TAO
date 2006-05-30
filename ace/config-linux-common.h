@@ -189,13 +189,6 @@
 #define ACE_CC_MAJOR_VERSION __GNUC__
 #define ACE_CC_MINOR_VERSION __GNUC_MINOR__
 //#define ACE_CC_BETA_VERSION 0 /* ??? */
-#elif defined (__KCC)
-# define ACE_HAS_STRING_CLASS
-# undef ACE_HAS_LLSEEK
-# undef ACE_HAS_LSEEK64
-# undef ACE_LACKS_LLSEEK_PROTOTYPE
-# undef ACE_LACKS_LSEEK64_PROTOTYPE
-# include "ace/config-kcc-common.h"
 #elif defined (__DECCXX)
 # define ACE_CONFIG_INCLUDE_CXX_COMMON
 # include "ace/config-cxx-common.h"
@@ -224,11 +217,11 @@
  * (TAO/orbsvcs/orbsvcs/SSLIOP/params_dup.{h,c}) that may indirectly
  * include this
  */
-#else  /* ! __GNUG__ && ! __KCC && !__DECCXX && !__INTEL_COMPILER && !__BORLANDC__ && !__PGI */
+#else  /* ! __GNUG__ && !__DECCXX && !__INTEL_COMPILER && !__BORLANDC__ && !__PGI */
 #  ifdef __cplusplus  /* Let it slide for C compilers. */
 #    error unsupported compiler in ace/config-linux-common.h
 #  endif  /* __cplusplus */
-#endif /* ! __GNUG__ && ! __KCC */
+#endif /* ! __GNUG__*/
 
 // Completely common part :-)
 
@@ -399,6 +392,8 @@
 
 // Linux implements sendfile().
 #define ACE_HAS_SENDFILE
+
+#define ACE_HAS_VOIDPTR_MMAP
 
 #if !defined (ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO)
 // Detect if getsockname() and getpeername() returns random values in

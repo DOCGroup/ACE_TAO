@@ -48,13 +48,6 @@ ACE_Condition_Thread_Mutex::ACE_Condition_Thread_Mutex (const ACE_Thread_Mutex &
   : mutex_ ((ACE_Thread_Mutex &) m),
     removed_ (0)
 {
-#if defined (ACE_HAS_FSU_PTHREADS)
-//      Initialize FSU pthreads package.
-//      If called more than once, pthread_init does nothing
-//      and so does no harm.
-   pthread_init ();
-#endif  /*  ACE_HAS_FSU_PTHREADS */
-
 // ACE_TRACE ("ACE_Condition_Thread_Mutex::ACE_Condition_Thread_Mutex");
   if (ACE_OS::cond_init (&this->cond_,
                          (short) USYNC_THREAD,
@@ -73,13 +66,6 @@ ACE_Condition_Thread_Mutex (const ACE_Thread_Mutex &m,
   : mutex_ ((ACE_Thread_Mutex &) m),
     removed_ (0)
 {
-#if defined (ACE_HAS_FSU_PTHREADS)
-//      Initialize FSU pthreads package.
-//      If called more than once, pthread_init does nothing
-//      and so does no harm.
-   pthread_init ();
-#endif  /*  ACE_HAS_FSU_PTHREADS */
-
 // ACE_TRACE ("ACE_Condition_Thread_Mutex::ACE_Condition_Thread_Mutex");
   if (ACE_OS::cond_init (&this->cond_, attributes.attributes_,
                          name, arg) != 0)

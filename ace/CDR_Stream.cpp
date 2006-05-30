@@ -439,7 +439,7 @@ ACE_OutputCDR::write_4 (const ACE_CDR::ULong *x)
     {
 #if !defined (ACE_ENABLE_SWAP_ON_WRITE)
       *reinterpret_cast<ACE_CDR::ULong*> (buf) = *x;
-      return 1;
+      return true;
 #else
       if (!this->do_byte_swap_)
         {
@@ -1060,9 +1060,11 @@ ACE_InputCDR::read_string (ACE_CDR::Char *&x)
       return this->good_bit_;
     }
 
-  ACE_CDR::ULong len;
+  ACE_CDR::ULong len = 0;
 
-  this->read_ulong (len);
+  if (!this->read_ulong (len))
+    return false;
+
   // A check for the length being too great is done later in the
   // call to read_char_array but we want to have it done before
   // the memory is allocated.
@@ -1123,7 +1125,7 @@ ACE_InputCDR::read_wstring (ACE_CDR::WChar*& x)
       return (this->good_bit_ = false);
     }
 
-  ACE_CDR::ULong len;
+  ACE_CDR::ULong len = 0;
   if (!this->read_ulong (len))
     return false;
 
@@ -1423,7 +1425,7 @@ ACE_InputCDR::read_16 (ACE_CDR::LongDouble *x)
 ACE_CDR::Boolean
 ACE_InputCDR::skip_string (void)
 {
-  ACE_CDR::ULong len;
+  ACE_CDR::ULong len = 0;
   if (this->read_ulong (len))
     {
       if (this->rd_ptr () + len <= this->wr_ptr ())
@@ -1440,17 +1442,17 @@ ACE_CDR::Boolean
 ACE_InputCDR::skip_wstring (void)
 {
   ACE_CDR::Boolean continue_skipping = true;
-  ACE_CDR::ULong len;
+  ACE_CDR::ULong len = 0;
 
   continue_skipping = read_ulong (len);
 
-  if (continue_skipping != 0 && len != 0)
+  if (continue_skipping != false && len != 0)
     {
       if (static_cast<ACE_CDR::Short> (this->major_version_) == 1
             && static_cast<ACE_CDR::Short> (this->minor_version_) == 2)
           continue_skipping = this->skip_bytes ((size_t)len);
       else
-        while (continue_skipping != 0 && len--)
+        while (continue_skipping != false && len--)
           continue_skipping = this->skip_wchar ();
     }
   return continue_skipping;

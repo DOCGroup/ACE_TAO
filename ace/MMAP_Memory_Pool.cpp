@@ -149,7 +149,7 @@ ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool (const ACE_TCHAR *backing_store_name,
                       ACE_DEFAULT_BACKING_STORE);
 #else /* ACE_DEFAULT_BACKING_STORE */
       if (ACE::get_temp_dir (this->backing_store_name_,
-                                      MAXPATHLEN - 17) == -1)
+                             MAXPATHLEN - 17) == -1)
         // -17 for ace-malloc-XXXXXX
         {
           ACE_ERROR ((LM_ERROR,
@@ -162,6 +162,9 @@ ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool (const ACE_TCHAR *backing_store_name,
       ACE_OS::strcat (this->backing_store_name_,
                       ACE_LIB_TEXT ("ace-malloc-XXXXXX"));
 
+      // If requested an unique filename, use mktemp to get a random file.
+      if (options->unique_)
+        ACE_OS::mktemp(this->backing_store_name_);
 #endif /* ACE_DEFAULT_BACKING_STORE */
     }
   else
@@ -169,7 +172,7 @@ ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool (const ACE_TCHAR *backing_store_name,
                       backing_store_name,
                       (sizeof this->backing_store_name_ / sizeof (ACE_TCHAR)));
 
-#if !defined (ACE_WIN32) && !defined (CHORUS)
+#if !defined (ACE_WIN32)
   if (this->signal_handler_.register_handler (SIGSEGV, this) == -1)
     ACE_ERROR ((LM_ERROR,
                 "%p\n", this->backing_store_name_));
@@ -188,9 +191,6 @@ ACE_MMAP_Memory_Pool::commit_backing_store_name (size_t rounded_bytes,
 {
   ACE_TRACE ("ACE_MMAP_Memory_Pool::commit_backing_store_name");
 
-#if defined (CHORUS)
-  map_size = rounded_bytes;
-#else
   size_t seek_len;
 
   if (this->write_each_page_)
@@ -229,7 +229,7 @@ ACE_MMAP_Memory_Pool::commit_backing_store_name (size_t rounded_bytes,
 
   // Increment by one to put us at the beginning of the next chunk...
   ++map_size;
-#endif /* CHORUS */
+
   return 0;
 }
 
@@ -344,11 +344,7 @@ ACE_MMAP_Memory_Pool::init_acquire (size_t nbytes,
       errno = 0;
       // Reopen file *without* using O_EXCL...
       if (this->mmap_.map (this->backing_store_name_,
-#if defined (CHORUS)
-                           nbytes,
-#else
                            -1,
-#endif /* CHORUS */
                            O_RDWR,
                            this->file_mode_,
                            PROT_RDWR,
@@ -418,7 +414,8 @@ ACE_MMAP_Memory_Pool_Options::ACE_MMAP_Memory_Pool_Options (const void *base_add
                                                             u_int flags,
                                                             int guess_on_fault,
                                                             LPSECURITY_ATTRIBUTES sa,
-                                                            mode_t file_mode)
+                                                            mode_t file_mode,
+                                                            bool unique)
   : base_addr_ (base_addr),
     use_fixed_addr_ (use_fixed_addr),
     write_each_page_ (write_each_page),
@@ -426,7 +423,8 @@ ACE_MMAP_Memory_Pool_Options::ACE_MMAP_Memory_Pool_Options (const void *base_add
     flags_ (flags),
     guess_on_fault_ (guess_on_fault),
     sa_ (sa),
-    file_mode_ (file_mode)
+    file_mode_ (file_mode),
+    unique_ (unique)
 {
   ACE_TRACE ("ACE_MMAP_Memory_Pool_Options::ACE_MMAP_Memory_Pool_Options");
   // for backwards compatability

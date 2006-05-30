@@ -23,11 +23,9 @@
 #include "ace/os_include/sys/os_select.h"
 #include "ace/os_include/os_limits.h"
 
-#if (defined (ACE_PSOS) && !defined (ACE_PSOSIM)) || defined (__QNX__)
+#if defined (__QNX__)
    typedef long fd_mask;
-#elif defined (ACE_WIN32) && defined (CHORUS) && !defined (CHORUS_4)
-   typedef cx_fd_mask fd_mask;
-#endif /* ACE_PSOS */
+#endif /* __QNX__ */
 
 // Default size of the ACE Reactor.
 #if defined (FD_SETSIZE)

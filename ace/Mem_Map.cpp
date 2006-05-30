@@ -121,7 +121,7 @@ ACE_Mem_Map::map_it (ACE_HANDLE handle,
   size_t current_file_length = static_cast<size_t> (result);
 
   // Flag to indicate if we need to extend the back store
-  int extend_backing_store = 0;
+  bool extend_backing_store = false;
 
   // File length requested by user
   size_t requested_file_length = 0;
@@ -145,7 +145,7 @@ ACE_Mem_Map::map_it (ACE_HANDLE handle,
           this->close_filemapping_handle ();
 
           // Remember to extend the backing store
-          extend_backing_store = 1;
+          extend_backing_store = true;
         }
 
       // Set length to length_request
@@ -222,13 +222,13 @@ ACE_Mem_Map::open (const ACE_TCHAR *file_name,
 {
   ACE_TRACE ("ACE_Mem_Map::open");
 
-#if defined (CHORUS) || defined(INTEGRITY)  || defined (__QNXNTO__)
+#if defined(INTEGRITY)  || defined (__QNXNTO__)
   this->handle_ = ACE_OS::shm_open (file_name, flags, mode, sa);
 #elif defined (ACE_OPENVMS)
   ACE_OSCALL (::open (file_name, flags, mode, "shr=get,put,upd"), ACE_HANDLE, -1, this->handle_);
 #else
   this->handle_ = ACE_OS::open (file_name, flags, mode, sa);
-#endif /* CHORUS */
+#endif /* INTEGRITY */
 
   if (this->handle_ == ACE_INVALID_HANDLE)
     return -1;
@@ -363,7 +363,7 @@ ACE_Mem_Map::remove (void)
   return ACE_OS::shm_unlink (this->filename_);
 #else
   return ACE_OS::unlink (this->filename_);
-#endif /* CHORUS */
+#endif /* __QNXNTO__ */
 
   else
     return 0;

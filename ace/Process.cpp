@@ -161,44 +161,6 @@ ACE_Process::spawn (ACE_Process_Options &options)
     }
   return ACE_INVALID_PID;
 
-#elif defined (CHORUS)
-  // This only works if we exec.  Chorus does not really support
-  // forking.
-  if (ACE_BIT_ENABLED (options.creation_flags (),
-                       ACE_Process_Options::NO_EXEC))
-    ACE_NOTSUP_RETURN (ACE_INVALID_PID);
-
-  // These are all currently unsupported.
-  if (options.get_stdin () != ACE_INVALID_HANDLE)
-    ACE_NOTSUP_RETURN (ACE_INVALID_PID);
-  if (options.get_stdout () != ACE_INVALID_HANDLE)
-    ACE_NOTSUP_RETURN (ACE_INVALID_PID);
-  if (options.get_stderr () != ACE_INVALID_HANDLE)
-    ACE_NOTSUP_RETURN (ACE_INVALID_PID);
-  if (options.working_directory () != 0)
-    ACE_NOTSUP_RETURN (ACE_INVALID_PID);
-
-  if (options.env_argv ()[0] == 0)
-    // command-line args
-    this->child_id_ = ACE_OS::execvp (options.process_name (),
-                                      options.command_line_argv ());
-  else
-    {
-      // Add the new environment variables to the environment context
-      // of the context before doing an <execvp>.
-      for (char *const *user_env = options.env_argv ();
-           *user_env != 0;
-           user_env++)
-        if (ACE_OS::putenv (*user_env) != 0)
-          return ACE_INVALID_PID;
-
-      // Now the forked process has both inherited variables and the
-      // user's supplied variables.
-      this->child_id_ = ACE_OS::execvp (options.process_name (),
-                                        options.command_line_argv ());
-    }
-
-  return this->child_id_;
 #elif defined(ACE_OPENVMS)
   if (ACE_BIT_ENABLED (options.creation_flags (),
                        ACE_Process_Options::NO_EXEC))

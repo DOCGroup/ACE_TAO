@@ -17,22 +17,6 @@
 #  define ACE_SPRINTF_ADAPTER(X) X
 #endif /* ACE_HAS_CHARPTR_SPRINTF */
 
-#if defined (ACE_PSOS)
-ACE_INLINE int
-isatty (int h)
-{
-  return ACE_OS::isatty (h);
-}
-#if defined (fileno)
-#undef fileno
-#endif /* defined (fileno)*/
-ACE_INLINE ACE_HANDLE
-fileno (FILE *fp)
-{
-  return (ACE_HANDLE) fp;
-}
-#endif /* defined (ACE_PSOS) */
-
 /*****************************************************************************/
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -69,55 +53,6 @@ ACE_OS::flock_init (ACE_OS::ace_flock_t *lock,
                     mode_t perms)
 {
   ACE_OS_TRACE ("ACE_OS::flock_init");
-#if defined (CHORUS)
-  lock->lockname_ = 0;
-  // Let's see if it already exists.
-  lock->handle_ = ACE_OS::shm_open (name,
-                                    flags | O_CREAT | O_EXCL,
-                                    perms);
-  if (lock->handle_ == ACE_INVALID_HANDLE)
-    {
-      if (errno == EEXIST)
-        // It's already there, so we'll just open it.
-        lock->handle_ = ACE_OS::shm_open (name,
-                                          flags | O_CREAT,
-                                          ACE_DEFAULT_FILE_PERMS);
-      else
-        return -1;
-    }
-  else
-    {
-      // We own this shared memory object!  Let's set its size.
-      if (ACE_OS::ftruncate (lock->handle_,
-                             sizeof (ACE_mutex_t)) == -1)
-        return -1;
-      // Note that only the owner can destroy a file lock...
-      ACE_ALLOCATOR_RETURN (lock->lockname_,
-                            ACE_OS::strdup (name),
-                            -1);
-    }
-  if (lock->handle_ == ACE_INVALID_HANDLE)
-    return -1;
-
-  lock->process_lock_ =
-    (ACE_mutex_t *) ACE_OS::mmap (0,
-                                  sizeof (ACE_mutex_t),
-                                  PROT_RDWR,
-                                  MAP_SHARED,
-                                  lock->handle_,
-                                  0);
-  if (lock->process_lock_ == MAP_FAILED)
-    return -1;
-
-  if (lock->lockname_
-      // Only initialize it if we're the one who created it.
-      && ACE_OS::mutex_init (lock->process_lock_,
-                             USYNC_PROCESS,
-                             name,
-                             0) != 0)
-        return -1;
-  return 0;
-#else
 #if defined (ACE_WIN32)
   // Once initialized, these values are never changed.
   lock->overlapped_.Internal = 0;
@@ -140,7 +75,6 @@ ACE_OS::flock_init (ACE_OS::ace_flock_t *lock,
     }
   else
     return 0;
-#endif /* CHORUS */
 }
 
 ACE_INLINE int
@@ -158,11 +92,6 @@ ACE_OS::flock_unlock (ACE_OS::ace_flock_t *lock,
                                                         len,
                                                         0),
                                           ace_result_), int, -1);
-#elif defined (CHORUS)
-  ACE_UNUSED_ARG (whence);
-  ACE_UNUSED_ARG (start);
-  ACE_UNUSED_ARG (len);
-  return ACE_OS::mutex_unlock (lock->process_lock_);
 #elif defined (ACE_LACKS_FILELOCKS)
   ACE_UNUSED_ARG (lock);
   ACE_UNUSED_ARG (whence);
@@ -193,24 +122,6 @@ ACE_OS::flock_destroy (ACE_OS::ace_flock_t *lock,
       // Close the handle.
       ACE_OS::close (lock->handle_);
       lock->handle_ = ACE_INVALID_HANDLE;
-#if defined (CHORUS)
-      // Are we the owner?
-      if (lock->process_lock_ && lock->lockname_ != 0)
-        {
-          // Only destroy the lock if we're the owner
-          ACE_OS::mutex_destroy (lock->process_lock_);
-          ACE_OS::munmap (lock->process_lock_,
-                          sizeof (ACE_mutex_t));
-          if (unlink_file)
-            ACE_OS::shm_unlink (lock->lockname_);
-          ACE_OS::free (
-            static_cast<void *> (const_cast<ACE_TCHAR *> (lock->lockname_)));
-        }
-      else if (lock->process_lock_)
-        // Just unmap the memory.
-        ACE_OS::munmap (lock->process_lock_,
-                        sizeof (ACE_mutex_t));
-#else
       if (lock->lockname_ != 0)
         {
           if (unlink_file)
@@ -218,7 +129,6 @@ ACE_OS::flock_destroy (ACE_OS::ace_flock_t *lock,
           ACE_OS::free (
             static_cast<void *> (const_cast<ACE_TCHAR *> (lock->lockname_)));
         }
-#endif /* CHORUS */
       lock->lockname_ = 0;
     }
   return 0;
@@ -249,11 +159,6 @@ ACE_OS::flock_rdlock (ACE_OS::ace_flock_t *lock,
                                                       0),
                                           ace_result_), int, -1);
 #  endif /* ACE_HAS_WINNT4 && (ACE_HAS_WINNT4 != 0) */
-#elif defined (CHORUS)
-  ACE_UNUSED_ARG (whence);
-  ACE_UNUSED_ARG (start);
-  ACE_UNUSED_ARG (len);
-  return ACE_OS::mutex_lock (lock->process_lock_);
 #elif defined (ACE_LACKS_FILELOCKS)
   ACE_UNUSED_ARG (lock);
   ACE_UNUSED_ARG (whence);
@@ -296,11 +201,6 @@ ACE_OS::flock_tryrdlock (ACE_OS::ace_flock_t *lock,
   ACE_UNUSED_ARG (len);
   ACE_NOTSUP_RETURN (-1);
 #  endif /* ACE_HAS_WINNT4 && (ACE_HAS_WINNT4 != 0) */
-#elif defined (CHORUS)
-  ACE_UNUSED_ARG (whence);
-  ACE_UNUSED_ARG (start);
-  ACE_UNUSED_ARG (len);
-  return ACE_OS::mutex_trylock (lock->process_lock_);
 #elif defined (ACE_LACKS_FILELOCKS)
   ACE_UNUSED_ARG (lock);
   ACE_UNUSED_ARG (whence);
@@ -319,10 +219,8 @@ ACE_OS::flock_tryrdlock (ACE_OS::ace_flock_t *lock,
                              reinterpret_cast<long> (&lock->lock_)),
               int, -1, result);
 
-# if ! defined (ACE_PSOS)
   if (result == -1 && (errno == EACCES || errno == EAGAIN))
     errno = EBUSY;
-# endif /* ! defined (ACE_PSOS) */
 
   return result;
 #endif /* ACE_WIN32 */
@@ -352,11 +250,6 @@ ACE_OS::flock_trywrlock (ACE_OS::ace_flock_t *lock,
   ACE_UNUSED_ARG (len);
   ACE_NOTSUP_RETURN (-1);
 #  endif /* ACE_HAS_WINNT4 && (ACE_HAS_WINNT4 != 0) */
-#elif defined (CHORUS)
-  ACE_UNUSED_ARG (whence);
-  ACE_UNUSED_ARG (start);
-  ACE_UNUSED_ARG (len);
-  return ACE_OS::mutex_trylock (lock->process_lock_);
 #elif defined (ACE_LACKS_FILELOCKS)
   ACE_UNUSED_ARG (lock);
   ACE_UNUSED_ARG (whence);
@@ -376,10 +269,8 @@ ACE_OS::flock_trywrlock (ACE_OS::ace_flock_t *lock,
                              reinterpret_cast<long> (&lock->lock_)),
               int, -1, result);
 
-# if ! defined (ACE_PSOS)
   if (result == -1 && (errno == EACCES || errno == EAGAIN))
     errno = EBUSY;
-# endif /* ! defined (ACE_PSOS) */
 
   return result;
 #endif /* ACE_WIN32 */
@@ -410,11 +301,6 @@ ACE_OS::flock_wrlock (ACE_OS::ace_flock_t *lock,
                                                       0),
                                           ace_result_), int, -1);
 #  endif /* ACE_HAS_WINNT4 && (ACE_HAS_WINNT4 != 0) */
-#elif defined (CHORUS)
-  ACE_UNUSED_ARG (whence);
-  ACE_UNUSED_ARG (start);
-  ACE_UNUSED_ARG (len);
-  return ACE_OS::mutex_lock (lock->process_lock_);
 #elif defined (ACE_LACKS_FILELOCKS)
   ACE_UNUSED_ARG (lock);
   ACE_UNUSED_ARG (whence);
@@ -508,7 +394,7 @@ ACE_OS::cuserid (char *user, size_t maxlen)
       ::remCurIdGet (user, 0);
       return user;
     }
-#elif defined (CHORUS) || defined (ACE_PSOS) || defined (__QNXNTO__)
+#elif defined (__QNXNTO__)
   ACE_UNUSED_ARG (user);
   ACE_UNUSED_ARG (maxlen);
   ACE_NOTSUP_RETURN (0);
@@ -669,13 +555,6 @@ ACE_OS::fdopen (ACE_HANDLE handle, const ACE_TCHAR *mode)
     }
 
   return file;
-# elif defined (ACE_PSOS)
-  // @@ it may be possible to implement this for pSOS,
-  // but it isn't obvious how to do this (perhaps via
-  // f_stat to glean the default volume, and then open_fn ?)
-  ACE_UNUSED_ARG (handle);
-  ACE_UNUSED_ARG (mode);
-  ACE_NOTSUP_RETURN (0);
 # else
   ACE_OSCALL_RETURN
     (::fdopen (handle, ACE_TEXT_ALWAYS_CHAR (mode)), FILE *, 0);
@@ -973,7 +852,7 @@ ACE_OS::rewind (FILE *fp)
   ::rewind (fp);
 #else
   // This isn't perfect since it doesn't reset EOF, but it's probably
-  // the closest we can get on WINCE. 
+  // the closest we can get on WINCE.
   (void) fseek (fp, 0L, SEEK_SET);
 #endif /* ACE_HAS_WINCE */
 }
@@ -986,10 +865,6 @@ ACE_OS::tempnam (const char *dir, const char *pfx)
   ACE_UNUSED_ARG (dir);
   ACE_UNUSED_ARG (pfx);
   ACE_NOTSUP_RETURN (0);
-#elif defined (ACE_PSOS)
-  // pSOS only considers the directory prefix
-  ACE_UNUSED_ARG (pfx);
-  ACE_OSCALL_RETURN (::tmpnam (const_cast <char *> (dir)), char *, 0);
 #elif defined (ACE_HAS_NONCONST_TEMPNAM)
   ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::tempnam (const_cast <char *> (dir), const_cast<char *> (pfx)), char *, 0);
 #else /* ACE_LACKS_TEMPNAM */

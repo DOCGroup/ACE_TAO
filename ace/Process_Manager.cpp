@@ -420,14 +420,14 @@ ACE_Process_Manager::register_handler (ACE_Event_Handler *eh,
 
 pid_t
 ACE_Process_Manager::spawn (ACE_Process_Options &options,
-			    ACE_Event_Handler *event_handler)
+                            ACE_Event_Handler *event_handler)
 {
-  ACE_Process *process;
+  ACE_Process *process = 0;
   ACE_NEW_RETURN (process,
                   ACE_Managed_Process,
                   ACE_INVALID_PID);
 
-  pid_t pid = spawn (process, options, event_handler);
+  pid_t const pid = spawn (process, options, event_handler);
   if (pid == ACE_INVALID_PID || pid == 0)
     delete process;
 
@@ -439,7 +439,7 @@ ACE_Process_Manager::spawn (ACE_Process_Options &options,
 pid_t
 ACE_Process_Manager::spawn (ACE_Process *process,
                             ACE_Process_Options &options,
-			    ACE_Event_Handler *event_handler)
+                            ACE_Event_Handler *event_handler)
 {
   ACE_TRACE ("ACE_Process_Manager::spawn");
 
@@ -465,7 +465,7 @@ int
 ACE_Process_Manager::spawn_n (size_t n,
                               ACE_Process_Options &options,
                               pid_t *child_pids,
-			      ACE_Event_Handler *event_handler)
+                              ACE_Event_Handler *event_handler)
 {
   ACE_TRACE ("ACE_Process_Manager::spawn_n");
 
@@ -526,7 +526,7 @@ ACE_Process_Manager::append_proc (ACE_Process *proc,
     r->register_handler (this, proc->gethandle ());
 #endif /* ACE_WIN32 */
 
-  this->current_count_++;
+  ++this->current_count_;
   return 0;
 }
 
