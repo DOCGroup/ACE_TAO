@@ -1,3 +1,13 @@
+Tue May 30 13:42:07 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/GIOP_Message_Base.{h,cpp}:
+          Removed the buffer as member, let the cdr stream get the buffer
+          from the allocator. This allocation is just done once at the
+          creation so this shouldn't impact performance a lot. Also use
+          the size argument passed to the constructor, specific protocol
+          implementations to pass this down to its base to set a
+          specific initial buffer size.
+
 Tue May 30 10:04:07 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_2543_Regression/bug_2543_regression.cpp:
