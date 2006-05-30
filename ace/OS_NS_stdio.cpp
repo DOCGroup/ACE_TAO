@@ -60,7 +60,7 @@ ACE_OS::ace_flock_t::dump (void) const
               this->overlapped_.OffsetHigh));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nhEvent = %d"),
               this->overlapped_.hEvent));
-#   elif !defined (CHORUS)
+#   else
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nl_whence = %d"),
               this->lock_.l_whence));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nl_start = %d"), this->lock_.l_start));

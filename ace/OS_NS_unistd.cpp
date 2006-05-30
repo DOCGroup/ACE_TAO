@@ -238,8 +238,6 @@ ACE_OS::fork_exec (ACE_TCHAR *argv[])
 
   // CreateProcess failed.
   return -1;
-# elif defined (CHORUS)
-  return ACE_OS::execv (argv[0], argv);
 # else
       pid_t result = ACE_OS::fork ();
 

@@ -29,11 +29,6 @@ ACE_Recursive_Thread_Mutex::ACE_Recursive_Thread_Mutex (const ACE_TCHAR *name,
   : removed_ (0)
 {
   // ACE_TRACE ("ACE_Recursive_Thread_Mutex::ACE_Recursive_Thread_Mutex");
-#if defined (ACE_HAS_FSU_PTHREADS) && ! defined (ACE_WIN32)
-  // Initialize FSU pthreads package.  If called more than once,
-  // pthread_init does nothing and so does no harm.
-   pthread_init ();
-#endif  /*  ACE_HAS_FSU_PTHREADS && ! ACE_WIN32 */
    if (ACE_OS::recursive_mutex_init (&this->lock_,
                                      name,
                                      arg) == -1)

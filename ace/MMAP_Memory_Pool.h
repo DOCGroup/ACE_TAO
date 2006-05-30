@@ -71,7 +71,8 @@ public:
                                 u_int flags = 0,
                                 int guess_on_fault = 1,
                                 LPSECURITY_ATTRIBUTES sa = 0,
-                                mode_t file_mode = ACE_DEFAULT_FILE_PERMS);
+                                mode_t file_mode = ACE_DEFAULT_FILE_PERMS,
+                                bool unique_ = false);
 
   /// Base address of the memory-mapped backing store.
   const void *base_addr_;
@@ -112,6 +113,9 @@ public:
 
   /// File mode for mmaped file, if it is created.
   mode_t file_mode_;
+
+  /// Do we want an unique backing store name?
+  bool unique_;
 
 private:
   // Prevent copying
@@ -261,7 +265,7 @@ protected:
    * parameter is ignored on platforms that know the faulting address
    * (UNIX with SI_ADDR and Win32).
    */
-  int guess_on_fault_;
+  bool guess_on_fault_;
 
   /// Security attributes object, only used on NT.
   LPSECURITY_ATTRIBUTES sa_;

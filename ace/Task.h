@@ -79,7 +79,7 @@ public:
   // provide <Task>-specific initialization and termination behavior.
 
   /// Hook called to initialize a task and prepare it for execution.
-  /// <args> can be used to pass arbitrary information into <open>.
+  /// @a args can be used to pass arbitrary information into <open>.
   virtual int open (void *args = 0);
 
   /**
