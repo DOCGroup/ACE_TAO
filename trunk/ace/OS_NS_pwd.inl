@@ -79,7 +79,7 @@ ACE_OS::getpwnam_r (const char *name, struct passwd *pwent,
     }
 #       endif /* (DIGITAL_UNIX) */
   return result;
-#     elif defined (AIX) || defined (HPUX_10)
+#     elif defined (AIX)
   if (::getpwnam_r (name, pwent, buffer, buflen) == -1)
     return 0;
   else

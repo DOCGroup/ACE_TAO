@@ -1516,16 +1516,7 @@ ACE_Thread_Manager::join (ACE_thread_t tid, ACE_THR_FUNC_RETURN *status)
   // Must explicitly detach threads.  Threads without THR_DETACHED
   // were detached in ACE_OS::thr_create ().
 
-#   if defined (HPUX_10)
-  // HP-UX DCE threads' pthread_detach will smash thr_id if it's just given
-  // as an argument.  Since the thread handle is still needed, give
-  // pthread_detach a junker to scribble on.
-  ACE_thread_t  junker;
-  cma_handle_assign(&tdb.thr_handle_, &junker);
-  ::pthread_detach (&junker);
-#   else
   ::pthread_detach (&tdb.thr_handle_);
-    #endif /* HPUX_10 */
 # endif /* ACE_HAS_PTHREADS_DRAFT4 && ACE_LACKS_SETDETACH */
   return 0;
 }

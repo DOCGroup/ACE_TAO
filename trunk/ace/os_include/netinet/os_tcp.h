@@ -34,12 +34,6 @@ extern "C"
 {
 #endif /* __cplusplus */
 
-#if defined (ACE_PSOS)
-#  if ! defined (TCP_NODELAY)
-#    define TCP_NODELAY  1
-#  endif /* TCP_NODELAY */
-#endif /* ACE_PSOS */
-
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

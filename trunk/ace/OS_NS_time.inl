@@ -37,13 +37,11 @@ ACE_OS::asctime_r (const struct tm *t, char *buf, int buflen)
   ACE_OS::strsncpy (buf, result, buflen);
   return buf;
 # else
-#   if defined (HPUX_10)
-  return (::asctime_r(t, buf, buflen) == 0 ? buf : (char *)0);
-#   elif defined (ACE_HAS_SIZET_PTR_ASCTIME_R_AND_CTIME_R)
+#   if defined (ACE_HAS_SIZET_PTR_ASCTIME_R_AND_CTIME_R)
   ACE_OSCALL_RETURN (::asctime_r (t, buf, reinterpret_cast<size_t*>(&buflen)), char *, 0);
 #   else
   ACE_OSCALL_RETURN (::asctime_r (t, buf, buflen), char *, 0);
-#   endif /* HPUX_10 */
+#   endif /* ACE_HAS_SIZET_PTR_ASCTIME_R_AND_CTIME_R */
 # endif /* ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R */
 #elif defined (ACE_LACKS_ASCTIME_R)
   ACE_UNUSED_ARG (t);
@@ -153,9 +151,7 @@ ACE_OS::ctime_r (const time_t *t, ACE_TCHAR *buf, int buflen)
 #      endif /* DIGITAL_UNIX */
 #   else /* ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R */
 
-#      if defined (ACE_CTIME_R_RETURNS_INT)
-  bufp = ::ctime_r (t, bufp, buflen) == -1 ? 0 : bufp;
-#      elif defined (ACE_HAS_SIZET_PTR_ASCTIME_R_AND_CTIME_R)
+#      if defined (ACE_HAS_SIZET_PTR_ASCTIME_R_AND_CTIME_R)
   bufp = ::ctime_r (t, bufp, reinterpret_cast<size_t*>(&buflen));
 #      else /* ACE_CTIME_R_RETURNS_INT */
   bufp = ::ctime_r (t, bufp, buflen);

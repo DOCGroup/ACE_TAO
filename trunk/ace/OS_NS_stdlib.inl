@@ -296,13 +296,6 @@ ACE_OS::rand_r (ACE_RANDR_TYPE &seed)
     !defined (ACE_LACKS_RAND_REENTRANT_FUNCTIONS)
 #   if defined (DIGITAL_UNIX)
   ACE_OSCALL_RETURN (::_Prand_r (&seed), int, -1);
-#   elif defined (HPUX_10)
-  // rand() is thread-safe on HP-UX 10.  rand_r's signature is not consistent
-  // with latest POSIX and will change in a future HP-UX release so that it
-  // is consistent.  At that point, this #elif section can be changed or
-  // removed, and just call rand_r.
-  ACE_UNUSED_ARG (seed);
-  ACE_OSCALL_RETURN (::rand(), int, -1);
 #   elif defined (ACE_HAS_BROKEN_RANDR)
   ACE_OSCALL_RETURN (::rand_r (seed), int, -1);
 #   else
