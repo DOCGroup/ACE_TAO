@@ -1,3 +1,8 @@
+Tue May 30 10:08:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/NodeManager/MonitorController.cpp:
+          Fixed typo
+
 Tue May 30 00:00:22 UTC 2006  Stoyan Paunov  <spaunov@isis.vanderbilt.edu>
 
         * DAnCE/Planner/Node_T.h:
