@@ -92,27 +92,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 // Run the thread entry point for the <ACE_Thread_Adapter>.  This must
 // be an extern "C" to make certain compilers happy...
 
-#if defined (ACE_PSOS)
-extern "C" void
-ACE_THREAD_ADAPTER_NAME (unsigned long args)
-{
-  ACE_OS_TRACE ("ACE_THREAD_ADAPTER_NAME");
-
-#if defined (ACE_HAS_TSS_EMULATION)
-  // As early as we can in the execution of the new thread, allocate
-  // its local TS storage.  Allocate it on the stack, to save dynamic
-  // allocation/dealloction.
-  void *ts_storage[ACE_TSS_Emulation::ACE_TSS_THREAD_KEYS_MAX];
-  ACE_TSS_Emulation::tss_open (ts_storage);
-#endif /* ACE_HAS_TSS_EMULATION */
-
-  ACE_Base_Thread_Adapter * const thread_args =
-    static_cast<ACE_Base_Thread_Adapter *> (args);
-
-  // Invoke the user-supplied function with the args.
-  thread_args->invoke ();
-}
-#else /* ! defined (ACE_PSOS) */
 extern "C" ACE_THR_FUNC_RETURN
 ACE_THREAD_ADAPTER_NAME (void *args)
 {
@@ -138,4 +117,4 @@ ACE_THREAD_ADAPTER_NAME (void *args)
 
   return status;
 }
-#endif /* ACE_PSOS */
+

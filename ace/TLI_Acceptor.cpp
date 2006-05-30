@@ -136,15 +136,9 @@ open_new_endpoint (ACE_HANDLE listen_handle,
                    ACE_Addr *remote_sap = 0)
 {
   ACE_TRACE ("open_new_endpoint");
-#if defined (ACE_PSOS)
-  ACE_HANDLE fd = ACE_OS::t_open ((char *) dev,
-                                  S_IRUSR | S_IWUSR,
-                                  0);
-#else
   ACE_HANDLE fd = ACE_OS::t_open ((char *) dev,
                                   O_RDWR,
                                   0);
-#endif /* ACE_PSOS */
 
    struct t_bind req, *req_p = 0;
    if (remote_sap != 0)

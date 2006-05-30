@@ -144,23 +144,19 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #     endif /* ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB */
 #   endif /* ! ACE_LACKS_NEW_H */
 
-#   if !defined (ACE_PSOS_DIAB_MIPS)  &&  !defined (ACE_VXWORKS)
+#   if !defined (ACE_VXWORKS)
 #   define ACE_DONT_INCLUDE_ACE_SIGNAL_H
 #     include "ace/os_include/os_signal.h"
 #   undef ACE_DONT_INCLUDE_ACE_SIGNAL_H
-#   endif /* ! ACE_PSOS_DIAB_MIPS && ! VXWORKS */
+#   endif /* ! VXWORKS */
 
-#   if ! defined (ACE_PSOS_DIAB_MIPS)
 #   include "ace/os_include/os_fcntl.h"
-#   endif /* ! ACE_PSOS_DIAB_MIPS */
 # endif /* ACE_HAS_WINCE */
 
 # include "ace/os_include/os_limits.h"
 # include "ace/os_include/os_ctype.h"
-# if ! defined (ACE_PSOS_DIAB_MIPS)
 # include "ace/os_include/os_string.h"
 # include "ace/os_include/os_stdlib.h"
-# endif /* ! ACE_PSOS_DIAB_MIPS */
 # include "ace/os_include/os_float.h"
 
 # if defined (ACE_NEEDS_SCHED_H)
@@ -170,9 +166,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #   include "ace/iosfwd.h"
 
 # if !defined (ACE_HAS_WINCE)
-#   if ! defined (ACE_PSOS_DIAB_MIPS)
 #   include "ace/os_include/os_fcntl.h"
-#   endif /* ! ACE_PSOS_DIAB_MIPS */
 # endif /* ACE_HAS_WINCE */
 
 # if defined ACE_HAS_BYTESEX_H
@@ -202,7 +196,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 #     include "ace/os_include/os_fcntl.h"
 
-# else /* !defined (ACE_WIN32) && !defined (ACE_PSOS) */
+# else /* !defined (ACE_WIN32) */
 
 #   if defined (CYGWIN32)
 #     include "ace/os_include/sys/os_uio.h"
@@ -282,7 +276,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #     include /**/ <sys/priocntl.h>
 #   endif /* ACE_HAS_PRIOCNTL */
 
-# endif /* !defined (ACE_WIN32) && !defined (ACE_PSOS) */
+# endif /* !defined (ACE_WIN32) */
 
 # if !defined (ACE_WIN32) && !defined (ACE_LACKS_UNIX_SYSLOG)
 # include "ace/os_include/os_syslog.h"

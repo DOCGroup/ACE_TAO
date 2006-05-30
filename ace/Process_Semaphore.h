@@ -24,11 +24,11 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if !(defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM) || defined (ACE_PSOS))
+#if !(defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM))
 # include "ace/SV_Semaphore_Complex.h"
 #else
 # include "ace/Semaphore.h"
-#endif /* !(ACE_WIN32 || ACE_HAS_POSIX_SEM || ACE_PSOS) */
+#endif /* !(ACE_WIN32 || ACE_HAS_POSIX_SEM) */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -117,10 +117,10 @@ public:
    */
   int tryacquire_write_upgrade (void);
 
-#if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM) || defined (ACE_PSOS)
+#if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM)
   /// Return the underlying lock.
   const ACE_sema_t &lock (void) const;
-#endif /* ACE_WIN32 || ACE_HAS_POSIX_SEM || ACE_PSOS */
+#endif /* ACE_WIN32 || ACE_HAS_POSIX_SEM */
 
   /// Dump the state of an object.
   void dump (void) const;
@@ -129,12 +129,12 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-#if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM) || defined (ACE_PSOS)
+#if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM)
   ACE_Semaphore lock_;
 #else
   /// We need this to get the right semantics...
   ACE_SV_Semaphore_Complex lock_;
-#endif /* ACE_WIN32 || ACE_HAS_POSIX_SEM || ACE_PSOS */
+#endif /* ACE_WIN32 || ACE_HAS_POSIX_SEM */
 };
 
 /*****************************************************************************/

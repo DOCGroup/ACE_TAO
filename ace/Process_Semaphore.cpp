@@ -29,13 +29,13 @@ ACE_Process_Semaphore::ACE_Process_Semaphore (u_int count,
                                               const ACE_TCHAR *name,
                                               void *arg,
                                               int max)
-#if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM) || defined (ACE_PSOS)
+#if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM)
   : lock_ (count, USYNC_PROCESS, name, arg, max)
 #else
   : lock_ (ACE_TEXT_ALWAYS_CHAR (name),
            ACE_SV_Semaphore_Complex::ACE_CREATE,
            count)
-#endif /* ACE_WIN32 || ACE_HAS_POSIX_SEM || ACE_PSOS */
+#endif /* ACE_WIN32 || ACE_HAS_POSIX_SEM */
 {
   arg = arg;
   max = max;
@@ -63,11 +63,11 @@ int
 ACE_Process_Semaphore::acquire (void)
 {
 // ACE_TRACE ("ACE_Process_Semaphore::acquire");
-#if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM) || defined (ACE_PSOS)
+#if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM)
   return this->lock_.acquire ();
 #else
   return this->lock_.acquire (0, SEM_UNDO);
-#endif // defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM) || defined (ACE_PSOS)
+#endif /* defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM) */
 }
 
 // Conditionally decrement the semaphore if count is greater
@@ -77,11 +77,11 @@ int
 ACE_Process_Semaphore::tryacquire (void)
 {
 // ACE_TRACE ("ACE_Process_Semaphore::tryacquire");
-#if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM) || defined (ACE_PSOS)
+#if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM)
   return this->lock_.tryacquire ();
 #else
   return this->lock_.tryacquire (0, SEM_UNDO);
-#endif // defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM) || defined (ACE_PSOS)
+#endif /* defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM) */
 }
 
 // Increment the semaphore, potentially unblocking
@@ -91,11 +91,11 @@ int
 ACE_Process_Semaphore::release (void)
 {
 // ACE_TRACE ("ACE_Process_Semaphore::release");
-#if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM) || defined (ACE_PSOS)
+#if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM)
   return this->lock_.release ();
 #else
   return this->lock_.release (0, SEM_UNDO);
-#endif // defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM) || defined (ACE_PSOS)
+#endif /* defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM) */
 }
 
 /*****************************************************************************/

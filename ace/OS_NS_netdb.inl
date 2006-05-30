@@ -277,7 +277,7 @@ ACE_OS::getipnodebyaddr (const void *src, size_t len, int family)
                                   family);
 
   ACE_NOTSUP_RETURN (0);
-# endif /* ACE_PSOS */
+# endif /* defined (ACE_HAS_IPV6) && !defined (ACE_WIN32) */
 }
 
 ACE_INLINE struct hostent *
@@ -311,7 +311,7 @@ ACE_OS::getipnodebyname (const char *name, int family, int flags)
     return ACE_OS::gethostbyname (name);
 
   ACE_NOTSUP_RETURN (0);
-# endif /* ACE_PSOS */
+# endif /* defined (ACE_HAS_IPV6) && !defined (ACE_WIN32) */
 }
 
 ACE_INLINE struct protoent *

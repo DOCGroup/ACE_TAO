@@ -514,10 +514,6 @@ typedef ACE_HANDLE ACE_SOCKET;
 # if defined (ACE_VXWORKS) && !defined (ACE_HAS_PTHREADS)
 # include /**/ <taskLib.h>
 typedef int ACE_THR_FUNC_RETURN;
-# elif defined (ACE_PSOS)
-typedef int ACE_THR_FUNC_RETURN;
-// pSOS task functions don't really return anything... this just makes it
-// easier to deal with declaring variables internally in ACE.
 # elif defined (ACE_WIN32)
 typedef DWORD ACE_THR_FUNC_RETURN;
 # else
@@ -537,8 +533,6 @@ typedef void (*ACE_THR_DEST)(void *);
 // Now some platforms have special requirements...
 # if defined (ACE_VXWORKS) && !defined (ACE_HAS_PTHREADS)
 typedef FUNCPTR ACE_THR_FUNC_INTERNAL;  // where typedef int (*FUNCPTR) (...)
-# elif defined (ACE_PSOS)
-typedef void (*ACE_THR_FUNC_INTERNAL)(void *);
 # else
 typedef ACE_THR_FUNC ACE_THR_FUNC_INTERNAL;
 # endif /* ACE_VXWORKS */
@@ -549,10 +543,6 @@ extern "C"
 # endif  /* __cplusplus */
 # if defined (ACE_VXWORKS) && !defined (ACE_HAS_PTHREADS)
 typedef FUNCPTR ACE_THR_C_FUNC;  // where typedef int (*FUNCPTR) (...)
-# elif defined (ACE_PSOS)
-// needed to handle task entry point type inconsistencies in pSOS+
-typedef void (*PSOS_TASK_ENTRY_POINT)();
-typedef void (*ACE_THR_C_FUNC)(void *);
 # else
 typedef ACE_THR_FUNC_RETURN (*ACE_THR_C_FUNC)(void *);
 # endif /* ACE_VXWORKS */

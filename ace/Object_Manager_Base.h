@@ -47,15 +47,7 @@ class ACE_Thread_Hook;
  */
 class ACE_Export ACE_Object_Manager_Base
 {
-# if (defined (ACE_PSOS) && defined (__DIAB))  || \
-     (defined (__DECCXX_VER) && __DECCXX_VER < 60000000)
-  // The Diab compiler got confused and complained about access rights
-  // if this section was protected (changing this to public makes it happy).
-  // Similarly, DEC CXX 5.6 needs the methods to be public.
-public:
-# else  /* ! (ACE_PSOS && __DIAB)  ||  ! __DECCXX_VER < 60000000 */
 protected:
-# endif /* ! (ACE_PSOS && __DIAB)  ||  ! __DECCXX_VER < 60000000 */
   /// Default constructor.
   ACE_Object_Manager_Base (void);
 
