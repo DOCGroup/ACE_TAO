@@ -285,7 +285,7 @@
 #     else
 #       define ACE_DEFAULT_FILE_PERMS (FILE_SHARE_READ | FILE_SHARE_WRITE)
 #     endif /* ACE_HAS_WINNT4 */
-#   elif defined (VXWORKS)
+#   elif defined (ACE_VXWORKS)
 #     define ACE_DEFAULT_FILE_PERMS (S_IRUSR | S_IWUSR| S_IRGRP| S_IROTH)
 #   else
 #     define ACE_DEFAULT_FILE_PERMS 0644

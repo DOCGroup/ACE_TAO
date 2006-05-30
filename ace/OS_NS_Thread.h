@@ -430,7 +430,7 @@ public:
   /// Queue up threads waiting for the condition to become signaled.
   ACE_sema_t sema_;
 
-#     if defined (VXWORKS)
+#     if defined (ACE_VXWORKS)
   /**
    * A semaphore used by the broadcast/signal thread to wait for all
    * the waiting thread(s) to wake up and be released from the
@@ -446,7 +446,7 @@ public:
   HANDLE waiters_done_;
 #     else
 #       error "Please implement this feature or check your config.h file!"
-#     endif /* VXWORKS */
+#     endif /* ACE_VXWORKS */
 
   /// Keeps track of whether we were broadcasting or just signaling.
   size_t was_broadcast_;
@@ -1449,7 +1449,7 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   int recursive_mutex_lock (ACE_recursive_thread_mutex_t *m,
                             const ACE_Time_Value &timeout);
- 
+
   ACE_NAMESPACE_INLINE_FUNCTION
   int recursive_mutex_lock (ACE_recursive_thread_mutex_t *m,
                             const ACE_Time_Value *timeout);
@@ -1672,19 +1672,19 @@ namespace ACE_OS {
   int thr_getspecific (ACE_thread_key_t key,
                        void **data);
 
-#if defined (VXWORKS)
+#if defined (ACE_VXWORKS)
   extern ACE_Export
 #else
   ACE_NAMESPACE_INLINE_FUNCTION
-#endif /* VXWORKS */
+#endif /* ACE_VXWORKS */
   int thr_join (ACE_hthread_t waiter_id,
                 ACE_THR_FUNC_RETURN *status);
 
-#if defined (VXWORKS)
+#if defined (ACE_VXWORKS)
   extern ACE_Export
 #else
   ACE_NAMESPACE_INLINE_FUNCTION
-#endif /* VXWORKS */
+#endif /* ACE_VXWORKS */
   int thr_join (ACE_thread_t waiter_id,
                 ACE_thread_t *thr_id,
                 ACE_THR_FUNC_RETURN *status);

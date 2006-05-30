@@ -29,7 +29,7 @@
 
 #include "ace/Thread_Mutex.h"
 
-#if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || defined (VXWORKS) || defined (ACE_PSOS)
+#if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || defined (ACE_VXWORKS) || defined (ACE_PSOS)
 // If platforms support semaphores with timed wait, then we use semaphores instead of c.v.
 # define ACE_TOKEN_USES_SEMAPHORE
 #endif /* (ACE_WIN32 && !ACE_HAS_WINCE) || VXWORKS || ACE_PSOS */

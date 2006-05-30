@@ -228,7 +228,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 // Include the templates here.
 #include "ace/Message_Queue_T.h"
 
-#if defined (VXWORKS)
+#if defined (ACE_VXWORKS)
 # include /**/ <msgQLib.h>
 # include "ace/Null_Mutex.h"
 # include "ace/Null_Condition.h"
@@ -421,7 +421,7 @@ private:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#endif /* VXWORKS */
+#endif /* ACE_VXWORKS */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
