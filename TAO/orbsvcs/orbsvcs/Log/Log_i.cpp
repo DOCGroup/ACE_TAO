@@ -965,7 +965,7 @@ TAO_Log_i::match (const char* grammar,
                            CORBA::INTERNAL ());
   ACE_CHECK_RETURN (0);
 
-  CORBA::ULong count =
+  const CORBA::ULong count =
     this->recordstore_->match (grammar,
 			       constraint
 			       ACE_ENV_ARG_PARAMETER);
@@ -988,7 +988,7 @@ TAO_Log_i::delete_records (const char *grammar,
 			    CORBA::INTERNAL ());
   ACE_CHECK_RETURN (0);
 
-  CORBA::ULong count =
+  const CORBA::ULong count =
     this->recordstore_->delete_records (grammar,
 					constraint
 					ACE_ENV_ARG_PARAMETER);
@@ -1030,7 +1030,7 @@ TAO_Log_i::delete_records_by_id (const DsLogAdmin::RecordIdList &ids
 			    CORBA::INTERNAL ());
   ACE_CHECK_RETURN (0);
 
-  CORBA::ULong count =
+  const CORBA::ULong count =
     this->recordstore_->delete_records_by_id (ids ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
@@ -1374,7 +1374,7 @@ void
 TAO_Log_i::remove_old_records (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  CORBA::ULong count =
+  const CORBA::ULong count =
     this->recordstore_->remove_old_records (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
@@ -1405,29 +1405,36 @@ void
 TAO_Log_i::check_capacity_alarm_threshold (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  CORBA::ULongLong max_size =
+  const CORBA::ULongLong max_size =
     this->recordstore_->get_max_size (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   if (max_size != 0 && this->thresholds_.length () > 0)
     {
-      CORBA::ULongLong current_size =
-        this->recordstore_->get_current_size (ACE_ENV_SINGLE_ARG_PARAMETER);
+      const DsLogAdmin::LogFullActionType log_full_action =
+	this->recordstore_->get_log_full_action (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
-
+      
+      CORBA::ULongLong current_size =
+	((log_full_action == DsLogAdmin::wrap)
+	 ? this->recordstore_->get_gauge (ACE_ENV_SINGLE_ARG_PARAMETER)
+	 : this->recordstore_->get_current_size (ACE_ENV_SINGLE_ARG_PARAMETER));
+      ACE_CHECK;
+      
       const CORBA::UShort percent =
         static_cast<CORBA::UShort> (((double) ACE_UINT64_DBLCAST_ADAPTER (current_size * 100U) /
-           (double) ACE_UINT64_DBLCAST_ADAPTER (max_size)));
+				     (double) ACE_UINT64_DBLCAST_ADAPTER (max_size)));
 
       while (current_threshold_ < this->thresholds_.length ()
              && this->thresholds_[this->current_threshold_] <= percent)
         {
-          DsLogNotification::PerceivedSeverityType severity =
-            percent == 100 ? DsLogNotification::critical :
-            DsLogNotification::minor;
-
           if (notifier_)
             {
+	      const DsLogNotification::PerceivedSeverityType severity =
+		((percent == 100)
+		 ? DsLogNotification::critical
+		 : DsLogNotification::minor);
+
 	      // @@ Calling create_log_reference () in the ctor or in ::init()
 	      // leads to an infinate loop.  This should be removed when that
 	      // is fixed.
@@ -1458,9 +1465,14 @@ TAO_Log_i::check_capacity_alarm_threshold (ACE_ENV_SINGLE_ARG_DECL)
           ++this->current_threshold_;
         }
 
-      if (this->current_threshold_ == this->thresholds_.length ()
-          && this->recordstore_->get_log_full_action (ACE_ENV_SINGLE_ARG_PARAMETER) != DsLogAdmin::halt)
+      // "When a log object is created with the wrap option, the
+      // capacity threshold alarms are triggered as if coupled to a
+      // gauge that counts from zero to the highest capacity threshold
+      // value defined and then resets to zero."
+      if (log_full_action == DsLogAdmin::wrap
+	  && this->current_threshold_ == this->thresholds_.length ())
         {
+	  this->recordstore_->reset_gauge ();
           this->current_threshold_ = 0;
         }
     }
@@ -1470,13 +1482,13 @@ void
 TAO_Log_i::reset_capacity_alarm_threshold (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  CORBA::ULongLong max_size =
+  const CORBA::ULongLong max_size =
     this->recordstore_->get_max_size (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   if (max_size != 0 && this->thresholds_.length() > 0)
     {
-      CORBA::ULongLong current_size =
+      const CORBA::ULongLong current_size =
         this->recordstore_->get_current_size (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 

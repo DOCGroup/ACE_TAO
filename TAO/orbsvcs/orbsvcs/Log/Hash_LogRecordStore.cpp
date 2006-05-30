@@ -25,6 +25,7 @@ TAO_Hash_LogRecordStore::TAO_Hash_LogRecordStore (
     id_ (logid),
     current_size_ (0),
     num_records_ (0),
+    gauge_ (0),
     max_rec_list_len_ (LOG_DEFAULT_MAX_REC_LIST_LEN),
     admin_state_ (DsLogAdmin::unlocked),
     forward_state_ (DsLogAdmin::on),
@@ -79,6 +80,18 @@ TAO_Hash_LogRecordStore::get_n_records (ACE_ENV_SINGLE_ARG_DECL)
   return this->num_records_;
 }
 
+CORBA::ULongLong 
+TAO_Hash_LogRecordStore::get_gauge (ACE_ENV_SINGLE_ARG_DECL)
+{   
+  return this->gauge_;
+}   
+ 
+void
+TAO_Hash_LogRecordStore::reset_gauge (ACE_ENV_SINGLE_ARG_DECL)
+{
+  this->gauge_ = 0;
+}   
+
 int
 TAO_Hash_LogRecordStore::log (const DsLogAdmin::LogRecord &const_rec
 			      ACE_ENV_ARG_DECL)
@@ -120,6 +133,7 @@ TAO_Hash_LogRecordStore::log (const DsLogAdmin::LogRecord &const_rec
   // Increment the number of records in the log
   ++this->num_records_;
   this->current_size_ += record_size;
+  this->gauge_ += record_size;
 
   return 0;
 }
