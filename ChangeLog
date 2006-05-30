@@ -1,4 +1,4 @@
-Tue May 30 11:57:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+Tue May 30 12:18:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Log_Msg.cpp:
         * ace/OS_NS_dirent.inl:
@@ -13,6 +13,13 @@ Tue May 30 11:57:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
         * ace/os_include/os_pthread.h:
         * ace/os_include/os_stdlib.h:
           Removed support for HPUX 10.20
+
+        * ace/os_include/net/os_if.h:
+        * ace/os_include/netinet/os_tcp.h:
+          Removed psos support
+
+        * ace/os_include/sys/os_types.h:
+          Removed ACE_LACKS_FLOATING_POINT
 
 Tue May 30 11:57:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
