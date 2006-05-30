@@ -261,46 +261,28 @@ TAO_Hash_LogRecordStore::set_records_attribute (const char *grammar,
 {
   // TODO: validate attributes here.
 
-  DsLogAdmin::Iterator_var iter_out;
-
-  DsLogAdmin::RecordList_var rec_list =
-    this->query (grammar,
-		 constraint,
-		 iter_out
-		 ACE_ENV_ARG_PARAMETER);
+  // Use an Interpreter to build an expression tree.
+  TAO_Log_Constraint_Interpreter interpreter (constraint
+                                              ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  CORBA::ULong count = rec_list->length ();
+  // Create iterators
+  LOG_RECORD_STORE_ITER iter (rec_hash_.begin ());
+  LOG_RECORD_STORE_ITER iter_end (rec_hash_.end ());
 
-  for (CORBA::ULong i = 0; i < count; ++i)
-    {
-      this->set_record_attribute (rec_list[i].id,
-				  attr_list
-				  ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
-    }
+  CORBA::ULong count = 0; // count of matches found.
 
-  // if iterator is not nil, process remainder of sequence
-  if (!CORBA::is_nil (iter_out.in ()))
+  for ( ; iter != iter_end; ++iter)
     {
-      CORBA::ULong len;
-      do
+      // Use an evaluator.
+      TAO_Log_Constraint_Visitor evaluator ((*iter).int_id_);
+
+      // Does it match the constraint?
+      if (interpreter.evaluate (evaluator) == 1)
         {
-	  rec_list = iter_out->get (count, 0 ACE_ENV_ARG_PARAMETER);
-	  ACE_CHECK_RETURN (0);
-
-	  len = rec_list->length ();
-	  for (CORBA::ULong i = 0; i < len; ++i)
-	    {
-	      this->set_record_attribute (rec_list[i].id,
-					  attr_list
-					  ACE_ENV_ARG_PARAMETER);
-	      ACE_CHECK_RETURN (0);
-	    }
-
-	  count += len;
-	}
-      while (len != 0);
+	  set_record_attribute((*iter).int_id_.id, attr_list);
+	  ++count;
+        }
     }
 
   return count;

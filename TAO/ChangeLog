@@ -1,3 +1,13 @@
+Tue May 30 01:59:07 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/Log/Hash_LogRecordStore.cpp:
+        
+          Changed set_records_attribute() to iterate through all the
+          records in the hash map instead of calling query() and (if there
+          are enough matching records) fiddling with iterators, etc.  This
+          is not only faster, it also avoids a deadlock that shows up when
+          the iterator takes the already held rwlock.
+
 Tue May 30 01:01:39 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * NEWS:
