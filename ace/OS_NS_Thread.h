@@ -57,54 +57,6 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-# if defined (ACE_PSOS)
-// Use pSOS semaphores, wrapped . . .
-typedef struct
-{
-  /// Semaphore handle.  This is allocated by pSOS.
-  u_long sema_;
-
-  /// Name of the semaphore: really a 32 bit number to pSOS
-  char name_[4];
-} ACE_sema_t;
-# endif /* ACE_PSOS */
-
-# if defined (ACE_PSOS)
-
-// @@ Note, why is this specially defined for PSOS?
-// Wrapper for NT events on pSOS.
-class ACE_Export ACE_event_t
-{
-protected:
-
-  /// Protect critical section.
-  ACE_mutex_t lock_;
-
-  /// Keeps track of waiters.
-  ACE_cond_t condition_;
-
-  /// Specifies if this is an auto- or manual-reset event.
-  int manual_reset_;
-
-  /// "True" if signaled.
-  int is_signaled_;
-
-  /// Special bool for auto_events alone
-  /**
-   * The semantics of auto events forces us to introduce this extra
-   * variable to ensure that the thread is not woken up
-   * spuriously. Please see event_wait and event_timedwait () to see
-   * how this is used for auto_events. Theoretically this is a hack
-   * that needs revisiting after x.4
-   */
-  bool auto_event_signaled_;
-
-  /// Number of waiting threads.
-  u_long waiting_threads_;
-};
-
-# endif /* ACE_PSOS */
-
 # if defined (ACE_WIN32)
 typedef DWORD ACE_thread_t;
 typedef HANDLE ACE_hthread_t;
@@ -456,8 +408,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * @class ACE_cond_t
  *
  * @brief This structure is used to implement condition variables on
- * platforms that lack it natively, such as VxWorks, pSoS, and
- * Win32.
+ * platforms that lack it natively, such as VxWorks, and Win32.
  *
  * At the current time, this stuff only works for threads
  * within the same process.
@@ -479,7 +430,7 @@ public:
   /// Queue up threads waiting for the condition to become signaled.
   ACE_sema_t sema_;
 
-#     if defined (VXWORKS) || defined (ACE_PSOS)
+#     if defined (VXWORKS)
   /**
    * A semaphore used by the broadcast/signal thread to wait for all
    * the waiting thread(s) to wake up and be released from the
@@ -495,7 +446,7 @@ public:
   HANDLE waiters_done_;
 #     else
 #       error "Please implement this feature or check your config.h file!"
-#     endif /* VXWORKS || ACE_PSOS */
+#     endif /* VXWORKS */
 
   /// Keeps track of whether we were broadcasting or just signaling.
   size_t was_broadcast_;
@@ -763,9 +714,9 @@ typedef int ACE_mutex_t;
 typedef int ACE_thread_mutex_t;
 typedef int ACE_recursive_thread_mutex_t;
 typedef int ACE_recursive_mutex_state;
-#   if !defined (ACE_HAS_POSIX_SEM) && !defined (ACE_PSOS) && !defined (ACE_USES_FIFO_SEM)
+#   if !defined (ACE_HAS_POSIX_SEM) && !defined (ACE_USES_FIFO_SEM)
 typedef int ACE_sema_t;
-#   endif /* !ACE_HAS_POSIX_SEM && !ACE_PSOS */
+#   endif /* !ACE_HAS_POSIX_SEM && !ACE_USES_FIFO_SEM */
 typedef int ACE_rwlock_t;
 typedef int ACE_thread_t;
 typedef int ACE_hthread_t;
@@ -866,17 +817,12 @@ typedef int ACE_Sched_Priority;
 class ACE_Sched_Params;
 class ACE_Time_Value;
 
-# if defined (ACE_PSOS)
-typedef u_long ACE_idtype_t;
-typedef u_long ACE_id_t;
-typedef u_long ACE_pri_t;
-#   define ACE_SELF (0)
-# elif defined (ACE_WIN32)
+#if defined (ACE_WIN32)
 typedef int ACE_idtype_t;
 typedef DWORD ACE_id_t;
 typedef int ACE_pri_t;
 #   define ACE_SELF (0)
-# else /* !defined (ACE_WIN32) && !defined (ACE_PSOS) */
+#else /* !defined (ACE_WIN32) */
 #   if defined (ACE_HAS_IDTYPE_T)
   typedef idtype_t ACE_idtype_t;
 #   else
@@ -894,7 +840,7 @@ typedef int ACE_pri_t;
 #     define ACE_SELF (-1)
   typedef short ACE_pri_t;
 #   endif /* ! ACE_HAS_STHREADS && ! DIGITAL_UNIX */
-# endif /* !defined (ACE_WIN32) && !defined (ACE_PSOS) */
+#endif /* !defined (ACE_WIN32) */
 
 # if defined (ACE_HAS_TSS_EMULATION)
     // Allow config.h to set the default number of thread keys.
@@ -1020,7 +966,7 @@ private:
 // moved ACE_TSS_Ref, ACE_TSS_Info, and ACE_TSS_Keys class
 // declarations from OS.cpp so they are visible to the single
 // file of template instantiations.
-# if defined (ACE_WIN32) || defined (ACE_HAS_TSS_EMULATION) || (defined (ACE_PSOS) && defined (ACE_PSOS_HAS_TSS))
+# if defined (ACE_WIN32) || defined (ACE_HAS_TSS_EMULATION)
 /**
  * @class ACE_TSS_Ref
  *
@@ -1210,12 +1156,6 @@ namespace ACE_OS {
   /// This is necessary to deal with POSIX pthreads and their use of
   /// structures for TSS keys.
   extern ACE_Export ACE_thread_key_t NULL_key;
-
-# if defined (CHORUS)
-  /// This is used to map an actor's id into a KnCap for killing and
-  /// waiting actors.
-  extern ACE_Export KnCap actorcaps_[ACE_CHORUS_MAX_ACTORS];
-# endif /* CHORUS */
   //@}
 
   /**
@@ -1227,33 +1167,33 @@ namespace ACE_OS {
   void cleanup_tss (const u_int main_thread);
 
   //@{ @name A set of wrappers for condition variables.
-#if defined (ACE_LACKS_COND_T) && ! defined (ACE_PSOS_DIAB_MIPS)
+#if defined (ACE_LACKS_COND_T)
   extern ACE_Export
 #else
   ACE_NAMESPACE_INLINE_FUNCTION
-#endif /* ACE_LACKS_COND_T && !ACE_PSOS_DIAB_MIPS */
+#endif /* ACE_LACKS_COND_T */
   int condattr_init (ACE_condattr_t &attributes,
                      int type = ACE_DEFAULT_SYNCH_TYPE);
 
-#if defined (ACE_LACKS_COND_T) && ! defined (ACE_PSOS_DIAB_MIPS)
+#if defined (ACE_LACKS_COND_T)
   extern ACE_Export
 #else
   ACE_NAMESPACE_INLINE_FUNCTION
-#endif /* ACE_LACKS_COND_T && !ACE_PSOS_DIAB_MIPS */
+#endif /* ACE_LACKS_COND_T */
   int condattr_destroy (ACE_condattr_t &attributes);
 
-#if defined (ACE_LACKS_COND_T) && ! defined (ACE_PSOS_DIAB_MIPS)
+#if defined (ACE_LACKS_COND_T)
   extern ACE_Export
 #else
   ACE_NAMESPACE_INLINE_FUNCTION
-#endif /* ACE_LACKS_COND_T && !ACE_PSOS_DIAB_MIPS */
+#endif /* ACE_LACKS_COND_T */
   int cond_broadcast (ACE_cond_t *cv);
 
-#if defined (ACE_LACKS_COND_T) && ! defined (ACE_PSOS_DIAB_MIPS)
+#if defined (ACE_LACKS_COND_T)
   extern ACE_Export
 #else
   ACE_NAMESPACE_INLINE_FUNCTION
-#endif /* ACE_LACKS_COND_T && !ACE_PSOS_DIAB_MIPS */
+#endif /* ACE_LACKS_COND_T */
   int cond_destroy (ACE_cond_t *cv);
 
   extern ACE_Export
@@ -1262,77 +1202,77 @@ namespace ACE_OS {
                  const char *name = 0,
                  void *arg = 0);
 
-#if defined (ACE_LACKS_COND_T) && ! defined (ACE_PSOS_DIAB_MIPS)
+#if defined (ACE_LACKS_COND_T)
   extern ACE_Export
 #else
   ACE_NAMESPACE_INLINE_FUNCTION
-#endif /* ACE_LACKS_COND_T && !ACE_PSOS_DIAB_MIPS */
+#endif /* ACE_LACKS_COND_T */
   int cond_init (ACE_cond_t *cv,
                  ACE_condattr_t &attributes,
                  const char *name = 0,
                  void *arg = 0);
 
 # if defined (ACE_HAS_WCHAR)
-#   if defined (ACE_LACKS_COND_T) && ! defined (ACE_PSOS_DIAB_MIPS)
+#   if defined (ACE_LACKS_COND_T)
   extern ACE_Export
 #   else
   ACE_NAMESPACE_INLINE_FUNCTION
-#   endif /* ACE_LACKS_COND_T && !ACE_PSOS_DIAB_MIPS */
+#   endif /* ACE_LACKS_COND_T */
   int cond_init (ACE_cond_t *cv,
                  short type,
                  const wchar_t *name,
                  void *arg = 0);
 
-#   if defined (ACE_LACKS_COND_T) && ! defined (ACE_PSOS_DIAB_MIPS)
+#   if defined (ACE_LACKS_COND_T)
   extern ACE_Export
 #   else
   ACE_NAMESPACE_INLINE_FUNCTION
-#   endif /* ACE_LACKS_COND_T && !ACE_PSOS_DIAB_MIPS */
+#   endif /* ACE_LACKS_COND_T */
   int cond_init (ACE_cond_t *cv,
                  ACE_condattr_t &attributes,
                  const wchar_t *name,
                  void *arg = 0);
 # endif /* ACE_HAS_WCHAR */
 
-#if defined (ACE_LACKS_COND_T) && ! defined (ACE_PSOS_DIAB_MIPS)
+#if defined (ACE_LACKS_COND_T)
   extern ACE_Export
 #else
   ACE_NAMESPACE_INLINE_FUNCTION
-#endif /* ACE_LACKS_COND_T && !ACE_PSOS_DIAB_MIPS */
+#endif /* ACE_LACKS_COND_T */
   int cond_signal (ACE_cond_t *cv);
 
-#if defined (ACE_LACKS_COND_T) && ! defined (ACE_PSOS_DIAB_MIPS)
+#if defined (ACE_LACKS_COND_T)
   extern ACE_Export
 #else
   ACE_NAMESPACE_INLINE_FUNCTION
-#endif /* ACE_LACKS_COND_T && !ACE_PSOS_DIAB_MIPS */
+#endif /* ACE_LACKS_COND_T */
   int cond_timedwait (ACE_cond_t *cv,
                       ACE_mutex_t *m,
                       ACE_Time_Value *);
 
-#if defined (ACE_LACKS_COND_T) && ! defined (ACE_PSOS_DIAB_MIPS)
+#if defined (ACE_LACKS_COND_T)
   extern ACE_Export
 #else
   ACE_NAMESPACE_INLINE_FUNCTION
-#endif /* ACE_LACKS_COND_T && !ACE_PSOS_DIAB_MIPS */
+#endif /* ACE_LACKS_COND_T */
   int cond_wait (ACE_cond_t *cv,
                  ACE_mutex_t *m);
 
 # if defined (ACE_WIN32) && defined (ACE_HAS_WTHREADS)
-#   if defined (ACE_LACKS_COND_T) && ! defined (ACE_PSOS_DIAB_MIPS)
+#   if defined (ACE_LACKS_COND_T)
   extern ACE_Export
 #   else
   ACE_NAMESPACE_INLINE_FUNCTION
-#   endif /* ACE_LACKS_COND_T && !ACE_PSOS_DIAB_MIPS */
+#   endif /* ACE_LACKS_COND_T */
   int cond_timedwait (ACE_cond_t *cv,
                       ACE_thread_mutex_t *m,
                       ACE_Time_Value *);
 
-#   if defined (ACE_LACKS_COND_T) && ! defined (ACE_PSOS_DIAB_MIPS)
+#   if defined (ACE_LACKS_COND_T)
   extern ACE_Export
 #   else
   ACE_NAMESPACE_INLINE_FUNCTION
-#   endif /* ACE_LACKS_COND_T && !ACE_PSOS_DIAB_MIPS */
+#   endif /* ACE_LACKS_COND_T */
   int cond_wait (ACE_cond_t *cv,
                  ACE_thread_mutex_t *m);
 # endif /* ACE_WIN32 && ACE_HAS_WTHREADS */
