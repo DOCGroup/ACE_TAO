@@ -62,8 +62,6 @@ ACE_OS::exit (int status)
 #if !defined (ACE_HAS_WINCE)
 # if defined (ACE_WIN32)
   ::ExitProcess ((UINT) status);
-# elif defined (ACE_PSOSIM)
-  ::u_exit (status);
 # else
   ::exit (status);
 # endif /* ACE_WIN32 */

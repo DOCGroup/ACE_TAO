@@ -23,17 +23,8 @@ ACE_INLINE void
 ACE_OS::_exit (int status)
 {
   ACE_OS_TRACE ("ACE_OS::_exit");
-#if defined (VXWORKS)
+#if defined (ACE_VXWORKS)
   ::exit (status);
-#elif defined (ACE_PSOSIM)
-  ::u_exit (status);
-#elif defined (ACE_PSOS)
-# if defined (ACE_PSOS_LACKS_PREPC)  /* pSoS TM does not support exit. */
-  ACE_UNUSED_ARG (status);
-  return;
-# else
-  ::exit (status);
-# endif /* defined (ACE_PSOS_LACKS_PREPC) */
 #elif !defined (ACE_HAS_WINCE)
   ::_exit (status);
 #else
@@ -138,7 +129,7 @@ ACE_OS::getenv (const char *symbol)
 #if defined (ACE_LACKS_ENV)
   ACE_UNUSED_ARG (symbol);
   ACE_NOTSUP_RETURN (0);
-#else /* ACE_PSOS */
+#else /* ACE_LACKS_ENV */
   ACE_OSCALL_RETURN (::getenv (symbol), char *, 0);
 #endif /* ACE_LACKS_ENV */
 }
@@ -245,14 +236,14 @@ ACE_INLINE int
 ACE_OS::putenv (const char *string)
 {
   ACE_OS_TRACE ("ACE_OS::putenv");
-#if defined (ACE_HAS_WINCE) || defined (ACE_PSOS)
-  // WinCE and pSOS don't have the concept of environment variables.
+#if defined (ACE_HAS_WINCE)
+  // WinCE don't have the concept of environment variables.
   ACE_UNUSED_ARG (string);
   ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_LACKS_ENV) || defined (ACE_LACKS_PUTENV)
   ACE_UNUSED_ARG (string);
   ACE_NOTSUP_RETURN (0);
-#else /* ! ACE_HAS_WINCE && ! ACE_PSOS */
+#else /* ! ACE_HAS_WINCE */
   ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::putenv (const_cast <char *> (string)), int, -1);
 #endif /* ACE_HAS_WINCE */
 }

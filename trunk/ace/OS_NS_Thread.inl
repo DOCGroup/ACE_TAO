@@ -113,7 +113,7 @@ ACE_OS::thr_equal (ACE_thread_t t1, ACE_thread_t t2)
 # else
   return pthread_equal (t1, t2);
 # endif /* pthread_equal */
-#elif defined (VXWORKS)
+#elif defined (ACE_VXWORKS)
   return ! ACE_OS::strcmp (t1, t2);
 #else /* For both STHREADS and WTHREADS... */
   // Hum, Do we need to treat WTHREAD differently?
@@ -1402,7 +1402,7 @@ ACE_OS::sema_destroy (ACE_sema_t *s)
   int r2 = ACE_OS::event_destroy (&s->count_nonzero_);
   return r1 != 0 || r2 != 0 ? -1 : 0;
 #     endif /* ACE_USES_WINCE_SEMA_SIMULATION */
-#   elif defined (VXWORKS)
+#   elif defined (ACE_VXWORKS)
   int result;
   ACE_OSCALL (::semDelete (s->sema_), int, -1, result);
   s->sema_ = 0;
@@ -1722,7 +1722,7 @@ ACE_OS::sema_init (ACE_sema_t *s,
     }
   return result;
 #    endif /* ACE_USES_WINCE_SEMA_SIMULATION */
-#  elif defined (VXWORKS)
+#  elif defined (ACE_VXWORKS)
   ACE_UNUSED_ARG (name);
   ACE_UNUSED_ARG (arg);
   ACE_UNUSED_ARG (max);
@@ -1880,7 +1880,7 @@ ACE_OS::sema_post (ACE_sema_t *s)
     }
   return result;
 #     endif /* ACE_USES_WINCE_SEMA_SIMULATION */
-#   elif defined (VXWORKS)
+#   elif defined (ACE_VXWORKS)
   ACE_OSCALL_RETURN (::semGive (s->sema_), int, -1);
 #   endif /* ACE_HAS_STHREADS */
 # else
@@ -2015,7 +2015,7 @@ ACE_OS::sema_trywait (ACE_sema_t *s)
   // This is taken from the hack above. ;)
   return -1;
 #     endif /* ACE_USES_WINCE_SEMA_SIMULATION */
-#   elif defined (VXWORKS)
+#   elif defined (ACE_VXWORKS)
   if (::semTake (s->sema_, NO_WAIT) == ERROR)
     if (errno == S_objLib_OBJ_UNAVAILABLE)
       {
@@ -2136,7 +2136,7 @@ ACE_OS::sema_wait (ACE_sema_t *s)
       }
   /* NOTREACHED */
 #     endif /* ACE_USES_WINCE_SEMA_SIMULATION */
-#   elif defined (VXWORKS)
+#   elif defined (ACE_VXWORKS)
   ACE_OSCALL_RETURN (::semTake (s->sema_, WAIT_FOREVER), int, -1);
 #   endif /* ACE_HAS_STHREADS */
 # else
@@ -2553,7 +2553,7 @@ ACE_OS::sigwait (sigset_t *sset, int *sig)
 # elif defined (ACE_HAS_WTHREADS)
     ACE_UNUSED_ARG (sset);
     ACE_NOTSUP_RETURN (-1);
-# elif defined (VXWORKS)
+# elif defined (ACE_VXWORKS)
     // Second arg is a struct siginfo *, which we don't need (the
     // selected signal number is returned).  Third arg is timeout:  0
     // means forever.
@@ -2610,7 +2610,7 @@ ACE_OS::thr_cancel (ACE_thread_t thr_id)
                            int, -1);
 #     endif /* pthread_cancel */
 #   endif /* ACE_HAS_PTHREADS_DRAFT4 || ACE_HAS_PTHREADS_DRAFT6 */
-# elif defined (VXWORKS)
+# elif defined (ACE_VXWORKS)
   ACE_hthread_t tid;
   ACE_OSCALL (::taskNameToId (thr_id), int, ERROR, tid);
 
@@ -2679,7 +2679,7 @@ ACE_OS::thr_continue (ACE_hthread_t target_thread)
     ACE_FAIL_RETURN (-1);
   else
     return 0;
-# elif defined (VXWORKS)
+# elif defined (ACE_VXWORKS)
   ACE_OSCALL_RETURN (::taskResume (target_thread), int, -1);
 # endif /* ACE_HAS_STHREADS */
 #else
@@ -2860,7 +2860,7 @@ ACE_OS::thr_getspecific (ACE_thread_key_t key, void **data)
 #endif /* ACE_HAS_THREADS */
 }
 
-#if !(defined (VXWORKS) && !defined (ACE_HAS_PTHREADS))
+#if !(defined (ACE_VXWORKS) && !defined (ACE_HAS_PTHREADS))
 ACE_INLINE int
 ACE_OS::thr_join (ACE_hthread_t thr_handle,
                   ACE_THR_FUNC_RETURN *status)
@@ -3092,7 +3092,7 @@ ACE_OS::thr_self (ACE_hthread_t &self)
   self = ::thr_self ();
 # elif defined (ACE_HAS_WTHREADS)
   self = ::GetCurrentThread ();
-# elif defined (VXWORKS)
+# elif defined (ACE_VXWORKS)
   self = ::taskIdSelf ();
 # endif /* ACE_HAS_STHREADS */
 #else
@@ -3257,7 +3257,7 @@ ACE_OS::thr_setprio (ACE_hthread_t ht_id, int priority, int policy)
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::SetThreadPriority (ht_id, priority),
                                           ace_result_),
                         int, -1);
-# elif defined (VXWORKS)
+# elif defined (ACE_VXWORKS)
   ACE_OSCALL_RETURN (::taskPrioritySet (ht_id, priority), int, -1);
 # else
   // For example, platforms that support Pthreads but LACK_SETSCHED.
@@ -3324,7 +3324,7 @@ ACE_OS::thr_sigsetmask (int how,
   ACE_UNUSED_ARG (how);
 
   ACE_NOTSUP_RETURN (-1);
-# elif defined (VXWORKS)
+# elif defined (ACE_VXWORKS)
   int old_mask = 0;
   switch (how)
     {
@@ -3393,7 +3393,7 @@ ACE_OS::thr_suspend (ACE_hthread_t target_thread)
   else
     ACE_FAIL_RETURN (-1);
   /* NOTREACHED */
-# elif defined (VXWORKS)
+# elif defined (ACE_VXWORKS)
   ACE_OSCALL_RETURN (::taskSuspend (target_thread), int, -1);
 # endif /* ACE_HAS_STHREADS */
 #else
@@ -3415,7 +3415,7 @@ ACE_OS::thr_testcancel (void)
 #endif /* !ACE_HAS_PTHREADS_DRAFT6 */
 # elif defined (ACE_HAS_STHREADS)
 # elif defined (ACE_HAS_WTHREADS)
-# elif defined (VXWORKS)
+# elif defined (ACE_VXWORKS)
 # else
   // no-op:  can't use ACE_NOTSUP_RETURN because there is no return value
 # endif /* ACE_HAS_PTHREADS */
@@ -3441,7 +3441,7 @@ ACE_OS::thr_yield (void)
   ::thr_yield ();
 # elif defined (ACE_HAS_WTHREADS)
   ::Sleep (0);
-# elif defined (VXWORKS)
+# elif defined (ACE_VXWORKS)
   // An argument of 0 to ::taskDelay doesn't appear to yield the
   // current thread.
   // Now, it does seem to work.  The context_switch_time test
@@ -3462,7 +3462,7 @@ ACE_OS::thread_mutex_destroy (ACE_thread_mutex_t *m)
   ::DeleteCriticalSection (m);
   return 0;
 
-# elif defined (ACE_HAS_STHREADS) || defined (ACE_HAS_PTHREADS) || defined (VXWORKS)
+# elif defined (ACE_HAS_STHREADS) || defined (ACE_HAS_PTHREADS) || defined (ACE_VXWORKS)
   return ACE_OS::mutex_destroy (m);
 
 # endif /* ACE_HAS_STHREADS || ACE_HAS_PTHREADS */
@@ -3492,7 +3492,7 @@ ACE_OS::thread_mutex_init (ACE_thread_mutex_t *m,
 # elif defined (ACE_HAS_STHREADS) || defined (ACE_HAS_PTHREADS)
   // Force the use of USYNC_THREAD!
   return ACE_OS::mutex_init (m, USYNC_THREAD, name, arg, 0, lock_type);
-# elif defined (VXWORKS)
+# elif defined (ACE_VXWORKS)
   return mutex_init (m, lock_type, name, arg);
 
 # endif /* ACE_HAS_STHREADS || ACE_HAS_PTHREADS */
@@ -3527,7 +3527,7 @@ ACE_OS::thread_mutex_init (ACE_thread_mutex_t *m,
   // Force the use of USYNC_THREAD!
   return ACE_OS::mutex_init (m, USYNC_THREAD, name, arg, 0, lock_type);
 
-# elif defined (VXWORKS)
+# elif defined (ACE_VXWORKS)
   return mutex_init (m, lock_type, name, arg);
 
 # endif /* ACE_HAS_STHREADS || ACE_HAS_PTHREADS */
@@ -3551,7 +3551,7 @@ ACE_OS::thread_mutex_lock (ACE_thread_mutex_t *m)
 # if defined (ACE_HAS_WTHREADS)
   ::EnterCriticalSection (m);
   return 0;
-# elif defined (ACE_HAS_STHREADS) || defined (ACE_HAS_PTHREADS) || defined (VXWORKS)
+# elif defined (ACE_HAS_STHREADS) || defined (ACE_HAS_PTHREADS) || defined (ACE_VXWORKS)
   return ACE_OS::mutex_lock (m);
 # endif /* ACE_HAS_STHREADS || ACE_HAS_PTHREADS || VXWORKS */
 #else
@@ -3575,7 +3575,7 @@ ACE_OS::thread_mutex_lock (ACE_thread_mutex_t *m,
   // Windows synchronization mechanism.
 
 #if defined (ACE_HAS_THREADS) && !defined (ACE_HAS_WTHREADS)
-# if defined (ACE_HAS_STHREADS) || defined (ACE_HAS_PTHREADS) || defined (VXWORKS)
+# if defined (ACE_HAS_STHREADS) || defined (ACE_HAS_PTHREADS) || defined (ACE_VXWORKS)
   return ACE_OS::mutex_lock (m, timeout);
 #endif /* ACE_HAS_STHREADS || ACE_HAS_PTHREADS || VXWORKS */
 #else
@@ -3614,7 +3614,7 @@ ACE_OS::thread_mutex_trylock (ACE_thread_mutex_t *m)
   ACE_UNUSED_ARG (m);
   ACE_NOTSUP_RETURN (-1);
 #   endif /* ACE_HAS_WIN32_TRYLOCK */
-# elif defined (ACE_HAS_STHREADS) || defined (ACE_HAS_PTHREADS) || defined (VXWORKS)
+# elif defined (ACE_HAS_STHREADS) || defined (ACE_HAS_PTHREADS) || defined (ACE_VXWORKS)
   return ACE_OS::mutex_trylock (m);
 #endif /* Threads variety case */
 
