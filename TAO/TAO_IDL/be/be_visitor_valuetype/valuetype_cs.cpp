@@ -248,7 +248,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
           << "::_tao_match_formal_type (ptrdiff_t ) const"
           << be_nl
           << "{" << be_idt_nl
-          << "return 0;"<< be_uidt_nl
+          << "return false;"<< be_uidt_nl
           << "}" << be_nl << be_nl;
 
 
