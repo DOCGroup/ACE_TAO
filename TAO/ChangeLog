@@ -1,7 +1,13 @@
+Tue May 30 10:04:07 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2543_Regression/bug_2543_regression.cpp:
+        * tests/Bug_2542_Regression/bug_2542_regression.cpp:
+          Fixed conversion warnings
+
 Tue May 30 01:59:07 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/orbsvcs/Log/Hash_LogRecordStore.cpp:
-        
+
           Changed set_records_attribute() to iterate through all the
           records in the hash map instead of calling query() and (if there
           are enough matching records) fiddling with iterators, etc.  This
@@ -11,33 +17,33 @@ Tue May 30 01:59:07 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 Tue May 30 01:01:39 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * NEWS:
-        
+
           Document changes.
 
         * orbsvcs/orbsvcs/Log/Hash_LogRecordStore.cpp:
         * orbsvcs/orbsvcs/Log/Hash_LogRecordStore.h:
         * orbsvcs/orbsvcs/Log/LogRecordStore.h:
         * orbsvcs/orbsvcs/Log/Log_i.cpp:
-        
+
           When a log channel's LogFullActionType is wrap, the capacity
           threshold alarms "are triggered as if coupled to a gauge that
           counts from zero to the highest capacity threshold value and
           then resets to zero".
-        
+
           The log service didn't implement such a gauge and compared the
           log channel's current size with the maximum size (as if the
-          LogFullActionType was halt).  This could result in an alarm 
+          LogFullActionType was halt).  This could result in an alarm
           being sent for each log record, as the log channel will almost
           always be "full".
-        
+
           Changed plug-in Strategy to maintain gauge.  Added get_gauge()
           and reset_gauge().
-        
+
           Changed log channel to compare the value of the gauge with the
           maximum size when the LogFullActionType is wrap.
-        
+
           Fixes bugzilla #2420.
-        
+
 Mon May 29 14:28:17 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * NEWS:
