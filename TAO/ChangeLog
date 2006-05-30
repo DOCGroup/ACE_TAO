@@ -1,3 +1,9 @@
+Tue May 30 18:33:12 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * tao/DLL_Parser.h: Updated the documentation to explain the
+         lookup scheme when a filename is given.  Thanks to Phlip
+          <phlip2005 at gmail dot com> for motivating this.
+
 Tue May 30 16:31:14 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/Bug_2543_Regression/bug_2542_regression.cpp:
