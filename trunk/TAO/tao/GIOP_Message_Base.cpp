@@ -26,12 +26,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_GIOP_Message_Base::TAO_GIOP_Message_Base (TAO_ORB_Core * orb_core,
                                               TAO_Transport * transport,
-                                              size_t /* input_cdr_size */)
+                                              size_t input_cdr_size)
   : orb_core_ (orb_core)
   , message_state_ ()
   , fragmentation_strategy_ (orb_core->fragmentation_strategy (transport))
-  , out_stream_ (this->buffer_,
-                 sizeof this->buffer_, /* ACE_CDR::DEFAULT_BUFSIZE */
+  , out_stream_ (0,
+                 input_cdr_size,
                  TAO_ENCAP_BYTE_ORDER,
                  orb_core->output_cdr_buffer_allocator (),
                  orb_core->output_cdr_dblock_allocator (),
@@ -41,9 +41,6 @@ TAO_GIOP_Message_Base::TAO_GIOP_Message_Base (TAO_ORB_Core * orb_core,
                  TAO_DEF_GIOP_MAJOR,
                  TAO_DEF_GIOP_MINOR)
 {
-#if defined (ACE_INITIALIZE_MEMORY_BEFORE_USE)
-  ACE_OS::memset (this->buffer_, 0, sizeof (buffer_));
-#endif /* ACE_INITIALIZE_MEMORY_BEFORE_USE */
 }
 
 
@@ -428,11 +425,11 @@ TAO_GIOP_Message_Base::extract_next_message (ACE_Message_Block &incoming,
           // so far, but allocate enough space to hold small GIOP
           // messages. This way we avoid expensive "grow" operation
           // for small messages.
-          const size_t default_buf_size = ACE_CDR::DEFAULT_BUFSIZE;
+          size_t const default_buf_size = ACE_CDR::DEFAULT_BUFSIZE;
 
           // Make a node which has at least message block of the size
           // of MESSAGE_HEADER_LEN.
-          const size_t buf_size = ace_max (TAO_GIOP_MESSAGE_HEADER_LEN,
+          size_t const buf_size = ace_max (TAO_GIOP_MESSAGE_HEADER_LEN,
                                            default_buf_size);
 
           // POST: buf_size >= TAO_GIOP_MESSAGE_HEADER_LEN
@@ -529,9 +526,9 @@ TAO_GIOP_Message_Base::consolidate_node (TAO_Queued_Data *qd,
       // We know that we would have space for
       // TAO_GIOP_MESSAGE_HEADER_LEN here.  So copy that much of data
       // from the <incoming> into the message block in <qd>
-      const size_t available     = incoming.length ();
-      const size_t desired       = TAO_GIOP_MESSAGE_HEADER_LEN - len;
-      const size_t n_copy        = ace_min (available, desired);
+      size_t const available = incoming.length ();
+      size_t const desired   = TAO_GIOP_MESSAGE_HEADER_LEN - len;
+      size_t const n_copy    = ace_min (available, desired);
 
       // paranoid check, but would cause endless looping
       if (n_copy == 0)
@@ -947,7 +944,7 @@ TAO_GIOP_Message_Base::process_request (TAO_Transport *transport,
                              this->orb_core_);
 
   CORBA::ULong request_id = 0;
-  CORBA::Boolean response_required = 0;
+  CORBA::Boolean response_required = false;
 
   int parse_error = 0;
 
@@ -1196,7 +1193,7 @@ TAO_GIOP_Message_Base::process_locate_request (TAO_Transport *transport,
 
       // We will send the reply. The ServerRequest class need not send
       // the reply
-      CORBA::Boolean deferred_reply = 1;
+      CORBA::Boolean deferred_reply = true;
       TAO_ServerRequest server_request (this,
                                         req_id,
                                         response_required,
