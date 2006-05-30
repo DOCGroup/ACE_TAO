@@ -312,6 +312,12 @@ protected:
   /// command-line.  Returns the number of errors that occurred.
   int process_commandline_directives (void);
 
+  /// Process a static directive without also inserting its descriptor
+  /// the global table. This avoids multiple additions when processing
+  /// directives in non-global gestalts.
+  int process_directive_i (const ACE_Static_Svc_Descriptor &ssd,
+                           int force_replace = 0);
+
 #if (ACE_USES_CLASSIC_SVC_CONF == 1)
   /// This is the implementation function that process_directives()
   /// and process_directive() both call.  Returns the number of errors
@@ -380,6 +386,11 @@ protected:
 
   /// Repository of statically linked services.
   ACE_STATIC_SVCS* static_svcs_;
+
+  /// Repository of statically linked services for which process
+  /// directive was called, but the service is not already a member of
+  /// the static_svcs_ list.
+  ACE_STATIC_SVCS* processed_static_svcs_;
 
 }; /* class ACE_Service_Gestalt */
 

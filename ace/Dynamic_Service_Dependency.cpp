@@ -34,7 +34,8 @@ void
 ACE_Dynamic_Service_Dependency::init (const ACE_Service_Gestalt *cfg,
                                       const ACE_TCHAR *principal)
 {
-  const ACE_Service_Type* st = ACE_Dynamic_Service_Base::find_i (cfg, principal);
+  const ACE_Service_Type* st =
+    ACE_Dynamic_Service_Base::find_i (cfg, principal,false);
   if (ACE::debug () > 1)
     {
       ACE_DEBUG ((LM_DEBUG,
