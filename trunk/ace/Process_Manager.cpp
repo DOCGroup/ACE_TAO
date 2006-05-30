@@ -227,11 +227,11 @@ ACE_Process_Manager::open (size_t size,
   if (r)
     {
       this->reactor (r);
-#if !defined (ACE_WIN32) && !defined (ACE_PSOS) && !defined (ACE_LACKS_UNIX_SIGNALS)
+#if !defined (ACE_WIN32) && !defined (ACE_LACKS_UNIX_SIGNALS)
       // Register signal handler object.
       if (r->register_handler (SIGCHLD, this) == -1)
         return -1;
-#endif  // !defined(ACE_WIN32) && !defined (ACE_PSOS)
+#endif /* !defined(ACE_WIN32) */
     }
 
   ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, this->lock_, -1));

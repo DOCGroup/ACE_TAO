@@ -461,10 +461,7 @@
    // We're on WinNT or Win95
 #  define ACE_PLATFORM_A "Win32"
 #  define ACE_PLATFORM_EXE_SUFFIX_A ".exe"
-#elif defined (ACE_PSOS)
-#  define ACE_PLATFORM_A "pSOS"
-#  define ACE_PLATFORM_EXE_SUFFIX_A ""
-#else /* !ACE_WIN32 && !ACE_PSOS */
+#else /* !ACE_WIN32 */
    // We're some kind of UNIX...
 #  define ACE_PLATFORM_A "UNIX"
 #  define ACE_PLATFORM_EXE_SUFFIX_A ""

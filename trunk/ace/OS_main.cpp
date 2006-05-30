@@ -30,45 +30,6 @@ ACE_RCSID(ace, OS_main, "$Id$")
 extern int ace_main_i (int, char *[]);
 #    endif
 
-#    if defined (ACE_PSOSIM)
-// PSOSIM root lacks the standard argc, argv command line parameters,
-// create dummy argc and argv in the "real" main  and pass to "user" main.
-// NOTE: ACE_MAIN must be defined to give the return type as well as the
-// name of the entry point.
-
-ACE_MAIN ()   /* user's entry point, e.g., "main" w/out argc, argv */
-{
-  int argc = 1;                            /* dummy arg count */
-  char *argv[] = {"psosim"};               /* dummy arg list */
-  ACE_MAIN_OBJECT_MANAGER
-  int ret_val = -1; /* assume the worst */
-  if (ACE_PSOS_Time_t::init_simulator_time ()) /* init simulator time */
-  {
-    ACE_ERROR((LM_ERROR, "init_simulator_time failed\n"));  /* report */
-  }
-  else
-  {
-    ret_val = ace_main_i (argc, argv);   /* call user main, save result */
-  }
-  ACE_OS::exit (ret_val);                /* pass code to simulator exit */
-}
-
-#    elif defined (ACE_PSOS) && defined (ACE_PSOS_LACKS_ARGC_ARGV)
-// PSOS root lacks the standard argc, argv command line parameters,
-// create dummy argc and argv in the "real" main  and pass to "user" main.
-// Ignore return value from user main as well.  NOTE: ACE_MAIN must be
-// defined to give the return type as well as the name of the entry point
-
-ACE_MAIN ()   /* user's entry point, e.g., "main" w/out argc, argv */
-{
-  int argc = 1;                           /* dummy arg count */
-  char *argv[] = {"root"};                /* dummy arg list */
-  ACE_MAIN_OBJECT_MANAGER
-  ace_main_i (argc, argv);                /* call user main, ignore result */
-}
-
-#    endif /* ACE_PSOSIM */
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #    if defined (ACE_VXWORKS) && !defined (__RTP__)

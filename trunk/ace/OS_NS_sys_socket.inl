@@ -318,11 +318,15 @@ ACE_OS::recvfrom (ACE_HANDLE handle,
     }
   else
     return result;
-#else /* non Win32 and non PSOS */
-  ACE_SOCKCALL_RETURN (::recvfrom ((ACE_SOCKET) handle, buf, len, flags,
-                                   addr, (ACE_SOCKET_LEN *) addrlen),
+#else /* non Win32 */
+  ACE_SOCKCALL_RETURN (::recvfrom ((ACE_SOCKET) handle,
+                                   buf,
+                                   len,
+                                   flags,
+                                   addr,
+                                   (ACE_SOCKET_LEN *) addrlen),
                        ssize_t, -1);
-#endif /* defined (ACE_PSOS) */
+#endif /* defined (ACE_WIN32) */
 }
 
 ACE_INLINE ssize_t

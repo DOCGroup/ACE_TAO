@@ -220,7 +220,7 @@ ACE::sendv_n (ACE_HANDLE handle,
 ACE_INLINE ssize_t
 ACE::send_i (ACE_HANDLE handle, const void *buf, size_t len)
 {
-#if defined (ACE_WIN32) || defined (ACE_PSOS) || defined (HPUX)
+#if defined (ACE_WIN32) || defined (HPUX)
   return ACE_OS::send (handle, (const char *) buf, len);
 #else
   return ACE_OS::write (handle, (const char *) buf, len);
@@ -230,7 +230,7 @@ ACE::send_i (ACE_HANDLE handle, const void *buf, size_t len)
 ACE_INLINE ssize_t
 ACE::recv_i (ACE_HANDLE handle, void *buf, size_t len)
 {
-#if defined (ACE_WIN32) || defined (ACE_PSOS) || defined (ACE_OPENVMS) || defined (ACE_TANDEM_T1248_PTHREADS)
+#if defined (ACE_WIN32) || defined (ACE_OPENVMS) || defined (ACE_TANDEM_T1248_PTHREADS)
   return ACE_OS::recv (handle, (char *) buf, len);
 #else
   return ACE_OS::read (handle, (char *) buf, len);

@@ -866,11 +866,7 @@ ACE_MAKE_SVC_CONFIG_FACTORY_NAME(ACE_VERSIONED_NAMESPACE_NAME,SERVICE_CLASS) (AC
 
 # define ACE_NOOP(x)
 
-#if defined (ACE_PSOS)
-#   define ACE_SEH_TRY if (1)
-#   define ACE_SEH_EXCEPT(X) while (0)
-#   define ACE_SEH_FINALLY if (1)
-#elif defined (ACE_WIN32)
+#if defined (ACE_WIN32)
 #   if !defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
 #     define ACE_SEH_TRY if (1)
 #     define ACE_SEH_EXCEPT(X) while (0)
@@ -888,11 +884,11 @@ ACE_MAKE_SVC_CONFIG_FACTORY_NAME(ACE_VERSIONED_NAMESPACE_NAME,SERVICE_CLASS) (AC
 #     define ACE_SEH_EXCEPT(X) __except(X)
 #     define ACE_SEH_FINALLY __finally
 #   endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
-# else /* !ACE_WIN32 && ACE_PSOS */
+# else /* !ACE_WIN32 */
 #   define ACE_SEH_TRY if (1)
 #   define ACE_SEH_EXCEPT(X) while (0)
 #   define ACE_SEH_FINALLY if (1)
-#endif /* ACE_WIN32 && ACE_PSOS */
+#endif /* ACE_WIN32 */
 
 
 // These should probably be put into a seperate header.
