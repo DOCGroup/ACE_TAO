@@ -28,10 +28,18 @@ ACE_Dynamic_Service_Base::dump (void) const
 // service configuration repository.
 
 void *
+ACE_Dynamic_Service_Base::instance (const ACE_TCHAR *name, bool no_global)
+{
+  ACE_TRACE ("ACE_Dynamic_Service_Base::instance");
+  return instance (ACE_Service_Config::current (), name, no_global);
+}
+
+
+void *
 ACE_Dynamic_Service_Base::instance (const ACE_TCHAR *name)
 {
   ACE_TRACE ("ACE_Dynamic_Service_Base::instance");
-  return instance (ACE_Service_Config::current (), name);
+  return instance (ACE_Service_Config::current (), name, false);
 }
 
 
@@ -39,14 +47,15 @@ ACE_Dynamic_Service_Base::instance (const ACE_TCHAR *name)
 
 const ACE_Service_Type *
 ACE_Dynamic_Service_Base::find_i (const ACE_Service_Gestalt* &repo,
-                                  const ACE_TCHAR *name)
+                                  const ACE_TCHAR *name,
+                                  bool no_global)
 {
   ACE_TRACE ("ACE_Dynamic_Service_Base::find_i");
   const ACE_Service_Type *svc_rec = 0;
 
   ACE_Service_Gestalt* global = ACE_Service_Config::global ();
 
-  for ( ; repo->find (name, &svc_rec) == -1; repo = global)
+  for ( ; (repo->find (name, &svc_rec) == -1) && !no_global; repo = global)
     {
       // Check the static repo, too if different
       if (repo == global)
@@ -61,7 +70,8 @@ ACE_Dynamic_Service_Base::find_i (const ACE_Service_Gestalt* &repo,
 
 void *
 ACE_Dynamic_Service_Base::instance (const ACE_Service_Gestalt* repo,
-                                    const ACE_TCHAR *name)
+                                    const ACE_TCHAR *name,
+                                    bool no_global)
 {
   ACE_TRACE ("ACE_Dynamic_Service_Base::instance");
 
@@ -70,7 +80,7 @@ ACE_Dynamic_Service_Base::instance (const ACE_Service_Gestalt* repo,
 
   const ACE_Service_Gestalt* repo_found = repo;
 
-  const ACE_Service_Type *svc_rec = find_i (repo_found, name);
+  const ACE_Service_Type *svc_rec = find_i (repo_found, name, no_global);
   if (svc_rec != 0)
     {
       type = svc_rec->type ();
@@ -95,5 +105,16 @@ ACE_Dynamic_Service_Base::instance (const ACE_Service_Gestalt* repo,
 
   return obj;
 }
+
+
+// Get the instance using <name> for specific configuration repository.
+
+void *
+ACE_Dynamic_Service_Base::instance (const ACE_Service_Gestalt* repo,
+                                    const ACE_TCHAR *name)
+{
+  return instance(repo,name,false);
+}
+
 
 ACE_END_VERSIONED_NAMESPACE_DECL
