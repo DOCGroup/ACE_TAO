@@ -454,18 +454,10 @@ ACE_INET_Addr::ACE_INET_Addr (u_short port_number,
                  host_name,
                  1,
                  address_family) == -1)
-#if defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS)
-    ACE_ERROR ((LM_ERROR,
-                (char *)"ACE_INET_Addr::ACE_INET_Addr: %p\n",
-                (((char *) host_name == 0) ?
-                 ((char *) "<unknown>") :
-                 ((char *) (host_name)))));
-#else /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
     ACE_ERROR ((LM_ERROR,
                 ACE_LIB_TEXT ("ACE_INET_Addr::ACE_INET_Addr: %p\n"),
                 ACE_TEXT_CHAR_TO_TCHAR ((host_name == 0) ?
                                         "<unknown>" : host_name)));
-#endif /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
 }
 
 #if defined (ACE_HAS_WCHAR)
@@ -480,19 +472,11 @@ ACE_INET_Addr::ACE_INET_Addr (u_short port_number,
                  host_name,
                  1,
                  address_family) == -1)
-#if defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS)
-    ACE_ERROR ((LM_ERROR,
-                (char *)"ACE_INET_Addr::ACE_INET_Addr: %p\n",
-                (((char *) host_name == 0) ?
-                 ((char *) "<unknown>") :
-                 ((char *) (host_name)))));
-#else /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
     ACE_ERROR ((LM_ERROR,
                 ACE_LIB_TEXT ("ACE_INET_Addr::ACE_INET_Addr: %p\n"),
                 ACE_TEXT_WCHAR_TO_TCHAR ((host_name == 0) ?
                                          ACE_TEXT_WIDE ("<unknown>") :
                                          host_name)));
-#endif /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
 }
 #endif /* ACE_HAS_WCHAR */
 

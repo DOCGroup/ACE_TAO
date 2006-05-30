@@ -81,12 +81,7 @@ ACE_Parse_Node::link (ACE_Parse_Node *n)
 
 ACE_Stream_Node::ACE_Stream_Node (const ACE_Static_Node *str_ops,
                                   const ACE_Parse_Node *str_mods)
-#if defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS)
-  : ACE_Parse_Node (str_ops == 0 ? static_cast<ACE_TCHAR *> (ACE_LIB_TEXT ("<unknown>"))
-        : static_cast<ACE_TCHAR *> (str_ops->name ())),
-#else
     : ACE_Parse_Node ((str_ops == 0 ? ACE_LIB_TEXT ("<unknown>") : str_ops->name ())),
-#endif /* defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
       node_ (str_ops),
       mods_ (str_mods)
 {
