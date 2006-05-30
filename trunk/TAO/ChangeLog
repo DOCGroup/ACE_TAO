@@ -1,3 +1,14 @@
+Tue May 30 14:24:07 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
+          Generate false instead of 0
+
+        * TAO_IDL/be/be_visitor_valuetype/marshal_cs.cpp:
+          Const improvement to generated code
+
+        * TAO_IDL/be/be_visitor_operation/amh_rh_ss.cpp:
+          Fixed 64bit conversion warning
+
 Tue May 30 14:10:07 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/AnyTypeCode/Marshal.cpp:
