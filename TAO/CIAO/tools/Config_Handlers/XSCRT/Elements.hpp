@@ -268,7 +268,8 @@ namespace XSCRT
   };
 
 #if ((defined (__GNUC__) && (__GNUC__ == 3 && (__GNUC_MINOR__ < 3))) || \
-    (defined (__BORLANDC__) && (__BORLANDC__ == 0x564)))
+    (defined (__BORLANDC__) && (__BORLANDC__ == 0x564)) || \
+    (defined (__SUNPRO_CC) && (__SUNPRO_CC <= 0x570)))
 
   // Stuff for broken gcc < 3.3. Don't like what you see - use better
   // compiler!
