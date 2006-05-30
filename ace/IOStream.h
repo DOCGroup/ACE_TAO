@@ -431,22 +431,7 @@ typedef ostream& (*__omanip_)(ostream&);
 // These are necessary in case somebody wants to derive from us and
 // override one of these with a custom approach.
 
-#  if defined (ACE_LACKS_CHAR_STAR_RIGHT_SHIFTS)
-#define GET_FUNC_SET0(MT,CODE,CODE2) \
-        GET_PROT(MT,short &,CODE) \
-        GET_PROT(MT,u_short &,CODE) \
-        GET_PROT(MT,int &,CODE) \
-        GET_PROT(MT,u_int &,CODE) \
-        GET_PROT(MT,long &,CODE) \
-        GET_PROT(MT,u_long &,CODE) \
-        GET_PROT(MT,float &,CODE) \
-        GET_PROT(MT,double &,CODE) \
-        GET_PROT(MT,char &,CODE) \
-        GET_PROT(MT,u_char &,CODE) \
-        GET_PROT(MT,char *,CODE) \
-        inline virtual MT& operator>>(__omanip_ func) CODE2 \
-        inline virtual MT& operator>>(__manip_ func)  CODE2
-#  elif defined (ACE_LACKS_CHAR_RIGHT_SHIFTS)
+#  if defined (ACE_LACKS_CHAR_RIGHT_SHIFTS)
 #define GET_FUNC_SET0(MT,CODE,CODE2) \
         GET_PROT(MT,short &,CODE) \
         GET_PROT(MT,u_short &,CODE) \
@@ -497,16 +482,10 @@ typedef ostream& (*__omanip_)(ostream&);
   #define GET_FUNC_SET1(MT,CODE,CODE2) GET_FUNC_SET0(MT,CODE,CODE2)
   #define PUT_FUNC_SET1(MT,CODE,CODE2) PUT_FUNC_SET0(MT,CODE,CODE2)
 #  else
-#    if defined (ACE_LACKS_CHAR_STAR_RIGHT_SHIFTS)
-  #define GET_FUNC_SET1(MT,CODE,CODE2) \
-          GET_PROT(MT,signed char &,CODE) \
-          GET_FUNC_SET0(MT,CODE,CODE2)
-#    else
   #define GET_FUNC_SET1(MT,CODE,CODE2) \
           GET_PROT(MT,signed char &,CODE) \
           GET_PROT(MT,signed char *,CODE) \
           GET_FUNC_SET0(MT,CODE,CODE2)
-#    endif
 
   #define PUT_FUNC_SET1(MT,CODE,CODE2) \
           PUT_FUNC(MT,signed char) \

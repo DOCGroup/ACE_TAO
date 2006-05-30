@@ -1,3 +1,18 @@
+Tue May 30 11:11:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/os_stdio.h:
+          Removed psos support
+
+        * ace/IOStream.h:
+          Removed checks for ACE_LACKS_CHAR_STAR_RIGHT_SHIFTS, that was only
+          set for chorus which is removed
+
+        * ace/Basic_Types.h:
+        * ace/Log_Msg.cpp:
+        * ace/Profile_Timer.{h,cpp}:
+          Removed checks for ACE_LACKS_FLOATING_POINT. Was only set for chorus
+          which is now removed.
+
 Tue May 30 10:48:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/CDR_Stream.cpp:

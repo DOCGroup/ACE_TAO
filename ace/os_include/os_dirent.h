@@ -29,7 +29,7 @@
 
 #if defined (ACE_VXWORKS) && (ACE_VXWORKS < 0x620)
 #  include "ace/os_include/os_unistd.h"  // VxWorks needs this to compile
-#endif /* VXWORKS */
+#endif /* ACE_VXWORKS */
 
 #if !defined (ACE_LACKS_DIRENT_H)
 # include /**/ <dirent.h>

@@ -47,7 +47,7 @@
 #  include /**/ <unldLib.h> /* for module unload */
 #  include /**/ <symLib.h> /* for findSymbol  */
 #  include /**/ <sysSymTbl.h> /* for global symbol table */
-#endif /* VXWORKS */
+#endif /* ACE_VXWORKS */
 
 // Place all additions (especially function declarations) within extern "C" {}
 #ifdef __cplusplus

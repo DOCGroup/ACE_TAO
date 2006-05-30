@@ -406,19 +406,10 @@ ACE_Profile_Timer::elapsed_time (ACE_Elapsed_Time &et)
 {
   ACE_TRACE ("ACE_Profile_Timer::elapsed_time");
 
-#  if defined (ACE_LACKS_FLOATING_POINT)
-  ACE_Time_Value delta_t; /* elapsed time will be in microseconds */
-  timer_.elapsed_time (delta_t);
-
-  // Store the time in usecs.
-  et.real_time = delta_t.sec () * ACE_ONE_SECOND_IN_USECS  +
-                 delta_t.usec ();
-#  else  /* ACE_LACKS_FLOATING_POINT */
   ACE_hrtime_t delta_t; /* nanoseconds */
   timer_.elapsed_time (delta_t);
 
   et.real_time = delta_t / (double) ACE_ONE_SECOND_IN_NSECS;
-#  endif /* ACE_LACKS_FLOATING_POINT */
 
   et.user_time = 0;
   et.system_time = 0;
