@@ -98,18 +98,34 @@ testBug1459 (int , ACE_TCHAR *[])
     // Look ma!! No ... services?!
 
     ACE_Service_Object *so = 0;
+    int error = 0;
     so = ACE_Dynamic_Service<ACE_Service_Object>::instance ("SSLIOP_Factory");
     if (so != 0)
-      ACE_ERROR_RETURN ((LM_DEBUG, ACE_TEXT("Unexpected to find SSLIOP_Factory, globally\n")), -1);
+      {
+        error++;
+        ACE_ERROR ((LM_DEBUG,
+                    ACE_TEXT("Unexpected to find SSLIOP_Factory globally\n")));
+      }
 
     so = ACE_Dynamic_Service<ACE_Service_Object>::instance ("UIPMC_Factory");
     if (so != 0)
-      ACE_ERROR_RETURN ((LM_DEBUG, ACE_TEXT("Unexpected to find UIPMC_Factory, globally\n")), -1);
+      {
+        error++;
+        ACE_ERROR ((LM_DEBUG,
+                    ACE_TEXT("Unexpected to find ")
+                    ACE_TEXT("UIPMC_Factory globally\n")));
+      }
 
     // Since each svc conf file causes the ORB to load the services in
     // its own service space no services are reachable through the
     // global service repo
 
+    ORBA->destroy();
+
+    ORBB->destroy();
+
+    if (error > 0)
+      return -1;
 #endif /* MORB_MA */
 
   }
@@ -133,4 +149,3 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   return testBug1459(argc, argv);
 }
-

@@ -1,3 +1,21 @@
+Tue May 30 19:17:28 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/orbsvcs/Security/Security_PolicyFactory.h:
+
+          Fix a memory leak resulting from the failure to use a reference
+          counted local object for the policy factory.
+
+        * tao/ORBInitializer_Registry.cpp:
+        * tao/ORB_Core.cpp:
+
+          Make use of changes in the ACE_Service_Gestalt and
+          ACE_Dynamic_Service<> classes to address separation of
+          configuration contexts.
+
+        * tests/ORB_Local_Config/Bug_1459/Test.cpp:
+
+          Fix for memory leaks induced through improper ORB destruction.
+
 Tue May 30 18:33:12 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * tao/DLL_Parser.h: Updated the documentation to explain the
