@@ -1,9 +1,71 @@
+Tue May 30 00:00:22 UTC 2006  Stoyan Paunov  <spaunov@isis.vanderbilt.edu>
+
+        * DAnCE/Planner/Node_T.h:
+        * DAnCE/Planner/Node_T.inl:
+        * DAnCE/Planner/Node_T.cpp:
+        * DAnCE/Planner/PCVisitor.h:
+        * DAnCE/Planner/PCVisitor.cpp:
+        * DAnCE/Planner/PCVisitorBase.h:
+        * DAnCE/Planner/PCVisitorBase.inl:
+        * DAnCE/Planner/PCVisitorBase.cpp:
+        * DAnCE/Planner/Planner.mpc:
+        * DAnCE/Planner/Planner.cpp:
+
+          Checking in the Planner for DAnCE which creates a Deployment
+          Plan on the fly (in-memory).
+
+        * RACE/Input_Adapters/LocationUpdater/Injector.cpp:
+        * RACE/Input_Adapters/LocationUpdater/LocationUpdater.cdp:
+        * RACE/Input_Adapters/LocationUpdater/LocationUpdater.cidl:
+        * RACE/Input_Adapters/LocationUpdater/LocationUpdater.idl:
+        * RACE/Input_Adapters/LocationUpdater/LocationUpdater_deployment.dat:
+        * RACE/Input_Adapters/LocationUpdater/LocationUpdater_exec.h:
+        * RACE/Input_Adapters/LocationUpdater/LocationUpdater_exec.cpp:
+        * RACE/Input_Adapters/LocationUpdater/LocationUpdater_exec_export.h:
+        * RACE/Input_Adapters/LocationUpdater/LocationUpdater_stub_export.h:
+        * RACE/Input_Adapters/LocationUpdater/LocationUpdater_svnt_export.h:
+        * RACE/Input_Adapters/LocationUpdater/Location_Updater.mpc.disable:
+        * RACE/Input_Adapters/LocationUpdater/PCVisitorBase.h:
+        * RACE/Input_Adapters/LocationUpdater/PCVisitorBase.inl:
+        * RACE/Input_Adapters/LocationUpdater/PCVisitorBase.cpp:
+        * RACE/Input_Adapters/LocationUpdater/PlanUpdater.h:
+        * RACE/Input_Adapters/LocationUpdater/PlanUpdater.cpp:
+        * RACE/Input_Adapters/LocationUpdater/README.txt:
+
+          Adding the LocationUpdater which is a RACE input adapter which
+          updates the locations of the implementation artifact to reclect
+          the ones available in the RepositoryManager. Please see the README
+          and the code for more info.
+
+        * RACE/Input_Adapters/PlanGenerator/Injector.cpp:
+        * RACE/Input_Adapters/PlanGenerator/PCVisitorBase.h:
+        * RACE/Input_Adapters/PlanGenerator/PCVisitorBase.inl:
+        * RACE/Input_Adapters/PlanGenerator/PCVisitorBase.cpp:
+        * RACE/Input_Adapters/PlanGenerator/PlanGenerator.h:
+        * RACE/Input_Adapters/PlanGenerator/PlanGenerator.cdp:
+        * RACE/Input_Adapters/PlanGenerator/PlanGenerator.cidl:
+        * RACE/Input_Adapters/PlanGenerator/PlanGenerator.cpp:
+        * RACE/Input_Adapters/PlanGenerator/PlanGenerator.idl:
+        * RACE/Input_Adapters/PlanGenerator/PlanGenerator.mpc.disable:
+        * RACE/Input_Adapters/PlanGenerator/PlanGenerator_deployment.dat:
+        * RACE/Input_Adapters/PlanGenerator/PlanGenerator_exec.h:
+        * RACE/Input_Adapters/PlanGenerator/PlanGenerator_exec.cpp:
+        * RACE/Input_Adapters/PlanGenerator/PlanGenerator_exec_export.h:
+        * RACE/Input_Adapters/PlanGenerator/PlanGenerator_stub_export.h:
+        * RACE/Input_Adapters/PlanGenerator/PlanGenerator_svnt_export.h:
+        * RACE/Input_Adapters/PlanGenerator/README.txt:
+
+          Adding the PlanGenerator which is a RACE input adapter which queries
+          the RepositoryManager for an installation name, retrieves the corresponding
+          PackageConfiguration, and builds the DeploymentPlan on the fly. Please see
+          the README and the code for more info.
+
 Mon May 29 21:58:18 UTC 2006  Stoyan Paunov  <spaunov@isis.vanderbilt.edu>
 
         * DAnCE/NodeApplicationManager/Containers_Info_Map.cpp:
 
           Got rid of the code that updates the loader path for the
-          libraries downloaded via HTTP. Now this has to be done 
+          libraries downloaded via HTTP. Now this has to be done
           manually.
 
         * DAnCE/RepositoryManager/PC_Updater.cpp:
