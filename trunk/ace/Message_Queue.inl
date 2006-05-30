@@ -9,7 +9,7 @@ ACE_Message_Queue_Base::ACE_Message_Queue_Base (void)
 {
 }
 
-#if defined (VXWORKS)
+#if defined (ACE_VXWORKS)
 // Specialization to use native VxWorks Message Queues.
 
 ACE_INLINE MSG_Q_ID
@@ -19,7 +19,7 @@ ACE_Message_Queue_Vx::msgq (void)
   return reinterpret_cast<MSG_Q_ID> (tail_);
 }
 
-#endif /* VXWORKS */
+#endif /* ACE_VXWORKS */
 
 #if defined (ACE_WIN32) && (ACE_HAS_WINNT4 != 0)
 ACE_INLINE int

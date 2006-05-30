@@ -94,7 +94,7 @@ ACE_TSS_Emulation::ts_object (const ACE_thread_key_t key)
             *tss_base_p = 0;
           }
       }
-#    endif /* VXWORKS */
+#    endif /* ACE_VXWORKS */
 
   return tss_base ()[key_index];
 }

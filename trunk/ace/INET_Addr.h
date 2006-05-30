@@ -22,10 +22,10 @@
 
 #include "ace/Addr.h"
 
-#if defined(VXWORKS)
+#if defined(ACE_VXWORKS)
    // Needed to get INET_ADDR_LEN
 #  include /**/ "inetLib.h"
-#endif /* VXWORKS */
+#endif /* ACE_VXWORKS */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

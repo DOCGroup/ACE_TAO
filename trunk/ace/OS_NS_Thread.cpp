@@ -156,7 +156,7 @@ ACE_Thread_ID::to_string (char *thr_string) const
 
 /*****************************************************************************/
 
-#if defined (ACE_WIN32) || defined (ACE_HAS_TSS_EMULATION) || (defined (ACE_PSOS) && defined (ACE_PSOS_HAS_TSS))
+#if defined (ACE_WIN32) || defined (ACE_HAS_TSS_EMULATION)
 
 #if defined (ACE_HAS_TSS_EMULATION)
 u_int ACE_TSS_Emulation::total_keys_ = 0;
@@ -434,7 +434,7 @@ ACE_TSS_Emulation::tss_close ()
 
 /*****************************************************************************/
 
-#if defined (ACE_WIN32) || defined (ACE_HAS_TSS_EMULATION) || (defined (ACE_PSOS) && defined (ACE_PSOS_HAS_TSS))
+#if defined (ACE_WIN32) || defined (ACE_HAS_TSS_EMULATION)
 
 // Moved class ACE_TSS_Ref declaration to OS.h so it can be visible to
 // the single file of template instantiations.
@@ -1150,7 +1150,7 @@ ACE_TSS_Cleanup::tss_keys ()
   return ts_keys;
 }
 
-#endif /* ACE_WIN32 || ACE_HAS_TSS_EMULATION || (ACE_PSOS && ACE_PSOS_HAS_TSS) */
+#endif /* ACE_WIN32 || ACE_HAS_TSS_EMULATION */
 
 /*****************************************************************************/
 
@@ -1164,7 +1164,7 @@ ACE_TSS_Cleanup::tss_keys ()
 // Note: these three objects require static construction.
 ACE_thread_t ACE_OS::NULL_thread;
 ACE_hthread_t ACE_OS::NULL_hthread;
-#if defined (ACE_HAS_TSS_EMULATION) || (defined (ACE_PSOS) && defined (ACE_PSOS_HAS_TSS))
+#if defined (ACE_HAS_TSS_EMULATION)
   ACE_thread_key_t ACE_OS::NULL_key = static_cast <ACE_thread_key_t> (-1);
 #else  /* ! ACE_HAS_TSS_EMULATION */
   ACE_thread_key_t ACE_OS::NULL_key;
@@ -1181,7 +1181,7 @@ KnCap ACE_OS::actorcaps_[ACE_CHORUS_MAX_ACTORS];
 void
 ACE_OS::cleanup_tss (const u_int main_thread)
 {
-#if defined (ACE_HAS_TSS_EMULATION) || defined (ACE_WIN32) || (defined (ACE_PSOS) && defined (ACE_PSOS_HAS_TSS))
+#if defined (ACE_HAS_TSS_EMULATION) || defined (ACE_WIN32)
   { // scope the cleanup instance
     // Call TSS destructors for current thread.
     TSS_Cleanup_Instance cleanup;
@@ -1190,7 +1190,7 @@ ACE_OS::cleanup_tss (const u_int main_thread)
         cleanup->thread_exit ();
       }
   }
-#endif /* ACE_HAS_TSS_EMULATION || ACE_WIN32 || ACE_PSOS_HAS_TSS */
+#endif /* ACE_HAS_TSS_EMULATION || ACE_WIN32 */
 
   if (main_thread)
     {
@@ -1202,7 +1202,7 @@ ACE_OS::cleanup_tss (const u_int main_thread)
       ACE_Base_Thread_Adapter::close_log_msg ();
 #endif /* ! ACE_HAS_TSS_EMULATION  &&  ! ACE_HAS_MINIMAL_ACE_OS */
 
-#if defined (ACE_WIN32) || defined (ACE_HAS_TSS_EMULATION) || (defined (ACE_PSOS) && defined (ACE_PSOS_HAS_TSS))
+#if defined (ACE_WIN32) || defined (ACE_HAS_TSS_EMULATION)
       // Finally, free up the ACE_TSS_Cleanup instance.  This method gets
       // called by the ACE_Object_Manager.
       TSS_Cleanup_Instance cleanup(TSS_Cleanup_Instance::DESTROY);
@@ -1211,7 +1211,7 @@ ACE_OS::cleanup_tss (const u_int main_thread)
         ; // the pointer deletes the Cleanup when it goes out of scope
       }
 
-#endif /* WIN32 || ACE_HAS_TSS_EMULATION || ACE_PSOS_HAS_TSS */
+#endif /* WIN32 || ACE_HAS_TSS_EMULATION */
 
 #if defined (ACE_HAS_TSS_EMULATION)
       ACE_TSS_Emulation::tss_close ();
@@ -1223,7 +1223,7 @@ ACE_OS::cleanup_tss (const u_int main_thread)
 // CONDITIONS BEGIN
 /*****************************************************************************/
 
-#if defined (ACE_LACKS_COND_T) && ! defined (ACE_PSOS_DIAB_MIPS)
+#if defined (ACE_LACKS_COND_T)
 // NOTE: The ACE_OS::cond_* functions for some non-Unix platforms are
 // defined here either because they're too big to be inlined, or
 // to avoid use before definition if they were inline.
@@ -1274,11 +1274,11 @@ ACE_OS::cond_broadcast (ACE_cond_t *cv)
         result = -1;
       // Wait for all the awakened threads to acquire their part of
       // the counting semaphore.
-#   if defined (VXWORKS) || defined (ACE_PSOS)
+#   if defined (ACE_VXWORKS)
       else if (ACE_OS::sema_wait (&cv->waiters_done_) == -1)
 #   else
       else if (ACE_OS::event_wait (&cv->waiters_done_) == -1)
-#   endif /* VXWORKS */
+#   endif /* ACE_VXWORKS */
         result = -1;
       // This is okay, even without the <waiters_lock_> held because
       // no other waiter threads can wake up to access it.
@@ -1298,9 +1298,9 @@ ACE_OS::cond_destroy (ACE_cond_t *cv)
 # if defined (ACE_HAS_THREADS)
 #   if defined (ACE_HAS_WTHREADS)
   ACE_OS::event_destroy (&cv->waiters_done_);
-#   elif defined (VXWORKS) || defined (ACE_PSOS)
+#   elif defined (ACE_VXWORKS)
   ACE_OS::sema_destroy (&cv->waiters_done_);
-#   endif /* VXWORKS */
+#   endif /* ACE_VXWORKS */
   ACE_OS::thread_mutex_destroy (&cv->waiters_lock_);
   return ACE_OS::sema_destroy (&cv->sema_);
 # else
@@ -1342,11 +1342,11 @@ ACE_OS::cond_init (ACE_cond_t *cv, short type, const char *name, void *arg)
     result = -1;
   else if (ACE_OS::thread_mutex_init (&cv->waiters_lock_) == -1)
     result = -1;
-#   if defined (VXWORKS) || defined (ACE_PSOS)
+#   if defined (ACE_VXWORKS)
   else if (ACE_OS::sema_init (&cv->waiters_done_, 0, type) == -1)
 #   else
   else if (ACE_OS::event_init (&cv->waiters_done_) == -1)
-#   endif /* VXWORKS */
+#   endif /* ACE_VXWORKS */
     result = -1;
   return result;
 # else
@@ -1372,11 +1372,11 @@ ACE_OS::cond_init (ACE_cond_t *cv, short type, const wchar_t *name, void *arg)
     result = -1;
   else if (ACE_OS::thread_mutex_init (&cv->waiters_lock_) == -1)
     result = -1;
-#     if defined (VXWORKS) || defined (ACE_PSOS)
+#     if defined (ACE_VXWORKS)
   else if (ACE_OS::sema_init (&cv->waiters_done_, 0, type) == -1)
 #     else
   else if (ACE_OS::event_init (&cv->waiters_done_) == -1)
-#     endif /* VXWORKS */
+#     endif /* ACE_VXWORKS */
     result = -1;
   return result;
 #   else
@@ -1490,11 +1490,11 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
   // If we're the last waiter thread during this particular broadcast
   // then let all the other threads proceed.
   else if (last_waiter)
-#   if defined (VXWORKS) || defined (ACE_PSOS)
+#   if defined (ACE_VXWORKS)
     ACE_OS::sema_post (&cv->waiters_done_);
 #   else
     ACE_OS::event_signal (&cv->waiters_done_);
-#   endif /* VXWORKS */
+#   endif /* ACE_VXWORKS */
 
   // We must always regain the <external_mutex>, even when errors
   // occur because that's the guarantee that we give to our callers.
@@ -1518,7 +1518,7 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
   // Handle the easy case first.
   if (timeout == 0)
     return ACE_OS::cond_wait (cv, external_mutex);
-#   if defined (ACE_HAS_WTHREADS) || defined (VXWORKS) || defined (ACE_PSOS)
+#   if defined (ACE_HAS_WTHREADS) || defined (ACE_VXWORKS)
 
   // Prevent race conditions on the <waiters_> count.
   ACE_OS::thread_mutex_lock (&cv->waiters_lock_);
@@ -1574,16 +1574,7 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
       result = ACE_OS::sema_wait (&cv->sema_,
                                   timeout);
 #       endif /* ACE_USES_WINCE_SEMA_SIMULATION */
-#     elif defined (ACE_PSOS)
-      // Inline the call to ACE_OS::sema_wait () because it takes an
-      // ACE_Time_Value argument.  Avoid the cost of that conversion . . .
-      u_long ticks = (KC_TICKS2SEC * msec_timeout) / ACE_ONE_SECOND_IN_MSECS;
-      //Tick set to 0 tells pSOS to wait forever is SM_WAIT is set.
-      if(ticks == 0)
-        result = ::sm_p (cv->sema_.sema_, SM_NOWAIT, ticks); //no timeout
-      else
-        result = ::sm_p (cv->sema_.sema_, SM_WAIT, ticks);
-#     elif defined (VXWORKS)
+#     elif defined (ACE_VXWORKS)
       // Inline the call to ACE_OS::sema_wait () because it takes an
       // ACE_Time_Value argument.  Avoid the cost of that conversion . . .
       int ticks_per_sec = ::sysClkRateGet ();
@@ -1614,22 +1605,7 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
         }
       result = -1;
     }
-#     elif defined (ACE_PSOS)
-  if (result != 0)
-    {
-      switch (result)
-        {
-        case ERR_TIMEOUT:  // Timeout occured with SM_WAIT
-        case ERR_NOMSG:    // Didn't acquire semaphore w/ SM_NOWAIT (ticks=0)
-          error = ETIME;
-          break;
-        default:
-          error = errno;
-          break;
-        }
-      result = -1;
-    }
-#     elif defined (VXWORKS)
+#     elif defined (ACE_VXWORKS)
   if (result == ERROR)
     {
       switch (errno)
@@ -1686,7 +1662,7 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
   ACE_OS::mutex_lock (external_mutex);
 
   return result;
-#   endif /* ACE_HAS_WTHREADS || ACE_HAS_VXWORKS || ACE_PSOS */
+#   endif /* ACE_HAS_WTHREADS || ACE_HAS_VXWORKS */
 # else
   ACE_UNUSED_ARG (cv);
   ACE_UNUSED_ARG (external_mutex);
@@ -2084,7 +2060,7 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
   result),
   int, -1);
 #   endif /* ACE_PSOS_HAS_MUTEX */
-# elif defined (VXWORKS)
+# elif defined (ACE_VXWORKS)
   ACE_UNUSED_ARG (name);
   ACE_UNUSED_ARG (attributes);
   ACE_UNUSED_ARG (sa);
@@ -2133,17 +2109,7 @@ ACE_OS::mutex_destroy (ACE_mutex_t *m)
     return -1;
 }
   /* NOTREACHED */
-# elif defined (ACE_PSOS)
-#   if defined (ACE_PSOS_HAS_MUTEX)
-  int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::mu_delete (*m), result),
-                     int, -1);
-#   else /* ! ACE_PSOS_HAS_MUTEX */
-  int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sm_delete (*m), result),
-                     int, -1);
-#   endif /* ACE_PSOS_HAS_MUTEX */
-# elif defined (VXWORKS)
+# elif defined (ACE_VXWORKS)
   return ::semDelete (*m) == OK ? 0 : -1;
 # endif /* Threads variety case */
 #else
@@ -2240,19 +2206,7 @@ ACE_OS::mutex_lock (ACE_mutex_t *m)
     return -1;
 }
   /* NOTREACHED */
-# elif defined (ACE_PSOS)
-#   if defined (ACE_PSOS_HAS_MUTEX)
-  int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::mu_lock (*m, MU_WAIT, 0),
-                     result),
-  int, -1);
-#   else /* ACE_PSOS_HAS_MUTEX */
-  int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sm_p (*m, SM_WAIT, 0),
-                     result),
-  int, -1);
-#   endif /* ACE_PSOS_HAS_MUTEX */
-# elif defined (VXWORKS)
+# elif defined (ACE_VXWORKS)
   return ::semTake (*m, WAIT_FOREVER) == OK ? 0 : -1;
 # endif /* Threads variety case */
 #else
@@ -2356,7 +2310,7 @@ ACE_OS::mutex_lock (ACE_mutex_t *m,
   }
   /* NOTREACHED */
 
-#  elif defined (VXWORKS)
+#  elif defined (ACE_VXWORKS)
 
   // Note that we must convert between absolute time (which is passed
   // as a parameter) and relative time (which is what the system call
@@ -2441,26 +2395,7 @@ ACE_OS::mutex_trylock (ACE_mutex_t *m)
     return -1;
 }
   /* NOTREACHED */
-# elif defined (ACE_PSOS)
-#   if defined (ACE_PSOS_HAS_MUTEX)
-  int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::mu_lock (*m, MU_NOWAIT, 0),
-                     result),
-  int, -1);
-#   else /* ! ACE_PSOS_HAS_MUTEX */
-   switch (::sm_p (*m, SM_NOWAIT, 0))
-{
-  case 0:
-    return 0;
-  case ERR_NOSEM:
-    errno = EBUSY;
-       // intentional fall through
-  default:
-    return -1;
-}
-#   endif /* ACE_PSOS_HAS_MUTEX */
-
-# elif defined (VXWORKS)
+# elif defined (ACE_VXWORKS)
   if (::semTake (*m, NO_WAIT) == ERROR)
     if (errno == S_objLib_OBJ_UNAVAILABLE)
 {
@@ -2551,17 +2486,7 @@ ACE_OS::mutex_unlock (ACE_mutex_t *m)
     return -1;
 }
   /* NOTREACHED */
-# elif defined (ACE_PSOS)
-#   if defined (ACE_PSOS_HAS_MUTEX)
-  int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::mu_unlock (*m), result),
-                     int, -1);
-#   else /* ! ACE_PSOS_HAS_MUTEX */
-  int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sm_v (*m), result),
-                     int, -1);
-#   endif /* ACE_PSOS_HAS_MUTEX */
-# elif defined (VXWORKS)
+# elif defined (ACE_VXWORKS)
   return ::semGive (*m) == OK ? 0 : -1;
 # endif /* Threads variety case */
 #else
@@ -3842,7 +3767,7 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
       errno = EINVAL;
       return -1;
     }
-#elif defined (VXWORKS) || defined (ACE_PSOS)
+#elif defined (ACE_VXWORKS)
   ACE_UNUSED_ARG (id);
 
   // There is only one class of priorities on VxWorks, and no time
@@ -4011,11 +3936,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 # define  ACE_THREAD_FUNCTION  func
 # define  ACE_THREAD_ARGUMENT  args
 #else /* ! defined (ACE_NO_THREAD_ADAPTER) */
-# if defined (ACE_PSOS)
-#   define  ACE_THREAD_FUNCTION (PSOS_TASK_ENTRY_POINT) thread_args->entry_point ()
-# else
-#   define  ACE_THREAD_FUNCTION  thread_args->entry_point ()
-# endif /* defined (ACE_PSOS) */
+# define  ACE_THREAD_FUNCTION  thread_args->entry_point ()
 # define  ACE_THREAD_ARGUMENT  thread_args
 #endif /* ! defined (ACE_NO_THREAD_ADAPTER) */
 
@@ -4054,7 +3975,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
     stacksize = ACE_NEEDS_HUGE_THREAD_STACKSIZE;
 # endif /* ACE_NEEDS_HUGE_THREAD_STACKSIZE */
 
-# if !defined (VXWORKS)
+# if !defined (ACE_VXWORKS)
   // On VxWorks, the OS will provide a task name if the user doesn't.
   // So, we don't need to create a tmp_thr.  If the caller of this
   // member function is the Thread_Manager, than thr_id will be non-zero
@@ -4706,72 +4627,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
     ACE_FAIL_RETURN (-1);
   /* NOTREACHED */
 
-# elif defined (ACE_PSOS)
-
-  // stack is created in the task's memory region 0
-  ACE_UNUSED_ARG (stack);
-
-  // task creation and start flags are fixed
-  ACE_UNUSED_ARG (flags);
-
-  // lowest priority is reserved for the IDLE pSOS+ system daemon,
-  // highest are reserved for high priority pSOS+ system daemons
-  if (priority < PSOS_TASK_MIN_PRIORITY)
-    {
-      priority = PSOS_TASK_MIN_PRIORITY;
-    }
-  else if (priority > PSOS_TASK_MAX_PRIORITY)
-    {
-      priority = PSOS_TASK_MAX_PRIORITY;
-    }
-
-  // set the stacksize to a default value if no size is specified
-  if (stacksize == 0)
-    stacksize = ACE_PSOS_DEFAULT_STACK_SIZE;
-
-  ACE_hthread_t tid;
-  *thr_handle = 0;
-
-  // create the thread
-  if (t_create ((char *) thr_id, // task name
-                priority,        // (possibly adjusted) task priority
-                stacksize,       // passed stack size is used for supervisor stack
-                0,               // no user stack: tasks run strictly in supervisor mode
-                T_LOCAL,         // local to the pSOS+ node (does not support pSOS+m)
-                &tid)            // receives task id
-      != 0)
-    {
-      return -1;
-    }
-
-  // pSOS tasks are passed an array of 4 u_longs
-  u_long targs[4];
-  targs[0] = (u_long) ACE_THREAD_ARGUMENT;
-  targs[1] = 0;
-  targs[2] = 0;
-  targs[3] = 0;
-
-  // start the thread
-  if (t_start (tid,
-               T_PREEMPT |            // Task can be preempted
-               //             T_NOTSLICE |           // Task is not timesliced with other tasks at same priority
-               T_TSLICE |             // Task is timesliced with other tasks at same priority
-               T_NOASR |              // Task level signals disabled
-               T_SUPV |               // Task runs strictly in supervisor mode
-               T_ISR,                 // Hardware interrupts are enabled
-               ACE_THREAD_FUNCTION,   // Task entry point
-               targs)                 // Task argument(s)
-      != 0)
-    {
-      return -1;
-    }
-
-  // store the task id in the handle and return success
-  *thr_handle = tid;
-  auto_thread_args.release ();
-  return 0;
-
-# elif defined (VXWORKS)
+# elif defined (ACE_VXWORKS)
   // The hard-coded values below are what ::sp () would use.  (::sp ()
   // hardcodes priority to 100, flags to VX_FP_TASK, and stacksize to
   // 20,000.)  stacksize should be an even integer.  If a stack is not
@@ -4939,27 +4795,17 @@ ACE_OS::thr_exit (ACE_THR_FUNC_RETURN status)
     ACE_ENDTHREADEX (status);
 #   endif /* ACE_HAS_MFC && ACE_HAS_MFS != 0*/
 
-# elif defined (VXWORKS)
+# elif defined (ACE_VXWORKS)
     ACE_hthread_t tid;
     ACE_OS::thr_self (tid);
     *((int *) status) = ::taskDelete (tid);
-# elif defined (ACE_PSOS)
-    ACE_hthread_t tid;
-    ACE_OS::thr_self (tid);
-
-#   if defined (ACE_PSOS) && defined (ACE_PSOS_HAS_TSS)
-    // Call TSS destructors.
-    ACE_OS::cleanup_tss (0 /* not main thread */);
-#   endif /* ACE_PSOS && ACE_PSOS_HAS_TSS */
-
-    *((u_long *) status) = ::t_delete (tid);
 # endif /* ACE_HAS_PTHREADS */
 #else
   ACE_UNUSED_ARG (status);
 #endif /* ACE_HAS_THREADS */
 }
 
-#if defined (VXWORKS) && !defined (ACE_HAS_PTHREADS)
+#if defined (ACE_VXWORKS) && !defined (ACE_HAS_PTHREADS)
 // Leave this in the global scope to allow
 // users to adjust the delay value.
 int ACE_THR_JOIN_DELAY = 5;
@@ -5023,12 +4869,12 @@ ACE_OS::thr_join (ACE_thread_t waiter_id,
   thr_id = 0;
   return ACE_OS::thr_join (taskNameToId (waiter_id), status);
 }
-#endif /* VXWORKS */
+#endif /* ACE_VXWORKS */
 
 int
 ACE_OS::thr_key_detach (ACE_thread_key_t key, void *)
 {
-#if defined (ACE_HAS_WTHREADS) || defined (ACE_HAS_TSS_EMULATION) || (defined (ACE_PSOS) && defined (ACE_PSOS_HAS_TSS))
+#if defined (ACE_HAS_WTHREADS) || defined (ACE_HAS_TSS_EMULATION)
   TSS_Cleanup_Instance cleanup;
   if (cleanup.valid ())
     {
@@ -5140,7 +4986,7 @@ ACE_OS::thr_set_affinity (ACE_hthread_t thr_id,
 int
 ACE_OS::thr_key_used (ACE_thread_key_t key)
 {
-#if defined (ACE_WIN32) || defined (ACE_HAS_TSS_EMULATION) || (defined (ACE_PSOS) && defined (ACE_PSOS_HAS_TSS))
+#if defined (ACE_WIN32) || defined (ACE_HAS_TSS_EMULATION)
   TSS_Cleanup_Instance cleanup;
   if (cleanup.valid ())
     {
@@ -5151,7 +4997,7 @@ ACE_OS::thr_key_used (ACE_thread_key_t key)
 #else
   ACE_UNUSED_ARG (key);
   ACE_NOTSUP_RETURN (-1);
-#endif /* ACE_WIN32 || ACE_HAS_TSS_EMULATION || ACE_PSOS_HAS_TSS */
+#endif /* ACE_WIN32 || ACE_HAS_TSS_EMULATION */
 }
 
 #if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
@@ -5188,22 +5034,6 @@ ACE_OS::thr_keycreate_native (ACE_OS_thread_key_t *key,
     ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_keycreate (key, dest),
                                          result),
                        int, -1);
-#   elif defined (ACE_PSOS) && defined (ACE_PSOS_HAS_TSS)
-    ACE_UNUSED_ARG (dest);
-
-    static u_long unique_name = 0;
-    void *tsdanchor;
-
-    ++unique_name;
-    if (::tsd_create (reinterpret_cast <char *> (&unique_name),
-                      0,
-                      TSD_NOALLOC,
-                      (void ****) &tsdanchor,
-                      key) != 0)
-      {
-        return -1;
-      }
-      return 0;
 #   elif defined (ACE_HAS_WTHREADS)
     ACE_UNUSED_ARG (dest);
     *key = ::TlsAlloc ();
@@ -5250,7 +5080,7 @@ ACE_OS::thr_keycreate (ACE_thread_key_t *key,
       }
     else
       return -1;
-#   elif (defined (ACE_PSOS) && defined (ACE_PSOS_HAS_TSS)) || defined (ACE_HAS_WTHREADS)
+#   elif defined (ACE_HAS_WTHREADS)
     if (ACE_OS::thr_keycreate_native (key, dest) == 0)
       {
         // Extract out the thread-specific table instance and stash away
@@ -5300,8 +5130,6 @@ ACE_OS::thr_keyfree_native (ACE_OS_thread_key_t key)
     ACE_NOTSUP_RETURN (-1);
 #   elif defined (ACE_HAS_WTHREADS)
     ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::TlsFree (key), ace_result_), int, -1);
-#   elif defined (ACE_PSOS) && defined (ACE_PSOS_HAS_TSS)
-    return (::tsd_delete (key) == 0) ? 0 : -1;
 #   else
     ACE_UNUSED_ARG (key);
     ACE_NOTSUP_RETURN (-1);
@@ -5327,7 +5155,7 @@ ACE_OS::thr_keyfree (ACE_thread_key_t key)
         return cleanup->free_key (key);
       }
     return -1;
-#   elif (defined (ACE_PSOS) && defined (ACE_PSOS_HAS_TSS)) || defined (ACE_HAS_WTHREADS)
+#   elif defined (ACE_HAS_WTHREADS)
     // Extract out the thread-specific table instance and free up
     // the key and destructor.
     TSS_Cleanup_Instance cleanup;
@@ -5417,12 +5245,6 @@ ACE_OS::thr_setspecific_native (ACE_OS_thread_key_t key, void *data)
 #     elif defined (ACE_HAS_STHREADS)
       int result;
       ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_setspecific (key, data), result), int, -1);
-#    elif defined (ACE_PSOS) && defined (ACE_PSOS_HAS_TSS)
-      ACE_hthread_t tid;
-      ACE_OS::thr_self (tid);
-      if (::tsd_setval (key, tid, data) != 0)
-        return -1;
-      return 0;
 #     elif defined (ACE_HAS_WTHREADS)
       ::TlsSetValue (key, data);
       return 0;
@@ -5472,7 +5294,7 @@ ACE_OS::thr_setspecific (ACE_thread_key_t key, void *data)
             return -1;
           }
       }
-#   elif (defined (ACE_PSOS) && defined (ACE_PSOS_HAS_TSS)) || defined (ACE_HAS_WTHREADS)
+#   elif defined (ACE_HAS_WTHREADS)
     if (ACE_OS::thr_setspecific_native (key, data) == 0)
       {
         TSS_Cleanup_Instance cleanup;

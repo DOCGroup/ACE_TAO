@@ -30,7 +30,7 @@ ACE_OS::_exit (int status)
 #else
   ::TerminateProcess (::GetCurrentProcess (),
                       status);
-#endif /* VXWORKS */
+#endif /* ACE_VXWORKS */
 }
 
 ACE_INLINE void

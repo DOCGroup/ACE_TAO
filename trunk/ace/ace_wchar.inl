@@ -56,7 +56,7 @@ ACE_Wide_To_Ascii::convert (const wchar_t *wstr)
 
 # if defined (ACE_WIN32)
   ::WideCharToMultiByte (cp, 0, wstr, -1, str, len, 0, 0);
-# elif defined (VXWORKS)
+# elif defined (ACE_VXWORKS)
   ::wcstombs (str, wstr, len);
 # else /* ACE_WIN32 */
   for (size_t i = 0; i < len; i++)
@@ -104,7 +104,7 @@ ACE_Ascii_To_Wide::convert (const char *str)
 
 # if defined (ACE_WIN32)
   ::MultiByteToWideChar (cp, 0, str, -1, wstr, len);
-# elif defined (VXWORKS)
+# elif defined (ACE_VXWORKS)
   ::mbstowcs (wstr, str, len);
 # else /* ACE_WIN32 */
   for (size_t i = 0; i < len; i++)

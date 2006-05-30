@@ -2667,7 +2667,7 @@ ACE_Message_Queue_Factory<ACE_SYNCH_USE>::create_laxity_message_queue (size_t hw
 // Factory method for a dynamically prioritized (by laxity)
 // <ACE_Dynamic_Message_Queue>.
 
-#if defined (VXWORKS)
+#if defined (ACE_VXWORKS)
 
 template <ACE_SYNCH_DECL>
 ACE_Message_Queue_Vx *
@@ -2699,7 +2699,7 @@ ACE_Message_Queue_Factory<ACE_SYNCH_USE>::create_NT_message_queue (size_t max_th
 }
 
 #endif /* ACE_WIN32 && ACE_HAS_WINNT4 != 0 */
-#endif /* defined (VXWORKS) */
+#endif /* defined (ACE_VXWORKS) */
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
