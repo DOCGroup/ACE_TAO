@@ -1,3 +1,9 @@
+Tue May 30 16:25:24 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/Bug_2542_Regression/bug_2542_regression.cpp:
+
+          Added .in() to an OctetSeq_var passed as an argument.
+
 Tue May 30 15:53:50 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/Log/Hash_LogRecordStore.cpp (set_records_attribute):

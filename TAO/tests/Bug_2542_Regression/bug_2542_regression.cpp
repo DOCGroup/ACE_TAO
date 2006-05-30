@@ -28,7 +28,7 @@ int main (int argc, char* argv[])
        any_o <<= &value;
 
        CORBA::OctetSeq_var bin = codec->encode(any_o);
-       CORBA::Any_var any_n = codec->decode(bin);
+       CORBA::Any_var any_n = codec->decode(bin.in ());
     }
   ACE_CATCHANY
     {
