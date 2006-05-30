@@ -43,7 +43,7 @@
 #  endif /* ACE_HAS_STL_MAP_CONFLICT */
 #  if defined (HPUX) && defined (IOR)
    /* HP-UX 11.11 defines IOR in /usr/include/pa/inline.h
-      and we don't want that definition.  See IOP_IORC.h. 
+      and we don't want that definition.  See IOP_IORC.h.
       Thanks to Torsten Kopper <tkue_0931@fastmail.fm> for this patch.*/
 #    undef IOR
 #  endif /* HPUX && IOR */
@@ -54,12 +54,6 @@
 extern "C"
 {
 #endif /* __cplusplus */
-
-#if defined (ACE_PSOS)
-#  if !defined (IFF_LOOPBACK)
-#    define IFF_LOOPBACK IFF_EXTLOOPBACK
-#  endif /* IFF_LOOPBACK */
-#endif /* ACE_PSOS */
 
 #if defined (ACE_HAS_BROKEN_IF_HEADER)
    struct ifafilt;

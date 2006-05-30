@@ -34,7 +34,7 @@
 
 #if defined (ACE_VXWORKS) && defined (ACE_LACKS_SYS_SELECT_H)
 #  include /**/ <selectLib.h>
-#endif /* VXWORKS */
+#endif /* ACE_VXWORKS */
 
 // Place all additions (especially function declarations) within extern "C" {}
 #ifdef __cplusplus

@@ -126,14 +126,7 @@ ACE_Thread_ID::to_string (char *thr_string) const
                                           );
 #else
 
-#  if defined (ACE_HAS_PTHREADS_DRAFT4) && defined (HPUX_10)
-                  ACE_OS::strcpy (fp, "u");
-                  // HP-UX 10.x DCE's thread ID is a pointer.  Grab the
-                  // more meaningful, readable, thread ID.  This will match
-                  // the one seen in the debugger as well.
-                  ACE_OS::sprintf (thr_string, format,
-                                   pthread_getunique_np(&thread_handle_));
-#  elif defined (ACE_MVS) || defined (ACE_TANDEM_T1248_PTHREADS)
+#  if defined (ACE_MVS) || defined (ACE_TANDEM_T1248_PTHREADS)
                   // MVS's pthread_t is a struct... yuck. So use the ACE 5.0
                   // code for it.
                   ACE_OS::strcpy (fp, "u");
@@ -149,7 +142,7 @@ ACE_Thread_ID::to_string (char *thr_string) const
                   ACE_OS::sprintf (thr_string,
                                    format,
                                    (unsigned long) thread_handle_);
-#  endif /* ACE_HAS_PTHREADS_DRAFT4 && HPUX_10 */
+#  endif /* ACE_MVS || ACE_TANDEM_T1248_PTHREADS */
 
 #endif /* ACE_WIN32 */
 }
@@ -4361,18 +4354,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 #     if defined (ACE_LACKS_SETDETACH)
   if (ACE_BIT_ENABLED (flags, THR_DETACHED))
     {
-#       if defined (HPUX_10)
-      // HP-UX DCE threads' pthread_detach will smash thr_id if it's
-      // just given as an argument.  This will cause
-      // ACE_Thread_Manager (if it's doing this create) to lose track
-      // of the new thread since the ID will be passed back equal to
-      // 0.  So give pthread_detach a junker to scribble on.
-      ACE_thread_t  junker;
-      cma_handle_assign(thr_id, &junker);
-      ::pthread_detach (&junker);
-#       else
       ::pthread_detach (thr_id);
-#       endif /* HPUX_10 */
     }
 #     endif /* ACE_LACKS_SETDETACH */
 

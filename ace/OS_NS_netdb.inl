@@ -82,7 +82,7 @@ ACE_OS::gethostbyaddr_r (const char *addr,
 {
   ACE_OS_TRACE ("ACE_OS::gethostbyaddr_r");
 # if defined (ACE_HAS_REENTRANT_FUNCTIONS) && !defined (UNIXWARE)
-#   if defined (AIX) || defined (DIGITAL_UNIX) || defined (HPUX_10)
+#   if defined (AIX) || defined (DIGITAL_UNIX)
   ACE_OS::memset (buffer, 0, sizeof (ACE_HOSTENT_DATA));
 
   if (::gethostbyaddr_r ((char *) addr, length, type, result,
@@ -193,7 +193,7 @@ ACE_OS::gethostbyname_r (const char *name,
   // gethostbyname returns thread-specific storage on Digital Unix and
   // AIX 4.3
   ACE_SOCKCALL_RETURN (::gethostbyname (name), struct hostent *, 0);
-#   elif defined (AIX) || defined (HPUX_10)
+#   elif defined (AIX)
   ACE_OS::memset (buffer, 0, sizeof (ACE_HOSTENT_DATA));
 
   if (::gethostbyname_r (name, result, (struct hostent_data *) buffer) == 0)
@@ -342,7 +342,7 @@ ACE_OS::getprotobyname_r (const char *name,
   ACE_UNUSED_ARG (buffer);
   ACE_NOTSUP_RETURN (0);
 #elif defined (ACE_HAS_REENTRANT_FUNCTIONS) && !defined (UNIXWARE)
-# if defined (AIX) || defined (DIGITAL_UNIX) || defined (HPUX_10)
+# if defined (AIX) || defined (DIGITAL_UNIX)
   if (::getprotobyname_r (name, result, (struct protoent_data *) buffer) == 0)
     return result;
   else
@@ -409,7 +409,7 @@ ACE_OS::getprotobynumber_r (int proto,
   ACE_UNUSED_ARG (buffer);
   ACE_NOTSUP_RETURN (0);
 #elif defined (ACE_HAS_REENTRANT_FUNCTIONS) && !defined (UNIXWARE)
-# if defined (AIX) || defined (DIGITAL_UNIX) || defined (HPUX_10)
+# if defined (AIX) || defined (DIGITAL_UNIX)
   if (::getprotobynumber_r (proto, result, (struct protoent_data *) buffer) == 0)
     return result;
   else
@@ -479,7 +479,7 @@ ACE_OS::getservbyname_r (const char *svc,
   ACE_UNUSED_ARG (buf);
   ACE_NOTSUP_RETURN (0);
 #elif defined (ACE_HAS_REENTRANT_FUNCTIONS) && !defined (UNIXWARE)
-# if defined (AIX) || defined (DIGITAL_UNIX) || defined (HPUX_10)
+# if defined (AIX) || defined (DIGITAL_UNIX)
   ACE_OS::memset (buf, 0, sizeof (ACE_SERVENT_DATA));
 
   if (::getservbyname_r (svc, proto, result, (struct servent_data *) buf) == 0)

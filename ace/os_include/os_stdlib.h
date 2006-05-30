@@ -51,12 +51,7 @@ extern "C"
    typedef u_int ACE_RANDR_TYPE;
    int rand_r (ACE_RANDR_TYPE seed);
 #else
-#  if defined (HPUX_10)
-     // HP-UX 10.x's stdlib.h (long *) doesn't match that man page (u_int *)
-     typedef long ACE_RANDR_TYPE;
-#  else
-     typedef u_int ACE_RANDR_TYPE;
-#  endif /* HPUX_10 */
+   typedef u_int ACE_RANDR_TYPE;
 #endif /* ACE_HAS_BROKEN_RANDR */
 
 #if defined (DIGITAL_UNIX)

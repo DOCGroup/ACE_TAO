@@ -38,7 +38,7 @@
 
 #if defined (ACE_VXWORKS) && (ACE_VXWORKS < 0x620)
 #  include /**/ <sockLib.h>
-#endif /* VXWORKS */
+#endif /* ACE_VXWORKS */
 
 // Place all additions (especially function declarations) within extern "C" {}
 #ifdef __cplusplus
