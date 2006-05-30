@@ -95,7 +95,7 @@ TAO_CDR_Encaps_Codec::encode (const CORBA::Any & data
            i != 0;
            i = i->cont ())
         {
-          size_t len = i->length ();
+          size_t const len = i->length ();
           ACE_OS::memcpy (buf, i->rd_ptr (), len);
           buf += len;
         }

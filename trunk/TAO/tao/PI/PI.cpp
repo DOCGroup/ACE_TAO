@@ -26,7 +26,7 @@ TAO_PI_Init::Initializer (void)
   ACE_Service_Config::process_directive (ace_svc_desc_TAO_PICurrent_Loader);
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
-  int status = ACE_Service_Config::process_directive (
+  int const status = ACE_Service_Config::process_directive (
                             ace_svc_desc_ORBInitializer_Registry);
 
 #if  TAO_HAS_INTERCEPTORS == 1
