@@ -3600,20 +3600,7 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
                       ACE_id_t id)
 {
   ACE_OS_TRACE ("ACE_OS::sched_params");
-#if defined (CHORUS)
-  ACE_UNUSED_ARG (id);
-  int result;
-  struct sched_param param;
-  ACE_thread_t thr_id = ACE_OS::thr_self ();
-
-  param.sched_priority = sched_params.priority ();
-
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_setschedparam (thr_id,
-                                                                sched_params.policy (),
-                                                                &param),
-                                       result),
-                     int, -1);
-#elif defined (ACE_HAS_STHREADS)
+#if defined (ACE_HAS_STHREADS)
   return ACE_OS::set_scheduling_params (sched_params, id);
 #elif defined (ACE_HAS_PTHREADS) && \
       (!defined (ACE_LACKS_SETSCHED) || defined (ACE_TANDEM_T1248_PTHREADS) || \
@@ -3781,7 +3768,7 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
   ACE_UNUSED_ARG (sched_params);
   ACE_UNUSED_ARG (id);
   ACE_NOTSUP_RETURN (-1);
-#endif /* CHORUS */
+#endif /* ACE_HAS_STHREADS */
 }
 
 int
@@ -3994,16 +3981,6 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
   if (ACE_ADAPT_RETVAL(::pthread_attr_init(&attr), result) != 0)
 #   endif /* ACE_HAS_PTHREADS_DRAFT4 */
       return -1;
-
-#   if defined (CHORUS)
-  // If it is a super actor, we can't set stacksize.  But for the time
-  // being we are all non-super actors.  Should be fixed to take care
-  // of super actors!!!
-  if (stacksize == 0)
-    stacksize = ACE_CHORUS_DEFAULT_MIN_STACK_SIZE;
-  else if (stacksize < ACE_CHORUS_DEFAULT_MIN_STACK_SIZE)
-    stacksize = ACE_CHORUS_DEFAULT_MIN_STACK_SIZE;
-#   endif /*CHORUS */
 
   if (stacksize != 0)
     {
