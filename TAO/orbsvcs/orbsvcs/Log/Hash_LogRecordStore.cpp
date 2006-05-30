@@ -80,21 +80,21 @@ TAO_Hash_LogRecordStore::get_n_records (ACE_ENV_SINGLE_ARG_DECL)
   return this->num_records_;
 }
 
-CORBA::ULongLong 
+CORBA::ULongLong
 TAO_Hash_LogRecordStore::get_gauge (ACE_ENV_SINGLE_ARG_DECL)
-{   
+{
   return this->gauge_;
-}   
- 
+}
+
 void
 TAO_Hash_LogRecordStore::reset_gauge (ACE_ENV_SINGLE_ARG_DECL)
 {
   this->gauge_ = 0;
-}   
+}
 
 int
 TAO_Hash_LogRecordStore::log (const DsLogAdmin::LogRecord &const_rec
-			      ACE_ENV_ARG_DECL)
+            ACE_ENV_ARG_DECL)
 {
   // Get log record size...
   size_t record_size = log_record_size (const_rec);
@@ -140,8 +140,8 @@ TAO_Hash_LogRecordStore::log (const DsLogAdmin::LogRecord &const_rec
 
 int
 TAO_Hash_LogRecordStore::retrieve (DsLogAdmin::RecordId id,
-				   DsLogAdmin::LogRecord &rec
-				   ACE_ENV_ARG_DECL)
+           DsLogAdmin::LogRecord &rec
+           ACE_ENV_ARG_DECL)
 {
   int retval = rec_hash_.find (id, rec);
   return retval;
@@ -149,7 +149,7 @@ TAO_Hash_LogRecordStore::retrieve (DsLogAdmin::RecordId id,
 
 int
 TAO_Hash_LogRecordStore::update (DsLogAdmin::LogRecord &rec
-				 ACE_ENV_ARG_DECL)
+         ACE_ENV_ARG_DECL)
 {
   DsLogAdmin::LogRecord oldrec;
 
@@ -190,7 +190,7 @@ TAO_Hash_LogRecordStore::remove_i (DsLogAdmin::RecordId id)
 
 int
 TAO_Hash_LogRecordStore::remove (DsLogAdmin::RecordId id
-				 ACE_ENV_ARG_DECL)
+         ACE_ENV_ARG_DECL)
 {
   return remove_i (id);
 }
@@ -226,9 +226,9 @@ TAO_Hash_LogRecordStore::purge_old_records (ACE_ENV_SINGLE_ARG_DECL)
 
 void
 TAO_Hash_LogRecordStore::set_record_attribute (DsLogAdmin::RecordId id,
-					      const DsLogAdmin::NVList
-					      &attr_list
-					      ACE_ENV_ARG_DECL)
+                const DsLogAdmin::NVList
+                &attr_list
+                ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    DsLogAdmin::InvalidRecordId,
                    DsLogAdmin::InvalidAttribute))
@@ -250,14 +250,15 @@ TAO_Hash_LogRecordStore::set_record_attribute (DsLogAdmin::RecordId id,
 }
 
 CORBA::ULong
-TAO_Hash_LogRecordStore::set_records_attribute (const char *grammar,
-						const char *constraint,
-						const DsLogAdmin::NVList
-						&attr_list ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     DsLogAdmin::InvalidGrammar,
-                     DsLogAdmin::InvalidConstraint,
-                     DsLogAdmin::InvalidAttribute))
+TAO_Hash_LogRecordStore::set_records_attribute (
+  const char * /* grammar */,
+  const char *constraint,
+  const DsLogAdmin::NVList
+  &attr_list ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   DsLogAdmin::InvalidGrammar,
+                   DsLogAdmin::InvalidConstraint,
+                   DsLogAdmin::InvalidAttribute))
 {
   // TODO: validate attributes here.
 
@@ -280,8 +281,8 @@ TAO_Hash_LogRecordStore::set_records_attribute (const char *grammar,
       // Does it match the constraint?
       if (interpreter.evaluate (evaluator) == 1)
         {
-	  set_record_attribute((*iter).int_id_.id, attr_list);
-	  ++count;
+          set_record_attribute ((*iter).int_id_.id, attr_list);
+          ++count;
         }
     }
 
@@ -407,7 +408,7 @@ TAO_Hash_LogRecordStore::query_i (const char *constraint,
       TAO_Hash_Iterator_i *iter_query = 0;
       ACE_NEW_THROW_EX (iter_query,
                         TAO_Hash_Iterator_i (this->reactor_,
-					     this,
+               this,
                                              iter,
                                              iter_end,
                                              count,
@@ -730,7 +731,7 @@ TAO_Hash_LogRecordStore::get_log_qos (ACE_ENV_SINGLE_ARG_DECL) const
 
 void
 TAO_Hash_LogRecordStore::set_log_qos (const DsLogAdmin::QoSList& qos
-				      ACE_ENV_ARG_DECL)
+              ACE_ENV_ARG_DECL)
 {
   this->log_qos_ = qos;
 }
@@ -775,7 +776,7 @@ TAO_Hash_LogRecordStore::get_week_mask (ACE_ENV_SINGLE_ARG_DECL)
 
 void
 TAO_Hash_LogRecordStore::set_week_mask (const DsLogAdmin::WeekMask &masks
-					ACE_ENV_ARG_DECL)
+          ACE_ENV_ARG_DECL)
 {
   this->weekmask_ = masks;
 }
