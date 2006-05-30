@@ -145,6 +145,19 @@ class TAO_Log_Serv_Export TAO_LogRecordStore
   virtual CORBA::ULongLong
     get_n_records (ACE_ENV_SINGLE_ARG_DECL)			= 0;
 
+
+  // = LogRecordStore gauge
+ 
+  /// Gets the current value of the "gauge" that measures the total
+  /// size of the records written to the log.
+  virtual CORBA::ULongLong
+    get_gauge(ACE_ENV_SINGLE_ARG_DECL)                          = 0;
+
+  /// Resets the "gauge" to 0
+  virtual void
+    reset_gauge(ACE_ENV_SINGLE_ARG_DECL)                        = 0;
+
+
   // = Record logging, retrieval, update and removal methods.
 
   /// Insert rec into storage. 
