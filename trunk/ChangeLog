@@ -1,3 +1,28 @@
+Tue May 30 19:17:40 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/Dynamic_Service.h:
+        * ace/Dynamic_Service.inl:
+        * ace/Dynamic_Service.cpp:
+        * ace/Dynamic_Service_Base.h:
+        * ace/Dynamic_Service_Base.cpp:
+        * ace/Dynamic_Service_Dependency.cpp:
+
+          In order to ensure proper separation of contexts, this patch
+          gives the dynamic service instance lookup the ability to
+          optionally exclude the global configuration context.
+
+        * ace/Service_Gestalt.h:
+        * ace/Service_Gestalt.cpp:
+
+          To allow explicitly configured static service objects, those for
+          which a directive such as 'static XYZ "foo bar"', to be
+          independently configured in different configuration contexts,
+          these changes retain any static service descriptor for service
+          XYZ, then looks for a previous instance of XYZ in the local
+          context only, otherwise it uses the previously retained static
+          service descriptor to create a new instance.
+
+
 Tue May 30 18:24:54 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/DLL.h (ACE_DLL): Updated the documentation of open() to explain the
@@ -7,28 +32,28 @@ Tue May 30 18:24:54 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 Tue May 30 13:06:42 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/ACE.inl:
-        * ace/Base_Thread_Adapter.cpp: 
-        * ace/Default_Constants.h: 
-        * ace/Global_Macros.h: 
-        * ace/OS.h: 
-        * ace/OS_NS_Thread.cpp: 
-        * ace/OS_NS_Thread.h: 
+        * ace/Base_Thread_Adapter.cpp:
+        * ace/Default_Constants.h:
+        * ace/Global_Macros.h:
+        * ace/OS.h:
+        * ace/OS_NS_Thread.cpp:
+        * ace/OS_NS_Thread.h:
         * ace/OS_NS_netdb.inl:
         * ace/OS_NS_signal.inl:
         * ace/OS_NS_sys_socket.inl:
         * ace/OS_NS_time.inl:
-        * ace/OS_main.cpp: 
-        * ace/OS_main.h: 
+        * ace/OS_main.cpp:
+        * ace/OS_main.h:
         * ace/Object_Manager_Base.h:
         * ace/Process_Manager.cpp:
         * ace/Process_Semaphore.cpp:
         * ace/Process_Semaphore.h:
-        * ace/Process_Semaphore.inl: 
+        * ace/Process_Semaphore.inl:
         * ace/Recursive_Thread_Mutex.cpp:
-        * ace/SV_Semaphore_Simple.h: 
+        * ace/SV_Semaphore_Simple.h:
         * ace/TLI_Acceptor.cpp:
         * ace/Thread_Adapter.cpp:
-        * ace/Token.h: 
+        * ace/Token.h:
         * ace/config-macros.h: Removed all vestiges of PSOS.
 
 Tue May 30 12:22:53 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>

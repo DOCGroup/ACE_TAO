@@ -179,6 +179,7 @@ ACE_Service_Gestalt::~ACE_Service_Gestalt (void)
   if (this->svc_repo_is_owned_)
     delete this->repo_;
   delete this->static_svcs_;
+  delete this->processed_static_svcs_;
 }
 
 ACE_Service_Gestalt::ACE_Service_Gestalt (size_t size,
@@ -200,6 +201,9 @@ ACE_Service_Gestalt::ACE_Service_Gestalt (size_t size,
 
   ACE_NEW_NORETURN (this->static_svcs_,
                     ACE_STATIC_SVCS);
+
+  ACE_NEW_NORETURN (this->processed_static_svcs_,
+                    ACE_STATIC_SVCS);
 }
 
 // Add the default statically-linked services to the Service
@@ -220,7 +224,7 @@ ACE_Service_Gestalt::load_static_svcs (void)
     {
       ACE_Static_Svc_Descriptor *ssd = *ssdp;
 
-      if (this->process_directive (*ssd, 1) == -1)
+      if (this->process_directive_i (*ssd, 1) == -1)
         return -1;
     }
   return 0;
@@ -242,6 +246,19 @@ ACE_Service_Gestalt::find_static_svc_descriptor (const ACE_TCHAR* name,
 
   ACE_Static_Svc_Descriptor **ssdp = 0;
   for (ACE_STATIC_SVCS_ITERATOR iter ( *this->static_svcs_);
+       iter.next (ssdp) != 0;
+       iter.advance ())
+    {
+      if (ACE_OS::strcmp ((*ssdp)->name_, name) == 0)
+        {
+          if (ssd != 0)
+            *ssd = *ssdp;
+
+          return 0;
+        }
+    }
+
+  for (ACE_STATIC_SVCS_ITERATOR iter ( *this->processed_static_svcs_);
        iter.next (ssdp) != 0;
        iter.advance ())
     {
@@ -390,8 +407,10 @@ ACE_Service_Gestalt::initialize (const ACE_TCHAR *svc_name,
 #endif
 
   const ACE_Service_Type *srp = 0;
-  if (this->repo_->find (svc_name, &srp) == -1)
+  for (int i = 0; this->repo_->find (svc_name, &srp) == -1 && i < 2; i++)
+    //  if (this->repo_->find (svc_name, &srp) == -1)
     {
+#if 0
       // Since we're searching by name, the service may be in the
       // process-wide repository, so check that before reporting
       // failure.
@@ -404,7 +423,27 @@ ACE_Service_Gestalt::initialize (const ACE_TCHAR *svc_name,
                              svc_name),
                             -1);
         }
+#endif
+      ACE_Static_Svc_Descriptor *assd = 0;
+      if (ACE_Service_Config::global()->find_static_svc_descriptor(svc_name, &assd) == 0)
+        {
+          this->process_directive_i(*assd,0);
+        }
+      else
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_LIB_TEXT ("(%P|%t) SG::initialize - service \'%s\'")
+                             ACE_LIB_TEXT (" was not located.\n"),
+                             svc_name),
+                            -1);
+        }
     }
+  if (srp == 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_LIB_TEXT ("(%P|%t) SG::initialize - service \'%s\'")
+                       ACE_LIB_TEXT (" was not located.\n"),
+                       svc_name),
+                      -1);
 
   /// If initialization fails ...
   if (srp->type ()->init (args.argc (),
@@ -452,7 +491,7 @@ ACE_Service_Gestalt::initialize (const ACE_Service_Type_Factory *stf,
       if (ACE::debug ())
         ACE_ERROR_RETURN ((LM_WARNING,
                            ACE_LIB_TEXT ("(%P|%t) \'%s\' already installed.")
-                           ACE_LIB_TEXT (" Must be removes before re-installing\n"),
+                           ACE_LIB_TEXT (" Must be removed before re-installing\n"),
                            stf->name ()),
                           0);
 #endif
@@ -492,7 +531,6 @@ ACE_Service_Gestalt::initialize (const ACE_Service_Type_Factory *stf,
   // make_service_type() is doing the dynamic loading and also runs
   // any static initializers
   ACE_Auto_Ptr<ACE_Service_Type> tmp (stf->make_service_type (this));
-
   if (tmp.get () != 0 &&
       this->initialize_i (tmp.get (), parameters) == 0)
     {
@@ -560,7 +598,6 @@ ACE_Service_Gestalt::initialize_i (const ACE_Service_Type *sr,
 {
   ACE_TRACE ("ACE_Service_Gestalt::initialize_i");
   ACE_ARGV args (parameters);
-
   if (sr->type ()->init (args.argc (),
                          args.argv ()) == -1)
     {
@@ -635,6 +672,27 @@ int
 ACE_Service_Gestalt::process_directive (const ACE_Static_Svc_Descriptor &ssd,
                                         int force_replace)
 {
+  int result = process_directive_i(ssd,force_replace);
+  if (result == 0)
+    {
+      ACE_Static_Svc_Descriptor *assd;
+      ACE_Service_Gestalt *g = ACE_Service_Config::global();
+      if (g->find_static_svc_descriptor (ssd.name_,&assd) == -1
+          || force_replace)
+        {
+          assd = const_cast<ACE_Static_Svc_Descriptor *>(&ssd);
+
+          g->processed_static_svcs_->insert(assd);
+        }
+    }
+  return result;
+}
+
+
+int
+ACE_Service_Gestalt::process_directive_i (const ACE_Static_Svc_Descriptor &ssd,
+                                        int force_replace)
+{
 #ifndef ACE_NLOGGING
   if (ACE::debug () > 2)
     ACE_DEBUG ((LM_DEBUG,
@@ -682,7 +740,6 @@ ACE_Service_Gestalt::process_directive (const ACE_Static_Svc_Descriptor &ssd,
 
   return this->repo_->insert (service_type);
 }
-
 
 #if (ACE_USES_CLASSIC_SVC_CONF == 1)
 
@@ -1127,6 +1184,9 @@ ACE_Service_Gestalt::close (void)
 
   delete this->static_svcs_;
   this->static_svcs_ = 0;
+
+  delete this->processed_static_svcs_;
+  this->processed_static_svcs_ = 0;
 
   return 0;
 
