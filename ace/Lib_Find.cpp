@@ -229,42 +229,21 @@ ACE::ldfind (const ACE_TCHAR* filename,
 #endif /* ACE_DIRECTORY_SEPARATOR_CHAR */
               // First, try matching the filename *without* adding a
               // prefix.
-#if defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS)
-              ACE_OS::sprintf (pathname,
-                               ACE_LIB_TEXT ("%s%s%s"),
-                               searchpathname,
-                               searchfilename,
-                               got_suffix
-                               ? static_cast<ACE_TCHAR *> (ACE_LIB_TEXT (""))
-                               : static_cast<ACE_TCHAR *> (dll_suffix));
-#else /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
               ACE_OS::sprintf (pathname,
                                ACE_LIB_TEXT ("%s%s%s"),
                                searchpathname,
                                searchfilename,
                                got_suffix ? ACE_LIB_TEXT ("") : dll_suffix);
-#endif /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
               if (ACE_OS::access (pathname, F_OK) == 0)
                 return 0;
 
               // Second, try matching the filename *with* adding a prefix.
-#if defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS)
-              ACE_OS::sprintf (pathname,
-                               ACE_LIB_TEXT ("%s%s%s%s"),
-                               searchpathname,
-                               ACE_DLL_PREFIX,
-                               searchfilename,
-                               got_suffix
-                               ? static_cast<ACE_TCHAR *> (ACE_LIB_TEXT (""))
-                               : static_cast<ACE_TCHAR *> (dll_suffix));
-#else /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
               ACE_OS::sprintf (pathname,
                                ACE_LIB_TEXT ("%s%s%s%s"),
                                searchpathname,
                                ACE_DLL_PREFIX,
                                searchfilename,
                                got_suffix ? ACE_LIB_TEXT ("") : dll_suffix);
-#endif /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
               if (ACE_OS::access (pathname, F_OK) == 0)
                 return 0;
             }
@@ -400,39 +379,17 @@ ACE::ldfind (const ACE_TCHAR* filename,
 
                   // First, try matching the filename *without* adding a
                   // prefix.
-#if defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS)
-                  ACE_OS::sprintf (pathname,
-                                   ACE_LIB_TEXT ("%s%c%s%s"),
-                                   path_entry,
-                                   ACE_DIRECTORY_SEPARATOR_CHAR,
-                                   searchfilename,
-                                   got_suffix
-                                   ? static_cast<ACE_TCHAR *> (ACE_LIB_TEXT (""))
-                                   : static_cast<ACE_TCHAR *> (dll_suffix));
-#else /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
                   ACE_OS::sprintf (pathname,
                                    ACE_LIB_TEXT ("%s%c%s%s"),
                                    path_entry,
                                    ACE_DIRECTORY_SEPARATOR_CHAR,
                                    searchfilename,
                                    got_suffix ? ACE_LIB_TEXT ("") : dll_suffix);
-#endif /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
                   if (ACE_OS::access (pathname, F_OK) == 0)
                     break;
 
                   // Second, try matching the filename *with* adding a
                   // prefix.
-#if defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS)
-                  ACE_OS::sprintf (pathname,
-                                   ACE_LIB_TEXT ("%s%c%s%s%s"),
-                                   path_entry,
-                                   ACE_DIRECTORY_SEPARATOR_CHAR,
-                                   ACE_DLL_PREFIX,
-                                   searchfilename,
-                                   got_suffix
-                                   ? static_cast<ACE_TCHAR *> (ACE_LIB_TEXT (""))
-                                   : static_cast<ACE_TCHAR *> (dll_suffix));
-#else /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
                   ACE_OS::sprintf (pathname,
                                    ACE_LIB_TEXT ("%s%c%s%s%s"),
                                    path_entry,
@@ -440,7 +397,6 @@ ACE::ldfind (const ACE_TCHAR* filename,
                                    ACE_DLL_PREFIX,
                                    searchfilename,
                                    got_suffix ? ACE_LIB_TEXT ("") : dll_suffix);
-#endif /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
                   if (ACE_OS::access (pathname, F_OK) == 0)
                     break;
 
