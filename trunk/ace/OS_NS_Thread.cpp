@@ -1170,12 +1170,6 @@ ACE_hthread_t ACE_OS::NULL_hthread;
   ACE_thread_key_t ACE_OS::NULL_key;
 #endif /* ! ACE_HAS_TSS_EMULATION */
 
-#if defined (CHORUS)
-KnCap ACE_OS::actorcaps_[ACE_CHORUS_MAX_ACTORS];
-// This is used to map an actor's id into a KnCap for killing and
-// waiting actors.
-#endif /* CHORUS */
-
 /*****************************************************************************/
 
 void

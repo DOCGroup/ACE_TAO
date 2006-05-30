@@ -530,10 +530,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
       struct ace_hi_lo_correct_endian data_;
 
       /// To ensure alignment on 8-byte boundary.
-      /**
-       * @note "double" isn't usually usable with
-       *       ACE_LACKS_FLOATING_POINT, but this seems OK.
-       */
       double for_alignment_;
     };
 

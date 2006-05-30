@@ -37,7 +37,7 @@
 
 #if defined (ACE_VXWORKS) && !defined (__RTP__)
 #  include /**/ <envLib.h>
-#endif /* VXWORKS */
+#endif /* ACE_VXWORKS */
 
 // Place all additions (especially function declarations) within extern "C" {}
 #ifdef __cplusplus
