@@ -545,7 +545,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << ");" << be_uidt << be_uidt_nl << be_nl
       << "_tao_adapter->dispose (_tao_retval);" << be_nl << be_nl;
 
-  *os << "if (_tao_result == 0)" << be_idt_nl
+  *os << "if (_tao_result == false)" << be_idt_nl
       << "{" << be_idt_nl
       << "ACE_THROW ( ::CORBA::MARSHAL ());" << be_uidt_nl
       << "}" << be_uidt;
@@ -829,7 +829,7 @@ be_visitor_interface_ss::this_method (be_interface *node)
 
   *os << "::CORBA::Object_ptr tmp = CORBA::Object::_nil ();"
       << be_nl << be_nl
-      << "::CORBA::Boolean _tao_opt_colloc =" << be_idt_nl
+      << "::CORBA::Boolean const _tao_opt_colloc =" << be_idt_nl
       << "stub->servant_orb_var ()->orb_core ()->"
       << "optimize_collocation_objects ();" << be_uidt_nl << be_nl
       << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
