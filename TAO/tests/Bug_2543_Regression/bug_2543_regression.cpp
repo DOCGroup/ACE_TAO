@@ -40,10 +40,10 @@ int main (int argc, char* argv[])
        any_o.type(_tc_BaseSeq);
 
        CORBA::OctetSeq_var bin = codec->encode(any_o);
-       CORBA::Any_var any_n = codec->decode(bin);
+       CORBA::Any_var any_n = codec->decode(bin.in ());
 
        const BaseSeq * out = 0;
-       if (!(any_n.in()>>=out))
+       if (!(any_n.in () >>= out))
          {
             ACE_ERROR_RETURN ((LM_ERROR,
                                "Error: extract out of any failed\n"),
