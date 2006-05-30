@@ -1,5 +1,31 @@
 Tue May 30 11:57:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
+        * ace/Log_Msg.cpp:
+        * ace/OS_NS_dirent.inl:
+        * ace/OS_NS_netdb.inl:
+        * ace/OS_NS_pwd.inl:
+        * ace/OS_NS_stdlib.inl:
+        * ace/OS_NS_Thread.cpp:
+        * ace/OS_NS_Thread.inl:
+        * ace/OS_NS_time.cpp:
+        * ace/OS_NS_time.inl:
+        * ace/Thread_Manager.cpp:
+        * ace/os_include/os_pthread.h:
+        * ace/os_include/os_stdlib.h:
+          Removed support for HPUX 10.20
+
+Tue May 30 11:57:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-hpux-10.x-g++.h
+        * ace/config-hpux-10.x-hpc++.h
+        * ace/config-hpux-10.x.h
+          Removed these files, not supported anymore
+
+        * ace/OS_NS_time.inl:
+          Removed check for ACE_CTIME_R_RETURNS_INT, it was for hpux 10.20
+
+Tue May 30 11:57:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
         * ace/config-osf1-4.0.h:
           Removed, contents merged to tru64 file
 

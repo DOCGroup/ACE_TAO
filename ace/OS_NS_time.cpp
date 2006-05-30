@@ -229,8 +229,6 @@ ACE_OS::localtime_r (const time_t *t, struct tm *res)
 #if defined (ACE_HAS_REENTRANT_FUNCTIONS)
 # if defined (DIGITAL_UNIX)
   ACE_OSCALL_RETURN (::_Plocaltime_r (t, res), struct tm *, 0);
-# elif defined (HPUX_10)
-  return (::localtime_r (t, res) == 0 ? res : (struct tm *)0);
 # else
   ACE_OSCALL_RETURN (::localtime_r (t, res), struct tm *, 0);
 # endif /* DIGITAL_UNIX */

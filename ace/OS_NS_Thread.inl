@@ -2532,11 +2532,7 @@ ACE_OS::sigwait (sigset_t *sset, int *sig)
       return errno == 0  ?  *sig  :  -1;
 #   else /* ! __Lynx __ && ! (DIGITAL_UNIX && __DECCXX_VER) */
 #     if (defined (ACE_HAS_PTHREADS_DRAFT4) || (defined (ACE_HAS_PTHREADS_DRAFT6))) || (defined (_UNICOS) && _UNICOS == 9)
-#       if defined (HPUX_10)
-        *sig = cma_sigwait (sset);
-#       else
         *sig = ::sigwait (sset);
-#       endif  /* HPUX_10 */
         return *sig;
 #     elif defined (CYGWIN32)
         // Cygwin has sigwait definition, but it is not implemented
@@ -2885,16 +2881,7 @@ ACE_OS::thr_join (ACE_hthread_t thr_handle,
   // Joinable threads need to be detached after joining on Pthreads
   // draft 4 (at least) to reclaim thread storage.
 #     if defined (ACE_HAS_PTHREADS_DRAFT4)
-#       if defined (HPUX_10)
-  // HP-UX DCE threads' pthread_detach will smash thr_id if it's just given
-  // as an argument.  Since the id is still needed, give pthread_detach
-  // a junker to scribble on.
-  ACE_thread_t  junker;
-  cma_handle_assign (&thr_handle, &junker);
-  pthread_detach (&junker);
-#       else
   pthread_detach (&thr_handle);
-#       endif  /* HPUX_10 */
 #     endif /* ACE_HAS_PTHREADS_DRAFT4 */
 
     return ace_result;
