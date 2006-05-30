@@ -26,12 +26,12 @@
 #include "ace/os_include/sys/os_sem.h"
 #include "ace/Default_Constants.h"
 
-#if defined (ACE_WIN32) && !defined (ACE_PSOS)
+#if defined (ACE_WIN32) 
    // Default semaphore key and mutex name
 #  if !defined (ACE_DEFAULT_SEM_KEY)
 #    define ACE_DEFAULT_SEM_KEY "ACE_SEM_KEY"
 #  endif /* ACE_DEFAULT_SEM_KEY */
-#else /* !defined (ACE_WIN32) && !defined (ACE_PSOS) */
+#else /* !defined (ACE_WIN32) */
    // Default semaphore key
 #  if !defined (ACE_DEFAULT_SEM_KEY)
 #    define ACE_DEFAULT_SEM_KEY 1234

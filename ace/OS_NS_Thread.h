@@ -152,88 +152,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #     define THR_SCHED_RR            0
 #     define THR_SCHED_DEFAULT       0
 
-#   elif defined (ACE_PSOS)
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
-// Some versions of pSOS provide native mutex support.  For others,
-// implement ACE_thread_mutex_t and ACE_mutex_t using pSOS semaphores.
-// Either way, the types are all u_longs.
-typedef u_long ACE_mutex_t;
-typedef u_long ACE_thread_mutex_t;
-typedef u_long ACE_thread_t;
-typedef u_long ACE_hthread_t;
-
-#     if defined (ACE_PSOS_HAS_COND_T)
-typedef u_long ACE_cond_t;
-typedef u_long ACE_condattr_t;
-struct ACE_Export ACE_mutexattr_t
-{
-  int type;
-};
-#     endif /* ACE_PSOS_HAS_COND_T */
-
-
-// TCB registers 0-7 are for application use
-#     define PSOS_TASK_REG_TSS 0
-#     define PSOS_TASK_REG_MAX 7
-
-#     define PSOS_TASK_MIN_PRIORITY   1
-#     define PSOS_TASK_MAX_PRIORITY 239
-
-// Key type: the ACE TSS emulation requires the key type be unsigned,
-// for efficiency.  Current POSIX and Solaris TSS implementations also
-// use unsigned int, so the ACE TSS emulation is compatible with them.
-// Native pSOS TSD, where available, uses unsigned long as the key type.
-#     if defined (ACE_PSOS_HAS_TSS)
-typedef u_long ACE_OS_thread_key_t;
-#     else
-typedef u_int ACE_OS_thread_key_t;
-#     endif /* ACE_PSOS_HAS_TSS */
-// Application TSS key type (use this type except in TSS Emulation)
-#   if defined (ACE_HAS_TSS_EMULATION)
-      typedef u_int ACE_thread_key_t;
-#   else  /* ! ACE_HAS_TSS_EMULATION */
-      typedef ACE_OS_thread_key_t ACE_thread_key_t;
-#   endif /* ! ACE_HAS_TSS_EMULATION */
-
-ACE_END_VERSIONED_NAMESPACE_DECL
-
-#     define THR_CANCEL_DISABLE      0  /* thread can never be cancelled */
-#     define THR_CANCEL_ENABLE       0      /* thread can be cancelled */
-#     define THR_CANCEL_DEFERRED     0      /* cancellation deferred to cancellation point */
-#     define THR_CANCEL_ASYNCHRONOUS 0      /* cancellation occurs immediately */
-
-#     define THR_BOUND               0
-#     define THR_NEW_LWP             0
-#     define THR_DETACHED            0
-#     define THR_SUSPENDED           0
-#     define THR_DAEMON              0
-#     define THR_JOINABLE            0
-
-#     define THR_SCHED_FIFO          0
-#     define THR_SCHED_RR            0
-#     define THR_SCHED_DEFAULT       0
-#     define THR_INHERIT_SCHED       0
-#     define USYNC_THREAD            T_LOCAL
-#     define USYNC_PROCESS           T_GLOBAL
-
-/* from psos.h */
-/* #define T_NOPREEMPT     0x00000001   Not preemptible bit */
-/* #define T_PREEMPT       0x00000000   Preemptible */
-/* #define T_TSLICE        0x00000002   Time-slicing enabled bit */
-/* #define T_NOTSLICE      0x00000000   No Time-slicing */
-/* #define T_NOASR         0x00000004   ASRs disabled bit */
-/* #define T_ASR           0x00000000   ASRs enabled */
-
-/* #define SM_GLOBAL       0x00000001  1 = Global */
-/* #define SM_LOCAL        0x00000000  0 = Local */
-/* #define SM_PRIOR        0x00000002  Queue by priority */
-/* #define SM_FIFO         0x00000000  Queue by FIFO order */
-
-/* #define T_NOFPU         0x00000000   Not using FPU */
-/* #define T_FPU           0x00000002   Using FPU bit */
-
 #   elif defined (ACE_VXWORKS)
 #     include /**/ <sysLib.h> // for sysClkRateGet()
 #     if !defined (__RTP__)
@@ -395,7 +313,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #     define THR_INHERIT_SCHED       0
 #     define THR_SCOPE_PROCESS       0
 #     define THR_SCOPE_SYSTEM        0
-#   endif /* ACE_HAS_PTHREADS / STHREADS / PSOS / VXWORKS / WTHREADS **********/
+#   endif /* ACE_HAS_PTHREADS / STHREADS / VXWORKS / WTHREADS **********/
 
 // If we're using PACE then we don't want this class (since PACE
 // takes care of it) unless we're on Windows. Win32 mutexes, semaphores,

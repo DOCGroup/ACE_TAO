@@ -364,22 +364,6 @@ ACE_TSS_Emulation::is_key (ACE_thread_key_t key)
 void *
 ACE_TSS_Emulation::tss_open (void *ts_storage[ACE_TSS_THREAD_KEYS_MAX])
 {
-#  if defined (ACE_PSOS)
-  u_long tss_base;
-
-  // Use the supplied array for this thread's TSS.
-  tss_base = (u_long) ts_storage;
-  t_setreg (0, PSOS_TASK_REG_TSS, tss_base);
-
-  // Zero the entire TSS array.
-  void **tss_base_p = ts_storage;
-  for (u_int i = 0; i < ACE_TSS_THREAD_KEYS_MAX; ++i, ++tss_base_p)
-    {
-      *tss_base_p = 0;
-    }
-
-  return (void *) tss_base;
-#  else  /* ! ACE_PSOS */
 #    if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
         // On VxWorks, in particular, don't check to see if the field
         // is 0.  It isn't always, specifically, when a program is run
@@ -410,7 +394,6 @@ ACE_TSS_Emulation::tss_open (void *ts_storage[ACE_TSS_THREAD_KEYS_MAX])
       return 0;
     }
 #    endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE */
-#  endif /* ! ACE_PSOS */
 }
 
 void
@@ -1989,64 +1972,6 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
 }
   /* NOTREACHED */
 
-# elif defined (ACE_PSOS)
-  ACE_UNUSED_ARG (lock_scope);
-  ACE_UNUSED_ARG (attributes);
-  ACE_UNUSED_ARG (sa);
-  ACE_UNUSED_ARG (lock_type);
-#   if defined (ACE_PSOS_HAS_MUTEX)
-
-    u_long flags = MU_LOCAL;
-    u_long ceiling = 0;
-
-#     if defined (ACE_HAS_RECURSIVE_MUTEXES)
-    flags |= MU_RECURSIVE;
-#     else /* ! ACE_HAS_RECURSIVE_MUTEXES */
-    flags |= MU_NONRECURSIVE;
-#     endif /* ACE_HAS_RECURSIVE_MUTEXES */
-
-#     if defined (ACE_PSOS_HAS_PRIO_MUTEX)
-
-    flags |= MU_PRIOR;
-
-#       if defined (ACE_PSOS_HAS_PRIO_INHERIT_MUTEX)
-    flags |= MU_PRIO_INHERIT;
-#       elif defined (ACE_PSOS_HAS_PRIO_PROTECT_MUTEX)
-    ceiling =  PSOS_TASK_MAX_PRIORITY;
-    flags |= MU_PRIO_PROTECT;
-#       else
-    flags |= MU_PRIO_NONE;
-#       endif /* ACE_PSOS_HAS_PRIO_INHERIT_MUTEX */
-
-#     else /* ! ACE_PSOS_HAS_PRIO_MUTEX */
-
-    flags |= MU_FIFO | MU_PRIO_NONE;
-
-#     endif
-
-    // Fake a pSOS name - it can be any 4-byte value, not necessarily needing
-    // to be ASCII. So use the mutex pointer passed in. That should identify
-    // each one uniquely.
-    union { ACE_mutex_t *p; char n[4]; } m_name;
-    m_name.p = m;
-
-    int result;
-    ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::mu_create (m_name.n,
-                       flags,
-                       ceiling,
-                       m),
-    result),
-    int, -1);
-
-#   else /* ! ACE_PSOS_HAS_MUTEX */
-  int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sm_create ((char *) name,
-                     1,
-                     SM_LOCAL | SM_PRIOR,
-                     m),
-  result),
-  int, -1);
-#   endif /* ACE_PSOS_HAS_MUTEX */
 # elif defined (ACE_VXWORKS)
   ACE_UNUSED_ARG (name);
   ACE_UNUSED_ARG (attributes);

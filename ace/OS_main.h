@@ -63,21 +63,7 @@
 
 // Rename "main ()" on platforms that don't allow it to be called "main ()".
 
-#   if defined (ACE_PSOSIM)
-         || (defined (ACE_PSOS) && defined (ACE_PSOS_LACKS_ARGC_ARGV))
-
-#     define main \
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL \
-ace_os_main_i (int, char *[]); \
-ACE_END_VERSIONED_NAMESPACE_DECL \
-ACE_MAIN ()   /* user's entry point, e.g., "main" w/out argc, argv */ \
-{ \
-  ace_os_main_i (argc, argv); /* what the user calls "main" */ \
-} \
-int \
-ace_main_i
-
-#   elif defined (ACE_VXWORKS) && !defined (__RTP__)
+#   if defined (ACE_VXWORKS) && !defined (__RTP__)
 
 typedef int (*ace_main_proc_ptr)(int, char *[]);
 

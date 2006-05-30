@@ -1,3 +1,30 @@
+Tue May 30 13:06:42 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/ACE.inl:
+        * ace/Base_Thread_Adapter.cpp: 
+        * ace/Default_Constants.h: 
+        * ace/Global_Macros.h: 
+        * ace/OS.h: 
+        * ace/OS_NS_Thread.cpp: 
+        * ace/OS_NS_Thread.h: 
+        * ace/OS_NS_netdb.inl:
+        * ace/OS_NS_signal.inl:
+        * ace/OS_NS_sys_socket.inl:
+        * ace/OS_NS_time.inl:
+        * ace/OS_main.cpp: 
+        * ace/OS_main.h: 
+        * ace/Object_Manager_Base.h:
+        * ace/Process_Manager.cpp:
+        * ace/Process_Semaphore.cpp:
+        * ace/Process_Semaphore.h:
+        * ace/Process_Semaphore.inl: 
+        * ace/Recursive_Thread_Mutex.cpp:
+        * ace/SV_Semaphore_Simple.h: 
+        * ace/TLI_Acceptor.cpp:
+        * ace/Thread_Adapter.cpp:
+        * ace/Token.h: 
+        * ace/config-macros.h: Removed all vestiges of PSOS.
+
 Tue May 30 12:22:53 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/mpc.pl:

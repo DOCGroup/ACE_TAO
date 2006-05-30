@@ -388,38 +388,6 @@ ACE_OS::nanosleep (const struct timespec *requested,
   // be available on the platform.  On Solaris 2.x, both functions
   // require linking with -lposix4.
   return ::nanosleep ((ACE_TIMESPEC_PTR) requested, remaining);
-#elif defined (ACE_PSOS)
-#  if ! defined (ACE_PSOS_DIAB_MIPS)
-  double ticks =
-    KC_TICKS2SEC * requested->tv_sec +
-    (static_cast<double> (requested->tv_nsec) *
-     static_cast<double> (KC_TICKS2SEC) ) /
-    static_cast<double> (ACE_ONE_SECOND_IN_NSECS);
-
-  if (ticks > static_cast<double> (ACE_PSOS_Time_t::max_ticks))
-    {
-      ticks -= static_cast<double> (ACE_PSOS_Time_t::max_ticks);
-      remaining->tv_sec =
-        static_cast<time_t> ((ticks / static_cast<double> (KC_TICKS2SEC)));
-      ticks -= static_cast<double> (remaining->tv_sec) *
-        static_cast<double> (KC_TICKS2SEC);
-
-      remaining->tv_nsec =
-        static_cast<long> ((ticks
-                            * static_cast<double> (ACE_ONE_SECOND_IN_NSECS)) /
-                           static_cast<double> (KC_TICKS2SEC));
-
-      ::tm_wkafter (ACE_PSOS_Time_t::max_ticks);
-    }
-  else
-    {
-      remaining->tv_sec = 0;
-      remaining->tv_nsec = 0;
-      ::tm_wkafter (static_cast<u_long> (ticks));
-    }
-
-  // tm_wkafter always returns 0
-#  endif /* ACE_PSOS_DIAB_MIPS */
   return 0;
 #else
   ACE_UNUSED_ARG (remaining);
@@ -488,7 +456,7 @@ ACE_OS::tzset (void)
 #   endif /* ACE_WIN32 */
 # else
   errno = ENOTSUP;
-# endif /* ACE_HAS_WINCE && !VXWORKS && !ACE_PSOS && !__rtems__ && !ACE_HAS_DINKUM_STL */
+# endif /* ACE_HAS_WINCE && !VXWORKS && !__rtems__ && !ACE_HAS_DINKUM_STL */
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL
