@@ -1,3 +1,9 @@
+Tue May 30 18:24:54 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/DLL.h (ACE_DLL): Updated the documentation of open() to explain the
+         lookup scheme when a filename is given.  Thanks to Phlip
+          <phlip2005 at gmail dot com> for motivating this.
+
 Tue May 30 13:06:42 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/ACE.inl:

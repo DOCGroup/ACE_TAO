@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_DLL_PARSER_H
 #define TAO_DLL_PARSER_H
 
@@ -36,11 +35,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * DLL:Service_Name
  *
  * the string_to_object() function will use ACE's Service Configurator
- * to dynamically load the service named 'Service_Name'.  The ORB
- * assumes that this service implements the TAO_Object_Loader
- * interface, and uses that interface to create a new object
- * implementation locally. The object reference for this local object
- * is returned to the application.
+ * framework to dynamically load the service named 'Service_Name'
+ * using all the normal platform-independent naming conventions and
+ * environment variable lookup rules that are normally used by @c
+ * ACE_DLL::open().  The ORB assumes that this service implements the
+ * TAO_Object_Loader interface, and uses that interface to create a
+ * new object implementation locally. The object reference for this
+ * local object is returned to the application.
  *
  * This can be used in applications that sometimes require local
  * object while other times they may use a remote implementation.
