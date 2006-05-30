@@ -24,6 +24,8 @@ typedef short TwoDArray[64][63];
 
 typedef short ThreeDArray[64][63][62];
 
+typedef short FourDArray[64][63][62][61];
+
 // This problem is a combination of two others
 // that have long been fixed, but you never know...
 
