@@ -323,7 +323,7 @@ TAO_Marshal_Struct::skip (CORBA::TypeCode_ptr  tc,
   CORBA::TypeCode_var param;
 
   // Number of fields in the struct.
-  const CORBA::ULong member_count =
+  CORBA::ULong const member_count =
     tc->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
 
@@ -953,9 +953,9 @@ TAO_Marshal_Value::skip (CORBA::TypeCode_ptr  tc,
   // first-time/nested skips so that we won't attempt to
   // skip rep_id several times.
   //
-  if (this->nested_processing_ == 0)
+  if (this->nested_processing_ == false)
     {
-      this->nested_processing_ = 1;
+      this->nested_processing_ = true;
 
       CORBA::Long value_tag;
 
@@ -964,7 +964,7 @@ TAO_Marshal_Value::skip (CORBA::TypeCode_ptr  tc,
           return TAO::TRAVERSE_STOP;
         }
 
-	  TAO_ORB_Core *orb_core = stream->orb_core ();
+      TAO_ORB_Core *orb_core = stream->orb_core ();
       if (orb_core == 0)
         {
           orb_core = TAO_ORB_Core_instance ();
@@ -981,7 +981,7 @@ TAO_Marshal_Value::skip (CORBA::TypeCode_ptr  tc,
 
       if (value_tag == 0) // Null value type pointer.
         {
-          //We are done.
+          // We are done.
           return retval;
         }
       else if (value_tag & adapter->type_info_single ())
@@ -1015,7 +1015,7 @@ TAO_Marshal_Value::skip (CORBA::TypeCode_ptr  tc,
     }
 
   // Number of fields in the valuetype.
-  const CORBA::ULong member_count =
+  CORBA::ULong const member_count =
     tc->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
 

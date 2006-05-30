@@ -136,7 +136,7 @@ void
 CORBA::Any::type (CORBA::TypeCode_ptr tc
                   ACE_ENV_ARG_DECL)
 {
-  CORBA::Boolean equiv = 0;
+  CORBA::Boolean equiv = false;
 
   if (this->impl_ != 0)
     {
