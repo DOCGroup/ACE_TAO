@@ -602,12 +602,12 @@ ACE_Log_Msg::priority_mask (u_long n_mask, MASK_TYPE mask_type)
 {
   u_long o_mask;
 
-  if (mask_type == THREAD) 
+  if (mask_type == THREAD)
     {
       o_mask = this->priority_mask_;
       this->priority_mask_ = n_mask;
     }
-  else 
+  else
     {
       o_mask = ACE_Log_Msg::process_priority_mask_;
       ACE_Log_Msg::process_priority_mask_ = n_mask;
@@ -619,7 +619,7 @@ ACE_Log_Msg::priority_mask (u_long n_mask, MASK_TYPE mask_type)
 u_long
 ACE_Log_Msg::priority_mask (MASK_TYPE mask_type)
 {
-  return mask_type == THREAD 
+  return mask_type == THREAD
     ? this->priority_mask_
     :  ACE_Log_Msg::process_priority_mask_;
 }
@@ -1159,13 +1159,8 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
 
                 case 'A':             // ACE_timer_t
                   {
-#if defined (ACE_LACKS_FLOATING_POINT)
-                    ACE_OS::strcpy (fp, ACE_LIB_TEXT ("ld"));
-                    ACE_UINT32 value = va_arg (argp, ACE_UINT32);
-#else
                     ACE_OS::strcpy (fp, ACE_LIB_TEXT ("f"));
                     double value = va_arg (argp, double);
-#endif /* ACE_LACKS_FLOATING_POINT */
                     if (can_check)
                       this_len = ACE_OS::snprintf (bp, bspace, format, value);
                     else
