@@ -1,3 +1,12 @@
+Tue May 30 21:56:52 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ACE-INSTALL.html: Corrected the AIX section; removed descriptions of
+          old compilers that are no longer supported and suggested the config
+          and platform_macros files to use. Thanks to Michelle Zheng
+          <Michelle dot Zheng at dowjones dot com> for motivating this.
+
+        * THANKS: Added Michelle Zheng to the Hall of Fame.
+
 Tue May 30 19:17:40 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ace/Dynamic_Service.h:
