@@ -309,10 +309,12 @@ run_main (int argc, ACE_TCHAR *argv[])
 {
   ACE_START_TEST (ACE_TEXT ("Recursive_Mutex_Test"));
 
-  if (argc > 1)
-    n_threads = ACE_OS::atoi (argv[1]);
-
 #if defined (ACE_HAS_THREADS)
+  if (argc > 1)
+    {
+      n_threads = ACE_OS::atoi (argv[1]);
+    }
+
   ACE_Recursive_Thread_Mutex rm;
 
   ACE_Thread_Manager::instance ()->spawn_n (n_threads,
@@ -326,8 +328,9 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_Thread_Manager::instance ()->wait ();
 #else
   ACE_ERROR ((LM_ERROR,
-              ACE_TEXT ("ACE doesn't support recursive process mutexes on this platform\n")));
-#endif /* ACE_WIN32 */
+              ACE_TEXT ("ACE doesn't support recursive process ")
+              ACE_TEXT ("mutexes on this platform\n")));
+#endif /* ACE_HAS_THREADS */
   ACE_END_TEST;
   return 0;
 }
