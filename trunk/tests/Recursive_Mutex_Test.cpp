@@ -23,6 +23,7 @@
 #include "ace/Thread_Manager.h"
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_sys_time.h"
+#include "ace/OS_NS_unistd.h"
 #include "ace/Recursive_Thread_Mutex.h"
 
 ACE_RCSID(tests, Recursive_Mutex_Test, "$Id$")
