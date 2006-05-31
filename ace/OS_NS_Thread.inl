@@ -833,6 +833,7 @@ ACE_OS::recursive_mutex_lock (ACE_recursive_thread_mutex_t *m,
 #endif /* ACE_HAS_RECURSIVE_MUTEXES */
 #else
   ACE_UNUSED_ARG (m);
+  ACE_UNUSED_ARG (timeout);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_THREADS */
 }
