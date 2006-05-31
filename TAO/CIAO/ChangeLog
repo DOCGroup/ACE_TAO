@@ -1,3 +1,11 @@
+Wed May 31 17:08:17 UTC 2006  jiang,shanshan <shanshan.jiang@vanderbilt.edu>
+
+        * DAnCE/Planner/Planner.mpc
+        * DAnCE/Planner/Planner.cpp
+
+          Removed the generated file of Repoman (RepositoryManagerDaemonC.*)
+          included in the Planner project and use the RepositoryManagerC.*.
+
 Wed May 31 16:49:12 UTC 2006  jiang,shanshan <shanshan.jiang@vanderbilt.edu>
 
         * DAnCE/RepositoryManager/RepositoryManager_Impl.cpp

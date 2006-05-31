@@ -13,7 +13,6 @@ project (Planner) : taoexe, ciao_component_dnc, ciao_client_dnc, ciao_deployment
   includes += $(CIAO_ROOT)/tools/Config_Handlers
 
   Source_Files {
-    ../RepositoryManager/RepositoryManagerDaemonC.cpp
     Planner.cpp
     PCVisitorBase.cpp
     PCVisitor.cpp
