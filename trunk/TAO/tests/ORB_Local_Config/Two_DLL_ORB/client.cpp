@@ -29,7 +29,7 @@ Client_Worker::~Client_Worker (void)
 int
 Client_Worker::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:");
+  ACE_Get_Opt get_opts (argc, argv, "k:",0);
 
   for( int c = 0; ((c = get_opts ()) != -1); )
     switch (c)
@@ -48,6 +48,7 @@ Client_Worker::test_main (int argc, ACE_TCHAR *argv[] ACE_ENV_ARG_DECL)
 {
 
   ACE_Argv_Type_Converter cvt (argc, argv);
+
   CORBA::ORB_var orb = CORBA::ORB_init (cvt.get_argc (), cvt.get_ASCII_argv () ACE_ENV_ARG_PARAMETER);
   ACE_TRY_CHECK;
 
