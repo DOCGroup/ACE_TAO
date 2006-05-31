@@ -160,8 +160,8 @@ Vector_Test
 WFMO_Reactor_Test: !nsk
 INET_Addr_Test_IPV6: !nsk
 Max_Default_Port_Test_IPV6: !nsk
-Multicast_Test_IPV6: !NO_MCAST !nsk !ACE_FOR_TAO
-Multihomed_INET_Addr_Test_IPV6: !nsk
+Multicast_Test_IPV6: !NO_MCAST !nsk
+Multihomed_INET_Addr_Test_IPV6: !nsk !ACE_FOR_TAO
 Proactor_Test_IPV6: !nsk !ACE_FOR_TAO !BAD_AIO
 SOCK_Send_Recv_Test_IPV6
 SOCK_Dgram_Test
