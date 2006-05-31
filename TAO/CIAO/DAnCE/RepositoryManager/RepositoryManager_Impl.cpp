@@ -49,9 +49,6 @@
 
 #include "ace/Configuration_Import_Export.h"
 
-#include "Config_Handlers/DnC_Dump.h"
-#include "Deployment.hpp"
-
 #include <iostream>
 using namespace std;
 
@@ -631,13 +628,6 @@ CIAO_RepositoryManagerDaemon_i::findPackageByName (const char * name)
   if(!RM_Helper::reincarnate (pc, pc_path.c_str ()))
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  //Deployment::DnC_Dump::dump (pc);
-
-  //xercesc::DOMDocument* the_xsc (CIAO::Config_Handlers::XML_HELPER->create_dom
-  //  ("Deployment:packageConfiguration", "http://www.omg.org/Deployment"));
-  //CIAO::Config_Handlers::packageConfiguration(pc, the_xsc);
-  //CIAO::Config_Handlers::XML_HELPER->write_DOM(the_xsc, "test.xml");
-
   ACE_DEBUG ((LM_INFO, "Successfully looked up \'%s\'.\n", name));
 
   return pc._retn ();
@@ -797,7 +787,7 @@ CIAO_RepositoryManagerDaemon_i::getAllNames ()
     iter != this->names_.end () && index < num_entries;
     ++iter, ++index)
   {
-    CIEntry& element = *iter;
+    PCEntry& element = *iter;
     seq[index] = CORBA::string_dup (element.ext_id_.c_str ());
   }
 
@@ -838,7 +828,7 @@ CIAO_RepositoryManagerDaemon_i::getAllNames ()
        ++i)
      ++num_entries;
 
-  ACE_DEBUG ((LM_DEBUG, "# names: %d\n", num_entries));
+  ACE_DEBUG ((LM_DEBUG, "# types: %d\n", num_entries));
 
 
   CORBA::StringSeq_var seq;
