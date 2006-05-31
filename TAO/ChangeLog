@@ -1,3 +1,22 @@
+Wed May 31 03:54:20 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/TAO_Internal.cpp:
+
+          Revert Jeff's May 25 change, it prevented the calling of a
+          necessary function if the debuglevel wasn't set high
+          enough. Reworked the logic enough to ensure the value Jeff's
+          change was protecting didn't start causing problems again.
+
+        * tests/ORB_Local_Config/Two_DLL_ORB/ORB_DLL.cpp:
+        * tests/ORB_Local_Config/Two_DLL_ORB/Service_Config_ORB_Test.conf:
+        * tests/ORB_Local_Config/Two_DLL_ORB/Service_Config_ORB_Test2.conf:
+        * tests/ORB_Local_Config/Two_DLL_ORB/Service_Config_ORB_Test3.conf:
+        * tests/ORB_Local_Config/Two_DLL_ORB/client.cpp:
+        * tests/ORB_Local_Config/Two_DLL_ORB/server.cpp:
+
+          Update this test to resolve some runtime issues and to ensure
+          the proper loading of subsequent service configuration files.
+
 Tue May 30 19:17:28 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/orbsvcs/Security/Security_PolicyFactory.h:

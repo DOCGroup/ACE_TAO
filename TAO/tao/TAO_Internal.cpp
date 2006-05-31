@@ -272,17 +272,17 @@ TAO::ORB::open_services (ACE_Service_Gestalt* pcfg,
 
       register_additional_services_i (theone);
     }
-  else if (TAO_debug_level > 2)
+  else
     {
       int status =
         parse_global_args_i(argc, argv,global_svc_config_argv, false);
-
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) Skipping the process-wide ")
-                  ACE_TEXT ("service configuration, service_open_count ")
-                  ACE_TEXT ("= %d, status = %d\n"),
-                  service_open_count,
-                  status));
+      if (status == -1 && TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("TAO (%P|%t) Skipping the process-wide ")
+                    ACE_TEXT ("service configuration, service_open_count ")
+                    ACE_TEXT ("= %d, status = %d\n"),
+                    service_open_count,
+                    status));
     }
 
   if (TAO_debug_level > 2)
