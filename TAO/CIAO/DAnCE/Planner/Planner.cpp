@@ -5,7 +5,7 @@
 
 #include "ace/OS_main.h"
 
-#include "DAnCE/RepositoryManager/RepositoryManagerDaemonC.h"
+#include "ciao/RepositoryManagerC.h"
 #include "PCVisitor.h"
 #include "PCVisitorBase.h"
 #include "Config_Handlers/DnC_Dump.h"
@@ -67,8 +67,8 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      CIAO::RepositoryManagerDaemon_var rm =
-      CIAO::RepositoryManagerDaemon::_narrow (obj.in ()
+      Deployment::RepositoryManager_var rm =
+      Deployment::RepositoryManager::_narrow (obj.in ()
                                 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
