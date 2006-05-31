@@ -357,7 +357,7 @@ run_main (int, ACE_TCHAR *[])
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) performing synchronous test...\n")));
 
-  Parent *parent1;
+  Parent *parent1 = 0;
   ACE_NEW_RETURN (parent1,
                   Parent,
                   -1);
@@ -386,7 +386,7 @@ run_main (int, ACE_TCHAR *[])
   // Weak pointer should now be set to null.
   ACE_ASSERT (p8.null ());
 
-  Printer *printer1;
+  Printer *printer1 = 0;
   ACE_NEW_RETURN (printer1,
                   Printer ("I am printer 1"),
                   -1);
