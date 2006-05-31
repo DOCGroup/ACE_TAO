@@ -361,7 +361,7 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc,
     tc->discriminator_type (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
 
-  CORBA::ULong kind =
+  CORBA::ULong const kind =
     discrim_tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
 
@@ -657,7 +657,7 @@ TAO_Marshal_Sequence::skip (CORBA::TypeCode_ptr  tc,
   ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
 
   // For CORBA basic types, the skip can be optimized
-  CORBA::TCKind kind = tc2->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::TCKind const kind = tc2->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
 
   char *dummy;
@@ -748,7 +748,7 @@ TAO_Marshal_Array::skip (CORBA::TypeCode_ptr  tc,
   ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
 
   // For CORBA basic types, the skip can be optimized
-  CORBA::TCKind kind = tc2->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::TCKind const kind = tc2->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
 
   char *dummy;
