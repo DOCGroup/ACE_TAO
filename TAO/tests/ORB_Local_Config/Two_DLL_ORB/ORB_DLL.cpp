@@ -5,7 +5,7 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_strings.h"
 
-#include "ace/Get_Opt.h"
+#include "ace/Arg_Shifter.h"
 #include "ace/Log_Msg.h"
 
 ACE_RCSID (tests,
@@ -42,25 +42,31 @@ Service_Config_ORB_DLL::~Service_Config_ORB_DLL (void)
 int
 Service_Config_ORB_DLL::init (int argc, ACE_TCHAR *argv[])
 {
-  ACE_ARGV* tmp = 0;
-  ACE_NEW_RETURN (tmp, ACE_ARGV (argv), -1);
-  this->argv_.reset (tmp);
+  ACE_Arg_Shifter arg_shifter (argc, argv);
 
-  ACE_Get_Opt get_opts (argc, argv, "cs");
-  for (int c=0;((c = get_opts ()) != -1); )
-    switch (c)
+  while (arg_shifter.is_anything_left ())
     {
-    case 'c':
-      this->is_server_ = 0;
-      break;
-
-    case 's':
-      this->is_server_ = 1;
-      break;
+      if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT ("-c")) == 0)
+        {
+          this->is_server_ = 0;
+          arg_shifter.consume_arg();
+        }
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT ("-s")) == 0)
+        {
+          this->is_server_ = 1;
+          arg_shifter.consume_arg();
+        }
+      else
+        arg_shifter.ignore_arg();
     }
 
   if (this->is_server_ < 0)
     ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) You must specify -c(lient) or -s(erver) argument. Aborting."), -1);
+
+  argv[argc][0] = 0; // whacks the previously processed -c or -s
+  ACE_ARGV* tmp = 0;
+  ACE_NEW_RETURN (tmp, ACE_ARGV (argv), -1);
+  this->argv_.reset (tmp);
 
   Abstract_Worker* worker = 0;
   if (this->is_server_)
