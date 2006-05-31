@@ -1,3 +1,12 @@
+Wed May 31 18:46:37 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * examples/Display/NavDisplay/NavDisplay.mpc:
+
+          Added 'libs += Display_Base_stub' to the
+          Display_Base_NaviDisplay_stub project so that VC8, with its
+          parallel builds, will know about the dependency that VC7.1
+          seems to get from the 'after' line.
+
 Wed May 31 18:17:11 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * DAnCE/TargetManager/TM_Client.mpc:
