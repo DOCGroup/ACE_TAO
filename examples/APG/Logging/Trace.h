@@ -10,9 +10,9 @@ class Trace
 {
 public:
   Trace (const ACE_TCHAR *prefix,
-	 const ACE_TCHAR *name,
-	 int line,
-	 const ACE_TCHAR *file)
+   const ACE_TCHAR *name,
+   int line,
+   const ACE_TCHAR *file)
     {
       this->prefix_ = prefix;
       this->name_   = name;
@@ -117,35 +117,35 @@ private:
 #define MY_DEBUG(FMT, ...)     \
         ACE_DEBUG(( LM_DEBUG,  \
                     DEBUG_PREFIX FMT \
-                    __VA_ARGS__))
+                    ##__VA_ARGS__))
 #define MY_INFO(FMT, ...)     \
         ACE_DEBUG(( LM_INFO,  \
                     INFO_PREFIX FMT \
-                    __VA_ARGS__))
+                    ##__VA_ARGS__))
 #define MY_NOTICE(FMT, ...)     \
         ACE_DEBUG(( LM_NOTICE,  \
                     NOTICE_PREFIX FMT \
-                    __VA_ARGS__))
+                    ##__VA_ARGS__))
 #define MY_WARNING(FMT, ...)     \
         ACE_DEBUG(( LM_WARNING,  \
                     WARNING_PREFIX FMT \
-                    __VA_ARGS__))
+                    ##__VA_ARGS__))
 #define MY_ERROR(FMT, ...)     \
         ACE_DEBUG(( LM_ERROR,  \
                     ERROR_PREFIX FMT \
-                    __VA_ARGS__))
+                    ##__VA_ARGS__))
 #define MY_CRITICAL(FMT, ...)     \
         ACE_DEBUG(( LM_CRITICAL,  \
                     CRITICAL_PREFIX FMT \
-                    __VA_ARGS__))
+                    ##__VA_ARGS__))
 #define MY_ALERT(FMT, ...)     \
         ACE_DEBUG(( LM_ALERT,  \
                     ALERT_PREFIX FMT \
-                    __VA_ARGS__))
+                    ##__VA_ARGS__))
 #define MY_EMERGENCY(FMT, ...)     \
         ACE_DEBUG(( LM_EMERGENCY,  \
                     EMERGENCY_PREFIX FMT \
-                    __VA_ARGS__))
+                    ##__VA_ARGS__))
 // Listing 3
 
 #endif /* __GNUC__ */
