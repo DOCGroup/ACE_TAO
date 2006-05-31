@@ -170,4 +170,4 @@ SOCK_SEQPACK_SCTP_Test: !MSVC !nsk !ACE_FOR_TAO
 SOCK_Test_IPv6: !nsk
 Process_Strategy_Test: !chorus !VxWorks !LynxOS !ACE_FOR_TAO
 Recursive_Condition_Bug_Test: !DISABLE_ToFix_LynxOS_PPC !ST
-UnloadLibACE: !STATIC
+UnloadLibACE: !STATIC !WinCE
