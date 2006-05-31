@@ -388,7 +388,6 @@ ACE_OS::nanosleep (const struct timespec *requested,
   // be available on the platform.  On Solaris 2.x, both functions
   // require linking with -lposix4.
   return ::nanosleep ((ACE_TIMESPEC_PTR) requested, remaining);
-  return 0;
 #else
   ACE_UNUSED_ARG (remaining);
 
