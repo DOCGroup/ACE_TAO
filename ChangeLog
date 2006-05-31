@@ -1,3 +1,11 @@
+Wed May 31 16:36:43 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * tests/tests.mpc:
+        * tests/run_test.lst: Don't build or run Unload_libACE on WinCE. The
+          code is purposely leaving out ACE stuff and the ACE stuff is needed
+          for WinCE, unless there's lots of conditional code added to duplicate
+          the workings on ACE_TMAIN on CE.
+
 Wed May 31 14:33:16 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/OS_NS_Thread.inl (recursive_mutex_lock):

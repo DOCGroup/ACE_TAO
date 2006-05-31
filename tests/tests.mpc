@@ -1339,6 +1339,7 @@ project(Based Pointer Test) : acetest {
 }
 
 project(Library Unload) {
+  avoids += wince
   exename = UnloadLibACE
   staticflags += ACE_AS_STATIC_LIBS
   Source_Files {
