@@ -21,7 +21,7 @@
       <name>read_message</name>
       <specificType>IDL:Hello/ReadMessage:1.0</specificType>
       <supportedType>IDL:Hello/ReadMessage:1.0</supportedType>
-      <provider>false></provider>
+      <provider>false</provider>
       <exclusiveProvider>false</exclusiveProvider>
       <exclusiveUser>true</exclusiveUser>
       <optional>false</optional>
