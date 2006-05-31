@@ -1,3 +1,9 @@
+Wed May 31 18:18:37 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * bin/MakeProjectCreator/config/ciao_config_handlers.mpb:
+
+          Shortened some line lengths, to make the file more readable.
+
 Wed May 31 16:36:43 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * tests/tests.mpc:
