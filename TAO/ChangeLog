@@ -1,3 +1,8 @@
+Wed May 31 17:47:55 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/AnyTypeCode/Marshal.cpp:
+          Fuzz fix.
+
 Wed May 31 13:35:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/AnyTypeCode/Marshal.cpp:
