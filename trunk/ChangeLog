@@ -1,3 +1,8 @@
+Wed May 31 09:23:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/run_test.lst:
+          Changes for ACE_FOR_TAO configuration
+
 Wed May 31 08:19:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bound_Ptr_Test.cpp:
