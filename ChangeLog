@@ -1,3 +1,11 @@
+Wed May 31 20:49:03 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * examples/APG/Logging/Trace.h:
+
+          Added '##' to several macro definitions in this file, at the
+          suggestion of Steve Huston <shuston@riverace.com> to get
+          rid of warnings on GCC4 platforms.
+
 Wed May 31 18:18:37 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * bin/MakeProjectCreator/config/ciao_config_handlers.mpb:
