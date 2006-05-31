@@ -1,11 +1,14 @@
+Wed May 31 13:05:05 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Argv_Type_Converter.cpp (align_char_with_wchar): ACE-ified this code.
+
 Wed May 31 14:00:16 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/Recursive_Mutex_Test.cpp (run_main):
 
-          Moved '#if defined (ACE_HAS_THREADS)' up a few lines to
-          include a variable defined inside the same guard at the
-          top of the file, to eliminate an 'undefined' error on
-          single-threaded builds.
+          Moved '#if defined (ACE_HAS_THREADS)' up a few lines to include
+          a variable defined inside the same guard at the top of the file,
+          to eliminate an 'undefined' error on single-threaded builds.
 
 Wed May 31 13:37:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
