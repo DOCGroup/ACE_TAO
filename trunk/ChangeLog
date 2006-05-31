@@ -1,3 +1,8 @@
+Wed May 31 08:16:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Recursive_Mutex_Test.cpp:
+          Added missing include to get ACE_OS::sleep
+
 Tue May 30 21:56:52 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * ACE-INSTALL.html: Corrected the AIX section; removed descriptions of
