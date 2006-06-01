@@ -1,3 +1,10 @@
+Thu Jun  1 15:49:47 UTC 2006  jiang,shanshan <shanshan.jiang@vanderbilt.edu>
+
+        * DAnCE/Planner/Node_T.h
+        * DAnCE/Planner/Planner.cpp
+
+          Modified some minor errors.
+
 Thu Jun  1 12:55:07 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * examples/Display/NavDisplay/NavDisplay.mpc:
