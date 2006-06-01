@@ -58,8 +58,6 @@ class TAO_Pluggable_Messaging;
  * The Connection handler which is common for the Acceptor and
  * the Connector
  */
-
-
 class TAO_Export TAO_IIOP_Connection_Handler : public TAO_IIOP_SVC_HANDLER,
                                                public TAO_Connection_Handler
 {

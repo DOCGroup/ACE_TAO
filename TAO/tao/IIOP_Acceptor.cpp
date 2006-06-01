@@ -981,7 +981,6 @@ TAO_IIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
                           this->hosts_[host_cnt]) != 0)
         return -1;
 
-
       // Copy the addr.  The port is (re)set in
       // TAO_IIOP_Acceptor::open_i().
       if (this->addrs_[host_cnt].set (if_addrs[i]) != 0)
