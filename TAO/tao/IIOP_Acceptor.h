@@ -56,7 +56,7 @@ public:
   //@@ TAO_ACCEPTOR_SPL_CONCRETE_METHODS_COPY_HOOK_START
 
   /// Constructor.
-  TAO_IIOP_Acceptor (CORBA::Boolean flag = 0);
+  TAO_IIOP_Acceptor (CORBA::Boolean flag = false);
 
   /// Destructor.
   ~TAO_IIOP_Acceptor (void);
@@ -125,9 +125,9 @@ public:
    *   hostname or the IP if no reverse mapping exists.
    */
   virtual int hostname (TAO_ORB_Core *orb_core,
-                ACE_INET_Addr &addr,
-                char *&host,
-                const char *specified_hostname = 0);
+                        ACE_INET_Addr &addr,
+                        char *&host,
+                        const char *specified_hostname = 0);
 
 protected:
 
