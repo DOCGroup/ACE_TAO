@@ -1,3 +1,25 @@
+Thu Jun  1 09:19:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Default_Constants.h:
+          Define the platform suffix for vxworks
+
+        * ace/Sock_Connect.cpp:
+          Added include for VxWorks and removed some unneeded checks
+          for vxworks >= 0x600
+
+        * ace/ACE.h:
+          Doxygen improvement
+
+        * ace/config-vxworks6.2.h:
+          Updated with more settings to better match vxworks 6.2
+
+        * ace/Process_Manager.cpp:
+          Added specific check for vxworks
+
+        * ace/OS_NS_stdlib.inl:
+          Emulate putenv with setenv when putenv is not available but
+          setenv is.
+
 Thu Jun  1 02:26:03 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ace/Service_Gestalt.h:
