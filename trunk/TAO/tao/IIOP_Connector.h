@@ -55,7 +55,7 @@ class TAO_Export TAO_IIOP_Connector : public TAO_Connector
 public:
   // = Initialization and termination methods.
   /// Constructor.
-  TAO_IIOP_Connector (CORBA::Boolean flag = 0);
+  TAO_IIOP_Connector (CORBA::Boolean flag = false);
 
   /// Destructor.
   ~TAO_IIOP_Connector (void);
