@@ -175,8 +175,7 @@ private:
 
   /**
    * Flag that indicates whether the operation has any arguments.  If
-   * there are any arguments the flag will have a value of 1, 0
-   * otherwise.
+   * there are arguments this flag is true, else false.
    */
   CORBA::Boolean argument_flag_;
 
@@ -194,8 +193,13 @@ private:
   /// Addressing  mode for this request.
   TAO_Target_Specification::TAO_Target_Address addressing_mode_;
 
+  /**
+   * The arguments of this operation. Note that the return value is also
+   * an argument
+   */
   TAO::Argument **args_;
 
+  /// Number of arguments including the return value
   CORBA::ULong num_args_;
 
   /// The type of exceptions that the operations can throw.
