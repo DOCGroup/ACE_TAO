@@ -327,6 +327,8 @@ run_main (int argc, ACE_TCHAR *argv[])
                                             (void *) &rm);
   ACE_Thread_Manager::instance ()->wait ();
 #else
+  ACE_UNUSED_ARG (argc);
+  ACE_UNUSED_ARG (argv);
   ACE_ERROR ((LM_ERROR,
               ACE_TEXT ("ACE doesn't support recursive process ")
               ACE_TEXT ("mutexes on this platform\n")));

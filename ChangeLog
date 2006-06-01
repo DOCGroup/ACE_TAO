@@ -1,3 +1,10 @@
+Thu Jun  1 20:53:31 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/Recursive_Mutex_Test.cpp (run_main):
+
+          Added ACE_UNUSED_ARG macros to eliminate 'unused parameter'
+          warnings on single threaded builds.
+
 Thu Jun  1 16:54:56 UTC 2006  Yan Dai  <dai_y@ociweb.com>
 
         * bin/tao_orb_tests.lst:
