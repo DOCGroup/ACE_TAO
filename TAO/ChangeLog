@@ -1,3 +1,15 @@
+Thu Jun  1 14:02:30 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/Hash_LogRecordStore.cpp:
+
+          Changed set_records_attribute() to validate the query language
+          grammar.
+
+          Changed query_i() to set the length of the output sequence to
+          the maximum number of log records (this will be shrunk to the
+          real value once we find how many records match the constraint).
+          We must have got lucky with the old sequence implementation...
+
 Thu Jun  1 11:38:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Valuetype/ValueBase.cpp:
