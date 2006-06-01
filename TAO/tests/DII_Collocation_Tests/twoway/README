@@ -1,17 +1,18 @@
 # $Id$
 
 Description:
-This test is used to test the bug fix on collocated dii send_oneway()
-invocation crash on get_in_arg() when the request has multiple "IN" parameters.
+This test is used to test the bug fix on collocated dii twoway request 
+invocation via invoke() crash on get_in_arg() when the request has multiple 
+"IN" parameters.
 
-The test.idl defines oneway operations with all sorts SArgument to test the
+The test.idl defines twoway operations with all sorts SArgument to test the
 conversion of the DII parameters in NVList to the list of arguments. 
 It also defines the operations with multiple "IN" arguments to test the
 bug fix.
 
 
 This test is a modification of the Collocation_Tests. The big difference is
-this test invokes the oneway operations using DII while the Collocation_Tests
+this test invokes the twoway operations using DII while the Collocation_Tests
 invoke a simple twoway operations.
 
 

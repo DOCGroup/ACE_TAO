@@ -8,16 +8,10 @@
 
 #include "TestS.h"
 
-#if defined (_MSC_VER)
-# if (_MSC_VER >= 1200)
-#  pragma warning(push)
-# endif /* _MSC_VER >= 1200 */
-# pragma warning (disable:4250)
-#endif /* _MSC_VER */
-
 #include "ace/OS.h"
 
-class  Test_Simple_Test_i : public virtual POA_Test::Simple_Test, public virtual PortableServer::RefCountServantBase
+class  Test_Simple_Test_i 
+  : public virtual POA_Test::Simple_Test
 {
 public:
   //Constructor 
@@ -39,7 +33,6 @@ public:
 /// Implement the Test::Hello interface
 class Hello
   : public virtual POA_Test::Hello
-  , public virtual PortableServer::RefCountServantBase
 {
 public:
   /// Constructor
@@ -209,9 +202,6 @@ private:
   CORBA::ULong error_count_;
 };
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
-# pragma warning(pop)
-#endif /* _MSC_VER */
 
 #include /**/ "ace/post.h"
 #endif /* HELLO_H */
