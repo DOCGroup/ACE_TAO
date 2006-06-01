@@ -251,7 +251,7 @@ TAO_Hash_LogRecordStore::set_record_attribute (DsLogAdmin::RecordId id,
 
 CORBA::ULong
 TAO_Hash_LogRecordStore::set_records_attribute (
-  const char * /* grammar */,
+  const char *grammar,
   const char *constraint,
   const DsLogAdmin::NVList
   &attr_list ACE_ENV_ARG_DECL)
@@ -260,6 +260,9 @@ TAO_Hash_LogRecordStore::set_records_attribute (
                    DsLogAdmin::InvalidConstraint,
                    DsLogAdmin::InvalidAttribute))
 {
+  this->check_grammar (grammar ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
   // TODO: validate attributes here.
 
   // Use an Interpreter to build an expression tree.
@@ -367,6 +370,7 @@ TAO_Hash_LogRecordStore::query_i (const char *constraint,
                     DsLogAdmin::RecordList (how_many),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
+  rec_list->length(how_many);
 
   // Create iterators
   LOG_RECORD_STORE_ITER iter (rec_hash_.begin ());
