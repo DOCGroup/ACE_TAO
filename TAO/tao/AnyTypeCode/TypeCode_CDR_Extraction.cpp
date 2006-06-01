@@ -28,7 +28,7 @@
 #include "ace/Value_Ptr.h"
 
 
-ACE_RCSID (tao,
+ACE_RCSID (AnyTypeCode,
            TypeCode_CDR_Extraction,
            "$Id$")
 

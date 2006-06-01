@@ -21,7 +21,7 @@
 # include "tao/AnyTypeCode/NVList.inl"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID (tao,
+ACE_RCSID (AnyTypeCode,
            NVList,
            "$Id$")
 

@@ -4,7 +4,7 @@
 #include "tao/AnyTypeCode/TypeCode_Constants.h"
 
 
-ACE_RCSID (tao,
+ACE_RCSID (AnyTypeCode,
            TypeCode_Constants,
            "$Id$")
 

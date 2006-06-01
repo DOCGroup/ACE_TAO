@@ -2,7 +2,7 @@
 
 #include "tao/AnyTypeCode/TypeCode.h"
 
-ACE_RCSID (tao,
+ACE_RCSID (AnyTypeCode,
            TypeCode,
            "$Id$")
 

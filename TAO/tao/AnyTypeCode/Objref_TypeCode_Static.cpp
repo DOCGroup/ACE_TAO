@@ -14,7 +14,7 @@
 #include "ace/OS_NS_string.h"
 
 
-ACE_RCSID (tao,
+ACE_RCSID (AnyTypeCode,
            Objref_TypeCode_Static,
            "$Id$")
 
