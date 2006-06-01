@@ -4,7 +4,7 @@
 project(Display_Base_NavDisplay_stub): ciao_client_dnc {
   after += Display_Base_stub
   sharedname = NavDisplay_stub
-  libs += Display_Base_Stub
+  libs += Display_Base_stub
   idlflags += -Wb,stub_export_macro=NAVDISPLAY_STUB_Export \
               -Wb,stub_export_include=NavDisplay_stub_export.h \
               -Wb,skel_export_macro=NAVDISPLAY_SVNT_Export \
