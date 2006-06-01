@@ -1,3 +1,11 @@
+Thu Jun  1 10:26:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/LocateRequest_Invocation_Adapter.cpp:
+          Use false instead of 0
+
+        * tao/operation_details.h:
+          Improved documentation
+
 Thu Jun  1 08:59:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/AnyTypeCode/Any_Dual_Impl_T.cpp:
