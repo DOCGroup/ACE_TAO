@@ -4,7 +4,7 @@
 #include "tao/AnyTypeCode/Null_RefCount_Policy.h"
 
 
-ACE_RCSID (tao,
+ACE_RCSID (AnyTypeCode,
            TypeCode,
            "$Id$")
 

@@ -15,7 +15,7 @@
 #include "ace/Dynamic_Service.h"
 
 
-ACE_RCSID (tao,
+ACE_RCSID (AnyTypeCode,
            Alias_TypeCode_Static,
            "$Id$")
 
