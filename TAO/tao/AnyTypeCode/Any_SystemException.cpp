@@ -16,7 +16,7 @@
 #include "ace/CORBA_macros.h"
 #include "ace/Auto_Ptr.h"
 
-ACE_RCSID (tao,
+ACE_RCSID (AnyTypeCode,
            Any_SystemException,
            "$Id$")
 

@@ -12,7 +12,7 @@
 
 #include "tao/CORBA_String.h"
 
-ACE_RCSID (tao,
+ACE_RCSID (AnyTypeCode,
            SystemExceptionA,
            "$Id$")
 

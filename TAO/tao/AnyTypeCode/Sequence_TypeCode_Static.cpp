@@ -9,7 +9,7 @@
 #endif  /* !__ACE_INLINE__ */
 
 
-ACE_RCSID (tao,
+ACE_RCSID (AnyTypeCode,
            Sequence_TypeCode_Static,
            "$Id$")
 

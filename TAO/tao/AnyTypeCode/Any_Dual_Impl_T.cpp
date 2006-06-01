@@ -108,7 +108,7 @@ TAO::Any_Dual_Impl_T<T>::extract (const CORBA::Any & any,
                                                       ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      if (_tao_equiv == 0)
+      if (_tao_equiv == false)
         {
           return false;
         }
@@ -132,13 +132,13 @@ TAO::Any_Dual_Impl_T<T>::extract (const CORBA::Any & any,
       T *empty_value = 0;
       ACE_NEW_RETURN (empty_value,
                       T,
-                      0);
+                      false);
       TAO::Any_Dual_Impl_T<T> *replacement = 0;
       ACE_NEW_RETURN (replacement,
                       TAO::Any_Dual_Impl_T<T> (destructor,
                                                any_tc,
                                                empty_value),
-                      0);
+                      false);
 
       auto_ptr<TAO::Any_Dual_Impl_T<T> > replacement_safety (replacement);
 
@@ -169,7 +169,7 @@ TAO::Any_Dual_Impl_T<T>::extract (const CORBA::Any & any,
     }
   ACE_ENDTRY;
 
-  return 0;
+  return false;
 }
 
 template<typename T>

@@ -9,7 +9,7 @@
 
 #include "ace/Guard_T.h"
 
-ACE_RCSID (tao,
+ACE_RCSID (AnyTypeCode,
            Any_Impl,
            "$Id$")
 
