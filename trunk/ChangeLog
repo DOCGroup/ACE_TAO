@@ -1,3 +1,19 @@
+Thu Jun  1 02:26:03 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/Service_Gestalt.h:
+        * ace/Service_Gestalt.cpp:
+
+          Reworked the way static svc descriptors are kept so that if DLLs
+          include static initializers, they won't cause a problem if the
+          DLL is later unloaded and reloaded. There is currently no
+          dependency replationship between these "static" services and the
+          DLL that contains them, so there is still a slight risk that
+          pointers held after the DLL is unloaded might be referenced. But
+          the only thing that actually uses these pointers is the service
+          gestalt itself if it is processing an explicit static directive
+          and the desired service object had not yet been loaded in that
+          configuration context.
+
 Wed May 31 20:49:03 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * examples/APG/Logging/Trace.h:

@@ -61,8 +61,8 @@ public:
   /// Constructor either associates the instance with the process-wide
   /// singleton instance of ACE_Service_Repository, or creates and
   /// manages its own instance of the specified size.
-  ACE_Service_Gestalt (size_t size, 
-                       bool svc_repo_is_owned = true, 
+  ACE_Service_Gestalt (size_t size,
+                       bool svc_repo_is_owned = true,
                        bool no_static_svcs = true);
 
   /// Perform user-specified close activities and remove dynamic
@@ -278,6 +278,14 @@ public:
   int find_static_svc_descriptor (const ACE_TCHAR* name,
                                   ACE_Static_Svc_Descriptor **ssd = 0) const;
 
+  struct Processed_Static_Svc
+  {
+    Processed_Static_Svc (const ACE_Static_Svc_Descriptor *);
+    ~Processed_Static_Svc (void);
+    ACE_TCHAR * name_;
+    const ACE_Static_Svc_Descriptor *assd_;
+  };
+
 protected:
 
   /**
@@ -333,6 +341,10 @@ protected:
   // the designated shared object in this file.
   int initialize_i (const ACE_Service_Type *sr, const ACE_TCHAR *parameters);
 
+const ACE_Static_Svc_Descriptor*
+   find_processed_static_svc (const ACE_TCHAR* );
+
+void add_processed_static_svc (const ACE_Static_Svc_Descriptor *);
 
 protected:
 
@@ -347,6 +359,12 @@ protected:
 
   typedef ACE_Unbounded_Set_Iterator<ACE_Static_Svc_Descriptor *>
     ACE_STATIC_SVCS_ITERATOR;
+
+  typedef ACE_Unbounded_Set<Processed_Static_Svc *>
+    ACE_PROCESSED_STATIC_SVCS;
+
+  typedef ACE_Unbounded_Set_Iterator<Processed_Static_Svc *>
+    ACE_PROCESSED_STATIC_SVCS_ITERATOR;
 
   friend class ACE_Dynamic_Service_Base;
   friend class ACE_Service_Object;
@@ -390,7 +408,7 @@ protected:
   /// Repository of statically linked services for which process
   /// directive was called, but the service is not already a member of
   /// the static_svcs_ list.
-  ACE_STATIC_SVCS* processed_static_svcs_;
+  ACE_PROCESSED_STATIC_SVCS* processed_static_svcs_;
 
 }; /* class ACE_Service_Gestalt */
 
