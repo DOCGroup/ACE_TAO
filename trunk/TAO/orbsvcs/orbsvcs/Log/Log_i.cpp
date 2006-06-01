@@ -1488,19 +1488,26 @@ TAO_Log_i::reset_capacity_alarm_threshold (ACE_ENV_SINGLE_ARG_DECL)
 
   if (max_size != 0 && this->thresholds_.length() > 0)
     {
-      const CORBA::ULongLong current_size =
-        this->recordstore_->get_current_size (ACE_ENV_SINGLE_ARG_PARAMETER);
+      const DsLogAdmin::LogFullActionType log_full_action =
+	this->recordstore_->get_log_full_action (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
-      const CORBA::UShort percent =
-        static_cast<CORBA::UShort> ((((double) ACE_UINT64_DBLCAST_ADAPTER (current_size * 100U)) /
-            (double) ACE_UINT64_DBLCAST_ADAPTER (max_size)));
+      if (log_full_action == DsLogAdmin::halt)
+	{
+	  const CORBA::ULongLong current_size =
+	    this->recordstore_->get_current_size (ACE_ENV_SINGLE_ARG_PARAMETER);
+	  ACE_CHECK;
 
-      this->current_threshold_ = 0;
+	  const CORBA::UShort percent =
+	    static_cast<CORBA::UShort> ((((double) ACE_UINT64_DBLCAST_ADAPTER (current_size * 100U)) /
+					 (double) ACE_UINT64_DBLCAST_ADAPTER (max_size)));
 
-      while (this->current_threshold_ < this->thresholds_.length ()
-             && this->thresholds_[this->current_threshold_] <= percent)
-        ++this->current_threshold_;
+	  this->current_threshold_ = 0;
+
+	  while (this->current_threshold_ < this->thresholds_.length ()
+		 && this->thresholds_[this->current_threshold_] <= percent)
+	    ++this->current_threshold_;
+	}
     }
 }
 
