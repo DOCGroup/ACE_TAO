@@ -215,7 +215,7 @@ if ($#builds == -1 && $#dates == 0)
         find_builds (\@builds, $allbuildsurl, 3);
     }
         
-    $dates[1] = strftime ("%Y_%m_%e", gmtime);
+    $dates[1] = strftime ("%Y_%m_%d", gmtime);
 
     foreach $build (@builds)
     {
