@@ -240,6 +240,29 @@ ACE_OS::putenv (const char *string)
   // WinCE don't have the concept of environment variables.
   ACE_UNUSED_ARG (string);
   ACE_NOTSUP_RETURN (-1);
+#elif defined (ACE_LACKS_PUTENV) && defined (ACE_HAS_SETENV)
+  int result = 0;
+  char* sp = ACE_OS::strchr (const_cast <char *> (string), '=');
+  if (sp)
+    {
+      char* stmp = ACE_OS::strdup (string);
+      if (stmp)
+        {
+          stmp[sp - string] = '\0';
+          ACE_OSCALL (::setenv(stmp, sp+sizeof(char), 1), int, -1, result);
+          ACE_OS::free (stmp);
+        }
+      else
+        {
+          errno = ENOMEM;
+          result = -1;
+        }
+    }
+  else
+    {
+      ACE_OSCALL (::setenv(string, "", 1), int, -1, result);
+    }
+  return result;
 #elif defined (ACE_LACKS_ENV) || defined (ACE_LACKS_PUTENV)
   ACE_UNUSED_ARG (string);
   ACE_NOTSUP_RETURN (0);
