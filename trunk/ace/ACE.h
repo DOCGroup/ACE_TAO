@@ -519,7 +519,7 @@ namespace ACE
 
   // = Miscellaneous functions.
   /// Rounds the request to a multiple of the page size.
-  extern ACE_Export size_t round_to_pagesize (off_t length);
+  extern ACE_Export size_t round_to_pagesize (off_t len);
 
   /// Rounds the request to a multiple of the allocation granularity.
   extern ACE_Export size_t round_to_allocation_granularity (off_t len);

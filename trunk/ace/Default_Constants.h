@@ -458,11 +458,16 @@
 # endif /* ACE_DEFAULT_TIMERS */
 
 #if defined (ACE_WIN32)
-   // We're on WinNT or Win95
 #  define ACE_PLATFORM_A "Win32"
 #  define ACE_PLATFORM_EXE_SUFFIX_A ".exe"
-#else /* !ACE_WIN32 */
-   // We're some kind of UNIX...
+#elif defined (ACE_VXWORKS)
+#  define ACE_PLATFORM_A "VxWorks"
+#  if defined (__RTP__)
+#    define ACE_PLATFORM_EXE_SUFFIX_A ".vxe"
+#  else
+#    define ACE_PLATFORM_EXE_SUFFIX_A ".out"
+#  endif
+#else /* !ACE_WIN32 && !ACE_VXWORKS */
 #  define ACE_PLATFORM_A "UNIX"
 #  define ACE_PLATFORM_EXE_SUFFIX_A ""
 #endif /* ACE_WIN32 */
