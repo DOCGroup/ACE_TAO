@@ -1,3 +1,22 @@
+Thu Jun  1 17:53:33 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/Log/EventLogFactory_i.cpp:
+        * orbsvcs/orbsvcs/Log/RTEventLogFactory_i.cpp:
+
+          Pass the RootPOA instead of the Log POA to the log servant ctor.
+          The log servant creates and attempts to activate a event channel
+          on the Log POA, which was failed because TAO's log event channel
+          implementation uses implicit activation (_this), and the Log POA
+          ImplicitActivationPolicy is NO_IMPLICIT_ACTIVATION.  In time, we
+          should consider whether we should create another POA just for
+          the event channels.
+
+        * orbsvcs/examples/Log/Event/run_test.pl:
+        * orbsvcs/examples/Log/Notify/run_test.pl:
+        * orbsvcs/examples/Log/RTEvent/run_test.pl:
+
+          New files.
+
 Thu Jun  1 16:54:56 UTC 2006  Yan Dai  <dai_y@ociweb.com>
 
         * tests/DII_Collocation_Tests/Client_Task.cpp:
