@@ -32,7 +32,7 @@ using namespace std;
 //Definition of a Node parametrized by
 //Deployment::Node
 namespace {
- typedef Node<Deployment::Node> NNode;
+ typedef ::Node<Deployment::Node> NNode;
 }
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
