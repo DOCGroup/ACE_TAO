@@ -10,7 +10,7 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/OS_NS_string.h"
 
-ACE_RCSID (tao,
+ACE_RCSID (AnyTypeCode,
            Any_Basic_Impl,
            "$Id$")
 
