@@ -1105,7 +1105,7 @@ ACE::get_ip_interfaces (size_t &count,
 
   return 0;
 
-#elif defined (__unix) || defined (__unix__) || defined (__Lynx__) || defined (_AIX) || (defined (ACE_VXWORKS) && (ACE_VXWORKS >= 0x600)) || defined (ACE_OPENVMS)
+#elif defined (__unix) || defined (__unix__) || defined (__Lynx__) || defined (_AIX) || defined (ACE_OPENVMS)
   // COMMON (SVR4 and BSD) UNIX CODE
 
   size_t num_ifs, num_ifs_found;
@@ -1374,7 +1374,7 @@ ACE::count_interfaces (ACE_HANDLE handle, size_t &how_many)
 
   how_many = num_ifs;
   return 0;
-#elif defined (__unix) || defined (__unix__) || defined (__Lynx__) || defined (_AIX) || (defined (ACE_VXWORKS) && (ACE_VXWORKS >= 0x600)) || defined (ACE_OPENVMS)
+#elif defined (__unix) || defined (__unix__) || defined (__Lynx__) || defined (_AIX) || defined (ACE_OPENVMS)
   // Note: DEC CXX doesn't define "unix".  BSD compatible OS: HP UX,
   // AIX, SunOS 4.x perform some ioctls to retrieve ifconf list of
   // ifreq structs no SIOCGIFNUM on SunOS 4.x, so use guess and scan
