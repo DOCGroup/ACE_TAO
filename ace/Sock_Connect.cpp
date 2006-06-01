@@ -26,7 +26,11 @@
 #endif /* ACE_HAS_IPV6 */
 
 # if defined (ACE_HAS_GETIFADDRS)
-#   include /**/ <ifaddrs.h>
+#   if defined (ACE_VXWORKS)
+#     include /**/ <net/ifaddrs.h>
+#   else
+#     include /**/ <ifaddrs.h>
+#   endif
 # endif /* ACE_HAS_GETIFADDRS */
 
 #if defined (ACE_VXWORKS) && (ACE_VXWORKS < 0x600)
@@ -36,7 +40,7 @@ extern "C" {
   extern struct in_ifaddr* in_ifaddr;
 }
 #include "ace/OS_NS_stdio.h"
-#endif /* ACE_VXWORKS */
+#endif /* ACE_VXWORKS < 0x600 */
 
 #if defined (ACE_HAS_WINCE)
 #include /**/ <Iphlpapi.h>

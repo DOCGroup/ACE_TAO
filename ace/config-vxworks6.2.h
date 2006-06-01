@@ -17,6 +17,14 @@
 # define ACE_VXWORKS 0x620
 #endif /* ! ACE_VXWORKS */
 
+// Fix for wrong typedef of suseconds_t
+// *and* for including right typedef for pid_t in VxTypes.h (int)
+// before wrong typedef in unistd.h (unsigned short)
+#include <vxWorksCommon.h>
+#include <unistd.h>
+#define suseconds_t long
+// END Fix
+
 #if ! defined (__ACE_INLINE__)
 # define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
@@ -63,6 +71,7 @@
 
 # define ACE_HAS_STANDARD_CPP_LIBRARY 1
 # define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
+# define ACE_HAS_USING_KEYWORD
 # define ACE_TEMPLATES_REQUIRE_SOURCE
 
 #else  /* ! __GNUG__ && ! ghs && !__DCC__ */
@@ -118,8 +127,10 @@
 #define ACE_LACKS_MALLOC_H
 #define ACE_LACKS_MEMORY_H
 #define ACE_LACKS_MKFIFO
-#define ACE_LACKS_MKSTEMP
 #define ACE_LACKS_MKTEMP
+#define ACE_LACKS_MKSTEMP
+#define ACE_LACKS_MMAP
+#define ACE_LACKS_MPROTECT
 #define ACE_LACKS_MSYNC
 #define ACE_LACKS_NETDB_REENTRANT_FUNCTIONS
 #define ACE_LACKS_SYS_PARAM_H
@@ -153,6 +164,7 @@
 #if !defined (ACE_VXWORKS_SPARE)
 # define ACE_VXWORKS_SPARE spare4
 #endif /* ! ACE_VXWORKS_SPARE */
+#define ACE_HAS_GETIFADDRS
 
 #define ACE_LACKS_SETEGID
 #define ACE_LACKS_SETPGID
@@ -177,6 +189,7 @@
 #define ACE_LACKS_SYS_SHM_H
 #define ACE_LACKS_TERMIOS_H
 #define ACE_LACKS_POLL_H
+#define ACE_LACKS_FCNTL
 
 // Some string things
 #define ACE_LACKS_STRCASECMP
@@ -194,8 +207,10 @@
   #define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
   #define ACE_LACKS_REGEX_H
   #define ACE_LACKS_PUTENV
+  #define ACE_HAS_SETENV
   #define ACE_HAS_3_PARAM_WCSTOK
   #define ACE_HAS_WCHAR
+  #define ACE_SIZEOF_WCHAR 2
 #else
   // We are building for kernel mode
   #define ACE_LACKS_SUSECONDS_T
