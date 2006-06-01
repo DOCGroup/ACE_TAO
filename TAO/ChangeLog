@@ -1,3 +1,11 @@
+Thu Jun  1 08:59:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/AnyTypeCode/Any_Dual_Impl_T.cpp:
+          Return false instead 0
+
+        * tao/AnyTypeCode/*.cpp:
+          Fixed rcsid tags
+
 Thu Jun  1 02:26:51 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/RTCORBA/RT_PolicyFactory.h:
