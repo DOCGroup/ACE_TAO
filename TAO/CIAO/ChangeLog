@@ -1,3 +1,11 @@
+Thu Jun  1 21:23:51 UTC 2006    <ming.xiong@vanderbilt.edu>
+
+        * examples/Hello/descriptors/run_test.pl
+
+
+          Changed the codes so that it will correctly destroy all
+          running processes upon failure.
+
 Thu Jun  1 16:03:26 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * DAnCE/Planner/Planner.cpp:
