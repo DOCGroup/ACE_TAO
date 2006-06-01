@@ -1,3 +1,9 @@
+Thu Jun  1 23:13:58 UTC 2006  Yan Dai  <dai_y@ociweb.com>
+
+        * bin/tao_orb_tests.lst:
+
+          Added oneway and twoway DII_Collocation_Tests.
+
 Thu Jun  1 20:53:31 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/Recursive_Mutex_Test.cpp (run_main):

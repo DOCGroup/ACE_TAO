@@ -1,6 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project(DII_Collocation_Tests): taoserver,  dynamicinterface, minimum_corba{
-  exename = Collocated_Test
-}
