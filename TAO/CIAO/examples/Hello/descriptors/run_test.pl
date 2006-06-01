@@ -84,13 +84,12 @@ sub run_node_daemons {
                           $PerlACE::wait_interval_for_process_creation) == -1) {
           print STDERR
             "ERROR: The ior file of node daemon $i could not be found\n";
-          for (; $i > 0; --$i) {
+          for (; $i >= 0; --$i) {
             $Daemons[$i]->Kill (); $Daemons[$i]->TimedWait (1);
           }
           return -1;
       }
   }
-  $daemons_running = 1;
   return 0;
 }
 
@@ -111,8 +110,11 @@ if (PerlACE::waitforfile_timed ($nsior, 10) == -1)
     exit 1;
 }
 
+$ns_running = 1;
+
 # Set up NamingService environment
 $ENV{"NameServiceIOR"} = "corbaloc:iiop:localhost:60003/NameService";
+
 
 # Invoke node daemons.
 print "Invoking node daemons\n";
@@ -120,10 +122,11 @@ $status = run_node_daemons ();
 
 if ($status != 0) {
   print STDERR "ERROR: Unable to execute the node daemons\n";
+  kill_open_processes ();
   exit 1;
 }
 
-$ns_running = 1;
+$daemons_running = 1;
 
 # Invoke execution manager.
 print "Invoking execution manager\n";
