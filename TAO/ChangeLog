@@ -1,3 +1,22 @@
+Thu Jun  1 16:54:56 UTC 2006  Yan Dai  <dai_y@ociweb.com>
+
+        * tests/DII_Collocation_Tests/Client_Task.cpp:
+        * tests/DII_Collocation_Tests/Client_Task.h:
+        * tests/DII_Collocation_Tests/Collocated_Test.cpp:
+        * tests/DII_Collocation_Tests/DII_Collocation_Tests.mpc:
+        * tests/DII_Collocation_Tests/Hello.cpp:
+        * tests/DII_Collocation_Tests/Hello.h:
+        * tests/DII_Collocation_Tests/README:
+        * tests/DII_Collocation_Tests/run_test.pl:
+        * tests/DII_Collocation_Tests/Server_Task.cpp:
+        * tests/DII_Collocation_Tests/Server_Task.h:
+        * tests/DII_Collocation_Tests/Test.idl:
+
+          Added new DII_Collocation_Tests test to show bug #2545.
+          The test crashes on get_in_arg() or gives incorrect arguments 
+          when the request is collocated oneway request and has "IN" 
+          arguments. See bugzilla bug #2545.
+
 Thu Jun  1 14:16:06 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/orbsvcs/Log/Log_i.cpp:
