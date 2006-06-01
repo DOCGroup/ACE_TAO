@@ -1,3 +1,8 @@
+Thu Jun  1 12:15:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Dirent_Test.cpp:
+          Updated VxWorks specific checks, removed chorus checks
+
 Thu Jun  1 11:03:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Threads/thread_pool.cpp:
