@@ -52,7 +52,7 @@ class TAO_Strategies_Export TAO_SHMIOP_Connector : public TAO_Connector
 {
 public:
   /// Constructor.
-  TAO_SHMIOP_Connector (CORBA::Boolean flag = 0);
+  TAO_SHMIOP_Connector (CORBA::Boolean flag = false);
 
   /// Default destructor
   ~TAO_SHMIOP_Connector (void);

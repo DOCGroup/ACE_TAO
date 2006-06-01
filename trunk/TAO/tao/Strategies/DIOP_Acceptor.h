@@ -47,7 +47,7 @@ class TAO_Strategies_Export TAO_DIOP_Acceptor : public TAO_Acceptor
 {
 public:
   /// Constructor.
-  TAO_DIOP_Acceptor (CORBA::Boolean flag = 0);
+  TAO_DIOP_Acceptor (CORBA::Boolean flag = false);
 
   /// Destructor.
   ~TAO_DIOP_Acceptor (void);

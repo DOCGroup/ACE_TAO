@@ -42,7 +42,7 @@ public:
    * Constructor.
    */
   TAO_Creation_Strategy (TAO_ORB_Core *orb_core,
-                         CORBA::Boolean flag = 0);
+                         CORBA::Boolean flag = false);
 
   /// Create a SVC_HANDLER  and set the ORB_Core pointer on it.
   int make_svc_handler (SVC_HANDLER *&sh);
