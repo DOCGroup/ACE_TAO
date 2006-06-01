@@ -172,6 +172,32 @@ ACE_Service_Type_Forward_Declaration_Guard::~ACE_Service_Type_Forward_Declaratio
 
 // ----------------------------------------
 
+ACE_Service_Gestalt::Processed_Static_Svc::
+Processed_Static_Svc (const ACE_Static_Svc_Descriptor *assd)
+  :name_(0),
+   assd_(assd)
+{
+  ACE_NEW_NORETURN (name_, ACE_TCHAR[ACE_OS::strlen(assd->name_)+1]);
+  ACE_OS::strcpy(name_,assd->name_);
+  if (ACE::debug ())
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_LIB_TEXT ("(%P|%t) PSS::ctor -  name = %s\n"),
+                name_));
+}
+
+ACE_Service_Gestalt::Processed_Static_Svc::
+~Processed_Static_Svc (void)
+{
+  if (ACE::debug ())
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_LIB_TEXT ("(%P|%t) PSS::dtor -  name = %s\n"),
+                name_));
+
+  delete [] name_;
+}
+
+// ----------------------------------------
+
 ACE_Service_Gestalt::~ACE_Service_Gestalt (void)
 {
   ACE_ASSERT (this->repo_ != 0);
@@ -179,6 +205,23 @@ ACE_Service_Gestalt::~ACE_Service_Gestalt (void)
   if (this->svc_repo_is_owned_)
     delete this->repo_;
   delete this->static_svcs_;
+  // Delete the dynamically allocated static_svcs instance.
+  if (ACE::debug ())
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_LIB_TEXT ("(%P|%t) SG::dtor - this=%@, pss = %@\n"),
+                this, this->processed_static_svcs_));
+
+  if (this->processed_static_svcs_ &&
+      !this->processed_static_svcs_->is_empty())
+    {
+      Processed_Static_Svc **pss = 0;
+      for (ACE_PROCESSED_STATIC_SVCS_ITERATOR iter (*this->processed_static_svcs_);
+           iter.next (pss) != 0;
+           iter.advance ())
+        {
+          delete *pss;
+        }
+    }
   delete this->processed_static_svcs_;
 }
 
@@ -202,8 +245,12 @@ ACE_Service_Gestalt::ACE_Service_Gestalt (size_t size,
   ACE_NEW_NORETURN (this->static_svcs_,
                     ACE_STATIC_SVCS);
 
-  ACE_NEW_NORETURN (this->processed_static_svcs_,
-                    ACE_STATIC_SVCS);
+  this->processed_static_svcs_ = 0;
+
+  if (ACE::debug ())
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_LIB_TEXT ("(%P|%t) SG::ctor - this = %@, pss = %@\n"),
+                this, this->processed_static_svcs_));
 }
 
 // Add the default statically-linked services to the Service
@@ -224,7 +271,7 @@ ACE_Service_Gestalt::load_static_svcs (void)
     {
       ACE_Static_Svc_Descriptor *ssd = *ssdp;
 
-      if (this->process_directive_i (*ssd, 1) == -1)
+      if (this->process_directive (*ssd, 1) == -1)
         return -1;
     }
   return 0;
@@ -258,22 +305,46 @@ ACE_Service_Gestalt::find_static_svc_descriptor (const ACE_TCHAR* name,
         }
     }
 
-  for (ACE_STATIC_SVCS_ITERATOR iter ( *this->processed_static_svcs_);
-       iter.next (ssdp) != 0;
+  return -1;
+}
+
+const ACE_Static_Svc_Descriptor*
+ACE_Service_Gestalt::find_processed_static_svc (const ACE_TCHAR* name)
+{
+  Processed_Static_Svc **pss = 0;
+  for (ACE_PROCESSED_STATIC_SVCS_ITERATOR iter (*this->processed_static_svcs_);
+       iter.next (pss) != 0;
        iter.advance ())
     {
-      if (ACE_OS::strcmp ((*ssdp)->name_, name) == 0)
-        {
-          if (ssd != 0)
-            *ssd = *ssdp;
+      if (ACE_OS::strcmp ((*pss)->name_, name) == 0)
+        return (*pss)->assd_;
+    }
+  return 0;
+}
 
-          return 0;
+void
+ACE_Service_Gestalt::add_processed_static_svc
+  (const ACE_Static_Svc_Descriptor *assd)
+{
+  if (this->processed_static_svcs_ == 0)
+    ACE_NEW (this->processed_static_svcs_,
+             ACE_PROCESSED_STATIC_SVCS);
+
+  Processed_Static_Svc **pss = 0;
+  for (ACE_PROCESSED_STATIC_SVCS_ITERATOR iter (*this->processed_static_svcs_);
+       iter.next (pss) != 0;
+       iter.advance ())
+    {
+      if (ACE_OS::strcmp ((*pss)->name_, assd->name_) == 0)
+        {
+          (*pss)->assd_ = assd;
+          return;
         }
     }
-  return -1;
-
-} /* find_static_svc_descriptor () */
-
+  Processed_Static_Svc *tmp = 0;
+  ACE_NEW (tmp,Processed_Static_Svc(assd));
+  this->processed_static_svcs_->insert(tmp);
+}
 
 int
 ACE_Service_Gestalt::insert (ACE_Static_Svc_Descriptor *stsd)
@@ -410,22 +481,9 @@ ACE_Service_Gestalt::initialize (const ACE_TCHAR *svc_name,
   for (int i = 0; this->repo_->find (svc_name, &srp) == -1 && i < 2; i++)
     //  if (this->repo_->find (svc_name, &srp) == -1)
     {
-#if 0
-      // Since we're searching by name, the service may be in the
-      // process-wide repository, so check that before reporting
-      // failure.
-      if (this->repo_ == ACE_Service_Repository::instance ()
-          || ACE_Service_Repository::instance ()->find (svc_name, &srp) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_LIB_TEXT ("(%P|%t) SG::initialize - service \'%s\'")
-                             ACE_LIB_TEXT (" was not located.\n"),
-                             svc_name),
-                            -1);
-        }
-#endif
-      ACE_Static_Svc_Descriptor *assd = 0;
-      if (ACE_Service_Config::global()->find_static_svc_descriptor(svc_name, &assd) == 0)
+      const ACE_Static_Svc_Descriptor *assd =
+        ACE_Service_Config::global()->find_processed_static_svc(svc_name);
+      if (assd != 0)
         {
           this->process_directive_i(*assd,0);
         }
@@ -675,19 +733,10 @@ ACE_Service_Gestalt::process_directive (const ACE_Static_Svc_Descriptor &ssd,
   int result = process_directive_i(ssd,force_replace);
   if (result == 0)
     {
-      ACE_Static_Svc_Descriptor *assd;
-      ACE_Service_Gestalt *g = ACE_Service_Config::global();
-      if (g->find_static_svc_descriptor (ssd.name_,&assd) == -1
-          || force_replace)
-        {
-          assd = const_cast<ACE_Static_Svc_Descriptor *>(&ssd);
-
-          g->processed_static_svcs_->insert(assd);
-        }
+      this->add_processed_static_svc(&ssd);
     }
   return result;
 }
-
 
 int
 ACE_Service_Gestalt::process_directive_i (const ACE_Static_Svc_Descriptor &ssd,
@@ -1179,14 +1228,30 @@ ACE_Service_Gestalt::close (void)
   // Delete the dynamically allocated static_svcs instance.
   if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
-                ACE_LIB_TEXT ("(%P|%t) SG::close - this=%@, repo=%@\n"),
-                this, this->repo_));
+                ACE_LIB_TEXT ("(%P|%t) SG::close - this=%@, repo=%@, pss = %@\n"),
+                this, this->repo_, this->processed_static_svcs_));
 
   delete this->static_svcs_;
   this->static_svcs_ = 0;
 
+  if (this->processed_static_svcs_ &&
+      !this->processed_static_svcs_->is_empty())
+    {
+      Processed_Static_Svc **pss = 0;
+      for (ACE_PROCESSED_STATIC_SVCS_ITERATOR iter (*this->processed_static_svcs_);
+           iter.next (pss) != 0;
+           iter.advance ())
+        {
+          delete *pss;
+        }
+    }
   delete this->processed_static_svcs_;
   this->processed_static_svcs_ = 0;
+  if (ACE::debug ())
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_LIB_TEXT ("(%P|%t) SG::close - complete this=%@, repo=%@\n"),
+                this, this->repo_));
+
 
   return 0;
 
