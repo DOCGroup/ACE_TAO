@@ -1,3 +1,12 @@
+Thu Jun  1 16:03:26 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * DAnCE/Planner/Planner.cpp:
+
+          Added global qualifier (double colon) to the specialization
+          and typedef of the planner's Node class, to avoid an
+          'ambiguous symbol' error in VC8, which is presumably confusing
+          it with Deployment::Node.
+
 Thu Jun  1 15:49:47 UTC 2006  jiang,shanshan <shanshan.jiang@vanderbilt.edu>
 
         * DAnCE/Planner/Node_T.h
