@@ -275,17 +275,17 @@ CORBA::ValueBase::_tao_unmarshal_pre (TAO_InputCDR &strm,
       orb_core = TAO_ORB_Core_instance ();
 
       if (TAO_debug_level > 0)
-            {
+        {
           ACE_DEBUG ((LM_WARNING,
                       "TAO (%P|%t) WARNING: extracting valuetype using "
                       "default ORB_Core\n"));
-            }
         }
+    }
 
   CORBA::Boolean require_truncation = false;
-  CORBA::Boolean chunking = TAO_OBV_GIOP_Flags::is_chunked (valuetag);
+  CORBA::Boolean const chunking = TAO_OBV_GIOP_Flags::is_chunked (valuetag);
 
-  CORBA::ULong num_ids = ids.size ();
+  CORBA::ULong const num_ids = ids.size ();
   // Find the registered factory for this unmarshalling valuetype. If any
   // factory for the valuetype in its truncatable derivation hierarchy
   // is registered, the factory is used to create value for unmarshalling.
