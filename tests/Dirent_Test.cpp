@@ -37,7 +37,7 @@ ACE_RCSID (tests,
            "$Id Dirent_Test.cpp,v 4.10 2003/05/18 19:17:34 dhinton Exp$")
 
 
-#if defined (ACE_VXWORKS) || defined(CHORUS)
+#if (defined (ACE_VXWORKS) && (ACE_VXWORKS < 0x600)) || defined(CHORUS)
 #define TEST_DIR "log"
 #define DIR_DOT "."
 #define DIR_DOT_DOT ".."
@@ -156,7 +156,7 @@ dirent_count (const ACE_TCHAR *dir_path,
 {
 #if !defined (ACE_LACKS_CHDIR)
 
-# if defined (ACE_VXWORKS)
+# if (defined (ACE_VXWORKS) && (ACE_VXWORKS < 0x600))
   // VxWorks only allows full paths (incl. device spec if applicable) to be specified
   ACE_TCHAR full_path[MAXPATHLEN];
   if (ACE_OS::getcwd (full_path, sizeof(full_path)) == NULL)
@@ -258,7 +258,7 @@ dirent_count (const ACE_TCHAR *dir_path,
               ++dir_count;
 
 #if !defined (ACE_LACKS_CHDIR)
-# if defined (ACE_VXWORKS)
+# if (defined (ACE_VXWORKS) && (ACE_VXWORKS < 0x600))
               // Move back to parent directory.
               if (ACE_OS::chdir (full_path) == -1)
                 ACE_ERROR_RETURN ((LM_ERROR,
