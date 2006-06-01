@@ -68,7 +68,7 @@ namespace TAO
             // LocateRequest class.
             TAO_Operation_Details op (0,
                                       0,
-                                      0);
+                                      false);
 
             op.request_id (resolver.transport ()->tms ()->request_id ());
             TAO::LocateRequest_Invocation synch (this->target_,
