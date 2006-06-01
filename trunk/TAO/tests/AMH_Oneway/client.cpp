@@ -63,6 +63,7 @@ main (int argc, char *argv[])
 
           ACE_DEBUG ((LM_DEBUG, "Sent call # %d \n", i));
         }
+      orb->destroy();
     }
   ACE_CATCHANY
     {

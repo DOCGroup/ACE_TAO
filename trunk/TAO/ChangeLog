@@ -1,3 +1,10 @@
+Thu Jun  1 02:26:51 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/RTCORBA/RT_PolicyFactory.h:
+        * tests/AMH_Oneway/client.cpp:
+        * tests/AMH_Oneway/server.cpp:
+          Memory leak fixes.
+
 Wed May 31 17:47:55 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/AnyTypeCode/Marshal.cpp:

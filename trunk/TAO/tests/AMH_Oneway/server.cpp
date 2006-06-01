@@ -46,7 +46,7 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 protected:
-  CORBA::ORB_ptr orb_;
+  CORBA::ORB_var orb_;
 };
 
 
