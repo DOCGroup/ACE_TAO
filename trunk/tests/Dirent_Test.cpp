@@ -37,7 +37,7 @@ ACE_RCSID (tests,
            "$Id Dirent_Test.cpp,v 4.10 2003/05/18 19:17:34 dhinton Exp$")
 
 
-#if (defined (ACE_VXWORKS) && (ACE_VXWORKS < 0x600)) || defined(CHORUS)
+#if (defined (ACE_VXWORKS) && (ACE_VXWORKS < 0x600))
 #define TEST_DIR "log"
 #define DIR_DOT "."
 #define DIR_DOT_DOT ".."
@@ -53,7 +53,7 @@ ACE_RCSID (tests,
 #    define DIR_DOT_DOT ".."
 #    define TEST_ENTRY "run_test.lst"
 #  endif /* ACE_LACKS_STRUCT_DIR */
-#endif /* VXWORKS || CHORUS */
+#endif /* ACE_VXWORKS < 0x600 */
 
 static const int RECURSION_INDENT = 3;
 
