@@ -15,7 +15,7 @@
 
 #include "ace/OS_NS_stdio.h"
 
-ACE_RCSID (tao,
+ACE_RCSID (AnyTypeCode,
            Exception,
            "$Id$")
 

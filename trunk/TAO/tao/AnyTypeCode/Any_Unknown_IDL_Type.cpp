@@ -11,7 +11,7 @@
 #include "ace/Dynamic_Service.h"
 #include "ace/OS_NS_string.h"
 
-ACE_RCSID (tao,
+ACE_RCSID (AnyTypeCode,
            Any_Unknown_IDL_Type,
            "$Id$")
 
