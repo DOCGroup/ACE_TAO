@@ -27,7 +27,7 @@ class Node_Factory {
   public:
     Node_Factory () : list_ (0) {};
     ~Node_Factory () {};
-  Node& Create (E* element) {return new Node<E> (element);}
+  Node<E>& Create (E* element) {return new Node<E> (element);}
   private:
     Node<E>* list_;
 };

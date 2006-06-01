@@ -23,7 +23,7 @@
 #include "Config_Handlers/DP_Handler.h"
 #include "Config_Handlers/Utils/XML_Helper.h"
 #include "Config_Handlers/Deployment.hpp"
-using namespace CIAO::Config_Handlers;
+//using namespace CIAO::Config_Handlers;
 
 #include <iostream>
 using namespace std;
@@ -90,16 +90,18 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         cout << "Unable to retrieve package!\n" << endl;
         return -1;
       }
-
+      ACE_TRY_CHECK;
 
       Deployment::DeploymentPlan plan;
 
       PCVisitor pcv (plan, *pc);
       pcv.Visit ();
+      ACE_TRY_CHECK;
 
       cout << "--> Printing populated DeploymentPlan\n";
       ::Deployment::DnC_Dump::dump (plan);
       cout << "End of populated DeploymentPlan dump\n---------------------------------------\n";
+      ACE_TRY_CHECK;
 
 /*-- NOTE: Currently reverse handler segfaults
 
@@ -122,7 +124,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // Finally destroy the ORB
       orb->destroy ();
-
+      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
