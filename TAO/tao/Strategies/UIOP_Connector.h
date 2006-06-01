@@ -55,7 +55,7 @@ public:
    * @@ Do we want to pass in the tag here or should it be statically
    * defined?
    */
-  TAO_UIOP_Connector (CORBA::Boolean flag = 0);
+  TAO_UIOP_Connector (CORBA::Boolean flag = false);
 
   /// Destructor
   ~TAO_UIOP_Connector (void);

@@ -50,7 +50,7 @@ class TAO_Strategies_Export TAO_SCIOP_Connector : public TAO_Connector
 public:
   // = Initialization and termination methods.
   /// Constructor.
-  TAO_SCIOP_Connector (CORBA::Boolean flag = 0);
+  TAO_SCIOP_Connector (CORBA::Boolean flag = false);
 
   /// Destructor.
   ~TAO_SCIOP_Connector (void);
