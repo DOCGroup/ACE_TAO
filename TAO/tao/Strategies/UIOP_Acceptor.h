@@ -48,7 +48,7 @@ public:
   // Create Acceptor object using addr.
 
   /// Create Acceptor object using addr.
-  TAO_UIOP_Acceptor (CORBA::Boolean flag = 0);
+  TAO_UIOP_Acceptor (CORBA::Boolean flag = false);
 
   /// Destructor
   virtual ~TAO_UIOP_Acceptor (void);

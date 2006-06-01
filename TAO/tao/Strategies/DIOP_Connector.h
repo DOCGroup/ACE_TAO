@@ -49,7 +49,7 @@ class TAO_Strategies_Export TAO_DIOP_Connector : public TAO_Connector
 public:
   // = Initialization and termination methods.
   /// Constructor.
-  TAO_DIOP_Connector (CORBA::Boolean flag = 0);
+  TAO_DIOP_Connector (CORBA::Boolean flag = false);
 
   /// Destructor.
   ~TAO_DIOP_Connector (void);
