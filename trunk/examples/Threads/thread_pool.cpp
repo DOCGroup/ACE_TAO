@@ -116,7 +116,7 @@ Thread_Pool::svc (void)
           break;
 	}
 
-      int length = mb->length ();
+      size_t length = mb->length ();
 
       if (length > 0)
 	ACE_DEBUG ((LM_DEBUG,
@@ -153,7 +153,7 @@ producer (Thread_Pool &thread_pool)
   for (int n; ;)
     {
       // Allocate a new message.
-      ACE_Message_Block *mb;
+      ACE_Message_Block *mb = 0;
       ACE_NEW (mb,
                ACE_Message_Block (BUFSIZ));
 
@@ -185,38 +185,38 @@ producer (Thread_Pool &thread_pool)
 
       if (n > 1)
         {
-	  // Send a normal message to the waiting threads and continue
-	  // producing.
-	  mb->wr_ptr (n);
+          // Send a normal message to the waiting threads and continue
+          // producing.
+          mb->wr_ptr (n);
 
-	  // Pass the message to the Thread_Pool.
-	  if (thread_pool.put (mb) == -1)
-            ACE_ERROR ((LM_ERROR,
-                        " (%t) %p\n",
-                        "put"));
-	}
+          // Pass the message to the Thread_Pool.
+          if (thread_pool.put (mb) == -1)
+                  ACE_ERROR ((LM_ERROR,
+                              " (%t) %p\n",
+                              "put"));
+        }
       else
-	{
-	  ACE_DEBUG ((LM_DEBUG,
-                      "\n(%t) start loop, dump of task:\n"));
-	  // thread_pool.dump ();
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                            "\n(%t) start loop, dump of task:\n"));
+          // thread_pool.dump ();
 
-          // Send a shutdown message to the waiting threads and exit.
-	  for (int i = thread_pool.thr_count (); i > 0; i--)
-	    {
-	      ACE_DEBUG ((LM_DEBUG,
-			  "(%t) EOF, enqueueing NULL block for thread = %d\n",
-			  i));
+                // Send a shutdown message to the waiting threads and exit.
+          for (size_t i = thread_pool.thr_count (); i > 0; i--)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+              "(%t) EOF, enqueueing NULL block for thread = %d\n",
+              i));
 
-	      // Enqueue a NULL message to flag each consumer to
-	      // shutdown.
-              ACE_Message_Block *mb;
+              // Enqueue a NULL message to flag each consumer to
+              // shutdown.
+              ACE_Message_Block *mb = 0;
               ACE_NEW (mb,
                        ACE_Message_Block);
-	      if (thread_pool.put (mb) == -1)
-		ACE_ERROR ((LM_ERROR,
-                            " (%t) %p\n",
-                            "put"));
+              if (thread_pool.put (mb) == -1)
+                      ACE_ERROR ((LM_ERROR,
+                                  " (%t) %p\n",
+                                  "put"));
 	    }
 
 	  ACE_DEBUG ((LM_DEBUG,
@@ -236,7 +236,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   ACE_DEBUG ((LM_DEBUG,
               "(%t) argc = %d, threads = %d\n",
-	      argc,
+              argc,
               n_threads));
 
   // Create the worker tasks.
