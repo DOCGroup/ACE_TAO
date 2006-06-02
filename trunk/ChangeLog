@@ -1,3 +1,14 @@
+Fri Jun  2 10:02:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_Thread.cpp:
+          Improved VxWorks 6.2 support
+
+        * ace/Svc_Handler.cpp:
+          64bit change and initialise pointer with 0
+
+        * ace/Process.cpp:
+          Added support for VxWorks 6.x in rtp mode
+
 Fri Jun  2 09:42:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_Thread.inl:
