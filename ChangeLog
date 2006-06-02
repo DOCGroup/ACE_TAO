@@ -1,3 +1,9 @@
+Fri Jun  2 12:12:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+          Added TAO_IDL3_TO_IDL2 and TAO_IDL3_TO_IDL2_DEP as first step to
+          run idl3_to_idl2 in a cross build environment
+
 Fri Jun  2 11:51:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_vxworks6.2.GNU:

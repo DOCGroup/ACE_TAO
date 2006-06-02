@@ -16,6 +16,15 @@ ifndef CIAO_ROOT
   CIAO_ROOT = $(TAO_ROOT)/CIAO
 endif
 
+ifndef TAO_IDL3_TO_IDL2
+  TAO_IDL3_TO_IDL2 = $(CIAO_ROOT)/tools/IDL3_TO_IDL2/tao_idl3_to_idl2
+  TAO_IDL3_TO_IDL2_DEP = $(TAO_IDL3_TO_IDL2)$(EXEEXT)
+else
+ifndef TAO_IDL3_TO_IDL2_DEP
+  TAO_IDL3_TO_IDL2_DEP = $(TAO_IDL3_TO_IDL2)
+endif
+endif
+
 ifeq (,$(findstring -L$(CIAO_ROOT)/ciao,$(LDFLAGS)))
   LDFLAGS += -L$(CIAO_ROOT)/ciao
 endif
