@@ -1,3 +1,19 @@
+Fri Jun  2 19:52:19 UTC 2006  Yan Dai  <dai_y@ociweb.com>
+
+        * tests/DII_Collocation_Tests/twoway/Client_Task.cpp:
+        * tests/DII_Collocation_Tests/twoway/Client_Task.h:
+        * tests/DII_Collocation_Tests/twoway/Collocated_Test.cpp:
+        * tests/DII_Collocation_Tests/twoway/DII_Collocation_Tests.mpc:
+        * tests/DII_Collocation_Tests/twoway/Hello.cpp:
+        * tests/DII_Collocation_Tests/twoway/Hello.h:
+        * tests/DII_Collocation_Tests/twoway/README:
+        * tests/DII_Collocation_Tests/twoway/run_test.pl:
+        * tests/DII_Collocation_Tests/twoway/Server_Task.cpp:
+        * tests/DII_Collocation_Tests/twoway/Server_Task.h:
+        * tests/DII_Collocation_Tests/twoway/Test.idl:
+
+          Removed twoway test.
+
 Fri Jun  2 12:05:13 USMST 2006  Yan Dai  <dai_y@ociweb.com>
 
         * tests/DII_Collocation_Tests/oneway/Collocated_Test.cpp:
