@@ -2,7 +2,7 @@
 
 // This include is needed for static builds to initialize DII_Arguments_Converter
 // service object.
-#include "tao/DynamicInterface/DII_Arguments_Converter_Impl.h"
+//#include "tao/DynamicInterface/DII_Arguments_Converter_Impl.h"
 
 #include "Server_Task.h"
 #include "Client_Task.h"
