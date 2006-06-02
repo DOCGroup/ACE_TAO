@@ -167,10 +167,10 @@ ifeq ($(rtp),1)
   include $(WIND_USR)/tool/$(TOOL_FAMILY)/make.$(CPU)$(TOOL)
   CPPFLAGS += -mrtp
   LDFLAGS := $(filter-out -X, $(LDFLAGS))
+  LDFLAGS := $(filter-out -N, $(LDFLAGS))
   LD := $(CPLUS)
   DLD := $(CPLUS)
   LDFLAGS += -L$(WIND_USR)/lib/$(VX_CPU_FAMILY)/$(CPU)/common
-  LDLIBS += -ldl
 else
   include $(TGT_DIR)/h/make/defs.default
   include $(TGT_DIR)/h/make/defs.$(WIND_HOST_TYPE)
@@ -247,7 +247,7 @@ else
   endif
 endif
 else
-  C++FLAGS += -fmerge-templates
+  C++FLAGS += -fimplicit-templates
 endif
 endif
 
