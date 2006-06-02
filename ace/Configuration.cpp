@@ -213,9 +213,9 @@ ACE_Configuration::operator== (const ACE_Configuration& rhs) const
   ACE_Configuration_Section_Key thisSection;
 
   // loop through each section in this object
-  while ((rc) && (!nonconst_this->enumerate_sections (this->root_,
-                                                      sectionIndex,
-                                                      sectionName)))
+  while ((rc) && (nonconst_this->enumerate_sections (this->root_,
+                                                     sectionIndex,
+                                                     sectionName) == 0))
     {
       // find that section in the rhs object
       if (nonconst_rhs.open_section (rhsRoot,
@@ -247,7 +247,7 @@ ACE_Configuration::operator== (const ACE_Configuration& rhs) const
           while ((rc) && nonconst_this->enumerate_values (thisSection,
                                                           valueIndex,
                                                           valueName,
-                                                          valueType))
+                                                          valueType) == 0)
             {
               // look for the same value in the rhs section
               if (nonconst_rhs.find_value (rhsSection,
@@ -359,16 +359,16 @@ ACE_Configuration::operator== (const ACE_Configuration& rhs) const
 
                 }// end else if values match.
 
-              valueIndex++;
+              ++valueIndex;
 
             }// end value while loop
 
           // look in the rhs for values not in this
           valueIndex = 0;
-          while ((rc) && (!nonconst_rhs.enumerate_values (rhsSection,
-                                                          valueIndex,
-                                                          valueName,
-                                                          rhsType)))
+          while ((rc) && (nonconst_rhs.enumerate_values (rhsSection,
+                                                         valueIndex,
+                                                         valueName,
+                                                         rhsType) == 0))
             {
               // look for the same value in this section
               if (nonconst_this->find_value (thisSection,
@@ -379,7 +379,7 @@ ACE_Configuration::operator== (const ACE_Configuration& rhs) const
                   // be found in the rhs object.
                   rc = false;
                 }
-              valueIndex++;
+              ++valueIndex;
             }// end while for rhs values not in this.
 
         }// end else if sections match.
@@ -392,9 +392,9 @@ ACE_Configuration::operator== (const ACE_Configuration& rhs) const
   // exist in this
   sectionIndex = 0;
   while ((rc)
-         && (!nonconst_rhs.enumerate_sections (rhsRoot,
-                                               sectionIndex,
-                                               sectionName)))
+         && (nonconst_rhs.enumerate_sections (rhsRoot,
+                                              sectionIndex,
+                                              sectionName) == 0))
     {
       // find the section in this
       if (nonconst_this->open_section (this->root_,
@@ -414,7 +414,7 @@ ACE_Configuration::operator== (const ACE_Configuration& rhs) const
           // are not equal.
           rc = false;
         }
-      sectionIndex++;
+      ++sectionIndex;
     }
   return rc;
 }
@@ -1672,7 +1672,7 @@ ACE_Configuration_Heap::remove_section (const ACE_Configuration_Section_Key& key
           if (remove_section (section, name.fast_rep (), 1))
             return -1;
 
-          index++;
+          ++index;
         }
     }
 
