@@ -470,8 +470,8 @@ template <PR_ST_1, ACE_SYNCH_DECL> int
 ACE_Buffered_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::flush_i (void)
 {
   ACE_Message_Queue_Iterator<ACE_SYNCH_USE> iterator (*this->msg_queue ());
-  ACE_Message_Block *mblk;
-  int result = 0;
+  ACE_Message_Block *mblk = 0;
+  ssize_t result = 0;
 
   // Get the first <ACE_Message_Block> so that we can write everything
   // out via the <send_n>.

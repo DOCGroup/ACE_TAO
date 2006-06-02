@@ -17,6 +17,11 @@
 #include "ace/Countdown_Time.h"
 #include "ace/OS_NS_unistd.h"
 
+#if defined (ACE_VXWORKS) && (ACE_VXWORKS > 0x600) && defined (__RTP__)
+# include <rtpLib.h>
+# include <taskLib.h>
+#endif
+
 ACE_RCSID (ace, Process, "$Id$")
 
 // This function acts as a signal handler for SIGCHLD. We don't really want
@@ -218,6 +223,108 @@ ACE_Process::spawn (ACE_Process_Options &options)
       ACE_OS::close (ACE_STDERR);
     else
       ACE_OS::dup2 (saved_stderr, ACE_STDERR);
+  }
+
+  return this->child_id_;
+#elif (defined (ACE_VXWORKS) && (ACE_VXWORKS > 0x600)) && defined (__RTP__)
+  if (ACE_BIT_ENABLED (options.creation_flags (),
+                       ACE_Process_Options::NO_EXEC))
+    ACE_NOTSUP_RETURN (ACE_INVALID_PID);
+
+  if (options.working_directory () != 0)
+    ACE_NOTSUP_RETURN (ACE_INVALID_PID);
+
+  int saved_stdin = ACE_STDIN;
+  int saved_stdout = ACE_STDOUT;
+  int saved_stderr = ACE_STDERR;
+  // Save STD file descriptors and redirect
+  if (options.get_stdin () != ACE_INVALID_HANDLE) {
+    if ((saved_stdin = ACE_OS::dup (ACE_STDIN)) == -1 && errno != EBADF)
+      ACE_OS::exit (errno);
+    if (ACE_OS::dup2 (options.get_stdin (), ACE_STDIN) == -1)
+      ACE_OS::exit (errno);
+  }
+  if (options.get_stdout () != ACE_INVALID_HANDLE) {
+    if ((saved_stdout = ACE_OS::dup (ACE_STDOUT)) == -1 && errno != EBADF)
+      ACE_OS::exit (errno);
+    if (ACE_OS::dup2 (options.get_stdout (), ACE_STDOUT) == -1)
+      ACE_OS::exit (errno);
+  }
+  if (options.get_stderr () != ACE_INVALID_HANDLE) {
+    if ((saved_stderr = ACE_OS::dup (ACE_STDERR)) == -1 && errno != EBADF)
+      ACE_OS::exit (errno);
+    if (ACE_OS::dup2 (options.get_stderr (), ACE_STDERR) == -1)
+      ACE_OS::exit (errno);
+  }
+
+  // Wide-char builds need narrow-char strings for commandline and
+  // environment variables.
+# if defined (ACE_USES_WCHAR)
+  wchar_t * const *wargv = options.command_line_argv ();
+  size_t vcount, i;
+  for (vcount = 0; wargv[vcount] != 0; ++vcount)
+    ;
+  char **procargv = new char *[vcount + 1];  // Need 0 at the end
+  procargv[vcount] = 0;
+  for (i = 0; i < vcount; ++i)
+    procargv[i] = ACE_Wide_To_Ascii::convert (wargv[i]);
+
+  char **procenv = 0;
+  if (options.inherit_environment ())
+    {
+      wargv = options.env_argv ();
+      for (vcount = 0; wargv[vcount] != 0; ++vcount)
+        ;
+      procenv = new char *[vcount + 1];  // Need 0 at the end
+      procenv[vcount] = 0;
+      for (i = 0; i < vcount; ++i)
+        procenv[i] = ACE_Wide_To_Ascii::convert (wargv[i]);
+    }
+# else
+  const char **procargv = const_cast<const char**> (options.command_line_argv ());
+  const char **procenv = const_cast<const char**> (options.env_argv ());
+# endif /* ACE_USES_WCHAR */
+
+  this->child_id_ = ::rtpSpawn (procargv[0],
+                                procargv,
+                                procenv,
+                                200,          // priority
+                                0x10000,      // uStackSize
+                                0,            // options
+                                VX_FP_TASK);  // taskOptions
+  int my_errno_ = errno;
+  if (this->child_id_ == ERROR) {
+      // something went wrong
+      this->child_id_ = ACE_INVALID_PID;
+  }
+
+# if defined (ACE_USES_WCHAR)
+  if (procenv)
+    delete procenv;
+# endif /* ACE_USES_WCHAR */
+
+  // restore STD file descriptors (if necessary)
+  if (options.get_stdin () != ACE_INVALID_HANDLE) {
+    if (saved_stdin == -1)
+      ACE_OS::close (ACE_STDIN);
+    else
+      ACE_OS::dup2 (saved_stdin, ACE_STDIN);
+  }
+  if (options.get_stdout () != ACE_INVALID_HANDLE) {
+    if (saved_stdout == -1)
+      ACE_OS::close (ACE_STDOUT);
+    else
+      ACE_OS::dup2 (saved_stdout, ACE_STDOUT);
+  }
+  if (options.get_stderr () != ACE_INVALID_HANDLE) {
+    if (saved_stderr == -1)
+      ACE_OS::close (ACE_STDERR);
+    else
+      ACE_OS::dup2 (saved_stderr, ACE_STDERR);
+  }
+
+  if (this->child_id_ == ACE_INVALID_PID) {
+    errno = my_errno_;
   }
 
   return this->child_id_;
@@ -453,7 +560,15 @@ ACE_Process::wait (const ACE_Time_Value &tv,
     }
 
   if (tv == ACE_Time_Value::max_time)
-    return this->wait (status);
+# if defined (ACE_VXWORKS)
+    {
+      pid_t retv;
+      while ( (retv = this->wait (status)) == ACE_INVALID_PID && errno == EINTR ) ;
+      return retv;
+    }
+# else
+     return this->wait (status);
+# endif
 
   pid_t pid = 0;
   ACE_Time_Value sleeptm (1);    // 1 msec
