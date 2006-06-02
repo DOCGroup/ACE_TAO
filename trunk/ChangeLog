@@ -1,3 +1,8 @@
+Fri Jun  2 09:42:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_Thread.inl:
+          Added necessary code for VxWorks 6.2
+
 Thu Jun  1 23:13:58 UTC 2006  Yan Dai  <dai_y@ociweb.com>
 
         * bin/tao_orb_tests.lst:
