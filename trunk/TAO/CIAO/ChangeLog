@@ -1,3 +1,10 @@
+Fri Jun  2 18:55:41 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tools/Config_Handlers/Config_Handlers.mpc:
+        * DAnCE/TargetManager/TargetManager.mpc:
+
+          Shortened long lines.
+
 Fri Jun  2 12:17:12 UTC 2006    Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * rules.ciao.GNU:
