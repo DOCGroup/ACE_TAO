@@ -207,7 +207,7 @@ size_t count_potential_surrogates (
   for (size_t i = 0; i < len; ++i)
     {
       // see comments above in encode_utf16().
-      unsigned long ul_value = static_cast<unsigned_long>(buffer[i]);
+      unsigned long ul_value = static_cast<unsigned long>(buffer[i]);
       if (ul_value >= ACE_UTF16_RAW_END &&
           ul_value < ACE_UTF16_END)
         {
