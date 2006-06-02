@@ -1415,7 +1415,8 @@ Fri Apr 28 14:31:48 UTC 2006  Steve Huston  <shuston@riverace.com>
           ACE_UNIMPLEMENTED_FUNC usage.
 
         * m4/ace.m4: Fixed incorrect variable referenced in case during
-          --enable-uses-wchar.
+          --enable-uses-wchar.  Thanks to Paul Robinson <probinson at
+          gmail dot com> for reporting this.
 
 Fri Apr 28 14:03:50 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
