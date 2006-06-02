@@ -1,8 +1,12 @@
+Fri Jun  2 12:17:12 UTC 2006    Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * rules.ciao.GNU:
+          Added setting of TAO_IDL3_TO_IDL2 and TAO_IDL3_TO_IDL2_DEP when
+          they are not set, needed for cross compilation
+
 Thu Jun  1 21:23:51 UTC 2006    <ming.xiong@vanderbilt.edu>
 
         * examples/Hello/descriptors/run_test.pl
-
-
           Changed the codes so that it will correctly destroy all
           running processes upon failure.
 
