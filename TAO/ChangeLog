@@ -1,3 +1,42 @@
+Fri Jun  2 12:36:58 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tao/TAO_Internal.cpp:
+
+           Adding synchronization, in the form of a condition variable to
+           fix a race condition occurring when a non-default ORB enters
+           open_services, before the default ORB has completed
+           initializing the global service objects. According to the spec,
+           the default ORB is the one that gets to call ORB_init
+           first. The ORB-specific configuration implementation designates
+           the default ORB to initialize globally available service
+           objects, like the Resource Factory. If a non-default ORB beats
+           it to the resource initialization, it would cause a SEGV.
+
+        * tests/ORB_Local_Config/Two_DLL_ORB/Service_Config_ORB_Test.conf:
+
+           As a consequence of implementing the ORB-specific
+           configuration, we discovered many implicit assumptions about
+           the lifetime of objects. For example, process-global Singletons
+           are created by service objects, loaded by ORBs, which are
+           themselves initialized from a DLL-loaded code. If that DLL,
+           which also contains the code for tearing down the Singleton
+           gets unloaded (for instance, as a consequence of calling
+           orb->destroy()), its TEXT segment will no longer be mapped in
+           memory when the Object Manager tries to destroy the Singleton.
+
+           Ossama has a solution for a similar problem, involving the TAO
+           Singleton Manager, for DLL-loaded ORBs (see the DLL_ORB test),
+           however it doesn't cover the ACE Object Manager.
+
+           This configuration change is a workaround the fact that SSLIOP,
+           loaded as a private service object by a DLL-based ORB,
+           registers a process-global Singleton - ACE_SLL_Context, with
+           the Object Manager. In an use-case with multiple dynamically
+           loaded components containing ORBs, SSLIOP should be loaded
+           prior to loading any of the dynamic components using it. In
+           general, any SO that uses ACE Singletons must be treated
+           similarly, or rewritten.
+
 Fri Jun  2 04:44:17 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/orbsvcs/Log/EventLogFactory_i.cpp:

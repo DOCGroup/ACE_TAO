@@ -1,6 +1,7 @@
 // $Id$
 
 #include "tao/TAO_Internal.h"
+#include "tao/TAO_Singleton.h"
 #include "tao/default_server.h"
 #include "tao/default_client.h"
 #include "tao/default_resource.h"
@@ -139,6 +140,15 @@ namespace
    */
   long service_open_count = 0;
 
+  /**
+   * Part of a condition variable, which helps to ensure non-default
+   * ORBs can not proceed with their initialization, until the globaly
+   * required services have been instantiated by the default
+   * ORB. Usually, the first ORB to be created is designated the
+   * default ORB (reference the CORBA spec)
+   */
+  bool is_ubergestalt_ready = false;
+
   char const * resource_factory_args =
     TAO_DEFAULT_RESOURCE_FACTORY_ARGS;
   char const * server_strategy_factory_args =
@@ -155,11 +165,76 @@ namespace
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+/// A little helper class to get around the TAO_Singleton::instance ()
+/// inability to pass default initialization arguments to the
+/// singleton ctor.
+class TAO_Ubergestalt_Ready_Condition
+  : public ACE_Condition<TAO_SYNCH_RECURSIVE_MUTEX>
+{
+public:
+  TAO_Ubergestalt_Ready_Condition (void)
+    : ACE_Condition<TAO_SYNCH_RECURSIVE_MUTEX>
+        (*ACE_Static_Object_Lock::instance ())
+  {
+  };
+
+  static TAO_Ubergestalt_Ready_Condition* instance (void)
+  {
+    // The first thread to get here will initialize the static
+    // local. Any subsequent threads synchronizaton will be handled by
+    // TAO_Singleton
+    static TAO_Ubergestalt_Ready_Condition *i_ =
+      TAO_Singleton <TAO_Ubergestalt_Ready_Condition,
+                     TAO_SYNCH_RECURSIVE_MUTEX>::instance ();
+
+    return i_;
+  };
+};
+
+
 int
 TAO::ORB::open_services (ACE_Service_Gestalt* pcfg,
                          int &argc,
                          ACE_TCHAR **argv)
 {
+  {
+    ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX,
+                              guard,
+                              TAO_Ubergestalt_Ready_Condition::instance ()->mutex (),
+                              -1));
+
+    // Wait in line, while the default ORB (which isn't us) completes
+    // initialization of the globaly reuired service objects
+    if (service_open_count == 1)
+      {
+        if (TAO_debug_level > 4)
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("TAO (%P|%t) Waiting for the default ")
+                      ACE_TEXT ("ORB to complete the global ")
+                      ACE_TEXT ("initialization\n")));
+
+        while (!is_ubergestalt_ready)
+          TAO_Ubergestalt_Ready_Condition::instance ()->wait ();
+
+        if (TAO_debug_level > 4)
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("TAO (%P|%t) The default ")
+                      ACE_TEXT ("ORB must have completed the global ")
+                      ACE_TEXT ("initialization...\n")));
+
+      }
+    else
+      {
+        if (TAO_debug_level > 4)
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("TAO (%P|%t) We are %sthe default ")
+                      ACE_TEXT ("ORB ...\n"),
+                      (service_open_count == 0) ? "" : "not "));
+      }
+
+    service_open_count++;
+  }
+
   // Construct an argument vector specific to the Service
   // Configurator.
   CORBA::StringSeq svc_config_argv;
@@ -194,15 +269,6 @@ TAO::ORB::open_services (ACE_Service_Gestalt* pcfg,
       return -1;
     }
 
-  {
-    ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX,
-                              guard,
-                              *ACE_Static_Object_Lock::instance (),
-                              -1));
-
-    service_open_count++;
-  }
-
   // Construct an argument vector specific to the process-wide
   // (global) Service Configurator instance.
   CORBA::StringSeq global_svc_config_argv;
@@ -219,11 +285,6 @@ TAO::ORB::open_services (ACE_Service_Gestalt* pcfg,
                       ACE_TEXT ("TAO (%P|%t) Initializing the ")
                       ACE_TEXT ("process-wide services\n")));
         }
-
-      ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX,
-                                guard,
-                                *ACE_Static_Object_Lock::instance (),
-                                -1));
 
       register_global_services_i (theone);
 
@@ -271,6 +332,26 @@ TAO::ORB::open_services (ACE_Service_Gestalt* pcfg,
         }
 
       register_additional_services_i (theone);
+
+
+      if (TAO_debug_level > 4)
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("TAO (%P|%t) Default ORB - global ")
+                    ACE_TEXT ("initialization completed.\n")));
+
+      // Notify all other threads that may be waiting, that the global
+      // gestalt has been initialized.
+      {
+        ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX,
+                                  guard,
+                                  TAO_Ubergestalt_Ready_Condition::instance ()->mutex (),
+                                  -1));
+
+        is_ubergestalt_ready = true;
+        if (TAO_Ubergestalt_Ready_Condition::instance ()->broadcast () == -1)
+          return -1;
+      }
+
     }
   else
     {
