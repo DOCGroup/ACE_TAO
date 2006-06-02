@@ -1,3 +1,8 @@
+Fri Jun  2 12:20:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/taoidl3toidl2defaults.mpb:
+          Updated to make cross compilation possible
+
 Fri Jun  2 12:12:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:
