@@ -21,6 +21,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_RTEventLog_i::TAO_RTEventLog_i (CORBA::ORB_ptr orb,
 				    PortableServer::POA_ptr poa,
+				    PortableServer::POA_ptr log_poa,
                                     TAO_LogMgr_i &logmgr_i,
                                     DsLogAdmin::LogMgr_ptr factory,
                                     TAO_LogNotification *log_notifier,
@@ -28,7 +29,8 @@ TAO_RTEventLog_i::TAO_RTEventLog_i (CORBA::ORB_ptr orb,
 				    )
   : TAO_Log_i (orb, logmgr_i, factory, id, log_notifier),
     logmgr_i_ (logmgr_i),
-    poa_ (PortableServer::POA::_duplicate (poa))
+    poa_ (PortableServer::POA::_duplicate (poa)),
+    log_poa_ (PortableServer::POA::_duplicate (log_poa))
 {
   ACE_DECLARE_NEW_CORBA_ENV;
 
@@ -62,7 +64,6 @@ TAO_RTEventLog_i::copy (DsLogAdmin::LogId &id ACE_ENV_ARG_DECL)
   ACE_CHECK_RETURN (DsLogAdmin::Log::_nil ());
 
   return log._retn ();
-
 }
 
 DsLogAdmin::Log_ptr
@@ -98,12 +99,12 @@ TAO_RTEventLog_i::destroy (ACE_ENV_SINGLE_ARG_DECL)
 
   // Deregister with POA.
   PortableServer::ObjectId_var id =
-    this->poa_->servant_to_id (this
-                               ACE_ENV_ARG_PARAMETER);
+    this->log_poa_->servant_to_id (this
+                                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  this->poa_->deactivate_object (id.in ()
-                                 ACE_ENV_ARG_PARAMETER);
+  this->log_poa_->deactivate_object (id.in ()
+                                     ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
