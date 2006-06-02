@@ -1,3 +1,11 @@
+Fri Jun  2 16:29:55 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Select_Reactor_T.cpp (open): Added an error message
+          explicitly noting that the notification pipe open failed, which
+          should make debugging easier when this occurs, e.g., due to a
+          disabled network interface.  Thanks to David Highley
+          <dhighley@highley-recommended.com> for this suggestion.
+
 Fri Jun  2 12:20:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/taoidl3toidl2defaults.mpb:

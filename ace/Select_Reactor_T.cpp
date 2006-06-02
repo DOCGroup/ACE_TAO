@@ -436,7 +436,12 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::open
   else if (this->notify_handler_->open (this,
                                         0,
                                         disable_notify_pipe) == -1)
-    result = -1;
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_LIB_TEXT ("%p\n"),
+                  ACE_LIB_TEXT ("notification pipe open failed")));
+      result = -1;
+    }
 
   if (result != -1)
     // We're all set to go.
