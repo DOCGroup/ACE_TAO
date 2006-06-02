@@ -162,15 +162,23 @@ size_t encode_utf16 (ACE_UTF16_T * buffer, ACE_CDR::WChar value)
 {
   buffer[0] = static_cast<ACE_UTF16_T> (value);
   size_t length = 1;
+
+  // On platforms where sizeof(ACE_CDR::WChar) == 2, the test using
+  // ul_value will always be false, since we are improperly using
+  // a 4-byte native wchar codeset. But since this is for a simple
+  // test that has to run on machines with 4 byte wchars, this cast
+  // avoids compile time issues of comparing a value that starts out
+  // as a short with a constant that is too big for a short.
+  unsigned long ul_value = static_cast<unsigned long>(value);
   if (value >= ACE_UTF16_SURROGATE_HIGH_BEGIN)
     {
       if (value < ACE_UTF16_SURROGATE_LOW_END)
         {
           buffer[0] = ACE_UNICODE_SUBSTITUTE_CHARACTER;
         }
-      else if ((unsigned long)value >= ACE_UTF16_RAW_END)
+      else if (ul_value >= ACE_UTF16_RAW_END)
         {
-          if ((unsigned long)value >= ACE_UTF16_END)
+          if (ul_value >= ACE_UTF16_END)
             {
               buffer[0] = ACE_UNICODE_SUBSTITUTE_CHARACTER;
             }
@@ -198,9 +206,10 @@ size_t count_potential_surrogates (
   size_t count = 0;
   for (size_t i = 0; i < len; ++i)
     {
-      ACE_CDR::WChar value = buffer[i];
-      if ((unsigned long)value >= ACE_UTF16_RAW_END &&
-          (unsigned long)value < ACE_UTF16_END)
+      // see comments above in encode_utf16().
+      unsigned long ul_value = static_cast<unsigned_long>(buffer[i]);
+      if (ul_value >= ACE_UTF16_RAW_END &&
+          ul_value < ACE_UTF16_END)
         {
           count += 1;
         }
@@ -437,8 +446,11 @@ WUCS4_UTF16::write_wchar_i (ACE_OutputCDR &cdr,
 {
   // If the desired char cannot be translated into a single unicode char,
   // we must raise a marshal exception.
-  if ((unsigned long)x >= ACE_UTF16_RAW_END &&
-      (unsigned long)x < ACE_UTF16_END)
+  //
+  // see the comment in encode_utf16() regarding the cast.
+  unsigned long ul_x = static_cast<unsigned long>(x);
+  if (ul_x >= ACE_UTF16_RAW_END &&
+      ul_x < ACE_UTF16_END)
     return 0;
 
   int len = 0;
