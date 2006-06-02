@@ -87,7 +87,7 @@ namespace TAO
      * being invoked.
      *
      * @param args Array of pointers to the argument list in the
-     * operation declaration. this includes the return, inout and out
+     * operation declaration. This includes the return, inout and out
      * arguments.
      *
      * @param arg_number Number of arguments in the above array. This
