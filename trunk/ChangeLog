@@ -1,3 +1,9 @@
+Fri Jun  2 11:33:36 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * tests/Recursive_Mutex_Test.cpp (test_recursion_depth): The
+          get_nesting_level() only works on certain OS platforms, so don't
+          use it as part of the test.
+
 Fri Jun  2 10:13:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Configuration.cpp:
