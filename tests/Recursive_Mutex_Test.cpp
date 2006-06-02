@@ -59,7 +59,6 @@ test_recursion_depth (int nesting_level,
   if (nesting_level < n_iterations)
     {
       int result = rm->acquire ();
-      int mutex_nesting_level = rm->get_nesting_level ();
       ACE_ASSERT (result == 0);
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) = acquired, nesting = %d, thread id = %u\n"),
@@ -75,7 +74,6 @@ test_recursion_depth (int nesting_level,
                   ACE_TEXT ("(%P|%t) = released, nesting = %d, thread id = %u\n"),
                   rm->get_nesting_level (),
                   rm->get_thread_id ()));
-      ACE_ASSERT (rm->get_nesting_level () == mutex_nesting_level);
     }
 }
 
