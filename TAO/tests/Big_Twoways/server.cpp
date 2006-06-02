@@ -210,6 +210,9 @@ main (int argc, char *argv[])
       coordinator_impl->shutdown_all_peers (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
+      coordinator_impl->_remove_ref();
+      session_control_impl->_remove_ref();
+
       ACE_DEBUG ((LM_DEBUG, "Shutdown poa and orb . . .\n"));
 
       root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
