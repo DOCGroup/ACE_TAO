@@ -46,7 +46,7 @@ public:
 
   /// Constructor
   TAO_Base_Transport_Property (TAO_Endpoint *endpoint,
-                               CORBA::Boolean flag = 0);
+                               CORBA::Boolean flag = false);
 
   /// Destructor
   virtual ~TAO_Base_Transport_Property (void);
