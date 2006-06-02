@@ -1,3 +1,8 @@
+Fri Jun  2 21:02:46 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/CodeSets/libs/UCS4_UTF16/WUCS4_UTF16.cpp:
+          Fixed a typo from the earlier commit.
+
 Fri Jun  2 19:52:19 UTC 2006  Yan Dai  <dai_y@ociweb.com>
 
         * tests/DII_Collocation_Tests/twoway/Client_Task.cpp:
@@ -19,7 +24,7 @@ Fri Jun  2 12:05:13 USMST 2006  Yan Dai  <dai_y@ociweb.com>
         * tests/DII_Collocation_Tests/oneway/Collocated_Test.cpp:
 
           Fixed compilation errors due to reference to a new file.
-          
+
 Fri Jun  2 13:33:19 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/Big_Twoways/server.cpp:
