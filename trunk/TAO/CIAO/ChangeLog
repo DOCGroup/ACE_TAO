@@ -2,6 +2,7 @@ Fri Jun  2 18:55:41 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tools/Config_Handlers/Config_Handlers.mpc:
         * DAnCE/TargetManager/TargetManager.mpc:
+        * DAnCE/TargetManager/TM_Client.mpc:
 
           Shortened long lines.
 
