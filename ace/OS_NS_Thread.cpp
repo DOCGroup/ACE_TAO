@@ -1842,7 +1842,16 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
   ACE_UNUSED_ARG (name);
   ACE_UNUSED_ARG (sa);
 
+# if defined (ACE_VXWORKS) && (ACE_VXWORKS >= 0x600) && (ACE_VXWORKS <= 0x620)
+  /* Tests show that VxWorks 6.x pthread lib does not only
+   * require zeroing of mutex/condition objects to function correctly
+   * but also of the attribute objects.
+   */
+  pthread_mutexattr_t l_attributes = {0};
+# else
   pthread_mutexattr_t l_attributes;
+# endif
+
   if (attributes == 0)
     attributes = &l_attributes;
   int result = 0;
@@ -1899,6 +1908,16 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
 
   if (result == 0)
 {
+#   if defined (ACE_VXWORKS)&& (ACE_VXWORKS >= 0x600) && (ACE_VXWORKS <= 0x620)
+      /* VxWorks 6.x API reference states:
+       * If the memory for the mutex variable object has been allocated
+       *   dynamically, it is a good policy to always zero out the
+       *   block of memory so as to avoid spurious EBUSY return code
+       *   when calling this routine.
+       * Tests shows this to be necessary.
+       */
+      ACE_OS::memset (m, 0, sizeof (*m));
+#   endif
 #   if defined (ACE_HAS_PTHREADS_DRAFT4)
       if (::pthread_mutex_init (m, *attributes) == 0)
 #   elif defined (ACE_HAS_PTHREADS_DRAFT7) || defined (ACE_HAS_PTHREADS_STD)
@@ -3874,16 +3893,16 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
     stacksize = ACE_NEEDS_HUGE_THREAD_STACKSIZE;
 # endif /* ACE_NEEDS_HUGE_THREAD_STACKSIZE */
 
-# if !defined (ACE_VXWORKS)
-  // On VxWorks, the OS will provide a task name if the user doesn't.
-  // So, we don't need to create a tmp_thr.  If the caller of this
-  // member function is the Thread_Manager, than thr_id will be non-zero
-  // anyways.
+# if !defined (ACE_VXWORKS) && !defined (ACE_HAS_PTHREADS)
+  // On VxWorks , using the task API,  the OS will provide a task name if
+  // the user doesn't. So, we don't need to create a tmp_thr.  If the
+  // caller of this member function is the Thread_Manager, than thr_id
+  // will be non-zero anyways.
   ACE_thread_t tmp_thr;
 
   if (thr_id == 0)
     thr_id = &tmp_thr;
-# endif /* ! VXWORKS */
+# endif /* ! ACE_VXWORKS && !ACE_HAS_PTHREADS */
 
   ACE_hthread_t tmp_handle;
   if (thr_handle == 0)
@@ -3892,7 +3911,15 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 # if defined (ACE_HAS_PTHREADS)
 
   int result;
+# if defined (ACE_VXWORKS) && (ACE_VXWORKS >= 0x600) && (ACE_VXWORKS <= 0x620)
+  /* Tests show that VxWorks 6.x pthread lib does not only
+   * require zeroing of mutex/condition objects to function correctly
+   * but also of the attribute objects.
+   */
+  pthread_attr_t attr = {0};
+#   else
   pthread_attr_t attr;
+#   endif
 #   if defined (ACE_HAS_PTHREADS_DRAFT4)
   if (ACE_ADAPT_RETVAL(::pthread_attr_create (&attr), result) != 0)
 #   else /* ACE_HAS_PTHREADS_DRAFT4 */
