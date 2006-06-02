@@ -64,6 +64,7 @@ public:
   /// Constructor.
   TAO_EventLog_i (CORBA::ORB_ptr orb,
 		  PortableServer::POA_ptr poa,
+		  PortableServer::POA_ptr log_poa,
                   TAO_LogMgr_i &logmgr_i,
                   DsLogAdmin::LogMgr_ptr factory,
                   TAO_LogNotification *log_notifier,
@@ -125,6 +126,8 @@ private:
   TAO_Event_LogConsumer *my_log_consumer_;
 
   PortableServer::POA_var	poa_;
+
+  PortableServer::POA_var	log_poa_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

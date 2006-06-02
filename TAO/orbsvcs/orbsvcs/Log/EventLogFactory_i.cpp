@@ -215,6 +215,7 @@ TAO_EventLogFactory_i::create_log_servant (DsLogAdmin::LogId id
   ACE_NEW_THROW_EX (event_log_i,
                     TAO_EventLog_i (this->orb_.in (),
 				    this->poa_.in (),
+				    this->log_poa_.in (),
                                     *this,
                                     this->log_mgr_.in (),
                                     this->notifier_,

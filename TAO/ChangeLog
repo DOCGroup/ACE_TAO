@@ -1,3 +1,15 @@
+Fri Jun  2 04:44:17 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/Log/EventLogFactory_i.cpp:
+        * orbsvcs/orbsvcs/Log/EventLog_i.cpp:
+        * orbsvcs/orbsvcs/Log/EventLog_i.h:
+        * orbsvcs/orbsvcs/Log/RTEventLogFactory_i.cpp:
+        * orbsvcs/orbsvcs/Log/RTEventLog_i.cpp:
+        * orbsvcs/orbsvcs/Log/RTEventLog_i.h:
+
+          We must pass both the RootPOA and the Log POA to the log servant
+          ctor, destroy() needs to deactivate the servant on the Log POA.
+
 Thu Jun  1 23:13:58 UTC 2006  Yan Dai  <dai_y@ociweb.com>
 
         * tests/DII_Collocation_Tests/Client_Task.cpp:
@@ -11,11 +23,11 @@ Thu Jun  1 23:13:58 UTC 2006  Yan Dai  <dai_y@ociweb.com>
         * tests/DII_Collocation_Tests/Server_Task.cpp:
         * tests/DII_Collocation_Tests/Server_Task.h:
         * tests/DII_Collocation_Tests/Test.idl:
-        
-          These files are moved to the tests/DII_Collocation_Tests/oneway 
+
+          These files are moved to the tests/DII_Collocation_Tests/oneway
           directory since a new test for twoway collocated DII request
           is added.
-          
+
         * tests/DII_Collocation_Tests/oneway/Client_Task.cpp:
         * tests/DII_Collocation_Tests/oneway/Client_Task.h:
         * tests/DII_Collocation_Tests/oneway/Collocated_Test.cpp:
@@ -27,9 +39,9 @@ Thu Jun  1 23:13:58 UTC 2006  Yan Dai  <dai_y@ociweb.com>
         * tests/DII_Collocation_Tests/oneway/Server_Task.cpp:
         * tests/DII_Collocation_Tests/oneway/Server_Task.h:
         * tests/DII_Collocation_Tests/oneway/Test.idl:
-        
+
           These files are moved from tests/DII_Collocation_Tests directory.
-        
+
         * tests/DII_Collocation_Tests/twoway/Client_Task.cpp:
         * tests/DII_Collocation_Tests/twoway/Client_Task.h:
         * tests/DII_Collocation_Tests/twoway/Collocated_Test.cpp:
@@ -43,10 +55,10 @@ Thu Jun  1 23:13:58 UTC 2006  Yan Dai  <dai_y@ociweb.com>
         * tests/DII_Collocation_Tests/twoway/Test.idl:
 
           Added a test for twoway collocation DII request via invoke ().
-          This test should fail now for the same reason as the 
+          This test should fail now for the same reason as the
           oneway collocation DII request. See bugzilla bug #2545
-          for details. 
-          
+          for details.
+
 Thu Jun  1 17:53:33 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/orbsvcs/Log/EventLogFactory_i.cpp:
@@ -81,8 +93,8 @@ Thu Jun  1 16:54:56 UTC 2006  Yan Dai  <dai_y@ociweb.com>
         * tests/DII_Collocation_Tests/Test.idl:
 
           Added new DII_Collocation_Tests test to show bug #2545.
-          The test crashes on get_in_arg() or gives incorrect arguments 
-          when the request is collocated oneway request and has "IN" 
+          The test crashes on get_in_arg() or gives incorrect arguments
+          when the request is collocated oneway request and has "IN"
           arguments. See bugzilla bug #2545.
 
 Thu Jun  1 14:16:06 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
