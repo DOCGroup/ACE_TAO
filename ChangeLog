@@ -1,3 +1,8 @@
+Fri Jun  2 11:51:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_vxworks6.2.GNU:
+          Updated for VxWorks 6.2
+
 Fri Jun  2 11:33:36 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * tests/Recursive_Mutex_Test.cpp (test_recursion_depth): The
