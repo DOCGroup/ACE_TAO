@@ -51,7 +51,7 @@ public:
   /// Constructor.
   TAO_Connect_Creation_Strategy (ACE_Thread_Manager * = 0,
                                  TAO_ORB_Core* orb_core = 0,
-                                 CORBA::Boolean flag = 0);
+                                 CORBA::Boolean flag = false);
 
   /// Makes TAO_*_Client_Connection_Handlers
   virtual int make_svc_handler (SVC_HANDLER *&sh);
