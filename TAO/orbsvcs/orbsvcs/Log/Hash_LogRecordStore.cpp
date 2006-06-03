@@ -110,7 +110,6 @@ TAO_Hash_LogRecordStore::log (const DsLogAdmin::LogRecord &const_rec
   // ACE emulation of U Long Long (for platforms that don't have one)
   // does not define postfix operators
   rec.id = ++maxid_;
-  // TODO: Reuse ids by keeping a list.
 
   ORBSVCS_Time::Time_Value_to_TimeT(rec.time,ACE_OS::gettimeofday());
 
@@ -184,7 +183,6 @@ TAO_Hash_LogRecordStore::remove_i (DsLogAdmin::RecordId id
 
   --this->num_records_;
   this->current_size_ -= log_record_size(rec);
-  // TODO: return ids to a reuse list.
 
   return 0;
 }
