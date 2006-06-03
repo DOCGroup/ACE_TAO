@@ -201,15 +201,15 @@ TAO_Hash_LogRecordStore::purge_old_records (ACE_ENV_SINGLE_ARG_DECL)
 
   if (num_records_to_purge > 0 )
     {
-      LOG_RECORD_STORE_ITER iter (rec_hash_);
-      LOG_RECORD_HASH_MAP_ENTRY *hash_entry = 0;
+      // Create iterators
+      LOG_RECORD_STORE_ITER iter (rec_hash_.begin ());
+      LOG_RECORD_STORE_ITER iter_end (rec_hash_.end ());
 
-      for (CORBA::ULongLong i = 0; i < num_records_to_purge; ++i)
+      for (CORBA::ULongLong i = 0; 
+	   iter != iter_end && i < num_records_to_purge; 
+	   ++i)
         {
-          if (iter.next (hash_entry) == -1 || iter.advance () == -1)
-            break;
-
-          if (this->remove_i (hash_entry->int_id_.id) == 0)
+          if (this->remove_i ((*iter++).int_id_.id) == 0)
             count++;
         }
     }
@@ -537,7 +537,7 @@ TAO_Hash_LogRecordStore::delete_records (const char *grammar,
 
   CORBA::ULong count = 0; // count of matches found.
 
-  for ( ; iter != iter_end; ++iter)
+  while (iter != iter_end)
     {
       // Use an evaluator.
       TAO_Log_Constraint_Visitor evaluator ((*iter).int_id_);
@@ -545,8 +545,12 @@ TAO_Hash_LogRecordStore::delete_records (const char *grammar,
       // Does it match the constraint?
       if (interpreter.evaluate (evaluator) == 1)
         {
-	  if (this->remove_i ((*iter).int_id_.id) == 0)
+	  if (this->remove_i ((*iter++).int_id_.id) == 0)
 	    count++;
+        }
+      else
+        {
+	  ++iter;
         }
     }
 
@@ -602,7 +606,7 @@ TAO_Hash_LogRecordStore::remove_old_records (ACE_ENV_SINGLE_ARG_DECL)
 
   CORBA::ULong count = 0; // count of matches found.
 
-  for ( ; iter != iter_end; ++iter)
+  while (iter != iter_end)
     {
       // Use an evaluator.
       TAO_Log_Constraint_Visitor evaluator ((*iter).int_id_);
@@ -610,8 +614,12 @@ TAO_Hash_LogRecordStore::remove_old_records (ACE_ENV_SINGLE_ARG_DECL)
       // Does it match the constraint?
       if (interpreter.evaluate (evaluator) == 1)
         {
-          if (this->remove_i ((*iter).int_id_.id) == 0)
+          if (this->remove_i ((*iter++).int_id_.id) == 0)
             count++;
+        }
+      else
+        {
+          ++iter;
         }
     }
 
