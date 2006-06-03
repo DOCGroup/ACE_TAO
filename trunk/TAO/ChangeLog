@@ -1,3 +1,9 @@
+Sat Jun  3 05:03:15 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/TAO_Internal.cpp:
+          Added ACE_MT guards around new synchronization code to make it
+          single-thread-build safe.
+
 Sat Jun  3 04:26:08 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tests/ORB_Local_Config/Two_DLL_ORB/README:

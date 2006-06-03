@@ -168,13 +168,15 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 /// A little helper class to get around the TAO_Singleton::instance ()
 /// inability to pass default initialization arguments to the
 /// singleton ctor.
+
+#if defined (ACE_HAS_THREADS)
 class TAO_Ubergestalt_Ready_Condition
-  : public ACE_Condition<TAO_SYNCH_RECURSIVE_MUTEX>
+  : public ACE_SYNCH_RECURSIVE_CONDITION
 {
 public:
   TAO_Ubergestalt_Ready_Condition (void)
-    : ACE_Condition<TAO_SYNCH_RECURSIVE_MUTEX>
-        (*ACE_Static_Object_Lock::instance ())
+    : ACE_SYNCH_RECURSIVE_CONDITION
+  (*ACE_Static_Object_Lock::instance())
   {
   };
 
@@ -190,7 +192,7 @@ public:
     return i_;
   };
 };
-
+#endif // ACE_HAS_THREADS
 
 int
 TAO::ORB::open_services (ACE_Service_Gestalt* pcfg,
@@ -213,8 +215,8 @@ TAO::ORB::open_services (ACE_Service_Gestalt* pcfg,
                       ACE_TEXT ("ORB to complete the global ")
                       ACE_TEXT ("initialization\n")));
 
-        while (!is_ubergestalt_ready)
-          TAO_Ubergestalt_Ready_Condition::instance ()->wait ();
+        ACE_MT (while (!is_ubergestalt_ready)
+                TAO_Ubergestalt_Ready_Condition::instance ()->wait ());
 
         if (TAO_debug_level > 4)
           ACE_DEBUG ((LM_DEBUG,
@@ -348,8 +350,9 @@ TAO::ORB::open_services (ACE_Service_Gestalt* pcfg,
                                   -1));
 
         is_ubergestalt_ready = true;
-        if (TAO_Ubergestalt_Ready_Condition::instance ()->broadcast () == -1)
-          return -1;
+        ACE_MT (if (TAO_Ubergestalt_Ready_Condition::instance ()->
+                    broadcast () == -1)
+                return -1);
       }
 
     }
