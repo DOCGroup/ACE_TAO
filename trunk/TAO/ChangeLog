@@ -1,3 +1,16 @@
+Sat Jun  3 17:37:11 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/Log/Hash_LogRecordStore.cpp:
+        * orbsvcs/orbsvcs/Log/Hash_LogRecordStore.h:
+
+          Changed last instance of use of old iterator API to the new
+          STL-like API.
+
+          Changed purge_old_records(), delete_records(), and
+          remove_old_records() to increment iterator before removing log
+          record.  Removing the record invalidates the current iterator,
+          and incrementing afterwards it resulted in undefined behavior.
+
 Sat Jun  3 16:10:47 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/orbsvcs/Log/Hash_LogRecordStore.cpp:
