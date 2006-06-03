@@ -301,6 +301,10 @@ protected:
   /// Returns 0 on success, -1 on failure.
   int remove_i (DsLogAdmin::RecordId id
 		ACE_ENV_ARG_DECL);
+	
+  /// Remove the record from the LogRecordStore.
+  void remove_i (LOG_RECORD_STORE_ITER iter
+		 ACE_ENV_ARG_DECL);
 
   DsLogAdmin::RecordList* query_i (const char *constraint,
                                    DsLogAdmin::Iterator_out &iter_out,

@@ -187,6 +187,18 @@ TAO_Hash_LogRecordStore::remove_i (DsLogAdmin::RecordId id
   return 0;
 }
 
+void
+TAO_Hash_LogRecordStore::remove_i (LOG_RECORD_STORE_ITER iter
+				   ACE_ENV_ARG_DECL)
+{
+  size_t size = log_record_size((*iter).int_id_);
+  
+  rec_hash_.unbind(&*iter);
+
+  --this->num_records_;
+  this->current_size_ -= size;
+}
+
 int
 TAO_Hash_LogRecordStore::purge_old_records (ACE_ENV_SINGLE_ARG_DECL)
 {
@@ -207,8 +219,8 @@ TAO_Hash_LogRecordStore::purge_old_records (ACE_ENV_SINGLE_ARG_DECL)
 	   iter != iter_end && i < num_records_to_purge; 
 	   ++i)
         {
-          if (this->remove_i ((*iter++).int_id_.id) == 0)
-            count++;
+          this->remove_i (iter++);
+	  count++;
         }
     }
 
@@ -543,8 +555,8 @@ TAO_Hash_LogRecordStore::delete_records (const char *grammar,
       // Does it match the constraint?
       if (interpreter.evaluate (evaluator) == 1)
         {
-	  if (this->remove_i ((*iter++).int_id_.id) == 0)
-	    count++;
+	  this->remove_i (iter++);
+	  count++;
         }
       else
         {
@@ -612,8 +624,8 @@ TAO_Hash_LogRecordStore::remove_old_records (ACE_ENV_SINGLE_ARG_DECL)
       // Does it match the constraint?
       if (interpreter.evaluate (evaluator) == 1)
         {
-          if (this->remove_i ((*iter++).int_id_.id) == 0)
-            count++;
+          this->remove_i (iter++);
+	  count++;
         }
       else
         {
