@@ -274,19 +274,17 @@ class TAO_Log_Serv_Export TAO_Hash_LogRecordStore
   virtual ACE_SYNCH_RW_MUTEX& lock();
 
 /* protected: */
-  /// Defines macros to represent the hash that maps ids to
+  /// Defines types to represent the hash that maps ids to
   /// DsLogAdmin::LogRecords.
   typedef ACE_Hash_Map_Manager <DsLogAdmin::RecordId,
-    DsLogAdmin::LogRecord, ACE_Null_Mutex> LOG_RECORD_HASH_MAP;
-  typedef ACE_Hash_Map_Iterator <DsLogAdmin::RecordId,
-    DsLogAdmin::LogRecord, ACE_Null_Mutex> LOG_RECORD_HASH_MAP_ITER;
-  typedef ACE_Hash_Map_Entry <DsLogAdmin::RecordId,
-    DsLogAdmin::LogRecord> LOG_RECORD_HASH_MAP_ENTRY;
+    DsLogAdmin::LogRecord, ACE_Null_Mutex>	LOG_RECORD_HASH_MAP;
+  typedef LOG_RECORD_HASH_MAP::ITERATOR		LOG_RECORD_HASH_MAP_ITER;
+  typedef LOG_RECORD_HASH_MAP::ENTRY		LOG_RECORD_HASH_MAP_ENTRY;
 
   /// Don't want to be tied to hash maps!.
-  typedef LOG_RECORD_HASH_MAP_ITER LOG_RECORD_STORE_ITER;
-  typedef LOG_RECORD_HASH_MAP LOG_RECORD_STORE;
-  typedef LOG_RECORD_HASH_MAP_ENTRY LOG_RECORD_STORE_ENTRY;
+  typedef LOG_RECORD_HASH_MAP			LOG_RECORD_STORE;
+  typedef LOG_RECORD_HASH_MAP_ITER		LOG_RECORD_STORE_ITER;
+  typedef LOG_RECORD_HASH_MAP_ENTRY		LOG_RECORD_STORE_ENTRY;
 
 protected:
   /// Set rec to the pointer to the LogRecord with the given

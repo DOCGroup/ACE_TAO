@@ -1,3 +1,13 @@
+Sat Jun  3 05:20:50 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/Log/Hash_LogRecordStore.h:
+
+          Declare LOG_RECORD_HASH_MAP_ENTRY and LOG_RECORD_HASH_MAP_ITER
+          in terms of LOG_RECORD_HASH_MAP::ENTRY, ...::ITERATOR, instead
+          of duplicating all the template stuff.  Will make it easier to
+          migrate to an ordered ma types, for bugzilla bugs #1980, #1981,
+          etc.
+
 Sat Jun  3 05:19:59 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/examples/Log/Event/run_test.pl:
