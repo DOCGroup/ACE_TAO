@@ -289,18 +289,18 @@ class TAO_Log_Serv_Export TAO_Hash_LogRecordStore
 protected:
   /// Set rec to the pointer to the LogRecord with the given
   /// id. Returns 0 on success, -1 on failure.
-  int retrieve (DsLogAdmin::RecordId id,
-		DsLogAdmin::LogRecord &rec
-		ACE_ENV_ARG_DECL);
+  int retrieve_i (DsLogAdmin::RecordId id,
+		  DsLogAdmin::LogRecord &rec
+		  ACE_ENV_ARG_DECL);
 
   /// Update into storage. Returns 0 on success -1 on failure.
-  int update (DsLogAdmin::LogRecord &rec
-	      ACE_ENV_ARG_DECL);
+  int update_i (DsLogAdmin::LogRecord &rec
+		ACE_ENV_ARG_DECL);
 
   /// Remove the record with id <id> from the LogRecordStore.
   /// Returns 0 on success, -1 on failure.
-  int remove (DsLogAdmin::RecordId id
-	      ACE_ENV_ARG_DECL);
+  int remove_i (DsLogAdmin::RecordId id
+		ACE_ENV_ARG_DECL);
 
   DsLogAdmin::RecordList* query_i (const char *constraint,
                                    DsLogAdmin::Iterator_out &iter_out,
@@ -314,8 +314,6 @@ protected:
                         ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      DsLogAdmin::InvalidConstraint));
-
-  int remove_i (DsLogAdmin::RecordId id);
 
   /// Throws DsLogAdmin::InvalidGrammar if we don't support this grammar.
   void check_grammar (const char* grammar ACE_ENV_ARG_DECL)
