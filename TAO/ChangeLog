@@ -1,3 +1,14 @@
+Sat Jun  3 19:38:44 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/Log/Hash_LogRecordStore.cpp:
+        * orbsvcs/orbsvcs/Log/Hash_LogRecordStore.h:
+
+          Added new varient of remove_i() that takes an iterator instead
+          of a record id as its argument.  In almost all cases, we have a
+          current iterator when deleting removing a log record; if we use
+          it when unbinding from the map, we avoid an extraneous lookup.
+          Update callers.
+
 Sat Jun  3 19:03:53 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/orbsvcs/Log/Hash_LogRecordStore.cpp:
