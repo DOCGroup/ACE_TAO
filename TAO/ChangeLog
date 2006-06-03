@@ -1,3 +1,31 @@
+Sat Jun  3 04:26:08 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tests/ORB_Local_Config/Two_DLL_ORB/README:
+
+          Added a bit of a documentation on the test
+
+        * tests/ORB_Local_Config/Two_DLL_ORB/Test.cpp:
+
+          Modified to conditionaly excersise one of the two test
+          scenarios. Originally, the test used SSLIOP, however that
+          service is not built by default. So the change makes use of
+          another service, which is normally available in "default"
+          builds.
+
+        * tests/ORB_Local_Config/Two_DLL_ORB/primary-csd.conf:
+        * tests/ORB_Local_Config/Two_DLL_ORB/primary-ssl.conf:
+        * tests/ORB_Local_Config/Two_DLL_ORB/secondary-csd.conf:
+        * tests/ORB_Local_Config/Two_DLL_ORB/secondary-empty.conf:
+        * tests/ORB_Local_Config/Two_DLL_ORB/secondary-ssl.conf:
+
+          Added a simple names for the the configuration files.
+
+        * tests/ORB_Local_Config/Two_DLL_ORB/Service_Config_ORB_Test.conf:
+        * tests/ORB_Local_Config/Two_DLL_ORB/Service_Config_ORB_Test2.conf:
+        * tests/ORB_Local_Config/Two_DLL_ORB/Service_Config_ORB_Test3.conf:
+
+          Removed these files.
+
 Fri Jun  2 21:02:46 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/CodeSets/libs/UCS4_UTF16/WUCS4_UTF16.cpp:
