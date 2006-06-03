@@ -479,12 +479,16 @@ TAO_Hash_LogRecordStore::retrieve (DsLogAdmin::TimeT from_time,
 }
 
 CORBA::ULong
-TAO_Hash_LogRecordStore::match_i (const char *constraint,
-                                  CORBA::Boolean delete_rec
-                                  ACE_ENV_ARG_DECL)
+TAO_Hash_LogRecordStore::match (const char* grammar,
+				const char *constraint
+				ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
+                   DsLogAdmin::InvalidGrammar,
                    DsLogAdmin::InvalidConstraint))
 {
+  this->check_grammar (grammar ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
   // Use an Interpreter to build an expression tree.
   TAO_Log_Constraint_Interpreter interpreter (constraint
                                               ACE_ENV_ARG_PARAMETER);
@@ -504,13 +508,7 @@ TAO_Hash_LogRecordStore::match_i (const char *constraint,
       // Does it match the constraint?
       if (interpreter.evaluate (evaluator) == 1)
         {
-          if (delete_rec == 1)
-            {
-              if (this->remove_i ((*iter).int_id_.id) == 0)
-                count++;
-            }
-          else
-            count++;
+	  count++;
         }
     }
 
@@ -518,26 +516,8 @@ TAO_Hash_LogRecordStore::match_i (const char *constraint,
 }
 
 CORBA::ULong
-TAO_Hash_LogRecordStore::match (const char* grammar,
-                  const char *constraint
-                  ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   DsLogAdmin::InvalidGrammar,
-                   DsLogAdmin::InvalidConstraint))
-{
-  this->check_grammar (grammar ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
-
-  CORBA::ULong count =
-    this->match_i (constraint, 0 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (count);
-
-  return count;
-}
-
-CORBA::ULong
 TAO_Hash_LogRecordStore::delete_records (const char *grammar,
-                           const char *constraint
+					 const char *constraint
                                          ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      DsLogAdmin::InvalidGrammar,
@@ -546,9 +526,29 @@ TAO_Hash_LogRecordStore::delete_records (const char *grammar,
   this->check_grammar (grammar ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  CORBA::ULong count =
-    this->match_i (constraint, 1 ACE_ENV_ARG_PARAMETER);
+  // Use an Interpreter to build an expression tree.
+  TAO_Log_Constraint_Interpreter interpreter (constraint
+                                              ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
+
+  // Create iterators
+  LOG_RECORD_STORE_ITER iter (rec_hash_.begin ());
+  LOG_RECORD_STORE_ITER iter_end (rec_hash_.end ());
+
+  CORBA::ULong count = 0; // count of matches found.
+
+  for ( ; iter != iter_end; ++iter)
+    {
+      // Use an evaluator.
+      TAO_Log_Constraint_Visitor evaluator ((*iter).int_id_);
+
+      // Does it match the constraint?
+      if (interpreter.evaluate (evaluator) == 1)
+        {
+	  if (this->remove_i ((*iter).int_id_.id) == 0)
+	    count++;
+        }
+    }
 
   return count;
 }

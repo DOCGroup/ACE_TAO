@@ -309,12 +309,6 @@ protected:
     ACE_THROW_SPEC ((CORBA::SystemException,
                      DsLogAdmin::InvalidConstraint));
 
-  CORBA::ULong match_i (const char *constraint,
-                        CORBA::Boolean delete_rec
-                        ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     DsLogAdmin::InvalidConstraint));
-
   /// Throws DsLogAdmin::InvalidGrammar if we don't support this grammar.
   void check_grammar (const char* grammar ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,

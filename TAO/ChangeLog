@@ -1,3 +1,14 @@
+Sat Jun  3 16:10:47 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/Log/Hash_LogRecordStore.cpp:
+        * orbsvcs/orbsvcs/Log/Hash_LogRecordStore.h:
+
+          Changed the match() and delete_records() methods to iterate
+          through the map by themselves instead of invoking match_i().
+          While match_i() factored out common code, it did so at the
+          expense of an extra conditional in the hot path.  Removed
+          match_i().
+
 Sat Jun  3 15:46:45 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/orbsvcs/Log/Hash_LogRecordStore.cpp:
