@@ -5,16 +5,25 @@
 
 #include "Service_Configuration_Per_ORB.h"
 
+// Uncomment this line to test the SSLIOP scenario, as described in
+//the README.
+// #define TEST_WITH_SSLIOP
+
 const ACE_TCHAR*
-file_Service_Config_ORB_Test ()
+config_file_name ()
 {
   // ASCII (UTF-8) encoded Service Configurator file.
   static const ACE_TCHAR svc_conf[] =
-    ACE_TEXT ("Service_Config_ORB_Test")
+#ifdef TEST_WITH_SSLIOP
+    ACE_TEXT ("primary-ssl")
+#else
+    ACE_TEXT ("primary-csd")
+#endif
     ACE_TEXT (ACE_DEFAULT_SVC_CONF_EXT);
 
   return svc_conf;
 }
+
 
 // @brief Loading a dynamic services in a local repository, which
 // initializes its own ORB
@@ -24,12 +33,14 @@ testLoadingTwoOrbs (int , ACE_TCHAR *argv[])
 {
   ACE_ARGV new_argv;
 
-  ACE_DEBUG ((LM_DEBUG, "Looking for conf file %s\n", file_Service_Config_ORB_Test ()));
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("Looking for conf file %s\n"),
+              config_file_name ()));
 
   // Process the Service Configurator directives in this test's
-    if (new_argv.add (argv) == -1
+  if (new_argv.add (argv) == -1
       || new_argv.add (ACE_TEXT ("-f")) == -1
-      || new_argv.add (file_Service_Config_ORB_Test ()) == -1)
+      || new_argv.add (config_file_name ()) == -1)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT("ARGV initialization failed\n")));
       return -1;
