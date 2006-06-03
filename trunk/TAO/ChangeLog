@@ -1,7 +1,16 @@
+Sat Jun  3 19:03:53 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/Log/Hash_LogRecordStore.cpp:
+
+          Remove TODO comments about storing the id on a list when a log
+          record is deleted, and reusing those ids when a new log record
+          is inserted.  If we did this, ids would be practically useless
+          for use by client applications.  It's much more useful to have
+          montonically increasing ids.
+
 Sat Jun  3 17:37:11 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/orbsvcs/Log/Hash_LogRecordStore.cpp:
-        * orbsvcs/orbsvcs/Log/Hash_LogRecordStore.h:
 
           Changed last instance of use of old iterator API to the new
           STL-like API.
