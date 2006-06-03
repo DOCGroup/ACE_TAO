@@ -1,3 +1,14 @@
+Sat Jun  3 15:46:45 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/Log/Hash_LogRecordStore.cpp:
+        * orbsvcs/orbsvcs/Log/Hash_LogRecordStore.h:
+
+          Remove private remove() method.  Update callers to invoke
+          remove_i().
+
+          Rename update() to update_i().
+          Rename retrieve() to retrieve_i().
+
 Sat Jun  3 05:25:09 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/orbsvcs/Log/PersistStore.cpp:

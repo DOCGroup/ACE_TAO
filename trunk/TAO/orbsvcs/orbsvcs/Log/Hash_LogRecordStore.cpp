@@ -139,17 +139,17 @@ TAO_Hash_LogRecordStore::log (const DsLogAdmin::LogRecord &const_rec
 }
 
 int
-TAO_Hash_LogRecordStore::retrieve (DsLogAdmin::RecordId id,
-           DsLogAdmin::LogRecord &rec
-           ACE_ENV_ARG_DECL)
+TAO_Hash_LogRecordStore::retrieve_i (DsLogAdmin::RecordId id,
+				     DsLogAdmin::LogRecord &rec
+				     ACE_ENV_ARG_DECL)
 {
   int retval = rec_hash_.find (id, rec);
   return retval;
 }
 
 int
-TAO_Hash_LogRecordStore::update (DsLogAdmin::LogRecord &rec
-         ACE_ENV_ARG_DECL)
+TAO_Hash_LogRecordStore::update_i (DsLogAdmin::LogRecord &rec
+				   ACE_ENV_ARG_DECL)
 {
   DsLogAdmin::LogRecord oldrec;
 
@@ -173,7 +173,8 @@ TAO_Hash_LogRecordStore::update (DsLogAdmin::LogRecord &rec
 }
 
 int
-TAO_Hash_LogRecordStore::remove_i (DsLogAdmin::RecordId id)
+TAO_Hash_LogRecordStore::remove_i (DsLogAdmin::RecordId id
+				   ACE_ENV_ARG_DECL)
 {
   DsLogAdmin::LogRecord rec;
   if (rec_hash_.unbind (id, rec) != 0)
@@ -187,14 +188,6 @@ TAO_Hash_LogRecordStore::remove_i (DsLogAdmin::RecordId id)
 
   return 0;
 }
-
-int
-TAO_Hash_LogRecordStore::remove (DsLogAdmin::RecordId id
-         ACE_ENV_ARG_DECL)
-{
-  return remove_i (id);
-}
-
 
 int
 TAO_Hash_LogRecordStore::purge_old_records (ACE_ENV_SINGLE_ARG_DECL)
@@ -236,14 +229,14 @@ TAO_Hash_LogRecordStore::set_record_attribute (DsLogAdmin::RecordId id,
   // TODO: validate attributes here.
 
   DsLogAdmin::LogRecord rec;
-  if (this->retrieve (id, rec ACE_ENV_ARG_PARAMETER) == -1)
+  if (this->retrieve_i (id, rec ACE_ENV_ARG_PARAMETER) == -1)
     {
       ACE_THROW (DsLogAdmin::InvalidRecordId ());
     }
 
   rec.attr_list = attr_list;
 
-  if (this->update (rec ACE_ENV_ARG_PARAMETER) == -1)
+  if (this->update_i (rec ACE_ENV_ARG_PARAMETER) == -1)
     {
       ACE_THROW (CORBA::PERSIST_STORE ());
     }
@@ -300,7 +293,7 @@ TAO_Hash_LogRecordStore::get_record_attribute (DsLogAdmin::RecordId id
 {
   DsLogAdmin::LogRecord rec;
 
-  int retval = this->retrieve (id, rec ACE_ENV_ARG_PARAMETER);
+  int retval = this->retrieve_i (id, rec ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   if (retval == -1)
