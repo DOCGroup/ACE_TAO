@@ -1,3 +1,13 @@
+Sat Jun  3 05:25:09 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/Log/PersistStore.cpp:
+        * orbsvcs/orbsvcs/Log/PersistStore.h:
+        * orbsvcs/orbsvcs/Log/LogRecordStore_persist.cpp:
+        * orbsvcs/orbsvcs/Log/LogRecordStore_persist.h:
+
+          Remove files.  This was an old attempt at log record persistence
+          that predated the plug-in strategy.
+
 Sat Jun  3 05:20:50 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/orbsvcs/Log/Hash_LogRecordStore.h:
