@@ -35,22 +35,23 @@ print STDERR "Starting Logging Service\n";
 $LS->Spawn ();
 
 # Give time for logging service to initialize and install its object 
-# reference in the nameing service.
+# reference in the naming service.
 sleep (5);
 
 print STDERR "Starting Consumer\n";
 
 $consumer->Spawn ();
 
-sleep (5);
+sleep (1);
 
 print STDERR "Starting Supplier\n";
 
 $supplier->Spawn ();
 
 
-$consumer->WaitKill (10);
-$supplier->WaitKill (10);
+$supplier->WaitKill (5);
+
+$consumer->Kill ();
 
 $NS->Kill ();
 
