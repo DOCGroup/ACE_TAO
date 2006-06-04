@@ -323,7 +323,9 @@ public:
    */
   size_t length (void) const;
 
-  /// Return @c true if the length of the string is zero.
+  /**
+   * Return @c true if the length of the string is zero.
+   */
   bool empty (void) const;
 
   /**
@@ -408,17 +410,23 @@ public:
    *  Equality comparison operator (must match entire string).
    *
    * @param s Input ACE_String_Base string to compare against stored string.
-   * @return Integer value of result (@c true = found, @c false = not
-   * found).
+   * @return @c true if equal, @c false otherwise.
    */
   bool operator == (const ACE_String_Base<CHAR> &s) const;
+
+  /**
+   *  Equality comparison operator (must match entire string).
+   *
+   * @param s Null terminated string to compare against stored string.
+   * @return @c true if equal, @c false otherwise.
+   */
+  bool operator == (const CHAR *s) const;
 
   /**
    *  Less than comparison operator.
    *
    *  @param s Input ACE_String_Base string to compare against stored string.
-   *  @return Integer value of result (@c true = less than, @c false =
-   *  greater than or equal).
+   *  @return @c true if less than, @c false otherwise.
    */
   bool operator < (const ACE_String_Base<CHAR> &s) const;
 
@@ -426,8 +434,7 @@ public:
    *  Greater than comparison operator.
    *
    *  @param s Input ACE_String_Base string to compare against stored string.
-   *  @return Integer value of result (@c true = greater than, @c
-   *  false = less than or equal).
+   *  @return @c true if greater than, @c false otherwise.
    */
   bool operator > (const ACE_String_Base<CHAR> &s) const;
 
@@ -435,9 +442,17 @@ public:
    *  Inequality comparison operator.
    *
    *  @param s Input ACE_String_Base string to compare against stored string.
-   *  @return Integer value of result (@c true = not equal, @c false = equal).
+   *  @return @c true if not equal, @c false otherwise.
    */
   bool operator != (const ACE_String_Base<CHAR> &s) const;
+
+  /**
+   *  Inequality comparison operator.
+   *
+   *  @param s Null terminated string to compare against stored string.
+   *  @return @c true if not equal, @c false otherwise.
+   */
+  bool operator != (const CHAR *s) const;
 
   /**
    *  Performs a strncmp comparison.
@@ -526,6 +541,14 @@ template < class CHAR >
 template < class CHAR >
   ACE_String_Base < CHAR > operator + (const CHAR c,
                                        const ACE_String_Base < CHAR > &t);
+
+template <class CHAR>
+  bool operator == (const CHAR *s,
+                    const ACE_String_Base<CHAR> &t);
+
+template <class CHAR>
+  bool operator != (const CHAR *s,
+                    const ACE_String_Base<CHAR> &t);
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
