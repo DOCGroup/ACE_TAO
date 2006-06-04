@@ -106,6 +106,12 @@ ACE_String_Base<CHAR>::operator!= (const ACE_String_Base<CHAR> &s) const
   return !(*this == s);
 }
 
+template <class CHAR> ACE_INLINE bool
+ACE_String_Base<CHAR>::operator!= (const CHAR *s) const
+{
+  return !(*this == s);
+}
+
 template <class CHAR> ACE_INLINE ssize_t
 ACE_String_Base<CHAR>::find (const ACE_String_Base<CHAR>&str, size_t pos) const
 {
@@ -118,6 +124,20 @@ ACE_String_Base<CHAR>::strstr (const ACE_String_Base<CHAR> &s) const
 {
   ACE_TRACE ("ACE_String_Base<CHAR>::strstr");
   return this->find (s.rep_);
+}
+
+template <class CHAR> ACE_INLINE bool
+operator== (const CHAR *s,
+            const ACE_String_Base<CHAR> &t)
+{
+  return t == s;
+}
+
+template <class CHAR> ACE_INLINE bool
+operator!= (const CHAR *s,
+            const ACE_String_Base<CHAR> &t)
+{
+  return !(t == s);
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL
