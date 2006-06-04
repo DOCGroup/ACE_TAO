@@ -1,3 +1,10 @@
+Sun Jun  4 16:04:36 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/DII_Collocation_Tests/oneway/Server_Task.h:
+
+          Add versioned namespace wrappers for the forward declaration of
+          an ACE class.
+
 Sun Jun  4 14:39:56 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/CSD_Framework/CSD_Default_Servant_Dispatcher.cpp:
