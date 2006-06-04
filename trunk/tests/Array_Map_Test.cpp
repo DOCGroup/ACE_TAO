@@ -111,7 +111,7 @@ insertion_removal_test (void)
                         false);
     }
 
-  ACE_ASSERT (!phonetic[0].empty ()); // Sanity check.
+  ACE_ASSERT (!phonetic[0].is_empty ()); // Sanity check.
 
   Map foo (phonetic[0]);  // Copy construction
   Map bar = foo;          // Assignment
@@ -234,7 +234,7 @@ index_operator_test (void)
   typedef ACE_Array_Map<char, ACE_TString> Map;
   Map phonetic;
 
-  ACE_ASSERT (phonetic.size () == 0 && phonetic.empty ());
+  ACE_ASSERT (phonetic.size () == 0 && phonetic.is_empty ());
   ACE_ASSERT (phonetic.max_size () > 1);
 
   // Run the same test twice, clearing the contents of the map between
@@ -330,7 +330,7 @@ index_operator_test (void)
       // Empty the map of its contents wholesale.
       phonetic.clear ();
 
-      ACE_ASSERT (phonetic.size () == 0 && phonetic.empty ());
+      ACE_ASSERT (phonetic.size () == 0 && phonetic.is_empty ());
     }
 
   ACE_DEBUG ((LM_DEBUG,

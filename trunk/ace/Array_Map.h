@@ -182,6 +182,9 @@ public:
   size_type max_size (void) const;
 
   /// Is the map empty?
+  bool is_empty (void) const;
+
+  /// Is the map empty? @deprecated Use is_empty() instead.
   bool empty (void) const;
 
   /// Swap the contents of this map with the given @a map in an

@@ -1,3 +1,17 @@
+Sun Jun  4 13:38:21 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * tests/Array_Map_Test.cpp: Fixed all uses of empty() to be
+          is_empty().
+
+Sun Jun  4 13:35:25 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Array_Map.{h,inl},
+        * ace/Intrusive_List.{h,inl},
+        * ace/String_Base.{h,inl}: Changed empty() to is_empty(), which
+          makes more sense.  Kept empty() around for the time being as a
+          @deprecated method.  Thanks to Domingos Monteiro <d dot monteiro
+          at netia dot net> for this suggestion.
+
 Sun Jun  4 00:51:38 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/CString.{h,inl,cpp}: Added some performance improvements for ACE_CString:
