@@ -46,6 +46,16 @@ TAO_CSD_Default_Servant_Dispatcher::create_Root_POA (const ACE_CString &name,
   TAO_CSD_Strategy_Repository *repo =
     ACE_Dynamic_Service<TAO_CSD_Strategy_Repository>::instance ("TAO_CSD_Strategy_Repository");
 
+  if (repo == 0)
+    {
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT("(%P|%t) CSD_Default_Servant_Dispatcher::")
+                    ACE_TEXT("create_POA could not find ")
+                    ACE_TEXT("TAO_CSD_Strategy_Repository\n")));
+      return 0;
+    }
+
   CSD_Framework::Strategy_var strategy = repo->find (name);
 
   if (! ::CORBA::is_nil (strategy.in ()))

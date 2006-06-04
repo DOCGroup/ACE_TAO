@@ -1,3 +1,16 @@
+Sun Jun  4 14:39:56 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/CSD_Framework/CSD_Default_Servant_Dispatcher.cpp:
+        * tao/CSD_Framework/CSD_Framework_Loader.cpp:
+
+          This is a temporary (duration unknown) resolution to a problem
+          highlighted by the intermitant failure in the Two_DLL_ORB test.
+          The problem is that the POA factory name and POA factory
+          directive are held in a static instance of the
+          TAO_ORB_Core_Static_Resoures. The problem is that with multiple
+          configuration contexts, the ORBs are supposed to be configured
+          separately, but this static resource violates that principle.
+
 Sat Jun  3 19:38:44 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/orbsvcs/Log/Hash_LogRecordStore.cpp:
