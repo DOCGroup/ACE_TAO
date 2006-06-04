@@ -2,7 +2,6 @@
 //
 // $Id$
 
-
 #include "ace/Malloc_Base.h"
 #include "ace/Min_Max.h"
 #include "ace/OS_NS_string.h"
@@ -35,9 +34,15 @@ ACE_String_Base<CHAR>::length (void) const
 }
 
 template <class CHAR> ACE_INLINE bool
-ACE_String_Base<CHAR>::empty (void) const
+ACE_String_Base<CHAR>::is_empty (void) const
 {
   return this->len_ == 0;
+}
+
+template <class CHAR> ACE_INLINE bool
+ACE_String_Base<CHAR>::empty (void) const
+{
+  return this->is_empty ();
 }
 
 template <class CHAR> ACE_INLINE ACE_String_Base<CHAR>

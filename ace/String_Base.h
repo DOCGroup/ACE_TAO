@@ -326,6 +326,12 @@ public:
   /**
    * Return @c true if the length of the string is zero.
    */
+  bool is_empty (void) const;
+
+  /**
+   * Return @c true if the length of the string is zero.
+   * @deprecated Use is_empty() instead.
+   */
   bool empty (void) const;
 
   /**

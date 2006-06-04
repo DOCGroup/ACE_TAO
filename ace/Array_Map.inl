@@ -98,9 +98,18 @@ ACE_Array_Map<Key, Value, EqualTo>::max_size (void) const
 
 template<typename Key, typename Value, class EqualTo>
 ACE_INLINE bool
-ACE_Array_Map<Key, Value, EqualTo>::empty (void) const
+ACE_Array_Map<Key, Value, EqualTo>::is_empty (void) const
 {
   return this->size_ == 0;
+}
+
+// The following method is deprecated.
+
+template<typename Key, typename Value, class EqualTo>
+ACE_INLINE bool
+ACE_Array_Map<Key, Value, EqualTo>::empty (void) const
+{
+  return this->is_empty ();
 }
 
 template<typename Key, typename Value, class EqualTo>
