@@ -382,10 +382,20 @@ ACE_String_Base<CHAR>::compare (const ACE_String_Base<CHAR> &s) const
 template <class CHAR> bool
 ACE_String_Base<CHAR>::operator== (const ACE_String_Base<CHAR> &s) const
 {
-  ACE_TRACE ("ACE_String_Base<CHAR>::operator==");
-  if (this->len_ != s.len_)
-    return false;
-  return compare (s) == 0;
+  return this->len_ == s.len_ &&
+         ACE_OS::memcmp (this->rep_,
+                         s.rep_,
+                         this->len_ * sizeof (CHAR)) == 0;
+}
+
+template <class CHAR> bool
+ACE_String_Base<CHAR>::operator== (const CHAR *s) const
+{
+  size_t len = ACE_OS::strlen (s);
+  return this->len_ == len &&
+         ACE_OS::memcmp (this->rep_,
+                         s,
+                         len * sizeof (CHAR)) == 0;
 }
 
 template <class CHAR> ssize_t
