@@ -1,3 +1,21 @@
+Sun Jun  4 00:51:38 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/CString.{h,inl,cpp}: Added some performance improvements for ACE_CString:
+
+          . Introduced new operators == and != to compare ACE_CString
+            and const char *.  This results in at least a 10-fold performance
+            improvement, due to avoiding dynamic memory allocation.
+
+          . Streamlined the existing operator == between two ACE_CString's.
+            (15% improvement in some cases, due to avoiding some of the
+            overhead of compare())
+
+          Also cleaned up some of the doxygen comments, e.g., the
+          ACE_CString comparison operators must have been returning an
+          integer at some point (?), but it's not the case anymore.
+          Thanks to Patrick Rabau <pr2345 at gmail dot com> for these
+          patches.
+
 Fri Jun  2 19:52:19 UTC 2006  Yan Dai  <dai_y@ociweb.com>
 
         * bin/tao_orb_tests.lst:
