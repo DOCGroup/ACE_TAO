@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -n Minimum_Base"
 
-project(Minimum_Base_DnC_stub): ciao_component_dnc {
+project(Minimum_Base_DnC_stub): ciao_client_dnc {
 
   sharedname = Minimum_Base_DnC_stub
   idlflags += -Sc \

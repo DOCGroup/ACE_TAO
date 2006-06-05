@@ -1,3 +1,64 @@
+Mon Jun  5 20:34:51 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/RepositoryManager/RepositoryManager.mpc
+        * DAnCE/TargetManager/TM_Client.mpc
+        * RACE/Controller/Component/Controller.mpc
+        * docs/tutorials/Quoter/Simple/Distributor/Distributor.mpc
+        * docs/tutorials/Quoter/Simple/Stock_Base/Stock_Base.mpc
+        * examples/BasicSP/BasicSP.mpc
+        * examples/BasicSP/BMClosedED/BMClosedED.mpc
+        * examples/BasicSP/BMDevice/BMDevice.mpc
+        * examples/BasicSP/BMDisplay/BMDisplay.mpc
+        * examples/BasicSP/EC/EC.mpc
+        * examples/Display/Display_Base/Display_Base.mpc
+        * examples/Display/NavDisplayGUI_exec/NavDisplayGUI.mpc
+        * examples/Hello/Hello_Base/Hello_Base.mpc
+        * examples/Hello/Receiver/Receiver.mpc
+        * examples/Hello/Sender/Sender.mpc
+        * examples/Swapping/Hello_Base/Hello_Base.mpc
+        * examples/Swapping/Receiver/Receiver.mpc
+        * examples/Swapping/Sender/Sender.mpc
+        * performance-tests/Protocols/common/Protocols.mpc
+        * tests/Bug_2130_Regression/interfaces/ENW.mpc
+        * tests/CIDL/CodeGen/CodeGen.mpc
+        * tests/IDL3/Components/ComplexComponent/Attributes/Attributes.mpc
+        * tests/IDL3/Components/ComplexComponent/EventSink/EventSink.mpc
+        * tests/IDL3/Components/ComplexComponent/EventSource/EventSource.mpc
+        * tests/IDL3/Components/ComplexComponent/Facets/Facets.mpc
+        * tests/IDL3/Components/ComplexComponent/Receptacles/Receptacles.mpc
+        * tests/IDL3/Components/SimpleComponent/SimpleComponent.mpc
+        * tests/IDL3/Events/Abstract/Abstract.mpc
+        * tests/IDL3/Events/Regular/Regular.mpc
+        * tests/IDL3/Homes/Attributes/HomeAttributes.mpc
+        * tests/IDL3/Homes/Basic/Basic.mpc
+        * tests/IDL3/Homes/Factory/Factory.mpc
+        * tests/IDL3/Homes/Finder/Finder.mpc
+        * tests/IDL3/Homes/Inheritance/Inheritance.mpc
+        * tests/IDL3/ImpliedIDL/Components/Basic/ICBasic.mpc
+        * tests/IDL3/ImpliedIDL/Components/EventSink/ICEventSink.mpc
+        * tests/IDL3/ImpliedIDL/Components/EventSource/ICEventSource.mpc
+        * tests/IDL3/ImpliedIDL/Components/Receptacles/ICReceptacles.mpc
+        * tests/IDL3/ImpliedIDL/Events/Events.mpc
+        * tests/IDL3/ImpliedIDL/Homes/Homes.mpc
+        * tests/IDL3/Lookup/lookup_test.mpc
+        * tests/Minimum/Minimum_Base/Minimum.mpc
+        * tools/Config_Handlers/Package_Handlers/Package_Handlers.mpc
+        
+          Fixes for linking errors/warnings in OS X. 
+        
+        * tools/Config_Handlers/Any_Handler.h
+        * tools/Config_Handlers/CEPE_Handler.h
+        * tools/Config_Handlers/CPD_Handler.h
+        * tools/Config_Handlers/Config_Handlers.mpc
+        * tools/Config_Handlers/DataType_Handler.h
+        * tools/Config_Handlers/ERE_Handler.h
+        * tools/Config_Handlers/Req_Handler.h
+        * tools/Config_Handlers/SatisfierProperty_Handler.h
+  
+          Factored certain elements used by both the deployment
+          and packaging handlers into a seperate library, also
+          fixes for linking errors in OS X. 
+        
 Fri Jun  2 18:55:41 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tools/Config_Handlers/Config_Handlers.mpc:

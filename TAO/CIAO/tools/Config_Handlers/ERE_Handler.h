@@ -12,7 +12,7 @@
 #define CIAO_CONFIG_HANDLERS_ERE_HANDLER_H
 #include /**/ "ace/pre.h"
 
-#include "Config_Handlers_Export.h"
+#include "Config_Handlers_Common_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -45,7 +45,7 @@ namespace CIAO
        *
        */
 
-      class Config_Handlers_Export ERE_Handler
+      class Config_Handlers_Common_Export ERE_Handler
 	{
 	public:
 	  static void external_ref_endpoints (const PlanConnectionDescription &src,
