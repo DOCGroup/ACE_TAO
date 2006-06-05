@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -n HUDisplay"
 
-project(BasicSP_DnC_stub): ciao_events_base_dnc {
+project(BasicSP_DnC_stub): ciao_client_dnc {
 
   sharedname = BasicSP_stub
   idlflags += -Wb,stub_export_macro=BASICSP_STUB_Export -Wb,stub_export_include=BasicSP_stub_export.h -Wb,skel_export_macro=BASICSP_SVNT_Export -Wb,skel_export_include=BasicSP_svnt_export.h

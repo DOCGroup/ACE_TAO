@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -l .. -p BasicSP -i -c EC"
 
-project(EC_DnC_stub): ciao_events_base_dnc {
+project(EC_DnC_stub): ciao_client_dnc {
   avoids += ace_for_tao
   after += BasicSP_DnC_stub
 

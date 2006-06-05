@@ -1,5 +1,6 @@
 // $Id$
-project(NavDisplayGUI_DnC_exec) : ciao_events_base_dnc, qt {
+
+project(NavDisplayGUI_DnC_exec) : ciao_component_dnc, qt {
   after   += Display_Base_NavDisplay_svnt
   requires += qt
   sharedname = NavDisplayGUI_DnC_exec

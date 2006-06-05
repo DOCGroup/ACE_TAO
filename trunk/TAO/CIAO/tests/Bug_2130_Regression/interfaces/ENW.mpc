@@ -1,6 +1,6 @@
 //$Id$
 
-project(ENW_stub): ciao_component_dnc, event {
+project(ENW_stub): ciao_client_dnc, event {
 
   sharedname = ENW_stub
   idlflags += -Wb,stub_export_macro=ENW_STUB_Export -Wb,stub_export_include=ENW_stub_export.h -Wb,skel_export_macro=ENW_SVNT_Export -Wb,skel_export_include=ENW_svnt_export.h

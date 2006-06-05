@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -n Protocols"
 
-project(Protocols_stub): ciao_component_dnc {
+project(Protocols_stub): ciao_client_dnc {
 
   sharedname = Protocols_stub
   idlflags += -Wb,stub_export_macro=PROTOCOLS_STUB_Export -Wb,stub_export_include=Protocols_stub_export.h -Wb,skel_export_macro=PROTOCOLS_SVNT_Export -Wb,skel_export_include=Protocols_svnt_export.h

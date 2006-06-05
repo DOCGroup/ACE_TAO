@@ -16,7 +16,7 @@
 #include "ciao/DeploymentC.h"
 #include "Basic_Deployment_Data.hpp"
 
-#include "Config_Handlers_Export.h"
+#include "Config_Handlers_Common_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -38,7 +38,7 @@ namespace Config_Handlers{
 *
 */
 
-class Config_Handlers_Export DataType_Handler {
+class Config_Handlers_Common_Export DataType_Handler {
 
 public:
 
