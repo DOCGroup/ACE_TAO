@@ -42,6 +42,8 @@
 #include "ace/Lock_Adapter_T.h"
 #include "ace/TSS_T.h"
 
+#include "ace/Service_Object.h"
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Data_Block;
 ACE_END_VERSIONED_NAMESPACE_DECL
@@ -1283,11 +1285,11 @@ protected:
  * Since the order in which these initializers execute is unspecified,
  * uninitialized members can be accessed.
  */
-class TAO_Export TAO_ORB_Core_Static_Resources
+class TAO_Export TAO_ORB_Core_Static_Resources : public ACE_Service_Object
 {
 public:
 
-  /// Return the singleton instance.
+  /// Return the context-specific singleton instance.
   static TAO_ORB_Core_Static_Resources* instance (void);
 
 public:
@@ -1411,15 +1413,17 @@ public:
   /// An alternative hook to be set for the ConnectionTimeoutPolicy
   TAO_ORB_Core::Timeout_Hook alt_connection_timeout_hook_;
 
-private:
+  //private:
 
   /// Constructor.
   TAO_ORB_Core_Static_Resources (void);
+  TAO_ORB_Core_Static_Resources& operator=
+      (const TAO_ORB_Core_Static_Resources&);
 
 private:
 
   /// The singleton instance.
-  static TAO_ORB_Core_Static_Resources* instance_;
+//   static TAO_ORB_Core_Static_Resources* instance_;
 
   /// Mostly unused variable whose sole purpose is to enforce
   /// the instantiation of a TAO_ORB_Core_Static_Resources instance
@@ -1436,6 +1440,9 @@ TAO_Export TAO_ORB_Core * TAO_ORB_Core_instance (void);
 // ****************************************************************
 
 TAO_END_VERSIONED_NAMESPACE_DECL
+
+ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_ORB_Core_Static_Resources)
+ACE_FACTORY_DECLARE (TAO, TAO_ORB_Core_Static_Resources)
 
 #if defined (__ACE_INLINE__)
 # include "tao/ORB_Core.i"
