@@ -79,6 +79,14 @@ ACE_RCSID (tao,
            ORB_Core,
            "$Id$")
 
+ACE_STATIC_SVC_DEFINE(TAO_ORB_Core_Static_Resources,
+                      ACE_TEXT ("TAO_ORB_Core_Static_Resources"),
+                      ACE_SVC_OBJ_T,
+                      &ACE_SVC_NAME (TAO_ORB_Core_Static_Resources),
+                      ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
+                       0)
+ACE_FACTORY_DEFINE (TAO, TAO_ORB_Core_Static_Resources)
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // ****************************************************************
@@ -94,7 +102,7 @@ TAO_default_environment (void)
 // Initialize instance_ to 0, since this is what we test for in the call
 // to instance ().  Note that this does not require a constructor call, so
 // it is always initialized by the time that instance () can be called.
-TAO_ORB_Core_Static_Resources* TAO_ORB_Core_Static_Resources::instance_ = 0;
+//TAO_ORB_Core_Static_Resources* TAO_ORB_Core_Static_Resources::instance_ = 0;
 
 // Force an instance to be created at module initialization time,
 // since we do not want to worry about double checked locking and
@@ -106,19 +114,34 @@ TAO_ORB_Core_Static_Resources::initialization_reference_ =
 TAO_ORB_Core_Static_Resources*
 TAO_ORB_Core_Static_Resources::instance (void)
 {
-  if (TAO_ORB_Core_Static_Resources::instance_ == 0)
+  ACE_Service_Gestalt *current = ACE_Service_Config::current();
+  TAO_ORB_Core_Static_Resources* tocsr =
+    ACE_Dynamic_Service<TAO_ORB_Core_Static_Resources>::instance
+    (current,"TAO_ORB_Core_Static_Resources",true);
+
+  if (tocsr == 0)
     {
       // This new is never freed on purpose.  The data specified by
       // it needs to be around for the last shared library that references
       // this class.  This could occur in a destructor in a shared library
       // that is unloaded after this one.  One solution to avoid this
       // harmless memory leak would be to use reference counting.
-      ACE_NEW_RETURN (TAO_ORB_Core_Static_Resources::instance_,
-                      TAO_ORB_Core_Static_Resources (),
-                      0);
+      current->process_directive(ace_svc_desc_TAO_ORB_Core_Static_Resources);
+      tocsr = ACE_Dynamic_Service<TAO_ORB_Core_Static_Resources>::instance
+        (current,"TAO_ORB_Core_Static_Resources",true);
+
+      ACE_Service_Gestalt *global = ACE_Service_Config::global();
+      if (current != global)
+        {
+          TAO_ORB_Core_Static_Resources* global_tocsr =
+            ACE_Dynamic_Service<TAO_ORB_Core_Static_Resources>::instance
+            (global,"TAO_ORB_Core_Static_Resources");
+          *tocsr = *global_tocsr;
+        }
     }
 
-  return TAO_ORB_Core_Static_Resources::instance_;
+  //  return TAO_ORB_Core_Static_Resources::instance_;
+  return tocsr;
 }
 
 TAO_ORB_Core_Static_Resources::TAO_ORB_Core_Static_Resources (void)
@@ -147,6 +170,33 @@ TAO_ORB_Core_Static_Resources::TAO_ORB_Core_Static_Resources (void)
                                        ""))),
     alt_connection_timeout_hook_ (0)
 {
+}
+
+TAO_ORB_Core_Static_Resources&
+TAO_ORB_Core_Static_Resources::operator=(const TAO_ORB_Core_Static_Resources& other)
+{
+  this->sync_scope_hook_ = other.sync_scope_hook_;
+  this->protocols_hooks_name_ = other.protocols_hooks_name_;
+  this->timeout_hook_ = other.timeout_hook_;
+  this->connection_timeout_hook_ = other.connection_timeout_hook_;
+  this->endpoint_selector_factory_name_ =
+    other.endpoint_selector_factory_name_;
+  this->thread_lane_resources_manager_factory_name_ =
+    other.thread_lane_resources_manager_factory_name_;
+  this->collocation_resolver_name_ = other.collocation_resolver_name_;
+  this->stub_factory_name_ = other.stub_factory_name_;
+  this->resource_factory_name_ = other.resource_factory_name_;
+  this->dynamic_adapter_name_ = other.dynamic_adapter_name_;
+  this->ifr_client_adapter_name_ = other.ifr_client_adapter_name_;
+  this->typecodefactory_adapter_name_ = other.typecodefactory_adapter_name_;
+  this->iorinterceptor_adapter_factory_name_ =
+    other.iorinterceptor_adapter_factory_name_;
+  this->valuetype_adapter_factory_name_ =
+    other.valuetype_adapter_factory_name_;
+  this->poa_factory_name_ = other.poa_factory_name_;
+  this->poa_factory_directive_ = other.poa_factory_directive_;
+  this->alt_connection_timeout_hook_ = other.alt_connection_timeout_hook_;
+  return *this;
 }
 
 // ****************************************************************
