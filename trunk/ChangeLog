@@ -1,3 +1,10 @@
+Mon Jun  5 20:27:42 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * bin/MakeProjectCreator/config/ciao_config_handlers.mpb
+        * bin/MakeProjectCreator/config/ciao_config_handlers_base.mpc
+        
+          Restructured to clean up config handlers MPC files.
+
 Sun Jun  4 13:38:21 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * tests/Array_Map_Test.cpp: Fixed all uses of empty() to be
