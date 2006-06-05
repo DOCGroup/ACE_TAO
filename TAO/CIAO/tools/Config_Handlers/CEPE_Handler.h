@@ -12,7 +12,7 @@
 #define CIAO_CONFIG_HANDLERS_CEPE_HANDLER_H
 #include /**/ "ace/pre.h"
 
-#include "Config_Handlers_Export.h"
+#include "Config_Handlers_Common_Export.h"
 #include "Utils/Functors.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -43,7 +43,7 @@ namespace CIAO
        *
        */
 
-      class Config_Handlers_Export CEPE_Handler
+      class Config_Handlers_Common_Export CEPE_Handler
 	{
 	public:
 	  static void external_port_endpoints (const PlanConnectionDescription &src,

@@ -1,13 +1,11 @@
 // $Id$
 
-project (Package_Config_Handlers) : acelib, ciao_deployment_stub, xerces {
+project (Package_Config_Handlers) : acelib, ciao_deployment_stub, ciao_config_handlers_base {
   sharedname = Package_Config_Handlers
   dynamicflags = PACKAGING_HANDLERS_BUILD_DLL
-  macros += XML_USE_PTHREADS
-  requires += exceptions
-  includes += $(CIAO_ROOT)/tools/Config_Handlers
-  after    += CIAO_XML_Utils XSC_XML_Handlers XSC_Config_Handlers
-  libs     += CIAO_XML_Utils XSC_XML_Handlers XSC_Config_Handlers
+
+  after    += XSC_Config_Handlers_Common XSC_DynAny_Handler 
+  libs     += XSC_Config_Handlers_Common XSC_DynAny_Handler 
   includes += $(CIAO_ROOT)/ciao
 
   Source_files {
@@ -30,9 +28,6 @@ project (Package_Config_Handlers) : acelib, ciao_deployment_stub, xerces {
     SID_Handler.h
   }
 
-  verbatim(gnuace, macros) {
-    override no_hidden_visibility = 1
-  }
 }
 
 project (Package_Config_Handlers_Tests) : ciao_component_dnc, ciao_config_handlers, ifr_client {
@@ -44,9 +39,7 @@ project (Package_Config_Handlers_Tests) : ciao_component_dnc, ciao_config_handle
   Source_Files {
     test.cpp
   }
-  verbatim(gnuace, macros) {
-    override no_hidden_visibility = 1
-  }
+
 }
 
 

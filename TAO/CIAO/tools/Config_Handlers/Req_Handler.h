@@ -13,7 +13,7 @@
 #include /**/ "ace/pre.h"
 
 #include "Basic_Deployment_Data.hpp"
-#include "Config_Handlers_Export.h"
+#include "Config_Handlers_Common_Export.h"
 #include "Utils/Functors.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -42,7 +42,7 @@ namespace CIAO
        *
        */
 
-      class Config_Handlers_Export Req_Handler
+      class Config_Handlers_Common_Export Req_Handler
 	{
 	public:
 

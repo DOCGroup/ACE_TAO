@@ -10,7 +10,6 @@ project (RepositoryManager) : ciao_server_dnc, ciao_config_handlers, zzip, zlib 
                                                   //in the Package_Handlers/PC_Intf.h
   exename = RepositoryManagerDeamon
   requires += zzip zlib
-  libs += Package_Config_Handlers
 
   IDL_Files {
     RepositoryManagerDaemon.idl
