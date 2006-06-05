@@ -1,3 +1,36 @@
+Mon Jun  5 03:19:58 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/ORB_Core.cpp:
+        * tao/ORB_Core.h:
+
+          There is a class for containing certain initialization values
+          used by the ORB Core that are set during Dynamic loading of
+          service configuration objects where there is no way to get a
+          pointer to an ORB Core instance. These values were stored in
+          a static instance of this class, TAO_ORB_Core_Static_Resources.
+          However, using a static instance of this class is incongruent
+          with the notion of per-ORB configuration, so this change
+          addresses the problem by making the resources container a
+          service object which is initialized in the local configuration
+          context for each ORB, as well as a copy in the global
+          configuration context.
+
+          This fix specifically addresses the problem of having a later
+          ORB initialization, such as for a second ORB, affecting the
+          configuration of earlier ORBs. If this happens in separate
+          threads, a race can occur leading to unpredictable results.
+
+          However, it might be possible for some ORB-related configuration
+          to be supplied via service configuration after ORB_init is
+          called. If that is the case, then the appropriate configuration
+          context must be set with ACE_Service_Config_Guard during the
+          duration of the configuration. This will ensure the newly loaded
+          configuration object goes into the correct context.
+
+        * tao/CSD_Framework/CSD_Framework_Loader.cpp:
+
+          Reverted the temporary fix, it is no longer needed.
+
 Sun Jun  4 16:04:36 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/DII_Collocation_Tests/oneway/Server_Task.h:
