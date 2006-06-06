@@ -346,8 +346,8 @@ protected:
   /// The max size of the record list returned in a query.
   CORBA::ULong max_rec_list_len_;
 
-  /// The hash of LogRecord ids to LogRecord 's
-  TAO_Hash_LogRecordStore::LOG_RECORD_HASH_MAP rec_hash_;
+  /// The map of RecordId's to LogRecord's
+  LOG_RECORD_HASH_MAP			rec_map_;
 
 
   /// The administrative state of the log

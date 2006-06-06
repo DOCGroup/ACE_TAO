@@ -58,14 +58,14 @@ TAO_Hash_LogRecordStore::~TAO_Hash_LogRecordStore (void)
 int
 TAO_Hash_LogRecordStore::open (void)
 {
-  return rec_hash_.open ();
+  return rec_map_.open ();
 }
 
 int
 TAO_Hash_LogRecordStore::close (void)
 {
   // Close the hash
-  return rec_hash_.close ();
+  return rec_map_.close ();
 }
 
 CORBA::ULongLong
@@ -114,7 +114,7 @@ TAO_Hash_LogRecordStore::log (const DsLogAdmin::LogRecord &const_rec
   ORBSVCS_Time::Time_Value_to_TimeT(rec.time,ACE_OS::gettimeofday());
 
   // First, bind the id to the LogRecord in the hash_map
-  if (this->rec_hash_.bind (rec.id, rec) != 0)
+  if (this->rec_map_.bind (rec.id, rec) != 0)
     {
 #if defined (ACE_LACKS_LONGLONG_T)
            ACE_ERROR_RETURN ((LM_ERROR,
@@ -142,7 +142,7 @@ TAO_Hash_LogRecordStore::retrieve_i (DsLogAdmin::RecordId id,
 				     DsLogAdmin::LogRecord &rec
 				     ACE_ENV_ARG_DECL)
 {
-  int retval = rec_hash_.find (id, rec);
+  int retval = rec_map_.find (id, rec);
   return retval;
 }
 
@@ -152,7 +152,7 @@ TAO_Hash_LogRecordStore::update_i (DsLogAdmin::LogRecord &rec
 {
   DsLogAdmin::LogRecord oldrec;
 
-  if (rec_hash_.unbind (rec.id, oldrec) != 0)
+  if (rec_map_.unbind (rec.id, oldrec) != 0)
     {
       return -1;
     }
@@ -160,7 +160,7 @@ TAO_Hash_LogRecordStore::update_i (DsLogAdmin::LogRecord &rec
   --this->num_records_;
   this->current_size_ -= log_record_size(oldrec);
 
-  if (rec_hash_.bind (rec.id, rec) != 0)
+  if (rec_map_.bind (rec.id, rec) != 0)
     {
       return -1;
     }
@@ -176,7 +176,7 @@ TAO_Hash_LogRecordStore::remove_i (DsLogAdmin::RecordId id
 				   ACE_ENV_ARG_DECL)
 {
   DsLogAdmin::LogRecord rec;
-  if (rec_hash_.unbind (id, rec) != 0)
+  if (rec_map_.unbind (id, rec) != 0)
     {
       return -1;
     }
@@ -193,7 +193,7 @@ TAO_Hash_LogRecordStore::remove_i (LOG_RECORD_STORE_ITER iter
 {
   size_t size = log_record_size(iter->item ());
   
-  rec_hash_.unbind(&*iter);
+  rec_map_.unbind(&*iter);
 
   --this->num_records_;
   this->current_size_ -= size;
@@ -212,8 +212,8 @@ TAO_Hash_LogRecordStore::purge_old_records (ACE_ENV_SINGLE_ARG_DECL)
   if (num_records_to_purge > 0 )
     {
       // Create iterators
-      LOG_RECORD_STORE_ITER iter (rec_hash_.begin ());
-      LOG_RECORD_STORE_ITER iter_end (rec_hash_.end ());
+      LOG_RECORD_STORE_ITER iter (rec_map_.begin ());
+      LOG_RECORD_STORE_ITER iter_end (rec_map_.end ());
 
       for (CORBA::ULongLong i = 0; 
 	   iter != iter_end && i < num_records_to_purge; 
@@ -274,8 +274,8 @@ TAO_Hash_LogRecordStore::set_records_attribute (
   ACE_CHECK_RETURN (0);
 
   // Create iterators
-  LOG_RECORD_STORE_ITER iter (rec_hash_.begin ());
-  LOG_RECORD_STORE_ITER iter_end (rec_hash_.end ());
+  LOG_RECORD_STORE_ITER iter (rec_map_.begin ());
+  LOG_RECORD_STORE_ITER iter_end (rec_map_.end ());
 
   CORBA::ULong count = 0; // count of matches found.
 
@@ -376,8 +376,8 @@ TAO_Hash_LogRecordStore::query_i (const char *constraint,
   rec_list->length(how_many);
 
   // Create iterators
-  LOG_RECORD_STORE_ITER iter (rec_hash_.begin ());
-  LOG_RECORD_STORE_ITER iter_end (rec_hash_.end ());
+  LOG_RECORD_STORE_ITER iter (rec_map_.begin ());
+  LOG_RECORD_STORE_ITER iter_end (rec_map_.end ());
 
   CORBA::ULong count = 0;       // count of matches found.
 
@@ -505,8 +505,8 @@ TAO_Hash_LogRecordStore::match (const char* grammar,
   ACE_CHECK_RETURN (0);
 
   // Create iterators
-  LOG_RECORD_STORE_ITER iter (rec_hash_.begin ());
-  LOG_RECORD_STORE_ITER iter_end (rec_hash_.end ());
+  LOG_RECORD_STORE_ITER iter (rec_map_.begin ());
+  LOG_RECORD_STORE_ITER iter_end (rec_map_.end ());
 
   CORBA::ULong count = 0; // count of matches found.
 
@@ -542,8 +542,8 @@ TAO_Hash_LogRecordStore::delete_records (const char *grammar,
   ACE_CHECK_RETURN (0);
 
   // Create iterators
-  LOG_RECORD_STORE_ITER iter (rec_hash_.begin ());
-  LOG_RECORD_STORE_ITER iter_end (rec_hash_.end ());
+  LOG_RECORD_STORE_ITER iter (rec_map_.begin ());
+  LOG_RECORD_STORE_ITER iter_end (rec_map_.end ());
 
   CORBA::ULong count = 0; // count of matches found.
 
@@ -611,8 +611,8 @@ TAO_Hash_LogRecordStore::remove_old_records (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CHECK_RETURN (0);
 
   // Create iterators
-  LOG_RECORD_STORE_ITER iter (rec_hash_.begin ());
-  LOG_RECORD_STORE_ITER iter_end (rec_hash_.end ());
+  LOG_RECORD_STORE_ITER iter (rec_map_.begin ());
+  LOG_RECORD_STORE_ITER iter_end (rec_map_.end ());
 
   CORBA::ULong count = 0; // count of matches found.
 
