@@ -7,11 +7,10 @@
 #include "Utils/Exceptions.h"
 #include "Package_Handlers/PCD_Handler.h"
 #include "Package_Handlers/CPD_Handler.h"
+#include "toplevel.hpp"
 #include "Deployment.hpp"
 #include "Property_Handler.h"
 #include "Req_Handler.h"
-
-#include "Basic_Deployment_Data.hpp"
 
 #include <memory>
 
@@ -25,26 +24,32 @@ namespace CIAO
       PCD_Handler::package_config (const ACE_TCHAR *uri,
                                    ::Deployment::PackageConfiguration &toconfig)
       {
-        const xercesc::DOMDocument *dom = XML_HELPER->create_dom (uri);
+        XERCES_CPP_NAMESPACE::DOMDocument *dom = XML_HELPER->create_dom (uri);
 
-	if (dom == 0)
-	  {
-	    std::string error ("Unable to open file: ");
-	    error += uri;
-	    throw Parse_Error (error);
-	  }
+        if (dom == 0)
+          {
+            std::string error ("Unable to open file: ");
+            error += uri;
+            throw Parse_Error (error);
+          }
 
-	XStr root = dom->getDocumentElement ()->getTagName ();
+        XStr root = dom->getDocumentElement ()->getTagName ();
 
         if (root == XStr ("Deployment:topLevelPackageDescription"))
           {
-	TopLevelPackageDescription tpd = topLevelPackageDescription (dom);
+	    PackageConfiguration foo;
+	    TopLevelPackageDescription tpd (foo);
+
+            tpd = topLevelPackageDescription (dom);
+            
             PCD_Handler::package_config (tpd.package (),
                                          toconfig);
+	    
           }
         else if (root == XStr ("Deployment:packageConfiguration"))
           {
-            PackageConfiguration pcd (packageConfiguration (dom));
+            PackageConfiguration pcd;
+            pcd = packageConfiguration (dom);
             PCD_Handler::package_config (pcd, toconfig);
           }
         else
@@ -91,7 +96,7 @@ namespace CIAO
           {
             toconfig.basePackage.length (1);
             CPD_Handler::handle_component_package_descr (pcd->basePackage (),
-							 toconfig.basePackage [0]);
+                                                         toconfig.basePackage [0]);
           }
 
         // @@ MAJO: Support other elements present here.

@@ -122,22 +122,19 @@ namespace XMLSchema
       {
       }
 
-      using XSCRT::Writer<C>::top_;
-      using XSCRT::Writer<C>::attr_;
-
       virtual void
       traverse (
         typename Traversal::Traverser<XMLSchema::IDREF<C> >::Type const& o)
       {
         using namespace XSCRT::XML;
 
-        if (Attribute<C>* a = attr_ ())
+        if (Attribute<C>* a = XSCRT::Writer<C>::attr_ ())
         {
           a->value (o.id ());
         }
         else
         {
-          top_().value (o.id ());
+          XSCRT::Writer<C>::top_().value (o.id ());
         }
       }
 

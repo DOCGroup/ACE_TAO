@@ -25,7 +25,7 @@ project (XSC_XML_Handlers) : acelib, xerces {
   }
 }
 
-project (XSC_Config_Handlers) : ciao_events_dnc, ciao_config_handlers_base {
+project (XSC_Config_Handlers) : ciao_deployment_stub, ciao_events_dnc, ciao_config_handlers_base {
   after += CIAO_Events_Handlers \
            RT_CCM_Config_Handlers \
            XSC_DynAny_Handler \
@@ -47,7 +47,6 @@ project (XSC_Config_Handlers) : ciao_events_dnc, ciao_config_handlers_base {
     ComponentPropertyDescription_Handler.cpp
     DataType_Handler.cpp
     MDD_Handler.cpp
-    Req_Handler.cpp
     PSPE_Handler.cpp
     CRDD_Handler.cpp
     IDD_Handler.cpp
