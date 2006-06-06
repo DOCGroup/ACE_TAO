@@ -6,13 +6,18 @@
 #include "ace/Service_Config.inl"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/ACE.h"
+#include "ace/Guard_T.h"
+#include "ace/Log_Msg.h"
 #include "ace/Service_Types.h"
 #include "ace/Reactor.h"
 #include "ace/Signal.h"
+#include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/Get_Opt.h"
 #include "ace/Service_Config.h"
+#include "ace/Static_Object_Lock.h"
 
 ACE_RCSID (ace,
            Service_Config,
