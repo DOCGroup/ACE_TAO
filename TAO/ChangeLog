@@ -1,3 +1,11 @@
+Tue Jun  6 13:38:39 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/Log/Hash_LogRecordStore.cpp:
+        * orbsvcs/orbsvcs/Log/Hash_LogRecordStore.h:
+
+          Rename rec_hash_ member variable to rec_map_, as we plan to
+          change the type.
+
 Tue Jun  6 13:23:06 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/orbsvcs/Log/Hash_LogRecordStore.cpp:
