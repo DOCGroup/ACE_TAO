@@ -13,7 +13,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "Config_Handlers_Export.h"
+#include "Config_Handlers_Common_Export.h"
 #include "Utils/Functors.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -43,7 +43,7 @@ namespace CIAO
        *
        */
 
-      class Config_Handlers_Export Property_Handler
+      class Config_Handlers_Common_Export Property_Handler
 	{
 	public:
 	  Property_Handler (void);

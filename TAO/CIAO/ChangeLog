@@ -1,3 +1,15 @@
+Tue Jun  6 20:32:53 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tools/Config_Handlers/Config_Handlers.mpc
+        * tools/Config_Handlers/Property_Handler.h
+
+          Compile fixes for Borland. 
+        
+        * tools/Config_Handlers/Package_Handlers/PCD_Handler.cpp
+        * tools/Config_Handlers/XMLSchema/Writer.hpp
+        
+          Fixes for Borland ICEs.
+        
 Tue Jun  6 13:48:59 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tools/Config_Handlers/Config_Handlers_Common_Export.h
