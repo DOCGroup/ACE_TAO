@@ -191,7 +191,7 @@ void
 TAO_Hash_LogRecordStore::remove_i (LOG_RECORD_STORE_ITER iter
 				   ACE_ENV_ARG_DECL)
 {
-  size_t size = log_record_size((*iter).int_id_);
+  size_t size = log_record_size(iter->item ());
   
   rec_hash_.unbind(&*iter);
 
@@ -282,12 +282,12 @@ TAO_Hash_LogRecordStore::set_records_attribute (
   for ( ; iter != iter_end; ++iter)
     {
       // Use an evaluator.
-      TAO_Log_Constraint_Visitor evaluator ((*iter).int_id_);
+      TAO_Log_Constraint_Visitor evaluator (iter->item ());
 
       // Does it match the constraint?
       if (interpreter.evaluate (evaluator) == 1)
         {
-          set_record_attribute ((*iter).int_id_.id, attr_list);
+          set_record_attribute (iter->item ().id, attr_list);
           ++count;
         }
     }
@@ -384,7 +384,7 @@ TAO_Hash_LogRecordStore::query_i (const char *constraint,
   for ( ; ((iter != iter_end) && (count < how_many)); ++iter)
     {
       // Use an evaluator.
-      TAO_Log_Constraint_Visitor evaluator ((*iter).int_id_);
+      TAO_Log_Constraint_Visitor evaluator (iter->item ());
 
       // Does it match the constraint?
       if (interpreter.evaluate (evaluator) == 1)
@@ -392,16 +392,16 @@ TAO_Hash_LogRecordStore::query_i (const char *constraint,
         if (TAO_debug_level > 0)
 #if defined (ACE_LACKS_LONGLONG_T)
                ACE_DEBUG ((LM_DEBUG,"Matched constraint! d = %d, Time = %d\n",
-                      ACE_U64_TO_U32 ((*iter).int_id_.id),
-                      ACE_U64_TO_U32 ((*iter).int_id_.time)));
+                      ACE_U64_TO_U32 (iter->item ().id),
+                      ACE_U64_TO_U32 (iter->item ().time)));
 
 #else
                ACE_DEBUG ((LM_DEBUG,"Matched constraint! d = %Q, Time = %Q\n",
-                      (*iter).int_id_.id,
-                      (*iter).int_id_.time));
+                      iter->item ().id,
+                      iter->item ().time));
 #endif
 
-        (*rec_list)[count] = (*iter).int_id_;
+        (*rec_list)[count] = iter->item ();
         // copy the log record.
         count++;
       }
@@ -513,7 +513,7 @@ TAO_Hash_LogRecordStore::match (const char* grammar,
   for ( ; iter != iter_end; ++iter)
     {
       // Use an evaluator.
-      TAO_Log_Constraint_Visitor evaluator ((*iter).int_id_);
+      TAO_Log_Constraint_Visitor evaluator (iter->item ());
 
       // Does it match the constraint?
       if (interpreter.evaluate (evaluator) == 1)
@@ -550,7 +550,7 @@ TAO_Hash_LogRecordStore::delete_records (const char *grammar,
   while (iter != iter_end)
     {
       // Use an evaluator.
-      TAO_Log_Constraint_Visitor evaluator ((*iter).int_id_);
+      TAO_Log_Constraint_Visitor evaluator (iter->item ());
 
       // Does it match the constraint?
       if (interpreter.evaluate (evaluator) == 1)
@@ -619,7 +619,7 @@ TAO_Hash_LogRecordStore::remove_old_records (ACE_ENV_SINGLE_ARG_DECL)
   while (iter != iter_end)
     {
       // Use an evaluator.
-      TAO_Log_Constraint_Visitor evaluator ((*iter).int_id_);
+      TAO_Log_Constraint_Visitor evaluator (iter->item ());
 
       // Does it match the constraint?
       if (interpreter.evaluate (evaluator) == 1)
