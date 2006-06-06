@@ -51,10 +51,18 @@ public:
   ~ACE_Hash_Map_Entry (void);
   #endif /* ! defined (ACE_HAS_BROKEN_NOOP_DTORS) */
 
+  /// Key accessor.
+  EXT_ID& key (void);
+
+  /// Item accessor.
+  INT_ID& item (void);
+
   /// Key used to look up an entry.
+  /// @deprecated Use key()
   EXT_ID ext_id_;
 
   /// The contents of the entry itself.
+  /// @deprecated Use item()
   INT_ID int_id_;
 
   /// Pointer to the next item in the bucket of overflow nodes.
@@ -506,6 +514,9 @@ public:
   /// Returns a reference to the interal element <this> is pointing to.
   ACE_Hash_Map_Entry<EXT_ID, INT_ID>& operator* (void) const;
 
+  /// Returns a pointer to the interal element <this> is pointing to.
+  ACE_Hash_Map_Entry<EXT_ID, INT_ID>* operator-> (void) const;
+
   /// Returns reference the Hash_Map_Manager_Ex that is being iterated
   /// over.
   ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>& map (void);
@@ -569,6 +580,9 @@ public:
 
   /// Returns a reference to the interal element <this> is pointing to.
   ACE_Hash_Map_Entry<EXT_ID, INT_ID>& operator* (void) const;
+
+  /// Returns a pointer to the interal element <this> is pointing to.
+  ACE_Hash_Map_Entry<EXT_ID, INT_ID>* operator-> (void) const;
 
   /// Returns reference the Hash_Map_Manager_Ex that is being iterated
   /// over.
@@ -740,6 +754,9 @@ public:
 
   /// Returns a reference to the interal element <this> is pointing to.
   ACE_Hash_Map_Entry<EXT_ID, INT_ID>& operator* (void) const;
+
+  /// Returns a pointer to the interal element <this> is pointing to.
+  ACE_Hash_Map_Entry<EXT_ID, INT_ID>* operator-> (void) const;
 
   /// Returns reference the Hash_Map_Manager_Ex that is being iterated
   /// over.
