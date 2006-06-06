@@ -9,6 +9,7 @@ project(TAO_IDL_EXE) : aceexe, core, tao_output, crosscompile {
 
   specific (automake) {
     includes    += $(srcdir)/include $(srcdir)/be_include $(srcdir)/fe
+    macros      += TAO_IDL_INCLUDE_DIR=\"\\"$(includedir)/tao\\"\"
   } else {
     includes    += include be_include fe
   }
@@ -19,10 +20,6 @@ project(TAO_IDL_EXE) : aceexe, core, tao_output, crosscompile {
     // vc6 or vc71).  This is due to the use of addresses of static objecs
     // within the code.
     optimize =
-  }
-
-  specific(automake) {
-    macros += TAO_IDL_INCLUDE_DIR=\"\\"$(includedir)/tao\\"\"
   }
 
   verbatim(gnuace, local) {
