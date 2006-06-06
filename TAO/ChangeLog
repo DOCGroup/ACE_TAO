@@ -1,3 +1,12 @@
+Tue Jun  6 13:56:49 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/Log/Hash_Iterator_i.h:
+        * orbsvcs/orbsvcs/Log/Hash_LogRecordStore.h:
+
+          Consistantly use the LOG_RECORD_STORE typedef instead of
+          LOG_RECORD_HASH_MAP.  The former is supposed to abstract the
+          latter.
+
 Tue Jun  6 13:38:39 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/orbsvcs/Log/Hash_LogRecordStore.cpp:
