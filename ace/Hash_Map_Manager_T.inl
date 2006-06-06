@@ -445,6 +445,21 @@ ACE_Hash_Map_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>:
   return *retv;
 }
 
+template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK> ACE_INLINE
+ACE_Hash_Map_Entry<EXT_ID, INT_ID> *
+ACE_Hash_Map_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::operator-> (void) const
+{
+  ACE_TRACE ("ACE_Hash_Map_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::operator->");
+  ACE_Hash_Map_Entry<EXT_ID, INT_ID> *retv = 0;
+
+  int result = this->next (retv);
+
+  ACE_UNUSED_ARG (result);
+  ACE_ASSERT (result != 0);
+
+  return retv;
+}
+
 // Returns the reference to the hash_map_manager_ex that is being
 // iterated over.
 template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK> ACE_INLINE
@@ -526,6 +541,21 @@ ACE_Hash_Map_Const_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_
   ACE_ASSERT (result != 0);
 
   return *retv;
+}
+
+template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK> ACE_INLINE
+ACE_Hash_Map_Entry<EXT_ID, INT_ID> *
+ACE_Hash_Map_Const_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::operator-> (void) const
+{
+  ACE_TRACE ("ACE_Hash_Map_Const_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::operator->");
+  ACE_Hash_Map_Entry<EXT_ID, INT_ID> *retv = 0;
+
+  int result = this->next (retv);
+
+  ACE_UNUSED_ARG (result);
+  ACE_ASSERT (result != 0);
+
+  return retv;
 }
 
 // Returns the reference to the hash_map_manager_ex that is being
@@ -782,6 +812,15 @@ ACE_Hash_Map_Bucket_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::
   ACE_TRACE ("ACE_Hash_Map_Bucket_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::operator*");
 
   return *this->next_;
+}
+
+template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK> ACE_INLINE
+ACE_Hash_Map_Entry<EXT_ID, INT_ID> *
+ACE_Hash_Map_Bucket_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::operator-> (void) const
+{
+  ACE_TRACE ("ACE_Hash_Map_Bucket_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::operator->");
+
+  return this->next_;
 }
 
 template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK> ACE_INLINE
