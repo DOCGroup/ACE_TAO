@@ -1,7 +1,18 @@
+Tue Jun  6 17:14:51 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/GNUACEProjectCreator.pm:
+
+          Cleaned up the fill_value() method and removed an unused method.
+
+        * bin/MakeProjectCreator/modules/GNUACEWorkspaceCreator.pm:
+
+          Use DirectoryManager::mpc_basename() instead of
+          File::Basename::basename().                    
+
 Tue Jun  6 15:43:32 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * bin/MakeProjectCreator/templates/gnu.mpd
-        
+
           Modified to explicitly state the name of a project being skipped
           due to missing features or libraries.
 
