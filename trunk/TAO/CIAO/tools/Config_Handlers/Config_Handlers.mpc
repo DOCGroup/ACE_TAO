@@ -23,6 +23,11 @@ project (XSC_XML_Handlers) : acelib, xerces {
   Header_Files {
     XSC_XML_Handlers_Export.h
   }
+
+  verbatim(gnuace, macros) {
+   override no_hidden_visibility = 1
+  }
+
 }
 
 project (XSC_Config_Handlers) : ciao_deployment_stub, ciao_events_dnc, ciao_config_handlers_base {
