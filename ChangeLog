@@ -1,3 +1,10 @@
+Tue Jun  6 15:43:32 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd
+        
+          Modified to explicitly state the name of a project being skipped
+          due to missing features or libraries.
+
 Tue Jun  6 03:57:08 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * ace/Hash_Map_Manager_T.cpp:

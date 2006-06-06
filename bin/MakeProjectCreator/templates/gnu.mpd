@@ -446,18 +446,18 @@ endif
 #----------------------------------------------------------------------------
 <%marker(local)%>
 lib_warning:
-	@echo This project will not be built due to the following missing library:
+	@echo <%project_name%> will not be built due to the following missing library:
 	@echo $(LIBCHECK)
 
 <%if(requires)%>
 require_warning:
-	@echo This project will not be built due to one of the following missing features:
+	@echo <%project_name%> will not be built due to one of the following missing features:
 	@echo<%foreach(requires)%> <%require%><%endfor%>
 
 <%endif%>
 <%if(avoids)%>
 avoid_warning:
-	@echo This project will not be built due to one of the following enabled features:
+	@echo <%project_name%> will not be built due to one of the following enabled features:
 	@echo<%foreach(avoids)%> <%avoid%><%endfor%>
 
 <%endif%>
