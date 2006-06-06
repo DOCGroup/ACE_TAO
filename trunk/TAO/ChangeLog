@@ -1,3 +1,10 @@
+Tue Jun  6 13:23:06 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/Log/Hash_LogRecordStore.cpp:
+
+          Use iter->item() instead of (*iter).int_id_ to dereference
+          iterators.
+
 Tue Jun  6 12:29:03 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/ORB_Local_Config/Two_DLL_ORB/ORB_DLL.cpp:
