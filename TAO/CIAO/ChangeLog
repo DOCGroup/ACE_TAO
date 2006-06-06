@@ -1,3 +1,9 @@
+Tue Jun  6 13:48:59 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tools/Config_Handlers/Config_Handlers_Common_Export.h
+        
+          Missing file from previous commit.
+
 Mon Jun  5 20:34:51 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * DAnCE/RepositoryManager/RepositoryManager.mpc
