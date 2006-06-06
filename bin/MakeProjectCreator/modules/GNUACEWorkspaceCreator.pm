@@ -11,7 +11,6 @@ package GNUACEWorkspaceCreator;
 # ************************************************************
 
 use strict;
-use File::Basename;
 
 use GNUACEProjectCreator;
 use WorkspaceCreator;
@@ -168,7 +167,8 @@ sub write_comps {
                   "\t\$(KEEP_GOING)\@";
         if (defined $dirprj{$project}) {
           print $fh "cd ", $self->mpc_dirname($project),
-                    " && \$(MAKE) -f ", basename($project), $crlf;
+                    " && \$(MAKE) -f ", $self->mpc_basename($project),
+                    $crlf;
         }
         else {
           print $fh "\$(MAKE) -f $project$crlf";
@@ -191,7 +191,8 @@ sub write_comps {
       print $fh "\t\$(KEEP_GOING)\@";
       if (defined $dirprj{$project}) {
         print $fh "cd ", $self->mpc_dirname($project),
-                  " && \$(MAKE) -f ", basename($project), " \$(\@)", $crlf;
+                  " && \$(MAKE) -f ", $self->mpc_basename($project),
+                  " \$(\@)", $crlf;
       }
       else {
         print $fh "\$(MAKE) -f $project \$(\@)$crlf";
@@ -231,7 +232,7 @@ sub write_named_targets {
     print $fh "\t\@",
               ($dname ne '.' ? "cd $dname && " : ''),
               "\$(MAKE) -f ",
-              ($dname eq '.' ? $project : basename($project)),
+              ($dname eq '.' ? $project : $self->mpc_basename($project)),
               " \$(\@)$crlf";
   }
 
@@ -250,7 +251,7 @@ sub write_named_targets {
               "\t\@",
               ($dname ne '.' ? "cd $dname && " : ''),
               "\$(MAKE) -f ",
-              ($dname eq '.' ? $project : basename($project)),
+              ($dname eq '.' ? $project : $self->mpc_basename($project)),
               ' all', $crlf;
   }
 
