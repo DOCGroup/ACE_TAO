@@ -1,3 +1,15 @@
+Tue Jun  6 14:48:33 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/Log/Hash_Iterator_i.cpp:
+
+          Use iter->item() instead of (*iter).int_id_ to dereference
+          iterators.
+
+          Changed get() to set the length of the output sequence to the
+          maximum number of log records (this will be shrunk to the real
+          value once we find how many records match the constraint).  We
+          must have got lucky with the old sequence implementation...
+
 Tue Jun  6 13:56:49 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/orbsvcs/Log/Hash_Iterator_i.h:

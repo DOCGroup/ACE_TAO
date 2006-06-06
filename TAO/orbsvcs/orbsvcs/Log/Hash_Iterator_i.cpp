@@ -70,6 +70,7 @@ TAO_Hash_Iterator_i::get (CORBA::ULong position,
                     DsLogAdmin::RecordList (how_many),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
+  rec_list->length (how_many);
 
   CORBA::ULong count = 0;
   CORBA::ULong current_position = this->current_position_;
@@ -79,14 +80,14 @@ TAO_Hash_Iterator_i::get (CORBA::ULong position,
        ++this->iter_)
     {
       // Use an evaluator.
-      TAO_Log_Constraint_Visitor visitor ((*this->iter_).int_id_);
+      TAO_Log_Constraint_Visitor visitor (this->iter_->item ());
 
       // Does it match the constraint?
       if (interpreter.evaluate (visitor) == 1)
         {
           if (++current_position >= position)
             {
-              (*rec_list)[count] = (*this->iter_).int_id_;
+              (*rec_list)[count] = this->iter_->item ();
               // copy the log record.
               count++;
             }
