@@ -1,6 +1,8 @@
+#include "ace/ACE.h"
 #include "ace/DLL_Manager.h"
 #include "ace/Dynamic_Service_Dependency.h"
 #include "ace/Service_Config.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID (ace,
            Dynamic_Service_Dependency,
