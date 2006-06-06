@@ -167,7 +167,7 @@ struct Tester
 
   ACE_Message_Block * alloc_and_init_mb()
   {
-    char buf[8];
+    char buf[9];
     sprintf (buf, "%s", "testing ");
     size_t n = (strlen (buf) + 1) * sizeof (char);
     ACE_Message_Block * mb = new ACE_Message_Block (n);
@@ -484,4 +484,3 @@ init_unit_test_suite(int, char*[])
 
   return ts;
 }
-
