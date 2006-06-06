@@ -70,10 +70,10 @@ private:
   TAO_Hash_LogRecordStore* recordstore_;
 
   /// Current Iterator.
-  TAO_Hash_LogRecordStore::LOG_RECORD_HASH_MAP_ITER iter_;
+  TAO_Hash_LogRecordStore::LOG_RECORD_STORE_ITER iter_;
 
   /// End Iterator.
-  TAO_Hash_LogRecordStore::LOG_RECORD_HASH_MAP_ITER iter_end_;
+  TAO_Hash_LogRecordStore::LOG_RECORD_STORE_ITER iter_end_;
 
   /// Position.
   CORBA::ULong current_position_;

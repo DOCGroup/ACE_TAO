@@ -347,7 +347,7 @@ protected:
   CORBA::ULong max_rec_list_len_;
 
   /// The map of RecordId's to LogRecord's
-  LOG_RECORD_HASH_MAP			rec_map_;
+  LOG_RECORD_STORE			rec_map_;
 
 
   /// The administrative state of the log
