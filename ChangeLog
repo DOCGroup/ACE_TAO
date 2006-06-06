@@ -1,3 +1,12 @@
+Tue Jun  6 21:41:02 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/Service_Gestalt.{h cpp}:
+        * ace/Dynamic_Service_Base.cpp:
+        * ace/Dynamic_Service_Dependency.cpp:
+        * ace/Service_Config.cpp:
+        * ace/Service_Object.cpp:
+        * ace/Svc_Conf_Lexer.cpp: Add missing #include directives.
+
 Tue Jun  6 18:09:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* ace/OS_NS_Thread.cpp:
