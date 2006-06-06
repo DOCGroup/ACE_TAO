@@ -1,3 +1,10 @@
+Tue Jun  6 18:09:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* ace/OS_NS_Thread.cpp:
+	  Reverted a change for VxWorks, broke other platforms, will make
+          a new change tomorrow.
+
+
 Tue Jun  6 17:14:51 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/GNUACEProjectCreator.pm:
