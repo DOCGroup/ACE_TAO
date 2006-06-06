@@ -63,10 +63,20 @@ Service_Config_ORB_DLL::init (int argc, ACE_TCHAR *argv[])
   if (this->is_server_ < 0)
     ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) You must specify -c(lient) or -s(erver) argument. Aborting."), -1);
 
-  argv[argc][0] = 0; // whacks the previously processed -c or -s
+  ACE_TCHAR **temp_argv = new ACE_TCHAR*[argc+1];
+  for (int i = 0; i < argc; i++)
+    {
+      temp_argv[i] = new ACE_TCHAR[ACE_OS::strlen(argv[i])+1];
+      ACE_OS::strcpy (temp_argv[i],argv[i]);
+    }
+  temp_argv[argc] = 0;
+
   ACE_ARGV* tmp = 0;
-  ACE_NEW_RETURN (tmp, ACE_ARGV (argv), -1);
+  ACE_NEW_RETURN (tmp, ACE_ARGV (temp_argv), -1);
   this->argv_.reset (tmp);
+  for (int i = 0; i < argc; i++)
+    delete [] temp_argv[i];
+  delete [] temp_argv;
 
   Abstract_Worker* worker = 0;
   if (this->is_server_)
@@ -117,7 +127,7 @@ Service_Config_ORB_DLL::svc (void)
     ACE_TRY_CHECK;
 
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%P|%t) %@ %s bowes out - so long, cruel world! (%d)\n"),
+                ACE_TEXT ("(%P|%t) %@ %s bows out - so long, cruel world! (%d)\n"),
                 this,
                 this->worker_->kind (),
                 ret));
