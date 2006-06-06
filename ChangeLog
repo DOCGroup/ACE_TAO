@@ -1,8 +1,26 @@
+Tue Jun  6 03:57:08 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ace/Hash_Map_Manager_T.cpp:
+        * ace/Hash_Map_Manager_T.h:
+
+          Added key() and item() methods to ACE_Hash_Map_Entry<>, to be
+          like ACE_RB_Tree_Node<>.  This makes it easier to switch code
+          to and from Hash_Maps and RB_Trees.  Mark direct access to
+          the ext_id_ and int_id_ fields @deprecated.
+
+        * ace/Hash_Map_Manager_T.cpp:
+        * ace/Hash_Map_Manager_T.h:
+        * ace/Hash_Map_Manager_T.inl:
+        * ace/RB_Tree.h:
+        * ace/RB_Tree.inl:
+
+          Added operator->() for iterators to be more like STL API.
+
 Mon Jun  5 20:27:42 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * bin/MakeProjectCreator/config/ciao_config_handlers.mpb
         * bin/MakeProjectCreator/config/ciao_config_handlers_base.mpc
-        
+
           Restructured to clean up config handlers MPC files.
 
 Sun Jun  4 13:38:21 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>

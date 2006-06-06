@@ -606,6 +606,10 @@ public:
   /// to the node underneath the iterator.
   ACE_RB_Tree_Node<EXT_ID, INT_ID> & operator* (void) const;
 
+  /// STL-like iterator dereference operator: returns a pointer
+  /// to the node underneath the iterator.
+  ACE_RB_Tree_Node<EXT_ID, INT_ID> * operator-> (void) const;
+
   /// Returns a const reference to the tree over which we're iterating.
   const ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &tree (void);
 
