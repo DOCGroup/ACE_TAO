@@ -1,3 +1,10 @@
+Tue Jun  6 12:29:03 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/ORB_Local_Config/Two_DLL_ORB/ORB_DLL.cpp:
+          Explicitly duplicate the command-line arguments passed to the
+          client and server ORBs. On some platforms, it wasn't enough to
+          merely readjust the length by setting last argv to 0.
+
 Mon Jun  5 03:19:58 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/ORB_Core.cpp:
