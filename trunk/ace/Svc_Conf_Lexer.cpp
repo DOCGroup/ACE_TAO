@@ -13,6 +13,7 @@
 #include "ace/Static_Object_Lock.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_ctype.h"
+#include "ace/OS_NS_string.h"
 #include "ace/Guard_T.h"
 #include "ace/Synch_Traits.h"
 #include "ace/os_include/os_ctype.h"

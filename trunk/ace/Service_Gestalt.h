@@ -22,6 +22,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Auto_Ptr.h"
 #include "ace/SString.h"
 #include "ace/Unbounded_Queue.h"
 #include "ace/Service_Repository.h"

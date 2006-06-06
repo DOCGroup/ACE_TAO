@@ -1,15 +1,17 @@
 // $Id$
 
+#include "ace/config-all.h"
+
 #include "ace/Service_Object.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Service_Object.inl"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/OS_NS_stdio.h"
 #include "ace/Service_Types.h"
 #include "ace/DLL.h"
 #include "ace/ACE.h"
-#include "ace/config-all.h"
 
 ACE_RCSID (ace,
            Service_Object,
