@@ -123,7 +123,7 @@ ACE_DLL_Strategy<SVC_HANDLER>::make_svc_handler (SVC_HANDLER *&sh)
 
   // Call the factory function to obtain the new SVC_Handler (should
   // use RTTI here when it becomes available...)
-  SVC_HANDLER *svc_handler;
+  SVC_HANDLER *svc_handler = 0;
 
   ACE_ALLOCATOR_RETURN (svc_handler, (*factory)(), -1);
 
@@ -388,7 +388,7 @@ ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::connect_svc_handler
 {
   ACE_TRACE ("ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::connect_svc_handler");
 
-  int result =
+  int const result =
     this->connector_.connect (sh->peer (),
                               remote_addr,
                               timeout,
