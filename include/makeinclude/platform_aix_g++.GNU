@@ -16,6 +16,14 @@ threads ?= 1
 buildbits ?= native
 with_ld ?= aix
 
+PLATFORM_XT_CPPFLAGS=
+PLATFORM_XT_LIBS=-lXt
+PLATFORM_XT_LDFLAGS=
+
+PLATFORM_X11_CPPFLAGS=
+PLATFORM_X11_LIBS=-lX11
+PLATFORM_X11_LDFLAGS=
+
 # Yes, believe it or not...
 # The way to make a shared lib on AIX is to make a shared object file and
 # then put that in an archive.
@@ -77,7 +85,7 @@ LIBS           += -lxti -ldl
 ARFLAGS         = cruv
 RANLIB          = ranlib
 
-# Test for template instantiation, add to SOFLAGS if versioned_so set, 
+# Test for template instantiation, add to SOFLAGS if versioned_so set,
 # add -E to LDFLAGS if using GNU ld
 #
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
