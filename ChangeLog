@@ -1,3 +1,9 @@
+Wed Jun  7 13:34:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-doxygen.h:
+          Added ACE_HAS_NETLINK so that we get documentation for the new
+          netlink classes
+
 Wed Jun  7 13:31:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/run_test.lst:
