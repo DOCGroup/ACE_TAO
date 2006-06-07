@@ -1,3 +1,8 @@
+Wed Jun  7 10:07:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Strategies_T.cpp:
+          Initialise pointer with 0 and const improvement
+
 Wed Jun  7 09:19:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/taoidldefaults.mpb:
