@@ -43,6 +43,9 @@ project {
     optional(source_pre_extension) {
       commandflags(-GA) += A
     }
+    optional(header_outputext) {
+      commandflags(-SS) += S
+    }
 
     // Other
     optional(template_outputext) {
