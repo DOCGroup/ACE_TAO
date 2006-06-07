@@ -1200,6 +1200,10 @@ ACE_WFMO_Reactor::open (size_t size,
   else
     this->delete_handler_rep_ = 1;
 
+  if (this->notify_handler_ != 0
+      && this->delete_notify_handler_ != 0)
+    delete this->notify_handler_;
+
   this->notify_handler_ = notify;
 
   if (this->notify_handler_ == 0)
