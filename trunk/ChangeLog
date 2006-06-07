@@ -1,3 +1,9 @@
+Wed Jun  7 10:45:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_linux_suncc.GNU:
+          First version for using the Sun compiler on Linux. The compiler
+          itself is an alpha version, so no guarantees at this moment
+
 Wed Jun  7 10:07:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Strategies_T.cpp:
