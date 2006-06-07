@@ -24,7 +24,7 @@
 
 #include "orbsvcs/Log/LogRecordStore.h"
 #include "ace/Containers.h"
-#include "ace/Hash_Map_Manager.h"
+#include "ace/RB_Tree.h"
 #include "ace/Synch_Traits.h"
 #include "ace/Null_Mutex.h"
 #include "ace/RW_Thread_Mutex.h"
@@ -40,11 +40,20 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * @brief A concrete container class for storing DsLogAdmin::LogRecords
  *
- * This implementation uses an ACE_RB_Tree and and ACE_Hash_Map
- * internally to store the pointers. Permits fast searches by id
- * and iteration, while allowing for ring-buffer like wrapping of
- * entries. Other features include searching by time ranges.
-  * @@ pradeep: The ACE_RB_Tree will come later.
+ * This implementation uses an ACE_RB_Tree to store LogRecords.
+ * Permits fast searches by id and iteration, while allowing for
+ * ring-buffer like wrapping of entries.
+ *
+ * @note The name of this class is somewhat misleading, as it no
+ * longer uses a ACE_Hash_Map.
+ *
+ * @note LogRecords should be indexed by both id and timestamp.
+ * However, timestamps are not unique keys and there are no ACE
+ * multimap containers.
+ *
+ * @todo If ACE_RB_Tree supported an insertion "hint" like std::map,
+ * log insertion would be O(1) instead of O(lgN).  This could be an
+ * issue for large log channels.
  */
 class TAO_Log_Serv_Export TAO_Hash_LogRecordStore
   : public TAO_LogRecordStore
@@ -274,17 +283,14 @@ class TAO_Log_Serv_Export TAO_Hash_LogRecordStore
   virtual ACE_SYNCH_RW_MUTEX& lock();
 
 /* protected: */
-  /// Defines types to represent the hash that maps ids to
-  /// DsLogAdmin::LogRecords.
-  typedef ACE_Hash_Map_Manager <DsLogAdmin::RecordId,
-    DsLogAdmin::LogRecord, ACE_Null_Mutex>	LOG_RECORD_HASH_MAP;
-  typedef LOG_RECORD_HASH_MAP::ITERATOR		LOG_RECORD_HASH_MAP_ITER;
-  typedef LOG_RECORD_HASH_MAP::ENTRY		LOG_RECORD_HASH_MAP_ENTRY;
-
-  /// Don't want to be tied to hash maps!.
-  typedef LOG_RECORD_HASH_MAP			LOG_RECORD_STORE;
-  typedef LOG_RECORD_HASH_MAP_ITER		LOG_RECORD_STORE_ITER;
-  typedef LOG_RECORD_HASH_MAP_ENTRY		LOG_RECORD_STORE_ENTRY;
+  /// Defines types to represent the container that maps RecordIds to
+  /// LogRecords.
+  typedef ACE_RB_Tree <DsLogAdmin::RecordId,
+		       DsLogAdmin::LogRecord,
+		       ACE_Less_Than<DsLogAdmin::RecordId>,
+		       ACE_Null_Mutex>		LOG_RECORD_STORE;
+  typedef LOG_RECORD_STORE::ITERATOR		LOG_RECORD_STORE_ITER;
+  typedef LOG_RECORD_STORE::ENTRY		LOG_RECORD_STORE_ENTRY;
 
 protected:
   /// Set rec to the pointer to the LogRecord with the given
