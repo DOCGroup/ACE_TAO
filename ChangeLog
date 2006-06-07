@@ -1,3 +1,8 @@
+Wed Jun  7 13:31:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/run_test.lst:
+          Removed chorus
+
 Wed Jun  7 13:16:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/os_include/sys/os_socket.h:
