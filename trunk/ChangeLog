@@ -1,3 +1,9 @@
+Wed Jun  7 21:42:36 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * bin/MakeProjectCreator/config/ciao_config_handlers.mpb
+        
+          Fixed static library ordering problem.
+
 Wed Jun  7 13:34:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-doxygen.h:
