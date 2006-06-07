@@ -1,3 +1,10 @@
+Wed Jun  7 11:46:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-suncc-common.h:
+          New config file for the SunCC compiler, idea is to refactor
+          all things related to the Sun C++ compiler to this file. This is
+          to make it easier to support Sun C++ on Linux
+
 Wed Jun  7 10:45:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_linux_suncc.GNU:
