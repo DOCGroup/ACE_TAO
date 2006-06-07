@@ -1,43 +1,54 @@
+Wed Jun  7 21:07:11 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ciao/Servant_Impl_Utils_T.cpp:
+
+          Fixed CORBA memory management rule violations in
+          Servant_Impl_Base static template methods
+          describe_pub_event_source(), describe_simplex_receptacle() and
+          describe_multiplex_receptacle(). Thanks to Phlip
+          <phlip2005@gmail.com> for reporting a problem in
+          get_all_receptacles() that uncovered the above violations.
+
 Wed Jun  7 16:52:45 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         *  tools/Config_Handlers/Config_Handlers.mpc
-        
+
            Fix for linking error in Visual Studio.
 
 Wed Jun  7 06:04:45 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * CIDLC/ExecutorMappingGenerator.cpp
-        
+
           Modified to generate an include of CCM_Container.idl.
-        
+
         * ciao/Components.idl
         * ciao/ComponentsC.h
         * ciao/ComponentsS.h
-         
+
           Changed Components.idl to include CCM_Component.idl instead of
           CCM_Container.idl.  This removes a dependancy on the container
-          library for stub projects.  
-        
-          Note this commit may be rolled back later based on discussions 
+          library for stub projects.
+
+          Note this commit may be rolled back later based on discussions
           on the dance-dev list, I am making it preemptively to resolve
           scoreboard problems.
-        
+
 Tue Jun  6 20:32:53 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tools/Config_Handlers/Config_Handlers.mpc
         * tools/Config_Handlers/Property_Handler.h
 
-          Compile fixes for Borland. 
-        
+          Compile fixes for Borland.
+
         * tools/Config_Handlers/Package_Handlers/PCD_Handler.cpp
         * tools/Config_Handlers/XMLSchema/Writer.hpp
-        
+
           Fixes for Borland ICEs.
-        
+
 Tue Jun  6 13:48:59 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tools/Config_Handlers/Config_Handlers_Common_Export.h
-        
+
           Missing file from previous commit.
 
 Mon Jun  5 20:34:51 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
@@ -85,9 +96,9 @@ Mon Jun  5 20:34:51 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
         * tests/IDL3/Lookup/lookup_test.mpc
         * tests/Minimum/Minimum_Base/Minimum.mpc
         * tools/Config_Handlers/Package_Handlers/Package_Handlers.mpc
-        
-          Fixes for linking errors/warnings in OS X. 
-        
+
+          Fixes for linking errors/warnings in OS X.
+
         * tools/Config_Handlers/Any_Handler.h
         * tools/Config_Handlers/CEPE_Handler.h
         * tools/Config_Handlers/CPD_Handler.h
@@ -96,11 +107,11 @@ Mon Jun  5 20:34:51 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
         * tools/Config_Handlers/ERE_Handler.h
         * tools/Config_Handlers/Req_Handler.h
         * tools/Config_Handlers/SatisfierProperty_Handler.h
-  
+
           Factored certain elements used by both the deployment
           and packaging handlers into a seperate library, also
-          fixes for linking errors in OS X. 
-        
+          fixes for linking errors in OS X.
+
 Fri Jun  2 18:55:41 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tools/Config_Handlers/Config_Handlers.mpc:
