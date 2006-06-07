@@ -1,3 +1,9 @@
+Wed Jun  7 13:16:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/sys/os_socket.h:
+          When ACE_HAS_NETLINK is defined, include more files specific
+          for this protocol.
+
 Wed Jun  7 12:56:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Netlink_Addr.{h,cpp,inl}:
