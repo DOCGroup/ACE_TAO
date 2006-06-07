@@ -1,3 +1,14 @@
+Wed Jun  7 12:56:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Netlink_Addr.{h,cpp,inl}:
+        * ace/SOCK_Netlink.{h,cpp,inl}:
+          New files for netlink sockets. Thanks to Rober Coroberti
+          <coroberti at gmail dot com> and Razi Ben-Yehuda
+          <raziebe at gmail dot com> for creating these new files.
+          These files will be added to the ACE mpc later this week, with
+          the files in the repo it is much easier to test them on
+          multiple linux version. See bugzilla bug 2317 for more info.
+
 Wed Jun  7 12:28:18 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:
