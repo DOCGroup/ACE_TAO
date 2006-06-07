@@ -113,4 +113,7 @@
 /// Enable IPv6
 #define ACE_HAS_IPV6
 
+/// Enable netlink socket support
+#define ACE_HAS_NETLINK
+
 #endif /* ACE_CONFIG_DOXYGEN_H */
