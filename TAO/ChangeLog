@@ -1,10 +1,25 @@
+Wed Jun  7 14:24:55 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/Log/Hash_LogRecordStore.h:
+
+          Now with all with the cleanup, we can switch from using a
+          ACE_Hash_Map to a ACE_RB_Tree by changing one typedef.
+
+          Now that LogRecords are ordered by RecordId, for all practical
+          purposes this resolves bugzilla bugs #1980 and #1981.  While it
+          doesn't handle the case where the RecordId's wrap, with 64 bits,
+          that's not worth losing too much sleep over.  Even if we logged
+          1,000,000 records per second, it would take nearly 600,000 years
+          to wrap.
+
 Wed Jun  7 09:04:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Invocation_Adapter.cpp:
-          Corrected the check whether a request has arguments or not. This fixes
-          interoperability issues with Orbix. Thanks to Phil Billingham
-          <phil_billingham at ml dot com> for reporting this. This fixes bugzilla
-          bug 2548
+
+          Corrected the check whether a request has arguments or not. This
+          fixes interoperability issues with Orbix. Thanks to Phil
+          Billingham <phil_billingham at ml dot com> for reporting
+          this. This fixes bugzilla bug 2548
 
 Tue Jun  6 21:05:19 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
