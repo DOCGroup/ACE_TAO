@@ -1,3 +1,10 @@
+Wed Jun  7 03:25:00 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * bin/MakeProjectCreator/config/ciao_config_handlers_base.mpb
+        * bin/MakeProjectCreator/config/ciao_config_handlers_base.mpc
+        
+          Corrected the file extension.
+        
 Tue Jun  6 21:11:37 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/WFMO_Reactor.cpp (open): make sure we delete the
