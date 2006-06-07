@@ -32,7 +32,7 @@
 #define _TAO_IDL_COMPONENTSS_H_
 
 
-#include "CCM_ContainerS.h"
+#include "CCM_ComponentS.h"
 #include "ComponentsC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
