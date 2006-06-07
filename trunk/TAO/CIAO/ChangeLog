@@ -1,3 +1,21 @@
+Wed Jun  7 06:04:45 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * CIDLC/ExecutorMappingGenerator.cpp
+        
+          Modified to generate an include of CCM_Container.idl.
+        
+        * ciao/Components.idl
+        * ciao/ComponentsC.h
+        * ciao/ComponentsS.h
+         
+          Changed Components.idl to include CCM_Component.idl instead of
+          CCM_Container.idl.  This removes a dependancy on the container
+          library for stub projects.  
+        
+          Note this commit may be rolled back later based on discussions 
+          on the dance-dev list, I am making it preemptively to resolve
+          scoreboard problems.
+        
 Tue Jun  6 20:32:53 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tools/Config_Handlers/Config_Handlers.mpc

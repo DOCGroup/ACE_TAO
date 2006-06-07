@@ -1928,6 +1928,8 @@ generate (CommandLine const& cl,
   }
 
   {
+    os << "#include \"ciao/CCM_Container.idl\"" << endl;
+    
     if (cl.get_value ("lem-force-all", false) && !file_name.empty ())
     {
       os << "#include \"" << file_name << '\"' << endl;
@@ -1968,7 +1970,7 @@ generate (CommandLine const& cl,
     Traversal::BracketIncludes bracket_includes;
     IncludesEmitter includes_emitter (ctx, os);
 
-
+    
     principal_region.edge_traverser (includes_emitter);
     principal_region.edge_traverser (quote_includes);
     principal_region.edge_traverser (bracket_includes);
