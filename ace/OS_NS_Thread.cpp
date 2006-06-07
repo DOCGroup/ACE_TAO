@@ -3893,8 +3893,8 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
     stacksize = ACE_NEEDS_HUGE_THREAD_STACKSIZE;
 # endif /* ACE_NEEDS_HUGE_THREAD_STACKSIZE */
 
-# if !defined (ACE_VXWORKS)  
-  // On VxWorks , using the task API,  the OS will provide a task name if
+# if !(defined (ACE_VXWORKS) && !defined (ACE_HAS_PTHREADS))
+  // On VxWorks, using the task API, the OS will provide a task name if
   // the user doesn't. So, we don't need to create a tmp_thr.  If the
   // caller of this member function is the Thread_Manager, than thr_id
   // will be non-zero anyways.
@@ -3902,7 +3902,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 
   if (thr_id == 0)
     thr_id = &tmp_thr;
-# endif /* !ACE_VXWORKS */
+# endif /* !(ACE_VXWORKS && !ACE_HAS_PTHREADS) */
 
   ACE_hthread_t tmp_handle;
   if (thr_handle == 0)
