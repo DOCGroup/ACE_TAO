@@ -1,3 +1,10 @@
+Tue Jun  6 21:11:37 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/WFMO_Reactor.cpp (open): make sure we delete the
+          notify_handler_ before reassigning it to prevent resource leaks.
+          Thanks to Sonicfly Zhou <zhoucn at txsec dot com> for suggesting
+          this.
+
 Tue Jun  6 21:41:02 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * ace/Service_Gestalt.{h cpp}:
@@ -12,7 +19,6 @@ Tue Jun  6 18:09:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 	* ace/OS_NS_Thread.cpp:
 	  Reverted a change for VxWorks, broke other platforms, will make
           a new change tomorrow.
-
 
 Tue Jun  6 17:14:51 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
