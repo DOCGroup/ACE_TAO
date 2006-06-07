@@ -50,7 +50,6 @@ project (XSC_Config_Handlers) : ciao_deployment_stub, ciao_events_dnc, ciao_conf
     ComponentPropertyDescription_Handler.cpp
     MDD_Handler.cpp
     ComponentPropertyDescription_Handler.cpp
-    DataType_Handler.cpp
     MDD_Handler.cpp
     PSPE_Handler.cpp
     CRDD_Handler.cpp
