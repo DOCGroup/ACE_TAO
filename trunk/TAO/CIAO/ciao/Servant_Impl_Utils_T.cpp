@@ -27,11 +27,15 @@ namespace CIAO
     elem->type_id (port_type_repo_id);
     elem->is_multiple (false);
     elem->connections ().length (1UL);
-    elem->connections ()[0UL]->ck (0);
 
-    // Valuetype 'set' call increments the reference count.
-    elem->connections ()[0UL]->objref (connection.in ());
+    ::Components::ConnectionDescription *conn = 0;
+    ACE_NEW (conn, ::OBV_Components::ConnectionDescription);
+    ::Components::ConnectionDescription_var safe_conn = conn;
 
+    conn->ck (0);
+    conn->objref (connection.in ());
+
+    elem->connections ()[0UL] = safe_conn._retn ();
     descriptions[slot] = safe_elem._retn ();
   }
 
@@ -56,6 +60,7 @@ namespace CIAO
     elem->connections ().length (objrefs.current_size ());
 
     CORBA::ULong map_slot = 0UL;
+    ::Components::ConnectionDescription *conn = 0;
 
     for (typename ACE_Active_Map_Manager<T_var>::CONST_ITERATOR iter (
              objrefs
@@ -63,14 +68,21 @@ namespace CIAO
          0 == iter.done ();
          iter.advance (), ++map_slot)
       {
+        ACE_NEW (conn,
+                 ::Components::ConnectionDescription);
+        ::Components::ConnectionDescription_var safe_conn = conn;
+
         ::Components::Cookie *cookie_from_key = 0;
         ACE_NEW (cookie_from_key,
                  ::CIAO::Map_Key_Cookie ((*iter).ext_id_));
 
-        // Both valuetype 'set' calls increment the reference count.
-        elem->connections ()[map_slot]->ck (cookie_from_key);
+        // Valuetype member set operation calls add_ref.
+        conn->ck (cookie_from_key);
         CORBA::remove_ref (cookie_from_key);
-        elem->connections ()[map_slot]->objref ((*iter).int_id_.in ());
+
+        conn->objref ((*iter).int_id_.in ());
+
+        elem->connections ()[map_slot] = safe_conn._retn ();
       }
 
     descriptions[slot] = safe_elem._retn ();
@@ -93,8 +105,10 @@ namespace CIAO
 
     elem->name (port_name);
     elem->type_id (port_type_repo_id);
+    elem->consumer ().length (consumers.current_size ());
 
     CORBA::ULong map_slot = 0UL;
+    ::Components::SubscriberDescription *sub = 0;
 
     for (typename ACE_Active_Map_Manager<T_var>::CONST_ITERATOR iter (
              consumers
@@ -102,14 +116,21 @@ namespace CIAO
          0 == iter.done ();
          iter.advance (), ++map_slot)
       {
+        ACE_NEW (sub,
+                 ::OBV_Components::SubscriberDescription);
+        ::Components::SubscriberDescription_var safe_sub = sub;
+
         ::Components::Cookie *cookie_from_key = 0;
         ACE_NEW (cookie_from_key,
                  ::CIAO::Map_Key_Cookie ((*iter).ext_id_));
 
-        // Both valuetype 'set' calls increment the reference count.
-        elem->consumer ()[map_slot]->ck (cookie_from_key);
+        // Valuetype member set operation calls add_ref.
+        sub->ck (cookie_from_key);
         CORBA::remove_ref (cookie_from_key);
-        elem->consumer ()[map_slot]->consumer ((*iter).int_id_.in ());
+
+        sub->consumer ((*iter).int_id_.in ());
+
+        elem->consumer ()[map_slot] = safe_sub._retn ();
       }
 
     descriptions[slot] = safe_elem._retn ();
