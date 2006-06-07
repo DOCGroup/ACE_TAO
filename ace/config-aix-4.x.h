@@ -11,6 +11,7 @@
 
 // Both IBM and g++ compilers set _THREAD_SAFE if compiler is asked to compile
 // threaded code (xlC_r, as opposed to xlC; and g++ -pthread)
+#if !defined (ACE_MT_SAFE) || (ACE_MT_SAFE != 0)
 #  if defined (ACE_HAS_THREADS)
 #    undef ACE_HAS_THREADS
 #  endif
@@ -19,6 +20,7 @@
 #  else
 #    define ACE_HAS_THREADS 0
 #  endif /* _THREAD_SAFE */
+#endif /* !ACE_MT_SAFE || (ACE_MT_SAFE != 0) */
 
 #if defined (__xlC__) || defined (__IBMCPP__)
    // AIX xlC, IBM C/C++, and Visual Age C++ compilers
