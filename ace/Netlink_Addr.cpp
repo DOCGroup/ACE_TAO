@@ -41,7 +41,7 @@ ACE_Netlink_Addr::ACE_Netlink_Addr (const ACE_Netlink_Addr &sa)
 
 int ACE_Netlink_Addr::set (const sockaddr_nl *un, int len)
 {
-  (void) ACE_OS::memcpy ((void *) &this->_nl,un,len);
+  (void) ACE_OS::memcpy ((void *) &this->nl_,un,len);
   return 0;
 }
 
