@@ -451,7 +451,7 @@ lib_warning:
 
 <%if(requires)%>
 require_warning:
-	@echo <%project_name%> will not be built due to one of the following missing features:
+	@echo <%project_name%> will not be built due to one of the following disabled features:
 	@echo<%foreach(requires)%> <%require%><%endfor%>
 
 <%endif%>

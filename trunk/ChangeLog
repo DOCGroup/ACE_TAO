@@ -1,3 +1,11 @@
+Wed Jun  7 12:28:18 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Changed the message displayed when a project isn't build when a
+          particular feature is disabled.  Many users thought that this
+          message was an error, I believe, because of the word 'missing'.
+
 Wed Jun  7 11:46:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-suncc-common.h:
@@ -81,8 +89,8 @@ Tue Jun  6 21:41:02 UTC 2006  Steve Huston  <shuston@riverace.com>
 
 Tue Jun  6 18:09:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ace/OS_NS_Thread.cpp:
-	  Reverted a change for VxWorks, broke other platforms, will make
+        * ace/OS_NS_Thread.cpp:
+          Reverted a change for VxWorks, broke other platforms, will make
           a new change tomorrow.
 
 Tue Jun  6 17:14:51 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
