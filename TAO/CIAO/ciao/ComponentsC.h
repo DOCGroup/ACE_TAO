@@ -42,7 +42,7 @@
 #include "tao/AnyTypeCode/TypeCode.h"
 #include "tao/Versioned_Namespace.h"
 
-#include "CCM_ContainerC.h"
+#include "CCM_ComponentC.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
