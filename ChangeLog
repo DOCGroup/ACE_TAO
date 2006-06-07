@@ -2,7 +2,7 @@ Wed Jun  7 12:56:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Netlink_Addr.{h,cpp,inl}:
         * ace/SOCK_Netlink.{h,cpp,inl}:
-          New files for netlink sockets. Thanks to Rober Coroberti
+          New files for netlink sockets. Thanks to Robert Iakobashvili
           <coroberti at gmail dot com> and Razi Ben-Yehuda
           <raziebe at gmail dot com> for creating these new files.
           These files will be added to the ACE mpc later this week, with
