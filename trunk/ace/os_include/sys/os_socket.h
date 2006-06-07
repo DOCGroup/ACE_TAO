@@ -149,6 +149,12 @@ typedef size_t ACE_SOCKET_LEN;
 typedef int ACE_SOCKET_LEN;
 #endif /* ACE_HAS_SIZET_SOCKET_LEN */
 
+#if defined (ACE_HAS_NETLINK)
+#  include <asm/types.h>
+#  include <linux/netlink.h>
+#  define ACE_PROTOCOL_FAMILY_NETLINK AF_NETLINK
+#endif
+
 #if defined (ACE_HAS_LKSCTP)
 extern "C"
 {
