@@ -1,10 +1,18 @@
+Wed Jun  7 08:27:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_Thread.cpp:
+          Added needed check for VxWorks with task api
+
+        * ace/os_include/sys/os_stat.h:
+          Removed workarounds for old Borland compiler versions
+
 Wed Jun  7 03:25:00 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * bin/MakeProjectCreator/config/ciao_config_handlers_base.mpb
         * bin/MakeProjectCreator/config/ciao_config_handlers_base.mpc
-        
+
           Corrected the file extension.
-        
+
 Tue Jun  6 21:11:37 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/WFMO_Reactor.cpp (open): make sure we delete the
@@ -36,7 +44,7 @@ Tue Jun  6 17:14:51 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
         * bin/MakeProjectCreator/modules/GNUACEWorkspaceCreator.pm:
 
           Use DirectoryManager::mpc_basename() instead of
-          File::Basename::basename().                    
+          File::Basename::basename().
 
 Tue Jun  6 15:43:32 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
