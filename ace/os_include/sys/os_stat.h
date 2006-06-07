@@ -119,16 +119,6 @@ extern "C"
    };
 #endif /* ACE_HAS_WINCE */
 
-#if defined (__BORLANDC__)
-#  if (__BORLANDC__ <= 0x540)
-#    define _stat stat
-#  endif
-#  if (__BORLANDC__ < 0x560)
-#    define _umask umask
-#    define _fstat fstat
-#  endif
-#endif /* __BORLANDC__ */
-
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
