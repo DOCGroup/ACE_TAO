@@ -1,3 +1,29 @@
+Wed Jun  7 09:02:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_aix_g++.GNU:
+          Set X11 and Xt defines, thanks to Peter Grotrian
+          <peter dot grotrian at pdv-fs dot de> for reporting this. This fixes
+          bugzilla 2556
+
+        * ace/config-sunos5.5.h:
+          Added fixes to build with threads=0, this fixes bugzilla bug 2555. Thanks
+          to Peter Grotrian <peter dot grotrian at pdv-fs dot de> for reporting
+          this.
+
+        * ace/config-aix-4.x.h:
+          Added fixes to build with threads=0, this fixes bugzilla bug 2553. Thanks
+          to Peter Grotrian <peter dot grotrian at pdv-fs dot de> for reporting
+          this.
+
+        * include/makeinclude/platform_chorus.GNU:
+        * include/makeinclude/platform_chorus4.x_g++.GNU:
+        * include/makeinclude/platform_chorus_ghs.GNU:
+        * include/makeinclude/platform_psos_diab.GNU:
+        * include/makeinclude/platform_psos_diab_ppc.GNU:
+        * include/makeinclude/platform_psos_tm.GNU:
+        * include/makeinclude/platform_psosim_g++.GNU:
+          Removed these files, psos and chorus are not supported anymore
+
 Wed Jun  7 08:27:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_Thread.cpp:
