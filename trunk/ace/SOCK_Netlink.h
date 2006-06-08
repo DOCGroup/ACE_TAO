@@ -73,7 +73,7 @@ public:
                 int flags) const;
 
   /**
-   *  Recieves an <iovec> of size <n> to the netlink socket (uses
+   *  Recieves an iovec of size @a n to the netlink socket
   */
   ssize_t recv (iovec iov[],
                 int n,
@@ -81,7 +81,7 @@ public:
                 int flags = 0) const;
 
   /**
-   *  Sends an <iovec> of size <n> to the netlink socket (uses
+   *  Sends an iovec of size @a n to the netlink socket
   */
   ssize_t send (const iovec iov[],
                 int n,
