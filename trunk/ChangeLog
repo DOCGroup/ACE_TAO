@@ -1,3 +1,9 @@
+Thu Jun  8 12:37:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/corba_e_compact.mpb:
+        * bin/MakeProjectCreator/config/corba_e_micro.mpb:
+          New base projects for CORBA/e micro and compact
+
 Thu Jun  8 12:28:49 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/DependencyGenerator/DependencyEditor.pm:
