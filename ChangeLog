@@ -1,3 +1,9 @@
+Thu Jun  8 11:37:59 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ace/config-netbsd.h:
+
+          Define ACE_HAS_SCANDIR and ACE_SCANDIR_CMP_VOIDPTR.
+
 Wed Jun  7 23:02:53 UTC 2006  Krishnakumar B  <kitty@nospam.invalid.domain>
 
         * tests/Recursive_Mutex_Test.cpp: Use ACE_TEST_MUTEX instead of
@@ -9,7 +15,7 @@ Wed Jun  7 23:02:53 UTC 2006  Krishnakumar B  <kitty@nospam.invalid.domain>
 Wed Jun  7 21:42:36 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * bin/MakeProjectCreator/config/ciao_config_handlers.mpb
-        
+
           Fixed static library ordering problem.
 
 Wed Jun  7 13:34:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
