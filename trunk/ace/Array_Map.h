@@ -181,10 +181,14 @@ public:
   /// Maximum number of elements the map can hold.
   size_type max_size (void) const;
 
-  /// Is the map empty?
+  /// Return @c true if the map is empty, else @c false.
   bool is_empty (void) const;
 
-  /// Is the map empty? @deprecated Use is_empty() instead.
+  /** 
+   * Return @c true if the map is empty, else @c false.  We recommend
+   * using @c is_empty() instead since it's more consistent with the
+   * ACE container naming conventions.
+   */
   bool empty (void) const;
 
   /// Swap the contents of this map with the given @a map in an

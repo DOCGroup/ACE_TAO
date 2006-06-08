@@ -8,24 +8,28 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK> ACE_INLINE
 ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::ACE_Hash_Map_Manager_Ex (size_t size,
-                                                                                                    ACE_Allocator *alloc)
+                                                                                                    ACE_Allocator *alloc,
+                                                                                                    ACE_Allocator *entry_alloc)
   : allocator_ (alloc),
+    entry_allocator_ (entry_alloc),
     table_ (0),
     total_size_ (0),
     cur_size_ (0)
 {
-  if (this->open (size, alloc) == -1)
+  if (this->open (size, alloc, entry_alloc) == -1)
     ACE_ERROR ((LM_ERROR, ACE_LIB_TEXT ("ACE_Hash_Map_Manager_Ex\n")));
 }
 
 template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK> ACE_INLINE
-ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::ACE_Hash_Map_Manager_Ex (ACE_Allocator *alloc)
+ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::ACE_Hash_Map_Manager_Ex (ACE_Allocator *alloc,
+                                                                                                    ACE_Allocator *entry_alloc)
   : allocator_ (alloc),
+    entry_allocator_ (entry_alloc),
     table_ (0),
     total_size_ (0),
     cur_size_ (0)
 {
-  if (this->open (ACE_DEFAULT_MAP_SIZE, alloc) == -1)
+  if (this->open (ACE_DEFAULT_MAP_SIZE, alloc, entry_alloc) == -1)
     ACE_ERROR ((LM_ERROR, ACE_LIB_TEXT ("ACE_Hash_Map_Manager_Ex\n")));
 }
 
