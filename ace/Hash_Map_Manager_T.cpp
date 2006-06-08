@@ -118,7 +118,8 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::creat
 
 template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK> int
 ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::open (size_t size,
-                                                                                 ACE_Allocator *alloc)
+                                                                                 ACE_Allocator *alloc,
+                                                                                 ACE_Allocator *entry_alloc)
 {
   ACE_WRITE_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, -1);
 
@@ -130,6 +131,11 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::open 
     alloc = ACE_Allocator::instance ();
 
   this->allocator_ = alloc;
+
+  if (entry_alloc == 0)
+    entry_alloc = ACE_Allocator::instance ();
+
+  this->entry_allocator_ = entry_alloc;
 
   // This assertion is here to help track a situation that shouldn't
   // happen, but did with Sun C++ 4.1 (before a change to this class
@@ -189,7 +195,7 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::unbin
           temp_ptr = temp_ptr->next_;
 
           // Explicitly call the destructor.
-          ACE_DES_FREE_TEMPLATE2 (hold_ptr, this->allocator_->free,
+          ACE_DES_FREE_TEMPLATE2 (hold_ptr, this->entry_allocator_->free,
                                   ACE_Hash_Map_Entry, EXT_ID, INT_ID);
         }
 
@@ -216,7 +222,7 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::bind_
       void *ptr;
       // Not found.
       ACE_ALLOCATOR_RETURN (ptr,
-                            this->allocator_->malloc (sizeof (ACE_Hash_Map_Entry<EXT_ID, INT_ID>)),
+                            this->entry_allocator_->malloc (sizeof (ACE_Hash_Map_Entry<EXT_ID, INT_ID>)),
                             -1);
 
       entry = new (ptr) ACE_Hash_Map_Entry<EXT_ID, INT_ID> (ext_id,
@@ -245,7 +251,7 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::trybi
       // Not found.
       void *ptr;
       ACE_ALLOCATOR_RETURN (ptr,
-                            this->allocator_->malloc (sizeof (ACE_Hash_Map_Entry<EXT_ID, INT_ID>)),
+                            this->entry_allocator_->malloc (sizeof (ACE_Hash_Map_Entry<EXT_ID, INT_ID>)),
                             -1);
 
       entry = new (ptr) ACE_Hash_Map_Entry<EXT_ID, INT_ID> (ext_id,
@@ -288,8 +294,9 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::unbin
   entry->prev_->next_ = entry->next_;
 
   // Explicitly call the destructor.
-  ACE_DES_FREE_TEMPLATE2 (entry, this->allocator_->free,
+  ACE_DES_FREE_TEMPLATE2 (entry, this->entry_allocator_->free,
                           ACE_Hash_Map_Entry, EXT_ID, INT_ID);
+
   this->cur_size_--;
   return 0;
 }

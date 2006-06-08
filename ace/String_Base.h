@@ -324,13 +324,14 @@ public:
   size_t length (void) const;
 
   /**
-   * Return @c true if the length of the string is zero.
+   * Return @c true if the length of the string is zero, else @c false.
    */
   bool is_empty (void) const;
 
   /**
-   * Return @c true if the length of the string is zero.
-   * @deprecated Use is_empty() instead.
+   * Return @c true if the length of the string is zero, else @c
+   * false.  We recommend using @c is_empty() instead since it's more
+   * consistent with the ACE container naming conventions.
    */
   bool empty (void) const;
 
