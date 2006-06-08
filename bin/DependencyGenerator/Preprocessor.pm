@@ -53,30 +53,31 @@ sub process {
       ## outside that all of the inner regular expressions have in
       ## common.  That way we go down the path of if elsif only if it is
       ## even possible due to the outside regular expression.
-      next if (not /^\s*#/);
+      ## index() is faster than a regular expression, so use index first.
+      next if (index($_, '#') == -1 || not /^\s*#/);
 
-      ## Remove c++ and same line c comments inside this if statement.
+      ## Remove same line c comments (no need to worry about c++
+      ## comments due to the regular expressions) inside this if statement.
       ## This saves about 5% off of processing the ace directory
       ## and we only need to strip comments if we are actually
       ## going to look at the string.
-      $_ =~ s/\/\/.*//o;
       $_ =~ s/\/\*.*\*\///o;
 
-      if (/#\s*endif/) {
+      if (/^\s*#\s*endif/) {
         --$ifcount;
         if (defined $zero[0] && $ifcount == $zero[$#zero]) {
           pop(@zero);
         }
       }
-      elsif (/#\s*if\s+0/) {
+      elsif (/^\s*#\s*if\s+0/) {
         push(@zero, $ifcount);
         ++$ifcount;
       }
-      elsif (/#\s*if/) {
+      elsif (/^\s*#\s*if/) {
         ++$ifcount;
       }
       elsif (!defined $zero[0] &&
-             /#\s*include\s+[<"]([^">]+)[">]/o) {
+             /^\s*#\s*include\s+[<"]([^">]+)[">]/o) {
         ## Locate the include file
         my($inc) = undef;
         if (exists $self->{'ifound'}->{$1}) {
@@ -110,7 +111,7 @@ sub process {
           push(@{$$files{$file}}, $inc);
           if (!defined $$files{$inc}) {
             ## Process this file, but do not return the include files
-            if (!defined $self->{'exclude'}->{basename($inc)}) {
+            if (!defined $self->{'exclude'}->{substr($inc, rindex($inc, '/') + 1)}) {
               $self->process($inc, $noinline, 1);
             }
           }
@@ -129,8 +130,8 @@ sub process {
     my(@files)  = ($file);
     my(%ifiles) = ();
 
-    for(my $i = 0; $i <= $#files; ++$i) {
-      foreach my $inc (@{$self->{'files'}->{$files[$i]}}) {
+    foreach my $processed (@files) {
+      foreach my $inc (@{$self->{'files'}->{$processed}}) {
         if (!defined $ifiles{$inc}) {
           $ifiles{$inc} = 1;
           push(@files, $inc);

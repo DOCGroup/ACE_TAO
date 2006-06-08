@@ -14,17 +14,17 @@ eval '(exit $?0)' && eval 'exec perl -w -S $0 ${1+"$@"}'
 # ************************************************************
 
 use strict;
-use Cwd;
 use Config;
+use FindBin;
 use File::Spec;
 use File::Basename;
 
-if ( $^O eq 'VMS' ) {
-  require VMS::Filespec;
-  import VMS::Filespec qw(unixpath);
+my($basePath) = $FindBin::Bin;
+if ($^O eq 'VMS') {
+  $basePath = File::Spec->rel2abs(dirname($0)) if ($basePath eq '');
+  $basePath = VMS::Filespec::unixify($basePath);
 }
-
-unshift(@INC, getExecutePath($0) . '/DependencyGenerator');
+unshift(@INC, $basePath . '/DependencyGenerator');
 
 require DependencyEditor;
 
@@ -32,7 +32,7 @@ require DependencyEditor;
 # Data Section
 # ************************************************************
 
-my($version)  = '0.9';
+my($version)  = '1.0';
 my($os)       = ($^O eq 'MSWin32' ? 'Windows' : 'UNIX');
 my(%types)    = ('gnu'   => 1,
                  'nmake' => 1,
@@ -45,60 +45,10 @@ my(%defaults) = ('UNIX'    => ['gnu'],
 # ************************************************************
 # Subroutine Section
 # ************************************************************
-sub which {
-  my($prog) = shift;
-  my($exec) = $prog;
-
-  if (defined $ENV{'PATH'}) {
-    my($part)   = '';
-    my($envSep) = $Config{'path_sep'};
-    foreach $part (split(/$envSep/, $ENV{'PATH'})) {
-      $part .= "/$prog";
-      if ( -x $part ) {
-        $exec = $part;
-        last;
-      }
-    }
-  }
-
-  return $exec;
-}
-
-
-sub getExecutePath {
-  my($prog) = shift;
-  my($loc)  = '';
-
-  if ($prog ne basename($prog)) {
-    my($dir) = ($^O eq 'VMS' ? unixpath(dirname($prog)) : dirname($prog));
-    if ($prog =~ /^[\/\\]/ ||
-        $prog =~ /^[A-Za-z]:[\/\\]?/) {
-      $loc = $dir;
-    }
-    else {
-      $loc = ($^O eq 'VMS' ? unixpath(getcwd()) : getcwd()) . '/' . $dir;
-    }
-  }
-  else {
-    $loc = dirname(which($prog));
-    if ($^O eq 'VMS') {
-      $loc = unixpath($loc);
-    }
-  }
-
-  $loc =~ s/\/\.$//;
-
-  if ($loc eq '.') {
-    $loc = ($^O eq 'VMS' ? unixpath(getcwd()) : getcwd());
-  }
-
-  return $loc;
-}
-
 
 sub usageAndExit {
-  my($base) = shift;
   my($opt)  = shift;
+  my($base) = basename($0);
 
   if (defined $opt) {
     print "$opt.\n";
@@ -162,7 +112,6 @@ sub setReplace {
 # Main Section
 # ************************************************************
 
-my($base)     = basename($0);
 my($type)     = $defaults{$os}->[0];
 my($noinline) = undef;
 my(@files)    = ();
@@ -200,7 +149,7 @@ for(my $i = 0; $i <= $#ARGV; ++$i) {
       }
     }
     else {
-      usageAndExit($base, 'Invalid use of -R');
+      usageAndExit('Invalid use of -R');
     }
   }
   elsif ($arg eq '-e') {
@@ -210,7 +159,7 @@ for(my $i = 0; $i <= $#ARGV; ++$i) {
       $exclude{$arg} = 1;
     }
     else {
-      usageAndExit($base, 'Invalid use of -e');
+      usageAndExit('Invalid use of -e');
     }
   }
   elsif ($arg eq '-f') {
@@ -220,7 +169,7 @@ for(my $i = 0; $i <= $#ARGV; ++$i) {
       $output = $arg;
     }
     else {
-      usageAndExit($base, 'Invalid use of -f');
+      usageAndExit('Invalid use of -f');
     }
   }
   elsif ($arg eq '-i') {
@@ -230,7 +179,7 @@ for(my $i = 0; $i <= $#ARGV; ++$i) {
     $noinline = 1;
   }
   elsif ($arg eq '-h') {
-    usageAndExit($base);
+    usageAndExit();
   }
   elsif ($arg eq '-t') {
     ++$i;
@@ -239,7 +188,7 @@ for(my $i = 0; $i <= $#ARGV; ++$i) {
       $type = $arg;
     }
     else {
-      usageAndExit($base, 'Invalid use of -t');
+      usageAndExit('Invalid use of -t');
     }
   }
   elsif ($arg =~ /^[\-+]/) {
@@ -253,7 +202,7 @@ for(my $i = 0; $i <= $#ARGV; ++$i) {
 
 if (!defined $files[0]) {
   if ($needsrc) {
-    usageAndExit($base, 'No files specified');
+    usageAndExit('No files specified');
   }
 }
 
