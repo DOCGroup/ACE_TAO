@@ -1,7 +1,12 @@
+Thu Jun  8 12:29:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/Planner/PCVisitor.cpp:
+          Fixed parameter never used warnings
+
 Wed Jun  7 21:39:00 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tools/Config_Handlers/CIAO_Events/CIAO_Events_Handlers.mpc
-        
+
           Removed unneeded base projects.
 
 Wed Jun  7 21:07:11 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
