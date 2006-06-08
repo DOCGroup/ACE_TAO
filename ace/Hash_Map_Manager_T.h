@@ -115,6 +115,7 @@ class ACE_Allocator;
  * user can make this a persistent class by providing an
  * ACE_Allocator with a persistable memory pool.
  */
+
 template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK>
 class ACE_Hash_Map_Manager_Ex
 {
@@ -153,15 +154,18 @@ public:
   // = Initialization and termination methods.
 
   /// Initialize a <Hash_Map_Manager_Ex> with default size.
-  ACE_Hash_Map_Manager_Ex (ACE_Allocator *alloc = 0);
+  ACE_Hash_Map_Manager_Ex (ACE_Allocator *alloc = 0,
+                           ACE_Allocator *entry_alloc = 0);
 
   /// Initialize a <Hash_Map_Manager_Ex> with size <length>.
   ACE_Hash_Map_Manager_Ex (size_t size,
-                           ACE_Allocator *alloc = 0);
+                           ACE_Allocator *alloc = 0,
+                           ACE_Allocator *entry_alloc = 0);
 
   /// Initialize a <Hash_Map_Manager_Ex> with <size> elements.
   int open (size_t size = ACE_DEFAULT_MAP_SIZE,
-            ACE_Allocator *alloc = 0);
+            ACE_Allocator *alloc = 0,
+            ACE_Allocator *entry_alloc = 0);
 
   /// Close down a <Hash_Map_Manager_Ex> and release dynamically allocated
   /// resources.
@@ -441,6 +445,15 @@ protected:
 
   /// Pointer to a memory allocator.
   ACE_Allocator *allocator_;
+
+  // - default allocator 'allocator_' is used for table_, so it should
+  //   supply size*sizeof (ACE_Hash_Map_Entry<EXT_ID, INT_ID>),
+  // - additional allocator 'entry_allocator_' will be used for entries, 
+  //   so it should be able to allocate 'size'
+  //   chunks of sizeof(ACE_Hash_Map_Entry<EXT_ID, INT_ID>) bytes each.
+
+  // Addidtional allocator for entries:
+  ACE_Allocator *entry_allocator_;
 
   /// Synchronization variable for the MT_SAFE <ACE_Hash_Map_Manager_Ex>.
   ACE_LOCK lock_;

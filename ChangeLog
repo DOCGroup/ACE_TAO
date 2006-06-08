@@ -1,3 +1,9 @@
+Thu Jun  8 17:13:42 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/String_Base.h,
+          ace/Array_Map.h: Removed the @deprecated
+          comments to make Ossama happy ;-)  This fixes bugid 2558.
+
 Thu Jun  8 12:44:46 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/OS_NS_Thread.inl (recursive_mutex_lock): Cleaned up the
