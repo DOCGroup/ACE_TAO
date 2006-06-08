@@ -1,3 +1,11 @@
+Wed Jun  7 23:02:53 UTC 2006  Krishnakumar B  <kitty@nospam.invalid.domain>
+
+        * tests/Recursive_Mutex_Test.cpp: Use ACE_TEST_MUTEX instead of
+          ACE_Recursive_Thread_Mutex so that we use the right version of
+          mutex (ACE_Process_Mutex) on Windows.  Thanks to Doug for the
+          suggestion.  This should fix the Recursive_Mutex_Test failing on
+          Windows.
+
 Wed Jun  7 21:42:36 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * bin/MakeProjectCreator/config/ciao_config_handlers.mpb
