@@ -43,10 +43,11 @@ extern "C"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
+#if defined (ACE_LACKS_CLOSEDIR)
 void
 ACE_OS::closedir_emulation (ACE_DIR *d)
 {
-#if defined (ACE_WIN32) && defined (ACE_LACKS_CLOSEDIR)
+#if defined (ACE_WIN32)
   if (d->current_handle_ != INVALID_HANDLE_VALUE)
     ::FindClose (d->current_handle_);
 
@@ -57,15 +58,17 @@ ACE_OS::closedir_emulation (ACE_DIR *d)
       ACE_OS::free (d->dirent_->d_name);
       ACE_OS::free (d->dirent_);
     }
-#else /* ACE_WIN32 && ACE_LACKS_CLOSEDIR */
+#else /* ACE_WIN32 */
   ACE_UNUSED_ARG (d);
-#endif /* ACE_WIN32 && ACE_LACKS_CLOSEDIR */
+#endif /* ACE_WIN32 */
 }
+#endif /* ACE_LACKS_CLOSEDIR */
 
+#if defined (ACE_LACKS_OPENDIR)
 ACE_DIR *
 ACE_OS::opendir_emulation (const ACE_TCHAR *filename)
 {
-#if defined (ACE_WIN32) && defined (ACE_LACKS_OPENDIR)
+#if defined (ACE_WIN32)
   ACE_DIR *dir;
   ACE_TCHAR extra[3] = {0,0,0};
 
@@ -116,16 +119,18 @@ ACE_OS::opendir_emulation (const ACE_TCHAR *filename)
   dir->started_reading_ = 0;
   dir->dirent_ = 0;
   return dir;
-#else /* WIN32 && ACE_LACKS_OPENDIR */
+#else /* WIN32 */
   ACE_UNUSED_ARG (filename);
   ACE_NOTSUP_RETURN (0);
-#endif /* WIN32 && ACE_LACKS_OPENDIR */
+#endif /* WIN32 */
 }
+#endif /* ACE_LACKS_CLOSEDIR */
 
+#if defined (ACE_LACKS_READDIR)
 struct ACE_DIRENT *
 ACE_OS::readdir_emulation (ACE_DIR *d)
 {
-#if defined (ACE_WIN32) && defined (ACE_LACKS_READDIR)
+#if defined (ACE_WIN32)
   if (d->dirent_ != 0)
     {
       ACE_OS::free (d->dirent_->d_name);
@@ -169,12 +174,14 @@ ACE_OS::readdir_emulation (ACE_DIR *d)
     }
   else
     return 0;
-#else /* ACE_WIN32 && ACE_LACKS_READDIR */
+#else /* ACE_WIN32 */
   ACE_UNUSED_ARG (d);
   ACE_NOTSUP_RETURN (0);
-#endif /* ACE_WIN32 && ACE_LACKS_READDIR */
+#endif /* ACE_WIN32 */
 }
+#endif /* ACE_LACKS_READDIR */
 
+#if !defined (ACE_HAS_SCANDIR)
 int
 ACE_OS::scandir_emulation (const ACE_TCHAR *dirname,
                            ACE_DIRENT **namelist[],
@@ -287,5 +294,6 @@ ACE_OS::scandir_emulation (const ACE_TCHAR *dirname,
 
   return nfiles;
 }
+#endif /* !ACE_HAS_SCANDIR */
 
 ACE_END_VERSIONED_NAMESPACE_DECL
