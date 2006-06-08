@@ -90,7 +90,7 @@ public:
 
   /**
    * Return local endpoint addresses in the referenced array of
-   * <ACE_INET_Addr>, which should have the specified <size>.  If the
+   * ACE_INET_Addr, which should have the specified <size>.  If the
    * number of local endpoint addresses is less than <size>, then
    * <size> will be set to this number.  If successful, the method
    * returns 0, otherwise returns -1.
@@ -99,7 +99,7 @@ public:
 
   /**
    * Return remote endpoint addresses in the referenced array of
-   * <ACE_INET_Addr>, which should have the specified <size>.  If the
+   * ACE_INET_Addr, which should have the specified <size>.  If the
    * number of remote endpoint addresses is less than <size>, then
    * <size> will be set to this number.  If successful, the method
    * returns 0, otherwise returns -1.
