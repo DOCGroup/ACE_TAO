@@ -69,7 +69,7 @@ namespace CIAO
          iter.advance (), ++map_slot)
       {
         ACE_NEW (conn,
-                 ::Components::ConnectionDescription);
+                 ::OBV_Components::ConnectionDescription);
         ::Components::ConnectionDescription_var safe_conn = conn;
 
         ::Components::Cookie *cookie_from_key = 0;
