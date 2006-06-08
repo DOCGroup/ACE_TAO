@@ -798,7 +798,7 @@ ACE_OS::recursive_mutex_lock (ACE_recursive_thread_mutex_t *m,
   ACE_thread_t t_id = ACE_OS::thr_self ();
   int result = 0;
 
-  // Acquire the guard.
+  // Try to acquire the guard.
   if (ACE_OS::thread_mutex_lock (&m->nesting_mutex_, timeout) == -1)
     result = -1;
   else
@@ -819,15 +819,13 @@ ACE_OS::recursive_mutex_lock (ACE_recursive_thread_mutex_t *m,
                                                &m->nesting_mutex_,
                                                const_cast <ACE_Time_Value *> (&timeout));
 
-              // the mutex is reacquired even in the case of a timeout
+              // The mutex is reacquired even in the case of a timeout
               // release the mutex to prevent a deadlock
               if (result == -1)
                 {
-                  {
-                    // Save/restore errno.
-                    ACE_Errno_Guard error (errno);
-                    ACE_OS::thread_mutex_unlock (&m->nesting_mutex_);
-                  }
+                  // Save/restore errno.
+                  ACE_Errno_Guard error (errno);
+                  ACE_OS::thread_mutex_unlock (&m->nesting_mutex_);
 
                   return result;
                 }
@@ -840,12 +838,11 @@ ACE_OS::recursive_mutex_lock (ACE_recursive_thread_mutex_t *m,
       // At this point, we can safely increment the nesting_level_ no
       // matter how we got here!
       m->nesting_level_++;
+
+      // Save/restore errno.
+      ACE_Errno_Guard error (errno);
+      ACE_OS::thread_mutex_unlock (&m->nesting_mutex_);
     }
-  {
-    // Save/restore errno.
-    ACE_Errno_Guard error (errno);
-    ACE_OS::thread_mutex_unlock (&m->nesting_mutex_);
-  }
   return result;
 #endif /* ACE_HAS_RECURSIVE_MUTEXES */
 #else
