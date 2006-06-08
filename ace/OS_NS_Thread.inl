@@ -2729,8 +2729,7 @@ ACE_OS::thr_getprio (ACE_hthread_t ht_id, int &priority, int &policy)
      (!defined (ACE_LACKS_SETSCHED) || defined (ACE_HAS_PTHREAD_SCHEDPARAM)))
 
 #   if defined (ACE_HAS_PTHREADS_DRAFT4)
-  int result;
-  result = pthread_getprio (ht_id);
+  int const result = pthread_getprio (ht_id);
   if (result != -1)
     {
       priority = result;
