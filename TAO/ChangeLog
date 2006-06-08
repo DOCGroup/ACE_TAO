@@ -1,3 +1,9 @@
+Thu Jun  8 02:16:30 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * orbsvcs/Event_Service/Event_Service.cpp (parse_args): Added a
+          missing break statement.  Thanks to Sunil Rottoo <sunil dot
+          rottoo at idilia dot com> for reporting this.
+
 Wed Jun  7 14:24:55 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/orbsvcs/Log/Hash_LogRecordStore.h:
