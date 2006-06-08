@@ -352,6 +352,7 @@ Event_Service::parse_args (int argc, ACE_TCHAR* argv [])
         {
         case 'n':
           this->service_name_ = ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ());
+          break;
 
         case 'o':
           this->ior_file_name_ = ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ());
