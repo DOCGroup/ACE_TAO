@@ -54,26 +54,30 @@ static size_t n_threads = ACE_MAX_THREADS;
 
 static void
 test_recursion_depth (int nesting_level,
-                      ACE_Recursive_Thread_Mutex *rm)
+                      ACE_TEST_MUTEX *rm)
 {
   if (nesting_level < n_iterations)
     {
       int result = rm->acquire ();
       ACE_ASSERT (result == 0);
+#if !defined (ACE_HAS_WTHREADS)
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) = acquired, nesting = %d, thread id = %u\n"),
                   rm->get_nesting_level (),
                   rm->get_thread_id ()));
+#endif /* !ACE_HAS_WTHREADS */
 
       test_recursion_depth (nesting_level + 1,
                             rm);
 
       result = rm->release ();
       ACE_ASSERT (result == 0);
+#if !defined (ACE_HAS_WTHREADS)
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) = released, nesting = %d, thread id = %u\n"),
                   rm->get_nesting_level (),
                   rm->get_thread_id ()));
+#endif /* !ACE_HAS_WTHREADS */
     }
 }
 
@@ -279,8 +283,8 @@ test_timed_wait (int nesting_level,
 static void *
 recursion_worker (void *arg)
 {
-  ACE_Recursive_Thread_Mutex *rm =
-    reinterpret_cast<ACE_Recursive_Thread_Mutex *> (arg);
+  ACE_TEST_MUTEX *rm =
+    reinterpret_cast<ACE_TEST_MUTEX *> (arg);
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%P|%t) Starting test of recursion depth\n")));
   test_recursion_depth (0, rm);
@@ -313,7 +317,7 @@ run_main (int argc, ACE_TCHAR *argv[])
       n_threads = ACE_OS::atoi (argv[1]);
     }
 
-  ACE_Recursive_Thread_Mutex rm;
+  ACE_TEST_MUTEX rm;
 
   ACE_Thread_Manager::instance ()->spawn_n (n_threads,
                                             ACE_THR_FUNC (recursion_worker),
