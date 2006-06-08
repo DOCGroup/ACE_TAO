@@ -93,7 +93,7 @@ using namespace std;
   }
 
 
-  void PCVisitor::Visit (Deployment::ComponentInterfaceDescription &cid)
+  void PCVisitor::Visit (Deployment::ComponentInterfaceDescription &)
   {
     //Might want to populate this too once PICML starts supporting it
   }
@@ -229,7 +229,7 @@ using namespace std;
 
   //ComponentPackageReference descendents
 
-  void PCVisitor::Visit (Deployment::ComponentPackageReference &cpr)
+  void PCVisitor::Visit (Deployment::ComponentPackageReference &)
   {
     //not implemented
   }
@@ -238,13 +238,13 @@ using namespace std;
 
   //properties
 
-  void PCVisitor::Visit (Deployment::AssemblyPropertyMapping &apm)
+  void PCVisitor::Visit (Deployment::AssemblyPropertyMapping &)
   {
 
   }
 
 
-  void PCVisitor::Visit (Deployment::Property &property)
+  void PCVisitor::Visit (Deployment::Property &)
   {
 
   }
@@ -252,25 +252,25 @@ using namespace std;
 
   //requirements & capabilities
 
-  void PCVisitor::Visit (Deployment::Requirement &requirement)
+  void PCVisitor::Visit (Deployment::Requirement &)
   {
 
   }
 
 
-  void PCVisitor::Visit (Deployment::Capability &capability)
+  void PCVisitor::Visit (Deployment::Capability &)
   {
 
   }
 
 
-  void PCVisitor::Visit (Deployment::ImplementationRequirement &ir)
+  void PCVisitor::Visit (Deployment::ImplementationRequirement &)
   {
 
   }
 
 
-  void PCVisitor::Visit (Deployment::ImplementationDependency &id)
+  void PCVisitor::Visit (Deployment::ImplementationDependency &)
   {
 
   }
@@ -364,13 +364,13 @@ interface_end:
   }
 
 
-  void PCVisitor::Visit (Deployment::SubcomponentPortEndpoint &spe)
+  void PCVisitor::Visit (Deployment::SubcomponentPortEndpoint &)
   {
 
   }
 
 
-  void PCVisitor::Visit (Deployment::ComponentExternalPortEndpoint &cepe)
+  void PCVisitor::Visit (Deployment::ComponentExternalPortEndpoint &)
   {
 
   }
