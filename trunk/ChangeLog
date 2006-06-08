@@ -1,3 +1,12 @@
+Thu Jun  8 11:57:58 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ace/OS_NS_dirent.cpp:
+        * ace/OS_NS_dirent.h:
+
+          Don't compile the {opendir,readir,closedir,scandir}_emulation()
+          functions if {opendir,readir,closedir,scandir} are provided by
+          the OS.
+
 Thu Jun  8 11:29:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Netlink_Addr.h:

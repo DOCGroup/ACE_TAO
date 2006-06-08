@@ -69,21 +69,29 @@ namespace ACE_OS {
   long telldir (ACE_DIR *);
 
   // Win32 emulation functions
+#if defined (ACE_LACKS_OPENDIR)
   extern ACE_Export
   ACE_DIR *opendir_emulation (const ACE_TCHAR *filename);
+#endif /* ACE_LACKS_OPENDIR */
 
+#if !defined (ACE_HAS_SCANDIR)
   extern ACE_Export
   int scandir_emulation (const ACE_TCHAR *dirname,
                          ACE_DIRENT **namelist[],
                          int (*selector)(const ACE_DIRENT *entry),
                          int (*comparator)(const ACE_DIRENT **f1,
                                            const ACE_DIRENT**f2));
+#endif /* !ACE_HAS_SCANDIR */
 
+#if defined (ACE_LACKS_CLOSEDIR)
   extern ACE_Export
   void closedir_emulation (ACE_DIR *);
+#endif /* ACE_LACKS_CLOSEDIR */
 
+#if defined (ACE_LACKS_READDIR)
   extern ACE_Export
   struct ACE_DIRENT *readdir_emulation (ACE_DIR *);
+#endif /* ACE_LACKS_READDIR */
 
 } /* namespace ACE_OS */
 
