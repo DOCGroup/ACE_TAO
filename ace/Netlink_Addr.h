@@ -4,7 +4,7 @@
 /**
  *  @file    Netlink_Addr.h
  *
- *  Netlink_Addr.h,v 5.4.2 2004/10/10
+ *  $Id$
  *
  * @author Robert Iakobashvilli <coroberti@gmail.com>
  * @author Raz Ben Yehuda <raziebe@gmail.com>
@@ -48,7 +48,7 @@ public:
   /// Copy constructor.
   ACE_Netlink_Addr (const ACE_Netlink_Addr &);
 
-  /// Creates an <ACE_INET_Addr> from a sockaddr_in structure.
+  /// Creates an ACE_INET_Addr from a sockaddr_in structure.
   ACE_Netlink_Addr (const sockaddr_nl *, int len);
 
   /// Dtor
