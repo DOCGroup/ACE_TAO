@@ -12,7 +12,6 @@ package DependencyEditor;
 
 use strict;
 use FileHandle;
-use File::Basename;
 
 use DependencyGenerator;
 
@@ -52,14 +51,11 @@ sub process {
   if (open($fh, ">$output")) {
     if (defined $contents) {
       foreach my $line (@$contents) {
-        if ($line =~ /DO NOT DELETE/) {
-          last;
-        }
         print $fh $line;
       }
     }
 
-    print $fh "# DO NOT DELETE THIS LINE -- ", basename($0), " uses it.\n",
+    print $fh "# DO NOT DELETE THIS LINE -- depgen.pl uses it.\n",
               "# DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.\n\n";
 
     my($dep) = new DependencyGenerator($macros, $ipaths, $replace,
@@ -92,10 +88,18 @@ sub backup {
   if (open($fh, $source)) {
     my($oh) = new FileHandle();
     if (open($oh, ">$backup")) {
+      my($record) = 1;
       $status = 1;
       while(<$fh>) {
         print $oh $_;
-        push(@$contents, $_);
+        if ($record) {
+          if (index($_, 'DO NOT DELETE') >= 0) {
+            $record = undef;
+          }
+          else {
+            push(@$contents, $_);
+          }
+        }
       }
       close($oh);
 

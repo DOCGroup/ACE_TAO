@@ -21,17 +21,13 @@ use vars qw(@ISA);
 # ************************************************************
 
 sub process {
-  my($noext)   = $_[1];
-  my(@objects) = ();
+  my($noext) = $_[1];
   $noext =~ s/\.[^\.]+$//o;
-
-  foreach my $dirs (qw(VDIR VSHDIR)) {
-    foreach my $ext (qw(SOEXT OBJEXT)) {
-      push(@objects, '$('.$dirs.')'.$noext.'.$('.$ext.')');
-    }
-  }
-
-  return \@objects;
+  return ["\$(VDIR)$noext.\$(SOEXT)",
+          "\$(VDIR)$noext.\$(OBJEXT)",
+          "\$(VSHDIR)$noext.\$(SOEXT)",
+          "\$(VSHDIR)$noext.\$(OBJEXT)",
+         ];
 }
 
 

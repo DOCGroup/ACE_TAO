@@ -52,9 +52,8 @@ sub new {
 
 
 sub process {
-  my($self)    = shift;
-  my($file)    = shift;
-  my($replace) = $self->{'replace'};
+  my($self) = shift;
+  my($file) = shift;
 
   ## Generate the dependency string
   my($depstr) = $self->{'dwrite'}->process(
@@ -62,9 +61,13 @@ sub process {
                    $self->{'pre'}->process($file, $self->{'noinline'}));
 
   ## Perform the replacements on the dependency string
-  $depstr =~ s/$self->{'cwd'}//go;
-  foreach my $rep (@{$self->{'repkeys'}}) {
-    $depstr =~ s/$rep/$$replace{$rep}/g;
+  if ($depstr =~ s/$self->{'cwd'}//go) {
+  }
+  else {
+    my($replace) = $self->{'replace'};
+    foreach my $rep (@{$self->{'repkeys'}}) {
+      $depstr =~ s/$rep/$$replace{$rep}/g;
+    }
   }
 
   return $depstr;
