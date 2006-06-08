@@ -1,3 +1,11 @@
+Thu Jun  8 16:07:05 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ciao/Servant_Impl_Utils_T.cpp (describe_multiplex_receptacle):
+
+          Fixed an error in instantiation of a
+          Components::ConnectionDescription valuetype - the actual
+          constructor call should have been on the OBV_* subclass.
+
 Thu Jun  8 12:29:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/Planner/PCVisitor.cpp:
