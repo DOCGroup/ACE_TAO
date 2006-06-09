@@ -1,7 +1,6 @@
 //$Id$
 #include "Builder.h"
 
-#include "ace/Arg_Shifter.h"
 #include "ace/Get_Opt.h"
 #include "POA_Holder.h"
 #include "Job_i.h"

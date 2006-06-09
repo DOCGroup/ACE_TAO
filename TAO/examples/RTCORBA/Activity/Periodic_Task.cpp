@@ -2,7 +2,6 @@
 
 #include "Periodic_Task.h"
 
-#include "ace/Arg_Shifter.h"
 #include "ace/High_Res_Timer.h"
 #include "tao/debug.h"
 
