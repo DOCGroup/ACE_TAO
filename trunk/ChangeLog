@@ -1,3 +1,15 @@
+Fri Jun  9 10:13:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Arg_Shifter.{h,cpp}:
+          Also refactored ACE_Arg_Shifter to ACE_Arg_Shifter<CHAR_TYPE> and
+          made ACE_Arg_Shifter a typedef. The refactoring fo ACE_ARGV resulted
+          in a drop of the TAO Hello client executable of about 2.5Kb which is
+          nice for such a small change.
+
+        * ace/ace.mpc:
+        * ace/Makefile.am:
+          Updated because Arg_Shifter.cpp is not a template file
+
 Fri Jun  9 09:54:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-linux-common.h:
