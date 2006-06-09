@@ -25,7 +25,7 @@ ACE_Mem_Map::filename (void) const
 
 ACE_INLINE int
 ACE_Mem_Map::map (ACE_HANDLE handle,
-                  int len,
+                  ssize_t length,
                   int prot,
                   int share,
                   void *addr,
@@ -33,13 +33,13 @@ ACE_Mem_Map::map (ACE_HANDLE handle,
                   LPSECURITY_ATTRIBUTES sa)
 {
   ACE_TRACE ("ACE_Mem_Map::map");
-  return this->map_it (handle, len, prot, share, addr, offset, sa);
+  return this->map_it (handle, length, prot, share, addr, offset, sa);
 }
 
 // Remap the file associated with <this->handle_>.
 
 ACE_INLINE int
-ACE_Mem_Map::map (int len,
+ACE_Mem_Map::map (ssize_t length,
                   int prot,
                   int share,
                   void *addr,
@@ -55,7 +55,7 @@ ACE_Mem_Map::map (int len,
       addr = this->base_addr_;
     }
 
-  return this->map_it (this->handle (), len, prot,
+  return this->map_it (this->handle (), length, prot,
                        share, addr, offset, sa);
 }
 

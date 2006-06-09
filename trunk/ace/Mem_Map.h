@@ -48,7 +48,7 @@ public:
   /// Map a file from an open file descriptor @a handle.  This function
   /// will lookup the length of the file if it is not given.
   ACE_Mem_Map (ACE_HANDLE handle,
-               int length = -1,
+               ssize_t length = -1,
                int prot = PROT_RDWR,
                int share = ACE_MAP_PRIVATE,
                void *addr = 0,
@@ -57,7 +57,7 @@ public:
 
   /// Map a file specified by @a file_name.
   ACE_Mem_Map (const ACE_TCHAR *filename,
-               int len = -1,
+               ssize_t length = -1,
                int flags = O_RDWR | O_CREAT,
                int mode = ACE_DEFAULT_FILE_PERMS,
                int prot = PROT_RDWR,
@@ -69,7 +69,7 @@ public:
   /// Map a file from an open file descriptor @a handle.  This function
   /// will lookup the length of the file if it is not given.
   int map (ACE_HANDLE handle,
-           int length = -1,
+           ssize_t length = -1,
            int prot = PROT_RDWR,
            int share = ACE_MAP_PRIVATE,
            void *addr = 0,
@@ -77,7 +77,7 @@ public:
            LPSECURITY_ATTRIBUTES sa = 0);
 
   /// Remap the file associated with <handle_>.
-  int map (int length = -1,
+  int map (ssize_t length = -1,
            int prot = PROT_RDWR,
            int share = ACE_MAP_PRIVATE,
            void *addr = 0,
@@ -86,7 +86,7 @@ public:
 
   /// Map a file specified by <filename>.
   int map (const ACE_TCHAR *filename,
-           int len = -1,
+           ssize_t length = -1,
            int flags = O_RDWR | O_CREAT,
            int mode = ACE_DEFAULT_FILE_PERMS,
            int prot = PROT_RDWR,

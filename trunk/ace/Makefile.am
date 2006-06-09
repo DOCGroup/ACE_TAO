@@ -42,7 +42,6 @@ libACE_la_SOURCES = \
   ACE.cpp \
   ACE_crc32.cpp \
   ACE_crc_ccitt.cpp \
-  ARGV.cpp \
   ATM_Acceptor.cpp \
   ATM_Addr.cpp \
   ATM_Connector.cpp \
@@ -168,6 +167,7 @@ libACE_la_SOURCES = \
   Name_Request_Reply.cpp \
   Name_Space.cpp \
   Naming_Context.cpp \
+  Netlink_Addr.cpp \
   Notification_Strategy.cpp \
   OS_Errno.cpp \
   OS_Log_Msg_Attributes.cpp \
@@ -249,6 +249,7 @@ libACE_la_SOURCES = \
   SOCK_Dgram_Bcast.cpp \
   SOCK_Dgram_Mcast.cpp \
   SOCK_IO.cpp \
+  SOCK_Netlink.cpp \
   SOCK_SEQPACK_Acceptor.cpp \
   SOCK_SEQPACK_Association.cpp \
   SOCK_SEQPACK_Connector.cpp \
@@ -341,6 +342,7 @@ nobase_include_HEADERS += \
   ACE.h \
   ACE.inl \
   ACE_export.h \
+  ARGV.cpp \
   ARGV.h \
   ARGV.inl \
   ATM_Acceptor.h \
@@ -687,6 +689,8 @@ nobase_include_HEADERS += \
   Name_Request_Reply.h \
   Name_Space.h \
   Naming_Context.h \
+  Netlink_Addr.h \
+  Netlink_Addr.inl \
   Node.cpp \
   Node.h \
   Notification_Strategy.h \
@@ -865,6 +869,8 @@ nobase_include_HEADERS += \
   SOCK_Dgram_Mcast.inl \
   SOCK_IO.h \
   SOCK_IO.inl \
+  SOCK_Netlink.h \
+  SOCK_Netlink.inl \
   SOCK_SEQPACK_Acceptor.h \
   SOCK_SEQPACK_Acceptor.inl \
   SOCK_SEQPACK_Association.h \

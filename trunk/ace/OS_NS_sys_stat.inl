@@ -95,19 +95,15 @@ namespace ACE_OS
   // This function returns the number of bytes in the file referenced by
   // FD.
 
-  ACE_INLINE off_t
+  ACE_INLINE ACE_LOFF_T
   filesize (ACE_HANDLE handle)
   {
     ACE_OS_TRACE ("ACE_OS::filesize");
-#if defined (ACE_WIN32)
-    ACE_WIN32CALL_RETURN (::GetFileSize (handle, 0), off_t, -1);
-#else /* !ACE_WIN32 */
     ACE_stat sb;
     return ACE_OS::fstat (handle, &sb) == -1 ? -1 : sb.st_size;
-#endif /* ACE_WIN32 */
   }
 
-  ACE_INLINE off_t
+  ACE_INLINE ACE_LOFF_T
   filesize (const ACE_TCHAR *filename)
   {
     ACE_OS_TRACE ("ACE_OS::filesize");
@@ -115,7 +111,7 @@ namespace ACE_OS
     ACE_HANDLE h = ACE_OS::open (filename, O_RDONLY);
     if (h != ACE_INVALID_HANDLE)
       {
-        off_t size = ACE_OS::filesize (h);
+        ACE_LOFF_T size = ACE_OS::filesize (h);
         ACE_OS::close (h);
         return size;
       }
@@ -240,9 +236,11 @@ namespace ACE_OS
 #elif defined (ACE_WIN32)
 # if defined(__IBMCPP__)
     ACE_OSCALL_RETURN (::_stat (file,  stp), int, -1);
-#else
-    ACE_OSCALL_RETURN (::_stat (file, (struct _stat *) stp), int, -1);
-#endif /* __IBMCPP__ */
+# elif defined (__BORLANDC__)
+    ACE_OSCALL_RETURN (::_stati64 (file, stp), int, -1);
+# else
+    ACE_OSCALL_RETURN (::_stat64 (file, stp), int, -1);
+# endif /* __IBMCPP__ */
 #else /* ACE_HAS_NONCONST_STAT */
     ACE_OSCALL_RETURN (::stat (file, stp), int, -1);
 #endif /* ACE_HAS_NONCONST_STAT */
@@ -277,10 +275,10 @@ namespace ACE_OS
         stp->st_mtime = ACE_Time_Value (fdata.ftLastWriteTime);
       }
     return 0;
-#elif defined (__BORLANDC__)  && (__BORLANDC__ <= 0x540)
-    ACE_OSCALL_RETURN (::_wstat (file, stp), int, -1);
+#elif defined (__BORLANDC__)
+    ACE_OSCALL_RETURN (::_wstati64 (file, stp), int, -1);
 #elif defined (ACE_WIN32)
-    ACE_OSCALL_RETURN (::_wstat (file, (struct _stat *) stp), int, -1);
+    ACE_OSCALL_RETURN (::_wstat64 (file, stp), int, -1);
 #else /* ACE_HAS_WINCE */
     ACE_Wide_To_Ascii nfile (file);
     return ACE_OS::stat (nfile.char_rep (), stp);

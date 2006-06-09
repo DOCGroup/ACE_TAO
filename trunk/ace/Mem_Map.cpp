@@ -95,7 +95,7 @@ ACE_Mem_Map::~ACE_Mem_Map (void)
 
 int
 ACE_Mem_Map::map_it (ACE_HANDLE handle,
-                     int length_request,
+                     ssize_t length_request,
                      int prot,
                      int share,
                      void *addr,
@@ -115,10 +115,10 @@ ACE_Mem_Map::map_it (ACE_HANDLE handle,
   this->base_addr_ = addr;
   this->handle_ = handle;
 
-  off_t result = ACE_OS::filesize (this->handle_);
+  ACE_LOFF_T const result = ACE_OS::filesize (this->handle_);
 
   // At this point we know <result> is not negative...
-  size_t current_file_length = static_cast<size_t> (result);
+  size_t const current_file_length = static_cast<size_t> (result);
 
   // Flag to indicate if we need to extend the back store
   bool extend_backing_store = false;
@@ -245,7 +245,7 @@ ACE_Mem_Map::open (const ACE_TCHAR *file_name,
 
 int
 ACE_Mem_Map::map (const ACE_TCHAR *file_name,
-                  int len,
+                  ssize_t len,
                   int flags,
                   int mode,
                   int prot,
@@ -286,7 +286,7 @@ ACE_Mem_Map::ACE_Mem_Map (void)
 // Map a file specified by FILE_NAME.
 
 ACE_Mem_Map::ACE_Mem_Map (const ACE_TCHAR *file_name,
-                          int len,
+                          ssize_t len,
                           int flags,
                           int mode,
                           int prot,
