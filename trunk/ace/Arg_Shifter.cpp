@@ -1,3 +1,6 @@
+#ifndef ACE_ARG_SHIFTER_T_CPP
+#define ACE_ARG_SHIFTER_T_CPP
+
 #include "ace/Arg_Shifter.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_strings.h"
@@ -223,3 +226,5 @@ ACE_Arg_Shifter_T<CHAR_TYPE>::num_ignored_args (void) const
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* ACE_ATOMIC_OP_T_CPP */
