@@ -1,5 +1,8 @@
 // $Id$
 
+#ifndef ACE_ARGV_CPP
+#define ACE_ARGV_CPP
+
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_string.h"
@@ -296,3 +299,5 @@ ACE_ARGV_T<CHAR_TYPE>::create_buf_from_queue (void)
 
 // Close versioned namespace, if enabled by the user.
 ACE_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* ACE_ARGV_CPP */
