@@ -8,12 +8,13 @@
 ACE_RCSID(Big_Request_Muxing, server, "$Id$")
 
 const char *ior_output_file = "test.ior";
-static int expected = 600;
+static int expected = 400;
+static int sn_expected = 200;
 
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:e:");
+  ACE_Get_Opt get_opts (argc, argv, "o:e:n:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -25,11 +26,14 @@ parse_args (int argc, char *argv[])
       case 'e':
         expected = ACE_OS::atoi(get_opts.opt_arg());
         break;
+      case 'n':
+        sn_expected = ACE_OS::atoi(get_opts.opt_arg());
+        break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
-                           "-o <iorfile> [-e <expected>]"
+                           "-o <iorfile> [-e <expected>] [-n <expected_sync_none>]"
                            "\n",
                            argv [0]),
                           -1);
@@ -71,7 +75,7 @@ main (int argc, char *argv[])
 
       Payload_Receiver *payload_receiver_impl;
       ACE_NEW_RETURN (payload_receiver_impl,
-                      Payload_Receiver(expected),
+                      Payload_Receiver(),
                       1);
       PortableServer::ServantBase_var receiver_owner_transfer(payload_receiver_impl);
 
@@ -98,30 +102,41 @@ main (int argc, char *argv[])
 
       ACE_DEBUG((LM_DEBUG, "Server waiting for messages...\n"));
 
-      ACE_Time_Value end_time = ACE_OS::gettimeofday() + ACE_Time_Value(25);
-
-      while (payload_receiver_impl->count() < expected)
+      ACE_Time_Value start_time = ACE_OS::gettimeofday();
+      ACE_Time_Value end_time = start_time + ACE_Time_Value(10);
+      int count = payload_receiver_impl->count();
+      int sn_count = payload_receiver_impl->count(true);
+      bool stalled = false;
+      while (payload_receiver_impl->count() < expected ||
+             payload_receiver_impl->count(true) < sn_expected)
       {
+        int prev_count = count;
+        int sn_prev_count = sn_count;
         ACE_Time_Value tv(0, 100 * 1000);
         orb->run (tv ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
-        if (ACE_OS::gettimeofday() > end_time)
-          break;
+        count = payload_receiver_impl->count();
+        sn_count = payload_receiver_impl->count(true);
+        if ((count < expected && count == prev_count) ||
+            (sn_count < sn_expected && sn_count == sn_prev_count))
+          {
+            if (!stalled)
+              {
+                stalled = true;
+                end_time =  ACE_OS::gettimeofday() + ACE_Time_Value(5);
+              }
+            else if (ACE_OS::gettimeofday() > end_time)
+              {
+                if (count < expected)
+                  ACE_DEBUG ((LM_DEBUG,"Clients stalled out after %d messages\n",
+                              count));
+                break;
+              }
+          }
+        else stalled = false;
       }
 
-      int count = payload_receiver_impl->count();
-
-      if (count != expected)
-        {
-          ACE_DEBUG((LM_DEBUG, "Server waiting for extra messages, "
-                               "have now %d messages already...\n", count));
-
-          ACE_Time_Value tv(5);
-          orb->run(tv ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-
-          count = payload_receiver_impl->count();
-        }
+      ACE_Time_Value runtime = ACE_OS::gettimeofday() - start_time;
 
       int result = 0;
 
@@ -133,10 +148,13 @@ main (int argc, char *argv[])
         result = 1;
       }
 
+
+
       ACE_DEBUG ((LM_DEBUG,
-                  "(%P) - Server got %d messages, expected %d\n",
-                  count,
-                  expected));
+                  "(%P) - Server got %d of %d sync messages plus %d sync_none"
+                  " in %d sec, %d usec\n",
+                  count, expected, payload_receiver_impl->count(true),
+                  runtime.sec(), runtime.usec()));
 
       root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
