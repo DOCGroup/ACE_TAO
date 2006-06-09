@@ -41,7 +41,7 @@ public:
   virtual int recycle_state (const void *recycling_act,
                              ACE_Recyclable_State new_state) = 0;
 
-  /// Get/Set <recycle_state>.
+  /// Get/Set recycle_state.
   virtual ACE_Recyclable_State recycle_state (const void *recycling_act) const = 0;
 
   /// Mark as closed.
