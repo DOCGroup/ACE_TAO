@@ -319,7 +319,7 @@ ACE_Mem_Map::ACE_Mem_Map (const ACE_TCHAR *file_name,
 // lookup the length of the file if it is not given.
 
 ACE_Mem_Map::ACE_Mem_Map (ACE_HANDLE handle,
-                          int len,
+                          ssize_t len,
                           int prot,
                           int share,
                           void *addr,
