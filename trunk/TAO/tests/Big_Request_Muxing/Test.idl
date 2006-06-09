@@ -10,5 +10,10 @@ module Test
   {
     /// Send the data using a twoway operat
     oneway void more_data (in Payload the_payload);
+
+    /// operation used with SYNC_NONE clients. This is separated to avoid
+    /// error reporting due to dropped messages. Drops are allowed in the
+    /// sync_none case.
+    oneway void sync_none_more_data (in Payload the_payload);
   };
 };

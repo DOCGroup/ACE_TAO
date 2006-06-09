@@ -9,6 +9,7 @@
 #include "TestC.h"
 #include "tao/Messaging/Messaging.h"
 #include "ace/Task.h"
+#include "ace/SString.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -24,7 +25,8 @@ public:
                CORBA::Long event_count,
                CORBA::ULong event_size,
                CORBA::ORB_ptr orb,
-               Messaging::SyncScope sync_scope);
+               Messaging::SyncScope sync_scope,
+               const ACE_CString& ident);
 
   /// Thread entry point
   int svc (void);
@@ -35,6 +37,9 @@ private:
   /// Make sure that all threads have connections available to
   /// workaround bug 189
   void validate_connection (ACE_ENV_SINGLE_ARG_DECL);
+
+  void do_invocations(Test::Payload& payload ACE_ENV_SINGLE_ARG_DECL);
+  void do_sync_none_invocations(Test::Payload& payload ACE_ENV_SINGLE_ARG_DECL);
 
 private:
   /// Reference to the test interface
@@ -54,6 +59,8 @@ private:
   Messaging::SyncScope sync_scope_;
 
   bool done_;
+
+  ACE_CString id_;
 };
 
 #include /**/ "ace/post.h"

@@ -43,7 +43,7 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
-  ACE_DEBUG ((LM_DEBUG, "Starting client\n"));
+  ACE_DEBUG ((LM_DEBUG, "(%P) Starting client\n"));
 
   ACE_TRY_NEW_ENV
   {
@@ -75,19 +75,22 @@ main (int argc, char *argv[])
       NUM_MSGS,
       MSG_SIZE,
       orb.in (),
-      Messaging::SYNC_WITH_TARGET);
+      Messaging::SYNC_WITH_TARGET,
+      ACE_CString("Sync_With_Target"));
     Client_Task task1 (ACE_Thread_Manager::instance (),
       payload_receiver.in (),
       NUM_MSGS,
       MSG_SIZE,
       orb.in (),
-      Messaging::SYNC_WITH_TRANSPORT);
+      Messaging::SYNC_WITH_TRANSPORT,
+      ACE_CString("Sync_With_Transport"));
     Client_Task task2 (ACE_Thread_Manager::instance (),
       payload_receiver.in (),
       NUM_MSGS,
       MSG_SIZE,
       orb.in (),
-      Messaging::SYNC_NONE);
+      Messaging::SYNC_NONE,
+      ACE_CString("Sync_None"));
 
     ACE_DEBUG ((LM_DEBUG, "(%P) Activating threads in client\n"));
     if (task0.activate (THR_NEW_LWP | THR_JOINABLE, NUM_THRDS, 1) == -1)
@@ -134,7 +137,7 @@ main (int argc, char *argv[])
   }
   ACE_ENDTRY;
 
-  ACE_DEBUG ((LM_DEBUG, "Ending client\n"));
+  ACE_DEBUG ((LM_DEBUG, "(%P) Ending client\n"));
 
   return 0;
 }
