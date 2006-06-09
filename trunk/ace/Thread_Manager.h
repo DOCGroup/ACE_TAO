@@ -599,25 +599,39 @@ public:
                             int do_thread_exit = 1);
 
   /**
-   * Block until there are no more threads running in the
-   * <Thread_Manager> or <timeout> expires.  Note that <timeout> is
-   * treated as "absolute" time.  Returns 0 on success and -1 on
-   * failure.  If <abandon_detached_threads> is set, wait will first
-   * check thru its thread list for threads with THR_DETACHED or
-   * THR_DAEMON flags set and remove these threads.  Notice that
-   * unlike other wait_* function, by default, <wait> does wait on
-   * all thread spawned by this thread_manager no matter the detached
-   * flags are set or not unless it is called with
-   * <abandon_detached_threads> flag set.
-   * NOTE that if this function is called while the ACE_Object_Manager
-   * is shutting down (as a result of program rundown via ACE::fini),
-   * it will not wait for any threads to complete. If you must wait for
-   * threads spawned by this thread manager to complete and you are in a
-   * ACE rundown situation (such as your object is being destroyed by the
-   * ACE_Object_Manager) you can use wait_grp instead.
+   * Block until there are no more threads running in this thread
+   * manager or @c timeout expires.
+   *
+   * @param timeout is treated as "absolute" time by default, but this
+   *                can be changed to "relative" time by setting the @c
+   *                use_absolute_time to 0.
+   * @param abandon_detached_threads If non-0, @c wait() will first
+   *                                 check thru its thread list for
+   *                                 threads with THR_DETACHED or
+   *                                 THR_DAEMON flags set and remove
+   *                                 these threads.  Notice that
+   *                                 unlike other @c wait_*() methods,
+   *                                 by default, @c wait() does wait on 
+   *                                 all thread spawned by this
+   *                                 thread manager no matter the detached 
+   *                                 flags are set or not unless it is
+   *                                 called with @c
+   *                                 abandon_detached_threads flag set. 
+   * @param use_absolute_time If non-0 then treat @c timeout as
+   *                          absolute time, else relative time.
+   * @return 0 on success * and -1 on failure.  
+   *
+   * NOTE that if this function is called while the @c
+   * ACE_Object_Manager is shutting down (as a result of program
+   * rundown via @c ACE::fini()), it will not wait for any threads to
+   * complete. If you must wait for threads spawned by this thread
+   * manager to complete and you are in a ACE rundown situation (such
+   * as your object is being destroyed by the @c ACE_Object_Manager)
+   * you can use @c wait_grp() instead.
    */
   int wait (const ACE_Time_Value *timeout = 0,
-            int abandon_detached_threads = 0);
+            int abandon_detached_threads = 0,
+            int use_absolute_time = 1);
 
   /// Join a thread specified by <tid>.  Do not wait on a detached thread.
   int join (ACE_thread_t tid, ACE_THR_FUNC_RETURN *status = 0);

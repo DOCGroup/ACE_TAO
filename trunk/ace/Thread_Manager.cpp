@@ -1735,9 +1735,14 @@ ACE_Thread_Manager::exit (ACE_THR_FUNC_RETURN status, int do_thr_exit)
 
 int
 ACE_Thread_Manager::wait (const ACE_Time_Value *timeout,
-                          int abandon_detached_threads)
+                          int abandon_detached_threads,
+                          int use_absolute_time)
 {
   ACE_TRACE ("ACE_Thread_Manager::wait");
+
+  // Check to see if we're using absolute time or not.
+  if (use_absolute_time == 0 && timeout != 0)
+    *timeout += ACE_OS::gettimeofday ();
 
 #if !defined (ACE_VXWORKS)
   ACE_Double_Linked_List<ACE_Thread_Descriptor_Base> term_thr_list_copy;
