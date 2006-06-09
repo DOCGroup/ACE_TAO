@@ -131,7 +131,6 @@ Fri Jun  9 07:55:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
           of bugzilla bug 2359, thanks to Olivier Brunet <o dot brunet at free dot fr>
           for reporting this.
 
->>>>>>> 4.10432
 Thu Jun  8 17:13:42 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/String_Base.h,
