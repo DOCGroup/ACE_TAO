@@ -915,8 +915,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   if (::geteuid ())
     {
       ACE_DEBUG ((LM_INFO,
-                  ACE_TEXT ("(%P) \"SOCK_Netlink_Test\" run_main() - \n")
-                  ACE_TEXT ("\tProcess has no superuser priveleges. ")
+                  ACE_TEXT ("Process has no superuser priveleges. ")
                   ACE_TEXT ("Unable to run this test.\n")));
     }
   else
@@ -939,8 +938,7 @@ run_main (int argc, ACE_TCHAR *argv[])
                             net_dev_name)) < 0)
         {
           ACE_DEBUG ((LM_ERROR,
-                      ACE_TEXT ("(%P) \"SOCK_Netlink_Test\" run_main() - \n")
-                      ACE_TEXT ("\trun_test () failed with rval returned %d. "),
+                      ACE_TEXT ("run_test() failed with rval returned %d. "),
                       rval));
           return -1;
         }

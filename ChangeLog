@@ -1,3 +1,13 @@
+Fri Jun  9 08:16:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/SOCK_Netlink_Test.cpp:
+          New test for netlink sockets. Thanks to Robert Iakobashvili
+          <coroberti at gmail dot com> for creating this test.
+
+        * tests/tests.mpc:
+        * tests/run_test.lst:
+          Added new netlink test
+
 Fri Jun  9 07:55:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/ARGV.{h,cpp,inl}:
