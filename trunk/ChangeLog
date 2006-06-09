@@ -1,3 +1,11 @@
+Fri Jun  9 09:54:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-linux-common.h:
+          Added ACE_HAS_NETLINK, all linux versions do support netlink sockets.
+          This closes bugzilla bug 2317. Thanks to Robert Iakobashvili
+          <coroberti at gmail dot com> and Razi Ben-Yehuda
+          <raziebe at gmail dot com> for creating the netlink wrappers
+
 Fri Jun  9 08:16:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/SOCK_Netlink_Test.cpp:
