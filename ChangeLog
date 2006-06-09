@@ -28,7 +28,9 @@ Fri Jun  9 07:55:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
           Use ACE_LOFF_T for the filesize so that we can support files bigger then
           2Gb on windows and other platforms. Also use for Borland the 64bit stat
           structure and api's. This fixes bugzilla bug 1286, thanks to Ruslan Zasukhin
-          <sunshine at public dot kherson dot ua> for reporting this.
+          <sunshine at public dot kherson dot ua> for reporting this. Also fixes part
+          of bugzilla bug 2359, thanks to Olivier Brunet <o dot brunet at free dot fr>
+          for reporting this.
 
 Thu Jun  8 17:13:42 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
