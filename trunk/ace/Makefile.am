@@ -51,7 +51,6 @@ libACE_la_SOURCES = \
   Activation_Queue.cpp \
   Active_Map_Manager.cpp \
   Addr.cpp \
-  Arg_Shifter.cpp \
   Argv_Type_Converter.cpp \
   Assert.cpp \
   Asynch_IO.cpp \
@@ -368,6 +367,7 @@ nobase_include_HEADERS += \
   Active_Map_Manager_T.inl \
   Addr.h \
   Addr.inl \
+  Arg_Shifter.cpp \
   Arg_Shifter.h \
   Argv_Type_Converter.h \
   Argv_Type_Converter.inl \
