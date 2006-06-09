@@ -1,3 +1,8 @@
+Fri Jun  9 13:12:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_unistd.{h,cpp}:
+          Use ACE_LOFF_T in the pwrite interface
+
 Fri Jun  9 12:47:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_sys_stat.h:
