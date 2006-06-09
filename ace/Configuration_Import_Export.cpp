@@ -627,7 +627,7 @@ ACE_Ini_ImpExp::export_section (const ACE_Configuration_Section_Key& section,
 ACE_TCHAR *
 ACE_Ini_ImpExp::squish (ACE_TCHAR *src)
 {
-  ACE_TCHAR *cp;
+  ACE_TCHAR *cp = 0;
 
   if (src == 0)
     return 0;
