@@ -14,7 +14,6 @@ project(ACE) : acedefaults, core, other, codecs, token, svcconf, uuid, filecache
     Activation_Queue.cpp
     Active_Map_Manager.cpp
     Addr.cpp
-    Arg_Shifter.cpp
     Argv_Type_Converter.cpp
     Assert.cpp
     Asynch_IO.cpp
@@ -274,6 +273,7 @@ project(ACE) : acedefaults, core, other, codecs, token, svcconf, uuid, filecache
     Acceptor.cpp
     Active_Map_Manager_T.cpp
     ARGV.cpp
+    Arg_Shifter.cpp
     Array_Base.cpp
     Array_Map.cpp
     Asynch_Acceptor.cpp

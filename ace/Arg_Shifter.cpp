@@ -11,9 +11,10 @@ ACE_RCSID (ace,
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_Arg_Shifter::ACE_Arg_Shifter (int& argc,
-                                  const ACE_TCHAR** argv,
-                                  const ACE_TCHAR** temp)
+template <typename CHAR_TYPE>
+ACE_Arg_Shifter_T<CHAR_TYPE>::ACE_Arg_Shifter_T (int& argc,
+                                                 const CHAR_TYPE** argv,
+                                                 const CHAR_TYPE** temp)
   : argc_ (argc),
     total_size_ (argc),
     temp_ (temp),
@@ -25,13 +26,14 @@ ACE_Arg_Shifter::ACE_Arg_Shifter (int& argc,
   this->init ();
 }
 
-ACE_Arg_Shifter::ACE_Arg_Shifter (int& argc,
-                                  ACE_TCHAR** argv,
-                                  ACE_TCHAR** temp)
+template <typename CHAR_TYPE>
+ACE_Arg_Shifter_T<CHAR_TYPE>::ACE_Arg_Shifter_T (int& argc,
+                                                 CHAR_TYPE** argv,
+                                                 CHAR_TYPE** temp)
   : argc_ (argc),
     total_size_ (argc),
-    temp_ ((const ACE_TCHAR **) temp),
-    argv_ ((const ACE_TCHAR **) argv),
+    temp_ ((const CHAR_TYPE **) temp),
+    argv_ ((const CHAR_TYPE **) argv),
     current_index_ (0),
     back_ (argc - 1),
     front_ (0)
@@ -39,13 +41,14 @@ ACE_Arg_Shifter::ACE_Arg_Shifter (int& argc,
   this->init ();
 }
 
+template <typename CHAR_TYPE>
 void
-ACE_Arg_Shifter::init (void)
+ACE_Arg_Shifter_T<CHAR_TYPE>::init (void)
 {
   // If not provided with one, allocate a temporary array.
   if (this->temp_ == 0)
     ACE_NEW (this->temp_,
-             const ACE_TCHAR *[this->total_size_]);
+             const CHAR_TYPE *[this->total_size_]);
 
   if (this->temp_ != 0)
     {
@@ -65,16 +68,18 @@ ACE_Arg_Shifter::init (void)
     }
 }
 
-ACE_Arg_Shifter::~ACE_Arg_Shifter (void)
+template <typename CHAR_TYPE>
+ACE_Arg_Shifter_T<CHAR_TYPE>::~ACE_Arg_Shifter_T (void)
 {
   // Delete the temporary vector.
   delete [] temp_;
 }
 
-const ACE_TCHAR *
-ACE_Arg_Shifter::get_current (void) const
+template <typename CHAR_TYPE>
+const CHAR_TYPE *
+ACE_Arg_Shifter_T<CHAR_TYPE>::get_current (void) const
 {
-  const ACE_TCHAR * retval = 0;
+  const CHAR_TYPE * retval = 0;
 
   if (this->is_anything_left ())
     retval =  this->temp_[current_index_];
@@ -82,8 +87,9 @@ ACE_Arg_Shifter::get_current (void) const
   return retval;
 }
 
-const ACE_TCHAR *
-ACE_Arg_Shifter::get_the_parameter (const ACE_TCHAR *flag)
+template <typename CHAR_TYPE>
+const CHAR_TYPE *
+ACE_Arg_Shifter_T<CHAR_TYPE>::get_the_parameter (const CHAR_TYPE *flag)
 {
   // the return 0's abound because this method
   // would otherwise be a deep if { } else { }
@@ -93,7 +99,7 @@ ACE_Arg_Shifter::get_the_parameter (const ACE_TCHAR *flag)
     return 0;
 
   // check to see if the flag is the argument
-  int offset = this->cur_arg_strncasecmp (flag);
+  int const offset = this->cur_arg_strncasecmp (flag);
   if (offset == -1)
     return 0;
 
@@ -110,13 +116,14 @@ ACE_Arg_Shifter::get_the_parameter (const ACE_TCHAR *flag)
   return this->temp_[current_index_] + offset;
 }
 
+template <typename CHAR_TYPE>
 int
-ACE_Arg_Shifter::cur_arg_strncasecmp (const ACE_TCHAR *flag)
+ACE_Arg_Shifter_T<CHAR_TYPE>::cur_arg_strncasecmp (const CHAR_TYPE *flag)
 {
   // Check for a current argument
   if (this->is_anything_left())
     {
-      size_t flag_length = ACE_OS::strlen (flag);
+      size_t const flag_length = ACE_OS::strlen (flag);
 
       // Check for presence of the flag
       if (ACE_OS::strncasecmp(this->temp_[current_index_],
@@ -132,7 +139,7 @@ ACE_Arg_Shifter::cur_arg_strncasecmp (const ACE_TCHAR *flag)
           else
             {
               // matches, with more info to boot!
-              size_t remaining = ACE_OS::strspn
+              size_t const remaining = ACE_OS::strspn
                 (this->temp_[current_index_] + flag_length,
                 ACE_LIB_TEXT (" ")) + flag_length;
               return static_cast<int> (remaining);
@@ -143,8 +150,9 @@ ACE_Arg_Shifter::cur_arg_strncasecmp (const ACE_TCHAR *flag)
   return -1;
 }
 
+template <typename CHAR_TYPE>
 int
-ACE_Arg_Shifter::consume_arg (int number)
+ACE_Arg_Shifter_T<CHAR_TYPE>::consume_arg (int number)
 {
   int retval = 0;
 
@@ -163,8 +171,9 @@ ACE_Arg_Shifter::consume_arg (int number)
   return retval;
 }
 
+template <typename CHAR_TYPE>
 int
-ACE_Arg_Shifter::ignore_arg (int number)
+ACE_Arg_Shifter_T<CHAR_TYPE>::ignore_arg (int number)
 {
   int retval = 0;
 
@@ -183,28 +192,32 @@ ACE_Arg_Shifter::ignore_arg (int number)
   return retval;
 }
 
+template <typename CHAR_TYPE>
 int
-ACE_Arg_Shifter::is_anything_left (void) const
+ACE_Arg_Shifter_T<CHAR_TYPE>::is_anything_left (void) const
 {
   return this->total_size_ - this->current_index_;
 }
 
+template <typename CHAR_TYPE>
 int
-ACE_Arg_Shifter::is_option_next (void) const
+ACE_Arg_Shifter_T<CHAR_TYPE>::is_option_next (void) const
 {
   return this->is_anything_left () &&
     this->temp_[this->current_index_][0] == '-';
 }
 
+template <typename CHAR_TYPE>
 int
-ACE_Arg_Shifter::is_parameter_next (void) const
+ACE_Arg_Shifter_T<CHAR_TYPE>::is_parameter_next (void) const
 {
   return this->is_anything_left ()
     && this->temp_[this->current_index_][0] != '-';
 }
 
+template <typename CHAR_TYPE>
 int
-ACE_Arg_Shifter::num_ignored_args (void) const
+ACE_Arg_Shifter_T<CHAR_TYPE>::num_ignored_args (void) const
 {
   return this->front_;
 }
