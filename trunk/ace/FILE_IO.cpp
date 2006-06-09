@@ -103,9 +103,9 @@ ACE_FILE_IO::recv (size_t n, ...) const
       iovp[i].iov_len  = va_arg (argp, int);
     }
 
-  ssize_t result = ACE_OS::readv (this->get_handle (),
-                                  iovp,
-                                  total_tuples);
+  ssize_t const result = ACE_OS::readv (this->get_handle (),
+                                        iovp,
+                                        total_tuples);
 #if !defined (ACE_HAS_ALLOCA)
   delete [] iovp;
 #endif /* !defined (ACE_HAS_ALLOCA) */
@@ -124,7 +124,7 @@ ACE_FILE_IO::recvv (iovec *io_vec)
   ACE_TRACE ("ACE_FILE_IO::recvv");
 
   io_vec->iov_base = 0;
-  size_t length = static_cast <size_t> (ACE_OS::filesize (this->get_handle ()));
+  size_t const length = static_cast <size_t> (ACE_OS::filesize (this->get_handle ()));
 
   if (length > 0)
     {
