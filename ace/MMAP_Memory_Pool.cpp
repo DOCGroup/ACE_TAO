@@ -187,7 +187,7 @@ ACE_MMAP_Memory_Pool::~ACE_MMAP_Memory_Pool (void)
 // memory.
 int
 ACE_MMAP_Memory_Pool::commit_backing_store_name (size_t rounded_bytes,
-                                                 off_t &map_size)
+                                                 ACE_LOFF_T &map_size)
 {
   ACE_TRACE ("ACE_MMAP_Memory_Pool::commit_backing_store_name");
 
@@ -236,7 +236,7 @@ ACE_MMAP_Memory_Pool::commit_backing_store_name (size_t rounded_bytes,
 // Memory map the file up to <map_size> bytes.
 
 int
-ACE_MMAP_Memory_Pool::map_file (off_t map_size)
+ACE_MMAP_Memory_Pool::map_file (ACE_LOFF_T map_size)
 {
   ACE_TRACE ("ACE_MMAP_Memory_Pool::map_file");
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
@@ -302,7 +302,7 @@ ACE_MMAP_Memory_Pool::acquire (size_t nbytes,
   // ACE_DEBUG ((LM_DEBUG, "(%P|%t) acquiring more chunks, nbytes =
   // %d, rounded_bytes = %d\n", nbytes, rounded_bytes));
 
-  off_t map_size;
+  ACE_LOFF_T map_size;
 
   if (this->commit_backing_store_name (rounded_bytes,
                                        map_size) == -1)
@@ -396,7 +396,7 @@ ACE_MMAP_Memory_Pool::remap (void *addr)
 {
   ACE_TRACE ("ACE_MMAP_Memory_Pool::remap");
   //  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("Remapping with fault address at: %X\n"), addr));
-  off_t current_map_size = ACE_OS::filesize (this->mmap_.handle ());
+  off_t const current_map_size = ACE_OS::filesize (this->mmap_.handle ());
   // ACE_OS::lseek (this->mmap_.handle (), 0, SEEK_END);
 
   if (!(addr < (void *) ((char *) this->mmap_.addr () + current_map_size)
@@ -410,7 +410,7 @@ ACE_MMAP_Memory_Pool::remap (void *addr)
 ACE_MMAP_Memory_Pool_Options::ACE_MMAP_Memory_Pool_Options (const void *base_addr,
                                                             int use_fixed_addr,
                                                             int write_each_page,
-                                                            off_t minimum_bytes,
+                                                            ACE_LOFF_T minimum_bytes,
                                                             u_int flags,
                                                             int guess_on_fault,
                                                             LPSECURITY_ATTRIBUTES sa,
@@ -477,7 +477,7 @@ ACE_MMAP_Memory_Pool::handle_signal (int signum, siginfo_t *siginfo, ucontext_t 
   if (guess_on_fault_)
     {
       // Check if the current mapping is up to date.
-      off_t const current_map_size = ACE_OS::filesize (this->mmap_.handle ());
+      ACE_LOFF_T const current_map_size = ACE_OS::filesize (this->mmap_.handle ());
 
       if (static_cast<size_t> (current_map_size) == this->mmap_.size ())
         {

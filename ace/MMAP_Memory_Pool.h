@@ -67,7 +67,7 @@ public:
   ACE_MMAP_Memory_Pool_Options (const void *base_addr = ACE_DEFAULT_BASE_ADDR,
                                 int use_fixed_addr = ALWAYS_FIXED,
                                 int write_each_page = 1,
-                                off_t minimum_bytes = 0,
+                                ACE_LOFF_T minimum_bytes = 0,
                                 u_int flags = 0,
                                 int guess_on_fault = 1,
                                 LPSECURITY_ATTRIBUTES sa = 0,
@@ -96,7 +96,7 @@ public:
   int write_each_page_;
 
   /// What the minimim bytes of the initial segment should be.
-  off_t minimum_bytes_;
+  ACE_LOFF_T minimum_bytes_;
 
   /// Any special flags that need to be used for @c mmap.
   u_int flags_;
@@ -222,10 +222,10 @@ protected:
   /// Compute the new @a map_size of the backing store and commit the
   /// memory.
   virtual int commit_backing_store_name (size_t rounded_bytes,
-                                         off_t &map_size);
+                                         ACE_LOFF_T &map_size);
 
   /// Memory map the file up to @a map_size bytes.
-  virtual int map_file (off_t map_size);
+  virtual int map_file (ACE_LOFF_T map_size);
 
   /// Handle SIGSEGV and SIGBUS signals to remap shared memory
   /// properly.
@@ -255,7 +255,7 @@ protected:
   int write_each_page_;
 
   /// What the minimum bytes of the initial segment should be.
-  off_t minimum_bytes_;
+  ACE_LOFF_T minimum_bytes_;
 
   /// Name of the backing store where the shared memory pool is kept.
   ACE_TCHAR backing_store_name_[MAXPATHLEN + 1];

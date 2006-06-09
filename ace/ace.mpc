@@ -15,7 +15,6 @@ project(ACE) : acedefaults, core, other, codecs, token, svcconf, uuid, filecache
     Active_Map_Manager.cpp
     Addr.cpp
     Arg_Shifter.cpp
-    ARGV.cpp
     Argv_Type_Converter.cpp
     Assert.cpp
     Asynch_IO.cpp
@@ -123,6 +122,7 @@ project(ACE) : acedefaults, core, other, codecs, token, svcconf, uuid, filecache
     Msg_WFMO_Reactor.cpp
     Multihomed_INET_Addr.cpp
     Mutex.cpp
+    Netlink_Addr.cpp
     Notification_Strategy.cpp
     Obchunk.cpp
     Object_Manager.cpp
@@ -213,6 +213,7 @@ project(ACE) : acedefaults, core, other, codecs, token, svcconf, uuid, filecache
     SOCK_Dgram_Bcast.cpp
     SOCK_Dgram_Mcast.cpp
     SOCK_IO.cpp
+    SOCK_Netlink.cpp
     SOCK_SEQPACK_Acceptor.cpp
     SOCK_SEQPACK_Association.cpp
     SOCK_SEQPACK_Connector.cpp
@@ -272,6 +273,7 @@ project(ACE) : acedefaults, core, other, codecs, token, svcconf, uuid, filecache
   Template_Files {
     Acceptor.cpp
     Active_Map_Manager_T.cpp
+    ARGV.cpp
     Array_Base.cpp
     Array_Map.cpp
     Asynch_Acceptor.cpp
@@ -381,6 +383,7 @@ project(ACE) : acedefaults, core, other, codecs, token, svcconf, uuid, filecache
     Method_Object.h
     Memory_Pool.h
     Min_Max.h
+    Netlink_Addr.h
     Null_Barrier.h
     Null_Condition.h
     Null_Mutex.h
@@ -398,6 +401,7 @@ project(ACE) : acedefaults, core, other, codecs, token, svcconf, uuid, filecache
     Reactor_Timer_Interface.h
     Refcounted_Auto_Ptr.h
     Reverse_Lock_T.h
+    SOCK_Netlink.h
     SStringfwd.h
     Static_Object_Lock.h
     Strategies.h

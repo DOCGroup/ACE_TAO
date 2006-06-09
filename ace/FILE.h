@@ -52,7 +52,7 @@ public:
   nlink_t nlink_;
 
   /// Size of file
-  off_t size_;
+  ACE_LOFF_T size_;
 };
 
 /**

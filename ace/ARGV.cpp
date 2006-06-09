@@ -1,17 +1,13 @@
 // $Id$
 
-// Transforms a string BUF into an ARGV-style vector of strings.
-
-#include "ace/ARGV.h"
-
-#if !defined (__ACE_INLINE__)
-#include "ace/ARGV.inl"
-#endif /* __ACE_INLINE__ */
-
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_Memory.h"
+
+#if !defined (__ACE_INLINE__)
+#include "ace/ARGV.inl"
+#endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, ARGV, "$Id$")
 
@@ -20,11 +16,12 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE (ACE_ARGV)
 
+template <typename CHAR_TYPE>
 void
-ACE_ARGV::dump (void) const
+ACE_ARGV_T<CHAR_TYPE>::dump (void) const
 {
 #if defined (ACE_HAS_DUMP)
-  ACE_TRACE ("ACE_ARGV::dump");
+  ACE_TRACE ("ACE_ARGV_T::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("argc_ = %d"), this->argc_));
@@ -48,10 +45,11 @@ ACE_ARGV::dump (void) const
 // style constructor and for creating this->argv_ when in iterative
 // mode.
 
+template <typename CHAR_TYPE>
 int
-ACE_ARGV::string_to_argv (void)
+ACE_ARGV_T<CHAR_TYPE>::string_to_argv (void)
 {
-  ACE_TRACE ("ACE_ARGV::string_to_argv");
+  ACE_TRACE ("ACE_ARGV_T::string_to_argv");
 
   return ACE_OS::string_to_argv (this->buf_,
                                  this->argc_,
@@ -59,14 +57,16 @@ ACE_ARGV::string_to_argv (void)
                                  this->substitute_env_args_);
 }
 
+template <typename CHAR_TYPE>
 int
-ACE_ARGV::argv_to_string (ACE_TCHAR **argv, ACE_TCHAR *&buf)
+ACE_ARGV_T<CHAR_TYPE>::argv_to_string (CHAR_TYPE **argv, CHAR_TYPE *&buf)
 {
   return ACE_OS::argv_to_string (argv, buf);
 }
 
-ACE_ARGV::ACE_ARGV (const ACE_TCHAR buf[],
-                    bool substitute_env_args)
+template <typename CHAR_TYPE>
+ACE_ARGV_T<CHAR_TYPE>::ACE_ARGV_T (const CHAR_TYPE buf[],
+                                   bool substitute_env_args)
   : substitute_env_args_ (substitute_env_args),
     iterative_ (false),
     argc_ (0),
@@ -75,14 +75,14 @@ ACE_ARGV::ACE_ARGV (const ACE_TCHAR buf[],
     length_ (0),
     queue_ ()
 {
-  ACE_TRACE ("ACE_ARGV::ACE_ARGV ACE_TCHAR[] to ACE_TCHAR *[]");
+  ACE_TRACE ("ACE_ARGV_T::ACE_ARGV_T CHAR_TYPE[] to CHAR_TYPE *[]");
 
   if (buf == 0 || buf[0] == 0)
     return;
 
   // Make an internal copy of the string.
   ACE_NEW (this->buf_,
-           ACE_TCHAR[ACE_OS::strlen (buf) + 1]);
+           CHAR_TYPE[ACE_OS::strlen (buf) + 1]);
   ACE_OS::strcpy (this->buf_, buf);
 
   // Create this->argv_.
@@ -92,8 +92,9 @@ ACE_ARGV::ACE_ARGV (const ACE_TCHAR buf[],
                 ACE_LIB_TEXT ("string_to_argv")));
 }
 
-ACE_ARGV::ACE_ARGV (ACE_TCHAR *argv[],
-                    bool substitute_env_args)
+template <typename CHAR_TYPE>
+ACE_ARGV_T<CHAR_TYPE>::ACE_ARGV_T (CHAR_TYPE *argv[],
+                                   bool substitute_env_args)
   : substitute_env_args_ (substitute_env_args),
     iterative_ (false),
     argc_ (0),
@@ -102,7 +103,7 @@ ACE_ARGV::ACE_ARGV (ACE_TCHAR *argv[],
     length_ (0),
     queue_ ()
 {
-  ACE_TRACE ("ACE_ARGV::ACE_ARGV ACE_TCHAR*[] to ACE_TCHAR[]");
+  ACE_TRACE ("ACE_ARGV_T::ACE_ARGV_T CHAR_TYPE*[] to CHAR_TYPE[]");
 
   if (argv == 0 || argv[0] == 0)
     return;
@@ -110,9 +111,10 @@ ACE_ARGV::ACE_ARGV (ACE_TCHAR *argv[],
   this->argc_ = ACE_OS::argv_to_string (argv, this->buf_, substitute_env_args);
 }
 
-ACE_ARGV::ACE_ARGV (ACE_TCHAR *first_argv[],
-                    ACE_TCHAR *second_argv[],
-                    bool substitute_env_args)
+template <typename CHAR_TYPE>
+ACE_ARGV_T<CHAR_TYPE>::ACE_ARGV_T (CHAR_TYPE *first_argv[],
+                                   CHAR_TYPE *second_argv[],
+                                   bool substitute_env_args)
   : substitute_env_args_ (substitute_env_args),
     iterative_ (false),
     argc_ (0),
@@ -121,13 +123,13 @@ ACE_ARGV::ACE_ARGV (ACE_TCHAR *first_argv[],
     length_ (0),
     queue_ ()
 {
-  ACE_TRACE ("ACE_ARGV::ACE_ARGV ACE_TCHAR*[] + ACE_TCHAR *[] to ACE_TCHAR[]");
+  ACE_TRACE ("ACE_ARGV_T::ACE_ARGV_T CHAR_TYPE*[] + CHAR_TYPE *[] to CHAR_TYPE[]");
 
   int first_argc;
   int second_argc;
 
-  ACE_TCHAR *first_buf;
-  ACE_TCHAR *second_buf;
+  CHAR_TYPE *first_buf;
+  CHAR_TYPE *second_buf;
 
   // convert the first argv to a string
   first_argc = this->argv_to_string (first_argv, first_buf);
@@ -143,7 +145,7 @@ ACE_ARGV::ACE_ARGV (ACE_TCHAR *first_argv[],
 
   // Allocate memory to the lenght of the combined argv string.
   ACE_NEW (this->buf_,
-           ACE_TCHAR[buf_len + 1]);
+           CHAR_TYPE[buf_len + 1]);
 
   // copy the first argv string to the buffer
   ACE_OS::strcpy (this->buf_, first_buf);
@@ -158,8 +160,8 @@ ACE_ARGV::ACE_ARGV (ACE_TCHAR *first_argv[],
   delete [] second_buf;
 }
 
-
-ACE_ARGV::ACE_ARGV (bool substitute_env_args)
+template <typename CHAR_TYPE>
+ACE_ARGV_T<CHAR_TYPE>::ACE_ARGV_T (bool substitute_env_args)
   : substitute_env_args_ (substitute_env_args),
     iterative_ (true),
     argc_ (0),
@@ -168,13 +170,14 @@ ACE_ARGV::ACE_ARGV (bool substitute_env_args)
     length_ (0),
     queue_ ()
 {
-  ACE_TRACE ("ACE_ARGV::ACE_ARGV Iterative");
+  ACE_TRACE ("ACE_ARGV_T::ACE_ARGV_T Iterative");
 
   // Nothing to do yet -- the user puts in arguments via add ()
 }
 
+template <typename CHAR_TYPE>
 int
-ACE_ARGV::add (const ACE_TCHAR *next_arg)
+ACE_ARGV_T<CHAR_TYPE>::add (const CHAR_TYPE *next_arg)
 {
   // Only allow this to work in the "iterative" verion -- the
   // ACE_ARGVs created with the one argument constructor.
@@ -185,7 +188,7 @@ ACE_ARGV::add (const ACE_TCHAR *next_arg)
     }
 
   // Put the new argument at the end of the queue.
-  if (this->queue_.enqueue_tail (const_cast <ACE_TCHAR *> (next_arg)) == -1)
+  if (this->queue_.enqueue_tail (const_cast <CHAR_TYPE *> (next_arg)) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_LIB_TEXT ("Can't add more to ARGV queue")),
                       -1);
@@ -211,8 +214,9 @@ ACE_ARGV::add (const ACE_TCHAR *next_arg)
   return 0;
 }
 
+template <typename CHAR_TYPE>
 int
-ACE_ARGV::add (ACE_TCHAR *argv[])
+ACE_ARGV_T<CHAR_TYPE>::add (CHAR_TYPE *argv[])
 {
   for (int i = 0; argv[i] != 0; i++)
     if (this->add (argv[i]) == -1)
@@ -223,9 +227,10 @@ ACE_ARGV::add (ACE_TCHAR *argv[])
 
 // Free up argv_ and buf_
 
-ACE_ARGV::~ACE_ARGV (void)
+template <typename CHAR_TYPE>
+ACE_ARGV_T<CHAR_TYPE>::~ACE_ARGV_T (void)
 {
-  ACE_TRACE ("ACE_ARGV::~ACE_ARGV");
+  ACE_TRACE ("ACE_ARGV_T::~ACE_ARGV_T");
 
   if (this->argv_ != 0)
     for (int i = 0; this->argv_[i] != 0; i++)
@@ -238,10 +243,11 @@ ACE_ARGV::~ACE_ARGV (void)
 // Create buf_ out of the queue_.  This is only used in the
 // "iterative" mode.
 
+template <typename CHAR_TYPE>
 int
-ACE_ARGV::create_buf_from_queue (void)
+ACE_ARGV_T<CHAR_TYPE>::create_buf_from_queue (void)
 {
-  ACE_TRACE ("ACE_ARGV::create_buf_from_queue");
+  ACE_TRACE ("ACE_ARGV_T::create_buf_from_queue");
 
   // If the are no arguments, don't do anything
   if (this->argc_ <= 0)
@@ -250,14 +256,14 @@ ACE_ARGV::create_buf_from_queue (void)
   delete [] this->buf_;
 
   ACE_NEW_RETURN (this->buf_,
-                  ACE_TCHAR[this->length_ + this->argc_],
+                  CHAR_TYPE[this->length_ + this->argc_],
                   -1);
 
   // Get an iterator over the queue
-  ACE_Unbounded_Queue_Iterator<ACE_TCHAR *> iter (this->queue_);
+  ACE_Unbounded_Queue_Iterator<CHAR_TYPE *> iter (this->queue_);
 
-  ACE_TCHAR **arg = 0;
-  ACE_TCHAR *ptr = this->buf_;
+  CHAR_TYPE **arg = 0;
+  CHAR_TYPE *ptr = this->buf_;
   size_t len;
   int more = 0;
 
@@ -273,7 +279,7 @@ ACE_ARGV::create_buf_from_queue (void)
       // Copy the argument into buf_
       ACE_OS::memcpy ((void *) ptr,
                       (const void *) (*arg),
-                      len * sizeof (ACE_TCHAR));
+                      len * sizeof (CHAR_TYPE));
       // Move the pointer down.
       ptr += len;
 
