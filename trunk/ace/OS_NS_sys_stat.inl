@@ -279,6 +279,8 @@ namespace ACE_OS
     return 0;
 #elif defined (__BORLANDC__)
     ACE_OSCALL_RETURN (::_wstati64 (file, stp), int, -1);
+#elif defined (ACE_WIN32) && defined _MSC_VER && _MSC_VER >= 1300 && _MSC_VER < 1400 // vc71
+    ACE_OSCALL_RETURN (::_wstati64 (file, stp), int, -1);
 #elif defined (ACE_WIN32)
     ACE_OSCALL_RETURN (::_wstat64 (file, stp), int, -1);
 #else /* ACE_HAS_WINCE */
