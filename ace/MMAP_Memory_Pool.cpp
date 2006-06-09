@@ -328,8 +328,8 @@ ACE_MMAP_Memory_Pool::init_acquire (size_t nbytes,
 
   first_time = 0;
 
-  if (nbytes < (size_t) this->minimum_bytes_)
-    nbytes = this->minimum_bytes_;
+  if (nbytes < static_cast <size_t> (this->minimum_bytes_))
+    nbytes = static_cast <size_t> (this->minimum_bytes_);
 
   if (this->mmap_.open (this->backing_store_name_,
                         O_RDWR | O_CREAT | O_TRUNC | O_EXCL,
@@ -376,7 +376,7 @@ ACE_MMAP_Memory_Pool::init_acquire (size_t nbytes,
 int
 ACE_MMAP_Memory_Pool::seh_selector (void *ep)
 {
-  DWORD ecode = ((EXCEPTION_POINTERS *) ep)->ExceptionRecord->ExceptionCode;
+  DWORD const ecode = ((EXCEPTION_POINTERS *) ep)->ExceptionRecord->ExceptionCode;
 
   if (ecode == EXCEPTION_ACCESS_VIOLATION)
     {
