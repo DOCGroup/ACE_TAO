@@ -1,11 +1,10 @@
 Fri Jun  9 12:47:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_sys_stat.h:
-          On windows use _stati64 for ACE_stat, not __stat64. The first has
+          With vc71 use _stati64 for ACE_stat, not __stat64. The first has
           time as 32bit, the second time as 64 bit (__time64_t) which causes
           problems because the time interfaces of ACE use time_t which is
-          32bit on windows. Maybe we have to introduce ACE_time_t and use
-          that in the interfaces :-(
+          32bit with vc71 but 64bit with vc8.
 
 Fri Jun  9 10:29:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
