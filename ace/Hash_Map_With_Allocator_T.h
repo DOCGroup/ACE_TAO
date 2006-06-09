@@ -42,6 +42,10 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  *     is meaningful!  That is why we need this wrapper, which
  *     insures that appropriate allocator pointer is in place for
  *     each call.
+ * 
+ *     At some point it would be a good idea to update this class to
+ *     use the new "two allocator" technique provided by @c
+ *     ACE_Hash_Map_Manager_Ex.
  */
 template <class EXT_ID, class INT_ID>
 class ACE_Hash_Map_With_Allocator :

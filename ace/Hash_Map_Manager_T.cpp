@@ -9,7 +9,7 @@
 //    Hash_Map_Manager_T.cpp
 //
 // = AUTHOR
-//    Doug Schmidt
+//    Douglas C. Schmidt <schmidt@cse.wustl.edu>
 //
 // ============================================================================
 
@@ -87,7 +87,8 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::dump 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("total_size_ = %d"), this->total_size_));
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\ncur_size_ = %d"), this->cur_size_));
-  this->allocator_->dump ();
+  this->table_allocator_->dump ();
+  this->entry_allocator_->dump ();
   this->lock_.dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
@@ -100,7 +101,7 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::creat
   void *ptr;
 
   ACE_ALLOCATOR_RETURN (ptr,
-                        this->allocator_->malloc (bytes),
+                        this->table_allocator_->malloc (bytes),
                         -1);
 
   this->table_ = (ACE_Hash_Map_Entry<EXT_ID, INT_ID> *) ptr;
@@ -130,10 +131,10 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::open 
   if (alloc == 0)
     alloc = ACE_Allocator::instance ();
 
-  this->allocator_ = alloc;
+  this->table_allocator_ = alloc;
 
   if (entry_alloc == 0)
-    entry_alloc = ACE_Allocator::instance ();
+    entry_alloc = alloc;
 
   this->entry_allocator_ = entry_alloc;
 
@@ -141,7 +142,8 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::open 
   // happen, but did with Sun C++ 4.1 (before a change to this class
   // was made: it used to have an enum that was supposed to be defined
   // to be ACE_DEFAULT_MAP_SIZE, but instead was defined to be 0).
-  ACE_ASSERT (size != 0);
+  if (size != 0)
+    return -1;
 
   return this->create_buckets (size);
 }
@@ -161,7 +163,8 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::close
         {
           // Destroy the dummy entry.
           ACE_Hash_Map_Entry<EXT_ID, INT_ID> *entry = &this->table_[i];
-          // The "if" second argument results in a no-op instead of
+
+          // The second argument results in a no-op instead of
           // deallocation.
           ACE_DES_FREE_TEMPLATE2 (entry, ACE_NOOP,
                                   ACE_Hash_Map_Entry, EXT_ID, INT_ID);
@@ -171,7 +174,7 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::close
       this->total_size_ = 0;
 
       // Free table memory.
-      this->allocator_->free (this->table_);
+      this->table_allocator_->free (this->table_);
 
       // Should be done last...
       this->table_ = 0;
