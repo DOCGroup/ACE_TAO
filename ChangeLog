@@ -1,3 +1,8 @@
+Fri Jun  9 14:04:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ace_for_tao.mpc:
+          Updated because ARGV and Arg_Shifter are template files now
+
 Fri Jun  9 13:58:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/FILE_IO.cpp:
