@@ -897,6 +897,13 @@ project(SOCK Connector Test) : acetest {
   }
 }
 
+project(SOCK Netlink Test) : acetest {
+  exename = SOCK_Netlink_Test
+  Source_Files {
+    SOCK_Netlink_Test.cpp
+  }
+}
+
 project(SOCK Send Recv Test) : acetest {
   exename = SOCK_Send_Recv_Test
   Source_Files {
