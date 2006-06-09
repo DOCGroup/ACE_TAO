@@ -30,7 +30,8 @@ ACE_Name_Space_Map<ALLOCATOR>::close (ALLOCATOR *alloc)
 {
   ACE_TRACE ("ACE_Name_Space_Map::close");
 
-  this->allocator_ = alloc;
+  this->table_allocator_ = alloc;
+  this->entry_allocator_ = alloc;
   return this->close_i ();
 }
 
@@ -41,7 +42,8 @@ ACE_Name_Space_Map<ALLOCATOR>::bind (const ACE_NS_String &ext_id,
 {
   ACE_TRACE ("ACE_Name_Space_Map::bind");
 
-  this->allocator_ = alloc;
+  this->table_allocator_ = alloc;
+  this->entry_allocator_ = alloc;
   return this->bind_i (ext_id, int_id);
 }
 
@@ -52,7 +54,8 @@ ACE_Name_Space_Map<ALLOCATOR>::unbind (const ACE_NS_String &ext_id,
 {
   ACE_TRACE ("ACE_Name_Space_Map::unbind");
 
-  this->allocator_ = alloc;
+  this->table_allocator_ = alloc;
+  this->entry_allocator_ = alloc;
   return this->unbind_i (ext_id, int_id);
 }
 
@@ -65,7 +68,8 @@ ACE_Name_Space_Map<ALLOCATOR>::rebind (const ACE_NS_String &ext_id,
 {
   ACE_TRACE ("ACE_Name_Space_Map::rebind");
 
-  this->allocator_ = alloc;
+  this->table_allocator_ = alloc;
+  this->entry_allocator_ = alloc;
   return this->rebind_i (ext_id, int_id, old_ext_id, old_int_id);
 }
 
@@ -76,7 +80,8 @@ ACE_Name_Space_Map<ALLOCATOR>::find (const ACE_NS_String &ext_id,
 {
   ACE_TRACE ("ACE_Name_Space_Map::find");
 
-  this->allocator_ = alloc;
+  this->table_allocator_ = alloc;
+  this->entry_allocator_ = alloc;
   return this->find_i (ext_id, int_id);
 }
 

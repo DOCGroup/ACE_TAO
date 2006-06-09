@@ -153,18 +153,50 @@ public:
 
   // = Initialization and termination methods.
 
-  /// Initialize a <Hash_Map_Manager_Ex> with default size.
-  ACE_Hash_Map_Manager_Ex (ACE_Allocator *alloc = 0,
+  /** 
+   * Initialize a @c Hash_Map_Manager_Ex with default size elements.
+   * @param table_alloc is a pointer to a memory allocator used for
+   *        table_, so it should supply size*sizeof (ACE_Hash_Map_Entry<EXT_ID, INT_ID>).
+   * @param entry_alloc is a pointer to an additional allocator for
+   *        entries, so it should be able to allocate 'size' / chunks
+   *        of sizeof(ACE_Hash_Map_Entry<EXT_ID, INT_ID>) bytes each.
+   * If @c table_alloc is 0 it defaults to @c ACE_Allocator::instance().
+   * If @c entry_alloc is 0 then it defaults to the same allocator as
+   * @c table_alloc.
+   */
+  ACE_Hash_Map_Manager_Ex (ACE_Allocator *table_alloc = 0,
                            ACE_Allocator *entry_alloc = 0);
 
-  /// Initialize a <Hash_Map_Manager_Ex> with size <length>.
+  /** 
+   * Initialize a @c Hash_Map_Manager_Ex with @c size elements.
+   * @param table_alloc is a pointer to a memory allocator used for
+   *        table_, so it should supply size*sizeof (ACE_Hash_Map_Entry<EXT_ID, INT_ID>).
+   * @param entry_alloc is a pointer to an additional allocator for
+   *        entries, so it should be able to allocate 'size' / chunks
+   *        of sizeof(ACE_Hash_Map_Entry<EXT_ID, INT_ID>) bytes each.
+   * If @c table_alloc is 0 it defaults to @c ACE_Allocator::instance().
+   * If @c entry_alloc is 0 then it defaults to the same allocator as
+   * @c table_alloc.
+   */
   ACE_Hash_Map_Manager_Ex (size_t size,
-                           ACE_Allocator *alloc = 0,
+                           ACE_Allocator *table_alloc = 0,
                            ACE_Allocator *entry_alloc = 0);
 
-  /// Initialize a <Hash_Map_Manager_Ex> with <size> elements.
+  /** 
+   * Initialize a @c Hash_Map_Manager_Ex with @c size elements.
+   * @param table_alloc is a pointer to a memory allocator used for
+   *        table_, so it should supply size*sizeof (ACE_Hash_Map_Entry<EXT_ID, INT_ID>).
+   * @param entry_alloc is a pointer to an additional allocator for
+   *        entries, so it should be able to allocate 'size' / chunks
+   *        of sizeof(ACE_Hash_Map_Entry<EXT_ID, INT_ID>) bytes each.
+   * If @c table_alloc is 0 it defaults to @c ACE_Allocator::instance().
+   * If @c entry_alloc is 0 then it defaults to the same allocator as
+   * @c table_alloc.
+   * @return -1 on failure, 0 on success
+   */
+
   int open (size_t size = ACE_DEFAULT_MAP_SIZE,
-            ACE_Allocator *alloc = 0,
+            ACE_Allocator *table_alloc = 0,
             ACE_Allocator *entry_alloc = 0);
 
   /// Close down a <Hash_Map_Manager_Ex> and release dynamically allocated
@@ -443,19 +475,17 @@ protected:
   /// locks held.
   int unbind_all_i (void);
 
-  /// Pointer to a memory allocator.
-  ACE_Allocator *allocator_;
+  /// Pointer to a memory allocator used for table_, so it should
+  /// supply size*sizeof (ACE_Hash_Map_Entry<EXT_ID, INT_ID>),
+  ACE_Allocator *table_allocator_;
 
-  // - default allocator 'allocator_' is used for table_, so it should
-  //   supply size*sizeof (ACE_Hash_Map_Entry<EXT_ID, INT_ID>),
-  // - additional allocator 'entry_allocator_' will be used for entries, 
-  //   so it should be able to allocate 'size'
-  //   chunks of sizeof(ACE_Hash_Map_Entry<EXT_ID, INT_ID>) bytes each.
-
-  // Addidtional allocator for entries:
+  /// Addidtional allocator for entries, so it should be able to
+  /// allocate 'size' / chunks of sizeof(ACE_Hash_Map_Entry<EXT_ID,
+  /// INT_ID>) bytes each.
   ACE_Allocator *entry_allocator_;
 
-  /// Synchronization variable for the MT_SAFE <ACE_Hash_Map_Manager_Ex>.
+  /// Synchronization variable for the MT_SAFE
+  /// @c ACE_Hash_Map_Manager_Ex.
   ACE_LOCK lock_;
 
   /// Function object used for hashing keys.
@@ -889,12 +919,35 @@ template <class EXT_ID, class INT_ID, class ACE_LOCK>
 class ACE_Hash_Map_Manager : public ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, ACE_Hash<EXT_ID>, ACE_Equal_To<EXT_ID>, ACE_LOCK>
 {
 public:
-  /// Initialize a <Hash_Map_Manager> with default size.
-  ACE_Hash_Map_Manager (ACE_Allocator *alloc = 0);
 
-  /// Initialize a <Hash_Map_Manager> with size <length>.
+  /** 
+   * Initialize a @c Hash_Map_Manager with default size elements.
+   * @param table_alloc is a pointer to a memory allocator used for
+   *        table_, so it should supply size*sizeof (ACE_Hash_Map_Entry<EXT_ID, INT_ID>).
+   * @param entry_alloc is a pointer to an additional allocator for
+   *        entries, so it should be able to allocate 'size' / chunks
+   *        of sizeof(ACE_Hash_Map_Entry<EXT_ID, INT_ID>) bytes each.
+   * If @c table_alloc is 0 it defaults to @c ACE_Allocator::instance().
+   * If @c entry_alloc is 0 then it defaults to the same allocator as
+   * @c table_alloc.
+   */
+  ACE_Hash_Map_Manager (ACE_Allocator *table_alloc = 0,
+                        ACE_Allocator *entry_alloc = 0);
+
+  /** 
+   * Initialize a @c Hash_Map_Manager with @c size elements.
+   * @param table_alloc is a pointer to a memory allocator used for
+   *        table_, so it should supply size*sizeof (ACE_Hash_Map_Entry<EXT_ID, INT_ID>).
+   * @param entry_alloc is a pointer to an additional allocator for
+   *        entries, so it should be able to allocate 'size' / chunks
+   *        of sizeof(ACE_Hash_Map_Entry<EXT_ID, INT_ID>) bytes each.
+   * If @c table_alloc is 0 it defaults to @c ACE_Allocator::instance().
+   * If @c entry_alloc is 0 then it defaults to the same allocator as
+   * @c table_alloc.
+   */
   ACE_Hash_Map_Manager (size_t size,
-                        ACE_Allocator *alloc = 0);
+                        ACE_Allocator *table_alloc = 0,
+                        ACE_Allocator *entry_alloc = 0);
 
   // = The following two are necessary for template specialization of
   // ACE_Hash_Map_Manager to work.
