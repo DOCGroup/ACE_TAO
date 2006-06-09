@@ -1,3 +1,14 @@
+Fri Jun  9 18:33:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/performance-tests/RTEvent/lib/Client_Options.{h,cpp}:
+        * examples/RTCORBA/Activity/POA_Holder.{h,cpp}:
+        * examples/RTCORBA/Activity/Periodic_Task.{h,cpp}:
+        * examples/RTCORBA/Activity/Job_i.{h,cpp}:
+        * examples/RTCORBA/Activity/Builder.{h,cpp}:
+        * orbsvcs/tests/Notify/lib/Peer.h:
+          Just include ACE_Arg_Shifter in the header file instead of
+          using a forward declaration
+
 Fri Jun  9 14:49:06 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/Stack_Recursion/run_test.pl:
