@@ -119,7 +119,7 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::creat
 
 template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK> int
 ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::open (size_t size,
-                                                                                 ACE_Allocator *alloc,
+                                                                                 ACE_Allocator *table_alloc,
                                                                                  ACE_Allocator *entry_alloc)
 {
   ACE_WRITE_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, -1);
@@ -128,13 +128,13 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::open 
   // memory before allocating new one.
   this->close_i ();
 
-  if (alloc == 0)
-    alloc = ACE_Allocator::instance ();
+  if (table_alloc == 0)
+    table_alloc = ACE_Allocator::instance ();
 
-  this->table_allocator_ = alloc;
+  this->table_allocator_ = table_alloc;
 
   if (entry_alloc == 0)
-    entry_alloc = alloc;
+    entry_alloc = table_alloc;
 
   this->entry_allocator_ = entry_alloc;
 
@@ -142,7 +142,7 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::open 
   // happen, but did with Sun C++ 4.1 (before a change to this class
   // was made: it used to have an enum that was supposed to be defined
   // to be ACE_DEFAULT_MAP_SIZE, but instead was defined to be 0).
-  if (size != 0)
+  if (size == 0)
     return -1;
 
   return this->create_buckets (size);
