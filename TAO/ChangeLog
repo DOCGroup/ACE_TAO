@@ -1,3 +1,10 @@
+Fri Jun  9 14:49:06 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/Stack_Recursion/run_test.pl:
+
+          Doubled the timeout to accomodate really slow machines. This was
+          necessitated by new sequence initialization code.
+
 Fri Jun  9 14:48:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Notify/lib/Options_Parser.{h,cpp}:
