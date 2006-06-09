@@ -124,7 +124,7 @@ ACE_FILE_IO::recvv (iovec *io_vec)
   ACE_TRACE ("ACE_FILE_IO::recvv");
 
   io_vec->iov_base = 0;
-  ACE_LOFF_T length = ACE_OS::filesize (this->get_handle ());
+  size_t length = static_cast <size_t> (ACE_OS::filesize (this->get_handle ()));
 
   if (length > 0)
     {
