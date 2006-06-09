@@ -234,7 +234,7 @@ namespace ACE_OS
     // wrapper for _xstat().
     ACE_OSCALL_RETURN (::_xstat (_STAT_VER, file, stp), int, -1);
 #elif defined (ACE_WIN32)
-# if defined(__IBMCPP__)
+# if defined(__IBMCPP__) || defined (__MINGW32__)
     ACE_OSCALL_RETURN (::_stat (file,  stp), int, -1);
 # elif defined (__BORLANDC__)
     ACE_OSCALL_RETURN (::_stati64 (file, stp), int, -1);
@@ -281,6 +281,8 @@ namespace ACE_OS
     ACE_OSCALL_RETURN (::_wstati64 (file, stp), int, -1);
 #elif defined (ACE_WIN32) && defined _MSC_VER && _MSC_VER >= 1300 && _MSC_VER < 1400 // vc71
     ACE_OSCALL_RETURN (::_wstati64 (file, stp), int, -1);
+#elif defined (__MINGW32__)
+    ACE_OSCALL_RETURN (::_wstat (file, stp), int, -1);
 #elif defined (ACE_WIN32)
     ACE_OSCALL_RETURN (::_wstat64 (file, stp), int, -1);
 #else /* ACE_HAS_WINCE */

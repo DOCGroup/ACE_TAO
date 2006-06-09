@@ -8,7 +8,6 @@
 
 #include "Client_Options.h"
 
-#include "ace/Arg_Shifter.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS.h"
 

@@ -2,7 +2,6 @@
 #include "Job_i.h"
 
 #include "tao/debug.h"
-#include "ace/Arg_Shifter.h"
 
 #include "Activity.h"
 
