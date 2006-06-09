@@ -228,7 +228,7 @@ namespace ACE_OS
   ssize_t pwrite (ACE_HANDLE handle,
                   const void *buf,
                   size_t nbyte,
-                  off_t offset);
+                  ACE_LOFF_T offset);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   ssize_t read (ACE_HANDLE handle,

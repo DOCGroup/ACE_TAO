@@ -499,7 +499,7 @@ ssize_t
 ACE_OS::pwrite (ACE_HANDLE handle,
                 const void *buf,
                 size_t nbytes,
-                off_t offset)
+                ACE_LOFF_T offset)
 {
 # if defined (ACE_HAS_P_READ_WRITE)
 #   if defined (ACE_WIN32)
