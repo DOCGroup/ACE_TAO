@@ -1,3 +1,8 @@
+Fri Jun  9 14:48:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Notify/lib/Options_Parser.{h,cpp}:
+          Moved the include of Arg_Shifter.h from cpp to header file
+
 Fri Jun  9 14:35:56 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/Big_Request_Muxing/Client_Task.h:
