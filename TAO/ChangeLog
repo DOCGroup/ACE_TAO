@@ -1,3 +1,24 @@
+Fri Jun  9 14:35:56 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/Big_Request_Muxing/Client_Task.h:
+        * tests/Big_Request_Muxing/Client_Task.cpp:
+        * tests/Big_Request_Muxing/Payload_Receiver.h:
+        * tests/Big_Request_Muxing/Payload_Receiver.cpp:
+        * tests/Big_Request_Muxing/Test.idl:
+        * tests/Big_Request_Muxing/client.cpp:
+        * tests/Big_Request_Muxing/run_test.pl:
+        * tests/Big_Request_Muxing/server.cpp:
+
+          This test frequently shows false errors due dropped SYNC_NONE
+          messages. These errors are false because dropping such messages
+          is not an error. The test now separately accounts for SYNC_NONE
+          invocations separately by using a different operation.
+
+          I also modified the timeout loop in an earlier attempt to
+          resolve the periodic dropped messages, thinking the timeout
+          occured due to heavy loads. Now the timeout less about the whole
+          event and more about the duration of individual requests.
+
 Thu Jun  8 02:16:30 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * orbsvcs/Event_Service/Event_Service.cpp (parse_args): Added a

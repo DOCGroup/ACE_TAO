@@ -12,7 +12,8 @@ Client_Task::Client_Task (ACE_Thread_Manager *thr_mgr,
                           CORBA::Long event_count,
                           CORBA::ULong event_size,
                           CORBA::ORB_ptr orb,
-                          Messaging::SyncScope sync_scope)
+                          Messaging::SyncScope sync_scope,
+                          const ACE_CString & ident)
   : ACE_Task_Base (thr_mgr)
   , payload_receiver_ (Test::Payload_Receiver::_duplicate (payload_receiver))
   , event_count_ (event_count)
@@ -20,6 +21,7 @@ Client_Task::Client_Task (ACE_Thread_Manager *thr_mgr,
   , orb_ (CORBA::ORB::_duplicate (orb))
   , sync_scope_ (sync_scope)
   , done_(false)
+  , id_ (ident)
 {
 }
 
@@ -29,9 +31,36 @@ Client_Task::done(void) const
   return done_;
 }
 
+void
+Client_Task::do_invocations(Test::Payload& payload ACE_ENV_SINGLE_ARG_DECL)
+{
+  ACE_DEBUG((LM_DEBUG, "(%P|%t)Client_Task %s sending %d payloads.\n",
+             this->id_.c_str(), this->event_count_));
+
+  for (int i = 0; i != this->event_count_; ++i)
+    {
+      this->payload_receiver_->more_data (payload ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+    }
+}
+
+void
+Client_Task::do_sync_none_invocations(Test::Payload& payload ACE_ENV_SINGLE_ARG_DECL)
+{
+  ACE_DEBUG((LM_DEBUG, "(%P|%t)Client_Task %s sending %d SYNC_NONE payloads.\n",
+             this->id_.c_str(), this->event_count_));
+
+  for (int i = 0; i != this->event_count_; ++i)
+    {
+      this->payload_receiver_->sync_none_more_data (payload ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+    }
+}
+
 int
 Client_Task::svc (void)
 {
+  ACE_DEBUG ((LM_DEBUG,"(%P|%t) Client_Task %s started\n",this->id_.c_str()));
   Test::Payload payload (this->event_size_);
   payload.length (this->event_size_);
 
@@ -69,20 +98,22 @@ Client_Task::svc (void)
                                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      for (int i = 0; i != this->event_count_; ++i)
-        {
-          this->payload_receiver_->more_data (payload ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-        }
+      if (this->sync_scope_ == Messaging::SYNC_NONE)
+        this->do_sync_none_invocations(payload ACE_ENV_SINGLE_ARG_PARAMETER);
+      else
+        this->do_invocations(payload ACE_ENV_SINGLE_ARG_PARAMETER);
+
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Client_Task: ");
+      ACE_DEBUG((LM_DEBUG, "(%P|%t)Client_Task %s: ",
+                 this->id_.c_str()));
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "");
       done_ = true;
       return -1;
     }
   ACE_ENDTRY;
-  ACE_DEBUG((LM_DEBUG, "Client_Task finished.\n"));
+  ACE_DEBUG((LM_DEBUG, "(%P|%t)Client_Task %s finished.\n", this->id_.c_str()));
   done_ = true;
   return 0;
 }
