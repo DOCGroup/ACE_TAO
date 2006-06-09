@@ -12,8 +12,6 @@ project(ACE_FOR_TAO) : acedefaults, core, svcconf, versioned_namespace, pkgconfi
     ACE.cpp
     Active_Map_Manager.cpp
     Addr.cpp
-    Arg_Shifter.cpp
-    ARGV.cpp
     Argv_Type_Converter.cpp
     Assert.cpp
     Atomic_Op.cpp
@@ -190,6 +188,8 @@ project(ACE_FOR_TAO) : acedefaults, core, svcconf, versioned_namespace, pkgconfi
     Active_Map_Manager_T.cpp
     Array_Base.cpp
     Array_Map.cpp
+    Arg_Shifter.cpp
+    ARGV.cpp
     Atomic_Op_T.cpp
     Auto_Functor.cpp
     Auto_IncDec_T.cpp

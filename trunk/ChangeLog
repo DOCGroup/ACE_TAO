@@ -1,6 +1,14 @@
 Fri Jun  9 13:58:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/FILE_IO.cpp:
+          Const improvements
+
+        * ace/MMAP_Memory_Pool.cpp:
+          Added static cast from ACE_LOFF_T to size_t and const improvements
+
+Fri Jun  9 13:58:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/FILE_IO.cpp:
           Added static cast from ACE_LOFF_T to size_t
 
 Fri Jun  9 13:42:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
