@@ -6,10 +6,9 @@
  *
  *  $Id$
  *
- *  @author Prashant Jain
+ *  @author Prashant Jain <pjain@cse.wustl.edu>
  */
 //==========================================================================
-
 
 #ifndef ACE_NAME_SPACE_H
 #define ACE_NAME_SPACE_H

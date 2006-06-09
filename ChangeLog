@@ -1,3 +1,36 @@
+Fri Jun  9 14:06:52 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Hash_Map_With_Allocator_T.{h,inl,cpp}: Enhanced this class
+          so that it compiles with the new "two allocator"
+          ACE_Hash_Map_Manager_Ex class.  This class needs to be improved
+          so that it actually leverages the two allocator features, but
+          that's something for the future.
+
+Fri Jun  9 13:15:38 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Hash_Map_Manager_T.h: Clarified the meaning of the
+          constructor and open() parameters.
+
+Fri Jun  9 13:07:40 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Hash_Map_Manager_T.cpp (open): If the user doesn't supply an
+          entry_alloc pointer then use the table_alloc pointer.
+
+Fri Jun  9 13:00:22 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Hash_Map_Manager_T.cpp (open): Zapped the use of ACE_ASSERT
+          and replaced it with and if statement.  We shouldn't be using
+          ACE_ASSERT in ACE library code..
+  
+Fri Jun  9 12:53:48 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Hash_Map_Manager_T.{h,inl,cpp}: Added support for a separate
+          allocator for creating the entries in the chain of
+          ACE_Hash_Map_Entry objects in the buckets.  There are now two
+          allocators, one for the bucket table and the other for the
+          entries in the buckets.  Thanks to Jaroslaw Nozderko <jaroslaw
+          dot nozderko at polkomtel dot com dot pl> for this fix.
+
 Fri Jun  9 14:04:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/ace_for_tao.mpc:
@@ -16,6 +49,7 @@ Fri Jun  9 13:58:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
         * ace/FILE_IO.cpp:
           Added static cast from ACE_LOFF_T to size_t
 
+>>>>>>> 4.10437
 Fri Jun  9 13:42:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_sys_stat.inl:
@@ -98,6 +132,7 @@ Fri Jun  9 07:55:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
           of bugzilla bug 2359, thanks to Olivier Brunet <o dot brunet at free dot fr>
           for reporting this.
 
+>>>>>>> 4.10432
 Thu Jun  8 17:13:42 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/String_Base.h,
