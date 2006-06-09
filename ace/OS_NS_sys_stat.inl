@@ -238,6 +238,8 @@ namespace ACE_OS
     ACE_OSCALL_RETURN (::_stat (file,  stp), int, -1);
 # elif defined (__BORLANDC__)
     ACE_OSCALL_RETURN (::_stati64 (file, stp), int, -1);
+# elif defined _MSC_VER && _MSC_VER >= 1300 && _MSC_VER < 1400 // vc71
+    ACE_OSCALL_RETURN (::_stati64 (file, stp), int, -1);
 # else
     ACE_OSCALL_RETURN (::_stat64 (file, stp), int, -1);
 # endif /* __IBMCPP__ */
