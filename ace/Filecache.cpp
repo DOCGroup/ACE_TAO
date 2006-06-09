@@ -130,7 +130,7 @@ ACE_Filecache_Handle::error (void) const
     return this->file_->error ();
 }
 
-off_t
+ACE_LOFF_T
 ACE_Filecache_Handle::size (void) const
 {
   if (this->file_ == 0)
@@ -704,7 +704,7 @@ ACE_Filecache_Object::filename (void) const
   return this->filename_;
 }
 
-off_t
+ACE_LOFF_T
 ACE_Filecache_Object::size (void) const
 {
   // The existence of the object means a read lock is being held.

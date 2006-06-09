@@ -117,7 +117,7 @@ public:
   int error (void) const;
 
   /// The size of the file.
-  off_t size (void) const;
+  ACE_LOFF_T size (void) const;
 
 protected:
   /// Default do nothing constructor.  Prevent it from being called.
@@ -277,7 +277,7 @@ public:
   void *address (void) const;
 
   /// size_ accessor.
-  off_t size (void) const;
+  ACE_LOFF_T size (void) const;
 
   /// True if file on disk is newer than cached file.
   int update (void) const;
@@ -327,7 +327,7 @@ private:
 
   /// Used to compare against the real file to test if an update is needed.
   ACE_stat stat_;
-  off_t size_;
+  ACE_LOFF_T size_;
 
   /// Status indicators.
   int action_;
