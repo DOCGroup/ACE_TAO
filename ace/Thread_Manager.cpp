@@ -8,6 +8,9 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/Guard_T.h"
 
+#include "ace/Time_Value.h"
+#include "ace/OS_NS_sys_time.h"
+
 #if !defined (__ACE_INLINE__)
 #include "ace/Thread_Manager.inl"
 #endif /* __ACE_INLINE__ */
@@ -1740,9 +1743,14 @@ ACE_Thread_Manager::wait (const ACE_Time_Value *timeout,
 {
   ACE_TRACE ("ACE_Thread_Manager::wait");
 
+  ACE_Time_Value local_timeout;
   // Check to see if we're using absolute time or not.
   if (use_absolute_time == 0 && timeout != 0)
-    *timeout += ACE_OS::gettimeofday ();
+    {
+      local_timeout = *timeout;
+      local_timeout += ACE_OS::gettimeofday ();
+      timeout = &local_timeout;
+    }
 
 #if !defined (ACE_VXWORKS)
   ACE_Double_Linked_List<ACE_Thread_Descriptor_Base> term_thr_list_copy;

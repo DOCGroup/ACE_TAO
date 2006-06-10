@@ -1,3 +1,8 @@
+Sat Jun 10 10:07:32 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/Thread_Manager.cpp:
+          Fix for compiler errors.
+
 Sat Jun 10 04:31:54 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * bin/MakeProjectCreator/config/automake.features:
