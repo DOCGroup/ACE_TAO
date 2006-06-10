@@ -24,10 +24,7 @@ BUILT_SOURCES = \
   FooC.inl \
   FooS.cpp \
   FooS.h \
-  FooS.inl \
-  FooS_T.cpp \
-  FooS_T.h \
-  FooS_T.inl
+  FooS.inl
 
 CLEANFILES = \
   Foo-stamp \
@@ -36,12 +33,9 @@ CLEANFILES = \
   FooC.inl \
   FooS.cpp \
   FooS.h \
-  FooS.inl \
-  FooS_T.cpp \
-  FooS_T.h \
-  FooS_T.inl
+  FooS.inl
 
-FooC.cpp FooC.h FooC.inl FooS.cpp FooS.h FooS.inl FooS_T.cpp FooS_T.h FooS_T.inl: Foo-stamp
+FooC.cpp FooC.h FooC.inl FooS.cpp FooS.h FooS.inl: Foo-stamp
 
 Foo-stamp: $(srcdir)/Foo.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Foo.idl
@@ -65,8 +59,7 @@ server_main_SOURCES = \
   FooC.h \
   FooC.inl \
   FooS.h \
-  FooS_T.h \
-  FooS_T.inl \
+  FooS.inl \
   Foo_i.h \
   OrbShutdownTask.h \
   ServerApp.h
@@ -88,10 +81,7 @@ BUILT_SOURCES += \
   FooC.h \
   FooC.inl \
   FooS.h \
-  FooS.inl \
-  FooS_T.cpp \
-  FooS_T.h \
-  FooS_T.inl
+  FooS.inl
 
 CLEANFILES += \
   Foo-stamp \
@@ -99,12 +89,9 @@ CLEANFILES += \
   FooC.h \
   FooC.inl \
   FooS.h \
-  FooS.inl \
-  FooS_T.cpp \
-  FooS_T.h \
-  FooS_T.inl
+  FooS.inl
 
-FooC.cpp FooC.h FooC.inl FooS.h FooS.inl FooS_T.cpp FooS_T.h FooS_T.inl: Foo-stamp
+FooC.cpp FooC.h FooC.inl FooS.h FooS.inl: Foo-stamp
 
 Foo-stamp: $(srcdir)/Foo.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Foo.idl
@@ -126,8 +113,7 @@ client_main_SOURCES = \
   FooC.h \
   FooC.inl \
   FooS.h \
-  FooS_T.h \
-  FooS_T.inl
+  FooS.inl
 
 client_main_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \

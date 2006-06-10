@@ -26,10 +26,7 @@ BUILT_SOURCES = \
   UDPC.inl \
   UDPS.cpp \
   UDPS.h \
-  UDPS.inl \
-  UDPS_T.cpp \
-  UDPS_T.h \
-  UDPS_T.inl
+  UDPS.inl
 
 CLEANFILES = \
   UDP-stamp \
@@ -38,12 +35,9 @@ CLEANFILES = \
   UDPC.inl \
   UDPS.cpp \
   UDPS.h \
-  UDPS.inl \
-  UDPS_T.cpp \
-  UDPS_T.h \
-  UDPS_T.inl
+  UDPS.inl
 
-UDPC.cpp UDPC.h UDPC.inl UDPS.cpp UDPS.h UDPS.inl UDPS_T.cpp UDPS_T.h UDPS_T.inl: UDP-stamp
+UDPC.cpp UDPC.h UDPC.inl UDPS.cpp UDPS.h UDPS.inl: UDP-stamp
 
 UDP-stamp: $(srcdir)/UDP.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St -Sd -Sp $(srcdir)/UDP.idl

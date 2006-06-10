@@ -238,6 +238,7 @@ AC_CONFIG_FILES([
   utils/Makefile
   utils/catior/Makefile
   utils/nslist/Makefile
+  utils/wxNamingViewer/Makefile
  ])
 
 if test $tao_build_examples = yes; then

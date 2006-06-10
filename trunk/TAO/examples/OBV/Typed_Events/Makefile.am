@@ -26,10 +26,7 @@ BUILT_SOURCES = \
   Event_TypesC.inl \
   Event_TypesS.cpp \
   Event_TypesS.h \
-  Event_TypesS.inl \
-  Event_TypesS_T.cpp \
-  Event_TypesS_T.h \
-  Event_TypesS_T.inl
+  Event_TypesS.inl
 
 CLEANFILES = \
   Event_Types-stamp \
@@ -38,12 +35,9 @@ CLEANFILES = \
   Event_TypesC.inl \
   Event_TypesS.cpp \
   Event_TypesS.h \
-  Event_TypesS.inl \
-  Event_TypesS_T.cpp \
-  Event_TypesS_T.h \
-  Event_TypesS_T.inl
+  Event_TypesS.inl
 
-Event_TypesC.cpp Event_TypesC.h Event_TypesC.inl Event_TypesS.cpp Event_TypesS.h Event_TypesS.inl Event_TypesS_T.cpp Event_TypesS_T.h Event_TypesS_T.inl: Event_Types-stamp
+Event_TypesC.cpp Event_TypesC.h Event_TypesC.inl Event_TypesS.cpp Event_TypesS.h Event_TypesS.inl: Event_Types-stamp
 
 Event_Types-stamp: $(srcdir)/Event_Types.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Event_Types.idl

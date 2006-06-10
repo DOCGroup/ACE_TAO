@@ -48,7 +48,7 @@ CLEANFILES = \
 HelloC.cpp HelloC.h HelloC.inl HelloS.cpp HelloS.h HelloS.inl HelloS_T.cpp HelloS_T.h HelloS_T.inl: Hello-stamp
 
 Hello-stamp: $(srcdir)/Hello.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/Hello.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT $(srcdir)/Hello.idl
 	@touch $@
 
 noinst_PROGRAMS = uipmc_test
@@ -68,6 +68,7 @@ uipmc_test_SOURCES = \
   HelloC.h \
   HelloC.inl \
   HelloS.h \
+  HelloS.inl \
   HelloS_T.h \
   HelloS_T.inl
 

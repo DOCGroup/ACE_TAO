@@ -26,10 +26,7 @@ BUILT_SOURCES = \
   ./NavWeapC.inl \
   ./NavWeapS.cpp \
   ./NavWeapS.h \
-  ./NavWeapS.inl \
-  ./NavWeapS_T.cpp \
-  ./NavWeapS_T.h \
-  ./NavWeapS_T.inl
+  ./NavWeapS.inl
 
 CLEANFILES = \
   ./NavWeap-stamp \
@@ -38,12 +35,9 @@ CLEANFILES = \
   ./NavWeapC.inl \
   ./NavWeapS.cpp \
   ./NavWeapS.h \
-  ./NavWeapS.inl \
-  ./NavWeapS_T.cpp \
-  ./NavWeapS_T.h \
-  ./NavWeapS_T.inl
+  ./NavWeapS.inl
 
-./NavWeapC.cpp ./NavWeapC.h ./NavWeapC.inl ./NavWeapS.cpp ./NavWeapS.h ./NavWeapS.inl ./NavWeapS_T.cpp ./NavWeapS_T.h ./NavWeapS_T.inl: ./NavWeap-stamp
+./NavWeapC.cpp ./NavWeapC.h ./NavWeapC.inl ./NavWeapS.cpp ./NavWeapS.h ./NavWeapS.inl: ./NavWeap-stamp
 
 ./NavWeap-stamp: $(srcdir)/../NavWeap.idl $(TAO_IDL_DEP)
 	mkdir -p .

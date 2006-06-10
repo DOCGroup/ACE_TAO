@@ -24,7 +24,10 @@ BUILT_SOURCES = \
   TTestC.inl \
   TTestS.cpp \
   TTestS.h \
-  TTestS.inl
+  TTestS.inl \
+  TTestS_T.cpp \
+  TTestS_T.h \
+  TTestS_T.inl
 
 CLEANFILES = \
   TTest-stamp \
@@ -33,12 +36,15 @@ CLEANFILES = \
   TTestC.inl \
   TTestS.cpp \
   TTestS.h \
-  TTestS.inl
+  TTestS.inl \
+  TTestS_T.cpp \
+  TTestS_T.h \
+  TTestS_T.inl
 
-TTestC.cpp TTestC.h TTestC.inl TTestS.cpp TTestS.h TTestS.inl: TTest-stamp
+TTestC.cpp TTestC.h TTestC.inl TTestS.cpp TTestS.h TTestS.inl TTestS_T.cpp TTestS_T.h TTestS_T.inl: TTest-stamp
 
 TTest-stamp: $(srcdir)/TTest.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -I..\..\.. -I..\..\..\orbsvcs -Sc -Wb,export_macro=TAO_TTest_Export -Wb,export_include=ttest_export.h $(srcdir)/TTest.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -I..\..\.. -I..\..\..\orbsvcs -Sc -Wb,export_macro=TAO_TTest_Export -Wb,export_include=ttest_export.h $(srcdir)/TTest.idl
 	@touch $@
 
 noinst_LTLIBRARIES = libTTest.la
@@ -72,6 +78,9 @@ noinst_HEADERS = \
   TTestC.inl \
   TTestS.h \
   TTestS.inl \
+  TTestS_T.cpp \
+  TTestS_T.h \
+  TTestS_T.inl \
   ttest_export.h
 
 ## Makefile.Trading_Colocated_Test.am

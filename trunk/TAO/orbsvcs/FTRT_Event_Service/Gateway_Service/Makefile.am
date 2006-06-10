@@ -37,6 +37,7 @@ ftrtec_gateway_service_SOURCES = \
   FTRTEC_Gateway_Service.cpp
 
 ftrtec_gateway_service_LDADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_Strategies.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_FTRT_ClientORB.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_FtRtEvent.la \
   $(TAO_BUILDDIR)/tao/libTAO_PI_Server.la \

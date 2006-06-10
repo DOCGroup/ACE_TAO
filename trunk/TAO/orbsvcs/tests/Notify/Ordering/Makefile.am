@@ -26,10 +26,7 @@ BUILT_SOURCES = \
   goC.inl \
   goS.cpp \
   goS.h \
-  goS.inl \
-  goS_T.cpp \
-  goS_T.h \
-  goS_T.inl
+  goS.inl
 
 CLEANFILES = \
   go-stamp \
@@ -38,12 +35,9 @@ CLEANFILES = \
   goC.inl \
   goS.cpp \
   goS.h \
-  goS.inl \
-  goS_T.cpp \
-  goS_T.h \
-  goS_T.inl
+  goS.inl
 
-goC.cpp goC.h goC.inl goS.cpp goS.h goS.inl goS_T.cpp goS_T.h goS_T.inl: go-stamp
+goC.cpp goC.h goC.inl goS.cpp goS.h goS.inl: go-stamp
 
 go-stamp: $(srcdir)/go.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/go.idl

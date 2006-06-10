@@ -49,7 +49,7 @@ CLEANFILES = \
 TestC.cpp TestC.h TestC.inl TestS.cpp TestS.h TestS.inl TestS_T.cpp TestS_T.h TestS_T.inl: Test-stamp
 
 Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/Test.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT $(srcdir)/Test.idl
 	@touch $@
 
 noinst_PROGRAMS = server
@@ -75,6 +75,7 @@ server_SOURCES = \
   TestC.h \
   TestC.inl \
   TestS.h \
+  TestS.inl \
   TestS_T.h \
   TestS_T.inl
 

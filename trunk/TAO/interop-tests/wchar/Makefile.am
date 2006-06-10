@@ -24,10 +24,7 @@ BUILT_SOURCES = \
   interop_wcharC.inl \
   interop_wcharS.cpp \
   interop_wcharS.h \
-  interop_wcharS.inl \
-  interop_wcharS_T.cpp \
-  interop_wcharS_T.h \
-  interop_wcharS_T.inl
+  interop_wcharS.inl
 
 CLEANFILES = \
   interop_wchar-stamp \
@@ -36,12 +33,9 @@ CLEANFILES = \
   interop_wcharC.inl \
   interop_wcharS.cpp \
   interop_wcharS.h \
-  interop_wcharS.inl \
-  interop_wcharS_T.cpp \
-  interop_wcharS_T.h \
-  interop_wcharS_T.inl
+  interop_wcharS.inl
 
-interop_wcharC.cpp interop_wcharC.h interop_wcharC.inl interop_wcharS.cpp interop_wcharS.h interop_wcharS.inl interop_wcharS_T.cpp interop_wcharS_T.h interop_wcharS_T.inl: interop_wchar-stamp
+interop_wcharC.cpp interop_wcharC.h interop_wcharC.inl interop_wcharS.cpp interop_wcharS.h interop_wcharS.inl: interop_wchar-stamp
 
 interop_wchar-stamp: $(srcdir)/interop_wchar.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/interop_wchar.idl

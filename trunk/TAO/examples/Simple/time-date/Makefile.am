@@ -24,10 +24,7 @@ BUILT_SOURCES = \
   Time_DateC.inl \
   Time_DateS.cpp \
   Time_DateS.h \
-  Time_DateS.inl \
-  Time_DateS_T.cpp \
-  Time_DateS_T.h \
-  Time_DateS_T.inl
+  Time_DateS.inl
 
 CLEANFILES = \
   Time_Date-stamp \
@@ -36,12 +33,9 @@ CLEANFILES = \
   Time_DateC.inl \
   Time_DateS.cpp \
   Time_DateS.h \
-  Time_DateS.inl \
-  Time_DateS_T.cpp \
-  Time_DateS_T.h \
-  Time_DateS_T.inl
+  Time_DateS.inl
 
-Time_DateC.cpp Time_DateC.h Time_DateC.inl Time_DateS.cpp Time_DateS.h Time_DateS.inl Time_DateS_T.cpp Time_DateS_T.h Time_DateS_T.inl: Time_Date-stamp
+Time_DateC.cpp Time_DateC.h Time_DateC.inl Time_DateS.cpp Time_DateS.h Time_DateS.inl: Time_Date-stamp
 
 Time_Date-stamp: $(srcdir)/Time_Date.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=Alt_Resource_Factory_Export -Wb,export_include=Alt_Resource_Factory.h $(srcdir)/Time_Date.idl
@@ -69,9 +63,7 @@ noinst_HEADERS = \
   Time_DateC.h \
   Time_DateC.inl \
   Time_DateS.h \
-  Time_DateS_T.cpp \
-  Time_DateS_T.h \
-  Time_DateS_T.inl \
+  Time_DateS.inl \
   Time_Date_i.h
 
 ## Makefile.Simple_Time_Date_Client.am

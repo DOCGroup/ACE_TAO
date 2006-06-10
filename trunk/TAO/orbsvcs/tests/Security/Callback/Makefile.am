@@ -26,10 +26,7 @@ BUILT_SOURCES = \
   serverC.inl \
   serverS.cpp \
   serverS.h \
-  serverS.inl \
-  serverS_T.cpp \
-  serverS_T.h \
-  serverS_T.inl
+  serverS.inl
 
 CLEANFILES = \
   server-stamp \
@@ -38,12 +35,9 @@ CLEANFILES = \
   serverC.inl \
   serverS.cpp \
   serverS.h \
-  serverS.inl \
-  serverS_T.cpp \
-  serverS_T.h \
-  serverS_T.inl
+  serverS.inl
 
-serverC.cpp serverC.h serverC.inl serverS.cpp serverS.h serverS.inl serverS_T.cpp serverS_T.h serverS_T.inl: server-stamp
+serverC.cpp serverC.h serverC.inl serverS.cpp serverS.h serverS.inl: server-stamp
 
 server-stamp: $(srcdir)/server.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/server.idl
@@ -55,10 +49,7 @@ BUILT_SOURCES += \
   clientC.inl \
   clientS.cpp \
   clientS.h \
-  clientS.inl \
-  clientS_T.cpp \
-  clientS_T.h \
-  clientS_T.inl
+  clientS.inl
 
 CLEANFILES += \
   client-stamp \
@@ -67,12 +58,9 @@ CLEANFILES += \
   clientC.inl \
   clientS.cpp \
   clientS.h \
-  clientS.inl \
-  clientS_T.cpp \
-  clientS_T.h \
-  clientS_T.inl
+  clientS.inl
 
-clientC.cpp clientC.h clientC.inl clientS.cpp clientS.h clientS.inl clientS_T.cpp clientS_T.h clientS_T.inl: client-stamp
+clientC.cpp clientC.h clientC.inl clientS.cpp clientS.h clientS.inl: client-stamp
 
 client-stamp: $(srcdir)/client.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/client.idl

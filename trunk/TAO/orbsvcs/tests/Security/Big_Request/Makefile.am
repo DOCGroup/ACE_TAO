@@ -26,10 +26,7 @@ BUILT_SOURCES = \
   TX_ObjectC.inl \
   TX_ObjectS.cpp \
   TX_ObjectS.h \
-  TX_ObjectS.inl \
-  TX_ObjectS_T.cpp \
-  TX_ObjectS_T.h \
-  TX_ObjectS_T.inl
+  TX_ObjectS.inl
 
 CLEANFILES = \
   TX_Object-stamp \
@@ -38,12 +35,9 @@ CLEANFILES = \
   TX_ObjectC.inl \
   TX_ObjectS.cpp \
   TX_ObjectS.h \
-  TX_ObjectS.inl \
-  TX_ObjectS_T.cpp \
-  TX_ObjectS_T.h \
-  TX_ObjectS_T.inl
+  TX_ObjectS.inl
 
-TX_ObjectC.cpp TX_ObjectC.h TX_ObjectC.inl TX_ObjectS.cpp TX_ObjectS.h TX_ObjectS.inl TX_ObjectS_T.cpp TX_ObjectS_T.h TX_ObjectS_T.inl: TX_Object-stamp
+TX_ObjectC.cpp TX_ObjectC.h TX_ObjectC.inl TX_ObjectS.cpp TX_ObjectS.h TX_ObjectS.inl: TX_Object-stamp
 
 TX_Object-stamp: $(srcdir)/TX_Object.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/TX_Object.idl

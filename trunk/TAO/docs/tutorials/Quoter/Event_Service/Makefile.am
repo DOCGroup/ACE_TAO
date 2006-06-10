@@ -26,10 +26,7 @@ BUILT_SOURCES = \
   QuoterC.inl \
   QuoterS.cpp \
   QuoterS.h \
-  QuoterS.inl \
-  QuoterS_T.cpp \
-  QuoterS_T.h \
-  QuoterS_T.inl
+  QuoterS.inl
 
 CLEANFILES = \
   Quoter-stamp \
@@ -38,12 +35,9 @@ CLEANFILES = \
   QuoterC.inl \
   QuoterS.cpp \
   QuoterS.h \
-  QuoterS.inl \
-  QuoterS_T.cpp \
-  QuoterS_T.h \
-  QuoterS_T.inl
+  QuoterS.inl
 
-QuoterC.cpp QuoterC.h QuoterC.inl QuoterS.cpp QuoterS.h QuoterS.inl QuoterS_T.cpp QuoterS_T.h QuoterS_T.inl: Quoter-stamp
+QuoterC.cpp QuoterC.h QuoterC.inl QuoterS.cpp QuoterS.h QuoterS.inl: Quoter-stamp
 
 Quoter-stamp: $(srcdir)/Quoter.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Quoter.idl

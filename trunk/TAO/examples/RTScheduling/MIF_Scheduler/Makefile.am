@@ -50,7 +50,7 @@ CLEANFILES += \
 ../SynchC.cpp ../SynchC.h ../SynchC.inl ../SynchS.cpp ../SynchS.h ../SynchS.inl ../SynchS_T.cpp ../SynchS_T.h ../SynchS_T.inl: Synch-stamp
 
 ../Synch-stamp: $(srcdir)/../Synch.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -o .. $(srcdir)/../Synch.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -o .. $(srcdir)/../Synch.idl
 	@touch $@
 
 noinst_PROGRAMS += Starter
@@ -72,6 +72,7 @@ Starter_SOURCES = \
   ../SynchC.h \
   ../SynchC.inl \
   ../SynchS.h \
+  ../SynchS.inl \
   ../SynchS_T.h \
   ../SynchS_T.inl \
   ../Synch_i.h
@@ -121,7 +122,7 @@ CLEANFILES += \
 ../SynchC.cpp ../SynchC.h ../SynchC.inl ../SynchS.cpp ../SynchS.h ../SynchS.inl ../SynchS_T.cpp ../SynchS_T.h ../SynchS_T.inl: Synch-stamp
 
 ../Synch-stamp: $(srcdir)/../Synch.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -o .. $(srcdir)/../Synch.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -o .. $(srcdir)/../Synch.idl
 	@touch $@
 
 BUILT_SOURCES += \
@@ -150,7 +151,7 @@ CLEANFILES += \
 ../JobC.cpp ../JobC.h ../JobC.inl ../JobS.cpp ../JobS.h ../JobS.inl ../JobS_T.cpp ../JobS_T.h ../JobS_T.inl: Job-stamp
 
 ../Job-stamp: $(srcdir)/../Job.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -o .. $(srcdir)/../Job.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -o .. $(srcdir)/../Job.idl
 	@touch $@
 
 BUILT_SOURCES += \
@@ -177,7 +178,7 @@ CLEANFILES += \
 ../MIF_SchedulingC.cpp ../MIF_SchedulingC.h ../MIF_SchedulingC.inl ../MIF_SchedulingS.h ../MIF_SchedulingS.inl ../MIF_SchedulingS_T.cpp ../MIF_SchedulingS_T.h ../MIF_SchedulingS_T.inl: MIF_Scheduling-stamp
 
 ../MIF_Scheduling-stamp: $(srcdir)/../MIF_Scheduling.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -o .. $(srcdir)/../MIF_Scheduling.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT -o .. $(srcdir)/../MIF_Scheduling.idl
 	@touch $@
 
 noinst_PROGRAMS += test
@@ -210,18 +211,21 @@ test_SOURCES = \
   ../JobC.h \
   ../JobC.inl \
   ../JobS.h \
+  ../JobS.inl \
   ../JobS_T.h \
   ../JobS_T.inl \
   ../Job_i.h \
   ../MIF_SchedulingC.h \
   ../MIF_SchedulingC.inl \
   ../MIF_SchedulingS.h \
+  ../MIF_SchedulingS.inl \
   ../MIF_SchedulingS_T.h \
   ../MIF_SchedulingS_T.inl \
   ../POA_Holder.h \
   ../SynchC.h \
   ../SynchC.inl \
   ../SynchS.h \
+  ../SynchS.inl \
   ../SynchS_T.h \
   ../SynchS_T.inl \
   ../Synch_i.h \

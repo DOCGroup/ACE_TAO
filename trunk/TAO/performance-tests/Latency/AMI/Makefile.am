@@ -29,10 +29,7 @@ BUILT_SOURCES = \
   TestC.inl \
   TestS.cpp \
   TestS.h \
-  TestS.inl \
-  TestS_T.cpp \
-  TestS_T.h \
-  TestS_T.inl
+  TestS.inl
 
 CLEANFILES = \
   Test-stamp \
@@ -41,12 +38,9 @@ CLEANFILES = \
   TestC.inl \
   TestS.cpp \
   TestS.h \
-  TestS.inl \
-  TestS_T.cpp \
-  TestS_T.h \
-  TestS_T.inl
+  TestS.inl
 
-TestC.cpp TestC.h TestC.inl TestS.cpp TestS.h TestS.inl TestS_T.cpp TestS_T.h TestS_T.inl: Test-stamp
+TestC.cpp TestC.h TestC.inl TestS.cpp TestS.h TestS.inl: Test-stamp
 
 Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -GC $(srcdir)/Test.idl

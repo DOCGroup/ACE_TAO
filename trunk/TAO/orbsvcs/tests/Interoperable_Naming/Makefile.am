@@ -44,7 +44,7 @@ CLEANFILES = \
 Web_ServerC.cpp Web_ServerC.h Web_ServerC.inl Web_ServerS.cpp Web_ServerS.h Web_ServerS.inl Web_ServerS_T.cpp Web_ServerS_T.h Web_ServerS_T.inl: Web_Server-stamp
 
 Web_Server-stamp: $(srcdir)/Web_Server.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/Web_Server.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT $(srcdir)/Web_Server.idl
 	@touch $@
 
 noinst_PROGRAMS = client
@@ -65,6 +65,7 @@ client_SOURCES = \
   Web_ServerC.h \
   Web_ServerC.inl \
   Web_ServerS.h \
+  Web_ServerS.inl \
   Web_ServerS_T.h \
   Web_ServerS_T.inl \
   ncontextext_client_i.h

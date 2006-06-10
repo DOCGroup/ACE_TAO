@@ -2306,6 +2306,7 @@ libTAO_EndpointPolicy_la_SOURCES = \
   EndpointPolicy/EndpointPolicy_i.cpp \
   EndpointPolicy/Endpoint_Acceptor_Filter.cpp \
   EndpointPolicy/Endpoint_Acceptor_Filter_Factory.cpp \
+  EndpointPolicy/Endpoint_Value_Impl.cpp \
   EndpointPolicy/IIOPEndpointValueA.cpp \
   EndpointPolicy/IIOPEndpointValueC.cpp \
   EndpointPolicy/IIOPEndpointValue_i.cpp

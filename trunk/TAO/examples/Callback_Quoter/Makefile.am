@@ -24,10 +24,7 @@ BUILT_SOURCES = \
   ConsumerC.inl \
   ConsumerS.cpp \
   ConsumerS.h \
-  ConsumerS.inl \
-  ConsumerS_T.cpp \
-  ConsumerS_T.h \
-  ConsumerS_T.inl
+  ConsumerS.inl
 
 CLEANFILES = \
   Consumer-stamp \
@@ -36,12 +33,9 @@ CLEANFILES = \
   ConsumerC.inl \
   ConsumerS.cpp \
   ConsumerS.h \
-  ConsumerS.inl \
-  ConsumerS_T.cpp \
-  ConsumerS_T.h \
-  ConsumerS_T.inl
+  ConsumerS.inl
 
-ConsumerC.cpp ConsumerC.h ConsumerC.inl ConsumerS.cpp ConsumerS.h ConsumerS.inl ConsumerS_T.cpp ConsumerS_T.h ConsumerS_T.inl: Consumer-stamp
+ConsumerC.cpp ConsumerC.h ConsumerC.inl ConsumerS.cpp ConsumerS.h ConsumerS.inl: Consumer-stamp
 
 Consumer-stamp: $(srcdir)/Consumer.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Consumer.idl
@@ -53,10 +47,7 @@ BUILT_SOURCES += \
   NotifierC.inl \
   NotifierS.cpp \
   NotifierS.h \
-  NotifierS.inl \
-  NotifierS_T.cpp \
-  NotifierS_T.h \
-  NotifierS_T.inl
+  NotifierS.inl
 
 CLEANFILES += \
   Notifier-stamp \
@@ -65,12 +56,9 @@ CLEANFILES += \
   NotifierC.inl \
   NotifierS.cpp \
   NotifierS.h \
-  NotifierS.inl \
-  NotifierS_T.cpp \
-  NotifierS_T.h \
-  NotifierS_T.inl
+  NotifierS.inl
 
-NotifierC.cpp NotifierC.h NotifierC.inl NotifierS.cpp NotifierS.h NotifierS.inl NotifierS_T.cpp NotifierS_T.h NotifierS_T.inl: Notifier-stamp
+NotifierC.cpp NotifierC.h NotifierC.inl NotifierS.cpp NotifierS.h NotifierS.inl: Notifier-stamp
 
 Notifier-stamp: $(srcdir)/Notifier.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Notifier.idl
