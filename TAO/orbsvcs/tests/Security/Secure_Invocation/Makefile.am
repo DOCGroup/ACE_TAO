@@ -26,10 +26,7 @@ BUILT_SOURCES = \
   FooC.inl \
   FooS.cpp \
   FooS.h \
-  FooS.inl \
-  FooS_T.cpp \
-  FooS_T.h \
-  FooS_T.inl
+  FooS.inl
 
 CLEANFILES = \
   Foo-stamp \
@@ -38,12 +35,9 @@ CLEANFILES = \
   FooC.inl \
   FooS.cpp \
   FooS.h \
-  FooS.inl \
-  FooS_T.cpp \
-  FooS_T.h \
-  FooS_T.inl
+  FooS.inl
 
-FooC.cpp FooC.h FooC.inl FooS.cpp FooS.h FooS.inl FooS_T.cpp FooS_T.h FooS_T.inl: Foo-stamp
+FooC.cpp FooC.h FooC.inl FooS.cpp FooS.h FooS.inl: Foo-stamp
 
 Foo-stamp: $(srcdir)/Foo.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Foo.idl

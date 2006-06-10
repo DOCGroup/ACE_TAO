@@ -29,10 +29,7 @@ BUILT_SOURCES = \
   ami_testC.inl \
   ami_testS.cpp \
   ami_testS.h \
-  ami_testS.inl \
-  ami_testS_T.cpp \
-  ami_testS_T.h \
-  ami_testS_T.inl
+  ami_testS.inl
 
 CLEANFILES = \
   ami_test-stamp \
@@ -41,12 +38,9 @@ CLEANFILES = \
   ami_testC.inl \
   ami_testS.cpp \
   ami_testS.h \
-  ami_testS.inl \
-  ami_testS_T.cpp \
-  ami_testS_T.h \
-  ami_testS_T.inl
+  ami_testS.inl
 
-ami_testC.cpp ami_testC.h ami_testC.inl ami_testS.cpp ami_testS.h ami_testS.inl ami_testS_T.cpp ami_testS_T.h ami_testS_T.inl: ami_test-stamp
+ami_testC.cpp ami_testC.h ami_testC.inl ami_testS.cpp ami_testS.h ami_testS.inl: ami_test-stamp
 
 ami_test-stamp: $(srcdir)/ami_test.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -GC $(srcdir)/ami_test.idl

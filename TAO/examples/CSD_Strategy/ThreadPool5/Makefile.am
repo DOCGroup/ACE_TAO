@@ -24,10 +24,7 @@ BUILT_SOURCES = \
   CallbackC.inl \
   CallbackS.cpp \
   CallbackS.h \
-  CallbackS.inl \
-  CallbackS_T.cpp \
-  CallbackS_T.h \
-  CallbackS_T.inl
+  CallbackS.inl
 
 CLEANFILES = \
   Callback-stamp \
@@ -36,12 +33,9 @@ CLEANFILES = \
   CallbackC.inl \
   CallbackS.cpp \
   CallbackS.h \
-  CallbackS.inl \
-  CallbackS_T.cpp \
-  CallbackS_T.h \
-  CallbackS_T.inl
+  CallbackS.inl
 
-CallbackC.cpp CallbackC.h CallbackC.inl CallbackS.cpp CallbackS.h CallbackS.inl CallbackS_T.cpp CallbackS_T.h CallbackS_T.inl: Callback-stamp
+CallbackC.cpp CallbackC.h CallbackC.inl CallbackS.cpp CallbackS.h CallbackS.inl: Callback-stamp
 
 Callback-stamp: $(srcdir)/Callback.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Callback.idl
@@ -53,10 +47,7 @@ BUILT_SOURCES += \
   FooC.inl \
   FooS.cpp \
   FooS.h \
-  FooS.inl \
-  FooS_T.cpp \
-  FooS_T.h \
-  FooS_T.inl
+  FooS.inl
 
 CLEANFILES += \
   Foo-stamp \
@@ -65,12 +56,9 @@ CLEANFILES += \
   FooC.inl \
   FooS.cpp \
   FooS.h \
-  FooS.inl \
-  FooS_T.cpp \
-  FooS_T.h \
-  FooS_T.inl
+  FooS.inl
 
-FooC.cpp FooC.h FooC.inl FooS.cpp FooS.h FooS.inl FooS_T.cpp FooS_T.h FooS_T.inl: Foo-stamp
+FooC.cpp FooC.h FooC.inl FooS.cpp FooS.h FooS.inl: Foo-stamp
 
 Foo-stamp: $(srcdir)/Foo.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Foo.idl
@@ -100,15 +88,13 @@ server_main_SOURCES = \
   CallbackC.h \
   CallbackC.inl \
   CallbackS.h \
-  CallbackS_T.h \
-  CallbackS_T.inl \
+  CallbackS.inl \
   Callback_i.h \
   ClientTask.h \
   FooC.h \
   FooC.inl \
   FooS.h \
-  FooS_T.h \
-  FooS_T.inl \
+  FooS.inl \
   FooServantList.h \
   Foo_i.h \
   OrbShutdownTask.h \
@@ -133,10 +119,7 @@ BUILT_SOURCES += \
   CallbackC.inl \
   CallbackS.cpp \
   CallbackS.h \
-  CallbackS.inl \
-  CallbackS_T.cpp \
-  CallbackS_T.h \
-  CallbackS_T.inl
+  CallbackS.inl
 
 CLEANFILES += \
   Callback-stamp \
@@ -145,12 +128,9 @@ CLEANFILES += \
   CallbackC.inl \
   CallbackS.cpp \
   CallbackS.h \
-  CallbackS.inl \
-  CallbackS_T.cpp \
-  CallbackS_T.h \
-  CallbackS_T.inl
+  CallbackS.inl
 
-CallbackC.cpp CallbackC.h CallbackC.inl CallbackS.cpp CallbackS.h CallbackS.inl CallbackS_T.cpp CallbackS_T.h CallbackS_T.inl: Callback-stamp
+CallbackC.cpp CallbackC.h CallbackC.inl CallbackS.cpp CallbackS.h CallbackS.inl: Callback-stamp
 
 Callback-stamp: $(srcdir)/Callback.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Callback.idl
@@ -161,10 +141,7 @@ BUILT_SOURCES += \
   FooC.h \
   FooC.inl \
   FooS.h \
-  FooS.inl \
-  FooS_T.cpp \
-  FooS_T.h \
-  FooS_T.inl
+  FooS.inl
 
 CLEANFILES += \
   Foo-stamp \
@@ -172,12 +149,9 @@ CLEANFILES += \
   FooC.h \
   FooC.inl \
   FooS.h \
-  FooS.inl \
-  FooS_T.cpp \
-  FooS_T.h \
-  FooS_T.inl
+  FooS.inl
 
-FooC.cpp FooC.h FooC.inl FooS.h FooS.inl FooS_T.cpp FooS_T.h FooS_T.inl: Foo-stamp
+FooC.cpp FooC.h FooC.inl FooS.h FooS.inl: Foo-stamp
 
 Foo-stamp: $(srcdir)/Foo.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Foo.idl
@@ -202,16 +176,14 @@ client_main_SOURCES = \
   CallbackC.h \
   CallbackC.inl \
   CallbackS.h \
-  CallbackS_T.h \
-  CallbackS_T.inl \
+  CallbackS.inl \
   Callback_i.h \
   ClientApp.h \
   ClientTask.h \
   FooC.h \
   FooC.inl \
   FooS.h \
-  FooS_T.h \
-  FooS_T.inl
+  FooS.inl
 
 client_main_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_CSD_ThreadPool.la \

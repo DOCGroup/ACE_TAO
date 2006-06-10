@@ -24,10 +24,7 @@ BUILT_SOURCES = \
   PP_TestC.inl \
   PP_TestS.cpp \
   PP_TestS.h \
-  PP_TestS.inl \
-  PP_TestS_T.cpp \
-  PP_TestS_T.h \
-  PP_TestS_T.inl
+  PP_TestS.inl
 
 CLEANFILES = \
   PP_Test-stamp \
@@ -36,12 +33,9 @@ CLEANFILES = \
   PP_TestC.inl \
   PP_TestS.cpp \
   PP_TestS.h \
-  PP_TestS.inl \
-  PP_TestS_T.cpp \
-  PP_TestS_T.h \
-  PP_TestS_T.inl
+  PP_TestS.inl
 
-PP_TestC.cpp PP_TestC.h PP_TestC.inl PP_TestS.cpp PP_TestS.h PP_TestS.inl PP_TestS_T.cpp PP_TestS_T.h PP_TestS_T.inl: PP_Test-stamp
+PP_TestC.cpp PP_TestC.h PP_TestC.inl PP_TestS.cpp PP_TestS.h PP_TestS.inl: PP_Test-stamp
 
 PP_Test-stamp: $(srcdir)/PP_Test.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/PP_Test.idl

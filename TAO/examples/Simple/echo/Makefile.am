@@ -24,10 +24,7 @@ BUILT_SOURCES = \
   EchoC.inl \
   EchoS.cpp \
   EchoS.h \
-  EchoS.inl \
-  EchoS_T.cpp \
-  EchoS_T.h \
-  EchoS_T.inl
+  EchoS.inl
 
 CLEANFILES = \
   Echo-stamp \
@@ -36,12 +33,9 @@ CLEANFILES = \
   EchoC.inl \
   EchoS.cpp \
   EchoS.h \
-  EchoS.inl \
-  EchoS_T.cpp \
-  EchoS_T.h \
-  EchoS_T.inl
+  EchoS.inl
 
-EchoC.cpp EchoC.h EchoC.inl EchoS.cpp EchoS.h EchoS.inl EchoS_T.cpp EchoS_T.h EchoS_T.inl: Echo-stamp
+EchoC.cpp EchoC.h EchoC.inl EchoS.cpp EchoS.h EchoS.inl: Echo-stamp
 
 Echo-stamp: $(srcdir)/Echo.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Echo.idl

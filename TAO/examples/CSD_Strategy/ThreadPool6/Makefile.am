@@ -13,7 +13,7 @@ ACE_ROOT = $(top_srcdir)/..
 TAO_BUILDDIR = $(top_builddir)
 TAO_IDL = ACE_ROOT=$(ACE_ROOT) TAO_ROOT=$(TAO_ROOT) $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
-TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf -GT
+TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
 CLEANFILES =
@@ -50,7 +50,7 @@ CLEANFILES += \
 FooC.cpp FooC.h FooC.inl FooS.cpp FooS.h FooS.inl FooS_T.cpp FooS_T.h FooS_T.inl: Foo-stamp
 
 Foo-stamp: $(srcdir)/Foo.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Foo.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -GT $(srcdir)/Foo.idl
 	@touch $@
 
 noinst_PROGRAMS += server_main
@@ -71,6 +71,7 @@ server_main_SOURCES = \
   FooC.h \
   FooC.inl \
   FooS.h \
+  FooS.inl \
   FooS_T.h \
   FooS_T.inl \
   Foo_i.h \
@@ -96,10 +97,7 @@ BUILT_SOURCES += \
   FooC.h \
   FooC.inl \
   FooS.h \
-  FooS.inl \
-  FooS_T.cpp \
-  FooS_T.h \
-  FooS_T.inl
+  FooS.inl
 
 CLEANFILES += \
   Foo-stamp \
@@ -107,12 +105,9 @@ CLEANFILES += \
   FooC.h \
   FooC.inl \
   FooS.h \
-  FooS.inl \
-  FooS_T.cpp \
-  FooS_T.h \
-  FooS_T.inl
+  FooS.inl
 
-FooC.cpp FooC.h FooC.inl FooS.h FooS.inl FooS_T.cpp FooS_T.h FooS_T.inl: Foo-stamp
+FooC.cpp FooC.h FooC.inl FooS.h FooS.inl: Foo-stamp
 
 Foo-stamp: $(srcdir)/Foo.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Foo.idl
@@ -134,8 +129,7 @@ client_main_SOURCES = \
   FooC.h \
   FooC.inl \
   FooS.h \
-  FooS_T.h \
-  FooS_T.inl
+  FooS.inl
 
 client_main_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \

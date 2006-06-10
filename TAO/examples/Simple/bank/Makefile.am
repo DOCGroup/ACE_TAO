@@ -24,10 +24,7 @@ BUILT_SOURCES = \
   BankC.inl \
   BankS.cpp \
   BankS.h \
-  BankS.inl \
-  BankS_T.cpp \
-  BankS_T.h \
-  BankS_T.inl
+  BankS.inl
 
 CLEANFILES = \
   Bank-stamp \
@@ -36,12 +33,9 @@ CLEANFILES = \
   BankC.inl \
   BankS.cpp \
   BankS.h \
-  BankS.inl \
-  BankS_T.cpp \
-  BankS_T.h \
-  BankS_T.inl
+  BankS.inl
 
-BankC.cpp BankC.h BankC.inl BankS.cpp BankS.h BankS.inl BankS_T.cpp BankS_T.h BankS_T.inl: Bank-stamp
+BankC.cpp BankC.h BankC.inl BankS.cpp BankS.h BankS.inl: Bank-stamp
 
 Bank-stamp: $(srcdir)/Bank.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Bank.idl

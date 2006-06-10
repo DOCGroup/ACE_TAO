@@ -17,6 +17,7 @@ bin_PROGRAMS =
 
 ## Makefile.NT_Naming_Service.am
 
+if BUILD_WINNT
 if !BUILD_ACE_FOR_TAO
 
 bin_PROGRAMS += NT_Naming_Service
@@ -52,6 +53,7 @@ NT_Naming_Service_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_ACE_FOR_TAO
+endif BUILD_WINNT
 
 ## Makefile.Naming_Service.am
 

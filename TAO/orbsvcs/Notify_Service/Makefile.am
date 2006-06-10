@@ -17,6 +17,7 @@ bin_PROGRAMS =
 
 ## Makefile.NT_Notify_Service.am
 
+if BUILD_WINNT
 if !BUILD_ACE_FOR_TAO
 if !BUILD_MINIMUM_CORBA
 
@@ -57,6 +58,7 @@ NT_Notify_Service_LDADD = \
 
 endif !BUILD_MINIMUM_CORBA
 endif !BUILD_ACE_FOR_TAO
+endif BUILD_WINNT
 
 ## Makefile.Notify_Service.am
 

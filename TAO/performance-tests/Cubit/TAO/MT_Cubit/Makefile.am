@@ -28,10 +28,7 @@ BUILT_SOURCES = \
   cubitC.inl \
   cubitS.cpp \
   cubitS.h \
-  cubitS.inl \
-  cubitS_T.cpp \
-  cubitS_T.h \
-  cubitS_T.inl
+  cubitS.inl
 
 CLEANFILES = \
   cubit-stamp \
@@ -40,12 +37,9 @@ CLEANFILES = \
   cubitC.inl \
   cubitS.cpp \
   cubitS.h \
-  cubitS.inl \
-  cubitS_T.cpp \
-  cubitS_T.h \
-  cubitS_T.inl
+  cubitS.inl
 
-cubitC.cpp cubitC.h cubitC.inl cubitS.cpp cubitS.h cubitS.inl cubitS_T.cpp cubitS_T.h cubitS_T.inl: cubit-stamp
+cubitC.cpp cubitC.h cubitC.inl cubitS.cpp cubitS.h cubitS.inl: cubit-stamp
 
 cubit-stamp: $(srcdir)/cubit.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/cubit.idl

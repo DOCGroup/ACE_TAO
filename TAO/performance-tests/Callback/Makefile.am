@@ -28,10 +28,7 @@ BUILT_SOURCES = \
   callbackC.inl \
   callbackS.cpp \
   callbackS.h \
-  callbackS.inl \
-  callbackS_T.cpp \
-  callbackS_T.h \
-  callbackS_T.inl
+  callbackS.inl
 
 CLEANFILES = \
   callback-stamp \
@@ -40,12 +37,9 @@ CLEANFILES = \
   callbackC.inl \
   callbackS.cpp \
   callbackS.h \
-  callbackS.inl \
-  callbackS_T.cpp \
-  callbackS_T.h \
-  callbackS_T.inl
+  callbackS.inl
 
-callbackC.cpp callbackC.h callbackC.inl callbackS.cpp callbackS.h callbackS.inl callbackS_T.cpp callbackS_T.h callbackS_T.inl: callback-stamp
+callbackC.cpp callbackC.h callbackC.inl callbackS.cpp callbackS.h callbackS.inl: callback-stamp
 
 callback-stamp: $(srcdir)/callback.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/callback.idl

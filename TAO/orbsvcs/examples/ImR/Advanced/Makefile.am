@@ -26,10 +26,7 @@ BUILT_SOURCES = \
   ManagerC.inl \
   ManagerS.cpp \
   ManagerS.h \
-  ManagerS.inl \
-  ManagerS_T.cpp \
-  ManagerS_T.h \
-  ManagerS_T.inl
+  ManagerS.inl
 
 CLEANFILES = \
   Manager-stamp \
@@ -38,12 +35,9 @@ CLEANFILES = \
   ManagerC.inl \
   ManagerS.cpp \
   ManagerS.h \
-  ManagerS.inl \
-  ManagerS_T.cpp \
-  ManagerS_T.h \
-  ManagerS_T.inl
+  ManagerS.inl
 
-ManagerC.cpp ManagerC.h ManagerC.inl ManagerS.cpp ManagerS.h ManagerS.inl ManagerS_T.cpp ManagerS_T.h ManagerS_T.inl: Manager-stamp
+ManagerC.cpp ManagerC.h ManagerC.inl ManagerS.cpp ManagerS.h ManagerS.inl: Manager-stamp
 
 Manager-stamp: $(srcdir)/Manager.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Manager.idl
@@ -55,10 +49,7 @@ BUILT_SOURCES += \
   MessengerC.inl \
   MessengerS.cpp \
   MessengerS.h \
-  MessengerS.inl \
-  MessengerS_T.cpp \
-  MessengerS_T.h \
-  MessengerS_T.inl
+  MessengerS.inl
 
 CLEANFILES += \
   Messenger-stamp \
@@ -67,12 +58,9 @@ CLEANFILES += \
   MessengerC.inl \
   MessengerS.cpp \
   MessengerS.h \
-  MessengerS.inl \
-  MessengerS_T.cpp \
-  MessengerS_T.h \
-  MessengerS_T.inl
+  MessengerS.inl
 
-MessengerC.cpp MessengerC.h MessengerC.inl MessengerS.cpp MessengerS.h MessengerS.inl MessengerS_T.cpp MessengerS_T.h MessengerS_T.inl: Messenger-stamp
+MessengerC.cpp MessengerC.h MessengerC.inl MessengerS.cpp MessengerS.h MessengerS.inl: Messenger-stamp
 
 Messenger-stamp: $(srcdir)/Messenger.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Messenger.idl

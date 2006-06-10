@@ -27,10 +27,7 @@ BUILT_SOURCES = \
   testC.inl \
   testS.cpp \
   testS.h \
-  testS.inl \
-  testS_T.cpp \
-  testS_T.h \
-  testS_T.inl
+  testS.inl
 
 CLEANFILES = \
   test-stamp \
@@ -39,12 +36,9 @@ CLEANFILES = \
   testC.inl \
   testS.cpp \
   testS.h \
-  testS.inl \
-  testS_T.cpp \
-  testS_T.h \
-  testS_T.inl
+  testS.inl
 
-testC.cpp testC.h testC.inl testS.cpp testS.h testS.inl testS_T.cpp testS_T.h testS_T.inl: test-stamp
+testC.cpp testC.h testC.inl testS.cpp testS.h testS.inl: test-stamp
 
 test-stamp: $(srcdir)/test.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/test.idl
@@ -65,8 +59,7 @@ registration_SOURCES = \
   testC.h \
   testC.inl \
   testS.h \
-  testS_T.h \
-  testS_T.inl
+  testS.inl
 
 registration_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \

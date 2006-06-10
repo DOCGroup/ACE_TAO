@@ -102,7 +102,7 @@ CLEANFILES = \
 FT_TestReplicaC.cpp FT_TestReplicaC.h FT_TestReplicaC.inl FT_TestReplicaS.cpp FT_TestReplicaS.h FT_TestReplicaS.inl FT_TestReplicaS_T.cpp FT_TestReplicaS_T.h FT_TestReplicaS_T.inl: FT_TestReplica-stamp
 
 FT_TestReplica-stamp: $(srcdir)/FT_TestReplica.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/FT_TestReplica.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT $(srcdir)/FT_TestReplica.idl
 	@touch $@
 
 

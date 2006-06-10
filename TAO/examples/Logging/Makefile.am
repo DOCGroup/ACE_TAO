@@ -24,10 +24,7 @@ BUILT_SOURCES = \
   LoggerC.inl \
   LoggerS.cpp \
   LoggerS.h \
-  LoggerS.inl \
-  LoggerS_T.cpp \
-  LoggerS_T.h \
-  LoggerS_T.inl
+  LoggerS.inl
 
 CLEANFILES = \
   Logger-stamp \
@@ -36,12 +33,9 @@ CLEANFILES = \
   LoggerC.inl \
   LoggerS.cpp \
   LoggerS.h \
-  LoggerS.inl \
-  LoggerS_T.cpp \
-  LoggerS_T.h \
-  LoggerS_T.inl
+  LoggerS.inl
 
-LoggerC.cpp LoggerC.h LoggerC.inl LoggerS.cpp LoggerS.h LoggerS.inl LoggerS_T.cpp LoggerS_T.h LoggerS_T.inl: Logger-stamp
+LoggerC.cpp LoggerC.h LoggerC.inl LoggerS.cpp LoggerS.h LoggerS.inl: Logger-stamp
 
 Logger-stamp: $(srcdir)/Logger.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Logger.idl

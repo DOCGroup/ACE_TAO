@@ -24,10 +24,7 @@ BUILT_SOURCES = \
   demux_testC.inl \
   demux_testS.cpp \
   demux_testS.h \
-  demux_testS.inl \
-  demux_testS_T.cpp \
-  demux_testS_T.h \
-  demux_testS_T.inl
+  demux_testS.inl
 
 CLEANFILES = \
   demux_test-stamp \
@@ -36,12 +33,9 @@ CLEANFILES = \
   demux_testC.inl \
   demux_testS.cpp \
   demux_testS.h \
-  demux_testS.inl \
-  demux_testS_T.cpp \
-  demux_testS_T.h \
-  demux_testS_T.inl
+  demux_testS.inl
 
-demux_testC.cpp demux_testC.h demux_testC.inl demux_testS.cpp demux_testS.h demux_testS.inl demux_testS_T.cpp demux_testS_T.h demux_testS_T.inl: demux_test-stamp
+demux_testC.cpp demux_testC.h demux_testC.inl demux_testS.cpp demux_testS.h demux_testS.inl: demux_test-stamp
 
 demux_test-stamp: $(srcdir)/demux_test.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/demux_test.idl
