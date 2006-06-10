@@ -1,3 +1,17 @@
+Sat Jun 10 03:52:25 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/Naming_Service/Naming_Service.mpc:
+
+          Changed NT_Naming_Service project to require new MPC feature
+          variable "winnt". Avoids building and installing this on non
+          Windows systems.  Fixes bugzilla bug #2412.
+
+        * orbsvcs/Notify_Service/Notify_Service.mpc:
+
+          Changed NT_Notify_Service project to require new MPC feature
+          variable "winnt". Avoids building and installing this on non
+          Windows systems.  Fixes bugzilla bug #2411.
+
 Fri Jun  9 18:33:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/performance-tests/RTEvent/lib/Client_Options.{h,cpp}:
