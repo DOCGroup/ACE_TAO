@@ -1,3 +1,9 @@
+Sat Jun 10 18:30:42 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * performance-tests/Makefile.am:
+
+          Disable building CSD_Strategy tests.
+
 Sat Jun 10 10:40:02 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * examples/RTScheduling/Job_i.h:
