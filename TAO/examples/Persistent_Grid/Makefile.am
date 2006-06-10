@@ -25,10 +25,7 @@ BUILT_SOURCES = \
   GridC.inl \
   GridS.cpp \
   GridS.h \
-  GridS.inl \
-  GridS_T.cpp \
-  GridS_T.h \
-  GridS_T.inl
+  GridS.inl
 
 CLEANFILES = \
   Grid-stamp \
@@ -37,12 +34,9 @@ CLEANFILES = \
   GridC.inl \
   GridS.cpp \
   GridS.h \
-  GridS.inl \
-  GridS_T.cpp \
-  GridS_T.h \
-  GridS_T.inl
+  GridS.inl
 
-GridC.cpp GridC.h GridC.inl GridS.cpp GridS.h GridS.inl GridS_T.cpp GridS_T.h GridS_T.inl: Grid-stamp
+GridC.cpp GridC.h GridC.inl GridS.cpp GridS.h GridS.inl: Grid-stamp
 
 Grid-stamp: $(srcdir)/Grid.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Grid.idl

@@ -46,7 +46,7 @@ CLEANFILES = \
 CosEventChannelFactoryC.cpp CosEventChannelFactoryC.h CosEventChannelFactoryC.inl CosEventChannelFactoryS.cpp CosEventChannelFactoryS.h CosEventChannelFactoryS.inl CosEventChannelFactoryS_T.cpp CosEventChannelFactoryS_T.h CosEventChannelFactoryS_T.inl: CosEventChannelFactory-stamp
 
 CosEventChannelFactory-stamp: $(srcdir)/CosEventChannelFactory.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/CosEventChannelFactory.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GT $(srcdir)/CosEventChannelFactory.idl
 	@touch $@
 
 

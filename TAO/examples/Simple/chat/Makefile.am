@@ -24,10 +24,7 @@ BUILT_SOURCES = \
   ReceiverC.inl \
   ReceiverS.cpp \
   ReceiverS.h \
-  ReceiverS.inl \
-  ReceiverS_T.cpp \
-  ReceiverS_T.h \
-  ReceiverS_T.inl
+  ReceiverS.inl
 
 CLEANFILES = \
   Receiver-stamp \
@@ -36,12 +33,9 @@ CLEANFILES = \
   ReceiverC.inl \
   ReceiverS.cpp \
   ReceiverS.h \
-  ReceiverS.inl \
-  ReceiverS_T.cpp \
-  ReceiverS_T.h \
-  ReceiverS_T.inl
+  ReceiverS.inl
 
-ReceiverC.cpp ReceiverC.h ReceiverC.inl ReceiverS.cpp ReceiverS.h ReceiverS.inl ReceiverS_T.cpp ReceiverS_T.h ReceiverS_T.inl: Receiver-stamp
+ReceiverC.cpp ReceiverC.h ReceiverC.inl ReceiverS.cpp ReceiverS.h ReceiverS.inl: Receiver-stamp
 
 Receiver-stamp: $(srcdir)/Receiver.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Receiver.idl
@@ -53,10 +47,7 @@ BUILT_SOURCES += \
   BroadcasterC.inl \
   BroadcasterS.cpp \
   BroadcasterS.h \
-  BroadcasterS.inl \
-  BroadcasterS_T.cpp \
-  BroadcasterS_T.h \
-  BroadcasterS_T.inl
+  BroadcasterS.inl
 
 CLEANFILES += \
   Broadcaster-stamp \
@@ -65,12 +56,9 @@ CLEANFILES += \
   BroadcasterC.inl \
   BroadcasterS.cpp \
   BroadcasterS.h \
-  BroadcasterS.inl \
-  BroadcasterS_T.cpp \
-  BroadcasterS_T.h \
-  BroadcasterS_T.inl
+  BroadcasterS.inl
 
-BroadcasterC.cpp BroadcasterC.h BroadcasterC.inl BroadcasterS.cpp BroadcasterS.h BroadcasterS.inl BroadcasterS_T.cpp BroadcasterS_T.h BroadcasterS_T.inl: Broadcaster-stamp
+BroadcasterC.cpp BroadcasterC.h BroadcasterC.inl BroadcasterS.cpp BroadcasterS.h BroadcasterS.inl: Broadcaster-stamp
 
 Broadcaster-stamp: $(srcdir)/Broadcaster.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Broadcaster.idl

@@ -39,6 +39,7 @@ consumer_SOURCES = \
   PushConsumer.h
 
 consumer_LDADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_Strategies.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_FTRT_ClientORB.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_FtRtEvent.la \
   $(TAO_BUILDDIR)/tao/libTAO_PI_Server.la \
@@ -90,6 +91,7 @@ supplier_SOURCES = \
   PushSupplier.h
 
 supplier_LDADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_Strategies.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_FTRT_ClientORB.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_FtRtEvent.la \
   $(TAO_BUILDDIR)/tao/libTAO_PI_Server.la \

@@ -39,6 +39,7 @@ ftrtec_factory_service_SOURCES = \
   EventChannelFactory_i.h
 
 ftrtec_factory_service_LDADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_Strategies.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosEvent_Skel.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_FaultTolerance.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_FT_ServerORB.la \

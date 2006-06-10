@@ -24,10 +24,7 @@ BUILT_SOURCES = \
   MCastC.inl \
   MCastS.cpp \
   MCastS.h \
-  MCastS.inl \
-  MCastS_T.cpp \
-  MCastS_T.h \
-  MCastS_T.inl
+  MCastS.inl
 
 CLEANFILES = \
   MCast-stamp \
@@ -36,12 +33,9 @@ CLEANFILES = \
   MCastC.inl \
   MCastS.cpp \
   MCastS.h \
-  MCastS.inl \
-  MCastS_T.cpp \
-  MCastS_T.h \
-  MCastS_T.inl
+  MCastS.inl
 
-MCastC.cpp MCastC.h MCastC.inl MCastS.cpp MCastS.h MCastS.inl MCastS_T.cpp MCastS_T.h MCastS_T.inl: MCast-stamp
+MCastC.cpp MCastC.h MCastC.inl MCastS.cpp MCastS.h MCastS.inl: MCast-stamp
 
 MCast-stamp: $(srcdir)/MCast.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/MCast.idl

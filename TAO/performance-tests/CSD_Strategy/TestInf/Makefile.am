@@ -24,10 +24,7 @@ BUILT_SOURCES = \
   FooExceptionC.inl \
   FooExceptionS.cpp \
   FooExceptionS.h \
-  FooExceptionS.inl \
-  FooExceptionS_T.cpp \
-  FooExceptionS_T.h \
-  FooExceptionS_T.inl
+  FooExceptionS.inl
 
 CLEANFILES = \
   FooException-stamp \
@@ -36,12 +33,9 @@ CLEANFILES = \
   FooExceptionC.inl \
   FooExceptionS.cpp \
   FooExceptionS.h \
-  FooExceptionS.inl \
-  FooExceptionS_T.cpp \
-  FooExceptionS_T.h \
-  FooExceptionS_T.inl
+  FooExceptionS.inl
 
-FooExceptionC.cpp FooExceptionC.h FooExceptionC.inl FooExceptionS.cpp FooExceptionS.h FooExceptionS.inl FooExceptionS_T.cpp FooExceptionS_T.h FooExceptionS_T.inl: FooException-stamp
+FooExceptionC.cpp FooExceptionC.h FooExceptionC.inl FooExceptionS.cpp FooExceptionS.h FooExceptionS.inl: FooException-stamp
 
 FooException-stamp: $(srcdir)/FooException.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=CSD_PT_TestInf_Export -Wb,export_include=CSD_PT_TestInf_Export.h $(srcdir)/FooException.idl
@@ -53,10 +47,7 @@ BUILT_SOURCES += \
   TestAppExceptionC.inl \
   TestAppExceptionS.cpp \
   TestAppExceptionS.h \
-  TestAppExceptionS.inl \
-  TestAppExceptionS_T.cpp \
-  TestAppExceptionS_T.h \
-  TestAppExceptionS_T.inl
+  TestAppExceptionS.inl
 
 CLEANFILES += \
   TestAppException-stamp \
@@ -65,12 +56,9 @@ CLEANFILES += \
   TestAppExceptionC.inl \
   TestAppExceptionS.cpp \
   TestAppExceptionS.h \
-  TestAppExceptionS.inl \
-  TestAppExceptionS_T.cpp \
-  TestAppExceptionS_T.h \
-  TestAppExceptionS_T.inl
+  TestAppExceptionS.inl
 
-TestAppExceptionC.cpp TestAppExceptionC.h TestAppExceptionC.inl TestAppExceptionS.cpp TestAppExceptionS.h TestAppExceptionS.inl TestAppExceptionS_T.cpp TestAppExceptionS_T.h TestAppExceptionS_T.inl: TestAppException-stamp
+TestAppExceptionC.cpp TestAppExceptionC.h TestAppExceptionC.inl TestAppExceptionS.cpp TestAppExceptionS.h TestAppExceptionS.inl: TestAppException-stamp
 
 TestAppException-stamp: $(srcdir)/TestAppException.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=CSD_PT_TestInf_Export -Wb,export_include=CSD_PT_TestInf_Export.h $(srcdir)/TestAppException.idl
@@ -82,10 +70,7 @@ BUILT_SOURCES += \
   CancelledExceptionC.inl \
   CancelledExceptionS.cpp \
   CancelledExceptionS.h \
-  CancelledExceptionS.inl \
-  CancelledExceptionS_T.cpp \
-  CancelledExceptionS_T.h \
-  CancelledExceptionS_T.inl
+  CancelledExceptionS.inl
 
 CLEANFILES += \
   CancelledException-stamp \
@@ -94,12 +79,9 @@ CLEANFILES += \
   CancelledExceptionC.inl \
   CancelledExceptionS.cpp \
   CancelledExceptionS.h \
-  CancelledExceptionS.inl \
-  CancelledExceptionS_T.cpp \
-  CancelledExceptionS_T.h \
-  CancelledExceptionS_T.inl
+  CancelledExceptionS.inl
 
-CancelledExceptionC.cpp CancelledExceptionC.h CancelledExceptionC.inl CancelledExceptionS.cpp CancelledExceptionS.h CancelledExceptionS.inl CancelledExceptionS_T.cpp CancelledExceptionS_T.h CancelledExceptionS_T.inl: CancelledException-stamp
+CancelledExceptionC.cpp CancelledExceptionC.h CancelledExceptionC.inl CancelledExceptionS.cpp CancelledExceptionS.h CancelledExceptionS.inl: CancelledException-stamp
 
 CancelledException-stamp: $(srcdir)/CancelledException.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=CSD_PT_TestInf_Export -Wb,export_include=CSD_PT_TestInf_Export.h $(srcdir)/CancelledException.idl
@@ -111,10 +93,7 @@ BUILT_SOURCES += \
   CustomExceptionC.inl \
   CustomExceptionS.cpp \
   CustomExceptionS.h \
-  CustomExceptionS.inl \
-  CustomExceptionS_T.cpp \
-  CustomExceptionS_T.h \
-  CustomExceptionS_T.inl
+  CustomExceptionS.inl
 
 CLEANFILES += \
   CustomException-stamp \
@@ -123,12 +102,9 @@ CLEANFILES += \
   CustomExceptionC.inl \
   CustomExceptionS.cpp \
   CustomExceptionS.h \
-  CustomExceptionS.inl \
-  CustomExceptionS_T.cpp \
-  CustomExceptionS_T.h \
-  CustomExceptionS_T.inl
+  CustomExceptionS.inl
 
-CustomExceptionC.cpp CustomExceptionC.h CustomExceptionC.inl CustomExceptionS.cpp CustomExceptionS.h CustomExceptionS.inl CustomExceptionS_T.cpp CustomExceptionS_T.h CustomExceptionS_T.inl: CustomException-stamp
+CustomExceptionC.cpp CustomExceptionC.h CustomExceptionC.inl CustomExceptionS.cpp CustomExceptionS.h CustomExceptionS.inl: CustomException-stamp
 
 CustomException-stamp: $(srcdir)/CustomException.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=CSD_PT_TestInf_Export -Wb,export_include=CSD_PT_TestInf_Export.h $(srcdir)/CustomException.idl
@@ -169,25 +145,19 @@ noinst_HEADERS = \
   CancelledExceptionC.h \
   CancelledExceptionC.inl \
   CancelledExceptionS.h \
-  CancelledExceptionS_T.cpp \
-  CancelledExceptionS_T.h \
-  CancelledExceptionS_T.inl \
+  CancelledExceptionS.inl \
   ClientEngine.h \
   ClientTask.h \
   CustomException.idl \
   CustomExceptionC.h \
   CustomExceptionC.inl \
   CustomExceptionS.h \
-  CustomExceptionS_T.cpp \
-  CustomExceptionS_T.h \
-  CustomExceptionS_T.inl \
+  CustomExceptionS.inl \
   FooException.idl \
   FooExceptionC.h \
   FooExceptionC.inl \
   FooExceptionS.h \
-  FooExceptionS_T.cpp \
-  FooExceptionS_T.h \
-  FooExceptionS_T.inl \
+  FooExceptionS.inl \
   OrbRunner.h \
   OrbShutdownTask.h \
   OrbTask.h \
@@ -198,9 +168,7 @@ noinst_HEADERS = \
   TestAppExceptionC.h \
   TestAppExceptionC.inl \
   TestAppExceptionS.h \
-  TestAppExceptionS_T.cpp \
-  TestAppExceptionS_T.h \
-  TestAppExceptionS_T.inl
+  TestAppExceptionS.inl
 
 ## Clean up template repositories, etc.
 clean-local:

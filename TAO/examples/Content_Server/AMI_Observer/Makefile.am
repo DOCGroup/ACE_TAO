@@ -29,10 +29,7 @@ BUILT_SOURCES = \
   Push_Web_ServerC.inl \
   Push_Web_ServerS.cpp \
   Push_Web_ServerS.h \
-  Push_Web_ServerS.inl \
-  Push_Web_ServerS_T.cpp \
-  Push_Web_ServerS_T.h \
-  Push_Web_ServerS_T.inl
+  Push_Web_ServerS.inl
 
 CLEANFILES = \
   Push_Web_Server-stamp \
@@ -41,12 +38,9 @@ CLEANFILES = \
   Push_Web_ServerC.inl \
   Push_Web_ServerS.cpp \
   Push_Web_ServerS.h \
-  Push_Web_ServerS.inl \
-  Push_Web_ServerS_T.cpp \
-  Push_Web_ServerS_T.h \
-  Push_Web_ServerS_T.inl
+  Push_Web_ServerS.inl
 
-Push_Web_ServerC.cpp Push_Web_ServerC.h Push_Web_ServerC.inl Push_Web_ServerS.cpp Push_Web_ServerS.h Push_Web_ServerS.inl Push_Web_ServerS_T.cpp Push_Web_ServerS_T.h Push_Web_ServerS_T.inl: Push_Web_Server-stamp
+Push_Web_ServerC.cpp Push_Web_ServerC.h Push_Web_ServerC.inl Push_Web_ServerS.cpp Push_Web_ServerS.h Push_Web_ServerS.inl: Push_Web_Server-stamp
 
 Push_Web_Server-stamp: $(srcdir)/Push_Web_Server.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -GC $(srcdir)/Push_Web_Server.idl

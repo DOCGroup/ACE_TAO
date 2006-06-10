@@ -30,10 +30,7 @@ BUILT_SOURCES += \
   GatewayC.inl \
   GatewayS.cpp \
   GatewayS.h \
-  GatewayS.inl \
-  GatewayS_T.cpp \
-  GatewayS_T.h \
-  GatewayS_T.inl
+  GatewayS.inl
 
 CLEANFILES += \
   Gateway-stamp \
@@ -42,12 +39,9 @@ CLEANFILES += \
   GatewayC.inl \
   GatewayS.cpp \
   GatewayS.h \
-  GatewayS.inl \
-  GatewayS_T.cpp \
-  GatewayS_T.h \
-  GatewayS_T.inl
+  GatewayS.inl
 
-GatewayC.cpp GatewayC.h GatewayC.inl GatewayS.cpp GatewayS.h GatewayS.inl GatewayS_T.cpp GatewayS_T.h GatewayS_T.inl: Gateway-stamp
+GatewayC.cpp GatewayC.h GatewayC.inl GatewayS.cpp GatewayS.h GatewayS.inl: Gateway-stamp
 
 Gateway-stamp: $(srcdir)/Gateway.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Gateway.idl
@@ -59,10 +53,7 @@ BUILT_SOURCES += \
   ObjectReferenceFactoryC.inl \
   ObjectReferenceFactoryS.cpp \
   ObjectReferenceFactoryS.h \
-  ObjectReferenceFactoryS.inl \
-  ObjectReferenceFactoryS_T.cpp \
-  ObjectReferenceFactoryS_T.h \
-  ObjectReferenceFactoryS_T.inl
+  ObjectReferenceFactoryS.inl
 
 CLEANFILES += \
   ObjectReferenceFactory-stamp \
@@ -71,12 +62,9 @@ CLEANFILES += \
   ObjectReferenceFactoryC.inl \
   ObjectReferenceFactoryS.cpp \
   ObjectReferenceFactoryS.h \
-  ObjectReferenceFactoryS.inl \
-  ObjectReferenceFactoryS_T.cpp \
-  ObjectReferenceFactoryS_T.h \
-  ObjectReferenceFactoryS_T.inl
+  ObjectReferenceFactoryS.inl
 
-ObjectReferenceFactoryC.cpp ObjectReferenceFactoryC.h ObjectReferenceFactoryC.inl ObjectReferenceFactoryS.cpp ObjectReferenceFactoryS.h ObjectReferenceFactoryS.inl ObjectReferenceFactoryS_T.cpp ObjectReferenceFactoryS_T.h ObjectReferenceFactoryS_T.inl: ObjectReferenceFactory-stamp
+ObjectReferenceFactoryC.cpp ObjectReferenceFactoryC.h ObjectReferenceFactoryC.inl ObjectReferenceFactoryS.cpp ObjectReferenceFactoryS.h ObjectReferenceFactoryS.inl: ObjectReferenceFactory-stamp
 
 ObjectReferenceFactory-stamp: $(srcdir)/ObjectReferenceFactory.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/ObjectReferenceFactory.idl
@@ -88,10 +76,7 @@ BUILT_SOURCES += \
   sum_serverC.inl \
   sum_serverS.cpp \
   sum_serverS.h \
-  sum_serverS.inl \
-  sum_serverS_T.cpp \
-  sum_serverS_T.h \
-  sum_serverS_T.inl
+  sum_serverS.inl
 
 CLEANFILES += \
   sum_server-stamp \
@@ -100,12 +85,9 @@ CLEANFILES += \
   sum_serverC.inl \
   sum_serverS.cpp \
   sum_serverS.h \
-  sum_serverS.inl \
-  sum_serverS_T.cpp \
-  sum_serverS_T.h \
-  sum_serverS_T.inl
+  sum_serverS.inl
 
-sum_serverC.cpp sum_serverC.h sum_serverC.inl sum_serverS.cpp sum_serverS.h sum_serverS.inl sum_serverS_T.cpp sum_serverS_T.h sum_serverS_T.inl: sum_server-stamp
+sum_serverC.cpp sum_serverC.h sum_serverC.inl sum_serverS.cpp sum_serverS.h sum_serverS.inl: sum_server-stamp
 
 sum_server-stamp: $(srcdir)/sum_server.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/sum_server.idl

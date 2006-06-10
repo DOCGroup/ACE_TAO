@@ -24,10 +24,7 @@ BUILT_SOURCES = \
   Event_CommC.inl \
   Event_CommS.cpp \
   Event_CommS.h \
-  Event_CommS.inl \
-  Event_CommS_T.cpp \
-  Event_CommS_T.h \
-  Event_CommS_T.inl
+  Event_CommS.inl
 
 CLEANFILES = \
   Event_Comm-stamp \
@@ -36,12 +33,9 @@ CLEANFILES = \
   Event_CommC.inl \
   Event_CommS.cpp \
   Event_CommS.h \
-  Event_CommS.inl \
-  Event_CommS_T.cpp \
-  Event_CommS_T.h \
-  Event_CommS_T.inl
+  Event_CommS.inl
 
-Event_CommC.cpp Event_CommC.h Event_CommC.inl Event_CommS.cpp Event_CommS.h Event_CommS.inl Event_CommS_T.cpp Event_CommS_T.h Event_CommS_T.inl: Event_Comm-stamp
+Event_CommC.cpp Event_CommC.h Event_CommC.inl Event_CommS.cpp Event_CommS.h Event_CommS.inl: Event_Comm-stamp
 
 Event_Comm-stamp: $(srcdir)/Event_Comm.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Event_Comm.idl

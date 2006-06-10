@@ -27,10 +27,7 @@ BUILT_SOURCES = \
   testC.inl \
   testS.cpp \
   testS.h \
-  testS.inl \
-  testS_T.cpp \
-  testS_T.h \
-  testS_T.inl
+  testS.inl
 
 CLEANFILES = \
   test-stamp \
@@ -39,12 +36,9 @@ CLEANFILES = \
   testC.inl \
   testS.cpp \
   testS.h \
-  testS.inl \
-  testS_T.cpp \
-  testS_T.h \
-  testS_T.inl
+  testS.inl
 
-testC.cpp testC.h testC.inl testS.cpp testS.h testS.inl testS_T.cpp testS_T.h testS_T.inl: test-stamp
+testC.cpp testC.h testC.inl testS.cpp testS.h testS.inl: test-stamp
 
 test-stamp: $(srcdir)/test.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=GENERIC_SERVANT_Export -Wb,export_include=generic_servant_export.h $(srcdir)/test.idl
@@ -69,9 +63,7 @@ noinst_HEADERS = \
   testC.h \
   testC.inl \
   testS.h \
-  testS_T.cpp \
-  testS_T.h \
-  testS_T.inl \
+  testS.inl \
   test_i.h
 
 endif !BUILD_MINIMUM_CORBA

@@ -24,10 +24,7 @@ BUILT_SOURCES = \
   TimeC.inl \
   TimeS.cpp \
   TimeS.h \
-  TimeS.inl \
-  TimeS_T.cpp \
-  TimeS_T.h \
-  TimeS_T.inl
+  TimeS.inl
 
 CLEANFILES = \
   Time-stamp \
@@ -36,12 +33,9 @@ CLEANFILES = \
   TimeC.inl \
   TimeS.cpp \
   TimeS.h \
-  TimeS.inl \
-  TimeS_T.cpp \
-  TimeS_T.h \
-  TimeS_T.inl
+  TimeS.inl
 
-TimeC.cpp TimeC.h TimeC.inl TimeS.cpp TimeS.h TimeS.inl TimeS_T.cpp TimeS_T.h TimeS_T.inl: Time-stamp
+TimeC.cpp TimeC.h TimeC.inl TimeS.cpp TimeS.h TimeS.inl: Time-stamp
 
 Time-stamp: $(srcdir)/Time.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Time.idl

@@ -24,10 +24,7 @@ BUILT_SOURCES = \
   corbanameC.inl \
   corbanameS.cpp \
   corbanameS.h \
-  corbanameS.inl \
-  corbanameS_T.cpp \
-  corbanameS_T.h \
-  corbanameS_T.inl
+  corbanameS.inl
 
 CLEANFILES = \
   corbaname-stamp \
@@ -36,12 +33,9 @@ CLEANFILES = \
   corbanameC.inl \
   corbanameS.cpp \
   corbanameS.h \
-  corbanameS.inl \
-  corbanameS_T.cpp \
-  corbanameS_T.h \
-  corbanameS_T.inl
+  corbanameS.inl
 
-corbanameC.cpp corbanameC.h corbanameC.inl corbanameS.cpp corbanameS.h corbanameS.inl corbanameS_T.cpp corbanameS_T.h corbanameS_T.inl: corbaname-stamp
+corbanameC.cpp corbanameC.h corbanameC.inl corbanameS.cpp corbanameS.h corbanameS.inl: corbaname-stamp
 
 corbaname-stamp: $(srcdir)/corbaname.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/corbaname.idl

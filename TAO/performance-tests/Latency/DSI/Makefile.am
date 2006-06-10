@@ -28,10 +28,7 @@ BUILT_SOURCES = \
   TestC.h \
   TestC.inl \
   TestS.h \
-  TestS.inl \
-  TestS_T.cpp \
-  TestS_T.h \
-  TestS_T.inl
+  TestS.inl
 
 CLEANFILES = \
   Test-stamp \
@@ -39,12 +36,9 @@ CLEANFILES = \
   TestC.h \
   TestC.inl \
   TestS.h \
-  TestS.inl \
-  TestS_T.cpp \
-  TestS_T.h \
-  TestS_T.inl
+  TestS.inl
 
-TestC.cpp TestC.h TestC.inl TestS.h TestS.inl TestS_T.cpp TestS_T.h TestS_T.inl: Test-stamp
+TestC.cpp TestC.h TestC.inl TestS.h TestS.inl: Test-stamp
 
 Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Test.idl
@@ -64,8 +58,7 @@ client_SOURCES = \
   TestC.h \
   TestC.inl \
   TestS.h \
-  TestS_T.h \
-  TestS_T.inl
+  TestS.inl
 
 client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Strategies.la \

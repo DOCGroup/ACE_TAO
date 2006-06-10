@@ -31,10 +31,7 @@ BUILT_SOURCES = \
   AirplaneC.inl \
   AirplaneS.cpp \
   AirplaneS.h \
-  AirplaneS.inl \
-  AirplaneS_T.cpp \
-  AirplaneS_T.h \
-  AirplaneS_T.inl
+  AirplaneS.inl
 
 CLEANFILES = \
   Airplane-stamp \
@@ -43,12 +40,9 @@ CLEANFILES = \
   AirplaneC.inl \
   AirplaneS.cpp \
   AirplaneS.h \
-  AirplaneS.inl \
-  AirplaneS_T.cpp \
-  AirplaneS_T.h \
-  AirplaneS_T.inl
+  AirplaneS.inl
 
-AirplaneC.cpp AirplaneC.h AirplaneC.inl AirplaneS.cpp AirplaneS.h AirplaneS.inl AirplaneS_T.cpp AirplaneS_T.h AirplaneS_T.inl: Airplane-stamp
+AirplaneC.cpp AirplaneC.h AirplaneC.inl AirplaneS.cpp AirplaneS.h AirplaneS.inl: Airplane-stamp
 
 Airplane-stamp: $(srcdir)/Airplane.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Airplane.idl
@@ -125,10 +119,7 @@ BUILT_SOURCES += \
   NesteaC.inl \
   NesteaS.cpp \
   NesteaS.h \
-  NesteaS.inl \
-  NesteaS_T.cpp \
-  NesteaS_T.h \
-  NesteaS_T.inl
+  NesteaS.inl
 
 CLEANFILES += \
   Nestea-stamp \
@@ -137,12 +128,9 @@ CLEANFILES += \
   NesteaC.inl \
   NesteaS.cpp \
   NesteaS.h \
-  NesteaS.inl \
-  NesteaS_T.cpp \
-  NesteaS_T.h \
-  NesteaS_T.inl
+  NesteaS.inl
 
-NesteaC.cpp NesteaC.h NesteaC.inl NesteaS.cpp NesteaS.h NesteaS.inl NesteaS_T.cpp NesteaS_T.h NesteaS_T.inl: Nestea-stamp
+NesteaC.cpp NesteaC.h NesteaC.inl NesteaS.cpp NesteaS.h NesteaS.inl: Nestea-stamp
 
 Nestea-stamp: $(srcdir)/Nestea.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Nestea.idl

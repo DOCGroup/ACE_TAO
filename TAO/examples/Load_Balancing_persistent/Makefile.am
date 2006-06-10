@@ -26,10 +26,7 @@ BUILT_SOURCES = \
   IdentityC.inl \
   IdentityS.cpp \
   IdentityS.h \
-  IdentityS.inl \
-  IdentityS_T.cpp \
-  IdentityS_T.h \
-  IdentityS_T.inl
+  IdentityS.inl
 
 CLEANFILES = \
   Identity-stamp \
@@ -38,12 +35,9 @@ CLEANFILES = \
   IdentityC.inl \
   IdentityS.cpp \
   IdentityS.h \
-  IdentityS.inl \
-  IdentityS_T.cpp \
-  IdentityS_T.h \
-  IdentityS_T.inl
+  IdentityS.inl
 
-IdentityC.cpp IdentityC.h IdentityC.inl IdentityS.cpp IdentityS.h IdentityS.inl IdentityS_T.cpp IdentityS_T.h IdentityS_T.inl: Identity-stamp
+IdentityC.cpp IdentityC.h IdentityC.inl IdentityS.cpp IdentityS.h IdentityS.inl: Identity-stamp
 
 Identity-stamp: $(srcdir)/Identity.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Identity.idl
@@ -55,10 +49,7 @@ BUILT_SOURCES += \
   Load_BalancerC.inl \
   Load_BalancerS.cpp \
   Load_BalancerS.h \
-  Load_BalancerS.inl \
-  Load_BalancerS_T.cpp \
-  Load_BalancerS_T.h \
-  Load_BalancerS_T.inl
+  Load_BalancerS.inl
 
 CLEANFILES += \
   Load_Balancer-stamp \
@@ -67,12 +58,9 @@ CLEANFILES += \
   Load_BalancerC.inl \
   Load_BalancerS.cpp \
   Load_BalancerS.h \
-  Load_BalancerS.inl \
-  Load_BalancerS_T.cpp \
-  Load_BalancerS_T.h \
-  Load_BalancerS_T.inl
+  Load_BalancerS.inl
 
-Load_BalancerC.cpp Load_BalancerC.h Load_BalancerC.inl Load_BalancerS.cpp Load_BalancerS.h Load_BalancerS.inl Load_BalancerS_T.cpp Load_BalancerS_T.h Load_BalancerS_T.inl: Load_Balancer-stamp
+Load_BalancerC.cpp Load_BalancerC.h Load_BalancerC.inl Load_BalancerS.cpp Load_BalancerS.h Load_BalancerS.inl: Load_Balancer-stamp
 
 Load_Balancer-stamp: $(srcdir)/Load_Balancer.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Load_Balancer.idl

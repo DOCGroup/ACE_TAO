@@ -26,10 +26,7 @@ BUILT_SOURCES = \
   DatabaseC.inl \
   DatabaseS.cpp \
   DatabaseS.h \
-  DatabaseS.inl \
-  DatabaseS_T.cpp \
-  DatabaseS_T.h \
-  DatabaseS_T.inl
+  DatabaseS.inl
 
 CLEANFILES = \
   Database-stamp \
@@ -38,12 +35,9 @@ CLEANFILES = \
   DatabaseC.inl \
   DatabaseS.cpp \
   DatabaseS.h \
-  DatabaseS.inl \
-  DatabaseS_T.cpp \
-  DatabaseS_T.h \
-  DatabaseS_T.inl
+  DatabaseS.inl
 
-DatabaseC.cpp DatabaseC.h DatabaseC.inl DatabaseS.cpp DatabaseS.h DatabaseS.inl DatabaseS_T.cpp DatabaseS_T.h DatabaseS_T.inl: Database-stamp
+DatabaseC.cpp DatabaseC.h DatabaseC.inl DatabaseS.cpp DatabaseS.h DatabaseS.inl: Database-stamp
 
 Database-stamp: $(srcdir)/Database.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Database.idl

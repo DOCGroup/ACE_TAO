@@ -26,10 +26,7 @@ BUILT_SOURCES = \
   RolyPolyC.inl \
   RolyPolyS.cpp \
   RolyPolyS.h \
-  RolyPolyS.inl \
-  RolyPolyS_T.cpp \
-  RolyPolyS_T.h \
-  RolyPolyS_T.inl
+  RolyPolyS.inl
 
 CLEANFILES = \
   RolyPoly-stamp \
@@ -38,12 +35,9 @@ CLEANFILES = \
   RolyPolyC.inl \
   RolyPolyS.cpp \
   RolyPolyS.h \
-  RolyPolyS.inl \
-  RolyPolyS_T.cpp \
-  RolyPolyS_T.h \
-  RolyPolyS_T.inl
+  RolyPolyS.inl
 
-RolyPolyC.cpp RolyPolyC.h RolyPolyC.inl RolyPolyS.cpp RolyPolyS.h RolyPolyS.inl RolyPolyS_T.cpp RolyPolyS_T.h RolyPolyS_T.inl: RolyPoly-stamp
+RolyPolyC.cpp RolyPolyC.h RolyPolyC.inl RolyPolyS.cpp RolyPolyS.h RolyPolyS.inl: RolyPoly-stamp
 
 RolyPoly-stamp: $(srcdir)/RolyPoly.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/RolyPoly.idl

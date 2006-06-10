@@ -24,10 +24,7 @@ BUILT_SOURCES = \
   corbalocC.inl \
   corbalocS.cpp \
   corbalocS.h \
-  corbalocS.inl \
-  corbalocS_T.cpp \
-  corbalocS_T.h \
-  corbalocS_T.inl
+  corbalocS.inl
 
 CLEANFILES = \
   corbaloc-stamp \
@@ -36,12 +33,9 @@ CLEANFILES = \
   corbalocC.inl \
   corbalocS.cpp \
   corbalocS.h \
-  corbalocS.inl \
-  corbalocS_T.cpp \
-  corbalocS_T.h \
-  corbalocS_T.inl
+  corbalocS.inl
 
-corbalocC.cpp corbalocC.h corbalocC.inl corbalocS.cpp corbalocS.h corbalocS.inl corbalocS_T.cpp corbalocS_T.h corbalocS_T.inl: corbaloc-stamp
+corbalocC.cpp corbalocC.h corbalocC.inl corbalocS.cpp corbalocS.h corbalocS.inl: corbaloc-stamp
 
 corbaloc-stamp: $(srcdir)/corbaloc.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/corbaloc.idl

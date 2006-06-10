@@ -10,5 +10,6 @@
 
 SUBDIRS = \
         catior \
-        nslist
+        nslist \
+        wxNamingViewer
 

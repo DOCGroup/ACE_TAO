@@ -24,10 +24,7 @@ BUILT_SOURCES = \
   FooC.inl \
   FooS.cpp \
   FooS.h \
-  FooS.inl \
-  FooS_T.cpp \
-  FooS_T.h \
-  FooS_T.inl
+  FooS.inl
 
 CLEANFILES = \
   Foo-stamp \
@@ -36,12 +33,9 @@ CLEANFILES = \
   FooC.inl \
   FooS.cpp \
   FooS.h \
-  FooS.inl \
-  FooS_T.cpp \
-  FooS_T.h \
-  FooS_T.inl
+  FooS.inl
 
-FooC.cpp FooC.h FooC.inl FooS.cpp FooS.h FooS.inl FooS_T.cpp FooS_T.h FooS_T.inl: Foo-stamp
+FooC.cpp FooC.h FooC.inl FooS.cpp FooS.h FooS.inl: Foo-stamp
 
 Foo-stamp: $(srcdir)/Foo.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/performance-tests/CSD_Strategy -Wb,export_macro=CSD_PT_TestServant_Export -Wb,export_include=CSD_PT_TestServant_Export.h $(srcdir)/Foo.idl
@@ -70,9 +64,7 @@ noinst_HEADERS = \
   FooC.h \
   FooC.inl \
   FooS.h \
-  FooS_T.cpp \
-  FooS_T.h \
-  FooS_T.inl \
+  FooS.inl \
   Foo_ClientEngine.h \
   Foo_Statistics.h \
   Foo_i.h
