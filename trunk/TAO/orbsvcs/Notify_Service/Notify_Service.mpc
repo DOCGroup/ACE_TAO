@@ -14,6 +14,7 @@ project : valuetype, orbsvcsexe, core, notification_serv, naming, iortable {
 
 project(NT_Notify_Service) : valuetype, orbsvcsexe, core, notification_serv, naming, iortable {
   avoids += ace_for_tao
+  requires += winnt
   exename  = NT_Notify_Service
   Source_Files {
     Notify_Service.cpp
