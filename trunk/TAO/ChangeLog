@@ -1,3 +1,10 @@
+Sat Jun 10 21:54:00 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * NEWS: 
+        
+          Mention that NT_Naming_Service and NT_Notify_Service must 
+          be enabled by new MPC feature variable "winnt".
+
 Sat Jun 10 18:30:42 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * performance-tests/Makefile.am:
