@@ -1,3 +1,9 @@
+Sat Jun 10 05:03:58 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * configure.ac:
+
+          Add AM_CONDITIONAL for BUILD_WINNT and BUILD_WXWINDOWS.
+
 Sat Jun 10 04:34:32 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * docs/tutorials/Quoter/AMI/Makefile.am:
