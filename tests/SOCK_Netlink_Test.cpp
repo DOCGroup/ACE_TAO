@@ -30,6 +30,8 @@
 #include "ace/Netlink_Addr.h"
 #include "ace/SOCK_Netlink.h"
 
+#include "ace/OS_NS_sys_socket.h"
+
 #include <linux/rtnetlink.h>
 
 
