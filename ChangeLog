@@ -1,3 +1,11 @@
+Sat Jun 10 22:32:03 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ACE-INSTALL.html: Corrected a bunch of platform build things and
+          hopefully clarified the sections a bit.
+
+        * bin/make_release: Removed the search for, and chmod for, dsp/dsw
+          files - they're for MSVC6 which is no longer generated.
+
 Sat Jun 10 10:07:32 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ace/Thread_Manager.cpp:

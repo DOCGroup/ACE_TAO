@@ -7,9 +7,9 @@
 <body bgcolor="#ffffff" link="#000fff" text="#000000" vlink="#ff0f0f">
 
 <hr>
-<h3>Building and Installing ACE and Its Auxiliary Libraries and Services</h3>
+<h1>Building and Installing ACE and Its Auxiliary Libraries and Services</h1>
 
-<h4>Synopsis</h4>
+<h2>Synopsis</h2>
 
 The file explains how to build and install ACE, its Network Services,
 test suite and examples on the various OS platforms and compilers that
@@ -33,7 +33,7 @@ tracking system</a> to submit a report in accordance with our <a
 href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/docs/ACE-bug-process.html">bug
 report process</a>.<p>
 
-</p><h4>Document Index</h4>
+</p><h2>Document Index</h2>
 
 <ul>
   <li><a href="#platforms">Platforms, C++ Compilers, and Support</a>
@@ -54,7 +54,7 @@ report process</a>.<p>
 
 
 <p></p><hr><p>
-</p><h3><a name="platforms">Platforms, C++ Compilers, and Support</a></h3>
+</p><h2><a name="platforms">Platforms, C++ Compilers, and Support</a></h2>
 
 <p>ACE has been ported to a large number of platforms using many different
 compilers over the years.
@@ -132,7 +132,8 @@ document</a>.</p><p>
         <a href="http://www.riverace.com/consult.htm">consulting services</a>
         for many platforms including AIX, HP-UX, Linux, Solaris, and Windows.
     </td>
-    <td>Riverace's <a href="http://www.riverace.com/">web site</a>.</td>
+    <td>Riverace's <a href="http://www.riverace.com/support.htm">ACE
+        Support page</a>.</td>
   </tr>
   <tr>
     <th>OCI</th>
@@ -177,7 +178,8 @@ document</a>.</p><p>
         no longer maintained and may be removed from ACE at any time.
         If you want to have support for these environments contact one
         of the commercial support organisations. The platforms include:
-        DG/UX, VxWorks 5.4, MSVC5/6/7.0, Borland C++ Builder 4 and 5.
+        DG/UX, HP-UX 9 and 10, VxWorks 5.4, MSVC5/6/7.0,
+        Borland C++ Builder 4 and 5.
         For up-to-date listings on platform that are deprecated and pending
         removal from ACE, please see the <a href="NEWS">NEWS file</a>.
     </td>
@@ -209,16 +211,18 @@ patches from the ACE+TAO user community for any platforms that aren't
 supported by the DOC group, Riverace, OCI or Remedy IT. </p><p>
 
 </p><p></p><hr><p>
-</p><h3><a name="installpre">Installation prerequisites</a></h3>
+</p><h2><a name="installpre">Installation prerequisites</a></h2>
 
 ACE (including TAO and CIAO) uses MPC (MakeProjectCreator) to generate
-files useful for the build tools (such as GNUmakefiles for UNIX based
-platforms, sln and vcproj files for VC71/vc8 and borland makefiles) on various
+files used by all supported build tools (such as GNUmakefiles for UNIX based
+platforms, sln and vcproj files for VC71/VC8 and Borland makefiles) on various
 platforms. To help new users to bootstrap quickly the release bundles
-of ACE (TAO and CIAO) includes GNUmakefiles for UNIX platforms, and VC71/vc8
-solution files. If it is necessary to generate
-files for build tools for other compilers such as Visual Age for IBM,
-and Windows CE users have to run MPC themselves to generate the
+of ACE (TAO and CIAO) include all needed files to use the build instructions
+in this document.
+
+If it is necessary to generate
+files for build tools for other compilers, one must
+run MPC to generate the
 appropriate files.  Please see <a href="MPC/USAGE">USAGE</a>, <a
 href="MPC/README">README</a>, and <a
 href="bin/MakeProjectCreator/README">README for ACE</a> files for
@@ -230,12 +234,18 @@ global.features</a> file.
 <p></p>
 
 <p></p><hr>
-<h3><a name="aceinstall">Building and Installing ACE</a></h3>
+<h1><a name="aceinstall">Building and Installing ACE</a></h1>
 
-The following explains how to build ACE on <a href="#unix">UNIX</a>
-and <a href="#win32">Windows</a>.
+The following sections explain how to build ACE on:
+<ul>
+<li><a href="#unix">UNIX</a></li>
+<li><a href="#win32">Windows</a></li>
+<li><a href="#vxworks">VxWorks</a></li>
+<li><a href="#interix">Interix</a></li>
+<li><a href="#rtems">RTEMS</a></li>
+</ul>
 
-<h4>General Rules</h4>
+<h2>General Rules</h2>
 <ul>
   <li><p>Many features in ACE can be modified by defining some macros in
       <code>$ACE_ROOT/ace/config.h</code>.  These macros should
@@ -250,7 +260,7 @@ and <a href="#win32">Windows</a>.
 </p></li></ul>
 
 <hr align="left" width="50%">
-<h4><a name="unix">Building and Installing ACE on UNIX</a></h4>
+<h2><a name="unix">Building and Installing ACE on UNIX</a></h2>
 
 As of ACE 5.4, you can choose between two methods of building ACE on
 UNIX:
@@ -261,7 +271,7 @@ UNIX:
 The <a href="#win32">build process</a> for Windows is different from both of
 the UNIX methods.
 
-<h5><a name="unix_autoconf">Building ACE with GNU Autoconf</a></h5>
+<h3><a name="unix_autoconf">Building ACE with GNU Autoconf</a></h3>
 <p>
 GNU Autoconf support is available in the ACE and ACE+TAO distributions
 in the DOC group website. More, precisely support for Autoconf will be
@@ -368,8 +378,8 @@ c       <pre>       ../configure [options]
   </li><li>(Optional) Install ACE by typing <code>make install</code>.
 </li></ol>
 
-<h5><a name="autoconf_development">Testing and Developing GNU Autotool
-Support in ACE</a></h5>
+<h4><a name="autoconf_development">Testing and Developing GNU Autotool
+Support in ACE</a></h4>
 <p>
 In order to test and develop the GNU Autotool support in ACE or
 bootstrap autotool support into ACE when working directly off of ACE
@@ -380,13 +390,13 @@ doing the following:
     <blockquote>
       <code>
         cd ACE_wrappers<br>
-        autoreconf -I m4 --install --force<br>
+        ./bin/bootstrap<br>
       </code>
     </blockquote>
 After doing so, you will be able to run the <code>configure</code>
 script.
 
-<h5><a name="unix_traditional">Using the Traditional ACE/GNU Configuration</a></h5>
+<h3><a name="unix_traditional">Using the Traditional ACE/GNU Configuration</a></h3>
 <p>
 Here's what you need to do to build ACE using GNU Make and ACE's traditional
 per-platform configuration method:</p>
@@ -491,147 +501,69 @@ include $(ACE_ROOT)/include/makeinclude/platform_sunos5_sunc++.GNU
 </p></li></ol>
 
 
-<p></p><hr align="left" width="50%"><p>
-</p><h4><a name="win32">Building and Installing ACE on Windows</a></h4>
+<p></p><hr align="left" width="50%">
+<h2><a name="win32">Building and Installing ACE on Windows</a></h2>
 
-Below are instructions for building ACE with <a href="#borland">Borland C++Builder</a>, <a href="#msvc">Microsoft
-Visual C++</a>, <a href="#mingw">MinGW</a>, and <a href="#cygwin">Cygwin</a>.<p>
+<p>This section contains instructions for building ACE on Microsoft
+Windows with a variety of compilers and development environments.</p>
 
-First, if you are upgrading from an older release, clean up everything
-and rebuild from scratch to ensure that everything is rebuilt
-correctly.  You might have to manually go through the ACE directories
-and delete all *.obj, *.dll, *.lib, *.ilk, *.pdb, *.idb, *.ncb, *.opt,
-and *.exp files in order to start over from scratch (the Clean command
-in MSVC may not do this).  </p><p>
+<p>First, if you are upgrading from an older release, the recommended practice
+is to start with a clean directory. Unpacking the newer release over an older
+one will not clean up any old files, and trying to use the environment's
+"Clean" command will probably not account for all existing files.</p>
 
-ACE contains project files for Microsoft Visual C++ 6.0 (*.dsp/.dsw)
-and Visual C++ .NET 2003 (*.vcproj/.sln).  There are also
-Makefile.bor files to compile ACE, and the ACE one-button tests with
-Borland C++ Builder. </p><p>
-
-</p><p></p><hr align="left" width="50%"><p>
-</p><h4><a name="borland">Building and Installing ACE on Windows with Borland
-C++</a></h4>
-
-If you are building for a machine without a network card, you may want
-to check <a href="#win32nonic">here</a> first. <p>
-
-</p><ol>
-  <li>Uncompress the ACE distribution into a directory, where it will
-      create an
-      ACE_wrappers directory containing the source.  The ACE_wrappers
-      directory will be referred to as ACE_ROOT in the following steps -- so
-      ACE_ROOT\ace would be C:\ACE_wrappers\ace if you uncompressed into the
-      root directory.<br>
-      <br>
-  </li><li>Create a file called <code>config.h</code> in the ACE_ROOT\ace
-      directory that contains: <br>
-      <br>
-      <code>#include "ace/config-win32.h"</code><br>
-      <br>
-      If you are building for Windows NT 4, Windows 2000, or Windows XP,
-      then you can start without any more changes.  If you are building
-      on Windows 9x/Me, then you should add the line <br>
-      <br>
-      <code>#define ACE_HAS_WINNT4 0</code><br>
-      <br>
-      before the #include statement in ACE_ROOT\ace\config.h and it
-      will turn off some WinNT/Win2K-specific code in ACE.<br>
-      <br>
-  </li><li>Open a Command Prompt (DOS Box).<br>
-      <br>
-  </li><li>Set the ACE_ROOT environment variable to point to the ACE_wrappers
-      directory. For example:<br>
-      <br>
-      <code>set ACE_ROOT=C:\ACE_wrappers</code><br>
-      <br>
-  </li><li>Set the BCBVER environment vairable to the main version of your Borland C++ compiler.
-      6 is the value for Borland C++ Builder 6, 8 the value for Borland C++ Builder 2006.
-      4 and 5 are also possible options but not supported anymore.<br>
-      <br>
-      <code>set BCBVER=6</code><br>
-      <br>
-  </li><li>Change to the ACE_ROOT\ace directory.<br>
-      <br>
-  </li><li>Build release DLLs for ACE by going:<br>
-      <br>
-      <code>make -f Makefile.bor all</code><br>
-      <br>
-  </li><li>You can build several different versions of ACE by setting environment
-      variables before you run make:<br>
-      <br>
-      Set the environment variable below to build a debug version of ACE<br>
-      <code>set DEBUG=1</code><br>
-      <br>
-      Set the environment variable below to build a static version of ACE<br>
-      <code>set STATIC=1</code><br>
-      <br>
-      Set the environment variable below to build a unicode version of ACE<br>
-      <code>set UNICODE=1</code><br>
-      <br>
-      Set the environment variable below to build a version of ACE with
-      Codeguard support. Should only be used when DEBUG is also set<br>
-      <code>set CODEGUARD=1</code><br>
-      <br>
-      Set the environment variable below to build a version of ACE optimized
-      for a certain CPU. For this there are special compiler flags 
-      (-3/-4/-5/-6), see the Borland help for more info.<br>
-      <code>set CPU_FLAG=-6</code><br>
-      <br>
-      Set the environment variable below to build a version of ACE using the
-      C++BuilderX preview compiler. This compiler isn't supported at this moment
-      but by setting this environment variable the new compiler is used and
-      you can expirement with this compiler.<br>
-      <code>set CBX=1</code><br>
-      <br>
-      You can then start the build with the command
-      <br><code>make -f Makefile.bor all</code><br>
-      <br>
-      You may also enable the options by passing them as command line options to make, for example:<br>
-      <code>make -f Makefile.bor -DDEBUG all</code><br>
-      <br>
-  </li><li>Optionally install the ACE header files, libraries and executables
-for use
-      in your applications. Here we are installing them into C:\ACETAO: <br>
-      <br>
-      <code>make -f Makefile.bor -DINSTALL_DIR=C:\ACETAO install</code><br>
-      <br>
-</li></ol>
-
-These instructions do not cover all possible build configurations. Please
-see <a href="http://www.tenermerx.com/programming/corba/tao_bcb/index.html">
-http://www.tenermerx.com/programming/corba/tao_bcb/index.html</a>
-for more detailed information on building and using ACE+TAO with Borland C++
-Builder. <p>
-
-Note that when you run <code>make</code> in a sub directory you give <code>make -f Makefile.bor all</code>. The <code>all</code> is needed to make sure the complete project is build.<p>
-
-The Borland C++ Builder 4.0/5.0/6.0/2006 port has been done by Jody Hagins, <a href="mailto:chris@kohlhoff.com">Christopher Kohlhoff</a> and <a href="mailto:jwillemsen@remedy.nl">Johnny Willemsen</a>. </p><p>
-
-<b>ACE TESTS</b></p><p>
-
-Before you can build the tests you need to build the protocols directory.
-Change the directory to ACE_ROOT\protocols and start the build with: </p><p>
-</p><blockquote><code>
-make -f Makefile.bor all
-</code></blockquote><p>
-
-The tests are located in ACE_ROOT\tests, change to this directory.
-You build then the tests with the following command:</p><p>
-</p><blockquote><code>
-make -f Makefile.bor all
-</code></blockquote><p>
-
-Once you build all the tests, you can run the automated test script using:</p><p>
-</p><blockquote><code>perl run_test.pl</code></blockquote><p> in the
-<code>tests</code> directory to try all the tests. You need to make
-sure the ACE bin and lib directory (in this case
-<code>ACE_ROOT\bin</code> and <code>ACE_ROOT\lib</code>)
-are on the path before you try to run the tests.</p><p>
+<ul>
+<li><a href="#msvc">Microsoft Visual Studio</a></li>
+<li><a href="#borland">Borland C++Builder</a></li>
+<li><a href="#mingw">MinGW</a></li>
+<li><a href="#cygwin">Cygwin</a></li>
+</ul>
 
 </p><p></p><hr align="left" width="50%"><p>
-</p><h4><a name="msvc">Building and Installing ACE on Windows with
-Microsoft Visual C++</a></h4>
+</p><h3><a name="msvc">Building and Installing ACE on Windows with
+Microsoft Visual Studio</a></h3>
+
+<p>ACE contains project files for Microsoft Visual Studio .NET 2003 (VC7.1)
+and Visual Studio 2005 (VC8). Visual Studio 2005 supports building for
+desktop/server Windows as well as for Windows CE and Windows Mobile. Since
+not all users will be interested in the CE/Mobile capability, these platforms
+have separate solution and project files from the desktop/server Windows.
+Furthermore, VC7.1 and VC8 use different file formats but the same file
+suffixes (<code>.sln</code> and <code>.vcproj</code>). To support both
+environments, ACE supplies files with different names for the different
+development and target platforms. The platform/name mapping is shown below.
+All solution files have a <code>.sln</code> suffix and all project files have
+a <code>.vcproj</code> suffix.</p>
+
+<table border="1" width="400">
+<caption><b>Mapping of Platform to Solution/Project File Name</b></caption>
+<thead>
+  <tr valign="top">
+    <th>Platform</th>
+    <th>File Name</th>
+  </tr>
+</thead><tbody>
+  <tr>
+    <th>VC7.1</th>
+    <td><i>name</i> (no decorator)
+    </td>
+  </tr>
+  <tr>
+    <th>VC8 for desktop/server</th>
+    <td><i>name</i><code>_vc8</code>
+    </td>
+  </tr>
+  <tr>
+    <th>VC8 for Windows CE/Mobile</th>
+    <td><i>name</i><code>_WinCE</code>
+    </td>
+  </tr>
+</tbody></table>
+<p>If you happen to open a VC7.1 file from within VC8, it will offer to convert
+the file to the newer format for you. <b>Do not do this</b>; there have been
+reports of Visual Studio crashing while attempting to convert the large
+solution and project files to build ACE. Simply refuse the conversion and
+open the file with the correct format.</p>
 
 <ol>
   <li>Uncompress the ACE distribution into a directory, where it will
@@ -806,9 +738,128 @@ x86, the Alpha configuration can get corrupted.  This seems to happen when addit
 include or library directories are specified using backslashes instead of forward
 slashes.  If this occurs, the easiest way to fix it is to recreate it.</a></p>
 
+<hr align="left" width="50%"><p>&nbsp;</p>
+<h3><a name="borland">Building and Installing ACE on Windows with Borland
+C++</a></h3>
+
+If you are building for a machine without a network card, you may want
+to check <a href="#win32nonic">here</a> first. <p>
+
+</p><ol>
+  <li>Uncompress the ACE distribution into a directory, where it will
+      create an
+      ACE_wrappers directory containing the source.  The ACE_wrappers
+      directory will be referred to as ACE_ROOT in the following steps -- so
+      ACE_ROOT\ace would be C:\ACE_wrappers\ace if you uncompressed into the
+      root directory.<br>
+      <br>
+  </li><li>Create a file called <code>config.h</code> in the ACE_ROOT\ace
+      directory that contains: <br>
+      <br>
+      <code>#include "ace/config-win32.h"</code><br>
+      <br>
+      If you are building for Windows NT 4, Windows 2000, or Windows XP,
+      then you can start without any more changes.  If you are building
+      on Windows 9x/Me, then you should add the line <br>
+      <br>
+      <code>#define ACE_HAS_WINNT4 0</code><br>
+      <br>
+      before the #include statement in ACE_ROOT\ace\config.h and it
+      will turn off some WinNT/Win2K-specific code in ACE.<br>
+      <br>
+  </li><li>Open a Command Prompt (DOS Box).<br>
+      <br>
+  </li><li>Set the ACE_ROOT environment variable to point to the ACE_wrappers
+      directory. For example:<br>
+      <br>
+      <code>set ACE_ROOT=C:\ACE_wrappers</code><br>
+      <br>
+  </li><li>Set the BCBVER environment vairable to the main version of your Borland C++ compiler.
+      6 is the value for Borland C++ Builder 6, 8 the value for Borland C++ Builder 2006.
+      4 and 5 are also possible options but not supported anymore.<br>
+      <br>
+      <code>set BCBVER=6</code><br>
+      <br>
+  </li><li>Change to the ACE_ROOT\ace directory.<br>
+      <br>
+  </li><li>Build release DLLs for ACE by going:<br>
+      <br>
+      <code>make -f Makefile.bor all</code><br>
+      <br>
+  </li><li>You can build several different versions of ACE by setting environment
+      variables before you run make:<br>
+      <br>
+      Set the environment variable below to build a debug version of ACE<br>
+      <code>set DEBUG=1</code><br>
+      <br>
+      Set the environment variable below to build a static version of ACE<br>
+      <code>set STATIC=1</code><br>
+      <br>
+      Set the environment variable below to build a unicode version of ACE<br>
+      <code>set UNICODE=1</code><br>
+      <br>
+      Set the environment variable below to build a version of ACE with
+      Codeguard support. Should only be used when DEBUG is also set<br>
+      <code>set CODEGUARD=1</code><br>
+      <br>
+      Set the environment variable below to build a version of ACE optimized
+      for a certain CPU. For this there are special compiler flags 
+      (-3/-4/-5/-6), see the Borland help for more info.<br>
+      <code>set CPU_FLAG=-6</code><br>
+      <br>
+      Set the environment variable below to build a version of ACE using the
+      C++BuilderX preview compiler. This compiler isn't supported at this moment
+      but by setting this environment variable the new compiler is used and
+      you can expirement with this compiler.<br>
+      <code>set CBX=1</code><br>
+      <br>
+      You can then start the build with the command
+      <br><code>make -f Makefile.bor all</code><br>
+      <br>
+      You may also enable the options by passing them as command line options to make, for example:<br>
+      <code>make -f Makefile.bor -DDEBUG all</code><br>
+      <br>
+  </li><li>Optionally install the ACE header files, libraries and executables
+for use
+      in your applications. Here we are installing them into C:\ACETAO: <br>
+      <br>
+      <code>make -f Makefile.bor -DINSTALL_DIR=C:\ACETAO install</code><br>
+      <br>
+</li></ol>
+
+These instructions do not cover all possible build configurations. Please
+see <a href="http://www.tenermerx.com/programming/corba/tao_bcb/index.html">
+http://www.tenermerx.com/programming/corba/tao_bcb/index.html</a>
+for more detailed information on building and using ACE+TAO with Borland C++
+Builder. <p>
+
+Note that when you run <code>make</code> in a sub directory you give <code>make -f Makefile.bor all</code>. The <code>all</code> is needed to make sure the complete project is build.<p>
+
+The Borland C++ Builder 4.0/5.0/6.0/2006 port has been done by Jody Hagins, <a href="mailto:chris@kohlhoff.com">Christopher Kohlhoff</a> and <a href="mailto:jwillemsen@remedy.nl">Johnny Willemsen</a>. </p><p>
+
+<b>ACE TESTS</b></p><p>
+
+Before you can build the tests you need to build the protocols directory.
+Change the directory to ACE_ROOT\protocols and start the build with: </p><p>
+</p><blockquote><code>
+make -f Makefile.bor all
+</code></blockquote><p>
+
+The tests are located in ACE_ROOT\tests, change to this directory.
+You build then the tests with the following command:</p><p>
+</p><blockquote><code>
+make -f Makefile.bor all
+</code></blockquote><p>
+
+Once you build all the tests, you can run the automated test script using:</p><p>
+</p><blockquote><code>perl run_test.pl</code></blockquote><p> in the
+<code>tests</code> directory to try all the tests. You need to make
+sure the ACE bin and lib directory (in this case
+<code>ACE_ROOT\bin</code> and <code>ACE_ROOT\lib</code>)
+are on the path before you try to run the tests.</p><p>
 
 <p></p><hr align="left" width="50%"><p>
-</p><h4><a name="mingw">Building and Installing ACE on Win32 with MinGW/ MSYS</a></h4>
+</p><h3><a name="mingw">Building and Installing ACE on Win32 with MinGW/ MSYS</a></h3>
 
 <p>
 If you are building for a machine without a network card, you may want
@@ -943,7 +994,7 @@ You may want to check <tt>$ACE_ROOT/tests/README</tt> for the status
 of the various tests on MinGW and the different Windows flavors.
 
 </p><p></p><hr align="left" width="50%"><p>
-</p><h4><a name="cygwin">Building and Installing ACE on Win32 with Cygwin</a></h4>
+</p><h3><a name="cygwin">Building and Installing ACE on Win32 with Cygwin</a></h3>
 
 <p>
 If you are building for a machine without a network card, you may want
@@ -1088,10 +1139,9 @@ of the various tests on Cygwin and the different Windows flavors.
 <hr align=left width="50%">
 
 <p>
-<H4><a name="interix">Building and Installing ACE on Win32 with Interix</H4>
-<P>Interix comes with a BSD style make you need GNUmake.
-</P>
-<P>Make builds easily under Interix or there is a pre-built
+<H2><a name="interix">Building and Installing ACE on Win32 with Interix</H2>
+<P>Interix comes with a BSD style make; you need GNU make.
+Make builds easily under Interix or there is a prebuilt
 package at: </P>
 <P><A
 href="http://www.interopsystems.com/tools/warehouse.htm">http://www.interopsystems.com/tools/warehouse.htm</A> </P>
@@ -1123,7 +1173,7 @@ to modify your LD_LIBRARY_PATH as explained in<A href="#unix_traditional" ><FONT
 <p></P>
 
 <p></p><hr align="left" width="50%"><p>
-</p><h4><a name="vxworks">Building and Installing ACE on VxWorks</a></h4>
+</p><h2><a name="vxworks">Building and Installing ACE on VxWorks</a></h2>
 For the most part, you should be able to follow the instructions above
 to build ACE and applications that use it.  Start with the
 <a href="#unix">Unix instructions</a> above to build ACE and the
@@ -1283,7 +1333,7 @@ The ACE helper functions <code>spa</code>, <code>spaef</code> and <code>vx_execa
 this problem by building a regular <code>argc</code> and <code>argv</code> which also contain a
 valid <code>argv[0]</code> element.</p>
 
-<h5><a name="VxWorks/SharedLibs">Building Shared Libraries for VxWorks</a>.</h5>
+<h3><a name="VxWorks/SharedLibs">Building Shared Libraries for VxWorks</a>.</h3>
 
 <strong>NOTE</strong>: Since VxWorks support is currently being reworked with
 an initial focus on static builds the support for shared builds is momentarily
@@ -1325,7 +1375,7 @@ recommend creating just one program, and spawning a thread for each
 task.  The TAO IDL_Cubit test <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/TAO/performance-tests/Cubit/TAO/IDL_Cubit/collocation_test.cpp">collocation
 test</a> is a good example.</p><p>
 
-</p><h5><a name="VxWorks/LinkToKernel">Linking ACE and/or TAO Libraries into the VxWorks Kernel</a>.</h5>
+</p><h3><a name="VxWorks/LinkToKernel">Linking ACE and/or TAO Libraries into the VxWorks Kernel</a>.</h3>
 
 It's easy to link your ACE and/or TAO libraries into the VxWorks kernel.
 Just build <a href="#VxWorks/SharedLibs">shared versions</a>, but
@@ -1340,7 +1390,7 @@ After building the shared lib, link it into the kernel by setting
 the <code>MACH_EXTRA</code> make variable in the kernel configuration
 Makefile.  Then, build the kernel using <code>make exe</code>.<p>
 
-</p><h5><a name="VxWorksTestScript">Using the one-button ACE tests with VxWorks</a>.</h5>
+</p><h3><a name="VxWorksTestScript">Using the one-button ACE tests with VxWorks</a>.</h3>
 
 It is possible to generate a script to execute all ACE tests. You can do this by executing
 </a></p><blockquote><code></code><pre><a name="vxworksscript">% perl run_test.pl -v -o > run_test.vxworks
@@ -1389,7 +1439,7 @@ approach for running the ACE tests on Tornado II:
 </pre><p>
 </p></li></ul>
 
-</p><h5><a name="VxWorks/NT">Building ACE on Tornado/NT hosts for VxWorks targets</a>.</h5>
+</p><h3><a name="VxWorks/NT">Building ACE on Tornado/NT hosts for VxWorks targets</a>.</h3>
 The following, very useful information was contributed by
 <a href="http://people.qualcomm.com/cryan">Chris Ryan</a>
 and <a href="mailto:Paul_von_Behren@stortek.com">Paul von Behren</a>.
@@ -1523,7 +1573,7 @@ on Windows NT hosts:
  </pre>
 </li></ol>
 
-<h5>TAO on NT Tornado host, VxWorks target.</h5>
+<h3>TAO on NT Tornado host, VxWorks target.</h3>
 
 <ol>
   <li>Build ACE and TAO_IDL in the NT tree as already documented.
@@ -1546,9 +1596,8 @@ on Windows NT hosts:
 </p></li></ol>
 
 
-<h4><a name="vxworks"></a>
-<a href="mailto:Jaffar_Shaikh@Mitel.COM">Jaffar Shaikh's</a>
-Notes for Building ACE and TAO for VxWorks on NT host</h4>
+<h3><a href="mailto:Jaffar_Shaikh@Mitel.COM">Jaffar Shaikh's</a>
+Notes for Building ACE and TAO for VxWorks on NT host</h3>
 <b></b><p><b>Scenario:</b>  I was building the ACE and TAO for VxWorks
 on NT. The target system was a PPC860 based chassis and another a NT
 host based card.</p>
@@ -1682,56 +1731,8 @@ your needs. For example when you give option debug=1 all the debug
 symbols will be created and the build will huge in size. The debug
 symbols are necessary when you want to debug your code.</p>
 
-
-<hr>
-<h3><a name="svcsinstall">Building and Installing ACE Network Services</a></h3>
-
-The following explains how to build the ACE <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE-netsvcs.html">network services</a> on <a href="#unixsvcs">UNIX</a> and <a href="#win32svcs">Win32</a>.
-
 <p></p><hr align="left" width="50%"><p>
-</p><h4><a name="unixsvcs">Building and Installing ACE Network Services on UNIX</a></h4>
-
-Building and installing ACE Network Services on UNIX is relatively
-simple (the <a href="#win32svcs">process</a> for Win32 is different).
-Here's what you need to do:<p>
-
-</p><ol>
-
-  <li>Build and install ACE on UNIX as described <a href="#unix">earlier</a>.  If ACE is built at the root of the ACE
-      source tree (and ACE has been ported to your platform, of course) the
-      netsvcs static and shared object libraries should be built
-      automatically.  In addition, the server driver program
-      (<code>main</code>) contained in <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/netsvcs/servers/main.cpp">$ACE_ROOT/netsvcs/servers/main.cpp</a>
-      should also be compiled and ready to run.<p>
-
-  </p></li><li>Set your <code>LD_LIBRARY_PATH</code> environment variable to
-      where the binary version of the ACE netsvcs library.  For
-      example, you probably want to do something like the following<p>
-
-      </p><pre><code>
-      % setenv LD_LIBRARY_PATH $ACE_ROOT/ace:$ACE_ROOT/lib:$LD_LIBRARY_PATH
-      </code></pre><p>
-
-  </p></li><li>By default, if the shared object library is built, the services
-      are linked into the <code>main</code> driver program dynamically.
-      To specify which services should be linked in and executed, edit the
-      <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/netsvcs/servers/svc.conf">$ACE_ROOT/netsvcs/servers/svc.conf</a>
-      file.  During your editing, you should update information (such as the
-      default service port numbers) that affects the initialization of
-      services in this file.  Refer to the
-      <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/ACE-papers.html#config">Service Configurator</a>
-      documentation to learn how the configuration file is parsed and
-      how the services are dynamically linked and executed.  In
-      addition, refer to the <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE-netsvcs.html">Network
-      Services</a> documentation to learn more about how to configure
-      each network service.<p>
-
-  </p></li><li>If you only want to link the services statically, simply remove
-      or rename the svc.conf file.<p>
-</p></li></ol>
-
-<p></p><hr align="left" width="50%"><p>
-</p><h4><a name="rtems">Building and Installing ACE on RTEMS</a></h4>
+</p><h2><a name="rtems">Building and Installing ACE on RTEMS</a></h2>
 
 <pre>export RTEMS_MAKEFILE_PATH=/opt/rtems/CPU-rtems/BSP
 # setup the build structure
@@ -1782,20 +1783,68 @@ cd ../TAO
 make
 </pre>
 
+
+<hr>
+<h1><a name="svcsinstall">Building and Installing ACE Network Services</a></h1>
+
+The following explains how to build the ACE <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE-netsvcs.html">network services</a> on <a href="#unixsvcs">UNIX</a> and <a href="#win32svcs">Win32</a>.
+
 <p></p><hr align="left" width="50%"><p>
-</p><h4><a name="win32svcs">Building and Installing ACE Network Services on Win32</a></h4>
+</p><h2><a name="unixsvcs">Building and Installing ACE Network Services on UNIX</a></h2>
+
+Building and installing ACE Network Services on UNIX is relatively
+simple (the <a href="#win32svcs">process</a> for Win32 is different).
+Here's what you need to do:<p>
+
+</p><ol>
+
+  <li>Build and install ACE on UNIX as described <a href="#unix">earlier</a>.  If ACE is built at the root of the ACE
+      source tree (and ACE has been ported to your platform, of course) the
+      netsvcs static and shared object libraries should be built
+      automatically.  In addition, the server driver program
+      (<code>main</code>) contained in <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/netsvcs/servers/main.cpp">$ACE_ROOT/netsvcs/servers/main.cpp</a>
+      should also be compiled and ready to run.<p>
+
+  </p></li><li>Set your <code>LD_LIBRARY_PATH</code> environment variable to
+      where the binary version of the ACE netsvcs library.  For
+      example, you probably want to do something like the following<p>
+
+      </p><pre><code>
+      % setenv LD_LIBRARY_PATH $ACE_ROOT/ace:$ACE_ROOT/lib:$LD_LIBRARY_PATH
+      </code></pre><p>
+
+  </p></li><li>By default, if the shared object library is built, the services
+      are linked into the <code>main</code> driver program dynamically.
+      To specify which services should be linked in and executed, edit the
+      <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/netsvcs/servers/svc.conf">$ACE_ROOT/netsvcs/servers/svc.conf</a>
+      file.  During your editing, you should update information (such as the
+      default service port numbers) that affects the initialization of
+      services in this file.  Refer to the
+      <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/ACE-papers.html#config">Service Configurator</a>
+      documentation to learn how the configuration file is parsed and
+      how the services are dynamically linked and executed.  In
+      addition, refer to the <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE-netsvcs.html">Network
+      Services</a> documentation to learn more about how to configure
+      each network service.<p>
+
+  </p></li><li>If you only want to link the services statically, simply remove
+      or rename the svc.conf file.<p>
+</p></li></ol>
+
+<p></p><hr align="left" width="50%"><p>
+</p><h2><a name="win32svcs">Building and Installing ACE Network Services on Win32</a></h2>
 
 Once again, there are supplied project for MSVC 6.0 or later for
 the Network Services.<p>
 
 </p><hr>
-<h3><a name="sslinstall">Building and Installing The ACE_SSL Library</a></h3>
+<h1><a name="sslinstall">Building and Installing the ACE_SSL Library</a></h1>
 
 <p>The first step for all platforms is to build and install the
 <a href="http://www.openssl.org/">OpenSSL</a> distribution.  The
 ACE_SSL library must then be built according to the instructions
 below.</p>
-<h3>Unix</h3>
+<h2>Unix</h2>
 <ol>
   <li>Make sure the OpenSSL header file directory is in your compiler's
       include path, and that OpenSSL libraries are in your library link/load
@@ -1820,7 +1869,7 @@ below.</p>
       directory. The <tt>ACE_ROOT</tt> environment variable should be set
       prior to this point.</li>
 </ol>
-<h3>Microsoft Visual Studio</h3>
+<h2>Microsoft Visual Studio</h2>
 <ol>
   <li>Set the <code>SSL_ROOT</code> environment variable to the location
       of the directory containing the OpenSSL <code>inc32</code> and
@@ -1836,7 +1885,7 @@ below.</p>
       the <code>config.h</code> file has been created, build the
       <code>ACE_SSL</code> project.</li>
 </ol>
-<h3>Borland C++</h3>
+<h2>Borland C++</h2>
 <p>Support for building ACE's ACE_SSL library and TAO's SSLIOP
    pluggable protocol with Borland C++ does exist.
 <ol>
@@ -1852,10 +1901,10 @@ below.</p>
 </p>
 
 <hr><p>
-</p><h3><a name="guireactor_install">Building and Using GUI Reactors Libraries</a></h3>
+</p><h1><a name="guireactor_install">Building and Using GUI Reactors Libraries</a></h1>
 There is a general method for building and using <code>ACE_Reactors</code> for various GUI
 libraries.
-    <h4> Building GUI Reactor Library </h4>
+    <h2> Building GUI Reactor Library </h2>
     <ol>
       <li>Try to generate build files using MPC. Inspect the output of MPC to find out which features are
         necessary to build given reactor. Add these features to
@@ -1905,24 +1954,26 @@ libraries.
     <code>Windows</code> the results are shared <code>QtReactor.dll</code> and import
     <code>QtReactor.lib</code> libraries or their variants depending on build options.
     When compiling TAO also GUI related libraries are created like <code>libTAO_QtResource.so</code>.
-  <h4> Using GUI Reactor Library </h4>
+  <h2> Using GUI Reactor Library </h2>
     Here one has at least three use cases:
-    <h5> Applications with their own build system.</h5>
+    <ol>
+    <li><b>Applications with their own build system.</b>
     To use ACE support for GUI one has to include specific GUI headers and
     link with specific <code>ACE_[GUI]Reactor</code> library. When using TAO support for GUI one has
-    also to link with specific <code>TAO_[GUI]Resource</code> library.
-    <h5> Applications with build system using MPC.</h5>
+    also to link with specific <code>TAO_[GUI]Resource</code> library.</li>
+    <li><b>Applications with build system using MPC.</b>
     In general, it is better to create specific base projects for using ACE GUI support in such application.
     Base projects provided by ACE <code>ACE_wrappers/bin/MakeProjectCreator/[ace,tao]_[gui][reactor,resource].mpb</code>
-    may be an examples of how to do this.
-    <h5> Internal ACE applications like tests or examples.</h5>
+    may be an examples of how to do this.</li>
+    <li><b>Internal ACE applications like tests or examples.</b>
     MPC project for internal ACE application using GUI support should be derived from
     <code>ace_[gui]reactor.mpb</code> base projects. To employ TAO support for GUI one should derive
     the project from <code>tao_[gui]resource.mpb</code> These base projects ensure that all necessary libraries
     are linked to the application, specifies features necessary to build a project and moreover impose a
     build order consistant with ACE. For example, the application project using <code>XtReactor</code> should be
-    derived from <code>ace_xtreactor.mpb</code>.
-  <h4>Notes on specific GUI Reactors</h4>
+    derived from <code>ace_xtreactor.mpb</code>.</li>
+   </ol>
+  <h2>Notes on specific GUI Reactors</h2>
     <ul>
       <li> <code>QtReactor</code></li>
         The build is controlled by <code>ace_qtreactor</code> [1 by default] feature.
@@ -1956,7 +2007,7 @@ libraries.
         <code>x11</code>switch is ignored for this platform.</li>
     </ul>
 
-<hr><p></p><h3><a name="installnotes">Installation Notes</a></h3>
+<hr><p></p><h1><a name="installnotes">Installation Notes</a></h1>
 
 <ul>
   <li><b>Windows (Windows NT, 2000, XP, 2003, etc., and Windows '9x/ME) </b><p>
@@ -2479,7 +2530,7 @@ libraries.
 
 
 <hr>
-<h4><a name="g++">Compiling ACE with GNU g++</a></h4>
+<h2><a name="g++">Compiling ACE with GNU g++</a></h2>
 
 If you use the GNU GCC g++ compiler please note the following:
 
@@ -2521,7 +2572,7 @@ If you use the GNU GCC g++ compiler please note the following:
 
 
 <hr><p>
-</p><h3><a name="minimum_build">What Do I Need to Build for TAO?</a></h3>
+</p><h2><a name="minimum_build">What Do I Need to Build for TAO?</a></h2>
 Toshio Hori &lt;toshi@etl.go.jp&gt; provided these suggestions on building
 just what's needed for (a subset of) TAO:<p>
 
@@ -2544,8 +2595,8 @@ in <code>$ACE_ROOT/include/makeinclude/platform_macros.GNU</code> also.  See
 library customization instructions</a> for more information.<p>
 
 
-</p><hr><p> </p><h3><a name="resource_requirements">System Resource
-Requirements</a></h3> The amount of system resources required to build
+</p><hr><p> </p><h2><a name="resource_requirements">System Resource
+Requirements</a></h2> The amount of system resources required to build
 ACE and TAO varies greatly.  The required system resources are
 influenced by OS and compiler platform, build options, and component
 configurations.  As a rough guide, the typical peak memory requirement
@@ -2597,7 +2648,7 @@ well, try 'make realclean'.</p><p>
 </p></li></ul>
 
 <p></p><hr><p>
-</p><h3><a name="MPC">General MPC information</a></h3>
+</p><h1><a name="MPC">General MPC information</a></h1>
 
 The Makefile Project Creator (MPC) is a tool that takes platform and
 building tool generic files (mpc files) as input, which describe basic
@@ -2642,7 +2693,7 @@ versions of the TAO Developer's Guide is released.
 
 </p>
 <p>
-</p><h3><a name="eclipse">Working with ACE in Eclipse</a></h3>
+</p><h1><a name="eclipse">Working with ACE in Eclipse</a></h1>
 
 
 <p>
@@ -2650,7 +2701,7 @@ The Eclipse CDT C++ development environment can be used to develop ACE applicati
 </p>
 
 <p>
-<h4>To create an Eclipse project for ACE starting from CVS:</h4>
+<h2>To create an Eclipse project for ACE starting from CVS:</h2>
 <ol>
 <li>In the "CVS Repository Exploring" perspective, navigate to the module containing ACE.</li>
 <li>Checkout the module using "Check Out As" and select the "project configured using the New Project Wizard" option.</li>
@@ -2665,7 +2716,7 @@ The Eclipse CDT C++ development environment can be used to develop ACE applicati
 
 
 <p>
-<h4>To create an Eclipse project for ACE from a local source distribution:</h4>
+<h2>To create an Eclipse project for ACE from a local source distribution:</h2>
 <ol>
 <li>Launch the "New Project Wizard" in Eclipse.</li>
 <li>Select "Standard Make C++ Project" for the project type.</li>
@@ -2682,7 +2733,7 @@ The Eclipse CDT C++ development environment can be used to develop ACE applicati
 </p>
 
 <hr><p>
-</p><h3><a name="advanced">Advanced Topics</a></h3>
+</p><h1><a name="advanced">Advanced Topics</a></h1>
 
 <ul>
   <li><a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/docs/ACE-porting.html">Porting ACE and TAO to a New OS Platform</a>
@@ -2695,8 +2746,8 @@ The Eclipse CDT C++ development environment can be used to develop ACE applicati
 </li></ul>
 
 <p></p><hr align="left" width="50%"><p>
-</p><h4><a name="NonStaticObjectManager">Non-static
-ACE_Object_Manager</a></h4> The ACE_Object_Manager can be instantiated
+</p><h2><a name="NonStaticObjectManager">Non-static
+ACE_Object_Manager</a></h2> The ACE_Object_Manager can be instantiated
 as a static object, can be instantiated on the stack of the main
 program thread, or can be explicitly instantiated and destroyed by the
 application with <code>ACE::init ()</code> and <code>ACE::fini
@@ -2750,7 +2801,7 @@ in <a href="ace/OS_main.h"><code>ace/OS_main.h</code></a> to see how ACE does
 that for entry points named <code>main</code>.
 
 </p><p></p><hr align="left" width="50%"><p>
-</p><h4><a name="cloning">Cloning the Source Tree</a></h4>
+</p><h2><a name="cloning">Cloning the Source Tree</a></h2>
 
 On UNIX platforms, we typically like to support multiple platform
 builds using the same ACE source tree.  This idiom is supported by ACE
@@ -2784,7 +2835,7 @@ See the comments at the top of the create_ace_build.pl script for
 further usage information.
 
 </p><p></p><hr align="left" width="50%"><p>
-</p><h4><a name="mvs">Additional Build Tips for MVS</a></h4>
+</p><h2><a name="mvs">Additional Build Tips for MVS</a></h2>
 
 For all intents and purpose, MVS OpenEdition (OE) is another flavor of
 UNIX, therefore, the instructions under <a href="#aceinstall">Building
@@ -2820,7 +2871,7 @@ from the binder (linkage editor).   You can get pre-link and link maps by
 uncommenting the PMAP and LMAP lines in the platform_mvs.GNU file.
 
 </p><p></p><hr align="left" width="50%"><p>
-</p><h4><a name="flags">Makefile Flags</a></h4>
+</p><h2><a name="flags">Makefile Flags</a></h2>
 
 GNU make provides many options to customize its operation.  See its
 documentation for more information.  One example is that for multi-cpu
@@ -2918,7 +2969,7 @@ show_uninit        Lists all uninitialized in object files built for
 </pre>
 
 </p><hr><p>
-</p><h3><a name="power">Building from anonymous CVS</a></h3>
+</p><h2><a name="power">Building from anonymous CVS</a></h2>
 If users are building from our <a href="http://cvs.doc.wustl.edu/anoncvs.html">anon cvs</a> the
 GNUmakefiles, and project files for building on various platforms will
 not be available. Users from anon cvs are expected to generate them
