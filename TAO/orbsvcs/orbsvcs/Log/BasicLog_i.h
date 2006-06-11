@@ -84,12 +84,9 @@ protected:
    */
   ~TAO_BasicLog_i (void);
 
-protected:
+private:
 
-  /// Used to access the hash map that holds all the Logs created.
-  TAO_LogMgr_i&			logmgr_i_;
-
-  /// POA.a
+  /// POA.
   PortableServer::POA_var	poa_;
 };
 

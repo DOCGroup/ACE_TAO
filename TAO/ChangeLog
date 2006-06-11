@@ -1,8 +1,22 @@
+Sun Jun 11 00:54:57 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Log/BasicLog_i.cpp:
+	* orbsvcs/orbsvcs/Log/BasicLog_i.h:
+	* orbsvcs/orbsvcs/Log/EventLog_i.cpp:
+	* orbsvcs/orbsvcs/Log/EventLog_i.h:
+	* orbsvcs/orbsvcs/Log/NotifyLog_i.cpp:
+	* orbsvcs/orbsvcs/Log/NotifyLog_i.h:
+	* orbsvcs/orbsvcs/Log/RTEventLog_i.cpp:
+	* orbsvcs/orbsvcs/Log/RTEventLog_i.h:
+
+          Remove member variable logmgr_i_, as it's also a protected
+          member in the base class.
+
 Sat Jun 10 21:54:00 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
-        * NEWS: 
-        
-          Mention that NT_Naming_Service and NT_Notify_Service must 
+        * NEWS:
+
+          Mention that NT_Naming_Service and NT_Notify_Service must
           be enabled by new MPC feature variable "winnt".
 
 Sat Jun 10 18:30:42 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>

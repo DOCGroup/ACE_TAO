@@ -111,11 +111,6 @@ protected:
    */
   ~TAO_EventLog_i ();
 
-protected:
-
-  /// Used to access the hash map that holds all the Logs created.
-  TAO_LogMgr_i &logmgr_i_;
-
 private:
 
   /// The Event Channel that the log uses.
