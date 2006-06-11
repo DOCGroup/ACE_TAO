@@ -112,10 +112,6 @@ public:
           RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
           RtecEventChannelAdmin::EventChannel::CANT_REMOVE_OBSERVER));
 
- protected:
-  /// Used to access the hash map that holds all the Logs created.
-  TAO_LogMgr_i &logmgr_i_;
-
  private:
   /// The EventChannel used.
   TAO_EC_Event_Channel *event_channel_;

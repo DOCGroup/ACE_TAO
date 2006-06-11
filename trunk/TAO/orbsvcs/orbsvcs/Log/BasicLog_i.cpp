@@ -14,7 +14,6 @@ TAO_BasicLog_i::TAO_BasicLog_i (CORBA::ORB_ptr orb,
                                 DsLogAdmin::LogMgr_ptr factory,
                                 DsLogAdmin::LogId id)
   : TAO_Log_i (orb, logmgr_i, factory, id, 0),
-    logmgr_i_(logmgr_i),
     poa_(PortableServer::POA::_duplicate(poa))
 {
   // No-Op.
