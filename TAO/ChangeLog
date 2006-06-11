@@ -1,3 +1,13 @@
+Sun Jun 11 16:46:44 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/EventLog_i.cpp:
+        * orbsvcs/orbsvcs/NotifyLog_i.cpp:
+        * orbsvcs/orbsvcs/RTEventLog_i.cpp:
+
+          Changed destructor to invoke destroy() on the event channel.
+          This notifies suppliers and consumers, and avoids a resource
+          leak.  Fixes bugzilla bug #2559.
+
 Sun Jun 11 00:54:57 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/Log/BasicLog_i.cpp:

@@ -41,7 +41,7 @@ TAO_NotifyLog_i::TAO_NotifyLog_i (CORBA::ORB_ptr orb,
 
 TAO_NotifyLog_i::~TAO_NotifyLog_i ()
 {
-  // No-Op.
+  this->event_channel_->destroy ();
 }
 
 DsLogAdmin::Log_ptr

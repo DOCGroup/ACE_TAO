@@ -33,7 +33,9 @@ TAO_EventLog_i::TAO_EventLog_i (CORBA::ORB_ptr orb,
 
 TAO_EventLog_i::~TAO_EventLog_i ()
 {
-  // No-Op.
+  this->event_channel_->destroy ();
+
+  delete this->event_channel_;
 }
 
 

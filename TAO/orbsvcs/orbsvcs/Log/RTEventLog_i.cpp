@@ -42,7 +42,9 @@ TAO_RTEventLog_i::TAO_RTEventLog_i (CORBA::ORB_ptr orb,
 
 TAO_RTEventLog_i::~TAO_RTEventLog_i ()
 {
-  // No-Op.
+  this->event_channel_->destroy ();
+
+  delete this->event_channel_;
 }
 
 
