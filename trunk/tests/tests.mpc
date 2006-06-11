@@ -898,6 +898,7 @@ project(SOCK Connector Test) : acetest {
 }
 
 project(SOCK Netlink Test) : acetest {
+  avoids += ace_for_tao
   exename = SOCK_Netlink_Test
   Source_Files {
     SOCK_Netlink_Test.cpp
