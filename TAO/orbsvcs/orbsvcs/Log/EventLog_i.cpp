@@ -17,7 +17,6 @@ TAO_EventLog_i::TAO_EventLog_i (CORBA::ORB_ptr orb,
                                 TAO_LogNotification *log_notifier,
                                 DsLogAdmin::LogId id)
   : TAO_Log_i (orb, logmgr_i, factory, id, log_notifier),
-    logmgr_i_(logmgr_i),
     poa_(PortableServer::POA::_duplicate(poa)),
     log_poa_(PortableServer::POA::_duplicate(log_poa))
 {
