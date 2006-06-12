@@ -82,6 +82,7 @@
 #                   else it defaults to .ACE_MAJOR.ACE_MINOR.ACE_BETA.
 #  wfmo             Build with wfmo support (Win32 only)
 #  winregistry      Build with windows registry support (Win32 only)
+#  winnt            Build WinNT-specific projects (Win32 only)
 #
 #  Usually, users do not need to be concerned with make targets.
 #  Just enter "make" on the command line to build.  A few notable
@@ -790,6 +791,9 @@ wfmo ?= 0
 
 # If not explicitly is set that we have winregistry, assume we don't have it.
 winregistry ?= 0
+
+# If not explicitly is set that we have winnt, assume we don't have it.
+winnt ?= 0
 
 # In MPC, these are now features that are enabled by default.
 ace_other     ?= 1
