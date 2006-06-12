@@ -44,6 +44,8 @@ typedef struct __stat64 ACE_stat;
 #elif defined (ACE_WIN32) && !defined (ACE_HAS_WINCE) && !defined(__IBMCPP__) && ((defined _MSC_VER) && _MSC_VER >= 1300)
 // For vc71 which has time_t as 32bit
 typedef struct _stati64 ACE_stat;
+#elif defined (__MINGW32__)
+typedef struct _stat ACE_stat;
 #else
 typedef struct stat ACE_stat;
 #endif /* ACE_WIN32 */
