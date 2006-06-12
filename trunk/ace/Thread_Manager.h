@@ -630,8 +630,8 @@ public:
    * you can use @c wait_grp() instead.
    */
   int wait (const ACE_Time_Value *timeout = 0,
-            int abandon_detached_threads = 0,
-            int use_absolute_time = 1);
+            bool abandon_detached_threads = false,
+            bool use_absolute_time = true);
 
   /// Join a thread specified by <tid>.  Do not wait on a detached thread.
   int join (ACE_thread_t tid, ACE_THR_FUNC_RETURN *status = 0);
