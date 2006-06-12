@@ -1,3 +1,8 @@
+Mon Jun 12 10:24:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/vc6.features:
+          Removed this file, wer don't support vc6 anymore
+
 Mon Jun 12 01:30:03 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/Thread_Manager.cpp (wait): Changed the flag parameters to be
