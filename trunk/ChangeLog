@@ -1,3 +1,8 @@
+Mon Jun 12 14:34:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_sys_stat.h:
+          Fixed mingw definition of ACE_stat
+
 Mon Jun 12 10:24:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/vc6.features:
