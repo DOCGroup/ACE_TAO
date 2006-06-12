@@ -154,14 +154,18 @@ run_main (int, ACE_TCHAR *[])
 
   // This semaphore is initially created with a count of 0, i.e., it
   // is "locked."
-  ACE_ASSERT (parent_mutex->open (SEM_KEY_1,
-                                  ACE_SV_Semaphore_Complex::ACE_CREATE,
-                                  0) != -1);
+  int result = parent_mutex->open (SEM_KEY_1,
+                                   ACE_SV_Semaphore_Complex::ACE_CREATE,
+                                   0);
+  ACE_ASSERT (result != -1);
+
   // This semaphore is initially created with a count of 0, i.e., it
   // is "locked."
-  ACE_ASSERT (parent_synch->open (SEM_KEY_2,
-                                  ACE_SV_Semaphore_Complex::ACE_CREATE,
-                                  0) != -1);
+  result = parent_synch->open (SEM_KEY_2,
+                               ACE_SV_Semaphore_Complex::ACE_CREATE,
+                               0);
+  ACE_ASSERT (result != -1);
+
   switch (ACE_OS::fork (ACE_TEXT ("SV_Shared_Memory_Test.cpp")))
     {
     case -1:
