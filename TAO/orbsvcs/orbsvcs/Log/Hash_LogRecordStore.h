@@ -29,11 +29,14 @@
 #include "ace/Null_Mutex.h"
 #include "ace/RW_Thread_Mutex.h"
 #include "ace/Reactor.h"
+#include "tao/PortableServer/PortableServer.h"
 #include "orbsvcs/Log/log_serv_export.h"
 
 #define LOG_DEFAULT_MAX_REC_LIST_LEN 100
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+class TAO_LogMgr_i;
 
 /**
  * @class TAO_Hash_LogRecordStore
@@ -63,7 +66,7 @@ class TAO_Log_Serv_Export TAO_Hash_LogRecordStore
   // = Initialization and termination methods
 
   /// Constructor.
-  TAO_Hash_LogRecordStore (CORBA::ORB_ptr orb,
+  TAO_Hash_LogRecordStore (TAO_LogMgr_i* logmgr,
                            DsLogAdmin::LogId id,
                            DsLogAdmin::LogFullActionType log_full_action,
                            CORBA::ULongLong max_size,
@@ -328,6 +331,8 @@ protected:
   /// The size of a LogRecord
   size_t log_record_size(const DsLogAdmin::LogRecord &rec);
 
+  TAO_LogMgr_i*		logmgr_i_;
+
   /// Assigned to a new RecordId and then incremented
   /// @@ Should I have a list of reclaimed id's for when records are
   /// deleted?
@@ -382,6 +387,8 @@ protected:
   
 
   ACE_Reactor*                          reactor_;
+
+  PortableServer::POA_var		iterator_poa_;
 
   mutable ACE_SYNCH_RW_MUTEX		lock_;
 };

@@ -112,7 +112,7 @@ TAO_LogMgr_i::init (CORBA::ORB_ptr orb,
       strategy_ = new TAO_Hash_Persistence_Strategy;
     }
 
-  logstore_ = strategy_->create_log_store (orb, this);
+  logstore_ = strategy_->create_log_store (this);
 }
 
 PortableServer::ObjectId*
@@ -273,6 +273,24 @@ TAO_LogMgr_i::create_with_id_i (DsLogAdmin::LogId id,
 				   thresholds
 				   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
+}
+
+CORBA::ORB_ptr
+TAO_LogMgr_i::orb ()
+{
+  return this->orb_.in ();
+}
+
+PortableServer::POA_ptr
+TAO_LogMgr_i::factory_poa ()
+{
+  return this->factory_poa_.in ();
+}
+
+PortableServer::POA_ptr
+TAO_LogMgr_i::log_poa ()
+{
+  return this->log_poa_.in ();
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
