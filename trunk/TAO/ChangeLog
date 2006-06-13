@@ -1,3 +1,21 @@
+Tue Jun 13 14:56:01 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/Log/Log_i.cpp:
+
+          Don't close the LogRecordStore in the TAO_Log_i destructor, if
+          the log channel was destroyed, it will be a dangling reference.
+          The LogStore should be responsible for opening and closing its
+          LogRecordStores.
+
+        * orbsvcs/orbsvcs/Log/Hash_LogStore.cpp (remove):
+
+          Obtain and delete LogRecordStore when unbinding from map.
+          Avoids leak.
+
+        * orbsvcs/orbsvcs/Log/Hash_LogRecordStore.cpp (query_i):
+
+          Re-indent to match coding conventions.
+
 Tue Jun 13 13:51:11 UTC 2006  Adam Mitz  <mitza@ociweb.com>
 
         * tests/Bug_2494_Regression/client.cpp:
