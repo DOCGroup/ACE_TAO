@@ -129,7 +129,8 @@ main (int argc, char *argv[])
     }
   catch (CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ex, "Exception caught:");
+      ACE_DEBUG ((LM_ERROR, ACE_TEXT ("(%P|%t) Exception caught: \n%s\n"),
+                  ACE_TEXT_CHAR_TO_TCHAR (ex._info ().c_str ())));
       return 1;
     }
 
