@@ -154,7 +154,15 @@ TAO_Hash_LogStore::remove (DsLogAdmin::LogId id
                             CORBA::INTERNAL ());
   ACE_CHECK_RETURN (-1);
 
-  return this->hash_map_.unbind (id);
+  TAO_Hash_LogRecordStore* recordstore;
+
+  int retval = this->hash_map_.unbind (id, recordstore);
+  if (retval == 0) 
+    {
+      delete recordstore; 
+    }
+
+  return retval;
 }
 
 

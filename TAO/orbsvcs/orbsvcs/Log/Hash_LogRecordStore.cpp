@@ -388,23 +388,25 @@ TAO_Hash_LogRecordStore::query_i (const char *constraint,
 
       // Does it match the constraint?
       if (interpreter.evaluate (evaluator) == 1)
-      {
-        if (TAO_debug_level > 0)
+	{
+	  if (TAO_debug_level > 0)
+	    {
 #if defined (ACE_LACKS_LONGLONG_T)
-               ACE_DEBUG ((LM_DEBUG,"Matched constraint! d = %d, Time = %d\n",
-                      ACE_U64_TO_U32 (iter->item ().id),
-                      ACE_U64_TO_U32 (iter->item ().time)));
+	      ACE_DEBUG ((LM_DEBUG,"Matched constraint! d = %d, Time = %d\n",
+			  ACE_U64_TO_U32 (iter->item ().id),
+			  ACE_U64_TO_U32 (iter->item ().time)));
 
 #else
-               ACE_DEBUG ((LM_DEBUG,"Matched constraint! d = %Q, Time = %Q\n",
-                      iter->item ().id,
-                      iter->item ().time));
+	      ACE_DEBUG ((LM_DEBUG,"Matched constraint! d = %Q, Time = %Q\n",
+			  iter->item ().id,
+			  iter->item ().time));
 #endif
-
-        (*rec_list)[count] = iter->item ();
-        // copy the log record.
-        count++;
-      }
+	    }
+	  
+	  (*rec_list)[count] = iter->item ();
+	  // copy the log record.
+	  count++;
+	}
     }
 
   rec_list->length (count);

@@ -106,7 +106,6 @@ TAO_Log_i::init (ACE_ENV_SINGLE_ARG_DECL)
 
 TAO_Log_i::~TAO_Log_i (void)
 {
-  recordstore_->close ();
 }
 
 DsLogAdmin::LogMgr_ptr
