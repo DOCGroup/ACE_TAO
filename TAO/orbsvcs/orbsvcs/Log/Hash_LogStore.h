@@ -45,7 +45,7 @@ public:
   // = Initialization and Termination Methods
 
   /// Constructor.
-  TAO_Hash_LogStore (CORBA::ORB_ptr orb, TAO_LogMgr_i* mgr);
+  TAO_Hash_LogStore (TAO_LogMgr_i* mgr);
 
   /// Destructor.
   virtual ~TAO_Hash_LogStore ();
@@ -120,9 +120,7 @@ private:
   /// taken by create_with_id().
   DsLogAdmin::LogId     next_id_;
 
-  CORBA::ORB_var        orb_;
-
-  TAO_LogMgr_i*         mgr_;
+  TAO_LogMgr_i*         logmgr_i_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

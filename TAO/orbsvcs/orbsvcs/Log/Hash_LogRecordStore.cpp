@@ -1,8 +1,10 @@
+#include "orbsvcs/Log/LogMgr_i.h"
 #include "orbsvcs/Log/Hash_LogRecordStore.h"
 #include "orbsvcs/Log/Hash_Iterator_i.h"
 #include "orbsvcs/Log/Log_Constraint_Interpreter.h"
 #include "orbsvcs/Log/Log_Constraint_Visitors.h"
 #include "orbsvcs/Time_Utilities.h"
+#include "tao/Utils/PolicyList_Destroyer.h"
 #include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
@@ -15,12 +17,13 @@ ACE_RCSID (Log,
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Hash_LogRecordStore::TAO_Hash_LogRecordStore (
-  CORBA::ORB_ptr orb,
+  TAO_LogMgr_i* logmgr_i,
   DsLogAdmin::LogId logid,
   DsLogAdmin::LogFullActionType log_full_action,
   CORBA::ULongLong max_size,
   const DsLogAdmin::CapacityAlarmThresholdList* thresholds)
-  : maxid_ (0),
+  : logmgr_i_ (logmgr_i),
+    maxid_ (0),
     max_size_ (max_size),
     id_ (logid),
     current_size_ (0),
@@ -31,7 +34,7 @@ TAO_Hash_LogRecordStore::TAO_Hash_LogRecordStore (
     forward_state_ (DsLogAdmin::on),
     log_full_action_ (log_full_action),
     max_record_life_ (0),
-    reactor_ (orb->orb_core ()->reactor ())
+    reactor_ (logmgr_i_->orb()->orb_core ()->reactor ())
 {
   interval_.start = 0;
   interval_.stop = 0;
@@ -48,11 +51,36 @@ TAO_Hash_LogRecordStore::TAO_Hash_LogRecordStore (
 
   this->log_qos_.length(1);
   this->log_qos_[0] = DsLogAdmin::QoSNone;
+
+  PortableServer::POA_ptr log_poa = 
+	logmgr_i_->log_poa();
+
+  // Create POA for iterators
+  TAO::Utils::PolicyList_Destroyer policies (3);
+  policies.length (3);
+
+  policies[0] =
+    log_poa->create_lifespan_policy (PortableServer::TRANSIENT);
+  policies[1] =
+    log_poa->create_id_assignment_policy (PortableServer::SYSTEM_ID);
+  policies[2] =
+    log_poa->create_servant_retention_policy (PortableServer::RETAIN);
+
+  char buf[32];
+  ACE_OS::snprintf (buf, sizeof (buf), "Log%d", (int) id_);
+
+  PortableServer::POAManager_var poa_manager =
+    log_poa->the_POAManager ();
+
+  this->iterator_poa_ = 
+	log_poa->create_POA(buf, PortableServer::POAManager::_nil(), policies);
 }
 
 TAO_Hash_LogRecordStore::~TAO_Hash_LogRecordStore (void)
 {
-  // No-Op.
+  ACE_DEBUG((LM_DEBUG, "TAO_Hash_LogRecordStore::~TAO_Hash_LogRecordStore ()\n"));
+  this->iterator_poa_->destroy (1, 0);
+  ACE_DEBUG((LM_DEBUG, "TAO_Hash_LogRecordStore::~TAO_Hash_LogRecordStore ()\n"));
 }
 
 int
@@ -417,7 +445,7 @@ TAO_Hash_LogRecordStore::query_i (const char *constraint,
       TAO_Hash_Iterator_i *iter_query = 0;
       ACE_NEW_THROW_EX (iter_query,
                         TAO_Hash_Iterator_i (this->reactor_,
-               this,
+					     this,
                                              iter,
                                              iter_end,
                                              count,
@@ -430,8 +458,13 @@ TAO_Hash_LogRecordStore::query_i (const char *constraint,
       PortableServer::ServantBase_var safe_iter_query = iter_query;
 
       // Activate it.
-      iter_out = iter_query->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (rec_list);
+      PortableServer::ObjectId_var oid =
+	this->iterator_poa_->activate_object (iter_query);
+      CORBA::Object_var obj =
+	this->iterator_poa_->id_to_reference (oid);
+
+      // Narrow it
+      iter_out = DsLogAdmin::Iterator::_narrow (obj.in ());
     }
 
   return rec_list;

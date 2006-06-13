@@ -47,7 +47,7 @@ public:
 
   /// @brief Log Store Factory
   virtual TAO_LogStore*
-    create_log_store (CORBA::ORB_ptr orb, TAO_LogMgr_i* mgr);
+    create_log_store (TAO_LogMgr_i* mgr);
 
 private:
 };

@@ -9,10 +9,9 @@ ACE_RCSID (Log,
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Hash_LogStore::TAO_Hash_LogStore(CORBA::ORB_ptr orb, TAO_LogMgr_i* mgr)
+TAO_Hash_LogStore::TAO_Hash_LogStore(TAO_LogMgr_i* logmgr_i)
   : next_id_ (0),
-    orb_ (CORBA::ORB::_duplicate (orb)),
-    mgr_ (mgr)
+    logmgr_i_ (logmgr_i)
 {
 }
 
@@ -57,8 +56,8 @@ TAO_Hash_LogStore::list_logs (ACE_ENV_SINGLE_ARG_DECL)
     {
       iter.next (hash_entry);
       iter.advance ();
-      (*list)[i] = mgr_->create_log_reference (static_cast<DsLogAdmin::LogId> (hash_entry->ext_id_)
-                                               ACE_ENV_ARG_PARAMETER);
+      (*list)[i] = logmgr_i_->create_log_reference (static_cast<DsLogAdmin::LogId> (hash_entry->ext_id_)
+						    ACE_ENV_ARG_PARAMETER);
     }
 
   return list;
@@ -125,7 +124,7 @@ TAO_Hash_LogStore::find_log (DsLogAdmin::LogId id
     }
   else
     {
-      return mgr_->create_log_reference (id ACE_ENV_ARG_PARAMETER);
+      return logmgr_i_->create_log_reference (id ACE_ENV_ARG_PARAMETER);
     }
 }
 
@@ -187,7 +186,7 @@ TAO_Hash_LogStore::create(DsLogAdmin::LogFullActionType full_action,
 
   TAO_Hash_LogRecordStore* impl = 0;
   ACE_NEW_THROW_EX (impl,
-                    TAO_Hash_LogRecordStore (this->orb_.in (),
+                    TAO_Hash_LogRecordStore (this->logmgr_i_,
                                              id,
                                              full_action,
                                              max_size,
@@ -227,7 +226,7 @@ TAO_Hash_LogStore::create_with_id (DsLogAdmin::LogId id,
 
   TAO_Hash_LogRecordStore* impl = 0;
   ACE_NEW_THROW_EX (impl,
-                    TAO_Hash_LogRecordStore (this->orb_.in (),
+                    TAO_Hash_LogRecordStore (this->logmgr_i_,
                                              id,
                                              full_action,
                                              max_size,
