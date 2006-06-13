@@ -12,6 +12,8 @@ USER VISIBLE CHANGES BETWEEN ACE-5.5.1 and ACE-5.5.2
 
 . Added a wrapper for the sendfile API
 
+. Added support for netlink sockets
+
 USER VISIBLE CHANGES BETWEEN ACE-5.5 and ACE-5.5.1
 ====================================================
 

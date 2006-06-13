@@ -15,6 +15,8 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 
 . (OCI) Fix Notification Service detection of dead consumers.
 
+. Add support for CORBA/e compact and micro
+
 PLANNED MAJOR CHANGES TARGETED FOR TAO-1.5.2
 ====================================================
 
@@ -32,14 +34,14 @@ USER VISIBLE CHANGES BETWEEN TAO-1.5.1 and TAO-1.5.2
   "winnt".  Avoids building and installing this on non-Windows systems.
   Fixes bugzilla bug #2411.
 
-. Changed Telecom Log Service plug-in Strategy Interface.  
+. Changed Telecom Log Service plug-in Strategy Interface.
 
   Added get_record_attribute(), set_record_attribute(), and
   set_records_attribute(); removed remove(), retrieve(), and update().
   This will allow plug-in Strategies to handle these high-level
   operations more efficiently.
 
-  Added get_gauge() and reset_gauge(), to maintain "gauge" used for 
+  Added get_gauge() and reset_gauge(), to maintain "gauge" used for
   capacity threshold alarms when log channel's LogFullActionType is
   DsLogAdmin::wrap.  This resolves bugzilla 2420.
 
