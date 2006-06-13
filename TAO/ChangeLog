@@ -1,3 +1,12 @@
+Tue Jun 13 13:51:11 UTC 2006  Adam Mitz  <mitza@ociweb.com>
+
+        * tests/Bug_2494_Regression/client.cpp:
+
+          The scoreboard was marking this test as "failed" because it printed
+          "EXCEPTION" (from the client process).  This isn't a failure as long
+          as the server process still exits cleanly.  The test is now modified
+          so that it doesn't print "EXCEPTION".
+
 Sun Jun 11 16:46:44 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/orbsvcs/EventLog_i.cpp:
@@ -10,14 +19,14 @@ Sun Jun 11 16:46:44 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
 Sun Jun 11 00:54:57 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Log/BasicLog_i.cpp:
-	* orbsvcs/orbsvcs/Log/BasicLog_i.h:
-	* orbsvcs/orbsvcs/Log/EventLog_i.cpp:
-	* orbsvcs/orbsvcs/Log/EventLog_i.h:
-	* orbsvcs/orbsvcs/Log/NotifyLog_i.cpp:
-	* orbsvcs/orbsvcs/Log/NotifyLog_i.h:
-	* orbsvcs/orbsvcs/Log/RTEventLog_i.cpp:
-	* orbsvcs/orbsvcs/Log/RTEventLog_i.h:
+        * orbsvcs/orbsvcs/Log/BasicLog_i.cpp:
+        * orbsvcs/orbsvcs/Log/BasicLog_i.h:
+        * orbsvcs/orbsvcs/Log/EventLog_i.cpp:
+        * orbsvcs/orbsvcs/Log/EventLog_i.h:
+        * orbsvcs/orbsvcs/Log/NotifyLog_i.cpp:
+        * orbsvcs/orbsvcs/Log/NotifyLog_i.h:
+        * orbsvcs/orbsvcs/Log/RTEventLog_i.cpp:
+        * orbsvcs/orbsvcs/Log/RTEventLog_i.h:
 
           Remove member variable logmgr_i_, as it's also a protected
           member in the base class.
