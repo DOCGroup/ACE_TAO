@@ -125,7 +125,7 @@ Reverse_Lock_Test
 Sendfile_Test
 Signal_Test
 SOCK_Connector_Test
-SOCK_Netlink_Test
+SOCK_Netlink_Test: !ACE_FOR_TAO
 SOCK_Send_Recv_Test
 SOCK_Test
 SPIPE_Test: !VxWorks !nsk !ACE_FOR_TAO
