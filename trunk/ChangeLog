@@ -1,3 +1,8 @@
+Tue Jun 13 02:10:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+	
+	* tests/run_tests.lst:
+	  Don't run netlink test in ACE_FOR_TAO configuration
+
 Mon Jun 12 17:00:02 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * include/makeinclude/wrapper_macros.GNU:
