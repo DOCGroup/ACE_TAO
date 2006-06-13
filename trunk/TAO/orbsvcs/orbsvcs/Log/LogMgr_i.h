@@ -145,6 +145,12 @@ public:
     get_log_record_store (DsLogAdmin::LogId id
 		          ACE_ENV_ARG_DECL);
 
+  CORBA::ORB_ptr orb();
+
+  PortableServer::POA_ptr factory_poa();
+
+  PortableServer::POA_ptr log_poa();
+
 protected:
   /// @brief Initialize
   ///
