@@ -5,7 +5,6 @@ workspace {
   lib
   Bunch
   Bug_1459
-  Limits 
   Separation
   Service_Dependency
   Shared
