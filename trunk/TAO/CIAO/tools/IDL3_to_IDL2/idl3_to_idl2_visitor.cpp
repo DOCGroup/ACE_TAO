@@ -1135,6 +1135,8 @@ idl3_to_idl2_visitor::visit_root (AST_Root *node)
       return -1;
     }
 
+  *os << be_nl;
+
   os->gen_ifndef_string (fn.c_str (), "_TAO_IDL_", "_IDL_");
 
   ACE_CString raw_filename;

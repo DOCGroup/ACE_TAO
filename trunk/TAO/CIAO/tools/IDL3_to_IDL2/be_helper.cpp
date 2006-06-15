@@ -103,8 +103,7 @@ TAO_OutStream::open (const char *fname)
     {
       // File name exists, open an I/O file handle.
       this->fp_ = ACE_OS::fopen (fname, "w");
-      return 0;
-/*
+
       if (this->fp_ != 0)
         {
           // Put the copyright notice.
@@ -119,7 +118,7 @@ TAO_OutStream::open (const char *fname)
       else
         {
           return -1;
-        }*/
+        }
     }
   else
     {
