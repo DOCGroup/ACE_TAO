@@ -1,3 +1,223 @@
+Thu Jun 15 15:05:43 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be_include/be_visitor_interface/remote_proxy_impl_cs.h:
+        * TAO_IDL/be/be_visitor_interface/remote_proxy_impl_cs.cpp:
+
+	        Removed these files from the repository, they are no
+ 	        longer used.
+
+        * TAO_IDL/tao_idl.cpp:
+        * TAO_IDL/ast/ast_argument.cpp:
+        * TAO_IDL/ast/ast_array.cpp:
+        * TAO_IDL/ast/ast_attribute.cpp:
+        * TAO_IDL/ast/ast_check.cpp:
+        * TAO_IDL/ast/ast_concrete_type.cpp:
+        * TAO_IDL/ast/ast_constant.cpp:
+        * TAO_IDL/ast/ast_decl.cpp:
+        * TAO_IDL/ast/ast_enum.cpp:
+        * TAO_IDL/ast/ast_exception.cpp:
+        * TAO_IDL/ast/ast_expression.cpp:
+        * TAO_IDL/ast/ast_factory.cpp:
+        * TAO_IDL/ast/ast_field.cpp:
+        * TAO_IDL/ast/ast_generator.cpp:
+        * TAO_IDL/ast/ast_home.cpp:
+        * TAO_IDL/ast/ast_interface.cpp:
+        * TAO_IDL/ast/ast_interface_fwd.cpp:
+        * TAO_IDL/ast/ast_module.cpp:
+        * TAO_IDL/ast/ast_native.cpp:
+        * TAO_IDL/ast/ast_operation.cpp:
+        * TAO_IDL/ast/ast_predefined_type.cpp:
+        * TAO_IDL/ast/ast_root.cpp:
+        * TAO_IDL/ast/ast_sequence.cpp:
+        * TAO_IDL/ast/ast_string.cpp:
+        * TAO_IDL/ast/ast_structure.cpp:
+        * TAO_IDL/ast/ast_structure_fwd.cpp:
+        * TAO_IDL/ast/ast_type.cpp:
+        * TAO_IDL/ast/ast_typedef.cpp:
+        * TAO_IDL/ast/ast_union_branch.cpp:
+        * TAO_IDL/ast/ast_union_label.cpp:
+        * TAO_IDL/ast/ast_valuebox.cpp:
+        * TAO_IDL/ast/ast_valuetype.cpp:
+        * TAO_IDL/be/be_argument.cpp:
+        * TAO_IDL/be/be_array.cpp:
+        * TAO_IDL/be/be_attribute.cpp:
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_constant.cpp:
+        * TAO_IDL/be/be_decl.cpp:
+        * TAO_IDL/be/be_enum.cpp:
+        * TAO_IDL/be/be_exception.cpp:
+        * TAO_IDL/be/be_factory.cpp:
+        * TAO_IDL/be/be_field.cpp:
+        * TAO_IDL/be/be_generator.cpp:
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be/be_home.cpp:
+        * TAO_IDL/be/be_init.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_interface_fwd.cpp:
+        * TAO_IDL/be/be_interface_strategy.cpp:
+        * TAO_IDL/be/be_module.cpp:
+        * TAO_IDL/be/be_native.cpp:
+        * TAO_IDL/be/be_operation.cpp:
+        * TAO_IDL/be/be_operation_strategy.cpp:
+        * TAO_IDL/be/be_predefined_type.cpp:
+        * TAO_IDL/be/be_produce.cpp:
+        * TAO_IDL/be/be_root.cpp:
+        * TAO_IDL/be/be_scope.cpp:
+        * TAO_IDL/be/be_sequence.cpp:
+        * TAO_IDL/be/be_string.cpp:
+        * TAO_IDL/be/be_structure.cpp:
+        * TAO_IDL/be/be_structure_fwd.cpp:
+        * TAO_IDL/be/be_type.cpp:
+        * TAO_IDL/be/be_union.cpp:
+        * TAO_IDL/be/be_union_branch.cpp:
+        * TAO_IDL/be/be_union_fwd.cpp:
+        * TAO_IDL/be/be_union_label.cpp:
+        * TAO_IDL/be/be_valuetype.cpp:
+        * TAO_IDL/be/be_visitor_amh_pre_proc.cpp:
+        * TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
+        * TAO_IDL/be/be_visitor_arg_traits.cpp:
+        * TAO_IDL/be/be_visitor_attribute.cpp:
+        * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
+        * TAO_IDL/be/be_visitor_context.cpp:
+        * TAO_IDL/be/be_visitor_decl.cpp:
+        * TAO_IDL/be/be_visitor_interface.cpp:
+        * TAO_IDL/be/be_visitor_valuetype.cpp:
+        * TAO_IDL/be/be_visitor_attribute/attribute.cpp:
+        * TAO_IDL/be/be_visitor_interface/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/direct_proxy_impl_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/direct_proxy_impl_ss.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_si.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+        * TAO_IDL/be/be_visitor_interface_fwd/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface_fwd/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_operation/amh_rh_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/amh_sh.cpp:
+        * TAO_IDL/be/be_visitor_operation/amh_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/ami_ch.cpp:
+        * TAO_IDL/be/be_visitor_typecode/enum_typecode.cpp:
+        * TAO_IDL/be/be_visitor_typecode/struct_typecode.cpp:
+        * TAO_IDL/be/be_visitor_typecode/union_typecode.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype.cpp:
+        * TAO_IDL/be_include/be_argument.h:
+        * TAO_IDL/be_include/be_array.h:
+        * TAO_IDL/be_include/be_attribute.h:
+        * TAO_IDL/be_include/be_codegen.h:
+        * TAO_IDL/be_include/be_extern.h:
+        * TAO_IDL/be_include/be_field.h:
+        * TAO_IDL/be_include/be_generator.h:
+        * TAO_IDL/be_include/be_global.h:
+        * TAO_IDL/be_include/be_interface.h:
+        * TAO_IDL/be_include/be_interface_strategy.h:
+        * TAO_IDL/be_include/be_native.h:
+        * TAO_IDL/be_include/be_operation_strategy.h:
+        * TAO_IDL/be_include/be_root.h:
+        * TAO_IDL/be_include/be_union_branch.h:
+        * TAO_IDL/be_include/be_union_label.h:
+        * TAO_IDL/be_include/be_valuebox.h:
+        * TAO_IDL/be_include/be_visitor.h:
+        * TAO_IDL/be_include/be_visitor_ami_pre_proc.h:
+        * TAO_IDL/be_include/be_visitor_ccm_pre_proc.h:
+        * TAO_IDL/be_include/be_visitor_decl.h:
+        * TAO_IDL/driver/drv_args.cpp:
+        * TAO_IDL/driver/drv_preproc.cpp:
+        * TAO_IDL/fe/fe_declarator.cpp:
+        * TAO_IDL/fe/fe_extern.cpp:
+        * TAO_IDL/fe/fe_init.cpp:
+        * TAO_IDL/fe/fe_interface_header.cpp:
+        * TAO_IDL/fe/idl.ll:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/y.tab.cpp:.diff:
+        * TAO_IDL/fe/y.tab.h:
+        * TAO_IDL/include/ast_argument.h:
+        * TAO_IDL/include/ast_array.h:
+        * TAO_IDL/include/ast_attribute.h:
+        * TAO_IDL/include/ast_concrete_type.h:
+        * TAO_IDL/include/ast_decl.h:
+        * TAO_IDL/include/ast_exception.h:
+        * TAO_IDL/include/ast_expression.h:
+        * TAO_IDL/include/ast_field.h:
+        * TAO_IDL/include/ast_generator.h:
+        * TAO_IDL/include/ast_interface.h:
+        * TAO_IDL/include/ast_interface_fwd.h:
+        * TAO_IDL/include/ast_native.h:
+        * TAO_IDL/include/ast_sequence.h:
+        * TAO_IDL/include/ast_structure.h:
+        * TAO_IDL/include/ast_structure_fwd.h:
+        * TAO_IDL/include/ast_typedef.h:
+        * TAO_IDL/include/ast_union_branch.h:
+        * TAO_IDL/include/ast_union_label.h:
+        * TAO_IDL/include/ast_valuebox.h:
+        * TAO_IDL/include/drv_extern.h:
+        * TAO_IDL/include/fe_extern.h:
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/include/utl_exceptlist.h:
+        * TAO_IDL/include/utl_exprlist.h:
+        * TAO_IDL/include/utl_labellist.h:
+        * TAO_IDL/include/utl_list.h:
+        * TAO_IDL/include/utl_namelist.h:
+        * TAO_IDL/include/utl_scope.h:
+        * TAO_IDL/util/utl_exceptlist.cpp:
+        * TAO_IDL/util/utl_exprlist.cpp:
+        * TAO_IDL/util/utl_global.cpp:
+        * TAO_IDL/util/utl_idlist.cpp:
+        * TAO_IDL/util/utl_labellist.cpp:
+        * TAO_IDL/util/utl_list.cpp:
+        * TAO_IDL/util/utl_namelist.cpp:
+        * TAO_IDL/util/utl_scope.cpp:
+        * TAO_IDL/util/utl_string.cpp:
+
+	        - Plugged all memory leaks occuring during successful
+	          execution, and most of the leaks occuring when there
+	          is some kind of error. For some syntax errors
+	          reported by the parser, it's not known how far
+	          the parser has looked ahead (and thus what memory
+	          it may have already allocated) when the error
+	          is detected. Creating the AST out of types that
+            manage their own memory, or creating the AST on
+	          the stack, would solve all memory leak problems,
+	          but would require substantial redesign of the IDL
+	          compiler front end.
+
+	        - Added generation of sendc_* operations inherited
+	          by local interfaces, if AMI code is being generated.
+
+	        - Fixed required check for parallel inheritance of 
+	          valuetypes and their corresponding supported
+	          interfaces, if any.
+
+	        - Added workarounds to skip problem code generation
+	          when IDL3 constructs and AMI code generation
+	          occur together. Integration of AMI with components
+ 	          is a future development item.
+
+	        - Fixed the logic of the decision whether or not to
+	          generate inheritance of a reference counting
+	          parent class for valuetype OBV_* classes.
+
+	        - Added default generation of Any insertion/extraction
+	          operators for local interfaces, and a command line
+	          option  - '-Sal' -  to suppress it.
+
+        * orbsvcs/IFR_Service/be_extern.h:
+        * orbsvcs/IFR_Service/be_init.cpp:
+        * orbsvcs/IFR_Service/be_produce.cpp:
+
+	        Changes to the IFR loader backend corresponding to the
+	        memory leak fixes above.
+
+        * docs/compiler.html:
+        * docs/releasenotes/index.html:
+
+          Documented new IDL compiler command line option
+	        described above.
+
 Thu Jun 15 12:32:58 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * TAO_IDL/be/be_visitor_valuebox/valuebox_ci.cpp:

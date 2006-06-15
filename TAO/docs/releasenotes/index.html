@@ -285,7 +285,7 @@ WFMO_Reactor_Test, Timer_Cancellation_Test</ul>
 <h3>
 <a NAME="idl"></a>IDL Compiler</h3>
 Point of contact: <a href="mailto:j.parsons@vanderbilt.edu">Jeff Parsons</a>
-<p>Current status: (As of August 10, 2005.)
+<p>Current status: (As of May 4, 2006.)
 <ul>
 <li>
 Generated code closely follows the C++ Mapping specified in the latest
@@ -661,6 +661,12 @@ created.</li>
 <li>
 Generation of explicit template instantiations has been completely 
 removed, it is no longer available via the command line option -GT.</li>
+
+<li>
+Generation of Any insertion/extracion operators for local interfaces
+has been enabled by default. An additional command line option -Sal
+has also been added to suppress the generation of Any operators for
+local interfaces only.</li>
 
 </ul>
 
@@ -2523,6 +2529,6 @@ Need to test local object support more systematically and comprehensively.
 
 <hr>
 <p>Back to the TAO <a href="../index.html">documentation index</a>.<!--#include virtual="/~schmidt/cgi-sig.html" -->
-<hr><!-- hhmts start -->Last modified: Mon Aug 25 12:30:29 PDT 2003<!-- hhmts end -->
+<hr><!-- hhmts start -->Last modified: Thu May 4 13:08:35 UTC 2006<!-- hhmts end -->
 </body>
 </html>

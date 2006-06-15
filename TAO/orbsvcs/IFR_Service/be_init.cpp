@@ -102,6 +102,11 @@ BE_version (void)
 TAO_IFR_BE_Export int
 BE_init (int &argc, char *argv[])
 {
+  // Initialize BE global data object.
+  ACE_NEW_RETURN (be_global,
+                  BE_GlobalData,
+                  -1);
+
   int status = BE_save_orb_args (argc, argv);
 
   if (status != 0)
@@ -115,7 +120,7 @@ BE_init (int &argc, char *argv[])
 }
 
 TAO_IFR_BE_Export void
-BE_post_init (const char *[], long)
+BE_post_init (char *[], long)
 {
 }
 
