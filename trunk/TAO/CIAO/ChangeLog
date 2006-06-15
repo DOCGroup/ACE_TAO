@@ -1,9 +1,18 @@
+Thu Jun 15 18:37:43 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tools/Config_Handlers/CIAO_Events/CIAO_Events_Handlers.mpc:
+
+          Added ciao_deployment_stub as a base project for
+          CIAO_Events_Handlers, to eliminate 'unresolved symbol'
+          linking errors. Thanks to Ming Xiong <ming.xiong@vanderbilt.edu>
+          for suggesting the fix.
+
 Thu Jun 15 15:10:58 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tools/IDL3_to_IDL2/be_extern.h:
         * tools/IDL3_to_IDL2/be_init.cpp:
         * tools/IDL3_to_IDL2/be_produce.cpp:
-        
+
           Changes to keep this backend in sync with changes to the
           TAO_IDL front end - see TAO ChangeLog entry of a few
           minutes ago.

@@ -1,6 +1,6 @@
 //$Id$
 
-project (CIAO_Events_Handlers) : acelib, ciao_xml_utils, ciao_events_dnc {
+project (CIAO_Events_Handlers) : acelib, ciao_xml_utils, ciao_events_dnc, ciao_deployment_stub {
   sharedname = CIAO_Events_Handlers
   dynamicflags   = CIAO_EVENTS_HANDLERS_BUILD_DLL
   macros   += XML_USE_PTHREADS
