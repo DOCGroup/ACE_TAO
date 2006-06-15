@@ -56,24 +56,10 @@ be_visitor_valuebox_ci::visit_valuebox (be_valuebox *node)
                         -1);
     }
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl;
+  // there is currently nothing to output at this point, but I don't
+  // want to take out this function at this time.
+  ACE_UNUSED_ARG (os);
 
-  *os << "ACE_INLINE const char* " << be_nl
-      << node->name () << "::_tao_obv_static_repository_id ()" << be_nl
-      << "{" << be_idt_nl
-      << "return \"" << node->repoID () << "\";" << be_uidt_nl
-      << "}" << be_nl << be_nl;
-
-  // _tao_match_formal_type method.  Generated because ValueBase interface
-  // requires it. Since value boxes do not support inheritence, this can
-  // simply return true.
-  *os << "ACE_INLINE ::CORBA::Boolean " << be_nl
-      << node->name ()
-      << "::_tao_match_formal_type (ptrdiff_t ) const" << be_nl
-      << "{" << be_idt_nl
-      << "return true;" << be_uidt_nl
-      << "}" << be_nl << be_nl;
 
   // Indicate that code is already generated for this node.
   node->cli_inline_gen (true);
@@ -98,12 +84,6 @@ be_visitor_valuebox_ci::visit_array (be_array *node)
       << be_nl << "{" << be_idt_nl
       << "this->_pd_value = " << node->full_name () << "_alloc ();"
       << be_uidt_nl << "}" << be_nl << be_nl;
-
-  // Protected destructor
-  *os << "ACE_INLINE" << be_nl
-      << vb_node->name () << "::~" << vb_node->local_name () << " (void)"
-      << be_nl << "{" << be_nl
-      << "}" << be_nl << be_nl;
 
   // Public constructor that takes a const array argument
   *os << "ACE_INLINE" << be_nl

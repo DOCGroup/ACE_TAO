@@ -1,3 +1,10 @@
+Thu Jun 15 12:32:58 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * TAO_IDL/be/be_visitor_valuebox/valuebox_ci.cpp:
+        * TAO_IDL/be/be_visitor_valuebox/valuebox_cs.cpp:
+
+          Moved virtual methods from inline to out-of-line.
+
 Wed Jun 14 14:48:07 UTC 2006  Wallace Zhang  <zhangw@ociweb.com>
 
         * tests/ORB_Local_Config/ORB_Local_Config.mwc:
