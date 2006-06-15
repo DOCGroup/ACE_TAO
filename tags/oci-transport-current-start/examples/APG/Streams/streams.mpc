@@ -1,0 +1,17 @@
+// -*- MPC -*-
+// $Id$
+
+project(Answerer) : aceexe {
+  avoids   += ace_for_tao
+  exename   = Answerer
+  requires += threads
+  Source_Files {
+    Answerer.cpp
+    CommandModule.cpp
+    CommandStream.cpp
+    CommandTask.cpp
+    CommandTasks.cpp
+    RecordingDeviceFactory.cpp
+    RecordingDevice_Text.cpp
+  }
+}

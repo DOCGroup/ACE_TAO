@@ -1,0 +1,18 @@
+// What I'd really like to have is a separate project
+// that is a library for the CORBA Object.
+//
+// $Id$
+
+project(list_interfaces) : aceexe {
+  Source_Files {
+    list_interfaces.cpp
+  }
+}
+
+project(generate_ior) : taoserver {
+  exename = generate_ior
+  Source_Files {
+    generate_ior.cpp
+    bogus_i.cpp
+  }
+}
