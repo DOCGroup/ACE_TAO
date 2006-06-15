@@ -56,10 +56,14 @@ be_visitor_valuebox_ci::visit_valuebox (be_valuebox *node)
                         -1);
     }
 
-  // there is currently nothing to output at this point, but I don't
-  // want to take out this function at this time.
-  ACE_UNUSED_ARG (os);
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl;
 
+  *os << "ACE_INLINE const char* " << be_nl
+      << node->name () << "::_tao_obv_static_repository_id ()" << be_nl
+      << "{" << be_idt_nl
+      << "return \"" << node->repoID () << "\";" << be_uidt_nl
+      << "}" << be_nl << be_nl;
 
   // Indicate that code is already generated for this node.
   node->cli_inline_gen (true);
