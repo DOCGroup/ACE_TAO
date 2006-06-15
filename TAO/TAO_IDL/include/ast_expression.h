@@ -242,7 +242,6 @@ public:
   void set_file_name (UTL_String *f);
 
   ExprComb ec (void);
-  void set_ec (ExprComb new_ec);
 
   AST_ExprValue *ev (void);
   void set_ev (AST_ExprValue *new_ev);
@@ -268,8 +267,6 @@ public:
   // Other operations.
 
   // Evaluation and value coercion.
-
-  AST_ExprValue *eval (EvalKind ek);
 
   AST_ExprValue *coerce (ExprType t);
 

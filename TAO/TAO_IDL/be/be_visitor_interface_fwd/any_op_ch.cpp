@@ -39,14 +39,15 @@ be_visitor_interface_fwd_any_op_ch::~be_visitor_interface_fwd_any_op_ch (void)
 }
 
 int
-be_visitor_interface_fwd_any_op_ch::visit_interface_fwd (be_interface_fwd *node)
+be_visitor_interface_fwd_any_op_ch::visit_interface_fwd (
+    be_interface_fwd *node
+  )
 {
-  AST_Interface *fd = node->full_definition ();
-
-  // Only a forward declared interface that is not defined in the same file
-  // needs to have this generated here. The Any operators are needed by
-  // portable interceptor code if the interface is a parameter of an operation.
-  if (fd->is_defined () != 0 || node->is_local ())
+  // Only a forward declared interface that is not defined in the same
+  // translation unit needs to have this generated here. The Any operators
+  // are needed by portable interceptor code if the interface is a
+  // parameter of an operation.
+  if (node->full_def_seen () || node->is_local ())
     {
       return 0;
     }
@@ -70,11 +71,11 @@ be_visitor_interface_fwd_any_op_ch::visit_interface_fwd (be_interface_fwd *node)
     {
       module = be_module::narrow_from_scope (node->defined_in ());
 
-      if (!module)
+      if (0 == module)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "be_visitor_valuebox_any_op_ch::"
-                             "visit_valuebox - "
+                             "visit_interface_fwd - "
                              "Error parsing nested name\n"),
                             -1);
         }

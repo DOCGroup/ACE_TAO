@@ -46,8 +46,6 @@ public:
   // Narrowing
   DEF_NARROW_METHODS2 (be_valuebox, AST_ValueBox, be_type);
   DEF_NARROW_FROM_DECL (be_valuebox);
-
-
 };
 
 #endif /* TAO_BE_VALUEBOX_H */

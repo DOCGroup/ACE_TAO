@@ -69,12 +69,14 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // node itself is created.
 
 #include "fe_interface_header.h"
+#include "ast_interface_fwd.h"
 #include "ast_valuetype.h"
 #include "ast_component.h"
 #include "ast_home.h"
 #include "ast_module.h"
 #include "utl_namelist.h"
 #include "utl_err.h"
+#include "fe_extern.h"
 #include "global_extern.h"
 #include "nr_extern.h"
 
@@ -285,14 +287,12 @@ FE_InterfaceHeader::is_abstract (void) const
 void
 FE_InterfaceHeader::destroy (void)
 {
-  if (this->pd_interface_name == 0)
+  if (0 != this->pd_interface_name)
     {
-      return;
+      this->pd_interface_name->destroy ();
+      delete this->pd_interface_name;
+      this->pd_interface_name = 0;
     }
-
-  this->pd_interface_name->destroy ();
-  delete this->pd_interface_name;
-  this->pd_interface_name = 0;
 }
 
 // Add this interface to the list of inherited if not already there.
@@ -371,16 +371,35 @@ FE_InterfaceHeader::compile_inheritance (UTL_NameList *ifaces,
 
           // This is probably the result of bad IDL.
           // We will crash if we continue from here.
-          exit (99);
+          throw FE_Bailout ();
         }
 
       // Look it up.
       UTL_Scope *s = idl_global->scopes ().top ();
 
       d = s->lookup_by_name  (item,
-                              true);
+                              true,
+                              true,
+                              true); // full_def_only
 
-      if (d == 0)
+       // Undefined interface?
+      if (0 == d)
+        {
+          // If the lookup now succeeds, without the full_def_only
+          // constraint, it's an error.
+          d = s->lookup_by_name (item, true, true);
+          
+          if (0 != d)
+            {
+              idl_global->err ()->inheritance_fwd_error (
+                                      this->pd_interface_name,
+                                      AST_Interface::narrow_from_decl (d)
+                                    );
+              break;
+            }
+        }
+
+     if (0 == d)
         {
           AST_Decl *sad = ScopeAsDecl (s);
 
@@ -393,13 +412,13 @@ FE_InterfaceHeader::compile_inheritance (UTL_NameList *ifaces,
         }
 
       // Not found?
-      if (d == 0)
+      if (0 == d)
         {
           idl_global->err ()->lookup_error (item);
 
           // This is probably the result of bad IDL.
           // We will crash if we continue from here.
-          exit (99);
+          throw FE_Bailout ();
         }
 
       // Not an appropriate interface?
@@ -423,14 +442,6 @@ FE_InterfaceHeader::compile_inheritance (UTL_NameList *ifaces,
       if (inh_err == -1)
         {
           idl_global->err ()->interface_expected (d);
-          break;
-        }
-
-      // Forward declared interface?
-      if (!i->is_defined ())
-        {
-          idl_global->err ()->inheritance_fwd_error (this->pd_interface_name,
-                                                     i);
           break;
         }
 
@@ -664,7 +675,7 @@ FE_OBVHeader::compile_supports (UTL_NameList *supports)
 
           // This is probably the result of bad IDL.
           // We will crash if we continue from here.
-          exit (99);
+          throw FE_Bailout ();
         }
 
       // Look it up.
@@ -692,7 +703,7 @@ FE_OBVHeader::compile_supports (UTL_NameList *supports)
 
           // This is probably the result of bad IDL.
           // We will crash if we continue from here.
-          exit (99);
+          throw FE_Bailout ();
         }
 
       // Remove typedefs, if any.
@@ -759,24 +770,28 @@ FE_OBVHeader::check_concrete_supported_inheritance (AST_Interface *d)
       vt = AST_ValueType::narrow_from_decl (this->pd_inherits[i]);
       concrete = vt->supports_concrete ();
 
-      if (concrete != 0)
+      if (0 == concrete)
         {
-          ancestors = concrete->inherits_flat ();
-          n_ancestors = concrete->n_inherits_flat ();
+          return 0;
+        }
+        
+      if (d == concrete)
+        {
+          return 0;
+        }
 
-          for (long j = 0; j < n_ancestors; ++j)
+      for (long j = 0; j < d->n_inherits_flat (); ++j)
+        {
+          ancestor = d->inherits_flat ()[j];
+
+          if (ancestor == concrete)
             {
-              ancestor = ancestors[j];
-
-              if (!d->is_child (ancestor))
-                {
-                  return 1;
-                }
+              return 0;
             }
         }
     }
 
-  return 0;
+  return 1;
 }
 
 //************************************************************************
@@ -875,7 +890,7 @@ FE_ComponentHeader::compile_inheritance (UTL_ScopedName *base_component)
 
       // This is probably the result of bad IDL.
       // We will crash if we continue from here.
-      exit (99);
+      throw FE_Bailout ();
     }
 
   if (d->node_type () == AST_Decl::NT_typedef)
@@ -931,7 +946,7 @@ FE_ComponentHeader::compile_supports (UTL_NameList *supports)
 
           // This is probably the result of bad IDL.
           // We will crash if we continue from here.
-          exit (99);
+          throw FE_Bailout ();
         }
 
       // Look it up.
@@ -959,7 +974,7 @@ FE_ComponentHeader::compile_supports (UTL_NameList *supports)
 
           // This is probably the result of bad IDL.
           // We will crash if we continue from here.
-          exit (99);
+          throw FE_Bailout ();
         }
 
       // Not an appropriate interface?
@@ -1048,8 +1063,9 @@ FE_HomeHeader::FE_HomeHeader (UTL_ScopedName *n,
     }
   else
     {
+      // No need to call compile_supports(), it got done in
+      // the call to the base class FE_ComponentHeader.
       this->compile_inheritance (base_home);
-      this->compile_supports (supports);
       this->compile_managed_component (managed_component);
       this->compile_primary_key (primary_key);
     }
@@ -1095,7 +1111,7 @@ FE_HomeHeader::compile_inheritance (UTL_ScopedName *base_home)
 
       // This is probably the result of bad IDL.
       // We will crash if we continue from here.
-      exit (99);
+      throw FE_Bailout ();
     }
 
   if (d->node_type () == AST_Decl::NT_typedef)
@@ -1130,7 +1146,7 @@ FE_HomeHeader::compile_managed_component (UTL_ScopedName *managed_component)
 
       // This is probably the result of bad IDL.
       // We will crash if we continue from here.
-      exit (99);
+      throw FE_Bailout ();
     }
 
   if (d->node_type () == AST_Decl::NT_typedef)
@@ -1165,7 +1181,7 @@ FE_HomeHeader::compile_primary_key (UTL_ScopedName *primary_key)
 
       // This is probably the result of bad IDL.
       // We will crash if we continue from here.
-      exit (99);
+      throw FE_Bailout ();
     }
 
   AST_Decl::NodeType nt = d->node_type ();

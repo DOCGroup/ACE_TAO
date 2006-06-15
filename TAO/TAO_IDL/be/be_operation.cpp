@@ -88,8 +88,12 @@ be_operation::~be_operation (void)
 void
 be_operation::destroy (void)
 {
-  delete this->strategy_;
-  this->strategy_ = 0;
+  if (0 != this->strategy_)
+    {
+      this->strategy_->destroy ();
+      delete this->strategy_;
+      this->strategy_ = 0;
+    }
 
   // Call the destroy methods of our base classes.
   this->be_scope::destroy ();

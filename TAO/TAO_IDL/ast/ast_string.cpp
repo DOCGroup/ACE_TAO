@@ -186,7 +186,7 @@ AST_String::destroy (void)
   delete this->pd_max_size;
   this->pd_max_size = 0;
 
-  this->AST_Decl::destroy ();
+  this->AST_ConcreteType::destroy ();
 }
 
 // Data accessors.

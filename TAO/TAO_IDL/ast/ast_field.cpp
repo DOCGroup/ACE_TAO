@@ -85,7 +85,8 @@ AST_Field::AST_Field (void)
   : COMMON_Base (),
     AST_Decl (),
     pd_field_type (0),
-    pd_visibility (vis_NA)
+    pd_visibility (vis_NA),
+    anonymous_type_ (false)
 {
 }
 
@@ -97,8 +98,15 @@ AST_Field::AST_Field (AST_Type *ft,
     AST_Decl (AST_Decl::NT_field,
               n),
     pd_field_type (ft),
-    pd_visibility (vis)
+    pd_visibility (vis),
+    anonymous_type_ (false)
 {
+  AST_Decl::NodeType fnt = ft->node_type ();
+  
+  if (AST_Decl::NT_array == fnt || AST_Decl::NT_sequence == fnt)
+    {
+      this->anonymous_type_ = true;
+    }
 }
 
 // To be used when constructing a node of a subclass of AST_Field.
@@ -110,8 +118,15 @@ AST_Field::AST_Field (AST_Decl::NodeType nt,
     AST_Decl (nt,
               n),
     pd_field_type (ft),
-    pd_visibility (vis)
+    pd_visibility (vis),
+    anonymous_type_ (false)
 {
+  AST_Decl::NodeType fnt = ft->node_type ();
+  
+  if (AST_Decl::NT_array == fnt || AST_Decl::NT_sequence == fnt)
+    {
+      this->anonymous_type_ = true;
+    }
 }
 
 AST_Field::~AST_Field (void)
@@ -147,6 +162,19 @@ int
 AST_Field::ast_accept (ast_visitor *visitor)
 {
   return visitor->visit_field (this);
+}
+
+void
+AST_Field::destroy (void)
+{
+  if (this->anonymous_type_)
+    {
+      this->pd_field_type->destroy ();
+      delete this->pd_field_type;
+      this->pd_field_type = 0;
+    }
+
+  this->AST_Decl::destroy ();
 }
 
 AST_Type *

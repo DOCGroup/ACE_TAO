@@ -387,6 +387,9 @@ public:
 
   void gen_ident_string (TAO_OutStream *stream) const;
   // Pass along the #ident string, if any, from the IDL file.
+  
+  void destroy (void);
+  // Cleanup.
 
 private:
   void gen_ifndef_string (const char *fname,

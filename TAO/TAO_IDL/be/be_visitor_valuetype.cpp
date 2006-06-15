@@ -30,6 +30,7 @@
 #include "be_eventtype_fwd.h"
 #include "be_factory.h"
 #include "be_field.h"
+#include "be_generator.h"
 #include "be_interface_fwd.h"
 #include "be_module.h"
 #include "be_predefined_type.h"

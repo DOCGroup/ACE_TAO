@@ -113,10 +113,6 @@ private:
   int gen_get_primary_key (be_home *node,
                            AST_Interface *implicit);
 
-  // Called if there is at least one component in the IDL file, saves
-  // lookup in be_global for later use by component skeleton visitors.
-  int lookup_ccmobject (void);
-
   // Utility functions to create and destroy the various things
   // needed by operations generated from CCM-related declarations.
 

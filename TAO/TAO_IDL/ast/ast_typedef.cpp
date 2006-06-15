@@ -84,7 +84,8 @@ AST_Typedef::AST_Typedef (void)
   : COMMON_Base (),
     AST_Decl (),
     AST_Type (),
-    pd_base_type (0)
+    pd_base_type (0),
+    owns_base_type_ (false)
 {
 }
 
@@ -98,8 +99,15 @@ AST_Typedef::AST_Typedef (AST_Type *bt,
               n),
     AST_Type (AST_Decl::NT_typedef,
               n),
-    pd_base_type (bt)
+    pd_base_type (bt),
+    owns_base_type_ (false)
 {
+  AST_Decl::NodeType nt = bt->node_type ();
+  
+  if (AST_Decl::NT_array == nt || AST_Decl::NT_sequence == nt)
+    {
+      this->owns_base_type_ = true;
+    }
 }
 
 AST_Typedef::~AST_Typedef (void)
@@ -188,6 +196,14 @@ AST_Typedef::ast_accept (ast_visitor *visitor)
 void
 AST_Typedef::destroy (void)
 {
+  if (this->owns_base_type_)
+    {
+      this->pd_base_type->destroy ();
+      delete this->pd_base_type;
+      this->pd_base_type = 0;
+    }
+
+  this->AST_Type::destroy ();
 }
 
 // Data accessors.

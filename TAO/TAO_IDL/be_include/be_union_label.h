@@ -19,6 +19,9 @@ public:
 
   // Visiting.
   virtual int accept (be_visitor *visitor);
+  
+  // Cleanup.
+  virtual void destroy (void);
 };
 
 #endif

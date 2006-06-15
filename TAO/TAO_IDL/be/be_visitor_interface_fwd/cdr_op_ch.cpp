@@ -42,13 +42,11 @@ be_visitor_interface_fwd_cdr_op_ch::~be_visitor_interface_fwd_cdr_op_ch (void)
 int
 be_visitor_interface_fwd_cdr_op_ch::visit_interface_fwd (be_interface_fwd *node)
 {
-  AST_Interface *fd = node->full_definition ();
-
   // If this forward declared interface is defined later in the file,
   // the CDR operator declaration (along with the corresponding
   // declarations for members of the interface's scope) will be
   // generated then.
-  if (fd->is_defined () || node->is_local ())
+  if (node->full_def_seen () || node->is_local ())
     {
       return 0;
     }

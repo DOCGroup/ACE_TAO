@@ -85,6 +85,13 @@ public:
 
   // Get list item.
   AST_Exception *head (void);
+  
+  // Cleanup.
+  virtual void destroy (void);
+  
+  // Copies the UTL_ExceptList pointers but not the
+  // contained AST_Exceptions.
+  virtual UTL_ExceptList *copy (void);
 
 private:
   // Data.

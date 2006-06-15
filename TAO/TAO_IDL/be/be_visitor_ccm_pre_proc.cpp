@@ -108,15 +108,6 @@ be_visitor_ccm_pre_proc::visit_module (be_module *node)
 int
 be_visitor_ccm_pre_proc::visit_component (be_component *node)
 {
-  if (this->lookup_ccmobject () == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_ccm_pre_proc::"
-                         "visit_component - "
-                         "Components::CCMObject lookup failed\n"),
-                        -1);
-    }
-
   if (this->lookup_cookie (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -312,6 +303,12 @@ be_visitor_ccm_pre_proc::gen_provides (be_component *node)
         {
           return -1;
         }
+        
+      // Might as well clean up here instead of putting 5 loops in 
+      // AST_Component::destroy ().
+      pd->id->destroy ();
+      delete pd->id;
+      pd->id = 0;
     }
 
   return 0;
@@ -387,6 +384,12 @@ be_visitor_ccm_pre_proc::gen_uses (be_component *node)
                                 -1);
             }
         }
+        
+      // Might as well clean up here instead of putting 5 loops in 
+      // AST_Component::destroy ().
+      pd->id->destroy ();
+      delete pd->id;
+      pd->id = 0;
     }
 
   return 0;
@@ -421,6 +424,12 @@ be_visitor_ccm_pre_proc::gen_emits (be_component *node)
                              "gen_emits_disconnect failed\n"),
                             -1);
         }
+        
+      // Might as well clean up here instead of putting 5 loops in 
+      // AST_Component::destroy ().
+      pd->id->destroy ();
+      delete pd->id;
+      pd->id = 0;
     }
 
   return 0;
@@ -455,6 +464,12 @@ be_visitor_ccm_pre_proc::gen_publishes (be_component *node)
                              "gen_unsubscribe failed\n"),
                             -1);
         }
+        
+      // Might as well clean up here instead of putting 5 loops in 
+      // AST_Component::destroy ().
+      pd->id->destroy ();
+      delete pd->id;
+      pd->id = 0;
     }
 
   return 0;
@@ -480,6 +495,12 @@ be_visitor_ccm_pre_proc::gen_consumes (be_component *node)
                              "gen_consumes_get_connection failed\n"),
                             -1);
         }
+              
+      // Might as well clean up here instead of putting 5 loops in 
+      // AST_Component::destroy ().
+      pd->id->destroy ();
+      delete pd->id;
+      pd->id = 0;
     }
 
   return 0;
@@ -1429,32 +1450,6 @@ be_visitor_ccm_pre_proc::gen_get_primary_key (be_home *node,
 // ********************************************************************
 
 int
-be_visitor_ccm_pre_proc::lookup_ccmobject (void)
-{
-  if (be_global->ccmobject () != 0)
-    {
-      return 0;
-    }
-
-  Identifier local_id ("CCMObject");
-  UTL_ScopedName local_name (&local_id,
-                             0);
-  UTL_ScopedName sn (&this->module_id_,
-                     &local_name);
-  AST_Decl *d =
-    idl_global->scopes ().top_non_null ()->lookup_by_name (&sn,
-                                                           true);
-
-  if (d == 0)
-    {
-      return -1;
-    }
-
-  be_global->ccmobject (be_interface::narrow_from_decl (d));
-  return 0;
-}
-
-int
 be_visitor_ccm_pre_proc::lookup_cookie (be_component *node)
 {
   if (this->cookie_ == 0)
@@ -1644,17 +1639,17 @@ be_visitor_ccm_pre_proc::create_explicit (be_home *node)
                              false,
                              false,
                              true);
-  parent_list->destroy ();
-  UTL_ScopedName *explicit_name =
-  this->create_scoped_name (0,
-                            node->local_name (),
-                            "Explicit",
-                            ScopeAsDecl (node->defined_in ()));
 
   // We're at global scope here so we need to fool the scope stack
   // for a minute so the correct repo id can be calculated at
   // interface construction time.
   idl_global->scopes ().push (node->defined_in ());
+
+  UTL_ScopedName *explicit_name =
+  this->create_scoped_name (0,
+                            node->local_name (),
+                            "Explicit",
+                            ScopeAsDecl (node->defined_in ()));
 
   AST_Interface *i = 0;
   ACE_NEW_RETURN (i,
@@ -1695,6 +1690,11 @@ be_visitor_ccm_pre_proc::create_explicit (be_home *node)
       d->set_name (new_name);
       i->add_to_scope (d);
     }
+    
+  header.destroy ();
+  parent_list->destroy ();
+  delete parent_list;
+  parent_list = 0;
 
   AST_Module *m = AST_Module::narrow_from_scope (node->defined_in ());
   m->be_add_interface (i);
@@ -1704,18 +1704,24 @@ be_visitor_ccm_pre_proc::create_explicit (be_home *node)
 AST_Interface *
 be_visitor_ccm_pre_proc::create_implicit (be_home *node)
 {
-  Identifier parent_id ("KeylessCCMHome");
-  UTL_ScopedName parent_local_name (&parent_id,
-                              0);
-  UTL_ScopedName parent_full_name (&this->module_id_,
-                                   &parent_local_name);
-  UTL_NameList parent_list (&parent_full_name,
-                            0);
-  UTL_ScopedName *implicit_name =
-    this->create_scoped_name (0,
-                              node->local_name (),
-                              "Implicit",
-                              ScopeAsDecl (node->defined_in ()));
+  Identifier *parent_id = 0;
+  ACE_NEW_RETURN (parent_id,
+                  Identifier ("KeylessCCMHome"),
+                  0);
+                  
+  UTL_ScopedName *parent_local_name = 0;
+  ACE_NEW_RETURN (parent_local_name,
+                  UTL_ScopedName (parent_id, 0),
+                  0);
+                  
+  UTL_ScopedName *parent_full_name = 0;
+  ACE_NEW_RETURN (parent_full_name,
+                  UTL_ScopedName (this->module_id_.copy (),
+                                  parent_local_name),
+                  0);
+                  
+  UTL_NameList parent_list (parent_full_name, 0);
+  
   UTL_NameList *parent_list_ptr = 0;
 
   if (node->primary_key () == 0)
@@ -1728,13 +1734,18 @@ be_visitor_ccm_pre_proc::create_implicit (be_home *node)
                              false,
                              false,
                              true);
-  parent_id.destroy ();
 
   // We're at global scope here so we need to fool the scope stack
   // for a minute so the correct repo id can be calculated at
   // interface construction time.
   idl_global->scopes ().push (node->defined_in ());
 
+  UTL_ScopedName *implicit_name =
+    this->create_scoped_name (0,
+                              node->local_name (),
+                              "Implicit",
+                              ScopeAsDecl (node->defined_in ()));
+                              
   AST_Interface *i = 0;
   ACE_NEW_RETURN (i,
                   be_interface (implicit_name,
@@ -1748,13 +1759,18 @@ be_visitor_ccm_pre_proc::create_implicit (be_home *node)
 
   // Back to reality.
   idl_global->scopes ().pop ();
+  
+  header.destroy ();
+  parent_list.destroy ();
 
   i->set_name (implicit_name);
   i->set_defined_in (node->defined_in ());
   i->set_imported (node->imported ());
+  
   be_interface::narrow_from_decl (i)->gen_fwd_helper_name ();
   AST_Module *m = AST_Module::narrow_from_scope (node->defined_in ());
   m->be_add_interface (i);
+  
   return i;
 }
 

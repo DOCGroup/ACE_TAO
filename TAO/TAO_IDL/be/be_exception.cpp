@@ -79,8 +79,9 @@ void
 be_exception::destroy (void)
 {
   // Call the destroy methods of our base classes.
-  be_scope::destroy ();
-  be_type::destroy ();
+  this->be_scope::destroy ();
+  this->be_type::destroy ();
+  this->AST_Exception::destroy ();
 }
 
 int

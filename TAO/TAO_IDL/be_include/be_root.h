@@ -43,6 +43,8 @@ public:
 
   be_root (UTL_ScopedName *n);
   // Constructor that sets its scoped name <n>, and any pragmas <p>.
+  
+  virtual ~be_root (void);
 
   // Scope management functions that override the AST scope management methods
   // since the AST methods set the names of the sequences, strings, and arrays

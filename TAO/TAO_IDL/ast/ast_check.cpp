@@ -135,4 +135,12 @@ AST_check_fwd_decls (void)
           idl_global->err ()->fwd_decl_not_defined (d);
         }
     }
+    
+  // This method is called once per file in the command line,
+  // in between which the elements of ast_fwds are destroyed,
+  // so we have to clean up.  
+  delete [] ast_fwds;
+  ast_fwds = 0;
+  ast_n_fwds_alloc = 0;
+  ast_n_fwds_used = 0;
 }

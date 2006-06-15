@@ -195,7 +195,6 @@ public:
 protected:
   be_visitor (void);
   // constructor is protected
-
 };
 
 #endif // TAO_BE_VISITOR_H

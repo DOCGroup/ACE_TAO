@@ -81,7 +81,7 @@ ACE_RCSID (driver,
            "$Id$")
 
 extern long DRV_nfiles;
-extern const char *DRV_files[];
+extern char *DRV_files[];
 
 // Push a file into the list of files to be processed
 void
@@ -226,18 +226,30 @@ DRV_parse_args (long ac, char **av)
                   ACE_TEXT ("letters not allowed\n")
                 ));
 
-              ACE_OS::exit (99);
+              ++i;
+              idl_global->set_err_count (idl_global->err_count () + 1);
+              break;
             case 'A':
               if (av[i][2] == '\0')
                 {
                   if (i < ac - 1)
                     {
-                      i++;
-                      s = av[i];
+                      s = av[i + 1];
+                      ++i;
                     }
                   else
                     {
-                      ACE_OS::exit (99);
+                      ACE_ERROR ((
+                          LM_ERROR,
+                          ACE_TEXT ("IDL: incorrect use of ")
+                          ACE_TEXT ("the -A option\n")
+                        ));
+                        
+                      idl_global->set_compile_flags (
+                                      idl_global->compile_flags ()
+                                      | IDL_CF_ONLY_USAGE
+                                    );
+                      break;
                     }
                 }
               else
@@ -253,8 +265,8 @@ DRV_parse_args (long ac, char **av)
               if ((av[i][2] == '\0') && (i < ac - 1))
                 {
                   idl_global->append_idl_flag (av[i + 1]);
-                  idl_global->temp_dir (av [i + 1]);
-                  i++;
+                  idl_global->temp_dir (av[i + 1]);
+                  ++i;
                 }
               else
                 {
@@ -264,9 +276,13 @@ DRV_parse_args (long ac, char **av)
                       ACE_TEXT (" the '%s' option\n"),
                       av[i]
                     ));
-
-                  ACE_OS::exit (99);
+                    
+                  idl_global->set_compile_flags (
+                                  idl_global->compile_flags ()
+                                  | IDL_CF_ONLY_USAGE
+                                );
                 }
+                
               break;
             case 'D':
             case 'U':
@@ -276,7 +292,6 @@ DRV_parse_args (long ac, char **av)
                   if (i < ac - 1)
                     {
                       idl_global->append_idl_flag (av[i + 1]);
-
                       has_space = idl_global->hasspace (av[i + 1]);
 
                       // If the include path has a space, we need to
@@ -288,7 +303,7 @@ DRV_parse_args (long ac, char **av)
 
                       DRV_cpp_putarg (arg.c_str ());
                       idl_global->add_include_path (arg.substr (2).c_str ());
-                      i++;
+                      ++i;
                     }
                   else
                     {
@@ -298,8 +313,12 @@ DRV_parse_args (long ac, char **av)
                           ACE_TEXT (" the '%s' option\n"),
                           av[i]
                         ));
-
-                      ACE_OS::exit (99);
+                        
+                      idl_global->set_compile_flags (
+                                      idl_global->compile_flags ()
+                                      | IDL_CF_ONLY_USAGE
+                                    );
+                      break;
                     }
                 }
               else
@@ -316,6 +335,7 @@ DRV_parse_args (long ac, char **av)
                   idl_global->add_include_path (arg.substr (2).c_str ());
                   DRV_cpp_putarg (arg.c_str ());
                 }
+                
               break;
             case 'E':
               idl_global->set_compile_flags (idl_global->compile_flags () |
@@ -330,8 +350,8 @@ DRV_parse_args (long ac, char **av)
                 {
                   if (i < ac - 1)
                     {
-                      i++;
-                      s = av[i];
+                      s = av[i + 1];
+                      ++i;
                     }
                   else
                     {
@@ -341,8 +361,12 @@ DRV_parse_args (long ac, char **av)
                           ACE_TEXT (" the '%s' option\n"),
                           av[i]
                         ));
-
-                      ACE_OS::exit (99);
+                        
+                      idl_global->set_compile_flags (
+                                      idl_global->compile_flags ()
+                                      | IDL_CF_ONLY_USAGE
+                                    );
+                      break;
                     }
                 }
               else
@@ -355,30 +379,38 @@ DRV_parse_args (long ac, char **av)
                 default:
                   ACE_ERROR ((
                       LM_ERROR,
-                      ACE_TEXT ("IDL: -W must be followed by 'p' or 'b'\n")
+                      ACE_TEXT ("IDL: Incorrect use of -W option\n")
                     ));
-                  ACE_OS::exit (99);
+                        
+                  idl_global->set_compile_flags (
+                                  idl_global->compile_flags ()
+                                  | IDL_CF_ONLY_USAGE
+                                );
+                  break;
                 case 'p':
                   if (*(s + 1) == ',')
                     {
                       DRV_prep_cpp_arg (s + 2);
                     }
+                    
                   break;
                 case 'b':
                   if (*(s + 1) == ',')
                     {
                       be_global->prep_be_arg (s + 2);
                     }
+                    
                   break;
                 }
+                
               break;
             case 'Y':
               if (av[i][2] == '\0')
                 {
                   if (i < ac - 1)
                     {
-                      i++;
-                      s = av[i];
+                      s = av[i + 1];
+                      ++i;
                     }
                   else
                     {
@@ -388,8 +420,12 @@ DRV_parse_args (long ac, char **av)
                           ACE_TEXT (" the '%s' option\n"),
                           av[i]
                         ));
-
-                      ACE_OS::exit (99);
+                        
+                      idl_global->set_compile_flags (
+                                      idl_global->compile_flags ()
+                                      | IDL_CF_ONLY_USAGE
+                                    );
+                      break;
                     }
                 }
               else
@@ -405,9 +441,34 @@ DRV_parse_args (long ac, char **av)
                         idl_global->set_cpp_location (s + 2);
                         DRV_cpp_new_location (s + 2);
                       }
+                    else
+                      {
+                        ACE_ERROR ((
+                            LM_ERROR,
+                            ACE_TEXT ("IDL: I don't understand")
+                            ACE_TEXT (" the '-Y' option\n")
+                          ));
+                          
+                        idl_global->set_compile_flags (
+                                        idl_global->compile_flags ()
+                                        | IDL_CF_ONLY_USAGE
+                                      );
+                      }
+                      
                     break;
                   default:
-                    break;
+                    ACE_ERROR ((
+                        LM_ERROR,
+                        ACE_TEXT ("IDL: I dont' understand the use of")
+                        ACE_TEXT (" %s with the '-Y' option\n"),
+                        s
+                      ));
+                    
+                    idl_global->set_compile_flags (
+                                    idl_global->compile_flags ()
+                                    | IDL_CF_ONLY_USAGE
+                                  );
+                   break;
                 }
               break;
             case 'd':
@@ -446,7 +507,10 @@ DRV_parse_args (long ac, char **av)
                       av[i]
                     ));
 
-                  ACE_OS::exit (99);
+                  idl_global->set_compile_flags (
+                                  idl_global->compile_flags ()
+                                  | IDL_CF_ONLY_USAGE
+                                );
                 }
 
               break;
@@ -504,10 +568,12 @@ DRV_parse_args (long ac, char **av)
             {
               ACE_ERROR ((LM_ERROR,
                           "%s%s\n",
-                          ACE_TEXT ("Error: Can't access temporary directory "),
+                          ACE_TEXT ("Error: Can't access ")
+                          ACE_TEXT ("temporary directory "),
                           tmpdir));
 
-              ACE_OS::exit (99);
+              idl_global->set_err_count (idl_global->err_count () + 1);
+              throw FE_Bailout ();
             }
         }
 

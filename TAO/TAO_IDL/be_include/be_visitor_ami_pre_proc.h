@@ -40,8 +40,6 @@ class be_visitor_ami_pre_proc : public be_visitor_scope
   //   Adds AMI implied IDL code to the AST
   //
 private:
- typedef AST_Interface *AST_Interface_ptr;
-
  typedef enum 
  {
    NORMAL,
@@ -116,8 +114,8 @@ private:
   be_operation *generate_set_operation (be_attribute *node);
   // generate a set operation out of the attribute.
 
-  AST_Interface_ptr *create_inheritance_list (be_interface *node,
-                                              long &n_parents);
+  AST_Interface **create_inheritance_list (be_interface *node,
+                                           long &n_parents);
   // Create an inheritance list for the reply handler.
 };
 

@@ -88,7 +88,7 @@ FE_yyparse (void)
 {
   int result = tao_yyparse ();
 
-  if (idl_global->err_count () == 0)
+  if (0 == idl_global->err_count ())
     {
       idl_global->root ()->call_add ();
     }

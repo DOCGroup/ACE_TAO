@@ -262,7 +262,11 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << " (void)" << be_nl;
   *os << "{}" << be_nl << be_nl;
 
-  if (be_global->any_support () && !node->is_local ())
+  bool gen_any_destructor =
+    be_global->any_support ()
+    && (!node->is_local () || be_global->gen_local_iface_anyops ());
+
+  if (gen_any_destructor)
     {
       *os << "void " << be_nl
           << node->name ()
@@ -630,30 +634,24 @@ be_visitor_interface_cs::gen_abstract_ops_helper (be_interface *node,
                                           0),
                           -1);
 
-          UTL_ScopedName *base = (UTL_ScopedName *)node->name ()->copy ();
-          base->nconc (item_new_name);
-
-          // We pass the node's is_abstract flag to the operation
-          // constructor so we will get the right generated operation
-          // body if we are regenerating an operation from an
-          // abstract interface in a concrete interface or component.
-          AST_Operation *op = AST_Operation::narrow_from_decl (d);
-          be_operation new_op (op->return_type (),
-                               op->flags (),
-                               0,
-                               op->is_local (),
-                               node->is_abstract ());
-          new_op.set_defined_in (node);
-          be_visitor_interface::add_abstract_op_args (op,
-                                                      new_op);
-          new_op.set_name (base);
+          UTL_ScopedName *new_op_name =
+            (UTL_ScopedName *)node->name ()->copy ();
+          new_op_name->nconc (item_new_name);
+          
+          be_operation *op = be_operation::narrow_from_decl (d);
+          UTL_ScopedName *old_op_name =
+            (UTL_ScopedName *) op->name ()->copy ();
+          op->set_name (new_op_name);
+          op->set_defined_in (node);
+          op->is_abstract (node->is_abstract ());
+          
           ctx.state (TAO_CodeGen::TAO_OPERATION_CS);
           be_visitor_operation_cs op_visitor (&ctx);
-          op_visitor.visit_operation (&new_op);
-
-          base->destroy ();
-          delete base;
-          base = 0;
+          op_visitor.visit_operation (op);
+          
+          op->set_name (old_op_name);
+          op->set_defined_in (base);
+          op->is_abstract (base->is_abstract ());
         }
     }
 

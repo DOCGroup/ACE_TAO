@@ -230,6 +230,11 @@ AST_Module::fe_add_module (AST_Module *t)
             {
               d->prefix (const_cast<char *> (this_prefix));
             }
+          // (JP) This could give a bogus error, since typeprefix can
+          // appear any time after the corresponding declaration.
+          // The right way to do this is with a separate traversal
+          // after the entire AST is built.
+          /*
           else
             {
               if (ACE_OS::strcmp (this_prefix, prev_prefix) != 0)
@@ -241,6 +246,7 @@ AST_Module::fe_add_module (AST_Module *t)
                   return 0;
                 }
             }
+          */
         }
     }
 
@@ -339,6 +345,17 @@ AST_Module::fe_add_interface (AST_Interface *t)
 
   // Add it to scope
   this->add_to_scope (t);
+
+  // We do this for interfaces, valuetypes and components in 
+  // a different place than we do for structs and unions,
+  // since fwd declared structs and unions must be defined in
+  // the same translation unit.
+  AST_InterfaceFwd *fd = t->fwd_decl ();
+  
+  if (0 != fd)
+    {
+      fd->set_as_defined ();
+    }
 
   // Add it to set of locally referenced symbols
   this->add_to_referenced (t,
@@ -474,6 +491,17 @@ AST_Module::fe_add_valuetype (AST_ValueType *t)
 
   // Add it to scope
   this->add_to_scope (t);
+
+  // We do this for interfaces, valuetypes and components in 
+  // a different place than we do for structs and unions,
+  // since fwd declared structs and unions must be defined in
+  // the same translation unit.
+  AST_InterfaceFwd *fd = t->fwd_decl ();
+  
+  if (0 != fd)
+    {
+      fd->set_as_defined ();
+    }
 
   // Add it to set of locally referenced symbols
   this->add_to_referenced (t,
@@ -648,6 +676,17 @@ AST_Module::fe_add_component (AST_Component *t)
 
   // Add it to scope
   this->add_to_scope (t);
+  
+  // We do this for interfaces, valuetypes and components in 
+  // a different place than we do for structs and unions,
+  // since fwd declared structs and unions must be defined in
+  // the same translation unit.
+  AST_InterfaceFwd *fd = t->fwd_decl ();
+  
+  if (0 != fd)
+    {
+      fd->set_as_defined ();
+    }
 
   // Add it to set of locally referenced symbols
   this->add_to_referenced (t,
@@ -712,13 +751,13 @@ AST_Module::fe_add_interface_fwd (AST_InterfaceFwd *i)
   if ((d = this->lookup_for_add (i, false)) != 0)
     {
       AST_Decl::NodeType nt = d->node_type ();
-
+/*
       if (nt == AST_Decl::NT_interface_fwd)
         {
           AST_InterfaceFwd *ifwd = AST_InterfaceFwd::narrow_from_decl (d);
           i->set_full_definition (ifwd->full_definition ());
         }
-
+*/
       // There used to be another check here ANDed with the one below:
       // d->defined_in () == this. But lookup_for_add calls only
       // lookup_by_name_local(), which does not bump up the scope,
@@ -741,7 +780,7 @@ AST_Module::fe_add_interface_fwd (AST_InterfaceFwd *i)
             }
 
           // @@ Redefinition of forward. Type check not implemented.
-          i->set_full_definition (itf);   // @@ Memory leak.
+//          i->set_full_definition (itf);   // @@ Memory leak.
           return i;
         }
 
@@ -1031,9 +1070,9 @@ AST_Module::fe_add_constant (AST_Constant *t)
       if (!can_be_redefined (d))
         {
           idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
-                                       t,
-                                       this,
-                                       d);
+                                      t,
+                                      this,
+                                      d);
           return 0;
         }
 
@@ -1695,7 +1734,15 @@ AST_Module::referenced (AST_Decl *e,
       return true;
     }
 
-  return this->look_in_previous (e->local_name (), true) != 0;
+  AST_Decl *d = this->look_in_previous (e->local_name (), true);
+  
+  if (0 == d)
+    {
+      return false;
+    }
+    
+  AST_Type *t = AST_Type::narrow_from_decl (d);
+  return 0 == t || t->is_defined ();
 }
 
 void
@@ -1797,6 +1844,7 @@ AST_Module::previous (void)
 void
 AST_Module::destroy (void)
 {
+  this->UTL_Scope::destroy ();
   this->AST_Decl::destroy ();
 }
 

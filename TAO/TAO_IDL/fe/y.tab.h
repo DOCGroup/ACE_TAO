@@ -210,7 +210,7 @@ typedef union TAO_YYSTYPE {
   AST_Argument::Direction       dival;          /* Argument direction   */
   AST_Operation::Flags          ofval;          /* Operation flags      */
   FE_Declarator                 *deval;         /* Declarator value     */
-  bool                      bval;           /* Boolean value        */
+  bool                          bval;           /* Boolean value        */
   long                          ival;           /* Long value           */
   idl_uns_long                  uival;          /* Unsigned long value  */
   double                        dval;           /* Double value         */

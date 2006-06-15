@@ -2,7 +2,7 @@
 /* A Bison parser, made by GNU Bison 1.875d.  */
 
 /* Skeleton parser for Yacc-like parsing with Bison,
-   Copyright (C) 1984, 1989, 1990, 2000, 2001, 2002, 2003, 2004 Free Software Foundation, Inc.
+   Copyright (C) 1984, 1989, 1990, 2000, 2001, 2002, 2003 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -306,7 +306,7 @@ typedef union TAO_YYSTYPE {
   AST_Argument::Direction       dival;          /* Argument direction   */
   AST_Operation::Flags          ofval;          /* Operation flags      */
   FE_Declarator                 *deval;         /* Declarator value     */
-  bool                      bval;           /* Boolean value        */
+  bool                          bval;           /* Boolean value        */
   long                          ival;           /* Long value           */
   idl_uns_long                  uival;          /* Unsigned long value  */
   double                        dval;           /* Double value         */
@@ -336,13 +336,6 @@ typedef union TAO_YYSTYPE {
 
 #if ! defined (tao_yyoverflow) || TAO_YYERROR_VERBOSE
 
-# ifndef TAO_YYFREE
-#  define TAO_YYFREE free
-# endif
-# ifndef TAO_YYMALLOC
-#  define TAO_YYMALLOC malloc
-# endif
-
 /* The parser invokes alloca or malloc; define the necessary symbols.  */
 
 # ifdef TAO_YYSTACK_USE_ALLOCA
@@ -367,8 +360,8 @@ typedef union TAO_YYSTYPE {
 #   include <stdlib.h> /* INFRINGES ON USER NAME SPACE */
 #   define TAO_YYSIZE_T size_t
 #  endif
-#  define TAO_YYSTACK_ALLOC TAO_YYMALLOC
-#  define TAO_YYSTACK_FREE TAO_YYFREE
+#  define TAO_YYSTACK_ALLOC malloc
+#  define TAO_YYSTACK_FREE free
 # endif
 #endif /* ! defined (tao_yyoverflow) || TAO_YYERROR_VERBOSE */
 
@@ -380,7 +373,7 @@ typedef union TAO_YYSTYPE {
 /* A type that is properly aligned for any stack member.  */
 union tao_yyalloc
 {
-  short int tao_yyss;
+  short tao_yyss;
   TAO_YYSTYPE tao_yyvs;
   };
 
@@ -390,7 +383,7 @@ union tao_yyalloc
 /* The size of an array large to enough to hold all stacks, each with
    N elements.  */
 # define TAO_YYSTACK_BYTES(N) \
-     ((N) * (sizeof (short int) + sizeof (TAO_YYSTYPE))                        \
+     ((N) * (sizeof (short) + sizeof (TAO_YYSTYPE))                                \
       + TAO_YYSTACK_GAP_MAXIMUM)
 
 /* Copy COUNT objects from FROM to TO.  The source and destination do
@@ -432,7 +425,7 @@ union tao_yyalloc
 #if defined (__STDC__) || defined (__cplusplus)
    typedef signed char tao_yysigned_char;
 #else
-   typedef short int tao_yysigned_char;
+   typedef short tao_yysigned_char;
 #endif
 
 /* TAO_YYFINAL -- State number of the termination state. */
@@ -498,7 +491,7 @@ static const unsigned char tao_yytranslate[] =
 #if TAO_YYDEBUG
 /* TAO_YYPRHS[TAO_YYN] -- Index of the first RHS symbol of rule number TAO_YYN in
    TAO_YYRHS.  */
-static const unsigned short int tao_yyprhs[] =
+static const unsigned short tao_yyprhs[] =
 {
        0,     0,     3,     5,     8,     9,    10,    14,    15,    19,
       20,    24,    25,    29,    30,    34,    35,    39,    40,    44,
@@ -551,7 +544,7 @@ static const unsigned short int tao_yyprhs[] =
 };
 
 /* TAO_YYRHS -- A `-1'-separated list of the rules' RHS. */
-static const short int tao_yyrhs[] =
+static const short tao_yyrhs[] =
 {
      101,     0,    -1,   102,    -1,   102,   103,    -1,    -1,    -1,
      190,   104,    79,    -1,    -1,   351,   105,    79,    -1,    -1,
@@ -677,56 +670,56 @@ static const short int tao_yyrhs[] =
 };
 
 /* TAO_YYRLINE[TAO_YYN] -- source line where rule number TAO_YYN was defined.  */
-static const unsigned short int tao_yyrline[] =
+static const unsigned short tao_yyrline[] =
 {
        0,   320,   320,   323,   324,   329,   328,   339,   338,   349,
      348,   359,   358,   369,   368,   379,   378,   389,   388,   399,
      398,   409,   408,   419,   418,   429,   428,   439,   438,   452,
-     457,   481,   486,   451,   502,   503,   508,   547,   552,   507,
-     570,   569,   583,   614,   638,   665,   664,   676,   683,   684,
-     685,   686,   690,   701,   706,   750,   755,   705,   784,   823,
-     828,   782,   847,   845,   882,   881,   895,   901,   908,   915,
-     922,   944,   967,  1020,  1021,  1025,  1026,  1027,  1033,  1032,
-    1040,  1039,  1049,  1050,  1055,  1054,  1065,  1064,  1075,  1074,
-    1085,  1084,  1095,  1094,  1105,  1104,  1115,  1114,  1125,  1124,
-    1138,  1151,  1149,  1179,  1186,  1197,  1196,  1222,  1220,  1241,
-    1252,  1289,  1313,  1340,  1345,  1350,  1355,  1339,  1404,  1405,
-    1406,  1407,  1408,  1409,  1410,  1422,  1427,  1498,  1500,  1502,
-    1503,  1517,  1518,  1532,  1533,  1546,  1547,  1557,  1570,  1571,
-    1581,  1594,  1595,  1605,  1615,  1628,  1629,  1639,  1649,  1662,
-    1692,  1693,  1702,  1707,  1714,  1719,  1724,  1729,  1735,  1740,
-    1746,  1755,  1829,  1828,  1838,  1843,  1848,  1853,  1876,  1885,
-    1884,  1937,  1938,  1942,  1950,  1951,  1979,  1980,  1981,  1982,
-    1983,  1984,  1985,  1986,  1990,  1991,  1992,  1996,  1997,  1998,
-    2002,  2003,  2007,  2020,  2018,  2048,  2055,  2056,  2060,  2073,
-    2071,  2101,  2108,  2125,  2144,  2145,  2149,  2154,  2159,  2167,
-    2172,  2177,  2185,  2190,  2195,  2203,  2217,  2222,  2230,  2238,
-    2246,  2254,  2263,  2262,  2278,  2308,  2313,  2277,  2332,  2335,
-    2336,  2340,  2340,  2350,  2355,  2349,  2414,  2413,  2428,  2427,
-    2442,  2447,  2452,  2457,  2500,  2505,  2441,  2529,  2537,  2551,
-    2561,  2569,  2570,  2667,  2670,  2671,  2676,  2681,  2675,  2711,
-    2710,  2724,  2735,  2757,  2765,  2764,  2780,  2785,  2779,  2802,
-    2801,  2850,  2870,  2891,  2896,  2925,  2930,  2890,  2956,  2961,
-    2959,  2966,  2970,  3005,  3010,  3003,  3067,  3122,  3132,  3121,
-    3147,  3152,  3145,  3184,  3208,  3218,  3223,  3216,  3253,  3276,
-    3285,  3284,  3314,  3325,  3347,  3355,  3360,  3354,  3388,  3389,
-    3394,  3399,  3404,  3409,  3393,  3470,  3475,  3480,  3485,  3469,
-    3551,  3556,  3582,  3587,  3550,  3605,  3610,  3663,  3668,  3603,
-    3705,  3711,  3718,  3725,  3726,  3738,  3744,  3781,  3737,  3803,
-    3802,  3813,  3812,  3825,  3830,  3828,  3835,  3840,  3845,  3839,
-    3882,  3881,  3892,  3891,  3904,  3909,  3907,  3914,  3919,  3924,
-    3918,  3967,  3975,  3976,  3977,  4020,  4025,  4030,  4039,  4044,
-    4038,  4056,  4064,  4069,  4063,  4081,  4089,  4094,  4088,  4106,
-    4114,  4119,  4113,  4131,  4138,  4151,  4149,  4177,  4184,  4205,
-    4235,  4236,  4240,  4266,  4306,  4311,  4265,  4330,  4335,  4328,
-    4363,  4362,  4373,  4380,  4381,  4386,  4385,  4396,  4395,  4406,
-    4405,  4416,  4415,  4426,  4425,  4436,  4435,  4448,  4489,  4507,
-    4532,  4583,  4589,  4596,  4630,  4664,  4699,  4698,  4748,  4753,
-    4758,  4763,  4768,  4773,  4747,  4802,  4801,  4812,  4819,  4826,
-    4834,  4839,  4833,  4851,  4852,  4856,  4858,  4857,  4868,  4867,
-    4882,  4917,  4880,  4951,  4986,  4949,  5018,  5019,  5020,  5024,
-    5025,  5029,  5053,  5080,  5121,  5126,  5078,  5143,  5153,  5172,
-    5184,  5183,  5216,  5262,  5267,  5214,  5284,  5289
+     457,   483,   488,   451,   504,   505,   510,   549,   554,   509,
+     572,   571,   585,   623,   654,   688,   687,   699,   706,   707,
+     708,   709,   713,   724,   729,   773,   778,   728,   807,   846,
+     851,   805,   870,   868,   919,   918,   932,   938,   945,   952,
+     959,   985,  1012,  1067,  1068,  1072,  1073,  1074,  1080,  1079,
+    1087,  1086,  1096,  1097,  1102,  1101,  1112,  1111,  1122,  1121,
+    1132,  1131,  1142,  1141,  1152,  1151,  1162,  1161,  1172,  1171,
+    1185,  1198,  1196,  1226,  1233,  1244,  1243,  1271,  1269,  1296,
+    1308,  1354,  1382,  1413,  1418,  1423,  1428,  1412,  1481,  1482,
+    1483,  1484,  1485,  1486,  1487,  1499,  1504,  1579,  1581,  1583,
+    1584,  1598,  1599,  1613,  1614,  1627,  1628,  1638,  1651,  1652,
+    1662,  1675,  1676,  1686,  1696,  1709,  1710,  1720,  1730,  1743,
+    1778,  1779,  1788,  1793,  1800,  1808,  1813,  1818,  1824,  1829,
+    1834,  1842,  1914,  1913,  1923,  1928,  1933,  1938,  1965,  1974,
+    1973,  2032,  2033,  2037,  2045,  2046,  2074,  2075,  2076,  2077,
+    2078,  2079,  2080,  2081,  2085,  2086,  2087,  2091,  2092,  2093,
+    2097,  2098,  2102,  2115,  2113,  2143,  2150,  2151,  2155,  2168,
+    2166,  2196,  2203,  2220,  2239,  2240,  2244,  2249,  2254,  2262,
+    2267,  2272,  2280,  2285,  2290,  2298,  2312,  2317,  2325,  2333,
+    2341,  2349,  2358,  2357,  2373,  2407,  2412,  2372,  2431,  2434,
+    2435,  2439,  2439,  2449,  2454,  2448,  2517,  2516,  2531,  2530,
+    2545,  2550,  2555,  2560,  2607,  2612,  2544,  2636,  2644,  2658,
+    2668,  2676,  2677,  2785,  2788,  2789,  2794,  2799,  2793,  2835,
+    2834,  2848,  2859,  2881,  2889,  2888,  2904,  2909,  2903,  2926,
+    2925,  2978,  3002,  3027,  3032,  3065,  3070,  3026,  3096,  3101,
+    3099,  3106,  3110,  3147,  3152,  3145,  3219,  3274,  3284,  3273,
+    3299,  3304,  3297,  3345,  3369,  3379,  3384,  3377,  3414,  3437,
+    3446,  3445,  3481,  3492,  3514,  3522,  3527,  3521,  3564,  3565,
+    3570,  3575,  3580,  3585,  3569,  3654,  3659,  3664,  3669,  3653,
+    3747,  3752,  3782,  3787,  3746,  3805,  3810,  3863,  3868,  3803,
+    3905,  3911,  3918,  3925,  3926,  3938,  3944,  3986,  3937,  4008,
+    4007,  4018,  4017,  4030,  4035,  4033,  4040,  4045,  4050,  4044,
+    4091,  4090,  4101,  4100,  4113,  4118,  4116,  4123,  4128,  4133,
+    4127,  4180,  4188,  4189,  4190,  4233,  4238,  4243,  4252,  4257,
+    4251,  4269,  4277,  4282,  4276,  4294,  4302,  4307,  4301,  4319,
+    4327,  4332,  4326,  4344,  4351,  4364,  4362,  4390,  4397,  4426,
+    4464,  4465,  4469,  4499,  4539,  4544,  4498,  4563,  4568,  4561,
+    4610,  4609,  4620,  4627,  4628,  4633,  4632,  4643,  4642,  4653,
+    4652,  4663,  4662,  4673,  4672,  4683,  4682,  4695,  4759,  4766,
+    4791,  4864,  4870,  4877,  4935,  4993,  5052,  5051,  5101,  5106,
+    5111,  5116,  5121,  5126,  5100,  5180,  5179,  5190,  5197,  5204,
+    5212,  5217,  5211,  5229,  5230,  5234,  5236,  5235,  5246,  5245,
+    5260,  5296,  5258,  5330,  5366,  5328,  5398,  5399,  5400,  5404,
+    5405,  5409,  5437,  5468,  5513,  5518,  5466,  5535,  5545,  5564,
+    5576,  5575,  5626,  5676,  5681,  5624,  5698,  5703
 };
 #endif
 
@@ -822,7 +815,7 @@ static const char *const tao_yytname[] =
 # ifdef TAO_YYPRINT
 /* TAO_YYTOKNUM[TAO_YYLEX-NUM] -- Internal token number corresponding to
    token TAO_YYLEX-NUM.  */
-static const unsigned short int tao_yytoknum[] =
+static const unsigned short tao_yytoknum[] =
 {
        0,   256,   257,   258,   259,   260,   261,   262,   263,   264,
      265,   266,   267,   268,   269,   270,   271,   272,   273,   274,
@@ -838,7 +831,7 @@ static const unsigned short int tao_yytoknum[] =
 # endif
 
 /* TAO_YYR1[TAO_YYN] -- Symbol number of symbol that rule TAO_YYN derives.  */
-static const unsigned short int tao_yyr1[] =
+static const unsigned short tao_yyr1[] =
 {
        0,   100,   101,   102,   102,   104,   103,   105,   103,   106,
      103,   107,   103,   108,   103,   109,   103,   110,   103,   111,
@@ -946,7 +939,7 @@ static const unsigned char tao_yyr2[] =
 /* TAO_YYDEFACT[STATE-NAME] -- Default rule to reduce with in state
    STATE-NUM when TAO_YYTABLE doesn't specify something else to do.  Zero
    means the default is an error.  */
-static const unsigned short int tao_yydefact[] =
+static const unsigned short tao_yydefact[] =
 {
        4,     0,     0,     1,    27,   113,    29,    40,   162,   222,
      238,   273,   320,     0,     0,     0,     0,    64,     0,     0,
@@ -1019,7 +1012,7 @@ static const unsigned short int tao_yydefact[] =
 };
 
 /* TAO_YYDEFGOTO[NTERM-NUM]. */
-static const short int tao_yydefgoto[] =
+static const short tao_yydefgoto[] =
 {
       -1,     1,     2,    23,   146,   150,   151,   145,   149,    96,
       95,   100,   152,   154,   156,    67,    24,    69,   225,   310,
@@ -1059,7 +1052,7 @@ static const short int tao_yydefgoto[] =
 /* TAO_YYPACT[STATE-NUM] -- Index in TAO_YYTABLE of the portion describing
    STATE-NUM.  */
 #define TAO_YYPACT_NINF -483
-static const short int tao_yypact[] =
+static const short tao_yypact[] =
 {
     -483,    49,  1047,  -483,  -483,  -483,  -483,  -483,  -483,  -483,
     -483,  -483,  -483,    61,    60,    66,    68,  -483,    61,    61,
@@ -1132,7 +1125,7 @@ static const short int tao_yypact[] =
 };
 
 /* TAO_YYPGOTO[NTERM-NUM].  */
-static const short int tao_yypgoto[] =
+static const short tao_yypgoto[] =
 {
     -483,  -483,   189,  -483,  -483,  -483,  -483,  -483,  -483,  -483,
     -483,  -483,  -483,  -483,  -483,  -483,  -483,  -483,  -483,  -483,
@@ -1174,7 +1167,7 @@ static const short int tao_yypgoto[] =
    number is the opposite.  If zero, do what TAO_YYDEFACT says.
    If TAO_YYTABLE_NINF, syntax error.  */
 #define TAO_YYTABLE_NINF -475
-static const short int tao_yytable[] =
+static const short tao_yytable[] =
 {
       77,    78,   138,    92,    94,    88,    89,   169,   170,   134,
      119,   135,   350,    38,   136,   163,   118,   166,   137,   167,
@@ -1290,7 +1283,7 @@ static const short int tao_yytable[] =
       21,    22
 };
 
-static const short int tao_yycheck[] =
+static const short tao_yycheck[] =
 {
       13,    13,    34,    21,    22,    18,    19,    68,    68,    34,
       34,    34,   286,     2,    34,    68,    34,    68,    34,    68,
@@ -1408,7 +1401,7 @@ static const short int tao_yycheck[] =
 
 /* TAO_YYSTOS[STATE-NUM] -- The (internal number of the) accessing
    symbol of state STATE-NUM.  */
-static const unsigned short int tao_yystos[] =
+static const unsigned short tao_yystos[] =
 {
        0,   101,   102,     0,     1,     4,     5,     6,     7,    20,
       21,    23,    27,    40,    41,    42,    43,    49,    50,    53,
@@ -1591,12 +1584,12 @@ do {                                                                \
 
 #if defined (__STDC__) || defined (__cplusplus)
 static void
-tao_yy_stack_print (short int *bottom, short int *top)
+tao_yy_stack_print (short *bottom, short *top)
 #else
 static void
 tao_yy_stack_print (bottom, top)
-    short int *bottom;
-    short int *top;
+    short *bottom;
+    short *top;
 #endif
 {
   TAO_YYFPRINTF (stderr, "Stack now");
@@ -1853,9 +1846,9 @@ tao_yyparse ()
      to reallocate them elsewhere.  */
 
   /* The state stack.  */
-  short int tao_yyssa[TAO_YYINITDEPTH];
-  short int *tao_yyss = tao_yyssa;
-  register short int *tao_yyssp;
+  short        tao_yyssa[TAO_YYINITDEPTH];
+  short *tao_yyss = tao_yyssa;
+  register short *tao_yyssp;
 
   /* The semantic value stack.  */
   TAO_YYSTYPE tao_yyvsa[TAO_YYINITDEPTH];
@@ -1892,7 +1885,6 @@ tao_yyparse ()
   tao_yyssp = tao_yyss;
   tao_yyvsp = tao_yyvs;
 
-
   goto tao_yysetstate;
 
 /*------------------------------------------------------------.
@@ -1918,7 +1910,7 @@ tao_yyparse ()
            these so that the &'s don't force the real ones into
            memory.  */
         TAO_YYSTYPE *tao_yyvs1 = tao_yyvs;
-        short int *tao_yyss1 = tao_yyss;
+        short *tao_yyss1 = tao_yyss;
 
 
         /* Each stack pointer address is followed by the size of the
@@ -1946,7 +1938,7 @@ tao_yyparse ()
         tao_yystacksize = TAO_YYMAXDEPTH;
 
       {
-        short int *tao_yyss1 = tao_yyss;
+        short *tao_yyss1 = tao_yyss;
         union tao_yyalloc *tao_yyptr =
           (union tao_yyalloc *) TAO_YYSTACK_ALLOC (TAO_YYSTACK_BYTES (tao_yystacksize));
         if (! tao_yyptr)
@@ -2284,6 +2276,8 @@ tao_yyreduce:
     {
 //        IDENTIFIER
             Identifier id (tao_yyvsp[0].strval);
+            ACE::strdelete (tao_yyvsp[0].strval);
+            tao_yyvsp[0].strval = 0;
             UTL_ScopedName n (&id,
                               0);
             AST_Module *m = 0;
@@ -2452,6 +2446,13 @@ tao_yyreduce:
                                               false,
                                               true),
                           1);
+
+          if (0 != tao_yyvsp[0].nlval)
+            {
+              tao_yyvsp[0].nlval->destroy ();
+              delete tao_yyvsp[0].nlval;
+              tao_yyvsp[0].nlval = 0;
+            }
         }
     break;
 
@@ -2478,6 +2479,13 @@ tao_yyreduce:
                                               false,
                                               true),
                           1);
+
+          if (0 != tao_yyvsp[0].nlval)
+            {
+              tao_yyvsp[0].nlval->destroy ();
+              delete tao_yyvsp[0].nlval;
+              tao_yyvsp[0].nlval = 0;
+            }
         }
     break;
 
@@ -2504,6 +2512,13 @@ tao_yyreduce:
                                               true,
                                               true),
                           1);
+
+          if (0 != tao_yyvsp[0].nlval)
+            {
+              tao_yyvsp[0].nlval->destroy ();
+              delete tao_yyvsp[0].nlval;
+              tao_yyvsp[0].nlval = 0;
+            }
         }
     break;
 
@@ -2727,6 +2742,20 @@ tao_yyreduce:
                                         tao_yyvsp[0].nlval,
                                         tao_yyvsp[-2].nlval ? tao_yyvsp[-2].nlval->truncatable () : false),
                           1);
+
+          if (0 != tao_yyvsp[0].nlval)
+            {
+              tao_yyvsp[0].nlval->destroy ();
+              delete tao_yyvsp[0].nlval;
+              tao_yyvsp[0].nlval = 0;
+            }
+
+          if (0 != tao_yyvsp[-2].nlval)
+            {
+              tao_yyvsp[-2].nlval->destroy ();
+              delete tao_yyvsp[-2].nlval;
+              tao_yyvsp[-2].nlval = 0;
+            }
         }
     break;
 
@@ -2799,6 +2828,10 @@ tao_yyreduce:
                                                             true);
               (void) s->fe_add_valuetype_fwd (f);
             }
+
+          tao_yyvsp[0].idval->destroy ();
+          delete tao_yyvsp[0].idval;
+          tao_yyvsp[0].idval = 0;
         }
     break;
 
@@ -2822,6 +2855,10 @@ tao_yyreduce:
                                                             false);
               (void) s->fe_add_valuetype_fwd (f);
             }
+
+          tao_yyvsp[0].idval->destroy ();
+          delete tao_yyvsp[0].idval;
+          tao_yyvsp[0].idval = 0;
         }
     break;
 
@@ -2829,52 +2866,54 @@ tao_yyreduce:
 
     {
 // value_box_decl : value_decl type_spec
-        idl_global->set_parse_state (IDL_GlobalData::PS_ValueBoxDeclSeen);
+          idl_global->set_parse_state (IDL_GlobalData::PS_ValueBoxDeclSeen);
 
-        UTL_Scope *s = idl_global->scopes ().top_non_null ();
-        UTL_ScopedName n (tao_yyvsp[-1].idval,
-                          0);
+          UTL_Scope *s = idl_global->scopes ().top_non_null ();
+          UTL_ScopedName n (tao_yyvsp[-1].idval,
+                            0);
 
-        if (s != 0 && tao_yyvsp[0].dcval != 0)
-          {
-            /*
-             * Get the type_spec associated with the valuebox
-             */
-            AST_Type *tp = 0;
-            AST_Typedef *td
-              = AST_Typedef::narrow_from_decl (tao_yyvsp[0].dcval);
+          if (s != 0 && tao_yyvsp[0].dcval != 0)
+            {
+              /*
+              * Get the type_spec associated with the valuebox
+              */
+              AST_Type *tp = 0;
+              AST_Typedef *td
+                = AST_Typedef::narrow_from_decl (tao_yyvsp[0].dcval);
 
-            if (td == 0)
-              {
-                tp = AST_Type::narrow_from_decl (tao_yyvsp[0].dcval);
-              }
-            else
-              {
-                tp = td->primitive_base_type ();
-              }
+              if (td == 0)
+                {
+                  tp = AST_Type::narrow_from_decl (tao_yyvsp[0].dcval);
+                }
+              else
+                {
+                  tp = td->primitive_base_type ();
+                }
 
-            if (tp == 0)
-              { // The <type_spec> given is a valid type
-                idl_global->err ()->not_a_type (tao_yyvsp[0].dcval);
-              }
+              if (tp == 0)
+                { // The <type_spec> given is a valid type
+                  idl_global->err ()->not_a_type (tao_yyvsp[0].dcval);
+                }
+              else if (tp->node_type() == AST_Decl::NT_valuetype)
+                { // valuetype is not allowed as <type_spec> for boxed value
+                  idl_global->err ()->error0 (
+                      UTL_Error::EIDL_ILLEGAL_BOXED_TYPE
+                    );
+                }
+              else
+                {
+                  /*
+                  * Add the valuebox to its definition scope
+                  */
+                  AST_ValueBox *vb = idl_global->gen ()->create_valuebox (&n,
+                                                                          tp);
+                  (void) s->fe_add_valuebox (vb);
+                }
+            }
 
-            else if (tp->node_type() == AST_Decl::NT_valuetype)
-              { // valuetype is not allowed as <type_spec> for boxed value
-                idl_global->err ()->error0 (
-                    UTL_Error::EIDL_ILLEGAL_BOXED_TYPE
-                  );
-              }
-
-            else
-              {
-                /*
-                 * Add the valuebox to its definition scope
-                 */
-                AST_ValueBox *vb = idl_global->gen ()->create_valuebox (&n,
-                                                                        tp);
-                (void) s->fe_add_valuebox (vb);
-              }
-          }
+          tao_yyvsp[-1].idval->destroy ();
+          delete tao_yyvsp[-1].idval;
+          tao_yyvsp[-1].idval = 0;
         }
     break;
 
@@ -3109,6 +3148,8 @@ tao_yyreduce:
           ACE_NEW_RETURN (id,
                           Identifier (tao_yyvsp[-2].strval),
                           1);
+          ACE::strdelete (tao_yyvsp[-2].strval);
+          tao_yyvsp[-2].strval = 0;
           UTL_IdList *sn = 0;
           ACE_NEW_RETURN (sn,
                           UTL_IdList (tao_yyvsp[0].idval,
@@ -3126,6 +3167,12 @@ tao_yyreduce:
     {
 //      | scoped_name IDL_SCOPE_DELIMITOR
           idl_global->set_parse_state (IDL_GlobalData::PS_ScopeDelimSeen);
+
+          // This cleans up all the non-global "::"s in scoped names.
+          // If there is a global one, it gets put into the UTL_IdList,
+          // so we clean it up in the case above.
+          ACE::strdelete (tao_yyvsp[0].strval);
+          tao_yyvsp[0].strval = 0;
         }
     break;
 
@@ -3152,7 +3199,8 @@ tao_yyreduce:
           ACE_NEW_RETURN (tao_yyval.idval,
                           Identifier (tao_yyvsp[0].strval),
                           1);
-          ACE_OS::free (tao_yyvsp[0].strval);
+          ACE::strdelete (tao_yyvsp[0].strval);
+          tao_yyvsp[0].strval = 0;
         }
     break;
 
@@ -3175,6 +3223,11 @@ tao_yyreduce:
                                       );
               (void) s->add_predefined_type (pdt);
               s->add_to_scope (pdt);
+
+              tao_yyvsp[0].idval->destroy ();
+              delete tao_yyvsp[0].idval;
+              tao_yyvsp[0].idval = 0;
+
               break;
             }
 
@@ -3192,6 +3245,10 @@ tao_yyreduce:
                                                             0);
               (void) s->fe_add_interface_fwd (f);
             }
+
+          tao_yyvsp[0].idval->destroy ();
+          delete tao_yyvsp[0].idval;
+          tao_yyvsp[0].idval = 0;
         }
     break;
 
@@ -3218,6 +3275,10 @@ tao_yyreduce:
                                                             0);
               (void) s->fe_add_interface_fwd (f);
             }
+
+          tao_yyvsp[0].idval->destroy ();
+          delete tao_yyvsp[0].idval;
+          tao_yyvsp[0].idval = 0;
         }
     break;
 
@@ -3244,6 +3305,10 @@ tao_yyreduce:
                                                             1);
               (void) s->fe_add_interface_fwd (f);
             }
+
+          tao_yyvsp[0].idval->destroy ();
+          delete tao_yyvsp[0].idval;
+          tao_yyvsp[0].idval = 0;
         }
     break;
 
@@ -3304,6 +3369,9 @@ tao_yyreduce:
                 {
                   idl_global->err ()->coercion_error (tao_yyvsp[0].exval,
                                                       tao_yyvsp[-6].etval);
+                  tao_yyvsp[0].exval->destroy ();
+                  delete tao_yyvsp[0].exval;
+                  tao_yyvsp[0].exval = 0;
                 }
               else
                 {
@@ -3315,6 +3383,7 @@ tao_yyreduce:
                                           );
                   (void) s->fe_add_constant (c);
                   delete result;
+                  result = 0;
                 }
 
               tao_yyvsp[-4].idval->destroy ();
@@ -3362,6 +3431,10 @@ tao_yyreduce:
           AST_Decl *d =
             s->lookup_by_name (tao_yyvsp[0].idlist,
                                true);
+
+          tao_yyvsp[0].idlist->destroy ();
+          delete tao_yyvsp[0].idlist;
+          tao_yyvsp[0].idlist = 0;
 
           if (s != 0  && d != 0)
             {
@@ -3601,7 +3674,7 @@ tao_yyreduce:
            */
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           AST_Decl *d = s->lookup_by_name (tao_yyvsp[0].idlist,
-                                            true);
+                                           true);
 
           /*
            * If the scoped name is an IDL constant, it may be used in an
@@ -3613,8 +3686,13 @@ tao_yyreduce:
           if (d != 0 && d->node_type () == AST_Decl::NT_const)
             {
               AST_Constant *c = AST_Constant::narrow_from_decl (d);
-              tao_yyval.exval = idl_global->gen ()->create_expr (c->constant_value (),
-                                                    c->et ());
+              tao_yyval.exval =
+                idl_global->gen ()->create_expr (c->constant_value (),
+                                                 c->et ());
+
+              tao_yyvsp[0].idlist->destroy ();
+              delete tao_yyvsp[0].idlist;
+              tao_yyvsp[0].idlist = 0;
             }
           else
             {
@@ -3655,6 +3733,9 @@ tao_yyreduce:
     {
 //      | IDL_STRING_LITERAL
           tao_yyval.exval = idl_global->gen ()->create_expr (tao_yyvsp[0].sval);
+          tao_yyvsp[0].sval->destroy ();
+          delete tao_yyvsp[0].sval;
+          tao_yyvsp[0].sval = 0;
         }
     break;
 
@@ -3769,9 +3850,7 @@ tao_yyreduce:
 
           if (good_expression)
             {
-              tao_yyval.exval =
-                idl_global->gen()->create_expr (tao_yyvsp[0].exval,
-                                                AST_Expression::EV_ulong);
+              tao_yyval.exval = tao_yyvsp[0].exval;
             }
           else
             {
@@ -3843,6 +3922,10 @@ tao_yyreduce:
                */
               (void) s->fe_add_native (node);
             }
+
+          tao_yyvsp[0].deval->destroy ();
+          delete tao_yyvsp[0].deval;
+          tao_yyvsp[0].deval = 0;
         }
     break;
 
@@ -3892,6 +3975,12 @@ tao_yyreduce:
 
                   if (tp == 0)
                     {
+                      continue;
+                    }
+
+                  if (AST_Decl::NT_except == tp->node_type ())
+                    {
+                      idl_global->err ()->not_a_type (tp);
                       continue;
                     }
 
@@ -4272,6 +4361,10 @@ tao_yyreduce:
            * Push the scope of the struct on the scopes stack.
            */
           idl_global->scopes ().push (d);
+
+          tao_yyvsp[0].idval->destroy ();
+          delete tao_yyvsp[0].idval;
+          tao_yyvsp[0].idval = 0;
         }
     break;
 
@@ -4386,6 +4479,10 @@ tao_yyreduce:
                   (void) s->fe_add_field (f);
                 }
             }
+
+          tao_yyvsp[-2].dlval->destroy ();
+          delete tao_yyvsp[-2].dlval;
+          tao_yyvsp[-2].dlval = 0;
         }
     break;
 
@@ -4490,6 +4587,10 @@ tao_yyreduce:
            * Push the scope of the union on the scopes stack
            */
           idl_global->scopes ().push (u);
+
+          tao_yyvsp[-7].idval->destroy ();
+          delete tao_yyvsp[-7].idval;
+          tao_yyvsp[-7].idval = 0;
         }
     break;
 
@@ -4676,9 +4777,17 @@ tao_yyreduce:
             {
               idl_global->err ()->lookup_error (tao_yyvsp[0].idlist);
 
+              tao_yyvsp[0].idlist->destroy ();
+              delete tao_yyvsp[0].idlist;
+              tao_yyvsp[0].idlist = 0;
+
               /* If we don't return here, we'll crash later.*/
               return 1;
             }
+
+          tao_yyvsp[0].idlist->destroy ();
+          delete tao_yyvsp[0].idlist;
+          tao_yyvsp[0].idlist = 0;
         }
     break;
 
@@ -4722,6 +4831,12 @@ tao_yyreduce:
                                         f->name ()
                                       );
               (void) s->fe_add_union_branch (b);
+
+              // f has passed its field type to the union branch,
+              // but the rest still needs to be cleaned up.
+              f->AST_Decl::destroy ();
+              delete f;
+              f = 0;
             }
         }
     break;
@@ -4883,6 +4998,10 @@ tao_yyreduce:
                                                tao_yyvsp[0].deval->name ()
                                              );
                 }
+
+              tao_yyvsp[0].deval->destroy ();
+              delete tao_yyvsp[0].deval;
+              tao_yyvsp[0].deval = 0;
             }
         }
     break;
@@ -4904,6 +5023,10 @@ tao_yyreduce:
               d = idl_global->gen ()->create_structure_fwd (&n);
               (void) s->fe_add_structure_fwd (d);
             }
+
+          tao_yyvsp[0].idval->destroy ();
+          delete tao_yyvsp[0].idval;
+          tao_yyvsp[0].idval = 0;
         }
     break;
 
@@ -4924,6 +5047,10 @@ tao_yyreduce:
               u = idl_global->gen ()->create_union_fwd (&n);
               (void) s->fe_add_union_fwd (u);
             }
+
+          tao_yyvsp[0].idval->destroy ();
+          delete tao_yyvsp[0].idval;
+          tao_yyvsp[0].idval = 0;
         }
     break;
 
@@ -4941,7 +5068,7 @@ tao_yyreduce:
 //      id
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           UTL_ScopedName n (tao_yyvsp[0].idval,
-                             0);
+                            0);
           AST_Enum *e = 0;
           idl_global->set_parse_state (IDL_GlobalData::PS_EnumIDSeen);
 
@@ -4964,6 +5091,10 @@ tao_yyreduce:
            * Push the enum scope on the scopes stack.
            */
           idl_global->scopes ().push (e);
+
+          tao_yyvsp[0].idval->destroy ();
+          delete tao_yyvsp[0].idval;
+          tao_yyvsp[0].idval = 0;
         }
     break;
 
@@ -5020,6 +5151,8 @@ tao_yyreduce:
 // enumerator : IDENTIFIER
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           Identifier id (tao_yyvsp[0].strval);
+          ACE::strdelete (tao_yyvsp[0].strval);
+          tao_yyvsp[0].strval = 0;
           UTL_ScopedName n (&id,
                             0);
           AST_EnumVal *e = 0;
@@ -5082,13 +5215,20 @@ tao_yyreduce:
           /*
            * Create a node representing a sequence
            */
-          if (tao_yyvsp[-2].exval == 0 || tao_yyvsp[-2].exval->coerce (AST_Expression::EV_ulong) == 0)
+          AST_Expression::AST_ExprValue *ev = 0;
+
+          if (tao_yyvsp[-2].exval != 0)
+            {
+              ev = tao_yyvsp[-2].exval->coerce (AST_Expression::EV_ulong);
+            }
+
+          if (0 == tao_yyvsp[-2].exval || 0 == ev)
             {
               idl_global->err ()->coercion_error (tao_yyvsp[-2].exval,
                                                   AST_Expression::EV_ulong);
               tao_yyval.dcval = 0;
             }
-          else if (tao_yyvsp[-5].dcval == 0)
+          else if (0 == tao_yyvsp[-5].dcval)
             {
               tao_yyval.dcval = 0;
             }
@@ -5096,7 +5236,7 @@ tao_yyreduce:
             {
               AST_Type *tp = AST_Type::narrow_from_decl (tao_yyvsp[-5].dcval);
 
-              if (tp == 0)
+              if (0 == tp)
                 {
                   ; // Error will be caught in FE_Declarator.
                 }
@@ -5116,6 +5256,9 @@ tao_yyreduce:
                                           );
                 }
             }
+
+          delete ev;
+          ev = 0;
         }
     break;
 
@@ -5227,8 +5370,14 @@ tao_yyreduce:
           /*
            * Create a node representing a string.
            */
-          if (tao_yyvsp[-2].exval == 0
-              || tao_yyvsp[-2].exval->coerce (AST_Expression::EV_ulong) == 0)
+          AST_Expression::AST_ExprValue *ev = 0;
+
+          if (tao_yyvsp[-2].exval != 0)
+            {
+              ev = tao_yyvsp[-2].exval->coerce (AST_Expression::EV_ulong);
+            }
+
+          if (0 == tao_yyvsp[-2].exval || 0 == ev)
             {
               idl_global->err ()->coercion_error (tao_yyvsp[-2].exval,
                                                   AST_Expression::EV_ulong);
@@ -5246,6 +5395,9 @@ tao_yyreduce:
                                                 )
                                             );
             }
+
+          delete ev;
+          ev = 0;
         }
     break;
 
@@ -5386,6 +5538,12 @@ tao_yyreduce:
                                         0,
                                         0
                                       );
+
+              tao_yyvsp[0].elval->destroy ();
+              delete tao_yyvsp[0].elval;
+              tao_yyvsp[0].elval = 0;
+
+              sn.destroy ();
             }
         }
     break;
@@ -5459,8 +5617,14 @@ tao_yyreduce:
            * Array dimensions are expressions which must be coerced to
            * positive integers.
            */
-          if (tao_yyvsp[-2].exval == 0
-              || tao_yyvsp[-2].exval->coerce (AST_Expression::EV_ulong) == 0)
+          AST_Expression::AST_ExprValue *ev = 0;
+
+          if (tao_yyvsp[-2].exval != 0)
+            {
+              ev = tao_yyvsp[-2].exval->coerce (AST_Expression::EV_ulong);
+            }
+
+          if (0 == tao_yyvsp[-2].exval || 0 == ev)
             {
               idl_global->err ()->coercion_error (tao_yyvsp[-2].exval,
                                                   AST_Expression::EV_ulong);
@@ -5470,6 +5634,9 @@ tao_yyreduce:
             {
               tao_yyval.exval = tao_yyvsp[-2].exval;
             }
+
+          delete ev;
+          ev = 0;
         }
     break;
 
@@ -5545,7 +5712,7 @@ tao_yyreduce:
                     idl_global->gen ()->create_attribute (
                                             true,
                                             tp,
-                                            (UTL_IdList *) d->name ()->copy (),
+                                            d->name (),
                                             s->is_local (),
                                             s->is_abstract ()
                                           );
@@ -5553,11 +5720,19 @@ tao_yyreduce:
                   if (tao_yyvsp[0].nlval != 0)
                     {
                       (void) a->fe_add_get_exceptions (tao_yyvsp[0].nlval);
+
+                      tao_yyvsp[0].nlval->destroy ();
+                      delete tao_yyvsp[0].nlval;
+                      tao_yyvsp[0].nlval = 0;
                     }
 
                   (void) s->fe_add_attribute (a);
                 }
             }
+
+          tao_yyvsp[-2].dlval->destroy ();
+          delete tao_yyvsp[-2].dlval;
+          tao_yyvsp[-2].dlval = 0;
         }
     break;
 
@@ -5633,7 +5808,7 @@ tao_yyreduce:
                     idl_global->gen ()->create_attribute (
                                             false,
                                             tp,
-                                            (UTL_IdList *) d->name ()->copy (),
+                                            d->name (),
                                             s->is_local (),
                                             s->is_abstract ()
                                           );
@@ -5641,16 +5816,28 @@ tao_yyreduce:
                   if (tao_yyvsp[-2].nlval != 0)
                     {
                       (void) a->fe_add_get_exceptions (tao_yyvsp[-2].nlval);
+
+                      tao_yyvsp[-2].nlval->destroy ();
+                      delete tao_yyvsp[-2].nlval;
+                      tao_yyvsp[-2].nlval = 0;
                     }
 
                   if (tao_yyvsp[0].nlval != 0)
                     {
                       (void) a->fe_add_set_exceptions (tao_yyvsp[0].nlval);
+
+                      tao_yyvsp[0].nlval->destroy ();
+                      delete tao_yyvsp[0].nlval;
+                      tao_yyvsp[0].nlval = 0;
                     }
 
                   (void) s->fe_add_attribute (a);
                 }
             }
+
+          tao_yyvsp[-4].dlval->destroy ();
+          delete tao_yyvsp[-4].dlval;
+          tao_yyvsp[-4].dlval = 0;
         }
     break;
 
@@ -5688,6 +5875,10 @@ tao_yyreduce:
            * Push the exception scope on the scope stack.
            */
           idl_global->scopes ().push (e);
+
+          tao_yyvsp[0].idval->destroy ();
+          delete tao_yyvsp[0].idval;
+          tao_yyvsp[0].idval = 0;
         }
     break;
 
@@ -5733,6 +5924,9 @@ tao_yyreduce:
 //      IDENTIFIER
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           Identifier id (tao_yyvsp[0].strval);
+          ACE::strdelete (tao_yyvsp[0].strval);
+          tao_yyvsp[0].strval = 0;
+
           UTL_ScopedName n (&id,
                             0);
           AST_Operation *o = 0;
@@ -5772,9 +5966,6 @@ tao_yyreduce:
                   (void) s->fe_add_operation (o);
                 }
             }
-
-           ACE_OS::free (tao_yyvsp[0].strval);
-           tao_yyvsp[0].strval = 0;
 
           /*
            * Push the operation scope onto the scopes stack.
@@ -5893,9 +6084,14 @@ tao_yyreduce:
                           ACE_TEXT ("factory construct.\n"),
                           idl_global->filename ()->get_string (),
                           idl_global->lineno ()));
+
+              idl_global->set_err_count (idl_global->err_count () + 1);
             }
 
           Identifier id (tao_yyvsp[0].strval);
+          ACE::strdelete (tao_yyvsp[0].strval);
+          tao_yyvsp[0].strval = 0;
+
           UTL_ScopedName n (&id,
                             0);
           AST_Factory *factory = 0;
@@ -6022,12 +6218,16 @@ tao_yyreduce:
                   a = idl_global->gen ()->create_argument (
                           AST_Argument::dir_IN,
                           tp,
-                          (UTL_IdList *) tao_yyvsp[0].deval->name ()->copy ()
+                          tao_yyvsp[0].deval->name ()
                         );
 
                   (void) s->fe_add_argument (a);
                 }
             }
+
+          tao_yyvsp[0].deval->destroy ();
+          delete tao_yyvsp[0].deval;
+          tao_yyvsp[0].deval = 0;
         }
     break;
 
@@ -6117,12 +6317,16 @@ tao_yyreduce:
                         idl_global->gen ()->create_argument (
                             tao_yyvsp[-4].dival,
                             tp,
-                            (UTL_IdList *) tao_yyvsp[0].deval->name ()->copy ()
+                            tao_yyvsp[0].deval->name ()
                           );
                       (void) s->fe_add_argument (a);
                     }
                 }
             }
+
+          tao_yyvsp[0].deval->destroy ();
+          delete tao_yyvsp[0].deval;
+          tao_yyvsp[0].deval = 0;
         }
     break;
 
@@ -6341,9 +6545,9 @@ tao_yyreduce:
     {
 // at_least_one_string_literal : IDL_STRING_LITERAL string_literals
           ACE_NEW_RETURN (tao_yyval.slval,
-                         UTL_StrList (tao_yyvsp[-1].sval,
-                                      tao_yyvsp[0].slval),
-                         1);
+                          UTL_StrList (tao_yyvsp[-1].sval,
+                                       tao_yyvsp[0].slval),
+                          1);
         }
     break;
 
@@ -6405,6 +6609,14 @@ tao_yyreduce:
                      tao_yyvsp[0].sval->get_string ()
                    );
             }
+
+          tao_yyvsp[-1].idlist->destroy ();
+          delete tao_yyvsp[-1].idlist;
+          tao_yyvsp[-1].idlist = 0;
+
+          tao_yyvsp[0].sval->destroy ();
+          delete tao_yyvsp[0].sval;
+          tao_yyvsp[0].sval = 0;
         }
     break;
 
@@ -6435,6 +6647,14 @@ tao_yyreduce:
                      tao_yyvsp[0].sval->get_string ()
                    );
             }
+
+          tao_yyvsp[-1].idlist->destroy ();
+          delete tao_yyvsp[-1].idlist;
+          tao_yyvsp[-1].idlist = 0;
+
+          tao_yyvsp[0].sval->destroy ();
+          delete tao_yyvsp[0].sval;
+          tao_yyvsp[0].sval = 0;
         }
     break;
 
@@ -6459,6 +6679,10 @@ tao_yyreduce:
               f = idl_global->gen ()->create_component_fwd (&n);
               (void) s->fe_add_component_fwd (f);
             }
+
+          tao_yyvsp[0].idval->destroy ();
+          delete tao_yyvsp[0].idval;
+          tao_yyvsp[0].idval = 0;
         }
     break;
 
@@ -6570,6 +6794,20 @@ tao_yyreduce:
                                               tao_yyvsp[0].nlval,
                                               false),
                           1);
+
+          if (0 != tao_yyvsp[0].nlval)
+            {
+              tao_yyvsp[0].nlval->destroy ();
+              delete tao_yyvsp[0].nlval;
+              tao_yyvsp[0].nlval = 0;
+            }
+
+          if (0 != tao_yyvsp[-2].idlist)
+            {
+              tao_yyvsp[-2].idlist->destroy ();
+              delete tao_yyvsp[-2].idlist;
+              tao_yyvsp[-2].idlist = 0;
+            }
         }
     break;
 
@@ -6704,9 +6942,18 @@ tao_yyreduce:
             {
               AST_Decl *d = s->lookup_by_name (tao_yyvsp[-1].idlist,
                                                true);
-              if (d == 0)
+              if (0 == d)
                 {
                   idl_global->err ()->lookup_error (tao_yyvsp[-1].idlist);
+
+                  tao_yyvsp[-1].idlist->destroy ();
+                  delete tao_yyvsp[-1].idlist;
+                  tao_yyvsp[-1].idlist = 0;
+
+                  tao_yyvsp[0].idval->destroy ();
+                  delete tao_yyvsp[0].idval;
+                  tao_yyvsp[0].idval = 0;
+
                   break;
                 }
               else if (d->node_type () != AST_Decl::NT_interface)
@@ -6718,9 +6965,19 @@ tao_yyreduce:
                         != 0)
                     {
                       idl_global->err ()->interface_expected (d);
+
+                      tao_yyvsp[-1].idlist->destroy ();
+                      delete tao_yyvsp[-1].idlist;
+                      tao_yyvsp[-1].idlist = 0;
+
+                      tao_yyvsp[0].idval->destroy ();
+                      delete tao_yyvsp[0].idval;
+                      tao_yyvsp[0].idval = 0;
+
                       break;
                     }
                 }
+
               AST_Type *interface_type =
                 AST_Type::narrow_from_decl (d);
 
@@ -6729,6 +6986,10 @@ tao_yyreduce:
               pd.impl = interface_type;
               c->provides ().enqueue_tail (pd);
             }
+
+          tao_yyvsp[-1].idlist->destroy ();
+          delete tao_yyvsp[-1].idlist;
+          tao_yyvsp[-1].idlist = 0;
         }
     break;
 
@@ -6736,19 +6997,8 @@ tao_yyreduce:
 
     {
 // interface_type : scoped_name
-          UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          AST_Decl *d = s->lookup_by_name (tao_yyvsp[0].idlist,
-                                           true);
-
-          if (d == 0)
-            {
-              idl_global->err ()->lookup_error (tao_yyvsp[0].idlist);
-            }
-          else if (d->node_type () != AST_Decl::NT_interface)
-            {
-              idl_global->err ()->interface_expected (d);
-            }
-
+          // Lookups and checking are done where the 'interface_type'
+          // token is used, in 'provides_decl' and 'uses_decl'.
           tao_yyval.idlist = tao_yyvsp[0].idlist;
         }
     break;
@@ -6786,9 +7036,18 @@ tao_yyreduce:
           AST_Decl *d = s->lookup_by_name (tao_yyvsp[-1].idlist,
                                            true);
 
-          if (d == 0)
+          if (0 == d)
             {
               idl_global->err ()->lookup_error (tao_yyvsp[-1].idlist);
+
+              tao_yyvsp[-1].idlist->destroy ();
+              delete tao_yyvsp[-1].idlist;
+              tao_yyvsp[-1].idlist = 0;
+
+              tao_yyvsp[0].idval->destroy ();
+              delete tao_yyvsp[0].idval;
+              tao_yyvsp[0].idval = 0;
+
               break;
             }
           else if (d->node_type () != AST_Decl::NT_interface)
@@ -6798,6 +7057,15 @@ tao_yyreduce:
                     != 0)
                 {
                   idl_global->err ()->interface_expected (d);
+
+                  tao_yyvsp[-1].idlist->destroy ();
+                  delete tao_yyvsp[-1].idlist;
+                  tao_yyvsp[-1].idlist = 0;
+
+                  tao_yyvsp[0].idval->destroy ();
+                  delete tao_yyvsp[0].idval;
+                  tao_yyvsp[0].idval = 0;
+
                   break;
                 }
             }
@@ -6823,6 +7091,10 @@ tao_yyreduce:
                   idl_global->create_uses_multiple_stuff (c, ud);
                 }
             }
+
+          tao_yyvsp[-1].idlist->destroy ();
+          delete tao_yyvsp[-1].idlist;
+          tao_yyvsp[-1].idlist = 0;
         }
     break;
 
@@ -6850,13 +7122,33 @@ tao_yyreduce:
           AST_Decl *d = s->lookup_by_name (tao_yyvsp[-1].idlist,
                                            true);
 
-          if (d == 0)
+          if (0 == d)
             {
               idl_global->err ()->lookup_error (tao_yyvsp[-1].idlist);
+
+              tao_yyvsp[-1].idlist->destroy ();
+              delete tao_yyvsp[-1].idlist;
+              tao_yyvsp[-1].idlist = 0;
+
+              tao_yyvsp[0].idval->destroy ();
+              delete tao_yyvsp[0].idval;
+              tao_yyvsp[0].idval = 0;
+
+              break;
             }
           else if (d->node_type () != AST_Decl::NT_eventtype)
             {
               idl_global->err ()->eventtype_expected (d);
+
+              tao_yyvsp[-1].idlist->destroy ();
+              delete tao_yyvsp[-1].idlist;
+              tao_yyvsp[-1].idlist = 0;
+
+              tao_yyvsp[0].idval->destroy ();
+              delete tao_yyvsp[0].idval;
+              tao_yyvsp[0].idval = 0;
+
+              break;
             }
           else
             {
@@ -6871,6 +7163,10 @@ tao_yyreduce:
                   c->emits ().enqueue_tail (pd);
                 }
             }
+
+          tao_yyvsp[-1].idlist->destroy ();
+          delete tao_yyvsp[-1].idlist;
+          tao_yyvsp[-1].idlist = 0;
         }
     break;
 
@@ -6882,13 +7178,33 @@ tao_yyreduce:
           AST_Decl *d = s->lookup_by_name (tao_yyvsp[-1].idlist,
                                            true);
 
-          if (d == 0)
+          if (0 == d)
             {
               idl_global->err ()->lookup_error (tao_yyvsp[-1].idlist);
+
+              tao_yyvsp[-1].idlist->destroy ();
+              delete tao_yyvsp[-1].idlist;
+              tao_yyvsp[-1].idlist = 0;
+
+              tao_yyvsp[0].idval->destroy ();
+              delete tao_yyvsp[0].idval;
+              tao_yyvsp[0].idval = 0;
+
+              break;
             }
           else if (d->node_type () != AST_Decl::NT_eventtype)
             {
               idl_global->err ()->eventtype_expected (d);
+
+              tao_yyvsp[-1].idlist->destroy ();
+              delete tao_yyvsp[-1].idlist;
+              tao_yyvsp[-1].idlist = 0;
+
+              tao_yyvsp[0].idval->destroy ();
+              delete tao_yyvsp[0].idval;
+              tao_yyvsp[0].idval = 0;
+
+              break;
             }
           else
             {
@@ -6903,6 +7219,10 @@ tao_yyreduce:
                   c->publishes ().enqueue_tail (pd);
                 }
             }
+
+          tao_yyvsp[-1].idlist->destroy ();
+          delete tao_yyvsp[-1].idlist;
+          tao_yyvsp[-1].idlist = 0;
         }
     break;
 
@@ -6914,13 +7234,33 @@ tao_yyreduce:
           AST_Decl *d = s->lookup_by_name (tao_yyvsp[-1].idlist,
                                            true);
 
-          if (d == 0)
+          if (0 == d)
             {
               idl_global->err ()->lookup_error (tao_yyvsp[-1].idlist);
+
+              tao_yyvsp[-1].idlist->destroy ();
+              delete tao_yyvsp[-1].idlist;
+              tao_yyvsp[-1].idlist = 0;
+
+              tao_yyvsp[0].idval->destroy ();
+              delete tao_yyvsp[0].idval;
+              tao_yyvsp[0].idval = 0;
+
+              break;
             }
           else if (d->node_type () != AST_Decl::NT_eventtype)
             {
               idl_global->err ()->eventtype_expected (d);
+
+              tao_yyvsp[-1].idlist->destroy ();
+              delete tao_yyvsp[-1].idlist;
+              tao_yyvsp[-1].idlist = 0;
+
+              tao_yyvsp[0].idval->destroy ();
+              delete tao_yyvsp[0].idval;
+              tao_yyvsp[0].idval = 0;
+
+              break;
             }
           else
             {
@@ -6935,6 +7275,10 @@ tao_yyreduce:
                   c->consumes ().enqueue_tail (pd);
                 }
             }
+
+          tao_yyvsp[-1].idlist->destroy ();
+          delete tao_yyvsp[-1].idlist;
+          tao_yyvsp[-1].idlist = 0;
         }
     break;
 
@@ -7059,6 +7403,31 @@ tao_yyreduce:
                                          tao_yyvsp[-2].idlist,
                                          tao_yyvsp[0].idlist),
                           1);
+
+          tao_yyvsp[-2].idlist->destroy ();
+          delete tao_yyvsp[-2].idlist;
+          tao_yyvsp[-2].idlist = 0;
+
+          if (0 != tao_yyvsp[-8].idlist)
+            {
+              tao_yyvsp[-8].idlist->destroy ();
+              delete tao_yyvsp[-8].idlist;
+              tao_yyvsp[-8].idlist = 0;
+            }
+
+          if (0 != tao_yyvsp[0].idlist)
+            {
+              tao_yyvsp[0].idlist->destroy ();
+              delete tao_yyvsp[0].idlist;
+              tao_yyvsp[0].idlist = 0;
+            }
+
+          if (0 != tao_yyvsp[-6].nlval)
+            {
+              tao_yyvsp[-6].nlval->destroy ();
+              delete tao_yyvsp[-6].nlval;
+              tao_yyvsp[-6].nlval = 0;
+            }
         }
     break;
 
@@ -7186,8 +7555,9 @@ tao_yyreduce:
               home->factories ().enqueue_tail (o);
             }
 
-           delete tao_yyvsp[0].idval;
-           tao_yyvsp[0].idval = 0;
+          tao_yyvsp[0].idval->destroy ();
+          delete tao_yyvsp[0].idval;
+          tao_yyvsp[0].idval = 0;
 
           /*
            * Push the operation scope onto the scopes stack.
@@ -7260,8 +7630,9 @@ tao_yyreduce:
               home->finders ().enqueue_tail (o);
             }
 
-           delete tao_yyvsp[0].idval;
-           tao_yyvsp[0].idval = 0;
+          tao_yyvsp[0].idval->destroy ();
+          delete tao_yyvsp[0].idval;
+          tao_yyvsp[0].idval = 0;
 
           /*
            * Push the operation scope onto the scopes stack.
@@ -7326,6 +7697,10 @@ tao_yyreduce:
                                                             false);
               (void) s->fe_add_valuetype_fwd (f);
             }
+
+          tao_yyvsp[0].idval->destroy ();
+          delete tao_yyvsp[0].idval;
+          tao_yyvsp[0].idval = 0;
         }
     break;
 
@@ -7349,6 +7724,10 @@ tao_yyreduce:
                                                             true);
               (void) s->fe_add_valuetype_fwd (f);
             }
+
+          tao_yyvsp[0].idval->destroy ();
+          delete tao_yyvsp[0].idval;
+          tao_yyvsp[0].idval = 0;
         }
     break;
 
@@ -7393,6 +7772,10 @@ tao_yyreduce:
            * Push it on the scope stack.
            */
           idl_global->scopes ().push (e);
+
+          tao_yyvsp[-1].idval->destroy ();
+          delete tao_yyvsp[-1].idval;
+          tao_yyvsp[-1].idval = 0;
         }
     break;
 
@@ -7436,7 +7819,7 @@ tao_yyreduce:
   case 468:
 
     {
-//      id
+// event_custom_header : IDL_CUSTOM IDL_EVENTTYPE id
           idl_global->set_parse_state (IDL_GlobalData::PS_EventTypeIDSeen);
 
           ACE_DEBUG ((LM_DEBUG,
@@ -7453,7 +7836,7 @@ tao_yyreduce:
   case 469:
 
     {
-//      id
+// event_plain_header : IDL_EVENTTYPE id
           idl_global->set_parse_state (IDL_GlobalData::PS_EventTypeIDSeen);
 
           tao_yyval.idval = tao_yyvsp[0].idval;
@@ -7476,11 +7859,29 @@ tao_yyreduce:
           idl_global->set_parse_state (IDL_GlobalData::PS_SupportSpecSeen);
 
           ACE_NEW_RETURN (tao_yyval.ehval,
-                          FE_EventHeader (0,
-                                          tao_yyvsp[-2].nlval,
-                                          tao_yyvsp[0].nlval,
-                                          tao_yyvsp[-2].nlval ? tao_yyvsp[-2].nlval->truncatable () : false),
+                          FE_EventHeader (
+                              0,
+                              tao_yyvsp[-2].nlval,
+                              tao_yyvsp[0].nlval,
+                              tao_yyvsp[-2].nlval
+                                ? tao_yyvsp[-2].nlval->truncatable ()
+                                : false
+                            ),
                           1);
+
+          if (0 != tao_yyvsp[0].nlval)
+            {
+              tao_yyvsp[0].nlval->destroy ();
+              delete tao_yyvsp[0].nlval;
+              tao_yyvsp[0].nlval = 0;
+            }
+
+          if (0 != tao_yyvsp[-2].nlval)
+            {
+              tao_yyvsp[-2].nlval->destroy ();
+              delete tao_yyvsp[-2].nlval;
+              tao_yyvsp[-2].nlval = 0;
+            }
         }
     break;
 
@@ -7494,6 +7895,8 @@ tao_yyreduce:
 
           if (s != 0 && tao_yyvsp[-1].idval != 0)
             {
+              // We create the scoped name here instead of with the
+              // FE_EventHeader because there is a token for it only here.
               UTL_ScopedName sn (tao_yyvsp[-1].idval,
                                  0);
               e =
@@ -7524,6 +7927,8 @@ tao_yyreduce:
               tao_yyvsp[0].ehval->destroy ();
               delete tao_yyvsp[0].ehval;
               tao_yyvsp[0].ehval = 0;
+
+              sn.destroy ();
             }
 
           /*
@@ -7581,7 +7986,7 @@ tao_yyreduce:
 
     }
 
-/* Line 1010 of yacc.c.  */
+/* Line 993 of yacc.c.  */
 
 
   tao_yyvsp -= tao_yylen;

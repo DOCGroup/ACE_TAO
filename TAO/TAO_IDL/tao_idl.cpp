@@ -83,8 +83,11 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 ACE_RCSID (TAO_IDL,
            tao_idl,
            "$Id$")
+           
+extern char *DRV_arglist[];
+extern unsigned long DRV_argcount;
 
-const char *DRV_files[NFILES];
+char *DRV_files[NFILES];
 long DRV_nfiles = 0;
 long DRV_file_index = -1;
 
@@ -106,7 +109,7 @@ DRV_version (void)
 int
 DRV_init (int &argc, char *argv[])
 {
-  // Initialize BE.
+  // Initialize front end.
   FE_init ();
 
   // Initialize driver private data
@@ -122,11 +125,6 @@ DRV_init (int &argc, char *argv[])
   idl_global->set_cpp_location ("cc");
 #endif /* TAO_IDL_PREPROCESSOR */
 
-  // Initialize BE global data object.
-  ACE_NEW_RETURN (be_global,
-                  BE_GlobalData,
-                  -1);
-
   // Does nothing for IDL compiler, stores -ORB args, initializes
   // ORB and IFR for IFR loader.
   return BE_init (argc, argv);
@@ -140,10 +138,36 @@ DRV_refresh (void)
   idl_global->set_main_filename (0);
   idl_global->set_real_filename (0);
   idl_global->set_stripped_filename (0);
-//  idl_global->set_import (true);
-//  idl_global->set_in_main_file (false);
   idl_global->set_lineno (-1);
   idl_global->reset_flag_seen ();
+}
+
+void
+DRV_cleanup (void)
+{
+  // In case we got here via an init error or 
+  // usage/version option - otherwise it's idempotent.
+  BE_cleanup ();
+
+  be_global->destroy ();
+  delete be_global;
+  be_global = 0;
+  
+  idl_global->fini ();
+  delete idl_global;
+  idl_global = 0;
+
+  for (DRV_file_index = 0;
+       DRV_file_index < DRV_nfiles;
+       ++DRV_file_index)
+    {
+      ACE::strdelete (DRV_files[DRV_file_index]);
+    }
+    
+  for (unsigned long i = 0; i < DRV_argcount; ++i)
+    {
+      ACE::strdelete (DRV_arglist[i]);
+    }
 }
 
 /*
@@ -166,11 +190,7 @@ DRV_drive (const char *s)
 {
   // Set the name of the IDL file we are parsing. This is useful to
   // the backend when it generates C++ headers and files.
-  UTL_String *src_file = 0;
-  ACE_NEW (src_file,
-           UTL_String (s));
-
-  idl_global->idl_src_file (src_file);
+  idl_global->idl_src_file (idl_global->utl_string_factory (s));
 
   // Pass through CPP.
   if (idl_global->compile_flags () & IDL_CF_INFORMATIVE)
@@ -189,12 +209,14 @@ DRV_drive (const char *s)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "%s%s %s\n",
-                  idl_global->prog_name(),
+                  idl_global->prog_name (),
                   ACE_TEXT (": parsing"),
                   s));
     }
 
-  FE_yyparse ();
+  // Return value not used - error count stored in idl_global
+  // and checked below.
+  (void) FE_yyparse ();
 
   // We must do this as late as possible to make sure any
   // forward declared structs or unions contained in a
@@ -216,10 +238,8 @@ DRV_drive (const char *s)
                     ? ACE_TEXT ("s")
                     : ACE_TEXT ("")))));
 
-      // Call BE_abort to allow a BE to clean up after itself.
-      BE_abort ();
-
-      ACE_OS::exit (static_cast<int> (idl_global->err_count ()));
+      // Backend will be cleaned up after the exception is caught.
+      throw FE_Bailout ();
     }
 
   // Dump the code.
@@ -254,15 +274,14 @@ DRV_drive (const char *s)
   // Make sure all forward declared structs and unions are defined
   // before proceeding to code generation.
   AST_check_fwd_decls ();
-  long error_count = idl_global->err_count ();
 
-  if (error_count == 0)
+  if (0 == idl_global->err_count ())
     {
       BE_produce ();
     }
   else
     {
-      ACE_OS::exit (static_cast<int> (error_count));
+      throw FE_Bailout ();
     }
 
   DRV_refresh ();
@@ -280,88 +299,87 @@ DRV_drive (const char *s)
 int
 main (int argc, char *argv[])
 {
-  // Initialize driver and global variables.
-  int init_status = DRV_init (argc, argv);
+  // Return status.
+  int status = 0;
 
-  if (init_status != 0)
+  try
     {
-      ACE_OS::exit (init_status);
+      // Initialize driver and global variables.
+      status = DRV_init (argc, argv);
+
+      if (0 != status)
+        {
+          throw FE_Bailout ();
+        }
+
+      // Parse arguments.
+      DRV_parse_args (argc, argv);
+
+      // If a version message is requested, print it and exit.
+      if (idl_global->compile_flags () & IDL_CF_VERSION)
+        {
+          DRV_version ();
+          throw FE_Bailout ();
+        }
+
+      // If a usage message is requested, give it and exit.
+      if (idl_global->compile_flags () & IDL_CF_ONLY_USAGE)
+        {
+          DRV_usage ();
+          throw FE_Bailout ();
+        }
+
+      // If there are no input files, and we are not using the
+      // directory recursion option, there's no sense going any further.
+      if (0 == DRV_nfiles && 0 == idl_global->recursion_start ())
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("IDL: No input files\n")));
+
+          ++status;
+          throw FE_Bailout ();
+        }
+
+      AST_Generator *gen = be_global->generator_init ();
+
+      if (0 == gen)
+        {
+          ACE_ERROR ((
+              LM_ERROR,
+              ACE_TEXT ("IDL: DRV_generator_init() failed to create ")
+              ACE_TEXT ("generator, exiting\n")
+            ));
+
+          ++status;
+          throw FE_Bailout ();
+        }
+      else
+        {
+          idl_global->set_gen (gen);
+        }
+
+      // Initialize AST and load predefined types.
+      FE_populate ();
+
+      // Does various things in various backends.
+      BE_post_init (DRV_files, DRV_nfiles);
+
+      for (DRV_file_index = 0;
+           DRV_file_index < DRV_nfiles;
+           ++DRV_file_index)
+        {
+          DRV_drive (DRV_files[DRV_file_index]);
+        }
     }
-
-  // Parse arguments.
-  DRV_parse_args (argc, argv);
-
-  // If a version message is requested, print it and exit.
-  if (idl_global->compile_flags () & IDL_CF_VERSION)
+  catch (FE_Bailout)
     {
-      DRV_version ();
-      ACE_OS::exit (0);
     }
-
-  // If a usage message is requested, give it and exit.
-  if (idl_global->compile_flags () & IDL_CF_ONLY_USAGE)
-    {
-      DRV_usage ();
-      ACE_OS::exit (0);
-    }
-
-  // If there are no input files, and we are not using the
-  // directory recursion option, there's no sense going any further.
-  if (DRV_nfiles == 0 && idl_global->recursion_start () == 0)
-    {
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("IDL: No input files\n")));
-
-      ACE_OS::exit (99);
-    }
-
-  AST_Generator *gen = be_global->generator_init ();
-
-  if (gen == 0)
-    {
-      ACE_ERROR ((
-          LM_ERROR,
-          ACE_TEXT ("IDL: DRV_generator_init() failed to create ")
-          ACE_TEXT ("generator, exiting\n")
-        ));
-
-      ACE_OS::exit (99);
-    }
-  else
-    {
-      idl_global->set_gen (gen);
-    }
-
-  // Initialize AST and load predefined types.
-  FE_populate ();
-
-  // Does various things in various backends.
-  BE_post_init (DRV_files, DRV_nfiles);
-
-  for (DRV_file_index = 0;
-       DRV_file_index < DRV_nfiles;
-       ++DRV_file_index)
-    {
-      DRV_drive (DRV_files[DRV_file_index]);
-    }
-
-  be_global->destroy ();
-  delete be_global;
-  be_global = 0;
-
-  idl_global->fini ();
-  delete idl_global;
-  idl_global = 0;
-
-  for (DRV_file_index = 0;
-       DRV_file_index < DRV_nfiles;
-       ++DRV_file_index)
-    {
-      ACE::strdelete (const_cast<char *> (DRV_files[DRV_file_index]));
-    }
-
-  ACE_OS::exit (0);
-
-  // NOT REACHED
-  return 0;
+    
+  // Case 1: init error, status = 1, nothing added here.
+  // Case 2: other error(s), status = 0, error count added here.  
+  status += idl_global->err_count ();
+  
+  DRV_cleanup ();
+    
+  return status;
 }

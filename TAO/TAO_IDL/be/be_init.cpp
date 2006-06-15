@@ -1,7 +1,5 @@
 // $Id$
 
-#include "ast_predefined_type.h"
-#include "utl_identifier.h"
 #include "global_extern.h"
 #include "be_extern.h"
 #include "../../tao/Version.h"
@@ -18,20 +16,16 @@ BE_version (void)
 TAO_IDL_BE_Export int
 BE_init (int &, char *[])
 {
+  // Initialize BE global data object.
+  ACE_NEW_RETURN (be_global,
+                  BE_GlobalData,
+                  -1);
+
   return 0;
 }
 
 TAO_IDL_BE_Export void
-BE_post_init (const char *[], long)
+BE_post_init (char *[], long)
 {
-  Identifier id ("void");
-  UTL_ScopedName n (&id,
-                    0);
-  AST_Decl *d =
-    idl_global->scopes ().bottom ()->lookup_primitive_type (
-                                          AST_Expression::EV_void
-                                        );
-  be_global->void_type (AST_PredefinedType::narrow_from_decl (d));
-  id.destroy ();
 }
 

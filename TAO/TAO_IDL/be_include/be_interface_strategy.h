@@ -42,7 +42,7 @@ public:
   be_interface_strategy (be_interface *node,
                          Strategy_Kind strategy_type);
 
-  virtual ~be_interface_strategy ();
+  virtual ~be_interface_strategy (void);
 
   virtual const char *local_name (void) = 0;
   // return the local name
@@ -140,29 +140,36 @@ public:
                            const char *suffix);
   // compute the collocation names
 
-  virtual TAO_OutStream *get_out_stream ();
+  virtual TAO_OutStream *get_out_stream (void);
   // return the out stream depending on the strategy
   // @@ Michael: Right now every strategy behaves
   // the same way, but it might be in the future that we
   // have to differentiate.
 
-  virtual const char *get_out_stream_fname ();
+  virtual const char *get_out_stream_fname (void);
   // return the file name of the output stream.
   // @@ Michael: Right now every strategy behaves the
   // same way.
 
-  int strategy_type ();
+  int strategy_type (void);
   // Return the type of the strategy.
 
-  virtual TAO_CodeGen::CG_STATE next_state (TAO_CodeGen::CG_STATE current_state,
-                                            int is_extra_state = 0);
+  virtual TAO_CodeGen::CG_STATE next_state (
+      TAO_CodeGen::CG_STATE current_state,
+      int is_extra_state = 0
+    );
   // Change the sate if necessary
 
-  virtual int has_extra_code_generation (TAO_CodeGen::CG_STATE current_state);
+  virtual int has_extra_code_generation (
+      TAO_CodeGen::CG_STATE current_state
+    );
 
   virtual be_interface *replacement (void);
   // Returns the node, which is used instead of the original node,
   // e.g. the reply handler to the actual node.
+  
+  virtual void destroy (void);
+  // Cleanup.
 
 protected:
   char *local_name_;
@@ -199,7 +206,7 @@ public:
   be_interface_default_strategy (be_interface *node,
                                  Strategy_Kind strategy_type = DEFAULT);
 
-  virtual ~be_interface_default_strategy ();
+  virtual ~be_interface_default_strategy (void);
 
   const char * local_name (void);
   // return the local name
@@ -278,7 +285,9 @@ public:
   virtual const char *flat_server_scope (void);
   // Return the "flat" version of the scope
   //that encloses the interface.
-
+  
+  virtual void destroy (void);
+  // Cleanup.
 
   // end of overridden methods
 
@@ -288,7 +297,8 @@ protected:
                                    const char *str,
                                    const char *suffix,
                                    const char *separator = "");
-  // create a new string made by the concatenation of "str" and "suffix" and using the
+  // create a new string made by the concatenation
+  // of "str" and "suffix" and using the
   // "separator" to concatenate the two.
 
 
@@ -349,11 +359,13 @@ class be_interface_ami_handler_strategy
 public:
   be_interface_ami_handler_strategy (be_interface *node);
 
-  virtual ~be_interface_ami_handler_strategy ();
+  virtual ~be_interface_ami_handler_strategy (void);
 
   // overridden methods.
-  virtual TAO_CodeGen::CG_STATE next_state (TAO_CodeGen::CG_STATE current_state,
-                                            int is_extra_state = 0);
+  virtual TAO_CodeGen::CG_STATE next_state (
+      TAO_CodeGen::CG_STATE current_state,
+      int is_extra_state = 0
+    );
 };
 
 
@@ -363,13 +375,17 @@ class be_interface_ami_exception_holder_strategy
 public:
   be_interface_ami_exception_holder_strategy (be_interface *node);
 
-  virtual ~be_interface_ami_exception_holder_strategy ();
+  virtual ~be_interface_ami_exception_holder_strategy (void);
 
   // overridden methods.
-  virtual TAO_CodeGen::CG_STATE next_state (TAO_CodeGen::CG_STATE current_state,
-                                            int is_extra_state = 0);
+  virtual TAO_CodeGen::CG_STATE next_state (
+      TAO_CodeGen::CG_STATE current_state,
+      int is_extra_state = 0
+    );
 
-  virtual int has_extra_code_generation (TAO_CodeGen::CG_STATE current_state);
+  virtual int has_extra_code_generation (
+      TAO_CodeGen::CG_STATE current_state
+    );
 };
 
 class be_interface_ami_strategy
@@ -382,10 +398,14 @@ public:
   virtual ~be_interface_ami_strategy ();
 
   // overridden methods.
-  virtual TAO_CodeGen::CG_STATE next_state (TAO_CodeGen::CG_STATE current_state,
-                                            int is_extra_state = 0);
+  virtual TAO_CodeGen::CG_STATE next_state (
+      TAO_CodeGen::CG_STATE current_state,
+      int is_extra_state = 0
+    );
 
-  virtual int has_extra_code_generation (TAO_CodeGen::CG_STATE current_state);
+  virtual int has_extra_code_generation (
+      TAO_CodeGen::CG_STATE current_state
+    );
 
   virtual be_interface *replacement (void);
 

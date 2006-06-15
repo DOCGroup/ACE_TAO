@@ -87,10 +87,13 @@ public:
   void set_full_definition (AST_Interface *nfd);
 
   virtual bool is_defined (void);
+  void set_as_defined (void);
 
   virtual bool is_local (void);
   virtual bool is_valuetype (void);
   virtual bool is_abstract_valuetype (void);
+  
+  bool full_def_seen (void);
 
   // Cleanup function.
   virtual void destroy (void);
@@ -108,6 +111,9 @@ public:
 private:
   AST_Interface *pd_full_definition;
   // The interface this is a forward declaration of.
+  
+  bool is_defined_;
+  // Checking the member above isn't good enough.
 };
 
 #endif           // _AST_INTERFACE_FWD_AST_INTERFACE_FWD_HH

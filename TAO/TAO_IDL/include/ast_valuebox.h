@@ -30,10 +30,12 @@ public:
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
+  
+  // Cleanup.
+  virtual void destroy (void);
 
 protected:
   AST_Type                    *pd_boxed_type;
- 
 };
 
 #endif           // _AST_VALUEBOX_AST_VALUEBOX_HH

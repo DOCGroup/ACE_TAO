@@ -554,6 +554,9 @@ AST_Type::ast_accept (ast_visitor *visitor)
 void
 AST_Type::destroy (void)
 {
+  delete [] this->nested_type_name_;
+  this->nested_type_name_ = 0;
+
   this->AST_Decl::destroy ();
 }
 

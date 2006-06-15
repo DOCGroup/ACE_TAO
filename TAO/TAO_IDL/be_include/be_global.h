@@ -28,6 +28,8 @@
 
 class be_interface;
 class be_valuetype;
+class be_module;
+class be_interface;
 class be_interface_fwd;
 class UTL_String;
 class AST_PredefinedType;
@@ -475,18 +477,25 @@ public:
   // CORBA::is_nil, needed when the interface inherits versions from
   // both CORBA::Object and CORBA::AbstractBase.
 
-  AST_PredefinedType *void_type (void) const;
-  void void_type (AST_PredefinedType *val);
-  // Accessors for the member.
+  AST_PredefinedType *void_type (void);
+  // Accessor for the member, sets it on the first call.
 
-  be_interface *ccmobject (void) const;
-  void ccmobject (be_interface *val);
-  // Accessors for the member.
+  be_interface *ccmobject (void);
+  // Accessor for the member, sets it on the first call.
 
+  be_module *messaging (void);
+  // Accessor for the member, sets it on the first call.
+
+  be_valuetype *messaging_exceptionholder (void);
+  // Accessor for the member, sets it on the first call.
+  
   be_valuetype *exceptionholder (void) const;
   void exceptionholder (be_valuetype *val);
   // Accessors for the member.
-
+  
+  be_interface *messaging_replyhandler (void);
+  // Accessor for the member, sets it on the first call.
+  
   bool gen_anyop_files (void) const;
   void gen_anyop_files (bool val);
   // Accessors for the member.
@@ -502,6 +511,10 @@ public:
   bool gen_server_inline (void) const;
   void gen_server_inline (bool val);
   // Accessors for the member gen_server_inline_.
+  
+  bool gen_local_iface_anyops (void) const;
+  void gen_local_iface_anyops (bool val);
+  // Accessors for the member gen_local_iface_anyops_.
 
   ACE_CString spawn_options (void);
   // Command line passed to ACE_Process::spawn. Different
@@ -682,9 +695,18 @@ private:
   be_interface *ccmobject_;
   // Reference holder for component skeleton visitors.
 
+  be_module *messaging_;
+  // Storage for the messaging exceptions holder's virtual scope.
+
+  be_valuetype *messaging_exceptionholder_;
+  // Storage for exception holders' base class node.
+  
   be_valuetype *exceptionholder_;
   // Reference holder for the exceptionholder.
-
+  
+  be_interface *messaging_replyhandler_;
+  // Storage for the reply handlers' base class node.
+  
   bool gen_anyop_files_;
   // Separate files for generated Any operators?
 
@@ -699,6 +721,10 @@ private:
   bool gen_server_inline_;
   // True by default, but a command line option can turn this off so
   // that we don't generate a server inline file
+  
+  bool gen_local_iface_anyops_;
+  // True by default, can be turned off by a command line option
+  // for regenerating internal ORB files.
 };
 
 #endif /* _BE_GLOBAL_H */

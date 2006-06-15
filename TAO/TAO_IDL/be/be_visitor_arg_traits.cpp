@@ -76,6 +76,21 @@ be_visitor_arg_traits::visit_root (be_root *node)
       << "// Arg traits specializations." << be_nl
       << "namespace TAO" << be_nl
       << "{" << be_idt;
+      
+  if (be_global->ami_call_back ())
+    {
+      int status =
+        this->visit_valuetype (be_global->messaging_exceptionholder ());
+        
+      if (-1 == status)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_arg_traits::"
+                             "visit_root - visit "
+                             "Messaging::ExceptionHolder failed\n"),
+                            -1);
+        }
+    }
 
   if (this->visit_scope (node) == -1)
     {
@@ -143,7 +158,7 @@ be_visitor_arg_traits::visit_interface (be_interface *node)
       if (ACE_OS::strlen (this->S_) == 0)
         {
           *os << "," << be_nl
-            << "TAO::Objref_Traits<" << node->name () << ">";
+              << "TAO::Objref_Traits<" << node->name () << ">";
         }
 
       *os << "," << be_nl << this->insert_policy() << " <"
@@ -170,6 +185,9 @@ be_visitor_arg_traits::visit_interface (be_interface *node)
 int
 be_visitor_arg_traits::visit_interface_fwd (be_interface_fwd *node)
 {
+  // If a full definition with the same name in the same scope
+  // has been seen, then it will have gone through visit_interface()
+  // already.
   if (this->generated (node))
     {
       return 0;

@@ -225,31 +225,24 @@ be_generator::create_interface (UTL_ScopedName *n,
 
 AST_InterfaceFwd *
 be_generator::create_interface_fwd (UTL_ScopedName *n,
-                                    bool local,
-                                    bool abstract)
+                                    bool is_local,
+                                    bool is_abstract)
 {
-  AST_Decl *d =
-    idl_global->scopes ().top_non_null ()->lookup_by_name (n, true);
-
-  AST_Interface *dummy = this->create_interface (n,
-                                                 0,
-                                                 -1,
-                                                 0,
-                                                 0,
-                                                 local,
-                                                 abstract);
+  AST_Interface *full_defn = this->create_interface (n,
+                                                     0,
+                                                     -1,
+                                                     0,
+                                                     0,
+                                                     is_local,
+                                                     is_abstract);
 
   be_interface_fwd *retval = 0;
   ACE_NEW_RETURN (retval,
-                  be_interface_fwd (dummy,
+                  be_interface_fwd (full_defn,
                                     n),
                   0);
 
-  if (d != 0)
-    {
-      retval->prefix (const_cast<char *> (ScopeAsDecl (d->defined_in ())->prefix ()));
-    }
-
+  full_defn->fwd_decl (retval);
   return retval;
 }
 
@@ -273,12 +266,12 @@ be_generator::create_valuetype (UTL_ScopedName *n,
                                 AST_ValueType *inherits_concrete,
                                 AST_Interface **inherits_flat,
                                 long n_inherits_flat,
-                                AST_Interface **supports,
+                                AST_Interface **supports_list,
                                 long n_supports,
                                 AST_Interface *supports_concrete,
-                                bool abstract,
-                                bool truncatable,
-                                bool custom)
+                                bool is_abstract,
+                                bool is_truncatable,
+                                bool is_custom)
 {
   be_valuetype *retval = 0;
   ACE_NEW_RETURN (retval,
@@ -288,12 +281,12 @@ be_generator::create_valuetype (UTL_ScopedName *n,
                                 inherits_concrete,
                                 inherits_flat,
                                 n_inherits_flat,
-                                supports,
+                                supports_list,
                                 n_supports,
                                 supports_concrete,
-                                abstract,
-                                truncatable,
-                                custom),
+                                is_abstract,
+                                is_truncatable,
+                                is_custom),
                   0);
 
   return retval;
@@ -301,27 +294,28 @@ be_generator::create_valuetype (UTL_ScopedName *n,
 
 AST_ValueTypeFwd *
 be_generator::create_valuetype_fwd (UTL_ScopedName *n,
-                                    bool abstract)
+                                    bool is_abstract)
 {
-  AST_ValueType *dummy = this->create_valuetype (n,
-                                                 0,
-                                                 -1,
-                                                 0,
-                                                 0,
-                                                 0,
-                                                 0,
-                                                 0,
-                                                 0,
-                                                 abstract,
-                                                 0,
-                                                 0);
+  AST_ValueType *full_defn = this->create_valuetype (n,
+                                                     0,
+                                                     -1,
+                                                     0,
+                                                     0,
+                                                     0,
+                                                     0,
+                                                     0,
+                                                     0,
+                                                     is_abstract,
+                                                     false,
+                                                     false);
 
   be_valuetype_fwd *retval = 0;
   ACE_NEW_RETURN (retval,
-                  be_valuetype_fwd (dummy,
+                  be_valuetype_fwd (full_defn,
                                     n),
                   0);
 
+  full_defn->fwd_decl (retval);
   return retval;
 }
 
@@ -332,12 +326,12 @@ be_generator::create_eventtype (UTL_ScopedName *n,
                                 AST_ValueType *inherits_concrete,
                                 AST_Interface **inherits_flat,
                                 long n_inherits_flat,
-                                AST_Interface **supports,
+                                AST_Interface **supports_list,
                                 long n_supports,
                                 AST_Interface *supports_concrete,
-                                bool abstract,
-                                bool truncatable,
-                                bool custom)
+                                bool is_abstract,
+                                bool is_truncatable,
+                                bool is_custom)
 {
   be_eventtype *retval = 0;
   ACE_NEW_RETURN (retval,
@@ -347,12 +341,12 @@ be_generator::create_eventtype (UTL_ScopedName *n,
                                 inherits_concrete,
                                 inherits_flat,
                                 n_inherits_flat,
-                                supports,
+                                supports_list,
                                 n_supports,
                                 supports_concrete,
-                                abstract,
-                                truncatable,
-                                custom),
+                                is_abstract,
+                                is_truncatable,
+                                is_custom),
                   0);
 
   return retval;
@@ -360,34 +354,35 @@ be_generator::create_eventtype (UTL_ScopedName *n,
 
 AST_EventTypeFwd *
 be_generator::create_eventtype_fwd (UTL_ScopedName *n,
-                                    bool abstract)
+                                    bool is_abstract)
 {
-  AST_EventType *dummy = this->create_eventtype (n,
-                                                 0,
-                                                 -1,
-                                                 0,
-                                                 0,
-                                                 0,
-                                                 0,
-                                                 0,
-                                                 0,
-                                                 abstract,
-                                                 0,
-                                                 0);
+  AST_EventType *full_defn = this->create_eventtype (n,
+                                                     0,
+                                                     -1,
+                                                     0,
+                                                     0,
+                                                     0,
+                                                     0,
+                                                     0,
+                                                     0,
+                                                     is_abstract,
+                                                     false,
+                                                     false);
 
   be_eventtype_fwd *retval = 0;
   ACE_NEW_RETURN (retval,
-                  be_eventtype_fwd (dummy,
+                  be_eventtype_fwd (full_defn,
                                     n),
                   0);
 
+  full_defn->fwd_decl (retval);
   return retval;
 }
 
 AST_Component *
 be_generator::create_component (UTL_ScopedName *n,
                                 AST_Component *base_component,
-                                AST_Interface **supports,
+                                AST_Interface **supports_list,
                                 long n_supports,
                                 AST_Interface **supports_flat,
                                 long n_supports_flat)
@@ -396,7 +391,7 @@ be_generator::create_component (UTL_ScopedName *n,
   ACE_NEW_RETURN (retval,
                   be_component (n,
                                 base_component,
-                                supports,
+                                supports_list,
                                 n_supports,
                                 supports_flat,
                                 n_supports_flat),
@@ -408,19 +403,20 @@ be_generator::create_component (UTL_ScopedName *n,
 AST_ComponentFwd *
 be_generator::create_component_fwd (UTL_ScopedName *n)
 {
-  AST_Component *dummy = this->create_component (n,
-                                                 0,
-                                                 0,
-                                                 -1,
-                                                 0,
-                                                 0);
+  AST_Component *full_defn = this->create_component (n,
+                                                     0,
+                                                     0,
+                                                     -1,
+                                                     0,
+                                                     0);
 
   be_component_fwd *retval = 0;
   ACE_NEW_RETURN (retval,
-                  be_component_fwd (dummy,
+                  be_component_fwd (full_defn,
                                     n),
                   0);
 
+  full_defn->fwd_decl (retval);
   return retval;
 }
 
@@ -429,7 +425,7 @@ be_generator::create_home (UTL_ScopedName *n,
                            AST_Home *base_home,
                            AST_Component *managed_component,
                            AST_ValueType *primary_key,
-                           AST_Interface **supports,
+                           AST_Interface **supports_list,
                            long n_supports,
                            AST_Interface **supports_flat,
                            long n_supports_flat)
@@ -440,7 +436,7 @@ be_generator::create_home (UTL_ScopedName *n,
                            base_home,
                            managed_component,
                            primary_key,
-                           supports,
+                           supports_list,
                            n_supports,
                            supports_flat,
                            n_supports_flat),
@@ -451,14 +447,14 @@ be_generator::create_home (UTL_ScopedName *n,
 
 AST_Exception *
 be_generator::create_exception (UTL_ScopedName *n,
-                                bool local,
-                                bool abstract)
+                                bool is_local,
+                                bool is_abstract)
 {
   be_exception *retval = 0;
   ACE_NEW_RETURN (retval,
                   be_exception (n,
-                                local,
-                                abstract),
+                                is_local,
+                                is_abstract),
                   0);
 
   return retval;
@@ -466,14 +462,14 @@ be_generator::create_exception (UTL_ScopedName *n,
 
 AST_Structure *
 be_generator::create_structure (UTL_ScopedName *n,
-                                bool local,
-                                bool abstract)
+                                bool is_local,
+                                bool is_abstract)
 {
   be_structure *retval = 0;
   ACE_NEW_RETURN (retval,
                   be_structure (n,
-                                local,
-                                abstract),
+                                is_local,
+                                is_abstract),
                   0);
 
   return retval;
@@ -483,28 +479,29 @@ AST_StructureFwd *
 be_generator::create_structure_fwd (UTL_ScopedName *n)
 {
 
-  AST_Structure *dummy = this->create_structure (n,
-                                                 0,
-                                                 0);
+  AST_Structure *full_defn = this->create_structure (n,
+                                                     false,
+                                                     false);
   be_structure_fwd *retval = 0;
   ACE_NEW_RETURN (retval,
-                  be_structure_fwd (dummy,
+                  be_structure_fwd (full_defn,
                                     n),
                   0);
 
+  full_defn->fwd_decl (retval);
   return retval;
 }
 
 AST_Enum *
 be_generator::create_enum (UTL_ScopedName *n,
-                           bool local,
-                           bool abstract)
+                           bool is_local,
+                           bool is_abstract)
 {
   be_enum *retval = 0;
   ACE_NEW_RETURN (retval,
                   be_enum (n,
-                           local,
-                           abstract),
+                           is_local,
+                           is_abstract),
                   0);
 
   return retval;
@@ -514,16 +511,16 @@ AST_Operation *
 be_generator::create_operation (AST_Type *rt,
                                 AST_Operation::Flags fl,
                                 UTL_ScopedName *n,
-                                bool local,
-                                bool abstract)
+                                bool is_local,
+                                bool is_abstract)
 {
   be_operation *retval = 0;
   ACE_NEW_RETURN (retval,
                   be_operation (rt,
                                 fl,
                                 n,
-                                local,
-                                abstract),
+                                is_local,
+                                is_abstract),
                   0);
 
   return retval;
@@ -563,16 +560,16 @@ AST_Attribute *
 be_generator::create_attribute (bool ro,
                                 AST_Type *ft,
                                 UTL_ScopedName *n,
-                                bool local,
-                                bool abstract)
+                                bool is_local,
+                                bool is_abstract)
 {
   be_attribute *retval = 0;
   ACE_NEW_RETURN (retval,
                   be_attribute (ro,
                                 ft,
                                 n,
-                                local,
-                                abstract),
+                                is_local,
+                                is_abstract),
                   0);
 
   return retval;
@@ -581,15 +578,15 @@ be_generator::create_attribute (bool ro,
 AST_Union *
 be_generator::create_union (AST_ConcreteType *dt,
                             UTL_ScopedName *n,
-                            bool local,
-                            bool abstract)
+                            bool is_local,
+                            bool is_abstract)
 {
   be_union *retval = 0;
   ACE_NEW_RETURN (retval,
                   be_union (dt,
                             n,
-                            local,
-                            abstract),
+                            is_local,
+                            is_abstract),
                   0);
 
   return retval;
@@ -598,16 +595,17 @@ be_generator::create_union (AST_ConcreteType *dt,
 AST_UnionFwd *
 be_generator::create_union_fwd (UTL_ScopedName *n)
 {
-  AST_Union *dummy = this->create_union (0,
-                                         n,
-                                         0,
-                                         0);
+  AST_Union *full_defn = this->create_union (0,
+                                             n,
+                                             false,
+                                             false);
   be_union_fwd *retval = 0;
   ACE_NEW_RETURN (retval,
-                  be_union_fwd (dummy,
+                  be_union_fwd (full_defn,
                                 n),
                   0);
 
+  full_defn->fwd_decl (retval);
   return retval;
 }
 
@@ -800,16 +798,16 @@ AST_Array *
 be_generator::create_array (UTL_ScopedName *n,
                             unsigned long ndims,
                             UTL_ExprList *dims,
-                            bool local,
-                            bool abstract)
+                            bool is_local,
+                            bool is_abstract)
 {
   be_array *retval = 0;
   ACE_NEW_RETURN (retval,
                   be_array (n,
                             ndims,
                             dims,
-                            local,
-                            abstract),
+                            is_local,
+                            is_abstract),
                   0);
 
   return retval;
@@ -819,16 +817,16 @@ AST_Sequence *
 be_generator::create_sequence (AST_Expression *v,
                                AST_Type *bt,
                                UTL_ScopedName *n,
-                               bool local,
-                               bool abstract)
+                               bool is_local,
+                               bool is_abstract)
 {
   be_sequence *retval = 0;
   ACE_NEW_RETURN (retval,
                   be_sequence (v,
                                bt,
                                n,
-                               local,
-                               abstract),
+                               is_local,
+                               is_abstract),
                   0);
 
   return retval;
@@ -878,15 +876,15 @@ be_generator::create_wstring (AST_Expression *v)
 AST_Typedef *
 be_generator::create_typedef (AST_Type *bt,
                               UTL_ScopedName *n,
-                              bool local,
-                              bool abstract)
+                              bool is_local,
+                              bool is_abstract)
 {
   be_typedef *retval = 0;
   ACE_NEW_RETURN (retval,
                   be_typedef (bt,
                               n,
-                              local,
-                              abstract),
+                              is_local,
+                              is_abstract),
                   0);
 
   return retval;

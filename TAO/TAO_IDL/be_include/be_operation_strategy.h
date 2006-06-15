@@ -42,7 +42,7 @@ public:
 
   virtual ~be_operation_strategy (void);
 
-  int strategy_type ();
+  int strategy_type (void);
   // Return the type of the strategy.
 
   virtual TAO_CodeGen::CG_STATE next_state (
@@ -63,9 +63,14 @@ public:
   // Returns a customized arguments list, e.g. AMI sendc_ operations
   // only use the in and inout arguments but not the out arguments,
   // also the first argument is the reply handler.
+  
+  virtual be_operation_strategy *copy (void);
+  // Overrides return a deep copy.
+  
+  virtual void destroy (void);
+  // Cleanup.
 
 protected:
-
   be_operation *node_;
   // The node we strategize.
 
@@ -82,12 +87,14 @@ class be_operation_default_strategy
 public:
   be_operation_default_strategy (be_operation *node);
 
-  virtual ~be_operation_default_strategy ();
+  virtual ~be_operation_default_strategy (void);
 
   // Overridden methods.
   TAO_CodeGen::CG_STATE next_state (TAO_CodeGen::CG_STATE current_state,
                                     int is_extra_state = 0);
-
+                                    
+  virtual be_operation_strategy *copy (void);
+  // Returns a deep copy.
 };
 
 
@@ -108,6 +115,9 @@ public:
 
   virtual int has_extra_code_generation (TAO_CodeGen::CG_STATE current_state);
   // Returns true if we have to genrate extra code.
+  
+  virtual be_operation_strategy *copy (void);
+  // Returns a deep copy.
 };
 
 
@@ -135,12 +145,20 @@ public:
   // sendc_ operations
 
   virtual be_operation *arguments (void);
-  // returns a customized arguments list, e.g. AMI sendc_ operations
+  // Returns a customized arguments list, e.g. AMI sendc_ operations
   // only use the in and inout arguments but not the out arguments,
   // also the first argument is the reply handler.
+  
+  virtual be_operation_strategy *copy (void);
+  // Returns a deep copy.
+  
+  virtual void destroy (void);
+  // Cleanup.
+  
 private:
   be_operation *marshaling_;
   be_operation *arguments_;
+  bool owns_operations_;
 };
 
 
@@ -159,6 +177,9 @@ public:
       TAO_CodeGen::CG_STATE current_state,
       int is_extra_state = 0
     );
+    
+  virtual be_operation_strategy *copy (void);
+  // Returns a deep copy.
 };
 
 
@@ -169,7 +190,7 @@ class be_operation_amh_strategy
 public:
   be_operation_amh_strategy (be_operation *node);
 
-  virtual ~be_operation_amh_strategy ();
+  virtual ~be_operation_amh_strategy (void);
 
   // Overridden methods.
   TAO_CodeGen::CG_STATE next_state (TAO_CodeGen::CG_STATE current_state,
@@ -178,6 +199,9 @@ public:
   virtual int has_extra_code_generation (TAO_CodeGen::CG_STATE current_state);
 
   virtual be_operation *arguments (void);
+  
+  virtual be_operation_strategy *copy (void);
+  // Returns a deep copy.
 
 private:
   be_operation *arguments_;

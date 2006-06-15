@@ -56,25 +56,6 @@ TAO_CodeGen::TAO_CodeGen (void)
 // destructor
 TAO_CodeGen::~TAO_CodeGen (void)
 {
-  delete this->client_header_;
-  delete this->server_header_;
-  delete this->implementation_header_;
-  delete this->implementation_skeleton_;
-  delete this->server_template_header_;
-  delete this->client_stubs_;
-  delete this->server_skeletons_;
-  delete this->server_template_skeletons_;
-  delete this->client_inline_;
-  delete this->server_inline_;
-  delete this->server_template_inline_;
-  delete this->anyop_source_;
-#if !defined (linux) && !defined (__QNX__) && !defined(__GLIBC__)
-  // This causes a seg fault on Linux RH 5.1.  Let it leak . . .
-  delete this->gperf_input_stream_;
-#endif /* ! linux */
-  delete [] this->gperf_input_filename_;
-  this->curr_os_ = 0;
-  //  delete this->visitor_factory_;
 }
 
 // visitor factory method
@@ -124,7 +105,7 @@ TAO_CodeGen::upcase (const char *str)
 int
 TAO_CodeGen::start_client_header (const char *fname)
 {
-  if (fname == 0)
+  if (0 == fname)
     {
       // Bad file name.
       return -1;
@@ -137,7 +118,8 @@ TAO_CodeGen::start_client_header (const char *fname)
   // Retrieve the singleton instance to the outstream factory.
   TAO_OutStream_Factory *factory = TAO_OUTSTREAM_FACTORY::instance ();
 
-  // Retrieve a specialized instance.
+  // Clean up between multiple files.
+  delete this->client_header_;
   this->client_header_ = factory->make_outstream ();
 
   if (!this->client_header_)
@@ -220,6 +202,8 @@ TAO_CodeGen::start_client_header (const char *fname)
       const char* client_hdr =
         BE_GlobalData::be_get_client_hdr (&idl_name_str,
                                           1);
+                                          
+      idl_name_str.destroy ();
 
       // Sanity check and then print.
       if (client_hdr != 0)
@@ -265,7 +249,8 @@ TAO_CodeGen::start_client_stubs (const char *fname)
   // Retrieve the singleton instance to the outstream factory.
   TAO_OutStream_Factory *factory = TAO_OUTSTREAM_FACTORY::instance ();
 
-  // Retrieve a specialized instance.
+  // Clean up between multiple files.
+  delete this->client_stubs_;
   this->client_stubs_ = factory->make_outstream ();
 
   if (!this->client_stubs_)
@@ -320,7 +305,8 @@ TAO_CodeGen::start_client_inline (const char *fname)
   // Retrieve the singleton instance to the outstream factory.
   TAO_OutStream_Factory *factory = TAO_OUTSTREAM_FACTORY::instance ();
 
-  // Retrieve a specialized instance.
+  // Clean up between multiple files.
+  delete this->client_inline_;
   this->client_inline_ = factory->make_outstream ();
 
   if (!this->client_inline_)
@@ -357,7 +343,8 @@ TAO_CodeGen::start_server_header (const char *fname)
   // Retrieve the singleton instance to the outstream factory.
   TAO_OutStream_Factory *factory = TAO_OUTSTREAM_FACTORY::instance ();
 
-  // Retrieve a specialized instance.
+  // Clean up between multiple files.
+  delete this->server_header_;
   this->server_header_ = factory->make_outstream ();
 
   if (!this->server_header_)
@@ -423,6 +410,8 @@ TAO_CodeGen::start_server_header (const char *fname)
 
       const char* server_hdr =
         BE_GlobalData::be_get_server_hdr (&idl_name_str, 1);
+        
+      idl_name_str.destroy ();
 
       this->server_header_->print ("\n#include \"%s\"",
                                    server_hdr);
@@ -499,7 +488,8 @@ TAO_CodeGen::start_server_template_header (const char *fname)
   // Retrieve the singleton instance to the outstream factory.
   TAO_OutStream_Factory *factory = TAO_OUTSTREAM_FACTORY::instance ();
 
-  // Retrieve a specialized instance.
+  // Clean up between multiple files.
+  delete this->server_template_header_;
   this->server_template_header_ = factory->make_outstream ();
 
   if (!this->server_template_header_)
@@ -557,7 +547,8 @@ TAO_CodeGen::start_server_skeletons (const char *fname)
   // Retrieve the singleton instance to the outstream factory.
   TAO_OutStream_Factory *factory = TAO_OUTSTREAM_FACTORY::instance ();
 
-  // Retrieve a specialized instance.
+  // Clean up between multiple files.
+  delete this->server_skeletons_;
   this->server_skeletons_ = factory->make_outstream ();
 
   if (!this->server_skeletons_)
@@ -635,7 +626,8 @@ TAO_CodeGen::start_server_template_skeletons (const char *fname)
   // Retrieve the singleton instance to the outstream factory.
   TAO_OutStream_Factory *factory = TAO_OUTSTREAM_FACTORY::instance ();
 
-  // Retrieve a specialized instance.
+  // Clean up between multiple files.
+  delete this->server_template_skeletons_;
   this->server_template_skeletons_ = factory->make_outstream ();
 
   if (!this->server_template_skeletons_)
@@ -701,7 +693,8 @@ TAO_CodeGen::start_server_inline (const char *fname)
   // Retrieve the singleton instance to the outstream factory.
   TAO_OutStream_Factory *factory = TAO_OUTSTREAM_FACTORY::instance ();
 
-  // Retrieve a specialized instance.
+  // Clean up between multiple files.
+  delete this->server_inline_;
   this->server_inline_ = factory->make_outstream ();
 
   if (!this->server_inline_)
@@ -738,7 +731,8 @@ TAO_CodeGen::start_server_template_inline (const char *fname)
   // Retrieve the singleton instance to the outstream factory.
   TAO_OutStream_Factory *factory = TAO_OUTSTREAM_FACTORY::instance ();
 
-  // Retrieve a specialized instance.
+  // Clean up between multiple files.
+  delete this->server_template_inline_;
   this->server_template_inline_ = factory->make_outstream ();
 
   if (!this->server_template_inline_)
@@ -774,25 +768,38 @@ TAO_CodeGen::server_template_inline (void)
 int
 TAO_CodeGen::start_anyop_header (const char *fname)
 {
+  if (!be_global->gen_anyop_files ())
+    {
+      return 0;
+    }
+    
   // Retrieve the singleton instance to the outstream factory.
   TAO_OutStream_Factory *factory = TAO_OUTSTREAM_FACTORY::instance ();
 
-  // Retrieve a specialized instance.
+  // Clean up between multiple files.
+  delete this->anyop_header_;
   this->anyop_header_ = factory->make_outstream ();
 
-  if (!this->anyop_header_)
+  if (0 == this->anyop_header_)
     {
-      return -1;
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "TAO_CodeGen::start_anyop_header - "
+                         "Error creating file stream\n"),
+                        -1);
     }
 
   if (this->anyop_header_->open (fname,
                                  TAO_OutStream::TAO_CLI_HDR)
        == -1)
     {
-      return -1;
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "TAO_CodeGen::start_anyop_header - "
+                         "Error opening file\n"),
+                        -1);
     }
 
-  *this->anyop_header_ << be_nl << "// TAO_IDL - Generated from" << be_nl
+  *this->anyop_header_ << be_nl
+                       << "// TAO_IDL - Generated from" << be_nl
                        << "// " << __FILE__ << ":" << __LINE__
                        << be_nl << be_nl;
 
@@ -858,6 +865,8 @@ TAO_CodeGen::start_anyop_header (const char *fname)
 
           const char *anyop_hdr =
             BE_GlobalData::be_get_anyop_header (&idl_name_str, 1);
+            
+          idl_name_str.destroy ();
 
           ACE_CString pidl_checker (idl_name);
           bool got_pidl =
@@ -919,22 +928,34 @@ TAO_CodeGen::start_anyop_header (const char *fname)
 int
 TAO_CodeGen::start_anyop_source (const char *fname)
 {
+  if (!be_global->gen_anyop_files ())
+    {
+      return 0;
+    }
+    
   // Retrieve the singleton instance to the outstream factory.
   TAO_OutStream_Factory *factory = TAO_OUTSTREAM_FACTORY::instance ();
 
-  // Retrieve a specialized instance.
+  // Clean up between multiple files.
+  delete this->anyop_source_;
   this->anyop_source_ = factory->make_outstream ();
 
-  if (!this->anyop_source_)
+  if (0 == this->anyop_source_)
     {
-      return -1;
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "TAO_CodeGen::start_anyop_source - "
+                         "Error creating file stream\n"),
+                        -1);
     }
 
   if (this->anyop_source_->open (fname,
                                  TAO_OutStream::TAO_CLI_IMPL)
        == -1)
     {
-      return -1;
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "TAO_CodeGen::start_anyop_source - "
+                         "Error opening file\n"),
+                        -1);
     }
 
   // Generate the include statement for the precompiled header file.
@@ -980,7 +1001,8 @@ TAO_CodeGen::start_implementation_header (const char *fname)
   // Retrieve the singleton instance to the outstream factory.
   TAO_OutStream_Factory *factory = TAO_OUTSTREAM_FACTORY::instance ();
 
-  // Retrieve a specialized instance.
+  // Clean up between multiple files.
+  delete this->implementation_header_;
   this->implementation_header_ = factory->make_outstream ();
 
   if (!this->implementation_header_)
@@ -1042,7 +1064,8 @@ TAO_CodeGen::start_implementation_skeleton (const char *fname)
   // Retrieve the singleton instance to the outstream factory.
   TAO_OutStream_Factory *factory = TAO_OUTSTREAM_FACTORY::instance ();
 
-  // Retrieve a specialized instance.
+  // Clean up between multiple files.
+  delete this->implementation_skeleton_;
   this->implementation_skeleton_ = factory->make_outstream ();
 
   if (!this->implementation_skeleton_)
@@ -1677,6 +1700,8 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
 
               const char *anyop_hdr =
                 BE_GlobalData::be_get_anyop_header (&idl_name_str, 1);
+                
+              idl_name_str.destroy ();
 
               // Stripped off any scope in the name and add the
               // AnyTypeCode prefix.
@@ -2327,4 +2352,28 @@ TAO_CodeGen::gen_typecode_includes (TAO_OutStream * stream)
   this->gen_cond_file_include (idl_global->recursive_type_seen_,
                                "tao/AnyTypeCode/Recursive_Type_TypeCode.h",
                                stream);
+}
+
+void
+TAO_CodeGen::destroy (void)
+{
+  delete this->client_header_;
+  delete this->server_header_;
+  delete this->implementation_header_;
+  delete this->implementation_skeleton_;
+  delete this->server_template_header_;
+  delete this->client_stubs_;
+  delete this->server_skeletons_;
+  delete this->server_template_skeletons_;
+  delete this->client_inline_;
+  delete this->server_inline_;
+  delete this->server_template_inline_;
+  delete this->anyop_source_;
+  delete this->anyop_header_;
+#if !defined (linux) && !defined (__QNX__) && !defined (__GLIBC__)
+  // This causes a seg fault on Linux RH 5.1.  Let it leak . . .
+  delete this->gperf_input_stream_;
+#endif /* ! linux */
+  delete [] this->gperf_input_filename_;
+  this->curr_os_ = 0;
 }

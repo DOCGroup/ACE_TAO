@@ -78,23 +78,23 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ace/OS_NS_string.h"
 #include "ace/OS_Memory.h"
 
-ACE_RCSID (ast, 
-           ast_root, 
+ACE_RCSID (ast,
+           ast_root,
            "$Id$")
 
 AST_Root::AST_Root (void)
-	: COMMON_Base (),
+  : COMMON_Base (),
     AST_Decl (),
-	  UTL_Scope (),
+    UTL_Scope (),
     AST_Module ()
 {
 }
 
 AST_Root::AST_Root (UTL_ScopedName *n)
-	: COMMON_Base (),
+  : COMMON_Base (),
     AST_Decl (AST_Decl::NT_root,
               n),
-	  UTL_Scope (AST_Decl::NT_root),
+    UTL_Scope (AST_Decl::NT_root),
     AST_Module (n)
 {
 }
@@ -118,10 +118,10 @@ AST_Root::nmembers (void)
         {
           continue;
         }
-        
+
       ++retval;
     }
-    
+
   return retval;
 }
 
@@ -221,21 +221,18 @@ AST_Root::destroy ()
   long i = 0;
   long j = 0;
   AST_Decl *d = 0;
-    
+
   // Just destroy and delete the non-predefined types in the
   // scope, in case we are processing multiple IDL files.
   // Final cleanup will be done in fini().
   for (i = this->pd_decls_used; i > 0; --i)
     {
       d = this->pd_decls[i - 1];
-      
+
       // We want to keep the predefined types we add to global
       // scope around and not add them each time.
       if (d->node_type () == AST_Decl::NT_pre_defined)
         {
-          // This needs to be j = i, but it has been temporarily
-          // changed for the CoSMIC release. Need to actually
-          // track down the source of the problem with tao_picml.
           j = i;
           break;
         }
@@ -245,18 +242,21 @@ AST_Root::destroy ()
       d = 0;
       --this->pd_decls_used;
     }
-    
+
+  // This array of pointers holds references, no need
+  // for destruction. The array itself will be cleaned
+  // up when AST_Root::fini() calls UTL_Scope::destroy ().
   for (i = this->pd_referenced_used; i > j; --i)
     {
-      d = this->pd_referenced[i - 1];    
-      d = 0;
+      this->pd_referenced[i - 1] = 0;
       --this->pd_referenced_used;
     }
-    
+
   for (i = this->pd_name_referenced_used; i > j; --i)
     {
       Identifier *id = this->pd_name_referenced[i - 1];
       id->destroy ();
+      delete id;
       id = 0;
       --this->pd_name_referenced_used;
     }
@@ -265,27 +265,6 @@ AST_Root::destroy ()
 void
 AST_Root::fini (void)
 {
-  long i = 0;
-  
-  for (i = this->pd_referenced_used; i > 0; --i)
-    {
-      AST_Decl *d = this->pd_referenced[i - 1];
-      
-      if (d->node_type () == AST_Decl::NT_pre_defined)
-        {
-          break;
-        }
-
-      d = 0;
-    }
-    
-  for (i = this->pd_name_referenced_used; i > 0; --i)
-    {
-      Identifier *id = this->pd_name_referenced[i - 1];
-      id->destroy ();
-      id = 0;
-    }
-
   this->UTL_Scope::destroy ();
   this->AST_Decl::destroy ();
 }

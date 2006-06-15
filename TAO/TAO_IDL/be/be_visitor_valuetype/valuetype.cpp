@@ -121,6 +121,8 @@ be_visitor_valuetype::visit_attribute (be_attribute *node)
                          "codegen for get_attribute failed\n"),
                         -1);
     }
+    
+  get_op.destroy ();
 
   if (node->readonly ())
     {
@@ -137,11 +139,12 @@ be_visitor_valuetype::visit_attribute (be_attribute *node)
                          &sn);
 
   // Argument type is the same as the attribute type.
-  be_argument arg (AST_Argument::dir_IN,
-                   node->field_type (),
-                   node->name ());
+  AST_Argument *arg =
+    idl_global->gen ()->create_argument (AST_Argument::dir_IN,
+                                         node->field_type (),
+                                         node->name ());
 
-  arg.set_name ((UTL_IdList *) node->name ()->copy ());
+  arg->set_name ((UTL_IdList *) node->name ()->copy ());
 
   // Create the operation.
   be_operation set_op (&rt,
@@ -151,7 +154,7 @@ be_visitor_valuetype::visit_attribute (be_attribute *node)
                        0);
 
   set_op.set_name ((UTL_IdList *) node->name ()->copy ());
-  set_op.be_add_argument (&arg);
+  set_op.be_add_argument (arg);
 
  if (this->visit_operation (&set_op) == -1)
     {
@@ -161,6 +164,9 @@ be_visitor_valuetype::visit_attribute (be_attribute *node)
                          "codegen for set_attribute failed\n"),
                         -1);
     }
+    
+  set_op.destroy ();
+  rt.destroy ();
 
   return 0;
 }
@@ -812,6 +818,11 @@ be_visitor_valuetype::gen_obv_init_constructor_args (be_valuetype *node,
                        &sn);
       ft->seen_in_operation (seen);
       visitor.visit_argument (&arg);
+      
+      // AST_Argument inherits from AST_Field, which will destroy
+      // its field type if it is anonymous - we don't want that.
+      arg.be_decl::destroy ();
+      arg.AST_Decl::destroy ();
       id.destroy ();
     }
 }
@@ -891,16 +902,7 @@ be_visitor_valuetype::gen_init_impl (be_valuetype *node)
 bool
 be_visitor_valuetype::obv_need_ref_counter (be_valuetype* node)
 {
-  // VT needs RefCounter if it has concrete factory or supports an
-  // abstract interface and none of its base VT has ref_counter
-
-  if (node->determine_factory_style () != be_valuetype::FS_CONCRETE_FACTORY
-      && !node->supports_abstract ())
-    {
-      return 0;
-    }
-
-  // Now go thru our base VTs and see if one has already.
+  // Go thru our base VTs and see if one has already.
   for (int i = 0; i < node->n_inherits (); ++i)
     {
       be_valuetype *vt =
@@ -910,12 +912,27 @@ be_visitor_valuetype::obv_need_ref_counter (be_valuetype* node)
         {
           if (be_visitor_valuetype::obv_have_ref_counter (vt))
             {
-              return 0;
+              return false;
             }
         }
     }
 
-  return 1;
+  // If we inherit from CORBA::Object and/or CORBA::AbstractBase
+  // (in addition to CORBA::ValueBase) we have to override _add_ref()
+  // and _remove_ref() by calling the one in DefaultValueRefCountBase 
+  // to avoid ambiguity.
+  if (node->n_supports () > 0)
+    {
+      return true;
+    }
+
+  // VT needs RefCounter if it has concrete factory. 
+  if (be_valuetype::FS_CONCRETE_FACTORY == node->determine_factory_style ())
+    {
+      return true;
+    }
+
+  return false;
 }
 
 bool
@@ -925,12 +942,12 @@ be_visitor_valuetype::obv_have_ref_counter (be_valuetype* node)
   // Just try to find a VT with concrete factory in inheritance tree.
   if (node == 0)
     {
-      return 0;
+      return false;
     }
 
   if (node->determine_factory_style () == be_valuetype::FS_CONCRETE_FACTORY)
     {
-      return 1;
+      return true;
     }
 
   // Now go thru our base VTs.
@@ -942,12 +959,12 @@ be_visitor_valuetype::obv_have_ref_counter (be_valuetype* node)
         {
           if (be_visitor_valuetype::obv_have_ref_counter (vt))
             {
-              return 1;
+              return true;
             }
         }
     }
 
-  return 0;
+  return false;
 }
 
 bool

@@ -127,6 +127,16 @@ AST_UnionBranch::ast_accept (ast_visitor *visitor)
   return visitor->visit_union_branch (this);
 }
 
+void
+AST_UnionBranch::destroy (void)
+{
+  this->pd_ll->destroy ();
+  delete this->pd_ll;
+  this->pd_ll = 0;
+  
+  this->AST_Field::destroy ();
+}
+
 // Data accessors.
 
 AST_UnionLabel *

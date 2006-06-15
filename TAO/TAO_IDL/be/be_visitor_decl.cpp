@@ -30,7 +30,6 @@ ACE_RCSID (be,
            be_visitor_decl, 
            "$Id$")
 
-
 // Root visitor for client header
 be_visitor_decl::be_visitor_decl (be_visitor_context *ctx)
   : ctx_ (ctx)
@@ -39,7 +38,12 @@ be_visitor_decl::be_visitor_decl (be_visitor_context *ctx)
 
 be_visitor_decl::~be_visitor_decl (void)
 {
-//  delete this->ctx_;
+}
+
+be_visitor_context *
+be_visitor_decl::ctx (void)
+{
+  return this->ctx_;
 }
 
 int
