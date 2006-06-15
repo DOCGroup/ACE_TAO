@@ -67,12 +67,12 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "TAO_IDL3_TO_IDL2_BE_Export.h"
 #include "global_extern.h"
 #include "be_extern.h"
+#include "fe_extern.h"
 #include "ast_root.h"
 #include "idl3_to_idl2_visitor.h"
 
 // Clean up before exit, whether successful or not.
-// Need not be exported since it is called only from this file.
-void
+TAO_IDL3_TO_IDL2_BE_Export void
 BE_cleanup (void)
 {
   idl_global->destroy ();
@@ -85,9 +85,8 @@ BE_abort (void)
   ACE_ERROR ((LM_ERROR,
               ACE_TEXT ("Fatal Error - Aborting\n")));
 
-  BE_cleanup ();
-
-  ACE_OS::exit (1);
+  // BE_cleanup will be called after the exception is caught.
+  throw FE_Bailout ();
 }
 
 // Do the work of this BE. This is the starting point for code generation.
