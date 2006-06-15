@@ -122,10 +122,26 @@ be_visitor_valuebox_cs::visit_valuebox (be_valuebox *node)
       << "return this->_tao_obv_static_repository_id ();" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
+  *os << "const char* " << be_nl
+      << node->name () << "::_tao_obv_static_repository_id ()" << be_nl
+      << "{" << be_idt_nl
+      << "return \"" << node->repoID () << "\";" << be_uidt_nl
+      << "}" << be_nl << be_nl;
+
   *os << "void" << be_nl
       << node->name () << "::_tao_obv_truncatable_repo_ids (Repository_Id_List& ids) const" << be_nl
       << "{" << be_idt_nl
       << "ids.push_back (this->_tao_obv_static_repository_id ());" << be_uidt_nl
+      << "}" << be_nl << be_nl;
+
+  // _tao_match_formal_type method.  Generated because ValueBase interface
+  // requires it. Since value boxes do not support inheritence, this can
+  // simply return true.
+  *os << "::CORBA::Boolean " << be_nl
+      << node->name ()
+      << "::_tao_match_formal_type (ptrdiff_t ) const" << be_nl
+      << "{" << be_idt_nl
+      << "return true;" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
   AST_Type * at = node->boxed_type()->unaliased_type();
@@ -246,6 +262,8 @@ be_visitor_valuebox_cs::visit_array (be_array * node)
 
   os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+
+  this->emit_destructor ();
 
   // _tao_marshal_v method
   os << "::CORBA::Boolean " << be_nl
