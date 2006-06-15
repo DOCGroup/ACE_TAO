@@ -122,12 +122,6 @@ be_visitor_valuebox_cs::visit_valuebox (be_valuebox *node)
       << "return this->_tao_obv_static_repository_id ();" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
-  *os << "const char* " << be_nl
-      << node->name () << "::_tao_obv_static_repository_id ()" << be_nl
-      << "{" << be_idt_nl
-      << "return \"" << node->repoID () << "\";" << be_uidt_nl
-      << "}" << be_nl << be_nl;
-
   *os << "void" << be_nl
       << node->name () << "::_tao_obv_truncatable_repo_ids (Repository_Id_List& ids) const" << be_nl
       << "{" << be_idt_nl
