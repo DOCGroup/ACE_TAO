@@ -1,0 +1,55 @@
+// -*- C++ -*-
+// $Id$
+
+interface Grid 
+{
+  // = TITLE
+  //   Create a <Grid> of type <name>
+
+  attribute short height;
+  // Height of the grid.
+
+  attribute short width;
+  // Width of the grid.
+
+  exception RANGE_ERROR 
+    {
+      // = TITLE
+      // The range of parameter values do not fall in the expected
+      // range.
+    };
+
+  // = Constants for LOCATIONS and VALUE.
+  const short DEFAULT_SIZE = 10;
+  const short DEFAULT_VALUE = 1;
+
+  void set (in short n, in short m, in long value)
+    raises (RANGE_ERROR);
+  // Set the element [n,m] of the grid, to value.
+
+  long get (in short n, in short m) 
+    raises (RANGE_ERROR);
+  // Return element [n,m] of the grid.
+
+  void destroy ();
+  // Destroy the grid.
+};
+
+interface Grid_Factory
+{
+  // = TITLE
+  //   Factory that creates a <Grid>
+
+  // = Default height and width for a <Grid>.
+  const short DEFAULT_HEIGHT = 10;
+  const short DEFAULT_WIDTH = 10;
+
+  Grid make_grid (in short height, in short width);
+  // Returns a new <Grid> instance.  
+
+  void shutdown ();
+  // Shutdown the application.
+
+  void cleanup ();
+  // Unbind from persistent memory
+};

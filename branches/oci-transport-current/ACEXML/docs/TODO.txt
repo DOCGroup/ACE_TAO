@@ -1,0 +1,17 @@
+/**
+@page acexml_todo ACEXML TO-DO List
+
+<ul>
+
+  <li>Add Schema parsing ability.
+
+  <li>Add support for resolving external entities, such as a
+      schema/namespace definition located on the web.
+
+  <li>Add parameterized entity management class.  See above.
+
+  <li>Define validator building/calling interfaces.
+
+</ul>
+
+*/
