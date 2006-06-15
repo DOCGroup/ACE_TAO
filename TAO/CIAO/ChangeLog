@@ -1,3 +1,15 @@
+Thu Jun 15 20:13:02 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tools/IDL3_to_IDL2/be_helper.cpp:
+
+          Uncommented code that outputs our copyright notice. This
+          change also elinates an unused arg warning for the
+          copyright notice string.
+
+        * tools/IDL3_to_IDL2/idl3_to_idl2_visitor.cpp:
+
+          Added a newline after opening the file for better readability.
+
 Thu Jun 15 18:37:43 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tools/Config_Handlers/CIAO_Events/CIAO_Events_Handlers.mpc:
