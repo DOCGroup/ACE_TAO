@@ -377,7 +377,7 @@ protected:
   int var_out_seq_decls_gen_;
   // Have these been done already?
 
-private:
+protected:
   int skel_count_;
   // Number of static skeletons in the operation table.
 

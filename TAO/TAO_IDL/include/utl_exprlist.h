@@ -88,6 +88,9 @@ public:
   // Get list item.
   AST_Expression *head (void);
 
+  // Cleanup.
+  virtual void destroy (void);
+
 private:
   // Data.
   AST_Expression *pd_car_data;

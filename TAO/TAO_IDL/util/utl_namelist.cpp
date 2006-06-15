@@ -105,6 +105,16 @@ UTL_NameList::truncatable (bool val)
   this->pd_truncatable = val;
 }
 
+void
+UTL_NameList::destroy (void)
+{
+  this->pd_car_data->destroy ();
+  delete this->pd_car_data;
+  this->pd_car_data = 0;
+  
+  this->UTL_List::destroy ();
+}
+
 UTL_NamelistActiveIterator::UTL_NamelistActiveIterator (UTL_NameList *s)
   : UTL_ListActiveIterator(s)
 {

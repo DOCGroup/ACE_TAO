@@ -73,11 +73,25 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
 
   get_op.set_name ((UTL_IdList *) node->name ()->copy ());
   get_op.set_defined_in (node->defined_in ());
-  get_op.be_add_exceptions (node->get_get_exceptions ());
+  
+  UTL_ExceptList *get_exceptions = node->get_get_exceptions ();
+  
+  if (0 != get_exceptions)
+    {
+      get_op.be_add_exceptions (get_exceptions->copy ());
+    }
 
   // Get the strategy from the attribute and hand it over
   // to the operation.
-  delete get_op.set_strategy (node->get_get_strategy ());
+  be_operation_strategy *old_strategy =
+    get_op.set_strategy (node->get_get_strategy ()->copy ());
+    
+  if (0 != old_strategy)
+    {
+      old_strategy->destroy ();
+      delete old_strategy;
+      old_strategy = 0;
+    }
 
   be_visitor_context ctx (*this->ctx_);
   int status = 1;
@@ -153,11 +167,13 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
         break;
       }
     default:
+      get_op.destroy ();
       return 0;
     }
 
   if (status == -1)
     {
+      get_op.destroy ();
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_attribute::"
                          "visit_attribute - "
@@ -174,6 +190,8 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
       if (!visitor || (get_op.accept (visitor) == -1))
         {
           delete visitor;
+          visitor = 0;
+          get_op.destroy ();
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_attribute::"
                              "visit_attribute - "
@@ -193,6 +211,8 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
           if (!visitor || (get_op.accept (visitor) == -1))
             {
               delete visitor;
+              visitor = 0;
+              get_op.destroy ();
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "(%N:%l) be_visitor_attribute::"
                                  "visit_attribute - "
@@ -204,6 +224,8 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
           visitor = 0;
         }
     }
+    
+  get_op.destroy ();
 
   // Do nothing for readonly attributes.
   if (node->readonly ())
@@ -221,11 +243,14 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
   // The return type  is "void".
   be_predefined_type rt (AST_PredefinedType::PT_void,
                          &sn);
+ 
   // Argument type is the same as the attribute type.
-  be_argument arg (AST_Argument::dir_IN,
-                   node->field_type (),
-                   node->name ());
-  arg.set_name ((UTL_IdList *) node->name ()->copy ());
+  AST_Argument *arg =
+    idl_global->gen ()->create_argument (AST_Argument::dir_IN,
+                                         node->field_type (),
+                                         node->name ());
+                                         
+  arg->set_name ((UTL_IdList *) node->name ()->copy ());
   // Create the operation.
   be_operation set_op (&rt,
                        AST_Operation::OP_noflags,
@@ -234,12 +259,26 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
                        node->is_abstract ());
   set_op.set_name ((UTL_IdList *) node->name ()->copy ());
   set_op.set_defined_in (node->defined_in ());
-  set_op.be_add_argument (&arg);
-  set_op.be_add_exceptions (node->get_set_exceptions ());
+  set_op.be_add_argument (arg);
+  
+  UTL_ExceptList *set_exceptions = node->get_set_exceptions ();
+  
+  if (0 != set_exceptions)
+    {
+      set_op.be_add_exceptions (set_exceptions->copy ());
+    }
 
   // Get the strategy from the attribute and hand it over
   // to the operation, thereby deleting the old one.
-  delete set_op.set_strategy (node->get_set_strategy ());
+  old_strategy =
+    set_op.set_strategy (node->get_set_strategy ()->copy ());
+
+  if (0 != old_strategy)
+    {
+      old_strategy->destroy ();
+      delete old_strategy;
+      old_strategy = 0;
+    }
 
   ctx = *this->ctx_;
   status = 1;
@@ -316,6 +355,8 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
       }
     default:
       // Error.
+      set_op.destroy ();
+      rt.destroy ();
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_attribute::"
                          "visit_attribute - "
@@ -325,10 +366,14 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
 
   if (status == 0)
     {
+      set_op.destroy ();
+      rt.destroy ();
       return 0;
     }
   else if (status == -1)
     {
+      set_op.destroy ();
+      rt.destroy ();
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_attribute::"
                          "visit_attribute - "
@@ -343,6 +388,9 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
   if (!visitor || (set_op.accept (visitor) == -1))
     {
       delete visitor;
+      visitor = 0;
+      set_op.destroy ();
+      rt.destroy ();
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_attribute::"
                          "visit_attribute - "
@@ -363,6 +411,9 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
       if (!visitor || (set_op.accept (visitor) == -1))
         {
           delete visitor;
+          visitor = 0;
+          set_op.destroy ();
+          rt.destroy ();
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_attribute::"
                              "visit_attribute - "
@@ -373,6 +424,8 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
       delete visitor;
       visitor = 0;
     }
-
+    
+  set_op.destroy ();
+  rt.destroy ();
   return 0;
 }

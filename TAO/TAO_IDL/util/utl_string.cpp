@@ -66,6 +66,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "utl_string.h"
 #include "global_extern.h"
+#include "fe_extern.h"
 #include "utl_err.h"
 
 // FUZZ: disable check_for_streams_include
@@ -95,7 +96,7 @@ UTL_String::UTL_String (const char *str)
   else
     {
       this->len = ACE_OS::strlen (str);
-      this->p_str = ACE_OS::strdup (str);
+      this->p_str = ACE::strnew (str);
       this->c_str = (char *) ACE_OS::malloc (this->len + 1);
       this->canonicalize ();
     }
@@ -122,7 +123,7 @@ UTL_String::UTL_String (UTL_String *s)
       else
         {
           this->len = ACE_OS::strlen (b);
-          this->p_str = ACE_OS::strdup (b);
+          this->p_str = ACE::strnew (b);
           this->c_str = (char *) ACE_OS::malloc (this->len + 1);
           this->canonicalize ();
         }
@@ -185,8 +186,8 @@ UTL_String::compare (UTL_String *s)
           idl_global->err ()->name_case_error (this->p_str,
                                                s->get_string ());
 
-            // if we try to continue from here, we risk a crash.
-            ACE_OS::exit (99);
+            // If we try to continue from here, we risk a crash.
+            throw FE_Bailout ();
         }
       else
         {
@@ -231,7 +232,7 @@ UTL_String::destroy (void)
 {
   if (this->p_str != 0)
     {
-      ACE_OS::free (this->p_str);
+      ACE::strdelete (this->p_str);
       this->p_str = 0;
     }
 

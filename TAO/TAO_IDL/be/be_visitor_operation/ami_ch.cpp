@@ -88,6 +88,14 @@ be_visitor_operation_ami_ch::visit_operation (be_operation *node)
   be_visitor_context ctx (*this->ctx_);
   ctx.state (TAO_CodeGen::TAO_OPERATION_ARGLIST_CH);
   be_visitor_operation_arglist visitor (&ctx);
+  be_operation *arguments = node->arguments ();
+  
+  // If a local node's parent has a sendc_* operation, we must
+  // regenerate it as pure virtual, so we temporarily set the
+  // strategy-related node to local, if necessary, and restore
+  // it after the visitor returns.
+  bool orig_local = arguments->is_local ();
+  arguments->set_local (node->is_local ());
 
   if (node->arguments ()->accept (&visitor) == -1)
     {
@@ -98,5 +106,6 @@ be_visitor_operation_ami_ch::visit_operation (be_operation *node)
                         -1);
     }
 
+  arguments->set_local (orig_local);
   return 0;
 }

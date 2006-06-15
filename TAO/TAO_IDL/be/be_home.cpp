@@ -19,6 +19,7 @@
 
 #include "be_home.h"
 #include "be_component.h"
+#include "be_interface_strategy.h"
 #include "be_visitor.h"
 #include "global_extern.h"
 #include "utl_err.h"
@@ -107,8 +108,20 @@ be_home::~be_home (void)
 void
 be_home::destroy (void)
 {
-  // Can't call be_interface->destroy() because all the
-  // home's decls are also added to the explicit interface.
+  // Skip be_interface, since our decls were added to
+  // the equivalent interface and will get destroyed
+  // there.
+  if (this->strategy_ != 0)
+    {
+      this->strategy_->destroy ();
+      delete this->strategy_;
+      this->strategy_ = 0;
+    }
+    
+  this->be_scope::destroy ();
+  this->be_type::destroy ();
+  
+  // This skips AST_Interface, for the reason above.
   this->AST_Home::destroy ();
 }
 

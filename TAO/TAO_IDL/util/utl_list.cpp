@@ -150,6 +150,7 @@ void
 UTL_List::set_tail (UTL_List *l)
 {
   this->pd_cdr_data->destroy ();
+  delete this->pd_cdr_data;
   this->pd_cdr_data = l;
 }
 

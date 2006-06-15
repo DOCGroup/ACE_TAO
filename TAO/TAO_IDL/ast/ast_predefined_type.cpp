@@ -270,7 +270,7 @@ AST_PredefinedType::ast_accept (ast_visitor *visitor)
 void
 AST_PredefinedType::destroy (void)
 {
-  this->AST_Type::destroy ();
+  this->AST_ConcreteType::destroy ();
 }
 
 // Data accessors.

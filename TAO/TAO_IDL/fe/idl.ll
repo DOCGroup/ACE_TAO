@@ -83,6 +83,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "fe_interface_header.h"
 #include "global_extern.h"
 #include "fe_private.h"
+#include "fe_extern.h"
 #include "nr_extern.h"
 #include "y.tab.h"
 
@@ -180,7 +181,7 @@ oneway          return IDL_ONEWAY;
 \<\<            return IDL_LEFT_SHIFT;
 \>\>            return IDL_RIGHT_SHIFT;
 \:\:            {
-                  yylval.strval = (char *) "::";
+                  yylval.strval = ACE::strnew ("::");
                   return IDL_SCOPE_DELIMITOR;
                 }
 
@@ -207,11 +208,11 @@ oneway          return IDL_ONEWAY;
 
   if (entry)
     {
-      yylval.strval = ACE_OS::strdup (entry->mapping_);
+      yylval.strval = ACE::strnew (entry->mapping_);
     }
   else
     {
-      yylval.strval = ACE_OS::strdup (ace_yytext);
+      yylval.strval = ACE:strnew (ace_yytext);
     }
 
   return IDENTIFIER;
@@ -434,7 +435,8 @@ idl_parse_line_and_file (char *buf)
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("IDL: No input files\n")));
 
-      ACE_OS::exit (99);
+      idl_global->set_err_count (idl_global->err_count () + 1);
+      throw FE_Bailout ();
     }
   else
     {

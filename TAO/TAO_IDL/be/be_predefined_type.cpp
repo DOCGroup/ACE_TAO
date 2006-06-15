@@ -28,8 +28,8 @@
 #include "ace/ACE.h"
 #include "ace/OS_NS_stdio.h"
 
-ACE_RCSID (be, 
-           be_predefined_type, 
+ACE_RCSID (be,
+           be_predefined_type,
            "$Id$")
 
 be_predefined_type::be_predefined_type (void)
@@ -213,7 +213,8 @@ be_predefined_type::compute_repoID (void)
   switch (this->pt ())
     {
     case AST_PredefinedType::PT_object:
-	    this->repoID_ = ACE::strnew ("IDL:omg.org/CORBA/Object:1.0");
+      ACE::strdelete (this->repoID_);
+      this->repoID_ = ACE::strnew ("IDL:omg.org/CORBA/Object:1.0");
       break;
     default:
       AST_Decl::compute_repoID ();

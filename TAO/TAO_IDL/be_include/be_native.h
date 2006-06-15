@@ -51,6 +51,9 @@ public:
 
   virtual long tc_size (void);
   // Return typecode size.
+  
+  virtual void destroy (void);
+  // Cleanup.
 
   // Visiting.
   virtual int accept (be_visitor *visitor);

@@ -78,6 +78,13 @@ be_native::tc_size (void)
   return 0;
 }
 
+void
+be_native::destroy (void)
+{
+  this->be_exception::destroy ();
+  this->AST_Native::destroy ();
+}
+
 int
 be_native::accept (be_visitor *visitor)
 {

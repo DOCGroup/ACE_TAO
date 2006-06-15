@@ -145,6 +145,14 @@ AST_Factory::has_native (void)
 void
 AST_Factory::destroy (void)
 {
+  if (0 != this->pd_exceptions)
+    {
+      this->pd_exceptions->destroy ();
+      this->pd_exceptions = 0;
+    }
+
+  this->AST_Decl::destroy ();
+  this->UTL_Scope::destroy ();
 }
 
 // Private operations.
@@ -292,6 +300,12 @@ AST_Factory::fe_add_exceptions (UTL_NameList *t)
       this->pd_n_exceptions++;
     }
 
+  // This return value is never used, it's easier to
+  // destroy it here and return 0 than to destroy it
+  // each place it is passed in.
+  t->destroy ();
+  delete t;
+  t = 0;
   return t;
 }
 

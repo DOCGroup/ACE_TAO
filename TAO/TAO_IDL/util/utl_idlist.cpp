@@ -247,6 +247,7 @@ UTL_IdList::destroy (void)
 {
   if (this->pd_car_data != 0)
     {
+      this->pd_car_data->destroy ();
       delete this->pd_car_data;
       this->pd_car_data = 0;
     }

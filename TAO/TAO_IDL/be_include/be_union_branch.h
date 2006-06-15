@@ -53,6 +53,9 @@ public:
 
   // Visiting.
   virtual int accept (be_visitor *visitor);
+  
+  // Cleanup.
+  virtual void destroy (void);
 
   // Narrowing.
   DEF_NARROW_METHODS2 (be_union_branch, AST_UnionBranch, be_decl);

@@ -15,7 +15,7 @@ class TAO_IDL_FE_Export AST_StructureFwd : public virtual AST_Type
 public:
   AST_StructureFwd (void);
 
-  AST_StructureFwd (AST_Structure *dummy,
+  AST_StructureFwd (AST_Structure *full_defn,
                     UTL_ScopedName *n);
 
   virtual ~AST_StructureFwd (void);
@@ -24,6 +24,7 @@ public:
   void set_full_definition (AST_Structure *nfd);
 
   virtual bool is_defined (void);
+  void set_as_defined (void);
 
   // Cleanup function.
   virtual void destroy (void);
@@ -41,6 +42,9 @@ public:
 private:
   AST_Structure *pd_full_definition;
   // The structure this is a forward declaration of.
+  
+  bool is_defined_;
+  // Checking the member above isn't good enough.
 };
 
 #endif           // _AST_STRUCTURE_FWD_AST_STRUCTURE_FWD_HH

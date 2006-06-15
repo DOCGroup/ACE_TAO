@@ -93,14 +93,25 @@ be_visitor_interface_direct_proxy_impl_ss::gen_abstract_ops_helper (
                             -1);
         }
 
-      UTL_ScopedName *item_new_name  = 0;
-      ACE_NEW_RETURN (item_new_name,
-                      UTL_ScopedName (d->local_name ()->copy (),
-                                      0),
-                      -1);
+      AST_Decl::NodeType nt = d->node_type ();
+  
+      UTL_ScopedName *item_new_name = 0;
+      UTL_ScopedName *new_name = 0;
+      
+      if (AST_Decl::NT_op == nt || AST_Decl::NT_attr == nt)
+        {
+          ACE_NEW_RETURN (item_new_name,
+                          UTL_ScopedName (d->local_name ()->copy (),
+                                          0),
+                          -1);
 
-      UTL_ScopedName *base = (UTL_ScopedName *)node->name ()->copy ();
-      base->nconc (item_new_name);
+          new_name = (UTL_ScopedName *) node->name ()->copy ();
+          new_name->nconc (item_new_name);
+        }
+      else
+        {
+          continue;
+        }
 
       // We pass the node's is_abstract flag to the operation
       // constructor so we will get the right generated operation
@@ -108,22 +119,19 @@ be_visitor_interface_direct_proxy_impl_ss::gen_abstract_ops_helper (
       // abstract interface in a concrete interface or component.
       if (d->node_type () == AST_Decl::NT_op)
         {
-          AST_Operation *op = AST_Operation::narrow_from_decl (d);
-          be_operation new_op (op->return_type (),
-                               op->flags (),
-                               0,
-                               op->is_local (),
-                               node->is_abstract ());
-          new_op.set_defined_in (node);
-          be_visitor_interface::add_abstract_op_args (op,
-                                                      new_op);
-          new_op.set_name (base);
+          be_operation *op = be_operation::narrow_from_decl (d);
+          UTL_ScopedName *old_name =
+            (UTL_ScopedName *) op->name ()->copy ();
+          op->set_name (new_name);
+          op->set_defined_in (node);
+          op->is_abstract (node->is_abstract ());
+          
           be_visitor_operation_direct_proxy_impl_ss op_visitor (&ctx);
-          op_visitor.visit_operation (&new_op);
-
-          base->destroy ();
-          delete base;
-          base = 0;
+          op_visitor.visit_operation (op);
+          
+          op->set_name (old_name);
+          op->set_defined_in (base);
+          op->is_abstract (base->is_abstract ());
         }
       else if (d->node_type () == AST_Decl::NT_attr)
         {
@@ -134,12 +142,26 @@ be_visitor_interface_direct_proxy_impl_ss::gen_abstract_ops_helper (
                                  attr->is_local (),
                                  attr->is_abstract ());
           new_attr.set_defined_in (node);
-          new_attr.set_name (base);
-          new_attr.be_add_get_exceptions (attr->get_get_exceptions ());
-          new_attr.be_add_set_exceptions (attr->get_set_exceptions ());
+          new_attr.set_name (new_name);
+          
+          UTL_ExceptList *get_exceptions = attr->get_get_exceptions ();
+          
+          if (0 != get_exceptions)
+            {
+              new_attr.be_add_get_exceptions (get_exceptions->copy ());
+            }
+            
+          UTL_ExceptList *set_exceptions = attr->get_set_exceptions ();
+          
+          if (0 != set_exceptions)
+            {
+              new_attr.be_add_set_exceptions (set_exceptions->copy ());
+            }
+            
           be_visitor_attribute attr_visitor (&ctx);
           attr_visitor.visit_attribute (&new_attr);
           ctx.attribute (0);
+          new_attr.destroy ();
         }
     }
 

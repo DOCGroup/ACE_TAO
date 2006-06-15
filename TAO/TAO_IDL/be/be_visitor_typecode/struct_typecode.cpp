@@ -77,9 +77,6 @@ int
 TAO::be_visitor_struct_typecode::visit (AST_Structure * node,
                                         bool is_exception)
 {
-  // Exceptions cannot be recursive.
-//   ACE_ASSERT (!is_exception || (is_exception && !this->in_recursion_));
-
   this->is_nested_ = true;
 
   TAO_OutStream & os = *this->ctx_->stream ();
@@ -96,7 +93,8 @@ TAO::be_visitor_struct_typecode::visit (AST_Structure * node,
                        "TypeCodes.\n"),
                       -1);
 
-  std::string const fields_name (std::string ("_tao_fields_")
+  static ACE_CString const tao_fields ("_tao_fields_");
+  ACE_CString const fields_name (tao_fields
                                  + node->flat_name ());
 
   // Generate array containing struct field characteristics.

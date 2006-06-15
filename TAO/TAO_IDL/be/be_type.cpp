@@ -344,12 +344,8 @@ be_type::destroy (void)
       delete this->tc_name_;
       this->tc_name_ = 0;
     }
-
-  if (this->nested_type_name_ != 0)
-    {
-      delete [] this->nested_type_name_;
-      this->nested_type_name_ = 0;
-    }
+  
+  this->be_decl::destroy ();
 }
 
 int

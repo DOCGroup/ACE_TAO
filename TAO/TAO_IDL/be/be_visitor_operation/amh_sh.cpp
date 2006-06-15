@@ -141,7 +141,11 @@ be_visitor_amh_operation_sh::visit_attribute (be_attribute *node)
   be_visitor_context ctx (*this->ctx_);
   be_visitor_args_arglist visitor (&ctx);
 
-  if (visitor.visit_argument (&the_argument) == -1)
+  int status = visitor.visit_argument (&the_argument);
+  
+  the_argument.destroy ();
+  
+  if (-1 == status)
     {
       return -1;
     }

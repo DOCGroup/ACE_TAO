@@ -121,6 +121,10 @@ private:
 
   AST_Type *pd_base_type;
   // Typedef base type.
+  
+  bool owns_base_type_;
+  // If our base type is anonymous array or sequence, we're
+  // responsible for destroying it.
 };
 
 #endif           // _AST_TYPEDEF_AST_TYPEDEF_HH

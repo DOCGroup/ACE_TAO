@@ -89,7 +89,8 @@ AST_Structure::AST_Structure (void)
     AST_ConcreteType (),
     UTL_Scope (),
     member_count_ (-1),
-    local_struct_ (-1)
+    local_struct_ (-1),
+    fwd_decl_ (0)
 {
 }
 
@@ -106,7 +107,8 @@ AST_Structure::AST_Structure (UTL_ScopedName *n,
                       n),
     UTL_Scope (AST_Decl::NT_struct),
     member_count_ (-1),
-    local_struct_ (-1)
+    local_struct_ (-1),
+    fwd_decl_ (0)
 {
 }
 
@@ -124,7 +126,8 @@ AST_Structure::AST_Structure (AST_Decl::NodeType nt,
                       n),
     UTL_Scope (nt),
     member_count_ (-1),
-    local_struct_ (-1)
+    local_struct_ (-1),
+    fwd_decl_ (0)
 {
 }
 
@@ -277,6 +280,12 @@ AST_Structure::contains_wstring (void)
 }
 
 bool
+AST_Structure::is_defined (void)
+{
+  return 0 == this->fwd_decl_ || this->fwd_decl_->is_defined ();
+}
+
+bool
 AST_Structure::legal_for_primary_key (void) const
 {
   bool retval = true;
@@ -303,6 +312,18 @@ AST_Structure::legal_for_primary_key (void) const
     }
 
   return retval;
+}
+
+AST_StructureFwd *
+AST_Structure::fwd_decl (void) const
+{
+  return this->fwd_decl_;
+}
+
+void
+AST_Structure::fwd_decl (AST_StructureFwd *node)
+{
+  this->fwd_decl_ = node;
 }
 
 // Private operations.
@@ -673,8 +694,20 @@ AST_Structure::fwd_redefinition_helper (AST_Structure *&i,
                 }
 
               fd->redefine (i);
+              AST_StructureFwd *fwd = fd->fwd_decl ();
+              
+              if (0 != fwd)
+                {
+                  // So the fwd decl won't destroy us at cleanup time.
+                  // Unlike interfaces, valuetypes and components, it's
+                  // ok to do this here, since fwd declared structs
+                  // and unions must be defined in the same translation
+                  // unit.
+                  fwd->set_as_defined ();
+                }
 
               // Use full definition node.
+              i->destroy ();
               delete i;
               i = fd;
             }
@@ -687,7 +720,7 @@ void
 AST_Structure::redefine (AST_Structure *from)
 {
   // We've already checked for inconsistent prefixes.
-  this->prefix (ACE::strnew (from->prefix ()));
+  this->prefix (from->prefix ());
 
   this->set_defined_in (from->defined_in ());
   this->set_imported (idl_global->imported ());
@@ -747,6 +780,8 @@ AST_Structure::ast_accept (ast_visitor *visitor)
 void
 AST_Structure::destroy (void)
 {
+  this->AST_ConcreteType::destroy ();
+  this->UTL_Scope::destroy ();
 }
 
 // Narrowing.

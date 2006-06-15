@@ -22,11 +22,15 @@
 #include "be_operation.h"
 #include "be_predefined_type.h"
 #include "be_argument.h"
-#include "utl_identifier.h"
 
 #include "be_visitor_attribute.h"
 #include "be_visitor_context.h"
 #include "be_visitor_operation.h"
+
+#include "ast_generator.h"
+#include "utl_identifier.h"
+#include "utl_exceptlist.h"
+#include "global_extern.h"
 #include "ace/Log_Msg.h"
 
 #include "be_visitor_attribute/attribute.cpp"

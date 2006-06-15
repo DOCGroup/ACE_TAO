@@ -79,6 +79,13 @@ be_argument::accept (be_visitor *visitor)
   return visitor->visit_argument (this);
 }
 
+void
+be_argument::destroy (void)
+{
+  this->be_decl::destroy ();
+  this->AST_Argument::destroy ();
+}
+
 // Narrowing.
 IMPL_NARROW_METHODS2 (be_argument, AST_Argument, be_decl)
 IMPL_NARROW_FROM_DECL (be_argument)

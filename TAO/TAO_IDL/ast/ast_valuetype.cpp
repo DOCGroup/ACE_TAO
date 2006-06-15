@@ -148,8 +148,8 @@ AST_ValueType::look_in_supported (UTL_ScopedName *e,
   // Can't look in an interface which was not yet defined.
   if (!this->is_defined ())
     {
-      idl_global->err ()->fwd_decl_lookup (this,
-                                           e);
+//      idl_global->err ()->fwd_decl_lookup (this,
+//                                           e);
       return 0;
     }
 
@@ -268,6 +268,10 @@ AST_ValueType::legal_for_primary_key (void) const
 void
 AST_ValueType::destroy (void)
 {
+  delete [] this->pd_supports;
+  this->pd_supports = 0;
+  this->pd_n_supports = 0;
+  
   this->AST_Interface::destroy ();
 }
 

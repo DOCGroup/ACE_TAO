@@ -95,12 +95,12 @@ public:
                                            long nih,
                                            AST_Interface **ih_flat,
                                            long nih_flat,
-                                           bool local,
-                                           bool abstract);
+                                           bool is_local,
+                                           bool is_abstract);
 
   virtual AST_InterfaceFwd *create_interface_fwd (UTL_ScopedName *n,
-                                                  bool local,
-                                                  bool abstract);
+                                                  bool is_local,
+                                                  bool is_abstract);
 
   // Create a node representing a boxed value type
   virtual AST_ValueBox *create_valuebox (UTL_ScopedName *n,
@@ -112,12 +112,12 @@ public:
                                            AST_ValueType *inherits_concrete,
                                            AST_Interface **inherits_flat,
                                            long n_inherits_flat,
-                                           AST_Interface **supports,
+                                           AST_Interface **supports_list,
                                            long n_supports,
                                            AST_Interface *supports_concrete,
-                                           bool abstract,
-                                           bool truncatable,
-                                           bool custom);
+                                           bool is_abstract,
+                                           bool is_truncatable,
+                                           bool is_custom);
 
   virtual AST_ValueTypeFwd *create_valuetype_fwd (UTL_ScopedName *n,
                                                   bool abstract);
@@ -128,19 +128,19 @@ public:
                                            AST_ValueType *inherits_concrete,
                                            AST_Interface **inherits_flat,
                                            long n_inherits_flat,
-                                           AST_Interface **supports,
+                                           AST_Interface **supports_list,
                                            long n_supports,
                                            AST_Interface *supports_concrete,
-                                           bool abstract,
-                                           bool truncatable,
-                                           bool custom);
+                                           bool is_abstract,
+                                           bool is_truncatable,
+                                           bool is_custom);
 
   virtual AST_EventTypeFwd *create_eventtype_fwd (UTL_ScopedName *n,
                                                   bool abstract);
 
   virtual AST_Component *create_component (UTL_ScopedName *n,
                                            AST_Component *base_component,
-                                           AST_Interface **supports,
+                                           AST_Interface **supports_list,
                                            long n_supports,
                                            AST_Interface **supports_flat,
                                            long n_supports_flat);
@@ -151,30 +151,30 @@ public:
                                  AST_Home *base_home,
                                  AST_Component *managed_component,
                                  AST_ValueType *primary_key,
-                                 AST_Interface **supports,
+                                 AST_Interface **supports_list,
                                  long n_supports,
                                  AST_Interface **supports_flat,
                                  long n_supports_flat);
 
   virtual AST_Exception *create_exception (UTL_ScopedName *n,
-                                           bool local,
-                                           bool abstract);
+                                           bool is_local,
+                                           bool is_abstract);
 
   virtual AST_Structure *create_structure (UTL_ScopedName *n,
-                                           bool local,
-                                           bool abstract);
+                                           bool is_local,
+                                           bool is_abstract);
 
   virtual AST_StructureFwd *create_structure_fwd (UTL_ScopedName *n);
 
   virtual AST_Enum *create_enum (UTL_ScopedName *n,
-                                 bool local,
-                                 bool abstract);
+                                 bool is_local,
+                                 bool is_abstract);
 
   virtual AST_Operation *create_operation (AST_Type *rt,
                                            AST_Operation::Flags fl,
                                            UTL_ScopedName *n,
-                                           bool local,
-                                           bool abstract);
+                                           bool is_local,
+                                           bool is_abstract);
 
   virtual AST_Field *create_field (AST_Type *ft, UTL_ScopedName *n,
                                    AST_Field::Visibility vis =
@@ -187,13 +187,13 @@ public:
   virtual AST_Attribute *create_attribute (bool ro,
                                            AST_Type *ft,
                                            UTL_ScopedName *n,
-                                           bool local,
-                                           bool abstract);
+                                           bool is_local,
+                                           bool is_abstract);
 
   virtual AST_Union *create_union (AST_ConcreteType *dt,
                                    UTL_ScopedName *n,
-                                   bool local,
-                                   bool abstract);
+                                   bool is_local,
+                                   bool is_abstract);
 
   virtual AST_UnionFwd *create_union_fwd (UTL_ScopedName *n);
 
@@ -240,14 +240,14 @@ public:
   virtual AST_Array *create_array (UTL_ScopedName *n,
                                    unsigned long ndims,
                                    UTL_ExprList *dims,
-                                   bool local,
-                                   bool abstract);
+                                   bool is_local,
+                                   bool is_abstract);
 
   virtual AST_Sequence *create_sequence (AST_Expression *v,
                                          AST_Type *bt,
                                          UTL_ScopedName *n,
-                                         bool local,
-                                         bool abstract);
+                                         bool is_local,
+                                         bool is_abstract);
 
   virtual AST_String *create_string (AST_Expression *v);
 
@@ -255,8 +255,8 @@ public:
 
   virtual AST_Typedef *create_typedef (AST_Type *bt,
                                        UTL_ScopedName *n,
-                                       bool local,
-                                       bool abstract);
+                                       bool is_local,
+                                       bool is_abstract);
 
   // Create a node representing a native
   virtual AST_Native *create_native (UTL_ScopedName *n);

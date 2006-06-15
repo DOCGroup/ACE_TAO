@@ -41,6 +41,9 @@ public:
 
   // Visiting.
   virtual int accept (be_visitor *visitor);
+  
+  // Cleanup.
+  virtual void destroy (void);
 
   // Narrowing.
   DEF_NARROW_METHODS2 (be_field, AST_Field, be_decl);

@@ -51,8 +51,9 @@ void
 be_module::destroy (void)
 {
   // Call the destroy methods of our base classes.
-  be_scope::destroy ();
-  be_decl::destroy ();
+  this->be_scope::destroy ();
+  this->be_decl::destroy ();
+  this->AST_Module::destroy ();
 }
 
 int

@@ -132,15 +132,16 @@ public:
   // Is this struct or union defined? This predicate returns FALSE when a
   // forward declaration is not defined yet, and TRUE in
   // all other cases.
-  bool is_defined (void)
-  {
-    return this->size_type () != AST_Type::SIZE_UNKNOWN;
-  }
+  virtual bool is_defined (void);
 
   // Recursively called on valuetype to check for legal use as
   // a primary key. Overridden for valuetype, struct, sequence,
   // union, array, typedef, and interface.
   virtual bool legal_for_primary_key (void) const;
+  
+  // Accessors for the member.
+  AST_StructureFwd *fwd_decl (void) const;
+  void fwd_decl (AST_StructureFwd *node);
 
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &o);
@@ -183,6 +184,9 @@ private:
 
   int local_struct_;
   // We also need to determine whether we contain any local type.
+  
+  AST_StructureFwd *fwd_decl_;
+  // The forward declaration we may have been created from.
 };
 
 #endif           // _AST_STRUCTURE_AST_STRUCTURE_HH

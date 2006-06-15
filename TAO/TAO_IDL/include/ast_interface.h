@@ -117,10 +117,7 @@ public:
   // Is this interface defined? This predicate returns FALSE when an
   // interface was forward declared but not defined yet, and TRUE in
   // all other cases.
-  bool is_defined (void)
-  {
-    return (pd_n_inherits < 0) ? false : true;
-  }
+  bool is_defined (void);
 
   // Check if we have redefined any of our parents' operations or attributes,
   // and check if there is such a clash among the parents
@@ -129,6 +126,10 @@ public:
   // Accessors for the member.
   bool home_equiv (void) const;
   void home_equiv (bool val);
+  
+  // Accessors for the member.
+  AST_InterfaceFwd *fwd_decl (void) const;
+  void fwd_decl (AST_InterfaceFwd *node);
 
   // Look through inherited interfaces.
   virtual AST_Decl *look_in_inherited (UTL_ScopedName *e,
@@ -181,6 +182,9 @@ protected:
 
   // Are we the equivalent interface of a home?
   bool home_equiv_;
+  
+  // The forward declaration we may have been created from.
+  AST_InterfaceFwd *fwd_decl_;
 
 protected:
   // Scope Management Protocol.

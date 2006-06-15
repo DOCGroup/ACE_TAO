@@ -103,6 +103,9 @@ public:
   // a primary key. Overridden for valuetype, struct, sequence,
   // union, array, typedef, and interface.
   virtual bool legal_for_primary_key (void) const;
+  
+  // Cleanup method.
+  virtual void destroy (void);
 
   // Narrowing.
   DEF_NARROW_METHODS1(AST_Sequence, AST_ConcreteType);
@@ -124,6 +127,10 @@ private:
 
   bool unbounded_;
   // Whether we are bounded or unbounded.
+  
+  bool owns_base_type_;
+  // If our base type is anonymous array or sequence, we're
+  // responsible for destroying it.
 };
 
 #endif           // _AST_SEQUENCE_AST_SEQUENCE_HH

@@ -114,6 +114,11 @@ public:
 
   // Are we or do we contain a wstring?
   virtual int contains_wstring (void);
+  
+  // Determine this bit of state after we have
+  // be added to our aggregate type and before
+  // we are destroyed.
+  void set_recursive_flag (void);
 
   // Narrowing.
   DEF_NARROW_METHODS1(AST_Field, AST_Decl);
@@ -124,6 +129,9 @@ public:
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
+  
+  // Cleanup.
+  virtual void destroy (void);
 
 private:
   // Data.
@@ -132,6 +140,11 @@ private:
   // Base type for field.
 
   Visibility pd_visibility;
+  // Used with valuetype and eventtype fields.
+  
+  bool anonymous_type_;
+  // If our field type is anonymous array or sequence, we're
+  // responsible for destroying it.
 };
 
 #endif           // _AST_FIELD_AST_FIELD_HH

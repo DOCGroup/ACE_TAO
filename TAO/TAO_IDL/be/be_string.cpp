@@ -99,23 +99,13 @@ be_string::compute_tc_name (void)
       ACE_NEW (tao_id,
                Identifier ("TAO"));
 
-      //   ACE_NEW (tao_id,
-      //            Identifier (""));
-
       ACE_NEW (this->tc_name_,
                UTL_ScopedName (tao_id,
                                0));
 
-//       char bound[30] = { 0 };
-
-//       ACE_OS::sprintf (bound,
-//                        "_%lu",
-//                        this->max_size ()->ev ()->u.ulval);
-
       ACE_CString local_tc_name =
         ACE_CString ("tc_")
         + ACE_CString (this->flat_name ());
-//         + ACE_CString (bound);
 
       Identifier * typecode_scope = 0;
       ACE_NEW (typecode_scope,
@@ -131,6 +121,8 @@ be_string::compute_tc_name (void)
       ACE_NEW (id,
                Identifier (local_tc_name.c_str ()));
     }
+    
+  zero.destroy ();
 
   UTL_ScopedName *conc_name = 0;
   ACE_NEW (conc_name,

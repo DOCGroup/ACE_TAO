@@ -109,6 +109,9 @@ public:
   // a primary key. Overridden for valuetype, struct, sequence,
   // union, array, typedef, and interface.
   virtual bool legal_for_primary_key (void) const;
+  
+  // Cleanup.
+  virtual void destroy (void);
 
   // Narrowing.
   DEF_NARROW_METHODS1(AST_Array, AST_ConcreteType);
@@ -135,8 +138,12 @@ private:
 
   AST_Type *pd_base_type;
   // Base type of array.
+  
+  bool owns_base_type_;
+  // If our base type is anonymous array or sequence, we're
+  // responsible for destroying it.
 
-  // Operations.
+private:
 
   // Compute how many dimensions.
   AST_Expression **compute_dims (UTL_ExprList *dims,

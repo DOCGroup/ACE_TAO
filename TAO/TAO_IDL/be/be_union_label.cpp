@@ -26,3 +26,10 @@ be_union_label::accept (be_visitor *visitor)
 {
   return visitor->visit_union_label (this);
 }
+
+void
+be_union_label::destroy (void)
+{
+  this->AST_UnionLabel::destroy ();
+}
+

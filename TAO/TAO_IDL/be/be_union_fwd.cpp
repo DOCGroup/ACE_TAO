@@ -64,7 +64,7 @@ be_union_fwd::~be_union_fwd (void)
 void
 be_union_fwd::destroy (void)
 {
-  // Do nothing.
+  this->be_structure_fwd::destroy ();
 }
 
 int

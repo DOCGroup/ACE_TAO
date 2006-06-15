@@ -114,7 +114,7 @@ FE_Declarator::compose (AST_Decl *d)
       return 0;
     }
 
-  // All uses of forward declared interfaces must
+  // All uses of forward declared types must
   // not have a different prefix from the place of declaration.
   if (!ct->is_defined ())
     {

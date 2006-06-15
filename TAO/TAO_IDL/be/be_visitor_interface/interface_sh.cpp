@@ -341,17 +341,9 @@ be_visitor_interface_sh::gen_abstract_ops_helper (
 
       if (d->node_type () == AST_Decl::NT_op)
         {
-          AST_Operation *op = AST_Operation::narrow_from_decl (d);
-          be_operation new_op (op->return_type (),
-                               op->flags (),
-                               &item_new_name,
-                               op->is_local (),
-                               op->is_abstract ());
-          new_op.set_defined_in (node);
-          be_visitor_interface::add_abstract_op_args (op,
-                                                      new_op);
+          be_operation *op = be_operation::narrow_from_decl (d);
           be_visitor_operation_sh op_visitor (&ctx);
-          op_visitor.visit_operation (&new_op);
+          op_visitor.visit_operation (op);
         }
       else if (d->node_type () == AST_Decl::NT_attr)
         {
@@ -362,11 +354,25 @@ be_visitor_interface_sh::gen_abstract_ops_helper (
                                  attr->is_local (),
                                  attr->is_abstract ());
           new_attr.set_defined_in (node);
-          new_attr.be_add_get_exceptions (attr->get_get_exceptions ());
-          new_attr.be_add_set_exceptions (attr->get_set_exceptions ());
+          
+          UTL_ExceptList *get_exceptions = attr->get_get_exceptions ();
+          
+          if (0 != get_exceptions)
+            {
+              new_attr.be_add_get_exceptions (get_exceptions->copy ());
+            }
+            
+          UTL_ExceptList *set_exceptions = attr->get_set_exceptions ();
+          
+          if (0 != set_exceptions)
+            {
+              new_attr.be_add_set_exceptions (set_exceptions->copy ());
+            }
+            
           be_visitor_attribute attr_visitor (&ctx);
           attr_visitor.visit_attribute (&new_attr);
           ctx.attribute (0);
+          new_attr.destroy ();
         }
     }
 

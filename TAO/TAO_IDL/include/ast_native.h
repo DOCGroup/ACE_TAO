@@ -27,6 +27,9 @@ public:
 
   virtual ~AST_Native (void);
   // Destructor.
+  
+  virtual void destroy (void);
+  // Cleanup.
 
   // Narrowing.
   DEF_NARROW_METHODS1(AST_Native, AST_Exception);

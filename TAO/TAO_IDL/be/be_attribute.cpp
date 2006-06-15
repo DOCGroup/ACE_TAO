@@ -138,6 +138,27 @@ be_attribute::get_get_strategy ()
   return this->get_strategy_;
 }
 
+void
+be_attribute::destroy (void)
+{
+  if (0 != this->get_strategy_)
+    {
+      this->get_strategy_->destroy ();
+      delete this->get_strategy_;
+      this->get_strategy_ = 0;
+    }
+  
+  if (0 != this->set_strategy_)
+    {
+      this->set_strategy_->destroy ();
+      delete this->set_strategy_;
+      this->set_strategy_ = 0;
+    }
+  
+  this->be_decl::destroy ();
+  this->AST_Attribute::destroy ();
+}
+
 // Narrowing
 IMPL_NARROW_METHODS2 (be_attribute, AST_Attribute, be_decl)
 IMPL_NARROW_FROM_DECL (be_attribute)

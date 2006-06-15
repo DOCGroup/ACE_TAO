@@ -95,6 +95,7 @@ be_interface::be_interface (UTL_ScopedName *n,
     var_out_seq_decls_gen_ (0),
     skel_count_ (0),
     in_mult_inheritance_ (-1),
+    strategy_ (0),
     original_interface_ (0),
     has_mixed_parentage_ (-1),
     session_component_child_ (-1)
@@ -138,12 +139,6 @@ be_interface::be_interface (UTL_ScopedName *n,
 
 be_interface::~be_interface (void)
 {
-  // We know that it cannot be 0, but..
-  if (this->strategy_ != 0)
-    {
-      delete this->strategy_;
-      this->strategy_ = 0;
-    }
 }
 
 be_interface_strategy *
@@ -170,7 +165,6 @@ be_interface::local_name (void) const
 const char *
 be_interface::full_name (void)
 {
-  // Return the stringified full name.
   return this->strategy_->full_name ();
 }
 
@@ -1661,7 +1655,7 @@ be_interface::gen_gperf_lookup_methods (const char *flat_name)
                          "fclose"),
                         -1);
     }
-
+    
   // Open the temp file.
   ACE_HANDLE input = ACE::open_temp_file (tao_cg->gperf_input_filename (),
                                           O_RDONLY);
@@ -2377,6 +2371,14 @@ be_interface::gen_throw_spec (UTL_ExceptList *list,
 void
 be_interface::destroy (void)
 {
+  // We know that it cannot be 0, but..
+  if (this->strategy_ != 0)
+    {
+      this->strategy_->destroy ();
+      delete this->strategy_;
+      this->strategy_ = 0;
+    }
+    
   // Call the destroy methods of our base classes.
   this->AST_Interface::destroy ();
   this->be_scope::destroy ();
@@ -2426,6 +2428,13 @@ int
 be_interface::has_mixed_parentage (void)
 {
   if (this->is_abstract_)
+    {
+      return 0;
+    }
+
+  AST_Decl::NodeType nt = this->node_type ();
+  
+  if (AST_Decl::NT_component == nt || AST_Decl::NT_home == nt)
     {
       return 0;
     }

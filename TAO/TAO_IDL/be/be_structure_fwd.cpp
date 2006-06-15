@@ -57,7 +57,8 @@ be_structure_fwd::~be_structure_fwd (void)
 void
 be_structure_fwd::destroy (void)
 {
-  // Do nothing.
+  this->be_type::destroy ();
+  this->AST_StructureFwd::destroy ();
 }
 
 int

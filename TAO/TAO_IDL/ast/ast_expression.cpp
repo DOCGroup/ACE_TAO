@@ -91,7 +91,7 @@ AST_Expression::fill_definition_details (void)
                           ? idl_global->scopes().top ()
                           : 0 ;
   this->pd_line = idl_global->lineno ();
-  this->pd_file_name    = idl_global->filename ();
+  this->pd_file_name = idl_global->filename ();
 }
 
 // Constructor(s) and destructor.
@@ -119,13 +119,43 @@ AST_Expression::AST_Expression (AST_Expression *v,
     tdef (0)
 {
   this->fill_definition_details ();
-
-  this->pd_ev = v->coerce (t);
-
-  if (this->pd_ev == 0)
+  
+  // If we are here because one string constant has
+  // another one as its rhs, we must copy the UTL_String
+  // so both can be destroyed at cleanup.
+  if (EV_string == t)
     {
-      idl_global->err ()->coercion_error (v,
-                                          t);
+      ACE_NEW (this->pd_ev,
+              AST_ExprValue);
+               
+      ACE_NEW (this->pd_ev->u.strval,
+               UTL_String (v->pd_ev->u.strval));
+
+      this->pd_ev->et = EV_string;
+    }
+  else if (EV_wstring == t)
+    {
+      ACE_NEW (this->pd_ev,
+              AST_ExprValue);
+               
+      this->pd_ev->u.wstrval = ACE::strnew (v->pd_ev->u.wstrval);
+      this->pd_ev->et = EV_string;
+    }
+  else
+    {
+      this->pd_ev = v->coerce (t);
+
+      if (this->pd_ev == 0)
+        {
+          idl_global->err ()->coercion_error (v,
+                                              t);
+        }
+        
+      if (0 != v->pd_n)
+        {
+          this->pd_n =
+            dynamic_cast<UTL_ScopedName *> (v->pd_n->copy ());
+        }
     }
 }
 
@@ -360,9 +390,13 @@ AST_Expression::AST_Expression (UTL_String *sv)
 
   ACE_NEW (this->pd_ev,
            AST_ExprValue);
+           
+  UTL_String *new_str = 0;
+  ACE_NEW (new_str,
+           UTL_String (sv));
 
+  this->pd_ev->u.strval = new_str;
   this->pd_ev->et = EV_string;
-  this->pd_ev->u.strval = sv;
 }
 
 // An AST_Expression denoting a wide string.
@@ -389,6 +423,8 @@ AST_Expression::~AST_Expression (void)
 
 AST_Expression::AST_ExprValue::AST_ExprValue (void)
 {
+  this->u.ulval = 0UL;
+  this->et = AST_Expression::EV_none;
 }
 
 // Static operations.
@@ -414,7 +450,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
         case AST_Expression::EV_ushort:
           if (ev->u.usval > (unsigned short) ACE_INT16_MAX)
             {
-                    return 0;
+              return 0;
             }
 
           ev->u.sval = (short) ev->u.usval;
@@ -424,7 +460,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
           if (ev->u.lval > (long) ACE_INT16_MAX
               || ev->u.lval < (long) ACE_INT16_MIN)
             {
-                    return 0;
+              return 0;
             }
 
           ev->u.sval = (short) ev->u.lval;
@@ -433,7 +469,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
         case AST_Expression::EV_ulong:
           if (ev->u.ulval > (unsigned long) ACE_INT16_MAX)
             {
-                    return 0;
+              return 0;
             }
 
           ev->u.sval = (short) ev->u.ulval;
@@ -444,7 +480,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
           if (ev->u.llval > (ACE_CDR::LongLong) ACE_INT16_MAX
               || ev->u.llval < (ACE_CDR::LongLong) ACE_INT16_MIN)
             {
-                    return 0;
+              return 0;
             }
 
           ev->u.sval = (short) ev->u.llval;
@@ -457,7 +493,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
 #if ! defined (ACE_LACKS_LONGLONG_T)
           if ((ev->u.ullval & ACE_INT16_MAX) != ev->u.ullval)
             {
-                    return 0;
+              return 0;
             }
 
           ev->u.sval = (short) ev->u.ullval;
@@ -474,7 +510,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
           if (ev->u.fval > (float) ACE_INT16_MAX
               || ev->u.fval < (float) ACE_INT16_MIN)
             {
-                    return 0;
+              return 0;
             }
 
           ev->u.sval = (short) ev->u.fval;
@@ -484,7 +520,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
           if (ev->u.dval > (double) ACE_INT16_MAX
               || ev->u.dval < (double) ACE_INT16_MIN)
             {
-                    return 0;
+              return 0;
             }
 
           ev->u.sval = (short) ev->u.dval;
@@ -1699,35 +1735,70 @@ incompatible_types (AST_Expression::ExprType t1,
 // @@(JP) This just maps one enum to another. It's a temporary fix,
 // but AST_Expression::EvalKind should go eventually.
 static AST_Expression::AST_ExprValue *
-eval_kind(AST_Expression::AST_ExprValue *ev, AST_Expression::EvalKind ek)
+eval_kind (AST_Expression::AST_ExprValue *ev, AST_Expression::EvalKind ek)
 {
+  // Make a copy to simplify the memory management logic.
+  AST_Expression::AST_ExprValue *newval = 0;
+  ACE_NEW_RETURN (newval,
+                  AST_Expression::AST_ExprValue,
+                  0);
+                  
+  if (ev != 0)
+    {
+      *newval = *ev;
+    }
+    
+  AST_Expression::AST_ExprValue *retval = 0;
+
   switch (ek)
   {
     case AST_Expression::EK_const:
-      return ev;
+      retval = newval;
+      break;
     case AST_Expression::EK_positive_int:
-      return coerce_value (ev, AST_Expression::EV_ulong);
+      retval = coerce_value (newval, AST_Expression::EV_ulong);
+      break;
     case AST_Expression::EK_short:
-      return coerce_value (ev, AST_Expression::EV_short);
+      retval = coerce_value (newval, AST_Expression::EV_short);
+      break;
     case AST_Expression::EK_ushort:
-      return coerce_value (ev, AST_Expression::EV_ushort);
+      retval = coerce_value (newval, AST_Expression::EV_ushort);
+      break;
     case AST_Expression::EK_long:
-      return coerce_value (ev, AST_Expression::EV_long);
+      retval = coerce_value (newval, AST_Expression::EV_long);
+      break;
     case AST_Expression::EK_ulong:
-      return coerce_value (ev, AST_Expression::EV_ulong);
+      retval = coerce_value (newval, AST_Expression::EV_ulong);
+      break;
 #if ! defined (ACE_LACKS_LONGLONG_T)
     case AST_Expression::EK_longlong:
-      return coerce_value (ev, AST_Expression::EV_longlong);
+      retval = coerce_value (newval, AST_Expression::EV_longlong);
+      break;
     case AST_Expression::EK_ulonglong:
-      return coerce_value (ev, AST_Expression::EV_ulonglong);
+      retval = coerce_value (newval, AST_Expression::EV_ulonglong);
+      break;
 #endif /* ! defined (ACE_LACKS_LONGLONG_T) */
     case AST_Expression::EK_octet:
-      return coerce_value (ev, AST_Expression::EV_octet);
+      retval = coerce_value (newval, AST_Expression::EV_octet);
+      break;
     case AST_Expression::EK_bool:
-      return coerce_value (ev, AST_Expression::EV_bool);
+      retval = coerce_value (newval, AST_Expression::EV_bool);
+      break;
     default:
-      return 0;
+      break;
   }
+  
+  // Sometimes the call above to coerce_value() will return an
+  // evaluated newval, other times 0. But a heap-allocated 
+  // ExprValue is not always passed to coerce_value(), so we
+  // have to manage it here, where we know it is always a 'new'.
+  if (retval != newval)
+    {
+      delete newval;
+      newval = 0;
+    }
+    
+  return retval;
 }
 
 // Private operations.
@@ -2026,30 +2097,30 @@ AST_Expression::eval_bit_op (AST_Expression::EvalKind ek)
       retval->et = EV_longlong;
 
       switch (this->pd_ec)
-  {
-        case EC_or:
-          retval->u.llval =
-            this->pd_v1->ev ()->u.llval | this->pd_v2->ev ()->u.llval;
-          break;
-        case EC_xor:
-          retval->u.llval =
-            this->pd_v1->ev ()->u.llval ^ this->pd_v2->ev ()->u.llval;
-          break;
-        case EC_and:
-          retval->u.llval =
-            this->pd_v1->ev ()->u.llval & this->pd_v2->ev ()->u.llval;
-          break;
-        case EC_left:
-          retval->u.llval =
-            this->pd_v1->ev ()->u.llval << this->pd_v2->ev ()->u.llval;
-          break;
-        case EC_right:
-          retval->u.llval =
-            this->pd_v1->ev ()->u.llval >> this->pd_v2->ev ()->u.llval;
-          break;
-        default:
-          return 0;
-  }
+        {
+          case EC_or:
+            retval->u.llval =
+              this->pd_v1->ev ()->u.llval | this->pd_v2->ev ()->u.llval;
+            break;
+          case EC_xor:
+            retval->u.llval =
+              this->pd_v1->ev ()->u.llval ^ this->pd_v2->ev ()->u.llval;
+            break;
+          case EC_and:
+            retval->u.llval =
+              this->pd_v1->ev ()->u.llval & this->pd_v2->ev ()->u.llval;
+            break;
+          case EC_left:
+            retval->u.llval =
+              this->pd_v1->ev ()->u.llval << this->pd_v2->ev ()->u.llval;
+            break;
+          case EC_right:
+            retval->u.llval =
+              this->pd_v1->ev ()->u.llval >> this->pd_v2->ev ()->u.llval;
+            break;
+          default:
+            return 0;
+        }
     }
   else
 #endif
@@ -2393,44 +2464,51 @@ AST_Expression::check_and_coerce (AST_Expression::ExprType t,
 AST_Expression::AST_ExprValue *
 AST_Expression::coerce (AST_Expression::ExprType t)
 {
+  AST_ExprValue *tmp = 0;
+
   // First, evaluate it, then try to coerce result type.
   // If already evaluated, return the result.
   switch (t)
   {
     case EV_short:
-      this->pd_ev = this->eval_internal (EK_short);
+      tmp = this->eval_internal (EK_short);
       break;
     case EV_ushort:
-      this->pd_ev = this->eval_internal (EK_ushort);
+      tmp = this->eval_internal (EK_ushort);
       break;
     case EV_long:
-      this->pd_ev = this->eval_internal (EK_long);
+      tmp = this->eval_internal (EK_long);
       break;
     case EV_ulong:
-      this->pd_ev = this->eval_internal (EK_ulong);
+      tmp = this->eval_internal (EK_ulong);
       break;
 #if ! defined (ACE_LACKS_LONGLONG_T)
     case EV_longlong:
-      this->pd_ev = this->eval_internal (EK_longlong);
+      tmp = this->eval_internal (EK_longlong);
       break;
     case EV_ulonglong:
-      this->pd_ev = this->eval_internal (EK_ulonglong);
+      tmp = this->eval_internal (EK_ulonglong);
       break;
 #endif /* ! defined (ACE_LACKS_LONGLONG_T) */
     case EV_octet:
-      this->pd_ev = this->eval_internal (EK_octet);
+      tmp = this->eval_internal (EK_octet);
       break;
     case EV_bool:
-      this->pd_ev = this->eval_internal (EK_bool);
+      tmp = this->eval_internal (EK_bool);
       break;
     default:
-      this->pd_ev = this->eval_internal (EK_const);
+      tmp = this->eval_internal (EK_const);
       break;
   }
 
-  if (pd_ev == 0)
+  if (tmp == 0)
     {
       return 0;
+    }
+  else
+    {
+      delete this->pd_ev;
+      this->pd_ev = tmp;
     }
 
   // Create a copy to contain coercion result.
@@ -2446,8 +2524,11 @@ AST_Expression::coerce (AST_Expression::ExprType t)
     case EV_longdouble:
     case EV_void:
     case EV_none:
-    case EV_enum:
+      delete copy;
       return 0;
+    case EV_enum:
+      copy->u.ulval = this->pd_ev->u.ulval;
+      break;
     case EV_short:
       copy->u.sval = this->pd_ev->u.sval;
       break;
@@ -2465,6 +2546,7 @@ AST_Expression::coerce (AST_Expression::ExprType t)
       copy->u.llval = this->pd_ev->u.llval;
       break;
 #else /* ! defined (ACE_LACKS_LONGLONG_T) */
+      delete copy;
       return 0;
 #endif /* ! defined (ACE_LACKS_LONGLONG_T) */
     case EV_ulonglong:
@@ -2472,6 +2554,7 @@ AST_Expression::coerce (AST_Expression::ExprType t)
       copy->u.ullval = this->pd_ev->u.ullval;
       break;
 #else /* ! defined (ACE_LACKS_LONGLONG_T) */
+      delete copy;
       return 0;
 #endif /* ! defined (ACE_LACKS_LONGLONG_T) */
     case EV_bool:
@@ -2572,26 +2655,13 @@ AST_Expression::eval_internal (AST_Expression::EvalKind ek)
 
 // Public operations.
 
-// Evaluate an AST_Expression, producing an AST_ExprValue or 0.
-AST_Expression::AST_ExprValue *
-AST_Expression::eval (AST_Expression::EvalKind ek)
-{
-  // Call internal evaluator which does not coerce value to
-  // EvalKind-expected format
-  AST_Expression::AST_ExprValue *v = this->eval_internal (ek);
-
-  //  Then coerce according to EvalKind-expected format.
-  return eval_kind (v,
-                    ek);
-}
-
 // Evaluate "this", assigning the value to the pd_ev field.
 void
 AST_Expression::evaluate (EvalKind ek)
 {
-  this->pd_ev = this->eval_internal (ek);
-  this->pd_ev = eval_kind (pd_ev,
-                           ek);
+  AST_ExprValue *tmp = eval_kind (this->pd_ev, ek);
+  delete this->pd_ev;
+  this->pd_ev = tmp;
 }
 
 // Expression equality comparison operator.
@@ -2988,8 +3058,39 @@ AST_Expression::ast_accept (ast_visitor *visitor)
 void
 AST_Expression::destroy (void)
 {
-//  delete this->pd_ev;
-//  this->pd_ev = 0;
+  if (0 != this->pd_ev && EV_string == this->pd_ev->et)
+    {
+      this->pd_ev->u.strval->destroy ();
+      delete this->pd_ev->u.strval;
+      this->pd_ev->u.strval = 0;
+    }
+
+  delete this->pd_ev;
+  this->pd_ev = 0;
+
+  if (this->pd_v1 != 0)
+    {
+      this->pd_v1->destroy ();
+    }
+
+  if (this->pd_v2 != 0)
+    {
+      this->pd_v2->destroy ();
+    }
+
+  delete this->pd_v1;
+  this->pd_v1 = 0;
+
+  delete this->pd_v2;
+  this->pd_v2 = 0;
+  
+  if (this->pd_n != 0)
+    {
+      this->pd_n->destroy ();
+    }
+    
+  delete this->pd_n;
+  this->pd_n = 0;
 }
 
 // Data accessors.
@@ -3036,12 +3137,6 @@ AST_Expression::ec (void)
   return this->pd_ec;
 }
 
-void
-AST_Expression::set_ec (AST_Expression::ExprComb new_ec)
-{
-  this->pd_ec = new_ec;
-}
-
 AST_Expression::AST_ExprValue   *
 AST_Expression::ev (void)
 {
@@ -3051,6 +3146,7 @@ AST_Expression::ev (void)
 void
 AST_Expression::set_ev (AST_Expression::AST_ExprValue *new_ev)
 {
+  delete this->pd_ev;
   this->pd_ev = new_ev;
 }
 

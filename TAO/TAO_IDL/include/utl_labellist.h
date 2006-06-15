@@ -87,6 +87,9 @@ public:
 
   // Get list item.
   AST_UnionLabel *head (void);
+  
+  // Cleanup.
+  virtual void destroy (void);
 
 private:
   AST_UnionLabel *pd_car_data;

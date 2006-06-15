@@ -90,7 +90,8 @@ AST_Sequence::AST_Sequence (void)
     AST_Type (),
     AST_ConcreteType (),
     pd_max_size (0),
-    pd_base_type (0)
+    pd_base_type (0),
+    owns_base_type_ (false)
 {
   // A sequence data type is always VARIABLE.
   this->size_type (AST_Type::VARIABLE);
@@ -111,7 +112,8 @@ AST_Sequence::AST_Sequence (AST_Expression *ms,
     AST_ConcreteType (AST_Decl::NT_sequence,
                       n),
     pd_max_size (ms),
-    pd_base_type (bt)
+    pd_base_type (bt),
+    owns_base_type_ (false)
 {
   // Check if we are bounded or unbounded. An expression value of 0 means
   // unbounded.
@@ -126,6 +128,13 @@ AST_Sequence::AST_Sequence (AST_Expression *ms,
 
   // A sequence data type is always VARIABLE.
   this->size_type (AST_Type::VARIABLE);
+
+  AST_Decl::NodeType nt = bt->node_type ();
+  
+  if (AST_Decl::NT_array == nt || AST_Decl::NT_sequence == nt)
+    {
+      this->owns_base_type_ = true;
+    }
 }
 
 AST_Sequence::~AST_Sequence (void)
@@ -167,27 +176,25 @@ AST_Sequence::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
         }
     }
 
-  if (this->match_names (this, list))
+  if (this->match_names (type, list))
     {
       // They match.
       this->in_recursion_ = 1;
       idl_global->recursive_type_seen_ = true;
-      return this->in_recursion_;
     }
   else
     {
       // Check the element type.
-      ACE_Unbounded_Queue<AST_Type *> scope_list = list;
-      scope_list.enqueue_tail (this);
-      this->in_recursion_ = type->in_recursion (scope_list);
+      list.enqueue_tail (type);
+      this->in_recursion_ = type->in_recursion (list);
 
       if (this->in_recursion_ == 1)
         {
           idl_global->recursive_type_seen_ = true;
         }
-
-      return this->in_recursion_;
     }
+
+  return this->in_recursion_;
 }
 
 // Redefinition of inherited virtual operations.
@@ -233,6 +240,23 @@ bool
 AST_Sequence::legal_for_primary_key (void) const
 {
   return this->base_type ()->legal_for_primary_key ();
+}
+
+void
+AST_Sequence::destroy (void)
+{
+  if (this->owns_base_type_)
+    {
+      this->pd_base_type->destroy ();
+      delete this->pd_base_type;
+      this->pd_base_type = 0;
+    }
+
+  this->pd_max_size->destroy ();
+  delete this->pd_max_size;
+  this->pd_max_size = 0;
+  
+  this->AST_ConcreteType::destroy ();
 }
 
 // Narrowing.
