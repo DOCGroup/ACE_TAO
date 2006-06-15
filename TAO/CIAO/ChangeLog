@@ -1,3 +1,13 @@
+Thu Jun 15 15:10:58 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tools/IDL3_to_IDL2/be_extern.h:
+        * tools/IDL3_to_IDL2/be_init.cpp:
+        * tools/IDL3_to_IDL2/be_produce.cpp:
+        
+          Changes to keep this backend in sync with changes to the
+          TAO_IDL front end - see TAO ChangeLog entry of a few
+          minutes ago.
+
 Thu Jun  8 16:07:05 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ciao/Servant_Impl_Utils_T.cpp (describe_multiplex_receptacle):
