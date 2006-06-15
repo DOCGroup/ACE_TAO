@@ -97,4 +97,12 @@ FE_new_UTL_Error (void);
 TAO_IDL_FE_Export UTL_Indenter *
 FE_new_UTL_Indenter (void);
 
+// Exception thrown when exiting prematurely in the front end.
+// Also used when command line options limit the output to
+// usage, version or preprocessed files. Catch block is just
+// before front end cleanup and exit.
+class TAO_IDL_FE_Export FE_Bailout
+{
+};
+
 #endif           // _FE_EXTERN_FE_EXTERN_HH

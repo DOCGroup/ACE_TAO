@@ -92,7 +92,6 @@ be_scope::decl (void)
 void
 be_scope::destroy (void)
 {
-  UTL_Scope::destroy ();
 }
 
 int

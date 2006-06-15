@@ -91,7 +91,8 @@ AST_Array::AST_Array (void)
     AST_ConcreteType (),
     pd_n_dims (0),
     pd_dims (0),
-    pd_base_type (0)
+    pd_base_type (0),
+    owns_base_type_ (false)
 {
 }
 
@@ -110,7 +111,8 @@ AST_Array::AST_Array (UTL_ScopedName *n,
     AST_ConcreteType (AST_Decl::NT_array,
                       n),
     pd_n_dims (nd),
-    pd_base_type (0)
+    pd_base_type (0),
+    owns_base_type_ (false)
 {
   this->pd_dims = this->compute_dims (ds,
                                       nd);
@@ -144,7 +146,13 @@ AST_Array::compute_dims (UTL_ExprList *ds,
        !iter.is_done () && i < nds;
        iter.next (), i++)
     {
-      result[i] = iter.item ();
+      AST_Expression *orig = iter.item ();
+      AST_Expression *copy = 0;
+      ACE_NEW_RETURN (copy,
+                      AST_Expression (orig,
+                                      orig->ev ()->et),
+                      0);
+      result[i] = copy;
     }
 
   return result;
@@ -225,12 +233,41 @@ AST_Array::set_base_type (AST_Type *nbt)
   this->pd_base_type = nbt;
 
   this->is_local_ = nbt->is_local ();
+
+  if (AST_Decl::NT_sequence == nbt->node_type ())
+    {
+      this->owns_base_type_ = true;
+    }
 }
 
 bool
 AST_Array::legal_for_primary_key (void) const
 {
   return this->base_type ()->legal_for_primary_key ();
+}
+
+void
+AST_Array::destroy (void)
+{
+  if (this->owns_base_type_)
+    {
+      this->pd_base_type->destroy ();
+      delete this->pd_base_type;
+      this->pd_base_type = 0;
+    }
+
+  for (unsigned long i = 0; i < this->pd_n_dims; ++i)
+    {
+      this->pd_dims[i]->destroy ();
+      delete this->pd_dims[i];
+      this->pd_dims[i] = 0;
+    }
+    
+  delete [] this->pd_dims;
+  this->pd_dims = 0;
+  this->pd_n_dims = 0;
+  
+  this->AST_ConcreteType::destroy ();
 }
 
 void

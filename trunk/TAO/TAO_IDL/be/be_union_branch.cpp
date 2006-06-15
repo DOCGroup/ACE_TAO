@@ -188,6 +188,13 @@ be_union_branch::accept (be_visitor *visitor)
   return visitor->visit_union_branch (this);
 }
 
+void
+be_union_branch::destroy (void)
+{
+  this->be_decl::destroy ();
+  this->AST_UnionBranch::destroy ();
+}
+
 // Narrowing.
 IMPL_NARROW_METHODS2 (be_union_branch, AST_UnionBranch, be_decl)
 IMPL_NARROW_FROM_DECL (be_union_branch)

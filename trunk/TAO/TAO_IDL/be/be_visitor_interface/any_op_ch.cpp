@@ -42,7 +42,7 @@ be_visitor_interface_any_op_ch::visit_interface (be_interface *node)
 {
   if (node->cli_hdr_any_op_gen ()
       || node->imported ()
-      || node->is_local ())
+      || (node->is_local () && !be_global->gen_local_iface_anyops ()))
     {
       return 0;
     }

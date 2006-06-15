@@ -41,6 +41,12 @@ AST_Native::~AST_Native (void)
 {
 }
 
+void
+AST_Native::destroy (void)
+{
+  this->AST_Exception::destroy ();
+}
+
 // Dump this AST_Native node to the ostream o.
 void
 AST_Native::dump (ACE_OSTREAM_TYPE &o)

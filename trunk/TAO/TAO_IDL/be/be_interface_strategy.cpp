@@ -45,53 +45,6 @@ be_interface_strategy::be_interface_strategy (be_interface *node,
 
 be_interface_strategy::~be_interface_strategy (void)
 {
-  if (this->local_name_ != 0)
-    {
-      delete [] this->local_name_;
-      this->local_name_ = 0;
-    }
-
-  if (this->full_name_ != 0)
-    {
-      delete [] this->full_name_;
-      this->full_name_ = 0;
-    }
-
-  if (this->flat_name_ != 0)
-    {
-      delete [] this->flat_name_;
-      this->flat_name_ = 0;
-    }
-
-  if (this->repoID_ != 0)
-    {
-      delete [] this->repoID_;
-      this->repoID_ = 0;
-    }
-
-  if (this->full_skel_name_ != 0)
-    {
-      delete [] this->full_skel_name_;
-      this->full_skel_name_ = 0;
-    }
-
-  if (this->full_coll_name_ != 0)
-    {
-      delete [] this->full_coll_name_;
-      this->full_coll_name_ = 0;
-    }
-
-  if (this->local_coll_name_ != 0)
-    {
-      delete [] this->local_coll_name_;
-      this->local_coll_name_ = 0;
-    }
-
-  if (this->relative_skel_name_ != 0)
-    {
-      delete [] this->relative_skel_name_;
-      this->relative_skel_name_ = 0;
-    }
 }
 
 // Interface Type Strategy Base Class
@@ -352,153 +305,56 @@ be_interface_strategy::replacement (void)
   return 0;
 }
 
-
-// ****************************************************************
-// AMI Handler Strategy
-
-be_interface_ami_handler_strategy::be_interface_ami_handler_strategy (
-    be_interface *node
-  )
-  : be_interface_default_strategy (node,
-                                   AMI_HANDLER)
+void
+be_interface_strategy::destroy (void)
 {
-}
-
-be_interface_ami_handler_strategy::~be_interface_ami_handler_strategy (void)
-{
-}
-
-
-TAO_CodeGen::CG_STATE
-be_interface_ami_handler_strategy::next_state (
-    TAO_CodeGen::CG_STATE current_state,
-    int /*is_extra_state */
-  )
-{
-  return current_state;
-}
-
-
-// ****************************************************************
-// AMI Exception Holder Strategy
-
-be_interface_ami_exception_holder_strategy::
-be_interface_ami_exception_holder_strategy (be_interface *node)
-  : be_interface_default_strategy (node,
-                                   AMI_EXCEPTION_HOLDER)
-{
-}
-
-be_interface_ami_exception_holder_strategy
-::~be_interface_ami_exception_holder_strategy (void)
-{
-}
-
-
-TAO_CodeGen::CG_STATE
-be_interface_ami_exception_holder_strategy::next_state (
-    TAO_CodeGen::CG_STATE current_state,
-    int is_extra_state
-  )
-{
-  if (is_extra_state)
+  if (this->local_name_ != 0)
     {
-      switch (current_state)
-        {
-        case TAO_CodeGen::TAO_VALUETYPE_OBV_CH:
-          return TAO_CodeGen::TAO_AMI_EXCEPTION_HOLDER_VALUETYPE_CH;
-        case TAO_CodeGen::TAO_VALUETYPE_OBV_CS:
-          return TAO_CodeGen::TAO_AMI_EXCEPTION_HOLDER_VALUETYPE_CS;
-        default:
-          return current_state;
-        }
+      delete [] this->local_name_;
+      this->local_name_ = 0;
     }
-  else
+
+  if (this->full_name_ != 0)
     {
-      return current_state;
+      delete [] this->full_name_;
+      this->full_name_ = 0;
     }
-}
 
-
-int
-be_interface_ami_exception_holder_strategy::has_extra_code_generation (
-    TAO_CodeGen::CG_STATE current_state
-  )
-{
-  if (current_state == TAO_CodeGen::TAO_VALUETYPE_OBV_CH
-      || current_state == TAO_CodeGen::TAO_VALUETYPE_OBV_CS)
+  if (this->flat_name_ != 0)
     {
-      return 1;
+      delete [] this->flat_name_;
+      this->flat_name_ = 0;
     }
-  else
+
+  if (this->repoID_ != 0)
     {
-      return 0;
+      delete [] this->repoID_;
+      this->repoID_ = 0;
     }
-}
 
-
-// ****************************************************************
-// AMI Strategy
-
-be_interface_ami_strategy::be_interface_ami_strategy (be_interface *node,
-                                                      be_interface *handler)
-  : be_interface_default_strategy (node,
-                                   AMI_INTERFACE),
-  handler_ (handler)
-{
-}
-
-be_interface_ami_strategy::~be_interface_ami_strategy (void)
-{
-}
-
-
-TAO_CodeGen::CG_STATE
-be_interface_ami_strategy::next_state (TAO_CodeGen::CG_STATE current_state,
-                                       int is_extra_state)
-{
-  if (is_extra_state)
+  if (this->full_skel_name_ != 0)
     {
-      switch (current_state)
-        {
-        case TAO_CodeGen::TAO_AMI_INTERFACE_CH:
-          return TAO_CodeGen::TAO_INTERFACE_CH;
-        default:
-          return current_state;
-        }
+      delete [] this->full_skel_name_;
+      this->full_skel_name_ = 0;
     }
-  else
-    {
-      switch (current_state)
-        {
-        case TAO_CodeGen::TAO_INTERFACE_CH:
-          return TAO_CodeGen::TAO_AMI_INTERFACE_CH;
-        default:
-          return current_state;
-        }
-    }
-}
 
-
-int
-be_interface_ami_strategy::has_extra_code_generation (
-    TAO_CodeGen::CG_STATE current_state
-  )
-{
-  if (current_state == TAO_CodeGen::TAO_AMI_INTERFACE_CH)
+  if (this->full_coll_name_ != 0)
     {
-      return 1;
+      delete [] this->full_coll_name_;
+      this->full_coll_name_ = 0;
     }
-  else
-    {
-      return 0;
-    }
-}
 
-be_interface *
-be_interface_ami_strategy::replacement (void)
-{
-  return handler_;
+  if (this->local_coll_name_ != 0)
+    {
+      delete [] this->local_coll_name_;
+      this->local_coll_name_ = 0;
+    }
+
+  if (this->relative_skel_name_ != 0)
+    {
+      delete [] this->relative_skel_name_;
+      this->relative_skel_name_ = 0;
+    }
 }
 
 // ****************************************************************
@@ -547,101 +403,6 @@ be_interface_default_strategy::be_interface_default_strategy (
 
 be_interface_default_strategy::~be_interface_default_strategy (void)
 {
-  if (this->base_proxy_impl_name_ != 0)
-    {
-      delete [] this->base_proxy_impl_name_;
-      this->base_proxy_impl_name_ = 0;
-    }
-
-  if (this->remote_proxy_impl_name_ != 0)
-    {
-      delete [] this->remote_proxy_impl_name_;
-      this->remote_proxy_impl_name_ = 0;
-    }
-
-  if (this->direct_proxy_impl_name_ != 0)
-    {
-      delete [] this->direct_proxy_impl_name_;
-      this->direct_proxy_impl_name_ = 0;
-    }
-
-  if (this->full_base_proxy_impl_name_ != 0)
-    {
-      delete [] this->full_base_proxy_impl_name_;
-      this->full_base_proxy_impl_name_ = 0;
-    }
-
-  if (this->full_remote_proxy_impl_name_ != 0)
-    {
-      delete [] this->full_remote_proxy_impl_name_;
-      this->full_remote_proxy_impl_name_ = 0;
-    }
-
-  if (this->full_direct_proxy_impl_name_ != 0)
-    {
-      delete [] this->full_direct_proxy_impl_name_;
-      this->full_direct_proxy_impl_name_ = 0;
-    }
-
-  if (this->base_proxy_broker_ != 0)
-    {
-      delete [] this->base_proxy_broker_;
-      this->base_proxy_broker_ = 0;
-    }
-
-  if (this->remote_proxy_broker_ != 0)
-    {
-      delete [] this->remote_proxy_broker_;
-      this->remote_proxy_broker_ = 0;
-    }
-
-  if (this->strategized_proxy_broker_ != 0)
-    {
-      delete [] this->strategized_proxy_broker_;
-      this->strategized_proxy_broker_ = 0;
-    }
-
-  if (this->full_base_proxy_broker_name_ != 0)
-    {
-      delete [] this->full_base_proxy_broker_name_;
-      this->full_base_proxy_broker_name_ = 0;
-    }
-
-  if (this->full_remote_proxy_broker_name_ != 0)
-    {
-      delete [] this->full_remote_proxy_broker_name_;
-      this->full_remote_proxy_broker_name_ = 0;
-    }
-
-  if (this->full_strategized_proxy_broker_name_ != 0)
-    {
-      delete [] this->full_strategized_proxy_broker_name_;
-      this->full_strategized_proxy_broker_name_ = 0;
-    }
-
-  if (this->client_scope_ != 0)
-    {
-      delete [] this->client_scope_;
-      this->client_scope_ = 0;
-    }
-
-  if (this->flat_client_scope_ != 0)
-    {
-      delete [] this->flat_client_scope_;
-      this->flat_client_scope_ = 0;
-    }
-
-  if (this->server_scope_ != 0)
-    {
-      delete [] this->server_scope_;
-      this->server_scope_ = 0;
-    }
-
-  if (this->flat_server_scope_ != 0)
-    {
-      delete [] this->flat_server_scope_;
-      this->flat_server_scope_ = 0;
-    }
 }
 
 const char *
@@ -1110,3 +871,254 @@ be_interface_default_strategy::full_strategized_proxy_broker_name (void)
 
   return this->full_strategized_proxy_broker_name_;
 }
+
+void
+be_interface_default_strategy::destroy (void)
+{
+  if (this->base_proxy_impl_name_ != 0)
+    {
+      delete [] this->base_proxy_impl_name_;
+      this->base_proxy_impl_name_ = 0;
+    }
+
+  if (this->remote_proxy_impl_name_ != 0)
+    {
+      delete [] this->remote_proxy_impl_name_;
+      this->remote_proxy_impl_name_ = 0;
+    }
+
+  if (this->direct_proxy_impl_name_ != 0)
+    {
+      delete [] this->direct_proxy_impl_name_;
+      this->direct_proxy_impl_name_ = 0;
+    }
+
+  if (this->full_base_proxy_impl_name_ != 0)
+    {
+      delete [] this->full_base_proxy_impl_name_;
+      this->full_base_proxy_impl_name_ = 0;
+    }
+
+  if (this->full_remote_proxy_impl_name_ != 0)
+    {
+      delete [] this->full_remote_proxy_impl_name_;
+      this->full_remote_proxy_impl_name_ = 0;
+    }
+
+  if (this->full_direct_proxy_impl_name_ != 0)
+    {
+      delete [] this->full_direct_proxy_impl_name_;
+      this->full_direct_proxy_impl_name_ = 0;
+    }
+
+  if (this->base_proxy_broker_ != 0)
+    {
+      delete [] this->base_proxy_broker_;
+      this->base_proxy_broker_ = 0;
+    }
+
+  if (this->remote_proxy_broker_ != 0)
+    {
+      delete [] this->remote_proxy_broker_;
+      this->remote_proxy_broker_ = 0;
+    }
+
+  if (this->strategized_proxy_broker_ != 0)
+    {
+      delete [] this->strategized_proxy_broker_;
+      this->strategized_proxy_broker_ = 0;
+    }
+
+  if (this->full_base_proxy_broker_name_ != 0)
+    {
+      delete [] this->full_base_proxy_broker_name_;
+      this->full_base_proxy_broker_name_ = 0;
+    }
+
+  if (this->full_remote_proxy_broker_name_ != 0)
+    {
+      delete [] this->full_remote_proxy_broker_name_;
+      this->full_remote_proxy_broker_name_ = 0;
+    }
+
+  if (this->full_strategized_proxy_broker_name_ != 0)
+    {
+      delete [] this->full_strategized_proxy_broker_name_;
+      this->full_strategized_proxy_broker_name_ = 0;
+    }
+
+  if (this->client_scope_ != 0)
+    {
+      delete [] this->client_scope_;
+      this->client_scope_ = 0;
+    }
+
+  if (this->flat_client_scope_ != 0)
+    {
+      delete [] this->flat_client_scope_;
+      this->flat_client_scope_ = 0;
+    }
+
+  if (this->server_scope_ != 0)
+    {
+      delete [] this->server_scope_;
+      this->server_scope_ = 0;
+    }
+
+  if (this->flat_server_scope_ != 0)
+    {
+      delete [] this->flat_server_scope_;
+      this->flat_server_scope_ = 0;
+    }
+    
+  this->be_interface_strategy::destroy ();
+}
+
+// ****************************************************************
+// AMI Handler Strategy
+
+be_interface_ami_handler_strategy::be_interface_ami_handler_strategy (
+    be_interface *node
+  )
+  : be_interface_default_strategy (node,
+                                   AMI_HANDLER)
+{
+}
+
+be_interface_ami_handler_strategy::~be_interface_ami_handler_strategy (void)
+{
+}
+
+
+TAO_CodeGen::CG_STATE
+be_interface_ami_handler_strategy::next_state (
+    TAO_CodeGen::CG_STATE current_state,
+    int /*is_extra_state */
+  )
+{
+  return current_state;
+}
+
+
+// ****************************************************************
+// AMI Exception Holder Strategy
+
+be_interface_ami_exception_holder_strategy::
+be_interface_ami_exception_holder_strategy (be_interface *node)
+  : be_interface_default_strategy (node,
+                                   AMI_EXCEPTION_HOLDER)
+{
+}
+
+be_interface_ami_exception_holder_strategy
+::~be_interface_ami_exception_holder_strategy (void)
+{
+}
+
+
+TAO_CodeGen::CG_STATE
+be_interface_ami_exception_holder_strategy::next_state (
+    TAO_CodeGen::CG_STATE current_state,
+    int is_extra_state
+  )
+{
+  if (is_extra_state)
+    {
+      switch (current_state)
+        {
+        case TAO_CodeGen::TAO_VALUETYPE_OBV_CH:
+          return TAO_CodeGen::TAO_AMI_EXCEPTION_HOLDER_VALUETYPE_CH;
+        case TAO_CodeGen::TAO_VALUETYPE_OBV_CS:
+          return TAO_CodeGen::TAO_AMI_EXCEPTION_HOLDER_VALUETYPE_CS;
+        default:
+          return current_state;
+        }
+    }
+  else
+    {
+      return current_state;
+    }
+}
+
+
+int
+be_interface_ami_exception_holder_strategy::has_extra_code_generation (
+    TAO_CodeGen::CG_STATE current_state
+  )
+{
+  if (current_state == TAO_CodeGen::TAO_VALUETYPE_OBV_CH
+      || current_state == TAO_CodeGen::TAO_VALUETYPE_OBV_CS)
+    {
+      return 1;
+    }
+  else
+    {
+      return 0;
+    }
+}
+
+
+// ****************************************************************
+// AMI Strategy
+
+be_interface_ami_strategy::be_interface_ami_strategy (be_interface *node,
+                                                      be_interface *handler)
+  : be_interface_default_strategy (node,
+                                   AMI_INTERFACE),
+  handler_ (handler)
+{
+}
+
+be_interface_ami_strategy::~be_interface_ami_strategy (void)
+{
+}
+
+
+TAO_CodeGen::CG_STATE
+be_interface_ami_strategy::next_state (TAO_CodeGen::CG_STATE current_state,
+                                       int is_extra_state)
+{
+  if (is_extra_state)
+    {
+      switch (current_state)
+        {
+        case TAO_CodeGen::TAO_AMI_INTERFACE_CH:
+          return TAO_CodeGen::TAO_INTERFACE_CH;
+        default:
+          return current_state;
+        }
+    }
+  else
+    {
+      switch (current_state)
+        {
+        case TAO_CodeGen::TAO_INTERFACE_CH:
+          return TAO_CodeGen::TAO_AMI_INTERFACE_CH;
+        default:
+          return current_state;
+        }
+    }
+}
+
+
+int
+be_interface_ami_strategy::has_extra_code_generation (
+    TAO_CodeGen::CG_STATE current_state
+  )
+{
+  if (current_state == TAO_CodeGen::TAO_AMI_INTERFACE_CH)
+    {
+      return 1;
+    }
+  else
+    {
+      return 0;
+    }
+}
+
+be_interface *
+be_interface_ami_strategy::replacement (void)
+{
+  return handler_;
+}
+

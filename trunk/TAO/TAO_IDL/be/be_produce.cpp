@@ -71,6 +71,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "be_visitor_context.h"
 #include "be_root.h"
 #include "be_extern.h"
+#include "fe_extern.h"
 #include "global_extern.h"
 
 ACE_RCSID (be,
@@ -91,191 +92,89 @@ BE_abort (void)
   ACE_ERROR ((LM_ERROR,
               "Fatal Error - Aborting\n"));
 
-  BE_cleanup ();
+  // BE_cleanup will be called after the exception is caught.
+  throw FE_Bailout ();
+}
 
-  ACE_OS::exit (1);
+void
+BE_visit_root (be_visitor_decl &root_visitor, const char *which_pass)
+{
+  static be_root *root =
+    be_root::narrow_from_decl (idl_global->root ());
+    
+  if (-1 == root->accept (&root_visitor))
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "BE_visit_root - %s for Root failed\n",
+                  which_pass));
+      BE_abort ();
+    }
+    
+  root_visitor.ctx ()->reset ();
 }
 
 // Do the work of this BE. This is the starting point for code generation.
 TAO_IDL_BE_Export void
 BE_produce (void)
 {
-  // Root of the AST made up of BE nodes.
-  be_root *root = 0;
-
-  // Context information for the visitor root.
   be_visitor_context ctx;
-
-  // Configure the CodeGen object with the strategy to generate the visitors.
-  tao_cg->config_visitor_factory ();
-
-  // Get the root node and narrow it down to be the back-end root node.
-  AST_Decl *d = idl_global->root ();
-  root = be_root::narrow_from_decl (d);
-
-  if (root == 0)
-    {
-      ACE_ERROR ((LM_ERROR,
-                  "(%N:%l) be_produce - "
-                  "No Root\n"));
-      BE_abort ();
-    }
 
   if (!idl_global->ignore_idl3 ())
     {
-      // Make a pass over the AST and introduce
-      // CCM specific nodes.
       be_visitor_ccm_pre_proc ccm_preproc_visitor (&ctx);
-
-      if (root->accept (&ccm_preproc_visitor) == -1)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      "(%N:%l) be_produce - "
-                      "CCM preprocessing for Root failed\n"));
-          BE_abort ();
-        }
+      BE_visit_root (ccm_preproc_visitor, "CCM preprocessing");
     }
 
   if (be_global->ami_call_back ())
     {
-      // Make a pass over the AST and introduce
-      // AMI specific interfaces, methods and valuetypes.
       be_visitor_ami_pre_proc ami_preproc_visitor (&ctx);
-
-      if (root->accept (&ami_preproc_visitor) == -1)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      "(%N:%l) be_produce - "
-                      "AMI preprocessing for Root failed\n"));
-          BE_abort ();
-        }
+      BE_visit_root (ami_preproc_visitor, "AMI preprocessing");
     }
 
   if (be_global->gen_amh_classes ())
     {
-      // Make a pass over the AST and introduce
-      // AMH specific code
       be_visitor_amh_pre_proc amh_pre_proc_visitor (&ctx);
-
-      if (root->accept (&amh_pre_proc_visitor) == -1)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      "(%N:%l) be_produce - "
-                      "AMH preprocessing for Root failed\n"));
-          BE_abort ();
-        }
+      BE_visit_root (amh_pre_proc_visitor, "AMH preprocessing");
     }
 
-  // (1) Generate client header,
-  // instantiate a visitor context, and set the codegen state
-  ctx.state (TAO_CodeGen::TAO_ROOT_CH);
-
-  // Get a root visitor.
-  be_visitor_root_ch root_ch_visitor (&ctx);
-
-  // Initialize the anyop header stream, if the option is set.
-  if (be_global->gen_anyop_files ())
+  const char *fname = be_global->be_get_anyop_header_fname ();
+      
+  // No-op if the -GA wasn't on the command line.
+  if (-1 == tao_cg->start_anyop_header (fname))
     {
-      int status = 0;
-
-      status =
-        tao_cg->start_anyop_header (
-                  be_global->be_get_anyop_header_fname ()
-                );
-
-      if (status == -1)
-        {
-          ACE_ERROR ((LM_ERROR,
-                            "(%N:%l) TAO_CodeGen::"
-                            "TAO_CodeGen - "
-                            "Error opening anyop header file\n"));
-        }
-    }
-        
-  // Generate code for the client header
-  if (root->accept (&root_ch_visitor) == -1)
-    {
-      ACE_ERROR ((LM_ERROR,
-                  "(%N:%l) be_produce - "
-                  "client header for Root failed\n"));
       BE_abort ();
     }
+        
+  ctx.state (TAO_CodeGen::TAO_ROOT_CH);
+  be_visitor_root_ch root_ch_visitor (&ctx);
+  BE_visit_root (root_ch_visitor, "client header");
 
   // Initialize the anyop source stream, if the option is set.
   // It has to be done after the stub header file generation,
   // where checks for recursive types are done,
-  // and before stub source file generation,
-  // since #includes of Any-related files may be redirected to a
-  // separate file.
-  if (be_global->gen_anyop_files ())
+  // and before stub source file generation, since
+  // generation of Any-related #includes may be redirected.
+  fname = be_global->be_get_anyop_source_fname ();
+  
+  if (-1 == tao_cg->start_anyop_source (fname))
     {
-      int status = 0;
-
-      status =
-        tao_cg->start_anyop_source (
-                  be_global->be_get_anyop_source_fname ()
-                );
-
-      if (status == -1)
-        {
-          ACE_ERROR ((LM_ERROR,
-                            "(%N:%l) TAO_CodeGen::"
-                            "TAO_CodeGen - "
-                            "Error opening anyop source file\n"));
-        }
+      BE_abort ();
     }
 
-  // (3) Generate client inline and
-  // set the context information.
   if (be_global->gen_client_inline ())
     {
-      ctx.reset ();
       ctx.state (TAO_CodeGen::TAO_ROOT_CI);
-
-      // Create a visitor.
       be_visitor_root_ci root_ci_visitor (&ctx);
-
-      // Generate code for the client inline file.
-      if (root->accept (&root_ci_visitor) == -1)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      "(%N:%l) be_produce - "
-                      "client inline for Root failed\n"));
-          BE_abort ();
-        }
+      BE_visit_root (root_ci_visitor, "client inline");
     }
 
-  // (4) Generate client stubs.
-  ctx.reset ();
   ctx.state (TAO_CodeGen::TAO_ROOT_CS);
-
-  // Create a visitor.
   be_visitor_root_cs root_cs_visitor (&ctx);
+  BE_visit_root (root_cs_visitor, "client stub");
 
-  // Generate code for the client stubs.
-  if (root->accept (&root_cs_visitor) == -1)
-    {
-      ACE_ERROR ((LM_ERROR,
-                  "(%N:%l) be_produce - "
-                  "client stubs for Root failed\n"));
-      BE_abort ();
-    }
-
-  // (5) Generate server header.
-  ctx.reset ();
   ctx.state (TAO_CodeGen::TAO_ROOT_SH);
-
-  // Create a visitor.
   be_visitor_root_sh root_sh_visitor (&ctx);
-
-  // Generate code for the server header file.
-  if (root->accept (&root_sh_visitor) == -1)
-    {
-      ACE_ERROR ((LM_ERROR,
-                  "(%N:%l) be_produce - "
-                  "server header for Root failed\n"));
-      BE_abort ();
-    }
+  BE_visit_root (root_sh_visitor, "server header");
 
   // If skeleton file generation is suppressed, we're done.
   if (!be_global->gen_skel_files ())
@@ -286,96 +185,36 @@ BE_produce (void)
 
   if (be_global->gen_server_inline ())
     {
-      // (6) Generate server inline.
-      ctx.reset ();
       ctx.state (TAO_CodeGen::TAO_ROOT_SI);
-
-      // Create a visitor.
       be_visitor_root_si root_si_visitor (&ctx);
-
-      // Generate code for the server inline file.
-      if (root->accept (&root_si_visitor) == -1)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      "(%N:%l) be_produce - "
-                      "server inline for Root failed\n"));
-          BE_abort ();
-        }
+      BE_visit_root (root_si_visitor, "server inline");
     }
 
-  // (7) Generate server skeletons
-  ctx.reset ();
   ctx.state (TAO_CodeGen::TAO_ROOT_SS);
-
-  // Create a visitor.
   be_visitor_root_ss root_ss_visitor (&ctx);
+  BE_visit_root (root_ss_visitor, "server skeleton");
 
-  // Generate code for the server skeletons.
-  if (root->accept (&root_ss_visitor) == -1)
-    {
-      ACE_ERROR ((LM_ERROR,
-                  "(%N:%l) be_produce - "
-                  "server skeletons for Root failed\n"));
-      BE_abort ();
-    }
-
-  // (8) Generated server template header.
+  // Inline and source files for tie classes are generated
+  // by the corresponding skeleton visitors.
   if (be_global->gen_tie_classes ())
     {
-      ctx.reset ();
       ctx.state (TAO_CodeGen::TAO_ROOT_TIE_SH);
-
-      // Create a visitor.
       be_visitor_root_sth sth_visitor (&ctx);
-
-      // Generate code for the implementation header.
-      if (root->accept (&sth_visitor) == -1)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      "(%N:%l) be_produce - "
-                      "server template header for Root failed\n"));
-          BE_abort ();
-        }
+      BE_visit_root (sth_visitor, "server template header");
     }
 
-  // Check if the flags are set for generating the
-  // the implementation header and skeleton files.
   if (be_global->gen_impl_files ())
     {
-      // (9) generate implementation header.
-      ctx.reset ();
       ctx.state (TAO_CodeGen::TAO_ROOT_IH);
-
-      // Create a visitor.
       be_visitor_root_ih root_ih_visitor (&ctx);
+      BE_visit_root (root_ih_visitor, "implementation header");
 
-      // Generate code for the implementation header.
-      if (root->accept (&root_ih_visitor) == -1)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      "(%N:%l) be_produce - "
-                      "implementation skeletons for Root failed\n"));
-          BE_abort ();
-        }
-
-      // (10) Generate implementation source.
-      ctx.reset ();
       ctx.state (TAO_CodeGen::TAO_ROOT_IS);
-
-      // Create a visitor.
       be_visitor_root_is root_is_visitor (&ctx);
-
-      // Generate code for the implementation source.
-      if (root->accept (&root_is_visitor) == -1)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      "(%N:%l) be_produce - "
-                      "implementation skeletons for Root failed\n"));
-          BE_abort ();
-        }
+      BE_visit_root (root_is_visitor, "implementation skeleton");
     }
 
-  // Clean up.
+  // Done with this IDL file.
   BE_cleanup ();
 }
 

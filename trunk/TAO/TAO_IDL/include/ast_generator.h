@@ -109,15 +109,15 @@ public:
       long n_inherits,
       AST_Interface **inherits_flat,
       long n_inherits_flat,
-      bool local,
-      bool abstract
+      bool is_local,
+      bool is_abstract
     );
 
   // Create a node representing a forward declaration of an interface.
   virtual AST_InterfaceFwd *create_interface_fwd (
       UTL_ScopedName *n,
-      bool local,
-      bool abstract
+      bool is_local,
+      bool is_abstract
     );
 
   // Create a node representing a valuetype.
@@ -128,18 +128,18 @@ public:
       AST_ValueType *inherits_concrete,
       AST_Interface **inherits_flat,
       long n_inherits_flat,
-      AST_Interface **supports,
+      AST_Interface **supports_list,
       long n_supports,
       AST_Interface *supports_concrete,
-      bool abstract,
-      bool truncatable,
-      bool custom
+      bool is_abstract,
+      bool is_truncatable,
+      bool is_custom
     );
 
   // Create a node representing a forward declaration of a valuetype.
   virtual AST_ValueTypeFwd *create_valuetype_fwd (
       UTL_ScopedName *n,
-      bool abstract
+      bool is_abstract
     );
 
   // Create a node representing an eventtype.
@@ -150,25 +150,25 @@ public:
       AST_ValueType *inherits_concrete,
       AST_Interface **inherits_flat,
       long n_inherits_flat,
-      AST_Interface **supports,
+      AST_Interface **supports_list,
       long n_supports,
       AST_Interface *supports_concrete,
-      bool abstract,
-      bool truncatable,
-      bool custom
+      bool is_abstract,
+      bool is_truncatable,
+      bool is_custom
     );
 
   // Create a node representing a forward declaration of an eventtype.
   virtual AST_EventTypeFwd *create_eventtype_fwd (
       UTL_ScopedName *n,
-      bool abstract
+      bool is_abstract
     );
 
   // Create a node representing a component.
   virtual AST_Component *create_component (
       UTL_ScopedName *n,
       AST_Component *base_component,
-      AST_Interface **supports,
+      AST_Interface **supports_list,
       long n_supports,
       AST_Interface **supports_flat,
       long n_supports_flat
@@ -185,7 +185,7 @@ public:
       AST_Home *base_home,
       AST_Component *managed_component,
       AST_ValueType *primary_key,
-      AST_Interface **supports,
+      AST_Interface **support_lists,
       long n_supports,
       AST_Interface **supports_flat,
       long n_supports_flat
@@ -194,15 +194,15 @@ public:
   // Create a node representing an exception.
   virtual AST_Exception *create_exception (
       UTL_ScopedName *n,
-      bool local,
-      bool abstract
+      bool is_local,
+      bool is_abstract
     );
 
   // Create a node representing a structure.
   virtual AST_Structure *create_structure (
       UTL_ScopedName *n,
-      bool local,
-      bool abstract
+      bool is_local,
+      bool is_abstract
     );
 
   // Create a node representing a forward declaration of a structure.
@@ -210,16 +210,16 @@ public:
 
   // Create a node representing an enum.
   virtual AST_Enum *create_enum (UTL_ScopedName *n,
-                                 bool local,
-                                 bool abstract);
+                                 bool is_local,
+                                 bool is_abstract);
 
   // Create a node representing an operation on an interface.
   virtual AST_Operation *create_operation (
       AST_Type *rt,
       AST_Operation::Flags fl,
       UTL_ScopedName *n,
-      bool local,
-      bool abstract
+      bool is_local,
+      bool is_abstract
     );
 
   // Create a node representing a field in a structure, exception or
@@ -241,15 +241,15 @@ public:
       bool ro,
       AST_Type *ft,
       UTL_ScopedName *n,
-      bool local,
-      bool abstract
+      bool is_local,
+      bool is_abstract
     );
 
   // Create a node representing a union.
   virtual AST_Union *create_union (AST_ConcreteType *dt,
                                    UTL_ScopedName *n,
-                                   bool local,
-                                   bool abstract);
+                                   bool is_local,
+                                   bool is_abstract);
 
   // Create a node representing a forward declaration of a union.
   virtual AST_UnionFwd *create_union_fwd (UTL_ScopedName *n);
@@ -307,15 +307,15 @@ public:
   virtual AST_Array *create_array (UTL_ScopedName *n,
                                    unsigned long ndims,
                                    UTL_ExprList *dims,
-                                   bool local,
-                                   bool abstract);
+                                   bool is_local,
+                                   bool is_abstract);
 
   // Create a node representing a sequence type.
   virtual AST_Sequence *create_sequence (AST_Expression *v,
                                          AST_Type *bt,
                                          UTL_ScopedName *n,
-                                         bool local,
-                                         bool abstract);
+                                         bool is_local,
+                                         bool is_abstract);
 
   // Create a node representing a string type.
   virtual AST_String *create_string (AST_Expression *v);
@@ -326,8 +326,8 @@ public:
   // Create a node representing a type renaming (typedef).
   virtual AST_Typedef*create_typedef (AST_Type *bt,
                                       UTL_ScopedName *n,
-                                      bool local,
-                                      bool abstract);
+                                      bool is_local,
+                                      bool is_abstract);
 
   // Create a node representing a native.
   virtual AST_Native *create_native (UTL_ScopedName *n);

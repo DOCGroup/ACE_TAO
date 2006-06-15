@@ -210,6 +210,19 @@ AST_Operation::has_native (void)
 void
 AST_Operation::destroy (void)
 {
+  // No need to delete our exception list, the
+  // destroy() method does it. The UTL_ExceptList
+  // destroy() method does NOT delete the contained
+  // exception nodes.
+
+  if (this->pd_exceptions != 0)
+    {
+      this->pd_exceptions->destroy ();
+      this->pd_exceptions = 0;
+    }
+  
+  this->UTL_Scope::destroy ();
+  this->AST_Decl::destroy ();
 }
 
 // Private operations.
@@ -323,6 +336,11 @@ AST_Operation::be_insert_exception (AST_Exception *ex)
 UTL_NameList *
 AST_Operation::fe_add_exceptions (UTL_NameList *t)
 {
+  if (0 == t)
+    {
+      return 0;
+    }
+    
   UTL_ScopedName *nl_n = 0;
   AST_Exception *fe = 0;
   AST_Decl *d = 0;
@@ -375,7 +393,13 @@ AST_Operation::fe_add_exceptions (UTL_NameList *t)
         }
     }
 
-  return t;
+  // This return value is never used, it's easier to
+  // destroy it here and return 0 than to destroy it
+  // each place it is passed in.
+  t->destroy ();
+  delete t;
+  t = 0;
+  return 0;
 }
 
 // Add this AST_Argument node (an operation argument declaration)

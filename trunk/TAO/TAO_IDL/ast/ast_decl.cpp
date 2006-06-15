@@ -106,15 +106,27 @@ COMMON_Base::COMMON_Base (bool local,
 }
 
 bool
-COMMON_Base::is_local (void)
+COMMON_Base::is_local (void) const
 {
   return this->is_local_;
 }
 
+void
+COMMON_Base::is_local (bool val)
+{
+  this->is_local_ = val;
+}
+
 bool
-COMMON_Base::is_abstract (void)
+COMMON_Base::is_abstract (void) const
 {
   return this->is_abstract_;
+}
+
+void
+COMMON_Base::is_abstract (bool val)
+{
+  this->is_abstract_ = val;
 }
 
 void
@@ -819,6 +831,13 @@ AST_Decl::destroy (void)
       this->pd_original_local_name = 0;
     }
 
+  if (this->last_referenced_as_ != 0)
+    {
+      this->last_referenced_as_->destroy ();
+      delete this->last_referenced_as_;
+      this->last_referenced_as_ = 0;
+    }
+
   delete [] this->full_name_;
   this->full_name_ = 0;
 
@@ -853,6 +872,7 @@ AST_Decl::repoID (void)
 {
   if (this->pd_node_type == NT_root)
     {
+      delete [] this->repoID_;
       this->repoID_ = ACE::strnew ("");
     }
 
@@ -870,7 +890,6 @@ AST_Decl::repoID (char *value)
   if (this->repoID_ != 0)
     {
       delete [] this->repoID_;
-      this->repoID_ = 0;
     }
 
   this->repoID_ = value;
@@ -1032,7 +1051,7 @@ AST_Decl::set_id_with_typeid (char *value)
 
   delete [] this->repoID_;
   this->repoID_ = 0;
-  this->repoID (value);
+  this->repoID (ACE::strnew (value));
   this->typeid_set_ = true;
 }
 
@@ -1345,6 +1364,12 @@ AST_Decl::last_referenced_as (void) const
 void
 AST_Decl::last_referenced_as (UTL_ScopedName *n)
 {
+  if (this->last_referenced_as_ != 0)
+    {
+      this->last_referenced_as_->destroy ();
+    }
+    
+  delete this->last_referenced_as_;
   this->last_referenced_as_ = n;
 }
 

@@ -155,7 +155,12 @@ be_visitor_interface::add_abstract_op_args (AST_Operation *old_op,
       new_op.add_to_scope (d);
     }
 
-  new_op.be_add_exceptions (old_op->exceptions ());
+  UTL_ExceptList *excep_list = old_op->exceptions ();
+  
+  if (0 != excep_list)
+    {
+      new_op.be_add_exceptions (excep_list->copy ());
+    }
 }
 
 // All common visit methods for interface visitor.

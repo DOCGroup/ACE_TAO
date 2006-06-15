@@ -76,6 +76,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include	"utl_exceptlist.h"
 
+#include "ace/OS_Memory.h"
+
 ACE_RCSID (util, 
            utl_exceptlist, 
            "$Id$")
@@ -92,6 +94,39 @@ AST_Exception *
 UTL_ExceptList::head (void)
 {
   return this->pd_car_data;
+}
+
+// The two methods below make direct calls on the
+// cdr list (we have been made a friend of the base
+// class UTL_List's private member). This is so we
+// can avoid copying the contained quantity, an
+// AST_Exception.
+
+void
+UTL_ExceptList::destroy (void)
+{
+  if (this->pd_cdr_data != 0)
+    {
+      this->pd_cdr_data->destroy ();
+    }
+    
+  delete this;
+}
+
+UTL_ExceptList *
+UTL_ExceptList::copy (void)
+{
+  UTL_ExceptList *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  UTL_ExceptList (
+                      this->pd_car_data,
+                      this->pd_cdr_data != 0
+                        ? (UTL_ExceptList *) this->pd_cdr_data->copy ()
+                        : 0
+                    ),
+                  0);
+                  
+  return retval;
 }
 
 UTL_ExceptlistActiveIterator::UTL_ExceptlistActiveIterator (UTL_ExceptList *s)

@@ -54,6 +54,10 @@ be_root::be_root (UTL_ScopedName *n)
 {
 }
 
+be_root::~be_root (void)
+{
+}
+
 // We had to provide these since the AST_Root::fe_* method was setting the
 // names of these three to "local type".
 

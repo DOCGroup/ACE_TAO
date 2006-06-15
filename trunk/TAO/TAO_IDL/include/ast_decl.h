@@ -101,8 +101,11 @@ public:
 
   virtual ~COMMON_Base (void) {}
 
-  virtual bool is_local (void);
-  virtual bool is_abstract (void);
+  bool is_local (void) const;
+  void is_local (bool val);
+  
+  bool is_abstract (void) const;
+  void is_abstract (bool val);
 
   // A no-op, overridden in the child classes.
   virtual void destroy (void);

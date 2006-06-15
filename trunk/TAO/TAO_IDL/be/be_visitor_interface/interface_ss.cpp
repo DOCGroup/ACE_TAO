@@ -174,7 +174,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
     // @@ Cheat a little by placing a space before the operation name
     //    to prevent the IDL compiler from interpreting the leading
     //    underscore as an IDL escape.
-    Identifier op_name (ACE_OS::strdup (" _is_a"));
+    Identifier op_name (" _is_a");
     UTL_ScopedName scoped_name (&op_name, 0);
     be_operation is_a (&rt,
                        AST_Operation::OP_noflags,
@@ -188,13 +188,14 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
         idl_global->gen ()->create_expr ((idl_uns_long) 0,
                                          AST_Expression::EV_ulong)));
 
-    Identifier arg_name (ACE_OS::strdup ("repository_id"));
+    Identifier arg_name ("repository_id");
     UTL_ScopedName scoped_arg_name (&arg_name, 0);
-    be_argument repository_id (AST_Argument::dir_IN,
-                               s.get (),
-                               &scoped_arg_name);
+    AST_Argument *repository_id =
+      idl_global->gen ()->create_argument (AST_Argument::dir_IN,
+                                           s.get (),
+                                           &scoped_arg_name);
 
-    is_a.be_add_argument (&repository_id);
+    is_a.be_add_argument (repository_id);
 
     ACE_CString is_a_upcall_command_name =
       "_is_a_" + ACE_CString (node_local_name) + "_Upcall_Command" ;
@@ -284,6 +285,10 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
     *os << be_uidt_nl
         << "}";
+    
+    is_a.destroy ();
+    rt.destroy ();
+    s.get ()->destroy ();
   }
 
   // Generate code for the _non_existent skeleton.
@@ -292,7 +297,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
     // @@ Cheat a little by placing a space before the operation name
     //    to prevent the IDL compiler from interpreting the leading
     //    underscore as an IDL escape.
-    Identifier op_name (ACE_OS::strdup (" _non_existent"));
+    Identifier op_name (" _non_existent");
     UTL_ScopedName scoped_name (&op_name, 0);
     be_operation non_existent (&rt,
                                AST_Operation::OP_noflags,
@@ -388,6 +393,9 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
     *os << be_uidt_nl
         << "}";
+        
+    non_existent.destroy ();
+    rt.destroy ();
   }
 
   // Generate code for the _repository_id skeleton.
@@ -400,7 +408,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
     // @@ Cheat a little by placing a space before the operation name
     //    to prevent the IDL compiler from interpreting the leading
     //    underscore as an IDL escape.
-    Identifier op_name (ACE_OS::strdup (" _repository_id"));
+    Identifier op_name (" _repository_id");
     UTL_ScopedName scoped_name (&op_name, 0);
     be_operation repository_id (s.get (),
                                 AST_Operation::OP_noflags,
@@ -496,6 +504,9 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
     *os << be_uidt_nl
         << "}";
+    
+    repository_id.destroy ();
+    s.get ()->destroy ();
   }
 
   *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
@@ -564,7 +575,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
     //    underscore as an IDL escape.
 
     // Yes, _get_component()
-    Identifier op_name (ACE_OS::strdup (" _get_component"));
+    Identifier op_name (" _get_component");
     UTL_ScopedName scoped_name (&op_name, 0);
     be_operation get_component (&rt,
                                 AST_Operation::OP_noflags,
@@ -655,6 +666,9 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
         << (be_global->use_raw_throw () ? "" : "ACE_ENV_ARG_PARAMETER")
         << ");" << TAO_ACE_CHECK () << be_uidt_nl
         << "}";
+  
+    get_component.destroy ();
+    rt.destroy ();
   }
 
   // Generate code for the _is_a override.
@@ -752,36 +766,48 @@ be_visitor_interface_ss::gen_abstract_ops_helper (be_interface *node,
                              "bad node in this scope\n"),
                             -1);
         }
-
-      UTL_ScopedName *item_new_name  = 0;
-      ACE_NEW_RETURN (item_new_name,
-                      UTL_ScopedName (d->local_name ()->copy (),
-                                      0),
-                      -1);
-
-      UTL_ScopedName *base = (UTL_ScopedName *)node->name ()->copy ();
-      base->nconc (item_new_name);
-
-      if (d->node_type () == AST_Decl::NT_op)
+        
+      AST_Decl::NodeType nt = d->node_type ();
+  
+      UTL_ScopedName *item_new_name = 0;
+      UTL_ScopedName *new_name = 0;
+      
+      if (AST_Decl::NT_op == nt || AST_Decl::NT_attr == nt)
         {
-          // We pass the node's is_abstract flag to the operation
-          // constructor so we will get the right generated operation
-          // body if we are regenerating an operation from an
-          // abstract interface in a concrete interface or component.
-          AST_Operation *op = AST_Operation::narrow_from_decl (d);
-          be_operation new_op (op->return_type (),
-                               op->flags (),
-                               0,
-                               op->is_local (),
-                               node->is_abstract ());
-          new_op.set_defined_in (node);
-          be_visitor_interface::add_abstract_op_args (op,
-                                                      new_op);
-          new_op.set_name (base);
-          be_visitor_operation_ss op_visitor (&ctx);
-          op_visitor.visit_operation (&new_op);
+          ACE_NEW_RETURN (item_new_name,
+                          UTL_ScopedName (d->local_name ()->copy (),
+                                          0),
+                          -1);
+
+          new_name = (UTL_ScopedName *) node->name ()->copy ();
+          new_name->nconc (item_new_name);
         }
-      else if (d->node_type () == AST_Decl::NT_attr)
+      else
+        {
+          continue;
+        }
+
+      // We pass the node's is_abstract flag to the operation
+      // constructor so we will get the right generated operation
+      // body if we are regenerating an operation from an
+      // abstract interface in a concrete interface or component.
+      if (AST_Decl::NT_op == nt)
+        {
+          be_operation *op = be_operation::narrow_from_decl (d);
+          UTL_ScopedName *old_name =
+            (UTL_ScopedName *) op->name ()->copy ();
+          op->set_name (new_name);
+          op->set_defined_in (node);
+          op->is_abstract (node->is_abstract ());
+          
+          be_visitor_operation_ss op_visitor (&ctx);
+          op_visitor.visit_operation (op);
+          
+          op->set_name (old_name);
+          op->set_defined_in (base);
+          op->is_abstract (base->is_abstract ());
+        }
+      else if (AST_Decl::NT_attr == nt)
         {
           AST_Attribute *attr = AST_Attribute::narrow_from_decl (d);
           be_attribute new_attr (attr->readonly (),
@@ -790,17 +816,27 @@ be_visitor_interface_ss::gen_abstract_ops_helper (be_interface *node,
                                  attr->is_local (),
                                  attr->is_abstract ());
           new_attr.set_defined_in (node);
-          new_attr.set_name (base);
-          new_attr.be_add_get_exceptions (attr->get_get_exceptions ());
-          new_attr.be_add_set_exceptions (attr->get_set_exceptions ());
+          new_attr.set_name (new_name);
+          
+          UTL_ExceptList *get_exceptions = attr->get_get_exceptions ();
+          
+          if (0 != get_exceptions)
+            {
+              new_attr.be_add_get_exceptions (get_exceptions->copy ());
+            }
+            
+          UTL_ExceptList *set_exceptions = attr->get_set_exceptions ();
+          
+          if (0 != set_exceptions)
+            {
+              new_attr.be_add_set_exceptions (set_exceptions->copy ());
+            }
+            
           be_visitor_attribute attr_visitor (&ctx);
           attr_visitor.visit_attribute (&new_attr);
           ctx.attribute (0);
+          new_attr.destroy ();
         }
-
-      base->destroy ();
-      delete base;
-      base = 0;
     }
 
   return 0;

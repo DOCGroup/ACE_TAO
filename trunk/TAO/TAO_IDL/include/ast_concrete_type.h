@@ -85,6 +85,9 @@ public:
 
   // Destructor.
   virtual ~AST_ConcreteType (void);
+  
+  // Cleanup.
+  virtual void destroy (void);
 
   // Narrowing.
   DEF_NARROW_METHODS1(AST_ConcreteType, AST_Type);

@@ -71,6 +71,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ast_interface_fwd.h"
 #include "ast_interface.h"
+#include "ast_module.h"
 #include "ast_visitor.h"
 #include "utl_identifier.h"
 
@@ -82,7 +83,8 @@ AST_InterfaceFwd::AST_InterfaceFwd (void)
   : COMMON_Base (),
     AST_Decl (),
     AST_Type (),
-    pd_full_definition (0)
+    pd_full_definition (0),
+    is_defined_ (false)
 {
 }
 
@@ -93,7 +95,8 @@ AST_InterfaceFwd::AST_InterfaceFwd (AST_Interface *dummy,
     AST_Decl (AST_Decl::NT_interface_fwd,
               n),
     AST_Type (AST_Decl::NT_interface_fwd,
-              n)
+              n),
+    is_defined_ (false)
 {
   // Create a dummy placeholder for the forward declared interface. This
   // interface node is not yet defined (n_inherits < 0), so some operations
@@ -123,6 +126,50 @@ AST_InterfaceFwd::is_abstract_valuetype (void)
 {
   return (this->full_definition ()->is_abstract ()
           && this->is_valuetype ());
+}
+
+bool
+AST_InterfaceFwd::full_def_seen (void)
+{
+  UTL_Scope *s = this->defined_in ();
+  AST_Interface *i = 0;
+  
+  // If a full definition is seen in a previous module opening
+  // or anywhere in the current scope (before or after our
+  // declaration, reture TRUE.
+  
+  if (AST_Decl::NT_module == s->scope_node_type ())
+    {
+      AST_Module *m = AST_Module::narrow_from_scope (s);
+      AST_Decl *d = m->look_in_previous (this->local_name (), false);
+      
+      if (0 != d)
+        {
+          i = AST_Interface::narrow_from_decl (d);
+          
+          if (0 != i && i->is_defined ())
+            {
+              return true;
+            }
+        }
+    }
+  
+  for (UTL_ScopeActiveIterator iter (s, UTL_Scope::IK_decls);
+        !iter.is_done ();
+        iter.next ())
+    {
+      i = AST_Interface::narrow_from_decl (iter.item ());
+      
+      if (0 != i && this->local_name ()->compare (i->local_name ()))
+        {
+          if (i->is_defined ())
+            {
+              return true;
+            }
+        }
+    }
+    
+  return false;
 }
 
 // Redefinition of inherited virtual operations.
@@ -170,15 +217,75 @@ AST_InterfaceFwd::set_full_definition (AST_Interface *nfd)
 bool
 AST_InterfaceFwd::is_defined (void)
 {
-  return this->pd_full_definition->is_defined ();
+  // Look for the one instance of the fwd decl
+  // that may have a full definition.
+  if (!this->is_defined_)
+    {
+      AST_Module *m =
+        AST_Module::narrow_from_scope (this->defined_in ());
+        
+      if (0 != m)
+        {
+          AST_Decl *d = m->look_in_previous (this->local_name ());
+          
+          if (0 != d)
+            {
+              // We could be looking at a superfluous forward decl
+              // of an interface already defined.
+              AST_Interface *full = AST_Interface::narrow_from_decl (d);
+              
+              if (0 != full)
+                {
+                  this->is_defined_ = true;
+                }
+                
+              AST_InterfaceFwd *fwd =
+                AST_InterfaceFwd::narrow_from_decl (d);
+                
+              // Since fwd_redefinition_helper() is called
+              // before fe_add_interface(), we can't check
+              // n_inherits() or is_defined(), but added()
+              // is a sufficient way to tell if our full
+              // definition has already gone through the
+              // add_to_scope process.  
+              if (0 != fwd && fwd->full_definition ()->added ())
+                {
+                  this->is_defined_ = true;
+                }
+            }
+        }
+    }
+    
+  return this->is_defined_;
+}
+
+void
+AST_InterfaceFwd::set_as_defined (void)
+{
+  this->is_defined_ = true;
 }
 
 void
 AST_InterfaceFwd::destroy (void)
 {
-//  this->pd_full_definition->destroy ();
-//  delete this->pd_full_definition;
-//  this->pd_full_definition = 0;
+  // The implementation of is_defined() accomodates
+  // code generation issues and doesn't have the
+  // correct semantics here. The older implementation
+  // of is_defined is used in the IF block below to
+  // check if our full definition allocation must be
+  // destroyed.
+  if (!this->is_defined_)
+    {
+      // If our full definition is not defined, it
+      // means that there was no full definition
+      // for us in this compilation unit, so we 
+      // have to destroy this allocation.
+      this->pd_full_definition->destroy ();
+      delete this->pd_full_definition;
+      this->pd_full_definition = 0;
+    }
+    
+  this->AST_Type::destroy ();
 }
 
 // Narrowing methods.

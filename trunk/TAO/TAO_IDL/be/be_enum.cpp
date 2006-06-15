@@ -75,6 +75,8 @@ be_enum::destroy (void)
   // No need to call be_scope::destroy(). It has no
   // allocated members, and AST_Enum::destroy() will
   // call UTL_Scope::destroy().
+  this->be_type::destroy ();
+  this->be_scope::destroy ();
   this->AST_Enum::destroy ();
 }
 

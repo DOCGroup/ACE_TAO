@@ -86,9 +86,9 @@ void
 be_structure::destroy (void)
 {
   // Call the destroy methods of our base classes.
-  be_scope::destroy ();
-  be_type::destroy ();
-  AST_Decl::destroy ();
+  this->be_scope::destroy ();
+  this->be_type::destroy ();
+  this->AST_Structure::destroy ();
 }
 
 int

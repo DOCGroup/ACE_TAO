@@ -201,11 +201,13 @@ be_sequence::gen_name (void)
       UTL_Scope *parent = this->defined_in ();
       seq->set_defined_in (parent);
       parent->add_sequence (seq);
+      char *seq_name = seq->gen_name ();
 
       ACE_OS::sprintf (namebuf,
                        "_tao_seq_%s_%s",
-                       seq->gen_name (),
+                       seq_name,
                        fn ? fn->local_name ()->get_string () : "");
+      ACE::strdelete (seq_name);
     }
   else
     {
@@ -225,7 +227,7 @@ be_sequence::gen_name (void)
                       ulval_str);
     }
 
-  return ACE_OS::strdup (namebuf);
+  return ACE::strnew (namebuf);
 }
 
 // Create a name for ourselves.
@@ -241,7 +243,9 @@ be_sequence::create_name (be_typedef *node)
   // If there is a typedef node, we use its name as our name.
   if (node)
     {
-      this->set_name (node->name ());
+      this->set_name (
+          dynamic_cast<UTL_ScopedName *> (node->name ()->copy ())
+        );
     }
   else
     {
@@ -282,7 +286,7 @@ be_sequence::create_name (be_typedef *node)
           return -1;
         }
 
-      ACE_OS::free (namebuf);
+      ACE::strdelete (namebuf);
     }
 
   return 0;
@@ -690,9 +694,6 @@ be_sequence::compute_tc_name (void)
   ACE_NEW (tao_id,
            Identifier ("TAO"));
 
-//   ACE_NEW (tao_id,
-//            Identifier (""));
-
   ACE_NEW (this->tc_name_,
            UTL_ScopedName (tao_id,
                            0));
@@ -749,8 +750,9 @@ void
 be_sequence::destroy (void)
 {
   // Call the destroy methods of our base classes.
-  be_scope::destroy ();
-  be_type::destroy ();
+  this->be_scope::destroy ();
+  this->be_type::destroy ();
+  this->AST_Sequence::destroy ();
 }
 
 // Narrowing

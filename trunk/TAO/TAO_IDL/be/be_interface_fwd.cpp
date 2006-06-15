@@ -93,7 +93,8 @@ be_interface_fwd::seen_in_operation (bool val)
 void
 be_interface_fwd::destroy (void)
 {
-  // Do nothing.
+  this->be_type::destroy ();
+  this->AST_InterfaceFwd::destroy ();
 }
 
 int

@@ -110,7 +110,8 @@ AST_Interface::AST_Interface (void)
     pd_n_inherits (0),
     pd_inherits_flat (0),
     pd_n_inherits_flat (0),
-    home_equiv_ (false)
+    home_equiv_ (false),
+    fwd_decl_ (0)
 {
   this->size_type (AST_Type::VARIABLE); // Always the case.
   this->has_constructor (true);      // Always the case.
@@ -134,7 +135,8 @@ AST_Interface::AST_Interface (UTL_ScopedName *n,
     pd_n_inherits (nih),
     pd_inherits_flat (ih_flat),
     pd_n_inherits_flat (nih_flat),
-    home_equiv_ (false)
+    home_equiv_ (false),
+    fwd_decl_ (0)
 {
   this->size_type (AST_Type::VARIABLE); // always the case
   this->has_constructor (true);      // always the case
@@ -159,6 +161,21 @@ AST_Operation *
 AST_Interface::be_add_operation (AST_Operation *op)
 {
   return this->fe_add_operation (op);
+}
+
+bool
+AST_Interface::is_defined (void)
+{
+  // Each instance of a forward declared interface no
+  // longer has a redefined full definition, so we
+  // have to backtrack to the fwd decl is_defined(),
+  // which searches for the one that does. If one
+  // is found, then we are defined for code generation
+  // purposes. See AST_InterfaceFwd::destroy() to
+  // see the difference for cleanup purposes.
+  return (0 == this->fwd_decl_
+          ? this->pd_n_inherits >= 0
+          : this->fwd_decl_->is_defined ());
 }
 
 // Add an AST_Constant node (a constant declaration) to this scope.
@@ -1096,7 +1113,11 @@ AST_Interface::fwd_redefinition_helper (AST_Interface *&i,
           scope = parent->defined_in ();
         }
 
-      // Full definition must have the same prefix as the forward declaration.
+      // (JP) This could give a bogus error, since typeprefix can
+      // appear any time after the corresponding declaration.
+      // The right way to do this is with a separate traversal
+      // after the entire AST is built.
+      /*
       if (ACE_OS::strcmp (i->prefix (), d->prefix ()) != 0)
         {
           idl_global->err ()->error1 (UTL_Error::EIDL_PREFIX_CONFLICT,
@@ -1104,30 +1125,9 @@ AST_Interface::fwd_redefinition_helper (AST_Interface *&i,
 
           return;
         }
+      */
 
-      AST_Decl::NodeType nt = d->node_type ();
-
-      // If this interface has been forward declared in a previous opening
-      // of the module it's defined in, the lookup will find the
-      // forward declaration.
-      if (nt == AST_Decl::NT_interface_fwd
-          || nt == AST_Decl::NT_valuetype_fwd
-          || nt == AST_Decl::NT_component_fwd
-          || nt == AST_Decl::NT_eventtype_fwd)
-        {
-          AST_InterfaceFwd *fwd_def =
-            AST_InterfaceFwd::narrow_from_decl (d);
-
-          fd = fwd_def->full_definition ();
-        }
-      // In all other cases, the lookup will find an interface node.
-      else if (nt == AST_Decl::NT_interface
-               || nt == AST_Decl::NT_valuetype
-               || nt == AST_Decl::NT_component
-               || nt == AST_Decl::NT_eventtype)
-        {
-          fd = AST_Interface::narrow_from_decl (d);
-        }
+      fd = AST_Interface::narrow_from_decl (d);
 
       // Successful?
       if (fd == 0)
@@ -1169,6 +1169,7 @@ AST_Interface::fwd_redefinition_helper (AST_Interface *&i,
               fd->redefine (i);
 
               // Use full definition node.
+              i->destroy ();
               delete i;
               i = fd;
             }
@@ -1229,6 +1230,18 @@ void
 AST_Interface::home_equiv (bool val)
 {
   this->home_equiv_ = val;
+}
+
+AST_InterfaceFwd *
+AST_Interface::fwd_decl (void) const
+{
+  return this->fwd_decl_;
+}
+
+void
+AST_Interface::fwd_decl (AST_InterfaceFwd *node)
+{
+  this->fwd_decl_ = node;
 }
 
 int
@@ -1316,13 +1329,32 @@ AST_Interface::redefine (AST_Interface *from)
   // definition, which may be in a different scope.
   // Since 'this' will replace 'from' upon returning
   // from here, we have to update the scope now.
-  this->pd_inherits = from->pd_inherits;
   this->pd_n_inherits = from->pd_n_inherits;
-  this->pd_inherits_flat = from->pd_inherits_flat;
+  unsigned long i = 0;
+  
+  unsigned long array_size =
+    static_cast<unsigned long> (from->pd_n_inherits);
+  ACE_NEW (this->pd_inherits,
+           AST_Interface *[array_size]);
+           
+  for (i = 0; i < array_size; ++i)
+    {
+      this->pd_inherits[i] = from->pd_inherits[i];
+    }
+    
   this->pd_n_inherits_flat = from->pd_n_inherits_flat;
+  array_size =
+    static_cast<unsigned long> (from->pd_n_inherits_flat);
+  ACE_NEW (this->pd_inherits_flat,
+           AST_Interface *[array_size]);
+   
+  for (i = 0; i < array_size; ++i)
+    {  
+      this->pd_inherits_flat[i] = from->pd_inherits_flat[i];
+    }
 
   // We've already checked for inconsistent prefixes.
-  this->prefix (ACE::strnew (from->prefix ()));
+  this->prefix (from->prefix ());
 
   this->set_defined_in (from->defined_in ());
   this->set_imported (idl_global->imported ());
@@ -1508,8 +1540,6 @@ AST_Interface::look_in_inherited (UTL_ScopedName *e,
   // Can't look in an interface which was not yet defined.
   if (!this->is_defined ())
     {
-      idl_global->err ()->fwd_decl_lookup (this,
-                                           e);
       return 0;
     }
 
@@ -1630,8 +1660,14 @@ AST_Interface::destroy (void)
 {
   delete [] this->pd_inherits;
   this->pd_inherits = 0;
+  this->pd_n_inherits = 0;
+  
   delete [] this->pd_inherits_flat;
   this->pd_inherits_flat = 0;
+  this->pd_n_inherits_flat = 0;
+  
+  this->UTL_Scope::destroy ();
+  this->AST_Type::destroy ();
 }
 
 int

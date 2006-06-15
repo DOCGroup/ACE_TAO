@@ -346,8 +346,8 @@ public:
   virtual UTL_Error        *err (void);                 // Error reporter
   virtual void             set_err (UTL_Error *);       // Set it
 
-  virtual long             err_count (void);            // How many errors?
-  virtual void             set_err_count (long);        // Set it
+  virtual int              err_count (void);            // How many errors?
+  virtual void             set_err_count (int);         // Set it
 
   virtual long             lineno (void);               // Where in file?
   virtual void             set_lineno (long);           // Set it
@@ -549,7 +549,7 @@ public:
   void add_include_path (const char *s);
   // Add another path to 'include_paths_'.
 
-  ACE_Hash_Map_Manager<ACE_CString, char *, ACE_Null_Mutex> &
+  ACE_Hash_Map_Manager<char *, char *, ACE_Null_Mutex> &
   file_prefixes (void);
   // Accessor for the IDL file prefix container.
 
@@ -594,6 +594,9 @@ public:
   const char *recursion_start (void) const;
   void recursion_start (const char *val);
   // Accessors for the member.
+  
+  UTL_String *utl_string_factory (const char *str);
+  // Utility function to create UTL_String classes on the FE heap.
 
 private:
   // Data
@@ -602,14 +605,14 @@ private:
   AST_Generator              *pd_gen;                // Store generator
   AST_ValueType              *pd_primary_key_base;   // Store PrimaryKeyBase
   UTL_Error                  *pd_err;                // Error object
-  long                       pd_err_count;           // Count of errors
+  int                        pd_err_count;           // Count of errors
   long                       pd_lineno;              // What line #
   UTL_String                 *pd_filename;           // What file
   UTL_String                 *pd_main_filename;      // What main filename
   UTL_String                 *pd_real_filename;      // What real filename
   UTL_String                 *pd_stripped_filename;  // Stripped filename
-  bool                   pd_import;              // Is import on?
-  bool                   pd_in_main_file;        // Are we in it?
+  bool                       pd_import;              // Is import on?
+  bool                       pd_in_main_file;        // Are we in it?
   const char                 *pd_prog_name;          // Argv[0]
   const char                 *pd_cpp_location;       // Where to find CPP
   long                       pd_compile_flags;       // Compile flags
@@ -673,7 +676,7 @@ private:
   ACE_Unbounded_Queue<char *> include_paths_;
   // List of -I options passed to us.
 
-  ACE_Hash_Map_Manager<ACE_CString, char *, ACE_Null_Mutex> file_prefixes_;
+  ACE_Hash_Map_Manager<char *, char *, ACE_Null_Mutex> file_prefixes_;
   // Associates a prefix with a file.
 
   bool pass_orb_idl_;

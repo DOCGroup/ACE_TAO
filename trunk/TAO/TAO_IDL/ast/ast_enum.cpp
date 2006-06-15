@@ -241,11 +241,14 @@ AST_Enum::fe_add_enum_val (AST_EnumVal *t)
 
   if (t != 0)
     {
-      unsigned long tmp =
-        t->constant_value ()->coerce (AST_Expression::EV_ulong)->u.ulval;
+      AST_Expression::AST_ExprValue *ev =
+        t->constant_value ()->coerce (AST_Expression::EV_ulong);
 
-      t1 = idl_global->gen ()->create_enum_val (tmp,
+      t1 = idl_global->gen ()->create_enum_val (ev->u.ulval,
                                                 t->name ());
+                                                
+      delete ev;
+      ev = 0;
 
       UTL_ScopedName *sn =
         munge_name_for_enumval ((UTL_IdList *) t->name ()->copy (),
@@ -353,7 +356,7 @@ void
 AST_Enum::destroy (void)
 {
   this->UTL_Scope::destroy ();
-  this->AST_Decl::destroy ();
+  this->AST_ConcreteType::destroy ();
 }
 
 

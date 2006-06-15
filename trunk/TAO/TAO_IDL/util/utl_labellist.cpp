@@ -73,6 +73,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 //	     public virtual inheritance.
 
 #include "utl_labellist.h"
+#include "ast_union_label.h"
 
 ACE_RCSID (util, 
            utl_labellist, 
@@ -90,6 +91,16 @@ AST_UnionLabel *
 UTL_LabelList::head (void)
 {
   return this->pd_car_data;
+}
+
+void
+UTL_LabelList::destroy (void)
+{
+  this->pd_car_data->destroy ();
+  delete this->pd_car_data;
+  this->pd_car_data = 0;
+  
+  this->UTL_List::destroy ();
 }
 
 UTL_LabellistActiveIterator::UTL_LabellistActiveIterator (UTL_LabelList *s)

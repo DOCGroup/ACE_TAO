@@ -72,7 +72,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 //	 will cease to operate correctly if you use either multiple or
 //	 public virtual inheritance.
 
-#include	"utl_exprlist.h"
+#include "utl_exprlist.h"
+#include "ast_expression.h"
 
 ACE_RCSID (util, 
            utl_exprlist, 
@@ -80,8 +81,8 @@ ACE_RCSID (util,
 
 UTL_ExprList::UTL_ExprList (AST_Expression *s, 
                             UTL_ExprList *cdr)
-	: UTL_List(cdr),
-	  pd_car_data(s)
+	: UTL_List (cdr),
+	  pd_car_data (s)
 {
 }
 
@@ -90,6 +91,19 @@ AST_Expression *
 UTL_ExprList::head (void)
 {
   return this->pd_car_data;
+}
+
+void
+UTL_ExprList::destroy (void)
+{
+  if (this->pd_car_data != 0)
+    {
+      this->pd_car_data->destroy ();
+      delete this->pd_car_data;
+      this->pd_car_data = 0;
+    }
+
+  this->UTL_List::destroy ();
 }
 
 UTL_ExprlistActiveIterator::UTL_ExprlistActiveIterator (UTL_ExprList *s)

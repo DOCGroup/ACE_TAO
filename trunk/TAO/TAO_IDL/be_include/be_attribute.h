@@ -65,6 +65,9 @@ public:
 
   be_operation_strategy *get_set_strategy (void);
   // Retrieve the underlying set_operation strategy.
+  
+  virtual void destroy (void);
+  // Cleanup.
 
   // Narrowing
   DEF_NARROW_METHODS2 (be_attribute, AST_Attribute, be_decl);

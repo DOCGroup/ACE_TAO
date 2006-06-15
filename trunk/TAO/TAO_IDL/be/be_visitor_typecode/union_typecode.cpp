@@ -147,7 +147,8 @@ TAO::be_visitor_union_typecode::visit_cases (be_union * node)
   be_type * const discriminant_type =
     be_type::narrow_from_decl (node->disc_type ());
 
-  std::string const fields_name (std::string ("_tao_cases_")
+  static ACE_CString tao_cases ("_tao_cases_");
+  ACE_CString const fields_name (tao_cases
                                  + node->flat_name ());
 
   TAO_OutStream & os = *this->ctx_->stream ();

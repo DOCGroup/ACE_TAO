@@ -89,6 +89,9 @@ public:
   // Accessors.
   bool truncatable (void) const;
   void truncatable (bool val);
+  
+  // Cleanup.
+  virtual void destroy (void);
 
 private:
   // List item.

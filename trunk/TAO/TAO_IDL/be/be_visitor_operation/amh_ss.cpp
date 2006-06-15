@@ -222,14 +222,21 @@ be_visitor_amh_operation_ss::visit_attribute (be_attribute *node)
   be_argument the_argument (AST_Argument::dir_IN,
                             node->field_type (),
                             node->name ());
+                            
+  int status = 0;
 
-  be_visitor_context ctx (*this->ctx_);
-  be_visitor_args_vardecl_ss visitor (&ctx);
+  {
+    be_visitor_context ctx (*this->ctx_);
+    be_visitor_args_vardecl_ss vardecl_visitor (&ctx);
 
-  if (visitor.visit_argument (&the_argument) == -1)
-    {
-      return -1;
-    }
+    status = vardecl_visitor.visit_argument (&the_argument);
+    
+    if (-1 == status)
+      {
+        the_argument.destroy ();
+        return -1;
+      }
+  }
 
   *os << be_nl
       << "TAO_InputCDR & _tao_in ="
@@ -241,10 +248,13 @@ be_visitor_amh_operation_ss::visit_attribute (be_attribute *node)
     be_visitor_context ctx (*this->ctx_);
     ctx.state (TAO_CodeGen::TAO_OPERATION_ARG_DEMARSHAL_SS);
     ctx.sub_state (TAO_CodeGen::TAO_CDR_INPUT);
-    be_visitor_args_marshal_ss visitor (&ctx);
+    be_visitor_args_marshal_ss marshal_visitor (&ctx);
 
-    if (visitor.visit_argument (&the_argument) == -1)
+    status = marshal_visitor.visit_argument (&the_argument);
+    
+    if (-1 == status)
       {
+        the_argument.destroy ();
         return -1;
       }
   }
@@ -253,9 +263,10 @@ be_visitor_amh_operation_ss::visit_attribute (be_attribute *node)
       << "{" << be_idt_nl;
 
   // If marshaling fails, raise exception.
-  if (this->gen_raise_exception (0,
-                                 "::CORBA::MARSHAL",
-                                 "") == -1)
+  status = this->gen_raise_exception (0,
+                                      "::CORBA::MARSHAL",
+                                      "");
+  if (-1 == status)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) gen_raise_exception failed\n"),
@@ -265,7 +276,7 @@ be_visitor_amh_operation_ss::visit_attribute (be_attribute *node)
   *os << be_uidt_nl
       << "}" << be_uidt_nl;
 
-  if (this->generate_shared_section (node, os) == -1)
+  if (-1 == this->generate_shared_section (node, os))
     {
       return -1;
     }
@@ -273,9 +284,11 @@ be_visitor_amh_operation_ss::visit_attribute (be_attribute *node)
   *os << ",";
 
   {
-    be_visitor_args_upcall_ss visitor (this->ctx_);
-
-    if (visitor.visit_argument (&the_argument) == -1)
+    be_visitor_args_upcall_ss upcall_visitor (this->ctx_);
+    status = upcall_visitor.visit_argument (&the_argument);   
+    the_argument.destroy ();
+    
+    if (-1 == status)
       {
         return -1;
       }
@@ -283,7 +296,7 @@ be_visitor_amh_operation_ss::visit_attribute (be_attribute *node)
 
   *os << env_arg;
 
-  if (this->generate_shared_epilogue (os) == -1)
+  if (-1 == this->generate_shared_epilogue (os))
     {
       return -1;
     }

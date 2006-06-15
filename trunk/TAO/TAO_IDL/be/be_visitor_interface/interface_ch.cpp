@@ -175,8 +175,12 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       << "return static_cast<" << node->local_name ()
       << "_ptr> (0);" << be_uidt_nl
       << "}" << be_nl << be_nl;
+      
+  bool gen_any_destructor =
+    be_global->any_support ()
+    && (!node->is_local () || be_global->gen_local_iface_anyops ());
 
-  if (be_global->any_support () && !node->is_local ())
+  if (gen_any_destructor)
     {
       *os << "static void _tao_any_destructor (void *);";
     }
@@ -420,21 +424,13 @@ be_visitor_interface_ch::gen_abstract_ops_helper (be_interface *node,
 
       if (d->node_type () == AST_Decl::NT_op)
         {
-          UTL_ScopedName item_new_name (d->local_name (),
-                                        0);
-
-          AST_Operation *op = AST_Operation::narrow_from_decl (d);
-          be_operation new_op (op->return_type (),
-                               op->flags (),
-                               &item_new_name,
-                               node->is_local (),
-                               op->is_abstract ());
-          new_op.set_defined_in (node);
-          be_visitor_interface::add_abstract_op_args (op,
-                                                      new_op);
+          
+          be_operation *op = be_operation::narrow_from_decl (d);
+          op->set_local (node->is_local ());
           ctx.state (TAO_CodeGen::TAO_OPERATION_CH);
           be_visitor_operation_ch op_visitor (&ctx);
-          op_visitor.visit_operation (&new_op);
+          op_visitor.visit_operation (op);
+          op->set_local (base->is_local ());
         }
     }
 

@@ -20,6 +20,11 @@
 #include "be_global.h"
 #include "be_codegen.h"
 #include "be_generator.h"
+#include "be_module.h"
+#include "be_valuetype.h"
+#include "be_interface.h"
+#include "ast_predefined_type.h"
+#include "utl_identifier.h"
 #include "utl_string.h"
 #include "global_extern.h"
 #include "idl_defines.h"
@@ -91,11 +96,15 @@ BE_GlobalData::BE_GlobalData (void)
     lookup_strategy_ (TAO_PERFECT_HASH),
     void_type_ (0),
     ccmobject_ (0),
+    messaging_ (0),
+    messaging_exceptionholder_ (0),
     exceptionholder_ (0),
+    messaging_replyhandler_ (0),
     gen_anyop_files_ (false),
     gen_skel_files_ (true),
     gen_client_inline_ (true),
-    gen_server_inline_ (true)
+    gen_server_inline_ (true),
+    gen_local_iface_anyops_ (true)
 {
 }
 
@@ -1127,30 +1136,182 @@ BE_GlobalData::destroy (void)
 
   delete [] this->anyop_output_dir_;
   this->anyop_output_dir_ = 0;
+    
+  if (0 != this->messaging_)
+    {
+      this->messaging_->destroy ();
+      delete this->messaging_;
+      this->messaging_ = 0;
+    }
+  
+  if (0 != this->messaging_exceptionholder_)
+    {
+      this->messaging_exceptionholder_->destroy ();
+      delete this->messaging_exceptionholder_;
+      this->messaging_exceptionholder_ = 0;
+    }
+  
+  if (0 != this->messaging_replyhandler_)
+    {
+      this->messaging_replyhandler_->destroy ();
+      delete this->messaging_replyhandler_;
+      this->messaging_replyhandler_ = 0;
+    }
+   
+  if (0 != tao_cg)
+    { 
+      tao_cg->destroy ();
+    }
 }
 
 AST_PredefinedType *
-BE_GlobalData:: void_type (void) const
+BE_GlobalData:: void_type (void)
 {
+  if (0 == this->void_type_)
+    {
+      AST_Decl *d =
+        idl_global->scopes ().bottom ()->lookup_primitive_type (
+                                              AST_Expression::EV_void
+                                            );
+      this->void_type_ = AST_PredefinedType::narrow_from_decl (d);
+    }
+    
   return this->void_type_;
 }
 
-void
-BE_GlobalData::void_type (AST_PredefinedType *val)
-{
-  this->void_type_ = val;
-}
-
 be_interface *
-BE_GlobalData::ccmobject (void) const
+BE_GlobalData::ccmobject (void)
 {
+  if (0 == this->ccmobject_)
+    {
+      Identifier *local_id = 0;
+      ACE_NEW_RETURN (local_id,
+                      Identifier ("CCMObject"),
+                      0);
+      UTL_ScopedName *local_name = 0;
+      ACE_NEW_RETURN (local_name,
+                      UTL_ScopedName (local_id, 0),
+                      0);
+                                
+      Identifier *module_id = 0;
+      ACE_NEW_RETURN (module_id,
+                      Identifier ("Components"),
+                      0);
+      UTL_ScopedName sn (module_id,
+                         local_name);
+                         
+      AST_Decl *d =
+        idl_global->scopes ().top_non_null ()->lookup_by_name (&sn,
+                                                               true);
+                                                               
+      sn.destroy ();
+
+      if (0 == d)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_global::ccmobject - "
+                             "lookup of CCMObject failed\n"),
+                            0);               
+        }
+
+      this->ccmobject_ = be_interface::narrow_from_decl (d);
+    }
+    
   return this->ccmobject_;
 }
 
-void
-BE_GlobalData::ccmobject (be_interface *val)
+be_module *
+BE_GlobalData::messaging (void)
 {
-  this->ccmobject_ = val;
+  if (0 == this->messaging_)
+    {
+      Identifier *id = 0;
+      UTL_ScopedName *sn = 0;
+    
+      ACE_NEW_RETURN (id,
+                      Identifier ("Messaging"),
+                      0);
+
+      ACE_NEW_RETURN (sn,
+                      UTL_ScopedName (id,
+                                      0),
+                      0);
+
+      ACE_NEW_RETURN (this->messaging_,
+                      be_module (sn),
+                      0);
+                      
+      this->messaging_->set_name (sn);
+    }
+
+  return this->messaging_;
+}
+
+be_valuetype *
+BE_GlobalData::messaging_exceptionholder (void)
+{
+  if (0 == this->messaging_exceptionholder_)
+    {
+      Identifier *id = 0;
+      be_module *msg = this->messaging ();      
+      idl_global->scopes ().push (msg);
+
+      ACE_NEW_RETURN (id,
+                      Identifier ("Messaging"),
+                      0);
+
+      // Create a valuetype "ExceptionHolder"
+      // from which we inherit.
+      UTL_ScopedName *full_name = 0;
+      ACE_NEW_RETURN (full_name,
+                      UTL_ScopedName (id,
+                                      0),
+                      0);
+
+      ACE_NEW_RETURN (id,
+                      Identifier ("ExceptionHolder"),
+                      0);
+
+      UTL_ScopedName *local_name = 0;
+      ACE_NEW_RETURN (local_name,
+                      UTL_ScopedName (id,
+                                      0),
+                      0);
+
+      full_name->nconc (local_name);
+
+      ACE_NEW_RETURN (this->messaging_exceptionholder_,
+                      be_valuetype (full_name,
+                                    0,
+                                    0,
+                                    0,
+                                    0,
+                                    0,
+                                    0,
+                                    0,
+                                    0,
+                                    0,
+                                    0,
+                                    0),
+                      0);
+
+      this->messaging_exceptionholder_->set_name (full_name);
+
+      // Notice the valuetype "ExceptionHolder" that it is defined in the
+      // "Messaging" module
+      this->messaging_exceptionholder_->set_defined_in (msg);
+      this->messaging_exceptionholder_->set_prefix_with_typeprefix (
+                                            "omg.org"
+                                          );
+                                          
+      idl_global->scopes ().pop ();
+
+      // Notice the interface "ReplyHandler" that it is defined in the
+      // "Messaging" module.
+      this->messaging_exceptionholder_->set_defined_in (msg);
+    }
+
+  return this->messaging_exceptionholder_;
 }
 
 be_valuetype *
@@ -1163,6 +1324,64 @@ void
 BE_GlobalData::exceptionholder (be_valuetype *val)
 {
   this->exceptionholder_ = val;
+}
+
+be_interface *
+BE_GlobalData::messaging_replyhandler (void)
+{
+  if (0 == this->messaging_replyhandler_)
+    {
+      be_module *msg = this->messaging ();      
+      idl_global->scopes ().push (msg);
+      
+      Identifier *id = 0;
+      UTL_ScopedName *local_name = 0;
+
+      // Create a virtual module named "Messaging"
+      // "and an interface "ReplyHandler"
+      // from which we inherit.
+      ACE_NEW_RETURN (id,
+                      Identifier ("Messaging"),
+                      0);
+
+      UTL_ScopedName *full_name = 0;
+      ACE_NEW_RETURN (full_name,
+                      UTL_ScopedName (id,
+                                      0),
+                      0);
+
+      ACE_NEW_RETURN (id,
+                      Identifier ("ReplyHandler"),
+                      0);
+
+      ACE_NEW_RETURN (local_name,
+                      UTL_ScopedName (id,
+                                      0),
+                      0);
+
+      full_name->nconc (local_name);
+
+      ACE_NEW_RETURN (this->messaging_replyhandler_,
+                      be_interface (full_name,
+                                    0,  // inherited interfaces
+                                    0,  // number of inherited interfaces
+                                    0,  // ancestors
+                                    0,  // number of ancestors
+                                    0,  // not local
+                                    0), // not abstract
+                      0);
+
+      this->messaging_replyhandler_->set_name (full_name);
+      this->messaging_replyhandler_->set_prefix_with_typeprefix ("omg.org");
+
+      idl_global->scopes ().pop ();
+
+      // Notice the interface "ReplyHandler" that it is defined in the
+      // "Messaging" module.
+      this->messaging_replyhandler_->set_defined_in (msg);
+    }
+    
+  return this->messaging_replyhandler_;
 }
 
 bool
@@ -1213,6 +1432,18 @@ BE_GlobalData::gen_server_inline (bool val)
   this->gen_server_inline_ = val;
 }
 
+bool
+BE_GlobalData::gen_local_iface_anyops (void) const
+{
+  return this->gen_local_iface_anyops_;
+}
+
+void
+BE_GlobalData::gen_local_iface_anyops (bool val)
+{
+  this->gen_local_iface_anyops_ = val;
+}
+
 ACE_CString
 BE_GlobalData::spawn_options (void)
 {
@@ -1242,40 +1473,39 @@ BE_GlobalData::parse_args (long &i, char **av)
             // @@ No error handling done here.
             idl_global->append_idl_flag (av[i + 1]);
             be_global->client_hdr_ending (av[i + 1]);
-            i++;
+            ++i;
           }
         else if (av[i][2] == 's')
           {
             // Server skeleton's header file.
             idl_global->append_idl_flag (av[i + 1]);
             be_global->server_hdr_ending (av[i + 1]);
-            i++;
+            ++i;
           }
         else if (av[i][2] == 'T')
           {
-            // Server Template header ending.
+            // Server template header ending.
             idl_global->append_idl_flag (av[i + 1]);
             be_global->server_template_hdr_ending (av[i + 1]);
-            i++;
-          }
+            ++i;
+         }
         else if (av[i][2] == 'I')
           {
-            // Server Template header ending.
+            // Server implementation header ending.
             idl_global->append_idl_flag (av[i + 1]);
             be_global->implementation_hdr_ending (av[i + 1]);
-            i++;
+            ++i;
           }
         else
           {
-            // I expect 'c' or 's' or 'T' after this.
+            // I expect 'c' or 's' or 'I' or 'T' after this.
             ACE_ERROR ((
                 LM_ERROR,
                 ACE_TEXT ("IDL: I don't understand the '%s' option\n"),
                 av[i]
               ));
-
-            ACE_OS::exit (99);
           }
+          
         break;
       // = Various 'c'lient side stub file_name_endings.
       case 'c':
@@ -1290,14 +1520,12 @@ BE_GlobalData::parse_args (long &i, char **av)
             be_global->client_stub_ending (av[i + 1]);
             i++;
           }
-
         else if (av[i][2] == 'i')
           {
             idl_global->append_idl_flag (av[i + 1]);
             be_global->client_inline_ending (av[i + 1]);
             i++;
           }
-
         else
           {
             // I expect 's' or 'i' after 'c'.
@@ -1306,9 +1534,8 @@ BE_GlobalData::parse_args (long &i, char **av)
                 ACE_TEXT ("IDL: I don't understand the '%s' option\n"),
                 av[i]
               ));
-
-            ACE_OS::exit (99);
           }
+          
         break;
       // = Various 's'erver side skeleton file name endings.
       case 's':
@@ -1327,34 +1554,32 @@ BE_GlobalData::parse_args (long &i, char **av)
           {
             idl_global->append_idl_flag (av[i + 1]);
             be_global->server_skeleton_ending (av[i + 1]);
-            i++;
+            ++i;
           }
         else if (av[i][2] == 'T')
           {
             idl_global->append_idl_flag (av[i + 1]);
             be_global->server_template_skeleton_ending (av[i + 1]);
-            i++;
+            ++i;
           }
         else if (av[i][2] == 'i')
           {
             idl_global->append_idl_flag (av[i + 1]);
             be_global->server_inline_ending (av[i + 1]);
-            i++;
+            ++i;
           }
         else if (av[i][2] == 't')
           {
             idl_global->append_idl_flag (av[i + 1]);
             be_global->server_template_inline_ending (av[i + 1]);
-            i++;
+            ++i;
           }
-
         else if (av[i][2] == 'I')
           {
             idl_global->append_idl_flag (av[i + 1]);
             be_global->implementation_skel_ending (av[i + 1]);
-            i++;
+            ++i;
           }
-
         else
           {
             // I expect 's' or 'T' or 'i' or 't' after 's'.
@@ -1363,22 +1588,19 @@ BE_GlobalData::parse_args (long &i, char **av)
                 ACE_TEXT ("IDL: I don't understand the '%s' option\n"),
                 av[i]
               ));
-
-            ACE_OS::exit (99);
           }
+          
         break;
-
         // Operation lookup strategy.
         // <perfect_hash>, <dynamic_hash> or <binary_search>
         // Default is perfect.
       case 'H':
         idl_global->append_idl_flag (av[i + 1]);
 
-        if (av[i+1] == 0 || av[i+1][0] == '-')
+        if (av[i + 1] == 0 || av[i + 1][0] == '-')
           {
             ACE_ERROR ((LM_ERROR,
                         ACE_TEXT ("no selection for -H option\n")));
-            ACE_OS::exit (99);
           }
         else if (ACE_OS::strcmp (av[i+1], "dynamic_hash") == 0)
           {
@@ -1410,10 +1632,9 @@ BE_GlobalData::parse_args (long &i, char **av)
                         ACE_TEXT ("%s: unknown operation lookup <%s>\n"),
                         av[0],
                         av[i + 1]));
-            ACE_OS::exit (99);
           }
 
-        i++;
+        ++i;
         break;
       // Switching between ""s and <>s when we generate
       // #include statements for the standard files (e.g. tao/corba.h)
@@ -1433,9 +1654,8 @@ BE_GlobalData::parse_args (long &i, char **av)
                 ACE_TEXT ("IDL: I don't understand the '%s' option\n"),
                 av[i]
               ));
-
-            ACE_OS::exit (99);
           }
+          
         break;
       // Path for the perfect hash generator(gperf) program. Default
       // is $ACE_ROOT/bin/gperf.
@@ -1452,7 +1672,7 @@ BE_GlobalData::parse_args (long &i, char **av)
             tmp += "\\gperf.exe";
 #endif
             idl_global->gperf_path (tmp.fast_rep ());
-            i++;
+            ++i;
           }
         else
           {
@@ -1462,9 +1682,8 @@ BE_GlobalData::parse_args (long &i, char **av)
                 ACE_TEXT (" the '%s' option\n"),
                 av[i]
               ));
-
-            ACE_OS::exit (99);
           }
+          
         break;
       // Directory where all the IDL-Compiler-Generated files are to
       // be kept. Default is the current directory from which the
@@ -1473,7 +1692,6 @@ BE_GlobalData::parse_args (long &i, char **av)
         if (av[i][2] == '\0')
           {
             idl_global->append_idl_flag (av[i + 1]);
-
             int result = ACE_OS::mkdir (av[i + 1]);
 
             #if !defined (__BORLANDC__)
@@ -1491,25 +1709,24 @@ BE_GlobalData::parse_args (long &i, char **av)
                     av[i + 1]
                   ));
 
-                ACE_OS::exit (99);
+                break;
               }
 
-            be_global->output_dir (av [i + 1]);
-            i++;
+            be_global->output_dir (av[i + 1]);
+            ++i;
           }
         else if (av[i][2] == 'A')
           {
             if (av[i][3] == '\0')
               {
                 idl_global->append_idl_flag (av[i + 1]);
-
                 int result = ACE_OS::mkdir (av[i + 1]);
 
                 #if !defined (__BORLANDC__)
                   if (result != 0 && errno != EEXIST)
                 #else
-                  // The Borland RTL doesn't give EEXIST back, only EACCES in case
-                  // the directory exists, reported to Borland as QC 9495
+                  // The Borland RTL doesn't give EEXIST back, only EACCES in
+                  // case the directory exists, reported to Borland as QC 9495
                   if (result != 0 && errno != EEXIST && errno != EACCES)
                 #endif
                   {
@@ -1520,11 +1737,11 @@ BE_GlobalData::parse_args (long &i, char **av)
                         av[i + 1]
                       ));
 
-                    ACE_OS::exit (99);
+                    break;
                   }
 
-                be_global->anyop_output_dir (av [i + 1]);
-                i++;
+                be_global->anyop_output_dir (av[i + 1]);
+                ++i;
               }
             else
               {
@@ -1534,8 +1751,6 @@ BE_GlobalData::parse_args (long &i, char **av)
                     ACE_TEXT (" the '%s' option\n"),
                     av[i]
                   ));
-
-                ACE_OS::exit (99);
               }
           }
         else
@@ -1546,9 +1761,8 @@ BE_GlobalData::parse_args (long &i, char **av)
                 ACE_TEXT (" the '%s' option\n"),
                 av[i]
               ));
-
-            ACE_OS::exit (99);
           }
+          
         break;
       case 'G':
         // Enable generation of ...
@@ -1575,23 +1789,22 @@ BE_GlobalData::parse_args (long &i, char **av)
           }
         else if (av[i][2] == 'e')
           {
-            idl_global->append_idl_flag (av[i+1]);
-            int option = ACE_OS::atoi (av[i+1]);
+            idl_global->append_idl_flag (av[i + 1]);
+            int option = ACE_OS::atoi (av[i + 1]);
 
-            // exception support
+            // Exception support.
             be_global->exception_support (option == 0
                                           || option == 2);
 
-            // use of raw 'throw'
+            // Use of raw 'throw'.
             be_global->use_raw_throw (option == 2);
-
-            i++;
+            ++i;
           }
         else if (av[i][2] == 's')
           {
             if (av[i][3] == 'p')
               {
-                // smart proxies
+                // Smart proxies.
                 be_global->gen_smart_proxies (true);
               }
             else
@@ -1602,8 +1815,6 @@ BE_GlobalData::parse_args (long &i, char **av)
                     ACE_TEXT ("the '%s' option\n"),
                     av[i]
                   ));
-
-                ACE_OS::exit (99);
               }
 
             break;
@@ -1612,7 +1823,7 @@ BE_GlobalData::parse_args (long &i, char **av)
           {
             if (av[i][3] == 'c')
               {
-                // inline constants
+                // Inline constants.
                 be_global->gen_inline_constants (false);
               }
             else
@@ -1623,21 +1834,19 @@ BE_GlobalData::parse_args (long &i, char **av)
                     ACE_TEXT ("the '%s' option\n"),
                     av[i]
                   ));
-
-                ACE_OS::exit (99);
               }
 
             break;
           }
         else if (av[i][2] == 't')
           {
-            // optimized typecode support
+            // Optimized typecode generation.
             be_global->opt_tc (1);
           }
         else if (av[i][2] == 'p')
           {
-            // generating Thru_POA collocated stubs.
-            be_global->gen_thru_poa_collocation (1);
+            // Generating Thru_POA collocated stubs.
+            be_global->gen_thru_poa_collocation (true);
           }
         else if (av[i][2] == 'd')
           {
@@ -1645,7 +1854,7 @@ BE_GlobalData::parse_args (long &i, char **av)
               {
                 if (av[i][4] == 'p' && av[i][5] =='s' && '\0' == av[i][6])
                   {
-                    // DDS DCSP type support
+                    // DDS DCSP type support.
                     be_global->gen_dcps_type_support (true);
                   }
                 else
@@ -1656,33 +1865,29 @@ BE_GlobalData::parse_args (long &i, char **av)
                         ACE_TEXT ("the '%s' option\n"),
                         av[i]
                       ));
-
-                    ACE_OS::exit (99);
                   }
               }
             else if ('\0' == av[i][3])
               {
-            // generating Direct collocated stubs.
-            be_global->gen_direct_collocation (1);
-          }
-           else
-             {
-               ACE_ERROR ((
-                   LM_ERROR,
-                   ACE_TEXT ("IDL: I don't understand ")
-                   ACE_TEXT ("the '%s' option\n"),
-                   av[i]
-                 ));
-
-               ACE_OS::exit (99);
-             }
+                // Generating Direct collocated stubs.
+                be_global->gen_direct_collocation (true);
+              }
+            else
+              {
+                ACE_ERROR ((
+                    LM_ERROR,
+                    ACE_TEXT ("IDL: I don't understand ")
+                    ACE_TEXT ("the '%s' option\n"),
+                    av[i]
+                  ));
+              }
           }
         else if (av[i][2] == 'I')
           {
-            size_t options = ACE_OS::strlen(av[i]) - 3;
+            size_t options = ACE_OS::strlen (av[i]) - 3;
             size_t j;
             size_t k = i;
-            // generate implementation files.
+            // Generate implementation files.
             be_global->gen_impl_files (1);
 
             for (j = 0; j < options; ++j)
@@ -1691,37 +1896,37 @@ BE_GlobalData::parse_args (long &i, char **av)
                   {
                     idl_global->append_idl_flag (av[i + 1]);
                     be_global->implementation_skel_ending (av[i + 1]);
-                    i++;
+                    ++i;
                   }
                 else if (av[k][j + 3] == 'h')
                   {
                     idl_global->append_idl_flag (av[i + 1]);
                     be_global->implementation_hdr_ending (av[i + 1]);
-                    i++;
+                    ++i;
                   }
                 else if (av[k][j + 3] == 'b')
                   {
                     idl_global->append_idl_flag (av[i + 1]);
                     be_global->impl_class_prefix (av[i + 1]);
-                    i++;
+                    ++i;
                   }
                 else if (av[k][j + 3] == 'e')
                   {
                     idl_global->append_idl_flag (av[i + 1]);
                     be_global->impl_class_suffix (av[i + 1]);
-                    i++;
+                    ++i;
                   }
                 else if (av[k][j + 3] == 'c')
                   {
-                    be_global->gen_copy_ctor (1);
+                    be_global->gen_copy_ctor (true);
                   }
                 else if (av[k][j + 3] == 'a')
                   {
-                    be_global->gen_assign_op (1);
+                    be_global->gen_assign_op (true);
                   }
                 else if (av[k][j + 3] == 'd')
                   {
-                    be_global->gen_impl_debug_info (1);
+                    be_global->gen_impl_debug_info (true);
                   }
                 else if (isalpha (av[k][j + 3] ))
                   {
@@ -1746,57 +1951,64 @@ BE_GlobalData::parse_args (long &i, char **av)
                 ACE_TEXT ("IDL: I don't understand the '%s' option\n"),
                 av[i]
               ));
-
-            ACE_OS::exit (99);
           }
+          
         break;
       case 'S':
-        // suppress generation of ...
+        // Suppress generation of...
         if (av[i][2] == 'a')
           {
-            // suppress Any support
-            be_global->any_support (false);
+            if (av[i][3] == 'l')
+              {
+                // Suppress Any support for local interfaces.
+                be_global->gen_local_iface_anyops (false);
+              }
+            else
+              {
+                // Suppress all Any support.
+                be_global->any_support (false);
+              }
           }
         else if (av[i][2] == 't')
           {
-            // suppress typecode support
-            // Anys must be suppressed as well
+            // Suppress typecode generation
+            // Anys must be suppressed as well.
             be_global->tc_support (false);
             be_global->any_support (false);
           }
         else if (av[i][2] == 'p')
           {
-            // suppress generating Thru_POA collocated stubs
+            // Suppress generating Thru_POA collocated stubs.
             be_global->gen_thru_poa_collocation (false);
           }
         else if (av[i][2] == 'd')
           {
-            // suppress generating Direct collocated stubs
+            // sSppress generating Direct collocated stubs.
             be_global->gen_direct_collocation (false);
           }
         else if (av[i][2] == 'c')
           {
             if (av[i][3] == 'i')
               {
-                // no client inline
+                // No stub inline.
                 be_global->gen_client_inline (false);
               }
           }
         else if (av[i][2] == 'm')
           {
-            // turn off ccm preprocessing.
+            // Turn off ccm preprocessing.
             idl_global->ignore_idl3 (true);
           }
         else if (av[i][2] == 'S')
           {
-            // disable skeleton file generation.
+            // Disable skeleton file generation.
             be_global->gen_skel_files (false);
           }
         else if (av[i][2] == 's')
           {
             if (av[i][3] == 'i')
               {
-                // no client inline
+                // No skeleton inline.
                 be_global->gen_server_inline (false);
               }
             else
@@ -1815,9 +2027,8 @@ BE_GlobalData::parse_args (long &i, char **av)
                 ACE_TEXT ("IDL: I don't understand the '%s' option\n"),
                 av[i]
               ));
-
-            ACE_OS::exit (99);
           }
+          
         break;
       default:
         ACE_ERROR ((
@@ -1991,14 +2202,12 @@ BE_GlobalData::arg_post_proc (void)
     }
 #endif /* ACE_HAS_GPERF */
 
-  // make sure that we are not suppressing TypeCode generation and asking for
-  // optimized typecode support at the same time
+  // Make sure that we are not suppressing TypeCode generation and asking for
+  // optimized typecode support at the same time.
   if (!be_global->tc_support () && be_global->opt_tc ())
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("Bad Combination -St and -Gt \n")));
-
-      ACE_OS::exit (99);
     }
 }
 
@@ -2274,6 +2483,12 @@ BE_GlobalData::usage (void) const
     ));
   ACE_DEBUG ((
       LM_DEBUG,
+      ACE_TEXT (" -Sal\t\t\tsuppress Any support")
+      ACE_TEXT (" for local interfaces")
+      ACE_TEXT (" (support enabled by default)\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
       ACE_TEXT (" -St\t\t\tsuppress TypeCode support")
       ACE_TEXT (" (support enabled by default)\n")
     ));
@@ -2313,6 +2528,7 @@ AST_Generator *
 BE_GlobalData::generator_init (void)
 {
   tao_cg = TAO_CODEGEN::instance ();
+  tao_cg->config_visitor_factory ();
 
   AST_Generator *gen = 0;
   ACE_NEW_RETURN (gen,

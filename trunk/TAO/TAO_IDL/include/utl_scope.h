@@ -230,11 +230,13 @@ public:
   // Name Lookup Mechanism
   AST_Decl *lookup_by_name (UTL_ScopedName *,
                             bool treat_as_ref,
-                            bool in_parent = 1);
+                            bool in_parent = true,
+                            bool full_def_only = false);
 
   // Look up the Identifier * specified only in the local scope.
   AST_Decl *lookup_by_name_local (Identifier *,
-                                  long index);
+                                  long index,
+                                  bool full_def_only = false);
 
   // Look up a predefined type by its ExprType.
   AST_Decl *lookup_primitive_type (AST_Expression::ExprType);

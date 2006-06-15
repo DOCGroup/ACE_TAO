@@ -133,7 +133,10 @@ be_valuetype::be_valuetype (UTL_ScopedName *n,
 
   for (long i = 0; i < this->pd_n_supports; ++i)
     {
-      if (this->pd_supports[i]->is_abstract ())
+      be_interface *intf =
+        be_interface::narrow_from_decl (this->pd_supports[i]);
+        
+      if (intf->has_mixed_parentage ())
         {
           this->supports_abstract_ = true;
           break;
@@ -188,7 +191,7 @@ be_valuetype::compute_fullobvskelname (void)
 const char*
 be_valuetype::full_obv_skel_name (void)
 {
-  if (!this->full_obv_skel_name_)
+  if (0 == this->full_obv_skel_name_)
     {
       compute_fullobvskelname ();
     }
@@ -610,7 +613,11 @@ be_valuetype::accept (be_visitor *visitor)
 void
 be_valuetype::destroy (void)
 {
+  delete [] this->full_obv_skel_name_;
+  this->full_obv_skel_name_ = 0;
+
   this->be_interface::destroy ();
+  this->AST_ValueType::destroy ();
 }
 
 ACE_CDR::ULong

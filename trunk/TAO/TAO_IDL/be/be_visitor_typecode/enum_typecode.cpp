@@ -34,7 +34,8 @@ TAO::be_visitor_enum_typecode::visit_enum (be_enum * node)
      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
 
-  std::string const enumerators_name (std::string ("_tao_enumerators_")
+  static ACE_CString const tao_enumerators ("_tao_enumerators_");
+  ACE_CString const enumerators_name (tao_enumerators
                                       + node->flat_name ());
 
   // Generate array containing enum field characteristics.

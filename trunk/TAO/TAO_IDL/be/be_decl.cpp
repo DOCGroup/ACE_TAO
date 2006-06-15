@@ -278,13 +278,12 @@ be_decl::compute_flat_name  (const char *prefix,
       result_str += suffix_str;
     }
 
-  name = ACE_OS::strdup (result_str.rep ());
+  name = ACE_OS::strdup (result_str.c_str ());
 }
 
 void
 be_decl::destroy (void)
 {
-  this->AST_Decl::destroy ();
 }
 
 void

@@ -136,6 +136,12 @@ AST_Argument::ast_accept (ast_visitor *visitor)
   return visitor->visit_argument (this);
 }
 
+void
+AST_Argument::destroy (void)
+{
+  this->AST_Field::destroy ();
+}
+
 AST_Argument::Direction
 AST_Argument::direction (void)
 {

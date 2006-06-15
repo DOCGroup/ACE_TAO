@@ -59,8 +59,8 @@ be_constant::accept (be_visitor *visitor)
 void
 be_constant::destroy (void)
 {
-  this->AST_Constant::destroy ();
   this->be_decl::destroy ();
+  this->AST_Constant::destroy ();
 }
 
 // Narrowing

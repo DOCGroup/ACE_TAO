@@ -133,6 +133,29 @@ AST_Attribute::ast_accept (ast_visitor *visitor)
   return visitor->visit_attribute (this);
 }
 
+void
+AST_Attribute::destroy (void)
+{
+  // No need to delete our exception lists, the
+  // destroy() method does it. The UTL_ExceptList
+  // destroy() method does NOT delete the contained
+  // exception nodes.
+
+  if (this->pd_get_exceptions != 0)
+    {
+      this->pd_get_exceptions->destroy ();
+      this->pd_get_exceptions = 0;
+    }
+  
+  if (this->pd_set_exceptions != 0)
+    {
+      this->pd_set_exceptions->destroy ();
+      this->pd_set_exceptions = 0;
+    }
+
+  this->AST_Field::destroy ();
+}
+
 UTL_ExceptList *
 AST_Attribute::be_add_get_exceptions (UTL_ExceptList *t)
 {

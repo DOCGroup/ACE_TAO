@@ -890,6 +890,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "fe_interface_header.h"
 #include "global_extern.h"
 #include "fe_private.h"
+#include "fe_extern.h"
 #include "nr_extern.h"
 #include "y.tab.h"
 
@@ -1413,7 +1414,7 @@ return IDL_RIGHT_SHIFT;
 case 67:
 TAO_YY_RULE_SETUP
 {
-                  tao_yylval.strval = (char *) "::";
+                  tao_yylval.strval = ACE::strnew ("::");
                   return IDL_SCOPE_DELIMITOR;
                 }
         TAO_YY_BREAK
@@ -1442,11 +1443,11 @@ TAO_YY_RULE_SETUP
 
   if (entry)
     {
-      tao_yylval.strval = ACE_OS::strdup (entry->mapping_);
+      tao_yylval.strval = ACE::strnew (entry->mapping_);
     }
   else
     {
-      tao_yylval.strval = ACE_OS::strdup (ace_tao_yytext);
+      tao_yylval.strval = ACE::strnew (ace_tao_yytext);
     }
 
   return IDENTIFIER;
@@ -2637,7 +2638,8 @@ idl_parse_line_and_file (char *buf)
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("IDL: No input files\n")));
 
-      ACE_OS::exit (99);
+      idl_global->set_err_count (idl_global->err_count () + 1);
+      throw FE_Bailout ();
     }
   else
     {
@@ -2791,12 +2793,18 @@ idl_store_pragma (char *buf)
               top_scope->has_prefix (true);
             }
 
-          ACE_CString ext_id;
-          ext_id.set (idl_global->filename ()->get_string (),
-                      0);
-          char *int_id = ACE::strnew (new_prefix);
-          (void) idl_global->file_prefixes ().rebind (ext_id,
-                                                      int_id);
+          char *ext_id = idl_global->filename ()->get_string ();
+          char *int_id = 0;
+          int status = idl_global->file_prefixes ().find (ext_id,
+                                                          int_id);
+                                                          
+          if (status != 0)
+            {
+              ext_id = ACE::strnew (ext_id);
+              int_id = ACE::strnew (new_prefix);
+              (void) idl_global->file_prefixes ().bind (ext_id,
+                                                        int_id);
+            }
         }
     }
   else if (ACE_OS::strncmp (buf + 8, "version", 7) == 0)
@@ -3282,10 +3290,11 @@ idl_find_node (char *s)
   if (d == 0)
     {
       idl_global->err ()->lookup_error (node);
-      node->destroy ();
-      delete node;
-      node = 0;
     }
+    
+  node->destroy ();
+  delete node;
+  node = 0;
 
   return d;
 }

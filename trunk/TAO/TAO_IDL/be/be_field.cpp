@@ -66,6 +66,13 @@ be_field::accept (be_visitor *visitor)
   return visitor->visit_field (this);
 }
 
+void
+be_field::destroy (void)
+{
+  this->be_decl::destroy ();
+  this->AST_Field::destroy ();
+}
+
 // Narrowing
 IMPL_NARROW_METHODS2 (be_field, AST_Field, be_decl)
 IMPL_NARROW_FROM_DECL (be_field)

@@ -116,7 +116,6 @@ be_visitor_context::reset (void)
   this->attr_ = 0;
   this->exception_ = 0;
   this->comma_ = 0;
-
 }
 
 void
