@@ -1,10 +1,19 @@
+Thu Jun 15 20:35:41 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * TAO_IDL/be/be_visitor_valuebox/valuebox_ci.cpp:
+        * TAO_IDL/be/be_visitor_valuebox/valuebox_cs.cpp:
+
+          Partially reverted this mornings fix. The
+          _tao_obv_static_repository_id function is not virtual and may
+          safely stay inlined.
+
 Thu Jun 15 15:05:43 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be_include/be_visitor_interface/remote_proxy_impl_cs.h:
         * TAO_IDL/be/be_visitor_interface/remote_proxy_impl_cs.cpp:
 
-	        Removed these files from the repository, they are no
- 	        longer used.
+                Removed these files from the repository, they are no
+                longer used.
 
         * TAO_IDL/tao_idl.cpp:
         * TAO_IDL/ast/ast_argument.cpp:
@@ -173,50 +182,50 @@ Thu Jun 15 15:05:43 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/util/utl_scope.cpp:
         * TAO_IDL/util/utl_string.cpp:
 
-	        - Plugged all memory leaks occuring during successful
-	          execution, and most of the leaks occuring when there
-	          is some kind of error. For some syntax errors
-	          reported by the parser, it's not known how far
-	          the parser has looked ahead (and thus what memory
-	          it may have already allocated) when the error
-	          is detected. Creating the AST out of types that
+                - Plugged all memory leaks occuring during successful
+                  execution, and most of the leaks occuring when there
+                  is some kind of error. For some syntax errors
+                  reported by the parser, it's not known how far
+                  the parser has looked ahead (and thus what memory
+                  it may have already allocated) when the error
+                  is detected. Creating the AST out of types that
             manage their own memory, or creating the AST on
-	          the stack, would solve all memory leak problems,
-	          but would require substantial redesign of the IDL
-	          compiler front end.
+                  the stack, would solve all memory leak problems,
+                  but would require substantial redesign of the IDL
+                  compiler front end.
 
-	        - Added generation of sendc_* operations inherited
-	          by local interfaces, if AMI code is being generated.
+                - Added generation of sendc_* operations inherited
+                  by local interfaces, if AMI code is being generated.
 
-	        - Fixed required check for parallel inheritance of 
-	          valuetypes and their corresponding supported
-	          interfaces, if any.
+                - Fixed required check for parallel inheritance of
+                  valuetypes and their corresponding supported
+                  interfaces, if any.
 
-	        - Added workarounds to skip problem code generation
-	          when IDL3 constructs and AMI code generation
-	          occur together. Integration of AMI with components
- 	          is a future development item.
+                - Added workarounds to skip problem code generation
+                  when IDL3 constructs and AMI code generation
+                  occur together. Integration of AMI with components
+                  is a future development item.
 
-	        - Fixed the logic of the decision whether or not to
-	          generate inheritance of a reference counting
-	          parent class for valuetype OBV_* classes.
+                - Fixed the logic of the decision whether or not to
+                  generate inheritance of a reference counting
+                  parent class for valuetype OBV_* classes.
 
-	        - Added default generation of Any insertion/extraction
-	          operators for local interfaces, and a command line
-	          option  - '-Sal' -  to suppress it.
+                - Added default generation of Any insertion/extraction
+                  operators for local interfaces, and a command line
+                  option  - '-Sal' -  to suppress it.
 
         * orbsvcs/IFR_Service/be_extern.h:
         * orbsvcs/IFR_Service/be_init.cpp:
         * orbsvcs/IFR_Service/be_produce.cpp:
 
-	        Changes to the IFR loader backend corresponding to the
-	        memory leak fixes above.
+                Changes to the IFR loader backend corresponding to the
+                memory leak fixes above.
 
         * docs/compiler.html:
         * docs/releasenotes/index.html:
 
           Documented new IDL compiler command line option
-	        described above.
+                described above.
 
 Thu Jun 15 12:32:58 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
