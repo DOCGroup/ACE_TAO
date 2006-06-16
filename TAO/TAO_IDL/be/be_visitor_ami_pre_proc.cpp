@@ -152,11 +152,7 @@ be_visitor_ami_pre_proc::visit_interface (be_interface *node)
                         -1);
     }
 
-  be_valuetype *excep_holder = 0;
-  be_valuetype *global_excep_holder = be_global->exceptionholder ();
-
-  excep_holder = this->create_exception_holder (node);
-
+  be_valuetype *excep_holder = this->create_exception_holder (node);
   be_interface *reply_handler = this->create_reply_handler (node,
                                                             excep_holder);
   if (reply_handler)
@@ -334,7 +330,7 @@ be_visitor_ami_pre_proc::visit_attribute (be_attribute *node)
 }
 
 be_valuetype *
-be_visitor_ami_pre_proc::create_exception_holder (be_interface *node)
+be_visitor_ami_pre_proc::create_exception_holder (be_interface *)
 {
   return be_global->messaging_exceptionholder ();
 }
@@ -1182,8 +1178,6 @@ be_visitor_ami_pre_proc::create_inheritance_list (be_interface *node,
   long n_parents = node->n_inherits ();
   AST_Interface **parents = node->inherits ();
   AST_Interface *parent = 0;
-  UTL_ScopedName *sn = 0;
-  Identifier *id = 0;
 
   for (long i = 0; i < n_parents; ++i)
     {

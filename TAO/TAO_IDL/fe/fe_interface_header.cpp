@@ -761,9 +761,7 @@ FE_OBVHeader::check_concrete_supported_inheritance (AST_Interface *d)
 {
   AST_ValueType *vt = 0;
   AST_Interface *concrete = 0;
-  AST_Interface **ancestors = 0;
   AST_Interface *ancestor = 0;
-  long n_ancestors = 0;
 
   for (long i = 0; i < this->pd_n_inherits; ++i)
     {
