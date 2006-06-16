@@ -228,7 +228,8 @@ int
 ifr_adding_visitor_operation::visit_argument (AST_Argument *node)
 {
   // Get the parameter's name.
-  this->params_[this->index_].name = node->local_name ()->get_string ();
+  this->params_[this->index_].name =
+    CORBA::string_dup (node->local_name ()->get_string ());
 
   AST_Type *arg_type = node->field_type ();
 

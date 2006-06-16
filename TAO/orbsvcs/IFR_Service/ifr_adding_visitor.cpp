@@ -4021,7 +4021,8 @@ ifr_adding_visitor::fill_initializers (CORBA::ExtInitializerSeq &result,
 
   for (CORBA::ULong i = 0; i < n_factories; ++i)
     {
-      result[i].name = factories[i]->local_name ()->get_string ();
+      result[i].name =
+        CORBA::string_dup (factories[i]->local_name ()->get_string ());
       n_args = static_cast<CORBA::ULong> (factories[i]->argument_count ());
       result[i].members.length (n_args);
 
