@@ -1,8 +1,22 @@
+Sat Jun 17 20:47:09 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/tao_idl.cpp:
+        * TAO_IDL/driver/drv_preproc.cpp:
+
+          Changed the type of the DRV_arglist variable from char*[]
+          to const char*[], since Borland compilers are strict about
+          array types and won't implicitly qualify char*[] to be
+          passed as const char*[]. This change also required
+          casting away constness when the array elements are
+          deleted during cleanup. Thanks to Johnny Willemsen
+          <jwillemsen@rememdy.nl> for his expertise with Borland
+          compilers.
+
 Fri Jun 16 20:25:45 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
         * orbsvcs/IFR_Service/ifr_adding_visitor_operation.cpp:
-        
+
           Added CORBA::string_dup() around the identifier string of
           an argument, when it is inserted into the sequence of
           parameter descriptions that is passed to the IFR to make
@@ -17,7 +31,7 @@ Fri Jun 16 14:29:23 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/fe_interface_header.cpp:
         * TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
-        
+
           Removed unused variables and identifiers for unused args.
 
 Thu Jun 15 20:35:41 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>

@@ -83,8 +83,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 ACE_RCSID (TAO_IDL,
            tao_idl,
            "$Id$")
-           
-extern char *DRV_arglist[];
+
+extern const char *DRV_arglist[];
 extern unsigned long DRV_argcount;
 
 char *DRV_files[NFILES];
@@ -145,14 +145,14 @@ DRV_refresh (void)
 void
 DRV_cleanup (void)
 {
-  // In case we got here via an init error or 
+  // In case we got here via an init error or
   // usage/version option - otherwise it's idempotent.
   BE_cleanup ();
 
   be_global->destroy ();
   delete be_global;
   be_global = 0;
-  
+
   idl_global->fini ();
   delete idl_global;
   idl_global = 0;
@@ -163,10 +163,10 @@ DRV_cleanup (void)
     {
       ACE::strdelete (DRV_files[DRV_file_index]);
     }
-    
+
   for (unsigned long i = 0; i < DRV_argcount; ++i)
     {
-      ACE::strdelete (DRV_arglist[i]);
+      delete [] (const_cast<char *> (DRV_arglist[i]));
     }
 }
 
@@ -374,12 +374,12 @@ main (int argc, char *argv[])
   catch (FE_Bailout)
     {
     }
-    
+
   // Case 1: init error, status = 1, nothing added here.
-  // Case 2: other error(s), status = 0, error count added here.  
+  // Case 2: other error(s), status = 0, error count added here.
   status += idl_global->err_count ();
-  
+
   DRV_cleanup ();
-    
+
   return status;
 }

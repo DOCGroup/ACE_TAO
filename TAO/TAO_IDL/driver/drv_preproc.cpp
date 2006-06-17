@@ -95,7 +95,7 @@ ACE_RCSID (driver,
 // Storage for preprocessor args.
 const unsigned long DRV_MAX_ARGCOUNT = 128;
 unsigned long DRV_argcount = 0;
-char *DRV_arglist[DRV_MAX_ARGCOUNT];
+const char *DRV_arglist[DRV_MAX_ARGCOUNT];
 
 static const char *output_arg_format = 0;
 static long output_arg_index = 0;
@@ -247,7 +247,7 @@ DRV_cpp_init (void)
 
   DRV_cpp_putarg (version_option);
   DRV_cpp_putarg ("-I.");
-  
+
   const char *platform_cpp_args = FE_get_cpp_args_from_env ();
 
   if (platform_cpp_args == 0)
@@ -540,7 +540,7 @@ DRV_cpp_post_init (void)
     {
       ACE_ERROR ((LM_ERROR,
                   "DRV_cpp_post_init: ACE_OS::getcwd failed\n"));
-                  
+
       idl_global->set_err_count (idl_global->err_count () + 1);
       throw FE_Bailout ();
     }
@@ -1123,11 +1123,9 @@ DRV_pre_proc (const char *myfile)
 
   // Remove the null termination and the input file from the DRV_arglist,
   // the next file will the previous args.
-  char *old_file = DRV_arglist[DRV_argcount - 2];
-  ACE::strdelete (old_file);
-  old_file = 0;
-  DRV_argcount -= 2;
+  delete [] const_cast<char *> (DRV_arglist[DRV_argcount - 2]);
 
+  DRV_argcount -= 2;
   ACE_exitcode status = 0;
 
   if (process.wait (&status) == ACE_INVALID_PID)
@@ -1230,7 +1228,7 @@ DRV_pre_proc (const char *myfile)
 
       ACE_OS::fclose (preproc);
     }
-    
+
   if (ACE_OS::unlink (t_ifile) == -1)
     {
       ACE_ERROR ((LM_ERROR,
