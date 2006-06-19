@@ -1,3 +1,10 @@
+Mon Jun 19 22:55:04 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Array_VarOut_T.h:
+        
+          Added 'typename' to the typedef of FORANY in class
+          TAO_Array_Var_Base_T.
+
 Mon Jun 19 19:39:25 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/EndpointPolicy/EndpointPolicyA.*:

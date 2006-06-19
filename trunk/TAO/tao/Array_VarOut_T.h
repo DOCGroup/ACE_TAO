@@ -114,7 +114,7 @@ public:
   // TAO extension.
   _retn_type    ptr (void) const;
 protected:
-  typedef TAO_Array_Forany_T<T,T_slice,TAG> FORANY;
+  typedef typename TAO_Array_Forany_T<T,T_slice,TAG> FORANY;
   T_slice * ptr_;
 };
 
