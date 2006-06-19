@@ -26,10 +26,12 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 
-// TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ci.cpp:70
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+
+
+// TAO_IDL - Generated from
+// w:\ace_wrappers\tao\tao_idl\be\be_visitor_interface/interface_ci.cpp:70
 
 #if !defined (_CORBA_IROBJECT___CI_)
 #define _CORBA_IROBJECT___CI_
@@ -37,16 +39,11 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_INLINE
 CORBA::IRObject::IRObject (
     TAO_Stub *objref,
-    CORBA::Boolean _tao_collocated,
+    ::CORBA::Boolean _tao_collocated,
     TAO_Abstract_ServantBase *servant,
     TAO_ORB_Core *oc
   )
-  : ::CORBA::Object (
-        objref,
-        _tao_collocated,
-        servant,
-        oc
-      ),
+  : ::CORBA::Object (objref, _tao_collocated, servant, oc),
     the_TAO_IRObject_Proxy_Broker_ (0)
 {
   this->CORBA_IRObject_setup_collocation ();
@@ -65,7 +62,7 @@ CORBA::IRObject::IRObject (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ci.cpp:70
+// w:\ace_wrappers\tao\tao_idl\be\be_visitor_interface/interface_ci.cpp:70
 
 #if !defined (_CORBA_CONTAINED___CI_)
 #define _CORBA_CONTAINED___CI_
@@ -73,16 +70,11 @@ CORBA::IRObject::IRObject (
 ACE_INLINE
 CORBA::Contained::Contained (
     TAO_Stub *objref,
-    CORBA::Boolean _tao_collocated,
+    ::CORBA::Boolean _tao_collocated,
     TAO_Abstract_ServantBase *servant,
     TAO_ORB_Core *oc
   )
-  : ::CORBA::Object (
-        objref,
-        _tao_collocated,
-        servant,
-        oc
-      ),
+  : ::CORBA::Object (objref, _tao_collocated, servant, oc),
     the_TAO_Contained_Proxy_Broker_ (0)
 {
   this->CORBA_Contained_setup_collocation ();
@@ -101,7 +93,7 @@ CORBA::Contained::Contained (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ci.cpp:70
+// w:\ace_wrappers\tao\tao_idl\be\be_visitor_interface/interface_ci.cpp:70
 
 #if !defined (_CORBA_CONTAINER___CI_)
 #define _CORBA_CONTAINER___CI_
@@ -109,16 +101,11 @@ CORBA::Contained::Contained (
 ACE_INLINE
 CORBA::Container::Container (
     TAO_Stub *objref,
-    CORBA::Boolean _tao_collocated,
+    ::CORBA::Boolean _tao_collocated,
     TAO_Abstract_ServantBase *servant,
     TAO_ORB_Core *oc
   )
-  : ::CORBA::Object (
-        objref,
-        _tao_collocated,
-        servant,
-        oc
-      ),
+  : ::CORBA::Object (objref, _tao_collocated, servant, oc),
     the_TAO_Container_Proxy_Broker_ (0)
 {
   this->CORBA_Container_setup_collocation ();
@@ -137,7 +124,7 @@ CORBA::Container::Container (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ci.cpp:70
+// w:\ace_wrappers\tao\tao_idl\be\be_visitor_interface/interface_ci.cpp:70
 
 #if !defined (_CORBA_IDLTYPE___CI_)
 #define _CORBA_IDLTYPE___CI_
@@ -145,16 +132,11 @@ CORBA::Container::Container (
 ACE_INLINE
 CORBA::IDLType::IDLType (
     TAO_Stub *objref,
-    CORBA::Boolean _tao_collocated,
+    ::CORBA::Boolean _tao_collocated,
     TAO_Abstract_ServantBase *servant,
     TAO_ORB_Core *oc
   )
-  : ::CORBA::Object (
-        objref,
-        _tao_collocated,
-        servant,
-        oc
-      ),
+  : ::CORBA::Object (objref, _tao_collocated, servant, oc),
     the_TAO_IDLType_Proxy_Broker_ (0)
 {
   this->CORBA_IDLType_setup_collocation ();
@@ -173,7 +155,7 @@ CORBA::IDLType::IDLType (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ci.cpp:70
+// w:\ace_wrappers\tao\tao_idl\be\be_visitor_interface/interface_ci.cpp:70
 
 #if !defined (_CORBA_TYPEDEFDEF___CI_)
 #define _CORBA_TYPEDEFDEF___CI_
@@ -181,16 +163,11 @@ CORBA::IDLType::IDLType (
 ACE_INLINE
 CORBA::TypedefDef::TypedefDef (
     TAO_Stub *objref,
-    CORBA::Boolean _tao_collocated,
+    ::CORBA::Boolean _tao_collocated,
     TAO_Abstract_ServantBase *servant,
     TAO_ORB_Core *oc
   )
-  : ::CORBA::Object (
-        objref,
-        _tao_collocated,
-        servant,
-        oc
-      ),
+  : ::CORBA::Object (objref, _tao_collocated, servant, oc),
     the_TAO_TypedefDef_Proxy_Broker_ (0)
 {
   this->CORBA_TypedefDef_setup_collocation ();
@@ -208,4 +185,7 @@ CORBA::TypedefDef::TypedefDef (
 
 #endif /* end #if !defined */
 
+
 TAO_END_VERSIONED_NAMESPACE_DECL
+
+

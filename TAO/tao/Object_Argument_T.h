@@ -120,19 +120,15 @@ namespace TAO
   };
 
   /**
-   * @struct Object_Tag
-   *
-   * @brief Struct for object arguments id tag.
-   *
-   */
-  struct TAO_Export Object_Tag {};
-
-  /**
    * @struct Object_Arg_Traits_T
    *
    * @brief Template class for stub argument traits of objects.
    */
-  template<typename T_ptr, typename T_var, typename T_out, typename T_traits, typename Insert_Policy>
+  template<typename T_ptr,
+           typename T_var,
+           typename T_out,
+           typename T_traits,
+           typename Insert_Policy>
   struct Object_Arg_Traits_T
   {
     typedef T_ptr                                         ret_type;
@@ -140,16 +136,17 @@ namespace TAO
     typedef T_ptr &                                       inout_type;
     typedef T_out                                         out_type;
 
-    typedef In_Object_Argument_T<T_ptr, Insert_Policy>
-      in_arg_val;
-    typedef Inout_Object_Argument_T<T_ptr, T_traits, Insert_Policy>
-      inout_arg_val;
-    typedef Out_Object_Argument_T<T_ptr,T_out, Insert_Policy>
-      out_arg_val;
-    typedef Ret_Object_Argument_T<T_ptr,T_var, Insert_Policy>
-      ret_val;
-
-    typedef Object_Tag                                    idl_tag;
+    typedef In_Object_Argument_T<T_ptr,
+                                 Insert_Policy>           in_arg_val;
+    typedef Inout_Object_Argument_T<T_ptr,
+                                    T_traits,
+                                    Insert_Policy>        inout_arg_val;
+    typedef Out_Object_Argument_T<T_ptr,
+                                  T_out,
+                                  Insert_Policy>          out_arg_val;
+    typedef Ret_Object_Argument_T<T_ptr,
+                                  T_var,
+                                  Insert_Policy>          ret_val;
   };
 }
 

@@ -185,6 +185,7 @@ namespace CORBA
     // Useful for template programming.
     typedef CORBA::Request_ptr _ptr_type;
     typedef CORBA::Request_var _var_type;
+    typedef CORBA::Request_out _out_type;
 
   private:
     friend class ::TAO_Dynamic_Adapter_Impl;

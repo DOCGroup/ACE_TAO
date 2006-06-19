@@ -1689,7 +1689,10 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
 
           ACE_CString pidl_checker (idl_name);
           bool got_pidl =
-            (pidl_checker.substr (pidl_checker.length () - 5) == ".pidl");
+            (pidl_checker.substr (pidl_checker.length () - 5) == ".pidl")
+            && (pidl_checker.find ("IFR_Client") == ACE_CString::npos);
+            // We can't use the -GA option on IFR_Client .pidl files,
+            // because there are decls inside interfaces.
 
           // If we're here and we have a .pidl file, we need to generate
           // the *A.h include from the AnyTypeCode library.
@@ -1921,15 +1924,16 @@ TAO_CodeGen::gen_skel_src_includes (void)
 
   if (be_global->gen_direct_collocation ())
     {
-      this->gen_standard_include (this->server_skeletons_,
-                                  "tao/PortableServer/Direct_Collocation_Upcall_Wrapper.h");
+      this->gen_standard_include (
+          this->server_skeletons_,
+          "tao/PortableServer/Direct_Collocation_Upcall_Wrapper.h"
+        );
     }
+
   this->gen_standard_include (this->server_skeletons_,
                               "tao/PortableServer/Upcall_Command.h");
   this->gen_standard_include (this->server_skeletons_,
                               "tao/PortableServer/Upcall_Wrapper.h");
-
-  this->gen_skel_arg_file_includes (this->server_skeletons_);
 
   this->gen_standard_include (this->server_skeletons_,
                               "tao/TAO_Server_Request.h");
@@ -1953,6 +1957,8 @@ TAO_CodeGen::gen_skel_src_includes (void)
                               "tao/operation_details.h");
   this->gen_standard_include (this->server_skeletons_,
                               "tao/PortableInterceptor.h");
+
+  this->gen_skel_arg_file_includes (this->server_skeletons_);
 
   if (be_global->gen_thru_poa_collocation ()
       || be_global->gen_direct_collocation ())

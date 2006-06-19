@@ -114,7 +114,9 @@ int be_visitor_union_ch::visit_union (be_union *node)
 
   // Generate the _var_type typedef.
   *os << be_nl << be_nl
-      << "typedef " << node->local_name () << "_var _var_type;";
+      << "typedef " << node->local_name () << "_var _var_type;"
+      << be_nl
+      << "typedef " << node->local_name () << "_out _out_type;";
 
   // Now generate the public defn for the union branch members. For this,
   // set our state to reflect what we are aiming to do.

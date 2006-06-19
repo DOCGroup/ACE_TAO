@@ -703,4 +703,9 @@ be_visitor_operation::gen_arg_template_param_name (AST_Decl *scope,
   // For types other than the 4 above, don't unalias the type name
   // in case it is a sequence or array.
   *os << bt->name ();
+
+  if (nt == AST_Decl::NT_array)
+    {
+      *os << "_tag";
+    }
 }

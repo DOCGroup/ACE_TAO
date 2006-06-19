@@ -106,6 +106,7 @@ namespace CORBA
     static void _tao_any_destructor (void *);
 
     typedef OctetSeq_var _var_type;
+    typedef OctetSeq_out _out_type;
 
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
     OctetSeq (

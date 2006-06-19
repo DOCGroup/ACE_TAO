@@ -53,7 +53,7 @@ namespace CORBA
   TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (ServerRequest_ptr);
 
   typedef TAO_Pseudo_Var_T<ServerRequest> ServerRequest_var;
-  typedef TAO_Pseudo_Out_T<ServerRequest, ServerRequest_var> ServerRequest_out;
+  typedef TAO_Pseudo_Out_T<ServerRequest> ServerRequest_out;
 
   /**
    * @class ServerRequest
@@ -143,6 +143,8 @@ namespace CORBA
 
     /// Useful for template programming.
     typedef CORBA::ServerRequest_ptr _ptr_type;
+    typedef CORBA::ServerRequest_var _var_type;
+    typedef CORBA::ServerRequest_out _out_type;
 
   private:
     /// If zero then the NVList is evaluated ASAP.

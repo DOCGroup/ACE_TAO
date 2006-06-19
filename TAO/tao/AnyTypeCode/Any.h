@@ -41,6 +41,7 @@ namespace CORBA
   class Any;
   typedef Any *Any_ptr;
   class Any_var;
+  class Any_out;
 
   class TypeCode;
   typedef TypeCode *TypeCode_ptr;
@@ -48,7 +49,7 @@ namespace CORBA
   class Object;
   typedef Object *Object_ptr;
   typedef TAO_Pseudo_Var_T<Object> Object_var;
-  typedef TAO_Pseudo_Out_T<Object, Object_var> Object_out;
+  typedef TAO_Pseudo_Out_T<Object> Object_out;
 
   class AbstractBase;
   typedef AbstractBase *AbstractBase_ptr;
@@ -71,6 +72,7 @@ namespace CORBA
   public:
     typedef Any_ptr _ptr_type;
     typedef Any_var _var_type;
+    typedef Any_out _out_type;
 
     Any (void);
     Any (const Any &);

@@ -38,7 +38,7 @@ namespace CORBA
   class LocalObject;
   typedef LocalObject *LocalObject_ptr;
   typedef TAO_Pseudo_Var_T<LocalObject> LocalObject_var;
-  typedef TAO_Pseudo_Out_T<LocalObject, LocalObject_var> LocalObject_out;
+  typedef TAO_Pseudo_Out_T<LocalObject> LocalObject_out;
 
   /**
    * @class LocalObject
@@ -186,6 +186,7 @@ namespace CORBA
     /// Useful for template programming.
     typedef LocalObject_ptr _ptr_type;
     typedef LocalObject_var _var_type;
+    typedef LocalObject_out _out_type;
 
   protected:
 

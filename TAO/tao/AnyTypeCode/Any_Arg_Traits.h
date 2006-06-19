@@ -30,8 +30,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace CORBA
 {
   class Any;
-  class Any_var;
-  class Any_out;
 }
 
 namespace TAO
@@ -41,8 +39,6 @@ namespace TAO
     : public
         Var_Size_Arg_Traits_T<
             CORBA::Any,
-            CORBA::Any_var,
-            CORBA::Any_out,
             TAO::Any_Insert_Policy_Stream <CORBA::Any>
           >
   {

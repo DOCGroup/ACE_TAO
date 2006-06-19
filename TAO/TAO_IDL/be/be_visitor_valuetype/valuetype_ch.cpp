@@ -180,7 +180,10 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
   *os << be_uidt << be_uidt_nl
       << "{" << be_nl
       << "public:" << be_idt_nl
+      << "typedef " << node->local_name () << " * _ptr_type;" << be_nl
       << "typedef " << node->local_name () << "_var _var_type;"
+      << be_nl
+      << "typedef " << node->local_name () << "_out _out_type;"
       << be_nl << be_nl;
 
   if (is_an_amh_exception_holder)

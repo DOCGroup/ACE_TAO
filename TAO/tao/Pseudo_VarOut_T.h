@@ -58,23 +58,23 @@ class TAO_Pseudo_Var_T : private TAO_Base_var
 {
 public:
   TAO_Pseudo_Var_T (void);
-  TAO_Pseudo_Var_T (T *);
+  TAO_Pseudo_Var_T (typename T::_ptr_type);
   TAO_Pseudo_Var_T (const TAO_Pseudo_Var_T<T> &);
 
   ~TAO_Pseudo_Var_T (void);
 
-  TAO_Pseudo_Var_T<T> & operator= (T *);
+  TAO_Pseudo_Var_T<T> & operator= (typename T::_ptr_type);
   TAO_Pseudo_Var_T<T> & operator= (const TAO_Pseudo_Var_T<T> &);
 
-  T * operator-> (void) const;
+  typename T::_ptr_type operator-> (void) const;
 
-  operator T * const & () const;
-  operator T *& ();
+  operator typename T::_ptr_type  const & () const;
+  operator typename T::_ptr_type & ();
 
-  typedef T *   _in_type;
-  typedef T *&  _inout_type;
-  typedef T *&  _out_type;
-  typedef T *   _retn_type;
+  typedef typename T::_ptr_type    _in_type;
+  typedef typename T::_ptr_type &  _inout_type;
+  typedef typename T::_ptr_type &  _out_type;
+  typedef typename T::_ptr_type    _retn_type;
 
   _in_type      in (void) const;
   _inout_type   inout (void);
@@ -90,7 +90,7 @@ private:
   void operator= (const TAO_Base_var &);
 
 private:
-  T * ptr_;
+  typename T::_ptr_type ptr_;
 };
 
 /**
@@ -102,26 +102,26 @@ private:
  * and Environment.
  *
  */
-template <typename T, typename T_var>
+template <typename T>
 class TAO_Pseudo_Out_T
 {
 public:
-  TAO_Pseudo_Out_T (T *&);
-  TAO_Pseudo_Out_T (T_var &);
-  TAO_Pseudo_Out_T (const TAO_Pseudo_Out_T<T,T_var> &);
+  TAO_Pseudo_Out_T (typename T::_ptr_type &);
+  TAO_Pseudo_Out_T (typename T::_var_type &);
+  TAO_Pseudo_Out_T (const TAO_Pseudo_Out_T<T> &);
 
-  TAO_Pseudo_Out_T<T,T_var> & operator= (const TAO_Pseudo_Out_T<T,T_var> &);
-  TAO_Pseudo_Out_T<T,T_var> & operator= (T *);
+  TAO_Pseudo_Out_T<T> & operator= (const TAO_Pseudo_Out_T<T> &);
+  TAO_Pseudo_Out_T<T> & operator= (typename T::_ptr_type);
 
-  operator T *& ();
-  T *& ptr (void);
-  T * operator-> (void);
+  operator typename T::_ptr_type & ();
+  typename T::_ptr_type & ptr (void);
+  typename T::_ptr_type operator-> (void);
 
 private:
-  T *& ptr_;
+  typename T::_ptr_type & ptr_;
 
   /// Assignment from _var not allowed.
-  TAO_Pseudo_Out_T<T,T_var> & operator= (const T_var &);
+  TAO_Pseudo_Out_T<T> & operator= (const typename T::_var_type &);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

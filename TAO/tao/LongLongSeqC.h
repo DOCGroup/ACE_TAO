@@ -110,6 +110,7 @@ namespace CORBA
     static void _tao_any_destructor (void *);
 
     typedef LongLongSeq_var _var_type;
+    typedef LongLongSeq_out _out_type;
   };
 
 #endif /* end #if !defined */

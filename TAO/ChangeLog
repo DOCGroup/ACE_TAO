@@ -1,3 +1,140 @@
+Mon Jun 19 14:49:25 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Abstract_Servant_Base.h:
+        * tao/Adapter.h:
+        * tao/Adapter_Registry.h:
+        * tao/AnyTypeCode.mpc
+        * tao/Array_Traits_T.h:
+        * tao/Array_VarOut_T.cpp:
+        * tao/Array_VarOut_T.h:
+        * tao/Array_VarOut_T.inl:
+        * tao/BD_String_Argument_T.cpp:
+        * tao/BD_String_Argument_T.h:
+        * tao/BD_String_Argument_T.inl:
+        * tao/Basic_Argument_T.h:
+        * tao/Basic_Arguments.h:
+        * tao/BooleanSeqC.h:
+        * tao/Bounded_Array_Sequence_T.h:
+        * tao/CharSeqC.h:
+        * tao/Collocation_Proxy_Broker.h:
+        * tao/DoubleSeqC.h:
+        * tao/Environment.h:
+        * tao/Fixed_Array_Argument_T.cpp:
+        * tao/Fixed_Array_Argument_T.h:
+        * tao/Fixed_Array_Argument_T.inl:
+        * tao/Fixed_Size_Argument_T.cpp:
+        * tao/Fixed_Size_Argument_T.h:
+        * tao/Fixed_Size_Argument_T.inl:
+        * tao/FloatSeqC.h:
+        * tao/LocalObject.h:
+        * tao/LongDoubleSeqC.h:
+        * tao/LongLongSeqC.h:
+        * tao/LongSeqC.h:
+        * tao/ORB.h:
+        * tao/Object.h:
+        * tao/Object_Argument_T.h:
+        * tao/OctetSeqC.h:
+        * tao/PolicyC.h:
+        * tao/Policy_ForwardC.h:
+        * tao/Principal.h:
+        * tao/Pseudo_VarOut_T.h:
+        * tao/Pseudo_VarOut_T.inl:
+        * tao/Request_Dispatcher.h:
+        * tao/ShortSeqC.h:
+        * tao/StringSeqC.h:
+        * tao/String_Traits_Base_T.h:
+        * tao/TypeCodeFactory_Adapter.h:
+        * tao/UB_String_Argument_T.cpp:
+        * tao/UB_String_Argument_T.h:
+        * tao/UB_String_Argument_T.inl:
+        * tao/UB_String_Arguments.h:
+        * tao/ULongLongSeqC.h:
+        * tao/ULongSeqC.h:
+        * tao/UShortSeqC.h:
+        * tao/Unbounded_Array_Sequence_T.h:
+        * tao/Var_Array_Argument_T.cpp:
+        * tao/Var_Array_Argument_T.h:
+        * tao/Var_Array_Argument_T.inl:
+        * tao/Var_Size_Argument_T.cpp:
+        * tao/Var_Size_Argument_T.h:
+        * tao/Var_Size_Argument_T.inl:
+        * tao/WCharSeqC.h:
+        * tao/WStringSeqC.h:
+        * tao/AnyTypeCode/Any.h:
+        * tao/AnyTypeCode/AnySeqC.h:
+        * tao/AnyTypeCode/Any_Arg_Traits.h:
+        * tao/AnyTypeCode/NVList.h:
+        * tao/AnyTypeCode/TypeCode.h:
+        * tao/Domain/DomainS.cpp:
+        * tao/DynamicInterface/Context.h:
+        * tao/DynamicInterface/ExceptionList.h:
+        * tao/DynamicInterface/Request.h:
+        * tao/DynamicInterface/Server_Request.h:
+        * tao/IFR_Client/IFR_BaseC.cpp:
+        * tao/IFR_Client/IFR_BaseC.h:
+        * tao/IFR_Client/IFR_BaseC.inl:
+        * tao/IFR_Client/IFR_BasicC.cpp:
+        * tao/IFR_Client/IFR_BasicC.h:
+        * tao/IFR_Client/IFR_BasicC.inl:
+        * tao/IFR_Client/IFR_ComponentsC.cpp:
+        * tao/IFR_Client/IFR_ComponentsC.h:
+        * tao/IFR_Client/IFR_ComponentsC.inl:
+        * tao/IFR_Client/IFR_ExtendedC.cpp:
+        * tao/IFR_Client/IFR_ExtendedC.h:
+        * tao/IFR_Client/IFR_ExtendedC.inl:
+        * tao/ImR_Client/ImplRepoC.cpp:
+        * tao/ImR_Client/ImplRepoC.h:
+        * tao/ImR_Client/ImplRepoS.cpp:
+        * tao/ImR_Client/ServerObjectS.cpp:
+        * tao/Messaging/MessagingS.cpp:
+        * tao/ObjRefTemplate/ObjectReferenceTemplateC.cpp:
+        * tao/PortableServer/Any_SArg_Traits.h:
+        * tao/PortableServer/BD_String_SArgument_T.cpp:
+        * tao/PortableServer/BD_String_SArgument_T.h:
+        * tao/PortableServer/BD_String_SArgument_T.inl:
+        * tao/PortableServer/Collocated_Object_Proxy_Broker.cpp:
+        * tao/PortableServer/Direct_Collocation_Upcall_Wrapper.h:
+        * tao/PortableServer/Fixed_Array_SArgument_T.cpp:
+        * tao/PortableServer/Fixed_Array_SArgument_T.h:
+        * tao/PortableServer/Fixed_Array_SArgument_T.inl:
+        * tao/PortableServer/Fixed_Size_SArgument_T.h:
+        * tao/PortableServer/Object_SArg_Traits.h:
+        * tao/PortableServer/Object_SArgument_T.h:
+        * tao/PortableServer/PolicyS.cpp:
+        * tao/PortableServer/Servant_Upcall.h:
+        * tao/PortableServer/TypeCode_SArg_Traits.h:
+        * tao/PortableServer/Var_Array_SArgument_T.cpp:
+        * tao/PortableServer/Var_Array_SArgument_T.h:
+        * tao/PortableServer/Var_Array_SArgument_T.inl:
+        * tao/PortableServer/Var_Size_SArgument_T.cpp:
+        * tao/PortableServer/Var_Size_SArgument_T.h:
+        * tao/PortableServer/Var_Size_SArgument_T.inl:
+        * tao/PortableServer/get_arg.h:
+        * tao/RTScheduling/RTSchedulerC.cpp:
+        * tao/Valuetype/AbstractBase.h:
+        * tao/Valuetype/ValueBase.h:
+
+          Reduced the number of template parameters in _var,
+          _out, _forany and arg template classes.
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_visitor_arg_traits.cpp:
+        * TAO_IDL/be/be_visitor_traits.cpp:
+        * TAO_IDL/be/be_visitor_array/array_ci.cpp:
+        * TAO_IDL/be/be_visitor_component/component_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/amh_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation.cpp:
+        * TAO_IDL/be/be_visitor_operation/upcall_command_ss.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_structure/structure_ch.cpp:
+        * TAO_IDL/be/be_visitor_union/union_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuebox/valuebox_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_ch.cpp:
+
+          Changes to generated code corresponding with the
+          changes to middleware code described above.
+
 Mon Jun 19 12:11:09 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/driver/drv_preproc.cpp:

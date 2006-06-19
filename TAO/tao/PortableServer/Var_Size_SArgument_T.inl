@@ -4,8 +4,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-template<typename S,
-         typename Insert_Policy>
+template<typename S, typename Insert_Policy>
 S const &
 TAO::In_Var_Size_SArgument_T<S,Insert_Policy>::arg (void) const
 {
@@ -14,15 +13,13 @@ TAO::In_Var_Size_SArgument_T<S,Insert_Policy>::arg (void) const
 
 // ==========================================================================
 
-template<typename S,
-         typename Insert_Policy>
+template<typename S, typename Insert_Policy>
 ACE_INLINE
 TAO::Inout_Var_Size_SArgument_T<S,Insert_Policy>::Inout_Var_Size_SArgument_T (void)
 {
 }
 
-template<typename S,
-         typename Insert_Policy>
+template<typename S, typename Insert_Policy>
 S &
 TAO::Inout_Var_Size_SArgument_T<S,Insert_Policy>::arg (void)
 {
@@ -31,39 +28,31 @@ TAO::Inout_Var_Size_SArgument_T<S,Insert_Policy>::arg (void)
 
 // ==========================================================================
 
-template<typename S,
-         typename S_var,
-         typename Insert_Policy>
+template<typename S, typename Insert_Policy>
 ACE_INLINE
-TAO::Out_Var_Size_SArgument_T<S,S_var,Insert_Policy>::Out_Var_Size_SArgument_T (void)
+TAO::Out_Var_Size_SArgument_T<S,Insert_Policy>::Out_Var_Size_SArgument_T (void)
 {
 }
 
-template<typename S,
-         typename S_var,
-         typename Insert_Policy>
+template<typename S, typename Insert_Policy>
 S *&
-TAO::Out_Var_Size_SArgument_T<S,S_var,Insert_Policy>::arg (void)
+TAO::Out_Var_Size_SArgument_T<S,Insert_Policy>::arg (void)
 {
   return this->x_.out ();
 }
 
 // ==========================================================================
 
-template<typename S,
-         typename S_var,
-         typename Insert_Policy>
+template<typename S, typename Insert_Policy>
 ACE_INLINE
-TAO::Ret_Var_Size_SArgument_T<S,S_var,Insert_Policy>::Ret_Var_Size_SArgument_T (void)
+TAO::Ret_Var_Size_SArgument_T<S,Insert_Policy>::Ret_Var_Size_SArgument_T (void)
 {
 }
 
-template<typename S,
-         typename S_var,
-         typename Insert_Policy>
+template<typename S, typename Insert_Policy>
 ACE_INLINE
 S *&
-TAO::Ret_Var_Size_SArgument_T<S,S_var,Insert_Policy>::arg (void)
+TAO::Ret_Var_Size_SArgument_T<S,Insert_Policy>::arg (void)
 {
   return this->x_.out ();
 }

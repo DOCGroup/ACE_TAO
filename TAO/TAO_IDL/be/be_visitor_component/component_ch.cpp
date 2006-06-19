@@ -108,6 +108,8 @@ be_visitor_component_ch::visit_component (be_component *node)
       << "typedef " << node->local_name () << "_ptr _ptr_type;"
       << be_nl
       << "typedef " << node->local_name () << "_var _var_type;"
+      << be_nl
+      << "typedef " << node->local_name () << "_out _out_type;"
       << be_nl;
 
   // Generate the static _duplicate, _narrow, and _nil operations.

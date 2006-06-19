@@ -30,7 +30,8 @@ public:
   typedef value_type const & const_subscript_type;
 
   typedef details::unbounded_array_allocation_traits<value_type,true> allocation_traits;
-  typedef details::array_traits <T_array, T_slice, T_tag> element_traits;
+  typedef TAO_Array_Forany_T<T_array, T_slice, T_tag> forany;
+  typedef details::array_traits <forany> element_traits;
   typedef details::generic_sequence<value_type, allocation_traits, element_traits> implementation_type;
 
   inline unbounded_array_sequence()
@@ -97,8 +98,8 @@ namespace TAO
   template <typename stream, typename T_array, typename T_slice, typename T_tag>
   bool demarshal_sequence(stream & strm, TAO::unbounded_array_sequence<T_array, T_slice, T_tag> & target) {
     typedef TAO::unbounded_array_sequence<T_array, T_slice, T_tag> sequence;
-    typedef TAO::Array_Traits<T_array, T_slice, T_tag> array_traits;
     typedef TAO_Array_Forany_T <T_array, T_slice, T_tag> forany;
+    typedef TAO::Array_Traits<forany> array_traits;
 
     ::CORBA::ULong new_length = 0;
     if (!(strm >> new_length)) {
@@ -128,8 +129,8 @@ namespace TAO
   template <typename stream, typename T_array, typename T_slice, typename T_tag>
   bool marshal_sequence(stream & strm, const TAO::unbounded_array_sequence<T_array, T_slice, T_tag> & source) {
     typedef TAO_FixedArray_Var_T <T_array, T_slice, T_tag> fixed_array;
-    typedef TAO::Array_Traits<T_array, T_slice, T_tag> array_traits;
     typedef TAO_Array_Forany_T <T_array, T_slice, T_tag> forany;
+    typedef TAO::Array_Traits<forany> array_traits;
     ::CORBA::ULong const length = source.length ();
     if (!(strm << length)) {
       return false;

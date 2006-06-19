@@ -125,13 +125,6 @@ namespace TAO
     S x_;
   };
 
-  /**
-   * @struct Basic_Tag
-   *
-   * @brief Struct for basic IDL type arguments id tag.
-   *
-   */
-  struct TAO_Export Basic_Tag {};
 
   /**
    * @struct Basic_Arg_Traits_T
@@ -151,8 +144,6 @@ namespace TAO
     typedef Inout_Basic_Argument_T<T, Insert_Policy>   inout_arg_val;
     typedef Out_Basic_Argument_T<T, Insert_Policy>     out_arg_val;
     typedef Ret_Basic_Argument_T<T, Insert_Policy>     ret_val;
-
-    typedef Basic_Tag                                  idl_tag;
   };
 }
 

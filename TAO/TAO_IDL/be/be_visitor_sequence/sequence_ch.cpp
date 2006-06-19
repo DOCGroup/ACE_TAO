@@ -186,7 +186,10 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
   if (this->ctx_->tdef () != 0)
     {
       *os << be_nl << be_nl
-          << "typedef " << node->local_name () << "_var _var_type;";
+          << "typedef " << node->local_name () << "_var _var_type;"
+          << be_nl
+          << "typedef " << node->local_name () << "_out _out_type;"
+          << be_nl << be_nl;
     }
 
   // TAO provides extensions for octet sequences, first find out if

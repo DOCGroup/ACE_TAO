@@ -37,22 +37,9 @@ namespace TAO
 {
   namespace Portable_Server
   {
-
     /// Get return value/argument.
-    /**
-     * @note It is possible to determine the return argument type
-     *       using typedef traits found in the TAO::SArg_Traits<>
-     *       template.  However, MSVC++ 6 does not support them
-     *       properly.  Until we drop MSVC++ 6 support, we'll have to
-     *       pass the return argument type in an additional template
-     *       parameter.
-     *
-     * @todo Drop second template parameter, and replace
-     *       " @c RET_ARG_TYPE " return type with
-     *       " @c typename TAO::SArg_Traits<T>::ret_arg_type ".
-     */
-    template<typename T, typename RET_ARG_TYPE>
-    RET_ARG_TYPE
+    template<typename T>
+    typename TAO::SArg_Traits<T>::ret_arg_type
     get_ret_arg (TAO_Operation_Details const * details,
                  TAO::Argument * const * skel_args)
     {
@@ -65,16 +52,8 @@ namespace TAO
     }
 
     /// Get "in" argument.
-    /**
-     * @see @c get_ret_arg note to understand why we currently use a
-     *      second template parameter.
-     *
-     * @todo Drop second template parameter, and replace
-     *       " @c IN_ARG_TYPE " return type with
-     *       " @c typename TAO::SArg_Traits<T>::in_arg_type ".
-     */
-    template<typename T, typename IN_ARG_TYPE>
-    IN_ARG_TYPE
+    template<typename T>
+    typename TAO::SArg_Traits<T>::in_arg_type
     get_in_arg (TAO_Operation_Details const * details,
                 TAO::Argument * const * skel_args,
                 size_t i)
@@ -88,16 +67,8 @@ namespace TAO
     }
 
     /// Get "inout" argument.
-    /**
-     * @see @c get_ret_arg note to understand why we currently use a
-     *      second template parameter.
-     *
-     * @todo Drop second template parameter, and replace
-     *       " @c INOUT_ARG_TYPE " return type with
-     *       " @c typename TAO::SArg_Traits<T>::inout_arg_type ".
-     */
-    template<typename T, typename INOUT_ARG_TYPE>
-    INOUT_ARG_TYPE
+    template<typename T>
+    typename TAO::SArg_Traits<T>::inout_arg_type
     get_inout_arg (TAO_Operation_Details const * details,
                    TAO::Argument * const * skel_args,
                    size_t i)
@@ -111,16 +82,8 @@ namespace TAO
     }
 
     /// Get "out" argument.
-    /**
-     * @see @c get_ret_arg note to understand why we currently use a
-     *      second template parameter.
-     *
-     * @todo Drop second template parameter, and replace
-     *       " @c OUT_ARG_TYPE " return type with
-     *       " @c typename TAO::SArg_Traits<T>::out_arg_type ".
-     */
-    template<typename T, typename OUT_ARG_TYPE>
-    OUT_ARG_TYPE
+    template<typename T>
+    typename TAO::SArg_Traits<T>::out_arg_type
     get_out_arg (TAO_Operation_Details const * details,
                  TAO::Argument * const * skel_args,
                  size_t i)
@@ -132,7 +95,6 @@ namespace TAO
         : static_cast<typename TAO::SArg_Traits<T>::out_arg_val *> (
             skel_args[i])->arg ();
     }
-
   }
 }
 

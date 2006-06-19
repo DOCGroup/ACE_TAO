@@ -31,14 +31,14 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<typename T> class TAO_Pseudo_Var_T;
-template <typename T, typename T_var> class TAO_Pseudo_Out_T;
+template<typename T> class TAO_Pseudo_Out_T;
 
 namespace CORBA
 {
   class Object;
   typedef Object *Object_ptr;
   typedef TAO_Pseudo_Var_T<Object> Object_var;
-  typedef TAO_Pseudo_Out_T<Object, Object_var> Object_out;
+  typedef TAO_Pseudo_Out_T<Object> Object_out;
   class Environment;
 }
 

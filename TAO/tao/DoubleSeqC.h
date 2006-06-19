@@ -101,6 +101,7 @@ namespace CORBA
     static void _tao_any_destructor (void *);
 
     typedef DoubleSeq_var _var_type;
+    typedef DoubleSeq_out _out_type;
   };
 
 #endif /* end #if !defined */
