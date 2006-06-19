@@ -2,7 +2,12 @@
 
 #include "ace/OS_NS_sys_sendfile.h"
 #include "ace/OS_NS_sys_mman.h"
-#include "ace/OS_NS_unistd.h"
+
+#if defined (ACE_WIN32) || defined (HPUX)
+# include "ace/OS_NS_sys_socket.h"
+#else
+# include "ace/OS_NS_unistd.h"
+#endif  /* ACE_WIN32 || HPUX */
 
 #ifndef ACE_HAS_INLINED_OSCALLS
 # include "ace/OS_NS_sys_sendfile.inl"
@@ -17,13 +22,24 @@ ACE_OS::sendfile_emulation (ACE_HANDLE out_fd,
                             off_t * offset,
                             size_t count)
 {
+  // @@ Is it possible to inline a call to ::TransmitFile() on
+  //    MS Windows instead of emulating here?
+
   // @@ We may want set up a signal lease (or oplock) if supported by
   //    the platform so that we don't get a bus error if the mmap()ed
   //    file is truncated.
   void * const buf =
-    ACE_OS::mmap (0, count, PROT_READ, MAP_PRIVATE, in_fd, *offset);
+    ACE_OS::mmap (0, count, PROT_READ, MAP_SHARED, in_fd, *offset);
 
+  if (buf == MAP_FAILED)
+    return -1;
+
+#if defined (ACE_WIN32) || defined (HPUX)
+  ssize_t const r =
+    ACE_OS::send (out_fd, static_cast<const char *> (buf), count);
+#else
   ssize_t const r = ACE_OS::write (out_fd, buf, count);
+#endif /* ACE_WIN32 */
 
   (void) ACE_OS::munmap (buf, count);
 

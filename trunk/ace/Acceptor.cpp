@@ -96,8 +96,8 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open
   // the <accept> call can hang!
   this->peer_acceptor_.enable (ACE_NONBLOCK);
 
-  int result = reactor->register_handler (this,
-                                          ACE_Event_Handler::ACCEPT_MASK);
+  int const result = reactor->register_handler (this,
+                                                ACE_Event_Handler::ACCEPT_MASK);
   if (result != -1)
     this->reactor (reactor);
   else

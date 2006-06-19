@@ -1,5 +1,15 @@
+Mon Jun 19 09:56:17 UTC 2006  Ossama Othman  <ossama_othman@symantec.com>
+
+        * ace/OS_NS_sys_sendfile.cpp (sendfile_emulation):
+
+          Verify the ACE_OS::mmap() call succeeded prior to continuing.
+
+          Use ACE_OS::send() instead of ACE_OS::write() on Windows.  The
+          latter doesn't provide the same semantics on Windows as on
+          Unix.  Addresses an ACE_OS::sendfile() failure on Windows.
+
 Tue Jun 13 02:10:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
-	
+
 	* tests/run_tests.lst:
 	  Don't run netlink test in ACE_FOR_TAO configuration
 
