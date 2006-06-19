@@ -18,8 +18,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_structure, 
-           structure_ch, 
+ACE_RCSID (be_visitor_structure,
+           structure_ch,
            "$Id$")
 
 // ******************************************************
@@ -47,7 +47,7 @@ int be_visitor_structure_ch::visit_structure (be_structure *node)
   // the recursive typecode include in the stub source file.
   ACE_Unbounded_Queue<AST_Type *> list;
   (void) node->in_recursion (list);
-        
+
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Generate the _var and _out typedefs.
@@ -63,6 +63,8 @@ int be_visitor_structure_ch::visit_structure (be_structure *node)
 
   // Generate the _ptr_type and _var_type typedefs.
   *os << "typedef " << node->local_name () << "_var _var_type;"
+      << be_nl
+      << "typedef " << node->local_name () << "_out _out_type;"
       << be_nl << be_nl;
 
   if (be_global->any_support ())

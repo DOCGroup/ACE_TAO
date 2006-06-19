@@ -56,10 +56,10 @@ namespace CORBA
   class Environment;
 
   typedef TAO_Pseudo_Var_T<Context> Context_var;
-  typedef TAO_Pseudo_Out_T<Context, Context_var> Context_out;
+  typedef TAO_Pseudo_Out_T<Context> Context_out;
 
   typedef TAO_Pseudo_Var_T<ContextList> ContextList_var;
-  typedef TAO_Pseudo_Out_T<ContextList, ContextList_var> ContextList_out;
+  typedef TAO_Pseudo_Out_T<ContextList> ContextList_out;
 
   /**
    * @class Context
@@ -119,6 +119,7 @@ namespace CORBA
     // Useful for template programming.
     typedef CORBA::Context_ptr _ptr_type;
     typedef CORBA::Context_var _var_type;
+    typedef CORBA::Context_out _out_type;
 
   private:
     /// Reference counter.
@@ -182,6 +183,7 @@ namespace CORBA
     // Useful for template programming.
     typedef CORBA::ContextList_ptr _ptr_type;
     typedef CORBA::ContextList_var _var_type;
+    typedef CORBA::ContextList_out _out_type;
 
   private:
     // Not allowed.

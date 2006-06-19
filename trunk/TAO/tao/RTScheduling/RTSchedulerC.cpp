@@ -59,8 +59,6 @@ namespace TAO
     : public
         Var_Size_Arg_Traits_T<
             CORBA::PolicyList,
-            CORBA::PolicyList_var,
-            CORBA::PolicyList_out,
             TAO::Any_Insert_Policy_Stream <CORBA::PolicyList>
           >
   {

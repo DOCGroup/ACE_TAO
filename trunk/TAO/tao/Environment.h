@@ -43,7 +43,7 @@ namespace CORBA
   class Environment;
   typedef Environment *Environment_ptr;
   typedef TAO_Pseudo_Var_T<Environment> Environment_var;
-  typedef TAO_Pseudo_Out_T<Environment, Environment_var> Environment_out;
+  typedef TAO_Pseudo_Out_T<Environment> Environment_out;
 
   /**
    * @class Environment
@@ -134,6 +134,7 @@ namespace CORBA
     // Useful for template programming.
     typedef CORBA::Environment_ptr _ptr_type;
     typedef CORBA::Environment_var _var_type;
+    typedef CORBA::Environment_out _out_type;
 
   private:
 

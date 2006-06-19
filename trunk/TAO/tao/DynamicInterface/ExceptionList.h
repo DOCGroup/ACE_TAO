@@ -52,7 +52,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace CORBA
 {
   typedef TAO_Pseudo_Var_T<ExceptionList> ExceptionList_var;
-  typedef TAO_Pseudo_Out_T<ExceptionList, ExceptionList_var> ExceptionList_out;
+  typedef TAO_Pseudo_Out_T<ExceptionList> ExceptionList_out;
 
   /**
    * @class ExceptionList
@@ -111,6 +111,7 @@ namespace CORBA
     /// Useful for template programming.
     typedef CORBA::ExceptionList_ptr _ptr_type;
     typedef CORBA::ExceptionList_var _var_type;
+    typedef CORBA::ExceptionList_out _out_type;
 
   private:
     // = Not allowed.

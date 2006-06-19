@@ -21,27 +21,27 @@ namespace TAO
 namespace details
 {
 
-template <typename T_array, typename T_slice, typename T_tag>
+template <typename T_forany>
 struct array_traits
 {
-  typedef T_array value_type;
-  typedef T_array const const_value_type;
+  typedef T_forany forany_type;
+  typedef typename T_forany::_array_type value_type;
+  typedef typename T_forany::_array_type const const_value_type;
 
-  typedef T_slice slice_type;
-  typedef T_tag TAG;
+  typedef typename T_forany::_slice_type slice_type;
 
   inline static void zero_range(
       value_type * begin, value_type * end)
   {
     std::for_each(
-        begin, end, &TAO::Array_Traits<value_type,slice_type,TAG>::zero);
+        begin, end, &TAO::Array_Traits<forany_type>::zero);
   }
 
   inline static void initialize_range(
       value_type * begin, value_type * end)
   {
     std::for_each(
-        begin, end, &TAO::Array_Traits<value_type,slice_type,TAG>::zero);
+        begin, end, &TAO::Array_Traits<forany_type>::zero);
   }
 
   inline static void copy_range(
@@ -49,7 +49,7 @@ struct array_traits
   {
     for(value_type * i = begin; i != end; ++i, ++dst)
     {
-      TAO::Array_Traits<value_type,slice_type,TAG>::copy(*dst, *i);
+      TAO::Array_Traits<forany_type>::copy(*dst, *i);
     }
   }
 
@@ -57,7 +57,7 @@ struct array_traits
       value_type * begin, value_type * end, value_type *dst)
   {
     std::for_each(
-        begin, end, &TAO::Array_Traits<value_type,slice_type,TAG>::zero);
+        begin, end, &TAO::Array_Traits<forany_type>::zero);
   }
 };
 

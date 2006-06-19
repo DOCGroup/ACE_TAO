@@ -255,6 +255,7 @@ namespace CORBA
     friend class TAO::Narrow_Utils<Policy>;
     typedef Policy_ptr _ptr_type;
     typedef Policy_var _var_type;
+    typedef Policy_out _out_type;
 
     // The static operations.
     static Policy_ptr _duplicate (Policy_ptr obj);

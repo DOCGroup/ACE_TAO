@@ -86,7 +86,7 @@ namespace CORBA
   class Object;
   typedef Object *Object_ptr;
   typedef TAO_Pseudo_Var_T<Object> Object_var;
-  typedef TAO_Pseudo_Out_T<Object, Object_var> Object_out;
+  typedef TAO_Pseudo_Out_T<Object> Object_out;
 
   /**
    * @class Object
@@ -262,6 +262,7 @@ namespace CORBA
     // Useful for template programming.
     typedef Object_ptr _ptr_type;
     typedef Object_var _var_type;
+    typedef Object_out _out_type;
 
     //@} End of CORBA specific methods
 

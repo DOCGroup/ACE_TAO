@@ -125,12 +125,12 @@ namespace CORBA
   class Request;
   typedef Request * Request_ptr;
   typedef TAO_Pseudo_Var_T<Request> Request_var;
-  typedef TAO_Pseudo_Out_T<Request, Request_var> Request_out;
+  typedef TAO_Pseudo_Out_T<Request> Request_out;
 
   class ORB;
   typedef ORB * ORB_ptr;
   typedef TAO_Pseudo_Var_T<ORB> ORB_var;
-  typedef TAO_Pseudo_Out_T<ORB, ORB_var> ORB_out;
+  typedef TAO_Pseudo_Out_T<ORB> ORB_out;
 
   typedef CORBA::Short ValueModifier;
 
@@ -582,6 +582,7 @@ namespace CORBA
     // Useful for template programming.
     typedef ORB_ptr _ptr_type;
     typedef ORB_var _var_type;
+    typedef ORB_out _out_type;
 
     /// Get the Timeout value
     ACE_Time_Value *get_timeout (void);

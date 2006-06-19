@@ -25,10 +25,13 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+
+
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ci.cpp:70
+// w:\ace_wrappers\tao\tao_idl\be\be_visitor_interface/interface_ci.cpp:70
 
 #if !defined (_CORBA_COMPONENTIR_EVENTDEF___CI_)
 #define _CORBA_COMPONENTIR_EVENTDEF___CI_
@@ -36,16 +39,11 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_INLINE
 CORBA::ComponentIR::EventDef::EventDef (
     TAO_Stub *objref,
-    CORBA::Boolean _tao_collocated,
+    ::CORBA::Boolean _tao_collocated,
     TAO_Abstract_ServantBase *servant,
     TAO_ORB_Core *oc
   )
-  : ::CORBA::Object (
-        objref,
-        _tao_collocated,
-        servant,
-        oc
-      ),
+  : ::CORBA::Object (objref, _tao_collocated, servant, oc),
     the_TAO_EventDef_Proxy_Broker_ (0)
 {
   this->CORBA_ComponentIR_EventDef_setup_collocation ();
@@ -64,7 +62,7 @@ CORBA::ComponentIR::EventDef::EventDef (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ci.cpp:70
+// w:\ace_wrappers\tao\tao_idl\be\be_visitor_interface/interface_ci.cpp:70
 
 #if !defined (_CORBA_COMPONENTIR_CONTAINER___CI_)
 #define _CORBA_COMPONENTIR_CONTAINER___CI_
@@ -72,16 +70,11 @@ CORBA::ComponentIR::EventDef::EventDef (
 ACE_INLINE
 CORBA::ComponentIR::Container::Container (
     TAO_Stub *objref,
-    CORBA::Boolean _tao_collocated,
+    ::CORBA::Boolean _tao_collocated,
     TAO_Abstract_ServantBase *servant,
     TAO_ORB_Core *oc
   )
-  : ::CORBA::Object (
-        objref,
-        _tao_collocated,
-        servant,
-        oc
-      ),
+  : ::CORBA::Object (objref, _tao_collocated, servant, oc),
     the_TAO_Container_Proxy_Broker_ (0)
 {
   this->CORBA_ComponentIR_Container_setup_collocation ();
@@ -100,7 +93,7 @@ CORBA::ComponentIR::Container::Container (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ci.cpp:70
+// w:\ace_wrappers\tao\tao_idl\be\be_visitor_interface/interface_ci.cpp:70
 
 #if !defined (_CORBA_COMPONENTIR_MODULEDEF___CI_)
 #define _CORBA_COMPONENTIR_MODULEDEF___CI_
@@ -108,16 +101,11 @@ CORBA::ComponentIR::Container::Container (
 ACE_INLINE
 CORBA::ComponentIR::ModuleDef::ModuleDef (
     TAO_Stub *objref,
-    CORBA::Boolean _tao_collocated,
+    ::CORBA::Boolean _tao_collocated,
     TAO_Abstract_ServantBase *servant,
     TAO_ORB_Core *oc
   )
-  : ::CORBA::Object (
-        objref,
-        _tao_collocated,
-        servant,
-        oc
-      ),
+  : ::CORBA::Object (objref, _tao_collocated, servant, oc),
     the_TAO_ModuleDef_Proxy_Broker_ (0)
 {
   this->CORBA_ComponentIR_ModuleDef_setup_collocation ();
@@ -136,7 +124,7 @@ CORBA::ComponentIR::ModuleDef::ModuleDef (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ci.cpp:70
+// w:\ace_wrappers\tao\tao_idl\be\be_visitor_interface/interface_ci.cpp:70
 
 #if !defined (_CORBA_COMPONENTIR_REPOSITORY___CI_)
 #define _CORBA_COMPONENTIR_REPOSITORY___CI_
@@ -144,16 +132,11 @@ CORBA::ComponentIR::ModuleDef::ModuleDef (
 ACE_INLINE
 CORBA::ComponentIR::Repository::Repository (
     TAO_Stub *objref,
-    CORBA::Boolean _tao_collocated,
+    ::CORBA::Boolean _tao_collocated,
     TAO_Abstract_ServantBase *servant,
     TAO_ORB_Core *oc
   )
-  : ::CORBA::Object (
-        objref,
-        _tao_collocated,
-        servant,
-        oc
-      ),
+  : ::CORBA::Object (objref, _tao_collocated, servant, oc),
     the_TAO_Repository_Proxy_Broker_ (0)
 {
   this->CORBA_ComponentIR_Repository_setup_collocation ();
@@ -172,7 +155,7 @@ CORBA::ComponentIR::Repository::Repository (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ci.cpp:70
+// w:\ace_wrappers\tao\tao_idl\be\be_visitor_interface/interface_ci.cpp:70
 
 #if !defined (_CORBA_COMPONENTIR_PROVIDESDEF___CI_)
 #define _CORBA_COMPONENTIR_PROVIDESDEF___CI_
@@ -180,16 +163,11 @@ CORBA::ComponentIR::Repository::Repository (
 ACE_INLINE
 CORBA::ComponentIR::ProvidesDef::ProvidesDef (
     TAO_Stub *objref,
-    CORBA::Boolean _tao_collocated,
+    ::CORBA::Boolean _tao_collocated,
     TAO_Abstract_ServantBase *servant,
     TAO_ORB_Core *oc
   )
-  : ::CORBA::Object (
-        objref,
-        _tao_collocated,
-        servant,
-        oc
-      ),
+  : ::CORBA::Object (objref, _tao_collocated, servant, oc),
     the_TAO_ProvidesDef_Proxy_Broker_ (0)
 {
   this->CORBA_ComponentIR_ProvidesDef_setup_collocation ();
@@ -208,7 +186,7 @@ CORBA::ComponentIR::ProvidesDef::ProvidesDef (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ci.cpp:70
+// w:\ace_wrappers\tao\tao_idl\be\be_visitor_interface/interface_ci.cpp:70
 
 #if !defined (_CORBA_COMPONENTIR_USESDEF___CI_)
 #define _CORBA_COMPONENTIR_USESDEF___CI_
@@ -216,16 +194,11 @@ CORBA::ComponentIR::ProvidesDef::ProvidesDef (
 ACE_INLINE
 CORBA::ComponentIR::UsesDef::UsesDef (
     TAO_Stub *objref,
-    CORBA::Boolean _tao_collocated,
+    ::CORBA::Boolean _tao_collocated,
     TAO_Abstract_ServantBase *servant,
     TAO_ORB_Core *oc
   )
-  : ::CORBA::Object (
-        objref,
-        _tao_collocated,
-        servant,
-        oc
-      ),
+  : ::CORBA::Object (objref, _tao_collocated, servant, oc),
     the_TAO_UsesDef_Proxy_Broker_ (0)
 {
   this->CORBA_ComponentIR_UsesDef_setup_collocation ();
@@ -244,7 +217,7 @@ CORBA::ComponentIR::UsesDef::UsesDef (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ci.cpp:70
+// w:\ace_wrappers\tao\tao_idl\be\be_visitor_interface/interface_ci.cpp:70
 
 #if !defined (_CORBA_COMPONENTIR_EVENTPORTDEF___CI_)
 #define _CORBA_COMPONENTIR_EVENTPORTDEF___CI_
@@ -252,16 +225,11 @@ CORBA::ComponentIR::UsesDef::UsesDef (
 ACE_INLINE
 CORBA::ComponentIR::EventPortDef::EventPortDef (
     TAO_Stub *objref,
-    CORBA::Boolean _tao_collocated,
+    ::CORBA::Boolean _tao_collocated,
     TAO_Abstract_ServantBase *servant,
     TAO_ORB_Core *oc
   )
-  : ::CORBA::Object (
-        objref,
-        _tao_collocated,
-        servant,
-        oc
-      ),
+  : ::CORBA::Object (objref, _tao_collocated, servant, oc),
     the_TAO_EventPortDef_Proxy_Broker_ (0)
 {
   this->CORBA_ComponentIR_EventPortDef_setup_collocation ();
@@ -280,7 +248,7 @@ CORBA::ComponentIR::EventPortDef::EventPortDef (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ci.cpp:70
+// w:\ace_wrappers\tao\tao_idl\be\be_visitor_interface/interface_ci.cpp:70
 
 #if !defined (_CORBA_COMPONENTIR_EMITSDEF___CI_)
 #define _CORBA_COMPONENTIR_EMITSDEF___CI_
@@ -288,16 +256,11 @@ CORBA::ComponentIR::EventPortDef::EventPortDef (
 ACE_INLINE
 CORBA::ComponentIR::EmitsDef::EmitsDef (
     TAO_Stub *objref,
-    CORBA::Boolean _tao_collocated,
+    ::CORBA::Boolean _tao_collocated,
     TAO_Abstract_ServantBase *servant,
     TAO_ORB_Core *oc
   )
-  : ::CORBA::Object (
-        objref,
-        _tao_collocated,
-        servant,
-        oc
-      ),
+  : ::CORBA::Object (objref, _tao_collocated, servant, oc),
     the_TAO_EmitsDef_Proxy_Broker_ (0)
 {
   this->CORBA_ComponentIR_EmitsDef_setup_collocation ();
@@ -316,7 +279,7 @@ CORBA::ComponentIR::EmitsDef::EmitsDef (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ci.cpp:70
+// w:\ace_wrappers\tao\tao_idl\be\be_visitor_interface/interface_ci.cpp:70
 
 #if !defined (_CORBA_COMPONENTIR_PUBLISHESDEF___CI_)
 #define _CORBA_COMPONENTIR_PUBLISHESDEF___CI_
@@ -324,16 +287,11 @@ CORBA::ComponentIR::EmitsDef::EmitsDef (
 ACE_INLINE
 CORBA::ComponentIR::PublishesDef::PublishesDef (
     TAO_Stub *objref,
-    CORBA::Boolean _tao_collocated,
+    ::CORBA::Boolean _tao_collocated,
     TAO_Abstract_ServantBase *servant,
     TAO_ORB_Core *oc
   )
-  : ::CORBA::Object (
-        objref,
-        _tao_collocated,
-        servant,
-        oc
-      ),
+  : ::CORBA::Object (objref, _tao_collocated, servant, oc),
     the_TAO_PublishesDef_Proxy_Broker_ (0)
 {
   this->CORBA_ComponentIR_PublishesDef_setup_collocation ();
@@ -352,7 +310,7 @@ CORBA::ComponentIR::PublishesDef::PublishesDef (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ci.cpp:70
+// w:\ace_wrappers\tao\tao_idl\be\be_visitor_interface/interface_ci.cpp:70
 
 #if !defined (_CORBA_COMPONENTIR_CONSUMESDEF___CI_)
 #define _CORBA_COMPONENTIR_CONSUMESDEF___CI_
@@ -360,16 +318,11 @@ CORBA::ComponentIR::PublishesDef::PublishesDef (
 ACE_INLINE
 CORBA::ComponentIR::ConsumesDef::ConsumesDef (
     TAO_Stub *objref,
-    CORBA::Boolean _tao_collocated,
+    ::CORBA::Boolean _tao_collocated,
     TAO_Abstract_ServantBase *servant,
     TAO_ORB_Core *oc
   )
-  : ::CORBA::Object (
-        objref,
-        _tao_collocated,
-        servant,
-        oc
-      ),
+  : ::CORBA::Object (objref, _tao_collocated, servant, oc),
     the_TAO_ConsumesDef_Proxy_Broker_ (0)
 {
   this->CORBA_ComponentIR_ConsumesDef_setup_collocation ();
@@ -388,7 +341,7 @@ CORBA::ComponentIR::ConsumesDef::ConsumesDef (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ci.cpp:70
+// w:\ace_wrappers\tao\tao_idl\be\be_visitor_interface/interface_ci.cpp:70
 
 #if !defined (_CORBA_COMPONENTIR_COMPONENTDEF___CI_)
 #define _CORBA_COMPONENTIR_COMPONENTDEF___CI_
@@ -396,16 +349,11 @@ CORBA::ComponentIR::ConsumesDef::ConsumesDef (
 ACE_INLINE
 CORBA::ComponentIR::ComponentDef::ComponentDef (
     TAO_Stub *objref,
-    CORBA::Boolean _tao_collocated,
+    ::CORBA::Boolean _tao_collocated,
     TAO_Abstract_ServantBase *servant,
     TAO_ORB_Core *oc
   )
-  : ::CORBA::Object (
-        objref,
-        _tao_collocated,
-        servant,
-        oc
-      ),
+  : ::CORBA::Object (objref, _tao_collocated, servant, oc),
     the_TAO_ComponentDef_Proxy_Broker_ (0)
 {
   this->CORBA_ComponentIR_ComponentDef_setup_collocation ();
@@ -424,7 +372,7 @@ CORBA::ComponentIR::ComponentDef::ComponentDef (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ci.cpp:70
+// w:\ace_wrappers\tao\tao_idl\be\be_visitor_interface/interface_ci.cpp:70
 
 #if !defined (_CORBA_COMPONENTIR_FACTORYDEF___CI_)
 #define _CORBA_COMPONENTIR_FACTORYDEF___CI_
@@ -432,16 +380,11 @@ CORBA::ComponentIR::ComponentDef::ComponentDef (
 ACE_INLINE
 CORBA::ComponentIR::FactoryDef::FactoryDef (
     TAO_Stub *objref,
-    CORBA::Boolean _tao_collocated,
+    ::CORBA::Boolean _tao_collocated,
     TAO_Abstract_ServantBase *servant,
     TAO_ORB_Core *oc
   )
-  : ::CORBA::Object (
-        objref,
-        _tao_collocated,
-        servant,
-        oc
-      ),
+  : ::CORBA::Object (objref, _tao_collocated, servant, oc),
     the_TAO_FactoryDef_Proxy_Broker_ (0)
 {
   this->CORBA_ComponentIR_FactoryDef_setup_collocation ();
@@ -460,7 +403,7 @@ CORBA::ComponentIR::FactoryDef::FactoryDef (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ci.cpp:70
+// w:\ace_wrappers\tao\tao_idl\be\be_visitor_interface/interface_ci.cpp:70
 
 #if !defined (_CORBA_COMPONENTIR_FINDERDEF___CI_)
 #define _CORBA_COMPONENTIR_FINDERDEF___CI_
@@ -468,16 +411,11 @@ CORBA::ComponentIR::FactoryDef::FactoryDef (
 ACE_INLINE
 CORBA::ComponentIR::FinderDef::FinderDef (
     TAO_Stub *objref,
-    CORBA::Boolean _tao_collocated,
+    ::CORBA::Boolean _tao_collocated,
     TAO_Abstract_ServantBase *servant,
     TAO_ORB_Core *oc
   )
-  : ::CORBA::Object (
-        objref,
-        _tao_collocated,
-        servant,
-        oc
-      ),
+  : ::CORBA::Object (objref, _tao_collocated, servant, oc),
     the_TAO_FinderDef_Proxy_Broker_ (0)
 {
   this->CORBA_ComponentIR_FinderDef_setup_collocation ();
@@ -496,7 +434,7 @@ CORBA::ComponentIR::FinderDef::FinderDef (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ci.cpp:70
+// w:\ace_wrappers\tao\tao_idl\be\be_visitor_interface/interface_ci.cpp:70
 
 #if !defined (_CORBA_COMPONENTIR_HOMEDEF___CI_)
 #define _CORBA_COMPONENTIR_HOMEDEF___CI_
@@ -504,16 +442,11 @@ CORBA::ComponentIR::FinderDef::FinderDef (
 ACE_INLINE
 CORBA::ComponentIR::HomeDef::HomeDef (
     TAO_Stub *objref,
-    CORBA::Boolean _tao_collocated,
+    ::CORBA::Boolean _tao_collocated,
     TAO_Abstract_ServantBase *servant,
     TAO_ORB_Core *oc
   )
-  : ::CORBA::Object (
-        objref,
-        _tao_collocated,
-        servant,
-        oc
-      ),
+  : ::CORBA::Object (objref, _tao_collocated, servant, oc),
     the_TAO_HomeDef_Proxy_Broker_ (0)
 {
   this->CORBA_ComponentIR_HomeDef_setup_collocation ();
@@ -531,4 +464,7 @@ CORBA::ComponentIR::HomeDef::HomeDef (
 
 #endif /* end #if !defined */
 
+
 TAO_END_VERSIONED_NAMESPACE_DECL
+
+

@@ -10,7 +10,6 @@
 #include "tao/Stub.h"
 #include "tao/ORB_Core.h"
 #include "tao/Profile.h"
-#include "tao/DomainC.h"
 
 ACE_RCSID (PortableServer,
            Collocated_Object_Proxy_Broker,

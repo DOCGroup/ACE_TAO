@@ -133,6 +133,8 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
   *os << "typedef " << node->local_name () << "_ptr _ptr_type;"
       << be_nl
       << "typedef " << node->local_name () << "_var _var_type;"
+      << be_nl
+      << "typedef " << node->local_name () << "_out _out_type;"
       << be_nl << be_nl;
 
   // Generate the static _duplicate, _narrow, _unchecked_narrow and

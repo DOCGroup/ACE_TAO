@@ -11,14 +11,10 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-template<typename S,
-         typename S_slice,
-         typename S_forany,
+template<typename S_forany,
          typename Insert_Policy>
 CORBA::Boolean
-TAO::In_Fixed_Array_SArgument_T<S,
-                                S_slice,
-                                S_forany,
+TAO::In_Fixed_Array_SArgument_T<S_forany,
                                 Insert_Policy>::demarshal (TAO_InputCDR &cdr)
 {
   S_forany tmp (this->x_);
@@ -27,14 +23,10 @@ TAO::In_Fixed_Array_SArgument_T<S,
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-template<typename S,
-         typename S_slice,
-         typename S_forany,
+template<typename S_forany,
          typename Insert_Policy>
 void
-TAO::In_Fixed_Array_SArgument_T<S,
-                                S_slice,
-                                S_forany,
+TAO::In_Fixed_Array_SArgument_T<S_forany,
                                 Insert_Policy>::interceptor_value (
     CORBA::Any *any) const
 {
@@ -45,27 +37,19 @@ TAO::In_Fixed_Array_SArgument_T<S,
 
 // ===========================================================
 
-template<typename S,
-         typename S_slice,
-         typename S_forany,
+template<typename S_forany,
          typename Insert_Policy>
 CORBA::Boolean
-TAO::Inout_Fixed_Array_SArgument_T<S,
-                                   S_slice,
-                                   S_forany,
+TAO::Inout_Fixed_Array_SArgument_T<S_forany,
                                    Insert_Policy>::marshal (TAO_OutputCDR &cdr)
 {
   return cdr << S_forany (this->x_);
 }
 
-template<typename S,
-         typename S_slice,
-         typename S_forany,
+template<typename S_forany,
          typename Insert_Policy>
 CORBA::Boolean
-TAO::Inout_Fixed_Array_SArgument_T<S,
-                                   S_slice,
-                                   S_forany,
+TAO::Inout_Fixed_Array_SArgument_T<S_forany,
                                    Insert_Policy>::
 demarshal (TAO_InputCDR & cdr)
 {
@@ -75,14 +59,10 @@ demarshal (TAO_InputCDR & cdr)
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-template<typename S,
-         typename S_slice,
-         typename S_forany,
+template<typename S_forany,
          typename Insert_Policy>
 void
-TAO::Inout_Fixed_Array_SArgument_T<S,
-                                   S_slice,
-                                   S_forany,
+TAO::Inout_Fixed_Array_SArgument_T<S_forany,
                                    Insert_Policy>::interceptor_value (
     CORBA::Any *any) const
 {
@@ -93,14 +73,10 @@ TAO::Inout_Fixed_Array_SArgument_T<S,
 
 // ==============================================================
 
-template<typename S,
-         typename S_slice,
-         typename S_forany,
+template<typename S_forany,
          typename Insert_Policy>
 CORBA::Boolean
-TAO::Out_Fixed_Array_SArgument_T<S,
-                                 S_slice,
-                                 S_forany,
+TAO::Out_Fixed_Array_SArgument_T<S_forany,
                                  Insert_Policy>::marshal (TAO_OutputCDR &cdr)
 {
   return cdr << S_forany (this->x_);
@@ -108,14 +84,10 @@ TAO::Out_Fixed_Array_SArgument_T<S,
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-template<typename S,
-         typename S_slice,
-         typename S_forany,
+template<typename S_forany,
          typename Insert_Policy>
 void
-TAO::Out_Fixed_Array_SArgument_T<S,
-                                 S_slice,
-                                 S_forany,
+TAO::Out_Fixed_Array_SArgument_T<S_forany,
                                  Insert_Policy>::interceptor_value (
     CORBA::Any *any) const
 {
@@ -126,13 +98,11 @@ TAO::Out_Fixed_Array_SArgument_T<S,
 
 // ============================================================
 
-template<typename S_slice,
-         typename S_var,
+template<typename S_var,
          typename S_forany,
          typename Insert_Policy>
 CORBA::Boolean
-TAO::Ret_Fixed_Array_SArgument_T<S_slice,
-                                 S_var,
+TAO::Ret_Fixed_Array_SArgument_T<S_var,
                                  S_forany,
                                  Insert_Policy>::marshal (
     TAO_OutputCDR & cdr
@@ -143,13 +113,11 @@ TAO::Ret_Fixed_Array_SArgument_T<S_slice,
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-template<typename S_slice,
-         typename S_var,
+template<typename S_var,
          typename S_forany,
          typename Insert_Policy>
 void
-TAO::Ret_Fixed_Array_SArgument_T<S_slice,
-                                 S_var,
+TAO::Ret_Fixed_Array_SArgument_T<S_var,
                                  S_forany,
                                  Insert_Policy>::interceptor_value (
   CORBA::Any *any) const

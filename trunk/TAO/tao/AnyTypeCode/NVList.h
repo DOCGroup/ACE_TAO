@@ -60,7 +60,7 @@ namespace CORBA
   };
 
   typedef TAO_Pseudo_Var_T<NamedValue> NamedValue_var;
-  typedef TAO_Pseudo_Out_T<NamedValue, NamedValue_var> NamedValue_out;
+  typedef TAO_Pseudo_Out_T<NamedValue> NamedValue_out;
 
   typedef ULong Flags;
 
@@ -104,6 +104,7 @@ namespace CORBA
     // Useful for template programming.
     typedef NamedValue_ptr _ptr_type;
     typedef NamedValue_var _var_type;
+    typedef NamedValue_out _out_type;
 
   protected:
 
@@ -138,7 +139,7 @@ namespace CORBA
   // ****************************************************************
 
   typedef TAO_Pseudo_Var_T<NVList> NVList_var;
-  typedef TAO_Pseudo_Out_T<NVList, NVList_var> NVList_out;
+  typedef TAO_Pseudo_Out_T<NVList> NVList_out;
 
   /**
    * @class NVList
@@ -252,6 +253,7 @@ namespace CORBA
     // Useful for template programming.
     typedef NVList_ptr _ptr_type;
     typedef NVList_var _var_type;
+    typedef NVList_out _out_type;
 
   protected:
 

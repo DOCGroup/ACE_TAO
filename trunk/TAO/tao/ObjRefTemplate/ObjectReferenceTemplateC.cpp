@@ -67,8 +67,6 @@ namespace TAO
     : public
         Var_Size_Arg_Traits_T<
             CORBA::StringSeq,
-            CORBA::StringSeq_var,
-            CORBA::StringSeq_out,
             TAO::Any_Insert_Policy_Stream <CORBA::StringSeq>
           >
   {

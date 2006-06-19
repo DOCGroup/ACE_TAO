@@ -446,12 +446,12 @@ namespace POA_CORBA
     virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
     {
       TAO::SArg_Traits< CORBA::Policy>::ret_arg_type retval =
-        TAO::Portable_Server::get_ret_arg< CORBA::Policy, TAO::SArg_Traits< CORBA::Policy>::ret_arg_type> (
+        TAO::Portable_Server::get_ret_arg< CORBA::Policy> (
           this->operation_details_,
           this->args_);
 
       TAO::SArg_Traits< ::CORBA::PolicyType>::in_arg_type arg_1 =
-        TAO::Portable_Server::get_in_arg< ::CORBA::PolicyType, TAO::SArg_Traits< ::CORBA::PolicyType>::in_arg_type> (
+        TAO::Portable_Server::get_in_arg< ::CORBA::PolicyType> (
           this->operation_details_,
           this->args_,
           1);
@@ -551,12 +551,12 @@ namespace POA_CORBA
     virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
     {
       TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type retval =
-        TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean, TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type> (
+        TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean> (
           this->operation_details_,
           this->args_);
 
       TAO::SArg_Traits< CORBA::Char *>::in_arg_type arg_1 =
-        TAO::Portable_Server::get_in_arg< CORBA::Char *, TAO::SArg_Traits< CORBA::Char *>::in_arg_type> (
+        TAO::Portable_Server::get_in_arg< CORBA::Char *> (
           this->operation_details_,
           this->args_,
           1);
@@ -648,7 +648,7 @@ namespace POA_CORBA
     virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
     {
       TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type retval =
-        TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean, TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type> (
+        TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean> (
           this->operation_details_,
           this->args_);
 
@@ -784,7 +784,7 @@ namespace POA_CORBA
     virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
     {
       TAO::SArg_Traits< ::CORBA::Object>::ret_arg_type retval =
-        TAO::Portable_Server::get_ret_arg< ::CORBA::Object, TAO::SArg_Traits< ::CORBA::Object>::ret_arg_type> (
+        TAO::Portable_Server::get_ret_arg< ::CORBA::Object> (
           this->operation_details_,
           this->args_);
 
@@ -1208,13 +1208,13 @@ namespace POA_CORBA
     virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
     {
       TAO::SArg_Traits< CORBA::InterfaceDef>::in_arg_type arg_1 =
-        TAO::Portable_Server::get_in_arg< CORBA::InterfaceDef, TAO::SArg_Traits< CORBA::InterfaceDef>::in_arg_type> (
+        TAO::Portable_Server::get_in_arg< CORBA::InterfaceDef> (
           this->operation_details_,
           this->args_,
           1);
 
       TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::in_arg_type arg_2 =
-        TAO::Portable_Server::get_in_arg< ::ACE_InputCDR::to_boolean, TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::in_arg_type> (
+        TAO::Portable_Server::get_in_arg< ::ACE_InputCDR::to_boolean> (
           this->operation_details_,
           this->args_,
           2);
@@ -1315,12 +1315,12 @@ namespace POA_CORBA
     virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
     {
       TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type retval =
-        TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean, TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type> (
+        TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean> (
           this->operation_details_,
           this->args_);
 
       TAO::SArg_Traits< CORBA::Char *>::in_arg_type arg_1 =
-        TAO::Portable_Server::get_in_arg< CORBA::Char *, TAO::SArg_Traits< CORBA::Char *>::in_arg_type> (
+        TAO::Portable_Server::get_in_arg< CORBA::Char *> (
           this->operation_details_,
           this->args_,
           1);
@@ -1412,7 +1412,7 @@ namespace POA_CORBA
     virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
     {
       TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type retval =
-        TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean, TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type> (
+        TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean> (
           this->operation_details_,
           this->args_);
 
@@ -1548,7 +1548,7 @@ namespace POA_CORBA
     virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
     {
       TAO::SArg_Traits< ::CORBA::Object>::ret_arg_type retval =
-        TAO::Portable_Server::get_ret_arg< ::CORBA::Object, TAO::SArg_Traits< ::CORBA::Object>::ret_arg_type> (
+        TAO::Portable_Server::get_ret_arg< ::CORBA::Object> (
           this->operation_details_,
           this->args_);
 

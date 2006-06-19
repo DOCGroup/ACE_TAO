@@ -39,7 +39,7 @@ namespace CORBA
   typedef Principal *Principal_ptr;
 
   typedef TAO_Pseudo_Var_T<Principal> Principal_var;
-  typedef TAO_Pseudo_Out_T<Principal, Principal_var> Principal_out;
+  typedef TAO_Pseudo_Out_T<Principal> Principal_out;
 
   /**
    * @class Principal

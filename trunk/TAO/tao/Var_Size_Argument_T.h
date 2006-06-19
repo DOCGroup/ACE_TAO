@@ -76,11 +76,11 @@ namespace TAO
    * @brief Template class for OUT stub argument of fixed size IDL types.
    *
    */
-  template<typename S, typename S_out, typename Insert_Policy>
+  template<typename S, typename Insert_Policy>
   class Out_Var_Size_Argument_T : public OutArgument, private Insert_Policy
   {
   public:
-    Out_Var_Size_Argument_T (S_out x);
+    Out_Var_Size_Argument_T (typename S::_out_type x);
 
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
 #if TAO_HAS_INTERCEPTORS == 1
@@ -98,7 +98,7 @@ namespace TAO
    * @brief Template class for return stub value of fixed size IDL types.
    *
    */
-  template<typename S, typename S_var, typename Insert_Policy>
+  template<typename S, typename Insert_Policy>
   class Ret_Var_Size_Argument_T : public RetArgument, private Insert_Policy
   {
   public:
@@ -114,16 +114,8 @@ namespace TAO
     S * retn (void);
 
   protected:
-    S_var x_;
+    typename S::_var_type x_;
   };
-
-  /**
-   * @struct Var_Size_Tag
-   *
-   * @brief Struct for fixed size IDL type arguments id tag.
-   *
-   */
-  struct TAO_Export Var_Size_Tag {};
 
   /**
    * @struct Var_Size_Arg_Traits_T
@@ -132,20 +124,18 @@ namespace TAO
    *  variable size IDL types.
    *
    */
-  template<typename T, typename T_var, typename T_out, typename Insert_Policy>
+  template<typename T, typename Insert_Policy>
   struct Var_Size_Arg_Traits_T
   {
     typedef T *                                         ret_type;
     typedef T const &                                   in_type;
     typedef T &                                         inout_type;
-    typedef T_out                                       out_type;
+    typedef typename T::_out_type                       out_type;
 
-    typedef In_Var_Size_Argument_T<T, Insert_Policy>          in_arg_val;
-    typedef Inout_Var_Size_Argument_T<T, Insert_Policy>       inout_arg_val;
-    typedef Out_Var_Size_Argument_T<T,T_out, Insert_Policy>   out_arg_val;
-    typedef Ret_Var_Size_Argument_T<T,T_var, Insert_Policy>   ret_val;
-
-    typedef Var_Size_Tag                                idl_tag;
+    typedef In_Var_Size_Argument_T<T, Insert_Policy>    in_arg_val;
+    typedef Inout_Var_Size_Argument_T<T, Insert_Policy> inout_arg_val;
+    typedef Out_Var_Size_Argument_T<T, Insert_Policy>   out_arg_val;
+    typedef Ret_Var_Size_Argument_T<T, Insert_Policy>   ret_val;
   };
 }
 
