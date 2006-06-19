@@ -13,7 +13,7 @@
 //     stderr and to a file.
 //
 // = AUTHOR
-//    Irfan Pyarali
+//    Irfan Pyarali <irfan@cse.wustl.edu>
 //
 // ============================================================================
 
@@ -49,14 +49,14 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
   // Create a persistent store.
   const char *filename = "output";
-  ofstream myostream (filename, ios::out | ios::trunc);
+  ofstream outfile (filename, ios::out | ios::trunc);
 
   // Check for errors.
-  if (myostream.bad ())
+  if (outfile.bad ())
     return 1;
 
   // Set the ostream.
-  ACE_LOG_MSG->msg_ostream (&myostream);
+  ACE_LOG_MSG->msg_ostream (&outfile);
 
   // This message should show up in the ostream.
   ACE_DEBUG ((LM_DEBUG,
@@ -70,5 +70,20 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   ACE_DEBUG ((LM_DEBUG,
               "fifth message\n"));
 
+#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
+  ifstream infile (filename, ios::in);
+
+  if (infile.bad ())
+    return 1;
+
+  // This loop should print out the contents of file "output", which should 
+  // have the strings "fourth\n" and "fifth\n" in them.
+
+  std::string line;
+
+  while (std::getline (infile, line))
+    std::cout << line << std::endl;
+
+#endif /* ACE_LACKS_IOSTREAM_TOTALLY */
   return 0;
 }

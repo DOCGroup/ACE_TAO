@@ -27,14 +27,16 @@
 ACE_RCSID(Log_Msg, test_callback, "$Id$")
 
 class Logger : public ACE_Log_Msg_Callback
+// Subclassing from ACE_Log_Msg_Callback means that an instance of
+// Logger can be a target of a callback. 
 {
 public:
-  Logger (int be_recursive = 1);
   // Constructor sets whether we're testing "recursive" callback
   // logging!
+  Logger (int be_recursive = 1);
 
-  void log (ACE_Log_Record &log_record);
-  // Logging callback
+  vritual void log (ACE_Log_Record &log_record);
+  // Logging callback hook.
 
   void verbose (int be_verbose);
 
@@ -61,6 +63,7 @@ void
 Logger::log (ACE_Log_Record &log_record)
 {
   int use_log_msg = 0;
+
   if (this->recursive_)
     {
       this->recursive_ = 0;
@@ -71,10 +74,10 @@ Logger::log (ACE_Log_Record &log_record)
     {
       if (use_log_msg)
         ACE_DEBUG ((LM_DEBUG,
-                    "Logger::log->%s\n",
+                    "Logger::log->%s",
                     log_record.msg_data ()));
       else
-        ACE_OS::printf ("Recursive Logger callback = %s\n",
+        ACE_OS::printf ("Recursive Logger callback = %s",
                         log_record.msg_data ());
     }
   else
@@ -87,10 +90,10 @@ Logger::log (ACE_Log_Record &log_record)
         {
           if (use_log_msg)
             ACE_DEBUG ((LM_DEBUG,
-                        "Logger::log->%s\n",
+                        "Logger::log->%s",
                         verbose_msg));
           else
-            ACE_OS::printf ("Recursive Logger callback = %s\n",
+            ACE_OS::printf ("Recursive Logger callback = %s",
                             verbose_msg);
         }
     }
@@ -109,7 +112,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 
   ACE_LOG_MSG->clr_flags (ACE_Log_Msg::STDERR);
 
-  // This message should not show up anywhere.
+  // This message should not show up anywhere since we disabled STDERR.
   ACE_DEBUG ((LM_DEBUG,
               "(%t) second message\n"));
 
@@ -129,7 +132,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 
   // This message should show up via the Logger callback.
   ACE_DEBUG ((LM_DEBUG,
-              "(%t) forth message\n"));
+              "(%t) fourth message\n"));
 
   ACE_LOG_MSG->set_flags (ACE_Log_Msg::VERBOSE_LITE);
 
@@ -158,6 +161,6 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   // The one from the Logger callback will not be verbose, but the one
   // from stderr should be verbose.
   ACE_DEBUG ((LM_DEBUG,
-              "(%t) eight message\n"));
+              "(%t) eighth message\n"));
   return 0;
 }

@@ -9,8 +9,8 @@
 //    test_log_msg.cpp
 //
 // = DESCRIPTION
-//     This program tests the Log_Msg abstraction and demontrates
-//     several use cases.
+//     This program tests the ACE_Log_Msg abstraction and demontrates
+//     several common use cases.
 //
 // = AUTHOR
 //    Douglas Schmidt <schmidt@cs.wustl.edu>
@@ -46,11 +46,9 @@ cause_error (void)
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  // Note that the default behavior is to log to STDERR...
+  int counter = 1;
 
-  int counter = 1 ;
-
-  if (argc > 1)
+  if (argc > 1) // Just give a dummy command-line argument to trigger this path.
     {
       if (ACE_LOG_MSG->open (argv[0],
                              ACE_Log_Msg::OSTREAM) == -1)
@@ -67,7 +65,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         ACE_ERROR ((LM_ERROR,
                     "op_status and errnum failed!\n"));
     }
-  else
+  else   // The default behavior is to log to STDERR...
     {
       if (ACE_LOG_MSG->open (argv[0]) == -1)
         ACE_ERROR ((LM_ERROR,
@@ -87,7 +85,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Exercise many different combinations of STDERR and OSTREAM.
 
       double f = 3.1416 * counter++;
-      int   i = 10000;
+      int i = 10000;
 
       ACE_DEBUG ((LM_INFO,
                   "%10f, %*s%s = %d\n",
@@ -104,6 +102,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       f = 3.1416 * counter;
       i = 10000 * counter++;
+
+      // This message will print twice - once for OSTREAM and once for
+      // STDERR.
 
       ACE_DEBUG ((LM_INFO,
                   "%10f, %*s%s = %d\n",

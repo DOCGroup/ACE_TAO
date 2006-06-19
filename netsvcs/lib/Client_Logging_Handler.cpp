@@ -387,7 +387,8 @@ ACE_Client_Logging_Handler::send (ACE_Log_Record &log_record)
 	}
       else
         ACE_DEBUG ((LM_DEBUG,
-                    "Sent logging message successfully to Server Logging Daemon!\n"));
+                    "Sent logging message %s successfully to Server Logging Daemon!\n",
+                    log_record.priority_name (ACE_Log_Priority (log_record.type ()))));
     }
 
   return 0;
