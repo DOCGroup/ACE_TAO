@@ -27,7 +27,7 @@ TAO_Endpoint_Acceptor_Filter::fill_profile (const TAO::ObjectKey &object_key,
                                             TAO_Acceptor **acceptors_end,
                                             CORBA::Short priority)
 {
-  CORBA::ULong num_endpoints = endpoints_->length ();
+  CORBA::ULong const num_endpoints = endpoints_->length ();
 
   for (TAO_Acceptor** acceptor = acceptors_begin;
        acceptor != acceptors_end;
@@ -58,9 +58,9 @@ TAO_Endpoint_Acceptor_Filter::fill_profile (const TAO::ObjectKey &object_key,
        pfile_ndx < mprofile.profile_count ();
        ++pfile_ndx)
     {
-      TAO_Profile *pfile =mprofile.get_profile (pfile_ndx);
+      TAO_Profile * const pfile =mprofile.get_profile (pfile_ndx);
 
-      TAO_Endpoint *ep_in_pfile = pfile->endpoint ();
+      TAO_Endpoint * ep_in_pfile = pfile->endpoint ();
 
       if (TAO_debug_level > 2)
         ACE_DEBUG ((LM_DEBUG,
