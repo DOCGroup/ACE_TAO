@@ -1,0 +1,9 @@
+// -*- MPC -*-
+// $Id$
+
+project {
+  Define_Custom(Script) {
+    automatic = 1
+    inputext = .sh 
+  }
+}
