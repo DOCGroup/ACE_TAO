@@ -76,7 +76,10 @@ be_visitor_valuebox_ch::visit_valuebox (be_valuebox *node)
   *os << be_uidt << be_nl
       << "{" << be_nl
       << "public:" << be_idt_nl
-      << be_nl;
+      << "typedef " << node->local_name () << " * _ptr_type;" << be_nl
+      << "typedef " << node->local_name () << "_var _var_type;" << be_nl
+      << "typedef " << node->local_name () << "_out _out_type;"
+      << be_nl << be_nl;
 
   // _downcast method
   *os << "static " << node->local_name () << "* "

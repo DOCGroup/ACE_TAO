@@ -128,10 +128,11 @@ namespace CORBA
 
     typedef ValueBase* _ptr_type;
     typedef ValueBase_var _var_type;
+    typedef ValueBase_out _out_type;
+
     typedef ACE_Vector < ACE_CString > Repository_Id_List;
 
-
-    // reference counting
+    // Reference counting.
     /// %! virtual CORBA::ValueBase* _copy_value (void) = 0;
     virtual void _add_ref (void) = 0;
     virtual void _remove_ref (void) = 0;

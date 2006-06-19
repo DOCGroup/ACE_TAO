@@ -5,7 +5,7 @@ includedir=@includedir@
 
 Name: TAO_DynamicInterface
 Description: TAO Dynamic Interface Library
-Requires: TAO_Messaging, TAO_PI, TAO_CodecFactory, TAO_POrtableServer, TAO_Valuetype, TAO_AnyTypeCode, TAO
+Requires: TAO_Messaging, TAO_PI, TAO_CodecFactory, TAO_PortableServer, TAO_Valuetype, TAO_AnyTypeCode, TAO
 Version: @VERSION@
 Libs: -L${libdir} -lTAO_DynamicInterface
 Cflags: -I${includedir}

@@ -20,7 +20,6 @@ project : taolib, core, extra_anytypecode {
     AnyTypeCode/CharSeqA.cpp
     AnyTypeCode/CONV_FRAMEA.cpp
     AnyTypeCode/CurrentA.cpp
-    AnyTypeCode/DomainA.cpp
     AnyTypeCode/DoubleSeqA.cpp
     AnyTypeCode/DynamicA.cpp
     AnyTypeCode/DynamicC.cpp

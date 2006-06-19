@@ -99,8 +99,6 @@ namespace TAO
     : public
         Var_Size_Arg_Traits_T<
             ImplementationRepository::StartupOptions,
-            ImplementationRepository::StartupOptions_var,
-            ImplementationRepository::StartupOptions_out,
             TAO::Any_Insert_Policy_Stream <ImplementationRepository::StartupOptions>
           >
   {
@@ -119,8 +117,6 @@ namespace TAO
     : public
         Var_Size_Arg_Traits_T<
             ImplementationRepository::ServerInformation,
-            ImplementationRepository::ServerInformation_var,
-            ImplementationRepository::ServerInformation_out,
             TAO::Any_Insert_Policy_Stream <ImplementationRepository::ServerInformation>
           >
   {
@@ -139,8 +135,6 @@ namespace TAO
     : public
         Var_Size_Arg_Traits_T<
             ImplementationRepository::ServerInformationList,
-            ImplementationRepository::ServerInformationList_var,
-            ImplementationRepository::ServerInformationList_out,
             TAO::Any_Insert_Policy_Stream <ImplementationRepository::ServerInformationList>
           >
   {

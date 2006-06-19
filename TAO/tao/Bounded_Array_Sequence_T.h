@@ -24,13 +24,14 @@ class bounded_array_sequence
 public:
   typedef T_array * element_type;
   typedef T_array value_type;
-  typedef T_slice * T_slice_ptr;
+  typedef T_array * T_slice_ptr;
   typedef T_slice_ptr * const_value_type;
   typedef value_type & subscript_type;
   typedef value_type const & const_subscript_type;
 
   typedef details::bounded_array_allocation_traits<value_type,MAX,true> allocation_traits;
-  typedef details::array_traits <T_array, T_slice, T_tag> element_traits;
+  typedef TAO_Array_Forany_T<T_array, T_slice, T_tag> forany;
+  typedef details::array_traits <forany> element_traits;
   typedef details::generic_sequence<value_type, allocation_traits, element_traits> implementation_type;
 
   inline bounded_array_sequence()
@@ -92,8 +93,8 @@ namespace TAO
   template <typename stream, typename T_array, typename T_slice, typename T_tag, CORBA::ULong MAX>
   bool demarshal_sequence(stream & strm, TAO::bounded_array_sequence<T_array, T_slice, T_tag, MAX> & target) {
     typedef TAO::bounded_array_sequence<T_array, T_slice, T_tag, MAX> sequence;
-    typedef TAO::Array_Traits<T_array, T_slice, T_tag> array_traits;
-    typedef TAO_Array_Forany_T <T_array, T_slice, T_tag> forany;
+    typedef TAO_Array_Forany_T<T_array, T_slice, T_tag> forany;
+    typedef TAO::Array_Traits<forany> array_traits;
 
     ::CORBA::ULong new_length = 0;
     if (!(strm >> new_length)) {
@@ -123,8 +124,8 @@ namespace TAO
   template <typename stream, typename T_array, typename T_slice, typename T_tag, CORBA::ULong MAX>
   bool marshal_sequence(stream & strm, const TAO::bounded_array_sequence<T_array, T_slice, T_tag, MAX> & source) {
     typedef TAO_FixedArray_Var_T <T_array, T_slice, T_tag> fixed_array;
-    typedef TAO::Array_Traits<T_array, T_slice, T_tag> array_traits;
-    typedef TAO_Array_Forany_T <T_array, T_slice, T_tag> forany;
+    typedef TAO_Array_Forany_T<T_array, T_slice, T_tag> forany;
+    typedef TAO::Array_Traits<forany> array_traits;
     ::CORBA::ULong const length = source.length ();
     if (!(strm << length)) {
       return false;

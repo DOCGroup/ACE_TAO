@@ -44,7 +44,7 @@ namespace CORBA
   class ValueBase;
 
   typedef TAO_Pseudo_Var_T<AbstractBase> AbstractBase_var;
-  typedef TAO_Pseudo_Out_T<AbstractBase, AbstractBase_var> AbstractBase_out;
+  typedef TAO_Pseudo_Out_T<AbstractBase> AbstractBase_out;
 
   /**
    * @class AbstractBase
@@ -69,6 +69,7 @@ namespace CORBA
 
     typedef CORBA::AbstractBase_ptr _ptr_type;
     typedef CORBA::AbstractBase_var _var_type;
+    typedef CORBA::AbstractBase_out _out_type;
 
     static CORBA::AbstractBase_ptr _narrow (CORBA::AbstractBase_ptr obj
                                             ACE_ENV_ARG_DECL_WITH_DEFAULTS);
@@ -158,12 +159,13 @@ namespace TAO
 {
   template<>
   class TAO_Valuetype_Export Arg_Traits<CORBA::AbstractBase>
-    : public Object_Arg_Traits_T<CORBA::AbstractBase_ptr,
-                                 CORBA::AbstractBase_var,
-                                 CORBA::AbstractBase_out,
-                                 TAO::Objref_Traits<CORBA::AbstractBase>,
-                                 TAO::Any_Insert_Policy_Stream <CORBA::AbstractBase_ptr>
-                                >
+    : public Object_Arg_Traits_T<
+          CORBA::AbstractBase_ptr,
+          CORBA::AbstractBase_var,
+          CORBA::AbstractBase_out,
+          TAO::Objref_Traits<CORBA::AbstractBase>,
+          TAO::Any_Insert_Policy_Stream <CORBA::AbstractBase_ptr>
+        >
   {
   };
 }

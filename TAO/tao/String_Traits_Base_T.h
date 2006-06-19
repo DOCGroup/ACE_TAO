@@ -12,6 +12,7 @@
  */
 
 #include "tao/String_Alloc.h"
+#include "ace/CDR_Stream.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -41,6 +42,8 @@ struct string_traits_base<char>
   typedef TAO::String_var <char_type> string_var;
   typedef TAO::String_out <char_type> string_out;
   typedef TAO::String_Manager_T <char_type> string_mgr;
+  typedef ACE_InputCDR::to_string to_type;
+  typedef ACE_OutputCDR::from_string from_type;
 
   inline static char_type * default_initializer()
   {
@@ -70,6 +73,8 @@ struct string_traits_base<CORBA::WChar>
   typedef TAO::String_var <char_type> string_var;
   typedef TAO::String_out <char_type> string_out;
   typedef TAO::String_Manager_T <char_type> string_mgr;
+  typedef ACE_InputCDR::to_wstring to_type;
+  typedef ACE_OutputCDR::from_wstring from_type;
 
   inline static char_type * default_initializer()
   {

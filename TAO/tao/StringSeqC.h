@@ -99,6 +99,7 @@ namespace CORBA
     static void _tao_any_destructor (void *);
 
     typedef StringSeq_var _var_type;
+    typedef StringSeq_out _out_type;
   };
 
 #endif /* end #if !defined */

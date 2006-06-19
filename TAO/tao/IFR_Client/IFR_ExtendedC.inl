@@ -25,10 +25,13 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+
+
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ci.cpp:70
+// w:\ace_wrappers\tao\tao_idl\be\be_visitor_interface/interface_ci.cpp:70
 
 #if !defined (_CORBA_FIXEDDEF___CI_)
 #define _CORBA_FIXEDDEF___CI_
@@ -36,16 +39,11 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_INLINE
 CORBA::FixedDef::FixedDef (
     TAO_Stub *objref,
-    CORBA::Boolean _tao_collocated,
+    ::CORBA::Boolean _tao_collocated,
     TAO_Abstract_ServantBase *servant,
     TAO_ORB_Core *oc
   )
-  : ::CORBA::Object (
-        objref,
-        _tao_collocated,
-        servant,
-        oc
-      ),
+  : ::CORBA::Object (objref, _tao_collocated, servant, oc),
     the_TAO_FixedDef_Proxy_Broker_ (0)
 {
   this->CORBA_FixedDef_setup_collocation ();
@@ -64,7 +62,7 @@ CORBA::FixedDef::FixedDef (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ci.cpp:70
+// w:\ace_wrappers\tao\tao_idl\be\be_visitor_interface/interface_ci.cpp:70
 
 #if !defined (_CORBA_VALUEMEMBERDEF___CI_)
 #define _CORBA_VALUEMEMBERDEF___CI_
@@ -72,16 +70,11 @@ CORBA::FixedDef::FixedDef (
 ACE_INLINE
 CORBA::ValueMemberDef::ValueMemberDef (
     TAO_Stub *objref,
-    CORBA::Boolean _tao_collocated,
+    ::CORBA::Boolean _tao_collocated,
     TAO_Abstract_ServantBase *servant,
     TAO_ORB_Core *oc
   )
-  : ::CORBA::Object (
-        objref,
-        _tao_collocated,
-        servant,
-        oc
-      ),
+  : ::CORBA::Object (objref, _tao_collocated, servant, oc),
     the_TAO_ValueMemberDef_Proxy_Broker_ (0)
 {
   this->CORBA_ValueMemberDef_setup_collocation ();
@@ -100,7 +93,7 @@ CORBA::ValueMemberDef::ValueMemberDef (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ci.cpp:70
+// w:\ace_wrappers\tao\tao_idl\be\be_visitor_interface/interface_ci.cpp:70
 
 #if !defined (_CORBA_VALUEDEF___CI_)
 #define _CORBA_VALUEDEF___CI_
@@ -108,16 +101,11 @@ CORBA::ValueMemberDef::ValueMemberDef (
 ACE_INLINE
 CORBA::ValueDef::ValueDef (
     TAO_Stub *objref,
-    CORBA::Boolean _tao_collocated,
+    ::CORBA::Boolean _tao_collocated,
     TAO_Abstract_ServantBase *servant,
     TAO_ORB_Core *oc
   )
-  : ::CORBA::Object (
-        objref,
-        _tao_collocated,
-        servant,
-        oc
-      ),
+  : ::CORBA::Object (objref, _tao_collocated, servant, oc),
     the_TAO_ValueDef_Proxy_Broker_ (0)
 {
   this->CORBA_ValueDef_setup_collocation ();
@@ -136,7 +124,7 @@ CORBA::ValueDef::ValueDef (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ci.cpp:70
+// w:\ace_wrappers\tao\tao_idl\be\be_visitor_interface/interface_ci.cpp:70
 
 #if !defined (_CORBA_EXTVALUEDEF___CI_)
 #define _CORBA_EXTVALUEDEF___CI_
@@ -144,16 +132,11 @@ CORBA::ValueDef::ValueDef (
 ACE_INLINE
 CORBA::ExtValueDef::ExtValueDef (
     TAO_Stub *objref,
-    CORBA::Boolean _tao_collocated,
+    ::CORBA::Boolean _tao_collocated,
     TAO_Abstract_ServantBase *servant,
     TAO_ORB_Core *oc
   )
-  : ::CORBA::Object (
-        objref,
-        _tao_collocated,
-        servant,
-        oc
-      ),
+  : ::CORBA::Object (objref, _tao_collocated, servant, oc),
     the_TAO_ExtValueDef_Proxy_Broker_ (0)
 {
   this->CORBA_ExtValueDef_setup_collocation ();
@@ -172,7 +155,7 @@ CORBA::ExtValueDef::ExtValueDef (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ci.cpp:70
+// w:\ace_wrappers\tao\tao_idl\be\be_visitor_interface/interface_ci.cpp:70
 
 #if !defined (_CORBA_VALUEBOXDEF___CI_)
 #define _CORBA_VALUEBOXDEF___CI_
@@ -180,16 +163,11 @@ CORBA::ExtValueDef::ExtValueDef (
 ACE_INLINE
 CORBA::ValueBoxDef::ValueBoxDef (
     TAO_Stub *objref,
-    CORBA::Boolean _tao_collocated,
+    ::CORBA::Boolean _tao_collocated,
     TAO_Abstract_ServantBase *servant,
     TAO_ORB_Core *oc
   )
-  : ::CORBA::Object (
-        objref,
-        _tao_collocated,
-        servant,
-        oc
-      ),
+  : ::CORBA::Object (objref, _tao_collocated, servant, oc),
     the_TAO_ValueBoxDef_Proxy_Broker_ (0)
 {
   this->CORBA_ValueBoxDef_setup_collocation ();
@@ -207,4 +185,7 @@ CORBA::ValueBoxDef::ValueBoxDef (
 
 #endif /* end #if !defined */
 
+
 TAO_END_VERSIONED_NAMESPACE_DECL
+
+

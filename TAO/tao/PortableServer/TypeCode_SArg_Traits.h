@@ -32,7 +32,7 @@ namespace CORBA
   typedef TypeCode *TypeCode_ptr;
 
   typedef TAO_Pseudo_Var_T<TypeCode> TypeCode_var;
-  typedef TAO_Pseudo_Out_T<TypeCode, TypeCode_var> TypeCode_out;
+  typedef TAO_Pseudo_Out_T<TypeCode> TypeCode_out;
 }
 
 // --------------------------------------------------------------

@@ -145,10 +145,19 @@ namespace TAO
     typedef T_ptr &                                       inout_type;
     typedef T_out                                         out_type;
 
-    typedef In_Object_SArgument_T<T_ptr,T_var,Insert_Policy>        in_arg_val;
-    typedef Inout_Object_SArgument_T<T_ptr,T_var,Insert_Policy>     inout_arg_val;
-    typedef Out_Object_SArgument_T<T_ptr,T_var,T_out,Insert_Policy> out_arg_val;
-    typedef Ret_Object_SArgument_T<T_ptr,T_var,Insert_Policy>       ret_val;
+    typedef In_Object_SArgument_T<T_ptr,
+                                  T_var,
+                                  Insert_Policy>          in_arg_val;
+    typedef Inout_Object_SArgument_T<T_ptr,
+                                     T_var,
+                                     Insert_Policy>       inout_arg_val;
+    typedef Out_Object_SArgument_T<T_ptr,
+                                   T_var,
+                                   T_out,
+                                   Insert_Policy>         out_arg_val;
+    typedef Ret_Object_SArgument_T<T_ptr,
+                                   T_var,
+                                   Insert_Policy>         ret_val;
 
     // Typedefs corresponding to return value of arg() method in both
     // the client and server side argument class templates.
@@ -156,7 +165,6 @@ namespace TAO
     typedef inout_type                                    inout_arg_type;
     typedef out_type                                      out_arg_type;
     typedef inout_type                                    ret_arg_type;
-
   };
 }
 

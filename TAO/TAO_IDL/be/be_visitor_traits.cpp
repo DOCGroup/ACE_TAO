@@ -59,12 +59,14 @@ be_visitor_traits::visit_root (be_root *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl << be_nl
+      << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
-  *os << be_global->core_versioning_begin () << be_nl;
+  *os << be_nl
+      << be_global->core_versioning_begin ();
 
-  *os << be_nl << be_nl
+  *os << be_nl
       << "// Traits specializations." << be_nl
       << "namespace TAO" << be_nl
       << "{" << be_idt;
@@ -429,17 +431,16 @@ be_visitor_traits::visit_array (be_array *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << be_nl
+  *os << be_nl
       << "template<>" << be_nl
       << "struct " << be_global->stub_export_macro () << " Array_Traits<"
       << be_idt << be_idt_nl
-      << name << "," << be_nl
-      << name << "_slice," << be_nl
-      << name << "_tag" << be_uidt_nl
+      << name << "_forany" << be_uidt_nl
       << ">" << be_uidt_nl
       << "{" << be_idt_nl
       << "static void free (" << be_idt << be_idt_nl
-      << name << "_slice * _tao_slice" << be_uidt_nl
+      << name << "_slice * _tao_slice"
+      << be_uidt_nl
       << ");" << be_uidt_nl
       << "static " << name << "_slice * dup ("
       << be_idt << be_idt_nl
@@ -451,16 +452,14 @@ be_visitor_traits::visit_array (be_array *node)
       << "const " << name << "_slice * _tao_from"
       << be_uidt_nl
       << ");" << be_uidt_nl
-      << "static " << name << "_slice * alloc (void);" << be_nl
+      << "static " << name << "_slice * alloc (void);"
+      << be_nl
       << "static void zero (" << be_idt << be_idt_nl
       << name << "_slice * _tao_slice"
       << be_uidt_nl
-      << ");" << be_uidt_nl
-
+      << ");" << be_uidt
       << be_uidt_nl
       << "};";
-
-//  os->gen_endif ();
 
   node->cli_traits_gen (true);
   return 0;

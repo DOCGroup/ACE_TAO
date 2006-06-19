@@ -35,15 +35,13 @@ namespace TAO
    * @brief Template class for IN bounded (w)string argument.
    *
    */
-  template<typename S,
-           typename to_S,
-           typename from_S,
+  template<typename S_var,
            size_t BOUND,
            typename Insert_Policy>
   class In_BD_String_Argument_T : public InArgument, private Insert_Policy
   {
   public:
-    In_BD_String_Argument_T (const S * x);
+    In_BD_String_Argument_T (const typename S_var::s_traits::char_type * x);
 
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
 
@@ -51,12 +49,10 @@ namespace TAO
     virtual void interceptor_value (CORBA::Any *any) const;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
 
-    S const * arg (void) const;
+    typename S_var::s_traits::char_type const * arg (void) const;
 
   private:
-
-    S const * x_;
-
+    typename S_var::s_traits::char_type const * x_;
   };
 
   /**
@@ -65,25 +61,23 @@ namespace TAO
    * @brief Template class for INOUT bounded (w)string argument.
    *
    */
-  template<typename S,
-           typename to_S,
-           typename from_S,
+  template<typename S_var,
            size_t BOUND,
            typename Insert_Policy>
   class Inout_BD_String_Argument_T : public InoutArgument, private Insert_Policy
   {
   public:
-    Inout_BD_String_Argument_T (S *& x);
+    Inout_BD_String_Argument_T (typename S_var::s_traits::char_type *& x);
 
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_value (CORBA::Any *any) const;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    S *& arg (void);
+    typename S_var::s_traits::char_type *& arg (void);
 
   private:
-    S *& x_;
+    typename S_var::s_traits::char_type *& x_;
   };
 
   /**
@@ -92,25 +86,22 @@ namespace TAO
    * @brief Template class for OUT bounded (w)string argument.
    *
    */
-  template<typename S,
-           typename S_out,
-           typename to_S,
-           typename from_S,
+  template<typename S_var,
            size_t BOUND,
            typename Insert_Policy>
   class Out_BD_String_Argument_T : public OutArgument, private Insert_Policy
   {
   public:
-    Out_BD_String_Argument_T (S_out x);
+    Out_BD_String_Argument_T (typename S_var::s_traits::string_out x);
 
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_value (CORBA::Any *any) const;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    S *& arg (void);
+    typename S_var::s_traits::char_type *& arg (void);
 
   private:
-    S *& x_;
+    typename S_var::s_traits::char_type *& x_;
   };
 
   /**
@@ -119,10 +110,7 @@ namespace TAO
    * @brief Template class for return stub value of bd (w)string argument.
    *
    */
-  template<typename S,
-           typename S_var,
-           typename to_S,
-           typename from_S,
+  template<typename S_var,
            size_t BOUND,
            typename Insert_Policy>
   class Ret_BD_String_Argument_T : public RetArgument, private Insert_Policy
@@ -134,24 +122,14 @@ namespace TAO
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_value (CORBA::Any *any) const;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    S *& arg (void);
+    typename S_var::s_traits::char_type *& arg (void);
 
-    S * excp (void);
-    S * retn (void);
+    typename S_var::s_traits::char_type * excp (void);
+    typename S_var::s_traits::char_type * retn (void);
 
   private:
-
     S_var x_;
-
   };
-
-  /**
-   * @struct BD_String_Tag
-   *
-   * @brief Struct for bounded (w)string arguments id tag.
-   *
-   */
-  struct TAO_Export BD_String_Tag {};
 
   /**
    * @struct BD_String_Arg_Traits_T
@@ -159,44 +137,28 @@ namespace TAO
    * @brief Template class for stub argument traits of bounded (w)strings.
    *
    */
-  template<typename T,
-           typename T_var,
-           typename T_out,
-           typename to_T,
-           typename from_T,
+  template<typename T_var,
            size_t BOUND,
            typename Insert_Policy>
   struct BD_String_Arg_Traits_T
   {
-    typedef T *                                   ret_type;
-    typedef T const *                             in_type;
-    typedef T *&                                  inout_type;
-    typedef T_out                                 out_type;
+    typedef typename T_var::s_traits::char_type *         ret_type;
+    typedef typename T_var::s_traits::char_type const *   in_type;
+    typedef typename T_var::s_traits::char_type *&        inout_type;
+    typedef typename T_var::s_traits::string_out          out_type;
 
-    typedef In_BD_String_Argument_T<T,
-                                    to_T,
-                                    from_T,
+    typedef In_BD_String_Argument_T<T_var,
                                     BOUND,
                                     Insert_Policy>        in_arg_val;
-    typedef Inout_BD_String_Argument_T<T,
-                                       to_T,
-                                       from_T,
+    typedef Inout_BD_String_Argument_T<T_var,
                                        BOUND,
                                        Insert_Policy>     inout_arg_val;
-    typedef Out_BD_String_Argument_T<T,
-                                     T_out,
-                                     to_T,
-                                     from_T,
+    typedef Out_BD_String_Argument_T<T_var,
                                      BOUND,
                                      Insert_Policy>       out_arg_val;
-    typedef Ret_BD_String_Argument_T<T,
-                                     T_var,
-                                     to_T,
-                                     from_T,
+    typedef Ret_BD_String_Argument_T<T_var,
                                      BOUND,
                                      Insert_Policy>       ret_val;
-
-    typedef BD_String_Tag                         idl_tag;
   };
 }
 

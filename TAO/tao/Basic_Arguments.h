@@ -41,8 +41,6 @@ namespace TAO
     typedef void        ret_type;
 
     typedef RetArgument ret_val;
-
-    typedef Basic_Tag   idl_tag;
   };
 
   /**

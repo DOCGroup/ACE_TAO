@@ -4,15 +4,15 @@
 *
 *  $Id$
 *
-*  Specialized interface visitor for AMH-RH generates code that is 
+*  Specialized interface visitor for AMH-RH generates code that is
 *  specific to AMH interfaces.
 *
 *  @author Mayur Deshpande <mayur@ics.uci.edu>
 */
 //=============================================================================
 
-ACE_RCSID (be_visitor_interface, 
-           amh_ch, 
+ACE_RCSID (be_visitor_interface,
+           amh_ch,
            "$Id$")
 
 be_visitor_amh_interface_ch::be_visitor_amh_interface_ch (
@@ -84,6 +84,8 @@ be_visitor_amh_interface_ch::visit_interface (be_interface *node)
       << "typedef " << node->local_name () << "_ptr _ptr_type;"
       << be_nl
       << "typedef " << node->local_name () << "_var _var_type;"
+      << be_nl
+      << "typedef " << node->local_name () << "_out _out_type;"
       << be_nl;
 
   // Generate code for the interface definition by traversing thru the

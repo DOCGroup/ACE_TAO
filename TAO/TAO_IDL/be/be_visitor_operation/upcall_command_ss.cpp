@@ -213,22 +213,6 @@ be_visitor_operation_upcall_command_ss::visit (be_operation * node,
                                              node->return_type (),
                                              &os);
 
-          // ------
-          // Because of MSVC++ 6's lack of template typedef support,
-          // explicitly specify the return value type for the argument
-          // selection function template.
-          /**
-           * @todo Remove this code once we drop support for MSVC++ 6,
-           *       and update tao/PortableServer/get_arg.h"
-           *       accordingly.
-           */
-          os << ", TAO::SArg_Traits< ";
-          this->gen_arg_template_param_name (node,
-                                             node->return_type (),
-                                             &os);
-          os << ">::ret_arg_type";
-          // ------
-
           os << "> (" << be_idt_nl
              << "this->operation_details_," << be_nl
              << "this->args_);" << be_uidt;
@@ -349,38 +333,6 @@ be_visitor_operation_upcall_command_ss::gen_upcall (be_operation * node)
           this->gen_arg_template_param_name (arg,
                                              arg->field_type (),
                                              &os);
-
-          // ------
-          // Because of MSVC++ 6's lack of template typedef support,
-          // explicitly specify the return value type for the argument
-          // selection function template.
-          /**
-           * @todo Remove this code once we drop support for MSVC++ 6,
-           *       and update tao/PortableServer/get_arg.h"
-           *       accordingly.
-           */
-          os << ", TAO::SArg_Traits< ";
-          this->gen_arg_template_param_name (arg,
-                                             arg->field_type (),
-                                             &os);
-          os << ">::";
-
-          switch (arg->direction ())
-            {
-            case AST_Argument::dir_IN:
-              os << "in";
-              break;
-            case AST_Argument::dir_INOUT:
-              os << "inout";
-              break;
-            case AST_Argument::dir_OUT:
-              os << "out";
-            default:
-              break;
-            }
-
-          os << "_arg_type";
-          // ------
 
           os << "> (" << be_idt_nl
              << "this->operation_details_," << be_nl

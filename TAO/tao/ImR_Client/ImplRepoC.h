@@ -302,6 +302,7 @@ namespace ImplementationRepository
     static void _tao_any_destructor (void *);
 
     typedef EnvironmentList_var _var_type;
+    typedef EnvironmentList_out _out_type;
   };
 
 #endif /* end #if !defined */
@@ -353,6 +354,7 @@ namespace ImplementationRepository
   struct TAO_IMR_Client_Export StartupOptions
   {
     typedef StartupOptions_var _var_type;
+    typedef StartupOptions_out _out_type;
 
     static void _tao_any_destructor (void *);
     TAO::String_Manager command_line;
@@ -392,6 +394,7 @@ namespace ImplementationRepository
   struct TAO_IMR_Client_Export ServerInformation
   {
     typedef ServerInformation_var _var_type;
+    typedef ServerInformation_out _out_type;
 
     static void _tao_any_destructor (void *);
     TAO::String_Manager server;
@@ -445,6 +448,7 @@ namespace ImplementationRepository
     static void _tao_any_destructor (void *);
 
     typedef ServerInformationList_var _var_type;
+    typedef ServerInformationList_out _out_type;
   };
 
 #endif /* end #if !defined */
