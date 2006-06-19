@@ -539,8 +539,8 @@ ACE_Service_Gestalt::initialize (const ACE_Service_Type_Factory *stf,
 #endif
 
   ACE_Service_Type *srp = 0;
-  int retv = this->repo_->find (stf->name (),
-                                (const ACE_Service_Type **) &srp);
+  int const retv = this->repo_->find (stf->name (),
+                                      (const ACE_Service_Type **) &srp);
 
   // If there is an active service already, it must first be removed,
   // before it could be re-installed.
