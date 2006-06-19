@@ -35,7 +35,7 @@ namespace TAO
     class Creation_Time
     {
     public:
-      Creation_Time (const ACE_Time_Value &creation_time);
+      explicit Creation_Time (const ACE_Time_Value &creation_time);
 
       Creation_Time (void);
 

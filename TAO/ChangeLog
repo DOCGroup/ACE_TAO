@@ -1,3 +1,64 @@
+Mon Jun 19 19:39:25 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/EndpointPolicy/EndpointPolicyA.*:
+        * tao/EndpointPolicy/EndpointPolicyC.*:
+        * tao/EndpointPolicy/EndpointPolicyTypeA.*:
+        * tao/EndpointPolicy/EndpointPolicyTypeC.*:
+        * tao/EndpointPolicy/IIOPEndpointValueA.*:
+        * tao/EndpointPolicy/IIOPEndpointValueC.*:
+        * tao/PortableServer/AdapterActivatorC.*:
+        * tao/PortableServer/AdapterActivatorA.*:
+        * tao/PortableServer/ForwardRequestC.*:
+        * tao/PortableServer/ForwardRequestA.*:
+        * tao/PortableServer/IdAssignmentPolicyC.*:
+        * tao/PortableServer/IdAssignmentPolicyA.*:
+        * tao/PortableServer/IdUniquenessPolicyC.*:
+        * tao/PortableServer/IdUniquenessPolicyA.*:
+        * tao/PortableServer/ThreadPolicyC.*:
+        * tao/PortableServer/ThreadPolicyA.*:
+        * tao/PortableServer/ServantRetentionPolicyC.*:
+        * tao/PortableServer/ServantRetentionPolicyA.*:
+        * tao/PortableServer/ServantManagerC.*:
+        * tao/PortableServer/ServantManagerA.*:
+        * tao/PortableServer/ServantLocatorC.*:
+        * tao/PortableServer/ServantLocatorA.*:
+        * tao/PortableServer/ServantActivatorC.*:
+        * tao/PortableServer/ServantActivatorA.*:
+        * tao/PortableServer/RequestProcessingPolicyC.*:
+        * tao/PortableServer/RequestProcessingPolicyA.*:
+        * tao/PortableServer/PS_CurrentC.*:
+        * tao/PortableServer/PortableServerA.cpp:
+        * tao/PortableServer/POAManagerFactoryC.*:
+        * tao/PortableServer/POAManagerC.*:
+        * tao/PortableServer/LifespanPolicyC.*:
+        * tao/PortableServer/LifespanPolicyA.*:
+        * tao/PortableServer/ImplicitActivationPolicyC.*:
+        * tao/PortableServer/ImplicitActivationPolicyA.*:
+        * tao/TypeCodeFactory/TypeCodeFactoryA.*:
+        * tao/TypeCodeFactory/TypeCodeFactoryC.*:
+        * tao/Valuetype/StringValueC.*:
+          Removed from the repo, will be generated with tao_idl during the build
+          of the core libs in the future.
+
+        * tao/EndpointPolicy/Endpoint_Acceptor_Filter.cpp:
+          Const improvement
+
+        * tao/EndpointPolicy/EndpointPolicy.pidl:
+        * tao/EndpointPolicy/EndpointPolicyType.pidl:
+        * tao/EndpointPolicy/IIOPEndpointValue.pidl:
+          Removed regeneration instructions, stored in mpc file in the future
+
+        * tao/PortableServer/AdapterActivator.pidl:
+        * tao/PortableServer/ForwardRequest.pidl:
+        * tao/PortableServer/IdUniquenessPolicy.pidl:
+        * tao/PortableServer/ImplicitActivationPolicy.pidl:
+        * tao/PortableServer/POAManagerFactory.pidl:
+        * tao/PortableServer/POAManager.pidl:
+          Removed regeneration instructions and updated for CORBA/e
+
+        * tao/PortableServer/Creation_Time.h:
+          Made single argument constructor explicit
+
 Mon Jun 19 14:49:25 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Abstract_Servant_Base.h:

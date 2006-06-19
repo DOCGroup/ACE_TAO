@@ -21,6 +21,8 @@
 
 #pragma prefix "omg.org"
 
+#if !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
+
 module PortableServer
 {
 # pragma version PortableServer 2.3
@@ -43,5 +45,7 @@ module PortableServer
     POAManager find(in string id);
   };
 };
+
+#endif
 
 #endif // _PORTABLESERVER_POAMANAGER_FACTORY_IDL

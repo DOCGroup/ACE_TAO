@@ -71,7 +71,7 @@ public:
   int enqueue_tail (TAO_Queued_Data *nd);
 
   /// Return the length of the queue..
-  CORBA::ULong queue_length (void);
+  CORBA::ULong queue_length (void) const;
 
 private:
 
@@ -94,7 +94,7 @@ private:
   TAO_ORB_Core *orb_core_;
 };
 
-/// Constant value indicating that the correct value is unknown yet, 
+/// Constant value indicating that the correct value is unknown yet,
 /// probably parsing the header failed due to insufficient data in buffer.
 const size_t TAO_MISSING_DATA_UNDEFINED = ~((size_t) 0); // MAX_SIZE_T
 
@@ -143,7 +143,7 @@ public:
   int consolidate (void);
 
 public:
-  
+
   /// The message block that contains the message.
   ACE_Message_Block *msg_block_;
 
@@ -154,8 +154,8 @@ public:
     data missing from \a msg_block_.
    */
   //@{
-  /*! Data missing in the above message that hasn't been read or processed yet, 
-      the value TAO_MISSING_DATA_UNDEFINED indicates it hasn't been processed yet, 
+  /*! Data missing in the above message that hasn't been read or processed yet,
+      the value TAO_MISSING_DATA_UNDEFINED indicates it hasn't been processed yet,
       otherwise greater or equal zero. */
   size_t missing_data_;
   //@}

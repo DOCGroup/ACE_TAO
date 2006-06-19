@@ -52,7 +52,7 @@ ACE_THROW_SPEC ((CORBA::Exception))
                        ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
-#if (TAO_HAS_MINIMUM_CORBA == 0)
+#if (TAO_HAS_MINIMUM_CORBA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
   ACE_CATCH (PortableServer::ForwardRequest, forward_request)
     {
       forward_obj =
@@ -65,7 +65,7 @@ ACE_THROW_SPEC ((CORBA::Exception))
       ACE_UNUSED_ARG (forward_obj);
       ACE_RE_THROW;
     }
-#endif /* TAO_HAS_MINIMUM_CORBA */
+#endif /* TAO_HAS_MINIMUM_CORBA && !CORBA_E_COMPACT && !CORBA_E_MICRO*/
   ACE_ENDTRY;
   ACE_CHECK;
 }

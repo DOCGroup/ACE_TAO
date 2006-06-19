@@ -3,15 +3,7 @@
  *
  * $Id$
  *
- * @brief Pre-compiled IDL source for the PortableServer module.
- *
- * tao_idl.exe \
- *     -o orig -Gp -Gd -Ge 1 -Sci -GA -I$(TAO_ROOT)
- *          -Wb,export_macro=TAO_PortableServer_Export \
- *          -Wb,export_include="portableserver_export.h" \
- *          -Wb,pre_include="ace/pre.h" \
- *          -Wb,post_include="ace/post.h" \
- *          IdUniquenessPolicy.pidl
+ * @brief PIDL source for the PortableServer module.
  */
 
 #ifndef _PORTABLESERVER_IDUNIQUENESSPOLICY_IDL_
@@ -31,10 +23,15 @@ module PortableServer
     MULTIPLE_ID
   };
 
+#if !defined (CORBA_E_MICRO)
+
   local interface IdUniquenessPolicy : CORBA::Policy
   {
     readonly attribute IdUniquenessPolicyValue value;
   };
+
+#endif
 };
+
 
 #endif // _PORTABLESERVER_IDUNIQUENESSPOLICY_IDL_

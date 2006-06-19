@@ -27,7 +27,7 @@ void
 TAO_POA_Default_Policy_Validator::validate_impl (TAO_Policy_Set &policies
                                                  ACE_ENV_ARG_DECL)
 {
-#if (TAO_HAS_MINIMUM_POA == 0)
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
   CORBA::Policy_var policy =
     policies.get_cached_policy (TAO_CACHED_POLICY_SERVANT_RETENTION
                                 ACE_ENV_ARG_PARAMETER);
@@ -66,7 +66,6 @@ TAO_POA_Default_Policy_Validator::validate_impl (TAO_Policy_Set &policies
     if (servant_retention != PortableServer::RETAIN)
       ACE_THROW (PortableServer::POA::InvalidPolicy ());
 
-
   policy =
     policies.get_cached_policy (TAO_CACHED_POLICY_ID_UNIQUENESS
                                 ACE_ENV_ARG_PARAMETER);
@@ -80,7 +79,6 @@ TAO_POA_Default_Policy_Validator::validate_impl (TAO_Policy_Set &policies
   PortableServer::IdUniquenessPolicyValue id_uniqueness =
     iup->value (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
-
 
   policy =
     policies.get_cached_policy (TAO_CACHED_POLICY_IMPLICIT_ACTIVATION
@@ -131,14 +129,21 @@ TAO_POA_Default_Policy_Validator::legal_policy_impl (CORBA::PolicyType type)
   // corresponding PolicyFactory.  The PolicyFactory check is mandated
   // by the CORBA specification.
   return
-    (type == PortableServer::THREAD_POLICY_ID
-     || type == PortableServer::LIFESPAN_POLICY_ID
-     || type == PortableServer::ID_UNIQUENESS_POLICY_ID
-     || type == PortableServer::ID_ASSIGNMENT_POLICY_ID
-     || type == PortableServer::IMPLICIT_ACTIVATION_POLICY_ID
-     || type == PortableServer::SERVANT_RETENTION_POLICY_ID
-     || type == PortableServer::REQUEST_PROCESSING_POLICY_ID
-     || (this->orb_core_.policy_factory_registry () != 0 &&
+    (
+#   if ! defined (CORBA_E_COMPACT) && ! defined (CORBA_E_MICRO)
+      type == PortableServer::THREAD_POLICY_ID ||
+#   endif
+#   if ! defined (CORBA_E_MICRO)
+      type == PortableServer::LIFESPAN_POLICY_ID ||
+      type == PortableServer::ID_UNIQUENESS_POLICY_ID ||
+      type == PortableServer::ID_ASSIGNMENT_POLICY_ID ||
+#   endif
+#   if ! defined (CORBA_E_COMPACT) && ! defined (CORBA_E_MICRO)
+      type == PortableServer::IMPLICIT_ACTIVATION_POLICY_ID ||
+      type == PortableServer::SERVANT_RETENTION_POLICY_ID ||
+      type == PortableServer::REQUEST_PROCESSING_POLICY_ID ||
+#   endif
+      (this->orb_core_.policy_factory_registry () != 0 &&
          this->orb_core_.policy_factory_registry ()->factory_exists (type)));
 }
 
