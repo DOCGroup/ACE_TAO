@@ -516,10 +516,12 @@ ACE_OS::pwrite (ACE_HANDLE handle,
     return -1;
 
   // Go to the correct position
-  DWORD altered_position = ::SetFilePointer (handle,
-                                             offset,
-                                             0,
-                                             FILE_BEGIN);
+  LARGE_INTEGER loffset;
+  loffset.QuadPart = offset;
+  DWORD altered_position = ::SetFilePointerEx (handle,
+                                               loffset,
+                                               0,
+                                               FILE_BEGIN);
   if (altered_position == 0xFFFFFFFF)
     return -1;
 
