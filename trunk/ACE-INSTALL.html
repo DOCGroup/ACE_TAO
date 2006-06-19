@@ -585,7 +585,7 @@ open the file with the correct format.</p>
   workspaces for MFC are not available and have to be generated using
   MPC. Please see <a href="MPC/README">MPC's README</a> for
   details.<br><br>
-  </li><li>Now load the workspace file for ACE (ACE_ROOT/ACE.dsw).<br>
+  </li><li>Now load the solution file for ACE (ACE_ROOT/ACE.sln).<br>
       <br>
   </li><li>Make sure you are building the configuration (i.e, Debug/Release)
   the one you'll use (for example, the debug tests need the debug
@@ -662,8 +662,8 @@ document is available under Related Topics in the ACE Library.</p>
 
 <b>ACE TESTS</b><p>
 
-The tests are located in ACE_ROOT\tests.  There is also a workspace in
-that directory to build all the tests (tests.dsw)</p><p>
+The tests are located in ACE_ROOT\tests.  There is also a solution in
+that directory to build all the tests (tests.sln)</p><p>
 
 Once you build all the tests (Batch Build works well for this), you
 can run perl script <code>run_test.pl</code> in the
@@ -1680,13 +1680,13 @@ library that supports TAO)</p>
 <p></p>
 <b><p>Steps to Build</p>
 </b><p>1) Build Ace.dll under NT</p>
-<p>In  MS Visual C++ open C:\Corba\ACE_wrappers\ace.dsw And build Ace
+<p>In  MS Visual C++ open C:\Corba\ACE_wrappers\ace.sln And build Ace
 DLL</p>
 <p>Copy Ace.dll in C:\bin</p>
 
 <p>2) Build gperf utility under NT</p>
 <p>In MS Visual C++ open
-C:\Corba\ACE_wrappers\apps\gperf\src\gperf.dsw. Build gperf.exe</p>
+C:\Corba\ACE_wrappers\apps\gperf\src\gperf.sln. Build gperf.exe</p>
 <p>Copy gperf.exe to C:\bin</p>
 
 <p>3) Mount Directries in Cygwin</p>
@@ -1879,7 +1879,7 @@ below.</p>
       or <code>$ACE_ROOT/local.features</code> file, and re-run MPC to add
       support for building the ACE_SSL library to your MSVC++
       workspaces and projects.
-  <li>Open the <code>ACE.dsw</code> workspace, and refer to the ACE build
+  <li>Open the <code>ACE.sln</code> solution, and refer to the ACE build
       and installation instructions above for details on creating a
       <code>config.h</code> configuration header for this platform.  Once
       the <code>config.h</code> file has been created, build the
@@ -2634,9 +2634,9 @@ Toshio Hori &lt;toshi@etl.go.jp&gt; provided these tips for reducing
 disk space usage:</p><p>
 
 To save space on a Unix machine, I usually run
-    'find . -name \*.dsw -o -name \*.dsp -o -name \*.bor | xargs rm -f'
+    'find . -name \*.sln -o -name \*.vcproj -o -name \*.bor | xargs rm -f'
 in $ACE_ROOT at first after I untar the distribution.  They are
-meaningless in my environment (Files named '*.dsw' and '*.dsp' are
+meaningless in my environment (Files named '*.sln' and '*.vcproj' are
 used for MSVC++ and files named '*.bor' are for Borland C++
 Builder.)</p><p>
 

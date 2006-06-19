@@ -1,3 +1,9 @@
+Mon Jun 19 14:26:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE-INSTALL.html:
+          Replaced dsp/dsw with sln/vcproj. Thanks to Abdullah Sowayan
+          <abdullah dot sowayan at lmco dot com> for reporting this
+
 Mon Jun 19 13:14:54 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * tests/Hash_Map_Manager_Test.cpp (test_two_allocators): Added a
@@ -6,8 +12,8 @@ Mon Jun 19 13:14:54 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
 Mon Jun 19 02:55:48 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
-        * examples/Log_Msg/test_ostream.cpp (ACE_TMAIN): Enhanced the test to 
-          show the ofstream output better.          
+        * examples/Log_Msg/test_ostream.cpp (ACE_TMAIN): Enhanced the test to
+          show the ofstream output better.
 
 Mon Jun 19 01:31:46 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
