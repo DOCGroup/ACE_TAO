@@ -50,30 +50,34 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #define ICMP_ECHO       8
 #define ICMP_ECHOREPLY  0
 
+#pragma pack(1)
+
 struct ip
 {
-  unsigned int    ip_hl:4;            // length of the header
-  unsigned int    version:4;          // Version of IP
-  unsigned char   tos;                // Type of service
-  unsigned short  total_len;          // total length of the packet
-  unsigned short  ident;              // unique identifier
-  unsigned short  frag_and_flags;     // flags
-  unsigned char   ip_ttl;             // Time to live
-  unsigned char   proto;              // protocol (TCP, UDP etc)
-  unsigned short  checksum;           // IP checksum
-  unsigned int    sourceIP;
-  unsigned int    destIP;
+  ACE_UINT8   ip_hl:4;            // length of the header
+  ACE_UINT8   version:4;          // Version of IP
+  ACE_UINT8   tos;                // Type of service
+  ACE_UINT16  total_len;          // total length of the packet
+  ACE_UINT16  ident;              // unique identifier
+  ACE_UINT16  frag_and_flags;     // flags
+  ACE_UINT8   ip_ttl;             // Time to live
+  ACE_UINT8   proto;              // protocol (TCP, UDP etc)
+  ACE_UINT16  checksum;           // IP checksum
+  ACE_UINT32  sourceIP;
+  ACE_UINT32  destIP;
 };
 
 struct icmp
 {
-  unsigned char  icmp_type;
-  unsigned char  icmp_code;      // type sub code
-  unsigned short icmp_cksum;
-  unsigned short icmp_id;
-  unsigned short icmp_seq;
-  unsigned long  icmp_data;      // time data
+  ACE_UINT8  icmp_type;
+  ACE_UINT8  icmp_code;      // type sub code
+  ACE_UINT16 icmp_cksum;
+  ACE_UINT16 icmp_id;
+  ACE_UINT16 icmp_seq;
+  ACE_UINT32 icmp_data;      // time data
 };
+
+#pragma pack()
 
 #endif /* #if ! defined (ACE_WIN32) */
 

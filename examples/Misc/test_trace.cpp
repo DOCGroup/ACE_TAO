@@ -10,7 +10,8 @@
 //
 // = DESCRIPTION
 //    This example illustrates how to use the ACE tracing feature and
-//    also illustrates how to redirect the output to a file.
+//    the ACE_TRACE macro.  It also shows the use of the ACE_Task_Base
+//    class running as an "active object".  
 //
 // = AUTHOR
 //    Douglas C. Schmidt <schmidt@cs.wustl.edu> and
@@ -47,13 +48,10 @@ private:
   // Depth of the recursion.
 };
 
-
 int
 My_Task::recursive (size_t depth)
 {
-  ACE_Trace trace (ACE_TEXT("int recursive (size_t depth)"),
-                   __LINE__,
-                   ACE_TEXT(__FILE__));
+  ACE_TRACE ("int My_Test::recursive (size_t depth)");
 
   if (depth > 0)
     return recursive (depth - 1);
@@ -66,6 +64,8 @@ extern "C"
 void
 exithook (void)
 {
+  ACE_TRACE ("void exithook (void)");
+
   ACE_DEBUG ((LM_DEBUG,
               "we're outta here!\n"));
 }
@@ -80,11 +80,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   if (argc > 2)
     ACE_Trace::set_nesting_indent (ACE_OS::atoi (argv[2]));
 
-  ACE_Trace trace (ACE_TEXT("int ACE_TMAIN (int argc, ACE_TCHAR *argv[])"),
-                   __LINE__,
-                   ACE_TEXT(__FILE__));
+  ACE_TRACE ("int ACE_TMAIN (int argc, ACE_TCHAR *argv[])");
 
-  // The following won't work on MVS OpenEdition...
   ACE_Sig_Action sig1 ((ACE_SignalHandler) ACE_Trace::start_tracing,
                        SIGUSR1);
   ACE_UNUSED_ARG (sig1);
@@ -94,7 +91,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   My_Task task (MAX_DEPTH);
 
-#if defined(ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   int n_threads = argc > 3 ? ACE_OS::atoi (argv[3]) : 4;
 
   if (task.activate (THR_BOUND | THR_DETACHED, n_threads) == -1)

@@ -2098,7 +2098,7 @@ Dmitriy Kuznetsov <dk3 at garant dot ru>
 Steve Orner <saorner at rdainc dot com>
 Bob Ronak <ronak2121 at gmail dot com>
 Aleksandar Vukajlovic <vukajlo at finsoft dot co dot yu>
-Ignacio Alvarez <support at xentient dot com>
+esIgnacio Alvarez <support at xentient dot com>
 Sergey Zubarev <sergant128 at mail dot ru>
 Qingbo Cai <qingbo dot cai at case dot edu>
 David White <david dot white dot 7 at gmail dot com>
@@ -2124,6 +2124,7 @@ David Highley <dhighley at highley-recommended dot com>
 Sonicfly Zhou <zhoucn at txsec dot com>
 Phil Billingham <phil_billingham at ml dot com>
 David Giovannini <giovannd at ociweb dot com>
+Paul Daugherty <Paul at nextalk dot com>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson in the early 1990's.  Paul devised the recursive Makefile

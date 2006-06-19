@@ -3,13 +3,12 @@
                             by Craig Rodrigues <crodrigu@bbn.com>
 		               2002/08/02
 
-The example in this directory is a Microsoft
-Foundation Class (MFC) example which illustrates how to
-write an ACE_Log_Msg_Callback which can
-send debug output to the Microsoft debugger console.
+The example in this directory is a Microsoft Foundation Class (MFC)
+example which illustrates how to write an ACE_Log_Msg_Callback which
+can send debug output to the Microsoft debugger console.
 
-This is very useful when debugging an MFC GUI-based application
-which uses ACE.
+This is very useful when debugging an MFC GUI-based application which
+uses ACE.
 
 NOTES
 =====
@@ -17,6 +16,7 @@ NOTES
    example.  Follow the instructions in $ACE_ROOT/ACE-INSTALL.html for building
    ACE with Visual C++.  Do a Batch Build of ACE, and make sure that you build
    the target "ACE DLL - Win32 MFC Debug".
+
  - We must call ACE::init() and ACE::fini() in the right places
    otherwise we will get strange crashes and memory leaks
    when invoking ACE_Log_Msg::instance().

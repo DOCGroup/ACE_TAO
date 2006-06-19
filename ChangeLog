@@ -1,3 +1,50 @@
+Mon Jun 19 02:55:48 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * examples/Log_Msg/test_ostream.cpp (ACE_TMAIN): Enhanced the test to 
+          show the ofstream output better.          
+
+Mon Jun 19 01:31:46 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * examples/Log_Msg/test_callback.cpp (ACE_TMAIN): Zapped the
+          extraneous '\n' from the messages.
+
+Mon Jun 19 01:06:49 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * examples/Misc/test_trace.cpp: Enhanced to the the ACE_TRACE macro.
+
+Sun Jun 18 16:58:20 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * netsvcs/clients/Logger/indirect_logging.cpp (ACE_TMAIN): Cleaned
+          up the test to work if none of the daemons are running.
+
+Sun Jun 18 16:44:14 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Signal.{inl,cpp}: Moved the destructors out of the *.inl
+          file into the *.cpp file since inline destructors aren't really
+          a good idea.
+
+Sun Jun 18 16:35:13 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * netsvcs/lib/Client_Logging_Handler.cpp (send): Printout the type
+          of log message as a diagnostic to make it easier to see the
+          filtering that's going on!
+
+Fri Jun 16 17:48:18 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/CDR_Size.cpp (adjust): Added a fix for the case where
+          ACE_LACKS_CDR_ALIGNMENT is undefined.  Thanks to Aleksandar
+          Vukajlovic <vukajlo at finsoft dot co dot yu> for contributing
+          this.
+
+Fri Jun 16 13:57:53 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Ping_Socket.cpp: Replaced the use of char, short, int,
+          etc. for struct ip and icmp with the equivalent
+          ACE_UNIT[8,12,32] types to ensure a fixed size.  Thanks to Paul
+          Daugherty <Paul at nextalk dot com> and Robert S. Iakobashvili
+          <coroberti at gmail dot com> for reporting this and contributing
+          a fix.
+
 Mon Jun 19 11:37:17 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_unistd.{h,cpp,inl}:
