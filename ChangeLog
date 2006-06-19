@@ -1,3 +1,9 @@
+Mon Jun 19 13:14:54 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * tests/Hash_Map_Manager_Test.cpp (test_two_allocators): Added a
+          test for the two allocator version of ACE_Hash_Map_Manager.
+          Thanks to Jarek for contributing this.
+
 Mon Jun 19 02:55:48 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * examples/Log_Msg/test_ostream.cpp (ACE_TMAIN): Enhanced the test to 
