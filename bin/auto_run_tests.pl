@@ -132,7 +132,12 @@ foreach my $test_lst (@file_list) {
             $cmd = "$opt_s \"perl $program $inherited_options\"";
         }
         else {
-            $cmd = $program.$inherited_options;
+            if ($^O eq 'VMS') {
+              $cmd = "perl $program$inherited_options";
+            }
+            else {
+              $cmd = $program.$inherited_options;
+            }
         }
 
 
@@ -147,7 +152,7 @@ foreach my $test_lst (@file_list) {
             $time = time() - $start_time;
 
             # see note about tests/run_test.pl printing reports for ace tests individually
-            if (! $is_ace_test) {    
+            if (! $is_ace_test) {
                 if ($result != 0) {
                     print "Error: $test returned with status $result\n";
                 }
