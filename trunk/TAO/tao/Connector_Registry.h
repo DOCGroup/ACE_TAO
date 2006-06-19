@@ -65,7 +65,7 @@ public:
   ~TAO_Connector_Registry (void);
 
   /// Return the connector bridges
-  TAO_Connector *get_connector (CORBA::ULong tag);
+  TAO_Connector *get_connector (CORBA::ULong tag) const;
 
   /// Initialize all registered connectors.
   int open (TAO_ORB_Core *orb_core);
@@ -87,8 +87,8 @@ public:
   char object_key_delimiter (const char *ior);
 
   // = Iterator.
-  TAO_ConnectorSetIterator begin (void);
-  TAO_ConnectorSetIterator end (void);
+  TAO_ConnectorSetIterator begin (void) const;
+  TAO_ConnectorSetIterator end (void) const;
 
 private:
   // Disallow copying and assignment.

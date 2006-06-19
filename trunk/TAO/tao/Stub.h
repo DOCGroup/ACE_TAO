@@ -268,7 +268,7 @@ public:
    */
   CORBA::Boolean optimize_collocation_objects (void) const;
 
-  // needed to avoid copying forward_profiles for thread safety
+  /// Needed to avoid copying forward_profiles for thread safety
   CORBA::Boolean marshal (TAO_OutputCDR&);
 
 protected:
