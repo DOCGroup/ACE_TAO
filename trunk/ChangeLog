@@ -1,3 +1,8 @@
+Mon Jun 19 15:11:12 UTC 2006  Martin Corino  <mcorino@remedy.nl>
+
+        * bin/auto_run_tests.pl:
+          Changed to enable spawning Perl testscripts on OpenVMS.
+
 Mon Jun 19 14:26:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ACE-INSTALL.html:
