@@ -1,3 +1,9 @@
+Mon Jun 19 10:00:17 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Service_Gestalt.cpp:
+        * ace/Acceptor.cpp:
+          Const improvement
+
 Mon Jun 19 09:56:17 UTC 2006  Ossama Othman  <ossama_othman@symantec.com>
 
         * ace/OS_NS_sys_sendfile.cpp (sendfile_emulation):
