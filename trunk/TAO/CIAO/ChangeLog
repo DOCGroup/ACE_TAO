@@ -1,3 +1,21 @@
+Mon Jun 19 14:52:25 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ciao/Home_Servant_Impl_T.cpp:
+        * ciao/Home_Servant_Impl_T.h:
+        * ciao/Servant_Impl_T.cpp
+        * ciao/Servant_Impl_T.h:
+
+          Reduced the number of template parameters in
+          the component servant and home servant template
+          base classes.
+
+        * CIDLC/ServantHeaderGenerator.cpp:
+        * CIDLC/ServantSourceGenerator.cpp:
+
+          Changes to generated servant code corresponding
+          the the changes in servant base class code
+          described above.
+
 Thu Jun 15 20:13:02 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tools/IDL3_to_IDL2/be_helper.cpp:

@@ -6,26 +6,15 @@
 #include "Home_Servant_Impl_T.h"
 #include "CIAO_common.h"
 
-
 namespace CIAO
 {
   template <typename BASE_SKEL,
             typename EXEC,
-            typename EXEC_VAR,
-            typename COMP,
-            typename COMP_VAR,
-            typename COMP_EXEC,
-            typename COMP_EXEC_VAR,
             typename COMP_SVNT>
   Home_Servant_Impl<BASE_SKEL,
                     EXEC,
-                    EXEC_VAR,
-                    COMP,
-                    COMP_VAR,
-                    COMP_EXEC,
-                    COMP_EXEC_VAR,
                     COMP_SVNT>::Home_Servant_Impl (
-      EXEC * exe,
+      typename EXEC::_ptr_type exe,
       Session_Container * c,
       const char *ins_name
     )
@@ -37,29 +26,18 @@ namespace CIAO
 
   template <typename BASE_SKEL,
             typename EXEC,
-            typename EXEC_VAR,
-            typename COMP,
-            typename COMP_VAR,
-            typename COMP_EXEC,
-            typename COMP_EXEC_VAR,
             typename COMP_SVNT>
   Home_Servant_Impl<BASE_SKEL,
                     EXEC,
-                    EXEC_VAR,
-                    COMP,
-                    COMP_VAR,
-                    COMP_EXEC,
-                    COMP_EXEC_VAR,
                     COMP_SVNT>::~Home_Servant_Impl (void)
   {
     CIAO_TRACE ("Home_Servant_Impl<>::destructor");
 
-    const OBJ_ITERATOR end =
-      this->objref_map_.end ();
+    const OBJ_ITERATOR end = this->objref_map_.end ();
 
-    for (OBJ_ITERATOR iter =
-           this->objref_map_.begin ();
-         iter != end; ++iter)
+    for (OBJ_ITERATOR iter = this->objref_map_.begin ();
+         iter != end;
+         ++iter)
       {
         this->remove_component (((*iter).int_id_).in ());
       }
@@ -69,20 +47,10 @@ namespace CIAO
 
   template <typename BASE_SKEL,
             typename EXEC,
-            typename EXEC_VAR,
-            typename COMP,
-            typename COMP_VAR,
-            typename COMP_EXEC,
-            typename COMP_EXEC_VAR,
             typename COMP_SVNT>
   void
   Home_Servant_Impl<BASE_SKEL,
                     EXEC,
-                    EXEC_VAR,
-                    COMP,
-                    COMP_VAR,
-                    COMP_EXEC,
-                    COMP_EXEC_VAR,
                     COMP_SVNT>::remove_component (
       ::Components::CCMObject_ptr comp
       ACE_ENV_ARG_DECL
@@ -104,9 +72,9 @@ namespace CIAO
         return;
       }
 
-    COMP_VAR _ciao_comp =
-      COMP::_narrow (ccm_obj_var.in ()
-                     ACE_ENV_ARG_PARAMETER);
+    typename COMP_SVNT::_stub_var_type _ciao_comp =
+      COMP_SVNT::_stub_type::_narrow (ccm_obj_var.in ()
+                                      ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
 
     if (CORBA::is_nil (_ciao_comp.in ()))
@@ -118,25 +86,17 @@ namespace CIAO
     ACE_CHECK;
 
     if (CIAO::debug_level () > 3)
-      ACE_DEBUG ((LM_DEBUG, "removed the component\n"));
+      {
+        ACE_DEBUG ((LM_DEBUG, "removed the component\n"));
+      }
   }
 
   template <typename BASE_SKEL,
             typename EXEC,
-            typename EXEC_VAR,
-            typename COMP,
-            typename COMP_VAR,
-            typename COMP_EXEC,
-            typename COMP_EXEC_VAR,
             typename COMP_SVNT>
   void
   Home_Servant_Impl<BASE_SKEL,
                     EXEC,
-                    EXEC_VAR,
-                    COMP,
-                    COMP_VAR,
-                    COMP_EXEC,
-                    COMP_EXEC_VAR,
                     COMP_SVNT>::update_component_map (
       PortableServer::ObjectId &oid)
   {
@@ -148,6 +108,7 @@ namespace CIAO
         ACE_DEBUG ((LM_DEBUG, "Invalid component object reference\n"));
         return;
       }
+
     return;
   }
 
@@ -155,20 +116,10 @@ namespace CIAO
 
   template <typename BASE_SKEL,
             typename EXEC,
-            typename EXEC_VAR,
-            typename COMP,
-            typename COMP_VAR,
-            typename COMP_EXEC,
-            typename COMP_EXEC_VAR,
             typename COMP_SVNT>
   Components::CCMObject_ptr
   Home_Servant_Impl<BASE_SKEL,
                     EXEC,
-                    EXEC_VAR,
-                    COMP,
-                    COMP_VAR,
-                    COMP_EXEC,
-                    COMP_EXEC_VAR,
                     COMP_SVNT>::create_component (
       ACE_ENV_SINGLE_ARG_DECL
     )
@@ -184,20 +135,10 @@ namespace CIAO
 
   template <typename BASE_SKEL,
             typename EXEC,
-            typename EXEC_VAR,
-            typename COMP,
-            typename COMP_VAR,
-            typename COMP_EXEC,
-            typename COMP_EXEC_VAR,
             typename COMP_SVNT>
-  COMP *
+  typename COMP_SVNT::_stub_ptr_type
   Home_Servant_Impl<BASE_SKEL,
                     EXEC,
-                    EXEC_VAR,
-                    COMP,
-                    COMP_VAR,
-                    COMP_EXEC,
-                    COMP_EXEC_VAR,
                     COMP_SVNT>::create (
       ACE_ENV_SINGLE_ARG_DECL
     )
@@ -209,16 +150,16 @@ namespace CIAO
     if (this->executor_.in () == 0)
     {
       ACE_THROW_RETURN (CORBA::INTERNAL (),
-                        COMP::_nil ());
+                        COMP_SVNT::_stub_type::_nil ());
     }
 
     ::Components::EnterpriseComponent_var _ciao_ec =
       this->executor_->create (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK_RETURN (COMP::_nil ());
 
-    COMP_EXEC_VAR _ciao_comp =
-      COMP_EXEC::_narrow (_ciao_ec.in ()
-                          ACE_ENV_ARG_PARAMETER);
+    typename COMP_SVNT::_exec_type::_var_type _ciao_comp =
+      COMP_SVNT::_exec_type::_narrow (_ciao_ec.in ()
+                                      ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (COMP::_nil ());
 
     return this->_ciao_activate_component (_ciao_comp.in ()
@@ -229,22 +170,12 @@ namespace CIAO
 
   template <typename BASE_SKEL,
             typename EXEC,
-            typename EXEC_VAR,
-            typename COMP,
-            typename COMP_VAR,
-            typename COMP_EXEC,
-            typename COMP_EXEC_VAR,
             typename COMP_SVNT>
-  COMP *
+  typename COMP_SVNT::_stub_ptr_type
   Home_Servant_Impl<BASE_SKEL,
                     EXEC,
-                    EXEC_VAR,
-                    COMP,
-                    COMP_VAR,
-                    COMP_EXEC,
-                    COMP_EXEC_VAR,
                     COMP_SVNT>::_ciao_activate_component (
-      COMP_EXEC *exe
+      typename COMP_SVNT::_exec_type::_ptr_type exe
       ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException))
@@ -254,12 +185,12 @@ namespace CIAO
     CORBA::Object_var hobj =
       this->container_->get_objref (this
                                     ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (COMP::_nil ());
+    ACE_CHECK_RETURN (COMP_SVNT::_stub_type::_nil ());
 
     Components::CCMHome_var home =
       Components::CCMHome::_narrow (hobj.in ()
                                     ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (COMP::_nil ());
+    ACE_CHECK_RETURN (COMP_SVNT::_stub_type::_nil ());
 
     COMP_SVNT *svt = 0;
     ACE_NEW_RETURN (svt,
@@ -268,7 +199,7 @@ namespace CIAO
                                this->ins_name_,
                                this,
                                this->container_),
-                    COMP::_nil ());
+                    COMP_SVNT::_stub_type::_nil ());
 
     PortableServer::ServantBase_var safe (svt);
     PortableServer::ObjectId_var oid;
@@ -277,18 +208,20 @@ namespace CIAO
       this->container_->install_component (svt,
                                            oid.out ()
                                            ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (COMP::_nil ());
+    ACE_CHECK_RETURN (COMP_SVNT::_stub_type::_nil ());
 
-    COMP_VAR ho = COMP::_narrow (objref.in ()
-                                 ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (COMP::_nil ());
+    typename COMP_SVNT::_stub_var_type ho =
+      COMP_SVNT::_stub_type::_narrow (objref.in ()
+                                      ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK_RETURN (COMP_SVNT::_stub_type::_nil ());
 
     Components::CCMObject_var ccmobjref =
       Components::CCMObject::_narrow (objref.in ()
                                       ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (COMP::_nil ());
+    ACE_CHECK_RETURN (COMP_SVNT::_stub_type::_nil ());
 
-    this->objref_map_.bind (oid.in (),
+    this->objref_map_.bind (
+      oid.in (),
       Components::CCMObject::_duplicate (ccmobjref.in ()));
 
     return ho._retn ();
@@ -296,22 +229,12 @@ namespace CIAO
 
   template <typename BASE_SKEL,
             typename EXEC,
-            typename EXEC_VAR,
-            typename COMP,
-            typename COMP_VAR,
-            typename COMP_EXEC,
-            typename COMP_EXEC_VAR,
             typename COMP_SVNT>
   void
   Home_Servant_Impl<BASE_SKEL,
                     EXEC,
-                    EXEC_VAR,
-                    COMP,
-                    COMP_VAR,
-                    COMP_EXEC,
-                    COMP_EXEC_VAR,
                     COMP_SVNT>::_ciao_passivate_component (
-      COMP *comp
+      typename COMP_SVNT::_stub_ptr_type comp
       ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException))

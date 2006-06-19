@@ -9,9 +9,8 @@ namespace CIAO
 {
   template <typename BASE_SKEL,
             typename EXEC,
-            typename EXEC_VAR,
             typename CONTEXT>
-  Servant_Impl<BASE_SKEL, EXEC, EXEC_VAR, CONTEXT>::Servant_Impl (
+  Servant_Impl<BASE_SKEL, EXEC, CONTEXT>::Servant_Impl (
       EXEC * exe,
       Components::CCMHome_ptr home,
       Home_Servant_Impl_Base *home_servant,
@@ -27,9 +26,8 @@ namespace CIAO
 
   template <typename BASE_SKEL,
             typename EXEC,
-            typename EXEC_VAR,
             typename CONTEXT>
-  Servant_Impl<BASE_SKEL, EXEC, EXEC_VAR, CONTEXT>::~Servant_Impl (void)
+  Servant_Impl<BASE_SKEL, EXEC, CONTEXT>::~Servant_Impl (void)
   {
   // **********************************************************************
   /*
@@ -62,10 +60,9 @@ namespace CIAO
 
   template <typename BASE_SKEL,
             typename EXEC,
-            typename EXEC_VAR,
             typename CONTEXT>
   CORBA::Boolean
-  Servant_Impl<BASE_SKEL, EXEC, EXEC_VAR, CONTEXT>::same_component (
+  Servant_Impl<BASE_SKEL, EXEC, CONTEXT>::same_component (
       CORBA::Object_ptr object_ref
       ACE_ENV_ARG_DECL
     )
@@ -91,10 +88,9 @@ namespace CIAO
 
   template <typename BASE_SKEL,
             typename EXEC,
-            typename EXEC_VAR,
             typename CONTEXT>
   ::Components::CCMHome_ptr
-  Servant_Impl<BASE_SKEL, EXEC, EXEC_VAR, CONTEXT>::get_ccm_home (
+  Servant_Impl<BASE_SKEL, EXEC, CONTEXT>::get_ccm_home (
       ACE_ENV_SINGLE_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException))
@@ -104,10 +100,9 @@ namespace CIAO
 
   template <typename BASE_SKEL,
             typename EXEC,
-            typename EXEC_VAR,
             typename CONTEXT>
   Components::SessionComponent_ptr
-  Servant_Impl<BASE_SKEL, EXEC, EXEC_VAR, CONTEXT>::get_executor (
+  Servant_Impl<BASE_SKEL, EXEC, CONTEXT>::get_executor (
       ACE_ENV_SINGLE_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException))
@@ -123,10 +118,9 @@ namespace CIAO
 
   template <typename BASE_SKEL,
             typename EXEC,
-            typename EXEC_VAR,
             typename CONTEXT>
   CORBA::Object_ptr
-  Servant_Impl<BASE_SKEL, EXEC, EXEC_VAR, CONTEXT>::_get_component (
+  Servant_Impl<BASE_SKEL, EXEC, CONTEXT>::_get_component (
       ACE_ENV_SINGLE_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException))
@@ -163,10 +157,9 @@ namespace CIAO
 
   template <typename BASE_SKEL,
             typename EXEC,
-            typename EXEC_VAR,
             typename CONTEXT>
   void
-  Servant_Impl<BASE_SKEL, EXEC, EXEC_VAR, CONTEXT>::activate_component (
+  Servant_Impl<BASE_SKEL, EXEC, CONTEXT>::activate_component (
       ACE_ENV_SINGLE_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException))
@@ -186,10 +179,9 @@ namespace CIAO
 
   template <typename BASE_SKEL,
             typename EXEC,
-            typename EXEC_VAR,
             typename CONTEXT>
   void
-  Servant_Impl<BASE_SKEL, EXEC, EXEC_VAR, CONTEXT>::ciao_preactivate (
+  Servant_Impl<BASE_SKEL, EXEC, CONTEXT>::ciao_preactivate (
       ACE_ENV_SINGLE_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException))
@@ -214,10 +206,9 @@ namespace CIAO
 
   template <typename BASE_SKEL,
             typename EXEC,
-            typename EXEC_VAR,
             typename CONTEXT>
   void
-  Servant_Impl<BASE_SKEL, EXEC, EXEC_VAR, CONTEXT>::ciao_activate (
+  Servant_Impl<BASE_SKEL, EXEC, CONTEXT>::ciao_activate (
   ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
   {
@@ -241,10 +232,9 @@ namespace CIAO
 
   template <typename BASE_SKEL,
             typename EXEC,
-            typename EXEC_VAR,
             typename CONTEXT>
   void
-  Servant_Impl<BASE_SKEL, EXEC, EXEC_VAR, CONTEXT>::ciao_postactivate (
+  Servant_Impl<BASE_SKEL, EXEC, CONTEXT>::ciao_postactivate (
       ACE_ENV_SINGLE_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException))
@@ -269,10 +259,9 @@ namespace CIAO
 
   template <typename BASE_SKEL,
             typename EXEC,
-            typename EXEC_VAR,
             typename CONTEXT>
   CORBA::Boolean
-  Servant_Impl<BASE_SKEL, EXEC, EXEC_VAR, CONTEXT>::is_activated (
+  Servant_Impl<BASE_SKEL, EXEC, CONTEXT>::is_activated (
       ACE_ENV_SINGLE_ARG_DECL_NOT_USED
     )
   ACE_THROW_SPEC ((CORBA::SystemException))
@@ -282,10 +271,9 @@ namespace CIAO
 
   template <typename BASE_SKEL,
             typename EXEC,
-            typename EXEC_VAR,
             typename CONTEXT>
   void
-  Servant_Impl<BASE_SKEL, EXEC, EXEC_VAR, CONTEXT>::ciao_passivate (
+  Servant_Impl<BASE_SKEL, EXEC, CONTEXT>::ciao_passivate (
       ACE_ENV_SINGLE_ARG_DECL
     )
   ACE_THROW_SPEC ((CORBA::SystemException))
