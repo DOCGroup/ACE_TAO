@@ -8,7 +8,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 // Methods for TAO_Incoming_Message_Queue
 /************************************************************************/
 ACE_INLINE CORBA::ULong
-TAO_Incoming_Message_Queue::queue_length (void)
+TAO_Incoming_Message_Queue::queue_length (void) const
 {
   return this->size_;
 }

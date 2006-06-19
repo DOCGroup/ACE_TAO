@@ -3,18 +3,8 @@
  *
  * $Id$
  *
- * @brief Pre-compiled IDL source for the PortableServer module.
+ * @brief PIDL source for the PortableServer module.
  *
- * This file was used to generate the code in
- * AdapaterActivatorC.{h,inl,cpp}, using the following command:
- *
- * tao_idl.exe \
- *     -o orig -Gp -Gd -Ge 1 -GA -Sci -I$(TAO_ROOT)
- *          -Wb,export_macro=TAO_PortableServer_Export \
- *          -Wb,export_include="portableserver_export.h" \
- *          -Wb,pre_include="ace/pre.h" \
- *          -Wb,post_include="ace/post.h" \
- *          AdapterActivator.pidl
  */
 
 #ifndef _PORTABLESERVER_ADAPTER_ACTIVATOR_IDL_
@@ -24,6 +14,8 @@
 #include "tao/PortableServer/PS_Forward.pidl"
 
 #pragma prefix "omg.org"
+
+#if !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO) && !defined (TAO_HAS_MINIMUM_POA)
 
 module PortableServer
 {
@@ -36,5 +28,7 @@ module PortableServer
                              in string name);
   };
 };
+
+#endif
 
 #endif // _PORTABLESERVER_ADAPTER_ACTIVATOR_IDL_

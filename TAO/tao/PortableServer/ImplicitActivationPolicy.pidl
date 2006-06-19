@@ -3,15 +3,7 @@
  *
  * $Id$
  *
- * @brief Pre-compiled IDL source for the PortableServer module.
- *
- * tao_idl.exe \
- *     -o orig -Gp -Gd -Ge 1 -Sci -GA -I$(TAO_ROOT)
- *          -Wb,export_macro=TAO_PortableServer_Export \
- *          -Wb,export_include="portableserver_export.h" \
- *          -Wb,pre_include="ace/pre.h" \
- *          -Wb,post_include="ace/post.h" \
- *          ImplicitActivationPolicy.pidl
+ * @brief PIDL source for the PortableServer module.
  */
 
 #ifndef _PORTABLESERVER_IMPLICITACTIVATIONPOLICY_IDL_
@@ -31,10 +23,13 @@ module PortableServer
     NO_IMPLICIT_ACTIVATION
   };
 
+#if !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO) && ! defined (TAO_HAS_MINIMUM_POA)
   local interface ImplicitActivationPolicy : CORBA::Policy
   {
     readonly attribute ImplicitActivationPolicyValue value;
   };
+#endif
 };
+
 
 #endif // _PORTABLESERVER_IMPLICITACTIVATIONPOLICY_IDL_

@@ -36,7 +36,7 @@ TAO_Connector_Registry::~TAO_Connector_Registry (void)
 }
 
 TAO_Connector *
-TAO_Connector_Registry::get_connector (CORBA::ULong tag)
+TAO_Connector_Registry::get_connector (CORBA::ULong tag) const
 {
   const TAO_ConnectorSetIterator end = this->end ();
 
