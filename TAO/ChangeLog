@@ -1,3 +1,9 @@
+Mon Jun 19 12:11:09 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/driver/drv_preproc.cpp:
+          Fixed copy past error which resulted in a non working tao_idl
+          with BCB
+
 Sat Jun 17 20:47:09 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/tao_idl.cpp:
