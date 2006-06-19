@@ -1,3 +1,9 @@
+Mon Jun 19 10:08:17 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/diff-builds.pl:
+          Changed this script not to die when we can't find results for
+          a certain date, then just take the closest results.
+
 Mon Jun 19 10:00:17 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Service_Gestalt.cpp:
