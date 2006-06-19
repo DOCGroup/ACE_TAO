@@ -92,9 +92,10 @@ sub load_failed_tests_list ($$)
     print "Build times for $file on $date are " 
         . join (', ', @timestamps) . "\n" unless !$debugging;
 
-    die "No builds for $file on $date. The closest earlier date is " 
-        . find_closest_earlier ($file, $date) . "\n" 
-        unless ($#timestamps > -1);
+    if ($#timestamps == -1) {
+      print "No builds for $file on $date. The closest earlier date is " 
+          . find_closest_earlier ($file, $date) . "\n\n" 
+    }
 
     my $fullfile = $file .'_' . $date . '_' . $timestamps[0];
     my ($fh, $tmpfile) = tempfile ($fullfile . ".XXXXXX", UNLINK => 1);
@@ -105,7 +106,7 @@ sub load_failed_tests_list ($$)
     system ("wget " . $verbose . " \'" .$teststaturl 
             . $fullfile . ".log\' -O - | sort >\'" . $tmpfile . '\'');
     close ($fh);
-
+    
     return $tmpfile;
 }
 
