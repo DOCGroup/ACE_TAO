@@ -318,7 +318,7 @@ endif
 CLEANUP_BIN ?=
 ifneq ($(CLEANUP_BIN),)
   DO_CLEANUP = 1
-  REALCLEAN_FILES = $(CLEANUP_BIN:%=%$(EXEEXT)) $(CLEANUP_BIN:%=%_debug$(EXEEXT)) $(CLEANUP_BIN:%=%_profile$(EXEEXT)) $(CLEANUP_BIN:%=%_optimize$(EXEEXT))
+  REALCLEAN_FILES += $(CLEANUP_BIN:%=%$(EXEEXT)) $(CLEANUP_BIN:%=%_debug$(EXEEXT)) $(CLEANUP_BIN:%=%_profile$(EXEEXT)) $(CLEANUP_BIN:%=%_optimize$(EXEEXT))
 endif # !CLEANUP_BIN
 
 ifdef static_libs
