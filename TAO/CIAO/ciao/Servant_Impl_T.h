@@ -40,7 +40,6 @@ namespace CIAO
    */
   template <typename BASE_SKEL,
             typename EXEC,
-            typename EXEC_VAR,
             typename CONTEXT>
   class Servant_Impl : public virtual BASE_SKEL,
                        public virtual Servant_Impl_Base
@@ -106,7 +105,7 @@ namespace CIAO
     CORBA::Boolean post_activated_;
 
     /// Initialized in this constructor.
-    EXEC_VAR executor_;
+    typename EXEC::_var_type executor_;
 
     /// Initialized in the derived, generated servant constructor.
     CONTEXT * context_;

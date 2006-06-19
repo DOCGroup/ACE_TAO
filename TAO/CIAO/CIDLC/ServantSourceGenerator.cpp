@@ -1121,8 +1121,14 @@ namespace
          << "::Components::CCMHome_ptr h," << endl
          << "::CIAO::Session_Container *c," << endl
          << t.name () << "_Servant *sv)" << endl
-         << "  : CIAO::Context_Impl_Base (h, c), " << endl
-         << "    ctx_svnt_base (h, c, sv)";
+         << "  : ::CIAO::Context_Impl_Base (h, c), " << endl
+         << "    ::CIAO::Context_Impl<" << endl
+         << "        " << t.scoped_name ().scope_name () << "::CCM_"
+         << t.name () << "_Context," << endl
+         << "        " << t.name () << "_Servant," << endl
+         << "        " << t.scoped_name () << "," << endl
+         << "        " << t.scoped_name () << "_var" << endl
+         << "      > (h, c, sv)";
 
       string swap_option = ctx.cl ().get_value ("custom-container", "");
       bool swapping = (swap_option == "upgradeable");
@@ -1130,7 +1136,13 @@ namespace
       if (swapping)
         {
           os << "," << endl
-             << "    ug_ctx_svnt_base (h, c, sv)" << endl;
+             << "    ::CIAO::Upgradeable_Context_Impl<" << endl
+             << "        " << t.scoped_name ().scope_name () << "::CCM_"
+             << t.name () << "_Context," << endl
+             << "        " << t.name () << "_Servant," << endl
+             << "        " << t.scoped_name () << "," << endl
+             << "        " << t.scoped_name () << "_var" << endl
+             << "      > (h, c, sv)" << endl;
         }
       else
         {
@@ -2882,9 +2894,14 @@ namespace
          << "const char *ins_name," << endl
          << "::CIAO::Home_Servant_Impl_Base *hs," << endl
          << "::CIAO::Session_Container *c)" << endl
-         << "  : CIAO::Servant_Impl_Base "
+         << "  : ::CIAO::Servant_Impl_Base "
          << "(h, hs, c)," << endl
-         << "    comp_svnt_base (exe, h, hs, c)," << endl
+         << "    ::CIAO::Servant_Impl<" << endl
+         << "        ::POA_" << stripped << "," << endl
+         << "        " << t.scoped_name ().scope_name () << "::CCM_"
+         << t.name () << "," << endl
+         << "        " << t.name () << "_Context" << endl
+         << "      > (exe, h, hs, c)," << endl
          << "    ins_name_ (ins_name)" << endl
          << "{"
          << "ACE_NEW ("
@@ -3668,11 +3685,14 @@ namespace
 
   struct HomeEmitter : Traversal::Home, EmitterBase
   {
-    HomeEmitter (Context& c)
+    HomeEmitter (Context& c, CommandLine const& cl)
       : EmitterBase (c),
+        cl_ (cl),
+        simple_type_name_emitter_ (c),
         repo_id_emitter_ (c),
         flat_name_emitter_ (c)
     {
+      simple_manages_.node_traverser (simple_type_name_emitter_);
       repo_id_manages_.node_traverser (repo_id_emitter_);
       flat_name_manages_.node_traverser (flat_name_emitter_);
     }
@@ -3990,11 +4010,25 @@ namespace
          << "_ptr exe," << endl
          << "const char *ins_name," << endl
          << "::CIAO::Session_Container *c)" << endl
-         << "  : CIAO::Home_Servant_Impl_Base (c)," << endl
-         << "    home_svnt_base (exe, c, ins_name";
+         << "  : ::CIAO::Home_Servant_Impl_Base (c)," << endl
+         << "    ::CIAO::";
 
-      string swap_option = ctx.cl ().get_value ("custom-container", "");
+      string swap_option = cl_.get_value ("custom-container", "");
       bool swapping = (swap_option == "upgradeable");
+
+      ScopedName scoped (t.scoped_name ());
+      Name stripped (scoped.begin () + 1, scoped.end ());
+
+      os << (swapping ? "Swapping_" : "") << "Home_Servant_Impl<" << endl
+         << "          ::POA_" << stripped << "," << endl
+         << "          " << t.scoped_name ().scope_name () << "::CCM_"
+         << t.name () << "," << endl
+         << "          ";
+
+      Traversal::Home::manages (t, simple_manages_);
+
+      os << "_Servant" << endl
+         << "        > (exe, c, ins_name";
 
       if (swapping)
         {
@@ -4239,8 +4273,11 @@ namespace
     }
 
   private:
+    CommandLine const& cl_;
+    SimpleTypeNameEmitter simple_type_name_emitter_;
     RepoIdEmitter repo_id_emitter_;
     FlatNameEmitter flat_name_emitter_;
+    Traversal::Manages simple_manages_;
     Traversal::Manages repo_id_manages_;
     Traversal::Manages flat_name_manages_;
   };
@@ -4324,7 +4361,7 @@ ServantSourceEmitter::generate (TranslationUnit& u)
   //--
   ContextEmitter context_emitter (c);
   ServantEmitter servant_emitter (c);
-  HomeEmitter home_emitter (c);
+  HomeEmitter home_emitter (c, cl_);
   implements.node_traverser (context_emitter);
   implements.node_traverser (servant_emitter);
   implements.node_traverser (home_emitter);

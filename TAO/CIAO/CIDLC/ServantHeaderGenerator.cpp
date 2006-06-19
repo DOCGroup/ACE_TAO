@@ -441,27 +441,6 @@ namespace
          << "access our state." << endl
          << "friend class " << t.name () << "_Servant;" << endl;
 
-      os << "/// Hack for VC6." << endl
-         << "typedef CIAO::Context_Impl<" << endl
-         << "    " << t.scoped_name ().scope_name () << "::CCM_"
-         << t.name () << "_Context," << endl
-         << "    " << t.name () << "_Servant," << endl
-         << "    " << t.scoped_name () << "," << endl
-         << "    " << t.scoped_name () << "_var" << endl
-         << "  > ctx_svnt_base;" << endl;
-
-      if (swapping)
-        {
-          os << "/// Another hack for VC6." << endl
-             << "typedef CIAO::Upgradeable_Context_Impl<" << endl
-             << "    " << t.scoped_name ().scope_name () << "::CCM_"
-             << t.name () << "_Context," << endl
-             << "    " << t.name () << "_Servant," << endl
-             << "    " << t.scoped_name () << "," << endl
-             << "    " << t.scoped_name () << "_var" << endl
-             << "  > ug_ctx_svnt_base;" << endl;
-        }
-
       os << t.name () << "_Context (" << endl
          << "::Components::CCMHome_ptr h," << endl
          << "::CIAO::Session_Container *c," << endl
@@ -953,22 +932,13 @@ namespace
          << "      POA_" << stripped << "," << endl
          << "      " << t.scoped_name ().scope_name () << "::CCM_"
          << t.name () << "," << endl
-         << "      " << t.scoped_name ().scope_name () << "::CCM_"
-         << t.name () << "_var," << endl
          << "      " << t.name () << "_Context" << endl
          << "    >" << endl
          << "{"
-         << "public:" << endl;
+         << "public:" << endl << endl;
 
-      os << "/// Hack for VC6." << endl
-         << "typedef CIAO::Servant_Impl<" << endl
-         << "    POA_" << stripped << "," << endl
-         << "    " << t.scoped_name ().scope_name () << "::CCM_"
-         << t.name () << "," << endl
-         << "    " << t.scoped_name ().scope_name () << "::CCM_"
-         << t.name () << "_var," << endl
-         << "    " << t.name () << "_Context" << endl
-         << "  > comp_svnt_base;" << endl;
+      os << "typedef " << t.scoped_name ().scope_name () << "::CCM_"
+         << t.name () << " _exec_type;" << endl;
 
       os << t.name () << "_Servant (" << endl
          << t.scoped_name ().scope_name () << "::CCM_" << t.name ()
@@ -1250,7 +1220,8 @@ namespace
     {
       os << "class " << ctx.export_macro () << " " << t.name ()
          << "_Servant" << endl
-         << "  : public virtual CIAO::";
+         << "  : public virtual" << endl
+         << "      ::CIAO::";
 
       string swap_option = cl_.get_value ("custom-container", "");
       bool swapping = (swap_option == "upgradeable");
@@ -1259,90 +1230,17 @@ namespace
       Name stripped (scoped.begin () + 1, scoped.end ());
 
       os << (swapping ? "Swapping_" : "") << "Home_Servant_Impl<" << endl
-         << "      POA_" << stripped << "," << endl
-         << "      " << t.scoped_name ().scope_name () << "::CCM_"
+         << "          ::POA_" << stripped << "," << endl
+         << "          " << t.scoped_name ().scope_name () << "::CCM_"
          << t.name () << "," << endl
-         << "      " << t.scoped_name ().scope_name () << "::CCM_"
-         << t.name () << "_var," << endl
-         << "      ";
-
-      Traversal::Home::manages (t, manages_);
-
-      os << "," << endl
-         << "      ";
-
-      Traversal::Home::manages (t, manages_);
-
-      os << "_var," << endl
-         << "      ";
-
-      Traversal::Home::manages (t, enclosing_manages_);
-
-      os << "::CCM_";
-
-      Traversal::Home::manages (t, simple_manages_);
-
-      os << "," << endl
-         << "      ";
-
-      Traversal::Home::manages (t, enclosing_manages_);
-
-      os << "::CCM_";
-
-      Traversal::Home::manages (t, simple_manages_);
-
-      os << "_var," << endl
-         << "      ";
+         << "          ";
 
       Traversal::Home::manages (t, simple_manages_);
 
       os << "_Servant" << endl
-         << "    >" << endl
+         << "        >" << endl
          << "{"
-         << "public:" << endl
-         << "/// Hack for VC6." << endl
-         << "typedef CIAO::"
-         << (swapping ? "Swapping_" : "") << "Home_Servant_Impl<" << endl
-         << "    POA_" << stripped << "," << endl
-         << "    " << t.scoped_name ().scope_name () << "::CCM_"
-         << t.name () << "," << endl
-         << "    " << t.scoped_name ().scope_name () << "::CCM_"
-         << t.name () << "_var," << endl
-         << "    ";
-
-      Traversal::Home::manages (t, manages_);
-
-      os << "," << endl
-         << "    ";
-
-      Traversal::Home::manages (t, manages_);
-
-      os << "_var," << endl
-         << "    ";
-
-      Traversal::Home::manages (t, enclosing_manages_);
-
-      os << "::CCM_";
-
-      Traversal::Home::manages (t, simple_manages_);
-
-      os << "," << endl
-         << "    ";
-
-      Traversal::Home::manages (t, enclosing_manages_);
-
-      os << "::CCM_";
-
-      Traversal::Home::manages (t, simple_manages_);
-
-      os << "_var," << endl
-         << "    ";
-
-      Traversal::Home::manages (t, simple_manages_);
-
-      os << "_Servant" << endl
-         << "  > home_svnt_base;" << endl;
-
+         << "public:" << endl << endl;
       os << t.name () << "_Servant (" << endl
          << t.scoped_name ().scope_name () << "::CCM_" << t.name ()
          << "_ptr exe," << endl
