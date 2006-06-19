@@ -346,7 +346,7 @@ DRV_cpp_init (void)
   for (int i = 0; i < platform_arglist.argc (); ++i)
     {
       // Check for an argument that specifies the preprocessor's output file.
-      if (ACE_OS::strstr (DRV_arglist[i], "%s") != 0
+      if (ACE_OS::strstr (platform_arglist[i], "%s") != 0
           && output_arg_format == 0)
         {
           output_arg_format = ACE::strnew (platform_arglist[i]);
