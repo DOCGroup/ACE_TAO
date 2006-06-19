@@ -54,10 +54,26 @@ Mon Jun 19 19:39:25 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
         * tao/PortableServer/ImplicitActivationPolicy.pidl:
         * tao/PortableServer/POAManagerFactory.pidl:
         * tao/PortableServer/POAManager.pidl:
+        * tao/PortableServer/LifespanPolicy.pidl:
           Removed regeneration instructions and updated for CORBA/e
 
         * tao/PortableServer/Creation_Time.h:
           Made single argument constructor explicit
+
+        * tao/Connector_Registry.{h,cpp,i}:
+        * tao/Incoming_Message_Queue.{h,inl}:
+          Const improvements
+
+        * tao/MMAP_Allocator.{h,cpp}:
+          New files part of the sendfile support
+
+        * tao/Stub.h:
+          Doxygen improvements
+
+        * tao/PortableServer/Direct_Collocation_Upcall_Wrapper.cpp:
+        * tao/PortableServer/Default_Policy_Validator.cpp:
+        * tao/PortableServer/Adapter_Activator.{h,cpp}:
+          Added support for CORBA/e
 
 Mon Jun 19 14:49:25 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
