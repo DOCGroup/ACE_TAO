@@ -351,15 +351,16 @@ ACE_OS::fsync (ACE_HANDLE handle)
 }
 
 ACE_INLINE int
-ACE_OS::ftruncate (ACE_HANDLE handle, off_t offset)
+ACE_OS::ftruncate (ACE_HANDLE handle, ACE_LOFF_T offset)
 {
   ACE_OS_TRACE ("ACE_OS::ftruncate");
 #if defined (ACE_WIN32)
-  if (::SetFilePointer (handle, offset, 0, FILE_BEGIN) != (unsigned) -1)
+  LARGE_INTEGER loff;
+  loff.QuadPart = offset;
+  if (::SetFilePointerEx (handle, loff, 0, FILE_BEGIN) != (unsigned) -1)
     ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::SetEndOfFile (handle), ace_result_), int, -1);
   else
     ACE_FAIL_RETURN (-1);
-  /* NOTREACHED */
 #else
   ACE_OSCALL_RETURN (::ftruncate (handle, offset), int, -1);
 #endif /* ACE_WIN32 */
@@ -974,19 +975,22 @@ ACE_OS::sysinfo (int cmd, char *buf, long count)
 
 ACE_INLINE int
 ACE_OS::truncate (const ACE_TCHAR *filename,
-                  off_t offset)
+                  ACE_LOFF_T offset)
 {
   ACE_OS_TRACE ("ACE_OS::truncate");
 #if defined (ACE_WIN32)
   ACE_HANDLE handle = ACE_OS::open (filename,
                                     O_WRONLY,
                                     ACE_DEFAULT_FILE_PERMS);
+
+  LARGE_INTEGER loffset;
+  loffset.QuadPart = offset;
   if (handle == ACE_INVALID_HANDLE)
     ACE_FAIL_RETURN (-1);
-  else if (::SetFilePointer (handle,
-                             offset,
-                             0,
-                             FILE_BEGIN) != (unsigned) -1)
+  else if (::SetFilePointerEx (handle,
+                               loffset,
+                               0,
+                               FILE_BEGIN) != (unsigned) -1)
     {
       BOOL result = ::SetEndOfFile (handle);
       ::CloseHandle (handle);

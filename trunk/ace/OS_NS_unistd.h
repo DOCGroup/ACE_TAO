@@ -139,7 +139,7 @@ namespace ACE_OS
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int ftruncate (ACE_HANDLE,
-                 off_t);
+                 ACE_LOFF_T);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   char *getcwd (char *, size_t);
@@ -313,7 +313,7 @@ namespace ACE_OS
                 long count);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int truncate (const ACE_TCHAR *filename, off_t length);
+  int truncate (const ACE_TCHAR *filename, ACE_LOFF_T length);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   u_long ualarm (u_long usecs,
