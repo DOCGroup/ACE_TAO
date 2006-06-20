@@ -61,10 +61,13 @@ int be_visitor_structure_ch::visit_structure (be_structure *node)
       << node->local_name () << be_nl
       << "{" << be_idt_nl;
 
-  // Generate the _ptr_type and _var_type typedefs.
+  // Generate the typedefs.
   *os << "typedef " << node->local_name () << "_var _var_type;"
       << be_nl
       << "typedef " << node->local_name () << "_out _out_type;"
+      << be_nl << be_nl;
+
+  *os << "typedef " << node->local_name () << "_out _out_type;"
       << be_nl << be_nl;
 
   if (be_global->any_support ())

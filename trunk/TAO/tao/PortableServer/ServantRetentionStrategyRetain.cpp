@@ -358,7 +358,7 @@ namespace TAO
       return servant;
     }
 
-    int 
+    int
     ServantRetentionStrategyRetain::find_servant_priority (
         const PortableServer::ObjectId &system_id,
         CORBA::Short &priority
@@ -845,6 +845,7 @@ namespace TAO
       return user_id._retn ();
     }
 
+#if !defined (CORBA_E_MICRO)
     void
     ServantRetentionStrategyRetain::activate_object_with_id (
       const PortableServer::ObjectId &id,
@@ -956,6 +957,7 @@ namespace TAO
       servant->_add_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
     }
+#endif
 
     CORBA::Object_ptr
     ServantRetentionStrategyRetain::create_reference (

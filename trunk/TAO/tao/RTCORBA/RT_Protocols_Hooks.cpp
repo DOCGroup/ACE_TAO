@@ -704,7 +704,7 @@ TAO_RT_Protocols_Hooks::get_thread_CORBA_priority (CORBA::Short &priority
                                                    ACE_ENV_ARG_DECL)
 {
   CORBA::Short native_priority = 0;
-  int result =
+  int const result =
     this->get_thread_CORBA_and_native_priority (priority,
                                                 native_priority
                                                 ACE_ENV_ARG_PARAMETER);

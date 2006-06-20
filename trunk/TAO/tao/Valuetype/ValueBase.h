@@ -134,6 +134,7 @@ namespace CORBA
 
     // Reference counting.
     /// %! virtual CORBA::ValueBase* _copy_value (void) = 0;
+
     virtual void _add_ref (void) = 0;
     virtual void _remove_ref (void) = 0;
     virtual CORBA::ULong _refcount_value (void) = 0;
@@ -344,8 +345,7 @@ namespace TAO
                                  CORBA::ValueBase_var,
                                  CORBA::ValueBase_out,
                                  TAO::Value_Traits<CORBA::ValueBase>,
-                                 TAO::Any_Insert_Policy_Stream <CORBA::ValueBase *>
-                                >
+                                 TAO::Any_Insert_Policy_Stream>
   {
   };
 

@@ -330,12 +330,14 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
 
   if (be_global->tc_support ())
     {
+      *os << be_global->core_versioning_begin () << be_nl;
       *os << "// TAO extension - the virtual _type method." << be_nl;
       *os << "::CORBA::TypeCode_ptr " << node->name ()
           << "::_tao_type (void) const" << be_nl;
       *os << "{" << be_idt_nl;
       *os << "return ::" << node->tc_name () << ";" << be_uidt_nl;
       *os << "}";
+      *os << be_global->core_versioning_end () << be_nl;
     }
 
   // Make sure we are generating to *C.cpp regardless of the above.

@@ -93,6 +93,7 @@ BE_GlobalData::BE_GlobalData (void)
     gen_smart_proxies_ (false),
     gen_inline_constants_ (true),
     gen_dcps_type_support_ (false),
+    gen_orb_h_include_ (true),
     lookup_strategy_ (TAO_PERFECT_HASH),
     void_type_ (0),
     ccmobject_ (0),
@@ -1050,6 +1051,7 @@ BE_GlobalData::gen_inline_constants (void) const
 {
   return this->gen_inline_constants_;
 }
+
 void
 BE_GlobalData::gen_dcps_type_support (bool val)
 {
@@ -1060,6 +1062,18 @@ bool
 BE_GlobalData::gen_dcps_type_support (void) const
 {
   return this->gen_dcps_type_support_;
+}
+
+void
+BE_GlobalData::gen_orb_h_include (bool val)
+{
+  this->gen_orb_h_include_ = val;
+}
+
+bool
+BE_GlobalData::gen_orb_h_include (void) const
+{
+  return this->gen_orb_h_include_;
 }
 
 void
@@ -1136,30 +1150,30 @@ BE_GlobalData::destroy (void)
 
   delete [] this->anyop_output_dir_;
   this->anyop_output_dir_ = 0;
-    
+
   if (0 != this->messaging_)
     {
       this->messaging_->destroy ();
       delete this->messaging_;
       this->messaging_ = 0;
     }
-  
+
   if (0 != this->messaging_exceptionholder_)
     {
       this->messaging_exceptionholder_->destroy ();
       delete this->messaging_exceptionholder_;
       this->messaging_exceptionholder_ = 0;
     }
-  
+
   if (0 != this->messaging_replyhandler_)
     {
       this->messaging_replyhandler_->destroy ();
       delete this->messaging_replyhandler_;
       this->messaging_replyhandler_ = 0;
     }
-   
+
   if (0 != tao_cg)
-    { 
+    {
       tao_cg->destroy ();
     }
 }
@@ -1175,7 +1189,7 @@ BE_GlobalData:: void_type (void)
                                             );
       this->void_type_ = AST_PredefinedType::narrow_from_decl (d);
     }
-    
+
   return this->void_type_;
 }
 
@@ -1192,18 +1206,18 @@ BE_GlobalData::ccmobject (void)
       ACE_NEW_RETURN (local_name,
                       UTL_ScopedName (local_id, 0),
                       0);
-                                
+
       Identifier *module_id = 0;
       ACE_NEW_RETURN (module_id,
                       Identifier ("Components"),
                       0);
       UTL_ScopedName sn (module_id,
                          local_name);
-                         
+
       AST_Decl *d =
         idl_global->scopes ().top_non_null ()->lookup_by_name (&sn,
                                                                true);
-                                                               
+
       sn.destroy ();
 
       if (0 == d)
@@ -1211,12 +1225,12 @@ BE_GlobalData::ccmobject (void)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_global::ccmobject - "
                              "lookup of CCMObject failed\n"),
-                            0);               
+                            0);
         }
 
       this->ccmobject_ = be_interface::narrow_from_decl (d);
     }
-    
+
   return this->ccmobject_;
 }
 
@@ -1227,7 +1241,7 @@ BE_GlobalData::messaging (void)
     {
       Identifier *id = 0;
       UTL_ScopedName *sn = 0;
-    
+
       ACE_NEW_RETURN (id,
                       Identifier ("Messaging"),
                       0);
@@ -1240,7 +1254,7 @@ BE_GlobalData::messaging (void)
       ACE_NEW_RETURN (this->messaging_,
                       be_module (sn),
                       0);
-                      
+
       this->messaging_->set_name (sn);
     }
 
@@ -1253,7 +1267,7 @@ BE_GlobalData::messaging_exceptionholder (void)
   if (0 == this->messaging_exceptionholder_)
     {
       Identifier *id = 0;
-      be_module *msg = this->messaging ();      
+      be_module *msg = this->messaging ();
       idl_global->scopes ().push (msg);
 
       ACE_NEW_RETURN (id,
@@ -1303,7 +1317,7 @@ BE_GlobalData::messaging_exceptionholder (void)
       this->messaging_exceptionholder_->set_prefix_with_typeprefix (
                                             "omg.org"
                                           );
-                                          
+
       idl_global->scopes ().pop ();
 
       // Notice the interface "ReplyHandler" that it is defined in the
@@ -1331,9 +1345,9 @@ BE_GlobalData::messaging_replyhandler (void)
 {
   if (0 == this->messaging_replyhandler_)
     {
-      be_module *msg = this->messaging ();      
+      be_module *msg = this->messaging ();
       idl_global->scopes ().push (msg);
-      
+
       Identifier *id = 0;
       UTL_ScopedName *local_name = 0;
 
@@ -1380,7 +1394,7 @@ BE_GlobalData::messaging_replyhandler (void)
       // "Messaging" module.
       this->messaging_replyhandler_->set_defined_in (msg);
     }
-    
+
   return this->messaging_replyhandler_;
 }
 
@@ -1505,7 +1519,7 @@ BE_GlobalData::parse_args (long &i, char **av)
                 av[i]
               ));
           }
-          
+
         break;
       // = Various 'c'lient side stub file_name_endings.
       case 'c':
@@ -1535,7 +1549,7 @@ BE_GlobalData::parse_args (long &i, char **av)
                 av[i]
               ));
           }
-          
+
         break;
       // = Various 's'erver side skeleton file name endings.
       case 's':
@@ -1589,7 +1603,7 @@ BE_GlobalData::parse_args (long &i, char **av)
                 av[i]
               ));
           }
-          
+
         break;
         // Operation lookup strategy.
         // <perfect_hash>, <dynamic_hash> or <binary_search>
@@ -1655,7 +1669,7 @@ BE_GlobalData::parse_args (long &i, char **av)
                 av[i]
               ));
           }
-          
+
         break;
       // Path for the perfect hash generator(gperf) program. Default
       // is $ACE_ROOT/bin/gperf.
@@ -1683,7 +1697,7 @@ BE_GlobalData::parse_args (long &i, char **av)
                 av[i]
               ));
           }
-          
+
         break;
       // Directory where all the IDL-Compiler-Generated files are to
       // be kept. Default is the current directory from which the
@@ -1762,7 +1776,7 @@ BE_GlobalData::parse_args (long &i, char **av)
                 av[i]
               ));
           }
-          
+
         break;
       case 'G':
         // Enable generation of ...
@@ -1952,7 +1966,7 @@ BE_GlobalData::parse_args (long &i, char **av)
                 av[i]
               ));
           }
-          
+
         break;
       case 'S':
         // Suppress generation of...
@@ -1968,6 +1982,10 @@ BE_GlobalData::parse_args (long &i, char **av)
                 // Suppress all Any support.
                 be_global->any_support (false);
               }
+          }
+        else if (av[i][2] == 'o' && av[i][3] == 'r' && av[i][4] =='b' && '\0' == av[i][5])
+          {
+            be_global->gen_orb_h_include (false);
           }
         else if (av[i][2] == 't')
           {
@@ -2028,7 +2046,7 @@ BE_GlobalData::parse_args (long &i, char **av)
                 av[i]
               ));
           }
-          
+
         break;
       default:
         ACE_ERROR ((
@@ -2520,6 +2538,11 @@ BE_GlobalData::usage (void) const
   ACE_DEBUG ((
       LM_DEBUG,
       ACE_TEXT (" -Ssi\t\t\tsuppress generating server inline file")
+      ACE_TEXT (" (disabled by default)\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Sorb\t\t\tsuppress generating include of ORB.h")
       ACE_TEXT (" (disabled by default)\n")
     ));
 }

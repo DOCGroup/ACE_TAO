@@ -14,11 +14,6 @@ TAO_LFU_Connection_Purging_Strategy::TAO_LFU_Connection_Purging_Strategy (
 {
 }
 
-
-TAO_LFU_Connection_Purging_Strategy::~TAO_LFU_Connection_Purging_Strategy (void)
-{
-}
-
 void
 TAO_LFU_Connection_Purging_Strategy::update_item (TAO_Transport* transport)
 {

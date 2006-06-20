@@ -228,6 +228,39 @@ be_visitor_interface::visit_constant (be_constant *node)
 }
 
 int
+be_visitor_interface::visit_native (be_native *node)
+{
+  // Instantiate a visitor context with a copy of our context. This info
+  // will be modified based on what type of node we are visiting
+  be_visitor_context ctx (*this->ctx_);
+  ctx.node (node);
+  int status = 0;
+
+  switch (this->ctx_->state ())
+    {
+    case TAO_CodeGen::TAO_INTERFACE_CH:
+      {
+        be_visitor_native_ch visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    default:
+      return 0; // nothing to be done
+    }
+
+  if (status == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_interface::"
+                         "visit_native - "
+                         "failed to accept visitor\n"),
+                        -1);
+    }
+
+  return 0;
+}
+
+int
 be_visitor_interface::visit_enum (be_enum *node)
 {
   // Instantiate a visitor context with a copy of our context. This info

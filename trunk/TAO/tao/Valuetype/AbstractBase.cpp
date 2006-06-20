@@ -40,11 +40,11 @@ CORBA::is_nil (CORBA::AbstractBase_ptr obj)
 // ************************************************************
 
 CORBA::AbstractBase::AbstractBase (void)
-  : is_objref_ (0)
+  : is_objref_ (false)
   , concrete_stubobj_ (0)
-  , is_collocated_ (0)
+  , is_collocated_ (false)
   , servant_ (0)
-  , is_local_ (0)
+  , is_local_ (false)
   , equivalent_obj_ (0)
 {
 }
@@ -72,11 +72,11 @@ CORBA::AbstractBase::AbstractBase (const CORBA::AbstractBase &rhs)
 CORBA::AbstractBase::AbstractBase (TAO_Stub * protocol_proxy,
                                    CORBA::Boolean collocated,
                                    TAO_Abstract_ServantBase * servant)
-  : is_objref_ (1)
+  : is_objref_ (true)
   , concrete_stubobj_ (protocol_proxy)
   , is_collocated_ (collocated)
   , servant_ (servant)
-  , is_local_ (protocol_proxy == 0 ? 1 : 0)
+  , is_local_ (protocol_proxy == 0 ? true : false)
   , equivalent_obj_ (0)
 {
   if (this->concrete_stubobj_ != 0)

@@ -39,9 +39,6 @@ public:
   /// The constructor
   TAO_NULL_Connection_Purging_Strategy (int cache_maximum);
 
-  /// The destructor
-  virtual ~TAO_NULL_Connection_Purging_Strategy (void);
-
   /// Does nothing.
   virtual void update_item (TAO_Transport* transport);
 

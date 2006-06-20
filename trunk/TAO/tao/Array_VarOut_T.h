@@ -140,7 +140,7 @@ protected:
  *
  */
 template<typename array_traits>
-class TAO_FixedArray_Var_T: public TAO_Array_Var_Base_T<array_traits>
+class TAO_FixedArray_Var_T : public TAO_Array_Var_Base_T<array_traits>
 {
 public:
   typedef typename array_traits::slice_type slice_type;

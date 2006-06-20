@@ -1,3 +1,8 @@
+Tue Jun 20 07:04:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/global.features:
+          CORBA subset configurations are disabled by default
+
 Mon Jun 19 18:03:12 UTC 2006  Martin Corino  <mcorino@remedy.nl>
 
         * include/makeinclude/platform_openvms.GNU:
@@ -21,7 +26,7 @@ Mon Jun 19 13:14:54 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * tests/Hash_Map_Manager_Test.cpp (test_two_allocators): Fixed a typo.
           Thanks to Abdul for reporting this.
-  
+
         * tests/Hash_Map_Manager_Test.cpp (test_two_allocators): Added a
           test for the two allocator version of ACE_Hash_Map_Manager.
           Thanks to Jarek for contributing this.

@@ -32,10 +32,15 @@ module PortableServer
     USE_SERVANT_MANAGER
   };
 
+#if !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO) && !defined (TAO_HAS_MINIMUM_POA)
+
   local interface RequestProcessingPolicy : CORBA::Policy
   {
     readonly attribute RequestProcessingPolicyValue value;
   };
+
+#endif
+
 };
 
 #endif // _PORTABLESERVER_REQUESTPROCESSINGPOLICY_IDL_

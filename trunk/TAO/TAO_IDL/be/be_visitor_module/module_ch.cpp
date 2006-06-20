@@ -17,8 +17,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_module, 
-           module_ch, 
+ACE_RCSID (be_visitor_module,
+           module_ch,
            "$Id$")
 
 // ******************************************************
@@ -48,15 +48,19 @@ be_visitor_module_ch::visit_module (be_module *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
+  *os << be_global->core_versioning_begin () << be_nl;
+
   *os << "namespace " << node->local_name () << be_nl
       << "{" << be_idt;
-      
+
   if (be_global->gen_anyop_files ())
     {
       aos = tao_cg->anyop_header ();
 
       *aos << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
            << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+
+      *aos << be_global->core_versioning_begin () << be_nl;
 
       *aos << "namespace " << node->local_name () << be_nl
            << "{" << be_idt;
@@ -70,7 +74,7 @@ be_visitor_module_ch::visit_module (be_module *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_module_ch::"
                          "visit_module - "
-                         "codegen for scope failed\n"), 
+                         "codegen for scope failed\n"),
                         -1);
     }
 
@@ -86,8 +90,13 @@ be_visitor_module_ch::visit_module (be_module *node)
            << "// " << __FILE__ << ":" << __LINE__ << be_nl;
 
       *aos << be_nl
-           << "} // module " << node->name ();
+           << "} // module " << node->name () << be_nl;
+
+      *aos << be_global->core_versioning_end () << be_nl;
+
     }
+
+  *os << be_global->core_versioning_end () << be_nl;
 
   return 0;
 }

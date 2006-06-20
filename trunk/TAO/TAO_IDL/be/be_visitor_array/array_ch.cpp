@@ -202,7 +202,26 @@ int be_visitor_array_ch::visit_array (be_array *node)
 
   *os << be_nl
       << "struct " << anon_p << node->nested_type_name (scope, "_tag")
-      << " {};";
+      << " {};" << be_nl;
+
+  // Traits class
+  *os << be_nl
+      << "struct " << anon_p
+      << node->nested_type_name (scope, "_traits") << be_nl
+      << "{" << be_idt_nl
+      << "typedef " << anon_p << node->local_name ()
+      << "_slice slice_type;" << be_nl;
+  *os << "typedef " << anon_p << node->local_name ()
+      << " value_type;" << be_nl;
+  *os << "typedef " << anon_p << node->nested_type_name (scope, "_tag")
+      << " tag_type;" << be_nl
+//      << "static void free (slice_type * value);" << be_nl
+//      << "static void zero(slice_type * value);" << be_nl
+//      << "static slice_type * alloc (void);" << be_nl
+//      << "static void copy (slice_type *_tao_to, const slice_type *_tao_from);" << be_nl
+//      << "static slice_type * dup (const slice_type * value);"
+      << be_uidt_nl
+      << "};";
 
   // No _var or _out class for an anonymous (non-typedef'd) array.
   if (td != 0)
@@ -214,19 +233,14 @@ int be_visitor_array_ch::visit_array (be_array *node)
           *os << be_nl << be_nl
               << "typedef" << be_idt_nl
               << "TAO_VarArray_Var_T<" << be_idt << be_idt_nl
-              << node->local_name () << "," << be_nl
-              << node->local_name () << "_slice," << be_nl
-              << node->local_name () << "_tag" << be_uidt_nl
+              << node->local_name () << "_traits" << be_uidt_nl
               << ">" << be_uidt_nl
               << node->local_name () << "_var;" << be_uidt;
 
           *os << be_nl << be_nl
               << "typedef" << be_idt_nl
               << "TAO_Array_Out_T<" << be_idt << be_idt_nl
-              << node->local_name () << "," << be_nl
-              << node->local_name () << "_var," << be_nl
-              << node->local_name () << "_slice," << be_nl
-              << node->local_name () << "_tag" << be_uidt_nl
+              << node->local_name () << "_traits" << be_uidt_nl
               << ">" << be_uidt_nl
               << node->local_name () << "_out;" << be_uidt;
         }
@@ -235,9 +249,7 @@ int be_visitor_array_ch::visit_array (be_array *node)
           *os << be_nl << be_nl
               << "typedef" << be_idt_nl
               << "TAO_FixedArray_Var_T<" << be_idt << be_idt_nl
-              << node->local_name () << "," << be_nl
-              << node->local_name () << "_slice," << be_nl
-              << node->local_name () << "_tag" << be_uidt_nl
+              << node->local_name () << "_traits" << be_uidt_nl
               << ">" << be_uidt_nl
               << node->local_name () << "_var;" << be_uidt;
 
@@ -251,9 +263,7 @@ int be_visitor_array_ch::visit_array (be_array *node)
   *os << be_nl << be_nl
       << "typedef" << be_idt_nl
       << "TAO_Array_Forany_T<" << be_idt << be_idt_nl
-      << anon_p << node->local_name () << "," << be_nl
-      << anon_p << node->local_name () << "_slice," << be_nl
-      << anon_p << node->local_name () << "_tag" << be_uidt_nl
+      << anon_p << node->local_name () << "_traits" << be_uidt_nl
       << ">" << be_uidt_nl
       << anon_p << node->local_name () << "_forany;" << be_uidt;
 
@@ -308,12 +318,6 @@ int be_visitor_array_ch::visit_array (be_array *node)
       *os << node->nested_type_name (scope, "_slice")
           << " *_tao_from" << be_uidt_nl
           << ");" << be_uidt << be_nl;
-      *os << storage_class << "void" << be_nl
-          << node->nested_type_name (scope, "_zero")
-          << " (" << be_idt << be_idt_nl;
-      *os << node->nested_type_name (scope, "_slice") << " *_tao_slice"
-          << be_uidt_nl
-          << ");" << be_uidt;
     }
   else
     {
@@ -344,12 +348,6 @@ int be_visitor_array_ch::visit_array (be_array *node)
           << "const ";
       *os << node->nested_type_name (scope, "_slice", "_")
           << " *_tao_from" << be_uidt_nl
-          << ");" << be_uidt;
-      *os << storage_class << "void" << be_nl
-          << node->nested_type_name (scope, "_zero", "_")
-          << " (" << be_idt << be_idt_nl;
-      *os << node->nested_type_name (scope, "_slice", "_")
-          << " *_tao_slice" << be_uidt_nl
           << ");" << be_uidt;
     }
 
