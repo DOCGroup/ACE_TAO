@@ -32,8 +32,9 @@ namespace TAO
    * @brief Template class for IN object argument.
    *
    */
-  template<typename S_ptr, typename Insert_Policy>
-  class In_Object_Argument_T : public InArgument, private Insert_Policy
+  template<typename S_ptr,
+           template <typename> class Insert_Policy>
+  class In_Object_Argument_T : public InArgument
   {
   public:
     In_Object_Argument_T (S_ptr x);
@@ -54,8 +55,10 @@ namespace TAO
    * @brief Template class for INOUT object argument.
    *
    */
-  template<typename S_ptr, typename S_traits, typename Insert_Policy>
-  class Inout_Object_Argument_T : public InoutArgument, private Insert_Policy
+  template<typename S_ptr,
+           typename S_traits,
+           template <typename> class Insert_Policy>
+  class Inout_Object_Argument_T : public InoutArgument
   {
   public:
     Inout_Object_Argument_T (S_ptr & x);
@@ -77,8 +80,10 @@ namespace TAO
    * @brief Template class for OUT object argument.
    *
    */
-  template<typename S_ptr, typename S_out, typename Insert_Policy>
-  class Out_Object_Argument_T : public OutArgument, private Insert_Policy
+  template<typename S_ptr,
+           typename S_out,
+           template <typename> class Insert_Policy>
+  class Out_Object_Argument_T : public OutArgument
   {
   public:
     Out_Object_Argument_T (S_out & x);
@@ -99,8 +104,10 @@ namespace TAO
    * @brief Template class for return stub value of object argument.
    *
    */
-  template<typename S_ptr, typename S_var, typename Insert_Policy>
-  class Ret_Object_Argument_T : public RetArgument, private Insert_Policy
+  template<typename S_ptr,
+           typename S_var,
+           template <typename> class Insert_Policy>
+  class Ret_Object_Argument_T : public RetArgument
   {
   public:
 
@@ -128,7 +135,7 @@ namespace TAO
            typename T_var,
            typename T_out,
            typename T_traits,
-           typename Insert_Policy>
+           template <typename> class Insert_Policy>
   struct Object_Arg_Traits_T
   {
     typedef T_ptr                                         ret_type;

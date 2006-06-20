@@ -104,7 +104,7 @@ TAO_Wait_On_Read::wait (ACE_Time_Value * max_wait_time,
                          this->transport_->id ()));
         }
 
-       this->is_registered_ = 1;
+       this->is_registered_ = true;
 
        return 0;
      }

@@ -85,7 +85,7 @@ namespace TAO
             CORBA::Policy_var,
             CORBA::Policy_out,
             TAO::Objref_Traits<CORBA::Policy>,
-            TAO::Any_Insert_Policy_AnyTypeCode_Adapter <CORBA::Policy_ptr>
+            TAO::Any_Insert_Policy_AnyTypeCode_Adapter
           >
   {
   };
@@ -983,13 +983,13 @@ CORBA::Boolean operator>> (
 CORBA::Boolean
 CORBA::Policy::_tao_encode (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 CORBA::Boolean
 CORBA::Policy::_tao_decode (TAO_InputCDR &)
 {
-  return 0;
+  return false;
 }
 
 TAO_Cached_Policy_Type

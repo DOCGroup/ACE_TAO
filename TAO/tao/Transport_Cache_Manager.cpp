@@ -195,7 +195,7 @@ namespace TAO
               }
             else
               {
-                transport->wait_strategy ()->is_registered (0);
+                transport->wait_strategy ()->is_registered (false);
               }
           }
       }
@@ -266,8 +266,8 @@ namespace TAO
                 if (TAO_debug_level > 4)
                   {
                     ACE_DEBUG ((LM_DEBUG,
-                                "TAO (%P|%t) - Transport_Cache_Manager::find_i, "
-                                "at index %d (Transport[%d]) - idle\n",
+                                ACE_TEXT("TAO (%P|%t) - Transport_Cache_Manager::find_i, ")
+                                ACE_TEXT("at index %d (Transport[%d]) - idle\n"),
                                 entry->ext_id_.index (),
                                 entry->int_id_.transport ()->id ()));
                   }
@@ -277,8 +277,8 @@ namespace TAO
             else if (TAO_debug_level > 6)
                   {
                     ACE_DEBUG ((LM_DEBUG,
-                                "TAO (%P|%t) - Transport_Cache_Manager::find_i, "
-                                "at index %d (Transport[%d]) - not idle\n",
+                                ACE_TEXT("TAO (%P|%t) - Transport_Cache_Manager::find_i, ")
+                                ACE_TEXT("at index %d (Transport[%d]) - not idle\n"),
                                 entry->ext_id_.index (),
                                 entry->int_id_.transport ()->id ()));
                   }
@@ -451,8 +451,8 @@ namespace TAO
     if (TAO_debug_level)
       {
         ACE_DEBUG ((LM_DEBUG,
-                    "TAO (%P|%t) - Transport_Cache_Manager::is_entry_idle, "
-                    "state is [%d]\n",
+                    ACE_TEXT("TAO (%P|%t) - Transport_Cache_Manager::is_entry_idle, ")
+                    ACE_TEXT("state is [%d]\n"),
                     entry_state));
       }
 
@@ -618,8 +618,8 @@ namespace TAO
         if (TAO_debug_level > 0)
           {
             ACE_DEBUG ((LM_DEBUG,
-                        "TAO (%P|%t) - Transport_Cache_Manager::fill_set_i, "
-                        "current_size = %d, cache_maximum = %d\n",
+                        ACE_TEXT("TAO (%P|%t) - Transport_Cache_Manager::fill_set_i, ")
+                        ACE_TEXT("current_size = %d, cache_maximum = %d\n"),
                         current_size, cache_maximum));
           }
 
@@ -655,9 +655,9 @@ namespace TAO
         if (TAO_debug_level > 2)
           {
             ACE_DEBUG ((LM_DEBUG,
-                        "TAO (%P|%t) - Transport_Cache_Manager"
-                        "::wait_for_connection, "
-                        "entering wait loop\n"));
+                        ACE_TEXT("TAO (%P|%t) - Transport_Cache_Manager")
+                        ACE_TEXT("::wait_for_connection, ")
+                        ACE_TEXT("entering wait loop\n")));
           }
 
         int ready_togo = 0;
@@ -673,8 +673,8 @@ namespace TAO
         if (TAO_debug_level > 2)
           {
             ACE_DEBUG ((LM_DEBUG,
-                        "TAO (%P|%t) - Transport_Cache_Manager::wait_for_connection, "
-                      "left wait loop\n"));
+                        ACE_TEXT("TAO (%P|%t) - Transport_Cache_Manager::wait_for_connection, ")
+                        ACE_TEXT("left wait loop\n")));
           }
 
         // We are not waiting anymore

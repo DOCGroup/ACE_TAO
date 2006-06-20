@@ -33,8 +33,11 @@ namespace TAO
    * @brief Template class for IN stub argument of (w)char/boolean/octet.
    *
    */
-  template<typename S, typename to_S, typename from_S, typename Insert_Policy>
-  class In_Special_Basic_Argument_T : public InArgument, private Insert_Policy
+  template<typename S,
+           typename to_S,
+           typename from_S,
+           template <typename> class Insert_Policy>
+  class In_Special_Basic_Argument_T : public InArgument
   {
   public:
     In_Special_Basic_Argument_T (S const &);
@@ -55,8 +58,11 @@ namespace TAO
    * @brief Template class for INOUT stub argument of (w)char/boolean/octet.
    *
    */
-  template<typename S, typename to_S, typename from_S, typename Insert_Policy>
-  class Inout_Special_Basic_Argument_T : public InoutArgument, private Insert_Policy
+  template<typename S,
+           typename to_S,
+           typename from_S,
+           template <typename> class Insert_Policy>
+  class Inout_Special_Basic_Argument_T : public InoutArgument
   {
   public:
     Inout_Special_Basic_Argument_T (S & x);
@@ -78,8 +84,11 @@ namespace TAO
    * @brief Template class for OUT stub argument of (w)char/boolean/octet.
    *
    */
-  template<typename S, typename to_S, typename from_S, typename Insert_Policy>
-  class Out_Special_Basic_Argument_T : public OutArgument, private Insert_Policy
+  template<typename S,
+           typename to_S,
+           typename from_S,
+           template <typename> class Insert_Policy>
+  class Out_Special_Basic_Argument_T : public OutArgument
   {
   public:
     Out_Special_Basic_Argument_T (S & x);
@@ -100,8 +109,11 @@ namespace TAO
    * @brief Template class for return stub value of (w)char/boolean/octet.
    *
    */
-  template<typename S, typename to_S, typename from_S, typename Insert_Policy>
-  class Ret_Special_Basic_Argument_T : public RetArgument, private Insert_Policy
+  template<typename S,
+           typename to_S,
+           typename from_S,
+           template <typename> class Insert_Policy>
+  class Ret_Special_Basic_Argument_T : public RetArgument
   {
   public:
     Ret_Special_Basic_Argument_T (void);
@@ -133,7 +145,10 @@ namespace TAO
    * @brief Template class for stub argument traits of (w)char/boolean/octet.
    *
    */
-  template<typename T, typename to_T, typename from_T, typename Insert_Policy>
+  template<typename T,
+           typename to_T,
+           typename from_T,
+           template <typename> class Insert_Policy>
   struct Special_Basic_Arg_Traits_T
   {
     typedef T                                               ret_type;

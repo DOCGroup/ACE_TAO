@@ -129,15 +129,17 @@ public:
  * and exceptions..
  *
  */
-template<typename T, typename T_var>
+template<typename T>
 class TAO_Out_T
 {
 public:
+  typedef typename T::_var_type T_var;
+
   TAO_Out_T (T *&);
   TAO_Out_T (T_var &);
-  TAO_Out_T (const TAO_Out_T<T,T_var> &);
+  TAO_Out_T (const TAO_Out_T<T> &);
 
-  TAO_Out_T &operator= (const TAO_Out_T<T,T_var> &);
+  TAO_Out_T &operator= (const TAO_Out_T<T> &);
   TAO_Out_T &operator= (T *);
 
   operator T *& ();

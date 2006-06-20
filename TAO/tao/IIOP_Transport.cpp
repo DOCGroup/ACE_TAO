@@ -13,6 +13,9 @@
 #include "tao/ORB_Core.h"
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/Transport_Mux_Strategy.h"
+#include "tao/MMAP_Allocator.h"
+
+#include "ace/OS_NS_sys_sendfile.h"
 
 ACE_RCSID (tao,
            IIOP_Transport,
@@ -71,8 +74,11 @@ TAO_IIOP_Transport::send (iovec *iov, int iovcnt,
                           size_t &bytes_transferred,
                           const ACE_Time_Value *max_wait_time)
 {
-  ssize_t retval = this->connection_handler_->peer ().sendv (iov, iovcnt,
-                                                             max_wait_time);
+  ssize_t const retval =
+    this->connection_handler_->peer ().sendv (iov,
+                                              iovcnt,
+                                              max_wait_time);
+
   if (retval > 0)
     bytes_transferred = retval;
   else
@@ -89,14 +95,94 @@ TAO_IIOP_Transport::send (iovec *iov, int iovcnt,
   return retval;
 }
 
+#ifdef ACE_HAS_SENDFILE
+ssize_t
+TAO_IIOP_Transport::sendfile (TAO_MMAP_Allocator * allocator,
+                              iovec * iov,
+                              int iovcnt,
+                              size_t &bytes_transferred,
+                              ACE_Time_Value const * timeout)
+{
+  // @@ We should probably set the TCP_CORK socket option to minimize
+  //    network operations.  It may also be useful to adjust the
+  //    socket send buffer size accordingly.
+
+  // If we don't have an allocator, fallback to the regular way of sending
+  // data
+  if (allocator == 0)
+    return this->send (iov, iovcnt, bytes_transferred, timeout);
+
+  // We can only use sendfile when all data is coming from the mmap allocator,
+  // if not, we just fallback to to the regular way of sending data
+  iovec * const off_check_begin = iov;
+  iovec * const off_check_end   = iov + iovcnt;
+  for (iovec * index = off_check_begin; index != off_check_end; ++index)
+    {
+      if (-1 == allocator->offset (index->iov_base))
+        return this->send (iov, iovcnt, bytes_transferred, timeout);
+    }
+
+  ssize_t retval = -1;
+
+  ACE_HANDLE const in_fd = allocator->handle ();
+
+  if (in_fd == ACE_INVALID_HANDLE)
+    return retval;
+
+  ACE_HANDLE const out_fd =
+    this->connection_handler_->peer ().get_handle ();
+
+  iovec * const begin = iov;
+  iovec * const end   = iov + iovcnt;
+  for (iovec * i = begin; i != end; ++i)
+    {
+      off_t offset = allocator->offset (i->iov_base);
+
+      if (timeout)
+        {
+          int val = 0;
+          if (ACE::enter_send_timedwait (out_fd, timeout, val) == -1)
+            return retval;
+          else
+            {
+              retval =
+                ACE_OS::sendfile (out_fd, in_fd, &offset, i->iov_len);
+              ACE::restore_non_blocking_mode (out_fd, val);
+
+            }
+        }
+      else
+        {
+          retval = ACE_OS::sendfile (out_fd, in_fd, &offset, i->iov_len);
+        }
+
+      if (retval <= 0)  // Report errors below.
+        break;
+
+      bytes_transferred += static_cast<size_t> (retval);
+    }
+
+  if (retval <= 0 && TAO_debug_level > 4)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("TAO (%P|%t) - IIOP_Transport[%d]::sendfile, ")
+                  ACE_TEXT ("sendfile failure - %m (errno: %d)\n"),
+                  this->id (),
+                  errno));
+    }
+
+  return retval;
+}
+#endif  /* ACE_HAS_SENDFILE */
+
 ssize_t
 TAO_IIOP_Transport::recv (char *buf,
                           size_t len,
                           const ACE_Time_Value *max_wait_time)
 {
-  ssize_t n = this->connection_handler_->peer ().recv (buf,
-                                                       len,
-                                                       max_wait_time);
+  ssize_t const n = this->connection_handler_->peer ().recv (buf,
+                                                             len,
+                                                             max_wait_time);
 
   // Do not print the error message if it is a timeout, which could
   // occur in thread-per-connection.
@@ -166,7 +252,7 @@ TAO_IIOP_Transport::send_message (TAO_OutputCDR &stream,
     return -1;
 
   // This guarantees to send all data (bytes) or return an error.
-  const ssize_t n = this->send_message_shared (stub,
+  ssize_t const n = this->send_message_shared (stub,
                                                message_semantics,
                                                stream.begin (),
                                                max_wait_time);
@@ -345,7 +431,7 @@ TAO_IIOP_Transport::get_listen_point (
     iiop_acceptor->endpoints ();
 
   // Get the endpoint count
-  const size_t count =
+  size_t const count =
     iiop_acceptor->endpoint_count ();
 
   // Get the local address of the connection

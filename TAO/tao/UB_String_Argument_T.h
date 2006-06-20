@@ -32,8 +32,9 @@ namespace TAO
    * @brief Template class for IN unbounded (w)string argument.
    *
    */
-  template<typename S_var, typename Insert_Policy>
-  class In_UB_String_Argument_T : public InArgument, private Insert_Policy
+  template<typename S_var,
+           template <typename> class Insert_Policy>
+  class In_UB_String_Argument_T : public InArgument
   {
   public:
     In_UB_String_Argument_T (const typename S_var::s_traits::char_type * x);
@@ -54,8 +55,9 @@ namespace TAO
    * @brief Template class for INOUT unbounded (w)string argument.
    *
    */
-  template<typename S_var, typename Insert_Policy>
-  class Inout_UB_String_Argument_T : public InoutArgument, private Insert_Policy
+  template<typename S_var,
+           template <typename> class Insert_Policy>
+  class Inout_UB_String_Argument_T : public InoutArgument
   {
   public:
     Inout_UB_String_Argument_T (typename S_var::s_traits::char_type *& x);
@@ -77,8 +79,9 @@ namespace TAO
    * @brief Template class for OUT unbounded (w)string argument.
    *
    */
-  template<typename S_var, typename Insert_Policy>
-  class Out_UB_String_Argument_T : public OutArgument, private Insert_Policy
+  template<typename S_var,
+           template <typename> class Insert_Policy>
+  class Out_UB_String_Argument_T : public OutArgument
   {
   public:
     Out_UB_String_Argument_T (typename S_var::s_traits::string_out & x);
@@ -99,8 +102,9 @@ namespace TAO
    * @brief Template class for return stub value of ub (w)string argument.
    *
    */
-  template<typename S_var, typename Insert_Policy>
-  class Ret_UB_String_Argument_T : public RetArgument, private Insert_Policy
+  template<typename S_var,
+           template <typename> class Insert_Policy>
+  class Ret_UB_String_Argument_T : public RetArgument
   {
   public:
     Ret_UB_String_Argument_T (void);
@@ -123,7 +127,8 @@ namespace TAO
    * @brief Template class for argument traits of unbounded (w)strings.
    *
    */
-  template<typename T_var, typename Insert_Policy>
+  template<typename T_var,
+           template <typename> class Insert_Policy>
   struct UB_String_Arg_Traits_T
   {
     typedef typename T_var::s_traits::char_type *            ret_type;

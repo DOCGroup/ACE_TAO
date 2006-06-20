@@ -17,6 +17,7 @@
 #include "tao/Codeset_Manager.h"
 #include "tao/Null_Fragmentation_Strategy.h"
 #include "tao/On_Demand_Fragmentation_Strategy.h"
+#include "tao/MMAP_Allocator.h"
 
 #include "ace/TP_Reactor.h"
 #include "ace/Dynamic_Service.h"
@@ -31,7 +32,6 @@
 ACE_RCSID (tao,
            default_resource,
            "$Id$")
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -48,6 +48,11 @@ TAO_Default_Resource_Factory::TAO_Default_Resource_Factory (void)
   , dynamically_allocated_reactor_ (0)
   , options_processed_ (0)
   , factory_disabled_ (0)
+#if TAO_USE_OUTPUT_CDR_MMAP_MEMORY_POOL == 1
+  , output_cdr_allocator_type_ (MMAP_ALLOCATOR)
+#else
+  , output_cdr_allocator_type_ (DEFAULT)
+#endif
 #if TAO_USE_LOCAL_MEMORY_POOL == 1
   , use_local_memory_pool_ (true)
 #else
@@ -126,8 +131,6 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
       ++this->parser_names_count_;
 
     ++curarg;
-
-
 
     if (curarg == (argc-1) && this->parser_names_count_ != 0)
       {
@@ -477,6 +480,53 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
           this->report_option_value_error (ACE_TEXT("-ORBDropRepliesDuringShutdown"),
                                            argv[curarg]);
       }
+    else if (0 == ACE_OS::strcasecmp (argv[curarg],
+                                      ACE_TEXT("-ORBOutputCDRAllocator")))
+      {
+        ++curarg;
+
+        if (curarg < argc)
+          {
+            ACE_TCHAR const * const current_arg = argv[curarg];
+
+            if (ACE_OS::strcasecmp (current_arg,
+                                    ACE_TEXT("mmap")) == 0)
+              {
+#ifdef ACE_HAS_SENDFILE
+                this->output_cdr_allocator_type_ = MMAP_ALLOCATOR;
+#else
+                ACE_DEBUG ((LM_WARNING,
+                            ACE_TEXT ("MMAP allocator unsupport on this platform")));
+#endif  /* ACE_HAS_SENDFILE */
+              }
+            else if (ACE_OS::strcasecmp (current_arg,
+                                         ACE_TEXT("local_memory_pool")) == 0
+                     && this->output_cdr_allocator_type_ != DEFAULT)
+              {
+                this->output_cdr_allocator_type_ = LOCAL_MEMORY_POOL;
+              }
+            else if (ACE_OS::strcasecmp (current_arg,
+                                         ACE_TEXT("default")) == 0)
+              {
+                this->output_cdr_allocator_type_ = DEFAULT;
+              }
+            else
+              {
+                this->report_option_value_error (
+                  ACE_TEXT("-ORBOutputCDRAllocator"), current_arg);
+              }
+          }
+      }
+    else if (0 == ACE_OS::strcasecmp (argv[curarg],
+                                      ACE_TEXT("-ORBZeroCopyWrite")))
+      {
+#ifdef ACE_HAS_SENDFILE
+        this->output_cdr_allocator_type_ = MMAP_ALLOCATOR;
+#else
+        ACE_DEBUG ((LM_WARNING,
+                    ACE_TEXT ("Zero copy writes unsupported on this platform\n")));
+#endif  /* ACE_HAS_SENDFILE */
+      }
     else if (ACE_OS::strncmp (argv[curarg],
                               ACE_TEXT ("-ORB"),
                               4) == 0)
@@ -792,7 +842,10 @@ typedef ACE_New_Allocator LOCKED_ALLOCATOR_NO_POOL;
 void
 TAO_Default_Resource_Factory::use_local_memory_pool (bool flag)
 {
-  use_local_memory_pool_ = flag;
+  this->use_local_memory_pool_ = flag;
+
+  if (this->output_cdr_allocator_type_ == DEFAULT)
+    this->output_cdr_allocator_type_ = LOCAL_MEMORY_POOL;
 }
 
 ACE_Allocator *
@@ -885,18 +938,33 @@ ACE_Allocator *
 TAO_Default_Resource_Factory::output_cdr_buffer_allocator (void)
 {
   ACE_Allocator *allocator = 0;
-  if (use_local_memory_pool_)
-  {
-    ACE_NEW_RETURN (allocator,
-                    LOCKED_ALLOCATOR_POOL,
-                    0);
-  }
-  else
-  {
-    ACE_NEW_RETURN (allocator,
-                    LOCKED_ALLOCATOR_NO_POOL,
-                    0);
-  }
+
+  switch (this->output_cdr_allocator_type_)
+    {
+    case LOCAL_MEMORY_POOL:
+      ACE_NEW_RETURN (allocator,
+                      LOCKED_ALLOCATOR_POOL,
+                      0);
+
+      break;
+
+#ifdef ACE_HAS_SENDFILE
+    case MMAP_ALLOCATOR:
+      ACE_NEW_RETURN (allocator,
+                      TAO_MMAP_Allocator,
+                      0);
+
+      break;
+#endif  /* ACE_HAS_SENDFILE */
+
+    case DEFAULT:
+    default:
+      ACE_NEW_RETURN (allocator,
+                      LOCKED_ALLOCATOR_NO_POOL,
+                      0);
+
+      break;
+    }
 
   return allocator;
 }

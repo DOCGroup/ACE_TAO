@@ -93,37 +93,45 @@ namespace TAO
 
   };
 
+#if TAO_HAS_INTERCEPTORS == 1
   class TAO_Export InArgument : public Argument
   {
   public:
-#if TAO_HAS_INTERCEPTORS == 1
     virtual CORBA::ParameterMode mode (void) const;
-#endif
   };
+#else
+  typedef Argument InArgument;
+#endif
 
+#if TAO_HAS_INTERCEPTORS == 1
   class TAO_Export InoutArgument : public Argument
   {
   public:
-#if TAO_HAS_INTERCEPTORS == 1
     virtual CORBA::ParameterMode mode (void) const;
-#endif
   };
+#else
+  typedef Argument InoutArgument;
+#endif
 
+#if TAO_HAS_INTERCEPTORS == 1
   class TAO_Export OutArgument : public Argument
   {
   public:
-#if TAO_HAS_INTERCEPTORS == 1
     virtual CORBA::ParameterMode mode (void) const;
-#endif
   };
+#else
+  typedef Argument OutArgument;
+#endif
 
+#if TAO_HAS_INTERCEPTORS == 1
   class TAO_Export RetArgument : public Argument
   {
   public:
-#if TAO_HAS_INTERCEPTORS == 1
     virtual CORBA::ParameterMode mode (void) const;
-#endif
   };
+#else
+  typedef Argument RetArgument;
+#endif
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

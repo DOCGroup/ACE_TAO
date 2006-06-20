@@ -198,66 +198,66 @@ TAO_Var_Var_T<T>::_retn (void)
 
 // *************************************************************
 
-template<typename T, typename T_var>
+template<typename T>
 ACE_INLINE
-TAO_Out_T<T,T_var>::TAO_Out_T (T *& p)
+TAO_Out_T<T>::TAO_Out_T (T *& p)
   : ptr_ (p)
 {
   this->ptr_ = 0;
 }
 
-template<typename T, typename T_var>
+template<typename T>
 ACE_INLINE
-TAO_Out_T<T,T_var>::TAO_Out_T (T_var & p)
+TAO_Out_T<T>::TAO_Out_T (T_var & p)
   : ptr_ (p.out ())
 {
   delete this->ptr_;
   this->ptr_ = 0;
 }
 
-template<typename T, typename T_var>
+template<typename T>
 ACE_INLINE
-TAO_Out_T<T,T_var>::TAO_Out_T (const TAO_Out_T<T,T_var> & p)
+TAO_Out_T<T>::TAO_Out_T (const TAO_Out_T<T> & p)
   : ptr_ (p.ptr_)
 {}
 
-template<typename T, typename T_var>
+template<typename T>
 ACE_INLINE
-TAO_Out_T<T,T_var> &
-TAO_Out_T<T,T_var>::operator= (const TAO_Out_T<T,T_var> & p)
+TAO_Out_T<T> &
+TAO_Out_T<T>::operator= (const TAO_Out_T<T> & p)
 {
   this->ptr_ = p.ptr_;
   return *this;
 }
 
-template<typename T, typename T_var>
+template<typename T>
 ACE_INLINE
-TAO_Out_T<T,T_var> &
-TAO_Out_T<T,T_var>::operator= (T * p)
+TAO_Out_T<T> &
+TAO_Out_T<T>::operator= (T * p)
 {
   this->ptr_ = p;
   return *this;
 }
 
-template<typename T, typename T_var>
+template<typename T>
 ACE_INLINE
-TAO_Out_T<T,T_var>::operator T *& ()
+TAO_Out_T<T>::operator T *& ()
 {
   return this->ptr_;
 }
 
-template<typename T, typename T_var>
+template<typename T>
 ACE_INLINE
 T *&
-TAO_Out_T<T,T_var>::ptr (void)
+TAO_Out_T<T>::ptr (void)
 {
   return this->ptr_;
 }
 
-template<typename T, typename T_var>
+template<typename T>
 ACE_INLINE
 T *
-TAO_Out_T<T,T_var>::operator-> (void)
+TAO_Out_T<T>::operator-> (void)
 {
   return this->ptr_;
 }

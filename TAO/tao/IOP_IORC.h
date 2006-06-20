@@ -98,8 +98,7 @@ namespace IOP
 
   typedef
     TAO_Out_T<
-        TaggedProfile,
-        TaggedProfile_var
+        TaggedProfile
       >
     TaggedProfile_out;
 
@@ -173,8 +172,7 @@ namespace IOP
 
   typedef
     TAO_Out_T<
-        IOR,
-        IOR_var
+        IOR
       >
     IOR_out;
 
@@ -209,8 +207,7 @@ namespace IOP
 
   typedef
     TAO_Out_T<
-        TaggedComponent,
-        TaggedComponent_var
+        TaggedComponent
       >
     TaggedComponent_out;
 
@@ -430,8 +427,7 @@ namespace IOP
 
   typedef
     TAO_Out_T<
-        ServiceContext,
-        ServiceContext_var
+        ServiceContext
       >
     ServiceContext_out;
 

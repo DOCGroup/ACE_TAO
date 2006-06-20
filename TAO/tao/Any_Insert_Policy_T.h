@@ -39,7 +39,7 @@ namespace TAO
   {
   public:
 
-    void any_insert (CORBA::Any* p, S const & x) const
+    static inline void any_insert (CORBA::Any* p, S const & x)
       {
         (*p) <<= x;
       }
@@ -50,7 +50,7 @@ namespace TAO
   {
   public:
 
-    void any_insert (CORBA::Any* p, S const & x) const
+    static inline void any_insert (CORBA::Any* p, S const & x)
       {
         TAO_AnyTypeCode_Adapter *adapter =
           ACE_Dynamic_Service<TAO_AnyTypeCode_Adapter>::instance (
@@ -75,7 +75,7 @@ namespace TAO
   {
   public:
 
-    void any_insert (CORBA::Any* p, S const & x) const
+    static inline void any_insert (CORBA::Any* p, S const & x)
       {
         TAO_IFR_Client_Adapter *adapter =
           ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance (
@@ -90,8 +90,7 @@ namespace TAO
   class Any_Insert_Policy_Noop
   {
   public:
-
-    void any_insert (CORBA::Any* , S const &) const
+    static inline void any_insert (CORBA::Any* , S const &)
       {
       }
   };
@@ -101,7 +100,7 @@ namespace TAO
   {
   public:
 
-    void any_insert (CORBA::Any* , S const &) const
+    static inline void any_insert (CORBA::Any* , S const &)
       {
         if (TAO_debug_level > 2)
           {
