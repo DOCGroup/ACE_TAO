@@ -74,7 +74,6 @@ public:
 
   virtual int vf_map_unbind (const char *) = 0;
 
-
   virtual CORBA::ValueFactory vf_map_find (const char *) = 0;
 };
 

@@ -84,9 +84,13 @@ TAO_POA_Policy_Set::validate_policies (TAO_Policy_Validator &validator,
 
       if (validator.legal_policy (type) == 0)
         {
+#if ! defined (CORBA_E_MICRO)
           // An invalid policy was specified.  Let the user know about
           // it.
           ACE_THROW (PortableServer::POA::InvalidPolicy ());
+#else
+          ACE_ERROR ((LM_ERROR, "Invalid policy\n"));
+#endif
         }
     }
 }

@@ -46,6 +46,7 @@ class TAO_Queued_Message;
 class TAO_Synch_Queued_Message;
 class TAO_Resume_Handle;
 class TAO_Stub;
+class TAO_MMAP_Allocator;
 
 namespace TAO
 {
@@ -397,6 +398,25 @@ public:
                         int iovcnt,
                         size_t &bytes_transferred,
                         const ACE_Time_Value *timeout = 0) = 0;
+
+#ifdef ACE_HAS_SENDFILE
+  /// Send data through zero-copy write mechanism, if available.
+  /**
+   * This method sends the data in the I/O vector through the platform
+   * sendfile() function to perform a zero-copy write, if available.
+   * Otherwise, the default fallback implementation simply delegates
+   * to the TAO_Transport::send() method.
+   *
+   * @note This method is best used when sending very large blocks of
+   *       data.
+   */
+  virtual ssize_t sendfile (TAO_MMAP_Allocator * allocator,
+                            iovec * iov,
+                            int iovcnt,
+                            size_t &bytes_transferred,
+                            ACE_Time_Value const * timeout = 0);
+#endif  /* ACE_HAS_SENDFILE */
+
 
   /// Read len bytes from into buf.
   /**
@@ -1026,6 +1046,15 @@ private:
 
   /// Holds the partial GIOP message (if there is one)
   ACE_Message_Block* partial_message_;
+
+#ifdef ACE_HAS_SENDFILE
+  /// mmap()-based allocator used to allocator output CDR buffers.
+  /**
+   * If this pointer is non-zero, sendfile() will be used to send data
+   * in a TAO_OutputCDR stream instance.
+   */
+  TAO_MMAP_Allocator * const mmap_allocator_;
+#endif  /* ACE_HAS_SENDFILE */
 
   /*
    * specialization hook to add class members from concrete

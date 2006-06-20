@@ -39,8 +39,8 @@ namespace TAO
    */
   template<typename S_ptr,
            typename S_var,
-           typename Insert_Policy>
-  class In_Object_SArgument_T : public InArgument, private Insert_Policy
+           template <typename> class Insert_Policy>
+  class In_Object_SArgument_T : public InArgument
   {
   public:
 
@@ -62,8 +62,8 @@ namespace TAO
    */
   template<typename S_ptr,
            typename S_var,
-           typename Insert_Policy>
-  class Inout_Object_SArgument_T : public InoutArgument, private Insert_Policy
+           template <typename> class Insert_Policy>
+  class Inout_Object_SArgument_T : public InoutArgument
   {
   public:
     Inout_Object_SArgument_T (void);
@@ -88,8 +88,8 @@ namespace TAO
   template<typename S_ptr,
            typename S_var,
            typename S_out,
-           typename Insert_Policy>
-  class Out_Object_SArgument_T : public OutArgument, private Insert_Policy
+           template <typename> class Insert_Policy>
+  class Out_Object_SArgument_T : public OutArgument
   {
   public:
     Out_Object_SArgument_T (void);
@@ -112,8 +112,8 @@ namespace TAO
    */
   template<typename S_ptr,
            typename S_var,
-           typename Insert_Policy>
-  class Ret_Object_SArgument_T : public RetArgument, private Insert_Policy
+           template <typename> class Insert_Policy>
+  class Ret_Object_SArgument_T : public RetArgument
   {
   public:
     Ret_Object_SArgument_T (void);
@@ -137,7 +137,7 @@ namespace TAO
   template<typename T_ptr,
            typename T_var,
            typename T_out,
-           typename Insert_Policy>
+           template <typename> class Insert_Policy>
   struct Object_SArg_Traits_T
   {
     typedef T_ptr                                         ret_type;

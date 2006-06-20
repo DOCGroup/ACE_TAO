@@ -52,6 +52,14 @@ ACE_RCSID (PortableServer,
            Object_Adapter,
            "$Id$")
 
+#if !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
+namespace PortableServer
+{
+  class POAManagerFactory;
+  typedef POAManagerFactory *POAManagerFactory_ptr;
+}
+#endif
+
 // Timeprobes class
 #include "tao/Timeprobe.h"
 
@@ -235,7 +243,7 @@ TAO_Object_Adapter::init_default_policies (TAO_POA_Policy_Set &policies
                                            ACE_ENV_ARG_DECL)
 {
   // Initialize the default policies.
-#if (TAO_HAS_MINIMUM_POA == 0)
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 
   TAO::Portable_Server::ThreadPolicy thread_policy (PortableServer::ORB_CTRL_MODEL);
   policies.merge_policy (&thread_policy ACE_ENV_ARG_PARAMETER);
@@ -243,22 +251,28 @@ TAO_Object_Adapter::init_default_policies (TAO_POA_Policy_Set &policies
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
+#if !defined (CORBA_E_MICRO)
   // Lifespan policy.
   TAO::Portable_Server::LifespanPolicy lifespan_policy (PortableServer::TRANSIENT);
   policies.merge_policy (&lifespan_policy ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
+#endif
 
+#if !defined (CORBA_E_MICRO)
   // ID uniqueness policy.
   TAO::Portable_Server::IdUniquenessPolicy id_uniqueness_policy (PortableServer::UNIQUE_ID);
   policies.merge_policy (&id_uniqueness_policy ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
+#endif
 
+#if !defined (CORBA_E_MICRO)
   // ID assignment policy.
   TAO::Portable_Server::IdAssignmentPolicy id_assignment_policy (PortableServer::SYSTEM_ID);
   policies.merge_policy (&id_assignment_policy ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
+#endif
 
-#if (TAO_HAS_MINIMUM_POA == 0)
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
   // Implicit activation policy.
   TAO::Portable_Server::ImplicitActivationPolicy implicit_activation_policy
     (PortableServer::NO_IMPLICIT_ACTIVATION);
@@ -277,6 +291,9 @@ TAO_Object_Adapter::init_default_policies (TAO_POA_Policy_Set &policies
   policies.merge_policy (&request_processing_policy ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
+#if defined (CORBA_E_MICRO)
+  ACE_UNUSED_ARG (policies);
+#endif
 }
 
 TAO_Object_Adapter::~TAO_Object_Adapter (void)
@@ -418,7 +435,7 @@ TAO_Object_Adapter::activate_poa (const poa_name &folded_name,
 {
   int result = -1;
 
-#if (TAO_HAS_MINIMUM_POA == 0)
+#if (TAO_HAS_MINIMUM_POA == 0) &&  !defined (CORBA_E_MICRO)
 
   iteratable_poa_name ipn (folded_name);
   iteratable_poa_name::iterator iterator = ipn.begin ();
@@ -592,6 +609,7 @@ TAO_Object_Adapter::open (ACE_ENV_SINGLE_ARG_DECL)
                TAO_Default_Servant_Dispatcher);
     }
 
+#if !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
   ACE_NEW_THROW_EX (this->poa_manager_factory_,
                     TAO_POAManager_Factory (*this),
                     CORBA::NO_MEMORY ());
@@ -602,6 +620,19 @@ TAO_Object_Adapter::open (ACE_ENV_SINGLE_ARG_DECL)
                                               policy
                                               ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
+#else
+  PortableServer::POAManager_var poa_manager;
+  PortableServer::POAManager_ptr pm = PortableServer::POAManager::_nil ();
+  ::CORBA::PolicyList policy_list;
+  PortableServer::POAManagerFactory_ptr fptr;
+  ACE_NEW_THROW_EX (pm,
+                    TAO_POA_Manager (*this, 0, policy_list, fptr),
+                    CORBA::NO_MEMORY
+                    (CORBA::SystemException::_tao_minor_code (0, ENOMEM),
+                      CORBA::COMPLETED_NO));
+  ACE_CHECK_RETURN (::PortableServer::POAManager::_nil ());
+  poa_manager = pm;
+#endif
 
   // This makes sure that the default resources are open when the Root
   // POA is created.
@@ -610,7 +641,7 @@ TAO_Object_Adapter::open (ACE_ENV_SINGLE_ARG_DECL)
 
   TAO_POA_Policy_Set policies (this->default_poa_policies ());
 
-#if (TAO_HAS_MINIMUM_POA == 0)
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
   // Specify the implicit activation policy since it should
   // be different from the default.  Note that merge_policy
   // takes a const reference and makes its own copy of the
@@ -702,7 +733,9 @@ TAO_Object_Adapter::close (int wait_for_completion
                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   ::CORBA::release (root);
+#if !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
   ::CORBA::release (factory);
+#endif
 }
 
 void

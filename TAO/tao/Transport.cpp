@@ -21,6 +21,7 @@
 #include "tao/debug.h"
 #include "tao/CDR.h"
 #include "tao/ORB_Core.h"
+#include "tao/MMAP_Allocator.h"
 
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_stdio.h"
@@ -138,6 +139,16 @@ TAO_Transport::TAO_Transport (CORBA::ULong tag,
   , tcs_set_ (0)
   , first_request_ (1)
   , partial_message_ (0)
+#ifdef ACE_HAS_SENDFILE
+    // The ORB has been configured to use the MMAP allocator, meaning
+    // we could/should use sendfile() to send data.  Cast once rather
+    // here rather than during each send.  This assumes that all
+    // TAO_OutputCDR instances are using the same TAO_MMAP_Allocator
+    // instance as the underlying output CDR buffer allocator.
+  , mmap_allocator_ (
+      dynamic_cast<TAO_MMAP_Allocator *> (
+        orb_core->output_cdr_buffer_allocator ()))
+#endif  /* ACE_HAS_SENDFILE */
 {
   TAO_Client_Strategy_Factory *cf =
     this->orb_core_->client_factory ();
@@ -252,7 +263,7 @@ TAO_Transport::send_message_shared (TAO_Stub *stub,
                                     const ACE_Message_Block *message_block,
                                     ACE_Time_Value *max_wait_time)
 {
-  int result;
+  int result = 0;
 
   {
     ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->handler_lock_, -1);
@@ -311,12 +322,31 @@ TAO_Transport::register_handler (void)
   // Set the flag in the Connection Handler and in the Wait Strategy
   // @@Maybe we should set these flags after registering with the
   // reactor. What if the  registration fails???
-  this->ws_->is_registered (1);
+  this->ws_->is_registered (true);
 
   // Register the handler with the reactor
   return r->register_handler (this->event_handler_i (),
                               ACE_Event_Handler::READ_MASK);
 }
+
+#ifdef ACE_HAS_SENDFILE
+ssize_t
+TAO_Transport::sendfile (TAO_MMAP_Allocator * /* allocator */,
+                         iovec * iov,
+                         int iovcnt,
+                         size_t &bytes_transferred,
+                         ACE_Time_Value const * timeout)
+{
+  // Concrete pluggable transport doesn't implement sendfile().
+  // Fallback on TAO_Transport::send().
+
+  // @@ We can probably refactor the TAO_IIOP_Transport::sendfile()
+  //    implementation to this base class method, and leave any TCP
+  //    specific configuration out of this base class method.
+  //      -Ossama
+  return this->send (iov, iovcnt, bytes_transferred, timeout);
+}
+#endif  /* ACE_HAS_SENDFILE */
 
 int
 TAO_Transport::generate_locate_request (
@@ -432,7 +462,7 @@ TAO_Transport::handle_output (void)
   // The flushing strategy (potentially via the Reactor) wants to send
   // more data, first check if there is a current message that needs
   // more sending...
-  int retval = this->drain_queue ();
+  int const retval = this->drain_queue ();
 
   if (TAO_debug_level > 3)
     {
@@ -473,7 +503,7 @@ TAO_Transport::send_message_block_chain_i (const ACE_Message_Block *mb,
                                            size_t &bytes_transferred,
                                            ACE_Time_Value *)
 {
-  const size_t total_length = mb->total_length ();
+  size_t const total_length = mb->total_length ();
 
   // We are going to block, so there is no need to clone
   // the message block.
@@ -512,6 +542,7 @@ TAO_Transport::send_synchronous_message_i (const ACE_Message_Block *mb,
   // the message block.
   TAO_Synch_Queued_Message synch_message (mb, this->orb_core_);
 
+  // Push synch_message on to the back of the queue.
   synch_message.push_back (this->head_, this->tail_);
 
   int const n =
@@ -660,7 +691,7 @@ TAO_Transport::send_synch_message_helper_i (TAO_Synch_Queued_Message &synch_mess
                                             ACE_Time_Value * /*max_wait_time*/)
 {
   // @@todo: Need to send timeouts for writing..
-  int n = this->drain_queue_i ();
+  int const n = this->drain_queue_i ();
 
   if (n == -1)
     {
@@ -799,8 +830,17 @@ TAO_Transport::drain_queue_helper (int &iovcnt, iovec iov[])
   size_t byte_count = 0;
 
   // ... send the message ...
-  ssize_t const retval =
-    this->send (iov, iovcnt, byte_count);
+  ssize_t retval = -1;
+
+#ifdef ACE_HAS_SENDFILE
+  if (this->mmap_allocator_)
+    retval = this->sendfile (this->mmap_allocator_,
+                             iov,
+                             iovcnt,
+                             byte_count);
+  else
+#endif  /* ACE_HAS_SENDFILE */
+    retval = this->send (iov, iovcnt, byte_count);
 
   if (TAO_debug_level == 5)
     {
@@ -876,7 +916,7 @@ TAO_Transport::drain_queue_i (void)
   // We loop over all the elements in the queue ...
   TAO_Queued_Message *i = this->head_;
 
-  // reset the value so that the counting is done for each new send
+  // Reset the value so that the counting is done for each new send
   // call.
   this->sent_byte_count_ = 0;
 
@@ -890,7 +930,7 @@ TAO_Transport::drain_queue_i (void)
       // IOV_MAX elements ...
       if (iovcnt == ACE_IOV_MAX)
         {
-          int retval =
+          int const retval =
             this->drain_queue_helper (iovcnt, iov);
 
           if (TAO_debug_level > 4)
@@ -916,15 +956,15 @@ TAO_Transport::drain_queue_i (void)
 
   if (iovcnt != 0)
     {
-      int retval = this->drain_queue_helper (iovcnt, iov);
+      int const retval = this->drain_queue_helper (iovcnt, iov);
 
-          if (TAO_debug_level > 4)
-            {
-              ACE_DEBUG ((LM_DEBUG,
-                 ACE_TEXT ("TAO (%P|%t) - Transport[%d]::drain_queue_i, ")
-                 ACE_TEXT ("helper retval = %d\n"),
-                 this->id (), retval));
-            }
+      if (TAO_debug_level > 4)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("TAO (%P|%t) - Transport[%d]::drain_queue_i, ")
+              ACE_TEXT ("helper retval = %d\n"),
+              this->id (), retval));
+        }
 
       if (retval != 1)
         {
@@ -937,7 +977,7 @@ TAO_Transport::drain_queue_i (void)
       if (this->flush_timer_pending ())
         {
           ACE_Event_Handler *eh = this->event_handler_i ();
-          ACE_Reactor *reactor = eh->reactor ();
+          ACE_Reactor * const reactor = eh->reactor ();
           reactor->cancel_timer (this->flush_timer_id_);
           this->reset_flush_timer ();
         }
@@ -1022,7 +1062,7 @@ TAO_Transport::check_buffering_constraints_i (TAO_Stub *stub,
 
   for (TAO_Queued_Message *i = this->head_; i != 0; i = i->next ())
     {
-      msg_count++;
+      ++msg_count;
       total_bytes += i->message_length ();
     }
 
@@ -1298,7 +1338,7 @@ TAO_Transport::handle_input (TAO_Resume_Handle &rh,
     }
 
   // First try to process messages of the head of the incoming queue.
-  int retval = this->process_queue_head (rh);
+  int const retval = this->process_queue_head (rh);
 
   if (retval <= 0)
     {
@@ -1523,10 +1563,10 @@ TAO_Transport::handle_input_missing_data (TAO_Resume_Handle &rh,
          this->id (), q_data->missing_data_));
     }
 
-  const size_t recv_size = q_data->missing_data_;
+  size_t const recv_size = q_data->missing_data_;
 
   // make sure the message_block has enough space
-  const size_t message_size =  recv_size
+  size_t const message_size =  recv_size
                                + q_data->msg_block_->length();
 
   if (q_data->msg_block_->space() < recv_size)
@@ -1545,7 +1585,7 @@ TAO_Transport::handle_input_missing_data (TAO_Resume_Handle &rh,
   this->recv_buffer_size_ = recv_size;
 
   // Read the message into the existing message block on heap
-  const ssize_t n = this->recv (q_data->msg_block_->wr_ptr(),
+  ssize_t const n = this->recv (q_data->msg_block_->wr_ptr(),
                                 recv_size,
                                 max_wait_time);
 
