@@ -1,3 +1,14 @@
+Tue Jun 20 08:23:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/taolib.mpb:
+          Add corba subset projects as base
+
+        * bin/MakeProjectCreator/config/core_minimum_corba.mpb:
+          New file for usage within the core libs
+
+        * bin/MakeProjectCreator/config/core_minimum_corba.mpb:
+          Make minimum corba a feature
+
 Tue Jun 20 07:42:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Log_Msg/test_callback.cpp:
