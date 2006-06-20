@@ -14,7 +14,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<typename array_traits>
 TAO_FixedArray_Var_T<array_traits> &
-TAO_FixedArray_Var_T<array_traits>::operator= (slice_type * p)
+TAO_FixedArray_Var_T<array_traits>::operator= (_slice_type * p)
 {
   // Is what we own the same that is being assigned to us?
   if (this->ptr_ != p)
@@ -48,7 +48,7 @@ TAO_FixedArray_Var_T<array_traits>::operator= (
 
 template<typename array_traits>
 TAO_VarArray_Var_T<array_traits> &
-TAO_VarArray_Var_T<array_traits>::operator= (slice_type * p)
+TAO_VarArray_Var_T<array_traits>::operator= (_slice_type * p)
 {
   // Is what we own the same that is being assigned to us?
   if (this->ptr_ != p)
@@ -86,7 +86,7 @@ TAO_Array_Forany_T<array_traits>::_tao_any_destructor (
     void * _tao_void_pointer
   )
 {
-  slice_type * tmp = static_cast<slice_type *> (_tao_void_pointer);
+  _slice_type * tmp = static_cast<_slice_type *> (_tao_void_pointer);
   TAO::details::array_traits<array_traits>::free (tmp);
 }
 
