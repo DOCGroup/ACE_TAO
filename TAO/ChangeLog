@@ -1,3 +1,15 @@
+Tue Jun 20 15:28:18 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * TAO_IDL/Makefile.am:
+        * tao/Makefile.am:
+
+          Regenerated.
+
+        * tao/TypeCodeFactory.mpc:
+
+          Remove TypeCodeFactory subdirectory from PIDL_Files section,
+          as it's now listed in IDL_Files.
+
 Tue Jun 20 13:43:05 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/orbsvcs/Log/Hash_LogRecordStore.cpp:

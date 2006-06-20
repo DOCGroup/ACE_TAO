@@ -245,6 +245,7 @@ libTAO_IDL_BE_la_SOURCES = \
   be/be_visitor_interface.cpp \
   be/be_visitor_interface_fwd.cpp \
   be/be_visitor_module.cpp \
+  be/be_visitor_native.cpp \
   be/be_visitor_operation.cpp \
   be/be_visitor_root.cpp \
   be/be_visitor_scope.cpp \
@@ -331,6 +332,7 @@ noinst_HEADERS += \
   be_include/be_visitor_interface.h \
   be_include/be_visitor_interface_fwd.h \
   be_include/be_visitor_module.h \
+  be_include/be_visitor_native.h \
   be_include/be_visitor_operation.h \
   be_include/be_visitor_root.h \
   be_include/be_visitor_scope.h \
