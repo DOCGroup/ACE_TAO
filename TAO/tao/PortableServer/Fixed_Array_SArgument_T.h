@@ -57,8 +57,7 @@ namespace TAO
    */
   template<typename S_forany,
            template <typename> class Insert_Policy>
-  class Inout_Fixed_Array_SArgument_T :
-    public InoutArgument
+  class Inout_Fixed_Array_SArgument_T : public InoutArgument
   {
   public:
     Inout_Fixed_Array_SArgument_T (void);

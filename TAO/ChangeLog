@@ -1,3 +1,8 @@
+Tue Jun 20 12:41:04 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/BD_String_SArgument_T.cpp:
+          Fixed compilation problems with Borland
+
 Tue Jun 20 12:29:04 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/Options.html:
