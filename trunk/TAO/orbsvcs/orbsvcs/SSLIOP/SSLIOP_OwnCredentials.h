@@ -54,6 +54,9 @@ namespace TAO
         public virtual SSLIOP_Credentials
     {
     public:
+      typedef OwnCredentials_ptr _ptr_type;
+      typedef OwnCredentials_var _var_type;
+      typedef OwnCredentials_out _out_type;
 
       /// Constructor
       OwnCredentials (::X509 *cert, ::EVP_PKEY *evp);

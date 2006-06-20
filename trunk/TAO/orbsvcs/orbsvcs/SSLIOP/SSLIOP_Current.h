@@ -59,6 +59,8 @@ namespace TAO
         public TAO_Local_RefCounted_Object
     {
     public:
+      typedef Current_ptr _ptr_type;
+      typedef Current_var _var_type;
 
       /// Constructor.
       Current (TAO_ORB_Core *orb_core);
