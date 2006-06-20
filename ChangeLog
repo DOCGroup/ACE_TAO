@@ -19,6 +19,8 @@ Tue Jun 20 19:25:20 UTC 2006  Steve Huston  <shuston@riverace.com>
           to rely on for destroying a thread. This fixes Bugzilla #2339.
           Thanks to Howard Finer <hfiner@sonusnet.com> for this idea.
 
+        * NEWS: Added a note about the new ACE_Task::last_thread() method.
+
 Tue Jun 20 18:55:12 UTC 2006  Martin Corino  <mcorino@remedy.nl>
 
         * tests/Based_Pointer_Test.cpp:

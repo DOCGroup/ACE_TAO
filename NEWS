@@ -14,6 +14,14 @@ USER VISIBLE CHANGES BETWEEN ACE-5.5.1 and ACE-5.5.2
 
 . Added support for netlink sockets
 
+. Added a new method, ACE_Task::last_thread(). This method returns the thread
+  ID (ACE_thread_t) of the last thread to exit from the ACE_Task object.
+  Users checking to see if a thread is the last one out (for example, to know
+  when to perform cleanup operations) should compare the current thread ID to
+  the return value from last_thread(). This is a change from the previously
+  recommended practice (C++NPv2, page 189) of comparing the return value of
+  thr_count() with 0.
+
 USER VISIBLE CHANGES BETWEEN ACE-5.5 and ACE-5.5.1
 ====================================================
 
