@@ -15,11 +15,6 @@ TAO_Blocked_Connect_Strategy::TAO_Blocked_Connect_Strategy (
 {
 }
 
-TAO_Blocked_Connect_Strategy::~TAO_Blocked_Connect_Strategy (void)
-{
-}
-
-
 void
 TAO_Blocked_Connect_Strategy::synch_options (ACE_Time_Value *timeout,
                                              ACE_Synch_Options &options)
@@ -41,7 +36,7 @@ TAO_Blocked_Connect_Strategy::synch_options (ACE_Time_Value *timeout,
 int
 TAO_Blocked_Connect_Strategy::wait_i (TAO_LF_Event *,
                                       TAO_Transport *,
-                                    ACE_Time_Value * )
+                                      ACE_Time_Value * )
 {
   // We cannot wait for connection completion
   return -1;

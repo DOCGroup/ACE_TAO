@@ -820,6 +820,11 @@ enum TAO_Policy_Scope
 #  define TAO_USE_LOCAL_MEMORY_POOL 1
 #endif /* TAO_USE_LOCAL_MEMORY_POOL */
 
+#if !defined (TAO_USE_OUTPUT_CDR_MMAP_MEMORY_POOL)
+#  define TAO_USE_OUTPUT_CDR_MMAP_MEMORY_POOL 0
+#endif /* TAO_USE_LOCAL_MEMORY_POOL */
+
+
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"

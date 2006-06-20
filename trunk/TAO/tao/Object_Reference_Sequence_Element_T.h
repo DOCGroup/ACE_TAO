@@ -89,25 +89,29 @@ public:
     return *element_;
   }
 
+  inline object_reference_type *in (void) const {
+    return *this->element_;
+  }
+
   inline value_type operator->()
   {
-    return *element_;
+    return *this->element_;
   }
 
   inline value_type operator->() const
   {
-    return *element_;
+    return *this->element_;
   }
 
   void swap(object_reference_sequence_element & rhs)
   {
-    std::swap(element_, rhs.element_);
-    std::swap(release_, rhs.release_);
+    std::swap(this->element_, rhs.element_);
+    std::swap(this->release_, rhs.release_);
   }
 
   inline CORBA::Boolean release() const
   {
-    return release_;
+    return this->release_;
   }
 
 private:

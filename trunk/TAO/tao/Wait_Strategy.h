@@ -81,10 +81,10 @@ public:
   virtual bool can_process_upcalls (void) const = 0;
 
   /// Get method for the flag
-  int is_registered (void);
+  bool is_registered (void) const;
 
   /// Set method for the flag
-  void is_registered (int flag);
+  void is_registered (bool flag);
 
 protected:
   /// Transport object.
@@ -92,8 +92,8 @@ protected:
 
   /// Flag to indicate whether the service handler that created the
   /// above transport has been registered with the reactor or not. The
-  /// default is 0.
-  int is_registered_;
+  /// default is false.
+  bool is_registered_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

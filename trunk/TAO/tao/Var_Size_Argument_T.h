@@ -31,8 +31,9 @@ namespace TAO
    * @brief Template class for IN stub argument of fixed size IDL types.
    *
    */
-  template<typename S, typename Insert_Policy>
-  class In_Var_Size_Argument_T : public InArgument, private Insert_Policy
+  template<typename S,
+           template <typename> class Insert_Policy>
+  class In_Var_Size_Argument_T : public InArgument
   {
   public:
     In_Var_Size_Argument_T (S const & x);
@@ -45,6 +46,9 @@ namespace TAO
 
   private:
     const S * x_;
+#if TAO_HAS_INTERCEPTORS == 1
+    Insert_Policy <S> insert_policy_;
+#endif /* TAO_HAS_INTERCEPTORS == 1 */
   };
 
   /**
@@ -53,8 +57,9 @@ namespace TAO
    * @brief Template class for INOUT stub argument of fixed size IDL types.
    *
    */
-  template<typename S, typename Insert_Policy>
-  class Inout_Var_Size_Argument_T : public InoutArgument, private Insert_Policy
+  template<typename S,
+           template <typename> class Insert_Policy>
+  class Inout_Var_Size_Argument_T : public InoutArgument
   {
   public:
     Inout_Var_Size_Argument_T (S & x);
@@ -76,8 +81,9 @@ namespace TAO
    * @brief Template class for OUT stub argument of fixed size IDL types.
    *
    */
-  template<typename S, typename Insert_Policy>
-  class Out_Var_Size_Argument_T : public OutArgument, private Insert_Policy
+  template<typename S,
+           template <typename> class Insert_Policy>
+  class Out_Var_Size_Argument_T : public OutArgument
   {
   public:
     Out_Var_Size_Argument_T (typename S::_out_type x);
@@ -98,8 +104,9 @@ namespace TAO
    * @brief Template class for return stub value of fixed size IDL types.
    *
    */
-  template<typename S, typename Insert_Policy>
-  class Ret_Var_Size_Argument_T : public RetArgument, private Insert_Policy
+  template<typename S,
+           template <typename> class Insert_Policy>
+  class Ret_Var_Size_Argument_T : public RetArgument
   {
   public:
     Ret_Var_Size_Argument_T (void);
@@ -124,7 +131,8 @@ namespace TAO
    *  variable size IDL types.
    *
    */
-  template<typename T, typename Insert_Policy>
+  template<typename T,
+           template <typename> class Insert_Policy>
   struct Var_Size_Arg_Traits_T
   {
     typedef T *                                         ret_type;

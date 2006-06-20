@@ -41,7 +41,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/TAO_Export.h"
-#include "tao/ORB.h"
 #include "tao/Environment.h"
 #include "tao/Sequence_T.h"
 #include "tao/Seq_Var_T.h"
@@ -156,8 +155,7 @@ namespace CORBA
 
   typedef
     TAO_Out_T<
-        ServiceDetail,
-        ServiceDetail_var
+        ServiceDetail
       >
     ServiceDetail_out;
 
@@ -231,8 +229,7 @@ namespace CORBA
 
   typedef
     TAO_Out_T<
-        ServiceInformation,
-        ServiceInformation_var
+        ServiceInformation
       >
     ServiceInformation_out;
 
@@ -242,6 +239,7 @@ namespace CORBA
   struct TAO_Export ServiceInformation
   {
     typedef ServiceInformation_var _var_type;
+    typedef ServiceInformation_out _out_type;
 
     static void _tao_any_destructor (void *);
     CORBA::ServiceOptionSeq service_options;

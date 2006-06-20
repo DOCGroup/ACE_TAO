@@ -82,8 +82,7 @@ namespace Messaging
 
   typedef
     TAO_Out_T<
-        PolicyValue,
-        PolicyValue_var
+        PolicyValue
       >
     PolicyValue_out;
 
@@ -93,6 +92,7 @@ namespace Messaging
   struct TAO_Export PolicyValue
   {
     typedef PolicyValue_var _var_type;
+    typedef PolicyValue_out _out_type;
 
     static void _tao_any_destructor (void *);
     CORBA::PolicyType ptype;

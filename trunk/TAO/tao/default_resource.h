@@ -216,7 +216,19 @@ protected:
   /// were processed before (or later).
   int factory_disabled_;
 
-  /// This flag is used to determine whether the cdr allocators
+  enum Output_CDR_Allocator_Type
+    {
+      LOCAL_MEMORY_POOL,
+#ifdef ACE_HAS_SENDFILE
+      MMAP_ALLOCATOR,
+#endif  /* ACE_HAS_SENDFILE */
+      DEFAULT
+    };
+
+  /// Type of allocator to use for output CDR buffers.
+  Output_CDR_Allocator_Type output_cdr_allocator_type_;
+
+  /// This flag is used to determine whether the CDR allocators
   /// should use the local memory pool or not.
   bool use_local_memory_pool_;
 

@@ -11,7 +11,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-template<typename S, typename Insert_Policy>
+template<typename S,
+         template <typename> class Insert_Policy>
 CORBA::Boolean
 TAO::In_Var_Size_Argument_T<S,Insert_Policy>::marshal (TAO_OutputCDR &cdr)
 {
@@ -20,20 +21,22 @@ TAO::In_Var_Size_Argument_T<S,Insert_Policy>::marshal (TAO_OutputCDR &cdr)
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-template<typename S, typename Insert_Policy>
+template<typename S,
+         template <typename> class Insert_Policy>
 void
 TAO::In_Var_Size_Argument_T<S,Insert_Policy>::interceptor_value (
     CORBA::Any *any
   ) const
 {
-  this->Insert_Policy::any_insert (any, *this->x_);
+  Insert_Policy<S>::any_insert (any, *this->x_);
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
 
 // ===========================================================
 
-template<typename S, typename Insert_Policy>
+template<typename S,
+         template <typename> class Insert_Policy>
 CORBA::Boolean
 TAO::Inout_Var_Size_Argument_T<S,Insert_Policy>::marshal (
     TAO_OutputCDR &cdr
@@ -42,7 +45,8 @@ TAO::Inout_Var_Size_Argument_T<S,Insert_Policy>::marshal (
   return cdr << *this->x_;
 }
 
-template<typename S, typename Insert_Policy>
+template<typename S,
+         template <typename> class Insert_Policy>
 CORBA::Boolean
 TAO::Inout_Var_Size_Argument_T<S,Insert_Policy>::demarshal (
     TAO_InputCDR & cdr
@@ -53,20 +57,22 @@ TAO::Inout_Var_Size_Argument_T<S,Insert_Policy>::demarshal (
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-template<typename S, typename Insert_Policy>
+template<typename S,
+         template <typename> class Insert_Policy>
 void
 TAO::Inout_Var_Size_Argument_T<S,Insert_Policy>::interceptor_value (
     CORBA::Any *any
   ) const
 {
-  this->Insert_Policy::any_insert (any, *this->x_);
+  Insert_Policy<S>::any_insert (any, *this->x_);
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
 
 // ==============================================================
 
-template<typename S, typename Insert_Policy>
+template<typename S,
+         template <typename> class Insert_Policy>
 CORBA::Boolean
 TAO::Out_Var_Size_Argument_T<S,Insert_Policy>::demarshal (
     TAO_InputCDR & cdr
@@ -78,20 +84,22 @@ TAO::Out_Var_Size_Argument_T<S,Insert_Policy>::demarshal (
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-template<typename S, typename Insert_Policy>
+template<typename S,
+         template <typename> class Insert_Policy>
 void
 TAO::Out_Var_Size_Argument_T<S,Insert_Policy>::interceptor_value (
     CORBA::Any *any
   ) const
 {
-  this->Insert_Policy::any_insert (any, *this->x_);
+  Insert_Policy<S>::any_insert (any, *this->x_);
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
 
 // ============================================================
 
-template<typename S, typename Insert_Policy>
+template<typename S,
+         template <typename> class Insert_Policy>
 CORBA::Boolean
 TAO::Ret_Var_Size_Argument_T<S,Insert_Policy>::demarshal (
     TAO_InputCDR & cdr
@@ -107,13 +115,14 @@ TAO::Ret_Var_Size_Argument_T<S,Insert_Policy>::demarshal (
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-template<typename S, typename Insert_Policy>
+template<typename S,
+         template <typename> class Insert_Policy>
 void
 TAO::Ret_Var_Size_Argument_T<S,Insert_Policy>::interceptor_value (
     CORBA::Any *any
   ) const
 {
-  this->Insert_Policy::any_insert (any, this->x_.in ());
+  Insert_Policy<S>::any_insert (any, this->x_.in ());
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */

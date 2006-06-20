@@ -2,8 +2,8 @@
 
 #include "tao/Wait_Strategy.h"
 
-ACE_RCSID (tao, 
-           Wait_Strategy, 
+ACE_RCSID (tao,
+           Wait_Strategy,
            "$Id$")
 
 #if !defined (__ACE_INLINE__)
@@ -16,7 +16,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 // Constructor.
 TAO_Wait_Strategy::TAO_Wait_Strategy (TAO_Transport *transport)
   : transport_ (transport),
-    is_registered_ (0)
+    is_registered_ (false)
 
 {
 }

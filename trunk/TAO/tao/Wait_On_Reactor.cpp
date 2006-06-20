@@ -98,7 +98,7 @@ TAO_Wait_On_Reactor::wait (ACE_Time_Value *max_wait_time,
 int
 TAO_Wait_On_Reactor::register_handler (void)
 {
-  if (this->is_registered_ == 0)
+  if (!this->is_registered_)
     {
       return this->transport_->register_handler ();
     }

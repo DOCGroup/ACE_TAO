@@ -25,7 +25,7 @@ TAO_Wait_On_Leader_Follower::~TAO_Wait_On_Leader_Follower (void)
 int
 TAO_Wait_On_Leader_Follower::register_handler (void)
 {
-  if (this->is_registered_ == 0)
+  if (!this->is_registered_)
     {
       return this->transport_->register_handler ();
     }
@@ -44,7 +44,7 @@ TAO_Wait_On_Leader_Follower::sending_request (TAO_ORB_Core *orb_core,
                                               int two_way)
 {
   // Register the handler.
-  if (this->is_registered_ == 0)
+  if (!this->is_registered_)
     {
       this->transport_->register_handler ();
     }
