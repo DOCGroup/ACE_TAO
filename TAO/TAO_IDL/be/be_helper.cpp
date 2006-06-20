@@ -248,7 +248,9 @@ TAO_OutStream::indent (void)
       for (int i = 0; i < this->indent_level_; i++)
         {
           ACE_OS::fprintf (this->fp_, "  ");
+#if !defined (ACE_OPENVMS)
           ACE_OS::fflush (this->fp_);
+#endif
         }
     }
 
@@ -349,8 +351,9 @@ TAO_OutStream::print (const char *format, ...)
               int,
               -1,
               result);
-
+#if !defined (ACE_OPENVMS)
   ACE_OS::fflush (this->fp_);
+#endif
   va_end (ap);
 
   return result;
@@ -360,7 +363,9 @@ TAO_OutStream &
 TAO_OutStream::operator<< (const char *str)
 {
   ACE_OS::fprintf (this->fp_, "%s", str);
+#if !defined (ACE_OPENVMS)
   ACE_OS::fflush (this->fp_);
+#endif
   return *this;
 }
 
@@ -371,7 +376,9 @@ TAO_OutStream::operator<< (const ACE_CDR::UShort num)
                    "%hu",
                    num);
 
+#if !defined (ACE_OPENVMS)
   ACE_OS::fflush (this->fp_);
+#endif
 
   return *this;
 }
@@ -383,7 +390,9 @@ TAO_OutStream::operator<< (const ACE_CDR::Short num)
                    "%hd",
                    num);
 
+#if !defined (ACE_OPENVMS)
   ACE_OS::fflush (this->fp_);
+#endif
 
   return *this;
 }
@@ -395,7 +404,9 @@ TAO_OutStream::operator<< (const ACE_CDR::ULong num)
                    "%lu",
                    (unsigned long) num);
 
+#if !defined (ACE_OPENVMS)
   ACE_OS::fflush (this->fp_);
+#endif
 
   return *this;
 }
@@ -407,7 +418,9 @@ TAO_OutStream::operator<< (const ACE_CDR::Long num)
                    "%ld",
                    (long) num);
 
+#if !defined (ACE_OPENVMS)
   ACE_OS::fflush (this->fp_);
+#endif
 
   return *this;
 }
@@ -420,7 +433,9 @@ TAO_OutStream::operator<< (const ACE_CDR::ULongLong num)
                    ACE_UINT64_FORMAT_SPECIFIER,
                    num);
 
+#if !defined (ACE_OPENVMS)
   ACE_OS::fflush (this->fp_);
+#endif
 
   return *this;
 }
@@ -432,7 +447,9 @@ TAO_OutStream::operator<< (const ACE_CDR::LongLong num)
                    ACE_INT64_FORMAT_SPECIFIER,
                    num);
 
+#if !defined (ACE_OPENVMS)
   ACE_OS::fflush (this->fp_);
+#endif
 
   return *this;
 }
@@ -445,7 +462,9 @@ TAO_OutStream::operator<< (const unsigned long num)
                    "%lu",
                    num);
 
+#if !defined (ACE_OPENVMS)
   ACE_OS::fflush (this->fp_);
+#endif
 
   return *this;
 }
@@ -457,7 +476,9 @@ TAO_OutStream::operator<< (const long num)
                    "%ld",
                    num);
 
+#if !defined (ACE_OPENVMS)
   ACE_OS::fflush (this->fp_);
+#endif
 
   return *this;
 }
