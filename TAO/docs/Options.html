@@ -933,8 +933,8 @@ Resource_Factory "[list of options]"</code></p>
 resource factory with the options listed within the double quotes. The
 following table shows the list of possible options that can be
 specified within the double quotes in the above directive. There is an <a
- href="http://cvs.doc.wustl.edu/viewcvs.cgi/TAO/tests/LongUpcalls/svc.conf?rev=HEAD">
-online</a> example of how this is used in TAO.</p>
+ href="../tests/LongUpcalls/svc.conf">
+example</a> of how this is used in TAO.</p>
 <p></p>
 <blockquote>
   <p>
@@ -969,8 +969,7 @@ pluggable protocol would then be available for use. </p>
 Parsers are used to interpret strings passed to <code>ORB::string_to_object()</code>.
 By default the ORB can handle multiple string formats, including <code>IOR:</code>,
         <code>corbaloc:</code>, <code>corbaname:</code>, and <code>file:</code>.
-The application developer can <a
- href="http://cvs.doc.wustl.edu/viewcvs.cgi/*checkout*/TAO/docs/ior_parsing.html?rev=HEAD">add
+The application developer can <a href="ior_parsing.html">add
 new IOR formats </a>using this option. </td>
       </tr>
       <tr>
@@ -1072,6 +1071,18 @@ until all the data is sent.
         processed until ORB::destroy () is called. Setting the value
         of this option to 0 would help with that. </td>
       </tr>
+      <tr>
+        <td><code>-ORBOutputCDRAllocator</code> <em>mmap|local_memory_pool</em></td>
+        <td><a name="-ORBOutputCDRAllocator"></a>When the define
+	<code>TAO_USE_OUTPUT_CDR_MMAP_MEMORY_POOL</code> is set to 1 then always the mmap pool
+        will be used.
+        </td>
+      </tr>
+      <tr>
+        <td><code>-ORBZeroCopyWrite</code> </td>
+        <td><a name="-ORBZeroCopyWrite"></a>
+        </td>
+      </tr>
     </tbody>
   </table>
   </p>
@@ -1100,9 +1111,9 @@ omit the <code>#include</code> if you always use dynamic libraries.
 <code>Resource_Factory</code>. Any directives for the
 <code>Resource_Factory</code> will have no effect (and generate
 warnings telling you so). The following table lists the options that
-can be provided in double quotes. An example is available <a
- href="http://cvs.doc.wustl.edu/viewcvs.cgi/TAO/performance-tests/Latency/Single_Threaded/svc.conf?rev=HEAD">online
-</a> that shows how to specify this option in the svc.conf file.</p>
+can be provided in double quotes. An <a
+ href="../performance-tests/Latency/Single_Threaded/svc.conf"> example</a>
+is available that shows how to specify this option in the svc.conf file.</p>
 <p></p>
 <blockquote>
   <p>
@@ -1219,8 +1230,8 @@ line)</p>
 <p><code>static Server_Strategy_Factory "[list of
 options]"</code></p>
 <p>would load all the options listed within "". An
-example is available <a
- href="http://cvs.doc.wustl.edu/viewcvs.cgi/TAO/performance-tests/Latency/Single_Threaded/svc.conf?rev=HEAD">online</a>
+<a href="../performance-tests/Latency/Single_Threaded/svc.conf">example</a>
+is available
 that shows how to specify this option in the <code>svc.conf</code>
 file. </p>
 <p></p>
@@ -1379,9 +1390,9 @@ configurator
 <p><code>static
 Client_Strategy_Factory "[list of options]"</code></p>
 <p> would load all
-the options listed within "". An example is available <a
- href="http://cvs.doc.wustl.edu/viewcvs.cgi/TAO/performance-tests/Latency/Single_Threaded/svc.conf?rev=HEAD">online</a>
-that shows how to specify this option in the <code>svc.conf</code>
+the options listed within "". An <a
+ href="../performance-tests/Latency/Single_Threaded/svc.conf">example</a>
+is available that shows how to specify this option in the <code>svc.conf</code>
 file.</p>
 <p></p>
 <blockquote>
