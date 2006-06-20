@@ -1,3 +1,8 @@
+Tue Jun 20 08:23:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACEXML/parser/parser/Parser.cpp:
+          64bit fix
+
 Thu Mar 30 13:14:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * common/NamespaceSupport.cpp:
