@@ -91,7 +91,7 @@ static String_Table string_table[] =
   }
 };
 
-static 
+static
 int test_two_allocators ()
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing both allocators\n")));
@@ -107,40 +107,40 @@ int test_two_allocators ()
   ACE_Cached_Allocator<HASH_STRING_MAP::ENTRY, ACE_Null_Mutex> entry_alloc (chunks);
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing hash map manager with %d elements...\n"), chunks));
- 
+
   HASH_STRING_MAP hash;
- 
+
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Opening hash map manager with "
                                   "insufficient table allocator, should fail...\n")));
   ACE_OS::last_error (0);
   status = hash.open (chunks, &table_alloc_small, &entry_alloc);
   if (status < 0)
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("OK, failed: %d (%s)\n"), 
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("OK, failed: %d (%s)\n"),
                 status, ACE_OS::strerror (ACE_OS::last_error ())));
   else
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("*** Something is wrong...\n")), -1);
- 
+
   status = hash.close ();
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Table allocator depth: %d.\n"),
               table_alloc.pool_depth ()));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Entry allocator depth: %d.\n"),
               entry_alloc.pool_depth ()));
- 
+
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Opening hash map manager again, should succeed...\n")));
   ACE_OS::last_error (0);
   status = hash.open (chunks, &table_alloc, &entry_alloc);
   if (status < 0)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("*** Something is wrong: %d (%s)\n"), 
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("*** Something is wrong: %d (%s)\n"),
                        status, ACE_OS::strerror (ACE_OS::last_error ())), -1);
   else
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("OK.\n")));
- 
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Table allocator depth: %d\n"), 
+
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Table allocator depth: %d\n"),
               table_alloc.pool_depth ()));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Entry allocator depth: %d.\n"),
               entry_alloc.pool_depth ()));
- 
+
   for (size_t i = 0; i < chunks; i++)
     {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("- Binding ('%s', '%s'), should succeed...\n"),
@@ -155,8 +155,8 @@ int test_two_allocators ()
                     entry_alloc.pool_depth ()));
     }
 
-  char *key = "key";
-  char *val = "value";
+  ACE_TCHAR *key = ACE_TEXT("key");
+  ACE_TCHAR *val = ACE_TEXT("value");
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("- Binding ('%s', '%s'), should fail...\n"),
               key, val));
@@ -168,13 +168,13 @@ int test_two_allocators ()
   else
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("*** Something is wrong: %d (%s)\n"),
                        status, ACE_OS::strerror (ACE_OS::last_error ())), -1);
- 
+
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Closing hash map.\n")));
   status = hash.close ();
 
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Table allocator depth: %d.\n"), 
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Table allocator depth: %d.\n"),
               table_alloc.pool_depth ()));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Entry allocator depth: %d.\n"), 
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Entry allocator depth: %d.\n"),
               entry_alloc.pool_depth ()));
 
   return 0;
@@ -314,9 +314,9 @@ run_test (void)
                          string_table[i].key_), -1);
 
   ace_test_allocator.dump ();
-  
+
   test_two_allocators();
-  
+
   return 0;
 }
 
