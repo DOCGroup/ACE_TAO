@@ -965,7 +965,7 @@ be_visitor_arg_traits::visit_union (be_union *node)
 
   *os << (node->size_type () == AST_Type::FIXED ? "Fixed" : "Var")
       << "_Size_" << this->S_ << "Arg_Traits_T<" << be_idt << be_idt_nl
-      << "," << be_nl << this->insert_policy();
+      << node->name () << "," << be_nl << this->insert_policy();
 
   *os << be_uidt_nl
       << ">" << be_uidt << be_uidt << be_uidt << be_uidt_nl
