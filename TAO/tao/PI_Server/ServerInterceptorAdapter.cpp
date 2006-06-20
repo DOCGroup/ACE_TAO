@@ -4,7 +4,7 @@
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-ACE_RCSID (PortableServer,
+ACE_RCSID (PI_Server,
            ServerInterceptorAdapter,
            "$Id$")
 

@@ -34,8 +34,8 @@ namespace TAO
    *
    */
   template<typename S_forany,
-           typename Insert_Policy>
-  class In_Fixed_Array_SArgument_T : public InArgument, private Insert_Policy
+           template <typename> class Insert_Policy>
+  class In_Fixed_Array_SArgument_T : public InArgument
   {
   public:
     In_Fixed_Array_SArgument_T (void);
@@ -54,14 +54,11 @@ namespace TAO
    * @class Inout_Fixed_Array_SArgument_T
    *
    * @brief INOUT skeleton argument of fixed size element array.
-   *
-   * @todo The mutable for x_ can be removed when vc6 has been dropped
    */
   template<typename S_forany,
-           typename Insert_Policy>
+           template <typename> class Insert_Policy>
   class Inout_Fixed_Array_SArgument_T :
-    public InoutArgument,
-    private Insert_Policy
+    public InoutArgument
   {
   public:
     Inout_Fixed_Array_SArgument_T (void);
@@ -74,19 +71,17 @@ namespace TAO
     typename S_forany::_slice_type * arg (void);
 
   private:
-    mutable typename S_forany::_array_type x_;
+    typename S_forany::_array_type x_;
   };
 
   /**
    * @class Out_Fixed_Array_SArgument_T
    *
    * @brief OUT skeleton argument of fixed size element array.
-   *
-   * @todo The mutable for x_ can be removed when vc6 has been dropped
    */
   template<typename S_forany,
-           typename Insert_Policy>
-  class Out_Fixed_Array_SArgument_T : public OutArgument, private Insert_Policy
+           template <typename> class Insert_Policy>
+  class Out_Fixed_Array_SArgument_T : public OutArgument
   {
   public:
     Out_Fixed_Array_SArgument_T (void);
@@ -98,7 +93,7 @@ namespace TAO
     typename S_forany::_slice_type * arg (void);
 
   private:
-    mutable typename S_forany::_array_type x_;
+    typename S_forany::_array_type x_;
   };
 
   /**
@@ -109,8 +104,8 @@ namespace TAO
    */
   template<typename S_var,
            typename S_forany,
-           typename Insert_Policy>
-  class Ret_Fixed_Array_SArgument_T : public RetArgument, private Insert_Policy
+           template <typename> class Insert_Policy>
+  class Ret_Fixed_Array_SArgument_T : public RetArgument
   {
   public:
     Ret_Fixed_Array_SArgument_T (void);
@@ -133,7 +128,7 @@ namespace TAO
    */
   template<typename T_var,
            typename T_forany,
-           typename Insert_Policy>
+           template <typename> class Insert_Policy>
   struct Fixed_Array_SArg_Traits_T
   {
     typedef typename T_forany::_slice_type *             ret_type;

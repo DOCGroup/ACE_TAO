@@ -31,7 +31,6 @@ namespace TAO
    * @brief IN stub argument of variable size element array.
    *
    */
-<<<<<<< Var_Array_Argument_T.h
   template<typename S_forany,
            template <typename> class Insert_Policy>
   class In_Var_Array_Argument_T : public InArgument

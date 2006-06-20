@@ -84,8 +84,7 @@ namespace Dynamic
 
   typedef
     TAO_Out_T<
-        Parameter,
-        Parameter_var
+        Parameter
       >
     Parameter_out;
 

@@ -1131,8 +1131,7 @@ namespace DynamicAny
 
   typedef
     TAO_Out_T<
-        NameValuePair,
-        NameValuePair_var
+        NameValuePair
       >
     NameValuePair_out;
 
@@ -1204,8 +1203,7 @@ namespace DynamicAny
 
   typedef
     TAO_Out_T<
-        NameDynAnyPair,
-        NameDynAnyPair_var
+        NameDynAnyPair
       >
     NameDynAnyPair_out;
 

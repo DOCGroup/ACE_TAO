@@ -126,8 +126,7 @@ namespace GIOP
 
   typedef
     TAO_Out_T<
-        IORAddressingInfo,
-        IORAddressingInfo_var
+        IORAddressingInfo
       >
     IORAddressingInfo_out;
 
@@ -156,8 +155,7 @@ namespace GIOP
 
   typedef
     TAO_Out_T<
-        TargetAddress,
-        TargetAddress_var
+        TargetAddress
       >
     TargetAddress_out;
 
@@ -184,6 +182,7 @@ namespace GIOP
     // be\be_visitor_union/union_ch.cpp:113
 
     typedef TargetAddress_var _var_type;
+    typedef TargetAddress_out _out_type;
 
     // TAO_IDL - Generated from
     // be\be_visitor_union_branch/public_ch.cpp:557

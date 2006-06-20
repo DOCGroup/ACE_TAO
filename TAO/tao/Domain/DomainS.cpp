@@ -91,7 +91,7 @@ namespace TAO
             CORBA::Policy_ptr,
             CORBA::Policy_var,
             CORBA::Policy_out,
-            TAO::Any_Insert_Policy_AnyTypeCode_Adapter <CORBA::Policy_ptr>
+            TAO::Any_Insert_Policy_AnyTypeCode_Adapter
           >
   {
   };
@@ -108,7 +108,7 @@ namespace TAO
             CORBA::InterfaceDef_ptr,
             CORBA::InterfaceDef_var,
             CORBA::InterfaceDef_out,
-            TAO::Any_Insert_Policy_IFR_Client_Adapter <CORBA::InterfaceDef_ptr>
+            TAO::Any_Insert_Policy_IFR_Client_Adapter
           >
   {
   };
@@ -135,7 +135,7 @@ namespace TAO
             CORBA::Policy_var,
             CORBA::Policy_out,
             TAO::Objref_Traits<CORBA::Policy>,
-            TAO::Any_Insert_Policy_Stream <CORBA::Policy_ptr>
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -153,7 +153,7 @@ namespace TAO
             CORBA::InterfaceDef_var,
             CORBA::InterfaceDef_out,
             TAO::Objref_Traits<CORBA::InterfaceDef>,
-            TAO::Any_Insert_Policy_Stream <CORBA::InterfaceDef_ptr>
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };

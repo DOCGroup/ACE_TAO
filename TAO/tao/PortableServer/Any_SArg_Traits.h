@@ -38,7 +38,7 @@ namespace TAO
     : public
         Var_Size_SArg_Traits_T<
             CORBA::Any,
-            TAO::Any_Insert_Policy_Stream <CORBA::Any>
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
