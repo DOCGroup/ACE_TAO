@@ -1,3 +1,24 @@
+Tue Jun 20 19:25:20 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/Task.{h inl cpp}: Moved the public data members (thr_count_,
+          thr_mgr_, flags_, grp_id_, lock_) from public to a new protected
+          section. There was a comment that said these should be private, but
+          no reason given why they weren't.
+          Removed the thr_count_dec() method since it is no longer used
+          anywhere in ACE. Moved its functionality into cleanup() where it
+          also sets the new last_thread_id_ member (see below).
+          Added a new member last_thread_id_ which holds the thread ID
+          (ACE_thread_t) of the last thread to exit svc() processing. Before
+          any threads exit, the value is 0; it's set to 0 in the constructor
+          and in activate().
+          The new accessor, ACE_thread_t last_thread (void) const, retrieves
+          the value of last_thread_id_. It's recommended that a thread in
+          close() check the last_thread_id_ value, rather than the thr_count(),
+          when deciding if it's safe to destroy the object. Since thr_count
+          can be seen as 0 in multiple threads concurrently, it's not safe
+          to rely on for destroying a thread. This fixes Bugzilla #2339.
+          Thanks to Howard Finer <hfiner@sonusnet.com> for this idea.
+
 Tue Jun 20 18:55:12 UTC 2006  Martin Corino  <mcorino@remedy.nl>
 
         * tests/Based_Pointer_Test.cpp:

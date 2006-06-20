@@ -19,7 +19,8 @@ ACE_Task_Base::ACE_Task_Base (ACE_Thread_Manager *thr_man)
   : thr_count_ (0),
     thr_mgr_ (thr_man),
     flags_ (0),
-    grp_id_ (-1)
+    grp_id_ (-1),
+    last_thread_id_ (0)
 {
 }
 
@@ -191,6 +192,8 @@ ACE_Task_Base::activate (long flags,
   if (this->grp_id_ == -1)
     this->grp_id_ = grp_spawned;
 
+  this->last_thread_id_ = 0;    // Reset to prevent inadvertant match on ID
+
   return 0;
 
 #else
@@ -218,10 +221,16 @@ ACE_Task_Base::cleanup (void *object, void *)
 
   // The thread count must be decremented first in case the <close>
   // hook does something crazy like "delete this".
-  t->thr_count_dec ();
+  {
+    ACE_MT (ACE_GUARD (ACE_Thread_Mutex, ace_mon, t->lock_));
+    t->thr_count_--;
+    if (0 == t->thr_count_)
+      t->last_thread_id_ = ACE_Thread::self ();
+  }
 
   // @@ Is it possible to pass in the exit status somehow?
   t->close ();
+  // t is undefined here. close() could have deleted it.
 }
 
 
