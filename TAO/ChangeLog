@@ -1,3 +1,15 @@
+Tue Jun 20 17:21:42 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/EndpointPolicy.mpc:
+        * tao/PortableServer.mpc:
+        * tao/TypeCodeFactory.mpc:
+        * tao/Valuetype.mpc:
+        
+          Replaced double quotes in these files with <%quote%>. Thanks
+          to Chad Elliott <elliott_c@ociweb.com> for providing
+          the fix that allowed the generated *.vcproj files to
+          load on MSVC 7.1.
+
 Tue Jun 20 15:28:18 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * TAO_IDL/Makefile.am:
