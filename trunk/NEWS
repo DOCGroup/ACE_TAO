@@ -22,6 +22,10 @@ USER VISIBLE CHANGES BETWEEN ACE-5.5.1 and ACE-5.5.2
   recommended practice (C++NPv2, page 189) of comparing the return value of
   thr_count() with 0.
 
+. Changed the first argument to ACE_OS::strptime() to be 'const' which
+  matches its usual usage in POSIX strptime(). This change allows users to
+  pass const strings in - a common use case.
+
 USER VISIBLE CHANGES BETWEEN ACE-5.5 and ACE-5.5.1
 ====================================================
 

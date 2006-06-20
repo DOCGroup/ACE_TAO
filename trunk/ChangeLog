@@ -1,3 +1,13 @@
+Tue Jun 20 22:09:54 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS_NS_time.cpp (strptime): Added a const_cast<char*> wherever
+          a return of something based on the const char *buf was done; related
+          to:
+          Tue Jun 20 20:19:37 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * NEWS: Noted that the signature of ACE_OS::strptime() changed, also
+          related to the entry above.
+
 Tue Jun 20 20:19:37 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * configure.ac:
