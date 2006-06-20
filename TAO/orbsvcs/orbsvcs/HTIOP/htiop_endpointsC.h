@@ -78,8 +78,7 @@ typedef
 
 typedef
   TAO_Out_T<
-      HTIOP_Endpoint_Info,
-      HTIOP_Endpoint_Info_var
+      HTIOP_Endpoint_Info
     >
   HTIOP_Endpoint_Info_out;
 
