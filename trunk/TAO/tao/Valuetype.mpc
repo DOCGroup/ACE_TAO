@@ -27,11 +27,9 @@ project : taolib, core, core_anytypecode, tao_versioning_idl_defaults {
   }
 
   IDL_Files {
-    idlflags += -SS -Ge 1 -Sorb -I$(TAO_ROOT) \
+    idlflags += -SS -Ge 1 -Sorb \
                 -Wb,export_macro=TAO_Valuetype_Export \
                 -Wb,export_include=<%quote%>tao/Valuetype/valuetype_export.h<%quote%> \
-                -Wb,pre_include=<%quote%>ace/pre.h<%quote%> \
-                -Wb,post_include=<%quote%>ace/post.h<%quote%> \
                 -o Valuetype
     idlflags -= -Sa -St
     Valuetype/StringValue.pidl
