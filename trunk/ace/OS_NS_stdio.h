@@ -29,9 +29,10 @@
 #include "ace/os_include/os_fcntl.h"
 #include "ace/ACE_export.h"
 
-#if defined (CYGWIN32)
+/* OPENVMS needs unistd for cuserid() */
+#if defined (CYGWIN32) || defined (ACE_OPENVMS)
 #  include "ace/os_include/os_unistd.h"
-#endif /* CYGWIN32 */
+#endif /* CYGWIN32 || ACE_OPENVMS */
 
 #if defined (ACE_EXPORT_MACRO)
 #  undef ACE_EXPORT_MACRO

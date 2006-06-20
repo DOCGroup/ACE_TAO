@@ -121,6 +121,19 @@ public:
   bool operator!= (ACE_Static_Svc_Descriptor &) const;
 };
 
+#if defined (ACE_OPENVMS)
+/**
+ * @class ACE_Static_Svc_Registrar
+ *
+ * @brief Used to register Service allocator function by its full name.
+ */
+class ACE_Static_Svc_Registrar
+{
+public:
+  ACE_Static_Svc_Registrar (const ACE_TCHAR* alloc_name,
+                            ACE_SERVICE_ALLOCATOR alloc);
+};
+#endif
 
 #define ACE_Component_Config ACE_Service_Config
 
