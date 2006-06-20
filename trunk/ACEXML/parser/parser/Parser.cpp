@@ -2969,7 +2969,7 @@ ACEXML_Parser::push_context (ACEXML_Parser_Context* context)
 int
 ACEXML_Parser::pop_context (int GE_ref ACEXML_ENV_ARG_DECL)
 {
-  int nrelems = this->ctx_stack_.size();
+  size_t nrelems = this->ctx_stack_.size();
   if (nrelems <= 1)
     {
       this->fatal_error(ACE_TEXT ("Unexpected end-of-file")
