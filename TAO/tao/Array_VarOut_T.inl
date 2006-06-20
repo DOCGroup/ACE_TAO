@@ -34,7 +34,8 @@ TAO_Array_Var_Base_T<array_traits>::~TAO_Array_Var_Base_T (void)
 
 template<typename array_traits>
 ACE_INLINE
-TAO_Array_Var_Base_T<array_traits>::operator typename TAO_Array_Var_Base_T<array_traits>::slice_type * const & () const
+TAO_Array_Var_Base_T<array_traits>::operator
+typename TAO_Array_Var_Base_T<array_traits>::slice_type * const & () const
 {
   return this->ptr_;
 }
@@ -154,7 +155,8 @@ TAO_VarArray_Var_T<array_traits>::TAO_VarArray_Var_T (
 
 template<typename array_traits>
 ACE_INLINE
-TAO_VarArray_Var_T<array_traits>::operator typename TAO_VarArray_Var_T<array_traits>::_slice_type *& ()
+TAO_VarArray_Var_T<array_traits>::operator
+typename TAO_VarArray_Var_T<array_traits>::_slice_type *& ()
 {
   return this->ptr_;
 }
@@ -218,7 +220,8 @@ TAO_Array_Out_T<array_traits, T_var>::operator= (_slice_type *p)
 
 template<typename array_traits, typename T_var>
 ACE_INLINE
-TAO_Array_Out_T<array_traits, T_var>::operator typename TAO_Array_Out_T<array_traits, T_var>::_slice_type *& ()
+TAO_Array_Out_T<array_traits, T_var>::operator
+typename TAO_Array_Out_T<array_traits, T_var>::_slice_type *& ()
 {
   return this->ptr_;
 }
@@ -297,14 +300,16 @@ TAO_Array_Forany_T<array_traits>::operator= (
 
 template<typename array_traits>
 ACE_INLINE
-TAO_Array_Forany_T<array_traits>::operator typename TAO_Array_Forany_T<array_traits>::_slice_type * const & () const
+TAO_Array_Forany_T<array_traits>::operator
+typename TAO_Array_Forany_T<array_traits>::_slice_type * const & () const
 {
   return this->ptr_;
 }
 
 template<typename array_traits>
 ACE_INLINE
-TAO_Array_Forany_T<array_traits>::operator typename TAO_Array_Forany_T<array_traits>::_slice_type *& ()
+TAO_Array_Forany_T<array_traits>::operator
+typename TAO_Array_Forany_T<array_traits>::_slice_type *& ()
 {
   return this->ptr_;
 }
