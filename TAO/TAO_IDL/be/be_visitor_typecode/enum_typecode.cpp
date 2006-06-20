@@ -31,8 +31,9 @@ TAO::be_visitor_enum_typecode::visit_enum (be_enum * node)
 
   os << be_nl << be_nl
      << "// TAO_IDL - Generated from" << be_nl
-     << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+     << "// " << __FILE__ << ":" << __LINE__ << be_nl;
 
+  os << be_global->core_versioning_begin () << be_nl;
 
   static ACE_CString const tao_enumerators ("_tao_enumerators_");
   ACE_CString const enumerators_name (tao_enumerators
@@ -63,7 +64,12 @@ TAO::be_visitor_enum_typecode::visit_enum (be_enum * node)
     << node->member_count () << ");" << be_uidt_nl
     << be_uidt_nl;
 
-  return this->gen_typecode_ptr (node);
+  if (this->gen_typecode_ptr (node) != 0)
+    return -1;
+
+  os << be_global->core_versioning_end () << be_nl;
+
+  return 0;
 }
 
 int

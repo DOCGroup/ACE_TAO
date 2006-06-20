@@ -98,7 +98,6 @@ public:
   bool cli_arg_traits_gen (void);
   bool srv_arg_traits_gen (void);
   bool srv_sarg_traits_gen (void);
-  bool cli_tmpl_class_gen (void);
   bool cli_pragma_inst_gen (void);
   bool cli_inarg_tmpl_class_gen (void);
   bool cli_inarg_pragma_inst_gen (void);
@@ -144,7 +143,6 @@ public:
   void cli_arg_traits_gen (bool);
   void srv_arg_traits_gen (bool);
   void srv_sarg_traits_gen (bool);
-  void cli_tmpl_class_gen (bool);
   void cli_pragma_inst_gen (bool);
   void cli_inarg_tmpl_class_gen (bool);
   void cli_inarg_pragma_inst_gen (bool);
@@ -200,7 +198,6 @@ private:
   bool cli_arg_traits_gen_;
   bool srv_arg_traits_gen_;
   bool srv_sarg_traits_gen_;
-  bool cli_tmpl_class_gen_;
   bool cli_pragma_inst_gen_;
   bool cli_inarg_tmpl_class_gen_;
   bool cli_inarg_pragma_inst_gen_;

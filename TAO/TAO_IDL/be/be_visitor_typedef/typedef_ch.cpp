@@ -194,15 +194,17 @@ be_visitor_typedef_ch::visit_array (be_array *node)
           << " " << tdef->nested_type_name (scope) << ";" << be_nl;
       *os << "typedef " << bt->nested_type_name (scope, "_slice")
           << " " << tdef->nested_type_name (scope, "_slice") << ";" << be_nl;
-      // Typedef the _var, _out, and _forany types.
+      // Typedef the _var, _out, _tag  types.
       *os << "typedef " << bt->nested_type_name (scope, "_var")
           << " " << tdef->nested_type_name (scope, "_var") << ";" << be_nl;
       *os << "typedef " << bt->nested_type_name (scope, "_out")
           << " " << tdef->nested_type_name (scope, "_out") << ";" << be_nl;
-      *os << "typedef " << bt->nested_type_name (scope, "_forany")
-          << " " << tdef->nested_type_name (scope, "_forany") << ";" << be_nl;
       *os << "typedef " << bt->nested_type_name (scope, "_tag")
           << " " << tdef->nested_type_name (scope, "_tag") << ";" << be_nl;
+      *os << "typedef " << bt->nested_type_name (scope, "_forany")
+          << " " << tdef->nested_type_name (scope, "_forany") << ";" << be_nl;
+      *os << "typedef " << bt->nested_type_name (scope, "_traits")
+          << " " << tdef->nested_type_name (scope, "_traits") << ";" << be_nl;
 
       // The _alloc, _dup, copy, and free methods
 
@@ -252,12 +254,6 @@ be_visitor_typedef_ch::visit_array (be_array *node)
           << "void " << td_name << "_copy (" << be_idt << be_idt_nl
           << td_name << "_slice *_tao_to," << be_nl
           << "const " << td_name << "_slice *_tao_from" << be_uidt_nl
-          << ");" << be_uidt_nl;
-      // _zero
-      *os << be_nl
-          << "ACE_INLINE " << static_decl << be_nl
-          << "void " << td_name << "_zero (" << be_idt << be_idt_nl
-          << td_name << "_slice *_tao_slice" << be_uidt_nl
           << ");" << be_uidt_nl;
       // _free
       *os << be_nl

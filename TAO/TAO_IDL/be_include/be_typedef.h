@@ -40,7 +40,6 @@ public:
               bool a);
   // Constructor.
 
-  virtual void seq_elem_tmplinst (bool val);
   virtual void seen_in_sequence (bool val);
   virtual void seen_in_operation (bool val);
   // Mutator overrides for be_type members. If we have been

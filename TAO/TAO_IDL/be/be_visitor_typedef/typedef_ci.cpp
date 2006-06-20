@@ -218,16 +218,6 @@ be_visitor_typedef_ci::visit_array (be_array *node)
       *os << "{" << be_idt_nl;
       *os << bt->name () << "_free (_tao_src);" << be_uidt_nl;
       *os << "}" << be_nl << be_nl;
-
-      // zero method
-      *os << "ACE_INLINE" << be_nl
-          << "void" << be_nl;
-      *os << tdef->name () << "_zero (" << be_idt << be_idt_nl
-          << tdef->name () << "_slice *_tao_src" << be_uidt_nl
-          << ")" << be_uidt_nl;
-      *os << "{" << be_idt_nl;
-      *os << bt->name () << "_zero (_tao_src);" << be_uidt_nl;
-      *os << "}" << be_nl << be_nl;
     }
 
   bt->cli_inline_gen (true);

@@ -11,7 +11,7 @@
 //    serializer_op_ch.cpp
 //
 // = DESCRIPTION
-//    Visitor generating code for TAO::DCPS::Serializer operators 
+//    Visitor generating code for TAO::DCPS::Serializer operators
 //    of a Typedef node
 //
 // = AUTHOR
@@ -19,8 +19,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_typedef, 
-           serializer_op_ch, 
+ACE_RCSID (be_visitor_typedef,
+           serializer_op_ch,
            "$Id$")
 
 // ***************************************************************************
@@ -91,7 +91,7 @@ be_visitor_typedef_serializer_op_ch::visit_typedef (be_typedef *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_typedef_serializer_op_ch::"
                              "visit_typedef - "
-                             "bad primitive base type\n"),  
+                             "bad primitive base type\n"),
                             -1);
         }
 
@@ -101,7 +101,7 @@ be_visitor_typedef_serializer_op_ch::visit_typedef (be_typedef *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_typedef_serializer_op_ch::"
                              "visit_typedef - "
-                             "failed to accept visitor\n"),  
+                             "failed to accept visitor\n"),
                             -1);
         }
 
@@ -121,7 +121,7 @@ be_visitor_typedef_serializer_op_ch::visit_typedef (be_typedef *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_typedef_serializer_op_ch::"
                              "visit_typedef - "
-                             "bad base type\n"),  
+                             "bad base type\n"),
                             -1);
         }
 
@@ -131,7 +131,7 @@ be_visitor_typedef_serializer_op_ch::visit_typedef (be_typedef *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_typedef_serializer_op_ch::"
                              "visit_typedef - "
-                             "failed to accept visitor\n"),  
+                             "failed to accept visitor\n"),
                             -1);
         }
 
@@ -156,8 +156,8 @@ be_visitor_typedef_serializer_op_ch::visit_array (be_array *node)
       bt = node;
     }
 
-  if (!bt->imported () 
-      && bt->node_type () == AST_Decl::NT_array)
+  if (!bt->imported () &&
+      bt->node_type () == AST_Decl::NT_array)
     {
       // Let the base class visitor handle this case.
       if (this->be_visitor_typedef::visit_array (node) == -1)
@@ -165,7 +165,7 @@ be_visitor_typedef_serializer_op_ch::visit_array (be_array *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_typedef_serializer_op_ch::"
                              "visit_array - "
-                             "base class visitor failed \n"),  
+                             "base class visitor failed \n"),
                             -1);
         }
     }
@@ -195,7 +195,7 @@ be_visitor_typedef_serializer_op_ch::visit_enum (be_enum *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_typedef_serializer_op_ch::"
                              "visit_enum - "
-                             "base class visitor failed \n"),  
+                             "base class visitor failed \n"),
                             -1);
         }
     }
@@ -225,7 +225,7 @@ be_visitor_typedef_serializer_op_ch::visit_sequence (be_sequence *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_typedef_serializer_op_ch::"
                              "visit_sequence - "
-                             "base class visitor failed \n"),  
+                             "base class visitor failed \n"),
                             -1);
         }
     }
@@ -255,7 +255,7 @@ be_visitor_typedef_serializer_op_ch::visit_structure (be_structure *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_typedef_serializer_op_ch::"
                              "visit_structure - "
-                             "base class visitor failed \n"),  
+                             "base class visitor failed \n"),
                             -1);
         }
     }
@@ -285,7 +285,7 @@ be_visitor_typedef_serializer_op_ch::visit_union (be_union *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_typedef_op_ch::"
                              "visit_union - "
-                             "base class visitor failed \n"),  
+                             "base class visitor failed \n"),
                             -1);
         }
     }
