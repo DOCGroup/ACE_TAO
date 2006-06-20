@@ -6,12 +6,13 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ./bin/mwc.pl -include /home/jtc/ACE/ACE-config3/MPC/config -include /home/jtc/ACE/ACE-config3/MPC/templates -type automake ACE.mwc
+## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
 
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.Misc_Test_Dump.am 
+
+## Makefile.Misc_Test_Dump.am
 noinst_PROGRAMS = test_dump
 
 test_dump_CPPFLAGS = \
@@ -23,9 +24,9 @@ test_dump_SOURCES = \
   test_dump.h
 
 test_dump_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Misc_Test_Get_Opt.am 
+## Makefile.Misc_Test_Get_Opt.am
 noinst_PROGRAMS += test_get_opt
 
 test_get_opt_CPPFLAGS = \
@@ -37,9 +38,11 @@ test_get_opt_SOURCES = \
   test_dump.h
 
 test_get_opt_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Misc_Test_Profile_Timer.am 
+## Makefile.Misc_Test_Profile_Timer.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += test_profile_timer
 
 test_profile_timer_CPPFLAGS = \
@@ -51,9 +54,11 @@ test_profile_timer_SOURCES = \
   test_dump.h
 
 test_profile_timer_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Misc_Test_Read_Buffer.am 
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.Misc_Test_Read_Buffer.am
 noinst_PROGRAMS += test_read_buffer
 
 test_read_buffer_CPPFLAGS = \
@@ -65,9 +70,9 @@ test_read_buffer_SOURCES = \
   test_dump.h
 
 test_read_buffer_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Misc_Test_Set.am 
+## Makefile.Misc_Test_Set.am
 noinst_PROGRAMS += test_set
 
 test_set_CPPFLAGS = \
@@ -79,9 +84,9 @@ test_set_SOURCES = \
   test_dump.h
 
 test_set_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Misc_Test_Sstring.am 
+## Makefile.Misc_Test_Sstring.am
 noinst_PROGRAMS += test_sstring
 
 test_sstring_CPPFLAGS = \
@@ -93,9 +98,9 @@ test_sstring_SOURCES = \
   test_dump.h
 
 test_sstring_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Misc_Test_Trace.am 
+## Makefile.Misc_Test_Trace.am
 noinst_PROGRAMS += test_trace
 
 test_trace_CPPFLAGS = \
@@ -107,7 +112,75 @@ test_trace_SOURCES = \
   test_dump.h
 
 test_trace_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+## Makefile.Misc_Test_XtReactor1.am
+
+if BUILD_ACE_XTREACTOR
+if BUILD_MOTIF
+if BUILD_X11
+if BUILD_XT
+
+noinst_PROGRAMS += test_XtReactor1
+
+test_XtReactor1_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  $(ACE_X11_CPPFLAGS) \
+  $(ACE_XT_CPPFLAGS)
+
+test_XtReactor1_SOURCES = \
+  test_XtReactor1.cpp \
+  test_dump.h
+
+test_XtReactor1_LDFLAGS = \
+ $(ACE_X11_LDFLAGS) $(ACE_XT_LDFLAGS)
+
+test_XtReactor1_LDADD = \
+  $(ACE_BUILDDIR)/ace/libACE_XtReactor.la \
+  $(ACE_BUILDDIR)/ace/libACE.la \
+  -lXm \
+  $(ACE_XT_LIBS) \
+  $(ACE_X11_LIBS)
+
+endif BUILD_XT
+endif BUILD_X11
+endif BUILD_MOTIF
+endif BUILD_ACE_XTREACTOR
+
+## Makefile.Misc_Test_XtReactor2.am
+
+if BUILD_ACE_XTREACTOR
+if BUILD_MOTIF
+if BUILD_X11
+if BUILD_XT
+
+noinst_PROGRAMS += test_XtReactor2
+
+test_XtReactor2_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  $(ACE_X11_CPPFLAGS) \
+  $(ACE_XT_CPPFLAGS)
+
+test_XtReactor2_SOURCES = \
+  test_XtReactor2.cpp \
+  test_dump.h
+
+test_XtReactor2_LDFLAGS = \
+ $(ACE_X11_LDFLAGS) $(ACE_XT_LDFLAGS)
+
+test_XtReactor2_LDADD = \
+  $(ACE_BUILDDIR)/ace/libACE_XtReactor.la \
+  $(ACE_BUILDDIR)/ace/libACE.la \
+  -lXm \
+  $(ACE_XT_LIBS) \
+  $(ACE_X11_LIBS)
+
+endif BUILD_XT
+endif BUILD_X11
+endif BUILD_MOTIF
+endif BUILD_ACE_XTREACTOR
 
 ## Clean up template repositories, etc.
 clean-local:

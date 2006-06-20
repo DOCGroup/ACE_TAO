@@ -11,7 +11,8 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.Timer_Queue_Library.am 
+## Makefile.Timer_Queue_Library.am
+
 noinst_LTLIBRARIES = libtqtd.la
 
 libtqtd_la_CPPFLAGS = \
@@ -25,16 +26,13 @@ libtqtd_la_SOURCES = \
   Reactor_Timer_Queue_Test.cpp \
   Thread_Timer_Queue_Test.cpp
 
-libtqtd_la_LIBADD = \
- $(top_builddir)/ace/libACE.la
-
 noinst_HEADERS = \
   Async_Timer_Queue_Test.h \
   Driver.h \
   Reactor_Timer_Queue_Test.h \
   Thread_Timer_Queue_Test.h
 
-## Makefile.Timer_Queue_Async.am 
+## Makefile.Timer_Queue_Async.am
 noinst_PROGRAMS = Asynch_Timer_Queue_Test
 
 Asynch_Timer_Queue_Test_CPPFLAGS = \
@@ -49,9 +47,10 @@ Asynch_Timer_Queue_Test_SOURCES = \
   Thread_Timer_Queue_Test.h
 
 Asynch_Timer_Queue_Test_LDADD = \
- libtqtd.la $(top_builddir)/ace/libACE.la
+  libtqtd.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Timer_Queue_Reactor.am 
+## Makefile.Timer_Queue_Reactor.am
 noinst_PROGRAMS += Reactor_Timer_Queue_Test
 
 Reactor_Timer_Queue_Test_CPPFLAGS = \
@@ -66,9 +65,10 @@ Reactor_Timer_Queue_Test_SOURCES = \
   Thread_Timer_Queue_Test.h
 
 Reactor_Timer_Queue_Test_LDADD = \
- libtqtd.la $(top_builddir)/ace/libACE.la
+  libtqtd.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Timer_Queue_Thread.am 
+## Makefile.Timer_Queue_Thread.am
 noinst_PROGRAMS += Thread_Timer_Queue_Test
 
 Thread_Timer_Queue_Test_CPPFLAGS = \
@@ -83,7 +83,8 @@ Thread_Timer_Queue_Test_SOURCES = \
   Thread_Timer_Queue_Test.h
 
 Thread_Timer_Queue_Test_LDADD = \
- libtqtd.la $(top_builddir)/ace/libACE.la
+  libtqtd.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Clean up template repositories, etc.
 clean-local:

@@ -11,7 +11,10 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.dev_sap_writer.am 
+
+## Makefile.dev_sap_writer.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS = writer
 
 writer_CPPFLAGS = \
@@ -22,7 +25,9 @@ writer_SOURCES = \
   writer.cpp
 
 writer_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif !BUILD_ACE_FOR_TAO
 
 ## Clean up template repositories, etc.
 clean-local:

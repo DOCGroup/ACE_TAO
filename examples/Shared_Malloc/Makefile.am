@@ -11,8 +11,12 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.Shared_Malloc.am 
-noinst_PROGRAMS = malloc
+noinst_PROGRAMS =
+
+## Makefile.Shared_Malloc.am
+
+if !BUILD_ACE_FOR_TAO
+noinst_PROGRAMS += malloc
 
 malloc_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -26,9 +30,13 @@ malloc_SOURCES = \
   Options.h
 
 malloc_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Shared_Malloc_Multiple.am 
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.Shared_Malloc_Multiple.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += multiple
 
 multiple_CPPFLAGS = \
@@ -43,9 +51,13 @@ multiple_SOURCES = \
   Options.h
 
 multiple_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Shared_Malloc_Persistence.am 
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.Shared_Malloc_Persistence.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += persistence
 
 persistence_CPPFLAGS = \
@@ -59,9 +71,13 @@ persistence_SOURCES = \
   test_position_independent_malloc.h
 
 persistence_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Shared_Malloc_Posind.am 
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.Shared_Malloc_Posind.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += posind
 
 posind_CPPFLAGS = \
@@ -77,7 +93,9 @@ posind_SOURCES = \
   test_position_independent_malloc.h
 
 posind_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif !BUILD_ACE_FOR_TAO
 
 ## Clean up template repositories, etc.
 clean-local:

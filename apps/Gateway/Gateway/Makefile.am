@@ -11,7 +11,8 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.Gateway.am 
+## Makefile.Gateway.am
+
 noinst_LTLIBRARIES = libGateway.la
 
 libGateway_la_CPPFLAGS = \
@@ -30,9 +31,6 @@ libGateway_la_SOURCES = \
   Gateway.cpp \
   Options.cpp
 
-libGateway_la_LIBADD = \
- $(top_builddir)/ace/libACE.la
-
 noinst_HEADERS = \
   Concrete_Connection_Handlers.h \
   Config_Files.h \
@@ -45,7 +43,7 @@ noinst_HEADERS = \
   Gateway.h \
   Options.h
 
-## Makefile.gatewayd.am 
+## Makefile.gatewayd.am
 noinst_PROGRAMS = gatewayd
 
 gatewayd_CPPFLAGS = \
@@ -68,7 +66,8 @@ gatewayd_SOURCES = \
   Options.h
 
 gatewayd_LDADD = \
- libGateway.la $(top_builddir)/ace/libACE.la
+  libGateway.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Clean up template repositories, etc.
 clean-local:

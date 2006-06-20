@@ -11,18 +11,15 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.IOStream_Client.am 
-noinst_PROGRAMS = iostream_client
+## Makefile.IOStream_Client.am
+noinst_LTLIBRARIES = libIOStream_Client.la
 
-iostream_client_CPPFLAGS = \
+libIOStream_Client_la_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR)
 
-iostream_client_SOURCES = \
+libIOStream_Client_la_SOURCES = \
   iostream_client.cpp
-
-iostream_client_LDADD = \
- $(top_builddir)/ace/libACE.la
 
 ## Clean up template repositories, etc.
 clean-local:

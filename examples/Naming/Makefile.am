@@ -11,8 +11,12 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.Naming_Multiple_Contexts.am 
-noinst_PROGRAMS = multiple_contexts
+noinst_PROGRAMS =
+
+## Makefile.Naming_Multiple_Contexts.am
+
+if !BUILD_ACE_FOR_TAO
+noinst_PROGRAMS += multiple_contexts
 
 multiple_contexts_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -22,9 +26,13 @@ multiple_contexts_SOURCES = \
   test_multiple_contexts.cpp
 
 multiple_contexts_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Naming_Non_Existent.am 
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.Naming_Non_Existent.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += non_existent
 
 non_existent_CPPFLAGS = \
@@ -35,9 +43,13 @@ non_existent_SOURCES = \
   test_non_existent.cpp
 
 non_existent_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Naming_Open.am 
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.Naming_Open.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += open
 
 open_CPPFLAGS = \
@@ -48,9 +60,13 @@ open_SOURCES = \
   test_open.cpp
 
 open_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Naming_Writers.am 
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.Naming_Writers.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += writers
 
 writers_CPPFLAGS = \
@@ -61,7 +77,9 @@ writers_SOURCES = \
   test_writers.cpp
 
 writers_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif !BUILD_ACE_FOR_TAO
 
 ## Clean up template repositories, etc.
 clean-local:

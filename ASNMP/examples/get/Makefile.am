@@ -11,8 +11,12 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.asnmp_example_get.am 
-noinst_PROGRAMS = get
+noinst_PROGRAMS =
+
+## Makefile.asnmp_example_get.am
+
+if !BUILD_USES_WCHAR
+noinst_PROGRAMS += get
 
 get_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -23,9 +27,14 @@ get_SOURCES = \
   get.cpp
 
 get_LDADD = \
- $(top_builddir)/ASNMP/asnmp/libasnmp.la $(top_builddir)/ace/libACE.la
+  $(top_builddir)/ASNMP/asnmp/libasnmp.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.asnmp_example_get_async.am 
+endif !BUILD_USES_WCHAR
+
+## Makefile.asnmp_example_get_async.am
+
+if !BUILD_USES_WCHAR
 noinst_PROGRAMS += get_async
 
 get_async_CPPFLAGS = \
@@ -37,7 +46,10 @@ get_async_SOURCES = \
   get_async.cpp
 
 get_async_LDADD = \
- $(top_builddir)/ASNMP/asnmp/libasnmp.la $(top_builddir)/ace/libACE.la
+  $(top_builddir)/ASNMP/asnmp/libasnmp.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif !BUILD_USES_WCHAR
 
 ## Clean up template repositories, etc.
 clean-local:

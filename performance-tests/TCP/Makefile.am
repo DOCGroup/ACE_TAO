@@ -11,7 +11,10 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.TCP.am 
+
+## Makefile.TCP.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS = tcp_test
 
 tcp_test_CPPFLAGS = \
@@ -22,7 +25,9 @@ tcp_test_SOURCES = \
   tcp_test.cpp
 
 tcp_test_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif !BUILD_ACE_FOR_TAO
 
 ## Clean up template repositories, etc.
 clean-local:

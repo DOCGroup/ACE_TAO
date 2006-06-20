@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ./bin/mwc.pl -include /home/jtc/ACE/ACE-config3/MPC/config -include /home/jtc/ACE/ACE-config3/MPC/templates -type automake ACE.mwc
+## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
 
 includedir = @includedir@/ACEXML/common
 pkgconfigdir = @libdir@/pkgconfig
@@ -14,6 +14,10 @@ pkgconfigdir = @libdir@/pkgconfig
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
+
+## Makefile.ACEXML.am
+
+if !BUILD_ACE_FOR_TAO
 
 lib_LTLIBRARIES = libACEXML.la
 
@@ -57,7 +61,7 @@ libACEXML_la_SOURCES = \
   ZipCharStream.cpp
 
 libACEXML_la_LDFLAGS = \
- -version-number @ACE_MAJOR@:@ACE_MINOR@:@ACE_BETA@
+ -release @ACE_VERSION_NAME@
 
 libACEXML_la_LIBADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
@@ -107,10 +111,16 @@ nobase_include_HEADERS = \
   XML_Util.h \
   ZipCharStream.h
 
-pkgconfig_DATA = ACEXML.pc
+pkgconfig_DATA = \
+  ACEXML.pc
+
+CLEANFILES = \
+  ACEXML.pc
 
 ACEXML.pc: ${top_builddir}/config.status ${srcdir}/ACEXML.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/ACEXML.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/ACEXML.pc.in
+
+endif !BUILD_ACE_FOR_TAO
 
 EXTRA_DIST = \
   ACEXML.pc.in

@@ -11,7 +11,8 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.Atomic_Op.am 
+
+## Makefile.Atomic_Op.am
 noinst_PROGRAMS = Atomic_Op
 
 Atomic_Op_CPPFLAGS = \
@@ -23,9 +24,9 @@ Atomic_Op_SOURCES = \
   ClientContext.h
 
 Atomic_Op_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Barrier.am 
+## Makefile.Barrier.am
 noinst_PROGRAMS += Barrier
 
 Barrier_CPPFLAGS = \
@@ -37,9 +38,9 @@ Barrier_SOURCES = \
   ClientContext.h
 
 Barrier_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Mutex.am 
+## Makefile.Mutex.am
 noinst_PROGRAMS += Mutex
 
 Mutex_CPPFLAGS = \
@@ -51,9 +52,11 @@ Mutex_SOURCES = \
   ClientContext.h
 
 Mutex_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.RW_Lock.am 
+## Makefile.RW_Lock.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += RW_Lock
 
 RW_Lock_CPPFLAGS = \
@@ -65,9 +68,13 @@ RW_Lock_SOURCES = \
   ClientContext.h
 
 RW_Lock_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Semaphore.am 
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.Semaphore.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += Semaphore
 
 Semaphore_CPPFLAGS = \
@@ -79,9 +86,11 @@ Semaphore_SOURCES = \
   ClientContext.h
 
 Semaphore_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.TSS.am 
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.TSS.am
 noinst_PROGRAMS += TSS
 
 TSS_CPPFLAGS = \
@@ -93,9 +102,9 @@ TSS_SOURCES = \
   ClientContext.h
 
 TSS_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Tokens.am 
+## Makefile.Tokens.am
 noinst_PROGRAMS += Tokens
 
 Tokens_CPPFLAGS = \
@@ -107,9 +116,9 @@ Tokens_SOURCES = \
   ClientContext.h
 
 Tokens_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Tokens_Deadlock.am 
+## Makefile.Tokens_Deadlock.am
 noinst_PROGRAMS += Tokens_Deadlock
 
 Tokens_Deadlock_CPPFLAGS = \
@@ -121,7 +130,7 @@ Tokens_Deadlock_SOURCES = \
   ClientContext.h
 
 Tokens_Deadlock_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Clean up template repositories, etc.
 clean-local:

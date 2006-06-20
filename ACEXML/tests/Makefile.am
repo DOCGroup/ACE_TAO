@@ -11,10 +11,16 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
+SUBDIRS = \
+        . \
+        util
+
 noinst_PROGRAMS =
-## Makefile.ContentHandler_Test.am 
+
+## Makefile.ContentHandler_Test.am
 
 if BUILD_ACEXML
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += ContentHandler_Test
 
 ContentHandler_Test_CPPFLAGS = \
@@ -26,13 +32,17 @@ ContentHandler_Test_SOURCES = \
   ContentHandler_Test.cpp
 
 ContentHandler_Test_LDADD = \
- $(top_builddir)/ACEXML/parser/parser/libACEXML_Parser.la $(top_builddir)/ACEXML/common/libACEXML.la $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ACEXML/parser/parser/libACEXML_Parser.la \
+  $(ACE_BUILDDIR)/ACEXML/common/libACEXML.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
 
+endif !BUILD_ACE_FOR_TAO
 endif BUILD_ACEXML
 
-## Makefile.HttpCharStream_Test.am 
+## Makefile.HttpCharStream_Test.am
 
 if BUILD_ACEXML
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += HttpCharStream_Test
 
 HttpCharStream_Test_CPPFLAGS = \
@@ -44,13 +54,17 @@ HttpCharStream_Test_SOURCES = \
   HttpCharStream_Test.cpp
 
 HttpCharStream_Test_LDADD = \
- $(top_builddir)/ACEXML/parser/parser/libACEXML_Parser.la $(top_builddir)/ACEXML/common/libACEXML.la $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ACEXML/parser/parser/libACEXML_Parser.la \
+  $(ACE_BUILDDIR)/ACEXML/common/libACEXML.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
 
+endif !BUILD_ACE_FOR_TAO
 endif BUILD_ACEXML
 
-## Makefile.NamespaceSupport_Test.am 
+## Makefile.NamespaceSupport_Test.am
 
 if BUILD_ACEXML
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += NamespaceSupport_Test
 
 NamespaceSupport_Test_CPPFLAGS = \
@@ -62,13 +76,17 @@ NamespaceSupport_Test_SOURCES = \
   NamespaceSupport_Test.cpp
 
 NamespaceSupport_Test_LDADD = \
- $(top_builddir)/ACEXML/parser/parser/libACEXML_Parser.la $(top_builddir)/ACEXML/common/libACEXML.la $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ACEXML/parser/parser/libACEXML_Parser.la \
+  $(ACE_BUILDDIR)/ACEXML/common/libACEXML.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
 
+endif !BUILD_ACE_FOR_TAO
 endif BUILD_ACEXML
 
-## Makefile.Transcoder_Test.am 
+## Makefile.Transcoder_Test.am
 
 if BUILD_ACEXML
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += Transcoder_Test
 
 Transcoder_Test_CPPFLAGS = \
@@ -80,8 +98,11 @@ Transcoder_Test_SOURCES = \
   Transcoder_Test.cpp
 
 Transcoder_Test_LDADD = \
- $(top_builddir)/ACEXML/parser/parser/libACEXML_Parser.la $(top_builddir)/ACEXML/common/libACEXML.la $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ACEXML/parser/parser/libACEXML_Parser.la \
+  $(ACE_BUILDDIR)/ACEXML/common/libACEXML.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
 
+endif !BUILD_ACE_FOR_TAO
 endif BUILD_ACEXML
 
 ## Clean up template repositories, etc.

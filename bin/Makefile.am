@@ -15,9 +15,9 @@ SUBDIRS = \
         . \
         PerlACE
 
-## Makefile.bin.am 
+## Makefile.bin.am
 
-noinst_SCRIPTS = ace_tests.lst auto_run_tests.pl
+noinst_SCRIPTS = auto_run_tests.pl ace_tests.lst
 
 noinst_PROGRAMS = envinfo
 
@@ -29,11 +29,7 @@ envinfo_SOURCES = \
   envinfo.cpp
 
 envinfo_LDADD = \
- $(top_builddir)/ace/libACE.la
-
-## This doesn't work... needs a way to separate build and source.
-##TESTS = auto_run_tests.pl
-
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Clean up template repositories, etc.
 clean-local:

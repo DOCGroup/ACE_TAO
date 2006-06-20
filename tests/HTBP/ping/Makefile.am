@@ -11,8 +11,13 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.Ping_Client.am 
-noinst_PROGRAMS = client
+noinst_PROGRAMS =
+
+## Makefile.Ping_Client.am
+
+if !BUILD_ACE_FOR_TAO
+
+noinst_PROGRAMS += client
 
 client_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -23,9 +28,15 @@ client_SOURCES = \
   client.cpp
 
 client_LDADD = \
- $(top_builddir)/protocols/ace/HTBP/libACE_HTBP.la $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/protocols/ace/HTBP/libACE_HTBP.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Ping_Server.am 
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.Ping_Server.am
+
+if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += server
 
 server_CPPFLAGS = \
@@ -37,7 +48,10 @@ server_SOURCES = \
   server.cpp
 
 server_LDADD = \
- $(top_builddir)/protocols/ace/HTBP/libACE_HTBP.la $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/protocols/ace/HTBP/libACE_HTBP.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif !BUILD_ACE_FOR_TAO
 
 ## Clean up template repositories, etc.
 clean-local:

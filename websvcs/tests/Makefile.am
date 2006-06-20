@@ -11,7 +11,7 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.Websvcs_Test.am 
+## Makefile.Websvcs_Test.am
 noinst_PROGRAMS = Test_Url_Addr
 
 Test_Url_Addr_CPPFLAGS = \
@@ -22,7 +22,8 @@ Test_Url_Addr_SOURCES = \
   Test_URL_Addr.cpp
 
 Test_Url_Addr_LDADD = \
- $(top_builddir)/websvcs/lib/libwebsvcs.la $(top_builddir)/ace/libACE.la
+  $(top_builddir)/websvcs/lib/libwebsvcs.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Clean up template repositories, etc.
 clean-local:

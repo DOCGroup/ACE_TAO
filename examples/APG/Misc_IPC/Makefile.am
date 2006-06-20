@@ -11,8 +11,12 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.UDP_Broadcast.am 
-noinst_PROGRAMS = UDP_Broadcast
+noinst_PROGRAMS =
+
+## Makefile.UDP_Broadcast.am
+
+if !BUILD_ACE_FOR_TAO
+noinst_PROGRAMS += UDP_Broadcast
 
 UDP_Broadcast_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -22,9 +26,11 @@ UDP_Broadcast_SOURCES = \
   UDP_Broadcast.cpp
 
 UDP_Broadcast_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.UDP_Multicast.am 
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.UDP_Multicast.am
 noinst_PROGRAMS += UDP_Multicast
 
 UDP_Multicast_CPPFLAGS = \
@@ -35,9 +41,11 @@ UDP_Multicast_SOURCES = \
   UDP_Multicast.cpp
 
 UDP_Multicast_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.UDP_Unicast.am 
+## Makefile.UDP_Unicast.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += UDP_Unicast
 
 UDP_Unicast_CPPFLAGS = \
@@ -48,7 +56,9 @@ UDP_Unicast_SOURCES = \
   UDP_Unicast.cpp
 
 UDP_Unicast_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif !BUILD_ACE_FOR_TAO
 
 ## Clean up template repositories, etc.
 clean-local:

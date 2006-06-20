@@ -11,7 +11,7 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.Change_Instance_Default.am 
+## Makefile.Change_Instance_Default.am
 noinst_PROGRAMS = Change_Instance_Default
 
 Change_Instance_Default_CPPFLAGS = \
@@ -28,9 +28,9 @@ Change_Instance_Default_SOURCES = \
   Trace.h
 
 Change_Instance_Default_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Change_Mask.am 
+## Makefile.Change_Mask.am
 noinst_PROGRAMS += Change_Mask
 
 Change_Mask_CPPFLAGS = \
@@ -47,9 +47,9 @@ Change_Mask_SOURCES = \
   Trace.h
 
 Change_Mask_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Howto_Syslog.am 
+## Makefile.Howto_Syslog.am
 noinst_PROGRAMS += Howto_Syslog
 
 Howto_Syslog_CPPFLAGS = \
@@ -66,9 +66,9 @@ Howto_Syslog_SOURCES = \
   Trace.h
 
 Howto_Syslog_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Simple1.am 
+## Makefile.Simple1.am
 noinst_PROGRAMS += Simple1
 
 Simple1_CPPFLAGS = \
@@ -85,9 +85,9 @@ Simple1_SOURCES = \
   Trace.h
 
 Simple1_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Simple2.am 
+## Makefile.Simple2.am
 noinst_PROGRAMS += Simple2
 
 Simple2_CPPFLAGS = \
@@ -104,9 +104,9 @@ Simple2_SOURCES = \
   Trace.h
 
 Simple2_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Trace_Return.am 
+## Makefile.Trace_Return.am
 noinst_PROGRAMS += Trace_Return
 
 Trace_Return_CPPFLAGS = \
@@ -123,9 +123,9 @@ Trace_Return_SOURCES = \
   Trace.h
 
 Trace_Return_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Use_Callback.am 
+## Makefile.Use_Callback.am
 noinst_PROGRAMS += Use_Callback
 
 Use_Callback_CPPFLAGS = \
@@ -142,9 +142,9 @@ Use_Callback_SOURCES = \
   Trace.h
 
 Use_Callback_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Use_Callback2.am 
+## Makefile.Use_Callback2.am
 noinst_PROGRAMS += Use_Callback2
 
 Use_Callback2_CPPFLAGS = \
@@ -161,9 +161,9 @@ Use_Callback2_SOURCES = \
   Trace.h
 
 Use_Callback2_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Use_LogManager.am 
+## Makefile.Use_LogManager.am
 noinst_PROGRAMS += Use_LogManager
 
 Use_LogManager_CPPFLAGS = \
@@ -180,9 +180,9 @@ Use_LogManager_SOURCES = \
   Trace.h
 
 Use_LogManager_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Use_Logger.am 
+## Makefile.Use_Logger.am
 noinst_PROGRAMS += Use_Logger
 
 Use_Logger_CPPFLAGS = \
@@ -199,9 +199,9 @@ Use_Logger_SOURCES = \
   Trace.h
 
 Use_Logger_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Use_Logging_Server.am 
+## Makefile.Use_Logging_Server.am
 noinst_PROGRAMS += Use_Logging_Server
 
 Use_Logging_Server_CPPFLAGS = \
@@ -218,9 +218,9 @@ Use_Logging_Server_SOURCES = \
   Trace.h
 
 Use_Logging_Server_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Use_Logging_Strategy.am 
+## Makefile.Use_Logging_Strategy.am
 noinst_PROGRAMS += Use_Logging_Strategy
 
 Use_Logging_Strategy_CPPFLAGS = \
@@ -237,9 +237,9 @@ Use_Logging_Strategy_SOURCES = \
   Trace.h
 
 Use_Logging_Strategy_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Use_Multiple_Sinks.am 
+## Makefile.Use_Multiple_Sinks.am
 noinst_PROGRAMS += Use_Multiple_Sinks
 
 Use_Multiple_Sinks_CPPFLAGS = \
@@ -256,9 +256,9 @@ Use_Multiple_Sinks_SOURCES = \
   Trace.h
 
 Use_Multiple_Sinks_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Use_Ostream.am 
+## Makefile.Use_Ostream.am
 noinst_PROGRAMS += Use_Ostream
 
 Use_Ostream_CPPFLAGS = \
@@ -275,9 +275,9 @@ Use_Ostream_SOURCES = \
   Trace.h
 
 Use_Ostream_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Use_Stderr.am 
+## Makefile.Use_Stderr.am
 noinst_PROGRAMS += Use_Stderr
 
 Use_Stderr_CPPFLAGS = \
@@ -294,9 +294,9 @@ Use_Stderr_SOURCES = \
   Trace.h
 
 Use_Stderr_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Use_Syslog.am 
+## Makefile.Use_Syslog.am
 noinst_PROGRAMS += Use_Syslog
 
 Use_Syslog_CPPFLAGS = \
@@ -313,9 +313,9 @@ Use_Syslog_SOURCES = \
   Trace.h
 
 Use_Syslog_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Wrap_Macros.am 
+## Makefile.Wrap_Macros.am
 noinst_PROGRAMS += Wrap_Macros
 
 Wrap_Macros_CPPFLAGS = \
@@ -332,9 +332,9 @@ Wrap_Macros_SOURCES = \
   Trace.h
 
 Wrap_Macros_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Wrap_Macros_Alt.am 
+## Makefile.Wrap_Macros_Alt.am
 noinst_PROGRAMS += Wrap_Macros_Alt
 
 Wrap_Macros_Alt_CPPFLAGS = \
@@ -351,7 +351,7 @@ Wrap_Macros_Alt_SOURCES = \
   Trace.h
 
 Wrap_Macros_Alt_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Clean up template repositories, etc.
 clean-local:

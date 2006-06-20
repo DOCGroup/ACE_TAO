@@ -428,6 +428,33 @@ AC_DEFUN([ACE_CONFIGURATION_OPTIONS],
   ])
  AM_CONDITIONAL([BUILD_WFMO], [test X$ace_user_enable_wfmo = Xyes])
 
+ AC_ARG_ENABLE([wince],
+  AS_HELP_STRING(--enable-wince,build Windows CE/Mobile-using examples [[[no]]]),
+  [
+   case "${enableval}" in
+    yes)
+      ace_user_enable_wince=no
+      ;;
+    no)
+      ace_user_enable_wince=no
+      ;;
+    *)
+      AC_MSG_ERROR([bad value ${enableval} for --enable-wince])
+      ;;
+   esac
+  ],
+  [
+    case "$host" in
+      *win32*)
+           ace_user_enable_wince=yes
+               ;;
+      *)
+           ace_user_enable_wince=no
+               ;;
+    esac
+  ])
+ AM_CONDITIONAL([BUILD_WINCE], [test X$ace_user_enable_wince = Xyes])
+
  AC_ARG_ENABLE([winregistry],
   AS_HELP_STRING(--enable-winregistry,build Windows registry-using examples [[[no]]]),
   [

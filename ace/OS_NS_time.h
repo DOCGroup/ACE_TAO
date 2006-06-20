@@ -242,18 +242,21 @@ namespace ACE_OS
                    const char *format,
                    const struct tm *timeptr);
 
-#if defined (ACE_HAS_STRPTIME)
-  extern ACE_Export
-  char *strptime (char *buf,
+  ACE_NAMESPACE_INLINE_FUNCTION
+  char *strptime (const char *buf,
                   const char *format,
                   struct tm *tm);
 
-# if defined (ACE_LACKS_NATIVE_STRPTIME)
+# if defined (ACE_LACKS_STRPTIME) && !defined (ACE_REFUSE_STRPTIME_EMULATION)
   extern ACE_Export
-  int strptime_getnum (char *buf, int *num, int *bi,
+  char *strptime_emulation (const char *buf,
+                            const char *format,
+                            struct tm *tm);
+
+  extern ACE_Export
+  int strptime_getnum (const char *buf, int *num, int *bi,
                        int *fi, int min, int max);
-# endif /* ACE_LACKS_NATIVE_STRPTIME */
-#endif /* ACE_HAS_STRPTIME */
+# endif /* ACE_LACKS_STRPTIME && !ACE_REFUSE_STRPTIME_EMULATION */
 
   ACE_NAMESPACE_INLINE_FUNCTION
   time_t time (time_t *tloc = 0);

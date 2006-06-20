@@ -11,8 +11,12 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.Connection_Blocking_Acceptor.am 
-noinst_PROGRAMS = acceptor
+noinst_PROGRAMS =
+
+## Makefile.Connection_Blocking_Acceptor.am
+
+if !BUILD_ACE_FOR_TAO
+noinst_PROGRAMS += acceptor
 
 acceptor_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -24,9 +28,13 @@ acceptor_SOURCES = \
   SPIPE-acceptor.h
 
 acceptor_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Connection_Blocking_Connector.am 
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.Connection_Blocking_Connector.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += connector
 
 connector_CPPFLAGS = \
@@ -39,7 +47,9 @@ connector_SOURCES = \
   SPIPE-connector.h
 
 connector_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif !BUILD_ACE_FOR_TAO
 
 ## Clean up template repositories, etc.
 clean-local:

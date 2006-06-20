@@ -11,7 +11,8 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.Synch_Lib.am 
+## Makefile.Synch_Lib.am
+
 noinst_LTLIBRARIES = libSynch_Lib.la
 
 libSynch_Lib_la_CPPFLAGS = \
@@ -21,9 +22,6 @@ libSynch_Lib_la_CPPFLAGS = \
 
 libSynch_Lib_la_SOURCES = \
   Benchmark_Base.cpp
-
-libSynch_Lib_la_LIBADD = \
- $(top_builddir)/ace/libACE.la
 
 noinst_HEADERS = \
   Benchmark_Base.h \

@@ -11,11 +11,12 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-noinst_PROGRAMS =
+
 ## Makefile.SAXPrint.am
 
 if BUILD_ACEXML
-noinst_PROGRAMS += SAXPrint
+if !BUILD_ACE_FOR_TAO
+noinst_PROGRAMS = SAXPrint
 
 SAXPrint_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -31,8 +32,11 @@ SAXPrint_SOURCES = \
   SAXPrint_Handler.i
 
 SAXPrint_LDADD = \
- $(top_builddir)/ACEXML/parser/parser/libACEXML_Parser.la $(top_builddir)/ACEXML/common/libACEXML.la $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ACEXML/parser/parser/libACEXML_Parser.la \
+  $(ACE_BUILDDIR)/ACEXML/common/libACEXML.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
 
+endif !BUILD_ACE_FOR_TAO
 endif BUILD_ACEXML
 
 ## Clean up template repositories, etc.

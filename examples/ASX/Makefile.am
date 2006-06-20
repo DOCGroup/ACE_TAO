@@ -10,5 +10,7 @@
 
 SUBDIRS = \
         CCM_App \
-        Message_Queue
+        Event_Server \
+        Message_Queue \
+        UPIPE_Event_Server
 

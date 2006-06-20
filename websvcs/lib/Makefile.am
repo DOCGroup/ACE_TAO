@@ -11,7 +11,8 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.websvcs.am 
+## Makefile.websvcs.am
+
 noinst_LTLIBRARIES = libwebsvcs.la
 
 libwebsvcs_la_CPPFLAGS = \
@@ -21,9 +22,6 @@ libwebsvcs_la_CPPFLAGS = \
 
 libwebsvcs_la_SOURCES = \
   URL_Addr.cpp
-
-libwebsvcs_la_LIBADD = \
- $(top_builddir)/ace/libACE.la
 
 noinst_HEADERS = \
   URL_Addr.h \

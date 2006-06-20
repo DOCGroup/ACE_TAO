@@ -11,8 +11,12 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.SCTP_SOCK_SEQPACK_Association_Test.am 
-noinst_PROGRAMS = SOCK_SEQPACK_Association_Test
+noinst_PROGRAMS =
+
+## Makefile.SCTP_SOCK_SEQPACK_Association_Test.am
+
+if !BUILD_ACE_FOR_TAO
+noinst_PROGRAMS += SOCK_SEQPACK_Association_Test
 
 SOCK_SEQPACK_Association_Test_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -24,9 +28,13 @@ SOCK_SEQPACK_Association_Test_SOURCES = \
   hist.h
 
 SOCK_SEQPACK_Association_Test_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.SCTP_SOCK_SEQPACK_Clt.am 
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.SCTP_SOCK_SEQPACK_Clt.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += SOCK_SEQPACK_clt
 
 SOCK_SEQPACK_clt_CPPFLAGS = \
@@ -41,9 +49,13 @@ SOCK_SEQPACK_clt_SOURCES = \
   hist.h
 
 SOCK_SEQPACK_clt_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.SCTP_SOCK_SEQPACK_Srv.am 
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.SCTP_SOCK_SEQPACK_Srv.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += SOCK_SEQPACK_srv
 
 SOCK_SEQPACK_srv_CPPFLAGS = \
@@ -56,9 +68,13 @@ SOCK_SEQPACK_srv_SOURCES = \
   Options_Manager.h
 
 SOCK_SEQPACK_srv_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.SCTP_SOCK_STREAM_Clt.am 
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.SCTP_SOCK_STREAM_Clt.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += SOCK_STREAM_clt
 
 SOCK_STREAM_clt_CPPFLAGS = \
@@ -73,9 +89,11 @@ SOCK_STREAM_clt_SOURCES = \
   hist.h
 
 SOCK_STREAM_clt_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.SCTP_SOCK_STREAM_Srv.am 
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.SCTP_SOCK_STREAM_Srv.am
 noinst_PROGRAMS += SOCK_STREAM_srv
 
 SOCK_STREAM_srv_CPPFLAGS = \
@@ -88,7 +106,7 @@ SOCK_STREAM_srv_SOURCES = \
   Options_Manager.h
 
 SOCK_STREAM_srv_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Clean up template repositories, etc.
 clean-local:

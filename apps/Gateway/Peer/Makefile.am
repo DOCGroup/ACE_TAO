@@ -11,7 +11,8 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.Gateway_Peer.am 
+## Makefile.Gateway_Peer.am
+
 noinst_LTLIBRARIES = libGateway_Peer.la
 
 libGateway_Peer_la_CPPFLAGS = \
@@ -22,14 +23,11 @@ libGateway_Peer_la_SOURCES = \
   Options.cpp \
   Peer.cpp
 
-libGateway_Peer_la_LIBADD = \
- $(top_builddir)/ace/libACE.la
-
 noinst_HEADERS = \
   Options.h \
   Peer.h
 
-## Makefile.gateway_peerd.am 
+## Makefile.gateway_peerd.am
 noinst_PROGRAMS = peerd
 
 peerd_CPPFLAGS = \
@@ -42,7 +40,8 @@ peerd_SOURCES = \
   Peer.h
 
 peerd_LDADD = \
- libGateway_Peer.la $(top_builddir)/ace/libACE.la
+  libGateway_Peer.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Clean up template repositories, etc.
 clean-local:

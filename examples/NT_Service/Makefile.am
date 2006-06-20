@@ -11,11 +11,13 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-noinst_PROGRAMS =
-## Makefile.NT_Service.am 
+
+## Makefile.NT_Service.am
 
 if BUILD_WINREGISTRY
-noinst_PROGRAMS += main
+if !BUILD_ACE_FOR_TAO
+if !BUILD_WINCE
+noinst_PROGRAMS = main
 
 main_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -27,8 +29,10 @@ main_SOURCES = \
   ntsvc.h
 
 main_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
+endif !BUILD_WINCE
+endif !BUILD_ACE_FOR_TAO
 endif BUILD_WINREGISTRY
 
 ## Clean up template repositories, etc.

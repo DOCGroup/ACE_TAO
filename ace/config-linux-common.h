@@ -353,7 +353,6 @@
 // Compiler/platform supports strerror ().
 #define ACE_HAS_STRERROR
 
-#define ACE_HAS_STRPTIME
 // Don't define _XOPEN_SOURCE in ACE to make strptime() prototype
 // visible.  ACE shouldn't depend on feature test macros to make
 // prototypes visible.

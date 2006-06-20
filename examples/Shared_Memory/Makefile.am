@@ -11,8 +11,12 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.Shared_Memory_MM.am 
-noinst_PROGRAMS = testmm
+noinst_PROGRAMS =
+
+## Makefile.Shared_Memory_MM.am
+
+if !BUILD_ACE_FOR_TAO
+noinst_PROGRAMS += testmm
 
 testmm_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -22,9 +26,13 @@ testmm_SOURCES = \
   test_MM.cpp
 
 testmm_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Shared_Memory_SV.am 
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.Shared_Memory_SV.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += testsv
 
 testsv_CPPFLAGS = \
@@ -35,7 +43,9 @@ testsv_SOURCES = \
   test_SV.cpp
 
 testsv_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif !BUILD_ACE_FOR_TAO
 
 ## Clean up template repositories, etc.
 clean-local:

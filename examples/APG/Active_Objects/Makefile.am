@@ -11,8 +11,12 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.AO.am 
-noinst_PROGRAMS = AO
+noinst_PROGRAMS =
+
+## Makefile.AO.am
+
+if !BUILD_ACE_FOR_TAO
+noinst_PROGRAMS += AO
 
 AO_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -22,9 +26,13 @@ AO_SOURCES = \
   AO.cpp
 
 AO_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.AO2.am 
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.AO2.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += AO2
 
 AO2_CPPFLAGS = \
@@ -35,7 +43,9 @@ AO2_SOURCES = \
   AO2.cpp
 
 AO2_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif !BUILD_ACE_FOR_TAO
 
 ## Clean up template repositories, etc.
 clean-local:

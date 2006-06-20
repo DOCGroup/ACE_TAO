@@ -11,8 +11,12 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.HA_Configurable_Server_Dynamic.am 
-noinst_PROGRAMS = HA_Configurable_Server_Dynamic
+noinst_PROGRAMS =
+
+## Makefile.HA_Configurable_Server_Dynamic.am
+
+if !BUILD_ACE_FOR_TAO
+noinst_PROGRAMS += HA_Configurable_Server_Dynamic
 
 HA_Configurable_Server_Dynamic_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -25,9 +29,13 @@ HA_Configurable_Server_Dynamic_SOURCES = \
   HA_Status_Static.h
 
 HA_Configurable_Server_Dynamic_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.HA_Configurable_Server_Static.am 
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.HA_Configurable_Server_Static.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += HA_Configurable_Server_Static
 
 HA_Configurable_Server_Static_CPPFLAGS = \
@@ -40,9 +48,14 @@ HA_Configurable_Server_Static_SOURCES = \
   HA_Status_Static.h
 
 HA_Configurable_Server_Static_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Svc_Config_HA_Status.am 
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.Svc_Config_HA_Status.am
+
+if !BUILD_ACE_FOR_TAO
+
 noinst_LTLIBRARIES = libHA_Status.la
 
 libHA_Status_la_CPPFLAGS = \
@@ -53,11 +66,10 @@ libHA_Status_la_CPPFLAGS = \
 libHA_Status_la_SOURCES = \
   HA_Status_Dynamic.cpp
 
-libHA_Status_la_LIBADD = \
- $(top_builddir)/ace/libACE.la
-
 noinst_HEADERS = \
   HA_Status_Dynamic.h
+
+endif !BUILD_ACE_FOR_TAO
 
 ## Clean up template repositories, etc.
 clean-local:

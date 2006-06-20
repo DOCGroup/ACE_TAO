@@ -12,9 +12,11 @@ ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
 noinst_PROGRAMS =
-## Makefile.QOS_Diffserv_Client.am 
+
+## Makefile.QOS_Diffserv_Client.am
 
 if BUILD_QOS
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += client
 
 client_CPPFLAGS = \
@@ -26,11 +28,13 @@ client_SOURCES = \
   diffserv_test.cpp
 
 client_LDADD = \
- $(top_builddir)/ace/QoS/libACE_QoS.la $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/QoS/libACE_QoS.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
 
+endif !BUILD_ACE_FOR_TAO
 endif BUILD_QOS
 
-## Makefile.QOS_Diffserv_Server.am 
+## Makefile.QOS_Diffserv_Server.am
 
 if BUILD_QOS
 noinst_PROGRAMS += server
@@ -44,7 +48,8 @@ server_SOURCES = \
   server.cpp
 
 server_LDADD = \
- $(top_builddir)/ace/QoS/libACE_QoS.la $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/QoS/libACE_QoS.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 endif BUILD_QOS
 

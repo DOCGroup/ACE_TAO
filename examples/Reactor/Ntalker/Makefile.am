@@ -11,7 +11,7 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.Reactor_Ntalker.am 
+## Makefile.Reactor_Ntalker.am
 noinst_PROGRAMS = ntalker
 
 ntalker_CPPFLAGS = \
@@ -22,7 +22,7 @@ ntalker_SOURCES = \
   ntalker.cpp
 
 ntalker_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Clean up template repositories, etc.
 clean-local:

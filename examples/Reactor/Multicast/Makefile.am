@@ -11,7 +11,7 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.Reactor_Multicast_Client.am 
+## Makefile.Reactor_Multicast_Client.am
 noinst_PROGRAMS = client
 
 client_CPPFLAGS = \
@@ -24,9 +24,9 @@ client_SOURCES = \
   Log_Wrapper.h
 
 client_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Reactor_Multicast_Server.am 
+## Makefile.Reactor_Multicast_Server.am
 noinst_PROGRAMS += server
 
 server_CPPFLAGS = \
@@ -39,7 +39,7 @@ server_SOURCES = \
   Log_Wrapper.h
 
 server_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Clean up template repositories, etc.
 clean-local:

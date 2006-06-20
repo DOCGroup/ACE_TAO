@@ -11,7 +11,7 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.Client.am 
+## Makefile.Client.am
 noinst_PROGRAMS = Client
 
 Client_CPPFLAGS = \
@@ -23,9 +23,9 @@ Client_SOURCES = \
   Client.h
 
 Client_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.HAStatus.am 
+## Makefile.HAStatus.am
 noinst_PROGRAMS += HAStatus
 
 HAStatus_CPPFLAGS = \
@@ -38,9 +38,9 @@ HAStatus_SOURCES = \
   ClientService.h
 
 HAStatus_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.HAStatus_AC.am 
+## Makefile.HAStatus_AC.am
 noinst_PROGRAMS += HAStatus-AC
 
 HAStatus_AC_CPPFLAGS = \
@@ -53,9 +53,9 @@ HAStatus_AC_SOURCES = \
   ClientService.h
 
 HAStatus_AC_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Reactor_Timers.am 
+## Makefile.Reactor_Timers.am
 noinst_PROGRAMS += Timers
 
 Timers_CPPFLAGS = \
@@ -68,9 +68,9 @@ Timers_SOURCES = \
   ClientService.h
 
 Timers_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Reschedule.am 
+## Makefile.Reschedule.am
 noinst_PROGRAMS += Reschedule
 
 Reschedule_CPPFLAGS = \
@@ -83,9 +83,9 @@ Reschedule_SOURCES = \
   ClientService.h
 
 Reschedule_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Schedule_Timers.am 
+## Makefile.Schedule_Timers.am
 noinst_PROGRAMS += Schedule_Timers
 
 Schedule_Timers_CPPFLAGS = \
@@ -98,9 +98,9 @@ Schedule_Timers_SOURCES = \
   ClientService.h
 
 Schedule_Timers_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Timer_Cancel.am 
+## Makefile.Timer_Cancel.am
 noinst_PROGRAMS += Timer_Cancel
 
 Timer_Cancel_CPPFLAGS = \
@@ -113,9 +113,9 @@ Timer_Cancel_SOURCES = \
   ClientService.h
 
 Timer_Cancel_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Timer_State_Data.am 
+## Makefile.Timer_State_Data.am
 noinst_PROGRAMS += Timer_State_Data
 
 Timer_State_Data_CPPFLAGS = \
@@ -128,7 +128,7 @@ Timer_State_Data_SOURCES = \
   ClientService.h
 
 Timer_State_Data_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Clean up template repositories, etc.
 clean-local:

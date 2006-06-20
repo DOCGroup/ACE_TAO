@@ -11,8 +11,12 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.Svr_Conc_Queue_Based_Workers.am 
-noinst_PROGRAMS = workers
+noinst_PROGRAMS =
+
+## Makefile.Svr_Conc_Queue_Based_Workers.am
+
+if !BUILD_ACE_FOR_TAO
+noinst_PROGRAMS += workers
 
 workers_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -23,9 +27,13 @@ workers_SOURCES = \
   RT_CORBA_Workers.h
 
 workers_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Svr_Conc_Queue_Based_Workers_RTCorba.am 
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.Svr_Conc_Queue_Based_Workers_RTCorba.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += RT_CORBA_Workers
 
 RT_CORBA_Workers_CPPFLAGS = \
@@ -37,7 +45,9 @@ RT_CORBA_Workers_SOURCES = \
   RT_CORBA_Workers.h
 
 RT_CORBA_Workers_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif !BUILD_ACE_FOR_TAO
 
 ## Clean up template repositories, etc.
 clean-local:
