@@ -239,8 +239,7 @@ namespace ImplementationRepository
 
   typedef
     TAO_Out_T<
-        EnvironmentVariable,
-        EnvironmentVariable_var
+        EnvironmentVariable
       >
     EnvironmentVariable_out;
 
@@ -343,8 +342,7 @@ namespace ImplementationRepository
 
   typedef
     TAO_Out_T<
-        StartupOptions,
-        StartupOptions_var
+        StartupOptions
       >
     StartupOptions_out;
 
@@ -383,8 +381,7 @@ namespace ImplementationRepository
 
   typedef
     TAO_Out_T<
-        ServerInformation,
-        ServerInformation_var
+        ServerInformation
       >
     ServerInformation_out;
 

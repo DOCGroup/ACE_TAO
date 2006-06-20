@@ -25,45 +25,51 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#include "tao/AnyTypeCode/WCharSeqA.h"
+#include "WCharSeqA.h"
 #include "tao/AnyTypeCode/Null_RefCount_Policy.h"
 #include "tao/AnyTypeCode/TypeCode_Constants.h"
 #include "tao/AnyTypeCode/Alias_TypeCode_Static.h"
 #include "tao/AnyTypeCode/Sequence_TypeCode_Static.h"
-#include "tao/AnyTypeCode/Any.h"
 #include "tao/CDR.h"
 #include "tao/AnyTypeCode/Any_Dual_Impl_T.h"
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // TAO_IDL - Generated from
 // be\be_visitor_typecode/alias_typecode.cpp:50
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:937
+// be\be_visitor_typecode/typecode_defn.cpp:507
 
 
 #ifndef _TAO_TYPECODE_CORBA_WCharSeq_GUARD
 #define _TAO_TYPECODE_CORBA_WCharSeq_GUARD
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   namespace TypeCode
   {
-    TAO::TypeCode::Sequence< ::CORBA::TypeCode_ptr const *,
-                            TAO::Null_RefCount_Policy>
-      CORBA_WCharSeq_0 (
-        ::CORBA::tk_sequence,
-        &CORBA::_tc_wchar,
-        0U);
-      
-    ::CORBA::TypeCode_ptr const tc_CORBA_WCharSeq_0 =
-      &CORBA_WCharSeq_0;
-    
+    namespace
+    {
+      TAO::TypeCode::Sequence< ::CORBA::TypeCode_ptr const *,
+                              TAO::Null_RefCount_Policy>
+        CORBA_WCharSeq_0 (
+          ::CORBA::tk_sequence,
+          &CORBA::_tc_wchar,
+          0U);
+        
+      ::CORBA::TypeCode_ptr const tc_CORBA_WCharSeq_0 =
+        &CORBA_WCharSeq_0;
+    }
   }
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* _TAO_TYPECODE_CORBA_WCharSeq_GUARD */
 
@@ -83,9 +89,15 @@ namespace CORBA
 }
 
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+
 
 // TAO_IDL - Generated from 
 // be\be_visitor_sequence/any_op_cs.cpp:54
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 
 // Copying insertion.
@@ -94,12 +106,15 @@ void operator<<= (
     const CORBA::WCharSeq &_tao_elem
   )
 {
-  TAO::Any_Dual_Impl_T<CORBA::WCharSeq>::insert_copy (
-      _tao_any,
-      CORBA::WCharSeq::_tao_any_destructor,
-      TAO::TypeCode::tc_CORBA_WCharSeq_0,
-      _tao_elem
-    );
+  if (0 == &_tao_elem) // Trying to de-reference NULL object
+    _tao_any <<= static_cast<CORBA::WCharSeq *>( 0 ); // Use non-copying insertion of a NULL
+  else
+    TAO::Any_Dual_Impl_T<CORBA::WCharSeq>::insert_copy (
+        _tao_any,
+        CORBA::WCharSeq::_tao_any_destructor,
+        TAO::TypeCode::tc_CORBA_WCharSeq_0,
+        _tao_elem
+      );
 }
 
 // Non-copying insertion.
@@ -142,5 +157,6 @@ void operator<<= (
         _tao_elem
       );
 }
-
 TAO_END_VERSIONED_NAMESPACE_DECL
+
+

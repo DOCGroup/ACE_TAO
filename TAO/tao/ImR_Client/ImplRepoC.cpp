@@ -81,7 +81,7 @@ namespace TAO
             ImplementationRepository::ServerObject_var,
             ImplementationRepository::ServerObject_out,
             TAO::Objref_Traits<ImplementationRepository::ServerObject>,
-            TAO::Any_Insert_Policy_Stream <ImplementationRepository::ServerObject_ptr>
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -99,7 +99,7 @@ namespace TAO
     : public
         Var_Size_Arg_Traits_T<
             ImplementationRepository::StartupOptions,
-            TAO::Any_Insert_Policy_Stream <ImplementationRepository::StartupOptions>
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -117,7 +117,7 @@ namespace TAO
     : public
         Var_Size_Arg_Traits_T<
             ImplementationRepository::ServerInformation,
-            TAO::Any_Insert_Policy_Stream <ImplementationRepository::ServerInformation>
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -135,7 +135,7 @@ namespace TAO
     : public
         Var_Size_Arg_Traits_T<
             ImplementationRepository::ServerInformationList,
-            TAO::Any_Insert_Policy_Stream <ImplementationRepository::ServerInformationList>
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -156,7 +156,7 @@ namespace TAO
             ImplementationRepository::ServerInformationIterator_var,
             ImplementationRepository::ServerInformationIterator_out,
             TAO::Objref_Traits<ImplementationRepository::ServerInformationIterator>,
-            TAO::Any_Insert_Policy_Stream <ImplementationRepository::ServerInformationIterator_ptr>
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };

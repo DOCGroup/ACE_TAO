@@ -54,7 +54,7 @@ namespace TAO
             PortableInterceptor::ObjectReferenceFactory_var,
             PortableInterceptor::ObjectReferenceFactory_out,
             TAO::Value_Traits<PortableInterceptor::ObjectReferenceFactory>,
-            TAO::Any_Insert_Policy_Noop <PortableInterceptor::ObjectReferenceFactory*>
+            TAO::Any_Insert_Policy_Noop
           >
   {
   };

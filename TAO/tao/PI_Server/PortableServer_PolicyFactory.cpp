@@ -11,7 +11,7 @@
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/PI_Server/Policy_Creator_T.h"
 
-ACE_RCSID (PortableServer,
+ACE_RCSID (PI_Server,
            PortableServer_PolicyFactory,
            "$Id$")
 

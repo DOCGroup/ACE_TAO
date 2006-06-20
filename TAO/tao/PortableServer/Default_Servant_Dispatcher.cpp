@@ -27,14 +27,14 @@ TAO_Default_Servant_Dispatcher::create_Root_POA (const ACE_CString &name,
 
   ACE_NEW_THROW_EX (poa,
                     TAO_Root_POA (name,
-                             poa_manager,
-                             policies,
-                             0,
-                             lock,
-                             thread_lock,
-                             orb_core,
-                             object_adapter
-                             ACE_ENV_ARG_PARAMETER), CORBA::NO_MEMORY ());
+                                  poa_manager,
+                                  policies,
+                                  0,
+                                  lock,
+                                  thread_lock,
+                                  orb_core,
+                                  object_adapter
+                                  ACE_ENV_ARG_PARAMETER), CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
 
   return poa;
