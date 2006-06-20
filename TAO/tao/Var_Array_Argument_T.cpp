@@ -111,7 +111,7 @@ TAO::Ret_Var_Array_Argument_T<S_var,S_forany,Insert_Policy>::demarshal (
     TAO_InputCDR & cdr
   )
 {
-  typedef TAO::Array_Traits<S_forany> ARRAY_TRAITS;
+  typedef TAO::details::array_traits<S_forany::_array_traits> ARRAY_TRAITS;
   typename S_forany::_slice_type * tmp_ptr = 0;
   ACE_ALLOCATOR_RETURN (tmp_ptr,
                         ARRAY_TRAITS::alloc (),
