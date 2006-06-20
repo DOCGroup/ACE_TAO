@@ -56,15 +56,13 @@ TAO_Hash_LogRecordStore::TAO_Hash_LogRecordStore (
 	logmgr_i_->log_poa();
 
   // Create POA for iterators
-  TAO::Utils::PolicyList_Destroyer policies (3);
-  policies.length (3);
+  TAO::Utils::PolicyList_Destroyer policies (2);
+  policies.length (2);
 
   policies[0] =
     log_poa->create_lifespan_policy (PortableServer::TRANSIENT);
   policies[1] =
     log_poa->create_id_assignment_policy (PortableServer::SYSTEM_ID);
-  policies[2] =
-    log_poa->create_servant_retention_policy (PortableServer::RETAIN);
 
   char buf[32];
   ACE_OS::snprintf (buf, sizeof (buf), "Log%d", (int) id_);

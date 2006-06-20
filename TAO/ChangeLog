@@ -1,3 +1,12 @@
+Tue Jun 20 13:43:05 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/Log/Hash_LogRecordStore.cpp:
+
+          Remove setting of servant retention policy when creating the new
+          POA because this policy is not available with Minimum CORBA.  We
+          were just being pedantic and setting it to the default value
+          (RETAIN) anyway.
+
 Tue Jun 20 13:35:04 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/HTIOP/htiop_endpointsC.h:
