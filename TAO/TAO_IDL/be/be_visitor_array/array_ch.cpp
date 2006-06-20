@@ -215,11 +215,6 @@ int be_visitor_array_ch::visit_array (be_array *node)
       << " value_type;" << be_nl;
   *os << "typedef " << anon_p << node->nested_type_name (scope, "_tag")
       << " tag_type;" << be_nl
-//      << "static void free (slice_type * value);" << be_nl
-//      << "static void zero(slice_type * value);" << be_nl
-//      << "static slice_type * alloc (void);" << be_nl
-//      << "static void copy (slice_type *_tao_to, const slice_type *_tao_from);" << be_nl
-//      << "static slice_type * dup (const slice_type * value);"
       << be_uidt_nl
       << "};";
 
@@ -240,9 +235,12 @@ int be_visitor_array_ch::visit_array (be_array *node)
           *os << be_nl << be_nl
               << "typedef" << be_idt_nl
               << "TAO_Array_Out_T<" << be_idt << be_idt_nl
-              << node->local_name () << "_traits" << be_uidt_nl
-              << ">" << be_uidt_nl
-              << node->local_name () << "_out;" << be_uidt;
+              << node->local_name () << "_traits" << "," << be_nl;
+
+          *os << node->local_name () << "_var" << be_uidt_nl
+              << ">" << be_uidt_nl;
+
+          *os << node->local_name () << "_out;" << be_uidt;
         }
       else
         {
