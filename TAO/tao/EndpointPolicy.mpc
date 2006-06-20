@@ -24,13 +24,13 @@ project : taolib, core, portableserver, pi, tao_versioning_idl_defaults {
   }
 
   PIDL_Files {
+    EndpointPolicy/EndpointPolicyType.pidl
   }
 
   IDL_Files {
     idlflags += -GA -SS -Sci -Ge 1 -Sorb -I$(TAO_ROOT) -Wb,export_macro=TAO_EndpointPolicy_Export -Wb,export_include="tao/EndpointPolicy/EndpointPolicy_Export.h" -o EndpointPolicy
     idlflags -= -Sa -St
     EndpointPolicy/EndpointPolicy.pidl
-    EndpointPolicy/EndpointPolicyType.pidl
     EndpointPolicy/IIOPEndpointValue.pidl
   }
 
