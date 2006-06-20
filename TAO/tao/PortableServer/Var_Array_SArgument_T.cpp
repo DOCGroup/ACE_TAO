@@ -37,15 +37,8 @@ TAO::In_Var_Array_SArgument_T<S_forany,
 
 // ===========================================================
 
-<<<<<<< Var_Array_SArgument_T.cpp
-template<typename S,
-         typename S_slice,
-         typename S_forany,
-         template <typename> class Insert_Policy>
-=======
 template<typename S_forany,
-         typename Insert_Policy>
->>>>>>> 1.9
+         template <typename> class Insert_Policy>
 CORBA::Boolean
 TAO::Inout_Var_Array_SArgument_T<S_forany,
                                  Insert_Policy>::marshal (TAO_OutputCDR &cdr)
@@ -53,15 +46,8 @@ TAO::Inout_Var_Array_SArgument_T<S_forany,
   return cdr << S_forany (this->x_);
 }
 
-<<<<<<< Var_Array_SArgument_T.cpp
-template<typename S,
-         typename S_slice,
-         typename S_forany,
-         template <typename> class Insert_Policy>
-=======
 template<typename S_forany,
-         typename Insert_Policy>
->>>>>>> 1.9
+         template <typename> class Insert_Policy>
 CORBA::Boolean
 TAO::Inout_Var_Array_SArgument_T<S_forany,
                                  Insert_Policy>::demarshal (TAO_InputCDR & cdr)
@@ -72,28 +58,17 @@ TAO::Inout_Var_Array_SArgument_T<S_forany,
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-<<<<<<< Var_Array_SArgument_T.cpp
-template<typename S,
-         typename S_slice,
-         typename S_forany,
-         template <typename> class Insert_Policy>
-=======
 template<typename S_forany,
-         typename Insert_Policy>
->>>>>>> 1.9
+         template <typename> class Insert_Policy>
 void
 TAO::Inout_Var_Array_SArgument_T<S_forany,
                                  Insert_Policy>::interceptor_value (
   CORBA::Any *any) const
 {
-<<<<<<< Var_Array_SArgument_T.cpp
-  Insert_Policy<S_forany>::any_insert (any, S_forany (const_cast <S_slice *>(this->x_)));
-=======
-  this->Insert_Policy::any_insert (
+  Insert_Policy<typename S_forany::_slice_type>::any_insert (
       any,
-      S_forany (const_cast <typename S_forany::_slice_type *>(this->x_))
+      S_forany (const_cast <S_slice *>(this->x_))
     );
->>>>>>> 1.9
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */

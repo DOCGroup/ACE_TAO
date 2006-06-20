@@ -90,7 +90,7 @@ namespace TAO
     : public
         Basic_SArg_Traits_T<
             CORBA::DefinitionKind,
-            TAO::Any_Insert_Policy_Stream <CORBA::DefinitionKind>
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -110,7 +110,7 @@ namespace TAO
             CORBA::Repository_ptr,
             CORBA::Repository_var,
             CORBA::Repository_out,
-            TAO::Any_Insert_Policy_Stream <CORBA::Repository_ptr>
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -130,7 +130,7 @@ namespace TAO
             CORBA::Container_ptr,
             CORBA::Container_var,
             CORBA::Container_out,
-            TAO::Any_Insert_Policy_Stream <CORBA::Container_ptr>
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -150,7 +150,7 @@ namespace TAO
             CORBA::IDLType_ptr,
             CORBA::IDLType_var,
             CORBA::IDLType_out,
-            TAO::Any_Insert_Policy_Stream <CORBA::IDLType_ptr>
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -170,7 +170,7 @@ namespace TAO
             CORBA::InterfaceDef_ptr,
             CORBA::InterfaceDef_var,
             CORBA::InterfaceDef_out,
-            TAO::Any_Insert_Policy_Stream <CORBA::InterfaceDef_ptr>
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -188,9 +188,7 @@ namespace TAO
     : public
         Var_Size_SArg_Traits_T<
             CORBA::InterfaceDefSeq,
-            CORBA::InterfaceDefSeq_var,
-            CORBA::InterfaceDefSeq_out,
-            TAO::Any_Insert_Policy_Stream <CORBA::InterfaceDefSeq>
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -210,7 +208,7 @@ namespace TAO
             CORBA::ValueDef_ptr,
             CORBA::ValueDef_var,
             CORBA::ValueDef_out,
-            TAO::Any_Insert_Policy_Stream <CORBA::ValueDef_ptr>
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -228,9 +226,7 @@ namespace TAO
     : public
         Var_Size_SArg_Traits_T<
             CORBA::ValueDefSeq,
-            CORBA::ValueDefSeq_var,
-            CORBA::ValueDefSeq_out,
-            TAO::Any_Insert_Policy_Stream <CORBA::ValueDefSeq>
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -248,9 +244,7 @@ namespace TAO
     : public
         Var_Size_SArg_Traits_T<
             CORBA::InitializerSeq,
-            CORBA::InitializerSeq_var,
-            CORBA::InitializerSeq_out,
-            TAO::Any_Insert_Policy_Stream <CORBA::InitializerSeq>
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -268,9 +262,7 @@ namespace TAO
     : public
         Var_Size_SArg_Traits_T<
             CORBA::ExtInitializerSeq,
-            CORBA::ExtInitializerSeq_var,
-            CORBA::ExtInitializerSeq_out,
-            TAO::Any_Insert_Policy_Stream <CORBA::ExtInitializerSeq>
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -288,9 +280,7 @@ namespace TAO
     : public
         Var_Size_SArg_Traits_T<
             CORBA::ExceptionDefSeq,
-            CORBA::ExceptionDefSeq_var,
-            CORBA::ExceptionDefSeq_out,
-            TAO::Any_Insert_Policy_Stream <CORBA::ExceptionDefSeq>
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -308,7 +298,7 @@ namespace TAO
     : public
         Basic_SArg_Traits_T<
             CORBA::OperationMode,
-            TAO::Any_Insert_Policy_Stream <CORBA::OperationMode>
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -326,9 +316,7 @@ namespace TAO
     : public
         Var_Size_SArg_Traits_T<
             CORBA::ParDescriptionSeq,
-            CORBA::ParDescriptionSeq_var,
-            CORBA::ParDescriptionSeq_out,
-            TAO::Any_Insert_Policy_Stream <CORBA::ParDescriptionSeq>
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -346,9 +334,7 @@ namespace TAO
     : public
         Var_Size_SArg_Traits_T<
             CORBA::ContextIdSeq,
-            CORBA::ContextIdSeq_var,
-            CORBA::ContextIdSeq_out,
-            TAO::Any_Insert_Policy_Stream <CORBA::ContextIdSeq>
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -368,7 +354,7 @@ namespace TAO
             CORBA::ComponentIR::ComponentDef_ptr,
             CORBA::ComponentIR::ComponentDef_var,
             CORBA::ComponentIR::ComponentDef_out,
-            TAO::Any_Insert_Policy_Stream <CORBA::ComponentIR::ComponentDef_ptr>
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -388,7 +374,7 @@ namespace TAO
             CORBA::ComponentIR::HomeDef_ptr,
             CORBA::ComponentIR::HomeDef_var,
             CORBA::ComponentIR::HomeDef_out,
-            TAO::Any_Insert_Policy_Stream <CORBA::ComponentIR::HomeDef_ptr>
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -408,7 +394,7 @@ namespace TAO
             CORBA::ComponentIR::EventDef_ptr,
             CORBA::ComponentIR::EventDef_var,
             CORBA::ComponentIR::EventDef_out,
-            TAO::Any_Insert_Policy_Stream <CORBA::ComponentIR::EventDef_ptr>
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -428,7 +414,7 @@ namespace TAO
             CORBA::ComponentIR::ProvidesDef_ptr,
             CORBA::ComponentIR::ProvidesDef_var,
             CORBA::ComponentIR::ProvidesDef_out,
-            TAO::Any_Insert_Policy_Stream <CORBA::ComponentIR::ProvidesDef_ptr>
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -448,7 +434,7 @@ namespace TAO
             CORBA::ComponentIR::UsesDef_ptr,
             CORBA::ComponentIR::UsesDef_var,
             CORBA::ComponentIR::UsesDef_out,
-            TAO::Any_Insert_Policy_Stream <CORBA::ComponentIR::UsesDef_ptr>
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -468,7 +454,7 @@ namespace TAO
             CORBA::ComponentIR::EmitsDef_ptr,
             CORBA::ComponentIR::EmitsDef_var,
             CORBA::ComponentIR::EmitsDef_out,
-            TAO::Any_Insert_Policy_Stream <CORBA::ComponentIR::EmitsDef_ptr>
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -488,7 +474,7 @@ namespace TAO
             CORBA::ComponentIR::PublishesDef_ptr,
             CORBA::ComponentIR::PublishesDef_var,
             CORBA::ComponentIR::PublishesDef_out,
-            TAO::Any_Insert_Policy_Stream <CORBA::ComponentIR::PublishesDef_ptr>
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -508,7 +494,7 @@ namespace TAO
             CORBA::ComponentIR::ConsumesDef_ptr,
             CORBA::ComponentIR::ConsumesDef_var,
             CORBA::ComponentIR::ConsumesDef_out,
-            TAO::Any_Insert_Policy_Stream <CORBA::ComponentIR::ConsumesDef_ptr>
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -528,7 +514,7 @@ namespace TAO
             CORBA::ComponentIR::FactoryDef_ptr,
             CORBA::ComponentIR::FactoryDef_var,
             CORBA::ComponentIR::FactoryDef_out,
-            TAO::Any_Insert_Policy_Stream <CORBA::ComponentIR::FactoryDef_ptr>
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -548,7 +534,7 @@ namespace TAO
             CORBA::ComponentIR::FinderDef_ptr,
             CORBA::ComponentIR::FinderDef_var,
             CORBA::ComponentIR::FinderDef_out,
-            TAO::Any_Insert_Policy_Stream <CORBA::ComponentIR::FinderDef_ptr>
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -575,7 +561,7 @@ namespace TAO
     : public
         Basic_Arg_Traits_T<
             CORBA::DefinitionKind,
-            TAO::Any_Insert_Policy_Stream <CORBA::DefinitionKind>
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -596,7 +582,7 @@ namespace TAO
             CORBA::Repository_var,
             CORBA::Repository_out,
             TAO::Objref_Traits<CORBA::Repository>,
-            TAO::Any_Insert_Policy_Stream <CORBA::Repository_ptr>
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -617,7 +603,7 @@ namespace TAO
             CORBA::Container_var,
             CORBA::Container_out,
             TAO::Objref_Traits<CORBA::Container>,
-            TAO::Any_Insert_Policy_Stream <CORBA::Container_ptr>
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -638,7 +624,7 @@ namespace TAO
             CORBA::IDLType_var,
             CORBA::IDLType_out,
             TAO::Objref_Traits<CORBA::IDLType>,
-            TAO::Any_Insert_Policy_Stream <CORBA::IDLType_ptr>
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -659,7 +645,7 @@ namespace TAO
             CORBA::InterfaceDef_var,
             CORBA::InterfaceDef_out,
             TAO::Objref_Traits<CORBA::InterfaceDef>,
-            TAO::Any_Insert_Policy_Stream <CORBA::InterfaceDef_ptr>
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -677,9 +663,7 @@ namespace TAO
     : public
         Var_Size_Arg_Traits_T<
             CORBA::InterfaceDefSeq,
-            CORBA::InterfaceDefSeq_var,
-            CORBA::InterfaceDefSeq_out,
-            TAO::Any_Insert_Policy_Stream <CORBA::InterfaceDefSeq>
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -700,7 +684,7 @@ namespace TAO
             CORBA::ValueDef_var,
             CORBA::ValueDef_out,
             TAO::Objref_Traits<CORBA::ValueDef>,
-            TAO::Any_Insert_Policy_Stream <CORBA::ValueDef_ptr>
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -718,9 +702,7 @@ namespace TAO
     : public
         Var_Size_Arg_Traits_T<
             CORBA::ValueDefSeq,
-            CORBA::ValueDefSeq_var,
-            CORBA::ValueDefSeq_out,
-            TAO::Any_Insert_Policy_Stream <CORBA::ValueDefSeq>
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -738,9 +720,7 @@ namespace TAO
     : public
         Var_Size_Arg_Traits_T<
             CORBA::InitializerSeq,
-            CORBA::InitializerSeq_var,
-            CORBA::InitializerSeq_out,
-            TAO::Any_Insert_Policy_Stream <CORBA::InitializerSeq>
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -758,9 +738,7 @@ namespace TAO
     : public
         Var_Size_Arg_Traits_T<
             CORBA::ExtInitializerSeq,
-            CORBA::ExtInitializerSeq_var,
-            CORBA::ExtInitializerSeq_out,
-            TAO::Any_Insert_Policy_Stream <CORBA::ExtInitializerSeq>
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -778,9 +756,7 @@ namespace TAO
     : public
         Var_Size_Arg_Traits_T<
             CORBA::ExceptionDefSeq,
-            CORBA::ExceptionDefSeq_var,
-            CORBA::ExceptionDefSeq_out,
-            TAO::Any_Insert_Policy_Stream <CORBA::ExceptionDefSeq>
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -798,7 +774,7 @@ namespace TAO
     : public
         Basic_Arg_Traits_T<
             CORBA::OperationMode,
-            TAO::Any_Insert_Policy_Stream <CORBA::OperationMode>
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -816,9 +792,7 @@ namespace TAO
     : public
         Var_Size_Arg_Traits_T<
             CORBA::ParDescriptionSeq,
-            CORBA::ParDescriptionSeq_var,
-            CORBA::ParDescriptionSeq_out,
-            TAO::Any_Insert_Policy_Stream <CORBA::ParDescriptionSeq>
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -836,9 +810,7 @@ namespace TAO
     : public
         Var_Size_Arg_Traits_T<
             CORBA::ContextIdSeq,
-            CORBA::ContextIdSeq_var,
-            CORBA::ContextIdSeq_out,
-            TAO::Any_Insert_Policy_Stream <CORBA::ContextIdSeq>
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -859,7 +831,7 @@ namespace TAO
             CORBA::ComponentIR::ComponentDef_var,
             CORBA::ComponentIR::ComponentDef_out,
             TAO::Objref_Traits<CORBA::ComponentIR::ComponentDef>,
-            TAO::Any_Insert_Policy_Stream <CORBA::ComponentIR::ComponentDef_ptr>
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -880,7 +852,7 @@ namespace TAO
             CORBA::ComponentIR::HomeDef_var,
             CORBA::ComponentIR::HomeDef_out,
             TAO::Objref_Traits<CORBA::ComponentIR::HomeDef>,
-            TAO::Any_Insert_Policy_Stream <CORBA::ComponentIR::HomeDef_ptr>
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -901,7 +873,7 @@ namespace TAO
             CORBA::ComponentIR::EventDef_var,
             CORBA::ComponentIR::EventDef_out,
             TAO::Objref_Traits<CORBA::ComponentIR::EventDef>,
-            TAO::Any_Insert_Policy_Stream <CORBA::ComponentIR::EventDef_ptr>
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -922,7 +894,7 @@ namespace TAO
             CORBA::ComponentIR::ProvidesDef_var,
             CORBA::ComponentIR::ProvidesDef_out,
             TAO::Objref_Traits<CORBA::ComponentIR::ProvidesDef>,
-            TAO::Any_Insert_Policy_Stream <CORBA::ComponentIR::ProvidesDef_ptr>
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -943,7 +915,7 @@ namespace TAO
             CORBA::ComponentIR::UsesDef_var,
             CORBA::ComponentIR::UsesDef_out,
             TAO::Objref_Traits<CORBA::ComponentIR::UsesDef>,
-            TAO::Any_Insert_Policy_Stream <CORBA::ComponentIR::UsesDef_ptr>
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -964,7 +936,7 @@ namespace TAO
             CORBA::ComponentIR::EmitsDef_var,
             CORBA::ComponentIR::EmitsDef_out,
             TAO::Objref_Traits<CORBA::ComponentIR::EmitsDef>,
-            TAO::Any_Insert_Policy_Stream <CORBA::ComponentIR::EmitsDef_ptr>
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -985,7 +957,7 @@ namespace TAO
             CORBA::ComponentIR::PublishesDef_var,
             CORBA::ComponentIR::PublishesDef_out,
             TAO::Objref_Traits<CORBA::ComponentIR::PublishesDef>,
-            TAO::Any_Insert_Policy_Stream <CORBA::ComponentIR::PublishesDef_ptr>
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -1006,7 +978,7 @@ namespace TAO
             CORBA::ComponentIR::ConsumesDef_var,
             CORBA::ComponentIR::ConsumesDef_out,
             TAO::Objref_Traits<CORBA::ComponentIR::ConsumesDef>,
-            TAO::Any_Insert_Policy_Stream <CORBA::ComponentIR::ConsumesDef_ptr>
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -1027,7 +999,7 @@ namespace TAO
             CORBA::ComponentIR::FactoryDef_var,
             CORBA::ComponentIR::FactoryDef_out,
             TAO::Objref_Traits<CORBA::ComponentIR::FactoryDef>,
-            TAO::Any_Insert_Policy_Stream <CORBA::ComponentIR::FactoryDef_ptr>
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -1048,7 +1020,7 @@ namespace TAO
             CORBA::ComponentIR::FinderDef_var,
             CORBA::ComponentIR::FinderDef_out,
             TAO::Objref_Traits<CORBA::ComponentIR::FinderDef>,
-            TAO::Any_Insert_Policy_Stream <CORBA::ComponentIR::FinderDef_ptr>
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -1329,12 +1301,12 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type retval =
-          TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean, TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type> (
+          TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean> (
             this->operation_details_,
             this->args_);
 
         TAO::SArg_Traits< ::CORBA::Char *>::in_arg_type arg_1 =
-          TAO::Portable_Server::get_in_arg< ::CORBA::Char *, TAO::SArg_Traits< ::CORBA::Char *>::in_arg_type> (
+          TAO::Portable_Server::get_in_arg< ::CORBA::Char *> (
             this->operation_details_,
             this->args_,
             1);
@@ -1429,7 +1401,7 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type retval =
-          TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean, TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type> (
+          TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean> (
             this->operation_details_,
             this->args_);
 
@@ -1520,7 +1492,7 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::CORBA::Char *>::ret_arg_type retval =
-          TAO::Portable_Server::get_ret_arg< ::CORBA::Char *, TAO::SArg_Traits< ::CORBA::Char *>::ret_arg_type> (
+          TAO::Portable_Server::get_ret_arg< ::CORBA::Char *> (
             this->operation_details_,
             this->args_);
 
@@ -1659,7 +1631,7 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::CORBA::Object>::ret_arg_type retval =
-          TAO::Portable_Server::get_ret_arg< ::CORBA::Object, TAO::SArg_Traits< ::CORBA::Object>::ret_arg_type> (
+          TAO::Portable_Server::get_ret_arg< ::CORBA::Object> (
             this->operation_details_,
             this->args_);
 
@@ -2046,36 +2018,36 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::CORBA::ComponentIR::ComponentDef>::ret_arg_type retval =
-          TAO::Portable_Server::get_ret_arg< ::CORBA::ComponentIR::ComponentDef, TAO::SArg_Traits< ::CORBA::ComponentIR::ComponentDef>::ret_arg_type> (
+          TAO::Portable_Server::get_ret_arg< ::CORBA::ComponentIR::ComponentDef> (
             this->operation_details_,
             this->args_);
 
         TAO::SArg_Traits< ::CORBA::RepositoryId>::in_arg_type arg_1 =
-          TAO::Portable_Server::get_in_arg< ::CORBA::RepositoryId, TAO::SArg_Traits< ::CORBA::RepositoryId>::in_arg_type> (
+          TAO::Portable_Server::get_in_arg< ::CORBA::RepositoryId> (
             this->operation_details_,
             this->args_,
             1);
 
         TAO::SArg_Traits< ::CORBA::Identifier>::in_arg_type arg_2 =
-          TAO::Portable_Server::get_in_arg< ::CORBA::Identifier, TAO::SArg_Traits< ::CORBA::Identifier>::in_arg_type> (
+          TAO::Portable_Server::get_in_arg< ::CORBA::Identifier> (
             this->operation_details_,
             this->args_,
             2);
 
         TAO::SArg_Traits< ::CORBA::VersionSpec>::in_arg_type arg_3 =
-          TAO::Portable_Server::get_in_arg< ::CORBA::VersionSpec, TAO::SArg_Traits< ::CORBA::VersionSpec>::in_arg_type> (
+          TAO::Portable_Server::get_in_arg< ::CORBA::VersionSpec> (
             this->operation_details_,
             this->args_,
             3);
 
         TAO::SArg_Traits< ::CORBA::ComponentIR::ComponentDef>::in_arg_type arg_4 =
-          TAO::Portable_Server::get_in_arg< ::CORBA::ComponentIR::ComponentDef, TAO::SArg_Traits< ::CORBA::ComponentIR::ComponentDef>::in_arg_type> (
+          TAO::Portable_Server::get_in_arg< ::CORBA::ComponentIR::ComponentDef> (
             this->operation_details_,
             this->args_,
             4);
 
         TAO::SArg_Traits< ::CORBA::InterfaceDefSeq>::in_arg_type arg_5 =
-          TAO::Portable_Server::get_in_arg< ::CORBA::InterfaceDefSeq, TAO::SArg_Traits< ::CORBA::InterfaceDefSeq>::in_arg_type> (
+          TAO::Portable_Server::get_in_arg< ::CORBA::InterfaceDefSeq> (
             this->operation_details_,
             this->args_,
             5);
@@ -2186,48 +2158,48 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::CORBA::ComponentIR::HomeDef>::ret_arg_type retval =
-          TAO::Portable_Server::get_ret_arg< ::CORBA::ComponentIR::HomeDef, TAO::SArg_Traits< ::CORBA::ComponentIR::HomeDef>::ret_arg_type> (
+          TAO::Portable_Server::get_ret_arg< ::CORBA::ComponentIR::HomeDef> (
             this->operation_details_,
             this->args_);
 
         TAO::SArg_Traits< ::CORBA::RepositoryId>::in_arg_type arg_1 =
-          TAO::Portable_Server::get_in_arg< ::CORBA::RepositoryId, TAO::SArg_Traits< ::CORBA::RepositoryId>::in_arg_type> (
+          TAO::Portable_Server::get_in_arg< ::CORBA::RepositoryId> (
             this->operation_details_,
             this->args_,
             1);
 
         TAO::SArg_Traits< ::CORBA::Identifier>::in_arg_type arg_2 =
-          TAO::Portable_Server::get_in_arg< ::CORBA::Identifier, TAO::SArg_Traits< ::CORBA::Identifier>::in_arg_type> (
+          TAO::Portable_Server::get_in_arg< ::CORBA::Identifier> (
             this->operation_details_,
             this->args_,
             2);
 
         TAO::SArg_Traits< ::CORBA::VersionSpec>::in_arg_type arg_3 =
-          TAO::Portable_Server::get_in_arg< ::CORBA::VersionSpec, TAO::SArg_Traits< ::CORBA::VersionSpec>::in_arg_type> (
+          TAO::Portable_Server::get_in_arg< ::CORBA::VersionSpec> (
             this->operation_details_,
             this->args_,
             3);
 
         TAO::SArg_Traits< ::CORBA::ComponentIR::HomeDef>::in_arg_type arg_4 =
-          TAO::Portable_Server::get_in_arg< ::CORBA::ComponentIR::HomeDef, TAO::SArg_Traits< ::CORBA::ComponentIR::HomeDef>::in_arg_type> (
+          TAO::Portable_Server::get_in_arg< ::CORBA::ComponentIR::HomeDef> (
             this->operation_details_,
             this->args_,
             4);
 
         TAO::SArg_Traits< ::CORBA::ComponentIR::ComponentDef>::in_arg_type arg_5 =
-          TAO::Portable_Server::get_in_arg< ::CORBA::ComponentIR::ComponentDef, TAO::SArg_Traits< ::CORBA::ComponentIR::ComponentDef>::in_arg_type> (
+          TAO::Portable_Server::get_in_arg< ::CORBA::ComponentIR::ComponentDef> (
             this->operation_details_,
             this->args_,
             5);
 
         TAO::SArg_Traits< ::CORBA::InterfaceDefSeq>::in_arg_type arg_6 =
-          TAO::Portable_Server::get_in_arg< ::CORBA::InterfaceDefSeq, TAO::SArg_Traits< ::CORBA::InterfaceDefSeq>::in_arg_type> (
+          TAO::Portable_Server::get_in_arg< ::CORBA::InterfaceDefSeq> (
             this->operation_details_,
             this->args_,
             6);
 
         TAO::SArg_Traits< ::CORBA::ValueDef>::in_arg_type arg_7 =
-          TAO::Portable_Server::get_in_arg< ::CORBA::ValueDef, TAO::SArg_Traits< ::CORBA::ValueDef>::in_arg_type> (
+          TAO::Portable_Server::get_in_arg< ::CORBA::ValueDef> (
             this->operation_details_,
             this->args_,
             7);
@@ -2344,66 +2316,66 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::CORBA::ComponentIR::EventDef>::ret_arg_type retval =
-          TAO::Portable_Server::get_ret_arg< ::CORBA::ComponentIR::EventDef, TAO::SArg_Traits< ::CORBA::ComponentIR::EventDef>::ret_arg_type> (
+          TAO::Portable_Server::get_ret_arg< ::CORBA::ComponentIR::EventDef> (
             this->operation_details_,
             this->args_);
 
         TAO::SArg_Traits< ::CORBA::RepositoryId>::in_arg_type arg_1 =
-          TAO::Portable_Server::get_in_arg< ::CORBA::RepositoryId, TAO::SArg_Traits< ::CORBA::RepositoryId>::in_arg_type> (
+          TAO::Portable_Server::get_in_arg< ::CORBA::RepositoryId> (
             this->operation_details_,
             this->args_,
             1);
 
         TAO::SArg_Traits< ::CORBA::Identifier>::in_arg_type arg_2 =
-          TAO::Portable_Server::get_in_arg< ::CORBA::Identifier, TAO::SArg_Traits< ::CORBA::Identifier>::in_arg_type> (
+          TAO::Portable_Server::get_in_arg< ::CORBA::Identifier> (
             this->operation_details_,
             this->args_,
             2);
 
         TAO::SArg_Traits< ::CORBA::VersionSpec>::in_arg_type arg_3 =
-          TAO::Portable_Server::get_in_arg< ::CORBA::VersionSpec, TAO::SArg_Traits< ::CORBA::VersionSpec>::in_arg_type> (
+          TAO::Portable_Server::get_in_arg< ::CORBA::VersionSpec> (
             this->operation_details_,
             this->args_,
             3);
 
         TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::in_arg_type arg_4 =
-          TAO::Portable_Server::get_in_arg< ::ACE_InputCDR::to_boolean, TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::in_arg_type> (
+          TAO::Portable_Server::get_in_arg< ::ACE_InputCDR::to_boolean> (
             this->operation_details_,
             this->args_,
             4);
 
         TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::in_arg_type arg_5 =
-          TAO::Portable_Server::get_in_arg< ::ACE_InputCDR::to_boolean, TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::in_arg_type> (
+          TAO::Portable_Server::get_in_arg< ::ACE_InputCDR::to_boolean> (
             this->operation_details_,
             this->args_,
             5);
 
         TAO::SArg_Traits< ::CORBA::ValueDef>::in_arg_type arg_6 =
-          TAO::Portable_Server::get_in_arg< ::CORBA::ValueDef, TAO::SArg_Traits< ::CORBA::ValueDef>::in_arg_type> (
+          TAO::Portable_Server::get_in_arg< ::CORBA::ValueDef> (
             this->operation_details_,
             this->args_,
             6);
 
         TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::in_arg_type arg_7 =
-          TAO::Portable_Server::get_in_arg< ::ACE_InputCDR::to_boolean, TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::in_arg_type> (
+          TAO::Portable_Server::get_in_arg< ::ACE_InputCDR::to_boolean> (
             this->operation_details_,
             this->args_,
             7);
 
         TAO::SArg_Traits< ::CORBA::ValueDefSeq>::in_arg_type arg_8 =
-          TAO::Portable_Server::get_in_arg< ::CORBA::ValueDefSeq, TAO::SArg_Traits< ::CORBA::ValueDefSeq>::in_arg_type> (
+          TAO::Portable_Server::get_in_arg< ::CORBA::ValueDefSeq> (
             this->operation_details_,
             this->args_,
             8);
 
         TAO::SArg_Traits< ::CORBA::InterfaceDefSeq>::in_arg_type arg_9 =
-          TAO::Portable_Server::get_in_arg< ::CORBA::InterfaceDefSeq, TAO::SArg_Traits< ::CORBA::InterfaceDefSeq>::in_arg_type> (
+          TAO::Portable_Server::get_in_arg< ::CORBA::InterfaceDefSeq> (
             this->operation_details_,
             this->args_,
             9);
 
         TAO::SArg_Traits< ::CORBA::ExtInitializerSeq>::in_arg_type arg_10 =
-          TAO::Portable_Server::get_in_arg< ::CORBA::ExtInitializerSeq, TAO::SArg_Traits< ::CORBA::ExtInitializerSeq>::in_arg_type> (
+          TAO::Portable_Server::get_in_arg< ::CORBA::ExtInitializerSeq> (
             this->operation_details_,
             this->args_,
             10);
@@ -2533,12 +2505,12 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type retval =
-          TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean, TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type> (
+          TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean> (
             this->operation_details_,
             this->args_);
 
         TAO::SArg_Traits< ::CORBA::Char *>::in_arg_type arg_1 =
-          TAO::Portable_Server::get_in_arg< ::CORBA::Char *, TAO::SArg_Traits< ::CORBA::Char *>::in_arg_type> (
+          TAO::Portable_Server::get_in_arg< ::CORBA::Char *> (
             this->operation_details_,
             this->args_,
             1);
@@ -2633,7 +2605,7 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type retval =
-          TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean, TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type> (
+          TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean> (
             this->operation_details_,
             this->args_);
 
@@ -2724,7 +2696,7 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::CORBA::Char *>::ret_arg_type retval =
-          TAO::Portable_Server::get_ret_arg< ::CORBA::Char *, TAO::SArg_Traits< ::CORBA::Char *>::ret_arg_type> (
+          TAO::Portable_Server::get_ret_arg< ::CORBA::Char *> (
             this->operation_details_,
             this->args_);
 
@@ -2863,7 +2835,7 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::CORBA::Object>::ret_arg_type retval =
-          TAO::Portable_Server::get_ret_arg< ::CORBA::Object, TAO::SArg_Traits< ::CORBA::Object>::ret_arg_type> (
+          TAO::Portable_Server::get_ret_arg< ::CORBA::Object> (
             this->operation_details_,
             this->args_);
 
@@ -3253,12 +3225,12 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type retval =
-          TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean, TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type> (
+          TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean> (
             this->operation_details_,
             this->args_);
 
         TAO::SArg_Traits< ::CORBA::Char *>::in_arg_type arg_1 =
-          TAO::Portable_Server::get_in_arg< ::CORBA::Char *, TAO::SArg_Traits< ::CORBA::Char *>::in_arg_type> (
+          TAO::Portable_Server::get_in_arg< ::CORBA::Char *> (
             this->operation_details_,
             this->args_,
             1);
@@ -3353,7 +3325,7 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type retval =
-          TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean, TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type> (
+          TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean> (
             this->operation_details_,
             this->args_);
 
@@ -3444,7 +3416,7 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::CORBA::Char *>::ret_arg_type retval =
-          TAO::Portable_Server::get_ret_arg< ::CORBA::Char *, TAO::SArg_Traits< ::CORBA::Char *>::ret_arg_type> (
+          TAO::Portable_Server::get_ret_arg< ::CORBA::Char *> (
             this->operation_details_,
             this->args_);
 
@@ -3583,7 +3555,7 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::CORBA::Object>::ret_arg_type retval =
-          TAO::Portable_Server::get_ret_arg< ::CORBA::Object, TAO::SArg_Traits< ::CORBA::Object>::ret_arg_type> (
+          TAO::Portable_Server::get_ret_arg< ::CORBA::Object> (
             this->operation_details_,
             this->args_);
 
@@ -3983,12 +3955,12 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type retval =
-          TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean, TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type> (
+          TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean> (
             this->operation_details_,
             this->args_);
 
         TAO::SArg_Traits< ::CORBA::Char *>::in_arg_type arg_1 =
-          TAO::Portable_Server::get_in_arg< ::CORBA::Char *, TAO::SArg_Traits< ::CORBA::Char *>::in_arg_type> (
+          TAO::Portable_Server::get_in_arg< ::CORBA::Char *> (
             this->operation_details_,
             this->args_,
             1);
@@ -4083,7 +4055,7 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type retval =
-          TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean, TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type> (
+          TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean> (
             this->operation_details_,
             this->args_);
 
@@ -4174,7 +4146,7 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::CORBA::Char *>::ret_arg_type retval =
-          TAO::Portable_Server::get_ret_arg< ::CORBA::Char *, TAO::SArg_Traits< ::CORBA::Char *>::ret_arg_type> (
+          TAO::Portable_Server::get_ret_arg< ::CORBA::Char *> (
             this->operation_details_,
             this->args_);
 
@@ -4313,7 +4285,7 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::CORBA::Object>::ret_arg_type retval =
-          TAO::Portable_Server::get_ret_arg< ::CORBA::Object, TAO::SArg_Traits< ::CORBA::Object>::ret_arg_type> (
+          TAO::Portable_Server::get_ret_arg< ::CORBA::Object> (
             this->operation_details_,
             this->args_);
 
@@ -4683,7 +4655,7 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::CORBA::InterfaceDef>::ret_arg_type retval =
-          TAO::Portable_Server::get_ret_arg< ::CORBA::InterfaceDef, TAO::SArg_Traits< ::CORBA::InterfaceDef>::ret_arg_type> (
+          TAO::Portable_Server::get_ret_arg< ::CORBA::InterfaceDef> (
             this->operation_details_,
             this->args_);
 
@@ -4778,7 +4750,7 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::CORBA::InterfaceDef>::in_arg_type arg_1 =
-          TAO::Portable_Server::get_in_arg< ::CORBA::InterfaceDef, TAO::SArg_Traits< ::CORBA::InterfaceDef>::in_arg_type> (
+          TAO::Portable_Server::get_in_arg< ::CORBA::InterfaceDef> (
             this->operation_details_,
             this->args_,
             1);
@@ -4880,12 +4852,12 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type retval =
-          TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean, TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type> (
+          TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean> (
             this->operation_details_,
             this->args_);
 
         TAO::SArg_Traits< ::CORBA::Char *>::in_arg_type arg_1 =
-          TAO::Portable_Server::get_in_arg< ::CORBA::Char *, TAO::SArg_Traits< ::CORBA::Char *>::in_arg_type> (
+          TAO::Portable_Server::get_in_arg< ::CORBA::Char *> (
             this->operation_details_,
             this->args_,
             1);
@@ -4980,7 +4952,7 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type retval =
-          TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean, TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type> (
+          TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean> (
             this->operation_details_,
             this->args_);
 
@@ -5071,7 +5043,7 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::CORBA::Char *>::ret_arg_type retval =
-          TAO::Portable_Server::get_ret_arg< ::CORBA::Char *, TAO::SArg_Traits< ::CORBA::Char *>::ret_arg_type> (
+          TAO::Portable_Server::get_ret_arg< ::CORBA::Char *> (
             this->operation_details_,
             this->args_);
 
@@ -5210,7 +5182,7 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::CORBA::Object>::ret_arg_type retval =
-          TAO::Portable_Server::get_ret_arg< ::CORBA::Object, TAO::SArg_Traits< ::CORBA::Object>::ret_arg_type> (
+          TAO::Portable_Server::get_ret_arg< ::CORBA::Object> (
             this->operation_details_,
             this->args_);
 
@@ -5574,7 +5546,7 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::CORBA::InterfaceDef>::ret_arg_type retval =
-          TAO::Portable_Server::get_ret_arg< ::CORBA::InterfaceDef, TAO::SArg_Traits< ::CORBA::InterfaceDef>::ret_arg_type> (
+          TAO::Portable_Server::get_ret_arg< ::CORBA::InterfaceDef> (
             this->operation_details_,
             this->args_);
 
@@ -5669,7 +5641,7 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::CORBA::InterfaceDef>::in_arg_type arg_1 =
-          TAO::Portable_Server::get_in_arg< ::CORBA::InterfaceDef, TAO::SArg_Traits< ::CORBA::InterfaceDef>::in_arg_type> (
+          TAO::Portable_Server::get_in_arg< ::CORBA::InterfaceDef> (
             this->operation_details_,
             this->args_,
             1);
@@ -5767,7 +5739,7 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type retval =
-          TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean, TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type> (
+          TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean> (
             this->operation_details_,
             this->args_);
 
@@ -5862,7 +5834,7 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::in_arg_type arg_1 =
-          TAO::Portable_Server::get_in_arg< ::ACE_InputCDR::to_boolean, TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::in_arg_type> (
+          TAO::Portable_Server::get_in_arg< ::ACE_InputCDR::to_boolean> (
             this->operation_details_,
             this->args_,
             1);
@@ -5964,12 +5936,12 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type retval =
-          TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean, TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type> (
+          TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean> (
             this->operation_details_,
             this->args_);
 
         TAO::SArg_Traits< ::CORBA::Char *>::in_arg_type arg_1 =
-          TAO::Portable_Server::get_in_arg< ::CORBA::Char *, TAO::SArg_Traits< ::CORBA::Char *>::in_arg_type> (
+          TAO::Portable_Server::get_in_arg< ::CORBA::Char *> (
             this->operation_details_,
             this->args_,
             1);
@@ -6064,7 +6036,7 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type retval =
-          TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean, TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type> (
+          TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean> (
             this->operation_details_,
             this->args_);
 
@@ -6155,7 +6127,7 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::CORBA::Char *>::ret_arg_type retval =
-          TAO::Portable_Server::get_ret_arg< ::CORBA::Char *, TAO::SArg_Traits< ::CORBA::Char *>::ret_arg_type> (
+          TAO::Portable_Server::get_ret_arg< ::CORBA::Char *> (
             this->operation_details_,
             this->args_);
 
@@ -6294,7 +6266,7 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::CORBA::Object>::ret_arg_type retval =
-          TAO::Portable_Server::get_ret_arg< ::CORBA::Object, TAO::SArg_Traits< ::CORBA::Object>::ret_arg_type> (
+          TAO::Portable_Server::get_ret_arg< ::CORBA::Object> (
             this->operation_details_,
             this->args_);
 
@@ -6657,7 +6629,7 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::CORBA::ComponentIR::EventDef>::ret_arg_type retval =
-          TAO::Portable_Server::get_ret_arg< ::CORBA::ComponentIR::EventDef, TAO::SArg_Traits< ::CORBA::ComponentIR::EventDef>::ret_arg_type> (
+          TAO::Portable_Server::get_ret_arg< ::CORBA::ComponentIR::EventDef> (
             this->operation_details_,
             this->args_);
 
@@ -6752,7 +6724,7 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::CORBA::ComponentIR::EventDef>::in_arg_type arg_1 =
-          TAO::Portable_Server::get_in_arg< ::CORBA::ComponentIR::EventDef, TAO::SArg_Traits< ::CORBA::ComponentIR::EventDef>::in_arg_type> (
+          TAO::Portable_Server::get_in_arg< ::CORBA::ComponentIR::EventDef> (
             this->operation_details_,
             this->args_,
             1);
@@ -6850,12 +6822,12 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type retval =
-          TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean, TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type> (
+          TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean> (
             this->operation_details_,
             this->args_);
 
         TAO::SArg_Traits< ::CORBA::RepositoryId>::in_arg_type arg_1 =
-          TAO::Portable_Server::get_in_arg< ::CORBA::RepositoryId, TAO::SArg_Traits< ::CORBA::RepositoryId>::in_arg_type> (
+          TAO::Portable_Server::get_in_arg< ::CORBA::RepositoryId> (
             this->operation_details_,
             this->args_,
             1);
@@ -6958,12 +6930,12 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type retval =
-          TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean, TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type> (
+          TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean> (
             this->operation_details_,
             this->args_);
 
         TAO::SArg_Traits< ::CORBA::Char *>::in_arg_type arg_1 =
-          TAO::Portable_Server::get_in_arg< ::CORBA::Char *, TAO::SArg_Traits< ::CORBA::Char *>::in_arg_type> (
+          TAO::Portable_Server::get_in_arg< ::CORBA::Char *> (
             this->operation_details_,
             this->args_,
             1);
@@ -7058,7 +7030,7 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type retval =
-          TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean, TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type> (
+          TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean> (
             this->operation_details_,
             this->args_);
 
@@ -7149,7 +7121,7 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::CORBA::Char *>::ret_arg_type retval =
-          TAO::Portable_Server::get_ret_arg< ::CORBA::Char *, TAO::SArg_Traits< ::CORBA::Char *>::ret_arg_type> (
+          TAO::Portable_Server::get_ret_arg< ::CORBA::Char *> (
             this->operation_details_,
             this->args_);
 
@@ -7288,7 +7260,7 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::CORBA::Object>::ret_arg_type retval =
-          TAO::Portable_Server::get_ret_arg< ::CORBA::Object, TAO::SArg_Traits< ::CORBA::Object>::ret_arg_type> (
+          TAO::Portable_Server::get_ret_arg< ::CORBA::Object> (
             this->operation_details_,
             this->args_);
 
@@ -7656,12 +7628,12 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type retval =
-          TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean, TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type> (
+          TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean> (
             this->operation_details_,
             this->args_);
 
         TAO::SArg_Traits< ::CORBA::Char *>::in_arg_type arg_1 =
-          TAO::Portable_Server::get_in_arg< ::CORBA::Char *, TAO::SArg_Traits< ::CORBA::Char *>::in_arg_type> (
+          TAO::Portable_Server::get_in_arg< ::CORBA::Char *> (
             this->operation_details_,
             this->args_,
             1);
@@ -7756,7 +7728,7 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type retval =
-          TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean, TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type> (
+          TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean> (
             this->operation_details_,
             this->args_);
 
@@ -7847,7 +7819,7 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::CORBA::Char *>::ret_arg_type retval =
-          TAO::Portable_Server::get_ret_arg< ::CORBA::Char *, TAO::SArg_Traits< ::CORBA::Char *>::ret_arg_type> (
+          TAO::Portable_Server::get_ret_arg< ::CORBA::Char *> (
             this->operation_details_,
             this->args_);
 
@@ -7986,7 +7958,7 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::CORBA::Object>::ret_arg_type retval =
-          TAO::Portable_Server::get_ret_arg< ::CORBA::Object, TAO::SArg_Traits< ::CORBA::Object>::ret_arg_type> (
+          TAO::Portable_Server::get_ret_arg< ::CORBA::Object> (
             this->operation_details_,
             this->args_);
 
@@ -8358,12 +8330,12 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type retval =
-          TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean, TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type> (
+          TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean> (
             this->operation_details_,
             this->args_);
 
         TAO::SArg_Traits< ::CORBA::Char *>::in_arg_type arg_1 =
-          TAO::Portable_Server::get_in_arg< ::CORBA::Char *, TAO::SArg_Traits< ::CORBA::Char *>::in_arg_type> (
+          TAO::Portable_Server::get_in_arg< ::CORBA::Char *> (
             this->operation_details_,
             this->args_,
             1);
@@ -8458,7 +8430,7 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type retval =
-          TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean, TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type> (
+          TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean> (
             this->operation_details_,
             this->args_);
 
@@ -8549,7 +8521,7 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::CORBA::Char *>::ret_arg_type retval =
-          TAO::Portable_Server::get_ret_arg< ::CORBA::Char *, TAO::SArg_Traits< ::CORBA::Char *>::ret_arg_type> (
+          TAO::Portable_Server::get_ret_arg< ::CORBA::Char *> (
             this->operation_details_,
             this->args_);
 
@@ -8688,7 +8660,7 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::CORBA::Object>::ret_arg_type retval =
-          TAO::Portable_Server::get_ret_arg< ::CORBA::Object, TAO::SArg_Traits< ::CORBA::Object>::ret_arg_type> (
+          TAO::Portable_Server::get_ret_arg< ::CORBA::Object> (
             this->operation_details_,
             this->args_);
 
@@ -9060,12 +9032,12 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type retval =
-          TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean, TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type> (
+          TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean> (
             this->operation_details_,
             this->args_);
 
         TAO::SArg_Traits< ::CORBA::Char *>::in_arg_type arg_1 =
-          TAO::Portable_Server::get_in_arg< ::CORBA::Char *, TAO::SArg_Traits< ::CORBA::Char *>::in_arg_type> (
+          TAO::Portable_Server::get_in_arg< ::CORBA::Char *> (
             this->operation_details_,
             this->args_,
             1);
@@ -9160,7 +9132,7 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type retval =
-          TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean, TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type> (
+          TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean> (
             this->operation_details_,
             this->args_);
 
@@ -9251,7 +9223,7 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::CORBA::Char *>::ret_arg_type retval =
-          TAO::Portable_Server::get_ret_arg< ::CORBA::Char *, TAO::SArg_Traits< ::CORBA::Char *>::ret_arg_type> (
+          TAO::Portable_Server::get_ret_arg< ::CORBA::Char *> (
             this->operation_details_,
             this->args_);
 
@@ -9390,7 +9362,7 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::CORBA::Object>::ret_arg_type retval =
-          TAO::Portable_Server::get_ret_arg< ::CORBA::Object, TAO::SArg_Traits< ::CORBA::Object>::ret_arg_type> (
+          TAO::Portable_Server::get_ret_arg< ::CORBA::Object> (
             this->operation_details_,
             this->args_);
 
@@ -9799,7 +9771,7 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::CORBA::ComponentIR::ComponentDef>::ret_arg_type retval =
-          TAO::Portable_Server::get_ret_arg< ::CORBA::ComponentIR::ComponentDef, TAO::SArg_Traits< ::CORBA::ComponentIR::ComponentDef>::ret_arg_type> (
+          TAO::Portable_Server::get_ret_arg< ::CORBA::ComponentIR::ComponentDef> (
             this->operation_details_,
             this->args_);
 
@@ -9894,7 +9866,7 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::CORBA::ComponentIR::ComponentDef>::in_arg_type arg_1 =
-          TAO::Portable_Server::get_in_arg< ::CORBA::ComponentIR::ComponentDef, TAO::SArg_Traits< ::CORBA::ComponentIR::ComponentDef>::in_arg_type> (
+          TAO::Portable_Server::get_in_arg< ::CORBA::ComponentIR::ComponentDef> (
             this->operation_details_,
             this->args_,
             1);
@@ -9992,7 +9964,7 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::CORBA::InterfaceDefSeq>::ret_arg_type retval =
-          TAO::Portable_Server::get_ret_arg< ::CORBA::InterfaceDefSeq, TAO::SArg_Traits< ::CORBA::InterfaceDefSeq>::ret_arg_type> (
+          TAO::Portable_Server::get_ret_arg< ::CORBA::InterfaceDefSeq> (
             this->operation_details_,
             this->args_);
 
@@ -10087,7 +10059,7 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::CORBA::InterfaceDefSeq>::in_arg_type arg_1 =
-          TAO::Portable_Server::get_in_arg< ::CORBA::InterfaceDefSeq, TAO::SArg_Traits< ::CORBA::InterfaceDefSeq>::in_arg_type> (
+          TAO::Portable_Server::get_in_arg< ::CORBA::InterfaceDefSeq> (
             this->operation_details_,
             this->args_,
             1);
@@ -10185,30 +10157,30 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::CORBA::ComponentIR::ProvidesDef>::ret_arg_type retval =
-          TAO::Portable_Server::get_ret_arg< ::CORBA::ComponentIR::ProvidesDef, TAO::SArg_Traits< ::CORBA::ComponentIR::ProvidesDef>::ret_arg_type> (
+          TAO::Portable_Server::get_ret_arg< ::CORBA::ComponentIR::ProvidesDef> (
             this->operation_details_,
             this->args_);
 
         TAO::SArg_Traits< ::CORBA::RepositoryId>::in_arg_type arg_1 =
-          TAO::Portable_Server::get_in_arg< ::CORBA::RepositoryId, TAO::SArg_Traits< ::CORBA::RepositoryId>::in_arg_type> (
+          TAO::Portable_Server::get_in_arg< ::CORBA::RepositoryId> (
             this->operation_details_,
             this->args_,
             1);
 
         TAO::SArg_Traits< ::CORBA::Identifier>::in_arg_type arg_2 =
-          TAO::Portable_Server::get_in_arg< ::CORBA::Identifier, TAO::SArg_Traits< ::CORBA::Identifier>::in_arg_type> (
+          TAO::Portable_Server::get_in_arg< ::CORBA::Identifier> (
             this->operation_details_,
             this->args_,
             2);
 
         TAO::SArg_Traits< ::CORBA::VersionSpec>::in_arg_type arg_3 =
-          TAO::Portable_Server::get_in_arg< ::CORBA::VersionSpec, TAO::SArg_Traits< ::CORBA::VersionSpec>::in_arg_type> (
+          TAO::Portable_Server::get_in_arg< ::CORBA::VersionSpec> (
             this->operation_details_,
             this->args_,
             3);
 
         TAO::SArg_Traits< ::CORBA::InterfaceDef>::in_arg_type arg_4 =
-          TAO::Portable_Server::get_in_arg< ::CORBA::InterfaceDef, TAO::SArg_Traits< ::CORBA::InterfaceDef>::in_arg_type> (
+          TAO::Portable_Server::get_in_arg< ::CORBA::InterfaceDef> (
             this->operation_details_,
             this->args_,
             4);
@@ -10316,36 +10288,36 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::CORBA::ComponentIR::UsesDef>::ret_arg_type retval =
-          TAO::Portable_Server::get_ret_arg< ::CORBA::ComponentIR::UsesDef, TAO::SArg_Traits< ::CORBA::ComponentIR::UsesDef>::ret_arg_type> (
+          TAO::Portable_Server::get_ret_arg< ::CORBA::ComponentIR::UsesDef> (
             this->operation_details_,
             this->args_);
 
         TAO::SArg_Traits< ::CORBA::RepositoryId>::in_arg_type arg_1 =
-          TAO::Portable_Server::get_in_arg< ::CORBA::RepositoryId, TAO::SArg_Traits< ::CORBA::RepositoryId>::in_arg_type> (
+          TAO::Portable_Server::get_in_arg< ::CORBA::RepositoryId> (
             this->operation_details_,
             this->args_,
             1);
 
         TAO::SArg_Traits< ::CORBA::Identifier>::in_arg_type arg_2 =
-          TAO::Portable_Server::get_in_arg< ::CORBA::Identifier, TAO::SArg_Traits< ::CORBA::Identifier>::in_arg_type> (
+          TAO::Portable_Server::get_in_arg< ::CORBA::Identifier> (
             this->operation_details_,
             this->args_,
             2);
 
         TAO::SArg_Traits< ::CORBA::VersionSpec>::in_arg_type arg_3 =
-          TAO::Portable_Server::get_in_arg< ::CORBA::VersionSpec, TAO::SArg_Traits< ::CORBA::VersionSpec>::in_arg_type> (
+          TAO::Portable_Server::get_in_arg< ::CORBA::VersionSpec> (
             this->operation_details_,
             this->args_,
             3);
 
         TAO::SArg_Traits< ::CORBA::InterfaceDef>::in_arg_type arg_4 =
-          TAO::Portable_Server::get_in_arg< ::CORBA::InterfaceDef, TAO::SArg_Traits< ::CORBA::InterfaceDef>::in_arg_type> (
+          TAO::Portable_Server::get_in_arg< ::CORBA::InterfaceDef> (
             this->operation_details_,
             this->args_,
             4);
 
         TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::in_arg_type arg_5 =
-          TAO::Portable_Server::get_in_arg< ::ACE_InputCDR::to_boolean, TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::in_arg_type> (
+          TAO::Portable_Server::get_in_arg< ::ACE_InputCDR::to_boolean> (
             this->operation_details_,
             this->args_,
             5);
@@ -10456,30 +10428,30 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::CORBA::ComponentIR::EmitsDef>::ret_arg_type retval =
-          TAO::Portable_Server::get_ret_arg< ::CORBA::ComponentIR::EmitsDef, TAO::SArg_Traits< ::CORBA::ComponentIR::EmitsDef>::ret_arg_type> (
+          TAO::Portable_Server::get_ret_arg< ::CORBA::ComponentIR::EmitsDef> (
             this->operation_details_,
             this->args_);
 
         TAO::SArg_Traits< ::CORBA::RepositoryId>::in_arg_type arg_1 =
-          TAO::Portable_Server::get_in_arg< ::CORBA::RepositoryId, TAO::SArg_Traits< ::CORBA::RepositoryId>::in_arg_type> (
+          TAO::Portable_Server::get_in_arg< ::CORBA::RepositoryId> (
             this->operation_details_,
             this->args_,
             1);
 
         TAO::SArg_Traits< ::CORBA::Identifier>::in_arg_type arg_2 =
-          TAO::Portable_Server::get_in_arg< ::CORBA::Identifier, TAO::SArg_Traits< ::CORBA::Identifier>::in_arg_type> (
+          TAO::Portable_Server::get_in_arg< ::CORBA::Identifier> (
             this->operation_details_,
             this->args_,
             2);
 
         TAO::SArg_Traits< ::CORBA::VersionSpec>::in_arg_type arg_3 =
-          TAO::Portable_Server::get_in_arg< ::CORBA::VersionSpec, TAO::SArg_Traits< ::CORBA::VersionSpec>::in_arg_type> (
+          TAO::Portable_Server::get_in_arg< ::CORBA::VersionSpec> (
             this->operation_details_,
             this->args_,
             3);
 
         TAO::SArg_Traits< ::CORBA::ComponentIR::EventDef>::in_arg_type arg_4 =
-          TAO::Portable_Server::get_in_arg< ::CORBA::ComponentIR::EventDef, TAO::SArg_Traits< ::CORBA::ComponentIR::EventDef>::in_arg_type> (
+          TAO::Portable_Server::get_in_arg< ::CORBA::ComponentIR::EventDef> (
             this->operation_details_,
             this->args_,
             4);
@@ -10587,30 +10559,30 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::CORBA::ComponentIR::PublishesDef>::ret_arg_type retval =
-          TAO::Portable_Server::get_ret_arg< ::CORBA::ComponentIR::PublishesDef, TAO::SArg_Traits< ::CORBA::ComponentIR::PublishesDef>::ret_arg_type> (
+          TAO::Portable_Server::get_ret_arg< ::CORBA::ComponentIR::PublishesDef> (
             this->operation_details_,
             this->args_);
 
         TAO::SArg_Traits< ::CORBA::RepositoryId>::in_arg_type arg_1 =
-          TAO::Portable_Server::get_in_arg< ::CORBA::RepositoryId, TAO::SArg_Traits< ::CORBA::RepositoryId>::in_arg_type> (
+          TAO::Portable_Server::get_in_arg< ::CORBA::RepositoryId> (
             this->operation_details_,
             this->args_,
             1);
 
         TAO::SArg_Traits< ::CORBA::Identifier>::in_arg_type arg_2 =
-          TAO::Portable_Server::get_in_arg< ::CORBA::Identifier, TAO::SArg_Traits< ::CORBA::Identifier>::in_arg_type> (
+          TAO::Portable_Server::get_in_arg< ::CORBA::Identifier> (
             this->operation_details_,
             this->args_,
             2);
 
         TAO::SArg_Traits< ::CORBA::VersionSpec>::in_arg_type arg_3 =
-          TAO::Portable_Server::get_in_arg< ::CORBA::VersionSpec, TAO::SArg_Traits< ::CORBA::VersionSpec>::in_arg_type> (
+          TAO::Portable_Server::get_in_arg< ::CORBA::VersionSpec> (
             this->operation_details_,
             this->args_,
             3);
 
         TAO::SArg_Traits< ::CORBA::ComponentIR::EventDef>::in_arg_type arg_4 =
-          TAO::Portable_Server::get_in_arg< ::CORBA::ComponentIR::EventDef, TAO::SArg_Traits< ::CORBA::ComponentIR::EventDef>::in_arg_type> (
+          TAO::Portable_Server::get_in_arg< ::CORBA::ComponentIR::EventDef> (
             this->operation_details_,
             this->args_,
             4);
@@ -10718,30 +10690,30 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::CORBA::ComponentIR::ConsumesDef>::ret_arg_type retval =
-          TAO::Portable_Server::get_ret_arg< ::CORBA::ComponentIR::ConsumesDef, TAO::SArg_Traits< ::CORBA::ComponentIR::ConsumesDef>::ret_arg_type> (
+          TAO::Portable_Server::get_ret_arg< ::CORBA::ComponentIR::ConsumesDef> (
             this->operation_details_,
             this->args_);
 
         TAO::SArg_Traits< ::CORBA::RepositoryId>::in_arg_type arg_1 =
-          TAO::Portable_Server::get_in_arg< ::CORBA::RepositoryId, TAO::SArg_Traits< ::CORBA::RepositoryId>::in_arg_type> (
+          TAO::Portable_Server::get_in_arg< ::CORBA::RepositoryId> (
             this->operation_details_,
             this->args_,
             1);
 
         TAO::SArg_Traits< ::CORBA::Identifier>::in_arg_type arg_2 =
-          TAO::Portable_Server::get_in_arg< ::CORBA::Identifier, TAO::SArg_Traits< ::CORBA::Identifier>::in_arg_type> (
+          TAO::Portable_Server::get_in_arg< ::CORBA::Identifier> (
             this->operation_details_,
             this->args_,
             2);
 
         TAO::SArg_Traits< ::CORBA::VersionSpec>::in_arg_type arg_3 =
-          TAO::Portable_Server::get_in_arg< ::CORBA::VersionSpec, TAO::SArg_Traits< ::CORBA::VersionSpec>::in_arg_type> (
+          TAO::Portable_Server::get_in_arg< ::CORBA::VersionSpec> (
             this->operation_details_,
             this->args_,
             3);
 
         TAO::SArg_Traits< ::CORBA::ComponentIR::EventDef>::in_arg_type arg_4 =
-          TAO::Portable_Server::get_in_arg< ::CORBA::ComponentIR::EventDef, TAO::SArg_Traits< ::CORBA::ComponentIR::EventDef>::in_arg_type> (
+          TAO::Portable_Server::get_in_arg< ::CORBA::ComponentIR::EventDef> (
             this->operation_details_,
             this->args_,
             4);
@@ -10853,12 +10825,12 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type retval =
-          TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean, TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type> (
+          TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean> (
             this->operation_details_,
             this->args_);
 
         TAO::SArg_Traits< ::CORBA::Char *>::in_arg_type arg_1 =
-          TAO::Portable_Server::get_in_arg< ::CORBA::Char *, TAO::SArg_Traits< ::CORBA::Char *>::in_arg_type> (
+          TAO::Portable_Server::get_in_arg< ::CORBA::Char *> (
             this->operation_details_,
             this->args_,
             1);
@@ -10953,7 +10925,7 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type retval =
-          TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean, TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type> (
+          TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean> (
             this->operation_details_,
             this->args_);
 
@@ -11044,7 +11016,7 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::CORBA::Char *>::ret_arg_type retval =
-          TAO::Portable_Server::get_ret_arg< ::CORBA::Char *, TAO::SArg_Traits< ::CORBA::Char *>::ret_arg_type> (
+          TAO::Portable_Server::get_ret_arg< ::CORBA::Char *> (
             this->operation_details_,
             this->args_);
 
@@ -11183,7 +11155,7 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::CORBA::Object>::ret_arg_type retval =
-          TAO::Portable_Server::get_ret_arg< ::CORBA::Object, TAO::SArg_Traits< ::CORBA::Object>::ret_arg_type> (
+          TAO::Portable_Server::get_ret_arg< ::CORBA::Object> (
             this->operation_details_,
             this->args_);
 
@@ -11634,12 +11606,12 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type retval =
-          TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean, TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type> (
+          TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean> (
             this->operation_details_,
             this->args_);
 
         TAO::SArg_Traits< ::CORBA::Char *>::in_arg_type arg_1 =
-          TAO::Portable_Server::get_in_arg< ::CORBA::Char *, TAO::SArg_Traits< ::CORBA::Char *>::in_arg_type> (
+          TAO::Portable_Server::get_in_arg< ::CORBA::Char *> (
             this->operation_details_,
             this->args_,
             1);
@@ -11734,7 +11706,7 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type retval =
-          TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean, TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type> (
+          TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean> (
             this->operation_details_,
             this->args_);
 
@@ -11825,7 +11797,7 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::CORBA::Char *>::ret_arg_type retval =
-          TAO::Portable_Server::get_ret_arg< ::CORBA::Char *, TAO::SArg_Traits< ::CORBA::Char *>::ret_arg_type> (
+          TAO::Portable_Server::get_ret_arg< ::CORBA::Char *> (
             this->operation_details_,
             this->args_);
 
@@ -11964,7 +11936,7 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::CORBA::Object>::ret_arg_type retval =
-          TAO::Portable_Server::get_ret_arg< ::CORBA::Object, TAO::SArg_Traits< ::CORBA::Object>::ret_arg_type> (
+          TAO::Portable_Server::get_ret_arg< ::CORBA::Object> (
             this->operation_details_,
             this->args_);
 
@@ -12399,12 +12371,12 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type retval =
-          TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean, TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type> (
+          TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean> (
             this->operation_details_,
             this->args_);
 
         TAO::SArg_Traits< ::CORBA::Char *>::in_arg_type arg_1 =
-          TAO::Portable_Server::get_in_arg< ::CORBA::Char *, TAO::SArg_Traits< ::CORBA::Char *>::in_arg_type> (
+          TAO::Portable_Server::get_in_arg< ::CORBA::Char *> (
             this->operation_details_,
             this->args_,
             1);
@@ -12499,7 +12471,7 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type retval =
-          TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean, TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type> (
+          TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean> (
             this->operation_details_,
             this->args_);
 
@@ -12590,7 +12562,7 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::CORBA::Char *>::ret_arg_type retval =
-          TAO::Portable_Server::get_ret_arg< ::CORBA::Char *, TAO::SArg_Traits< ::CORBA::Char *>::ret_arg_type> (
+          TAO::Portable_Server::get_ret_arg< ::CORBA::Char *> (
             this->operation_details_,
             this->args_);
 
@@ -12729,7 +12701,7 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::CORBA::Object>::ret_arg_type retval =
-          TAO::Portable_Server::get_ret_arg< ::CORBA::Object, TAO::SArg_Traits< ::CORBA::Object>::ret_arg_type> (
+          TAO::Portable_Server::get_ret_arg< ::CORBA::Object> (
             this->operation_details_,
             this->args_);
 
@@ -13140,7 +13112,7 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::CORBA::ComponentIR::HomeDef>::ret_arg_type retval =
-          TAO::Portable_Server::get_ret_arg< ::CORBA::ComponentIR::HomeDef, TAO::SArg_Traits< ::CORBA::ComponentIR::HomeDef>::ret_arg_type> (
+          TAO::Portable_Server::get_ret_arg< ::CORBA::ComponentIR::HomeDef> (
             this->operation_details_,
             this->args_);
 
@@ -13235,7 +13207,7 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::CORBA::ComponentIR::HomeDef>::in_arg_type arg_1 =
-          TAO::Portable_Server::get_in_arg< ::CORBA::ComponentIR::HomeDef, TAO::SArg_Traits< ::CORBA::ComponentIR::HomeDef>::in_arg_type> (
+          TAO::Portable_Server::get_in_arg< ::CORBA::ComponentIR::HomeDef> (
             this->operation_details_,
             this->args_,
             1);
@@ -13333,7 +13305,7 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::CORBA::InterfaceDefSeq>::ret_arg_type retval =
-          TAO::Portable_Server::get_ret_arg< ::CORBA::InterfaceDefSeq, TAO::SArg_Traits< ::CORBA::InterfaceDefSeq>::ret_arg_type> (
+          TAO::Portable_Server::get_ret_arg< ::CORBA::InterfaceDefSeq> (
             this->operation_details_,
             this->args_);
 
@@ -13428,7 +13400,7 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::CORBA::InterfaceDefSeq>::in_arg_type arg_1 =
-          TAO::Portable_Server::get_in_arg< ::CORBA::InterfaceDefSeq, TAO::SArg_Traits< ::CORBA::InterfaceDefSeq>::in_arg_type> (
+          TAO::Portable_Server::get_in_arg< ::CORBA::InterfaceDefSeq> (
             this->operation_details_,
             this->args_,
             1);
@@ -13526,7 +13498,7 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::CORBA::ComponentIR::ComponentDef>::ret_arg_type retval =
-          TAO::Portable_Server::get_ret_arg< ::CORBA::ComponentIR::ComponentDef, TAO::SArg_Traits< ::CORBA::ComponentIR::ComponentDef>::ret_arg_type> (
+          TAO::Portable_Server::get_ret_arg< ::CORBA::ComponentIR::ComponentDef> (
             this->operation_details_,
             this->args_);
 
@@ -13621,7 +13593,7 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::CORBA::ComponentIR::ComponentDef>::in_arg_type arg_1 =
-          TAO::Portable_Server::get_in_arg< ::CORBA::ComponentIR::ComponentDef, TAO::SArg_Traits< ::CORBA::ComponentIR::ComponentDef>::in_arg_type> (
+          TAO::Portable_Server::get_in_arg< ::CORBA::ComponentIR::ComponentDef> (
             this->operation_details_,
             this->args_,
             1);
@@ -13719,7 +13691,7 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::CORBA::ValueDef>::ret_arg_type retval =
-          TAO::Portable_Server::get_ret_arg< ::CORBA::ValueDef, TAO::SArg_Traits< ::CORBA::ValueDef>::ret_arg_type> (
+          TAO::Portable_Server::get_ret_arg< ::CORBA::ValueDef> (
             this->operation_details_,
             this->args_);
 
@@ -13814,7 +13786,7 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::CORBA::ValueDef>::in_arg_type arg_1 =
-          TAO::Portable_Server::get_in_arg< ::CORBA::ValueDef, TAO::SArg_Traits< ::CORBA::ValueDef>::in_arg_type> (
+          TAO::Portable_Server::get_in_arg< ::CORBA::ValueDef> (
             this->operation_details_,
             this->args_,
             1);
@@ -13912,36 +13884,36 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::CORBA::ComponentIR::FactoryDef>::ret_arg_type retval =
-          TAO::Portable_Server::get_ret_arg< ::CORBA::ComponentIR::FactoryDef, TAO::SArg_Traits< ::CORBA::ComponentIR::FactoryDef>::ret_arg_type> (
+          TAO::Portable_Server::get_ret_arg< ::CORBA::ComponentIR::FactoryDef> (
             this->operation_details_,
             this->args_);
 
         TAO::SArg_Traits< ::CORBA::RepositoryId>::in_arg_type arg_1 =
-          TAO::Portable_Server::get_in_arg< ::CORBA::RepositoryId, TAO::SArg_Traits< ::CORBA::RepositoryId>::in_arg_type> (
+          TAO::Portable_Server::get_in_arg< ::CORBA::RepositoryId> (
             this->operation_details_,
             this->args_,
             1);
 
         TAO::SArg_Traits< ::CORBA::Identifier>::in_arg_type arg_2 =
-          TAO::Portable_Server::get_in_arg< ::CORBA::Identifier, TAO::SArg_Traits< ::CORBA::Identifier>::in_arg_type> (
+          TAO::Portable_Server::get_in_arg< ::CORBA::Identifier> (
             this->operation_details_,
             this->args_,
             2);
 
         TAO::SArg_Traits< ::CORBA::VersionSpec>::in_arg_type arg_3 =
-          TAO::Portable_Server::get_in_arg< ::CORBA::VersionSpec, TAO::SArg_Traits< ::CORBA::VersionSpec>::in_arg_type> (
+          TAO::Portable_Server::get_in_arg< ::CORBA::VersionSpec> (
             this->operation_details_,
             this->args_,
             3);
 
         TAO::SArg_Traits< ::CORBA::ParDescriptionSeq>::in_arg_type arg_4 =
-          TAO::Portable_Server::get_in_arg< ::CORBA::ParDescriptionSeq, TAO::SArg_Traits< ::CORBA::ParDescriptionSeq>::in_arg_type> (
+          TAO::Portable_Server::get_in_arg< ::CORBA::ParDescriptionSeq> (
             this->operation_details_,
             this->args_,
             4);
 
         TAO::SArg_Traits< ::CORBA::ExceptionDefSeq>::in_arg_type arg_5 =
-          TAO::Portable_Server::get_in_arg< ::CORBA::ExceptionDefSeq, TAO::SArg_Traits< ::CORBA::ExceptionDefSeq>::in_arg_type> (
+          TAO::Portable_Server::get_in_arg< ::CORBA::ExceptionDefSeq> (
             this->operation_details_,
             this->args_,
             5);
@@ -14052,36 +14024,36 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::CORBA::ComponentIR::FinderDef>::ret_arg_type retval =
-          TAO::Portable_Server::get_ret_arg< ::CORBA::ComponentIR::FinderDef, TAO::SArg_Traits< ::CORBA::ComponentIR::FinderDef>::ret_arg_type> (
+          TAO::Portable_Server::get_ret_arg< ::CORBA::ComponentIR::FinderDef> (
             this->operation_details_,
             this->args_);
 
         TAO::SArg_Traits< ::CORBA::RepositoryId>::in_arg_type arg_1 =
-          TAO::Portable_Server::get_in_arg< ::CORBA::RepositoryId, TAO::SArg_Traits< ::CORBA::RepositoryId>::in_arg_type> (
+          TAO::Portable_Server::get_in_arg< ::CORBA::RepositoryId> (
             this->operation_details_,
             this->args_,
             1);
 
         TAO::SArg_Traits< ::CORBA::Identifier>::in_arg_type arg_2 =
-          TAO::Portable_Server::get_in_arg< ::CORBA::Identifier, TAO::SArg_Traits< ::CORBA::Identifier>::in_arg_type> (
+          TAO::Portable_Server::get_in_arg< ::CORBA::Identifier> (
             this->operation_details_,
             this->args_,
             2);
 
         TAO::SArg_Traits< ::CORBA::VersionSpec>::in_arg_type arg_3 =
-          TAO::Portable_Server::get_in_arg< ::CORBA::VersionSpec, TAO::SArg_Traits< ::CORBA::VersionSpec>::in_arg_type> (
+          TAO::Portable_Server::get_in_arg< ::CORBA::VersionSpec> (
             this->operation_details_,
             this->args_,
             3);
 
         TAO::SArg_Traits< ::CORBA::ParDescriptionSeq>::in_arg_type arg_4 =
-          TAO::Portable_Server::get_in_arg< ::CORBA::ParDescriptionSeq, TAO::SArg_Traits< ::CORBA::ParDescriptionSeq>::in_arg_type> (
+          TAO::Portable_Server::get_in_arg< ::CORBA::ParDescriptionSeq> (
             this->operation_details_,
             this->args_,
             4);
 
         TAO::SArg_Traits< ::CORBA::ExceptionDefSeq>::in_arg_type arg_5 =
-          TAO::Portable_Server::get_in_arg< ::CORBA::ExceptionDefSeq, TAO::SArg_Traits< ::CORBA::ExceptionDefSeq>::in_arg_type> (
+          TAO::Portable_Server::get_in_arg< ::CORBA::ExceptionDefSeq> (
             this->operation_details_,
             this->args_,
             5);
@@ -14196,12 +14168,12 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type retval =
-          TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean, TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type> (
+          TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean> (
             this->operation_details_,
             this->args_);
 
         TAO::SArg_Traits< ::CORBA::Char *>::in_arg_type arg_1 =
-          TAO::Portable_Server::get_in_arg< ::CORBA::Char *, TAO::SArg_Traits< ::CORBA::Char *>::in_arg_type> (
+          TAO::Portable_Server::get_in_arg< ::CORBA::Char *> (
             this->operation_details_,
             this->args_,
             1);
@@ -14296,7 +14268,7 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type retval =
-          TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean, TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type> (
+          TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean> (
             this->operation_details_,
             this->args_);
 
@@ -14387,7 +14359,7 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::CORBA::Char *>::ret_arg_type retval =
-          TAO::Portable_Server::get_ret_arg< ::CORBA::Char *, TAO::SArg_Traits< ::CORBA::Char *>::ret_arg_type> (
+          TAO::Portable_Server::get_ret_arg< ::CORBA::Char *> (
             this->operation_details_,
             this->args_);
 
@@ -14526,7 +14498,7 @@ namespace POA_CORBA
       virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
       {
         TAO::SArg_Traits< ::CORBA::Object>::ret_arg_type retval =
-          TAO::Portable_Server::get_ret_arg< ::CORBA::Object, TAO::SArg_Traits< ::CORBA::Object>::ret_arg_type> (
+          TAO::Portable_Server::get_ret_arg< ::CORBA::Object> (
             this->operation_details_,
             this->args_);
 

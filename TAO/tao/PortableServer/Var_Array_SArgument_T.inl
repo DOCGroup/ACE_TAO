@@ -36,9 +36,7 @@ Inout_Var_Array_SArgument_T (void)
 template<typename S_forany,
          template <typename> class Insert_Policy>
 typename S_forany::_slice_type *
-TAO::Inout_Var_Array_SArgument_T<S,
-                                 S_slice,
-                                 S_forany,
+TAO::Inout_Var_Array_SArgument_T<S_forany,
                                  Insert_Policy>::arg (void)
 {
   S_forany tmp (this->x_);
