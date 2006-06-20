@@ -1,4 +1,19 @@
 // -*- C++ -*-
+//=============================================================================
+/**
+ *  @file    Service_Config_DLL.cpp
+ *
+ *  $Id$
+ *
+ *  This file is related to, and used with, Service_Config_Test. It's
+ *  used when testing the reentrance/thread-safety of the
+ *  Service Configurator, in addition to testing the Service
+ *  Configurator's ability to handle nested processing of Service
+ *  Configurator directives.
+ *
+ *  @author Ossama Othman <ossama@uci.edu>
+ */
+//=============================================================================
 
 #include "Service_Config_DLL.h"
 #include "ace/Service_Config.h"
