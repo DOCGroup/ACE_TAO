@@ -1,7 +1,11 @@
+Tue Jun 20 12:29:04 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/Options.html:
           Document ORBOutputCDRAllocator and don't refer to cvs.doc.wustl.edu
           for files, just get them locally
+
+        * docs/compiler.html:
+          Document -Sorb
 
 Tue Jun 20 10:21:04 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
