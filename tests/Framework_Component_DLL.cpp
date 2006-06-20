@@ -1,4 +1,23 @@
-// -*- C++ -*-
+// $Id$
+
+// ============================================================================
+//
+// = LIBRARY
+//    tests
+//
+// = FILENAME
+//    Framework_Component_DLL.cpp
+//
+// = DESCRIPTION
+//   This is a simple server that can be loaded via the ACE
+//   Service Configuration framework and uses the singleton that
+//   also lives in this library.
+//
+// = AUTHOR
+//    Don Hinton <dhinton@ieee.org>
+//
+// ============================================================================
+
 #include "Framework_Component_DLL.h"
 #include "ace/Service_Config.h"
 #include "ace/Service_Object.h"
@@ -29,9 +48,6 @@ Simple_Service::name (void)
 
 /***************************************************************************/
 
-/// This is just a simple server that can be loaded via the ACE
-/// Service Configuration framework and uses the singleton that
-/// also lives in this library.
 template <int which>
 class Server_T : public ACE_Service_Object
 {
@@ -64,11 +80,3 @@ typedef Server_T <2> Server_2;
 FRAMEWORK_COMPONENT_DLL_SINGLETON_DECLARATION(Server_T<2>;)
 ACE_FACTORY_DEFINE (Framework_Component_DLL, Server_2)
 
-#if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
-
-template ACE_DLL_Singleton_T<FWCT_DLL_Singleton_Adapter_T <Simple_Service>,
-                             ACE_SYNCH_MUTEX> *
-  ACE_DLL_Singleton_T<FWCT_DLL_Singleton_Adapter_T <Simple_Service>,
-                      ACE_SYNCH_MUTEX>::singleton_;
-
-#endif /* ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION */

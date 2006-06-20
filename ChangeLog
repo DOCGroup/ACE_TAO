@@ -1,3 +1,7 @@
+Tue Jun 20 23:20:17 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * tests/Framework_Component_DLL.cpp: Added a description of this test.
+
 Tue Jun 20 22:34:43 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * tests/Service_Config_DLL.cpp: Added a comment block at the top
