@@ -2,7 +2,7 @@
 // $Id$
 
 /**
- * @file EndpointPolicy.pidl
+ * @file IIOPEndpointValue.pidl
  *
  * This file contains idl definition for Endpoint policy interface and
  * the policy value. This TAO-specific policy is used to filter endpoints
