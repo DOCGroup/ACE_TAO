@@ -284,6 +284,7 @@ run_main (int argc, ACE_TCHAR *argv[])
                 result,
                 exitcode));
 
+#if !defined (ACE_OPENVMS)
   // --------------------------------------------------
   // Finally, try the reactor stuff...
   mgr.open (ACE_Process_Manager::DEFAULT_SIZE,
@@ -312,6 +313,7 @@ run_main (int argc, ACE_TCHAR *argv[])
                 ACE_TEXT ("(%P) %d processes left in manager\n"),
                 nr_procs));
 
+#endif
   ACE_END_TEST;
   return test_status;
 }

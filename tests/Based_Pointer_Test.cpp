@@ -42,7 +42,7 @@ ACE_RCSID (tests,
 # define OBJ_SUFFIX ACE_DLL_SUFFIX
 #endif /* ACE_WIN32 && && _MSC_VER && _DEBUG */
 
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) || defined (ACE_OPENVMS)
 #  define OBJ_PREFIX ACE_DLL_PREFIX
 #else
 #  define OBJ_PREFIX ACE_TEXT("./") ACE_DLL_PREFIX
@@ -96,7 +96,12 @@ int singleton_test (void)
                            -1);
        }
 
+#if defined (ACE_OPENVMS)
+    // with OPENVMS symbol names > 31 cause us trouble with dlsym()
+    void* foo = dll.symbol (ACE_TEXT ("get_based_pointer_repo_inst"));
+#else
     void* foo = dll.symbol (ACE_TEXT ("get_based_pointer_repository_instance"));
+#endif
 
     // Cast the void* to function* with a long as intermediate.
     ptrdiff_t tmp = reinterpret_cast<ptrdiff_t> (foo);
@@ -115,7 +120,7 @@ int singleton_test (void)
     if (baddr_dll != baddr1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("ACE_Based_Pointer_Repository is not a singleton in DLL\n")),
+                         ACE_TEXT ("ACE_Based_Pointer_Repository is not a singleton in DLL %x %x\n"), baddr_dll, baddr1),
                         -1);
     }
 

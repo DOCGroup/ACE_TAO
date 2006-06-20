@@ -1,3 +1,13 @@
+Tue Jun 20 18:55:12 UTC 2006  Martin Corino  <mcorino@remedy.nl>
+
+        * tests/Based_Pointer_Test.cpp:
+        * tests/Based_Pointer_Test_Lib.cpp:
+        * tests/CDR_File_Test.cpp:
+        * tests/DLL_Test.cpp:
+        * tests/Malloc_Test.cpp:
+        * tests/Process_Manager_Test.cpp:
+          Several fixes to make OpenVMS happy.
+
 Tue Jun 20 18:04:45 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * examples/Log_Msg/test_ostream.cpp (ACE_TMAIN): Couldn't used
