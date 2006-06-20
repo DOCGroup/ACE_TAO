@@ -5,7 +5,7 @@ ACE_RCSID (PortableServer,
            ImplicitActivationPolicy,
            "$Id$")
 
-#if (TAO_HAS_MINIMUM_POA == 0)
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -68,4 +68,4 @@ namespace TAO
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
+#endif /* TAO_HAS_MINIMUM_POA == 0 && !CORBA_E_COMPACT && !CORBA_E_MICRO */

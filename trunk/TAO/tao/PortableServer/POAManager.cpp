@@ -28,15 +28,21 @@ TAO_POA_Manager::TAO_POA_Manager (
     poa_collection_ (),
     object_adapter_ (object_adapter),
     id_ (id == 0 ? this->generate_manager_id () : CORBA::string_dup (id)),
-    poa_manager_factory_ (* (dynamic_cast <TAO_POAManager_Factory*> (poa_manager_factory))),
+#if !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
+    poa_manager_factory_ (* dynamic_cast <TAO_POAManager_Factory*> (poa_manager_factory)),
+#endif
     policies_ (policies)
 {
-  poa_manager_factory->_add_ref ();
+#if !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
+  poa_manager_factory_._add_ref ();
+#endif
 }
 
 TAO_POA_Manager::~TAO_POA_Manager (void)
 {
+#if !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
   poa_manager_factory_._remove_ref ();
+#endif
 }
 
 char *
@@ -307,13 +313,15 @@ TAO_POA_Manager::discard_requests_i (CORBA::Boolean wait_for_completion
 int
 TAO_POA_Manager::remove_poa (TAO_Root_POA *poa)
 {
-  int result = this->poa_collection_.remove (poa);
+  int const result = this->poa_collection_.remove (poa);
 
   if (result == 0)
     {
       if (this->poa_collection_.is_empty ())
         {
+#if !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
           this->poa_manager_factory_.remove_poamanager (this);
+#endif
         }
     }
 

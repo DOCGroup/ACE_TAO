@@ -30,6 +30,8 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+#if !defined (CORBA_E_MICRO)
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
@@ -68,6 +70,8 @@ namespace TAO
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
+
+#endif
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

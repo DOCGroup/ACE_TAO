@@ -10,6 +10,8 @@ ACE_RCSID (PortableServer,
            POAManagerFactory,
            "$Id$")
 
+#if !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_POAManager_Factory::TAO_POAManager_Factory (TAO_Object_Adapter &object_adapter) :
@@ -62,7 +64,7 @@ TAO_POAManager_Factory::create_POAManager (
   }
 
   // this indirection brought to you by borland's compiler and its refusal
-  // to directly assign the newly crated TAO_POA_Manager to a POAManager_var.
+  // to directly assign the newly created TAO_POA_Manager to a POAManager_var.
   {
     PortableServer::POAManager_ptr pm = 0;
     ACE_NEW_THROW_EX (pm,
@@ -159,3 +161,5 @@ TAO_POAManager_Factory::register_poamanager (
 
 
 TAO_END_VERSIONED_NAMESPACE_DECL
+
+#endif

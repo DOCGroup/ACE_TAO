@@ -33,6 +33,7 @@
 #include "tao/Seq_Out_T.h"
 #include "tao/Sequence_T.h"
 #include "tao/Policy_ForwardC.h"
+#include "tao/ServicesC.h"
 
 #include "ace/Thread_Mutex.h"
 #include "ace/Guard_T.h"
@@ -101,21 +102,6 @@ namespace CORBA
         ORB_ObjectIdList
       >
     ORB_ObjectIdList_out;
-
-  struct ServiceInformation;
-
-  typedef
-    TAO_Var_Var_T<
-        ServiceInformation
-      >
-    ServiceInformation_var;
-
-  typedef
-    TAO_Out_T<
-        ServiceInformation,
-        ServiceInformation_var
-      >
-    ServiceInformation_out;
 
   class ValueFactoryBase;
   typedef ValueFactoryBase *ValueFactory;
@@ -240,16 +226,24 @@ namespace CORBA
     char * object_to_string (CORBA::Object_ptr obj
                              ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
+#if !defined(CORBA_E_MICRO)
     // Value factory operations  (CORBA 2.3 ptc/98-10-05 Ch. 4.2 p.4-7)
     CORBA::ValueFactory register_value_factory (
         const char *repository_id,
         CORBA::ValueFactory factory
         ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+#endif
+
+#if !defined(CORBA_E_MICRO)
     void unregister_value_factory (const char * repository_id
                                    ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+#endif
+
+#if !defined(CORBA_E_MICRO)
     CORBA::ValueFactory lookup_value_factory (
         const char *repository_id
         ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+#endif
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 
@@ -531,28 +525,34 @@ namespace CORBA
       ACE_Time_Value *timeout
       ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
+#if !defined(CORBA_E_MICRO)
     /// Register an object reference with the ORB.
     void register_initial_reference (const char * id,
                                      CORBA::Object_ptr obj
                                      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+#endif
 
     /// Returns a sequence of ObjectIds that lists which objects have
     /// references available via the initial references mechanism.
     CORBA::ORB::ObjectIdList_ptr list_initial_services (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
+#if !defined(CORBA_E_MICRO)
     CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
                                      const CORBA::Any& val
                                      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+#endif
 
     // ----------------------------------------------------------------
     // = TAO-specific extensions to the CORBA specification.
     // ----------------------------------------------------------------
 
+#if !defined(CORBA_E_MICRO)
     /// Create an empty policy, usually to be filled in later by
     /// demarshaling.
     CORBA::Policy_ptr _create_policy (CORBA::PolicyType type
                                       ACE_ENV_ARG_DECL);
+#endif
 
     // Reference counting...
     CORBA::ULong _incr_refcnt (void);

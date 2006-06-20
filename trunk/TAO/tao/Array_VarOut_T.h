@@ -7,6 +7,7 @@
  *  $Id$
  *
  *  @author Jeff Parsons
+ *  @author Johnny Willemsen
  */
 //=============================================================================
 
@@ -40,44 +41,45 @@ namespace TAO
  * @brief Parametrized implementation of _forany class for arrays.
  *
  */
-template<typename T, typename T_slice, typename TAG>
+template<typename array_traits>
 class TAO_Array_Forany_T
 {
 public:
-  typedef T _array_type;
-  typedef T_slice _slice_type;
+  typedef typename array_traits::slice_type slice_type;
 
   TAO_Array_Forany_T (void);
-  TAO_Array_Forany_T (T_slice *,
-                      CORBA::Boolean nocopy = false);
-  TAO_Array_Forany_T (const TAO_Array_Forany_T<T,T_slice,TAG> &);
+  TAO_Array_Forany_T (slice_type *, CORBA::Boolean nocopy = false);
+  TAO_Array_Forany_T (const TAO_Array_Forany_T<array_traits> &);
   ~TAO_Array_Forany_T (void);
 
   static void _tao_any_destructor (void *);
 
-  TAO_Array_Forany_T & operator= (T_slice *);
-  TAO_Array_Forany_T & operator= (
-      const TAO_Array_Forany_T<T,T_slice,TAG> &
-    );
+  TAO_Array_Forany_T & operator= (slice_type *);
+  TAO_Array_Forany_T & operator= (const TAO_Array_Forany_T<array_traits> &);
 
-  T_slice & operator[] (CORBA::ULong index);
-  const T_slice & operator[] (CORBA::ULong index) const;
+  slice_type & operator[] (CORBA::ULong index);
+  const slice_type & operator[] (CORBA::ULong index) const;
 
-  operator T_slice * const & () const;
-  operator T_slice *& ();
+  operator slice_type * const & () const;
+  operator slice_type *& ();
+
+  typedef const slice_type *   _in_type;
+  typedef       slice_type *   _inout_type;
+  typedef       slice_type * & _out_type;
+  typedef       slice_type *   _retn_type;
+  typedef       slice_type *&  _retn_arg_type;
 
   // in, inout, out, _retn
-  const T_slice * in (void) const;
-  T_slice * inout (void);
-  T_slice * &out (void);
-  T_slice * _retn (void);
-  T_slice * ptr (void) const;
+  _in_type      in (void) const;
+  _inout_type   inout (void);
+  _out_type     out (void);
+  _retn_type    _retn (void);
+  slice_type * ptr (void) const;
   CORBA::Boolean nocopy (void) const;
 
-  static T_slice * tao_alloc (void);
+  static slice_type * tao_alloc (void);
 private:
-  typedef TAO_Array_Forany_T<T,T_slice,TAG> FORANY;
-  T_slice * ptr_;
+  slice_type * ptr_;
   CORBA::Boolean nocopy_;
 };
 
@@ -87,23 +89,27 @@ private:
  * @brief Parametrized implementation of _var base class for arrays.
  *
  */
-template<typename T, typename T_slice, typename TAG>
+template<typename array_traits>
 class TAO_Array_Var_Base_T
 {
 public:
+  typedef typename array_traits::slice_type slice_type;
+  typedef typename array_traits::slice_type const & const_subscript_type;
+  typedef typename array_traits::slice_type & subscript_type;
+
   TAO_Array_Var_Base_T (void);
-  TAO_Array_Var_Base_T (T_slice *);
-  TAO_Array_Var_Base_T (const TAO_Array_Var_Base_T<T,T_slice,TAG> &);
+  TAO_Array_Var_Base_T (slice_type *);
+  TAO_Array_Var_Base_T (const TAO_Array_Var_Base_T<array_traits> &);
   ~TAO_Array_Var_Base_T (void);
 
-  T_slice & operator[] (CORBA::ULong index);
-  T_slice const & operator[] (CORBA::ULong index) const;
-  operator T_slice * const & () const;
+  subscript_type operator[] (CORBA::ULong index);
+  const_subscript_type operator[] (CORBA::ULong index) const;
+  operator slice_type * const & () const;
 
-  typedef const T_slice *   _in_type;
-  typedef       T_slice *   _inout_type;
-  typedef       T_slice *   _retn_type;
-  typedef       T_slice *&  _retn_arg_type;
+  typedef const slice_type *   _in_type;
+  typedef       slice_type *   _inout_type;
+  typedef       slice_type *   _retn_type;
+  typedef       slice_type *&  _retn_arg_type;
 
   // in, inout, out, _retn
   _in_type      in (void) const;
@@ -114,8 +120,7 @@ public:
   // TAO extension.
   _retn_type    ptr (void) const;
 protected:
-  typedef typename TAO_Array_Forany_T<T,T_slice,TAG> FORANY;
-  T_slice * ptr_;
+  slice_type * ptr_;
 };
 
 /**
@@ -125,20 +130,22 @@ protected:
  * elements of fixed size.
  *
  */
-template<typename T, typename T_slice, typename TAG>
-class TAO_FixedArray_Var_T: public TAO_Array_Var_Base_T<T,T_slice,TAG>
+template<typename array_traits>
+class TAO_FixedArray_Var_T: public TAO_Array_Var_Base_T<array_traits>
 {
 public:
-  TAO_FixedArray_Var_T (void);
-  TAO_FixedArray_Var_T (T_slice *);
-  TAO_FixedArray_Var_T (const TAO_FixedArray_Var_T<T,T_slice,TAG> &);
+  typedef typename array_traits::slice_type slice_type;
+  typedef typename array_traits::slice_type *_out_type;
 
-  TAO_FixedArray_Var_T<T,T_slice,TAG> &operator= (T_slice *);
-  TAO_FixedArray_Var_T<T,T_slice,TAG> &operator= (
-      const TAO_FixedArray_Var_T<T,T_slice,TAG> &
+  TAO_FixedArray_Var_T (void);
+  TAO_FixedArray_Var_T (slice_type *);
+  TAO_FixedArray_Var_T (const TAO_FixedArray_Var_T<array_traits> &);
+
+  TAO_FixedArray_Var_T<array_traits> &operator= (slice_type *);
+  TAO_FixedArray_Var_T<array_traits> &operator= (
+      const TAO_FixedArray_Var_T<array_traits> &
     );
 
-  typedef       T_slice *  _out_type;
   _out_type     out (void);
 };
 
@@ -149,23 +156,25 @@ public:
  * elements of variable size.
  *
  */
-template<typename T, typename T_slice, typename TAG>
-class TAO_VarArray_Var_T : public TAO_Array_Var_Base_T<T,T_slice,TAG>
+template<typename array_traits>
+class TAO_VarArray_Var_T : public TAO_Array_Var_Base_T<array_traits>
 {
 public:
-  TAO_VarArray_Var_T (void);
-  TAO_VarArray_Var_T (T_slice *);
-  TAO_VarArray_Var_T (const TAO_VarArray_Var_T<T,T_slice,TAG> &);
+  typedef typename array_traits::slice_type slice_type;
+  typedef typename array_traits::slice_type *&_out_type;
 
-  TAO_VarArray_Var_T<T,T_slice,TAG> &operator= (T_slice *);
-  TAO_VarArray_Var_T<T,T_slice,TAG> &operator= (
-      const TAO_VarArray_Var_T<T,T_slice,TAG> &
+  TAO_VarArray_Var_T (void);
+  TAO_VarArray_Var_T (slice_type *);
+  TAO_VarArray_Var_T (const TAO_VarArray_Var_T<array_traits> &);
+
+  TAO_VarArray_Var_T<array_traits> &operator= (slice_type *);
+  TAO_VarArray_Var_T<array_traits> &operator= (
+      const TAO_VarArray_Var_T<array_traits> &
     );
 
-  typedef       T_slice *&  _out_type;
   _out_type     out (void);
 
-  operator T_slice *& ();
+  operator slice_type *& ();
 };
 
 /**
@@ -174,32 +183,32 @@ public:
  * @brief Parametrized implementation of _out class for arrays.
  *
  */
-template<typename T, typename T_var, typename T_slice, typename TAG>
+template<typename array_traits>
 class TAO_Array_Out_T
 {
 public:
-  typedef T_var _var_type;
+  typedef typename array_traits::slice_type slice_type;
+  typedef typename array_traits::value_type value_type;
 
-  TAO_Array_Out_T (T_slice *&);
-  TAO_Array_Out_T (T_var &);
-  TAO_Array_Out_T (const TAO_Array_Out_T<T,T_var,T_slice,TAG> &);
+  TAO_Array_Out_T (slice_type *&);
+  TAO_Array_Out_T (value_type &);
+  TAO_Array_Out_T (const TAO_Array_Out_T<array_traits> &);
 
-  TAO_Array_Out_T<T,T_var,T_slice,TAG> &operator= (
-      const TAO_Array_Out_T<T,T_var,T_slice,TAG> &
+  TAO_Array_Out_T<array_traits> &operator= (
+      const TAO_Array_Out_T<array_traits> &
     );
-  TAO_Array_Out_T<T,T_var,T_slice,TAG> &operator= (T_slice *);
+  TAO_Array_Out_T<array_traits> &operator= (slice_type *);
 
-  operator T_slice *& ();
-  T_slice *& ptr (void);
+  operator slice_type *& ();
+  slice_type *& ptr (void);
 
-  T_slice & operator[] (CORBA::ULong index);
-  const T_slice & operator[] (CORBA::ULong index) const;
+  slice_type & operator[] (CORBA::ULong index);
+  const slice_type & operator[] (CORBA::ULong index) const;
 private:
-  typedef TAO_Array_Forany_T<T,T_slice,TAG> FORANY;
-  typedef TAO_Array_Out_T<T,T_var,T_slice,TAG> THIS_OUT_TYPE;
-  T_slice *& ptr_;
+  slice_type *& ptr_;
+
   // Assignment from T_var not allowed.
-  void operator= (const T_var &);
+  void operator= (const value_type &);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
