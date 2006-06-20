@@ -73,7 +73,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_string.h"
 #include "utl_identifier.h"
 #include "drv_extern.h"
-#include "../tao/Version.h"
+#include "tao/Version.h"
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 // FUZZ: disable check_for_streams_include

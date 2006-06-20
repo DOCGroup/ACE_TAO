@@ -1,3 +1,23 @@
+Tue Jun 20 18:17:04 UTC 2006  Martin Corino  <mcorino@remedy.nl>
+
+        * TAO_IDL/tao_idl.cpp:
+        * TAO_IDL/tao_idl.mpc:
+          Changed include directive for "../tao/Version.h" to "tao/Version.h"
+          and added ".." and "$(srcdir)/.." to the list of include dirs in
+          tao_idl.mpc.
+          OpenVMS doesn't grok the "../tao/Version.h" when toa_idl.cpp is
+          compiled for the IFR project.
+
+        * TAO_IDL/driver/drv_preproc.cpp:
+        * TAO_IDL/util/utl_global.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+          Changes to circumvent OpenVMS differences regarding subprocesses,
+          redirection and file naming.
+        
+        * TAO_IDL/be/be_helper.cpp:
+          Disabled ACE_OS::fflush () calls for OpenVMS as these slow down
+          things dramatically.
+
 Tue Jun 20 18:12:04 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Credentials.h:

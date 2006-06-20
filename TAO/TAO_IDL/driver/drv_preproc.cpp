@@ -1074,9 +1074,14 @@ DRV_pre_proc (const char *myfile)
       // If the following open() fails, then we're either being hit with a
       // symbolic link attack, or another process opened the file before
       // us.
+#if defined (ACE_OPENVMS)
+      fd = ::open (t_file, O_WRONLY | O_CREAT | O_EXCL,
+                   ACE_DEFAULT_FILE_PERMS, "shr=get,put,upd", "ctx=rec", "fop=dfw");
+#else
       fd = ACE_OS::open (t_file,
                          O_WRONLY | O_CREAT | O_EXCL,
                          ACE_DEFAULT_FILE_PERMS);
+#endif
 
       if (fd == ACE_INVALID_HANDLE)
         {
@@ -1172,6 +1177,10 @@ DRV_pre_proc (const char *myfile)
   // version the current process would exit if the pre-processor
   // returned with error.
 
+#if defined (ACE_OPENVMS)
+  cpp_options.release_handles();
+#endif
+
   FILE * const yyin = ACE_OS::fopen (t_file, "r");
 
   if (yyin == NULL)
@@ -1241,6 +1250,7 @@ DRV_pre_proc (const char *myfile)
     }
 
 #if !defined (ACE_WIN32) || defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)
+ 
   if (ACE_OS::unlink (t_file) == -1)
     {
       ACE_ERROR ((LM_ERROR,
