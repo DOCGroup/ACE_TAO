@@ -24,7 +24,6 @@ project : taolib, core, ifr_client, tao_versioning_idl_defaults {
   }
 
   PIDL_Files {
-    TypeCodeFactory
   }
 
   IDL_Files {
