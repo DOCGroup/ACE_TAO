@@ -286,7 +286,11 @@ ACE_DLL_Handle::symbol (const ACE_TCHAR *sym_name, int ignore_errors)
   // BTW. Handle lifecycle management is a little crazy in ACE
   if (this->handle_ != ACE_SHLIB_INVALID_HANDLE)
     {
+#if defined (ACE_OPENVMS)
+      void *sym =  ACE::ldsymbol (this->handle_, auto_name.get ());
+#else
       void *sym =  ACE_OS::dlsym (this->handle_, auto_name.get ());
+#endif
 
       // Linux says that the symbol could be null and that it isn't an
       // error.  So you should check the error message also, but since

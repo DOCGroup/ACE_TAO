@@ -17,6 +17,9 @@
 #include "ace/OS_NS_dlfcn.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_Errno.h"
+#if defined (ACE_OPENVMS)
+# include "ace/Lib_Find.h"
+#endif
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Strategies_T.inl"
@@ -117,9 +120,15 @@ ACE_DLL_Strategy<SVC_HANDLER>::make_svc_handler (SVC_HANDLER *&sh)
   ACE_SHLIB_HANDLE handle = ACE_OS::dlopen (this->dll_name_);
 
   // Extract the factory function.
+#if defined (ACE_OPENVMS)
+  SVC_HANDLER *(*factory)(void) =
+    (SVC_HANDLER *(*)(void)) ACE::ldsymbol (handle,
+                                            this->factory_function_);
+#else
   SVC_HANDLER *(*factory)(void) =
     (SVC_HANDLER *(*)(void)) ACE_OS::dlsym (handle,
                                             this->factory_function_);
+#endif
 
   // Call the factory function to obtain the new SVC_Handler (should
   // use RTTI here when it becomes available...)
