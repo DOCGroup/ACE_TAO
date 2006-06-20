@@ -54,41 +54,41 @@ template<typename array_traits>
 class TAO_Array_Forany_T
 {
 public:
-  typedef typename array_traits::slice_type slice_type;
+  typedef typename array_traits::slice_type _slice_type;
 
   TAO_Array_Forany_T (void);
-  TAO_Array_Forany_T (slice_type *, CORBA::Boolean nocopy = false);
+  TAO_Array_Forany_T (_slice_type *, CORBA::Boolean nocopy = false);
   TAO_Array_Forany_T (const TAO_Array_Forany_T<array_traits> &);
   ~TAO_Array_Forany_T (void);
 
   static void _tao_any_destructor (void *);
 
-  TAO_Array_Forany_T & operator= (slice_type *);
+  TAO_Array_Forany_T & operator= (_slice_type *);
   TAO_Array_Forany_T & operator= (const TAO_Array_Forany_T<array_traits> &);
 
-  slice_type & operator[] (CORBA::ULong index);
-  const slice_type & operator[] (CORBA::ULong index) const;
+  _slice_type & operator[] (CORBA::ULong index);
+  const _slice_type & operator[] (CORBA::ULong index) const;
 
-  operator slice_type * const & () const;
-  operator slice_type *& ();
+  operator _slice_type * const & () const;
+  operator _slice_type *& ();
 
-  typedef const slice_type *   _in_type;
-  typedef       slice_type *   _inout_type;
-  typedef       slice_type * & _out_type;
-  typedef       slice_type *   _retn_type;
-  typedef       slice_type *&  _retn_arg_type;
+  typedef const _slice_type *   _in_type;
+  typedef       _slice_type *   _inout_type;
+  typedef       _slice_type * & _out_type;
+  typedef       _slice_type *   _retn_type;
+  typedef       _slice_type *&  _retn_arg_type;
 
   // in, inout, out, _retn
   _in_type      in (void) const;
   _inout_type   inout (void);
   _out_type     out (void);
   _retn_type    _retn (void);
-  slice_type * ptr (void) const;
+  _slice_type * ptr (void) const;
   CORBA::Boolean nocopy (void) const;
 
-  static slice_type * tao_alloc (void);
+  static _slice_type * tao_alloc (void);
 private:
-  slice_type * ptr_;
+  _slice_type * ptr_;
   CORBA::Boolean nocopy_;
 };
 
@@ -143,14 +143,14 @@ template<typename array_traits>
 class TAO_FixedArray_Var_T : public TAO_Array_Var_Base_T<array_traits>
 {
 public:
-  typedef typename array_traits::slice_type slice_type;
+  typedef typename array_traits::slice_type _slice_type;
   typedef typename array_traits::slice_type *_out_type;
 
   TAO_FixedArray_Var_T (void);
-  TAO_FixedArray_Var_T (slice_type *);
+  TAO_FixedArray_Var_T (_slice_type *);
   TAO_FixedArray_Var_T (const TAO_FixedArray_Var_T<array_traits> &);
 
-  TAO_FixedArray_Var_T<array_traits> &operator= (slice_type *);
+  TAO_FixedArray_Var_T<array_traits> &operator= (_slice_type *);
   TAO_FixedArray_Var_T<array_traits> &operator= (
       const TAO_FixedArray_Var_T<array_traits> &
     );
@@ -169,21 +169,21 @@ template<typename array_traits>
 class TAO_VarArray_Var_T : public TAO_Array_Var_Base_T<array_traits>
 {
 public:
-  typedef typename array_traits::slice_type slice_type;
+  typedef typename array_traits::slice_type _slice_type;
   typedef typename array_traits::slice_type *&_out_type;
 
   TAO_VarArray_Var_T (void);
-  TAO_VarArray_Var_T (slice_type *);
+  TAO_VarArray_Var_T (_slice_type *);
   TAO_VarArray_Var_T (const TAO_VarArray_Var_T<array_traits> &);
 
-  TAO_VarArray_Var_T<array_traits> &operator= (slice_type *);
+  TAO_VarArray_Var_T<array_traits> &operator= (_slice_type *);
   TAO_VarArray_Var_T<array_traits> &operator= (
       const TAO_VarArray_Var_T<array_traits> &
     );
 
   _out_type     out (void);
 
-  operator slice_type *& ();
+  operator _slice_type *& ();
 };
 
 /**
@@ -196,28 +196,28 @@ template<typename array_traits>
 class TAO_Array_Out_T
 {
 public:
-  typedef typename array_traits::slice_type slice_type;
-  typedef typename array_traits::value_type value_type;
+  typedef typename array_traits::slice_type _slice_type;
+  typedef typename array_traits::value_type _value_type;
 
-  TAO_Array_Out_T (slice_type *&);
-  TAO_Array_Out_T (value_type &);
+  TAO_Array_Out_T (_slice_type *&);
+  TAO_Array_Out_T (_value_type &);
   TAO_Array_Out_T (const TAO_Array_Out_T<array_traits> &);
 
   TAO_Array_Out_T<array_traits> &operator= (
       const TAO_Array_Out_T<array_traits> &
     );
-  TAO_Array_Out_T<array_traits> &operator= (slice_type *);
+  TAO_Array_Out_T<array_traits> &operator= (_slice_type *);
 
-  operator slice_type *& ();
-  slice_type *& ptr (void);
+  operator _slice_type *& ();
+  _slice_type *& ptr (void);
 
-  slice_type & operator[] (CORBA::ULong index);
-  const slice_type & operator[] (CORBA::ULong index) const;
+  _slice_type & operator[] (CORBA::ULong index);
+  const _slice_type & operator[] (CORBA::ULong index) const;
 private:
-  slice_type *& ptr_;
+  _slice_type *& ptr_;
 
   // Assignment from T_var not allowed.
-  void operator= (const value_type &);
+  void operator= (const _value_type &);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
