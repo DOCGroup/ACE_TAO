@@ -1,3 +1,8 @@
+Tue Jun 20 10:21:04 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Security/SL3_CredentialsCurator.h:
+          Fixed compile error
+
 Tue Jun 20 08:12:04 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Any_Insert_Policy_T.h:
