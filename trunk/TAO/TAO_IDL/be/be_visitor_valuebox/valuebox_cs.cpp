@@ -198,7 +198,7 @@ be_visitor_valuebox_cs::visit_valuebox (be_valuebox *node)
       << node->local_name () << "::_tao_obv_static_repository_id ()," << be_nl
       << "is_null_object"
       << be_uidt_nl
-      << ") == 0)" << be_uidt_nl
+      << ") == false)" << be_uidt_nl
       << "{" << be_idt_nl
       << "return false;" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl

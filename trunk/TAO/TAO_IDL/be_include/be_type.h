@@ -63,10 +63,6 @@ public:
   void gen_common_varout (TAO_OutStream *os);
   // Generate _var and _out typedefs for structs and unions.
 
-  bool seq_elem_tmplinst (void) const;
-  virtual void seq_elem_tmplinst (bool val);
-  // Accessors for the member.
-
   bool seen_in_sequence (void) const;
   virtual void seen_in_sequence (bool val);
   // Accessors for the member.
@@ -103,10 +99,6 @@ protected:
 
   bool common_varout_gen_;
   // Have we generated our _var and _out class typedefs yet?
-
-  bool seq_elem_tmplinst_;
-  // Have we generated an explicit template instantiation for a sequence
-  // with this element?
 
   bool seen_in_sequence_;
   // Has this declaration been used as a sequence element?

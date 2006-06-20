@@ -451,7 +451,10 @@ public:
   bool gen_dcps_type_support (void) const;
   // Return the flag.
 
-  bool gen_tmplinst (void) const;
+  void gen_orb_h_include (bool value);
+  // Set the flag.
+
+  bool gen_orb_h_include (void) const;
   // Return the flag.
 
   void lookup_strategy (LOOKUP_STRATEGY s);
@@ -488,14 +491,14 @@ public:
 
   be_valuetype *messaging_exceptionholder (void);
   // Accessor for the member, sets it on the first call.
-  
+
   be_valuetype *exceptionholder (void) const;
   void exceptionholder (be_valuetype *val);
   // Accessors for the member.
-  
+
   be_interface *messaging_replyhandler (void);
   // Accessor for the member, sets it on the first call.
-  
+
   bool gen_anyop_files (void) const;
   void gen_anyop_files (bool val);
   // Accessors for the member.
@@ -511,7 +514,7 @@ public:
   bool gen_server_inline (void) const;
   void gen_server_inline (bool val);
   // Accessors for the member gen_server_inline_.
-  
+
   bool gen_local_iface_anyops (void) const;
   void gen_local_iface_anyops (bool val);
   // Accessors for the member gen_local_iface_anyops_.
@@ -686,6 +689,10 @@ private:
   // Flag to indicate whether we are supporting DDS DCPS type definitions.
   // Includes Serializer operators (like TAO_Input/OutuptCDR).
 
+  bool gen_orb_h_include_;
+  // Flag to indicate whether ORB.h include should be generated, needed for
+  // regenerating the pidl files.
+
   LOOKUP_STRATEGY lookup_strategy_;
   // The enumerated value indicating the lookup strategy.
 
@@ -700,13 +707,13 @@ private:
 
   be_valuetype *messaging_exceptionholder_;
   // Storage for exception holders' base class node.
-  
+
   be_valuetype *exceptionholder_;
   // Reference holder for the exceptionholder.
-  
+
   be_interface *messaging_replyhandler_;
   // Storage for the reply handlers' base class node.
-  
+
   bool gen_anyop_files_;
   // Separate files for generated Any operators?
 
@@ -721,7 +728,7 @@ private:
   bool gen_server_inline_;
   // True by default, but a command line option can turn this off so
   // that we don't generate a server inline file
-  
+
   bool gen_local_iface_anyops_;
   // True by default, can be turned off by a command line option
   // for regenerating internal ORB files.
