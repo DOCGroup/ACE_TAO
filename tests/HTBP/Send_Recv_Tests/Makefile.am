@@ -11,7 +11,11 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.SendRecv_Test.am 
+
+## Makefile.SendRecv_Test.am
+
+if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS = SendRecv_Test
 
 SendRecv_Test_CPPFLAGS = \
@@ -23,7 +27,11 @@ SendRecv_Test_SOURCES = \
   SendRecv_Test.cpp
 
 SendRecv_Test_LDADD = \
- $(top_builddir)/tests/libTest_Output.la $(top_builddir)/protocols/ace/HTBP/libACE_HTBP.la $(top_builddir)/ace/libACE.la
+  $(top_builddir)/tests/libTest_Output.la \
+  $(ACE_BUILDDIR)/protocols/ace/HTBP/libACE_HTBP.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif !BUILD_ACE_FOR_TAO
 
 ## Clean up template repositories, etc.
 clean-local:

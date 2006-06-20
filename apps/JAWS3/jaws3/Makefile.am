@@ -11,7 +11,12 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.JAWS3.am 
+
+## Makefile.JAWS3.am
+
+if !BUILD_ACE_FOR_TAO
+if !BUILD_USES_WCHAR
+
 noinst_LTLIBRARIES = libJAWS3.la
 
 libJAWS3_la_CPPFLAGS = \
@@ -43,14 +48,13 @@ libJAWS3_la_SOURCES = \
   Timer.cpp \
   Timer_Helpers.cpp
 
-libJAWS3_la_LIBADD = \
- $(top_builddir)/ace/libACE.la
-
 noinst_HEADERS = \
   Asynch_IO.h \
   Asynch_IO_Helpers.h \
+  Cached_Allocator_T.cpp \
   Cached_Allocator_T.h \
   Concurrency.h \
+  Concurrency_T.cpp \
   Concurrency_T.h \
   Config_File.h \
   Datagram.h \
@@ -72,11 +76,15 @@ noinst_HEADERS = \
   TPR_Concurrency.h \
   Task_Timer.h \
   Timer.h \
-  Timer_Helpers.h \
-  Cached_Allocator_T.cpp \
-  Concurrency_T.cpp
+  Timer_Helpers.h
 
-## Makefile.JAWS3_server.am 
+endif !BUILD_USES_WCHAR
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.JAWS3_server.am
+
+if !BUILD_ACE_FOR_TAO
+if !BUILD_USES_WCHAR
 noinst_PROGRAMS = main
 
 main_CPPFLAGS = \
@@ -114,7 +122,11 @@ main_SOURCES = \
   Timer_Helpers.h
 
 main_LDADD = \
- libJAWS3.la $(top_builddir)/ace/libACE.la
+  libJAWS3.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif !BUILD_USES_WCHAR
+endif !BUILD_ACE_FOR_TAO
 
 ## Clean up template repositories, etc.
 clean-local:

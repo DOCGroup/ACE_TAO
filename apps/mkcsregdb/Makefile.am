@@ -11,7 +11,10 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.mkcsregdb.am 
+
+## Makefile.mkcsregdb.am
+
+if !BUILD_USES_WCHAR
 noinst_PROGRAMS = mkcsregdb
 
 mkcsregdb_CPPFLAGS = \
@@ -22,7 +25,9 @@ mkcsregdb_SOURCES = \
   mkcsregdb.cpp
 
 mkcsregdb_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif !BUILD_USES_WCHAR
 
 ## Clean up template repositories, etc.
 clean-local:

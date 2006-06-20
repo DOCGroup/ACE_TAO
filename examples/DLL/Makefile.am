@@ -11,7 +11,8 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.DLL_Today.am 
+## Makefile.DLL_Today.am
+
 noinst_LTLIBRARIES = libDLL_Today.la
 
 libDLL_Today_la_CPPFLAGS = \
@@ -21,13 +22,11 @@ libDLL_Today_la_CPPFLAGS = \
 libDLL_Today_la_SOURCES = \
   Today.cpp
 
-libDLL_Today_la_LIBADD = \
- $(top_builddir)/ace/libACE.la
-
 noinst_HEADERS = \
   Today.h
 
-## Makefile.DLL_Newsweek.am 
+## Makefile.DLL_Newsweek.am
+
 noinst_LTLIBRARIES += libDLL_Newsweek.la
 
 libDLL_Newsweek_la_CPPFLAGS = \
@@ -37,13 +36,10 @@ libDLL_Newsweek_la_CPPFLAGS = \
 libDLL_Newsweek_la_SOURCES = \
   Newsweek.cpp
 
-libDLL_Newsweek_la_LIBADD = \
- $(top_builddir)/ace/libACE.la
-
 noinst_HEADERS += \
   Newsweek.h
 
-## Makefile.DLL_Main.am 
+## Makefile.DLL_Main.am
 noinst_PROGRAMS = test_dll
 
 test_dll_CPPFLAGS = \
@@ -57,7 +53,7 @@ test_dll_SOURCES = \
   Today.h
 
 test_dll_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Clean up template repositories, etc.
 clean-local:

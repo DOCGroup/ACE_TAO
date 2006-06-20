@@ -11,7 +11,7 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.TLI_SAP_ATM_Client.am 
+## Makefile.TLI_SAP_ATM_Client.am
 noinst_PROGRAMS = ATM-client
 
 ATM_client_CPPFLAGS = \
@@ -22,9 +22,9 @@ ATM_client_SOURCES = \
   CPP-ATM-client.cpp
 
 ATM_client_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.TLI_SAP_ATM_Server.am 
+## Makefile.TLI_SAP_ATM_Server.am
 noinst_PROGRAMS += ATM-server
 
 ATM_server_CPPFLAGS = \
@@ -35,9 +35,9 @@ ATM_server_SOURCES = \
   CPP-ATM-server.cpp
 
 ATM_server_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.TLI_SAP_CPP_Client.am 
+## Makefile.TLI_SAP_CPP_Client.am
 noinst_PROGRAMS += CPP-client
 
 CPP_client_CPPFLAGS = \
@@ -48,9 +48,9 @@ CPP_client_SOURCES = \
   CPP-client.cpp
 
 CPP_client_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.TLI_SAP_CPP_Server.am 
+## Makefile.TLI_SAP_CPP_Server.am
 noinst_PROGRAMS += CPP-server
 
 CPP_server_CPPFLAGS = \
@@ -61,9 +61,9 @@ CPP_server_SOURCES = \
   CPP-server.cpp
 
 CPP_server_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.TLI_SAP_Db_Client.am 
+## Makefile.TLI_SAP_Db_Client.am
 noinst_PROGRAMS += db-client
 
 db_client_CPPFLAGS = \
@@ -74,9 +74,9 @@ db_client_SOURCES = \
   db-client.cpp
 
 db_client_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.TLI_SAP_Db_Server.am 
+## Makefile.TLI_SAP_Db_Server.am
 noinst_PROGRAMS += db-server
 
 db_server_CPPFLAGS = \
@@ -87,9 +87,9 @@ db_server_SOURCES = \
   db-server.cpp
 
 db_server_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.TLI_SAP_Ftp_Client.am 
+## Makefile.TLI_SAP_Ftp_Client.am
 noinst_PROGRAMS += ftp-client
 
 ftp_client_CPPFLAGS = \
@@ -100,9 +100,9 @@ ftp_client_SOURCES = \
   ftp-client.cpp
 
 ftp_client_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.TLI_SAP_Ftp_Server.am 
+## Makefile.TLI_SAP_Ftp_Server.am
 noinst_PROGRAMS += ftp-server
 
 ftp_server_CPPFLAGS = \
@@ -113,7 +113,7 @@ ftp_server_SOURCES = \
   ftp-server.cpp
 
 ftp_server_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Clean up template repositories, etc.
 clean-local:

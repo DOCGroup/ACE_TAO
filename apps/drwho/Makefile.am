@@ -12,9 +12,11 @@ ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
 noinst_PROGRAMS =
-## Makefile.drwho__client.am 
+
+## Makefile.drwho__client.am
 
 if BUILD_RWHO
+if !BUILD_ACE_FOR_TAO
 if !BUILD_USES_WCHAR
 noinst_PROGRAMS += client
 
@@ -66,6 +68,7 @@ client_SOURCES = \
   Binary_Search.h \
   CM_Client.h \
   CM_Server.h \
+  Comm_Manager.h \
   Drwho_Node.h \
   File_Manager.h \
   HT_Client.h \
@@ -95,17 +98,20 @@ client_SOURCES = \
   SM_Client.h \
   SM_Server.h \
   Search_Struct.h \
+  Select_Manager.h \
   Single_Lookup.h
 
 client_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_USES_WCHAR
+endif !BUILD_ACE_FOR_TAO
 endif BUILD_RWHO
 
-## Makefile.drwho__server.am 
+## Makefile.drwho__server.am
 
 if BUILD_RWHO
+if !BUILD_ACE_FOR_TAO
 if !BUILD_USES_WCHAR
 noinst_PROGRAMS += server
 
@@ -157,6 +163,7 @@ server_SOURCES = \
   Binary_Search.h \
   CM_Client.h \
   CM_Server.h \
+  Comm_Manager.h \
   Drwho_Node.h \
   File_Manager.h \
   HT_Client.h \
@@ -186,12 +193,14 @@ server_SOURCES = \
   SM_Client.h \
   SM_Server.h \
   Search_Struct.h \
+  Select_Manager.h \
   Single_Lookup.h
 
 server_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_USES_WCHAR
+endif !BUILD_ACE_FOR_TAO
 endif BUILD_RWHO
 
 ## Clean up template repositories, etc.

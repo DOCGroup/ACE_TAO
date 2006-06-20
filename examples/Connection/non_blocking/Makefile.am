@@ -11,8 +11,12 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.Connection_Non_Blocking_LSockClient.am 
-noinst_PROGRAMS = lsock_client
+noinst_PROGRAMS =
+
+## Makefile.Connection_Non_Blocking_LSockClient.am
+
+if !BUILD_ACE_FOR_TAO
+noinst_PROGRAMS += lsock_client
 
 lsock_client_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -24,9 +28,13 @@ lsock_client_SOURCES = \
   CPP-connector.h
 
 lsock_client_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Connection_Non_Blocking_LSockServer.am 
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.Connection_Non_Blocking_LSockServer.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += lsock_server
 
 lsock_server_CPPFLAGS = \
@@ -39,9 +47,11 @@ lsock_server_SOURCES = \
   CPP-acceptor.h
 
 lsock_server_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Connection_Non_Blocking_SPipeClient.am 
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.Connection_Non_Blocking_SPipeClient.am
 noinst_PROGRAMS += spipe_client
 
 spipe_client_CPPFLAGS = \
@@ -54,9 +64,9 @@ spipe_client_SOURCES = \
   CPP-connector.h
 
 spipe_client_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Connection_Non_Blocking_SPipeServer.am 
+## Makefile.Connection_Non_Blocking_SPipeServer.am
 noinst_PROGRAMS += spipe_server
 
 spipe_server_CPPFLAGS = \
@@ -69,9 +79,9 @@ spipe_server_SOURCES = \
   CPP-acceptor.h
 
 spipe_server_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Connection_Non_Blocking_SockClient.am 
+## Makefile.Connection_Non_Blocking_SockClient.am
 noinst_PROGRAMS += sock_client
 
 sock_client_CPPFLAGS = \
@@ -84,9 +94,9 @@ sock_client_SOURCES = \
   CPP-connector.h
 
 sock_client_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Connection_Non_Blocking_SockServer.am 
+## Makefile.Connection_Non_Blocking_SockServer.am
 noinst_PROGRAMS += sock_server
 
 sock_server_CPPFLAGS = \
@@ -99,9 +109,9 @@ sock_server_SOURCES = \
   CPP-acceptor.h
 
 sock_server_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Connection_Non_Blocking_TLIClient.am 
+## Makefile.Connection_Non_Blocking_TLIClient.am
 noinst_PROGRAMS += tli_client
 
 tli_client_CPPFLAGS = \
@@ -114,9 +124,9 @@ tli_client_SOURCES = \
   CPP-connector.h
 
 tli_client_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Connection_Non_Blocking_TLIServer.am 
+## Makefile.Connection_Non_Blocking_TLIServer.am
 noinst_PROGRAMS += tli_server
 
 tli_server_CPPFLAGS = \
@@ -129,7 +139,7 @@ tli_server_SOURCES = \
   CPP-acceptor.h
 
 tli_server_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Clean up template repositories, etc.
 clean-local:

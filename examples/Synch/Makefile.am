@@ -11,7 +11,10 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.Synch.am 
+
+## Makefile.Synch.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS = proc_sema
 
 proc_sema_CPPFLAGS = \
@@ -22,7 +25,9 @@ proc_sema_SOURCES = \
   proc_sema.cpp
 
 proc_sema_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif !BUILD_ACE_FOR_TAO
 
 ## Clean up template repositories, etc.
 clean-local:

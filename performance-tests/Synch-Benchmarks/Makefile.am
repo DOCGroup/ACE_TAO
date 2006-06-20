@@ -14,10 +14,10 @@ ACE_ROOT = $(top_srcdir)
 SUBDIRS = \
         Synch_Lib \
         Perf_Test \
-        . \
-        Base_Test
+        Base_Test \
+        .
 
-## Makefile.Synch_Benchmarks.am 
+## Makefile.Synch_Benchmarks.am
 noinst_PROGRAMS = synch_driver
 
 synch_driver_CPPFLAGS = \
@@ -28,7 +28,8 @@ synch_driver_SOURCES = \
   synch_driver.cpp
 
 synch_driver_LDADD = \
- $(top_builddir)/performance-tests/Synch-Benchmarks/Synch_Lib/libSynch_Lib.la $(top_builddir)/ace/libACE.la
+  $(top_builddir)/performance-tests/Synch-Benchmarks/Synch_Lib/libSynch_Lib.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Clean up template repositories, etc.
 clean-local:

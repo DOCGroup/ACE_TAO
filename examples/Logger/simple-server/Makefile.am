@@ -11,25 +11,23 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.Logger_Simple_Server.am 
-noinst_LTLIBRARIES = libLogger_Simple_Server.la
+## Makefile.Logger_Simple_Server.am
+noinst_PROGRAMS = server_loggerd
 
-libLogger_Simple_Server_la_CPPFLAGS = \
+server_loggerd_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR)
 
-libLogger_Simple_Server_la_SOURCES = \
+server_loggerd_SOURCES = \
   Logging_Acceptor.cpp \
   Logging_Handler.cpp \
-  server_loggerd.cpp
-
-libLogger_Simple_Server_la_LIBADD = \
- $(top_builddir)/ace/libACE.la
-
-noinst_HEADERS = \
+  server_loggerd.cpp \
   Logging_Acceptor.h \
   Logging_Handler.h \
   Reactor_Singleton.h
+
+server_loggerd_LDADD = \
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Clean up template repositories, etc.
 clean-local:

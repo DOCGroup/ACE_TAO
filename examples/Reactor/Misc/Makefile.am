@@ -11,7 +11,7 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.Reactor_Misc_Demuxing.am 
+## Makefile.Reactor_Misc_Demuxing.am
 noinst_PROGRAMS = demuxing
 
 demuxing_CPPFLAGS = \
@@ -22,9 +22,9 @@ demuxing_SOURCES = \
   test_demuxing.cpp
 
 demuxing_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Reactor_Misc_Early_Timeouts.am 
+## Makefile.Reactor_Misc_Early_Timeouts.am
 noinst_PROGRAMS += early_timeouts
 
 early_timeouts_CPPFLAGS = \
@@ -35,9 +35,22 @@ early_timeouts_SOURCES = \
   test_early_timeouts.cpp
 
 early_timeouts_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Reactor_Misc_Notification.am 
+## Makefile.Reactor_Misc_Event_Handler_t.am
+noinst_PROGRAMS += event_handler_t
+
+event_handler_t_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
+
+event_handler_t_SOURCES = \
+  test_event_handler_t.cpp
+
+event_handler_t_LDADD = \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+## Makefile.Reactor_Misc_Notification.am
 noinst_PROGRAMS += notification
 
 notification_CPPFLAGS = \
@@ -48,9 +61,9 @@ notification_SOURCES = \
   notification.cpp
 
 notification_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Reactor_Misc_Pingpong.am 
+## Makefile.Reactor_Misc_Pingpong.am
 noinst_PROGRAMS += pingpong
 
 pingpong_CPPFLAGS = \
@@ -61,9 +74,9 @@ pingpong_SOURCES = \
   pingpong.cpp
 
 pingpong_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Reactor_Misc_Reactors.am 
+## Makefile.Reactor_Misc_Reactors.am
 noinst_PROGRAMS += reactors
 
 reactors_CPPFLAGS = \
@@ -74,9 +87,9 @@ reactors_SOURCES = \
   test_reactors.cpp
 
 reactors_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Reactor_Misc_Signals_1.am 
+## Makefile.Reactor_Misc_Signals_1.am
 noinst_PROGRAMS += signals_1
 
 signals_1_CPPFLAGS = \
@@ -87,9 +100,9 @@ signals_1_SOURCES = \
   test_signals_1.cpp
 
 signals_1_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Reactor_Misc_Signals_2.am 
+## Makefile.Reactor_Misc_Signals_2.am
 noinst_PROGRAMS += signals_2
 
 signals_2_CPPFLAGS = \
@@ -100,9 +113,9 @@ signals_2_SOURCES = \
   test_signals_2.cpp
 
 signals_2_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Reactor_Misc_Timer_Queue.am 
+## Makefile.Reactor_Misc_Timer_Queue.am
 noinst_PROGRAMS += timer_queue
 
 timer_queue_CPPFLAGS = \
@@ -113,7 +126,7 @@ timer_queue_SOURCES = \
   test_timer_queue.cpp
 
 timer_queue_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Clean up template repositories, etc.
 clean-local:

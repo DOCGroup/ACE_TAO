@@ -12,7 +12,8 @@ ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
 noinst_PROGRAMS =
-## Makefile.QOS_Simple_Receiver.am 
+
+## Makefile.QOS_Simple_Receiver.am
 
 if BUILD_QOS
 noinst_PROGRAMS += receiver
@@ -34,11 +35,12 @@ receiver_SOURCES = \
   Receiver_QoS_Event_Handler.h
 
 receiver_LDADD = \
- $(top_builddir)/ace/QoS/libACE_QoS.la $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/QoS/libACE_QoS.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 endif BUILD_QOS
 
-## Makefile.QOS_Simple_Sender.am 
+## Makefile.QOS_Simple_Sender.am
 
 if BUILD_QOS
 noinst_PROGRAMS += sender
@@ -60,7 +62,8 @@ sender_SOURCES = \
   Sender_QoS_Event_Handler.h
 
 sender_LDADD = \
- $(top_builddir)/ace/QoS/libACE_QoS.la $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/QoS/libACE_QoS.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 endif BUILD_QOS
 

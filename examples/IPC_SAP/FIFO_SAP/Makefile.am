@@ -11,7 +11,8 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.Fifo_Sap_Msg_Client.am 
+
+## Makefile.Fifo_Sap_Msg_Client.am
 noinst_PROGRAMS = FIFO-Msg-client
 
 FIFO_Msg_client_CPPFLAGS = \
@@ -22,9 +23,9 @@ FIFO_Msg_client_SOURCES = \
   FIFO-Msg-client.cpp
 
 FIFO_Msg_client_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Fifo_Sap_Msg_Server.am 
+## Makefile.Fifo_Sap_Msg_Server.am
 noinst_PROGRAMS += FIFO-Msg-server
 
 FIFO_Msg_server_CPPFLAGS = \
@@ -35,9 +36,11 @@ FIFO_Msg_server_SOURCES = \
   FIFO-Msg-server.cpp
 
 FIFO_Msg_server_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.fifo_sap_client.am 
+## Makefile.fifo_sap_client.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += FIFO-client
 
 FIFO_client_CPPFLAGS = \
@@ -48,9 +51,13 @@ FIFO_client_SOURCES = \
   FIFO-client.cpp
 
 FIFO_client_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.fifo_sap_server.am 
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.fifo_sap_server.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += FIFO-server
 
 FIFO_server_CPPFLAGS = \
@@ -61,9 +68,13 @@ FIFO_server_SOURCES = \
   FIFO-server.cpp
 
 FIFO_server_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.fifo_sap_test.am 
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.fifo_sap_test.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += FIFO-test
 
 FIFO_test_CPPFLAGS = \
@@ -74,7 +85,9 @@ FIFO_test_SOURCES = \
   FIFO-test.cpp
 
 FIFO_test_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif !BUILD_ACE_FOR_TAO
 
 ## Clean up template repositories, etc.
 clean-local:

@@ -11,7 +11,11 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.Netsvsc_Client_Test_Lib.am 
+
+## Makefile.Netsvsc_Client_Test_Lib.am
+
+if !BUILD_ACE_FOR_TAO
+
 noinst_LTLIBRARIES = libClient_Test.la
 
 libClient_Test_la_CPPFLAGS = \
@@ -22,13 +26,14 @@ libClient_Test_la_CPPFLAGS = \
 libClient_Test_la_SOURCES = \
   Client_Test.cpp
 
-libClient_Test_la_LIBADD = \
- $(top_builddir)/ace/libACE.la
-
 noinst_HEADERS = \
   Client_Test.h
 
-## Makefile.Netsvcs_Client_Test.am 
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.Netsvcs_Client_Test.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS = main
 
 main_CPPFLAGS = \
@@ -40,7 +45,10 @@ main_SOURCES = \
   Client_Test.h
 
 main_LDADD = \
- libClient_Test.la $(top_builddir)/ace/libACE.la
+  libClient_Test.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif !BUILD_ACE_FOR_TAO
 
 ## Clean up template repositories, etc.
 clean-local:

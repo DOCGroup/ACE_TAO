@@ -11,7 +11,8 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.ARGV_Example.am 
+
+## Makefile.ARGV_Example.am
 noinst_PROGRAMS = ARGV_Example
 
 ARGV_Example_CPPFLAGS = \
@@ -23,9 +24,11 @@ ARGV_Example_SOURCES = \
   HASTATUS_export.h
 
 ARGV_Example_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Config_HA_Status.am 
+## Makefile.Config_HA_Status.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += HA_Status
 
 HA_Status_CPPFLAGS = \
@@ -33,12 +36,15 @@ HA_Status_CPPFLAGS = \
   -I$(ACE_BUILDDIR)
 
 HA_Status_SOURCES = \
-  HA_Status.cpp
+  HA_Status.cpp \
+  HASTATUS_export.h
 
 HA_Status_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Get_Opt.am 
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.Get_Opt.am
 noinst_PROGRAMS += Get_Opt
 
 Get_Opt_CPPFLAGS = \
@@ -50,9 +56,9 @@ Get_Opt_SOURCES = \
   HASTATUS_export.h
 
 Get_Opt_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Get_Opt_Long.am 
+## Makefile.Get_Opt_Long.am
 noinst_PROGRAMS += Get_Opt_Long
 
 Get_Opt_Long_CPPFLAGS = \
@@ -61,10 +67,10 @@ Get_Opt_Long_CPPFLAGS = \
 
 Get_Opt_Long_SOURCES = \
   Get_Opt_Long.cpp \
-  HASTATUS_export.h 
+  HASTATUS_export.h
 
 Get_Opt_Long_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Clean up template repositories, etc.
 clean-local:

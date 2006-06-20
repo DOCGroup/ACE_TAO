@@ -1,3 +1,99 @@
+Tue Jun 20 20:19:37 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * configure.ac:
+        * ace/README:
+        * ace/OS_NS_time.h:
+        * ace/OS_NS_time.inl:
+        * ace/OS_NS_time.cpp:
+        * m4/config_h.m4: The ACE_OS::strptime() wrapper was previously not
+          compiled in unless ACE_HAS_STRPTIME was set. If this was set and
+          ACE_LACKS_NATIVE_STRPTIME was also set, an emulation was supplied.
+          This has been changed so that:
+             - ACE_OS::strptime() is always supplied.
+             - The emulation is used if ACE_LACKS_STRPTIME is set.
+             - The first arg to ACE_OS::strptime() is now "const char *"
+               instead of "char *" as the native strptime() is.
+             - ACE_OS::strptime() is inlineable.
+          ACE_HAS_STRPTIME is no longer used, and ACE_LACKS_NATIVE_STRPTIME
+          is changed to ACE_LACKS_STRPTIME. If ACE_LACKS_STRPTIME is set
+          and the user decides not to include the emulation, then
+          ACE_REFUSE_STRPTIME_EMULATION should be set, which will cause
+          ACE_NOTSUP_RETURN to be used instead of the emulation.
+
+        * ace/config-borland-common.h:
+        * ace/config-vxworks5.x.h:
+        * ace/config-vxworks6.2.h:
+        * ace/config-win32-dmc.h:
+        * ace/config-win32-ghs.h:
+        * ace/config-win32-mingw.h:
+        * ace/config-win32-msvc-7.h:
+        * ace/config-win32-msvc-8.h:
+        * ace/config-win32-visualage.h: Removed ACE_HAS_STRPTIME; changed
+          ACE_LACKS_NATIVE_STRPTIME to ACE_LACKS_STRPTIME.
+
+        * ace/config-cygwin32.h:
+        * ace/config-doxygen.h:
+        * ace/config-irix6.x-common.h:
+        * ace/config-linux-common.h:
+        * ace/config-netbsd.h:
+        * ace/config-openvms.h:
+        * ace/config-sunos5.5.h:
+        * ace/config-tandem-nsk-mips-v3.h: Removed ACE_HAS_STRPTIME.
+
+        * ace/config-rtems.h: Changed ACE_LACKS_NATIVE_STRPTIME to
+          ACE_LACKS_STRPTIME.
+          NOTE!! RTEMS users should add #define ACE_REFUSE_STRPTIME_EMULATION
+          to the local config.h file to avoid bringing in the emulation,
+          maintaining behavior in previous ACE versions.
+
+        For additional background on why this arrangement was put in place
+        originally, please see:
+        Tue Aug 10 14:46:12 1999  David L. Levine  <levine@cs.wustl.edu>
+        It makes sense, but adds a unique requirement for porting to new
+        platforms that one must know to explicitly enable an existing wrapper,
+        even if its natively available. This has tripped up a number of porting
+        efforts (including mine) and now it's consistent with other wrappers.
+
+        * m4/ace.m4: Add --enable-wince to set up the BUILD_WINCE setting
+          that's inserted into the Makefile.am files for the wince MPC setting.
+
+        * ace/ace.mpc: Replace config-win32-msvc-6.h with config-win32-msvc-8.h
+
+        * bin/bin/mpc: Removed the verbatim for automake that adds
+          TESTS=auto_run_tests.pl - it was an early attempt at getting the
+          test ability to work that never was right.
+
+        * */Makefile.am: Regenerated with MPC. This effectively changes the
+          version scheme based on the changes in:
+          Thu May 18 16:37:46 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * apps/Makefile.am: Hand-added code to avoid building gperf if
+          --disable-gperf was specified to configure. Thanks to Robert Schwebel
+          <robert at schwebel dot de> for this fix.
+
+        * apps/gperf/tests/Makefile.am: This one doesn't get close to being
+          regenerated with MPC. The "stamp" items require hand-tweaking as
+          given in previous entries for this file.
+
+        * ace/Makefile.am: Regenerated with MPC and hand-tweaked to add needed
+          "nobase_include_HEADERS =" line.
+
+        * configure.ac: Added the following new AC_CONFIG_FILES entries:
+
+        * ACEXML/tests/util/Makefile.am:
+        * apps/JAWS2/Makefile.am:
+        * apps/JAWS2/JAWS/Makefile.am:
+        * examples/ASX/Event_Server/Makefile.am:
+        * examples/ASX/Event_Server/Event_Server/Makefile.am:
+        * examples/ASX/Event_Server/Transceiver/Makefile.am:
+        * examples/ASX/UPIPE_Event_Server/Makefile.am:
+        * examples/Map_Manager/Makefile.am:
+        * examples/Reactor/TP_Reactor/Makefile.am:
+        * protocols/tests/Makefile.am:
+        * protocols/tests/RMCast/Makefile.am: New files, generated with MPC.
+
+        * THANKS: Added Robert Schwebel to the Hall of Fame.
+
 Tue Jun 20 19:25:20 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * ace/Task.{h inl cpp}: Moved the public data members (thr_count_,

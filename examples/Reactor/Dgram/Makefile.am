@@ -11,7 +11,8 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.Reactor_Dgram.am 
+
+## Makefile.Reactor_Dgram.am
 noinst_PROGRAMS = dgram
 
 dgram_CPPFLAGS = \
@@ -22,9 +23,11 @@ dgram_SOURCES = \
   Dgram.cpp
 
 dgram_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Reactor_Dgram_CO.am 
+## Makefile.Reactor_Dgram_CO.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += codgram
 
 codgram_CPPFLAGS = \
@@ -35,7 +38,9 @@ codgram_SOURCES = \
   CODgram.cpp
 
 codgram_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif !BUILD_ACE_FOR_TAO
 
 ## Clean up template repositories, etc.
 clean-local:

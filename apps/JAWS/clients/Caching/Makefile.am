@@ -11,27 +11,28 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-noinst_PROGRAMS =
+
 ## Makefile.http_client.am
 
 if BUILD_ACE_FILECACHE
-noinst_PROGRAMS += http_client
+if !BUILD_ACE_FOR_TAO
+noinst_LTLIBRARIES = libhttp_client.la
 
-http_client_CPPFLAGS = \
+libhttp_client_la_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR)
 
-http_client_SOURCES = \
+libhttp_client_la_SOURCES = \
   http_client.cpp \
-  http_handler.cpp \
-  http_handler.h \
+  http_handler.cpp
+
+noinst_HEADERS = \
   Local_Locator.i \
   Locator_Request_Reply.i \
-  URL_Properties.i
+  URL_Properties.i \
+  http_handler.h
 
-http_client_LDADD = \
- $(top_builddir)/ace/libACE.la
-
+endif !BUILD_ACE_FOR_TAO
 endif BUILD_ACE_FILECACHE
 
 ## Clean up template repositories, etc.

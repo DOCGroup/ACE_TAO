@@ -11,7 +11,7 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.Log_Msg_Test_Callback.am 
+## Makefile.Log_Msg_Test_Callback.am
 noinst_PROGRAMS = test_callback
 
 test_callback_CPPFLAGS = \
@@ -22,9 +22,9 @@ test_callback_SOURCES = \
   test_callback.cpp
 
 test_callback_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Log_Msg_Test_Log_Msg.am 
+## Makefile.Log_Msg_Test_Log_Msg.am
 noinst_PROGRAMS += test_log_msg
 
 test_log_msg_CPPFLAGS = \
@@ -35,9 +35,9 @@ test_log_msg_SOURCES = \
   test_log_msg.cpp
 
 test_log_msg_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Log_Msg_Test_Ostream.am 
+## Makefile.Log_Msg_Test_Ostream.am
 noinst_PROGRAMS += test_ostream
 
 test_ostream_CPPFLAGS = \
@@ -48,7 +48,7 @@ test_ostream_SOURCES = \
   test_ostream.cpp
 
 test_ostream_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Clean up template repositories, etc.
 clean-local:

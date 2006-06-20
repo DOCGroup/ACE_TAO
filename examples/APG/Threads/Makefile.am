@@ -11,7 +11,7 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.Activate.am 
+## Makefile.Activate.am
 noinst_PROGRAMS = Activate
 
 Activate_CPPFLAGS = \
@@ -23,9 +23,9 @@ Activate_SOURCES = \
   Message_Receiver.h
 
 Activate_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Condition_Variables.am 
+## Makefile.Condition_Variables.am
 noinst_PROGRAMS += Condition_Variables
 
 Condition_Variables_CPPFLAGS = \
@@ -37,9 +37,9 @@ Condition_Variables_SOURCES = \
   Message_Receiver.h
 
 Condition_Variables_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Guards.am 
+## Makefile.Guards.am
 noinst_PROGRAMS += Guards
 
 Guards_CPPFLAGS = \
@@ -51,9 +51,9 @@ Guards_SOURCES = \
   Message_Receiver.h
 
 Guards_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Message_Blocks.am 
+## Makefile.Message_Blocks.am
 noinst_PROGRAMS += Message_Blocks
 
 Message_Blocks_CPPFLAGS = \
@@ -65,9 +65,9 @@ Message_Blocks_SOURCES = \
   Message_Receiver.h
 
 Message_Blocks_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Message_Queue.am 
+## Makefile.Message_Queue.am
 noinst_PROGRAMS += Message_Queue
 
 Message_Queue_CPPFLAGS = \
@@ -79,9 +79,9 @@ Message_Queue_SOURCES = \
   Message_Receiver.h
 
 Message_Queue_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Mutexes.am 
+## Makefile.Mutexes.am
 noinst_PROGRAMS += Mutexes
 
 Mutexes_CPPFLAGS = \
@@ -93,7 +93,7 @@ Mutexes_SOURCES = \
   Message_Receiver.h
 
 Mutexes_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Clean up template repositories, etc.
 clean-local:

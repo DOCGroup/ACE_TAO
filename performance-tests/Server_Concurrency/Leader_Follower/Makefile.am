@@ -11,8 +11,12 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.Svr_Conc_Leader_Follower.am 
-noinst_PROGRAMS = leader_follower
+noinst_PROGRAMS =
+
+## Makefile.Svr_Conc_Leader_Follower.am
+
+if !BUILD_ACE_FOR_TAO
+noinst_PROGRAMS += leader_follower
 
 leader_follower_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -23,9 +27,13 @@ leader_follower_SOURCES = \
   RT_CORBA_Leader_Follower.h
 
 leader_follower_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Svr_Conc_Leader_Follower_RT_CORBA.am 
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.Svr_Conc_Leader_Follower_RT_CORBA.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += RT_CORBA_Leader_Follower
 
 RT_CORBA_Leader_Follower_CPPFLAGS = \
@@ -37,7 +45,9 @@ RT_CORBA_Leader_Follower_SOURCES = \
   RT_CORBA_Leader_Follower.h
 
 RT_CORBA_Leader_Follower_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif !BUILD_ACE_FOR_TAO
 
 ## Clean up template repositories, etc.
 clean-local:

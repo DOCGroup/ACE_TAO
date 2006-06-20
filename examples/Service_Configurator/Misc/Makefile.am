@@ -11,7 +11,8 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.Service_Configurator_Misc_Timer.am 
+## Makefile.Service_Configurator_Misc_Timer.am
+
 noinst_LTLIBRARIES = libtimer.la
 
 libtimer_la_CPPFLAGS = \
@@ -22,13 +23,10 @@ libtimer_la_CPPFLAGS = \
 libtimer_la_SOURCES = \
   Timer_Service.cpp
 
-libtimer_la_LIBADD = \
- $(top_builddir)/ace/libACE.la
-
 noinst_HEADERS = \
   Timer_Service.h
 
-## Makefile.Service_Configurator_Misc_Main.am 
+## Makefile.Service_Configurator_Misc_Main.am
 noinst_PROGRAMS = main
 
 main_CPPFLAGS = \
@@ -40,7 +38,8 @@ main_SOURCES = \
   Timer_Service.h
 
 main_LDADD = \
- libtimer.la $(top_builddir)/ace/libACE.la
+  libtimer.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Clean up template repositories, etc.
 clean-local:

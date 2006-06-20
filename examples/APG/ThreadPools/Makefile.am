@@ -11,8 +11,12 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.Futures.am 
-noinst_PROGRAMS = Futures
+noinst_PROGRAMS =
+
+## Makefile.Futures.am
+
+if !BUILD_ACE_FOR_TAO
+noinst_PROGRAMS += Futures
 
 Futures_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -23,9 +27,11 @@ Futures_SOURCES = \
   Request_Handler.h
 
 Futures_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.LF_ThreadPool.am 
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.LF_ThreadPool.am
 noinst_PROGRAMS += LF_ThreadPool
 
 LF_ThreadPool_CPPFLAGS = \
@@ -37,9 +43,9 @@ LF_ThreadPool_SOURCES = \
   Request_Handler.h
 
 LF_ThreadPool_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.TP_Reactor.am 
+## Makefile.TP_Reactor.am
 noinst_PROGRAMS += TP_Reactor
 
 TP_Reactor_CPPFLAGS = \
@@ -51,9 +57,9 @@ TP_Reactor_SOURCES = \
   Request_Handler.h
 
 TP_Reactor_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Task_ThreadPool.am 
+## Makefile.Task_ThreadPool.am
 noinst_PROGRAMS += Task_ThreadPool
 
 Task_ThreadPool_CPPFLAGS = \
@@ -65,9 +71,9 @@ Task_ThreadPool_SOURCES = \
   Request_Handler.h
 
 Task_ThreadPool_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.ThreadPool.am 
+## Makefile.ThreadPool.am
 noinst_PROGRAMS += ThreadPool
 
 ThreadPool_CPPFLAGS = \
@@ -79,7 +85,7 @@ ThreadPool_SOURCES = \
   Request_Handler.h
 
 ThreadPool_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Clean up template repositories, etc.
 clean-local:

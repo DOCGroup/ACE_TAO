@@ -11,7 +11,7 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.Bounded_Packet_Relay.am 
+## Makefile.Bounded_Packet_Relay.am
 noinst_PROGRAMS = bpr_thread
 
 bpr_thread_CPPFLAGS = \
@@ -28,7 +28,7 @@ bpr_thread_SOURCES = \
   Thread_Bounded_Packet_Relay.h
 
 bpr_thread_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Clean up template repositories, etc.
 clean-local:

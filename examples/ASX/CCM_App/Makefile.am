@@ -11,7 +11,8 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.ASX_CCM_App_Lib.am 
+## Makefile.ASX_CCM_App_Lib.am
+
 noinst_LTLIBRARIES = libccm_app.la
 
 libccm_app_la_CPPFLAGS = \
@@ -21,10 +22,7 @@ libccm_app_la_CPPFLAGS = \
 libccm_app_la_SOURCES = \
   CCM_App.cpp
 
-libccm_app_la_LIBADD = \
- $(top_builddir)/ace/libACE.la
-
-## Makefile.ASX_CCM_App_Server.am 
+## Makefile.ASX_CCM_App_Server.am
 noinst_PROGRAMS = server
 
 server_CPPFLAGS = \
@@ -35,9 +33,9 @@ server_SOURCES = \
   SC_Server.cpp
 
 server_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.ASX_CCM_App_Client.am 
+## Makefile.ASX_CCM_App_Client.am
 noinst_PROGRAMS += client
 
 client_CPPFLAGS = \
@@ -48,7 +46,7 @@ client_SOURCES = \
   SC_Client.cpp
 
 client_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Clean up template repositories, etc.
 clean-local:

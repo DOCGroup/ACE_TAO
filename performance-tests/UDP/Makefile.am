@@ -11,7 +11,10 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.UDP.am 
+
+## Makefile.UDP.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS = udp_test
 
 udp_test_CPPFLAGS = \
@@ -22,7 +25,9 @@ udp_test_SOURCES = \
   udp_test.cpp
 
 udp_test_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif !BUILD_ACE_FOR_TAO
 
 ## Clean up template repositories, etc.
 clean-local:

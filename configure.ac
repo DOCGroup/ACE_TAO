@@ -3966,9 +3966,7 @@ if test "$ac_cv_func_strptime" == yes; then
   dnl Reset the compiler flags
   CPPFLAGS="$ace_save_CPPFLAGS"
 else
-  dnl As of this writing, ACE does not follow standard conventions for
-  dnl strptime() feature test macros.
-  AC_DEFINE([ACE_LACKS_NATIVE_STRPTIME], 1,
+  AC_DEFINE([ACE_LACKS_STRPTIME], 1,
 	    [Define to 1 if platform lacks strptime().])
 fi
 
@@ -7878,6 +7876,8 @@ AC_CONFIG_FILES([
   apps/JAWS/clients/Blobby/Makefile
   apps/JAWS/clients/Caching/Makefile
   apps/JAWS/server/Makefile
+  apps/JAWS2/Makefile
+  apps/JAWS2/JAWS/Makefile
   apps/JAWS3/Makefile
   apps/JAWS3/jaws3/Makefile
   apps/drwho/Makefile
@@ -7935,7 +7935,11 @@ if test $ace_build_examples = yes; then
     examples/APG/Timers/Makefile
     examples/ASX/Makefile
     examples/ASX/CCM_App/Makefile
+    examples/ASX/Event_Server/Makefile
+    examples/ASX/Event_Server/Event_Server/Makefile
+    examples/ASX/Event_Server/Transceiver/Makefile
     examples/ASX/Message_Queue/Makefile
+    examples/ASX/UPIPE_Event_Server/Makefile
     examples/Bounded_Packet_Relay/Makefile
     examples/C++NPv1/Makefile
     examples/C++NPv2/Makefile
@@ -7965,6 +7969,7 @@ if test $ace_build_examples = yes; then
     examples/Logger/Acceptor-server/Makefile
     examples/Logger/client/Makefile
     examples/Logger/simple-server/Makefile
+    examples/Map_Manager/Makefile
     examples/Mem_Map/Makefile
     examples/Mem_Map/IO-tests/Makefile
     examples/Mem_Map/file-reverse/Makefile
@@ -7985,6 +7990,7 @@ if test $ace_build_examples = yes; then
     examples/Reactor/Multicast/Makefile
     examples/Reactor/Ntalker/Makefile
     examples/Reactor/Proactor/Makefile
+    examples/Reactor/TP_Reactor/Makefile
     examples/Reactor/WFMO_Reactor/Makefile
     examples/Registry/Makefile
     examples/Service_Configurator/Makefile
@@ -8022,6 +8028,8 @@ if test $ace_build_tests = yes; then
     performance-tests/Synch-Benchmarks/Perf_Test/Makefile
     performance-tests/TCP/Makefile
     performance-tests/UDP/Makefile
+    protocols/tests/Makefile
+    protocols/tests/RMCast/Makefile
     tests/Makefile
     tests/HTBP/Makefile
     tests/HTBP/Reactor_Tests/Makefile
@@ -8044,6 +8052,7 @@ if test -d $srcdir/ACEXML; then
     ACEXML/examples/Makefile
     ACEXML/examples/SAXPrint/Makefile
     ACEXML/tests/Makefile
+    ACEXML/tests/util/Makefile
   ])
 fi
 

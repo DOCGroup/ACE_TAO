@@ -151,8 +151,6 @@
 #endif
 #define ACE_LACKS_PERFECT_MULTICAST_FILTERING 1
 
-#define ACE_HAS_STRPTIME
-
 //**************************************************************
 // Not so sure how next lines should look like
 

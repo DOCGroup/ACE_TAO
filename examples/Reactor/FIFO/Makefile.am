@@ -11,8 +11,12 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.Reactor_FIFO_Client.am 
-noinst_PROGRAMS = client
+noinst_PROGRAMS =
+
+## Makefile.Reactor_FIFO_Client.am
+
+if !BUILD_ACE_FOR_TAO
+noinst_PROGRAMS += client
 
 client_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -22,9 +26,13 @@ client_SOURCES = \
   client.cpp
 
 client_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Reactor_FIFO_Server.am 
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.Reactor_FIFO_Server.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += server
 
 server_CPPFLAGS = \
@@ -35,7 +43,9 @@ server_SOURCES = \
   server.cpp
 
 server_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif !BUILD_ACE_FOR_TAO
 
 ## Clean up template repositories, etc.
 clean-local:

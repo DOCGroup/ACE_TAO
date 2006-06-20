@@ -11,7 +11,8 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.asnmp_lib.am 
+## Makefile.asnmp_lib.am
+
 noinst_LTLIBRARIES = libasnmp.la
 
 libasnmp_la_CPPFLAGS = \
@@ -37,9 +38,6 @@ libasnmp_la_SOURCES = \
   transaction.cpp \
   vb.cpp \
   wpdu.cpp
-
-libasnmp_la_LIBADD = \
- $(top_builddir)/ace/libACE.la
 
 noinst_HEADERS = \
   address.h \

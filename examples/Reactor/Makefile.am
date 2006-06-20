@@ -15,5 +15,6 @@ SUBDIRS = \
         Multicast \
         Ntalker \
         Proactor \
+        TP_Reactor \
         WFMO_Reactor
 

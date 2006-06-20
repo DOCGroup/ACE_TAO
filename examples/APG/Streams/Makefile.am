@@ -11,11 +11,12 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-noinst_PROGRAMS =
-## Makefile.Answerer.am 
+
+## Makefile.Answerer.am
 
 if BUILD_THREADS
-noinst_PROGRAMS += Answerer
+if !BUILD_ACE_FOR_TAO
+noinst_PROGRAMS = Answerer
 
 Answerer_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -37,8 +38,9 @@ Answerer_SOURCES = \
   RecordingDevice_Text.h
 
 Answerer_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
+endif !BUILD_ACE_FOR_TAO
 endif BUILD_THREADS
 
 ## Clean up template repositories, etc.

@@ -11,7 +11,7 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.blobby.am 
+## Makefile.blobby.am
 noinst_PROGRAMS = blobby
 
 blobby_CPPFLAGS = \
@@ -28,7 +28,7 @@ blobby_SOURCES = \
   Options.h
 
 blobby_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Clean up template repositories, etc.
 clean-local:

@@ -11,7 +11,8 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.Allocator.am 
+
+## Makefile.Allocator.am
 noinst_PROGRAMS = Allocator
 
 Allocator_CPPFLAGS = \
@@ -26,9 +27,9 @@ Allocator_SOURCES = \
   RB_Tree_Functors.h
 
 Allocator_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Array.am 
+## Makefile.Array.am
 noinst_PROGRAMS += Array
 
 Array_CPPFLAGS = \
@@ -43,9 +44,9 @@ Array_SOURCES = \
   RB_Tree_Functors.h
 
 Array_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Containers_Hash_Map.am 
+## Makefile.Containers_Hash_Map.am
 noinst_PROGRAMS += Hash_Map
 
 Hash_Map_CPPFLAGS = \
@@ -60,9 +61,9 @@ Hash_Map_SOURCES = \
   RB_Tree_Functors.h
 
 Hash_Map_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Containers_Map_Manager.am 
+## Makefile.Containers_Map_Manager.am
 noinst_PROGRAMS += Map_Manager
 
 Map_Manager_CPPFLAGS = \
@@ -77,9 +78,11 @@ Map_Manager_SOURCES = \
   RB_Tree_Functors.h
 
 Map_Manager_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.DLList.am 
+## Makefile.DLList.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += DLList
 
 DLList_CPPFLAGS = \
@@ -94,9 +97,11 @@ DLList_SOURCES = \
   RB_Tree_Functors.h
 
 DLList_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Hash_Map_Hash.am 
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.Hash_Map_Hash.am
 noinst_PROGRAMS += Hash_Map_Hash
 
 Hash_Map_Hash_CPPFLAGS = \
@@ -108,9 +113,9 @@ Hash_Map_Hash_SOURCES = \
   Hash_Map_Hash.h
 
 Hash_Map_Hash_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Map_Manager_Specialization.am 
+## Makefile.Map_Manager_Specialization.am
 noinst_PROGRAMS += Map_Manager_Specialization
 
 Map_Manager_Specialization_CPPFLAGS = \
@@ -125,9 +130,9 @@ Map_Manager_Specialization_SOURCES = \
   RB_Tree_Functors.h
 
 Map_Manager_Specialization_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Queues.am 
+## Makefile.Queues.am
 noinst_PROGRAMS += Queues
 
 Queues_CPPFLAGS = \
@@ -142,9 +147,9 @@ Queues_SOURCES = \
   RB_Tree_Functors.h
 
 Queues_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.RB_Tree.am 
+## Makefile.RB_Tree.am
 noinst_PROGRAMS += RB_Tree
 
 RB_Tree_CPPFLAGS = \
@@ -159,9 +164,9 @@ RB_Tree_SOURCES = \
   RB_Tree_Functors.h
 
 RB_Tree_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.RB_Tree_Functors.am 
+## Makefile.RB_Tree_Functors.am
 noinst_PROGRAMS += RB_Tree_Functors
 
 RB_Tree_Functors_CPPFLAGS = \
@@ -173,9 +178,9 @@ RB_Tree_Functors_SOURCES = \
   RB_Tree_Functors.h
 
 RB_Tree_Functors_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Sets.am 
+## Makefile.Sets.am
 noinst_PROGRAMS += Sets
 
 Sets_CPPFLAGS = \
@@ -190,9 +195,9 @@ Sets_SOURCES = \
   RB_Tree_Functors.h
 
 Sets_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Stacks.am 
+## Makefile.Stacks.am
 noinst_PROGRAMS += Stacks
 
 Stacks_CPPFLAGS = \
@@ -207,7 +212,7 @@ Stacks_SOURCES = \
   RB_Tree_Functors.h
 
 Stacks_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Clean up template repositories, etc.
 clean-local:
