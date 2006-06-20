@@ -39,7 +39,6 @@ be_type::be_type (void)
     be_decl (),
     tc_name_ (0),
     common_varout_gen_ (false),
-    seq_elem_tmplinst_ (false),
     seen_in_sequence_ (false),
     seen_in_operation_ (false)
 {
@@ -56,7 +55,6 @@ be_type::be_type (AST_Decl::NodeType nt,
              n),
     tc_name_ (0),
     common_varout_gen_ (false),
-    seq_elem_tmplinst_ (false),
     seen_in_sequence_ (false),
     seen_in_operation_ (false)
 {
@@ -283,25 +281,12 @@ be_type::gen_common_varout (TAO_OutStream *os)
     {
       *os << "typedef" << be_idt_nl
           << "TAO_Out_T<" << be_idt << be_idt_nl
-          << this->local_name () << "," << be_nl
-          << this->local_name () << "_var" << be_uidt_nl
+          << this->local_name () << be_uidt_nl
           << ">" << be_uidt_nl
           << this->local_name () << "_out;" << be_uidt;
     }
 
   this->common_varout_gen_ = 1;
-}
-
-bool
-be_type::seq_elem_tmplinst (void) const
-{
-  return this->seq_elem_tmplinst_;
-}
-
-void
-be_type::seq_elem_tmplinst (bool val)
-{
-  this->seq_elem_tmplinst_ = val;
 }
 
 bool
@@ -344,7 +329,7 @@ be_type::destroy (void)
       delete this->tc_name_;
       this->tc_name_ = 0;
     }
-  
+
   this->be_decl::destroy ();
 }
 

@@ -31,10 +31,15 @@ module PortableServer
     NON_RETAIN
   };
 
+#if !defined (TAO_HAS_MINIMUM_POA) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
+
   local interface ServantRetentionPolicy : CORBA::Policy
   {
     readonly attribute ServantRetentionPolicyValue value;
   };
+
+#endif
+
 };
 
 #endif // _PORTABLESERVER_SERVANTRETENTIONPOLICY_IDL_

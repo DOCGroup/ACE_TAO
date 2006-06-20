@@ -74,7 +74,6 @@ be_decl::be_decl (void)
     cli_arg_traits_gen_ (false),
     srv_arg_traits_gen_ (false),
     srv_sarg_traits_gen_ (false),
-    cli_tmpl_class_gen_ (false),
     cli_pragma_inst_gen_ (false),
     cli_inarg_tmpl_class_gen_ (false),
     cli_inarg_pragma_inst_gen_ (false),
@@ -126,7 +125,6 @@ be_decl::be_decl (AST_Decl::NodeType type,
     cli_arg_traits_gen_ (false),
     srv_arg_traits_gen_ (false),
     srv_sarg_traits_gen_ (false),
-    cli_tmpl_class_gen_ (false),
     cli_pragma_inst_gen_ (false),
     cli_inarg_tmpl_class_gen_ (false),
     cli_inarg_pragma_inst_gen_ (false),
@@ -439,12 +437,6 @@ be_decl::srv_sarg_traits_gen (void)
 }
 
 bool
-be_decl::cli_tmpl_class_gen (void)
-{
-  return this->cli_tmpl_class_gen_;
-}
-
-bool
 be_decl::cli_pragma_inst_gen (void)
 {
   return this->cli_pragma_inst_gen_;
@@ -701,12 +693,6 @@ void
 be_decl::srv_sarg_traits_gen (bool val)
 {
   this->srv_sarg_traits_gen_ = val;
-}
-
-void
-be_decl::cli_tmpl_class_gen (bool val)
-{
-  this->cli_tmpl_class_gen_ = val;
 }
 
 void

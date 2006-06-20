@@ -21,8 +21,8 @@
 
 #include "be_visitor_sequence/cdr_op_ch.h"
 
-ACE_RCSID (be_visitor_array, 
-           cdr_op_ch, 
+ACE_RCSID (be_visitor_array,
+           cdr_op_ch,
            "$Id$")
 
 // ***************************************************************************
@@ -72,8 +72,8 @@ be_visitor_array_cdr_op_ch::visit_array (be_array *node)
   // If the array is an anonymous member and if its element type
   // is a declaration (not a reference), we must generate code for
   // the declaration.
-  if (this->ctx_->alias () == 0 // Not a typedef.
-      && bt->is_child (this->ctx_->scope ()))
+  if (this->ctx_->alias () == 0 && // Not a typedef.
+      bt->is_child (this->ctx_->scope ()))
     {
       int status = 0;
       be_visitor_context ctx (*this->ctx_);
@@ -119,7 +119,7 @@ be_visitor_array_cdr_op_ch::visit_array (be_array *node)
 
   // Generate the CDR << and >> operator declarations.
   *os << be_global->stub_export_macro () << " CORBA::Boolean"
-      << " operator<< (TAO_OutputCDR &, const ";
+      << " operator<< (TAO_OutputCDR &strm, const ";
 
   if (!this->ctx_->tdef ())
     {
@@ -128,11 +128,11 @@ be_visitor_array_cdr_op_ch::visit_array (be_array *node)
 
       *os << parent->full_name ()
           << "::_" << node->local_name ()
-          << "_forany &);" << be_nl;
+          << "_forany &_tao_array);" << be_nl;
     }
   else
     {
-      *os << node->name () << "_forany &);" << be_nl;
+      *os << node->name () << "_forany &_tao_array);" << be_nl;
     }
 
   *os << be_global->stub_export_macro () << " ::CORBA::Boolean"
@@ -152,7 +152,7 @@ be_visitor_array_cdr_op_ch::visit_array (be_array *node)
       *os << node->name () << "_forany &);";
     }
 
-  *os << be_global->core_versioning_end () << be_nl;
+  *os << be_nl << be_global->core_versioning_end ();
 
   node->cli_hdr_cdr_op_gen (1);
   return 0;
