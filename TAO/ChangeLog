@@ -1,10 +1,16 @@
+Tue Jun 20 18:12:04 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Credentials.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_OwnCredentials.h:
+          Fixed compile errors
+
 Tue Jun 20 17:21:42 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/EndpointPolicy.mpc:
         * tao/PortableServer.mpc:
         * tao/TypeCodeFactory.mpc:
         * tao/Valuetype.mpc:
-        
+
           Replaced double quotes in these files with <%quote%>. Thanks
           to Chad Elliott <elliott_c@ociweb.com> for providing
           the fix that allowed the generated *.vcproj files to
