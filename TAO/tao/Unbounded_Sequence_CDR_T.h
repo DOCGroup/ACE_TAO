@@ -600,7 +600,7 @@ namespace TAO {
     if (0 == &source)
       ACE_THROW_RETURN (::CORBA::BAD_PARAM(0, CORBA::COMPLETED_MAYBE), false);
     typedef typename TAO_FixedArray_Var_T <array_traits> fixed_array;
-    typedef typename TAO_Array_Forany_T <array_traits> forany;
+    typedef TAO_Array_Forany_T <array_traits> forany;
     ::CORBA::ULong const length = source.length ();
     if (!(strm << length)) {
       return false;
