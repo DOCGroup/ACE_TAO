@@ -184,7 +184,7 @@ testLimits (int , ACE_TCHAR *[])
     ACE_TEXT ("  Service_Config_DLL:_make_Service_Config_DLL() \"Test_Object_2_More\"");
 
   // Ensure enough room for just one ...
-  ACE_Service_Gestalt one(1, true);
+  ACE_Service_Gestalt one (1, true);
   if (0 != one.process_directive (svc_desc1))
     {
       ++error;

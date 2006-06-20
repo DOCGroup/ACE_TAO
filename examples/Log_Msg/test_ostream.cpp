@@ -79,9 +79,9 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   // This loop should print out the contents of file "output", which should 
   // have the strings "fourth\n" and "fifth\n" in them.
 
-  std::string line;
+  char line[BUFSIZ];
 
-  while (std::getline (infile, line))
+  while (infile.getline (line, BUFSIZ, '\n'))
     std::cout << line << std::endl;
 
 #endif /* ACE_LACKS_IOSTREAM_TOTALLY */
