@@ -860,7 +860,7 @@ be_visitor_arg_traits::visit_structure (be_structure *node)
   *os << (node->size_type () == AST_Type::FIXED ? "Fixed" : "Var")
       << "_Size_" << this->S_ << "Arg_Traits_T<" << be_idt << be_idt_nl;
 
-  *os << "," << be_nl << this->insert_policy() << be_uidt_nl
+  *os << node->name () << "," << be_nl << this->insert_policy() << be_uidt_nl
       << ">" << be_uidt << be_uidt << be_uidt << be_uidt_nl
       << "{" << be_nl
       << "};";
