@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:754
+// be\be_codegen.cpp:796
 
 #ifndef _TAO_IDL_ANYTYPECODE_WCHARSEQA_H_
 #define _TAO_IDL_ANYTYPECODE_WCHARSEQA_H_
@@ -38,7 +38,8 @@
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_module/module_ch.cpp:59
+// be\be_visitor_module/module_ch.cpp:61
+
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -51,19 +52,27 @@ namespace CORBA
   extern TAO_AnyTypeCode_Export ::CORBA::TypeCode_ptr const _tc_WCharSeq;
 
 // TAO_IDL - Generated from
-// be\be_visitor_module/module_ch.cpp:86
+// be\be_visitor_module/module_ch.cpp:90
 
 } // module CORBA
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+
+
 // TAO_IDL - Generated from
 // be\be_visitor_sequence/any_op_ch.cpp:53
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_AnyTypeCode_Export void operator<<= ( ::CORBA::Any &, const CORBA::WCharSeq &); // copying version
 TAO_AnyTypeCode_Export void operator<<= ( ::CORBA::Any &, CORBA::WCharSeq*); // noncopying version
 TAO_AnyTypeCode_Export ::CORBA::Boolean operator>>= (const ::CORBA::Any &, CORBA::WCharSeq *&); // deprecated
 TAO_AnyTypeCode_Export ::CORBA::Boolean operator>>= (const ::CORBA::Any &, const CORBA::WCharSeq *&);
-
 TAO_END_VERSIONED_NAMESPACE_DECL
+
+
 
 #include /**/ "ace/post.h"
 

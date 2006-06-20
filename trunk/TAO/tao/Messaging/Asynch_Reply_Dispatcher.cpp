@@ -84,8 +84,8 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (
 
   // Steal the buffer, that way we don't do any unnecesary copies of
   // this data.
-  CORBA::ULong max = params.svc_ctx_.maximum ();
-  CORBA::ULong len = params.svc_ctx_.length ();
+  CORBA::ULong const max = params.svc_ctx_.maximum ();
+  CORBA::ULong const len = params.svc_ctx_.length ();
   IOP::ServiceContext *context_list = params.svc_ctx_.get_buffer (1);
   this->reply_service_info_.replace (max, len, context_list, 1);
 

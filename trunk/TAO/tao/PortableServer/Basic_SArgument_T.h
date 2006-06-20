@@ -32,8 +32,8 @@ namespace TAO
    * @brief Template class for IN skeleton argument of basic IDL types.
    *
    */
-  template<typename S, typename Insert_Policy>
-  class In_Basic_SArgument_T : public InArgument, private Insert_Policy
+  template<typename S, template <typename> class Insert_Policy>
+  class In_Basic_SArgument_T : public InArgument
   {
   public:
     In_Basic_SArgument_T (void);
@@ -54,8 +54,8 @@ namespace TAO
    * @brief Template class for INOUT skeleton argument of basic IDL types.
    *
    */
-  template<typename S, typename Insert_Policy>
-  class Inout_Basic_SArgument_T : public InoutArgument, private Insert_Policy
+  template<typename S, template <typename> class Insert_Policy>
+  class Inout_Basic_SArgument_T : public InoutArgument
   {
   public:
     Inout_Basic_SArgument_T (void);
@@ -77,8 +77,8 @@ namespace TAO
    * @brief Template class for OUT skeleton argument of basic IDL types.
    *
    */
-  template<typename S, typename Insert_Policy>
-  class Out_Basic_SArgument_T : public OutArgument, private Insert_Policy
+  template<typename S, template <typename> class Insert_Policy>
+  class Out_Basic_SArgument_T : public OutArgument
   {
   public:
     Out_Basic_SArgument_T (void);
@@ -99,8 +99,8 @@ namespace TAO
    * @brief Template class for return skeleton value of basic IDL types.
    *
    */
-  template<typename S, typename Insert_Policy>
-  class Ret_Basic_SArgument_T : public RetArgument, private Insert_Policy
+  template<typename S, template <typename> class Insert_Policy>
+  class Ret_Basic_SArgument_T : public RetArgument
   {
   public:
     Ret_Basic_SArgument_T (void);
@@ -121,7 +121,7 @@ namespace TAO
    * @brief Template class for skeleton argument traits of basic IDL types.
    *
    */
-  template<typename T, typename Insert_Policy>
+  template<typename T, template <typename> class Insert_Policy>
   struct Basic_SArg_Traits_T
   {
     typedef T                           ret_type;
