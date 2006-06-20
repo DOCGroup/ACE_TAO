@@ -11,7 +11,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-<<<<<<< Fixed_Array_SArgument_T.cpp
 template<typename S_forany,
          template <typename> class Insert_Policy>
 CORBA::Boolean

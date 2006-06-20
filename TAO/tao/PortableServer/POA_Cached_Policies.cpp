@@ -61,8 +61,7 @@ namespace TAO
                                     ACE_ENV_ARG_DECL)
     {
 
-    #if (TAO_HAS_MINIMUM_POA == 0)
-
+    #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
       ::PortableServer::ThreadPolicy_var thread
         = ::PortableServer::ThreadPolicy::_narrow (policy
                                                    ACE_ENV_ARG_PARAMETER);
@@ -75,9 +74,9 @@ namespace TAO
 
           return;
         }
-
     #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
+    #if !defined (CORBA_E_MICRO)
       ::PortableServer::LifespanPolicy_var lifespan
         = ::PortableServer::LifespanPolicy::_narrow (policy
                                                      ACE_ENV_ARG_PARAMETER);
@@ -90,7 +89,9 @@ namespace TAO
 
           return;
         }
+    #endif
 
+    #if !defined (CORBA_E_MICRO)
       ::PortableServer::IdUniquenessPolicy_var id_uniqueness
         = ::PortableServer::IdUniquenessPolicy::_narrow (policy
                                                          ACE_ENV_ARG_PARAMETER);
@@ -103,7 +104,9 @@ namespace TAO
 
           return;
         }
+    #endif
 
+    #if !defined (CORBA_E_MICRO)
       ::PortableServer::IdAssignmentPolicy_var id_assignment
         = ::PortableServer::IdAssignmentPolicy::_narrow (policy
                                                          ACE_ENV_ARG_PARAMETER);
@@ -116,8 +119,9 @@ namespace TAO
 
           return;
         }
+    #endif
 
-    #if (TAO_HAS_MINIMUM_POA == 0)
+    #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 
       ::PortableServer::ImplicitActivationPolicy_var implicit_activation
         = ::PortableServer::ImplicitActivationPolicy::_narrow (policy
@@ -159,6 +163,10 @@ namespace TAO
         }
 
     #endif /* TAO_HAS_MINIMUM_POA == 0 */
+
+    #if defined (CORBA_E_MICRO)
+      ACE_UNUSED_ARG (policy);
+    #endif
     }
   }
 }

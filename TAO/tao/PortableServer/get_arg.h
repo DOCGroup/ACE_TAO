@@ -44,7 +44,7 @@ namespace TAO
                  TAO::Argument * const * skel_args)
     {
       return
-        details
+        (details != 0 && details->args () != 0)
         ? static_cast<typename TAO::Arg_Traits<T>::ret_val *> (
             details->args ()[0])->arg ()
         : static_cast<typename TAO::SArg_Traits<T>::ret_val *> (
@@ -74,7 +74,7 @@ namespace TAO
                    size_t i)
     {
       return
-        details
+        (details != 0 && details->args () != 0)
         ? static_cast<typename TAO::Arg_Traits<T>::inout_arg_val *> (
             details->args ()[i])->arg ()
         : static_cast<typename TAO::SArg_Traits<T>::inout_arg_val *> (
@@ -89,7 +89,7 @@ namespace TAO
                  size_t i)
     {
       return
-        details
+        (details != 0 && details->args () != 0)
         ? static_cast<typename TAO::Arg_Traits<T>::out_arg_val *> (
             details->args ()[i])->arg ()
         : static_cast<typename TAO::SArg_Traits<T>::out_arg_val *> (

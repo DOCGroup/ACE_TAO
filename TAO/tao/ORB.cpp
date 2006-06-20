@@ -1216,6 +1216,7 @@ CORBA::ORB::resolve_initial_references (const char *name,
   ACE_THROW_RETURN (CORBA::ORB::InvalidName (), CORBA::Object::_nil ());
 }
 
+#if !defined(CORBA_E_MICRO)
 void
 CORBA::ORB::register_initial_reference (const char * id,
                                         CORBA::Object_ptr obj
@@ -1235,7 +1236,7 @@ CORBA::ORB::register_initial_reference (const char * id,
   if (table.register_initial_reference (id, obj) == -1)
     ACE_THROW (CORBA::ORB::InvalidName ());
 }
-
+#endif
 
 CORBA::ORB::ObjectIdList_ptr
 CORBA::ORB::list_initial_services (ACE_ENV_SINGLE_ARG_DECL)
@@ -1762,6 +1763,7 @@ CORBA::ORB::id (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 // ****************************************************************
 
+#if !defined(CORBA_E_MICRO)
 CORBA::Policy_ptr
 CORBA::ORB::create_policy (CORBA::PolicyType type,
                            const CORBA::Any& val
@@ -1785,7 +1787,9 @@ CORBA::ORB::create_policy (CORBA::PolicyType type,
           val
           ACE_ENV_ARG_PARAMETER);
 }
+#endif
 
+#if !defined(CORBA_E_MICRO)
 CORBA::Policy_ptr
 CORBA::ORB::_create_policy (CORBA::PolicyType type
                             ACE_ENV_ARG_DECL)
@@ -1807,6 +1811,7 @@ CORBA::ORB::_create_policy (CORBA::PolicyType type
           type
           ACE_ENV_ARG_PARAMETER);
 }
+#endif
 
 // Destringify OMG-specified "IOR" string.
 //
@@ -1941,6 +1946,7 @@ CORBA::ORB::set_timeout (ACE_Time_Value *timeout)
 // Valuetype factory operations
 // *************************************************************
 
+#if !defined(CORBA_E_MICRO)
 CORBA::ValueFactory
 CORBA::ORB::register_value_factory (const char *repository_id,
                                     CORBA::ValueFactory factory
@@ -1968,7 +1974,9 @@ CORBA::ORB::register_value_factory (const char *repository_id,
 
   return factory;    // previous factory was found
 }
+#endif
 
+#if !defined(CORBA_E_MICRO)
 void
 CORBA::ORB::unregister_value_factory (const char *repository_id
                                       ACE_ENV_ARG_DECL_NOT_USED)
@@ -1981,7 +1989,9 @@ CORBA::ORB::unregister_value_factory (const char *repository_id
       (void) vta->vf_map_unbind (repository_id);
     }
 }
+#endif
 
+#if !defined(CORBA_E_MICRO)
 CORBA::ValueFactory
 CORBA::ORB::lookup_value_factory (const char *repository_id
                                   ACE_ENV_ARG_DECL)
@@ -1995,5 +2005,6 @@ CORBA::ORB::lookup_value_factory (const char *repository_id
 
   return 0;
 }
+#endif
 
 TAO_END_VERSIONED_NAMESPACE_DECL

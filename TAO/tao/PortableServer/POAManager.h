@@ -160,7 +160,9 @@ protected:
 
   CORBA::String_var id_;
 
+#if !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
   TAO_POAManager_Factory& poa_manager_factory_;
+#endif
 
   CORBA::PolicyList policies_;
 
