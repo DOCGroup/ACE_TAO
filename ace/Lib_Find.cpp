@@ -15,12 +15,102 @@
 #endif /* ACE_WIN32 */
 
 #if defined (ACE_OPENVMS)
+#include "ace/RB_Tree.h"
+#include "ace/Thread_Mutex.h"
+#include "ace/Singleton.h"
+
 #include /**/ "descrip.h"
 #include /**/ "chfdef.h"
 #include /**/ "stsdef.h"
 #include /**/ "libdef.h"
 
 extern "C" int LIB$FIND_IMAGE_SYMBOL(...);
+
+class ACE_LD_Symbol_Registry
+{
+  // @internal
+  // = TITLE
+  //   Implements a class to register symbols and addresses for use with DLL
+  //   symbol retrieval.
+  //
+  // = DESCRIPTION
+  //   OpenVMS restricts symbol length to 31 characters encoding any symbols
+  //   longer than that. In these cases dlsym() only works with the encoded
+  //   names.
+  //   This creates serious problems for the service configurator framework
+  //   where the factory method names often exceed 31 chars and where loading
+  //   is based on retrieval of method pointers using the *full* name.
+  //   For OpenVMS we therefor added this singleton class and the
+  //   ACE_Static_Svc_Registrar class which registers full names and function
+  //   pointers with this singleton at the time the static ACE_Static_Svc_Registrar
+  //   object is created in a (service) DLL.
+  //   By forcing the DLL to load using a common symbol ("NULL") we trigger static
+  //   object creation *before* the full names are referenced.
+  //   Symbol references will be resolved as follows on OpenVMS:
+  //   - first try directly from DLL using the RTL dlsym() function and if that fails;
+  //   - try to find symbol in singleton registry.
+public:
+
+  typedef ACE_RB_Tree<const ACE_TCHAR*,
+                      void*,
+                      ACE_Less_Than<const ACE_TCHAR*>,
+                      ACE_Thread_Mutex>
+          TREE;
+
+  void register_symbol (const ACE_TCHAR* symname, void* symaddr);
+
+  void* find_symbol (const ACE_TCHAR* symname);
+
+  ACE_LD_Symbol_Registry () {}
+private:
+
+  TREE symbol_registry_;
+};
+
+void
+ACE_LD_Symbol_Registry::register_symbol (const ACE_TCHAR* symname,
+                                         void* symaddr)
+{
+  int result = symbol_registry_.bind (symname, symaddr);
+  if (result == 1)
+    {
+      ACE_DEBUG((LM_INFO, ACE_LIB_TEXT ("ACE_LD_Symbol_Registry:")
+                          ACE_LIB_TEXT (" duplicate symbol %s registered\n"),
+                          ACE_TEXT_ALWAYS_CHAR (symname)));
+    }
+  else if (result == -1)
+    {
+      ACE_ERROR((LM_ERROR, ACE_LIB_TEXT ("ACE_LD_Symbol_Registry:")
+                           ACE_LIB_TEXT (" failed to register symbol %s\n"),
+                           ACE_TEXT_ALWAYS_CHAR (symname)));
+    }
+
+  //::fprintf (stderr, "ACE_LD_Symbol_Registry::register_symbol(%s, %x) -> %d\n", symname, symaddr, result);
+}
+
+void*
+ACE_LD_Symbol_Registry::find_symbol (const ACE_TCHAR* symname)
+{
+  void* symaddr = 0;
+  int result = symbol_registry_.find (symname, symaddr);
+
+  //::fprintf (stderr, "ACE_LD_Symbol_Registry::find_symbol(%s) -> %x, %d\n", symname, symaddr, result);
+
+  return (result == 0 ? symaddr : 0);
+}
+
+/// Declare a process wide singleton
+ACE_SINGLETON_DECLARE (ACE_Singleton,
+                       ACE_LD_Symbol_Registry,
+                       ACE_Thread_Mutex)
+
+typedef ACE_Singleton<ACE_LD_Symbol_Registry, ACE_Thread_Mutex>
+        ACE_LD_SYMBOL_REGISTRY;
+
+#if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
+template ACE_Singleton<ACE_LD_Symbol_Registry, ACE_Thread_Mutex> *
+  ACE_Singleton<ACE_LD_Symbol_Registry, ACE_Thread_Mutex>::singleton_;
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 #endif
 
 ACE_RCSID(ace, Lib_Find, "$Id$")
@@ -474,13 +564,30 @@ ACE::ldname (const ACE_TCHAR *entry_point)
                   0);
 
   ACE_OS::strcpy (new_name, entry_point);
-#if defined (ACE_OPENVMS)
-  if (size > 32)
-    new_name[31] = '\000';
-#endif
   return new_name;
 #endif /* ACE_NEEDS_DL_UNDERSCORE */
 }
+
+#if defined (ACE_OPENVMS)
+void
+ACE::ldregister (const ACE_TCHAR *entry_point,
+                 void* entry_addr)
+{
+  ACE_LD_SYMBOL_REGISTRY::instance ()->register_symbol (entry_point,
+                                                        entry_addr);
+}
+
+void *
+ACE::ldsymbol (ACE_SHLIB_HANDLE sh, const ACE_TCHAR *entry_point)
+{
+  void* symaddr = ACE_OS::dlsym (sh, entry_point);
+  // if not found through dlsym() try registry
+  if (symaddr == 0)
+    symaddr = ACE_LD_SYMBOL_REGISTRY::instance ()->find_symbol (entry_point);
+
+  return symaddr;
+}
+#endif
 
 int
 ACE::get_temp_dir (ACE_TCHAR *buffer, size_t buffer_len)

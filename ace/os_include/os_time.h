@@ -63,8 +63,12 @@ typedef struct timespec
   long tv_nsec;
 } timespec_t;
 # elif defined (ACE_HAS_BROKEN_POSIX_TIME)
+#  if defined (ACE_OPENVMS)
+#     include /**/ <timers.h>
+#  else
 // OSF/1 defines struct timespec in <sys/timers.h> - Tom Marrs
-#   include /**/ <sys/timers.h>
+#     include /**/ <sys/timers.h>
+#  endif
 # endif /* !ACE_HAS_POSIX_TIME */
 
 # if defined(ACE_LACKS_TIMESPEC_T)

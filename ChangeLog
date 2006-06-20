@@ -1,3 +1,24 @@
+Tue Jun 20 12:31:12 UTC 2006  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/os_include/os_time.h:
+        * ace/os_include/sys/os_types.h:
+          Fixed type definitions for OpenVMS.
+
+        * ace/config-openvms.h:
+          Updated build configuration for OpenVMS.
+
+        * ace/Lib_Find{.h .cpp}:
+        * ace/DLL_Manager.cpp:
+        * ace/Service_Config{.h .cpp}:
+        * ace/Global_Macros.h:
+        * ace/Strategies_T.cpp:
+        * ace/Logging_Strategy.cpp:
+          Added support for dynamic loading scheme of service configurator
+          framework under OpenVMS.
+
+        * ace/OS_NS_stdio.h:
+          Additional include for OpenVMS.
+
 Tue Jun 20 08:23:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/taolib.mpb:
