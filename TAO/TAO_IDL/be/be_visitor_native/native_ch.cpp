@@ -55,7 +55,7 @@ be_visitor_native_ch::visit_native (be_native *node)
 
   const char *node_name = node->full_name ();
   if (ACE_OS::strcmp (node_name, "PortableServer::ServantLocator::Cookie") == 0)
-    *os << "typedef void *" << node->full_name () << ";" << be_nl;
+    *os << "typedef void *Cookie;" << be_nl;
 
   node->cli_hdr_gen (true);
   return 0;
