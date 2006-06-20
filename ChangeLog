@@ -1,3 +1,8 @@
+Tue Jun 20 22:34:43 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * tests/Service_Config_DLL.cpp: Added a comment block at the top
+          to describe this file's purpose.
+
 Tue Jun 20 22:09:54 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * ace/OS_NS_time.cpp (strptime): Added a const_cast<char*> wherever
