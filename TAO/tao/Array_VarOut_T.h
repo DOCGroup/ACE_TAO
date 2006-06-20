@@ -31,7 +31,7 @@ namespace TAO
    * @brief Specialized for each array in generated code.
    *
    */
-  template<typename T_forany>
+  template<typename T, typename T_slice, typename TAG>
   struct Array_Traits;
 }
 
