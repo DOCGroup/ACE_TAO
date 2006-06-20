@@ -363,37 +363,6 @@ namespace TAO {
     tmp.swap(target);
     return true;
   }
-
-  template <typename stream, typename array_traits>
-  bool demarshal_sequence(stream & strm, TAO::unbounded_array_sequence<array_traits> & target) {
-    typedef TAO::unbounded_array_sequence<array_traits> sequence;
-    typedef TAO_Array_Forany_T <array_traits> forany;
-
-    ::CORBA::ULong new_length = 0;
-    if (!(strm >> new_length)) {
-      return false;
-    }
-    if (new_length > strm.length()) {
-        return false;
-    }
-    sequence tmp(new_length);
-    tmp.length(new_length);
-    typename sequence::value_type * buffer = tmp.get_buffer();
-    for(CORBA::ULong i = 0; i < new_length; ++i) {
-      forany tmp (TAO::details::array_traits<array_traits>::alloc ());
-      bool const _tao_marshal_flag = (strm >> tmp);
-      if (_tao_marshal_flag) {
-        TAO::details::array_traits<array_traits>::copy (buffer[i], tmp.in ());
-      }
-      TAO::details::array_traits<array_traits>::free (tmp.inout ());
-      if (!_tao_marshal_flag) {
-        return false;
-      }
-    }
-    tmp.swap(target);
-    return true;
-  }
-
 }
 
 namespace TAO {
@@ -590,26 +559,6 @@ namespace TAO {
     }
     for(CORBA::ULong i = 0; i < length; ++i) {
       if (!TAO::Objref_Traits<objec_t>::marshal (source[i], strm)) {
-        return false;
-      }
-    }
-    return true;
-  }
-
-  template <typename stream, typename array_traits>
-  bool marshal_sequence(stream & strm, const TAO::unbounded_array_sequence<array_traits> & source) {
-    if (0 == &source)
-      ACE_THROW_RETURN (::CORBA::BAD_PARAM(0, CORBA::COMPLETED_MAYBE), false);
-    typedef typename ::TAO_FixedArray_Var_T <array_traits> fixed_array;
-    typedef typename ::TAO_Array_Forany_T <array_traits> forany;
-    ::CORBA::ULong const length = source.length ();
-    if (!(strm << length)) {
-      return false;
-    }
-    for(CORBA::ULong i = 0; i < length; ++i) {
-      fixed_array tmp_array = TAO::details::array_traits<array_traits>::dup (source[i]);
-      forany const tmp (tmp_array.inout ());
-      if (!(strm << tmp)) {
         return false;
       }
     }
