@@ -332,7 +332,7 @@ namespace TAO {
   template <typename stream, typename array_traits, CORBA::ULong MAX>
   bool demarshal_sequence(stream & strm, TAO::bounded_array_sequence<array_traits, MAX> & target) {
     typedef typename TAO::bounded_array_sequence<array_traits, MAX> sequence;
-    typedef typename TAO_Array_Forany_T <array_traits> forany;
+    typedef TAO_Array_Forany_T <array_traits> forany;
 
     ::CORBA::ULong new_length = 0;
     if (!(strm >> new_length)) {
