@@ -51,7 +51,7 @@ private:
 int
 My_Task::recursive (size_t depth)
 {
-  ACE_TRACE ("int My_Test::recursive (size_t depth)");
+  ACE_TRACE ("My_Test::recursive");
 
   if (depth > 0)
     return recursive (depth - 1);
