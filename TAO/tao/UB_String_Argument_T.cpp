@@ -92,7 +92,10 @@ TAO::Out_UB_String_Argument_T<S_var,Insert_Policy>::interceptor_value (
     CORBA::Any *any
   ) const
 {
-  Insert_Policy<S const *>::any_insert (any, this->x_);
+  Insert_Policy<typename S_var::s_traits::char_type const *>::any_insert (
+      any,
+      this->x_
+    );
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
