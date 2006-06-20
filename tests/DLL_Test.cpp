@@ -33,7 +33,7 @@ ACE_RCSID(tests, DLL_Test, "$Id$")
 # define OBJ_SUFFIX ACE_DLL_SUFFIX
 #endif /* ACE_WIN32 && && _MSC_VER && _DEBUG */
 
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) || defined (ACE_OPENVMS)
 #  define OBJ_PREFIX ACE_DLL_PREFIX
 #else
 #  define OBJ_PREFIX ACE_TEXT("./") ACE_DLL_PREFIX
