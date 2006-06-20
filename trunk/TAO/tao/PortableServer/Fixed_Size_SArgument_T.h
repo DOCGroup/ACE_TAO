@@ -192,7 +192,8 @@ namespace TAO
    * @brief Template class for argument traits of fixed size IDL types.
    *
    */
-  template<typename T, template <typename> class Insert_Policy>
+  template<typename T,
+           template <typename> class Insert_Policy>
   struct Fixed_Size_SArg_Traits_T
   {
     typedef T                                               ret_type;
