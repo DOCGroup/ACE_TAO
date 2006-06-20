@@ -86,7 +86,7 @@ extern FILE *tao_yyin;
 int
 FE_yyparse (void)
 {
-  int result = tao_yyparse ();
+  int const result = tao_yyparse ();
 
   if (0 == idl_global->err_count ())
     {

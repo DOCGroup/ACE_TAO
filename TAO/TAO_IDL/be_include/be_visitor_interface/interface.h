@@ -73,6 +73,9 @@ public:
   virtual int visit_constant (be_constant *node);
   // visit a constant
 
+  virtual int visit_native (be_native *node);
+  // visit an native
+
   virtual int visit_enum (be_enum *node);
   // visit an enum
 

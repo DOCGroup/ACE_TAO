@@ -28,14 +28,14 @@ ACE_RCSID(Log_Msg, test_callback, "$Id$")
 
 class Logger : public ACE_Log_Msg_Callback
 // Subclassing from ACE_Log_Msg_Callback means that an instance of
-// Logger can be a target of a callback. 
+// Logger can be a target of a callback.
 {
 public:
   // Constructor sets whether we're testing "recursive" callback
   // logging!
   Logger (int be_recursive = 1);
 
-  vritual void log (ACE_Log_Record &log_record);
+  virtual void log (ACE_Log_Record &log_record);
   // Logging callback hook.
 
   void verbose (int be_verbose);
