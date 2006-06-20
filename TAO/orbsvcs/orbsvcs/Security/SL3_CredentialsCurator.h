@@ -46,7 +46,7 @@ namespace TAO
     class CredentialsCurator;
     typedef CredentialsCurator* CredentialsCurator_ptr;
     typedef TAO_Pseudo_Var_T<CredentialsCurator> CredentialsCurator_var;
-    typedef TAO_Pseudo_Out_T<CredentialsCurator, CredentialsCurator_var> CredentialsCurator_out;
+    typedef TAO_Pseudo_Out_T<CredentialsCurator> CredentialsCurator_out;
 
     /**
      * @class CredentialsCurator
