@@ -55,6 +55,8 @@ class TAO_Array_Forany_T
 {
 public:
   typedef typename array_traits::slice_type _slice_type;
+  typedef typename array_traits::value_type _array_type;
+  typedef array_traits _array_traits;
 
   TAO_Array_Forany_T (void);
   TAO_Array_Forany_T (_slice_type *, CORBA::Boolean nocopy = false);
@@ -192,21 +194,22 @@ public:
  * @brief Parametrized implementation of _out class for arrays.
  *
  */
-template<typename array_traits>
+template<typename array_traits, typename T_var>
 class TAO_Array_Out_T
 {
 public:
   typedef typename array_traits::slice_type _slice_type;
   typedef typename array_traits::value_type _value_type;
+  typedef T_var _var_type;
 
   TAO_Array_Out_T (_slice_type *&);
   TAO_Array_Out_T (_value_type &);
-  TAO_Array_Out_T (const TAO_Array_Out_T<array_traits> &);
+  TAO_Array_Out_T (const TAO_Array_Out_T<array_traits, T_var> &);
 
-  TAO_Array_Out_T<array_traits> &operator= (
-      const TAO_Array_Out_T<array_traits> &
+  TAO_Array_Out_T<array_traits, T_var> &operator= (
+      const TAO_Array_Out_T<array_traits, T_var> &
     );
-  TAO_Array_Out_T<array_traits> &operator= (_slice_type *);
+  TAO_Array_Out_T<array_traits, T_var> &operator= (_slice_type *);
 
   operator _slice_type *& ();
   _slice_type *& ptr (void);
