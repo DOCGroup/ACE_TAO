@@ -84,6 +84,15 @@ protected:
                         size_t &bytes_transferred,
                         const ACE_Time_Value *timeout = 0);
 
+#ifdef ACE_HAS_SENDFILE
+  virtual ssize_t sendfile (TAO_MMAP_Allocator * allocator,
+                            iovec * iov,
+                            int iovcnt,
+                            size_t &bytes_transferred,
+                            ACE_Time_Value const * timeout = 0);
+#endif  /* ACE_HAS_SENDFILE */
+
+
   virtual ssize_t recv (char *buf,
                         size_t len,
                         const ACE_Time_Value *s = 0);
@@ -114,9 +123,6 @@ public:
                             TAO_Stub *stub = 0,
                             int message_semantics = TAO_Transport::TAO_TWOWAY_REQUEST,
                             ACE_Time_Value *max_time_wait = 0);
-
-  /*virtual int send_reply (TAO_OutputCDR &stream,
-                          TAO_Adapter *poa = 0);*/
 
   virtual int generate_request_header (TAO_Operation_Details &opdetails,
                                        TAO_Target_Specification &spec,

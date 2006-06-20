@@ -183,6 +183,7 @@ namespace CORBA
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     );
 
+#if ! defined (CORBA_E_COMPACT) && ! defined (CORBA_E_MICRO)
     // DII operations to create a request.
     //
     // The mapping for create_request is split into two forms,
@@ -206,6 +207,7 @@ namespace CORBA
                                   CORBA::Request_ptr &request,
                                   CORBA::Flags req_flags
                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+#endif
 
     // The default implementation of this method uses the same simple,
     // multi-protocol remote invocation interface as is assumed by the
@@ -425,7 +427,7 @@ namespace TAO
                                  CORBA::Object_var,
                                  CORBA::Object_out,
                                  TAO::Objref_Traits<CORBA::Object>,
-                                 TAO::Any_Insert_Policy_CORBA_Object <CORBA::Object_ptr> >
+                                 TAO::Any_Insert_Policy_CORBA_Object>
   {
   };
 

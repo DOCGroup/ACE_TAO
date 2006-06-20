@@ -102,7 +102,7 @@ public:
 
   // Verify if condition is given for LOCATION_FORWARD_PERM reply
   virtual CORBA::Boolean is_permanent_forward_condition (const CORBA::Object_ptr obj,
-                                                           const TAO_Service_Context &service_context) const;
+                                                         const TAO_Service_Context &service_context) const;
 
 
 

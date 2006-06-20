@@ -363,7 +363,7 @@ TAO_Connection_Handler::close_connection_eh (ACE_Event_Handler *eh)
 
       // @@ This seems silly, the reactor is a much better authority to
       //    find out if a handle is registered...
-      this->transport ()->wait_strategy ()->is_registered (0);
+      this->transport ()->wait_strategy ()->is_registered (false);
     }
 
   // This call should be made only after the cache and reactor are

@@ -93,7 +93,11 @@ public:
 
   inline operator const_value_type() const
   {
-    return *element_;
+    return *this->element_;
+  }
+
+  inline const character_type *in (void) const {
+    return *this->element_;
   }
 
   void swap(string_sequence_element & rhs)
@@ -104,7 +108,7 @@ public:
 
   CORBA::Boolean release() const
   {
-    return release_;
+    return this->release_;
   }
 
 private:

@@ -26,24 +26,28 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:277
+// be\be_codegen.cpp:282
 
 
-#include "tao/WCharSeqC.h"
+#include "WCharSeqC.h"
 #include "tao/CDR.h"
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:70
-
+// be\be_visitor_arg_traits.cpp:71
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+
 
 // Arg traits specializations.
 namespace TAO
 {
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
-// TAO_IDL - Generated from
+
+
+// TAO_IDL - Generated from 
 // be\be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_CORBA_WCHARSEQ_CS_)
@@ -98,9 +102,10 @@ void CORBA::WCharSeq::_tao_any_destructor (
 
 // TAO_IDL - Generated from
 // be\be_visitor_sequence/cdr_op_cs.cpp:96
-
 #if !defined _TAO_CDR_OP_CORBA_WCharSeq_CPP_
 #define _TAO_CDR_OP_CORBA_WCharSeq_CPP_
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ::CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -118,6 +123,7 @@ void CORBA::WCharSeq::_tao_any_destructor (
   return TAO::demarshal_sequence(strm, _tao_sequence);
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #endif /* _TAO_CDR_OP_CORBA_WCharSeq_CPP_ */
 
-TAO_END_VERSIONED_NAMESPACE_DECL

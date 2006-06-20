@@ -361,6 +361,7 @@ CORBA::Object::is_nil_i (CORBA::Object_ptr obj)
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 
+#if !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 void
 CORBA::Object::_create_request (CORBA::Context_ptr ctx,
                                 const char *operation,
@@ -398,7 +399,9 @@ CORBA::Object::_create_request (CORBA::Context_ptr ctx,
                        ACE_ENV_ARG_PARAMETER
                      );
 }
+#endif
 
+#if !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 void
 CORBA::Object::_create_request (CORBA::Context_ptr ctx,
                                 const char *operation,
@@ -438,6 +441,7 @@ CORBA::Object::_create_request (CORBA::Context_ptr ctx,
                        ACE_ENV_ARG_PARAMETER
                      );
 }
+#endif
 
 CORBA::Request_ptr
 CORBA::Object::_request (const char *operation

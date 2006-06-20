@@ -41,11 +41,11 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/TAO_Export.h"
-#include "tao/ORB.h"
 #include "tao/Environment.h"
 #include "tao/Sequence_T.h"
 #include "tao/Seq_Var_T.h"
 #include "tao/Seq_Out_T.h"
+#include "tao/Versioned_Namespace.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -54,6 +54,7 @@
 
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:49
+
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -96,7 +97,7 @@ namespace CORBA
         ::CORBA::Boolean release = false
       );
     WCharSeq (const WCharSeq &);
-    ~WCharSeq (void);
+    virtual ~WCharSeq (void);
 
     static void _tao_any_destructor (void *);
 
@@ -107,40 +108,52 @@ namespace CORBA
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be\be_visitor_module/module_ch.cpp:78
+// be\be_visitor_module/module_ch.cpp:82
 
 } // module CORBA
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+
 
 // TAO_IDL - Generated from
-// be\be_visitor_traits.cpp:61
+// be\be_visitor_traits.cpp:63
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+
 
 // Traits specializations.
 namespace TAO
 {
 }
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+
 
 // TAO_IDL - Generated from
 // be\be_visitor_sequence/cdr_op_ch.cpp:71
 
 #if !defined _TAO_CDR_OP_CORBA_WCharSeq_H_
 #define _TAO_CDR_OP_CORBA_WCharSeq_H_
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+
 
 TAO_Export ::CORBA::Boolean operator<< (
-    TAO_OutputCDR &,
-    const CORBA::WCharSeq &
+    TAO_OutputCDR &strm,
+    const CORBA::WCharSeq &_tao_sequence
   );
 TAO_Export ::CORBA::Boolean operator>> (
-    TAO_InputCDR &,
-    CORBA::WCharSeq &
+    TAO_InputCDR &strm,
+    CORBA::WCharSeq &_tao_sequence
   );
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+
 
 #endif /* _TAO_CDR_OP_CORBA_WCharSeq_H_ */
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:1040
-
-TAO_END_VERSIONED_NAMESPACE_DECL
-
+// be\be_codegen.cpp:1092
 #include /**/ "ace/post.h"
 
 #endif /* ifndef */

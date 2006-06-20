@@ -35,9 +35,6 @@ public:
   /// Constructor
   TAO_Blocked_Connect_Strategy (TAO_ORB_Core *orb);
 
-  /// Destructor
-  ~TAO_Blocked_Connect_Strategy (void);
-
   /*
    * Concrete implementation for this class. Please see
    * Connect_Strategy.h for details
