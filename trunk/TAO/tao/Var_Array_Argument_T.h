@@ -121,9 +121,6 @@ namespace TAO
 
   private:
     S_var x_;
-#if TAO_HAS_INTERCEPTORS == 1
-    Insert_Policy <S> insert_policy_;
-#endif /* TAO_HAS_INTERCEPTORS == 1 */
   };
 
   /**
