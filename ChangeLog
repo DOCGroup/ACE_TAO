@@ -1,3 +1,10 @@
+Tue Jun 20 18:04:45 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * examples/Log_Msg/test_ostream.cpp (ACE_TMAIN): Couldn't used
+          std::getline() for some odd reason..  Fixed by using
+          ifstream::getline() instead.  Thanks to Johnny for reporting
+          this.
+  
 Tue Jun 20 14:31:05 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * examples/Misc/test_trace.cpp (recursive): Simplified the
