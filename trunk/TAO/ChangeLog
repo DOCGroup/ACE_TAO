@@ -1,3 +1,9 @@
+Tue Jun 20 20:58:35 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * tao/Makefile.am:
+
+          Regenerated with updated MPC automake.mpd.
+
 Tue Jun 20 18:17:04 UTC 2006  Martin Corino  <mcorino@remedy.nl>
 
         * TAO_IDL/tao_idl.cpp:
