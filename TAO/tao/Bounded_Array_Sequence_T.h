@@ -87,6 +87,56 @@ public:
 private:
   implementation_type impl_;
 };
+
+  template <typename stream, typename array_traits, CORBA::ULong MAX>
+  bool demarshal_sequence(stream & strm, TAO::bounded_array_sequence<array_traits, MAX> & target) {
+    typedef typename TAO::bounded_array_sequence<array_traits, MAX> sequence;
+    typedef typename ::TAO_Array_Forany_T <array_traits> forany;
+
+    ::CORBA::ULong new_length = 0;
+    if (!(strm >> new_length)) {
+      return false;
+    }
+    if ((new_length > strm.length()) || (new_length > target.maximum ())) {
+      return false;
+    }
+    sequence tmp;
+    tmp.length(new_length);
+    typename sequence::value_type * buffer = tmp.get_buffer();
+    for(CORBA::ULong i = 0; i < new_length; ++i) {
+      forany tmp (TAO::details::array_traits<array_traits>::alloc ());
+      bool const _tao_marshal_flag = (strm >> tmp);
+      if (_tao_marshal_flag) {
+        TAO::details::array_traits<array_traits>::copy (buffer[i], tmp.in ());
+      }
+      TAO::details::array_traits<array_traits>::free (tmp.inout ());
+      if (!_tao_marshal_flag) {
+        return false;
+      }
+    }
+    tmp.swap(target);
+    return true;
+  }
+
+  template <typename stream, typename array_traits, CORBA::ULong MAX>
+  bool marshal_sequence(stream & strm, const TAO::bounded_array_sequence<array_traits, MAX> & source) {
+    if (0 == &source)
+      ACE_THROW_RETURN (::CORBA::BAD_PARAM(0, CORBA::COMPLETED_MAYBE), false);
+    typedef TAO_FixedArray_Var_T <array_traits> fixed_array;
+    typedef TAO_Array_Forany_T <array_traits> forany;
+    ::CORBA::ULong const length = source.length ();
+    if (!(strm << length)) {
+      return false;
+    }
+    for(CORBA::ULong i = 0; i < length; ++i) {
+      fixed_array tmp_array = TAO::details::array_traits<array_traits>::dup (source[i]);
+      forany tmp (tmp_array.inout ());
+      if (!(strm << tmp)) {
+        return false;
+      }
+    }
+    return true;
+  }
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
