@@ -97,3 +97,8 @@ tao_flresource    = 1
 
 //Use the ZIP_Wrapper feature for when using the ZIP wrapper classes
 ZIP_Wrapper = 0
+
+// Feature for CORBA subsets
+corba_e_compact = 0
+corba_e_micro = 0
+minimum_corba = 0

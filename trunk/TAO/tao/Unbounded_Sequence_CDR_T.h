@@ -599,7 +599,7 @@ namespace TAO {
   bool marshal_sequence(stream & strm, const TAO::unbounded_array_sequence<array_traits> & source) {
     if (0 == &source)
       ACE_THROW_RETURN (::CORBA::BAD_PARAM(0, CORBA::COMPLETED_MAYBE), false);
-    typedef typename TAO_FixedArray_Var_T <array_traits> fixed_array;
+    typedef TAO_FixedArray_Var_T <array_traits> fixed_array;
     typedef TAO_Array_Forany_T <array_traits> forany;
     ::CORBA::ULong const length = source.length ();
     if (!(strm << length)) {
