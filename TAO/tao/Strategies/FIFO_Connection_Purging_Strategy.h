@@ -43,9 +43,6 @@ public:
   /// The constructor
   TAO_FIFO_Connection_Purging_Strategy (int cache_maximum);
 
-  /// The destructor
-  virtual ~TAO_FIFO_Connection_Purging_Strategy (void);
-
   /// Called when accessing an item from the cache
   virtual void update_item (TAO_Transport* transport);
 

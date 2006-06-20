@@ -18,8 +18,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_sequence, 
-           buffer_type, 
+ACE_RCSID (be_visitor_sequence,
+           buffer_type,
            "$Id$")
 
 // ****************************************************************
@@ -70,7 +70,7 @@ be_visitor_sequence_buffer_type::visit_predefined_type (be_predefined_type *node
 {
   TAO_OutStream *os = this->ctx_->stream ();
   AST_PredefinedType::PredefinedType pt = node->pt ();
-  
+
   *os << "::";
 
   if (pt == AST_PredefinedType::PT_pseudo
@@ -212,7 +212,7 @@ be_visitor_sequence_buffer_type::visit_string (be_string *node)
 
   if (node->width () == (long) sizeof (char))
     {
-      *os << "char *";
+      *os << "::CORBA::Char *";
     }
   else
     {

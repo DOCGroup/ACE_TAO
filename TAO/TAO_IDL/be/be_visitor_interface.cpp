@@ -35,6 +35,7 @@
 #include "be_helper.h"
 #include "be_extern.h"
 #include "be_util.h"
+#include "be_native.h"
 #include "utl_identifier.h"
 #include "utl_exceptlist.h"
 #include "nr_extern.h"
@@ -52,6 +53,7 @@
 #include "be_visitor_operation.h"
 #include "be_visitor_typecode.h"
 #include "be_visitor_context.h"
+#include "be_visitor_native.h"
 #include "ace/Auto_Ptr.h"
 
 #include "be_visitor_interface/interface.cpp"

@@ -69,6 +69,7 @@ namespace TAO
                            PortableServer::POA::ServantAlreadyActive,
                            PortableServer::POA::WrongPolicy)) = 0;
 
+#if !defined (CORBA_E_MICRO)
       virtual void activate_object_with_id (
         const PortableServer::ObjectId &id,
         PortableServer::Servant servant,
@@ -79,6 +80,7 @@ namespace TAO
                            PortableServer::POA::ServantAlreadyActive,
                            PortableServer::POA::ObjectAlreadyActive,
                            PortableServer::POA::WrongPolicy)) = 0;
+#endif
 
       virtual void deactivate_object (const PortableServer::ObjectId &id
                                       ACE_ENV_ARG_DECL) = 0;

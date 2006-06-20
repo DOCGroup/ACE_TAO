@@ -137,7 +137,7 @@ namespace TAO
       return 0;
     }
 
-    int 
+    int
     ServantRetentionStrategyNonRetain::find_servant_priority (
         const PortableServer::ObjectId &/*system_id*/,
         CORBA::Short &/*priority*/
@@ -206,6 +206,7 @@ namespace TAO
                         0);
     }
 
+#if !defined (CORBA_E_MICRO)
     void
     ServantRetentionStrategyNonRetain::activate_object_with_id (
       const PortableServer::ObjectId &/*id*/,
@@ -220,6 +221,7 @@ namespace TAO
     {
       ACE_THROW (PortableServer::POA::WrongPolicy ());
     }
+#endif
 
     CORBA::Object_ptr
     ServantRetentionStrategyNonRetain::create_reference (

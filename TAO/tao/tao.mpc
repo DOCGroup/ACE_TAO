@@ -126,6 +126,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     MCAST_Parser.cpp
     Messaging_PolicyValueC.cpp
     Messaging_SyncScopeC.cpp
+    MMAP_Allocator.cpp
     MProfile.cpp
     Muxed_TMS.cpp
     New_Leader_Generator.cpp
@@ -402,6 +403,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     MCAST_Parser.h
     Messaging_PolicyValueC.h
     Messaging_SyncScopeC.h
+    MMAP_Allocator.h
     MProfile.h
     Muxed_TMS.h
     New_Leader_Generator.h

@@ -202,7 +202,7 @@ TAO_CodeGen::start_client_header (const char *fname)
       const char* client_hdr =
         BE_GlobalData::be_get_client_hdr (&idl_name_str,
                                           1);
-                                          
+
       idl_name_str.destroy ();
 
       // Sanity check and then print.
@@ -410,7 +410,7 @@ TAO_CodeGen::start_server_header (const char *fname)
 
       const char* server_hdr =
         BE_GlobalData::be_get_server_hdr (&idl_name_str, 1);
-        
+
       idl_name_str.destroy ();
 
       this->server_header_->print ("\n#include \"%s\"",
@@ -772,7 +772,7 @@ TAO_CodeGen::start_anyop_header (const char *fname)
     {
       return 0;
     }
-    
+
   // Retrieve the singleton instance to the outstream factory.
   TAO_OutStream_Factory *factory = TAO_OUTSTREAM_FACTORY::instance ();
 
@@ -865,7 +865,7 @@ TAO_CodeGen::start_anyop_header (const char *fname)
 
           const char *anyop_hdr =
             BE_GlobalData::be_get_anyop_header (&idl_name_str, 1);
-            
+
           idl_name_str.destroy ();
 
           ACE_CString pidl_checker (idl_name);
@@ -932,7 +932,7 @@ TAO_CodeGen::start_anyop_source (const char *fname)
     {
       return 0;
     }
-    
+
   // Retrieve the singleton instance to the outstream factory.
   TAO_OutStream_Factory *factory = TAO_OUTSTREAM_FACTORY::instance ();
 
@@ -1590,8 +1590,11 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
 
   // @note This header should not go first.  See the discussion above
   //       regarding non-dependent template names.
-  this->gen_standard_include (this->client_header_,
-                              "tao/ORB.h");
+  this->gen_cond_file_include (
+      be_global->gen_orb_h_include (),
+      "tao/ORB.h",
+      this->client_header_
+    );
 
   this->gen_cond_file_include (
       idl_global->operation_seen_ || idl_global->valuefactory_seen_
@@ -1703,7 +1706,7 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
 
               const char *anyop_hdr =
                 BE_GlobalData::be_get_anyop_header (&idl_name_str, 1);
-                
+
               idl_name_str.destroy ();
 
               // Stripped off any scope in the name and add the
@@ -2016,8 +2019,6 @@ TAO_CodeGen::gen_any_file_includes (void)
         {
           stream = this->anyop_source_;
 
-          this->gen_standard_include (stream,
-                                      "tao/AnyTypeCode/Any.h");
           this->gen_standard_include (stream,
                                       "tao/CDR.h");
         }

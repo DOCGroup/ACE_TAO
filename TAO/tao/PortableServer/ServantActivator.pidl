@@ -27,6 +27,8 @@
 
 #pragma prefix "omg.org"
 
+#if ! defined (CORBA_E_COMPACT) && ! defined (CORBA_E_MICRO) && !defined (TAO_HAS_MINIMUM_POA)
+
 module PortableServer
 {
 # pragma version PortableServer 2.3
@@ -46,5 +48,7 @@ module PortableServer
                       in boolean remaining_activations);
   };
 };
+
+#endif
 
 #endif // _PORTABLESERVER_SERVANT_ACTIVATOR_IDL_

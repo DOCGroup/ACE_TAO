@@ -66,13 +66,6 @@ be_typedef::be_typedef (AST_Type *bt,
 }
 
 void
-be_typedef::seq_elem_tmplinst (bool val)
-{
-  this->be_type::seq_elem_tmplinst (val);
-  this->primitive_base_type ()->seq_elem_tmplinst (val);
-}
-
-void
 be_typedef::seen_in_sequence (bool val)
 {
   this->be_type::seen_in_sequence (val);

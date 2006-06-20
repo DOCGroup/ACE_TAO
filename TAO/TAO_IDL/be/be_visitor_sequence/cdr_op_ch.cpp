@@ -19,8 +19,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_sequence, 
-           cdr_op_ch, 
+ACE_RCSID (be_visitor_sequence,
+           cdr_op_ch,
            "$Id$")
 
 // ***************************************************************************
@@ -81,16 +81,16 @@ be_visitor_sequence_cdr_op_ch::visit_sequence (be_sequence *node)
 
   *os << be_global->core_versioning_begin () << be_nl;
 
-  *os << be_nl << be_nl 
+  *os << be_nl << be_nl
       << be_global->stub_export_macro () << " ::CORBA::Boolean"
       << " operator<< (" << be_idt << be_idt_nl
-      << "TAO_OutputCDR &," << be_nl
-      << "const " << node->name () << " &" << be_uidt_nl
+      << "TAO_OutputCDR &strm," << be_nl
+      << "const " << node->name () << " &_tao_sequence" << be_uidt_nl
       << ");" << be_uidt_nl;
   *os << be_global->stub_export_macro () << " ::CORBA::Boolean"
       << " operator>> (" << be_idt << be_idt_nl
-      << "TAO_InputCDR &," << be_nl
-      << node->name () << " &" << be_uidt_nl
+      << "TAO_InputCDR &strm," << be_nl
+      << node->name () << " &_tao_sequence" << be_uidt_nl
       << ");" << be_uidt;
 
   *os << be_global->core_versioning_end () << be_nl;

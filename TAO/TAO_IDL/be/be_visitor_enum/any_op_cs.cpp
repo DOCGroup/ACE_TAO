@@ -49,10 +49,10 @@ be_visitor_enum_any_op_cs::visit_enum (be_enum *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl;
 
   *os << be_global->core_versioning_begin () << be_nl;
-  
+
   // Since we don't generate CDR stream operators for types that
   // explicitly contain a local interface (at some level), we
   // must override these Any template class methods to avoid
@@ -112,7 +112,7 @@ be_visitor_enum_any_op_cs::visit_enum (be_enum *node)
       << "}";
 
   *os << be_global->core_versioning_end () << be_nl;
-  
+
   node->cli_stub_any_op_gen (1);
   return 0;
 }

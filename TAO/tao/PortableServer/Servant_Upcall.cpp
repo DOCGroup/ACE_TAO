@@ -148,7 +148,7 @@ namespace TAO
           if (wait_occurred_restart_call)
             return TAO_Adapter::DS_FAILED;
         }
-#if (TAO_HAS_MINIMUM_CORBA == 0)
+#if (TAO_HAS_MINIMUM_CORBA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
       ACE_CATCH (PortableServer::ForwardRequest, forward_request)
         {
           forward_to =

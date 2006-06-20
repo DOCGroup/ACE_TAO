@@ -121,6 +121,7 @@ public:
 
   typedef ACE_CString String;
 
+#if !defined (CORBA_E_MICRO)
   PortableServer::POA_ptr create_POA (
       const char *adapter_name,
       PortableServer::POAManager_ptr poa_manager,
@@ -136,41 +137,46 @@ public:
                                     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableServer::POA::AdapterNonExistent));
+#endif
 
   void destroy (CORBA::Boolean etherealize_objects,
                 CORBA::Boolean wait_for_completion
                 ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-#if (TAO_HAS_MINIMUM_POA == 0)
-
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
   PortableServer::ThreadPolicy_ptr create_thread_policy (
       PortableServer::ThreadPolicyValue value
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
+#if !defined (CORBA_E_MICRO)
   PortableServer::LifespanPolicy_ptr create_lifespan_policy (
       PortableServer::LifespanPolicyValue value
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
+#endif
 
+#if !defined (CORBA_E_MICRO)
   PortableServer::IdUniquenessPolicy_ptr create_id_uniqueness_policy (
       PortableServer::IdUniquenessPolicyValue value
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
+#endif
 
+#if !defined (CORBA_E_MICRO)
   PortableServer::IdAssignmentPolicy_ptr create_id_assignment_policy (
       PortableServer::IdAssignmentPolicyValue value
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
+#endif
 
-#if (TAO_HAS_MINIMUM_POA == 0)
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 
   PortableServer::ImplicitActivationPolicy_ptr
   create_implicit_activation_policy (
@@ -193,7 +199,7 @@ public:
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
+#endif /* TAO_HAS_MINIMUM_POA == 0 && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO) */
 
   char * the_name (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -210,9 +216,11 @@ public:
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+#if !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
   PortableServer::POAManagerFactory_ptr the_POAManagerFactory (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
+#endif
 
   /// This method returns the adapter_name as a sequence of strings of
   /// length one or more or just a fixed name depending on the Object
@@ -232,8 +240,7 @@ public:
     IOP::ProfileId profile_id
     ACE_ENV_ARG_DECL);
 
-#if (TAO_HAS_MINIMUM_POA == 0)
-
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
   PortableServer::AdapterActivator_ptr the_activator (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -261,8 +268,7 @@ public:
                     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableServer::POA::WrongPolicy));
-
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
+#endif /* TAO_HAS_MINIMUM_POA == 0 !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO) */
 
   PortableServer::ObjectId *activate_object (PortableServer::Servant p_servant
                                              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
@@ -270,6 +276,7 @@ public:
                      PortableServer::POA::ServantAlreadyActive,
                      PortableServer::POA::WrongPolicy));
 
+#if !defined (CORBA_E_MICRO)
   void activate_object_with_id (const PortableServer::ObjectId &id,
                                 PortableServer::Servant p_servant
                                 ACE_ENV_ARG_DECL_WITH_DEFAULTS)
@@ -277,6 +284,7 @@ public:
                      PortableServer::POA::ServantAlreadyActive,
                      PortableServer::POA::ObjectAlreadyActive,
                      PortableServer::POA::WrongPolicy));
+#endif
 
   void deactivate_object (const PortableServer::ObjectId &oid
                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
@@ -613,6 +621,7 @@ protected:
                             TAO_Object_Adapter *object_adapter
                             ACE_ENV_ARG_DECL);
 
+#if ! defined (CORBA_E_MICRO)
   PortableServer::POA_ptr create_POA_i (
       const char *adapter_name,
       PortableServer::POAManager_ptr poa_manager,
@@ -636,6 +645,7 @@ protected:
                        ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableServer::POA::AdapterNonExistent));
+#endif
 
   void destroy_i (CORBA::Boolean etherealize_objects,
                   CORBA::Boolean wait_for_completion
@@ -703,6 +713,7 @@ protected:
                      PortableServer::POA::WrongPolicy));
 
 protected:
+#if !defined (CORBA_E_MICRO)
   void activate_object_with_id_i (const PortableServer::ObjectId &id,
                                   PortableServer::Servant p_servant,
                                   CORBA::Short priority,
@@ -712,6 +723,7 @@ protected:
                      PortableServer::POA::ServantAlreadyActive,
                      PortableServer::POA::ObjectAlreadyActive,
                      PortableServer::POA::WrongPolicy));
+#endif
 
   virtual void remove_from_parent_i (ACE_ENV_SINGLE_ARG_DECL);
 
@@ -907,11 +919,9 @@ protected:
 
   TAO::Portable_Server::Active_Policy_Strategies active_policy_strategies_;
 
-#if (TAO_HAS_MINIMUM_POA == 0)
-
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
   PortableServer::AdapterActivator_var adapter_activator_;
-
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
+#endif /* TAO_HAS_MINIMUM_POA == 0 !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO) */
 
   typedef
     ACE_Hash_Map_Manager_Ex<

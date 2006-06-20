@@ -59,6 +59,9 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
+  *os << be_nl << be_nl;
+  *os << be_global->core_versioning_begin () << be_nl;
+
   if (node->is_defined ())
     {
       *os << be_nl << be_nl
@@ -231,12 +234,12 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "}" << be_uidt;
 
       // Now we setup the immediate parents.
-      int n_parents = node->n_inherits ();
+      long n_parents = node->n_inherits ();
       int has_parent = 0;
 
       if (n_parents > 0)
         {
-          for (int i = 0; i < n_parents; ++i)
+          for (long i = 0; i < n_parents; ++i)
             {
               be_interface *inherited =
                 be_interface::narrow_from_decl (node->inherits ()[i]);
@@ -508,6 +511,8 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
                             -1);
         }
     }
+
+  *os << be_global->core_versioning_end () << be_nl;
 
   return 0;
 }
