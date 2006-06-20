@@ -1,3 +1,11 @@
+Tue Jun 20 12:51:19 UTC 2006  James H. Hill  <hillj@isis.vanderbilt.edu>
+
+        * bin/ChangeLogEditor/FileLocatorFactory.pm:
+
+          Now supports the standard hack for subversion on Windows when
+          SVN_ASP_DOT_NET_HACK environment variable is set. Instead
+          of placing repo info in a .svn file, it is placed in _svn.
+
 Tue Jun 20 12:31:12 UTC 2006  Martin Corino  <mcorino@remedy.nl>
 
         * ace/os_include/os_time.h:
@@ -145,8 +153,8 @@ Mon Jun 19 09:56:17 UTC 2006  Ossama Othman  <ossama_othman@symantec.com>
 
 Tue Jun 13 02:10:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* tests/run_tests.lst:
-	  Don't run netlink test in ACE_FOR_TAO configuration
+  * tests/run_tests.lst:
+    Don't run netlink test in ACE_FOR_TAO configuration
 
 Mon Jun 12 17:00:02 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 

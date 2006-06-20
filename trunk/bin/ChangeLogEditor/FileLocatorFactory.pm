@@ -22,7 +22,8 @@ use SVNFileLocator;
 sub create {
   switch: {
     -d 'CVS'  && do { return new CVSFileLocator(); };
-    -d '.svn' && do { return new SVNFileLocator(); };
+    ((defined $ENV{SVN_ASP_DOT_NET_HACK} && -d '_svn') || -d '.svn')
+      && do { return new SVNFileLocator(); };
     print STDERR "WARNING: Unsupported revision control protocol\n";
   }
 
