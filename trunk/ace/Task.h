@@ -234,9 +234,23 @@ public:
    */
   size_t thr_count (void) const;
 
-  /// Atomically decrement the thread count by 1.  This should only be
-  /// called by the ACE_Thread_Exit class destructor.
-  void thr_count_dec (void);
+  /**
+   * Returns the thread ID of the thread whose exit caused this object's
+   * thread count to be decremented to 0.
+   *
+   * When a thread spawned in the context of this object (using activate())
+   * returns from its svc() method ACE calls the close() hook. Before it does
+   * so, it decrements the number of active threads. If the number of threads
+   * is decremented to 0, the thread ID of the current thread is stored for
+   * access by this method. If the returned thread ID matches the calling
+   * thread's ID, the calling thread knows that there are no other threads
+   * still active in the ACE_Task.
+   *
+   * @retval  ACE_thread_t of the last thread to close. 0 if the last thread
+   *          is not yet known; for example, if no threads are active, or if
+   *          multiple threads are active.
+   */
+  ACE_thread_t last_thread (void) const;
 
   /// Routine that runs the service routine as a daemon thread.
   static ACE_THR_FUNC_RETURN svc_run (void *);
@@ -245,9 +259,7 @@ public:
   /// shutdown an ACE_Task.
   static void cleanup (void *object, void *params);
 
-  // = Internal data (should be private...).
-// private:
-
+protected:
   /**
    * Count of the number of threads running within the task.  If this
    * value is greater than 0 then we're an active object and the value
@@ -270,6 +282,9 @@ public:
   /// only if we're configured as MT safe...
   ACE_Thread_Mutex lock_;
 #endif /* ACE_MT_SAFE */
+
+  /// Holds the thread ID of the last thread to exit svc() in this object.
+  ACE_thread_t  last_thread_id_;
 
 private:
 
