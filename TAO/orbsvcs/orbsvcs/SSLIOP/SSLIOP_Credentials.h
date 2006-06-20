@@ -37,7 +37,7 @@ namespace TAO
    {
      typedef SSLIOP_Credentials* Credentials_ptr;
      typedef TAO_Pseudo_Var_T<SSLIOP_Credentials> Credentials_var;
-     typedef TAO_Pseudo_Out_T<SSLIOP_Credentials, Credentials_var> Credentials_out;
+     typedef TAO_Pseudo_Out_T<SSLIOP_Credentials> Credentials_out;
    }
 
     /**

@@ -38,7 +38,7 @@ namespace TAO
     class OwnCredentials;
     typedef OwnCredentials* OwnCredentials_ptr;
     typedef TAO_Pseudo_Var_T<OwnCredentials> OwnCredentials_var;
-    typedef TAO_Pseudo_Out_T<OwnCredentials, OwnCredentials_var> OwnCredentials_out;
+    typedef TAO_Pseudo_Out_T<OwnCredentials> OwnCredentials_out;
 
     /**
      * @class OwnCredentials
