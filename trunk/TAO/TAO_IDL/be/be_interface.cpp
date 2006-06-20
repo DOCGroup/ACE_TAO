@@ -1657,8 +1657,13 @@ be_interface::gen_gperf_lookup_methods (const char *flat_name)
     }
     
   // Open the temp file.
+#if defined (ACE_OPENVMS)
+  ACE_HANDLE input = ::open(tao_cg->gperf_input_filename(), O_RDONLY,
+                            "shr=get,put,upd", "ctx=rec", "fop=dfw");
+#else
   ACE_HANDLE input = ACE::open_temp_file (tao_cg->gperf_input_filename (),
                                           O_RDONLY);
+#endif
 
   if (input == ACE_INVALID_HANDLE)
     {
@@ -1672,8 +1677,19 @@ be_interface::gen_gperf_lookup_methods (const char *flat_name)
   // again with <ACE_OS::open> with WRITE + APPEND option.. After
   // this, remember to update the file offset to the correct location.
 
+#if defined (ACE_OPENVMS)
+  char* gperfOutput = tempnam(NULL, "idl_");
+  if (gperfOutput == NULL)
+    {
+    ACE_OS::close(input);
+    ACE_ERROR_RETURN ((LM_ERROR, "failed to allocate memory\n"), -1);
+    }
+  ACE_HANDLE output = ::open(gperfOutput, O_WRONLY | O_CREAT | O_EXCL,
+                             ACE_DEFAULT_FILE_PERMS , "shr=get,put,upd", "ctx=rec", "fop=dfw");
+#else
   ACE_HANDLE output = ACE_OS::open (this->strategy_->get_out_stream_fname (),
                                     O_WRONLY | O_APPEND);
+#endif
 
   if (output == ACE_INVALID_HANDLE)
     {
@@ -1801,6 +1817,42 @@ be_interface::gen_gperf_lookup_methods (const char *flat_name)
 
   ACE_OS::close (output);
   ACE_OS::close (input);
+
+#if defined(ACE_OPENVMS)
+  ACE_OS::unlink(tao_cg->gperf_input_filename());
+  process_options.release_handles();
+  if (result != -1)
+    {
+      FILE* gperfOutputFile;
+      gperfOutputFile = ::fopen(gperfOutput, "r");
+      if (gperfOutputFile == 0)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "Error:%p:Couldn't open gperf output file\n",
+                      "fopen"));
+          result = -1;
+        }
+      else
+        {
+          FILE* out = this->strategy_->get_out_stream()->file();
+          int c;
+          while ((c = fgetc(gperfOutputFile)) != EOF)
+            {
+              fputc(c, out);
+            }
+          if (ferror(gperfOutputFile) || ferror(out))
+            {
+              ACE_ERROR ((LM_ERROR,
+                          "Error:%p:Couldn't open gperf output file\n",
+                          "get/put"));
+              result = -1;
+            }
+          fclose(gperfOutputFile);
+        }
+    }
+  ACE_OS::unlink(gperfOutput);
+  free(gperfOutput);
+#endif /* ACE_OPENVMS */
 
   return result;
 }
