@@ -1,3 +1,8 @@
+
+        * docs/Options.html:
+          Document ORBOutputCDRAllocator and don't refer to cvs.doc.wustl.edu
+          for files, just get them locally
+
 Tue Jun 20 10:21:04 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Security/SL3_CredentialsCurator.h:
