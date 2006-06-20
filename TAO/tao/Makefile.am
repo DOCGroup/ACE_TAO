@@ -1340,7 +1340,7 @@ CLEANFILES += \
   PortableServer/AdapterActivatorC.cpp \
   PortableServer/AdapterActivatorC.h
 
-PortableServer/AdapterActivatorC.cpp PortableServer/AdapterActivatorC.h: AdapterActivator-stamp
+PortableServer/AdapterActivatorC.cpp PortableServer/AdapterActivatorC.h: PortableServer/AdapterActivator-stamp
 
 PortableServer/AdapterActivator-stamp: $(srcdir)/PortableServer/AdapterActivator.pidl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Ge 1 -Sci -SS -Sorb -GA -I$(TAO_ROOT) -Wb,export_macro=TAO_PortableServer_Export -Wb,export_include="tao/PortableServer/portableserver_export.h" -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -o PortableServer $(srcdir)/PortableServer/AdapterActivator.pidl
@@ -1355,7 +1355,7 @@ CLEANFILES += \
   PortableServer/ForwardRequestC.cpp \
   PortableServer/ForwardRequestC.h
 
-PortableServer/ForwardRequestC.cpp PortableServer/ForwardRequestC.h: ForwardRequest-stamp
+PortableServer/ForwardRequestC.cpp PortableServer/ForwardRequestC.h: PortableServer/ForwardRequest-stamp
 
 PortableServer/ForwardRequest-stamp: $(srcdir)/PortableServer/ForwardRequest.pidl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Ge 1 -Sci -SS -Sorb -GA -I$(TAO_ROOT) -Wb,export_macro=TAO_PortableServer_Export -Wb,export_include="tao/PortableServer/portableserver_export.h" -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -o PortableServer $(srcdir)/PortableServer/ForwardRequest.pidl
@@ -1370,7 +1370,7 @@ CLEANFILES += \
   PortableServer/IdAssignmentPolicyC.cpp \
   PortableServer/IdAssignmentPolicyC.h
 
-PortableServer/IdAssignmentPolicyC.cpp PortableServer/IdAssignmentPolicyC.h: IdAssignmentPolicy-stamp
+PortableServer/IdAssignmentPolicyC.cpp PortableServer/IdAssignmentPolicyC.h: PortableServer/IdAssignmentPolicy-stamp
 
 PortableServer/IdAssignmentPolicy-stamp: $(srcdir)/PortableServer/IdAssignmentPolicy.pidl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Ge 1 -Sci -SS -Sorb -GA -I$(TAO_ROOT) -Wb,export_macro=TAO_PortableServer_Export -Wb,export_include="tao/PortableServer/portableserver_export.h" -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -o PortableServer $(srcdir)/PortableServer/IdAssignmentPolicy.pidl
@@ -1385,7 +1385,7 @@ CLEANFILES += \
   PortableServer/IdUniquenessPolicyC.cpp \
   PortableServer/IdUniquenessPolicyC.h
 
-PortableServer/IdUniquenessPolicyC.cpp PortableServer/IdUniquenessPolicyC.h: IdUniquenessPolicy-stamp
+PortableServer/IdUniquenessPolicyC.cpp PortableServer/IdUniquenessPolicyC.h: PortableServer/IdUniquenessPolicy-stamp
 
 PortableServer/IdUniquenessPolicy-stamp: $(srcdir)/PortableServer/IdUniquenessPolicy.pidl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Ge 1 -Sci -SS -Sorb -GA -I$(TAO_ROOT) -Wb,export_macro=TAO_PortableServer_Export -Wb,export_include="tao/PortableServer/portableserver_export.h" -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -o PortableServer $(srcdir)/PortableServer/IdUniquenessPolicy.pidl
@@ -1400,7 +1400,7 @@ CLEANFILES += \
   PortableServer/ImplicitActivationPolicyC.cpp \
   PortableServer/ImplicitActivationPolicyC.h
 
-PortableServer/ImplicitActivationPolicyC.cpp PortableServer/ImplicitActivationPolicyC.h: ImplicitActivationPolicy-stamp
+PortableServer/ImplicitActivationPolicyC.cpp PortableServer/ImplicitActivationPolicyC.h: PortableServer/ImplicitActivationPolicy-stamp
 
 PortableServer/ImplicitActivationPolicy-stamp: $(srcdir)/PortableServer/ImplicitActivationPolicy.pidl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Ge 1 -Sci -SS -Sorb -GA -I$(TAO_ROOT) -Wb,export_macro=TAO_PortableServer_Export -Wb,export_include="tao/PortableServer/portableserver_export.h" -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -o PortableServer $(srcdir)/PortableServer/ImplicitActivationPolicy.pidl
@@ -1415,7 +1415,7 @@ CLEANFILES += \
   PortableServer/LifespanPolicyC.cpp \
   PortableServer/LifespanPolicyC.h
 
-PortableServer/LifespanPolicyC.cpp PortableServer/LifespanPolicyC.h: LifespanPolicy-stamp
+PortableServer/LifespanPolicyC.cpp PortableServer/LifespanPolicyC.h: PortableServer/LifespanPolicy-stamp
 
 PortableServer/LifespanPolicy-stamp: $(srcdir)/PortableServer/LifespanPolicy.pidl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Ge 1 -Sci -SS -Sorb -GA -I$(TAO_ROOT) -Wb,export_macro=TAO_PortableServer_Export -Wb,export_include="tao/PortableServer/portableserver_export.h" -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -o PortableServer $(srcdir)/PortableServer/LifespanPolicy.pidl
@@ -1430,7 +1430,7 @@ CLEANFILES += \
   PortableServer/RequestProcessingPolicyC.cpp \
   PortableServer/RequestProcessingPolicyC.h
 
-PortableServer/RequestProcessingPolicyC.cpp PortableServer/RequestProcessingPolicyC.h: RequestProcessingPolicy-stamp
+PortableServer/RequestProcessingPolicyC.cpp PortableServer/RequestProcessingPolicyC.h: PortableServer/RequestProcessingPolicy-stamp
 
 PortableServer/RequestProcessingPolicy-stamp: $(srcdir)/PortableServer/RequestProcessingPolicy.pidl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Ge 1 -Sci -SS -Sorb -GA -I$(TAO_ROOT) -Wb,export_macro=TAO_PortableServer_Export -Wb,export_include="tao/PortableServer/portableserver_export.h" -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -o PortableServer $(srcdir)/PortableServer/RequestProcessingPolicy.pidl
@@ -1445,7 +1445,7 @@ CLEANFILES += \
   PortableServer/ServantActivatorC.cpp \
   PortableServer/ServantActivatorC.h
 
-PortableServer/ServantActivatorC.cpp PortableServer/ServantActivatorC.h: ServantActivator-stamp
+PortableServer/ServantActivatorC.cpp PortableServer/ServantActivatorC.h: PortableServer/ServantActivator-stamp
 
 PortableServer/ServantActivator-stamp: $(srcdir)/PortableServer/ServantActivator.pidl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Ge 1 -Sci -SS -Sorb -GA -I$(TAO_ROOT) -Wb,export_macro=TAO_PortableServer_Export -Wb,export_include="tao/PortableServer/portableserver_export.h" -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -o PortableServer $(srcdir)/PortableServer/ServantActivator.pidl
@@ -1460,7 +1460,7 @@ CLEANFILES += \
   PortableServer/ServantLocatorC.cpp \
   PortableServer/ServantLocatorC.h
 
-PortableServer/ServantLocatorC.cpp PortableServer/ServantLocatorC.h: ServantLocator-stamp
+PortableServer/ServantLocatorC.cpp PortableServer/ServantLocatorC.h: PortableServer/ServantLocator-stamp
 
 PortableServer/ServantLocator-stamp: $(srcdir)/PortableServer/ServantLocator.pidl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Ge 1 -Sci -SS -Sorb -GA -I$(TAO_ROOT) -Wb,export_macro=TAO_PortableServer_Export -Wb,export_include="tao/PortableServer/portableserver_export.h" -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -o PortableServer $(srcdir)/PortableServer/ServantLocator.pidl
@@ -1475,7 +1475,7 @@ CLEANFILES += \
   PortableServer/ServantManagerC.cpp \
   PortableServer/ServantManagerC.h
 
-PortableServer/ServantManagerC.cpp PortableServer/ServantManagerC.h: ServantManager-stamp
+PortableServer/ServantManagerC.cpp PortableServer/ServantManagerC.h: PortableServer/ServantManager-stamp
 
 PortableServer/ServantManager-stamp: $(srcdir)/PortableServer/ServantManager.pidl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Ge 1 -Sci -SS -Sorb -GA -I$(TAO_ROOT) -Wb,export_macro=TAO_PortableServer_Export -Wb,export_include="tao/PortableServer/portableserver_export.h" -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -o PortableServer $(srcdir)/PortableServer/ServantManager.pidl
@@ -1490,7 +1490,7 @@ CLEANFILES += \
   PortableServer/ServantRetentionPolicyC.cpp \
   PortableServer/ServantRetentionPolicyC.h
 
-PortableServer/ServantRetentionPolicyC.cpp PortableServer/ServantRetentionPolicyC.h: ServantRetentionPolicy-stamp
+PortableServer/ServantRetentionPolicyC.cpp PortableServer/ServantRetentionPolicyC.h: PortableServer/ServantRetentionPolicy-stamp
 
 PortableServer/ServantRetentionPolicy-stamp: $(srcdir)/PortableServer/ServantRetentionPolicy.pidl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Ge 1 -Sci -SS -Sorb -GA -I$(TAO_ROOT) -Wb,export_macro=TAO_PortableServer_Export -Wb,export_include="tao/PortableServer/portableserver_export.h" -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -o PortableServer $(srcdir)/PortableServer/ServantRetentionPolicy.pidl
@@ -1505,7 +1505,7 @@ CLEANFILES += \
   PortableServer/ThreadPolicyC.cpp \
   PortableServer/ThreadPolicyC.h
 
-PortableServer/ThreadPolicyC.cpp PortableServer/ThreadPolicyC.h: ThreadPolicy-stamp
+PortableServer/ThreadPolicyC.cpp PortableServer/ThreadPolicyC.h: PortableServer/ThreadPolicy-stamp
 
 PortableServer/ThreadPolicy-stamp: $(srcdir)/PortableServer/ThreadPolicy.pidl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Ge 1 -Sci -SS -Sorb -GA -I$(TAO_ROOT) -Wb,export_macro=TAO_PortableServer_Export -Wb,export_include="tao/PortableServer/portableserver_export.h" -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -o PortableServer $(srcdir)/PortableServer/ThreadPolicy.pidl
@@ -1520,7 +1520,7 @@ CLEANFILES += \
   PortableServer/POAManagerC.cpp \
   PortableServer/POAManagerC.h
 
-PortableServer/POAManagerC.cpp PortableServer/POAManagerC.h: POAManager-stamp
+PortableServer/POAManagerC.cpp PortableServer/POAManagerC.h: PortableServer/POAManager-stamp
 
 PortableServer/POAManager-stamp: $(srcdir)/PortableServer/POAManager.pidl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Ge 1 -Sci -SS -Sorb -I$(TAO_ROOT) -Wb,export_macro=TAO_PortableServer_Export -Wb,export_include="tao/PortableServer/portableserver_export.h" -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -o PortableServer $(srcdir)/PortableServer/POAManager.pidl
@@ -1535,7 +1535,7 @@ CLEANFILES += \
   PortableServer/POAManagerFactoryC.cpp \
   PortableServer/POAManagerFactoryC.h
 
-PortableServer/POAManagerFactoryC.cpp PortableServer/POAManagerFactoryC.h: POAManagerFactory-stamp
+PortableServer/POAManagerFactoryC.cpp PortableServer/POAManagerFactoryC.h: PortableServer/POAManagerFactory-stamp
 
 PortableServer/POAManagerFactory-stamp: $(srcdir)/PortableServer/POAManagerFactory.pidl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Ge 1 -Sci -SS -Sorb -I$(TAO_ROOT) -Wb,export_macro=TAO_PortableServer_Export -Wb,export_include="tao/PortableServer/portableserver_export.h" -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -o PortableServer $(srcdir)/PortableServer/POAManagerFactory.pidl
@@ -1550,7 +1550,7 @@ CLEANFILES += \
   PortableServer/POAC.cpp \
   PortableServer/POAC.h
 
-PortableServer/POAC.cpp PortableServer/POAC.h: POA-stamp
+PortableServer/POAC.cpp PortableServer/POAC.h: PortableServer/POA-stamp
 
 PortableServer/POA-stamp: $(srcdir)/PortableServer/POA.pidl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Ge 1 -Sci -SS -Sorb -I$(TAO_ROOT) -Wb,export_macro=TAO_PortableServer_Export -Wb,export_include="tao/PortableServer/portableserver_export.h" -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -o PortableServer $(srcdir)/PortableServer/POA.pidl
@@ -1565,7 +1565,7 @@ CLEANFILES += \
   PortableServer/PS_CurrentC.cpp \
   PortableServer/PS_CurrentC.h
 
-PortableServer/PS_CurrentC.cpp PortableServer/PS_CurrentC.h: PS_Current-stamp
+PortableServer/PS_CurrentC.cpp PortableServer/PS_CurrentC.h: PortableServer/PS_Current-stamp
 
 PortableServer/PS_Current-stamp: $(srcdir)/PortableServer/PS_Current.pidl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Ge 1 -Sci -SS -Sorb -I$(TAO_ROOT) -Wb,export_macro=TAO_PortableServer_Export -Wb,export_include="tao/PortableServer/portableserver_export.h" -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -o PortableServer $(srcdir)/PortableServer/PS_Current.pidl
@@ -2279,7 +2279,7 @@ CLEANFILES += \
   Valuetype/StringValueC.h \
   Valuetype/StringValueC.inl
 
-Valuetype/StringValueC.cpp Valuetype/StringValueC.h Valuetype/StringValueC.inl: StringValue-stamp
+Valuetype/StringValueC.cpp Valuetype/StringValueC.h Valuetype/StringValueC.inl: Valuetype/StringValue-stamp
 
 Valuetype/StringValue-stamp: $(srcdir)/Valuetype/StringValue.pidl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -SS -Ge 1 -Sorb -I$(TAO_ROOT) -Wb,export_macro=TAO_Valuetype_Export -Wb,export_include="tao/Valuetype/valuetype_export.h" -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -o Valuetype $(srcdir)/Valuetype/StringValue.pidl
@@ -2549,7 +2549,7 @@ CLEANFILES += \
   EndpointPolicy/EndpointPolicyC.cpp \
   EndpointPolicy/EndpointPolicyC.h
 
-EndpointPolicy/EndpointPolicyC.cpp EndpointPolicy/EndpointPolicyC.h: EndpointPolicy-stamp
+EndpointPolicy/EndpointPolicyC.cpp EndpointPolicy/EndpointPolicyC.h: EndpointPolicy/EndpointPolicy-stamp
 
 EndpointPolicy/EndpointPolicy-stamp: $(srcdir)/EndpointPolicy/EndpointPolicy.pidl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -GA -SS -Sci -Ge 1 -Sorb -I$(TAO_ROOT) -Wb,export_macro=TAO_EndpointPolicy_Export -Wb,export_include="tao/EndpointPolicy/EndpointPolicy_Export.h" -o EndpointPolicy $(srcdir)/EndpointPolicy/EndpointPolicy.pidl
@@ -2564,7 +2564,7 @@ CLEANFILES += \
   EndpointPolicy/IIOPEndpointValueC.cpp \
   EndpointPolicy/IIOPEndpointValueC.h
 
-EndpointPolicy/IIOPEndpointValueC.cpp EndpointPolicy/IIOPEndpointValueC.h: IIOPEndpointValue-stamp
+EndpointPolicy/IIOPEndpointValueC.cpp EndpointPolicy/IIOPEndpointValueC.h: EndpointPolicy/IIOPEndpointValue-stamp
 
 EndpointPolicy/IIOPEndpointValue-stamp: $(srcdir)/EndpointPolicy/IIOPEndpointValue.pidl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -GA -SS -Sci -Ge 1 -Sorb -I$(TAO_ROOT) -Wb,export_macro=TAO_EndpointPolicy_Export -Wb,export_include="tao/EndpointPolicy/EndpointPolicy_Export.h" -o EndpointPolicy $(srcdir)/EndpointPolicy/IIOPEndpointValue.pidl
@@ -3571,7 +3571,7 @@ CLEANFILES += \
   TypeCodeFactory/TypeCodeFactoryC.cpp \
   TypeCodeFactory/TypeCodeFactoryC.h
 
-TypeCodeFactory/TypeCodeFactoryC.cpp TypeCodeFactory/TypeCodeFactoryC.h: TypeCodeFactory-stamp
+TypeCodeFactory/TypeCodeFactoryC.cpp TypeCodeFactory/TypeCodeFactoryC.h: TypeCodeFactory/TypeCodeFactory-stamp
 
 TypeCodeFactory/TypeCodeFactory-stamp: $(srcdir)/TypeCodeFactory/TypeCodeFactory.pidl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -SS -Sci -Ge 1 -Sorb -I$(TAO_ROOT) -Wb,export_macro=TAO_TypeCodeFactory_Export -Wb,export_include="tao/TypeCodeFactory/typecodefactory_export.h" -o TypeCodeFactory $(srcdir)/TypeCodeFactory/TypeCodeFactory.pidl
