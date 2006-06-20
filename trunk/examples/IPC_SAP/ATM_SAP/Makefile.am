@@ -11,7 +11,7 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.atm_sap_client.am 
+## Makefile.atm_sap_client.am
 noinst_PROGRAMS = client
 
 client_CPPFLAGS = \
@@ -22,9 +22,9 @@ client_SOURCES = \
   CPP-client.cpp
 
 client_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.atm_sap_server.am 
+## Makefile.atm_sap_server.am
 noinst_PROGRAMS += server
 
 server_CPPFLAGS = \
@@ -35,7 +35,7 @@ server_SOURCES = \
   CPP-server.cpp
 
 server_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Clean up template repositories, etc.
 clean-local:

@@ -12,40 +12,64 @@ ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
 noinst_PROGRAMS =
-## Makefile.Thread_Pool_Reactor_SSL_Test.am 
+
+## Makefile.SSL_Asynch_Stream_Test.am
 
 if BUILD_SSL
-noinst_PROGRAMS += Thread_Pool_Reactor_SSL_Test
-
-Thread_Pool_Reactor_SSL_Test_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  @ACE_TLS_CPPFLAGS@ \
-  -DACE_HAS_SSL=1
-
-Thread_Pool_Reactor_SSL_Test_SOURCES = \
-  $(ACE_ROOT)/tests/Main.cpp \
-  Thread_Pool_Reactor_SSL_Test.cpp \
-  Thread_Pool_Reactor_SSL_Test.h
-
-Thread_Pool_Reactor_SSL_Test_LDADD = \
- $(top_builddir)/ace/SSL/libACE_SSL.la $(top_builddir)/tests/libTest_Output.la $(top_builddir)/ace/libACE.la @ACE_TLS_LDFLAGS@ @ACE_TLS_LIBS@
+if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS += SSL_Asynch_Stream_Test
 
 SSL_Asynch_Stream_Test_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
-  @ACE_TLS_CPPFLAGS@ \
-  -DACE_HAS_SSL=1
+  -DACE_HAS_SSL=1 \
+  @ACE_TLS_CPPFLAGS@
 
 SSL_Asynch_Stream_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
   SSL_Asynch_Stream_Test.cpp
 
-SSL_Asynch_Stream_Test_LDADD = \
- $(top_builddir)/ace/SSL/libACE_SSL.la $(top_builddir)/tests/libTest_Output.la $(top_builddir)/ace/libACE.la @ACE_TLS_LDFLAGS@ @ACE_TLS_LIBS@
+SSL_Asynch_Stream_Test_LDFLAGS = \
+ @ACE_TLS_LDFLAGS@
 
+SSL_Asynch_Stream_Test_LDADD = \
+  $(ACE_BUILDDIR)/ace/SSL/libACE_SSL.la \
+  $(top_builddir)/tests/libTest_Output.la \
+  $(ACE_BUILDDIR)/ace/libACE.la \
+  @ACE_TLS_LIBS@
+
+endif !BUILD_ACE_FOR_TAO
+endif BUILD_SSL
+
+## Makefile.Thread_Pool_Reactor_SSL_Test.am
+
+if BUILD_SSL
+if !BUILD_ACE_FOR_TAO
+
+noinst_PROGRAMS += Thread_Pool_Reactor_SSL_Test
+
+Thread_Pool_Reactor_SSL_Test_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -DACE_HAS_SSL=1 \
+  @ACE_TLS_CPPFLAGS@
+
+Thread_Pool_Reactor_SSL_Test_SOURCES = \
+  $(ACE_ROOT)/tests/Main.cpp \
+  Thread_Pool_Reactor_SSL_Test.cpp \
+  Thread_Pool_Reactor_SSL_Test.h
+
+Thread_Pool_Reactor_SSL_Test_LDFLAGS = \
+ @ACE_TLS_LDFLAGS@
+
+Thread_Pool_Reactor_SSL_Test_LDADD = \
+  $(ACE_BUILDDIR)/ace/SSL/libACE_SSL.la \
+  $(top_builddir)/tests/libTest_Output.la \
+  $(ACE_BUILDDIR)/ace/libACE.la \
+  @ACE_TLS_LIBS@
+
+endif !BUILD_ACE_FOR_TAO
 endif BUILD_SSL
 
 ## Clean up template repositories, etc.

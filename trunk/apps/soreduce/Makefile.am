@@ -11,11 +11,12 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-noinst_PROGRAMS =
-## Makefile.soreduce.am 
 
+## Makefile.soreduce.am
+
+if !BUILD_ACE_FOR_TAO
 if !BUILD_USES_WCHAR
-noinst_PROGRAMS += soreduce
+noinst_PROGRAMS = soreduce
 
 soreduce_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -35,9 +36,10 @@ soreduce_SOURCES = \
   Signature.h
 
 soreduce_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_USES_WCHAR
+endif !BUILD_ACE_FOR_TAO
 
 ## Clean up template repositories, etc.
 clean-local:

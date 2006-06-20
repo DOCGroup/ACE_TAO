@@ -6,11 +6,10 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ./bin/mwc.pl -type automake -noreldefs ACE.mwc
+## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
 
 includedir = @includedir@/ace
 pkgconfigdir = @libdir@/pkgconfig
-DEFAULT_INCLUDES =
 
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
@@ -22,8 +21,8 @@ SUBDIRS = \
 
 CLEANFILES =
 lib_LTLIBRARIES =
-nobase_include_HEADERS =
 pkgconfig_DATA =
+nobase_include_HEADERS =
 
 ## Makefile.ACE.am
 
@@ -192,6 +191,7 @@ libACE_la_SOURCES = \
   OS_NS_sys_msg.cpp \
   OS_NS_sys_resource.cpp \
   OS_NS_sys_select.cpp \
+  OS_NS_sys_sendfile.cpp \
   OS_NS_sys_shm.cpp \
   OS_NS_sys_socket.cpp \
   OS_NS_sys_stat.cpp \
@@ -335,7 +335,7 @@ libACE_la_SOURCES = \
   gethrtime.cpp
 
 libACE_la_LDFLAGS = \
- -version-number @ACE_MAJOR@:@ACE_MINOR@:@ACE_BETA@
+ -release @ACE_VERSION_NAME@
 
 nobase_include_HEADERS += \
   ACE.h \
@@ -638,6 +638,7 @@ nobase_include_HEADERS += \
   MEM_Stream.h \
   MEM_Stream.inl \
   MMAP_Memory_Pool.h \
+  MMAP_Memory_Pool.inl \
   Malloc.h \
   Malloc.inl \
   Malloc_Allocator.h \
@@ -671,8 +672,6 @@ nobase_include_HEADERS += \
   Message_Queue_T.h \
   Method_Object.h \
   Method_Request.h \
-  Metrics_Cache.h \
-  Metrics_Cache_T.cpp \
   Min_Max.h \
   Module.cpp \
   Module.h \
@@ -700,7 +699,6 @@ nobase_include_HEADERS += \
   Null_Mutex.h \
   Null_Semaphore.h \
   OS.h \
-  OS.inl \
   OS_Dirent.h \
   OS_Errno.h \
   OS_Errno.inl \
@@ -752,6 +750,8 @@ nobase_include_HEADERS += \
   OS_NS_sys_resource.inl \
   OS_NS_sys_select.h \
   OS_NS_sys_select.inl \
+  OS_NS_sys_sendfile.h \
+  OS_NS_sys_sendfile.inl \
   OS_NS_sys_shm.h \
   OS_NS_sys_shm.inl \
   OS_NS_sys_socket.h \
@@ -782,7 +782,6 @@ nobase_include_HEADERS += \
   Object_Manager.h \
   Object_Manager.inl \
   Object_Manager_Base.h \
-  Obstack.h \
   Obstack_T.cpp \
   Obstack_T.h \
   Obstack_T.inl \
@@ -907,7 +906,6 @@ nobase_include_HEADERS += \
   Sbrk_Memory_Pool.h \
   Sched_Params.h \
   Sched_Params.inl \
-  Select_Reactor.h \
   Select_Reactor_Base.h \
   Select_Reactor_Base.inl \
   Select_Reactor_T.cpp \
@@ -924,7 +922,6 @@ nobase_include_HEADERS += \
   Service_Object.inl \
   Service_Repository.h \
   Service_Repository.inl \
-  Service_Templates.h \
   Service_Types.h \
   Service_Types.inl \
   Shared_Memory.h \
@@ -1098,6 +1095,7 @@ nobase_include_HEADERS += \
   config-win32-common.h \
   config-win32-ghs.h \
   config-win32-msvc-7.h \
+  config-win32-msvc-8.h \
   config-win32-msvc.h \
   config-win32-visualage.h \
   config-win32.h \
@@ -1202,7 +1200,7 @@ CLEANFILES += \
   ACE.pc
 
 ACE.pc: ${top_builddir}/config.status ${srcdir}/ACE.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/ACE.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/ACE.pc.in
 
 endif !BUILD_ACE_FOR_TAO
 
@@ -1229,7 +1227,7 @@ libACE_FlReactor_la_SOURCES = \
   FlReactor.cpp
 
 libACE_FlReactor_la_LDFLAGS = \
- -version-number @ACE_MAJOR@:@ACE_MINOR@:@ACE_BETA@ $(ACE_FLTK_LDFLAGS)
+ -release @ACE_VERSION_NAME@ $(ACE_FLTK_LDFLAGS)
 
 libACE_FlReactor_la_LIBADD = \
   libACE.la \
@@ -1246,7 +1244,7 @@ CLEANFILES += \
   ACE_FlReactor.pc
 
 ACE_FlReactor.pc: ${top_builddir}/config.status ${srcdir}/ACE_FlReactor.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/ACE_FlReactor.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/ACE_FlReactor.pc.in
 
 endif BUILD_X11
 endif BUILD_GL
@@ -1282,7 +1280,7 @@ libACE_QtReactor_la_SOURCES = \
   QtReactor_moc.cpp
 
 libACE_QtReactor_la_LDFLAGS = \
- -version-number @ACE_MAJOR@:@ACE_MINOR@:@ACE_BETA@ $(ACE_QT_LDFLAGS)
+ -release @ACE_VERSION_NAME@ $(ACE_QT_LDFLAGS)
 
 libACE_QtReactor_la_LIBADD = \
   libACE.la \
@@ -1299,7 +1297,7 @@ CLEANFILES += \
   ACE_QtReactor.pc
 
 ACE_QtReactor.pc: ${top_builddir}/config.status ${srcdir}/ACE_QtReactor.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/ACE_QtReactor.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/ACE_QtReactor.pc.in
 
 endif BUILD_QT
 
@@ -1324,7 +1322,7 @@ libACE_TkReactor_la_SOURCES = \
   TkReactor.cpp
 
 libACE_TkReactor_la_LDFLAGS = \
- -version-number @ACE_MAJOR@:@ACE_MINOR@:@ACE_BETA@ $(ACE_TK_LDFLAGS) $(ACE_TCL_LDFLAGS)
+ -release @ACE_VERSION_NAME@ $(ACE_TK_LDFLAGS) $(ACE_TCL_LDFLAGS)
 
 libACE_TkReactor_la_LIBADD = \
   libACE.la \
@@ -1342,7 +1340,7 @@ CLEANFILES += \
   ACE_TkReactor.pc
 
 ACE_TkReactor.pc: ${top_builddir}/config.status ${srcdir}/ACE_TkReactor.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/ACE_TkReactor.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/ACE_TkReactor.pc.in
 
 endif BUILD_TK
 
@@ -1368,7 +1366,7 @@ libACE_XtReactor_la_SOURCES = \
   XtReactor.cpp
 
 libACE_XtReactor_la_LDFLAGS = \
- -version-number @ACE_MAJOR@:@ACE_MINOR@:@ACE_BETA@ $(ACE_X11_LDFLAGS) $(ACE_XT_LDFLAGS)
+ -release @ACE_VERSION_NAME@ $(ACE_X11_LDFLAGS) $(ACE_XT_LDFLAGS)
 
 libACE_XtReactor_la_LIBADD = \
   libACE.la \
@@ -1386,7 +1384,7 @@ CLEANFILES += \
   ACE_XtReactor.pc
 
 ACE_XtReactor.pc: ${top_builddir}/config.status ${srcdir}/ACE_XtReactor.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/ACE_XtReactor.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/ACE_XtReactor.pc.in
 
 endif BUILD_XT
 endif BUILD_X11

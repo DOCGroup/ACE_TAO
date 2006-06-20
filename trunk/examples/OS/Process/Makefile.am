@@ -11,8 +11,12 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.OS_Process_Imore.am 
-noinst_PROGRAMS = imore
+noinst_PROGRAMS =
+
+## Makefile.OS_Process_Imore.am
+
+if !BUILD_ACE_FOR_TAO
+noinst_PROGRAMS += imore
 
 imore_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -22,9 +26,11 @@ imore_SOURCES = \
   imore.cpp
 
 imore_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.OS_Process_Process.am 
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.OS_Process_Process.am
 noinst_PROGRAMS += process
 
 process_CPPFLAGS = \
@@ -35,7 +41,7 @@ process_SOURCES = \
   process.cpp
 
 process_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Clean up template repositories, etc.
 clean-local:

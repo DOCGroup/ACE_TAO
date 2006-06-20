@@ -11,7 +11,8 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.Connection_Misc_Handler.am 
+
+## Makefile.Connection_Misc_Handler.am
 noinst_PROGRAMS = handler
 
 handler_CPPFLAGS = \
@@ -23,9 +24,11 @@ handler_SOURCES = \
   Connection_Handler.h
 
 handler_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Connection_Misc_Test_Upipe.am 
+## Makefile.Connection_Misc_Test_Upipe.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += test_upipe
 
 test_upipe_CPPFLAGS = \
@@ -37,7 +40,9 @@ test_upipe_SOURCES = \
   test_upipe.h
 
 test_upipe_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif !BUILD_ACE_FOR_TAO
 
 ## Clean up template repositories, etc.
 clean-local:

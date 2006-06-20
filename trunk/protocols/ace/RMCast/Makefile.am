@@ -6,17 +6,19 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ./bin/mwc.pl -include /home/jtc/ACE/ACE-config3/MPC/config -include /home/jtc/ACE/ACE-config3/MPC/templates -type automake ACE.mwc
+## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
 
-includedir = @includedir@/ace/RMCast
+includedir = @includedir@/protocols/ace/RMCast
 pkgconfigdir = @libdir@/pkgconfig
 
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
 
+## Makefile.RMCast.am
 
 if BUILD_THREADS
+if !BUILD_ACE_FOR_TAO
 
 lib_LTLIBRARIES = libACE_RMCast.la
 
@@ -38,7 +40,7 @@ libACE_RMCast_la_SOURCES = \
   Stack.cpp
 
 libACE_RMCast_la_LDFLAGS = \
- -version-number @ACE_MAJOR@:@ACE_MINOR@:@ACE_BETA@
+ -release @ACE_VERSION_NAME@
 
 libACE_RMCast_la_LIBADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
@@ -58,11 +60,16 @@ nobase_include_HEADERS = \
   Socket.h \
   Stack.h
 
-pkgconfig_DATA = ACE_RMCast.pc
+pkgconfig_DATA = \
+  ACE_RMCast.pc
+
+CLEANFILES = \
+  ACE_RMCast.pc
 
 ACE_RMCast.pc: ${top_builddir}/config.status ${srcdir}/ACE_RMCast.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/ACE_RMCast.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/ACE_RMCast.pc.in
 
+endif !BUILD_ACE_FOR_TAO
 endif BUILD_THREADS
 
 EXTRA_DIST = \

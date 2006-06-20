@@ -11,8 +11,12 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.Netlocal.am 
-noinst_PROGRAMS = Netlocal
+noinst_PROGRAMS =
+
+## Makefile.Netlocal.am
+
+if !BUILD_ACE_FOR_TAO
+noinst_PROGRAMS += Netlocal
 
 Netlocal_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -24,9 +28,13 @@ Netlocal_SOURCES = \
   Temperature_Monitor2.h
 
 Netlocal_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Netlocal_Reader.am 
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.Netlocal_Reader.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += Netlocal_reader
 
 Netlocal_reader_CPPFLAGS = \
@@ -41,9 +49,13 @@ Netlocal_reader_SOURCES = \
   Temperature_Grapher.h
 
 Netlocal_reader_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Nodelocal.am 
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.Nodelocal.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += Nodelocal
 
 Nodelocal_CPPFLAGS = \
@@ -56,9 +68,13 @@ Nodelocal_SOURCES = \
   Temperature_Monitor.h
 
 Nodelocal_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Nodelocal_Shared.am 
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.Nodelocal_Shared.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += Nodelocal_shared
 
 Nodelocal_shared_CPPFLAGS = \
@@ -71,9 +87,13 @@ Nodelocal_shared_SOURCES = \
   Temperature_Monitor2.h
 
 Nodelocal_shared_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Nodelocal_Shared_Reader.am 
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.Nodelocal_Shared_Reader.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += Nodelocal_shared_reader
 
 Nodelocal_shared_reader_CPPFLAGS = \
@@ -90,7 +110,9 @@ Nodelocal_shared_reader_SOURCES = \
   Temperature_Monitor.h
 
 Nodelocal_shared_reader_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif !BUILD_ACE_FOR_TAO
 
 ## Clean up template repositories, etc.
 clean-local:

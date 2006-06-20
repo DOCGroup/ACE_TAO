@@ -10,4 +10,6 @@
 
 SUBDIRS = \
         ace \
-	examples
+        examples \
+        tests
+

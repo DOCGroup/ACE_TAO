@@ -11,7 +11,10 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.asnmp_agent.am 
+
+## Makefile.asnmp_agent.am
+
+if !BUILD_USES_WCHAR
 noinst_PROGRAMS = agent
 
 agent_CPPFLAGS = \
@@ -27,7 +30,10 @@ agent_SOURCES = \
   snmp_agent.h
 
 agent_LDADD = \
- $(top_builddir)/ASNMP/asnmp/libasnmp.la $(top_builddir)/ace/libACE.la
+  $(top_builddir)/ASNMP/asnmp/libasnmp.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif !BUILD_USES_WCHAR
 
 ## Clean up template repositories, etc.
 clean-local:

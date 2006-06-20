@@ -635,8 +635,6 @@ AH_TEMPLATE([ACE_HAS_STANDARD_CPP_LIBRARY],
 
 AH_TEMPLATE([ACE_HAS_STRBUF_T],[Compiler/platform supports struct strbuf])
 
-AH_TEMPLATE([ACE_HAS_STRPTIME],[Compile ACE_OS::strptime() wrapper into ACE.])
-
 AH_TEMPLATE([ACE_HAS_STREAMS],[Platform supports STREAMS])
 
 AH_TEMPLATE([ACE_HAS_STREAM_PIPES],[Platform supports STREAM pipes])
@@ -871,7 +869,7 @@ AH_TEMPLATE([ACE_HAS_MUTEX_TIMEOUTS],
 AH_TEMPLATE([ACE_LACKS_NAMED_POSIX_SEM],
 [Platform lacks named POSIX semaphores (e.g., Chorus)])
 
-AH_TEMPLATE([ACE_LACKS_NATIVE_STRPTIME],
+AH_TEMPLATE([ACE_LACKS_STRPTIME],
 [Platform lacks native strptime() implementation.])
 
 AH_TEMPLATE([ACE_LACKS_RLIMIT],

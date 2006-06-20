@@ -11,8 +11,12 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.Process_Manager_Death.am 
-noinst_PROGRAMS = Process_Manager_Death
+noinst_PROGRAMS =
+
+## Makefile.Process_Manager_Death.am
+
+if !BUILD_ACE_FOR_TAO
+noinst_PROGRAMS += Process_Manager_Death
 
 Process_Manager_Death_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -22,9 +26,13 @@ Process_Manager_Death_SOURCES = \
   Process_Manager_Death.cpp
 
 Process_Manager_Death_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Process_Manager_Spawn.am 
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.Process_Manager_Spawn.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += Process_Manager_Spawn
 
 Process_Manager_Spawn_CPPFLAGS = \
@@ -35,9 +43,13 @@ Process_Manager_Spawn_SOURCES = \
   Process_Manager_Spawn.cpp
 
 Process_Manager_Spawn_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Process_Mutex.am 
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.Process_Mutex.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += Process_Mutex
 
 Process_Mutex_CPPFLAGS = \
@@ -48,9 +60,13 @@ Process_Mutex_SOURCES = \
   Process_Mutex.cpp
 
 Process_Mutex_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Spawn.am 
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.Spawn.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += Spawn
 
 Spawn_CPPFLAGS = \
@@ -61,7 +77,9 @@ Spawn_SOURCES = \
   Spawn.cpp
 
 Spawn_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif !BUILD_ACE_FOR_TAO
 
 ## Clean up template repositories, etc.
 clean-local:

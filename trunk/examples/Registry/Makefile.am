@@ -12,9 +12,11 @@ ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
 noinst_PROGRAMS =
-## Makefile.Registry_Iterator.am 
+
+## Makefile.Registry_Iterator.am
 
 if BUILD_WINREGISTRY
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += iterator
 
 iterator_CPPFLAGS = \
@@ -25,13 +27,15 @@ iterator_SOURCES = \
   test_registry_iterator.cpp
 
 iterator_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
+endif !BUILD_ACE_FOR_TAO
 endif BUILD_WINREGISTRY
 
-## Makefile.Registry_Update.am 
+## Makefile.Registry_Update.am
 
 if BUILD_WINREGISTRY
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += update
 
 update_CPPFLAGS = \
@@ -42,8 +46,9 @@ update_SOURCES = \
   test_registry_update.cpp
 
 update_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
+endif !BUILD_ACE_FOR_TAO
 endif BUILD_WINREGISTRY
 
 ## Clean up template repositories, etc.

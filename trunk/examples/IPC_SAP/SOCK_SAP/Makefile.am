@@ -11,7 +11,8 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.Sock_Sap_CPP_Inclient.am 
+
+## Makefile.Sock_Sap_CPP_Inclient.am
 noinst_PROGRAMS = CPP-inclient
 
 CPP_inclient_CPPFLAGS = \
@@ -23,9 +24,11 @@ CPP_inclient_SOURCES = \
   CPP-inclient.h
 
 CPP_inclient_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Sock_Sap_CPP_Inserver.am 
+## Makefile.Sock_Sap_CPP_Inserver.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += CPP-inserver
 
 CPP_inserver_CPPFLAGS = \
@@ -38,9 +41,13 @@ CPP_inserver_SOURCES = \
   CPP-inserver-fancy.h
 
 CPP_inserver_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Sock_Sap_CPP_Memclient.am 
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.Sock_Sap_CPP_Memclient.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += CPP-memclient
 
 CPP_memclient_CPPFLAGS = \
@@ -53,9 +60,13 @@ CPP_memclient_SOURCES = \
   CPP-inserver-fancy.h
 
 CPP_memclient_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Sock_Sap_CPP_Memserver.am 
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.Sock_Sap_CPP_Memserver.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += CPP-memserver
 
 CPP_memserver_CPPFLAGS = \
@@ -68,9 +79,13 @@ CPP_memserver_SOURCES = \
   CPP-inserver-fancy.h
 
 CPP_memserver_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Sock_Sap_CPP_Unclient.am 
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.Sock_Sap_CPP_Unclient.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += CPP-unclient
 
 CPP_unclient_CPPFLAGS = \
@@ -83,9 +98,13 @@ CPP_unclient_SOURCES = \
   CPP-inserver-fancy.h
 
 CPP_unclient_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Sock_Sap_CPP_Unserver.am 
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.Sock_Sap_CPP_Unserver.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += CPP-unserver
 
 CPP_unserver_CPPFLAGS = \
@@ -98,9 +117,11 @@ CPP_unserver_SOURCES = \
   CPP-inserver-fancy.h
 
 CPP_unserver_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Sock_Sap_C_Inclient.am 
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.Sock_Sap_C_Inclient.am
 noinst_PROGRAMS += C-inclient
 
 C_inclient_CPPFLAGS = \
@@ -113,9 +134,9 @@ C_inclient_SOURCES = \
   CPP-inserver-fancy.h
 
 C_inclient_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Sock_Sap_C_Inserver.am 
+## Makefile.Sock_Sap_C_Inserver.am
 noinst_PROGRAMS += C-inserver
 
 C_inserver_CPPFLAGS = \
@@ -128,9 +149,11 @@ C_inserver_SOURCES = \
   CPP-inserver-fancy.h
 
 C_inserver_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Sock_Sap_FD_Unclient.am 
+## Makefile.Sock_Sap_FD_Unclient.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += FD-unclient
 
 FD_unclient_CPPFLAGS = \
@@ -143,7 +166,9 @@ FD_unclient_SOURCES = \
   CPP-inserver-fancy.h
 
 FD_unclient_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif !BUILD_ACE_FOR_TAO
 
 ## Clean up template repositories, etc.
 clean-local:

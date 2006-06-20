@@ -9,17 +9,17 @@
 ## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
 
 includedir = @includedir@/ACEXML/apps/svcconf
-pkgconfigdir = @libdir@/pkgconfig
 
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-nobase_include_HEADERS =
-lib_LTLIBRARIES =
-## Makefile.ACEXML_XML_Svc_Conf_Parser.am 
+
+## Makefile.ACEXML_XML_Svc_Conf_Parser.am
 
 if BUILD_ACEXML
-lib_LTLIBRARIES += libACEXML_XML_Svc_Conf_Parser.la
+if !BUILD_ACE_FOR_TAO
+
+lib_LTLIBRARIES = libACEXML_XML_Svc_Conf_Parser.la
 
 libACEXML_XML_Svc_Conf_Parser_la_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -31,21 +31,19 @@ libACEXML_XML_Svc_Conf_Parser_la_SOURCES = \
   Svcconf_Handler.cpp
 
 libACEXML_XML_Svc_Conf_Parser_la_LDFLAGS = \
- -version-number @ACE_MAJOR@:@ACE_MINOR@:@ACE_BETA@
+ -release @ACE_VERSION_NAME@
 
 libACEXML_XML_Svc_Conf_Parser_la_LIBADD = \
- $(top_builddir)/ACEXML/parser/parser/libACEXML_Parser.la $(top_builddir)/ACEXML/common/libACEXML.la $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ACEXML/parser/parser/libACEXML_Parser.la \
+  $(ACE_BUILDDIR)/ACEXML/common/libACEXML.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-nobase_include_HEADERS += \
+nobase_include_HEADERS = \
   Svcconf.h \
   Svcconf_Handler.h \
   Svcconf_Handler.i
 
-pkgconfig_DATA = ACEXML_XML_Svc_Conf_Parser.pc
-
-ACEXML_XML_Svc_Conf_Parser.pc: ${top_builddir}/config.status ${srcdir}/ACEXML_XML_Svc_Conf_Parser.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/ACEXML_XML_Svc_Conf_Parser.pc.in
-
+endif !BUILD_ACE_FOR_TAO
 endif BUILD_ACEXML
 
 ## Clean up template repositories, etc.

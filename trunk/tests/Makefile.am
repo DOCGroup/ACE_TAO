@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ./bin/mwc.pl -type automake -noreldefs ACE.mwc
+## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
 
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
@@ -20,6 +20,7 @@ SUBDIRS = \
 ## Makefile.Test_Output.am
 
 noinst_SCRIPTS = run_test.pl run_test.lst
+
 dist_check_SCRIPTS = run_test.pl run_test.lst
 TESTS = $(noinst_PROGRAMS)
 TESTS_ENVIRONMENT = $(srcdir)/run_test.pl -t
@@ -53,6 +54,10 @@ ACE_Init_Test_SOURCES = \
 ACE_Init_Test_LDADD = \
   libTest_Output.la \
   $(ACE_BUILDDIR)/ace/libACE.la
+
+EXTRA_DIST = \
+  ACE_Init_Test.rc
+
 
 ## Makefile.ACE_Test.am
 noinst_PROGRAMS += ACE_Test
@@ -332,6 +337,36 @@ Bug_1576_Regression_Test_SOURCES = \
   Bug_1576_Regression_Test.cpp
 
 Bug_1576_Regression_Test_LDADD = \
+  libTest_Output.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+## Makefile.Bug_2368_Regression_Test.am
+noinst_PROGRAMS += Bug_2368_Regression_Test
+
+Bug_2368_Regression_Test_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
+
+Bug_2368_Regression_Test_SOURCES = \
+  $(ACE_ROOT)/tests/Main.cpp \
+  Bug_2368_Regression_Test.cpp
+
+Bug_2368_Regression_Test_LDADD = \
+  libTest_Output.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+## Makefile.Bug_2497_Regression_Test.am
+noinst_PROGRAMS += Bug_2497_Regression_Test
+
+Bug_2497_Regression_Test_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
+
+Bug_2497_Regression_Test_SOURCES = \
+  $(ACE_ROOT)/tests/Main.cpp \
+  Bug_2497_Regression_Test.cpp
+
+Bug_2497_Regression_Test_LDADD = \
   libTest_Output.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -988,6 +1023,56 @@ Lazy_Map_Manager_Test_SOURCES = \
 Lazy_Map_Manager_Test_LDADD = \
   libTest_Output.la \
   $(ACE_BUILDDIR)/ace/libACE.la
+
+## Makefile.Library_Unload.am
+noinst_PROGRAMS += UnloadLibACE
+
+UnloadLibACE_SOURCES = \
+  Unload_libACE.cpp \
+  ACE_Init_Test.h \
+  ACE_Init_TestDlg.h \
+  ACE_Init_Test_Resource.h \
+  ACE_Init_Test_StdAfx.h \
+  Bound_Ptr_Test.h \
+  CE_fostream.h \
+  Cache_Map_Manager_Test.h \
+  Cached_Accept_Conn_Test.h \
+  Cached_Conn_Test.h \
+  Collection_Test.h \
+  Config_Test.h \
+  Conn_Test.h \
+  DLL_Test.h \
+  DLL_Test_Impl.h \
+  DLL_Test_Parent.h \
+  DLL_Test_Parent_Export.h \
+  Framework_Component_DLL.h \
+  Framework_Component_DLL_Export.h \
+  Framework_Component_Test.h \
+  MEM_Stream_Test.h \
+  MT_Reactor_Timer_Test.h \
+  Malloc_Test.h \
+  Map_Test.h \
+  Max_Default_Port_Test.h \
+  Message_Queue_Test_Ex.h \
+  Network_Adapters_Test.h \
+  NonBlocking_Conn_Test.h \
+  Priority_Reactor_Test.h \
+  Proactor_Test.h \
+  Process_Strategy_Test.h \
+  QtReactor_Test.h \
+  RB_Tree_Test.h \
+  Reactor_Performance_Test.h \
+  Refcounted_Auto_Ptr_Test.h \
+  Service_Config_DLL.h \
+  Service_Config_DLL_Export.h \
+  TP_Reactor_Test.h \
+  TSS_Test_Errno.h \
+  Task_Ex_Test.h \
+  Test_Output_Export.h \
+  Thread_Pool_Reactor_Resume_Test.h \
+  Thread_Pool_Reactor_Test.h \
+  Upgradable_RW_Test.h \
+  test_config.h
 
 ## Makefile.Log_Msg_Test.am
 
@@ -2300,6 +2385,21 @@ Semaphore_Test_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_ACE_FOR_TAO
+
+## Makefile.Sendfile_Test.am
+noinst_PROGRAMS += Sendfile_Test
+
+Sendfile_Test_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
+
+Sendfile_Test_SOURCES = \
+  $(ACE_ROOT)/tests/Main.cpp \
+  Sendfile_Test.cpp
+
+Sendfile_Test_LDADD = \
+  libTest_Output.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Service_Config_DLL.am
 

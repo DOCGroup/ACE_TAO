@@ -11,11 +11,11 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-bin_PROGRAMS =
-## Makefile.gperf.am 
+
+## Makefile.gperf.am
 
 if !BUILD_USES_WCHAR
-bin_PROGRAMS += gperf
+bin_PROGRAMS = gperf
 
 gperf_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -42,7 +42,7 @@ gperf_SOURCES = \
   Vectors.h
 
 gperf_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_USES_WCHAR
 

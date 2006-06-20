@@ -12,9 +12,11 @@ ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
 noinst_PROGRAMS =
-## Makefile.WFMO_Reactor_APC.am 
+
+## Makefile.WFMO_Reactor_APC.am
 
 if BUILD_WFMO
+if !BUILD_WINCE
 noinst_PROGRAMS += apc
 
 apc_CPPFLAGS = \
@@ -25,11 +27,12 @@ apc_SOURCES = \
   APC.cpp
 
 apc_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
+endif !BUILD_WINCE
 endif BUILD_WFMO
 
-## Makefile.WFMO_Reactor_Abandoned.am 
+## Makefile.WFMO_Reactor_Abandoned.am
 
 if BUILD_WFMO
 noinst_PROGRAMS += abandoned
@@ -42,11 +45,11 @@ abandoned_SOURCES = \
   Abandoned.cpp
 
 abandoned_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 endif BUILD_WFMO
 
-## Makefile.WFMO_Reactor_Console_Input.am 
+## Makefile.WFMO_Reactor_Console_Input.am
 
 if BUILD_WFMO
 noinst_PROGRAMS += console_input
@@ -59,11 +62,11 @@ console_input_SOURCES = \
   Console_Input.cpp
 
 console_input_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 endif BUILD_WFMO
 
-## Makefile.WFMO_Reactor_Directory_Changes.am 
+## Makefile.WFMO_Reactor_Directory_Changes.am
 
 if BUILD_WFMO
 noinst_PROGRAMS += directory_changes
@@ -76,11 +79,11 @@ directory_changes_SOURCES = \
   Directory_Changes.cpp
 
 directory_changes_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 endif BUILD_WFMO
 
-## Makefile.WFMO_Reactor_Exceptions.am 
+## Makefile.WFMO_Reactor_Exceptions.am
 
 if BUILD_WFMO
 noinst_PROGRAMS += exceptions
@@ -93,11 +96,11 @@ exceptions_SOURCES = \
   Exceptions.cpp
 
 exceptions_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 endif BUILD_WFMO
 
-## Makefile.WFMO_Reactor_Handle_Close.am 
+## Makefile.WFMO_Reactor_Handle_Close.am
 
 if BUILD_WFMO
 noinst_PROGRAMS += handle_close
@@ -110,11 +113,11 @@ handle_close_SOURCES = \
   Handle_Close.cpp
 
 handle_close_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 endif BUILD_WFMO
 
-## Makefile.WFMO_Reactor_Multithreading.am 
+## Makefile.WFMO_Reactor_Multithreading.am
 
 if BUILD_WFMO
 noinst_PROGRAMS += multithreading
@@ -127,11 +130,11 @@ multithreading_SOURCES = \
   Multithreading.cpp
 
 multithreading_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 endif BUILD_WFMO
 
-## Makefile.WFMO_Reactor_Network_Events.am 
+## Makefile.WFMO_Reactor_Network_Events.am
 
 if BUILD_WFMO
 noinst_PROGRAMS += network_events
@@ -144,11 +147,11 @@ network_events_SOURCES = \
   Network_Events.cpp
 
 network_events_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 endif BUILD_WFMO
 
-## Makefile.WFMO_Reactor_Prerun_State_Changes.am 
+## Makefile.WFMO_Reactor_Prerun_State_Changes.am
 
 if BUILD_WFMO
 noinst_PROGRAMS += prerun_state_changes
@@ -161,11 +164,11 @@ prerun_state_changes_SOURCES = \
   Prerun_State_Changes.cpp
 
 prerun_state_changes_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 endif BUILD_WFMO
 
-## Makefile.WFMO_Reactor_Registration.am 
+## Makefile.WFMO_Reactor_Registration.am
 
 if BUILD_WFMO
 noinst_PROGRAMS += registration
@@ -178,13 +181,15 @@ registration_SOURCES = \
   Registration.cpp
 
 registration_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 endif BUILD_WFMO
 
-## Makefile.WFMO_Reactor_Registry_Changes.am 
+## Makefile.WFMO_Reactor_Registry_Changes.am
 
 if BUILD_WFMO
+if !BUILD_ACE_FOR_TAO
+if !BUILD_WINCE
 noinst_PROGRAMS += registry_changes
 
 registry_changes_CPPFLAGS = \
@@ -195,11 +200,13 @@ registry_changes_SOURCES = \
   Registry_Changes.cpp
 
 registry_changes_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
+endif !BUILD_WINCE
+endif !BUILD_ACE_FOR_TAO
 endif BUILD_WFMO
 
-## Makefile.WFMO_Reactor_Removals.am 
+## Makefile.WFMO_Reactor_Removals.am
 
 if BUILD_WFMO
 noinst_PROGRAMS += removals
@@ -212,11 +219,11 @@ removals_SOURCES = \
   Removals.cpp
 
 removals_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 endif BUILD_WFMO
 
-## Makefile.WFMO_Reactor_Suspended_Removals.am 
+## Makefile.WFMO_Reactor_Suspended_Removals.am
 
 if BUILD_WFMO
 noinst_PROGRAMS += suspended_removals
@@ -229,13 +236,15 @@ suspended_removals_SOURCES = \
   Suspended_Removals.cpp
 
 suspended_removals_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 endif BUILD_WFMO
 
-## Makefile.WFMO_Reactor_Talker.am 
+## Makefile.WFMO_Reactor_Talker.am
 
 if BUILD_WFMO
+if !BUILD_ACE_FOR_TAO
+if !BUILD_WINCE
 noinst_PROGRAMS += talker
 
 talker_CPPFLAGS = \
@@ -246,11 +255,13 @@ talker_SOURCES = \
   Talker.cpp
 
 talker_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
+endif !BUILD_WINCE
+endif !BUILD_ACE_FOR_TAO
 endif BUILD_WFMO
 
-## Makefile.WFMO_Reactor_Timeouts.am 
+## Makefile.WFMO_Reactor_Timeouts.am
 
 if BUILD_WFMO
 noinst_PROGRAMS += timeouts
@@ -263,13 +274,15 @@ timeouts_SOURCES = \
   Timeouts.cpp
 
 timeouts_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 endif BUILD_WFMO
 
-## Makefile.WFMO_Reactor_Window_Messages.am 
+## Makefile.WFMO_Reactor_Window_Messages.am
 
 if BUILD_WFMO
+if !BUILD_ACE_FOR_TAO
+if !BUILD_WINCE
 noinst_PROGRAMS += window_messages
 
 window_messages_CPPFLAGS = \
@@ -280,8 +293,10 @@ window_messages_SOURCES = \
   Window_Messages.cpp
 
 window_messages_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
+endif !BUILD_WINCE
+endif !BUILD_ACE_FOR_TAO
 endif BUILD_WFMO
 
 ## Clean up template repositories, etc.

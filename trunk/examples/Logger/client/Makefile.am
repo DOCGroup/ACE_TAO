@@ -11,18 +11,18 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.Logger_client.am 
-noinst_LTLIBRARIES = libLogger_client.la
+## Makefile.Logger_client.am
+noinst_PROGRAMS = logging_app
 
-libLogger_client_la_CPPFLAGS = \
+logging_app_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR)
 
-libLogger_client_la_SOURCES = \
+logging_app_SOURCES = \
   logging_app.cpp
 
-libLogger_client_la_LIBADD = \
- $(top_builddir)/ace/libACE.la
+logging_app_LDADD = \
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Clean up template repositories, etc.
 clean-local:

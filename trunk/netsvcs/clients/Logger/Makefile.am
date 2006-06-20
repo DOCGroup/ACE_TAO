@@ -11,8 +11,12 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.direct_logging.am 
-noinst_PROGRAMS = direct_logging
+noinst_PROGRAMS =
+
+## Makefile.direct_logging.am
+
+if !BUILD_ACE_FOR_TAO
+noinst_PROGRAMS += direct_logging
 
 direct_logging_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -22,9 +26,14 @@ direct_logging_SOURCES = \
   direct_logging.cpp
 
 direct_logging_LDADD = \
- $(top_builddir)/netsvcs/lib/libnetsvcs.la $(top_builddir)/ace/libACE.la
+  $(top_builddir)/netsvcs/lib/libnetsvcs.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.indirect_logging.am 
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.indirect_logging.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += indirect_logging
 
 indirect_logging_CPPFLAGS = \
@@ -35,7 +44,10 @@ indirect_logging_SOURCES = \
   indirect_logging.cpp
 
 indirect_logging_LDADD = \
- $(top_builddir)/netsvcs/lib/libnetsvcs.la $(top_builddir)/ace/libACE.la
+  $(top_builddir)/netsvcs/lib/libnetsvcs.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif !BUILD_ACE_FOR_TAO
 
 ## Clean up template repositories, etc.
 clean-local:

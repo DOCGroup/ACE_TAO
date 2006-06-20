@@ -11,7 +11,10 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.Mem_Map_IO_Tests.am 
+
+## Makefile.Mem_Map_IO_Tests.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS = test_io
 
 test_io_CPPFLAGS = \
@@ -24,7 +27,9 @@ test_io_SOURCES = \
   IO_Test.h
 
 test_io_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif !BUILD_ACE_FOR_TAO
 
 ## Clean up template repositories, etc.
 clean-local:

@@ -11,7 +11,10 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.asnmp_example_set.am 
+
+## Makefile.asnmp_example_set.am
+
+if !BUILD_USES_WCHAR
 noinst_PROGRAMS = set
 
 set_CPPFLAGS = \
@@ -23,7 +26,10 @@ set_SOURCES = \
   set.cpp
 
 set_LDADD = \
- $(top_builddir)/ASNMP/asnmp/libasnmp.la $(top_builddir)/ace/libACE.la
+  $(top_builddir)/ASNMP/asnmp/libasnmp.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif !BUILD_USES_WCHAR
 
 ## Clean up template repositories, etc.
 clean-local:

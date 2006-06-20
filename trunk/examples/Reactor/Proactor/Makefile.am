@@ -11,8 +11,12 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.Proactor_Cancel.am 
-noinst_PROGRAMS = test_cancel
+noinst_PROGRAMS =
+
+## Makefile.Proactor_Cancel.am
+
+if !BUILD_ACE_FOR_TAO
+noinst_PROGRAMS += test_cancel
 
 test_cancel_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -23,9 +27,13 @@ test_cancel_SOURCES = \
   test_cancel.h
 
 test_cancel_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Proactor_End_Event_Loops.am 
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.Proactor_End_Event_Loops.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += test_end_event_loop
 
 test_end_event_loop_CPPFLAGS = \
@@ -38,9 +46,13 @@ test_end_event_loop_SOURCES = \
   test_proactor.h
 
 test_end_event_loop_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Proactor_Multiple_Loops.am 
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.Proactor_Multiple_Loops.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += test_multiple_loops
 
 test_multiple_loops_CPPFLAGS = \
@@ -53,9 +65,13 @@ test_multiple_loops_SOURCES = \
   test_proactor.h
 
 test_multiple_loops_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Proactor_Post_Completions.am 
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.Proactor_Post_Completions.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += test_post_completions
 
 test_post_completions_CPPFLAGS = \
@@ -68,9 +84,13 @@ test_post_completions_SOURCES = \
   test_proactor.h
 
 test_post_completions_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Proactor_Proactor.am 
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.Proactor_Proactor.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += test_proactor
 
 test_proactor_CPPFLAGS = \
@@ -82,9 +102,13 @@ test_proactor_SOURCES = \
   test_proactor.h
 
 test_proactor_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Proactor_Timeout.am 
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.Proactor_Timeout.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += test_timeout
 
 test_timeout_CPPFLAGS = \
@@ -97,9 +121,13 @@ test_timeout_SOURCES = \
   test_proactor.h
 
 test_timeout_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Proactor_Udp_Proactor.am 
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.Proactor_Udp_Proactor.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += test_udp_proactor
 
 test_udp_proactor_CPPFLAGS = \
@@ -112,7 +140,9 @@ test_udp_proactor_SOURCES = \
   test_proactor.h
 
 test_udp_proactor_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif !BUILD_ACE_FOR_TAO
 
 ## Clean up template repositories, etc.
 clean-local:

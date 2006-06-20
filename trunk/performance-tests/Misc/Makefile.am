@@ -11,8 +11,12 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.Misc_Basic_Perf.am 
-noinst_PROGRAMS = basic_perf
+noinst_PROGRAMS =
+
+## Makefile.Misc_Basic_Perf.am
+
+if !BUILD_ACE_FOR_TAO
+noinst_PROGRAMS += basic_perf
 
 basic_perf_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -24,9 +28,13 @@ basic_perf_SOURCES = \
   basic_func.h
 
 basic_perf_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Misc_Childbirth_Time.am 
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.Misc_Childbirth_Time.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += childbirth_time
 
 childbirth_time_CPPFLAGS = \
@@ -39,9 +47,13 @@ childbirth_time_SOURCES = \
   test_singleton.h
 
 childbirth_time_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Misc_Context_Switch_Time.am 
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.Misc_Context_Switch_Time.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += context_switch_time
 
 context_switch_time_CPPFLAGS = \
@@ -54,9 +66,11 @@ context_switch_time_SOURCES = \
   test_singleton.h
 
 context_switch_time_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Misc_Preempt.am 
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.Misc_Preempt.am
 noinst_PROGRAMS += preempt
 
 preempt_CPPFLAGS = \
@@ -69,9 +83,11 @@ preempt_SOURCES = \
   test_singleton.h
 
 preempt_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Misc_Test_Mutex.am 
+## Makefile.Misc_Test_Mutex.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += test_mutex
 
 test_mutex_CPPFLAGS = \
@@ -84,9 +100,13 @@ test_mutex_SOURCES = \
   test_singleton.h
 
 test_mutex_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Misc_Test_Naming.am 
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.Misc_Test_Naming.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += test_naming
 
 test_naming_CPPFLAGS = \
@@ -99,9 +119,13 @@ test_naming_SOURCES = \
   test_singleton.h
 
 test_naming_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Misc_Test_Singleton.am 
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.Misc_Test_Singleton.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += test_singleton
 
 test_singleton_CPPFLAGS = \
@@ -113,7 +137,9 @@ test_singleton_SOURCES = \
   test_singleton.h
 
 test_singleton_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif !BUILD_ACE_FOR_TAO
 
 ## Clean up template repositories, etc.
 clean-local:

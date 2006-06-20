@@ -11,8 +11,12 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.Malloc.am 
-noinst_PROGRAMS = Malloc
+noinst_PROGRAMS =
+
+## Makefile.Malloc.am
+
+if !BUILD_ACE_FOR_TAO
+noinst_PROGRAMS += Malloc
 
 Malloc_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -23,9 +27,13 @@ Malloc_SOURCES = \
   Record.h
 
 Malloc_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Mem_Map.am 
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.Mem_Map.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += Mem_Map
 
 Mem_Map_CPPFLAGS = \
@@ -37,9 +45,13 @@ Mem_Map_SOURCES = \
   Record.h
 
 Mem_Map_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.PI_Malloc.am 
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.PI_Malloc.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += PI_Malloc
 
 PI_Malloc_CPPFLAGS = \
@@ -51,9 +63,13 @@ PI_Malloc_SOURCES = \
   Record.h
 
 PI_Malloc_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Pool_Growth.am 
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.Pool_Growth.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += Pool_Growth
 
 Pool_Growth_CPPFLAGS = \
@@ -65,9 +81,13 @@ Pool_Growth_SOURCES = \
   Record.h
 
 Pool_Growth_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Shared_Memory_Hash_Map.am 
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.Shared_Memory_Hash_Map.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += Hash_Map
 
 Hash_Map_CPPFLAGS = \
@@ -79,7 +99,9 @@ Hash_Map_SOURCES = \
   Record.h
 
 Hash_Map_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif !BUILD_ACE_FOR_TAO
 
 ## Clean up template repositories, etc.
 clean-local:

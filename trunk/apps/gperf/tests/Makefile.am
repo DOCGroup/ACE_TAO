@@ -11,9 +11,10 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-noinst_PROGRAMS =
 CLEANFILES =
 BUILT_SOURCES =
+noinst_PROGRAMS =
+
 ## Makefile.adainset.am 
 
 if !BUILD_USES_WCHAR
@@ -42,7 +43,7 @@ aout_SOURCES = \
   test.cpp
 
 aout_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_USES_WCHAR
 
@@ -74,7 +75,7 @@ cout_SOURCES = \
   test.cpp
 
 cout_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_USES_WCHAR
 
@@ -106,7 +107,7 @@ cppout_SOURCES = \
   test.cpp
 
 cppout_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_USES_WCHAR
 
@@ -138,7 +139,7 @@ iout_SOURCES = \
   test.cpp
 
 iout_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_USES_WCHAR
 
@@ -171,7 +172,7 @@ iout2_SOURCES = \
   test.cpp
 
 iout2_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_USES_WCHAR
 
@@ -203,7 +204,7 @@ m3out_SOURCES = \
   test.cpp
 
 m3out_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_USES_WCHAR
 
@@ -235,7 +236,7 @@ pout_SOURCES = \
   test.cpp
 
 pout_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_USES_WCHAR
 
@@ -267,7 +268,7 @@ preout_SOURCES = \
   test.cpp
 
 preout_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_USES_WCHAR
 
@@ -299,7 +300,7 @@ taoout_SOURCES = \
   test.cpp
 
 taoout_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_USES_WCHAR
 
@@ -331,7 +332,7 @@ tout_SOURCES = \
   test.cpp
 
 tout_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_USES_WCHAR
 

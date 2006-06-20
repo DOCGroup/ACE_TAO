@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ./bin/mwc.pl -include /home/jtc/ACE/ACE-config3/MPC/config -include /home/jtc/ACE/ACE-config3/MPC/templates -type automake -noreldefs ACE.mwc
+## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
 
 includedir = @includedir@/ace/SSL
 pkgconfigdir = @libdir@/pkgconfig
@@ -15,6 +15,7 @@ ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
 
+## Makefile.SSL.am
 
 if BUILD_SSL
 
@@ -36,8 +37,7 @@ libACE_SSL_la_SOURCES = \
   SSL_SOCK_Stream.cpp
 
 libACE_SSL_la_LDFLAGS = \
-  -version-number @ACE_MAJOR@:@ACE_MINOR@:@ACE_BETA@ \
-  @ACE_TLS_LDFLAGS@
+ -release @ACE_VERSION_NAME@ @ACE_TLS_LDFLAGS@
 
 libACE_SSL_la_LIBADD = \
   $(ACE_BUILDDIR)/ace/libACE.la \
@@ -66,7 +66,7 @@ CLEANFILES = \
   ACE_SSL.pc
 
 ACE_SSL.pc: ${top_builddir}/config.status ${srcdir}/ACE_SSL.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/ACE_SSL.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/ACE_SSL.pc.in
 
 endif BUILD_SSL
 

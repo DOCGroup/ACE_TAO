@@ -11,13 +11,14 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-noinst_PROGRAMS =
-noinst_HEADERS =
-noinst_LTLIBRARIES =
-## Makefile.JAWS.am 
+
+## Makefile.JAWS.am
 
 if BUILD_ACE_FILECACHE
-noinst_LTLIBRARIES += libJAWS.la
+if !BUILD_ACE_FOR_TAO
+if !BUILD_USES_WCHAR
+
+noinst_LTLIBRARIES = libJAWS.la
 
 libJAWS_la_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -36,10 +37,7 @@ libJAWS_la_SOURCES = \
   JAWS_Pipeline.cpp \
   Parse_Headers.cpp
 
-libJAWS_la_LIBADD = \
- $(top_builddir)/ace/libACE.la
-
-noinst_HEADERS += \
+noinst_HEADERS = \
   HTTP_Config.h \
   HTTP_Handler.h \
   HTTP_Helpers.h \
@@ -51,12 +49,16 @@ noinst_HEADERS += \
   JAWS_Pipeline.h \
   Parse_Headers.h
 
+endif !BUILD_USES_WCHAR
+endif !BUILD_ACE_FOR_TAO
 endif BUILD_ACE_FILECACHE
 
-## Makefile.JAWS_server.am 
+## Makefile.JAWS_server.am
 
 if BUILD_ACE_FILECACHE
-noinst_PROGRAMS += main
+if !BUILD_ACE_FOR_TAO
+if !BUILD_USES_WCHAR
+noinst_PROGRAMS = main
 
 main_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -77,8 +79,11 @@ main_SOURCES = \
   Parse_Headers.h
 
 main_LDADD = \
- libJAWS.la $(top_builddir)/ace/libACE.la
+  libJAWS.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
 
+endif !BUILD_USES_WCHAR
+endif !BUILD_ACE_FOR_TAO
 endif BUILD_ACE_FILECACHE
 
 ## Clean up template repositories, etc.

@@ -8,12 +8,19 @@
 ## MPC Command:
 ## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
 
+OPTDIRS =
+
+if COMPILE_GPERF
+OPTDIRS += gperf
+endif
+
 SUBDIRS = \
         Gateway \
         JAWS \
+        JAWS2 \
         JAWS3 \
         drwho \
         gperf \
         mkcsregdb \
-        soreduce
-
+        soreduce \
+        $(OPTDIRS)

@@ -427,8 +427,8 @@ project(ACE) : acedefaults, core, other, codecs, token, svcconf, uuid, filecache
     config-win32-borland.h
     config-win32-common.h
     config-win32-ghs.h
-    config-win32-msvc-6.h
     config-win32-msvc-7.h
+    config-win32-msvc-8.h
     config-win32-msvc.h
     config-win32-visualage.h
     config-win32.h

@@ -11,8 +11,12 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.SV_Semaphores_1.am 
-noinst_PROGRAMS = sem1
+noinst_PROGRAMS =
+
+## Makefile.SV_Semaphores_1.am
+
+if !BUILD_ACE_FOR_TAO
+noinst_PROGRAMS += sem1
 
 sem1_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -22,9 +26,13 @@ sem1_SOURCES = \
   Semaphores_1.cpp
 
 sem1_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.SV_Semaphores_2.am 
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.SV_Semaphores_2.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += sem2
 
 sem2_CPPFLAGS = \
@@ -35,7 +43,9 @@ sem2_SOURCES = \
   Semaphores_2.cpp
 
 sem2_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif !BUILD_ACE_FOR_TAO
 
 ## Clean up template repositories, etc.
 clean-local:

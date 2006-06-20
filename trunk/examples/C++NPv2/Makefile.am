@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ./bin/mwc.pl -include /home/jtc/ACE/ACE-config3/MPC/config -include /home/jtc/ACE/ACE-config3/MPC/templates -type automake -noreldefs ACE.mwc
+## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
 
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
@@ -18,6 +18,7 @@ noinst_PROGRAMS =
 ## Makefile.C++NPv2_AC_CLD.am
 
 if BUILD_SSL
+if !BUILD_ACE_FOR_TAO
 if !BUILD_USES_WCHAR
 
 noinst_LTLIBRARIES += libAC_CLD.la
@@ -34,10 +35,7 @@ libAC_CLD_la_SOURCES = \
   Logging_Handler.cpp
 
 libAC_CLD_la_LDFLAGS = \
-  @ACE_TLS_LDFLAGS@
-
-libAC_CLD_la_LIBADD = \
-  @ACE_TLS_LIBS@
+ @ACE_TLS_LDFLAGS@
 
 noinst_HEADERS += \
   AC_Client_Logging_Daemon.h \
@@ -45,11 +43,13 @@ noinst_HEADERS += \
   Reactor_Logging_Server_T.cpp
 
 endif !BUILD_USES_WCHAR
+endif !BUILD_ACE_FOR_TAO
 endif BUILD_SSL
 
 ## Makefile.C++NPv2_AIO_CLD.am
 
 if BUILD_SSL
+if !BUILD_ACE_FOR_TAO
 
 noinst_LTLIBRARIES += libAIO_CLD.la
 
@@ -64,19 +64,18 @@ libAIO_CLD_la_SOURCES = \
   AIO_Client_Logging_Daemon.cpp
 
 libAIO_CLD_la_LDFLAGS = \
-  @ACE_TLS_LDFLAGS@
-
-libAIO_CLD_la_LIBADD = \
-  @ACE_TLS_LIBS@
+ @ACE_TLS_LDFLAGS@
 
 noinst_HEADERS += \
   AIO_Client_Logging_Daemon.h \
   Reactor_Logging_Server_T.cpp
 
+endif !BUILD_ACE_FOR_TAO
 endif BUILD_SSL
 
 ## Makefile.C++NPv2_CLD.am
 
+if !BUILD_ACE_FOR_TAO
 if !BUILD_USES_WCHAR
 
 noinst_LTLIBRARIES += libCLD.la
@@ -99,6 +98,7 @@ noinst_HEADERS += \
   Reactor_Logging_Server_T.cpp
 
 endif !BUILD_USES_WCHAR
+endif !BUILD_ACE_FOR_TAO
 
 ## Makefile.C++NPv2_Configurable_Log_Server.am
 
@@ -120,6 +120,8 @@ configurable_logging_server_LDADD = \
 endif !BUILD_USES_WCHAR
 
 ## Makefile.C++NPv2_Display_Logfile.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += display_logfile
 
 display_logfile_CPPFLAGS = \
@@ -138,8 +140,8 @@ display_logfile_SOURCES = \
   Logging_Event_Handler.h \
   Logging_Event_Handler_Ex.h \
   Logging_Handler.h \
-  Reactor_Logging_Server_T.h \
   Reactor_Logging_Server_Adapter.h \
+  Reactor_Logging_Server_T.h \
   SLDEX_export.h \
   SLD_export.h \
   Service_Reporter.h \
@@ -151,8 +153,11 @@ display_logfile_SOURCES = \
 display_logfile_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+endif !BUILD_ACE_FOR_TAO
+
 ## Makefile.C++NPv2_Reactor_Log_Server.am
 
+if !BUILD_ACE_FOR_TAO
 if !BUILD_USES_WCHAR
 noinst_PROGRAMS += reactor_logging_server
 
@@ -169,16 +174,17 @@ reactor_logging_server_SOURCES = \
   Logging_Acceptor.h \
   Logging_Event_Handler.h \
   Logging_Event_Handler_Ex.h \
-  Logging_Handler.h \
-  Reactor_Logging_Server_T.h
+  Logging_Handler.h
 
 reactor_logging_server_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_USES_WCHAR
+endif !BUILD_ACE_FOR_TAO
 
 ## Makefile.C++NPv2_SLD.am
 
+if !BUILD_ACE_FOR_TAO
 if !BUILD_USES_WCHAR
 
 noinst_LTLIBRARIES += libSLD.la
@@ -201,9 +207,11 @@ noinst_HEADERS += \
   Reactor_Logging_Server_T.cpp
 
 endif !BUILD_USES_WCHAR
+endif !BUILD_ACE_FOR_TAO
 
 ## Makefile.C++NPv2_SLDex.am
 
+if !BUILD_ACE_FOR_TAO
 if !BUILD_USES_WCHAR
 
 noinst_LTLIBRARIES += libSLDex.la
@@ -231,6 +239,7 @@ noinst_HEADERS += \
   Reactor_Logging_Server_T.cpp
 
 endif !BUILD_USES_WCHAR
+endif !BUILD_ACE_FOR_TAO
 
 ## Makefile.C++NPv2_SR_Configurable_Log_Server.am
 noinst_PROGRAMS += sr_configurable_logging_server
@@ -251,8 +260,8 @@ sr_configurable_logging_server_SOURCES = \
   Logging_Event_Handler.h \
   Logging_Event_Handler_Ex.h \
   Logging_Handler.h \
-  Reactor_Logging_Server_T.h \
   Reactor_Logging_Server_Adapter.h \
+  Reactor_Logging_Server_T.h \
   SLDEX_export.h \
   SLD_export.h \
   Service_Reporter.h \
@@ -266,6 +275,7 @@ sr_configurable_logging_server_LDADD = \
 
 ## Makefile.C++NPv2_Select_Reactor_Log_Server.am
 
+if !BUILD_ACE_FOR_TAO
 if !BUILD_USES_WCHAR
 noinst_PROGRAMS += select_reactor_logging_server
 
@@ -288,10 +298,12 @@ select_reactor_logging_server_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_USES_WCHAR
+endif !BUILD_ACE_FOR_TAO
 
 ## Makefile.C++NPv2_TPCLS.am
 
 if BUILD_SSL
+if !BUILD_ACE_FOR_TAO
 if !BUILD_USES_WCHAR
 
 noinst_LTLIBRARIES += libTPCLS.la
@@ -308,10 +320,7 @@ libTPCLS_la_SOURCES = \
   TPC_Logging_Server.cpp
 
 libTPCLS_la_LDFLAGS = \
-  @ACE_TLS_LDFLAGS@
-
-libTPCLS_la_LIBADD = \
-  @ACE_TLS_LIBS@
+ @ACE_TLS_LDFLAGS@
 
 noinst_HEADERS += \
   Logging_Handler.h \
@@ -319,10 +328,12 @@ noinst_HEADERS += \
   TPC_Logging_Server.h
 
 endif !BUILD_USES_WCHAR
+endif !BUILD_ACE_FOR_TAO
 endif BUILD_SSL
 
 ## Makefile.C++NPv2_TPLS.am
 
+if !BUILD_ACE_FOR_TAO
 if !BUILD_USES_WCHAR
 
 noinst_LTLIBRARIES += libTPLS.la
@@ -346,9 +357,11 @@ noinst_HEADERS += \
   TP_Logging_Server.h
 
 endif !BUILD_USES_WCHAR
+endif !BUILD_ACE_FOR_TAO
 
 ## Makefile.C++NPv2_TP_Reactor_Log_Server.am
 
+if !BUILD_ACE_FOR_TAO
 if !BUILD_USES_WCHAR
 noinst_PROGRAMS += tp_reactor_logging_server
 
@@ -371,10 +384,12 @@ tp_reactor_logging_server_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_USES_WCHAR
+endif !BUILD_ACE_FOR_TAO
 
 ## Makefile.C++NPv2_WFMO_Reactor_Log_Server.am
 
 if BUILD_WFMO
+if !BUILD_ACE_FOR_TAO
 if !BUILD_USES_WCHAR
 noinst_PROGRAMS += wfmo_reactor_logging_server
 
@@ -397,6 +412,7 @@ wfmo_reactor_logging_server_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_USES_WCHAR
+endif !BUILD_ACE_FOR_TAO
 endif BUILD_WFMO
 
 ## Clean up template repositories, etc.

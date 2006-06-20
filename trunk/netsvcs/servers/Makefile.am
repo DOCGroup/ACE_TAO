@@ -11,7 +11,10 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.Netsvcs_server.am 
+
+## Makefile.Netsvcs_server.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS = main
 
 main_CPPFLAGS = \
@@ -23,7 +26,10 @@ main_SOURCES = \
   main.cpp
 
 main_LDADD = \
- $(top_builddir)/netsvcs/lib/libnetsvcs.la $(top_builddir)/ace/libACE.la
+  $(top_builddir)/netsvcs/lib/libnetsvcs.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif !BUILD_ACE_FOR_TAO
 
 ## Clean up template repositories, etc.
 clean-local:

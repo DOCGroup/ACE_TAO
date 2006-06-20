@@ -11,8 +11,12 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.Svc_Cfg_IPC_Client_Bcast.am 
-noinst_PROGRAMS = remote_broadcast_test
+noinst_PROGRAMS =
+
+## Makefile.Svc_Cfg_IPC_Client_Bcast.am
+
+if !BUILD_ACE_FOR_TAO
+noinst_PROGRAMS += remote_broadcast_test
 
 remote_broadcast_test_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -22,9 +26,13 @@ remote_broadcast_test_SOURCES = \
   broadcast_client_test.cpp
 
 remote_broadcast_test_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Svc_Cfg_IPC_Client_Loc_Dgram.am 
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.Svc_Cfg_IPC_Client_Loc_Dgram.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += local_dgram_test
 
 local_dgram_test_CPPFLAGS = \
@@ -35,9 +43,13 @@ local_dgram_test_SOURCES = \
   local_dgram_client_test.cpp
 
 local_dgram_test_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Svc_Cfg_IPC_Client_Loc_Fifo.am 
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.Svc_Cfg_IPC_Client_Loc_Fifo.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += local_fifo_test
 
 local_fifo_test_CPPFLAGS = \
@@ -48,9 +60,13 @@ local_fifo_test_SOURCES = \
   local_fifo_client_test.cpp
 
 local_fifo_test_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Svc_Cfg_IPC_Client_Loc_Pipe.am 
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.Svc_Cfg_IPC_Client_Loc_Pipe.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += local_pipe_test
 
 local_pipe_test_CPPFLAGS = \
@@ -61,9 +77,11 @@ local_pipe_test_SOURCES = \
   local_pipe_client_test.cpp
 
 local_pipe_test_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Svc_Cfg_IPC_Client_Loc_Spipe.am 
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.Svc_Cfg_IPC_Client_Loc_Spipe.am
 noinst_PROGRAMS += local_spipe_test
 
 local_spipe_test_CPPFLAGS = \
@@ -74,9 +92,11 @@ local_spipe_test_SOURCES = \
   local_spipe_client_test.cpp
 
 local_spipe_test_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Svc_Cfg_IPC_Client_Loc_Stream.am 
+## Makefile.Svc_Cfg_IPC_Client_Loc_Stream.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += local_stream_test
 
 local_stream_test_CPPFLAGS = \
@@ -87,9 +107,13 @@ local_stream_test_SOURCES = \
   local_stream_client_test.cpp
 
 local_stream_test_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Svc_Cfg_IPC_Client_Rem_Dgram.am 
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.Svc_Cfg_IPC_Client_Rem_Dgram.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += remote_dgram_test
 
 remote_dgram_test_CPPFLAGS = \
@@ -100,9 +124,13 @@ remote_dgram_test_SOURCES = \
   remote_dgram_client_test.cpp
 
 remote_dgram_test_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Svc_Cfg_IPC_Client_Rem_Stream.am 
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.Svc_Cfg_IPC_Client_Rem_Stream.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += remote_stream_test
 
 remote_stream_test_CPPFLAGS = \
@@ -113,9 +141,11 @@ remote_stream_test_SOURCES = \
   remote_stream_client_test.cpp
 
 remote_stream_test_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Svc_Cfg_IPC_Client_Rem_Svc_Dir.am 
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.Svc_Cfg_IPC_Client_Rem_Svc_Dir.am
 noinst_PROGRAMS += remote_service_directory_test
 
 remote_service_directory_test_CPPFLAGS = \
@@ -126,9 +156,9 @@ remote_service_directory_test_SOURCES = \
   remote_service_directory_test.cpp
 
 remote_service_directory_test_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Svc_Cfg_IPC_Client_Rem_Thr_Stream.am 
+## Makefile.Svc_Cfg_IPC_Client_Rem_Thr_Stream.am
 noinst_PROGRAMS += remote_thr_stream_test
 
 remote_thr_stream_test_CPPFLAGS = \
@@ -139,7 +169,7 @@ remote_thr_stream_test_SOURCES = \
   remote_thr_stream_client_test.cpp
 
 remote_thr_stream_test_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Clean up template repositories, etc.
 clean-local:

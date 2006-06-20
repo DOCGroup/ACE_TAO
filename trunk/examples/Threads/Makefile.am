@@ -11,7 +11,8 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.Threads_Auto_Event.am 
+
+## Makefile.Threads_Auto_Event.am
 noinst_PROGRAMS = auto_event
 
 auto_event_CPPFLAGS = \
@@ -26,9 +27,9 @@ auto_event_SOURCES = \
   thread_specific.h
 
 auto_event_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Threads_Barrier1.am 
+## Makefile.Threads_Barrier1.am
 noinst_PROGRAMS += barrier1
 
 barrier1_CPPFLAGS = \
@@ -43,9 +44,9 @@ barrier1_SOURCES = \
   thread_specific.h
 
 barrier1_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Threads_Barrier2.am 
+## Makefile.Threads_Barrier2.am
 noinst_PROGRAMS += barrier2
 
 barrier2_CPPFLAGS = \
@@ -60,9 +61,9 @@ barrier2_SOURCES = \
   thread_specific.h
 
 barrier2_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Threads_Cancel.am 
+## Makefile.Threads_Cancel.am
 noinst_PROGRAMS += cancel
 
 cancel_CPPFLAGS = \
@@ -77,9 +78,11 @@ cancel_SOURCES = \
   thread_specific.h
 
 cancel_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Threads_Future1.am 
+## Makefile.Threads_Future1.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += future1
 
 future1_CPPFLAGS = \
@@ -94,9 +97,13 @@ future1_SOURCES = \
   thread_specific.h
 
 future1_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Threads_Future2.am 
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.Threads_Future2.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += future2
 
 future2_CPPFLAGS = \
@@ -111,9 +118,11 @@ future2_SOURCES = \
   thread_specific.h
 
 future2_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Threads_Manual_Event.am 
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.Threads_Manual_Event.am
 noinst_PROGRAMS += manual_event
 
 manual_event_CPPFLAGS = \
@@ -128,9 +137,11 @@ manual_event_SOURCES = \
   thread_specific.h
 
 manual_event_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Threads_Process_Mutex.am 
+## Makefile.Threads_Process_Mutex.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += process_mutex
 
 process_mutex_CPPFLAGS = \
@@ -145,9 +156,13 @@ process_mutex_SOURCES = \
   thread_specific.h
 
 process_mutex_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Threads_Process_Semaphore.am 
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.Threads_Process_Semaphore.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += process_semaphore
 
 process_semaphore_CPPFLAGS = \
@@ -162,9 +177,11 @@ process_semaphore_SOURCES = \
   thread_specific.h
 
 process_semaphore_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Threads_Reader_Writer.am 
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.Threads_Reader_Writer.am
 noinst_PROGRAMS += reader_writer
 
 reader_writer_CPPFLAGS = \
@@ -179,9 +196,9 @@ reader_writer_SOURCES = \
   thread_specific.h
 
 reader_writer_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Threads_Recursive_Mutex.am 
+## Makefile.Threads_Recursive_Mutex.am
 noinst_PROGRAMS += recursive_mutex
 
 recursive_mutex_CPPFLAGS = \
@@ -196,9 +213,9 @@ recursive_mutex_SOURCES = \
   thread_specific.h
 
 recursive_mutex_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Threads_Task_Five.am 
+## Makefile.Threads_Task_Five.am
 noinst_PROGRAMS += task_five
 
 task_five_CPPFLAGS = \
@@ -213,9 +230,9 @@ task_five_SOURCES = \
   thread_specific.h
 
 task_five_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Threads_Task_Four.am 
+## Makefile.Threads_Task_Four.am
 noinst_PROGRAMS += task_four
 
 task_four_CPPFLAGS = \
@@ -230,9 +247,9 @@ task_four_SOURCES = \
   thread_specific.h
 
 task_four_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Threads_Task_One.am 
+## Makefile.Threads_Task_One.am
 noinst_PROGRAMS += task_one
 
 task_one_CPPFLAGS = \
@@ -247,9 +264,9 @@ task_one_SOURCES = \
   thread_specific.h
 
 task_one_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Threads_Task_Three.am 
+## Makefile.Threads_Task_Three.am
 noinst_PROGRAMS += task_three
 
 task_three_CPPFLAGS = \
@@ -264,9 +281,9 @@ task_three_SOURCES = \
   thread_specific.h
 
 task_three_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Threads_Task_Two.am 
+## Makefile.Threads_Task_Two.am
 noinst_PROGRAMS += task_two
 
 task_two_CPPFLAGS = \
@@ -281,9 +298,9 @@ task_two_SOURCES = \
   thread_specific.h
 
 task_two_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Threads_Thread_Manager.am 
+## Makefile.Threads_Thread_Manager.am
 noinst_PROGRAMS += thread_manager
 
 thread_manager_CPPFLAGS = \
@@ -298,9 +315,9 @@ thread_manager_SOURCES = \
   thread_specific.h
 
 thread_manager_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Threads_Thread_Pool.am 
+## Makefile.Threads_Thread_Pool.am
 noinst_PROGRAMS += thread_pool
 
 thread_pool_CPPFLAGS = \
@@ -315,9 +332,9 @@ thread_pool_SOURCES = \
   thread_specific.h
 
 thread_pool_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Threads_Thread_Specific.am 
+## Makefile.Threads_Thread_Specific.am
 noinst_PROGRAMS += thread_specific
 
 thread_specific_CPPFLAGS = \
@@ -329,9 +346,9 @@ thread_specific_SOURCES = \
   thread_specific.h
 
 thread_specific_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Threads_Token.am 
+## Makefile.Threads_Token.am
 noinst_PROGRAMS += token
 
 token_CPPFLAGS = \
@@ -346,9 +363,9 @@ token_SOURCES = \
   thread_specific.h
 
 token_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Threads_Tss1.am 
+## Makefile.Threads_Tss1.am
 noinst_PROGRAMS += tss1
 
 tss1_CPPFLAGS = \
@@ -363,9 +380,9 @@ tss1_SOURCES = \
   thread_specific.h
 
 tss1_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Threads_Tss2.am 
+## Makefile.Threads_Tss2.am
 noinst_PROGRAMS += tss2
 
 tss2_CPPFLAGS = \
@@ -380,7 +397,7 @@ tss2_SOURCES = \
   thread_specific.h
 
 tss2_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Clean up template repositories, etc.
 clean-local:

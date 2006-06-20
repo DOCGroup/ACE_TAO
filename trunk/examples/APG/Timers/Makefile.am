@@ -11,7 +11,7 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.Alarm.am 
+## Makefile.Alarm.am
 noinst_PROGRAMS = Alarm
 
 Alarm_CPPFLAGS = \
@@ -27,9 +27,9 @@ Alarm_SOURCES = \
   Upcall.h
 
 Alarm_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Task.am 
+## Makefile.Task.am
 noinst_PROGRAMS += Task
 
 Task_CPPFLAGS = \
@@ -45,9 +45,9 @@ Task_SOURCES = \
   Upcall.h
 
 Task_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Timers.am 
+## Makefile.Timers.am
 noinst_PROGRAMS += Timers
 
 Timers_CPPFLAGS = \
@@ -62,9 +62,9 @@ Timers_SOURCES = \
   TimerDispatcher.h
 
 Timers_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Upcall.am 
+## Makefile.Upcall.am
 noinst_PROGRAMS += Upcall
 
 Upcall_CPPFLAGS = \
@@ -80,7 +80,7 @@ Upcall_SOURCES = \
   Upcall.h
 
 Upcall_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Clean up template repositories, etc.
 clean-local:

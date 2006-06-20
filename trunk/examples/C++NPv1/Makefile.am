@@ -12,8 +12,10 @@ ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
 noinst_PROGRAMS =
-## Makefile.C++NPv1_Iterative_Logging_Server.am 
 
+## Makefile.C++NPv1_Iterative_Logging_Server.am
+
+if !BUILD_ACE_FOR_TAO
 if !BUILD_USES_WCHAR
 noinst_PROGRAMS += iterative_logging_server
 
@@ -30,11 +32,12 @@ iterative_logging_server_SOURCES = \
   Logging_Server.h
 
 iterative_logging_server_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_USES_WCHAR
+endif !BUILD_ACE_FOR_TAO
 
-## Makefile.C++NPv1_Logging_Client.am 
+## Makefile.C++NPv1_Logging_Client.am
 
 if !BUILD_USES_WCHAR
 noinst_PROGRAMS += logging_client
@@ -55,12 +58,13 @@ logging_client_SOURCES = \
   Thread_Per_Connection_Logging_Server.h
 
 logging_client_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_USES_WCHAR
 
-## Makefile.C++NPv1_PPC_Logging_Server.am 
+## Makefile.C++NPv1_PPC_Logging_Server.am
 
+if !BUILD_ACE_FOR_TAO
 if !BUILD_USES_WCHAR
 noinst_PROGRAMS += ppc_logging_server
 
@@ -77,12 +81,14 @@ ppc_logging_server_SOURCES = \
   Process_Per_Connection_Logging_Server.h
 
 ppc_logging_server_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_USES_WCHAR
+endif !BUILD_ACE_FOR_TAO
 
-## Makefile.C++NPv1_RTTPC_Logging_Server.am 
+## Makefile.C++NPv1_RTTPC_Logging_Server.am
 
+if !BUILD_ACE_FOR_TAO
 if !BUILD_USES_WCHAR
 noinst_PROGRAMS += RTTPC_logging_server
 
@@ -99,12 +105,14 @@ RTTPC_logging_server_SOURCES = \
   RT_Thread_Per_Connection_Logging_Server.h
 
 RTTPC_logging_server_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_USES_WCHAR
+endif !BUILD_ACE_FOR_TAO
 
-## Makefile.C++NPv1_Reactive_Logging_Server.am 
+## Makefile.C++NPv1_Reactive_Logging_Server.am
 
+if !BUILD_ACE_FOR_TAO
 if !BUILD_USES_WCHAR
 noinst_PROGRAMS += reactive_logging_server
 
@@ -121,12 +129,14 @@ reactive_logging_server_SOURCES = \
   Reactive_Logging_Server.h
 
 reactive_logging_server_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_USES_WCHAR
+endif !BUILD_ACE_FOR_TAO
 
-## Makefile.C++NPv1_Reactive_Logging_Server_Ex.am 
+## Makefile.C++NPv1_Reactive_Logging_Server_Ex.am
 
+if !BUILD_ACE_FOR_TAO
 if !BUILD_USES_WCHAR
 noinst_PROGRAMS += reactive_logging_server_ex
 
@@ -143,12 +153,14 @@ reactive_logging_server_ex_SOURCES = \
   Reactive_Logging_Server_Ex.h
 
 reactive_logging_server_ex_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_USES_WCHAR
+endif !BUILD_ACE_FOR_TAO
 
-## Makefile.C++NPv1_TPC_Logging_Server.am 
+## Makefile.C++NPv1_TPC_Logging_Server.am
 
+if !BUILD_ACE_FOR_TAO
 if !BUILD_USES_WCHAR
 noinst_PROGRAMS += tpc_logging_server
 
@@ -165,9 +177,10 @@ tpc_logging_server_SOURCES = \
   Thread_Per_Connection_Logging_Server.h
 
 tpc_logging_server_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_USES_WCHAR
+endif !BUILD_ACE_FOR_TAO
 
 ## Clean up template repositories, etc.
 clean-local:

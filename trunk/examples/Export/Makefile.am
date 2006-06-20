@@ -11,7 +11,8 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.Export_Lib.am 
+## Makefile.Export_Lib.am
+
 noinst_LTLIBRARIES = libExport_Lib.la
 
 libExport_Lib_la_CPPFLAGS = \
@@ -22,13 +23,10 @@ libExport_Lib_la_CPPFLAGS = \
 libExport_Lib_la_SOURCES = \
   dll.cpp
 
-libExport_Lib_la_LIBADD = \
- $(top_builddir)/ace/libACE.la
-
 noinst_HEADERS = \
   dll.h
 
-## Makefile.Export_Test.am 
+## Makefile.Export_Test.am
 noinst_PROGRAMS = test
 
 test_CPPFLAGS = \
@@ -41,7 +39,8 @@ test_SOURCES = \
   test_export.h
 
 test_LDADD = \
- libExport_Lib.la $(top_builddir)/ace/libACE.la
+  libExport_Lib.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Clean up template repositories, etc.
 clean-local:

@@ -11,7 +11,11 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
+
 ## Makefile.Svc_Cfg_IPC_Server_Lib.am
+
+if !BUILD_ACE_FOR_TAO
+
 noinst_LTLIBRARIES = libIPC_Tests_Server.la
 
 libIPC_Tests_Server_la_CPPFLAGS = \
@@ -31,31 +35,32 @@ libIPC_Tests_Server_la_SOURCES = \
   Handle_Thr_Stream.cpp \
   Handle_Timeout.cpp
 
-libIPC_Tests_Server_la_LIBADD = \
- $(top_builddir)/ace/libACE.la
-
 noinst_HEADERS = \
   Handle_Broadcast.h \
+  Handle_Broadcast.i \
   Handle_L_CODgram.h \
+  Handle_L_CODgram.i \
   Handle_L_Dgram.h \
+  Handle_L_Dgram.i \
   Handle_L_FIFO.h \
+  Handle_L_FIFO.i \
   Handle_L_Pipe.h \
+  Handle_L_Pipe.i \
   Handle_L_SPIPE.h \
+  Handle_L_SPIPE.i \
   Handle_L_Stream.h \
+  Handle_L_Stream.i \
   Handle_R_Stream.h \
+  Handle_R_Stream.i \
   Handle_Thr_Stream.h \
   Handle_Timeout.h \
-  Handle_Broadcast.i \
-  Handle_L_CODgram.i \
-  Handle_L_Dgram.i \
-  Handle_L_FIFO.i \
-  Handle_L_Pipe.i \
-  Handle_L_SPIPE.i \
-  Handle_L_Stream.i \
-  Handle_R_Stream.i \
   Handle_Timeout.i
 
+endif !BUILD_ACE_FOR_TAO
+
 ## Makefile.Svc_Cfg_IPC_Server_Test.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS = server_test
 
 server_test_CPPFLAGS = \
@@ -65,29 +70,32 @@ server_test_CPPFLAGS = \
 server_test_SOURCES = \
   server_test.cpp \
   Handle_Broadcast.h \
+  Handle_Broadcast.i \
   Handle_L_CODgram.h \
+  Handle_L_CODgram.i \
   Handle_L_Dgram.h \
+  Handle_L_Dgram.i \
   Handle_L_FIFO.h \
+  Handle_L_FIFO.i \
   Handle_L_Pipe.h \
+  Handle_L_Pipe.i \
   Handle_L_SPIPE.h \
+  Handle_L_SPIPE.i \
   Handle_L_Stream.h \
+  Handle_L_Stream.i \
   Handle_R_Dgram.h \
+  Handle_R_Dgram.i \
   Handle_R_Stream.h \
+  Handle_R_Stream.i \
   Handle_Thr_Stream.h \
   Handle_Timeout.h \
-  Handle_Broadcast.i \
-  Handle_L_CODgram.i \
-  Handle_L_Dgram.i \
-  Handle_L_FIFO.i \
-  Handle_L_Pipe.i \
-  Handle_L_SPIPE.i \
-  Handle_L_Stream.i \
-  Handle_R_Dgram.i \
-  Handle_R_Stream.i \
   Handle_Timeout.i
 
 server_test_LDADD = \
- libIPC_Tests_Server.la $(top_builddir)/ace/libACE.la
+  libIPC_Tests_Server.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif !BUILD_ACE_FOR_TAO
 
 ## Clean up template repositories, etc.
 clean-local:

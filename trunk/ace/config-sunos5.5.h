@@ -350,8 +350,6 @@
 // Platform supports ACE_TLI.
 #define ACE_HAS_TLI
 
-#define ACE_HAS_STRPTIME
-
 #define ACE_HAS_GETPAGESIZE 1
 
 #define ACE_HAS_STL_MAP_CONFLICT

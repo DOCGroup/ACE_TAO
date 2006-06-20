@@ -11,7 +11,8 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.ASX_Message_Queue_Bounded_Buffer.am 
+
+## Makefile.ASX_Message_Queue_Bounded_Buffer.am
 noinst_PROGRAMS = bounded_buffer
 
 bounded_buffer_CPPFLAGS = \
@@ -22,9 +23,11 @@ bounded_buffer_SOURCES = \
   bounded_buffer.cpp
 
 bounded_buffer_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.ASX_Message_Queue_Buffer_Stream.am 
+## Makefile.ASX_Message_Queue_Buffer_Stream.am
+
+if !BUILD_USES_WCHAR
 noinst_PROGRAMS += buffer_stream
 
 buffer_stream_CPPFLAGS = \
@@ -35,9 +38,11 @@ buffer_stream_SOURCES = \
   buffer_stream.cpp
 
 buffer_stream_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.ASX_Message_Queue_Priority_Buffer.am 
+endif !BUILD_USES_WCHAR
+
+## Makefile.ASX_Message_Queue_Priority_Buffer.am
 noinst_PROGRAMS += priority_buffer
 
 priority_buffer_CPPFLAGS = \
@@ -48,7 +53,7 @@ priority_buffer_SOURCES = \
   priority_buffer.cpp
 
 priority_buffer_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Clean up template repositories, etc.
 clean-local:

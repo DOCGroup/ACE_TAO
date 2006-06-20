@@ -11,7 +11,7 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.Smart_Pointers_Gadget.am 
+## Makefile.Smart_Pointers_Gadget.am
 noinst_PROGRAMS = gadget
 
 gadget_CPPFLAGS = \
@@ -34,9 +34,9 @@ gadget_SOURCES = \
   Gadget_Part_Impl.h
 
 gadget_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Smart_Pointers_Widget.am 
+## Makefile.Smart_Pointers_Widget.am
 noinst_PROGRAMS += Widget
 
 Widget_CPPFLAGS = \
@@ -59,7 +59,7 @@ Widget_SOURCES = \
   Widget_Part_Impl.h
 
 Widget_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Clean up template repositories, etc.
 clean-local:

@@ -21,6 +21,7 @@ SUBDIRS = \
         IPC_SAP \
         Log_Msg \
         Logger \
+        Map_Manager \
         Mem_Map \
         Misc \
         NT_Service \

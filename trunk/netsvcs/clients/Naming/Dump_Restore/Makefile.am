@@ -11,7 +11,11 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.Netsvcs_Dump_Restore_Lib.am 
+
+## Makefile.Netsvcs_Dump_Restore_Lib.am
+
+if !BUILD_ACE_FOR_TAO
+
 noinst_LTLIBRARIES = libDump_Restore.la
 
 libDump_Restore_la_CPPFLAGS = \
@@ -22,13 +26,14 @@ libDump_Restore_la_CPPFLAGS = \
 libDump_Restore_la_SOURCES = \
   Dump_Restore.cpp
 
-libDump_Restore_la_LIBADD = \
- $(top_builddir)/ace/libACE.la
-
 noinst_HEADERS = \
   Dump_Restore.h
 
-## Makefile.Netsvcs_Dump_Restore.am 
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.Netsvcs_Dump_Restore.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS = main
 
 main_CPPFLAGS = \
@@ -40,7 +45,10 @@ main_SOURCES = \
   Dump_Restore.h
 
 main_LDADD = \
- libDump_Restore.la $(top_builddir)/ace/libACE.la
+  libDump_Restore.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif !BUILD_ACE_FOR_TAO
 
 ## Clean up template repositories, etc.
 clean-local:

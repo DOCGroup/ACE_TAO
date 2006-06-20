@@ -11,8 +11,12 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.UPIPE_SAP_Ex1.am 
-noinst_PROGRAMS = ex1
+noinst_PROGRAMS =
+
+## Makefile.UPIPE_SAP_Ex1.am
+
+if !BUILD_ACE_FOR_TAO
+noinst_PROGRAMS += ex1
 
 ex1_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -22,9 +26,13 @@ ex1_SOURCES = \
   ex1.cpp
 
 ex1_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.UPIPE_SAP_Ex2.am 
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.UPIPE_SAP_Ex2.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += ex2
 
 ex2_CPPFLAGS = \
@@ -35,9 +43,13 @@ ex2_SOURCES = \
   ex2.cpp
 
 ex2_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.UPIPE_SAP_Ex3.am 
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.UPIPE_SAP_Ex3.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += ex3
 
 ex3_CPPFLAGS = \
@@ -48,7 +60,9 @@ ex3_SOURCES = \
   ex3.cpp
 
 ex3_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif !BUILD_ACE_FOR_TAO
 
 ## Clean up template repositories, etc.
 clean-local:

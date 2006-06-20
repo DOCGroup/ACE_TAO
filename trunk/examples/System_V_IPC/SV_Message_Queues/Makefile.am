@@ -11,8 +11,12 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.SV_Message_Queues_MQ_Client.am 
-noinst_PROGRAMS = mqclient
+noinst_PROGRAMS =
+
+## Makefile.SV_Message_Queues_MQ_Client.am
+
+if !BUILD_ACE_FOR_TAO
+noinst_PROGRAMS += mqclient
 
 mqclient_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -23,9 +27,13 @@ mqclient_SOURCES = \
   test.h
 
 mqclient_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.SV_Message_Queues_MQ_Server.am 
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.SV_Message_Queues_MQ_Server.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += mqserver
 
 mqserver_CPPFLAGS = \
@@ -37,9 +45,13 @@ mqserver_SOURCES = \
   test.h
 
 mqserver_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.SV_Message_Queues_TMQ_Client.am 
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.SV_Message_Queues_TMQ_Client.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += tmqclient
 
 tmqclient_CPPFLAGS = \
@@ -51,9 +63,13 @@ tmqclient_SOURCES = \
   test.h
 
 tmqclient_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.SV_Message_Queues_TMQ_Server.am 
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.SV_Message_Queues_TMQ_Server.am
+
+if !BUILD_ACE_FOR_TAO
 noinst_PROGRAMS += tmqserver
 
 tmqserver_CPPFLAGS = \
@@ -65,7 +81,9 @@ tmqserver_SOURCES = \
   test.h
 
 tmqserver_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif !BUILD_ACE_FOR_TAO
 
 ## Clean up template repositories, etc.
 clean-local:

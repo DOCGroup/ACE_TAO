@@ -11,8 +11,12 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.netsvcs.am 
-lib_LTLIBRARIES = libnetsvcs.la
+
+## Makefile.netsvcs.am
+
+if !BUILD_ACE_FOR_TAO
+
+noinst_LTLIBRARIES = libnetsvcs.la
 
 libnetsvcs_la_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -30,23 +34,19 @@ libnetsvcs_la_SOURCES = \
   TS_Server_Handler.cpp \
   Token_Handler.cpp
 
-libnetsvcs_la_LIBADD = \
- $(top_builddir)/ace/libACE.la
-
-libnetsvcs_la_LDFLAGS = \
- -version-number @ACE_MAJOR@:@ACE_MINOR@:@ACE_BETA@
-
 noinst_HEADERS = \
   Base_Optimizer.h \
   Client_Logging_Handler.h \
   Log_Message_Receiver.h \
   Name_Handler.h \
   Server_Logging_Handler.h \
+  Server_Logging_Handler_T.cpp \
   Server_Logging_Handler_T.h \
   TS_Clerk_Handler.h \
   TS_Server_Handler.h \
-  Token_Handler.h \
-  Server_Logging_Handler_T.cpp
+  Token_Handler.h
+
+endif !BUILD_ACE_FOR_TAO
 
 ## Clean up template repositories, etc.
 clean-local:

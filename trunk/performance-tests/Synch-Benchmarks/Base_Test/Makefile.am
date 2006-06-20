@@ -11,7 +11,11 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.Synch_Benchmarks_Base_Test.am 
+
+## Makefile.Synch_Benchmarks_Base_Test.am
+
+if !BUILD_ACE_FOR_TAO
+
 noinst_LTLIBRARIES = libSynch_Benchmarks_Base_Test.la
 
 libSynch_Benchmarks_Base_Test_la_CPPFLAGS = \
@@ -24,12 +28,11 @@ libSynch_Benchmarks_Base_Test_la_SOURCES = \
   base_test.cpp \
   mutex_test.cpp
 
-libSynch_Benchmarks_Base_Test_la_LIBADD = \
- $(top_builddir)/performance-tests/Synch-Benchmarks/Synch_Lib/libSynch_Lib.la $(top_builddir)/ace/libACE.la
-
 noinst_HEADERS = \
   Baseline_Test.h \
   Baseline_Test.i
+
+endif !BUILD_ACE_FOR_TAO
 
 ## Clean up template repositories, etc.
 clean-local:
