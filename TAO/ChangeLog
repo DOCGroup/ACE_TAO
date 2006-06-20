@@ -1,7 +1,298 @@
+Tue Jun 20 08:12:04 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Any_Insert_Policy_T.h:
+          Reworded the policies to just contain a static method so that we
+          don't need to create an instance
+
+        * tao/Argument.h:
+          When we don't have interceptors, just don't declare the In/Out/InOut
+          classes, just typedef them to Argument
+
+        * tao/Basic_Arguments.h:
+        * tao/Basic_Argument_T.{h,cpp.inl}:
+        * tao/BD_String_Argument_T.{h,cpp,inl}:
+        * tao/Fixed_Array_Argument_T.{h,cpp,inl}:
+        * tao/Fixed_Size_Argument_T.{h,cpp,inl}:
+        * tao/Object_Argument_T.{h,cpp,inl}:
+        * tao/Object.h:
+        * tao/Special_Basic_Argument_T.{h,cpp,inl}:
+        * tao/Special_Basic_Arguments.h:
+        * tao/UB_String_Argument_T.{h,cpp,inl}:
+        * tao/UB_String_Argument.h:
+        * tao/Var_Array_Argument_T.{h,cpp,inl}:
+        * tao/Var_Size_Argument_T.{h,cpp,inl}:
+        * tao/AnyTypeCode/Any_Arg_Traits.h:
+        * tao/AnyTypeCode/TypeCode.h:
+        * tao/IFR_Client/IFR_Client_Adapter_Impl.cpp:
+        * tao/PortableServer/Any_SArg_Traits.h:
+        * tao/PortableServer/Basic_SArgument_T.{h,cpp,inl}:
+        * tao/PortableServer/Basic_SArguments.h:
+        * tao/PortableServer/BD_String_SArgument_T.{h,cpp,inl}:
+        * tao/PortableServer/Fixed_Array_SArgument_T.{h,cpp,inl}:
+        * tao/PortableServer/Fixed_Size_SArgument_T.{h,cpp,inl}:
+        * tao/PortableServer/Object_SArgument_T.{h,cpp,inl}:
+        * tao/PortableServer/Object_SArg_Traits.h:
+        * tao/PortableServer/Var_Size_SArgument_T.{h,cpp,inl}:
+        * tao/Valuetype/ValueBase.h:
+        * tao/Valuetype/AbstractBase.h:
+        * tao/PortableServer/Special_Basic_SArgument_T.{h,cpp,inl}:
+        * tao/PortableServer/Special_Basic_SArgument.h:
+        * tao/PortableServer/TypeCode_SArg_Traits.h:
+        * tao/PortableServer/Var_Array_SArgument_T.{h,cpp,inl}:
+        * TAO_IDL/be/be_visitor_arg_traits.cpp:
+          The any insert policy has been changed to a template template
+          argument.
+
+        * tao/PortableServer/PolicyS.cpp:
+        * tao/WCharSeqS.h:
+        * tao/WCharSeqC.h:
+        * tao/CONV_FRAMEC.h:
+        * tao/DomainC.cpp:
+        * tao/IIOP_EndpointsC.h:
+        * tao/IIOPC.h:
+        * tao/Messaging_PolicyValueC.h:
+        * tao/IOP_IORC.h:
+        * tao/OctetSeqC.h:
+        * tao/WCharSeqC.cpp:
+        * tao/Policy_ForwardC.h:
+        * tao/PolicyC.cpp:
+        * tao/StringSeqC.h:
+        * tao/ServicesC.h:
+        * tao/GIOPC.h:
+        * tao/AnyTypeCode/Dynamic_ParameterC.h:
+        * tao/AnyTypeCode/WCharSeqA.{h,cpp}:
+        * tao/Domain/DomainS.cpp:
+        * tao/DynamicAny/DynamicAnyC.h:
+        * tao/IFR_Client/IFR_ExtendedC.{h,cpp}:
+        * tao/IFR_Client/IFR_ComponentsC.{h,cpp}:
+        * tao/IFR_Client/IFR_BasicC.{h,cpp}:
+        * tao/IFR_Client/IFR_BaseC.{h,cpp}:
+        * tao/ImR_Client/ImplRepoC.{h,cpp}:
+        * tao/ImR_Client/ImplRepoS.cpp:
+        * tao/ImR_Client/ServerObjectS.cpp:
+        * tao/IORInterceptor/IORInfoC.cpp:
+        * tao/ObjRefTemplate/ObjectReferenceTemplateC.cpp:
+        * tao/RTCORBA/RTCORBAC.h:
+        * tao/RTScheduling/RTSchedulerC.cpp:
+        * tao/Strategies/sciop_endpointsC.h:
+        * tao/Strategies/uiop_endpointsC.h:
+        * tao/PortableServer/PortableServerC.{h,cpp}:
+        * tao/PortableServer/PortableServerS.h:
+          Updated for all template changes
+
+        * tao/Sequence_T.h:
+          Reordered includes
+
+        * tao/Blocked_Connect_Strategy.{h,cpp}:
+          Removed not needed virtual destructor
+
+        * tao/Connection_Handler.cpp:
+        * tao/Wait_On_Leader_Follower.cpp:
+        * tao/Wait_On_Reactor.cpp:
+        * tao/Wait_On_Read.cpp:
+        * tao/Wait_Strategy.{h,cpp,inl}:
+        * tao/Transport_Cache_Manager.cpp:
+          Changed is_registered flag of the wait stratetegy to a real bool
+
+        * tao/Object_Reference_Sequence_Element_T.h:
+        * tao/String_Sequence_Element_T.h:
+          Added in accessor
+
+        * tao/Object.cpp:
+        * tao/PortableServer/IdAssignmentPolicy.{h,cpp}:
+        * tao/PortableServer/IdUniquenessPolicy.{h,cpp}:
+        * tao/PortableServer/ImplicitActivationPolicy.{h,cpp}:
+        * tao/PortableServer/LifespanPolicy.{h,cpp}:
+        * tao/PortableServer/POA_Cached_Policies.cpp:
+        * tao/PortableServer/POA_Policy_Set.cpp:
+        * tao/PortableServer/Object_Adapter.cpp:
+        * tao/PortableServer/POAManager.{h,cpp}:
+        * tao/PortableServer/POAManagerFactory.{h,cpp}:
+        * tao/PortableServer/RequestProcessingPolicy.{h,cpp}:
+        * tao/ORB.{h,cpp}:
+        * tao/PortableServer/PortableServer.cpp:
+        * tao/PortableServer/RequestProcessingStrategyDefaultServant.{h,cpp}:
+        * tao/PortableServer/RequestProcessingStrategyDefaultServantFI.{h,cpp}:
+        * tao/PortableServer/RequestProcessingStrategyServantActivator.{h,cpp}:
+        * tao/PortableServer/RequestProcessingStrategyServantActivatorFI.{h,cpp}:
+        * tao/PortableServer/RequestProcessingStrategyServantLocator.{h,cpp}:
+        * tao/PortableServer/RequestProcessingStrategyServantLocatorFI.{h,cpp}:
+        * tao/PortableServer/RequestProcessingStrategyServantManager.{h,cpp}:
+        * tao/PortableServer/Servant_Upcall.cpp:
+        * tao/PortableServer/Root_POA.{h,cpp}:
+        * tao/PortableServer/ThreadPolicy.{h,cpp}:
+        * tao/PortableServer/ServantRetentionStrategyRetain.{h,cpp}:
+        * tao/PortableServer/ServantRetentionStrategyNonRetain.{h,cpp}:
+        * tao/PortableServer/ServantRetentionStrategy.h:
+        * tao/PortableServer/ServantRetentionPolicy.{h,cpp}:
+          Added support for CORBA/e
+
+        * tao/PortableServer/IdAssignmentPolicy.pidl:
+        * tao/PortableServer/PS_Current.pidl:
+        * tao/TypeCodeFactory/TypeCodeFactory.pidl:
+        * tao/Valuetype/StringValue.pidl:
+        * tao/PortableServer/RequestProcessingPolicy.pidl:
+        * tao/PortableServer/ServantActivator.pidl:
+        * tao/PortableServer/ServantLocator.pidl:
+        * tao/PortableServer/ServantManager.pidl:
+        * tao/PortableServer/ServantRetentionPolicy.pidl:
+        * tao/PortableServer/ThreadPolicy.pidl:
+          Updated regeneration instructions and support CORBA/e
+
+        * tao/OctetSeq.pidl:
+          Added -Sorb to the regeneration instructions
+
+        * tao/Policy_Forward.pidl:
+          Updated regeneration instructions, handcrafting is not needed anymore
+
+        * tao/diffs/Policy_Forward.diff:
+          Removed from the repo
+
+        * tao/VarOut_T.{h,inl}:
+          Zapped one template argument
+
+        * tao/IIOP_Transport.{h,cpp}:
+        * tao/default_resource.{h,cpp}:
+        * tao/Transport.{h,cpp}:
+          Added support for sendfile
+
+        * tao/orbconf.h:
+          Added TAO_USE_OUTPUT_CDR_MMAP_MEMORY_POOL with which sendfile
+          can be forced during compilation
+
+        * tao/Transport_Cache_Manager.cpp:
+          Use ACE_TEXT with debug macros
+
+        * tao/Messaging/Asynch_Reply_Dispatcher.cpp:
+        * tao/RTCORBA/RT_Protocols_Hooks.cpp:
+        * tao/Valuetype/AbstractBase_T.cpp:
+          Const improvements
+
+        * tao/PortableServer/get_arg.h:
+          Check if the details do have args before doing a cast, part of
+          bug 2503
+
+        * tao/PortableServer/POA.pidl:
+        * tao/PortableServer/PortableServer.pidl:
+          Moved most contents to POA.pidl to make regeneration easier
+
+        * tao/Bounded_Sequence_CDR_T.h:
+          Moved array code to this file
+
+        * tao/Array_VarOut_T.{h,cpp,inl}:
+        * tao/Array_Traits_T.h:
+        * tao/Bounded_Array_Sequence_T.h:
+        * tao/Unbounded_Array_Sequence_T.h:
+        * tao/Unbounded_Sequence_CDR_T.h:
+          Refactored array support, mix of the changes from Jeff from
+          yesterday and my work. Need to cleanup a little when things
+          compile again.
+
+        * tao/TypeCodeFactory.mpc:
+        * tao/Valuetype.mpc:
+        * tao/PortableServer.mpc:
+        * tao/ImR_Client.mpc:
+        * tao/EndpointPolicy.mpc:
+          Enabled regeneration of pidl files as part of building the core
+          TAO libs. More pidl files will get regenerated as part of the
+          build, this is the first step.
+
+        * tao/tao.mpc:
+          Added new sendfile files
+
+        * tao/RTCORBA/RT_Transport_Descriptor.h:
+          Use false for a boolean
+
+        * tao/Strategies/FIFO_Connection_Purging_Strategy.{h,cpp}:
+        * tao/Strategies/LFU_Connection_Purging_Strategy.{h,cpp}:
+        * tao/Strategies/NULL_Connection_Purging_Strategy.{h,cpp}:
+          Removed not needed virtual destructors
+
+        * tao/PortableServer/diffs/AdapterActivator.diff
+        * tao/PortableServer/diffs/ForwardRequest.diff
+        * tao/PortableServer/diffs/ImplicitActivationPolicy.diff
+        * tao/PortableServer/diffs/POAManager.diff
+        * tao/PortableServer/diffs/RequestProcessingPolicy.diff
+        * tao/PortableServer/diffs/ServantActivator.diff
+        * tao/PortableServer/diffs/ServantLocator.diff
+        * tao/PortableServer/diffs/ServantManager.diff
+        * tao/PortableServer/diffs/ServantRetentionPolicy.diff
+        * tao/PortableServer/diffs/ThreadPolicy.diff
+          Removed, not needed anymore
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be_include/be_decl.h:
+          Made generation of ORB.h optional, can be suppressed using -Sorb
+
+        * TAO_IDL/be/be_decl.cpp:
+        * TAO_IDL/be/be_interface_fwd.cpp:
+        * TAO_IDL/be/be_type.cpp:
+        * TAO_IDL/be/be_typedef.cpp:
+        * TAO_IDL/be_include/be_decl.h:
+        * TAO_IDL/be_include/be_interface_fwd.h:
+        * TAO_IDL/be_include/be_type.h:
+        * TAO_IDL/be_include/be_typedef.h:
+          Removed old code related to explicit template instantiations
+
+        * TAO_IDL/be/be_sequence.cpp:
+          Updated generation of array sequences
+
+        * TAO_IDL/be/be_visitor_array/array_ch.cpp:
+        * TAO_IDL/be/be_visitor_array/array_ci.cpp:
+        * TAO_IDL/be/be_visitor_array/array_cs.cpp:
+        * TAO_IDL/be/be_visitor_array/cdr_op_ch.cpp:
+          Updated generation for arrays
+
+        * TAO_IDL/be/be_visitor_interface.cpp:
+          Added support for native keyword, needed to generate typedefs  from
+          the pidl files
+
+        * TAO_IDL/be/be_visitor_enum/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_enum/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_enum/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/buffer_type.cpp:
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+          Small layout improvements
+
+        * TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_module/module_ch.cpp:
+        * TAO_IDL/be/be_visitor_typecode/alias_typecode.cpp
+        * TAO_IDL/be/be_visitor_typecode/enum_typecode.cpp
+        * TAO_IDL/be/be_visitor_typecode/objref_typecode.cpp
+        * TAO_IDL/be/be_visitor_typecode/struct_typecode.cpp
+        * TAO_IDL/be/be_visitor_typecode/union_typecode.cpp
+        * TAO_IDL/be/be_visitor_typecode/value_typecode.cpp
+        * TAO_IDL/be/be_visitor_valuebox/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuebox/valuebox_ci.cpp:
+        * TAO_IDL/be/be_visitor_valuebox/valuebox_cs.cpp:
+          Added missing generation of versioning macros.
+
+        * TAO_IDL/be/be_visitor_interface/interface.cpp:
+        * TAO_IDL/be_include/be_visitor_interface/interface.h:
+          Handle native
+
+        * TAO_IDL/be/be_visitor_native/native_ch.cpp:
+        * TAO_IDL/be_include/be_visitor_native.h:
+        * TAO_IDL/be_include/be_visitor_native/native_ch.h:
+          New file for native generation
+
+        * TAO_IDL/be/be_visitor_typedef/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_typedef/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_typedef/serializer_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_typedef/typedef_ch.cpp:
+        * TAO_IDL/be/be_visitor_typedef/typedef_ci.cpp:
+          Updated for array changes
+
+        * TAO_IDL/fe/fe_extern.cpp:
+          Const improvement
+
 Mon Jun 19 22:55:04 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Array_VarOut_T.h:
-        
+
           Added 'typename' to the typedef of FORANY in class
           TAO_Array_Var_Base_T.
 
