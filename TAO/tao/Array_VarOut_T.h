@@ -21,8 +21,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Array_Traits_T.h"
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
@@ -35,6 +33,15 @@ namespace TAO
    */
   template<typename T, typename T_slice, typename TAG>
   struct Array_Traits;
+}
+
+namespace TAO
+{
+  namespace details
+  {
+    template <typename T_array_traits>
+    struct array_traits;
+  }
 }
 
 /**
