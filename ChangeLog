@@ -1,3 +1,8 @@
+Tue Jun 20 14:31:05 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * examples/Misc/test_trace.cpp (recursive): Simplified the
+          ACE_TRACE method name to make fuzz happy.
+
 Tue Jun 20 13:50:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Hash_Map_Manager_Test.cpp:
