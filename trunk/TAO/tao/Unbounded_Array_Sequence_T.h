@@ -13,6 +13,7 @@
 #include "tao/Generic_Sequence_T.h"
 #include "tao/Array_Traits_T.h"
 #include "tao/SystemException.h"
+#include "tao/Array_VarOut_T.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
