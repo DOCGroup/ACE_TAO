@@ -364,10 +364,11 @@ namespace TAO {
     return true;
   }
 
-  template <typename stream, typename array_traits>
-  bool demarshal_sequence(stream & strm, TAO::unbounded_array_sequence<array_traits> & target) {
-    typedef TAO::unbounded_array_sequence<array_traits> sequence;
-    typedef TAO_Array_Forany_T <array_traits> forany;
+  template <typename stream, typename T_array, typename T_slice, typename T_tag>
+  bool demarshal_sequence(stream & strm, TAO::unbounded_array_sequence<T_array, T_slice, T_tag> & target) {
+    typedef TAO::unbounded_array_sequence<T_array, T_slice, T_tag> sequence;
+    typedef TAO_Array_Forany_T <T_array, T_slice, T_tag> forany;
+    typedef TAO::Array_Traits<forany> array_traits;
 
     ::CORBA::ULong new_length = 0;
     if (!(strm >> new_length)) {
@@ -380,12 +381,12 @@ namespace TAO {
     tmp.length(new_length);
     typename sequence::value_type * buffer = tmp.get_buffer();
     for(CORBA::ULong i = 0; i < new_length; ++i) {
-      forany tmp (TAO::details::array_traits<array_traits>::alloc ());
+      forany tmp (array_traits::alloc ());
       bool const _tao_marshal_flag = (strm >> tmp);
       if (_tao_marshal_flag) {
-        TAO::details::array_traits<array_traits>::copy (buffer[i], tmp.in ());
+        array_traits::copy (buffer[i], tmp.in ());
       }
-      TAO::details::array_traits<array_traits>::free (tmp.inout ());
+      array_traits::free (tmp.inout ());
       if (!_tao_marshal_flag) {
         return false;
       }
@@ -595,18 +596,19 @@ namespace TAO {
     return true;
   }
 
-  template <typename stream, typename array_traits>
-  bool marshal_sequence(stream & strm, const TAO::unbounded_array_sequence<array_traits> & source) {
+  template <typename stream, typename T_array, typename T_slice, typename T_tag>
+  bool marshal_sequence(stream & strm, const TAO::unbounded_array_sequence<T_array, T_slice, T_tag> & source) {
     if (0 == &source)
       ACE_THROW_RETURN (::CORBA::BAD_PARAM(0, CORBA::COMPLETED_MAYBE), false);
-    typedef TAO_FixedArray_Var_T <array_traits> fixed_array;
-    typedef TAO_Array_Forany_T <array_traits> forany;
+    typedef TAO_FixedArray_Var_T <T_array, T_slice, T_tag> fixed_array;
+    typedef TAO_Array_Forany_T <T_array, T_slice, T_tag> forany;
+    typedef TAO::Array_Traits<forany> array_traits;
     ::CORBA::ULong const length = source.length ();
     if (!(strm << length)) {
       return false;
     }
     for(CORBA::ULong i = 0; i < length; ++i) {
-      fixed_array tmp_array = TAO::details::array_traits<array_traits>::dup (source[i]);
+      fixed_array tmp_array = array_traits::dup (source[i]);
       forany const tmp (tmp_array.inout ());
       if (!(strm << tmp)) {
         return false;

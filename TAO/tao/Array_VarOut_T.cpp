@@ -12,33 +12,33 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-template<typename array_traits>
-TAO_FixedArray_Var_T<array_traits> &
-TAO_FixedArray_Var_T<array_traits>::operator= (_slice_type * p)
+template<typename T, typename T_slice, typename TAG>
+TAO_FixedArray_Var_T<T,T_slice,TAG> &
+TAO_FixedArray_Var_T<T,T_slice,TAG>::operator= (T_slice * p)
 {
   // Is what we own the same that is being assigned to us?
   if (this->ptr_ != p)
     {
       // Delete our stuff and assume ownership of p.
-      TAO::details::array_traits<array_traits>::free (this->ptr_);
+      TAO::Array_Traits<FORANY>::free (this->ptr_);
       this->ptr_ = p;
     }
 
   return *this;
 }
 
-template<typename array_traits>
-TAO_FixedArray_Var_T<array_traits> &
-TAO_FixedArray_Var_T<array_traits>::operator= (
-    const TAO_FixedArray_Var_T<array_traits> & p
+template<typename T, typename T_slice, typename TAG>
+TAO_FixedArray_Var_T<T,T_slice,TAG> &
+TAO_FixedArray_Var_T<T,T_slice,TAG>::operator= (
+    const TAO_FixedArray_Var_T<T,T_slice,TAG> & p
   )
 {
   if (this != &p)
     {
-      TAO::details::array_traits<array_traits>::free (this->ptr_);
+      TAO::Array_Traits<FORANY>::free (this->ptr_);
 
       // Deep copy.
-      this->ptr_ = TAO::details::array_traits<array_traits>::dup (p.in ());
+      this->ptr_ = TAO::Array_Traits<FORANY>::dup (p.in ());
     }
 
   return *this;
@@ -46,33 +46,33 @@ TAO_FixedArray_Var_T<array_traits>::operator= (
 
 // *************************************************************
 
-template<typename array_traits>
-TAO_VarArray_Var_T<array_traits> &
-TAO_VarArray_Var_T<array_traits>::operator= (_slice_type * p)
+template<typename T, typename T_slice, typename TAG>
+TAO_VarArray_Var_T<T,T_slice,TAG> &
+TAO_VarArray_Var_T<T,T_slice,TAG>::operator= (T_slice * p)
 {
   // Is what we own the same that is being assigned to us?
   if (this->ptr_ != p)
     {
       // Delete our stuff and assume ownership of p.
-      TAO::details::array_traits<array_traits>::free (this->ptr_);
+      TAO::Array_Traits<FORANY>::free (this->ptr_);
       this->ptr_ = p;
     }
 
   return *this;
 }
 
-template<typename array_traits>
-TAO_VarArray_Var_T<array_traits> &
-TAO_VarArray_Var_T<array_traits>::operator= (
-    const TAO_VarArray_Var_T<array_traits> & p
+template<typename T, typename T_slice, typename TAG>
+TAO_VarArray_Var_T<T,T_slice,TAG> &
+TAO_VarArray_Var_T<T,T_slice,TAG>::operator= (
+    const TAO_VarArray_Var_T<T,T_slice,TAG> & p
   )
 {
   if (this != &p)
     {
-      TAO::details::array_traits<array_traits>::free (this->ptr_);
+      TAO::Array_Traits<FORANY>::free (this->ptr_);
 
       // Deep copy.
-      this->ptr_ = TAO::details::array_traits<array_traits>::dup (p.in ());
+      this->ptr_ = TAO::Array_Traits<FORANY>::dup (p.in ());
     }
 
   return *this;
@@ -80,14 +80,14 @@ TAO_VarArray_Var_T<array_traits>::operator= (
 
 // *************************************************************
 
-template<typename array_traits>
+template<typename T, typename T_slice, typename TAG>
 void
-TAO_Array_Forany_T<array_traits>::_tao_any_destructor (
+TAO_Array_Forany_T<T,T_slice,TAG>::_tao_any_destructor (
     void * _tao_void_pointer
   )
 {
-  _slice_type * tmp = static_cast<_slice_type *> (_tao_void_pointer);
-  TAO::details::array_traits<array_traits>::free (tmp);
+  T_slice * tmp = static_cast<T_slice *> (_tao_void_pointer);
+  TAO::Array_Traits<FORANY>::free (tmp);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

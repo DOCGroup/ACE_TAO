@@ -204,20 +204,6 @@ int be_visitor_array_ch::visit_array (be_array *node)
       << "struct " << anon_p << node->nested_type_name (scope, "_tag")
       << " {};" << be_nl;
 
-  // Traits class
-  *os << be_nl
-      << "struct " << anon_p
-      << node->nested_type_name (scope, "_traits") << be_nl
-      << "{" << be_idt_nl
-      << "typedef " << anon_p << node->local_name ()
-      << "_slice slice_type;" << be_nl;
-  *os << "typedef " << anon_p << node->local_name ()
-      << " value_type;" << be_nl;
-  *os << "typedef " << anon_p << node->nested_type_name (scope, "_tag")
-      << " tag_type;" << be_nl
-      << be_uidt_nl
-      << "};";
-
   // No _var or _out class for an anonymous (non-typedef'd) array.
   if (td != 0)
     {
@@ -228,26 +214,30 @@ int be_visitor_array_ch::visit_array (be_array *node)
           *os << be_nl << be_nl
               << "typedef" << be_idt_nl
               << "TAO_VarArray_Var_T<" << be_idt << be_idt_nl
-              << node->local_name () << "_traits" << be_uidt_nl
+              << node->local_name () << "," << be_nl
+              << node->local_name () << "_slice," << be_nl
+              << node->local_name () << "_tag" << be_uidt_nl
               << ">" << be_uidt_nl
               << node->local_name () << "_var;" << be_uidt;
 
           *os << be_nl << be_nl
               << "typedef" << be_idt_nl
               << "TAO_Array_Out_T<" << be_idt << be_idt_nl
-              << node->local_name () << "_traits" << "," << be_nl;
-
-          *os << node->local_name () << "_var" << be_uidt_nl
-              << ">" << be_uidt_nl;
-
-          *os << node->local_name () << "_out;" << be_uidt;
+              << node->local_name () << "," << be_nl
+              << node->local_name () << "_var," << be_nl
+              << node->local_name () << "_slice," << be_nl
+              << node->local_name () << "_tag" << be_uidt_nl
+              << ">" << be_uidt_nl
+              << node->local_name () << "_out;" << be_uidt;
         }
       else
         {
           *os << be_nl << be_nl
               << "typedef" << be_idt_nl
               << "TAO_FixedArray_Var_T<" << be_idt << be_idt_nl
-              << node->local_name () << "_traits" << be_uidt_nl
+              << node->local_name () << "," << be_nl
+              << node->local_name () << "_slice," << be_nl
+              << node->local_name () << "_tag" << be_uidt_nl
               << ">" << be_uidt_nl
               << node->local_name () << "_var;" << be_uidt;
 
@@ -261,7 +251,9 @@ int be_visitor_array_ch::visit_array (be_array *node)
   *os << be_nl << be_nl
       << "typedef" << be_idt_nl
       << "TAO_Array_Forany_T<" << be_idt << be_idt_nl
-      << anon_p << node->local_name () << "_traits" << be_uidt_nl
+      << anon_p << node->local_name () << "," << be_nl
+      << anon_p << node->local_name () << "_slice," << be_nl
+      << anon_p << node->local_name () << "_tag" << be_uidt_nl
       << ">" << be_uidt_nl
       << anon_p << node->local_name () << "_forany;" << be_uidt;
 

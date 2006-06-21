@@ -21,47 +21,47 @@ namespace TAO
 namespace details
 {
 
-template <typename T_array_traits>
+template <typename T_forany>
 struct array_traits
 {
-  typedef typename T_array_traits::value_type value_type;
-  typedef typename T_array_traits::value_type const const_value_type;
-  typedef typename T_array_traits::slice_type slice_type;
-  typedef typename T_array_traits::tag_type tag_type;
+  typedef T_forany forany_type;
+  typedef typename T_forany::_array_type value_type;
+  typedef typename T_forany::_array_type const const_value_type;
+  typedef typename T_forany::_slice_type slice_type;
 
   inline static void copy (slice_type * _tao_to, const slice_type * _tao_from)
   {
-    TAO::Array_Traits<value_type,slice_type,tag_type>::copy (_tao_to, _tao_from);
+    TAO::Array_Traits<forany_type>::copy (_tao_to, _tao_from);
   }
 
   inline static void free (slice_type * value)
   {
-    TAO::Array_Traits<value_type,slice_type,tag_type>::free (value);
+    TAO::Array_Traits<forany_type>::free (value);
   }
 
   inline static slice_type * alloc (void)
   {
-    return TAO::Array_Traits<value_type,slice_type,tag_type>::alloc ();
+    return TAO::Array_Traits<forany_type>::alloc ();
   }
 
   inline static slice_type * dup(
       const slice_type * value)
   {
-    return TAO::Array_Traits<value_type,slice_type,tag_type>::dup (value);
+    return TAO::Array_Traits<forany_type>::dup (value);
   }
 
   inline static void zero_range(
       value_type * begin, value_type * end)
   {
     std::for_each(
-        begin, end, &TAO::Array_Traits<value_type,slice_type,tag_type>::zero);
+        begin, end, &TAO::Array_Traits<forany_type>::zero);
   }
 
   inline static void initialize_range(
       value_type * begin, value_type * end)
   {
     std::for_each(
-        begin, end, &TAO::Array_Traits<value_type,slice_type,tag_type>::zero);
+        begin, end, &TAO::Array_Traits<forany_type>::zero);
   }
 
   inline static void copy_range(
@@ -69,7 +69,7 @@ struct array_traits
   {
     for(value_type * i = begin; i != end; ++i, ++dst)
     {
-      TAO::Array_Traits<value_type,slice_type,tag_type>::copy(*dst, *i);
+      TAO::Array_Traits<forany_type>::copy(*dst, *i);
     }
   }
 };

@@ -203,8 +203,6 @@ be_visitor_typedef_ch::visit_array (be_array *node)
           << " " << tdef->nested_type_name (scope, "_tag") << ";" << be_nl;
       *os << "typedef " << bt->nested_type_name (scope, "_forany")
           << " " << tdef->nested_type_name (scope, "_forany") << ";" << be_nl;
-      *os << "typedef " << bt->nested_type_name (scope, "_traits")
-          << " " << tdef->nested_type_name (scope, "_traits") << ";" << be_nl;
 
       // The _alloc, _dup, copy, and free methods
 

@@ -19,21 +19,20 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO
 {
 
-template<typename array_traits, CORBA::ULong MAX>
+template<typename T_array, typename T_slice, typename T_tag, CORBA::ULong MAX>
 class bounded_array_sequence
 {
 public:
-  typedef typename array_traits::value_type value_type;
-  typedef typename array_traits::slice_type slice_type;
-
-  typedef value_type * element_type;
-  typedef slice_type * T_slice_ptr;
+  typedef T_array * element_type;
+  typedef T_array value_type;
+  typedef T_array * T_slice_ptr;
   typedef T_slice_ptr * const_value_type;
   typedef value_type & subscript_type;
   typedef value_type const & const_subscript_type;
 
   typedef details::bounded_array_allocation_traits<value_type,MAX,true> allocation_traits;
-  typedef details::array_traits <array_traits> element_traits;
+  typedef TAO_Array_Forany_T<T_array, T_slice, T_tag> forany;
+  typedef details::array_traits <forany> element_traits;
   typedef details::generic_sequence<value_type, allocation_traits, element_traits> implementation_type;
 
   inline bounded_array_sequence()
