@@ -110,8 +110,9 @@ int test_two_allocators ()
 
   HASH_STRING_MAP hash;
 
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Opening hash map manager with "
-                                  "insufficient table allocator, should fail...\n")));
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("Opening hash map manager with ")
+              ACE_TEXT ("insufficient table allocator, should fail...\n")));
   ACE_OS::last_error (0);
   status = hash.open (chunks, &table_alloc_small, &entry_alloc);
   if (status < 0)
@@ -127,7 +128,9 @@ int test_two_allocators ()
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Entry allocator depth: %d.\n"),
               entry_alloc.pool_depth ()));
 
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Opening hash map manager again, should succeed...\n")));
+  ACE_DEBUG
+    ((LM_DEBUG,
+      ACE_TEXT ("Opening hash map manager again, should succeed...\n")));
   ACE_OS::last_error (0);
   status = hash.open (chunks, &table_alloc, &entry_alloc);
   if (status < 0)

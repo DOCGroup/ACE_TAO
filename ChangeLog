@@ -1,3 +1,8 @@
+Wed Jun 21 15:45:32 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * tests/Hash_Map_Manager_Test.cpp: Fix incorrect concatenating of
+          text literals.
+
 Wed Jun 21 07:10:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Misc/test_trace.cpp:
