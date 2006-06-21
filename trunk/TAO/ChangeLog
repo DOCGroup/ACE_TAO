@@ -1,3 +1,11 @@
+Wed Jun 21 14:10:38 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Array_VarOut_T.h:
+        
+          Removed 'typename' qualifier in typedef of FORANY inside the
+          TAO_Array_Var_Base_T template class, since it was causing
+          problems on the FC4_CIAO_Core build.
+
 Wed Jun 21 13:50:57 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Credentials.h:
