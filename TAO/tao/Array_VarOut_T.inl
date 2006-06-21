@@ -4,293 +4,290 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-template<typename array_traits>
+template<typename T, typename T_slice, typename TAG>
 ACE_INLINE
-TAO_Array_Var_Base_T<array_traits>::TAO_Array_Var_Base_T (void)
+TAO_Array_Var_Base_T<T,T_slice,TAG>::TAO_Array_Var_Base_T (void)
   : ptr_ (0)
 {}
 
-template<typename array_traits>
+template<typename T, typename T_slice, typename TAG>
 ACE_INLINE
-TAO_Array_Var_Base_T<array_traits>::TAO_Array_Var_Base_T (slice_type * p)
+TAO_Array_Var_Base_T<T,T_slice,TAG>::TAO_Array_Var_Base_T (T_slice * p)
   : ptr_ (p)
 {}
 
-template<typename array_traits>
+template<typename T, typename T_slice, typename TAG>
 ACE_INLINE
-TAO_Array_Var_Base_T<array_traits>::TAO_Array_Var_Base_T (
+TAO_Array_Var_Base_T<T,T_slice,TAG>::TAO_Array_Var_Base_T (
     const TAO_Array_Var_Base_T & p
   )
 {
-  this->ptr_ = TAO::details::array_traits<array_traits>::dup (p.in ());
+  this->ptr_ = TAO::Array_Traits<FORANY>::dup (p.in ());
 }
 
-template<typename array_traits>
+template<typename T, typename T_slice, typename TAG>
 ACE_INLINE
-TAO_Array_Var_Base_T<array_traits>::~TAO_Array_Var_Base_T (void)
+TAO_Array_Var_Base_T<T,T_slice,TAG>::~TAO_Array_Var_Base_T (void)
 {
-  TAO::details::array_traits<array_traits>::free (this->ptr_);
+  TAO::Array_Traits<FORANY>::free (this->ptr_);
 }
 
-template<typename array_traits>
+template<typename T, typename T_slice, typename TAG>
 ACE_INLINE
-TAO_Array_Var_Base_T<array_traits>::operator
-typename TAO_Array_Var_Base_T<array_traits>::slice_type * const & () const
+TAO_Array_Var_Base_T<T,T_slice,TAG>::operator T_slice * const & () const
 {
   return this->ptr_;
 }
 
-template<typename array_traits>
+template<typename T, typename T_slice, typename TAG>
 ACE_INLINE
-typename TAO_Array_Var_Base_T<array_traits>::const_subscript_type
-TAO_Array_Var_Base_T<array_traits>::operator[] (CORBA::ULong index) const
+T_slice const &
+TAO_Array_Var_Base_T<T,T_slice,TAG>::operator[] (CORBA::ULong index) const
 {
   return this->ptr_[index];
 }
 
-template<typename array_traits>
+template<typename T, typename T_slice, typename TAG>
 ACE_INLINE
-typename TAO_Array_Var_Base_T<array_traits>::subscript_type
-TAO_Array_Var_Base_T<array_traits>::operator[] (CORBA::ULong index)
+T_slice &
+TAO_Array_Var_Base_T<T,T_slice,TAG>::operator[] (CORBA::ULong index)
 {
   return this->ptr_[index];
 }
 
-template<typename array_traits>
+template<typename T, typename T_slice, typename TAG>
 ACE_INLINE
-typename TAO_Array_Var_Base_T<array_traits>::_in_type
-TAO_Array_Var_Base_T<array_traits>::in (void) const
+const T_slice *
+TAO_Array_Var_Base_T<T,T_slice,TAG>::in (void) const
 {
   // @todo Replace with C++ cast after vc6 has been dropped,
   // vc6 can't handle this as const cast
-  return (const slice_type *) this->ptr_;
+  return (const T_slice *) this->ptr_;
 }
 
-template<typename array_traits>
+template<typename T, typename T_slice, typename TAG>
 ACE_INLINE
-typename TAO_Array_Var_Base_T<array_traits>::_inout_type
-TAO_Array_Var_Base_T<array_traits>::inout (void)
+T_slice *
+TAO_Array_Var_Base_T<T,T_slice,TAG>::inout (void)
 {
   return this->ptr_;
 }
 
-template<typename array_traits>
+template<typename T, typename T_slice, typename TAG>
 ACE_INLINE
-typename TAO_Array_Var_Base_T<array_traits>::_retn_arg_type
-TAO_Array_Var_Base_T<array_traits>::_retn_arg (void)
+T_slice *&
+TAO_Array_Var_Base_T<T,T_slice,TAG>::_retn_arg (void)
 {
-  TAO::details::array_traits<array_traits>::free (this->ptr_);
+  TAO::Array_Traits<FORANY>::free (this->ptr_);
   this->ptr_ = 0;
   return this->ptr_;
 }
 
-template<typename array_traits>
+template<typename T, typename T_slice, typename TAG>
 ACE_INLINE
-typename TAO_Array_Var_Base_T<array_traits>::_retn_type
-TAO_Array_Var_Base_T<array_traits>::_retn (void)
+T_slice *
+TAO_Array_Var_Base_T<T,T_slice,TAG>::_retn (void)
 {
-  slice_type * tmp = this->ptr_;
+  T_slice * tmp = this->ptr_;
   this->ptr_ = 0;
   return tmp;
 }
 
-template<typename array_traits>
+template<typename T, typename T_slice, typename TAG>
 ACE_INLINE
-typename TAO_Array_Var_Base_T<array_traits>::_retn_type
-TAO_Array_Var_Base_T<array_traits>::ptr (void) const
+T_slice *
+TAO_Array_Var_Base_T<T,T_slice,TAG>::ptr (void) const
 {
   return this->ptr_;
 }
 
 // *************************************************************
 
-template<typename array_traits>
+template<typename T, typename T_slice, typename TAG>
 ACE_INLINE
-TAO_FixedArray_Var_T<array_traits>::TAO_FixedArray_Var_T (void)
+TAO_FixedArray_Var_T<T,T_slice,TAG>::TAO_FixedArray_Var_T (void)
 {}
 
-template<typename array_traits>
+template<typename T, typename T_slice, typename TAG>
 ACE_INLINE
-TAO_FixedArray_Var_T<array_traits>::TAO_FixedArray_Var_T (_slice_type * p)
-  : TAO_Array_Var_Base_T<array_traits> (p)
+TAO_FixedArray_Var_T<T,T_slice,TAG>::TAO_FixedArray_Var_T (T_slice * p)
+  : TAO_Array_Var_Base_T<T,T_slice,TAG> (p)
 {}
 
-template<typename array_traits>
+template<typename T, typename T_slice, typename TAG>
 ACE_INLINE
-TAO_FixedArray_Var_T<array_traits>::TAO_FixedArray_Var_T (
+TAO_FixedArray_Var_T<T,T_slice,TAG>::TAO_FixedArray_Var_T (
     const TAO_FixedArray_Var_T & p
   )
-  : TAO_Array_Var_Base_T<array_traits> (p)
+  : TAO_Array_Var_Base_T<T,T_slice,TAG> (p)
 {}
 
 
-template<typename array_traits>
+template<typename T, typename T_slice, typename TAG>
 ACE_INLINE
-typename TAO_FixedArray_Var_T<array_traits>::_slice_type *
-TAO_FixedArray_Var_T<array_traits>::out (void)
+T_slice *
+TAO_FixedArray_Var_T<T,T_slice,TAG>::out (void)
 {
   return this->ptr_;
 }
 
 // *************************************************************
 
-template<typename array_traits>
+template<typename T, typename T_slice, typename TAG>
 ACE_INLINE
-TAO_VarArray_Var_T<array_traits>::TAO_VarArray_Var_T (void)
+TAO_VarArray_Var_T<T,T_slice,TAG>::TAO_VarArray_Var_T (void)
 {}
 
-template<typename array_traits>
+template<typename T, typename T_slice, typename TAG>
 ACE_INLINE
-TAO_VarArray_Var_T<array_traits>::TAO_VarArray_Var_T (_slice_type * p)
-  : TAO_Array_Var_Base_T<array_traits> (p)
+TAO_VarArray_Var_T<T,T_slice,TAG>::TAO_VarArray_Var_T (T_slice * p)
+  : TAO_Array_Var_Base_T<T,T_slice,TAG> (p)
 {}
 
-template<typename array_traits>
+template<typename T, typename T_slice, typename TAG>
 ACE_INLINE
-TAO_VarArray_Var_T<array_traits>::TAO_VarArray_Var_T (
+TAO_VarArray_Var_T<T,T_slice,TAG>::TAO_VarArray_Var_T (
     const TAO_VarArray_Var_T & p
   )
-  : TAO_Array_Var_Base_T<array_traits> (p)
+  : TAO_Array_Var_Base_T<T,T_slice,TAG> (p)
 {}
 
-template<typename array_traits>
+template<typename T, typename T_slice, typename TAG>
 ACE_INLINE
-TAO_VarArray_Var_T<array_traits>::operator
-typename TAO_VarArray_Var_T<array_traits>::_slice_type *& ()
+TAO_VarArray_Var_T<T,T_slice,TAG>::operator T_slice *& ()
 {
   return this->ptr_;
 }
 
-template<typename array_traits>
+template<typename T, typename T_slice, typename TAG>
 ACE_INLINE
-typename TAO_VarArray_Var_T<array_traits>::_slice_type *&
-TAO_VarArray_Var_T<array_traits>::out (void)
+T_slice *&
+TAO_VarArray_Var_T<T,T_slice,TAG>::out (void)
 {
-  TAO::details::array_traits<array_traits>::free (this->ptr_);
+  TAO::Array_Traits<FORANY>::free (this->ptr_);
   this->ptr_ = 0;
   return this->ptr_;
 }
 
 // *************************************************************
 
-template<typename array_traits, typename T_var>
+template<typename T, typename T_var, typename T_slice, typename TAG>
 ACE_INLINE
-TAO_Array_Out_T<array_traits, T_var>::TAO_Array_Out_T (_slice_type *& p)
+TAO_Array_Out_T<T,T_var,T_slice,TAG>::TAO_Array_Out_T (T_slice *& p)
   : ptr_ (p)
 {
   this->ptr_ = 0;
 }
 
-template<typename array_traits, typename T_var>
+template<typename T, typename T_var, typename T_slice, typename TAG>
 ACE_INLINE
-TAO_Array_Out_T<array_traits, T_var>::TAO_Array_Out_T (_value_type & p)
+TAO_Array_Out_T<T,T_var,T_slice,TAG>::TAO_Array_Out_T (T_var & p)
   : ptr_ (p.out ())
 {
-  TAO::details::array_traits<array_traits>::free (this->ptr_);
+  TAO::Array_Traits<FORANY>::free (this->ptr_);
   this->ptr_ = 0;
 }
 
-template<typename array_traits, typename T_var>
+template<typename T, typename T_var, typename T_slice, typename TAG>
 ACE_INLINE
-TAO_Array_Out_T<array_traits, T_var>::TAO_Array_Out_T (
-    const TAO_Array_Out_T<array_traits, T_var> & p
+TAO_Array_Out_T<T,T_var,T_slice,TAG>::TAO_Array_Out_T (
+    const TAO_Array_Out_T<T,T_var,T_slice,TAG> & p
   )
-  : ptr_ (const_cast<TAO_Array_Out_T<array_traits, T_var> &> (p).ptr_)
+  : ptr_ (const_cast<THIS_OUT_TYPE &> (p).ptr_)
 {}
 
-template<typename array_traits, typename T_var>
+template<typename T, typename T_var, typename T_slice, typename TAG>
 ACE_INLINE
-TAO_Array_Out_T<array_traits, T_var> &
-TAO_Array_Out_T<array_traits, T_var>::operator= (
-    const TAO_Array_Out_T<array_traits, T_var> & p
+TAO_Array_Out_T<T,T_var,T_slice,TAG> &
+TAO_Array_Out_T<T,T_var,T_slice,TAG>::operator= (
+    const TAO_Array_Out_T<T,T_var,T_slice,TAG> & p
   )
 {
-  this->ptr_ = const_cast<TAO_Array_Out_T<array_traits, T_var> &> (p).ptr_;
+  this->ptr_ = const_cast<THIS_OUT_TYPE &> (p).ptr_;
   return *this;
 }
 
-template<typename array_traits, typename T_var>
+template<typename T, typename T_var, typename T_slice, typename TAG>
 ACE_INLINE
-TAO_Array_Out_T<array_traits, T_var> &
-TAO_Array_Out_T<array_traits, T_var>::operator= (_slice_type *p)
+TAO_Array_Out_T<T,T_var,T_slice,TAG> &
+TAO_Array_Out_T<T,T_var,T_slice,TAG>::operator= (T_slice *p)
 {
   this->ptr_ = p;
   return *this;
 }
 
-template<typename array_traits, typename T_var>
+template<typename T, typename T_var, typename T_slice, typename TAG>
 ACE_INLINE
-TAO_Array_Out_T<array_traits, T_var>::operator
-typename TAO_Array_Out_T<array_traits, T_var>::_slice_type *& ()
+TAO_Array_Out_T<T,T_var,T_slice,TAG>::operator T_slice *& ()
 {
   return this->ptr_;
 }
 
-template<typename array_traits, typename T_var>
+template<typename T, typename T_var, typename T_slice, typename TAG>
 ACE_INLINE
-typename TAO_Array_Out_T<array_traits, T_var>::_slice_type &
-TAO_Array_Out_T<array_traits, T_var>::operator[] (CORBA::ULong index)
+T_slice &
+TAO_Array_Out_T<T,T_var,T_slice,TAG>::operator[] (CORBA::ULong index)
 {
   return this->ptr_[index];
 }
 
-template<typename array_traits, typename T_var>
+template<typename T, typename T_var, typename T_slice, typename TAG>
 ACE_INLINE
-typename TAO_Array_Out_T<array_traits, T_var>::_slice_type *&
-TAO_Array_Out_T<array_traits, T_var>::ptr (void)
+T_slice *&
+TAO_Array_Out_T<T,T_var,T_slice,TAG>::ptr (void)
 {
   return this->ptr_;
 }
 
 // *************************************************************
 
-template<typename array_traits>
+template<typename T, typename T_slice, typename TAG>
 ACE_INLINE
-TAO_Array_Forany_T<array_traits>::TAO_Array_Forany_T (void)
+TAO_Array_Forany_T<T,T_slice,TAG>::TAO_Array_Forany_T (void)
   : ptr_ (0),
     nocopy_ (false)
 {}
 
-template<typename array_traits>
+template<typename T, typename T_slice, typename TAG>
 ACE_INLINE
-TAO_Array_Forany_T<array_traits>::TAO_Array_Forany_T (
-    _slice_type * p,
+TAO_Array_Forany_T<T,T_slice,TAG>::TAO_Array_Forany_T (
+    T_slice * p,
     CORBA::Boolean nocopy
   )
   : ptr_ (p),
     nocopy_ (nocopy)
 {}
 
-template<typename array_traits>
+template<typename T, typename T_slice, typename TAG>
 ACE_INLINE
-TAO_Array_Forany_T<array_traits>::TAO_Array_Forany_T (
-    const TAO_Array_Forany_T<array_traits> & p
+TAO_Array_Forany_T<T,T_slice,TAG>::TAO_Array_Forany_T (
+    const TAO_Array_Forany_T<T,T_slice,TAG> & p
   )
   : ptr_ (p.ptr_),
     nocopy_ (p.nocopy_)
 {
 }
 
-template<typename array_traits>
+template<typename T, typename T_slice, typename TAG>
 ACE_INLINE
-TAO_Array_Forany_T<array_traits>::~TAO_Array_Forany_T (void)
+TAO_Array_Forany_T<T,T_slice,TAG>::~TAO_Array_Forany_T (void)
 {
 }
 
-template<typename array_traits>
+template<typename T, typename T_slice, typename TAG>
 ACE_INLINE
-TAO_Array_Forany_T<array_traits> &
-TAO_Array_Forany_T<array_traits>::operator= (_slice_type * p)
+TAO_Array_Forany_T<T,T_slice,TAG> &
+TAO_Array_Forany_T<T,T_slice,TAG>::operator= (T_slice * p)
 {
   this->ptr_ = p;
   return *this;
 }
 
-template<typename array_traits>
+template<typename T, typename T_slice, typename TAG>
 ACE_INLINE
-TAO_Array_Forany_T<array_traits> &
-TAO_Array_Forany_T<array_traits>::operator= (
-    const TAO_Array_Forany_T<array_traits> & p
+TAO_Array_Forany_T<T,T_slice,TAG> &
+TAO_Array_Forany_T<T,T_slice,TAG>::operator= (
+    const TAO_Array_Forany_T<T,T_slice,TAG> & p
   )
 {
   this->ptr_ = p.ptr_;
@@ -298,93 +295,91 @@ TAO_Array_Forany_T<array_traits>::operator= (
   return *this;
 }
 
-template<typename array_traits>
+template<typename T, typename T_slice, typename TAG>
 ACE_INLINE
-TAO_Array_Forany_T<array_traits>::operator
-typename TAO_Array_Forany_T<array_traits>::_slice_type * const & () const
+TAO_Array_Forany_T<T,T_slice,TAG>::operator T_slice * const & () const
 {
   return this->ptr_;
 }
 
-template<typename array_traits>
+template<typename T, typename T_slice, typename TAG>
 ACE_INLINE
-TAO_Array_Forany_T<array_traits>::operator
-typename TAO_Array_Forany_T<array_traits>::_slice_type *& ()
+TAO_Array_Forany_T<T,T_slice,TAG>::operator T_slice *& ()
 {
   return this->ptr_;
 }
 
-template<typename array_traits>
+template<typename T, typename T_slice, typename TAG>
 ACE_INLINE
-const typename TAO_Array_Forany_T<array_traits>::_slice_type &
-TAO_Array_Forany_T<array_traits>::operator[] (CORBA::ULong index) const
+const T_slice &
+TAO_Array_Forany_T<T,T_slice,TAG>::operator[] (CORBA::ULong index) const
 {
-  const _slice_type & tmp = this->ptr_[index];
+  const T_slice & tmp = this->ptr_[index];
   return tmp;
 }
 
-template<typename array_traits>
+template<typename T, typename T_slice, typename TAG>
 ACE_INLINE
-typename TAO_Array_Forany_T<array_traits>::_slice_type &
-TAO_Array_Forany_T<array_traits>::operator[] (CORBA::ULong index)
+T_slice &
+TAO_Array_Forany_T<T,T_slice,TAG>::operator[] (CORBA::ULong index)
 {
   return this->ptr_[index];
 }
 
-template<typename array_traits>
+template<typename T, typename T_slice, typename TAG>
 ACE_INLINE
-typename TAO_Array_Forany_T<array_traits>::_in_type
-TAO_Array_Forany_T<array_traits>::in (void) const
+const T_slice *
+TAO_Array_Forany_T<T,T_slice,TAG>::in (void) const
 {
   return this->ptr_;
 }
 
-template<typename array_traits>
+template<typename T, typename T_slice, typename TAG>
 ACE_INLINE
-typename TAO_Array_Forany_T<array_traits>::_inout_type
-TAO_Array_Forany_T<array_traits>::inout (void)
+T_slice *
+TAO_Array_Forany_T<T,T_slice,TAG>::inout (void)
 {
   return this->ptr_;
 }
 
-template<typename array_traits>
+template<typename T, typename T_slice, typename TAG>
 ACE_INLINE
-typename TAO_Array_Forany_T<array_traits>::_out_type
-TAO_Array_Forany_T<array_traits>::out (void)
+T_slice *&
+TAO_Array_Forany_T<T,T_slice,TAG>::out (void)
 {
   return this->ptr_;
 }
 
-template<typename array_traits>
+template<typename T, typename T_slice, typename TAG>
 ACE_INLINE
-typename TAO_Array_Forany_T<array_traits>::_retn_type
-TAO_Array_Forany_T<array_traits>::_retn (void)
+T_slice *
+TAO_Array_Forany_T<T,T_slice,TAG>::_retn (void)
 {
   return this->ptr_;
 }
 
-template<typename array_traits>
+template<typename T, typename T_slice, typename TAG>
 ACE_INLINE
 CORBA::Boolean
-TAO_Array_Forany_T<array_traits>::nocopy (void) const
+TAO_Array_Forany_T<T,T_slice,TAG>::nocopy (void) const
 {
   return this->nocopy_;
 }
 
-template<typename array_traits>
+template<typename T, typename T_slice, typename TAG>
 ACE_INLINE
-typename TAO_Array_Forany_T<array_traits>::_slice_type *
-TAO_Array_Forany_T<array_traits>::ptr (void) const
+T_slice *
+TAO_Array_Forany_T<T,T_slice,TAG>::ptr (void) const
 {
   return this->ptr_;
 }
 
-template<typename array_traits>
+template<typename T, typename T_slice, typename TAG>
 ACE_INLINE
-typename TAO_Array_Forany_T<array_traits>::_slice_type *
-TAO_Array_Forany_T<array_traits>::tao_alloc (void)
+T_slice *
+TAO_Array_Forany_T<T,T_slice,TAG>::tao_alloc (void)
 {
-  return TAO::details::array_traits<array_traits>::alloc ();
+  return TAO::Array_Traits<FORANY>::alloc ();
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

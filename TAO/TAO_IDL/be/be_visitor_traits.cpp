@@ -435,9 +435,7 @@ be_visitor_traits::visit_array (be_array *node)
       << "template<>" << be_nl
       << "struct " << be_global->stub_export_macro () << " Array_Traits<"
       << be_idt << be_idt_nl
-      << name << "," << be_nl
-      << name << "_slice," << be_nl
-      << name << "_tag" << be_uidt_nl
+      << name << "_forany" << be_uidt_nl
       << ">" << be_uidt_nl
       << "{" << be_idt_nl
       << "static void free (" << be_idt << be_idt_nl

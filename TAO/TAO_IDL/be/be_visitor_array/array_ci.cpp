@@ -190,11 +190,7 @@ int be_visitor_array_ci::visit_array (be_array *node)
   *os << be_nl << be_nl
       << "ACE_INLINE" << be_nl
       << "void" << be_nl
-      << "TAO::Array_Traits<"
-      << fname << "," << be_nl
-      << fname << "_slice," << be_nl
-      << fname << "_tag" << be_uidt_nl
-      << ">::free ("
+      << "TAO::Array_Traits<" << fname << "_forany>::free ("
       << be_idt << be_idt_nl
       << fname << "_slice * _tao_slice" << be_uidt_nl
       << ")" << be_uidt_nl
@@ -205,11 +201,7 @@ int be_visitor_array_ci::visit_array (be_array *node)
   *os << be_nl << be_nl
       << "ACE_INLINE" << be_nl
       << fname << "_slice *" << be_nl
-      << "TAO::Array_Traits<"
-      << fname << "," << be_nl
-      << fname << "_slice," << be_nl
-      << fname << "_tag" << be_uidt_nl
-      << ">::dup ("
+      << "TAO::Array_Traits<" << fname << "_forany>::dup ("
       << be_idt << be_idt_nl
       << "const " << fname << "_slice * _tao_slice" << be_uidt_nl
       << ")" << be_uidt_nl
@@ -220,11 +212,7 @@ int be_visitor_array_ci::visit_array (be_array *node)
   *os << be_nl << be_nl
       << "ACE_INLINE" << be_nl
       << "void" << be_nl
-      << "TAO::Array_Traits<"
-      << fname << "," << be_nl
-      << fname << "_slice," << be_nl
-      << fname << "_tag" << be_uidt_nl
-      << ">::copy ("
+      << "TAO::Array_Traits<" << fname << "_forany>::copy ("
       << be_idt << be_idt_nl
       << fname << "_slice * _tao_to," << be_nl
       << "const " << fname << "_slice * _tao_from" << be_uidt_nl
@@ -236,11 +224,7 @@ int be_visitor_array_ci::visit_array (be_array *node)
   *os << be_nl << be_nl
       << "ACE_INLINE" << be_nl
       << "void" << be_nl
-      << "TAO::Array_Traits<"
-      << fname << "," << be_nl
-      << fname << "_slice," << be_nl
-      << fname << "_tag" << be_uidt_nl
-      << ">::zero ("
+      << "TAO::Array_Traits<" << fname << "_forany>::zero ("
       << be_idt << be_idt_nl
       << fname << "_slice * _tao_slice" << be_uidt_nl
       << ")" << be_uidt_nl
@@ -320,29 +304,9 @@ int be_visitor_array_ci::visit_array (be_array *node)
                               -1);
           }
 
-        * os << ", ";
+        * os << "_forany";
 
-        if (bt->accept (this) == -1)
-          {
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "be_visitor_array_cs::"
-                               "visit_array - "
-                               "base type decl failed\n"),
-                              -1);
-          }
-
-        * os << "_slice, ";
-
-        if (bt->accept (this) == -1)
-          {
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "be_visitor_array_cs::"
-                               "visit_array - "
-                               "base type decl failed\n"),
-                              -1);
-          }
-
-        * os << "_tag>::";
+        * os << ">::";
 
         *os << "zero (_tao_slice";
 
@@ -389,11 +353,7 @@ int be_visitor_array_ci::visit_array (be_array *node)
   *os << be_nl << be_nl
       << "ACE_INLINE" << be_nl
       << fname << "_slice *" << be_nl
-      << "TAO::Array_Traits<"
-      << fname << "," << be_nl
-      << fname << "_slice," << be_nl
-      << fname << "_tag" << be_uidt_nl
-      << ">::alloc (void)"
+     << "TAO::Array_Traits<" << fname << "_forany>::alloc (void)"
       << be_idt << be_uidt_nl
       << "{" << be_idt_nl
       << "return " << fname << "_alloc ();" << be_uidt_nl
