@@ -1,3 +1,8 @@
+Wed Jun 21 21:29:04 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-lynxos.h: Added ACE_LACKS_STRPTIME. This should fix a
+          compile error on LynxOS.
+
 Wed Jun 21 15:45:32 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * tests/Hash_Map_Manager_Test.cpp: Fix incorrect concatenating of
