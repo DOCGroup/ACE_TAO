@@ -8,7 +8,7 @@ project(TAO_IDL_EXE) : aceexe, core, tao_output, crosscompile {
   after       += TAO_IDL_BE TAO_IDL_FE gperf
 
   specific (automake) {
-    includes    += $(srcdir)/include $(srcdir)/be_include $(srcdir)/fe $(srcdir)/..
+    includes    += $(srcdir)/include $(srcdir)/be_include $(srcdir)/fe $(TAO_ROOT)
     macros      += TAO_IDL_INCLUDE_DIR=\"\\"$(includedir)/tao\\"\"
   } else {
     includes    += include be_include fe ..
