@@ -1,3 +1,8 @@
+        Wed Jun 21 07:10:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Misc/test_trace.cpp:
+          Fixed fuzz error
+
 Tue Jun 20 23:20:17 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * tests/Framework_Component_DLL.cpp: Added a description of this test.
@@ -152,7 +157,7 @@ Tue Jun 20 18:04:45 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
           std::getline() for some odd reason..  Fixed by using
           ifstream::getline() instead.  Thanks to Johnny for reporting
           this.
-  
+
 Tue Jun 20 14:31:05 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * examples/Misc/test_trace.cpp (recursive): Simplified the
