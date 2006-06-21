@@ -79,8 +79,9 @@ TAO::Out_Var_Array_Argument_T<S_out,S_forany,Insert_Policy>::demarshal (
     TAO_InputCDR & cdr
   )
 {
+  typedef TAO::Array_Traits<S_forany> ARRAY_TRAITS;
   ACE_ALLOCATOR_RETURN (this->x_,
-                        TAO::details::array_traits<S_forany::_array_traits>::alloc (),
+                        ARRAY_TRAITS::alloc (),
                         0);
   S_forany tmp (this->x_);
   return cdr >> tmp;
@@ -111,7 +112,7 @@ TAO::Ret_Var_Array_Argument_T<S_var,S_forany,Insert_Policy>::demarshal (
     TAO_InputCDR & cdr
   )
 {
-  typedef TAO::details::array_traits<S_forany::_array_traits> ARRAY_TRAITS;
+  typedef TAO::Array_Traits<S_forany> ARRAY_TRAITS;
   typename S_forany::_slice_type * tmp_ptr = 0;
   ACE_ALLOCATOR_RETURN (tmp_ptr,
                         ARRAY_TRAITS::alloc (),
