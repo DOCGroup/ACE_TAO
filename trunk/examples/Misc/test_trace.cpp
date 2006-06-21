@@ -11,7 +11,7 @@
 // = DESCRIPTION
 //    This example illustrates how to use the ACE tracing feature and
 //    the ACE_TRACE macro.  It also shows the use of the ACE_Task_Base
-//    class running as an "active object".  
+//    class running as an "active object".
 //
 // = AUTHOR
 //    Douglas C. Schmidt <schmidt@cs.wustl.edu> and
@@ -51,7 +51,7 @@ private:
 int
 My_Task::recursive (size_t depth)
 {
-  ACE_TRACE ("My_Test::recursive");
+  ACE_TRACE ("My_Task::recursive");
 
   if (depth > 0)
     return recursive (depth - 1);
