@@ -64,7 +64,7 @@ $ENV{'CVSROOT'} ||
   die "$0: must set your CVSROOT environment variable\n";
 
 $ENV{'ACE_ROOT'} ||
-  die "$0: must set your CVSROOT environment variable\n";
+  die "$0: must set your ACE_ROOT environment variable\n";
 
 ########
 ######## Configuration parameters.
