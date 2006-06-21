@@ -43,6 +43,7 @@ namespace TAO
     class Current;
     typedef Current * Current_ptr;
     typedef TAO_Pseudo_Var_T<Current> Current_var;
+    typedef TAO_Pseudo_Out_T<Current> Current_out;
 
     /**
      * @class Current
@@ -59,6 +60,10 @@ namespace TAO
         public TAO_Local_RefCounted_Object
     {
     public:
+      typedef Current_ptr _ptr_type;
+      typedef Current_var _var_type;
+      typedef Current_out _out_type;
+    
       /// Constructor.
       Current (TAO_ORB_Core *orb_core);
 
@@ -153,9 +158,7 @@ namespace TAO
       /// Pointer to the ORB Core corresponding to the ORB with which this
       /// object is registered.
       TAO_ORB_Core * const orb_core_;
-
     };
-
   }  // End SSLIOP namespace.
 }  // End TAO namespace.
 
