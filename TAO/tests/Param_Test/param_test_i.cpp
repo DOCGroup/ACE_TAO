@@ -21,7 +21,7 @@
 #include "ace/OS_NS_string.h"
 
 ACE_RCSID (Param_Test,
-           param_test_i, 
+           param_test_i,
            "$Id$")
 
 // ********* class Coffee_i ****************
@@ -978,7 +978,7 @@ Param_Test_i::test_exception (CORBA::ULong s1,
       s3 = s1 * 3;
       return s1 * 4;
     }
-  // Throw a known user exceptio type to test the user exception.
+  // Throw a known user exception type to test the user exception.
   else if (d == 1)
     {
       ACE_THROW_RETURN (Param_Test::Ooops (" % 4 == 1", d), 0);
