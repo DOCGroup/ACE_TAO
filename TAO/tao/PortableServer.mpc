@@ -40,6 +40,7 @@ project : taolib, core, core_anytypecode, tao_versioning_idl_defaults {
     PortableServer/ServantManager.pidl
     PortableServer/ServantRetentionPolicy.pidl
     PortableServer/ThreadPolicy.pidl
+    PortableServer/ForwardRequest.pidl
   }
 
   IDL_Files {
@@ -52,7 +53,6 @@ project : taolib, core, core_anytypecode, tao_versioning_idl_defaults {
     PortableServer/POAManagerFactory.pidl
     PortableServer/POA.pidl
     PortableServer/PS_Current.pidl
-    PortableServer/ForwardRequest.pidl
   }
 
   PIDL_Files {

@@ -32,9 +32,10 @@ void
 TAO::In_BD_String_Argument_T<S_var,BOUND,Insert_Policy>::interceptor_value (
   CORBA::Any *any) const
 {
-  Insert_Policy<typename S_var::s_traits::from_type>::any_insert (
+  typedef typename S_var::s_traits::from_type from_type;
+  Insert_Policy<from_type>::any_insert (
       any,
-      S_var::s_traits::from_type (this->x_, BOUND)
+      from_type (this->x_, BOUND)
     );
 }
 
