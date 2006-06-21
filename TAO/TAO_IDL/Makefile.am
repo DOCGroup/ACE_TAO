@@ -10,6 +10,7 @@
 
 ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
+TAO_ROOT = $(top_srcdir)
 
 ## Makefile.TAO_IDL_FE.am
 
@@ -358,6 +359,7 @@ tao_idl_CPPFLAGS = \
   -I$(srcdir)/include \
   -I$(srcdir)/be_include \
   -I$(srcdir)/fe \
+  -I$(TAO_ROOT) \
   -DTAO_IDL_INCLUDE_DIR="\"$(includedir)/tao\""
 
 tao_idl_SOURCES = \
