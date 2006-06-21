@@ -1,3 +1,15 @@
+Wed Jun 21 20:46:09 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Array_VarOut_T.h:
+        
+          Added a typedef of FORANY in the TAO_FixedArray_Var_T<> and
+          TAO_VarArray_Var_T<> classes that just refer to the existing
+          typedef for FORANY in the common base class. Some compilers,
+          when parsing template code, will not look into a base class
+          unless they are forced to, so the base class typedef was not
+          seen when referenced in a derived class. Thanks to Will Otte
+          <wotte@dre.vanderbilt.edu> for figuring this out.
+
 Wed Jun 21 14:10:38 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Array_VarOut_T.h:
