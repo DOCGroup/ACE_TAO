@@ -176,7 +176,7 @@ public:
    *
    *
    */
-  virtual int activate (long flags = THR_NEW_LWP | THR_JOINABLE |THR_INHERIT_SCHED ,
+  virtual int activate (long flags = THR_NEW_LWP | THR_JOINABLE | THR_INHERIT_SCHED,
                         int n_threads = 1,
                         int force_active = 0,
                         long priority = ACE_DEFAULT_THREAD_PRIORITY,

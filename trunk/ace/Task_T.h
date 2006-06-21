@@ -132,7 +132,7 @@ public: // Should be protected:
 
   /**
    * Flush the task's queue, i.e., free all of the enqueued
-   * message blocks and releases any threads blocked on the queue.
+   * message blocks and unblocks any threads waiting on the queue.
    * Note that if this conflicts with the C++ iostream <flush>
    * function, just rewrite the iostream function as ::<flush>.
    */
