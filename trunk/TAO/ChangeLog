@@ -1,3 +1,13 @@
+Wed Jun 21 07:15:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/EndpointPolicy.mpc:
+        * tao/PortableServer.mpc:
+        * tao/TypeCodeFactory.mpc:
+        * tao/Valuetype.mpc:
+          Removed the <%quote%>, it did break on several platforms, just
+          don't add the quotes in the mcp file, the IDL compiler will
+          add quotes around the include string
+
 Wed Jun 21 02:02:59 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * TAO_IDL/Makefile.am:
