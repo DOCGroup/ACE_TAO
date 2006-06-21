@@ -1,4 +1,4 @@
-        Wed Jun 21 07:10:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+Wed Jun 21 07:10:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Misc/test_trace.cpp:
           Fixed fuzz error
