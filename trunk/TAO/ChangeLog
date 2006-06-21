@@ -1,3 +1,15 @@
+Wed Jun 21 02:02:59 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * TAO_IDL/Makefile.am:
+
+          Regenerated.
+
+        * TAO_IDL/tao_idl.mpc:
+
+          Changed automake specific include "$(srcdir)/.." to $(TAO_ROOT).
+          This is enough to trigger the MPC heuristic that this is a TAO
+          rather than ACE project.  No more hand edits!
+
 Tue Jun 20 20:58:35 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * tao/Makefile.am:
@@ -19,7 +31,7 @@ Tue Jun 20 18:17:04 UTC 2006  Martin Corino  <mcorino@remedy.nl>
         * TAO_IDL/be/be_interface.cpp:
           Changes to circumvent OpenVMS differences regarding subprocesses,
           redirection and file naming.
-        
+
         * TAO_IDL/be/be_helper.cpp:
           Disabled ACE_OS::fflush () calls for OpenVMS as these slow down
           things dramatically.
