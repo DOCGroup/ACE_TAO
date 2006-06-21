@@ -1,3 +1,10 @@
+Wed Jun 21 07:23:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer.mpc:
+          Moved ForwardRequest.pidl to the section without the -GA flag,
+          this hopefully resolves the strange unresolved externals in
+          some builds
+
 Wed Jun 21 07:15:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/EndpointPolicy.mpc:
