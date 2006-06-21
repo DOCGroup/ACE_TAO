@@ -1,3 +1,14 @@
+Wed Jun 21 13:50:57 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Credentials.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_OwnCredentials.h:
+        * orbsvcs/orbsvcs/Security/SL3_CredentialsCurator.h:
+        
+          Added typedefs _ptr_type, _var_type, and _out_type to
+          these "interface" classes, since the typedefs are now
+          required by the *_var and *_out template classes.
+
 Wed Jun 21 12:13:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_sequence.cpp:

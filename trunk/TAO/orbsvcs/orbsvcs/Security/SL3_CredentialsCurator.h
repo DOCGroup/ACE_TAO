@@ -62,6 +62,9 @@ namespace TAO
         public virtual TAO_Local_RefCounted_Object
     {
     public:
+      typedef CredentialsCurator_ptr _ptr_type;
+      typedef CredentialsCurator_var _var_type;
+      typedef CredentialsCurator_out _out_type;
 
       /**
        * The type of table that maps acquisition method to acquirer
@@ -158,7 +161,6 @@ namespace TAO
       /// Table of OwnCredentials.
       Credentials_Table credentials_table_;
     };
-
   } // End SL3 namespace
 }  // End TAO namespace
 
