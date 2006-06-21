@@ -19,7 +19,8 @@ TAO::In_BD_String_Argument_T<S_var,BOUND,Insert_Policy>::marshal (
     TAO_OutputCDR & cdr
   )
 {
-  return cdr << S_var::s_traits::from_type (this->x_, BOUND);
+  typedef typename S_var::s_traits::from_type from_type;
+  return cdr << from_type (this->x_, BOUND);
 }
 
 #if TAO_HAS_INTERCEPTORS == 1
