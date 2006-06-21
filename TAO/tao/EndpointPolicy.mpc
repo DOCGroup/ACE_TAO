@@ -28,9 +28,9 @@ project : taolib, core, portableserver, pi, tao_versioning_idl_defaults {
   }
 
   IDL_Files {
-    idlflags += -GA -SS -Sci -Ge 1 -Sorb -I$(TAO_ROOT) \
+    idlflags += -GA -SS -Sci -Ge 1 -Sorb \
                 -Wb,export_macro=TAO_EndpointPolicy_Export \
-                -Wb,export_include=<%quote%>tao/EndpointPolicy/EndpointPolicy_Export.h<%quote%> \
+                -Wb,export_include=tao/EndpointPolicy/EndpointPolicy_Export.h \
                 -o EndpointPolicy
     idlflags -= -Sa -St
     EndpointPolicy/EndpointPolicy.pidl
