@@ -150,6 +150,11 @@ public:
     );
 
   _out_type     out (void);
+  
+private:
+  // Some compilers don't look into the base class when parsing
+  // templates unless they are force to.
+  typedef typename TAO_Array_Var_Base_T<T,T_slice,TAG>::FORANY FORANY;
 };
 
 /**
@@ -178,6 +183,11 @@ public:
   _out_type     out (void);
 
   operator _slice_type *& ();
+  
+private:
+  // Some compilers don't look into the base class when parsing
+  // templates unless they are force to.
+  typedef typename TAO_Array_Var_Base_T<T,T_slice,TAG>::FORANY FORANY;
 };
 
 /**
