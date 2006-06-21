@@ -1,8 +1,31 @@
+Wed Jun 21 12:13:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_sequence.cpp:
+        * TAO_IDL/be/be_visitor_traits.cpp:
+        * TAO_IDL/be/be_visitor_array/array_ch.cpp:
+        * TAO_IDL/be/be_visitor_array/array_ci.cpp:
+        * TAO_IDL/be/be_visitor_typedef/typedef_ch.cpp:
+        * tao/Array_Traits_T.h
+        * tao/Array_VarOut_T.cpp
+        * tao/Array_VarOut_T.h
+        * tao/Array_VarOut_T.inl
+        * tao/BD_String_Argument_T.cpp
+        * tao/Bounded_Array_Sequence_T.h
+        * tao/Bounded_Sequence_CDR_T.h
+        * tao/Fixed_Array_Argument_T.cpp
+        * tao/Unbounded_Array_Sequence_T.h
+        * tao/Unbounded_Sequence_CDR_T.h
+        * tao/Var_Array_Argument_T.cpp
+          Reworked array support, remove the traits struct I added and use the
+          forany class in most templates, this is how Jeff refactoring things
+          earlier this week, my approach just gave to much problems.
+
 Wed Jun 21 07:23:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/BD_String_Argument_T.cpp:
           Fixed compile problems by added a seperate typedef and use
           this in the methods.
+
 Wed Jun 21 07:15:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/EndpointPolicy.mpc:
