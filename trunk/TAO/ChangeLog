@@ -1,3 +1,10 @@
+Thu Jun 22 15:01:21 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Credentials.h:
+
+          Added missing SSLIOP namespace qualifier to typedef inside
+          the SSLIOP_Credentials class.
+
 Thu Jun 22 14:39:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/BD_String_SArgument_T.cpp:
