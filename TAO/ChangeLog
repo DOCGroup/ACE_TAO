@@ -1,3 +1,8 @@
+Thu Jun 22 14:39:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/BD_String_SArgument_T.cpp:
+          Fixed compile problems in Debian Core build
+
 Thu Jun 22 07:14:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Var_Array_SArgument_T.cpp:
