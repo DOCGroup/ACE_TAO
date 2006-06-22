@@ -125,9 +125,6 @@ ACE_SSL_Asynch_Stream::ACE_SSL_Asynch_Stream (
         ACE_TEXT ("- cannot allocate new SSL structure")
      ));
 
-  ::SSL_set_verify (this->ssl_,
-                    ctx->default_verify_mode (),
-                    0);
 }
 
 ACE_SSL_Asynch_Stream::~ACE_SSL_Asynch_Stream (void)

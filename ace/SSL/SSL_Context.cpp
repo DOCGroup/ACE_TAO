@@ -23,6 +23,7 @@
 #include <openssl/x509.h>
 #include <openssl/err.h>
 #include <openssl/rand.h>
+#include <openssl/safestack.h>
 
 ACE_RCSID (ACE_SSL,
            SSL_Context,
@@ -293,11 +294,13 @@ ACE_SSL_Context::set_mode (int mode)
 }
 
 int
-ACE_SSL_Context::load_trusted_ca (const char* ca_file, const char* ca_dir)
+ACE_SSL_Context::load_trusted_ca (const char* ca_file,
+                                  const char* ca_dir,
+                                  bool use_env_defaults)
 {
   this->check_context ();
 
-  if (ca_file == 0)
+  if (ca_file == 0 && use_env_defaults)
     {
       // Use the default environment settings.
       ca_file = ACE_OS::getenv (ACE_SSL_CERT_FILE_ENV);
@@ -305,7 +308,7 @@ ACE_SSL_Context::load_trusted_ca (const char* ca_file, const char* ca_dir)
         ca_file = ACE_DEFAULT_SSL_CERT_FILE;
     }
 
-  if (ca_dir == 0)
+  if (ca_dir == 0 && use_env_defaults)
     {
       // Use the default environment settings.
       ca_dir = ACE_OS::getenv (ACE_SSL_CERT_DIR_ENV);
@@ -322,53 +325,82 @@ ACE_SSL_Context::load_trusted_ca (const char* ca_file, const char* ca_dir)
         ACE_SSL_Context::report_error ();
       return -1;
     }
-  else
+
+  ++this->have_ca_;
+
+  // For TLS/SSL servers scan all certificates in ca_file and ca_dir and
+  // list them as acceptable CAs when requesting a client certificate.
+  if (mode_ == SSLv23
+      || mode_ == SSLv23_server
+      || mode_ == TLSv1
+      || mode_ == TLSv1_server
+      || mode_ == SSLv3
+      || mode_ == SSLv3_server
+      || mode_ == SSLv2
+      || mode_ == SSLv2_server)
     {
-      ++this->have_ca_;
+      // Note: The STACK_OF(X509_NAME) pointer is a copy of the pointer in
+      // the CTX; any changes to it by way of these function calls will
+      // change the CTX directly.
+      STACK_OF (X509_NAME) * cert_names;
+      cert_names = ::SSL_CTX_get_client_CA_list (this->context_);
+      bool error = false;
 
-      // for TLS/SSL servers scan all certificates in ca_file and list
-      // then as acceptable CAs when requesting a client certificate.
-      if (mode_ == SSLv23
-          || mode_ == SSLv23_server
-          || mode_ == TLSv1
-          || mode_ == TLSv1_server
-          || mode_ == SSLv3
-          || mode_ == SSLv3_server
-          || mode_ == SSLv2
-          || mode_ == SSLv2_server)
+      // Add CAs from both the file and dir, if specified. There should
+      // already be a STACK_OF(X509_NAME) in the CTX, but if not, we create
+      // one.
+      if (ca_file)
         {
-          STACK_OF (X509_NAME) * cert_names;
-          cert_names = ::SSL_CTX_get_client_CA_list (this->context_);
-
           if (cert_names == 0)
             {
-              // Set the first certificate authorith list.
-              cert_names = ::SSL_load_client_CA_file (ca_file);
-              if (cert_names != 0 )
-                ::SSL_CTX_set_client_CA_list (this->context_,
-                                              cert_names);
+              if ((cert_names = ::SSL_load_client_CA_file (ca_file)) != 0)
+                ::SSL_CTX_set_client_CA_list (this->context_, cert_names);
+              else
+                error = true;
             }
           else
             {
               // Add new certificate names to the list.
-              if (!::SSL_add_file_cert_subjects_to_stack (cert_names,
-                                                          ca_file))
-                cert_names = 0;
+              error = (0 == ::SSL_add_file_cert_subjects_to_stack (cert_names,
+                                                                   ca_file));
             }
 
-          if (cert_names == 0)
+          if (error)
             {
               if (ACE::debug ())
                 ACE_SSL_Context::report_error ();
               return -1;
             }
-
-          // @todo
-          // If warranted do the same for ca_dir when the function
-          // SSL_add_dir_cert_subjects_to_stack() is portable to
-          // WIN32, VMS, MAC_OS_pre_X (nb. it is not defined for those
-          // platforms by OpenSSL).
         }
+
+      // SSL_add_dir_cert_subjects_to_stack is defined at 0.9.8a (but not
+      // on OpenVMS or Mac Classic); it may be available earlier. Change
+      // this comparison if so.
+#if defined (OPENSSL_VERSION_NUMBER) && (OPENSSL_VERSION_NUMBER >= 0x0090801fL)
+#  if !defined (OPENSSL_SYS_VMS) && !defined (OPENSSL_SYS_MACINTOSH_CLASSIC)
+
+      if (ca_dir != 0)
+        {
+          if (cert_names == 0)
+            {
+              if ((cert_names = sk_X509_NAME_new_null ()) == 0)
+                {
+                  if (ACE::debug ())
+                    ACE_SSL_Context::report_error ();
+                  return -1;
+                }
+              ::SSL_CTX_set_client_CA_list (this->context_, cert_names);
+            }
+          if (0 == ::SSL_add_dir_cert_subjects_to_stack (cert_names, ca_dir))
+            {
+              if (ACE::debug ())
+                ACE_SSL_Context::report_error ();
+              return -1;
+            }
+        }
+#  endif /* !OPENSSL_SYS_VMS && !OPENSSL_SYS_MACINTOSH_CLASSIC */
+#endif /* OPENSSL_VERSION_NUMBER >= 0.9.8a release */
+
     }
 
   return 0;
@@ -472,7 +504,7 @@ ACE_SSL_Context::egd_file (const char * socket_file)
   ACE_NOTSUP_RETURN (-1);
 #else
   // RAND_egd() returns the amount of entropy used to seed the random
-  // number generator.  The actually value should be greater than 16,
+  // number generator.  The actual value should be greater than 16,
   // i.e. 128 bits.
   if (::RAND_egd (socket_file) > 0)
     return 0;
@@ -485,9 +517,15 @@ int
 ACE_SSL_Context::seed_file (const char * seed_file, long bytes)
 {
   // RAND_load_file() returns the number of bytes used to seed the
-  // random number generator.
+  // random number generator. If the file reads ok, check RAND_status to
+  // see if it got enough entropy.
   if (::RAND_load_file (seed_file, bytes) > 0)
-    return 0;
+#if OPENSSL_VERSION_NUMBER >= 0x00905100L
+    // RAND_status() returns 1 if the PRNG has enough entropy.
+    return (::RAND_status () == 1 ? 0 : -1);
+#else
+    return 0;  // Ugly, but OpenSSL <= 0.9.4 doesn't have RAND_status().
+#endif  /* OPENSSL_VERSION_NUMBER >= 0x00905100L */
   else
     return -1;
 }

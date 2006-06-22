@@ -34,13 +34,7 @@ ACE_SSL_SOCK_Stream::ACE_SSL_SOCK_Stream (ACE_SSL_Context *context)
 
   this->ssl_ = ::SSL_new (ctx->context ());
 
-  if (this->ssl_ != 0)
-    {
-      ::SSL_set_verify (this->ssl_,
-                        ctx->default_verify_mode (),
-                        0);
-    }
-  else
+  if (this->ssl_ == 0)
     {
       ACE_ERROR ((LM_ERROR,
                   "(%P|%t) ACE_SSL_SOCK_Stream "
