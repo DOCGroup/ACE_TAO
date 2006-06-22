@@ -25,6 +25,7 @@
 #include "tao/AnyTypeCode/AnyTypeCode_methods.h"
 #include "tao/Pseudo_VarOut_T.h"
 #include "tao/Arg_Traits_T.h"
+#include "tao/Object.h"
 
 #include "ace/CDR_Stream.h"
 #include "ace/CORBA_macros.h"
@@ -45,11 +46,6 @@ namespace CORBA
 
   class TypeCode;
   typedef TypeCode *TypeCode_ptr;
-
-  class Object;
-  typedef Object *Object_ptr;
-  typedef TAO_Pseudo_Var_T<Object> Object_var;
-  typedef TAO_Pseudo_Out_T<Object> Object_out;
 
   class AbstractBase;
   typedef AbstractBase *AbstractBase_ptr;
