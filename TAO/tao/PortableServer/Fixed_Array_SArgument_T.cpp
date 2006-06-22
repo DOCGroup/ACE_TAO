@@ -17,8 +17,7 @@ CORBA::Boolean
 TAO::In_Fixed_Array_SArgument_T<S_forany,
                                 Insert_Policy>::demarshal (TAO_InputCDR &cdr)
 {
-  S_forany tmp (this->x_);
-  return cdr >> tmp;
+  return cdr >> this->x_;
 }
 
 #if TAO_HAS_INTERCEPTORS == 1
@@ -30,7 +29,7 @@ TAO::In_Fixed_Array_SArgument_T<S_forany,
                                 Insert_Policy>::interceptor_value (
     CORBA::Any *any) const
 {
-  Insert_Policy<S_forany>::any_insert (any, S_forany (this->x_));
+  Insert_Policy<S_forany>::any_insert (any, this->x_);
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
@@ -43,7 +42,7 @@ CORBA::Boolean
 TAO::Inout_Fixed_Array_SArgument_T<S_forany,
                                    Insert_Policy>::marshal (TAO_OutputCDR &cdr)
 {
-  return cdr << S_forany (this->x_);
+  return cdr << this->x_;
 }
 
 template<typename S_forany,
@@ -53,8 +52,7 @@ TAO::Inout_Fixed_Array_SArgument_T<S_forany,
                                    Insert_Policy>::
 demarshal (TAO_InputCDR & cdr)
 {
-  S_forany tmp (this->x_);
-  return cdr >> tmp;
+  return cdr >> this->x_;
 }
 
 #if TAO_HAS_INTERCEPTORS == 1
@@ -66,7 +64,7 @@ TAO::Inout_Fixed_Array_SArgument_T<S_forany,
                                    Insert_Policy>::interceptor_value (
     CORBA::Any *any) const
 {
-  Insert_Policy<S_forany>::any_insert (any, S_forany (this->x_));
+  Insert_Policy<S_forany>::any_insert (any, this->x_);
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
@@ -79,7 +77,7 @@ CORBA::Boolean
 TAO::Out_Fixed_Array_SArgument_T<S_forany,
                                  Insert_Policy>::marshal (TAO_OutputCDR &cdr)
 {
-  return cdr << S_forany (this->x_);
+  return cdr << this->x_;
 }
 
 #if TAO_HAS_INTERCEPTORS == 1
@@ -91,7 +89,7 @@ TAO::Out_Fixed_Array_SArgument_T<S_forany,
                                  Insert_Policy>::interceptor_value (
     CORBA::Any *any) const
 {
-  Insert_Policy<S_forany>::any_insert (any, S_forany (this->x_));
+  Insert_Policy<S_forany>::any_insert (any, this->x_);
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
