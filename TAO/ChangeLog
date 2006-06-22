@@ -1,7 +1,12 @@
+Thu Jun 22 06:47:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/BD_String_Argument_T.cpp:
+          Fixed bug in this file
+
 Wed Jun 21 20:46:09 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Array_VarOut_T.h:
-        
+
           Added a typedef of FORANY in the TAO_FixedArray_Var_T<> and
           TAO_VarArray_Var_T<> classes that just refer to the existing
           typedef for FORANY in the common base class. Some compilers,
@@ -13,7 +18,7 @@ Wed Jun 21 20:46:09 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 Wed Jun 21 14:10:38 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Array_VarOut_T.h:
-        
+
           Removed 'typename' qualifier in typedef of FORANY inside the
           TAO_Array_Var_Base_T template class, since it was causing
           problems on the FC4_CIAO_Core build.
@@ -24,7 +29,7 @@ Wed Jun 21 13:50:57 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
         * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current.h:
         * orbsvcs/orbsvcs/SSLIOP/SSLIOP_OwnCredentials.h:
         * orbsvcs/orbsvcs/Security/SL3_CredentialsCurator.h:
-        
+
           Added typedefs _ptr_type, _var_type, and _out_type to
           these "interface" classes, since the typedefs are now
           required by the *_var and *_out template classes.
