@@ -27,6 +27,7 @@
 
 #include "ace/os_include/os_fcntl.h"
 #include "ace/Global_Macros.h"  // for LPSECURITY_ATTRIBUTES :-(
+#include "ace/Default_Constants.h"
 #include "ace/ACE_export.h"
 
 #if defined (ACE_EXPORT_MACRO)
@@ -43,22 +44,9 @@ namespace ACE_OS {
              int cmd,
              long arg = 0);
 
-  // It used to be that the <perms> argument default was 0 on all
-  // platforms. Further, the ACE_OS::open implementations ignored <perms>
-  // for Win32 and always supplied read|write|delete. To preserve
-  // backward compatibility and allow users to pass in values
-  // that are used as desired, the defaults are now what the default
-  // action used to be on Win32. The implementation now obeys what is passed.
-#if defined (ACE_WIN32)
-#  if defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 == 1)
-#    define ACE_DEFAULT_OPEN_PERMS (FILE_SHARE_READ | FILE_SHARE_WRITE | \
-                                    FILE_SHARE_DELETE)
-#  else
-#    define ACE_DEFAULT_OPEN_PERMS (FILE_SHARE_READ | FILE_SHARE_WRITE)
-#  endif /* ACE_HAS_WINCE */
-#else
-#  define ACE_DEFAULT_OPEN_PERMS 0
-#endif  /* ACE_WIN32 */
+#if !defined (ACE_DEFAULT_OPEN_PERMS)
+#  define ACE_DEFAULT_OPEN_PERMS ACE_DEFAULT_FILE_PERMS
+#endif  /* ACE_DEFAULT_OPEN_PERMS */
 
   /// The O_APPEND flag is only partly supported on Win32. If you specify
   /// O_APPEND, then the file pointer will be positioned at the end of
