@@ -1,3 +1,9 @@
+Thu Jun 22 06:59:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/AnyTypeCode/Any.{h,cpp,inl}:
+          Moved include of Object.h to the header file to resolve compile
+          problems with Borland in release mode when inlining is enabled
+
 Thu Jun 22 06:47:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/BD_String_Argument_T.cpp:
