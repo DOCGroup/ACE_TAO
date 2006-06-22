@@ -16,11 +16,11 @@ TAO/tao/AnyTypeCode
 TAO/tao/CodecFactory
 TAO/tao/Codeset
 TAO/tao/PI
+TAO/tao/PortableServer
 TAO/tao/PI_Server
 TAO/tao/Valuetype
 TAO/tao/IORInterceptor
 TAO/tao/ObjRefTemplate
-TAO/tao/PortableServer
 TAO/tao/DynamicAny
 TAO/tao/IORManipulation
 TAO/tao/IORTable
