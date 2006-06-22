@@ -1,3 +1,13 @@
+Thu Jun 22 05:29:48 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/Service_Gestalt.cpp:
+
+          The initialize_i() method would not remove a service, which
+          failed to initialize, in case the ACE_NOLOGGING is defined. For
+          some reason the two blocks of code were switched around.  Thanks
+          to Martin Corino <mcorino at remedy dot nl> for pointing out the
+          problem.
+
 Wed Jun 21 21:29:04 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * ace/config-lynxos.h: Added ACE_LACKS_STRPTIME. This should fix a

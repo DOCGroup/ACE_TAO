@@ -660,6 +660,10 @@ ACE_Service_Gestalt::initialize_i (const ACE_Service_Type *sr,
   if (sr->type ()->init (args.argc (),
                          args.argv ()) == -1)
     {
+      // We just get ps to avoid having remove() delete it.
+      ACE_Service_Type *ps = 0;
+      this->repo_->remove (sr->name (), &ps);
+
 #ifndef ACE_NLOGGING
       if (ACE::debug ())
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -668,12 +672,6 @@ ACE_Service_Gestalt::initialize_i (const ACE_Service_Type *sr,
                            sr->name ()),
                           -1);
 #endif
-        return -1;
-
-      ACE_Service_Type *ps = 0;
-      this->repo_->remove (sr->name (), &ps);
-
-      // We just get ps to avoid having remove() delete it.
       return -1;
     }
 
