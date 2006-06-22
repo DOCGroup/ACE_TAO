@@ -60,9 +60,9 @@ namespace TAO
         public virtual TAO_Local_RefCounted_Object
     {
     public:
-      typedef Credentials_ptr _ptr_type;
-      typedef Credentials_var _var_type;
-      typedef Credentials_out _out_type;
+      typedef SSLIOP::Credentials_ptr _ptr_type;
+      typedef SSLIOP::Credentials_var _var_type;
+      typedef SSLIOP::Credentials_out _out_type;
 
       /// Constructor
       SSLIOP_Credentials (::X509 * cert, ::EVP_PKEY * evp);
