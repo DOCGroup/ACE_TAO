@@ -1,3 +1,8 @@
+Thu Jun 22 14:48:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/msvc_static_order.lst:
+          Build the portableserver earlier in the list of libs
+
 Thu Jun 22 05:29:48 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * ace/Service_Gestalt.cpp:
