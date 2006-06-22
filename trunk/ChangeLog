@@ -1,3 +1,10 @@
+Thu Jun 22 21:05:20 UTC 2006  Krishnakumar B  <kitty@dre.vanderbilt.edu>
+
+        * ace/OS_NS_fcntl.h (ACE_DEFAULT_OPEN_PERMS): Set the value of
+          ACE_DEFAULT_OPEN_PERMS from ACE_DEFAULT_FILE_PERMS instead of
+          0.  This ensures that users of ACE_OS::open() who don't override
+          the default argument get a sensible default.
+
 Thu Jun 22 15:08:01 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * ace/SSL/SSL_Context.{h cpp} (load_trusted_ca): Added a third
