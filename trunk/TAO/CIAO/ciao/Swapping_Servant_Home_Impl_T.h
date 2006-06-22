@@ -42,18 +42,13 @@ namespace CIAO
    */
   template <typename BASE_SKEL,
             typename EXEC,
-            typename EXEC_VAR,
-            typename COMP,
-            typename COMP_VAR,
-            typename COMP_EXEC,
-            typename COMP_EXEC_VAR,
             typename COMP_SVNT>
   class Swapping_Home_Servant_Impl
     : public virtual BASE_SKEL,
       public virtual Home_Servant_Impl_Base
   {
   public:
-    Swapping_Home_Servant_Impl (EXEC * exe,
+    Swapping_Home_Servant_Impl (typename EXEC::_ptr_type exe,
                                 Session_Container * c,
                                 const char* ins_name,
                                 const char* obj_id,
@@ -78,7 +73,7 @@ namespace CIAO
 
     // Operations for implicit home interface.
 
-    virtual COMP *
+    virtual typename COMP_SVNT::_stub_ptr_type
     create (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::CreateFailure));
@@ -89,18 +84,18 @@ namespace CIAO
   protected:
     // CIAO-specific operations.
 
-    COMP *
+    typename COMP_SVNT::_stub_ptr_type
     _ciao_activate_component (::Components::EnterpriseComponent_ptr ec
                               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     void
-    _ciao_passivate_component (COMP *comp
+    _ciao_passivate_component (typename COMP_SVNT::_stub_ptr_type comp
                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   protected:
-    EXEC_VAR executor_;
+    typename EXEC::_var_type executor_;
 
     ACE_Hash_Map_Manager_Ex<PortableServer::ObjectId,
                             COMP_SVNT *,

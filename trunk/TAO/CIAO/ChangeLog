@@ -1,3 +1,14 @@
+Thu Jun 22 18:47:47 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ciao/Dynamic_Component_Servant_T.cpp:
+        * ciao/Dynamic_Component_Servant_T.h:
+        * ciao/Swapping_Servant_Home_Impl_T.cpp:
+        * ciao/Swapping_Servant_Home_Impl_T.h:
+
+          Made changes to template code corresponding to those in
+
+          Mon Jun 19 14:52:25 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
 Mon Jun 19 14:52:25 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ciao/Home_Servant_Impl_T.cpp:
