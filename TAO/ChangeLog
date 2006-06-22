@@ -1,3 +1,14 @@
+Thu Jun 22 15:27:04 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/ORB_Local_Config/Bug_1459/a.conf:
+          Fix the test by making it use UIOP rather than SSLIOP as the
+          alternative protocol. The original problem results from first
+          using SSLIOP in the non-default ORB which loads the SSL library,
+          which in turn registers with the ACE Object Manager. At shutdown
+          time, the SSL library is unloaded in order, but then the ACE
+          Object Manager tries to clean it up, but can't, because it is
+          already gone.
+
 Thu Jun 22 16:13:29 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/PortableServer/Fixed_Array_SArgument_T.cpp:
