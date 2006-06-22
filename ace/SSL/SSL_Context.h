@@ -154,37 +154,85 @@ public:
   /**
    *  Load the location of the trusted certification authority
    *  certificates.  Note that CA certificates are stored in PEM format
-   *  as a sequence of certificates in <ca_file> or as a set of
-   *  individual certificates in <ca_dir> (or both).
+   *  as a sequence of certificates in @a ca_file or as a set of
+   *  individual certificates in @a ca_dir (or both).
    *
    *  Note this method is called by set_mode() to load the default
-   *  environment settings for <ca_file> and <ca_dir>, if any. This
+   *  environment settings for @a ca_file and @a ca_dir, if any. This
    *  allows for automatic service configuration (and backward
-   *  compatibility with previous versions.
+   *  compatibility with previous versions).
    *
    *  Note that the underlying SSL function will add valid file and
    *  directory names to the load location lists maintained as part of
-   *  the SSL_CTX table.  (... It therefore dosn't make sense to keep a
+   *  the SSL_CTX table.  It therefore doesn't make sense to keep a
    *  copy of the file and path name of the most recently added
-   *  <ca_file> or <ca_path>.
+   *  @a ca_file or @a ca_path.
+   *
+   *  @param[in] ca_file           CA file pathname. Passed to 
+   *                               @c SSL_CTX_load_verify_locations() if not
+   *                               0. If 0, behavior depends on the value of
+   *                               @a use_env_defaults.
+   *  @param[in] ca_dir            CA directory pathname. Passed to 
+   *                               @c SSL_CTX_load_verify_locations() if not
+   *                               0. If 0, behavior depends on the value of
+   *                               @a use_env_defaults.
+   *  @param[in] use_env_defaults  If false, the specified @a ca_file argument
+   *                               is passed to
+   *                               @c SSL_CTX_load_verify_locations(),
+   *                               regardless of its value.
+   *                               If true (the default), additional defaults
+   *                               can be applied to either @a ca_file,
+   *                               @a ca_dir, or both. The following
+   *                               additional defaults are applied when the
+   *                               @a ca_file argument is 0:
+   *                                - The @c SSL_CERT_FILE environment variable
+   *                                  will be queried for a file name to use as
+   *                                  the @a ca_file argument. The environment
+   *                                  variable name to query can be changed by
+   *                                  supplying a @c ACE_SSL_CERT_FILE_ENV
+   *                                  configuration item when building ACE.
+   *                                - If there is no @c SSL_CERT_FILE in the
+   *                                  current environment, the file specified
+   *                                  by the @c ACE_DEFAULT_SSL_CERT_FILE ACE
+   *                                  configuration item will be used. The
+   *                                  default value is "cert.pem" on Windows
+   *                                  and "/etc/ssl/cert.pem" on all other
+   *                                  platforms.
+   *                               The following additional defaults are
+   *                               applied when the @a ca_dir argument is 0:
+   *                                - The @c SSL_CERT_DIR environment variable
+   *                                  will be queried for a file name to use as
+   *                                  the @a ca_dir argument. The environment
+   *                                  variable name to query can be changed by
+   *                                  supplying a @c ACE_SSL_CERT_DIR_ENV
+   *                                  configuration item when building ACE.
+   *                                - If there is no @c SSL_CERT_DIR in the
+   *                                  current environment, the directory
+   *                                  specified by the @c
+   *                                  ACE_DEFAULT_SSL_CERT_DIR ACE
+   *                                  configuration item will be used. The
+   *                                  default value is "certs" on Windows
+   *                                  and "/etc/ssl/certs" on all other
+   *                                  platforms.
    *
    *  @return 0 for success or -1 on error.
    *
    *  @see OpenSSL manual SSL_CTX_load_verify_locations(3) for a
    *  detailed description of the CA file and directory requirements
    *  and processing.
-  */
-  int load_trusted_ca(const char* ca_file = 0, const char* ca_dir = 0);
+   */
+  int load_trusted_ca (const char* ca_file = 0,
+                       const char* ca_dir = 0,
+                       bool use_env_defaults = true);
 
   /**
-     Test whether any CA locations have been successfully loaded and
-     return the number of successful attempts.
-
-     @return  >0 This value indicates the number of successful CA load
-                 attempts .
-     @return  0  If all CA load attempts have failed.
-  */
-  int have_trusted_ca(void) const;
+   *  Test whether any CA locations have been successfully loaded and
+   *  return the number of successful attempts.
+   *
+   *  @retval >0  The number of successful CA load attempts.
+   *  @retval  0  If all CA load attempts have failed.
+   */
+  int have_trusted_ca (void) const;
 
 
   /**

@@ -1,3 +1,24 @@
+Thu Jun 22 15:08:01 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/SSL/SSL_Context.{h cpp} (load_trusted_ca): Added a third
+          argument, bool use_env_defaults, which defaults to true. If false,
+          the ca_file and ca_dir arguments do not get ACE defaults applied
+          to them if passed as 0. This allows a user to specify a 0 file or
+          directory to the underlying SSL_CTX_load_verify_locations() function.
+          If a ca_dir is supplied, attempt to add its CA list to the
+          X509 names in addition to that of ca_file.
+
+          (seed_file): If the file loads ok, check RAND_status() to see if
+          there's "enough" entropy.
+
+        * ace/SSL/SSL_Context.inl:
+        * ace/SSL/SSL_Asynch_Stream.cpp:
+        * ace/SSL/SSL_SOCK_Stream.cpp: When setting up SSL_CTX, set the verify
+          mode as well. When creating a new socket object, let it inherit the
+          verify mode from the SSL context rather than making a call back to
+          the context to retrieve the verify mode and setting it with a
+          separate SSL call.
+
 Thu Jun 22 14:48:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/msvc_static_order.lst:
