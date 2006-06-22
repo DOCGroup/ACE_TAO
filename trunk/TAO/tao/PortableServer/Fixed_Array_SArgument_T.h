@@ -47,7 +47,7 @@ namespace TAO
     typename S_forany::_slice_type const * arg (void) const;
 
   private:
-    mutable typename S_forany::_array_type x_;
+    mutable typename S_forany x_;
   };
 
   /**
@@ -70,7 +70,7 @@ namespace TAO
     typename S_forany::_slice_type * arg (void);
 
   private:
-    typename S_forany::_array_type x_;
+    typename S_forany x_;
   };
 
   /**
@@ -92,7 +92,7 @@ namespace TAO
     typename S_forany::_slice_type * arg (void);
 
   private:
-    typename S_forany::_array_type x_;
+    typename S_forany x_;
   };
 
   /**

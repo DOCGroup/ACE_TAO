@@ -1,3 +1,16 @@
+Thu Jun 22 16:13:29 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/PortableServer/Fixed_Array_SArgument_T.cpp:
+        * tao/PortableServer/Fixed_Array_SArgument_T.h:
+        * tao/PortableServer/Fixed_Array_SArgument_T.inl:
+
+          Changed the member type of all classes except the out arg
+          class from array type to forany type. Almost every operation
+          in these classes was first converting the member to forany
+          type first, and there is no forany constructor directly from
+          array type. This new design is similar to the stub argument
+          classes for fixed arrays in TAO.
+
 Thu Jun 22 15:01:21 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Credentials.h:

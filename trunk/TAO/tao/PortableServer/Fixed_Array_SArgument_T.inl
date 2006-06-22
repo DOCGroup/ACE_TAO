@@ -19,8 +19,7 @@ typename S_forany::_slice_type const *
 TAO::In_Fixed_Array_SArgument_T<S_forany,
                                 Insert_Policy>::arg (void) const
 {
-  S_forany tmp (this->x_);
-  return tmp.in ();
+  return this->x_.in ();
 }
 
 // ===========================================================================
@@ -41,8 +40,7 @@ typename S_forany::_slice_type *
 TAO::Inout_Fixed_Array_SArgument_T<S_forany,
                                    Insert_Policy>::arg (void)
 {
-  S_forany tmp (this->x_);
-  return tmp.inout ();
+  return this->x_.inout ();
 }
 
 // ===========================================================================
@@ -63,8 +61,7 @@ typename S_forany::_slice_type *
 TAO::Out_Fixed_Array_SArgument_T<S_forany,
                                  Insert_Policy>::arg (void)
 {
-  S_forany tmp (this->x_);
-  return tmp.inout ();
+  return this->x_.inout ();
 }
 
 // ===========================================================================
