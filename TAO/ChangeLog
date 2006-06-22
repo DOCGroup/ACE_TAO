@@ -1,3 +1,8 @@
+Thu Jun 22 07:14:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Var_Array_SArgument_T.cpp:
+          Fixed compile problem
+
 Thu Jun 22 06:59:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/AnyTypeCode/Any.{h,cpp,inl}:
