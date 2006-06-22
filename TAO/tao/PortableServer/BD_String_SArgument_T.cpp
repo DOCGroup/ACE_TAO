@@ -19,7 +19,8 @@ TAO::In_BD_String_SArgument_T<S_var,BOUND,Insert_Policy>::demarshal (
     TAO_InputCDR & cdr
   )
 {
-  return cdr >> S_var::s_traits::to_type (this->x_.out (), BOUND);
+  typedef typename S_var::s_traits::to_type to_type;
+  return cdr >> to_type (this->x_.out (), BOUND);
 }
 
 #if TAO_HAS_INTERCEPTORS == 1
@@ -31,9 +32,10 @@ void
 TAO::In_BD_String_SArgument_T<S_var,BOUND,Insert_Policy>::interceptor_value (
   CORBA::Any *any) const
 {
-  Insert_Policy<typename S_var::s_traits::from_type>::any_insert (
+  typedef typename S_var::s_traits::from_type from_type;
+  Insert_Policy<from_type>::any_insert (
       any,
-      S_var::s_traits::from_type (this->x_.in (), BOUND)
+      from_type (this->x_.in (), BOUND)
     );
 }
 
@@ -49,7 +51,8 @@ TAO::Inout_BD_String_SArgument_T<S_var,BOUND,Insert_Policy>::marshal (
     TAO_OutputCDR & cdr
   )
 {
-  return cdr << S_var::s_traits::from_type (this->x_.in (), BOUND);
+  typedef typename S_var::s_traits::from_type from_type;
+  return cdr << from_type (this->x_.in (), BOUND);
 }
 
 template<typename S_var,
@@ -60,7 +63,8 @@ TAO::Inout_BD_String_SArgument_T<S_var,BOUND,Insert_Policy>::demarshal (
     TAO_InputCDR & cdr
   )
 {
-  return cdr >> S_var::s_traits::to_type (this->x_.out (), BOUND);
+  typedef typename S_var::s_traits::to_type to_type;
+  return cdr >> to_type (this->x_.out (), BOUND);
 }
 
 #if TAO_HAS_INTERCEPTORS == 1
@@ -72,9 +76,10 @@ void
 TAO::Inout_BD_String_SArgument_T<S_var,BOUND,Insert_Policy>::
 interceptor_value (CORBA::Any *any) const
 {
-  Insert_Policy<typename S_var::s_traits::from_type>::any_insert (
+  typedef typename S_var::s_traits::from_type from_type;
+  Insert_Policy<from_type>::any_insert (
       any,
-      S_var::s_traits::from_type (this->x_.in (), BOUND)
+      from_type (this->x_.in (), BOUND)
     );
 }
 
@@ -90,7 +95,8 @@ TAO::Out_BD_String_SArgument_T<S_var,BOUND,Insert_Policy>::marshal (
     TAO_OutputCDR &cdr
   )
 {
-  return cdr << S_var::s_traits::from_type (this->x_.in (), BOUND);
+  typedef typename S_var::s_traits::from_type from_type;
+  return cdr << from_type (this->x_.in (), BOUND);
 }
 
 #if TAO_HAS_INTERCEPTORS == 1
@@ -102,9 +108,10 @@ void
 TAO::Out_BD_String_SArgument_T<S_var,BOUND,Insert_Policy>::
 interceptor_value (CORBA::Any *any) const
 {
-  Insert_Policy<typename S_var::s_traits::from_type>::any_insert (
+  typedef typename S_var::s_traits::from_type from_type;
+  Insert_Policy<from_type>::any_insert (
       any,
-      S_var::s_traits::from_type (this->x_.in (), BOUND)
+      from_type (this->x_.in (), BOUND)
     );
 }
 
@@ -120,7 +127,8 @@ TAO::Ret_BD_String_SArgument_T<S_var,BOUND,Insert_Policy>::marshal (
     TAO_OutputCDR & cdr
   )
 {
-  return cdr << S_var::s_traits::from_type (this->x_.in (), BOUND);
+  typedef typename S_var::s_traits::from_type from_type;
+  return cdr << from_type (this->x_.in (), BOUND);
 }
 
 #if TAO_HAS_INTERCEPTORS == 1
@@ -132,9 +140,10 @@ void
 TAO::Ret_BD_String_SArgument_T<S_var,BOUND,Insert_Policy>::
 interceptor_value (CORBA::Any *any) const
 {
-  Insert_Policy<typename S_var::s_traits::from_type>::any_insert (
+  typedef typename S_var::s_traits::from_type from_type;
+  Insert_Policy<from_type>::any_insert (
       any,
-      S_var::s_traits::from_type (this->x_.in (), BOUND)
+      from_type (this->x_.in (), BOUND)
     );
 }
 
