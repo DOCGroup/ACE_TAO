@@ -1,3 +1,11 @@
+Fri Jun 23 13:20:21 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        Reverted the change below, it triggers pidl recompilation for all pidl files
+        Fri Jun 23 07:36:21 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+        * bin/MakeProjectCreator/config/taoidldefaults.mpb:
+          Added .pidl to the inputext. This should be the way how things should
+          run fine again in TAO but it seems somewhere ther is something missing.
+
 Fri Jun 23 07:36:21 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/taoidldefaults.mpb:
