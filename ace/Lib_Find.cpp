@@ -641,12 +641,15 @@ ACE_HANDLE
 ACE::open_temp_file (const ACE_TCHAR *name, int mode, int perm)
 {
 #if defined (ACE_WIN32)
-  ACE_UNUSED_ARG(perm);
-  return ACE_OS::open (name,
-                       mode | _O_TEMPORARY);
+  ACE_HANDLE handle = ACE_OS::open (name,
+                                    mode,
+                                    FILE_SHARE_READ
+                                    | FILE_SHARE_WRITE
+                                    | FILE_SHARE_DELETE);
 #else
   // Open it.
   ACE_HANDLE handle = ACE_OS::open (name, mode, perm);
+#endif /* ACE_WIN32 */
 
   if (handle == ACE_INVALID_HANDLE)
     return ACE_INVALID_HANDLE;
@@ -654,11 +657,10 @@ ACE::open_temp_file (const ACE_TCHAR *name, int mode, int perm)
   // Unlink it so that the file will be removed automatically when the
   // process goes away.
   if (ACE_OS::unlink (name) == -1)
-    return -1;
+    return ACE_INVALID_HANDLE;
   else
     // Return the handle.
     return handle;
-#endif /* ACE_WIN32 */
 }
 
 size_t
