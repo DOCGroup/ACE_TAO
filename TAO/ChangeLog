@@ -1,3 +1,8 @@
+Fri Jun 23 07:36:21 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Fixed_Array_SArgument_T.h:
+          Fixed compile problem
+
 Thu Jun 22 15:27:04 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/ORB_Local_Config/Bug_1459/a.conf:
