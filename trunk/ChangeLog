@@ -1,3 +1,14 @@
+Fri Jun 23 21:03:37 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/Lib_Find.cpp (open_temp_file):
+
+          Added FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE
+          for the 'perms' argument of the Windows version, which
+          eliminates a open_temp_file() failure in the IDL compiler
+          on a file that was previously opened/closed with fopen/fclose.
+          Thanks to Krishnakumar Balasubramanian <kitty@dre.vanderbilt.edu>
+          for figuring out the fix.
+
 Fri Jun 23 16:01:31 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * examples/Reactor/Proactor/test_proactor.cpp (open): When calling
