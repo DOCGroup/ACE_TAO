@@ -15,7 +15,7 @@ project {
     dependent            = $(TAO_IDL_DEP)
     command              = $(TAO_IDL)
     libpath              = $(ACE_ROOT)/lib
-    inputext             = .idl, .pidl
+    inputext             = .idl
     source_pre_extension = C
     header_pre_extension = C, S
     source_outputext     = .cpp, .cxx, .cc, .C
