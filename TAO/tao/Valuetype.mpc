@@ -5,6 +5,7 @@ project : taolib, core, core_anytypecode, tao_versioning_idl_defaults {
 
   Source_Files {
     Valuetype
+    Valuetype/StringValueA.cpp
   }
 
   Header_Files {
