@@ -35,7 +35,9 @@ project(TAO_IDL3_TO_IDL2_EXE) : aceexe, core, tao_output, crosscompile {
   after          += TAO_IDL3_TO_IDL2_BE TAO_IDL_FE
   exename         = tao_idl3_to_idl2
   libs           += TAO_IDL3_TO_IDL2_BE TAO_IDL_FE
-  includes       += . $(TAO_ROOT)/TAO_IDL/include $(TAO_ROOT)/TAO_IDL/fe
+  includes       += . $(TAO_ROOT)/TAO_IDL/include \
+                    $(TAO_ROOT)/TAO_IDL/fe \
+                    $(TAO_ROOT)
   libpaths       += $(TAO_ROOT)/TAO_IDL
   install         = $(ACE_ROOT)/bin
 
