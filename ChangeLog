@@ -1,3 +1,14 @@
+Fri Jun 23 16:01:31 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * examples/Reactor/Proactor/test_proactor.cpp (open): When calling
+          ACE_OS::open(), don't supply a very UNIXy-looking 0644 value for
+          the 'perms' argument. Let it default to something reasonable for
+          the platform. Using 0644 on Windows passes something Windows doesn't
+          like, and the test fails. Thanks very much to William Cote
+          <William dot Cote at hp dot com> for fixing this.
+
+        * THANKS: Added William Cote to the Hall of Fame.
+
 Fri Jun 23 13:20:21 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         Reverted the change below, it triggers pidl recompilation for all pidl files
