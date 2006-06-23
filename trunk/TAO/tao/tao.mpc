@@ -1,11 +1,8 @@
 //$Id$
 
-project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
+project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core, tao_versioning_idl_defaults {
   sharedname   = TAO
   dynamicflags = TAO_BUILD_DLL
-
-  // It is no longer necessary to override IDL_Files since it is a
-  // custom build type and comes from the taoidldefaults base project.
 
   Source_Files(TAO_COMPONENTS) {
     Abstract_Servant_Base.cpp
@@ -581,6 +578,9 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Connector_Impl.cpp
     TAO_Singleton.cpp
     orb.idl
+  }
+
+  IDL_Files {
   }
 
   Pkgconfig_Files {

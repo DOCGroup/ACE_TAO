@@ -5,10 +5,10 @@
 // necessary to add minimum_corba to 'avoids' here.
 project(IFR_Service) : orbsvcsexe, core, ifrservice, ifr_client, imr_client, crosscompile {
   exename = IFR_Service
-  
+
   IDL_Files {
   }
-  
+
   Source_Files {
     IFR_Server.cpp
     IFR_Service.cpp
@@ -35,7 +35,7 @@ project(TAO_IFR_BE) : taolib, conv_lib, ifr_client, crosscompile, minimum_corba 
     ifr_removing_visitor.cpp
     ifr_visitor.cpp
   }
-  
+
   Header_Files {
     be_extern.h
   }
@@ -48,7 +48,7 @@ project(TAO_IFR_EXE) : aceexe, core, ifr_client, crosscompile, minimum_corba {
   libs           += TAO_IFR_BE TAO TAO_IDL_FE
   includes       += $(TAO_ROOT)/orbsvcs/IFR_Service \
                     $(TAO_ROOT)/TAO_IDL/include \
-                    $(TAO_ROOT)/TAO_IDL/fe
+                    $(TAO_ROOT)/TAO_IDL/fe \
                     $(TAO_ROOT)
   install         = $(ACE_ROOT)/bin
 
@@ -69,7 +69,7 @@ project(TAO_IFR_EXE) : aceexe, core, ifr_client, crosscompile, minimum_corba {
     drv_preproc.cpp
     tao_idl.cpp
   }
-  
+
   Header_Files {
     $(TAO_ROOT)/TAO_IDL/include/drv_extern.h
   }
