@@ -1,3 +1,11 @@
+Fri Jun 23 13:42:54 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/IFR_Service/IFR_Service.mpc:
+        
+          Added $(TAO_ROOT) to the 'includes' line of the IFR loader
+          executable project, because of a change in the way
+          TAO/Version.h is included.
+
 Fri Jun 23 07:36:21 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Fixed_Array_SArgument_T.h:
