@@ -1,3 +1,11 @@
+Fri Jun 23 13:45:38 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tools/IDL3_to_IDL2/IDL3_to_IDL2.mpc:
+        
+          Added $(TAO_ROOT) to the 'includes' line of the executable
+          project, due to a change in the way TAO/Version.h is 
+          included.
+
 Thu Jun 22 18:47:47 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ciao/Dynamic_Component_Servant_T.cpp:
