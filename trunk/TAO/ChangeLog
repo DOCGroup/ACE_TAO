@@ -1,3 +1,11 @@
+Fri Jun 23 19:03:21 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Valuetype.mpc:
+        * tao/EndpointPolicy.mpc:
+        * tao/PortableServer.mpc:
+          Explicitly list the generated A.cpp in the source section because
+          MPC doesn't add them at this moment
+
 Fri Jun 23 18:39:21 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Valuetype.mpc:
