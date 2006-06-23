@@ -94,8 +94,8 @@ Receiver::open (ACE_HANDLE handle,
 
   // Open dump file (in OVERLAPPED mode)
   this->dump_file_ = ACE_OS::open (dump_file,
-                                   O_CREAT | O_RDWR | O_TRUNC | FILE_FLAG_OVERLAPPED,
-                                   0644);
+                                   O_CREAT | O_RDWR | O_TRUNC | \
+                                   FILE_FLAG_OVERLAPPED);
   if (this->dump_file_ == ACE_INVALID_HANDLE)
     {
       ACE_ERROR ((LM_ERROR,
