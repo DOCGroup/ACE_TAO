@@ -1,3 +1,9 @@
+Fri Jun 23 07:36:21 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/taoidldefaults.mpb:
+          Added .pidl to the inputext. This should be the way how things should
+          run fine again in TAO but it seems somewhere ther is something missing.
+
 Thu Jun 22 21:05:20 UTC 2006  Krishnakumar B  <kitty@dre.vanderbilt.edu>
 
         * ace/OS_NS_fcntl.h (ACE_DEFAULT_OPEN_PERMS): Set the value of
