@@ -158,8 +158,8 @@ int test_two_allocators ()
                     entry_alloc.pool_depth ()));
     }
 
-  ACE_TCHAR *key = ACE_TEXT("key");
-  ACE_TCHAR *val = ACE_TEXT("value");
+  const ACE_TCHAR *key = ACE_TEXT ("key");
+  const ACE_TCHAR *val = ACE_TEXT ("value");
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("- Binding ('%s', '%s'), should fail...\n"),
               key, val));
