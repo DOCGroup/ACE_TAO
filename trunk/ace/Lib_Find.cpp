@@ -641,6 +641,7 @@ ACE_HANDLE
 ACE::open_temp_file (const ACE_TCHAR *name, int mode, int perm)
 {
 #if defined (ACE_WIN32)
+  ACE_UNUSED_ARG (perm);
   ACE_HANDLE handle = ACE_OS::open (name,
                                     mode,
                                     FILE_SHARE_READ

@@ -1,3 +1,11 @@
+Sat Jun 24 14:02:15 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/Lib_Find.cpp (open_temp_file): In the ACE_WIN32 section,
+          'perm' is not used, so use ACE_UNUSED_ARG on it.
+
+        * tests/Hash_Map_Manager_Test.cpp: Use const ACE_TCHAR with literal
+          string, not non-const. Resolves compile warning on some compilers.
+
 Fri Jun 23 21:03:37 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/Lib_Find.cpp (open_temp_file):
