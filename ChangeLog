@@ -1,3 +1,8 @@
+Sun Jun 25 08:36:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/msvc_mpc_auto_compile.pl:
+          Build gperf and TAO_IDL before tao
+
 Sat Jun 24 14:02:15 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * ace/Lib_Find.cpp (open_temp_file): In the ACE_WIN32 section,
