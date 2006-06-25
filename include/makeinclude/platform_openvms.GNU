@@ -20,7 +20,7 @@ VSHDIR          = shobj/
 LN_S = cp -p
 DEFFLAGS        +=
 #CCFLAGS         += -D__USE_STD_IOSTREAM -ieee -Wc/template=noauto -Wc/noimplicit
-CCFLAGS         += -D__USE_STD_IOSTREAM -ieee -names_as_is_short -msg_disable intoverflow -Wc/template=auto
+CCFLAGS         += -D__USE_STD_IOSTREAM -ieee -names_as_is_short -msg_disable intoverflow,reftemporary -Wc/template=auto
 ifeq ($(debug),1)
 LDFLAGS         += -g -threads -Wl/PRELINK=USE_OLB
 else
