@@ -1,3 +1,8 @@
+Sun Jun 25 11:54:12 UTC 2006  Martin Corino  <mcorino@remedy.nl>
+
+        * include/makeinclude/platform_openvms.GNU:
+          Some compileswitch changes.
+
 Sun Jun 25 08:36:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/msvc_mpc_auto_compile.pl:
