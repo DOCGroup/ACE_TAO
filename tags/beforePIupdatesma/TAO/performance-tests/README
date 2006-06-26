@@ -1,0 +1,40 @@
+#
+# $Id$
+#
+
+This directory contains a number of tests that illustrate the
+performance of TAO and other ORBs.  The individual directories contain
+READMEs on how to run the following performance tests:
+
+        . Cubit
+
+          This directory contains performance tests for TAO that
+          measure the latency, jitter, CPU utilization, and
+          priority inversion of these ORBs.
+
+        . Latency
+
+          A set of performance tests that measure throughput, latency
+          and jitter.
+
+        . POA
+        
+          Various tests of the TAO's POA performance.
+
+        . Pluggable
+
+          The tests in this directory time the latency contributed by
+          various parts of the ORB, but mostly the emphasis is on the
+          contribution due to the pluggable protocols code.  
+
+        . RTCorba
+
+          Tests for various (TAO-specific) real-time features. Tests
+          for RT CORBA spec real-time features can be found in
+          $TAO_ROOT/tests/RTCORBA.
+
+        . Throughput
+
+          Throughput tests (bytes per second) for TAO.
+
+
