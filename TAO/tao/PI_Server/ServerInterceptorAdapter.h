@@ -170,14 +170,8 @@ namespace TAO
 
     virtual TAO::PICurrent_Impl *allocate_pi_current (void);
 
-    virtual TAO::PICurrent_Copy_Callback *
-        allocate_pi_current_callback (void);
-
     virtual void deallocate_pi_current (
         TAO::PICurrent_Impl *picurrent);
-
-    virtual void deallocate_pi_current_callback (
-        TAO::PICurrent_Copy_Callback *callback);
 
     virtual void execute_command (
         TAO_ServerRequest &server_request,

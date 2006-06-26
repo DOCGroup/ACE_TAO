@@ -11,32 +11,12 @@ ACE_RCSID (tao,
 # include "tao/PI/PICurrent_Impl.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "tao/PI/PICurrent_Copy_Callback.h"
-
 #include "tao/TAO_Server_Request.h"
 #include "tao/SystemException.h"
 #include "ace/Log_Msg.h"
 #include "tao/debug.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-TAO::PICurrent_Impl::PICurrent_Impl (void)
-  : slot_table_ (),
-    lc_slot_table_ (0),
-    copy_callback_ (0),
-    destruction_callback_ (0)
-{
-}
-
-TAO::PICurrent_Impl::~PICurrent_Impl (void)
-{
-  // Break any existing ties with PICurrent to which our table was
-  // logically copied since our table no longer exists once this
-  // destructor completes.
-  if (this->destruction_callback_ != 0)
-    this->destruction_callback_->execute_destruction_callback (0);
-}
-
 
 CORBA::Any *
 TAO::PICurrent_Impl::get_slot (PortableInterceptor::SlotId identifier
@@ -47,17 +27,17 @@ TAO::PICurrent_Impl::get_slot (PortableInterceptor::SlotId identifier
   // No need to check validity of SlotId.  It is validated before this
   // method is invoked.
 
-  // Get the slot table that is currently active
-  PICurrent_Impl::Table & table = this->current_slot_table ();
-
   // The active slot table should never be a lazy copy of itself!
-  if (this->lc_slot_table_ == &this->slot_table_)
+  if ( (0 != this->lazy_copy_)
+      && (&this->lazy_copy_->current_slot_table () == &this->slot_table_))
   {
     if (TAO_debug_level > 0)
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) Lazy copy of self detected at %N,%l")));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) Lazy copy of self detected at %N,%l\n")));
     ACE_THROW (CORBA::INTERNAL ());
   }
 
+  // Get the slot table that is currently active
+  PICurrent_Impl::Table & table = this->current_slot_table ();
   CORBA::Any * any = 0;
 
   if (identifier < table.size ())
@@ -99,21 +79,14 @@ TAO::PICurrent_Impl::set_slot (PortableInterceptor::SlotId identifier,
   // No need to check validity of SlotId.  It is validated before this
   // method is invoked.
 
-  // Perform deep copy of the logically copied slot table, if
-  // necessary, before modifying our own slot table. This is a setup
-  // where another PICurrent refers to our slot table, so we force the
-  // the other PICurrent does copy our table before making changes to
-  // our table.
-  if (this->copy_callback_ != 0)
-    this->copy_callback_->execute ();
+  // Break any existing ties that another PICurrent has with our table
+  // since our table is changing.
+  if (0 != this->impending_change_callback_)
+    this->impending_change_callback_->convert_from_lazy_to_real_copy ();
 
-  // If we have a logical copied slot table we refer to, just make a
-  // copy of that table first before making changes to our table.
-  if (this->lc_slot_table_ != 0)
-    {
-      this->slot_table_ = *this->lc_slot_table_;
-      this->lc_slot_table_ = 0;
-    }
+  // Ensure that we have a real physical copy of the table before
+  // making any changes to it.
+  this->convert_from_lazy_to_real_copy ();
 
   // If the slot table array isn't large enough, then increase its
   // size.  We're guaranteed not to exceed the number of allocated
@@ -126,16 +99,41 @@ TAO::PICurrent_Impl::set_slot (PortableInterceptor::SlotId identifier,
 }
 
 void
-TAO::PICurrent_Impl::execute_destruction_callback (
-  TAO::PICurrent_Impl::Table * old_lc_slot_table)
+TAO::PICurrent_Impl::take_lazy_copy (
+  TAO::PICurrent_Impl * p)
 {
-  // we are being asked to lc another table, if this
-  // is null, make sure we take a physical copy of the
-  // existing table we had lc before it disappears.
-  if ((0 == old_lc_slot_table) && (0 != this->lc_slot_table_))
-    this->slot_table_ = *this->lc_slot_table_;
+  // Check that we are being told to actually change which table we are
+  // copying from. (If it is the same as before OR it would ultimately be
+  // the same table, we are already correctly setup and we do nothing.)
+  if ( (p != this->lazy_copy_)
+      && ((0 == p) || (&p->current_slot_table () != &this->current_slot_table ()))
+      )
+    {
+      // Break any existing ties that another PICurrent has with our table
+      // since our table is changing.
+      if (0 != this->impending_change_callback_)
+        this->impending_change_callback_->convert_from_lazy_to_real_copy ();
 
-  this->lc_slot_table_ = old_lc_slot_table;
+      // If we have previously logically copied another table, ensure it is
+      // told that we are no longer interested in it so that it will not
+      // call our conver_from_lazy_to_real_copy() when it changes/destructs.
+      if (0 != this->lazy_copy_)
+        this->lazy_copy_->set_callback_for_impending_change (0);
+
+      // Are we being asked to copy ourself (or nothing)
+      if ((0 == p) || (this == p))
+        {
+          this->lazy_copy_ = 0; // Use our own physical slot_table_
+        }
+      else
+        {
+          this->lazy_copy_ = p;
+
+          // Must tell the newly copied PICurrent_Impl that we want to
+          // be told when/if it is going to be changed or destroyed.
+          this->lazy_copy_->set_callback_for_impending_change (this);
+        }
+    }
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

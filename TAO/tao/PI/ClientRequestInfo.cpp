@@ -29,8 +29,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_ClientRequestInfo::TAO_ClientRequestInfo (TAO::Invocation_Base *inv)
   : invocation_ (inv),
-    rs_pi_current_ (),
-    copy_callback_ ()
+    rs_pi_current_ ()
 {
   this->setup_picurrent ();
 }
@@ -55,19 +54,7 @@ TAO_ClientRequestInfo::setup_picurrent (void)
       if (tsc != 0)
         {
           // Logically copy the TSC's slot table to the RSC.
-          this->rs_pi_current_.lc_slot_table (tsc);
-
-          // PICurrent will potentially have to call back on the request
-          // scope current so that it can deep copy the contents of the
-          // thread scope current if the contents of the thread scope
-          // current are about to be modified.  It is necessary to do this
-          // deep copy once in order to completely isolate the request
-          // scope current from the thread scope current.  This is only
-          // necessary, if the thread scope current is modified after its
-          // contents have been *logically* copied to the request scope
-          // current.
-          this->copy_callback_.src_and_dst (tsc, &this->rs_pi_current_);
-          tsc->copy_callback (&this->copy_callback_);
+          this->rs_pi_current_.take_lazy_copy (tsc);
        }
     }
 }

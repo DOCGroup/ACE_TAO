@@ -42,7 +42,6 @@ class TAO_ORB_Core;
 
 namespace TAO
 {
-  class PICurrent_Copy_Callback;
   class PICurrent_Impl;
 
   /**

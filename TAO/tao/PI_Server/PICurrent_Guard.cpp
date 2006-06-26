@@ -10,7 +10,6 @@ ACE_RCSID (PortableServer,
 
 #include "tao/ORB_Core.h"
 #include "tao/TAO_Server_Request.h"
-#include "tao/PI/PICurrent_Copy_Callback.h"
 #include "tao/PI/PICurrent.h"
 #include "tao/PI/PICurrent_Impl.h"
 
@@ -19,9 +18,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO::PICurrent_Guard::PICurrent_Guard (TAO_ServerRequest &server_request,
                                        bool tsc_to_rsc)
   : src_ (0),
-    dest_ (0),
-    copy_callback_ (server_request.pi_current_copy_callback ()),
-    tsc_to_rsc_ (tsc_to_rsc)
+    dest_ (0)
 {
   // This constructor is used on the server side.
 
@@ -64,21 +61,9 @@ TAO::PICurrent_Guard::PICurrent_Guard (TAO_ServerRequest &server_request,
 TAO::PICurrent_Guard::~PICurrent_Guard (void)
 {
   if (this->src_ != 0 && this->dest_ != 0
-      && this->src_ != this->dest_
-      && this->dest_->lc_slot_table (this->src_))
+      && this->src_ != this->dest_)
     {
-      // PICurrent will potentially have to call back on the request
-      // scope current so that it can deep copy the contents of the
-      // thread scope current if the contents of the thread scope
-      // current are about to be modified.  It is necessary to do this
-      // deep copy once in order to completely isolate the request
-      // scope current from the thread scope current.  This is only
-      // necessary, if the thread scope current is modified after its
-      // contents have been *logically* copied to the request scope
-      // current.  The same goes for the reverse, i.e. RSC to TSC.
-
-      this->copy_callback_->src_and_dst (this->src_, this->dest_);
-      this->src_->copy_callback (this->copy_callback_);
+      this->dest_->take_lazy_copy (this->src_);
     }
 }
 

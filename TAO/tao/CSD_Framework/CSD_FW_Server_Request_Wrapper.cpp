@@ -265,12 +265,6 @@ TAO::CSD::FW_Server_Request_Wrapper::clone (TAO_ServerRequest*& request)
   //
   // clone_obj->rs_pi_current_
 
-  // TYPE: TAO::PICurrent_Copy_Callback
-  // ACTION: No copy/assignment operator.
-  //         Just leave this alone for a clone.
-  //
-  // clone_obj->pi_current_copy_callback_
-
   // TYPE: CORBA::OctetSeq_var
   // ACTION: Assignment performs reference-counted copy of sequence.
   //         Assuming that this is ok.

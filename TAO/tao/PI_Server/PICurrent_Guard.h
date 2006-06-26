@@ -33,7 +33,6 @@ class TAO_ServerRequest;
 namespace TAO
 {
   class PICurrent_Impl;
-  class PICurrent_Copy_Callback;
 
   /**
    * @class PICurrent_Guard
@@ -85,19 +84,6 @@ namespace TAO
     /// The PICurrent implementation whose slot table will be filled
     /// with the contents of another PICurrent's slot table.
     PICurrent_Impl *dest_;
-
-    /// Callback object responsible for performing deep copies of a
-    /// PICurrent's slot table.
-    PICurrent_Copy_Callback *copy_callback_;
-
-    /// Flag that indicates if the TSC is to be copied to the RSC.
-    /**
-     * If false, then the RSC must be deep copied upon leaving the
-     * request scope and entering the thread scope.  This is necessary
-     * since the RSC slot table is no longer available upon leaving
-     * the thread scope, meaning that a logical copy is not enough.
-     */
-    const bool tsc_to_rsc_;
   };
 }
 

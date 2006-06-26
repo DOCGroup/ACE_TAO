@@ -1,3 +1,25 @@
+Mon Jun 26 09:15:00 UTC 2006  Simon Massey  <sma@prismtech.com>
+
+        * tao/ServerRequestInterceptor_Adapter.h:
+        * tao/TAO_Server_Request.cpp:
+        * tao/TAO_Server_Request.h:
+        * tao/CSD_Framework/CSD_FW_Server_Request_Wrapper.cpp:
+        * tao/PI/ClientRequestInfo.cpp:
+        * tao/PI/ClientRequestInfo.h:
+        * tao/PI/PICurrent.h:
+        * tao/PI/PICurrent_Copy_Callback.cpp: (Deleted)
+        * tao/PI/PICurrent_Copy_Callback.h:   (Deleted)
+        * tao/PI/PICurrent_Impl.cpp:
+        * tao/PI/PICurrent_Impl.h:
+        * tao/PI/PICurrent_Impl.inl:
+        * tao/PI_Server/PICurrent_Guard.cpp:
+        * tao/PI_Server/PICurrent_Guard.h:
+        * tao/PI_Server/ServerInterceptorAdapter.cpp:
+        * tao/PI_Server/ServerInterceptorAdapter.h:
+
+          This refactors the PICurrent implimentaion and fixes issue 2552
+          (TAO358).
+
 Mon Jun 26 08:17:12 UTC 2006  Martin Corino  <mcorino@remedy.nl>
 
         * tao/RTScheduling/RTScheduler_includeA.h:

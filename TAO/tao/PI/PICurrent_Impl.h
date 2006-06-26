@@ -37,9 +37,6 @@ class TAO_ORB_Core;
 
 namespace TAO
 {
-  class PICurrent_Copy_Callback;
-  class PICurrent_Impl;
-
   /**
    * @class PICurrent_Impl
    *
@@ -53,10 +50,6 @@ namespace TAO
   class TAO_PI_Export PICurrent_Impl
   {
   public:
-
-    /// Typedef for the underyling "slot table."
-    typedef ACE_Array_Base<CORBA::Any> Table;
-
     /// Constructor.
     PICurrent_Impl (void);
 
@@ -77,19 +70,23 @@ namespace TAO
       ACE_THROW_SPEC ((CORBA::SystemException,
                        PortableInterceptor::InvalidSlot));
 
-    /// Set the PICurrent copy callback object responsible for deep
-    /// copying the source PICurrent's slot table.
-    void copy_callback (PICurrent_Copy_Callback *cb);
+    /// Logically/Lazy (shallow) copy the given object's slot table.
+    void take_lazy_copy (PICurrent_Impl *p);
 
-    /// Set the PICurrent destruction callback object that will be
-    /// notified of this object's destruction.
-    void destruction_callback (PICurrent_Impl *p);
+  private:
+    /// Force this object to convert from a logical (referenced)
+    /// copy, to a physical (or deep, actual) copy.
+    void convert_from_lazy_to_real_copy ();
 
-    /// Execute the destruction callback object
-    void execute_destruction_callback (Table *old_lc_slot_table);
+    /// Set the callback PICurrent_Impl object that will be notified
+    /// of this object's impending destruction or change.
+    /// Set to 0 to clear. (NOTE Only handles a SINGLE object at
+    /// at time, does NOT warn previous callback that this has
+    /// been changed.)
+    void set_callback_for_impending_change (PICurrent_Impl *p);
 
-    /// Return a reference to the underlying slot table.
-    Table & slot_table (void);
+    /// Typedef for the underyling "slot table."
+    typedef ACE_Array_Base<CORBA::Any> Table;
 
     /// Return a reference to the slot table currently associated
     /// with this PICurrent_Impl object.
@@ -97,20 +94,7 @@ namespace TAO
      * @return Logically copied slot table if available, otherwise
      *         underlying slot table.
      */
-    Table & current_slot_table (void);
-
-    /// Logically (shallow) copy the given slot table.
-    // returns true if copied, false if it would be self-referencing.
-    bool lc_slot_table (PICurrent_Impl *p);
-
-    /// Return pointer to the logically copied slot table.
-    /**
-     * @return Zero if no logically copied slot table.  Non-zero
-     *         otherwise.
-     */
-    Table *lc_slot_table (void) const;
-
-  private:
+    Table & current_slot_table ();
 
     /// Prevent copying through the copy constructor and the assignment
     /// operator.
@@ -120,27 +104,19 @@ namespace TAO
     //@}
 
   private:
-
     /// Array of CORBA::Anys that is the underlying "slot table."
     Table slot_table_;
 
-    /// Table that was logically copied from a PICurrent in another
+    /// Access to logical copy from a PICurrent_Impl in another
     /// scope, i.e. either the request scope or the thread scope.
-    Table *lc_slot_table_;
-
-    /// Callback object responsible for performing deep copies of a
-    /// PICurrent's slot table. This is the PICurrent that has our slot_table_
-    /// referred as lc_slot_table_. This copy is there to make sure that when
-    /// we want to modify our table, that we can first copy our table to
-    /// the PICurrent that refers to our table so that it has an unique copy
-    /// of the data.
-    PICurrent_Copy_Callback *copy_callback_;
+    PICurrent_Impl *lazy_copy_;
 
     /// PICurrent_Impl object that will be notified of this object's
-    /// destruction. This is the PICurrent that has our slot_table_ as
-    /// lc_slot_table_.
-    PICurrent_Impl *destruction_callback_;
-
+    /// impending destruction or change to its slot_table_. This is
+    /// the PICurrent_Impl that has access to our slot_table_ via its
+    /// lazy_copy_ pointer. As necessary this allows that object's
+    /// convert_from_lazy_to_real_copy() to be called.
+    PICurrent_Impl *impending_change_callback_;
   };
 }
 

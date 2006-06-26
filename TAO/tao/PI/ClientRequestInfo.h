@@ -35,7 +35,6 @@
 #include "tao/PI/ClientRequestInfoC.h"
 #include "tao/PI/PIForwardRequestC.h"
 #include "tao/PI/PICurrent_Impl.h"
-#include "tao/PI/PICurrent_Copy_Callback.h"
 #include "tao/CORBA_methods.h"
 #include "tao/ORB_Constants.h"
 #include "tao/LocalObject.h"
@@ -274,22 +273,6 @@ private:
   /// The "Request Scope Current" (RSC) object, as required by
   /// Portable Interceptors.
   TAO::PICurrent_Impl rs_pi_current_;
-
-  /// Callback object to be executed when shallow copied slot table
-  /// must be deep copied.
-  /**
-   * This callback object deep copies the slot table from the TSC to
-   * the RSC.
-   * @par
-   * As an optimization, the TSC's slot table is initially only
-   * shallowed copied to the RSC.  If the TSC's slot table will be
-   * modified, e.g. via PICurrent::set_slot(), it's slot table must be
-   * deep copied to the RSC before actually modifying that slot
-   * table.  This is necessary since the RSC is read-only on the
-   * client side, meaning that changes in the TSC that occur after
-   * instantiation of the RSC must not be reflected in the RSC.
-   */
-  TAO::PICurrent_Copy_Callback copy_callback_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
