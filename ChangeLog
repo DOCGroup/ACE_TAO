@@ -1,3 +1,8 @@
+Mon Jun 26 14:13:00 UTC 2006  Simon Massey  <sma@prismtech.com>
+
+        * NEWS:
+          Added PICurrent refactoring note.
+
 Mon Jun 26 08:27:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/DLL_Manager.h:
