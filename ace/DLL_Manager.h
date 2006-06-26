@@ -56,7 +56,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * execution.
  *
  */
-class ACE_DLL_Handle
+class ACE_Export ACE_DLL_Handle
 {
 public:
 
