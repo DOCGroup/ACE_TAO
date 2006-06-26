@@ -4,15 +4,12 @@
 
 ACE_OPENVMS = 1
 versioned_so = 0
-ifndef exceptions
-  exceptions = 1
-endif
-ifeq (,$(debug))
-  debug = 1
-endif
-ifeq (,$(optimize))
-  optimize = 0
-endif
+exceptions ?= 1
+debug ?= 1
+optimize ?= 0
+threads ?= 1
+pthread ?= 1
+rtti ?= 1
 
 VDIR            = obj/
 VSHDIR          = shobj/
