@@ -63,7 +63,8 @@ protected:
   virtual void handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result);
 
 private:
-  ACE_SOCK_Dgram sockDgram_;
+  ACE_SOCK_Dgram sock_dgram_;
+
   ACE_Asynch_Read_Dgram rd_;
   // rd (read dgram): for reading from a UDP socket.
   const char* completion_key_;
@@ -78,7 +79,7 @@ Receiver::Receiver (void)
 
 Receiver::~Receiver (void)
 {
-  sockDgram_.close ();
+  sock_dgram_.close ();
 }
 
 int
@@ -88,14 +89,14 @@ Receiver::open_addr (const ACE_INET_Addr &localAddr)
               "%N:%l:Receiver::open_addr called\n"));
 
   // Create a local UDP socket to receive datagrams.
-  if (this->sockDgram_.open (localAddr) == -1)
+  if (this->sock_dgram_.open (localAddr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "ACE_SOCK_Dgram::open"), -1);
 
   // Initialize the asynchronous read.
   if (this->rd_.open (*this,
-                      this->sockDgram_.get_handle (),
+                      this->sock_dgram_.get_handle (),
                       this->completion_key_,
                       ACE_Proactor::instance ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -122,7 +123,7 @@ Receiver::open_addr (const ACE_INET_Addr &localAddr)
 
   // set body as the cont of msg.  This associates the 2 message
   // blocks so that a read will fill the first block (which is the
-  // header) up to size(), and use the cont() block for the rest of
+  // header) up to size (), and use the cont () block for the rest of
   // the data.  You can chain up to IOV_MAX message block using this
   // method.
   msg->cont (body);
@@ -194,13 +195,13 @@ Receiver::handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result)
   if (result.success () && result.bytes_transferred () != 0)
     {
       // loop through our message block and print out the contents
-      for (const ACE_Message_Block* msg = result.message_block(); msg != 0; msg = msg->cont ())
-        { // use msg->length() to get the number of bytes written to the message
+      for (const ACE_Message_Block* msg = result.message_block (); msg != 0; msg = msg->cont ())
+        { // use msg->length () to get the number of bytes written to the message
           // block.
           ACE_DEBUG ((LM_DEBUG, "Buf=[size=<%d>", msg->length ()));
-          for (u_long i = 0; i < msg->length(); ++i)
+          for (u_long i = 0; i < msg->length (); ++i)
             ACE_DEBUG ((LM_DEBUG,
-                        "%c", (msg->rd_ptr())[i]));
+                        "%c", (msg->rd_ptr ())[i]));
           ACE_DEBUG ((LM_DEBUG, "]\n"));
         }
     }
@@ -233,7 +234,7 @@ protected:
 
 private:
 
-  ACE_SOCK_Dgram sockDgram_;
+  ACE_SOCK_Dgram sock_dgram_;
   // Network I/O handle
 
   ACE_Asynch_Write_Dgram wd_;
@@ -251,7 +252,7 @@ Sender::Sender (void)
 
 Sender::~Sender (void)
 {
-  this->sockDgram_.close ();
+  this->sock_dgram_.close ();
 }
 
 int
@@ -260,14 +261,14 @@ Sender::open (const ACE_TCHAR *host,
 {
   // Initialize stuff
 
-  if (this->sockDgram_.open(ACE_INET_Addr::sap_any) == -1)
+  if (this->sock_dgram_.open (ACE_INET_Addr::sap_any) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "ACE_SOCK_Dgram::open"), -1);
 
   // Initialize the asynchronous read.
   if (this->wd_.open (*this,
-                      this->sockDgram_.get_handle (),
+                      this->sock_dgram_.get_handle (),
                       this->completion_key_,
                       ACE_Proactor::instance ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -279,28 +280,27 @@ Sender::open (const ACE_TCHAR *host,
 
   // create a message block for the message header
   ACE_Message_Block* msg = 0;
-  ACE_NEW_RETURN(msg, ACE_Message_Block(100), -1);
-  const char rawMsg [] = "To be or not to be.";
+  ACE_NEW_RETURN (msg, ACE_Message_Block (100), -1);
+  const char raw_msg [] = "To be or not to be.";
   // Copy buf into the Message_Block and update the wr_ptr ().
-  msg->copy(rawMsg, ACE_OS::strlen(rawMsg) + 1);
+  msg->copy (raw_msg, ACE_OS::strlen (raw_msg) + 1);
 
   // create a message block for the message body
   ACE_Message_Block* body = 0;
-  ACE_NEW_RETURN(body, ACE_Message_Block(100), -1);
-  ACE_OS::memset(body->wr_ptr(), 'X', 100);
-  body->wr_ptr(100); // always remember to update the wr_ptr()
+  ACE_NEW_RETURN (body, ACE_Message_Block (100), -1);
+  ACE_OS::memset (body->wr_ptr (), 'X', 100);
+  body->wr_ptr (100); // always remember to update the wr_ptr ()
 
   // set body as the cont of msg.  This associates the 2 message blocks so
   // that a send will send the first block (which is the header) up to
-  // length(), and use the cont() to get the next block to send.  You can
+  // length (), and use the cont () to get the next block to send.  You can
   // chain up to IOV_MAX message block using this method.
-  msg->cont(body);
-
+  msg->cont (body);
 
   // do the asynch send
   size_t number_of_bytes_sent = 0;
-  ACE_INET_Addr serverAddr(port, host);
-  int res = this->wd_.send(msg, number_of_bytes_sent, 0, serverAddr, this->act_);
+  ACE_INET_Addr serverAddr (port, host);
+  int res = this->wd_.send (msg, number_of_bytes_sent, 0, serverAddr, this->act_);
 
   switch (res)
     {
@@ -368,7 +368,7 @@ Sender::handle_write_dgram (const ACE_Asynch_Write_Dgram::Result &result)
 static int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("h:p:"));
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("h:p:"));
   int c;
 
   while ((c = get_opt ()) != EOF)

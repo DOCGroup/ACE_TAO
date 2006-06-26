@@ -1,4 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<!Doctype HTML PUBLIC "-//IETF//DTD HTML//EN">
 <html>
   <head>
     <title>Implementation Repository</title>
@@ -66,18 +66,31 @@
     Compare your server.cpp with <a href = server.cpp>server.cpp</a> file. 
     
     <H3>Testing</H3>
-    <P>To test your changes, you need to run three programs. The first
+    <P>To test your changes, you need to run four programs. The first
       step is to start up the Implementation Repository provided 
-      with TAO. We need to dump the IOR of the ImplRepo_Service to a file,
-      so that we can use it later to use the implementation repository
-      for the initial service. 
+      with TAO. The Implementation Repository is split into one locator at least
+      one activator. The locator provides the interface visible
+      to the application intending to use the repository (in our case,
+      the client), while the activators do the real work of activating
+      and maintaining servers.
+    </P>
+    
+    <P>First, we start the locator. We need to dump the IOR of the ImplRepo_Service to a file,
+      so that both the activator and the client can find the locator.
     </P>
     <PRE>
        $ $TAO_ROOT/orbsvcs/ImplRepo_Service/ImplRepo_Service -o implrepo.ior -d 0 -ORBobjrefstyle URL &
-
-          TAO Implementation Repository
     </PRE>
     
+    <P>Second, we start the activator, pointing it to the locator's IOR file.
+    </P>
+    <PRE>
+       $ $TAO_ROOT/orbsvcs/ImplRepo_Service/ImR_Activator -ORBInitRef ImplRepoService=file://implrepo.ior
+
+          ImR Activator: Starting doc.ece.uci.edu
+          ImR Activator: Registered with ImR.
+    </PRE>
+
     <P> Next, we need to register our server with the implementation
       repository. We can use the
       <CODE>$TAO_ROOT/orbsvcs/ImplRepo_Service/tao_imr</CODE>
