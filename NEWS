@@ -26,15 +26,6 @@ USER VISIBLE CHANGES BETWEEN ACE-5.5.1 and ACE-5.5.2
   matches its usual usage in POSIX strptime(). This change allows users to
   pass const strings in - a common use case.
 
-. Refactored PICurrent, removing PICurrent_Copy_Callback classes, subsuming
-  this functionality inside PICurrent_Impl where it can be controlled
-  correctly. The copying of PICurrent objects still performs lazy/deferred
-  copying where possible, only taking a real physical copy when modifications
-  are attempted. Interest in PICurrent objects where lazy copies have been
-  taken can now be correctly reversed when the lazy copy is destroyed fixing
-  a range of call-back bugs that were performed on already destroyed objects.
-  (For detail see bugzilla 2552.)
-
 USER VISIBLE CHANGES BETWEEN ACE-5.5 and ACE-5.5.1
 ====================================================
 
