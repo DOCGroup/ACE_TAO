@@ -10,6 +10,14 @@ ACE_RCSID(Nested_Upcall_Crash, scavenger, "$Id$")
 
 const char *ior = "file://test.ior";
 
+#if defined (ACE_OPENVMS)
+// need this to circumvent link error on OpenVMS
+// has to do with interference in template instantiations
+// because multiple executables are build in one directory
+// reuising eachothers object files.
+ACE_Time_Value dum = ACE_Time_Value::zero;
+#endif
+
 int
 parse_args (int argc, char *argv[]);
 

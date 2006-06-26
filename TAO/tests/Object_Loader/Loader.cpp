@@ -2,6 +2,10 @@
 
 #include "Loader.h"
 #include "Test_i.h"
+#if defined (ACE_OPENVMS)
+// need this for ACE_Static_Svc_Registrar
+# include "ace/Service_Config.h"
+#endif
 
 ACE_RCSID(Object_Loader, Loader, "$Id$")
 
