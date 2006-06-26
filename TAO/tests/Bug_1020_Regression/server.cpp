@@ -13,6 +13,15 @@ ACE_RCSID (Bug_1230_Regression,
 
 const char *ior_output_file = "test.ior";
 
+#if defined (ACE_OPENVMS)
+// need this to circumvent link error on OpenVMS
+// has to do with interference in template instantiations
+// for the server build by previous compilation of TestX
+// components in client build which are reused by server
+// without recompilation
+ACE_Time_Value dum = ACE_Time_Value::zero;
+#endif
+
 int
 parse_args (int argc, char *argv[]);
 
