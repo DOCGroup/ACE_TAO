@@ -15,7 +15,6 @@ ACE_RCSID (PI_Server,
 #include "tao/TAO_Server_Request.h"
 #include "tao/ORB_Core.h"
 #include "tao/PI/PICurrent_Impl.h"
-#include "tao/PI/PICurrent_Copy_Callback.h"
 #include "tao/PortableServer/Upcall_Command.h"
 #include "tao/PortableInterceptor.h"
 
@@ -582,28 +581,11 @@ TAO::ServerRequestInterceptor_Adapter_Impl::allocate_pi_current (void)
   return pi;
 }
 
-TAO::PICurrent_Copy_Callback *
-TAO::ServerRequestInterceptor_Adapter_Impl::allocate_pi_current_callback (void)
-{
-  TAO::PICurrent_Copy_Callback * pi = 0;
-  ACE_NEW_RETURN (pi,
-                  TAO::PICurrent_Copy_Callback,
-                  pi);
-  return pi;
-}
-
 void
 TAO::ServerRequestInterceptor_Adapter_Impl::deallocate_pi_current (
         TAO::PICurrent_Impl *picurrent)
 {
   delete picurrent;
-}
-
-void
-TAO::ServerRequestInterceptor_Adapter_Impl::deallocate_pi_current_callback (
-  TAO::PICurrent_Copy_Callback * callback)
-{
-  delete callback;
 }
 
 void

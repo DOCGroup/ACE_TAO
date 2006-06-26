@@ -4,67 +4,58 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_INLINE void
-TAO::PICurrent_Impl::copy_callback (TAO::PICurrent_Copy_Callback *cb)
+ACE_INLINE
+TAO::PICurrent_Impl::PICurrent_Impl ()
+  : slot_table_ (),
+    lazy_copy_ (0),
+    impending_change_callback_ (0)
 {
-  this->copy_callback_ = cb;
+}
+
+ACE_INLINE
+TAO::PICurrent_Impl::~PICurrent_Impl ()
+{
+  // Break any existing ties that another PICurrent has with our table
+  // since our table will no longer exist once this destructor completes.
+  if (0 != this->impending_change_callback_)
+    this->impending_change_callback_->convert_from_lazy_to_real_copy ();
+
+  // If we have logically copied another table, ensure it is told about our
+  // demise so that it will not call our non-existant
+  // convert_from_lazy_to_real_copy() when it changes/destructs.
+  if (0 != this->lazy_copy_)
+    this->lazy_copy_->set_callback_for_impending_change (0);
 }
 
 ACE_INLINE void
-TAO::PICurrent_Impl::destruction_callback (TAO::PICurrent_Impl *p)
+TAO::PICurrent_Impl::convert_from_lazy_to_real_copy ()
 {
-  this->destruction_callback_ = p;
-}
-
-ACE_INLINE TAO::PICurrent_Impl::Table &
-TAO::PICurrent_Impl::slot_table (void)
-{
-  return this->slot_table_;
-}
-
-ACE_INLINE TAO::PICurrent_Impl::Table &
-TAO::PICurrent_Impl::current_slot_table (void)
-{
-  return
-    this->lc_slot_table_ == 0 ? this->slot_table_ : *this->lc_slot_table_;
-}
-
-ACE_INLINE bool
-TAO::PICurrent_Impl::lc_slot_table (TAO::PICurrent_Impl *p)
-{
-  // Being told to lazy copy some other table?
-  if (p != 0)
+  // Make sure we take a physical copy of the existing logical
+  // copy of the table before it disappears/changes.
+  if (0 != this->lazy_copy_)
     {
-      // Which actual table are we supposed to lazy copy?
-      Table * t = &p->current_slot_table ();
+      this->slot_table_ = this->lazy_copy_->current_slot_table ();
 
-      // Only if we have not already lazy copied this table
-      if (t != this->lc_slot_table_)
-        {
-          // Whould this be a lazy copy of ourselves?
-          if (t == &this->slot_table_)
-            this->lc_slot_table_ = 0; // Already ourself!
-          else
-            {
-              this->lc_slot_table_ = t;
-
-              // Ensure remote table will tell us if it is
-              // going to change or destroy itself.
-              if (this != p)
-                p->destruction_callback (this);
-            }
-        }
+      // Must tell the old copied PICurrent_Impl that we no
+      // longer want to be told when/if it is going to be
+      // changed or destroyed.
+      this->lazy_copy_->set_callback_for_impending_change (0);
+      this->lazy_copy_ = 0;
     }
-  else
-    this->lc_slot_table_ = 0;
-
-  return (0 != this->lc_slot_table_);
 }
 
-ACE_INLINE TAO::PICurrent_Impl::Table *
-TAO::PICurrent_Impl::lc_slot_table (void) const
+ACE_INLINE void
+TAO::PICurrent_Impl::set_callback_for_impending_change (TAO::PICurrent_Impl *p)
 {
-  return this->lc_slot_table_;
+  this->impending_change_callback_ = (this == p) ? 0 : p;
+}
+
+ACE_INLINE TAO::PICurrent_Impl::Table &
+TAO::PICurrent_Impl::current_slot_table ()
+{
+  return (0 == this->lazy_copy_) ?
+         this->slot_table_ :
+         this->lazy_copy_->current_slot_table ();
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
