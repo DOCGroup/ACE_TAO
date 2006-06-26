@@ -76,7 +76,6 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_Pluggable_Messaging *mesg_base,
 #if TAO_HAS_INTERCEPTORS == 1
     , interceptor_count_ (0)
     , rs_pi_current_ (0)
-    , pi_current_copy_callback_ (0)
     , result_seq_ (0)
     , caught_exception_ (0)
     , reply_status_ (-1)
@@ -119,7 +118,6 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_Pluggable_Messaging *mesg_base,
 #if TAO_HAS_INTERCEPTORS == 1
   , interceptor_count_ (0)
   , rs_pi_current_ (0)
-  , pi_current_copy_callback_ (0)
   , result_seq_ (0)
   , caught_exception_ (0)
   , reply_status_ (-1)
@@ -155,7 +153,6 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_ORB_Core * orb_core,
 #if TAO_HAS_INTERCEPTORS == 1
   , interceptor_count_ (0)
   , rs_pi_current_ (0)
-  , pi_current_copy_callback_ (0)
   , result_seq_ (0)
   , caught_exception_ (0)
   , reply_status_ (-1)
@@ -186,18 +183,6 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_ORB_Core * orb_core,
 TAO_ServerRequest::~TAO_ServerRequest (void)
 {
 #if TAO_HAS_INTERCEPTORS == 1
-  if (this->pi_current_copy_callback_)
-    {
-      TAO::ServerRequestInterceptor_Adapter *interceptor_adapter =
-        this->orb_core_->serverrequestinterceptor_adapter ();
-
-      if (interceptor_adapter)
-        {
-          interceptor_adapter->deallocate_pi_current_callback (
-            this->pi_current_copy_callback_);
-        }
-    }
-
   if (this->rs_pi_current_)
     {
       TAO::ServerRequestInterceptor_Adapter *interceptor_adapter =
@@ -579,24 +564,6 @@ TAO_ServerRequest::rs_pi_current (void)
     }
 
   return this->rs_pi_current_;
-}
-
-TAO::PICurrent_Copy_Callback *
-TAO_ServerRequest::pi_current_copy_callback (void)
-{
-  if (!this->pi_current_copy_callback_)
-    {
-      TAO::ServerRequestInterceptor_Adapter *interceptor_adapter =
-        this->orb_core_->serverrequestinterceptor_adapter ();
-
-      if (interceptor_adapter)
-        {
-          this->pi_current_copy_callback_ =
-            interceptor_adapter->allocate_pi_current_callback ();
-        }
-    }
-
-  return this->pi_current_copy_callback_;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
