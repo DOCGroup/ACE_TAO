@@ -6,7 +6,15 @@
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 
-ACE_RCSID(Bug_1270_Regression, shutdown, "$Id$")
+ACE_RCSID(Bug_1361_Regression, shutdown, "$Id$")
+
+#if defined (ACE_OPENVMS)
+// need this to circumvent link error on OpenVMS
+// has to do with interference in template instantiations
+// because multiple executables are build in one directory
+// reuising eachothers object files.
+ACE_Time_Value dum = ACE_Time_Value::zero;
+#endif
 
 const char *ior = "file://test.ior";
 

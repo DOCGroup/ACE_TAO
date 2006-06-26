@@ -1,3 +1,16 @@
+Mon Jun 26 08:17:12 UTC 2006  Martin Corino  <mcorino@remedy.nl>
+
+        * tao/RTScheduling/RTScheduler_includeA.h:
+        * tao/RTScheduling/RTScheduler_includeC.h:
+          Changed include for RTSheduler,h to make it compatible for OpenVMS.
+
+        * tests/Bug_1020_Regression/server.cpp:
+        * tests/Bug_1361_Regression/shutdown.cpp:
+        * tests/Nested_Upcall_Crash/scavenger.cpp:
+        * tests/Object_Loader/Loader.cpp:
+        * tests/Smart_Proxies/On_Demand/Smart_Test_Factory.cpp:
+          Small OpenVMS compatibility changes.
+
 Fri Jun 23 19:03:21 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Valuetype.mpc:
