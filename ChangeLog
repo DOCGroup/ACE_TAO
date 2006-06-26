@@ -2,7 +2,7 @@ Mon Jun 26 08:27:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/DLL_Manager.h:
           Reexport ACE_DLL_Handle, the ACE_DLL_Manager returns a pointer
-          to this type in its interfaces. Thanks to Patrick Bennet
+          to this type in its interfaces. Thanks to Patrick Bennett
           <Patrick dot Bennett at inin dot com> for reporting this
 
 Mon Jun 26 08:17:12 UTC 2006  Martin Corino  <mcorino@remedy.nl>
