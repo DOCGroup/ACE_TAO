@@ -567,7 +567,7 @@ namespace TAO
                                  CORBA::TypeCode_var,
                                  CORBA::TypeCode_out,
                                  TAO::Objref_Traits<CORBA::TypeCode>,
-                                 TAO::Any_Insert_Policy_Stream>
+                                 TAO::Any_Insert_Policy_Stream <CORBA::TypeCode_ptr> >
   {
   };
 

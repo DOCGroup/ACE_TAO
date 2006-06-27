@@ -36,7 +36,7 @@ namespace TAO
   template<typename S,
            typename to_S,
            typename from_S,
-           template <typename> class Insert_Policy>
+           class Insert_Policy>
   class In_Special_Basic_Argument_T : public InArgument
   {
   public:
@@ -61,7 +61,7 @@ namespace TAO
   template<typename S,
            typename to_S,
            typename from_S,
-           template <typename> class Insert_Policy>
+           class Insert_Policy>
   class Inout_Special_Basic_Argument_T : public InoutArgument
   {
   public:
@@ -87,7 +87,7 @@ namespace TAO
   template<typename S,
            typename to_S,
            typename from_S,
-           template <typename> class Insert_Policy>
+           class Insert_Policy>
   class Out_Special_Basic_Argument_T : public OutArgument
   {
   public:
@@ -112,7 +112,7 @@ namespace TAO
   template<typename S,
            typename to_S,
            typename from_S,
-           template <typename> class Insert_Policy>
+           class Insert_Policy>
   class Ret_Special_Basic_Argument_T : public RetArgument
   {
   public:
@@ -148,7 +148,7 @@ namespace TAO
   template<typename T,
            typename to_T,
            typename from_T,
-           template <typename> class Insert_Policy>
+           class Insert_Policy>
   struct Special_Basic_Arg_Traits_T
   {
     typedef T                                               ret_type;

@@ -1,5 +1,5 @@
 //$Id$
-project : taolib, core, core_anytypecode {
+project : taolib, core, core_anytypecode, tao_versioning_idl_defaults {
   sharedname   = TAO_IFR_Client
   dynamicflags = TAO_IFR_CLIENT_BUILD_DLL
 
@@ -25,6 +25,18 @@ project : taolib, core, core_anytypecode {
 
   PIDL_Files {
     IFR_Client
+  }
+
+  IDL_Files {
+    idlflags += -SS -Ge 1 -Sorb \
+                -Wb,export_macro=TAO_IFR_Client_Export \
+                -Wb,export_include=tao/IFR_Client/ifr_client_export.h \
+                -o IFR_Client
+    idlflags -= -Sa -St
+    IFR_Client/IFR_Base.pidl
+    IFR_Client/IFR_Basic.pidl
+    IFR_Client/IFR_Components.pidl
+    IFR_Client/IFR_Extended.pidl
   }
 
   Pkgconfig_Files {
