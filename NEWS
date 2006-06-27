@@ -1,8 +1,6 @@
 PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 ===========================================================================
 
-. (Remedy) VxWorks 6.2 support
-
 USER VISIBLE CHANGES BETWEEN ACE-5.5.1 and ACE-5.5.2
 ====================================================
 
@@ -25,6 +23,10 @@ USER VISIBLE CHANGES BETWEEN ACE-5.5.1 and ACE-5.5.2
 . Changed the first argument to ACE_OS::strptime() to be 'const' which
   matches its usual usage in POSIX strptime(). This change allows users to
   pass const strings in - a common use case.
+
+. VxWorks 6.2 support has been added for the rtp model using pthread support
+
+. OpenVMS 8.2 for Alpha has been added as supported platform
 
 USER VISIBLE CHANGES BETWEEN ACE-5.5 and ACE-5.5.1
 ====================================================
