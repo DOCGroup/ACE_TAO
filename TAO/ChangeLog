@@ -1,3 +1,17 @@
+Tue Jun 27 12:03:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/CSD_Framework.mpc:
+          Enabled recompilation for the pidl files of CSD_Framework
+
+        * tao/CSD_Framework/CSD_Framework.pidl:
+          Updated instructions, removed comments about the patch, not needed
+
+        * tao/CSD_Framework/CSD_Framework*.*:
+          Removed from the repo
+
+        * tao/CSD_Framework/diffs/CSD_Framework.diff:
+          Removed, not needed anymore
+
 Tue Jun 27 11:50:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PI_Server.mpc:
