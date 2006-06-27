@@ -71,6 +71,7 @@ project(ACE_FOR_TAO) : acedefaults, core, svcconf, versioned_namespace, pkgconfi
     Manual_Event.cpp
     Message_Block.cpp
     Message_Queue.cpp
+    MMAP_Memory_Pool.cpp
     Mutex.cpp
     Notification_Strategy.cpp
     Obchunk.cpp
@@ -173,7 +174,7 @@ project(ACE_FOR_TAO) : acedefaults, core, svcconf, versioned_namespace, pkgconfi
     }
 
     // ACE_Token implementation uses semaphores on Windows and VxWorks.
-    conditional(vc6,vc71,vc8,nmake,bmake) {
+    conditional(vc6,vc71,vc8,nmake,bmake,borland) {
       ACE_crc32.cpp  // Required by SV_Semaphore_Simple
       Semaphore.cpp
       Process_Mutex.cpp
@@ -271,6 +272,7 @@ project(ACE_FOR_TAO) : acedefaults, core, svcconf, versioned_namespace, pkgconfi
     Swap.inl
     TSS_T.inl
     ace_wchar.inl
+    MMAP_Memory_Pool.inl
   }
 
   Header_Files {
@@ -289,6 +291,7 @@ project(ACE_FOR_TAO) : acedefaults, core, svcconf, versioned_namespace, pkgconfi
     Lock_Adapter_T.h
     Log_Priority.h
     Malloc_Base.h
+    MMAP_Memory_Pool.h
     Memory_Pool.h
     Min_Max.h
     Null_Barrier.h
