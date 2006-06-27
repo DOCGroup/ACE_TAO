@@ -3,6 +3,8 @@ Tue Jun 27 19:24:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
         * examples/Content_Server/SMI_Iterator/Content_Iterator_i.{h,cpp}:
         * examples/Content_Server/SMI_Iterator/Iterator_Factory_i.cpp:
         * examples/Content_Server/SMI_Iterator/Web_Server.idl:
+        * examples/Content_Server/AMI_Iterator/Content_Iterator_i.{h,cpp}:
+        * examples/Content_Server/AMI_Iterator/Web_Server.idl:
           Made the filesize a CORBA::ULongLong so that we could handle files
           bigger then 2Gb, this also resolves some warnings we have on
           windows

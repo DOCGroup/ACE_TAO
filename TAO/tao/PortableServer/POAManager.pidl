@@ -31,7 +31,7 @@ module PortableServer
     void activate ()
       raises(AdapterInactive);
 
-#if !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
+#if !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO) && !defined (TAO_HAS_MINIMUM_POA)
     void hold_requests (in boolean wait_for_completion)
       raises(AdapterInactive);
 
