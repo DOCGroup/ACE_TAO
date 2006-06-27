@@ -1,3 +1,8 @@
+Tue Jun 27 14:48:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Fixed_Array_SArgument_T.{h,cpp,inl}:
+          Fixed crashing of multdim array part of the param test
+
 Tue Jun 27 14:40:00 UTC 2006  Simon Massey  <sma@prismtech.com>
 
         * utils/nslist/nsadd.cpp:
