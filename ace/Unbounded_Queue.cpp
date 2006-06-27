@@ -162,7 +162,7 @@ ACE_Unbounded_Queue<T>::enqueue_head (const T &new_item)
 {
   //   ACE_TRACE ("ACE_Unbounded_Queue<T>::enqueue_head");
 
-  ACE_Node<T> *temp;
+  ACE_Node<T> *temp = 0;
 
   // Create a new node that points to the original head.
   ACE_NEW_MALLOC_RETURN (temp,
@@ -188,7 +188,7 @@ ACE_Unbounded_Queue<T>::enqueue_tail (const T &new_item)
   // the "tail" of the queue...
   this->head_->item_ = new_item;
 
-  ACE_Node<T> *temp;
+  ACE_Node<T> *temp = 0;
 
   // Create a new dummy node.
   ACE_NEW_MALLOC_RETURN (temp,
