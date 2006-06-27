@@ -1,3 +1,16 @@
+Tue Jun 27 17:35:02 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tao/CSD_Framework.mpc:
+        * tao/EndpointPolicy.mpc:
+        * tao/ImR_Client.mpc:
+        * tao/Messaging.mpc:
+        * tao/PI.mpc:
+        * tao/PI_Server.mpc:
+        * tao/PortableServer.mpc:
+
+          Reverted the work-around for MPC where generated A.cpp files
+          needed to be added.  The bug in MPC has been fixed.
+
 Tue Jun 27 14:48:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Fixed_Array_SArgument_T.{h,cpp,inl}:
@@ -368,7 +381,7 @@ Wed Jun 21 07:15:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
         * tao/TypeCodeFactory.mpc:
         * tao/Valuetype.mpc:
           Removed the <%quote%>, it did break on several platforms, just
-          don't add the quotes in the mcp file, the IDL compiler will
+          don't add the quotes in the mpc file, the IDL compiler will
           add quotes around the include string
 
 Wed Jun 21 02:02:59 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
