@@ -1,3 +1,11 @@
+Tue Jun 27 06:56:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_unistd.inl:
+        * ace/config-WinCE.h:
+          WinCE doesn't seem to have SetFilePointerEx, so introduced
+          ACE_LACKS_SETFILEPOINTEREX which we check in OS_NS_unistd.inl,
+          if this is set we fallback to SetFilePointer
+
 Tue Jun 27 06:47:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/CDR_File_Test.cpp:
