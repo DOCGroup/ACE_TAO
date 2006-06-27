@@ -1,3 +1,8 @@
+Tue Jun 27 19:30:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/POAManager.pidl:
+          Added missing checks for minimum poa
+
 Tue Jun 27 19:24:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Content_Server/SMI_Iterator/Content_Iterator_i.{h,cpp}:
