@@ -5,8 +5,6 @@ project : taolib, pi, portableserver, core, tao_versioning_idl_defaults {
 
   Source_Files {
     PI_Server
-    PI/ServerRequestInfoA.cpp
-    PI/ServerRequestInterceptorA.cpp
   }
 
   Header_Files {

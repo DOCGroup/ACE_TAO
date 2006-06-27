@@ -5,15 +5,6 @@ project : taolib, codecfactory, core, tao_versioning_idl_defaults {
 
   Source_Files {
     PI
-    PI/ORBInitializerA.cpp
-    PI/ClientRequestInterceptorA.cpp
-    PI/InterceptorA.cpp
-    PI/ClientRequestInfoA.cpp
-    PI/RequestInfoA.cpp
-    PI/PIForwardRequestA.cpp
-    PI/InvalidSlotA.cpp
-    PI/PICurrentA.cpp
-    PI/ProcessingModePolicyA.cpp
   }
 
   Header_Files {

@@ -5,7 +5,6 @@ project : taolib, core, portableserver, tao_versioning_idl_defaults {
 
   Source_Files {
     ImR_Client
-    ImR_Client/ServerObjectA.cpp
   }
 
   Header_Files {
