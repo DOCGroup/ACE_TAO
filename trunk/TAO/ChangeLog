@@ -1,3 +1,12 @@
+Tue Jun 27 18:38:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/FlResource.mpc:
+        * tao/QtResource.mpc:
+        * tao/TkResource.mpc:
+          Added empty IDL_Files section to prevent orb.idl to appear in these
+          projects when building for corba/e or minimum corba. Thanks to Chad
+          Elliot for bringing these files to my attention.
+
 Tue Jun 27 17:35:02 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * tao/CSD_Framework.mpc:
