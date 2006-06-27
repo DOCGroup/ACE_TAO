@@ -1,3 +1,21 @@
+Tue Jun 27 09:52:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ImR_Client.mpc:
+          Enabled recompilation for the pidl files of ImR_Client
+
+        * tao/ImR_Client/ImplRepoS.*:
+        * tao/ImR_Client/ImplRepoA.cpp:
+        * tao/ImR_Client/ImplRepoC.*:
+        * tao/ImR_Client/ServerObjectA.*:
+        * tao/ImR_Client/ServerObjectC.*:
+        * tao/ImR_Client/ServerObjectS.*:
+          Removed from the repo, do get regenerated as part of the building
+          of the core libs
+
+        * tao/ImR_Client/ImplRepoA.h:
+          Dummy file that just includes ImplRepoC.h, using -GA for this file
+          doesn't work
+
 Tue Jun 27 09:22:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/BiDirectional/run_test.pl:
