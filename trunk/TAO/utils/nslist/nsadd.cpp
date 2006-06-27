@@ -255,7 +255,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
       ACE_TRY_EX (inner)
         {
           if (!ior)
-            root_nc->bind_new_context (the_name ACE_ENV_ARG_PARAMETER);
+            obj= root_nc->bind_new_context (the_name ACE_ENV_ARG_PARAMETER);
           else if (context)
             {
               CosNaming::NamingContext_var this_nc =
