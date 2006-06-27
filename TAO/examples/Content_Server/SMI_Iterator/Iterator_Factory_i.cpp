@@ -115,7 +115,7 @@ Iterator_Factory_i::content_type (const char *filename,
   //    I know.
   //        -Ossama
 
-  size_t len = ACE_OS::strlen (filename);
+  size_t const len = ACE_OS::strlen (filename);
 
   // Search for extension
   // Handle the case where multiple periods exists in the filename,
