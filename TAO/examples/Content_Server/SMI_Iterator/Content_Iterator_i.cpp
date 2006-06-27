@@ -11,7 +11,7 @@ ACE_RCSID(SMI_Iterator, Content_Iterator_i, "$Id$")
 
 
 Content_Iterator_i::Content_Iterator_i (const char *pathname,
-                                        CORBA::ULong file_size)
+                                        CORBA::ULongLong file_size)
   : file_ (pathname),
     file_io_ (),
     file_size_ (file_size),
@@ -26,7 +26,7 @@ Content_Iterator_i::~Content_Iterator_i (void)
 }
 
 CORBA::Boolean
-Content_Iterator_i::next_chunk (CORBA::ULong offset,
+Content_Iterator_i::next_chunk (CORBA::ULongLong offset,
                                 Web_Server::Chunk_Type_out chunk
                                 ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
@@ -36,7 +36,7 @@ Content_Iterator_i::next_chunk (CORBA::ULong offset,
   ACE_NEW_THROW_EX (tmp,
                     Web_Server::Chunk_Type,
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK_RETURN (false);
 
   chunk = tmp;
 
@@ -55,9 +55,9 @@ Content_Iterator_i::next_chunk (CORBA::ULong offset,
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("%p\n"),
                          ACE_TEXT ("Error during lseek")),
-                        0);
+                        false);
     }
-  else if (offset != static_cast<CORBA::ULong> (real_offset))
+  else if (offset != static_cast<CORBA::ULongLong> (real_offset))
     {
       // Didn't get the desired offset.
 
@@ -72,7 +72,7 @@ Content_Iterator_i::next_chunk (CORBA::ULong offset,
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("Unable to reposition to desired ")
                          ACE_TEXT ("offset.\n")),
-                        0);
+                        false);
     }
 
   // Allocate a buffer for the file being read.
@@ -83,11 +83,11 @@ Content_Iterator_i::next_chunk (CORBA::ULong offset,
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("Could not allocate chunk buffer\n")),
-                        0);
+                        false);
     }
 
-  ssize_t bytes_read = this->file_io_.recv (buf,
-                                            BUFSIZ);
+  ssize_t const bytes_read = this->file_io_.recv (buf,
+                                                  BUFSIZ);
 
   if (bytes_read == -1)
     {
@@ -96,7 +96,7 @@ Content_Iterator_i::next_chunk (CORBA::ULong offset,
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("%p\n"),
                          ACE_TEXT ("Error during read")),
-                        0);
+                        false);
     }
 
   ACE_DEBUG ((LM_DEBUG,
@@ -114,7 +114,7 @@ Content_Iterator_i::next_chunk (CORBA::ULong offset,
 
   this->chunk_index_++;
 
-  return 1;
+  return true;
 }
 
 void
