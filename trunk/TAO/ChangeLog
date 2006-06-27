@@ -1,3 +1,11 @@
+Tue Jun 27 19:14:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PI_Server.mpc:
+        * tao/PI_Server/ServerRequestInterceptor{A,C,S}.{h,cpp}:
+          Readded these generated files and removed the regeneration of these
+          files from the core libs. The generated files had a diff that I
+          missed this morning, need to resolve that handcrafting first
+
 Tue Jun 27 19:06:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/AnyTypeCode/WCharSeqA.cpp:
