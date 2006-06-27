@@ -1,3 +1,21 @@
+Tue Jun 27 10:24:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Messaging.mpc:
+          Enabled recompilation for the pidl files of Messaging
+
+        * tao/Messaging/TAO_ExtC.*:
+        * tao/Messaging/TAO_ExtA.*:
+        * tao/Messaging/PollableC.*:
+        * tao/Messaging/PollableA.*:
+        * tao/Messaging/Messaging_SyncScope_PolicyC.*:
+        * tao/Messaging/Messaging_SyncScope_PolicyA.*:
+        * tao/Messaging/Messaging_RT_PolicyC.*:
+        * tao/Messaging/Messaging_RT_PolicyA.*:
+        * tao/Messaging/ExceptionHolderC.*:
+        * tao/Messaging/ExceptionHolderA.*:
+        * tao/Messaging/ExceptionHolderS.*:
+          Removed from the repo
+
 Tue Jun 27 09:52:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ImR_Client.mpc:
