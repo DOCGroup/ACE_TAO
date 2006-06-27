@@ -75,7 +75,7 @@ namespace TAO
 
   template<>
   CORBA::Boolean
-  In_Object_Argument_T<CORBA::InterfaceDef_ptr, TAO::Any_Insert_Policy_IFR_Client_Adapter>::marshal (TAO_OutputCDR &cdr)
+  In_Object_Argument_T<CORBA::InterfaceDef_ptr, TAO::Any_Insert_Policy_IFR_Client_Adapter <CORBA::InterfaceDef_ptr> >::marshal (TAO_OutputCDR &cdr)
   {
     TAO_IFR_Client_Adapter *adapter =
       ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance (
@@ -101,7 +101,7 @@ namespace TAO
             CORBA::Policy_var,
             CORBA::Policy_out,
             TAO::Objref_Traits<CORBA::Policy>,
-            TAO::Any_Insert_Policy_AnyTypeCode_Adapter
+            TAO::Any_Insert_Policy_AnyTypeCode_Adapter <CORBA::Policy_ptr>
           >
   {
   };
@@ -119,7 +119,7 @@ namespace TAO
             CORBA::InterfaceDef_var,
             CORBA::InterfaceDef_out,
             TAO::Objref_Traits<CORBA::InterfaceDef>,
-            TAO::Any_Insert_Policy_IFR_Client_Adapter
+            TAO::Any_Insert_Policy_IFR_Client_Adapter <CORBA::InterfaceDef_ptr>
           >
   {
   };

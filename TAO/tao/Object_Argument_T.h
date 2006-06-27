@@ -33,7 +33,7 @@ namespace TAO
    *
    */
   template<typename S_ptr,
-           template <typename> class Insert_Policy>
+           class Insert_Policy>
   class In_Object_Argument_T : public InArgument
   {
   public:
@@ -57,7 +57,7 @@ namespace TAO
    */
   template<typename S_ptr,
            typename S_traits,
-           template <typename> class Insert_Policy>
+           class Insert_Policy>
   class Inout_Object_Argument_T : public InoutArgument
   {
   public:
@@ -82,7 +82,7 @@ namespace TAO
    */
   template<typename S_ptr,
            typename S_out,
-           template <typename> class Insert_Policy>
+           class Insert_Policy>
   class Out_Object_Argument_T : public OutArgument
   {
   public:
@@ -106,7 +106,7 @@ namespace TAO
    */
   template<typename S_ptr,
            typename S_var,
-           template <typename> class Insert_Policy>
+           class Insert_Policy>
   class Ret_Object_Argument_T : public RetArgument
   {
   public:
@@ -135,7 +135,7 @@ namespace TAO
            typename T_var,
            typename T_out,
            typename T_traits,
-           template <typename> class Insert_Policy>
+           class Insert_Policy>
   struct Object_Arg_Traits_T
   {
     typedef T_ptr                                         ret_type;

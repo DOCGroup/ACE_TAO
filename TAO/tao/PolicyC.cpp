@@ -85,7 +85,7 @@ namespace TAO
             CORBA::Policy_var,
             CORBA::Policy_out,
             TAO::Objref_Traits<CORBA::Policy>,
-            TAO::Any_Insert_Policy_AnyTypeCode_Adapter
+            TAO::Any_Insert_Policy_AnyTypeCode_Adapter <CORBA::Policy_ptr>
           >
   {
   };
