@@ -27,6 +27,9 @@ project : taolib, core, core_anytypecode {
     IORManipulation
   }
 
+  IDL_Files {
+  }
+
   Pkgconfig_Files {
     IORManipulation/TAO_IORManip.pc.in
   }

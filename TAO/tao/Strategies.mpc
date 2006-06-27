@@ -29,6 +29,9 @@ project : taolib, core, core_anytypecode {
     Strategies
   }
 
+  IDL_Files {
+  }
+
   Pkgconfig_Files {
     Strategies/TAO_Strategies.pc.in
   }
