@@ -34,7 +34,6 @@ project : taolib, pi, portableserver, core, tao_versioning_idl_defaults {
                 -o PI_Server
     idlflags -= -Sa -St
     PI_Server/ServerRequestInfo.pidl
-    PI_Server/ServerRequestInterceptor.pidl
   }
 
   Pkgconfig_Files {
