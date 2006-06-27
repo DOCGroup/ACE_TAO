@@ -1,3 +1,20 @@
+Tue Jun 27 10:46:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PI.mpc:
+          Enabled recompilation for the pidl files of PI
+
+        * tao/PI/ClientRequestInfo*.*:
+        * tao/PI/ClientRequestInterceptor*.*:
+        * tao/PI/Interceptor*.*:
+        * tao/PI/InvalidSlot*.*:
+        * tao/PI/ORBInitializer*.*:
+        * tao/PI/ORBInitInfo*.*:
+        * tao/PI/PICurrent*.*:
+        * tao/PI/PIForwardRequest*.*:
+        * tao/PI/ProcessingModePolicy*.*:
+        * tao/PI/RequestInfo*.*:
+          Removed from the repo
+
 Tue Jun 27 10:25:00 UTC 2006  Simon Massey  <sma@prismtech.com>
 
         * NEWS:
