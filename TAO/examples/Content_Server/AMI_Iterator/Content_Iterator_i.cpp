@@ -10,7 +10,7 @@
 ACE_RCSID (AMI_Iterator, Content_Iterator_i, "$Id$")
 
 Content_Iterator_i::Content_Iterator_i (const char *pathname,
-                                        CORBA::ULong file_size)
+                                        CORBA::ULongLong file_size)
   : file_ (pathname),
     file_io_ (),
     file_size_ (file_size),
@@ -25,7 +25,7 @@ Content_Iterator_i::~Content_Iterator_i (void)
 }
 
 CORBA::Boolean
-Content_Iterator_i::next_chunk (CORBA::ULong offset,
+Content_Iterator_i::next_chunk (CORBA::ULongLong offset,
                                 Web_Server::Chunk_Type_out chunk
                                 ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
@@ -34,7 +34,7 @@ Content_Iterator_i::next_chunk (CORBA::ULong offset,
   chunk = new Web_Server::Chunk_Type;
 
   if (offset >= this->file_size_)
-    return 0;  // Applications shouldn't throw system exceptions.
+    return false;  // Applications shouldn't throw system exceptions.
 
   off_t real_offset =
     ACE_OS::lseek (this->file_io_.get_handle (),
@@ -46,8 +46,8 @@ Content_Iterator_i::next_chunk (CORBA::ULong offset,
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("Error during lseek")),
-                      0);
-  else if (offset != static_cast<CORBA::ULong> (real_offset))
+                      false);
+  else if (offset != static_cast<CORBA::ULongLong> (real_offset))
     {
       // Didn't get the desired offset.
 
@@ -61,7 +61,7 @@ Content_Iterator_i::next_chunk (CORBA::ULong offset,
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("Unable to reposition to desired ")
                          ACE_TEXT ("offset.\n")),
-                        0);
+                        false);
     }
 
   // Allocate a buffer for the file being read.
@@ -72,11 +72,11 @@ Content_Iterator_i::next_chunk (CORBA::ULong offset,
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("Could not allocate chunk buffer\n")),
-                        0);
+                        false);
     }
 
-  ssize_t bytes_read = this->file_io_.recv (buf,
-                                            BUFSIZ);
+  ssize_t const bytes_read = this->file_io_.recv (buf,
+                                                  BUFSIZ);
   if (bytes_read == -1)
     {
       Web_Server::Chunk_Type::freebuf (buf);
@@ -102,7 +102,7 @@ Content_Iterator_i::next_chunk (CORBA::ULong offset,
 
   this->chunk_index_++;
 
-  return 1;
+  return true;
 }
 
 void

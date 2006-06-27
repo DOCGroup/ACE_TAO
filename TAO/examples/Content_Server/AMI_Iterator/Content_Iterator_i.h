@@ -45,13 +45,13 @@ class Content_Iterator_i :
   friend class Iterator_Factory_i;
 public:
 
-  Content_Iterator_i (const char *filename, CORBA::ULong file_size);
+  Content_Iterator_i (const char *filename, CORBA::ULongLong file_size);
   // Constructor
 
   ~Content_Iterator_i (void);
   // Destructor
 
-  virtual CORBA::Boolean next_chunk (CORBA::ULong offset,
+  virtual CORBA::Boolean next_chunk (CORBA::ULongLong offset,
                                      Web_Server::Chunk_Type_out chunk
                                      ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -75,10 +75,10 @@ private:
   ACE_FILE_IO file_io_;
   // Object that handles all IO operations on the requested file.
 
-  CORBA::ULong file_size_;
+  CORBA::ULongLong file_size_;
   // The size of the file being iterated over.
 
-  CORBA::ULong chunk_index_;
+  CORBA::ULongLong chunk_index_;
   // The number of the current chunk of data being sent.  (Used only
   // for debugging purposes.)
 };
