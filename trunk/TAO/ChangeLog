@@ -1,3 +1,12 @@
+Tue Jun 27 11:50:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PI_Server.mpc:
+          Enabled recompilation for the pidl files of PI_Server
+
+        * tao/PI_Server/ServerRequestInterceptor*.*:
+        * tao/PI_Server/ServerRequestInfo*.*:
+          Removed from the repo
+
 Tue Jun 27 10:46:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PI.mpc:
