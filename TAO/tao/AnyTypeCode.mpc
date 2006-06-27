@@ -85,7 +85,6 @@ project : taolib, core, extra_anytypecode {
     AnyTypeCode/*.inl
   }
 
-
   Template_Files {
     AnyTypeCode/*_T.cpp
     AnyTypeCode/Alias_TypeCode.cpp
@@ -106,6 +105,9 @@ project : taolib, core, extra_anytypecode {
   }
 
   PIDL_Files {
+  }
+
+  IDL_Files {
   }
 
   Pkgconfig_Files {

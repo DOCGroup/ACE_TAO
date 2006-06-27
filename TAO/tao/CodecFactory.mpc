@@ -27,6 +27,9 @@ project : taolib, core, core_anytypecode {
     CodecFactory
   }
 
+  IDL_Files {
+  }
+
   Pkgconfig_Files {
     CodecFactory/TAO_CodecFactory.pc.in
   }
