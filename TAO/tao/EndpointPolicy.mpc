@@ -5,8 +5,6 @@ project : taolib, core, portableserver, pi, tao_versioning_idl_defaults {
 
   Source_Files {
     EndpointPolicy
-    EndpointPolicy/EndpointPolicyA.cpp
-    EndpointPolicy/IIOPEndpointValueA.cpp
   }
 
   Header_Files {
