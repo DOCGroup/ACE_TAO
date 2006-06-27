@@ -23,7 +23,7 @@ public:
   void dump_results (void);
 
   /// Get the status of the flag..
-  int is_done (void) const;
+  bool is_done (void) const;
 
   // = The skeleton methods
   virtual CORBA::Boolean get_data (CORBA::ULong size,
@@ -46,7 +46,7 @@ private:
   CORBA::ULong byte_count_;
   CORBA::ORB_var orb_;
 
-  int is_done_;
+  bool is_done_;
 };
 
 #include /**/ "ace/post.h"
