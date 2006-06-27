@@ -1,3 +1,10 @@
+Tue Jun 27 19:06:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/AnyTypeCode/WCharSeqA.cpp:
+          Removed some versioning macros that don't seem correct, if this
+          solves the errors in the versioning builds I have to change the
+          IDL compiler for this.
+
 Tue Jun 27 18:59:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/XtResource.mpc:
