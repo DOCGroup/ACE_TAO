@@ -1,3 +1,8 @@
+Tue Jun 27 18:50:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Domain/DomainS.cpp:
+          Fixed compile error
+
 Tue Jun 27 18:38:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/FlResource.mpc:
