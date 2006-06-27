@@ -1,3 +1,55 @@
+Tue Jun 27 06:35:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/*.mpc:
+          Removed tao_versioning_idl_defaults as explicit base, this is coming
+          from taolib. Added empty IDL_Files section to all files that didn't
+          had one to prevent the compilation of orb.idl in the corba/e builds
+
+        * tao/IFR_Client/IFR_BaseC.*
+        * tao/IFR_Client/IFR_BasicC.*
+        * tao/IFR_Client/IFR_ComponentsC.*
+        * tao/IFR_Client/IFR_ExtendedC.*
+          Removed these files from the repo
+
+        * tao/IFR_Client.mpc:
+          Regenerate the pidl files as part of the build
+
+        * tao/Basic_Arguments.h:
+        * tao/Basic_Argument_T.{h,cpp.inl}:
+        * tao/BD_String_Argument_T.{h,cpp,inl}:
+        * tao/Fixed_Array_Argument_T.{h,cpp,inl}:
+        * tao/Fixed_Size_Argument_T.{h,cpp,inl}:
+        * tao/Object_Argument_T.{h,cpp,inl}:
+        * tao/Object.h:
+        * tao/Special_Basic_Argument_T.{h,cpp,inl}:
+        * tao/Special_Basic_Arguments.h:
+        * tao/UB_String_Argument_T.{h,cpp,inl}:
+        * tao/UB_String_Argument.h:
+        * tao/Var_Array_Argument_T.{h,cpp,inl}:
+        * tao/Var_Size_Argument_T.{h,cpp,inl}:
+        * tao/AnyTypeCode/Any_Arg_Traits.h:
+        * tao/AnyTypeCode/TypeCode.h:
+        * tao/IFR_Client/IFR_Client_Adapter_Impl.cpp:
+        * tao/PortableServer/Any_SArg_Traits.h:
+        * tao/PortableServer/Basic_SArgument_T.{h,cpp,inl}:
+        * tao/PortableServer/Basic_SArguments.h:
+        * tao/PortableServer/BD_String_SArgument_T.{h,cpp,inl}:
+        * tao/PortableServer/Fixed_Array_SArgument_T.{h,cpp,inl}:
+        * tao/PortableServer/Fixed_Size_SArgument_T.{h,cpp,inl}:
+        * tao/PortableServer/Object_SArgument_T.{h,cpp,inl}:
+        * tao/PortableServer/Object_SArg_Traits.h:
+        * tao/PortableServer/Var_Size_SArgument_T.{h,cpp,inl}:
+        * tao/Valuetype/ValueBase.h:
+        * tao/Valuetype/AbstractBase.h:
+        * tao/PortableServer/Special_Basic_SArgument_T.{h,cpp,inl}:
+        * tao/PortableServer/Special_Basic_SArgument.h:
+        * tao/PortableServer/TypeCode_SArg_Traits.h:
+        * tao/PortableServer/Var_Array_SArgument_T.{h,cpp,inl}:
+        * TAO_IDL/be/be_visitor_arg_traits.cpp:
+          Removed the introduction of template template arguments for any
+          insertion strategy. The HP aCC3 compiler doesn't support this at
+          all so it broke that support fully.
+
 Mon Jun 26 13:27:00 UTC 2006  Simon Massey  <sma@prismtech.com>
 
         * NEWS:
