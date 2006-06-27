@@ -1,3 +1,8 @@
+Tue Jun 27 13:06:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Unbounded_Queue.cpp:
+          Explicitly initialise pointers with 0
+
 Tue Jun 27 08:59:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/ace_for_tao.mpc:
