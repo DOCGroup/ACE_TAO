@@ -1,3 +1,17 @@
+Tue Jun 27 09:22:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/BiDirectional/run_test.pl:
+          Use wait_interval_for_process_creation instead of hardcoded value
+
+        * tests/Hello/server.cpp:
+          Added newline after debug message
+
+        * tests/Stack_Recursion/server.cpp:
+          Initialise pointer with 0
+
+        * tests/Stack_Recursion/Sender.{h,cpp}:
+          Changed is_done to a real bool
+
 Tue Jun 27 08:50:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/PolicyS.cpp:
