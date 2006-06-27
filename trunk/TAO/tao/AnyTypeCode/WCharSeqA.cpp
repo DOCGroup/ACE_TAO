@@ -48,8 +48,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 #ifndef _TAO_TYPECODE_CORBA_WCharSeq_GUARD
 #define _TAO_TYPECODE_CORBA_WCharSeq_GUARD
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 namespace TAO
 {
   namespace TypeCode
@@ -62,14 +60,12 @@ namespace TAO
           ::CORBA::tk_sequence,
           &CORBA::_tc_wchar,
           0U);
-        
+
       ::CORBA::TypeCode_ptr const tc_CORBA_WCharSeq_0 =
         &CORBA_WCharSeq_0;
     }
   }
 }
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* _TAO_TYPECODE_CORBA_WCharSeq_GUARD */
 
@@ -81,7 +77,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:omg.org/CORBA/WCharSeq:1.0",
     "WCharSeq",
     &TAO::TypeCode::tc_CORBA_WCharSeq_0);
-  
+
 namespace CORBA
 {
   ::CORBA::TypeCode_ptr const _tc_WCharSeq =
@@ -93,7 +89,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_sequence/any_op_cs.cpp:54
 
 
