@@ -1,3 +1,9 @@
+Tue Jun 27 08:59:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ace_for_tao.mpc:
+          Added MMAP_Memory_Pool.* because TAO uses these for sendfile
+          support
+
 Tue Jun 27 06:56:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_unistd.inl:
