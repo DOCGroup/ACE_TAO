@@ -1,4 +1,3 @@
-
 //=============================================================================
 /**
  *  @file    nslist.cpp
@@ -10,9 +9,9 @@
  *
  *  @author  Thomas Lockhart, NASA/JPL <Thomas.Lockhart@jpl.nasa.gov>
  *  @date 1999-06-03
+ *  Enhanced 21 Jun, 2006 Simon Massey <sma@prismtech.com>
  */
 //=============================================================================
-
 
 #include "ace/SString.h"
 #include "orbsvcs/CosNamingC.h"
@@ -23,290 +22,657 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/Argv_Type_Converter.h"
+#include "ace/os_include/os_ctype.h"
 
-CORBA::ORB_var orb;
-int showIOR = 0;
-int showNSonly = 0;
-int showCtxIOR = 0;
-
-static void list_context (CosNaming::NamingContext_ptr nc,
-                          int level
-                          ACE_ENV_ARG_DECL);
-
-static void
-get_tag_name (CORBA::ULong tag, ACE_CString& tag_string)
+//============================================================================
+namespace
 {
-  if (tag == IOP::TAG_INTERNET_IOP)
+  CORBA::ORB_var orb;
+  bool
+    showIOR = false,    // Default decodes endpoints
+    showCtxIOR = false, // Default no displaying naming context ior
+    noLoops = false;    // Default draw loopback arrows
+  const char
+    *tree = "|",        // Default string to draw tree "tram-lines"
+    *node = "+";        // Default string to draw tree node end-points
+  int
+    sizeTree,           // Initialised by main to strlen (tree)
+    sizeNode,           // Initialised by main to strlen (node)
+    maxDepth= 0;        // Limit to display depth (default unlimited)
+
+  void list_context (const CosNaming::NamingContext_ptr,
+                     int level
+                     ACE_ENV_ARG_DECL);
+
+  //==========================================================================
+  class NestedNamingContexts
+  {
+  public:
+    static void add (const CosNaming::NamingContext_ptr nc)
+    {
+      pBottom= new NestedNamingContexts( nc );
+    }
+
+    static void remove ()
+    {
+      delete pBottom;
+    }
+
+    static int hasBeenSeen (const CosNaming::NamingContext_ptr nc)
+    {
+      int level= 1;
+      for (const NestedNamingContexts *pNode= pBottom;
+           pNode;
+           ++level, pNode= pNode->pNext)
+        {
+          if (pNode->pnc->_is_equivalent (nc))
+            return level; // Loops backwards this number of levels
+        }
+
+      return 0; // Not seen before
+    }
+
+  private:
+    static const NestedNamingContexts
+      *pBottom; // Our current lowest level
+    const CosNaming::NamingContext_ptr
+      pnc; // This level's Naming Context
+    const NestedNamingContexts
+      *const pNext; // Next highest level
+
+    NestedNamingContexts (const CosNaming::NamingContext_ptr nc)
+      :pnc(nc), pNext(pBottom)
+    {
+    }
+
+    ~NestedNamingContexts ()
+    {
+      this->pBottom= this->pNext;
+    }
+
+    // Outlaw copying
+    NestedNamingContexts (const NestedNamingContexts &);
+    NestedNamingContexts &operator= (const NestedNamingContexts &);
+  };
+  const NestedNamingContexts *NestedNamingContexts::pBottom= 0;
+
+  //==========================================================================
+  void
+  get_tag_name (CORBA::ULong tag, ACE_CString& tag_string)
+  {
+    if (tag == IOP::TAG_INTERNET_IOP)
       tag_string = "IIOP";
-  else if (tag == TAO_TAG_UIOP_PROFILE)
+    else if (tag == TAO_TAG_UIOP_PROFILE)
       tag_string = "UIOP";
-  else if (tag == TAO_TAG_SHMEM_PROFILE)
+    else if (tag == TAO_TAG_SHMEM_PROFILE)
       tag_string = "SHMEM";
 #ifdef TAO_TAG_DIOP_PROFILE
-  else if (tag == TAO_TAG_DIOP_PROFILE)
+    else if (tag == TAO_TAG_DIOP_PROFILE)
       tag_string = "GIOP over UDP";
 #endif /* TAO_TAG_DIOP_PROFILE */
-  else
+    else
       tag_string = "Unknown tag: " + tag;
-}
+  }
 
+  //==========================================================================
+  void
+  display_endpoint_info (CORBA::Object_ptr obj, const int level)
+  {
+    TAO_Stub *stub = obj->_stubobj ();
+    if (!stub)
+      {
+        ACE_DEBUG ((LM_DEBUG, " {Invalid Stub}\n"));
+        return;
+      }
 
-static void
-display_endpoint_info (CORBA::Object_ptr obj)
-{
-  if (CORBA::is_nil (obj))
-    {
-      ACE_DEBUG ((LM_DEBUG, "Nil\n"));
-      return;
-    }
+    TAO_Profile* profile = stub->profile_in_use ();
+    if (!profile)
+      {
+        ACE_DEBUG ((LM_DEBUG, " {Invalid Profile}\n"));
+        return;
+      }
 
-  TAO_Stub *stub = obj->_stubobj ();
-  if (!stub)
-    {
-      ACE_DEBUG ((LM_DEBUG, "Invalid stub\n"));
-      return;
-    }
+    TAO_Endpoint* endpoint = profile->endpoint ();
+    if (!endpoint)
+      {
+        ACE_DEBUG ((LM_DEBUG, " {Invalid Endpoint}\n"));
+        return;
+      }
 
-  TAO_Profile* profile = stub->profile_in_use ();
-  if (!profile)
-    {
-      ACE_DEBUG ((LM_DEBUG, "Invalid profile\n"));
-      return;
-    }
+    // Display protocol
+    CORBA::ULong tag = endpoint->tag ();
+    ACE_CString tag_name;
+    get_tag_name (tag, tag_name);
 
+    ACE_DEBUG ((LM_DEBUG, "\n"));
+    int count;
+    for (count= 0; count < level; ++count)
+      ACE_DEBUG ((LM_DEBUG, "%s ", tree));
+    ACE_DEBUG ((LM_DEBUG, "%*s Protocol: %s\n",
+               sizeNode, "",tag_name.c_str()));
 
-  TAO_Endpoint* endpoint = profile->endpoint ();
-  if (!endpoint)
-    {
-      ACE_DEBUG ((LM_DEBUG, "Invalid profile\n"));
-      return;
-    }
+    // Display Endpoint
+    for (count= 0; count < level; ++count)
+      ACE_DEBUG ((LM_DEBUG, "%s ", tree));
+    char buf[256];
+    if (endpoint->addr_to_string (buf, sizeof(buf)) < 0)
+      ACE_OS::strcpy( buf, "{Endpoint too long}" );
+    ACE_DEBUG ((LM_DEBUG, "%*s Endpoint: %s\n", sizeNode, "", buf));
+  }
 
-  CORBA::ULong tag = endpoint->tag ();
-  ACE_CString tag_name;
-  get_tag_name (tag, tag_name);
-
-  char buf[255];
-  if (endpoint->addr_to_string (buf, 255) < 0)
-    {
-      ACE_DEBUG ((LM_DEBUG, "Could not put endpoint address in string.\n"));
-      return;
-    }
-
-  ACE_DEBUG ((LM_DEBUG,
-              "Protocol: %s,   Endpoint: %s\n",
-              tag_name.c_str(),
-              buf));
-}
-
-// Display NS entries from a finite list.
-
-static void
-show_chunk (CosNaming::NamingContext_ptr nc,
-            const CosNaming::BindingList &bl,
-            int level
-            ACE_ENV_ARG_DECL)
-{
-  for (CORBA::ULong i = 0;
-       i < bl.length ();
-       i++)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "%*s%s",
-                  2 * level,
-                  "",
-                  bl[i].binding_name[0].id.in ()));
-
-      if (ACE_OS::strlen (bl[i].binding_name[0].kind) > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    "(%s)",
-                    bl[i].binding_name[0].kind.in ()));
-
-      CosNaming::Name Name;
-      Name.length (1);
-      Name[0].id =
-        CORBA::string_dup (bl[i].binding_name[0].id);
-      Name[0].kind =
-        CORBA::string_dup (bl[i].binding_name[0].kind);
-
-      CORBA::Object_var obj = nc->resolve (Name ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
-
-      // If this is a context node, follow it down to the next
-      // level...
-      if (bl[i].binding_type == CosNaming::ncontext)
-        {
-          if (showCtxIOR)
-            {
-              CORBA::String_var str =
-                orb->object_to_string (obj.in ()
-                                       ACE_ENV_ARG_PARAMETER);
-              ACE_CHECK;
-              ACE_DEBUG ((LM_DEBUG,
-                          ": naming context : <%s>\n",
-                          str.in ()));
-            }
-          else
-            {
-              ACE_DEBUG ((LM_DEBUG,
-                            ": naming context\n"));
-
-            }
-          CosNaming::NamingContext_var xc =
-            CosNaming::NamingContext::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
-
-          list_context (xc.in (), level + 1 ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
-        }
-      // Mark this node as a reference
-      else
-        {
-          if (showIOR)
-            {
-              CORBA::String_var str =
-                orb->object_to_string (obj.in ()
-                                       ACE_ENV_ARG_PARAMETER);
-              ACE_CHECK;
-              ACE_DEBUG ((LM_DEBUG,
-                          ": <%s>\n",
-                          str.in ()));
-            }
-          else
-            {
-              ACE_DEBUG ((LM_DEBUG,
-                          ": object reference:   "));
-              display_endpoint_info (obj.in());
-            }
-        }
-    }
-}
-
-static void
-list_context (CosNaming::NamingContext_ptr nc,
+  //==========================================================================
+  // Display NS entries from a finite list.
+  void
+  show_chunk (const CosNaming::NamingContext_ptr nc,
+              const CosNaming::BindingList &bl,
               int level
               ACE_ENV_ARG_DECL)
-{
-  CosNaming::BindingIterator_var it;
-  CosNaming::BindingList_var bl;
-  const CORBA::ULong CHUNK = 100;
+  {
+    for (CORBA::ULong i = 0;
+         i < bl.length ();
+         ++i)
+      {
+        int count;
+        for (count= 0; count < level-1; ++count)
+          ACE_DEBUG ((LM_DEBUG, "%s ", tree));
+        ACE_DEBUG ((LM_DEBUG, "%s %s", node,
+                   bl[i].binding_name[0].id.in ()));
 
-  nc->list (CHUNK, bl, it ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+        if (bl[i].binding_name[0].kind[0])
+          ACE_DEBUG ((LM_DEBUG,
+                     " (Kind: %s)",
+                     bl[i].binding_name[0].kind.in ()));
 
-  show_chunk (nc, bl.in (), level ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+        CosNaming::Name Name;
+        Name.length (1);
+        Name[0].id =
+          CORBA::string_dup (bl[i].binding_name[0].id);
+        Name[0].kind =
+          CORBA::string_dup (bl[i].binding_name[0].kind);
 
-  if (!CORBA::is_nil (it.in ()))
-    {
-      CORBA::Boolean more;
+        CORBA::Object_var obj = nc->resolve (Name ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK;
 
-      do
-        {
-          more = it->next_n (CHUNK, bl);
-          show_chunk (nc, bl.in (), level ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
-        }
-      while (more);
+        // If this is a context node, follow it down to the next level...
+        if (bl[i].binding_type == CosNaming::ncontext)
+          {
+            ACE_DEBUG ((LM_DEBUG, ": Naming context"));
 
-      it->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
-    }
-}
+            CosNaming::NamingContext_var xc;
+            ACE_TRY_EX (inner)
+              {
+                xc = CosNaming::NamingContext::_narrow (obj.in ()
+                                                        ACE_ENV_ARG_PARAMETER);
+                ACE_TRY_CHECK_EX (inner);
+              }
+            ACE_CATCH (CORBA::OBJECT_NOT_EXIST, not_used)
+              {
+                 ACE_UNUSED_ARG (not_used);
+                 xc= 0;
+                ACE_DEBUG ((LM_DEBUG, " {Destroyed}"));
+              }
+            ACE_ENDTRY;
+            ACE_CHECK;
 
+            if (const int backwards= NestedNamingContexts::hasBeenSeen (xc))
+              {
+                ACE_DEBUG ((LM_DEBUG, " (Binding Loop)\n"));
+                if (!noLoops)
+                  {
+                    int count;
+                    for (count= 0; count < (level - backwards); ++count)
+                      ACE_DEBUG ((LM_DEBUG, "%s ", tree));
+                    ACE_DEBUG ((LM_DEBUG, "^"));
+                    int chars;
+                    while (++count < level)
+                      for (chars= 0; chars <= sizeTree; ++chars)
+                        ACE_DEBUG ((LM_DEBUG, "-"));
+                    for (chars= 0; chars < sizeNode; ++chars)
+                      ACE_DEBUG ((LM_DEBUG, "-"));
+                    ACE_DEBUG ((LM_DEBUG, "^\n"));
+                  }
+              }
+            else
+              {
+                if (showCtxIOR)
+                  {
+                    CORBA::String_var str =
+                      orb->object_to_string (obj.in ()
+                                             ACE_ENV_ARG_PARAMETER);
+                    ACE_CHECK;
+                    ACE_DEBUG ((LM_DEBUG, ": %s", str.in ()));
+                  }
+
+                if (maxDepth != level)
+                  {
+                    ACE_DEBUG ((LM_DEBUG, "\n"));
+                    if (xc.in ())
+                      {
+                        list_context (xc.in (), level + 1 ACE_ENV_ARG_PARAMETER);
+                        ACE_CHECK;
+                      }
+                  }
+                else
+                  ACE_DEBUG ((LM_DEBUG, " {Max depth reached}\n"));
+              }
+          }
+        // Mark this node as a reference
+        else
+          {
+            ACE_DEBUG ((LM_DEBUG, ": Object Reference"));
+            if (CORBA::is_nil (obj))
+              ACE_DEBUG ((LM_DEBUG, " {Null}"));
+
+            if (showIOR)
+              {
+                CORBA::String_var str =
+                  orb->object_to_string (obj.in ()
+                                         ACE_ENV_ARG_PARAMETER);
+                ACE_CHECK;
+                ACE_DEBUG ((LM_DEBUG, ": %s\n", str.in ()));
+              }
+            else if (CORBA::is_nil (obj))
+              ACE_DEBUG ((LM_DEBUG, "\n"));
+            else
+              display_endpoint_info (obj.in(), level);
+          }
+      }
+  }
+
+  //==========================================================================
+  void
+  list_context (const CosNaming::NamingContext_ptr nc,
+                const int level
+                ACE_ENV_ARG_DECL)
+  {
+    CosNaming::BindingIterator_var it;
+    CosNaming::BindingList_var bl;
+    const CORBA::ULong CHUNK = 100;
+
+    NestedNamingContexts::add (nc);
+    nc->list (CHUNK, bl, it ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+
+    show_chunk (nc, bl.in (), level ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+
+    if (!CORBA::is_nil (it.in ()))
+      {
+        CORBA::Boolean more;
+
+        do
+          {
+            more = it->next_n (CHUNK, bl);
+            show_chunk (nc, bl.in (), level ACE_ENV_ARG_PARAMETER);
+            ACE_CHECK;
+          } while (more);
+
+        it->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+        ACE_CHECK;
+      }
+
+    NestedNamingContexts::remove ();
+  }
+} // end of local unnamed namespace
+
+//============================================================================
 int
 ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
 {
-  showIOR = 0;
-  showNSonly = 0;
-
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
+      // Contact the orb
       ACE_Argv_Type_Converter argcon (argcw, argvw);
       orb = CORBA::ORB_init (argcon.get_argc (), argcon.get_ASCII_argv (),
                              "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      int argc = argcon.get_argc ();
-      ACE_TCHAR** argv = argcon.get_TCHAR_argv ();
+      // Scan through the command line options
+      bool
+        failed = false,
+        showNSonly = false;
+      int
+        argc = argcon.get_argc ();
+      ACE_TCHAR
+        **argv = argcon.get_TCHAR_argv ();
+      char
+        kindsep= '.',
+        ctxsep[]= "/",
+        *name = 0;
+      const char
+        *const pname = ACE_TEXT_ALWAYS_CHAR (argv[0]),
+        *nameService = 0;
 
-      ACE_TCHAR *pname = argv[0];
-
-      while (argc > 0)
+      if (0 < argc)
         {
-          if (ACE_OS::strcmp(*argv, ACE_TEXT ("--ior")) == 0)
+          while (0 < --argc)
             {
-              if (showNSonly)
+              ++argv;
+              if (0 == ACE_OS::strcmp (*argv, ACE_TEXT ("--ns")))
+                {
+                  if (!--argc)
+                    {
+                      ACE_DEBUG ((LM_DEBUG,
+                                 "Error: --ns requires an argument\n"));
+                      failed= true;
+                    }
+                  else
+                    {
+                      ++argv;
+                      if (nameService)
+                        {
+                          ACE_DEBUG ((LM_DEBUG,
+                                     "Error: more than one --ns.\n"));
+                          failed= true;
+                        }
+                      else if (showNSonly)
+                        {
+                          ACE_DEBUG ((LM_DEBUG,
+                                     "Error: --nsior and --ns "
+                                     "are both specified\n"));
+                          failed = true;
+                        }
+                      else
+                        nameService = ACE_TEXT_ALWAYS_CHAR (*argv);
+                    }
+                }
+              else if (0 == ACE_OS::strcmp (*argv, ACE_TEXT ("--nsior")))
+                {
+                  if (showIOR || showCtxIOR || noLoops
+                      || nameService || name || maxDepth)
+                    {
+                      ACE_DEBUG ((LM_DEBUG,
+                                 "Error: --nsior given "
+                                 "with other options\n"));
+                      failed = true;
+                    }
+                  else
+                    showNSonly = true;
+                }
+              else if (0 == ACE_OS::strcmp(*argv, ACE_TEXT ("--ior")))
+                {
+                  if (showNSonly)
+                    {
+                      ACE_DEBUG ((LM_DEBUG,
+                                 "Error: --nsior and --ior are "
+                                 "both specified\n"));
+                      failed = true;
+                    }
+                  else
+                    showIOR = true;
+                }
+              else if (0 == ACE_OS::strcmp (*argv, ACE_TEXT ("--ctxior")))
+                {
+                  if (showNSonly)
+                    {
+                      ACE_DEBUG ((LM_DEBUG,
+                                 "Error: --nsior and --ctxior are "
+                                 "both specified\n"));
+                      failed = true;
+                    }
+                  else
+                    showCtxIOR = true;
+                }
+              else if (0 == ACE_OS::strcmp (*argv, ACE_TEXT ("--tree")))
+                {
+                  if (!--argc)
+                    {
+                      ACE_DEBUG ((LM_DEBUG,
+                                 "Error: --tree requires an argument\n"));
+                      failed= true;
+                    }
+                  else
+                    {
+                      ++argv;
+                      if (showNSonly)
+                        {
+                          ACE_DEBUG ((LM_DEBUG,
+                                     "Error: --nsior and --tree are "
+                                     "both specified\n"));
+                          failed = true;
+                        }
+                      else
+                        tree = ACE_TEXT_ALWAYS_CHAR (*argv);
+                    }
+                }
+              else if (0 == ACE_OS::strcmp (*argv, ACE_TEXT ("--node")))
+                {
+                  if (!--argc)
+                    {
+                      ACE_DEBUG ((LM_DEBUG,
+                                 "Error: --node requires an argument\n"));
+                      failed= true;
+                    }
+                  else
+                    {
+                      ++argv;
+                      if (showNSonly)
+                        {
+                          ACE_DEBUG ((LM_DEBUG,
+                                     "Error: --nsior and --node are "
+                                     "both specified\n"));
+                          failed = true;
+                        }
+                      else
+                        node = ACE_TEXT_ALWAYS_CHAR (*argv);
+                    }
+                }
+              else if (0 == strcmp(*argv, ACE_TEXT ("--noloops")))
+                {
+                  if (showNSonly)
+                    {
+                      ACE_DEBUG ((LM_DEBUG,
+                                 "Error: --nsior and --noloops are "
+                                 "both specified\n"));
+                      failed = true;
+                    }
+                  else
+                    noLoops = true;
+                }
+              else if (0 == ACE_OS::strcmp (*argv, ACE_TEXT ("--name")))
+                {
+                  if (name)
+                    {
+                      ACE_DEBUG ((LM_DEBUG,
+                                 "Error: more than one --name\n"));
+                      failed = true;
+                    }
+                  else if (!--argc)
+                    {
+                      ACE_DEBUG ((LM_DEBUG,
+                                 "Error: --name requires an argument\n"));
+                      failed = true;
+                    }
+                  else
+                    {
+                      ++argv;
+                      if (showNSonly)
+                        {
+                          ACE_DEBUG ((LM_DEBUG,
+                                     "Error: --nsior and --name are "
+                                     "both specified\n"));
+                          failed = true;
+                        }
+                      else
+                        name = ACE_TEXT_ALWAYS_CHAR (*argv);
+                    }
+                }
+              else if (0 == ACE_OS::strcmp (*argv, ACE_TEXT ("--ctxsep")))
+                {
+                  if (!--argc)
+                    {
+                      ACE_DEBUG ((LM_DEBUG,
+                                 "Error: --ctxsep requires a character\n"));
+                      failed = true;
+                    }
+                  else if (1 != ACE_OS::strlen(*++argv))
+                    {
+                      ACE_DEBUG ((LM_DEBUG,
+                                 "Error: --ctxsep takes a single character (not %s)\n", *argv));
+                      failed = true;
+                    }
+                  else if (showNSonly)
+                    {
+                      ACE_DEBUG ((LM_DEBUG,
+                                 "Error: --nsior and --ctxsep are "
+                                 "both specified\n"));
+                      failed = true;
+                    }
+                  else
+                    ctxsep[0] = ACE_TEXT_ALWAYS_CHAR (*argv)[0];
+                }
+              else if (0 == ACE_OS::strcmp (*argv, ACE_TEXT ("--kindsep")))
+                {
+                  if (!--argc)
+                    {
+                      ACE_DEBUG ((LM_DEBUG,
+                                 "Error: --kindsep requires a character\n"));
+                      failed = true;
+                    }
+                  else if (1 != ACE_OS::strlen(*++argv))
+                    {
+                       ACE_DEBUG ((LM_DEBUG,
+                                  "Error: --kindsep takes a single character (not %s)\n", *argv));
+                      failed = true;
+                    }
+                  else if (showNSonly)
+                    {
+                      ACE_DEBUG ((LM_DEBUG,
+                                 "Error: --nsior and --kindsep are "
+                                 "both specified\n"));
+                      failed = true;
+                    }
+                  else
+                    kindsep = ACE_TEXT_ALWAYS_CHAR (*argv)[0];
+                }
+              else if (0 == strcmp(*argv, ACE_TEXT ("--max")))
+                {
+                  if (maxDepth)
+                    {
+                      ACE_DEBUG ((LM_DEBUG,
+                                 "Error: --max given more than once\n"));
+                      failed = true;
+                    }
+                  else if (!--argc || !isdigit (ACE_TEXT_ALWAYS_CHAR (*++argv)[0]))
+                    {
+                      ACE_DEBUG ((LM_DEBUG,
+                                 "Error: --max requires a number\n"));
+                      failed = true;
+                    }
+                  else if (showNSonly)
+                    {
+                      ACE_DEBUG ((LM_DEBUG,
+                                 "Error: --nsior and --max are "
+                                 "both specified\n"));
+                      failed = true;
+                    }
+                  else
+                     maxDepth= ACE_OS::atoi (ACE_TEXT_ALWAYS_CHAR (*argv));
+                }
+              else
                 {
                   ACE_DEBUG ((LM_DEBUG,
-                              "Error: --nsior and --ior are "
-                              "both specified\n"));
-                  return 1;
+                             "Unknown option %s\n", ACE_TEXT_ALWAYS_CHAR (*argv)));
+                  failed = true;
                 }
-              showIOR = 1;
             }
-          else if (ACE_OS::strcmp (*argv, ACE_TEXT ("--nsior")) == 0)
-            {
-              if (showIOR)
-                {
-                  ACE_DEBUG ((LM_DEBUG,
-                              "Error: --nsior and --ior "
-                              "are both specified\n"));
-                  return 1;
-                }
-              showNSonly = 1;
-            }
-          else if (ACE_OS::strcmp (*argv, ACE_TEXT ("--ctxior")) == 0)
-            {
-              showCtxIOR = 1;
-            }
-          else if (ACE_OS::strncmp (*argv, ACE_TEXT ("--"), 2) == 0)
-            {
-              ACE_DEBUG ((LM_DEBUG, "Usage: %s [[ --ior ][ --ctxior ] | --nsior ]\n", pname));
-              return 1;
-            }
-          argc--;
-          argv++;
         }
 
-      CORBA::Object_var obj =
-        orb->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
+      if (failed)
+        {
+          ACE_DEBUG ((LM_DEBUG, "\n%s options:\n"
+            "  --nsior               {Display the naming service IOR and exit}\n"
+            "or:\n"
+            "  --ns <ior>            {Defaults to standard NameService}\n"
+            "  --ior                 {Display ior for end points}\n"
+            "  --ctxior              {Display ior for naming contexts}\n"
+            "  --tree \"xx\"           {Defaults to | for drawing tramlines}\n"
+            "  --node \"xx\"           {Defaults to + for drawing nodes}\n"
+            "  --noloops             {Inhibit drawing of naming context loops}\n"
+            "  --name <name>         {Lists sub-set, defaults to root}\n"
+            "  --ctxsep  <character> {<name> Context separation character, default /}\n"
+            "  --kindsep <character> {<name> ID/Kind separation character, default .}\n"
+            "  --max <number>        {If given, limits displayed sub-context depth}\n",
+            pname));
+          orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+          return 1;
+        }
+
+      // Initialise the lengths of the tree and node draw strings.
+      sizeTree= ACE_OS::strlen (tree);
+      sizeNode= ACE_OS::strlen (node);
+
+      // Contact the name service
+      CORBA::Object_var obj;
+      if (nameService)
+        obj = orb->string_to_object (nameService ACE_ENV_ARG_PARAMETER);
+      else
+        obj = orb->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CosNaming::NamingContext_var root_nc =
         CosNaming::NamingContext::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
+      if (CORBA::is_nil (root_nc.in ()))
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Error: nil root naming context\n"));
+          orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+          return 1;
+        }
+      if (name)
+        {
+          // Assemble the name from the user string given
+          CosNaming::Name the_name (0);
+          char *cp;
+          while (0 != (cp = ACE_OS::strtok (name, ctxsep)))
+            {
+              const int index= the_name.length();
+              the_name.length (index+1);
+              char *kind = (char *)ACE_OS::strchr (cp, kindsep);
+              if (kind)
+                {
+                  *kind = '\0';
+                  the_name[index].kind= CORBA::string_dup (++kind);
+                }
+              the_name[index].id = CORBA::string_dup (cp);
+              name = 0; // way strtok works
+            }
+
+          // Now find this sub-context and replace the root with it.
+          obj = root_nc->resolve( the_name ACE_ENV_ARG_PARAMETER );
+          ACE_TRY_CHECK;
+          root_nc =
+            CosNaming::NamingContext::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+          if (CORBA::is_nil (root_nc.in ()))
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                         "Error: Can't find naming context\n    %s\n", name));
+              orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+              ACE_TRY_CHECK;
+              return 1;
+            }
+        }
 
       CORBA::String_var str =
         orb->object_to_string (root_nc.in ()
                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      if (CORBA::is_nil (obj.in ()) || CORBA::is_nil (root_nc.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Naming Service not found"),
-                          -1);
-
       if (showNSonly)
         {
-          // ACE_DEBUG ((LM_DEBUG, "%s", str.in ()));
-          ACE_OS::printf ("%s", str.in());
+          ACE_DEBUG ((LM_DEBUG,
+                     "The NameService is located via:\n%s\n", str.in ()));
         }
       else
         {
-          if (showIOR)
-            {
-              ACE_DEBUG ((LM_DEBUG,
-                          "Naming Service: <%s>\n---------\n",
-                          str.in ()));
-            }
-          else
-            {
-              ACE_DEBUG ((LM_DEBUG,
-                          "Naming Service:\n---------\n"));
-            }
-
+          ACE_DEBUG ((LM_DEBUG,
+                     "Naming Service: %s\n---------------\n",
+                     ((showCtxIOR)? str.in () : "")));
           list_context (root_nc.in (), 1 ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
@@ -315,9 +681,11 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "Exception in nslist");
+      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       return -1;
     }
   ACE_ENDTRY;
 
+  orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
   return 0;
 }
