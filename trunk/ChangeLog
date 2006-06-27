@@ -1,3 +1,8 @@
+Tue Jun 27 06:34:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/taolib.mpb:
+          Added tao_versioning_idl_defaults as base
+
 Mon Jun 26 13:27:00 UTC 2006  Simon Massey  <sma@prismtech.com>
 
         * NEWS:
