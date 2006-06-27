@@ -90,6 +90,16 @@ USER VISIBLE CHANGES BETWEEN TAO-1.5.1 and TAO-1.5.2
   a range of call-back bugs that were performed on already destroyed objects.
   (For detail see bugzilla 2552.)
 
+. Updated/Enhanced TAO/utils/nslist utilities nslist,nsadd and nsdel.
+  These tools now allow for full ID.Kind processing (the separating character
+  is user controlled, defaulting to .) and sub-context path processing (the
+  separating character is also user controlled, defaulting to /).
+  nsadd allows for (re)binding naming contexts in addition to final objects
+  nsdel allows for destroying naming contexts when unbinding.
+  nslist output has been prittyfide with user controlled character drawing
+  of the naming context tree or sub-tree of full or limited depth.
+  For full usage details execute these utilities with a ? parameter.
+
 USER VISIBLE CHANGES BETWEEN TAO-1.5 and TAO-1.5.1
 ====================================================
 
