@@ -1,3 +1,9 @@
+Tue Jun 27 18:59:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/XtResource.mpc:
+          And the last mpc file to get an empty IDL_Files section. Thanks to
+          Chad Elliot for noticing this last missing file
+
 Tue Jun 27 18:50:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Domain/DomainS.cpp:
