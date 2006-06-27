@@ -64,7 +64,7 @@ main (int argc, char *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      Sender *sender_impl;
+      Sender *sender_impl = 0;
       ACE_NEW_RETURN (sender_impl,
                       Sender (orb.in ()),
                       1);

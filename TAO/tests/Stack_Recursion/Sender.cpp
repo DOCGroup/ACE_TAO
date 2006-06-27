@@ -11,7 +11,7 @@ Sender::Sender (CORBA::ORB_ptr orb)
   :  message_count_ (0)
   ,  byte_count_ (0)
   ,  orb_ (CORBA::ORB::_duplicate (orb))
-  ,  is_done_ (0)
+  ,  is_done_ (false)
 {
 }
 
@@ -26,7 +26,7 @@ Sender::dump_results (void)
               this->byte_count_));
 }
 
-int
+bool
 Sender::is_done (void) const
 {
   return this->is_done_;
@@ -43,7 +43,7 @@ Sender::get_data (CORBA::ULong size,
                     this->mutex_,
                     0);
 
-  this->message_count_++;
+  ++this->message_count_;
   payload =
     new Test::Payload (size);
   payload->length (size);
@@ -75,13 +75,13 @@ void
 Sender::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  if (this->is_done_ == 0)
+  if (this->is_done_ == false)
     {
       ACE_GUARD (ACE_SYNCH_MUTEX,
                  ace_mon,
                  this->mutex_);
 
-      if (this->is_done_ == 0)
-        this->is_done_ = 1;
+      if (this->is_done_ == false)
+        this->is_done_ = true;
     }
 }
