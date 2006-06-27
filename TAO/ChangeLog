@@ -1,3 +1,8 @@
+Tue Jun 27 08:50:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/PolicyS.cpp:
+          Forgot to patch this file
+
 Tue Jun 27 06:35:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/*.mpc:
