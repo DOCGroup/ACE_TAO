@@ -48,7 +48,8 @@ namespace TAO
     : public Object_SArg_Traits_T<CORBA::Object_ptr,
                                   CORBA::Object_var,
                                   CORBA::Object_out,
-                                  TAO::Any_Insert_Policy_Stream>
+                                  TAO::Any_Insert_Policy_Stream <CORBA::Object_ptr>
+                                 >
   {
   };
 }

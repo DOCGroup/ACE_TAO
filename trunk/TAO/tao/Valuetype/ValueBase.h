@@ -345,7 +345,7 @@ namespace TAO
                                  CORBA::ValueBase_var,
                                  CORBA::ValueBase_out,
                                  TAO::Value_Traits<CORBA::ValueBase>,
-                                 TAO::Any_Insert_Policy_Stream>
+                                 TAO::Any_Insert_Policy_Stream <CORBA::ValueBase *> >
   {
   };
 
