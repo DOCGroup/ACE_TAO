@@ -1,3 +1,10 @@
+Wed Jun 28 08:00:00 UTC 2006  Simon Massey  <sma@prismtech.com>
+
+        * utils/nslist/nsadd.cpp:
+        * utils/nslist/nslist.cpp:
+          Fix minor compiler warnings. Anoying cut and paste
+          ; subsitution for a , in nsadd.cpp.
+
 Wed Jun 28 06:42:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * utils/catior/catior.mpc:
