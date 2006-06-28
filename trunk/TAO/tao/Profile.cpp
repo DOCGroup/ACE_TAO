@@ -441,7 +441,7 @@ void
 TAO_Profile::get_policies (CORBA::PolicyList& pl
                            ACE_ENV_ARG_DECL)
 {
-#if (TAO_HAS_CORBA_MESSAGING == 1)
+#if (TAO_HAS_CORBA_MESSAGING == 1) && !defined (CORBA_E_MICRO)
 
   if (!this->are_policies_parsed_)
     // None has already parsed the policies.
