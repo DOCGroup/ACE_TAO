@@ -748,8 +748,14 @@ Foo::bar ()
         <code>this-&gt;</code><em>member</em>. This makes it clear to the
         reader that a class member is being used. It also makes it crystal
         clear to the compiler which variable/function you mean in cases
-        where it might make a difference.
-  </ul>
+        where it might make a difference. <p>
+
+    <li>Don't use template template arguments, this C++ construct is not
+        supported by the HP aCC 3.70 compiler at this moment. For example the
+	following template decleration is one that just doesn't work.
+        <pre>
+        template&lt;typename S_var, size_t BOUND, template &lt;typename&gt; class Insert_Policy&gt; class A {};
+        </pre>
 
   <li><strong>I/O</strong><p>
   <ul>
