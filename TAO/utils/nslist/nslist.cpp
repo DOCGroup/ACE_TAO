@@ -63,7 +63,7 @@ namespace
       int level= 1;
       for (const NestedNamingContexts *pMyNode= pBottom;
            pMyNode;
-           ++level, pMyNode= pMyNode->pMyNext)
+           ++level, pMyNode= pMyNode->pNext)
         {
           if (pMyNode->pnc->_is_equivalent (nc))
             return level; // Loops backwards this number of levels
