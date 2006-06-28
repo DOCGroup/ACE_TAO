@@ -1,3 +1,9 @@
+Wed Jun 28 07:10:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/ACE-guidelines.html:
+          Document that template template arguments are not possible to
+          be used because HP aCC 3.70 doesn't support it.
+
 Tue Jun 27 13:06:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Unbounded_Queue.cpp:
