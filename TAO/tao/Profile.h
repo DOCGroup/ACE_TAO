@@ -137,7 +137,6 @@ public:
                          ACE_ENV_ARG_DECL);
 
   /// Accessor for the client exposed policies of this profile.
-  //virtual CORBA::PolicyList&  policies (ACE_ENV_SINGLE_ARG_DECL);
   virtual void  get_policies (CORBA::PolicyList &policy_list
                               ACE_ENV_ARG_DECL);
 
