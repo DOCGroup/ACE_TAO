@@ -18,6 +18,7 @@ project(ACE_FOR_TAO) : acedefaults, core, svcconf, versioned_namespace, pkgconfi
     Auto_Event.cpp
     Barrier.cpp             // Required by orbsvcs/tests/Notify/lib
     Base_Thread_Adapter.cpp
+    Based_Pointer_Repository.cpp
     Basic_Stats.cpp         // Required by ace/Stats
     Basic_Types.cpp
     Capabilities.cpp        // Required by TAO/orbsvcs/examples/ImR/Advanced
@@ -69,6 +70,7 @@ project(ACE_FOR_TAO) : acedefaults, core, svcconf, versioned_namespace, pkgconfi
     Malloc.cpp
     Malloc_Allocator.cpp
     Manual_Event.cpp
+    Mem_Map.cpp
     Message_Block.cpp
     Message_Queue.cpp
     MMAP_Memory_Pool.cpp
@@ -273,11 +275,13 @@ project(ACE_FOR_TAO) : acedefaults, core, svcconf, versioned_namespace, pkgconfi
     TSS_T.inl
     ace_wchar.inl
     MMAP_Memory_Pool.inl
+    Mem_Map.inl
   }
 
   Header_Files {
     ACE_export.h
     Array.h
+    Based_Pointer_Repository.h
     Bound_Ptr.h
     CORBA_macros.h
     Condition_T.h
@@ -293,6 +297,7 @@ project(ACE_FOR_TAO) : acedefaults, core, svcconf, versioned_namespace, pkgconfi
     Malloc_Base.h
     MMAP_Memory_Pool.h
     Memory_Pool.h
+    Mem_Map.h
     Min_Max.h
     Null_Barrier.h
     Null_Condition.h
