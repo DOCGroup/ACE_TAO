@@ -161,7 +161,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                     ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      TAO_LB_LoadManager * lm;
+      TAO_LB_LoadManager * lm = 0;
       ACE_NEW_THROW_EX (lm,
                         TAO_LB_LoadManager,
                         CORBA::NO_MEMORY (
@@ -272,7 +272,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       TAO_LB_Signal_Handler signal_handler (orb.in (), root_poa.in ());
 
       if (signal_handler.activate () != 0)
-        return -1;
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Error: can't activate LB signal handler, exiting.\n"),
+                             -1);
+        }
 
       // @@ There is a subtle race condition here.  If the signal
       //    handler thread shuts down the ORB before it is run, the
