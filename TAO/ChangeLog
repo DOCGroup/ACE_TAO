@@ -1,3 +1,9 @@
+Wed Jun 28 06:42:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * utils/catior/catior.mpc:
+          Removed not needed libpaths and added messaging as base project
+          so that we are sure we build this exe after messaging
+
 Tue Jun 27 19:30:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/POAManager.pidl:
