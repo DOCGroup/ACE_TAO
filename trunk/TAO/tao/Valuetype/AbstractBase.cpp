@@ -285,7 +285,7 @@ CORBA::Boolean
 operator>> (TAO_InputCDR &strm, CORBA::AbstractBase_ptr &abs)
 {
   abs = 0;
-  CORBA::Boolean discriminator = 0;
+  CORBA::Boolean discriminator = false;
   ACE_InputCDR::to_boolean tb (discriminator);
   TAO_ORB_Core *orb_core = 0;
 
@@ -403,7 +403,7 @@ CORBA::AbstractBase::_tao_unmarshal_v (TAO_InputCDR &)
 CORBA::Boolean
 CORBA::AbstractBase::_tao_match_formal_type (ptrdiff_t ) const
 {
-  return 0;
+  return false;
 }
 
 CORBA::ValueBase *
