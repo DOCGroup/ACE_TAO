@@ -60,7 +60,7 @@ Builder::init (int argc, char *argv[])
         {
           arg_shifter.consume_arg ();
 
-          Periodic_Task *task;
+          Periodic_Task *task = 0;
 
           ACE_NEW_RETURN (task, Thread_Task (), -1);
 
@@ -73,7 +73,7 @@ Builder::init (int argc, char *argv[])
         {
           arg_shifter.consume_arg ();
 
-          Job_i *job;
+          Job_i *job = 0;
 
           ACE_NEW_RETURN (job, Job_i (), -1);
 

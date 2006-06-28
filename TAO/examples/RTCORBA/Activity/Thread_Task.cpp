@@ -124,7 +124,7 @@ Thread_Task::svc (void)
 
           // did we miss any deadlines?
 
-          int missed =
+          int const missed =
             elapsed_microseconds > period_ ? elapsed_microseconds/period_ : 0;
 
           long sleep_time = (missed + 1)*period_ ;
