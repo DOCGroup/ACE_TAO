@@ -1,3 +1,8 @@
+Wed Jun 28 12:45:00 UTC 2006  Simon Massey  <sma@prismtech.com>
+
+        * utils/nslist/nslist.cpp:
+          Fix overzellous VuWorks renaming of variables from last fix.
+
 Wed Jun 28 11:02:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/LoadBalancer/LoadManager.cpp:
