@@ -2,7 +2,7 @@
 <HTML>
 
 <HEAD>
-     <TITLE>TAO libraries.</TITLE>       
+     <TITLE>TAO libraries.</TITLE>
 </HEAD>
 
 <BODY text = "#000000"
@@ -99,6 +99,17 @@ and the dependencies outlined below are the same. <P>
    <td>dynamicany.mpb</td>
    </tr>
    <tr align=left>
+   <th>libTAO_EndpointPolicy.so</th>
+   <td>Support for the TAO-specific Endpoint Policy. This is used
+    to set up constraints on endpoints placed in IORs. The endpoint
+    policy is applied to a POAManager via the POAManagerFactory and
+    affects all POAs associated with that mananger. Examples of use
+    are in $TAO_ROOT/tests/POA/EndpointPolicy. Applications have to
+    <code> #include "tao/EndpointPolicy/EndpointPolicy.h" </code> to
+    get the right symbols.</td>
+   <td>endpointpolicy.mpb</td>
+   </tr>
+   <tr align=left>
    <th>libTAO_DynamicInterface.so</th>
    <td>Support for DII and DSI invocations. Applications have to
     <code> #include "tao/DynamicInterface/Dynamic_Adapter_Impl.h"
@@ -110,7 +121,7 @@ and the dependencies outlined below are the same. <P>
    <td>Support for client/stub side interfaces for
     InterfaceRepository applications. Applications have to <code>
     #include "tao/IFR_Client/IFR_Client_Adapter_Impl.h" </code> to
-    get the right symbols.</td> 
+    get the right symbols.</td>
    <td>ifr_client.mpb</td>
    </tr>
    <tr align=left>
@@ -118,7 +129,7 @@ and the dependencies outlined below are the same. <P>
    <td>Support for applications that want to register itself to
     the Implementation Repository. Applications have to <code>
     #include "tao/ImR_Client/ImR_Client.h" </code> to
-    get the right symbols.</td> 
+    get the right symbols.</td>
    <td>imr_client.mpb</td>
    </tr>
    <tr align=left>
@@ -127,7 +138,7 @@ and the dependencies outlined below are the same. <P>
     depends on the IORInterceptor library. Applications have to
     <code> #include
     "tao/IORInterceptor/IORInterceptor_Adapter_Factory_Impl.h"
-    </code> to get the right symbols.</td> 
+    </code> to get the right symbols.</td>
    <td>iorinterceptor.mpb</td>
    </tr>
    <tr align=left>
@@ -136,7 +147,7 @@ and the dependencies outlined below are the same. <P>
     provide operations to create and multi-profile IOR's and
     other related utilities. Applications have to <code> #include
     "tao/IORManipulation/IORManip_Loader.h" </code> to get the
-    right symbols.</td>  
+    right symbols.</td>
    <td>iormanip.mpb</td>
    </tr>
    <tr align=left>
@@ -149,7 +160,7 @@ and the dependencies outlined below are the same. <P>
     handles any sort of request. This feature is placed in this
     library. Applications have to <code> #include
     "tao/IORTable/IORTable.h" </code> to get the right
-    symbols.</td>   
+    symbols.</td>
    <td>iortable.mpb</td>
    </tr>
    <tr align=left>
@@ -158,24 +169,24 @@ and the dependencies outlined below are the same. <P>
     RoundtripTimeout and ConnectionTimeout are placed in this
     library. Applications have to <code> #include
     "tao/Messaging/Messaging.h" </code> to get the
-    rightsymbols.</td>    
+    rightsymbols.</td>
    <td>messaging.mpb</td>
    </tr>
    <tr align=left>
    <th>libTAO_ObjRefTemplate.so</th>
    <td>Support for Object Reference Template
     specification. The portable server library depends on this
-    library. </td>    
+    library. </td>
    <td>objreftemplate.mpb</td>
    </tr>
    <tr align=left>
    <th>libTAO_PI.so</th>
-   <td>Support for Portalbe Interceptors. This library is automagically 
+   <td>Support for Portalbe Interceptors. This library is automagically
     loaded by
     the ORB when the application uses the PolicyFactory or ORBInitializer
     . Just linking this library should be sufficient to
     get all the features that are required to write applications
-    using portable intercetpros. </td>   
+    using portable intercetpros. </td>
    <td>pi.mpb</td>
    </tr>
    <tr align=left>
@@ -184,7 +195,7 @@ and the dependencies outlined below are the same. <P>
     the ORB when the application calls resolve_intial_references
     ("RootPOA"); Just linking this library should be sufficient to
     get all the features that are required to write powerful
-    servers. </td>   
+    servers. </td>
    <td>taoserver.mpb</td>
    </tr>
    <tr align=left>
@@ -192,25 +203,25 @@ and the dependencies outlined below are the same. <P>
    <td>Support for RTCORBA client side features. Applications are
     required to <code> #include "tao/RTCORBA/RTCORBA.h" </code> to
     get the required symbols for linking. Support in this library
-    is complaint with RTCORBA 1.0 spec.</td>   
+    is complaint with RTCORBA 1.0 spec.</td>
    <td>rt_client.mpb</td>
    </tr>
    <tr align=left>
    <th>libTAO_RTPortableServer.so</th>
    <td>Support for RTCORBA server side features. Applications are
     required to <code> #include
-    "tao/RTPortableServer/RTPortableServer.h" </code> to 
+    "tao/RTPortableServer/RTPortableServer.h" </code> to
     get the required symbols for linking. Support in this library
-    is complaint with RTCORBA 1.0 spec.</td>   
+    is complaint with RTCORBA 1.0 spec.</td>
    <td>rt_server.mpb</td>
    </tr>
    <tr align=left>
    <th>libTAO_RTScheduling.so</th>
    <td>Support for RTCORBA 2.0 features. Applications are
     required to <code> #include
-    "tao/RTScheduling/RTScheulding.h" </code> to 
+    "tao/RTScheduling/RTScheulding.h" </code> to
     get the required symbols for linking. Support in this library
-    is complaint with RTCORBA 2.0 spec.</td>   
+    is complaint with RTCORBA 2.0 spec.</td>
    <td>rtscheduling.mpb</td>
    </tr>
    <tr align=left>
@@ -226,39 +237,39 @@ and the dependencies outlined below are the same. <P>
     categories include new transport protocols, additional
     reactors, connection purging strategies etc. Applications
     should <code> #include "tao/Strategies/advanced_resources.h"
-    </code>.</td> 
+    </code>.</td>
    <td>strategies.mpb</td>
    </tr>
    <tr align=left>
    <th>libTAO_TypeCodeFactory.so</th>
-   <td>Support for TypeCodeFactory interface.</td> 
+   <td>Support for TypeCodeFactory interface.</td>
    <td>typecodefactory.mpb</td>
    </tr>
    <tr align=left>
    <th>libTAO_Utils.so</th>
    <td>Helper methods for that are useful for writing portable,
-    exception safe application code.</td> 
+    exception safe application code.</td>
    <td>utils.mpb</td>
    </tr>
    <tr align=left>
    <th>libTAO_Valuetype.so</th>
    <td>Support for object by value (OBV). Portable server and messaging depends on
-    this library </td> 
+    this library </td>
    <td>valuetype.mpb</td>
    </tr>
    <tr align=left>
    <th>libTAO_CSD_Framework.so</th>
    <td>Support framework for Custom Servant Dispatching (CSD) feature. The CSD_ThreadPool
-    depends on this library</td> 
+    depends on this library</td>
    <td>csd_framework.mpb</td>
    </tr>
    <tr align=left>
    <th>libTAO_CSD_ThreadPool.so</th>
-   <td>Support for ThreadPool Custom Servant Dispatching (CSD) Strategy. This library can 
+   <td>Support for ThreadPool Custom Servant Dispatching (CSD) Strategy. This library can
     be loaded statically or dynamically. Applications are required to
     <code> #include "tao/CSD_ThreadPool/CSD_ThreadPool.h"
     </code> for static loading and provide service configuration file for dynamic loading.
-   </td> 
+   </td>
    <td>csd_threadpool.mpb</td>
    </tr>
 </tr>
@@ -269,6 +280,3 @@ and the dependencies outlined below are the same. <P>
 </body>
 
 </HTML>
-
-
-
