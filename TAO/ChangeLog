@@ -1,3 +1,16 @@
+Wed Jun 28 13:34:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/IDL_Test/typeprefix.idl:
+          New file with small example of IDL construct with typeprefix
+          that fails to compile when TAO_IDL is build with Intel C++
+          and Sun C++ at this moment. Changing the forward declared
+          interface B to a real interface makes it compiling, no idea
+          what happens and why this only fails with the mentioned
+          compilers
+
+        * tests/IDL_Test/IDL_Test.mpc:
+          Added new file
+
 Wed Jun 28 12:45:00 UTC 2006  Simon Massey  <sma@prismtech.com>
 
         * utils/nslist/nslist.cpp:
