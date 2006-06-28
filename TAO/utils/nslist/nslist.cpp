@@ -33,11 +33,11 @@ namespace
     showCtxIOR = false, // Default no displaying naming context ior
     noLoops = false;    // Default draw loopback arrows
   const char
-    *tree = "|",        // Default string to draw tree "tram-lines"
-    *node = "+";        // Default string to draw tree node end-points
+    *myTree = "|",      // Default string to draw tree "tram-lines"
+    *myNode = "+";      // Default string to draw tree node end-points
   int
-    sizeTree,           // Initialised by main to strlen (tree)
-    sizeNode,           // Initialised by main to strlen (node)
+    sizeMyTree,         // Initialised by main to strlen (myTree)
+    sizeMyNode,         // Initialised by main to strlen (myNode)
     maxDepth= 0;        // Limit to display depth (default unlimited)
 
   void list_context (const CosNaming::NamingContext_ptr,
@@ -61,11 +61,11 @@ namespace
     static int hasBeenSeen (const CosNaming::NamingContext_ptr nc)
     {
       int level= 1;
-      for (const NestedNamingContexts *pNode= pBottom;
-           pNode;
-           ++level, pNode= pNode->pNext)
+      for (const NestedNamingContexts *pMyNode= pBottom;
+           pMyNode;
+           ++level, pMyNode= pMyNode->pMyNext)
         {
-          if (pNode->pnc->_is_equivalent (nc))
+          if (pMyNode->pnc->_is_equivalent (nc))
             return level; // Loops backwards this number of levels
         }
 
@@ -147,17 +147,17 @@ namespace
     ACE_DEBUG ((LM_DEBUG, "\n"));
     int count;
     for (count= 0; count < level; ++count)
-      ACE_DEBUG ((LM_DEBUG, "%s ", tree));
+      ACE_DEBUG ((LM_DEBUG, "%s ", myTree));
     ACE_DEBUG ((LM_DEBUG, "%*s Protocol: %s\n",
-               sizeNode, "",tag_name.c_str()));
+               sizeMyNode, "",tag_name.c_str()));
 
     // Display Endpoint
     for (count= 0; count < level; ++count)
-      ACE_DEBUG ((LM_DEBUG, "%s ", tree));
+      ACE_DEBUG ((LM_DEBUG, "%s ", myTree));
     char buf[256];
     if (endpoint->addr_to_string (buf, sizeof(buf)) < 0)
       ACE_OS::strcpy( buf, "{Endpoint too long}" );
-    ACE_DEBUG ((LM_DEBUG, "%*s Endpoint: %s\n", sizeNode, "", buf));
+    ACE_DEBUG ((LM_DEBUG, "%*s Endpoint: %s\n", sizeMyNode, "", buf));
   }
 
   //==========================================================================
@@ -174,8 +174,8 @@ namespace
       {
         int count;
         for (count= 0; count < level-1; ++count)
-          ACE_DEBUG ((LM_DEBUG, "%s ", tree));
-        ACE_DEBUG ((LM_DEBUG, "%s %s", node,
+          ACE_DEBUG ((LM_DEBUG, "%s ", myTree));
+        ACE_DEBUG ((LM_DEBUG, "%s %s", myNode,
                    bl[i].binding_name[0].id.in ()));
 
         if (bl[i].binding_name[0].kind[0])
@@ -214,20 +214,20 @@ namespace
             ACE_ENDTRY;
             ACE_CHECK;
 
-            if (const int backwards= NestedNamingContexts::hasBeenSeen (xc))
+            if (const int backwards= NestedNamingContexts::hasBeenSeen (xc.in ()))
               {
                 ACE_DEBUG ((LM_DEBUG, " (Binding Loop)\n"));
                 if (!noLoops)
                   {
                     int count;
                     for (count= 0; count < (level - backwards); ++count)
-                      ACE_DEBUG ((LM_DEBUG, "%s ", tree));
+                      ACE_DEBUG ((LM_DEBUG, "%s ", myTree));
                     ACE_DEBUG ((LM_DEBUG, "^"));
                     int chars;
                     while (++count < level)
-                      for (chars= 0; chars <= sizeTree; ++chars)
+                      for (chars= 0; chars <= sizeMyTree; ++chars)
                         ACE_DEBUG ((LM_DEBUG, "-"));
-                    for (chars= 0; chars < sizeNode; ++chars)
+                    for (chars= 0; chars < sizeMyNode; ++chars)
                       ACE_DEBUG ((LM_DEBUG, "-"));
                     ACE_DEBUG ((LM_DEBUG, "^\n"));
                   }
@@ -260,7 +260,7 @@ namespace
         else
           {
             ACE_DEBUG ((LM_DEBUG, ": Object Reference"));
-            if (CORBA::is_nil (obj))
+            if (CORBA::is_nil (obj.in ()))
               ACE_DEBUG ((LM_DEBUG, " {Null}"));
 
             if (showIOR)
@@ -271,7 +271,7 @@ namespace
                 ACE_CHECK;
                 ACE_DEBUG ((LM_DEBUG, ": %s\n", str.in ()));
               }
-            else if (CORBA::is_nil (obj))
+            else if (CORBA::is_nil (obj.in ()))
               ACE_DEBUG ((LM_DEBUG, "\n"));
             else
               display_endpoint_info (obj.in(), level);
@@ -433,7 +433,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                           failed = true;
                         }
                       else
-                        tree = ACE_TEXT_ALWAYS_CHAR (*argv);
+                        myTree = ACE_TEXT_ALWAYS_CHAR (*argv);
                     }
                 }
               else if (0 == ACE_OS::strcmp (*argv, ACE_TEXT ("--node")))
@@ -455,7 +455,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                           failed = true;
                         }
                       else
-                        node = ACE_TEXT_ALWAYS_CHAR (*argv);
+                        myNode = ACE_TEXT_ALWAYS_CHAR (*argv);
                     }
                 }
               else if (0 == strcmp(*argv, ACE_TEXT ("--noloops")))
@@ -600,9 +600,9 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
           return 1;
         }
 
-      // Initialise the lengths of the tree and node draw strings.
-      sizeTree= ACE_OS::strlen (tree);
-      sizeNode= ACE_OS::strlen (node);
+      // Initialise the lengths of the myTree and myNode draw strings.
+      sizeMyTree= ACE_OS::strlen (myTree);
+      sizeMyNode= ACE_OS::strlen (myNode);
 
       // Contact the name service
       CORBA::Object_var obj;
