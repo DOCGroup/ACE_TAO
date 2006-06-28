@@ -1,7 +1,6 @@
 // $Id$
-project : namingexe, rtcorba, core {
-  libpaths += $(ACE_ROOT)/lib
-  libpaths += $(ACE_ROOT)/ace
+
+project : namingexe, rtcorba, core, messaging {
   exename   = catior
   install   = $(ACE_ROOT)/bin
 }
