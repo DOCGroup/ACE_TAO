@@ -1,3 +1,8 @@
+Wed Jun 28 10:03:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ace_for_tao.mpc:
+          Added missing file because of the sendfile addition to TAO
+
 Wed Jun 28 09:20:08 UTC 2006  Boris Kolpackov  <boris@kolpackov.net>
 
         * protocols/ace/RMCast/Link.cpp:
