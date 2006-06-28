@@ -12,6 +12,13 @@
 namespace ACE_RMCast
 {
   Link::
+  ~Link ()
+  {
+    ssock_.close ();
+    rsock_.close ();
+  }
+
+  Link::
   Link (Address const& addr, Parameters const& params)
       : params_ (params),
         addr_ (addr),

@@ -19,6 +19,8 @@ namespace ACE_RMCast
   class Link : public Element
   {
   public:
+    ~Link ();
+
     Link (Address const& addr, Parameters const& params);
 
     virtual void

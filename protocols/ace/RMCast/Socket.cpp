@@ -82,38 +82,38 @@ namespace ACE_RMCast
 
 
   Socket_Impl::
-    Socket_Impl (Address const& a, bool loop, Parameters const& params)
-    : loop_ (loop),
-    params_ (params),
-    cond_ (mutex_)
-    {
-      fragment_.reset (new Fragment (params_));
-      reassemble_.reset (new Reassemble (params_));
-      acknowledge_.reset (new Acknowledge (params_));
-      retransmit_.reset (new Retransmit (params_));
-      flow_.reset (new Flow (params_));
-      link_.reset (new Link (a, params_));
+  Socket_Impl (Address const& a, bool loop, Parameters const& params)
+      : loop_ (loop),
+        params_ (params),
+        cond_ (mutex_)
+  {
+    fragment_.reset (new Fragment (params_));
+    reassemble_.reset (new Reassemble (params_));
+    acknowledge_.reset (new Acknowledge (params_));
+    retransmit_.reset (new Retransmit (params_));
+    flow_.reset (new Flow (params_));
+    link_.reset (new Link (a, params_));
 
-      // Start IN stack from top to bottom.
-      //
-      in_start (0);
-      fragment_->in_start (this);
-      reassemble_->in_start (fragment_.get ());
-      acknowledge_->in_start (reassemble_.get ());
-      retransmit_->in_start (acknowledge_.get ());
-      flow_->in_start (retransmit_.get ());
-      link_->in_start (flow_.get ());
+    // Start IN stack from top to bottom.
+    //
+    in_start (0);
+    fragment_->in_start (this);
+    reassemble_->in_start (fragment_.get ());
+    acknowledge_->in_start (reassemble_.get ());
+    retransmit_->in_start (acknowledge_.get ());
+    flow_->in_start (retransmit_.get ());
+    link_->in_start (flow_.get ());
 
-      // Start OUT stack from bottom up.
-      //
-      link_->out_start (0);
-      flow_->out_start (link_.get ());
-      retransmit_->out_start (flow_.get ());
-      acknowledge_->out_start (retransmit_.get ());
-      reassemble_->out_start (acknowledge_.get ());
-      fragment_->out_start (reassemble_.get ());
-      out_start (fragment_.get ());
-    }
+    // Start OUT stack from bottom up.
+    //
+    link_->out_start (0);
+    flow_->out_start (link_.get ());
+    retransmit_->out_start (flow_.get ());
+    acknowledge_->out_start (retransmit_.get ());
+    reassemble_->out_start (acknowledge_.get ());
+    fragment_->out_start (reassemble_.get ());
+    out_start (fragment_.get ());
+  }
 
   Socket_Impl::
     ~Socket_Impl ()
@@ -137,6 +137,11 @@ namespace ACE_RMCast
       reassemble_->in_stop ();
       fragment_->in_stop ();
       in_stop ();
+
+      // Close signal pipe.
+      //
+      if (signal_pipe_.read_handle () != ACE_INVALID_HANDLE)
+        signal_pipe_.close ();
     }
 
 
