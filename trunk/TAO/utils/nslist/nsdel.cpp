@@ -47,7 +47,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
       int
         argc = argcon.get_argc ();
       ACE_TCHAR
-        **argv = argcon.get_TCHAR_argv (),
+        **argv = argcon.get_TCHAR_argv ();
       const char
         *const pname = ACE_TEXT_ALWAYS_CHAR (argv[0]),
         *nameService = 0;
