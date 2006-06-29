@@ -974,6 +974,8 @@ TAO_CodeGen::start_anyop_source (const char *fname)
 
   this->gen_typecode_includes (this->anyop_source_);
 
+  this->gen_any_file_includes (this->anyop_source_);
+
   // Begin versioned namespace support after initial headers have been
   // included, but before the inline file and post include
   // directives.
@@ -1859,7 +1861,10 @@ TAO_CodeGen::gen_stub_src_includes (void)
     }
 
   // Includes whatever Any template classes that may be needed.
-  this->gen_any_file_includes ();
+  if (!be_global->gen_anyop_files ())
+    {
+      this->gen_any_file_includes (this->client_stubs_);
+    }
 
   // Includes whatever arg helper template classes that may be needed.
   this->gen_stub_arg_file_includes (this->client_stubs_);
@@ -2009,19 +2014,12 @@ TAO_CodeGen::gen_seq_file_includes (void)
 }
 
 void
-TAO_CodeGen::gen_any_file_includes (void)
+TAO_CodeGen::gen_any_file_includes (TAO_OutStream * stream)
 {
   if (be_global->any_support ())
     {
-      TAO_OutStream *stream = this->client_stubs_;
-
-      if (be_global->gen_anyop_files ())
-        {
-          stream = this->anyop_source_;
-
-          this->gen_standard_include (stream,
-                                      "tao/CDR.h");
-        }
+      this->gen_standard_include (stream,
+                                  "tao/CDR.h");
 
       // Any_Impl_T.cpp needs the full CORBA::Any type.
       this->gen_cond_file_include (
