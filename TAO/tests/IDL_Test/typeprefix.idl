@@ -12,3 +12,9 @@ module A
   };
 };
 
+module A
+{
+  typeprefix A "TAO";
+  interface B{};
+};
+
