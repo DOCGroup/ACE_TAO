@@ -22,45 +22,10 @@ else
 GXX_4_OR_BETTER := 1
 endif
 
-# If no option has been specified, try to enable templates based on the
+# If no option has been specified, set templates to automatic
 # version of the compiler.
 #
-ifndef templates
-  ifeq ($(GXX_4_OR_BETTER),1)
-    templates=automatic
-  else
-    ifeq (2.95,$(findstring 2.95,$(CXX_VERSION)))
-      templates = automatic
-    else
-      ifeq (3.,$(findstring 3.,$(CXX_VERSION)))
-        templates = automatic
-      else
-        ifeq (2.96,$(findstring 2.96,$(CXX_VERSION)))
-          templates = automatic
-        else
-          ifeq (2.9-gnupro, $(findstring 2.9-gnupro, $(CXX_VERSION)))
-            templates = automatic
-          else
-            ifeq (egcs, $(findstring egcs, $(CXX_VERSION)))
-              templates = explicit
-            else
-              templates = explicit
-            endif
-          endif
-        endif
-      endif
-    endif
-  endif
-endif
-
-# Turn on the proper flags for explicit template instantiation.
-#
-ifeq ($(templates),explicit)
-  ifeq ($(TEMPLATES_FLAG),) # Turn on flags if none is speficied.
-    TEMPLATES_FLAG=-fno-implicit-templates
-  endif
-  CPPFLAGS += -DACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
-endif
+templates ?= automatic
 
 # The correct flags to pass to the linker for ELF dynamic shared library
 # versioning. None of this works on OpenBSD's ld.
