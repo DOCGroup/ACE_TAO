@@ -1,3 +1,17 @@
+Thu Jun 29 09:54:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Bounded_Array_Sequence_T.h:
+        * tao/Bounded_Sequence_CDR_T.h:
+        * tao/Unbounded_Array_Sequence_T.h:
+        * tao/Unbounded_Sequence_CDR_T.h:
+          Moved (de)marshal_sequence methods from CDR file to the Array
+          file.
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be_include/be_codegen.h:
+          Slightly reworked the way the any includes are generated. This
+          way the versioning macros are generated better in the A.cpp file.
+
 Thu Jun 29 08:53:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * rules.tao.GNU:
