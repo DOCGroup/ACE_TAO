@@ -4,6 +4,7 @@
 #define DEPLOYMENT_BASE_IDL
 
 #include <orb.idl>
+#include <tao/AnyTypeCode/AnySeq.pidl>
 #include "Deployment_Core.idl"
 
 module Deployment {
@@ -80,6 +81,32 @@ module Deployment {
     Interconnects interconnect;
     Bridges bridge;
     Properties infoProperty;
+  };
+  
+  struct ResourceAllocation 
+  {
+    string elementName;
+    string resourceName;
+    Properties property;
+  };
+  
+  typedef sequence < ResourceAllocation > ResourceAllocations;
+  
+  exception ResourceCommitmentFailure
+  {
+    string reason;
+    long index;
+    string propertyName;
+    ::CORBA::AnySeq propertyValue;
+  };
+  
+  interface ResourceCommitmentManager 
+  {   
+    void commitResources (in ResourceAllocations resources) 
+      raises (ResourceCommitmentFailure);
+    
+    void releaseResources (in ResourceAllocations resources) 
+      raises (ResourceCommitmentFailure); 
   };
 
 };

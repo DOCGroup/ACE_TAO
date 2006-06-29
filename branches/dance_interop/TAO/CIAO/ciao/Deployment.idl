@@ -14,16 +14,8 @@ module Deployment {
     string name;
     string reason;
   };
-
-  exception NoSuchName {
-  };
-
-  exception LastConfiguration {
-  };
-
-  exception InvalidReference {
-  };
-
+  
+  
   // Below exception types are CIAO specific
   exception PlanNotExist {
   };
@@ -52,9 +44,17 @@ module Deployment {
 
   typedef sequence < ComponentPlan > ComponentPlans;
 
-  typedef sequence < Application > Applications;
-
   interface Logger {
+  };
+  
+  interface ApplicationManager 
+  {
+    Application startLaunch (in Properties configProperty, out Connections 
+                             providedReference) 
+      raises (ResourceNotAvailable, StartError, InvalidProperty, 
+              InvalidNodeExecParameter, InvalidComponentExecParameter);
+    void destroyApplication (in Application app) 
+      raises (StopError);
   };
 };
 

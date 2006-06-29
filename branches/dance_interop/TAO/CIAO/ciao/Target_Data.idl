@@ -19,17 +19,17 @@ module Deployment {
     string name;
     string reason;
   };
-
-
-  interface TargetManager {
+  
+  interface TargetManager 
+  {
     Domain getAllResources ();
     Domain getAvailableResources ();
-    void commitResources (in DeploymentPlan plan)
-      raises (ResourceNotAvailable, PlanError);
-    void releaseResources (in DeploymentPlan argname);
-    void updateDomain (in ::CORBA::StringSeq elements,
-                       in Domain domainSubset,
-                       in DomainUpdateKind updateKind);
+    ResourceCommitmentManager commitResources (in ResourceAllocations 
+                                               resources) 
+      raises (ResourceCommitmentFailure);
+    void destroyResourceCommitment (in ResourceCommitmentManager manager);
+    void updateDomain (in ::CORBA::StringSeq elements, in Domain 
+                       domainSubset, in DomainUpdateKind updateKind);
   };
 };
 

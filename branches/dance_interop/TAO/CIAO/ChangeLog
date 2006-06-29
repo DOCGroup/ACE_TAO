@@ -1,3 +1,22 @@
+Thu Jun 29 14:58:54 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * CCM_Core.mpc
+        * CIAO_common.h
+        * Deployment.idl
+        * Deployment_Base.idl
+        * Deployment_Core.idl
+        * Deployment_Data.idl
+        * DomainApplication.idl
+        * DomainApplicationManager.idl
+        * ExecutionManager.idl
+        * NodeApplicationManager.idl
+        * NodeManager.idl
+        * Packaging_Data.idl
+        * RepositoryManager.idl
+        * Target_Data.idl
+        
+          Updated idl that is compliant with the spec. 
+        
 Thu Jun 22 18:32:20 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * dance_interop branch created. Beginning marked by dance_interop_tag.

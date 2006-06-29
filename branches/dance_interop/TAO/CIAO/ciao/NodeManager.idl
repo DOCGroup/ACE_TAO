@@ -7,31 +7,17 @@
 module Deployment {
 
   interface NodeApplicationManager;
-
-  interface NodeManager {
-    void joinDomain (in Domain ciao_domain,
-                     in TargetManager manager,
-                     in Logger log);
-
+  interface NodeManager 
+  {
+    void joinDomain (in Domain theDomain, in TargetManager manager, in 
+                     Logger log, in long updateInterval);
     void leaveDomain ();
-
-    NodeApplicationManager preparePlan (in DeploymentPlan plan)
+    NodeApplicationManager preparePlan (in DeploymentPlan plan, in 
+                                        ResourceCommitmentManager resourceCommitment) 
       raises (StartError, PlanError);
-
-    void destroyManager (in NodeApplicationManager appManager)
-      raises (StopError, InvalidReference);
-
-    /// CIAO specific extension
-    /// Destroy the NAM and all the associated NAs with this child_plan
-    /// We can guarantee that the input DeploymentPlan is valid, since it
-    /// is fetched from the cached DeploymentPlan of DAM, which has been
-    /// validated before.
-    void destroyPlan (in DeploymentPlan plan)
+    void destroyManager (in NodeApplicationManager appManager) 
       raises (StopError);
-
-    /// CIAO specific extension
-    /// Get all the shared components installed in this node
-    ComponentPlans get_shared_components ();
+    Resources getDynamicResources ();
   };
 };
 

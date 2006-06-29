@@ -39,8 +39,8 @@ module Deployment {
   };
 
   struct Requirement {
-    string resourceType;
     string name;
+    string resourceType;
     Properties property;
   };
 
@@ -50,8 +50,8 @@ module Deployment {
     string name;
     ::CORBA::StringSeq source;
     ::CORBA::ULongSeq artifactRef;
-    Properties execParameter;
-    Requirements deployRequirement;
+    Properties nodeExecParameter;
+    Properties componentExecParameter;
   };
 
   typedef sequence < MonolithicDeploymentDescription > MonolithicDeploymentDescriptions;
@@ -66,6 +66,8 @@ module Deployment {
 
   struct InstanceResourceDeploymentDescription {
     ResourceUsageKind resourceUsage;
+    string resourcePort;
+    string componentPort;
     string requirementName;
     string resourceName;
     Properties property;
@@ -102,6 +104,9 @@ module Deployment {
 
   struct ExternalReferenceEndpoint {
     string location;
+    boolean provider;
+    string portName;
+    ::CORBA::StringSeq supportedType;
   };
 
   typedef sequence < ExternalReferenceEndpoint > ExternalReferenceEndpoints;
@@ -163,11 +168,24 @@ module Deployment {
     string node;
     ::CORBA::StringSeq source;
     Properties execParameter;
-    Requirements deployRequirement;
     ResourceDeploymentDescriptions deployedResource;
   };
 
   typedef sequence < ArtifactDeploymentDescription > ArtifactDeploymentDescriptions;
+  
+  enum PlanLocalityKind { 
+    PlanSameProcess, 
+    PlanDifferentProcess, 
+    PlanNoConstraint 
+  };
+  
+  struct PlanLocality 
+  {
+    PlanLocalityKind constraint;
+    ::CORBA::ULongSeq constrainedInstanceRef;
+  };
+  
+  typedef sequence < PlanLocality > PlanLocalities;
 
   struct DeploymentPlan {
     string label;
@@ -176,23 +194,24 @@ module Deployment {
     MonolithicDeploymentDescriptions implementation;
     InstanceDeploymentDescriptions instance;
     PlanConnectionDescriptions connection;
-            PlanPropertyMappings externalProperty;
+    PlanPropertyMappings externalProperty;
     ImplementationDependencies dependsOn;
     ArtifactDeploymentDescriptions artifact;
     Properties infoProperty;
+    PlanLocalities localityConstraint;
   };
 
   enum DomainUpdateKind {
     Add,
     Delete,
     UpdateAll,
-    UpdateAvailable
+    UpdateDynamic
   };
 
   struct ComponentPackageReference {
     string requiredUUID;
     string requiredName;
-    string requiredType;
+    ComponentInterfaceDescription requiredType;
   };
 
   typedef sequence < ComponentPackageReference > ComponentPackageReferences;
@@ -203,8 +222,8 @@ module Deployment {
     ResourceUsageKinds resourceUsage;
     string resourcePort;
     string componentPort;
-    string resourceType;
     string name;
+    string resourceType;
     Properties property;
   };
 

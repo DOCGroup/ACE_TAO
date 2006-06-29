@@ -76,5 +76,29 @@ namespace CIAO
   CIAO_CLIENT_Export int debug_level (void);
 }
 
+#if defined (CIAO_NLOGGING)
+#define CIAO_DEBUG(X,Y) do {} while (0)
+#define CIAO_ERROR(X,Y) do {} while (0)
+#else
+#define CIAO_DEBUG(X,Y) \
+  do { \
+       if (CIAO::debug_level () >= X) \
+            ACE_DEBUG (Y); \
+  } while (0)
+#define CIAO_ERROR(X,Y) \
+  do { \
+       if (CIAO::debug_level () >= X) \
+            ACE_ERROR (Y); \
+  } while (0)
+#endif
+
+#define CIAO_PRINT_EXCEPTION(LEVEL, EXCEPTION, MESSAGE) \
+  do { \
+        if (CIAO::debug_level () >= LEVEL) \
+             ACE_ERROR((LM_ERROR, "%s - %s\n", \
+                        MESSAGE, \
+                        EXCEPTION._info.c_str ())); \
+   } while (0)
+
 #include /**/ "ace/post.h"
 #endif /* CIAO_COMMON_H */
