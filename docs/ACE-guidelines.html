@@ -77,7 +77,7 @@ bgcolor="#ffffff">
         line arguments are given in char strings in most cases,
         or <code>wchar</code> strings when <code>ACE_USES_WCHAR</code> is defined.
         See <code>$ACE_ROOT/docs/wchar.txt</code> for more information
-        on ACE support on <code>wchar</code>.
+        on ACE support on <code>wchar</code>.<p>
 
     <li>The program entry point function, in any form mentioned above, must
         always be declared with arguments, <em>e.g.</em>,
@@ -128,7 +128,7 @@ bgcolor="#ffffff">
         isn't a need for an interface, leave it out.  This eases maintenance,
         minimizes footprint, and reduces the likelihood of interference
         when other interfaces need to be added later.  (See the
-        <a href="#ACE_Time_Value example">ACE_Time_Value example</a>
+        <a href="#ACE_Time_Value example">ACE_Time_Value</a> example
         .<p>
 
      <li> Never use <CODE>assert()</CODE> macros or related constructs
@@ -1123,7 +1123,17 @@ public:
       values. <P>
 
   <li>Avoid using the C++ Standard Template Library (STL) in our
-      applications.  Some platforms do not support it yet.<p>
+      applications.  Some platforms do not support it yet. It is
+      safe to use the STL generic algoritms. The following have been
+      used already and don't seem to cause any portability issues:
+      <pre>
+	std::swap
+	std::for_each
+	std::fill
+	std::generate
+	std::transform
+	std::copy
+      </pre><p>
 
   <li>Be <em>very</em> careful with <code>ACE_ASSERT</code>.  It
       must only be used to check values; it may never be used to
@@ -1137,7 +1147,7 @@ public:
       Instead, the above should be coded this way:
 
       <pre>
-      int result = this-&gt;next (retv);
+      int const result = this-&gt;next (retv);
       ACE_ASSERT (result != 0);
       ACE_UNUSED_ARG (result);
       </pre><p>
@@ -1171,9 +1181,6 @@ public:
 
       This avoids leaving the temporary file even if the program crashes.<p>
 
-  <li>Always use <code>$(RM)</code> instead of <code>rm</code> or
-      <code>rm -f</code> in Makefiles.<p>
-
   <li>Be sure to specify the <code>THR_BOUND</code> thread creation
     flag for time-critical threads.  This ensures that the thread competes
     for resources globally on Solaris.  It is harmless on other platforms.<p>
@@ -1200,7 +1207,7 @@ public:
       <a href="..">ACE_wrappers</a> directory.<p>
     <li>Commit your change using a message of this form:<p>
 <code>
-ChangeLogTag: Thu Jul 22 09:55:10 1999  David L. Levine
+ChangeLogTag: Thu Jul 22 09:55:10 UTC 1999  David L. Levine
  &lt;levine@cs.wustl.edu&gt;
 </code><p>
     <li>If the change is in response to a request by someone else:
