@@ -103,7 +103,7 @@ RedGreen_Test::destroy_ec ()
         }
       ACE_ENDTRY;
 
-      this->ec_ = CORBA::CosNotifyChannelAdmin::EventChannel::_nil ();
+      this->ec_ = CosNotifyChannelAdmin::EventChannel::_nil ();
     }
 }
 
