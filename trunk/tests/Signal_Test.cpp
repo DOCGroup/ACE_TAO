@@ -100,8 +100,8 @@ handle_signal (int signum)
                     ACE_TEXT ("(%P|%t) killing child pid %d \n"),
                     child_pid));
 #endif
-        int result = ACE_OS::kill (child_pid,
-                                   SIGTERM);
+        int const result = ACE_OS::kill (child_pid,
+                                         SIGTERM);
         ACE_ASSERT (result != -1);
 
         return -1;
@@ -218,8 +218,8 @@ worker_child (void *arg)
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) sending SIGHUP to parent process %d\n"),
                       parent_pid));
-          int result = ACE_OS::kill (parent_pid,
-                                     SIGHUP);
+          int const result = ACE_OS::kill (parent_pid,
+                                           SIGHUP);
           if (result == -1)
             {
               ACE_ERROR ((LM_ERROR,
@@ -233,15 +233,14 @@ worker_child (void *arg)
   if (handle_signals_synchronously)
     {
       if (!shut_down)
-	{
-	  ACE_DEBUG ((LM_DEBUG,
-		      ACE_TEXT ("(%P|%t) sending SIGINT to ourselves\n")));
-	  // We need to do this to dislodge the signal handling thread if
-	  // it hasn't shut down on its own accord yet.
-	  int result = ACE_OS::kill (ACE_OS::getpid (),
-				     SIGINT);
-	  ACE_ASSERT (result != -1);
-	}
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("(%P|%t) sending SIGINT to ourselves\n")));
+          // We need to do this to dislodge the signal handling thread if
+          // it hasn't shut down on its own accord yet.
+          int const result = ACE_OS::kill (ACE_OS::getpid (), SIGINT);
+          ACE_ASSERT (result != -1);
+        }
     }
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) finished running child\n")));
@@ -339,21 +338,21 @@ run_test (ACE_THR_FUNC worker,
       ACE_DEBUG ((LM_DEBUG,
 		  ACE_TEXT ("(%P|%t) spawning worker thread\n")));
       result = ACE_Thread_Manager::instance ()->spawn
-	(worker,
-	 reinterpret_cast <void *> (handle_signals_synchronously),
-	 THR_DETACHED);
+                (worker,
+                  reinterpret_cast <void *> (handle_signals_synchronously),
+                  THR_DETACHED);
       ACE_ASSERT (result != -1);
 
       if (handle_signals_in_separate_thread)
-	{
-	  ACE_DEBUG ((LM_DEBUG,
-		      ACE_TEXT ("(%P|%t) spawning signal handler thread\n")));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("(%P|%t) spawning signal handler thread\n")));
 
-	  result = ACE_Thread_Manager::instance ()->spawn
-	    (synchronous_signal_handler,
-	     0,
-	     THR_DETACHED);
-	  ACE_ASSERT (result != -1);
+          result = ACE_Thread_Manager::instance ()->spawn
+            (synchronous_signal_handler,
+             0,
+             THR_DETACHED);
+          ACE_ASSERT (result != -1);
         }
       else
         {
