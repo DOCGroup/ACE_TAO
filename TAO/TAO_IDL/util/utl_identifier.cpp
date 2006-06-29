@@ -192,7 +192,7 @@ Identifier::case_compare_quiet (Identifier *o)
   UTL_String member (this->pv_string);
   UTL_String other (o->pv_string);
 
-  bool result = member.compare_quiet (&other);
+  bool const result = member.compare_quiet (&other);
 
   member.destroy ();
   other.destroy ();

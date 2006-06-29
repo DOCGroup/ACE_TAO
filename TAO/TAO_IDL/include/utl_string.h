@@ -101,7 +101,7 @@ public:
   bool compare (UTL_String *s);
   // Compare two UTL_String *
 
-  long compare_quiet (UTL_String *s);
+  bool compare_quiet (UTL_String *s);
   // Like the above but without error or warning message output.
 
   virtual void destroy (void);
