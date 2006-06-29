@@ -49,6 +49,7 @@ versioned_so ?= 1
 tk_reactor ?= 0
 ace_with_x11 ?= 0
 no_hidden_visibility ?= 1
+templates ?= automatic
 
 PLATFORM_TK_CPPFLAGS=
 PLATFORM_TK_LIBS=-ltk -ltcl
@@ -192,24 +193,6 @@ else  # ! 4.2
   endif # CC 5.0 or later
 endif # ! 4.2
 
-# If no option has been specified, try to enable templates based on the
-# version of the compiler.
-ifeq ($(templates),)
-  ifeq (Compilers 4.2,$(findstring Compilers 4.2,$(CC_VERSION)))
-    templates = explicit
-  else
-    templates = automatic
-  endif
-endif
-
-# Turn on the proper flags for explicit template instantiation.
-#
-ifeq ($(templates),explicit)
-  ifeq ($(TEMPLATES_FLAG),) # Turn on flags if none is speficied.
-    TEMPLATES_FLAG=-instances=explicit
-  endif
-  CPPFLAGS += -DACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
-endif
 
 CCFLAGS         += $(TEMPLATES_FLAG)
 
