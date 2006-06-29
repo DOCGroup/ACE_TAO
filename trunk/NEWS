@@ -4,6 +4,12 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 USER VISIBLE CHANGES BETWEEN ACE-5.5.1 and ACE-5.5.2
 ====================================================
 
+. To support dynamically-sized ACE_Log_Record messages, the netsvcs
+  logging components now use ACE CDR encoding and transfer mechanisms
+  inspired by the examples in Chapter 4 of the C++NPv1 book.
+  The client and server logging daemons in ACE 5.5.2 and forward will
+  not interoperate with those in previous ACE versions.
+
 . Explicit template instantiations support has been removed
 
 . Visual C++ 6.0 and 7.0 support has been removed
