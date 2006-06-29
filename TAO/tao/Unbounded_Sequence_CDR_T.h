@@ -25,7 +25,7 @@ namespace TAO {
       return false;
     }
     if (new_length > strm.length()) {
-        return false;
+      return false;
     }
     sequence tmp(new_length);
     tmp.length(new_length);
@@ -45,7 +45,7 @@ namespace TAO {
       return false;
     }
     if (new_length > strm.length()) {
-        return false;
+      return false;
     }
     sequence tmp(new_length);
     tmp.length(new_length);
@@ -65,7 +65,7 @@ namespace TAO {
       return false;
     }
     if (new_length > strm.length()) {
-        return false;
+      return false;
     }
     sequence tmp(new_length);
     tmp.length(new_length);
@@ -85,7 +85,7 @@ namespace TAO {
       return false;
     }
     if (new_length > strm.length()) {
-        return false;
+      return false;
     }
     sequence tmp(new_length);
     tmp.length(new_length);
@@ -106,7 +106,7 @@ namespace TAO {
       return false;
     }
     if (new_length > strm.length()) {
-        return false;
+      return false;
     }
     sequence tmp(new_length);
     tmp.length(new_length);
@@ -139,7 +139,7 @@ namespace TAO {
       return false;
     }
     if (new_length > strm.length()) {
-        return false;
+      return false;
     }
     sequence tmp(new_length);
     tmp.length(new_length);
@@ -160,7 +160,7 @@ namespace TAO {
       return false;
     }
     if (new_length > strm.length()) {
-        return false;
+      return false;
     }
     sequence tmp(new_length);
     tmp.length(new_length);
@@ -181,7 +181,7 @@ namespace TAO {
       return false;
     }
     if (new_length > strm.length()) {
-        return false;
+      return false;
     }
     sequence tmp(new_length);
     tmp.length(new_length);
@@ -202,7 +202,7 @@ namespace TAO {
       return false;
     }
     if (new_length > strm.length()) {
-        return false;
+      return false;
     }
     sequence tmp(new_length);
     tmp.length(new_length);
@@ -222,7 +222,7 @@ namespace TAO {
       return false;
     }
     if (new_length > strm.length()) {
-        return false;
+      return false;
     }
     sequence tmp(new_length);
     tmp.length(new_length);
@@ -242,7 +242,7 @@ namespace TAO {
       return false;
     }
     if (new_length > strm.length()) {
-        return false;
+      return false;
     }
     sequence tmp(new_length);
     tmp.length(new_length);
@@ -262,7 +262,7 @@ namespace TAO {
       return false;
     }
     if (new_length > strm.length()) {
-        return false;
+      return false;
     }
     sequence tmp(new_length);
     tmp.length(new_length);
@@ -282,7 +282,7 @@ namespace TAO {
       return false;
     }
     if (new_length > strm.length()) {
-        return false;
+      return false;
     }
     sequence tmp(new_length);
     tmp.length(new_length);
@@ -302,7 +302,7 @@ namespace TAO {
       return false;
     }
     if (new_length > strm.length()) {
-        return false;
+      return false;
     }
     sequence tmp(new_length);
     tmp.length(new_length);
@@ -325,7 +325,7 @@ namespace TAO {
       return false;
     }
     if (new_length > strm.length()) {
-        return false;
+      return false;
     }
     sequence tmp(new_length);
     tmp.length(new_length);
@@ -350,7 +350,7 @@ namespace TAO {
       return false;
     }
     if (new_length > strm.length()) {
-        return false;
+      return false;
     }
     sequence tmp(new_length);
     tmp.length(new_length);
@@ -375,7 +375,7 @@ namespace TAO {
       return false;
     }
     if (new_length > strm.length()) {
-        return false;
+      return false;
     }
     sequence tmp(new_length);
     tmp.length(new_length);
