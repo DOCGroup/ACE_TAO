@@ -20,6 +20,8 @@ main (int argc, char *argv [])
 
       client.run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
+
+      client.destroy_ec ();
     }
   ACE_CATCH (CORBA::Exception, se)
     {
