@@ -1,3 +1,8 @@
+Thu Jun 29 08:53:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * rules.tao.GNU:
+          Removed check for templates=explicit
+
 Thu Jun 29 01:45:29 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * tao/Makefile.am:
