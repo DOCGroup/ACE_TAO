@@ -247,7 +247,7 @@ ACE_Unbounded_Stack<T>::push (const T &new_item)
 {
   //  ACE_TRACE ("ACE_Unbounded_Stack<T>::push");
 
-  ACE_Node<T> *temp;
+  ACE_Node<T> *temp = 0;
 
   ACE_NEW_MALLOC_RETURN (temp,
                          static_cast<ACE_Node<T> *> (this->allocator_->malloc (sizeof (ACE_Node<T>))),
