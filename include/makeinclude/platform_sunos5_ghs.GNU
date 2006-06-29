@@ -2,24 +2,10 @@
 
 # SunOS 5.x (Solaris 2.x) with GreenHills compiler.
 
-debug = 1
-exceptions = 0
-optimize = 1
-threads = 1
-
-# I(kitty) don't know anything about this compiler. Making it explicit.
-#
-templates = explicit
-
-# Turn on the proper flags for explicit template instantiation.
-#
-ifeq ($(templates),explicit)
-  ifeq ($(TEMPLATES_FLAG),) # Turn on flags if none is speficied.
-    TEMPLATES_FLAG=-tnone
-  endif
-  CPPFLAGS += -DACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
-  LDFLAGS  += --no_auto_instantiation
-endif
+debug ?= 1
+exceptions ?= 0
+optimize ?= 1
+threads ?= 1
 
 CC       = gcx
 CXX      = $(CC)

@@ -59,38 +59,23 @@ ifneq ($(CXX_VER),CXX_5)
   endif
 endif # 6.0 or later
 
-# Check for enabling automatic template instantiation
-#
-ifeq (6.,$(findstring 6.,$(CXX_VERSION)))
-    templates = automatic
-else
-    templates = explicit
-endif # 6.x
+templates ?= automatic
 
 # Turn on the appropriate flags
 #
-ifeq ($(templates),explicit)
+ifeq ($(templates), automatic)
   ifeq ($(TEMPLATES_FLAG),) # Turn on flags if none is speficied.
-    TEMPLATES_FLAG = -nopt
-    # Needed to ensure explicit template instantiation of inline functions
-    inline = 0
+    TEMPLATES_FLAG = -pt
+    SOFLAGS        += -tall
   endif
-  CPPFLAGS += -DACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
 else
-  ifeq ($(templates), automatic)
+  ifeq ($(templates), used)
     ifeq ($(TEMPLATES_FLAG),) # Turn on flags if none is speficied.
       TEMPLATES_FLAG = -pt
-      SOFLAGS        += -tall
+      SOFLAGS        += -tused
     endif
-  else
-    ifeq ($(templates), used)
-      ifeq ($(TEMPLATES_FLAG),) # Turn on flags if none is speficied.
-        TEMPLATES_FLAG = -pt
-        SOFLAGS        += -tused
-      endif
-    endif # templates == used
-  endif # templates == automatic
-endif # templates == explicit
+  endif # templates == used
+endif # templates == automatic
 
 # Add the extra definitions needed to use the Standard Template Library
 #

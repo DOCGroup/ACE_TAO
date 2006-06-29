@@ -1,4 +1,4 @@
-# -*- Makefile -*-
+        # -*- Makefile -*-
 
 #----------------------------------------------------------------------------
 #  $Id$
@@ -30,9 +30,7 @@
 #                   default, others do not. If platform_macros.GNU does not
 #                   set this, inline is enabled.
 #  templates	    Type of template instantiation to perform. Can be one of
-# 		    automatic, used, explicit. Defaults to automatic if the
-#                   platform/compiler combination supports it, otherwise is
-#                   set to explicit.
+#                   automatic, used. Defaults to automatic.
 #  optimize         Enable optimization; see OCFLAGS and OCCFLAGS.
 #  probe            Enable ACE_Timeprobes.
 #  profile          Enable profiling; see PCFLAGS and PCCFLAGS.
