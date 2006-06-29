@@ -1,3 +1,9 @@
+Thu Jun 29 08:34:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/ACE-guidelines.html:
+          Document that the STL generic algorithms are safe to be used and
+          made some other small updates
+
 Wed Jun 28 10:03:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/ace_for_tao.mpc:
