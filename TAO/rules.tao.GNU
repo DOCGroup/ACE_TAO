@@ -31,15 +31,10 @@ ifeq (,$(findstring -I$(TAO_ROOT),$(INCLDIRS)))
   INCLDIRS += -I$(TAO_ROOT)
 endif
 
-ifeq ($(templates),explicit)
-  default:
-	echo "ERROR: Explicit templates are not possible to be used with TAO"
-endif # templates
 ifeq ($(exceptions),0)
   default:
 	echo "ERROR: Emulated exceptions are not safe to use anymore, see the NEWS file"
 endif # exceptions
-
 
 ifdef COMSPEC
   #### Assume we're on a WIN32 host.
