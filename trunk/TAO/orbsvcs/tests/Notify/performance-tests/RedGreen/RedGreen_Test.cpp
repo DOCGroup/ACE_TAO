@@ -94,7 +94,7 @@ RedGreen_Test::destroy_ec ()
           ACE_DEBUG ((LM_INFO,
                       "INFO: Got a COMM_FAILURE exception while trying to \n"
                       "      invoke `destroy()' on the Event Channel in the \n"
-                      "      RedGreen destructor.  This is likely not a problem.\n"));
+                      "      RedGreen destroy_ec. This is likely not a problem.\n"));
         }
       ACE_CATCHANY
         {
