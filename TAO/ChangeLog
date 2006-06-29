@@ -1,3 +1,9 @@
+Thu Jun 29 14:26:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Notify/performance-tests/RedGreen/RedGreen_Test.{h,cpp}:
+        * orbsvcs/tests/Notify/performance-tests/RedGreen/main.cpp:
+          Moved destroy_ec out of the destructor to a seperate method
+
 Thu Jun 29 10:35:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/include/utl_string.h:
