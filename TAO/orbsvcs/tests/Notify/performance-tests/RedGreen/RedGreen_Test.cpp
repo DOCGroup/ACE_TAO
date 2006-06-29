@@ -73,7 +73,8 @@ RedGreen_Test::RedGreen_Test (void)
   ifgop_ = CosNotifyChannelAdmin::OR_OP;
 }
 
-RedGreen_Test::~RedGreen_Test ()
+void
+RedGreen_Test::destroy_ec ()
 {
   if (!CORBA::is_nil (ec_.in ()))
     {
@@ -101,8 +102,11 @@ RedGreen_Test::~RedGreen_Test ()
                               "in RedGreen destructor; swallowing.\n");
         }
       ACE_ENDTRY;
+
+      this->ec_ = CORBA::CosNotifyChannelAdmin::EventChannel::_nil ();
     }
 }
+
 
 void
 RedGreen_Test::init (int argc,
@@ -154,8 +158,6 @@ RedGreen_Test::run (ACE_ENV_SINGLE_ARG_DECL)
   }
   ACE_ENDTRY;
   ACE_CHECK;
-
-
 
   worker_.thr_mgr ()->wait ();
 }
@@ -280,7 +282,7 @@ RedGreen_Test::create_supplieradmin (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-RedGreen_Test:: create_consumeradmin (ACE_ENV_SINGLE_ARG_DECL)
+RedGreen_Test::create_consumeradmin (ACE_ENV_SINGLE_ARG_DECL)
 {
   CosNotifyChannelAdmin::AdminID adminid;
 

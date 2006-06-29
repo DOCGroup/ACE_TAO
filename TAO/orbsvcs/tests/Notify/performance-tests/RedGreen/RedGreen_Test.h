@@ -66,9 +66,8 @@ class RedGreen_Test
   //   Shows how consumers RedGreen_Test for events.
 
  public:
-  // = Initialization and Termination.
+  // = Initialization
   RedGreen_Test (void);
-  ~RedGreen_Test (void);
 
   int parse_args (int argc,
                   char *argv[]);
@@ -85,6 +84,9 @@ class RedGreen_Test
 
   void done (void);
   // Called when all events we are waiting for have occured.
+
+  void destroy_ec (void);
+  // Destroy from the EC
 
   int burst_size_;
   Worker worker_;
