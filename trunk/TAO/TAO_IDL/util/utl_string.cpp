@@ -159,7 +159,7 @@ UTL_String::canonicalize (void)
 bool
 UTL_String::compare (UTL_String *s)
 {
-  char *s_c_str;
+  char *s_c_str = 0;
   bool result;
 
   if (this->c_str == 0
@@ -202,7 +202,7 @@ UTL_String::compare (UTL_String *s)
 long
 UTL_String::compare_quiet (UTL_String *s)
 {
-  char  *s_c_str;
+  char  *s_c_str = 0;
   long  result;
 
   if (this->c_str == 0
