@@ -1,3 +1,8 @@
+Fri Jun 30 13:14:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Profile.cpp (is_equivalent):
+          Use true/false for bool
+
 Fri Jun 30 10:36:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_module/module_ch.cpp:
