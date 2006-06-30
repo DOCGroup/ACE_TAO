@@ -1,3 +1,8 @@
+Fri Jun 30 10:36:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_module/module_ch.cpp:
+          Removed some versioning macro calls
+
 Thu Jun 29 14:26:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Notify/performance-tests/RedGreen/RedGreen_Test.{h,cpp}:
