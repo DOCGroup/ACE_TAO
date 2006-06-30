@@ -1,3 +1,8 @@
+Fri Jun 30 09:33:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/generate_rel_manpages:
+          Updated doxygen version we are using for the release
+
 Fri Jun 30 07:29:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/taoexe.mpb:
