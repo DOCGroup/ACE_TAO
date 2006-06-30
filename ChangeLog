@@ -1,3 +1,10 @@
+Fri Jun 30 07:29:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/taoexe.mpb:
+          Added corba/e and core_minimum_corba as base projects so that
+          the executables that can be build with CORBA/e and minimum
+          corba do have set the correct flags during compilation
+
 Thu Jun 29 17:30:52 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * NEWS: Added a note about the logging changes from
