@@ -703,7 +703,7 @@ TAO_Profile::parse_string (const char *ior
 CORBA::Boolean
 TAO_Profile::is_equivalent (const TAO_Profile *other)
 {
-  CORBA::Boolean result = 0;
+  CORBA::Boolean result = false;
   if (other)
     {
       TAO_Service_Callbacks::Profile_Equivalence callback
@@ -717,7 +717,7 @@ TAO_Profile::is_equivalent (const TAO_Profile *other)
                 && this->object_key () == other->object_key ()
                 && this->do_is_equivalent (other);
           case TAO_Service_Callbacks::EQUIVALENT:
-            result = 1;
+            result = true;
             break;
           case TAO_Service_Callbacks::NOT_EQUIVALENT:
             break;
