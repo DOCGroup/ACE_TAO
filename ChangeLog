@@ -1,3 +1,8 @@
+Fri Jun 30 13:40:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/msvc_static_order.lst:
+          Added CSD_Framework and CSD_ThreadPool
+
 Fri Jun 30 09:33:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/generate_rel_manpages:
