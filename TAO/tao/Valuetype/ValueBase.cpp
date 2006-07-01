@@ -465,7 +465,7 @@ CORBA::Boolean
 CORBA::ValueBase::write_value_header(TAO_OutputCDR &strm,
                                      ptrdiff_t formal_type_id) const
 {
-#if defined (TAO_HAS_OPTIMIMIZED_VALUETYPE_MARSHALING)
+#if defined (TAO_HAS_OPTIMIZED_VALUETYPE_MARSHALING)
   // this case allows TAO to avoid marshaling the typeID for values
   // where the actual type matches the formal type (ie not a derived
   // type).
@@ -485,7 +485,7 @@ CORBA::ValueBase::write_value_header(TAO_OutputCDR &strm,
   CORBA::Boolean is_formal_type =
     false;
   ACE_UNUSED_ARG (formal_type_id);
-#endif /* TAO_HAS_OPTIMIMIZED_VALUETYPE_MARSHALING */
+#endif /* TAO_HAS_OPTIMIZED_VALUETYPE_MARSHALING */
 
   // Get the list of repository ids for this valuetype.
   Repository_Id_List repository_ids;
