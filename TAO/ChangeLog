@@ -1,3 +1,24 @@
+Sat Jul  1 15:32:43 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/AnyTypeCode/skip.cpp:
+        * tao/Valuetype/Valuetype_Adapter_Impl.h:
+        * tao/Valuetype/Valuetype_Adapter_Impl.cpp:
+        * tao/Valuetype_Adapter.h:
+
+          Added an exclusion for Valuetypes marshaled with implied types.
+          Implicitly typed values are those for which the actual valuetype
+          matches the formal valuetype. For values inserted into an Any
+          this is always true as the Any separately marshals the typecode
+          making it redundant to do this again by the value itself.
+
+          TAO only marshals values this way when compiled to use optimized
+          valuetype marshaling which is not the default case since it
+          breaks backwards compatibility.
+
+        * tao/TAO_Server_Request.h:
+
+          Fixed a typo in a comment.
+
 Sat Jul  1 12:16:20 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/Valuetype/ValueBase.cpp:

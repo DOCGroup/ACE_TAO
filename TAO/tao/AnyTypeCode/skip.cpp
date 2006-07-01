@@ -986,10 +986,15 @@ TAO_Marshal_Value::skip (CORBA::TypeCode_ptr  tc,
         }
       else if (value_tag & adapter->type_info_single ())
         {
+          // @@@ this isn't really correct, the test will return true
+          // if the value_tag ends with 02 for a single value or 06
+          // for a value list. In the latter case, we need to skip an
+          // array of strings.
+
           // Skip a single repository id which is of type string.
           stream->skip_string ();
         }
-      else
+      else if (value_tag != adapter->type_info_implied ())
         {
           //@@ boris: VT CDR
           return TAO::TRAVERSE_STOP;
