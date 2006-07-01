@@ -67,7 +67,8 @@ public:
       CORBA::AbstractBase_ptr &
     ) = 0;
 
-  virtual CORBA::ULong type_info_single (void) const = 0;
+  virtual CORBA::Long type_info_single (void) const = 0;
+  virtual CORBA::Long type_info_implied (void) const = 0;
 
   virtual int vf_map_rebind (const char *,
                              CORBA::ValueFactory &) = 0;
