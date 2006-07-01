@@ -42,10 +42,18 @@ TAO_Valuetype_Adapter_Impl::stream_to_abstract_base (
   return cdr >> obj;
 }
 
-CORBA::ULong
+CORBA::Long
 TAO_Valuetype_Adapter_Impl::type_info_single (void) const
 {
   return TAO_OBV_GIOP_Flags::Type_info_single;
+}
+
+CORBA::Long
+TAO_Valuetype_Adapter_Impl::type_info_implied (void) const
+{
+  return
+    TAO_OBV_GIOP_Flags::Value_tag_base |
+    TAO_OBV_GIOP_Flags::Type_info_none;
 }
 
 int
@@ -72,4 +80,3 @@ TAO_Valuetype_Adapter_Impl::vf_map_find (const char *repo_id)
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
