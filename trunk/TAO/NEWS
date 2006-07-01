@@ -61,6 +61,15 @@ USER VISIBLE CHANGES BETWEEN TAO-1.5.1 and TAO-1.5.2
   IDL compiler. If you need these for your project, add -GT to the
   idl compiler flags.
 
+. Added optional support for implicitly typed values. When the Valuetype
+  library is compiled with TAO_HAS_OPTIMIZED_VALUETYPE_MARSHALING defined
+  TAO will skip the marshaling of the value's type when it is allowed to
+  do so. It is allowed by the spec to do so when the value's actual type
+  matches the formal type for the parameter through which the value is
+  passed. As older versions of TAO did not correctly unmarshal implicitly
+  typed values, the default behavior is for TAO to always marshal the
+  type id for values.
+
 . Added support for CORBA specified truncatable valuetypes.
 
 . Added support for CORBA specified POAManagerFactory.
