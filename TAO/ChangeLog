@@ -1,3 +1,8 @@
+Sat Jul  1 19:16:11 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * NEWS:
+          Documented the TAO_HAS_OPTIMIZED_VALUETYPE_MARSHALING switch.
+
 Sat Jul  1 15:32:43 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/AnyTypeCode/skip.cpp:
