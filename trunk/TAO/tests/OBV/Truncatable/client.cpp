@@ -483,7 +483,6 @@ main (int argc, char *argv[])
                       ACE_TEXT ("passed") : ACE_TEXT ("failed")));
       }
 
-#if defined (TAO_TEST_BUG_2576)
       {
         OBV_OBV_TruncatableTest::Extra1 v1;
         v1.basic_data (9);
@@ -513,7 +512,6 @@ main (int argc, char *argv[])
                       (pretest == fail) ?
                       ACE_TEXT ("passed") : ACE_TEXT ("failed")));
       }
-#endif /* TAO_TEST_BUG_2576 */
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - shutdown orb \n"));
 
