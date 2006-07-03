@@ -290,7 +290,7 @@ AST_Decl::set_prefix_with_typeprefix_r (const char *value,
     {
       AST_Decl *decl = ScopeAsDecl (this->prefix_scope_);
 
-      bool overridden =
+      bool const overridden =
         decl->has_ancestor (ScopeAsDecl (appeared_in));
 
       if (overridden)
@@ -1368,7 +1368,7 @@ AST_Decl::last_referenced_as (UTL_ScopedName *n)
     {
       this->last_referenced_as_->destroy ();
     }
-    
+
   delete this->last_referenced_as_;
   this->last_referenced_as_ = n;
 }

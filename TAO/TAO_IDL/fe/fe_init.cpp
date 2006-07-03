@@ -637,7 +637,7 @@ FE_init (void)
 void
 FE_populate (void)
 {
-  AST_Root *r;
+  AST_Root *r = 0;
 
   // Check that the BE init created a generator object
   if (idl_global->gen () == 0)

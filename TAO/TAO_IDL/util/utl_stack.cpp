@@ -95,7 +95,7 @@ UTL_ScopeStack::~UTL_ScopeStack (void)
 UTL_ScopeStack *
 UTL_ScopeStack::push (UTL_Scope *el)
 {
-  UTL_Scope  **tmp;
+  UTL_Scope  **tmp = 0;
   long ostack_data_nalloced;
   long i;
 
