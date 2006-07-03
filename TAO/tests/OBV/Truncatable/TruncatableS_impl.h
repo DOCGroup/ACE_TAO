@@ -78,6 +78,15 @@ public:
       ::CORBA::SystemException
     ));
 
+  virtual void op5 (const CORBA::Any& val,
+                    const char * id,
+                    ::OBV_TruncatableTest::TValue1_out ov,
+                    char *& desc
+                    ACE_ENV_ARG_DECL )
+    ACE_THROW_SPEC ((
+      ::CORBA::SystemException
+    ));
+
   virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 

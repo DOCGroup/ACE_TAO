@@ -984,21 +984,47 @@ TAO_Marshal_Value::skip (CORBA::TypeCode_ptr  tc,
           // We are done.
           return retval;
         }
-      else if (value_tag & adapter->type_info_single ())
+      else if (adapter->is_type_info_single(value_tag))
         {
-          // @@@ this isn't really correct, the test will return true
-          // if the value_tag ends with 02 for a single value or 06
-          // for a value list. In the latter case, we need to skip an
-          // array of strings.
-
           // Skip a single repository id which is of type string.
           stream->skip_string ();
         }
-      else if (value_tag != adapter->type_info_implied ())
+      else if (adapter->is_type_info_list(value_tag))
+        {
+          CORBA::Long num_types;
+          if (!stream->read_long (num_types))
+            {
+              return TAO::TRAVERSE_STOP;
+            }
+          while (num_types > 0)
+            {
+              stream->skip_string();
+              num_types--;
+            }
+        }
+      else if (!adapter->is_type_info_implied (value_tag))
         {
           //@@ boris: VT CDR
           return TAO::TRAVERSE_STOP;
         }
+
+      if (adapter->is_value_chunked (value_tag))
+        {
+          CORBA::Long chunk_tag = 0;
+          while (chunk_tag != -1)
+            {
+              if (!stream->read_long (chunk_tag))
+                return TAO::TRAVERSE_STOP;
+
+              if (chunk_tag > 0)
+                {
+                  if (!stream->skip_bytes(chunk_tag))
+                    return TAO::TRAVERSE_STOP;
+                }
+            }
+          return TAO::TRAVERSE_CONTINUE;
+        }
+
     }
 
   // Handle our base valuetype if any.

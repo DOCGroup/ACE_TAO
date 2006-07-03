@@ -1,6 +1,7 @@
 // $Id$
 
 #include "TruncatableC.h"
+#include "ExtraC.h"
 #include "ace/Get_Opt.h"
 
 ACE_RCSID(Truncatable, client, "$Id$")
@@ -17,7 +18,7 @@ int verbose = 0;
     { \
         fail++; \
         if (!verbose) \
-          ACE_DEBUG ((LM_DEBUG, ACE_TEXT("(%P|%t) - Failure at line %l\n"))); \
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT("(%P|%t) client - Failure at line %l\n"))); \
     } \
 }
 
@@ -422,6 +423,97 @@ main (int argc, char *argv[])
                       (pretest == fail) ?
                       ACE_TEXT ("passed") : ACE_TEXT ("failed")));
       }
+
+      {
+        OBV_OBV_TruncatableTest::Extra1 v1;
+        v1.basic_data (9);
+        v1.data1 (99);
+        v1.edata1 (1234);
+
+        OBV_TruncatableTest::TValue1_var ov1;
+
+        desc = CORBA::string_dup ("A<-tB, truncate unknown B to A");
+        if (verbose)
+          ACE_DEBUG ((LM_DEBUG,ACE_TEXT("Case 9: %s: "),
+                      ACE_TEXT_CHAR_TO_TCHAR(desc.in())));
+        pretest = fail;
+
+        test->op2 (&v1, "case9", ov1.out (), desc.inout ()
+                   ACE_ENV_ARG_PARAMETER);
+
+        ACE_TRY_CHECK;
+
+        VERIFY (! ACE_OS::strcmp (desc.in (),
+                                  "case9: A<-tB, truncate unknown B to A"));
+        VERIFY (v1.basic_data () == ov1->basic_data ()
+                && v1.data1() == ov1->data1());
+        if (verbose)
+          ACE_DEBUG ((LM_DEBUG,ACE_TEXT ("%s\n"),
+                      (pretest == fail) ?
+                      ACE_TEXT ("passed") : ACE_TEXT ("failed")));
+      }
+
+
+      {
+        OBV_OBV_TruncatableTest::TValue1 v1;
+        v1.basic_data (9);
+        v1.data1 (99);
+
+        OBV_TruncatableTest::TValue1_var ov1;
+        CORBA::Any a;
+        a <<= &v1;
+        desc = CORBA::string_dup ("A<-tB, known truncatable via Any");
+        if (verbose)
+          ACE_DEBUG ((LM_DEBUG,ACE_TEXT("Case 10: %s: "),
+                      ACE_TEXT_CHAR_TO_TCHAR(desc.in())));
+        pretest = fail;
+
+        test->op5 (a, "case10", ov1.out (), desc.inout ()
+                   ACE_ENV_ARG_PARAMETER);
+
+        ACE_TRY_CHECK;
+
+        VERIFY (! ACE_OS::strcmp (desc.in (),
+                                  "case10: A<-tB, known truncatable via Any"));
+        VERIFY (v1.basic_data () == ov1->basic_data ()
+                && v1.data1() == ov1->data1());
+        if (verbose)
+          ACE_DEBUG ((LM_DEBUG,ACE_TEXT ("%s\n"),
+                      (pretest == fail) ?
+                      ACE_TEXT ("passed") : ACE_TEXT ("failed")));
+      }
+
+#if defined (TAO_TEST_BUG_2576)
+      {
+        OBV_OBV_TruncatableTest::Extra1 v1;
+        v1.basic_data (9);
+        v1.data1 (99);
+        v1.edata1 (1234);
+
+        OBV_TruncatableTest::TValue1_var ov1;
+        CORBA::Any a;
+        a <<= &v1;
+        desc = CORBA::string_dup ("A<-tB, unknown truncatable via Any");
+        if (verbose)
+          ACE_DEBUG ((LM_DEBUG,ACE_TEXT("Case 11: %s: "),
+                      ACE_TEXT_CHAR_TO_TCHAR(desc.in())));
+        pretest = fail;
+
+        test->op5 (a, "case11", ov1.out (), desc.inout ()
+                   ACE_ENV_ARG_PARAMETER);
+
+        ACE_TRY_CHECK;
+
+        VERIFY (! ACE_OS::strcmp (desc.in (),
+                                  "case11: A<-tB, unknown truncatable via Any"));
+        VERIFY (v1.basic_data () == ov1->basic_data ()
+                && v1.data1() == ov1->data1());
+        if (verbose)
+          ACE_DEBUG ((LM_DEBUG,ACE_TEXT ("%s\n"),
+                      (pretest == fail) ?
+                      ACE_TEXT ("passed") : ACE_TEXT ("failed")));
+      }
+#endif /* TAO_TEST_BUG_2576 */
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - shutdown orb \n"));
 

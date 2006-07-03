@@ -48,12 +48,29 @@ TAO_Valuetype_Adapter_Impl::type_info_single (void) const
   return TAO_OBV_GIOP_Flags::Type_info_single;
 }
 
-CORBA::Long
-TAO_Valuetype_Adapter_Impl::type_info_implied (void) const
+CORBA::Boolean
+TAO_Valuetype_Adapter_Impl::is_type_info_implied (CORBA::Long vt) const
 {
-  return
-    TAO_OBV_GIOP_Flags::Value_tag_base |
-    TAO_OBV_GIOP_Flags::Type_info_none;
+  return vt == TAO_OBV_GIOP_Flags::Value_tag_base;
+}
+
+CORBA::Boolean
+TAO_Valuetype_Adapter_Impl::is_type_info_single (CORBA::Long vt) const
+{
+  return ((vt | TAO_OBV_GIOP_Flags::Type_info_single) == vt) &&
+         ((vt | TAO_OBV_GIOP_Flags::Type_info_list) != vt);
+}
+
+CORBA::Boolean
+TAO_Valuetype_Adapter_Impl::is_type_info_list (CORBA::Long vt) const
+{
+  return (vt | TAO_OBV_GIOP_Flags::Type_info_list) == vt;
+}
+
+CORBA::Boolean
+TAO_Valuetype_Adapter_Impl::is_value_chunked (CORBA::Long vt) const
+{
+  return (vt | TAO_OBV_GIOP_Flags::Chunking_tag_sigbits) == vt;
 }
 
 int
