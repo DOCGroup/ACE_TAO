@@ -11,11 +11,9 @@ typedef DateTime_T WhenLastUpdated_T;
 
 valuetype Data_T
 {
-#if BUG
+  // Typedef valuetype member was blocking generation of
+  // SArg specialization for the struct.
   public WhenLastUpdated_T whenLastUpdated;
-#else
-  public DateTime_T whenLastUpdated;
-#endif
 };
 
 interface User_T {

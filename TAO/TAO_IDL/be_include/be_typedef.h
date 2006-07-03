@@ -41,8 +41,9 @@ public:
   // Constructor.
 
   virtual void seen_in_sequence (bool val);
+  virtual bool seen_in_operation (void) const;
   virtual void seen_in_operation (bool val);
-  // Mutator overrides for be_type members. If we have been
+  // Overrides for be_type members. If we have been
   // defined, we want the underlying type to be set as well.
 
   be_type *primitive_base_type (void);

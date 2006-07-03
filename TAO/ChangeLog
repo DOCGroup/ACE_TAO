@@ -1,3 +1,20 @@
+Mon Jul  3 15:05:55 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_typedef.cpp:
+        * TAO_IDL/be/be_visitor_arg_traits.cpp:
+        * TAO_IDL/be_include/be_typedef.h:
+
+          Changed logic of how the seen_in_operation_ flag is handled
+          and how the arg traits visitor works for typedefs. There
+          was an interaction between a typedef valuetype member
+          and the use of the base type in an interface operation.
+          This fix closes [BUGID:2577].
+
+        * tests/IDL_Test/Bug_2577_Regression.idl:
+
+          Removed the preprocessor condition around the line that
+          reproduces the bug, and added a comment.
+
 Mon Jul  3 14:29:07 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/OBV/Any/client.cpp:
