@@ -1,3 +1,8 @@
+Mon Jul  3 14:42:45 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * NEWS: Updated the NEWS file with information about using multiple
+          service repositories.
+
 Mon Jul  3 03:25:43 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * examples/APG/Svc_Config/HA_Configurable_Server_Dynamic.cpp
