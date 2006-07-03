@@ -75,8 +75,6 @@ TAO::be_visitor_objref_typecode::visit_i (char const * kind,
      << "// TAO_IDL - Generated from" << be_nl
      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
-  os << be_global->core_versioning_begin () << be_nl;
-
   // Generate the TypeCode instantiation.
   os
     << "static TAO::TypeCode::Objref<char const *," << be_nl
@@ -90,8 +88,6 @@ TAO::be_visitor_objref_typecode::visit_i (char const * kind,
 
   if (this->gen_typecode_ptr (node) != 0)
     return -1;
-
-  os << be_global->core_versioning_end () << be_nl;
 
   return 0;
 }

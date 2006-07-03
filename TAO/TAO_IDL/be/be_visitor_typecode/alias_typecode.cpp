@@ -49,8 +49,6 @@ TAO::be_visitor_alias_typecode::common (be_type * node,
      << "// TAO_IDL - Generated from" << be_nl
      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
-  os << be_global->core_versioning_begin () << be_nl;
-
   this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_TYPECODE_NESTED);
 
   // Generate typecode for the base type, being careful to avoid doing
@@ -91,8 +89,6 @@ TAO::be_visitor_alias_typecode::common (be_type * node,
 
   if (this->gen_typecode_ptr (node) != 0)
     return -1;
-
-  os << be_global->core_versioning_end () << be_nl;
 
   return 0;
 }

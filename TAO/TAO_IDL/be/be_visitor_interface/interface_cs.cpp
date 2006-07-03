@@ -59,9 +59,6 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
-  *os << be_nl << be_nl;
-  *os << be_global->core_versioning_begin () << be_nl;
-
   if (node->is_defined ())
     {
       *os << be_nl << be_nl
@@ -511,8 +508,6 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
                             -1);
         }
     }
-
-  *os << be_global->core_versioning_end () << be_nl;
 
   return 0;
 }

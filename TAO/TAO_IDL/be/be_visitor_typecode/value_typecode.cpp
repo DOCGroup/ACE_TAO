@@ -62,8 +62,6 @@ TAO::be_visitor_value_typecode::visit_valuetype (be_valuetype * node)
      << "// TAO_IDL - Generated from" << be_nl
      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
-  os << be_global->core_versioning_begin () << be_nl;
-
   if (this->gen_member_typecodes (node) != 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -172,8 +170,6 @@ TAO::be_visitor_value_typecode::visit_valuetype (be_valuetype * node)
 
   if (this->gen_typecode_ptr (be_type::narrow_from_decl (node)) != 0)
     return -1;
-
-  os << be_global->core_versioning_end () << be_nl;
 
   return 0;
 }
