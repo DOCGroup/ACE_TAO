@@ -53,15 +53,17 @@
 #endif
 #define TAO_EXPORT_MACRO TAO_EndpointPolicy_Export
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // TAO_IDL - Generated from
 // c:\ticket\tao-1_4_8_merge\ace_wrappers\tao\tao_idl\be\be_visitor_module/module_ch.cpp:49
 
 namespace EndpointPolicy
 {
-  
+
   // TAO_IDL - Generated from
   // c:\ticket\tao-1_4_8_merge\ace_wrappers\tao\tao_idl\be\be_visitor_constant/constant_ch.cpp:52
-  
+
   const CORBA::PolicyType ENDPOINT_POLICY_TYPE = 1329790988U;
 
 // TAO_IDL - Generated from
@@ -71,8 +73,6 @@ namespace EndpointPolicy
 
 // TAO_IDL - Generated from
 // .\be\be_visitor_traits.cpp:62
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 
 
 // Traits specializations.
