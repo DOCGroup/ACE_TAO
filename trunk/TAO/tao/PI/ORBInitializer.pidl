@@ -24,11 +24,13 @@
 #ifndef _ORB_INITIALIZER_PIDL
 #define _ORB_INITIALIZER_PIDL
 
+#include "tao/PI/ORBInitInfo.pidl"
+
 module PortableInterceptor {
 
   typeprefix PortableInterceptor "omg.org";
 
-  local interface ORBInitInfo;
+//  local interface ORBInitInfo;
 
   local interface ORBInitializer
   {

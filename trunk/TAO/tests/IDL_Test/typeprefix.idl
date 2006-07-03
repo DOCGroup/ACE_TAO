@@ -6,15 +6,15 @@
 module A
 {
   typeprefix A "TAO";
-  interface B;
+  interface B {};
   interface C{
     void op (in B a);
   };
 };
-
+/*
 module A
 {
   typeprefix A "TAO";
   interface B{};
-};
+};*/
 
