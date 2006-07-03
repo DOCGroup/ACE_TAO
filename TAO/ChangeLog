@@ -1,3 +1,14 @@
+Mon Jul  3 09:27:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
+        * TAO_IDL/be/be_visitor_typecode/alias_typecode.cpp
+        * TAO_IDL/be/be_visitor_typecode/enum_typecode.cpp
+        * TAO_IDL/be/be_visitor_typecode/objref_typecode.cpp
+        * TAO_IDL/be/be_visitor_typecode/struct_typecode.cpp
+        * TAO_IDL/be/be_visitor_typecode/union_typecode.cpp
+        * TAO_IDL/be/be_visitor_typecode/value_typecode.cpp
+          Fixed versioning macros generation
+
 Mon Jul  3 00:54:37 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/AnyTypeCode/skip.cpp:
