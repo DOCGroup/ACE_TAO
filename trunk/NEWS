@@ -34,6 +34,11 @@ USER VISIBLE CHANGES BETWEEN ACE-5.5.1 and ACE-5.5.2
 
 . OpenVMS 8.2 for Alpha has been added as supported platform
 
+. Made part of the file support in ACE 64bit but we have some places where
+  32bit types are used, this could lead to some conversion warnings which
+  will be addressed in the near future, but getting everything 64bit
+  compliant is a lot of work.
+
 USER VISIBLE CHANGES BETWEEN ACE-5.5 and ACE-5.5.1
 ====================================================
 
