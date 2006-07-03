@@ -1,3 +1,10 @@
+Mon Jul  3 11:15:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Sequence_Unit_Tests/Sequence_Unit_Tests.mpc:
+          Temporarily disabled the array sequence ut, the mock_array
+          isn't updated after all array refactoring and this needs
+          more time then we have for the upcoming beta
+
 Mon Jul  3 10:59:59 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/OBV/Any/OBV_Any.mpc:
