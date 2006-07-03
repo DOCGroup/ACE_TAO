@@ -1,0 +1,24 @@
+// $Id$
+
+// Test Bug 2577
+
+struct DateTime_T
+{
+  short t;
+};
+
+typedef DateTime_T WhenLastUpdated_T;
+
+valuetype Data_T
+{
+#if BUG
+  public WhenLastUpdated_T whenLastUpdated;
+#else
+  public DateTime_T whenLastUpdated;
+#endif
+};
+
+interface User_T {
+  DateTime_T getLoginTime();
+};
+
