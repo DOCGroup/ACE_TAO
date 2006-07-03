@@ -1,3 +1,16 @@
+Mon Jul  3 10:59:59 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/OBV/Any/OBV_Any.mpc:
+        * tests/OBV/Any/client.cpp:
+
+        * tests/OBV/Truncatable/OBV_Truncatable.mpc:
+        * tests/OBV/Truncatable/TruncatableS_impl.cpp:
+        * tests/OBV/Truncatable/client.cpp:
+
+          Bug 2576 turned out to be invalid. There is already a mechanism
+          present to address the problem I raised. I've updated the tests
+          to work with the correct value extraction methods.
+
 Mon Jul  3 12:00:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/IDL_Test/Bug_2577_Regression.idl:

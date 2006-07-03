@@ -170,7 +170,8 @@ Test_impl::op5 (const CORBA::Any& val,
 {
   ov = new ::OBV_OBV_TruncatableTest::TValue1();
   ::OBV_TruncatableTest::TValue1 *iv = 0;
-  if (!(val >>= iv))
+  CORBA::ValueBase_var target;
+  if (!(val >>= CORBA::Any::to_value(target.inout())))
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT("(%P|%t)Test_impl::op5 extract failed\n")));
@@ -179,6 +180,7 @@ Test_impl::op5 (const CORBA::Any& val,
     }
   else
     {
+      iv = ::OBV_TruncatableTest::TValue1::_downcast(target._retn());
       if (TAO_debug_level > 0)
         ACE_DEBUG((LM_DEBUG,
                    ACE_TEXT("(%P|%t)Test_impl::op5")

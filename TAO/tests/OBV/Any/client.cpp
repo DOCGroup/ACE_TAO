@@ -73,24 +73,6 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
       vb_factory->_remove_ref (); // release ownership
 
-      // Obtain reference to the object
-
-      CORBA::Object_var tmp =
-        orb->string_to_object(ior ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      OBV_AnyTest::Test_var test =
-        OBV_AnyTest::Test::_narrow(tmp.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      if (CORBA::is_nil (test.in ()))
-      {
-      ACE_ERROR_RETURN ((LM_DEBUG,
-                         "Nil OBV_AnyTest::Test reference <%s>\n",
-                         ior),
-                        1);
-      }
-
       // Do local test
 
       OBV_AnyTest::VA_var va1, va2;
@@ -126,23 +108,47 @@ main (int argc, char *argv[])
                             1);
         }
 
-#if defined (TAO_TEST_BUG_2576)
+
       // It should be possible to extract to a base type
       OBV_AnyTest::VB_var vb1;
       ACE_NEW_RETURN (vb1.inout (), OBV_OBV_AnyTest::VB, 1);
       vb1->id (magic);
 
       a1 <<= vb1.in ();
-
-      if (!(a1 >>= dst) || dst->id() != magic)
+      CORBA::ValueBase_var target;
+      if (!(a1 >>= CORBA::Any::to_value(target.inout())))
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
                              "(%P|%t) client - base extraction test failed.\n"),
                             1);
         }
-#endif /* TAO_TEST_BUG_2576 */
+      dst = OBV_AnyTest::VA::_downcast(target._retn());
+      if (dst == 0 || dst->id() != magic)
+        {
+          ACE_ERROR_RETURN ((LM_DEBUG,
+                             "(%P|%t) client - base extraction test failed.\n"),
+                            1);
+        }
+
 
       // Now do remote test
+
+      CORBA::Object_var tmp =
+        orb->string_to_object(ior ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      OBV_AnyTest::Test_var test =
+        OBV_AnyTest::Test::_narrow(tmp.in () ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      if (CORBA::is_nil (test.in ()))
+      {
+      ACE_ERROR_RETURN ((LM_DEBUG,
+                         "Nil OBV_AnyTest::Test reference <%s>\n",
+                         ior),
+                        1);
+      }
+
 
       // STEP 1.
       CORBA::Any_var result = test->get_something (
@@ -181,22 +187,26 @@ main (int argc, char *argv[])
                             1);
         }
 
-#if defined (TAO_TEST_BUG_2576)
       // STEP 4. get a VB, but extract to a VA*.
-      OBV_AnyTest::VA* dst_va = test->get_vb();
-
       result = test->get_something (
           1
           ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      if (!(result.inout () >>= dst_va) || dst_va->id () != magic)
+      if (!(result.inout () >>= CORBA::Any::to_value(target.inout())))
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
                              "(%P|%t) client - test 4 failed.\n"),
                             1);
         }
-#endif /* TAO_TEST_BUG_2576 */
+      dst_va = OBV_AnyTest::VA::_downcast(target._retn());
+      if (dst_va == 0 || dst_va->id() != magic)
+        {
+          ACE_ERROR_RETURN ((LM_DEBUG,
+                             "(%P|%t) client -  test 4 failed.\n"),
+                            1);
+        }
+
 
       test->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
