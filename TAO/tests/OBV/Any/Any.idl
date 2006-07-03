@@ -18,7 +18,7 @@ module OBV_AnyTest
   };
 
   valuetype VB : VA
-  {    
+  {
   };
 
   //
@@ -28,7 +28,9 @@ module OBV_AnyTest
   {
     // Returns VA or VB inserted into any
     any get_something (in boolean need_vb);
-    
+
+    VB get_vb ();
+
     // Shutdown the romote ORB
     oneway void shutdown ();
   };

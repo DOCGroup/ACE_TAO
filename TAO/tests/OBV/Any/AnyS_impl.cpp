@@ -47,6 +47,20 @@ Test_impl::get_something (
   return ret_val._retn();
 }
 
+OBV_AnyTest::VB *
+Test_impl::get_vb(
+    ACE_ENV_ARG_DECL_NOT_USED)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  const CORBA::ULong magic = 3145;
+
+  OBV_AnyTest::VB_var vb;
+  ACE_NEW_RETURN (vb.inout (), OBV_OBV_AnyTest::VB, 0);
+
+  vb->id (magic);
+  return vb._retn();
+}
+
 void
 Test_impl::shutdown (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
