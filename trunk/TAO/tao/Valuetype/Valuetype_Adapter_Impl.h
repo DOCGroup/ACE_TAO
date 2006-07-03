@@ -57,7 +57,11 @@ public:
     );
 
   virtual CORBA::Long type_info_single (void) const;
-  virtual CORBA::Long type_info_implied (void) const;
+
+  virtual CORBA::Boolean is_type_info_implied (CORBA::Long) const;
+  virtual CORBA::Boolean is_type_info_single (CORBA::Long) const;
+  virtual CORBA::Boolean is_type_info_list (CORBA::Long) const;
+  virtual CORBA::Boolean is_value_chunked (CORBA::Long) const;
 
   virtual int vf_map_rebind (const char *,
                              CORBA::ValueFactory &);

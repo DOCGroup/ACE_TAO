@@ -126,6 +126,22 @@ main (int argc, char *argv[])
                             1);
         }
 
+#if defined (TAO_TEST_BUG_2576)
+      // It should be possible to extract to a base type
+      OBV_AnyTest::VB_var vb1;
+      ACE_NEW_RETURN (vb1.inout (), OBV_OBV_AnyTest::VB, 1);
+      vb1->id (magic);
+
+      a1 <<= vb1.in ();
+
+      if (!(a1 >>= dst) || dst->id() != magic)
+        {
+          ACE_ERROR_RETURN ((LM_DEBUG,
+                             "(%P|%t) client - base extraction test failed.\n"),
+                            1);
+        }
+#endif /* TAO_TEST_BUG_2576 */
+
       // Now do remote test
 
       // STEP 1.
@@ -137,7 +153,7 @@ main (int argc, char *argv[])
       if (!(result.inout () >>= dst) || dst->id () != magic)
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
-                             "(%P|%t) client - test failed.\n"),
+                             "(%P|%t) client - test 1 failed.\n"),
                             1);
         }
 
@@ -151,9 +167,36 @@ main (int argc, char *argv[])
       if (!(result.inout () >>= dst_vb) || dst_vb->id () != magic)
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
-                             "(%P|%t) client - test failed.\n"),
+                             "(%P|%t) client - test 2 failed.\n"),
                             1);
         }
+
+      // STEP 3. A sanity check demonstrating base-type pointer to
+      // derived type allowed.
+      OBV_AnyTest::VA* dst_va = test->get_vb();
+      if (dst_va->id () != magic)
+        {
+          ACE_ERROR_RETURN ((LM_DEBUG,
+                             "(%P|%t) client - test 3 failed.\n"),
+                            1);
+        }
+
+#if defined (TAO_TEST_BUG_2576)
+      // STEP 4. get a VB, but extract to a VA*.
+      OBV_AnyTest::VA* dst_va = test->get_vb();
+
+      result = test->get_something (
+          1
+          ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      if (!(result.inout () >>= dst_va) || dst_va->id () != magic)
+        {
+          ACE_ERROR_RETURN ((LM_DEBUG,
+                             "(%P|%t) client - test 4 failed.\n"),
+                            1);
+        }
+#endif /* TAO_TEST_BUG_2576 */
 
       test->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;

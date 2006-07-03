@@ -11,8 +11,8 @@ project(*Server): taoexe, portableserver, valuetype {
 project(*Client): taoexe, valuetype {
   after += *Server
   Source_Files {
+//    buildflags += TAO_TEST_BUG_2576
     AnyC.cpp
     client.cpp
   }
 }
-

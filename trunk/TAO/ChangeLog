@@ -1,3 +1,44 @@
+Mon Jul  3 00:54:37 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/AnyTypeCode/skip.cpp:
+        * tao/Valuetype/Valuetype_Adapter_Impl.h:
+        * tao/Valuetype/Valuetype_Adapter_Impl.cpp:
+        * tao/Valuetype_Adapter.h:
+          Reworked the new interfaces added to the valuetype adapter to be
+          a little more logical, and added one for detecting chunking.
+          Skipping the chunks turns out to be really easy, the chunk start
+          is the length in bytes to skip. Skip that length, then get the
+          chunk end tag, which is the negated length. If the chunk start
+          value is negative, that indicates the end of a nesting level, so
+          this process is repeated until a nesting level of -1 is reached,
+          indicating the end of the value.
+
+          This change enables truncatable values to be encapsulated in
+          anys.
+
+        * tao/Valuetype/ValueBase.cpp:
+          Reformatted a long comment
+
+        * tests/OBV/Any/Any.idl:
+        * tests/OBV/Any/AnyS_impl.h:
+        * tests/OBV/Any/AnyS_impl.cpp:
+        * tests/OBV/Any/OBV_Any.mpc:
+        * tests/OBV/Any/client.cpp:
+        * tests/OBV/Truncatable/Extra.idl:
+        * tests/OBV/Truncatable/OBV_Truncatable.mpc:
+        * tests/OBV/Truncatable/Truncatable.idl:
+        * tests/OBV/Truncatable/TruncatableS_impl.h:
+        * tests/OBV/Truncatable/TruncatableS_impl.cpp:
+        * tests/OBV/Truncatable/client.cpp:
+
+          Adding the change for encapsulating truncatables gave rise to a
+          new bug, 2576. This bug illustrates that TAO does not properly
+          extract a valuetype to a base value pointer, even though the
+          base value type is carried as part of the Any's typeID
+          information. So as not to increase the number of failures on the
+          scoreboard at this time the test code illustrating this bug is
+          guarded by a #if defined (TAO_TEST_BUG_2576).
+
 Sat Jul  1 19:16:11 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * NEWS:
@@ -19,6 +60,8 @@ Sat Jul  1 15:32:43 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
           TAO only marshals values this way when compiled to use optimized
           valuetype marshaling which is not the default case since it
           breaks backwards compatibility.
+
+          This resolves bug 2575.
 
         * tao/TAO_Server_Request.h:
 

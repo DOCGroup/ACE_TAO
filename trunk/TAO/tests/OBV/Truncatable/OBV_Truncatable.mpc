@@ -11,8 +11,9 @@ project(*Server): taoexe, portableserver, valuetype {
 project(*Client): taoexe, valuetype {
   after += *Server
   Source_Files {
+//    buildflags += -DTAO_TEST_BUG_2576
+    ExtraC.cpp
     TruncatableC.cpp
     client.cpp
   }
 }
-
