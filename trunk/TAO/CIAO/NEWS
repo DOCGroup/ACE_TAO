@@ -52,7 +52,7 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 
 . Add support for querying for interface types to the
   RepositoryManager.
- 
+
 . Implement a planner to query the TargetManager and RepositoryManager
   and generate deployment plans on the fly.
 
@@ -67,6 +67,22 @@ PLANNED MAJOR CHANGES FOR THE NEXT RELEASE
 
 . Integrate various Pub/Sub services into CIAO and DAnCE.
 
+USER VISIBLE CHANGES BETWEEN CIAO-0.5.1 and CIAO-0.5.2
+====================================================
+
+. Changed CIDL compiler code generation for facet servant classes
+  to enable reuse if the same interface is used as a facet more
+  than once in a single translation unit.
+
+. Fixed code that fetches component DLL entry points to be portable
+  across all supported compilers.
+
+. Fixed bugs in the recent implementation of component servant methods
+  get_all_receptacles() and get_all_publishers().
+
+. Simplified template code in component servant and home servant
+  base classes.
+
 USER VISIBLE CHANGES BETWEEN CIAO-0.5.0 and CIAO-0.5.1
 ====================================================
 
@@ -74,14 +90,14 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.5.0 and CIAO-0.5.1
   CIAO core framework. Enhanced DAnCE to support declaratively configure
   and deploy real-time event channels to mediate event communication
   among components.
-  
+
 . Fixed a bug in detecting External connection and Internal
-  connections when components are shared across different 
+  connections when components are shared across different
   deployment plans. Earlier when removing connections attached
-  to an external/shared component, not *all* connections 
-  associated with this components are purged from the 
-  to-be-removed connections list. 
-  
+  to an external/shared component, not *all* connections
+  associated with this components are purged from the
+  to-be-removed connections list.
+
 . Fixed a bug when redeploying components using the same set
   of NodeManagers, the destroy of applications results not
   all internal components and external/shared components
@@ -90,10 +106,10 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.5.0 and CIAO-0.5.1
 
 . Fixed bug in detecting name clashes between names of ports of the same
   category (facet, event sink, etc.) in the same component.
-  
+
 . Added support for attribute exceptions in code generated for executor
   implementation classes.
-  
+
 . Implemented spec-defined component methods get_all_receptacles(),
   get_all_publishers(), and disconnect_consumer().
 
@@ -104,15 +120,15 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.4.10 and CIAO-0.5.0
   visibility if applicable when compiling Config_Handlers or projects
   that use Config_Handlers on linux.This change was to work around symbol
   visibility inconsistencies in GNU standard C++ library when using g++
-  4.x's symbol visibility features. 
+  4.x's symbol visibility features.
 
 . Enhanced ReDaC service to enforce the correct
   assembly redeployment and reconfiguration order.
 
-. Some bug fixes in ReDaC about removing components. 
+. Some bug fixes in ReDaC about removing components.
 
-. Fixed NodeApplication to unbind a component with naming service 
-  when removing it from the container. 
+. Fixed NodeApplication to unbind a component with naming service
+  when removing it from the container.
 
 USER VISIBLE CHANGES BETWEEN CIAO-0.4.9 and CIAO-0.4.10
 ======================================================
@@ -135,12 +151,12 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.4.9 and CIAO-0.4.10
 . Enhanced DAnCE to maintain a component state map in
   the component server to manage component life cycle.
 
-. Some bug fixes in DAnCE. 
+. Some bug fixes in DAnCE.
 
 USER VISIBLE CHANGES BETWEEN CIAO-0.4.8 and CIAO-0.4.9
 ======================================================
 . RTTI enabled versions of the Xerces library are no longer needed on
-  Windows platforms.  
+  Windows platforms.
 
 . The CIDLC compiler now supports basic preprocessor directives:
   #ifdef, #ifndef, #else, and #endif as well as the -D command-
@@ -148,7 +164,7 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.4.8 and CIAO-0.4.9
 
 . The CIDLC compiler now supports incomplete struct and union
   semantics which will appear in CORBA 3.1.
-  
+
 . DAnCE now supports dynamically adding/removing components
   to/from the existing running assembly without shutting down the
   running appliation.  This will allow the application developers to
@@ -170,8 +186,8 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.4.8 and CIAO-0.4.9
      the same physical node.
   6) Install new component instances into another component server
      into a remote host.
-  
-  To see how to use this feature, please see the ReDaC-Usage.html 
+
+  To see how to use this feature, please see the ReDaC-Usage.html
   under the $CIAO_ROOT/examples/Hello/ directory.
 
 . Removed the Old Config Handlers, which have been deprecated for some
@@ -208,10 +224,10 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.4.8 and CIAO-0.4.9
 
 . The RepositoryManager has been enhanced to support standards based
   interfaces. A number of techniques have been used to ensure high
-  performance and scalability. 
+  performance and scalability.
 
 . The RepositoryManager can now retrieve packages from remote locations via
-  HTTP. 
+  HTTP.
 
 . The Target Manager is released with this CIAO release. It is an
   infrastructure component which keeps track of resource usage in the
@@ -224,7 +240,7 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.4.8 and CIAO-0.4.9
   new monitors which can monitor different resources in the domain. The
   Target manager is a component thus it needs to be started using a
   deployment plan. It is right now a optional component in the DAnCE
-  tool chain. 
+  tool chain.
 
 . We added a skeleton implementation of the Resource Allocation and
   Control Engine (RACE) which is a middleware framework built atop
