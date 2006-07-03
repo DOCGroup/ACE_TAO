@@ -1,3 +1,11 @@
+Mon Jul  3 14:29:07 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/OBV/Any/client.cpp:
+          Guard against running the test using Any::to_value() with a
+          streamed any when compiled with optimized valuetype marshaling
+          as this test case still fails. See the verbose comment in the
+          source for details.
+
 Mon Jul  3 14:17:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/EndpointPolicy/EndpointPolicyTypeC.h:
