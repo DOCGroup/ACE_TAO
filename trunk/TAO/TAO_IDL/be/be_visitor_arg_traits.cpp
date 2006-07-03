@@ -1051,10 +1051,23 @@ be_visitor_arg_traits::visit_union_branch (be_union_branch *node)
 int
 be_visitor_arg_traits::visit_typedef (be_typedef *node)
 {
+  if (this->generated (node) || !node->seen_in_operation ())
+    {
+      return 0;
+    }
+
   this->ctx_->alias (node);
 
   // Make a decision based on the primitive base type.
   be_type *bt = node->primitive_base_type ();
+
+  // We can't set seen_in_operation_ for the base type
+  // in the be_typedef operation, since valuetype OBV
+  // constructor code may pass in FALSE, and the base
+  // type may be used unaliased in another arg somewhere.
+  // So we just set it to TRUE here, since we know it
+  // has to be TRUE at this point.
+  bt->seen_in_operation (true);
 
   if (!bt || (bt->accept (this) == -1))
     {
