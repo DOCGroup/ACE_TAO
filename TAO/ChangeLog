@@ -1,3 +1,13 @@
+Mon Jul  3 12:00:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/IDL_Test/Bug_2577_Regression.idl:
+        * tests/IDL_Test/IDL_Test.mpc:
+          Added regression for bug 2577, this is not fixed yet, but I had
+          this in my workspace, so commit the test for others. The
+          file should be changed to reproduce the bug. Thanks to
+          Heesuk Shin <heesuks at econz dot com> for delivering this test
+          case.
+
 Mon Jul  3 10:21:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PI/ORBInitializer.pidl:
