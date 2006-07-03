@@ -72,11 +72,18 @@ be_typedef::seen_in_sequence (bool val)
   this->primitive_base_type ()->seen_in_sequence (val);
 }
 
+// Some compilers seems to have a problem with a function
+// that's both virtual and overloaded.
+bool
+be_typedef::seen_in_operation (void) const
+{
+  return this->be_type::seen_in_operation ();
+}
+
 void
 be_typedef::seen_in_operation (bool val)
 {
   this->be_type::seen_in_operation (val);
-  this->primitive_base_type ()->seen_in_operation (val);
 }
 
 // Given a typedef node, traverse the chain of base types until they are no
