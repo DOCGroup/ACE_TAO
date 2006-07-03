@@ -1,3 +1,12 @@
+Mon Jul  3 13:06:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/ast/ast_decl.cpp:
+          Const improvements
+
+        * TAO_IDL/fe/fe_init.cpp:
+        * TAO_IDL/util/utl_stack.cpp:
+          Initialise pointer with 0
+
 Mon Jul  3 11:41:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PI/ORBInitInfoA.h:
