@@ -25,3 +25,16 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
+#ifndef _TAO_IDL_PI_ORBINITINFOA_H_
+#define _TAO_IDL_PI_ORBINITINFOA_H_
+
+#include /**/ "ace/pre.h"
+
+#include "tao/PI/ORBInitInfoC.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include /**/ "ace/post.h"
+#endif /* ifndef */
