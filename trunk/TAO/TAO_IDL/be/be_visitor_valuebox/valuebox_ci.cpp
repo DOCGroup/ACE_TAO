@@ -59,8 +59,6 @@ be_visitor_valuebox_ci::visit_valuebox (be_valuebox *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl;
 
-  *os << be_global->core_versioning_begin () << be_nl;
-
   *os << "ACE_INLINE const char* " << be_nl
       << node->name () << "::_tao_obv_static_repository_id ()" << be_nl
       << "{" << be_idt_nl
@@ -69,8 +67,6 @@ be_visitor_valuebox_ci::visit_valuebox (be_valuebox *node)
 
   // Indicate that code is already generated for this node.
   node->cli_inline_gen (true);
-
-  *os << be_global->core_versioning_end () << be_nl;
 
   return 0;
 }
@@ -85,8 +81,6 @@ be_visitor_valuebox_ci::visit_array (be_array *node)
 
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
-
-  *os << be_global->core_versioning_begin () << be_nl;
 
   // Public default constructor
   *os << "ACE_INLINE" << be_nl
@@ -179,8 +173,6 @@ be_visitor_valuebox_ci::visit_array (be_array *node)
       << "{" << be_idt_nl
       << "return this->_pd_value.out ();" << be_uidt_nl
       << "}" << be_nl << be_nl;
-
-  *os << be_global->core_versioning_end () << be_nl;
 
   return 0;
 }
@@ -307,8 +299,6 @@ be_visitor_valuebox_ci::visit_string (be_string *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
-  *os << be_global->core_versioning_begin () << be_nl;
-
   this->emit_default_constructor ();
   this->emit_constructor_one_arg (node, "");
   this->emit_copy_constructor ();
@@ -413,8 +403,6 @@ be_visitor_valuebox_ci::visit_string (be_string *node)
       << "{" << be_idt_nl
       << "return this->_pd_value[slot];" << be_uidt_nl
       << "}" << be_nl << be_nl;
-
-  *os << be_global->core_versioning_end () << be_nl;
 
   return 0;
 }
