@@ -1,3 +1,16 @@
+Mon Jul  3 03:25:43 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * examples/APG/Svc_Config/HA_Configurable_Server_Dynamic.cpp
+          (ACE_TMAIN): Changed the reactor event loop to explicitly pass
+          in ACE_Reactor::check_reconfiguration().  Thanks to Michael Reed
+          <mnr102 at yahoo dot com> for reporting this.
+
+Mon Jul  3 03:15:14 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * examples/Service_Configurator/IPC-tests/server/server_test.cpp
+          (ACE_TMAIN): Changed the reactor event loop to explicitly pass
+          in ACE_Reactor::check_reconfiguration().
+
 Fri Jun 30 13:40:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/msvc_static_order.lst:
