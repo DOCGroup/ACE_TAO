@@ -1,3 +1,8 @@
+Mon Jul  3 14:17:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/EndpointPolicy/EndpointPolicyTypeC.h:
+          Fixed versioning macros
+
 Mon Jul  3 14:07:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_valuebox/valuebox_ci.cpp:
