@@ -1,6 +1,7 @@
-//$Id$
-// UUIDTest.cpp
-// $Revision$ $Date$
+// $Id$
+
+// Test the ACE UUID class which generates unique id's
+
 
 #include "test_config.h"
 #include "ace/UUID.h"
