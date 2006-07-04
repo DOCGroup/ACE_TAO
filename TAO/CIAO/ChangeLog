@@ -1,6 +1,8 @@
 Tue Jul  4 11:39:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Home_Servant_Impl_T.cpp:
+        * ciao/Dynamic_Component_Servant_T.cpp:
+        * ciao/Swapping_Servant_Home_Impl_T.cpp:
           Fixed compile problems with VxWorks 5.5.1 and GCC 2.96
 
 Tue Jul  4 06:26:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
