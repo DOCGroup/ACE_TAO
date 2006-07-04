@@ -84,7 +84,7 @@ TAO/orbsvcs/tests/Simple_Naming/run_test.pl: !ST !SUNCC5_1 !NO_MESSAGING !ACE_FO
 TAO/orbsvcs/tests/Simple_Naming/run_test_ffp.pl: !ST !SUNCC5_1 !MINIMUM !NO_MESSAGING !ACE_FOR_TAO
 TAO/orbsvcs/tests/Redundant_Naming/run_test.pl: !ST !SUNCC5_1 !MINIMUM !ACE_FOR_TAO
 TAO/orbsvcs/tests/Trading/run_test.pl: !MINIMUM !SUNCC5_1
-TAO/orbsvcs/tests/Event/Basic/run_test.pl: !ST !MINIMUM
+TAO/orbsvcs/tests/Event/Basic/run_test.pl: !ST !MINIMUM !ACE_FOR_TAO
 TAO/orbsvcs/tests/Event/Performance/run_test.pl: !ST !MINIMUM !ACE_FOR_TAO
 TAO/orbsvcs/tests/EC_Custom_Marshal/run_test.pl: !ST !MINIMUM !ACE_FOR_TAO !DISABLE_ToFix_LynxOS_x86
 TAO/orbsvcs/tests/EC_Throughput/run_test.pl: !ST !MINIMUM !DISABLE_ToFix_LynxOS_x86 !ACE_FOR_TAO
@@ -98,7 +98,7 @@ TAO/orbsvcs/tests/InterfaceRepo/IDL3_Test/run_test.pl:  !MINIMUM !NO_IFR !ACE_FO
 TAO/orbsvcs/tests/InterfaceRepo/IFR_Test/run_test.pl:  !MINIMUM !NO_IFR !ACE_FOR_TAO
 TAO/orbsvcs/tests/InterfaceRepo/IFR_Inheritance_Test/run_test.pl:  !MINIMUM !NO_IFR !ACE_FOR_TAO
 TAO/orbsvcs/tests/InterfaceRepo/Latency_Test/run_test.pl:  !MINIMUM !NO_IFR !ACE_FOR_TAO
-TAO/orbsvcs/tests/InterfaceRepo/Persistence_Test/run_test.pl:  !MINIMUM !NO_IFR
+TAO/orbsvcs/tests/InterfaceRepo/Persistence_Test/run_test.pl:  !MINIMUM !NO_IFR !ACE_FOR_TAO
 TAO/orbsvcs/tests/ImplRepo/run_test.pl both_ir: !MINIMUM !ACE_FOR_TAO
 TAO/orbsvcs/tests/ImplRepo/run_test.pl nestea_ir: !MINIMUM !ACE_FOR_TAO
 TAO/orbsvcs/tests/ImplRepo/run_test.pl airplane_ir: !MINIMUM !ACE_FOR_TAO
