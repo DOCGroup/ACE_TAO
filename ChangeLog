@@ -1,3 +1,12 @@
+Tue Jul  4 01:05:47 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * tests/Memcpy_Test.cpp (testit): ACE-ified this test.
+
+Tue Jul  4 01:03:52 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * tests/CE_fostream.cpp: 
+        * tests/Service_Config_Test.cpp: Improved the description of these tests.
+
 Mon Jul  3 14:42:45 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * NEWS: Updated the NEWS file with information about using multiple

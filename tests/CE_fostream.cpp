@@ -1,4 +1,18 @@
-// $Id$
+//=============================================================================
+/**
+ *  @file    CE_fostream.cpp
+ *
+ *  $Id$
+ *
+ *  @author Si Mong Park  <spark@ociweb.com>
+ *
+ *  This is a helper class to simulate basic functions of fostream for
+ *  Windows CE since WinCE does not have IO stream.
+ *
+ *  Note that the numeric base conversion does not work and will be displayed
+ *  as received.
+ */
+// ============================================================================
 
 #include "CE_fostream.h"
 
