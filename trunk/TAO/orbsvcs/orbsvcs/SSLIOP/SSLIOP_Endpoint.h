@@ -125,7 +125,7 @@ namespace TAO
       /// so that the guard may be used uniformly.
       void set_sec_attrs (::Security::QOP qop,
                           const ::Security::EstablishTrust &trust,
-                          TAO::SSLIOP::OwnCredentials_ptr creds);
+                          const TAO::SSLIOP::OwnCredentials_ptr creds);
 
       /// Get the Quality-of-Protection settings for this endpoint.
       ::Security::QOP qop (void) const;
@@ -232,11 +232,11 @@ namespace TAO
        * ports are the same.
        */
       CORBA::Boolean is_equivalent (const TAO_Endpoint *other_endpoint);
-      
+
       /// Return a copy of the corresponding endpoints by allocating
       /// memory.
       virtual TAO_Endpoint *duplicate (void);
-    
+
     private:
       TAO_SSLIOP_Synthetic_Endpoint (const ::SSLIOP::SSL *ssl);
 
