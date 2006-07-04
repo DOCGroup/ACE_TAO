@@ -179,9 +179,10 @@ namespace CIAO
 
     this->dynamic_servant_map_.bind (oid.in (), svt);
 
+    typedef typename COMP_SVNT::_stub_type stub_type;
     typename COMP_SVNT::_stub_var_type ho =
-      COMP_SVNT::_stub_type::_narrow (objref.in ()
-                                      ACE_ENV_ARG_PARAMETER);
+      stub_type::_narrow (objref.in ()
+                          ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (COMP_SVNT::_stub_type::_nil ());
 
     return ho._retn ();
