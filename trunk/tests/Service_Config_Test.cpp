@@ -6,14 +6,13 @@
  *
  *  $Id$
  *
- *  This is a simple test to make sure the Service_Configurator is
- *  working correctly.
+ *  This is a simple test to make sure the ACE Service Configurator
+ *  framework is working correctly.
  *
  *  @author David Levine <levine@cs.wustl.edu>
  *  @author Ossama Othman <ossama@uci.edu>
  */
 //=============================================================================
-
 
 #include "test_config.h"
 #include "ace/OS_NS_stdio.h"
