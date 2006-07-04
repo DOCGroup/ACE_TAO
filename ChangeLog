@@ -1,3 +1,8 @@
+Tue Jul  4 04:10:11 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * tests/Memcpy_Test.cpp: Added a short summary of this test.
+          Thanks to Arvind Krishna for contributing it.
+
 Tue Jul  4 01:05:47 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * tests/Memcpy_Test.cpp (testit): ACE-ified this test.
