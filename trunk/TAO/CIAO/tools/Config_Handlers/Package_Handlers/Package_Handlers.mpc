@@ -3,9 +3,11 @@
 project (Package_Config_Handlers) : acelib, ciao_deployment_stub, ciao_config_handlers_base {
   sharedname = Package_Config_Handlers
   dynamicflags = PACKAGING_HANDLERS_BUILD_DLL
+  avoids   += ace_for_tao
 
-  after    += XSC_Config_Handlers_Common XSC_DynAny_Handler 
-  libs     += XSC_Config_Handlers_Common XSC_DynAny_Handler 
+  after    += XSC_Config_Handlers_Common XSC_DynAny_Handler
+  libs     += XSC_Config_Handlers_Common XSC_DynAny_Handler
+
   includes += $(CIAO_ROOT)/ciao
 
   Source_files {
@@ -31,10 +33,10 @@ project (Package_Config_Handlers) : acelib, ciao_deployment_stub, ciao_config_ha
 }
 
 project (Package_Config_Handlers_Tests) : ciao_component_dnc, ciao_config_handlers, ifr_client {
-//  requires += dummy_label
   includes += $(CIAO_ROOT)/tools/Config_Handlers
   exename = test
   macros   += XML_USE_PTHREADS
+  avoids   += ace_for_tao
   libs += Package_Config_Handlers XSC_Config_Handlers
   Source_Files {
     test.cpp
