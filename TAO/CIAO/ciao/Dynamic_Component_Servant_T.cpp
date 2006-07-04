@@ -65,9 +65,10 @@ namespace CIAO
       swap_exec->incarnate (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK_RETURN (0);
 
+    typedef typename COMP_SVNT::_exec_type exec_type;
     typename COMP_SVNT::_exec_type::_var_type ciao_comp =
-      COMP_SVNT::_exec_type::_narrow (ciao_ec.in ()
-                                      ACE_ENV_ARG_PARAMETER);
+      exec_type::_narrow (ciao_ec.in ()
+                          ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (0);
 
     /// @@ Jai, should you be using ACE_NEW_THROW_EX here?
