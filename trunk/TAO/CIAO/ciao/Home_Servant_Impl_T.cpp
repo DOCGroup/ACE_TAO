@@ -72,9 +72,10 @@ namespace CIAO
         return;
       }
 
+	typedef typename COMP_SVNT::_stub_type stub_type;
     typename COMP_SVNT::_stub_var_type _ciao_comp =
-      COMP_SVNT::_stub_type::_narrow (ccm_obj_var.in ()
-                                      ACE_ENV_ARG_PARAMETER);
+      stub_type::_narrow (ccm_obj_var.in ()
+                          ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
 
     if (CORBA::is_nil (_ciao_comp.in ()))
@@ -157,9 +158,10 @@ namespace CIAO
       this->executor_->create (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK_RETURN (COMP::_nil ());
 
+	typedef typename COMP_SVNT::_exec_type exec_type;
     typename COMP_SVNT::_exec_type::_var_type _ciao_comp =
-      COMP_SVNT::_exec_type::_narrow (_ciao_ec.in ()
-                                      ACE_ENV_ARG_PARAMETER);
+      exec_type::_narrow (_ciao_ec.in ()
+                          ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (COMP::_nil ());
 
     return this->_ciao_activate_component (_ciao_comp.in ()
@@ -192,6 +194,7 @@ namespace CIAO
                                     ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (COMP_SVNT::_stub_type::_nil ());
 
+	typedef typename COMP_SVNT::_stub_type stub_type;
     COMP_SVNT *svt = 0;
     ACE_NEW_RETURN (svt,
                     COMP_SVNT (exe,
@@ -199,7 +202,7 @@ namespace CIAO
                                this->ins_name_,
                                this,
                                this->container_),
-                    COMP_SVNT::_stub_type::_nil ());
+                    stub_type::_nil ());
 
     PortableServer::ServantBase_var safe (svt);
     PortableServer::ObjectId_var oid;
@@ -210,9 +213,10 @@ namespace CIAO
                                            ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (COMP_SVNT::_stub_type::_nil ());
 
+	typedef typename COMP_SVNT::_stub_type stub_type;
     typename COMP_SVNT::_stub_var_type ho =
-      COMP_SVNT::_stub_type::_narrow (objref.in ()
-                                      ACE_ENV_ARG_PARAMETER);
+      stub_type::_narrow (objref.in ()
+                          ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (COMP_SVNT::_stub_type::_nil ());
 
     Components::CCMObject_var ccmobjref =
