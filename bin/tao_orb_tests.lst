@@ -155,7 +155,7 @@ TAO/tests/Timeout/run_test.pl: !MINIMUM
 TAO/tests/MT_Timeout/run_test.pl: !MINIMUM !ST
 TAO/tests/Timed_Buffered_Oneways/run_test.pl: !MINIMUM
 TAO/tests/Single_Read/run_test.pl:
-TAO/tests/Connection_Timeout/run_test.pl: !VxWorks !MINIMUM
+TAO/tests/Connection_Timeout/run_test.pl: !VxWorks !MINIMUM !ACE_FOR_TAO
 #TAO/tests/Connection_Failure/run_test.pl ! Timesout for good reasons
 TAO/tests/MProfile_Connection_Timeout/run_test.pl: !MINIMUM !ACE_FOR_TAO
 TAO/tests/Codec/run_test.pl:
