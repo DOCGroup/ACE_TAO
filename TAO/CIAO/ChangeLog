@@ -1,3 +1,8 @@
+Wed Jul  5 15:31:18 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
+
+        * NEWS
+          Updated the NEWS file to add the changes of Repoman.
+
 Tue Jul  4 11:39:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Home_Servant_Impl_T.cpp:
