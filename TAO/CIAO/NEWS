@@ -82,6 +82,12 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.5.1 and CIAO-0.5.2
 
 . Simplified template code in component servant and home servant
   base classes.
+  
+. Added the naming service & the implementation of createPackage function
+  to RepoMan.
+
+. Added the code to save the state of the RepoMan at exit and load the
+  state of it at start.
 
 USER VISIBLE CHANGES BETWEEN CIAO-0.5.0 and CIAO-0.5.1
 ====================================================
