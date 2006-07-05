@@ -13,8 +13,8 @@
 
 The file explains how to build and install ACE, its Network Services,
 test suite and examples on the various OS platforms and compilers that
-it has been ported to.  Please consult the <a
-href="ChangeLog">ChangeLog</a> file to see whether any recent changes
+it has been ported to.  Please consult the <a href="NEWS">NEWS</a> and
+<a href="ChangeLog">ChangeLog</a> files to see whether any recent changes
 to the release will affect your code.  In addition, you should check
 out our <a
 href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/docs/ACE-development-process.html">development
@@ -70,11 +70,19 @@ compiling the ACE source distribution, please contact one of the
 commercial support companies, or send a copy of the
 <a href="PROBLEM-REPORT-FORM">PROBLEM-REPORT-FORM</a>, located in the
 ACE_wrappers directory, to either the <a href="news:comp.soft-sys.ace">ACE
-Newsgroup</a> or the <a href="mailto:ace-users@cs.wustl.edu">ACE
-mailing list</a> and someone will try to help you fix the problems.
-
-</p><p>The responsibility for maintaining ACE across this wide range of
-platforms is divided among a few different groups:
+Newsgroup</a> or the <a href="mailto:ace-users@cse.wustl.edu">ace-users
+mailing list</a>.
+The DOC groups at Washington University, UC Irvine, and Vanderbilt
+University provide only "best effort" support for non-sponsors for the
+latest release, as described in <a href="docs/ACE-bug-process.html">
+docs/ACE-bug-process.html</a>.
+Thus, if you need more "predictable" help, or help with earlier versions of
+ACE, it's recommend that you check out the
+<a href="http://www.cs.wustl.edu/~schmidt/commercial-support.html">list of
+commercial support companies</a> for additional assistance.
+</p>
+<p>The responsibility for maintaining ACE across the wide range of
+supported platforms is divided among a few different groups:
 <ul>
 <li>The DOC group maintains platforms used in the course of their research
 and sponsored work</li>
@@ -115,8 +123,7 @@ document</a>.</p><p>
 </thead><tbody>
   <tr>
     <th>DOC Group</th>
-    <td>Solaris 7, 8, 9, and 10 (many compilers excluding SunC++ 4.x);
-        Windows 2000, XP (MSVC++ 7.1, and 8);
+    <td>Windows 2000, XP (MSVC++ 7.1, and 8);
         many versions of Linux/Intel (many compilers), Linux/IA64 (GCC).
     </td>
     <td>DOC sites at <a href="http://www.dre.vanderbilt.edu/">ISIS</a>,
@@ -159,18 +166,23 @@ document</a>.</p><p>
     </td>
   </tr>
   <tr>
+    <th>PrismTech</th>
+    <td>Maintains ACE on certain platforms required for their TAO
+        software and service offerings, including LynxOS.
+    </td>
+    <td>PrismTech's <a href="http://www.prismtech.com/">web site</a></td>
+  </tr>
+  <tr>
     <th>ACE user community</th>
     <td>Responsible for continued maintenance and testing of platforms
         to which ACE has been ported, but aren't supported by the
         above groups. These include
         Digital UNIX (Compaq Tru64) 4.0 and 5.0;
-        IRIX 6.x; UnixWare 7.1.0; SunOS 4.x and Solaris with SunC++ 4.x;
+        IRIX 6.x; UnixWare 7.1.0;
         Linux on PPC; OpenMVS;
         Tandem; SCO; FreeBSD; NetBSD; OpenBSD;
-        Macintosh OS X;
-        Chorus; OS/9; PharLap TNT Embedded ToolSuite 9.1;
-        QNX RTP and Neutrino 2.0; LynxOS; RTEMS; Interix
-        (Windows Services for Unix)
+        Macintosh OS X; OS/9; PharLap TNT Embedded ToolSuite 9.1;
+        QNX RTP and Neutrino 2.0; RTEMS; Interix (Windows Services for Unix)
     </td>
   </tr><tr>
     <th>Not maintained</th>
@@ -178,8 +190,9 @@ document</a>.</p><p>
         no longer maintained and may be removed from ACE at any time.
         If you want to have support for these environments contact one
         of the commercial support organisations. The platforms include:
-        DG/UX, HP-UX 9 and 10, VxWorks 5.4, MSVC5/6/7.0,
-        Borland C++ Builder 4 and 5.
+        Chorus; DG/UX; HP-UX 9, 10 and 11.00; pSOS;
+        SunOS 4.x and Solaris with SunC++ 4.x; VxWorks 5.4;
+        Microsoft Visual C++ 5, 6, and 7.0; Borland C++ Builder 4 and 5.
         For up-to-date listings on platform that are deprecated and pending
         removal from ACE, please see the <a href="NEWS">NEWS file</a>.
     </td>
@@ -212,14 +225,15 @@ supported by the DOC group, Riverace, OCI or Remedy IT. </p><p>
 
 </p><p></p><hr><p>
 </p><h2><a name="installpre">Installation prerequisites</a></h2>
-
-ACE (including TAO and CIAO) uses MPC (MakeProjectCreator) to generate
+<p>
+ACE (as well as TAO and CIAO) use MPC (MakeProjectCreator) to generate
 files used by all supported build tools (such as GNUmakefiles for UNIX based
 platforms, sln and vcproj files for VC71/VC8 and Borland makefiles) on various
 platforms. To help new users to bootstrap quickly the release bundles
-of ACE (TAO and CIAO) include all needed files to use the build instructions
-in this document.
-
+of ACE (as well as TAO and CIAO) include all needed files to use the build
+instructions in this document.
+</p>
+<p>
 If it is necessary to generate
 files for build tools for other compilers, one must
 run MPC to generate the
@@ -230,16 +244,15 @@ details. The options that have been used to generate the above build
 files can be found in <a
 href="bin/MakeProjectCreator/config/global.features">
 global.features</a> file.
+</p>
 
-<p></p>
-
-<p></p><hr>
+<hr>
 <h1><a name="aceinstall">Building and Installing ACE</a></h1>
 
 The following sections explain how to build ACE on:
 <ul>
 <li><a href="#unix">UNIX</a></li>
-<li><a href="#win32">Windows</a></li>
+<li><a href="#win32">Windows (including MinGW and Cygwin)</a></li>
 <li><a href="#vxworks">VxWorks</a></li>
 <li><a href="#interix">Interix</a></li>
 <li><a href="#rtems">RTEMS</a></li>
@@ -268,25 +281,30 @@ UNIX:
   <li><a href="#unix_autoconf">GNU Autoconf</a></li>
   <li><a href="#unix_traditional">Traditional ACE/GNU Make Configuration</a></li>
 </ol>
-The <a href="#win32">build process</a> for Windows is different from both of
+The <a href="#win32">build process for Windows</a> is different from both of
 the UNIX methods.
 
 <h3><a name="unix_autoconf">Building ACE with GNU Autoconf</a></h3>
 <p>
 GNU Autoconf support is available in the ACE and ACE+TAO distributions
-in the DOC group website. More, precisely support for Autoconf will be
-missing in distributions that have CIAO bundled along.
-
+in the DOC group website. Support for Autoconf is not included in
+distributions that contain CIAO.
+</p>
+<p>
 GNU Autoconf support has been partially present in a number of ACE
 versions. However, ACE 5.4 was the first version that supported it in
-earnest. There are still a few problems with this method, so you
+earnest. The range of platforms on which GNU autoconf support is regularly
+tested is not as broad as for the traditional configuration method, so you
 should be careful to test the resulting ACE library before using it in
-your applications. The traditional configuration method is still more
-reliable. Any help you can
-lend to improve the ACE build process using GNU Autoconf would be very much
-appreciated. Please send any fixes to the
-<a href="mailto:ace-users@cs.wustl.edu">ACE users</a> mailing list
-using the standard <a href="PROBLEM-REPORT-FORM">problem-report-form</a>.</p>
+your applications. You can review the
+<a href="http://www.dre.vanderbilt.edu/scoreboard/" target="_blank">
+build scoreboard</a> to check the currently tested set of autoconfigured
+platforms (look for autoconf in the platform name).
+Any help you can lend to improve the ACE build process using GNU Autoconf
+would be very much appreciated. Please send any fixes to the
+<a href="mailto:ace-users@cse.wustl.edu">ACE users</a> mailing list
+using the standard <a href="PROBLEM-REPORT-FORM">PROBLEM-REPORT-FORM</a>.
+</p>
 <p>
 The kit has been bootstrapped so you do not need to install the GNU
 Autotools (autoconf, automake, libtool) unless you want to participate
@@ -298,15 +316,13 @@ ACE CVS repository. To simply configure and build ACE, do:
   <li>Create a subdirectory to hold your build's configuration and built
       ACE version, and then change to the new directory:
        <pre>       mkdir build
-       cd build
-       </pre>
+       cd build</pre>
       Note that you do not run the <code>create_ace_build.pl</code> utility
       mentioned in the <a href="#cloning">Cloning the Source Tree</a>
       section. The configure script takes care of creating all files
       and links that are needed.</li>
   <li>Configure ACE for your platform by issuing the following command:
-c       <pre>       ../configure [options]
-       </pre>
+       <pre>       ../configure [options]</pre>
       <code>options</code> can be a variable setting (such as setting
       <code>CXX</code> to your C++ compiler command) any standard GNU
       configure options, or any of the following ACE configure options
@@ -370,6 +386,15 @@ c       <pre>       ../configure [options]
         <li><code>--enable-ssl</code> (yes): Include the ACE_SSL library when
           building ACE. Requires the SSL components to be available using the
           compiler's and linker's default search directories.</li>
+        <li><code>--with-openssl</code>: Specifies the root directory of the
+          OpenSSL installation; expects the specified directory to have
+          <code>include</code> and <code>lib</code> subdirectories. To
+          specify other locations for the header and libraries, use one or
+          both of the following.</li>
+        <li><code>--with-openssl-include</code>: Specify the directory
+          containing the OpenSSL header files.</li>
+        <li><code>--with-openssl-libdir</code>: Specify the directory
+          containing the OpenSSL libraries.</li>
         <li><code>--with-tli-device</code> (/dev/tcp): Specifies the device
           name for opening a TLI device at run time.</li>
       </ul>
@@ -403,41 +428,37 @@ per-platform configuration method:</p>
 
 <ol>
   <li>Install <a href="http://ftp.gnu.org/pub/gnu/make/">GNU make</a>
-  3.79.1 or greater on your system (available via <code>http</code>
+      3.79.1 or greater on your system (available via <code>http</code>
       anonymous <code>ftp</code> from <code>ftp.gnu.org</code> in the
       <code>pub/gnu/make/</code> directory).
       You <em>must</em> use GNU make when using ACE's traditional
-        per-platform configuration method or ACE won't compile.<p>
-
-  </p></li><li>Add an environment variable called ACE_ROOT that contains the
+      per-platform configuration method or ACE won't compile.
+  </li>
+  <li>Add an environment variable called ACE_ROOT that contains the
       name of the root of the directory where you keep the ACE wrapper
       source tree.  The ACE recursive Makefile scheme needs this information.
-      There are several ways to set the ACE_ROOT variable.  For
-      instance, in my .login file for TSCH/CSH I have the following entry:<p>
-
-      </p><pre><code>
-      setenv ACE_ROOT /home/cs/faculty/schmidt/ACE_wrappers
-      </code></pre><p>
-
-      BTW, if you're running BASH or Bourne Shell you'll need to do the following:
-
-      </p><pre><code>
-      ACE_ROOT=/home/cs/faculty/schmidt/ACE_wrappers; export ACE_ROOT
-      </code></pre><p>
-
+      There are several ways to set the ACE_ROOT variable.  For example:
+      <blockquote>
+      TSCH/CSH:
+      <code>setenv ACE_ROOT /home/cs/faculty/schmidt/ACE_wrappers</code>
+      </blockquote>
+      <blockquote>
+      BASH or Bourne Shell:
+      <code>ACE_ROOT=/home/cs/faculty/schmidt/ACE_wrappers; export ACE_ROOT
+      </code>
+      </blockquote>
+      <p>
       If you're building a number of versions of ACE, however, (e.g., for
       different OS platforms or for different releases of ACE) you might use
-      the following approach (again assuming TCSH/CSH):
-
-      </p><pre><code>
-      setenv ACE_ROOT $cwd
-      </code></pre>
-
-  </li><li>Create a configuration file, <code>$ACE_ROOT/ace/config.h</code>,
+      the following approach (assuming TCSH/CSH):
+      </p><blockquote><code>setenv ACE_ROOT $cwd</code>
+      </blockquote>
+  </li>
+  <li>Create a configuration file, <code>$ACE_ROOT/ace/config.h</code>,
       that includes the appropriate platform/compiler-specific
       header configurations from the ACE source directory. For example:
 <blockquote><code>
-#include "ace/config-sunos5-sunc++-4.x.h"
+#include "ace/config-linux.h"
 </code></blockquote>
       The platform/compiler-specific configuration file
       contains the #defines that are used throughout ACE to indicate
@@ -446,62 +467,62 @@ per-platform configuration method:</p>
       macro settings. If you desire to add some site-specific or build-specific
       changes, you can add them to your config.h file; place them
       <strong>before</strong> the inclusion of the platform-specific
-      header file.<p>
-
+      header file.
+      <p>
       There are config files for most versions of UNIX.  If there
       isn't a version of this file that matches your
-      platform/compiler, you'll need to make one.  Please send me
-      email if you get it working so I can add it to the master ACE
-      release.</p><p>
+      platform/compiler, you'll need to make one.  Please send email
+      to the <a href="mailto:ace-users@cse.wustl.edu">ace-users</a> list
+      if you get it working so it can be added to the master ACE
+      release.</p>
+  </li>
 
-  </p></li><li>Create a build configuration file,
+  <li>Create a build configuration file,
       <code>$ACE_ROOT/include/makeinclude/platform_macros.GNU</code>,
       that contains the appropriate platform/compiler-specific
       Makefile configurations, e.g.,
 <blockquote><code>
-include $(ACE_ROOT)/include/makeinclude/platform_sunos5_sunc++.GNU
+include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
 </code></blockquote>
       This file contains the compiler and Makefile directives that are
       platform/compiler-specific. If you'd like to add make options, you
-      can add them before including the paltform-specific configuration.<p>
+      can add them before including the platform-specific configuration.<p>
       NOTE! There really is not a # character before 'include' in the
-      platform_macros.GNU file. # is a comment character.<p>
-
-  </p></li><li>Note that because ACE builds shared libraries, you'll need to set
-      LD_LIBRARY_PATH to whereever you put the binary version of the
-      ACE library.  For example, you probably want to do something
-      like the following<p>
-
-      </p><pre><code>
-      % setenv LD_LIBRARY_PATH $ACE_ROOT/ace:$ACE_ROOT/lib:$LD_LIBRARY_PATH
-      </code></pre><p>
-
-  </p></li><li>When all this is done, hopefully all you'll need to do is type:<p>
-
-      </p><pre><code>
-      % make
-      </code></pre><p>
-
-      at the root of the ACE source tree.  This will build the ACE
+      platform_macros.GNU file. # is a comment character.
+  </li>
+  <li>Note that because ACE builds shared libraries, you'll need to set
+      LD_LIBRARY_PATH (or equivalent for your platform) to the directory
+      where binary version of the ACE library is built into. For example,
+      you probably want to do something like the following:
+      <blockquote>
+      <code>% setenv LD_LIBRARY_PATH $ACE_ROOT/lib:$LD_LIBRARY_PATH</code></blockquote>
+  </li>
+  <li>When all this is done, hopefully all you'll need to do is type:
+      <blockquote>
+      <code>% make</code></blockquote>
+      at the ACE_ROOT directory.  This will build the ACE
       library, tests, the examples, and the sample applications.
       Building the entire ACE release can take a long time and consume
       lots of disk space, however.  Therefore, you might consider
-      cd'ing into the <a href="ace">$ACE_ROOT/ace/</a> directory and
+      cd'ing into the <code>$ACE_ROOT/ace</code> directory and
       running <code>make</code> there to build just the ACE library.
       As a sanity check, you might also want to build and run the
-      automated <a href="tests/README">"one-button" tests</a> in <a href="tests/">$ACE_ROOT/tests/</a>.  Finally, if you're also
+      automated <a href="tests/README">"one-button" tests</a> in
+      <code>$ACE_ROOT/tests</code>. Finally, if you're also
       planning on building <a href="http://www.cs.wustl.edu/%7Eschmidt/TAO.html">TAO</a>, you
       should build the <a href="http://www.cs.wustl.edu/%7Eschmidt/PDF/gperf.pdf">gperf</a>
-      perfect hash function generator application in <a href="apps/gperf">$ACE_ROOT/apps/gperf/</a>.</p><p>
-
-  </p></li><li>If you need to regenerate the Svc_Conf_y.cpp file, you'll need to
+      perfect hash function generator application in
+      <code>$ACE_ROOT/apps/gperf</code>.
+  </li>
+  <li>If you need to regenerate the <code>ace/Svc_Conf_y.cpp</code> file,
+      you'll need to
       get <a href="http://ftp.gnu.org/pub/gnu/bison/">GNU Bison</a>.
-        However, you should rarely, if ever, need to do this.<p>
+      However, you should rarely, if ever, need to do this.
+  </li>
+</ol>
 
-</p></li></ol>
+<hr align="left" width="50%">
 
-
-<p></p><hr align="left" width="50%">
 <h2><a name="win32">Building and Installing ACE on Windows</a></h2>
 
 <p>This section contains instructions for building ACE on Microsoft
@@ -560,10 +581,14 @@ a <code>.vcproj</code> suffix.</p>
   </tr>
 </tbody></table>
 <p>If you happen to open a VC7.1 file from within VC8, it will offer to convert
-the file to the newer format for you. <b>Do not do this</b>; there have been
-reports of Visual Studio crashing while attempting to convert the large
+the file to the newer format for you. With the stock VC8, do not do this;
+Visual Studio will crash while attempting to convert the large
 solution and project files to build ACE. Simply refuse the conversion and
-open the file with the correct format.</p>
+open the file with the correct format. Note that Microsoft has fixed this
+problem. See
+<a href="https://msdn.microsoft.com/visualc/downloads/default.aspx">
+https://msdn.microsoft.com/visualc/downloads/default.aspx</a> for information.
+</p>
 
 <ol>
   <li>Uncompress the ACE distribution into a directory, where it will
@@ -1444,7 +1469,7 @@ The following, very useful information was contributed by
 <a href="http://people.qualcomm.com/cryan">Chris Ryan</a>
 and <a href="mailto:Paul_von_Behren@stortek.com">Paul von Behren</a>.
 Please submit corrections, additions, or clarifications to the
-the <a href="mailto:ace-users@cs.wustl.edu">ACE mailing list</a>.<p>
+the <a href="mailto:ace-users@cse.wustl.edu">ACE mailing list</a>.<p>
 
 <strong>NOTE:</strong>The make (version 3.74) that is provided with
 Tornado 2.2 cannot be used to build ACE. A working version is available
@@ -1546,7 +1571,7 @@ on Windows NT hosts:
       </pre>
 
       <code>aced.dll</code> is produced in an ACE NT source tree according to
-      documented procedure for NT VC++ 6.0 ACE build.
+      documented procedure for Windows VC++ ACE build.
 
       <code>cygwin.dll</code> is from the Cygnus GNU software download and install.
 
@@ -1834,7 +1859,7 @@ Here's what you need to do:<p>
 <p></p><hr align="left" width="50%"><p>
 </p><h2><a name="win32svcs">Building and Installing ACE Network Services on Win32</a></h2>
 
-Once again, there are supplied project for MSVC 6.0 or later for
+Once again, there are supplied project for Visual C++ 7.1 or later for
 the Network Services.<p>
 
 </p><hr>
@@ -1848,25 +1873,19 @@ below.</p>
 <ol>
   <li>Make sure the OpenSSL header file directory is in your compiler's
       include path, and that OpenSSL libraries are in your library link/load
-      path (e.g.
-      <font face="Courier New, Courier, mono">LD_LIBRARY_PATH</font>). If you
+      path (e.g. <code>LD_LIBRARY_PATH</code>). If you
       installed OpenSSL into a set of directories unknown by the compiler,
       set the <code>SSL_ROOT</code> environment variable to point to the
       top level directory of your OpenSSL distribution, i.e. the one
       containing OpenSSL's <code>include</code> and <code>lib</code>
       directories.</li>
-  <li>Add <code>ssl=1</code> to your MPC
-      <code>$ACE_ROOT/bin/MakeProjectCreator/config/default.features</code>
-      or <code>$ACE_ROOT/local.features</code> file, and re-run MPC to add
-      support for building the ACE_SSL library to your GNUmakefiles.
   <li>Build ACE as described above. When building ACE, add
-      "<font face="Courier New, Courier, mono">ssl=1</font>"
-      to your <font face="Courier New, Courier, mono">make</font>
+      <code>ssl=1</code>
+      to your <code>make</code>
       command line invocation, or add it to your
-      <font face="Courier New, Courier, mono">platform_macros.GNU</font>
-      file.</li>
+      <code>platform_macros.GNU</code> file.</li>
   <li>Build the ACE_SSL library in the <tt>$ACE_ROOT/ace/SSL</tt>
-      directory. The <tt>ACE_ROOT</tt> environment variable should be set
+      directory. The <code>ACE_ROOT</code> environment variable should be set
       prior to this point.</li>
 </ol>
 <h2>Microsoft Visual Studio</h2>
@@ -2187,33 +2206,6 @@ libraries.
       appear to fail with the O32 ABI.  Please check the config files
       for the details.</p><p>
 
-  </p></li><li><b> HP-UX 10.x and 11.x </b> <p>
-
-      HP sells 2 C++ compilers for HP-UX 10.x and 11.00:
-
-      </p><ul>
-        <li>HP C++ - this is CC, HP's cfront-based compiler.  As of ACE 4.4, it
-            can be used, but some people have problems with templates.
-            Caveat emptor.  It's been said that you should run version 10.24,
-            if not later. ACE hasn't been tested with this compiler since
-            the ACE 5.0 timeframe.
-
-        </li><li>HP aC++ - this is aCC, HP's new, ANSI compiler.  It handles ACE
-            very well.  You should use version A.01.27 (or higher) on
-            HP-UX 10.x and version A.03.37 (or higher) on HP-UX 11.
-
-      </li></ul>
-      <p>
-      On HP-UX 10.20, a patch is required to compile ACE. The exact patch
-      number depends on the platform - check with HP's patch database to
-      locate the exact patch or its successor. For 9000 700 series machines
-      it is PHKL_8693 (s700 10.20 sys/time.h fix for select(2)/C++ defects).</p><p>
-
-      Also see further notes on this platform at Riverace's
-      <a href="http://www.riverace.com/FAQ/faq.html">Frequently Asked
-      Questions</a> page.
-      </p><p>
-
   </p></li><li><b>OSF/1 3.2 and 4.0 (a.k.a. Digital UNIX 4.0)</b> <p>
 
       The Digital UNIX C++ 5.4 through 5.7 compilers have problems
@@ -2328,11 +2320,6 @@ libraries.
   for a in /usr/local/i386-sco-sysv4/bin/*; do ln -s $a .; done
 </pre>
        Once done, ACE and TAO will successfully build and link.<p>
-
-  </p></li><li><b>Chorus</b> <p>
-
-      Wei Chiang &lt;<a href="mailto:chiang@tele.nokia.fi">chiang@tele.nokia.fi</a>&gt;
-      has ported ACE to Chorus 3.1 using GNU g++ 2.7.2.</p><p>
 
   </p></li><li><b><a name="LynxOS">LynxOS</a></b><p>
 
@@ -3018,7 +3005,7 @@ from
 <EM><br> -->
 
 <!-- hhmts start -->
-Last modified: Mon Mar 20 08:58:22 CST 2006
+Last modified: Wed Jul  5 17:26:22 EST 2006
 <!-- hhmts end -->
 
 
