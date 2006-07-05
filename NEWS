@@ -1,13 +1,27 @@
 PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 ===========================================================================
 
-PLANNED MAJOR CHANGES TARGETED FOR TAO-1.5.3
+PLANNED MAJOR CHANGES TARGETED FOR ACE-5.5.3
 ====================================================
 
 . (Remedy) VxWorks 6.3 support
 
 USER VISIBLE CHANGES BETWEEN ACE-5.5.1 and ACE-5.5.2
 ====================================================
+
+. Added support for:
+   - VxWorks 6.2 for the rtp model using pthread support
+   - OpenVMS 8.2 for Alpha
+
+. Removed code and configurations that provided support for:
+   - Visual C++ 6.0 and 7.0
+   - Chorus
+   - pSOS
+   - KAI C++ on all platforms
+
+. Explicit template instantiation support has been removed. This effectively
+  removes support for Sun Forte 6 and 7 which required explicit template
+  instantiation to build ACE reliably.
 
 . Added support for multiple independent Service Repositories through
   configuration contexts called "Gestalt". Full backwards compatibility
@@ -22,10 +36,6 @@ USER VISIBLE CHANGES BETWEEN ACE-5.5.1 and ACE-5.5.2
   inspired by the examples in Chapter 4 of the C++NPv1 book.
   The client and server logging daemons in ACE 5.5.2 and forward will
   not interoperate with those in previous ACE versions.
-
-. Explicit template instantiation support has been removed.
-
-. Visual C++ 6.0 and 7.0 support has been removed.
 
 . Added a wrapper for the sendfile API (ACE_OS::sendfile()).
 
@@ -42,10 +52,6 @@ USER VISIBLE CHANGES BETWEEN ACE-5.5.1 and ACE-5.5.2
 . Changed the first argument to ACE_OS::strptime() to be 'const' which
   matches its usual usage in POSIX strptime(). This change allows users to
   pass const strings in - a common use case.
-
-. VxWorks 6.2 support has been added for the rtp model using pthread support.
-
-. OpenVMS 8.2 for Alpha has been added as supported platform.
 
 . Made part of the file support in ACE 64bit but we have some places where
   32bit types are used, this could lead to some conversion warnings which

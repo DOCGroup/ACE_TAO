@@ -1,3 +1,10 @@
+Wed Jul  5 19:15:37 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ACE-INSTALL.html: Cleaned up further; clarified role of DOC and
+          support companies and use of PROBLEM-REPORT-FORM.
+
+        * NEWS: Noted removal of Chorus and pSOS.
+
 Tue Jul  4 04:10:11 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * tests/Memcpy_Test.cpp: Added a short summary of this test.
