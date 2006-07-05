@@ -1,6 +1,11 @@
 PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 ===========================================================================
 
+PLANNED MAJOR CHANGES TARGETED FOR TAO-1.5.3
+====================================================
+
+. (Remedy) VxWorks 6.3 support
+
 USER VISIBLE CHANGES BETWEEN ACE-5.5.1 and ACE-5.5.2
 ====================================================
 
