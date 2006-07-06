@@ -25,7 +25,14 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 
 . Enhance DAnCE to support OpenCCM components.
 
-. Target Manager implementation.
+. Update DAnCE IDL data structures and interfaces to comply with the
+  06-02-01 version of the DnC specification, and perform
+  interoperability testing with other DnC implementations.  Note this
+  work may change the functionality and semantics of some proprietary
+  DAnCE extensions, notably ReDaC, Shared Compoents, and RTEC
+  integration, and may even be absent until such a time as they
+  can be implemented in such a way as to not break copliance with the DnC
+  specification.
 
 . Implement Resource Allocation and Control Engine (RACE), which is a
   component middleware framework built atop of CIAO/DAnCE that integrates
@@ -89,22 +96,34 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.5.1 and CIAO-0.5.2
 . Added the code to save the state of the RepoMan at exit and load the
   state of it at start.
 
-. bin/PerlCIAO/TestUtils - a perl module for building quickly
-  and running cleanly CIAO tests
+. A new perl library has been added to the bin directory. PerlCIAO is
+  a wrapper around PerlACE with extensions to aid in scripting CIAO
+  tests.
 
 . DAnCE/Planner - a planner which contacts the RepositoryManager, gets a
   PackageConfiguration by name, and builds a DeploymentPlan on
   the fly. Note that the node information is currently not populated.
 
-. RACE/Input_Adapters/PlanGenerator - The RACE component version of the
-  Planner which creates a DeploymentPlan without node info from a
-  PackageConfiguration and uses the RACE plan analyzer to
-  populate the node information in the plan.
+. Added two RACE utilities, the LocationUpdater and PlanGenerator.
+  The LocationUpdater modifies the location field of artifacts in
+  flattened plans to correspond to HTTP URLs pointing at the
+  RepositoryManager.  The PlanGenerator is the Planner utility
+  modified to work with RACE. Note that most RACE functionality is
+  still in development and is not included with this release.
 
-. RACE/Input_Adapters/LocationUpdater - a RACE input adapter
-  serving as a location updater which updates the location fields in a
-  DeploymentPlan to point to libraries available via HTTP from the
-  RepositoryManager.
+. Added support for parsing packaging descriptors to the
+  Config_Handlers, and improved support for IDL->XML serialization.
+
+. Added a Planner utility which, when given the name of a package,
+  will contact the RepositoryManager and construct a flattened
+  deployment plan on the fly.  Note this utility currently does not
+  populate node assignments.
+
+. Several important bugfixes for ReDaC and shared components.
+
+. Changed Components.idl to include CCM_Component.idl instead of
+  CCM_Container.idl. This removes a dependancy on the container
+  library for stub projects.
 
 USER VISIBLE CHANGES BETWEEN CIAO-0.5.0 and CIAO-0.5.1
 ====================================================
