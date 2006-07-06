@@ -82,12 +82,29 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.5.1 and CIAO-0.5.2
 
 . Simplified template code in component servant and home servant
   base classes.
-  
+
 . Added the naming service & the implementation of createPackage function
   to RepoMan.
 
 . Added the code to save the state of the RepoMan at exit and load the
   state of it at start.
+
+. bin/PerlCIAO/TestUtils - a perl module for building quickly
+  and running cleanly CIAO tests
+
+. DAnCE/Planner - a planner which contacts the RepositoryManager, gets a
+  PackageConfiguration by name, and builds a DeploymentPlan on
+  the fly. Note that the node information is currently not populated.
+
+. RACE/Input_Adapters/PlanGenerator - The RACE component version of the
+  Planner which creates a DeploymentPlan without node info from a
+  PackageConfiguration and uses the RACE plan analyzer to
+  populate the node information in the plan.
+
+. RACE/Input_Adapters/LocationUpdater - a RACE input adapter
+  serving as a location updater which updates the location fields in a
+  DeploymentPlan to point to libraries available via HTTP from the
+  RepositoryManager.
 
 USER VISIBLE CHANGES BETWEEN CIAO-0.5.0 and CIAO-0.5.1
 ====================================================
