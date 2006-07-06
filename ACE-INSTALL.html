@@ -2026,39 +2026,22 @@ libraries.
         <code>x11</code>switch is ignored for this platform.</li>
     </ul>
 
-<hr><p></p><h1><a name="installnotes">Installation Notes</a></h1>
+<hr>
+<h1><a name="installnotes">Installation Notes</a></h1>
 
 <ul>
   <li><b>Windows (Windows NT, 2000, XP, 2003, etc., and Windows '9x/ME) </b><p>
 
-      All of ACE has been ported to the Win32 API (which includes
-      Windows NT, Windows 2000, and Windows '95/98/ME) and Win64.  The entire
-      release now compiles using the Microsoft Visual C++ 6.0, and
-      7.1 (aka Visual C++ .NET 2003) compilers.  ACE can be built as both
-      a static (LIB) and dynamic (DLL) library, using the Win32 installation
-      process described below.</p><p>
-
       Please see the <a href="#NonStaticObjectManager">Non-static
       ACE_Object_Manager</a> discussion below.</p><p>
 
-      We've also added some support for
-      <a href="#mingw">GNU g++ with MinGW</a>,
-      <a href="#cygwin">GNU g++ with Cygwin</a>,
-      <a href="#borland">Borland C++ Builder 6.0,
-      Borland C++ BuilderX, and Borland C++ Builder 2006</a>,
-      <a href="#interix">Interix (Windows Services for Unix)</a>,
-      and IBM's VisualAge C++ compiler.
-      Since we don't have these compilers we rely on the ACE+TAO users
-      community to maintain these ports.  Therefore, please send email
-      to the ACE mailing list if you run into problems. </p><p>
-
   </p></li><li><b>Windows CE</b><p>
 
-      Take a look at (<a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/docs/CE-status.txt">CE-status.txt</a>) for
-      up-to-date information about ACE on CE.</p><p>
+      Take a look at (<a href="docs/CE-status.txt">CE-status.txt</a>) for
+      up-to-date information about ACE on Windows CE and Windows Mobile.
 
-  </p></li><li><b> Solaris 2.6, 7, 8, and 9 using Sun ONE Studio 8 (C++ 5.5)
-       or Sun Studio 9 (C++ 5.6), Centerline C++ 2.x, GNU gcc 2.95 and
+  </p></li><li><b> Solaris 7, 8, 9, and 10 using Sun ONE Studio 8 (C++ 5.5)
+       or higher, Centerline C++ 2.x, GNU gcc 2.95 and
        later.</b><p>
 
       All the source code and tests should build and run without any
@@ -2088,11 +2071,7 @@ libraries.
       it on a SunOS 5.7 (Solaris 7) host.  Some versions of g++ 
       provide replacements for system header files.  The
       replacements on older SunOS systems are not compatible with the
-      SunOS 5.7 system headers.  <P>
-
-      The Sun/C++ compilers until and including 5.4 has several
-      problems with templates and we don't test very often with them.
-      We regularly use and test with Sun/C++ 5.5.</p>
+      SunOS 5.7 system headers.  </P>
 
   </li><li><b>AIX</b><p>
 
@@ -2672,11 +2651,11 @@ source of documentation, however it is not a complete set of
 documentation. The TAO Developer's Guide from OCI starting with the
 1.3a version contains more information about MPC.<p>
 
-There is a pdf of the MPC chapter from the TAO 1.3a Developer's Guide
+The MPC chapter from the TAO Developer's Guide is
 available at <a href="http://downloads.ociweb.com/MPC/">
 http://downloads.ociweb.com/MPC/</a>.  However, much of MPC has
 changed since its original writing.  It will be updated as newer
-versions of the TAO Developer's Guide is released.
+versions of the TAO Developer's Guide are released.
 
 </p>
 <p>
