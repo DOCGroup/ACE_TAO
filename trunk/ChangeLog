@@ -1,3 +1,7 @@
+Fri Jul  7 08:07:50 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE-INSTALL.html: Small improvements
+
 Thu Jul  6 19:57:50 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * ACE-INSTALL.html: Improvements and corrections motivated by
@@ -21,7 +25,7 @@ Tue Jul  4 01:05:47 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
 Tue Jul  4 01:03:52 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
-        * tests/CE_fostream.cpp: 
+        * tests/CE_fostream.cpp:
         * tests/Service_Config_Test.cpp: Improved the description of these
           tests.
 
