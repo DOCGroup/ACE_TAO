@@ -1,0 +1,20 @@
+<?xml version='1.0'?>
+<!-- Converted from ./orbsvcs/TAO_Service/svc.conf by svcconf-convert.pl -->
+<ACE_Svc_Conf>
+ <!--  Dynamically configure the naming service into the application process. -->
+ <!-- dynamic TAO_Naming_Loader Service_Object * TAO_CosNaming:_make_TAO_Naming_Loader () "dummy -o ns.ior" -->
+ <!--  Dynamically configure the default Event Service Factory -->
+ <!-- dynamic CEC_Factory Service_Object * TAO_CosEvent:_make_TAO_CEC_Default_Factory () "" -->
+ <!--  Dynamically configure the naming service into the application process. -->
+ <!-- dynamic TAO_CEC_Event_Loader Service_Object * TAO_CosEvent:_make_TAO_CEC_Event_Loader () "dummy -o foo.ref -x" -->
+ <!--  Dynamically configure the trading service into the application process. -->
+ <!-- dynamic TAO_Trading_Loader Service_Object * TAO_CosTrading:_make_TAO_Trading_Loader () "dummy -TSdumpior footra.ref" -->
+ <!-- Dynamically remove the trading service from the application process -->
+ <!-- remove TAO_Trading_Loader -->
+ <!-- Dynamically remove the event service from the application process -->
+ <!-- remove TAO_Event_Loader -->
+ <!-- Dynamically remove the event service factory from the application process -->
+ <!-- remove CEC_Factory -->
+ <!-- Dynamically remove the naming service from the application process -->
+ <!-- remove TAO_Naming_Loader -->
+</ACE_Svc_Conf>
