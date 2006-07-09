@@ -1,0 +1,8 @@
+// $Id$
+project: taoexe, anytypecode {
+  avoids += ace_for_tao
+  Source_Files {
+    testC.cpp
+    anyop.cpp
+  }
+}

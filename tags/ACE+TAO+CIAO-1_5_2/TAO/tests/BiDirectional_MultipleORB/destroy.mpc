@@ -1,0 +1,10 @@
+// -*- MPC -*-
+// $Id$
+
+project: taoserver, anytypecode, bidir_giop {
+  exename = destroy
+  Source_Files {
+    destroy.cpp
+  }
+}
+
