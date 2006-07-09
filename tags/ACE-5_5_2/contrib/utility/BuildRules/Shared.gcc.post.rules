@@ -1,0 +1,43 @@
+# file      : BuildRules/Shared.gcc.post.rules
+# author    : Boris Kolpackov <boris@kolpackov.net>
+# copyright : Copyright (c) 2002-2003 Boris Kolpackov
+# license   : http://kolpackov.net/license.html
+
+
+#
+# Note: normally you wouldn't want to change anything below.
+#
+
+FULL_MODULE_PREFIX := $(MODULE_PREFIX)$(module_prefix)
+FULL_MODULE_SUFFIX := $(module_suffix)$(MODULE_SUFFIX)
+MODULE             := $(FULL_MODULE_PREFIX)$(module_base)$(FULL_MODULE_SUFFIX)
+
+#
+# Pattern rules catalog.
+# {
+
+# Defined pattern rule to build .o from .cpp
+%.o : %.cpp
+	$(CXX) $(CXX_PREPROCESS_FLAGS) $(CXX_COMPILE_FLAGS) -MD -MP -MT $(@:.o=.d) -MF $(@:.o=.d) -c $< -o $@
+
+# }
+
+# Defines the rule to build module from tarnslated c++ translation units.
+$(MODULE) : $(cxx_translation_units:.cpp=.o) $(translated_units)
+	$(CXX) $(CXX_LINK_FLAGS) -o $@ $^ $(CXX_LINK_LIBS)
+
+# Defines a phony target to clean all what's been generated
+.PHONY : clean
+clean :
+	-rm -f $(cxx_translation_units:.cpp=.o)
+	-rm -f $(cxx_translation_units:.cpp=.d)
+	-rm -f $(MODULE)
+
+
+# Include dependencies for c++ translation units.
+-include $(cxx_translation_units:.cpp=.d)
+
+
+# The following catch-all rule will skip unknown targets
+%:: ;@:
+# $Id$
