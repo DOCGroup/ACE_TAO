@@ -83,6 +83,14 @@ ifeq ($(threads),1)
     CPPFLAGS  += -D_REENTRANT $(PLATFORM_AIO_SUPPORT)
 endif # threads
 
+ifeq ($(buildbits),32)
+  CFLAGS   += -m32
+  LDFLAGS  += -m32
+endif
+ifeq ($(buildbits),64)
+  CFLAGS   += -m64
+endif
+
 #
 # Rely on _GNU_SOURCE to set these defaults defined in /usr/include/features.h
 # instead of setting them directly here (older versions of gcc don't set it
