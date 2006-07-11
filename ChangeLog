@@ -1,3 +1,8 @@
+Tue Jul 11 01:47:23 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Log_Msg_Test.cpp:
+          initialise pointer with 0
+
 Tue Jul 11 01:37:23 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_unistd.h:
