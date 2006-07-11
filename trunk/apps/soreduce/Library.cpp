@@ -220,6 +220,8 @@ Library::has_modules () const
   return num_modules_ > 0;
 }
 
+extern "C" {
+
 static int
 selector (const dirent *d)
 {
@@ -231,6 +233,8 @@ comparator (const dirent **d1, const dirent **d2)
 {
   return ACE_OS::strcmp ((*d1)->d_name, (*d2)->d_name);
 }
+
+} /* extern "C" */
 
 void
 Library::load_modules ()

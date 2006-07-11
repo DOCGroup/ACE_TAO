@@ -177,6 +177,18 @@ ACE_HAS_RUSAGE_WHO_ENUM                 Platform has enum instead of
                                         definition, e.g., enum
                                         __rusage_who, for Linux glibc
                                         2.0.
+ACE_HAS_SCANDIR                         Platform has a native scandir()
+                                        function. Without any other scandir-
+                                        related settings, it's assumed that
+                                        the selector and comparator functions
+                                        accept const ACE_DIRENT pointers.
+ACE_SCANDIR_CMP_USES_VOIDPTR            The OS's scandir() comparator function
+                                        is int (*compare)(void*, void*).
+ACE_SCANDIR_CMP_USES_CONST_VOIDPTR      The OS's scandir() comparator function
+                                        is int (*compare)(const void*,
+                                                          const void*).
+ACE_SCANDIR_SEL_LACKS_CONST             The OS's scandir() selector function
+                                        is int (*selector)(ACE_DIRENT*)
 ACE_HAS_SEND_TIMEDWAIT
 ACE_HAS_SENDTO_TIMEDWAIT
 ACE_HAS_SENDMSG_TIMEDWAIT

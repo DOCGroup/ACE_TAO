@@ -22,6 +22,7 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/OS_NS_dirent.h"    /* Need ACE_SCANDIR_SELECTOR, COMPARATOR */
 #include "ace/os_include/os_dirent.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -50,11 +51,11 @@ public:
   /// Free up resources.
   int close (void);
 
-  /// Open the directory @a dir and populate the <namelist_> array with
+  /// Open the directory @a dir and populate the current list of names with
   /// directory entries that match the @a selector and @a comparator.
   int open (const ACE_TCHAR *dir,
-            int (*selector)(const ACE_DIRENT *d) = 0,
-            int (*comparator)(const ACE_DIRENT **d1, const ACE_DIRENT **d2) = 0);
+            ACE_SCANDIR_SELECTOR selector = 0,
+            ACE_SCANDIR_COMPARATOR comparator = 0);
 
 protected:
   /// Ptr to the namelist array.
