@@ -119,7 +119,7 @@ TAO_Singleton_Manager::instance (void)
 
   if (the_instance == 0)
     {
-      TAO_Singleton_Manager *instance_pointer;
+      TAO_Singleton_Manager *instance_pointer = 0;
 
       ACE_NEW_RETURN (instance_pointer,
                       TAO_Singleton_Manager,
