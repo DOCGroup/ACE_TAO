@@ -1,3 +1,10 @@
+Tue Jul 11 01:43:01 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/IDL_Test/Bug_2582_Regression.idl:
+        * tests/IDL_Test/Bug_2583_Regression.idl:
+          New tests for TAO_IDL, mpc file will be committed when the latest
+          change from Jeff is in the archive
+
 Tue Jul 11 01:40:01 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/TAO_Singleton_Manager.cpp:
