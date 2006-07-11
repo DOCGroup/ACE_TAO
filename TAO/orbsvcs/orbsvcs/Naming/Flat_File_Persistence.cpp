@@ -334,15 +334,14 @@ TAO_NS_FlatFileStream::operator >>(
     {
     case 0:
       this->setstate (badbit);
-      return *this;
+      break; // Still set the global.counter (to 0)
     case EOF:
       this->setstate (eofbit);
-      return *this;
+      break; // Still set the global.counter (to 0)
     }
   global.counter(counter);
 
   return *this;
-
 }
 
 
