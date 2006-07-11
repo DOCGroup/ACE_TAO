@@ -88,6 +88,30 @@ ACE_OutputCDR::ACE_OutputCDR (char *data,
   this->current_ = &this->start_;
 }
 
+ACE_OutputCDR::ACE_OutputCDR (ACE_Data_Block *data_block,
+                              int byte_order,
+                              ACE_Allocator *message_block_allocator,
+                              size_t memcpy_tradeoff,
+                              ACE_CDR::Octet major_version,
+                              ACE_CDR::Octet minor_version)
+  :  start_ (data_block,
+             ACE_Message_Block::DONT_DELETE,
+             message_block_allocator),
+     current_alignment_ (0),
+     current_is_writable_ (true),
+     do_byte_swap_ (byte_order != ACE_CDR_BYTE_ORDER),
+     good_bit_ (true),
+     memcpy_tradeoff_ (memcpy_tradeoff),
+     major_version_ (major_version),
+     minor_version_ (minor_version),
+     char_translator_ (0),
+     wchar_translator_ (0)
+{
+  // We cannot trust the buffer to be properly aligned
+  ACE_CDR::mb_align (&this->start_);
+  this->current_ = &this->start_;
+}
+
 ACE_OutputCDR::ACE_OutputCDR (ACE_Message_Block *data,
                               int byte_order,
                               size_t memcpy_tradeoff,

@@ -43,7 +43,9 @@
 #     define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
 #     define ACE_HAS_THR_C_DEST
 #   endif /* __SUNPRO_CC_COMPAT >= 5 */
-#  if !defined (ACE_HAS_EXCEPTIONS)
+#  if defined (ACE_HAS_EXCEPTIONS)
+#    define ACE_HAS_NEW_NOTHROW
+#  else
      // See /opt/SUNWspro_5.0/SC5.0/include/CC/stdcomp.h:
 #    define _RWSTD_NO_EXCEPTIONS 1
 #  endif /* ! ACE_HAS_EXCEPTIONS */

@@ -1,3 +1,76 @@
+Tue Jul 11 12:01:12 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/Atomic_Op.cpp:
+        * ace/Atomic_Op_Sparc.h:
+        * ace/Atomic_Op_Sparc.c:
+        * include/makeinclude/platform_sunos5_sunc++.GNU:
+
+          Added a SPARC assembler implementation of functions needed for use
+          within the ACE_Atomic_Op specializations.  The implementation will
+          only be used if atomic_ops_sparc is set to 1 in
+          platform_macros.GNU.  It also requires that v8plus or higher be
+          used with SunCC.
+
+        * ace/Makefile.am:
+        * ace/ace.mpc:
+
+          Added the new Atomic_Op_Sparc.c.
+
+        * ace/CDR_Base.cpp:
+
+          In grow(), call the clone_nocopy() method on the ACE_Data_Block
+          with the new size.  Previously, the clone_nocopy() would be called
+          and then directly after that, size() would be called on the cloned
+          data block which would re-allocate to the new size and copy the
+          previous contents.
+
+          In the same method, we avoid constructing an ACE_Message_Block to
+          avoid reference count manipulating the data block's reference
+          count.
+
+          Also, in consolidate(), avoid attempting to copy data if the
+          destination and source are the same. [RT 8372]
+
+        * ace/CDR_Stream.h:
+        * ace/CDR_Stream.cpp:
+
+          Added a constructor that takes an ACE_Data_Block* which can be
+          used to avoid an allocation while constructing the
+          ACE_Message_Block held by the ACE_OutputCDR. [RT 8372]
+
+        * ace/Message_Block.h:
+        * ace/Message_Block.cpp:
+        * ace/Message_Block_T.h:
+        * ace/Message_Block_T.cpp:
+
+          Added a new parameter to the ACE_Data_Block::clone_nocopy() method
+          that allows the user copy the data block, but increase the size
+          all in one step. [RT 8372]
+
+        * ace/OS_NS_string.inl:
+
+          Added an unrolled implementation of memset, only active if
+          ACE_HAS_SLOW_MEMSET is defined, that supports up to 16 bytes
+          without calling into the memset() C function.
+
+        * ace/config-sunos5.5.h:
+
+          SunCC 5.x supports new(nothrow_t).  So, I have enable the use of
+          it when exceptions are enabled. [RT 8372]
+
+        * ace/OS_NS_Thread.h:
+        * ace/os_include/os_pthread.h:
+
+          Added macro definitions required to build ACE and TAO on Solaris
+          without using the pthreads library.
+
+        * include/makeinclude/platform_aix_ibm.GNU:
+        * include/makeinclude/platform_hpux_aCC.GNU:
+        * include/makeinclude/platform_irix6.x_sgic++.GNU:
+
+          Added 64-bit options to the CFLAGS macros to deal with the newly
+          added C file in ACE. [RT 8372]
+
 Tue Jul 11 01:47:23 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Log_Msg_Test.cpp:

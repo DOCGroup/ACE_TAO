@@ -58,7 +58,8 @@ public:
    * ACE_Locked_Data_Block<>
    * See the documentation in Message_Block.h for details.
    */
-  virtual ACE_Data_Block *clone_nocopy (ACE_Message_Block::Message_Flags mask = 0) const;
+  virtual ACE_Data_Block *clone_nocopy (ACE_Message_Block::Message_Flags mask = 0,
+                                        size_t max_size = 0) const;
 
 private:
   /// The lock

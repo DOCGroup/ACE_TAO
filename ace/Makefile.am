@@ -56,6 +56,7 @@ libACE_la_SOURCES = \
   Asynch_IO_Impl.cpp \
   Asynch_Pseudo_Task.cpp \
   Atomic_Op.cpp \
+  Atomic_Op_Sparc.c \
   Auto_Event.cpp \
   Barrier.cpp \
   Base_Thread_Adapter.cpp \

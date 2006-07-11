@@ -13,7 +13,7 @@
 # platform_macros.GNU file such as this can be used:
 #     fast=1
 #     include $(ACE_ROOT)/include/makeinclude/platform_sunos5_sunc++.GNU
-#     CCFLAGS += -xtarget=ultra2 -xarch=v9a #### CPU specific!
+#     CFLAGS += -xtarget=ultra2 -xarch=v9a #### CPU specific!
 #     SOFLAGS += -xtarget=ultra2 -xarch=v9a
 #     LDFLAGS += -L/opt/SUNWspro/SC5.0/lib/v9 -L/usr/lib/sparcv9
 # Please note that the xtarget and xarch settings are specific to
@@ -51,6 +51,10 @@ ace_with_x11 ?= 0
 no_hidden_visibility ?= 1
 templates ?= automatic
 
+## If you set this to 1 you will need to add -xarch=v8plus (or higher)
+## to CFLAGS or the assembler code will not compile
+atomic_ops_sparc ?= 0
+
 PLATFORM_TK_CPPFLAGS=
 PLATFORM_TK_LIBS=-ltk -ltcl
 PLATFORM_TK_LDFLAGS=
@@ -81,6 +85,10 @@ else
   ifeq (C++ 5.7,$(findstring C++ 5.7,$(CC_VERSION)))
     PLATFORM_STLPORT_CPPFLAGS = -library=stlport4
   endif
+endif
+
+ifeq ($(atomic_ops_sparc),1)
+  CFLAGS += -DACE_HAS_BUILTIN_ATOMIC_OP -DACE_INCLUDE_ATOMIC_OP_SPARC
 endif
 
 #### The following macro overrides enable creation of fast executables.
@@ -181,10 +189,10 @@ else  # ! 4.2
         # from CCFLAGS in a private platform_macros.GNU file.
         ifeq (64,$(buildbits))
           ifeq (C++ 5.7,$(findstring C++ 5.7,$(CC_VERSION)))
-            CCFLAGS += -xarch=generic64
+            CFLAGS += -xarch=generic64
             LDFLAGS += -xarch=generic64
           else
-            CCFLAGS += -xarch=v9
+            CFLAGS += -xarch=v9
             LDFLAGS += -xarch=v9
           endif # C++ 5.7
         endif # buildbits
