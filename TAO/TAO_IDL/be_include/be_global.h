@@ -209,6 +209,20 @@ public:
   // set the name of the include file to be put at the bottom of every
   // header file.
 
+  const char* include_guard (void) const;
+  // returns the guard that is placed in the client header file
+
+  void include_guard (const char* s);
+  // set the guard that is placed in the client header file
+
+  const char* safe_include (void) const;
+  // returns the name of the include file that is used instead of the own
+  // generated client header file
+
+  void safe_include (const char* s);
+  // set the name of the include file that is used instead of the own
+  // generated client header file
+
   /// Set text that opens a "versioned" namespace.
   void versioning_begin (const char* s);
 
@@ -558,6 +572,8 @@ private:
   char* pch_include_;
   char* pre_include_;
   char* post_include_;
+  char* include_guard_;
+  char* safe_include_;
 
   /// Text that opens a "versioned" namespace for core TAO and orbsvcs
   /// related code.

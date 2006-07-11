@@ -39,6 +39,7 @@ TAO_PortableServer_ORBInitializer::register_policy_factories (
   PortableInterceptor::ORBInitInfo_ptr info
   ACE_ENV_ARG_DECL)
 {
+#if !defined (CORBA_E_MICRO)
   // Register the PortableServer policy factories.
   PortableInterceptor::PolicyFactory_ptr tmp;
   ACE_NEW_THROW_EX (tmp,
@@ -102,6 +103,9 @@ TAO_PortableServer_ORBInitializer::register_policy_factories (
       ACE_ENDTRY;
       ACE_CHECK;
     }
+#else
+  ACE_UNUSED_ARG (info);
+#endif
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

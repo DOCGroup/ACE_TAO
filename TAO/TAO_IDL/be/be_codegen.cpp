@@ -152,6 +152,27 @@ TAO_CodeGen::start_client_header (const char *fname)
                             << "\"\n\n";
     }
 
+  if (be_global->include_guard () != 0)
+    {
+      *this->client_header_ << "#ifndef "
+                            << be_global->include_guard ()
+                            << "\n";
+
+      *this->client_header_ << "#error "
+                            << "You should not include " << fname;
+
+      if (be_global->safe_include () != 0)
+        {
+          *this->client_header_ << ", use " << be_global->safe_include ();
+        }
+
+      *this->client_header_ << "\n";
+
+      *this->client_header_ << "#endif /* "
+                            << be_global->include_guard ()
+                            << " */\n";
+    }
+
   // To get ACE_UNUSED_ARGS
   this->gen_standard_include (this->client_header_,
                               "ace/config-all.h");
@@ -966,11 +987,22 @@ TAO_CodeGen::start_anyop_source (const char *fname)
                            << "\"";
     }
 
-  // Generate the include statement for the client header. We just
-  // need to put only the base names. Path info is not required.
-  *this->anyop_source_ << "\n#include \""
-                       << be_global->be_get_anyop_header_fname (1)
-                       << "\"";
+  if (be_global->safe_include ())
+    {
+      // Generate the safe include if it is defined instead of the client header
+      // need to put only the base names. Path info is not required.
+      *this->anyop_source_ << "\n#include \""
+                           << be_global->safe_include ()
+                           << "\"";
+    }
+  else
+    {
+      // Generate the include statement for the client header. We just
+      // need to put only the base names. Path info is not required.
+      *this->anyop_source_ << "\n#include \""
+                           << be_global->be_get_anyop_header_fname (1)
+                           << "\"";
+    }
 
   this->gen_typecode_includes (this->anyop_source_);
 
@@ -1605,18 +1637,12 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
       this->client_header_
     );
 
-  // Not needed at the moment, since UserException.h is pulled in by
-  // ORB.h, which is included in the stub header file. May change if
-  // ORB.h is rearranged to make a lighter include for applications.
-  // System exception throw spec for every operation may change soon.
-#if 0
   // For IDL exception, we need full knowledge of CORBA::UserException.
   this->gen_cond_file_include (
       idl_global->exception_seen_,
       "tao/UserException.h",
       this->client_header_
     );
-#endif  /* 0 */
 
   this->gen_standard_include (this->client_header_,
                               "tao/Environment.h");
@@ -1769,11 +1795,22 @@ TAO_CodeGen::gen_stub_src_includes (void)
                            << "\"";
     }
 
-  // Generate the include statement for the client header. We just
-  // need to put only the base names. Path info is not required.
-  *this->client_stubs_ << "\n#include \""
-                       << be_global->be_get_client_hdr_fname (1)
-                       << "\"";
+  if (be_global->safe_include ())
+    {
+      // Generate the safe include if it is defined instead of the client header
+      // need to put only the base names. Path info is not required.
+      *this->client_stubs_ << "\n#include \""
+                           << be_global->safe_include ()
+                           << "\"";
+    }
+  else
+    {
+      // Generate the include statement for the client header. We just
+      // need to put only the base names. Path info is not required.
+      *this->client_stubs_ << "\n#include \""
+                           << be_global->be_get_client_hdr_fname (1)
+                           << "\"";
+    }
 
   if (be_global->tc_support ()
       && !be_global->gen_anyop_files ())

@@ -1,3 +1,8 @@
+Tue Jul 11 00:50:23 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/generate_compile_stats.sh:
+          Updated to also handle redhat version information
+
 Sun Jul 09 05:53:23 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ACE version 5.5.2 released.

@@ -367,6 +367,24 @@ also receives other options that are specific to it.<p>
         and CORBA services.</td>
   </tr>
 
+  <tr><a name="include_guard">
+    <td></td>
+
+    <td><tt>include_guard=</tt><i>define</i></td>
+
+    <td>The compiler will generate code the define in the C.h file to prevent
+        users from including the generated C.h file. Useful for regenerating 
+        the pidl files in the archive.</td>
+  </tr>
+
+  <tr><a name="safe_include">
+    <td></td>
+
+    <td><tt>safe_include=</tt><i>file</i></td>
+
+    <td>File that the user should include instead of this generated C.h file.
+        Useful for regenerating the pidl files in the archive.</td>
+  </tr>
 
   <tr><a name="E">
     <td><tt>-E</tt></td>
