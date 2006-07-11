@@ -1,3 +1,15 @@
+Tue Jul 11 22:22:04 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * configure.ac: Change the minimum automake version to 1.9.6; this is
+          required to generate Makefiles that work properly on AIX.
+
+        * m4/compiler.m4: For AIX, replace ACE_AIX_MAJOR_VERS and
+          ACE_AIX_MINOR_VERS compile macros with ACE_AIX_VERS as the
+          hand-edited platform_aix_ibm.GNU has and the code expects.
+          Also removed the AIX 3 and 4 code since AIX 3 and 4 are no longer
+          supported. Also, turned on -qtemplateregistry for xlC-type
+          compilers (Visual Age C++ 6 and XL C++ 7).
+
 Tue Jul 11 21:37:51 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * ace/OS_NS_stdio.cpp (snprintf, sprintf): In the wchar versions,
