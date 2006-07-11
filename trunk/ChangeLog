@@ -1,3 +1,10 @@
+Tue Jul 11 22:09:56 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * include/makeinclude/platform_linux.GNU: Added support for the
+          "buildbits=64" and "buildbits=32" make settings to target
+          32- and 64-bit build targets, respectively. Thanks to Boris
+          Kaminer <boris dor kaminer at gmail dot com> for this addition.
+
 Tue Jul 11 22:22:04 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * configure.ac: Change the minimum automake version to 1.9.6; this is
