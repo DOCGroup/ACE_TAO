@@ -90,11 +90,10 @@ extern "C"
 #endif /* ACE_HAS_PRUSAGE_T */
 
 #if !defined (ACE_WIN32)
-// These prototypes are chronically lacking from many versions of
-// UNIX.
+// These prototypes are chronically lacking from many versions of UNIX.
 # if !defined (ACE_HAS_GETRUSAGE_PROTOTYPE)
   int getrusage (int who, struct rusage *rusage);
-# endif /* ! ACE_HAS_GETRUSAGE_PROTO */
+# endif /* ! ACE_HAS_GETRUSAGE_PROTOTYPE */
 
 # if defined (ACE_LACKS_SYSCALL)
   int syscall (int, ACE_HANDLE, struct rusage *);

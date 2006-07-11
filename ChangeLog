@@ -1,13 +1,26 @@
+Tue Jul 11 16:55:57 UTC 2006  Olli Savia  <ops@iki.fi>
+
+        * ace/TTY_IO.cpp:
+          Enable raw mode correctly on POSIX systems. Accept "none" as
+          valid parity value. Thanks to hongxing <hongxing777 at gmail dot com>
+          for the patch.
+
+        * ace/TTY_IO.h:
+          Updated documentation to reflect changes above.
+
+        * ace/os_include/sys/os_resource.h:
+          Fixed typo in comment.
+
 Tue Jul 11 16:38:29 UTC 2006  Olli Savia  <ops@iki.fi>
 
         * ace/config-linux-common.h:
         * ace/os_include/os_signal.h:
         * ace/os_include/os_stropts.h:
 
-        Changed ACE_HAS_ISASTREAM_PROTO to ACE_HAS_ISASTREAM_PROTOTYPE and
-        ACE_HAS_PTHREAD_SIGMASK_PROTO to ACE_HAS_PTHREAD_SIGMASK_PROTOTYPE
-        to better follow ACE naming conventions.
-        
+          Changed ACE_HAS_ISASTREAM_PROTO to ACE_HAS_ISASTREAM_PROTOTYPE and
+          ACE_HAS_PTHREAD_SIGMASK_PROTO to ACE_HAS_PTHREAD_SIGMASK_PROTOTYPE
+          to better follow ACE naming conventions.
+
 Tue Jul 11 13:38:10 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * ace/Message_Queue.inl: Include "ace/Guard_T.h" in the ACE_WIN32
