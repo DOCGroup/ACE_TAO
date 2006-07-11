@@ -77,7 +77,7 @@ ifeq ($(threads),1)
   # set the defs by hand; anything else, use -mt. This leaves out .1x
   # versions, which should be no problem at this point.
   ifeq (,$(filter 2%,$(CXXMINORVERS)))
-    THR_DEFS += -mt
+    CC_THR_DEFS += -mt
   else
     # Different for v2 vs. v1 C++ library selection.
     ifeq (1,$(stdcpplib))
@@ -127,6 +127,7 @@ ifeq (05,$(CXXMAJORVERS))
 endif
 
 CPPFLAGS        += $(THR_DEFS) -D_HPUX_SOURCE -DHPUX_VERS=$(HPUX_VERS) -DACE_LACKS_PRAGMA_ONCE
+CCFLAGS         += $(CC_THR_DEFS)
 
 # If exception support is explicitly disabled, tell the compiler.
 # This is not recommended since the run-time library can throw exceptions.
@@ -213,8 +214,8 @@ ifeq ($(word 2,$(HPVERS_WORDS)), 11)
 
   #11.x:
   ifeq ($(threads),1)
-    # If -mt is in CPPLAGS, we don't need to add anything to LIBS; -mt does it.
-    ifeq ($(findstring -mt,$(CPPFLAGS)),)
+    # If -mt is in CCFLAGS, we don't need to add anything to LIBS; -mt does it.
+    ifeq ($(findstring -mt,$(CCFLAGS)),)
       ## -L./ must directly preceed the system libraries for 64-bit builds
       ## with aCC 3.27.  Without this change, libpthread.sl can not be found.
       LIBS += -L./ -lpthread
