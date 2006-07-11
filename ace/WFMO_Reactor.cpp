@@ -1187,9 +1187,20 @@ ACE_WFMO_Reactor::open (size_t size,
   this->atomic_wait_array_[0] = this->lock_.lock ().proc_mutex_;
   this->atomic_wait_array_[1] = this->ok_to_wait_.handle ();
 
-  // This is to guard against reopens of WFMO_Reactor
+  // Prevent memory leaks when the ACE_WFMO_Reactor is reopened. 
   if (this->delete_handler_rep_)
-    this->handler_rep_.~ACE_WFMO_Reactor_Handler_Repository ();
+    {
+      if (this->handler_rep_.changes_required ())
+        {
+          // Make necessary changes to the handler repository
+          this->handler_rep_.make_changes ();
+          // Turn off <wakeup_all_threads_> since all necessary changes
+          // have completed
+          this->wakeup_all_threads_.reset ();
+        }
+
+      this->handler_rep_.~ACE_WFMO_Reactor_Handler_Repository ();
+    }
 
   // Open the handle repository.  Two additional handles for internal
   // purposes
