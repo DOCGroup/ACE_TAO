@@ -1,3 +1,11 @@
+Tue Jul 11 17:25:06 UTC 2006  Olli Savia  <ops@iki.fi>
+
+        * include/makeinclude/platform_rtems.x_g++.GNU:
+        * include/makeinclude/wrapper_macros.GNU:
+
+          Removed references to obsolete ACE_HAS_GNUG_PRE_2_8 make
+          variable. Removed egcs checks.
+
 Tue Jul 11 16:55:57 UTC 2006  Olli Savia  <ops@iki.fi>
 
         * ace/TTY_IO.cpp:

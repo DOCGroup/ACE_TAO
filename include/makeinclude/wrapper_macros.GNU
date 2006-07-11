@@ -1,4 +1,4 @@
-        # -*- Makefile -*-
+# -*- Makefile -*-
 
 #----------------------------------------------------------------------------
 #  $Id$
@@ -97,12 +97,6 @@
 #
 #  Variable     Description
 #  --------     -----------
-#  ACE_HAS_GNUG_PRE_2_8 CXX
-#               includes "g++", and the g++ version is prior to 2.8.0.  This is
-#               automatically determined below, but can be overridden in the
-#               user's platform_macros.GNU or environment.  Three values are
-#               supported: 1 for g++ < 2.8.0, 0 for g++ >= 2.8.0 or egcs,
-#               undefined for non-g++ compilers.
 #  ARFLAGS      Flags for the archive utility (ar)
 #  CC           C compiler command
 #  CXX          C++ compiler command
@@ -380,15 +374,6 @@ endif
 #----------------------------------------------------------------------------
 #      Platform-dependent macros that require platform_macros.GNU.
 #----------------------------------------------------------------------------
-
-ifeq ($(findstring g++,$(CXX)),g++)
-  ifndef ACE_HAS_GNUG_PRE_2_8
-      ACE_HAS_GNUG_PRE_2_8 := \
-        $(shell \
-          if $(CXX) -dumpversion 2>/dev/null | egrep '^(cygnus-)?2\.[0-7]' \
-	  >/dev/null; then echo 1; else echo 0; fi)
-  endif # ! ACE_HAS_GNUG_PRE_2_8
-endif # g++
 
 OBJEXT ?= o
 SOEXT ?= so
