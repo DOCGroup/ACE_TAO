@@ -80,11 +80,11 @@ TAO_RT_Transport_Descriptor::is_equivalent (const TAO_Transport_Descriptor_Inter
     dynamic_cast<const TAO_RT_Transport_Descriptor*> (other_prop);
 
   if (rhs == 0)
-    return 0;
+    return false;
 
   // Check if endpoint is equivalent.
   if (this->endpoint_->is_equivalent (rhs->endpoint_) == 0)
-    return 0;
+    return false;
 
   // Check the property_list_.
   TAO_RT_Transport_Descriptor_Property *current =
@@ -95,18 +95,17 @@ TAO_RT_Transport_Descriptor::is_equivalent (const TAO_Transport_Descriptor_Inter
 
   while (current || rhs_current)
     {
-      if (rhs_current == 0 ||
-          current == 0)
-        return 0;
+      if (rhs_current == 0 || current == 0)
+        return false;
 
       if (current->is_equivalent (rhs_current) == 0)
-        return 0;
+        return false;
 
       current = current->next_;
       rhs_current = rhs_current->next_;
     }
 
-  return 1;
+  return true;
 }
 
 u_long

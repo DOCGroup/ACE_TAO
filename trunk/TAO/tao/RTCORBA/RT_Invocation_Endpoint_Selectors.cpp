@@ -95,7 +95,7 @@ TAO_RT_Invocation_Endpoint_Selector::select_endpoint_based_on_client_protocol_po
     ACE_Time_Value *val
     ACE_ENV_ARG_DECL)
 {
-  CORBA::Boolean valid_profile_found = 0;
+  CORBA::Boolean valid_profile_found = false;
 
   // Even though cycling through all the protocols is the correct
   // things to do to find a match, starting from the start of the
@@ -120,11 +120,11 @@ TAO_RT_Invocation_Endpoint_Selector::select_endpoint_based_on_client_protocol_po
 
           if (profile->tag () == client_protocols[protocol_index].protocol_type)
             {
-              valid_profile_found = 1;
+              valid_profile_found = true;
 
               r.profile (profile);
 
-              int status =
+              int const status =
                 this->endpoint_from_profile (r,
                                              val
                                              ACE_ENV_ARG_PARAMETER);
