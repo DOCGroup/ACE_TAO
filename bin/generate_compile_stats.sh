@@ -734,9 +734,11 @@ create_index_page ()
 
   if [ -e "/etc/SuSE-release" ]; then
     cat /etc/SuSE-release
+  fi
 
   if [ -e "/etc/redhat-release" ]; then
     cat /etc/redhat-release
+  fi
 
   echo '), and we use GCC '
 
