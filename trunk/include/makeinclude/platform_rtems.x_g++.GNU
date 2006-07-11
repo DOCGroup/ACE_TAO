@@ -50,16 +50,6 @@ ifndef ACE_CC_VERSION
   ACE_CC_VERSION := $(shell $(ACE_CC) --version)
 endif # ! ACE_CC_VERSION
 
-ifeq (egcs,$(findstring egcs,$(ACE_CC_VERSION)))
-  ACE_HAS_GNUG_PRE_2_8 := 0
-  CFLAGS +=
-  ifneq (1,$(exceptions))
-    #### With exceptions, this is applied in wrapper_macros.GNU.
-    #### Without, we do it here.
-    CFLAGS += -Wno-uninitialized
-  endif # ! exceptions
-endif # egcs
-
 #CFLAGS          += -D_REENTRANT -ansi -fno-builtin -fno-defer-pop \
 #                   -fvolatile $(PIPE_OPT) -W -Wall
 #CCFLAGS         += $(CFLAGS)
