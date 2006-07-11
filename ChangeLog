@@ -1,3 +1,10 @@
+Tue Jul 11 22:20:14 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * bin/generate_doxygen.pl: Add the ability to put the generated
+          HTML output in a specified location using the new -html_output
+          command line option. It alters the path specified for the
+          HTML_OUTPUT and GENERATE_TAGFILE Doxygen options.
+
 Tue Jul 11 22:09:56 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * include/makeinclude/platform_linux.GNU: Added support for the
