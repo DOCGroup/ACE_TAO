@@ -1,3 +1,8 @@
+Tue Jul 11 11:08:01 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/BiDir_GIOP.mpc:
+          Fixed casing of include
+
 Tue Jul 11 08:30:00 UTC 2006  Simon Massey  <sma@prismtech.com>
 
         * utils/nslist/nslist.cpp:
