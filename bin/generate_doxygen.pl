@@ -18,6 +18,7 @@ $exclude_ciao = 0;
 $verbose = 0;
 $perl_path = '/usr/bin/perl';
 $dot_path = '/usr/local/bin';
+$html_output_dir = '.';
 @ACE_DOCS = ('ace',
              'ace_man',
              'ace_rmcast',
@@ -92,6 +93,9 @@ sub parse_args {
     } elsif ($ARGV[0] eq "-dot_path" && $#ARGV >= 1) {
       $dot_path = $ARGV[1];
       shift;
+    } elsif ($ARGV[0] eq "-html_output" && $#ARGV >= 1) {
+      $html_output_dir = $ARGV[1];
+      shift;
     } else {
       print "Ignoring option $ARGV[0]\n";
     }
@@ -163,7 +167,17 @@ sub generate_doxy_files {
       } elsif ($generate_html && /^HTML_OUTPUT/) {
         my @field = split(' = ');
         if ($#field >= 1) {
-          push @output_dirs, $field[1];
+          my $html_out_dir = "$html_output_dir/$field[1]";
+          push @output_dirs, $html_out_dir;
+	  print DOXYOUTPUT "HTML_OUTPUT = $html_out_dir\n";
+	  next;
+        }
+      } elsif ($generate_html && /^GENERATE_TAGFILE/) {
+        my @field = split(' = ');
+        if ($#field >= 1) {
+          my $html_out_dir = "$html_output_dir/$field[1]";
+	  print DOXYOUTPUT "GENERATE_TAGFILE = $html_out_dir\n";
+	  next;
         }
       } elsif ($generate_html && /^MAN_OUTPUT/) {
         my @field = split(' = ');
