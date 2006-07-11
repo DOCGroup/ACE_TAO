@@ -28,6 +28,23 @@ project : valuetype, portableserver, core {
   }
 
   IDL_Files {
+    idlflags += -Gp -Gd -Ge 1 -SS -Sorb  \
+                -Wb,export_macro=TAO_ORT_Export \
+                -Wb,export_include=tao/ObjRefTemplate/ort_export.h \
+                -Wb,include_guard=TAO_OBJREF_TEMPLATE_SAFE_INCLUDE \
+                -Wb,safe_include=tao/ObjRefTemplate/ObjectReferenceTemplate.h \
+                -o ObjRefTemplate
+    idlflags -= -Sa -St
+    ObjRefTemplate/ObjectReferenceTemplate.pidl
+  }
+
+  IDL_Files {
+    idlflags += -Gp -Gd -Ge 1 -SS -GA -Sorb  \
+                -Wb,export_macro=TAO_ORT_Export \
+                -Wb,export_include=tao/ObjRefTemplate/ort_export.h \
+                -o ObjRefTemplate
+    idlflags -= -Sa -St
+    ObjRefTemplate/Default_ORT.pidl
   }
 
   Pkgconfig_Files {
