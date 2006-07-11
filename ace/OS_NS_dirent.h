@@ -33,6 +33,27 @@
 #endif
 #define ACE_EXPORT_MACRO ACE_Export
 
+// Define the scandir() selector and comparator function types. Many platforms
+// define these in terms of const pointers to dirent arrays/structs. Some
+// platforms use void pointers instead. The ACE-exported API is defined in
+// terms of the dirent-using function types, and if the OS-native scandir()
+// uses void*, that's handled internal to the ACE_OS::scandir() wrapper using
+// the ACE_SCANDIR_OS_COMPARATOR.
+extern "C" {
+#if defined (ACE_SCANDIR_CMP_USES_VOIDPTR)
+  typedef int (*ACE_SCANDIR_OS_COMPARATOR)(void *f1, void *f2);
+#elif defined (ACE_SCANDIR_CMP_USES_CONST_VOIDPTR)
+  typedef int (*ACE_SCANDIR_OS_COMPARATOR)(const void *f1, const void *f2);
+#endif /* ACE_SCANDIR_CMP_USES_VOIDPTR */
+  typedef int (*ACE_SCANDIR_COMPARATOR)(const ACE_DIRENT **f1,
+                                        const ACE_DIRENT **f2);
+
+#if defined (ACE_SCANDIR_SEL_LACKS_CONST)
+  typedef int (*ACE_SCANDIR_OS_SELECTOR)(ACE_DIRENT *filename);
+#endif /* ACE_SCANDIR_SEL_LACKS_CONST */
+  typedef int (*ACE_SCANDIR_SELECTOR)(const ACE_DIRENT *filename);
+}
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE_OS {
@@ -57,9 +78,8 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   int scandir (const ACE_TCHAR *dirname,
                struct ACE_DIRENT **namelist[],
-               int (*selector) (const struct ACE_DIRENT *filename),
-               int (*comparator) (const struct ACE_DIRENT **f1,
-                                  const struct ACE_DIRENT **f2));
+               ACE_SCANDIR_SELECTOR selector,
+               ACE_SCANDIR_COMPARATOR comparator);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   void seekdir (ACE_DIR *,
@@ -78,9 +98,8 @@ namespace ACE_OS {
   extern ACE_Export
   int scandir_emulation (const ACE_TCHAR *dirname,
                          ACE_DIRENT **namelist[],
-                         int (*selector)(const ACE_DIRENT *entry),
-                         int (*comparator)(const ACE_DIRENT **f1,
-                                           const ACE_DIRENT**f2));
+                         ACE_SCANDIR_SELECTOR selector,
+                         ACE_SCANDIR_COMPARATOR comparator);
 #endif /* !ACE_HAS_SCANDIR */
 
 #if defined (ACE_LACKS_CLOSEDIR)

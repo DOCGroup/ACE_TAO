@@ -134,20 +134,25 @@ rewinddir (ACE_DIR *d)
 
 ACE_INLINE int
 scandir (const ACE_TCHAR *dirname,
-                 struct ACE_DIRENT **namelist[],
-                 int (*selector)(const struct ACE_DIRENT *),
-                 int (*comparator) (const struct ACE_DIRENT **f1,
-                                    const struct ACE_DIRENT **f2))
+         struct ACE_DIRENT **namelist[],
+         ACE_SCANDIR_SELECTOR selector,
+         ACE_SCANDIR_COMPARATOR comparator)
 {
 #if defined (ACE_HAS_SCANDIR)
   return ::scandir (ACE_TEXT_ALWAYS_CHAR (dirname),
                     namelist,
+#  if defined (ACE_SCANDIR_SEL_LACKS_CONST)
+                    reinterpret_cast<ACE_SCANDIR_OS_SELECTOR> (selector),
+#  else
                     selector,
-#  if defined (ACE_SCANDIR_CMP_USES_VOIDPTR)
-                    reinterpret_cast<int(*)(const void*, const void*)> (comparator));
+#  endif /* ACE_SCANDIR_SEL_LACKS_CONST */
+#  if defined (ACE_SCANDIR_CMP_USES_VOIDPTR) || \
+      defined (ACE_SCANDIR_CMP_USES_CONST_VOIDPTR)
+                    reinterpret_cast<ACE_SCANDIR_OS_COMPARATOR> (comparator));
 #  else
                     comparator);
 #  endif /* ACE_SCANDIR_CMP_USES_VOIDPTR */
+
 #else /* ! defined ( ACE_HAS_SCANDIR) */
   return ACE_OS::scandir_emulation (dirname, namelist, selector, comparator);
 #endif /* ACE_HAS_SCANDIR */

@@ -318,12 +318,12 @@ namespace ACE_OS
   int truncate (const ACE_TCHAR *filename, ACE_LOFF_T length);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  u_long ualarm (u_long usecs,
-                 u_long interval = 0);
+  useconds_t ualarm (useconds_t usecs,
+                     useconds_t interval = 0);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  u_long ualarm (const ACE_Time_Value &tv,
-                 const ACE_Time_Value &tv_interval = ACE_Time_Value::zero);
+  useconds_t ualarm (const ACE_Time_Value &tv,
+                     const ACE_Time_Value &tv_interval = ACE_Time_Value::zero);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int unlink (const char *path);
