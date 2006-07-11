@@ -1,3 +1,8 @@
+Tue Jul 11 12:19:23 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/tao.doxygen:
+          Added .idl to FILE_PATTERNS
+
 Tue Jul 11 12:01:12 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/Atomic_Op.cpp:
