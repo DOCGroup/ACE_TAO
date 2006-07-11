@@ -36,6 +36,7 @@
 #include "tao/Pseudo_VarOut_T.h"
 #include "tao/Object_Argument_T.h"
 #include "tao/Arg_Traits_T.h"
+#include "tao/Objref_VarOut_T.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
