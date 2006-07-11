@@ -39,23 +39,7 @@ const char *ior = "file://RepositoryManagerDeamon.ior";
 //Name service of the RM
 char *RMname_service;
 
-
-///=============================COUPLE OF HELPER METHORS==================================
-CORBA::Octet* read_from_disk (
-  const char* full_path,
-  size_t &length
-  );
-
-int write_to_disk (
-  const char* full_path,
-  const CORBA::Octet* buffer,
-  size_t length
-  );
-///========================================================================================
-
-
 ///main function that provides a sample interface for RM clients
-
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_TRY_NEW_ENV
@@ -287,67 +271,3 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   return 0;
 }
-
-CORBA::Octet* read_from_disk (
-  const char* full_path,
-  size_t &length
-  )
-{
-  //open the file
-
-  ACE_HANDLE handle = ACE_OS::open (full_path, O_RDONLY);
-    if (handle == ACE_INVALID_HANDLE)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("[RM::read_from_disk] file open error")),
-                           0);
-
-  ACE_stat file_info;
-
-  ACE_OS::fstat (handle, &file_info);
-
-  CORBA::Octet* buffer = 0;
-  ACE_NEW_RETURN (buffer, CORBA::Octet[file_info.st_size], 0);
-
-  // read the contents of the file into the buffer
-  if (ACE_OS::read_n (handle, buffer, file_info.st_size) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-               ACE_TEXT ("[RM::write_to_disk] file write error")),
-                           0);
-
-  // Close the file handle
-    ACE_OS::close (handle);
-
-  length = file_info.st_size;
-  return buffer;
-}
-
-
-int write_to_disk (
-  const char* full_path,
-  const CORBA::Octet* buffer,
-  size_t length
-  )
-{
-  // Open a file handle to the local filesystem
-    ACE_HANDLE handle = ACE_OS::open (full_path, O_CREAT | O_TRUNC | O_WRONLY);
-    if (handle == ACE_INVALID_HANDLE)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("[RM::write_to_disk] file creation error")),
-                           -1);
-
-  //write the data to the file
-  if (ACE_OS::write (handle, buffer, length) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("[RM::write_to_disk] file write error")),
-                           -1);
-
-  // Close the file handle
-    ACE_OS::close (handle);
-
-  return 1;
-}
-

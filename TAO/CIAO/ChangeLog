@@ -1,3 +1,11 @@
+Tue Jul 11 23:19:58 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
+        * DAnCE/RepositoryManager/RM_Helper.h:
+        * DAnCE/RepositoryManager/RM_Helper.cpp:
+        * DAnCE/RepositoryManager/RMadmin.cpp:
+        * DAnCE/RepositoryManager/RepositoryManager_Impl.cpp:
+          Fixed the "conversion from '__int64' to 'size_t', possible loss
+          of data" warnings.
+          
 Sun Jul 09 06:01:14 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * CIAO version 0.5.2 released.
