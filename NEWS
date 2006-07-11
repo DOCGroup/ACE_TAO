@@ -6,6 +6,17 @@ PLANNED MAJOR CHANGES TARGETED FOR ACE-5.5.3
 
 . (Remedy) VxWorks 6.3 support
 
+USER VISIBLE CHANGES BETWEEN ACE-5.5.2 and ACE-5.5.3
+====================================================
+
+. The selector and comparator function pointer arguments to ACE_OS::scandir()
+  and ACE_Dirent_Selector are now marked as extern "C" to enforce their
+  use with a C RTL function. User code that defines functions which are
+  passed as the selector or comparator arguments which are not declared
+  extern "C" may generate compile warnings. To resolve this, add extern "C"
+  to the function's signature. See ACE_wrappers/tests/Dirent_Test.cpp for
+  an example.
+
 USER VISIBLE CHANGES BETWEEN ACE-5.5.1 and ACE-5.5.2
 ====================================================
 

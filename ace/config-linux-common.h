@@ -327,7 +327,8 @@
 
 // Platform supplies scandir()
 #define ACE_HAS_SCANDIR
-#define ACE_SCANDIR_CMP_USES_VOIDPTR
+// Although the scandir man page says otherwise, this setting is correct.
+#define ACE_SCANDIR_CMP_USES_CONST_VOIDPTR
 
 //#define ACE_LACKS_STRRECVFD
 #define ACE_HAS_STRBUF_T

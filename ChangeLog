@@ -1,3 +1,53 @@
+Tue Jul 11 21:37:51 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS_NS_stdio.cpp (snprintf, sprintf): In the wchar versions,
+          adjust the preprocessor checks to pick up the way that Solaris
+          indicates the presence of XPG5 capability. Allows these functions
+          to work, which allows ACE_Log_Msg to work also.
+
+        * ace/OS_NS_unistd.{h inl} (ualarm): Changed u_long arguments and
+          return value to useconds_t to gain portability.
+
+        * ace/OS_NS_dirent.{h inl cpp}: Made the selector and comparator
+          function pointer arguments to ACE_OS::scandir() and
+          scandir_emulation() be extern "C" to enforce their use with a
+          C RTL function. This resolves warnings from Solaris and makes usage
+          correct across all platforms. The function types are now in
+          typedefs ACE_SCANDIR_SELECTOR and ACE_SCANDIR_COMPARATOR,
+          respectively. The typedef was used previously only for Windows/MSVC
+          where the calling convention change had bit someone - now it's
+          uniform for all.
+          Also, folded in the ACE_SCANDIR_CMP_USES_VOIDPTR def here to
+          set up the proper typing with extern "C" for when it's needed to
+          cast inside the ACE_OS::scandir() implementation. The interface
+          offered by ACE_OS::scandir() is always defined in terms of
+          ACE_SCANDIR_SELECTOR and ACE_SCANDIR_COMPARATOR.
+
+        * ace/Dirent_Selector.{h cpp}: Use the extern "C"-containing typedefs
+          for selector/comparator functions set up for ACE_OS::scandir() in
+          ACE_Dirent_Selector as well since they get passed through to ACE_OS.
+
+        * apps/soreduce/Library.cpp:
+        * tests/Dirent_Test.cpp: Mark selector/comparator functions that'll be
+          passed to ACE_OS::scandir() as extern "C" to match new param types.
+
+        * ace/config-aix-5.x.h: Added ACE_HAS_SCANDIR since AIX has scandir(),
+          as well as the needed ACE_SCANDIR_SEL_LACKS_CONST and
+          ACE_SCANDIR_CMP_USES_VOIDPTR to adjust to it's differences from
+          the common way scandir() is usually defined.
+
+        * ace/config-hpux-11.00.h: Added ACE_HAS_SCANDIR.
+
+        * ace/config-linux-common.h: Clarify that, despite the man page,
+          ACE_SCANDIR_CMP_USES_CONST_VOIDPTR is needed, at least on RHEL 3
+          and 4.
+
+        * ace/README: Added descriptions for ACE_HAS_SCANDIR and
+          ACE_SCANDIR_CMP_USES_VOIDPTR as well as the new settings
+          ACE_SCANDIR_SEL_LACKS_CONST and ACE_SCANDIR_CMP_USES_CONST_VOIDPTR.
+
+        * NEWS: Summarize the above user-visible selector/comparator changes.
+
 Tue Jul 11 17:39:00 UTC 2006  Olli Savia  <ops@iki.fi>
 
         * ace/Basic_Types.h:

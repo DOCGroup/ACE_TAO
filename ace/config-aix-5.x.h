@@ -50,6 +50,9 @@
 #undef ACE_LACKS_NETINET_TCP_H
 
 #define ACE_HAS_POSIX_GETPWNAM_R
+#define ACE_HAS_SCANDIR
+# define ACE_SCANDIR_CMP_USES_VOIDPTR
+# define ACE_SCANDIR_SEL_LACKS_CONST
 #define ACE_HAS_SIGSUSPEND
 #define ACE_HAS_TIMEZONE  /* Call tzset() to set timezone */
 

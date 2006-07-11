@@ -60,6 +60,8 @@ static const int RECURSION_INDENT = 3;
 // Number of entries in the directory.
 static int entrycount = 0;
 
+extern "C" {
+
 static int
 selector (const ACE_DIRENT *d)
 {
@@ -71,6 +73,8 @@ comparator (const ACE_DIRENT **d1, const ACE_DIRENT **d2)
 {
   return ACE_OS::strcmp ((*d1)->d_name, (*d2)->d_name);
 }
+
+} /* extern "C" */
 
 static int
 dirent_selector_test (void)

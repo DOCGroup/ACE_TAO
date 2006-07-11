@@ -313,6 +313,9 @@
 // ctime_r and asctime_r conform to POSIX.1c (2 param version)
 #define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
 
+// Platform offers scandir(), and requires no adjustments for its API.
+#define ACE_HAS_SCANDIR
+
 // HP-UX 11 has reentrant netdb functions.  The catch is that the old
 // functions (gethostbyname, etc.) are thread-safe and the _r versions are
 // not used and will be removed at some point.  So, define things so

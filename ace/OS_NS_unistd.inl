@@ -1023,8 +1023,8 @@ ACE_OS::truncate (const ACE_TCHAR *filename,
 #endif /* ACE_WIN32 */
 }
 
-ACE_INLINE u_long
-ACE_OS::ualarm (u_long usecs, u_long interval)
+ACE_INLINE useconds_t
+ACE_OS::ualarm (useconds_t usecs, useconds_t interval)
 {
   ACE_OS_TRACE ("ACE_OS::ualarm");
 
@@ -1040,15 +1040,16 @@ ACE_OS::ualarm (u_long usecs, u_long interval)
 #endif /* ACE_HAS_UALARM */
 }
 
-ACE_INLINE u_long
+ACE_INLINE useconds_t
 ACE_OS::ualarm (const ACE_Time_Value &tv,
                 const ACE_Time_Value &tv_interval)
 {
   ACE_OS_TRACE ("ACE_OS::ualarm");
 
 #if defined (ACE_HAS_UALARM)
-  u_long usecs = (tv.sec () * ACE_ONE_SECOND_IN_USECS) + tv.usec ();
-  u_long interval = (tv_interval.sec () * ACE_ONE_SECOND_IN_USECS) + tv_interval.usec ();
+  useconds_t usecs = (tv.sec () * ACE_ONE_SECOND_IN_USECS) + tv.usec ();
+  useconds_t interval =
+    (tv_interval.sec () * ACE_ONE_SECOND_IN_USECS) + tv_interval.usec ();
   return ::ualarm (usecs, interval);
 #elif !defined (ACE_LACKS_UNIX_SIGNALS)
   ACE_UNUSED_ARG (tv_interval);

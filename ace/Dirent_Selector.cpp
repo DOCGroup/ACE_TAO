@@ -31,9 +31,8 @@ ACE_Dirent_Selector::~ACE_Dirent_Selector (void)
 
 int
 ACE_Dirent_Selector::open (const ACE_TCHAR *dir,
-                           int (*sel)(const ACE_DIRENT *d),
-                           int (*cmp) (const ACE_DIRENT **d1,
-                                       const ACE_DIRENT **d2))
+                           ACE_SCANDIR_SELECTOR sel,
+                           ACE_SCANDIR_COMPARATOR cmp)
 {
   n_ = ACE_OS::scandir (dir, &this->namelist_, sel, cmp);
   return n_;

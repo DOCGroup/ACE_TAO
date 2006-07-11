@@ -13,19 +13,6 @@ ACE_RCSID(ace, OS_NS_dirent, "$Id$")
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_stdlib.h"
 
-// On Windows, we explicitly set this up as __cdecl so it's correct even
-// if building with another calling convention, such as __stdcall.
-#if defined (ACE_WIN32) && defined (_MSC_VER)
-extern "C"
-{
-  typedef int (__cdecl *ACE_SCANDIR_COMPARATOR) (const void *, const void *);
-}
-#else
-extern "C"
-{
-  typedef int (*ACE_SCANDIR_COMPARATOR) (const void *, const void *);
-}
-#endif /* ACE_WIN32 && _MSC_VER */
 
 /*
    These definitions are missing on the original VC6 distribution.  The new
@@ -185,9 +172,8 @@ ACE_OS::readdir_emulation (ACE_DIR *d)
 int
 ACE_OS::scandir_emulation (const ACE_TCHAR *dirname,
                            ACE_DIRENT **namelist[],
-                           int (*selector) (const ACE_DIRENT *entry),
-                           int (*comparator) (const ACE_DIRENT **f1,
-                                              const ACE_DIRENT **f2))
+                           ACE_SCANDIR_SELECTOR selector,
+                           ACE_SCANDIR_COMPARATOR comparator)
 {
   ACE_DIR *dirp = ACE_OS::opendir (dirname);
 
@@ -290,7 +276,7 @@ ACE_OS::scandir_emulation (const ACE_TCHAR *dirname,
     ACE_OS::qsort (*namelist,
                    nfiles,
                    sizeof (ACE_DIRENT *),
-                   (ACE_SCANDIR_COMPARATOR) comparator);
+                   (ACE_COMPARE_FUNC) comparator);
 
   return nfiles;
 }
