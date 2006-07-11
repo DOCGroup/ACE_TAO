@@ -1,3 +1,14 @@
+Tue Jul 11 22:30:21 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-win32-common.h:
+        * ace/config-WinCE.h: Break the tight tie between UNICODE and
+          ACE_USES_WCHAR I introduced in
+          Thu Oct  6 17:56:19 2005  Steve Huston  <shuston@riverace.com>
+          Now ACE_USES_WCHAR is always on for CE; non-CE Windows builds must
+          explicitly set ACE_USES_WCHAR independent of UNICODE. Thanks to
+          Russell Morra <russell_mora at symantec dot com> for explaining
+          the situation and submitting this fix.
+
 Tue Jul 11 22:20:14 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * bin/generate_doxygen.pl: Add the ability to put the generated

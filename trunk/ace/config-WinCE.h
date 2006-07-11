@@ -77,6 +77,11 @@
 #define ACE_LACKS_MSG_WFMO
 #define ACE_LACKS_UMASK
 
+// WinCE only supports the UNICODE API
+#if !defined (ACE_USES_WCHAR)
+# define ACE_USES_WCHAR
+#endif /* ACE_USES_WCHAR */
+
 #define ACE_USES_WINCE_SEMA_SIMULATION
 
 #define ACE_HAS_NONSTATIC_OBJECT_MANAGER 1

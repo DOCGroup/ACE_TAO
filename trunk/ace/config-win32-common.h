@@ -300,17 +300,7 @@
 
 // Win32 has wide-char support. Use of the compiler-defined wchar_t type
 // is controlled in compiler configs since it's a compiler switch.
-// Additionally, if the user selected use of wide chars (by setting either
-// ACE_USES_WCHAR or UNICODE) make sure both are enabled.
 #define ACE_HAS_WCHAR
-#if defined (ACE_USES_WCHAR)
-#  ifndef UNICODE
-#    define UNICODE
-#  endif
-#endif /* ACE_USES_WCHAR */
-#if defined (UNICODE) && !defined (ACE_USES_WCHAR)
-#  define ACE_USES_WCHAR
-#endif /* UNICODE && !ACE_USES_WCHAR */
 
 // Compiler/platform correctly calls init()/fini() for shared
 // libraries. - applied for DLLs ?
