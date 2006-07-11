@@ -1,3 +1,36 @@
+Tue Jul 11 12:07:01 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/AnyTypeCode.mpc:
+          Enabled regeneration of the pidl files
+
+        * tao/AnyTypeCode/TypeCode.h:
+          Added include that was first pulled in indirectly
+
+        * tao/AnyTypeCode/AnySeqA.cpp
+        * tao/AnyTypeCode/AnySeqA.h
+        * tao/AnyTypeCode/AnySeqC.cpp
+        * tao/AnyTypeCode/AnySeqC.h
+        * tao/AnyTypeCode/AnySeqS.h
+        * tao/AnyTypeCode/BoundsA.cpp
+        * tao/AnyTypeCode/BoundsA.h
+        * tao/AnyTypeCode/BoundsC.cpp
+        * tao/AnyTypeCode/BoundsC.h
+        * tao/AnyTypeCode/Dynamic_ParameterA.cpp
+        * tao/AnyTypeCode/Dynamic_ParameterA.h
+        * tao/AnyTypeCode/Dynamic_ParameterC.cpp
+        * tao/AnyTypeCode/Dynamic_ParameterC.h
+        * tao/AnyTypeCode/ValueModifierA.cpp
+        * tao/AnyTypeCode/ValueModifierA.h
+        * tao/AnyTypeCode/ValueModifierC.cpp
+        * tao/AnyTypeCode/ValueModifierC.h
+        * tao/AnyTypeCode/ValueModifierS.h
+        * tao/AnyTypeCode/VisibilityA.cpp
+        * tao/AnyTypeCode/VisibilityA.h
+        * tao/AnyTypeCode/VisibilityC.cpp
+        * tao/AnyTypeCode/VisibilityC.h
+        * tao/AnyTypeCode/VisibilityS.h
+          Removed from the repository, regenerated now automatically
+
 Tue Jul 11 11:59:01 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Object_Adapter.cpp:
