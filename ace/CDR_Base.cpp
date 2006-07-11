@@ -504,18 +504,26 @@ ACE_CDR::grow (ACE_Message_Block *mb, size_t minsize)
     return 0;
 
   ACE_Data_Block *db =
-    mb->data_block ()->clone_nocopy ();
+    mb->data_block ()->clone_nocopy (0, newsize);
 
-  if (db->size (newsize) == -1)
+  if (db == 0)
     return -1;
 
-  ACE_Message_Block tmp (db);
-  ACE_CDR::mb_align (&tmp);
+  // Do the equivalent of ACE_CDR::mb_align() here to avoid having
+  // to allocate an ACE_Message_Block on the stack thereby avoiding
+  // the manipulation of the data blocks reference count
+  size_t mb_len = mb->length ();
+  char *start = ACE_ptr_align_binary (db->base (),
+                                      ACE_CDR::MAX_ALIGNMENT);
 
-  tmp.copy (mb->rd_ptr (), mb->length());
-  mb->data_block (tmp.data_block ()->duplicate ());
-  mb->rd_ptr (tmp.rd_ptr ());
-  mb->wr_ptr (tmp.wr_ptr ());
+  ACE_OS::memcpy (start, mb->rd_ptr (), mb_len);
+  mb->data_block (db);
+
+  // Setting the data block on the mb resets the read and write
+  // pointers back to the beginning.  We must set the rd_ptr to the
+  // aligned start and adjust the write pointer to the end
+  mb->rd_ptr (start);
+  mb->wr_ptr (start + mb_len);
 
   // Remove the DONT_DELETE flags from mb
   mb->clr_self_flags (ACE_Message_Block::DONT_DELETE);
@@ -566,7 +574,12 @@ ACE_CDR::consolidate (ACE_Message_Block *dst,
        i != 0;
        i = i->cont ())
     {
-      dst->copy (i->rd_ptr (), i->length ());
+      // If the destination and source are the same, do not
+      // attempt to copy the data.  Just update the write pointer.
+      if (dst->wr_ptr () != i->rd_ptr ())
+        dst->copy (i->rd_ptr (), i->length ());
+      else
+        dst->wr_ptr (i->length ());
     }
 }
 

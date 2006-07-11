@@ -35,6 +35,7 @@ DCCFLAGS	+= -g
 
 # Enable 64-bit builds
 ifeq (64,$(buildbits))
+  CFLAGS        += -64
   CPPFLAGS      += -64
 endif
 

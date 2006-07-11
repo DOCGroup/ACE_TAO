@@ -434,6 +434,25 @@ public:
 
 #  endif  /* linux && ((__GLIBC__ > 2) || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 2)) */
 
+#elif defined (ACE_HAS_STHREADS)
+#  if !defined (ACE_THR_PRI_FIFO_MIN)
+#    define ACE_THR_PRI_FIFO_MIN  (long) 0
+#  endif /* !ACE_THR_PRI_FIFO_MIN */
+#  if !defined (ACE_THR_PRI_FIFO_MAX)
+#    define ACE_THR_PRI_FIFO_MAX  (long) 59
+#  endif /* !ACE_THR_PRI_FIFO_MAX */
+#  if !defined (ACE_THR_PRI_RR_MIN)
+#    define ACE_THR_PRI_RR_MIN    (long) 0
+#  endif /* !ACE_THR_PRI_RR_MIN */
+#  if !defined (ACE_THR_PRI_RR_MAX)
+#    define ACE_THR_PRI_RR_MAX    (long) 59
+#  endif /* !ACE_THR_PRI_RR_MAX */
+#  if !defined (ACE_THR_PRI_OTHER_MIN)
+#    define ACE_THR_PRI_OTHER_MIN (long) 0
+#  endif /* !ACE_THR_PRI_OTHER_MIN */
+#  if !defined (ACE_THR_PRI_OTHER_MAX)
+#    define ACE_THR_PRI_OTHER_MAX (long) 127
+#  endif /* !ACE_THR_PRI_OTHER_MAX */
 #endif /* ACE_HAS_PTHREADS */
 
 #include /**/ "ace/post.h"

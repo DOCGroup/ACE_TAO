@@ -132,6 +132,27 @@ public:
                  ACE_CDR::Octet giop_minor_version =
                  ACE_CDR_GIOP_MINOR_VERSION);
 
+  /// Build a CDR stream with an initial data block, it will *not* remove
+  /// <data_block>, since it did not allocated it.  It's important to be
+  // careful with the alignment of <data_block>.
+  /**
+   * Create an output stream from an arbitrary data block, care must be
+   * exercised with alignment, because this contructor will align if
+   * needed.  In this case the <data_block> buffer will not point to the
+   * start off the output stream. begin()->rd_prt() points to the start
+   * off the output stream.  See ACE_ptr_align_binary() to properly align a
+   * pointer and use ACE_CDR::MAX_ALIGNMENT for the correct alignment.
+   */
+  ACE_OutputCDR (ACE_Data_Block *data_block,
+                 int byte_order = ACE_CDR_BYTE_ORDER,
+                 ACE_Allocator* message_block_allocator = 0,
+                 size_t memcpy_tradeoff=
+                 ACE_DEFAULT_CDR_MEMCPY_TRADEOFF,
+                 ACE_CDR::Octet giop_major_version =
+                 ACE_CDR_GIOP_MAJOR_VERSION,
+                 ACE_CDR::Octet giop_minor_version =
+                 ACE_CDR_GIOP_MINOR_VERSION);
+
   /// Build a CDR stream with an initial Message_Block chain, it will
   /// *not* remove <data>, since it did not allocate it.
   ACE_OutputCDR (ACE_Message_Block *data,

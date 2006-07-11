@@ -142,6 +142,7 @@ else    # Visual Age 5 and up
   SOFLAGS    += $(CCFLAGS) $(CPPFLAGS) $(INCLDIRS)
   ifeq ($(buildbits),64)
     DLD     += -q64
+    CFLAGS  += -q64 -qwarn64
     CCFLAGS += -q64 -qwarn64
     ARFLAGS := -X64 $(ARFLAGS)
 

@@ -151,6 +151,8 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #     define THR_SCHED_FIFO          0
 #     define THR_SCHED_RR            0
 #     define THR_SCHED_DEFAULT       0
+#     define THR_INHERIT_SCHED       0
+#     define THR_SCOPE_PROCESS       0
 
 #   elif defined (ACE_VXWORKS)
 #     include /**/ <sysLib.h> // for sysClkRateGet()

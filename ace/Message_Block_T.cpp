@@ -19,7 +19,8 @@ ACE_Locked_Data_Block<L>::~ACE_Locked_Data_Block (void)
 }
 
 template<class ACE_LOCK> ACE_Data_Block *
-ACE_Locked_Data_Block<ACE_LOCK>::clone_nocopy (ACE_Message_Block::Message_Flags mask) const
+ACE_Locked_Data_Block<ACE_LOCK>::clone_nocopy (ACE_Message_Block::Message_Flags mask,
+                                               size_t max_size) const
 {
   ACE_TRACE ("ACE_Locked_Data_Block::clone_nocopy");
 
@@ -33,7 +34,9 @@ ACE_Locked_Data_Block<ACE_LOCK>::clone_nocopy (ACE_Message_Block::Message_Flags 
   ACE_NEW_MALLOC_RETURN (nb,
                          static_cast<ACE_Locked_Data_Block<ACE_LOCK>*> (
                                          this->data_block_allocator ()->malloc (sizeof (ACE_Locked_Data_Block<ACE_LOCK>))),
-                         ACE_Locked_Data_Block<ACE_LOCK> (this->size (),
+                         ACE_Locked_Data_Block<ACE_LOCK> (
+                                                   max_size == 0 ?
+                                                     this->size () : max_size,
                                                    this->msg_type (),
                                                    0,
                                                    this->allocator_strategy (),

@@ -26,6 +26,7 @@ project(ACE) : acedefaults, core, other, codecs, token, svcconf, uuid, filecache
     ATM_QoS.cpp
     ATM_Stream.cpp
     Atomic_Op.cpp
+    Atomic_Op_Sparc.c
     Auto_Event.cpp
     Barrier.cpp
     Base_Thread_Adapter.cpp

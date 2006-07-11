@@ -1092,7 +1092,8 @@ ACE_Data_Block::clone (ACE_Message_Block::Message_Flags mask) const
 }
 
 ACE_Data_Block *
-ACE_Data_Block::clone_nocopy (ACE_Message_Block::Message_Flags mask) const
+ACE_Data_Block::clone_nocopy (ACE_Message_Block::Message_Flags mask,
+                              size_t max_size) const
 {
   ACE_FUNCTION_TIMEPROBE(ACE_DATA_BLOCK_CLONE_ENTER);
 
@@ -1108,7 +1109,8 @@ ACE_Data_Block::clone_nocopy (ACE_Message_Block::Message_Flags mask) const
   ACE_NEW_MALLOC_RETURN (nb,
                          static_cast<ACE_Data_Block*> (
                            this->data_block_allocator_->malloc (sizeof (ACE_Data_Block))),
-                         ACE_Data_Block (this->max_size_, // size
+                         ACE_Data_Block (max_size == 0 ?
+                                           this->max_size_ : max_size, // size
                                          this->type_,     // type
                                          0,               // data
                                          this->allocator_strategy_, // allocator

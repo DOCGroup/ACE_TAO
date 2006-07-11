@@ -13,6 +13,10 @@ ACE_RCSID (ace,
 
 #if defined (ACE_HAS_BUILTIN_ATOMIC_OP)
 
+#if defined (ACE_INCLUDE_ATOMIC_OP_SPARC)
+# include "ace/Atomic_Op_Sparc.h"
+#endif /* ACE_INCLUDE_ATOMIC_OP_SPARC */
+
 namespace {
 
 #if defined (_MSC_VER)
@@ -30,6 +34,9 @@ single_cpu_increment (volatile long *value)
   unsigned long addr = reinterpret_cast<unsigned long> (value);
   asm( "xadd %0, (%1)" : "+r"(tmp) : "r"(addr) );
   return tmp + 1;
+#elif defined (sun)
+  return ace_atomic_add_long (
+           reinterpret_cast<volatile unsigned long*> (value), 1);
 #else /* __GNUC__ && ACE_HAS_PENTIUM */
   ACE_UNUSED_ARG (value);
   ACE_NOTSUP_RETURN (-1);
@@ -44,6 +51,9 @@ single_cpu_decrement (volatile long *value)
   unsigned long addr = reinterpret_cast<unsigned long> (value);
   asm( "xadd %0, (%1)" : "+r"(tmp) : "r"(addr) );
   return tmp - 1;
+#elif defined (sun)
+  return ace_atomic_add_long (
+            reinterpret_cast<volatile unsigned long*> (value), -1);
 #else /* __GNUC__ && ACE_HAS_PENTIUM */
   ACE_UNUSED_ARG (value);
   ACE_NOTSUP_RETURN (-1);
@@ -57,6 +67,9 @@ single_cpu_exchange (volatile long *value, long rhs)
   unsigned long addr = reinterpret_cast<unsigned long> (value);
   asm( "xchg %0, (%1)" : "+r"(rhs) : "r"(addr) );
   return rhs;
+#elif defined (sun)
+  return ace_atomic_swap_long (
+           reinterpret_cast<volatile unsigned long*> (value), rhs);
 #else /* __GNUC__ && ACE_HAS_PENTIUM */
   ACE_UNUSED_ARG (value);
   ACE_UNUSED_ARG (rhs);
@@ -71,6 +84,9 @@ single_cpu_exchange_add (volatile long *value, long rhs)
   unsigned long addr = reinterpret_cast<unsigned long> (value);
   asm( "xadd %0, (%1)" : "+r"(rhs) : "r"(addr) );
   return rhs;
+#elif defined (sun)
+  return ace_atomic_swap_add_long (
+           reinterpret_cast<volatile unsigned long*> (value), rhs);
 #elif defined (WIN32) && !defined (ACE_HAS_INTERLOCKED_EXCHANGEADD)
 # if defined (_MSC_VER)
   __asm
@@ -105,6 +121,9 @@ multi_cpu_increment (volatile long *value)
   unsigned long addr = reinterpret_cast<unsigned long> (value);
   asm( "lock ; xadd %0, (%1)" : "+r"(tmp) : "r"(addr) );
   return tmp + 1;
+#elif defined (sun)
+  return ace_atomic_add_long (
+           reinterpret_cast<volatile unsigned long*> (value), 1);
 #else /* __GNUC__ && ACE_HAS_PENTIUM */
   ACE_UNUSED_ARG (value);
   ACE_NOTSUP_RETURN (-1);
@@ -119,6 +138,9 @@ multi_cpu_decrement (volatile long *value)
   unsigned long addr = reinterpret_cast<unsigned long> (value);
   asm( "lock ; xadd %0, (%1)" : "+r"(tmp) : "r"(addr) );
   return tmp - 1;
+#elif defined (sun)
+  return ace_atomic_add_long (
+           reinterpret_cast<volatile unsigned long*> (value), -1);
 #else /* __GNUC__ && ACE_HAS_PENTIUM */
   ACE_UNUSED_ARG (value);
   ACE_NOTSUP_RETURN (-1);
@@ -133,6 +155,9 @@ multi_cpu_exchange (volatile long *value, long rhs)
   // The XCHG instruction automatically follows LOCK semantics
   asm( "xchg %0, (%1)" : "+r"(rhs) : "r"(addr) );
   return rhs;
+#elif defined (sun)
+  return ace_atomic_swap_long (
+           reinterpret_cast<volatile unsigned long*> (value), rhs);
 #else /* __GNUC__ && ACE_HAS_PENTIUM */
   ACE_UNUSED_ARG (value);
   ACE_UNUSED_ARG (rhs);
@@ -147,6 +172,9 @@ multi_cpu_exchange_add (volatile long *value, long rhs)
   unsigned long addr = reinterpret_cast<unsigned long> (value);
   asm( "lock ; xadd %0, (%1)" : "+r"(rhs) : "r"(addr) );
   return rhs;
+#elif defined (sun)
+  return ace_atomic_swap_add_long (
+           reinterpret_cast<volatile unsigned long*> (value), rhs);
 #elif defined (WIN32) && !defined (ACE_HAS_INTERLOCKED_EXCHANGEADD)
 # if defined (_MSC_VER)
   __asm
