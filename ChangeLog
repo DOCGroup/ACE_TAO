@@ -1,3 +1,8 @@
+Tue Jul 11 01:37:23 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_unistd.h:
+          Layout change
+
 Tue Jul 11 01:09:23 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/taoidldefaults.mpb:
