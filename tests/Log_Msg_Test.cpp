@@ -419,7 +419,7 @@ test_ostream (void)
     }
 
   // Allocate the input buffer
-  char *buffer;
+  char *buffer = 0;
   ACE_NEW_RETURN (buffer,
                   char[info.size_ + 1],
                   -1);
