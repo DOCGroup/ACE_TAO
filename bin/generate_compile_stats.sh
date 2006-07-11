@@ -732,7 +732,11 @@ create_index_page ()
   echo '<P>All the experiments run on the system described below. '
   echo 'The machine is running Linux ('
 
-  cat /etc/SuSE-release
+  if [ -e "/etc/SuSE-release" ]; then
+    cat /etc/SuSE-release
+
+  if [ -e "/etc/redhat-release" ]; then
+    cat /etc/redhat-release
 
   echo '), and we use GCC '
 
