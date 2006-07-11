@@ -1,6 +1,25 @@
 // $Id$
-// ACE_Init_TestDlg.cpp : implementation file
+
+// ============================================================================
 //
+// = LIBRARY
+//    tests
+//
+// = DESCRIPTION
+//    This is a Win32-only test for verifying that the ACE dll
+//    initializes itself without having a nonstatic object manager
+//    present by way of a console app's main function.  It's a MFC dialog
+//    app - it pops up a dialog and spawns a thread - this source file is
+//    the code for implementing the dialog box.
+//
+//    This test program was initially generated from MSVC AppWizard, then
+//    some files were renamed and moved around to fit in with the ACE
+//    test directory structure.
+//
+// = AUTHOR
+//    Steve Huston <shuston@riverace.com>
+//
+// ============================================================================
 
 #if defined(ACE_HAS_MFC)
 
