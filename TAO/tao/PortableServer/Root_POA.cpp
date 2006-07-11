@@ -434,6 +434,7 @@ TAO_Root_POA::create_POA_i (const char *adapter_name,
         = root_poa->the_POAManagerFactory ();
 
       CORBA::PolicyList empty_policies;
+
       // The POAManager name will be generated when the POAManager instance
       // is created.
       the_poa_manager
@@ -598,8 +599,8 @@ TAO_Root_POA::find_POA (const char *adapter_name,
 #if ! defined (CORBA_E_MICRO)
 TAO_Root_POA *
 TAO_Root_POA::find_POA_i (const ACE_CString &child_name,
-                     CORBA::Boolean activate_it
-                     ACE_ENV_ARG_DECL)
+                          CORBA::Boolean activate_it
+                          ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::POA::AdapterNonExistent))
 {
@@ -607,7 +608,7 @@ TAO_Root_POA::find_POA_i (const ACE_CString &child_name,
   int result = this->children_.find (child_name,
                                      child);
 
-#if (TAO_HAS_MINIMUM_POA == 0)
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT)
 
   if (result != 0)
     {

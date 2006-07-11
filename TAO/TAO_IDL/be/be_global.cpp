@@ -50,6 +50,8 @@ BE_GlobalData::BE_GlobalData (void)
     pch_include_ (0),
     pre_include_ (0),
     post_include_ (0),
+    include_guard_ (0),
+    safe_include_ (0),
     core_versioning_begin_ ("\nTAO_BEGIN_VERSIONED_NAMESPACE_DECL\n"),
     core_versioning_end_   ("\nTAO_END_VERSIONED_NAMESPACE_DECL\n"),
     versioning_begin_ (),
@@ -576,6 +578,30 @@ BE_GlobalData::post_include (const char *s)
   this->post_include_ = ACE_OS::strdup (s);
 }
 
+const char*
+BE_GlobalData::include_guard (void) const
+{
+  return this->include_guard_;
+}
+
+void
+BE_GlobalData::include_guard (const char *s)
+{
+  this->include_guard_ = ACE_OS::strdup (s);
+}
+
+const char*
+BE_GlobalData::safe_include (void) const
+{
+  return this->safe_include_;
+}
+
+void
+BE_GlobalData::safe_include (const char *s)
+{
+  this->safe_include_ = ACE_OS::strdup (s);
+}
+
 void
 BE_GlobalData::versioning_begin (const char * s)
 {
@@ -1099,6 +1125,12 @@ BE_GlobalData::destroy (void)
 
   ACE_OS::free (this->post_include_);
   this->post_include_ = 0;
+
+  ACE_OS::free (this->include_guard_);
+  this->include_guard_ = 0;
+
+  ACE_OS::free (this->safe_include_);
+  this->safe_include_ = 0;
 
   delete [] this->client_hdr_ending_;
   this->client_hdr_ending_ = 0;
@@ -2079,7 +2111,8 @@ BE_GlobalData::prep_be_arg (char *s)
   static const char arg_versioning_begin[] = "versioning_begin=";
   static const char arg_versioning_end[]   = "versioning_end=";
   static const char obv_opt_accessor[]     = "obv_opt_accessor";
-
+  static const char include_guard[]        = "include_guard=";
+  static const char safe_include[]         = "safe_include=";
 
   char* last = 0;
 
@@ -2143,6 +2176,16 @@ BE_GlobalData::prep_be_arg (char *s)
         {
           char* val = arg + sizeof (arg_post_include) - 1;
           be_global->post_include (val);
+        }
+      else if (ACE_OS::strstr (arg, include_guard) == arg)
+        {
+          char* val = arg + sizeof (include_guard) - 1;
+          be_global->include_guard (val);
+        }
+      else if (ACE_OS::strstr (arg, safe_include) == arg)
+        {
+          char* val = arg + sizeof (safe_include) - 1;
+          be_global->safe_include (val);
         }
       else if (ACE_OS::strstr (arg, obv_opt_accessor) == arg)
         {
@@ -2288,6 +2331,16 @@ BE_GlobalData::usage (void) const
       LM_DEBUG,
       ACE_TEXT (" -Wb,post_include=<include path>\t\tsets include ")
       ACE_TEXT ("file generated at the end of the file\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Wb,include_guard=<include path>\t\tguard to prevent ")
+      ACE_TEXT ("the generated client header file\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Wb,safe_include=<include path>\t\tinclude that should ")
+      ACE_TEXT ("be used instead of the own generated client header file\n")
     ));
   ACE_DEBUG ((
       LM_DEBUG,

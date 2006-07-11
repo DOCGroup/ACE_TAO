@@ -25,6 +25,7 @@ TAO_PortableServer_PolicyFactory::create_policy (
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CORBA::PolicyError))
 {
+#if !defined (CORBA_E_MICRO)
 #if (TAO_HAS_MINIMUM_POA == 0)
 
 
@@ -112,6 +113,13 @@ TAO_PortableServer_PolicyFactory::create_policy (
 
   ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_TYPE),
                     CORBA::Policy::_nil ());
+#else
+  ACE_UNUSED_ARG (value);
+  ACE_UNUSED_ARG (type);
+
+  ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_TYPE),
+                    CORBA::Policy::_nil ());
+#endif
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
