@@ -107,11 +107,10 @@ struct strbuf
 };
 # endif /* ACE_HAS_STRBUF_T */
 
-// These prototypes are chronically lacking from many versions of
-// UNIX.
-#if !defined (ACE_WIN32) && !defined (ACE_HAS_ISASTREAM_PROTO)
+// These prototypes are chronically lacking from many versions of UNIX.
+#if !defined (ACE_WIN32) && !defined (ACE_HAS_ISASTREAM_PROTOTYPE)
   int isastream (int);
-#endif /* !ACE_WIN32 && ACE_HAS_ISASTREAM_PROTO */
+#endif /* !ACE_WIN32 && ACE_HAS_ISASTREAM_PROTOTYPE */
 
 #ifdef __cplusplus
 }

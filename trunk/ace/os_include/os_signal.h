@@ -266,9 +266,9 @@ extern "C"
 #  endif /* __rtems__ */
 #endif /* ! DIGITAL_UNIX && ! ACE_HAS_SIGWAIT */
 
-#if !defined (ACE_HAS_PTHREAD_SIGMASK_PROTO)
+#if !defined (ACE_HAS_PTHREAD_SIGMASK_PROTOTYPE)
   int pthread_sigmask(int, const sigset_t *, sigset_t *);
-#endif /*!ACE_HAS_PTHREAD_SIGMASK_PROTO */
+#endif /*!ACE_HAS_PTHREAD_SIGMASK_PROTOTYPE */
 
 #ifdef __cplusplus
 }

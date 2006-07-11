@@ -171,8 +171,8 @@
 #endif /* __GLIBC__ > 1 && __GLIBC_MINOR__ >= 0 */
 
 #if (__GLIBC__  > 2)  || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 3)
-# define ACE_HAS_ISASTREAM_PROTO
-# define ACE_HAS_PTHREAD_SIGMASK_PROTO
+# define ACE_HAS_ISASTREAM_PROTOTYPE
+# define ACE_HAS_PTHREAD_SIGMASK_PROTOTYPE
 # define ACE_HAS_CPU_SET_T
 #endif /* __GLIBC__ > 2 || __GLIBC__ === 2 && __GLIBC_MINOR__ >= 3) */
 
