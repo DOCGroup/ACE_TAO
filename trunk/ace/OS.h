@@ -130,8 +130,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #endif /* ACE_LACKS_UNISTD_H */
 
 // Standard C Library includes
-// NOTE: stdarg.h must be #included before stdio.h on LynxOS.
-# include "ace/os_include/os_stdarg.h"
 # if !defined (ACE_HAS_WINCE)
 #   include "ace/os_include/os_assert.h"
 #   include "ace/os_include/os_stdio.h"
