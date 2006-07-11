@@ -1,3 +1,16 @@
+Tue Jul 11 13:38:10 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/Message_Queue.inl: Include "ace/Guard_T.h" in the ACE_WIN32
+          section to avoid compile errors with Release builds.
+
+        * ace/TSS_T.h: Improved documentation.
+
+        * tests/ACE_Init_TestDlg.cpp: Added comment block at the top to explain
+          the file's purpose.
+
+        * tests/Task_Test.cpp: Added a smoke test for the new
+          ACE_Task::last_thread() method.
+
 Thu Jul  6 12:48:58 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/OS_NS_sys_socket.inl (sendto): Initialize "bytes_sent" to 0
