@@ -1,3 +1,11 @@
+Tue Jul 11 23:09:28 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * include/makeinclude/platform_hpux_aCC.GNU:
+
+          The C compiler doesn't support the -mt option.  So, add -mt to
+          CC_THR_DEFS and then later add CC_THR_DEFS to CCFLAGS.  CCFLAGS
+          isn't used when compiling C files.
+
 Tue Jul 11 22:30:21 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * ace/config-win32-common.h:
