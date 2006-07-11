@@ -603,9 +603,9 @@ ACE_OS::sendto (ACE_HANDLE handle,
 {
   ACE_OS_TRACE ("ACE_OS::sendto");
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
-  DWORD bytes_sent;
+  DWORD bytes_sent = 0;
   int result = ::WSASendTo ((SOCKET) handle,
-                            (WSABUF*)buffers,
+                            (WSABUF*) buffers,
                             buffer_count,
                             &bytes_sent,
                             flags,
