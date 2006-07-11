@@ -623,10 +623,9 @@ TAO_Object_Adapter::open (ACE_ENV_SINGLE_ARG_DECL)
 #else
   PortableServer::POAManager_var poa_manager;
   PortableServer::POAManager_ptr pm = PortableServer::POAManager::_nil ();
-  PortableServer::POAManagerFactory_ptr fptr = PortableServer::POAManagerFactory::_nil ();
   ::CORBA::PolicyList policy_list;
   ACE_NEW_THROW_EX (pm,
-                    TAO_POA_Manager (*this, 0, policy_list, fptr),
+                    TAO_POA_Manager (*this, 0, policy_list, 0),
                     CORBA::NO_MEMORY
                     (CORBA::SystemException::_tao_minor_code (0, ENOMEM),
                       CORBA::COMPLETED_NO));
