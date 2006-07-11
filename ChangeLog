@@ -1,3 +1,13 @@
+Tue Jul 11 16:38:29 UTC 2006  Olli Savia  <ops@iki.fi>
+
+        * ace/config-linux-common.h:
+        * ace/os_include/os_signal.h:
+        * ace/os_include/os_stropts.h:
+
+        Changed ACE_HAS_ISASTREAM_PROTO to ACE_HAS_ISASTREAM_PROTOTYPE and
+        ACE_HAS_PTHREAD_SIGMASK_PROTO to ACE_HAS_PTHREAD_SIGMASK_PROTOTYPE
+        to better follow ACE naming conventions.
+        
 Tue Jul 11 13:38:10 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * ace/Message_Queue.inl: Include "ace/Guard_T.h" in the ACE_WIN32
