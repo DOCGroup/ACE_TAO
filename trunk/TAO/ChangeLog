@@ -1,3 +1,22 @@
+Tue Jul 11 12:12:01 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/BiDir_GIOP/diffs/BiDirPolicy.diff:
+        * tao/CodecFactory/diff/IOP_Codec.diff:
+        * tao/IORInterceptor/diff/IORInterceptor.diff:
+        * tao/IORTable/diff/IORTable.diff:
+        * tao/ObjRefTemplate/diffs/ObjectReferenceTemplate.diff:
+        * tao/RTPortableServer/diffs/RTPortableServer.diff:
+          Removed, not needed anymore
+
+        * tao/RTPortableServer.mpc:
+          Enabed regeneration of the pidl files
+
+        * tao/RTPortableServer/RTPortableServerA.cpp:
+        * tao/RTPortableServer/RTPortableServerC.cpp:
+        * tao/RTPortableServer/RTPortableServerC.h:
+        * tao/RTPortableServer/RTPortableServerS.h:
+          Removed from the repo
+
 Tue Jul 11 12:07:01 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/AnyTypeCode.mpc:
