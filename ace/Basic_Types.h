@@ -61,7 +61,6 @@
 # include "ace/os_include/os_stddef.h"   // Get ptrdiff_t - see further comments below
 
 # if defined(ACE_LACKS_LONGLONG_T)
-#   include "ace/os_include/os_stdarg.h" // LynxOS requires this before stdio.h
 #   include "ace/os_include/os_stdio.h"  // For long long emulation
 # endif  /* ACE_LACKS_LONGLONG_T */
 

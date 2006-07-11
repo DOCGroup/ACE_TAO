@@ -1,3 +1,9 @@
+Tue Jul 11 17:39:00 UTC 2006  Olli Savia  <ops@iki.fi>
+
+        * ace/Basic_Types.h:
+        * ace/OS.h:
+          Removed unnecessary includes.
+
 Tue Jul 11 17:25:06 UTC 2006  Olli Savia  <ops@iki.fi>
 
         * include/makeinclude/platform_rtems.x_g++.GNU:
