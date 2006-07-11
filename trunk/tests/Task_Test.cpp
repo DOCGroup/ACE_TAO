@@ -27,7 +27,12 @@
 ACE_RCSID(tests, Task_Test, "$Id$")
 
 #if defined (ACE_HAS_THREADS)
+#include "ace/Atomic_Op.h"
 #include "ace/Barrier.h"
+
+// Make sure that only one thread sees the "time to clean up" condition
+// in Barrier_Task::close()
+static ACE_Atomic_Op<ACE_Thread_Mutex, int> close_cleanups (0);
 
 class My_Thread_Hook : public ACE_Thread_Hook
 {
@@ -43,6 +48,8 @@ public:
                 int n_threads,
                 int n_iterations);
 
+  virtual int close (u_long flags = 0);
+
   virtual int svc (void);
   // Iterate <n_iterations> time printing off a message and "waiting"
   // for all other threads to complete this iteration.
@@ -56,6 +63,15 @@ private:
   // Number of iterations to run.
 };
 
+ACE_THR_FUNC_RETURN
+My_Thread_Hook::start (ACE_THR_FUNC func,
+                       void *arg)
+{
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("(%t) starting the thread!\n")));
+  return (func) (arg);
+}
+
 Barrier_Task::Barrier_Task (ACE_Thread_Manager *thr_mgr,
                             int n_threads,
                             int n_iterations)
@@ -68,18 +84,20 @@ Barrier_Task::Barrier_Task (ACE_Thread_Manager *thr_mgr,
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("activate failed")));
 }
 
-ACE_THR_FUNC_RETURN
-My_Thread_Hook::start (ACE_THR_FUNC func,
-                       void *arg)
+// Check to see if it's time to clean up by examining last_thread().
+int
+Barrier_Task::close (u_long)
 {
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%t) starting the thread!\n")));
-  return (func) (arg);
+  if (ACE_OS::thr_equal (ACE_Thread::self (),
+                         this->last_thread ()))
+    {
+      ++close_cleanups;
+    }
+  return 0;
 }
 
 // Iterate <n_iterations> time printing off a message and "waiting"
 // for all other threads to complete this iteration.
-
 int
 Barrier_Task::svc (void)
 {
@@ -120,6 +138,14 @@ run_main (int, ACE_TCHAR *[])
                              n_iterations);
 
   ACE_Thread_Manager::instance ()->wait ();
+
+  // Only one of the threads should see a cleanup...
+  if (close_cleanups != 1)
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("%d threads saw cleanup indication; ")
+                ACE_TEXT ("should be 1\n"),
+                close_cleanups.value ()));
+
   // Cleanup the thread hook so it doesn't leak.
   delete ACE_Thread_Hook::thread_hook ();
 #else

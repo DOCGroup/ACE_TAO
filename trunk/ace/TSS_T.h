@@ -50,21 +50,26 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * storage (i.e., private to a thread) to be accessed as though
  * they were "logically" global to a program.
  *
- * This class is a wrapper around the OS thread library
- * thread-specific functions.  It uses the <C++ operator->> to
- * shield applications from the details of accessing
- * thread-specific storage.
+ * This class helps to maintain a separate copy of an object for each thread
+ * that needs access to it. All threads access a single instance of ACE_TSS
+ * to obtain a pointer to a thread-specific copy of a TYPE object. Using
+ * a pointer to TYPE in TSS instead of TYPE itself is useful because,
+ * in addition to avoiding copies on what may be a complex class, it allows
+ * assignment of objects to thread-specific data that have arbitrarily
+ * complex constructors.
  *
- * @note For maximal portability, <TYPE> cannot be a built-in type,
- * but instead should be a user-defined class (some compilers will
- * allow a built-in type, others won't).  See template class
- * ACE_TSS_Type_Adapter, below, for adapting built-in types to work
- * with ACE_TSS.
+ * When the ACE_TSS object is destroyed, all threads's instances of the
+ * data are deleted.
+ *
+ * Modern compilers have no problem using a built-in type for @c TYPE.
+ * However, if you must use an older compiler that won't work with a built-in
+ * type, the ACE_TSS_Type_Adapter class template, below, can be used for
+ * adapting built-in types to work with ACE_TSS.
  *  
  * @note Beware when creating static instances of this type
  * (as with any other, btw). The unpredictable order of initialization
- * across different platforms may cause a situation where you'd use
- * the instance, before it is fully initialized. That's why typically
+ * across different platforms may cause a situation where one uses
+ * the instance before it is fully initialized. That's why typically
  * instances of this type are dynamicaly allocated. On the stack it is
  * typically allocated inside the ACE_Thread::svc() method which
  * limits its lifetime appropriately.
@@ -74,41 +79,88 @@ template <class TYPE>
 class ACE_TSS
 {
 public:
-  // = Initialization and termination methods.
-
   /**
-   * If caller has passed us a non-NULL ts_obj *, then we'll just use
-   * this to initialize the thread-specific value (but only for the
-   * calling thread).  Thus, subsequent calls to <operator->> in this
-   * thread will return this value.  This is useful since it enables
-   * us to assign objects to thread-specific data that have
-   * arbitrarily complex constructors.
+   * Default constructor. Can also initialize this ACE_TSS instance,
+   * readying it for use by the calling thread as well as all other
+   * threads in the process. If the constructor does not initialize this
+   * object, the first access to it will perform the initialization, which
+   * could possibly (under odd error conditions) fail.
    *
+   * @param ts_obj   If non-zero, this object is initialized for use by
+   *                 all threads and @a ts_obj is used to set the
+   *                 thread-specific value for the calling thread. Other
+   *                 threads use the ts_object (TYPE *) method to set
+   *                 a specific value.
    */
   ACE_TSS (TYPE *ts_obj = 0);
 
-  /// Deregister with thread-key administration.
+  /// Deregister this object from thread-specific storage administration.
+  /// Will cause all threads' copies of TYPE to be destroyed.
   virtual ~ACE_TSS (void);
 
-  // = Accessors.
-
   /**
-   * Get the thread-specific object for the key associated with this
-   * object.  Returns 0 if the data has never been initialized,
-   * otherwise returns a pointer to the data.
+   * Set the thread-specific object for the calling thread.
+   * If this object has not been initialized yet, this method performs the
+   * initialization.
+   *
+   * @param new_ts_obj  The new value for the calling thread's copy of
+   *                    this object.
+   *
+   * @return  The previous value of the calling thread's copy of this
+   *          object; 0 if there was no previous value. This method also
+   *          returns 0 on errors. To tell the difference between an error
+   *          and a returned 0 pointer, it's recommended that one set errno
+   *          to 0 prior to calling ts_object() and check for a new errno
+   *          value if ts_object() returns 0.
+   */
+  TYPE *ts_object (TYPE *new_ts_obj);
+
+  /** @name Accessors
+   *
+   * All accessors return a pointer to the calling thread's copy of the
+   * TYPE data. The pointer may be 0 on error conditions or if the calling
+   * thread's copy of the data has not yet been set. See specific method
+   * descriptions for complete details.
+   */
+  //@{
+  /**
+   * Get the thread-specific object for this object.
+   * 
+   * @return  0 if the object has never been initialized, otherwise returns
+   *          the calling thread's copy of the data. The returned pointer
+   *          may be 0 under odd error conditions; check errno for further
+   *          information.
    */
   TYPE *ts_object (void) const;
 
-  /// Set the thread-specific object for the key associated with this
-  /// object.
-  TYPE *ts_object (TYPE *);
-
-  /// Use a "smart pointer" to get the thread-specific object
-  /// associated with the <key_>.
+  /**
+   * Use a "smart pointer" to get the thread-specific data associated
+   * with this object.
+   * If this ACE_TSS object hasn't been initialized, this method
+   * will initialize it as a side-affect. If the calling thread has not
+   * set a value, a default-constructed instance of TYPE is allocated and it
+   * becomes the thread's instance.
+   *
+   * @return  The calling thread's copy of the data. The returned pointer
+   *          may be 0 under odd error conditions; check errno for further
+   *          information.
+   */
   TYPE *operator-> () const;
 
-  /// Return or create and return the calling threads TYPE object.
+  /**
+   * Obtain a pointer to the calling thread's TYPE object.
+   * If this ACE_TSS object hasn't been initialized, this method
+   * will initialize it as a side-affect. If the calling thread has not
+   * set a value, a default-constructed instance of TYPE is allocated and it
+   * becomes the thread's instance.
+   *
+   * @return  The calling thread's copy of the data. The returned pointer
+   *          may be 0 under odd error conditions; check errno for further
+   *          information.
+   */
   operator TYPE *(void) const;
+
+  //@}
 
   /// Hook for construction parameters.
   virtual TYPE *make_TSS_TYPE (void) const;

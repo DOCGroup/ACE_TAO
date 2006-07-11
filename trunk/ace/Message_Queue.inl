@@ -22,6 +22,9 @@ ACE_Message_Queue_Vx::msgq (void)
 #endif /* ACE_VXWORKS */
 
 #if defined (ACE_WIN32) && (ACE_HAS_WINNT4 != 0)
+
+#include "ace/Guard_T.h"
+
 ACE_INLINE int
 ACE_Message_Queue_NT::enqueue_tail (ACE_Message_Block *new_item,
                                     ACE_Time_Value *timeout)
