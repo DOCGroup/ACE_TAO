@@ -64,8 +64,9 @@ public:
     int readtimeoutmsec;
     /** Enable/disable parity checking. */
     bool parityenb;
-    /** Specifies the parity mode. POSIX supports "even" and "odd" parity.
-        Additionally Win32 supports "mark" and "space" parity modes. */
+    /** Specifies the parity mode. POSIX supports "none", "even" and
+        "odd" parity. Additionally Win32 supports "mark" and "space"
+        parity modes. */
     const char *paritymode;
     /** Enable & set CTS mode. Note that RTS & CTS are enabled/disabled
         together on some systems (RTS/CTS is enabled if either
