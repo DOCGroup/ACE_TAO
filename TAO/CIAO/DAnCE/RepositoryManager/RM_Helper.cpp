@@ -34,6 +34,7 @@ bool RM_Helper::externalize (const Deployment::PackageConfiguration& pc, const c
   return write_pc_to_disk (path, *(const_cast<ACE_Message_Block*> (mb)));
 }
 
+
 bool RM_Helper::reincarnate (Deployment::PackageConfiguration& pc, const char* path)
 {
   size_t length = 0;
@@ -50,38 +51,81 @@ bool RM_Helper::reincarnate (Deployment::PackageConfiguration& pc, const char* p
 }
 
 
-//---------------------------------------------------------------------
-//These are a bit obsolete but until I am sure I will keep them
-
-//This function attempts to write a sequence of bytes to
-//a specified location. A 0 is returned in the case of an error
-//and a 1 upon success
-
-bool RM_Helper::write_to_disk (
-                 const char* full_path,
-                 const CORBA::Octet* buffer,
-                 size_t length
-                )
+/// This function attempts to copy the file from a specified location
+/// to another specified location on the hard disk.
+bool RM_Helper::copy_from_disk_to_disk (const char* from_path, const char* to_path)
 {
+  if (from_path == to_path)
+    return true;
 
-  // Open a file handle to the local filesystem
-  ACE_HANDLE handle = ACE_OS::open (full_path, O_CREAT | O_TRUNC | O_WRONLY);
-  if (handle == ACE_INVALID_HANDLE)
+  // Open the files
+  ACE_HANDLE from_handle = ACE_OS::open (from_path, O_RDONLY);
+  if (from_handle == ACE_INVALID_HANDLE)
       ACE_ERROR_RETURN ((LM_ERROR,
                           ACE_TEXT ("%p\n"),
-                          ACE_TEXT ("[RM::write_to_disk] file creation error")),
-                          false);
+                          ACE_TEXT ("[RM::copy_from_disk_to_disk] file open error")),
+                          0);
 
-  // Write the data to the file
-  if (ACE_OS::write (handle, buffer, length) == -1)
+  ACE_stat file_info;
+  ACE_OS::fstat (from_handle, &file_info);
+  ACE_UINT64 file_length = file_info.st_size;
+  
+  ACE_HANDLE to_handle = ACE_OS::open (to_path, O_CREAT | O_TRUNC | O_WRONLY);
+  if (to_handle == ACE_INVALID_HANDLE)
+      ACE_ERROR_RETURN ((LM_ERROR,
+                          ACE_TEXT ("%p\n"),
+                          ACE_TEXT ("[RM::copy_from_disk_to_disk] file creation error")),
+                          0);
+
+  
+  // Read the contents of the file into the buffer and write the data to another file
+  ACE_Message_Block *mb;
+  size_t length;
+  size_t number = 0;
+  bool last = false;
+
+  while (true)
+  {
+    if ((file_length - BUFSIZ*number) > BUFSIZ)
+      length = BUFSIZ;
+    else
+    {
+      length = static_cast<size_t> (file_length - BUFSIZ*number);
+      last = true;
+    }
+    
+    mb = new ACE_Message_Block (length);
+
+    if (ACE_OS::read_n (from_handle, mb->wr_ptr (), length) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("[RM::write_to_disk] file write error")),
-                           false);
+                            ACE_TEXT ("%p\n"),
+                            ACE_TEXT ("[RM::copy_from_disk_to_disk] file read error")),
+                            0);
 
-  // Close the file handle
-  ACE_OS::close (handle);
+    number++;
 
+    mb->length (length);
+
+    for (ACE_Message_Block *curr = mb; curr != 0; curr = curr->cont ())
+      if (ACE_OS::write_n (to_handle, curr->rd_ptr (), curr->length ()) == -1)
+      {
+        mb->release ();
+        ACE_ERROR_RETURN ((LM_ERROR,
+                            ACE_TEXT ("%p\n"),
+                            ACE_TEXT ("[RM::copy_from_disk_to_disk] file write error")),
+                            0);
+      }  
+
+    mb->release ();
+
+    if (last)
+      break;
+  }
+
+  // Close the files
+  ACE_OS::close (from_handle);
+  ACE_OS::close (to_handle);
+  
   return true;
 }
 
@@ -95,7 +139,6 @@ bool RM_Helper::write_to_disk (
                  bool replace
                 )
 {
-
   ACE_stat stat;
 
   if (ACE_OS::stat(full_path, &stat) != -1 && !replace)
@@ -137,7 +180,6 @@ bool RM_Helper::write_pc_to_disk (
                   bool replace
                  )
 {
-
   ACE_stat stat;
 
   if (ACE_OS::stat(full_path, &stat) != -1 && !replace)
@@ -166,45 +208,6 @@ bool RM_Helper::write_pc_to_disk (
 }
 
 
-/// This function attempts to read a sequence of bytes from a specified
-/// location and returns an octet sequence. A 0 is returned
-/// in the case of an error and a 1 upon success
-CORBA::Octet* RM_Helper::read_from_disk (
-                     const char* full_path,
-                      size_t &length
-                    )
-{
-  //open the file
-  ACE_HANDLE handle = ACE_OS::open (full_path, O_RDONLY);
-  if (handle == ACE_INVALID_HANDLE)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                          ACE_TEXT ("%p\n"),
-                          ACE_TEXT ("[RM::read_from_disk] file open error")),
-                          0);
-
-  ACE_stat file_info;
-
-  ACE_OS::fstat (handle, &file_info);
-
-  CORBA::Octet* buffer = 0;
-  ACE_NEW_RETURN (buffer, CORBA::Octet[file_info.st_size], 0);
-
-  // Read the contents of the file into the buffer
-  if (ACE_OS::read_n (handle, buffer, file_info.st_size) == -1)
-     ACE_ERROR_RETURN ((LM_ERROR,
-                        ACE_TEXT ("%p\n"),
-                        ACE_TEXT ("[RM::read_from_disk] file read error")),
-                        0);
-
-  // Close the file handle
-  ACE_OS::close (handle);
-
-  length = file_info.st_size;
-  return buffer;
-}
-
-
-
 /// Function to read the contents of a file from disk into an ACE_Message_Block
 /// returns a pointer to an ACE_Message_Block and updates the lenght on success
 /// 0 on failure
@@ -216,7 +219,7 @@ RM_Helper::read_pc_from_disk (
 {
   length = 0;
 
-  //open the file
+  // Open the file
   ACE_HANDLE handle = ACE_OS::open (full_path, O_RDONLY);
   if (handle == ACE_INVALID_HANDLE)
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -225,24 +228,35 @@ RM_Helper::read_pc_from_disk (
                           0);
 
   ACE_stat file_info;
-
   ACE_OS::fstat (handle, &file_info);
 
-  ACE_Message_Block* mb = 0;
-  ACE_NEW_RETURN (mb, ACE_Message_Block (file_info.st_size + 1), 0);
+  // Get and check the length of the file
+  length = static_cast<size_t> (file_info.st_size);
+
+  ACE_UINT64 check = length;
+  if (check != file_info.st_size)
+  {
+    length = 0;
+    ACE_ERROR_RETURN ((LM_ERROR,
+                          ACE_TEXT ("%p\n"),
+                          ACE_TEXT ("[RM::read_mb_from_disk] file length error")),
+                          0);
+  }
 
   // Read the contents of the file into the buffer
-  if (ACE_OS::read_n (handle, mb->wr_ptr (), file_info.st_size) == -1)
+  ACE_Message_Block* mb = 0;
+  ACE_NEW_RETURN (mb, ACE_Message_Block (length + 1), 0);
+
+  if (ACE_OS::read_n (handle, mb->wr_ptr (), length) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("%p\n"),
                ACE_TEXT ("[RM::read_mb_from_disk] file read error")),
                            0);
 
-  mb->length (file_info.st_size);
+  mb->length (length);
 
   // Close the file handle
   ACE_OS::close (handle);
 
-  length = file_info.st_size;
   return mb;
 }

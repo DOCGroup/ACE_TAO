@@ -67,6 +67,8 @@ CIAO_RepositoryManagerDaemon_i::CIAO_RepositoryManagerDaemon_i
   //form the path
   this->HTTP_server_ += server;
   this->HTTP_server_ += "/";
+  this->HTTP_server_ += install_path;
+  this->HTTP_server_ += "/";
 
   //create directory in which the packages will be stored
   ACE_OS::mkdir(install_path.c_str ());
@@ -272,25 +274,8 @@ void CIAO_RepositoryManagerDaemon_i::installPackage (
     }
   else
     {
-      CORBA::Octet* file = 0;
-
-      //read the package from disk and store in the RM directory
-      //see if you can substiture this with a memory mapped file
-      //for better perofrmance (mimic zero copy here)
-      file = RM_Helper::read_from_disk (location, length);
-
-      if (!file)
+      if (!RM_Helper::copy_from_disk_to_disk (location, package_path.c_str ()))
         ACE_THROW (CORBA::INTERNAL ());
-
-      //Store the package in the local RM dir for future retrieval
-      if (!RM_Helper::write_to_disk (package_path.c_str (), file, length))
-    {
-      delete file;
-          ACE_THROW (CORBA::INTERNAL ());
-    }
-
-      //NOTE: MEMORY LEAK UNLESS delete file; change to Auto_Ptr
-      delete file;
     }
 
 
@@ -491,26 +476,10 @@ void CIAO_RepositoryManagerDaemon_i::createPackage (
   }
   else
   {
-    CORBA::Octet* file = 0;
-
-    //read the package from disk and store in the RM directory
-    //see if you can substiture this with a memory mapped file
-    //for better perofrmance (mimic zero copy here)
-    file = RM_Helper::read_from_disk (baseLocation, length);
-
-    if (!file)
+    if (!RM_Helper::copy_from_disk_to_disk (baseLocation, package_path.c_str ()))
       ACE_THROW (CORBA::INTERNAL ());
-
-    //Store the package in the local RM dir for future retrieval
-    if (!RM_Helper::write_to_disk (package_path.c_str (), file, length))
-    {
-      delete file;
-      ACE_THROW (CORBA::INTERNAL ());
-    }
-
-    //NOTE: MEMORY LEAK UNLESS delete file; change to Auto_Ptr
-    delete file;
   }
+
 
   ZIP_Wrapper::uncompress (const_cast<char*> (package_path.c_str ()),
     const_cast<char*> (this->install_root_.c_str ()),
