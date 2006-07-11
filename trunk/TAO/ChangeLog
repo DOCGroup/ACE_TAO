@@ -1,3 +1,9 @@
+Tue Jul 11 08:30:00 UTC 2006  Simon Massey  <sma@prismtech.com>
+
+        * utils/nslist/nslist.cpp:
+        * utils/nslist/run_test.pl:
+          Fix bugzilla 2592.
+
 Tue Jul 11 08:10:00 UTC 2006  Simon Massey  <sma@prismtech.com>
 
         * orbsvcs/orbsvcs/Naming/Flat_File_Persistence.cpp:

@@ -111,7 +111,11 @@ namespace
       tag_string = "GIOP over UDP";
 #endif /* TAO_TAG_DIOP_PROFILE */
     else
-      tag_string = "Unknown tag: " + tag;
+      {
+        char buffer[32]= {'\0'};
+        ACE_OS::sprintf( buffer, "%08x (%u)", tag, tag );
+        (tag_string = "Unknown tag: ") += buffer;
+      }
   }
 
   //==========================================================================
@@ -148,16 +152,20 @@ namespace
     int count;
     for (count= 0; count < level; ++count)
       ACE_DEBUG ((LM_DEBUG, "%s ", myTree));
-    ACE_DEBUG ((LM_DEBUG, "%*s Protocol: %s\n",
-               sizeMyNode, "",tag_name.c_str()));
+    for (count= 0; count < sizeMyNode; ++count)
+      ACE_DEBUG ((LM_DEBUG, " "));
+    ACE_DEBUG ((LM_DEBUG, " Protocol: %s\n",
+               tag_name.c_str()));
 
     // Display Endpoint
     for (count= 0; count < level; ++count)
       ACE_DEBUG ((LM_DEBUG, "%s ", myTree));
-    char buf[256];
-    if (endpoint->addr_to_string (buf, sizeof(buf)) < 0)
+    for (count= 0; count < sizeMyNode; ++count)
+      ACE_DEBUG ((LM_DEBUG, " "));
+    char buf[256]= {'\0'};
+    if (endpoint->addr_to_string (buf, sizeof(buf)-1u) < 0)
       ACE_OS::strcpy( buf, "{Endpoint too long}" );
-    ACE_DEBUG ((LM_DEBUG, "%*s Endpoint: %s\n", sizeMyNode, "", buf));
+    ACE_DEBUG ((LM_DEBUG, " Endpoint: %s\n", buf));
   }
 
   //==========================================================================
