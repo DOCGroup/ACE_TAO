@@ -1,3 +1,50 @@
+Tue Jul 11 01:20:01 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be_include/be_global.h:
+        * TAO_IDL/be/be_global.cpp:
+        * docs/compiler.html:
+        * TAO_IDL/be/be_codegen.cpp:
+          Added support for -Wb,include_guard= and -Wb,safe_include=.
+          The include guard is a define that is generated in the C.h file
+          that prevents the user from including this generated file, the
+          safe_include is the file that the user should include instead
+          of the C.h and which is also used in the generated A.cpp and
+          C.cpp. With these new options a lot of generated files can be
+          removed also from the repository
+
+        * tao/RTCORBA/RT_Transport_Descriptor.cpp:
+        * tao/RTCORBA/RT_Invocation_Endpoint_Selectors.cpp:
+        * tao/Valuetype/ValueBase.cpp:
+          Bool and const changes
+
+        * tao/PI_Server/PortableServer_ORBInitializer.cpp:
+        * tao/PI_Server/PortableServer_PolicyFactory.cpp:
+        * tao/PortableServer/Root_POA.cpp:
+        * tao/PortableServer/Object_Adapter.cpp:
+          Fixes for CORBA/e
+
+        * tao/CodecFactory.mpc:
+        * tao/BiDir_GIOP.mpc:
+        * tao/IORInterceptor.mpc:
+        * tao/IORTable.mpc:
+        * tao/ObjRefTemplate.mpc:
+          Enabled regeneration of the pidl files
+
+        * tao/CodecFactory/IOP_CodecC.{h,cpp}:
+        * tao/CodecFactory/IOP_CodecS.h:
+        * tao/BiDir_GIOP/BiDirPolicyC.{h,cpp}:
+        * tao/IORInterceptor/IORInfoC.{h,cpp}:
+        * tao/IORInterceptor/IORInterceptorC.{h,cpp}:
+        * tao/IORTable/IORTableC.{h,cpp}:
+        * tao/ObjRefTemplate/Default_ORTC.{h,cpp,inl}:
+        * tao/ObjRefTemplate/ObjectReferenceTemplateC.{h,cpp,inl}:
+          Removed from the repo, will get regenerated as part of the
+          building of the core lib.
+
+        * tao/BiDir_GIOP/BiDirPolicy.pidl:
+        * tao/IIOP_Endpoints.pidl:
+          Updated comments to resolve warnings during recompilation
+
 Sun Jul 09 05:56:55 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO version 1.5.2 released.
