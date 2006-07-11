@@ -86,69 +86,26 @@ dnl @todo Clean up / consolidate these conditionals
      dnl In case anything here or in the config depends on OS
      dnl version number, grab it here and pass it all to the
      dnl compiler as well.
-     AIX_MAJOR_VERS=`uname -v`
-     AIX_MINOR_VERS=`uname -r`
-
-     ACE_CPPFLAGS="$ACE_CPPFLAGS -DACE_AIX_MAJOR_VERS=$AIX_MAJOR_VERS"
-     ACE_CPPFLAGS="$ACE_CPPFLAGS -DACE_AIX_MINOR_VERS=$AIX_MINOR_VERS"
+     AIX_VERS=`uname -v`0`uname -r`
+     ACE_CPPFLAGS="$ACE_CPPFLAGS -DACE_AIX_VERS=$AIX_VERS"
 
      case "$CXX" in
        xlC*)
-         dnl IBM C/C++ compiler 3.6.x produces a bazillion warnings about
-         dnl 0-valued preprocessor defs. Since both 3.1 and 3.4 could
-         dnl be installed, don't ask lslpp for one or the
-         dnl other. Instead, compile a file and see which compiler the
-         dnl user has set up for use. This trick was submitted by
-         dnl Craig Rodrigues <rodrigc@mediaone.net>, originally from
-         dnl the vacpp compiler newsgroup.  It relies on the
-         dnl preprocessor defining __xlC__ to the proper version
-         dnl number of the compiler.
-
-         AC_EGREP_CPP([0x0306],
-           [
-            __xlC__
-           ],
-           [
-            CXXFLAGS="$CXXFLAGS -qflag=e:e"
-           ],
-           [
-            CXXFLAGS="$CXXFLAGS -qflag=w:w"
-           ])
          if test "$ace_user_enable_rtti" = yes; then
-           CXXFLAGS="$CXXFLAGS -qrtti=dynamiccast"
+           CXXFLAGS="$CXXFLAGS -qrtti=all"
          else
            CXXFLAGS="$CXXFLAGS -DACE_LACKS_RTTI"
          fi
-
-         ;;
-     esac
-     ;;
- esac
-
- case "$host" in
-   *aix4.2* | *aix4.3*)
-     case "$CXX" in
-       xlC*)
-         CXXFLAGS="$CXXFLAGS"
-         ACE_CXXFLAGS="$ACE_CXXFLAGS "
+         TEMPLATE_OPTION='-qtemplateregistry=templateregistry.$* -DACE_TEMPLATES_REQUIRE_SOURCE'
+         ACE_CXXFLAGS="$ACE_CXXFLAGS $TEMPLATE_OPTION"
          DCXXFLAGS="-g -qcheck=nobounds:div:null"
-         OCXXFLAGS="-qarch=com"
-         CPPFLAGS="$CPPFLAGS -qlanglvl=ansi"
-         ;;
-       *)
-         if test "$GXX" = yes; then
-           ACE_CXXFLAGS="-mcpu=common"
-         fi
-         ;;
-     esac
-     ;;
-   *aix4.1*)
-     case "$CXX" in
-       xlC*)
-         CXXFLAGS="$CXXFLAGS"
-         ACE_CXXFLAGS="$ACE_CXXFLAGS -qxcall -qtempinc"
-         DCXXFLAGS="-g"
-         OCXXFLAGS="-qarch=ppc -qtune=604"
+         OCXXFLAGS="-qlibansi -qarch=com"
+         CPPFLAGS="$CPPFLAGS"
+         # Use -qhalt=i to cause the compiler to signal failure on any
+         # diagnostic when converting warnings to errors. This helps to
+         # find that #pragma once is invalid, even though xlC only triggers
+         # an informational message, not a warning.
+         WERROR="-qhalt=i"
          ;;
        *)
          if test "$GXX" = yes; then
