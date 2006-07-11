@@ -82,9 +82,12 @@ sub nsadd
 
 name_server ();
 
+print STDOUT "nslist of starting NS content\n";
+nslist ();
+
 client ("-ORBInitRef NameService=file://$iorfile", "-t");
 
-print STDOUT "nslist of starting NS content\n";
+print STDOUT "nslist of NS content after client use\n";
 nslist ();
 
 print STDOUT "nsadd of a new context at level 2\n";
