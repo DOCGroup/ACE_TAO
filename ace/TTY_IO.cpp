@@ -20,6 +20,7 @@ namespace
 {
   const char ACE_TTY_IO_ODD[]   = "odd";
   const char ACE_TTY_IO_EVEN[]  = "even";
+  const char ACE_TTY_IO_NONE[]  = "none";
 #if defined (ACE_WIN32)
   const char ACE_TTY_IO_MARK[]  = "mark";
   const char ACE_TTY_IO_SPACE[] = "space";
@@ -224,11 +225,18 @@ int ACE_TTY_IO::control (Control_Mode cmd, Serial_Params *arg) const
 
       if (arg->parityenb && arg->paritymode)
         {
-          devpar.c_cflag |=  PARENB;
           if (ACE_OS::strcasecmp (arg->paritymode, ACE_TTY_IO_ODD) == 0)
-            devpar.c_cflag |=  PARODD;
+            {
+              devpar.c_cflag |=  PARENB;
+              devpar.c_cflag |=  PARODD;
+            }
           else if (ACE_OS::strcasecmp (arg->paritymode, ACE_TTY_IO_EVEN) == 0)
-            devpar.c_cflag &= ~PARODD;
+            {
+              devpar.c_cflag |=  PARENB;
+              devpar.c_cflag &= ~PARODD;
+            }
+          else if (ACE_OS::strcasecmp (arg->paritymode, ACE_TTY_IO_NONE) == 0)
+            devpar.c_cflag &= ~PARENB;
           else
             return -1;
         }
@@ -302,6 +310,26 @@ int ACE_TTY_IO::control (Control_Mode cmd, Serial_Params *arg) const
       // Enable noncanonical input processing mode
       devpar.c_lflag &= ~ICANON;
 #endif /* ICANON */
+
+#if defined (ECHO)
+      // Disable echoing of input characters
+      devpar.c_lflag &= ~ECHO;
+#endif /* ECHO */
+
+#if defined (ECHOE)
+      // Disable echoing erase chareacter as BS-SP-BS
+      devpar.c_lflag &= ~ECHOE;
+#endif /* ECHOE */
+
+#if defined (ISIG)
+      // Disable SIGINTR, SIGSUSP, SIGDSUSP and SIGQUIT signals
+      devpar.c_lflag &= ~ISIG;
+#endif /* ISIG */
+
+#if defined (OPOST)
+      // Disable post-processing of output data
+      devpar.c_oflag &= ~OPOST;
+#endif /* OPOST */
 
       if (arg->readtimeoutmsec < 0)
         {
@@ -402,12 +430,14 @@ int ACE_TTY_IO::control (Control_Mode cmd, Serial_Params *arg) const
             dcb.Parity = ODDPARITY;
           else if (ACE_OS::strcasecmp (arg->paritymode, ACE_TTY_IO_EVEN) == 0)
             dcb.Parity = EVENPARITY;
+          else if (ACE_OS::strcasecmp (arg->paritymode, ACE_TTY_IO_NONE) == 0)
+            dcb.Parity = NOPARITY;
           else if (ACE_OS::strcasecmp (arg->paritymode, ACE_TTY_IO_MARK) == 0)
             dcb.Parity = MARKPARITY;
           else if (ACE_OS::strcasecmp (arg->paritymode, ACE_TTY_IO_SPACE) == 0)
             dcb.Parity = SPACEPARITY;
           else
-            dcb.Parity = NOPARITY;
+            return -1;
         }
       else
         {
