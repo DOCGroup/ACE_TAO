@@ -1,3 +1,8 @@
+Tue Jul 11 01:09:23 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/taoidldefaults.mpb:
+          If -oA has been used as idlflags, don't add the A files
+
 Tue Jul 11 00:50:23 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/generate_compile_stats.sh:
