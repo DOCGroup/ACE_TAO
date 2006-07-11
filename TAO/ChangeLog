@@ -1,3 +1,8 @@
+Tue Jul 11 01:40:01 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/TAO_Singleton_Manager.cpp:
+          Initialise pointer with 0
+
 Tue Jul 11 01:20:01 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be_include/be_global.h:
