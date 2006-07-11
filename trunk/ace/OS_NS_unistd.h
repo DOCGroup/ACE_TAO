@@ -204,7 +204,9 @@ namespace ACE_OS
 
 #if defined (ACE_HAS_LLSEEK) || defined (ACE_HAS_LSEEK64)
   ACE_NAMESPACE_INLINE_FUNCTION
-  ACE_LOFF_T llseek (ACE_HANDLE handle, ACE_LOFF_T offset, int whence);
+  ACE_LOFF_T llseek (ACE_HANDLE handle,
+                     ACE_LOFF_T offset,
+                     int whence);
 #endif /* ACE_HAS_LLSEEK */
 
   /// Get the number of CPUs configured in the machine.
