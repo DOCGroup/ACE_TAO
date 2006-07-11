@@ -1,3 +1,15 @@
+Thu Jul  6 12:48:58 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/OS_NS_sys_socket.inl (sendto): Initialize "bytes_sent" to 0
+          to avoid random values.  Thanks to Winston Zhang <winston_ace at
+          kubao-inc dot com> for reporting this.
+
+Wed Jul  5 20:32:20 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/WFMO_Reactor.cpp (open): Added some more code to prevent
+          memory leaks when the ACE_WFMO_Reactor is reopened.  Thanks to
+          Sonicfly Zhou <zhoucn at txsec dot com> for this fix.
+
 Tue Jul 11 12:19:23 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * etc/tao.doxygen:
