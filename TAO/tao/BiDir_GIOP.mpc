@@ -33,7 +33,7 @@ project : taolib, core, pi, tao_versioning_idl_defaults {
                 -Wb,export_include=tao/BiDir_GIOP/bidirgiop_export.h \
                 -Wb,include_guard=TAO_BIDIRGIOP_SAFE_INCLUDE \
                 -Wb,safe_include=tao/BiDir_GIOP/BiDirGIOP.h \
-                -o BiDIR_GIOP
+                -o BiDir_GIOP
     BiDir_GIOP/BiDirPolicy.pidl
   }
 
