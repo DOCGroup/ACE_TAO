@@ -743,9 +743,12 @@ public:
    * As clone above, but it does not copy the contents of the buffer,
    * i.e., create a new Data_Block of the same dynamic type, with the
    * same allocator, locking_strategy, and with the same amount of
-   * storage available but the buffer is unitialized.
+   * storage available (if @a max_size is zero) but the buffer is unitialized.
+   * If @a max_size is specified other than zero, it will be used when
+   * creating the new data block.
    */
-  virtual ACE_Data_Block *clone_nocopy (ACE_Message_Block::Message_Flags mask = 0) const;
+  virtual ACE_Data_Block *clone_nocopy (ACE_Message_Block::Message_Flags mask = 0,
+                                        size_t max_size = 0) const;
 
   /// Return a "shallow" copy that increments our reference count by 1.
   ACE_Data_Block *duplicate (void);

@@ -174,19 +174,24 @@ SOEXT           = sl
 
 ifeq ($(buildbits),32)
   ifeq ($(itanium),1)
+    CFLAGS += +DD32
     CCFLAGS += +DD32
   else
+    CFLAGS += +DA1.1 +DS1.1
     CCFLAGS += +DA1.1 +DS1.1
   endif
 else
 ifeq ($(buildbits),64)
   ifeq ($(itanium),1)
+    CFLAGS += +DD64
     CCFLAGS += +DD64
   else
     ifeq ($(word 2,$(HPVERS_WORDS)), 11)
       ## Without the W, it isn't really a 64-bit build
+      CFLAGS += +DA2.0W +DS2.0W
       CCFLAGS += +DA2.0W +DS2.0W
     else
+      CFLAGS += +DA2.0 +DS2.0
       CCFLAGS += +DA2.0 +DS2.0
     endif
   endif
@@ -194,6 +199,7 @@ LDFLAGS         += -Wl,+vnocompatwarnings
 else
   ifneq ($(itanium),1)
     # HP aCC on Itanium doesn't support this option, defaults to 32bit then.
+    CFLAGS += +DAportable
     CCFLAGS += +DAportable
   endif
 endif
