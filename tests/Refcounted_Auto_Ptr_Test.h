@@ -20,6 +20,9 @@
 #ifndef ACE_TESTS_REFCOUNTED_AUTO_PTR_TEST_H
 #define ACE_TESTS_REFCOUNTED_AUTO_PTR_TEST_H
 
+#include "ace/Atomic_Op.h"
+#include "ace/Synch.h"
+
 struct Printer
 {
   Printer (const char *message);
@@ -28,7 +31,9 @@ struct Printer
   void print (void);
 
   const char *message_;
-  static size_t instance_count_;
+  unsigned int which_;
+  static ACE_Atomic_Op<ACE_SYNCH_MUTEX, unsigned int> current_instance_;
+  static ACE_Atomic_Op<ACE_SYNCH_MUTEX, long> instance_count_;
 };
 
 #endif /* ACE_TESTS_REFCOUNTED_AUTO_PTR_TEST_H */
