@@ -1,6 +1,7 @@
 Wed Jul 12 14:30:16 UTC 2006  Steve Huston  <shuston@riverace.com>
 
-        * ace/config-lynxos.h: Changed ACE_SCANDIR_CMP_USES_VOIDPTR to
+        * ace/config-lynxos.h:
+        * ace/config-netbsd.h: Changed ACE_SCANDIR_CMP_USES_VOIDPTR to
           ACE_SCANDIR_CMP_USES_CONST_VOIDPTR - makes it match the decl in
           ace/os_include/os_dirent.h and should resolve a compile error.
 
