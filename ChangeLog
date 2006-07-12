@@ -1,3 +1,14 @@
+Wed Jul 12 16:37:40 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * etc/ace.doxygen:
+        * etc/ace_qos.doxygen:
+        * etc/ace_ssl.doxygen: Use the IGNORE_PREFIX directive to have Doxygen
+          ignore the ACE_, ACE_QoS_, ACE_SSL_ prefixes when alphabetizing
+          the class index. Thanks to Stefan Naewe <naewe dot s at atlas dot de>
+          for this idea.
+
+        * THANKS: Added Stefan Naewe to the Hall of Fame.
+
 Wed Jul 12 14:30:16 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * ace/config-lynxos.h:

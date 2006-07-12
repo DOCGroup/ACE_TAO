@@ -64,7 +64,7 @@ INPUT_FILTER          =
 
 ALPHABETICAL_INDEX    = YES
 COLS_IN_ALPHA_INDEX   = 1
-IGNORE_PREFIX         =
+IGNORE_PREFIX         = ACE_ ACE_QoS_
 
 #---------------------------------------------------------------------------
 # configuration options related to the HTML output
