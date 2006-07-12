@@ -1,3 +1,8 @@
+Wed Jul 12 02:21:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/msvc_static_order.lst:
+          Build ObjRefTemplate before IORInterceptor
+
 Tue Jul 11 23:09:28 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * include/makeinclude/platform_hpux_aCC.GNU:
