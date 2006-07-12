@@ -41,8 +41,8 @@ class ACE_LD_Symbol_Registry
   //   where the factory method names often exceed 31 chars and where loading
   //   is based on retrieval of method pointers using the *full* name.
   //   For OpenVMS we therefor added this singleton class and the
-  //   ACE_Static_Svc_Registrar class which registers full names and function
-  //   pointers with this singleton at the time the static ACE_Static_Svc_Registrar
+  //   ACE_Dynamic_Svc_Registrar class which registers full names and function
+  //   pointers with this singleton at the time the static ACE_Dynamic_Svc_Registrar
   //   object is created in a (service) DLL.
   //   By forcing the DLL to load using a common symbol ("NULL") we trigger static
   //   object creation *before* the full names are referenced.

@@ -1,3 +1,20 @@
+Wed Jul 12 10:15:12 UTC 2006  Martin Corino <mcorino@remedy.nl>
+
+        * include/makeinclude/platform_openvms.GNU:
+          Added fixes for SSL support.
+
+        * ace/config-openvms.h:
+          Added ACE_HAS_PTHREAD_SCHEDPARAM.
+
+        * ace/Global_Macros.h:
+        * ace/Lib_Find.cpp:
+        * ace/Service_Config.cpp:
+        * ace/Service_Config.h:
+        * ace/Service_Object.cpp:
+        * ace/Service_Object.h:
+          Moved OpenVMS specific dynamic service support class to a
+          better place.
+
 Wed Jul 12 07:13:01 UTC 2006  Olli Savia  <ops@iki.fi>
 
         * ace/FILE_Connector.cpp:
