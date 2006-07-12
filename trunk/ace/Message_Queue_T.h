@@ -1297,6 +1297,106 @@ protected:
   ACE_Message_Queue<ACE_SYNCH_USE> queue_;
 };
 
+/**
+ * @class ACE_Message_Queue_Ex_N
+ *
+ * @brief A threaded message queueing facility, modeled after the
+ *        queueing facilities in System V STREAMs which can enqueue
+ *        multiple messages in one call.
+ *
+ * As ACE_Message_Queue_Ex, ACE_Message_Queue_Ex_N is a strongly-typed
+ * version of the ACE_Message_Queue. If @c ACE_SYNCH_DECL is @c ACE_MT_SYNCH
+ * then all operations are thread-safe. Otherwise, if it's @c ACE_NULL_SYNCH
+ * then there's no locking overhead.
+ * 
+ * The @c ACE_MESSAGE_TYPE messages that are sent to this
+ * queue can be chained. Messages are expected to have a
+ * @c next method that returns the next message in the chain;
+ * ACE_Message_Queue_Ex_N uses this method to run through
+ * all the incoming messages and enqueue them in one call.
+ */
+template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL>
+class ACE_Message_Queue_Ex_N : public ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>
+{
+public:
+  // = Initialization and termination methods.
+
+  /**
+   * Initialize an ACE_Message_Queue_Ex_N.  The @a high_water_mark
+   * determines how many bytes can be stored in a queue before it's
+   * considered "full."  Supplier threads must block until the queue
+   * is no longer full.  The @a low_water_mark determines how many
+   * bytes must be in the queue before supplier threads are allowed to
+   * enqueue additional messages.  By default, the @a high_water_mark
+   * equals the @a low_water_mark, which means that suppliers will be
+   * able to enqueue new messages as soon as a consumer removes any message
+   * from the queue.  Making the @a low_water_mark smaller than the
+   * @a high_water_mark forces consumers to drain more messages from the
+   * queue before suppliers can enqueue new messages, which can minimize
+   * the "silly window syndrome."
+   */
+  ACE_Message_Queue_Ex_N (size_t high_water_mark = ACE_Message_Queue_Base::DEFAULT_HWM,
+                          size_t low_water_mark = ACE_Message_Queue_Base::DEFAULT_LWM,
+                          ACE_Notification_Strategy * ns = 0);
+
+  /// Close down the message queue and release all resources.
+  virtual ~ACE_Message_Queue_Ex_N (void);
+
+  /**
+   * Enqueue one or more @c ACE_MESSAGE_TYPE objects at the head of the queue.
+   * If the @a new_item @c next() pointer is non-zero, it is assumed to be the
+   * start of a series of @c ACE_MESSAGE_TYPE objects connected via their
+   * @c next() pointers. The series of blocks will be added to the queue in
+   * the same order they are passed in as.
+   *
+   * @param new_item Pointer to an @c ACE_MESSAGE_TYPE that will be
+   *                 added to the queue. If the block's @c next() pointer
+   *                 is non-zero, all blocks chained from the @c next()
+   *                 pointer are enqueued as well.
+   * @param tv       The absolute time the caller will wait until
+   *                 for the block to be queued.
+   *
+   * @retval >0 The number of @c ACE_MESSAGE_TYPE objects on the queue after
+   *             adding the specified block(s).
+   * @retval -1 On failure.  errno holds the reason. Common errno values are:
+   *            - EWOULDBLOCK: the timeout elapsed
+   *            - ESHUTDOWN: the queue was deactivated or pulsed
+   */
+  virtual int enqueue_head (ACE_MESSAGE_TYPE *new_item, ACE_Time_Value *tv = 0);
+
+  /**
+   * Enqueue one or more @c ACE_MESSAGE_TYPE objects at the tail of the queue.
+   * If the @a new_item @c next() pointer is non-zero, it is assumed to be the
+   * start of a series of @c ACE_MESSAGE_TYPE objects connected via their
+   * @c next() pointers. The series of blocks will be added to the queue in
+   * the same order they are passed in as.
+   *
+   * @param new_item Pointer to an @c ACE_MESSAGE_TYPE that will be
+   *                 added to the queue. If the block's @c next() pointer
+   *                 is non-zero, all blocks chained from the @c next()
+   *                 pointer are enqueued as well.
+   * @param tv       The absolute time the caller will wait until
+   *                 for the block to be queued.
+   *
+   * @retval >0 The number of @c ACE_MESSAGE_TYPE objects on the queue after
+   *             adding the specified block(s).
+   * @retval -1 On failure.  errno holds the reason. Common errno values are:
+   *            - EWOULDBLOCK: the timeout elapsed
+   *            - ESHUTDOWN: the queue was deactivated or pulsed
+   */
+  virtual int enqueue_tail (ACE_MESSAGE_TYPE *new_item, ACE_Time_Value *tv = 0);
+
+  /// Declare the dynamic allocation hooks.
+  ACE_ALLOC_HOOK_DECLARE;
+
+protected:
+  /**
+   * An helper method that wraps the incoming chain messages
+   * with ACE_Message_Blocks.
+   */
+  ACE_Message_Block *wrap_with_mbs_i (ACE_MESSAGE_TYPE *new_item);
+};
+
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

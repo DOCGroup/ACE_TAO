@@ -21,6 +21,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_ALLOC_HOOK_DEFINE(ACE_Message_Queue)
 ACE_ALLOC_HOOK_DEFINE(ACE_Dynamic_Message_Queue)
 ACE_ALLOC_HOOK_DEFINE(ACE_Message_Queue_Ex)
+ACE_ALLOC_HOOK_DEFINE(ACE_Message_Queue_Ex_N)
 
 template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> void
 ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::dump (void) const
@@ -330,6 +331,112 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::notify (void)
   return this->queue_.notify ();
 }
 
+
+template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL>
+ACE_Message_Queue_Ex_N<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::ACE_Message_Queue_Ex_N
+  (size_t high_water_mark,
+   size_t low_water_mark,
+   ACE_Notification_Strategy *ns):
+    ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE> (high_water_mark,
+                                                           low_water_mark,
+                                                           ns)
+{
+  ACE_TRACE ("ACE_Message_Queue_Ex_N<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::ACE_Message_Queue_Ex_N");
+}
+
+template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL>
+ACE_Message_Queue_Ex_N<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::~ACE_Message_Queue_Ex_N (void)
+{
+  ACE_TRACE ("ACE_Message_Queue_Ex_N<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::~ACE_Message_Queue_Ex_N");
+}
+
+template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> int
+ACE_Message_Queue_Ex_N<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::enqueue_head
+  (ACE_MESSAGE_TYPE *new_item,
+   ACE_Time_Value   *timeout)
+{
+  ACE_TRACE ("ACE_Message_Queue_Ex_N<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::enqueue_head");
+
+  // Create a chained ACE_Message_Blocks wrappers around the 'chained'
+  // ACE_MESSAGE_TYPES.
+  ACE_Message_Block *mb = this->wrap_with_mbs_i (new_item);
+  if (0 == mb)
+    {
+      return -1;
+    }
+
+  int result = this->queue_.enqueue_head (mb, timeout);
+  if (-1 == result)
+    {
+      // Zap the messages.
+      mb->release ();
+    }
+  return result;
+}
+
+template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> int
+ACE_Message_Queue_Ex_N<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::enqueue_tail
+  (ACE_MESSAGE_TYPE *new_item,
+   ACE_Time_Value   *timeout)
+{
+  ACE_TRACE ("ACE_Message_Queue_Ex_N<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::enqueue_tail");
+
+  // Create a chained ACE_Message_Blocks wrappers around the 'chained'
+  // ACE_MESSAGE_TYPES.
+  ACE_Message_Block *mb = this->wrap_with_mbs_i (new_item);
+  if (0 == mb)
+    {
+      return -1;
+    }
+
+  int result = this->queue_.enqueue_tail (mb, timeout);
+  if (-1 == result)
+    {
+      // Zap the message.
+      mb->release ();
+    }
+  return result;
+}
+
+template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> ACE_Message_Block *
+ACE_Message_Queue_Ex_N<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::wrap_with_mbs_i
+  (ACE_MESSAGE_TYPE *new_item)
+{    
+  ACE_TRACE ("ACE_Message_Queue_Ex_N<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::wrap_with_mbs_i");
+
+  // We need to keep a reference to the head of the chain
+  ACE_Message_Block *mb_head = 0;
+
+  ACE_NEW_RETURN (mb_head,
+                  ACE_Message_Block ((char *) new_item,
+                                     sizeof (*new_item),
+                                     ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::DEFAULT_PRIORITY),
+                  0);
+
+  // mb_tail will point to the last ACE_Message_Block
+  ACE_Message_Block *mb_tail = mb_head;
+
+  // Run through rest of the messages and wrap them
+  for (ACE_MESSAGE_TYPE *pobj = new_item->next (); pobj; pobj = pobj->next ())
+    {
+      ACE_Message_Block *mb_temp = 0;
+      ACE_NEW_NORETURN (mb_temp,
+                        ACE_Message_Block ((char *) pobj,
+                                           sizeof (*pobj),
+                                           ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::DEFAULT_PRIORITY));
+      if (mb_temp == 0)
+        {
+          mb_head->release ();
+          mb_head = 0;
+          break;
+        }
+
+      mb_tail->next (mb_temp);
+      mb_tail = mb_temp;
+    }
+
+  return mb_head;
+}
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Message_Queue_Reverse_Iterator)
 
