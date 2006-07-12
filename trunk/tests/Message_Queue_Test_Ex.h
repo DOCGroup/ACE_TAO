@@ -75,8 +75,8 @@ public:
 
 private:
   /// Helper methods
-  int test_enqueue_head (User_Class *uc);
-  int test_enqueue_tail (User_Class *uc);
+  int test_enqueue_head (void);
+  int test_enqueue_tail (void);
 
   int dequeue_messages (Receive_Messages& r_messages);
 };
