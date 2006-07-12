@@ -105,7 +105,7 @@
 #define ACE_LACKS_USECONDS_T
 #define ACE_MALLOC_ALIGN 8
 #define ACE_PAGE_SIZE 4096
-#define ACE_SCANDIR_CMP_USES_VOIDPTR
+#define ACE_SCANDIR_CMP_USES_CONST_VOIDPTR
 
 // Compile using multi-thread libraries.
 #if !defined (ACE_MT_SAFE)
