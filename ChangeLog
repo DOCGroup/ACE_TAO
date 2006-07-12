@@ -1,3 +1,7 @@
+Wed Jul 12 20:32:49 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * tests/Message_Queue_Test_Ex.{h cpp}: Fixed compile errors on Linux.
+
 Wed Jul 12 19:15:58 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * ace/Message_Queue_T.{h cpp}: Added a new class,
