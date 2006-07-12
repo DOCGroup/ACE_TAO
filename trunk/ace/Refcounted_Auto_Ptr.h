@@ -36,6 +36,11 @@ template <class X, class ACE_LOCK> class ACE_Refcounted_Auto_Ptr;
  * instance that references a ACE_Refcounted_Auto_Ptr instance is
  * destroyed or overwritten, it will invoke delete on its underlying
  * pointer.
+ *
+ * The ACE_Refcounted_Auto_Ptr works by maintaining a reference to a
+ * separate representation object, ACE_Refcounted_Auto_Ptr_Rep. That
+ * separate representation object contains the reference count and
+ * the actual pointer value.
  */
 template <class X, class ACE_LOCK>
 class ACE_Refcounted_Auto_Ptr
@@ -44,26 +49,28 @@ public:
 
   // = Initialization and termination methods.
 
-  /// Constructor that initializes an @c ACE_Refcounted_Auto_Ptr to
-  /// point to the result immediately.
+  /// Constructor that initializes an ACE_Refcounted_Auto_Ptr to
+  /// the specified pointer value.
   ACE_Refcounted_Auto_Ptr (X *p = 0);
 
-  /// Copy constructor binds the created object and @c r to the same
-  /// @c ACE_Refcounted_Auto_Ptr_Rep. An @c ACE_Refcounted_Auto_Ptr_Rep
-  /// is created if necessary.
+  /// Copy constructor binds the new ACE_Refcounted_Auto_Ptr to the
+  /// representation object referenced by @a r.
+  /// An ACE_Refcounted_Auto_Ptr_Rep is created if necessary.
   ACE_Refcounted_Auto_Ptr (const ACE_Refcounted_Auto_Ptr<X, ACE_LOCK> &r);
 
-  /// Destructor.
+  /// Destructor. Releases the reference to the underlying representation.
+  /// If the release of that reference causes its reference count to reach 0,
+  /// the representation object will also be destroyed.
   virtual ~ACE_Refcounted_Auto_Ptr (void);
 
-  /// Assignment operator that binds the current object and @c r to the same
-  /// @c ACE_Refcounted_Auto_Ptr_Rep. An @c ACE_Refcounted_Auto_Ptr_Rep
+  /// Assignment operator that binds the current object and @a r to the same
+  /// ACE_Refcounted_Auto_Ptr_Rep. An ACE_Refcounted_Auto_Ptr_Rep
   /// is created if necessary.
   void operator = (const ACE_Refcounted_Auto_Ptr<X, ACE_LOCK> &r);
 
   /// Equality operator that returns @c true if both
-  /// ACE_Refcounted_Auto_Ptr@<X, ACE_LOCK@> objects point to the same
-  /// ACE_Refcounted_Auto_Ptr_Rep@<X, ACE_LOCK@> object
+  /// ACE_Refcounted_Auto_Ptr objects point to the same underlying
+  /// representation. It does not compare the actual pointers.
   /**
    * @note It also returns @c true if both objects have just been
    *       instantiated and not used yet.
@@ -76,15 +83,15 @@ public:
   /// Redirection operator
   X *operator-> (void) const;
 
-  // = Accessor methods.
-
+  /// Accessor method.
   X &operator *() const;
 
-  /// Sets the pointer value to 0 and returns its old value.
+  /// Releases the reference to the underlying representation object.
+  /// @retval The pointer value prior to releasing it.
   X *release (void);
 
-  /// Invokes delete on the previous pointer value and then sets the
-  /// pointer value to the specified value.
+  /// Releases the current pointer value and then sets a new
+  /// pointer value specified by @a p.
   void reset (X *p = 0);
 
   /// Get the pointer value.
@@ -93,9 +100,7 @@ public:
   /// Get the reference count value.
   int count (void) const;
 
-  // = Utility method.
-
-  /// Allows us to check for NULL on all ACE_Refcounted_Auto_Ptr objects.
+  /// Returns @c true if this object does not contain a valid pointer.
   int null (void) const;
 
   /// Declare the dynamic allocation hooks.
@@ -112,23 +117,18 @@ protected:
 /**
  * @class ACE_Refcounted_Auto_Ptr_Rep
  *
- * @brief An ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK> object
- * encapsulates a pointer to an object of type X.  It is pointed to by
- * ACE_Refcounted_Auto_Ptr<X, ACE_LOCK> object[s] and only accessible
- * through them.
+ * @brief An ACE_Refcounted_Auto_Ptr_Rep object encapsulates a pointer
+ * to an object of type X. It uses a lock object of type ACE_LOCK to protect
+ * access to the reference count.
+ *
+ * @internal ACE_Refcounted_Auto_Ptr_Rep is used internally by the
+ * ACE_Refcounted_Auto_Ptr class and is only accessible through it.
  */
 template <class X, class ACE_LOCK>
 class ACE_Refcounted_Auto_Ptr_Rep
 {
 private:
   friend class ACE_Refcounted_Auto_Ptr<X, ACE_LOCK>;
-
-  /// Sets the pointer value to 0 and returns its old value.
-  X *release (void);
-
-  /// Invokes delete on the previous pointer value and then
-  /// sets the pointer value to the specified value.
-  void reset (X *p = 0);
 
   /// Get the pointer value.
   X *get (void) const;
@@ -151,10 +151,10 @@ private:
   /// the reference count.
   static ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK> *create (X *p);
 
-  /// Increase the reference count and return argument. Uses the
-  /// attribute "ace_lock_" to synchronize reference count updating.
+  /// Increase the reference count on @a rep.
   ///
-  /// Precondition (rep != 0).
+  /// @retval @a rep if success, 0 if there's an error obtaining the lock
+  ///         on @a rep.
   static ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK> *attach (ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK> *&rep);
 
   /// Decreases the reference count and and deletes rep if there are no
@@ -162,13 +162,6 @@ private:
   ///
   /// Precondition (rep != 0)
   static void detach (ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK> *&rep);
-
-  /// Decreases the rep's reference count and and deletes rep if there
-  /// are no more references to rep. Then assigns new_rep to rep.
-  ///
-  /// Precondition (rep != 0 && new_rep != 0)
-  static void assign (ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK> *&rep,
-                      ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK> *new_rep);
 
   /// Pointer to the result.
   ACE_Auto_Basic_Ptr<X> ptr_;
@@ -178,13 +171,10 @@ private:
 
   // = Mutex variable to protect the <ptr_>.
 
-  /// Synchronization variable for the MT_SAFE <ACE_Hash_Map_Manager_Ex>.
+  /// Synchronization variable for serializing access to ref_count_
   mutable ACE_LOCK lock_;
 
 private:
-  /// Allows us to check for NULL on all ACE_Refcounted_Auto_Ptr objects.
-  int null (void) const;
-
   // = Constructor and destructor private.
   ACE_Refcounted_Auto_Ptr_Rep (X *p = 0);
   ~ACE_Refcounted_Auto_Ptr_Rep (void);
