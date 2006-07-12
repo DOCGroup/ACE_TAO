@@ -10,6 +10,7 @@ optimize ?= 0
 threads ?= 1
 pthread ?= 1
 rtti ?= 1
+ssl ?= 0
 
 VDIR            = obj/
 VSHDIR          = shobj/
@@ -26,7 +27,7 @@ endif
 DCCFLAGS        += -g
 OCCFLAGS        += -O
 
-CFLAGS          += -ieee
+CFLAGS          += -ieee -names_as_is_short
 DCFLAGS         += -g
 OCFLAGS         += -O
 

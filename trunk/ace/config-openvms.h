@@ -10,6 +10,7 @@
 # define ACE_USE_RCSID 0
 #endif
 
+#ifdef __cplusplus
 #pragma message disable CODCAUUNR
 #pragma message disable CODEUNREACHABLE
 //#pragma message disable DOLLARID
@@ -18,6 +19,7 @@
 #pragma message disable NARROWPTR
 //#pragma message disable LONGEXTERN
 #pragma message disable UNSCOMZER
+#endif
 
 // Use a signed int to match POSIX
 #define __SIGNED_INT_TIME_T
@@ -150,8 +152,9 @@
 #define ACE_LACKS_PTHREAD_SIGMASK 1
 #define ACE_LACKS_PTHREAD_THR_SIGSETMASK 1
 #define ACE_NEEDS_HUGE_THREAD_STACKSIZE (64U*1024)
-#define ACE_HAS_PTHREAD_SETCONCURRENCY
-#define ACE_HAS_PTHREAD_GETCONCURRENCY
+#define ACE_HAS_PTHREAD_SETCONCURRENCY 1
+#define ACE_HAS_PTHREAD_GETCONCURRENCY 1
+#define ACE_HAS_PTHREAD_SCHEDPARAM 1
 
 
 /* language/platform conformance */

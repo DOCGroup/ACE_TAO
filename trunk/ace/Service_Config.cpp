@@ -18,24 +18,12 @@
 #include "ace/Get_Opt.h"
 #include "ace/Service_Config.h"
 #include "ace/Static_Object_Lock.h"
-#if defined (ACE_OPENVMS)
-# include "ace/Lib_Find.h"
-#endif
 
 ACE_RCSID (ace,
            Service_Config,
            "$Id$")
 
   ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
-#if defined (ACE_OPENVMS)
-ACE_Static_Svc_Registrar::ACE_Static_Svc_Registrar (const ACE_TCHAR* alloc_name,
-                                                    ACE_SERVICE_ALLOCATOR alloc)
-{
-  // register service allocator function by full name in ACE singleton registry
-  ACE::ldregister (alloc_name, (void*)alloc);
-}
-#endif
 
 ///
 ACE_Service_Config_Guard::ACE_Service_Config_Guard (ACE_Service_Gestalt * psg)
