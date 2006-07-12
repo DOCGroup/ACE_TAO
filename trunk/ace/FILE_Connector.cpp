@@ -51,10 +51,6 @@ ACE_FILE_Connector::connect (ACE_FILE_IO &new_io,
         const_cast<ACE_FILE_Addr &> (remote_sap)) == ACE_Addr::sap_any)
     {
       // Create a new temporary file.
-#ifdef ACE_LACKS_MKSTEMP
-      new_io.addr_ =
-        ACE_FILE_Addr (ACE_sap_any_cast (ACE_FILE_Addr &)); // class copy.
-#else
       // Use ACE_OS::mkstemp() if it is available since it avoids a
       // race condition, and subsequently a security hole due to that
       // race condition (specifically, a denial-of-service attack).
@@ -73,7 +69,6 @@ ACE_FILE_Connector::connect (ACE_FILE_IO &new_io,
       new_io.set_handle (handle);
 
       return 0;
-#endif  /* ACE_LACKS_MKSTEMP */
     }
   else
     new_io.addr_ = remote_sap; // class copy.

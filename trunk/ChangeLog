@@ -1,3 +1,8 @@
+Wed Jul 12 07:13:01 UTC 2006  Olli Savia  <ops@iki.fi>
+
+        * ace/FILE_Connector.cpp:
+          It is safe to use ACE_OS::mkstemp() on all platforms.
+
 Wed Jul 12 02:21:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/msvc_static_order.lst:
