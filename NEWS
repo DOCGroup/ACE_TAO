@@ -10,7 +10,7 @@ USER VISIBLE CHANGES BETWEEN ACE-5.5.2 and ACE-5.5.3
 ====================================================
 
 . The ACE_Message_Queue_Ex_N<class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> class
-  is new, contributed by  Guy Peleg <guy dot peleg at amdocs dot com>.
+  is new, contributed by Guy Peleg <guy dot peleg at amdocs dot com>.
   ACE_Message_Queue_Ex_N<class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> is
   similar to ACE_Message_Queue_Ex in that the object queued is a
   template parameter. However, ACE_Message_Queue_Ex_N allows the
