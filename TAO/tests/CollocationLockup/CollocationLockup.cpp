@@ -20,7 +20,13 @@
 
 namespace
 {
+#if defined (ACE_OPENVMS)
+  // less threads on OpenVMS otherwise this test
+  // (although working correctly) takes far too long.
+  const size_t N_THREADS = 10;
+#else
   const size_t N_THREADS = 20;
+#endif
   const size_t N_ITERATIONS = 100;
   const char* nameString = "myBobject";
 
@@ -131,7 +137,7 @@ TestThread (void*)
           B_var b = B::_narrow (obj.in ());
           b->makeA ();
           if (i % 50 == 0)
-            ACE_DEBUG ((LM_INFO, "collocated call returned\n"));
+            ACE_DEBUG ((LM_INFO, "(%t) collocated call returned\n"));
         }
     }
   catch (CORBA::Exception& ex)

@@ -1,10 +1,6 @@
 //$Id$
 #define ACE_BUILD_SVC_DLL
 #include "Smart_Test_Factory.h"
-#if defined (ACE_OPENVMS)
-// need this for ACE_Static_Svc_Registrar
-# include "ace/Service_Config.h"
-#endif
 
 Smart_Test_Factory::Smart_Test_Factory (void)
 {

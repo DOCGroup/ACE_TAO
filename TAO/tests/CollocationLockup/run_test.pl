@@ -45,9 +45,16 @@ else {
                               "SimpleNamingService=file://$iorfile");
 }
 
-# In testing on various platforms, the builds with the bug failed before 
+my $client;
+if ($^O eq "VMS") {
+  # On OpenVMS this test does not lock up but takes much longer
+  $client = $CL->SpawnWaitKill (300);
+}
+else {
+# In testing on various platforms, the builds with the bug failed before
 # 20 seconds and when the bug was fixed it returned before 20 seconds.
-my $client = $CL->SpawnWaitKill (20);
+  $client = $CL->SpawnWaitKill (20);
+}
 
 if ($client != 0) {
   print STDERR "ERROR: client returned $client\n";

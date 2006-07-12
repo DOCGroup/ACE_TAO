@@ -1,3 +1,13 @@
+Wed Jul 12 10:25:12 UTC 2006  Martin Corino <mcorino@remedy.nl>
+
+        * tests/CollocationLockup/CollocationLockup.cpp:
+        * tests/CollocationLockup/run_test.pl:
+          Added some customization to have this test run correctly on OpenVMS.
+
+        * tests/Object_Loader/Loader.cpp:
+        * tests/Smart_Proxies/On_Demand/Smart_Test_Factory.cpp:
+          Removed deprecated OpenVMS specific include.
+
 Tue Jul 11 12:12:01 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/BiDir_GIOP/diffs/BiDirPolicy.diff:
