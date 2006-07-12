@@ -365,14 +365,11 @@ performance_test (void)
 int
 MQ_Ex_N_Tester::single_thread_performance_test (void)
 {
-  const ACE_TCHAR *message =
-    ACE_TEXT ("ACE_Message_Queue_Ex_N<ACE_NULL_SYNCH>, single thread");
-
   // Create the messages.  Allocate off the heap in case messages is
   // large relative to the amount of stack space available.
 
-  if ((0 != this->test_enqueue_tail (0)) ||
-      (0 != this->test_enqueue_head (0)))
+  if ((0 != this->test_enqueue_tail ()) ||
+      (0 != this->test_enqueue_head ())    )
     {
       return -1;
     }
@@ -381,7 +378,7 @@ MQ_Ex_N_Tester::single_thread_performance_test (void)
 }
 
 int
-MQ_Ex_N_Tester::test_enqueue_tail (User_Class *head_send_block)
+MQ_Ex_N_Tester::test_enqueue_tail (void)
 {
   const ACE_TCHAR *message =
     ACE_TEXT ("ACE_Message_Queue_Ex_N<ACE_NULL_SYNCH>, test_enqueue_tail");
@@ -399,11 +396,10 @@ MQ_Ex_N_Tester::test_enqueue_tail (User_Class *head_send_block)
     }
 
   // prepare
-  int i, j, k = 0;
   int limit = max_messages / chain_limit;
   timer->start ();
   // Send with just one call
-  for (i = 0; i < limit; ++i)
+  for (int i = 0; i < limit; ++i)
     {
       if (-1 == this->st_queue_.enqueue_tail (messages.send_block_[i]))
         {
@@ -413,7 +409,7 @@ MQ_Ex_N_Tester::test_enqueue_tail (User_Class *head_send_block)
                             -1);
         }
 
-      for (j = 0; j < chain_limit; ++j, ++k)
+      for (int j = 0, k = 0; j < chain_limit; ++j, ++k)
         {
           if (this->st_queue_.dequeue_head (r_messages.receive_block_[k]) == -1)
             {
@@ -435,7 +431,7 @@ MQ_Ex_N_Tester::test_enqueue_tail (User_Class *head_send_block)
 }
 
 int
-MQ_Ex_N_Tester::test_enqueue_head (User_Class *head_send_block)
+MQ_Ex_N_Tester::test_enqueue_head (void)
 {
   const ACE_TCHAR *message =
     ACE_TEXT ("ACE_Message_Queue_Ex_N<ACE_NULL_SYNCH>, test_enqueue_head");
@@ -536,12 +532,12 @@ MQ_Ex_N_Tester::performance_test (void)
 ACE_THR_FUNC_RETURN
 MQ_Ex_N_Tester::receiver (void *args)
 {
-  MQ_Ex_N_Tester *tester = ACE_reinterpret_cast (MQ_Ex_N_Tester *, args);
+  MQ_Ex_N_Tester *tester = reinterpret_cast<MQ_Ex_N_Tester *> (args);
 
   User_Class **receive_block_p = 0;
   ACE_NEW_RETURN (receive_block_p,
                   User_Class *[max_messages],
-                  -1);
+                  (ACE_THR_FUNC_RETURN) -1);
 
 #if defined (VXWORKS)
   // Set up blocks to receive the messages.  Allocate these off the
@@ -550,7 +546,7 @@ MQ_Ex_N_Tester::receiver (void *args)
   User_Class *receive_block;
   ACE_NEW_RETURN (receive_block,
                   User_Class[max_messages],
-                  (void *) -1);
+                  (ACE_THR_FUNC_RETURN) -1);
 
   for (i = 0; i < max_messages; ++i)
     {
@@ -568,21 +564,12 @@ MQ_Ex_N_Tester::receiver (void *args)
     {
       if (tester->mt_queue_.dequeue_head (receive_block_p[i]) == -1)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("%p\n"),
-                             ACE_TEXT ("dequeue_head")),
-                            -1);
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("%p\n"),
+                      ACE_TEXT ("dequeue_head")));
+          return (ACE_THR_FUNC_RETURN) -1;
         }
     }
-  /*
-    for (i = 0; i < max_messages; ++i)
-    if (-1 == tester->mt_queue_.dequeue_head (receive_block_p[i]))
-    ACE_ERROR_RETURN ((LM_ERROR,
-    ACE_TEXT ("%p\n"),
-    ACE_TEXT ("dequeue_head")),
-    0);
-  */
-
   timer->stop ();
 
   delete [] receive_block_p;
@@ -600,13 +587,10 @@ MQ_Ex_N_Tester::sender (void *args)
     reinterpret_cast<MQ_Ex_N_Tester_Wrapper *> (args);
   MQ_Ex_N_Tester *tester = tester_wrapper->tester_;
 
-  // prepare
-  int i, k = 0;
-
   Send_Messages messages (max_messages, chain_limit);
   if (-1 == messages.create_messages (test_message))
     {
-      return -1;
+      return (ACE_THR_FUNC_RETURN) -1;
     }
   int limit = max_messages / chain_limit;
   tester_barrier.wait ();
@@ -614,14 +598,14 @@ MQ_Ex_N_Tester::sender (void *args)
   // Send/receive the messages.
   timer->start ();
   // Send with just one call
-  for (i = 0; i < limit; ++i)
+  for (int i = 0; i < limit; ++i)
     {
       if (-1 == tester->mt_queue_.enqueue_tail (messages.send_block_[i]))
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("%p\n"),
-                             ACE_TEXT ("enqueue_tail_n")),
-                            -1);
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("%p\n"),
+                      ACE_TEXT ("enqueue_tail_n")));
+          return (ACE_THR_FUNC_RETURN) -1;
         }
     }
   return 0;
