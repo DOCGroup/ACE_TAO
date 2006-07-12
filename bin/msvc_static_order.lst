@@ -19,8 +19,8 @@ TAO/tao/PI
 TAO/tao/PortableServer
 TAO/tao/PI_Server
 TAO/tao/Valuetype
-TAO/tao/IORInterceptor
 TAO/tao/ObjRefTemplate
+TAO/tao/IORInterceptor
 TAO/tao/DynamicAny
 TAO/tao/IORManipulation
 TAO/tao/IORTable
