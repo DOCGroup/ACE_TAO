@@ -1,3 +1,24 @@
+Wed Jul 12 19:15:58 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/Message_Queue_T.{h cpp}: Added a new class,
+          ACE_Message_Queue_Ex_N<class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL>, that
+          is similar to ACE_Message_Queue_Ex in that the object queued is a
+          template parameter. However, ACE_Message_Queue_Ex_N allows the
+          enqueueing and dequeueing of multiple chained objects at once. This
+          wasn't added to ACE_Message_Queue_Ex because the chained object
+          functionality requires the ACE_MESSAGE_TYPE class to have a
+          ACE_MESSAGE_TYPE *next (void) const method, analogous to
+          ACE_Message_Block::next(), to follow the chain and this would
+          probably break existing applications using ACE_Message_Queue_Ex.
+
+        * tests/Message_Queue_Test_Ex.{h cpp}: Added test capability for
+          ACE_Message_Queue_Ex_N.
+
+        * NEWS: Added description of the new class.
+        
+          Thanks to Guy Peleg <guy dot peleg at amdocs dot com> for
+          contributing this new class and its tests.
+
 Wed Jul 12 16:37:40 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * etc/ace.doxygen:
