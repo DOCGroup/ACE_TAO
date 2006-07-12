@@ -1,3 +1,8 @@
+Wed Jul 12 14:00:59 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
+
+        * DAnCE/RepositoryManager/RM_Helper.cpp:
+          Fixed the "comparison between signed and unsigned integer" warning.
+
 Tue Jul 11 23:19:58 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
         * DAnCE/RepositoryManager/RM_Helper.h:
         * DAnCE/RepositoryManager/RM_Helper.cpp:
