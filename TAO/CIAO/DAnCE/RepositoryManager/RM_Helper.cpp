@@ -233,7 +233,7 @@ RM_Helper::read_pc_from_disk (
   // Get and check the length of the file
   length = static_cast<size_t> (file_info.st_size);
 
-  ACE_UINT64 check = length;
+  ACE_INT64 check = length;
   if (check != file_info.st_size)
   {
     length = 0;
