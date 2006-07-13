@@ -202,7 +202,6 @@ typedef union sigval sigval_t;
 #define ACE_NEEDS_HUGE_THREAD_STACKSIZE 0x5000
 #define fileno(file) ((file)->io_channel) //Hack to get Svc_Conf_l.cpp compiled
 #define ACE_DEFAULT_THREAD_PRIORITY 127
-#define ACE_HAS_ATTR_SETSCHED
 #define PRI_FIFO_MIN 1
 #define PRI_FIFO_MAX 127
 #define ACE_THR_PRI_FIFO_DEF 127

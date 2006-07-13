@@ -104,7 +104,6 @@
 // Platform has prototypes for ACE_TLI.
 #define ACE_HAS_TLI
 //#define       ACE_HAS_SVR4_TLI
-#define ACE_HAS_T_OPMGMT
 #define ACE_HAS_TLI_PROTOTYPES
 #define ACE_HAS_TIMOD_H
 #define ACE_HAS_TIUSER_H
