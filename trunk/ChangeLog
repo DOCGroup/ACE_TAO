@@ -1,3 +1,11 @@
+Thu Jul 13 09:32:54 UTC 2006  Olli Savia  <ops@iki.fi>
+
+        * ace/config-vxworks6.2.h:
+        * configure.ac:
+        * m4/config_h.m4:
+          Removed references to ACE_HAS_USING_KEYWORD. It's no longer
+          used in ACE/TAO/CIAO code.
+
 Thu Jul  6 20:45:15 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * ace/Refcounted_Auto_Ptr.{h inl}: Repaired the ACE_Refcounted_Auto_Ptr
@@ -23,7 +31,7 @@ Thu Jul  6 20:45:15 UTC 2006  Steve Huston  <shuston@riverace.com>
           responding to user reports. It may still be possibly/adviseable to
           work further on this class, though I have no specific ideas or
           reports at this time.
-        
+
         * tests/Refcounted_Auto_Ptr_Test.{h cpp}: Added tests for release()
           and reset() per code supplied in Bugzilla #1925. Removed code in
           ACE_ASSERT since it doesn't run in Release builds; replaced with
@@ -50,7 +58,7 @@ Wed Jul 12 19:15:58 UTC 2006  Steve Huston  <shuston@riverace.com>
           ACE_Message_Queue_Ex_N.
 
         * NEWS: Added description of the new class.
-        
+
           Thanks to Guy Peleg <guy dot peleg at amdocs dot com> for
           contributing this new class and its tests.
 

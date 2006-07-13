@@ -756,9 +756,6 @@ AH_TEMPLATE([ACE_USES_WCHAR],[ACE is built to use wide characters internally])
 AH_TEMPLATE([ACE_HAS_TYPENAME_KEYWORD],
 [Compiler supports the C++ typename keyword])
 
-AH_TEMPLATE([ACE_HAS_USING_KEYWORD],
-[Compiler supports the new using keyword for C++ namespaces.])
-
 AH_TEMPLATE([ACE_HAS_VERBOSE_NOTSUP],
 [Prints out console message in ACE_NOTSUP.  Useful for tracking down
    origin of ACE_NOTSUP.])

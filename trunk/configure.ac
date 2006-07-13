@@ -2203,41 +2203,6 @@ ACE_CACHE_CHECK([for C++ "std" namespace],
                    ])
   ],[AC_DEFINE([ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB])],)
 
-dnl Check for C++ "using" keyword support
-ACE_CACHE_CHECK([for C++ "using" keyword support],
-  [ace_cv_feature_cxx_using_keyword],
-  [
-   AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
-#if defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB)
-# include <iostream>
-#elif !defined (ACE_HAS_BROKEN_NAMESPACES)
-  namespace ACE
-  {
-   int x;
-  }
-#endif
-                  ]],[[
-#if defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB)
-  using namespace std;
-
-  cout << "FOO" << endl;
-#elif !defined (ACE_HAS_BROKEN_NAMESPACES)
-  using namespace ACE;
-
-  x++;
-#else
-# error Namespaces are not supported on this platform.
-Throw in some extraneous text since some compilers are stupid
-enough to interpret "#error" as a warning.  Go figure.
-This extraneous text should force an error.
-#endif
-                  ]])],[
-                   ace_cv_feature_cxx_using_keyword=yes
-                  ],[
-                   ace_cv_feature_cxx_using_keyword=no
-                  ])
-  ],[AC_DEFINE([ACE_HAS_USING_KEYWORD])],)
-
 dnl Check for new style C++ include file support
 ACE_CACHE_CHECK([for new style C++ include file support],
   [ace_cv_lib_posix_standard_includes],[
