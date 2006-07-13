@@ -71,7 +71,6 @@
 
 # define ACE_HAS_STANDARD_CPP_LIBRARY 1
 # define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
-# define ACE_HAS_USING_KEYWORD
 # define ACE_TEMPLATES_REQUIRE_SOURCE
 
 #else  /* ! __GNUG__ && ! ghs && !__DCC__ */
