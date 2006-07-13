@@ -48,7 +48,7 @@
 
 #if defined (ACE_HAS_SYS_SOCKIO_H)
 #  include /**/ <sys/sockio.h>
-#endif /* ACE_HAS_SOCKIO_ */
+#endif /* ACE_HAS_SOCKIO_H */
 
 // This is sorta counter intuitive, but this is how it was done in OS.h
 // @todo: fix this...  dhinton
