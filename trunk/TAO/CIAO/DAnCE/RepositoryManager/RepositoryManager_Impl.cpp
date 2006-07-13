@@ -246,8 +246,6 @@ void CIAO_RepositoryManagerDaemon_i::installPackage (
   //check if URL or local file
   //download or load into memory
 
-  size_t length = 0;
-
   if (ACE_OS::strstr (location, "http://"))
     {
 
@@ -450,7 +448,6 @@ void CIAO_RepositoryManagerDaemon_i::createPackage (
   pc_path += PC_EXTENSION;      //external PackageConfiguration extension
 
   // Check if URL or local file, download or load into memory
-  size_t length = 0;
   if (ACE_OS::strstr (baseLocation, "http://"))
   {
     //TODO: how can I incorporate a Auto_Ptr is explicit release is needed
