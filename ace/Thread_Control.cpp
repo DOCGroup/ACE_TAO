@@ -16,7 +16,7 @@ ACE_RCSID(ace, Thread_Control, "$Id$")
 
 #if !defined (ACE_HAS_INLINED_OSCALLS)
 # include "ace/Thread_Control.inl"
-#endif /* ACE_HAS_INLINED_OS_CALLS */
+#endif /* ACE_HAS_INLINED_OSCALLS */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

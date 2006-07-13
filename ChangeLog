@@ -1,3 +1,50 @@
+Thu Jul 13 10:35:39 UTC 2006  Olli Savia  <ops@iki.fi>
+
+        * ace/Base_Thread_Adapter.cpp:
+        * ace/Cleanup.cpp:
+        * ace/OS.cpp:
+        * ace/OS_Errno.cpp:
+        * ace/OS_Log_Msg_Attributes.cpp:
+        * ace/OS_NS_Thread.cpp:
+        * ace/OS_NS_arpa_inet.cpp:
+        * ace/OS_NS_ctype.cpp:
+        * ace/OS_NS_dirent.cpp:
+        * ace/OS_NS_dlfcn.cpp:
+        * ace/OS_NS_errno.cpp:
+        * ace/OS_NS_fcntl.cpp:
+        * ace/OS_NS_math.cpp:
+        * ace/OS_NS_netdb.cpp:
+        * ace/OS_NS_poll.cpp:
+        * ace/OS_NS_pwd.cpp:
+        * ace/OS_NS_regex.cpp:
+        * ace/OS_NS_signal.cpp:
+        * ace/OS_NS_stdio.cpp:
+        * ace/OS_NS_stdlib.cpp:
+        * ace/OS_NS_string.cpp:
+        * ace/OS_NS_strings.cpp:
+        * ace/OS_NS_stropts.cpp:
+        * ace/OS_NS_sys_mman.cpp:
+        * ace/OS_NS_sys_msg.cpp:
+        * ace/OS_NS_sys_resource.cpp:
+        * ace/OS_NS_sys_select.cpp:
+        * ace/OS_NS_sys_sendfile.cpp:
+        * ace/OS_NS_sys_shm.cpp:
+        * ace/OS_NS_sys_socket.cpp:
+        * ace/OS_NS_sys_stat.cpp:
+        * ace/OS_NS_sys_time.cpp:
+        * ace/OS_NS_sys_uio.cpp:
+        * ace/OS_NS_sys_wait.cpp:
+        * ace/OS_NS_time.cpp:
+        * ace/OS_NS_unistd.cpp:
+        * ace/OS_NS_wchar.cpp:
+        * ace/OS_TLI.cpp:
+        * ace/Thread_Adapter.cpp:
+        * ace/Thread_Control.cpp:
+        * apps/JAWS2/HTTPU/parse_http_request.cpp:
+        * apps/JAWS2/HTTPU/parse_http_response.cpp:
+
+          Fixed typo in comment.
+
 Thu Jul 13 09:51:33 UTC 2006  Olli Savia  <ops@iki.fi>
 
         * configure.ac:

@@ -7,7 +7,7 @@ ACE_RCSID(ace, OS_NS_netdb, "$Id$")
 
 #if !defined (ACE_HAS_INLINED_OSCALLS)
 # include "ace/OS_NS_netdb.inl"
-#endif /* ACE_HAS_INLINED_OS_CALLS */
+#endif /* ACE_HAS_INLINED_OSCALLS */
 
 #include "ace/os_include/net/os_if.h"
 #include "ace/OS_NS_unistd.h"
