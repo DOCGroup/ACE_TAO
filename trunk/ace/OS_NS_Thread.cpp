@@ -6,7 +6,7 @@ ACE_RCSID (ace,
 
 #if !defined (ACE_HAS_INLINED_OSCALLS)
 # include "ace/OS_NS_Thread.inl"
-#endif /* ACE_HAS_INLINED_OS_CALLS */
+#endif /* ACE_HAS_INLINED_OSCALLS */
 
 #include "ace/OS_NS_stdio.h"
 #include "ace/Sched_Params.h"

@@ -6,7 +6,7 @@ ACE_RCSID(ace, OS_NS_unistd, "$Id$")
 
 #if !defined (ACE_HAS_INLINED_OSCALLS)
 # include "ace/OS_NS_unistd.inl"
-#endif /* ACE_HAS_INLINED_OS_CALLS */
+#endif /* ACE_HAS_INLINED_OSCALLS */
 
 #include "ace/Base_Thread_Adapter.h"
 #include "ace/OS_NS_stdlib.h"

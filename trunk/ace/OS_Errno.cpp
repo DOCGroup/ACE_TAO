@@ -14,7 +14,7 @@ ACE_RCSID(ace, OS_Errno, "$Id$")
 # endif /* ACE_INLINE */
 # define ACE_INLINE
 # include "ace/OS_Errno.inl"
-#endif /* ACE_HAS_INLINED_OS_CALLS */
+#endif /* ACE_HAS_INLINED_OSCALLS */
 
 #if defined (ACE_HAS_WINCE_BROKEN_ERRNO)
 
