@@ -6,7 +6,7 @@ ACE_RCSID(ace, OS_NS_strings, "$Id$")
 
 #if !defined (ACE_HAS_INLINED_OSCALLS)
 # include "ace/OS_NS_strings.inl"
-#endif /* ACE_HAS_INLINED_OS_CALLS */
+#endif /* ACE_HAS_INLINED_OSCALLS */
 
 #if defined (ACE_LACKS_STRCASECMP)
 #  include "ace/OS_NS_ctype.h"

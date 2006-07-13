@@ -6,7 +6,7 @@ ACE_RCSID(ace, OS_NS_time, "$Id$")
 
 #if !defined (ACE_HAS_INLINED_OSCALLS)
 # include "ace/OS_NS_time.inl"
-#endif /* ACE_HAS_INLINED_OS_CALLS */
+#endif /* ACE_HAS_INLINED_OSCALLS */
 
 #if defined (ACE_LACKS_STRPTIME)
 # include "ace/os_include/os_ctype.h"

@@ -6,7 +6,7 @@ ACE_RCSID(ace, OS_NS_signal, "$Id$")
 
 #if !defined (ACE_HAS_INLINED_OSCALLS)
 # include "ace/OS_NS_signal.inl"
-#endif /* ACE_HAS_INLINED_OS_CALLS */
+#endif /* ACE_HAS_INLINED_OSCALLS */
 
 #if !defined (ACE_HAS_SIGINFO_T)
 siginfo_t::siginfo_t (ACE_HANDLE handle)

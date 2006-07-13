@@ -11,7 +11,7 @@
 // we can always link against the OS symbols?
 #if !defined (ACE_HAS_INLINED_OSCALLS)
 # include "ace/OS.inl"
-#endif /* ACE_HAS_INLINED_OS_CALLS */
+#endif /* ACE_HAS_INLINED_OSCALLS */
 
 ACE_RCSID(ace, OS, "$Id$")
 
