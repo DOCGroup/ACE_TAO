@@ -1,3 +1,17 @@
+Thu Jul 13 20:40:10 UTC 2006  Olli Savia  <ops@iki.fi>
+
+        * ace/config-integritySCA.h:
+          Removed references to ACE_HAS_ATTR_SETSCHED. It's no longer
+          used in ACE/TAO/CIAO code.
+
+        * ace/config-rtems.h:
+          Removed references to ACE_HAS_SIGNAL_SAFE_OS_CALLS. It's no longer
+          used in ACE/TAO/CIAO code.
+
+        * ace/config-sco-5.0.0-mit-pthread.h:
+          Removed references to ACE_HAS_T_OPMGMT. It's no longer
+          used in ACE/TAO/CIAO code.
+
 Thu Jul 13 10:35:39 UTC 2006  Olli Savia  <ops@iki.fi>
 
         * ace/Base_Thread_Adapter.cpp:
