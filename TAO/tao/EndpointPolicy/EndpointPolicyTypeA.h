@@ -40,7 +40,7 @@
 
 // TAO_IDL - Generated from
 // c:\ticket\tao-1_4_8_merge\ace_wrappers\tao\tao_idl\be\be_visitor_module/module_ch.cpp:59
-
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace EndpointPolicy
 {
 
@@ -48,6 +48,7 @@ namespace EndpointPolicy
 // c:\ticket\tao-1_4_8_merge\ace_wrappers\tao\tao_idl\be\be_visitor_module/module_ch.cpp:86
 
 } // module EndpointPolicy
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 
