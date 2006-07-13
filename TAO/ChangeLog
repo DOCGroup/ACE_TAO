@@ -1,3 +1,10 @@
+Thu Jul 13 10:26:42 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * tao/EndpointPolicy/EndpointPolicyTypeA.h:
+        * tao/EndpointPolicy/Endpoint_Value_Impl.cpp:
+
+          Added missing versioned namespace macros.
+
 Thu Jul 12 18:45:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ObjRefTemplate.mpc:
