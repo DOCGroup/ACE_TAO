@@ -1,3 +1,9 @@
+Thu Jul 13 09:48:10 UTC 2006  Olli Savia  <ops@iki.fi>
+
+        * ace/os_include/os_string.h:
+        * ace/os_include/os_stropts.h:
+          Fixed typo in comment.
+        
 Thu Jul 13 09:32:54 UTC 2006  Olli Savia  <ops@iki.fi>
 
         * ace/config-vxworks6.2.h:
