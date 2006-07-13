@@ -986,12 +986,6 @@ AC_CHECK_HEADER([new],
    ACE_CHECK_HAS_HEADERS([new.h])
   ])
 
-AC_CHECK_HEADER([stdexcept],
-  [AC_DEFINE([ACE_HAS_STDEXCEPT_NO_H])],
-  [
-   ACE_CHECK_HAS_HEADERS([exception.h])
-  ])
-
 dnl ace/OS.i can #include <cstring>,not #include <cstring.h>
 dnl "cstring" is the correct form.
 dnl TODO: Double check the above comment.
