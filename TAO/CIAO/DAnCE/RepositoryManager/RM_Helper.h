@@ -41,7 +41,7 @@ public:
   ///returns 1 on success
   ///        0 on error
 
-  static bool RM_Helper::copy_from_disk_to_disk (const char* from_path, const char* to_path);
+  static bool copy_from_disk_to_disk (const char* from_path, const char* to_path);
 
 
   ///function that writes out a file to a specified location on the hand disk
