@@ -1,3 +1,8 @@
+Fri Jul 14 16:25:00 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * bin/tao_orb_tests.lst:
+          Added exclusions for Bug_2593_Regression test.
+
 Fri Jul 14 15:50:34 UTC 2006  Adam Mitz  <mitza@ociweb.com>
 
         * bin/PerlACE/Process_Unix.pm:
