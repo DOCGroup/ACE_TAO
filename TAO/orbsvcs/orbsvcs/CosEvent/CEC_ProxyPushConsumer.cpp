@@ -20,8 +20,10 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 typedef ACE_Reverse_Lock<ACE_Lock> TAO_CEC_Unlock;
 
 TAO_CEC_ProxyPushConsumer::
-    TAO_CEC_ProxyPushConsumer (TAO_CEC_EventChannel* ec)
+    TAO_CEC_ProxyPushConsumer (TAO_CEC_EventChannel* ec,
+                                ACE_Time_Value timeout)
   : event_channel_ (ec),
+    timeout_(timeout),
     refcount_ (1),
     connected_ (false)
 {
@@ -103,11 +105,11 @@ TAO_CEC_ProxyPushConsumer::supplier_non_existent (
         disconnected = true;
         return false;
       }
-    if (CORBA::is_nil (this->supplier_.in ()))
+    if (CORBA::is_nil (this->nopolicy_supplier_.in ()))
       {
         return false;
       }
-    supplier = CORBA::Object::_duplicate (this->supplier_.in ());
+    supplier = CORBA::Object::_duplicate (this->nopolicy_supplier_.in ());
   }
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
@@ -224,13 +226,40 @@ TAO_CEC_ProxyPushConsumer::connect_push_supplier (
         if (this->is_connected_i ())
           return;
       }
-    this->supplier_ =
-      CosEventComm::PushSupplier::_duplicate (push_supplier);
+    this->supplier_ = apply_policy (push_supplier);
     this->connected_ = true;
   }
 
   // Notify the event channel...
   this->event_channel_->connected (this ACE_ENV_ARG_PARAMETER);
+}
+
+CosEventComm::PushSupplier_ptr
+TAO_CEC_ProxyPushConsumer::apply_policy (CosEventComm::PushSupplier_ptr pre)
+{
+  if (CORBA::is_nil (pre)) return pre;
+  this->nopolicy_supplier_ = CosEventComm::PushSupplier::_duplicate (pre);
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+  CosEventComm::PushSupplier_var post =
+    CosEventComm::PushSupplier::_duplicate (pre);
+  if (this->timeout_ > ACE_Time_Value::zero)
+    {
+      CORBA::PolicyList policy_list;
+      policy_list.length (1);
+      policy_list[0] = this->event_channel_->
+        create_roundtrip_timeout_policy (this->timeout_);
+
+      CORBA::Object_var post_obj = pre->_set_policy_overrides
+        (policy_list, CORBA::ADD_OVERRIDE);
+      post = CosEventComm::PushSupplier::_narrow(post_obj.in ());
+
+      policy_list[0]->destroy ();
+      policy_list.length (0);
+    }
+  return post._retn ();
+#else
+  return CosEventComm::PushSupplier::_duplicate (pre);
+#endif /* TAO_HAS_CORBA_MESSAGING */
 }
 
 void

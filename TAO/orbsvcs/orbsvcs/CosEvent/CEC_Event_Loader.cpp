@@ -103,13 +103,14 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
 
       // Parse the options, check if we should bind with the naming
       // service and under what name...
-      ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("n:o:p:xrtd"));
+      ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("n:o:p:xrtdb"));
       int opt;
       const ACE_TCHAR *service_name = ACE_TEXT("CosEventService");
       const ACE_TCHAR *ior_file = 0;
       const ACE_TCHAR *pid_file = 0;
       this->bind_to_naming_service_ = 1;
       int use_rebind = 0;
+      int disconnect_callbacks = 0;
 
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
       // Flag to create a typed event channel
@@ -142,6 +143,10 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
               use_rebind = 1;
               break;
 
+            case 'b':
+              disconnect_callbacks = 1;
+              break;
+
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
             case 't':
               typed_ec = 1;
@@ -162,6 +167,7 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
                           ACE_TEXT ("-p pid_file_name ")
                           ACE_TEXT ("-x [disable naming service bind]")
                           ACE_TEXT ("-r [rebind, no AlreadyBound failures] ")
+                          ACE_TEXT ("-b [send callBacks on disconnect] ")
                           ACE_TEXT ("-t [enable typed event channel]")
                           ACE_TEXT ("-d [destroy typed event channelon shutdown] ")
                           ACE_TEXT ("\n"),
@@ -174,6 +180,7 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
                           ACE_TEXT ("-p pid_file_name ")
                           ACE_TEXT ("-x [disable naming service bind] ")
                           ACE_TEXT ("-r [rebind, no AlreadyBound failures] ")
+                          ACE_TEXT ("-b [send callBacks on disconnect] ")
                           ACE_TEXT ("\n"),
                           argv[0]));
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
@@ -210,6 +217,9 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
       // Create and activate the event service
       this->attributes_ = new TAO_CEC_EventChannel_Attributes(poa.in (),
                                                               poa.in ());
+
+      this->attributes_->disconnect_callbacks = disconnect_callbacks;
+
       this->factory_ = 0;
 
       this->ec_impl_ = new TAO_CEC_EventChannel (*this->attributes_,
@@ -348,6 +358,8 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
             {
               this->typed_attributes_->destroy_on_shutdown = 1;
             }
+
+          this->typed_attributes_->disconnect_callbacks = disconnect_callbacks;
 
           this->factory_ = 0;
 

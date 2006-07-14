@@ -202,6 +202,36 @@ static CEC_Factory "-CECDispatching reactive ....."
           </TD>
         </TR>
 
+        <!-- <TR NAME="CECConsumerOperationTimeout"> -->
+        <TR>
+          <TD><CODE>-CECConsumerOperationTimeout</CODE>
+            <EM>timeout</EM>
+          </TD>
+          <TD>Set the relative roundtrip timeout for all operations (except
+            &quot;pings&quot; due to reactive consumer control) on consumers.
+            Reactive consumer control must be enabled for this option to take
+            effect.  The units for <EM>timeout</EM> are microseconds.
+            If a remote operation invoked on the consumer exceeds the timeout,
+            then that consumer will be considered &quot;bad&quot; and will be
+            disconnected from the event channel.
+          </TD>
+        </TR>
+
+        <!-- <TR NAME="CECSupplierOperationTimeout"> -->
+        <TR>
+          <TD><CODE>-CECSupplierOperationTimeout</CODE>
+            <EM>timeout</EM>
+          </TD>
+          <TD>Set the relative roundtrip timeout for all operations (except
+            &quot;pings&quot; due to reactive supplier control) on suppliers.
+            Reactive supplier control must be enabled for this option to take
+            effect.  The units for <EM>timeout</EM> are microseconds.
+            If a remote operation invoked on the supplier exceeds the timeout
+            then that supplier will be considered &quot;bad&quot; and will be
+            disconnected from the event channel.
+          </TD>
+        </TR>
+
         <!-- <TR NAME="CECProxyConsumerCollection"> -->
         <TR>
           <TD><CODE>-CECProxyConsumerCollection</CODE>

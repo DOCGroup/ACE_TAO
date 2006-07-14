@@ -12,7 +12,7 @@
 #include "orbsvcs/CosEvent/CEC_ConsumerControl.h"
 #include "orbsvcs/ESF/ESF_RefCount_Guard.h"
 #include "orbsvcs/ESF/ESF_Proxy_RefCount_Guard.h"
-#include "tao/debug.h"
+
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
 #include "orbsvcs/CosEvent/CEC_TypedEvent.h"
 #include "orbsvcs/CosEvent/CEC_TypedEventChannel.h"
@@ -35,8 +35,10 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 typedef ACE_Reverse_Lock<ACE_Lock> TAO_CEC_Unlock;
 
 // TAO_CEC_ProxyPushSupplier Constructure (Un-typed EC)
-TAO_CEC_ProxyPushSupplier::TAO_CEC_ProxyPushSupplier (TAO_CEC_EventChannel* ec)
+TAO_CEC_ProxyPushSupplier::TAO_CEC_ProxyPushSupplier (TAO_CEC_EventChannel* ec,
+                                                      ACE_Time_Value timeout)
   : event_channel_ (ec),
+    timeout_ (timeout),
     refcount_ (1)
 {
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
@@ -54,8 +56,10 @@ TAO_CEC_ProxyPushSupplier::TAO_CEC_ProxyPushSupplier (TAO_CEC_EventChannel* ec)
 
 // TAO_CEC_ProxyPushSupplier Constructure (Typed EC)
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
-TAO_CEC_ProxyPushSupplier::TAO_CEC_ProxyPushSupplier (TAO_CEC_TypedEventChannel* ec)
-  : typed_event_channel_ (ec),
+TAO_CEC_ProxyPushSupplier::TAO_CEC_ProxyPushSupplier (TAO_CEC_TypedEventChannel* ec,
+                                                      ACE_Time_Value timeout)
+  : timeout_ (timeout),
+    typed_event_channel_ (ec),
     refcount_ (1)
 {
   event_channel_ = 0;
@@ -400,8 +404,7 @@ TAO_CEC_ProxyPushSupplier::connect_push_consumer (
               // Re-connections are allowed....
               this->cleanup_i ();
 
-              this->typed_consumer_ =
-                CosTypedEventComm::TypedPushConsumer::_duplicate (local_typed_consumer.in () );
+              this->typed_consumer_ = apply_policy (local_typed_consumer.in () );
               ACE_CHECK;
 
               TAO_CEC_Unlock reverse_lock (*this->lock_);
@@ -420,13 +423,12 @@ TAO_CEC_ProxyPushSupplier::connect_push_consumer (
 
             }
 
-          this->typed_consumer_ =
-            CosTypedEventComm::TypedPushConsumer::_duplicate (local_typed_consumer.in () );
+          this->typed_consumer_ = apply_policy (local_typed_consumer.in () );
           ACE_CHECK;
 
           // Store the typed object interface from the consumer
           this->typed_consumer_obj_ =
-            CORBA::Object::_duplicate (local_typed_consumer_obj.in () );
+            apply_policy_obj (local_typed_consumer_obj.in () );
           ACE_CHECK;
         }
 
@@ -462,8 +464,7 @@ TAO_CEC_ProxyPushSupplier::connect_push_consumer (
         // Re-connections are allowed....
         this->cleanup_i ();
 
-        this->consumer_ =
-          CosEventComm::PushConsumer::_duplicate (push_consumer);
+        this->consumer_ = apply_policy (push_consumer);
 
         TAO_CEC_Unlock reverse_lock (*this->lock_);
 
@@ -480,8 +481,7 @@ TAO_CEC_ProxyPushSupplier::connect_push_consumer (
         return;
       }
 
-    this->consumer_ =
-      CosEventComm::PushConsumer::_duplicate (push_consumer);
+    this->consumer_ = apply_policy (push_consumer);
   }
 
   // Notify the event channel...
@@ -493,6 +493,60 @@ TAO_CEC_ProxyPushSupplier::connect_push_consumer (
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
   }
 }
+
+CORBA::Object_ptr
+TAO_CEC_ProxyPushSupplier::apply_policy_obj (CORBA::Object_ptr pre)
+{
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+  CORBA::Object_var post = CORBA::Object::_duplicate (pre);
+  if (this->timeout_ > ACE_Time_Value::zero)
+    {
+      CORBA::PolicyList policy_list;
+      policy_list.length (1);
+      if (this->typed_event_channel_)
+        {
+          policy_list[0] = this->typed_event_channel_->
+            create_roundtrip_timeout_policy (this->timeout_);
+        }
+      else
+        {
+          policy_list[0] = this->event_channel_->
+            create_roundtrip_timeout_policy (this->timeout_);
+        }
+      post = pre->_set_policy_overrides (policy_list, CORBA::ADD_OVERRIDE);
+
+      policy_list[0]->destroy ();
+      policy_list.length (0);
+    }
+  return post._retn ();
+#else
+  return CORBA::Object::_duplicate (pre);
+#endif /* TAO_HAS_CORBA_MESSAGING */
+}
+
+CosEventComm::PushConsumer_ptr
+TAO_CEC_ProxyPushSupplier::apply_policy (CosEventComm::PushConsumer_ptr pre)
+{
+  this->nopolicy_consumer_ = CosEventComm::PushConsumer::_duplicate (pre);
+  CORBA::Object_var post_obj = apply_policy_obj (pre);
+  CosEventComm::PushConsumer_var post =
+    CosEventComm::PushConsumer::_narrow (post_obj.in ());
+  return post._retn ();
+}
+
+#if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
+CosTypedEventComm::TypedPushConsumer_ptr
+TAO_CEC_ProxyPushSupplier::apply_policy
+  (CosTypedEventComm::TypedPushConsumer_ptr pre)
+{
+  this->nopolicy_typed_consumer_ =
+    CosTypedEventComm::TypedPushConsumer::_duplicate (pre);
+  CORBA::Object_var post_obj = apply_policy_obj (pre);
+  CosTypedEventComm::TypedPushConsumer_var post = 
+    CosTypedEventComm::TypedPushConsumer::_narrow (post_obj.in ());
+  return post._retn ();
+}
+#endif
 
 void
 TAO_CEC_ProxyPushSupplier::disconnect_push_supplier (
@@ -879,20 +933,21 @@ TAO_CEC_ProxyPushSupplier::consumer_non_existent (
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
     if (this->is_typed_ec () )
       {
-        if (CORBA::is_nil (this->typed_consumer_.in ()))
+        if (CORBA::is_nil (this->nopolicy_typed_consumer_.in ()))
           {
             return 0;
           }
-        consumer = CORBA::Object::_duplicate (this->typed_consumer_.in ());
+        consumer = CORBA::Object::_duplicate
+          (this->nopolicy_typed_consumer_.in ());
       }
     else
       {
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
-    if (CORBA::is_nil (this->consumer_.in ()))
+    if (CORBA::is_nil (this->nopolicy_consumer_.in ()))
       {
         return 0;
       }
-    consumer = CORBA::Object::_duplicate (this->consumer_.in ());
+    consumer = CORBA::Object::_duplicate (this->nopolicy_consumer_.in ());
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
       } /* ! this->is_typed_ec */
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */

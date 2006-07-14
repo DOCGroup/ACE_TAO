@@ -62,11 +62,13 @@ public:
   typedef CosEventChannelAdmin::ProxyPushSupplier_var _var_type;
 
   /// constructor...
-  TAO_CEC_ProxyPushSupplier (TAO_CEC_EventChannel* event_channel);
+  TAO_CEC_ProxyPushSupplier (TAO_CEC_EventChannel* event_channel,
+    ACE_Time_Value timeout);
 
   /// typed ec constructor
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
-  TAO_CEC_ProxyPushSupplier (TAO_CEC_TypedEventChannel* typed_event_channel);
+  TAO_CEC_ProxyPushSupplier (TAO_CEC_TypedEventChannel* typed_event_channel,
+    ACE_Time_Value timeout);
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
   /// destructor...
@@ -166,9 +168,23 @@ protected:
   CORBA::Boolean is_typed_ec (void) const;
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
+  /// Assigns the parameter to both consumer_ and nopolicy_consumer_, and
+  /// applies policies (when appropriate) to consumer_.
+  CosEventComm::PushConsumer_ptr apply_policy
+  (CosEventComm::PushConsumer_ptr c);
+
+#if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
+  CosTypedEventComm::TypedPushConsumer_ptr apply_policy
+  (CosTypedEventComm::TypedPushConsumer_ptr c);
+#endif
+
+  CORBA::Object_ptr apply_policy_obj (CORBA::Object_ptr c);
+
 private:
   /// The Event Channel that owns this object.
   TAO_CEC_EventChannel* event_channel_;
+
+  ACE_Time_Value timeout_;
 
   /// The Typed Event Channel that owns this object.
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
@@ -181,15 +197,25 @@ private:
   /// The reference count.
   CORBA::ULong refcount_;
 
-  /// The consumer....
+  /// The consumer -- use apply_policy() instead of assigning directly to
+  /// consumer_.  This will keep consumer_ and nopolicy_consumer_ in sync.
   CosEventComm::PushConsumer_var consumer_;
 
+  /// The consumer without any policies applied
+  CosEventComm::PushConsumer_var nopolicy_consumer_;
+
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
-  /// The typed consumer....
+  /// The typed consumer -- use apply_policy() instead of assigning directly to
+  /// typed_consumer_.  This will keep typed_consumer_ and
+  /// nopolicy_typed_consumer_ in sync.
   CosTypedEventComm::TypedPushConsumer_var typed_consumer_;
 
   /// The consumer object returned from get_typed_consumer()
   CORBA::Object_var typed_consumer_obj_;
+
+  /// The typed consumer without any policies applied
+  CosTypedEventComm::TypedPushConsumer_var nopolicy_typed_consumer_;
+
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
   /// Store the default POA.
