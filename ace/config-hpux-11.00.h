@@ -405,7 +405,11 @@
 #define ACE_LACKS_SYS_SYSCTL_H
 
 // Shared library name/path components
-#define ACE_DLL_SUFFIX  ".sl"
+#if defined (__ia64)
+#  define ACE_DLL_SUFFIX  ".so"
+#else
+#  define ACE_DLL_SUFFIX  ".sl"
+#endif  /* __ia64 */
 #if defined (__LP64__)
 #  define ACE_LD_SEARCH_PATH "LD_LIBRARY_PATH"
 #else
