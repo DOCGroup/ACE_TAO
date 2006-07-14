@@ -117,6 +117,20 @@ TAO::Any_Basic_Impl_T<T>::extract (const CORBA::Any & any,
 }
 
 template<typename T>
+CORBA::Boolean
+TAO::Any_Basic_Impl_T<T>::marshal_value (TAO_OutputCDR &cdr)
+{
+  return (cdr << this->value_);
+}
+
+template<typename T>
+const void *
+TAO::Any_Basic_Impl_T<T>::value (void) const
+{
+  return &this->value_;
+}
+
+template<typename T>
 TAO::Any_Basic_Impl_T<T> *
 TAO::Any_Basic_Impl_T<T>::create_empty (CORBA::TypeCode_ptr tc)
 {

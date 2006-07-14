@@ -1089,17 +1089,15 @@ TAO_IIOP_Acceptor::parse_options (const char *str)
   ACE_CString **argv = 0;
   ACE_NEW_RETURN (argv, ACE_CString*[argc],-1);
 
-  ssize_t begin = 0;
-  ssize_t end = -1;
+  ACE_CString::size_type begin = 0;
+  ACE_CString::size_type end = 0;
   int result = 0;
   for (int j = 0; j < argc; ++j)
     {
-      begin = end + 1;
-
       if (j < argc - 1)
         end = options.find (option_delimiter, begin);
       else
-        end = static_cast<ssize_t> (len);
+        end = len;
 
       if (end == begin)
         {
@@ -1108,10 +1106,15 @@ TAO_IIOP_Acceptor::parse_options (const char *str)
           result = -1;
           break;
         }
-      else if (end != ACE_CString::npos)
+      else if (end != options.npos)
         {
           argv_base[j] = options.substring (begin, end);
           argv[j] = &argv_base[j];
+          begin = end + 1;
+        }
+      else
+        {
+          break;  // No other options.
         }
     }
 
@@ -1142,10 +1145,10 @@ TAO_IIOP_Acceptor::parse_options_i (int &argc,
   int i = 0;
   while (i < argc)
     {
-      size_t len = argv[i]->length();
-      ssize_t slot = argv[i]->find ("=");
+      ACE_CString::size_type const len  = argv[i]->length ();
+      ACE_CString::size_type const slot = argv[i]->find ('=');
 
-      if (slot == static_cast <ssize_t> (len - 1)
+      if (slot == len - 1
           || slot == ACE_CString::npos)
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("TAO (%P|%t) - IIOP option <%s> is ")
@@ -1194,7 +1197,7 @@ TAO_IIOP_Acceptor::parse_options_i (int &argc,
       else
         {
           // the name is not known, skip to the next option
-          i++;
+          ++i;
           continue;
         }
       // at the end, we've consumed this argument. Shift the list and
@@ -1203,7 +1206,7 @@ TAO_IIOP_Acceptor::parse_options_i (int &argc,
       // these arguments are only whole strings.
       --argc;
       ACE_CString *temp = argv[i];
-      for (int j = i; j <= argc-1; j++)
+      for (int j = i; j <= argc-1; ++j)
         argv[j] = argv[j+1];
       argv[argc] = temp;
     }

@@ -1982,7 +1982,7 @@ TAO_ORB_Core::create_object (TAO_Stub *stub)
     // iterate through the ORBs.
     ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                       guard,
-                      TAO::ORB_Table::instance()->lock_,
+                      TAO::ORB_Table::instance()->lock (),
                       CORBA::Object::_nil ());
 
     TAO::ORB_Table * const table = TAO::ORB_Table::instance ();
@@ -2058,7 +2058,7 @@ TAO_ORB_Core::initialize_object_i (TAO_Stub *stub,
     // iterate through the ORBs.
     ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                               guard,
-                              TAO::ORB_Table::instance()->lock_,
+                              TAO::ORB_Table::instance()->lock (),
                               0));
 
     TAO::ORB_Table * const table = TAO::ORB_Table::instance ();

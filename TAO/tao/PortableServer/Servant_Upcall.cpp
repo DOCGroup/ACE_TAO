@@ -301,7 +301,7 @@ namespace TAO
           // non-servant upcall is in progress, wait for it to complete.
           // Unless of course, the thread making the non-servant upcall is
           // this thread.
-          this->object_adapter_->wait_for_non_servant_upcalls_to_complete ();
+          this->object_adapter_->wait_for_non_servant_upcalls_to_complete_no_throw ();
 
           // Cleanup servant related state.
           this->servant_cleanup ();

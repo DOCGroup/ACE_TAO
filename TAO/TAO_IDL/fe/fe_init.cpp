@@ -696,14 +696,14 @@ FE_store_env_include_paths (void)
       separator = ':';
 #endif
       ACE_CString aggr_cstr (aggr_str);
-      ssize_t pos;
+      ACE_CString::size_type pos;
 
       do
         {
           pos = aggr_cstr.find (separator);
           idl_global->add_include_path (aggr_cstr.substr (0, pos).fast_rep ());
           aggr_cstr = aggr_cstr.substr (pos + 1);
-        } while (pos != ACE_String_Base_Const::npos);
+        } while (pos != ACE_CString::npos);
     }
 }
 

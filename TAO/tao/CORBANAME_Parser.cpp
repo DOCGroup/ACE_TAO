@@ -80,7 +80,7 @@ TAO_CORBANAME_Parser::parse_string (const char *ior,
     {
       // The position of the seperator between the obj_addr and key
       // string
-      ssize_t pos_seperator = 0;
+      ACE_CString::size_type pos_seperator = 0;
 
       ACE_CString corbaname_str (corbaname, 0, 1);
 
@@ -92,7 +92,7 @@ TAO_CORBANAME_Parser::parse_string (const char *ior,
       if (pos_seperator != ACE_CString::npos)
         {
           key_string = corbaname_str.substring (pos_seperator + 1,
-                                                -1);
+                                                ACE_CString::npos);
         }
 
       // Prepare a suitable corbaloc string for the name service.
