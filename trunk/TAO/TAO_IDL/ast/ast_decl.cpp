@@ -961,7 +961,7 @@ AST_Decl::version (char *value)
       if (this->repoID_ != 0)
         {
           ACE_CString tmp (this->repoID_);
-          int pos = tmp.rfind (':');
+          ACE_CString::size_type const pos = tmp.rfind (':');
 
           if (pos != ACE_CString::npos)
             {
