@@ -24,7 +24,7 @@
 
 #if !defined (ACE_HAS_THREADS)
 #  include "ace/Null_Mutex.h"
-#else /* ACE_HAS_THREAD */
+#else /* ACE_HAS_THREADS */
 // ACE platform supports some form of threading.
 
 #include "ace/ACE_export.h"
