@@ -368,14 +368,17 @@ sub check_return_value ($)
     return 0;
 }
 
-sub Kill ()
+sub Kill ($)
 {
     my $self = shift;
+    my $ignore_return_value = shift;
 
     if ($self->{RUNNING} && !defined $ENV{'ACE_TEST_WINDOW'}) {
         kill ('KILL', $self->{PROCESS});
         waitpid ($self->{PROCESS}, 0);
-        $self->check_return_value ($?);
+        if (! $ignore_return_value) {
+            $self->check_return_value ($?);
+        }
     }
 
     $self->{RUNNING} = 0;

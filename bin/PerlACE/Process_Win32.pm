@@ -324,15 +324,16 @@ sub SpawnWaitKill ($)
 
 # Kill the process
 
-sub Kill ()
+sub Kill ($)
 {
     my $self = shift;
+    my $notused = shift; #Used in Process_Unix.pm
 
     if ($self->{RUNNING}  && !defined $ENV{'ACE_TEST_WINDOW'}) {
         Win32::Process::Kill ($self->{PROCESS}, -1);
     }
 
-	$self->{RUNNING} = 0;
+    $self->{RUNNING} = 0;
 }
 
 

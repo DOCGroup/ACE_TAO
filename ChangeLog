@@ -1,3 +1,11 @@
+Fri Jul 14 15:50:34 UTC 2006  Adam Mitz  <mitza@ociweb.com>
+
+        * bin/PerlACE/Process_Unix.pm:
+        * bin/PerlACE/Process_Win32.pm:
+
+          Added an optional parameter to Process->Kill().  If the parameter is
+          true then the return value from the process is ignored.
+
 Fri Jul 14 15:45:04 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * tests/Message_Queue_Test_Ex.{h cpp}: Corrected for !ACE_HAS_THREADS.
