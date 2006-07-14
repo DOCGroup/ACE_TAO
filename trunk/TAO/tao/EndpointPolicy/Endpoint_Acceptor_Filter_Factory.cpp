@@ -28,8 +28,8 @@ TAO_Endpoint_Acceptor_Filter_Factory::~TAO_Endpoint_Acceptor_Filter_Factory(void
     {
       if (policies[i]->policy_type() == EndpointPolicy::ENDPOINT_POLICY_TYPE)
         {
-          policy = EndpointPolicy::Policy::_narrow (policies[0]);
-  ACE_NEW_RETURN (filter,
+          policy = EndpointPolicy::Policy::_narrow (policies[i]);
+          ACE_NEW_RETURN (filter,
                           TAO_Endpoint_Acceptor_Filter (policy.in()),
                           0);
           return filter;
