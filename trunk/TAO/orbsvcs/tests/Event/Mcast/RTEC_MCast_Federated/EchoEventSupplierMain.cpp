@@ -6,22 +6,22 @@
 #include "EchoEventSupplier_i.h"
 #include "SimpleAddressServer.h"
 
-#include <orbsvcs/RtecEventCommC.h>
-#include <orbsvcs/RtecEventChannelAdminC.h>
-#include <orbsvcs/Time_Utilities.h>
-#include <orbsvcs/Event_Utilities.h>
-#include <orbsvcs/CosNamingC.h>
-#include <orbsvcs/Event/EC_Event_Channel.h>
-#include <orbsvcs/Event/EC_Default_Factory.h>
-#include <orbsvcs/Event/ECG_Mcast_EH.h>
-#include <orbsvcs/Event/ECG_UDP_Sender.h>
-#include <orbsvcs/Event/ECG_UDP_Receiver.h>
-#include <orbsvcs/Event/ECG_UDP_Out_Endpoint.h>
-#include <orbsvcs/Event/ECG_UDP_EH.h>
+#include "orbsvcs/RtecEventCommC.h"
+#include "orbsvcs/RtecEventChannelAdminC.h"
+#include "orbsvcs/Time_Utilities.h"
+#include "orbsvcs/Event_Utilities.h"
+#include "orbsvcs/CosNamingC.h"
+#include "orbsvcs/Event/EC_Event_Channel.h"
+#include "orbsvcs/Event/EC_Default_Factory.h"
+#include "orbsvcs/Event/ECG_Mcast_EH.h"
+#include "orbsvcs/Event/ECG_UDP_Sender.h"
+#include "orbsvcs/Event/ECG_UDP_Receiver.h"
+#include "orbsvcs/Event/ECG_UDP_Out_Endpoint.h"
+#include "orbsvcs/Event/ECG_UDP_EH.h"
 
-#include <tao/ORB_Core.h>
+#include "tao/ORB_Core.h"
 
-#include <ace/Auto_Ptr.h>
+#include "ace/Auto_Ptr.h"
 #include <iostream>
 #include <fstream>
 
