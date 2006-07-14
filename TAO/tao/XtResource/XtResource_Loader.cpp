@@ -1,7 +1,7 @@
 //$Id$
-#include "tao/XtResource_Loader.h"
+#include "tao/XtResource/XtResource_Loader.h"
 #include "tao/ORB_Core.h"
-#include "tao/XtResource_Factory.h"
+#include "tao/XtResource/XtResource_Factory.h"
 
 ACE_RCSID( TAO_XtResource,
            XtResource_Loader,

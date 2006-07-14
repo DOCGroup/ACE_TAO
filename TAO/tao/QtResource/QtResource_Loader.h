@@ -2,21 +2,20 @@
 
 //=============================================================================
 /**
- *  @file   TkResource_Loader.h
+ *  @file   QtResource_Loader.h
  *
  *  $Id$
  *
- *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  *  @author Marek Brudka <mbrudka@aster.pl>
+ *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
 //=============================================================================
 
-#ifndef TAO_TKRESOURCE_LOADER_H
-#define TAO_TKRESOURCE_LOADER_H
-
+#ifndef TAO_QTRESOURCE_LOADER_H
+#define TAO_QTRESOURCE_LOADER_H
 #include /**/ "ace/pre.h"
 
-#include "tao/TAO_TkResource_Export.h"
+#include "tao/QtResource/TAO_QtResource_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -24,37 +23,36 @@
 
 #include "tao/Versioned_Namespace.h"
 
+#include <qapplication.h>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
   /**
-   * @class TkResource_Loader
+   * @class QtResource_Loader
    *
-   * @brief Loads TAO resources related with Tk.
+   * @brief Loads TAO resources related with Qt.
    *
    * This class changes the default reactor implementation into
-   * ACE_TkReactor one by calling TAO_ORB_Core::set_gui_resource_factory.
+   * ACE_QtReactor one by calling TAO_ORB_Core::set_gui_resource_factory.
    * User should create an instance of this class before ORB_init
-   * when the TAO server has has to be integrated within Tk event loop.
+   * when the TAO server has has to be integrated within Qt event loop.
    *
-   * Please notice, this class has to be created in the main Tk thread,
+   * Please notice, this class has to be created in the main Qt thread,
    * because set_gui_resource_factory creates a variable in TSS. This way
-   * TkReactor is instantiated only in Tk event loop thread.
+   * QtReactor is instantiated only in Qt event loop thread.
    */
-  class TAO_TkResource_Export TkResource_Loader
+
+  class TAO_QtResource_Export QtResource_Loader
   {
   public:
-
-    TkResource_Loader (void);
-
-    virtual ~TkResource_Loader (void);
-
+    QtResource_Loader (QApplication *qapp);
+    virtual ~QtResource_Loader (void);
   };
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
-
-#endif /* TAO_TKRESOURCE_LOADER_H */
+#endif /* TAO_QTRESOURCE_LOADER_H */

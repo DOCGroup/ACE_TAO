@@ -1,6 +1,6 @@
 //$Id$
 
-#include "tao/QtResource_Factory.h"
+#include "tao/QtResource/QtResource_Factory.h"
 #include "tao/debug.h"
 #include "ace/QtReactor.h"
 

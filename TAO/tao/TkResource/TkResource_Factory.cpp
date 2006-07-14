@@ -1,6 +1,6 @@
 //$Id$
 
-#include "tao/TkResource_Factory.h"
+#include "tao/TkResource/TkResource_Factory.h"
 #include "tao/debug.h"
 #include "ace/TkReactor.h"
 

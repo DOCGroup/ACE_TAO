@@ -1,7 +1,7 @@
 //$Id$
-#include "tao/FlResource_Loader.h"
+#include "tao/FlResource/FlResource_Loader.h"
 #include "tao/ORB_Core.h"
-#include "tao/FlResource_Factory.h"
+#include "tao/FlResource/FlResource_Factory.h"
 
 ACE_RCSID( TAO_FlResource,
            FlResource_Loader,
