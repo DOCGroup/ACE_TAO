@@ -24,6 +24,7 @@
 
 #include "tao/SystemException.h"
 #include "tao/PI_ForwardC.h"
+#include "tao/Policy_ForwardC.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 template <class T> class ACE_Array_Base;
