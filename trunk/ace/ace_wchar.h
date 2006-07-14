@@ -54,7 +54,7 @@
 #    define ACE_HAS_WCHAR
 #  endif
 #  include /**/ <wchar.h>
-#endif /* ACE_HAS_XPG4_MULTIBYPTE_CHAR */
+#endif /* ACE_HAS_XPG4_MULTIBYTE_CHAR */
 
 #if defined (ACE_HAS_WCHAR)
 # if defined (ACE_VXWORKS)

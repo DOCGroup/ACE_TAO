@@ -1,3 +1,14 @@
+Fri Jul 14 07:26:46 UTC 2006  Olli Savia  <ops@iki.fi>
+
+        * ace/Thread_Mutex.h:
+        * ace/ace_wchar.h:
+        * tests/SOCK_Dgram_Bcast_Test.cpp:
+          Fixed typos in comments.
+        
+        * m4/config_h.m4:
+          Removed references to ACE_HAS_TERM_IOCTLS. It's no longer
+          used in ACE/TAO/CIAO code.
+
 Fri Jul 14 02:11:21 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * bin/tao_orb_tests.lst:

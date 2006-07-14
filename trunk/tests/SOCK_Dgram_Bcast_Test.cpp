@@ -181,7 +181,7 @@ int run_auto_test (const ACE_TCHAR *prog_name)
                                                       child_timeout,
                                                       &receiver_exit_code) == child_pid)
             break;
-#else /* ACE_HAS_THREAD */
+#else /* ACE_HAS_THREADS */
           // sleep 1 second or wait for child thread
           child_timeout += ACE_OS::gettimeofday () ;
           if (ACE_Thread_Manager::instance ()->wait (&child_timeout) == 0)
