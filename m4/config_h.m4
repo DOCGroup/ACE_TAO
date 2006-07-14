@@ -697,9 +697,6 @@ AH_TEMPLATE([ACE_HAS_TEMPLATE_TYPEDEFS],
 [Compiler implements templates that support typedefs inside of
    classes used as formal arguments to a template class.])
 
-AH_TEMPLATE([ACE_HAS_TERM_IOCTLS],
-[Platform has terminal ioctl flags like TCGETS and TCSETS.])
-
 AH_TEMPLATE([ACE_HAS_THREADS],[Platform supports threads.])
 
 AH_TEMPLATE([ACE_HAS_THREAD_SAFE_ACCEPT],
