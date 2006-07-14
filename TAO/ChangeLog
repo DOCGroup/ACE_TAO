@@ -1,3 +1,23 @@
+Fri Jul 14 02:02:55 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/IIOP_Acceptor.cpp:
+          Fix for parsing IPv6 endpoints not using the enclosing []. An
+          address such as fe80::a0f2:2510:7549:12345 is a legitemate IPv6
+          address but would be misinterpreted.
+
+        * tao/Profile.cpp:
+        * tests/Bug_2593_Regression/Bug_2593_Regression.mpc:
+        * tests/Bug_2593_Regression/Hello.h:
+        * tests/Bug_2593_Regression/Hello.cpp:
+        * tests/Bug_2593_Regression/README:
+        * tests/Bug_2593_Regression/Test.idl:
+        * tests/Bug_2593_Regression/client.cpp:
+        * tests/Bug_2593_Regression/run_test.pl:
+        * tests/Bug_2593_Regression/server.conf:
+        * tests/Bug_2593_Regression/server.cpp:
+          A fix and a new regression test for bug 2593. Thanks to Jules
+          Colding, <colding at omesc dot com> for finding this.
+
 Thu Jul 13 10:26:42 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
         * tao/EndpointPolicy/EndpointPolicyTypeA.h:
