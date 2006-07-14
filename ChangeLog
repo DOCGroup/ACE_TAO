@@ -205,7 +205,7 @@ Fri Jul 14 21:10:11 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
           handle (e.g. ACE_Numeric_Limits<size_type>::max()).  This works
           since a string length will always be less than or equal to
           "max() - 1" since the final character in the string is the null
-          terminator.
+          terminator.  [Bug 2598]
 
         * ace/String_Base.cpp:
         * ace/String_Base.h:
@@ -241,7 +241,7 @@ Fri Jul 14 21:10:11 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
          To summarize, a "no position" condition is denoted using the npos
          constant, not -1. It can be referred directly by scoping it with
          the appropriate string class (e.g. ACE_CString::npos,
-         ACE_WString::npos, etc).
+         ACE_WString::npos, etc).  [Bug 2598]
 
         * ace/Task_T.h:
 
