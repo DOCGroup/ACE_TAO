@@ -54,6 +54,7 @@ project(ACE) : acedefaults, core, other, codecs, token, svcconf, uuid, filecache
     DEV_Addr.cpp
     DEV_Connector.cpp
     DEV_IO.cpp
+    DLL_Manager.cpp
     Dev_Poll_Reactor.cpp
     Dirent.cpp
     Dirent_Selector.cpp
@@ -203,6 +204,8 @@ project(ACE) : acedefaults, core, other, codecs, token, svcconf, uuid, filecache
     Shared_Memory_MM.cpp
     Shared_Memory_Pool.cpp
     Shared_Memory_SV.cpp
+    Sig_Adapter.cpp
+    Sig_Handler.cpp
     Signal.cpp
     SOCK.cpp
     SOCK_Acceptor.cpp
@@ -389,6 +392,7 @@ project(ACE) : acedefaults, core, other, codecs, token, svcconf, uuid, filecache
     Null_Condition.h
     Null_Mutex.h
     Null_Semaphore.h
+    Numeric_Limits.h
     OS.h
     OS_Dirent.h
     OS_Memory.h
@@ -406,6 +410,7 @@ project(ACE) : acedefaults, core, other, codecs, token, svcconf, uuid, filecache
     SStringfwd.h
     Static_Object_Lock.h
     Strategies.h
+    String_Base_Const.h
     Svc_Conf.h
     Svc_Conf_Tokens.h
     Swap.h

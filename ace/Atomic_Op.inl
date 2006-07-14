@@ -14,7 +14,7 @@ ACE_Atomic_Op<ACE_Thread_Mutex, long>::ACE_Atomic_Op (void)
 }
 
 ACE_INLINE
-ACE_Atomic_Op<ACE_Thread_Mutex, long>::ACE_Atomic_Op (const long &c)
+ACE_Atomic_Op<ACE_Thread_Mutex, long>::ACE_Atomic_Op (long c)
   : value_ (c)
 {
 }
@@ -159,7 +159,7 @@ ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::ACE_Atomic_Op (void)
 }
 
 ACE_INLINE
-ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::ACE_Atomic_Op (const unsigned long &c)
+ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::ACE_Atomic_Op (unsigned long c)
   : value_ (c)
 {
 }

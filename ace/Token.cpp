@@ -3,7 +3,7 @@
 #include "ace/Token.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Token.inl"
+# include "ace/Token.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, Token, "$Id$")

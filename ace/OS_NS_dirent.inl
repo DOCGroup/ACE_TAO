@@ -84,7 +84,7 @@ readdir_r (ACE_DIR *dirp,
                         (_POSIX_C_SOURCE - 0 >= 199506L))) || \
       (!defined (sun) && (defined (ACE_HAS_PTHREADS_STD) || \
                          defined (ACE_HAS_PTHREADS_DRAFT7) || \
-                         defined (__USE_POSIX) || \
+                         defined (_POSIX_SOURCE) || \
                          defined (__FreeBSD__) || \
                          defined (HPUX_11)))
 #    if defined (__GNUG__) && defined (DIGITAL_UNIX)

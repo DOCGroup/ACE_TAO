@@ -26,9 +26,9 @@ ACE_OS::uname (ACE_utsname *name)
   ACE_OS::strcpy (name->sysname,
                   ACE_LIB_TEXT ("Win32"));
 
-  OSVERSIONINFO vinfo;
-  vinfo.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
-  ::GetVersionEx (&vinfo);
+  ACE_TEXT_OSVERSIONINFO vinfo;
+  vinfo.dwOSVersionInfoSize = sizeof(ACE_TEXT_OSVERSIONINFO);
+  ACE_TEXT_GetVersionEx (&vinfo);
 
   SYSTEM_INFO sinfo;
 #   if defined (ACE_HAS_PHARLAP)
@@ -170,13 +170,13 @@ ACE_OS::uname (ACE_utsname *name)
       if (vinfo.dwMajorVersion == 4 && vinfo.dwMinorVersion == 0)
         {
           ACE_OS::strcpy (name->release, ACE_LIB_TEXT ("Windows 95"));
-          if (vinfo.szCSDVersion[1] == 'C')
+          if (vinfo.szCSDVersion[1] == ACE_LIB_TEXT('C'))
             ACE_OS::strcat (name->release, ACE_LIB_TEXT (" OSR2"));
         }
       else if (vinfo.dwMajorVersion == 4 && vinfo.dwMinorVersion == 10)
         {
           ACE_OS::strcpy (name->release, ACE_LIB_TEXT ("Windows 98"));
-          if (vinfo.szCSDVersion[1] == 'A')
+          if (vinfo.szCSDVersion[1] == ACE_LIB_TEXT('A'))
             ACE_OS::strcat (name->release, ACE_LIB_TEXT (" SE"));
         }
       else if (vinfo.dwMajorVersion == 4 && vinfo.dwMinorVersion == 90)

@@ -2,8 +2,18 @@
 //
 // $Id$
 
+// The ACE_FOR_TAO subset is designed primarily for use with the
+// TAO CosNotification service.  It is not intended to be used
+// for some of other TAO features and services, such as the TAO
+// Strategies library, the CosNaming service, etc.
+//
+// Avoid adding source files simply to get some ACE/TAO-based code to
+// link.  This ACE_FOR_TAO subset library must remain as small as
+// possible.
+
 project(ACE_FOR_TAO) : acedefaults, core, svcconf, versioned_namespace, pkgconfig {
-  requires     = ace_for_tao
+  macros      += ACE_LACKS_ACE_TOKEN
+  requires     = ace_for_tao ace_svcconf
   libout       = $(ACE_ROOT)/lib
   sharedname   = ACE_FOR_TAO
   dynamicflags = ACE_BUILD_DLL
@@ -33,6 +43,7 @@ project(ACE_FOR_TAO) : acedefaults, core, svcconf, versioned_namespace, pkgconfi
     Condition_Thread_Mutex.cpp
     Countdown_Time.cpp
     Copy_Disabled.cpp
+    DLL_Manager.cpp
     Dirent.cpp // Required by TAO_IDL
     Dirent_Selector.cpp
     Dump.cpp
@@ -171,13 +182,14 @@ project(ACE_FOR_TAO) : acedefaults, core, svcconf, versioned_namespace, pkgconfi
     TSS_Adapter.cpp
 
     // Dev_Poll_Reactor isn't available on Windows.
-    conditional(automake, make) {
+    conditional(automake,make,gnuace) {
       Dev_Poll_Reactor.cpp
     }
 
     // ACE_Token implementation uses semaphores on Windows and VxWorks.
     conditional(vc6,vc71,vc8,nmake,bmake,borland) {
       ACE_crc32.cpp  // Required by SV_Semaphore_Simple
+      NT_Service.cpp // Required by ace_for_tao sponsors
       Semaphore.cpp
       Process_Mutex.cpp
       WFMO_Reactor.cpp
@@ -303,6 +315,7 @@ project(ACE_FOR_TAO) : acedefaults, core, svcconf, versioned_namespace, pkgconfi
     Null_Condition.h
     Null_Mutex.h
     Null_Semaphore.h
+    Numeric_Limits.h
     OS.h
     OS_Dirent.h
     OS_Memory.h
@@ -318,6 +331,7 @@ project(ACE_FOR_TAO) : acedefaults, core, svcconf, versioned_namespace, pkgconfi
     SStringfwd.h
     Static_Object_Lock.h
     Strategies.h
+    String_Base_Const.h
     Svc_Conf.h
     Svc_Conf_Tokens.h
     Swap.h

@@ -26,7 +26,7 @@ ACE_String_Base<CHAR>::assign_nocopy (const ACE_String_Base<CHAR> &s)
   return *this;
 }
 
-template <class CHAR> ACE_INLINE size_t
+template <class CHAR> ACE_INLINE typename ACE_String_Base<CHAR>::size_type
 ACE_String_Base<CHAR>::length (void) const
 {
   ACE_TRACE ("ACE_String_Base<CHAR>::length");
@@ -46,8 +46,8 @@ ACE_String_Base<CHAR>::empty (void) const
 }
 
 template <class CHAR> ACE_INLINE ACE_String_Base<CHAR>
-ACE_String_Base<CHAR>::substr (size_t offset,
-                               ssize_t length) const
+ACE_String_Base<CHAR>::substr (size_type offset,
+                               size_type length) const
 {
   ACE_TRACE ("ACE_String_Base<CHAR>::substr");
   return this->substring (offset, length);
@@ -56,7 +56,7 @@ ACE_String_Base<CHAR>::substr (size_t offset,
 // Return the <slot'th> character in the string.
 
 template <class CHAR> ACE_INLINE const CHAR &
-ACE_String_Base<CHAR>::operator[] (size_t slot) const
+ACE_String_Base<CHAR>::operator[] (size_type slot) const
 {
   ACE_TRACE ("ACE_String_Base<CHAR>::operator[]");
   return this->rep_[slot];
@@ -65,7 +65,7 @@ ACE_String_Base<CHAR>::operator[] (size_t slot) const
 // Return the <slot'th> character in the string by reference.
 
 template <class CHAR> ACE_INLINE CHAR &
-ACE_String_Base<CHAR>::operator[] (size_t slot)
+ACE_String_Base<CHAR>::operator[] (size_type slot)
 {
   ACE_TRACE ("ACE_String_Base<CHAR>::operator[]");
   return this->rep_[slot];
@@ -117,14 +117,15 @@ ACE_String_Base<CHAR>::operator!= (const CHAR *s) const
   return !(*this == s);
 }
 
-template <class CHAR> ACE_INLINE ssize_t
-ACE_String_Base<CHAR>::find (const ACE_String_Base<CHAR>&str, size_t pos) const
+template <class CHAR> ACE_INLINE typename ACE_String_Base<CHAR>::size_type
+ACE_String_Base<CHAR>::find (const ACE_String_Base<CHAR>&str,
+                             size_type pos) const
 {
   ACE_TRACE ("ACE_String_Base<CHAR>::find");
   return this->find (str.rep_, pos);
 }
 
-template <class CHAR> ACE_INLINE ssize_t
+template <class CHAR> ACE_INLINE typename ACE_String_Base<CHAR>::size_type
 ACE_String_Base<CHAR>::strstr (const ACE_String_Base<CHAR> &s) const
 {
   ACE_TRACE ("ACE_String_Base<CHAR>::strstr");

@@ -103,7 +103,11 @@ ACE_OS::closesocket (ACE_HANDLE handle)
 {
   ACE_OS_TRACE ("ACE_OS::closesocket");
 #if defined (ACE_WIN32)
-  ACE_OS::shutdown (handle, ACE_SHUTDOWN_WRITE);
+  // @note Do not shutdown the write end here.  Doing so will break
+  //       applications that duplicate a handle on fork(), for
+  //       example, and expect to continue writing in the fork()ed
+  //       process.
+
   ACE_SOCKCALL_RETURN (::closesocket ((SOCKET) handle), int, -1);
 #else
   ACE_OSCALL_RETURN (::close (handle), int, -1);

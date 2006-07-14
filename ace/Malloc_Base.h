@@ -39,6 +39,10 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Allocator
 {
 public:
+
+  /// Unsigned integer type used for specifying memory block lengths.
+  typedef size_t size_type;
+
   // = Memory Management
 
   /// Get pointer to a default ACE_Allocator.
@@ -58,15 +62,15 @@ public:
   virtual ~ACE_Allocator (void);
 
   /// Allocate <nbytes>, but don't give them any initial value.
-  virtual void *malloc (size_t nbytes) = 0;
+  virtual void *malloc (size_type nbytes) = 0;
 
   /// Allocate <nbytes>, giving them <initial_value>.
-  virtual void *calloc (size_t nbytes, char initial_value = '\0') = 0;
+  virtual void *calloc (size_type nbytes, char initial_value = '\0') = 0;
 
   /// Allocate <n_elem> each of size <elem_size>, giving them
   /// <initial_value>.
-  virtual void *calloc (size_t n_elem,
-                        size_t elem_size,
+  virtual void *calloc (size_type n_elem,
+                        size_type elem_size,
                         char initial_value = '\0') = 0;
 
   /// Free <ptr> (must have been allocated by <ACE_Allocator::malloc>).
@@ -127,7 +131,7 @@ public:
 
   /// Sync @a len bytes of the memory region to the backing store
   /// starting at @a addr.
-  virtual int sync (void *addr, size_t len, int flags = MS_SYNC) = 0;
+  virtual int sync (void *addr, size_type len, int flags = MS_SYNC) = 0;
 
   /**
    * Change the protection of the pages of the mapped region to <prot>
@@ -138,7 +142,7 @@ public:
 
   /// Change the protection of the pages of the mapped region to <prot>
   /// starting at <addr> up to <len> bytes.
-  virtual int protect (void *addr, size_t len, int prot = PROT_RDWR) = 0;
+  virtual int protect (void *addr, size_type len, int prot = PROT_RDWR) = 0;
 
 #if defined (ACE_HAS_MALLOC_STATS)
   /// Dump statistics of how malloc is behaving.

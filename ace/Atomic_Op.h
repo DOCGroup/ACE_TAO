@@ -64,7 +64,7 @@ public:
   ACE_Atomic_Op (void);
 
   /// Initialize <value_> to c.
-  ACE_Atomic_Op (const long &c);
+  ACE_Atomic_Op (long c);
 
   /// Manage copying...
   ACE_Atomic_Op (const ACE_Atomic_Op<ACE_Thread_Mutex, long> &c);
@@ -163,7 +163,7 @@ public:
   ACE_Atomic_Op (void);
 
   /// Initialize <value_> to c.
-  ACE_Atomic_Op (const unsigned long &c);
+  ACE_Atomic_Op (unsigned long c);
 
   /// Manage copying...
   ACE_Atomic_Op (const ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long> &c);

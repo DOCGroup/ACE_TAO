@@ -226,8 +226,6 @@ ACE_SOCK_Acceptor::shared_open (const ACE_Addr &local_sap,
   int error = 0;
 
 #if defined (ACE_HAS_IPV6)
-  ACE_ASSERT (protocol_family == PF_INET || protocol_family == PF_INET6);
-
   if (protocol_family == PF_INET6)
     {
       sockaddr_in6 local_inet6_addr;

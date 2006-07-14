@@ -22,6 +22,7 @@
 
 #include "ace/Synch_Traits.h"
 #include "ace/Task.h"
+#include "ace/IO_Cntl_Msg.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

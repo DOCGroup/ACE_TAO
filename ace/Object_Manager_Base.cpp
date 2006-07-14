@@ -267,8 +267,8 @@ ACE_OS_Object_Manager::init (void)
 
 # if defined (ACE_WIN32)
       ACE_OS::win32_versioninfo_.dwOSVersionInfoSize =
-        sizeof (OSVERSIONINFO);
-      ::GetVersionEx (&ACE_OS::win32_versioninfo_);
+        sizeof (ACE_TEXT_OSVERSIONINFO);
+      ACE_TEXT_GetVersionEx (&ACE_OS::win32_versioninfo_);
 # endif /* ACE_WIN32 */
       return 0;
     } else {

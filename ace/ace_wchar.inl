@@ -33,23 +33,23 @@ ACE_Wide_To_Ascii::convert (const wchar_t *wstr)
     return 0;
 
 # if defined (ACE_WIN32)
-  UINT cp = GetACP ();
-  int len = ::WideCharToMultiByte (cp,
-                                   0,
-                                   wstr,
-                                   -1,
-                                   0,
-                                   0,
-                                   0,
-                                   0);
+  UINT const cp = GetACP ();  // Codepage
+  int const len = ::WideCharToMultiByte (cp,
+                                         0,
+                                         wstr,
+                                         -1,
+                                         0,
+                                         0,
+                                         0,
+                                         0);
 # elif defined (ACE_LACKS_WCSLEN)
-  const wchar_t *wtemp = wstr;
+  const wchar_t * wtemp = wstr;
   while (wtemp != 0)
     ++wtemp;
 
-  int len = wtemp - wstr + 1;
+  int const len = wtemp - wstr + 1;
 # else  /* ACE_WIN32 */
-  size_t len = ::wcslen (wstr) + 1;
+  size_t const len = ::wcslen (wstr) + 1;
 # endif /* ACE_WIN32 */
 
   char *str = new char[len];
@@ -59,7 +59,7 @@ ACE_Wide_To_Ascii::convert (const wchar_t *wstr)
 # elif defined (ACE_VXWORKS)
   ::wcstombs (str, wstr, len);
 # else /* ACE_WIN32 */
-  for (size_t i = 0; i < len; i++)
+  for (size_t i = 0; i < len; ++i)
     {
       wchar_t *t = const_cast <wchar_t *> (wstr);
       str[i] = static_cast<char> (*(t + i));
@@ -94,10 +94,10 @@ ACE_Ascii_To_Wide::convert (const char *str)
     return 0;
 
 # if defined (ACE_WIN32)
-  UINT cp = GetACP ();
-  int len = ::MultiByteToWideChar (cp, 0, str, -1, 0, 0);
+  UINT const cp = GetACP ();  // Codepage
+  int const len = ::MultiByteToWideChar (cp, 0, str, -1, 0, 0);
 # else /* ACE_WIN32 */
-  size_t len = strlen (str) + 1;
+  size_t const len = strlen (str) + 1;
 # endif /* ACE_WIN32 */
 
   wchar_t *wstr = new wchar_t[len];
@@ -107,7 +107,7 @@ ACE_Ascii_To_Wide::convert (const char *str)
 # elif defined (ACE_VXWORKS)
   ::mbstowcs (wstr, str, len);
 # else /* ACE_WIN32 */
-  for (size_t i = 0; i < len; i++)
+  for (size_t i = 0; i < len; ++i)
     {
       char *t = const_cast<char *> (str);
       wstr[i] = static_cast<wchar_t> (*((unsigned char*)(t + i)));

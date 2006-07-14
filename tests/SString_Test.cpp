@@ -96,9 +96,9 @@ run_main (int, ACE_TCHAR *[])
     if (s1 != s0){ACE_ERROR((LM_ERROR,"Set #1: \n"));return 1;}
 
     // Substring match. Error if they are not equal
-    if (s1.strstr (s2) != -1){ACE_ERROR((LM_ERROR,"Set #1: \n"));return 1;}
+    if (s1.strstr (s2) != ACE_CString::npos){ACE_ERROR((LM_ERROR,"Set #1: \n"));return 1;}
     if (s1.strstr (s3) != 2){ACE_ERROR((LM_ERROR,"Set #1: \n"));return 1;}
-    if (s3.strstr (s1) != -1){ACE_ERROR((LM_ERROR,"Set #1: \n"));return 1;}
+    if (s3.strstr (s1) != ACE_CString::npos){ACE_ERROR((LM_ERROR,"Set #1: \n"));return 1;}
     if (s1.strstr (s4) != 1){ACE_ERROR((LM_ERROR,"Set #1: \n"));return 1;}
 
     // Substring creation. Error if they are not equal
@@ -154,9 +154,9 @@ run_main (int, ACE_TCHAR *[])
     if (s1 != s0){ACE_ERROR((LM_ERROR,"Set #2: \n"));return 1;}
 
     // Substring match. Error if they are not equal
-    if (s1.strstr (s2) != -1){ACE_ERROR((LM_ERROR,"Set #2: \n"));return 1;}
+    if (s1.strstr (s2) != ACE_CString::npos){ACE_ERROR((LM_ERROR,"Set #2: \n"));return 1;}
     if (s1.strstr (s3) != 2){ACE_ERROR((LM_ERROR,"Set #2: \n"));return 1;}
-    if (s3.strstr (s1) != -1){ACE_ERROR((LM_ERROR,"Set #2: \n"));return 1;}
+    if (s3.strstr (s1) != ACE_CString::npos){ACE_ERROR((LM_ERROR,"Set #2: \n"));return 1;}
     if (s1.strstr (s4) != 1){ACE_ERROR((LM_ERROR,"Set #2: \n"));return 1;}
 
     // Substring creation. Error if they are not equal
@@ -227,9 +227,9 @@ run_main (int, ACE_TCHAR *[])
     if (s1 != s0){ACE_ERROR((LM_ERROR,"Set #3: \n"));return 1;}
 
     // Substring match. Error if they are not equal
-    if (s1.strstr (s2) != -1){ACE_ERROR((LM_ERROR,"Set #3: \n"));return 1;}
+    if (s1.strstr (s2) != ACE_NS_WString::npos){ACE_ERROR((LM_ERROR,"Set #3: \n"));return 1;}
     if (s1.strstr (s3) != 2){ACE_ERROR((LM_ERROR,"Set #3: \n"));return 1;}
-    if (s3.strstr (s1) != -1){ACE_ERROR((LM_ERROR,"Set #3: \n"));return 1;}
+    if (s3.strstr (s1) != ACE_NS_WString::npos){ACE_ERROR((LM_ERROR,"Set #3: \n"));return 1;}
     if (s1.strstr (s4) != 1){ACE_ERROR((LM_ERROR,"Set #3: \n"));return 1;}
 
     // Substring creation. Error if they are not equal
@@ -240,10 +240,10 @@ run_main (int, ACE_TCHAR *[])
 
     // Forward search. Error if they are not equal
     if (s1.find (s3) != 2){ACE_ERROR((LM_ERROR,"Set #3: \n"));return 1;}
-    if (s3.find (s1) != ACE_WString::npos){ACE_ERROR((LM_ERROR,"Set #3: \n"));return 1;}
+    if (s3.find (s1) != ACE_NS_WString::npos){ACE_ERROR((LM_ERROR,"Set #3: \n"));return 1;}
     if (s1.find (s3, 2) != 2){ACE_ERROR((LM_ERROR,"Set #3: \n"));return 1;}
-    if (s3.find (s1, 1) != ACE_WString::npos){ACE_ERROR((LM_ERROR,"Set #3: \n"));return 1;}
-    if (s1.find (s2) != ACE_WString::npos){ACE_ERROR((LM_ERROR,"Set #3: \n"));return 1;}
+    if (s3.find (s1, 1) != ACE_NS_WString::npos){ACE_ERROR((LM_ERROR,"Set #3: \n"));return 1;}
+    if (s1.find (s2) != ACE_NS_WString::npos){ACE_ERROR((LM_ERROR,"Set #3: \n"));return 1;}
     if (s1.find ('o') != 4){ACE_ERROR((LM_ERROR,"Set #3: \n"));return 1;}
 
     // Reverse search. Error if they are not equal
