@@ -19,6 +19,8 @@
 
 // Enable these by default.
 acexml        = 1
+ace_svcconf   = 1
+ace_token     = 1
 
 // By default we disable these.
 ace_for_tao   = 0
