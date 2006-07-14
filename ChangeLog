@@ -1,3 +1,297 @@
+Fri Jul 14 21:10:11 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * ace/Atomic_Op.h (ACE_Atomic_Op):
+        * ace/Atomic_Op.inl (ACE_Atomic_Op):
+
+          Reverted change that made the constructor parameters for the
+          "long" type specialization be passed in by reference to const
+          instead of by value.  Explicit template instantiation is no
+          longer performed by ACE so there is no need for the
+          specialization constructor parameters to match the primary
+          template constructor parameters.
+
+        * ace/CDR_Base.cpp:
+        * ace/CDR_Stream.h:
+        * ace/CDR_Stream.inl:
+
+          Const-correctness improvements.
+
+        * ace/CDR_Base.h:
+
+          Minor const related cosmetic changes.
+
+        * ace/CDR_Base.inl (first_size, next_size):
+
+          Quickly multiply by two using a bit shift.  This is guaranteed
+          to work since the variable is an unsigned integer.
+
+        * ace/CORBA_macros.h:
+
+          Removed unnecessary instantiation of emulated exception
+          environment variable from native exception case.  Reduces
+          footprint in code that uses the ACE emulated exception macros in
+          a native C++ exception configuration, and provides a slight
+          performance increase due to resulting tighter binaries.
+
+        * ace/DLL_Manager.cpp (get_dll_names):
+
+          ACE_TString::rfind() now return an ACE_TString::size_type type.
+          Use ACE_TString::size_type, not ssize_t, to hold the return
+          value of ACE_TString::rfind().
+
+        * ace/Dev_Poll_Reactor.cpp:
+
+          Include new "ace/Sig_Handler.h" header to pull in
+          ACE_Sig_Handler class declaration.
+
+          Added support for HP-UX devpoll headers.
+
+        * ace/Event_Handler.cpp:
+
+          No need to include "ace/Message_Block.h".
+
+        * ace/MMAP_Memory_Pool.h:
+        * ace/Select_Reactor_T.cpp:
+        * ace/TP_Reactor.cpp:
+        * ace/WFMO_Reactor.inl:
+
+          Include new "ace/Sig_Handler.h" header to pull in
+          ACE_Sig_Handler class declaration.
+
+        * ace/Malloc_Base.h (ACE_Allocator):
+
+          Defined a new "size_type" typedef (currently a "size_t") to
+          simplify potential allocator size type changes in the future.
+          It's introduction was motivated by the ACE string class size
+          type fixes described below.  Analogous to the STL
+          std::allocator<>::size_type typedef.
+
+        * ace/Numeric_Limits.h:
+
+          Traits containing basic integer limits.  Useful for
+          template-based code on platforms that lack
+          std::numeric_limits<>.  These traits are not meant to be a
+          replacement for std::numeric_limits<>.  Rather they are a crutch
+          until all ACE-supported platforms support
+          std::numeric_limits<>.  [Bug 2451]
+
+        * ace/OS_NS_dirent.inl:
+
+          "__USE_POSIX" -> "_POSIX_SOURCE".  The former is a C library
+          implementation-specific feature test macro/symbol.
+          
+        * ace/OS_NS_stdio.cpp:
+        * ace/OS_NS_stdio.h:
+        * ace/OS_NS_stdio.inl (get_win32_versioninfo):
+
+          Fixed/added missing wide character support.
+          
+        * ace/OS_NS_stdlib.cpp (mkstemp_emulation):
+
+          Clean up preprocessor conditional blocks by taking advantage of
+          new ACE_Numeric_Limits<> trait templates.
+
+        * ace/OS_NS_stdlib.inl (atop):
+
+          Address VC++ 64-bit warnings by taking advantage of standard
+          intptr_t type, if available.
+
+        * ace/OS_NS_sys_socket.inl (closesocket):
+
+          Do not shutdown the write end here.  Doing so will break
+          applications that duplicate a handle on fork(), for example, and
+          expect to continue writing in the fork()ed process.
+
+        * ace/OS_NS_sys_utsname.cpp (uname):
+
+          Fixed garbage in wide string output.
+
+        * ace/Object_Manager.cpp:
+
+          No need to include "ace/Containers.h".
+
+          Include newly refactored "ace/Sig_Adapter.h" instead of old
+          "ace/Signal.h".  Removes dependency on the ACE_Reactor.  Allows
+          service configurator-disabled subset containing
+          ACE_Object_Manager support to be built, e,g, MPC ace_svcconf=0
+          configuration.
+
+        * ace/Object_Manager_Base.cpp (init):
+        * ace/Process.cpp (pass_handle):
+
+          Fixed Windows version info handling in wide string
+          configurations. 
+
+        * ace/Process_Manager.h (wait):
+
+          Clarified that the timeout value is a relative time, not
+          absolute, in the documentation.
+
+        * ace/SOCK_Acceptor.cpp (shared_open):
+
+          Removed assertion that assumes all protocol families are
+          internet related.  This method is invoked by some non-internet
+          protocol subclasses, such as ACE_LSOCK_Acceptor.
+
+        * ace/SOCK_Stream.cpp (close):
+
+          Reinstituted explicit close_writer() method call for the
+          ACE_WIN32 case since ACE_OS::close() no longer causes the writer
+          to be shutdown on Windows (nor should it!).
+
+        * ace/Service_Config.cpp:
+
+          Replaced old "ace/Signal.h" include directive with
+          "ace/Sig_Adapter.h".  ACE_Sig_Handler support is unnecessary.
+
+          Removed redundant "ace/Service_Config.h" include directive.
+
+        * ace/Sig_Adapter.cpp:
+        * ace/Sig_Adapter.h:
+        * ace/Sig_Handler.cpp:
+        * ace/Sig_Handler.h:
+        * ace/Sig_Handler.inl:
+        * ace/Signal.cpp:
+        * ace/Signal.h:
+        * ace/Signal.inl:
+
+          Refactored ACE_Sig_Adapter and ACE_Sig_Handler classes from
+          "ace/Signal.*" into their own dedicated source files.  Allows
+          ACE_Sig_{Guard,Set} to be used without introducing a dependency
+          on the ACE_Reactor framework.
+
+        * ace/String_Base_Const.cpp (npos):
+        * ace/String_Base_Const.h (npos):
+
+          Introduced a new "size_type" typedef.  This is consistent with
+          the standard C++ string class typdef/trait.
+
+          The "no position" constant is now an unsigned integer of the
+          same "size" type used by the underlying ACE string allocator.
+          It is defined to be the maximum value the unsigned type can
+          handle (e.g. ACE_Numeric_Limits<size_type>::max()).  This works
+          since a string length will always be less than or equal to
+          "max() - 1" since the final character in the string is the null
+          terminator.
+
+        * ace/String_Base.cpp:
+        * ace/String_Base.h:
+        * ace/String_Base.inl:
+        * ace/SString.cpp:
+        * ace/SString.h:
+        * ace/SString.inl:
+
+          All size parameter and return value types are now consistent
+          with the size type of the underlying allocator
+          (i.e. ACE_Allocator::size_type).  Addresses inability of ACE
+          string classes to provide valid search index for string lengths
+          greater than the maximum value of ssize_t, a signed type.  In
+          particular, the find(), rfind() and strstr() methods now return
+          an unsigned integer (size_t) instead of a signed one
+          (ssize_t). Affected classes include:
+
+              ACE_CString
+              ACE_WString
+              ACE_TString
+              ACE_NS_WString
+
+         Unless you have been explicitly using -1 instead of npos when
+         comparing the return value of find(), rfind() and strstr(),
+         and/or assigning the return value to ssize_t you should not see
+         any difference. A new size_type typedef has been added to the ACE
+         string class to aid developers. 
+
+         The ACE_String_Base<>::strstr() documentation as well as a
+         default rfind() argument erroneously referred to -1 instead of
+         npos. Those instances have been corrected. 
+
+         To summarize, a "no position" condition is denoted using the npos
+         constant, not -1. It can be referred directly by scoping it with
+         the appropriate string class (e.g. ACE_CString::npos,
+         ACE_WString::npos, etc).
+
+        * ace/Task_T.h:
+
+          Include "ace/IO_Cntl_Msg.h" to pull in ACE_IO_Cntl_Msg class
+          declaration.
+
+        * ace/Time_Value.cpp (max_time):
+
+          Cleaned up preprocessor conditional blocks by taking advantage
+          of ACE_Numeric_Limits trait templates.
+        
+        * ace/Timer_Queue_Adapters.cpp:
+
+          Include "ace/Signal.h" to pull in ACE_Sig_Guard class
+          declaration.
+
+        * ace/Timer_Queue_Adapters.h:
+
+          Forward declare ACE_Sig_Set class.  No need for the full blown
+          declaration.
+
+        * ace/Token.cpp:
+
+          Minor cosmetic change.
+
+        * ace/ace_wchar.h (ACE_GetVersionEx):
+
+          New wide string support for Windows "GetVersionEx{A,W}()"
+          functions.
+
+        * ace/ace_wchar.inl:
+
+          Improved const-correctness.
+
+        * ace/config-aix-4.x.h:
+        * ace/config-macosx-panther.h:
+        * ace/config-macosx-tiger.h:
+        * ace/config-macosx.h:
+
+          Fixed single-threaded configuration so that all multi-thread
+          support is disabled.
+
+        * ace/ace.mpc:
+
+          Added missing DLL_Manager.cpp source file, and newly refactored
+          Sig_{Adapter,Handler}.cpp source files.
+
+        * ace/ace_for_tao.mpc:
+
+          Explicitly require the ace_svcconf MPC feature.
+
+          Added missing ACE_LACKS_ACE_TOKEN macro.  The ace_for_tao subset
+          does not support ACE's token collections.
+
+        * ace/svcconf.mpb:
+
+          Do not define ACE_HAS_ACE_SVCCONF.  There is no such macro in
+          the ACE sources.
+
+          Explicitly remove ACE_LACKS_ACE_SVCCONF from the macro list.
+
+          Moved "DLL_Manager.cpp" to the core ACE library source file
+          list.  "DLL_Manager.cpp" is not an optional component, and must
+          always exist in ACE regardless of whether or not ACE's service
+          configurator support is enabled.
+
+        * ace/token.mpb:
+
+          Do not define ACE_HAS_ACE_TOKEN.  There is no such macro in
+          the ACE sources.
+
+          Explicitly remove ACE_LACKS_ACE_TOKEN from the macro list.
+
+        * bin/MakeProjectCreator/config/ace_for_tao.mpb:
+
+          Added missing ACE_LACKS_ACE_TOKEN macro.  The ace_for_tao subset
+          does not support ACE's token collections.
+
+        * tests/SString_Test.cpp:
+
+          Corrected checks for "no position" return values to compare
+          against "npos" constant, not "-1".
+
 Fri Jul 14 20:57:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/INET_Addr.cpp:
