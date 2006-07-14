@@ -1,3 +1,8 @@
+Fri Jul 14 15:39:53 UTC 2006  Adam Mitz  <mitza@ociweb.com>
+
+        * bin/tao_other_tests.lst:
+          Added new test (TAO/orbsvcs/tests/CosEvent/Timeout/run_test.pl).
+
 Fri Jul 14 10:34:43 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * ace/config-vxworks6.2.h: Added ACE_LACKS_USECONDS_T to fix a
@@ -10,7 +15,7 @@ Fri Jul 14 07:26:46 UTC 2006  Olli Savia  <ops@iki.fi>
         * ace/ace_wchar.h:
         * tests/SOCK_Dgram_Bcast_Test.cpp:
           Fixed typos in comments.
-        
+
         * m4/config_h.m4:
           Removed references to ACE_HAS_TERM_IOCTLS. It's no longer
           used in ACE/TAO/CIAO code.
