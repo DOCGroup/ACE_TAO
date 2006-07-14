@@ -139,11 +139,26 @@ TAO_CodeGen::start_client_header (const char *fname)
   // Generate the #ident string, if any.
   this->gen_ident_string (this->client_header_);
 
-  // Generate the #ifndef clause.
-  this->gen_ifndef_string (fname,
-                           this->client_header_,
-                           "_TAO_IDL_",
-                           "_H_");
+  ACE_CString pidl_checker (idl_global->filename ()->get_string ());
+  bool got_pidl =
+    (pidl_checker.substr (pidl_checker.length () - 5) == ".pidl");
+
+  if (!got_pidl)
+    {
+      // Generate the #ifndef clause.
+      this->gen_ifndef_string (fname,
+                               this->client_header_,
+                               "_TAO_IDL_",
+                               "_H_");
+    }
+  else
+    {
+      // Generate the #ifndef clause.
+      this->gen_ifndef_string (fname,
+                               this->client_header_,
+                               "_TAO_PIDL_",
+                               "_H_");
+    }
 
   if (be_global->pre_include () != 0)
     {
