@@ -145,6 +145,12 @@ AST_Typedef::legal_for_primary_key (void) const
   return this->primitive_base_type ()->legal_for_primary_key ();
 }
 
+bool
+AST_Typedef::is_local (void)
+{
+  return this->pd_base_type->is_local ();
+}
+
 // Dump this AST_Typedef node to the ostream o.
 void
 AST_Typedef::dump (ACE_OSTREAM_TYPE&o)
