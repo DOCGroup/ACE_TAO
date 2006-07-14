@@ -5,6 +5,11 @@ Fri Jul 14 21:32:02 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
           "ace/ACE_Export.h" -> "ace/ACE_export.h".  Darn Windows case
           insensitivity.
 
+        * ace/Registry.cpp (make_name):
+
+          Use ACE_TString::size_type, not ssize_t, to hold string position
+          values.  Addresses signed/unsigned comparison warnings.
+
         * ace/Shared_Memory_Pool.h:
 
           Include new "ace/Sig_Handler.h" header to pull in
