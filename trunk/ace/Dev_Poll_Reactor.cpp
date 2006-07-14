@@ -3,6 +3,7 @@
 #include "ace/OS_NS_errno.h"
 #include "ace/Dev_Poll_Reactor.h"
 #include "ace/Signal.h"
+#include "ace/Sig_Handler.h"
 
 ACE_RCSID (ace,
            Dev_Poll_Reactor,
@@ -19,6 +20,8 @@ ACE_RCSID (ace,
 # elif defined (ACE_HAS_DEV_POLL)
 #    if defined (linux)
 #      include /**/ <linux/devpoll.h>
+#    elif defined (HPUX_VERS) && HPUX_VERS < 1123
+#      include /**/ <devpoll.h>
 #    else
 #      include /**/ <sys/devpoll.h>
 #    endif  /* linux */
@@ -921,7 +924,7 @@ ACE_Dev_Poll_Reactor::open (size_t size,
                && this->register_handler_i (
                                             this->notify_handler_->notify_handle (),
                                             this->notify_handler_,
-                                            ACE_Event_Handler::READ_MASK)) == -1)
+                                            ACE_Event_Handler::READ_MASK) == -1))
     result = -1;
 
   this->size_ = size;

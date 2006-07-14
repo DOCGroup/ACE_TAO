@@ -52,6 +52,9 @@ template class ACE_Export ACE_String_Base<ACE_WSTRING_TYPE>;
 class ACE_Export ACE_NS_WString : public ACE_WString
 {
 public:
+
+  using ACE_WString::size_type;
+
   /// Default constructor.
   ACE_NS_WString (ACE_Allocator *alloc = 0);
 
@@ -67,19 +70,19 @@ public:
   /// Constructor that takes in a ushort16 string (mainly used by the
   /// ACE Name_Space classes)
   ACE_NS_WString (const ACE_USHORT16 *s,
-                  size_t len,
+                  size_type len,
                   ACE_Allocator *alloc = 0);
 #endif /* ACE_WSTRING_HAS_USHORT_SUPPORT */
 
   /// Constructor that copies @a len ACE_WSTRING_TYPE's of @a s into dynamically
   /// allocated memory (will NUL terminate the result).
   ACE_NS_WString (const ACE_WSTRING_TYPE *s,
-                  size_t len,
+                  size_type len,
                   ACE_Allocator *alloc = 0);
 
   /// Constructor that dynamically allocates memory for @a len + 1
   /// ACE_WSTRING_TYPE characters. The newly created memory is set memset to 0.
-  ACE_NS_WString (size_t len, ACE_Allocator *alloc = 0);
+  ACE_NS_WString (size_type len, ACE_Allocator *alloc = 0);
 
   /// Copy constructor.
   ACE_NS_WString (const ACE_NS_WString &s);
@@ -124,8 +127,11 @@ ACE_NS_WString operator + (const ACE_NS_WString &,
 class ACE_Export ACE_SString
 {
 public:
+
+  typedef ACE_Allocator::size_type size_type;
+
   /// No position constant
-  static const int npos;
+  static const size_type npos;
 
   /// Default constructor.
   ACE_SString (ACE_Allocator *alloc = 0);
@@ -135,7 +141,7 @@ public:
 
   /// Constructor that copies @a len chars of  @s  into dynamically
   /// allocated memory (will NUL terminate the result).
-  ACE_SString (const char *s, size_t len, ACE_Allocator *alloc = 0);
+  ACE_SString (const char *s, size_type len, ACE_Allocator *alloc = 0);
 
   /// Copy constructor.
   ACE_SString (const ACE_SString &);
@@ -148,30 +154,30 @@ public:
 
   /// Return the <slot'th> character in the string (doesn't perform
   /// bounds checking).
-  char operator [] (size_t slot) const;
+  char operator [] (size_type slot) const;
 
   /// Return the <slot'th> character by reference in the string
   /// (doesn't perform bounds checking).
-  char &operator [] (size_t slot);
+  char &operator [] (size_type slot);
 
   /// Assignment operator (does copy memory).
   ACE_SString &operator = (const ACE_SString &);
 
   /**
-   * Return a substring given an offset and length, if length == -1
+   * Return a substring given an offset and length, if length == npos
    * use rest of str return empty substring if offset or offset/length
    * are invalid
    */
-  ACE_SString substring (size_t offset, ssize_t length = -1) const;
+  ACE_SString substring (size_type offset, size_type length = npos) const;
 
   /// Same as substring
-  ACE_SString substr (size_t offset, ssize_t length = -1) const;
+  ACE_SString substr (size_type offset, size_type length = npos) const;
 
   /// Returns a hash value for this string.
   u_long hash (void) const;
 
   /// Return the length of the string.
-  size_t length (void) const;
+  size_type length (void) const;
 
   /// Set the underlying pointer.  Since this does not copy memory or
   /// delete existing memory use with extreme caution!!!
@@ -187,24 +193,24 @@ public:
   const char *c_str (void) const;
 
   /// Comparison operator that will match substrings.  Returns the
-  /// slot of the first location that matches, else -1.
-  int strstr (const ACE_SString &s) const;
+  /// slot of the first location that matches, else @c npos.
+  size_type strstr (const ACE_SString &s) const;
 
   /// Find <str> starting at pos.  Returns the slot of the first
   /// location that matches (will be >= pos), else npos.
-  int find (const ACE_SString &str, int pos = 0) const;
+  size_type find (const ACE_SString &str, size_type pos = 0) const;
 
   /// Find <s> starting at pos.  Returns the slot of the first
   /// location that matches (will be >= pos), else npos.
-  int find (const char *s, int pos = 0) const;
+  size_type find (const char *s, size_type pos = 0) const;
 
   /// Find <c> starting at pos.  Returns the slot of the first
   /// location that matches (will be >= pos), else npos.
-  int find (char c, int pos = 0) const;
+  size_type find (char c, size_type pos = 0) const;
 
   /// Find <c> starting at pos (counting from the end).  Returns the
   /// slot of the first location that matches, else npos.
-  int rfind (char c, int pos = npos) const;
+  size_type rfind (char c, size_type pos = npos) const;
 
   /// Equality comparison operator (must match entire string).
   bool operator == (const ACE_SString &s) const;
@@ -232,7 +238,7 @@ private:
   ACE_Allocator *allocator_;
 
   /// Length of the ACE_SString (not counting the trailing '\0').
-  size_t len_;
+  size_type len_;
 
   /// Pointer to data.
   char *rep_;
@@ -474,7 +480,7 @@ public:
   ~ACE_Auto_String_Free (void);
 
   char* operator* () const;
-  char operator[] (int i) const;
+  char operator[] (size_t i) const;
   char* get (void) const;
   char* release (void);
   void reset (char* p = 0);

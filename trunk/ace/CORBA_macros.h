@@ -109,14 +109,20 @@
 
 // Declare a new environment variable on the stack. The type of the
 // environment variable is determined by ACE_ENV_TYPE.
-#define ACE_DECLARE_NEW_ENV \
-     ACE_ENV_TYPE ACE_TRY_ENV
+#if defined (ACE_USES_NATIVE_EXCEPTIONS)
+// Don't instantiate an emulated exception environment at all when
+// using native C++ exception support.  It won't be used.
+# define ACE_DECLARE_NEW_ENV
+#else
+# define ACE_DECLARE_NEW_ENV \
+      ACE_ENV_TYPE ACE_TRY_ENV
+#endif  /* ACE_USES_NATIVE_EXCEPTIONS */
 
 // Provided for backward compatibility purposes. Don't use it in new code.
 // Use the definition above along with defining ACE_ENV_TYPE.
 
 #if defined (ACE_ENV_POLLUTE_NAMES)
-#  define ACE_DECLARE_NEW_CORBA_ENV ACE_ENV_TYPE ACE_TRY_ENV
+#  define ACE_DECLARE_NEW_CORBA_ENV ACE_DECLARE_NEW_ENV
 #endif /* ACE_ENV_POLLUTE_NAMES */
 
 #if defined (ACE_USES_NATIVE_EXCEPTIONS)
@@ -168,7 +174,6 @@
 # define ACE_TRY_NEW_ENV \
    do \
      { \
-       ACE_ENV_TYPE ACE_TRY_ENV; \
        try \
          {
 # define ACE_TRY_EX(LABEL) \
@@ -280,7 +285,7 @@
 // most function where no ACE_TRY_ENV is available.
 # define ACE_TRY_NEW_ENV \
    do { \
-     ACE_ENV_TYPE ACE_TRY_ENV;\
+     ACE_DECLARE_NEW_ENV;\
      int ACE_TRY_FLAG = 1; \
      int ACE_EXCEPTION_NOT_CAUGHT = 1; \
    ACE_TRY_LABEL: \

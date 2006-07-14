@@ -105,20 +105,20 @@ public:
    * doubleword (8 bytes) and quadword (16 byte); because those are
    * the IDL basic type sizes.
    */
-  static void swap_2 (const char *orig, char *target);
-  static void swap_4 (const char *orig, char *target);
-  static void swap_8 (const char *orig, char *target);
-  static void swap_16 (const char *orig, char *target);
-  static void swap_2_array (const char *orig,
+  static void swap_2 (char const *orig, char *target);
+  static void swap_4 (char const *orig, char *target);
+  static void swap_8 (char const *orig, char *target);
+  static void swap_16 (char const *orig, char *target);
+  static void swap_2_array (char const *orig,
                             char *target,
                             size_t length);
-  static void swap_4_array (const char *orig,
+  static void swap_4_array (char const *orig,
                             char *target,
                             size_t length);
-  static void swap_8_array (const char *orig,
+  static void swap_8_array (char const *orig,
                             char *target,
                             size_t length);
-  static void swap_16_array (const char *orig,
+  static void swap_16_array (char const *orig,
                              char *target,
                              size_t length);
 

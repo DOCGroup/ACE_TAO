@@ -2,7 +2,6 @@
 // $Id$
 
 #include "ace/Event_Handler.h"
-#include "ace/Message_Block.h"
 #include "ace/OS_Errno.h"
 #include "ace/Reactor.h"
 #include "ace/Thread_Manager.h"

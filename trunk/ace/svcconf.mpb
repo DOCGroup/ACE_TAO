@@ -2,11 +2,10 @@
 // $Id$
 
 feature(ace_svcconf) {
-  macros += ACE_HAS_ACE_SVCCONF
+  macros -= ACE_LACKS_ACE_SVCCONF
 
   Source_Files(ACE_COMPONENTS) {
     DLL.cpp
-    DLL_Manager.cpp
     Dynamic_Service_Base.cpp
     Dynamic_Service_Dependency.cpp
     Parse_Node.cpp

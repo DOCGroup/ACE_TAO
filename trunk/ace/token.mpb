@@ -2,7 +2,7 @@
 // $Id$
 
 feature(ace_token) {
-  macros += ACE_HAS_ACE_TOKEN
+  macros -= ACE_LACKS_ACE_TOKEN
 
   Source_Files(ACE_COMPONENTS) {
     Local_Tokens.cpp

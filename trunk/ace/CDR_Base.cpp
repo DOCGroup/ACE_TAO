@@ -19,7 +19,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 //
 
 void
-ACE_CDR::swap_2_array (const char* orig, char* target, size_t n)
+ACE_CDR::swap_2_array (char const * orig, char* target, size_t n)
 {
   // ACE_ASSERT(n > 0); The caller checks that n > 0
 
@@ -30,7 +30,7 @@ ACE_CDR::swap_2_array (const char* orig, char* target, size_t n)
   // so make sure we don't do that for unaligned addresses.
 #if ACE_SIZEOF_LONG == 8 && \
     !(defined(__amd64__) && defined(__GNUG__))
-  const char* const o8 = ACE_ptr_align_binary (orig, 8);
+  char const * const o8 = ACE_ptr_align_binary (orig, 8);
   while (orig < o8 && n > 0)
     {
       ACE_CDR::swap_2 (orig, target);
@@ -39,7 +39,7 @@ ACE_CDR::swap_2_array (const char* orig, char* target, size_t n)
       --n;
     }
 #else
-  const char* const o4 = ACE_ptr_align_binary (orig, 4);
+  char const * const o4 = ACE_ptr_align_binary (orig, 4);
   // this is an _if_, not a _while_. The mistmatch can only be by 2.
   if (orig != o4)
     {
@@ -60,7 +60,7 @@ ACE_CDR::swap_2_array (const char* orig, char* target, size_t n)
   // In the while loop ahead, orig will move over the array by 8 byte
   // increments (4 elements of 2 bytes).
   // end marks our barrier for not falling outside.
-  const char* const end = orig + 2 * (n & (~3));
+  char const * const end = orig + 2 * (n & (~3));
 
   // See if we're aligned for writting in 64 or 32 bit chunks...
 #if ACE_SIZEOF_LONG == 8 && \
@@ -246,14 +246,14 @@ ACE_CDR::swap_2_array (const char* orig, char* target, size_t n)
 }
 
 void
-ACE_CDR::swap_4_array (const char* orig, char* target, size_t n)
+ACE_CDR::swap_4_array (char const * orig, char* target, size_t n)
 {
   // ACE_ASSERT (n > 0); The caller checks that n > 0
 
 #if ACE_SIZEOF_LONG == 8
   // Later, we read from *orig in 64 bit chunks,
   // so make sure we don't generate unaligned readings.
-  const char* const o8 = ACE_ptr_align_binary (orig, 8);
+  char const * const o8 = ACE_ptr_align_binary (orig, 8);
   // The mismatch can only be by 4.
   if (orig != o8)
     {
@@ -275,7 +275,7 @@ ACE_CDR::swap_4_array (const char* orig, char* target, size_t n)
   // In the while loop, orig will move over the array by 16 byte
   // increments (4 elements of 4 bytes).
   // ends marks our barrier for not falling outside.
-  const char* const end = orig + 4 * (n & (~3));
+  char const * const end = orig + 4 * (n & (~3));
 
 #if ACE_SIZEOF_LONG == 8
   // 64 bits architecture.
@@ -454,11 +454,11 @@ ACE_CDR::swap_4_array (const char* orig, char* target, size_t n)
 // (swap_8 and swap_16 are big enough).
 //
 void
-ACE_CDR::swap_8_array (const char* orig, char* target, size_t n)
+ACE_CDR::swap_8_array (char const * orig, char* target, size_t n)
 {
   // ACE_ASSERT(n > 0); The caller checks that n > 0
 
-  const char* const end = orig + 8*n;
+  char const * const end = orig + 8*n;
   while (orig < end)
     {
       swap_8 (orig, target);
@@ -468,11 +468,11 @@ ACE_CDR::swap_8_array (const char* orig, char* target, size_t n)
 }
 
 void
-ACE_CDR::swap_16_array (const char* orig, char* target, size_t n)
+ACE_CDR::swap_16_array (char const * orig, char* target, size_t n)
 {
   // ACE_ASSERT(n > 0); The caller checks that n > 0
 
-  const char* const end = orig + 16*n;
+  char const * const end = orig + 16*n;
   while (orig < end)
     {
       swap_16 (orig, target);
@@ -485,10 +485,10 @@ void
 ACE_CDR::mb_align (ACE_Message_Block *mb)
 {
 #if !defined (ACE_CDR_IGNORE_ALIGNMENT)
-  char *start = ACE_ptr_align_binary (mb->base (),
-                                      ACE_CDR::MAX_ALIGNMENT);
+  char * const start = ACE_ptr_align_binary (mb->base (),
+                                             ACE_CDR::MAX_ALIGNMENT);
 #else
-  char *start = mb->base ();
+  char * const start = mb->base ();
 #endif /* ACE_CDR_IGNORE_ALIGNMENT */
   mb->rd_ptr (start);
   mb->wr_ptr (start);

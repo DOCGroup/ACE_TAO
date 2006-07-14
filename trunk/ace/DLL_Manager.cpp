@@ -372,7 +372,7 @@ ACE_DLL_Handle::get_dll_names (const ACE_TCHAR *dll_name,
 
   // 1. Separate the dll_name into the dir part and the file part. We
   // only decorate the file part to determine the names to try loading.
-  ssize_t pos = base.rfind (ACE_DIRECTORY_SEPARATOR_CHAR);
+  ACE_TString::size_type pos = base.rfind (ACE_DIRECTORY_SEPARATOR_CHAR);
   if (pos != ACE_TString::npos)
     {
       base_dir = base.substr (0, pos + 1);

@@ -21,7 +21,7 @@ ACE_NS_WString::ACE_NS_WString (ACE_Allocator *alloc)
 
 ACE_INLINE
 ACE_NS_WString::ACE_NS_WString (const ACE_WSTRING_TYPE *s,
-                                size_t len,
+                                size_type len,
                                 ACE_Allocator *alloc)
   : ACE_WString (s, len, alloc)
 {
@@ -35,7 +35,7 @@ ACE_NS_WString::ACE_NS_WString (const ACE_WSTRING_TYPE *s,
 }
 
 ACE_INLINE
-ACE_NS_WString::ACE_NS_WString (size_t len, ACE_Allocator *alloc)
+ACE_NS_WString::ACE_NS_WString (size_type len, ACE_Allocator *alloc)
   : ACE_WString (len, 0, alloc)
 {
 }
@@ -68,8 +68,8 @@ ACE_SString::~ACE_SString (void)
 }
 
 ACE_INLINE ACE_SString
-ACE_SString::substr (size_t offset,
-                     ssize_t length) const
+ACE_SString::substr (size_type offset,
+                     size_type length) const
 {
   return this->substring (offset, length);
 }
@@ -77,7 +77,7 @@ ACE_SString::substr (size_t offset,
 // Return the <slot'th> character in the string.
 
 ACE_INLINE char
-ACE_SString::operator[] (size_t slot) const
+ACE_SString::operator[] (size_type slot) const
 {
   ACE_TRACE ("ACE_SString::operator[]");
   return this->rep_[slot];
@@ -86,7 +86,7 @@ ACE_SString::operator[] (size_t slot) const
 // Return the <slot'th> character in the string by reference.
 
 ACE_INLINE char &
-ACE_SString::operator[] (size_t slot)
+ACE_SString::operator[] (size_type slot)
 {
   ACE_TRACE ("ACE_SString::operator[]");
   return this->rep_[slot];
@@ -169,8 +169,8 @@ ACE_SString::compare (const ACE_SString &s) const
   return ACE_OS::strcmp (this->rep_, s.rep_);
 }
 
-ACE_INLINE int
-ACE_SString::find (const char *s, int pos) const
+ACE_INLINE ACE_SString::size_type
+ACE_SString::find (const char *s, size_type pos) const
 {
   char *substr = this->rep_ + pos;
   char *pointer = ACE_OS::strstr (substr, s);
@@ -180,8 +180,8 @@ ACE_SString::find (const char *s, int pos) const
     return pointer - this->rep_;
 }
 
-ACE_INLINE int
-ACE_SString::find (char c, int pos) const
+ACE_INLINE ACE_SString::size_type
+ACE_SString::find (char c, size_type pos) const
 {
   char *substr = this->rep_ + pos;
   char *pointer = ACE_OS::strchr (substr, c);
@@ -191,7 +191,7 @@ ACE_SString::find (char c, int pos) const
     return pointer - this->rep_;
 }
 
-ACE_INLINE int
+ACE_INLINE ACE_SString::size_type
 ACE_SString::strstr (const ACE_SString &s) const
 {
   ACE_TRACE ("ACE_SString::strstr");
@@ -199,19 +199,21 @@ ACE_SString::strstr (const ACE_SString &s) const
   return this->find (s.rep_);
 }
 
-ACE_INLINE int
-ACE_SString::find (const ACE_SString &str, int pos) const
+ACE_INLINE ACE_SString::size_type
+ACE_SString::find (const ACE_SString &str, size_type pos) const
 {
   return this->find (str.rep_, pos);
 }
 
-ACE_INLINE int
-ACE_SString::rfind (char c, int pos) const
+ACE_INLINE ACE_SString::size_type
+ACE_SString::rfind (char c, size_type pos) const
 {
   if (pos == ACE_SString::npos)
-    pos = static_cast<int> (this->len_);
+    pos = this->len_;
 
-  for (int i = pos - 1; i >= 0; i--)
+  // Do not change to prefix operator!  Proper operation of this loop
+  // depends on postfix decrement behavior.
+  for (size_type i = pos; i-- != 0; )
     if (this->rep_[i] == c)
       return i;
 
@@ -224,7 +226,7 @@ ACE_SString::hash (void) const
   return ACE::hash_pjw (this->rep_);
 }
 
-ACE_INLINE size_t
+ACE_INLINE ACE_SString::size_type
 ACE_SString::length (void) const
 {
   ACE_TRACE ("ACE_SString::length");
@@ -247,8 +249,7 @@ ACE_Auto_String_Free::ACE_Auto_String_Free (ACE_Auto_String_Free& rhs)
 ACE_INLINE void
 ACE_Auto_String_Free::reset (char* p)
 {
-  if (this->p_ != 0)
-    ACE_OS::free (this->p_);
+  ACE_OS::free (this->p_);
   this->p_ = p;
 }
 
@@ -276,7 +277,7 @@ ACE_Auto_String_Free::operator* (void) const
 }
 
 ACE_INLINE char
-ACE_Auto_String_Free::operator[] (int i) const
+ACE_Auto_String_Free::operator[] (size_t i) const
 {
   return this->p_[i];
 }

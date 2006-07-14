@@ -17,6 +17,7 @@
 #  include "ace/Timer_Queue_Adapters.inl"
 # endif /* __ACE_INLINE__ */
 
+#include "ace/Signal.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_sys_time.h"
 

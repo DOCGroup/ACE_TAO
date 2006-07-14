@@ -16,17 +16,15 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/String_Base_Const.h"
+#include "ace/Global_Macros.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Global_Macros.h"
+#include "ace/String_Base_Const.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
-class ACE_Allocator;
 
 /**
  * @class ACE_String_Base
@@ -46,9 +44,11 @@ class ACE_Allocator;
  * provided buffer with the release parameter set to 0,
  * ACE_String_Base is not guaranteed to be '\0' terminated.
  */
-template <class CHAR> class ACE_String_Base : public ACE_String_Base_Const
+template <class CHAR>
+class ACE_String_Base : public ACE_String_Base_Const
 {
 public:
+
    /**
     *  Default constructor.
     *
@@ -94,7 +94,7 @@ public:
    * @return ACE_String_Base containing const CHAR *s
    */
   ACE_String_Base (const CHAR *s,
-                   size_t len,
+                   size_type len,
                    ACE_Allocator *the_allocator = 0,
                    int release = 1);
 
@@ -128,7 +128,7 @@ public:
    *  @param the_allocator ACE_Allocator associated with string
    *  @return Empty ACE_String_Base with room for len CHARs
    */
-  ACE_String_Base (size_t len,
+  ACE_String_Base (size_type len,
                    CHAR c = 0,
                    ACE_Allocator *the_allocator = 0);
 
@@ -144,7 +144,7 @@ public:
    * @param slot Index of the desired character
    * @return The character at index @a slot
    */
-  const CHAR & operator[] (size_t slot) const;
+  const CHAR & operator[] (size_type slot) const;
 
   /**
    * Return the <slot'th> character by reference in the string
@@ -153,7 +153,7 @@ public:
    * @param slot Index of the desired character
    * @return The character at index @a slot
    */
-  CHAR & operator[] (size_t slot);
+  CHAR & operator[] (size_type slot);
 
   /**
    *  Assignment operator (does copy memory).
@@ -216,7 +216,7 @@ public:
    *  @param release Allocator responsible(1)/not reponsible(0) for
    *    freeing memory.
    */
-  void set (const CHAR * s, size_t len, int release);
+  void set (const CHAR * s, size_type len, int release);
 
   /**
    * Clear this string. Memory is _not_ freed if <release> is 0.
@@ -252,16 +252,16 @@ public:
   void fast_clear (void);
 
   /**
-   * Return a substring given an offset and length, if length == -1
-   * use rest of str.  Return empty substring if offset or
-   * offset/length are invalid.
+   * Return a substring given an offset and length.
+   * If length == @c npos use rest of str.  Return empty substring if
+   * offset or offset/length are invalid.
    *
    * @param offset Index of first desired character of the substring.
    * @param length How many characters to return starting at the offset.
    * @return The string containing the desired substring
    */
-  ACE_String_Base < CHAR > substring (size_t offset,
-                                      ssize_t length = -1) const;
+  ACE_String_Base < CHAR > substring (size_type offset,
+                                      size_type length = npos) const;
 
   /**
    *  Same as <substring>.
@@ -270,7 +270,8 @@ public:
    * @param length How many characters to return starting at the offset.
    * @return The string containing the desired substring
    */
-  ACE_String_Base < CHAR > substr (size_t offset, ssize_t length = -1) const;
+  ACE_String_Base < CHAR > substr (size_type offset,
+                                   size_type length = npos) const;
 
   /**
    *  Concat operator (copies memory).
@@ -307,7 +308,7 @@ public:
    *  @return The combined string (input append to the end of the old). New
    *    string is zero terminated.
    */
-  ACE_String_Base < CHAR >& append (const CHAR* s, size_t slen);
+  ACE_String_Base < CHAR >& append (const CHAR* s, size_type slen);
 
   /**
    *  Returns a hash value for this string.
@@ -321,7 +322,7 @@ public:
    *
    *  @return Length of stored string
    */
-  size_t length (void) const;
+  size_type length (void) const;
 
   /**
    * Return @c true if the length of the string is zero, else @c false.
@@ -365,53 +366,57 @@ public:
 
   /**
    *  Comparison operator that will match substrings.  Returns the
-   *  slot of the first location that matches, else -1.
+   *  slot of the first location that matches, else @c npos.
    *
    *  @param s Input ACE_String_Base string
    *  @return Integer index value of the first location of string @a s or
-   *    -1 (not found).
+   *          @c npos (not found).
    */
-  ssize_t strstr (const ACE_String_Base<CHAR> &s) const;
+  size_type strstr (const ACE_String_Base<CHAR> &s) const;
 
   /**
    *  Find <str> starting at pos.  Returns the slot of the first
-   *  location that matches (will be >= pos), else npos.
+   *  location that matches (will be >= pos), else @c npos.
    *
    *  @param str Input ACE_String_Base string to search for in stored string.
    *  @param pos Starting index position to start searching for string @a str.
-   *  @return Index value of the first location of string @a str else npos.
+   *  @return Index value of the first location of string @a str else
+   *          @c npos.
    */
-  ssize_t find (const ACE_String_Base<CHAR> &str, size_t pos = 0) const;
+  size_type find (const ACE_String_Base<CHAR> &str, size_type pos = 0) const;
 
   /**
    *  Find @a s starting at pos.  Returns the slot of the first
-   *  location that matches (will be >= pos), else npos.
+   *  location that matches (will be >= pos), else @c npos.
    *
    *  @param s non-zero input string to search for in stored string.
    *  @param pos Starting index position to start searching for string @a str.
-   *  @return Index value of the first location of string @a str else npos.
+   *  @return Index value of the first location of string @a str else
+   *          @c npos.
    */
-  ssize_t find (const CHAR *s, size_t pos = 0) const;
+  size_type find (const CHAR *s, size_type pos = 0) const;
 
   /**
    *  Find @a c starting at pos.  Returns the slot of the first
-   *  location that matches (will be >= pos), else npos.
+   *  location that matches (will be >= pos), else @c npos.
    *
    *  @param c Input character to search for in stored string.
    *  @param pos Starting index position to start searching for string @a str.
-   *  @return Index value of the first location of string @a str else npos.
+   *  @return Index value of the first location of string @a str else
+   *          @c npos.
    */
-  ssize_t find (CHAR c, size_t pos = 0) const;
+  size_type find (CHAR c, size_type pos = 0) const;
 
   /**
    *  Find @a c starting at pos (counting from the end).  Returns the
-   *  slot of the first location that matches, else npos.
+   *  slot of the first location that matches, else @c npos.
    *
    *  @param c Input character to search for in stored string.
    *  @param pos Starting index position to start searching for string @a str.
-   *  @return Index value of the first location of string @a str else npos.
+   *  @return Index value of the first location of string @a str else
+   *          @c npos.
    */
-  ssize_t rfind (CHAR c, ssize_t pos = npos) const;
+  size_type rfind (CHAR c, size_type pos = npos) const;
 
   /**
    *  Equality comparison operator (must match entire string).
@@ -491,8 +496,14 @@ public:
    * @param len The number of CHARs to reserve
    * @param c The CHAR to use when filling the string.
    */
-  void resize (size_t len, CHAR c = 0);
+  void resize (size_type len, CHAR c = 0);
 
+  /// Swap the contents of this @c ACE_String_Base with @a str.
+  /**
+   * @note This is non-throwing operation.
+   */
+  void swap (ACE_String_Base<CHAR> & str);
+  
   /**
    *  Declare the dynamic allocation hooks.
    */
@@ -507,13 +518,13 @@ protected:
   /**
    *  Length of the ACE_String_Base data (not counting the trailing '\0').
    */
-  size_t len_;
+  size_type len_;
 
   /**
    *  Length of the ACE_String_Base data buffer.  Keeping track of the
    *  length allows to avoid unnecessary dynamic allocations.
    */
-  size_t buf_len_;
+  size_type buf_len_;
 
   /**
    *  Pointer to data.

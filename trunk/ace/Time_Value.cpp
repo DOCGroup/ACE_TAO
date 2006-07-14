@@ -9,17 +9,7 @@ ACE_RCSID (ace,
 #include "ace/Time_Value.inl"
 #endif /* __ACE_INLINE__ */
 
-#if !defined(ACE_LACKS_NUMERIC_LIMITS)
-// some platforms pollute the namespace by defining max() and min() macros
-#ifdef max
-#undef max
-#endif
-#ifdef min
-#undef min
-#endif
-#include <limits>
-#endif /* ACE_LACKS_NUMERIC_LIMITS */
-
+#include "ace/Numeric_Limits.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -33,15 +23,16 @@ const ACE_Time_Value ACE_Time_Value::zero;
 // Its primary use is in time computations such as those used by the
 // dynamic subpriority strategies in the ACE_Dynamic_Message_Queue class.
 // Note: this object requires static construction.
-// Note: on platforms without std::numeric_limits<>, we assume time_t is
-// a long, the historical type used for time.
+// Note: On Win64, time_t is 64 bits, yet the timeval members used
+// internally to ACE_Time_Value are still long. This makes time values
+// outside the LONG_MAX, LONG_MIN range very broken.
 const ACE_Time_Value ACE_Time_Value::max_time (
-#if !defined(ACE_LACKS_NUMERIC_LIMITS) && !defined (ACE_WIN64)
-                                               std::numeric_limits<time_t>::max (),
+#if !defined (ACE_WIN64)
+  ACE_Numeric_Limits<time_t>::max (),
 #else
-                                               LONG_MAX,
+  LONG_MAX,
 #endif
-                                               ACE_ONE_SECOND_IN_USECS - 1);
+  ACE_ONE_SECOND_IN_USECS - 1);
 
 ACE_ALLOC_HOOK_DEFINE (ACE_Time_Value)
 

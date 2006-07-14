@@ -17,8 +17,8 @@
 #  endif
 #  if defined (_THREAD_SAFE)
 #    define ACE_HAS_THREADS 1
-#  else
-#    define ACE_HAS_THREADS 0
+// #  else
+// #    define ACE_HAS_THREADS 0
 #  endif /* _THREAD_SAFE */
 #endif /* !ACE_MT_SAFE || (ACE_MT_SAFE != 0) */
 

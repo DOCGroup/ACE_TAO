@@ -167,7 +167,11 @@ ACE_CDR::first_size (size_t minsize)
         {
           // We grow exponentially at the beginning, this is fast and
           // reduces the number of allocations.
-          newsize *= 2;
+
+          // Quickly multiply by two using a bit shift.  This is
+          // guaranteed to work since the variable is an unsigned
+          // integer.
+          newsize <<= 1;
         }
       else
         {
@@ -190,7 +194,10 @@ ACE_CDR::next_size (size_t minsize)
     {
       // If necessary increment the size
       if (newsize < ACE_CDR::EXP_GROWTH_MAX)
-        newsize *= 2;
+        // Quickly multiply by two using a bit shift.  This is
+        // guaranteed to work since the variable is an unsigned
+        // integer.
+        newsize <<= 1;
       else
         newsize += ACE_CDR::LINEAR_GROWTH_CHUNK;
     }
