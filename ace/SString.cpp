@@ -18,6 +18,10 @@
 #include "ace/SString.inl"
 #endif /* __ACE_INLINE__ */
 
+#undef max
+#include <limits>
+
+
 ACE_RCSID (ace,
            SString,
            "SString.cpp,v 4.61 2001/03/04 00:55:30 brunsch Exp")
@@ -65,7 +69,7 @@ char *
 ACE_NS_WString::char_rep (void) const
 {
   ACE_TRACE ("ACE_NS_WString::char_rep");
-  if (this->len_ <= 0)
+  if (this->len_ == 0)
     return 0;
   else
     {
@@ -75,7 +79,7 @@ ACE_NS_WString::char_rep (void) const
                       char[this->len_ + 1],
                       0);
 
-      for (size_t i = 0; i < this->len_; i++)
+      for (size_type i = 0; i < this->len_; ++i)
         // Note that this cast may lose data if wide chars are
         // actually used!
         t[i] = char (this->rep_[i]);
@@ -99,7 +103,7 @@ ACE_NS_WString::ushort_rep (void) const
                       ACE_USHORT16[this->len_ + 1],
                       0);
 
-      for (size_t i = 0; i < this->len_; i++)
+      for (size_type i = 0; i < this->len_; ++i)
         // Note that this cast may lose data if wide chars are
         // actually used!
         t[i] = (ACE_USHORT16)this->rep_[i];
@@ -126,13 +130,13 @@ ACE_NS_WString::ACE_NS_WString (const char *s,
                  this->allocator_->malloc ((this->buf_len_ + 1) *
                                            sizeof (ACE_WSTRING_TYPE)));
   this->release_ = 1;
-  for (size_t i = 0; i <= this->buf_len_; i++)
+  for (size_type i = 0; i <= this->buf_len_; ++i)
     this->rep_[i] = s[i];
 }
 
 #if defined (ACE_WSTRING_HAS_USHORT_SUPPORT)
 ACE_NS_WString::ACE_NS_WString (const ACE_USHORT16 *s,
-                                size_t len,
+                                size_type len,
                                 ACE_Allocator *alloc)
   : ACE_WString (alloc)
 {
@@ -149,14 +153,15 @@ ACE_NS_WString::ACE_NS_WString (const ACE_USHORT16 *s,
                  this->allocator_->malloc ((this->buf_len_) *
                                            sizeof (ACE_WSTRING_TYPE)));
   this->release_ = 1;
-  for (size_t i = 0; i < this->buf_len_; i++)
+  for (size_type i = 0; i < this->buf_len_; ++i)
     this->rep_[i] = s[i];
 }
 #endif /* ACE_WSTRING_HAS_USHORT_SUPPORT */
 
 // *****************************************************************
 
-const int ACE_SString::npos = -1;
+ACE_SString::size_type const ACE_SString::npos =
+  std::numeric_limits<ACE_SString::size_type>::max ();
 
 ACE_ALLOC_HOOK_DEFINE(ACE_SString)
 
@@ -262,7 +267,7 @@ ACE_SString::ACE_SString (char c,
 // Constructor that actually copies memory.
 
 ACE_SString::ACE_SString (const char *s,
-                          size_t len,
+                          size_type len,
                           ACE_Allocator *alloc)
   : allocator_ (alloc)
 {
@@ -311,8 +316,8 @@ ACE_SString::operator= (const ACE_SString &s)
 
 // Return substring.
 ACE_SString
-ACE_SString::substring (size_t offset,
-                        ssize_t length) const
+ACE_SString::substring (size_type offset,
+                        size_type length) const
 {
   ACE_SString nill;
   size_t count = length;
@@ -326,7 +331,7 @@ ACE_SString::substring (size_t offset,
     return nill;
 
   // get all remaining bytes
-  if (length == -1 || count > (this->len_ - offset))
+  if (length == npos || count > (this->len_ - offset))
     count = len_ - offset;
 
   return ACE_SString (&rep_[offset], count, this->allocator_);

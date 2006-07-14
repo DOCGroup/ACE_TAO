@@ -1139,11 +1139,11 @@ ACE_Process_Options::pass_handle (ACE_HANDLE h)
   // process. On WinNT, they get inherited by the child process automatically.
   // If the handle is duplicated, remember the duplicate so it can be
   // closed later. Can't be closed now, or the child won't get it.
-  OSVERSIONINFO osvi;
+  ACE_TEXT_OSVERSIONINFO osvi;
   ZeroMemory (&osvi, sizeof (osvi));
-  osvi.dwOSVersionInfoSize = sizeof (OSVERSIONINFO);
+  osvi.dwOSVersionInfoSize = sizeof (ACE_TEXT_OSVERSIONINFO);
   // If this is Win95/98 or we can't tell, duplicate the handle.
-  if (!GetVersionEx (&osvi) || osvi.dwPlatformId != VER_PLATFORM_WIN32_NT)
+  if (!ACE_TEXT_GetVersionEx (&osvi) || osvi.dwPlatformId != VER_PLATFORM_WIN32_NT)
     {
       HANDLE dup_handle;
       if (!DuplicateHandle (GetCurrentProcess (),

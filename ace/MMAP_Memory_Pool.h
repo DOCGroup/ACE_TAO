@@ -24,7 +24,7 @@
 
 #include "ace/ACE.h"
 #include "ace/Event_Handler.h"
-#include "ace/Signal.h"
+#include "ace/Sig_Handler.h"
 #include "ace/Mem_Map.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

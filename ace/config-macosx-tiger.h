@@ -172,22 +172,26 @@
 #define ACE_HAS_4_4BSD_SENDMSG_RECVMSG
 #define ACE_HAS_NONCONST_MSGSND
 
-// Thread specific settings
-// Yes, we do have threads.
-#define ACE_HAS_THREADS
-// And they're even POSIX pthreads
 #if !defined (ACE_MT_SAFE)
 # define ACE_MT_SAFE 1
-#endif /* ! ACE_MT_SAFE */
-#define ACE_HAS_PTHREADS
-#define ACE_HAS_PTHREADS_STD
+#endif
+
+#if ACE_MT_SAFE == 1
+// Yes, we do have threads.
+# define ACE_HAS_THREADS
+// And they're even POSIX pthreads
+# define ACE_HAS_PTHREADS
+# define ACE_HAS_PTHREADS_STD
+# define ACE_HAS_PTHREAD_SCHEDPARAM
+# define ACE_HAS_THREAD_SPECIFIC_STORAGE
+#endif  /* ACE_MT_SAFE == 1 */
+
 #define ACE_LACKS_THREAD_PROCESS_SCOPING
-#define ACE_HAS_THREAD_SPECIFIC_STORAGE
+
 #define ACE_HAS_DIRENT
 #define ACE_LACKS_POLL_H
 #define ACE_LACKS_SEARCH_H
 
-#define ACE_HAS_PTHREAD_SCHEDPARAM
 #define ACE_LACKS_SETSCHED
 //#define ACE_HAS_RECURSIVE_MUTEXES
 

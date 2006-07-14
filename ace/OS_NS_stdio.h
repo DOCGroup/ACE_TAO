@@ -261,7 +261,7 @@ namespace ACE_OS {
   // = Win32 OS version determination function.
   /// Return the win32 OSVERSIONINFO structure.
   ACE_NAMESPACE_INLINE_FUNCTION
-  const OSVERSIONINFO &get_win32_versioninfo (void);
+  const ACE_TEXT_OSVERSIONINFO &get_win32_versioninfo (void);
 
   // = A pair of functions for modifying ACE's Win32 resource usage.
   /// Return the handle of the module containing ACE's resources. By
@@ -281,7 +281,7 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   void fopen_mode_to_open_mode_converter (ACE_TCHAR x, int &hmode);
 
-  extern ACE_Export OSVERSIONINFO win32_versioninfo_;
+  extern ACE_Export ACE_TEXT_OSVERSIONINFO win32_versioninfo_;
 
   extern ACE_Export HINSTANCE win32_resource_module_;
 

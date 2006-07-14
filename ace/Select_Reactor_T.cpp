@@ -13,6 +13,7 @@
 #include "ace/Guard_T.h"
 #include "ace/Log_Msg.h"
 #include "ace/Signal.h"
+#include "ace/Sig_Handler.h"
 #include "ace/Thread.h"
 #include "ace/Timer_Heap.h"
 #include "ace/OS_NS_errno.h"

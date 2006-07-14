@@ -11,9 +11,8 @@
 #endif /* ! ACE_LACKS_ACE_SVCCONF */
 #include "ace/Signal.h"
 #include "ace/Log_Msg.h"
-#include "ace/Containers.h"
 #include "ace/Malloc.h"
-#include "ace/Signal.h"
+#include "ace/Sig_Adapter.h"
 #include "ace/Framework_Component.h"
 #include "ace/DLL_Manager.h"
 #include "ace/Atomic_Op.h"

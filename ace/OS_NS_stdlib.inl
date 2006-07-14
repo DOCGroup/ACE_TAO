@@ -82,6 +82,9 @@ ACE_OS::atop (const char *s)
   // exception.
 #if defined (ACE_WIN64)
   __int64 ip = ::_atoi64 (s);
+#elif defined(ACE_WIN32) && !defined(ACE_LACKS_INTPTR_T)
+  // Avoid warnings with /Wp64
+  intptr_t ip = ::atoi (s);
 #else
   int ip = ::atoi (s);
 #endif /* ACE_WIN64 */
@@ -95,6 +98,9 @@ ACE_OS::atop (const wchar_t *s)
 {
 #  if defined (ACE_WIN64)
   __int64 ip = ::_wtoi64 (s);
+#  elif defined(ACE_WIN32) && !defined(ACE_LACKS_INTPTR_T)
+  // Avoid warnings with /Wp64
+  intptr_t ip = ACE_OS::atoi (s);
 #  else
   int ip = ACE_OS::atoi (s);
 #  endif /* ACE_WIN64 */

@@ -164,8 +164,8 @@ ACE_OutputCDR::reset (void)
   // release any potential user buffers chained in the continuation
   // field.
 
-  ACE_Message_Block *cont = this->start_.cont ();
-  if (cont != 0)
+  ACE_Message_Block * const cont = this->start_.cont ();
+  if (cont)
     {
       ACE_Message_Block::release (cont);
       this->start_.cont (0);
@@ -177,14 +177,19 @@ ACE_OutputCDR::reset (void)
 ACE_INLINE ACE_CDR::Boolean
 ACE_OutputCDR::write_octet (ACE_CDR::Octet x)
 {
-  const void *temp = &x;
+  void const * temp = &x;
   return this->write_1 (reinterpret_cast<const ACE_CDR::Octet *> (temp));
 }
 
 ACE_INLINE ACE_CDR::Boolean
 ACE_OutputCDR::write_boolean (ACE_CDR::Boolean x)
 {
-  return (ACE_CDR::Boolean) this->write_octet (x ? (ACE_CDR::Octet) 1 : (ACE_CDR::Octet) 0);
+  return
+    static_cast<ACE_CDR::Boolean> (
+      this->write_octet (
+        x
+        ? static_cast<ACE_CDR::Octet> (1)
+        : static_cast<ACE_CDR::Octet> (0)));
 }
 
 ACE_INLINE ACE_CDR::Boolean
@@ -192,8 +197,8 @@ ACE_OutputCDR::write_char (ACE_CDR::Char x)
 {
   if (this->char_translator_ == 0)
     {
-      const void *temp = &x;
-      return this->write_1 (reinterpret_cast<const ACE_CDR::Octet*> (temp));
+      void const * temp = &x;
+      return this->write_1 (reinterpret_cast<ACE_CDR::Octet const *> (temp));
     }
   return this->char_translator_->write_char (*this, x);
 }
@@ -264,24 +269,26 @@ ACE_OutputCDR::write_longdouble (const ACE_CDR::LongDouble &x)
 ACE_INLINE ACE_CDR::Boolean
 ACE_OutputCDR::write_string (const ACE_CDR::Char *x)
 {
-  if (x != 0)
+  if (x)
     {
       const ACE_CDR::ULong len =
         static_cast<ACE_CDR::ULong> (ACE_OS::strlen (x));
       return this->write_string (len, x);
     }
+
   return this->write_string (0, 0);
 }
 
 ACE_INLINE ACE_CDR::Boolean
 ACE_OutputCDR::write_wstring (const ACE_CDR::WChar *x)
 {
-  if (x != 0)
+  if (x)
     {
       ACE_CDR::ULong len =
         static_cast<ACE_CDR::ULong> (ACE_OS::strlen (x));
       return this->write_wstring (len, x);
     }
+
   return this->write_wstring (0, 0);
 }
 
@@ -303,11 +310,13 @@ ACE_OutputCDR::write_wchar_array (const ACE_CDR::WChar* x,
 {
   if (this->wchar_translator_)
     return this->wchar_translator_->write_wchar_array (*this, x, length);
+
   if (ACE_OutputCDR::wchar_maxbytes_ == 0)
     {
       errno = EACCES;
       return (ACE_CDR::Boolean) (this->good_bit_ = false);
     }
+
   if (ACE_OutputCDR::wchar_maxbytes_ == sizeof (ACE_CDR::WChar))
     return this->write_array (x,
                               sizeof (ACE_CDR::WChar),

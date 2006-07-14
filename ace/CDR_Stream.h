@@ -114,9 +114,9 @@ public:
   /**
    * Create an output stream from an arbitrary buffer, care must be
    * exercised with alignment, because this contructor will align if
-   * needed.  In this case <data> will not point to the start off the
-   * output stream. begin()->rd_prt() points to the start off the
-   * output stream.  See ACE_ptr_align_binary() to properly align a
+   * needed.  In this case @a data will not point to the start of the
+   * output stream. @c begin()->rd_ptr() points to the start of the
+   * output stream.  See @c ACE_ptr_align_binary() to properly align a
    * pointer and use ACE_CDR::MAX_ALIGNMENT for the correct alignment.
    */
   ACE_OutputCDR (char *data,
@@ -126,11 +126,11 @@ public:
                  ACE_Allocator* data_block_allocator = 0,
                  ACE_Allocator* message_block_allocator = 0,
                  size_t memcpy_tradeoff=
-                 ACE_DEFAULT_CDR_MEMCPY_TRADEOFF,
+                   ACE_DEFAULT_CDR_MEMCPY_TRADEOFF,
                  ACE_CDR::Octet giop_major_version =
-                 ACE_CDR_GIOP_MAJOR_VERSION,
+                   ACE_CDR_GIOP_MAJOR_VERSION,
                  ACE_CDR::Octet giop_minor_version =
-                 ACE_CDR_GIOP_MINOR_VERSION);
+                   ACE_CDR_GIOP_MINOR_VERSION);
 
   /// Build a CDR stream with an initial data block, it will *not* remove
   /// <data_block>, since it did not allocated it.  It's important to be
@@ -154,15 +154,15 @@ public:
                  ACE_CDR_GIOP_MINOR_VERSION);
 
   /// Build a CDR stream with an initial Message_Block chain, it will
-  /// *not* remove <data>, since it did not allocate it.
+  /// *not* remove @a data, since it did not allocate it.
   ACE_OutputCDR (ACE_Message_Block *data,
                  int byte_order = ACE_CDR_BYTE_ORDER,
-                 size_t memcpy_tradeoff=
-                 ACE_DEFAULT_CDR_MEMCPY_TRADEOFF,
+                 size_t memcpy_tradeoff =
+                   ACE_DEFAULT_CDR_MEMCPY_TRADEOFF,
                  ACE_CDR::Octet giop_major_version =
-                 ACE_CDR_GIOP_MAJOR_VERSION,
+                   ACE_CDR_GIOP_MAJOR_VERSION,
                  ACE_CDR::Octet giop_minor_version =
-                 ACE_CDR_GIOP_MINOR_VERSION);
+                   ACE_CDR_GIOP_MINOR_VERSION);
 
   /// destructor
   ~ACE_OutputCDR (void);
@@ -510,7 +510,7 @@ private:
   bool good_bit_;
 
   /// Break-even point for copying.
-  size_t memcpy_tradeoff_;
+  size_t const memcpy_tradeoff_;
 
 protected:
   /// GIOP version information

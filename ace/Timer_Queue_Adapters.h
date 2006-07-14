@@ -22,6 +22,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Signal.h"
+#include "ace/Sig_Handler.h"
 #include "ace/Condition_Recursive_Thread_Mutex.h"
 
 #if defined (ACE_HAS_DEFERRED_TIMER_COMMANDS)
@@ -32,6 +33,8 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #endif /* ACE_HAS_DEFERRED_TIMER_COMMANDS */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
+class ACE_Sig_Set;
 
 /**
  * @class ACE_Async_Timer_Queue_Adapter

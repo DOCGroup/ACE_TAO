@@ -3,6 +3,10 @@
 // $Id$
 
 #include "ace/OS_NS_signal.h"
+#include "ace/config-all.h"
+#include "ace/Trace.h"
+#include "ace/Object_Manager_Base.h"
+#include "ace/OS_NS_Thread.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -256,18 +260,6 @@ ACE_Sig_Guard::ACE_Sig_Guard (ACE_Sig_Set *mask,
                             this->omask_);
 #  endif /* ACE_LACKS_PTHREAD_THR_SIGSETMASK */
 #endif /* ACE_LACKS_UNIX_SIGNALS */
-}
-
-ACE_INLINE
-ACE_Sig_Handler::ACE_Sig_Handler (void)
-{
-}
-
-ACE_INLINE int
-ACE_Sig_Handler::in_range (int signum)
-{
-  ACE_TRACE ("ACE_Sig_Handler::in_range");
-  return signum > 0 && signum < ACE_NSIG;
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

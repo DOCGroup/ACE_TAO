@@ -247,6 +247,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #define ACE_TEXT_SERVICE_TABLE_ENTRY             SERVICE_TABLE_ENTRYW
 #define ACE_TEXT_STARTUPINFO                     STARTUPINFOW
 #define ACE_TEXT_WIN32_FIND_DATA                 WIN32_FIND_DATAW
+#define ACE_TEXT_OSVERSIONINFO                   OSVERSIONINFOW
 
 #define ACE_TEXT_CreateEvent                     ::CreateEventW
 #define ACE_TEXT_CreateFile                      ::CreateFileW
@@ -267,6 +268,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #define ACE_TEXT_GetModuleFileName               ::GetModuleFileNameW
 #define ACE_TEXT_GetTempPath                     ::GetTempPathW
 #define ACE_TEXT_GetUserName                     ::GetUserNameW
+#define ACE_TEXT_GetVersionEx                    ::GetVersionExW
 #define ACE_TEXT_LoadLibrary                     ::LoadLibraryW
 #define ACE_TEXT_MoveFileEx                      ::MoveFileExW
 #define ACE_TEXT_WaitNamedPipe                   ::WaitNamedPipeW
@@ -296,6 +298,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #define ACE_TEXT_SERVICE_TABLE_ENTRY             SERVICE_TABLE_ENTRYA
 #define ACE_TEXT_STARTUPINFO                     STARTUPINFOA
 #define ACE_TEXT_WIN32_FIND_DATA                 WIN32_FIND_DATAA
+#define ACE_TEXT_OSVERSIONINFO                   OSVERSIONINFOA
 
 #define ACE_TEXT_CreateEvent                     ::CreateEventA
 #define ACE_TEXT_CreateFile                      ::CreateFileA
@@ -316,6 +319,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #define ACE_TEXT_GetModuleFileName               ::GetModuleFileNameA
 #define ACE_TEXT_GetTempPath                     ::GetTempPathA
 #define ACE_TEXT_GetUserName                     ::GetUserNameA
+#define ACE_TEXT_GetVersionEx                    ::GetVersionExA
 #define ACE_TEXT_LoadLibrary                     ::LoadLibraryA
 #define ACE_TEXT_MoveFileEx                      ::MoveFileExA
 #define ACE_TEXT_WaitNamedPipe                   ::WaitNamedPipeA

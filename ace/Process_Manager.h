@@ -216,25 +216,32 @@ public:
 
   /**
    * Block until there are no more child processes running that were
-   * <spawn>ed by this <ACE_Process_Manager>.  Unlike the <wait> call
-   * below, this method does not require a signal handler or
-   * <ACE_OS::sigwait> because it simply blocks synchronously waiting
-   * for all the children managed by this <ACE_Process_Manager> to
+   * @c spawn()ed by this @c ACE_Process_Manager.  Unlike the @c wait
+   * call below, this method does not require a signal handler or
+   * @c ACE_OS::sigwait because it simply blocks synchronously waiting
+   * for all the children managed by this @c ACE_Process_Manager to
    * exit.  Note that this does not return any status information
    * about the success or failure of exiting child processes, although
    * any registered exit_handlers are called.  Returns 0 on success
-   * (and <remove>s the corresponding <ACE_Process_Descriptor> entries
-   * from the <Process_Manager>; otherwise, returns -1 on failure.
+   * (and @c remove()s the corresponding @c ACE_Process_Descriptor
+   * entries from the @c Process_Manager; otherwise, returns -1 on
+   * failure.
+   *
+   * @param timeout Relative time to wait for process to terminate
    */
   int wait (const ACE_Time_Value &timeout = ACE_Time_Value::max_time);
 
   /**
-   * Wait up to <timeout> for a single process to terminate.  If
+   * Wait up to @a timeout for a single process to terminate.  If
    * pid==0, waits for any of the managed <Process>es (but see the
    * note in the class documentation above for caveats about this --
    * "sloppy process cleanup on unix") If pid != 0, waits for that <Process>
    * only.  Returns the pid of the Process whose exit was handled, 0
    * if a timeout occurred, or ACE_INVALID_PID on error.
+   *
+   * @param pid     Process ID
+   * @param timeout Relative time to wait for process to terminate
+   * @param status  Exit status of terminated process
    */
   pid_t wait (pid_t pid,
               const ACE_Time_Value &timeout,
