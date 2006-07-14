@@ -1,3 +1,11 @@
+Fri Jul 14 22:10:02 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * ace/Sig_Handler.cpp:
+
+          Removed explicit template instantiations.  They snuck back in
+          when Signal.* was refactored.  Thanks to Johnny for pointing
+          this out.
+
 Fri Jul 14 21:32:02 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
         * ace/Numeric_Limits.h:
