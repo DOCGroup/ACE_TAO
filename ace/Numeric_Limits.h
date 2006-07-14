@@ -160,7 +160,7 @@ struct ACE_Export ACE_Numeric_Limits<long double>
 // Just wrap it.
 
 template <typename T>
-struct ACE_Export ACE_Numeric_Limits
+struct ACE_Numeric_Limits
 {
   static T min (void) { return std::numeric_limits<T>::min (); }
   static T max (void) { return std::numeric_limits<T>::max (); }
