@@ -193,8 +193,6 @@ struct MQ_Ex_N_Tester_Wrapper
 
 #endif /* ACE_HAS_THREADS */
 
-#if defined (ACE_HAS_THREADS)
-
 static int
 single_thread_performance_test (void)
 {
@@ -257,107 +255,6 @@ single_thread_performance_test (void)
     delete send_block[i];
   delete [] send_block;
   delete msgq;
-
-  return 0;
-}
-
-static void *
-receiver (void *arg)
-{
-  Queue_Wrapper *queue_wrapper = reinterpret_cast<Queue_Wrapper *> (arg);
-  int i;
-
-  User_Class **receive_block_p = 0;
-  ACE_NEW_RETURN (receive_block_p,
-                  User_Class *[max_messages],
-                  (void *) -1);
-
-  for (i = 0; i < max_messages; ++i)
-    if (queue_wrapper->q_->dequeue_head (receive_block_p[i]) == -1)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("%p\n"),
-                         ACE_TEXT ("dequeue_head")),
-                        0);
-  timer->stop ();
-
-  delete [] receive_block_p;
-
-  return 0;
-}
-
-static void *
-sender (void *arg)
-{
-  Queue_Wrapper *queue_wrapper = reinterpret_cast<Queue_Wrapper *> (arg);
-  int i;
-
-  timer->start ();
-
-  // Send the messages.
-  for (i = 0; i < max_messages; ++i)
-    if (queue_wrapper->q_->
-        enqueue_tail (queue_wrapper->send_block_[i]) == -1)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("%p\n"),
-                         ACE_TEXT ("enqueue")),
-                        0);
-  return 0;
-}
-
-static int
-performance_test (void)
-{
-  Queue_Wrapper queue_wrapper;
-  const ACE_TCHAR *message =
-    ACE_TEXT ("ACE_Message_Queue_Ex<ACE_SYNCH>");
-  int i = 0;
-
-  // Create the messages.  Allocate off the heap in case messages is
-  // large relative to the amount of stack space available.  Allocate
-  // it here instead of in the sender, so that we can delete it after
-  // the _receiver_ is done.
-  User_Class **send_block = 0;
-  ACE_NEW_RETURN (send_block,
-                  User_Class *[max_messages],
-                  -1);
-
-  for (i = 0; i < max_messages; ++i)
-    ACE_NEW_RETURN (send_block[i],
-                    User_Class (test_message),
-                    -1);
-
-  queue_wrapper.send_block_ = send_block;
-
-  ACE_NEW_RETURN (queue_wrapper.q_,
-                  SYNCH_QUEUE,
-                  -1);
-
-  if (ACE_Thread_Manager::instance ()->spawn ((ACE_THR_FUNC) sender,
-                                              &queue_wrapper,
-                                              THR_BOUND) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("spawning sender thread")),
-                      -1);
-
-  if (ACE_Thread_Manager::instance ()->spawn ((ACE_THR_FUNC) receiver,
-                                              &queue_wrapper,
-                                              THR_BOUND) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("spawning receiver thread")),
-                      -1);
-
-  ACE_Thread_Manager::instance ()->wait ();
-  print_message (message);
-  timer->reset ();
-
-  delete queue_wrapper.q_;
-  queue_wrapper.q_ = 0;
-
-  for (i = 0; i < max_messages; ++i)
-    delete send_block[i];
-  delete [] send_block;
 
   return 0;
 }
@@ -486,6 +383,109 @@ MQ_Ex_N_Tester::test_enqueue_head (void)
 
   return 0;
 
+}
+
+#if defined (ACE_HAS_THREADS)
+
+static void *
+receiver (void *arg)
+{
+  Queue_Wrapper *queue_wrapper = reinterpret_cast<Queue_Wrapper *> (arg);
+  int i;
+
+  User_Class **receive_block_p = 0;
+  ACE_NEW_RETURN (receive_block_p,
+                  User_Class *[max_messages],
+                  (void *) -1);
+
+  for (i = 0; i < max_messages; ++i)
+    if (queue_wrapper->q_->dequeue_head (receive_block_p[i]) == -1)
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("dequeue_head")),
+                        0);
+  timer->stop ();
+
+  delete [] receive_block_p;
+
+  return 0;
+}
+
+static void *
+sender (void *arg)
+{
+  Queue_Wrapper *queue_wrapper = reinterpret_cast<Queue_Wrapper *> (arg);
+  int i;
+
+  timer->start ();
+
+  // Send the messages.
+  for (i = 0; i < max_messages; ++i)
+    if (queue_wrapper->q_->
+        enqueue_tail (queue_wrapper->send_block_[i]) == -1)
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("enqueue")),
+                        0);
+  return 0;
+}
+
+static int
+performance_test (void)
+{
+  Queue_Wrapper queue_wrapper;
+  const ACE_TCHAR *message =
+    ACE_TEXT ("ACE_Message_Queue_Ex<ACE_SYNCH>");
+  int i = 0;
+
+  // Create the messages.  Allocate off the heap in case messages is
+  // large relative to the amount of stack space available.  Allocate
+  // it here instead of in the sender, so that we can delete it after
+  // the _receiver_ is done.
+  User_Class **send_block = 0;
+  ACE_NEW_RETURN (send_block,
+                  User_Class *[max_messages],
+                  -1);
+
+  for (i = 0; i < max_messages; ++i)
+    ACE_NEW_RETURN (send_block[i],
+                    User_Class (test_message),
+                    -1);
+
+  queue_wrapper.send_block_ = send_block;
+
+  ACE_NEW_RETURN (queue_wrapper.q_,
+                  SYNCH_QUEUE,
+                  -1);
+
+  if (ACE_Thread_Manager::instance ()->spawn ((ACE_THR_FUNC) sender,
+                                              &queue_wrapper,
+                                              THR_BOUND) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("spawning sender thread")),
+                      -1);
+
+  if (ACE_Thread_Manager::instance ()->spawn ((ACE_THR_FUNC) receiver,
+                                              &queue_wrapper,
+                                              THR_BOUND) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("spawning receiver thread")),
+                      -1);
+
+  ACE_Thread_Manager::instance ()->wait ();
+  print_message (message);
+  timer->reset ();
+
+  delete queue_wrapper.q_;
+  queue_wrapper.q_ = 0;
+
+  for (i = 0; i < max_messages; ++i)
+    delete send_block[i];
+  delete [] send_block;
+
+  return 0;
 }
 
 int
@@ -661,37 +661,33 @@ run_main (int argc, ACE_TCHAR *argv[])
       max_messages = ACE_OS::atoi (argv[1]);
 
   int status = 0;
+
   // Be sure that the a timed out get sets the error code properly.
   ACE_Message_Queue_Ex<User_Class, ACE_SYNCH> q1;
   ACE_Message_Queue_Ex_N<User_Class, ACE_SYNCH> q2;
   if (0 != basic_queue_test (q1) ||
       0 != basic_queue_test (q2))
     {
-      status = 1;
+      ++status;
     }
 
   ACE_NEW_RETURN (timer,
                   ACE_High_Res_Timer,
                   -1);
+
+  status += single_thread_performance_test ();
+
 #if defined (ACE_HAS_THREADS)
-
-  if (status == 0)
-    single_thread_performance_test ();
-
-  if (status == 0)
-    performance_test ();
-
-  if (0 == status)
-    {
-      MQ_Ex_N_Tester ex_n_tester;
-      if (0 != ex_n_tester.single_thread_performance_test () ||
-          0 != ex_n_tester.performance_test ())
-        {
-          status = 1;
-        }
-    }
-
+  status += performance_test ();
 #endif /* ACE_HAS_THREADS */
+
+  {
+    MQ_Ex_N_Tester ex_n_tester;
+    status += ex_n_tester.single_thread_performance_test ();
+#if defined (ACE_HAS_THREADS)
+    status += ex_n_tester.performance_test ();
+#endif /* ACE_HAS_THREADS */
+    }
 
   if (status != 0)
     ACE_ERROR ((LM_ERROR,
