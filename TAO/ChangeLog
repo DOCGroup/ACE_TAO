@@ -1,3 +1,22 @@
+Fri Jul 14 20:38:07 UTC 2006  john_c  <johnc@ociweb.com>
+
+        * tests/AlternateIIOP/run_test.pl:
+
+          Split a long string.
+
+        * tests/Optimized_Connection/Optimized_Connection.mpc:
+        * tests/Optimized_Connection/README:
+        * tests/Optimized_Connection/oc.ior:
+        * tests/Optimized_Connection/oc_client.cpp:
+        * tests/Optimized_Connection/oc_svc.conf:
+        * tests/Optimized_Connection/run_test.pl:
+
+          Created new test to test the Optimized_Connection Selector.
+
+        * tests/AlternateIIOP/svc.conf:
+
+          Removed this file. This test shouldn't be testing the Optimized
+          Connection Selector.
 Fri Jul 14 19:20:34 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * docs/tutorials/Quoter/RTCORBA/Admin.cpp
@@ -26,7 +45,7 @@ Fri Jul 14 19:20:34 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
         * docs/tutorials/Quoter/RTCORBA/docs/mpc.html
         * docs/tutorials/Quoter/RTCORBA/docs/prioritymapping.html
         * docs/tutorials/Quoter/RTCORBA/docs/run.html
-        
+
           A RTCORBA tutorial based on the Quoter by Shanshan Jiang.
 
 Fri Jul 14 18:34:41 UTC 2006  john_c  <johnc@ociweb.com>
