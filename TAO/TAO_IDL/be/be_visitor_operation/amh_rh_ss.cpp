@@ -153,8 +153,8 @@ be_visitor_amh_rh_operation_ss::visit_operation (be_operation *node)
       // Remove the trailing '_excep' from the operation name, we know
       // there is one from the checks above...
       ACE_CString operation_name (node->local_name ()->get_string ());
-      ssize_t idx = operation_name.rfind ('_');
-      ACE_ASSERT (idx != ACE_String_Base_Const::npos);
+      ACE_CString::size_type const idx = operation_name.rfind ('_');
+      ACE_ASSERT (idx != ACE_CString::npos);
       operation_name[idx] = '\0';
 
       *os << be_nl << "{" << be_idt_nl

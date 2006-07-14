@@ -1,3 +1,151 @@
+Fri Jul 14 21:15:32 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * TAO_IDL/ast/ast_decl.cpp (version):
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_visitor_operation/amh_rh_ss.cpp:
+        * tao/Acceptor_Registry.cpp:
+        * tao/CORBANAME_Parser.cpp:
+        * tao/IIOP_Acceptor.cpp:
+        * tao/IIOP_Endpoint.cpp:
+        * tao/IIOP_Profile.cpp:
+        * tao/Transport_Connector.cpp:
+        * tao/params.cpp:
+        * tao/CSD_ThreadPool/CSD_TP_Strategy_Factory.cpp:
+        * tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
+
+          ACE string class  operations now consistently return and accept an
+          unsigned index/position value instead of a mix of signed and
+          unsigned return index types.  Use the "size_type" typedef
+          instead of int or ssize_t, and the "npos" constant instead of
+          "-1".
+
+        * TAO_IDL/fe/fe_init.cpp:
+
+          Use ACE_CString::npos instead of ACE_String_Base_Const::npos.
+          The latter is not meant for use outside of ACE.
+
+        * orbsvcs/Trading_Service/Trading_Service.h:
+        * orbsvcs/orbsvcs/Shutdown_Utilities.h:
+
+          Include "ace/Sig_Handler.h" to pull in ACE_Sig_Handler class
+          declaration.
+
+        * orbsvcs/orbsvcs/Notify/ConsumerAdmin.h:
+
+          Moved TAO_Notify_ProxySupplier forward declaration within the
+          TAO versioned namespace.
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Accept_Strategy.cpp
+          (accept_svc_handler):
+
+          Ensure that errno is preserved in case the svc_handler close()
+          method resets it.
+
+        * orbsvcs/tests/CosEvent/lib/CosEvent_lib.mpc:
+
+          Removed "naming" MPC base project from "CosEvent Test Lib"
+          project.  That test library does not depending on the Naming
+          Service.
+
+        * tao/GIOP_Message_Base.cpp:
+
+          Cosmetic changes.
+
+        * tao/ORB_Core.cpp:
+
+          Access ORB table lock using the new lock accessor rather than
+          directly using the lock member because of a (now removed) friend
+          declaration.  Folks, stop being lazy. :)
+
+        * tao/ORB_Table.h:
+        * tao/ORB_Table.inl:
+
+          The ORB table now has no friends, nor should it!  HP aCC 3.63
+          was confused by the global scope qualifier in the friend
+          declaration, due to broken namespace scoping support.
+
+          Added a public lock accessor method.
+
+        * tao/Policy_Manager.h (TAO_Policy_Manager, operator=):
+
+          Added private and unimplemented copy constructor and assignment
+          operator.  TAO_Policy_Manager should not be copied.
+
+        * tao/PortableServer.mpc (Template_Files):
+
+          Explicitly list template files since the Servant_var.* template
+          sources will otherwise not be considered template sources.
+
+        * tao/AnyTypeCode/Any_Array_Impl_T.cpp (marshal_value, value):
+        * tao/AnyTypeCode/Any_Array_Impl_T.inl:
+        * tao/AnyTypeCode/Any_Basic_Impl_T.cpp:
+        * tao/AnyTypeCode/Any_Basic_Impl_T.inl:
+        * tao/AnyTypeCode/Any_Dual_Impl_T.cpp:
+        * tao/AnyTypeCode/Any_Dual_Impl_T.inl:
+        * tao/AnyTypeCode/Any_Impl_T.cpp:
+        * tao/AnyTypeCode/Any_Impl_T.inl:
+        * tao/AnyTypeCode/Any_Special_Impl_T.cpp:
+        * tao/AnyTypeCode/Any_Special_Impl_T.inl:
+
+          Moved inline virtual methods out of line.  Virtual methods
+          generally should not be inlined.  Addresses potential RTTI
+          problems with g++ 4.x.
+
+
+        * tao/PortableServer/Object_Adapter.cpp
+          (wait_for_non_servant_upcalls_to_complete):
+
+          Removed explicit use of CORBA::Environment in native C++
+          exception builds.  It isn't needed.
+
+          (dispatch, get_collocated_servant):
+
+          Prevent potential buffer overread.  (From Andrew Schnable)
+
+        * tao/PortableServer/Object_Adapter.h
+          (wait_for_non_servant_upcalls_to_complete):
+
+          Removed explicit use of CORBA::Environment in native C++
+          exception builds.  It isn't needed.
+
+        * tao/PortableServer/PS_ForwardC.h:
+
+          PortableServer::ServantBase_var is now a specialization of the
+          new (standard) PortableServer::Servant_var<> class template.
+
+        * tao/PortableServer/Servant_Base.cpp:
+        * tao/PortableServer/Servant_Base.h:
+        * tao/PortableServer/Servant_Base.i:
+
+          Removed TAO_ServantBase_var class.  It's functionality is now
+          provided by the PortableServer::Servant_var<> class template.
+
+        * tao/PortableServer/Servant_Upcall.cpp (upcall_cleanup):
+
+          Renamed wait_for_non_servant_upcall_to_complete() method
+          call to the name (..._to_complete_no_throw()).
+        
+        * tao/PortableServer/Servant_var.cpp:
+        * tao/PortableServer/Servant_var.h:
+        * tao/PortableServer/Servant_var.inl:
+
+          Implementation of the standard PortableServer::Servant_var<>
+          class template.
+
+        * tao/Utils/Servant_Var.h:
+
+          Marked TAO::Utils::Servant_var<> class template as deprecated.
+          Use standard PortableServer::Servant_var class template
+          instead.
+
+        * utils/catior/catior.cpp (catior):
+
+          Fixed crash due to buffer overrun.  The message block write
+          pointer should be set to the end of the message block, not twice
+          the length of message block.  Thanks to Sriram Chandramouli
+          <sriram_chandramouli at symantec dot com> for pointing out this
+          problem.
+
 Fri Jul 14 21:10:30 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/DynamicAny.mpc:
@@ -50,6 +198,7 @@ Fri Jul 14 20:38:07 UTC 2006  john_c  <johnc@ociweb.com>
 
           Removed this file. This test shouldn't be testing the Optimized
           Connection Selector.
+
 Fri Jul 14 19:20:34 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * docs/tutorials/Quoter/RTCORBA/Admin.cpp
