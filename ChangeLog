@@ -1,3 +1,8 @@
+Fri Jul 14 02:11:21 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * bin/tao_orb_tests.lst:
+          Added new test for Bug 2593 to nightly suite.
+
 Thu Jul 13 20:40:10 UTC 2006  Olli Savia  <ops@iki.fi>
 
         * ace/config-integritySCA.h:
