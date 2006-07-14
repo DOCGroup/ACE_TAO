@@ -1,3 +1,34 @@
+Fri Jul 14 19:20:34 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * docs/tutorials/Quoter/RTCORBA/Admin.cpp
+        * docs/tutorials/Quoter/RTCORBA/Broker.cpp
+        * docs/tutorials/Quoter/RTCORBA/Broker.idl
+        * docs/tutorials/Quoter/RTCORBA/Broker_i.cpp
+        * docs/tutorials/Quoter/RTCORBA/Broker_i.h
+        * docs/tutorials/Quoter/RTCORBA/Common.idl
+        * docs/tutorials/Quoter/RTCORBA/Common_i.cpp
+        * docs/tutorials/Quoter/RTCORBA/Common_i.h
+        * docs/tutorials/Quoter/RTCORBA/Distributor.cpp
+        * docs/tutorials/Quoter/RTCORBA/Distributor.idl
+        * docs/tutorials/Quoter/RTCORBA/Distributor_i.cpp
+        * docs/tutorials/Quoter/RTCORBA/Distributor_i.h
+        * docs/tutorials/Quoter/RTCORBA/StockQuoter.mpc
+        * docs/tutorials/Quoter/RTCORBA/Stock_Database.cpp
+        * docs/tutorials/Quoter/RTCORBA/Stock_Database.h
+        * docs/tutorials/Quoter/RTCORBA/Stock_PriorityMapping.cpp
+        * docs/tutorials/Quoter/RTCORBA/Stock_PriorityMapping.h
+        * docs/tutorials/Quoter/RTCORBA/docs/broker.html
+        * docs/tutorials/Quoter/RTCORBA/docs/common.html
+        * docs/tutorials/Quoter/RTCORBA/docs/database.html
+        * docs/tutorials/Quoter/RTCORBA/docs/distributor.html
+        * docs/tutorials/Quoter/RTCORBA/docs/idl.html
+        * docs/tutorials/Quoter/RTCORBA/docs/index.html
+        * docs/tutorials/Quoter/RTCORBA/docs/mpc.html
+        * docs/tutorials/Quoter/RTCORBA/docs/prioritymapping.html
+        * docs/tutorials/Quoter/RTCORBA/docs/run.html
+        
+          A RTCORBA tutorial based on the Quoter by Shanshan Jiang.
+
 Fri Jul 14 18:34:41 UTC 2006  john_c  <johnc@ociweb.com>
 
         * orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp:
@@ -20,6 +51,7 @@ Fri Jul 14 18:34:41 UTC 2006  john_c  <johnc@ociweb.com>
         * orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/supplier.conf:
 
           Adding a test to traverse the changed code path.
+
 Fri Jul 14 17:00:49 UTC 2006  Yan Dai  <dai_y@ociweb.com>
 
         * tao/EndpointPolicy/Endpoint_Acceptor_Filter_Factory.cpp:

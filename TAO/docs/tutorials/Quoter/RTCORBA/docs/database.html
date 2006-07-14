@@ -1,0 +1,71 @@
+<!-- $Id$ -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>Stock Database definition for the Stock Quoter Publisher/Subscriber Real-time CORBA Service</title>
+</head>
+
+<body
+ text = "#000000"
+ link = "#000fff"
+ vLink= "#ff0f0f"
+ aLink = "#0000ff"
+ bgColor = "#ffffff">
+
+<hr><h2>Stock Database definition for the Stock Quoter Publisher/Subscriber Real-time CORBA Service</h2><hr>
+
+<P> The Stock Database class is used to install, update and publish the information of all the stocks. It uses the
+singleton design pattern.<P>
+
+<h3>Implementing the Constructor</h3>
+
+The main steps of this function are described as follows: <P>
+
+<li>Set the active state of StockDistributor object to false.</li> <P>
+
+<li>Create an array of stock names.</li> <P>
+
+<li>Create a StockInfo object for each stock with the corresponding stock name and initialize
+its high, low and last values randomly.</li> <P>
+
+<li>Insert the StockInfo objects into stock map, using the stock name as the key.</li> <P>
+
+<hr><h3>Implementing the get_stock_info () function</h3>
+
+The main steps of this function are described as follows: <P>
+
+<li>Locate the stock in the stock database with the same stock name given in the argument.</li> <P>
+
+<li>Create a StockInfo object of the former stock and return it.</li> <P>
+
+<hr><h3>Implementing the publish_stock_info () function</h3>
+
+This function is called by the Stock Distributor server's thread function to notify the Stock Broker clien
+the state change of the stock it interested in. <P>
+For each stock in the stock database, do the following steps: <P>
+
+<li>Initialze the StockName object with the name of the stock.</li> <P>
+
+<li>Call the push_StockName () function of StockNameConsumer object (given in the argument),
+using the former StockName object.</li> <P>
+
+<hr><h3>Implementing the init () member function</h3>
+
+Set the active state of the Stock_Database object to true, create a RTCOBRA::Mutex object and
+create a thread to update the information of all the stocks. <P>
+
+The main steps of this thread function are described as follows:  <P>
+While the state of the Stock_Database object is active, continue the following looping:
+<OL>
+<li>    Lock the RTCOBRA::Mutex object.</li>
+<li>    For each stock in the stock database, calculate the new high, low and last values randomly.</li>
+<li>    Unlock the RTCOBRA::Mutex object.</li>
+<li>    Sleep for a while.</li>
+</OL>
+
+<hr><b>Email: </b><a href="mailto:"</a<ADDRESS>shanshan.jiang@vanderbilt.edu</ADDRESS>
+
+</body>
+
+</html>
