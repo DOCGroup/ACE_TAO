@@ -1,3 +1,10 @@
+Fri Jul 14 23:44:45 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * tao/Utils/Servant_Var.h:
+
+          Removed "#warning" preprocess directive.  It's not portable.
+          Thanks to Jeff for pointing this out.
+
 Fri Jul 14 23:42:30 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_codegen.cpp:
@@ -103,6 +110,7 @@ Fri Jul 14 21:10:30 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
           Moved the different resources files (Qt,Fl,Tk, and Xt) to
           subdirectories so that in TAO/tao we only have the tao lib
           core
+
 Fri Jul 14 21:15:32 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
         * TAO_IDL/ast/ast_decl.cpp (version):
@@ -195,7 +203,6 @@ Fri Jul 14 21:15:32 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
           Moved inline virtual methods out of line.  Virtual methods
           generally should not be inlined.  Addresses potential RTTI
           problems with g++ 4.x.
-
 
         * tao/PortableServer/Object_Adapter.cpp
           (wait_for_non_servant_upcalls_to_complete):
