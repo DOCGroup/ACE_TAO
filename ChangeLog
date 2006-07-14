@@ -1,3 +1,20 @@
+Fri Jul 14 21:32:02 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * ace/Numeric_Limits.h:
+
+          "ace/ACE_Export.h" -> "ace/ACE_export.h".  Darn Windows case
+          insensitivity.
+
+        * ace/Shared_Memory_Pool.h:
+
+          Include new "ace/Sig_Handler.h" header to pull in
+          ACE_Sig_Handler class declaration.
+
+        * ace/String_Base.h:
+
+          Added tips to documentation related to potentially user visible
+          changes.
+
 Fri Jul 14 21:10:11 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
         * ace/Atomic_Op.h (ACE_Atomic_Op):

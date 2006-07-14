@@ -43,6 +43,16 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * CAUTION: in cases when ACE_String_Base is constructed from a
  * provided buffer with the release parameter set to 0,
  * ACE_String_Base is not guaranteed to be '\0' terminated.
+ *
+ * \li Do not use a "@c -1" magic number to refer to the "no position"
+ *     condition.  This was never the right thing to do.  The "@c npos"
+ *     constant should be used in such cases.
+ * \li Do not assign or pass string positions to or from signed types.
+ *     Use the "@c size_type" @c typedef found in all ACE string
+ *     classes.  This typedef is analogous to the "@c size_type"
+ *     @c typedef found in the standard C++ string class as well as
+ *     many STL class templates.  If you find yourself casting you're
+ *     probably doing something wrong.
  */
 template <class CHAR>
 class ACE_String_Base : public ACE_String_Base_Const
