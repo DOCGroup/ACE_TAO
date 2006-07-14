@@ -654,7 +654,7 @@ TAO_IIOP_Acceptor::parse_address (const char *address,
     specified_hostname.clear();
   }
 
-  const char *port_separator_loc = ACE_OS::strrchr (address, ':');
+  const char *port_separator_loc = ACE_OS::strchr (address, ':');
   char tmp_host[MAXHOSTNAMELEN + 1];
 
 #if defined (ACE_HAS_IPV6)
