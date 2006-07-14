@@ -1376,7 +1376,7 @@ TAO_CEC_Default_Factory::destroy_supplier_control (TAO_CEC_SupplierControl* x)
 }
 
 CORBA::Policy_ptr
-TAO_CEC_Default_Factory::create_roundtrip_timeout_policy 
+TAO_CEC_Default_Factory::create_roundtrip_timeout_policy
   (ACE_Time_Value timeout)
 {
   //get the existing orb
@@ -1387,7 +1387,7 @@ TAO_CEC_Default_Factory::create_roundtrip_timeout_policy
   TimeBase::TimeT timet;
   ORBSVCS_Time::Time_Value_to_TimeT (timet, timeout);
   value <<= timet;
-  return orb->create_policy (Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE, 
+  return orb->create_policy (Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE,
     value);
 }
 
