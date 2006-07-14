@@ -739,7 +739,8 @@ TAO_Profile::compare_key (const TAO_Profile *other) const
 TAO_Endpoint *
 TAO_Profile::first_filtered_endpoint (void)
 {
-  return this->endpoint()->next_filtered(this->orb_core_,0);
+  TAO_Endpoint *ep = this->endpoint();
+  return ep == 0 ? 0 : ep->next_filtered(this->orb_core_,0);
 }
 
 TAO_Endpoint *
