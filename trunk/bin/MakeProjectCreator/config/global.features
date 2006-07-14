@@ -43,6 +43,7 @@ ziparchive    = 0
 negotiate_codesets  = 0
 versioned_namespace = 0
 vcl           = 0
+stl           = 0
 
 // Features for various GUI libraries
 
