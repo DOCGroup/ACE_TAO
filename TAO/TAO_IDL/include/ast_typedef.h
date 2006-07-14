@@ -98,6 +98,9 @@ public:
   // Recursively called on valuetype to check for legal use as
   // a primary key. Overridden for valuetype, struct, sequence,
   // union, array, typedef, and interface.
+  
+  virtual bool is_local (void);
+  // Override the base class method.
 
   // Narrowing.
   DEF_NARROW_METHODS1(AST_Typedef, AST_Type);
