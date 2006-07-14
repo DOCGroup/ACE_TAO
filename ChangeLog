@@ -5,6 +5,9 @@ Fri Jul 14 21:32:02 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
           "ace/ACE_Export.h" -> "ace/ACE_export.h".  Darn Windows case
           insensitivity.
 
+          Removed unnecessary "ACE_Export" from ACE_Numeric_Limits primary
+          template.
+
         * ace/Registry.cpp (make_name):
 
           Use ACE_TString::size_type, not ssize_t, to hold string position
