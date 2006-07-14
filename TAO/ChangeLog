@@ -1,3 +1,10 @@
+Fri Jul 14 23:42:30 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_codegen.cpp:
+          When generating a pidl file change the guard we generate in the
+          header file. Fixes problems with TimeBase.pidl and TimeBase.idl
+          which both exist.
+
 Fri Jul 14 21:43:55 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/IIOP_Acceptor.cpp (parse_address):
