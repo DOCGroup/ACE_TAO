@@ -31,6 +31,34 @@ USER VISIBLE CHANGES BETWEEN ACE-5.5.2 and ACE-5.5.3
   to the function's signature. See ACE_wrappers/tests/Dirent_Test.cpp for
   an example.
 
+. To address a problem in the ACE string interface that prevented
+  substring or character searches in very large strings (e.g. greater
+  than the maximum value of an ssize_t type) from being correctly
+  reported to the caller, the find(), rfind() and strstr() methods now
+  return an unsigned integer (size_t) instead of a signed one
+  (ssize_t). Affected classes include: 
+
+    * ACE_CString
+    * ACE_WString
+    * ACE_TString
+    * ACE_NS_WString
+
+  Unless you have been explicitly using -1 instead of npos when
+  comparing the return value of find(), rfind() and strstr(), and/or
+  assigning the return value to ssize_t you should not see any
+  difference. A new size_type typedef has been added to the ACE string
+  class to aid developers.  This typedef is analogous to the standard
+  C++ string::size_type typedef.
+
+  The ACE_String_Base<>::strstr() documentation as well as a default
+  rfind() argument erroneously referred to -1 instead of npos. Those
+  instances have been corrected.
+
+  To summarize, a "no position" condition is denoted using the npos
+  constant, not -1. It can be referred directly by scoping it with the
+  appropriate string class (e.g. ACE_CString::npos, ACE_WString::npos,
+  etc).
+
 USER VISIBLE CHANGES BETWEEN ACE-5.5.1 and ACE-5.5.2
 ====================================================
 
