@@ -7,14 +7,11 @@ project(TAO_FlResource) : acelib, taolib, core, tao_output, taodefaults, ace_flr
   dynamicflags += TAO_FLRESOURCE_BUILD_DLL
 
   Source_Files {
-    FlResource_Factory.cpp
-    FlResource_Loader.cpp
+    FlResource
   }
 
   Header_Files {
-    FlResource_Factory.h
-    FlResource_Loader.h
-    TAO_FlResource_Export.h
+    FlResource
   }
 
   Inline_Files {

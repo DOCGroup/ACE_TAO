@@ -1,6 +1,6 @@
 //$Id$
 
-#include "tao/FlResource_Factory.h"
+#include "tao/FlResource/FlResource_Factory.h"
 #include "tao/debug.h"
 #include "ace/FlReactor.h"
 

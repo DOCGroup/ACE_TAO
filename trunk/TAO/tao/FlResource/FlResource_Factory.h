@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file   XtResource_Factory.h
+ *  @file   FlResource_Factory.h
  *
  *  $Id$
  *
@@ -10,36 +10,41 @@
  *  @author Marek Brudka <mbrudka@aster.pl>
  */
 //=============================================================================
-#ifndef TAO_XTRESOURCE_FACTORY_H
-#define TAO_XTRESOURCE_FACTORY_H
+#ifndef TAO_FLRESOURCE_FACTORY_H
+#define TAO_FLRESOURCE_FACTORY_H
 #include /**/ "ace/pre.h"
-#include /**/ <X11/Intrinsic.h>
-#include "tao/TAO_XtResource_Export.h"
-#include "ace/XtReactor.h"
-#include "tao/GUIResource_Factory.h"
+
+#include "tao/FlResource/TAO_FlResource_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/FlReactor.h"
+#include "tao/GUIResource_Factory.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
-
   /**
-   * @class XtResource_Factory
+   * @class FlResource_Factory
    *
-   * @brief TAO_GUI_Resource_Factory for creating XtReactor.
+   * @brief TAO_GUI_Resource_Factory for creating FlReactor.
    *
-   * This factory is intended for creating XtReactor for ORB. This
+   * This factory is intended for creating FlReactor for ORB. This
    * factory can be feed into ORB using
    * TAO_ORB_Core::set_gui_resource_factory method which is usually
-   * done by TAO_XtResource_Loader.
+   * done by TAO_FlResource_Loader.
    */
 
-  class TAO_XtResource_Export XtResource_Factory : public GUIResource_Factory
+  class TAO_FlResource_Export FlResource_Factory : public GUIResource_Factory
   {
   public:
-    XtResource_Factory (XtAppContext context);
+
+    FlResource_Factory ();
+
+  protected:
 
     /// Create or obtain current reactor implementation
     virtual ACE_Reactor_Impl *reactor_impl (void);
@@ -47,15 +52,11 @@ namespace TAO
   private:
 
     /// Reactor created by this factory.
-    ACE_XtReactor *reactor_impl_;
-
-    /// Xt context for XtReactor
-    XtAppContext  context_;
-
-    /// for internal locking
-    TAO_SYNCH_MUTEX lock_;
+    ACE_FlReactor *reactor_impl_;
   };
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #include /**/ "ace/post.h"
-#endif /* TAO_XTRESOURCE_FACTORY_H */
+#endif /* TAO_FLRESOURCE_FACTORY_H */

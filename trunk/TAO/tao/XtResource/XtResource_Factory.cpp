@@ -1,6 +1,6 @@
 //$Id$
 
-#include "tao/XtResource_Factory.h"
+#include "tao/XtResource/XtResource_Factory.h"
 #include "tao/debug.h"
 #include "ace/XtReactor.h"
 

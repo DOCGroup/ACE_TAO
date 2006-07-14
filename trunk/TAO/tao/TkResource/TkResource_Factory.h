@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file   FlResource_Factory.h
+ *  @file   TkResource_Factory.h
  *
  *  $Id$
  *
@@ -10,39 +10,38 @@
  *  @author Marek Brudka <mbrudka@aster.pl>
  */
 //=============================================================================
-#ifndef TAO_FLRESOURCE_FACTORY_H
-#define TAO_FLRESOURCE_FACTORY_H
+#ifndef TAO_TKRESOURCE_FACTORY_H
+#define TAO_TKRESOURCE_FACTORY_H
 #include /**/ "ace/pre.h"
-
-#include "tao/TAO_FlResource_Export.h"
+#include "ace/TkReactor.h"
+#include "tao/TkResource/TAO_TkResource_Export.h"
+#include "tao/GUIResource_Factory.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/FlReactor.h"
-#include "tao/GUIResource_Factory.h"
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
+
   /**
-   * @class FlResource_Factory
+   * @class TkResource_Factory
    *
-   * @brief TAO_GUI_Resource_Factory for creating FlReactor.
+   * @brief TAO_GUI_Resource_Factory for creating TkReactor.
    *
-   * This factory is intended for creating FlReactor for ORB. This
+   * This factory is intended for creating TkReactor for ORB. This
    * factory can be feed into ORB using
    * TAO_ORB_Core::set_gui_resource_factory method which is usually
-   * done by TAO_FlResource_Loader.
+   * done by TAO_TkResource_Loader.
    */
 
-  class TAO_FlResource_Export FlResource_Factory : public GUIResource_Factory
+  class TAO_TkResource_Export TkResource_Factory : public GUIResource_Factory
   {
   public:
 
-    FlResource_Factory ();
+    TkResource_Factory ();
 
   protected:
 
@@ -52,11 +51,14 @@ namespace TAO
   private:
 
     /// Reactor created by this factory.
-    ACE_FlReactor *reactor_impl_;
+    ACE_TkReactor *reactor_impl_;
+
+    /// for internal locking.
+    TAO_SYNCH_MUTEX lock_;
   };
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
-#endif /* TAO_FLRESOURCE_FACTORY_H */
+#endif /* TAO_TKRESOURCE_FACTORY_H */
