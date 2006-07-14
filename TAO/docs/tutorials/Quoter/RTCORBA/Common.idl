@@ -1,0 +1,69 @@
+// $Id$
+
+/*
+* @file Common.id
+* @author William Otte <wotte@dre.vanderbilt.edu
+*         Shanshan Jiang <shanshan.jiang@vanderbilt.edu
+
+* Contains common IDL definitions in the Publish/Subscribe Real-time CORB
+* Stock Quoter Service
+*
+
+#ifndef QUOTER_COMMON_ID
+#define QUOTER_COMMON_ID
+
+module Stoc
+
+  exception Invalid_Stoc
+
+  }
+
+  /// Contains information about a single stock
+  struct StockInf
+
+    string name
+    long high
+    long low
+    long las
+  }
+
+  /// Used to communicate an available update
+  valuetype StockNam
+
+    public string name
+  }
+
+  valuetype Cooki
+
+    public string cookie_id
+  }
+
+  interface Trigge
+
+    void start ()
+    void stop ()
+  }
+
+  /*
+  * @class StockNameConsume
+  * @brief Callback interface used by the distributor to notify brokers of updates
+  *
+  interface StockNameConsume
+
+    void push_StockName (in StockName the_stockname)
+  }
+
+  /*
+  * @class StockQuote
+  * @brief Provides an interface for brokers to get detailed stock information
+  *
+  interface StockQuote
+
+    /// Returns detailed stock information to brokers
+    /// @param stockname A valid name for a stock
+    /// @returns Completed stockinfo struc
+    StockInfo get_stock_info (in string stock_name) raises (Invalid_Stock)
+  }
+}
+
+#endi

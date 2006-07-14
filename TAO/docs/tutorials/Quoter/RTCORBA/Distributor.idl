@@ -1,0 +1,53 @@
+// $Id$
+
+/*
+* @file Distributor.id
+* @author William Otte <wotte@dre.vanderbilt.edu
+*         Shanshan Jiang <shanshan.jiang@vanderbilt.edu
+
+* Contains IDL definitions for the Distributor in the Publish/Subscribe Real-time CORB
+* Stock Quoter Service
+*
+
+#ifndef QUOTER_DISTRIBUTOR_ID
+#define QUOTER_DISTRIBUTOR_ID
+
+#include "Common.idl
+#include "tao/RTCORBA/RTCORBA_include.pidl
+
+module Stoc
+
+  /*
+  * @class StockDistributo
+  * @brief Provides interfaces for stock distributor server
+  *
+  interface StockDistributor : Trigge
+
+    /// Event source operation to establish connectivity
+    /// @param c An object reference to the consumer the distributor should notif
+    /// @returns A cookie used to identify the subscription
+    Cookie subscribe_notifier (in Stock::StockNameConsumer c, in RTCORBA::Priority priority)
+
+    /// Opteration to discontinue connectivity
+    /// @param ck The cookie that identifies the connection to be terminated
+    Stock::StockNameConsumer unsubscribe_notifier (in Cookie ck)
+
+    /// Factory operation to return StockQuoter object reference
+    StockQuoter provide_quoter_info ()
+
+    /// Controls rate of updates
+    attribute long notification_rate
+  }
+
+  /*
+  * @class StockDistributorHom
+  * @brief Interface that aids in managing StockDistributor lifecycles
+  *
+  interface StockDistributorHom
+
+    /// Create a StockDistributor objec
+    StockDistributor create ()
+  }
+}
+
+#endi
