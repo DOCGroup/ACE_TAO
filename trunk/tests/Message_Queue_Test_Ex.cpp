@@ -53,7 +53,7 @@ static ACE_Barrier tester_barrier (2);
 static ACE_High_Res_Timer *timer = 0;
 
 // Helper printing function
-static void 
+static void
 print_message (const ACE_TCHAR *message)
 {
   ACE_Time_Value tv;
@@ -115,7 +115,7 @@ struct Send_Messages
         ACE_NEW_RETURN (temp1,
                         User_Class (test_message),
                         -1);
-        User_Class *tail = temp1; 
+        User_Class *tail = temp1;
         for (j = 1; j < this->chain_limit_; ++j)
           {
             User_Class *temp2 = 0;
@@ -316,7 +316,6 @@ MQ_Ex_N_Tester::test_enqueue_tail (void)
                                 -1);
             }
         }
-
     }
   timer->stop ();
 
@@ -373,7 +372,6 @@ MQ_Ex_N_Tester::test_enqueue_head (void)
                                 -1);
             }
         }
-
     }
   timer->stop ();
 
