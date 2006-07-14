@@ -587,7 +587,7 @@ TAO_CEC_TypedEventChannel::destroy (ACE_ENV_SINGLE_ARG_DECL)
     }
 }
 
-CORBA::Policy_ptr 
+CORBA::Policy_ptr
 TAO_CEC_TypedEventChannel::create_roundtrip_timeout_policy
   (ACE_Time_Value timeout)
 {

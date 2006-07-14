@@ -351,7 +351,7 @@ TAO_CEC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
           if (arg_shifter.is_parameter_next ())
             {
               const ACE_TCHAR* opt = arg_shifter.get_current ();
-			  unsigned long timeout_ = ACE_OS::strtoul(opt, 0, 10);
+                          unsigned long timeout_ = ACE_OS::strtoul(opt, 0, 10);
               this->consumer_control_timeout_.usec(timeout_);
               arg_shifter.consume_arg ();
             }
@@ -365,7 +365,7 @@ TAO_CEC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
           if (arg_shifter.is_parameter_next ())
             {
               const ACE_TCHAR* opt = arg_shifter.get_current ();
-			  unsigned long timeout_ = ACE_OS::strtoul(opt, 0, 10);
+                          unsigned long timeout_ = ACE_OS::strtoul(opt, 0, 10);
               this->supplier_control_timeout_.usec(timeout_);
               arg_shifter.consume_arg ();
             }

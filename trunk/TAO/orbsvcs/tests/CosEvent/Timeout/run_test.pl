@@ -23,7 +23,7 @@ $NS = new PerlACE::Process($NameService, "-o $nsiorfile");
 $NS->Spawn();
 if (PerlACE::waitforfile_timed ($nsiorfile, 5) == -1) {
     print STDERR "ERROR: cannot find file <$nsiorfile>\n";
-    $NS->Kill(); 
+    $NS->Kill();
     exit 1;
 }
 
@@ -34,7 +34,7 @@ $ES = new PerlACE::Process($EventService, "-ORBSvcConf cosevent.conf "
 $ES->Spawn();
 if (PerlACE::waitforfile_timed ($esiorfile, 5) == -1) {
     print STDERR "ERROR: cannot find file <$esiorfile>\n";
-    $ES->Kill(); 
+    $ES->Kill();
     unlink $nsiorfile;
     exit 1;
 }
