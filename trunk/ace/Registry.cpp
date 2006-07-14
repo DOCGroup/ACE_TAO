@@ -637,8 +637,8 @@ ACE_Registry::make_string (const Name &const_name)
 ACE_Registry::Name
 ACE_Registry::make_name (const ACE_TString &string)
 {
-  ssize_t new_position = 0;
-  ssize_t last_position = 0;
+  ACE_TString::size_type new_position = 0;
+  ACE_TString::size_type last_position = 0;
   Name name;
 
   // Rememeber: NPOS is -1
