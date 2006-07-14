@@ -149,8 +149,8 @@ ACE_INET_Addr::string_to_addr (const char s[])
 {
   ACE_TRACE ("ACE_INET_Addr::string_to_addr");
   int result;
-  char *ip_buf;
-  char *ip_addr;
+  char *ip_buf = 0;
+  char *ip_addr = 0;
 
   // Need to make a duplicate since we'll be overwriting the string.
   ACE_ALLOCATOR_RETURN (ip_buf,
