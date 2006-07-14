@@ -1,3 +1,13 @@
+Fri Jul 14 21:43:58 UTC 2006  john_c  <johnc@ociweb.com>
+
+        * orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/EchoEventConsumer_i.cpp:
+        * orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/EchoEventSupplierMain.cpp:
+        * orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/EchoEventSupplier_i.cpp:
+        * orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/RTEC_MCast_Federated.mpc:
+        * tests/Optimized_Connection/oc_client.cpp:
+
+          Minor fixes to make Fuzz builds happy.
+
 Fri Jul 14 21:42:30 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/AnyTypeCode/BooleanSeqA.*

@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(*Supplier): namingexe, rteventexe, rtevent_serv {
   requires += exceptions
   exename   = EchoEventSupplier
