@@ -25,9 +25,6 @@
 #include "ace/CORBA_macros.h"
 #include "tao/Environment.h"
 
-#warning TAO::Utils::Servant_Var<> is deprecated.
-#warning Use PortableServer::Servant_var<> instead.
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
