@@ -170,7 +170,7 @@ TAO_ORB_Parameters::parse_and_add_endpoints (const ACE_CString &endpoints,
           // from the offset `begin' to the end of the string.
 
           // Check for a valid URL style endpoint set
-          ssize_t const check_offset = endpt.find ("://");
+          ACE_CString::size_type const check_offset = endpt.find ("://");
 
           if (check_offset > 0 &&
               check_offset != endpt.npos)

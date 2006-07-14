@@ -40,6 +40,12 @@ TAO::ORB_Table::table (void)
   return &this->table_;
 }
 
+ACE_INLINE TAO_SYNCH_MUTEX &
+TAO::ORB_Table::lock (void)
+{
+  return this->lock_;
+}
+
 // ****************************************************************
 
 ACE_INLINE

@@ -930,10 +930,11 @@ TAO_GIOP_Message_Base::write_protocol_header (TAO_GIOP_Message_Type type,
 }
 
 int
-TAO_GIOP_Message_Base::process_request (TAO_Transport *transport,
-                                        TAO_InputCDR &cdr,
-                                        TAO_OutputCDR &output,
-                                        TAO_GIOP_Message_Generator_Parser *parser)
+TAO_GIOP_Message_Base::process_request (
+  TAO_Transport * transport,
+  TAO_InputCDR & cdr,
+  TAO_OutputCDR & output,
+  TAO_GIOP_Message_Generator_Parser * parser)
 {
   // This will extract the request header, set <response_required>
   // and <sync_with_server> as appropriate.
@@ -954,11 +955,11 @@ TAO_GIOP_Message_Base::process_request (TAO_Transport *transport,
       parse_error =
         parser->parse_request_header (request);
 
-      TAO_Codeset_Manager *csm = request.orb_core()->codeset_manager();
+      TAO_Codeset_Manager *csm = request.orb_core ()->codeset_manager ();
       if (csm)
         {
-          csm->process_service_context(request);
-          transport->assign_translators(&cdr,&output);
+          csm->process_service_context (request);
+          transport->assign_translators (&cdr, &output);
         }
 
       // Throw an exception if the
@@ -971,11 +972,11 @@ TAO_GIOP_Message_Base::process_request (TAO_Transport *transport,
 
       CORBA::Object_var forward_to;
 
-/*
- * Hook to specialize request processing within TAO
- * This hook will be replaced by specialized request
- * processing implementation.
- */
+      /*
+       * Hook to specialize request processing within TAO
+       * This hook will be replaced by specialized request
+       * processing implementation.
+       */
 //@@ TAO_DISPATCH_RESOLUTION_OPT_COMMENT_HOOK_START
 
       // Do this before the reply is sent.
@@ -1005,7 +1006,8 @@ TAO_GIOP_Message_Base::process_request (TAO_Transport *transport,
           reply_params.svc_ctx_.length (0);
 
           // Send back the reply service context.
-          reply_params.service_context_notowned (&request.reply_service_info ());
+          reply_params.service_context_notowned (
+            &request.reply_service_info ());
 
           output.message_attributes (request_id,
                                      0,
@@ -1013,8 +1015,7 @@ TAO_GIOP_Message_Base::process_request (TAO_Transport *transport,
                                      0);
 
           // Make the GIOP header and Reply header
-          this->generate_reply_header (output,
-                                       reply_params);
+          this->generate_reply_header (output, reply_params);
 
           if (!(output << forward_to.in ()))
             {

@@ -1,4 +1,5 @@
 // -*- C++ -*-
+
 //=============================================================================
 /**
  * @file Servant_Var.h
@@ -7,8 +8,11 @@
  *
  * @author Jody Hagins <jody@atdesk.com>
  * @author Carlos O'Ryan <coryan@atdesk.com>
+ *
+ * @deprecated Use PortableServer::Servant_var instead.
  */
 //=============================================================================
+
 #ifndef TAO_UTILS_SERVANT_VAR_H
 #define TAO_UTILS_SERVANT_VAR_H
 #include /**/ "ace/pre.h"
@@ -20,6 +24,9 @@
 
 #include "ace/CORBA_macros.h"
 #include "tao/Environment.h"
+
+#warning TAO::Utils::Servant_Var<> is deprecated.
+#warning Use PortableServer::Servant_var<> instead.
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

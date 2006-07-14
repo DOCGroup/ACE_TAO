@@ -16,7 +16,8 @@ project : taolib, core, core_anytypecode, tao_versioning_idl_defaults {
   }
 
   Template_Files {
-    PortableServer
+    PortableServer/Servant_var.cpp
+    PortableServer/*_T.cpp
   }
 
   Resource_Files {

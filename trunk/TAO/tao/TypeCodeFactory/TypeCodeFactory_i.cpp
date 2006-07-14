@@ -1662,7 +1662,7 @@ TAO_TypeCodeFactory_i::valid_id (const char *id)
                       0,
                       0);
 
-  int pos = safety.find (':');
+  ACE_CString::size_type const pos = safety.find (':');
 
   if (pos == ACE_CString::npos)
     {

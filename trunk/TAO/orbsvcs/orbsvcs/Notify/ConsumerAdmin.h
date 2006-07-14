@@ -23,7 +23,6 @@
 #include "orbsvcs/NotifyExtS.h"
 
 #include "orbsvcs/Notify/Admin.h"
-class TAO_Notify_ProxySupplier;
 
 #if defined(_MSC_VER)
 #pragma warning(push)
@@ -31,6 +30,8 @@ class TAO_Notify_ProxySupplier;
 #endif /* _MSC_VER */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+class TAO_Notify_ProxySupplier;
 
 /**
  * @class TAO_Notify_ConsumerAdmin

@@ -12,6 +12,8 @@
 
 #include "ace/Event_Handler.h"
 #include "ace/Signal.h"
+#include "ace/Sig_Handler.h"
+
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

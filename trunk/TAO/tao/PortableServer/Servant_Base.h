@@ -22,6 +22,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/PortableServer/PS_ForwardC.h"
+#include "tao/PortableServer/Servant_var.h"
 #include "tao/Abstract_Servant_Base.h"
 #include "ace/Atomic_Op.h"
 
@@ -179,45 +180,11 @@ public:
   u_long operator () (PortableServer::Servant servant) const;
 };
 
-/**
- * @class TAO_ServantBase_var
- *
- * @brief Auto pointer for reference counting servants.
- *
- * For the convenience of automatically managing servant
- * reference counts, the PortableServer namespace also provides
- * the ServantBase_var class. This class behaves similarly to
- * _var classes for object references (see Section 20.3.1).
- */
-class TAO_PortableServer_Export TAO_ServantBase_var
+
+namespace PortableServer
 {
-public:
-  TAO_ServantBase_var (void);
-
-  TAO_ServantBase_var (TAO_ServantBase *p);
-
-  TAO_ServantBase_var (const TAO_ServantBase_var &b);
-
-  ~TAO_ServantBase_var (void);
-
-  TAO_ServantBase_var &operator= (TAO_ServantBase *p);
-
-  TAO_ServantBase_var &operator= (const TAO_ServantBase_var &b);
-
-  TAO_ServantBase *operator-> () const;
-
-  TAO_ServantBase *in (void) const;
-
-  TAO_ServantBase *&inout (void);
-
-  TAO_ServantBase *&out (void);
-
-  TAO_ServantBase *_retn (void);
-
-private:
-
-  TAO_ServantBase *ptr_;
-};
+  typedef Servant_var<TAO_ServantBase> ServantBase_var;
+}
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

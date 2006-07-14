@@ -116,7 +116,7 @@ TAO_Connector::make_mprofile (const char *string,
   ior.set (string, ACE_OS::strlen (string), 1);
 
   // Find out where the protocol ends
-  ssize_t ior_index = ior.find ("://");
+  ACE_CString::size_type ior_index = ior.find ("://");
 
   if (ior_index == ACE_CString::npos)
     {
@@ -131,7 +131,7 @@ TAO_Connector::make_mprofile (const char *string,
     }
 
   // Find the object key
-  const ssize_t objkey_index =
+  const ACE_CString::size_type objkey_index =
     ior.find (this->object_key_delimiter (), ior_index);
 
   if (objkey_index == 0 || objkey_index == ACE_CString::npos)
@@ -151,7 +151,7 @@ TAO_Connector::make_mprofile (const char *string,
 
   // Only check for endpoints after the protocol specification and
   // before the object key.
-  for (ssize_t i = ior_index; i < objkey_index; ++i)
+  for (ACE_CString::size_type i = ior_index; i < objkey_index; ++i)
     {
       if (ior[i] == endpoint_delimiter)
         ++profile_count;
@@ -179,8 +179,8 @@ TAO_Connector::make_mprofile (const char *string,
   //    `shu/arf'
   //    `1.1@chicken/arf'
 
-  ssize_t begin = 0;
-  ssize_t end = ior_index - 1;
+  ACE_CString::size_type begin = 0;
+  ACE_CString::size_type end = ior_index - 1;
   // Initialize the end of the endpoint index
 
   for (CORBA::ULong j = 0; j < profile_count; ++j)
@@ -196,7 +196,7 @@ TAO_Connector::make_mprofile (const char *string,
           end = objkey_index;  // Handle last endpoint differently
         }
 
-      if (end < static_cast<ssize_t> (ior.length ()) && end != ior.npos)
+      if (end < ior.length () && end != ior.npos)
         {
           ACE_CString endpoint = ior.substring (begin, end - begin);
 

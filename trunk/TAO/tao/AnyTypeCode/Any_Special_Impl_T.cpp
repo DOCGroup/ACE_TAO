@@ -177,6 +177,22 @@ TAO::Any_Special_Impl_T<T, from_T, to_T>::extract (const CORBA::Any & any,
 }
 
 template<typename T, typename from_T, typename to_T>
+CORBA::Boolean
+TAO::Any_Special_Impl_T<T, from_T, to_T>::marshal_value (
+    TAO_OutputCDR &cdr
+  )
+{
+  return (cdr << from_T (this->value_, this->bound_));
+}
+
+template<typename T, typename from_T, typename to_T>
+const void *
+TAO::Any_Special_Impl_T<T, from_T, to_T>::value (void) const
+{
+  return this->value_;
+}
+
+template<typename T, typename from_T, typename to_T>
 void
 TAO::Any_Special_Impl_T<T, from_T, to_T>::free_value (void)
 {

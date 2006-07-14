@@ -495,7 +495,7 @@ TAO_IIOP_Profile::to_string (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
         {
           // Don't publish scopeid if included.
           ACE_CString tmp(endp->host ());
-          ssize_t pos = tmp.find('%');
+          ACE_CString::size_type pos = tmp.find('%');
           if (pos != ACE_CString::npos)
             {
               tmp = tmp.substr(0, pos + 1);
@@ -694,7 +694,7 @@ TAO_IIOP_Profile::encode_endpoints (void)
             {
               // Don't publish scopeid if included.
               ACE_CString tmp(endpoint->host ());
-              ssize_t pos = tmp.find('%');
+              ACE_CString::size_type pos = tmp.find('%');
               if (pos != ACE_CString::npos)
                 {
                   tmp = tmp.substr (0, pos + 1);

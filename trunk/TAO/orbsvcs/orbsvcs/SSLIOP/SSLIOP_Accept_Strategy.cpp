@@ -50,6 +50,10 @@ TAO::SSLIOP::Accept_Strategy::accept_svc_handler (handler_type * svc_handler)
                                    reset_new_handle  // reset new handler
                                    ) == -1)
     {
+      // Ensure that errno is preserved in case the svc_handler
+      // close() method resets it.
+      ACE_Errno_Guard error (errno);
+
       // Close down handler to avoid memory leaks.
       svc_handler->close (0);
 

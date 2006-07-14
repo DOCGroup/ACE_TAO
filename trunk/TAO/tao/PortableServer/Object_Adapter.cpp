@@ -759,9 +759,10 @@ TAO_Object_Adapter::dispatch (TAO::ObjectKey &key,
                               CORBA::Object_out forward_to
                               ACE_ENV_ARG_DECL)
 {
-  if (ACE_OS::memcmp (key.get_buffer (),
-                      &TAO_Root_POA::objectkey_prefix[0],
-                      TAO_Root_POA::TAO_OBJECTKEY_PREFIX_SIZE) != 0)
+  if (key.length() < TAO_Root_POA::TAO_OBJECTKEY_PREFIX_SIZE
+      || ACE_OS::memcmp (key.get_buffer (),
+                         &TAO_Root_POA::objectkey_prefix[0],
+                         TAO_Root_POA::TAO_OBJECTKEY_PREFIX_SIZE) != 0)
     {
       return TAO_Adapter::DS_MISMATCHED_KEY;
     }
@@ -968,9 +969,10 @@ TAO_Object_Adapter::get_collocated_servant (const TAO_MProfile &mp)
       const TAO_Profile *profile = mp.get_profile (j);
       TAO::ObjectKey_var objkey = profile->_key ();
 
-      if (ACE_OS::memcmp (objkey->get_buffer (),
-                          &TAO_Root_POA::objectkey_prefix[0],
-                          TAO_Root_POA::TAO_OBJECTKEY_PREFIX_SIZE) != 0)
+      if (objkey->length() < TAO_Root_POA::TAO_OBJECTKEY_PREFIX_SIZE
+          || ACE_OS::memcmp (objkey->get_buffer (),
+                             &TAO_Root_POA::objectkey_prefix[0],
+                             TAO_Root_POA::TAO_OBJECTKEY_PREFIX_SIZE) != 0)
         continue;
 
       TAO_ServantBase *servant = 0;
@@ -1228,12 +1230,8 @@ TAO_Object_Adapter::iteratable_poa_name::end (void) const
 }
 
 void
-TAO_Object_Adapter::wait_for_non_servant_upcalls_to_complete (CORBA::Environment &ACE_TRY_ENV)
+TAO_Object_Adapter::wait_for_non_servant_upcalls_to_complete (ACE_ENV_SINGLE_ARG_DECL)
 {
-#if defined (ACE_HAS_EXCEPTIONS)
-  ACE_UNUSED_ARG (ACE_TRY_ENV); // FUZZ: ignore check_for_ace_check
-#endif
-
   // Check if a non-servant upcall is in progress.  If a non-servant
   // upcall is in progress, wait for it to complete.  Unless of
   // course, the thread making the non-servant upcall is this thread.
@@ -1251,12 +1249,12 @@ TAO_Object_Adapter::wait_for_non_servant_upcalls_to_complete (CORBA::Environment
 }
 
 void
-TAO_Object_Adapter::wait_for_non_servant_upcalls_to_complete (void)
+TAO_Object_Adapter::wait_for_non_servant_upcalls_to_complete_no_throw (void)
 {
   // Non-exception throwing version.
   ACE_TRY_NEW_ENV
     {
-      this->wait_for_non_servant_upcalls_to_complete (ACE_TRY_ENV);
+      this->wait_for_non_servant_upcalls_to_complete (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

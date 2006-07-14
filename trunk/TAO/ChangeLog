@@ -124,7 +124,7 @@ Fri Jul 14 21:15:32 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
           Renamed wait_for_non_servant_upcall_to_complete() method
           call to the name (..._to_complete_no_throw()).
-        
+
         * tao/PortableServer/Servant_var.cpp:
         * tao/PortableServer/Servant_var.h:
         * tao/PortableServer/Servant_var.inl:
