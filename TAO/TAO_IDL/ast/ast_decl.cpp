@@ -106,7 +106,7 @@ COMMON_Base::COMMON_Base (bool local,
 }
 
 bool
-COMMON_Base::is_local (void) const
+COMMON_Base::is_local (void)
 {
   return this->is_local_;
 }

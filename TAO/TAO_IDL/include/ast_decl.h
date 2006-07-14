@@ -101,7 +101,8 @@ public:
 
   virtual ~COMMON_Base (void) {}
 
-  bool is_local (void) const;
+  // Accessor needs to get overridden for a few types.
+  virtual bool is_local (void);
   void is_local (bool val);
   
   bool is_abstract (void) const;
