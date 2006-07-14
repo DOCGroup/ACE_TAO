@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file   FlResource_Loader.h
+ *  @file   TkResource_Loader.h
  *
  *  $Id$
  *
@@ -11,11 +11,12 @@
  */
 //=============================================================================
 
-#ifndef TAO_FLRESOURCE_LOADER_H
-#define TAO_FLRESOURCE_LOADER_H
+#ifndef TAO_TKRESOURCE_LOADER_H
+#define TAO_TKRESOURCE_LOADER_H
+
 #include /**/ "ace/pre.h"
 
-#include "tao/TAO_FlResource_Export.h"
+#include "tao/TkResource/TAO_TkResource_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -27,28 +28,28 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-
   /**
-   * @class FlResource_Loader
+   * @class TkResource_Loader
    *
-   * @brief Loads TAO resources related with Fl.
+   * @brief Loads TAO resources related with Tk.
    *
    * This class changes the default reactor implementation into
-   * ACE_FlReactor one by calling TAO_ORB_Core::set_gui_resource_factory.
+   * ACE_TkReactor one by calling TAO_ORB_Core::set_gui_resource_factory.
    * User should create an instance of this class before ORB_init
-   * when the TAO server has has to be integrated within Fl event loop.
+   * when the TAO server has has to be integrated within Tk event loop.
    *
-   * Please notice, this class has to be created in the main Fl thread,
+   * Please notice, this class has to be created in the main Tk thread,
    * because set_gui_resource_factory creates a variable in TSS. This way
-   * FlReactor is instantiated only in Qt event loop thread.
+   * TkReactor is instantiated only in Tk event loop thread.
    */
-  class TAO_FlResource_Export FlResource_Loader
+  class TAO_TkResource_Export TkResource_Loader
   {
-
   public:
-    FlResource_Loader (void);
 
-    virtual ~FlResource_Loader (void);
+    TkResource_Loader (void);
+
+    virtual ~TkResource_Loader (void);
+
   };
 }
 
@@ -56,4 +57,4 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 
-#endif /* TAO_FLRESOURCE_LOADER_H */
+#endif /* TAO_TKRESOURCE_LOADER_H */

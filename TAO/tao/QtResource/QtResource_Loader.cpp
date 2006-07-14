@@ -1,7 +1,7 @@
 //$Id$
-#include "tao/QtResource_Loader.h"
+#include "tao/QtResource/QtResource_Loader.h"
 #include "tao/ORB_Core.h"
-#include "tao/QtResource_Factory.h"
+#include "tao/QtResource/QtResource_Factory.h"
 
 ACE_RCSID( TAO_QtResource,
            QtResource_Loader,

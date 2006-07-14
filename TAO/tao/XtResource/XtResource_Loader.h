@@ -15,7 +15,7 @@
 #define TAO_XTRESOURCE_LOADER_H
 #include /**/ "ace/pre.h"
 #include /**/ <X11/Intrinsic.h>
-#include "tao/TAO_XtResource_Export.h"
+#include "tao/XtResource/TAO_XtResource_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
