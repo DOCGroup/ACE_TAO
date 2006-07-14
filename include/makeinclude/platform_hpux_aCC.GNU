@@ -171,7 +171,11 @@ endif
 
 endif
 
-SOEXT           = sl
+ifeq ($(itanium),1)
+ SOEXT		= so
+else
+ SOEXT           = sl
+endif
 
 ifeq ($(buildbits),32)
   ifeq ($(itanium),1)

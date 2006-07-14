@@ -1,9 +1,19 @@
+Fri Jul 14 19:44:03 UTC 2006  john_c  <johnc@ociweb.com>
+
+        * ace/config-hpux-11.00.h:
+        * include/makeinclude/platform_hpux_aCC.GNU:
+
+          Changing the shared library extension for hpux ia64 to ".so". On
+          HP-UX 11i Version 1.5 the naming scheme is lib*.sl for PA and
+          lib*.so on IPF.
+
 Fri Jul 14 19:13:06 UTC 2006  john_c  <john@ociweb.com>
 
         * ace/Timer_Queue_Adapters.cpp:
 
           Include file was missing. Fixes compile error when
           ACE_HAS_DEFERRED_TIMER_COMMANDS is defined.
+
 Fri Jul 14 19:05:15 UTC 2006  Ciju John  <john_c@ociweb.com>
 
         * bin/tao_other_tests.lst:
