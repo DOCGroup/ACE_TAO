@@ -8,6 +8,8 @@ project(*Main): taoserver, messaging {
     idlflags += -GC -GH -Gd
     array.idl
     Bug_2577_Regression.idl
+    Bug_2582_Regression.idl
+    Bug_2583_Regression.idl
     enum_in_struct.idl
     full.idl
     fwd.idl
