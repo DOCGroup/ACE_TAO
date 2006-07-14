@@ -50,7 +50,8 @@ public:
   typedef CosEventChannelAdmin::ProxyPullConsumer_var _var_type;
 
   /// constructor...
-  TAO_CEC_ProxyPullConsumer (TAO_CEC_EventChannel* event_channel);
+  TAO_CEC_ProxyPullConsumer (TAO_CEC_EventChannel* event_channel,
+    ACE_Time_Value timeout);
 
   /// destructor...
   virtual ~TAO_CEC_ProxyPullConsumer (void);
@@ -118,9 +119,16 @@ protected:
   /// Release the supplier
   void cleanup_i (void);
 
+  /// Assigns the parameter to both supplier_ and nopolicy_supplier_, and
+  /// applies policies (when appropriate) to supplier_.
+  CosEventComm::PullSupplier_ptr apply_policy
+  (CosEventComm::PullSupplier_ptr s);
+
 private:
   /// The supplier admin, used for activation and memory managment.
   TAO_CEC_EventChannel* event_channel_;
+
+  ACE_Time_Value timeout_;
 
   /// The locking strategy.
   ACE_Lock* lock_;
@@ -128,8 +136,12 @@ private:
   /// The reference count.
   CORBA::ULong refcount_;
 
-  /// The supplier....
+  /// The supplier -- use apply_policy() instead of assigning directly to
+  /// supplier_.  This will keep supplier_ and nopolicy_supplier_ in sync.
   CosEventComm::PullSupplier_var supplier_;
+
+  /// The supplier without any policies applied
+  CosEventComm::PullSupplier_var nopolicy_supplier_;
 
   /// Store the default POA.
   PortableServer::POA_var default_POA_;

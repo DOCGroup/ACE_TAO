@@ -1,3 +1,48 @@
+Fri Jul 14 15:11:11 UTC 2006  Adam Mitz  <mitza@ociweb.com>
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_EventChannel.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_EventChannel.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Factory.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullConsumer.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullConsumer.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullSupplier.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullSupplier.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushConsumer.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushConsumer.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedEventChannel.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedEventChannel.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedProxyPushConsumer.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedProxyPushConsumer.cpp:
+
+        Added two new options to the CEC_Default_Factory,
+        -CECConsumerOperationTimeout and -CECSupplierOperationTimeout.
+        These options apply relative roundtrip timeout policies for consumer
+        and supplier objects.  This allows users to minimize the ill effects of
+        unresponsive consumer and supplier operations (i.e. push() or pull()).
+        See bugzilla #2594 and docs/cec_options.html.
+        Also, exposed the "disconnect_callbacks" event channel attribute
+        as the "-b" option to the CosEvent_Service executable.
+
+        * NEWS
+        * docs/cec_options.html:
+
+        Documented the Timeout feature described above.
+
+        * orbsvcs/tests/CosEvent/Timeout/README:
+        * orbsvcs/tests/CosEvent/Timeout/TestEventConsumer_i.h:
+        * orbsvcs/tests/CosEvent/Timeout/TestEventConsumer_i.cpp:
+        * orbsvcs/tests/CosEvent/Timeout/Timeout.mpc:
+        * orbsvcs/tests/CosEvent/Timeout/TimeoutTestMain.cpp:
+        * orbsvcs/tests/CosEvent/Timeout/cosevent.conf:
+        * orbsvcs/tests/CosEvent/Timeout/run_test.pl:
+
+        Functional test for the Timeout feature described above.
+
 Fri Jul 14 02:02:55 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/IIOP_Acceptor.cpp:

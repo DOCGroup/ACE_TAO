@@ -19,6 +19,9 @@
 #include "orbsvcs/ESF/ESF_Copy_On_Read.h"
 #include "orbsvcs/ESF/ESF_Proxy_List.h"
 #include "orbsvcs/ESF/ESF_Proxy_RB_Tree.h"
+#include "orbsvcs/Time_Utilities.h"
+
+#include "tao/Messaging/Messaging_RT_PolicyC.h"
 
 #include "ace/Arg_Shifter.h"
 #include "ace/Sched_Params.h"
@@ -368,6 +371,32 @@ TAO_CEC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
             }
         }
 
+      else if (ACE_OS::strcasecmp (arg, ACE_TEXT("-CECConsumerOperationTimeout")) == 0)
+        {
+          arg_shifter.consume_arg ();
+
+          if (arg_shifter.is_parameter_next ())
+            {
+              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              unsigned long timeout = ACE_OS::strtoul (opt, 0, 10);
+              this->consumer_timeout_.usec (timeout);
+              arg_shifter.consume_arg ();
+            }
+        }
+
+      else if (ACE_OS::strcasecmp (arg, ACE_TEXT("-CECSupplierOperationTimeout")) == 0)
+        {
+          arg_shifter.consume_arg ();
+
+          if (arg_shifter.is_parameter_next ())
+            {
+              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              unsigned long timeout = ACE_OS::strtoul (opt, 0, 10);
+              this->supplier_timeout_.usec (timeout);
+              arg_shifter.consume_arg ();
+            }
+        }
+
       else if (ACE_OS::strcasecmp (arg, ACE_TEXT("-CECProxyDisconnectRetries")) == 0)
         {
           arg_shifter.consume_arg ();
@@ -525,14 +554,22 @@ TAO_CEC_Default_Factory::destroy_supplier_admin (TAO_CEC_TypedSupplierAdmin *x)
 TAO_CEC_ProxyPushSupplier*
 TAO_CEC_Default_Factory::create_proxy_push_supplier (TAO_CEC_EventChannel *ec)
 {
-  return new TAO_CEC_ProxyPushSupplier (ec);
+  TAO_CEC_ProxyPushSupplier *created;
+  ACE_Time_Value timeout = this->consumer_control_ ? this->consumer_timeout_
+    : ACE_Time_Value::zero;
+  ACE_NEW_RETURN (created, TAO_CEC_ProxyPushSupplier (ec, timeout), 0);
+  return created;
 }
 
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
 TAO_CEC_ProxyPushSupplier*
 TAO_CEC_Default_Factory::create_proxy_push_supplier (TAO_CEC_TypedEventChannel *ec)
 {
-  return new TAO_CEC_ProxyPushSupplier (ec);
+  TAO_CEC_ProxyPushSupplier *created;
+  ACE_Time_Value timeout = this->consumer_control_ ? this->consumer_timeout_
+    : ACE_Time_Value::zero;
+  ACE_NEW_RETURN (created, TAO_CEC_ProxyPushSupplier (ec, timeout), 0);
+  return created;
 }
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
@@ -545,7 +582,11 @@ TAO_CEC_Default_Factory::destroy_proxy_push_supplier (TAO_CEC_ProxyPushSupplier 
 TAO_CEC_ProxyPullSupplier*
 TAO_CEC_Default_Factory::create_proxy_pull_supplier (TAO_CEC_EventChannel *ec)
 {
-  return new TAO_CEC_ProxyPullSupplier (ec);
+  TAO_CEC_ProxyPullSupplier *created;
+  ACE_Time_Value timeout = this->consumer_control_ ? this->consumer_timeout_
+    : ACE_Time_Value::zero;
+  ACE_NEW_RETURN (created, TAO_CEC_ProxyPullSupplier (ec, timeout), 0);
+  return created;
 }
 
 void
@@ -557,14 +598,22 @@ TAO_CEC_Default_Factory::destroy_proxy_pull_supplier (TAO_CEC_ProxyPullSupplier 
 TAO_CEC_ProxyPushConsumer*
 TAO_CEC_Default_Factory::create_proxy_push_consumer (TAO_CEC_EventChannel *ec)
 {
-  return new TAO_CEC_ProxyPushConsumer (ec);
+  TAO_CEC_ProxyPushConsumer *created;
+  ACE_Time_Value timeout = this->supplier_control_ ? this->supplier_timeout_
+    : ACE_Time_Value::zero;
+  ACE_NEW_RETURN (created, TAO_CEC_ProxyPushConsumer (ec, timeout), 0);
+  return created;
 }
 
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
 TAO_CEC_TypedProxyPushConsumer*
 TAO_CEC_Default_Factory::create_proxy_push_consumer (TAO_CEC_TypedEventChannel *ec)
 {
-  return new TAO_CEC_TypedProxyPushConsumer (ec);
+  TAO_CEC_TypedProxyPushConsumer *created;
+  ACE_Time_Value timeout = this->supplier_control_ ? this->supplier_timeout_
+    : ACE_Time_Value::zero;
+  ACE_NEW_RETURN (created, TAO_CEC_TypedProxyPushConsumer (ec, timeout), 0);
+  return created;
 }
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
@@ -585,7 +634,11 @@ TAO_CEC_Default_Factory::destroy_proxy_push_consumer (TAO_CEC_TypedProxyPushCons
 TAO_CEC_ProxyPullConsumer*
 TAO_CEC_Default_Factory::create_proxy_pull_consumer (TAO_CEC_EventChannel *ec)
 {
-  return new TAO_CEC_ProxyPullConsumer (ec);
+  TAO_CEC_ProxyPullConsumer *created;
+  ACE_Time_Value timeout = this->supplier_control_ ? this->supplier_timeout_
+    : ACE_Time_Value::zero;
+  ACE_NEW_RETURN (created, TAO_CEC_ProxyPullConsumer (ec, timeout), 0);
+  return created;
 }
 
 void
@@ -1320,6 +1373,22 @@ void
 TAO_CEC_Default_Factory::destroy_supplier_control (TAO_CEC_SupplierControl* x)
 {
   delete x;
+}
+
+CORBA::Policy_ptr
+TAO_CEC_Default_Factory::create_roundtrip_timeout_policy 
+  (ACE_Time_Value timeout)
+{
+  //get the existing orb
+  int fake_argc = 0;
+  CORBA::ORB_var orb = CORBA::ORB_init (fake_argc, 0, this->orbid_);
+
+  CORBA::Any value;
+  TimeBase::TimeT timet;
+  ORBSVCS_Time::Time_Value_to_TimeT (timet, timeout);
+  value <<= timet;
+  return orb->create_policy (Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE, 
+    value);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
