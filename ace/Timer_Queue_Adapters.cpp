@@ -5,6 +5,10 @@
 
 #include "ace/Timer_Queue_Adapters.h"
 
+#if defined (ACE_HAS_DEFERRED_TIMER_COMMANDS)
+#include "ace/Functor.h"
+#endif /* ACE_HAS_DEFERRED_TIMER_COMMANDS */
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -260,13 +264,13 @@ ACE_Thread_Timer_Queue_Adapter<TQ>::svc (void)
           // for "negative" amounts of time.
           const ACE_Time_Value tv_curr = this->timer_queue_->gettimeofday ();
           const ACE_Time_Value tv_earl = this->timer_queue_->earliest_time ();
- 
+
           if (tv_earl > tv_curr)
             {
               // The earliest time on the Timer_Queue is in future, so
               // use ACE_OS::gettimeofday() to convert the tv to the
               // absolute time.
-              const ACE_Time_Value tv = ACE_OS::gettimeofday () + (tv_earl - tv_curr);  
+              const ACE_Time_Value tv = ACE_OS::gettimeofday () + (tv_earl - tv_curr);
               // ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("waiting until %u.%3.3u secs\n"),
               // tv.sec(), tv.msec()));
               this->condition_.wait (&tv);

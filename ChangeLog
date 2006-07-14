@@ -1,3 +1,9 @@
+Fri Jul 14 19:13:06 UTC 2006  john_c  <john@ociweb.com>
+
+        * ace/Timer_Queue_Adapters.cpp:
+
+          Include file was missing. Fixes compile error when
+          ACE_HAS_DEFERRED_TIMER_COMMANDS is defined.
 Fri Jul 14 19:05:15 UTC 2006  Ciju John  <john_c@ociweb.com>
 
         * bin/tao_other_tests.lst:
