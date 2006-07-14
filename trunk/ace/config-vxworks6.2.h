@@ -212,7 +212,6 @@
 #else
   // We are building for kernel mode
   #define ACE_LACKS_SUSECONDS_T
-  #define ACE_LACKS_USECONDS_T
   #define ACE_LACKS_INTTYPES_H
   #define ACE_LACKS_STDINT_H
   #define ACE_LACKS_UNAME
