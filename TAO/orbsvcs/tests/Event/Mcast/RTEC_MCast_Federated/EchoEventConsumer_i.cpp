@@ -4,8 +4,9 @@
 // Implements a PushConsumer.
 
 #include "EchoEventConsumer_i.h"
-#include <tao/PortableServer/PS_CurrentC.h>
-#include <ace/OS_NS_stdio.h>
+#include "tao/PortableServer/PS_CurrentC.h"
+#include "ace/OS_NS_stdio.h"
+
 #include <sstream>
 
 // Constructor duplicates the ORB reference.
