@@ -1,3 +1,11 @@
+Fri Jul 14 16:01:38 UTC 2006  Adam Mitz  <mitza@ociweb.com>
+
+        * tests/Bug_2494_Regression/client.cpp:
+        * tests/Bug_2494_Regression/run_test.pl:
+
+        Eliminate false failures of this test due to the client process
+        printing the exception or exiting with a non-zero status.
+
 Fri Jul 14 15:11:11 UTC 2006  Adam Mitz  <mitza@ociweb.com>
 
         * orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.h:

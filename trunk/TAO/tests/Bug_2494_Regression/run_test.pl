@@ -33,7 +33,9 @@ if (PerlACE::waitforfile_timed ($iorfile,
 $CL->Spawn ();
 #Client will not terminate on its own, kill it after 30 seconds
 $CL->TimedWait (30);
-$CL->Kill ();
+$CL->Kill (1);
+#The parameter '1' (above) indicates that an error return value should not
+#cause this test to fail.
 
 print "***Client has been killed***\n";
 
