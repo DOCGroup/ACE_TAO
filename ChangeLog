@@ -79,13 +79,13 @@ Fri Jul 14 21:10:11 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
           "__USE_POSIX" -> "_POSIX_SOURCE".  The former is a C library
           implementation-specific feature test macro/symbol.
-          
+
         * ace/OS_NS_stdio.cpp:
         * ace/OS_NS_stdio.h:
         * ace/OS_NS_stdio.inl (get_win32_versioninfo):
 
           Fixed/added missing wide character support.
-          
+
         * ace/OS_NS_stdlib.cpp (mkstemp_emulation):
 
           Clean up preprocessor conditional blocks by taking advantage of
@@ -120,7 +120,7 @@ Fri Jul 14 21:10:11 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
         * ace/Process.cpp (pass_handle):
 
           Fixed Windows version info handling in wide string
-          configurations. 
+          configurations.
 
         * ace/Process_Manager.h (wait):
 
@@ -199,11 +199,11 @@ Fri Jul 14 21:10:11 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
          comparing the return value of find(), rfind() and strstr(),
          and/or assigning the return value to ssize_t you should not see
          any difference. A new size_type typedef has been added to the ACE
-         string class to aid developers. 
+         string class to aid developers.
 
          The ACE_String_Base<>::strstr() documentation as well as a
          default rfind() argument erroneously referred to -1 instead of
-         npos. Those instances have been corrected. 
+         npos. Those instances have been corrected.
 
          To summarize, a "no position" condition is denoted using the npos
          constant, not -1. It can be referred directly by scoping it with
@@ -219,7 +219,7 @@ Fri Jul 14 21:10:11 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
           Cleaned up preprocessor conditional blocks by taking advantage
           of ACE_Numeric_Limits trait templates.
-        
+
         * ace/Timer_Queue_Adapters.cpp:
 
           Include "ace/Signal.h" to pull in ACE_Sig_Guard class
