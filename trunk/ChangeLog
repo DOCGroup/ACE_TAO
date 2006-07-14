@@ -1,3 +1,8 @@
+Fri Jul 14 20:57:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/INET_Addr.cpp:
+          Initialise some pointers explicitly with 0
+
 Fri Jul 14 20:41:23 UTC 2006  john_c  <johnc@ociweb.com>
 
         * bin/tao_orb_tests.lst:
