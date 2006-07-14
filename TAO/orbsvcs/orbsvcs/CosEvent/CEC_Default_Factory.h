@@ -161,6 +161,9 @@ public:
       create_supplier_control (TAO_CEC_TypedEventChannel*);
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
+  virtual CORBA::Policy_ptr create_roundtrip_timeout_policy
+    (ACE_Time_Value timeout);
+
 private:
   /// Parse an argument to set the type of collections used.
   int parse_collection_arg (ACE_TCHAR* opt);
@@ -202,6 +205,13 @@ private:
   /// The consumer and supplier control timeout in usecs
   ACE_Time_Value consumer_control_timeout_;
   ACE_Time_Value supplier_control_timeout_;
+
+  /// The consumer and supplier operation timeouts.
+  /// Only in effect if the corresponding "reactive control" is enabled.
+  /// Applies the given timeout as the round-trip time policy on the 
+  /// object reference.
+  ACE_Time_Value consumer_timeout_;
+  ACE_Time_Value supplier_timeout_;
 
   /// The number of retries before disconnecting a proxy
   unsigned int proxy_disconnect_retries_;

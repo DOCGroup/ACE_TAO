@@ -9,7 +9,9 @@
 #include "orbsvcs/CosEvent/CEC_ConsumerControl.h"
 #include "orbsvcs/CosEvent/CEC_SupplierControl.h"
 #include "tao/debug.h"
+#include "tao/ORB_Core.h"
 #include "ace/Dynamic_Service.h"
+#include "ace/Reactor.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "orbsvcs/CosEvent/CEC_TypedEventChannel.i"
@@ -81,6 +83,23 @@ TAO_CEC_TypedEventChannel::activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   this->supplier_control_->activate ();
 }
 
+namespace
+{
+  struct ShutdownHandler : ACE_Event_Handler
+  {
+    ShutdownHandler (CORBA::ORB_ptr orb)
+      : orb_ (CORBA::ORB::_duplicate (orb)) {}
+    CORBA::ORB_var orb_;
+
+    virtual int handle_timeout (const ACE_Time_Value&, const void*)
+    {
+      orb_->shutdown (1);
+      return 0;
+    }
+
+  };
+}
+
 void
 TAO_CEC_TypedEventChannel::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 {
@@ -126,7 +145,10 @@ TAO_CEC_TypedEventChannel::shutdown (ACE_ENV_SINGLE_ARG_DECL)
       t_poa->deactivate_object (t_id.in () ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
-      this->orb_->shutdown(0);
+      ACE_Event_Handler *timer;
+      ACE_NEW (timer, ShutdownHandler (this->orb_.in ()));
+      ACE_Reactor *reactor = this->orb_->orb_core ()->reactor ();
+      reactor->schedule_timer (timer, 0, ACE_Time_Value (1));
     }
 }
 
@@ -563,6 +585,13 @@ TAO_CEC_TypedEventChannel::destroy (ACE_ENV_SINGLE_ARG_DECL)
       this->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
     }
+}
+
+CORBA::Policy_ptr 
+TAO_CEC_TypedEventChannel::create_roundtrip_timeout_policy
+  (ACE_Time_Value timeout)
+{
+  return this->factory_->create_roundtrip_timeout_policy (timeout);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

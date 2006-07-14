@@ -57,7 +57,8 @@ public:
   typedef CosEventChannelAdmin::ProxyPullSupplier_var _var_type;
 
   /// constructor...
-  TAO_CEC_ProxyPullSupplier (TAO_CEC_EventChannel* event_channel);
+  TAO_CEC_ProxyPullSupplier (TAO_CEC_EventChannel* event_channel,
+    ACE_Time_Value timeout);
 
   /// destructor...
   virtual ~TAO_CEC_ProxyPullSupplier (void);
@@ -133,9 +134,16 @@ protected:
   /// Release the child and the consumer
   void cleanup_i (void);
 
+  /// Assigns the parameter to both consumer_ and nopolicy_consumer_, and
+  /// applies policies (when appropriate) to consumer_.
+  CosEventComm::PullConsumer_ptr apply_policy
+  (CosEventComm::PullConsumer_ptr c);
+
 private:
   /// The Event Channel that owns this object.
   TAO_CEC_EventChannel* event_channel_;
+
+  ACE_Time_Value timeout_;
 
   /// The locking strategy.
   ACE_Lock* lock_;
@@ -143,8 +151,12 @@ private:
   /// The reference count.
   CORBA::ULong refcount_;
 
-  /// The consumer....
+  /// The consumer -- use apply_policy() instead of assigning directly to
+  /// consumer_.  This will keep consumer_ and nopolicy_consumer_ in sync.
   CosEventComm::PullConsumer_var consumer_;
+
+  /// The consumer without any policies applied
+  CosEventComm::PullConsumer_var nopolicy_consumer_;
 
   /// If the flag is not zero then we are connected, notice that the
   /// consumer can be nil.

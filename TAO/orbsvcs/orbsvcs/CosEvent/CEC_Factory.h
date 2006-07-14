@@ -24,6 +24,11 @@
 
 #include "ace/Service_Object.h"
 
+#if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
+#include "tao/AnyTypeCode/AnyTypeCode_methods.h"
+#endif
+
+#include "tao/Policy_ForwardC.h"
 #include "tao/Versioned_Namespace.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -219,6 +224,9 @@ public:
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
   virtual void
       destroy_supplier_control (TAO_CEC_SupplierControl*) = 0;
+
+  virtual CORBA::Policy_ptr create_roundtrip_timeout_policy
+    (ACE_Time_Value timeout) = 0;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

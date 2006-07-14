@@ -52,7 +52,8 @@ public:
   typedef CosEventChannelAdmin::ProxyPushConsumer_var _var_type;
 
   /// constructor...
-  TAO_CEC_ProxyPushConsumer (TAO_CEC_EventChannel* event_channel);
+  TAO_CEC_ProxyPushConsumer (TAO_CEC_EventChannel* event_channel,
+    ACE_Time_Value timeout);
 
   /// destructor...
   virtual ~TAO_CEC_ProxyPushConsumer (void);
@@ -121,9 +122,16 @@ protected:
   /// Release the supplier
   void cleanup_i (void);
 
+  /// Assigns the parameter to both supplier_ and nopolicy_supplier_, and
+  /// applies policies (when appropriate) to supplier_.
+  CosEventComm::PushSupplier_ptr apply_policy
+  (CosEventComm::PushSupplier_ptr s);
+
 private:
   /// The supplier admin, used for activation and memory managment.
   TAO_CEC_EventChannel* event_channel_;
+
+  ACE_Time_Value timeout_;
 
   /// The locking strategy.
   ACE_Lock* lock_;
@@ -131,8 +139,12 @@ private:
   /// The reference count.
   CORBA::ULong refcount_;
 
-  /// The supplier....
+  /// The supplier -- use apply_policy() instead of assigning directly to
+  /// supplier_.  This will keep supplier_ and nopolicy_supplier_ in sync.
   CosEventComm::PushSupplier_var supplier_;
+
+  /// The supplier without any policies applied
+  CosEventComm::PushSupplier_var nopolicy_supplier_;
 
   /// If the flag is true then we are connected, notice that the
   /// supplier can be nil.

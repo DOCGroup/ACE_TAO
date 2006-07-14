@@ -18,8 +18,10 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 typedef ACE_Reverse_Lock<ACE_Lock> TAO_CEC_Unlock;
 
-TAO_CEC_ProxyPullSupplier::TAO_CEC_ProxyPullSupplier (TAO_CEC_EventChannel* ec)
+TAO_CEC_ProxyPullSupplier::TAO_CEC_ProxyPullSupplier
+  (TAO_CEC_EventChannel* ec, ACE_Time_Value timeout)
   : event_channel_ (ec),
+    timeout_ (timeout),
     refcount_ (1),
     connected_ (0),
     wait_not_empty_ (queue_lock_)
@@ -138,11 +140,11 @@ TAO_CEC_ProxyPullSupplier::consumer_non_existent (
         disconnected = 1;
         return 0;
       }
-    if (CORBA::is_nil (this->consumer_.in ()))
+    if (CORBA::is_nil (this->nopolicy_consumer_.in ()))
       {
         return 0;
       }
-    consumer = CORBA::Object::_duplicate (this->consumer_.in ());
+    consumer = CORBA::Object::_duplicate (this->nopolicy_consumer_.in ());
   }
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
@@ -265,8 +267,7 @@ TAO_CEC_ProxyPullSupplier::connect_pull_consumer (
         // Re-connections are allowed....
         this->cleanup_i ();
 
-        this->consumer_ =
-          CosEventComm::PullConsumer::_duplicate (pull_consumer);
+        this->consumer_ = apply_policy (pull_consumer);
         this->connected_ = 1;
 
         TAO_CEC_Unlock reverse_lock (*this->lock_);
@@ -284,13 +285,40 @@ TAO_CEC_ProxyPullSupplier::connect_pull_consumer (
         return;
       }
 
-    this->consumer_ =
-      CosEventComm::PullConsumer::_duplicate (pull_consumer);
+    this->consumer_ = apply_policy (pull_consumer);
     this->connected_ = 1;
   }
 
   // Notify the event channel...
   this->event_channel_->connected (this ACE_ENV_ARG_PARAMETER);
+}
+
+CosEventComm::PullConsumer_ptr
+TAO_CEC_ProxyPullSupplier::apply_policy (CosEventComm::PullConsumer_ptr pre)
+{
+  if (CORBA::is_nil (pre)) return pre;
+  this->nopolicy_consumer_ = CosEventComm::PullConsumer::_duplicate (pre);
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+  CosEventComm::PullConsumer_var post =
+    CosEventComm::PullConsumer::_duplicate (pre);
+  if (this->timeout_ > ACE_Time_Value::zero)
+    {
+      CORBA::PolicyList policy_list;
+      policy_list.length (1);
+      policy_list[0] = this->event_channel_->
+        create_roundtrip_timeout_policy (this->timeout_);
+
+      CORBA::Object_var post_obj = pre->_set_policy_overrides
+        (policy_list, CORBA::ADD_OVERRIDE);
+      post = CosEventComm::PullConsumer::_narrow(post_obj.in ());
+
+      policy_list[0]->destroy ();
+      policy_list.length (0);
+    }
+  return post._retn ();
+#else
+  return CosEventComm::PullConsumer::_duplicate (pre);
+#endif /* TAO_HAS_CORBA_MESSAGING */
 }
 
 void
