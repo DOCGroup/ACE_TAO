@@ -1,3 +1,8 @@
+Fri Jul 14 21:43:55 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/IIOP_Acceptor.cpp (parse_address):
+          Reverted change at Johnny's request.
+
 Fri Jul 14 21:43:58 UTC 2006  john_c  <johnc@ociweb.com>
 
         * orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/EchoEventConsumer_i.cpp:
