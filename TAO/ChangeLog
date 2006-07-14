@@ -1,3 +1,10 @@
+Fri Jul 14 17:00:49 UTC 2006  Yan Dai  <dai_y@ociweb.com>
+
+        * tao/EndpointPolicy/Endpoint_Acceptor_Filter_Factory.cpp:
+
+          Fixed a bug in create_object() that uses an incorrect index 
+          to access the policy in the policy list.
+
 Fri Jul 14 16:01:38 UTC 2006  Adam Mitz  <mitza@ociweb.com>
 
         * tests/Bug_2494_Regression/client.cpp:
