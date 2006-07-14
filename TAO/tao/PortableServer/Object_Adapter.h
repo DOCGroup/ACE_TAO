@@ -132,10 +132,10 @@ public:
   TAO_ORB_Core &orb_core (void) const;
 
   /// Wait for non-servant upcalls to complete.
-  void wait_for_non_servant_upcalls_to_complete (CORBA::Environment &ACE_TRY_ENV);
+  void wait_for_non_servant_upcalls_to_complete (ACE_ENV_SINGLE_ARG_DECL);
 
   /// Non-exception throwing version.
-  void wait_for_non_servant_upcalls_to_complete (void);
+  void wait_for_non_servant_upcalls_to_complete_no_throw (void);
 
   static CORBA::ULong transient_poa_name_size (void);
 

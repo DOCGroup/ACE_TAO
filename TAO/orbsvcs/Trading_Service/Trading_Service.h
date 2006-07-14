@@ -1,3 +1,5 @@
+// -*- C++ -*-
+//
 // $Id$
 
 // ========================================================================
@@ -17,7 +19,7 @@
 #define _TRADING_SERVICE_H
 
 #include "ace/Auto_Ptr.h"
-#include "ace/Signal.h"
+#include "ace/Sig_Handler.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

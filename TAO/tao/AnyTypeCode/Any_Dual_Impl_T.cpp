@@ -173,6 +173,20 @@ TAO::Any_Dual_Impl_T<T>::extract (const CORBA::Any & any,
 }
 
 template<typename T>
+CORBA::Boolean
+TAO::Any_Dual_Impl_T<T>::marshal_value (TAO_OutputCDR &cdr)
+{
+  return (cdr << *this->value_);
+}
+
+template<typename T>
+const void *
+TAO::Any_Dual_Impl_T<T>::value (void) const
+{
+  return this->value_;
+}
+
+template<typename T>
 void
 TAO::Any_Dual_Impl_T<T>::free_value (void)
 {

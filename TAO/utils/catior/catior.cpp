@@ -153,18 +153,18 @@ CORBA::Boolean
 cat_profile_helper(TAO_InputCDR& stream, const char *protocol);
 
 CORBA::Boolean
-catior (char* str
+catior (char const * str
         ACE_ENV_ARG_DECL_NOT_USED)
 {
   // Unhex the bytes, and make a CDR deencapsulation stream from the
   // resulting data.
 
-  ACE_Message_Block mb (ACE_OS::strlen ((char *) str)  / 2 + 1
+  ACE_Message_Block mb (ACE_OS::strlen (str)  / 2 + 1
                         + ACE_CDR::MAX_ALIGNMENT);
   ACE_CDR::mb_align (&mb);
 
-  char *buffer = mb.rd_ptr ();
-  char *tmp = (char *) str;
+  char * const buffer = mb.rd_ptr ();
+  char const * tmp = (char *) str;
   size_t len = 0;
 
   CORBA::Boolean continue_decoding;
@@ -182,7 +182,7 @@ catior (char* str
       byte = (u_char) (ACE::hex2byte (tmp [0]) << 4);
       byte |= ACE::hex2byte (tmp [1]);
 
-      buffer [len++] = byte;
+      buffer[len++] = byte;
       tmp += 2;
     }
 
@@ -192,7 +192,7 @@ catior (char* str
   int byteOrder = *(mb.rd_ptr ());
 
   mb.rd_ptr (1);
-  mb.wr_ptr (2 * len - 1);
+  mb.wr_ptr (len);
   TAO_InputCDR stream (&mb, static_cast<int> (byteOrder));
 
   if (byteOrder == 1)
@@ -576,7 +576,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                             "\nhere is the IOR\n%s\n\n",
                             aString.rep ()));
 
-                char* str;
+                char * str = 0;
                 if (aString.find ("IOR:") == 0)
                   {
                     ACE_DEBUG ((LM_DEBUG,
@@ -619,6 +619,8 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                 else
                   ACE_ERROR ((LM_ERROR,
                              "Don't know how to decode this IOR\n"));
+
+                delete [] str;
               }
             ACE_CATCHANY
               {

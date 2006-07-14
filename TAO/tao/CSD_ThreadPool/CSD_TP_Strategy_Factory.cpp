@@ -57,7 +57,7 @@ TAO::CSD::TP_Strategy_Factory::init (int argc,
           {
             // Parse the parameter
             ACE_CString arg ((const char *)argv[curarg]);
-            ssize_t pos = arg.find (':');
+            ACE_CString::size_type pos = arg.find (':');
 
             if (pos == ACE_CString::npos)
               {

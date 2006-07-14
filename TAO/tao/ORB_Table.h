@@ -62,7 +62,6 @@ namespace TAO
    */
   class TAO_Export ORB_Table
   {
-  friend class ::TAO_ORB_Core;
   public:
 
     /// Constructor
@@ -119,6 +118,9 @@ namespace TAO
 
     /// Accessor to the underlying table_
     Table * table (void);
+
+    /// Return reference to underlying lock.
+    TAO_SYNCH_MUTEX & lock (void);
 
   private:
 

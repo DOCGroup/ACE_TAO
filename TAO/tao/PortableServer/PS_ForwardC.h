@@ -55,7 +55,6 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_ServantBase;
-class TAO_ServantBase_var;
 class TAO_Local_ServantBase;
 class TAO_Root_POA;
 class TAO_DynamicImplementation;
@@ -67,7 +66,8 @@ namespace PortableServer
 {
     typedef TAO_ServantBase ServantBase;
     struct RefCountServantBase {};
-    typedef TAO_ServantBase_var ServantBase_var;
+    template <class T> class Servant_var;
+    typedef Servant_var<TAO_ServantBase> ServantBase_var;
     typedef ServantBase *Servant;
 
     typedef TAO_Local_ServantBase LocalServantBase;

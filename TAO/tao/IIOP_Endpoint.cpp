@@ -461,11 +461,11 @@ static void find_preferred_interfaces (const ACE_CString& host,
   // The outer loop steps through each preferred interface directive
   // and chains a new endpoint if the remote interface matches the
   // current endpoint.
-  size_t index = 0;
+  ACE_CString::size_type index = 0;
   while (index < csvPreferred.length())
   {
-    ssize_t comma = csvPreferred.find(',', index);
-    ssize_t assign = csvPreferred.find('=', index);
+    ACE_CString::size_type comma = csvPreferred.find(',', index);
+    ACE_CString::size_type assign = csvPreferred.find('=', index);
 
     if (assign == ACE_CString::npos)
     {
@@ -484,7 +484,7 @@ static void find_preferred_interfaces (const ACE_CString& host,
       wild_local = csvPreferred.substr(assign + 1, comma - assign - 1);
     ACE_CString wild_remote = csvPreferred.substr(index, assign - index);
 
-    index = static_cast<size_t>(comma) + 1;
+    index = comma + 1;
 
     // For now, we just try to match against the host literally. In
     // the future it might be worthwhile to resolve some aliases for

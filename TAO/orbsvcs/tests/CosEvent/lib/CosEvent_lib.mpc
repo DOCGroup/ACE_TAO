@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(CosEvent Test Lib): orbsvcslib, event_skel, naming, svc_utils, iortable, portableserver {
+project(CosEvent Test Lib): orbsvcslib, event_skel, svc_utils, iortable, portableserver {
   sharedname   = CECTests
   dynamicflags = CEC_TEST_BUILD_DLL
   Header_Files {
