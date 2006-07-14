@@ -1,8 +1,30 @@
+Fri Jul 14 18:34:41 UTC 2006  john_c  <johnc@ociweb.com>
+
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp:
+
+          Set handle options after a proper handle has been assigned. This
+          was causing a race condition at a client location. We couldn't
+          reproduce the problem, but the change is valid.
+
+        * orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/EchoEventConsumerMain.cpp:
+        * orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/EchoEventConsumer_i.h:
+        * orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/EchoEventConsumer_i.cpp:
+        * orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/EchoEventSupplierMain.cpp:
+        * orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/EchoEventSupplier_i.h:
+        * orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/EchoEventSupplier_i.cpp:
+        * orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/README:
+        * orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/RTEC_MCast_Federated.mpc:
+        * orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/SimpleAddressServer.h:
+        * orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/SimpleAddressServer.cpp:
+        * orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/run_test.pl:
+        * orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/supplier.conf:
+
+          Adding a test to traverse the changed code path.
 Fri Jul 14 17:00:49 UTC 2006  Yan Dai  <dai_y@ociweb.com>
 
         * tao/EndpointPolicy/Endpoint_Acceptor_Filter_Factory.cpp:
 
-          Fixed a bug in create_object() that uses an incorrect index 
+          Fixed a bug in create_object() that uses an incorrect index
           to access the policy in the policy list.
 
 Fri Jul 14 16:01:38 UTC 2006  Adam Mitz  <mitza@ociweb.com>
