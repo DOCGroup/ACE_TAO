@@ -1,3 +1,86 @@
+Fri Jul 14 21:42:30 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/AnyTypeCode/BooleanSeqA.*
+        * tao/AnyTypeCode/CharSeqA.*
+        * tao/AnyTypeCode/CONV_FRAMEA.*
+        * tao/AnyTypeCode/CurrentA.*
+        * tao/AnyTypeCode/DoubleSeqA.*
+        * tao/AnyTypeCode/FloatSeqA.*
+        * tao/AnyTypeCode/GIOPA.*
+        * tao/AnyTypeCode/IIOP_EndpointsA.*
+        * tao/AnyTypeCode/IIOPA.*
+        * tao/AnyTypeCode/IOP_IORA.*
+        * tao/AnyTypeCode/IOPA.*
+        * tao/AnyTypeCode/LongDoubleSeqA.*
+        * tao/AnyTypeCode/LongLongSeqA.*
+        * tao/AnyTypeCode/LongSeqA.*
+        * tao/AnyTypeCode/Messaging_PolicyValueA.*
+        * tao/AnyTypeCode/Messaging_SyncScopeA.*
+        * tao/AnyTypeCode/ObjectIdListA.*
+        * tao/AnyTypeCode/orb_typesA.*
+        * tao/AnyTypeCode/ParameterModeA.*
+        * tao/AnyTypeCode/PI_ForwardA.*
+        * tao/AnyTypeCode/Policy_ForwardA.*
+        * tao/AnyTypeCode/PortableInterceptorA.*
+        * tao/AnyTypeCode/ServicesA.*
+        * tao/AnyTypeCode/ShortSeqA.*
+        * tao/AnyTypeCode/TAOA.*
+        * tao/AnyTypeCode/TimeBaseA.*
+        * tao/AnyTypeCode/ULongLongSeqA.*
+        * tao/AnyTypeCode/ULongSeqA.*
+        * tao/AnyTypeCode/WCharSeqA.*
+        * tao/AnyTypeCode/WStringSeqA.*
+        * tao/BooleanSeqC.*
+        * tao/CharSeqC.*
+        * tao/CONV_FRAMEC.*
+        * tao/CurrentC.*
+        * tao/DoubleSeqC.*
+        * tao/FloatSeqC.*
+        * tao/GIOPC.*
+        * tao/IIOP_EndpointsC.*
+        * tao/IIOPC.*
+        * tao/IOP_IORC.*
+        * tao/IOPC.*
+        * tao/LongDoubleSeqC.*
+        * tao/LongLongSeqC.*
+        * tao/LongSeqC.*
+        * tao/Messaging_PolicyValueC.*
+        * tao/Messaging_SyncScopeC.*
+        * tao/ObjectIdListC.*
+        * tao/orb_typesC.*
+        * tao/ParameterModeC.*
+        * tao/PI_ForwardC.*
+        * tao/Policy_ForwardC.*
+        * tao/PortableInterceptorC.*
+        * tao/ServicesC.*
+        * tao/ShortSeqC.*
+        * tao/StringSeqC.*
+        * tao/TAOC.*
+        * tao/TimeBaseC.*
+        * tao/ULongLongSeqC.*
+        * tao/ULongSeqC.*
+        * tao/WCharSeqC.*
+        * tao/WStringSeqC.*
+          Removed from the repo, all regenerated as part of the build
+
+        * tao/tao.mpc:
+          Enabled regeneration for a lot of pidl files
+
+        * tao/DynamicAny/diffs/DynamicAny.diff:
+          Removed, not needed anymore
+
+Fri Jul 14 21:10:30 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/DynamicAny.mpc:
+          Enabled regeneration of the pidl files
+
+        * tao/DynamicAny/DynamicAnyC.{h,cpp}:
+          Removed from the repo, will get regenerated automatically
+
+        * tao/*Resource*.*:
+          Moved the different resources files (Qt,Fl,Tk, and Xt) to
+          subdirectories so that in TAO/tao we only have the tao lib
+          core
 Fri Jul 14 21:15:32 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
         * TAO_IDL/ast/ast_decl.cpp (version):
