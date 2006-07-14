@@ -15,7 +15,8 @@ $status = 0;
               "-orbendpoint iiop://localhost:10202/hostname_in_ior=bogus.com");
 $valid_ep = "-orbendpoint iiop://localhost:10201";
 
-$SV_ALT_IIOP = new PerlACE::Process ("../Hello/server", "-o $iorfile $bogus_eps[0] $valid_ep $bogus_eps[1]");
+$SV_ALT_IIOP = new PerlACE::Process ("../Hello/server", "-o $iorfile -ORBUseSharedProfile 1 ",
+                                     "$bogus_eps[0] $valid_ep $bogus_eps[1]");
 $CL_ALT_IIOP = new PerlACE::Process ("../Hello/client", " -k file://$iorfile");
 $SV_ALT_IIOP->Spawn ();
 
