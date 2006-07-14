@@ -1,3 +1,11 @@
+Fri Jul 14 18:53:32 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * bin/MakeProjectCreator/config/global.features
+        * bin/MakeProjectCreator/config/stl.mpb
+        
+          Added an stl feature/base project for projects that use portions
+          of the STL that may not be universally supported.  
+
 Fri Jul 14 19:44:03 UTC 2006  john_c  <johnc@ociweb.com>
 
         * ace/config-hpux-11.00.h:
