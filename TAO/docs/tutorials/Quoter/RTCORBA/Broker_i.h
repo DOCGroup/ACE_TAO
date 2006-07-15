@@ -1,5 +1,10 @@
 // $Id$
 
+/**
+ * @file Broker_i.h
+ * @author Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
+ */
+
 #ifndef BROKERI_H_
 #define BROKERI_H_
 
@@ -11,85 +16,102 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-// @@ Shanshan - Please document this code in doxygen style
-// @@ Shanshan - Please remove ACE exception macros.
-
+/**
+ * @class Stock_StockBroker_i
+ * @brief This class defined the Stock Broker client.
+ */
 class  Stock_StockBroker_i
   : public virtual POA_Stock::StockBroker,
     public virtual PortableServer::RefCountServantBase
 {
 public:
-  // Constructor
+  /**
+   * Constructor.
+   *
+   * @param orb
+   * @param stock_name The name of the stock that the Stock Broker client is interested in.
+   * @param priority The priority of this  Stock Broker client.
+   */
   Stock_StockBroker_i (CORBA::ORB_ptr orb,
                        const char *stock_name,
                        RTCORBA::Priority priority);
 
-  // Destructor
+  /// Destructor
   virtual ~Stock_StockBroker_i (void);
 
-  virtual
-  ::Stock::StockNameConsumer_ptr get_consumer_notifier (
-      ACE_ENV_SINGLE_ARG_DECL
-    )
-    ACE_THROW_SPEC ((
-      ::CORBA::SystemException
-    ));
+  /**
+   * Return the StockNameConsumer object created by the Constructor.
+   *
+   * @return Returns a StockNameConsumer object reference.
+   */
+  virtual ::Stock::StockNameConsumer_ptr get_consumer_notifier ()
+    throw (::CORBA::SystemException);
 
-  virtual
-  void connect_quoter_info (
-      ::Stock::StockQuoter_ptr c
-      ACE_ENV_ARG_DECL
-    )
-    ACE_THROW_SPEC ((
-      ::CORBA::SystemException
-    ));
+  /**
+   * Duplicate a StockQuoter object using the StockQuoter object reference "c" in the argument.
+   *
+   * @param c A StockQuoter object reference.
+   */
+  virtual void connect_quoter_info (::Stock::StockQuoter_ptr c)
+    throw (::CORBA::SystemException);
 
-  virtual
-  ::Stock::StockQuoter_ptr disconnect_quoter_info (
-      ACE_ENV_SINGLE_ARG_DECL
-    )
-    ACE_THROW_SPEC ((
-      ::CORBA::SystemException
-    ));
+  /**
+   * Destroy the StockQuoter object and return it.
+   *
+   * @return Returns the destroyed StockQuoter object reference.
+   */
+  virtual ::Stock::StockQuoter_ptr disconnect_quoter_info ()
+    throw (::CORBA::SystemException);
 
-  virtual
-  ::Stock::StockQuoter_ptr get_connection_quoter_info (
-      ACE_ENV_SINGLE_ARG_DECL
-    )
-    ACE_THROW_SPEC ((
-      ::CORBA::SystemException
-    ));
+  /**
+   * Return the StockQuoter object.
+   *
+   * @return Returns the StockQuoter object reference that has been created by connect_quoter_info ().
+   */
+  virtual ::Stock::StockQuoter_ptr get_connection_quoter_info ()
+    throw (::CORBA::SystemException);
 
 private:
+  /// A StockQuoter object reference that is used to get detailed stock information. 
   Stock::StockQuoter_var quoter_;
 
-  // @@ Shanshan - Please use an auto_ptr here to manage the memory for you.
-  Stock_StockNameConsumer_i *consumer_;
+  /// A StockNameConsumer object reference that is used to get notification of updates..
+ Stock_StockNameConsumer_i *consumer_;
 };
 
+/**
+ * @class Stock_StockBrokerHome_i
+ * @brief This class defined the Stock Broker home.
+ */
 class  Stock_StockBrokerHome_i
   : public virtual POA_Stock::StockBrokerHome,
     public virtual PortableServer::RefCountServantBase
 {
 public:
-  // Constructor
+  /**
+   * Constructor.
+   * Register the necessary factories and mappings with the specified orb and 
+   * Create a new instance of the StockBroker object.
+   *
+   * @param orb
+   */
   Stock_StockBrokerHome_i (CORBA::ORB_ptr orb,
                            const char *stock_name,
                            RTCORBA::Priority priority);
 
-  // Destructor
+  /// Destructor
   virtual ~Stock_StockBrokerHome_i (void);
 
-  virtual
-  ::Stock::StockBroker_ptr create (
-      ACE_ENV_SINGLE_ARG_DECL
-    )
-    ACE_THROW_SPEC ((
-      ::CORBA::SystemException
-    ));
+  /**
+   * Return the StockBroker object created by the Constructor.
+   *
+   * @return The StockBroker object created by the Constructor.
+   */
+  virtual ::Stock::StockBroker_ptr create ()
+    throw (::CORBA::SystemException);
 
 private:
-  // @@ Shanshan - Please use an auto_ptr here to manage the memory for you
+  /// The StockDistributor object created by its home.
   Stock_StockBroker_i *broker_;
 };
 

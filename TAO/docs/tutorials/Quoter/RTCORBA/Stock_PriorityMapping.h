@@ -2,8 +2,7 @@
 
 /**
  * @file Stock_PriorityMapping.h
- * @author Shanshan Jiang <your.email.here>
- *
+ * @author Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
  */
 
 #ifndef STOCK_PRIORITYMAPPING_
@@ -26,13 +25,13 @@ class	Stock_PriorityMapping :
   public TAO_Continuous_Priority_Mapping
 {
 public:
-  /// Default constructor
+  /// Default constructor.
   Stock_PriorityMapping (void);
 
-  /// Default destructor
+  /// Default destructor.
   virtual ~Stock_PriorityMapping (void);
 
-  /// Stock priorities
+  /// Stock priorities.
   enum Priority
   {
     VERY_LOW = 0,
@@ -42,6 +41,7 @@ public:
     VERY_HIGH = 4
   };
 
+  /// Register mapping.
   static void register_mapping (CORBA::ORB_ptr orb);
 };
 
