@@ -24,10 +24,8 @@ Real-time CORBA Service. <P>
 <li><h4>Defining the Distributor project</h4></li>
 
 <PRE>
-project(*Distributor): rt_server {
+project(*Distributor): rt_server, stl {
 	libs += TAO_Valuetype
-	
-	idlflags += -GI
 	
 	Source_Files {
 		Common_i.cpp
@@ -53,10 +51,8 @@ alse provide the detailed information about a stock required by a Stock Broker c
 <li><h4>Defining the Broker project</h4></li>
 
 <PRE>
-project(*Broker): rt_server {
+project(*Broker): rt_server, stl {
 	libs += TAO_Valuetype
-	
-	idlflags += -GI
 	
 	Source_Files {
 		Common_i.cpp
@@ -82,7 +78,7 @@ alse receive the detailed information about a stock by invoke a Stock Distributo
 <li><h4>Defining the Admin project</h4></li>
 
 <PRE>
-project(*Admin): rt_client {
+project(*Admin): rt_client, stl {
 	libs += TAO_Valuetype
 	
 	Idl_Files {

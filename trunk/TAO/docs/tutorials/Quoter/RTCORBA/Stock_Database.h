@@ -1,7 +1,15 @@
 // $Id$
 
+/**
+ * @file Stock_Database.h
+ * @author Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
+ */
+
 #ifndef STOCK_DATABASE_H_
 #define STOCK_DATABASE_H_
+
+// ACE headers
+#include "ace/Task.h"
 
 // local headers
 #include "Common_i.h"
@@ -10,49 +18,49 @@
 #include <map>
 #include <string>
 
-// @@ Shanshan, please document this class using doxygen style comments.
-
 /**
- *
+ * @class Stock_Database
+ * @brief This class is used to install, update and publish the information of 
+ * all the stocks. It uses the singleton design pattern.
  */
-class Stock_Database
+class Stock_Database: public ACE_Task_Base
 {
 public:
-  void init (RTCORBA::RTORB_ptr rt_orb);
-
-  void term (void);
-
-  static Stock_Database *instance (void);
-
-  Stock::StockInfo *get_stock_info (const char *name);
-
-  void publish_stock_info (Stock::StockNameConsumer_ptr consumer);
-
-  void lock (void);
-
-  void unlock (void);
-
-private:
+  /// Constructor.
   Stock_Database (void);
 
-  static Stock_Database *instance_;
+  /**
+   * Create a StockInfo object storeed in the database with the given name.
+   *
+   * @param name The name of the stock.
+   * @return A StockInfo object.
+   */
+  Stock::StockInfo *get_stock_info (const char *name);
 
-  RTCORBA::RTORB_var rt_orb_;
+  /**
+   * This function is called by the Stock Distributor server's thread function 
+   * to notify the Stock Broker client the state change of the stock it interested in. 
+   *
+   * @param consumer The StockNameConsumer object reference.
+   */
+  void publish_stock_info (Stock::StockNameConsumer_ptr consumer);
+  
+  /**
+   * This function is used to calculate the new high, low and last values
+   * for each stock in the stock database randomly. 
+   */
+  virtual int svc (void);
 
+private:
+  /// Stock map.
   typedef std::map<std::string, Stock::StockInfo *> StockMap;
-
   StockMap stock_map_;
 
-  RTCORBA::Mutex_var lock_;
-
-  ACE_hthread_t _thread;
-
-  ACE_thread_t _thread_id;
-
-  bool active_;
-
-  static ACE_THR_FUNC_RETURN _thread_func (void *param);
+  /// ACE_Thread_Mutex.
+  ACE_Thread_Mutex lock_;
 };
 
-#endif	// !defined STOCK_DATABASE_H_
+typedef ACE_Singleton<Stock_Database, ACE_Thread_Mutex> Stock_Database_Singleton;
+#define STOCK_DATABASE Stock_Database_Singleton::instance()
 
+#endif	// !defined STOCK_DATABASE_H_

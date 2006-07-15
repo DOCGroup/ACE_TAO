@@ -47,6 +47,7 @@ the Constructor.</li>
 
 <PRE>
     broker_ = new Stock_StockBroker_i (orb, stock_name, priority);
+    PortableServer::ServantBase_var broker_owner_transfer = broker_;
     _default_POA ()->activate_object (broker_);
 </PRE>
 
@@ -60,7 +61,7 @@ Return the StockBroker object created by the Constructor.
 
 <hr><h3>Implementation of StockBroker interface</h3>
 
-This interface is used for Stock Broker server. <P>
+This interface is used for Stock Broker client. <P>
 The Stock_StockBroker_i class is generated automatically by the IDL compiler (using the -GI flag),
 which is a subclass of POA_Stock::StockBroker class. <P>
 
@@ -85,9 +86,9 @@ Duplicate a StockQuoter object using the StockQuoter object reference "c" in the
 Destroy the StockQuoter object and return it.
 
 <PRE>
-  Stock::StockQuoter_ptr old_quoter = quoter_;
+  Stock::StockQuoter_var old_quoter = quoter_;
   quoter_ = Stock::StockQuoter::_nil();
-  return Stock::StockQuoter::_duplicate (old_quoter);
+  return old_quoter._retn ();
 </PRE>
 
 <h4>Implementing the get_connection_quoter_info () member function</h4>

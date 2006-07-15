@@ -64,9 +64,7 @@ which is a subclass of POA_Stock::StockQuoter class. <P>
 <h4>Implementing the get_stock_info () member function</h4>
 
 <PRE>
-    Stock_Database::instance ()->lock ();
     Stock::StockInfo * stock = Stock_Database::instance ()->get_stock_info (stock_name);
-    Stock_Database::instance ()->unlock ();
 </PRE>
 
 Call the get_stock_info () function of Stock_Database interface.

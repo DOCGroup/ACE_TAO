@@ -18,11 +18,17 @@
 <P> The Stock Database class is used to install, update and publish the information of all the stocks. It uses the
 singleton design pattern.<P>
 
+<PRE>
+    typedef ACE_Singleton<Stock_Database, ACE_Thread_Mutex> Stock_Database_Singleton;
+    #define STOCK_DATABASE Stock_Database_Singleton::instance()
+</PRE>
+
+ACE_Singleton simply ensures that we create one single instance of the Stock_Database class at runtime, 
+even if multiple threads all try to create one at the same time.
+
 <h3>Implementing the Constructor</h3>
 
 The main steps of this function are described as follows: <P>
-
-<li>Set the active state of StockDistributor object to false.</li> <P>
 
 <li>Create an array of stock names.</li> <P>
 
@@ -50,19 +56,10 @@ For each stock in the stock database, do the following steps: <P>
 <li>Call the push_StockName () function of StockNameConsumer object (given in the argument),
 using the former StockName object.</li> <P>
 
-<hr><h3>Implementing the init () member function</h3>
+<hr><h3>Implementing the svc () function</h3>
 
-Set the active state of the Stock_Database object to true, create a RTCOBRA::Mutex object and
-create a thread to update the information of all the stocks. <P>
-
-The main steps of this thread function are described as follows:  <P>
-While the state of the Stock_Database object is active, continue the following looping:
-<OL>
-<li>    Lock the RTCOBRA::Mutex object.</li>
-<li>    For each stock in the stock database, calculate the new high, low and last values randomly.</li>
-<li>    Unlock the RTCOBRA::Mutex object.</li>
-<li>    Sleep for a while.</li>
-</OL>
+This function will be run when the stock database is started. The functionality of this function is to 
+calculate the new high, low and last values of each stock in the stock database randomly. <P>
 
 <hr><b>Email: </b><a href="mailto:"</a<ADDRESS>shanshan.jiang@vanderbilt.edu</ADDRESS>
 
