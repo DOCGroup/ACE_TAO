@@ -2,6 +2,7 @@
 // $Id$
 
 #include "idl3_client.h"
+#include "tao/ORB.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_string.h"
 

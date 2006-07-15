@@ -5,6 +5,7 @@
 #include "tao/IFR_Client/IFR_BasicC.h"
 #include "tao/IFR_Client/IFR_Client_Adapter_Impl.h"
 #include "tao/AnyTypeCode/NVList.h"
+#include "tao/ORB.h"
 #include "ace/OS_NS_string.h"
 
 int main (int argc, char* argv[])
@@ -12,16 +13,16 @@ int main (int argc, char* argv[])
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY_NEW_ENV
    {
-      int failed = 0 ;
+      int failed = 0;
 
       // Initialise ORB.
       //
-      CORBA::ORB_var orb = CORBA::ORB_init( argc, argv, "" ACE_ENV_ARG_PARAMETER) ;
+      CORBA::ORB_var orb = CORBA::ORB_init( argc, argv, "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Find the Interface Repository.
       //
-      CORBA::Object_var ifr_obj = orb->resolve_initial_references( "InterfaceRepository" ACE_ENV_ARG_PARAMETER) ;
+      CORBA::Object_var ifr_obj = orb->resolve_initial_references( "InterfaceRepository" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Repository_var ifr = CORBA::Repository::_narrow( ifr_obj.in() ACE_ENV_ARG_PARAMETER);
