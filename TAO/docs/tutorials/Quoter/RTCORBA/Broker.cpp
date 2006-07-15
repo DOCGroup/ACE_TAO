@@ -6,38 +6,57 @@
 #include "Stock_PriorityMapping.h"
 
 // ACE header files
-#include <ace/streams.h>
+#include "ace/streams.h"
+#include "ace/Get_Opt.h"
 
 // STL headers
 #include <cstdlib>
 
-//
-// usage
-//
-void usage()
-{
-  cerr << "syntax:" << endl;
-  cerr << "         ./broker stock_symbol [priority]" << endl;
-  cerr << endl;
-  cerr << "arguments:" << endl;
-  cerr << "         stock_symbol      - symbol of the stock of interest" << endl;
-  cerr << "         priority          - priority which to listen; [0,4]" << endl;
-  cerr << endl;
-  cerr << "NOTE: If you do not specify a priority, the default priority" << endl;
-  cerr << "of 2 [MEDIUM] will be assigned to the broker." << endl;
-}
+static const char *ior = "file://StockDistributor.ior";
+static const char *priority_level = "2";
+static const char *stock_name = "IBM";
 
-//
-// main
-//
-int main (int argc, char *argv[])
+int parse_args (int argc, char *argv[])
 {
-  if (argc < 2) {
-    usage ();
-    return 0;
+  ACE_Get_Opt get_opts (argc, argv, "o:p:n:");
+  int c;
+
+  while ((c = get_opts ()) != -1)
+  {
+    switch (c)
+    {
+      case 'o':
+        ior = get_opts.opt_arg ();
+        break;
+      case 'p':
+        priority_level = get_opts.opt_arg ();
+        break;
+      case 'n':
+        stock_name = get_opts.opt_arg ();
+        break;
+      case '?':
+      default:
+        ACE_ERROR_RETURN ((LM_ERROR,
+                          "usage: %s\n"
+                          "-o <Distributor IOR> (default is file://StockDistributor.ior) \n"
+                          "-p <Priority> (default is 2) \n"
+                          "-n <Stock name> (default is IBM) \n"
+                          "\n",
+                          argv [0]),
+                          -1);
+    }
   }
 
-  try {
+  return 0;
+}
+
+int main (int argc, char *argv[])
+{
+  if (parse_args (argc, argv) != 0)
+    return 1;
+
+  try
+  {
     // Initialiaze the ORB.
     CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
@@ -49,25 +68,30 @@ int main (int argc, char *argv[])
     PortableServer::POAManager_var mgr = poa->the_POAManager ();
     mgr->activate ();
 
-    // @@ Shanshan - Be careful here, what if I don't pass any arguments to the program?
-    // It might be better to use ACE_Get_Opt (please see me if you need an example) to parse your arguments.
-
-    // Extract the command-line arguments.
-    std::string stock_name (argv[1]);
-    RTCORBA::Priority priority = argc > 2 ? priority = atoi(argv[2]) : Stock_PriorityMapping::MEDIUM;
-
     // Create an instance of the <StockBroker>.
-    Stock_StockBrokerHome_i stock_broker_home (orb, argv[1], priority);
+    static const RTCORBA::Priority priority = atoi (priority_level);
+    Stock_StockBrokerHome_i stock_broker_home (orb, stock_name, priority);
     Stock::StockBroker_var stock_broker = stock_broker_home.create ();
-    ACE_ASSERT (!CORBA::is_nil (stock_broker));
+    if (CORBA::is_nil (stock_broker.in ()))
+    {
+      ACE_ERROR_RETURN ((LM_DEBUG,
+                         "Nil StockBroker object reference <%s>\n",
+                         ior),
+                        1);
+    }
 
     // Read and destringify the Stock_Distributor object's IOR.
-    obj = orb->string_to_object ("file://StockDistributor.ior");
-    ACE_ASSERT (!CORBA::is_nil (obj));
+    obj = orb->string_to_object (ior);
 
     // Narrow the IOR to a Stock_Distributor object reference.
     Stock::StockDistributor_var stock_distributor = Stock::StockDistributor::_narrow(obj);
-    ACE_ASSERT (!CORBA::is_nil (stock_distributor));
+    if (CORBA::is_nil (stock_distributor.in ()))
+    {
+      ACE_ERROR_RETURN ((LM_DEBUG,
+                         "Nil StockDistributor object reference <%s>\n",
+                         ior),
+                        1);
+    }
 
     // Connect the <stock_quoter> to the <stock_broker>.
     Stock::StockQuoter_var stock_quoter = stock_distributor->provide_quoter_info ();
@@ -77,14 +101,16 @@ int main (int argc, char *argv[])
     Stock::StockNameConsumer_var consumer = stock_broker->get_consumer_notifier ();
     Stock::Cookie *cookie = stock_distributor->subscribe_notifier (consumer, priority);
 
-    // @@ Shanshan - Please use ACE_DEBUG
     // Run the event loop.
-    cerr << "*** message: Ready to receieve stock information..." << endl;
+    ACE_DEBUG ((LM_DEBUG, "Ready to receieve stock information!\n"));
     orb->run ();
     orb->destroy ();
   }
-  catch (CORBA::Exception &ex) {
-    cerr << "CORBA exception: " << ex << endl;
+  catch (CORBA::Exception &ex)
+  {
+    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                         "Exception caught:");
+    return 1;
   }
-  return 1;
+  return 0;
 }

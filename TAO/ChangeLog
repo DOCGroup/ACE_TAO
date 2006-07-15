@@ -1,3 +1,27 @@
+Sat Jul 15 22:08:58 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
+
+        * docs/tutorials/Quoter/RTCORBA/Admin.cpp
+        * docs/tutorials/Quoter/RTCORBA/Broker.cpp
+        * docs/tutorials/Quoter/RTCORBA/Broker_i.cpp
+        * docs/tutorials/Quoter/RTCORBA/Broker_i.h
+        * docs/tutorials/Quoter/RTCORBA/Common_i.cpp
+        * docs/tutorials/Quoter/RTCORBA/Common_i.h
+        * docs/tutorials/Quoter/RTCORBA/Distributor.cpp
+        * docs/tutorials/Quoter/RTCORBA/Distributor_i.cpp
+        * docs/tutorials/Quoter/RTCORBA/Distributor_i.h
+        * docs/tutorials/Quoter/RTCORBA/Stock_Database.cpp
+        * docs/tutorials/Quoter/RTCORBA/Stock_Database.h
+        * docs/tutorials/Quoter/RTCORBA/Stock_PriorityMapping.h
+        
+        * docs/tutorials/Quoter/RTCORBA/docs/broker.html
+        * docs/tutorials/Quoter/RTCORBA/docs/common.html
+        * docs/tutorials/Quoter/RTCORBA/docs/database.html
+        * docs/tutorials/Quoter/RTCORBA/docs/distributor.html
+        * docs/tutorials/Quoter/RTCORBA/docs/index.html
+        * docs/tutorials/Quoter/RTCORBA/docs/mpc.html
+
+          Modify these files based on the suggestions of William R. Otte.
+        
 Sat Jul 15 12:25:11 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Bug_1393_Regression/client.cpp:

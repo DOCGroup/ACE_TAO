@@ -1,20 +1,20 @@
 // $Id$
 
+// ACE headers
+#include "ace/streams.h"
+#include "ace/OS_NS_unistd.h"
+
+// TAO headers
+#include "tao/CORBA.h"
+#include "tao/AnyTypeCode/Typecode.h"
+#include "tao/RTCORBA/RTCORBA.h"
+#include "tao/RTCORBA/Thread_Pool.h"
+#include "tao/RTPortableServer/RTPortableServer.h"
+
 // local headers
 #include "Broker_i.h"
 #include "Stock_PriorityMapping.h"
 #include "Stock_Database.h"
-
-// ACE headers
-#include <ace/streams.h>
-#include <ace/OS_NS_unistd.h>
-
-// TAO headers
-#include <tao/CORBA.h>
-#include <tao/AnyTypeCode/Typecode.h>
-#include <tao/RTCORBA/RTCORBA.h>
-#include <tao/RTCORBA/Thread_Pool.h>
-#include <tao/RTPortableServer/RTPortableServer.h>
 
 // STL headers
 #include <strstream>
@@ -38,7 +38,7 @@ Stock_StockBroker_i::Stock_StockBroker_i (CORBA::ORB_ptr orb,
   consumer_policies.length (1);
 
   // Create a <CLIENT_PROPOGATED> priority model policy.
-  consumer_policies[0] = rt_orb->create_priority_model_policy (RTCORBA::CLIENT_PROPAGATED,
+  consumer_policies[0] = rt_orb->create_priority_model_policy (RTCORBA::SERVER_DECLARED,
     Stock_PriorityMapping::MEDIUM);
 
   // Create a child POA with CLIENT_PROPAGATED policies. The name of the
@@ -55,60 +55,37 @@ Stock_StockBroker_i::Stock_StockBroker_i (CORBA::ORB_ptr orb,
 
   // Activate the <consumer_> with the specified <priority>.
   this->consumer_ = new Stock_StockNameConsumer_i (this->_this (), stock_name);
+  PortableServer::ServantBase_var nameconsumer_owner_transfer = this->consumer_;
   rt_poa->activate_object_with_priority (this->consumer_, priority);
 }
 
 // Implementation skeleton destructor
 Stock_StockBroker_i::~Stock_StockBroker_i (void)
 {
-  // @@ Shanshan - Yikes!  Leaking memory - use an auto_ptr tomanage consumer_!
 }
 
-::Stock::StockNameConsumer_ptr Stock_StockBroker_i::get_consumer_notifier (
-    ACE_ENV_SINGLE_ARG_DECL
-  )
-  ACE_THROW_SPEC ((
-    ::CORBA::SystemException
-  ))
+::Stock::StockNameConsumer_ptr Stock_StockBroker_i::get_consumer_notifier ()
+  throw (::CORBA::SystemException)
 {
-  // @@ Shanshan - Is there any partifular reason you are using a C++
-  // pointer to store the consumer? Why not store it as an objec
-  // reference (_var type)?
   return Stock::StockNameConsumer::_duplicate (this->consumer_->_this ());
 }
 
-void Stock_StockBroker_i::connect_quoter_info (
-    ::Stock::StockQuoter_ptr c
-    ACE_ENV_ARG_DECL
-  )
-  ACE_THROW_SPEC ((
-    ::CORBA::SystemException
-  ))
+void Stock_StockBroker_i::connect_quoter_info (::Stock::StockQuoter_ptr c)
+  throw (::CORBA::SystemException)
 {
   this->quoter_ = Stock::StockQuoter::_duplicate (c);
 }
 
-::Stock::StockQuoter_ptr Stock_StockBroker_i::disconnect_quoter_info (
-    ACE_ENV_SINGLE_ARG_DECL
-  )
-  ACE_THROW_SPEC ((
-    ::CORBA::SystemException
-  ))
+::Stock::StockQuoter_ptr Stock_StockBroker_i::disconnect_quoter_info ()
+  throw (::CORBA::SystemException)
 {
-  // @@ Shanshan - I think you are leaking memory here.  Could you
-  // please store this in a _var type instead of a _ptr type, and do
-  // return old_quoter._retn ();
-  Stock::StockQuoter_ptr old_quoter = this->quoter_;
+  Stock::StockQuoter_var old_quoter = this->quoter_;
   this->quoter_ = Stock::StockQuoter::_nil();
-  return Stock::StockQuoter::_duplicate (old_quoter);
+  return old_quoter._retn ();
 }
 
-::Stock::StockQuoter_ptr Stock_StockBroker_i::get_connection_quoter_info (
-    ACE_ENV_SINGLE_ARG_DECL
-  )
-  ACE_THROW_SPEC ((
-    ::CORBA::SystemException
-  ))
+::Stock::StockQuoter_ptr Stock_StockBroker_i::get_connection_quoter_info ()
+  throw (::CORBA::SystemException)
 {
   return Stock::StockQuoter::_duplicate (this->quoter_);
 }
@@ -122,28 +99,21 @@ Stock_StockBrokerHome_i::Stock_StockBrokerHome_i (CORBA::ORB_ptr orb,
   // Register the necessary factories and mappings with the specified
   // <orb>. If we neglect to perform these registrations then the app
   // will not execute.
-  Stock::StockName_init *factory1 = new Stock::StockName_init;
-  orb->register_value_factory (factory1->tao_repository_id (),
-    factory1
-    ACE_ENV_ARG_PARAMETER);
+  Stock::StockName_init *stockname_factory = new Stock::StockName_init;
+  orb->register_value_factory (stockname_factory->tao_repository_id (),
+                               stockname_factory);
 
-  Stock::Cookie_init *factory2 = new Stock::Cookie_init;
-  orb->register_value_factory (factory2->tao_repository_id (),
-    factory2
-    ACE_ENV_ARG_PARAMETER);
+  Stock::Cookie_init *cookie_factory = new Stock::Cookie_init;
+  orb->register_value_factory (cookie_factory->tao_repository_id (),
+                               cookie_factory);
 
-  //Stock_CookieFactory_i::register_factory (orb);
-  //Stock_StockNameFactory_i::register_factory (orb);
   Stock_PriorityMapping::register_mapping (orb);
 
   // Because the broker has nothing to do with any of the RTCORBA
   // mechanisms, we can register it under the <default_POA>.
   try {
-    // @@ Shanshan - A couple comments here:
-    // First, I think it would be better to store the object reference
-    // in the class instead of a c++ pointer.
-    // Second, please see me about memory management during activation.
     this->broker_ = new Stock_StockBroker_i (orb, stock_name, priority);
+    PortableServer::ServantBase_var broker_owner_transfer = this->broker_;
     this->_default_POA ()->activate_object (this->broker_);
   }
   catch (PortableServer::POA::ServantAlreadyActive &) {
@@ -158,12 +128,8 @@ Stock_StockBrokerHome_i::~Stock_StockBrokerHome_i (void)
   // Leaking the broker_!
 }
 
-::Stock::StockBroker_ptr Stock_StockBrokerHome_i::create (
-    ACE_ENV_SINGLE_ARG_DECL
-  )
-  ACE_THROW_SPEC ((
-    ::CORBA::SystemException
-  ))
+::Stock::StockBroker_ptr Stock_StockBrokerHome_i::create ()
+  throw (::CORBA::SystemException)
 {
   return Stock::StockBroker::_duplicate (this->broker_->_this ());
 }

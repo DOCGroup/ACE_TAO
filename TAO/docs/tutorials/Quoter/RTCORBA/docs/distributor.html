@@ -41,16 +41,10 @@ The main steps of this function are described as follows: <P>
     Stock_PriorityMapping::register_mapping (orb);
 </PRE>
 
-<li>Get a reference to the RTORB object and use it to initialize the Stock database.</li>
-
-<PRE>
-    Stock_Database::instance ()->init (rt_orb);
-</PRE>
-
 <li>Initialize the Stock database.</li>
 
 <PRE>
-    Stock_Database::instance ()->init (rt_orb);
+    STOCK_DATABASE->activate (THR_NEW_LWP | THR_JOINABLE, 1);
 </PRE>
 
 <li>Create a CORBA::PolicyList for the child POA.</li>
@@ -95,6 +89,7 @@ Then activate it under the former RTPOA. </li>
 
 <PRE>
     distributor_ = new Stock_StockDistributor_i (orb, stock_distributor_policies);
+    PortableServer::ServantBase_var distributor_owner_transfer = distributor_;
     rt_poa->activate_object (distributor_);
 </PRE>
 
@@ -128,30 +123,16 @@ The main steps of this function are described as follows: <P>
 
 <li>Create a new instance of the StockQuoter object and activate it under the former RTPOA.</li> <P>
 
-<li>Get a reference to RTORB and use it to create a RTCOBRA::Mutex object.</li> <P>
-
 <li>Seed the random number generator.</li> <P>
-
-<h4>Implementing the Destructor</h4>
-
-The main steps of this function are described as follows: <P>
-
-<li>Set the active state of StockDistributor object to false.</li> <P>
-
-<li>Destroy the Set the RTCOBRA::Mutex object.</li> <P>
 
 <h4>Implementing the subscribe_notifier () member function</h4>
 
 The main steps of this function are described as follows: <P>
 
-<li>Lock the RTCOBRA::Mutex object.</li> <P>
-
 <li>Generate an unique id and use it to create a new Cookie object.</li> <P>
 
 <li>Insert the Cookie object as well as the StockNameConsumer object and its priority into the
 StockDistributor object's subscribers' map.</li> <P>
-
-<li>Unlock the RTCOBRA::Mutex object.</li> <P>
 
 <li>Return the Cookie object.</li> <P>
 
@@ -159,13 +140,9 @@ StockDistributor object's subscribers' map.</li> <P>
 
 The main steps of this function are described as follows: <P>
 
-<li>Lock the RTCOBRA::Mutex object.</li> <P>
-
 <li>Search for the Cookie object in the argument in the StockDistributor object's subscribers' map.</li> <P>
 
 <li>Erase the Cookie object from the StockDistributor object's subscribers' map.</li> <P>
-
-<li>Unlock the RTCOBRA::Mutex object.</li> <P>
 
 <li>Return the StockNameConsumer object related to the erased Cookie object.</li> <P>
 
@@ -185,9 +162,7 @@ to the Stock Broker clients. <P>
 The main steps of this thread function are described as follows:  <P>
 While the state of the StockDistributor object is active, continue the following looping:
 <OL>
-<li>    Lock the RTCOBRA::Mutex object.</li>
 <li>    Publish the stock information to all the StockNameConsumer objects.</li>
-<li>    Unlock the RTCOBRA::Mutex object.</li>
 <li>    Sleep for the specified amount of seconds given in the notification rate.</li>
 </OL>
 
