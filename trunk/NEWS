@@ -36,7 +36,7 @@ USER VISIBLE CHANGES BETWEEN ACE-5.5.2 and ACE-5.5.3
   than the maximum value of an ssize_t type) from being correctly
   reported to the caller, the find(), rfind() and strstr() methods now
   return an unsigned integer (size_t) instead of a signed one
-  (ssize_t). Affected classes include: 
+  (ssize_t). Affected classes include:
 
     * ACE_CString
     * ACE_WString
@@ -58,6 +58,10 @@ USER VISIBLE CHANGES BETWEEN ACE-5.5.2 and ACE-5.5.3
   constant, not -1. It can be referred directly by scoping it with the
   appropriate string class (e.g. ACE_CString::npos, ACE_WString::npos,
   etc).
+
+. Changing the shared library extension for hpux ia64 to ".so". On
+  HP-UX 11i Version 1.5 the naming scheme is lib*.sl for PA and
+  lib*.so on IPF.
 
 USER VISIBLE CHANGES BETWEEN ACE-5.5.1 and ACE-5.5.2
 ====================================================
