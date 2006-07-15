@@ -1,16 +1,26 @@
+Sat Jul 15 12:25:11 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Bug_1393_Regression/client.cpp:
+        * orbsvcs/tests/Bug_1630_Regression/testclient.cpp:
+        * orbsvcs/tests/InterfaceRepo/IDL3_Test/idl3_client.cpp:
+        * orbsvcs/tests/InterfaceRepo/IFR_Inheritance_Test/main.cpp:
+        * orbsvcs/tests/InterfaceRepo/IFR_Test/Admin_Client.h:
+        * orbsvcs/tests/InterfaceRepo/Persistence_Test/Ptest.h:
+          Added needed include
+
 Sat Jul 15 05:07:11 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * docs/tutorials/Quoter/index.html
-        
+
           Added a link to the RTCORBA tutorial.
-        
+
         * docs/tutorials/Quoter/RTCORBA/Broker.idl
         * docs/tutorials/Quoter/RTCORBA/Common.idl
         * docs/tutorials/Quoter/RTCORBA/Distributor.idl
-        
+
           Corrected IDL files which had been corrupted by overzealous
           removal of DOS style line endings.
-        
+
 Sat Jul 15 00:47:30 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/IDL_Test/IDL_Test.mpc:
