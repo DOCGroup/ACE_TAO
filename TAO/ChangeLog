@@ -1,3 +1,8 @@
+Sat Jul 15 00:42:30 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/tao.mpc:
+          Fixed casing of include
+
 Fri Jul 14 23:44:45 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
         * tao/Utils/Servant_Var.h:
