@@ -3,6 +3,7 @@ Sat Jul 15 16:14:05 UTC 2006  Ciju John  <johnc@ociweb.com>
         * NEWS:
 
           Added entry on HPUX library extension changes.
+
 Fri Jul 14 22:10:02 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
         * ace/Sig_Handler.cpp:
