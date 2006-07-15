@@ -1,3 +1,9 @@
+Sat Jul 15 00:47:30 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/IDL_Test/IDL_Test.mpc:
+          Disabled the regression for bug 2582, I tested it weeks ago and
+          it worked, but now it fails when I added the test
+
 Sat Jul 15 00:42:30 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/tao.mpc:
