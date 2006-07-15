@@ -1,49 +1,47 @@
-// $Id$
+/**
+* @file Broker.idl
+* @author William Otte <wotte@dre.vanderbilt.edu>
+*         Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
+* $Id$
+* Contains IDL definitions for the Stock Broker in the Publish/Subscribe Real-time CORBA
+* Stock Quoter Service.
+*/
 
-/*
-* @file Broker.id
-* @author William Otte <wotte@dre.vanderbilt.edu
-*         Shanshan Jiang <shanshan.jiang@vanderbilt.edu
+#ifndef QUOTER_BROKER_IDL
+#define QUOTER_BROKER_IDL
 
-* Contains IDL definitions for the Stock Broker in the Publish/Subscribe Real-time CORB
-* Stock Quoter Service
-*
+#include "Common.idl"
 
-#ifndef QUOTER_BROKER_ID
-#define QUOTER_BROKER_ID
+module Stock
+{
+  /** 
+  * @class StockBroker
+  * @brief Provides interfaces for stock broker clients.
+  */
+  interface StockBroker
+  {
+    /// Factory operation to return StockNameConsumer object reference.
+    StockNameConsumer get_consumer_notifier ();
 
-#include "Common.idl
+    /// Connects the broker to a supplied Quoter object reference.
+    void connect_quoter_info  (in StockQuoter c);
 
-module Stoc
+    /// Disconnects a the quoter connection.
+    StockQuoter disconnect_quoter_info ();
 
-  /*
-  * @class StockBroke
-  * @brief Provides interfaces for stock broker clients
-  *
-  interface StockBroke
+    /// Gets the current quoter connection.
+    StockQuoter get_connection_quoter_info ();
+  };
 
-    /// Factory operation to return StockNameConsumer object reference
-    StockNameConsumer get_consumer_notifier ()
+  /**
+  * @class StockBrokerHome
+  * @brief Interface that aids in managing StockBroker lifecycles.
+  */
+  interface StockBrokerHome 
+  {
+    /// Create a StockBroker object.
+    StockBroker create ();
+  }; 
+};
 
-    /// Connects the broker to a supplied Quoter object reference
-    void connect_quoter_info  (in StockQuoter c)
-
-    /// Disconnects a the quoter connection
-    StockQuoter disconnect_quoter_info ()
-
-    /// Gets the current quoter connection
-    StockQuoter get_connection_quoter_info ()
-  }
-
-  /*
-  * @class StockBrokerHom
-  * @brief Interface that aids in managing StockBroker lifecycles
-  *
-  interface StockBrokerHom
-
-    /// Create a StockBroker objec
-    StockBroker create ()
-  }
-}
-
-#endi
+#endif
