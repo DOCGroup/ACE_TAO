@@ -1,3 +1,11 @@
+Sat Jul 15 04:21:13 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
+
+        * DAnCE/RepositoryManager/README.txt:
+          Remove this file.
+        
+        * DAnCE/RepositoryManager/README:
+          Add this file.
+
 Thu Jul 13 18:42:08 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
 
         * DAnCE/RepositoryManager/RM_Helper.h:
