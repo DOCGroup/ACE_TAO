@@ -208,7 +208,7 @@ private:
 
   /// The consumer and supplier operation timeouts.
   /// Only in effect if the corresponding "reactive control" is enabled.
-  /// Applies the given timeout as the round-trip time policy on the 
+  /// Applies the given timeout as the round-trip time policy on the
   /// object reference.
   ACE_Time_Value consumer_timeout_;
   ACE_Time_Value supplier_timeout_;
