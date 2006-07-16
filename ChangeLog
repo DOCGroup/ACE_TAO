@@ -1,3 +1,10 @@
+Sun Jul 16 23:14:53 UTC 2006  Ciju John  <johnc@ociweb.com>
+
+        * ace/String_Base_Const.cpp:
+
+          Took out an extra sem-colon. It seems to make the
+          FC4_Versioned_Namespace build grumpy.
+
 Sat Jul 15 16:14:05 UTC 2006  Ciju John  <johnc@ociweb.com>
 
         * NEWS:
