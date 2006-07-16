@@ -51,7 +51,7 @@ public:
 
   /// constructor...
   TAO_CEC_ProxyPullConsumer (TAO_CEC_EventChannel* event_channel,
-    ACE_Time_Value timeout);
+                             const ACE_Time_Value &timeout);
 
   /// destructor...
   virtual ~TAO_CEC_ProxyPullConsumer (void);

@@ -20,7 +20,7 @@ typedef ACE_Reverse_Lock<ACE_Lock> TAO_CEC_Unlock;
 
 // Implementation skeleton constructor
 TAO_CEC_TypedProxyPushConsumer::TAO_CEC_TypedProxyPushConsumer
-  (TAO_CEC_TypedEventChannel* ec, ACE_Time_Value timeout)
+(TAO_CEC_TypedEventChannel* ec, const ACE_Time_Value &timeout)
   : typed_event_channel_ (ec),
     timeout_ (timeout),
     refcount_ (1),

@@ -232,9 +232,8 @@ TAO_CEC_EventChannel::destroy (ACE_ENV_SINGLE_ARG_DECL)
   this->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
-CORBA::Policy_ptr
-TAO_CEC_EventChannel::create_roundtrip_timeout_policy
-  (ACE_Time_Value timeout)
+CORBA::Policy_ptr TAO_CEC_EventChannel::create_roundtrip_timeout_policy
+(const ACE_Time_Value &timeout)
 {
   return this->factory_->create_roundtrip_timeout_policy (timeout);
 }

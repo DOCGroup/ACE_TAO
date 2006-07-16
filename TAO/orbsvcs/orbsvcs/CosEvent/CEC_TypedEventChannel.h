@@ -268,7 +268,8 @@ public:
   ServantRetryMap& get_servant_retry_map (void);
 
   /// Forwarded to the factory
-  CORBA::Policy_ptr create_roundtrip_timeout_policy (ACE_Time_Value timeout);
+  CORBA::Policy_ptr
+  create_roundtrip_timeout_policy (const ACE_Time_Value &timeout);
 
 protected:
   /// Function caches the full interface description from the IFR

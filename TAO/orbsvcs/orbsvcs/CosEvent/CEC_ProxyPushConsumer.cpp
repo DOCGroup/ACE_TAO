@@ -20,8 +20,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 typedef ACE_Reverse_Lock<ACE_Lock> TAO_CEC_Unlock;
 
 TAO_CEC_ProxyPushConsumer::
-    TAO_CEC_ProxyPushConsumer (TAO_CEC_EventChannel* ec,
-                                ACE_Time_Value timeout)
+TAO_CEC_ProxyPushConsumer (TAO_CEC_EventChannel* ec,
+                           const ACE_Time_Value &timeout)
   : event_channel_ (ec),
     timeout_(timeout),
     refcount_ (1),
