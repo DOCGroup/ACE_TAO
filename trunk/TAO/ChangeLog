@@ -1,3 +1,25 @@
+Sun Jul 16 23:28:27 UTC 2006  Adam Mitz  <mitza@ociweb.com>
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_EventChannel.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_EventChannel.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Factory.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullConsumer.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullConsumer.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullSupplier.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullSupplier.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushConsumer.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushConsumer.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedEventChannel.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedEventChannel.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedProxyPushConsumer.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedProxyPushConsumer.cpp:
+
+          Change method signatures to pass ACE_Time_Value by const-reference.
+
 Sat Jul 15 22:08:58 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
 
         * docs/tutorials/Quoter/RTCORBA/Admin.cpp
@@ -12,7 +34,7 @@ Sat Jul 15 22:08:58 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
         * docs/tutorials/Quoter/RTCORBA/Stock_Database.cpp
         * docs/tutorials/Quoter/RTCORBA/Stock_Database.h
         * docs/tutorials/Quoter/RTCORBA/Stock_PriorityMapping.h
-        
+
         * docs/tutorials/Quoter/RTCORBA/docs/broker.html
         * docs/tutorials/Quoter/RTCORBA/docs/common.html
         * docs/tutorials/Quoter/RTCORBA/docs/database.html
@@ -21,7 +43,7 @@ Sat Jul 15 22:08:58 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
         * docs/tutorials/Quoter/RTCORBA/docs/mpc.html
 
           Modify these files based on the suggestions of William R. Otte.
-        
+
 Sat Jul 15 12:25:11 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Bug_1393_Regression/client.cpp:

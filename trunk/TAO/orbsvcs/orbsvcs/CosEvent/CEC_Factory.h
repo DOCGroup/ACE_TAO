@@ -225,8 +225,8 @@ public:
   virtual void
       destroy_supplier_control (TAO_CEC_SupplierControl*) = 0;
 
-  virtual CORBA::Policy_ptr create_roundtrip_timeout_policy
-    (ACE_Time_Value timeout) = 0;
+  virtual CORBA::Policy_ptr
+  create_roundtrip_timeout_policy (const ACE_Time_Value &timeout) = 0;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

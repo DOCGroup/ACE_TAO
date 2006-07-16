@@ -43,7 +43,7 @@ public:
   //Constructor
   TAO_CEC_TypedProxyPushConsumer (
       TAO_CEC_TypedEventChannel* typed_event_channel,
-      ACE_Time_Value timeout
+      const ACE_Time_Value &timeout
     );
 
   //Destructor

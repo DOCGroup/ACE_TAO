@@ -63,12 +63,12 @@ public:
 
   /// constructor...
   TAO_CEC_ProxyPushSupplier (TAO_CEC_EventChannel* event_channel,
-    ACE_Time_Value timeout);
+                             const ACE_Time_Value &timeout);
 
   /// typed ec constructor
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
   TAO_CEC_ProxyPushSupplier (TAO_CEC_TypedEventChannel* typed_event_channel,
-    ACE_Time_Value timeout);
+                             const ACE_Time_Value &timeout);
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
   /// destructor...
