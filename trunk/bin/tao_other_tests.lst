@@ -112,7 +112,7 @@ TAO/orbsvcs/tests/ImplRepo/locked/run_test.pl: !MINIMUM !DISABLE_ToFix_LynxOS_x8
 TAO/orbsvcs/tests/ImplRepo/scale/run_test.pl -servers 5 -objects 5: !MINIMUM !ACE_FOR_TAO
 TAO/orbsvcs/examples/ImR/Combined_Service/run_test.pl: !MINIMUM !STATIC !ST !ACE_FOR_TAO
 TAO/orbsvcs/examples/CosEC/TypedSimple/run_test.pl: !MINIMUM !NO_IFR !ACE_FOR_TAO
-TAO/orbsvcs/tests/CosEvent/Timeout/run_test.pl: !MINIMUM !ST !NO_MESSAGING
+TAO/orbsvcs/tests/CosEvent/Timeout/run_test.pl: !MINIMUM !ST !NO_MESSAGING !ACE_FOR_TAO
 TAO/orbsvcs/tests/Log/Basic_Log_Test/run_test.pl: !NO_MESSAGING !ACE_FOR_TAO
 TAO/orbsvcs/tests/Notify/Basic/run_test.pl notify.reactive.conf: !ST !NO_MESSAGING !STATIC !MINIMUM !ACE_FOR_TAO
 TAO/orbsvcs/tests/Notify/Basic/run_test_ipv6.pl notify.reactive.conf: IPV6 !ST !NO_MESSAGING !STATIC !MINIMUM !ACE_FOR_TAO
