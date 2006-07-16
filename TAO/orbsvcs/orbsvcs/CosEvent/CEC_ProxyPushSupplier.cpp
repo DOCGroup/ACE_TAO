@@ -35,8 +35,9 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 typedef ACE_Reverse_Lock<ACE_Lock> TAO_CEC_Unlock;
 
 // TAO_CEC_ProxyPushSupplier Constructure (Un-typed EC)
-TAO_CEC_ProxyPushSupplier::TAO_CEC_ProxyPushSupplier (TAO_CEC_EventChannel* ec,
-                                                      ACE_Time_Value timeout)
+TAO_CEC_ProxyPushSupplier::
+TAO_CEC_ProxyPushSupplier (TAO_CEC_EventChannel* ec,
+                           const ACE_Time_Value &timeout)
   : event_channel_ (ec),
     timeout_ (timeout),
     refcount_ (1)
@@ -56,8 +57,9 @@ TAO_CEC_ProxyPushSupplier::TAO_CEC_ProxyPushSupplier (TAO_CEC_EventChannel* ec,
 
 // TAO_CEC_ProxyPushSupplier Constructure (Typed EC)
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
-TAO_CEC_ProxyPushSupplier::TAO_CEC_ProxyPushSupplier (TAO_CEC_TypedEventChannel* ec,
-                                                      ACE_Time_Value timeout)
+TAO_CEC_ProxyPushSupplier::
+TAO_CEC_ProxyPushSupplier (TAO_CEC_TypedEventChannel* ec,
+                           const ACE_Time_Value &timeout)
   : timeout_ (timeout),
     typed_event_channel_ (ec),
     refcount_ (1)

@@ -1375,9 +1375,8 @@ TAO_CEC_Default_Factory::destroy_supplier_control (TAO_CEC_SupplierControl* x)
   delete x;
 }
 
-CORBA::Policy_ptr
-TAO_CEC_Default_Factory::create_roundtrip_timeout_policy
-  (ACE_Time_Value timeout)
+CORBA::Policy_ptr TAO_CEC_Default_Factory::create_roundtrip_timeout_policy
+(const ACE_Time_Value &timeout)
 {
   //get the existing orb
   int fake_argc = 0;

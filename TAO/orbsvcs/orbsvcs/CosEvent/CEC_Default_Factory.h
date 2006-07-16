@@ -161,8 +161,8 @@ public:
       create_supplier_control (TAO_CEC_TypedEventChannel*);
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
-  virtual CORBA::Policy_ptr create_roundtrip_timeout_policy
-    (ACE_Time_Value timeout);
+  virtual CORBA::Policy_ptr
+  create_roundtrip_timeout_policy (const ACE_Time_Value &timeout);
 
 private:
   /// Parse an argument to set the type of collections used.
