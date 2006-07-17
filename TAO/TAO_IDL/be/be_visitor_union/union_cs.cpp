@@ -94,7 +94,6 @@ int be_visitor_union_cs::visit_union (be_union *node)
   *os << be_nl << be_nl
       << node->name () << "::" << node->local_name () << " (void)" << be_nl
       << "{" << be_idt_nl
-      << "ACE_OS::memset (&this->disc_, 0, sizeof (this->disc_));" << be_nl
       << "ACE_OS::memset (&this->u_, 0, sizeof (this->u_));" << be_nl
       << "this->disc_ = ";
 

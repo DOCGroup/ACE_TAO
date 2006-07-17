@@ -36,10 +36,10 @@ TAO::CSD::TP_Collocated_Synch_Request::dispatch_i()
 #if defined (TAO_HAS_EXCEPTIONS)
   ACE_CATCHALL
     {
-      this->exception_ 
-        = new CORBA::UNKNOWN (CORBA::SystemException::_tao_minor_code
+      ACE_NEW (this->exception_ ,
+               CORBA::UNKNOWN (CORBA::SystemException::_tao_minor_code
                                  (TAO_UNHANDLED_SERVER_CXX_EXCEPTION, 0),
-                                  CORBA::COMPLETED_MAYBE);
+                                  CORBA::COMPLETED_MAYBE));
     }
 #endif
   ACE_ENDTRY;

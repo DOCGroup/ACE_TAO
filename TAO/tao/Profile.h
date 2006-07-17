@@ -24,6 +24,7 @@
 #include "tao/GIOP_Message_Version.h"
 #include "tao/Refcounted_ObjectKey.h"
 #include "tao/Service_Callbacks.h"
+#include "tao/Configurable_Refcount.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Lock;
@@ -375,11 +376,8 @@ private:
   /// object.
   TAO_MProfile* forward_to_;
 
-  /// Mutex to protect reference count.
-  ACE_Lock *refcount_lock_;
-
   /// Number of outstanding references to this object.
-  CORBA::ULong refcount_;
+  TAO_Configurable_Refcount refcount_;
 
   //@@ TAO_PROFILE_SPL_PRIVATE_DATA_ADD_HOOK
 };

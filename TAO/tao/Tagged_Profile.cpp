@@ -174,9 +174,8 @@ TAO_Tagged_Profile::unmarshall_ref_addr_i (
 
   if (hdr_status)
     {
-      // Set the type_id
-      this->type_id_.set (input.rd_ptr (),
-                          0);
+      // Set the type_id (it is not owned by this object)
+      this->type_id_ = input.rd_ptr ();
 
       input.skip_bytes (id_length);
     }

@@ -1776,14 +1776,11 @@ TAO_Root_POA::parse_key (const TAO::ObjectKey &key,
                          CORBA::Boolean &is_system_id,
                          TAO::Portable_Server::Temporary_Creation_Time &poa_creation_time)
 {
-  // Start at zero.
-  CORBA::ULong starting_at = 0;
-
   // Get the object key octets.
   const CORBA::Octet *key_data = key.get_buffer ();
 
   // Skip the object key prefix since we have already checked for this.
-  starting_at += TAO_OBJECTKEY_PREFIX_SIZE;
+  CORBA::ULong starting_at = TAO_OBJECTKEY_PREFIX_SIZE;
 
   // Check the root indicator.
   char root_key_type = key_data[starting_at];

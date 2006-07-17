@@ -25,6 +25,10 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+#ifndef TAO_POA_OBJECT_ID_BUF_SIZE
+#define TAO_POA_OBJECT_ID_BUF_SIZE 512
+#endif /* TAO_POA_OBJECT_ID_BUF_SIZE */
+
 namespace TAO
 {
   namespace Portable_Server
@@ -145,6 +149,10 @@ namespace TAO
     protected:
       /// The POA implementation invoking an upcall
       ::TAO_Root_POA *poa_;
+
+      /// In order to avoid memory allocations, we will populate
+      /// the object id with this buffer.
+      CORBA::Octet object_id_buf_[TAO_POA_OBJECT_ID_BUF_SIZE];
 
       /**
        * The object ID of the current context.  This is the user id and

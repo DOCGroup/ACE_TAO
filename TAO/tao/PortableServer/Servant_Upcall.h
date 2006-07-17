@@ -205,6 +205,7 @@ namespace TAO
 
       State state_;
 
+      CORBA::Octet system_id_buf_[TAO_POA_OBJECT_ID_BUF_SIZE];
       PortableServer::ObjectId system_id_;
 
       const PortableServer::ObjectId *user_id_;

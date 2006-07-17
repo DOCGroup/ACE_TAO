@@ -486,15 +486,16 @@ TAO_Thread_Pool::TAO_Thread_Pool (TAO_Thread_Pool_Manager &manager,
     ACE_THROW (CORBA::NO_IMPLEMENT ());
 
   // Create one lane.
-  this->lanes_ = new TAO_Thread_Lane *[this->number_of_lanes_];
-  this->lanes_[0] =
-    new TAO_Thread_Lane (*this,
-                         0,
-                         default_priority,
-                         static_threads,
-                         dynamic_threads,
-                         dynamic_thread_idle_timeout
-                         ACE_ENV_ARG_PARAMETER);
+  ACE_NEW (this->lanes_,
+           TAO_Thread_Lane *[this->number_of_lanes_]);
+  ACE_NEW (this->lanes_[0],
+           TAO_Thread_Lane (*this,
+                            0,
+                            default_priority,
+                            static_threads,
+                            dynamic_threads,
+                            dynamic_thread_idle_timeout
+                            ACE_ENV_ARG_PARAMETER));
 }
 
 TAO_Thread_Pool::TAO_Thread_Pool (TAO_Thread_Pool_Manager &manager,
@@ -525,18 +526,19 @@ TAO_Thread_Pool::TAO_Thread_Pool (TAO_Thread_Pool_Manager &manager,
     ACE_THROW (CORBA::NO_IMPLEMENT ());
 
   // Create multiple lane.
-  this->lanes_ = new TAO_Thread_Lane *[this->number_of_lanes_];
+  ACE_NEW (this->lanes_,
+           TAO_Thread_Lane *[this->number_of_lanes_]);
   for (CORBA::ULong i = 0;
        i != this->number_of_lanes_;
        ++i)
-    this->lanes_[i] =
-      new TAO_Thread_Lane (*this,
-                           i,
-                           lanes[i].lane_priority,
-                           lanes[i].static_threads,
-                           lanes[i].dynamic_threads,
-                           dynamic_thread_idle_timeout
-                           ACE_ENV_ARG_PARAMETER);
+    ACE_NEW (this->lanes_[i],
+             TAO_Thread_Lane (*this,
+                              i,
+                              lanes[i].lane_priority,
+                              lanes[i].static_threads,
+                              lanes[i].dynamic_threads,
+                              dynamic_thread_idle_timeout
+                              ACE_ENV_ARG_PARAMETER));
 }
 
 void

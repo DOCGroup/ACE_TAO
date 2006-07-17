@@ -212,34 +212,52 @@ TAO_Queued_Data::TAO_Queued_Data (const TAO_Queued_Data &qd)
 
 /*static*/
 TAO_Queued_Data *
-TAO_Queued_Data::make_queued_data (ACE_Allocator *alloc)
+TAO_Queued_Data::make_queued_data (ACE_Allocator *message_buffer_alloc,
+                                   ACE_Allocator *input_cdr_alloc,
+                                   ACE_Data_Block *db)
 {
+  // Get a node for the queue..
   TAO_Queued_Data *qd = 0;
 
-  if (alloc)
+  if (message_buffer_alloc)
     {
       ACE_NEW_MALLOC_RETURN (qd,
                              static_cast<TAO_Queued_Data *> (
-                               alloc->malloc (sizeof (TAO_Queued_Data))),
-                             TAO_Queued_Data (alloc),
+                               message_buffer_alloc->malloc (sizeof (TAO_Queued_Data))),
+                             TAO_Queued_Data (message_buffer_alloc),
                              0);
 
-      return qd;
     }
-
-  // No allocator, so use the global pool!
-  // @@ TODO: We should be removing this at some point of time!
-  if (TAO_debug_level == 4)
+  else
     {
-      // This debug is for testing purposes!
-      ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) - Queued_Data::get_queued_data\n"
-                  "Using global pool for allocation \n"));
+      // No allocator, so use the global pool!
+      ACE_NEW_RETURN (qd,
+                      TAO_Queued_Data,
+                      0);
     }
 
-  ACE_NEW_RETURN (qd,
-                  TAO_Queued_Data,
-                  0);
+  // Providing an ACE_Data_Block indicates that the caller wants
+  // an aligned ACE_Message_Block added to the TAO_Queued_Data.
+  if (db != 0)
+    {
+      // If this allocation fails, the TAO_Queued_Data will be leaked.
+      if (input_cdr_alloc == 0)
+        ACE_NEW_RETURN (qd->msg_block_,
+                        ACE_Message_Block (db,
+                                           0,
+                                           input_cdr_alloc),
+                        0);
+      else
+        ACE_NEW_MALLOC_RETURN (qd->msg_block_,
+                               static_cast<ACE_Message_Block*> (
+                                 input_cdr_alloc->malloc (sizeof (ACE_Message_Block))),
+                               ACE_Message_Block (db,
+                                                  0,
+                                                  input_cdr_alloc),
+                               0);
+
+      ACE_CDR::mb_align (qd->msg_block_);
+    }
 
   return qd;
 }

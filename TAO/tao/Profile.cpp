@@ -41,13 +41,9 @@ TAO_Profile::TAO_Profile (CORBA::ULong tag,
     , tag_ (tag)
     , orb_core_ (orb_core)
     , forward_to_ (0)
-    , refcount_lock_ (0)
-    , refcount_ (1)
+    , refcount_ (this->orb_core_->
+                   client_factory ()->create_profile_refcount ())
 {
-  // @@ NOTE: Need to probably use a different type of lock.
-  this->refcount_lock_ =
-    this->orb_core_->client_factory ()->create_profile_lock ();
-
   (void) this->orb_core_->object_key_table ().bind (obj_key,
                                                     this->ref_object_key_);
 }
@@ -63,12 +59,9 @@ TAO_Profile::TAO_Profile (CORBA::ULong tag,
     , tag_ (tag)
     , orb_core_ (orb_core)
     , forward_to_ (0)
-    , refcount_lock_ (0)
-    , refcount_ (1)
+    , refcount_ (this->orb_core_->
+                   client_factory ()->create_profile_refcount ())
 {
-  // @@ NOTE: Need to probably use a different type of lock.
-  this->refcount_lock_ =
-    this->orb_core_->client_factory ()->create_profile_lock ();
 }
 
 TAO_Profile::~TAO_Profile (void)
@@ -79,7 +72,6 @@ TAO_Profile::~TAO_Profile (void)
     }
 
   this->orb_core_->object_key_table ().unbind (this->ref_object_key_);
-  delete this->refcount_lock_;
 
   //@@ TAO_PROFILE_SPL_DESTRUCTOR_ADD_HOOK
 }
@@ -87,22 +79,15 @@ TAO_Profile::~TAO_Profile (void)
 CORBA::ULong
 TAO_Profile::_incr_refcnt (void)
 {
-  ACE_GUARD_RETURN (ACE_Lock, guard, *this->refcount_lock_, 0);
-  return ++this->refcount_;
+  return this->refcount_.increment ();
 }
 
 CORBA::ULong
 TAO_Profile::_decr_refcnt (void)
 {
-  {
-    ACE_GUARD_RETURN (ACE_Lock, mon, *this->refcount_lock_, 0);
-    --this->refcount_;
-
-    if (this->refcount_ != 0)
-      {
-        return this->refcount_;
-      }
-  }
+  CORBA::ULong count = this->refcount_.decrement ();
+  if (count != 0)
+    return count;
 
   // refcount is 0, so delete us!
   // delete will call our ~ destructor which in turn deletes stuff.

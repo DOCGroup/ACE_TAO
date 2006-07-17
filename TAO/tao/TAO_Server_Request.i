@@ -2,7 +2,43 @@
 //
 // $Id$
 
+#include "tao/GIOP_Utils.h"
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+// This constructor is used by the CSD clone.
+ACE_INLINE
+TAO_ServerRequest::TAO_ServerRequest (void)
+  : mesg_base_ (0),
+    operation_ (0),
+    operation_len_ (0),
+    release_operation_ (false),
+    incoming_ (0),
+    outgoing_ (0),
+    transport_(0),
+    response_expected_ (false),
+    deferred_reply_ (false),
+    sync_with_server_ (false),
+    is_dsi_ (false),
+    exception_type_ (TAO_GIOP_NO_EXCEPTION),
+    orb_core_ (0),
+    request_id_ (0),
+    profile_ (0),
+    requesting_principal_ (0),
+    dsi_nvlist_align_ (0),
+    operation_details_ (0),
+    argument_flag_ (1)
+#if TAO_HAS_INTERCEPTORS == 1
+  , interceptor_count_ (0)
+  , rs_pi_current_ ()
+  , result_seq_ (0)
+  , caught_exception_ (0)
+  , reply_status_ (-1)
+#endif  /* TAO_HAS_INTERCEPTORS == 1 */
+{
+  if (this->release_operation_)
+    CORBA::string_free (const_cast<char*> (this->operation_));
+}
 
 ACE_INLINE TAO_ORB_Core *
 TAO_ServerRequest::orb_core (void) const
@@ -25,7 +61,7 @@ TAO_ServerRequest::outgoing (void) const
 ACE_INLINE const char *
 TAO_ServerRequest::operation (void) const
 {
-  return this->operation_.c_str ();
+  return (this->operation_ == 0 ? "" : this->operation_);
 }
 
 ACE_INLINE void
@@ -33,20 +69,18 @@ TAO_ServerRequest::operation (const char *operation,
                               size_t length,
                               int release)
 {
-  if (length == 0)
-    {
-      this->operation_.set (operation, release);
-    }
-  else
-    {
-      this->operation_.set (operation, length, release);
-    }
+  if (this->release_operation_)
+    CORBA::string_free (const_cast <char*> (this->operation_));
+
+  this->operation_len_ = (length == 0 ? ACE_OS::strlen (operation) : length);
+  this->release_operation_ = release;
+  this->operation_ = operation;
 }
 
 ACE_INLINE size_t
 TAO_ServerRequest::operation_length (void) const
 {
-  return this->operation_.length ();
+  return this->operation_len_;
 }
 
 ACE_INLINE CORBA::Boolean
