@@ -28,7 +28,7 @@ project : taolib, core, core_anytypecode, tao_versioning_idl_defaults {
   }
 
   IDL_Files {
-    idlflags += -SS -Ge 1 -Sorb \
+    idlflags += -SS -Ge 1 \
                 -Wb,export_macro=TAO_IFR_Client_Export \
                 -Wb,export_include=tao/IFR_Client/ifr_client_export.h \
                 -o IFR_Client
