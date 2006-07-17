@@ -23,7 +23,7 @@ namespace TAO
   {
     POA_Current_Impl::POA_Current_Impl (void)
       : poa_ (0),
-        object_id_ (),
+        object_id_ (TAO_POA_OBJECT_ID_BUF_SIZE, 0, object_id_buf_),
         object_key_ (0),
         servant_ (0),
         priority_ (TAO_INVALID_PRIORITY),

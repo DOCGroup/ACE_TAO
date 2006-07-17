@@ -129,7 +129,10 @@ public:
   TAO_Queued_Data (const TAO_Queued_Data &qd);
 
   /// Creation of a node in the queue.
-  static TAO_Queued_Data* make_queued_data (ACE_Allocator *alloc = 0);
+  static TAO_Queued_Data* make_queued_data (
+                                    ACE_Allocator *message_buffer_alloc = 0,
+                                    ACE_Allocator *input_cdr_alloc = 0,
+                                    ACE_Data_Block *db = 0);
 
   /// Deletion of a node from the queue.
   static void release (TAO_Queued_Data *qd);

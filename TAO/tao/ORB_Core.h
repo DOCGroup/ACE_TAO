@@ -1217,7 +1217,7 @@ protected:
   TAO::Transport_Queueing_Strategy *default_transport_queueing_strategy_;
 
   /// Number of outstanding references to this object.
-  CORBA::ULong refcount_;
+  ACE_Atomic_Op<TAO_SYNCH_MUTEX, unsigned long> refcount_;
 
   /// Registry containing all registered policy factories.
   TAO::PolicyFactory_Registry_Adapter *policy_factory_registry_;

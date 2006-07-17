@@ -304,7 +304,9 @@ TAO_GIOP_Message_Base::format_message (TAO_OutputCDR &stream)
       ACE_Message_Block* consolidated_block = 0;
       if (stream.begin()->cont () != 0)
         {
-          consolidated_block = new ACE_Message_Block;
+          ACE_NEW_RETURN (consolidated_block,
+                          ACE_Message_Block,
+                          0);
           ACE_CDR::consolidate (consolidated_block, stream.begin ());
           buf = (char *) (consolidated_block->rd_ptr ());
         }
@@ -658,12 +660,22 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
                    qd->minor_version_,
                    generator_parser);
 
-  // A buffer that we will use to initialise the CDR stream
+  // A buffer that we will use to initialise the CDR stream.  Since we're
+  // allocating the buffer on the stack, we may as well allocate the data
+  // block on the stack too and avoid an allocation inside the message
+  // block of the CDR.
 #if defined (ACE_INITIALIZE_MEMORY_BEFORE_USE)
   char repbuf[ACE_CDR::DEFAULT_BUFSIZE] = { 0 };
 #else
   char repbuf[ACE_CDR::DEFAULT_BUFSIZE];
 #endif /* ACE_INITIALIZE_MEMORY_BEFORE_USE */
+  ACE_Data_Block out_db (sizeof (repbuf),
+                         ACE_Message_Block::MB_DATA,
+                         repbuf,
+                         this->orb_core_->input_cdr_buffer_allocator (),
+                         0,
+                         ACE_Message_Block::DONT_DELETE,
+                         this->orb_core_->input_cdr_dblock_allocator ());
 
   // Initialize an output CDR on the stack
   // NOTE: Don't jump to a conclusion as to why we are using the
@@ -675,11 +687,8 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
   // lock, we need to set things like this -- put stuff in TSS here
   // and transfer to global memory when we get flow controlled. We
   // need to work on the message block to get it right!
-  TAO_OutputCDR output (repbuf,
-                        sizeof repbuf,
+  TAO_OutputCDR output (&out_db,
                         TAO_ENCAP_BYTE_ORDER,
-                        this->orb_core_->input_cdr_buffer_allocator (),
-                        this->orb_core_->input_cdr_dblock_allocator (),
                         this->orb_core_->input_cdr_msgblock_allocator (),
                         this->orb_core_->orb_params ()->cdr_memcpy_tradeoff (),
                         this->fragmentation_strategy_.get (),
@@ -1678,24 +1687,6 @@ TAO_GIOP_Message_Base::is_ready_for_bidirectional (TAO_OutputCDR &msg)
 TAO_Queued_Data *
 TAO_GIOP_Message_Base::make_queued_data (size_t sz)
 {
-  // Get a node for the queue..
-  TAO_Queued_Data *qd =
-    TAO_Queued_Data::make_queued_data (
-      this->orb_core_->transport_message_buffer_allocator ());
-
-  if (qd == 0)
-    {
-      if (TAO_debug_level > 0)
-        {
-          ACE_ERROR ((LM_ERROR,
-            ACE_TEXT ("TAO (%P|%t) - TAO_GIOP_Message_Base::make_queued_data, ")
-            ACE_TEXT ("our of memory, failed to allocate queued data object\n")));
-        }
-      return 0; // NULL pointer
-    }
-
-  // @@todo: We have a similar method in Transport.cpp. Need to see how
-  // we can factor them out..
   // Make a datablock for the size requested + something. The
   // "something" is required because we are going to align the data
   // block in the message block. During alignment we could loose some
@@ -1705,57 +1696,23 @@ TAO_GIOP_Message_Base::make_queued_data (size_t sz)
     this->orb_core_->create_input_cdr_data_block (sz +
                                                   ACE_CDR::MAX_ALIGNMENT);
 
-  if (db == 0)
-    {
-      TAO_Queued_Data::release (qd);
+  TAO_Queued_Data *qd =
+    TAO_Queued_Data::make_queued_data (
+                 this->orb_core_->transport_message_buffer_allocator (),
+                 this->orb_core_->input_cdr_msgblock_allocator (),
+                 db);
 
+  if (qd == 0)
+    {
       if (TAO_debug_level > 0)
         {
           ACE_ERROR ((LM_ERROR,
             ACE_TEXT ("TAO (%P|%t) - TAO_GIOP_Message_Base::make_queued_data, ")
-            ACE_TEXT ("out of memory, failed to allocate input data block of size %u\n"),
-            sz));
+            ACE_TEXT ("out of memory, failed to allocate queued data object\n")));
         }
+      db->release ();
       return 0; // NULL pointer
     }
-
-  ACE_Allocator *alloc =
-    this->orb_core_->input_cdr_msgblock_allocator ();
-
-  if (alloc == 0)
-    {
-      if (TAO_debug_level >= 8)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-             ACE_TEXT ("(%P|%t) - TAO_GIOP_Message_Base::make_queued_data,")
-             ACE_TEXT (" no ACE_Allocator defined\n")));
-        }
-    }
-
-
-  ACE_Message_Block mb (db,
-                        0,
-                        alloc);
-
-  ACE_Message_Block *new_mb = mb.duplicate ();
-
-  if (new_mb == 0)
-    {
-      TAO_Queued_Data::release (qd);
-      db->release();
-
-      if (TAO_debug_level > 0)
-        {
-          ACE_ERROR ((LM_ERROR,
-            ACE_TEXT ("TAO (%P|%t) - TAO_GIOP_Message_Base::make_queued_data, ")
-            ACE_TEXT ("out of memory, failed to allocate message block\n")));
-        }
-      return 0;
-    }
-
-  ACE_CDR::mb_align (new_mb);
-
-  qd->msg_block_ = new_mb;
 
   return qd;
 }

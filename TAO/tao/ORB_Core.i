@@ -16,19 +16,15 @@ TAO_ORB_Core::configuration (void) const
 ACE_INLINE CORBA::ULong
 TAO_ORB_Core::_incr_refcnt (void)
 {
-  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->lock_, 0);
   return this->refcount_++;
 }
 
 ACE_INLINE CORBA::ULong
 TAO_ORB_Core::_decr_refcnt (void)
 {
-  {
-    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_, 0);
-    --this->refcount_;
-    if (this->refcount_ != 0)
-      return this->refcount_;
-  }
+  CORBA::ULong count = --this->refcount_;
+  if (count != 0)
+    return count;
 
   this->fini ();
   return 0;

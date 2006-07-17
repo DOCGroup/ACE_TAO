@@ -32,6 +32,7 @@
 #include "tao/Object_Argument_T.h"
 #include "tao/Arg_Traits_T.h"
 #include "tao/Any_Insert_Policy_T.h"
+#include "tao/Configurable_Refcount.h"
 
 #if defined (HPUX) && defined (IOR)
    /* HP-UX 11.11 defines IOR in /usr/include/pa/inline.h
@@ -406,7 +407,7 @@ namespace CORBA
     TAO_Stub * protocol_proxy_;
 
     /// Number of outstanding references to this object.
-    CORBA::ULong refcount_;
+    TAO_Configurable_Refcount refcount_;
 
     /// Protect reference count manipulation from race conditions.
     /**
@@ -415,7 +416,7 @@ namespace CORBA
      * not require reference counting (the default) may be
      * instantiated in the critical path.
      */
-    ACE_Lock * refcount_lock_;
+    ACE_Lock * object_init_lock_;
   };
 }   // End CORBA namespace.
 

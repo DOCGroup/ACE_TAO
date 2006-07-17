@@ -3,6 +3,8 @@
 // $Id$
 
 
+#include "ace/OS_Memory.h"
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
@@ -35,7 +37,11 @@ CORBA::Environment::_duplicate (CORBA::Environment *x)
       return 0;
     }
 
-  return new CORBA::Environment (*x);
+  CORBA::Environment* ptr = 0;
+  ACE_NEW_RETURN (ptr,
+                  CORBA::Environment (*x),
+                  0);
+  return ptr;
 }
 
 ACE_INLINE

@@ -48,7 +48,11 @@ TAO_Leader_Follower::allocate_follower (void)
   if (!this->follower_free_list_.empty ())
     return this->follower_free_list_.pop_front ();
 
-  return new TAO_LF_Follower (*this);
+  TAO_LF_Follower* ptr = 0;
+  ACE_NEW_RETURN (ptr,
+                  TAO_LF_Follower (*this),
+                  0);
+  return ptr;
 }
 
 void

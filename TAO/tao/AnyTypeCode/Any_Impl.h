@@ -110,7 +110,7 @@ namespace TAO
 
   private:
     /// Reference counter.
-    ACE_Atomic_Op<TAO_SYNCH_MUTEX, CORBA::ULong> refcount_;
+    ACE_Atomic_Op<TAO_SYNCH_MUTEX, unsigned long> refcount_;
   };
 }
 

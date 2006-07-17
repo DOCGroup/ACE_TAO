@@ -52,8 +52,8 @@ namespace TAO
      * FW_Server_Request_Wrapper class' implementation, and all CSD
      * Strategies will work again.  It's a maintenance issue.
      *
-     * @note: The CSD namespace is inside of TAO namespace in current 
-     *        implementation. This can be changed but, at least for now, it's 
+     * @note: The CSD namespace is inside of TAO namespace in current
+     *        implementation. This can be changed but, at least for now, it's
      *        already been delivered to some customs, we leave it as-is. If it
      *        needs to change, we will make this change.
      */
@@ -87,13 +87,13 @@ namespace TAO
       TAO_InputCDR* clone (TAO_InputCDR*& from);
 
       /// Create a deep copy of a TAO_Operation_Details object and marshall
-      /// the arguments into a TAO_InputCDR stream. The cloned TAO_Operation_Details 
-      /// object is created without any arguments. This would help the skeleton 
-      /// code to determine whether the arguments are in the operation_details_ 
+      /// the arguments into a TAO_InputCDR stream. The cloned TAO_Operation_Details
+      /// object is created without any arguments. This would help the skeleton
+      /// code to determine whether the arguments are in the operation_details_
       /// object or should be demarshalled from the incoming_ stream in the request_
       /// object.
       bool clone (TAO_Operation_Details const *& from,
-                  TAO_Operation_Details const *& to, 
+                  TAO_Operation_Details const *& to,
                   TAO_InputCDR* & cdr);
 
       /// Clone the TAO_Tagged_Profile object.
@@ -102,14 +102,11 @@ namespace TAO
       /// Clone the TAO_Service_Context object.
       void clone (TAO_Service_Context& from, TAO_Service_Context& to);
 
-      /// Create a new TAO_ServerRequest with default initial values. 
-      TAO_ServerRequest* create_new_request ();
-
       /// Create a TAO_OutputCDR stream initialized with a heap allocated
       /// buffer.
       TAO_OutputCDR* create_new_output_cdr ();
 
-      /// A flag that indicates that the TAO_ServerRequest object 
+      /// A flag that indicates that the TAO_ServerRequest object
       /// is already cloned.
       bool is_clone_;
 

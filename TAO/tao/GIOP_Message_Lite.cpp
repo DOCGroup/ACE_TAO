@@ -220,7 +220,9 @@ TAO_GIOP_Message_Lite::format_message (TAO_OutputCDR &stream)
       ACE_Message_Block* consolidated_block = 0;
       if (stream.begin()->cont() != 0)
         {
-          consolidated_block = new ACE_Message_Block;
+          ACE_NEW_RETURN (consolidated_block,
+                          ACE_Message_Block,
+                          0);
           ACE_CDR::consolidate(consolidated_block, stream.begin());
           buf = (char *) (consolidated_block->rd_ptr ());
         }
@@ -1670,15 +1672,6 @@ TAO_GIOP_Message_Lite::dump_msg (const char *label,
 TAO_Queued_Data *
 TAO_GIOP_Message_Lite::make_queued_data (size_t sz)
 {
-  // Get a node for the queue..
-  TAO_Queued_Data *qd =
-    TAO_Queued_Data::make_queued_data ();
-
-  if (qd == 0)
-    {
-      return 0;
-    }
-
   // Make a datablock for the size requested + something. The
   // "something" is required because we are going to align the data
   // block in the message block. During alignment we could loose some
@@ -1688,32 +1681,17 @@ TAO_GIOP_Message_Lite::make_queued_data (size_t sz)
     this->orb_core_->create_input_cdr_data_block (sz +
                                                   ACE_CDR::MAX_ALIGNMENT);
 
-  if (db == 0)
+  TAO_Queued_Data *qd =
+    TAO_Queued_Data::make_queued_data (
+                 this->orb_core_->transport_message_buffer_allocator (),
+                 this->orb_core_->input_cdr_msgblock_allocator (),
+                 db);
+
+  if (qd == 0)
     {
-      TAO_Queued_Data::release (qd);
+      db->release ();
       return 0;
     }
-
-  ACE_Allocator *alloc =
-    this->orb_core_->input_cdr_msgblock_allocator ();
-
-  ACE_Message_Block mb (db,
-                        0,
-                        alloc);
-
-  ACE_Message_Block *new_mb = mb.duplicate ();
-
-  if (new_mb == 0)
-    {
-      TAO_Queued_Data::release (qd);
-      db->release();
-
-      return 0;
-    }
-
-  ACE_CDR::mb_align (new_mb);
-
-  qd->msg_block_ = new_mb;
 
   return qd;
 }

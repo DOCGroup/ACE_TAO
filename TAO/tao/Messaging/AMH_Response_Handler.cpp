@@ -234,9 +234,7 @@ TAO_AMH_Response_Handler::_tao_rh_send_exception (CORBA::Exception &ex
 void
 TAO_AMH_Response_Handler::_remove_ref (void)
 {
-  const CORBA::ULong new_count = --this->refcount_;
-
-  if (new_count > 0)
+  if (--this->refcount_ > 0)
     return;
 
   if (this->allocator_)

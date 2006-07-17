@@ -177,7 +177,11 @@ TAO_Table_Adapter_Factory::TAO_Table_Adapter_Factory (void)
 TAO_Adapter*
 TAO_Table_Adapter_Factory::create (TAO_ORB_Core *oc)
 {
-  return new TAO_Table_Adapter (oc);
+  TAO_Adapter* ptr = 0;
+  ACE_NEW_RETURN (ptr,
+                 TAO_Table_Adapter (oc),
+                 0);
+  return ptr;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
