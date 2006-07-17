@@ -28,7 +28,7 @@ module Stock
 
 This IDL file (Common.idl) contains all the exception(s), struct(s), value type(s) and
 common interface(s) used by the Stock Quoter Publisher/Subscriber Real-time CORBA Service. The
-generated lib of this idl file will be linked by all the other projects in the service system. <P>
+generated lib of this idl file will be linked by all the other projects in the system. <P>
 
 <li><h4>Defining the IDL exception</h4></li>
 
@@ -136,10 +136,10 @@ interface StockBroker
 
 This is the interface definition for Stock Broker client. <P>
 The get_consumer_notifier() operation returns an object reference to the StockNameConsumer interface
-shown earlier. When the stock quoter system is initialized, this factory operation will be used to
-connect the stock distributor publisher with the StockNameConsumer subscriber. <P>
+shown earlier. When the stock quoter system is initialized, this factory operation will be used to 
+return the StockNameConsumer object that belongs to the Stock Broker object. <P>
 These connect_quoter_info(), disconnect_quoter_info(), and get_connection_quoter_info() operations
-are also used connect the StockBroker with the StockQuoter object that's provided by the StockDistributor
+are used to connect the StockBroker with the StockQuoter object that's provided by the StockDistributor
 interface describe next. <P>
 
 <PRE>
@@ -178,6 +178,8 @@ The subscribe_notifier() and unsubscribe_notifier() operations are to subscribe/
 objects that consume the StockName events published by the StockDistributor. <P>
 The provide_quoter_info() factory operation returns object references that StockBroker consumers can
 use to obtain more information about a particular stock. <P>
+The notification_rate attribute stands for the notification frequency that the Stock Distributor server used 
+to communicate with the Stock Broker client. <P>
 
 <PRE>
 interface StockBrokerHome

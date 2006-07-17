@@ -1,14 +1,9 @@
 // $Id$
 
 // ACE headers
-#include "ace/streams.h"
 #include "ace/OS_NS_unistd.h"
 
 // TAO headers
-#include "tao/CORBA.h"
-#include "tao/AnyTypeCode/Typecode.h"
-#include "tao/RTCORBA/RTCORBA.h"
-#include "tao/RTCORBA/Thread_Pool.h"
 #include "tao/RTPortableServer/RTPortableServer.h"
 
 // local headers
@@ -18,24 +13,18 @@
 
 // STL headers
 #include <strstream>
-#include <ctime>
-#include <cstring>
 
 // Implementation skeleton constructor
 Stock_StockDistributor_i::Stock_StockDistributor_i (CORBA::ORB_ptr orb,
                                                     CORBA::PolicyList &policy_list)
                                                     : rate_(3000),
-                                                      active_ (false)
+                                                      active_ (false),
+                                                      quoter_ (0)
 {
-  // Get at reference to the <RTCurrent> object. This will be used
-  // in the _thread_func for changing the priority of the client thread
-  // to the priority of the connected <StockNameConsumer>.
-  CORBA::Object_var obj = orb->resolve_initial_references ("RTCurrent");
-
   // Create a child POA with CLIENT_PROPAGATED policies. The name of the
-  // POA will be <Stock_StockDistributorHome>. Any instances of the
-  // Stock_StockDistributor_i created via the create() method will be
-  // activated under this POA.
+  // POA will be <StockQuoter_POA>. Any instances of the
+  // Stock_StockQuoter_i created by this Stock_StockDistributor_i object
+  // will be activated under this POA.
   PortableServer::POA_var poa = this->_default_POA()->create_POA (
     "StockQuoter_POA", PortableServer::POAManager::_nil (), policy_list);
   ACE_ASSERT (!CORBA::is_nil (poa));
@@ -65,29 +54,23 @@ Stock_StockDistributor_i::~Stock_StockDistributor_i (void)
   throw (::CORBA::SystemException)
 {
   // Get mutual exclusion of the <subscribers_list_>.
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, g, lock_, 0);
+  ACE_GUARD_RETURN (ACE_RW_Thread_Mutex, g, lock_, 0);
 
-  for (; ;)
+  // Generate an unique id for the cookie.
+  std::ostrstream cookie_id;
+  cookie_id << "COOKIE:" << time (0) << "_" << ACE_OS::rand () << std::ends;
+
+  // Create a new cookie object; initialize its value.
+  OBV_Stock::Cookie *cookie = new OBV_Stock::Cookie (cookie_id.str ());
+
+  // Insert the cookie into the <subscribers_list_>.
+  std::pair <CookieMap::iterator, bool> result =
+    this->subscribers_list_.insert (std::make_pair (cookie,
+    std::make_pair (Stock::StockNameConsumer::_duplicate (c), priority)));
+
+  if (result.second == true)
   {
-    // Generate an unique id for the cookie.
-    std::ostrstream cookie_id;
-    cookie_id << "COOKIE:" << time (0) << "_" << ACE_OS::rand () << std::ends;
-
-    // Create a new cookie object; initialize its value.
-    OBV_Stock::Cookie *cookie = new OBV_Stock::Cookie (cookie_id.str ());
-
-    // Insert the cookie into the <subscribers_list_>.
-    std::pair <CookieMap::iterator, bool> result =
-      this->subscribers_list_.insert (std::make_pair (cookie,
-      std::make_pair (Stock::StockNameConsumer::_duplicate (c), priority)));
-
-    // The <Cookie> was successfully created. Now that it has been
-    // inserted into the map, we need to activate the StockNameConsumer
-    // using the specified priority
-    if (result.second == true)	{
-      // This will allow the <_thread_func> to continue processing the <subscribers_list_>.
-      return cookie;
-    }
+    return cookie;
   }
 
   return 0;
@@ -96,8 +79,10 @@ Stock_StockDistributor_i::~Stock_StockDistributor_i (void)
 ::Stock::StockNameConsumer_ptr Stock_StockDistributor_i::unsubscribe_notifier (::Stock::Cookie *ck)
   throw (::CORBA::SystemException)
 {
+  // Get mutual exclusion of the <subscribers_list_>.
+  ACE_GUARD_RETURN (ACE_RW_Thread_Mutex, g, lock_, 0);
+  
   // Search for the <cookie> in the <subscribers_list_>.
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, g, lock_, 0);
   CookieMap::iterator iter = this->subscribers_list_.find (ck);
 
   // Verify we have located the <cookie>.
@@ -105,9 +90,7 @@ Stock_StockDistributor_i::~Stock_StockDistributor_i (void)
     return Stock::StockNameConsumer::_nil ();
 
   // Erase the mapping from the <subscribers_list_>.
-  Stock::Cookie_var cookie = iter->first;
   Stock::StockNameConsumer_var consumer = iter->second.first;
-
   this->subscribers_list_.erase (iter);
 
   // Return the StockNameConsumer to the client.
@@ -165,14 +148,14 @@ Stock_StockDistributorHome_i::Stock_StockDistributorHome_i (CORBA::ORB_ptr orb)
                                cookie_factory);
 
   Stock_PriorityMapping::register_mapping (orb);
+  
+  // Initialize the database
+  STOCK_DATABASE->activate (THR_NEW_LWP | THR_JOINABLE, 1);
 
   // Get a reference to the <RTORB>.
   CORBA::Object_var obj = orb->resolve_initial_references ("RTORB");
   RTCORBA::RTORB_var rt_orb = RTCORBA::RTORB::_narrow (obj.in ());
   ACE_ASSERT (!CORBA::is_nil (rt_orb));
-
-  // Initialize the database
-  STOCK_DATABASE->activate (THR_NEW_LWP | THR_JOINABLE, 1);
 
   // Create a <CORBA::PolicyList> for the child POA.
   CORBA::PolicyList stock_distributor_policies (2);
@@ -197,7 +180,7 @@ Stock_StockDistributorHome_i::Stock_StockDistributorHome_i (CORBA::ORB_ptr orb)
   stock_distributor_policies[1] = rt_orb->create_threadpool_policy (threadpool_id);
 
   // Create a child POA with CLIENT_PROPAGATED policies. The name of the
-  // POA will be <Stock_StockDistributorHome>. Any instances of the
+  // POA will be <StockDistributor_POA>. Any instances of the
   // Stock_StockDistributor_i created via the create() method will be
   // activated under this POA.
   PortableServer::POA_var poa = this->_default_POA()->create_POA (
@@ -241,7 +224,7 @@ int Stock_StockDistributor_i::svc (void)
   {
     ACE_DEBUG ((LM_DEBUG, "*** message: transmitting data to the StockNameConsumer...\n"));
 
-    ACE_GUARD_RETURN (ACE_Thread_Mutex, g, lock_, 0);
+    ACE_GUARD_RETURN (ACE_RW_Thread_Mutex, g, lock_, 0);
     
     // Push the information to all the consumers.
     Stock_StockDistributor_i::CookieMap::iterator iter;

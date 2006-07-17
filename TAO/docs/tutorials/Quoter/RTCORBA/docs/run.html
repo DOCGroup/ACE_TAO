@@ -88,12 +88,11 @@ Admin execution file. The main steps in this file are described as follows: <P>
 
 <li>Read and destringify the Distributor object's IOR and narrow it to a Distributor object reference.</li> <P>
 
-<li>Accept user's commands:</li>
+<li>Call the operations of StockDistributor interface:</li>
 <PRE>
     start: Start the distributor.
     stop: Stop the distributor.
     rate: Change the notification rate of the distributor.
-    exit: Exit the application.
 </PRE>
 
 <hr><h3>Running the Stock Quoter Service</h3>
@@ -108,7 +107,8 @@ When executing the programs, they should be executed in the following order:
 
 You can run more than one Broker program at the same time. Each of them should be given different stock name
 that it is interested in. All the stock information is installed in the <A HREF="database.html">Stock Database</A>.
-The number of stocks can easily be extended by adding the stock name to the Stock Database constuctor. <P>
+The number of stocks can easily be extended by adding items to the stock_names array of 
+the Stock Database constuctor. <P>
 
 <hr><b>Email: </b><a href="mailto:"</a<ADDRESS>shanshan.jiang@vanderbilt.edu</ADDRESS>
 

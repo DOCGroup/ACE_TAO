@@ -1,16 +1,12 @@
 // $Id$
 
+// ACE header files
+#include "ace/Get_Opt.h"
+
 // local header files
 #include "Broker_i.h"
 #include "Distributor_i.h"
 #include "Stock_PriorityMapping.h"
-
-// ACE header files
-#include "ace/streams.h"
-#include "ace/Get_Opt.h"
-
-// STL headers
-#include <cstdlib>
 
 static const char *ior = "file://StockDistributor.ior";
 static const char *priority_level = "2";
@@ -102,7 +98,7 @@ int main (int argc, char *argv[])
     Stock::Cookie *cookie = stock_distributor->subscribe_notifier (consumer, priority);
 
     // Run the event loop.
-    ACE_DEBUG ((LM_DEBUG, "Ready to receieve stock information!\n"));
+    ACE_DEBUG ((LM_DEBUG, "*** message: ready to receieve stock information...\n"));
     orb->run ();
     orb->destroy ();
   }
