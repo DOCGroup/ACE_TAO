@@ -1,3 +1,15 @@
+Mon Jul 17 17:49:41 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * include/makeinclude/platform_hpux_aCC.GNU (SOFLAGS):
+
+          Corrected shared library path for Itanium builds.
+
+        * protocols/ace/HTBP/HTBP_ID_Requestor.cpp (get_HTID):
+
+          Use new ACE_CString::size_type type to hold string
+          position/index value, instead of "int".  Addresses "comparison
+          between signed and unsigned" warnings.
+
 Mon Jul 17 16:04:07 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * NEWS:
