@@ -1,3 +1,14 @@
+Mon Jul 18 09:32:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-vxworks6.3.h:
+        * include/makeinclude/platform_vxworks6.3.GNU:
+          New files for VxWorks 6.3
+
+        * ace/os_include/sys/os_types.h:
+        * ace/os_include/os_stdio.h:
+        * ace/OS_NS_unistd.inl:
+          Updated for VxWorks 6.3
+
 Sun Jul 17 06:49:21 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
         * apps/soreduce/Library.cpp (set_path):
