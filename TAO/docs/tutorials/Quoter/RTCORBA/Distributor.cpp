@@ -1,20 +1,17 @@
 // $Id$
 
+// ACE header files
+#include "ace/Get_Opt.h"
+
 // local header files
 #include "Distributor_i.h"
 
-// ACE header files
-#include "ace/streams.h"
-#include "ace/Get_Opt.h"
-
-// TAO headers
-#include <tao/RTCORBA/RTCORBA.h>
-
 static const char *ior = "StockDistributor.ior";
+static const char *rate = "1";
 
 int parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:");
+  ACE_Get_Opt get_opts (argc, argv, "o:r:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -23,6 +20,9 @@ int parse_args (int argc, char *argv[])
     {
       case 'o':
         ior = get_opts.opt_arg ();
+        break;
+      case 'r':
+        rate = get_opts.opt_arg ();
         break;
       case '?':
       default:
@@ -40,6 +40,9 @@ int parse_args (int argc, char *argv[])
 
 int main (int argc, char *argv[])
 {
+  if (parse_args (argc, argv) != 0)
+    return 1;
+
   try
   {
     // Initalize the ORB.
@@ -68,16 +71,16 @@ int main (int argc, char *argv[])
     // Write the object reference for the <stock_distributor> to a file
     // so the <StockBroker> can read it when it's bootstrapping.
     CORBA::String_var str = orb->object_to_string (stock_distributor.in ());
-    ofstream outfile(ior);
-    outfile << str << endl;
-    outfile.close();
+    FILE *output_file= ACE_OS::fopen (ior, "w");
+    if (output_file == 0)
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Cannot open output file for writing IOR: %s\n",
+                         ior),
+                         1);
+    ACE_OS::fprintf (output_file, "%s", str.in ());
+    ACE_OS::fclose (output_file);
 
-    // Set the rate of the <stock_distributor>.
-    ACE_DEBUG ((LM_DEBUG, "Enter notification rate (sec): "));
-    CORBA::Long rate; cin >> rate;
-
-    ACE_DEBUG ((LM_DEBUG, "*** message: setting notification rate...\n"));
-    stock_distributor->notification_rate (rate);
+    stock_distributor->notification_rate (atoi (rate));
 
     // Enter into the event looping.
     ACE_DEBUG ((LM_DEBUG, "*** message: ready for transmission...\n"));

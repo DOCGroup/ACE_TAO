@@ -15,6 +15,9 @@
 #include "Common_i.h"
 #include "DistributorS.h"
 
+// STL headers
+#include <map>
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -113,8 +116,8 @@ private:
   /// The StockQuoter object created by this StockDistributor object.
   Stock_StockQuoter_i *quoter_;
 
-  /// RTCORBA mutex.
-  ACE_Thread_Mutex lock_;
+  /// ACE_RW_Thread_Mutex.
+  ACE_RW_Thread_Mutex lock_;
 
   /// The active state of the  StockDistributor object.
   bool active_;

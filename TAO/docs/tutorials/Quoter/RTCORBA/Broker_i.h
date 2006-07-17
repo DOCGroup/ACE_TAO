@@ -75,8 +75,8 @@ private:
   /// A StockQuoter object reference that is used to get detailed stock information. 
   Stock::StockQuoter_var quoter_;
 
-  /// A StockNameConsumer object reference that is used to get notification of updates..
- Stock_StockNameConsumer_i *consumer_;
+  /// A StockNameConsumer object that is used to get notification of updates.
+  Stock_StockNameConsumer_i *consumer_;
 };
 
 /**

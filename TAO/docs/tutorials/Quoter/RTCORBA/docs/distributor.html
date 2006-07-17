@@ -51,6 +51,7 @@ The main steps of this function are described as follows: <P>
 
 This step include several sub-stpes:
 <OL>
+<li>    Get a reference to the RTORB.</li>
 <li>    Initialize a CORBA::PolicyList object.</li>
 <li>    Create a CLIENT_PROPOGATED priority model policy and add it into the former CORBA::PolicyList object.</li>
 <li>    Create a threadpool with lanes for the distributor. Since the brokers have various priorities,
@@ -60,6 +61,9 @@ create a lane for each priority.</li>
 </OL>
 
 <PRE>
+    CORBA::Object_var obj = orb->resolve_initial_references ("RTORB");
+    RTCORBA::RTORB_var rt_orb = RTCORBA::RTORB::_narrow (obj.in ());
+
     CORBA::PolicyList stock_distributor_policies (2);
     stock_distributor_policies.length (2);
 
@@ -111,11 +115,12 @@ which is a subclass of POA_Stock::StockDistributor class. <P>
 
 <PRE>
     Stock_StockDistributor_i (CORBA::ORB_ptr orb, CORBA::PolicyList &policy_list)
-      : rate_(3000), active_ (false)
+      : rate_(3000), active_ (false), quoter_ (0)
 </PRE>
 
-The "rate_" and "active_" are two private members of the Stock_StockDistributor_i class. They stand for the
-notification rate and the active state of StockDistributor object. <P>
+The "rate_", "active_" and "quoter_" are three private members of the Stock_StockDistributor_i class. They stand 
+for the notification rate and the active state of the StockDistributor object and the StockQuoter object created by 
+the StockDistributor object. <P>
 
 The main steps of this function are described as follows: <P>
 
@@ -129,10 +134,12 @@ The main steps of this function are described as follows: <P>
 
 The main steps of this function are described as follows: <P>
 
+<li>Get the thread mutex of the subscriber map.</li> <P>
+
 <li>Generate an unique id and use it to create a new Cookie object.</li> <P>
 
 <li>Insert the Cookie object as well as the StockNameConsumer object and its priority into the
-StockDistributor object's subscribers' map.</li> <P>
+StockDistributor object's subscriber map.</li> <P>
 
 <li>Return the Cookie object.</li> <P>
 
@@ -140,7 +147,9 @@ StockDistributor object's subscribers' map.</li> <P>
 
 The main steps of this function are described as follows: <P>
 
-<li>Search for the Cookie object in the argument in the StockDistributor object's subscribers' map.</li> <P>
+<li>Get the thread mutex of the subscriber map.</li> <P>
+  
+<li>Search for the Cookie object in the argument in the StockDistributor object's subscriber map.</li> <P>
 
 <li>Erase the Cookie object from the StockDistributor object's subscribers' map.</li> <P>
 

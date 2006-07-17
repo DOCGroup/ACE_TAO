@@ -1,10 +1,10 @@
 // $Id$
 
-// local headers
-#include "Stock_Database.h"
-
 // ACE headers
 #include <ace/OS_NS_unistd.h>
+
+// local headers
+#include "Stock_Database.h"
 
 //
 // Stock_Database
@@ -32,6 +32,8 @@ Stock_Database::Stock_Database (void)
 //
 Stock::StockInfo * Stock_Database::get_stock_info (const char *name)
 {
+  //ACE_GUARD_RETURN (ACE_RW_Thread_Mutex, g, lock_, 0);
+
   // Locate the <stock_name> in the database.
   ACE_DEBUG ((LM_DEBUG, "*** message: searching the stock_map_ for the stock_name\n"));
   StockMap::iterator iter = this->stock_map_.find (std::string (name));
@@ -53,6 +55,8 @@ Stock::StockInfo * Stock_Database::get_stock_info (const char *name)
 //
 void Stock_Database::publish_stock_info (Stock::StockNameConsumer_ptr consumer)
 {
+  //ACE_GUARD (ACE_RW_Thread_Mutex, g, lock_);
+
   Stock::StockName_var stock_name = new OBV_Stock::StockName;
 
   for (StockMap::iterator iter = this->stock_map_.begin ();
@@ -67,7 +71,7 @@ int Stock_Database::svc (void)
 {
   while (true) 
   {
-    ACE_GUARD_RETURN (ACE_Thread_Mutex, g, lock_, 0);
+    ACE_GUARD_RETURN (ACE_RW_Thread_Mutex, g, lock_, 0);
 
     for (Stock_Database::StockMap::iterator iter = this->stock_map_.begin ();
       iter != this->stock_map_.end (); ++iter)

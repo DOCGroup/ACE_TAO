@@ -64,10 +64,10 @@ which is a subclass of POA_Stock::StockQuoter class. <P>
 <h4>Implementing the get_stock_info () member function</h4>
 
 <PRE>
-    Stock::StockInfo * stock = Stock_Database::instance ()->get_stock_info (stock_name);
+    Stock::StockInfo *stock = STOCK_DATABASE->get_stock_info (stock_name);
 </PRE>
 
-Call the get_stock_info () function of Stock_Database interface.
+Call the get_stock_info () function of Stock_Database instance.
 
 <hr><b>Email: </b><a href="mailto:"</a<ADDRESS>shanshan.jiang@vanderbilt.edu</ADDRESS>
 
