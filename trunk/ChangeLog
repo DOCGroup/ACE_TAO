@@ -1,3 +1,9 @@
+Mon Jul 17 15:05:05 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * examples/System_V_IPC/SV_Message_Queues/MQ_Server.cpp: Added
+          include "ace/Log_Msg.h" in the "non-supported platform" case.
+          Fixes compile error on Windows.
+
 Mon Jul 17 13:03:09 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/ace_for_tao.mpc:
