@@ -1,3 +1,8 @@
+Mon Jul 17 00:20:29 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * NEWS:
+          Added news entry re Bug 2593.
+
 Sun Jul 16 23:28:27 UTC 2006  Adam Mitz  <mitza@ociweb.com>
 
         * orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.h:
