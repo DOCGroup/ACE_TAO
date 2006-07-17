@@ -1,10 +1,10 @@
 // $Id$
 
-#include "tao/DynamicAny/DynUnion_i.h"
-#include "tao/DynamicAny/DynAnyFactory.h"
 #include "tao/AnyTypeCode/Marshal.h"
 #include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
 #include "tao/AnyTypeCode/AnyTypeCode_methods.h"
+#include "tao/DynamicAny/DynUnion_i.h"
+#include "tao/DynamicAny/DynAnyFactory.h"
 #include "tao/CDR.h"
 
 ACE_RCSID (DynamicAny,
@@ -199,6 +199,7 @@ TAO_DynUnion_i::set_from_any (const CORBA::Any & any,
   ACE_CHECK;
 
   CORBA::ULong count =
+Long count =
     unaliased->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
