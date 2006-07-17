@@ -1,3 +1,10 @@
+Mon Jul 17 16:04:07 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * NEWS:
+
+          Added information about the use of atomic operations on SPARC
+          Solaris.
+
 Mon Jul 17 15:09:21 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * ace/Refcounted_Auto_Ptr.{h inl} (null): Changed the return type

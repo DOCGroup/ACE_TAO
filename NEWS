@@ -9,6 +9,16 @@ PLANNED MAJOR CHANGES TARGETED FOR ACE-5.5.3
 USER VISIBLE CHANGES BETWEEN ACE-5.5.2 and ACE-5.5.3
 ====================================================
 
+. (OCI) An assembler (within a C source file) based implementation for SPARC
+  of atomic operations suitable for use with the
+  ACE_Atomic_Op<ACE_Thread_Mutex, long> and
+  ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long> specializations has
+  been added.  Currently, it can only be enabled by setting the
+  atomic_ops_sparc make macro to 1 when using the GNUACE build system with
+  the Solaris SunCC compiler.  It should be noted that this requires the
+  -xarch=v8plus (or higher) be added to the CFLAGS make macro or the
+  assembler code will not compile.
+
 . The ACE_Message_Queue_Ex_N<class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> class
   is new, contributed by Guy Peleg <guy dot peleg at amdocs dot com>.
   ACE_Message_Queue_Ex_N<class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> is
