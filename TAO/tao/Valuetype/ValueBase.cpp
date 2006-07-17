@@ -796,14 +796,6 @@ namespace TAO
                                                    &CORBA::_tc_null,
                                                    0,  // Field array
                                                    0); // Field count
-
-    Alias<char const *,
-          CORBA::TypeCode_ptr const *,
-          TAO::Null_RefCount_Policy> tc_ValueModifier (
-      CORBA::tk_alias,
-     "IDL:omg.org/CORBA/ValueModifier:1.0",
-     "ValueModifier",
-     &CORBA::_tc_short);
   }
 }
 
@@ -811,7 +803,6 @@ namespace CORBA
 {
   TypeCode_ptr const _tc_ValueBase     = &TAO::TypeCode::tc_ValueBase;
   TypeCode_ptr const _tc_EventBase     = &TAO::TypeCode::tc_EventBase;
-  TypeCode_ptr const _tc_ValueModifier = &TAO::TypeCode::tc_ValueModifier;
 }
 
 // member functions for CORBA::DefaultValueRefCountBase ============
