@@ -17,10 +17,10 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   ACE_NS_WString s6 ("el");
 
   ACE_ASSERT (s1 != s2);
-  ACE_ASSERT (s1.strstr (s2) == -1);
-  ACE_ASSERT (s1.strstr (s2) == -1);
+  ACE_ASSERT (s1.strstr (s2) == ACE_CString::npos);
+  ACE_ASSERT (s1.strstr (s2) == ACE_CString::npos);
   ACE_ASSERT (s1.strstr (s3));
-  ACE_ASSERT (s4.strstr (s5) == -1);
+  ACE_ASSERT (s4.strstr (s5) == ACE_NS_WString::npos);
   ACE_ASSERT (s5.strstr (s6));
   return 0;
 }

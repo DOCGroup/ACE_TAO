@@ -12,7 +12,7 @@
 
 #include "ace/Connector.h"
 #include "ace/Svc_Handler.h"
-#include "ace/Signal.h"
+#include "ace/Sig_Adapter.h"
 
 template <ACE_PEER_STREAM_1>
 class Peer_Handler : public ACE_Svc_Handler<ACE_PEER_STREAM_2, ACE_SYNCH>

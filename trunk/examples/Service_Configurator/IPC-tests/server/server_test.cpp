@@ -7,6 +7,7 @@
 #include "ace/Reactor.h"
 #include "ace/Log_Msg.h"
 #include "ace/Signal.h"
+#include "ace/Sig_Adapter.h"
 
 ACE_RCSID(server, server_test, "$Id$")
 

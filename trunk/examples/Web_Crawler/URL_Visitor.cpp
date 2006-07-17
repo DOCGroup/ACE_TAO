@@ -89,7 +89,7 @@ HTTP_Header_Processing_Strategy::execute (void)
       else
         {
 
-          if (line.find ("text/html") >= 0)
+          if (line.find ("text/html") != ACE_CString::npos)
             {
               ACE_CString url_content_type("text/html");
               this->url_.content_type (url_content_type);
@@ -139,7 +139,7 @@ HTML_Body_Validation_Strategy::execute (void)
   while (this->iterator_.next (url) > 0)
     {
       // Check for relative urls.Strip out "http://" if its there.
-      if (url.find ("http") < 0)
+      if (url.find ("http") == url.npos)
         {
           if (url[0] == '.' && url[1] == '.')
            {
@@ -155,7 +155,7 @@ HTML_Body_Validation_Strategy::execute (void)
       else
         url.set (&url[7], 1);
       // Double slash at the end works!e.g www.cs.wustl.edu/~kirthika//
-      if (url.find (".html") < 0)
+      if (url.find (".html") == url.npos)
         url = url + "/";
 
       // Create the new URL address.

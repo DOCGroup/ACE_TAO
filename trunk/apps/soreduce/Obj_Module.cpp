@@ -98,7 +98,7 @@ Obj_Module::add_source(const char *p, int imports_only)
   ACE_Process_Options nm_opts;
   ACE_CString path (p);
 
-  int pathsep = path.rfind('/');
+  ACE_CString::size_type pathsep = path.rfind('/');
 
   ACE_CString src_name;
   ACE_CString workpath;

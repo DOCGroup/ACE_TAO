@@ -199,7 +199,7 @@ Library::set_path (const char *p)
     path = abspath;
   }
 
-  int pathsep = path.rfind('/');
+  ACE_CString::size_type pathsep = path.rfind('/');
 
   if (pathsep == ACE_CString::npos) {
     path_ = ".";

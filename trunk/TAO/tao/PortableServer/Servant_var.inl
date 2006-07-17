@@ -160,7 +160,7 @@ PortableServer::Servant_var<T>::_retn (void)
 {
   T * const rval = ptr_;
   this->ptr_ = 0;
-  return this->rval;
+  return rval;
 }
 
 template <class X, class Y>
