@@ -1036,16 +1036,18 @@ populate_binding_info (const ACE_CString& name,
 
   retv->name_ = name;
 
-  // Parse the child_uuid string and populate the "node" name and "plan_uuid" fields.
-  // Our protocol here is searching for the "@", the substring *before* that is the
-  // global plan uuid, and the substring *after* that is the node name.
-  size_t pos = child_uuid.find ('@');
+  // Parse the child_uuid string and populate the "node" name and
+  // "plan_uuid" fields.  Our protocol here is searching for the "@",
+  // the substring *before* that is the global plan uuid, and the
+  // substring *after* that is the node name.
+  ACE_CString::size_type pos = child_uuid.find ('@');
 
   retv->plan_uuid_ =
     child_uuid.substring (0, pos);
 
   retv->node_ =
-    child_uuid.substring (pos+1, -1); // get the rest of the string
+    child_uuid.substring (pos + 1,
+                          ACE_CString::npos); // get the rest of the string
 
   Deployment::Connections_var connections;
   ACE_NEW_RETURN (connections,
