@@ -694,29 +694,29 @@ TAO_DIOP_Acceptor::parse_options (const char *str)
   //    `option1=foo'
   //    `option2=bar'
 
-  ssize_t begin = 0;
-  ssize_t end = -1;
+  ACE_CString::size_type begin = 0;
+  ACE_CString::size_type end = 0;
 
   for (CORBA::ULong j = 0; j < option_count; ++j)
     {
-      begin += end + 1;
-
       if (j < option_count - 1)
         end = options.find (option_delimiter, begin);
       else
-        end = (len - begin); // Handle last endpoint differently
+        end = len;
 
       if (end == begin)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("TAO (%P|%t) Zero length DIOP option.\n")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("TAO (%P|%t) Zero length DIOP option.\n")),
+                            -1);
+        }
       else if (end != ACE_CString::npos)
         {
           ACE_CString opt = options.substring (begin, end);
 
-          ssize_t slot = opt.find ("=");
+          ACE_CString::size_type const slot = opt.find ("=");
 
-          if (slot == static_cast<ssize_t> (len - 1)
+          if (slot == len - 1
               || slot == ACE_CString::npos)
             ACE_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("TAO (%P|%t) DIOP option <%s> is ")
@@ -741,10 +741,18 @@ TAO_DIOP_Acceptor::parse_options (const char *str)
                                 -1);
             }
           else
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("TAO (%P|%t) Invalid DIOP option: <%s>\n"),
-                               ACE_TEXT_CHAR_TO_TCHAR (name.c_str ())),
-                              -1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("TAO (%P|%t) Invalid DIOP option: <%s>\n"),
+                                 ACE_TEXT_CHAR_TO_TCHAR (name.c_str ())),
+                                -1);
+            }
+
+          begin = end + 1;
+        }
+      else
+        {
+          break;  // No other options.
         }
     }
   return 0;
