@@ -1,3 +1,10 @@
+Mon Jul 17 10:41:14 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * tests/Message_Queue_Test_Ex.cpp: Removed the VxWorks-specific
+          section from MQ_Ex_N_Tester::receiver() - it was apparantly
+          pulled in from another test example and didn't need to be here.
+          Should resolve compile errors on VxWorks.
+
 Mon Jul 18 09:32:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-vxworks6.3.h:
