@@ -1,3 +1,9 @@
+Mon Jul 17 13:03:09 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/ace_for_tao.mpc:
+
+          Sig_Handler.cpp and Sig_Adapter.cpp are needed to link gperf.
+
 Mon Jul 17 12:49:34 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * netsvcs/servers/main.cpp:
