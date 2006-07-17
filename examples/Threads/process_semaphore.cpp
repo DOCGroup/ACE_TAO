@@ -8,6 +8,7 @@
 #include "ace/Signal.h"
 #include "ace/Log_Msg.h"
 #include "ace/Process_Semaphore.h"
+#include "ace/OS_NS_stdlib.h"
 
 ACE_RCSID(Threads, process_semaphore, "$Id$")
 
