@@ -165,7 +165,11 @@ ifeq ($(buildbits),32)
 SOFLAGS         += -Wl,-x -Wl,+h$(@F) -Wl,+b/usr/lib
 endif
 ifeq ($(buildbits),64)
-SOFLAGS         += -Wl,-x -Wl,+h$(@F) -Wl,+b/usr/lib/pa20_64
+  ifeq ($(itanium),1)
+    SOFLAGS     += -Wl,-x -Wl,+h$(@F) -Wl,+b/usr/lib/hpux64
+  else
+    SOFLAGS     += -Wl,-x -Wl,+h$(@F) -Wl,+b/usr/lib/pa20_64
+  endif
 endif
 endif
 
