@@ -1,3 +1,11 @@
+Mon Jul 19 11:21:56 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * ace/String_Base.cpp:
+        * ace/String_Base.inl:
+
+          Explicitly qualify size_type parameters with "typename" to force
+          some compilers (Sun Studio 10) to recognize it as a type.
+
 Mon Jul 17 17:49:41 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
         * include/makeinclude/platform_hpux_aCC.GNU (SOFLAGS):
