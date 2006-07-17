@@ -532,7 +532,7 @@ ACE_THROW_SPEC ((CORBA::SystemException,
   // We assume that the first part of the object name is the server name.
   // So a name of foo/bar means that the server name is foo.
   ACE_CString server_name (object_name);
-  ssize_t pos = server_name.find ('/');
+  ACE_CString::size_type pos = server_name.find ('/');
   if (pos != ACE_CString::npos)
     server_name = server_name.substr (pos + 1);
 
