@@ -8,7 +8,7 @@
 #include "ace/Service_Config.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Reactor.h"
-#include "ace/Signal.h"
+#include "ace/Sig_Adapter.h"
 
 ACE_RCSID(CCM_App, SC_Server, "$Id$")
 

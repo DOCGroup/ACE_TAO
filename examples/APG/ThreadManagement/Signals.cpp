@@ -8,6 +8,7 @@
 #include "ace/Task.h"
 #include "ace/Log_Msg.h"
 #include "ace/Signal.h"
+#include "ace/Sig_Handler.h"
 
 // Listing 1 code/ch13
 class SignalableTask : public ACE_Task<ACE_MT_SYNCH>

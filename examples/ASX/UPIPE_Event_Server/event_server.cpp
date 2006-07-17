@@ -15,7 +15,7 @@
 #include "Consumer_Router.h"
 #include "Event_Analyzer.h"
 #include "Supplier_Router.h"
-#include "ace/Signal.h"
+#include "ace/Sig_Adapter.h"
 #include "ace/OS_NS_unistd.h"
 
 ACE_RCSID (UPIPE_Event_Server,

@@ -1,3 +1,9 @@
+Sun Jul 17 06:49:21 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * tao/PortableServer/Servant_var.inl (_retn):
+
+          Removed extraneous "this" pointer usage on local variable.
+
 Mon Jul 17 00:20:29 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * NEWS:
