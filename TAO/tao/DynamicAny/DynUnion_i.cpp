@@ -198,12 +198,11 @@ TAO_DynUnion_i::set_from_any (const CORBA::Any & any,
                                     ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  CORBA::ULong count =
-Long count =
+  CORBA::ULong const count =
     unaliased->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  CORBA::Boolean match = 0;
+  CORBA::Boolean match = false;
   CORBA::ULong i;
 
   // Get the index.
@@ -551,11 +550,11 @@ TAO_DynUnion_i::set_to_no_active_member (ACE_ENV_SINGLE_ARG_DECL)
 
       if (kind == CORBA::tk_enum)
         {
-          CORBA::ULong member_count =
+          CORBA::ULong const member_count =
             this->type_->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK;
 
-          CORBA::ULong label_count =
+          CORBA::ULong const label_count =
             disc_tc->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK;
 
