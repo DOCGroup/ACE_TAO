@@ -20,7 +20,7 @@ ACE_Refcounted_Auto_Ptr<X, ACE_LOCK>::count (void) const
   return this->rep_->count ();
 }
 
-template <class X, class ACE_LOCK> inline int
+template <class X, class ACE_LOCK> inline bool
 ACE_Refcounted_Auto_Ptr<X, ACE_LOCK>::null (void) const
 {
   return (this->rep_ == 0 || this->rep_->get () == 0);

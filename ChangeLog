@@ -1,3 +1,11 @@
+Mon Jul 17 15:09:21 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/Refcounted_Auto_Ptr.{h inl} (null): Changed the return type
+          of the null() method from int to bool in order to more accurately
+          reflect the true/false nature of the returned value.
+
+        * NEWS: Noted the above change.
+
 Mon Jul 17 15:05:05 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * examples/System_V_IPC/SV_Message_Queues/MQ_Server.cpp: Added
