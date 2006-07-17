@@ -537,25 +537,6 @@ MQ_Ex_N_Tester::receiver (void *args)
                   User_Class *[max_messages],
                   (ACE_THR_FUNC_RETURN) -1);
 
-#if defined (VXWORKS)
-  // Set up blocks to receive the messages.  Allocate these off the
-  // heap in case messages is large relative to the amount of stack
-  // space available.
-  User_Class *receive_block;
-  ACE_NEW_RETURN (receive_block,
-                  User_Class[max_messages],
-                  (ACE_THR_FUNC_RETURN) -1);
-
-  for (i = 0; i < max_messages; ++i)
-    {
-      receive_block[i].init (MAX_MESSAGE_SIZE);
-
-      // For VxWorks Message Queues, the receive block pointer must be
-      // assigned.  It will be used by <dequeue_head>.
-      receive_block_p[i] = &receive_block[i];
-    }
-#endif /* VXWORKS */
-
   int i;
   tester_barrier.wait ();
   for (i = 0; i < max_messages; ++i)
@@ -571,9 +552,6 @@ MQ_Ex_N_Tester::receiver (void *args)
   timer->stop ();
 
   delete [] receive_block_p;
-#if defined (VXWORKS)
-  delete [] receive_block;
-#endif /* VXWORKS */
 
   return 0;
 }
