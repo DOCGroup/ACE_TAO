@@ -1,3 +1,10 @@
+Mon Jul 17 11:57:26 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/qt_reactor.mpb:
+
+          Removed this file.  It was no longer referenced by ace and it's
+          functionality was replaced by ace_qtreactor.mpc.
+
 Mon Jul 17 10:41:14 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * tests/Message_Queue_Test_Ex.cpp: Removed the VxWorks-specific
