@@ -275,7 +275,7 @@ TAO_UIPMC_Profile::parse_string_i (const char *string
   ACE_CString ace_str (string, 0, 0);
 
   // Look for the group domain delimitor.
-  ssize_t pos = ace_str.find ('-');
+  ACE_CString::size_type pos = ace_str.find ('-');
 
   if (pos == ACE_CString::npos)
     {
@@ -295,8 +295,8 @@ TAO_UIPMC_Profile::parse_string_i (const char *string
   // The group_id is terminated with a '-' or a '/'.
 
   // Skip past the last '-'.
-  pos++;
-  ssize_t end_pos = ace_str.find ('-',pos);
+  ++pos;
+  ACE_CString::size_type end_pos = ace_str.find ('-',pos);
 
   CORBA::Boolean parse_group_ref_version_flag = 0;
 

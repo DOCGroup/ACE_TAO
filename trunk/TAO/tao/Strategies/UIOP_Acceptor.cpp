@@ -422,17 +422,15 @@ TAO_UIOP_Acceptor::parse_options (const char *str)
   //    `option1=foo'
   //    `option2=bar'
 
-  int begin = 0;
-  int end = -1;
+  ACE_CString::size_type begin = 0;
+  ACE_CString::size_type end = 0;
 
   for (CORBA::ULong j = 0; j < option_count; ++j)
     {
-      begin += end + 1;
-
       if (j < option_count - 1)
         end = options.find (option_delimiter, begin);
       else
-        end = len - begin;  // Handle last endpoint differently
+        end = len;
 
       if (end == begin)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -443,9 +441,9 @@ TAO_UIOP_Acceptor::parse_options (const char *str)
           ACE_CString opt =
             options.substring (begin, end);
 
-          const int slot = opt.find ("=");
+          ACE_CString::size_type const slot = opt.find ("=");
 
-          if (slot == static_cast<int> (len - 1)
+          if (slot == len - 1
               || slot == ACE_CString::npos)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "TAO (%P|%t) UIOP option <%s> is "
@@ -465,7 +463,7 @@ TAO_UIOP_Acceptor::parse_options (const char *str)
           if (name == "priority")
             {
               ACE_ERROR_RETURN ((LM_ERROR,
-                                 ACE_TEXT ("TAO (%P|%t) Invalid IIOP endpoint format: ")
+                                 ACE_TEXT ("TAO (%P|%t) Invalid UIOP endpoint format: ")
                                  ACE_TEXT ("endpoint priorities no longer supported. \n")),
                                 -1);
             }
@@ -474,7 +472,11 @@ TAO_UIOP_Acceptor::parse_options (const char *str)
                                "TAO (%P|%t) Invalid UIOP option: <%s>\n",
                                name.c_str ()),
                               -1);
+
+          begin = end + 1;
         }
+      else
+        break;  // No other options.
     }
   return 0;
 }
