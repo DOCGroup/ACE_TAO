@@ -1,25 +1,12 @@
 // $Id$
 
-// ACE headers
-#include "ace/streams.h"
-#include "ace/OS_NS_unistd.h"
-
 // TAO headers
-#include "tao/CORBA.h"
-#include "tao/AnyTypeCode/Typecode.h"
-#include "tao/RTCORBA/RTCORBA.h"
-#include "tao/RTCORBA/Thread_Pool.h"
 #include "tao/RTPortableServer/RTPortableServer.h"
 
 // local headers
 #include "Broker_i.h"
 #include "Stock_PriorityMapping.h"
 #include "Stock_Database.h"
-
-// STL headers
-#include <strstream>
-#include <ctime>
-#include <cstring>
 
 // Implementation skeleton constructor
 Stock_StockBroker_i::Stock_StockBroker_i (CORBA::ORB_ptr orb,
@@ -37,11 +24,11 @@ Stock_StockBroker_i::Stock_StockBroker_i (CORBA::ORB_ptr orb,
   CORBA::PolicyList consumer_policies (1);
   consumer_policies.length (1);
 
-  // Create a <CLIENT_PROPOGATED> priority model policy.
+  // Create a <SERVER_DECLARED> priority model policy.
   consumer_policies[0] = rt_orb->create_priority_model_policy (RTCORBA::SERVER_DECLARED,
     Stock_PriorityMapping::MEDIUM);
 
-  // Create a child POA with CLIENT_PROPAGATED policies. The name of the
+  // Create a child POA with SERVER_DECLARED policies. The name of the
   // POA will be <Stock_StockDistributorHome>. Any instances of the
   // Stock_StockDistributor_i created via the create() method will be
   // activated under this POA.

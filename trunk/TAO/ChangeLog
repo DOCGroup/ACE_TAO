@@ -1,3 +1,26 @@
+Mon Jul 17 18:35:32 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
+
+        * docs/tutorials/Quoter/RTCORBA/Admin.cpp
+        * docs/tutorials/Quoter/RTCORBA/Broker.cpp
+        * docs/tutorials/Quoter/RTCORBA/Broker_i.cpp
+        * docs/tutorials/Quoter/RTCORBA/Broker_i.h
+        * docs/tutorials/Quoter/RTCORBA/Common_i.cpp
+        * docs/tutorials/Quoter/RTCORBA/Common_i.h
+        * docs/tutorials/Quoter/RTCORBA/Distributor.cpp
+        * docs/tutorials/Quoter/RTCORBA/Distributor_i.cpp
+        * docs/tutorials/Quoter/RTCORBA/Distributor_i.h
+        * docs/tutorials/Quoter/RTCORBA/Stock_Database.cpp
+        * docs/tutorials/Quoter/RTCORBA/Stock_Database.h
+
+        * docs/tutorials/Quoter/RTCORBA/docs/broker.html
+        * docs/tutorials/Quoter/RTCORBA/docs/common.html
+        * docs/tutorials/Quoter/RTCORBA/docs/database.html
+        * docs/tutorials/Quoter/RTCORBA/docs/distributor.html
+        * docs/tutorials/Quoter/RTCORBA/docs/idl.html
+        * docs/tutorials/Quoter/RTCORBA/docs/run.html
+
+          Make some minor changes.
+
 Mon Jul 17 17:49:41 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
         * examples/POA/On_Demand_Loading/Servant_Manager.cpp:

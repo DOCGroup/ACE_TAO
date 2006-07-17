@@ -65,6 +65,50 @@ This interface is used for Stock Broker client. <P>
 The Stock_StockBroker_i class is generated automatically by the IDL compiler (using the -GI flag),
 which is a subclass of POA_Stock::StockBroker class. <P>
 
+<h4>Implementing the Constructor</h4>
+
+<PRE>
+    Stock_StockBroker_i (CORBA::ORB_ptr orb, const char *stock_name, RTCORBA::Priority priority)
+      : quoter_ (Stock::StockQuoter::_nil()), consumer_ (0)
+</PRE>
+
+The "quoter_" and "consumer_" are two private members of the Stock_StockBroker_i class. They stand 
+for the StockQuoter object that is used to get detailed stock information and the StockNameConsumer 
+object that is used to get notification of updates. <P>
+
+The main steps of this function are described as follows: <P>
+
+<li>Get a reference to the RTORB.</li>
+
+<li>Initialize a CORBA::PolicyList object.</li>
+
+<li>Create a SERVER_DECLARED priority model policy and add it into the former CORBA::PolicyList object.</li>
+
+<li>Create a child POA using the former CORBA::PolicyList and narrow it to RTPOA.</li>
+
+<li>Create a new instance of the StockNameConsumer object with the specified name and activate it 
+under the former RTPOA with the specified priority.</li>
+
+<PRE>
+    CORBA::Object_var obj = orb->resolve_initial_references ("RTORB");
+    RTCORBA::RTORB_var rt_orb = RTCORBA::RTORB::_narrow (obj.in ());
+    
+    CORBA::PolicyList consumer_policies (1);
+    consumer_policies.length (1);
+
+    consumer_policies[0] = rt_orb->create_priority_model_policy (RTCORBA::SERVER_DECLARED,
+    Stock_PriorityMapping::MEDIUM);
+
+    PortableServer::POA_var poa = this->_default_POA()->create_POA (
+      "StockNameConsumer_POA", PortableServer::POAManager::_nil (), consumer_policies);
+  
+    RTPortableServer::POA_var rt_poa = RTPortableServer::POA::_narrow (poa);
+    
+    consumer_ = new Stock_StockNameConsumer_i (_this (), stock_name);
+    PortableServer::ServantBase_var nameconsumer_owner_transfer = consumer_;
+    rt_poa->activate_object_with_priority (consumer_, priority);
+</PRE>
+
 <h4>Implementing the get_consumer_notifier () member function</h4>
 
 Return the StockNameConsumer object created by the Constructor.

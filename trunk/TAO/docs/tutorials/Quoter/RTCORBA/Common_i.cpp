@@ -1,25 +1,8 @@
 // $Id$
 
-// ACE headers
-#include "ace/streams.h"
-#include "ace/OS_NS_unistd.h"
-
-// TAO headers
-#include "tao/CORBA.h"
-#include "tao/AnyTypeCode/Typecode.h"
-#include "tao/RTCORBA/RTCORBA.h"
-#include "tao/RTCORBA/Thread_Pool.h"
-#include "tao/RTPortableServer/RTPortableServer.h"
-
 // local headers
 #include "Common_i.h"
-#include "Stock_PriorityMapping.h"
 #include "Stock_Database.h"
-
-// STL headers
-#include <strstream>
-#include <ctime>
-#include <cstring>
 
 // Implementation skeleton constructor
 Stock_StockNameConsumer_i::Stock_StockNameConsumer_i (Stock::StockBroker_ptr parent,

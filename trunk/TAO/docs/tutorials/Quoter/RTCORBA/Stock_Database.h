@@ -16,7 +16,6 @@
 
 // STL headers
 #include <map>
-#include <string>
 
 /**
  * @class Stock_Database
@@ -30,7 +29,7 @@ public:
   Stock_Database (void);
 
   /**
-   * Create a StockInfo object storeed in the database with the given name.
+   * Create a StockInfo object stored in the database with the given name.
    *
    * @param name The name of the stock.
    * @return A StockInfo object.
@@ -56,8 +55,8 @@ private:
   typedef std::map<std::string, Stock::StockInfo *> StockMap;
   StockMap stock_map_;
 
-  /// ACE_Thread_Mutex.
-  ACE_Thread_Mutex lock_;
+  /// ACE_RW_Thread_Mutex.
+  ACE_RW_Thread_Mutex lock_;
 };
 
 typedef ACE_Singleton<Stock_Database, ACE_Thread_Mutex> Stock_Database_Singleton;
