@@ -1,3 +1,8 @@
+Mon Jul 17 09:50:45 UTC 2006  Adam Mitz  <mitza@ociweb.com>
+
+        * orbsvcs/tests/CosEvent/Timeout/TimeoutTestMain.cpp:
+          Eliminate warning with String_var usage on GCC 2.96.
+
 Mon Jul 18 07:58:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/IFR_Client.mpc:

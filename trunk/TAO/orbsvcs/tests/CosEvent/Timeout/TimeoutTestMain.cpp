@@ -42,7 +42,7 @@ struct SupplierTask : ACE_Task_Base
       {
         // Insert the event data into an any.
         CORBA::Any any;
-        any <<= eventData;
+        any <<= eventData.in ();
 
         // Now push the event to the consumer
         this->consumer_->push (any);
