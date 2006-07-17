@@ -5228,7 +5228,7 @@ TAO_Tokenizer::parse (const char *string, char delimiter)
 {
   ACE_CString new_string (string);
   u_int pos =0;
-  int slash_pos = 0;
+  ACE_CString::size_type slash_pos = 0;
   u_int count = 0;
   int result;
   while (pos < new_string.length ())

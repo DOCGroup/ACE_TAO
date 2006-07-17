@@ -282,7 +282,7 @@ TAO_UIPMC_Acceptor::parse_options (const char *str)
   // before the object key.
   for (size_t i = 0; i < len; ++i)
     if (options[i] == option_delimiter)
-      option_count++;
+      ++option_count;
 
   // The idea behind the following loop is to split the options into
   // (option, name) pairs.
@@ -292,17 +292,15 @@ TAO_UIPMC_Acceptor::parse_options (const char *str)
   //    `option1=foo'
   //    `option2=bar'
 
-  int begin = 0;
-  int end = -1;
+  ACE_CString::size_type begin = 0;
+  ACE_CString::size_type end = 0;
 
   for (CORBA::ULong j = 0; j < option_count; ++j)
     {
-      begin += end + 1;
-
       if (j < option_count - 1)
         end = options.find (option_delimiter, begin);
       else
-        end = static_cast<int> (len - begin); // Handle last endpoint differently
+        end = len;
 
       if (end == begin)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -312,9 +310,9 @@ TAO_UIPMC_Acceptor::parse_options (const char *str)
         {
           ACE_CString opt = options.substring (begin, end);
 
-          int slot = opt.find ("=");
+          ACE_CString::size_type const slot = opt.find ("=");
 
-          if (slot == static_cast<int> (len - 1)
+          if (slot == len - 1
               || slot == ACE_CString::npos)
             ACE_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("TAO (%P|%t) UIPMC option <%s> is ")
@@ -344,7 +342,11 @@ TAO_UIPMC_Acceptor::parse_options (const char *str)
                                ACE_TEXT ("TAO (%P|%t) Invalid UIPMC option: <%s>\n"),
                                name.c_str ()),
                               -1);
+
+          begin = end + 1;
         }
+      else
+        break;  // No other options.
     }
   return 0;
 }

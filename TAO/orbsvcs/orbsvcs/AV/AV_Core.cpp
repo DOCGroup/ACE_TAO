@@ -1160,7 +1160,7 @@ char *
 TAO_AV_Core::get_flowname (const char *flow_spec_entry_str)
 {
   ACE_CString flow_spec_entry (flow_spec_entry_str);
-  int slash_pos = flow_spec_entry.find ('\\');
+  ACE_CString::size_type slash_pos = flow_spec_entry.find ('\\');
   ACE_CString flow_name;
   if (slash_pos != flow_spec_entry.npos)
     flow_name = flow_spec_entry.substring (0, slash_pos);
