@@ -125,7 +125,7 @@ ACE::HTBP::ID_Requestor::get_HTID ()
   if (result > 0)
     {
       ACE_CString answer ((char *)recv_buf.iov_base,recv_buf.iov_len);
-      ssize_t start = answer.rfind (ACE_TEXT('\n'));
+      ACE_CString::size_type start = answer.rfind (ACE_TEXT('\n'));
       if (start == ACE_CString::npos)
         start = 0;
       else
