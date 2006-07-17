@@ -1,9 +1,22 @@
+Mon Jul 17 14:26:08 UTC 2006  Ciju John  <john_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp:
+
+          Addendum to
+          Fri Jul 14 18:34:41 UTC 2006  john_c  <johnc@ociweb.com>
+
+          Previously the code created a connection, then made the socket
+          non-blocking. This change first make the socket
+          non-blocking then initiates the connection. Previous code left a
+          small window, which I think was causing a hangup in certain
+          conditions.
+
 Mon Jul 17 13:15:58 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/examples/ORT/client.cpp:
 
           Modified this code to correctly utilize the exception macros.  It
-          was using ACE_TRY_ENV as a parameter to CORBA::ORB_init().       
+          was using ACE_TRY_ENV as a parameter to CORBA::ORB_init().
 
 Mon Jul 17 12:55:48 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
