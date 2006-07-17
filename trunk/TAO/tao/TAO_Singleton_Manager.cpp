@@ -63,12 +63,16 @@ TAO_Singleton_Manager::TAO_Singleton_Manager (void)
     exit_info_ (),
     registered_with_object_manager_ (-1)
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-    , internal_lock_ (new TAO_SYNCH_RECURSIVE_MUTEX)
+    , internal_lock_ (0)
 # endif /* ACE_MT_SAFE */
 #if defined (ACE_HAS_EXCEPTIONS)
     , old_unexpected_ (0)
 #endif  /* ACE_HAS_EXCEPTIONS */
 {
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+  ACE_NEW (this->internal_lock_,
+           TAO_SYNCH_RECURSIVE_MUTEX);
+# endif /* ACE_MT_SAFE */
   // Be sure that no further instances are created via instance ().
   if (the_instance == 0)
     {

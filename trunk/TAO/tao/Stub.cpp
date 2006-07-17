@@ -354,9 +354,7 @@ TAO_Stub::_incr_refcnt (void)
 void
 TAO_Stub::_decr_refcnt (void)
 {
-  const CORBA::ULong new_count = --this->refcount_;
-
-  if (new_count == 0)
+  if (--this->refcount_ == 0)
     delete this;
 }
 

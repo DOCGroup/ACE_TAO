@@ -1,3 +1,153 @@
+Mon Jul 17 14:40:43 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * TAO_IDL/be/be_visitor_union/union_cs.cpp:
+
+          The memset of the discriminator was redundant as it is assigned
+          directly after the memset of the union data.
+
+        * tao/CDR.h:
+        * tao/CDR.cpp:
+
+          Added a constructor that takes an ACE_Data_Block* which can be
+          used to avoid an allocation while constructing the
+          ACE_Message_Block held by the ACE_OutputCDR. [RT 8372]
+
+        * tao/CSD_Framework/CSD_FW_Server_Request_Wrapper.h:
+        * tao/CSD_Framework/CSD_FW_Server_Request_Wrapper.cpp:
+
+          Use the new inline TAO_ServerRequest constructor.  This avoids
+          having to allocate a costly dummy input and output cdr.
+
+          Avoid using ACE_CString for the operation name which will avoid
+          memory allocations when it isn't necessary.  Most of the time, the
+          operation name can be shared from the operation_details_ object.
+
+          When the type of TAO_Tagged_Profile::type_id_ changed in the
+          previous commit, the cloning needed to take that into account.
+          [RT 8372]
+
+          When cloning the operation details, allocate an input cdr with a
+          "large" message block that will be shared by the output cdr as
+          the marshaling of the arguments is done.  This allows us to
+          avoid the copying of the data block, in most situations, from the
+          output cdr into the input cdr as was done in the previous version.
+          [RT 8372]
+
+        * tao/CSD_ThreadPool.mpc:
+
+          Added a requires for threads as this project shouldn't be built if
+          thread support is not going to be built into TAO.
+
+        * tao/Client_Strategy_Factory.h:
+        * tao/Client_Strategy_Factory.cpp:
+        * tao/Configurable_Refcount.h:
+        * tao/Configurable_Refcount.inl:
+        * tao/Configurable_Refcount.cpp:
+        * tao/Object.h:
+        * tao/Object.i:
+        * tao/Object.cpp:
+        * tao/Profile.h:
+        * tao/Profile.cpp:
+        * tao/Resource_Factory.h:
+        * tao/Resource_Factory.cpp:
+        * tao/default_client.h:
+        * tao/default_client.cpp:
+        * tao/default_resource.h:
+        * tao/tao.mpc:
+
+          The TAO_Configurable_Refcount can be used as an ACE_Atomic_Op with
+          either a null mutex or a thread mutex.  Those classes that use it
+          used to use either a null mutex or a thread mutex and an integer
+          based reference count.
+
+        * tao/GIOP_Message_Base.cpp:
+
+          When processing a request, a character buffer is allocated on the
+          stack.  Previously, it was passed as a parameter to the
+          TAO_OutputCDR and an ACE_Data_Block was heap allocated during the
+          construction of the ACE_Message_Block held by the ACE_OutputCDR.
+
+          Now, the ACE_Data_Block is constructed on the stack as well and
+          passed in during the construction of the ACE_Message_Block to
+          avoid heap allocations altogether. [RT 8372]
+
+        * tao/GIOP_Message_Lite.cpp:
+        * tao/Incoming_Message_Queue.h:
+        * tao/Incoming_Message_Queue.cpp:
+
+          Factored various forms of creating a TAO_Queued_Data (with and
+          without an ACE_Message_Block) into a single method.  Doing this
+          allows us to avoid extra manipulations of the reference count in
+          the ACE_Data_Block involved.
+
+        * tao/Environment.i:
+        * tao/Leader_Follower.cpp:
+        * tao/TAO_Singleton_Manager.cpp:
+        * tao/Var_Size_Argument_T.cpp:
+        * tao/default_resource.cpp:
+        * tao/IORTable/Table_Adapter.cpp:
+        * tao/CSD_ThreadPool/CSD_TP_Collocated_Synch_Request.cpp:
+        * tao/RTCORBA/Thread_Pool.cpp:
+
+          Replace many instances of the use of a bare 'new' with the
+          equivalent ACE_NEW or ACE_NEW_RETURN macro. [RT 8372]
+
+        * tao/LocalObject.h:
+        * tao/Principal.h:
+        * tao/Stub.h:
+        * tao/Stub.cpp:
+        * tao/AnyTypeCode/Any_Impl.h:
+        * tao/AnyTypeCode/NVList.h:
+        * tao/Messaging/AMH_Response_Handler.cpp:
+        * tao/Valuetype/ValueBase.h:
+
+          Use unsigned long instead of CORBA::ULong to be able to take
+          advantage of the ACE_Atomic_Op<> template specialization.
+          CORBA::ULong doesn't necessarily equate to unsigned long.
+
+        * tao/ORB.h:
+        * tao/ORB.i:
+        * tao/ORB.cpp:
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.i:
+
+          Switch from using a thread mutex and CORBA::ULong to an
+          ACE_Atomic_Op<> with a thread mutex and unsigned long.  When the
+          assembler based specialization of ACE_Atomic_Op<> is used, there
+          is a performance benefit.
+
+        * tao/PortableServer/POA_Current_Impl.h:
+        * tao/PortableServer/POA_Current_Impl.inl:
+        * tao/PortableServer/POA_Current_Impl.cpp:
+        * tao/PortableServer/Servant_Upcall.h:
+        * tao/PortableServer/Servant_Upcall.cpp:
+
+          Use an octet sequence array of a specific size (512 bytes by
+          default) when constructing the ObjectId.  This allows us to avoid
+          allocations during an upcall in most situations. [RT 8372]
+
+        * tao/PortableServer/Root_POA.cpp:
+
+          Begin the starting_at index at the TAO_OBJECTKEY_PREFIX_SIZE
+          instead of starting it at zero and then adding the value directly
+          after that.  This is probably immeasurable performance-wise.
+
+        * tao/TAO_Server_Request.h:
+        * tao/TAO_Server_Request.i:
+        * tao/TAO_Server_Request.cpp:
+
+          Avoid using ACE_CString for the operation name which will avoid
+          memory allocations when it isn't necessary.  Most of the time, the
+          operation name can be shared from the operation_details_ object.
+
+        * tao/Tagged_Profile.h:
+        * tao/Tagged_Profile.i:
+        * tao/Tagged_Profile.cpp:
+
+          Avoid using ACE_CString as the type_id_.  The type_id_ was never
+          used for anything more than a holder of a char* that it didn't
+          own, but incurred allocation penalties during construction.
+
 Mon Jul 17 14:26:08 UTC 2006  Ciju John  <john_c@ociweb.com>
 
         * orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp:

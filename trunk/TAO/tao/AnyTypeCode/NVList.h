@@ -124,7 +124,7 @@ namespace CORBA
   private:
 
     /// Reference counter.
-    ACE_Atomic_Op<TAO_SYNCH_MUTEX, ULong> refcount_;
+    ACE_Atomic_Op<TAO_SYNCH_MUTEX, unsigned long> refcount_;
 
     /// holds the value
     Any any_;
@@ -286,7 +286,7 @@ namespace CORBA
     ULong max_;
 
     /// Reference counter.
-    ACE_Atomic_Op<TAO_SYNCH_MUTEX, ULong> refcount_;
+    ACE_Atomic_Op<TAO_SYNCH_MUTEX, unsigned long> refcount_;
 
     /// Protects the incoming pointer.
     TAO_SYNCH_MUTEX lock_;

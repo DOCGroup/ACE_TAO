@@ -28,7 +28,9 @@ static const char *TAO_CDR_Timeprobe_Description[] =
   "OutputCDR::ctor[3] - enter",
   "OutputCDR::ctor[3] - leave",
   "OutputCDR::ctor[4] - enter",
-  "OutputCDR::ctor[4] - leave"
+  "OutputCDR::ctor[4] - leave",
+  "OutputCDR::ctor[5] - enter",
+  "OutputCDR::ctor[5] - leave"
 };
 
 enum
@@ -40,7 +42,9 @@ enum
   TAO_OUTPUT_CDR_CTOR3_ENTER,
   TAO_OUTPUT_CDR_CTOR3_LEAVE,
   TAO_OUTPUT_CDR_CTOR4_ENTER,
-  TAO_OUTPUT_CDR_CTOR4_LEAVE
+  TAO_OUTPUT_CDR_CTOR4_LEAVE,
+  TAO_OUTPUT_CDR_CTOR5_ENTER,
+  TAO_OUTPUT_CDR_CTOR5_LEAVE
 };
 
 // Setup Timeprobes
@@ -154,6 +158,29 @@ TAO_OutputCDR::TAO_OutputCDR (ACE_Message_Block *data,
   ACE_FUNCTION_TIMEPROBE (TAO_OUTPUT_CDR_CTOR4_ENTER);
 }
 
+TAO_OutputCDR::TAO_OutputCDR (ACE_Data_Block *data_block,
+                              int byte_order,
+                              ACE_Allocator* message_block_allocator,
+                              size_t memcpy_tradeoff,
+                              TAO_GIOP_Fragmentation_Strategy * fs,
+                              ACE_CDR::Octet major_version,
+                              ACE_CDR::Octet minor_version)
+  :  ACE_OutputCDR (data_block,
+                    byte_order,
+                    message_block_allocator,
+                    memcpy_tradeoff,
+                    major_version,
+                    minor_version)
+  , fragmentation_strategy_ (fs)
+  , more_fragments_ (false)
+  , request_id_ (0)
+  , stub_ (0)
+  , message_semantics_ (-1)
+  , timeout_ (0)
+{
+  ACE_FUNCTION_TIMEPROBE (TAO_OUTPUT_CDR_CTOR5_ENTER);
+}
+
 void
 TAO_OutputCDR::throw_stub_exception (int error_num ACE_ENV_ARG_DECL)
 {
@@ -245,7 +272,6 @@ TAO_InputCDR::TAO_InputCDR (const TAO_OutputCDR& rhs,
   orb_core_ (orb_core)
 {
 }
-
 
 void
 TAO_InputCDR::throw_stub_exception (int error_num ACE_ENV_ARG_DECL)

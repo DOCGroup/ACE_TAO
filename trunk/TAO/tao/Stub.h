@@ -384,7 +384,7 @@ protected:
   CORBA::Boolean profile_success_;
 
   /// Reference counter.
-  ACE_Atomic_Op<TAO_SYNCH_MUTEX, CORBA::ULong> refcount_;
+  ACE_Atomic_Op<TAO_SYNCH_MUTEX, unsigned long> refcount_;
 
   /// The policy overrides in this object, if nil then use the default
   /// policies.

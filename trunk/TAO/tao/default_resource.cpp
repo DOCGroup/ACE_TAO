@@ -565,8 +565,9 @@ TAO_Default_Resource_Factory::get_parser_names (char **&names,
 
   // OK fallback on the hardcoded ones....
   this->parser_names_count_ = 5; // HOW MANY DO WE HAVE?
-  this->parser_names_ =
-    new char *[this->parser_names_count_];
+  ACE_NEW_RETURN (this->parser_names_,
+                  char *[this->parser_names_count_],
+                  -1);
 
   CORBA::ULong index = 0;
 
@@ -1107,6 +1108,21 @@ TAO_Default_Resource_Factory::create_corba_object_lock (void)
                     0);
 
   return the_lock;
+}
+
+TAO_Configurable_Refcount
+TAO_Default_Resource_Factory::create_corba_object_refcount (void)
+{
+  switch (this->corba_object_lock_type_)
+    {
+      case TAO_NULL_LOCK:
+        return TAO_Configurable_Refcount (
+                       TAO_Configurable_Refcount::TAO_NULL_LOCK);
+      case TAO_THREAD_LOCK:
+      default:
+        return TAO_Configurable_Refcount (
+                       TAO_Configurable_Refcount::TAO_THREAD_LOCK);
+    }
 }
 
 TAO_Flushing_Strategy *

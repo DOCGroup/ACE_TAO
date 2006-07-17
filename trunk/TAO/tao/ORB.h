@@ -37,6 +37,7 @@
 
 #include "ace/Thread_Mutex.h"
 #include "ace/Guard_T.h"
+#include "ace/Atomic_Op.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -632,12 +633,9 @@ namespace CORBA
 
   private:
 
-    /// Lock required for mutual exclusion between multiple threads.
-    TAO_SYNCH_MUTEX lock_;
-
     /// Maintains a reference count of number of instantiations of the
     /// ORB.
-    CORBA::ULong refcount_;
+    ACE_Atomic_Op<TAO_SYNCH_MUTEX, unsigned long> refcount_;
 
     /// The ORB_Core that created us....
     TAO_ORB_Core * orb_core_;

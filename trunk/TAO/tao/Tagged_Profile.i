@@ -11,7 +11,7 @@ TAO_Tagged_Profile::TAO_Tagged_Profile (TAO_ORB_Core *orb_core)
     object_key_ (),
     profile_ (),
     profile_index_ (0),
-    type_id_ ()
+    type_id_ (0)
 {
 
 }
@@ -52,10 +52,10 @@ TAO_Tagged_Profile::profile_index (void) const
   return this->profile_index_;
 }
 
-ACE_INLINE const ACE_CString &
+ACE_INLINE const char*
 TAO_Tagged_Profile::type_id (void) const
 {
-  return this->type_id_;
+  return this->type_id_ == 0 ? "" : this->type_id_;
 }
 
 ACE_INLINE CORBA::Short

@@ -79,7 +79,7 @@ public:
 
   /// Accessor to the type_id contained in the IOP::IOR received from
   /// the client.
-  const ACE_CString &type_id (void) const;
+  const char* type_id (void) const;
 
   CORBA::Short discriminator (void) const;
 
@@ -141,7 +141,7 @@ private:
 
   /// The type_id in the IOP::IOR in case we receive the
   /// GIOP::IORAddressingInfo information.
-  ACE_CString type_id_;
+  const char* type_id_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

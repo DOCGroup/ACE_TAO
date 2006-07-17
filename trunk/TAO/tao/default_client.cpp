@@ -106,8 +106,8 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
               else if (ACE_OS::strcasecmp (name,
                                            ACE_TEXT("null")) == 0)
                 this->profile_lock_type_ = TAO_NULL_LOCK;
-	      else
-		this->report_option_value_error (ACE_TEXT("-ORBIIOPProfileLock"), name);
+              else
+                this->report_option_value_error (ACE_TEXT("-ORBIIOPProfileLock"), name);
             }
         }
 
@@ -218,7 +218,7 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
                else if (ACE_OS::strcmp (name, ACE_TEXT("1")) == 0 ||
                         ACE_OS::strcasecmp (name, ACE_TEXT("true")) == 0)
                  this->use_cleanup_options_ = true;
-               else 
+               else
                  this->report_option_value_error (ACE_TEXT("-ORBConnectionHandlerCleanup"), name);
              }
          }
@@ -259,6 +259,21 @@ TAO_Default_Client_Strategy_Factory::create_profile_lock (void)
                     0);
 
   return the_lock;
+}
+
+TAO_Configurable_Refcount
+TAO_Default_Client_Strategy_Factory::create_profile_refcount (void)
+{
+  switch (this->profile_lock_type_)
+    {
+    case TAO_NULL_LOCK:
+      return TAO_Configurable_Refcount (
+                     TAO_Configurable_Refcount::TAO_NULL_LOCK);
+    case TAO_THREAD_LOCK:
+    default:
+      return TAO_Configurable_Refcount (
+                     TAO_Configurable_Refcount::TAO_THREAD_LOCK);
+    }
 }
 
 // Create the correct client transport muxing strategy.

@@ -279,10 +279,20 @@ public:
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
 private:
+  /// Default ctor only used to create a TAO_ServerRequest that is about
+  /// to be the target of a clone operation.
+  TAO_ServerRequest (void);
+
   TAO_Pluggable_Messaging *mesg_base_;
 
   /// Operation name.
-  ACE_CString operation_;
+  const char* operation_;
+
+  /// Operation length.
+  size_t operation_len_;
+
+  /// Do we own the memory associated with operation_?
+  bool release_operation_;
 
   CORBA::Object_var forward_location_;
 

@@ -13,8 +13,8 @@ CORBA::Object::Object (int)
     ior_ (),
     orb_core_ (0),
     protocol_proxy_ (0),
-    refcount_ (1),
-    refcount_lock_ (0)
+    refcount_ (),
+    object_init_lock_ (0)
 {
 }
 

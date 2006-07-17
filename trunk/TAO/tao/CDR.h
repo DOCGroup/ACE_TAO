@@ -148,6 +148,18 @@ public:
                  ACE_CDR::Octet minor_version =
                    TAO_DEF_GIOP_MINOR);
 
+  /// Build a CDR stream with an initial data block, it will *not* remove
+  /// <data_block>, since it did not allocated it.
+  TAO_OutputCDR (ACE_Data_Block *data,
+                 int byte_order = ACE_CDR_BYTE_ORDER,
+                 ACE_Allocator* message_block_allocator = 0,
+                 size_t memcpy_tradeoff = 0,
+                 TAO_GIOP_Fragmentation_Strategy * fs = 0,
+                 ACE_CDR::Octet major_version =
+                   TAO_DEF_GIOP_MAJOR,
+                 ACE_CDR::Octet minor_version =
+                   TAO_DEF_GIOP_MINOR);
+
   /// Destructor.
   ~TAO_OutputCDR (void);
 
