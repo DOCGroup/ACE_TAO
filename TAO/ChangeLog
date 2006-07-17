@@ -1,3 +1,10 @@
+Mon Jul 17 13:15:58 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/examples/ORT/client.cpp:
+
+          Modified this code to correctly utilize the exception macros.  It
+          was using ACE_TRY_ENV as a parameter to CORBA::ORB_init().       
+
 Mon Jul 17 12:55:48 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/tests/Event/Mcast/Complex/consumer.cpp:

@@ -39,7 +39,7 @@ main (int argc, char *argv[])
   ACE_TRY
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "client_sum_orb", ACE_TRY_ENV);
+        CORBA::ORB_init (argc, argv, "client_sum_orb" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
