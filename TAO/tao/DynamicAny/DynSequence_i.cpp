@@ -2,7 +2,7 @@
 
 #include "tao/AnyTypeCode/Marshal.h"
 #include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
-#include "tao/AnyTypeCode/TypeCode.h"
+#include "tao/AnyTypeCode/AnyTypeCode_methods.h"
 #include "tao/DynamicAny/DynSequence_i.h"
 #include "tao/DynamicAny/DynAnyFactory.h"
 #include "tao/CDR.h"
