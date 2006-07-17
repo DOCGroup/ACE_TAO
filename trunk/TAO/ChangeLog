@@ -1,3 +1,10 @@
+Mon Jul 17 12:55:48 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/tests/Event/Mcast/Complex/consumer.cpp:
+
+          Modified this code to correctly utilize the exception macros.  It
+          was using ACE_TRY_ENV as a parameter to CORBA::ORB_init().
+
 Mon Jul 18 11:37:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Strategies.mpc:
