@@ -2,6 +2,7 @@
 
 #include "ace/Service_Config.h"
 #include "ace/Logging_Strategy.h"
+#include "ace/Sig_Adapter.h"
 #include "TS_Clerk_Handler.h"
 #include "TS_Server_Handler.h"
 #include "Client_Logging_Handler.h"
