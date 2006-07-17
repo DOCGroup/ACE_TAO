@@ -9,7 +9,7 @@
 #include "Consumer_Router.h"
 #include "Event_Analyzer.h"
 #include "Supplier_Router.h"
-#include "ace/Signal.h"
+#include "ace/Sig_Adapter.h"
 #include "ace/Stream.h"
 
 ACE_RCSID (Event_Server,

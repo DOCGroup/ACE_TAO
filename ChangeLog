@@ -1,3 +1,41 @@
+Sun Jul 17 06:49:21 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * apps/soreduce/Library.cpp (set_path):
+        * apps/soreduce/Obj_Module.cpp (add_source):
+        * examples/Misc/test_sstring.cpp:
+        * examples/Web_Crawler/Command_Processor.cpp:
+        * examples/Web_Crawler/URL_Visitor.cpp:
+
+          Use new ACE_CString::size_type type to hold string
+          position/index value, instead of "int".  Addresses "comparison
+          between signed and unsigned" warnings.
+
+        * examples/APG/Signals/SigAction.cpp:
+        * examples/System_V_IPC/SV_Message_Queues/MQ_Server.cpp:
+        * examples/System_V_IPC/SV_Message_Queues/TMQ_Server.cpp:
+
+          Include "ace/OS_NS_stdlib.h" to pull in ACE_OS::exit()
+          prototype.
+
+        * examples/APG/Signals/SigGuard.cpp:
+        * examples/APG/Signals/SigHandler.cpp:
+        * examples/APG/Signals/SigHandlers.cpp:
+        * examples/APG/ThreadManagement/Signals.cpp:
+        * examples/APG/ThreadManagement/Signals2.cpp:
+        * examples/ASX/CCM_App/SC_Server.cpp:
+        * examples/ASX/Event_Server/Event_Server/event_server.cpp:
+        * examples/ASX/UPIPE_Event_Server/event_server.cpp:
+        * examples/Connection/blocking/SPIPE-connector.h:
+        * examples/Connection/misc/Connection_Handler.cpp:
+        * examples/Connection/non_blocking/CPP-acceptor.h:
+        * examples/Connection/non_blocking/CPP-connector.h:
+        * examples/Service_Configurator/IPC-tests/server/server_test.cpp:
+        * netsvcs/lib/TS_Clerk_Handler.cpp:
+
+          Include "ace/Sig_Handler.h" or "ace/Sig_Adapter.h" to pull in
+          ACE_Sig_Handler or ACE_Sig_Adapter class declaration,
+          respectively.  Necessitated by "ace/Signal.h" refactoring.
+
 Sun Jul 16 23:14:53 UTC 2006  Ciju John  <johnc@ociweb.com>
 
         * ace/String_Base_Const.cpp:
@@ -1461,7 +1499,7 @@ Mon Jun 19 10:00:17 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
         * ace/Acceptor.cpp:
           Const improvement
 
-Mon Jun 19 09:56:17 UTC 2006  Ossama Othman  <ossama_othman@symantec.com>
+Mon Jun 19 09:56:17 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
         * ace/OS_NS_sys_sendfile.cpp (sendfile_emulation):
 

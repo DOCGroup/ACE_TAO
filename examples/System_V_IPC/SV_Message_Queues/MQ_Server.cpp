@@ -9,6 +9,7 @@
 #include "test.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_stdlib.h"
 
 ACE_RCSID(SV_Message_Queues, MQ_Server, "$Id$")
 

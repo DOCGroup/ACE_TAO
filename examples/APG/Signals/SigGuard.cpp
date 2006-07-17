@@ -3,6 +3,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/Log_Msg.h"
 #include "ace/Signal.h"
+#include "ace/Sig_Handler.h"
 
 // Listing 1
 class MySignalHandler : public ACE_Event_Handler
