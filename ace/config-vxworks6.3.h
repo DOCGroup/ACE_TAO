@@ -3,7 +3,7 @@
 
 // The following configuration file is designed to work for VxWorks
 // 6.2 platforms using one of these compilers:
-// 1) The GNU g++ compiler that is shipped with VxWorks 6.2
+// 1) The GNU g++ compiler that is shipped with VxWorks 6.3
 
 #ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
@@ -14,16 +14,8 @@
 #endif /* ! VXWORKS */
 
 #if ! defined (ACE_VXWORKS)
-# define ACE_VXWORKS 0x620
+# define ACE_VXWORKS 0x630
 #endif /* ! ACE_VXWORKS */
-
-// Fix for wrong typedef of suseconds_t
-// *and* for including right typedef for pid_t in VxTypes.h (int)
-// before wrong typedef in unistd.h (unsigned short)
-#include <vxWorksCommon.h>
-#include <unistd.h>
-#define suseconds_t long
-// END Fix
 
 #if ! defined (__ACE_INLINE__)
 # define __ACE_INLINE__
@@ -43,35 +35,6 @@
 #     define _GLIBCPP_USE_LONG_LONG
 #   endif
 # endif /* (__GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 3)) */
-
-#elif defined (ghs)
-  // Processor type, if necessary.  Green Hills defines "ppc".
-# if defined (ppc)
-#   define ACE_HAS_POWERPC_TIMER
-#   define ACE_LACKS_CLEARERR
-# endif /* ppc */
-
-# define ACE_CONFIG_INCLUDE_GHS_COMMON
-# include "ace/config-ghs-common.h"
-
-# define ACE_LACKS_UNISTD_H
-# define ACE_LACKS_IOSTREAM_TOTALLY
-
-// Short-circuit the include of <arpa/inet.h>
-// Green Hills has a problem with multiply defined functions
-// with different parameters.
-# define __INCineth
-
-#elif defined (__DCPLUSPLUS__) || defined (__DCC__)
-  // Diab 4.2a or later.
-# if !defined (ACE_LACKS_PRAGMA_ONCE)
-    // We define it with a -D with make depend.
-#   define ACE_LACKS_PRAGMA_ONCE
-# endif /* ! ACE_LACKS_PRAGMA_ONCE */
-
-# define ACE_HAS_STANDARD_CPP_LIBRARY 1
-# define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
-# define ACE_TEMPLATES_REQUIRE_SOURCE
 
 #else  /* ! __GNUG__ && ! ghs && !__DCC__ */
 #  ifdef __cplusplus  /* Let it slide for C compilers. */
@@ -151,6 +114,7 @@
 #define ACE_LACKS_TIMESPEC_T
 #define ACE_LACKS_TRUNCATE
 #define ACE_LACKS_UCONTEXT_H
+#define ACE_LACKS_USECONDS_T
 #define ACE_LACKS_UMASK
 #define ACE_LACKS_STRPTIME
 #define ACE_PAGE_SIZE 4096
