@@ -236,7 +236,7 @@ TAO_ECG_Mcast_EH::add_new_subscriptions (Address_Set& multicast_addresses)
                     errno ));
       }
 
-      socket->subscribe (new_subscription.mcast_addr, 1, this->net_if_);
+      socket->join (new_subscription.mcast_addr, 1, this->net_if_);
 
       if (this->recvbuf_size_ != 0
           && (((ACE_SOCK_Dgram *)socket)->set_option(SOL_SOCKET,
