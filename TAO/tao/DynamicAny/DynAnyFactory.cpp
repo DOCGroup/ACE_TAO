@@ -9,7 +9,7 @@
 //=============================================================================
 
 
-#include "tao/AnyTypeCode/TypeCode.h"
+#include "tao/AnyTypeCode/AnyTypeCode_methods.h"
 
 #include "tao/DynamicAny/DynAnyFactory.h"
 
