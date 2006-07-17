@@ -1,3 +1,11 @@
+Mon Jul 17 14:46:26 UTC 2006  Ciju John  <johnc@ociweb.com>
+
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp:
+
+          Replaced deprecated call to ACE_SOCK_Dgram_Mcast::subscribe()
+          with ACE_SOCK_Dgram_Mcast::join(). Thanks to Johnny for pointing
+          this out.
+
 Mon Jul 17 14:40:43 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * TAO_IDL/be/be_visitor_union/union_cs.cpp:
