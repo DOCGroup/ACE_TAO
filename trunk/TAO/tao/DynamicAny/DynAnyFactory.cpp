@@ -9,6 +9,8 @@
 //=============================================================================
 
 
+#include "tao/AnyTypeCode/TypeCode.h"
+
 #include "tao/DynamicAny/DynAnyFactory.h"
 
 #include "tao/DynamicAny/DynAny_i.h"
