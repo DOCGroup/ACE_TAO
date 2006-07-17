@@ -101,7 +101,7 @@ public:
   int count (void) const;
 
   /// Returns @c true if this object does not contain a valid pointer.
-  int null (void) const;
+  bool null (void) const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

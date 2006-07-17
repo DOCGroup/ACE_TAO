@@ -50,7 +50,7 @@ USER VISIBLE CHANGES BETWEEN ACE-5.5.2 and ACE-5.5.3
   class to aid developers.  This typedef is analogous to the standard
   C++ string::size_type typedef.
 
-  The ACE_String_Base<>::strstr() documentation as well as a default
+  The ACE_String_Base<>::strstr() documentation and the default
   rfind() argument erroneously referred to -1 instead of npos. Those
   instances have been corrected.
 
@@ -62,6 +62,9 @@ USER VISIBLE CHANGES BETWEEN ACE-5.5.2 and ACE-5.5.3
 . Changing the shared library extension for hpux ia64 to ".so". On
   HP-UX 11i Version 1.5 the naming scheme is lib*.sl for PA and
   lib*.so on IPF.
+
+. The return type of "ACE_Refcounted_Auto_Ptr::null (void) const" changed
+  from int to bool. It's possible values, true and false, have not changed.
 
 USER VISIBLE CHANGES BETWEEN ACE-5.5.1 and ACE-5.5.2
 ====================================================
