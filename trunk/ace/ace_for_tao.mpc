@@ -144,6 +144,8 @@ project(ACE_FOR_TAO) : acedefaults, core, svcconf, versioned_namespace, pkgconfi
     Sched_Params.cpp
     Select_Reactor_Base.cpp
     Signal.cpp
+    Sig_Handler.cpp
+    Sig_Adapter.cpp
     SOCK.cpp
     SOCK_Acceptor.cpp
     Sock_Connect.cpp
