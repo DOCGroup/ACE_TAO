@@ -143,7 +143,7 @@ main (int argc, char *argv[])
     {
       // Initialize ORB and POA, POA Manager, parse args.
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
+        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) == -1)
