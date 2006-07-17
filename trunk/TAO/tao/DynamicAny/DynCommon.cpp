@@ -1,5 +1,7 @@
 // $Id$
 
+#include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
+#include "tao/AnyTypeCode/TypeCode.h"
 #include "tao/DynamicAny/DynCommon.h"
 #include "tao/DynamicAny/DynAnyFactory.h"
 #include "tao/DynamicAny/DynAny_i.h"
@@ -8,7 +10,6 @@
 #include "tao/DynamicAny/DynSequence_i.h"
 #include "tao/DynamicAny/DynStruct_i.h"
 #include "tao/DynamicAny/DynUnion_i.h"
-#include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
 #include "tao/CDR.h"
 #include "ace/OS_NS_wchar.h"
 #include "ace/OS_NS_string.h"
