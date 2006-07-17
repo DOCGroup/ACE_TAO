@@ -447,6 +447,13 @@ Fri Jul 14 19:44:03 UTC 2006  john_c  <johnc@ociweb.com>
           HP-UX 11i Version 1.5 the naming scheme is lib*.sl for PA and
           lib*.so on IPF.
 
+Fri Jul 14 19:29:59 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS_NS_stdio.cpp (DllMain): Add extern "C" to the DllMain
+          signature - enables it to be located and called at startup.
+          Thanks to Hubert Talbot <Hubert dot Talbot at criq dot qc dot ca>
+          for this fix.
+
 Fri Jul 14 19:13:06 UTC 2006  john_c  <john@ociweb.com>
 
         * ace/Timer_Queue_Adapters.cpp:

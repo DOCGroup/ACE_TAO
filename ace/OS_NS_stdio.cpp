@@ -22,7 +22,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #   if defined (ACE_HAS_DLL) && (ACE_HAS_DLL == 1) && !defined (ACE_HAS_WINCE)
 // This function is called by the OS when the ACE DLL is loaded. We
 // use it to determine the default module containing ACE's resources.
-BOOL WINAPI DllMain(HINSTANCE instance, DWORD reason, LPVOID)
+extern "C" BOOL WINAPI DllMain(HINSTANCE instance, DWORD reason, LPVOID)
 {
   if (reason == DLL_PROCESS_ATTACH)
     {
