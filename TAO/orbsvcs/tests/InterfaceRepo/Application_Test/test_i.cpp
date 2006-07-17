@@ -23,12 +23,12 @@ inventory_i::getCDinfo (const char * artist,
   ACE_CString name_key ("Beatles");
   ACE_CString name (artist);
 
-  if (name.strstr (name_key) != -1)
+  if (name.strstr (name_key) != ACE_CString::npos)
     {
       ACE_CString title_key ("Sgt. Pepper");
       ACE_CString working_title (title);
 
-      if (working_title.strstr (title_key) != -1)
+      if (working_title.strstr (title_key) != ACE_CString::npos)
         {
           title =
             CORBA::string_dup ("Sgt. Pepper's Lonely Hearts Club Band");

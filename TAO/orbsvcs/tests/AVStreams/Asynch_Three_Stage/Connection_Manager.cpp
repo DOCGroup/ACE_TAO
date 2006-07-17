@@ -75,7 +75,7 @@ Connection_Manager::load_ep_addr (const char* file_name)
 	{
 	  ACE_CString token (addr_tokenizer [1]);
 
-	  int pos = token.find ('\r');
+	  ACE_CString::size_type pos = token.find ('\r');
 	  if (pos != ACE_CString::npos)
 	    {
 	      addr->sender_addr = CORBA::string_dup ((token.substr (0, pos)).c_str ());

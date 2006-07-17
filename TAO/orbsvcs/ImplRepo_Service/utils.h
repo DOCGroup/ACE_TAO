@@ -63,15 +63,15 @@ public:
     const ACE_CString VALTAG = "value=\"";
     const ACE_CString ENDTAG = "\"";
 
-    ssize_t i = 0;
+    ACE_CString::size_type i = 0;
 
     for (CORBA::ULong idx = 0; ; ++idx)
     {
       // find name
-      ssize_t j = s.find(NAMETAG, i);
+      ACE_CString::size_type j = s.find(NAMETAG, i);
       if (j == ACE_CString::npos) break;
       j += NAMETAG.length();
-      ssize_t k = s.find(ENDTAG, j + 1);
+      ACE_CString::size_type k = s.find(ENDTAG, j + 1);
       if (k == ACE_CString::npos) break;
       ACE_CString name = s.substr(j, k - j);
 

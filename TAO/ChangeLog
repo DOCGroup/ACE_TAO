@@ -1,11 +1,16 @@
 Mon Jul 17 17:49:41 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
+        * examples/POA/On_Demand_Loading/Servant_Manager.cpp:
         * orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
         * orbsvcs/orbsvcs/AV/AV_Core.cpp:
         * orbsvcs/orbsvcs/HTIOP/HTIOP_Acceptor.cpp:
         * orbsvcs/orbsvcs/IFRService/Container_i.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/ImplRepo_Service/utils.h:
         * orbsvcs/orbsvcs/PortableGroup/UIPMC_Acceptor.cpp:
         * orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.cpp:
+        * orbsvcs/tests/AVStreams/Asynch_Three_Stage/Connection_Manager.cpp:
+        * orbsvcs/tests/InterfaceRepo/Application_Test/test_i.cpp:
         * tao/Strategies/DIOP_Acceptor.cpp:
         * tao/Strategies/SHMIOP_Acceptor.cpp:
         * tao/Strategies/UIOP_Acceptor.cpp:
