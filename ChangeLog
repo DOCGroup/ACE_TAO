@@ -1,3 +1,9 @@
+Mon Jul 17 12:49:34 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * netsvcs/servers/main.cpp:
+
+          Added a missing #include for ace/Sig_Adapter.h.
+
 Mon Jul 17 11:57:26 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/qt_reactor.mpb:
