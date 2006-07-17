@@ -1,3 +1,12 @@
+Mon Jul 17 17:49:41 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
+        * DAnCE/NodeApplicationManager/Containers_Info_Map.cpp:
+
+          Use new ACE_CString::size_type type to hold string
+          position/index value, instead of "int".  Addresses "comparison
+          between signed and unsigned" warnings.
+
 Sat Jul 15 04:21:13 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
 
         * DAnCE/RepositoryManager/README.txt:
