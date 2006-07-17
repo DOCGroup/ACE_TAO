@@ -301,7 +301,7 @@ namespace CIAO
           }
 
         ACE_CString tmp = arti.name.in ();
-        ssize_t pos;
+        ACE_CString::size_type pos;
 
         //@@ Note: I am not checking for redundancy here. Maybe
         //         the modeling tool should make sure of
