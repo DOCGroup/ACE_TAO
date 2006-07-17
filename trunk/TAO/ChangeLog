@@ -1,3 +1,16 @@
+Mon Jul 18 11:37:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Strategies.mpc:
+          Enabled regeneration of the pidl files
+
+        * tao/Strategies/sciop_endpoints.pidl:
+        * tao/Strategies/uiop_endpoints.pidl:
+          Updated comments block to resolve warnings during recompilation
+
+        * tao/Strategies/uiop_endpointsC.{h,cpp}:
+        * tao/Strategies/sciop_endpointsC.{h,cpp}:
+          Removed from the repo
+
 Mon Jul 18 11:00:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Valuetype/ValueBase.{h,cpp}:
