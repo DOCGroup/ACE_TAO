@@ -19,7 +19,6 @@ Mon Jul 17 17:49:41 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
           position/index value, instead of "int".  Addresses "comparison
           between signed and unsigned" warnings.
 
-
 Mon Jul 17 14:46:26 UTC 2006  Ciju John  <johnc@ociweb.com>
 
         * orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp:
