@@ -20,7 +20,7 @@ Hello::op (
         ::CORBA::SystemException
       ))
 {
-  Test::Fls a;
+  Test::Fls a = {5, 1.0};
   fstruct = a;
   vstruct = new Test::Vls;
 }
