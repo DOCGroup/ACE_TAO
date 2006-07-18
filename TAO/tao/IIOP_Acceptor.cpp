@@ -661,7 +661,6 @@ TAO_IIOP_Acceptor::parse_address (const char *address,
   // IPv6 numeric address in host string?
   bool ipv6_in_host = false;
 
-
   // Check if this is a (possibly) IPv6 supporting profile containing a
   // numeric IPv6 address representation.
   if ((this->version_.major > TAO_MIN_IPV6_IIOP_MAJOR ||
@@ -687,7 +686,7 @@ TAO_IIOP_Acceptor::parse_address (const char *address,
           else
             port_separator_loc = 0;
           // Extract out just the host part of the address.
-          const size_t len = cp_pos - (address + 1);
+          size_t const len = cp_pos - (address + 1);
           ACE_OS::memcpy (tmp_host, address + 1, len);
           tmp_host[len] = '\0';
           ipv6_in_host = true; // host string contains full IPv6 numeric address
