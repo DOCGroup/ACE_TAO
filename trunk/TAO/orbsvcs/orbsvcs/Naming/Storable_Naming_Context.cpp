@@ -266,7 +266,7 @@ void TAO_Storable_Naming_Context::Write(TAO_Storable_Base& wrtr)
 
   wrtr << header;
 
-  if( storable_context_->current_size() == 0 )
+  if (0u == header.size ())
     return;
 
   ACE_Hash_Map_Iterator<TAO_Storable_ExtId,TAO_Storable_IntId,
@@ -280,17 +280,62 @@ void TAO_Storable_Naming_Context::Write(TAO_Storable_Base& wrtr)
   {
     TAO_NS_Persistence_Record record;
 
+    ACE_CString name;
     CosNaming::BindingType bt = (*it).int_id_.type_;
     if (bt ==  CosNaming::ncontext)
-      record.type(TAO_NS_Persistence_Record::NCONTEXT);
-    else if (bt == CosNaming::nobject)
-      record.type(TAO_NS_Persistence_Record::OBJREF);
-    //else
-    //there shouldn't be any other, can there be ??
-    //ignore for now
+      {
+        CORBA::Object_var
+          obj = orb_->string_to_object ((*it).int_id_.ref_.in ());
+        if (obj->_is_collocated ())
+          {
+            // This is a local (i.e. non federated context) we therefore
+            // store only the ObjectID (persistence filename) for the object.
 
-    // todo - are we using this i ??
-    //int i = storable_context_->current_size();
+            // The driving force behind storing ObjectIDs rather than IORs for
+            // local contexts is to provide for a redundant naming service.
+            // That is, a naming service that runs simultaneously on multiple
+            // machines sharing a file system. It allows multiple redundant
+            // copies to be started and stopped independently.
+            // The original target platform was Tru64 Clusters where there was
+            // a cluster address. In that scenario, clients may get different
+            // servers on each request, hence the requirement to keep
+            // synchronized to the disk. It also works on non-cluster system
+            // where the client picks one of the redundant servers and uses it,
+            // while other systems can pick different servers. (However in this
+            // scenario, if a server fails and a client must pick a new server,
+            // that client may not use any saved context IORs, instead starting
+            // from the root to resolve names. So this latter mode is not quite
+            // transparent to clients.) [Rich Seibel (seibel_r) of ociweb.com]
+
+            PortableServer::ObjectId_var
+              oid = poa_->reference_to_id (obj.in ());
+            CORBA::String_var
+              nm = PortableServer::ObjectId_to_string (oid.in ());
+            const char
+              *newname = nm.in ();
+            name.set (newname); // The local ObjectID (persistance filename)
+            record.type (TAO_NS_Persistence_Record::LOCAL_NCONTEXT);
+          }
+        else
+          {
+            // Since this is a foreign (federated) context, we can not store
+            // the objectID (because it isn't in our storage), if we did, when
+            // we restore, we would end up either not finding a permanent
+            // record (and thus ending up incorrectly assuming the context was
+            // destroyed) or loading another context altogether (just because
+            // the contexts shares its objectID filename which is very likely).
+            // [Simon Massey  (sma) of prismtech.com]
+
+            name.set ((*it).int_id_.ref_.in ()); // The federated context IOR
+            record.type (TAO_NS_Persistence_Record::REMOTE_NCONTEXT);
+          }
+      }
+    else // if (bt == CosNaming::nobject) // shouldn't be any other, can there?
+      {
+        name.set ((*it).int_id_.ref_.in ()); // The non-context object IOR
+        record.type (TAO_NS_Persistence_Record::OBJREF);
+      }
+    record.ref(name);
 
     const char *myid = (*it).ext_id_.id();
     ACE_CString id(myid);
@@ -299,21 +344,6 @@ void TAO_Storable_Naming_Context::Write(TAO_Storable_Base& wrtr)
     const char *mykind = (*it).ext_id_.kind();
     ACE_CString kind(mykind);
     record.kind(kind);
-
-    ACE_CString name;
-    if (bt == CosNaming::nobject)
-      {
-        name.set((*it).int_id_.ref_.in());
-      }
-    else
-      {
-        CORBA::Object_var obj = orb_->string_to_object((*it).int_id_.ref_.in());
-        PortableServer::ObjectId_var oid = poa_->reference_to_id(obj.in());
-        CORBA::String_var nm = PortableServer::ObjectId_to_string(oid.in());
-        const char *newname = nm.in();
-        name.set(newname);
-      }
-    record.ref(name);
 
     wrtr << record;
     it.advance();
@@ -351,36 +381,40 @@ TAO_Storable_Naming_Context::load_map(File_Open_Lock_and_Check *flck
   this->destroyed_ = header.destroyed();
 
   // read in the data for the map
-  for (unsigned int i=0; i<header.size(); i++)
-  {
-    flck->peer() >> record;
-    if (!flck->peer ().good ())
-      {
-        flck->peer ().clear ();
-        ACE_THROW_RETURN (CORBA::INTERNAL (), -1);
-      }
-    if( record.type() == TAO_NS_Persistence_Record::NCONTEXT )
+  for (unsigned int i= 0u; i<header.size(); ++i)
     {
-      PortableServer::ObjectId_var id =
-                      PortableServer::string_to_ObjectId(record.ref().c_str());
-      const char * intf = interface_->_interface_repository_id();
-      CORBA::Object_var objref = poa_->create_reference_with_id (
-                                           id.in (),
-                                           intf );
-      bindings_map->bind( record.id().c_str(),
-                          record.kind().c_str(),
-                          objref.in(),
-                          CosNaming::ncontext );
+      flck->peer() >> record;
+      if (!flck->peer ().good ())
+        {
+          flck->peer ().clear ();
+          ACE_THROW_RETURN (CORBA::INTERNAL (), -1);
+        }
+
+      if (TAO_NS_Persistence_Record::LOCAL_NCONTEXT == record.type ())
+        {
+          PortableServer::ObjectId_var
+            id = PortableServer::string_to_ObjectId (record.ref ().c_str ());
+          const char
+            *intf = interface_->_interface_repository_id ();
+          CORBA::Object_var
+            objref = poa_->create_reference_with_id (id.in (), intf);
+          bindings_map->bind ( record.id ().c_str (),
+                               record.kind ().c_str (),
+                               objref.in (),
+                               CosNaming::ncontext );
+        }
+      else
+        {
+          CORBA::Object_var
+            objref = orb_->string_to_object (record.ref ().c_str ());
+          bindings_map->bind ( record.id ().c_str (),
+                               record.kind ().c_str (),
+                               objref.in (),
+                               ((TAO_NS_Persistence_Record::REMOTE_NCONTEXT == record.type ())
+                                ? CosNaming::ncontext    // REMOTE_NCONTEXT
+                                : CosNaming::nobject )); // OBJREF
+        }
     }
-    else
-    {
-      CORBA::Object_var objref = orb_->string_to_object (record.ref().c_str());
-      bindings_map->bind( record.id().c_str(),
-                          record.kind().c_str(),
-                          objref.in(),
-                          CosNaming::nobject );
-    }
-  }
   storable_context_ = bindings_map;
   context_ = storable_context_;
   return 0;

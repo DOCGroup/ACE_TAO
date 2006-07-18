@@ -47,7 +47,7 @@ class TAO_NS_Persistence_Header
 class TAO_NS_Persistence_Record
 {
  public:
-  enum Record_Type {NCONTEXT, OBJREF};
+  enum Record_Type {LOCAL_NCONTEXT, OBJREF, REMOTE_NCONTEXT};
 
   Record_Type type () const;
   void type (Record_Type type);

@@ -1,3 +1,11 @@
+Tue Jul 18 08:15:00 UTC 2006  Simon Massey  <sma@prismtech.com>
+
+        * orbsvcs/orbsvcs/Naming/Storable.h:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp:
+
+          Fix bugzilla 2600 - Naming Service Flat File Persistance with
+          Federated naming contexts.
+
 Mon Jul 17 18:35:32 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
 
         * docs/tutorials/Quoter/RTCORBA/Admin.cpp
