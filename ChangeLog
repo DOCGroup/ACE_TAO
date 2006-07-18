@@ -1,3 +1,10 @@
+Tue Jul 18 12:48:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/taoidldefaults.mpb:
+          Fixed the rules to decide whether a .inl file should be added
+          or not. Thanks to Chad Elliot for noticing this incorrect
+          rule.
+
 Tue Jul 18 09:59:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/PerlACE/ProcessVX_Win32.pm:
