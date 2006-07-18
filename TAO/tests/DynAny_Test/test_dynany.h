@@ -16,6 +16,7 @@
 #define TEST_DYNANY_H
 
 #include "tao/ORB.h"
+#include "tao/AnyTypeCode/AnyTypeCode_methods.h"
 
 class Test_DynAny
 {
