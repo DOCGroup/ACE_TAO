@@ -1,3 +1,8 @@
+Tue Jul 18 09:54:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/Process_Unix.pm:
+          Removed chorus support
+
 Mon Jul 17 16:06:57 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * tests/Unload_LibACE.cpp: Alter the libACE suffix for HP-UX on
