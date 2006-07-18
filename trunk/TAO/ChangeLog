@@ -1,3 +1,12 @@
+Tue Jul 18 11:19:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/VarOut_T.inl:
+          Fixed bug 2595, when the _var is nill and the .out() is invoked
+          we have to allocate a new instance instead of deference a
+          nill pointer. This matches the latest CORBA C++ mapping, thanks
+          to Abdul Sowayan <abdullah dot sowayan at lmco dot com> for
+          reporting this bug
+
 Tue Jul 18 10:29:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_2595_Regression/*
