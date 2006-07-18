@@ -1,3 +1,9 @@
+Tue Jul 18 18:12:17 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ACE-INSTALL.html: Updated the description of how to build
+          ACE+TAO using MPC.  Thanks to Steve Totten for helping with
+          this.
+
 Tue Jul 18 19:04:42 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
         * ace/Numeric_Limits.h:
