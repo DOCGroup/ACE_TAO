@@ -1,9 +1,14 @@
+Tue Jul 18 20:50:49 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * Happy Birthday to me!!  
+
 Tue Jul 18 19:17:54 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
-          This change is in response to bug#2602. It fixes a problem with
-          trying to use XML as the service configuration file format.  The
-          change also includes additional comments and in-line
-          documentation on the new ability to use local service
+          This change is in response to bug#2602, which was reported by
+          Lothar Werzinger <lothar at tradescape dot biz>. It fixes a
+          problem with trying to use XML as the service configuration file
+          format.  The change also includes additional comments and
+          in-line documentation on the new ability to use local service
           repositories.
 
         * ace/DLL_Manager.cpp:
