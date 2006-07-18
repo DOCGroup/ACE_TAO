@@ -282,6 +282,8 @@ libACE_la_SOURCES = \
   Shared_Memory_Pool.cpp \
   Shared_Memory_SV.cpp \
   Shared_Object.cpp \
+  Sig_Adapter.cpp \
+  Sig_Handler.cpp \
   Signal.cpp \
   Sock_Connect.cpp \
   Stats.cpp \
@@ -933,6 +935,9 @@ nobase_include_HEADERS += \
   Shared_Memory_SV.inl \
   Shared_Object.h \
   Shared_Object.inl \
+  Sig_Adapter.h \
+  Sig_Handler.h \
+  Sig_Handler.inl \
   Signal.h \
   Signal.inl \
   Singleton.cpp \
