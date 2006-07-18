@@ -2621,7 +2621,25 @@ building tool generic files (mpc files) as input, which describe basic
 information needed to generate a "project" file for various build
 tools, including Make, NMake, Visual C++ 6, Visual C++ 7, etc.  Please
 see <a href="MPC/USAGE">USAGE</a>, <a href="MPC/README">README</a> for
-documentation on MPC.
+documentation on MPC.<P>
+
+A common usage for creating a Windows workspace
+containing just the core ACE and TAO libraries and executables is the
+following:
+<pre><code>
+C:> cd %TAO_ROOT%
+C:> %ACE_ROOT%\bin\mwc.pl -type vc71 TAO_ACE.mwc
+</pre></code>
+
+Replace vc71 with whatever project type you want to use.  On Linux and
+other UNIX platform it's even easier: <P>
+
+<pre><code>
+% cd $TAO_ROOT
+% $ACE_ROOT/bin/mwc.pl TAO_ACE.mwc
+</pre></code>
+
+this creates the appropriate GNUmakefiles. <P>
 
 If you are attempting to generate project files using MPC, and you get
 the following error message:<br>
@@ -2651,11 +2669,13 @@ source of documentation, however it is not a complete set of
 documentation. The TAO Developer's Guide from OCI starting with the
 1.3a version contains more information about MPC.<p>
 
-The MPC chapter from the TAO Developer's Guide is
-available at <a href="http://downloads.ociweb.com/MPC/">
-http://downloads.ociweb.com/MPC/</a>.  However, much of MPC has
-changed since its original writing.  It will be updated as newer
-versions of the TAO Developer's Guide are released.
+The MPC chapter from the TAO Developer's Guide is available at <a
+href="http://downloads.ociweb.com/MPC/">
+http://downloads.ociweb.com/MPC/</a>.  Some of MPC has changed since
+this versoin, but it is largely accurate.  An updated version will be
+available as newer versions of the TAO Developer's Guide are released.
+In the meantime, please see the README and USAGE files in the MPC
+directory.
 
 </p>
 <p>

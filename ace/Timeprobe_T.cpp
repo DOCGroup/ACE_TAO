@@ -110,6 +110,17 @@ ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::timeprobe (const char *event)
 
   ACE_ASSERT (this->current_size_ < this->max_size_);
 
+#if defined (ACE_TIMEPROBE_ASSERTS_FIXED_SIZE)
+  ACE_ASSERT (this->current_size_ < this->max_size_);
+#else /* ! ACE_TIMEPROBE_ASSERTS_FIXED_SIZE */
+  // wrap around to the beginning on overflow
+  if (this->current_size_ >= this->max_size_)
+    {
+      this->current_size_ = 0;
+      this->report_buffer_full_ = 1;
+    }
+#endif /* ACE_TIMEPROBE_ASSERTS_FIXED_SIZE */
+
   this->timeprobes_[this->current_size_].event_.event_description_ = event;
   this->timeprobes_[this->current_size_].event_type_ = ACE_timeprobe_t::STRING;
   this->timeprobes_[this->current_size_].time_ = ACE_OS::gethrtime ();
