@@ -91,6 +91,20 @@ struct Queue_Wrapper
   // Default constructor.
 };
 
+struct MQ_Ex_N_Tester_Wrapper
+{
+  //  = TITLE
+  //      Container for data passed to sender in the MQ_Ex_N_Tester
+  //      performance test.
+  //
+  //  = DESCRIPTION
+  //     For use in multithreaded performance test.
+  MQ_Ex_N_Tester *tester_;
+  User_Class     *head_send_block_;
+};
+
+#endif /* ACE_HAS_THREADS */
+
 // Encapsulates the sent messages creation and destruction
 struct Send_Messages
 {
@@ -178,20 +192,6 @@ struct Receive_Messages
   User_Class **receive_block_;
   int          number_of_messages_;
 };
-
-struct MQ_Ex_N_Tester_Wrapper
-{
-  //  = TITLE
-  //      Container for data passed to sender in the MQ_Ex_N_Tester
-  //      performance test.
-  //
-  //  = DESCRIPTION
-  //     For use in multithreaded performance test.
-  MQ_Ex_N_Tester *tester_;
-  User_Class     *head_send_block_;
-};
-
-#endif /* ACE_HAS_THREADS */
 
 static int
 single_thread_performance_test (void)
