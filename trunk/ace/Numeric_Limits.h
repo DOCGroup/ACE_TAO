@@ -64,8 +64,8 @@ struct ACE_Export ACE_Numeric_Limits<signed char>
 template<>
 struct ACE_Export ACE_Numeric_Limits<signed short>
 {
-  static signed short min (void) { return SHORT_MIN; }
-  static signed short max (void) { return SHORT_MAX; }
+  static signed short min (void) { return SHRT_MIN; }
+  static signed short max (void) { return SHRT_MAX; }
 };
 
 template<>
@@ -86,8 +86,28 @@ struct ACE_Export ACE_Numeric_Limits<signed long>
 template<>
 struct ACE_Export ACE_Numeric_Limits<signed long long>
 {
-  static signed long long min (void) { return LLONG_MIN; }
-  static signed long long max (void) { return LLONG_MAX; }
+#if defined (LLONG_MIN)
+#  define ACE_LLONG_MIN LLONG_MIN
+#elif defined (LONG_LONG_MIN)
+#  define ACE_LLONG_MIN LONG_LONG_MIN
+#elif defined (LONGLONG_MIN)
+#  define ACE_LLONG_MIN LONGLONG_MIN
+#else
+#  error Unable to determine minimum signed long long value.
+#endif  /* LLONG_MIN */
+
+#if defined (LLONG_MAX)
+#  define ACE_LLONG_MAX LLONG_MAX
+#elif defined (LONG_LONG_MAX)
+#  define ACE_LLONG_MAX LONG_LONG_MAX
+#elif defined (LONGLONG_MAX)
+#  define ACE_LLONG_MAX LONGLONG_MAX
+#else
+#  error Unable to determine maximum signed long long value.
+#endif  /* LLONG_MAX */
+
+  static signed long long min (void) { return ACE_LLONG_MIN; }
+  static signed long long max (void) { return ACE_LLONG_MAX; }
 };
 #endif  /* !ACE_LACKS_LONGLONG_T */
 
@@ -104,7 +124,7 @@ template<>
 struct ACE_Export ACE_Numeric_Limits<unsigned short>
 {
   static unsigned short min (void) { return 0; }
-  static unsigned short max (void) { return USHORT_MAX; }
+  static unsigned short max (void) { return USHRT_MAX; }
 };
 
 template<>
@@ -126,7 +146,16 @@ template<>
 struct ACE_Export ACE_Numeric_Limits<unsigned long long>
 {
   static unsigned long long min (void) { return 0; }
-  static unsigned long long max (void) { return ULLONG_MAX; }
+  static unsigned long long max (void)
+  {
+# if defined (ULLONG_MAX)
+    return ULLONG_MAX;
+# elif defined (ULONGLONG_MAX)
+    return ULONGLONG_MAX;
+# else
+#  error Unable to determine maximum unsigned long long value.
+# endif  /* ULLONG_MAX */
+  }
 };
 #endif  /* !ACE_LACKS_LONGLONG_T */
 
