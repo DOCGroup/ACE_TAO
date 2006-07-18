@@ -1,3 +1,9 @@
+Tue Jul 18 10:29:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_1639_Regression/struct_client.cpp:
+        * tests/DynAny_Test/test_dynany.h:
+          Fixed compile errors with gcc4
+
 Tue Jul 18 10:01:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Event/ECG_UDP_Out_Endpoint.cpp:
