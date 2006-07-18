@@ -1,3 +1,14 @@
+Tue Jul 18 09:37:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/HTIOP.mpc:
+          Enabled regeneration of the pidl file
+
+        * orbsvcs/orbsvcs/HTIOP/htiop_endpoints.pidl:
+          Updated comments
+
+        * orbsvcs/orbsvcs/HTIOP/htiop_endpointsC.{h,cpp}:
+          Removed from the repo
+
 Tue Jul 18 09:29:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/QtTests/server.cpp:
