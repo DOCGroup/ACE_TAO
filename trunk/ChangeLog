@@ -1,3 +1,9 @@
+Tue Jul 18 09:59:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/ProcessVX_Win32.pm:
+          Increased delay factor from 2 to 3, downloading executables
+          seems to take longer now
+
 Tue Jul 18 09:54:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/PerlACE/Process_Unix.pm:
