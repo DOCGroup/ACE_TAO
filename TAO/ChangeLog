@@ -1,3 +1,9 @@
+Tue Jul 18 13:51:09 UTC 2006  Adam Mitz  <mitza@ociweb.com>
+
+        * orbsvcs/tests/CosEvent/Timeout/Timeout.mpc:
+          Added the "threads" base project to exclude this test from single-
+          threaded builds.
+
 Tue Jul 18 11:19:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/VarOut_T.inl:
