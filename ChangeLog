@@ -1,3 +1,42 @@
+Tue Jul 18 19:17:54 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+          This change is in response to bug#2602. It fixes a problem with
+          trying to use XML as the service configuration file format.  The
+          change also includes additional comments and in-line
+          documentation on the new ability to use local service
+          repositories.
+
+        * ace/DLL_Manager.cpp:
+
+          Updated the debugging output of DLL_Handle::open() to be able to
+          see _why_ a DLL open failed.  For example, the errno message is
+          'not found' in a case where one tries to open library A, which
+          in turn depends on library B, but B is missing.  This change
+          allows one to see the underlying cause for the error
+          (via DLL_Handle::error(), if ACE_DEBUG=2, or greater is
+          present).
+
+        * ace/Parse_Node.h:
+        * ace/Parse_Node.cpp:
+
+          Moving the ACE_Service_Type_Factory here, from
+          Service_Config.{h,cpp} This class is only needed when
+          ACE_USES_CLASSIC_SVC_CONF is 1, i.e. when ACE is using the
+          non-XML configuration file format.  Therefore, moving it to
+          Parse_Node.{h,cpp} causes it to compile only if needed.
+
+        * ace/Service_Config.h:
+
+          Removed the static get_xml_svc_conf() method, as it already has
+          the required implementation in the base class.
+
+        * ace/Service_Gestalt.h:
+        * ace/Service_Gestalt.cpp:
+
+          Moved the ACE_Service_Type_Factory class to Parse_Node.{h,cpp}.
+          Updated the documentation with a more clear description of the
+          class responsibilities. Corrected minor omissions.
+
 Tue Jul 18 18:12:17 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ACE-INSTALL.html: Updated the description of how to build
