@@ -98,6 +98,16 @@ Tue Jul 18 09:54:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
         * bin/PerlACE/Process_Unix.pm:
           Removed chorus support
 
+Mon Jul 17 22:52:19 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/Proactor.cpp (schedule_timer): Record the ACE_Proactor instance
+          that the timer is scheduled on in the ACE_Handler; makes this
+          behavior analogous to that in ACE_Reactor::schedule_timer().
+
+        * tests/Proactor_Timer_Test.cpp: Add a test for repeating timers and
+          canceling a repeating timer when it's likely that an expiration for
+          the timer is already queued when it's canceled.
+
 Mon Jul 17 16:06:57 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * tests/Unload_LibACE.cpp: Alter the libACE suffix for HP-UX on
