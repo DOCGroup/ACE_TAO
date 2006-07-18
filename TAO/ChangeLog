@@ -3,6 +3,9 @@ Tue Jul 18 10:01:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
         * orbsvcs/orbsvcs/Event/ECG_UDP_Out_Endpoint.cpp:
           Use true/false
 
+        * orbsvcs/orbsvcs/SSLIOP/ssl_endpoints.pidl:
+          Updated comments
+
 Tue Jul 18 09:55:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/IIOP_Acceptor.cpp:
