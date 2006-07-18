@@ -1,5 +1,5 @@
 // $Id$
-#include "tao/FlResource_Loader.h"
+#include "tao/FlResource/FlResource_Loader.h"
 #include "testC.h"
 #include "ace/Get_Opt.h"
 

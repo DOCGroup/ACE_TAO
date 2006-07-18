@@ -9,7 +9,7 @@ ACE_RCSID (QtTests, server, "$Id$")
 #ifdef index
 #undef index
 #endif
-#include "tao/QtResource_Loader.h"
+#include "tao/QtResource/QtResource_Loader.h"
 #include <qlcdnumber.h>
 #include <qvbox.h>
 #include <qslider.h>
