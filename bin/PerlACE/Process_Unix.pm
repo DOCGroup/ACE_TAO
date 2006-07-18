@@ -10,33 +10,6 @@ use Config;
 
 ###############################################################################
 
-### Chorus stuff
-
-$PerlACE::Process::chorushostname = "localhost";
-$PerlACE::Process::chorus = 0;
-
-$PerlACE::Process::cwd = getcwd();
-
-for(my $i = 0; $i <= $#ARGV; $i++) {
-    if ($ARGV[$i] eq '-chorus') {
-        if (defined $ARGV[$i + 1]) {
-            $PerlACE::Process::chorus = 1;
-            $PerlACE::Process::chorushostname = $ARGV[$1 + 1];
-        }
-        else {
-            print STDERR "The -chorus option requires " .
-                         "the hostname of the target\n";
-            exit(1);
-        }
-
-        splice(@ARGV, $i, 2);
-        # Don't break from the loop just in case there
-        # is an accidental duplication of the -chorus option
-    }
-}
-
-###############################################################################
-
 ###  Grab signal names
 
 my @signame;
@@ -151,21 +124,12 @@ sub CommandLine ()
     # arguments.
     if ($^O eq "nonstop_kernel") {
         my $global_args = $ENV{"ACE_RUNTEST_ARGS"};
-        if ((length($global_args) > 0) 
+        if ((length($global_args) > 0)
             && ($commandline !~ /tao_idl/)) {
-            $commandline = $commandline 
-                           . ' ' 
+            $commandline = $commandline
+                           . ' '
                            . $global_args;
         }
-    }
-
-    if ($PerlACE::Process::chorus == 1) {
-        $commandline = "rsh "
-                       . $PerlACE::Process::chorushostname
-                       . " arun "
-                       . $PerlACE::Process::cwd
-                       . "/"
-                       . $commandline;
     }
 
     return $commandline;
@@ -219,12 +183,6 @@ sub Spawn ()
                          "> not found\n";
             return -1;
         }
-
-        if (!$PerlACE::Process::chorus && !-x $self->Executable ()) {
-            print STDERR "ERROR: Cannot Spawn: <", $self->Executable (),
-                         "> not executable\n";
-            return -1;
-        }
     }
 
     my $cmdline = "";
@@ -235,7 +193,7 @@ sub Spawn ()
         $executable = $self->{VALGRIND_CMD};
         my $basename = basename ($self->{EXECUTABLE});
 
-        $cmdline = "$executable $orig_cmdline"; 
+        $cmdline = "$executable $orig_cmdline";
     }
     elsif (defined $ENV{'ACE_TEST_WINDOW'}) {
       $cmdline = $ENV{'ACE_TEST_WINDOW'} . ' ' . $self->CommandLine();
@@ -324,7 +282,7 @@ sub check_return_value ($)
     my $self = shift;
     my $rc = shift;
 
-    # NSK OSS has a 32-bit waitpid() status 
+    # NSK OSS has a 32-bit waitpid() status
     my $is_NSK = ($^O eq "nonstop_kernel");
     my $CC_MASK = $is_NSK ? 0xffff00 : 0xff00;
 
