@@ -1,3 +1,14 @@
+Tue Jul 18 14:21:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/HTIOP.mpc:
+          Simplified this file
+
+        * orbsvcs/orbsvcs/SSLIOP.mpc:
+          Regenerate the pidl file
+
+        * orbsvcs/orbsvcs/SSLIOP/ssl_endpointsC.{h,cpp}:
+          Removed from the repo
+
 Tue Jul 18 13:51:09 UTC 2006  Adam Mitz  <mitza@ociweb.com>
 
         * orbsvcs/tests/CosEvent/Timeout/Timeout.mpc:
