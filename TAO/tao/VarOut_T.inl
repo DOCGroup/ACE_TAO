@@ -127,6 +127,12 @@ ACE_INLINE
 T &
 TAO_Fixed_Var_T<T>::out (void)
 {
+  // Use plain new, using the ACE_NEW macros will mean we dereference a
+  // nil pointer and crash which is more bad then plain new which could
+  // lead to a bad_alloc exception
+  if (this->ptr_ == 0)
+    this->ptr_ = new T;
+
   return *this->ptr_;
 }
 
