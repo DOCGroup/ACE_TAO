@@ -386,77 +386,6 @@ ACE_Service_Gestalt::dump (void) const
 
 
 
-ACE_ALLOC_HOOK_DEFINE (ACE_Service_Type_Factory)
-
-ACE_Service_Type_Factory::ACE_Service_Type_Factory (ACE_TCHAR const *name,
-                                                    int type,
-                                                    ACE_Location_Node *location,
-                                                    int active)
-  : name_ (name)
-  , type_ (type)
-  , location_ (location)
-  , is_active_ (active)
-{
-}
-
-
-ACE_Service_Type_Factory::~ACE_Service_Type_Factory (void)
-{
-}
-
-
-ACE_Service_Type *
-ACE_Service_Type_Factory::make_service_type (ACE_Service_Gestalt *cfg) const
-{
-  ACE_TRACE ("ACE_Service_Type_Factory::make_service_type");
-
-  u_int flags = ACE_Service_Type::DELETE_THIS
-    | (this->location_->dispose () == 0 ? 0 : ACE_Service_Type::DELETE_OBJ);
-
-  ACE_Service_Object_Exterminator gobbler = 0;
-
-  int yyerrno = 0;
-  void *sym = this->location_->symbol (cfg, yyerrno, &gobbler);
-
-  if (sym != 0)
-    {
-      ACE_Service_Type_Impl *stp
-        = ACE_Service_Config::create_service_type_impl (this->name (),
-                                                        this->type_,
-                                                        sym,
-                                                        flags,
-                                                        gobbler);
-      if (stp == 0)
-        ++yyerrno;
-
-      ACE_Service_Type *tmp = 0;
-      ACE_NEW_RETURN (tmp,
-                      ACE_Service_Type (this->name (),
-                                        stp,
-                                        this->location_->dll (),
-                                        this->is_active_),
-                      0);
-      return tmp;
-    }
-  else
-    {
-#ifndef ACE_NLOGGING
-      ACE_ERROR ((LM_ERROR,
-                  ACE_LIB_TEXT ("(%P|%t) Unable to find service \'%s\'\n"),
-                  this->name ()));
-#endif
-      ++yyerrno;
-      return 0;
-    }
-}
-
-ACE_TCHAR const*
-ACE_Service_Type_Factory::name (void) const
-{
-  return name_.c_str ();
-}
-
-
 ///
 
 int
@@ -523,6 +452,7 @@ ACE_Service_Gestalt::initialize (const ACE_TCHAR *svc_name,
 }
 
 
+#if (ACE_USES_CLASSIC_SVC_CONF == 1)
 int
 ACE_Service_Gestalt::initialize (const ACE_Service_Type_Factory *stf,
                                  const ACE_TCHAR *parameters)
@@ -610,6 +540,7 @@ ACE_Service_Gestalt::initialize (const ACE_Service_Type_Factory *stf,
 
   return -1;
 }
+#endif /* (ACE_USES_CLASSIC_SVC_CONF == 1) */
 
 
 // Dynamically link the shared object file and retrieve a pointer to
@@ -928,7 +859,7 @@ ACE_Service_Gestalt::process_file (const ACE_TCHAR file[])
   ACE_DLL dll;
 
   auto_ptr<ACE_XML_Svc_Conf>
-    xml_svc_conf (ACE_Service_Config::get_xml_svc_conf (dll));
+    xml_svc_conf (this->get_xml_svc_conf (dll));
 
   if (xml_svc_conf.get () == 0)
     return -1;
