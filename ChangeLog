@@ -1,3 +1,8 @@
+Tue Jul 18 22:52:38 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * tests/Message_Queue_Test_Ex.cpp: Rearranged the pieces left out of
+          single-threaded builds; should correct single-threaded builds.
+
 Tue Jul 18 20:50:49 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * Happy Birthday to me!!  
