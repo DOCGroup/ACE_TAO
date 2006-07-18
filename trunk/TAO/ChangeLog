@@ -1,5 +1,12 @@
 Tue Jul 18 10:29:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
+        * tests/Bug_2595_Regression/*
+          New regression for bug 2595, not fixed yet, makes it possible
+          to retest things on linux before we enable this test in
+          the regression suite
+
+Tue Jul 18 10:29:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
         * tests/Bug_1639_Regression/struct_client.cpp:
         * tests/DynAny_Test/test_dynany.h:
           Fixed compile errors with gcc4
