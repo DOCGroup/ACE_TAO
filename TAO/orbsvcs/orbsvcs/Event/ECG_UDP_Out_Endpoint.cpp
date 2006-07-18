@@ -27,7 +27,7 @@ TAO_ECG_UDP_Out_Endpoint::is_loopback (const ACE_INET_Addr& from)
       // Cache the port number...
       ACE_INET_Addr local_addr;
       if (this->dgram ().get_local_addr (local_addr) == -1)
-        return 0;
+        return false;
       this->port_number_ = local_addr.get_port_number ();
     }
 
@@ -35,7 +35,7 @@ TAO_ECG_UDP_Out_Endpoint::is_loopback (const ACE_INET_Addr& from)
   // message is remote, only when the local port number and the remote
   // port number match we have to look at the local ip addresses.
   if (from.get_port_number () != this->port_number_)
-    return 0;
+    return false;
 
   if (this->ifs_ == 0)
     {
@@ -47,9 +47,9 @@ TAO_ECG_UDP_Out_Endpoint::is_loopback (const ACE_INET_Addr& from)
        ++i)
     {
       if ((*i).get_ip_address () == from.get_ip_address ())
-        return 1;
+        return true;
     }
-  return 0;
+  return false;
 }
 
 TAO_ECG_UDP_Out_Endpoint&
