@@ -2623,13 +2623,11 @@ tools, including Make, NMake, Visual C++ 6, Visual C++ 7, etc.  Please
 see <a href="MPC/USAGE">USAGE</a>, <a href="MPC/README">README</a> for
 documentation on MPC.<P>
 
-A common usage for creating a Windows workspace
-containing just the core ACE and TAO libraries and executables is the
-following:
-<pre><code>
-C:> cd %TAO_ROOT%
-C:> %ACE_ROOT%\bin\mwc.pl -type vc71 TAO_ACE.mwc
-</pre></code>
+A common usage for creating a Windows workspace containing just the
+core ACE and TAO libraries and executables is the following:
+
+<pre><code> C:> cd %TAO_ROOT% C:> %ACE_ROOT%\bin\mwc.pl -type vc71
+TAO_ACE.mwc </pre></code>
 
 Replace vc71 with whatever project type you want to use.  On Linux and
 other UNIX platform it's even easier: <P>
@@ -2639,7 +2637,10 @@ other UNIX platform it's even easier: <P>
 % $ACE_ROOT/bin/mwc.pl TAO_ACE.mwc
 </pre></code>
 
-this creates the appropriate GNUmakefiles. <P>
+this creates the appropriate GNUmakefiles.  Additional information on
+how to obtain, configuration, and build ACE+TAO using MPC appear at
+the OCI <A
+HREF="http://www.theaceorb.com/faq/index.html#HowToBuildACEandTAOonWindows">FAQ</A>.<P>
 
 If you are attempting to generate project files using MPC, and you get
 the following error message:<br>
