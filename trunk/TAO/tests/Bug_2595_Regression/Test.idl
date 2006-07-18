@@ -27,7 +27,7 @@ module Test
   /// A very simple interface
   interface Hello
   {
-    string op(out Fls fstruct, out Vls vstruct);
+    void op(out Fls fstruct, out Vls vstruct);
 
     /// A method to shutdown the ORB
     /**
