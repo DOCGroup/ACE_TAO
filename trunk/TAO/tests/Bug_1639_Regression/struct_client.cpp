@@ -2,6 +2,7 @@
 // $Id$
 //
 #include "tao/DynamicAny/DynAnyFactory.h"
+#include "tao/AnyTypeCode/AnyTypeCode_methods.h"
 #include "structC.h"
 #include <ace/streams.h>
 
