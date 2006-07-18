@@ -1,3 +1,9 @@
+Tue Jul 18 09:29:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/QtTests/server.cpp:
+        * tests/FL_Cube/client.cpp:
+          Fixed include paths because resource factories got moved
+
 Tue Jul 18 08:15:00 UTC 2006  Simon Massey  <sma@prismtech.com>
 
         * orbsvcs/orbsvcs/Naming/Storable.h:
