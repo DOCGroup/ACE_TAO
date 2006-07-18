@@ -24,7 +24,7 @@ project {
 
     // Inline related options
     optional(inline_outputext) {
-      commandflags(!-SS && !-Ssi || !-Sci || -GT) += .inl, .i
+      commandflags(!-SS && !-Ssi || !-Sci || -GT && !-SS) += .inl, .i
     }
     optional(inline_pre_extension) {
       commandflags(!-SS && !-Ssi) += S
