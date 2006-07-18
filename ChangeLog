@@ -1,3 +1,8 @@
+Tue Jul 18 13:21:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Added Bug_2595_Regression
+
 Tue Jul 18 12:48:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/taoidldefaults.mpb:
