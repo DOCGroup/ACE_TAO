@@ -127,7 +127,7 @@ public:
  * @class ACE_Service_Config
  *
  * @brief Supplies common server operations for dynamic and static
- * configuration of services.
+ * configuration of service.
  *
  * The ACE_Service_Config uses the Monostate pattern.  Therefore,
  * you can only have one of these instantiated per-process. It
@@ -521,10 +521,6 @@ protected:
   /// and process_directive() both call.  Returns the number of errors
   /// that occurred.
   static int process_directives_i (ACE_Svc_Conf_Param *param);
-#else
-  /// Helper function to dynamically link in the XML Service Configurator
-  /// parser.
-  static ACE_XML_Svc_Conf *get_xml_svc_conf (ACE_DLL &d);
 #endif /* ACE_USES_CLASSIC_SVC_CONF == 1 */
 
   /// Become a daemon.

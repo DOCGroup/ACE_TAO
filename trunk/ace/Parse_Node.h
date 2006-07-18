@@ -476,6 +476,44 @@ private:
   ACE_UNIMPLEMENTED_FUNC (ACE_Static_Function_Node& operator= (const ACE_Static_Function_Node&))
 };
 
+// A helper class used to safely register dynamic services, which may contains
+// subordinate static services. It is used to capture the necessary data during
+// the parsing, but perform the actuall instantiation later.
+class ACE_Service_Type_Factory
+{
+public:
+  ACE_Service_Type_Factory (ACE_TCHAR const *name,
+                            int type,
+                            ACE_Location_Node *location,
+                            int active);
+
+  ~ACE_Service_Type_Factory (void);
+
+  ACE_Service_Type *make_service_type (ACE_Service_Gestalt *pcfg) const;
+
+  ACE_TCHAR const* name (void) const;
+
+  /// Declare the dynamic allocation hooks.
+  ACE_ALLOC_HOOK_DECLARE;
+
+private:
+
+  /**
+   * Not implemented to enforce no copying
+   */
+  ACE_UNIMPLEMENTED_FUNC
+    (ACE_Service_Type_Factory(const ACE_Service_Type_Factory&))
+
+  ACE_UNIMPLEMENTED_FUNC
+    (ACE_Service_Type_Factory& operator=(const ACE_Service_Type_Factory&))
+
+private:
+  ACE_TString name_;
+  int type_;
+  ACE_Auto_Ptr<ACE_Location_Node> location_;
+  int is_active_;
+};
+
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_USES_CLASSIC_SVC_CONF == 1 */

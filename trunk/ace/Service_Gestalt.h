@@ -32,10 +32,16 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
+#if (ACE_USES_CLASSIC_SVC_CONF == 1)
 class ACE_Service_Type_Factory;
+class ACE_Location_Node;
+#else
+class ACE_XML_Svc_Conf;
+class ACE_DLL;
+#endif /* ACE_USES_CLASSIC_SVC_CONF == 1 */
+
 class ACE_Static_Svc_Descriptor;
 class ACE_Svc_Conf_Param;
-
 class ACE_Service_Gestalt;
 
 /**
@@ -43,6 +49,21 @@ class ACE_Service_Gestalt;
  *
  * @brief Supplies common server operations for dynamic and static
  * configuration of services.
+ *
+ * The Gestalt embodies the concept of configuration context. On one
+ * hand, it is a flat namespace, where names correspond to a Service
+ * Object instance. A Gestalt owns the Service Repository instance,
+ * which in turn owns the Service Object instances.
+ *
+ * Another aspect of a Gestalt is its responsibility for
+ * record-keeping and accounting for the meta-data, necessary for
+ * locating, removing or instantiating a service.
+ *
+ * A repository underlies an instance of a gestalt and its lifetime
+ * may or may not be bounded by the lifetime of the gestalt, that owns
+ * it. This feature is important for the derived classes and the
+ * Service Config in particular.
+
  */
 class ACE_Export ACE_Service_Gestalt
 {
@@ -194,10 +215,10 @@ public:
 
   /**
    * Handle the command-line options intended for the
-   * <ACE_Service_Config>.  Note that <argv[0]> is assumed to be the
+   * <ACE_Service_Gestalt>.  Note that <argv[0]> is assumed to be the
    * program name.
+   *
    * The arguments that are valid in a call to this method are
-   * - '-b' Option to indicate that we should be a daemon
    * - '-d' Turn on debugging mode
    * - '-f' Option to read in the list of svc.conf file names
    * - '-k' Option to read a wide string where in the logger output can
@@ -227,6 +248,8 @@ public:
   int insert (ACE_Static_Svc_Descriptor *stsd);
 
   // = Utility methods.
+
+#if (ACE_USES_CLASSIC_SVC_CONF == 1)
   /// Dynamically link the shared object file and retrieve a pointer to
   /// the designated shared object in this file. Also account for the
   /// possiblity to have static services registered when loading the DLL, by
@@ -235,18 +258,20 @@ public:
   /// problems.
   int initialize (const ACE_Service_Type_Factory *,
                   const ACE_TCHAR *parameters);
+#endif /* (ACE_USES_CLASSIC_SVC_CONF == 1) */
 
   // Dynamically link the shared object file and retrieve a pointer to
   // the designated shared object in this file.
   // @obsolete
-  // @note This is error-prone in the presense of dynamic
-  // services with their own static services. This method will allow those
-  // static services to register *before* the dynamic service that owns them.
-  // Upon finalization of the static services the process may crash, because
-  // the dynamic service's DLL may have been already released, together with
-  // the memory in which the static services reside.
-  // It may not crash, for instance, when the first static service to register
-  // is the same as the dynamic service being loaded. You should be so lucky!
+  // @note This is error-prone in the presense of dynamic services,
+  // which in turn initialize their own static services. This method
+  // will allow those static services to register *before* the dynamic
+  // service that owns them.  Upon finalization of the static services
+  // the process will typically crash, because the dynamic service's
+  // DLL may have been already released, together with the memory in
+  // which the static services reside.  It may not crash, for
+  // instance, when the first static service to register is the same
+  // as the dynamic service being loaded. You should be so lucky!
   int initialize (const ACE_Service_Type *,
                   const ACE_TCHAR *parameters);
 
@@ -335,7 +360,7 @@ protected:
 #else
   /// Helper function to dynamically link in the XML Service Configurator
   /// parser.
-  ACE_XML_Svc_Conf *get_xml_svc_conf (ACE_DLL &d);
+  ACE_XML_Svc_Conf* get_xml_svc_conf (ACE_DLL &d);
 #endif /* ACE_USES_CLASSIC_SVC_CONF == 1 */
 
   // Dynamically link the shared object file and retrieve a pointer to
@@ -413,46 +438,6 @@ protected:
 
 }; /* class ACE_Service_Gestalt */
 
-
-class ACE_Location_Node;
-
-// A helper class used to safely register dynamic services, which may contains
-// subordinate static services. It is used to capture the necessary data during
-// the parsing, but perform the actuall instantiation later.
-class ACE_Service_Type_Factory
-{
-public:
-  ACE_Service_Type_Factory (ACE_TCHAR const *name,
-                            int type,
-                            ACE_Location_Node *location,
-                            int active);
-
-  ~ACE_Service_Type_Factory (void);
-
-  ACE_Service_Type *make_service_type (ACE_Service_Gestalt *pcfg) const;
-
-  ACE_TCHAR const* name (void) const;
-
-  /// Declare the dynamic allocation hooks.
-  ACE_ALLOC_HOOK_DECLARE;
-
-private:
-
-  /**
-   * Not implemented to enforce no copying
-   */
-  ACE_UNIMPLEMENTED_FUNC
-    (ACE_Service_Type_Factory(const ACE_Service_Type_Factory&))
-
-  ACE_UNIMPLEMENTED_FUNC
-    (ACE_Service_Type_Factory& operator=(const ACE_Service_Type_Factory&))
-
-private:
-  ACE_TString name_;
-  int type_;
-  ACE_Auto_Ptr<ACE_Location_Node> location_;
-  int is_active_;
-};
 
 
 ACE_END_VERSIONED_NAMESPACE_DECL
