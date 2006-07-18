@@ -14,6 +14,13 @@ project : htbp, orbsvcslib, core, tao_versioning_idl_defaults {
     HTIOP.idl
   }
 
+  IDL_Files {
+    idlflags += -Sci -SS -Gp -Gd -Ge 1 -Sc -Sa -Sorb \
+                -o HTIOP
+    idlflags -= -St
+    HTIOP/htiop_endpoints.pidl
+  }
+
   Source_Files(ORBSVCS_COMPONENTS) {
     HTIOP {
       HTIOPC.cpp
