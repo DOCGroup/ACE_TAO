@@ -675,9 +675,15 @@ ACE_Proactor::schedule_timer (ACE_Handler &handler,
 
   // Only one guy goes in here at a time
   ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX,
-                    ace_mon,
-                    this->timer_queue_->mutex (),
-                    -1));
+                            ace_mon,
+                            this->timer_queue_->mutex (),
+                            -1));
+
+  // Remember the old proactor.
+  ACE_Proactor *old_proactor = handler.proactor ();
+
+  // Assign *this* Proactor to the handler.
+  handler.proactor (this);
 
   // Schedule the timer
   long result = this->timer_queue_->schedule (&handler,
@@ -697,6 +703,13 @@ ACE_Proactor::schedule_timer (ACE_Handler &handler,
             result = -1;
           }
     }
+
+  if (result == -1)
+    {
+      // Reset the old proactor in case of failures.
+      handler.proactor (old_proactor);
+    }
+
   return result;
 }
 

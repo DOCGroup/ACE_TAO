@@ -31,6 +31,7 @@ ACE_RCSID (tests,
   // This only works on Win32 platforms and on Unix platforms
   // supporting POSIX aio calls.
 
+#include "ace/OS_NS_unistd.h"
 #include "ace/Timer_Queue.h"
 #include "ace/Proactor.h"
 #include "ace/High_Res_Timer.h"
@@ -59,6 +60,36 @@ private:
   long timer_id_;
   // Stores the id of this timer.
 };
+
+/*
+ * Need a variant of this that will track if a repeating timer is working
+ * correctly. This class should be scheduled with a repeating timer that
+ * repeats on a specified number of seconds. This class will let two
+ * expirations happen then wait in handle_time_out() longer than the repeat
+ * time to cause at least one timer expiration to be queued up while we're
+ * waiting; then cancel the timer.
+ */
+class Repeat_Timer_Handler : public ACE_Handler
+{
+public:
+  const static int REPEAT_INTERVAL = 2;
+
+  // Constructor arg tells how many seconds we intend to do the repeat with.
+  // The internals will use this to tell how long to wait in order to cause
+  // a timer expiration to be missed and queued up.
+  Repeat_Timer_Handler (const int repeat_time = REPEAT_INTERVAL)
+    : repeat_secs_ (repeat_time), expirations_ (0) {};
+
+  ~Repeat_Timer_Handler ();
+
+  // Handle the timeout.
+  virtual void handle_time_out (const ACE_Time_Value &tv, const void *arg);
+
+private:
+  int repeat_secs_;
+  int expirations_;
+};
+
 
 Time_Handler::Time_Handler (void)
   : timer_id_ (-1)
@@ -105,6 +136,44 @@ void
 Time_Handler::timer_id (long t)
 {
   this->timer_id_ = t;
+}
+
+Repeat_Timer_Handler::~Repeat_Timer_Handler ()
+{
+  if (this->expirations_ == 2)
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Repeater expired twice; correct\n")));
+  else
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("Repeater expired %d times; should be 2\n"),
+                this->expirations_));
+}
+
+void
+Repeat_Timer_Handler::handle_time_out (const ACE_Time_Value &, const void *)
+{
+  // Let the first one go.
+  if (++this->expirations_ == 1)
+    return;
+
+  if (this->expirations_ == 2)
+    {
+      ACE_OS::sleep (this->repeat_secs_ + 1);
+      int canceled = this->proactor ()->cancel_timer (*this);
+      if (canceled != 1)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Repeater cancel timer: %d; should be 1\n"),
+                      canceled));
+        }
+      delete this;
+    }
+  else
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Repeater expiration #%d; should get only 2\n"),
+                  this->expirations_));
+    }
+  return;
 }
 
 static void
@@ -198,6 +267,31 @@ test_canceling_odd_timers (void)
     ACE_Proactor::instance ()->handle_events ();
 }
 
+static void
+test_cancel_repeat_timer (void)
+{
+  Repeat_Timer_Handler *handler = new Repeat_Timer_Handler;
+  ACE_Time_Value timeout (Repeat_Timer_Handler::REPEAT_INTERVAL);
+  long t_id = ACE_Proactor::instance ()->schedule_repeating_timer
+    (*handler, 0, timeout);
+  if (t_id == -1)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("schedule_repeating_timer")));
+      delete handler;
+      return;
+    }
+
+  ACE_Time_Value test_timer (4 * Repeat_Timer_Handler::REPEAT_INTERVAL);
+  if (-1 == ACE_Proactor::instance ()->proactor_run_event_loop (test_timer))
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("proactor loop fail")));
+
+  // handler should be deleted by its own handle_time_out().
+  return;
+}
+
+
 // If any command line arg is given, run the test with high res timer
 // queue. Else run it normally.
 int
@@ -223,6 +317,8 @@ run_main (int argc, ACE_TCHAR *[])
 
   // Try canceling handlers with odd numbered timer ids.
   test_canceling_odd_timers ();
+
+  test_cancel_repeat_timer ();
 
   ACE_END_TEST;
   return 0;
