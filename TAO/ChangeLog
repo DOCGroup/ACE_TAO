@@ -1,3 +1,10 @@
+Tue Jul 18 21:38:55 UTC 2006  Ciju John  <johnc@ociweb.com>
+
+        * tao/IIOP_Acceptor.cpp:
+
+          substring() 2nd parameter is supposed to be the relative
+          length, not the absolute position as before.
+
 Tue Jul 18 14:21:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/HTIOP.mpc:
