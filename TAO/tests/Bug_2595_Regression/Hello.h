@@ -16,7 +16,7 @@ public:
   /// Constructor
   Hello (CORBA::ORB_ptr orb);
 
-    virtual char * op (
+    virtual void op (
         ::Test::Fls_out fstruct,
         ::Test::Vls_out vstruct
         ACE_ENV_ARG_DECL_WITH_DEFAULTS

@@ -10,7 +10,7 @@ Hello::Hello (CORBA::ORB_ptr orb)
 {
 }
 
-char *
+void
 Hello::op (
         ::Test::Fls_out fstruct,
         ::Test::Vls_out vstruct

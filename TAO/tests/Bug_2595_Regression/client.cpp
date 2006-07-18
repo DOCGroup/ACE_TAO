@@ -67,10 +67,10 @@ main (int argc, char *argv[])
       Test::Vls_var vstruct;
 
       ACE_DEBUG ((LM_DEBUG, "\n(%P|%t) - op test 1\n"));
-      CORBA::String_var ret_val_1 = hello->op(fstruct.out(), vstruct.out());
+      hello->op(fstruct.out(), vstruct.out());
 
       ACE_DEBUG ((LM_DEBUG, "\n(%P|%t) - op test 2\n"));
-      CORBA::String_var ret_val_2 = hello->op(fstruct, vstruct.out());
+      hello->op(fstruct, vstruct.out());
 
       hello->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
