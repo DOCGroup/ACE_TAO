@@ -1,3 +1,8 @@
+Tue Jul 18 09:55:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/IIOP_Acceptor.cpp:
+          Const improvement
+
 Tue Jul 18 09:37:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/HTIOP.mpc:

@@ -33,7 +33,7 @@ sub new
     $self->{EXECUTABLE} = shift;
     $self->{ARGUMENTS} = shift;
     if (!defined $PerlACE::ProcessVX::WAIT_DELAY_FACTOR) {
-        $PerlACE::ProcessVX::WAIT_DELAY_FACTOR = 2;
+        $PerlACE::ProcessVX::WAIT_DELAY_FACTOR = 3;
     }
     $self->{WINDSH} = $ENV{"ACE_RUN_WINDSH"};
     if (!defined $self->{WINDSH}) {
