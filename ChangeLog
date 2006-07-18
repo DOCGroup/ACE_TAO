@@ -1,3 +1,13 @@
+Tue Jul 18 19:04:42 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * ace/Numeric_Limits.h:
+
+          Corrected short integer limit constants, i.e. "s/SHORT/SHRT/g".
+
+          Try other known "long long" integer constants if
+          "{U}LLONG_{MIN,MAX}" are not available.  Issue a preprocessor
+          error if all known cases have been exhausted.
+
 Tue Jul 18 16:55:31 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
         * ace/Makefile.am (libACE_la_SOURCES, nobase_include_HEADERS):
