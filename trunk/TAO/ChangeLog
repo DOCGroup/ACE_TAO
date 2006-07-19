@@ -1,3 +1,14 @@
+Wed Jul 19 15:52:11 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/IDL_Test/anonymous.idl:
+        * tests/IDL_Test/typedef.idl:
+        * tests/IDL_Test/valuetype.idl:
+        
+          Entries to test sequence of valuetype as valuetype member
+          and typedefs of string with the same bound repeated in
+          different compilation units that are linked in the same
+          build.
+
 Wed Jul 19 15:03:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbscvs/orbsvcs/IFRService/*S.h:

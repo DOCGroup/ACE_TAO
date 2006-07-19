@@ -60,3 +60,12 @@ module All_Anon
     sequence<float> float_seq_array[6];
   };
 };
+
+// An anonymous string of the same bound will be found in
+// another IDL file not included in this one (typedef.idl).
+// The typecode for the anonymous string should not give us
+// 'already found' link errors.
+module Second
+{
+  typedef string<32> SecondString;
+};
