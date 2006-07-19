@@ -59,6 +59,8 @@ class ACE_String_Base : public ACE_String_Base_Const
 {
 public:
 
+  using ACE_String_Base_Const::size_type;
+
    /**
     *  Default constructor.
     *

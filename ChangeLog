@@ -1,3 +1,18 @@
+Tue Jul 19 7:14:10 UTC 2006  Ossama Othman  <ossama_othman@symantec.com>
+
+        * ace/String_Base.h (size_type):
+
+          Explicitly bring the ACE_String_Base_Const::size_type typedef
+          into the ACE_String_Base<> scope through a "using" declaration.
+          IBM Visual Age 6 and Sun Studio 10 have difficulty resolving the
+          name otherwise.
+
+        * ace/SString.cpp:
+
+          Replaced std::numeric_limits<>::max() call that was
+          inadvertently introduced with its ACE_Numeric_Limits<>
+          counterpart.  The former is not available on VxWorks.
+
 Tue Jul 18 22:52:38 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * tests/Message_Queue_Test_Ex.cpp: Rearranged the pieces left out of
