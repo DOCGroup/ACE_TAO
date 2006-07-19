@@ -12,6 +12,7 @@ Wed Jul 19 19:20:28 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
             This feature will make it easier to automate the generation
             from IDL files for services like the Interface Repository,
             where the stub and skeleton files go to different directories.
+            This fix closes [BUGID:2603].
           
           - Changed all occurrences of 'base_name_only' parameters from
           int to bool.
