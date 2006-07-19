@@ -1,3 +1,11 @@
+Wed Jul 19 12:17:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbscvs/orbsvcs/IFRService/*.S*.*:
+          Regenerated these files
+
+        * tao/IFR_Client.mpc:
+          Only use the stub export tao_idl options
+
 Wed Jul 19 10:23:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/RTScheduler.mpc:
