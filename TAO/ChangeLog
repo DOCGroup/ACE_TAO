@@ -1,3 +1,9 @@
+Wed Jul 19 15:03:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbscvs/orbsvcs/IFRService/*S.h:
+          Replace ace\pre.h with ace/pre.h, seems generation with MPC is
+          dependent on windows or linux
+
 Wed Jul 19 13:18:41 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * tao/Codeset/Codeset_Descriptor.cpp:
