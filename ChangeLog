@@ -1,3 +1,10 @@
+Wed Jul 19 21:15:51 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * NEWS:
+
+          Updated the file with a note announcing the interface change
+          from "Wed Jul 19 20:11:52 UTC 2006".
+
 Wed Jul 19 20:11:52 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * ace/ACE.h:
