@@ -8,6 +8,7 @@
 #include "ace/SString.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/OS_NS_string.h"
+#include "ace/Numeric_Limits.h"
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 // FUZZ: disable check_for_streams_include
@@ -17,9 +18,6 @@
 #if !defined (__ACE_INLINE__)
 #include "ace/SString.inl"
 #endif /* __ACE_INLINE__ */
-
-#undef max
-#include <limits>
 
 
 ACE_RCSID (ace,
@@ -161,7 +159,7 @@ ACE_NS_WString::ACE_NS_WString (const ACE_USHORT16 *s,
 // *****************************************************************
 
 ACE_SString::size_type const ACE_SString::npos =
-  std::numeric_limits<ACE_SString::size_type>::max ();
+  ACE_Numeric_Limits<ACE_SString::size_type>::max ();
 
 ACE_ALLOC_HOOK_DEFINE(ACE_SString)
 
