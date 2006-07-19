@@ -337,7 +337,9 @@ TAO_UTF16_BOM_Translator::write_wstring (ACE_OutputCDR & cdr,
 
       if (this->forceBE_ && cdr.byte_order())
         {
-          ACE_CDR::ULong l = (len+1) * ACE_UTF16_CODEPOINT_SIZE;
+          ACE_CDR::ULong l = (len+1) *
+                             static_cast<ACE_CDR::ULong> (
+                                         ACE_UTF16_CODEPOINT_SIZE);
           if (this->write_4 (cdr, &l) &&
               this->write_2 (cdr, &ACE_UNICODE_BOM_SWAPPED) &&
               x != 0)
@@ -345,7 +347,9 @@ TAO_UTF16_BOM_Translator::write_wstring (ACE_OutputCDR & cdr,
         }
       else
         {
-          ACE_CDR::ULong l = (len+1) * ACE_UTF16_CODEPOINT_SIZE;
+          ACE_CDR::ULong l = (len+1) *
+                             static_cast<ACE_CDR::ULong> (
+                                         ACE_UTF16_CODEPOINT_SIZE);
           if (this->write_4 (cdr, &l) &&
               this->write_2 (cdr, &ACE_UNICODE_BOM_CORRECT) &&
               x != 0)

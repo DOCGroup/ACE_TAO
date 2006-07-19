@@ -1,3 +1,13 @@
+Wed Jul 19 13:18:41 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tao/Codeset/Codeset_Descriptor.cpp:
+        * tao/Codeset/UTF16_BOM_Translator.cpp:
+
+          Added static casts to remove build warnings from some 64-bit
+          compilers where unsigned long and ACE_CDR::ULong were mixed.
+          It was necessary to use static_cast<> as the size of the data in
+          most cases needed to be size_t/unsigned long.
+
 Wed Jul 19 12:31:50 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * tao/LocalObject.cpp:

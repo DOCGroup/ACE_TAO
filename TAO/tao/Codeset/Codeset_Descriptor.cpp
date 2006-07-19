@@ -59,9 +59,9 @@ TAO_Codeset_Descriptor::ncs (const ACE_TCHAR *name)
   if (ACE_Codeset_Registry::locale_to_registry
       (ACE_TEXT_ALWAYS_CHAR(name), n) == 0)
     {
-      char **endPtr =0;
-      n = ACE_OS::strtoul(ACE_TEXT_ALWAYS_CHAR(name),
-                                   endPtr, 0);
+      char **endPtr = 0;
+      n = static_cast<ACE_CDR::ULong> (
+            ACE_OS::strtoul(ACE_TEXT_ALWAYS_CHAR(name), endPtr, 0));
     }
   this->ncs(n);
 }
