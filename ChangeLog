@@ -1,9 +1,15 @@
+Wed Jul 19 13:55:39 UTC 2006  Olli Savia  <ops@iki.fi>
+
+        * examples/IPC_SAP/DEV_SAP/reader/reader.cpp:
+        * examples/IPC_SAP/DEV_SAP/writer/writer.cpp:
+          Updated to reflect changes below.
+
 Wed Jul 19 13:39:13 UTC 2006  Olli Savia  <ops@iki.fi>
 
         * ace/TTY_IO.h:
           Changed type of rtsenb from 'int' to 'unsigned char'.
           Updated documentation to note that 'parityenb' member is
-          now deprecated. 
+          now deprecated.
 
         * ace/TTY_IO.cpp:
           Changed constructor of Serial_Params class to assign sensible
