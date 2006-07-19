@@ -1,10 +1,9 @@
 //$Id$
 
-project (XSC_XML_Handlers) : acelib, xerces {
+project (XSC_XML_Handlers) : acelib, xerces, exceptions {
   sharedname    += XSC_XML_Handlers
   dynamicflags  = XSC_XML_HANDLERS_BUILD_DLL
   macros       += XML_USE_PTHREADS
-  requires     += exceptions
   includes += $(CIAO_ROOT)/tools/Config_Handlers
 
   Source_Files {
@@ -76,11 +75,11 @@ project (XSC_Config_Handlers) : ciao_deployment_stub, ciao_events_dnc, ciao_conf
 }
 
 project (XSC_Config_Handlers_Common) : ciao_deployment_stub, ciao_config_handlers_base {
-   after += XSC_DynAny_Handler 
+   after += XSC_DynAny_Handler
    sharedname = XSC_Config_Handlers_Common
    dynamicflags = CONFIG_HANDLERS_COMMON_BUILD_DLL
 
-   libs += XSC_DynAny_Handler 
+   libs += XSC_DynAny_Handler
 
    Source_Files {
     ERE_Handler.cpp
@@ -89,7 +88,7 @@ project (XSC_Config_Handlers_Common) : ciao_deployment_stub, ciao_config_handler
     Property_Handler.cpp
     SatisfierProperty_Handler.cpp
     CPD_Handler.cpp
-    CEPE_Handler.cpp    
+    CEPE_Handler.cpp
     Any_Handler.cpp
    }
 }

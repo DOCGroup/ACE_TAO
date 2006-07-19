@@ -1,4 +1,9 @@
-Tue Jul 19 7:14:10 UTC 2006  Ossama Othman  <ossama_othman@symantec.com>
+Wed Jul 19 08:00:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/ciao_config_handlers_base.mpb:
+          Use exceptions as base project
+
+Wed Jul 19 7:14:10 UTC 2006  Ossama Othman  <ossama_othman@symantec.com>
 
         * ace/String_Base.h (size_type):
 
