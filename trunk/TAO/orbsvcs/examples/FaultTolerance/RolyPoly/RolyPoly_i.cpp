@@ -41,7 +41,7 @@ set_state (CORBA::Any const& state)
 CORBA::Short
 RolyPoly_i::number (char *&str
                 ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+  ACE_THROW_SPEC ((CORBA::SystemException, RolyPoly::E))
 {
   CORBA::string_free (str);
 
