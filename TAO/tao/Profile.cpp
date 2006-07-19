@@ -76,16 +76,16 @@ TAO_Profile::~TAO_Profile (void)
   //@@ TAO_PROFILE_SPL_DESTRUCTOR_ADD_HOOK
 }
 
-CORBA::ULong
+unsigned long
 TAO_Profile::_incr_refcnt (void)
 {
   return this->refcount_.increment ();
 }
 
-CORBA::ULong
+unsigned long
 TAO_Profile::_decr_refcnt (void)
 {
-  CORBA::ULong count = this->refcount_.decrement ();
+  unsigned long count = this->refcount_.decrement ();
   if (count != 0)
     return count;
 

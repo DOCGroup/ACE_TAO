@@ -13,16 +13,16 @@ TAO_ORB_Core::configuration (void) const
   return this->config_;
 }
 
-ACE_INLINE CORBA::ULong
+ACE_INLINE unsigned long
 TAO_ORB_Core::_incr_refcnt (void)
 {
   return this->refcount_++;
 }
 
-ACE_INLINE CORBA::ULong
+ACE_INLINE unsigned long
 TAO_ORB_Core::_decr_refcnt (void)
 {
-  CORBA::ULong count = --this->refcount_;
+  unsigned long count = --this->refcount_;
   if (count != 0)
     return count;
 

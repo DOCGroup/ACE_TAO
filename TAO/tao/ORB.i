@@ -8,16 +8,16 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 //  ORB specific
 // ---------------------------------------------------------------------------
 
-ACE_INLINE CORBA::ULong
+ACE_INLINE unsigned long
 CORBA::ORB::_incr_refcnt (void)
 {
   return ++this->refcount_;
 }
 
-ACE_INLINE CORBA::ULong
+ACE_INLINE unsigned long
 CORBA::ORB::_decr_refcnt (void)
 {
-  CORBA::ULong count = --this->refcount_;
+  unsigned long count = --this->refcount_;
 
   if (count != 0)
     {

@@ -75,11 +75,11 @@ public:
   TAO_ORB_Core *orb_core (void) const;
 
   /// Increase the reference count by one on this object.
-  CORBA::ULong _incr_refcnt (void);
+  unsigned long _incr_refcnt (void);
 
   /// Decrement the object's reference count.  When this count goes to
   /// 0 this object will be deleted.
-  CORBA::ULong _decr_refcnt (void);
+  unsigned long _decr_refcnt (void);
 
   /// Keep a pointer to the forwarded profile
   void forward_to (TAO_MProfile *mprofiles);
