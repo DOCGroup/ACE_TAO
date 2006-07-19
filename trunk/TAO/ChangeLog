@@ -1,3 +1,12 @@
+Wed Jul 19 17:21:38 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * orbsvcs/tests/AVStreams/Asynch_Three_Stage/Connection_Manager.cpp
+          (load_ep_addr):
+
+          Use new ACE_CString::size_type type to hold string
+          position/index value, instead of "int".  Addresses "comparison
+          between signed and unsigned" warnings.
+
 Wed Jul 19 15:52:11 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/IDL_Test/anonymous.idl:
