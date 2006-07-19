@@ -439,7 +439,7 @@ TAO_UIOP_Acceptor::parse_options (const char *str)
       else if (end != ACE_CString::npos)
         {
           ACE_CString opt =
-            options.substring (begin, end);
+            options.substring (begin, end - begin);
 
           ACE_CString::size_type const slot = opt.find ("=");
 

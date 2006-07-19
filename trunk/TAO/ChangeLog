@@ -7,6 +7,14 @@ Wed Jul 19 17:21:38 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
           position/index value, instead of "int".  Addresses "comparison
           between signed and unsigned" warnings.
 
+        * tao/Strategies/DIOP_Acceptor.cpp (parse_options):
+        * tao/Strategies/SCIOP_Acceptor.cpp (parse_options):
+        * tao/Strategies/SHMIOP_Acceptor.cpp (parse_options):
+        * tao/Strategies/UIOP_Acceptor.cpp (parse_options):
+
+          Applied Ciju's substring fix.  See "Tue Jul 18 21:38:55 UTC 2006
+          Ciju John  <johnc@ociweb.com>" below for details.
+
 Wed Jul 19 15:52:11 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/IDL_Test/anonymous.idl:
