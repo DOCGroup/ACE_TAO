@@ -62,7 +62,14 @@ public:
     /** Specifies the time to wait before returning from read. Negative value
         means infinite timeout. */
     int readtimeoutmsec;
-    /** Enable/disable parity checking. */
+    /** 
+      * @deprecated
+      *   Note that this member is going away in a subsequent
+      *   release. Use <code>paritymode = "none"</code> to disable parity
+      *   checking.
+      *
+      * Enable/disable parity checking.
+      */
     bool parityenb;
     /** Specifies the parity mode. POSIX supports "none", "even" and
         "odd" parity. Additionally Win32 supports "mark" and "space"
@@ -80,7 +87,7 @@ public:
         - 2 = Enable RTS flow-control handshaking (Win32).
         - 3 = Specifies that RTS line will be high if bytes are available
               for transmission. After transmission RTS will be low (Win32). */
-    int rtsenb;
+    unsigned char rtsenb;
     /** Enable/disable software flow control on input. */
     bool xinenb;
     /** Enable/disable software flow control on output. */

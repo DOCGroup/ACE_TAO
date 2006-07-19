@@ -32,7 +32,23 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_TTY_IO::Serial_Params::Serial_Params (void)
 {
-  ACE_OS::memset (this, 0, sizeof *this);
+  baudrate = 9600;
+  xonlim = 0;
+  xofflim = 0;
+  readmincharacters = 0;
+  readtimeoutmsec = 10000;
+  parityenb = true;
+  paritymode = ACE_TTY_IO_NONE;
+  ctsenb = false;
+  rtsenb = 0;
+  xinenb = false;
+  xoutenb = false;
+  modem = false;
+  rcvenb = true;
+  dsrenb = false;
+  dtrdisable = false;
+  databits = 8;
+  stopbits = 1;
 }
 
 // Interface for reading/writing serial device parameters
