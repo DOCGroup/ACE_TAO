@@ -29,7 +29,7 @@ public:
   //
   virtual CORBA::Short
   number (char *&s ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    ACE_THROW_SPEC ((CORBA::SystemException, RolyPoly::E));
 
   virtual void
   shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)

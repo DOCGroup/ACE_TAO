@@ -4,6 +4,8 @@
 
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/SString.h"
+#include "ace/Unbounded_Queue.h"
 
 // IOR manipulation.
 #include "tao/IORManipulation/IORManip_Loader.h"
@@ -12,9 +14,9 @@
 
 #include "RolyPolyC.h"
 
-const char *ior1 = 0;
-const char *ior2 = 0;
+typedef ACE_Unbounded_Queue<ACE_SString> IOR_QUEUE;
 
+IOR_QUEUE ior_strs;
 
 int
 parse_args (int argc, char *argv[])
@@ -26,13 +28,21 @@ parse_args (int argc, char *argv[])
     switch (c)
     {
     case 'k':
-      if (ior1 == 0) ior1 = get_opts.opt_arg ();
-      else ior2 = get_opts.opt_arg ();
+      {
+      ACE_SString ior(get_opts.opt_arg ());
+      if (ior_strs.enqueue_tail (ior) != 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Unable to enqueue IOR: %s\n",
+                           ior.c_str ()),
+                          -1);
+      else
+        ACE_DEBUG ((LM_DEBUG, "Enqueued IOR: %s\n", ior.c_str ()));
+      }
       break;
     default:
       ACE_ERROR_RETURN ((LM_ERROR,
                          "Usage:  %s "
-                         "-k IOR_1 -k IOR_2\n",
+                         "-k IOR ...\n",
                          argv[0]),
                         -1);
     }
@@ -56,26 +66,40 @@ main (int argc, char *argv[])
 
       if (::parse_args (argc, argv) != 0) return -1;
 
+      if (ior_strs.is_empty ())
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "No IOR provided\n"),
+                          -1);
+
       // Start out with the first IOR.  Interaction with the second
       // IOR occurs during the various interceptions executed during
       // this test.
 
       CORBA::Object_var object;
 
-      if (ior2 != 0)
+      if (ior_strs.size() > 1)
       {
         // merge case
 
+        ACE_DEBUG ((LM_DEBUG, "We got %d iors\n", ior_strs.size ()));
+        IOR_QUEUE::ITERATOR ior_go = ior_strs.begin ();
+        ACE_SString *pior = 0;
+         while (ior_go.next (pior) != 0)
+           {
+             ACE_DEBUG ((LM_DEBUG, "IOR: %s\n", pior->c_str ()));
+             ior_go.advance ();
+           }
+
+
+        IOR_QUEUE::ITERATOR ior_iter = ior_strs.begin ();
+
+        ACE_SString *ior = 0;
+        ior_iter.next (ior);
+
         CORBA::Object_var object_primary;
-        CORBA::Object_var object_secondary;
 
-        object_primary = orb->string_to_object (
-          ior1 ACE_ENV_ARG_PARAMETER);
-
-        ACE_CHECK_RETURN (-1);
-
-        object_secondary = orb->string_to_object (
-          ior2 ACE_ENV_ARG_PARAMETER);
+        object_primary =
+          orb->string_to_object (ior->c_str() ACE_ENV_ARG_PARAMETER);
 
         ACE_CHECK_RETURN (-1);
 
@@ -92,11 +116,23 @@ main (int argc, char *argv[])
 
 
         // Create the list
-        TAO_IOP::TAO_IOR_Manipulation::IORList iors (2);
-        iors.length(2);
-        iors [0] = CORBA::Object::_duplicate (object_primary.in ());
-        iors [1] = CORBA::Object::_duplicate (object_secondary.in ());
+        TAO_IOP::TAO_IOR_Manipulation::IORList iors (ior_strs.size ());
+        iors.length(ior_strs.size ());
+        size_t cntr = 0;
+        iors [cntr] = CORBA::Object::_duplicate (object_primary.in ());
+        
+        while (ior_iter.advance ())
+          {
+            ++cntr;
+            ior_iter.next (ior);
+            ACE_DEBUG ((LM_DEBUG, "IOR%d: %s\n",cntr, ior->c_str ()));
+            iors [cntr] =
+              orb->string_to_object (ior->c_str() ACE_ENV_ARG_PARAMETER);
 
+            ACE_CHECK_RETURN (-1);
+          }
+
+        ACE_DEBUG ((LM_DEBUG, "Prepare to merge IORs.\n"));
         // Create a merged set 1;
         object = iorm->merge_iors (iors ACE_ENV_ARG_PARAMETER);
 
@@ -140,7 +176,12 @@ main (int argc, char *argv[])
       }
       else
       {
-        object = orb->string_to_object (ior1 ACE_ENV_ARG_PARAMETER);
+        ACE_SString *ior = 0;
+        if (ior_strs.get (ior) != 0)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Unable to extract the only IOR string\n"),
+                            -1);
+        object = orb->string_to_object (ior->c_str() ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
       }
 
