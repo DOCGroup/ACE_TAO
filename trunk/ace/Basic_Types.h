@@ -247,6 +247,11 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 #elif ACE_SIZEOF_LONG == 8
   typedef long                  ACE_INT64;
 #elif !defined (ACE_LACKS_LONGLONG_T) && ACE_SIZEOF_LONG_LONG == 8
+# ifdef __GNUC__
+  // Silence g++ "-pedantic" warnings regarding use of "long long"
+  // type.
+  __extension__
+# endif  /* __GNUC__ */
   typedef long long             ACE_INT64;
 #endif /* defined (ACE_INT64_TYPE) */
 
@@ -260,6 +265,11 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 #  elif ACE_SIZEOF_LONG == 8
   typedef unsigned long         ACE_UINT64;
 #  elif ACE_SIZEOF_LONG_LONG == 8
+# ifdef __GNUC__
+  // Silence g++ "-pedantic" warnings regarding use of "long long"
+  // type.
+  __extension__
+# endif  /* __GNUC__ */
   typedef unsigned long long    ACE_UINT64;
 #  endif /* defined (ACE_UINT64_TYPE) */
 #endif /* !(ACE_LACKS_LONGLONG_T || ACE_LACKS_UNSIGNEDLONGLONG_T) */
@@ -577,6 +587,14 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 # endif /* ACE_LACKS_LONGLONG_T */
+
+ACE_UINT64
+ACE_NTOHLL (ACE_UINT64 x)
+{
+  return
+    (static_cast<ACE_UINT64> (ntohl(static_cast<int> ((x << 32) >> 32))) << 32)
+    | static_cast<unsigned int> (ntohl(((int)(x >> 32))));
+}
 
 // Conversions from ACE_UINT64 to ACE_UINT32.  ACE_CU64_TO_CU32 should
 // be used on const ACE_UINT64's.
