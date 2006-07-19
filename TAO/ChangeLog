@@ -1,3 +1,9 @@
+Wed Jul 19 22:44:16 UTC 2006  Ciju John  <johnc@ociweb.com>
+
+        * orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/SimpleAddressServer.h:
+
+          Add version macros.
+
 Wed Jul 19 22:28:50 UTC 2006  Ciju John  <johnc@ociweb.com>
 
         * orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp:
