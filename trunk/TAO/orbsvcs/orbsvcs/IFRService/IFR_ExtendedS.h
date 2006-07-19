@@ -31,7 +31,7 @@
 #ifndef _TAO_IDL____ORBSVCS_ORBSVCS_IFRSERVICE_IFR_EXTENDEDS_H_
 #define _TAO_IDL____ORBSVCS_ORBSVCS_IFRSERVICE_IFR_EXTENDEDS_H_
 
-#include /**/ "ace\pre.h"
+#include /**/ "ace/pro.h"
 
 #include "tao/IFR_Client/IFR_ExtendedC.h"
 #include "orbsvcs/IFRService/IFR_BasicS.h"
@@ -55,102 +55,102 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace POA_CORBA
 {
-  
-  
+
+
   // TAO_IDL - Generated from
   // be\be_visitor_interface/interface_sh.cpp:87
-  
+
   class FixedDef;
   typedef FixedDef *FixedDef_ptr;
-  
+
   class  FixedDef
     : public virtual POA_CORBA::IDLType
   {
   protected:
     FixedDef (void);
-  
+
   public:
     // Useful for template programming.
     typedef ::CORBA::FixedDef _stub_type;
     typedef ::CORBA::FixedDef_ptr _stub_ptr_type;
     typedef ::CORBA::FixedDef_var _stub_var_type;
-    
+
     FixedDef (const FixedDef& rhs);
     virtual ~FixedDef (void);
-    
+
     virtual ::CORBA::Boolean _is_a (
         const char* logical_type_id
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static void _is_a_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL
       );
-    
+
     static void _non_existent_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL
       );
-    
+
     static void _interface_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL
       );
-    
+
     static void _component_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL
       );
-    
+
     static void _repository_id_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL
       );
-    
+
     virtual void _dispatch (
         TAO_ServerRequest & req,
         void * servant_upcall
         ACE_ENV_ARG_DECL
       );
-    
+
     ::CORBA::FixedDef *_this (
-        
+
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     virtual const char* _interface_repository_id (void) const;
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_sh.cpp:45
-    
+
     virtual ::CORBA::UShort digits (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
       )) = 0;
-    
+
     static void _get_digits_skel (
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_sh.cpp:45
-    
+
     virtual void digits (
         ::CORBA::UShort digits
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -158,34 +158,34 @@ namespace POA_CORBA
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
       )) = 0;
-    
+
     static void _set_digits_skel (
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_sh.cpp:45
-    
+
     virtual ::CORBA::Short scale (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
       )) = 0;
-    
+
     static void _get_scale_skel (
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_sh.cpp:45
-    
+
     virtual void scale (
         ::CORBA::Short scale
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -193,14 +193,14 @@ namespace POA_CORBA
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
       )) = 0;
-    
+
     static void _set_scale_skel (
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL
       );
-    
+
     static void
     _get_def_kind_skel (
         TAO_ServerRequest & server_request,
@@ -208,18 +208,18 @@ namespace POA_CORBA
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_interface.cpp:1955
-    
+
     static void
     destroy_skel (
-        TAO_ServerRequest & server_request, 
+        TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static void
     _get_type_skel (
         TAO_ServerRequest & server_request,
@@ -228,118 +228,118 @@ namespace POA_CORBA
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
   };
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_interface/interface_sh.cpp:87
-  
+
   class ValueMemberDef;
   typedef ValueMemberDef *ValueMemberDef_ptr;
-  
+
   class  ValueMemberDef
     : public virtual POA_CORBA::Contained
   {
   protected:
     ValueMemberDef (void);
-  
+
   public:
     // Useful for template programming.
     typedef ::CORBA::ValueMemberDef _stub_type;
     typedef ::CORBA::ValueMemberDef_ptr _stub_ptr_type;
     typedef ::CORBA::ValueMemberDef_var _stub_var_type;
-    
+
     ValueMemberDef (const ValueMemberDef& rhs);
     virtual ~ValueMemberDef (void);
-    
+
     virtual ::CORBA::Boolean _is_a (
         const char* logical_type_id
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static void _is_a_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL
       );
-    
+
     static void _non_existent_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL
       );
-    
+
     static void _interface_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL
       );
-    
+
     static void _component_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL
       );
-    
+
     static void _repository_id_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL
       );
-    
+
     virtual void _dispatch (
         TAO_ServerRequest & req,
         void * servant_upcall
         ACE_ENV_ARG_DECL
       );
-    
+
     ::CORBA::ValueMemberDef *_this (
-        
+
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     virtual const char* _interface_repository_id (void) const;
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_sh.cpp:45
-    
+
     virtual ::CORBA::TypeCode_ptr type (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
       )) = 0;
-    
+
     static void _get_type_skel (
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_sh.cpp:45
-    
+
     virtual ::CORBA::IDLType_ptr type_def (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
       )) = 0;
-    
+
     static void _get_type_def_skel (
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_sh.cpp:45
-    
+
     virtual void type_def (
         ::CORBA::IDLType_ptr type_def
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -347,34 +347,34 @@ namespace POA_CORBA
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
       )) = 0;
-    
+
     static void _set_type_def_skel (
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_sh.cpp:45
-    
+
     virtual ::CORBA::Visibility access (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
       )) = 0;
-    
+
     static void _get_access_skel (
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_sh.cpp:45
-    
+
     virtual void access (
         ::CORBA::Visibility access
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -382,14 +382,14 @@ namespace POA_CORBA
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
       )) = 0;
-    
+
     static void _set_access_skel (
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL
       );
-    
+
     static void
     _get_def_kind_skel (
         TAO_ServerRequest & server_request,
@@ -397,18 +397,18 @@ namespace POA_CORBA
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_interface.cpp:1955
-    
+
     static void
     destroy_skel (
-        TAO_ServerRequest & server_request, 
+        TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static void
     _get_id_skel (
         TAO_ServerRequest & server_request,
@@ -416,7 +416,7 @@ namespace POA_CORBA
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static void
     _set_id_skel (
         TAO_ServerRequest & server_request,
@@ -424,7 +424,7 @@ namespace POA_CORBA
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static void
     _get_name_skel (
         TAO_ServerRequest & server_request,
@@ -432,7 +432,7 @@ namespace POA_CORBA
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static void
     _set_name_skel (
         TAO_ServerRequest & server_request,
@@ -440,7 +440,7 @@ namespace POA_CORBA
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static void
     _get_version_skel (
         TAO_ServerRequest & server_request,
@@ -448,7 +448,7 @@ namespace POA_CORBA
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static void
     _set_version_skel (
         TAO_ServerRequest & server_request,
@@ -456,7 +456,7 @@ namespace POA_CORBA
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static void
     _get_defined_in_skel (
         TAO_ServerRequest & server_request,
@@ -464,7 +464,7 @@ namespace POA_CORBA
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static void
     _get_absolute_name_skel (
         TAO_ServerRequest & server_request,
@@ -472,7 +472,7 @@ namespace POA_CORBA
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static void
     _get_containing_repository_skel (
         TAO_ServerRequest & server_request,
@@ -480,36 +480,36 @@ namespace POA_CORBA
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_interface.cpp:1955
-    
+
     static void
     describe_skel (
-        TAO_ServerRequest & server_request, 
+        TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_interface.cpp:1955
-    
+
     static void
     move_skel (
-        TAO_ServerRequest & server_request, 
+        TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
   };
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_interface/interface_sh.cpp:87
-  
+
   class ValueDef;
   typedef ValueDef *ValueDef_ptr;
-  
+
   class  ValueDef
     : public virtual POA_CORBA::Container,
       public virtual POA_CORBA::Contained,
@@ -517,89 +517,89 @@ namespace POA_CORBA
   {
   protected:
     ValueDef (void);
-  
+
   public:
     // Useful for template programming.
     typedef ::CORBA::ValueDef _stub_type;
     typedef ::CORBA::ValueDef_ptr _stub_ptr_type;
     typedef ::CORBA::ValueDef_var _stub_var_type;
-    
+
     ValueDef (const ValueDef& rhs);
     virtual ~ValueDef (void);
-    
+
     virtual ::CORBA::Boolean _is_a (
         const char* logical_type_id
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static void _is_a_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL
       );
-    
+
     static void _non_existent_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL
       );
-    
+
     static void _interface_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL
       );
-    
+
     static void _component_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL
       );
-    
+
     static void _repository_id_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL
       );
-    
+
     virtual void _dispatch (
         TAO_ServerRequest & req,
         void * servant_upcall
         ACE_ENV_ARG_DECL
       );
-    
+
     ::CORBA::ValueDef *_this (
-        
+
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     virtual const char* _interface_repository_id (void) const;
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_sh.cpp:45
-    
+
     virtual ::CORBA::InterfaceDefSeq * supported_interfaces (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
       )) = 0;
-    
+
     static void _get_supported_interfaces_skel (
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_sh.cpp:45
-    
+
     virtual void supported_interfaces (
         const ::CORBA::InterfaceDefSeq & supported_interfaces
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -607,34 +607,34 @@ namespace POA_CORBA
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
       )) = 0;
-    
+
     static void _set_supported_interfaces_skel (
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_sh.cpp:45
-    
+
     virtual ::CORBA::InitializerSeq * initializers (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
       )) = 0;
-    
+
     static void _get_initializers_skel (
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_sh.cpp:45
-    
+
     virtual void initializers (
         const ::CORBA::InitializerSeq & initializers
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -642,34 +642,34 @@ namespace POA_CORBA
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
       )) = 0;
-    
+
     static void _set_initializers_skel (
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_sh.cpp:45
-    
+
     virtual ::CORBA::ValueDef_ptr base_value (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
       )) = 0;
-    
+
     static void _get_base_value_skel (
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_sh.cpp:45
-    
+
     virtual void base_value (
         ::CORBA::ValueDef_ptr base_value
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -677,34 +677,34 @@ namespace POA_CORBA
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
       )) = 0;
-    
+
     static void _set_base_value_skel (
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_sh.cpp:45
-    
+
     virtual ::CORBA::ValueDefSeq * abstract_base_values (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
       )) = 0;
-    
+
     static void _get_abstract_base_values_skel (
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_sh.cpp:45
-    
+
     virtual void abstract_base_values (
         const ::CORBA::ValueDefSeq & abstract_base_values
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -712,34 +712,34 @@ namespace POA_CORBA
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
       )) = 0;
-    
+
     static void _set_abstract_base_values_skel (
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_sh.cpp:45
-    
+
     virtual ::CORBA::Boolean is_abstract (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
       )) = 0;
-    
+
     static void _get_is_abstract_skel (
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_sh.cpp:45
-    
+
     virtual void is_abstract (
         ::CORBA::Boolean is_abstract
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -747,34 +747,34 @@ namespace POA_CORBA
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
       )) = 0;
-    
+
     static void _set_is_abstract_skel (
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_sh.cpp:45
-    
+
     virtual ::CORBA::Boolean is_custom (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
       )) = 0;
-    
+
     static void _get_is_custom_skel (
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_sh.cpp:45
-    
+
     virtual void is_custom (
         ::CORBA::Boolean is_custom
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -782,34 +782,34 @@ namespace POA_CORBA
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
       )) = 0;
-    
+
     static void _set_is_custom_skel (
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_sh.cpp:45
-    
+
     virtual ::CORBA::Boolean is_truncatable (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
       )) = 0;
-    
+
     static void _get_is_truncatable_skel (
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_sh.cpp:45
-    
+
     virtual void is_truncatable (
         ::CORBA::Boolean is_truncatable
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -817,17 +817,17 @@ namespace POA_CORBA
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
       )) = 0;
-    
+
     static void _set_is_truncatable_skel (
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_sh.cpp:45
-    
+
     virtual ::CORBA::Boolean is_a (
         const char * id
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -835,34 +835,34 @@ namespace POA_CORBA
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
       )) = 0;
-    
+
     static void is_a_skel (
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_sh.cpp:45
-    
+
     virtual ::CORBA::ValueDef::FullValueDescription * describe_value (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
       )) = 0;
-    
+
     static void describe_value_skel (
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_sh.cpp:45
-    
+
     virtual ::CORBA::ValueMemberDef_ptr create_value_member (
         const char * id,
         const char * name,
@@ -874,17 +874,17 @@ namespace POA_CORBA
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
       )) = 0;
-    
+
     static void create_value_member_skel (
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_sh.cpp:45
-    
+
     virtual ::CORBA::AttributeDef_ptr create_attribute (
         const char * id,
         const char * name,
@@ -896,17 +896,17 @@ namespace POA_CORBA
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
       )) = 0;
-    
+
     static void create_attribute_skel (
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_sh.cpp:45
-    
+
     virtual ::CORBA::OperationDef_ptr create_operation (
         const char * id,
         const char * name,
@@ -921,14 +921,14 @@ namespace POA_CORBA
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
       )) = 0;
-    
+
     static void create_operation_skel (
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL
       );
-    
+
     static void
     _get_def_kind_skel (
         TAO_ServerRequest & server_request,
@@ -936,216 +936,216 @@ namespace POA_CORBA
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_interface.cpp:1955
-    
+
     static void
     destroy_skel (
-        TAO_ServerRequest & server_request, 
+        TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_interface.cpp:1955
-    
+
     static void
     lookup_skel (
-        TAO_ServerRequest & server_request, 
+        TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_interface.cpp:1955
-    
+
     static void
     contents_skel (
-        TAO_ServerRequest & server_request, 
+        TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_interface.cpp:1955
-    
+
     static void
     lookup_name_skel (
-        TAO_ServerRequest & server_request, 
+        TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_interface.cpp:1955
-    
+
     static void
     describe_contents_skel (
-        TAO_ServerRequest & server_request, 
+        TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_interface.cpp:1955
-    
+
     static void
     create_module_skel (
-        TAO_ServerRequest & server_request, 
+        TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_interface.cpp:1955
-    
+
     static void
     create_constant_skel (
-        TAO_ServerRequest & server_request, 
+        TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_interface.cpp:1955
-    
+
     static void
     create_struct_skel (
-        TAO_ServerRequest & server_request, 
+        TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_interface.cpp:1955
-    
+
     static void
     create_union_skel (
-        TAO_ServerRequest & server_request, 
+        TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_interface.cpp:1955
-    
+
     static void
     create_enum_skel (
-        TAO_ServerRequest & server_request, 
+        TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_interface.cpp:1955
-    
+
     static void
     create_alias_skel (
-        TAO_ServerRequest & server_request, 
+        TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_interface.cpp:1955
-    
+
     static void
     create_interface_skel (
-        TAO_ServerRequest & server_request, 
+        TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_interface.cpp:1955
-    
+
     static void
     create_value_skel (
-        TAO_ServerRequest & server_request, 
+        TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_interface.cpp:1955
-    
+
     static void
     create_value_box_skel (
-        TAO_ServerRequest & server_request, 
+        TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_interface.cpp:1955
-    
+
     static void
     create_exception_skel (
-        TAO_ServerRequest & server_request, 
+        TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_interface.cpp:1955
-    
+
     static void
     create_native_skel (
-        TAO_ServerRequest & server_request, 
+        TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_interface.cpp:1955
-    
+
     static void
     create_abstract_interface_skel (
-        TAO_ServerRequest & server_request, 
+        TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_interface.cpp:1955
-    
+
     static void
     create_local_interface_skel (
-        TAO_ServerRequest & server_request, 
+        TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_interface.cpp:1955
-    
+
     static void
     create_ext_value_skel (
-        TAO_ServerRequest & server_request, 
+        TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static void
     _get_id_skel (
         TAO_ServerRequest & server_request,
@@ -1153,7 +1153,7 @@ namespace POA_CORBA
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static void
     _set_id_skel (
         TAO_ServerRequest & server_request,
@@ -1161,7 +1161,7 @@ namespace POA_CORBA
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static void
     _get_name_skel (
         TAO_ServerRequest & server_request,
@@ -1169,7 +1169,7 @@ namespace POA_CORBA
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static void
     _set_name_skel (
         TAO_ServerRequest & server_request,
@@ -1177,7 +1177,7 @@ namespace POA_CORBA
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static void
     _get_version_skel (
         TAO_ServerRequest & server_request,
@@ -1185,7 +1185,7 @@ namespace POA_CORBA
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static void
     _set_version_skel (
         TAO_ServerRequest & server_request,
@@ -1193,7 +1193,7 @@ namespace POA_CORBA
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static void
     _get_defined_in_skel (
         TAO_ServerRequest & server_request,
@@ -1201,7 +1201,7 @@ namespace POA_CORBA
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static void
     _get_absolute_name_skel (
         TAO_ServerRequest & server_request,
@@ -1209,7 +1209,7 @@ namespace POA_CORBA
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static void
     _get_containing_repository_skel (
         TAO_ServerRequest & server_request,
@@ -1217,29 +1217,29 @@ namespace POA_CORBA
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_interface.cpp:1955
-    
+
     static void
     describe_skel (
-        TAO_ServerRequest & server_request, 
+        TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_interface.cpp:1955
-    
+
     static void
     move_skel (
-        TAO_ServerRequest & server_request, 
+        TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static void
     _get_type_skel (
         TAO_ServerRequest & server_request,
@@ -1248,101 +1248,101 @@ namespace POA_CORBA
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
   };
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_interface/interface_sh.cpp:87
-  
+
   class ExtValueDef;
   typedef ExtValueDef *ExtValueDef_ptr;
-  
+
   class  ExtValueDef
     : public virtual POA_CORBA::ValueDef
   {
   protected:
     ExtValueDef (void);
-  
+
   public:
     // Useful for template programming.
     typedef ::CORBA::ExtValueDef _stub_type;
     typedef ::CORBA::ExtValueDef_ptr _stub_ptr_type;
     typedef ::CORBA::ExtValueDef_var _stub_var_type;
-    
+
     ExtValueDef (const ExtValueDef& rhs);
     virtual ~ExtValueDef (void);
-    
+
     virtual ::CORBA::Boolean _is_a (
         const char* logical_type_id
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static void _is_a_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL
       );
-    
+
     static void _non_existent_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL
       );
-    
+
     static void _interface_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL
       );
-    
+
     static void _component_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL
       );
-    
+
     static void _repository_id_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL
       );
-    
+
     virtual void _dispatch (
         TAO_ServerRequest & req,
         void * servant_upcall
         ACE_ENV_ARG_DECL
       );
-    
+
     ::CORBA::ExtValueDef *_this (
-        
+
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     virtual const char* _interface_repository_id (void) const;
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_sh.cpp:45
-    
+
     virtual ::CORBA::ExtInitializerSeq * ext_initializers (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
       )) = 0;
-    
+
     static void _get_ext_initializers_skel (
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_sh.cpp:45
-    
+
     virtual void ext_initializers (
         const ::CORBA::ExtInitializerSeq & ext_initializers
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -1350,34 +1350,34 @@ namespace POA_CORBA
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
       )) = 0;
-    
+
     static void _set_ext_initializers_skel (
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_sh.cpp:45
-    
+
     virtual ::CORBA::ExtValueDef::ExtFullValueDescription * describe_ext_value (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
       )) = 0;
-    
+
     static void describe_ext_value_skel (
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_sh.cpp:45
-    
+
     virtual ::CORBA::ExtAttributeDef_ptr create_ext_attribute (
         const char * id,
         const char * name,
@@ -1391,14 +1391,14 @@ namespace POA_CORBA
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
       )) = 0;
-    
+
     static void create_ext_attribute_skel (
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL
       );
-    
+
     static void
     _get_def_kind_skel (
         TAO_ServerRequest & server_request,
@@ -1406,216 +1406,216 @@ namespace POA_CORBA
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_interface.cpp:1955
-    
+
     static void
     destroy_skel (
-        TAO_ServerRequest & server_request, 
+        TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_interface.cpp:1955
-    
+
     static void
     lookup_skel (
-        TAO_ServerRequest & server_request, 
+        TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_interface.cpp:1955
-    
+
     static void
     contents_skel (
-        TAO_ServerRequest & server_request, 
+        TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_interface.cpp:1955
-    
+
     static void
     lookup_name_skel (
-        TAO_ServerRequest & server_request, 
+        TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_interface.cpp:1955
-    
+
     static void
     describe_contents_skel (
-        TAO_ServerRequest & server_request, 
+        TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_interface.cpp:1955
-    
+
     static void
     create_module_skel (
-        TAO_ServerRequest & server_request, 
+        TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_interface.cpp:1955
-    
+
     static void
     create_constant_skel (
-        TAO_ServerRequest & server_request, 
+        TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_interface.cpp:1955
-    
+
     static void
     create_struct_skel (
-        TAO_ServerRequest & server_request, 
+        TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_interface.cpp:1955
-    
+
     static void
     create_union_skel (
-        TAO_ServerRequest & server_request, 
+        TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_interface.cpp:1955
-    
+
     static void
     create_enum_skel (
-        TAO_ServerRequest & server_request, 
+        TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_interface.cpp:1955
-    
+
     static void
     create_alias_skel (
-        TAO_ServerRequest & server_request, 
+        TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_interface.cpp:1955
-    
+
     static void
     create_interface_skel (
-        TAO_ServerRequest & server_request, 
+        TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_interface.cpp:1955
-    
+
     static void
     create_value_skel (
-        TAO_ServerRequest & server_request, 
+        TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_interface.cpp:1955
-    
+
     static void
     create_value_box_skel (
-        TAO_ServerRequest & server_request, 
+        TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_interface.cpp:1955
-    
+
     static void
     create_exception_skel (
-        TAO_ServerRequest & server_request, 
+        TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_interface.cpp:1955
-    
+
     static void
     create_native_skel (
-        TAO_ServerRequest & server_request, 
+        TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_interface.cpp:1955
-    
+
     static void
     create_abstract_interface_skel (
-        TAO_ServerRequest & server_request, 
+        TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_interface.cpp:1955
-    
+
     static void
     create_local_interface_skel (
-        TAO_ServerRequest & server_request, 
+        TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_interface.cpp:1955
-    
+
     static void
     create_ext_value_skel (
-        TAO_ServerRequest & server_request, 
+        TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static void
     _get_id_skel (
         TAO_ServerRequest & server_request,
@@ -1623,7 +1623,7 @@ namespace POA_CORBA
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static void
     _set_id_skel (
         TAO_ServerRequest & server_request,
@@ -1631,7 +1631,7 @@ namespace POA_CORBA
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static void
     _get_name_skel (
         TAO_ServerRequest & server_request,
@@ -1639,7 +1639,7 @@ namespace POA_CORBA
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static void
     _set_name_skel (
         TAO_ServerRequest & server_request,
@@ -1647,7 +1647,7 @@ namespace POA_CORBA
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static void
     _get_version_skel (
         TAO_ServerRequest & server_request,
@@ -1655,7 +1655,7 @@ namespace POA_CORBA
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static void
     _set_version_skel (
         TAO_ServerRequest & server_request,
@@ -1663,7 +1663,7 @@ namespace POA_CORBA
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static void
     _get_defined_in_skel (
         TAO_ServerRequest & server_request,
@@ -1671,7 +1671,7 @@ namespace POA_CORBA
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static void
     _get_absolute_name_skel (
         TAO_ServerRequest & server_request,
@@ -1679,7 +1679,7 @@ namespace POA_CORBA
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static void
     _get_containing_repository_skel (
         TAO_ServerRequest & server_request,
@@ -1687,29 +1687,29 @@ namespace POA_CORBA
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_interface.cpp:1955
-    
+
     static void
     describe_skel (
-        TAO_ServerRequest & server_request, 
+        TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_interface.cpp:1955
-    
+
     static void
     move_skel (
-        TAO_ServerRequest & server_request, 
+        TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static void
     _get_type_skel (
         TAO_ServerRequest & server_request,
@@ -1717,7 +1717,7 @@ namespace POA_CORBA
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static void
     _get_supported_interfaces_skel (
         TAO_ServerRequest & server_request,
@@ -1725,7 +1725,7 @@ namespace POA_CORBA
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static void
     _set_supported_interfaces_skel (
         TAO_ServerRequest & server_request,
@@ -1733,7 +1733,7 @@ namespace POA_CORBA
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static void
     _get_initializers_skel (
         TAO_ServerRequest & server_request,
@@ -1741,7 +1741,7 @@ namespace POA_CORBA
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static void
     _set_initializers_skel (
         TAO_ServerRequest & server_request,
@@ -1749,7 +1749,7 @@ namespace POA_CORBA
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static void
     _get_base_value_skel (
         TAO_ServerRequest & server_request,
@@ -1757,7 +1757,7 @@ namespace POA_CORBA
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static void
     _set_base_value_skel (
         TAO_ServerRequest & server_request,
@@ -1765,7 +1765,7 @@ namespace POA_CORBA
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static void
     _get_abstract_base_values_skel (
         TAO_ServerRequest & server_request,
@@ -1773,7 +1773,7 @@ namespace POA_CORBA
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static void
     _set_abstract_base_values_skel (
         TAO_ServerRequest & server_request,
@@ -1781,7 +1781,7 @@ namespace POA_CORBA
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static void
     _get_is_abstract_skel (
         TAO_ServerRequest & server_request,
@@ -1789,7 +1789,7 @@ namespace POA_CORBA
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static void
     _set_is_abstract_skel (
         TAO_ServerRequest & server_request,
@@ -1797,7 +1797,7 @@ namespace POA_CORBA
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static void
     _get_is_custom_skel (
         TAO_ServerRequest & server_request,
@@ -1805,7 +1805,7 @@ namespace POA_CORBA
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static void
     _set_is_custom_skel (
         TAO_ServerRequest & server_request,
@@ -1813,7 +1813,7 @@ namespace POA_CORBA
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static void
     _get_is_truncatable_skel (
         TAO_ServerRequest & server_request,
@@ -1821,7 +1821,7 @@ namespace POA_CORBA
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static void
     _set_is_truncatable_skel (
         TAO_ServerRequest & server_request,
@@ -1829,157 +1829,157 @@ namespace POA_CORBA
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_interface.cpp:1955
-    
+
     static void
     is_a_skel (
-        TAO_ServerRequest & server_request, 
+        TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_interface.cpp:1955
-    
+
     static void
     describe_value_skel (
-        TAO_ServerRequest & server_request, 
+        TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_interface.cpp:1955
-    
+
     static void
     create_value_member_skel (
-        TAO_ServerRequest & server_request, 
+        TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_interface.cpp:1955
-    
+
     static void
     create_attribute_skel (
-        TAO_ServerRequest & server_request, 
+        TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_interface.cpp:1955
-    
+
     static void
     create_operation_skel (
-        TAO_ServerRequest & server_request, 
+        TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
   };
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_interface/interface_sh.cpp:87
-  
+
   class ValueBoxDef;
   typedef ValueBoxDef *ValueBoxDef_ptr;
-  
+
   class  ValueBoxDef
     : public virtual POA_CORBA::TypedefDef
   {
   protected:
     ValueBoxDef (void);
-  
+
   public:
     // Useful for template programming.
     typedef ::CORBA::ValueBoxDef _stub_type;
     typedef ::CORBA::ValueBoxDef_ptr _stub_ptr_type;
     typedef ::CORBA::ValueBoxDef_var _stub_var_type;
-    
+
     ValueBoxDef (const ValueBoxDef& rhs);
     virtual ~ValueBoxDef (void);
-    
+
     virtual ::CORBA::Boolean _is_a (
         const char* logical_type_id
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static void _is_a_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL
       );
-    
+
     static void _non_existent_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL
       );
-    
+
     static void _interface_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL
       );
-    
+
     static void _component_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL
       );
-    
+
     static void _repository_id_skel (
         TAO_ServerRequest & req,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL
       );
-    
+
     virtual void _dispatch (
         TAO_ServerRequest & req,
         void * servant_upcall
         ACE_ENV_ARG_DECL
       );
-    
+
     ::CORBA::ValueBoxDef *_this (
-        
+
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     virtual const char* _interface_repository_id (void) const;
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_sh.cpp:45
-    
+
     virtual ::CORBA::IDLType_ptr original_type_def (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
       )) = 0;
-    
+
     static void _get_original_type_def_skel (
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_sh.cpp:45
-    
+
     virtual void original_type_def (
         ::CORBA::IDLType_ptr original_type_def
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -1987,14 +1987,14 @@ namespace POA_CORBA
       ACE_THROW_SPEC ((
         ::CORBA::SystemException
       )) = 0;
-    
+
     static void _set_original_type_def_skel (
         TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL
       );
-    
+
     static void
     _get_def_kind_skel (
         TAO_ServerRequest & server_request,
@@ -2002,18 +2002,18 @@ namespace POA_CORBA
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_interface.cpp:1955
-    
+
     static void
     destroy_skel (
-        TAO_ServerRequest & server_request, 
+        TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static void
     _get_id_skel (
         TAO_ServerRequest & server_request,
@@ -2021,7 +2021,7 @@ namespace POA_CORBA
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static void
     _set_id_skel (
         TAO_ServerRequest & server_request,
@@ -2029,7 +2029,7 @@ namespace POA_CORBA
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static void
     _get_name_skel (
         TAO_ServerRequest & server_request,
@@ -2037,7 +2037,7 @@ namespace POA_CORBA
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static void
     _set_name_skel (
         TAO_ServerRequest & server_request,
@@ -2045,7 +2045,7 @@ namespace POA_CORBA
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static void
     _get_version_skel (
         TAO_ServerRequest & server_request,
@@ -2053,7 +2053,7 @@ namespace POA_CORBA
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static void
     _set_version_skel (
         TAO_ServerRequest & server_request,
@@ -2061,7 +2061,7 @@ namespace POA_CORBA
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static void
     _get_defined_in_skel (
         TAO_ServerRequest & server_request,
@@ -2069,7 +2069,7 @@ namespace POA_CORBA
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static void
     _get_absolute_name_skel (
         TAO_ServerRequest & server_request,
@@ -2077,7 +2077,7 @@ namespace POA_CORBA
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static void
     _get_containing_repository_skel (
         TAO_ServerRequest & server_request,
@@ -2085,29 +2085,29 @@ namespace POA_CORBA
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_interface.cpp:1955
-    
+
     static void
     describe_skel (
-        TAO_ServerRequest & server_request, 
+        TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_interface.cpp:1955
-    
+
     static void
     move_skel (
-        TAO_ServerRequest & server_request, 
+        TAO_ServerRequest & server_request,
         void * servant_upcall,
         void * servant
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static void
     _get_type_skel (
         TAO_ServerRequest & server_request,
@@ -2122,7 +2122,7 @@ namespace POA_CORBA
 
 } // module CORBA
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_codegen.cpp:1219
 
 
@@ -2135,6 +2135,6 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #include "IFR_ExtendedS.inl"
 #endif /* defined INLINE */
 
-#include /**/ "ace\post.h"
+#include /**/ "ace/post.h"
 #endif /* ifndef */
 
