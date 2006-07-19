@@ -31,7 +31,7 @@
 #ifndef _TAO_IDL____ORBSVCS_ORBSVCS_IFRSERVICE_IFR_BASICS_T_H_
 #define _TAO_IDL____ORBSVCS_ORBSVCS_IFRSERVICE_IFR_BASICS_T_H_
 
-#include /**/ "ace/pro.h"
+#include /**/ "ace/pre.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
