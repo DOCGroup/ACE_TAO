@@ -1,3 +1,35 @@
+Wed Jul 19 15:53:09 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * bin/PythonACE/fuzz/__init__.py
+        * bin/PythonACE/fuzz/_fuzz.py
+        * bin/PythonACE/fuzz/_generic_handler.py
+        * bin/PythonACE/fuzz/_path.py
+        * bin/PythonACE/fuzz/_types.py
+        * bin/PythonACE/fuzz/check_includes.py
+        * bin/PythonACE/fuzz/cpp_inline.py
+        * bin/PythonACE/fuzz/inline.py
+        * bin/PythonACE/fuzz/math_include.py
+        * bin/PythonACE/fuzz/max_filename.py
+        * bin/PythonACE/fuzz/max_project_len.py
+        * bin/PythonACE/fuzz/newline.py
+        * bin/PythonACE/fuzz/no_conflict_markers.py
+        * bin/PythonACE/fuzz/noncvs.py
+        * bin/PythonACE/fuzz/ptr_arith_t.py
+        * bin/PythonACE/fuzz/refcountservantbase.py
+        * bin/PythonACE/fuzz/verify_changelog.py
+        
+          This is a python module designed to eventually replace the
+          bin/fuzz.pl script.  Each .py file in the fuzz directory that
+          does not have a _ at the beginning of its filename contains a
+          single check.  New fuzz checks can be added to the system simply
+          by creating a new file in the fuzz directory.  Care should be
+          taken to select a filename that does not conflict with an
+          existing python module.
+        
+          ptr_arith_t.py and inline.py are good examples that use the
+          generic handler to implement their checks, max_project_len is a
+          good example of a check that does not use the generic handler.
+
 Wed Jul 19 15:07:29 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * ace/DLL_Manager.cpp:
