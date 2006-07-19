@@ -22,6 +22,7 @@
 #include "be_constant.h"
 #include "be_enum.h"
 #include "be_exception.h"
+#include "be_native.h"
 #include "be_interface.h"
 #include "be_interface_fwd.h"
 #include "be_structure.h"
@@ -44,6 +45,7 @@
 #include "be_visitor_module.h"
 #include "be_visitor_constant.h"
 #include "be_visitor_enum.h"
+#include "be_visitor_native.h"
 #include "be_visitor_exception.h"
 #include "be_visitor_interface.h"
 #include "be_visitor_interface_fwd.h"
@@ -68,6 +70,6 @@
 #include "be_visitor_module/cdr_op.cpp"
 #include "be_visitor_module/serializer_op.cpp"
 
-ACE_RCSID (be, 
-           be_visitor_module, 
+ACE_RCSID (be,
+           be_visitor_module,
            "$Id$")
