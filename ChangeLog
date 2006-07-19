@@ -1,3 +1,11 @@
+Wed Jul 19 22:46:51 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * ace/Basic_Types.h (ACE_INT64, ACE_UINT64):
+
+          Silence g++ "-pedantic" warnings regarding use of "long long"
+          type by preceding the typedef with the g++ __extension__
+          keyword.
+
 Wed Jul 19 21:15:51 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * NEWS:
