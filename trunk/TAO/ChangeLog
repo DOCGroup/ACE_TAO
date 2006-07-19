@@ -1,3 +1,12 @@
+Wed Jul 19 17:07:12 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_arg_traits.cpp:
+        
+          Fixed bug in the logic of the decisioin whether or not to generate
+          the arg traits template specialization for a typedef. This fix
+          addresses the reopening of [BUGID:2582], which will now be set
+          to FIXED unless and until another bug is found.
+
 Wed Jul 19 17:21:38 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
         * orbsvcs/tests/AVStreams/Asynch_Three_Stage/Connection_Manager.cpp

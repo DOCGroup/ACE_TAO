@@ -1063,11 +1063,20 @@ be_visitor_arg_traits::visit_typedef (be_typedef *node)
 
   // We can't set seen_in_operation_ for the base type
   // in the be_typedef operation, since valuetype OBV
-  // constructor code may pass in FALSE, and the base
+  // constructor code may reset it to FALSE, and the base
   // type may be used unaliased in another arg somewhere.
   // So we just set it to TRUE here, since we know it
-  // has to be TRUE at this point.
-  bt->seen_in_operation (true);
+  // has to be TRUE at this point. We also set the
+  // 'generated' flag to false if the original value
+  // of 'seen_in_operation' was false, since the base
+  // type could have been processed already, as a member
+  // for example, before the typedef was seen, which
+  // would short-circuit things.
+  if (!bt->seen_in_operation ())
+    {
+      bt->seen_in_operation (true);
+      this->generated (bt, false);
+    }
 
   if (!bt || (bt->accept (this) == -1))
     {
@@ -1104,24 +1113,24 @@ be_visitor_arg_traits::generated (be_decl *node) const
 
 void
 be_visitor_arg_traits::generated (be_decl *node,
-                                  bool )
+                                  bool val)
 {
   if (ACE_OS::strcmp (this->S_, "") == 0)
     {
       switch (this->ctx_->state ())
         {
           case TAO_CodeGen::TAO_ROOT_CS:
-            node->cli_arg_traits_gen (true);
+            node->cli_arg_traits_gen (val);
             return;
           case TAO_CodeGen::TAO_ROOT_SS:
-            node->srv_arg_traits_gen (true);
+            node->srv_arg_traits_gen (val);
             return;
           default:
             return;
         }
     }
 
-  node->srv_sarg_traits_gen (true);
+  node->srv_sarg_traits_gen (val);
 }
 
 int
