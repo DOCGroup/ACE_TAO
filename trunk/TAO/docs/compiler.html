@@ -503,7 +503,7 @@ also receives other options that are specific to it.<p>
   </tr>
 
   <tr><a name="o">
-    <td><tt>-o</tt></td>
+    <td><tt>-o </tt><i>path</i></td>
 
     <td>To specify the output directory to IDL compiler as to where all the
         IDL-compiler-generated files are to be put. By default, all the files are
@@ -513,11 +513,18 @@ also receives other options that are specific to it.<p>
         itself already exists, no action is taken.&nbsp;</td>
   </tr>
 
+  <tr><a name="oS">
+    <td><tt>-oS </tt><i>path</i></td>
+
+    <td>Same as -o option but applies only to generated *S.* files&nbsp;</td>
+    <td>Default is value of -o option or current directory&nbsp;</td>
+  </tr>
+
   <tr><a name="oA">
-    <td><tt>-oA</tt></td>
+    <td><tt>-oA </tt><i>path</i></td>
 
     <td>Same as -o option but applies only to generated *A.* files&nbsp;</td>
-    <td>&nbsp;</td>
+    <td>Default is value of -o option or current directory&nbsp;</td>
   </tr>
 
   <tr><a name="hc">

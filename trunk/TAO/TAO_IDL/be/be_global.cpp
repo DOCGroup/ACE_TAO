@@ -72,6 +72,7 @@ BE_GlobalData::BE_GlobalData (void)
     anyop_hdr_ending_ (ACE::strnew ("A.h")),
     anyop_src_ending_ (ACE::strnew ("A.cpp")),
     output_dir_ (0),
+    skel_output_dir_ (0),
     anyop_output_dir_ (0),
     any_support_ (true),
     tc_support_ (true),
@@ -135,8 +136,9 @@ BE_GlobalData::changing_standard_include_files (void)
 static const char*
 be_change_idl_file_extension (UTL_String* idl_file,
                               const char *new_extension,
-                              int base_name_only = 0,
-                              bool for_anyop = false)
+                              bool base_name_only = false,
+                              bool for_anyop = false,
+                              bool for_skel = false)
 {
   // @@ This shouldn't happen anyway; but a better error handling
   // mechanism is needed.
@@ -179,12 +181,21 @@ be_change_idl_file_extension (UTL_String* idl_file,
       return 0;
     }
 
-  // Anyop file output defaults to general output dir if not set.
-  const char *output_path = (for_anyop
-                             ? (be_global->anyop_output_dir () == 0
-                                ? be_global->output_dir ()
-                                : be_global->anyop_output_dir ())
-                             : be_global->output_dir ());
+  // Anyop * skel file output defaults to general output dir if not set.
+  const char *output_path = 0;
+  
+  if (for_anyop && 0 != be_global->anyop_output_dir ())
+    {
+      output_path = be_global->anyop_output_dir ();
+    }
+  else if (for_skel && 0 != be_global->skel_output_dir ())
+    {
+      output_path = be_global->skel_output_dir ();
+    }
+  else
+    {
+      output_path = be_global->output_dir ();
+    }
 
   if (!base_name_only && output_path != 0)
     {
@@ -233,7 +244,7 @@ be_change_idl_file_extension (UTL_String* idl_file,
 
 const char *
 BE_GlobalData::be_get_client_hdr (UTL_String *idl_file_name,
-                                  int base_name_only)
+                                  bool base_name_only)
 {
   // User-defined file extensions don't apply to .pidl files.
   ACE_CString fn (idl_file_name->get_string ());
@@ -256,7 +267,7 @@ BE_GlobalData::be_get_client_stub (UTL_String *idl_file_name)
 
 const char *
 BE_GlobalData::be_get_client_inline (UTL_String *idl_file_name,
-                                     int base_name_only)
+                                     bool base_name_only)
 {
   return be_change_idl_file_extension (idl_file_name,
                                        be_global->client_inline_ending (),
@@ -265,7 +276,7 @@ BE_GlobalData::be_get_client_inline (UTL_String *idl_file_name,
 
 const char *
 BE_GlobalData::be_get_server_hdr (UTL_String *idl_file_name,
-                                  int base_name_only)
+                                  bool base_name_only)
 {
   // User-defined file extensions don't apply to .pidl files.
   ACE_CString fn (idl_file_name->get_string ());
@@ -276,12 +287,14 @@ BE_GlobalData::be_get_server_hdr (UTL_String *idl_file_name,
                                        orb_file
                                          ? "S.h"
                                          : be_global->server_hdr_ending (),
-                                       base_name_only);
+                                       base_name_only,
+                                       false,
+                                       true);
 }
 
 const char *
 BE_GlobalData::be_get_implementation_hdr (UTL_String *idl_file_name,
-                                          int base_name_only)
+                                          bool base_name_only)
 {
   return be_change_idl_file_extension (idl_file_name,
                                        be_global->implementation_hdr_ending (),
@@ -290,7 +303,7 @@ BE_GlobalData::be_get_implementation_hdr (UTL_String *idl_file_name,
 
 const char *
 BE_GlobalData::be_get_implementation_skel (UTL_String *idl_file_name,
-                                           int base_name_only)
+                                           bool base_name_only)
 {
   return be_change_idl_file_extension (idl_file_name,
                                        be_global->implementation_skel_ending (),
@@ -299,50 +312,61 @@ BE_GlobalData::be_get_implementation_skel (UTL_String *idl_file_name,
 
 const char *
 BE_GlobalData::be_get_server_template_hdr (UTL_String *idl_file_name,
-                                            int base_name_only)
+                                           bool base_name_only)
 {
   return be_change_idl_file_extension (idl_file_name,
                                        be_global->server_template_hdr_ending (),
-                                       base_name_only);
+                                       base_name_only,
+                                       false,
+                                       true);
 }
 
 const char *
 BE_GlobalData::be_get_server_skeleton (UTL_String *idl_file_name)
 {
   return be_change_idl_file_extension (idl_file_name,
-                                       be_global->server_skeleton_ending ());
+                                       be_global->server_skeleton_ending (),
+                                       false,
+                                       false,
+                                       true);
 }
 
 const char *
 BE_GlobalData::be_get_server_template_skeleton (UTL_String *idl_file_name,
-                                                int base_name_only)
+                                                bool base_name_only)
 {
   return be_change_idl_file_extension (idl_file_name,
                                        be_global->server_template_skeleton_ending (),
-                                       base_name_only);
+                                       base_name_only,
+                                       false,
+                                       true);
 }
 
 const char *
 BE_GlobalData::be_get_server_inline (UTL_String *idl_file_name,
-                                     int base_name_only)
+                                     bool base_name_only)
 {
   return be_change_idl_file_extension (idl_file_name,
                                        be_global->server_inline_ending (),
-                                       base_name_only);
+                                       base_name_only,
+                                       false,
+                                       true);
 }
 
 const char *
 BE_GlobalData::be_get_server_template_inline (UTL_String *idl_file_name,
-                                              int base_name_only)
+                                              bool base_name_only)
 {
   return be_change_idl_file_extension (idl_file_name,
                                        be_global->server_template_inline_ending (),
-                                       base_name_only);
+                                       base_name_only,
+                                       false,
+                                       true);
 }
 
 const char *
 BE_GlobalData::be_get_anyop_header (UTL_String *idl_file_name,
-                                    int base_name_only)
+                                    bool base_name_only)
 {
   return be_change_idl_file_extension (idl_file_name,
                                        be_global->anyop_header_ending (),
@@ -352,7 +376,7 @@ BE_GlobalData::be_get_anyop_header (UTL_String *idl_file_name,
 
 const char *
 BE_GlobalData::be_get_anyop_source (UTL_String *idl_file_name,
-                                    int base_name_only)
+                                    bool base_name_only)
 {
   return be_change_idl_file_extension (idl_file_name,
                                        be_global->anyop_source_ending (),
@@ -361,95 +385,95 @@ BE_GlobalData::be_get_anyop_source (UTL_String *idl_file_name,
 }
 
 const char *
-BE_GlobalData::be_get_client_hdr_fname (int base_name_only)
+BE_GlobalData::be_get_client_hdr_fname (bool base_name_only)
 {
   return be_get_client_hdr (idl_global->stripped_filename (),
                             base_name_only);
 }
 
 const char *
-BE_GlobalData::be_get_client_stub_fname ()
+BE_GlobalData::be_get_client_stub_fname (void)
 {
   return be_get_client_stub (idl_global->stripped_filename ());
 }
 
 const char *
-BE_GlobalData::be_get_client_inline_fname (int base_name_only)
+BE_GlobalData::be_get_client_inline_fname (bool base_name_only)
 {
   return be_get_client_inline (idl_global->stripped_filename (),
                                base_name_only);
 }
 
 const char *
-BE_GlobalData::be_get_server_hdr_fname (int base_name_only)
+BE_GlobalData::be_get_server_hdr_fname (bool base_name_only)
 {
   return be_get_server_hdr (idl_global->stripped_filename (),
                             base_name_only);
 }
 
 const char *
-BE_GlobalData::be_get_implementation_hdr_fname (int base_name_only)
+BE_GlobalData::be_get_implementation_hdr_fname (bool base_name_only)
 {
   return be_get_implementation_hdr (idl_global->stripped_filename (),
                                     base_name_only);
 }
 
 const char *
-BE_GlobalData::be_get_implementation_skel_fname (int base_name_only)
+BE_GlobalData::be_get_implementation_skel_fname (bool base_name_only)
 {
   return be_get_implementation_skel (idl_global->stripped_filename (),
                                      base_name_only);
 }
 
 const char *
-BE_GlobalData::be_get_server_template_hdr_fname (int base_name_only)
+BE_GlobalData::be_get_server_template_hdr_fname (bool base_name_only)
 {
   return be_get_server_template_hdr (idl_global->stripped_filename (),
                                      base_name_only);
 }
 
 const char *
-BE_GlobalData::be_get_server_skeleton_fname ()
+BE_GlobalData::be_get_server_skeleton_fname (void)
 {
   return be_get_server_skeleton (idl_global->stripped_filename ());
 }
 
 const char *
-BE_GlobalData::be_get_implementation_skeleton_fname ()
+BE_GlobalData::be_get_implementation_skeleton_fname (void)
 {
   return be_get_implementation_skel (idl_global->stripped_filename ());
 }
 
 const char *
-BE_GlobalData::be_get_server_template_skeleton_fname (int base_name_only)
+BE_GlobalData::be_get_server_template_skeleton_fname (bool base_name_only)
 {
   return be_get_server_template_skeleton (idl_global->stripped_filename (),
                                           base_name_only);
 }
 
 const char *
-BE_GlobalData::be_get_server_inline_fname (int base_name_only)
+BE_GlobalData::be_get_server_inline_fname (bool base_name_only)
 {
   return be_get_server_inline (idl_global->stripped_filename (),
                                base_name_only);
 }
 
 const char *
-BE_GlobalData::be_get_server_template_inline_fname (int base_name_only)
+BE_GlobalData::be_get_server_template_inline_fname (bool base_name_only)
 {
   return be_get_server_template_inline (idl_global->stripped_filename (),
                                         base_name_only);
 }
 
 const char *
-BE_GlobalData::be_get_anyop_source_fname (int base_name_only)
+BE_GlobalData::be_get_anyop_source_fname (bool base_name_only)
 {
   return be_get_anyop_source (idl_global->stripped_filename (),
                               base_name_only);
 }
 
 const char *
-BE_GlobalData::be_get_anyop_header_fname (int base_name_only)
+BE_GlobalData::be_get_anyop_header_fname (bool base_name_only)
 {
   return be_get_anyop_header (idl_global->stripped_filename (),
                               base_name_only);
@@ -859,6 +883,19 @@ const char*
 BE_GlobalData::output_dir (void) const
 {
   return this->output_dir_;
+}
+
+void
+BE_GlobalData::skel_output_dir (const char* s)
+{
+  delete [] this->skel_output_dir_;
+  this->skel_output_dir_ = ACE::strnew (s);
+}
+
+const char*
+BE_GlobalData::skel_output_dir (void) const
+{
+  return this->skel_output_dir_;
 }
 
 void
@@ -1799,6 +1836,44 @@ BE_GlobalData::parse_args (long &i, char **av)
                   ));
               }
           }
+        else if (av[i][2] == 'S')
+          {
+            if (av[i][3] == '\0')
+              {
+                idl_global->append_idl_flag (av[i + 1]);
+                int result = ACE_OS::mkdir (av[i + 1]);
+
+                #if !defined (__BORLANDC__)
+                  if (result != 0 && errno != EEXIST)
+                #else
+                  // The Borland RTL doesn't give EEXIST back, only EACCES in
+                  // case the directory exists, reported to Borland as QC 9495
+                  if (result != 0 && errno != EEXIST && errno != EACCES)
+                #endif
+                  {
+                    ACE_ERROR ((
+                        LM_ERROR,
+                        ACE_TEXT ("IDL: unable to create directory %s")
+                        ACE_TEXT (" specified by -oS option\n"),
+                        av[i + 1]
+                      ));
+
+                    break;
+                  }
+
+                be_global->skel_output_dir (av[i + 1]);
+                ++i;
+              }
+            else
+              {
+                ACE_ERROR ((
+                    LM_ERROR,
+                    ACE_TEXT ("IDL: I don't understand")
+                    ACE_TEXT (" the '%s' option\n"),
+                    av[i]
+                  ));
+              }
+          }
         else
           {
             ACE_ERROR ((
@@ -2524,8 +2599,13 @@ BE_GlobalData::usage (void) const
     ));
   ACE_DEBUG ((
       LM_DEBUG,
+      ACE_TEXT (" -oS <output_dir>\tOutput directory for the generated ")
+      ACE_TEXT ("skeleton files. Default is -o value or current directory\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
       ACE_TEXT (" -oA <output_dir>\tOutput directory for the generated anyop")
-      ACE_TEXT ("files. Default is current directory\n")
+      ACE_TEXT ("files. Default is -o value or current directory\n")
     ));
   ACE_DEBUG ((
       LM_DEBUG,
