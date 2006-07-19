@@ -1,3 +1,9 @@
+Wed Jul 19 08:08:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_native/native_ch.cpp:
+          Add generation for CORBA::VoidData which is a native that is used
+          in the RTScheduling library.
+
 Tue Jul 18 21:38:55 UTC 2006  Ciju John  <johnc@ociweb.com>
 
         * tao/IIOP_Acceptor.cpp:
