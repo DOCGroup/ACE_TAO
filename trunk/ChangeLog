@@ -1,3 +1,16 @@
+Wed Jul 19 23:39:05 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * bin/PythonACE/fuzz/__init__.py
+        * bin/PythonACE/fuzz/_generic_handler.py
+        * bin/PythonACE/fuzz/_mailer.py
+        * bin/PythonACE/fuzz/_singleton.py
+        * bin/PythonACE/fuzz/_warning_handler.py
+        * bin/PythonACE/fuzz/streams_include.py
+        
+          Changes necessary to support mailing (non-fatal) Fuzz errors to
+          the user that attempts a commit.  streams_include is an example
+          of a fuzz check that sends warnings instead of stopping commits.
+
 Wed Jul 19 22:46:51 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
         * ace/Basic_Types.h (ACE_INT64, ACE_UINT64):
