@@ -1,3 +1,17 @@
+Wed Jul 19 17:49:47 UTC 2006  Nanbor Wang  <nanbor (a) txcorp (d) com>
+
+        * orbsvcs/examples/FaultTolerance/RolyPoly/client.cpp: Enhanced
+          the client to use more than 2 replicas.  The limitation of using
+          2 replicas was causing the client to exit when one of the server
+          crashes.  This is due to the way ACE_TMCase handling a single
+          server as a fault.  But allowing more than 2 replicas, the 2
+          remaining servers can continue to work and thus demonstrate how
+          FT work.
+
+        * orbsvcs/examples/FaultTolerance/RolyPoly/RolyPoly_i.cpp: 
+        * orbsvcs/examples/FaultTolerance/RolyPoly/RolyPoly_i.h: 
+          Minor fixup to throw spec.
+        
 Wed Jul 19 17:07:12 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_arg_traits.cpp:
