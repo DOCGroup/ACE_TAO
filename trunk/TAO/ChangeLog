@@ -1,3 +1,25 @@
+Wed Jul 19 08:03:36 UTC 2006  Simon McQueen  <sm@prismtech.com>
+
+        * tao/CodecFactory/IOP_CodecA.h:
+        * tao/ObjRefTemplate/ObjectReferenceTemplateA.h:
+        * tao/PortableServer/PortableServerA.h:
+        * tao/RTCORBA/RTCORBAA.h:
+        * tao/RTCORBA/RTCORBAS.h:
+        * tao/RTPortableServer/RTPortableServerA.h:
+        * tao/RTPortableServer/RTPortableServer_includeA.h:
+        * tao/RTScheduling/RTSchedulerA.h:
+        * tao/RTScheduling/RTSchedulerS.h:
+
+          Added these 'empty' files. Works around problems with the IDL
+          preprocessing. This fixes bug #2549. See ticket for more.
+
+        * tests/Bug_2549_Regression/Bug_2549_Regression.mpc:
+        * tests/Bug_2549_Regression/README:
+        * tests/Bug_2549_Regression/test.cpp:
+        * tests/Bug_2549_Regression/test.idl:
+
+          Compile only regression test for the above fix.
+
 Wed Jul 19 08:08:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_native/native_ch.cpp:
