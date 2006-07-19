@@ -71,7 +71,7 @@ module bug_2124
 };
 
 // Caught a case where the #ifdef guards were different, but the
-// generated string typename was.
+// generated string typename was the same.
 module bug_2122
 {
    module One
@@ -80,7 +80,7 @@ module bug_2122
 
       interface Whatever
       {
-         void someOp( in MyString s );
+         void someOp (in MyString s);
       };
    };
 
@@ -90,7 +90,7 @@ module bug_2122
 
       interface WhoCares
       {
-         void someOp( in MyString s );
+         void someOp (in MyString s);
       };
    };
 
@@ -100,11 +100,19 @@ module bug_2122
 
       interface WhoCares
       {
-         void someOp( in MyString s );
+         void someOp (in MyString s);
       };
    };
 };
 
+// An anonymous string of the same bound will be found in
+// another IDL file not included in this one (anonymous.idl).
+// The typecode for the anonymous string should not give us
+// 'already found' link errors.
+module First
+{
+  typedef string<32> FirstString;
+};
 
 
 
