@@ -26,16 +26,24 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from 
-// be\be_codegen.cpp:627
+// be\be_codegen.cpp:683
 
-#ifndef _TAO_IDL_ORIG_IFR_COMPONENTSS_T_CPP_
-#define _TAO_IDL_ORIG_IFR_COMPONENTSS_T_CPP_
+#ifndef _TAO_IDL____ORBSVCS_ORBSVCS_IFRSERVICE_IFR_COMPONENTSS_T_CPP_
+#define _TAO_IDL____ORBSVCS_ORBSVCS_IFRSERVICE_IFR_COMPONENTSS_T_CPP_
 
-#include "orbsvcs/IFRService/IFR_ComponentsS_T.h"
+#include "IFR_ComponentsS_T.h"
 
 #if !defined (__ACE_INLINE__)
-#include "orbsvcs/IFRService/IFR_ComponentsS_T.inl"
+#include "IFR_ComponentsS_T.inl"
 #endif /* !defined INLINE */
+
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 
 #endif /* ifndef */
