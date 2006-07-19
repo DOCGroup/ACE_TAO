@@ -556,8 +556,8 @@ namespace CORBA
 #endif
 
     // Reference counting...
-    CORBA::ULong _incr_refcnt (void);
-    CORBA::ULong _decr_refcnt (void);
+    unsigned long _incr_refcnt (void);
+    unsigned long _decr_refcnt (void);
 
     /// Set the IOR flag.
     void _use_omg_ior_format (CORBA::Boolean ior);

@@ -233,9 +233,7 @@ TAO_Local_RefCounted_Object::_add_ref (void)
 void
 TAO_Local_RefCounted_Object::_remove_ref (void)
 {
-  const CORBA::ULong new_count = --this->refcount_;
-
-  if (new_count == 0)
+  if (--this->refcount_ == 0)
     delete this;
 }
 
