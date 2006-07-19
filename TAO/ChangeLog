@@ -1,3 +1,22 @@
+Wed Jul 19 12:31:50 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tao/LocalObject.cpp:
+        * tao/ORB.h:
+        * tao/ORB.i:
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.i:
+        * tao/Principal.h:
+        * tao/Principal.i:
+        * tao/Profile.h:
+        * tao/Profile.cpp:
+
+          In my change from Mon Jul 17 14:40:43 UTC 2006, I modified these
+          files to use an ACE_Atomic_Op<> with an unsigned long.  They all
+          had instances where unsigned long and CORBA::ULong were being
+          mixed which causes warnings with some 64-bit compilers.  I have
+          modified these to all use unsigned long in places where
+          CORBA::ULong was previously used.
+
 Wed Jul 19 12:17:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbscvs/orbsvcs/IFRService/*.S*.*:

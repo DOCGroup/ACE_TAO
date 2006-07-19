@@ -12,10 +12,10 @@ CORBA::is_nil (CORBA::Principal_ptr principal)
 }
 
 ACE_INLINE
-CORBA::ULong
+unsigned long
 CORBA::Principal::_decr_refcnt (void)
 {
-  const CORBA::ULong new_count = --this->refcount_;
+  unsigned long new_count = --this->refcount_;
 
   if (new_count == 0)
     delete this;
@@ -34,7 +34,7 @@ CORBA::release (CORBA::Principal_ptr principal)
 }
 
 ACE_INLINE
-CORBA::ULong
+unsigned long
 CORBA::Principal::_incr_refcnt (void)
 {
   return ++this->refcount_;
