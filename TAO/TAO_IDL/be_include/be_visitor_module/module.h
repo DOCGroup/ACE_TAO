@@ -48,6 +48,9 @@ public:
   virtual int visit_enum (be_enum *node);
   // visit an enum
 
+  virtual int visit_native (be_native *node);
+  // visit a native
+
   virtual int visit_exception (be_exception *node);
   // visit an exception
 
