@@ -26,14 +26,16 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:501
+// be\be_codegen.cpp:545
 
-#ifndef _TAO_IDL_ORIG_IFR_BASICS_T_H_
-#define _TAO_IDL_ORIG_IFR_BASICS_T_H_
+#ifndef _TAO_IDL____ORBSVCS_ORBSVCS_IFRSERVICE_IFR_BASICS_T_H_
+#define _TAO_IDL____ORBSVCS_ORBSVCS_IFRSERVICE_IFR_BASICS_T_H_
 
-#include /**/ "ace/pre.h"
+#include /**/ "ace\pre.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+
 
 // TAO_IDL - Generated from 
 // be\be_visitor_root/root_sth.cpp:116
@@ -49,33 +51,33 @@ namespace POA_CORBA
   class  Repository_tie : public Repository
   {
   public:
+    /// the T& ctor
     Repository_tie (T &t);
-    // the T& ctor
+    /// ctor taking a POA
     Repository_tie (T &t, PortableServer::POA_ptr poa);
-    // ctor taking a POA
-    Repository_tie (T *tp, ::CORBA::Boolean release = 1);
-    // ctor taking pointer and an ownership flag
+    /// ctor taking pointer and an ownership flag
+    Repository_tie (T *tp, ::CORBA::Boolean release = true);
+    /// ctor with T*, ownership flag and a POA
     Repository_tie (
         T *tp,
         PortableServer::POA_ptr poa,
-        ::CORBA::Boolean release = 1
+        ::CORBA::Boolean release = true
       );
-    // ctor with T*, ownership flag and a POA
+    /// dtor
+    
     ~Repository_tie (void);
-    // dtor
-    
     // TIE specific functions
+    /// return the underlying object
     T *_tied_object (void);
-    // return the underlying object
+    /// set the underlying object
     void _tied_object (T &obj);
-    // set the underlying object
-    void _tied_object (T *obj, ::CORBA::Boolean release = 1);
-    // set the underlying object and the ownership flag
+    /// set the underlying object and the ownership flag
+    void _tied_object (T *obj, ::CORBA::Boolean release = true);
+    /// do we own it
     ::CORBA::Boolean _is_owner (void);
-    // do we own it
-    void _is_owner ( ::CORBA::Boolean b);
-    // set the ownership
+    /// set the ownership
     
+    void _is_owner ( ::CORBA::Boolean b);
     // overridden ServantBase operations
     PortableServer::POA_ptr _default_POA (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -468,33 +470,33 @@ namespace POA_CORBA
   class  ModuleDef_tie : public ModuleDef
   {
   public:
+    /// the T& ctor
     ModuleDef_tie (T &t);
-    // the T& ctor
+    /// ctor taking a POA
     ModuleDef_tie (T &t, PortableServer::POA_ptr poa);
-    // ctor taking a POA
-    ModuleDef_tie (T *tp, ::CORBA::Boolean release = 1);
-    // ctor taking pointer and an ownership flag
+    /// ctor taking pointer and an ownership flag
+    ModuleDef_tie (T *tp, ::CORBA::Boolean release = true);
+    /// ctor with T*, ownership flag and a POA
     ModuleDef_tie (
         T *tp,
         PortableServer::POA_ptr poa,
-        ::CORBA::Boolean release = 1
+        ::CORBA::Boolean release = true
       );
-    // ctor with T*, ownership flag and a POA
+    /// dtor
+    
     ~ModuleDef_tie (void);
-    // dtor
-    
     // TIE specific functions
+    /// return the underlying object
     T *_tied_object (void);
-    // return the underlying object
+    /// set the underlying object
     void _tied_object (T &obj);
-    // set the underlying object
-    void _tied_object (T *obj, ::CORBA::Boolean release = 1);
-    // set the underlying object and the ownership flag
+    /// set the underlying object and the ownership flag
+    void _tied_object (T *obj, ::CORBA::Boolean release = true);
+    /// do we own it
     ::CORBA::Boolean _is_owner (void);
-    // do we own it
-    void _is_owner ( ::CORBA::Boolean b);
-    // set the ownership
+    /// set the ownership
     
+    void _is_owner ( ::CORBA::Boolean b);
     // overridden ServantBase operations
     PortableServer::POA_ptr _default_POA (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -912,33 +914,33 @@ namespace POA_CORBA
   class  ConstantDef_tie : public ConstantDef
   {
   public:
+    /// the T& ctor
     ConstantDef_tie (T &t);
-    // the T& ctor
+    /// ctor taking a POA
     ConstantDef_tie (T &t, PortableServer::POA_ptr poa);
-    // ctor taking a POA
-    ConstantDef_tie (T *tp, ::CORBA::Boolean release = 1);
-    // ctor taking pointer and an ownership flag
+    /// ctor taking pointer and an ownership flag
+    ConstantDef_tie (T *tp, ::CORBA::Boolean release = true);
+    /// ctor with T*, ownership flag and a POA
     ConstantDef_tie (
         T *tp,
         PortableServer::POA_ptr poa,
-        ::CORBA::Boolean release = 1
+        ::CORBA::Boolean release = true
       );
-    // ctor with T*, ownership flag and a POA
+    /// dtor
+    
     ~ConstantDef_tie (void);
-    // dtor
-    
     // TIE specific functions
+    /// return the underlying object
     T *_tied_object (void);
-    // return the underlying object
+    /// set the underlying object
     void _tied_object (T &obj);
-    // set the underlying object
-    void _tied_object (T *obj, ::CORBA::Boolean release = 1);
-    // set the underlying object and the ownership flag
+    /// set the underlying object and the ownership flag
+    void _tied_object (T *obj, ::CORBA::Boolean release = true);
+    /// do we own it
     ::CORBA::Boolean _is_owner (void);
-    // do we own it
-    void _is_owner ( ::CORBA::Boolean b);
-    // set the ownership
+    /// set the ownership
     
+    void _is_owner ( ::CORBA::Boolean b);
     // overridden ServantBase operations
     PortableServer::POA_ptr _default_POA (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -1150,33 +1152,33 @@ namespace POA_CORBA
   class  StructDef_tie : public StructDef
   {
   public:
+    /// the T& ctor
     StructDef_tie (T &t);
-    // the T& ctor
+    /// ctor taking a POA
     StructDef_tie (T &t, PortableServer::POA_ptr poa);
-    // ctor taking a POA
-    StructDef_tie (T *tp, ::CORBA::Boolean release = 1);
-    // ctor taking pointer and an ownership flag
+    /// ctor taking pointer and an ownership flag
+    StructDef_tie (T *tp, ::CORBA::Boolean release = true);
+    /// ctor with T*, ownership flag and a POA
     StructDef_tie (
         T *tp,
         PortableServer::POA_ptr poa,
-        ::CORBA::Boolean release = 1
+        ::CORBA::Boolean release = true
       );
-    // ctor with T*, ownership flag and a POA
+    /// dtor
+    
     ~StructDef_tie (void);
-    // dtor
-    
     // TIE specific functions
+    /// return the underlying object
     T *_tied_object (void);
-    // return the underlying object
+    /// set the underlying object
     void _tied_object (T &obj);
-    // set the underlying object
-    void _tied_object (T *obj, ::CORBA::Boolean release = 1);
-    // set the underlying object and the ownership flag
+    /// set the underlying object and the ownership flag
+    void _tied_object (T *obj, ::CORBA::Boolean release = true);
+    /// do we own it
     ::CORBA::Boolean _is_owner (void);
-    // do we own it
-    void _is_owner ( ::CORBA::Boolean b);
-    // set the ownership
+    /// set the ownership
     
+    void _is_owner ( ::CORBA::Boolean b);
     // overridden ServantBase operations
     PortableServer::POA_ptr _default_POA (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -1625,33 +1627,33 @@ namespace POA_CORBA
   class  UnionDef_tie : public UnionDef
   {
   public:
+    /// the T& ctor
     UnionDef_tie (T &t);
-    // the T& ctor
+    /// ctor taking a POA
     UnionDef_tie (T &t, PortableServer::POA_ptr poa);
-    // ctor taking a POA
-    UnionDef_tie (T *tp, ::CORBA::Boolean release = 1);
-    // ctor taking pointer and an ownership flag
+    /// ctor taking pointer and an ownership flag
+    UnionDef_tie (T *tp, ::CORBA::Boolean release = true);
+    /// ctor with T*, ownership flag and a POA
     UnionDef_tie (
         T *tp,
         PortableServer::POA_ptr poa,
-        ::CORBA::Boolean release = 1
+        ::CORBA::Boolean release = true
       );
-    // ctor with T*, ownership flag and a POA
+    /// dtor
+    
     ~UnionDef_tie (void);
-    // dtor
-    
     // TIE specific functions
+    /// return the underlying object
     T *_tied_object (void);
-    // return the underlying object
+    /// set the underlying object
     void _tied_object (T &obj);
-    // set the underlying object
-    void _tied_object (T *obj, ::CORBA::Boolean release = 1);
-    // set the underlying object and the ownership flag
+    /// set the underlying object and the ownership flag
+    void _tied_object (T *obj, ::CORBA::Boolean release = true);
+    /// do we own it
     ::CORBA::Boolean _is_owner (void);
-    // do we own it
-    void _is_owner ( ::CORBA::Boolean b);
-    // set the ownership
+    /// set the ownership
     
+    void _is_owner ( ::CORBA::Boolean b);
     // overridden ServantBase operations
     PortableServer::POA_ptr _default_POA (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -2131,33 +2133,33 @@ namespace POA_CORBA
   class  EnumDef_tie : public EnumDef
   {
   public:
+    /// the T& ctor
     EnumDef_tie (T &t);
-    // the T& ctor
+    /// ctor taking a POA
     EnumDef_tie (T &t, PortableServer::POA_ptr poa);
-    // ctor taking a POA
-    EnumDef_tie (T *tp, ::CORBA::Boolean release = 1);
-    // ctor taking pointer and an ownership flag
+    /// ctor taking pointer and an ownership flag
+    EnumDef_tie (T *tp, ::CORBA::Boolean release = true);
+    /// ctor with T*, ownership flag and a POA
     EnumDef_tie (
         T *tp,
         PortableServer::POA_ptr poa,
-        ::CORBA::Boolean release = 1
+        ::CORBA::Boolean release = true
       );
-    // ctor with T*, ownership flag and a POA
+    /// dtor
+    
     ~EnumDef_tie (void);
-    // dtor
-    
     // TIE specific functions
+    /// return the underlying object
     T *_tied_object (void);
-    // return the underlying object
+    /// set the underlying object
     void _tied_object (T &obj);
-    // set the underlying object
-    void _tied_object (T *obj, ::CORBA::Boolean release = 1);
-    // set the underlying object and the ownership flag
+    /// set the underlying object and the ownership flag
+    void _tied_object (T *obj, ::CORBA::Boolean release = true);
+    /// do we own it
     ::CORBA::Boolean _is_owner (void);
-    // do we own it
-    void _is_owner ( ::CORBA::Boolean b);
-    // set the ownership
+    /// set the ownership
     
+    void _is_owner ( ::CORBA::Boolean b);
     // overridden ServantBase operations
     PortableServer::POA_ptr _default_POA (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -2348,33 +2350,33 @@ namespace POA_CORBA
   class  AliasDef_tie : public AliasDef
   {
   public:
+    /// the T& ctor
     AliasDef_tie (T &t);
-    // the T& ctor
+    /// ctor taking a POA
     AliasDef_tie (T &t, PortableServer::POA_ptr poa);
-    // ctor taking a POA
-    AliasDef_tie (T *tp, ::CORBA::Boolean release = 1);
-    // ctor taking pointer and an ownership flag
+    /// ctor taking pointer and an ownership flag
+    AliasDef_tie (T *tp, ::CORBA::Boolean release = true);
+    /// ctor with T*, ownership flag and a POA
     AliasDef_tie (
         T *tp,
         PortableServer::POA_ptr poa,
-        ::CORBA::Boolean release = 1
+        ::CORBA::Boolean release = true
       );
-    // ctor with T*, ownership flag and a POA
+    /// dtor
+    
     ~AliasDef_tie (void);
-    // dtor
-    
     // TIE specific functions
+    /// return the underlying object
     T *_tied_object (void);
-    // return the underlying object
+    /// set the underlying object
     void _tied_object (T &obj);
-    // set the underlying object
-    void _tied_object (T *obj, ::CORBA::Boolean release = 1);
-    // set the underlying object and the ownership flag
+    /// set the underlying object and the ownership flag
+    void _tied_object (T *obj, ::CORBA::Boolean release = true);
+    /// do we own it
     ::CORBA::Boolean _is_owner (void);
-    // do we own it
-    void _is_owner ( ::CORBA::Boolean b);
-    // set the ownership
+    /// set the ownership
     
+    void _is_owner ( ::CORBA::Boolean b);
     // overridden ServantBase operations
     PortableServer::POA_ptr _default_POA (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -2565,33 +2567,33 @@ namespace POA_CORBA
   class  NativeDef_tie : public NativeDef
   {
   public:
+    /// the T& ctor
     NativeDef_tie (T &t);
-    // the T& ctor
+    /// ctor taking a POA
     NativeDef_tie (T &t, PortableServer::POA_ptr poa);
-    // ctor taking a POA
-    NativeDef_tie (T *tp, ::CORBA::Boolean release = 1);
-    // ctor taking pointer and an ownership flag
+    /// ctor taking pointer and an ownership flag
+    NativeDef_tie (T *tp, ::CORBA::Boolean release = true);
+    /// ctor with T*, ownership flag and a POA
     NativeDef_tie (
         T *tp,
         PortableServer::POA_ptr poa,
-        ::CORBA::Boolean release = 1
+        ::CORBA::Boolean release = true
       );
-    // ctor with T*, ownership flag and a POA
+    /// dtor
+    
     ~NativeDef_tie (void);
-    // dtor
-    
     // TIE specific functions
+    /// return the underlying object
     T *_tied_object (void);
-    // return the underlying object
+    /// set the underlying object
     void _tied_object (T &obj);
-    // set the underlying object
-    void _tied_object (T *obj, ::CORBA::Boolean release = 1);
-    // set the underlying object and the ownership flag
+    /// set the underlying object and the ownership flag
+    void _tied_object (T *obj, ::CORBA::Boolean release = true);
+    /// do we own it
     ::CORBA::Boolean _is_owner (void);
-    // do we own it
-    void _is_owner ( ::CORBA::Boolean b);
-    // set the ownership
+    /// set the ownership
     
+    void _is_owner ( ::CORBA::Boolean b);
     // overridden ServantBase operations
     PortableServer::POA_ptr _default_POA (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -2761,33 +2763,33 @@ namespace POA_CORBA
   class  PrimitiveDef_tie : public PrimitiveDef
   {
   public:
+    /// the T& ctor
     PrimitiveDef_tie (T &t);
-    // the T& ctor
+    /// ctor taking a POA
     PrimitiveDef_tie (T &t, PortableServer::POA_ptr poa);
-    // ctor taking a POA
-    PrimitiveDef_tie (T *tp, ::CORBA::Boolean release = 1);
-    // ctor taking pointer and an ownership flag
+    /// ctor taking pointer and an ownership flag
+    PrimitiveDef_tie (T *tp, ::CORBA::Boolean release = true);
+    /// ctor with T*, ownership flag and a POA
     PrimitiveDef_tie (
         T *tp,
         PortableServer::POA_ptr poa,
-        ::CORBA::Boolean release = 1
+        ::CORBA::Boolean release = true
       );
-    // ctor with T*, ownership flag and a POA
+    /// dtor
+    
     ~PrimitiveDef_tie (void);
-    // dtor
-    
     // TIE specific functions
+    /// return the underlying object
     T *_tied_object (void);
-    // return the underlying object
+    /// set the underlying object
     void _tied_object (T &obj);
-    // set the underlying object
-    void _tied_object (T *obj, ::CORBA::Boolean release = 1);
-    // set the underlying object and the ownership flag
+    /// set the underlying object and the ownership flag
+    void _tied_object (T *obj, ::CORBA::Boolean release = true);
+    /// do we own it
     ::CORBA::Boolean _is_owner (void);
-    // do we own it
-    void _is_owner ( ::CORBA::Boolean b);
-    // set the ownership
+    /// set the ownership
     
+    void _is_owner ( ::CORBA::Boolean b);
     // overridden ServantBase operations
     PortableServer::POA_ptr _default_POA (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -2851,33 +2853,33 @@ namespace POA_CORBA
   class  StringDef_tie : public StringDef
   {
   public:
+    /// the T& ctor
     StringDef_tie (T &t);
-    // the T& ctor
+    /// ctor taking a POA
     StringDef_tie (T &t, PortableServer::POA_ptr poa);
-    // ctor taking a POA
-    StringDef_tie (T *tp, ::CORBA::Boolean release = 1);
-    // ctor taking pointer and an ownership flag
+    /// ctor taking pointer and an ownership flag
+    StringDef_tie (T *tp, ::CORBA::Boolean release = true);
+    /// ctor with T*, ownership flag and a POA
     StringDef_tie (
         T *tp,
         PortableServer::POA_ptr poa,
-        ::CORBA::Boolean release = 1
+        ::CORBA::Boolean release = true
       );
-    // ctor with T*, ownership flag and a POA
+    /// dtor
+    
     ~StringDef_tie (void);
-    // dtor
-    
     // TIE specific functions
+    /// return the underlying object
     T *_tied_object (void);
-    // return the underlying object
+    /// set the underlying object
     void _tied_object (T &obj);
-    // set the underlying object
-    void _tied_object (T *obj, ::CORBA::Boolean release = 1);
-    // set the underlying object and the ownership flag
+    /// set the underlying object and the ownership flag
+    void _tied_object (T *obj, ::CORBA::Boolean release = true);
+    /// do we own it
     ::CORBA::Boolean _is_owner (void);
-    // do we own it
-    void _is_owner ( ::CORBA::Boolean b);
-    // set the ownership
+    /// set the ownership
     
+    void _is_owner ( ::CORBA::Boolean b);
     // overridden ServantBase operations
     PortableServer::POA_ptr _default_POA (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -2952,33 +2954,33 @@ namespace POA_CORBA
   class  WstringDef_tie : public WstringDef
   {
   public:
+    /// the T& ctor
     WstringDef_tie (T &t);
-    // the T& ctor
+    /// ctor taking a POA
     WstringDef_tie (T &t, PortableServer::POA_ptr poa);
-    // ctor taking a POA
-    WstringDef_tie (T *tp, ::CORBA::Boolean release = 1);
-    // ctor taking pointer and an ownership flag
+    /// ctor taking pointer and an ownership flag
+    WstringDef_tie (T *tp, ::CORBA::Boolean release = true);
+    /// ctor with T*, ownership flag and a POA
     WstringDef_tie (
         T *tp,
         PortableServer::POA_ptr poa,
-        ::CORBA::Boolean release = 1
+        ::CORBA::Boolean release = true
       );
-    // ctor with T*, ownership flag and a POA
+    /// dtor
+    
     ~WstringDef_tie (void);
-    // dtor
-    
     // TIE specific functions
+    /// return the underlying object
     T *_tied_object (void);
-    // return the underlying object
+    /// set the underlying object
     void _tied_object (T &obj);
-    // set the underlying object
-    void _tied_object (T *obj, ::CORBA::Boolean release = 1);
-    // set the underlying object and the ownership flag
+    /// set the underlying object and the ownership flag
+    void _tied_object (T *obj, ::CORBA::Boolean release = true);
+    /// do we own it
     ::CORBA::Boolean _is_owner (void);
-    // do we own it
-    void _is_owner ( ::CORBA::Boolean b);
-    // set the ownership
+    /// set the ownership
     
+    void _is_owner ( ::CORBA::Boolean b);
     // overridden ServantBase operations
     PortableServer::POA_ptr _default_POA (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -3053,33 +3055,33 @@ namespace POA_CORBA
   class  SequenceDef_tie : public SequenceDef
   {
   public:
+    /// the T& ctor
     SequenceDef_tie (T &t);
-    // the T& ctor
+    /// ctor taking a POA
     SequenceDef_tie (T &t, PortableServer::POA_ptr poa);
-    // ctor taking a POA
-    SequenceDef_tie (T *tp, ::CORBA::Boolean release = 1);
-    // ctor taking pointer and an ownership flag
+    /// ctor taking pointer and an ownership flag
+    SequenceDef_tie (T *tp, ::CORBA::Boolean release = true);
+    /// ctor with T*, ownership flag and a POA
     SequenceDef_tie (
         T *tp,
         PortableServer::POA_ptr poa,
-        ::CORBA::Boolean release = 1
+        ::CORBA::Boolean release = true
       );
-    // ctor with T*, ownership flag and a POA
+    /// dtor
+    
     ~SequenceDef_tie (void);
-    // dtor
-    
     // TIE specific functions
+    /// return the underlying object
     T *_tied_object (void);
-    // return the underlying object
+    /// set the underlying object
     void _tied_object (T &obj);
-    // set the underlying object
-    void _tied_object (T *obj, ::CORBA::Boolean release = 1);
-    // set the underlying object and the ownership flag
+    /// set the underlying object and the ownership flag
+    void _tied_object (T *obj, ::CORBA::Boolean release = true);
+    /// do we own it
     ::CORBA::Boolean _is_owner (void);
-    // do we own it
-    void _is_owner ( ::CORBA::Boolean b);
-    // set the ownership
+    /// set the ownership
     
+    void _is_owner ( ::CORBA::Boolean b);
     // overridden ServantBase operations
     PortableServer::POA_ptr _default_POA (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -3185,33 +3187,33 @@ namespace POA_CORBA
   class  ArrayDef_tie : public ArrayDef
   {
   public:
+    /// the T& ctor
     ArrayDef_tie (T &t);
-    // the T& ctor
+    /// ctor taking a POA
     ArrayDef_tie (T &t, PortableServer::POA_ptr poa);
-    // ctor taking a POA
-    ArrayDef_tie (T *tp, ::CORBA::Boolean release = 1);
-    // ctor taking pointer and an ownership flag
+    /// ctor taking pointer and an ownership flag
+    ArrayDef_tie (T *tp, ::CORBA::Boolean release = true);
+    /// ctor with T*, ownership flag and a POA
     ArrayDef_tie (
         T *tp,
         PortableServer::POA_ptr poa,
-        ::CORBA::Boolean release = 1
+        ::CORBA::Boolean release = true
       );
-    // ctor with T*, ownership flag and a POA
+    /// dtor
+    
     ~ArrayDef_tie (void);
-    // dtor
-    
     // TIE specific functions
+    /// return the underlying object
     T *_tied_object (void);
-    // return the underlying object
+    /// set the underlying object
     void _tied_object (T &obj);
-    // set the underlying object
-    void _tied_object (T *obj, ::CORBA::Boolean release = 1);
-    // set the underlying object and the ownership flag
+    /// set the underlying object and the ownership flag
+    void _tied_object (T *obj, ::CORBA::Boolean release = true);
+    /// do we own it
     ::CORBA::Boolean _is_owner (void);
-    // do we own it
-    void _is_owner ( ::CORBA::Boolean b);
-    // set the ownership
+    /// set the ownership
     
+    void _is_owner ( ::CORBA::Boolean b);
     // overridden ServantBase operations
     PortableServer::POA_ptr _default_POA (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -3317,33 +3319,33 @@ namespace POA_CORBA
   class  ExceptionDef_tie : public ExceptionDef
   {
   public:
+    /// the T& ctor
     ExceptionDef_tie (T &t);
-    // the T& ctor
+    /// ctor taking a POA
     ExceptionDef_tie (T &t, PortableServer::POA_ptr poa);
-    // ctor taking a POA
-    ExceptionDef_tie (T *tp, ::CORBA::Boolean release = 1);
-    // ctor taking pointer and an ownership flag
+    /// ctor taking pointer and an ownership flag
+    ExceptionDef_tie (T *tp, ::CORBA::Boolean release = true);
+    /// ctor with T*, ownership flag and a POA
     ExceptionDef_tie (
         T *tp,
         PortableServer::POA_ptr poa,
-        ::CORBA::Boolean release = 1
+        ::CORBA::Boolean release = true
       );
-    // ctor with T*, ownership flag and a POA
+    /// dtor
+    
     ~ExceptionDef_tie (void);
-    // dtor
-    
     // TIE specific functions
+    /// return the underlying object
     T *_tied_object (void);
-    // return the underlying object
+    /// set the underlying object
     void _tied_object (T &obj);
-    // set the underlying object
-    void _tied_object (T *obj, ::CORBA::Boolean release = 1);
-    // set the underlying object and the ownership flag
+    /// set the underlying object and the ownership flag
+    void _tied_object (T *obj, ::CORBA::Boolean release = true);
+    /// do we own it
     ::CORBA::Boolean _is_owner (void);
-    // do we own it
-    void _is_owner ( ::CORBA::Boolean b);
-    // set the ownership
+    /// set the ownership
     
+    void _is_owner ( ::CORBA::Boolean b);
     // overridden ServantBase operations
     PortableServer::POA_ptr _default_POA (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -3792,33 +3794,33 @@ namespace POA_CORBA
   class  AttributeDef_tie : public AttributeDef
   {
   public:
+    /// the T& ctor
     AttributeDef_tie (T &t);
-    // the T& ctor
+    /// ctor taking a POA
     AttributeDef_tie (T &t, PortableServer::POA_ptr poa);
-    // ctor taking a POA
-    AttributeDef_tie (T *tp, ::CORBA::Boolean release = 1);
-    // ctor taking pointer and an ownership flag
+    /// ctor taking pointer and an ownership flag
+    AttributeDef_tie (T *tp, ::CORBA::Boolean release = true);
+    /// ctor with T*, ownership flag and a POA
     AttributeDef_tie (
         T *tp,
         PortableServer::POA_ptr poa,
-        ::CORBA::Boolean release = 1
+        ::CORBA::Boolean release = true
       );
-    // ctor with T*, ownership flag and a POA
+    /// dtor
+    
     ~AttributeDef_tie (void);
-    // dtor
-    
     // TIE specific functions
+    /// return the underlying object
     T *_tied_object (void);
-    // return the underlying object
+    /// set the underlying object
     void _tied_object (T &obj);
-    // set the underlying object
-    void _tied_object (T *obj, ::CORBA::Boolean release = 1);
-    // set the underlying object and the ownership flag
+    /// set the underlying object and the ownership flag
+    void _tied_object (T *obj, ::CORBA::Boolean release = true);
+    /// do we own it
     ::CORBA::Boolean _is_owner (void);
-    // do we own it
-    void _is_owner ( ::CORBA::Boolean b);
-    // set the ownership
+    /// set the ownership
     
+    void _is_owner ( ::CORBA::Boolean b);
     // overridden ServantBase operations
     PortableServer::POA_ptr _default_POA (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -4030,33 +4032,33 @@ namespace POA_CORBA
   class  ExtAttributeDef_tie : public ExtAttributeDef
   {
   public:
+    /// the T& ctor
     ExtAttributeDef_tie (T &t);
-    // the T& ctor
+    /// ctor taking a POA
     ExtAttributeDef_tie (T &t, PortableServer::POA_ptr poa);
-    // ctor taking a POA
-    ExtAttributeDef_tie (T *tp, ::CORBA::Boolean release = 1);
-    // ctor taking pointer and an ownership flag
+    /// ctor taking pointer and an ownership flag
+    ExtAttributeDef_tie (T *tp, ::CORBA::Boolean release = true);
+    /// ctor with T*, ownership flag and a POA
     ExtAttributeDef_tie (
         T *tp,
         PortableServer::POA_ptr poa,
-        ::CORBA::Boolean release = 1
+        ::CORBA::Boolean release = true
       );
-    // ctor with T*, ownership flag and a POA
+    /// dtor
+    
     ~ExtAttributeDef_tie (void);
-    // dtor
-    
     // TIE specific functions
+    /// return the underlying object
     T *_tied_object (void);
-    // return the underlying object
+    /// set the underlying object
     void _tied_object (T &obj);
-    // set the underlying object
-    void _tied_object (T *obj, ::CORBA::Boolean release = 1);
-    // set the underlying object and the ownership flag
+    /// set the underlying object and the ownership flag
+    void _tied_object (T *obj, ::CORBA::Boolean release = true);
+    /// do we own it
     ::CORBA::Boolean _is_owner (void);
-    // do we own it
-    void _is_owner ( ::CORBA::Boolean b);
-    // set the ownership
+    /// set the ownership
     
+    void _is_owner ( ::CORBA::Boolean b);
     // overridden ServantBase operations
     PortableServer::POA_ptr _default_POA (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -4320,33 +4322,33 @@ namespace POA_CORBA
   class  OperationDef_tie : public OperationDef
   {
   public:
+    /// the T& ctor
     OperationDef_tie (T &t);
-    // the T& ctor
+    /// ctor taking a POA
     OperationDef_tie (T &t, PortableServer::POA_ptr poa);
-    // ctor taking a POA
-    OperationDef_tie (T *tp, ::CORBA::Boolean release = 1);
-    // ctor taking pointer and an ownership flag
+    /// ctor taking pointer and an ownership flag
+    OperationDef_tie (T *tp, ::CORBA::Boolean release = true);
+    /// ctor with T*, ownership flag and a POA
     OperationDef_tie (
         T *tp,
         PortableServer::POA_ptr poa,
-        ::CORBA::Boolean release = 1
+        ::CORBA::Boolean release = true
       );
-    // ctor with T*, ownership flag and a POA
+    /// dtor
+    
     ~OperationDef_tie (void);
-    // dtor
-    
     // TIE specific functions
+    /// return the underlying object
     T *_tied_object (void);
-    // return the underlying object
+    /// set the underlying object
     void _tied_object (T &obj);
-    // set the underlying object
-    void _tied_object (T *obj, ::CORBA::Boolean release = 1);
-    // set the underlying object and the ownership flag
+    /// set the underlying object and the ownership flag
+    void _tied_object (T *obj, ::CORBA::Boolean release = true);
+    /// do we own it
     ::CORBA::Boolean _is_owner (void);
-    // do we own it
-    void _is_owner ( ::CORBA::Boolean b);
-    // set the ownership
+    /// set the ownership
     
+    void _is_owner ( ::CORBA::Boolean b);
     // overridden ServantBase operations
     PortableServer::POA_ptr _default_POA (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -4621,33 +4623,33 @@ namespace POA_CORBA
   class  InterfaceDef_tie : public InterfaceDef
   {
   public:
+    /// the T& ctor
     InterfaceDef_tie (T &t);
-    // the T& ctor
+    /// ctor taking a POA
     InterfaceDef_tie (T &t, PortableServer::POA_ptr poa);
-    // ctor taking a POA
-    InterfaceDef_tie (T *tp, ::CORBA::Boolean release = 1);
-    // ctor taking pointer and an ownership flag
+    /// ctor taking pointer and an ownership flag
+    InterfaceDef_tie (T *tp, ::CORBA::Boolean release = true);
+    /// ctor with T*, ownership flag and a POA
     InterfaceDef_tie (
         T *tp,
         PortableServer::POA_ptr poa,
-        ::CORBA::Boolean release = 1
+        ::CORBA::Boolean release = true
       );
-    // ctor with T*, ownership flag and a POA
+    /// dtor
+    
     ~InterfaceDef_tie (void);
-    // dtor
-    
     // TIE specific functions
+    /// return the underlying object
     T *_tied_object (void);
-    // return the underlying object
+    /// set the underlying object
     void _tied_object (T &obj);
-    // set the underlying object
-    void _tied_object (T *obj, ::CORBA::Boolean release = 1);
-    // set the underlying object and the ownership flag
+    /// set the underlying object and the ownership flag
+    void _tied_object (T *obj, ::CORBA::Boolean release = true);
+    /// do we own it
     ::CORBA::Boolean _is_owner (void);
-    // do we own it
-    void _is_owner ( ::CORBA::Boolean b);
-    // set the ownership
+    /// set the ownership
     
+    void _is_owner ( ::CORBA::Boolean b);
     // overridden ServantBase operations
     PortableServer::POA_ptr _default_POA (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -5150,33 +5152,33 @@ namespace POA_CORBA
   class  InterfaceAttrExtension_tie : public InterfaceAttrExtension
   {
   public:
+    /// the T& ctor
     InterfaceAttrExtension_tie (T &t);
-    // the T& ctor
+    /// ctor taking a POA
     InterfaceAttrExtension_tie (T &t, PortableServer::POA_ptr poa);
-    // ctor taking a POA
-    InterfaceAttrExtension_tie (T *tp, ::CORBA::Boolean release = 1);
-    // ctor taking pointer and an ownership flag
+    /// ctor taking pointer and an ownership flag
+    InterfaceAttrExtension_tie (T *tp, ::CORBA::Boolean release = true);
+    /// ctor with T*, ownership flag and a POA
     InterfaceAttrExtension_tie (
         T *tp,
         PortableServer::POA_ptr poa,
-        ::CORBA::Boolean release = 1
+        ::CORBA::Boolean release = true
       );
-    // ctor with T*, ownership flag and a POA
+    /// dtor
+    
     ~InterfaceAttrExtension_tie (void);
-    // dtor
-    
     // TIE specific functions
+    /// return the underlying object
     T *_tied_object (void);
-    // return the underlying object
+    /// set the underlying object
     void _tied_object (T &obj);
-    // set the underlying object
-    void _tied_object (T *obj, ::CORBA::Boolean release = 1);
-    // set the underlying object and the ownership flag
+    /// set the underlying object and the ownership flag
+    void _tied_object (T *obj, ::CORBA::Boolean release = true);
+    /// do we own it
     ::CORBA::Boolean _is_owner (void);
-    // do we own it
-    void _is_owner ( ::CORBA::Boolean b);
-    // set the ownership
+    /// set the ownership
     
+    void _is_owner ( ::CORBA::Boolean b);
     // overridden ServantBase operations
     PortableServer::POA_ptr _default_POA (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -5227,33 +5229,33 @@ namespace POA_CORBA
   class  ExtInterfaceDef_tie : public ExtInterfaceDef
   {
   public:
+    /// the T& ctor
     ExtInterfaceDef_tie (T &t);
-    // the T& ctor
+    /// ctor taking a POA
     ExtInterfaceDef_tie (T &t, PortableServer::POA_ptr poa);
-    // ctor taking a POA
-    ExtInterfaceDef_tie (T *tp, ::CORBA::Boolean release = 1);
-    // ctor taking pointer and an ownership flag
+    /// ctor taking pointer and an ownership flag
+    ExtInterfaceDef_tie (T *tp, ::CORBA::Boolean release = true);
+    /// ctor with T*, ownership flag and a POA
     ExtInterfaceDef_tie (
         T *tp,
         PortableServer::POA_ptr poa,
-        ::CORBA::Boolean release = 1
+        ::CORBA::Boolean release = true
       );
-    // ctor with T*, ownership flag and a POA
+    /// dtor
+    
     ~ExtInterfaceDef_tie (void);
-    // dtor
-    
     // TIE specific functions
+    /// return the underlying object
     T *_tied_object (void);
-    // return the underlying object
+    /// set the underlying object
     void _tied_object (T &obj);
-    // set the underlying object
-    void _tied_object (T *obj, ::CORBA::Boolean release = 1);
-    // set the underlying object and the ownership flag
+    /// set the underlying object and the ownership flag
+    void _tied_object (T *obj, ::CORBA::Boolean release = true);
+    /// do we own it
     ::CORBA::Boolean _is_owner (void);
-    // do we own it
-    void _is_owner ( ::CORBA::Boolean b);
-    // set the ownership
+    /// set the ownership
     
+    void _is_owner ( ::CORBA::Boolean b);
     // overridden ServantBase operations
     PortableServer::POA_ptr _default_POA (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -5783,33 +5785,33 @@ namespace POA_CORBA
   class  AbstractInterfaceDef_tie : public AbstractInterfaceDef
   {
   public:
+    /// the T& ctor
     AbstractInterfaceDef_tie (T &t);
-    // the T& ctor
+    /// ctor taking a POA
     AbstractInterfaceDef_tie (T &t, PortableServer::POA_ptr poa);
-    // ctor taking a POA
-    AbstractInterfaceDef_tie (T *tp, ::CORBA::Boolean release = 1);
-    // ctor taking pointer and an ownership flag
+    /// ctor taking pointer and an ownership flag
+    AbstractInterfaceDef_tie (T *tp, ::CORBA::Boolean release = true);
+    /// ctor with T*, ownership flag and a POA
     AbstractInterfaceDef_tie (
         T *tp,
         PortableServer::POA_ptr poa,
-        ::CORBA::Boolean release = 1
+        ::CORBA::Boolean release = true
       );
-    // ctor with T*, ownership flag and a POA
+    /// dtor
+    
     ~AbstractInterfaceDef_tie (void);
-    // dtor
-    
     // TIE specific functions
+    /// return the underlying object
     T *_tied_object (void);
-    // return the underlying object
+    /// set the underlying object
     void _tied_object (T &obj);
-    // set the underlying object
-    void _tied_object (T *obj, ::CORBA::Boolean release = 1);
-    // set the underlying object and the ownership flag
+    /// set the underlying object and the ownership flag
+    void _tied_object (T *obj, ::CORBA::Boolean release = true);
+    /// do we own it
     ::CORBA::Boolean _is_owner (void);
-    // do we own it
-    void _is_owner ( ::CORBA::Boolean b);
-    // set the ownership
+    /// set the ownership
     
+    void _is_owner ( ::CORBA::Boolean b);
     // overridden ServantBase operations
     PortableServer::POA_ptr _default_POA (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -6312,33 +6314,33 @@ namespace POA_CORBA
   class  ExtAbstractInterfaceDef_tie : public ExtAbstractInterfaceDef
   {
   public:
+    /// the T& ctor
     ExtAbstractInterfaceDef_tie (T &t);
-    // the T& ctor
+    /// ctor taking a POA
     ExtAbstractInterfaceDef_tie (T &t, PortableServer::POA_ptr poa);
-    // ctor taking a POA
-    ExtAbstractInterfaceDef_tie (T *tp, ::CORBA::Boolean release = 1);
-    // ctor taking pointer and an ownership flag
+    /// ctor taking pointer and an ownership flag
+    ExtAbstractInterfaceDef_tie (T *tp, ::CORBA::Boolean release = true);
+    /// ctor with T*, ownership flag and a POA
     ExtAbstractInterfaceDef_tie (
         T *tp,
         PortableServer::POA_ptr poa,
-        ::CORBA::Boolean release = 1
+        ::CORBA::Boolean release = true
       );
-    // ctor with T*, ownership flag and a POA
+    /// dtor
+    
     ~ExtAbstractInterfaceDef_tie (void);
-    // dtor
-    
     // TIE specific functions
+    /// return the underlying object
     T *_tied_object (void);
-    // return the underlying object
+    /// set the underlying object
     void _tied_object (T &obj);
-    // set the underlying object
-    void _tied_object (T *obj, ::CORBA::Boolean release = 1);
-    // set the underlying object and the ownership flag
+    /// set the underlying object and the ownership flag
+    void _tied_object (T *obj, ::CORBA::Boolean release = true);
+    /// do we own it
     ::CORBA::Boolean _is_owner (void);
-    // do we own it
-    void _is_owner ( ::CORBA::Boolean b);
-    // set the ownership
+    /// set the ownership
     
+    void _is_owner ( ::CORBA::Boolean b);
     // overridden ServantBase operations
     PortableServer::POA_ptr _default_POA (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -6868,33 +6870,33 @@ namespace POA_CORBA
   class  LocalInterfaceDef_tie : public LocalInterfaceDef
   {
   public:
+    /// the T& ctor
     LocalInterfaceDef_tie (T &t);
-    // the T& ctor
+    /// ctor taking a POA
     LocalInterfaceDef_tie (T &t, PortableServer::POA_ptr poa);
-    // ctor taking a POA
-    LocalInterfaceDef_tie (T *tp, ::CORBA::Boolean release = 1);
-    // ctor taking pointer and an ownership flag
+    /// ctor taking pointer and an ownership flag
+    LocalInterfaceDef_tie (T *tp, ::CORBA::Boolean release = true);
+    /// ctor with T*, ownership flag and a POA
     LocalInterfaceDef_tie (
         T *tp,
         PortableServer::POA_ptr poa,
-        ::CORBA::Boolean release = 1
+        ::CORBA::Boolean release = true
       );
-    // ctor with T*, ownership flag and a POA
+    /// dtor
+    
     ~LocalInterfaceDef_tie (void);
-    // dtor
-    
     // TIE specific functions
+    /// return the underlying object
     T *_tied_object (void);
-    // return the underlying object
+    /// set the underlying object
     void _tied_object (T &obj);
-    // set the underlying object
-    void _tied_object (T *obj, ::CORBA::Boolean release = 1);
-    // set the underlying object and the ownership flag
+    /// set the underlying object and the ownership flag
+    void _tied_object (T *obj, ::CORBA::Boolean release = true);
+    /// do we own it
     ::CORBA::Boolean _is_owner (void);
-    // do we own it
-    void _is_owner ( ::CORBA::Boolean b);
-    // set the ownership
+    /// set the ownership
     
+    void _is_owner ( ::CORBA::Boolean b);
     // overridden ServantBase operations
     PortableServer::POA_ptr _default_POA (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -7397,33 +7399,33 @@ namespace POA_CORBA
   class  ExtLocalInterfaceDef_tie : public ExtLocalInterfaceDef
   {
   public:
+    /// the T& ctor
     ExtLocalInterfaceDef_tie (T &t);
-    // the T& ctor
+    /// ctor taking a POA
     ExtLocalInterfaceDef_tie (T &t, PortableServer::POA_ptr poa);
-    // ctor taking a POA
-    ExtLocalInterfaceDef_tie (T *tp, ::CORBA::Boolean release = 1);
-    // ctor taking pointer and an ownership flag
+    /// ctor taking pointer and an ownership flag
+    ExtLocalInterfaceDef_tie (T *tp, ::CORBA::Boolean release = true);
+    /// ctor with T*, ownership flag and a POA
     ExtLocalInterfaceDef_tie (
         T *tp,
         PortableServer::POA_ptr poa,
-        ::CORBA::Boolean release = 1
+        ::CORBA::Boolean release = true
       );
-    // ctor with T*, ownership flag and a POA
+    /// dtor
+    
     ~ExtLocalInterfaceDef_tie (void);
-    // dtor
-    
     // TIE specific functions
+    /// return the underlying object
     T *_tied_object (void);
-    // return the underlying object
+    /// set the underlying object
     void _tied_object (T &obj);
-    // set the underlying object
-    void _tied_object (T *obj, ::CORBA::Boolean release = 1);
-    // set the underlying object and the ownership flag
+    /// set the underlying object and the ownership flag
+    void _tied_object (T *obj, ::CORBA::Boolean release = true);
+    /// do we own it
     ::CORBA::Boolean _is_owner (void);
-    // do we own it
-    void _is_owner ( ::CORBA::Boolean b);
-    // set the ownership
+    /// set the ownership
     
+    void _is_owner ( ::CORBA::Boolean b);
     // overridden ServantBase operations
     PortableServer::POA_ptr _default_POA (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -7947,22 +7949,23 @@ namespace POA_CORBA
 } // module CORBA
 
 // TAO_IDL - Generated from 
-// be\be_codegen.cpp:1165
+// be\be_codegen.cpp:1322
+
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/IFRService/IFR_BasicS_T.inl"
+#include "IFR_BasicS_T.inl"
 #endif /* defined INLINE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "orbsvcs/IFRService/IFR_BasicS_T.cpp"
+#include "IFR_BasicS_T.cpp"
 #endif /* defined REQUIRED SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
 #pragma implementation ("IFR_BasicS_T.cpp")
 #endif /* defined REQUIRED PRAGMA */
 
-#include /**/ "ace/post.h"
+#include /**/ "ace\post.h"
 #endif /* ifndef */
 
