@@ -25,7 +25,10 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+
 
 ACE_INLINE
 void
@@ -46,7 +49,7 @@ POA_CORBA::ComponentIR::EventDef::_get_def_kind_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -67,7 +70,7 @@ POA_CORBA::ComponentIR::EventDef::destroy_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -88,7 +91,7 @@ POA_CORBA::ComponentIR::EventDef::lookup_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -109,7 +112,7 @@ POA_CORBA::ComponentIR::EventDef::contents_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -130,7 +133,7 @@ POA_CORBA::ComponentIR::EventDef::lookup_name_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -151,7 +154,7 @@ POA_CORBA::ComponentIR::EventDef::describe_contents_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -172,7 +175,7 @@ POA_CORBA::ComponentIR::EventDef::create_module_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -193,7 +196,7 @@ POA_CORBA::ComponentIR::EventDef::create_constant_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -214,7 +217,7 @@ POA_CORBA::ComponentIR::EventDef::create_struct_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -235,7 +238,7 @@ POA_CORBA::ComponentIR::EventDef::create_union_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -256,7 +259,7 @@ POA_CORBA::ComponentIR::EventDef::create_enum_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -277,7 +280,7 @@ POA_CORBA::ComponentIR::EventDef::create_alias_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -298,7 +301,7 @@ POA_CORBA::ComponentIR::EventDef::create_interface_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -319,7 +322,7 @@ POA_CORBA::ComponentIR::EventDef::create_value_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -340,7 +343,7 @@ POA_CORBA::ComponentIR::EventDef::create_value_box_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -361,7 +364,7 @@ POA_CORBA::ComponentIR::EventDef::create_exception_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -382,7 +385,7 @@ POA_CORBA::ComponentIR::EventDef::create_native_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -403,7 +406,7 @@ POA_CORBA::ComponentIR::EventDef::create_abstract_interface_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -424,7 +427,7 @@ POA_CORBA::ComponentIR::EventDef::create_local_interface_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -607,7 +610,7 @@ POA_CORBA::ComponentIR::EventDef::_get_containing_repository_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -628,7 +631,7 @@ POA_CORBA::ComponentIR::EventDef::describe_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -919,7 +922,7 @@ POA_CORBA::ComponentIR::EventDef::_set_is_truncatable_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -940,7 +943,7 @@ POA_CORBA::ComponentIR::EventDef::is_a_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -961,7 +964,7 @@ POA_CORBA::ComponentIR::EventDef::describe_value_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -982,7 +985,7 @@ POA_CORBA::ComponentIR::EventDef::create_value_member_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -1003,7 +1006,7 @@ POA_CORBA::ComponentIR::EventDef::create_attribute_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -1060,7 +1063,7 @@ POA_CORBA::ComponentIR::EventDef::_set_ext_initializers_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -1081,7 +1084,7 @@ POA_CORBA::ComponentIR::EventDef::describe_ext_value_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -1120,7 +1123,7 @@ POA_CORBA::ComponentIR::Container::_get_def_kind_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -1141,7 +1144,7 @@ POA_CORBA::ComponentIR::Container::destroy_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -1162,7 +1165,7 @@ POA_CORBA::ComponentIR::Container::lookup_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -1183,7 +1186,7 @@ POA_CORBA::ComponentIR::Container::contents_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -1204,7 +1207,7 @@ POA_CORBA::ComponentIR::Container::lookup_name_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -1225,7 +1228,7 @@ POA_CORBA::ComponentIR::Container::describe_contents_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -1246,7 +1249,7 @@ POA_CORBA::ComponentIR::Container::create_module_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -1267,7 +1270,7 @@ POA_CORBA::ComponentIR::Container::create_constant_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -1288,7 +1291,7 @@ POA_CORBA::ComponentIR::Container::create_struct_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -1309,7 +1312,7 @@ POA_CORBA::ComponentIR::Container::create_union_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -1330,7 +1333,7 @@ POA_CORBA::ComponentIR::Container::create_enum_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -1351,7 +1354,7 @@ POA_CORBA::ComponentIR::Container::create_alias_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -1372,7 +1375,7 @@ POA_CORBA::ComponentIR::Container::create_interface_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -1393,7 +1396,7 @@ POA_CORBA::ComponentIR::Container::create_value_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -1414,7 +1417,7 @@ POA_CORBA::ComponentIR::Container::create_value_box_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -1435,7 +1438,7 @@ POA_CORBA::ComponentIR::Container::create_exception_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -1456,7 +1459,7 @@ POA_CORBA::ComponentIR::Container::create_native_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -1477,7 +1480,7 @@ POA_CORBA::ComponentIR::Container::create_abstract_interface_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -1498,7 +1501,7 @@ POA_CORBA::ComponentIR::Container::create_local_interface_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -1537,7 +1540,7 @@ POA_CORBA::ComponentIR::ModuleDef::_get_def_kind_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -1558,7 +1561,7 @@ POA_CORBA::ComponentIR::ModuleDef::destroy_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -1579,7 +1582,7 @@ POA_CORBA::ComponentIR::ModuleDef::lookup_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -1600,7 +1603,7 @@ POA_CORBA::ComponentIR::ModuleDef::contents_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -1621,7 +1624,7 @@ POA_CORBA::ComponentIR::ModuleDef::lookup_name_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -1642,7 +1645,7 @@ POA_CORBA::ComponentIR::ModuleDef::describe_contents_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -1663,7 +1666,7 @@ POA_CORBA::ComponentIR::ModuleDef::create_module_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -1684,7 +1687,7 @@ POA_CORBA::ComponentIR::ModuleDef::create_constant_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -1705,7 +1708,7 @@ POA_CORBA::ComponentIR::ModuleDef::create_struct_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -1726,7 +1729,7 @@ POA_CORBA::ComponentIR::ModuleDef::create_union_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -1747,7 +1750,7 @@ POA_CORBA::ComponentIR::ModuleDef::create_enum_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -1768,7 +1771,7 @@ POA_CORBA::ComponentIR::ModuleDef::create_alias_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -1789,7 +1792,7 @@ POA_CORBA::ComponentIR::ModuleDef::create_interface_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -1810,7 +1813,7 @@ POA_CORBA::ComponentIR::ModuleDef::create_value_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -1831,7 +1834,7 @@ POA_CORBA::ComponentIR::ModuleDef::create_value_box_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -1852,7 +1855,7 @@ POA_CORBA::ComponentIR::ModuleDef::create_exception_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -1873,7 +1876,7 @@ POA_CORBA::ComponentIR::ModuleDef::create_native_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -1894,7 +1897,7 @@ POA_CORBA::ComponentIR::ModuleDef::create_abstract_interface_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -1915,7 +1918,7 @@ POA_CORBA::ComponentIR::ModuleDef::create_local_interface_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -2098,7 +2101,7 @@ POA_CORBA::ComponentIR::ModuleDef::_get_containing_repository_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -2119,7 +2122,7 @@ POA_CORBA::ComponentIR::ModuleDef::describe_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -2140,7 +2143,7 @@ POA_CORBA::ComponentIR::ModuleDef::move_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -2161,7 +2164,7 @@ POA_CORBA::ComponentIR::ModuleDef::create_component_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -2182,7 +2185,7 @@ POA_CORBA::ComponentIR::ModuleDef::create_home_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -2221,7 +2224,7 @@ POA_CORBA::ComponentIR::Repository::_get_def_kind_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -2242,7 +2245,7 @@ POA_CORBA::ComponentIR::Repository::destroy_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -2263,7 +2266,7 @@ POA_CORBA::ComponentIR::Repository::lookup_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -2284,7 +2287,7 @@ POA_CORBA::ComponentIR::Repository::contents_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -2305,7 +2308,7 @@ POA_CORBA::ComponentIR::Repository::lookup_name_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -2326,7 +2329,7 @@ POA_CORBA::ComponentIR::Repository::describe_contents_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -2347,7 +2350,7 @@ POA_CORBA::ComponentIR::Repository::create_module_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -2368,7 +2371,7 @@ POA_CORBA::ComponentIR::Repository::create_constant_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -2389,7 +2392,7 @@ POA_CORBA::ComponentIR::Repository::create_struct_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -2410,7 +2413,7 @@ POA_CORBA::ComponentIR::Repository::create_union_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -2431,7 +2434,7 @@ POA_CORBA::ComponentIR::Repository::create_enum_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -2452,7 +2455,7 @@ POA_CORBA::ComponentIR::Repository::create_alias_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -2473,7 +2476,7 @@ POA_CORBA::ComponentIR::Repository::create_interface_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -2494,7 +2497,7 @@ POA_CORBA::ComponentIR::Repository::create_value_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -2515,7 +2518,7 @@ POA_CORBA::ComponentIR::Repository::create_value_box_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -2536,7 +2539,7 @@ POA_CORBA::ComponentIR::Repository::create_exception_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -2557,7 +2560,7 @@ POA_CORBA::ComponentIR::Repository::create_native_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -2578,7 +2581,7 @@ POA_CORBA::ComponentIR::Repository::create_abstract_interface_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -2599,7 +2602,7 @@ POA_CORBA::ComponentIR::Repository::create_local_interface_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -2620,7 +2623,7 @@ POA_CORBA::ComponentIR::Repository::create_ext_value_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -2641,7 +2644,7 @@ POA_CORBA::ComponentIR::Repository::lookup_id_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -2662,7 +2665,7 @@ POA_CORBA::ComponentIR::Repository::get_canonical_typecode_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -2683,7 +2686,7 @@ POA_CORBA::ComponentIR::Repository::get_primitive_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -2704,7 +2707,7 @@ POA_CORBA::ComponentIR::Repository::create_string_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -2725,7 +2728,7 @@ POA_CORBA::ComponentIR::Repository::create_wstring_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -2746,7 +2749,7 @@ POA_CORBA::ComponentIR::Repository::create_sequence_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -2767,7 +2770,7 @@ POA_CORBA::ComponentIR::Repository::create_array_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -2788,7 +2791,7 @@ POA_CORBA::ComponentIR::Repository::create_fixed_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -2809,7 +2812,7 @@ POA_CORBA::ComponentIR::Repository::create_component_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -2830,7 +2833,7 @@ POA_CORBA::ComponentIR::Repository::create_home_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -2869,7 +2872,7 @@ POA_CORBA::ComponentIR::ProvidesDef::_get_def_kind_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -3052,7 +3055,7 @@ POA_CORBA::ComponentIR::ProvidesDef::_get_containing_repository_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -3073,7 +3076,7 @@ POA_CORBA::ComponentIR::ProvidesDef::describe_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -3112,7 +3115,7 @@ POA_CORBA::ComponentIR::UsesDef::_get_def_kind_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -3295,7 +3298,7 @@ POA_CORBA::ComponentIR::UsesDef::_get_containing_repository_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -3316,7 +3319,7 @@ POA_CORBA::ComponentIR::UsesDef::describe_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -3355,7 +3358,7 @@ POA_CORBA::ComponentIR::EventPortDef::_get_def_kind_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -3538,7 +3541,7 @@ POA_CORBA::ComponentIR::EventPortDef::_get_containing_repository_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -3559,7 +3562,7 @@ POA_CORBA::ComponentIR::EventPortDef::describe_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -3598,7 +3601,7 @@ POA_CORBA::ComponentIR::EmitsDef::_get_def_kind_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -3781,7 +3784,7 @@ POA_CORBA::ComponentIR::EmitsDef::_get_containing_repository_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -3802,7 +3805,7 @@ POA_CORBA::ComponentIR::EmitsDef::describe_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -3859,7 +3862,7 @@ POA_CORBA::ComponentIR::EmitsDef::_set_event_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -3898,7 +3901,7 @@ POA_CORBA::ComponentIR::PublishesDef::_get_def_kind_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -4081,7 +4084,7 @@ POA_CORBA::ComponentIR::PublishesDef::_get_containing_repository_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -4102,7 +4105,7 @@ POA_CORBA::ComponentIR::PublishesDef::describe_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -4159,7 +4162,7 @@ POA_CORBA::ComponentIR::PublishesDef::_set_event_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -4198,7 +4201,7 @@ POA_CORBA::ComponentIR::ConsumesDef::_get_def_kind_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -4381,7 +4384,7 @@ POA_CORBA::ComponentIR::ConsumesDef::_get_containing_repository_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -4402,7 +4405,7 @@ POA_CORBA::ComponentIR::ConsumesDef::describe_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -4459,7 +4462,7 @@ POA_CORBA::ComponentIR::ConsumesDef::_set_event_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -4498,7 +4501,7 @@ POA_CORBA::ComponentIR::ComponentDef::_get_def_kind_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -4519,7 +4522,7 @@ POA_CORBA::ComponentIR::ComponentDef::destroy_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -4540,7 +4543,7 @@ POA_CORBA::ComponentIR::ComponentDef::lookup_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -4561,7 +4564,7 @@ POA_CORBA::ComponentIR::ComponentDef::contents_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -4582,7 +4585,7 @@ POA_CORBA::ComponentIR::ComponentDef::lookup_name_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -4603,7 +4606,7 @@ POA_CORBA::ComponentIR::ComponentDef::describe_contents_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -4624,7 +4627,7 @@ POA_CORBA::ComponentIR::ComponentDef::create_module_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -4645,7 +4648,7 @@ POA_CORBA::ComponentIR::ComponentDef::create_constant_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -4666,7 +4669,7 @@ POA_CORBA::ComponentIR::ComponentDef::create_struct_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -4687,7 +4690,7 @@ POA_CORBA::ComponentIR::ComponentDef::create_union_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -4708,7 +4711,7 @@ POA_CORBA::ComponentIR::ComponentDef::create_enum_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -4729,7 +4732,7 @@ POA_CORBA::ComponentIR::ComponentDef::create_alias_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -4750,7 +4753,7 @@ POA_CORBA::ComponentIR::ComponentDef::create_interface_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -4771,7 +4774,7 @@ POA_CORBA::ComponentIR::ComponentDef::create_value_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -4792,7 +4795,7 @@ POA_CORBA::ComponentIR::ComponentDef::create_value_box_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -4813,7 +4816,7 @@ POA_CORBA::ComponentIR::ComponentDef::create_exception_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -4834,7 +4837,7 @@ POA_CORBA::ComponentIR::ComponentDef::create_native_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -4855,7 +4858,7 @@ POA_CORBA::ComponentIR::ComponentDef::create_abstract_interface_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -4876,7 +4879,7 @@ POA_CORBA::ComponentIR::ComponentDef::create_local_interface_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -5059,7 +5062,7 @@ POA_CORBA::ComponentIR::ComponentDef::_get_containing_repository_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -5080,7 +5083,7 @@ POA_CORBA::ComponentIR::ComponentDef::describe_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -5155,7 +5158,7 @@ POA_CORBA::ComponentIR::ComponentDef::_set_base_interfaces_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -5176,7 +5179,7 @@ POA_CORBA::ComponentIR::ComponentDef::is_a_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -5197,7 +5200,7 @@ POA_CORBA::ComponentIR::ComponentDef::describe_interface_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -5218,7 +5221,7 @@ POA_CORBA::ComponentIR::ComponentDef::create_attribute_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -5239,7 +5242,7 @@ POA_CORBA::ComponentIR::ComponentDef::create_operation_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -5260,7 +5263,7 @@ POA_CORBA::ComponentIR::ComponentDef::describe_ext_interface_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -5299,7 +5302,7 @@ POA_CORBA::ComponentIR::FactoryDef::_get_def_kind_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -5482,7 +5485,7 @@ POA_CORBA::ComponentIR::FactoryDef::_get_containing_repository_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -5503,7 +5506,7 @@ POA_CORBA::ComponentIR::FactoryDef::describe_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -5740,7 +5743,7 @@ POA_CORBA::ComponentIR::FinderDef::_get_def_kind_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -5923,7 +5926,7 @@ POA_CORBA::ComponentIR::FinderDef::_get_containing_repository_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -5944,7 +5947,7 @@ POA_CORBA::ComponentIR::FinderDef::describe_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -6181,7 +6184,7 @@ POA_CORBA::ComponentIR::HomeDef::_get_def_kind_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -6202,7 +6205,7 @@ POA_CORBA::ComponentIR::HomeDef::destroy_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -6223,7 +6226,7 @@ POA_CORBA::ComponentIR::HomeDef::lookup_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -6244,7 +6247,7 @@ POA_CORBA::ComponentIR::HomeDef::contents_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -6265,7 +6268,7 @@ POA_CORBA::ComponentIR::HomeDef::lookup_name_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -6286,7 +6289,7 @@ POA_CORBA::ComponentIR::HomeDef::describe_contents_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -6307,7 +6310,7 @@ POA_CORBA::ComponentIR::HomeDef::create_module_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -6328,7 +6331,7 @@ POA_CORBA::ComponentIR::HomeDef::create_constant_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -6349,7 +6352,7 @@ POA_CORBA::ComponentIR::HomeDef::create_struct_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -6370,7 +6373,7 @@ POA_CORBA::ComponentIR::HomeDef::create_union_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -6391,7 +6394,7 @@ POA_CORBA::ComponentIR::HomeDef::create_enum_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -6412,7 +6415,7 @@ POA_CORBA::ComponentIR::HomeDef::create_alias_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -6433,7 +6436,7 @@ POA_CORBA::ComponentIR::HomeDef::create_interface_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -6454,7 +6457,7 @@ POA_CORBA::ComponentIR::HomeDef::create_value_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -6475,7 +6478,7 @@ POA_CORBA::ComponentIR::HomeDef::create_value_box_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -6496,7 +6499,7 @@ POA_CORBA::ComponentIR::HomeDef::create_exception_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -6517,7 +6520,7 @@ POA_CORBA::ComponentIR::HomeDef::create_native_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -6538,7 +6541,7 @@ POA_CORBA::ComponentIR::HomeDef::create_abstract_interface_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -6559,7 +6562,7 @@ POA_CORBA::ComponentIR::HomeDef::create_local_interface_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -6742,7 +6745,7 @@ POA_CORBA::ComponentIR::HomeDef::_get_containing_repository_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -6763,7 +6766,7 @@ POA_CORBA::ComponentIR::HomeDef::describe_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -6838,7 +6841,7 @@ POA_CORBA::ComponentIR::HomeDef::_set_base_interfaces_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -6859,7 +6862,7 @@ POA_CORBA::ComponentIR::HomeDef::is_a_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -6880,7 +6883,7 @@ POA_CORBA::ComponentIR::HomeDef::describe_interface_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -6901,7 +6904,7 @@ POA_CORBA::ComponentIR::HomeDef::create_attribute_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -6922,7 +6925,7 @@ POA_CORBA::ComponentIR::HomeDef::create_operation_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -6943,7 +6946,7 @@ POA_CORBA::ComponentIR::HomeDef::describe_ext_interface_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -6963,4 +6966,7 @@ POA_CORBA::ComponentIR::HomeDef::create_ext_attribute_skel (
     );
 }
 
+
 TAO_END_VERSIONED_NAMESPACE_DECL
+
+

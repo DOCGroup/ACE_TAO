@@ -26,12 +26,12 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:373
+// be\be_codegen.cpp:409
 
-#ifndef _TAO_IDL_ORIG_IFR_BASES_H_
-#define _TAO_IDL_ORIG_IFR_BASES_H_
+#ifndef _TAO_IDL____ORBSVCS_ORBSVCS_IFRSERVICE_IFR_BASES_H_
+#define _TAO_IDL____ORBSVCS_ORBSVCS_IFRSERVICE_IFR_BASES_H_
 
-#include /**/ "ace/pre.h"
+#include /**/ "ace\pre.h"
 
 #include "tao/IFR_Client/IFR_BaseC.h"
 #include "tao/orb_typesS.h"
@@ -45,10 +45,12 @@
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/PortableServer/Servant_Base.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+
+
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_sh.cpp:49
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace POA_CORBA
 {
@@ -59,7 +61,6 @@ namespace POA_CORBA
   
   class IRObject;
   typedef IRObject *IRObject_ptr;
-  
   
   class  IRObject
     : public virtual PortableServer::ServantBase
@@ -123,7 +124,8 @@ namespace POA_CORBA
       );
     
     ::CORBA::IRObject *_this (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
     
     virtual const char* _interface_repository_id (void) const;
@@ -168,7 +170,6 @@ namespace POA_CORBA
   
   class Contained;
   typedef Contained *Contained_ptr;
-  
   
   class  Contained
     : public virtual POA_CORBA::IRObject
@@ -232,7 +233,8 @@ namespace POA_CORBA
       );
     
     ::CORBA::Contained *_this (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
     
     virtual const char* _interface_repository_id (void) const;
@@ -439,7 +441,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:1917
+    // be\be_interface.cpp:1955
     
     static void
     destroy_skel (
@@ -455,7 +457,6 @@ namespace POA_CORBA
   
   class Container;
   typedef Container *Container_ptr;
-  
   
   class  Container
     : public virtual POA_CORBA::IRObject
@@ -519,7 +520,8 @@ namespace POA_CORBA
       );
     
     ::CORBA::Container *_this (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
     
     virtual const char* _interface_repository_id (void) const;
@@ -917,7 +919,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:1917
+    // be\be_interface.cpp:1955
     
     static void
     destroy_skel (
@@ -933,7 +935,6 @@ namespace POA_CORBA
   
   class IDLType;
   typedef IDLType *IDLType_ptr;
-  
   
   class  IDLType
     : public virtual POA_CORBA::IRObject
@@ -997,7 +998,8 @@ namespace POA_CORBA
       );
     
     ::CORBA::IDLType *_this (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
     
     virtual const char* _interface_repository_id (void) const;
@@ -1028,7 +1030,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:1917
+    // be\be_interface.cpp:1955
     
     static void
     destroy_skel (
@@ -1044,7 +1046,6 @@ namespace POA_CORBA
   
   class TypedefDef;
   typedef TypedefDef *TypedefDef_ptr;
-  
   
   class  TypedefDef
     : public virtual POA_CORBA::Contained,
@@ -1109,7 +1110,8 @@ namespace POA_CORBA
       );
     
     ::CORBA::TypedefDef *_this (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+        
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
     
     virtual const char* _interface_repository_id (void) const;
@@ -1123,7 +1125,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:1917
+    // be\be_interface.cpp:1955
     
     static void
     destroy_skel (
@@ -1206,7 +1208,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:1917
+    // be\be_interface.cpp:1955
     
     static void
     describe_skel (
@@ -1217,7 +1219,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_interface.cpp:1917
+    // be\be_interface.cpp:1955
     
     static void
     move_skel (
@@ -1242,16 +1244,18 @@ namespace POA_CORBA
 } // module CORBA
 
 // TAO_IDL - Generated from 
-// be\be_codegen.cpp:1072
+// be\be_codegen.cpp:1219
+
+
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-#include "orbsvcs/IFRService/IFR_BaseS_T.h"
+#include "IFR_BaseS_T.h"
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/IFRService/IFR_BaseS.inl"
+#include "IFR_BaseS.inl"
 #endif /* defined INLINE */
 
-#include /**/ "ace/post.h"
+#include /**/ "ace\post.h"
 #endif /* ifndef */
 

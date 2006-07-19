@@ -25,7 +25,10 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+
 
 ACE_INLINE
 void
@@ -46,7 +49,7 @@ POA_CORBA::Contained::_get_def_kind_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -85,7 +88,7 @@ POA_CORBA::Container::_get_def_kind_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -124,7 +127,7 @@ POA_CORBA::IDLType::_get_def_kind_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -163,7 +166,7 @@ POA_CORBA::TypedefDef::_get_def_kind_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -346,7 +349,7 @@ POA_CORBA::TypedefDef::_get_containing_repository_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -367,7 +370,7 @@ POA_CORBA::TypedefDef::describe_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1917
+// be\be_interface.cpp:1955
 
 ACE_INLINE
 void
@@ -405,4 +408,7 @@ POA_CORBA::TypedefDef::_get_type_skel (
     );
 }
 
+
 TAO_END_VERSIONED_NAMESPACE_DECL
+
+
