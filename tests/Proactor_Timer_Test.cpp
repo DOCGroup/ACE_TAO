@@ -72,7 +72,7 @@ private:
 class Repeat_Timer_Handler : public ACE_Handler
 {
 public:
-  const static int REPEAT_INTERVAL = 2;
+  static const int REPEAT_INTERVAL = 2;
 
   // Constructor arg tells how many seconds we intend to do the repeat with.
   // The internals will use this to tell how long to wait in order to cause
