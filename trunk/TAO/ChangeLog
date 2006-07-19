@@ -1,10 +1,20 @@
+Wed Jul 19 22:28:50 UTC 2006  Ciju John  <johnc@ociweb.com>
+
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp:
+
+          The open() initializes the underlying socket that is later
+          enabled to be non-blocking. Without open() the enable call will
+          fail as it should. This fixes the scoreboard failure introduced
+          in:
+
+          Mon Jul 17 14:26:08 UTC 2006  Ciju John  <john_c@ociweb.com>
 Wed Jul 19 19:20:28 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_global.cpp:
         * TAO_IDL/be_include/be_global.h:
         * docs/compiler.html:
         * docs/releasenotes/index.html:
-        
+
           - Added IDL compiler command line option -oS, which sets an
             output directory for all skeleton (*S*) files, similar to what
             the -oA option does for *A.* files. Overrides the -o option
@@ -13,10 +23,10 @@ Wed Jul 19 19:20:28 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
             from IDL files for services like the Interface Repository,
             where the stub and skeleton files go to different directories.
             This fix closes [BUGID:2603].
-          
+
           - Changed all occurrences of 'base_name_only' parameters from
           int to bool.
-           
+
 Wed Jul 19 17:49:47 UTC 2006  Nanbor Wang  <nanbor (a) txcorp (d) com>
 
         * orbsvcs/examples/FaultTolerance/RolyPoly/client.cpp: Enhanced
@@ -27,14 +37,14 @@ Wed Jul 19 17:49:47 UTC 2006  Nanbor Wang  <nanbor (a) txcorp (d) com>
           remaining servers can continue to work and thus demonstrate how
           FT work.
 
-        * orbsvcs/examples/FaultTolerance/RolyPoly/RolyPoly_i.cpp: 
-        * orbsvcs/examples/FaultTolerance/RolyPoly/RolyPoly_i.h: 
+        * orbsvcs/examples/FaultTolerance/RolyPoly/RolyPoly_i.cpp:
+        * orbsvcs/examples/FaultTolerance/RolyPoly/RolyPoly_i.h:
           Minor fixup to throw spec.
-        
+
 Wed Jul 19 17:07:12 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_arg_traits.cpp:
-        
+
           Fixed bug in the logic of the decisioin whether or not to generate
           the arg traits template specialization for a typedef. This fix
           addresses the reopening of [BUGID:2582], which will now be set

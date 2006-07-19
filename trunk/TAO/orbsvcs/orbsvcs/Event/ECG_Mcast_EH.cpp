@@ -230,13 +230,24 @@ TAO_ECG_Mcast_EH::add_new_subscriptions (Address_Set& multicast_addresses)
       this->subscriptions_[subscriptions_size] = new_subscription;
 
       ACE_SOCK_Dgram_Mcast *socket = new_subscription.dgram;
+
+      if (socket->open (new_subscription.mcast_addr, this->net_if_, 1) == -1) {
+        ACE_ERROR ((LM_ERROR,
+                    "Error: %d - Unable to open multicast socket\n",
+                    errno ));
+      }
+
       if ( socket->enable (ACE_NONBLOCK) != 0 ) {
         ACE_ERROR ((LM_ERROR,
                     "Error: %d - Unable to enable nonblocking on mcast_eh\n",
                     errno ));
       }
 
-      socket->join (new_subscription.mcast_addr, 1, this->net_if_);
+      if (socket->join (new_subscription.mcast_addr, 1, this->net_if_) == -1) {
+        ACE_ERROR ((LM_ERROR,
+                    "Error: %d - Unable to join multicast group\n",
+                    errno ));
+      }
 
       if (this->recvbuf_size_ != 0
           && (((ACE_SOCK_Dgram *)socket)->set_option(SOL_SOCKET,
