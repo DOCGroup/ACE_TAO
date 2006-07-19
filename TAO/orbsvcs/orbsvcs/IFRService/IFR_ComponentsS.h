@@ -31,7 +31,7 @@
 #ifndef _TAO_IDL____ORBSVCS_ORBSVCS_IFRSERVICE_IFR_COMPONENTSS_H_
 #define _TAO_IDL____ORBSVCS_ORBSVCS_IFRSERVICE_IFR_COMPONENTSS_H_
 
-#include /**/ "ace/pro.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/IFR_Client/IFR_ComponentsC.h"
 #include "orbsvcs/IFRService/IFR_ExtendedS.h"
