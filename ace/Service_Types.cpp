@@ -103,15 +103,6 @@ ACE_Service_Object_Type::init (int argc, ACE_TCHAR *argv[]) const
   ACE_Service_Object * const so =
     static_cast<ACE_Service_Object *> (obj);
 
-  if (ACE::debug () > 2)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_LIB_TEXT ("(%P|%t) SOT::init, this=%@, ")
-                ACE_LIB_TEXT ("name=%s, flags=%d, so=%@\n"),
-                this,
-                this->name_,
-                this->flags_,
-                obj));
-
   if (so == 0)
     return -1;
   else
@@ -124,15 +115,6 @@ ACE_Service_Object_Type::fini (void) const
   ACE_TRACE ("ACE_Service_Object_Type::fini");
 
   void * const obj = this->object ();
-
-  if (ACE::debug () > 2)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_LIB_TEXT ("(%P|%t) SOT::fini - this=%@, ")
-                ACE_LIB_TEXT ("name=%s, flags=%d, so=%@\n"),
-                this,
-                this->name_,
-                this->flags_,
-                obj));
 
   ACE_Service_Object * const so =
     static_cast<ACE_Service_Object *> (obj);

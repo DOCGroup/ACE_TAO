@@ -161,17 +161,17 @@ ACE::compiler_beta_version (void)
 #endif
 }
 
-char
+bool
 ACE::debug (void)
 {
   static const char* debug = ACE_OS::getenv ("ACE_DEBUG");
-  return ACE::debug_ != 0 ? ACE::debug_ : (debug != 0 ? (*debug - '0'): 0);
+  return (ACE::debug_ != 0) ? ACE::debug_ : (debug != 0 ? (*debug != '0'): false);
 }
 
 void
-ACE::debug (char c)
+ACE::debug (bool onoff)
 {
-  ACE::debug_ = c;
+  ACE::debug_ = onoff;
 }
 
 int

@@ -175,29 +175,56 @@ void
 testLimits (int , ACE_TCHAR *[])
 {
   static const ACE_TCHAR *svc_desc1 =
+#if (ACE_USES_CLASSIC_SVC_CONF == 1)
     ACE_TEXT ("dynamic Test_Object_1_More Service_Object * ")
-    ACE_TEXT ("  Service_Config_DLL:_make_Service_Config_DLL() \"Test_Object_1_More\"");
+    ACE_TEXT ("  Service_Config_DLL:_make_Service_Config_DLL() \"Test_Object_1_More\"")
+#else
+    ACE_TEXT ("<dynamic id=\"Test_Object_1_More\" type=\"Service_Object\">")
+    ACE_TEXT ("  <initializer init=\"_make_Service_Config_DLL\" path=\"Service_Config_DLL\" params=\"Test_Object_1_More\"/>")
+    ACE_TEXT ("</dynamic>")
+#endif /* (ACE_USES_CLASSIC_SVC_CONF == 1) */
+    ;
 
   static const ACE_TCHAR *svc_desc2 =
+#if (ACE_USES_CLASSIC_SVC_CONF == 1)
     ACE_TEXT ("dynamic Test_Object_2_More Service_Object * ")
-    ACE_TEXT ("  Service_Config_DLL:_make_Service_Config_DLL() \"Test_Object_2_More\"");
+    ACE_TEXT ("  Service_Config_DLL:_make_Service_Config_DLL() \"Test_Object_2_More\"")
+#else
+    ACE_TEXT ("<dynamic id=\"Test_Object_2_More\" type=\"Service_Object\">")
+    ACE_TEXT ("  <initializer init=\"_make_Service_Config_DLL\" path=\"Service_Config_DLL\" params=\"Test_Object_2_More\"/>")
+    ACE_TEXT ("</dynamic>")
+#endif /* (ACE_USES_CLASSIC_SVC_CONF == 1) */
+    ;
 
-  // Ensure enough room for just one ...
+
+  u_int error0 = error;
+
+  // Ensure enough room for one
   ACE_Service_Gestalt one (1, true);
-  if (0 != one.process_directive (svc_desc1))
+
+  // Add two.
+  // We cant simply rely on the fact that insertion fails, because it
+  // is typical to have no easy way of getting detailed error
+  // information from a parser.
+  one.process_directive (svc_desc1);
+  one.process_directive (svc_desc2);
+
+  if (-1 == one.find ("Test_Object_1_More", 0, 0))
     {
       ++error;
-      ACE_DEBUG ((LM_ERROR, ACE_TEXT("Unable to register the first service: %m\n")));
+      ACE_ERROR ((LM_ERROR, ACE_TEXT("Expected to have registered the first service\n")));
     }
 
-  // We simply rely on the fact that subsequent insertion
-  // fails. Currently there is no easy way of getting detailed error
-  // information from the yacc parser.
-  if (0 == one.process_directive (svc_desc2))
+  if (-1 != one.find ("Test_Object_2_More", 0, 0))
     {
       ++error;
-      ACE_DEBUG ((LM_ERROR, ACE_TEXT("Being able to add more was unexpected\n")));
+      ACE_ERROR ((LM_ERROR, ACE_TEXT("Being able to add more than 1 service was not expected\n")));
     }
+
+  if (error == error0)
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Limits test completed successfully\n")));
+  else
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Limits test failed\n")));
 }
 
 

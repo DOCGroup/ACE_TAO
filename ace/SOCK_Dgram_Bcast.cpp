@@ -211,7 +211,7 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
           // only print an error if this is not the case, or if we're
           // in "debugging" mode.
           if (ifr->ifr_addr.sa_family != 0
-              || ACE::debug () > 0)
+              || ACE::debug ())
           ACE_DEBUG ((LM_DEBUG,
                       "warning %p: sa_family: %d\n",
                       "ACE_SOCK_Dgram_Bcast::mk_broadcast: Not AF_INET",

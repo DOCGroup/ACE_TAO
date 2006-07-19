@@ -382,7 +382,7 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_input (ACE_HANDLE listene
 
       if (this->make_svc_handler (svc_handler) == -1)
         {
-          if (ACE::debug () > 0)
+          if (ACE::debug ())
             ACE_DEBUG ((LM_DEBUG,
                         ACE_LIB_TEXT ("%p\n"),
                         ACE_LIB_TEXT ("make_svc_handler")));
@@ -394,7 +394,7 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_input (ACE_HANDLE listene
         {
           // Note that <accept_svc_handler> closes the <svc_handler>
           // on failure.
-          if (ACE::debug () > 0)
+          if (ACE::debug ())
             ACE_DEBUG ((LM_DEBUG,
                         ACE_LIB_TEXT ("%p\n"),
                         ACE_LIB_TEXT ("accept_svc_handler")));
@@ -410,7 +410,7 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_input (ACE_HANDLE listene
           // Note that <activate_svc_handler> closes the <svc_handler>
           // on failure.
 
-          if (ACE::debug () > 0)
+          if (ACE::debug ())
             ACE_DEBUG ((LM_DEBUG,
                         ACE_LIB_TEXT ("%p\n"),
                         ACE_LIB_TEXT ("activate_svc_handler")));
