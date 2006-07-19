@@ -30,10 +30,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   myparams.xofflim = 0;
   myparams.readmincharacters = 0;
   myparams.readtimeoutmsec = 10000;
-  myparams.parityenb = true;
   myparams.paritymode = "EVEN";
   myparams.ctsenb = false;
-  myparams.rtsenb = false;
+  myparams.rtsenb = 0;
   myparams.xinenb = false;
   myparams.xoutenb = false;
   myparams.modem = false;
