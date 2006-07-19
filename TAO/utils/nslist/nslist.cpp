@@ -50,12 +50,13 @@ namespace
   public:
     static void add (const CosNaming::NamingContext_ptr nc)
     {
-      pBottom= new NestedNamingContexts( nc );
+      (void) new NestedNamingContexts( nc ); // This is not a leak (see constructor)
     }
 
     static void remove ()
     {
-      delete pBottom;
+      const NestedNamingContexts *const pThisOne= pBottom;
+      delete pThisOne; // i.e. delete pBottom; Attempt to stop over-optimisation by BORLAND
     }
 
     static int hasBeenSeen (const CosNaming::NamingContext_ptr nc)
@@ -81,13 +82,14 @@ namespace
       *const pNext; // Next highest level
 
     NestedNamingContexts (const CosNaming::NamingContext_ptr nc)
-      :pnc(nc), pNext(pBottom)
+      :pnc(nc), pNext(pBottom) // Adds the old list to this!
     {
+      this->pBottom= this; // Doesn't leak this (it's the new start)
     }
 
     ~NestedNamingContexts ()
     {
-      this->pBottom= this->pNext;
+      this->pBottom= this->pNext; // this node removed from list.
     }
 
     // Outlaw copying
