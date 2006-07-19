@@ -1,3 +1,11 @@
+Wed Jul 19 15:07:29 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * ace/DLL_Manager.cpp:
+
+          Fixing a build problem on HP and Windows, as a consequence of my
+          earlier change: "Tue Jul 18 19:17:54 UTC 2006". Moral: use
+          ACE_TEXT around literal expressions only.
+
 Wed Jul 19 13:55:39 UTC 2006  Olli Savia  <ops@iki.fi>
 
         * examples/IPC_SAP/DEV_SAP/reader/reader.cpp:

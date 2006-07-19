@@ -132,9 +132,9 @@ ACE_DLL_Handle::open (const ACE_TCHAR *dll_name,
                               ACE_LIB_TEXT ("(\"%s\", 0x%x) -> %s: %s\n"),
                               name->c_str (),
                               open_mode,
-                              ACE_LIB_TEXT ((this->handle_ != ACE_SHLIB_INVALID_HANDLE)
-                                            ? "succeeded"
-                                            : "failed"),
+                              ((this->handle_ != ACE_SHLIB_INVALID_HANDLE)
+                               ? ACE_LIB_TEXT ("succeeded")
+                               : ACE_LIB_TEXT ("failed")),
                               this->error()->c_str()));
                 }
 
