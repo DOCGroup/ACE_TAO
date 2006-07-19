@@ -26,9 +26,9 @@ ACE_Dynamic_Service_Dependency::ACE_Dynamic_Service_Dependency (const ACE_Servic
 
 ACE_Dynamic_Service_Dependency::~ACE_Dynamic_Service_Dependency (void)
 {
-  if (ACE::debug () > 1)
+  if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%P|%t) DSD, this=%@ - destroying dependency\n"),
+                ACE_TEXT ("(%P|%t) DSD, this=%@ - destroying\n"),
                 this));
 }
 
@@ -38,7 +38,7 @@ ACE_Dynamic_Service_Dependency::init (const ACE_Service_Gestalt *cfg,
 {
   const ACE_Service_Type* st =
     ACE_Dynamic_Service_Base::find_i (cfg, principal,false);
-  if (ACE::debug () > 1)
+  if (ACE::debug ())
     {
       ACE_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t) DSD, this=%@ - creating dependency on "), this));
