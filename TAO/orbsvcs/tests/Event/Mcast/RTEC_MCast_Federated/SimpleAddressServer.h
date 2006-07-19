@@ -7,7 +7,9 @@
 
 #include <orbsvcs/RtecUDPAdminS.h>
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_INET_Addr;
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 class SimpleAddressServer : public POA_RtecUDPAdmin::AddrServer {
 public:
