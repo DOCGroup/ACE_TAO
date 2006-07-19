@@ -165,7 +165,7 @@ ACE_Service_Repository::fini (void)
 
     // Collect any errors.
     int ret = s->fini ();
-    if (ACE::debug ()>1)
+    if (ACE::debug ())
       {
         ACE_DEBUG ((LM_DEBUG,
         ACE_LIB_TEXT ("(%P|%t) SR::fini, returned %d\n"),
@@ -329,23 +329,25 @@ ACE_Service_Repository::insert (const ACE_Service_Type *sr)
     if (ACE::debug ())
       {
         ACE_DEBUG ((LM_DEBUG,
-                    "(%P|%t) SR::insert, repo=%@ [%d] (size=%d): ",
+                    ACE_TEXT ("ACE (%P|%t) SR::insert, repo=%@ [%d] (size=%d): "),
                     this,
                     i,
                     this->total_size_));
         sr->dump();
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
       }
   }
 
   // Delete outside the lock
   if (s != 0)
     {
-      if (ACE::debug () > 1)
+      if (ACE::debug ())
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "(%P|%t) SR::insert, repo=%@ - destroying : ",
+                      ACE_TEXT ("ACE (%P|%t) SR::insert, repo=%@ - destroying : "),
                       this));
           s->dump();
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
         }
       delete s;
     }
