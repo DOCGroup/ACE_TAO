@@ -72,40 +72,40 @@ public:
   // name with output dir path, is useful, when I just want just the
   // base name to use in #include's etc.
   static const char *be_get_client_hdr_fname (
-      int base_name_only = 0
+      bool base_name_only = 0
     );
   static const char *be_get_client_stub_fname (void);
   static const char *be_get_client_inline_fname (
-      int base_name_only = 0
+      bool base_name_only = 0
     );
   static const char *be_get_server_hdr_fname (
-      int base_name_only = 0
+      bool base_name_only = 0
     );
   static const char *be_get_implementation_hdr_fname (
-      int base_name_only = 0
+      bool base_name_only = 0
     );
   static const char *be_get_implementation_skel_fname (
-      int base_name_only = 0
+      bool base_name_only = 0
     );
   static const char *be_get_server_template_hdr_fname (
-      int base_name_only = 0
+      bool base_name_only = 0
     );
   static const char *be_get_server_skeleton_fname (void);
   static const char *be_get_implementation_skeleton_fname (void);
   static const char *be_get_server_template_skeleton_fname (
-      int base_name_only = 0
+      bool base_name_only = 0
     );
   static const char *be_get_server_inline_fname (
-      int base_name_only = 0
+      bool base_name_only = 0
     );
   static const char *be_get_server_template_inline_fname (
-      int base_name_only = 0
+      bool base_name_only = 0
     );
   static const char *be_get_anyop_source_fname (
-      int base_name_only = 0
+      bool base_name_only = 0
     );
   static const char *be_get_anyop_header_fname (
-      int base_name_only = 0
+      bool base_name_only = 0
     );
 
   // Helper functions: obtain the names of each generated file given
@@ -114,31 +114,31 @@ public:
   // name with output dir path, is useful, when I want just the
   // base name to use in #include's etc.
   static const char *be_get_client_hdr (UTL_String *idl_file_name,
-                                        int base_name_only = 0);
+                                        bool base_name_only = 0);
   static const char *be_get_client_stub (UTL_String *idl_file_name);
   static const char *be_get_client_inline (UTL_String *idl_file_name,
-                                           int base_name_only = 0);
+                                           bool base_name_only = 0);
   static const char *be_get_server_hdr (UTL_String *idl_file_name,
-                                        int base_name_only = 0);
+                                        bool base_name_only = 0);
   static const char *be_get_implementation_hdr (UTL_String *idl_file_name,
-                                                int base_name_only = 0);
+                                                bool base_name_only = 0);
   static const char *be_get_implementation_skel (UTL_String *idl_file_name,
-                                                 int base_name_only = 0);
+                                                 bool base_name_only = 0);
   static const char *be_get_server_template_hdr (UTL_String *idl_file_name,
-                                                 int base_name_only = 0);
+                                                 bool base_name_only = 0);
   static const char *be_get_server_skeleton (UTL_String *idl_file_name);
   static const char *be_get_server_template_skeleton (
       UTL_String *idl_file_name,
-      int base_name_only = 0
+      bool base_name_only = 0
     );
   static const char *be_get_server_inline (UTL_String *idl_file_name,
-                                           int base_name_only = 0);
+                                           bool base_name_only = 0);
   static const char *be_get_server_template_inline (UTL_String *idl_file_name,
-                                                    int base_name_only = 0);
+                                                    bool base_name_only = 0);
   static const char *be_get_anyop_header (UTL_String *idl_file_name,
-                                          int base_name_only = 0);
+                                          bool base_name_only = 0);
   static const char *be_get_anyop_source (UTL_String *idl_file_name,
-                                          int base_name_only = 0);
+                                          bool base_name_only = 0);
 
   const char* skel_export_macro (void) const;
   // returns the macro name for exporting server side classes in Win32
@@ -337,23 +337,29 @@ public:
 
   void output_dir (const char* s);
   // Set the directory where all the IDL-Compiler-Generated files are
-  // to be kept. Default  is current directory from which the
+  // to be kept. Default is current directory from which the
   // <tao_idl> is called.
 
   const char* output_dir (void) const;
   // Get the directory where all the IDL-Compiler-Generated files are
-  // to be kept. Default  is current directory from which the
+  // to be kept. Default is current directory from which the
   // <tao_idl> is called.
+
+  void skel_output_dir (const char* s);
+  // Set the directory where all the *S.* files are
+  // to be kept. Default is output_dir_.
+
+  const char* skel_output_dir (void) const;
+  // Get the directory where all the *S.* files are
+  // to be kept. Default is output_dir_.
 
   void anyop_output_dir (const char* s);
   // Set the directory where all the *A.* files are
-  // to be kept. Default  is current directory from which the
-  // <tao_idl> is called.
+  // to be kept. Default is output_dir_.
 
   const char* anyop_output_dir (void) const;
   // Get the directory where all the *A.* files are
-  // to be kept. Default  is current directory from which the
-  // <tao_idl> is called.
+  // to be kept. Default is output_dir_.
 
   void any_support (bool);
   // Set any support.
@@ -640,10 +646,15 @@ private:
   // kept. Default value is 0 for this string which means the current
   // directory from which the <tao_idl> is called.
 
+  char* skel_output_dir_;
+  // Directory where all the *S.* files are to be
+  // kept. Default value is 0 for this string which means the
+  // value for output_dir_ is used.
+
   char* anyop_output_dir_;
   // Directory where all the *A.* files are to be
-  // kept. Default value is 0 for this string which means the current
-  // directory from which the <tao_idl> is called.
+  // kept. Default value is 0 for this string which means the
+  // value for output_dir_ is used.
 
   bool any_support_;
   // do we support Any operators?
