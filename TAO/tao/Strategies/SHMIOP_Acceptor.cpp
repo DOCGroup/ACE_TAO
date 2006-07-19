@@ -467,7 +467,7 @@ TAO_SHMIOP_Acceptor::parse_options (const char *str)
                           -1);
       else if (end != ACE_CString::npos)
         {
-          ACE_CString opt = options.substring (begin, end);
+          ACE_CString opt = options.substring (begin, end - begin);
 
           ACE_CString::size_type const slot = opt.find ("=");
 
