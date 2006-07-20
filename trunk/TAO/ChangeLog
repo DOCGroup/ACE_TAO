@@ -1,3 +1,10 @@
+Thu Jul 20 08:17:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_1639_Regression/struct_client.cpp:
+        * tests/DynAny_Test/test_dynany.cpp:
+        * tests/DynAny_Test/analyzer.h:
+          Reordered includes to fix problems with gcc4
+
 Thu Jul 20 07:08:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/IDL_Test/IDL_Test.mpc:
