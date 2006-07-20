@@ -10,6 +10,7 @@
  */
 //=============================================================================
 
+#include "tao/AnyTypeCode/AnyTypeCode_methods.h"
 #include "tao/DynamicAny/DynamicAny.h"
 
 #include "test_dynany.h"
