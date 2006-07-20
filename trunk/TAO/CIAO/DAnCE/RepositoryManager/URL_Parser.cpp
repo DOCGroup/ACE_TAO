@@ -45,8 +45,8 @@ bool URL_Parser::parseURL (char* url)
 {
   char* ptr;
   bool success = true;
-
-  if (ptr = ACE_OS::strstr (url, "http://"))
+  ptr = ACE_OS::strstr (url, "http://");
+  if (ptr)
     url += ACE_OS::strlen ("http://");
 
   if (url[0] == '/')
@@ -54,8 +54,8 @@ bool URL_Parser::parseURL (char* url)
     this->filename_ = ACE_OS::strdup (url);
   }
   else
-  {
-    if (ptr = ACE_OS::strstr (url, ":"))
+  { ptr = ACE_OS::strstr (url, ":");
+    if (ptr)
       this->port_ = ACE_OS::atoi (ptr + 1);
     else
       ptr = ACE_OS::strstr (url, "/");
@@ -68,8 +68,8 @@ bool URL_Parser::parseURL (char* url)
       ACE_NEW_RETURN (this->hostname_, char [host_len + 1], false);
       ACE_OS::strncpy (this->hostname_, url, host_len);
       this->hostname_ [host_len] = '\0';
-
-      if (ptr = ACE_OS::strstr (ptr, "/"))
+      ptr = ACE_OS::strstr (ptr, "/");
+      if (ptr)
       {
         this->filename_ = ACE_OS::strdup(ptr);
       }

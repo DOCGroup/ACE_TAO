@@ -1,3 +1,22 @@
+Thu Jul 20 01:10:58 UTC 2006  Vipul Singh  <vipuls@dre.vanderbilt.edu>
+
+        * DAnCE/RepositoryManager/PC_Updater.cpp: Removed the variable name
+	  from the arguments in function definition in empty functions to
+	  fix warnings.
+
+        * DAnCE/RepositoryManager/RepositoryManager_Impl.h: Changed declaration
+	  at a few places from const static to static const to fix a few
+	  warnings, also removed an unnecessarily defined namespace.
+
+        * DAnCE/RepositoryManager/RepositoryManager_Impl.cpp: Made a few
+	  changes to fix the warnings and to keep the code in sync with 
+	  the changes made to RepositoryManager_Impl.h. Fixed code which 
+	  passed non POD types to a varargs function(ACE_DEBUG) which 
+	  resulted in aborts at runtime.
+
+        * DAnCE/RepositoryManager/URL_Parser.cpp: Assigned value to ptr before
+	  if condition to fix a few warnings.
+	  
 Wed Jul 19 08:00:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tools/Config_Handlers/Config_Handlers.mpc:
