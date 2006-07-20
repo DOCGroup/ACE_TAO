@@ -2,74 +2,46 @@
 
 Assuming we store two CIAO:ServerResources documents in two XML files
 called "RTLinuxServerConfig.xml" and "RTwIN32ServerConfig.xml"
-respectively.  We will specify their IDs in a DeploymentPlan via
-infoProperfy with the equivalent of the following struct:
+respectively.  Two things need to happen in order to use the
+PolicySet's defined in these files.  First, we need to tell the DnC
+tools what are all the CIAOServerResources files a DeploymentPlan
+needs.  This can easily be done by enumerating all these file in the
+<infoProperty> element under the <DeploymentPlan>. For example, the
+following XML document snippet shows a DeploymentPlan will reference
+to two aforementioned CIAO:ServerResources files.  The property name
+"CIAOServerResourceRef" is a CIAO-specific extension that signifies
+this need.  The values of these properties simply specify the
+filenames.
 
-   struct CIAOServerResourcesRef
-   {
-     string resourceId;
-     string filename;
-   };
-
-So, the DeploymentPlan should look something like:
 
    <infoProperty>
      <name>CIAOServerResourceRef</name>
      <value>
         <type>
-          <kind>tk_struct</kind> <!-- I don't know how to specify the
-                                      type of CIAO:ServerResourceRef
-                                      struct here -->
+          <kind>tk_string</kind>
         </type>
         <value>
-          <name>resourceId</name>
-          <value>
-            <type>tk_tring</type>
-            <value>RTConfig4LinuxBox</value>  <!-- Component instances
-                                                   will refer to this
-                                                   name to specify 
-                                                   required server
-                                                   config -->
-          </value>
-          <name>filename</name>
-          <value>
-            <type>tk_tring</type>
-            <value>RTLinuxServerConfig.xml</value>
-          </value>
+         <string>RTLinuxServerConfig.xml</string>
         </value>
      </value>
 
      <name>CIAOServerResourceRef</name>
      <value>
         <type>
-          <kind>tk_struct</kind> <!-- I don't know how to specify the
-                                      type of CIAO:ServerResourceRef
-                                      struct here -->
+          <kind>tk_string</kind>
         </type>
         <value>
-          <name>resourceId</name>
-          <value>
-            <type>tk_tring</type>
-            <value>RTConfig4Win32Box</value>  <!-- Component instances
-                                                   will refer to this
-                                                   name to specify 
-                                                   required server
-                                                   config -->
-          </value>
-          <name>filename</name>
-          <value>
-            <type>tk_tring</type>
-            <value>RTWin32ServerConfig.xml</value>
-          </value>
+          <string>RTWin32ServerConfig.xml</string>
         </value>
      </value>
    </infoProperty>
 
-We can now use the policy sets defined in the XML documents to
-instantiate components.  A component instance in deployment plan can
-specify the policies it wishes to be instantiated with.  To use this
-feature, one need to specify both the resouceID and the ID for the
-policySet as following:
+Second, we can now use the policy sets defined in these files by
+associating a policy set with the entity the policy set will be
+applied.  Currently, only associations with component instances are
+supported.  A component instance in deployment plan can specify the
+policy set it wishes to be instantiated with.  A PolicySet is
+referenced by its name and the CIAO:ServerResources name.
 
    <deploymentplan>
      ....
@@ -78,31 +50,27 @@ policySet as following:
      
        <deployedResource>
          <resourceUsage>InstanceUsesResource</resourceUsage>
-         <requirementName>CIAO:PolicySet</requirementName>
-         <resourceName>here_we_insert_the_CIAO:PolicySet_ID</resourcename>
-         <resourceValue>
-           <type>tk_null</type>
-           <value></value>
-         </resourceValue>
-       </deployedResource>
-
-       <deployedResource>
-         <resourceUsage>InstanceUsesResource</resourceUsage>
          <requirementName>CIAO:ServerResources</requirementName>
-         <resourceName>here_we_insert_the_CIAO:ServerResources_ID
-         defined in infoProperty</resourcename>
-         <resourceValue>
-           <type>tk_null</type>
-           <value></value>
-         </resourceValue>
+         <resourceName>here_we_insert_the_name_defined_in_CIAO:ServerResources</resourcename>
+         <property>
+           <name>CIAO:PolicySetName</name>
+           <value>
+             <type>tk_string</type>
+             <value>
+               <string>here_we_insert_the_PolicySet_name_defined_in_the_ServerResources</string>
+             </value>
+           </value>
+         </property>
        </deployedResource>
 
      </instance>
    </deploymentplan>
   
-If only ID of CIAO:ServerResources is specified, we are using it as a
-collocation constraint.  I.e., if two instances are deployed to the
-same target node with different ServerResources IDs, DAnCE should
+If only the name of the CIAO:ServerResources is specified, we are
+using it as a collocation constraint.  In this case, the
+<deployedResource> will contain no <property> sub-element.  Component
+instances with different <resourceName> values will be deployed to the
+same target node with different ServerResources names.  DAnCE should
 create two differnet NodeApplication on the same node.
 
 Likewise, specifying different CIAO:PolicySet IDs will force component
