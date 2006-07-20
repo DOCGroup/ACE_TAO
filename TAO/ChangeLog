@@ -1,11 +1,16 @@
+Thu Jul 20 07:08:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/IDL_Test/IDL_Test.mpc:
+          Added regression for bug 2582 again
+
 Thu Jul 20 03:43:30 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * docs/tutorials/Quoter/RTCORBA/Broker_i.cpp
         * docs/tutorials/Quoter/RTCORBA/Distributor_i.cpp
         * docs/tutorials/Quoter/RTCORBA/Stock_Database.cpp
-        
+
           Added some comments for Shanshan.
-        
+
 Wed Jul 19 22:44:16 UTC 2006  Ciju John  <johnc@ociweb.com>
 
         * orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/SimpleAddressServer.h:
