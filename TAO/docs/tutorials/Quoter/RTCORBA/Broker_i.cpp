@@ -54,6 +54,7 @@ Stock_StockBroker_i::~Stock_StockBroker_i (void)
 ::Stock::StockNameConsumer_ptr Stock_StockBroker_i::get_consumer_notifier ()
   throw (::CORBA::SystemException)
 {
+  // @@ Shanshan - I would rather you use a _var here.
   return Stock::StockNameConsumer::_duplicate (this->consumer_->_this ());
 }
 
@@ -112,11 +113,13 @@ Stock_StockBrokerHome_i::Stock_StockBrokerHome_i (CORBA::ORB_ptr orb,
 // Implementation skeleton destructor
 Stock_StockBrokerHome_i::~Stock_StockBrokerHome_i (void)
 {
+  // @@ Shanshan - Why??
   // Leaking the broker_!
 }
 
 ::Stock::StockBroker_ptr Stock_StockBrokerHome_i::create ()
   throw (::CORBA::SystemException)
 {
+  // @@ Shanshan - Please use a _var to store this->broker_
   return Stock::StockBroker::_duplicate (this->broker_->_this ());
 }

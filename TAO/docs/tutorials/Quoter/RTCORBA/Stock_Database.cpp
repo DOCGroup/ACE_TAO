@@ -15,16 +15,20 @@ Stock_Database::Stock_Database (void)
 
   Stock::StockInfo * stock_info; 
 
-  for (int i = 0; i < sizeof (stock_names) / sizeof (const char *); ++i) {
-    stock_info = new Stock::StockInfo;
-
-    stock_info->name = stock_names[i];
-    stock_info->high = 70 + (ACE_OS::rand () % 30);
-    stock_info->last = 65 + (ACE_OS::rand () % 15);
-    stock_info->low = 60 + (ACE_OS::rand () % 20);
-
-    this->stock_map_.insert (std::make_pair (std::string (stock_names[i]), stock_info));
-  }
+  for (int i = 0; i < sizeof (stock_names) / sizeof (const char *); ++i) 
+    {
+      // @@ Shanshan - This still leaks memory.  Please either don't
+      // store pointers in the container, or write a destructor to
+      // delete this memory.
+      stock_info = new Stock::StockInfo;
+      
+      stock_info->name = stock_names[i];
+      stock_info->high = 70 + (ACE_OS::rand () % 30);
+      stock_info->last = 65 + (ACE_OS::rand () % 15);
+      stock_info->low = 60 + (ACE_OS::rand () % 20);
+      
+      this->stock_map_.insert (std::make_pair (std::string (stock_names[i]), stock_info));
+    }
 }
 
 //
@@ -71,6 +75,8 @@ int Stock_Database::svc (void)
 {
   while (true) 
   {
+    // @@ Shanshan - This lock only does you any good if the other methods
+    // are similarly locked.
     ACE_GUARD_RETURN (ACE_RW_Thread_Mutex, g, lock_, 0);
 
     for (Stock_Database::StockMap::iterator iter = this->stock_map_.begin ();
@@ -90,8 +96,6 @@ int Stock_Database::svc (void)
         iter->second->low = iter->second->last;
       else if (iter->second->last > iter->second->high)
         iter->second->high = iter->second->last;
-      else
-        ;
     }
 
     // Sleep for one second.
