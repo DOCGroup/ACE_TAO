@@ -1,6 +1,9 @@
 // -*- C++ -*-
 
 #include "tao/EndpointPolicy/IIOPEndpointValue_i.h"
+
+#if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
+
 #include "tao/IIOP_Endpoint.h"
 #include "tao/IIOP_Acceptor.h"
 #include "ace/OS_NS_strings.h"
@@ -114,6 +117,6 @@ IIOPEndpointValue_i::protocol_tag (void)
   return IOP::TAG_INTERNET_IOP;
 }
 
-
-
 TAO_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* TAO_HAS_IIOP && TAO_HAS_IIOP != 0 */

@@ -6,7 +6,8 @@
 
 #include "tao/Transport_Acceptor.h"
 #include "tao/MProfile.h"
-#include "tao/IIOP_Profile.h"
+#include "tao/Profile.h"
+#include "tao/Endpoint.h"
 
 ACE_RCSID(EndpointPolicy,
           Endpoint_Acceptor_Filter,
