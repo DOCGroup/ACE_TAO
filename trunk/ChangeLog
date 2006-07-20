@@ -1,3 +1,9 @@
+Thu Jul 20 08:37:17 UTC 2006  Olli Savia  <ops@iki.fi>
+
+        * ace/TTY_IO.cpp:
+          Fixed compile error on VxWorks. Thanks to Johnny for pointing
+          out the problem.
+        
 Wed Jul 19 23:39:05 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * bin/PythonACE/fuzz/__init__.py
@@ -6,7 +12,7 @@ Wed Jul 19 23:39:05 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
         * bin/PythonACE/fuzz/_singleton.py
         * bin/PythonACE/fuzz/_warning_handler.py
         * bin/PythonACE/fuzz/streams_include.py
-        
+
           Changes necessary to support mailing (non-fatal) Fuzz errors to
           the user that attempts a commit.  streams_include is an example
           of a fuzz check that sends warnings instead of stopping commits.
