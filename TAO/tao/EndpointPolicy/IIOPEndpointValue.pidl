@@ -15,6 +15,8 @@
 ///FUZZ: disable check_for_include/
 #include "tao/EndpointPolicy/EndpointPolicy.pidl"
 
+#if !defined (TAO_LACKS_IIOP)
+
 module EndpointPolicy
 {
   local interface IIOPEndpointValue : EndpointValueBase
@@ -25,5 +27,7 @@ module EndpointPolicy
     attribute unsigned short port;
   };
 };
+
+#endif /* TAO_LACKS_IIOP */
 
 #endif /* _TAO_IIOPENDPOINT_VALUE_IDL_ */

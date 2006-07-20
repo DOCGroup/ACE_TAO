@@ -29,6 +29,7 @@
 // complicated we may want to have them here.
 #pragma prefix "omg.org"
 
+#if !defined (TAO_LACKS_IIOP)
 
 module IIOP
 {
@@ -45,5 +46,7 @@ module IIOP
     ListenPointList listen_points;
   };
 };
+
+#endif /* TAO_LACKS_IIOP */
 
 #endif  /* TAO_IIOP_PIDL */
