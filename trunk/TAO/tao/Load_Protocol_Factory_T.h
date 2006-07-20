@@ -29,7 +29,7 @@ namespace TAO
   {
     template<typename T>
     int
-    load_protocol_factory (TAO_ProtocolFactorySet protocol_set,
+    load_protocol_factory (TAO_ProtocolFactorySet &protocol_set,
                            const ACE_TCHAR *name)
     {
       TAO_Protocol_Factory *protocol_factory = 0;
