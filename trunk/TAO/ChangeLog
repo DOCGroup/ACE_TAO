@@ -1,3 +1,18 @@
+Thu Jul 20 11:38:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Load_Protocol_Factory_T.h:
+          New template method that can be used to load a specific pluggable
+          protocol.
+
+        * tao/tao.mpc:
+          Added new file
+
+        * tao/default_resource.cpp:
+        * tao/Strategies/advanced_resource.cpp:
+          Use the new template method to load the pluggable protocols. This
+          way we can remove a lot of duplicated code that was copied just for
+          each specific protocol.
+
 Thu Jul 20 10:24:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Strategies/DIOP_Transport.h:
