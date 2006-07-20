@@ -40,7 +40,7 @@ ACE_Mutex::ACE_Mutex (int type, const ACE_TCHAR *name,
     process_lock_ (0),
     lockname_ (0),
 #endif /* ACE_HAS_PTHREADS || ACE_HAS_STHREADS */
-    removed_ (0)
+    removed_ (false)
 {
   // ACE_TRACE ("ACE_Mutex::ACE_Mutex");
 
