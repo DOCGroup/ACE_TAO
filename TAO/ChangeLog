@@ -1,3 +1,8 @@
+Thu Jul 20 13:16:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/IIOP_Profile.cpp (do_is_equivalent):
+          Use true/false
+
 Thu Jul 20 12:36:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Strategies/DIOP_Endpoint.{h,cpp}:
