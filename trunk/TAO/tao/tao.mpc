@@ -389,6 +389,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core, tao_vers
     LF_Invocation_Event.h
     LF_Strategy_Complete.h
     LF_Strategy.h
+    Load_Protocol_Factory_T.h
     LocalObject.h
     LocateRequest_Invocation_Adapter.h
     LocateRequest_Invocation.h
