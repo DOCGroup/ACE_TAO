@@ -48,9 +48,18 @@
 #include "PC_Updater.h"           //A visitor class to walk through the elements of the PC
 
 #include "ace/Configuration_Import_Export.h"
-
+ 
 #include <iostream>
 using namespace std;
+
+const  char* CIAO_RepositoryManagerDaemon_i::PC_EXTENSION = ".epc";
+const  char *CIAO_RepositoryManagerDaemon_i::RM_RECORD_FILE = "RM_record";
+const  char *CIAO_RepositoryManagerDaemon_i::RM_RECORD_NAME_SECTION = "Names";
+const  char *CIAO_RepositoryManagerDaemon_i::RM_RECORD_UUID_SECTION = "UUIDs";
+ 
+#if defined ASSEMBLY_INTERFACE_SUPPORT
+const char *CIAO_RepositoryManagerDaemon_i::RM_RECORD_TYPE_SECTION = "Types";
+# endif
 
 //-----------------------------------------------------------------
 //Constructor
@@ -372,7 +381,7 @@ void CIAO_RepositoryManagerDaemon_i::installPackage (
   {
      ACE_DEBUG ((LM_ERROR,
                  "[RM] could not bind %s.\n",
-                 pc->UUID));
+                 pc->UUID.in()));
 
      //unbind the name
      this->names_.unbind (installationName);
@@ -399,7 +408,7 @@ void CIAO_RepositoryManagerDaemon_i::installPackage (
 
   ACE_DEBUG ((LM_INFO,
               "Installed PackageConfiguration \n\tname: %s \n\tuuid: %s\n",
-              installationName, pc->UUID));
+              installationName, pc->UUID.in()));
 }
 
 
@@ -412,7 +421,7 @@ void CIAO_RepositoryManagerDaemon_i::createPackage (
                                                     const char * installationName,
                                                     const ::Deployment::PackageConfiguration & package,
                                                     const char * baseLocation,
-                                                    ::CORBA::Boolean replace
+                                                    ::CORBA::Boolean 
                                                     )
                    ACE_THROW_SPEC ((
                                     CORBA::SystemException,
@@ -528,7 +537,7 @@ void CIAO_RepositoryManagerDaemon_i::createPackage (
   {
      ACE_DEBUG ((LM_ERROR,
                  "[RM] could not bind %s.\n",
-                 pc.UUID));
+                 pc.UUID.in()));
 
      //unbind the name
      this->names_.unbind (installationName);
@@ -554,8 +563,8 @@ void CIAO_RepositoryManagerDaemon_i::createPackage (
   this->dump ();
 
   ACE_DEBUG ((LM_INFO,
-    "Created PackageConfiguration \n  directory: %s \n  name: %s \n  uuid: %s\n",
-    path.c_str (), installationName, pc.UUID));
+	      "Created PackageConfiguration \n  directory: %s \n  name: %s \n  uuid: %s\n",
+	      path.c_str (), installationName, pc.UUID.in()));
 }
 
 
@@ -646,7 +655,7 @@ CIAO_RepositoryManagerDaemon_i::findPackageByUUID (const char * UUID)
 //-----------------------------------------------------------------
 
 ::CORBA::StringSeq * CIAO_RepositoryManagerDaemon_i::findNamesByType (
-                                                                      const char * type
+                                                                      const char * 
                                                                       )
   ACE_THROW_SPEC ((
                    CORBA::SystemException

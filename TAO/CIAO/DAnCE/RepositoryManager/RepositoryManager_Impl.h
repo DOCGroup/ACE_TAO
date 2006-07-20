@@ -44,19 +44,6 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-namespace
-{
-  const static size_t TEMP_LEN = 1024;
-
-  const static char* PC_EXTENSION = ".epc";
-
-  const static char *RM_RECORD_FILE = "RM_record";
-  const static char *RM_RECORD_NAME_SECTION = "Names";
-  const static char *RM_RECORD_UUID_SECTION = "UUIDs";
-#if defined ASSEMBLY_INTERFACE_SUPPORT
-  const static char *RM_RECORD_TYPE_SECTION = "Types";
-# endif
-}
 
 class  CIAO_RepositoryManagerDaemon_i :
   public virtual POA_CIAO::RepositoryManagerDaemon
@@ -279,8 +266,15 @@ public:
   /// a hash map that associates the UUIDs of
   /// PackageConfigurations with their location
   PCMap uuids_;
-
+  
+  static  const  size_t TEMP_LEN = 1024;
+  static  const  char* PC_EXTENSION;
+  static  const  char *RM_RECORD_FILE;
+  static  const  char *RM_RECORD_NAME_SECTION;
+  static  const  char *RM_RECORD_UUID_SECTION;
+ 
 #if defined ASSEMBLY_INTERFACE_SUPPORT
+  static const char *RM_RECORD_TYPE_SECTION;
   //a hash map which associates Component Interface
   //UUIDs with their implementations
   CIMap types_;
