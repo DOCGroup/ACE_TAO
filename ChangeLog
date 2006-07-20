@@ -8,17 +8,23 @@ Thu Jul 20 16:42:04 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
           Removed "ace/os_include/netinet/os_in.h" include directive.  Now
           that ACE_NTOHLL has been removed it is no longer necessary.
 
+        * ace/Numeric_Limits.h:
+
+          Commented out "{unsigned} long long" specializations in the
+          ACE_LACKS_NUMERIC_LIMITS case.  They're currently not used, and
+          we need
+
 Thu Jul 20 15:19:30 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
-        * ace/Basic_Types.h: Added 
-        
+        * ace/Basic_Types.h: Added
+
           # include "ace/os_include/netinet/os_in.h" // Get ntohl()
-          
+
           and added the inline keyword to ACE_NTOHLL() to fix the problems
           introduced with
 
           Wed Jul 19 22:46:51 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
-    
+
 Thu Jul 20 15:01:32 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/Configuration.cpp: Made
