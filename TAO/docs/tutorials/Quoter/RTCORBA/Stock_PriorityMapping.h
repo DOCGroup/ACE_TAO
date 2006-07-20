@@ -9,7 +9,7 @@
 #define STOCK_PRIORITYMAPPING_
 
 // TAO headers
-#include <tao/RTCORBA/Continuous_Priority_Mapping.h>
+#include "tao/RTCORBA/Continuous_Priority_Mapping.h"
 
 /**
  * @class Stock_PriorityMapping

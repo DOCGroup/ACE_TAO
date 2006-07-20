@@ -65,7 +65,7 @@ int main (int argc, char *argv[])
     mgr->activate ();
 
     // Create an instance of the <StockBroker>.
-    static const RTCORBA::Priority priority = atoi (priority_level);
+    static const RTCORBA::Priority priority = static_cast<RTCORBA::Priority> (atoi (priority_level));
     Stock_StockBrokerHome_i stock_broker_home (orb, stock_name, priority);
     Stock::StockBroker_var stock_broker = stock_broker_home.create ();
     if (CORBA::is_nil (stock_broker.in ()))
@@ -95,7 +95,7 @@ int main (int argc, char *argv[])
 
     // Create a new consumer; initialize it; subscribe to the notification service.
     Stock::StockNameConsumer_var consumer = stock_broker->get_consumer_notifier ();
-    Stock::Cookie *cookie = stock_distributor->subscribe_notifier (consumer, priority);
+    stock_distributor->subscribe_notifier (consumer, priority);
 
     // Run the event loop.
     ACE_DEBUG ((LM_DEBUG, "*** message: ready to receieve stock information...\n"));

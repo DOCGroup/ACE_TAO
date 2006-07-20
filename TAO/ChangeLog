@@ -1,3 +1,18 @@
+Thu Jul 20 20:38:08 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
+
+        * docs/tutorials/Quoter/RTCORBA/Broker.cpp
+        * docs/tutorials/Quoter/RTCORBA/Broker_i.cpp
+        * docs/tutorials/Quoter/RTCORBA/Broker_i.h
+        * docs/tutorials/Quoter/RTCORBA/Common_i.h
+        * docs/tutorials/Quoter/RTCORBA/Distributor_i.cpp
+        * docs/tutorials/Quoter/RTCORBA/Distributor_i.h
+        * docs/tutorials/Quoter/RTCORBA/Stock_Database.cpp
+        * docs/tutorials/Quoter/RTCORBA/Stock_Database.h
+        * docs/tutorials/Quoter/RTCORBA/Stock_PriorityMapping.cpp
+        * docs/tutorials/Quoter/RTCORBA/Stock_PriorityMapping.h
+
+          Fixed some errors. Addressed the comments from Will.
+
 Thu Jul 20 13:16:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/IIOP_Profile.cpp (do_is_equivalent):
