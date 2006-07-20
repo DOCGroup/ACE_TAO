@@ -55,10 +55,11 @@
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
 // Pull in definitions
-# include "ace/os_include/os_limits.h"   // Integer limits
-# include "ace/os_include/os_float.h"    // Floating point limits
-# include "ace/os_include/os_stdlib.h"   // Other types
-# include "ace/os_include/os_stddef.h"   // Get ptrdiff_t - see further comments below
+# include "ace/os_include/os_limits.h"     // Integer limits
+# include "ace/os_include/os_float.h"      // Floating point limits
+# include "ace/os_include/os_stdlib.h"     // Other types
+# include "ace/os_include/os_stddef.h"     // Get ptrdiff_t - see further comments below
+# include "ace/os_include/netinet/os_in.h" // Get ntohl()
 
 # if defined(ACE_LACKS_LONGLONG_T)
 #   include "ace/os_include/os_stdio.h"  // For long long emulation
