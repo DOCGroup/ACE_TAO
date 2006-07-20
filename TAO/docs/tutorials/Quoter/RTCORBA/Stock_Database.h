@@ -28,6 +28,9 @@ public:
   /// Constructor.
   Stock_Database (void);
 
+  /// Destructor.
+  //Stock_Database (void);
+
   /**
    * Create a StockInfo object stored in the database with the given name.
    *
@@ -52,11 +55,8 @@ public:
 
 private:
   /// Stock map.
-  typedef std::map<std::string, Stock::StockInfo *> StockMap;
+  typedef std::map<std::string, Stock::StockInfo_var> StockMap;
   StockMap stock_map_;
-
-  /// ACE_RW_Thread_Mutex.
-  ACE_RW_Thread_Mutex lock_;
 };
 
 typedef ACE_Singleton<Stock_Database, ACE_Thread_Mutex> Stock_Database_Singleton;

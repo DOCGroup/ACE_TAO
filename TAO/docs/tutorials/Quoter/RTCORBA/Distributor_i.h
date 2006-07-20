@@ -28,8 +28,7 @@
  */
 class  Stock_StockDistributor_i
   : public ACE_Task_Base,
-    public virtual POA_Stock::StockDistributor,
-    public virtual PortableServer::RefCountServantBase
+    public virtual POA_Stock::StockDistributor
 {
 public:
   /**
@@ -38,7 +37,7 @@ public:
    * @param orb
    * @param policy_list The policy list use to create StockQuoter_POA.
    */
-  Stock_StockDistributor_i (CORBA::ORB_ptr orb, CORBA::PolicyList &policy_list);
+  Stock_StockDistributor_i (CORBA::PolicyList &policy_list);
 
   /// Destructor
   virtual ~Stock_StockDistributor_i (void);
@@ -108,7 +107,7 @@ private:
   CORBA::Long rate_;
 
   /// The map that stores the subscribed StockNameConsumer object.
-  typedef std::map <Stock::Cookie *,
+  typedef std::map <const char *,
                     std::pair <Stock::StockNameConsumer_ptr,
                                RTCORBA::Priority> > CookieMap;
   CookieMap subscribers_list_;
@@ -128,8 +127,7 @@ private:
  * @brief This class defined the Stock Distributor home.
  */
 class  Stock_StockDistributorHome_i
-  : public virtual POA_Stock::StockDistributorHome,
-    public virtual PortableServer::RefCountServantBase
+  : public virtual POA_Stock::StockDistributorHome
 {
 public:
   /**

@@ -4,7 +4,7 @@
 #include "Stock_PriorityMapping.h"
 
 // TAO headers
-#include <tao/RTCORBA/Priority_Mapping_Manager.h>
+#include "tao/RTCORBA/Priority_Mapping_Manager.h"
 
 //
 // Stock_PriorityMapping
