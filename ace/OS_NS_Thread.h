@@ -1277,7 +1277,7 @@ namespace ACE_OS {
   int mutex_lock (ACE_mutex_t *m);
 
   /// This method is only implemented for Win32.  For abandoned
-  /// mutexes, <abandoned> is set to 1 and 0 is returned.
+  /// mutexes, @a abandoned is set to 1 and 0 is returned.
   extern ACE_Export
   int mutex_lock (ACE_mutex_t *m,
                   int &abandoned);
@@ -1286,7 +1286,7 @@ namespace ACE_OS {
    * This method attempts to acquire a lock, but gives up if the lock
    * has not been acquired by the given time.  If the lock is not
    * acquired within the given amount of time, then this method
-   * returns -1 with an <ETIME> errno on platforms that actually
+   * returns -1 with an @c ETIME errno on platforms that actually
    * support timed mutexes.  The timeout should be an absolute time.
    * Note that the mutex should not be a recursive one, i.e., it
    * should only be a standard mutex or an error checking mutex since
