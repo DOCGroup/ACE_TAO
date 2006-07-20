@@ -34,7 +34,7 @@ TAO_DIOP_Endpoint::TAO_DIOP_Endpoint (const ACE_INET_Addr &addr,
     , host_ ()
     , port_ (0)
     , object_addr_ (addr)
-    , object_addr_set_ (0)
+    , object_addr_set_ (false)
     , next_ (0)
 {
   this->set (addr, use_dotted_decimal_addresses);
@@ -49,7 +49,7 @@ TAO_DIOP_Endpoint::TAO_DIOP_Endpoint (const char *host,
     , host_ ()
     , port_ (port)
     , object_addr_ (addr)
-    , object_addr_set_ (0)
+    , object_addr_set_ (false)
     , next_ (0)
 {
   if (host != 0)
@@ -61,7 +61,7 @@ TAO_DIOP_Endpoint::TAO_DIOP_Endpoint (void)
     host_ (),
     port_ (0),
     object_addr_ (),
-    object_addr_set_ (0),
+    object_addr_set_ (false),
     next_ (0)
 {
 }
@@ -73,7 +73,7 @@ TAO_DIOP_Endpoint::TAO_DIOP_Endpoint (const char *host,
     host_ (),
     port_ (port),
     object_addr_ (),
-    object_addr_set_ (0),
+    object_addr_set_ (false),
     next_ (0)
 {
   if (host != 0)
@@ -239,7 +239,7 @@ TAO_DIOP_Endpoint::object_addr (void) const
             }
           else
             {
-              endpoint->object_addr_set_ = 1;
+              endpoint->object_addr_set_ = true;
             }
         }
     }
