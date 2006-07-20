@@ -137,9 +137,9 @@ ACE_Mutex::remove (void)
   // shm_open needs to be deleted as well.
   if (this->process_lock_)
     {
-      if (this->removed_ == 0)
+      if (this->removed_ == false)
         {
-          this->removed_ = 1;
+          this->removed_ = true;
           // Only destroy the lock if we're the ones who initialized
           // it.
           if (!this->lockname_)
@@ -160,9 +160,9 @@ ACE_Mutex::remove (void)
   else
   {
 #else /* !ACE_HAS_PTHREADS && !ACE_HAS_STHREADS */
-    if (this->removed_ == 0)
+    if (this->removed_ == false)
       {
-        this->removed_ = 1;
+        this->removed_ = true;
         result = ACE_OS::mutex_destroy (&this->lock_);
       }
 #endif /* ACE_HAS_PTHREADS || ACE_HAS_STHREADS */
