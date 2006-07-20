@@ -32,6 +32,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_TTY_IO::Serial_Params::Serial_Params (void)
 {
+#if defined (ACE_HAS_TERMIOS) || defined (ACE_HAS_TERMIO) || defined (ACE_WIN32)
   baudrate = 9600;
   xonlim = 0;
   xofflim = 0;
@@ -49,6 +50,7 @@ ACE_TTY_IO::Serial_Params::Serial_Params (void)
   dtrdisable = false;
   databits = 8;
   stopbits = 1;
+#endif
 }
 
 // Interface for reading/writing serial device parameters
