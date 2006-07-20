@@ -102,20 +102,20 @@ void PC_Updater::clear_list ()
 
   // ComponentInterfaceDescription
 
-  void PC_Updater::update (::Deployment::ComponentInterfaceDescription &cid)
+  void PC_Updater::update (::Deployment::ComponentInterfaceDescription &)
   {
   }
 
   // Requirement
 
-  void PC_Updater::update (::Deployment::Requirement &req)
+  void PC_Updater::update (::Deployment::Requirement &)
   {
   }
 
 
   // ComponentExternalPortEndpoint
 
-  void PC_Updater::update (::Deployment::ComponentExternalPortEndpoint &cepe)
+  void PC_Updater::update (::Deployment::ComponentExternalPortEndpoint &)
   {
   }
 
@@ -123,13 +123,13 @@ void PC_Updater::clear_list ()
 
   // ImplementationDependency
 
-  void PC_Updater::update (Deployment::ImplementationDependency &id)
+  void PC_Updater::update (Deployment::ImplementationDependency &)
   {
   }
 
   // ComponentPackageReference
 
-  void PC_Updater::update (::Deployment::ComponentPackageReference &cpr)
+  void PC_Updater::update (::Deployment::ComponentPackageReference &)
   {
   }
 
@@ -142,13 +142,13 @@ void PC_Updater::clear_list ()
 
   // SubcomponentPortEndpoint
 
-  void PC_Updater::update (::Deployment::SubcomponentPortEndpoint& spe)
+  void PC_Updater::update (::Deployment::SubcomponentPortEndpoint& )
   {
   }
 
   // AssemblyConnectionDescription
 
-  void PC_Updater::update (::Deployment::AssemblyConnectionDescription &acd)
+  void PC_Updater::update (::Deployment::AssemblyConnectionDescription &)
   {
   }
 
@@ -156,7 +156,7 @@ void PC_Updater::clear_list ()
   // AssemblyPropertyMapping
 
   void
-  PC_Updater::update (::Deployment::AssemblyPropertyMapping &apm)
+  PC_Updater::update (::Deployment::AssemblyPropertyMapping &)
   {
   }
 
@@ -201,10 +201,11 @@ void PC_Updater::clear_list ()
       }
       iter++;
     }
-
+    const char* location = iad.location[0];
+    
     ACE_ERROR ((LM_ERROR,
                "[PC_Updater::update] Unable to update: %s!\n",
-                iad.location[0]));
+               location));
 
     this->success_ = false;
   }
@@ -218,7 +219,7 @@ void PC_Updater::clear_list ()
 
   // ImplementationRequirement
 
-  void PC_Updater::update (::Deployment::ImplementationRequirement &ir)
+  void PC_Updater::update (::Deployment::ImplementationRequirement &)
   {
   }
 
@@ -231,7 +232,7 @@ void PC_Updater::clear_list ()
 
   // Capability
 
-  void PC_Updater::update (::Deployment::Capability &capability)
+  void PC_Updater::update (::Deployment::Capability &)
   {
   }
 
@@ -261,6 +262,6 @@ void PC_Updater::clear_list ()
 
 
   // Property
-  void PC_Updater::update (Deployment::Property& property)
+  void PC_Updater::update (Deployment::Property& )
   {
   }
