@@ -15,6 +15,8 @@
 
 #ifndef ANALYZER_H
 #define ANALYZER_H
+
+#include "tao/AnyTypeCode/AnyTypeCode_methods.h"
 #include "tao/DynamicAny/DynamicAny.h"
 #include "tao/ORB.h"
 
