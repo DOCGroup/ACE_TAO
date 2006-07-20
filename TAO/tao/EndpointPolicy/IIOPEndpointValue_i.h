@@ -22,10 +22,13 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/orbconf.h"
+
+#if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
+
 #include "tao/EndpointPolicy/IIOPEndpointValueC.h"
 #include "tao/EndpointPolicy/Endpoint_Value_Impl.h"
 #include "tao/LocalObject.h"
-
 
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
@@ -109,6 +112,8 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
+
+#endif /* TAO_HAS_IIOP && TAO_HAS_IIOP != 0 */
 
 #include /**/ "ace/post.h"
 

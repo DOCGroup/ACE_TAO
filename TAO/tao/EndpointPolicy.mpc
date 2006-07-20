@@ -1,5 +1,5 @@
 //$Id$
-project : taolib, core, portableserver, pi, tao_versioning_idl_defaults {
+project : taolib, core, portableserver, pi, tao_versioning_idl_defaults, tao_no_iiop {
   sharedname   = TAO_EndpointPolicy
   dynamicflags = TAO_ENDPOINTPOLICY_BUILD_DLL
 

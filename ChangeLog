@@ -1,3 +1,11 @@
+Thu Jul 20 09:57:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/tao_no_iiop.mpb:
+          New feature to disable iiop in TAO
+
+        * bin/MakeProjectCreator/config/global.features:
+          Set tao_no_iiop to 0 by default
+
 Thu Jul 20 09:11:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_Thread.h:
