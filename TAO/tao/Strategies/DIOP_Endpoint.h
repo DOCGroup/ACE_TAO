@@ -128,7 +128,7 @@ private:
   ACE_INET_Addr object_addr_;
 
   /// Flag to indicate if the address has been resolved and set.
-  int object_addr_set_;
+  bool object_addr_set_;
 
   /// DIOP Endpoints can be stringed into a list.  Return the next
   /// endpoint in the list, if any.
