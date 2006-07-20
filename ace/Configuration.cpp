@@ -3,6 +3,7 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/SString.h"
 #include "ace/OS_NS_string.h"
+#include "ace/OS_NS_strings.h"
 
 // Can remove this when import_config and export_config are removed from
 // ACE_Configuration. They're deprecated at ACE 5.2.
@@ -1189,13 +1190,13 @@ ACE_Configuration_ExtId& ACE_Configuration_ExtId::operator= (const ACE_Configura
 bool
 ACE_Configuration_ExtId::operator== (const ACE_Configuration_ExtId& rhs) const
 {
-  return (ACE_OS::strcmp (name_, rhs.name_) == 0);
+  return (ACE_OS::strcasecmp (name_, rhs.name_) == 0);
 }
 
 bool
 ACE_Configuration_ExtId::operator!= (const ACE_Configuration_ExtId& rhs) const
 {
-  return (ACE_OS::strcmp (name_, rhs.name_) != 0);
+  return (ACE_OS::strcasecmp (name_, rhs.name_) != 0);
 }
 
 u_long
