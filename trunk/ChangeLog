@@ -4,7 +4,8 @@ Thu Jul 20 15:19:30 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
         
           # include "ace/os_include/netinet/os_in.h" // Get ntohl()
           
-          to fix the problems introduced with 
+          and added the inline keyword to ACE_NTOHLL() to fix the problems
+          introduced with
 
           Wed Jul 19 22:46:51 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
     
