@@ -304,19 +304,19 @@ CORBA::Boolean
 TAO_IIOP_Profile::do_is_equivalent (const TAO_Profile *other_profile)
 {
   if (other_profile == this)
-    return 1;
+    return true;
 
   const TAO_IIOP_Profile *op =
     dynamic_cast<const TAO_IIOP_Profile *> (other_profile);
 
   // Make sure we have a TAO_IIOP_Profile.
   if (op == 0)
-    return 0;
+    return false;
 
   if (this->count_ == 0 && op->count_ == 0)
-    return 1;
+    return true;
   if (this->count_ != op->count_)
-    return 0;
+    return false;
   // Check endpoints equivalence.
   const TAO_IIOP_Endpoint *other_endp = &op->endpoint_;
   for (TAO_IIOP_Endpoint *endp = &this->endpoint_;
@@ -326,10 +326,10 @@ TAO_IIOP_Profile::do_is_equivalent (const TAO_Profile *other_profile)
       if (endp->is_equivalent (other_endp))
         other_endp = other_endp->next_;
       else
-        return 0;
+        return false;
     }
 
-  return 1;
+  return true;
 }
 
 CORBA::ULong
