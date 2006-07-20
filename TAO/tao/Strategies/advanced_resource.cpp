@@ -20,11 +20,9 @@
 #include "tao/Leader_Follower.h"
 #include "tao/StringSeqC.h"
 #include "tao/ORB_Core.h"
-#include "tao/Protocol_Factory.h"
+#include "tao/Load_Protocol_Factory_T.h"
 
 #include "ace/Arg_Shifter.h"
-#include "ace/Auto_Ptr.h"
-#include "ace/Dynamic_Service.h"
 #include "ace/Service_Config.h"
 #include "ace/Select_Reactor.h"
 #include "ace/WFMO_Reactor.h"
@@ -60,7 +58,6 @@ TAO_Resource_Factory_Changer::TAO_Resource_Factory_Changer (void)
 #if TAO_HAS_SCIOP == 1
   ACE_Service_Config::process_directive (ace_svc_desc_TAO_SCIOP_Protocol_Factory);
 #endif /* TAO_HAS_SCIOP == 1 */
-
 }
 
 TAO_Advanced_Resource_Factory::TAO_Advanced_Resource_Factory (void)
@@ -303,6 +300,7 @@ TAO_Advanced_Resource_Factory::load_default_protocols (void)
   return 0;
 }
 
+
 int
 TAO_Advanced_Resource_Factory::init_protocol_factories (void)
 {
@@ -324,271 +322,33 @@ TAO_Advanced_Resource_Factory::init_protocol_factories (void)
 
   if (factory == end)
     {
-      TAO_Protocol_Factory *protocol_factory = 0;
-      auto_ptr<TAO_Protocol_Factory> safe_protocol_factory;
-
-      TAO_Protocol_Item *item = 0;
-
-      // If a protocol factory is obtained from the Service
-      // Configurator then do not transfer ownership to the
-      // TAO_Protocol_Item.
-      int transfer_ownership = 0;
-
-      int r = this->load_default_protocols ();
+      int const r = this->load_default_protocols ();
 
       if (r == -1)
         return -1;
 
 #if TAO_HAS_UIOP == 1
-      protocol_factory =
-        ACE_Dynamic_Service<TAO_Protocol_Factory>::instance ("UIOP_Factory");
-
-      if (protocol_factory == 0)
-        {
-          if (TAO_debug_level > 0)
-            ACE_ERROR ((LM_WARNING,
-                        ACE_TEXT("(%P|%t) WARNING - No %s found in Service Repository.")
-                        ACE_TEXT("  Using default instance.\n"),
-                        ACE_TEXT("UIOP Protocol Factory")));
-
-          ACE_NEW_RETURN (protocol_factory,
-                          TAO_UIOP_Protocol_Factory,
-                          -1);
-
-          ACE_AUTO_PTR_RESET (safe_protocol_factory,
-                              protocol_factory,
-                              TAO_Protocol_Factory);
-
-          transfer_ownership = 1;
-        }
-      else
-        {
-          transfer_ownership = 0;
-        }
-
-      ACE_NEW_RETURN (item, TAO_Protocol_Item ("UIOP_Factory"), -1);
-      // If the TAO_Protocol_Item retains ownership of the
-      // TAO_Protocol_Factory then we used an auto_ptr<> above, so
-      // release the TAO_Protocol_Factory from it.  Otherwise, we
-      // obtained the TAO_Protocol_Factory from the Service
-      // Configurator so an auto_ptr<> wasn't used since the Service
-      // Configurator retains ownership, hence there was no need to
-      // use an auto_ptr<> in this method.
-      item->factory ((transfer_ownership ?
-                      safe_protocol_factory.release () :
-                      protocol_factory),
-                     transfer_ownership);
-
-      if (this->protocol_factories_.insert (item) == -1)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT("TAO (%P|%t) Unable to add ")
-                      ACE_TEXT("<%s> to protocol factory set.\n"),
-                      ACE_TEXT_CHAR_TO_TCHAR(item->protocol_name ().c_str ())));
-
-          delete item;
-
-          if (transfer_ownership == 0)
-            delete protocol_factory;
-
-          return -1;
-        }
-
-      if (TAO_debug_level > 0)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT("TAO (%P|%t) Loaded default ")
-                      ACE_TEXT("protocol <UIOP_Factory>\n")));
-        }
+      if (TAO::details::load_protocol_factory <TAO_UIOP_Protocol_Factory> (
+          this->protocol_factories_, "UIOP_Factory") == -1)
+        return -1;
 #endif /* TAO_HAS_UIOP == 1 */
 
 #if defined (TAO_HAS_SHMIOP) && (TAO_HAS_SHMIOP != 0)
-      protocol_factory =
-        ACE_Dynamic_Service<TAO_Protocol_Factory>::instance ("SHMIOP_Factory");
-
-      if (protocol_factory == 0)
-        {
-          if (TAO_debug_level > 0)
-            ACE_ERROR ((LM_WARNING,
-                        ACE_TEXT("(%P|%t) WARNING - No %s found in Service Repository.")
-                        ACE_TEXT("  Using default instance.\n"),
-                        ACE_TEXT("SHMIOP Protocol Factory")));
-
-          ACE_NEW_RETURN (protocol_factory,
-                          TAO_SHMIOP_Protocol_Factory,
-                          -1);
-
-          ACE_AUTO_PTR_RESET (safe_protocol_factory,
-                              protocol_factory,
-                              TAO_Protocol_Factory);
-
-          transfer_ownership = 1;
-        }
-      else
-        {
-          transfer_ownership = 0;
-        }
-
-      ACE_NEW_RETURN (item, TAO_Protocol_Item ("SHMIOP_Factory"), -1);
-      // If the TAO_Protocol_Item retains ownership of the
-      // TAO_Protocol_Factory then we used an auto_ptr<> above, so
-      // release the TAO_Protocol_Factory from it.  Otherwise, we
-      // obtained the TAO_Protocol_Factory from the Service
-      // Configurator so an auto_ptr<> wasn't used since the Service
-      // Configurator retains ownership, hence there was no need to
-      // use an auto_ptr<> in this method.
-      item->factory ((transfer_ownership ?
-                      safe_protocol_factory.release () :
-                      protocol_factory),
-                     transfer_ownership);
-
-      if (this->protocol_factories_.insert (item) == -1)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT("TAO (%P|%t) Unable to add ")
-                      ACE_TEXT("<%s> to protocol factory set.\n"),
-                      ACE_TEXT_CHAR_TO_TCHAR(item->protocol_name ().c_str ())));
-
-          delete item;
-
-          if (transfer_ownership == 0)
-            delete protocol_factory;
-
-          return -1;
-        }
-
-      if (TAO_debug_level > 0)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT("TAO (%P|%t) Loaded default ")
-                      ACE_TEXT("protocol <SHMIOP_Factory>\n")));
-        }
+      if (TAO::details::load_protocol_factory <TAO_SHMIOP_Protocol_Factory> (
+          this->protocol_factories_, "SHMIOP_Factory") == -1)
+        return -1;
 #endif /* TAO_HAS_SHMIOP && TAO_HAS_SHMIOP != 0 */
 
 #if defined (TAO_HAS_DIOP) && (TAO_HAS_DIOP != 0)
-      protocol_factory =
-        ACE_Dynamic_Service<TAO_Protocol_Factory>::instance ("DIOP_Factory");
-
-      if (protocol_factory == 0)
-        {
-          if (TAO_debug_level > 0)
-            ACE_ERROR ((LM_WARNING,
-                        ACE_TEXT("(%P|%t) WARNING - No %s found in Service Repository.")
-                        ACE_TEXT("  Using default instance.\n"),
-                        ACE_TEXT("DIOP Protocol Factory")));
-
-          ACE_NEW_RETURN (protocol_factory,
-                          TAO_DIOP_Protocol_Factory,
-                          -1);
-
-          ACE_AUTO_PTR_RESET (safe_protocol_factory,
-                              protocol_factory,
-                              TAO_Protocol_Factory);
-
-          transfer_ownership = 1;
-        }
-      else
-        {
-          transfer_ownership = 0;
-        }
-
-      ACE_NEW_RETURN (item, TAO_Protocol_Item ("DIOP_Factory"), -1);
-      // If the TAO_Protocol_Item retains ownership of the
-      // TAO_Protocol_Factory then we used an auto_ptr<> above, so
-      // release the TAO_Protocol_Factory from it.  Otherwise, we
-      // obtained the TAO_Protocol_Factory from the Service
-      // Configurator so an auto_ptr<> wasn't used since the Service
-      // Configurator retains ownership, hence there was no need to
-      // use an auto_ptr<> in this method.
-      item->factory ((transfer_ownership ?
-                      safe_protocol_factory.release () :
-                      protocol_factory),
-                     transfer_ownership);
-
-      if (this->protocol_factories_.insert (item) == -1)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT("TAO (%P|%t) Unable to add ")
-                      ACE_TEXT("<%s> to protocol factory set.\n"),
-                      ACE_TEXT_CHAR_TO_TCHAR(item->protocol_name ().c_str ())));
-
-          delete item;
-
-          if (transfer_ownership == 0)
-            delete protocol_factory;
-
-          return -1;
-        }
-
-      if (TAO_debug_level > 0)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT("TAO (%P|%t) Loaded default ")
-                      ACE_TEXT("protocol <DIOP_Factory>\n")));
-        }
+      if (TAO::details::load_protocol_factory <TAO_DIOP_Protocol_Factory> (
+          this->protocol_factories_, "DIOP_Factory") == -1)
+        return -1;
 #endif /* TAO_HAS_DIOP && TAO_HAS_DIOP != 0 */
 
 #if defined (TAO_HAS_SCIOP) && (TAO_HAS_SCIOP != 0)
-      protocol_factory =
-        ACE_Dynamic_Service<TAO_Protocol_Factory>::instance ("SCIOP_Factory");
-
-      if (protocol_factory == 0)
-        {
-          if (TAO_debug_level > 0)
-            ACE_ERROR ((LM_WARNING,
-                        ACE_TEXT("(%P|%t) WARNING - No %s found in Service Repository.")
-                        ACE_TEXT("  Using default instance.\n"),
-                        ACE_TEXT("SCIOP Protocol Factory")));
-
-          ACE_NEW_RETURN (protocol_factory,
-                          TAO_SCIOP_Protocol_Factory,
-                          -1);
-
-          ACE_AUTO_PTR_RESET (safe_protocol_factory,
-                              protocol_factory,
-                              TAO_Protocol_Factory);
-
-          transfer_ownership = 1;
-        }
-      else
-        {
-          transfer_ownership = 0;
-        }
-
-      ACE_NEW_RETURN (item, TAO_Protocol_Item ("SCIOP_Factory"), -1);
-      // If the TAO_Protocol_Item retains ownership of the
-      // TAO_Protocol_Factory then we used an auto_ptr<> above, so
-      // release the TAO_Protocol_Factory from it.  Otherwise, we
-      // obtained the TAO_Protocol_Factory from the Service
-      // Configurator so an auto_ptr<> wasn't used since the Service
-      // Configurator retains ownership, hence there was no need to
-      // use an auto_ptr<> in this method.
-      item->factory ((transfer_ownership ?
-                      safe_protocol_factory.release () :
-                      protocol_factory),
-                     transfer_ownership);
-
-      if (this->protocol_factories_.insert (item) == -1)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT("TAO (%P|%t) Unable to add ")
-                      ACE_TEXT("<%s> to protocol factory set.\n"),
-                      ACE_TEXT_CHAR_TO_TCHAR(item->protocol_name ().c_str ())));
-
-          delete item;
-
-          if (transfer_ownership == 0)
-            delete protocol_factory;
-
-          return -1;
-        }
-
-      if (TAO_debug_level > 0)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT("TAO (%P|%t) Loaded default ")
-                      ACE_TEXT("protocol <SCIOP_Factory>\n")));
-        }
+      if (TAO::details::load_protocol_factory <TAO_SCIOP_Protocol_Factory> (
+          this->protocol_factories_, "SCIOP_Factory") == -1)
+        return -1;
 #endif /* TAO_HAS_SCIOP && TAO_HAS_SCIOP != 0 */
 
       return 0;
