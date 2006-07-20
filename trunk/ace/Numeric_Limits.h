@@ -82,34 +82,34 @@ struct ACE_Export ACE_Numeric_Limits<signed long>
   static signed long max (void) { return LONG_MAX; }
 };
 
-#ifndef ACE_LACKS_LONGLONG_T
-template<>
-struct ACE_Export ACE_Numeric_Limits<signed long long>
-{
-#if defined (LLONG_MIN)
-#  define ACE_LLONG_MIN LLONG_MIN
-#elif defined (LONG_LONG_MIN)
-#  define ACE_LLONG_MIN LONG_LONG_MIN
-#elif defined (LONGLONG_MIN)
-#  define ACE_LLONG_MIN LONGLONG_MIN
-#else
-#  error Unable to determine minimum signed long long value.
-#endif  /* LLONG_MIN */
+// #ifndef ACE_LACKS_LONGLONG_T
+// template<>
+// struct ACE_Export ACE_Numeric_Limits<signed long long>
+// {
+// #if defined (LLONG_MIN)
+// #  define ACE_LLONG_MIN LLONG_MIN
+// #elif defined (LONG_LONG_MIN)
+// #  define ACE_LLONG_MIN LONG_LONG_MIN
+// #elif defined (LONGLONG_MIN)
+// #  define ACE_LLONG_MIN LONGLONG_MIN
+// #else
+// #  error Unable to determine minimum signed long long value.
+// #endif  /* LLONG_MIN */
 
-#if defined (LLONG_MAX)
-#  define ACE_LLONG_MAX LLONG_MAX
-#elif defined (LONG_LONG_MAX)
-#  define ACE_LLONG_MAX LONG_LONG_MAX
-#elif defined (LONGLONG_MAX)
-#  define ACE_LLONG_MAX LONGLONG_MAX
-#else
-#  error Unable to determine maximum signed long long value.
-#endif  /* LLONG_MAX */
+// #if defined (LLONG_MAX)
+// #  define ACE_LLONG_MAX LLONG_MAX
+// #elif defined (LONG_LONG_MAX)
+// #  define ACE_LLONG_MAX LONG_LONG_MAX
+// #elif defined (LONGLONG_MAX)
+// #  define ACE_LLONG_MAX LONGLONG_MAX
+// #else
+// #  error Unable to determine maximum signed long long value.
+// #endif  /* LLONG_MAX */
 
-  static signed long long min (void) { return ACE_LLONG_MIN; }
-  static signed long long max (void) { return ACE_LLONG_MAX; }
-};
-#endif  /* !ACE_LACKS_LONGLONG_T */
+//   static signed long long min (void) { return ACE_LLONG_MIN; }
+//   static signed long long max (void) { return ACE_LLONG_MAX; }
+// };
+// #endif  /* !ACE_LACKS_LONGLONG_T */
 
 // ------------------------------------------
 // Unsigned integers
@@ -141,23 +141,23 @@ struct ACE_Export ACE_Numeric_Limits<unsigned long>
   static unsigned long max (void) { return ULONG_MAX; }
 };
 
-#ifndef ACE_LACKS_LONGLONG_T
-template<>
-struct ACE_Export ACE_Numeric_Limits<unsigned long long>
-{
-  static unsigned long long min (void) { return 0; }
-  static unsigned long long max (void)
-  {
-# if defined (ULLONG_MAX)
-    return ULLONG_MAX;
-# elif defined (ULONGLONG_MAX)
-    return ULONGLONG_MAX;
-# else
-#  error Unable to determine maximum unsigned long long value.
-# endif  /* ULLONG_MAX */
-  }
-};
-#endif  /* !ACE_LACKS_LONGLONG_T */
+// #ifndef ACE_LACKS_LONGLONG_T
+// template<>
+// struct ACE_Export ACE_Numeric_Limits<unsigned long long>
+// {
+//   static unsigned long long min (void) { return 0; }
+//   static unsigned long long max (void)
+//   {
+// # if defined (ULLONG_MAX)
+//     return ULLONG_MAX;
+// # elif defined (ULONGLONG_MAX)
+//     return ULONGLONG_MAX;
+// # else
+// #  error Unable to determine maximum unsigned long long value.
+// # endif  /* ULLONG_MAX */
+//   }
+// };
+// #endif  /* !ACE_LACKS_LONGLONG_T */
 
 // ------------------------------------------
 // Floating point types
