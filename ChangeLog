@@ -1,3 +1,10 @@
+Thu Jul 20 21:44:31 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * tests/Service_Config_Test.cpp:
+
+          In testLimits (), surrounded string literals with ACE_TEXT to
+          fix a build error on wchar builds.
+
 Thu Jul 20 16:42:04 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
         * ace/Basic_Types.h:
