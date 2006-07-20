@@ -1,3 +1,22 @@
+Thu Jul 20 10:00:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/tao.mpc:
+        * tao/EndpointPolicy.mpc:
+          Add tao_no_iiop as base project, when we enable this feature these
+          projects are affected
+
+        * tao/IIOP.pidl:
+        * tao/EndpointPolicy/IIOPEndpointValue.pidl:
+          Guard this with !TAO_LACKS_IIOP, when tao_no_iiop is enabled as MPC
+          feature we don't generate code for these files.
+
+        * tao/Endpoint_Acceptor_Filter.cpp:
+          No need to include IIOP specific files, base classes are all we need
+          here.
+
+        * tao/EndpointPolicy/IIOPEndpointValue_i.{h,cpp}:
+          Don't compile these files when IIOP is disabled.
+
 Thu Jul 20 08:17:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_1639_Regression/struct_client.cpp:
