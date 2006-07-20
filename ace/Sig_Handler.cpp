@@ -7,13 +7,11 @@
 #include "ace/Managed_Object.h"
 #include "ace/Containers.h"
 
-
 #if !defined (__ACE_INLINE__)
 #include "ace/Sig_Handler.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, Sig_Handler, "$Id$")
-
 
 #if defined (ACE_HAS_SIG_C_FUNC)
 
