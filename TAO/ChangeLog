@@ -1,3 +1,8 @@
+Thu Jul 20 10:24:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Strategies/DIOP_Transport.h:
+          Removed commented out methods
+
 Thu Jul 20 10:00:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/tao.mpc:
