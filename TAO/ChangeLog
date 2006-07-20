@@ -1,3 +1,9 @@
+Thu Jul 20 12:26:59 UTC 2006  Simon McQueen  <sm@prismtech.com>
+
+        * tests/Bug_2549_Regression/test.idl:
+
+          Replace <> with "" to fix fuxx error.
+
 Thu Jul 20 11:38:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Load_Protocol_Factory_T.h:
