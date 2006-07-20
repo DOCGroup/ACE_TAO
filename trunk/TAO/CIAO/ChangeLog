@@ -1,3 +1,10 @@
+Thu Jul 20 22:03:31 UTC 2006  Nanbor Wang  <nanbor (at) txcorp (dot) com>
+
+        * docs/schema/ServerResourceUsage.txt: Revised the document to
+          change how a policy set should be hooked into a component
+          instance.  This needs to be changed to reflect recent changed in
+          DnC schema.
+
 Thu Jul 20 01:10:58 UTC 2006  Vipul Singh  <vipuls@dre.vanderbilt.edu>
 
         * DAnCE/RepositoryManager/PC_Updater.cpp: Removed the variable name
