@@ -1,3 +1,8 @@
+Thu Jul 20 09:11:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_Thread.h:
+          Doxygen improvements
+
 Thu Jul 20 08:55:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Mutex.{h,cpp,inl}:
