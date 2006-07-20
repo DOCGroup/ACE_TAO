@@ -18,7 +18,6 @@ Stock_StockBroker_i::Stock_StockBroker_i (CORBA::ORB_ptr orb,
   // Get a reference to the <RTORB>.
   CORBA::Object_var obj = orb->resolve_initial_references ("RTORB");
   RTCORBA::RTORB_var rt_orb = RTCORBA::RTORB::_narrow (obj.in ());
-  ACE_ASSERT (!CORBA::is_nil (rt_orb));
 
   // Create a <CORBA::PolicyList> for the child POA.
   CORBA::PolicyList consumer_policies (1);
@@ -34,11 +33,11 @@ Stock_StockBroker_i::Stock_StockBroker_i (CORBA::ORB_ptr orb,
   // activated under this POA.
   PortableServer::POA_var poa = this->_default_POA()->create_POA (
     "StockNameConsumer_POA", PortableServer::POAManager::_nil (), consumer_policies);
-  ACE_ASSERT (!CORBA::is_nil (poa));
+
+  consumer_policies[0]->destroy ();
 
   // Narrow the POA to a <RTPortableServer::POA>.
   RTPortableServer::POA_var rt_poa = RTPortableServer::POA::_narrow (poa);
-  ACE_ASSERT (!CORBA::is_nil (rt_poa));
 
   // Activate the <consumer_> with the specified <priority>.
   this->consumer_ = new Stock_StockNameConsumer_i (this->_this (), stock_name);
@@ -54,8 +53,8 @@ Stock_StockBroker_i::~Stock_StockBroker_i (void)
 ::Stock::StockNameConsumer_ptr Stock_StockBroker_i::get_consumer_notifier ()
   throw (::CORBA::SystemException)
 {
-  // @@ Shanshan - I would rather you use a _var here.
-  return Stock::StockNameConsumer::_duplicate (this->consumer_->_this ());
+  Stock::StockNameConsumer_var consumer = this->consumer_->_this ();
+  return consumer._retn();
 }
 
 void Stock_StockBroker_i::connect_quoter_info (::Stock::StockQuoter_ptr c)
@@ -99,7 +98,8 @@ Stock_StockBrokerHome_i::Stock_StockBrokerHome_i (CORBA::ORB_ptr orb,
 
   // Because the broker has nothing to do with any of the RTCORBA
   // mechanisms, we can register it under the <default_POA>.
-  try {
+  try
+  {
     this->broker_ = new Stock_StockBroker_i (orb, stock_name, priority);
     PortableServer::ServantBase_var broker_owner_transfer = this->broker_;
     this->_default_POA ()->activate_object (this->broker_);
@@ -113,13 +113,11 @@ Stock_StockBrokerHome_i::Stock_StockBrokerHome_i (CORBA::ORB_ptr orb,
 // Implementation skeleton destructor
 Stock_StockBrokerHome_i::~Stock_StockBrokerHome_i (void)
 {
-  // @@ Shanshan - Why??
-  // Leaking the broker_!
 }
 
 ::Stock::StockBroker_ptr Stock_StockBrokerHome_i::create ()
   throw (::CORBA::SystemException)
 {
-  // @@ Shanshan - Please use a _var to store this->broker_
-  return Stock::StockBroker::_duplicate (this->broker_->_this ());
+  Stock::StockBroker_var broker = this->broker_->_this ();
+  return broker._retn();
 }

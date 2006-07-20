@@ -13,7 +13,7 @@
 #include "BrokerS.h"
 
 // TAO headers
-#include <tao/RTCORBA/RTCORBA.h>
+#include "tao/RTCORBA/RTCORBA.h"
 
 // STL headers
 #include <string>
@@ -28,8 +28,7 @@
  *        distributor to notify brokers of updates.
  */
 class  Stock_StockNameConsumer_i
-  : public virtual POA_Stock::StockNameConsumer,
-    public virtual PortableServer::RefCountServantBase
+  : public virtual POA_Stock::StockNameConsumer
 {
 public:
   /**
@@ -65,8 +64,7 @@ private:
  * @brief This class is used by brokers to get detailed stock information.
  */
 class  Stock_StockQuoter_i
-  : public virtual POA_Stock::StockQuoter,
-    public virtual PortableServer::RefCountServantBase
+  : public virtual POA_Stock::StockQuoter
 {
 public:
   /// Constructor.

@@ -21,8 +21,7 @@
  * @brief This class defined the Stock Broker client.
  */
 class  Stock_StockBroker_i
-  : public virtual POA_Stock::StockBroker,
-    public virtual PortableServer::RefCountServantBase
+  : public virtual POA_Stock::StockBroker
 {
 public:
   /**
@@ -84,8 +83,7 @@ private:
  * @brief This class defined the Stock Broker home.
  */
 class  Stock_StockBrokerHome_i
-  : public virtual POA_Stock::StockBrokerHome,
-    public virtual PortableServer::RefCountServantBase
+  : public virtual POA_Stock::StockBrokerHome
 {
 public:
   /**
