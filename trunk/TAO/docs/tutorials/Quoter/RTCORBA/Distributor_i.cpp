@@ -27,6 +27,10 @@ Stock_StockDistributor_i::Stock_StockDistributor_i (CORBA::ORB_ptr orb,
   // will be activated under this POA.
   PortableServer::POA_var poa = this->_default_POA()->create_POA (
     "StockQuoter_POA", PortableServer::POAManager::_nil (), policy_list);
+  // @@ Shanshan - Please get rid of all ACE_ACCERTs in the code.  If
+  // you would like to do the check, please do so using an if statment
+  // - most of them may not be strictly necessary, as exceptions would
+  // be thrown if creation failed.
   ACE_ASSERT (!CORBA::is_nil (poa));
 
   // _narrow () the POA to a RTPortableServer::POA.
@@ -60,6 +64,9 @@ Stock_StockDistributor_i::~Stock_StockDistributor_i (void)
   std::ostrstream cookie_id;
   cookie_id << "COOKIE:" << time (0) << "_" << ACE_OS::rand () << std::ends;
 
+  // @@ Shanshan - Please use the OBV_Stock::Cookie_var here to manage your memory,
+  // there is a possibility that it could leak. Also, you may want to store a _var in the map, 
+  // or instead simply the value of the cookie in the CookieMak.
   // Create a new cookie object; initialize its value.
   OBV_Stock::Cookie *cookie = new OBV_Stock::Cookie (cookie_id.str ());
 
@@ -82,6 +89,10 @@ Stock_StockDistributor_i::~Stock_StockDistributor_i (void)
   // Get mutual exclusion of the <subscribers_list_>.
   ACE_GUARD_RETURN (ACE_RW_Thread_Mutex, g, lock_, 0);
   
+  // @@ Shanshan - Yow! I am not certain this find operation will succeed, 
+  // and if it does, you are very lucky!  You are comparing the _address_
+  // of the stored cookie, not its value!  Please see my note above about storing
+  // the *contents* of the cookie, not the cookie itself!
   // Search for the <cookie> in the <subscribers_list_>.
   CookieMap::iterator iter = this->subscribers_list_.find (ck);
 
@@ -100,6 +111,10 @@ Stock_StockDistributor_i::~Stock_StockDistributor_i (void)
 ::Stock::StockQuoter_ptr Stock_StockDistributor_i::provide_quoter_info ()
   throw (::CORBA::SystemException)
 {
+  // @@ Shanshan - Again, I am not sure why you are storing a raw
+  // pointer to the StockQuoter_i in the class, it seems like a very
+  // bad idea since you don't have ownership over the memory.  It
+  // would be better to store a _var, and duplicate that.
   return Stock::StockQuoter::_duplicate (this->quoter_->_this ());
 }
 
@@ -155,11 +170,16 @@ Stock_StockDistributorHome_i::Stock_StockDistributorHome_i (CORBA::ORB_ptr orb)
   // Get a reference to the <RTORB>.
   CORBA::Object_var obj = orb->resolve_initial_references ("RTORB");
   RTCORBA::RTORB_var rt_orb = RTCORBA::RTORB::_narrow (obj.in ());
+  // @@ Shanshan - Please go through your code and remove the ACE_ASSERTs.
   ACE_ASSERT (!CORBA::is_nil (rt_orb));
 
   // Create a <CORBA::PolicyList> for the child POA.
   CORBA::PolicyList stock_distributor_policies (2);
   stock_distributor_policies.length (2);
+  
+  // @@ Shanshan - You need to make sure to explicitly call destroy on
+  // each element of any policy list you create, or use the
+  // PolicyListDestroyer in the TAO::Utils namespace
 
   // Create a <CLIENT_PROPOGATED> priority model policy.
   stock_distributor_policies[0] =
@@ -212,6 +232,8 @@ Stock_StockDistributorHome_i::~Stock_StockDistributorHome_i (void)
 ::Stock::StockDistributor_ptr Stock_StockDistributorHome_i::create ()
   throw (::CORBA::SystemException)
 {
+  // @@ Shanshan - Again, I am not sure why you are storing a raw C++
+  // pointer here.  Please consider using a _var.
   return Stock::StockDistributor::_duplicate (this->distributor_->_this ());
 }
 
