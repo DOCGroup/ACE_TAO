@@ -1,3 +1,21 @@
+Thu Jul 20 15:19:30 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Basic_Types.h: Added 
+        
+          # include "ace/os_include/netinet/os_in.h" // Get ntohl()
+          
+          to fix the problems introduced with 
+
+          Wed Jul 19 22:46:51 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+    
+Thu Jul 20 15:01:32 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Configuration.cpp: Made
+          ACE_Configuration_ExtId::operator==() and
+          ACE_Configuration_ExtId::operator!=() case insensitive.  Thanks
+          to Domingos Monteiro <d dot monteiro at netia dot net> for this
+          contribution.
+
 Thu Jul 20 09:57:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/tao_no_iiop.mpb:
