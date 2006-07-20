@@ -111,9 +111,6 @@ public:
   /// Set the port number.
   CORBA::UShort port (CORBA::UShort p);
 
-  //TAO_DIOP_Connection_Handler *&hint (void);
-  // Access to our <hint_>.
-
 private:
 
   /// Helper method for setting INET_Addr.
