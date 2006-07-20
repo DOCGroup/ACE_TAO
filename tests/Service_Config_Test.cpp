@@ -209,13 +209,13 @@ testLimits (int , ACE_TCHAR *[])
   one.process_directive (svc_desc1);
   one.process_directive (svc_desc2);
 
-  if (-1 == one.find ("Test_Object_1_More", 0, 0))
+  if (-1 == one.find (ACE_TEXT ("Test_Object_1_More"), 0, 0))
     {
       ++error;
       ACE_ERROR ((LM_ERROR, ACE_TEXT("Expected to have registered the first service\n")));
     }
 
-  if (-1 != one.find ("Test_Object_2_More", 0, 0))
+  if (-1 != one.find (ACE_TEXT ("Test_Object_2_More"), 0, 0))
     {
       ++error;
       ACE_ERROR ((LM_ERROR, ACE_TEXT("Being able to add more than 1 service was not expected\n")));
