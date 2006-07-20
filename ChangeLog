@@ -1,3 +1,13 @@
+Thu Jul 20 16:42:04 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * ace/Basic_Types.h:
+
+          Removed ACE_NTOHLL function.  It was experimental, untested and
+          not ready for the ACE sources just yet.
+
+          Removed "ace/os_include/netinet/os_in.h" include directive.  Now
+          that ACE_NTOHLL has been removed it is no longer necessary.
+
 Thu Jul 20 15:19:30 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/Basic_Types.h: Added 

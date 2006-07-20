@@ -59,7 +59,6 @@
 # include "ace/os_include/os_float.h"      // Floating point limits
 # include "ace/os_include/os_stdlib.h"     // Other types
 # include "ace/os_include/os_stddef.h"     // Get ptrdiff_t - see further comments below
-# include "ace/os_include/netinet/os_in.h" // Get ntohl()
 
 # if defined(ACE_LACKS_LONGLONG_T)
 #   include "ace/os_include/os_stdio.h"  // For long long emulation
@@ -588,14 +587,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 # endif /* ACE_LACKS_LONGLONG_T */
-
-inline ACE_UINT64
-ACE_NTOHLL (ACE_UINT64 x)
-{
-  return
-    (static_cast<ACE_UINT64> (ntohl(static_cast<int> ((x << 32) >> 32))) << 32)
-    | static_cast<unsigned int> (ntohl(((int)(x >> 32))));
-}
 
 // Conversions from ACE_UINT64 to ACE_UINT32.  ACE_CU64_TO_CU32 should
 // be used on const ACE_UINT64's.
