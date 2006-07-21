@@ -9,12 +9,17 @@ class test_i
   : public POA_Test
 {
 public:
-  test_i();
+  test_i(CORBA::ORB_ptr);
 
   virtual void the_operation(CORBA::Long & x)
     throw(CORBA::SystemException);
 
-  static char * create_and_activate_server(CORBA::ORB_ptr);
+  virtual void shutdown (void)
+    throw (CORBA::SystemException);
+
+  char * create_and_activate_server(void);
+private:
+  CORBA::ORB_var orb_;
 };
 
 #endif // test_i_h

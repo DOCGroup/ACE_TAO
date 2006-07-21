@@ -17,13 +17,13 @@ main(int argc, char * argv[])
 
     parse_args(argc, argv);
 
+    test_i servant (orb.in());
     CORBA::String_var ior =
-      test_i::create_and_activate_server(orb.in());
+      servant.create_and_activate_server();
 
     write_ior_to_file(ior.in());
 
-    ACE_Time_Value timeout (10, 0);
-    orb->run(timeout);
+    orb->run();
   }
   catch(...)
   {
