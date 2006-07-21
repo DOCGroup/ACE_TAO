@@ -40,8 +40,18 @@ Reply_Handler::short_sleep_excep (
 
   ACE_TRY
     {
-      ex->raise_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      if (ex)
+        {
+          ex->raise_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+      else
+        {
+          // Problem with the exceptionholder, instead of crashing, print
+          // an error to the log, this normally shouldn't happen but when
+          // there is a bug in TAO it can happen :-(
+          ACE_ERROR ((LM_ERROR, "ERROR: Got nill exceptionholder\n"));
+        }
     }
   ACE_CATCHANY
     {
@@ -65,7 +75,7 @@ Reply_Handler::short_sleep_excep (
 void Reply_Handler::
 check_counter(ACE_ENV_SINGLE_ARG_DECL)
 {
-  long count = --counter_;
+  long const count = --counter_;
   if(count == 0)
   {
     // ACE_DEBUG((LM_DEBUG, "(%P|%t) Shut down client thread\n"));
