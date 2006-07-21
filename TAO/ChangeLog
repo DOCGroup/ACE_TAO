@@ -1,3 +1,10 @@
+Fri Jul 21 14:09:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Portable_Interceptors/PICurrent/client.cpp:
+        * tests/Portable_Interceptors/PICurrent/test.idl:
+        * tests/Portable_Interceptors/PICurrent/test_i.{h,cpp}:
+          Extended this test
+
 Fri Jul 21 13:27:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Connection_Timeout/Connection_Timeout.mpc:
