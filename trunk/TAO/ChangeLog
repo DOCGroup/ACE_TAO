@@ -1,3 +1,9 @@
+Fri Jul 21 11:48:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Notify/lib/Peer.cpp:
+          Removed include of Arg_Shifter.h, it is already done in the header
+          file
+
 Fri Jul 21 08:40:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * utils/catior/catior.cpp:
