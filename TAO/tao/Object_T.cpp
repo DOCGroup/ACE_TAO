@@ -23,11 +23,11 @@ namespace TAO
         return T::_nil ();
       }
 
-    CORBA::Boolean is_it = obj->_is_a (repo_id
-                                       ACE_ENV_ARG_PARAMETER);
+    CORBA::Boolean const is_it = obj->_is_a (repo_id
+                                             ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (T::_nil ());
 
-    if (is_it == 0)
+    if (is_it == false)
       {
         return T::_nil ();
       }
@@ -98,7 +98,7 @@ namespace TAO
 
     stub->_incr_refcnt ();
 
-    bool collocated =
+    bool const collocated =
       !CORBA::is_nil (stub->servant_orb_var ().in ())
       && stub->optimize_collocation_objects ()
       && obj->_is_collocated ()
@@ -106,7 +106,7 @@ namespace TAO
 
     ACE_NEW_THROW_EX (proxy,
                       T (stub,
-                         collocated ? 1 : 0,
+                         collocated,
                          obj->_servant ()),
                       CORBA::NO_MEMORY ());
     return proxy;
