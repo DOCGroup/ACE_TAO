@@ -63,7 +63,7 @@ main (int argc, char *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      Oneway_Receiver *oneway_receiver_impl;
+      Oneway_Receiver *oneway_receiver_impl = 0;
       ACE_NEW_RETURN (oneway_receiver_impl,
                       Oneway_Receiver (orb.in ()),
                       1);
