@@ -1,3 +1,9 @@
+Fri Jul 21 14:13:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/RTScheduling/Current/Thread_Task.cpp:
+        * tests/RTScheduling/Thread_Cancel/Thread_Task.cpp:
+          Simplified printing the elements of a string sequence
+
 Fri Jul 21 14:09:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Portable_Interceptors/PICurrent/client.cpp:
