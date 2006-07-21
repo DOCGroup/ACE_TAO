@@ -1,3 +1,12 @@
+Fri Jul 21 13:24:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2503_Regression/client.cpp:
+        * tests/Bug_2503_Regression/server.cpp:
+        * tests/Bug_2503_Regression/Test.idl:
+        * tests/Bug_2503_Regression/test_i.{h,cpp}:
+          Extended this test in such a way that the client does a shutdown
+          invocation on the server when it is ready.
+
 Fri Jul 21 12:05:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_1551_Regression/Reply_Handler.cpp:
