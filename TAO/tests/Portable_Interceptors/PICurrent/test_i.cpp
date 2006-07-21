@@ -151,6 +151,45 @@ test_i::invoke_you (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 void
+test_i::invoke_we (ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Insert some data into the TSC PICurrent object.
+  const char str[] = "We drink milk!";
+
+  CORBA::Any data;
+
+  data <<= str;
+
+  ACE_TRY_EX (foo)
+    {
+      this->current_->set_slot (this->slot_id_,
+                                data
+                                ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK_EX (foo);
+    }
+  ACE_CATCH (PortableInterceptor::InvalidSlot, ex)
+    {
+      ACE_PRINT_EXCEPTION (ex,
+                           "Exception thrown in "
+                           "test_i::invoke_me() when calling "
+                           "Current::set_slot\n");
+
+      ACE_DEBUG ((LM_DEBUG,
+                  "Invalid slot: %u\n",
+                  this->slot_id_));
+
+      ACE_TRY_THROW_EX (CORBA::INTERNAL (), foo);
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+
+  ACE_DEBUG ((LM_DEBUG,
+              "(%P|%t) String \"%s\" inserted into TSC.\n",
+              str));
+}
+
+void
 test_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
