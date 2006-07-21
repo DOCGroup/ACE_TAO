@@ -152,7 +152,7 @@ Thread_Task::svc (void)
           {
             ACE_DEBUG ((LM_DEBUG,
                         "%s\n",
-                        static_cast<char const*>((*segment_name_list)[i])));
+                        (*segment_name_list)[i].in ()));
           }
       }
 
