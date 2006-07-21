@@ -243,7 +243,7 @@ TAO_SCIOP_Profile::do_is_equivalent (const TAO_Profile *other_profile)
     dynamic_cast<const TAO_SCIOP_Profile *> (other_profile);
 
   if (op == 0)
-    return 0;
+    return false;
 
   // Check endpoints equivalence.
   const TAO_SCIOP_Endpoint *other_endp = &op->endpoint_;
@@ -254,10 +254,10 @@ TAO_SCIOP_Profile::do_is_equivalent (const TAO_Profile *other_profile)
       if (endp->is_equivalent (other_endp))
         other_endp = other_endp->next_;
       else
-        return 0;
+        return false;
     }
 
-  return 1;
+  return true;
 }
 
 CORBA::ULong
