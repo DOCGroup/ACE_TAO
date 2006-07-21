@@ -22,6 +22,8 @@ module PICurrentTest
 
     void invoke_you ();
 
+    void invoke_we ();
+
     oneway void shutdown ();
   };
 

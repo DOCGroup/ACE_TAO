@@ -143,6 +143,9 @@ main (int argc, char *argv[])
           ACE_TRY_THROW (CORBA::INTERNAL ());
         }
 
+      server->invoke_we (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
       server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
