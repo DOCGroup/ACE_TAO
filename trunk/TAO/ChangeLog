@@ -1,3 +1,13 @@
+Fri Jul 21 12:05:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_1551_Regression/Reply_Handler.cpp:
+          At the moment there is a bug in the AMI code it could happen that
+          the exception holder pointer is nill, in that case print an error
+          message instead of trying to invoke a method on it. This shouldn't
+          normally happen, but makes it a lot easier to analyze the problem
+          because we now just get an error message instead of an access
+          violation.
+
 Fri Jul 21 11:48:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Notify/lib/Peer.cpp:
