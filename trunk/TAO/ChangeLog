@@ -1,3 +1,12 @@
+Fri Jul 21 08:40:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * utils/catior/catior.cpp:
+          Added needed include to build catior when IIOP has been disabled
+          in the orb
+
+        * tao/Object_T.cpp:
+          Const improvements, use true/false for bool
+
 Fri Jul 21 07:40:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Strategies/UIOP_Profile.cpp:
