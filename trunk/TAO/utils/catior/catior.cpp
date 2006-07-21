@@ -28,6 +28,7 @@
 #include "tao/ORB_Constants.h"
 #include "tao/Transport_Acceptor.h"
 #include "tao/IIOP_EndpointsC.h"
+#include "tao/Tagged_Components.h"
 #include "tao/CDR.h"
 #include "ace/Codeset_Registry.h"
 #include "ace/Get_Opt.h"
