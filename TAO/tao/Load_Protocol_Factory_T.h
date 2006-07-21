@@ -103,6 +103,8 @@ namespace TAO
                       ACE_TEXT("protocol <%s>\n"),
                       name));
         }
+
+      return 0;
     }
   }
 }
