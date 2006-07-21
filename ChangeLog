@@ -1,3 +1,8 @@
+Fri Jul 21 13:17:31 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_unistd.cpp:
+          Const improvements and initialise pointer with 0
+
 Thu Jul 20 21:44:31 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * tests/Service_Config_Test.cpp:
