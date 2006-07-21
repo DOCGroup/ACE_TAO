@@ -169,7 +169,7 @@ ACE_OS::fork (const ACE_TCHAR *program_name)
   ACE_UNUSED_ARG (program_name);
   ACE_NOTSUP_RETURN (pid_t (-1));
 # else
-  pid_t pid =
+  pid_t const pid =
 # if defined (ACE_HAS_STHREADS)
     ::fork1 ();
 #else
@@ -192,7 +192,7 @@ pid_t
 ACE_OS::fork_exec (ACE_TCHAR *argv[])
 {
 # if defined (ACE_WIN32)
-  ACE_TCHAR *buf;
+  ACE_TCHAR *buf = 0;
 
   if (ACE_OS::argv_to_string (argv, buf) != -1)
     {
@@ -239,12 +239,12 @@ ACE_OS::fork_exec (ACE_TCHAR *argv[])
   // CreateProcess failed.
   return -1;
 # else
-      pid_t result = ACE_OS::fork ();
+      pid_t const result = ACE_OS::fork ();
 
 #   if defined (ACE_USES_WCHAR)
       // Wide-char builds need to convert the command-line args to
       // narrow char strings for execv().
-      char **cargv;
+      char **cargv = 0;
       int arg_count;
 #   endif /* ACE_HAS_WCHAR */
 
