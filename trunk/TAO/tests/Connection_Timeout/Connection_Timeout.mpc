@@ -1,7 +1,8 @@
 // -*- MPC -*-
 // $Id$
 
-project(*client): taoclient, messaging, portableserver {
+project(*client): taoserver, messaging {
+  exename = client
   avoids += ace_for_tao
   Source_Files {
     TestC.cpp
