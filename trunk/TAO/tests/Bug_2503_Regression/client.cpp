@@ -13,12 +13,18 @@ main(int argc, char * argv[])
 {
   try
   {
+    ACE_DEBUG ((LM_DEBUG, "Starting client\n"));
     CORBA::ORB_var orb = initialize_orb_and_poa(argc, argv);
 
     parse_args(argc, argv);
 
+    ACE_DEBUG ((LM_DEBUG, "Testing remote\n"));
     test_remote_calls(orb.in());
+
+    ACE_DEBUG ((LM_DEBUG, "Testing colocated\n"));
     test_colocated_calls(orb.in());
+
+    ACE_DEBUG ((LM_DEBUG, "Testing ready\n"));
   }
   catch(...)
   {
@@ -59,7 +65,8 @@ parse_args (int argc, char *argv[])
 
 void test_impl(
     CORBA::ORB_ptr orb,
-    char const * ior)
+    char const * ior,
+    bool shutdown)
 {
   CORBA::Object_var object = orb->string_to_object(ior);
   Test_var test = Test::_narrow(object.in());
@@ -76,17 +83,21 @@ void test_impl(
 
   ACE_Time_Value wait_for_responses_interval(1, 0);
   orb->run(wait_for_responses_interval);
+
+  if (shutdown)
+    test->shutdown ();
 }
 
 void test_remote_calls(CORBA::ORB_ptr orb)
 {
-  test_impl(orb, ior_argument);
+  test_impl(orb, ior_argument, true);
 }
 
 void test_colocated_calls(CORBA::ORB_ptr orb)
 {
+  test_i servant (orb);
   CORBA::String_var ior =
-    test_i::create_and_activate_server(orb);
+    servant.create_and_activate_server();
 
-  test_impl(orb, ior.in());
+  test_impl(orb, ior.in(), false);
 }
