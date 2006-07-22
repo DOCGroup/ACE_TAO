@@ -68,6 +68,21 @@ namespace CIAO
 
   Session_Container::~Session_Container (void)
   {
+    if (! CORBA::is_nil (this->component_poa_))
+      {
+        this->component_poa_->destroy (1, 1);
+      }
+
+    if (! CORBA::is_nil (this->facet_cons_poa_))
+      {
+        this->facet_cons_poa_->destroy (1, 1);
+      }
+
+    if (! CORBA::is_nil (this->home_servant_poa_))
+      {
+        this->home_servant_poa_->destroy (1, 1);
+      }
+
     delete this->sa_;
   }
 
