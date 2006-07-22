@@ -12,7 +12,8 @@ Sat Jul 22 21:34:57 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
           Servant_Activator attached to this POA is long gone, a segfault
           occurs in the cleaning up phase. The right fix is to destroy all the POAs
           associated with this Session_Container in its destructor together with the
-          Servant_Activator.
+          Servant_Activator. Thanks Phlip <phlip2005 @ gmail.com> for a
+          bug report.
 
 Thu Jul 20 22:03:31 UTC 2006  Nanbor Wang  <nanbor (at) txcorp (dot) com>
 
