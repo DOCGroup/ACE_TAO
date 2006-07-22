@@ -1,3 +1,12 @@
+Sat Jul 22 19:12:10 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * docs/svn/config
+        * docs/svn/svn-prefs.reg
+        
+          These are client side configuration files for Subversion. Currently,
+          the automate setting svn:eol-style and svn:executable properties on
+          newly added files.
+        
 Sat Jul 22 18:28:33 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * bin/sets-manager.py
