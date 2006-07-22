@@ -1,3 +1,19 @@
+Sat Jul 22 21:34:57 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * ciao/Container_Base.cpp
+        
+          Fixed a runtime Segfault bug about destroying POA.  The problem
+          is because a Session_Container creates 2 POAs, one of which is called
+          facet_cons_POA which uses the Servant_Activator policy to activate component
+          ports (facets, consumers) on demand, then the Servant_Activator object
+          was deleted when the Session_Container object is out of scope in its
+          destructor. But when the ORB finally shuts itself down, it tries
+          to clean all the resources including the facet_cons_POA, since the
+          Servant_Activator attached to this POA is long gone, a segfault
+          occurs in the cleaning up phase. The right fix is to destroy all the POAs
+          associated with this Session_Container in its destructor together with the
+          Servant_Activator.
+
 Thu Jul 20 22:03:31 UTC 2006  Nanbor Wang  <nanbor (at) txcorp (dot) com>
 
         * docs/schema/ServerResourceUsage.txt: Revised the document to
