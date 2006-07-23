@@ -15,44 +15,13 @@
 # include "NodeApplicationManager_Impl.inl"
 #endif /* __ACE_INLINE__ */
 
-
-bool
-CIAO::NodeApplicationManager_Impl_Base::
-is_shared_component (ACE_CString & name)
-{
-  for (CORBA::ULong i = 0; i < this->shared_components_.length (); ++i)
-    {
-      if (ACE_OS::strcmp (this->shared_components_[i].name.in (),
-                          name.c_str ()) == 0)
-        return true;
-    }
-
-  return false;
-}
-
-bool
-CIAO::NodeApplicationManager_Impl_Base::
-is_external_component (ACE_CString & name)
-{
-  for (CORBA::ULong i = 0; i < this->external_components_.length (); ++i)
-    {
-      if (ACE_OS::strcmp (this->external_components_[i].name.in (),
-                          name.c_str ()) == 0 &&
-          ACE_OS::strcmp (this->external_components_[i].plan_uuid.in (),
-                          this->plan_.UUID.in ()))
-        return true;
-    }
-
-  return false;
-}
-
 Deployment::Connections *
 CIAO::NodeApplicationManager_Impl_Base::
-create_connections (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Deployment::ResourceNotAvailable,
-                   Deployment::StartError,
-                   Deployment::InvalidProperty))
+create_connections ()
+  throw (CORBA::SystemException,
+         Deployment::ResourceNotAvailable,
+         Deployment::StartError,
+         Deployment::InvalidProperty)
 {
   CIAO_TRACE("CIAO::NodeApplicationManager_Impl::create_connections");
   Deployment::Connections_var retv;
@@ -60,7 +29,6 @@ create_connections (ACE_ENV_SINGLE_ARG_DECL)
   ACE_NEW_THROW_EX (retv,
                     Deployment::Connections (),
                     CORBA::INTERNAL ());
-  ACE_CHECK_RETURN (0);
 
   CORBA::ULong len = retv->length ();
 
@@ -88,7 +56,7 @@ create_connections (ACE_ENV_SINGLE_ARG_DECL)
           ACE_DEBUG ((LM_DEBUG, "NAMImpl::create_connections: Component %s is not shared, getting and setting"
                       "all facets\n",
                       comp_name.c_str ()));
-          facets = ((*iter).int_id_)->get_all_facets (ACE_ENV_SINGLE_ARG_PARAMETER);
+          facets = ((*iter).int_id_)->get_all_facets ();
           this->node_manager_->set_all_facets (comp_name, facets);
         }
       
@@ -117,7 +85,7 @@ create_connections (ACE_ENV_SINGLE_ARG_DECL)
                       "all facets\n",
                       comp_name.c_str ()));
           consumers =
-            ((*iter).int_id_)->get_all_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
+            ((*iter).int_id_)->get_all_consumers ();
           this->node_manager_->set_all_consumers (comp_name, consumers);
         }
 
@@ -180,31 +148,16 @@ create_connections (ACE_ENV_SINGLE_ARG_DECL)
 Deployment::Application_ptr
 CIAO::NodeApplicationManager_Impl_Base::
 startLaunch (const Deployment::Properties & configProperty,
-             Deployment::Connections_out providedReference,
-             CORBA::Boolean start
-             ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Deployment::ResourceNotAvailable,
-                   Deployment::StartError,
-                   Deployment::InvalidProperty))
+             Deployment::Connections_out providedReference)
+  throw (CORBA::SystemException,
+         Deployment::ResourceNotAvailable,
+         Deployment::StartError,
+         Deployment::InvalidProperty)
 {
-  ACE_TRY
+  try
     {
       CIAO_TRACE("CIAO::NodeApplicationManager_Impl::startLaunch");
       ACE_UNUSED_ARG (configProperty);
-      ACE_UNUSED_ARG (start);
-
-      // In this step, we know all the "shared components" are
-      // the external components to ourself.
-      this->external_components_ = this->shared_components_;
-
-      // If no additional components need to be installed, then we simply
-      // create a NA, but doesn't install any components on it.
-      if (this->plan_.instance.length () == this->shared_components_.length ())
-        {
-          ACE_DEBUG ((LM_DEBUG, "Prespawn a NodeApplication process without "
-                      "installing any components.\n"));
-        }
 
       /**
        *  1. First Map properties to TAO/CIAO specific property/configurations
@@ -213,8 +166,7 @@ startLaunch (const Deployment::Properties & configProperty,
        *  4. Initialize the NodeApplication.
        *  5. get the provided connection endpoints back and return them.
        */
-
-      NodeImplementationInfoHandler handler (this->plan_, this->shared_components_);
+      NodeImplementationInfoHandler handler (this->plan_);
 
       Deployment::NodeImplementationInfo * node_info =
         handler.node_impl_info ();
@@ -271,7 +223,7 @@ startLaunch (const Deployment::Properties & configProperty,
         }
 
       Deployment::NodeApplication_var tmp =
-        create_node_application (cmd_option.c_str () ACE_ENV_ARG_PARAMETER);
+        create_node_application (cmd_option.c_str ());
       ACE_TRY_CHECK;
 
       if (CIAO::debug_level () > 9)
@@ -302,7 +254,7 @@ startLaunch (const Deployment::Properties & configProperty,
       Deployment::ComponentInfos_var comp_info;
 
       // This will install all homes and components.
-      comp_info = this->nodeapp_->install (*node_info ACE_ENV_ARG_PARAMETER);
+      comp_info = this->nodeapp_->install (*node_info);
       ACE_TRY_CHECK;
 
 
@@ -321,225 +273,42 @@ startLaunch (const Deployment::Properties & configProperty,
               ACE_CString error ("Duplicate component instance name ");
               error += comp_info[len].component_instance_name.in();
 
-              ACE_TRY_THROW
-                (Deployment::StartError
+              throw Deployment::StartError
                  ("NodeApplicationManager_Impl::startLaunch",
-                  error.c_str ()));
+                  error.c_str ());
             }
         }
-
-      // Also, we need to fill in the map about those "shared components"
-      // For now, we could use "NIL" component object reference for these
-      // shared components since they are not used anyway.
-      CORBA::ULong shared_comp_length = this->shared_components_.length ();
-      for (CORBA::ULong j = 0; j < shared_comp_length; ++j)
-        {
-          if (this->component_map_.
-              bind (this->shared_components_[j].name.in (),
-                    Components::CCMObject::_nil ()))
-            {
-              ACE_CString error ("Duplicate component instance name ");
-              error += this->shared_components_[j].name.in();
-
-              ACE_TRY_THROW
-                (Deployment::StartError
-                 ("NodeApplicationManager_Impl::startLaunch",
-                  error.c_str ()));
-            }
-        }
-
 
       providedReference =
-        this->create_connections (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        this->create_connections ();
 
       if (providedReference == 0)
         {
-          ACE_TRY_THROW
-            (Deployment::StartError
+          throw Deployment::StartError
              ("NodeApplicationManager_Impl::startLaunch",
-              "Error creating connections for components during startLaunch."));
+              "Error creating connections for components during startLaunch.");
         }
     }
-  ACE_CATCH (Deployment::UnknownImplId, e)
+  catch (Deployment::UnknownImplId  &e)
     {
-      ACE_THROW_RETURN (Deployment::StartError (e.name.in (),
-                                                e.reason.in ()),
-                        Deployment::Application::_nil());
+      throw  Deployment::StartError (e.name.in (),
+                                     e.reason.in ());
     }
-  ACE_CATCH (Deployment::ImplEntryPointNotFound, e)
+  catch  (Deployment::ImplEntryPointNotFound &e)
     {
-      ACE_THROW_RETURN (Deployment::StartError (e.name.in (),
-                                                e.reason.in ()),
-                        Deployment::Application::_nil());
+      throw Deployment::StartError (e.name.in (),
+                                    e.reason.in ());
     }
-  ACE_CATCH (Deployment::InstallationFailure,e)
+  catch (Deployment::InstallationFailure &e)
     {
-      ACE_THROW_RETURN (Deployment::StartError (e.name.in (),
-                                                e.reason.in ()),
-                        Deployment::Application::_nil());
+      throw Deployment::StartError (e.name.in (),
+                                    e.reason.in ());
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (Deployment::Application::_nil());
 
   return Deployment::NodeApplication::_duplicate (this->nodeapp_.in ());
 }
 
-
-Deployment::Application_ptr
-CIAO::NodeApplicationManager_Impl_Base::
-perform_redeployment (const Deployment::Properties & configProperty,
-                      Deployment::Connections_out providedReference,
-                      CORBA::Boolean /*add_or_remove*/, // true means "add" only
-                      CORBA::Boolean start
-                      ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((::CORBA::SystemException,
-                   ::Deployment::PlanError,
-                   ::Deployment::InstallationFailure,
-                   ::Deployment::UnknownImplId,
-                   ::Deployment::ImplEntryPointNotFound,
-                   ::Deployment::InvalidConnection,
-                   ::Deployment::InvalidProperty,
-                   ::Components::RemoveFailure))
-{
-  // Prerequisite:
-  //    (1) If this is an existiing old NAM, then <nodeapp_> is ready to use.
-  //        We also got a copy of <plan_> as well as all the installed components
-  //        in the <component_map_>.
-  //    (2) Then we should call <install> operation on the NA, but in order to do this,
-  //        we must pack all the to-be-added components into some appropriate
-  //        data structure called "NodeImplementationInfo".
-  //    (3) We should also call <remove> operation on the NA to remove those
-  //        to-be-removed components, and the "comp_inst_name" could be as input.
-  //    (4) We should also consider removing all the unneeded "connections", but
-  //        this should be driven by the DAM, so it looks like that we need to
-  //        add another operation on the NA interface which is a counterpart of
-  //        <finishLaunch>, something like <finishLaunch_remove_only>.
-  //
-  //
-  //
-  //    (1) If this is an brand new NAM, then only new installation is needed.
-  //    (2) Then we could pretty much replicate the "startLaunch" implementation.
-  //        This capability is useful to install a set of new components into
-  //        some totally new nodes.
-
-  ACE_UNUSED_ARG (configProperty);
-  ACE_UNUSED_ARG (start);
-
-  CIAO_TRACE ("CIAO::NodeApplicationManager_Impl_Base::perform_redeployment");
-
-  ACE_DEBUG ((LM_DEBUG,
-              "CIAO (%P|%t) NodeApplicationManager_Impl_Base: "
-              "invoked CIAO::NodeApplicationManager_Impl_Base::perform_redeployment \n"));
-  ACE_TRY
-    {
-      if (! CORBA::is_nil (this->nodeapp_.in ()))
-        {
-          // We ignored those components that are already in the <component_map_>, for
-          // the rest ones, we pack them into NodeImplementationInfo.
-          Deployment::DeploymentPlan tmp_plan = this->plan_;
-          tmp_plan.instance.length (0);
-
-          CORBA::ULong const length = this->plan_.instance.length ();
-          for (CORBA::ULong i = 0; i <  length; ++i)
-            {
-              // add the new components into the tmp_plan
-              if (this->component_map_.find (this->plan_.instance[i].name.in ()) != 0)
-                {
-                  CORBA::ULong cur_len = tmp_plan.instance.length ();
-                  tmp_plan.instance.length (cur_len + 1);
-                  tmp_plan.instance[cur_len] = this->plan_.instance[i];
-                }
-            }
-
-          // package the components
-          NodeImplementationInfoHandler handler (tmp_plan,
-                                                 this->shared_components_);
-          Deployment::NodeImplementationInfo * node_info =
-            handler.node_impl_info ();
-
-          if (!node_info)
-            {
-              this->add_new_components ();
-            }
-
-          // Install the components
-          // This is what we will get back, a sequence of compoent object refs.
-          Deployment::ComponentInfos_var comp_info;
-          comp_info = this->nodeapp_->install (*node_info ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-
-          // Now fill in the map we have for the components.
-          const CORBA::ULong comp_len = comp_info->length ();
-          for (CORBA::ULong len = 0;
-               len < comp_len;
-               ++len)
-            {
-              //Since we know the type ahead of time...narrow is omitted here.
-              if (this->component_map_.
-                  bind (comp_info[len].component_instance_name.in(),
-                        Components::CCMObject::_duplicate
-                        (comp_info[len].component_ref.in())))
-                {
-                  ACE_CString error ("Duplicate component instance name ");
-                  error += comp_info[len].component_instance_name.in();
-
-                  ACE_TRY_THROW
-                    (Deployment::PlanError
-                     ("NodeApplicationManager_Impl::startLaunch",
-                      error.c_str ()));
-                }
-            }
-
-          // NOTE: We are propogating back "all" the facets/consumers object
-          // references to the DAM, including the previous existing ones.
-          providedReference =
-            this->create_connections (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-
-          if (providedReference == 0)
-            {
-              ACE_TRY_THROW
-                (Deployment::InstallationFailure
-                  ("NodeApplicationManager_Impl::startLaunch",
-                    "Error creating connections during startLaunch."));
-            }
-        }
-      else // This is a new NodeApplication process, then we need to install
-           // all the components. We should try to reuse much of the above code.
-        {
-          this->startLaunch (configProperty,
-                             providedReference,
-                             start
-                             ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-        }
-    }
-  ACE_CATCH (Deployment::UnknownImplId, e)
-    {
-      ACE_THROW_RETURN (Deployment::UnknownImplId (e.name.in (),
-                                                   e.reason.in ()),
-                        Deployment::Application::_nil());
-    }
-  ACE_CATCH (Deployment::ImplEntryPointNotFound, e)
-    {
-      ACE_THROW_RETURN (Deployment::ImplEntryPointNotFound (e.name.in (),
-                                                            e.reason.in ()),
-                        Deployment::Application::_nil());
-    }
-  ACE_CATCH (Deployment::InstallationFailure,e)
-    {
-      ACE_THROW_RETURN (Deployment::InstallationFailure (e.name.in (),
-                                                         e.reason.in ()),
-                        Deployment::Application::_nil());
-    }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (Deployment::Application::_nil());
-
-  return Deployment::NodeApplication::_duplicate (this->nodeapp_.in ());
-}
-
-
+/*
 void
 CIAO::NodeApplicationManager_Impl_Base::
 add_new_components ()
@@ -587,16 +356,14 @@ add_new_components ()
                       "CIAO::NodeApplicationManager_Impl::perform_redeployment -"
                       "Failed to create Node Implementation Infos!\n"));
 
-          ACE_TRY_THROW
-            (Deployment::PlanError ("NodeApplicationManager_Imp::perform_redeployment",
-                                    "Unable to get node level infos"));
+          throw Deployment::PlanError ("NodeApplicationManager_Imp::perform_redeployment",
+                                       "Unable to get node level infos");
         }
 
       // Install the components
       // This is what we will get back, a sequence of component object refs.
       Deployment::ComponentInfos_var comp_info;
       comp_info = this->nodeapp_->install (*node_info ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       // Now fill in the map we have for the components.
       const CORBA::ULong comp_len = comp_info->length ();
@@ -620,13 +387,12 @@ add_new_components ()
             }
         }
     }
-  ACE_CATCHANY
+  catch (...)
     {
       ACE_DEBUG ((LM_ERROR, "NodeApplicationManager_Impl_Base::"
                   "add_new_components () exception caught.\n"));
-      ACE_RE_THROW;
+      throw;
     }
-  ACE_ENDTRY;
 }
 
 
@@ -695,7 +461,7 @@ set_shared_components (const Deployment::ComponentPlans & shared
 {
   this->shared_components_ = shared;
 }
-
+*/
 void
 CIAO::NodeApplicationManager_Impl_Base::
 destroyApplication (Deployment::Application_ptr app
@@ -836,8 +602,7 @@ NodeApplicationManager_Impl (CORBA::ORB_ptr o,
 }
 
 PortableServer::ObjectId
-CIAO::NodeApplicationManager_Impl::init (
-                                         const char *nodeapp_location,
+CIAO::NodeApplicationManager_Impl::init (const char *nodeapp_location,
                                          const char *nodeapp_op,
                                          const CORBA::ULong delay,
                                          const Deployment::DeploymentPlan & plan,

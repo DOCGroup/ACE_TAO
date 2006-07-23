@@ -97,7 +97,7 @@ namespace CIAO
         if (CIAO::debug_level () >= LEVEL) \
              ACE_ERROR((LM_ERROR, "%s - %s\n", \
                         MESSAGE, \
-                        EXCEPTION._info.c_str ())); \
+                        EXCEPTION._info ().c_str ())); \
    } while (0)
 
 #include /**/ "ace/post.h"

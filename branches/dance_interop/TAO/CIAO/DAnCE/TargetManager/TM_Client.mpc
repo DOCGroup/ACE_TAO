@@ -4,6 +4,7 @@
 
 
 project(TMClient): ciao_client_dnc, ciao_deployment_stub, ciao_config_handlers, ciao_events_dnc {
+  requires += dummy_label
   after += CIAO_TargetManager_stub
   includes += $(CIAO_ROOT)/DAnCE $(TAO_ROOT)/orbsvcs
   includes += $(CIAO_ROOT)/DAnCE/TargetManager

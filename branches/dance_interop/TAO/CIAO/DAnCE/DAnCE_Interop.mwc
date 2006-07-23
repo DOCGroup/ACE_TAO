@@ -1,0 +1,17 @@
+// $Id$
+
+workspace {
+  exclude {
+       DomainApplicationManager
+       ExecutionManager
+       NodeApplication
+       NodeApplicationManager
+       NodeManager
+       Plan_Launcher
+       Planner
+       RTNodeApplication
+       RepositoryManager
+       StaticConfigurator
+       tests
+  }
+}

@@ -57,51 +57,20 @@ namespace CIAO
      *============================================================*/
 
     /// The return type is NodeApplication_ptr actually.
-    /// For "external/shared" components of this child plan, they are
-    /// not actaully installed, however, the object references
-    /// of the ports of these external components are returned
-    /// through <providedReference>.
     virtual Deployment::Application_ptr
     startLaunch (const Deployment::Properties & configProperty,
-                 Deployment::Connections_out providedReference,
-                 CORBA::Boolean start
-                 ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                              Deployment::ResourceNotAvailable,
-                              Deployment::StartError,
-                              Deployment::InvalidProperty));
+                 Deployment::Connections_out providedReference)
+      throw (CORBA::SystemException,
+             Deployment::ResourceNotAvailable,
+             Deployment::StartError,
+             Deployment::InvalidProperty);
 
     //@@ Destroy the whole applicaton.
-    virtual void destroyApplication (Deployment::Application_ptr
-                                     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                              Deployment::StopError));
-
-    virtual Deployment::Application_ptr
-    perform_redeployment (const Deployment::Properties & configProperty,
-                          Deployment::Connections_out providedReference,
-                          CORBA::Boolean add_or_remove,
-                          CORBA::Boolean start
-                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((::CORBA::SystemException,
-                       ::Deployment::PlanError,
-                       ::Deployment::InstallationFailure,
-                       ::Deployment::UnknownImplId,
-                       ::Deployment::ImplEntryPointNotFound,
-                       ::Deployment::InvalidConnection,
-                       ::Deployment::InvalidProperty,
-                       ::Components::RemoveFailure));
-
-    virtual void
-    reset_plan (const ::Deployment::DeploymentPlan & plan
-                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((::CORBA::SystemException));
-
-    virtual void
-    set_shared_components (const Deployment::ComponentPlans & shared
-                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((::CORBA::SystemException));
-
+    virtual void destroyApplication (Deployment::Application_ptr)
+      throw (CORBA::SystemException,
+             Deployment::StopError);
+    
+    
     /**
      * A factory operation to create NodeApplicationManager interface, and return
      * the object reference.
@@ -139,20 +108,17 @@ namespace CIAO
           const CORBA::ULong delay,
           const Deployment::DeploymentPlan & plan,
           const PortableServer::POA_ptr callback_poa,
-          NodeManager_Impl_Base * nm
-          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       Deployment::InvalidProperty))=0;
+          NodeManager_Impl_Base * nm)
+      throw (CORBA::SystemException,
+             Deployment::InvalidProperty)=0;
 
     /// @note This method doesn't do duplicate.
     Deployment::NodeApplicationManager_ptr get_nodeapp_manager (void);
 
     /// Set the priority of the NodeApplication process which this NAM manages
-    virtual ::CORBA::Long set_priority (
-        const char * cid,
-        const ::Deployment::Sched_Params & params
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException ));
+    ::CORBA::Long set_priority (const char * cid,
+                                const ::Deployment::Sched_Params & params)
+      throw (CORBA::SystemException );
 
   protected:
     /// Destructor
@@ -207,14 +173,6 @@ namespace CIAO
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Deployment::InvalidProperty));
 
-    /// Helper function to check wheather a component instance
-    /// is in the "shared components list".
-    bool is_shared_component (ACE_CString & name);
-
-    /// Helper function to check wheather a component instance
-    /// is in the "shared components list".
-    bool is_external_component (ACE_CString & name);
-
   protected:
     /// location of the Nodeapplication
     ACE_CString nodeapp_path_;
@@ -252,12 +210,6 @@ namespace CIAO
     /// Extracted commandline options to pass to the NodeApplication.
     CORBA::String_var nodeapp_command_op_;
 
-    /// A list of components shared across deployment plans
-    Deployment::ComponentPlans shared_components_;
-
-    /// A list of components that are "external" to this plan
-    Deployment::ComponentPlans external_components_;
-
     /// A map of the component created on this node.
     typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
                                     Components::CCMObject_var,
@@ -272,13 +224,6 @@ namespace CIAO
 
     /// The Process Manager for this NodeApplicationManager
     ACE_Process_Manager node_app_process_manager_;
-
-    /// The process id of the NA associated with the NAM,
-    /// Each NAM will only have one NA associated with it,
-    /// so we have only one process associated with it.
-
-    // this is UNIX specific .... not portable
-    pid_t process_id_;
   };
 
 
