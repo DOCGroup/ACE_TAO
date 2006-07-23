@@ -82,6 +82,12 @@ USER VISIBLE CHANGES BETWEEN ACE-5.5.2 and ACE-5.5.3
 . The return type of "ACE_Refcounted_Auto_Ptr::null (void) const" changed
   from int to bool. It's possible values, true and false, have not changed.
 
+. TTY_IO now accepts "none" as a valid parity value. Due to this change 
+  'parityenb' member is now deprecated and will be removed in the future. 
+  The users of TTY_IO class should change their code to use only 'paritymode'
+  member for parity control and leave 'parityenb' unchanged (it is
+  enabled by default in class constructor).
+
 USER VISIBLE CHANGES BETWEEN ACE-5.5.1 and ACE-5.5.2
 ====================================================
 
