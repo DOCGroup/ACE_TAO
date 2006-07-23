@@ -814,9 +814,9 @@ sub generate_makefiles () {
           find ./ -name 'GNUmake*' | /usr/bin/xargs chmod 0644");
 
     &ex ("cd ACE_wrappers; \
-          bin/mwc.pl -type vc8 $mpc_option $exclude_option $vc8_option; \
+          bin/mwc.pl -type vc8 $mpc_option $vc8_option; \
           bin/mwc.pl -type vc8 $mpc_option $exclude_option $ce_option; \
-          bin/mwc.pl -type vc71 $mpc_option $exclude_option; \
+          bin/mwc.pl -type vc71 $mpc_option; \
           bin/mwc.pl -type borland  $mpc_option $exclude_option; \
           bin/mwc.pl -type vc71 $static_option; \
           find ./ -name '*.bor' | /usr/bin/xargs chmod 0644;\
