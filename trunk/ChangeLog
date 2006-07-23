@@ -1,3 +1,9 @@
+Sun Jul 23 11:17:31 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/make_release:
+          Don't exclude the other mwc files for vc71/vc8, this will create then
+          some more workspace files which just contain a subset of the projects
+
 Sun Jul 23 09:25:12 UTC 2006  Olli Savia  <ops@iki.fi>
 
         * NEWS:
