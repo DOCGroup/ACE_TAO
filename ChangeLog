@@ -1,16 +1,21 @@
+Sun Jul 23 09:25:12 UTC 2006  Olli Savia  <ops@iki.fi>
+
+        * NEWS:
+          Added a note about TTY_IO API change.
+
 Sat Jul 22 19:12:10 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * docs/svn/config
         * docs/svn/svn-prefs.reg
-        
+
           These are client side configuration files for Subversion. Currently,
           the automate setting svn:eol-style and svn:executable properties on
           newly added files.
-        
+
 Sat Jul 22 18:28:33 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * bin/sets-manager.py
-        
+
           First cut of a branching script for subverion.  Pass --help
           to get documentation.
 
