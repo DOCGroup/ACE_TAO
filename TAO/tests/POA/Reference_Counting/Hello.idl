@@ -1,0 +1,7 @@
+//
+// $Id$
+//
+
+interface Hello {
+  void moo ();
+};
