@@ -1,8 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-feature(ace_uuid) {
-  Source_Files(ACE_COMPONENTS) {
-    UUID.cpp
-  }
-}
