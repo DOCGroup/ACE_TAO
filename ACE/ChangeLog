@@ -1,3 +1,10 @@
+Mon Jul 24 19:17:37 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * bin/fuzz.pl
+        
+          Disabled the ID string check until the script can be fixed to ignore
+          .svn directories.
+
 Mon Jul 24 15:45:34 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
         
         * Subversion conversion completed at revision 73730
