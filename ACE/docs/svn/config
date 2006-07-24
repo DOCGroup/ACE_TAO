@@ -80,23 +80,23 @@ enable-auto-props = yes
 ### Note that auto-props functionality must be enabled, which
 ### is typically done by setting the 'enable-auto-props' option.
 # [auto-props]
-*.cpp=svn:eol-style=native
-*.h=svn:eol-style=native
-*.inl=svn:eol-style=native
-*.html=svn:eol-style=native
-*.sh=svn:eol-style=native;svn:executable
-*.py=svn:eol-style=native;svn:executable
-*.pl=svn:eol-style=native;svn:executable
-*.mpc=svn:eol-style=native
-*.mpb=svn:eol-style=native
-*.mpt=svn:eol-style=native
-*.hpp=svn:eol-style=native
-*.cdp=svn:eol-style=native
-*.xsd=svn:eol-style=native
-*.txt=svn:eol-style=native
-Change?og*=svn:eol-style=native
-*.am=svn:eol-style=native
-*.ac=svn:eol-style=native
-*.lst=svn:eol-style=native
-*.pm=svn:eol-style=native
+*.cpp=svn:eol-style=native;svn:keywords
+*.h=svn:eol-style=native;svn:keywords
+*.inl=svn:eol-style=native;svn:keywords
+*.html=svn:eol-style=native;svn:keywords
+*.sh=svn:eol-style=native;svn:keywords;svn:executable
+*.py=svn:eol-style=native;svn:keywords;svn:executable
+*.pl=svn:eol-style=native;svn:keywords;svn:executable
+*.mpc=svn:eol-style=native;svn:keywords
+*.mpb=svn:eol-style=native;svn:keywords
+*.mpt=svn:eol-style=native;svn:keywords
+*.hpp=svn:eol-style=native;svn:keywords
+*.cdp=svn:eol-style=native;svn:keywords
+*.xsd=svn:eol-style=native;svn:keywords
+*.txt=svn:eol-style=native;svn:keywords
+Change?og*=svn:eol-style=native;svn:keywords
+*.am=svn:eol-style=native;svn:keywords
+*.ac=svn:eol-style=native;svn:keywords
+*.lst=svn:eol-style=native;svn:keywords
+*.pm=svn:eol-style=native;svn:keywords
 
