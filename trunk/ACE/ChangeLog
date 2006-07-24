@@ -1,3 +1,10 @@
+Mon Jul 24 23:58:33 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * docs/svn/svn-prefs.reg
+        * docs/svn/config
+         
+          Updated these files to add svn:keywords to most text types.
+
 Mon Jul 24 23:53:53 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * bin/create_ace_build.pl
