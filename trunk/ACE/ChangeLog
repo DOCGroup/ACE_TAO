@@ -1,3 +1,10 @@
+Mon Jul 24 23:53:53 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * bin/create_ace_build.pl
+        
+          Fix provided by Steve Huston to prevent this script from building
+          links from .svn directories.
+
 Mon Jul 24 19:17:37 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * bin/fuzz.pl
