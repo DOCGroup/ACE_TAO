@@ -3,14 +3,41 @@
 #include "fe_private.h"
 #include "ace/OS_NS_string.h"
 
-/* starting time is 2:40:07 */
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: /project/adaptive/ACE_wrappers/build/SunOS5.5/bin/gperf -M -J -c -C -D -E -T -f 0 -a -o -t -p -K keyword_ -L C++ -Z TAO_IDL_CPP_Keyword_Table -N lookup -k1,2,$ fe/keywords.dat  */
+/* Command-line: /build/isisbuilds/Core/ACE_wrappers/bin/gperf -M -J -c -C -D -E -T -f 0 -a -o -t -p -K keyword_ -L C++ -Z TAO_IDL_CPP_Keyword_Table -N lookup -k1,2,$ fe/keywords.dat  */
 unsigned int
 TAO_IDL_CPP_Keyword_Table::hash (const char *str, unsigned int len)
 {
   static const unsigned char asso_values[] =
     {
+#if defined (ACE_MVS)
+     252, 252, 252, 252, 252, 252, 252, 252, 252, 252,
+     252, 252, 252, 252, 252, 252, 252, 252, 252, 252,
+     252, 252, 252, 252, 252, 252, 252, 252, 252, 252,
+     252, 252, 252, 252, 252, 252, 252, 252, 252, 252,
+     252, 252, 252, 252, 252, 252, 252, 252, 252, 252,
+     252, 252, 252, 252, 252, 252, 252, 252, 252, 252,
+     252, 252, 252, 252, 252, 252, 252, 252, 252, 252,
+     252, 252, 252, 252, 252, 252, 252, 252, 252, 252,
+     252, 252, 252, 252, 252, 252, 252, 252, 252, 252,
+     252, 252, 252, 252, 252, 252, 252, 252, 252, 252,
+     252, 252, 252, 252, 252, 252, 252, 252, 252, 252,
+     252, 252, 252, 252, 252, 252, 252, 252, 252, 252,
+     252, 252, 252, 252, 252, 252, 252, 252, 252,  15,
+      35,  65,   0,   0,  35,   5,   0,  60, 252, 252,
+     252, 252, 252, 252, 252, 252,   0,  30,   0,   5,
+       5,  20,  50,  40, 252, 252, 252, 252, 252, 252,
+     252, 252,  20, 110,   0,  45,  35,  95,  55, 252,
+     252, 252, 252, 252, 252, 252, 252, 252, 252, 252,
+     252, 252, 252, 252, 252, 252, 252, 252, 252, 252,
+     252, 252, 252, 252, 252, 252, 252, 252, 252, 252,
+     252, 252, 252, 252, 252, 252, 252, 252, 252, 252,
+     252, 252, 252, 252, 252, 252, 252, 252, 252, 252,
+     252, 252, 252, 252, 252, 252, 252, 252, 252, 252,
+     252, 252, 252, 252, 252, 252, 252, 252, 252, 252,
+     252, 252, 252, 252, 252, 252, 252, 252, 252, 252,
+     252, 252, 252, 252, 252, 252,
+#else
      252, 252, 252, 252, 252, 252, 252, 252, 252, 252,
      252, 252, 252, 252, 252, 252, 252, 252, 252, 252,
      252, 252, 252, 252, 252, 252, 252, 252, 252, 252,
@@ -24,11 +51,12 @@ TAO_IDL_CPP_Keyword_Table::hash (const char *str, unsigned int len)
        0,   0,  35,   5,   0,  60, 252,   0,  30,   0,
        5,   5,  20,  50,  40,  20, 110,   0,  45,  35,
       95,  55, 252, 252, 252, 252, 252, 252,
+#endif /* ACE_MVS */
     };
   return len + asso_values[(int) str[1]] + asso_values[(int) str[0]] + asso_values[(int) str[len - 1]];
 }
 
-const TAO_IDL_CPP_Keyword_Entry *
+const struct TAO_IDL_CPP_Keyword_Entry *
 TAO_IDL_CPP_Keyword_Table::lookup (const char *str, unsigned int len)
 {
   enum
@@ -39,12 +67,13 @@ TAO_IDL_CPP_Keyword_Table::lookup (const char *str, unsigned int len)
       MIN_HASH_VALUE = 6,
       MAX_HASH_VALUE = 251,
       HASH_VALUE_RANGE = 246,
-      DUPLICATES = 0
+      DUPLICATES = 0,
+      WORDLIST_SIZE = 80
     };
 
-  static const TAO_IDL_CPP_Keyword_Entry wordlist[] =
+  static const struct TAO_IDL_CPP_Keyword_Entry  wordlist[] =
     {
-      {"",0}, {"",0}, {"",0}, {"",0}, {"",0}, {"",0},
+      {"",0},{"",0},{"",0},{"",0},{"",0},{"",0},
       {"delete",  "_cxx_delete"},
       {"mutable",  "_cxx_mutable"},
       {"",0},
@@ -55,33 +84,33 @@ TAO_IDL_CPP_Keyword_Table::lookup (const char *str, unsigned int len)
       {"unsigned",  "_cxx_unsigned"},
       {"",0},
       {"union",  "_cxx_union"},
-      {"",0}, {"",0}, {"",0},
+      {"",0},{"",0},{"",0},
       {"goto",  "_cxx_goto"},
-      {"",0}, {"",0}, {"",0},
+      {"",0},{"",0},{"",0},
       {"and",  "_cxx_and"},
       {"auto",  "_cxx_auto"},
-      {"",0}, {"",0}, {"",0}, {"",0},
+      {"",0},{"",0},{"",0},{"",0},
       {"namespace",  "_cxx_namespace"},
       {"using",  "_cxx_using"},
-      {"",0}, {"",0}, {"",0},
+      {"",0},{"",0},{"",0},
       {"else",  "_cxx_else"},
-      {"",0}, {"",0}, {"",0},
+      {"",0},{"",0},{"",0},
       {"asm",  "_cxx_asm"},
       {"",0},
       {"while",  "_cxx_while"},
-      {"",0}, {"",0},
+      {"",0},{"",0},
       {"new",  "_cxx_new"},
       {"long",  "_cxx_long"},
-      {"",0}, {"",0}, {"",0}, {"",0}, {"",0}, {"",0},
+      {"",0},{"",0},{"",0},{"",0},{"",0},{"",0},
       {"return",  "_cxx_return"},
-      {"",0}, {"",0},
+      {"",0},{"",0},
       {"void",  "_cxx_void"},
       {"false",  "_cxx_false"},
-      {"",0}, {"",0},
+      {"",0},{"",0},
       {"volatile",  "_cxx_volatile"},
-      {"",0}, {"",0},
+      {"",0},{"",0},
       {"switch",  "_cxx_switch"},
-      {"",0}, {"",0}, {"",0}, {"",0},
+      {"",0},{"",0},{"",0},{"",0},
       {"not_eq",  "_cxx_not_eq"},
       {"private",  "_cxx_private"},
       {"",0},
@@ -105,17 +134,17 @@ TAO_IDL_CPP_Keyword_Table::lookup (const char *str, unsigned int len)
       {"signed",  "_cxx_signed"},
       {"or",  "_cxx_or"},
       {"register",  "_cxx_register"},
-      {"",0}, {"",0},
+      {"",0},{"",0},
       {"public",  "_cxx_public"},
-      {"",0}, {"",0}, {"",0}, {"",0}, {"",0}, {"",0}, {"",0}, {"",0},
+      {"",0},{"",0},{"",0},{"",0},{"",0},{"",0},{"",0},{"",0},
       {"or_eq",  "_cxx_or_eq"},
       {"bitand",  "_cxx_bitand"},
-      {"",0}, {"",0}, {"",0},
+      {"",0},{"",0},{"",0},
       {"compl",  "_cxx_compl"},
       {"extern",  "_cxx_extern"},
-      {"",0}, {"",0},
+      {"",0},{"",0},
       {"char",  "_cxx_char"},
-      {"",0}, {"",0}, {"",0}, {"",0}, {"",0}, {"",0}, {"",0},
+      {"",0},{"",0},{"",0},{"",0},{"",0},{"",0},{"",0},
       {"default",  "_cxx_default"},
       {"template",  "_cxx_template"},
       {"",0},
@@ -123,55 +152,55 @@ TAO_IDL_CPP_Keyword_Table::lookup (const char *str, unsigned int len)
       {"sizeof",  "_cxx_sizeof"},
       {"",0},
       {"not",  "_cxx_not"},
-      {"",0}, {"",0}, {"",0}, {"",0}, {"",0}, {"",0}, {"",0}, {"",0},
+      {"",0},{"",0},{"",0},{"",0},{"",0},{"",0},{"",0},{"",0},
       {"if",  "_cxx_if"},
       {"",0},
       {"this",  "_cxx_this"},
       {"short",  "_cxx_short"},
-      {"",0}, {"",0}, {"",0}, {"",0},
+      {"",0},{"",0},{"",0},{"",0},
       {"bitor",  "_cxx_bitor"},
       {"",0},
       {"virtual",  "_cxx_virtual"},
       {"xor",  "_cxx_xor"},
-      {"",0}, {"",0}, {"",0}, {"",0}, {"",0}, {"",0},
+      {"",0},{"",0},{"",0},{"",0},{"",0},{"",0},
       {"throw",  "_cxx_throw"},
-      {"",0}, {"",0}, {"",0},
+      {"",0},{"",0},{"",0},
       {"true",  "_cxx_true"},
       {"",0},
       {"xor_eq",  "_cxx_xor_eq"},
-      {"",0}, {"",0}, {"",0}, {"",0}, {"",0}, {"",0}, {"",0}, {"",0}, {"",0},
+      {"",0},{"",0},{"",0},{"",0},{"",0},{"",0},{"",0},{"",0},{"",0},
       {"reinterpret_cast",  "_cxx_reinterpret_cast"},
-      {"",0}, {"",0}, {"",0}, {"",0},
+      {"",0},{"",0},{"",0},{"",0},
       {"typeid",  "_cxx_typeid"},
       {"",0},
       {"typename",  "_cxx_typename"},
-      {"",0}, {"",0}, {"",0},
+      {"",0},{"",0},{"",0},
       {"dynamic_cast",  "_cxx_dynamic_cast"},
       {"int",  "_cxx_int"},
       {"",0},
       {"float",  "_cxx_float"},
-      {"",0}, {"",0}, {"",0}, {"",0},
+      {"",0},{"",0},{"",0},{"",0},
       {"const",  "_cxx_const"},
-      {"",0}, {"",0}, {"",0}, {"",0},
+      {"",0},{"",0},{"",0},{"",0},
       {"const_cast",  "_cxx_const_cast"},
-      {"",0}, {"",0}, {"",0}, {"",0}, {"",0}, {"",0}, {"",0}, {"",0}, {"",0},
+      {"",0},{"",0},{"",0},{"",0},{"",0},{"",0},{"",0},{"",0},{"",0},
       {"",0},
       {"static",  "_cxx_static"},
-      {"",0}, {"",0}, {"",0}, {"",0}, {"",0},
+      {"",0},{"",0},{"",0},{"",0},{"",0},
       {"typedef",  "_cxx_typedef"},
       {"try",  "_cxx_try"},
-      {"",0}, {"",0},
+      {"",0},{"",0},
       {"export",  "_cxx_export"},
       {"",0},
       {"explicit",  "_cxx_explicit"},
-      {"",0}, {"",0}, {"",0},
+      {"",0},{"",0},{"",0},
       {"wchar_t",  "_cxx_wchar_t"},
-      {"",0}, {"",0}, {"",0}, {"",0}, {"",0}, {"",0}, {"",0}, {"",0}, {"",0},
-      {"",0}, {"",0}, {"",0}, {"",0}, {"",0}, {"",0}, {"",0}, {"",0}, {"",0},
-      {"",0}, {"",0}, {"",0}, {"",0}, {"",0}, {"",0}, {"",0}, {"",0}, {"",0},
+      {"",0},{"",0},{"",0},{"",0},{"",0},{"",0},{"",0},{"",0},{"",0},
+      {"",0},{"",0},{"",0},{"",0},{"",0},{"",0},{"",0},{"",0},{"",0},
+      {"",0},{"",0},{"",0},{"",0},{"",0},{"",0},{"",0},{"",0},{"",0},
       {"",0},
       {"struct",  "_cxx_struct"},
-      {"",0}, {"",0}, {"",0}, {"",0},
+      {"",0},{"",0},{"",0},{"",0},
       {"static_cast",  "_cxx_static_cast"},
     };
 
@@ -181,15 +210,11 @@ TAO_IDL_CPP_Keyword_Table::lookup (const char *str, unsigned int len)
 
       if (key <= MAX_HASH_VALUE && key >= MIN_HASH_VALUE)
         {
-          if (len == static_cast<unsigned int> (ACE_OS::strlen (wordlist[key].keyword_)))
-            {
-              const char *s = wordlist[key].keyword_;
+          const char *s = wordlist[key].keyword_;
 
-              if (*str == *s && !ACE_OS::strncmp (str + 1, s + 1, len - 1))
-                return &wordlist[key];
-            }
+          if (len == static_cast<unsigned int> (ACE_OS::strlen (s)) && *str == *s && !ACE_OS::strncmp (str + 1, s + 1, len - 1))
+            return &wordlist[key];
         }
     }
   return 0;
 }
-/* ending time is 2:40:07 */
