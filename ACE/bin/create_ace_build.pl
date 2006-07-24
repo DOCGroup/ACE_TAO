@@ -280,6 +280,8 @@ sub wanted {
     /^Static_Debug\z/s && ($File::Find::prune = 1)
     ||
     /^Static_Release\z/s && ($File::Find::prune = 1)
+    ||
+    /^\.svn\z/s && ($File::Find::prune = 1)
     );
 
     $matches = $matches &&
