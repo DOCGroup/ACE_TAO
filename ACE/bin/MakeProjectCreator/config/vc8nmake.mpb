@@ -1,0 +1,10 @@
+// -*- MPC -*-
+// $Id$
+
+project {
+  specific(nmake) {
+    compile_flags -= /EHs
+    compile_flags += /EHa
+  }
+}
+
