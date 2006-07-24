@@ -1,3 +1,25 @@
+Mon Jul 24 21:54:22 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/HTIOP/htiop_endpointsC.cpp
+        * orbsvcs/orbsvcs/HTIOP/htiop_endpointsC.h
+        * orbsvcs/orbsvcs/SSLIOP/ssl_endpointsC.h
+        * orbsvcs/orbsvcs/SSLIOP/ssl_endpointsC.cpp
+        * tao/RTScheduling/RTSchedulerC.cpp
+        * tao/RTScheduling/RTSchedulerC.h
+        
+          Removed these, they were kept around erroneously.
+        
+        * ./TAO/performance-tests/AMI_Latency
+        * ./TAO/performance-tests/Deferred_Latency
+        * ./TAO/performance-tests/DII_Latency
+        * ./TAO/performance-tests/DSI_Latency
+        * ./TAO/performance-tests/Single_Threaded_Latency
+        * ./TAO/performance-tests/Thread_Per_Connection_Latency
+        * ./TAO/performance-tests/Thread_Pool_Latency
+        
+          Removed these directories, which had been previously merged into 
+          performance-tests/Latency
+
 Mon Jul 24 19:02:33 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * TAO/RTScheduling/RTSchedulerA.h
