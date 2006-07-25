@@ -61,7 +61,7 @@
 # [miscellany]
 ### Set global-ignores to a set of whitespace-delimited globs
 ### which Subversion will ignore in its 'status' output.
-# global-ignores = *.o *.lo *.la #*# .*.rej *.rej .*~ *~ .#* .DS_Store
+global-ignores = *.o *.lo *.la #*# .*.rej *.rej .*~ *~ .#* .DS_Store *.class *.dll *.exp *.ilk *.lib *.ncb *.opt *.pdb *.plg *.bsc *.ini *.res *C.i *C.inl *S.i *S.inl *C.h *S.h *C.cpp *S.cpp *C.hh *S.hh *S_T.i *S_T.inl *S_T.h *S_T.cpp .obj .pure .shobj LIB DLL Debug Release Static_Debug Static_Release config.h Templates.DB Thumbs.db ir.out *.aux *.lof *.lot *.log *.dvi *.blg *.bbl *.ior *Cli.* *Ser.* *Ser_T.* *.pch *.idb *.vcl *.vcb *.vcl *.vco *.SUP .depend.* GNUmake* *.so* obj *.exe *_svnt.*
 ### Set log-encoding to the default encoding for log messages
 # log-encoding = latin1
 ### Set use-commit-times to make checkout/update/switch/revert
