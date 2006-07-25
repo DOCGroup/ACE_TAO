@@ -26,7 +26,7 @@ REGEDIT4
 "#diff3-has-program-arg"=""
 
 [HKEY_CURRENT_USER\Software\Tigris.org\Subversion\Config\miscellany]
-"#global-ignores"="*.o *.lo *.la #*# .*.rej *.rej .*~ *~ .#* .DS_Store"
+"global-ignores"="****.class *.dll *.exp *.ilk *.lib *.ncb *.opt *.pdb *.plg *.bsc *.ini *.res *C.i *C.inl *S.i *S.inl *C.h *S.h *C.cpp *S.cpp *C.hh *S.hh *S_T.i *S_T.inl *S_T.h *S_T.cpp .obj .pure .shobj LIB DLL Debug Release Static_Debug Static_Release config.h Templates.DB Thumbs.db ir.out *.aux *.lof *.lot *.log *.dvi *.blg *.bbl *.ior *Cli.* *Ser.* *Ser_T.* *.pch *.idb *.vcl *.vcb *.vcl *.vco *.SUP .depend.* GNUmake* *.so* obj *.exe"
 "#log-encoding"=""
 "#use-commit-times"=""
 "#template-root"=""
