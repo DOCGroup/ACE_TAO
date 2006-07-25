@@ -17,9 +17,10 @@ def handler (file_name, file_content):
         return 0
     else:
         for group in match.groups ():
-            stderr.write (file_name + ":0: error: Project named " + group +
-                          " meets or exceeds the maximum project name length of " +
-                          str (max_proj_len) + " characters\n")
+            if (len (group) >= max_proj_len):
+                stderr.write (file_name + ":0: error: Project named " + group +
+                              " meets or exceeds the maximum project name length of " +
+                              str (max_proj_len) + " characters\n")
 
         return 1
 
