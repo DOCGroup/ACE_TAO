@@ -1,4 +1,4 @@
-#!/opt/local/bin/python
+#!/usr/bin/env python
 
 """ This script implements branching and tagging in the DOC group
 repository, and automates the process of creating sets. """
@@ -24,8 +24,8 @@ def parse_args ():
     parser.add_option ("-s", "--svn", dest="svn", default="svn",
                        help="Full path to svn binary, if not in path")
     parser.add_option ("-r", "--repo", dest="repo", 
-                       default="https://svn.dre.vanderbilt.edu/DOC/ACE/",
-                       help="Repository to use, defaults to s.d.v.e/DOC/ACE.")
+                       default="https://svn.dre.vanderbilt.edu/DOC/Middleware/",
+                       help="Repository to use, defaults to s.d.v.e/DOC/Middleware.")
     parser.add_option ("--src", dest="source", default="trunk/",
                        help="Path in repository from which to branch, defaults to trunk")
     parser.add_option ("--dest", dest="dest", default="",

@@ -6,7 +6,7 @@ type_list = _types.source_files + _types.header_files + _types.inline_files + _t
 from sys import stderr
 import re
 
-regex = re.compile ("\s*#\s*include\s*(\/\*\*\/){0,1}\s*<[(ace)|(tao)|(ciao)|(TAO)|(CIAO)].*>")
+regex = re.compile ("\s*#\s*include\s*(\/\*\*\/){0,1}\s*<(ace|tao|ciao|TAO|CIAO).*>")
 begin_exclude = re.compile ("FUZZ\: disable check_for_include")
 end_exclude = re.compile ("FUZZ\: enable check_for_include")
 

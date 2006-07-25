@@ -1,3 +1,22 @@
+Tue Jul 25 19:40:54 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * bin/PythonACE/__init__.py
+        
+          This enables PythonACE to be loaded as a module.
+        
+        * bin/PythonACE/fuzz/check_includes.py
+        * bin/PythonACE/fuzz/no_conflict_markers.py
+        
+          Fixed these checks, they were incorrectly flagging errors.
+        
+        * bin/fuzz.py
+        
+          Command line fuzz client that uses the PythonACE fuzz module.
+        
+        * bin/sets-manager.py
+        
+          Corrected this file to point at DOC/Middleware instead of ACE/Middleware.
+
 Mon Jul 24 23:58:33 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * docs/svn/svn-prefs.reg
