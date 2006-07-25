@@ -5,7 +5,7 @@ type_list = source_files
 
 import re
 from sys import stderr
-regex = re.compile ("(ACE_INLINE)|(ASYS_INLINE)")
+regex = re.compile ("(^\s*ACE_INLINE)|(^\s*ASYS_INLINE)", re.MULTILINE)
 
 error_message = ": error: ACE_INLINE or ASYS_INLINE found in .cpp file\n"
 
