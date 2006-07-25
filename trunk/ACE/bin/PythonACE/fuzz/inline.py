@@ -10,7 +10,7 @@ regex = re.compile ("(\s|^)+inline\s+")
 begin_exclude = re.compile ("FUZZ\: disable check_for_inline")
 end_exclude = re.compile ("FUZZ\: enable check_for_inline")
 
-error_message = "contains a C++ inline keyword, instead of ACE_INLINE\n"
+error_message = ": error: contains a C++ inline keyword, instead of ACE_INLINE\n"
 
 from _generic_handler import generic_handler
 
