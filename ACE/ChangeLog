@@ -1,3 +1,10 @@
+Tue Jul 25 21:51:07 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * bin/PythonACE/fuzz/max_project_len.py
+        * bin/PythonACE/fuzz/inline.py
+        
+          Fixed errors in these checks.
+
 Tue Jul 25 20:52:51 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * bin/PythonACE/fuzz/cpp_inline.py
