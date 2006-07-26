@@ -1,9 +1,0 @@
-// -*- MPC -*-
-//$Id$
-
-project : csd_tp_test_lib {
-  after += csd_tp_foo_b_lib
-  includes += $(TAO_ROOT)/tests/CSD_Strategy_Tests/TP_Foo_B
-  libs += CSD_TP_Foo_B
-  libpaths += $(TAO_ROOT)/tests/CSD_Strategy_Tests/TP_Foo_B
-}

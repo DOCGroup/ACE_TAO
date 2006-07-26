@@ -1,7 +1,0 @@
-test_cancel
-test_end_event_loop
-test_multiple_loops
-test_post_completions
-test_proactor
-test_timeout
-test_udp_proactor
