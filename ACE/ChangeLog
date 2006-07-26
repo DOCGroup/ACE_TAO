@@ -1,14 +1,21 @@
+Wed Jul 26 07:25:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE-INSTALL.html:
+        * html/Stats/index.shtml:
+        * docs/ACE-bug-process.html:
+          Updated documentation to point to the new svn repository
+
 Tue Jul 25 21:51:07 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * bin/PythonACE/fuzz/max_project_len.py
         * bin/PythonACE/fuzz/inline.py
-        
+
           Fixed errors in these checks.
 
 Tue Jul 25 20:52:51 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * bin/PythonACE/fuzz/cpp_inline.py
-        
+
           Fixed this check, it was incorrectly matching ACE_INLINES inside
           defines and comments.
 
@@ -16,53 +23,53 @@ Tue Jul 25 20:16:26 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * docs/svn/svn-prefs.reg
         * docs/svn/config
-        
+
           Updated to add global-ignores to mimic .cvsignore functionality.
 
 Tue Jul 25 19:40:54 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * bin/PythonACE/__init__.py
-        
+
           This enables PythonACE to be loaded as a module.
-        
+
         * bin/PythonACE/fuzz/check_includes.py
         * bin/PythonACE/fuzz/no_conflict_markers.py
-        
+
           Fixed these checks, they were incorrectly flagging errors.
-        
+
         * bin/fuzz.py
-        
+
           Command line fuzz client that uses the PythonACE fuzz module.
-        
+
         * bin/sets-manager.py
-        
+
           Corrected this file to point at DOC/Middleware instead of ACE/Middleware.
 
 Mon Jul 24 23:58:33 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * docs/svn/svn-prefs.reg
         * docs/svn/config
-         
+
           Updated these files to add svn:keywords to most text types.
 
 Mon Jul 24 23:53:53 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * bin/create_ace_build.pl
-        
+
           Fix provided by Steve Huston to prevent this script from building
           links from .svn directories.
 
 Mon Jul 24 19:17:37 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * bin/fuzz.pl
-        
+
           Disabled the ID string check until the script can be fixed to ignore
           .svn directories.
 
 Mon Jul 24 15:45:34 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
-        
+
         * Subversion conversion completed at revision 73730
-        
+
 Sun Jul 23 15:44:43 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * Repository frozen for repository conversion
