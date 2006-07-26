@@ -7,15 +7,15 @@ import os
 
 def parse_args ():
     from optparse import OptionParser
-    
-    parser = OptionParser ("usage: %prog [optoins] name")
+
+    parser = OptionParser ("usage: %prog [options] name")
     parser.add_option ("-A", "--ACE", dest="project", action="store_const",
                        help="Branch/tag only ACE", default=None, const="ace")
     parser.add_option ("-T", "--TAO", dest="project", action="store_const",
                        help="Branch/tag ACE and TAO", default=None, const="tao")
     parser.add_option ("-C", "--CIAO", dest="project", action="store_const",
                        help="Branch/tag ACE, TAO, and CIAO", default=None, const="ciao")
-    parser.add_option ("-t", "--tag", dest="action", 
+    parser.add_option ("-t", "--tag", dest="action",
                        help="Create a tag", action="store_true", default=None)
     parser.add_option ("-b", "--branch", dest="action", action="store_false",
                        help="Create a branch", default=None)
@@ -23,7 +23,7 @@ def parse_args ():
                        help="Print out verbose debugging output", default=False)
     parser.add_option ("-s", "--svn", dest="svn", default="svn",
                        help="Full path to svn binary, if not in path")
-    parser.add_option ("-r", "--repo", dest="repo", 
+    parser.add_option ("-r", "--repo", dest="repo",
                        default="https://svn.dre.vanderbilt.edu/DOC/Middleware/",
                        help="Repository to use, defaults to s.d.v.e/DOC/Middleware.")
     parser.add_option ("--src", dest="source", default="trunk/",
@@ -43,7 +43,7 @@ def parse_args ():
 
     if opts.project is None:
         parser.error ("must specity a project to branch")
-        
+
     return (opts, args)
 
 def execute (command):
@@ -97,7 +97,7 @@ def branch_ACE ():
 
 def branch_TAO ():
     branch_ACE ()
-    
+
     # Perform branching
     destination = opts.repo + opts.dest
     svn_copy (opts.repo + opts.source + "/TAO",
@@ -130,7 +130,7 @@ def branch_CIAO ():
                   "ACE_wrappers/TAO",
                   destination + "modules/TAO",
                   "ACE_wrappers/TAO/CIAO",
-                  destination + "modules/CIAO"))                         
+                  destination + "modules/CIAO"))
 
 def main (opts, args):
     # Lets make opts global
@@ -154,7 +154,7 @@ def main (opts, args):
     # We need a local copy of the sets directory, as svn:externals
     # can only be modified locally
     execute ("svn co " + opts.repo + path + "/sets")
-    
+
     # opts.dest should now be set to path, all of the branching
     # functions assume dest now points to the branch/tag in which
     # the copies should be places
@@ -173,7 +173,7 @@ def main (opts, args):
             os.remove (os.path.join (root, name))
         for name in dirs:
             os.rmdir (os.path.join (root, name))
-    
+
 if __name__ == "__main__":
     opts, args = parse_args ()
     main (opts, args)
