@@ -1,0 +1,14 @@
+// -*- MPC -*-
+// $Id$
+
+project: taoexe, ifr_client, minimum_corba {
+  exename  = IDL3_Test
+  
+  Source_Files {
+	client.cpp
+	idl3_client.cpp
+  }
+
+  IDL_Files {
+  }
+}

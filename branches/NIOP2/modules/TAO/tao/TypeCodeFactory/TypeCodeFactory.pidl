@@ -1,0 +1,145 @@
+//
+// $Id$
+
+/**
+ * @file TypeCodeFactory.pidl
+ *
+ * It was originally part of Interface.idl, but since the TypeCodeFactory
+ * has been made into a separate library, and the TypeCodeFactory interface
+ * has been made local, it is simpler to generate the necessary stub
+ * code in TypeCodeFactoryC.* by splitting Interface.idl into two
+ * parts.
+ */
+
+// ================================================================
+
+#ifndef _TYPECODEFACTORY_IDL_
+#define _TYPECODEFACTORY_IDL_
+
+#include "tao/IFR_Client/IFR_Extended.pidl"
+
+#pragma prefix "omg.org"
+
+module CORBA
+{
+// These are pulled in from #includes.
+/*
+  typedef string Identifier;
+  typedef string RepositoryId;
+  typedef short ValueModifier;
+*/
+  local interface TypeCodeFactory
+  {
+    TypeCode create_struct_tc (
+        in RepositoryId id,
+        in Identifier name,
+        in StructMemberSeq members
+      );
+
+    TypeCode create_union_tc (
+        in RepositoryId id,
+        in Identifier name,
+        in TypeCode discriminator_type,
+        in UnionMemberSeq members
+      );
+
+    TypeCode create_enum_tc (
+        in RepositoryId id,
+        in Identifier name,
+        in EnumMemberSeq members
+      );
+
+    TypeCode create_alias_tc (
+        in RepositoryId id,
+        in Identifier name,
+        in TypeCode original_type
+      );
+
+    TypeCode create_exception_tc (
+        in RepositoryId id,
+        in Identifier name,
+        in StructMemberSeq members
+      );
+
+    TypeCode create_interface_tc (
+        in RepositoryId id,
+        in Identifier name
+      );
+
+    TypeCode create_string_tc (
+        in unsigned long bound
+      );
+
+    TypeCode create_wstring_tc (
+        in unsigned long bound
+      );
+
+    TypeCode create_fixed_tc (
+        in unsigned short digits,
+        in unsigned short scale
+      );
+
+    TypeCode create_sequence_tc (
+        in unsigned long bound,
+        in TypeCode element_type
+      );
+
+    TypeCode create_array_tc (
+        in unsigned long length,
+        in TypeCode element_type
+      );
+
+    TypeCode create_value_tc (
+        in RepositoryId id,
+        in Identifier name,
+        in ValueModifier type_modifier,
+        in TypeCode concrete_base,
+        in ValueMemberSeq members
+      );
+
+    TypeCode create_value_box_tc (
+        in RepositoryId id,
+        in Identifier name,
+        in TypeCode boxed_type
+      );
+
+    TypeCode create_native_tc (
+        in RepositoryId id,
+        in Identifier name
+      );
+
+    TypeCode create_recursive_tc (
+        in RepositoryId id
+      );
+
+    TypeCode create_abstract_interface_tc (
+        in RepositoryId id,
+        in Identifier name
+      );
+
+    TypeCode create_local_interface_tc (
+        in RepositoryId id,
+        in Identifier name
+      );
+
+    TypeCode create_component_tc (
+        in RepositoryId id,
+        in Identifier name
+      );
+
+    TypeCode create_home_tc (
+        in RepositoryId id,
+        in Identifier name
+      );
+
+    TypeCode create_event_tc (
+        in RepositoryId id,
+        in Identifier name,
+        in ValueModifier type_modifier,
+        in TypeCode concrete_base,
+        in ValueMemberSeq members
+      );
+  };
+};
+
+#endif // _TYPECODEFACTORY_IDL_

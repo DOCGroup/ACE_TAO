@@ -1,0 +1,116 @@
+static char *bindObject = "dialog(name = 'bindObject',\
+  style = 'wxRAISED_BORDER | wxCAPTION | wxTHICK_FRAME | wxSYSTEM_MENU',\
+  title = 'Bind Object/Context',\
+  id = 133,\
+  x = -1, y = -1, width = 274, height = 66,\
+  background_colour = 'C0C0C0',\
+  use_dialog_units = 1,\
+  use_system_defaults = 0,\
+  font = [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Sans Serif'],\
+  control = [5100, wxButton, 'OK', 'wxNO_BORDER', 'okButton', 77, 45, 50, 14, '',\
+      [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Sans Serif']],\
+  control = [5101, wxButton, 'Cancel', '0', 'cancelPButton', 152, 45, 50, 14, '',\
+      [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Sans Serif']],\
+  control = [5105, wxStaticText, 'Id:', '0', 'statictext10', 7, 9, 6, 6, '',\
+      [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Sans Serif']],\
+  control = [1015, wxTextCtrl, '', '0', 'idTextCtrl', 35, 7, 115, 12, '',\
+      [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Sans Serif']],\
+  control = [5105, wxStaticText, 'Kind:', '0', 'statictext12', 163, 9, 17, 8, '',\
+      [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Sans Serif']],\
+  control = [5105, wxStaticText, 'IOR:', '0', 'statictext14', 7, 28, 22, 8, '',\
+      [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Sans Serif']],\
+  control = [1017, wxTextCtrl, '', '0', 'kindTextCtrl', 185, 7, 87, 12, '',\
+      [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Sans Serif']],\
+  control = [1002, wxTextCtrl, '', '0', 'iorTextCtrl', 35, 26, 174, 12, '',\
+      [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Sans Serif']],\
+  control = [1018, wxButton, 'View IOR', '0', 'viewIORButton', 222, 26, 50, 12, '',\
+      [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Sans Serif']]).";
+
+static char *addNameServer = "dialog(name = 'addNameServer',\
+  style = 'wxRAISED_BORDER | wxCAPTION | wxTHICK_FRAME | wxSYSTEM_MENU',\
+  title = 'Add Name Server',\
+  id = 136,\
+  x = -1, y = -1, width = 186, height = 69,\
+  background_colour = 'C0C0C0',\
+  use_dialog_units = 1,\
+  use_system_defaults = 0,\
+  font = [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Sans Serif'],\
+  control = [1025, wxTextCtrl, '', '0', 'nameText', 36, 7, 143, 12, '',\
+      [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Sans Serif']],\
+  control = [1002, wxTextCtrl, '', '0', 'iorText', 37, 27, 142, 12, '',\
+      [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Sans Serif']],\
+  control = [5100, wxButton, 'OK', '0', 'okButton', 26, 48, 50, 14, '',\
+      [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Sans Serif']],\
+  control = [5101, wxButton, 'Cancel', '0', 'button5', 109, 48, 50, 14, '',\
+      [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Sans Serif']],\
+  control = [5105, wxStaticText, 'Name:', '0', 'statictext6', 7, 10, 22, 8, '',\
+      [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Sans Serif']],\
+  control = [5105, wxStaticText, 'IOR:', '0', 'statictext7', 7, 30, 24, 6, '',\
+      [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Sans Serif']]).";
+
+static char *bindNewContext = "dialog(name = 'bindNewContext',\
+  style = 'wxRAISED_BORDER | wxCAPTION | wxTHICK_FRAME | wxSYSTEM_MENU',\
+  title = 'Bind New Context',\
+  id = 134,\
+  x = -1, y = -1, width = 154, height = 76,\
+  background_colour = 'C0C0C0',\
+  use_dialog_units = 1,\
+  use_system_defaults = 0,\
+  font = [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Sans Serif'],\
+  control = [1015, wxTextCtrl, '', '0', 'idText', 16, 7, 135, 12, '',\
+      [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Sans Serif']],\
+  control = [1017, wxTextCtrl, '', '0', 'kindText', 27, 31, 125, 12, '',\
+      [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Sans Serif']],\
+  control = [5100, wxButton, 'OK', '0', 'button4', 18, 55, 50, 14, '',\
+      [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Sans Serif']],\
+  control = [5101, wxButton, 'Cancel', '0', 'button5', 91, 55, 50, 14, '',\
+      [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Sans Serif']],\
+  control = [5105, wxStaticText, 'Id:', '0', 'statictext6', 7, 10, 8, 6, '',\
+      [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Sans Serif']],\
+  control = [5105, wxStaticText, 'Kind:', '0', 'statictext7', 7, 34, 15, 6, '',\
+      [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Sans Serif']]).";
+
+static char *viewIOR = "dialog(name = 'viewIOR',\
+  style = 'wxRAISED_BORDER | wxCAPTION | wxTHICK_FRAME | wxSYSTEM_MENU',\
+  title = 'View IOR',\
+  id = 102,\
+  x = -1, y = -1, width = 394, height = 127,\
+  background_colour = 'C0C0C0',\
+  use_dialog_units = 1,\
+  use_system_defaults = 0,\
+  font = [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Sans Serif'],\
+  control = [5100, wxButton, 'OK', '0', 'okButton', 342, 26, 42, 11, '',\
+      [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Sans Serif']],\
+  control = [5102, wxButton, 'Apply', '0', 'applyButton', 342, 7, 42, 11, '',\
+      [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Sans Serif']],\
+  control = [5105, wxStaticText, 'IOR:', '0', 'statictext4', 7, 9, 12, 6, '',\
+      [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Sans Serif']],\
+  control = [1002, wxTextCtrl, '', '0', 'iorText', 27, 7, 304, 12, '',\
+      [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Sans Serif']],\
+  control = [5105, wxStaticText, 'Repository ID:', '0', 'statictext6', 7, 30, 46, 6, '',\
+      [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Sans Serif']],\
+  control = [1007, wxTextCtrl, '', 'wxTE_READONLY', 'typeIDText', 57, 27, 274, 12, '',\
+      [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Sans Serif']]).";
+
+static char *selectNS = "dialog(name = 'selectNS',\
+  style = 'wxRAISED_BORDER | wxCAPTION | wxTHICK_FRAME | wxSYSTEM_MENU',\
+  title = 'Select Naming Service',\
+  id = 135,\
+  x = -1, y = -1, width = 181, height = 94,\
+  background_colour = 'C0C0C0',\
+  use_dialog_units = 1,\
+  use_system_defaults = 0,\
+  font = [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Sans Serif'],\
+  control = [1024, wxListBox, '', 'wxLB_SINGLE', 'serversList', 7, 7, 107, 80, [],\
+      [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Sans Serif']],\
+  control = [5100, wxButton, 'OK', '0', 'okButton', 128, 7, 41, 11, '',\
+      [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Sans Serif']],\
+  control = [1028, wxButton, 'Default', '0', 'button1', 128, 24, 42, 11, '',\
+      [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Sans Serif']],\
+  control = [1022, wxButton, 'Add', '0', 'button4', 128, 41, 41, 11, '',\
+      [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Sans Serif']],\
+  control = [1023, wxButton, 'Remove', '0', 'button5', 128, 58, 41, 11, '',\
+      [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Sans Serif']],\
+  control = [5101, wxButton, 'Cancel', '0', 'button6', 128, 76, 41, 11, '',\
+      [8, 'wxSWISS', 'wxNORMAL', 'wxNORMAL', 0, 'MS Sans Serif']]).";
+
