@@ -231,7 +231,7 @@ namespace TAO
  *
  * <B>See Also:</B>
  *
- * http://cvs.doc.wustl.edu/ace-latest.cgi/ACE_wrappers/TAO/docs/pluggable_protocols/index.html
+ * https://svn.dre.vanderbilt.edu/viewvc/Middleware/trunk/TAO/docs/pluggable_protocols/index.html?revision=HEAD
  *
  */
 class TAO_Export TAO_Transport
