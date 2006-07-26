@@ -176,16 +176,16 @@ replica.
 
 <p>
 The Replication Manager's interfaces are defined in <a
-  href="http://cvs.doc.wustl.edu/viewcvs.cgi/*checkout*/TAO/orbsvcs/orbsvcs/FT_ReplicationManager.idl">FT_ReplicationManager.idl</a>.
+  href="../../orbsvcs/orbsvcs/FT_ReplicationManager.idl">FT_ReplicationManager.idl</a>.
 The Replication Manager also supports interfaces and types from the
 PortableGroup module that is defined in <a
-  href="http://cvs.doc.wustl.edu/viewcvs.cgi/*checkout*/TAO/orbsvcs/orbsvcs/PortableGroup.idl">PortableGroup.idl</a>
+  href="../../orbsvcs/orbsvcs/PortableGroup.idl">PortableGroup.idl</a>
 and additional interfaces and types from the FT module that is defined
 in <a
-  href="http://cvs.doc.wustl.edu/viewcvs.cgi/*checkout*/TAO/orbsvcs/orbsvcs/FT_CORBA.idl">FT_CORBA.idl</a>.
+  href="../../orbsvcs/orbsvcs/FT_CORBA.idl">FT_CORBA.idl</a>.
 Source code for the Replication Manager's implementation is found in
 the <a
-  href="http://cvs.doc.wustl.edu/viewcvs.cgi/*checkout*/TAO/orbsvcs/FT_ReplicationManager/">FT_ReplicationManager</a>
+  href="../../orbsvcs/FT_ReplicationManager/">FT_ReplicationManager</a>
 directory.
 </p>
 
@@ -217,9 +217,9 @@ Replication Manager, using the <a
 
 <p>
 The Fault Notifier's interfaces are defined in <a
-  href="http://cvs.doc.wustl.edu/viewcvs.cgi/*checkout*/TAO/orbsvcs/orbsvcs/FT_Notifier.idl">FT_Notifier.idl</a>.
+  href="../../orbsvcs/orbsvcs/FT_Notifier.idl">FT_Notifier.idl</a>.
 Source code for the Fault Notifier's implementation is found in the <a
-  href="http://cvs.doc.wustl.edu/viewcvs.cgi/*checkout*/TAO/orbsvcs/Fault_Notifier/">Fault_Notifier</a>
+  href="../../orbsvcs/Fault_Notifier/">Fault_Notifier</a>
 directory.
 </p>
 
@@ -277,10 +277,10 @@ monitor replicas as they are created.
 <p>
 The Fault Detector Factory's interfaces are defined in
 <a
-  href="http://cvs.doc.wustl.edu/viewcvs.cgi/*checkout*/TAO/orbsvcs/orbsvcs/FT_FaultDetectorFactory.idl">FT_FaultDetectorFactory.idl</a>.  Source code for the
+  href="../../orbsvcs/orbsvcs/FT_FaultDetectorFactory.idl">FT_FaultDetectorFactory.idl</a>.  Source code for the
 Fault Detector and Fault Detector Factory implementations is found in
 the <a
-  href="http://cvs.doc.wustl.edu/viewcvs.cgi/*checkout*/TAO/orbsvcs/Fault_Detector/">Fault_Detector</a> directory.
+  href="../../orbsvcs/Fault_Detector/">Fault_Detector</a> directory.
 </p>
 
 <h4><a name="Redundancy"></a>Redundancy of FT CORBA Infrastructure Services</h4>
@@ -338,10 +338,10 @@ groups.
 We have provided a sample implementation of a Replica Factory as part
 of our example application for this project.  It implements the
 Generic Factory interface from the FT module defined in <a
-  href="http://cvs.doc.wustl.edu/viewcvs.cgi/*checkout*/TAO/orbsvcs/orbsvcs/FT_CORBA.idl">FT_CORBA.idl</a>.
+  href="../../orbsvcs/orbsvcs/FT_CORBA.idl">FT_CORBA.idl</a>.
 Source code for the example application's Replica Factory is found in
 the <a
-  href="http://cvs.doc.wustl.edu/viewcvs.cgi/*checkout*/TAO/orbsvcs/tests/FT_App/">FT_App</a>
+  href="../../orbsvcs/tests/FT_App/">FT_App</a>
 directory.
 </p>
 
@@ -363,11 +363,11 @@ We have provided a sample implementation of a Replica as part of our
 example application for this project.  A Replica must implement the
 <code>PullMonitorable</code>, <code>Checkpointable</code>, and
 <code>Updateable</code> interfaces, which are defined in <a
-  href="http://cvs.doc.wustl.edu/viewcvs.cgi/*checkout*/TAO/orbsvcs/orbsvcs/FT_Replica.idl">FT_Replica.idl</a>.
+  href="../../orbsvcs/orbsvcs/FT_Replica.idl">FT_Replica.idl</a>.
 For our example application, a test replica interface is defined in <a
-  href="http://cvs.doc.wustl.edu/viewcvs.cgi/*checkout*/TAO/orbsvcs/tests/FT_App/FT_TestReplica.idl">FT_App/FT_TestReplica.idl</a>.
+  href="../../orbsvcs/tests/FT_App/FT_TestReplica.idl">FT_App/FT_TestReplica.idl</a>.
 The implementation of the test replica is also in the <a
-  href="http://cvs.doc.wustl.edu/viewcvs.cgi/*checkout*/TAO/orbsvcs/tests/FT_App/">FT_App</a>
+  href="../../orbsvcs/tests/FT_App/">FT_App</a>
 directory.
 </p>
 
@@ -411,7 +411,7 @@ Service so it can be accessed by clients.
 The Object Group Creator can exist as a stand-alone utility or it can
 be integrated with an application.  Our example application includes
 an implementation of the Object Group Creator in the <a
-  href="http://cvs.doc.wustl.edu/viewcvs.cgi/*checkout*/TAO/orbsvcs/tests/FT_App/">FT_App</a>
+  href="../../orbsvcs/tests/FT_App/">FT_App</a>
 directory.
 </p>
 
@@ -433,7 +433,7 @@ detection mechanisms described above are used to notify the
 Replication Manager of the fault and the Replication Manager takes the
 necessary actions to maintain the object group's integrity.  Our
 example application includes a simple client in the <a
-  href="http://cvs.doc.wustl.edu/viewcvs.cgi/*checkout*/TAO/orbsvcs/tests/FT_App/">FT_App</a>
+  href="../../orbsvcs/tests/FT_App/">FT_App</a>
 directory.
 </p>
 
