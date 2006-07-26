@@ -1,7 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project(registration): taoexe, portableserver {
-  avoids += ace_for_tao
-  exename = registration
-}
