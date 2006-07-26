@@ -1,5 +1,10 @@
 Wed Jul 26 07:25:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
+        * bin/sets-manager.py:
+          Fixed typo
+
+Wed Jul 26 07:25:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
         * ACE-INSTALL.html:
         * html/Stats/index.shtml:
         * docs/ACE-bug-process.html:
