@@ -1,8 +1,0 @@
-// -*- MPC -*-
-// $Id$
-project (*Client) : taoserver, messaging {
-  exename = client
-  Source_Files {
-    client.cpp
-    }
-}
