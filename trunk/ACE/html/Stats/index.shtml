@@ -8,7 +8,7 @@
   </HEAD>
   <CENTER>
   <TABLE>
-  <h1>Continuous Metrics for ACE+TAO+CIAO</h1> 
+  <h1>Continuous Metrics for ACE+TAO+CIAO</h1>
   </TABLE>
   </CENTER>
   <!--#include file="img.html"-->
@@ -22,7 +22,7 @@
       href="http://www.dre.vanderbilt.edu/scoreboard"> nightly</A>
       regression tests.  The complete source for the tests is
       available as part of the ACE+TAO+CIAO <A
-      HREF="http://deuce.doc.wustl.edu/Download.html"> distribution  
+      HREF="http://deuce.doc.wustl.edu/Download.html"> distribution
       </A>. The hardware and software configuration used for these
       tests is described <A
       HREF="configuration.shtml">here</A>. Notice, however, that the
@@ -33,7 +33,7 @@
     <P>More information about ACE+TAO+CIAO footprints, and the continuing
       effort to reduce the library and application's code size can be
       found in the
-      <A HREF="http://cvs.doc.wustl.edu/ace-latest.cgi/ACE_wrappers/docs/ACE-subsets.html">
+      <A HREF="https://svn.dre.vanderbilt.edu/viewvc/Middleware/trunk/ACE/docs/ACE-subsets.html?revision=HEAD">
 	ACE+TAO+CIAO subsetting
       </A>
       page.
