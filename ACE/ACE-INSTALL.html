@@ -98,7 +98,7 @@ to provide build results. Members of the ACE community that maintain ACE on
 platforms not maintained by the DOC group, Riverace, OCI, or Remedy IT are
 encouraged to provide build and regression test results for the scoreboard
 to ensure that all in-use platforms are represented.
-See the <a href="http://cvs.doc.wustl.edu/viewcvs.cgi/*checkout*/README?cvsroot=autobuild" target="_blank">autobuild README</a> for more information about
+See the <a href="https://svn.dre.vanderbilt.edu/viewvc/ACE_autobuild/trunk/README?revision=HEAD" target="_blank">autobuild README</a> for more information about
 how to set up a build; contact one of the above groups to inquire about how
 to get your build results recorded on the scoreboard.</p>
 <p>Because older
@@ -155,10 +155,10 @@ document</a>.</p><p>
     <td>Maintains ACE on many platforms required for their ACE and
         TAO service offerings. Besides the standard DOC group platforms
         we also support AIX, Borland C++ Builder 6/2006, CBuilderX 1.0, MinGW,
-        Cygwin, VxWorks 5.5.1 & 6.2 & 6.3, OpenVMS 7.3-2 & 8.2-1, 
-        Tru64, SuSE Linux on Alpha/IA32/EM64T, 
+        Cygwin, VxWorks 5.5.1 & 6.2 & 6.3, OpenVMS 7.3-2 & 8.2-1,
+        Tru64, SuSE Linux on Alpha/IA32/EM64T,
         HPUX 11i v2/v2 32/64 bit on PA-RISC, and
-        HPUX 11i v2 on Itanium. The Intel C++ compiler is supported on 
+        HPUX 11i v2 on Itanium. The Intel C++ compiler is supported on
         Windows 32/64bit, Linux IA32/EM64T/Itanium2.
     </td>
     <td>Remedy IT <a href="http://www.theaceorb.nl/">web site</a> and
@@ -828,7 +828,7 @@ to check <a href="#win32nonic">here</a> first. <p>
       <code>set CODEGUARD=1</code><br>
       <br>
       Set the environment variable below to build a version of ACE optimized
-      for a certain CPU. For this there are special compiler flags 
+      for a certain CPU. For this there are special compiler flags
       (-3/-4/-5/-6), see the Borland help for more info.<br>
       <code>set CPU_FLAG=-6</code><br>
       <br>
@@ -2068,7 +2068,7 @@ libraries.
       information on make flags.</p><p>
 
       If you use g++ on Solaris 7, you might need to rebuild
-      it on a SunOS 5.7 (Solaris 7) host.  Some versions of g++ 
+      it on a SunOS 5.7 (Solaris 7) host.  Some versions of g++
       provide replacements for system header files.  The
       replacements on older SunOS systems are not compatible with the
       SunOS 5.7 system headers.  </P>
@@ -2626,8 +2626,8 @@ documentation on MPC.<P>
 A common usage for creating a Windows workspace containing just the
 core ACE and TAO libraries and executables is the following:
 
-<pre><code> 
-C:> cd %TAO_ROOT% C:> %ACE_ROOT%\bin\mwc.pl -type vc71 TAO_ACE.mwc 
+<pre><code>
+C:> cd %TAO_ROOT% C:> %ACE_ROOT%\bin\mwc.pl -type vc71 TAO_ACE.mwc
 </pre></code>
 
 Replace vc71 with whatever project type you want to use.  On Linux and
@@ -2958,10 +2958,10 @@ show_uninit        Lists all uninitialized in object files built for
 
 </p><hr><p>
 </p><h2><a name="power">Building from anonymous CVS</a></h2>
-If users are building from our <a href="http://cvs.doc.wustl.edu/anoncvs.html">anon cvs</a> the
+If users are building from our <a href="https://svn.dre.vanderbilt.edu/viewvc/Middleware/trunk/"> svn</a> the
 GNUmakefiles, and project files for building on various platforms will
 not be available. Users from anon cvs are expected to generate them
-using <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/MPC/README">MPC</a> before building ACE, TAO or
+using <a href="https://svn.dre.vanderbilt.edu/viewvc/MPC/trunk/README?revision=HEAD">MPC</a> before building ACE, TAO or
 CIAO. We point out some suggestions below to get bootstrapped
 quickly.
 
