@@ -1,0 +1,32 @@
+// $Id$
+
+project(*Server): taoserver, valuetype, strategies {
+  // This is just a dummy_label to prevent the test from being compiled
+  // in MPC builds
+  requires += dummy_label
+  Source_Files {
+    server.cpp
+    Supports_Test_impl.cpp
+    Supports_TestC.cpp
+    Supports_TestS.cpp
+  }
+  Header_Files {
+    Supports_Test_impl.h
+    Supports_TestC.h
+    Supports_TestS.h
+  }
+}
+
+project(*Client): taoclient, taoserver, valuetype {
+  exename = client
+  after += *Server
+  // This is just a dummy_label to prevent the test from being compiled
+  // in MPC builds
+  requires += dummy_label
+  Source_Files {
+    client.cpp
+    Supports_Test_impl.cpp
+    Supports_TestC.cpp
+    Supports_TestS.cpp
+  }
+}
