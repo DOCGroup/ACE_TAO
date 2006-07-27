@@ -6,7 +6,7 @@
 #include "orbsvcs/ESF/ESF_Proxy_RefCount_Guard.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/ESF/ESF_Proxy_RefCount_Guard.i"
+#include "orbsvcs/ESF/ESF_Proxy_RefCount_Guard.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

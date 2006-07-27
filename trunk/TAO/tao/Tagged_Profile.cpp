@@ -10,7 +10,7 @@
 #include "tao/CDR.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/Tagged_Profile.i"
+# include "tao/Tagged_Profile.inl"
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID (tao,

@@ -15,7 +15,7 @@
 #include "Kokyu/Kokyu.h"
 
 #if     ! defined (__ACE_INLINE__)
-#include "orbsvcs/Event/EC_Kokyu_Dispatching.i"
+#include "orbsvcs/Event/EC_Kokyu_Dispatching.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (Event,

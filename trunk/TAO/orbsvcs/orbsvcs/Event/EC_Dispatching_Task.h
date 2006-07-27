@@ -188,7 +188,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/Event/EC_Dispatching_Task.i"
+#include "orbsvcs/Event/EC_Dispatching_Task.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_STATIC_SVC_DECLARE (TAO_EC_Simple_Queue_Full_Action)

@@ -27,7 +27,7 @@
 #include "ace/Reactor.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/CosEvent/CEC_Reactive_ConsumerControl.i"
+#include "orbsvcs/CosEvent/CEC_Reactive_ConsumerControl.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (CosEvent,

@@ -122,7 +122,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/CosEvent/CEC_TypedConsumerAdmin.i"
+#include "orbsvcs/CosEvent/CEC_TypedConsumerAdmin.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

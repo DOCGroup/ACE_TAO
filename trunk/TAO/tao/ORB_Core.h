@@ -1445,7 +1445,7 @@ ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_ORB_Core_Static_Resources)
 ACE_FACTORY_DECLARE (TAO, TAO_ORB_Core_Static_Resources)
 
 #if defined (__ACE_INLINE__)
-# include "tao/ORB_Core.i"
+# include "tao/ORB_Core.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

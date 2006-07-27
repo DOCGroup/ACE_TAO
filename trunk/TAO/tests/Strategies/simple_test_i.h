@@ -42,7 +42,7 @@ private:
 };
 
 #if defined(__ACE_INLINE__)
-#include "simple_test_i.i"
+#include "simple_test_i.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* TAO_STRATEGIES_I_H */

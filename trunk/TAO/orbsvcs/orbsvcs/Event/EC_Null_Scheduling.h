@@ -52,7 +52,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/Event/EC_Null_Scheduling.i"
+#include "orbsvcs/Event/EC_Null_Scheduling.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

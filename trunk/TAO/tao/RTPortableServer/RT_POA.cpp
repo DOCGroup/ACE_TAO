@@ -28,7 +28,7 @@
 #include "ace/Auto_Ptr.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/RTPortableServer/RT_POA.i"
+# include "tao/RTPortableServer/RT_POA.inl"
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID (RTPortableServer,

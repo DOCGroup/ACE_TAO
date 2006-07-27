@@ -17,7 +17,7 @@
 #include "ace/os_include/os_ctype.h"
 
 #if !defined (__ACE_INLINE__)
-#include "tao/Profile.i"
+#include "tao/Profile.inl"
 #endif /* __ACE_INLINE__ */
 
 

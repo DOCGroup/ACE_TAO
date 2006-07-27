@@ -523,7 +523,7 @@ WSOA_Metrics_Handles::WSOA_Metrics_Handles ()
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if !defined (__ACE_INLINE__)
-#include "orbsvcs/Metrics/Metrics_Utils.i"
+#include "orbsvcs/Metrics/Metrics_Utils.inl"
 #endif /* __ACE_INLINE__ */
 
 #else

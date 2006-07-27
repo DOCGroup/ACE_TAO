@@ -6,7 +6,7 @@
 #include "orbsvcs/ESF/ESF_Copy_On_Write.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/ESF/ESF_Copy_On_Write.i"
+#include "orbsvcs/ESF/ESF_Copy_On_Write.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "tao/Environment.h"

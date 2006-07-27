@@ -189,7 +189,7 @@ namespace PortableServer
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "tao/PortableServer/Servant_Base.i"
+# include "tao/PortableServer/Servant_Base.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

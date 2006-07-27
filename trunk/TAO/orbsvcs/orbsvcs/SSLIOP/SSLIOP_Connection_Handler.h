@@ -193,7 +193,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/SSLIOP/SSLIOP_Connection_Handler.i"
+#include "orbsvcs/SSLIOP/SSLIOP_Connection_Handler.inl"
 #endif /* __ACE_INLINE__ */
 
 

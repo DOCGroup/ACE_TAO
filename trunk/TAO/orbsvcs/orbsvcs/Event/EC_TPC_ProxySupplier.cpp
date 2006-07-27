@@ -3,7 +3,7 @@
 #include "orbsvcs/Event/EC_TPC_ProxySupplier.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/Event/EC_TPC_ProxySupplier.i"
+#include "orbsvcs/Event/EC_TPC_ProxySupplier.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(Event, EC_TPC_ProxySupplier, "$Id$")

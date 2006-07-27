@@ -6,7 +6,7 @@
 #include "orbsvcs/ESF/ESF_Proxy_RB_Tree.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/ESF/ESF_Proxy_RB_Tree.i"
+#include "orbsvcs/ESF/ESF_Proxy_RB_Tree.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

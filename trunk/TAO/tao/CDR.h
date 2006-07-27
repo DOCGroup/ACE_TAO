@@ -396,7 +396,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(__ACE_INLINE__)
-# include "tao/CDR.i"
+# include "tao/CDR.inl"
 #else
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

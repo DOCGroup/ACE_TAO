@@ -23,7 +23,7 @@
 #endif
 
 #if !defined (__ACE_INLINE__)
-#include "Driver.i"
+#include "Driver.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(EC_Tests, EC_Driver, "$Id$")

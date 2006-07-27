@@ -21,7 +21,7 @@
 #include "ace/OS_NS_stdio.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/Sched/SchedEntry.i"
+#include "orbsvcs/Sched/SchedEntry.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(Sched, SchedEntry, "$Id$")

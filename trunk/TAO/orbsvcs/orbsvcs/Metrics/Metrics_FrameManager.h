@@ -18,7 +18,7 @@
 #include "orbsvcs/Metrics/Metrics_Utils.h"
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/Metrics/Metrics_FrameManager.i"
+#include "orbsvcs/Metrics/Metrics_FrameManager.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "orbsvcs/Metrics/Metrics_FrameManager_T.h"

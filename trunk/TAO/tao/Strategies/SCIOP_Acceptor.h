@@ -222,7 +222,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(__ACE_INLINE__)
-#include "tao/Strategies/SCIOP_Acceptor.i"
+#include "tao/Strategies/SCIOP_Acceptor.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* TAO_HAS_SCIOP == 1 */

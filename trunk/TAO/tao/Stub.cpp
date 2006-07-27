@@ -20,7 +20,7 @@
 #include "tao/CDR.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/Stub.i"
+# include "tao/Stub.inl"
 #endif /* ! __ACE_INLINE__ */
 
 #include "ace/Auto_Ptr.h"

@@ -14,7 +14,7 @@ ACE_RCSID (SSLIOP,
 
 
 #if !defined (__ACE_INLINE__)
-# include "orbsvcs/SSLIOP/SSLIOP_Endpoint.i"
+# include "orbsvcs/SSLIOP/SSLIOP_Endpoint.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

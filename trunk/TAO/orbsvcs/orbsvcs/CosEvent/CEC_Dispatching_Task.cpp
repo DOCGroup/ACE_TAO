@@ -7,7 +7,7 @@
 
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/CosEvent/CEC_Dispatching_Task.i"
+#include "orbsvcs/CosEvent/CEC_Dispatching_Task.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/OS_NS_errno.h"

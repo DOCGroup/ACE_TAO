@@ -153,7 +153,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(__ACE_INLINE__)
-#include "orbsvcs/PortableGroup/UIPMC_Acceptor.i"
+#include "orbsvcs/PortableGroup/UIPMC_Acceptor.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

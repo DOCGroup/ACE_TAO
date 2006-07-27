@@ -5,7 +5,7 @@
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
 #if !defined (__ACE_INLINE__)
-# include "tao/Policy_Manager.i"
+# include "tao/Policy_Manager.inl"
 #endif /* ! __ACE_INLINE__ */
 
 

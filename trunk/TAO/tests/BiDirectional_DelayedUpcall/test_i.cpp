@@ -8,7 +8,7 @@
 #include "ace/Reactor.h"
 
 #if !defined(__ACE_INLINE__)
-#include "test_i.i"
+#include "test_i.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(BiDirectional_NestedUpcall, test_i, "$Id$")

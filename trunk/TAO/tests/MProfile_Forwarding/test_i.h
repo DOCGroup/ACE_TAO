@@ -46,7 +46,7 @@ public:
 };
 
 #if defined(__ACE_INLINE__)
-#include "test_i.i"
+#include "test_i.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* TAO_MT_CLIENT_TEST_I_H */

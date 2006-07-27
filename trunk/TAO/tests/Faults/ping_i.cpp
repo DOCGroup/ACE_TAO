@@ -3,7 +3,7 @@
 #include "ping_i.h"
 
 #if !defined(__ACE_INLINE__)
-#include "ping_i.i"
+#include "ping_i.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(Faults, test_i, "$Id$")

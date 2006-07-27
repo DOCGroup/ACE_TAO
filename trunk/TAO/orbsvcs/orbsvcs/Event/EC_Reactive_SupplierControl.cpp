@@ -12,7 +12,7 @@
 #include "ace/Reactor.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/Event/EC_Reactive_SupplierControl.i"
+#include "orbsvcs/Event/EC_Reactive_SupplierControl.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(Event, EC_Reactive_SupplierControl, "$Id$")

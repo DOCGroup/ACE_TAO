@@ -10,7 +10,7 @@
 #include "ace/OS_NS_string.h"
 
 #if !defined(__ACE_INLINE__)
-#include "orbsvcs/Event/ECG_CDR_Message_Receiver.i"
+#include "orbsvcs/Event/ECG_CDR_Message_Receiver.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (Event,

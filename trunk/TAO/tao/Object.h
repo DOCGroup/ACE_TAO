@@ -458,7 +458,7 @@ operator>> (TAO_InputCDR&, CORBA::Object *&);
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "tao/Object.i"
+# include "tao/Object.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

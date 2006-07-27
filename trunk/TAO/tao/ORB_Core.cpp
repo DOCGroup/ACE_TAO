@@ -72,7 +72,7 @@
 
 
 #if !defined (__ACE_INLINE__)
-# include "tao/ORB_Core.i"
+# include "tao/ORB_Core.inl"
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID (tao,

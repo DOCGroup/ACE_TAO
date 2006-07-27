@@ -150,7 +150,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/CosEvent/CEC_ProxyPullConsumer.i"
+#include "orbsvcs/CosEvent/CEC_ProxyPullConsumer.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

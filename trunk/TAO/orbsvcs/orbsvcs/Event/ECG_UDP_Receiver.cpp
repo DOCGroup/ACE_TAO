@@ -5,7 +5,7 @@
 #include "ace/SString.h"
 
 #if !defined(__ACE_INLINE__)
-#include "orbsvcs/Event/ECG_UDP_Receiver.i"
+#include "orbsvcs/Event/ECG_UDP_Receiver.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (Event,

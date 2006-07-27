@@ -7,7 +7,7 @@
 #include "tao/Transport.h"
 
 #if !defined (__ACE_INLINE__)
-#include "tao/Asynch_Reply_Dispatcher_Base.i"
+#include "tao/Asynch_Reply_Dispatcher_Base.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (tao,

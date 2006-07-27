@@ -11,7 +11,7 @@
 #include "tao/CDR.h"
 
 #if !defined(__ACE_INLINE__)
-#include "tao/Strategies/SCIOP_Acceptor.i"
+#include "tao/Strategies/SCIOP_Acceptor.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(tao,

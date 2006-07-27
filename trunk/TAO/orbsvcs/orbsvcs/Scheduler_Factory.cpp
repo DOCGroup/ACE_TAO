@@ -10,7 +10,7 @@
 #include "orbsvcs/Scheduler_Factory.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/Scheduler_Factory.i"
+#include "orbsvcs/Scheduler_Factory.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(orbsvcs,

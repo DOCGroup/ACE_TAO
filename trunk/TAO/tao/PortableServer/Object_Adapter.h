@@ -513,7 +513,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #endif /* _MSC_VER */
 
 #if defined (__ACE_INLINE__)
-# include "tao/PortableServer/Object_Adapter.i"
+# include "tao/PortableServer/Object_Adapter.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

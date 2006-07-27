@@ -137,7 +137,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "tao/RTScheduling/RTScheduler_Manager.i"
+#include "tao/RTScheduling/RTScheduler_Manager.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* TAO_PRIORITY_MAPPING_MANAGER_H */

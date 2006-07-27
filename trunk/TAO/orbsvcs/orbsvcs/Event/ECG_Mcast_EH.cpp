@@ -10,7 +10,7 @@
 #include "ace/os_include/os_fcntl.h"
 
 #if !defined(__ACE_INLINE__)
-#include "orbsvcs/Event/ECG_Mcast_EH.i"
+#include "orbsvcs/Event/ECG_Mcast_EH.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(Event, ECG_Mcast_EH, "$Id$")

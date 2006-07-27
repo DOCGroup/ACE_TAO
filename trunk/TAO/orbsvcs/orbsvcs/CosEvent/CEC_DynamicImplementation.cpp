@@ -9,7 +9,7 @@
 #include "orbsvcs/CosEvent/CEC_TypedEvent.h"
 
 #if !defined(__ACE_INLINE__)
-#include "orbsvcs/CosEvent/CEC_DynamicImplementation.i"
+#include "orbsvcs/CosEvent/CEC_DynamicImplementation.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

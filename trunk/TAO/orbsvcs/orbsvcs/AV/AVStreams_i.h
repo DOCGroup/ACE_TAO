@@ -1527,7 +1527,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "tao/debug.h"
-#include "orbsvcs/AV/AVStreams_i.i"
+#include "orbsvcs/AV/AVStreams_i.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "orbsvcs/AV/Flows_T.h"

@@ -54,7 +54,7 @@ private:
 };
 
 #if defined(__ACE_INLINE__)
-#include "ping_i.i"
+#include "ping_i.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* TAO_PING_I_H */

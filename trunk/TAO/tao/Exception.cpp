@@ -20,7 +20,7 @@
 #endif /* (ACE_LACKS_IOSTREAM_TOTALLY) */
 
 #if !defined (__ACE_INLINE__)
-# include "tao/Exception.i"
+# include "tao/Exception.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/OS_NS_stdio.h"

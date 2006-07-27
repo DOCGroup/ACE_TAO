@@ -4,7 +4,7 @@
 #define TAO_ESF_PROXY_ADMIN_CPP
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/ESF/ESF_Proxy_Admin.i"
+#include "orbsvcs/ESF/ESF_Proxy_Admin.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "orbsvcs/ESF/ESF_Shutdown_Proxy.h"

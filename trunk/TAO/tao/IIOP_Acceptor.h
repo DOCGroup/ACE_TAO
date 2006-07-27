@@ -270,7 +270,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(__ACE_INLINE__)
-#include "tao/IIOP_Acceptor.i"
+#include "tao/IIOP_Acceptor.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* TAO_HAS_IIOP && TAO_HAS_IIOP != 0 */

@@ -10,7 +10,7 @@
 #if defined (ACE_ENABLE_TIMEPROBES) && defined (ACE_COMPILE_TIMEPROBES)
 
 #if !defined (__ACE_INLINE__)
-#include "orbsvcs/Metrics/Metrics_UpcallMonitor.i"
+#include "orbsvcs/Metrics/Metrics_UpcallMonitor.inl"
 #endif /* __ACE_INLINE__ */
 
 #else

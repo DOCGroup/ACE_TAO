@@ -128,7 +128,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "tao/Policy_Set.i"
+# include "tao/Policy_Set.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

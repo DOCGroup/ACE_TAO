@@ -7,7 +7,7 @@
 #include "ace/CORBA_macros.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/ESF/ESF_Shutdown_Proxy.i"
+#include "orbsvcs/ESF/ESF_Shutdown_Proxy.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

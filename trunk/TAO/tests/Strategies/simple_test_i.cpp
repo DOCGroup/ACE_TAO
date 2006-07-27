@@ -4,7 +4,7 @@
 #include "tao/debug.h"
 
 #if !defined(__ACE_INLINE__)
-#include "simple_test_i.i"
+#include "simple_test_i.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(tests, simple_test_i, "$Id$")

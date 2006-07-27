@@ -5,7 +5,7 @@
 #include "orbsvcs/Event/EC_QOS_Info.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/Event/EC_Supplier_Filter.i"
+#include "orbsvcs/Event/EC_Supplier_Filter.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(Event, EC_Supplier_Filter, "$Id$")

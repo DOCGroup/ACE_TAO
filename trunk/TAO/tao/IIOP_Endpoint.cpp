@@ -22,7 +22,7 @@ ACE_RCSID (tao,
            "$Id$")
 
 #if !defined (__ACE_INLINE__)
-# include "tao/IIOP_Endpoint.i"
+# include "tao/IIOP_Endpoint.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/OS_NS_stdio.h"

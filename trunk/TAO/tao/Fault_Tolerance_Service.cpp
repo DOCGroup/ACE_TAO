@@ -6,7 +6,7 @@
 #include "ace/Dynamic_Service.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/Fault_Tolerance_Service.i"
+# include "tao/Fault_Tolerance_Service.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (tao,

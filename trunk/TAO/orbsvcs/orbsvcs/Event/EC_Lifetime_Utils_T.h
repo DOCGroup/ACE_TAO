@@ -189,7 +189,7 @@ bool operator!=(TAO_EC_Servant_Var<X> const & x,
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/Event/EC_Lifetime_Utils_T.i"
+#include "orbsvcs/Event/EC_Lifetime_Utils_T.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

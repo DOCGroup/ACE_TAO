@@ -25,7 +25,7 @@
 #include "ace/OS_NS_arpa_inet.h"
 
 #if !defined (__ACE_INLINE__)
-#include "orbsvcs/AV/AVStreams_i.i"
+#include "orbsvcs/AV/AVStreams_i.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (AV,

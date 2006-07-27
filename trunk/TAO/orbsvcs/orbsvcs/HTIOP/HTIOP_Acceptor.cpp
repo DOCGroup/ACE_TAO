@@ -16,7 +16,7 @@
 #include "ace/Auto_Ptr.h"
 
 #if !defined(__ACE_INLINE__)
-#include "orbsvcs/HTIOP/HTIOP_Acceptor.i"
+#include "orbsvcs/HTIOP/HTIOP_Acceptor.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(HTIOP,

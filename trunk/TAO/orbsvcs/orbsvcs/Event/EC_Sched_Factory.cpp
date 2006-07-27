@@ -12,7 +12,7 @@
 #include "ace/OS_NS_strings.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/Event/EC_Sched_Factory.i"
+#include "orbsvcs/Event/EC_Sched_Factory.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(Event, EC_Sched_Factory, "$Id$")

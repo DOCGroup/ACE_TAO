@@ -6,7 +6,7 @@
 #include "orbsvcs/Event/EC_Busy_Lock.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/Event/EC_Busy_Lock.i"
+#include "orbsvcs/Event/EC_Busy_Lock.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

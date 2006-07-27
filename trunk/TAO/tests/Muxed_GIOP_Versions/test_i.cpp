@@ -4,7 +4,7 @@
 #include "tao/debug.h"
 
 #if !defined(__ACE_INLINE__)
-#include "test_i.i"
+#include "test_i.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/OS_NS_unistd.h"

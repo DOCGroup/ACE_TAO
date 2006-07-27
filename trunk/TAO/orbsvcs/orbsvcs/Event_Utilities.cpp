@@ -6,7 +6,7 @@
 #include "ace/OS_NS_string.h"
 
 #if !defined (__ACE_INLINE__)
-#include "orbsvcs/Event_Utilities.i"
+#include "orbsvcs/Event_Utilities.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (orbsvcs, 
