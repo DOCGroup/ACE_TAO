@@ -15,7 +15,7 @@
 #include "ace/os_include/os_netdb.h"
 
 #if !defined (__ACE_INLINE__)
-# include "orbsvcs/SSLIOP/SSLIOP_Connection_Handler.i"
+# include "orbsvcs/SSLIOP/SSLIOP_Connection_Handler.inl"
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID (SSLIOP,

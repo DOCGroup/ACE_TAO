@@ -8,7 +8,7 @@
 #include "tao/CDR.h"
 
 #if !defined (__ACE_INLINE__)
-#include "tao/Principal.i"
+#include "tao/Principal.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (tao,

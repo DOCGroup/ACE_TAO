@@ -61,7 +61,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "tao/Bind_Dispatcher_Guard.i"
+# include "tao/Bind_Dispatcher_Guard.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

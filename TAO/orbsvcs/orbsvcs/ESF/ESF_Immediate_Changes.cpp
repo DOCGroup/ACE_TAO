@@ -6,7 +6,7 @@
 #include "orbsvcs/ESF/ESF_Immediate_Changes.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/ESF/ESF_Immediate_Changes.i"
+#include "orbsvcs/ESF/ESF_Immediate_Changes.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "orbsvcs/ESF/ESF_Worker.h"

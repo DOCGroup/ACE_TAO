@@ -10,7 +10,7 @@
 #include "ace/Auto_Ptr.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/Event/EC_ObserverStrategy.i"
+#include "orbsvcs/Event/EC_ObserverStrategy.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(Event, EC_ObserverStrategy, "$Id$")

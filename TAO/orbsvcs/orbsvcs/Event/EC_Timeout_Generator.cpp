@@ -5,7 +5,7 @@
 #include "orbsvcs/Event_Service_Constants.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/Event/EC_Timeout_Generator.i"
+#include "orbsvcs/Event/EC_Timeout_Generator.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (Event, 

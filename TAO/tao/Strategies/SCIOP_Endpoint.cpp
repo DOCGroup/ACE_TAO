@@ -19,7 +19,7 @@ ACE_RCSID (Strategies,
 
 
 #if !defined (__ACE_INLINE__)
-# include "tao/Strategies/SCIOP_Endpoint.i"
+# include "tao/Strategies/SCIOP_Endpoint.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

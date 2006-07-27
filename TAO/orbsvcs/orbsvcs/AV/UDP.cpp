@@ -8,7 +8,7 @@
 #include "ace/OS_NS_strings.h"
 
 #if !defined (__ACE_INLINE__)
-#include "orbsvcs/AV/UDP.i"
+#include "orbsvcs/AV/UDP.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (AV,

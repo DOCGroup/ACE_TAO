@@ -323,7 +323,7 @@ protected:
 };
 
 #if defined (__ACE_INLINE__)
-#include "Driver.i"
+#include "Driver.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ECT_CONSUMER_H */

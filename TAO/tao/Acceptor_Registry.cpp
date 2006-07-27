@@ -22,7 +22,7 @@
 #include "ace/os_include/os_ctype.h"
 
 #if !defined(__ACE_INLINE__)
-#include "tao/Acceptor_Registry.i"
+#include "tao/Acceptor_Registry.inl"
 #endif /* __ACE_INLINE__ */
 
 

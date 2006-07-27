@@ -8,7 +8,7 @@
 #include "tao/GIOP_Fragmentation_Strategy.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/CDR.i"
+# include "tao/CDR.inl"
 #endif /* ! __ACE_INLINE__ */
 
 

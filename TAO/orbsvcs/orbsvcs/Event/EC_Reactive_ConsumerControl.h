@@ -147,7 +147,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/Event/EC_Reactive_ConsumerControl.i"
+#include "orbsvcs/Event/EC_Reactive_ConsumerControl.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

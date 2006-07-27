@@ -16,7 +16,7 @@ ACE_RCSID (tao,
 
 
 #if !defined (__ACE_INLINE__)
-# include "orbsvcs/PortableGroup/UIPMC_Endpoint.i"
+# include "orbsvcs/PortableGroup/UIPMC_Endpoint.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

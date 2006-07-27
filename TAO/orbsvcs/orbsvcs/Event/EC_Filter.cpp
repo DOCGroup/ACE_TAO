@@ -6,7 +6,7 @@
 #include "tao/ORB_Constants.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/Event/EC_Filter.i"
+#include "orbsvcs/Event/EC_Filter.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (Event,

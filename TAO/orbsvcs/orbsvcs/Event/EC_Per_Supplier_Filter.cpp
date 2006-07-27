@@ -12,7 +12,7 @@
 #include "orbsvcs/Event_Service_Constants.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/Event/EC_Per_Supplier_Filter.i"
+#include "orbsvcs/Event/EC_Per_Supplier_Filter.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(Event, EC_Per_Supplier_Filter, "$Id$")

@@ -8,7 +8,7 @@
 #include "tao/ORB_Core.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/PortableServer/POA_Policy_Set.i"
+# include "tao/PortableServer/POA_Policy_Set.inl"
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID (PortableServer,

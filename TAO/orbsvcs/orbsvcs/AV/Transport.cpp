@@ -19,7 +19,7 @@
 #include "ace/Dynamic_Service.h"
 
 #if !defined (__ACE_INLINE__)
-#include "orbsvcs/AV/Transport.i"
+#include "orbsvcs/AV/Transport.inl"
 #endif /* __ACE_INLINE__ */
 
 

@@ -414,4 +414,4 @@ Demux_Test_Client::print_results (void)
 }
 
 // include the generated code
-#include "demux_test_client.i"
+#include "demux_test_client.inl"

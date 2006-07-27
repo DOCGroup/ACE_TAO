@@ -24,7 +24,7 @@
 #include "ace/OS_NS_string.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/Object.i"
+# include "tao/Object.inl"
 #endif /* ! __ACE_INLINE__ */
 
 

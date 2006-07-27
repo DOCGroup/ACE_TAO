@@ -7,7 +7,7 @@
 #include "orbsvcs/ESF/ESF_Shutdown_Proxy.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/CosEvent/CEC_SupplierAdmin.i"
+#include "orbsvcs/CosEvent/CEC_SupplierAdmin.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (CosEvent,

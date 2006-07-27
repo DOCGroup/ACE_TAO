@@ -23,7 +23,7 @@ ACE_RCSID (PortableServer,
            "$Id$")
 
 #if !defined (__ACE_INLINE__)
-# include "tao/PortableServer/Servant_Base.i"
+# include "tao/PortableServer/Servant_Base.inl"
 #endif /* ! __ACE_INLINE__ */
 
 #if defined (ACE_ENABLE_TIMEPROBES)

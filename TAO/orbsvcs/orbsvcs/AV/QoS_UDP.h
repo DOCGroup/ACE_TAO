@@ -297,7 +297,7 @@ ACE_FACTORY_DECLARE (TAO_AV, TAO_AV_UDP_QoS_Factory)
 
 
 #if defined(__ACE_INLINE__)
-#include "orbsvcs/AV/QoS_UDP.i"
+#include "orbsvcs/AV/QoS_UDP.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_RAPI || ACE_HAS_WINSOCK2_GQOS */

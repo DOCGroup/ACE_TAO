@@ -7,7 +7,7 @@
 #include "ace/Dynamic_Service.h"
 
 #if !defined(__ACE_INLINE__)
-#include "tao/Parser_Registry.i"
+#include "tao/Parser_Registry.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (tao,

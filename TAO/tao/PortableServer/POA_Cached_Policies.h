@@ -107,7 +107,7 @@ namespace TAO
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "tao/PortableServer/POA_Cached_Policies.i"
+# include "tao/PortableServer/POA_Cached_Policies.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

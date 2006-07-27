@@ -63,7 +63,7 @@ private:
 };
 
 #if defined(__ACE_INLINE__)
-#include "test_dsi.i"
+#include "test_dsi.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* TAO_DSI_GATEWAY_TEST_I_H */

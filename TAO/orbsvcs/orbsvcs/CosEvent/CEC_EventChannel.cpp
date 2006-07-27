@@ -10,7 +10,7 @@
 #include "ace/Dynamic_Service.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/CosEvent/CEC_EventChannel.i"
+#include "orbsvcs/CosEvent/CEC_EventChannel.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(CosEvent, CEC_EventChannel, "$Id$")

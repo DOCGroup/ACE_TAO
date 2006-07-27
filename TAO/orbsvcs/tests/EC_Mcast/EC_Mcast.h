@@ -520,7 +520,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "EC_Mcast.i"
+#include "EC_Mcast.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* EC_MCAST_H */

@@ -103,7 +103,7 @@ METRICS_LOGGER_REF); \
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/Metrics/Metrics_LocalCache.i"
+#include "orbsvcs/Metrics/Metrics_LocalCache.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_ENABLE_TIMEPROBES && ACE_COMPILE_TIMEPROBES */

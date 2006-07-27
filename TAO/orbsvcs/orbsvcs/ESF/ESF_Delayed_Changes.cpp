@@ -6,7 +6,7 @@
 #include "orbsvcs/ESF/ESF_Delayed_Changes.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/ESF/ESF_Delayed_Changes.i"
+#include "orbsvcs/ESF/ESF_Delayed_Changes.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "orbsvcs/ESF/ESF_Defaults.h"

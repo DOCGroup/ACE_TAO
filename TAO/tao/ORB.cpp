@@ -32,7 +32,7 @@ ACE_RCSID (tao,
 #include "tao/ObjectIdListC.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/ORB.i"
+# include "tao/ORB.inl"
 #endif /* ! __ACE_INLINE__ */
 
 #include "ace/Dynamic_Service.h"

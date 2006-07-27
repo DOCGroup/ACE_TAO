@@ -161,7 +161,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "tao/Tagged_Components.i"
+# include "tao/Tagged_Components.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

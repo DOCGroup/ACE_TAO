@@ -11,7 +11,7 @@
 #include "tao/PortableServer/ThreadPolicyC.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/PortableServer/POA_Cached_Policies.i"
+# include "tao/PortableServer/POA_Cached_Policies.inl"
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID(PortableServer,

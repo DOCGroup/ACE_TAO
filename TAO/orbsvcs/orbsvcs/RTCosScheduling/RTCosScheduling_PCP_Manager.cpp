@@ -17,7 +17,7 @@
 #include "ace/OS_NS_unistd.h"
 
 #if !defined (__ACE_INLINE__)
-#include "orbsvcs/RTCosScheduling/RTCosScheduling_PCP_Manager.i"
+#include "orbsvcs/RTCosScheduling/RTCosScheduling_PCP_Manager.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

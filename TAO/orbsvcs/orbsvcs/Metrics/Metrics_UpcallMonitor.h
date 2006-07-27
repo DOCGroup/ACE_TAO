@@ -229,7 +229,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/Metrics/Metrics_UpcallMonitor.i"
+#include "orbsvcs/Metrics/Metrics_UpcallMonitor.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "orbsvcs/Metrics/Metrics_UpcallMonitor_T.h"

@@ -3,7 +3,7 @@
 #include "tao/LocalObject.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/LocalObject.i"
+# include "tao/LocalObject.inl"
 #endif /* ! __ACE_INLINE__ */
 
 #include "tao/SystemException.h"

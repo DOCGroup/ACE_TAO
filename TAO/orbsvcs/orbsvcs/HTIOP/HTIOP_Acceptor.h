@@ -232,7 +232,7 @@ namespace TAO
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(__ACE_INLINE__)
-#include "orbsvcs/HTIOP/HTIOP_Acceptor.i"
+#include "orbsvcs/HTIOP/HTIOP_Acceptor.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

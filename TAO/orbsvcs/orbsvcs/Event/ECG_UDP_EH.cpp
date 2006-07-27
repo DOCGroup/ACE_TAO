@@ -5,7 +5,7 @@
 #include "ace/INET_Addr.h"
 
 #if !defined(__ACE_INLINE__)
-#include "orbsvcs/Event/ECG_UDP_EH.i"
+#include "orbsvcs/Event/ECG_UDP_EH.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(Event, ECG_UDP_EH, "$Id$")

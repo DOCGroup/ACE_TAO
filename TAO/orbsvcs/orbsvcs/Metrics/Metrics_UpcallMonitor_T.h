@@ -149,7 +149,7 @@ protected:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/Metrics/Metrics_UpcallMonitor_T.i"
+#include "orbsvcs/Metrics/Metrics_UpcallMonitor_T.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
