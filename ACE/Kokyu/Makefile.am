@@ -51,7 +51,7 @@ nobase_include_HEADERS = \
   Dispatcher_Impl.h \
   Dispatcher_Impl.i \
   Dispatcher_Task.h \
-  Dispatcher_Task.i \
+  Dispatcher_Task.inl \
   Kokyu.h \
   Kokyu.i \
   Kokyu_defs.h \
