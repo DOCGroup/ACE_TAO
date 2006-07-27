@@ -26,7 +26,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Recursive_Thread_Mutex)
 
 ACE_Recursive_Thread_Mutex::ACE_Recursive_Thread_Mutex (const ACE_TCHAR *name,
                                                         ACE_mutexattr_t *arg)
-  : removed_ (0)
+  : removed_ (false)
 {
   // ACE_TRACE ("ACE_Recursive_Thread_Mutex::ACE_Recursive_Thread_Mutex");
    if (ACE_OS::recursive_mutex_init (&this->lock_,
@@ -48,9 +48,9 @@ ACE_Recursive_Thread_Mutex::remove (void)
 {
 // ACE_TRACE ("ACE_Recursive_Thread_Mutex::remove");
   int result = 0;
-  if (this->removed_ == 0)
+  if (this->removed_ == false)
     {
-      this->removed_ = 1;
+      this->removed_ = true;
       result = ACE_OS::recursive_mutex_destroy (&this->lock_);
     }
   return result;
@@ -82,7 +82,7 @@ int
 ACE_Recursive_Thread_Mutex::get_nesting_level (void)
 {
   // ACE_TRACE ("ACE_Recursive_Thread_Mutex::get_nesting_level");
-#if defined (ACE_HAS_WINCE) || defined (ACE_VXWORKS) 
+#if defined (ACE_HAS_WINCE) || defined (ACE_VXWORKS)
   ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_HAS_RECURSIVE_MUTEXES)
   // Nothing inside of a CRITICAL_SECTION object should ever be

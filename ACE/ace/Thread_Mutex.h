@@ -155,77 +155,13 @@ public:
   /// destructor.  This flag isn't protected by a lock, so make sure
   /// that you don't have multiple threads simultaneously calling
   /// <remove> on the same object, which is a bad idea anyway...
-  int removed_;
+  bool removed_;
 
 private:
   // = Prevent assignment and initialization.
   void operator= (const ACE_Thread_Mutex &);
   ACE_Thread_Mutex (const ACE_Thread_Mutex &);
 };
-
-#if defined (ACE_USES_OBSOLETE_GUARD_CLASSES)
-/**
- * @class ACE_Thread_Mutex_Guard
- *
- * @brief This data structure is meant to be used within a method or
- * function...  It performs automatic aquisition and release of
- * an ACE_Thread_Mutex.
- *
- * This class is obsolete and should be replaced by
- * ACE_Guard<ACE_Thread_Mutex>.
- */
-class ACE_Export ACE_Thread_Mutex_Guard
-{
-public:
-  /// Implicitly and automatically acquire the lock.
-  ACE_Thread_Mutex_Guard (ACE_Thread_Mutex &m, int block = 1);
-
-  /// Implicitly release the lock.
-  ~ACE_Thread_Mutex_Guard (void);
-
-  /// 1 if locked, 0 if couldn't acquire the lock (errno will contain
-  /// the reason for this).
-  int locked (void);
-
-  /**
-   * Explicitly release the lock.  Note that only one thread should
-   * call this method since it doesn't protect against race
-   * conditions.
-   */
-  int remove (void);
-
-  /// Explicitly acquire the lock.
-  int acquire (void);
-
-  /**
-   * Conditionally acquire the lock (i.e., won't block).  Returns -1
-   * on failure.  If we "failed" because someone else already had the
-   * lock, <errno> is set to <EBUSY>.
-   */
-  int tryacquire (void);
-
-  /// Explicitly release the lock.
-  int release (void);
-
-  /// Dump the state of an object.
-  void dump (void) const;
-
-  /// Declare the dynamic allocation hooks.
-  ACE_ALLOC_HOOK_DECLARE;
-
-protected:
-  /// Reference to the mutex.
-  ACE_Thread_Mutex &lock_;
-
-  /// Keeps track of whether we acquired the lock or failed.
-  int owner_;
-
-private:
-  // = Prevent assignment and initialization.
-  void operator= (const ACE_Thread_Mutex_Guard &);
-  ACE_Thread_Mutex_Guard (const ACE_Thread_Mutex_Guard &);
-};
-#endif /* ACE_USES_OBSOLETE_GUARD_CLASSES */
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
