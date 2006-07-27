@@ -112,5 +112,5 @@ Parse_HTTP_Request::init (const char *request)
 }
 
 #if !defined (ACE_HAS_INLINED_OSCALLS)
-# include "HTTPU/parse_http_request.i"
+# include "HTTPU/parse_http_request.inl"
 #endif /* ACE_HAS_INLINED_OSCALLS */

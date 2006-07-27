@@ -301,7 +301,7 @@ private:
 };
 
 #if defined (__ACEXML_INLINE__)
-# include "ACEXML/common/AttributesImpl.i"
+# include "ACEXML/common/AttributesImpl.inl"
 #endif /* __ACEXML_INLINE__ */
 
 #include /**/ "ace/post.h"

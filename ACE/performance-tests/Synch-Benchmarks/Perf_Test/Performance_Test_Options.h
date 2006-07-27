@@ -128,6 +128,6 @@ private:
 // Make this available to any code that wants to see it!
 extern ACE_Svc_Export Performance_Test_Options performance_test_options;
 
-#include "Performance_Test_Options.i"
+#include "Performance_Test_Options.inl"
 #endif /* ACE_HAS_THREADS */
 #endif /* _PERFORMANCE_TEST_OPTIONS_H */

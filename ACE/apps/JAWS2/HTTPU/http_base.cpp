@@ -319,5 +319,5 @@ HTTP_Base::dump (void)
 }
 
 #if !defined (ACE_HAS_INLINED_OSCALLS)
-#   include "HTTPU/http_base.i"
+#   include "HTTPU/http_base.inl"
 # endif /* ACE_HAS_INLINED_OSCALLS */

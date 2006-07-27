@@ -3,7 +3,7 @@
 #include "SSL_SOCK.h"
 
 #if !defined (__ACE_INLINE__)
-#include "SSL_SOCK.i"
+#include "SSL_SOCK.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/OS_NS_errno.h"

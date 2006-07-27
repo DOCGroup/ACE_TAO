@@ -42,7 +42,7 @@ extern ACE_Service_Object_Type rb;
 
 #if defined (__ACE_INLINE__)
 #define ACE_INLINE inline
-#include "Handle_Broadcast.i"
+#include "Handle_Broadcast.inl"
 #else
 #define ACE_INLINE
 #endif /* __ACE_INLINE__ */

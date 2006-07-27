@@ -398,7 +398,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "URL_Addr.i"
+#include "URL_Addr.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_URL_ADDR_H */

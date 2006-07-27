@@ -214,7 +214,7 @@ protected:
   // Buffer to store encoded data.
 };
 #if defined (__ACE_INLINE__)
-#include "Locator_Request_Reply.i"
+#include "Locator_Request_Reply.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_LOCATOR_REQUEST_REPLY_H */

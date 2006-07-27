@@ -5,7 +5,7 @@
 #include "Default_Dispatcher_Impl.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "Kokyu.i"
+#include "Kokyu.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(Kokyu, Kokyu, "$Id$")

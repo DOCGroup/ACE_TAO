@@ -108,7 +108,7 @@ namespace Kokyu
 } //end of namespace
 
 #if defined (__ACE_INLINE__)
-#include "Kokyu.i"
+#include "Kokyu.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

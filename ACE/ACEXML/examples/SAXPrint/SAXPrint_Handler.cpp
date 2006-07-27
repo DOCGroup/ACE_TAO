@@ -5,7 +5,7 @@
 #include "ace/Log_Msg.h"
 
 #if !defined (__ACEXML_INLINE__)
-# include "SAXPrint_Handler.i"
+# include "SAXPrint_Handler.inl"
 #endif /* __ACEXML_INLINE__ */
 
 ACEXML_SAXPrint_Handler::ACEXML_SAXPrint_Handler (const ACEXML_Char* filename)

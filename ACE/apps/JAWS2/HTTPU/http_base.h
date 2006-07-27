@@ -81,7 +81,7 @@ protected:
 #     undef ACE_INLINE
 #   endif /* ACE_INLINE */
 #   define ACE_INLINE inline
-#   include "HTTPU/http_base.i"
+#   include "HTTPU/http_base.inl"
 # endif /* ACE_HAS_INLINED_OSCALLS */
 
 #endif /* !defined (HTTPU_HTTP_BASE_H) */

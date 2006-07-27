@@ -13,7 +13,7 @@
 #include <openssl/err.h>
 
 #if !defined (__ACE_INLINE__)
-#include "SSL_SOCK_Connector.i"
+#include "SSL_SOCK_Connector.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (ACE_SSL,

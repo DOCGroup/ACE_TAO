@@ -13,7 +13,7 @@
 #include "ace/Countdown_Time.h"
 
 #if !defined (__ACE_INLINE__)
-#include "SSL_SOCK_Acceptor.i"
+#include "SSL_SOCK_Acceptor.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (ACE_SSL,

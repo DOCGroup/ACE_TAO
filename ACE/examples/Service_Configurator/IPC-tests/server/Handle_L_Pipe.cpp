@@ -57,7 +57,7 @@ Handle_L_Pipe::handle_input (ACE_HANDLE)
 const ACE_TCHAR *Handle_L_Pipe::DEFAULT_RENDEZVOUS = ACE_TEXT ("/tmp/foo_pipe");
 
 #if !defined (__ACE_INLINE__)
-#include "Handle_L_Pipe.i"
+#include "Handle_L_Pipe.inl"
 #endif /* __ACE_INLINE__ */
 
 Handle_L_Pipe local_pipe;

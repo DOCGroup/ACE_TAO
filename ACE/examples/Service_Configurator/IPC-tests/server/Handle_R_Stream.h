@@ -45,7 +45,7 @@ extern ACE_Service_Object_Type rs;
 
 #if defined (__ACE_INLINE__)
 #define ACE_INLINE inline
-#include "Handle_R_Stream.i"
+#include "Handle_R_Stream.inl"
 #else
 #define ACE_INLINE
 #endif /* __ACE_INLINE__ */

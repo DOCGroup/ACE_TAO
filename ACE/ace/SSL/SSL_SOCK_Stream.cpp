@@ -12,7 +12,7 @@
 #include "SSL_SOCK_Stream.h"
 
 #if !defined (__ACE_INLINE__)
-#include "SSL_SOCK_Stream.i"
+#include "SSL_SOCK_Stream.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (ACE_SSL,

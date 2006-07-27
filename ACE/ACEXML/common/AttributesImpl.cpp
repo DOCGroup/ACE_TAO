@@ -3,7 +3,7 @@
 #include "ACEXML/common/AttributesImpl.h"
 
 #if !defined (__ACEXML_INLINE__)
-# include "ACEXML/common/AttributesImpl.i"
+# include "ACEXML/common/AttributesImpl.inl"
 #endif /* __ACEXML_INLINE__ */
 
 ACEXML_AttributesImpl::ACEXML_AttributesImpl (int size)
