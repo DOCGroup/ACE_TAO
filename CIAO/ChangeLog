@@ -1,3 +1,11 @@
+Thu Jul 27 18:08:47 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * CIAO_TAO.mwc
+        * CIAO_TAO_DAnCE.mwc
+        
+          Replaced relative references to ACE/TAO with absolute references
+          using environment variables.  
+
 Mon Jul 24 15:45:34 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * Subversion conversion completed at revision 73730
