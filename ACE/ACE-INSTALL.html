@@ -49,7 +49,7 @@ report process</a>.<p>
   </li><li><a href="#MPC">General MPC Information</a>
   </li><li><a href="#eclipse">Working with ACE in Eclipse</a>
   </li><li><a href="#advanced">Advanced Topics</a>
-  </li><li><a href="#power">Building from Anonymous CVS</a>
+  </li><li><a href="#power">Building from subversion</a>
 </li></ul>
 
 
@@ -310,7 +310,7 @@ The kit has been bootstrapped so you do not need to install the GNU
 Autotools (autoconf, automake, libtool) unless you want to participate
 in <a href="#autoconf_development">testing and developing</a> this
 process further or if you are working directly off of sources in the
-ACE CVS repository. To simply configure and build ACE, do:
+ACE subversion repository. To simply configure and build ACE, do:
 </p><ol>
   <li><code>cd</code> to the top-level <code>ACE_wrappers</code> directory.</li>
   <li>Create a subdirectory to hold your build's configuration and built
@@ -408,7 +408,7 @@ Support in ACE</a></h4>
 <p>
 In order to test and develop the GNU Autotool support in ACE or
 bootstrap autotool support into ACE when working directly off of ACE
-sources in the CVS repository, you must have recent versions of GNU
+sources in the subversion repository, you must have recent versions of GNU
 Autoconf, Automake and Libtool installed on your host.  Once
 installed, autotool support may be bootstrapped into your workspace by
 doing the following:
@@ -2656,17 +2656,17 @@ You need to do one of the following:
 <li>If you have already obtained MPC, either move it underneath the
 ACE_wrappers directory or set your MPC_ROOT environment variable to point
 to the full path of MPC.</li>
-<li>Check out MPC from either the DOC Group CVS repository or the OCI
-anonymous CVS server and set your MPC_ROOT environment variable.</li>
+<li>Check out MPC from the DOC Group subversion repository
+and set your MPC_ROOT environment variable.</li>
 </ol>
 
-If you do not have access to the DOC Group CVS repository, you can check
-out MPC from the OCI anonymous CVS server using the following command.
+You can check
+out MPC from the doc_group subversion server using the following command.
 
-<pre>cvs -d :pserver:anonymous@anoncvs.ociweb.com:/cvs co MPC
+<pre>svn co svn://svn.dre.vanderbilt.edu/DOC/MPC/trunk MPC
 </pre>
 
-The README and USAGE files in the MPC directory are an up-to-date
+The <A HREF="MPC/docs/README">README</A> and <A HREF="MPC/docs/USAGE">USAGE</A> files in the MPC/docs directory are an up-to-date
 source of documentation, however it is not a complete set of
 documentation. The TAO Developer's Guide from OCI starting with the
 1.3a version contains more information about MPC.<p>
@@ -2957,17 +2957,17 @@ show_uninit        Lists all uninitialized in object files built for
 </pre>
 
 </p><hr><p>
-</p><h2><a name="power">Building from anonymous CVS</a></h2>
+</p><h2><a name="power">Building from anonymous subversion</a></h2>
 If users are building from our <a href="https://svn.dre.vanderbilt.edu/viewvc/Middleware/trunk/"> svn</a> the
 GNUmakefiles, and project files for building on various platforms will
-not be available. Users from anon cvs are expected to generate them
-using <a href="https://svn.dre.vanderbilt.edu/viewvc/MPC/trunk/README?revision=HEAD">MPC</a> before building ACE, TAO or
+not be available. Users from subversion are expected to generate them
+using <a href="https://svn.dre.vanderbilt.edu/viewvc/MPC/trunk/docs/README?revision=HEAD">MPC</a> before building ACE, TAO or
 CIAO. We point out some suggestions below to get bootstrapped
 quickly.
 
 <ul>
-  <li> Please see <a href="#MPC"> instructions</a> above to  download
-  MPC from anon cvs repository <p>
+  <li> Please see <a href="#MPC"> instructions</a> above to download
+  MPC from the subversion repository <p>
   </p></li><li>Please make sure that you have <a href="http://www.perl.org/">
   perl</a> installed, preferably perl
   5.8 or higher. Users on Win32 based platforms are recommended to use
