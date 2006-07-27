@@ -1,3 +1,15 @@
+Thu Jul 27 10:14:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        Committing some small changes I had pending to see how svn behaves now
+        with updates and status info on the build systems.
+
+        * ace/Recursive_Thread_Mutex.{h,cpp}:
+          Changed removed_ to a bool
+
+        * ace/Thread_Mutex.{h,cpp,inl}:
+          Changed removed_ to a bool and removed ACE_USES_OBSOLETE_GUARD_CLASSES
+          support.
+
 Thu Jul 27 07:37:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * etc/tao.doxygen:
