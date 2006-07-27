@@ -1,3 +1,19 @@
+Thu Jul 27 07:37:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/tao.doxygen:
+        * etc/tao_portableserver.doxygen:
+          Set ignore prefix
+
+        * Kokyu/Dispatcher_Task.i
+        * Kokyu/Dispatcher_Task.inl
+          Renamed .i to .inl so that we can have a look how subversion stores
+          this in the history
+
+        * Kokyu/Dispatcher_Task.cpp
+        * Kokyu/Dispatcher_Task.h
+        * Kokyu/Makefile.am
+          Updated for the change above.
+
 Wed Jul 26 07:25:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/sets-manager.py:
