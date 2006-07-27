@@ -1,3 +1,9 @@
+Thu Jul 27 13:57:31 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * docs/svn/config
+        
+          Fixed syntax errors.  thanks to Adam Mitz for reporting them.
+
 Thu Jul 27 10:14:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         Committing some small changes I had pending to see how svn behaves now
