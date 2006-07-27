@@ -1,3 +1,8 @@
+Thu Jul 27 19:21:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO-INSTALL.html:
+          Updated to use subversion and updated minimum corba documentation
+
 Thu Jul 27 18:59:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/minimumTAO.html:
