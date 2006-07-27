@@ -1,3 +1,10 @@
+Thu Jul 27 18:07:44 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * TAO_ACE.mwc
+         
+          Replaced relative reference to ACE with an environment variable.
+          This is necessary to allow TAO to build in flattened repo layout.
+
 Wed Jul 26 07:59:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO-INSTALL.html:
