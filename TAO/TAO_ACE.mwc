@@ -2,13 +2,13 @@
 // $Id$
 
 workspace {
-  ../ace
-  ../apps/gperf/src
-  ../ACEXML/common
-  ../ACEXML/parser/parser
-  ../ACEXML/apps/svcconf
-  ../Kokyu/Kokyu.mpc
-  ../protocols
+  $(ACE_ROOT)/ace
+  $(ACE_ROOT)/apps/gperf/src
+  $(ACE_ROOT)/ACEXML/common
+  $(ACE_ROOT)/ACEXML/parser/parser
+  $(ACE_ROOT)/ACEXML/apps/svcconf
+  $(ACE_ROOT)/Kokyu/Kokyu.mpc
+  $(ACE_ROOT)/protocols
   tao
   TAO_IDL
   utils
