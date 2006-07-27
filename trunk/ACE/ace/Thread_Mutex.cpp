@@ -17,28 +17,12 @@
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Log_Msg.h"
-#include "ace/Guard_T.h"
 #include "ace/Malloc_T.h"
 
 ACE_RCSID(ace, Thread_Mutex, "$Id$")
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_ALLOC_HOOK_DEFINE(ACE_Thread_Mutex_Guard)
-
-#if defined (ACE_USES_OBSOLETE_GUARD_CLASSES)
-void
-ACE_Thread_Mutex_Guard::dump (void) const
-{
-#if defined (ACE_HAS_DUMP)
-// ACE_TRACE ("ACE_Thread_Mutex_Guard::dump");
-
-  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\n")));
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
-#endif /* ACE_HAS_DUMP */
-}
-#endif /* ACE_USES_OBSOLETE_GUARD_CLASSES */
 ACE_ALLOC_HOOK_DEFINE(ACE_Thread_Mutex)
 
 void
@@ -60,7 +44,7 @@ ACE_Thread_Mutex::~ACE_Thread_Mutex (void)
 }
 
 ACE_Thread_Mutex::ACE_Thread_Mutex (const ACE_TCHAR *name, ACE_mutexattr_t *arg)
-  : removed_ (0)
+  : removed_ (false)
 {
 //  ACE_TRACE ("ACE_Thread_Mutex::ACE_Thread_Mutex");
 
