@@ -2,21 +2,21 @@
 // $Id$
 
 workspace {
-  ../../ace
-  ../../apps/gperf/src
-  ../../ACEXML
-  ../tao
-  ../TAO_IDL
-  ../orbsvcs/orbsvcs/CosNaming.mpc
-  ../orbsvcs/orbsvcs/CosNaming_Serv.mpc
-  ../orbsvcs/orbsvcs/CosNaming_Skel.mpc
-  ../orbsvcs/Naming_Service
-  ../orbsvcs/orbsvcs/Svc_Utils.mpc
-  ../orbsvcs/orbsvcs/Security.mpc
-  ../orbsvcs/orbsvcs/IFRService.mpc
-  ../orbsvcs/orbsvcs/RTEvent.mpc
-  ../orbsvcs/orbsvcs/RTEvent_Serv.mpc
-  ../orbsvcs/orbsvcs/RTEvent_Skel.mpc
+  $(ACE_ROOT)/ace
+  $(ACE_ROOT)/apps/gperf/src
+  $(ACE_ROOT)/ACEXML
+  $(TAO_ROOT)/tao
+  $(TAO_ROOT)/TAO_IDL
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNaming.mpc
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNaming_Serv.mpc
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNaming_Skel.mpc
+  $(TAO_ROOT)/orbsvcs/Naming_Service
+  $(TAO_ROOT)/orbsvcs/orbsvcs/Svc_Utils.mpc
+  $(TAO_ROOT)/orbsvcs/orbsvcs/Security.mpc
+  $(TAO_ROOT)/orbsvcs/orbsvcs/IFRService.mpc
+  $(TAO_ROOT)/orbsvcs/orbsvcs/RTEvent.mpc
+  $(TAO_ROOT)/orbsvcs/orbsvcs/RTEvent_Serv.mpc
+  $(TAO_ROOT)/orbsvcs/orbsvcs/RTEvent_Skel.mpc
   ciao
   DAnCE
   ciaosvcs
