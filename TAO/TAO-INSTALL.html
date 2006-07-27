@@ -16,7 +16,7 @@
 <H5>Document Index</H4>
 <UL>
   <LI><A HREF="#build">Building and Installing TAO from a distribution</A>
-  <LI><A HREF="#anoncvs">Building and Installing TAO from anonymous CVS</A>
+  <LI><A HREF="#svn">Building and Installing TAO from subversion</A>
 </UL>
 
 <HR>
@@ -472,17 +472,25 @@ compiler flags must also be given to the compiler to enable them.</P>
 <HR>
 <P>
 
-<H3>minimumTAO</H3>
+<H3>Minimum CORBA</H3>
 
 <P>By default, all components in TAO will be compiled.  If you only
 want support for <A HREF="docs/minimumTAO.html">minimumTAO</A>, define
-TAO_HAS_MINIMUM_CORBA. This can be accomplished in two ways: by
-defining TAO_HAS_MINIMUM_CORBA in the config.h or orbconf.h files or
-by using <CODE>make minimum_corba=1</CODE> when you compile TAO.</P>
+TAO_HAS_MINIMUM_CORBA. This can be accomplished by the following:
+create <code>ACE_wrappers/bin/MakeProjectCreator/config/default.features</code> 
+with the contents:</p>
+<code>minimum_corba=1</code><p>
+Then regenerate the project files with MPC using <code>perl bin/mwc.pl</code>, 
+see also <A HREF="../ACE-INSTALL.html#MPC">ACE-INSTALL.html</A> for more info
+about the MPC generation. This <code>miminum_corba=1</code> will add compiler
+flags to the C++ compiler and the IDL compiler to indicate that minimum corba
+is enabled.
+For your own project code you can define TAO_HAS_MINIMUM_CORBA in the ace/config.h file or
+by using <CODE>make minimum_corba=1</CODE> when you compile TAO after that.</P>
 
 <strong><blink><font color="#ff0000">WARNING:</font></blink></strong>
-Make sure that if you build liborbsvcs with minimum_corba=1 you also
-build libTAO with minimum_corba=1!<P>
+Make sure that if you build the orbsvcs with minimum_corba=1 you also
+build the core libraries with minimum_corba=1!<P>
 
 <HR>
 <P>
@@ -495,14 +503,13 @@ Resource Requirements discussion</a> for information on system resources
 required to build ACE and TAO.<p>
 
 <HR>
-<H4><A NAME="anoncvs">Building and Installing TAO from anonymous
-CVS</H4>
+<H4><A NAME="svn">Building and Installing TAO from subversion</H4>
 
 If users are building from our <a
-href="https://svn.dre.vanderbilt.edu/viewvc/Middleware/trunk/"> svn </a> the
+href="https://svn.dre.vanderbilt.edu/viewvc/Middleware/trunk/">subversion archive</a> the
 GNUmakefiles, and project files for building on various platforms will
-not be available. Users from anon cvs are expected to generate them
-using <a href="../MPC/README">MPC</a> before building ACE, TAO or
+not be available. Users from subversion are expected to generate them
+using <a href="../MPC/docs/README">MPC</a> before building ACE, TAO or
 CIAO. We point out some suggestions below to get bootstrapped
 quickly.
 
