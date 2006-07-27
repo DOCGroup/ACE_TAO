@@ -58,7 +58,7 @@
 ### escape for the following character.
 
 ### Section for configuring miscelleneous Subversion options.
-# [miscellany]
+[miscellany]
 ### Set global-ignores to a set of whitespace-delimited globs
 ### which Subversion will ignore in its 'status' output.
 global-ignores = *.o *.lo *.la #*# .*.rej *.rej .*~ *~ .#* .DS_Store *.class *.dll *.exp *.ilk *.lib *.ncb *.opt *.pdb *.plg *.bsc *.ini *.res *C.i *C.inl *S.i *S.inl *C.h *S.h *C.cpp *S.cpp *C.hh *S.hh *S_T.i *S_T.inl *S_T.h *S_T.cpp .obj .pure .shobj LIB DLL Debug Release Static_Debug Static_Release config.h Templates.DB Thumbs.db ir.out *.aux *.lof *.lot *.log *.dvi *.blg *.bbl *.ior *Cli.* *Ser.* *Ser_T.* *.pch *.idb *.vcl *.vcb *.vcl *.vco *.SUP .depend.* GNUmake* *.so* obj *.exe *_svnt.*
@@ -79,7 +79,7 @@ enable-auto-props = yes
 ### '?').  All entries which match will be applied to the file.
 ### Note that auto-props functionality must be enabled, which
 ### is typically done by setting the 'enable-auto-props' option.
-# [auto-props]
+[auto-props]
 *.cpp=svn:eol-style=native;svn:keywords
 *.h=svn:eol-style=native;svn:keywords
 *.inl=svn:eol-style=native;svn:keywords
