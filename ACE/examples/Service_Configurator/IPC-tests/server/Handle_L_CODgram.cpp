@@ -10,7 +10,7 @@ const ACE_TCHAR *Handle_L_CODgram::DEFAULT_RENDEZVOUS =
   ACE_TEXT ("/tmp/foo_codgram");
 
 #if !defined (__ACE_INLINE__)
-#include "Handle_L_CODgram.i"
+#include "Handle_L_CODgram.inl"
 #endif /* __ACE_INLINE__ */
 
 Handle_L_CODgram local_codgram;

@@ -10,7 +10,7 @@ const ACEXML_Char *ACEXML_Exception::exception_name_ = ACE_TEXT ("ACEXML_Excepti
 const ACEXML_Char *ACEXML_Exception::null_ = ACE_TEXT ("");
 
 #if !defined (__ACEXML_INLINE__)
-# include "ACEXML/common/Exception.i"
+# include "ACEXML/common/Exception.inl"
 #endif /* __ACEXML_INLINE__ */
 
 ACEXML_Exception::ACEXML_Exception()

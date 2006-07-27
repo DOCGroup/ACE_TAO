@@ -82,5 +82,5 @@ HTTP_Request::dump (void)
 }
 
 #if !defined (ACE_HAS_INLINED_OSCALLS)
-#   include "HTTPU/http_request.i"
+#   include "HTTPU/http_request.inl"
 # endif /* ACE_HAS_INLINED_OSCALLS */

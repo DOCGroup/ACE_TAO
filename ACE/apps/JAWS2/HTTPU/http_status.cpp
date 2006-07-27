@@ -76,6 +76,6 @@ HTTP_SCode::~HTTP_SCode (void)
 }
 
 #if !defined (ACE_HAS_INLINED_OSCALLS)
-#   include "HTTPU/http_status.i"
+#   include "HTTPU/http_status.inl"
 # endif /* ACE_HAS_INLINED_OSCALLS */
 

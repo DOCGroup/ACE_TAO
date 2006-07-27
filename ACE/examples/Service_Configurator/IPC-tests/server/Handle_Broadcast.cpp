@@ -31,7 +31,7 @@ fini (void)
 unsigned short Handle_Broadcast::DEFAULT_PORT = ACE_DEFAULT_BROADCAST_PORT;
 
 #if !defined (__ACE_INLINE__)
-#include "Handle_Broadcast.i"
+#include "Handle_Broadcast.inl"
 #endif /* __ACE_INLINE__ */
 
 Handle_Broadcast remote_broadcast;

@@ -3,7 +3,7 @@
 #include "URL_Addr.h"
 
 #if !defined (__ACE_INLINE__)
-#include "URL_Addr.i"
+#include "URL_Addr.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/OS_Memory.h"

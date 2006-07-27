@@ -3,7 +3,7 @@
 #include "ACEXML/common/XMLFilterImpl.h"
 
 #if !defined (__ACEXML_INLINE__)
-# include "ACEXML/common/XMLFilterImpl.i"
+# include "ACEXML/common/XMLFilterImpl.inl"
 #endif /* __ACEXML_INLINE__ */
 
 ACEXML_XMLFilterImpl::ACEXML_XMLFilterImpl (void)

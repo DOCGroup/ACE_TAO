@@ -145,7 +145,7 @@ private:
 ACE_SVC_FACTORY_DECLARE (Baseline_Test)
 
 #if defined (__ACE_INLINE__)
-#include "Baseline_Test.i"
+#include "Baseline_Test.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif  /* ACE_HAS_THREADS */

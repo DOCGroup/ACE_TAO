@@ -35,7 +35,7 @@ char *Handle_R_Stream::login_name  = 0;
 char Handle_R_Stream::login[ACE_MAX_USERID];
 
 #if !defined (__ACE_INLINE__)
-#include "Handle_R_Stream.i"
+#include "Handle_R_Stream.inl"
 #endif /* __ACE_INLINE__ */
 
 Handle_R_Stream	    remote_stream;

@@ -160,7 +160,7 @@ public:
 #     undef ACE_INLINE
 #   endif /* ACE_INLINE */
 #   define ACE_INLINE inline
-#   include "HTTPU/http_headers.i"
+#   include "HTTPU/http_headers.inl"
 # endif /* ACE_HAS_INLINED_OSCALLS */
 
 #endif /* !defined (HTTPU_HTTP_HEADERS_HPP) */

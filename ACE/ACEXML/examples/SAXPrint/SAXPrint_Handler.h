@@ -190,6 +190,6 @@ private:
 };
 
 #if defined (__ACEXML_INLINE__)
-# include "SAXPrint_Handler.i"
+# include "SAXPrint_Handler.inl"
 #endif /* __ACEXML_INLINE__ */
 #endif /* ACEXML_SAXPRINT_HANDLER_H */

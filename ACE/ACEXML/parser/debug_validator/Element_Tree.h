@@ -152,7 +152,7 @@ protected:
 };
 
 #if defined (__ACEXML_INLINE__)
-# include "ACEXML/parser/debug_validator/Element_Tree.i"
+# include "ACEXML/parser/debug_validator/Element_Tree.inl"
 #endif /* __ACEXML_INLINE__ */
 
 #include /**/ "ace/post.h"

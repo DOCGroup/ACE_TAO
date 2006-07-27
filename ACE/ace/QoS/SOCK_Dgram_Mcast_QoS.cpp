@@ -9,7 +9,7 @@
 #endif /* ACE_WIN32 */
 
 #if !defined (__ACE_INLINE__)
-#include "SOCK_Dgram_Mcast_QoS.i"
+#include "SOCK_Dgram_Mcast_QoS.inl"
 #endif /* __ACE_INLINE__ */
 
 // This is a workaround for platforms with non-standard

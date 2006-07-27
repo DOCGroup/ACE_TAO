@@ -162,7 +162,7 @@ namespace Kokyu
 } //end of namespace
 
 #if defined (__ACE_INLINE__)
-#include "Kokyu_dsrt.i"
+#include "Kokyu_dsrt.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

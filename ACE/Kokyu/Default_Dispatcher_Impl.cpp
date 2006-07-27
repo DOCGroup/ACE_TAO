@@ -4,7 +4,7 @@
 #include "ace/Sched_Params.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "Default_Dispatcher_Impl.i"
+#include "Default_Dispatcher_Impl.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(Kokyu, Default_Dispatcher_Impl, "$Id$")

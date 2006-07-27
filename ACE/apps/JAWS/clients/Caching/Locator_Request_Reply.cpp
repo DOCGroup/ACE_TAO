@@ -6,7 +6,7 @@
 #include "Locator_Request_Reply.h"
 
 #if !defined (__ACE_INLINE__)
-#include "Locator_Request_Reply.i"
+#include "Locator_Request_Reply.inl"
 #endif
 
 #include "ace/Auto_Ptr.h"

@@ -258,7 +258,7 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "QoS_Session_Impl.i"
+#include "QoS_Session_Impl.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

@@ -12,7 +12,7 @@
 #include "ace/Thread_Manager.h"
 
 #if !defined (__ACE_INLINE__)
-#include "Baseline_Test.i"
+#include "Baseline_Test.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (Base_Test,

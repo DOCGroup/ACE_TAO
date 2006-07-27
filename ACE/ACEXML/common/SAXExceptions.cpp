@@ -15,7 +15,7 @@ const ACEXML_Char *ACEXML_SAXNotRecognizedException::exception_name_ = ACE_TEXT 
 const ACEXML_Char *ACEXML_SAXParseException::exception_name_ = ACE_TEXT ("ACEXML_SAXParseException");
 
 #if !defined (__ACEXML_INLINE__)
-# include "ACEXML/common/SAXExceptions.i"
+# include "ACEXML/common/SAXExceptions.inl"
 #endif /* __ACEXML_INLINE__ */
 
 ACEXML_SAXException::ACEXML_SAXException (void)

@@ -70,7 +70,7 @@ namespace Kokyu
 } //end of namespace
 
 #if defined (__ACE_INLINE__)
-#include "Default_Dispatcher_Impl.i"
+#include "Default_Dispatcher_Impl.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

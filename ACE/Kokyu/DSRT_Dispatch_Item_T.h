@@ -88,7 +88,7 @@ namespace Kokyu
 }
 
 #if defined (__ACE_INLINE__)
-#include "DSRT_Dispatch_Item_T.i"
+#include "DSRT_Dispatch_Item_T.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

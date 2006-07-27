@@ -42,7 +42,7 @@ extern ACE_Service_Object_Type lc;
 
 #if defined (__ACE_INLINE__)
 #define ACE_INLINE inline
-#include "Handle_L_CODgram.i"
+#include "Handle_L_CODgram.inl"
 #else
 #define ACE_INLINE
 #endif /* __ACE_INLINE__ */

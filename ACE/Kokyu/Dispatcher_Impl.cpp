@@ -3,7 +3,7 @@
 #include "Dispatcher_Impl.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "Dispatcher_Impl.i"
+#include "Dispatcher_Impl.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(Kokyu, Dispatcher_Impl, "$Id$")

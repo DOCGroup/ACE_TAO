@@ -135,7 +135,7 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "SOCK_Dgram_Mcast_QoS.i"
+#include "SOCK_Dgram_Mcast_QoS.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

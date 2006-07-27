@@ -79,7 +79,7 @@ protected:
 };
 
 #if defined (__ACEXML_INLINE__)
-# include "ACEXML/common/Exception.i"
+# include "ACEXML/common/Exception.inl"
 #endif /* __ACEXML_INLINE__ */
 
 #include /**/ "ace/post.h"

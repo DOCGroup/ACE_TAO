@@ -5,7 +5,7 @@
 #include "Dispatcher_Task.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "Dispatch_Deferrer.i"
+#include "Dispatch_Deferrer.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "kokyu_config.h"
