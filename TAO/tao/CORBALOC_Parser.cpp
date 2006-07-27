@@ -13,7 +13,7 @@
 #include "ace/os_include/os_netdb.h"
 
 #if !defined(__ACE_INLINE__)
-#include "tao/CORBALOC_Parser.i"
+#include "tao/CORBALOC_Parser.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (tao,

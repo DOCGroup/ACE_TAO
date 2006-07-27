@@ -5,7 +5,7 @@
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
 #if ! defined (__ACE_INLINE__)
-#include "tao/RTCORBA/Network_Priority_Mapping_Manager.i"
+#include "tao/RTCORBA/Network_Priority_Mapping_Manager.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (RTCORBA, 

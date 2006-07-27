@@ -155,7 +155,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 
 #if defined (__ACE_INLINE__)
-# include "tao/Environment.i"
+# include "tao/Environment.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

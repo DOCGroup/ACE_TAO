@@ -6,7 +6,7 @@
 #include "orbsvcs/Metrics/Metrics_UpcallMonitor_T.h"
 
 #if !defined (__ACE_INLINE__)
-#include "orbsvcs/Metrics/Metrics_UpcallMonitor_T.i"
+#include "orbsvcs/Metrics/Metrics_UpcallMonitor_T.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

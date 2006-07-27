@@ -352,7 +352,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #include "orbsvcs/AV/Transport.h"
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/AV/FlowSpec_Entry.i"
+#include "orbsvcs/AV/FlowSpec_Entry.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

@@ -112,7 +112,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/Event/EC_Timeout_Filter.i"
+#include "orbsvcs/Event/EC_Timeout_Filter.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

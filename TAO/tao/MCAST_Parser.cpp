@@ -11,7 +11,7 @@
 #include "ace/OS_NS_string.h"
 
 #if !defined(__ACE_INLINE__)
-#include "tao/MCAST_Parser.i"
+#include "tao/MCAST_Parser.inl"
 #endif /* __ACE_INLINE__ */
 
 

@@ -5,7 +5,7 @@
 #include "tao/SystemException.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/PortableServer/Active_Object_Map.i"
+# include "tao/PortableServer/Active_Object_Map.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Auto_Ptr.h"

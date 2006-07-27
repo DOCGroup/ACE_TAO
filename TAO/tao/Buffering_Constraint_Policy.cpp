@@ -12,7 +12,7 @@ ACE_RCSID (tao,
            "$Id$")
 
 #if ! defined (__ACE_INLINE__)
-#include "tao/Buffering_Constraint_Policy.i"
+#include "tao/Buffering_Constraint_Policy.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

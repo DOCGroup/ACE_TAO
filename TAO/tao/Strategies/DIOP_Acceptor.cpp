@@ -17,7 +17,7 @@
 #include "ace/OS_NS_string.h"
 
 #if !defined(__ACE_INLINE__)
-#include "tao/Strategies/DIOP_Acceptor.i"
+#include "tao/Strategies/DIOP_Acceptor.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/os_include/os_netdb.h"

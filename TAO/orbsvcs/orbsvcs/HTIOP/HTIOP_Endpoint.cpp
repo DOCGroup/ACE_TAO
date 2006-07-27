@@ -15,7 +15,7 @@ ACE_RCSID (HTIOP,
            "$Id$")
 
 #if !defined (__ACE_INLINE__)
-# include "orbsvcs/HTIOP/HTIOP_Endpoint.i"
+# include "orbsvcs/HTIOP/HTIOP_Endpoint.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

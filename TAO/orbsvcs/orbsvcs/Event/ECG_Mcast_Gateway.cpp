@@ -17,7 +17,7 @@
 #include "ace/OS_NS_strings.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/Event/ECG_Mcast_Gateway.i"
+#include "orbsvcs/Event/ECG_Mcast_Gateway.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(Event, ECG_Mcast_Gateway, "$Id$")

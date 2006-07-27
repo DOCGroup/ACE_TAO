@@ -6,7 +6,7 @@
 #include "orbsvcs/ESF/ESF_RefCount_Guard.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/ESF/ESF_RefCount_Guard.i"
+#include "orbsvcs/ESF/ESF_RefCount_Guard.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ESF, ESF_RefCount_Guard, "$Id$")

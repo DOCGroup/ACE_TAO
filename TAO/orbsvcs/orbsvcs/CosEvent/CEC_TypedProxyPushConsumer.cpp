@@ -9,7 +9,7 @@
 #include "tao/debug.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/CosEvent/CEC_TypedProxyPushConsumer.i"
+#include "orbsvcs/CosEvent/CEC_TypedProxyPushConsumer.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Reverse_Lock_T.h"

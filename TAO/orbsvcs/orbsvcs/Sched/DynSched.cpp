@@ -23,7 +23,7 @@
 #include "ace/Null_Mutex.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/Sched/DynSched.i"
+#include "orbsvcs/Sched/DynSched.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(Sched, DynSched, "$Id$")

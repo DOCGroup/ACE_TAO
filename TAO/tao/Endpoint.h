@@ -171,7 +171,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "tao/Endpoint.i"
+# include "tao/Endpoint.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

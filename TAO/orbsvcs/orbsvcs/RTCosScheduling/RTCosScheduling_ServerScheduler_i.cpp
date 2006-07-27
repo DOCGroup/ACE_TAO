@@ -13,7 +13,7 @@
 #include "ace/OS_NS_unistd.h"
 
 #if !defined (__ACE_INLINE__)
-#include "orbsvcs/RTCosScheduling/RTCosScheduling_ServerScheduler_i.i"
+#include "orbsvcs/RTCosScheduling/RTCosScheduling_ServerScheduler_i.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "tao/ORB_Core.h"

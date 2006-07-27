@@ -100,7 +100,7 @@ typedef ACE_Refcounted_Auto_Ptr<TAO_ECG_UDP_Out_Endpoint,ACE_Null_Mutex> TAO_ECG
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(__ACE_INLINE__)
-#include "orbsvcs/Event/ECG_UDP_Out_Endpoint.i"
+#include "orbsvcs/Event/ECG_UDP_Out_Endpoint.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

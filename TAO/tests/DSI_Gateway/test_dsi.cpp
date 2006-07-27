@@ -5,7 +5,7 @@
 #include "tao/DynamicInterface/Unknown_User_Exception.h"
 
 #if !defined(__ACE_INLINE__)
-#include "test_dsi.i"
+#include "test_dsi.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(DSI_Gateway, test_dsi, "$Id$")

@@ -6,7 +6,7 @@
 #include "orbsvcs/ESF/ESF_Delayed_Command.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/ESF/ESF_Delayed_Command.i"
+#include "orbsvcs/ESF/ESF_Delayed_Command.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

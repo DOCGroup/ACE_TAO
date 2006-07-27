@@ -17,7 +17,7 @@
 #include "ace/Reactor.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/CosEvent/CEC_Reactive_Pulling_Strategy.i"
+#include "orbsvcs/CosEvent/CEC_Reactive_Pulling_Strategy.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(CosEvent, CEC_Reactive_Pulling_Strategy, "$Id$")

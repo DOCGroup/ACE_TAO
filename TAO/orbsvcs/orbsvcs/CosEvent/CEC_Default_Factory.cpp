@@ -37,7 +37,7 @@
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/CosEvent/CEC_Default_Factory.i"
+#include "orbsvcs/CosEvent/CEC_Default_Factory.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (CosEvent,

@@ -18,7 +18,7 @@
 #endif
 
 #if !defined (__ACE_INLINE__)
-# include "tao/TAO_Server_Request.i"
+# include "tao/TAO_Server_Request.inl"
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID (tao,

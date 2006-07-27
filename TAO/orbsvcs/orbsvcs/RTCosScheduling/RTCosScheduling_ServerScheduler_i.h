@@ -299,7 +299,7 @@ typedef ACE_Hash_Map_Manager_Ex_Adapter<
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/RTCosScheduling/RTCosScheduling_ServerScheduler_i.i"
+#include "orbsvcs/RTCosScheduling/RTCosScheduling_ServerScheduler_i.inl"
 #endif /* __ACE_INLINE__ */
 
 

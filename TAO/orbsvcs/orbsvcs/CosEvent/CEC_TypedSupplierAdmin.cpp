@@ -5,7 +5,7 @@
 #include "orbsvcs/CosEvent/CEC_TypedEventChannel.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/CosEvent/CEC_TypedSupplierAdmin.i"
+#include "orbsvcs/CosEvent/CEC_TypedSupplierAdmin.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

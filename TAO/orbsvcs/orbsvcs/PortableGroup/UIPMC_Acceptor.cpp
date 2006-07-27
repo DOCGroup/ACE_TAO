@@ -15,7 +15,7 @@
 #include "ace/os_include/os_netdb.h"
 
 #if !defined(__ACE_INLINE__)
-#include "orbsvcs/PortableGroup/UIPMC_Acceptor.i"
+#include "orbsvcs/PortableGroup/UIPMC_Acceptor.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (PortableGroup,

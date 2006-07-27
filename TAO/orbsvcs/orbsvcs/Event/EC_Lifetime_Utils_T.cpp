@@ -6,7 +6,7 @@
 #include "orbsvcs/Event/EC_Lifetime_Utils_T.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/Event/EC_Lifetime_Utils_T.i"
+#include "orbsvcs/Event/EC_Lifetime_Utils_T.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

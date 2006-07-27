@@ -11,7 +11,7 @@
 #include "orbsvcs/AV/Fill_ACE_QoS.h"
 
 #if !defined (__ACE_INLINE__)
-#include "orbsvcs/AV/QoS_UDP.i"
+#include "orbsvcs/AV/QoS_UDP.inl"
 #endif /* __ACE_INLINE__ */
 
 //------------------------------------------------------------

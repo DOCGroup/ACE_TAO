@@ -12,7 +12,7 @@
 #include "ace/Auto_Ptr.h"
 
 #if !defined(__ACE_INLINE__)
-#include "tao/Connector_Registry.i"
+#include "tao/Connector_Registry.inl"
 #endif /* __ACE_INLINE__ */
 
 

@@ -96,7 +96,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "tao/CORBALOC_Parser.i"
+# include "tao/CORBALOC_Parser.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_CORBALOC_Parser)

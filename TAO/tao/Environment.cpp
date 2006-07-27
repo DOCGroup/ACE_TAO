@@ -6,7 +6,7 @@
 #include "ace/OS_NS_string.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/Environment.i"
+# include "tao/Environment.inl"
 #endif /* __ACE_INLINE__ */
 
 

@@ -14,7 +14,7 @@
 #include "tao/ORB_Core.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/Leader_Follower.i"
+# include "tao/Leader_Follower.inl"
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID (tao,

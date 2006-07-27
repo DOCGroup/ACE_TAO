@@ -20,7 +20,7 @@ ACE_RCSID (Strategies,
 
 
 #if !defined (__ACE_INLINE__)
-# include "tao/Strategies/DIOP_Endpoint.i"
+# include "tao/Strategies/DIOP_Endpoint.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/os_include/os_netdb.h"

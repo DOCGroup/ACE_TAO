@@ -5,7 +5,7 @@
 #include "ace/Sock_Connect.h"
 
 #if !defined(__ACE_INLINE__)
-#include "orbsvcs/Event/ECG_UDP_Out_Endpoint.i"
+#include "orbsvcs/Event/ECG_UDP_Out_Endpoint.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(Event, ECG_UDP_Out_Endpoint, "$Id$")

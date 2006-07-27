@@ -182,7 +182,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(__ACE_INLINE__)
-#include "orbsvcs/Event/ECG_CDR_Message_Sender.i"
+#include "orbsvcs/Event/ECG_CDR_Message_Sender.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

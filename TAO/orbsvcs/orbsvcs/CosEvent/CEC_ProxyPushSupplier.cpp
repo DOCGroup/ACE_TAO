@@ -23,7 +23,7 @@
 #include "ace/Reverse_Lock_T.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/CosEvent/CEC_ProxyPushSupplier.i"
+#include "orbsvcs/CosEvent/CEC_ProxyPushSupplier.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (CosEvent,

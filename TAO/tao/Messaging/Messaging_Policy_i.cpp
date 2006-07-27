@@ -7,7 +7,7 @@
 #include "tao/AnyTypeCode/Any.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "tao/Messaging/Messaging_Policy_i.i"
+#include "tao/Messaging/Messaging_Policy_i.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (Messaging,

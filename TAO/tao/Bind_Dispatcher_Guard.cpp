@@ -4,7 +4,7 @@
 #include "tao/Bind_Dispatcher_Guard.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/Bind_Dispatcher_Guard.i"
+# include "tao/Bind_Dispatcher_Guard.inl"
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID (tao,

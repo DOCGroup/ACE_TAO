@@ -7,7 +7,7 @@
 #include "orbsvcs/CosEvent/CEC_TypedEventChannel.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/CosEvent/CEC_TypedConsumerAdmin.i"
+#include "orbsvcs/CosEvent/CEC_TypedConsumerAdmin.inl"
 #endif /* __ACE_INLINE__ */
 
 

@@ -11,7 +11,7 @@
 #include "ace/Dynamic_Service.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/Event/EC_Event_Channel_Base.i"
+#include "orbsvcs/Event/EC_Event_Channel_Base.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(Event, EC_Event_Channel_Base, "$Id$")

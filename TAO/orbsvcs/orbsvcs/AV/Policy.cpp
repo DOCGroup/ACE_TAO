@@ -5,7 +5,7 @@
 #include "orbsvcs/AV/Policy.h"
 
 #if !defined(__ACE_INLINE__)
-#include "orbsvcs/AV/Policy.i"
+#include "orbsvcs/AV/Policy.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

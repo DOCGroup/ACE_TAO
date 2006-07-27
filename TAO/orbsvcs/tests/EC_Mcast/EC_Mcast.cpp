@@ -20,7 +20,7 @@
 #include "ace/os_include/os_ctype.h"
 
 #if !defined (__ACE_INLINE__)
-#include "EC_Mcast.i"
+#include "EC_Mcast.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (EC_Mcast,

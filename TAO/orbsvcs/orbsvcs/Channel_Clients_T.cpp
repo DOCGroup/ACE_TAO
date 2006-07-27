@@ -6,7 +6,7 @@
 #include "orbsvcs/Channel_Clients_T.h"
 
 #if !defined (__ACE_INLINE__)
-#include "orbsvcs/Channel_Clients_T.i"
+#include "orbsvcs/Channel_Clients_T.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

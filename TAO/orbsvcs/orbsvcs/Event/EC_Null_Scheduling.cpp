@@ -5,7 +5,7 @@
 #include "orbsvcs/Event/EC_Supplier_Filter.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/Event/EC_Null_Scheduling.i"
+#include "orbsvcs/Event/EC_Null_Scheduling.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(Event, EC_Null_Scheduling, "$Id$")

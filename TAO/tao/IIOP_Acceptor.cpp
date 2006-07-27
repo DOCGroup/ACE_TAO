@@ -16,7 +16,7 @@
 #include "tao/CDR.h"
 
 #if !defined(__ACE_INLINE__)
-#include "tao/IIOP_Acceptor.i"
+#include "tao/IIOP_Acceptor.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Auto_Ptr.h"

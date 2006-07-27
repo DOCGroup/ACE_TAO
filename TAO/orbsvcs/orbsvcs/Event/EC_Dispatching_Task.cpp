@@ -9,7 +9,7 @@
 #include "ace/OS_NS_strings.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/Event/EC_Dispatching_Task.i"
+#include "orbsvcs/Event/EC_Dispatching_Task.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (Event,

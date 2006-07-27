@@ -300,7 +300,7 @@ public:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/RTCosScheduling/RTCosScheduling_PCP_Manager.i"
+#include "orbsvcs/RTCosScheduling/RTCosScheduling_PCP_Manager.inl"
 #endif /* __ACE_INLINE__ */
 
 

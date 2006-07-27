@@ -107,7 +107,7 @@ ACE_STATIC_SVC_DECLARE (TAO_EC_Gateway_IIOP_Factory)
 ACE_FACTORY_DECLARE (TAO_RTEvent_Serv, TAO_EC_Gateway_IIOP_Factory)
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/Event/EC_Gateway_IIOP_Factory.i"
+#include "orbsvcs/Event/EC_Gateway_IIOP_Factory.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

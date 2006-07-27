@@ -6,7 +6,7 @@
 #include "orbsvcs/Metrics/Metrics_FrameManager_T.h"
 
 #if !defined (__ACE_INLINE__)
-#include "orbsvcs/Metrics/Metrics_FrameManager_T.i"
+#include "orbsvcs/Metrics/Metrics_FrameManager_T.inl"
 #endif /* __ACE_INLINE__ */
 
 

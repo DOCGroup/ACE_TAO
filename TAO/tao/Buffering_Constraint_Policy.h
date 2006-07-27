@@ -85,7 +85,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #endif /* _MSC_VER */
 
 #if defined (__ACE_INLINE__)
-#include "tao/Buffering_Constraint_Policy.i"
+#include "tao/Buffering_Constraint_Policy.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */

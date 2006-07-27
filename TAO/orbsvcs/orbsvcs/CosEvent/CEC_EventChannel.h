@@ -308,7 +308,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/CosEvent/CEC_EventChannel.i"
+#include "orbsvcs/CosEvent/CEC_EventChannel.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

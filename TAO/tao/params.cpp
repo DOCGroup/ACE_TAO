@@ -4,7 +4,7 @@
 #include "tao/orbconf.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/params.i"
+# include "tao/params.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/OS_NS_Thread.h"

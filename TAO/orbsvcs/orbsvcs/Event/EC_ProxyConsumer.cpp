@@ -8,7 +8,7 @@
 #include "ace/Reverse_Lock_T.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/Event/EC_ProxyConsumer.i"
+#include "orbsvcs/Event/EC_ProxyConsumer.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (Event,

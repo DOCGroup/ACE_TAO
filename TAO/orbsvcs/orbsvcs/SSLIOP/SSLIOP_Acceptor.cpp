@@ -9,7 +9,7 @@
 #include "tao/debug.h"
 
 #if !defined(__ACE_INLINE__)
-#include "orbsvcs/SSLIOP/SSLIOP_Acceptor.i"
+#include "orbsvcs/SSLIOP/SSLIOP_Acceptor.inl"
 #endif /* __ACE_INLINE__ */
 
 
