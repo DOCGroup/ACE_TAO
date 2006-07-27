@@ -70,5 +70,5 @@ Parse_HTTP_Response::init (const char *response)
 }
 
 #if !defined (ACE_HAS_INLINED_OSCALLS)
-# include "HTTPU/parse_http_response.i"
+# include "HTTPU/parse_http_response.inl"
 #endif /* ACE_HAS_INLINED_OSCALLS */

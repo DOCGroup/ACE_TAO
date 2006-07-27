@@ -53,7 +53,7 @@ private:
 #     undef ACE_INLINE
 #   endif /* ACE_INLINE */
 #   define ACE_INLINE inline
-#   include "HTTPU/parse_http_request.i"
+#   include "HTTPU/parse_http_request.inl"
 # endif /* ACE_HAS_INLINED_OSCALLS */
 
 #endif /* !defined (HTTPU_PARSE_HTTP_REQUEST_H) */

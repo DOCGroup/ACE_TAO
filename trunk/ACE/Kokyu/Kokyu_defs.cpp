@@ -3,7 +3,7 @@
 #include "Kokyu_defs.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "Kokyu_defs.i"
+#include "Kokyu_defs.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(Kokyu, Kokyu_defs, "$Id$")

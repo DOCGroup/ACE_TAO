@@ -88,7 +88,7 @@ class Dispatch_Deferrer : public ACE_Event_Handler
 } //namespace Kokyu
 
 #if defined (__ACE_INLINE__)
-#include "Dispatch_Deferrer.i"
+#include "Dispatch_Deferrer.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

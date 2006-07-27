@@ -184,7 +184,7 @@ namespace Kokyu
 ACE_INLINE bool operator != (const Kokyu::ConfigInfo& lhs, const Kokyu::ConfigInfo& rhs);
 
 #if defined (__ACE_INLINE__)
-#include "Kokyu_defs.i"
+#include "Kokyu_defs.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

@@ -113,7 +113,7 @@ protected:
 };
 
 #if defined (__ACE_INLINE__)
-#include "Local_Locator.i"
+#include "Local_Locator.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_LOCAL_LOCATOR_H */

@@ -5,7 +5,7 @@
 ACE_RCSID(server, Handle_L_SPIPE, "$Id$")
 
 #if !defined (__ACE_INLINE__)
-#include "Handle_L_SPIPE.i"
+#include "Handle_L_SPIPE.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_HAS_STREAM_PIPES)

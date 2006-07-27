@@ -13,7 +13,7 @@ char *Handle_L_Stream::login_name = 0;
 char Handle_L_Stream::login[ACE_MAX_USERID];
 
 #if !defined (__ACE_INLINE__)
-#include "Handle_L_Stream.i"
+#include "Handle_L_Stream.inl"
 #endif /* __ACE_INLINE__ */
 
 Handle_L_Stream local_stream;

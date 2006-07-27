@@ -91,7 +91,7 @@ protected:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "SSL_SOCK.i"
+#include "SSL_SOCK.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

@@ -29,7 +29,7 @@ fini (void)
 #endif /* SunOS4 */
 
 #if !defined (__ACE_INLINE__)
-#include "Handle_Timeout.i"
+#include "Handle_Timeout.inl"
 #endif /* __ACE_INLINE__ */
 
 Handle_Timeout timer_1;

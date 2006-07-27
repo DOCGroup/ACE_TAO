@@ -284,7 +284,7 @@ private:
 };
 
 #if defined (__ACEXML_INLINE__)
-# include "Svcconf_Handler.i"
+# include "Svcconf_Handler.inl"
 #endif /* __ACEXML_INLINE__ */
 
 #endif /* ACE_USES_CLASSIC_SVC_CONF == 0 */

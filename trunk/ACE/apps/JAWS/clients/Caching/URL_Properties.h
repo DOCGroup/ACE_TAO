@@ -195,7 +195,7 @@ typedef ACE_Array<ACE_URL_Offer> ACE_URL_Offer_Seq;
 // type of URL offer collections.
 
 #if defined (__ACE_INLINE__)
-#include "URL_Properties.i"
+#include "URL_Properties.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_WEB_PROPERTIES_H */

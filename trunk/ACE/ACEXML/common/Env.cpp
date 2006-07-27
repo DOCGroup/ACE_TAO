@@ -3,7 +3,7 @@
 #include "ACEXML/common/Env.h"
 
 #if !defined (__ACEXML_INLINE__)
-# include "ACEXML/common/Env.i"
+# include "ACEXML/common/Env.inl"
 #endif /* __ACEXML_INLINE__ */
 
 ACEXML_Env::ACEXML_Env (void)

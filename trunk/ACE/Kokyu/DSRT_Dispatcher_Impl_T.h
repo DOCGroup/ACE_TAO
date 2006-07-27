@@ -195,7 +195,7 @@ namespace Kokyu
 } //end of namespace
 
 #if defined (__ACE_INLINE__)
-#include "DSRT_Dispatcher_Impl_T.i"
+#include "DSRT_Dispatcher_Impl_T.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

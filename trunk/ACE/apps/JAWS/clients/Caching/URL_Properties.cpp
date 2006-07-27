@@ -6,7 +6,7 @@
 #include "URL_Properties.h"
 
 #if !defined (__ACE_INLINE__)
-#include "URL_Properties.i"
+#include "URL_Properties.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Auto_Ptr.h"

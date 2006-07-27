@@ -118,5 +118,5 @@ private:
 
 };
 
-#include "Options.i"
+#include "Options.inl"
 #endif /* OPTIONS_H */

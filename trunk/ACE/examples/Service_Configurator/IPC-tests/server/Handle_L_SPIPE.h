@@ -41,7 +41,7 @@ extern ACE_Service_Object_Type lsp;
 
 #if defined (__ACE_INLINE__)
 #define ACE_INLINE inline
-#include "Handle_L_SPIPE.i"
+#include "Handle_L_SPIPE.inl"
 #else
 #define ACE_INLINE
 #endif /* __ACE_INLINE__ */

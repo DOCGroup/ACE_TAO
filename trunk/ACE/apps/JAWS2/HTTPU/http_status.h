@@ -104,7 +104,7 @@ typedef ACE_Singleton<HTTP_SCode, ACE_SYNCH_MUTEX>
 #     undef ACE_INLINE
 #   endif /* ACE_INLINE */
 #   define ACE_INLINE inline
-#   include "HTTPU/http_status.i"
+#   include "HTTPU/http_status.inl"
 # endif /* ACE_HAS_INLINED_OSCALLS */
 
 #endif /* HTTPU_HTTP_STATUS_HPP */

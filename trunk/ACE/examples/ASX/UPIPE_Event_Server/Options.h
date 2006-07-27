@@ -83,6 +83,6 @@ private:
 
 extern Options options;
 
-#include "Options.i"
+#include "Options.inl"
 #endif /* ACE_HAS_THREADS */
 #endif /* DEVICE_OPTIONS_H */

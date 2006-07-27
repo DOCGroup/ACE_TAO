@@ -39,7 +39,7 @@ extern ACE_Service_Object_Type rd;
 
 #if defined (__ACE_INLINE__)
 #define ACE_INLINE inline
-#include "Handle_R_Dgram.i"
+#include "Handle_R_Dgram.inl"
 #else
 #define ACE_INLINE
 #endif /*  __ACE_INLINE__ */

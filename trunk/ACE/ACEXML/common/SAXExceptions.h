@@ -200,7 +200,7 @@ protected:
 };
 
 #if defined (__ACEXML_INLINE__)
-# include "ACEXML/common/SAXExceptions.i"
+# include "ACEXML/common/SAXExceptions.inl"
 #endif /* __ACEXML_INLINE__ */
 
 #include /**/ "ace/post.h"

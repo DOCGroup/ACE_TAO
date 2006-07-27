@@ -151,7 +151,7 @@ private:
 };
 
 #if defined (__ACEXML_INLINE__)
-# include "ACEXML/common/LocatorImpl.i"
+# include "ACEXML/common/LocatorImpl.inl"
 #endif /* __ACEXML_INLINE__ */
 
 #include /**/ "ace/post.h"

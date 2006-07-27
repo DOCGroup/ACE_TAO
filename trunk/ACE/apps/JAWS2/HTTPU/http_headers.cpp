@@ -140,6 +140,6 @@ HTTP_Headers::value_reset (void)
 }
 
 #if !defined (ACE_HAS_INLINED_OSCALLS)
-#   include "HTTPU/http_headers.i"
+#   include "HTTPU/http_headers.inl"
 # endif /* ACE_HAS_INLINED_OSCALLS */
 

@@ -896,7 +896,7 @@ private:
 };
 
 #if defined (__ACEXML_INLINE__)
-# include "ACEXML/parser/parser/Parser.i"
+# include "ACEXML/parser/parser/Parser.inl"
 #endif /* __ACEXML_INLINE__ */
 
 #include /**/ "ace/post.h"
