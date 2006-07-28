@@ -2,22 +2,22 @@
 
 // Test Bug 2616
 
-struct A
+struct AA
 {
   long x;
 };
-struct B
+struct BB
 {
-  A data;
+  AA data;
 };
 interface Interface1
 {
-  typedef B Type;
+  typedef BB Type;
   void do_it(in Type value);
 };
 interface Interface2
 {
-  typedef A Type;
+  typedef AA Type;
   void do_it(in Type value);
 };
 
