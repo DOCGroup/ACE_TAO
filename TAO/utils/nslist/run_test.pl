@@ -11,7 +11,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 use strict;
 
-use lib '../../../bin';
+use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 
 # Variables for command-line arguments to client and server

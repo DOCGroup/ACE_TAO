@@ -1,3 +1,12 @@
+Fri Jul 28 00:44:26 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * Most run_test.pl scripts in the TAO repository
+        
+          Updated to use the ACE_ROOT environment variable to find
+          PerlACE.  This is necessary for the flattened ACE/TAO/CIAO
+          Thanks to Adam Mitz for reporting the problem and
+          suggesting a solution.
+
 Thu Jul 27 20:50:17 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/Scheduler_Factory.inl

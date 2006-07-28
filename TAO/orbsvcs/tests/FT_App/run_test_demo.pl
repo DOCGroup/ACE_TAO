@@ -80,7 +80,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 #   10.1)     Repeat 8.1 & 8.2 using IOGR3.
 #   11)       System manages to shut itself down.
 
-use lib '../../../../bin';
+use lib "$ENV{ACE_ROOT}/bin";
 #use lib '$ENV{ACE_ROOT}/bin';
 use PerlACE::Run_Test;
 

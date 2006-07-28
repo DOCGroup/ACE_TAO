@@ -9,7 +9,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # It runs all the tests that will run with min CORBA.
 # It starts all the servers and clients as necessary.
 
-use lib '../../../../../bin';
+use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 
 # Amount of delay (in seconds) between starting a server and a client

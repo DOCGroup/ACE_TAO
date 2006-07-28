@@ -7,7 +7,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 # This is a Perl script that tests AMH exceptions
 
-use lib "../../../bin";
+use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 
 # Amount of delay (in seconds) between starting a server and a client.

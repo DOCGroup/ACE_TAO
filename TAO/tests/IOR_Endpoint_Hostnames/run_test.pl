@@ -17,7 +17,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # and indicates whether or not that permutation FAILed.
 #
 
-use lib '../../../bin';
+use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 use Sys::Hostname;
 
