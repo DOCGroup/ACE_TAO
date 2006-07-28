@@ -86,7 +86,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 #   factory unregisters itself.
 #   The ReplicationManager is killed because it doesn't have a quit-on-idle option.
 
-use lib '../../../../bin';
+use lib "$ENV{ACE_ROOT}/bin";
 #use lib '$ENV{ACE_ROOT}/bin';
 use PerlACE::Run_Test;
 

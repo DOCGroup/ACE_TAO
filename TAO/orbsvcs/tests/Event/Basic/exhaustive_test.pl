@@ -8,7 +8,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # This is a Perl script that runs the client and all the other servers that
 # are needed
 
-use lib '../../../../../bin';
+use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 
 $status = 0;

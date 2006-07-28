@@ -8,7 +8,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # This is a Perl script that runs the federated Name Service timeout test.
 # It starts all the servers and clients as necessary.
 
-use lib '../../../bin';
+use lib "$ENV{ACE_ROOT}/bin";
 
 use PerlACE::Run_Test;
 
