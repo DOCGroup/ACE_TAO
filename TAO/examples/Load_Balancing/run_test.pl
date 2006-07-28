@@ -8,7 +8,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # This is a Perl script that runs a Load Balancing service demo.
 # See README file for details about the demo.
 
-use lib "../../../bin";
+use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 
 # Amount of delay (in seconds) between starting a server and a client

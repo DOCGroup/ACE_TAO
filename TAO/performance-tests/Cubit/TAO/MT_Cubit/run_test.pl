@@ -7,7 +7,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 $usage = "run_tests.pl [-n iterations] [-r, for thread-per-rate] [-t low priority threads]\n";
 
-use lib "../../../../../bin";
+use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 
 $iorfile = PerlACE::LocalFile ("mtcubit.ior");
