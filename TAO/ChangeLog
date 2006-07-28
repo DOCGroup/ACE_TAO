@@ -1,3 +1,14 @@
+Fri Jul 28 14:08:35 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * TAO_IDL/fe/fe_lookup.cpp
+         
+          Rolled this file back a version, accidentally got pulled in by
+          Thu Jul 27 20:50:17 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
+          
+        * TAO_IDL/fe/lex.yy.cpp
+        
+          Re committing this file to update the timestamp.
+        
 Fri Jul 28 12:17:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ServerScheduler_i.inl:
