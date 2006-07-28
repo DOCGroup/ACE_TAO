@@ -1,6 +1,6 @@
 /* -*- C++ -*- */
 /**
- *  @file  DSRT_Dispatch_Item_T.i
+ *  @file  DSRT_Dispatch_Item_T.inl
  *
  *  $Id$
  *
