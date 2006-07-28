@@ -10,6 +10,7 @@ project(*Main): taoserver, messaging {
     Bug_2577_Regression.idl
     Bug_2582_Regression.idl
     Bug_2583_Regression.idl
+    Bug_2616_Regression.idl
     enum_in_struct.idl
     full.idl
     fwd.idl

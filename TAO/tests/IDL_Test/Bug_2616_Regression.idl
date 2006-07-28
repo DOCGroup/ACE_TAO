@@ -1,0 +1,23 @@
+// $Id: Bug_2577_Regression.idl 73398 2006-07-03 15:11:32Z parsons $
+
+// Test Bug 2616
+
+struct A
+{
+  long x;
+};
+struct B
+{
+  A data;
+};
+interface Interface1
+{
+  typedef B Type;
+  void do_it(in Type value);
+};
+interface Interface2
+{
+  typedef A Type;
+  void do_it(in Type value);
+};
+
