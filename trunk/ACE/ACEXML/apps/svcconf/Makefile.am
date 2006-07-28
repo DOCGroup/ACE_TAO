@@ -41,7 +41,7 @@ libACEXML_XML_Svc_Conf_Parser_la_LIBADD = \
 nobase_include_HEADERS = \
   Svcconf.h \
   Svcconf_Handler.h \
-  Svcconf_Handler.i
+  Svcconf_Handler.inl
 
 endif !BUILD_ACE_FOR_TAO
 endif BUILD_ACEXML

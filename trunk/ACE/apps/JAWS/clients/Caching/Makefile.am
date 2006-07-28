@@ -27,9 +27,9 @@ libhttp_client_la_SOURCES = \
   http_handler.cpp
 
 noinst_HEADERS = \
-  Local_Locator.i \
-  Locator_Request_Reply.i \
-  URL_Properties.i \
+  Local_Locator.inl \
+  Locator_Request_Reply.inl \
+  URL_Properties.inl \
   http_handler.h
 
 endif !BUILD_ACE_FOR_TAO

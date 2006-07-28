@@ -40,25 +40,25 @@ nobase_include_HEADERS = \
   DSRT_Direct_Dispatcher_Impl_T.h \
   DSRT_Dispatch_Item_T.cpp \
   DSRT_Dispatch_Item_T.h \
-  DSRT_Dispatch_Item_T.i \
+  DSRT_Dispatch_Item_T.inl \
   DSRT_Dispatcher_Impl_T.cpp \
   DSRT_Dispatcher_Impl_T.h \
-  DSRT_Dispatcher_Impl_T.i \
+  DSRT_Dispatcher_Impl_T.inl \
   DSRT_Sched_Queue_T.cpp \
   DSRT_Sched_Queue_T.h \
   Default_Dispatcher_Impl.h \
-  Default_Dispatcher_Impl.i \
+  Default_Dispatcher_Impl.inl \
   Dispatcher_Impl.h \
-  Dispatcher_Impl.i \
+  Dispatcher_Impl.inl \
   Dispatcher_Task.h \
   Dispatcher_Task.inl \
   Kokyu.h \
-  Kokyu.i \
+  Kokyu.inl \
   Kokyu_defs.h \
-  Kokyu_defs.i \
+  Kokyu_defs.inl \
   Kokyu_dsrt.cpp \
   Kokyu_dsrt.h \
-  Kokyu_dsrt.i
+  Kokyu_dsrt.inl
 
 pkgconfig_DATA = Kokyu.pc
 

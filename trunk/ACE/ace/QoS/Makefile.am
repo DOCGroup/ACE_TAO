@@ -46,9 +46,9 @@ nobase_include_HEADERS = \
   QoS_Session.h \
   QoS_Session_Factory.h \
   QoS_Session_Impl.h \
-  QoS_Session_Impl.i \
+  QoS_Session_Impl.inl \
   SOCK_Dgram_Mcast_QoS.h \
-  SOCK_Dgram_Mcast_QoS.i
+  SOCK_Dgram_Mcast_QoS.inl
 
 pkgconfig_DATA = \
   ACE_QoS.pc
