@@ -447,7 +447,7 @@ libTAO_AV_la_LIBADD = \
 
 nobase_include_HEADERS += \
   AV/AVStreams_i.h \
-  AV/AVStreams_i.i \
+  AV/AVStreams_i.inl\
   AV/AV_Core.h \
   AV/AV_export.h \
   AV/Endpoint_Strategy.h \
@@ -455,16 +455,16 @@ nobase_include_HEADERS += \
   AV/Endpoint_Strategy_T.h \
   AV/Fill_ACE_QoS.h \
   AV/FlowSpec_Entry.h \
-  AV/FlowSpec_Entry.i \
+  AV/FlowSpec_Entry.inl\
   AV/Flows_T.cpp \
   AV/Flows_T.h \
   AV/MCast.h \
-  AV/MCast.i \
+  AV/MCast.inl\
   AV/Policy.h \
-  AV/Policy.i \
+  AV/Policy.inl\
   AV/Protocol_Factory.h \
   AV/QoS_UDP.h \
-  AV/QoS_UDP.i \
+  AV/QoS_UDP.inl\
   AV/RTCP.h \
   AV/RTCP_Channel.h \
   AV/RTCP_Packet.h \
@@ -473,9 +473,9 @@ nobase_include_HEADERS += \
   AV/SCTP_SEQ.h \
   AV/TCP.h \
   AV/Transport.h \
-  AV/Transport.i \
+  AV/Transport.inl\
   AV/UDP.h \
-  AV/UDP.i \
+  AV/UDP.inl\
   AV/default_resource.h \
   AV/global.h \
   AV/md5.h \
@@ -972,7 +972,7 @@ nobase_include_HEADERS += \
   TimeBaseS_T.cpp \
   TimeBaseS_T.inl \
   Time_Utilities.h \
-  Time_Utilities.i \
+  Time_Utilities.inl\
   svc_utils_export.h
 
 pkgconfig_DATA += \
@@ -1125,49 +1125,49 @@ libTAO_CosEvent_Serv_la_LIBADD = \
 
 nobase_include_HEADERS += \
   CosEvent/CEC_ConsumerAdmin.h \
-  CosEvent/CEC_ConsumerAdmin.i \
+  CosEvent/CEC_ConsumerAdmin.inl\
   CosEvent/CEC_ConsumerControl.h \
   CosEvent/CEC_Default_Factory.h \
-  CosEvent/CEC_Default_Factory.i \
+  CosEvent/CEC_Default_Factory.inl\
   CosEvent/CEC_Defaults.h \
   CosEvent/CEC_Dispatching.h \
   CosEvent/CEC_Dispatching_Task.h \
-  CosEvent/CEC_Dispatching_Task.i \
+  CosEvent/CEC_Dispatching_Task.inl\
   CosEvent/CEC_DynamicImplementation.h \
-  CosEvent/CEC_DynamicImplementation.i \
+  CosEvent/CEC_DynamicImplementation.inl\
   CosEvent/CEC_EventChannel.h \
-  CosEvent/CEC_EventChannel.i \
+  CosEvent/CEC_EventChannel.inl\
   CosEvent/CEC_Event_Loader.h \
   CosEvent/CEC_Factory.h \
   CosEvent/CEC_MT_Dispatching.h \
   CosEvent/CEC_ProxyPullConsumer.h \
-  CosEvent/CEC_ProxyPullConsumer.i \
+  CosEvent/CEC_ProxyPullConsumer.inl\
   CosEvent/CEC_ProxyPullSupplier.h \
-  CosEvent/CEC_ProxyPullSupplier.i \
+  CosEvent/CEC_ProxyPullSupplier.inl\
   CosEvent/CEC_ProxyPushConsumer.h \
-  CosEvent/CEC_ProxyPushConsumer.i \
+  CosEvent/CEC_ProxyPushConsumer.inl\
   CosEvent/CEC_ProxyPushSupplier.h \
-  CosEvent/CEC_ProxyPushSupplier.i \
+  CosEvent/CEC_ProxyPushSupplier.inl\
   CosEvent/CEC_Pulling_Strategy.h \
   CosEvent/CEC_Reactive_ConsumerControl.h \
-  CosEvent/CEC_Reactive_ConsumerControl.i \
+  CosEvent/CEC_Reactive_ConsumerControl.inl\
   CosEvent/CEC_Reactive_Pulling_Strategy.h \
-  CosEvent/CEC_Reactive_Pulling_Strategy.i \
+  CosEvent/CEC_Reactive_Pulling_Strategy.inl\
   CosEvent/CEC_Reactive_SupplierControl.h \
-  CosEvent/CEC_Reactive_SupplierControl.i \
+  CosEvent/CEC_Reactive_SupplierControl.inl\
   CosEvent/CEC_SupplierAdmin.h \
-  CosEvent/CEC_SupplierAdmin.i \
+  CosEvent/CEC_SupplierAdmin.inl\
   CosEvent/CEC_SupplierControl.h \
   CosEvent/CEC_TypedConsumerAdmin.h \
-  CosEvent/CEC_TypedConsumerAdmin.i \
+  CosEvent/CEC_TypedConsumerAdmin.inl\
   CosEvent/CEC_TypedEvent.h \
-  CosEvent/CEC_TypedEvent.i \
+  CosEvent/CEC_TypedEvent.inl\
   CosEvent/CEC_TypedEventChannel.h \
-  CosEvent/CEC_TypedEventChannel.i \
+  CosEvent/CEC_TypedEventChannel.inl\
   CosEvent/CEC_TypedProxyPushConsumer.h \
-  CosEvent/CEC_TypedProxyPushConsumer.i \
+  CosEvent/CEC_TypedProxyPushConsumer.inl\
   CosEvent/CEC_TypedSupplierAdmin.h \
-  CosEvent/CEC_TypedSupplierAdmin.i \
+  CosEvent/CEC_TypedSupplierAdmin.inl\
   CosEvent/event_serv_export.h
 
 pkgconfig_DATA += \
@@ -1490,11 +1490,11 @@ nobase_include_HEADERS += \
   PortableGroup/PortableGroup_Request_Dispatcher.h \
   PortableGroup/Portable_Group_Map.h \
   PortableGroup/UIPMC_Acceptor.h \
-  PortableGroup/UIPMC_Acceptor.i \
+  PortableGroup/UIPMC_Acceptor.inl\
   PortableGroup/UIPMC_Connection_Handler.h \
   PortableGroup/UIPMC_Connector.h \
   PortableGroup/UIPMC_Endpoint.h \
-  PortableGroup/UIPMC_Endpoint.i \
+  PortableGroup/UIPMC_Endpoint.inl\
   PortableGroup/UIPMC_Factory.h \
   PortableGroup/UIPMC_Message_Block_Data_Iterator.h \
   PortableGroup/UIPMC_Profile.h \
@@ -3586,47 +3586,47 @@ EXTRA_DIST += \
 nobase_include_HEADERS += \
   ESF/ESF_Busy_Lock.cpp \
   ESF/ESF_Busy_Lock.h \
-  ESF/ESF_Busy_Lock.i \
+  ESF/ESF_Busy_Lock.inl\
   ESF/ESF_Copy_On_Read.cpp \
   ESF/ESF_Copy_On_Read.h \
   ESF/ESF_Copy_On_Write.cpp \
   ESF/ESF_Copy_On_Write.h \
-  ESF/ESF_Copy_On_Write.i \
+  ESF/ESF_Copy_On_Write.inl\
   ESF/ESF_Defaults.h \
   ESF/ESF_Delayed_Changes.cpp \
   ESF/ESF_Delayed_Changes.h \
-  ESF/ESF_Delayed_Changes.i \
+  ESF/ESF_Delayed_Changes.inl\
   ESF/ESF_Delayed_Command.cpp \
   ESF/ESF_Delayed_Command.h \
-  ESF/ESF_Delayed_Command.i \
+  ESF/ESF_Delayed_Command.inl\
   ESF/ESF_Immediate_Changes.cpp \
   ESF/ESF_Immediate_Changes.h \
-  ESF/ESF_Immediate_Changes.i \
+  ESF/ESF_Immediate_Changes.inl\
   ESF/ESF_Peer_Admin.cpp \
   ESF/ESF_Peer_Admin.h \
   ESF/ESF_Peer_Workers.cpp \
   ESF/ESF_Peer_Workers.h \
-  ESF/ESF_Peer_Workers.i \
+  ESF/ESF_Peer_Workers.inl\
   ESF/ESF_Proxy_Admin.cpp \
   ESF/ESF_Proxy_Admin.h \
-  ESF/ESF_Proxy_Admin.i \
+  ESF/ESF_Proxy_Admin.inl\
   ESF/ESF_Proxy_Collection.cpp \
   ESF/ESF_Proxy_Collection.h \
   ESF/ESF_Proxy_List.cpp \
   ESF/ESF_Proxy_List.h \
-  ESF/ESF_Proxy_List.i \
+  ESF/ESF_Proxy_List.inl\
   ESF/ESF_Proxy_RB_Tree.cpp \
   ESF/ESF_Proxy_RB_Tree.h \
-  ESF/ESF_Proxy_RB_Tree.i \
+  ESF/ESF_Proxy_RB_Tree.inl\
   ESF/ESF_Proxy_RefCount_Guard.cpp \
   ESF/ESF_Proxy_RefCount_Guard.h \
-  ESF/ESF_Proxy_RefCount_Guard.i \
+  ESF/ESF_Proxy_RefCount_Guard.inl\
   ESF/ESF_RefCount_Guard.cpp \
   ESF/ESF_RefCount_Guard.h \
-  ESF/ESF_RefCount_Guard.i \
+  ESF/ESF_RefCount_Guard.inl\
   ESF/ESF_Shutdown_Proxy.cpp \
   ESF/ESF_Shutdown_Proxy.h \
-  ESF/ESF_Shutdown_Proxy.i \
+  ESF/ESF_Shutdown_Proxy.inl\
   ESF/ESF_Worker.cpp \
   ESF/ESF_Worker.h \
   ESF/esf_export.h
@@ -3876,7 +3876,7 @@ nobase_include_HEADERS += \
   Event/event_export.h \
   Event/event_skel_export.h \
   Event_Utilities.h \
-  Event_Utilities.i \
+  Event_Utilities.inl\
   RtecDefaultEventData.idl \
   RtecDefaultEventDataC.h \
   RtecDefaultEventDataC.inl \
@@ -4074,112 +4074,112 @@ libTAO_RTEvent_Serv_la_LIBADD = \
 nobase_include_HEADERS += \
   Channel_Clients_T.cpp \
   Channel_Clients_T.h \
-  Channel_Clients_T.i \
+  Channel_Clients_T.inl\
   Event/ECG_Adapters.h \
   Event/ECG_CDR_Message_Receiver.h \
-  Event/ECG_CDR_Message_Receiver.i \
+  Event/ECG_CDR_Message_Receiver.inl\
   Event/ECG_CDR_Message_Sender.h \
-  Event/ECG_CDR_Message_Sender.i \
+  Event/ECG_CDR_Message_Sender.inl\
   Event/ECG_Complex_Address_Server.h \
-  Event/ECG_Complex_Address_Server.i \
+  Event/ECG_Complex_Address_Server.inl\
   Event/ECG_ConsumerEC_Control.h \
   Event/ECG_Mcast_EH.h \
-  Event/ECG_Mcast_EH.i \
+  Event/ECG_Mcast_EH.inl\
   Event/ECG_Mcast_Gateway.h \
-  Event/ECG_Mcast_Gateway.i \
+  Event/ECG_Mcast_Gateway.inl\
   Event/ECG_Reactive_ConsumerEC_Control.h \
   Event/ECG_Reconnect_ConsumerEC_Control.h \
   Event/ECG_Simple_Address_Server.h \
-  Event/ECG_Simple_Address_Server.i \
+  Event/ECG_Simple_Address_Server.inl\
   Event/ECG_Simple_Mcast_EH.h \
   Event/ECG_UDP_EH.h \
-  Event/ECG_UDP_EH.i \
+  Event/ECG_UDP_EH.inl\
   Event/ECG_UDP_Out_Endpoint.h \
-  Event/ECG_UDP_Out_Endpoint.i \
+  Event/ECG_UDP_Out_Endpoint.inl\
   Event/ECG_UDP_Receiver.h \
-  Event/ECG_UDP_Receiver.i \
+  Event/ECG_UDP_Receiver.inl\
   Event/ECG_UDP_Sender.h \
   Event/ECG_UDP_Sender.inl \
   Event/EC_And_Filter.h \
   Event/EC_Basic_Factory.h \
   Event/EC_Basic_Filter_Builder.h \
-  Event/EC_Basic_Filter_Builder.i \
+  Event/EC_Basic_Filter_Builder.inl\
   Event/EC_Bitmask_Filter.h \
   Event/EC_Busy_Lock.cpp \
   Event/EC_Busy_Lock.h \
-  Event/EC_Busy_Lock.i \
+  Event/EC_Busy_Lock.inl\
   Event/EC_Channel_Destroyer.h \
   Event/EC_Conjunction_Filter.h \
   Event/EC_ConsumerAdmin.h \
   Event/EC_ConsumerControl.h \
   Event/EC_Default_Factory.h \
-  Event/EC_Default_Factory.i \
+  Event/EC_Default_Factory.inl\
   Event/EC_Default_ProxyConsumer.h \
   Event/EC_Default_ProxySupplier.h \
   Event/EC_Disjunction_Filter.h \
   Event/EC_Dispatching.h \
   Event/EC_Dispatching_Task.h \
-  Event/EC_Dispatching_Task.i \
+  Event/EC_Dispatching_Task.inl\
   Event/EC_Event_Channel.h \
   Event/EC_Event_Channel_Base.h \
-  Event/EC_Event_Channel_Base.i \
+  Event/EC_Event_Channel_Base.inl\
   Event/EC_Factory.h \
   Event/EC_Filter.h \
-  Event/EC_Filter.i \
+  Event/EC_Filter.inl\
   Event/EC_Filter_Builder.h \
-  Event/EC_Filter_Builder.i \
+  Event/EC_Filter_Builder.inl\
   Event/EC_Gateway.h \
   Event/EC_Gateway_IIOP.h \
   Event/EC_Gateway_IIOP_Factory.h \
-  Event/EC_Gateway_IIOP_Factory.i \
+  Event/EC_Gateway_IIOP_Factory.inl\
   Event/EC_Group_Scheduling.h \
   Event/EC_Group_Scheduling.inl \
   Event/EC_Lifetime_Utils.h \
-  Event/EC_Lifetime_Utils.i \
+  Event/EC_Lifetime_Utils.inl\
   Event/EC_Lifetime_Utils_T.cpp \
   Event/EC_Lifetime_Utils_T.h \
-  Event/EC_Lifetime_Utils_T.i \
+  Event/EC_Lifetime_Utils_T.inl\
   Event/EC_MT_Dispatching.h \
   Event/EC_Masked_Type_Filter.h \
   Event/EC_Negation_Filter.h \
   Event/EC_Null_Factory.h \
   Event/EC_Null_Scheduling.h \
-  Event/EC_Null_Scheduling.i \
+  Event/EC_Null_Scheduling.inl\
   Event/EC_ObserverStrategy.h \
-  Event/EC_ObserverStrategy.i \
+  Event/EC_ObserverStrategy.inl\
   Event/EC_Per_Supplier_Filter.h \
-  Event/EC_Per_Supplier_Filter.i \
+  Event/EC_Per_Supplier_Filter.inl\
   Event/EC_Prefix_Filter_Builder.h \
-  Event/EC_Prefix_Filter_Builder.i \
+  Event/EC_Prefix_Filter_Builder.inl\
   Event/EC_ProxyConsumer.h \
-  Event/EC_ProxyConsumer.i \
+  Event/EC_ProxyConsumer.inl\
   Event/EC_ProxySupplier.h \
-  Event/EC_ProxySupplier.i \
+  Event/EC_ProxySupplier.inl\
   Event/EC_Proxy_Disconnector.h \
   Event/EC_QOS_Info.h \
-  Event/EC_QOS_Info.i \
+  Event/EC_QOS_Info.inl\
   Event/EC_Reactive_ConsumerControl.h \
-  Event/EC_Reactive_ConsumerControl.i \
+  Event/EC_Reactive_ConsumerControl.inl\
   Event/EC_Reactive_Dispatching.h \
   Event/EC_Reactive_SupplierControl.h \
-  Event/EC_Reactive_SupplierControl.i \
+  Event/EC_Reactive_SupplierControl.inl\
   Event/EC_Reactive_Timeout_Generator.h \
   Event/EC_Scheduling_Strategy.h \
   Event/EC_SupplierAdmin.h \
   Event/EC_SupplierControl.h \
   Event/EC_Supplier_Filter.h \
-  Event/EC_Supplier_Filter.i \
+  Event/EC_Supplier_Filter.inl\
   Event/EC_Supplier_Filter_Builder.h \
   Event/EC_TPC_Dispatching.h \
   Event/EC_TPC_Dispatching_Task.h \
   Event/EC_TPC_Factory.h \
   Event/EC_TPC_ProxyConsumer.h \
   Event/EC_TPC_ProxySupplier.h \
-  Event/EC_TPC_ProxySupplier.i \
+  Event/EC_TPC_ProxySupplier.inl\
   Event/EC_Timeout_Filter.h \
-  Event/EC_Timeout_Filter.i \
+  Event/EC_Timeout_Filter.inl\
   Event/EC_Timeout_Generator.h \
-  Event/EC_Timeout_Generator.i \
+  Event/EC_Timeout_Generator.inl\
   Event/EC_Trivial_Supplier_Filter.h \
   Event/EC_Type_Filter.h \
   Event/EC_UDP_Admin.h
@@ -4999,14 +4999,14 @@ libTAO_HTIOP_la_LIBADD = \
 nobase_include_HEADERS += \
   HTIOP.idl \
   HTIOP/HTIOP_Acceptor.h \
-  HTIOP/HTIOP_Acceptor.i \
+  HTIOP/HTIOP_Acceptor.inl\
   HTIOP/HTIOP_Acceptor_Impl.h \
   HTIOP/HTIOP_Completion_Handler.h \
   HTIOP/HTIOP_Connection_Handler.h \
   HTIOP/HTIOP_Connector.h \
   HTIOP/HTIOP_Connector_Impl.h \
   HTIOP/HTIOP_Endpoint.h \
-  HTIOP/HTIOP_Endpoint.i \
+  HTIOP/HTIOP_Endpoint.inl\
   HTIOP/HTIOP_Factory.h \
   HTIOP/HTIOP_Profile.h \
   HTIOP/HTIOP_Transport.h \
@@ -5403,18 +5403,18 @@ nobase_include_HEADERS += \
   Runtime_Scheduler.h \
   Sched/Config_Scheduler.h \
   Sched/DynSched.h \
-  Sched/DynSched.i \
+  Sched/DynSched.inl\
   Sched/Reconfig_Sched_Utils.h \
   Sched/Reconfig_Sched_Utils_T.cpp \
   Sched/SchedEntry.h \
-  Sched/SchedEntry.i \
+  Sched/SchedEntry.inl\
   Sched/Scheduler.h \
   Sched/Scheduler_Generic.h \
   Sched/Strategy_Scheduler.h \
   Scheduler_Factory.h \
-  Scheduler_Factory.i \
+  Scheduler_Factory.inl\
   Scheduler_Utilities.h \
-  Scheduler_Utilities.i
+  Scheduler_Utilities.inl
 
 EXTRA_DIST += \
   RTSched.rc
@@ -5598,14 +5598,14 @@ libTAO_RTKokyuEvent_la_LIBADD = \
 
 nobase_include_HEADERS += \
   Event/EC_Kokyu_Dispatching.h \
-  Event/EC_Kokyu_Dispatching.i \
+  Event/EC_Kokyu_Dispatching.inl\
   Event/EC_Kokyu_Factory.h \
-  Event/EC_Kokyu_Factory.i \
+  Event/EC_Kokyu_Factory.inl\
   Event/EC_Kokyu_Filter.h \
   Event/EC_Kokyu_Filter_Builder.h \
-  Event/EC_Kokyu_Filter_Builder.i \
+  Event/EC_Kokyu_Filter_Builder.inl\
   Event/EC_Kokyu_Scheduling.h \
-  Event/EC_Kokyu_Scheduling.i
+  Event/EC_Kokyu_Scheduling.inl
 
 endif !BUILD_ACE_FOR_TAO
 endif BUILD_CORBA_MESSAGING
@@ -5657,12 +5657,12 @@ nobase_include_HEADERS += \
   Event/EC_Gateway_Sched.h \
   Event/EC_Priority_Dispatching.h \
   Event/EC_Priority_Scheduling.h \
-  Event/EC_Priority_Scheduling.i \
+  Event/EC_Priority_Scheduling.inl\
   Event/EC_Sched_Factory.h \
-  Event/EC_Sched_Factory.i \
+  Event/EC_Sched_Factory.inl\
   Event/EC_Sched_Filter.h \
   Event/EC_Sched_Filter_Builder.h \
-  Event/EC_Sched_Filter_Builder.i
+  Event/EC_Sched_Filter_Builder.inl
 
 endif !BUILD_ACE_FOR_TAO
 endif BUILD_CORBA_MESSAGING
@@ -6113,10 +6113,10 @@ nobase_include_HEADERS += \
   SSLIOP/IIOP_SSL_Transport.h \
   SSLIOP/SSLIOP_Accept_Strategy.h \
   SSLIOP/SSLIOP_Acceptor.h \
-  SSLIOP/SSLIOP_Acceptor.i \
+  SSLIOP/SSLIOP_Acceptor.inl\
   SSLIOP/SSLIOP_ClientCredentials.h \
   SSLIOP/SSLIOP_Connection_Handler.h \
-  SSLIOP/SSLIOP_Connection_Handler.i \
+  SSLIOP/SSLIOP_Connection_Handler.inl\
   SSLIOP/SSLIOP_Connector.h \
   SSLIOP/SSLIOP_Credentials.h \
   SSLIOP/SSLIOP_Credentials.inl \
@@ -6128,7 +6128,7 @@ nobase_include_HEADERS += \
   SSLIOP/SSLIOP_Current_Impl.inl \
   SSLIOP/SSLIOP_EVP_PKEY.h \
   SSLIOP/SSLIOP_Endpoint.h \
-  SSLIOP/SSLIOP_Endpoint.i \
+  SSLIOP/SSLIOP_Endpoint.inl\
   SSLIOP/SSLIOP_Export.h \
   SSLIOP/SSLIOP_Factory.h \
   SSLIOP/SSLIOP_Invocation_Interceptor.h \

@@ -70,7 +70,7 @@ client_SOURCES = \
   client.cpp \
   testC.cpp \
   test_i.h \
-  test_i.i
+  test_i.inl
 
 client_LDFLAGS = \
  @ACE_TLS_LDFLAGS@
@@ -119,7 +119,7 @@ server_SOURCES = \
   testS.cpp \
   test_i.cpp \
   test_i.h \
-  test_i.i
+  test_i.inl
 
 server_LDFLAGS = \
  @ACE_TLS_LDFLAGS@

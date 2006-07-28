@@ -67,7 +67,7 @@ noinst_HEADERS = \
   testS.h \
   testS.inl \
   test_i.h \
-  test_i.i
+  test_i.inl
 
 endif !BUILD_MINIMUM_CORBA
 endif BUILD_RT_CORBA
