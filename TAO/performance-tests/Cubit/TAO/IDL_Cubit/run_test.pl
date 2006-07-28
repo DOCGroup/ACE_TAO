@@ -10,7 +10,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # Taken from perlrun man page.
 
 # Do not use environment variables here since not all platforms use ACE_ROOT
-use lib "../../../../../bin";
+use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 use English;
 

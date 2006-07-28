@@ -1,3 +1,11 @@
+Fri Jul 28 14:29:53 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * Most remaining run_test.pl and run_all.pl scripts
+        
+          These scripts were missing from 
+          Fri Jul 28 00:44:26 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>,
+          as they used " instead of ' in their use lib line.
+
 Fri Jul 28 14:08:35 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * TAO_IDL/fe/fe_lookup.cpp

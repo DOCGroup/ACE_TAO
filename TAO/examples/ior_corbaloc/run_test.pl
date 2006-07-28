@@ -8,7 +8,7 @@
 # This is a Perl Script that runs the corbaloc: style URL tests.
 # It starts the servers and client.
 
-use lib "../../../bin";
+use lib "$ENV{ACE_ROOT}/bin";
 
 use PerlACE::Run_Test;
 
