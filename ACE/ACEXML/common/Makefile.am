@@ -70,7 +70,7 @@ nobase_include_HEADERS = \
   ACEXML_Export.h \
   Attributes.h \
   AttributesImpl.h \
-  AttributesImpl.i \
+  AttributesImpl.inl \
   Attributes_Def_Builder.h \
   CharStream.h \
   ContentHandler.h \
@@ -81,20 +81,20 @@ nobase_include_HEADERS = \
   Encoding.h \
   EntityResolver.h \
   Env.h \
-  Env.i \
+  Env.inl \
   ErrorHandler.h \
   Exception.h \
-  Exception.i \
+  Exception.inl \
   FileCharStream.h \
   HttpCharStream.h \
   InputSource.h \
   Locator.h \
   LocatorImpl.h \
-  LocatorImpl.i \
+  LocatorImpl.inl \
   Mem_Map_Stream.h \
   NamespaceSupport.h \
   SAXExceptions.h \
-  SAXExceptions.i \
+  SAXExceptions.inl \
   StrCharStream.h \
   StreamFactory.h \
   Transcode.h \
@@ -103,7 +103,7 @@ nobase_include_HEADERS = \
   Validator.h \
   XMLFilter.h \
   XMLFilterImpl.h \
-  XMLFilterImpl.i \
+  XMLFilterImpl.inl \
   XMLReader.h \
   XML_Codecs.h \
   XML_Macros.h \

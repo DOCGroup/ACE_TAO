@@ -37,24 +37,24 @@ libIPC_Tests_Server_la_SOURCES = \
 
 noinst_HEADERS = \
   Handle_Broadcast.h \
-  Handle_Broadcast.i \
+  Handle_Broadcast.inl \
   Handle_L_CODgram.h \
-  Handle_L_CODgram.i \
+  Handle_L_CODgram.inl \
   Handle_L_Dgram.h \
-  Handle_L_Dgram.i \
+  Handle_L_Dgram.inl \
   Handle_L_FIFO.h \
-  Handle_L_FIFO.i \
+  Handle_L_FIFO.inl \
   Handle_L_Pipe.h \
-  Handle_L_Pipe.i \
+  Handle_L_Pipe.inl \
   Handle_L_SPIPE.h \
-  Handle_L_SPIPE.i \
+  Handle_L_SPIPE.inl \
   Handle_L_Stream.h \
-  Handle_L_Stream.i \
+  Handle_L_Stream.inl \
   Handle_R_Stream.h \
-  Handle_R_Stream.i \
+  Handle_R_Stream.inl \
   Handle_Thr_Stream.h \
   Handle_Timeout.h \
-  Handle_Timeout.i
+  Handle_Timeout.inl
 
 endif !BUILD_ACE_FOR_TAO
 
@@ -70,26 +70,26 @@ server_test_CPPFLAGS = \
 server_test_SOURCES = \
   server_test.cpp \
   Handle_Broadcast.h \
-  Handle_Broadcast.i \
+  Handle_Broadcast.inl \
   Handle_L_CODgram.h \
-  Handle_L_CODgram.i \
+  Handle_L_CODgram.inl \
   Handle_L_Dgram.h \
-  Handle_L_Dgram.i \
+  Handle_L_Dgram.inl \
   Handle_L_FIFO.h \
-  Handle_L_FIFO.i \
+  Handle_L_FIFO.inl \
   Handle_L_Pipe.h \
-  Handle_L_Pipe.i \
+  Handle_L_Pipe.inl \
   Handle_L_SPIPE.h \
-  Handle_L_SPIPE.i \
+  Handle_L_SPIPE.inl \
   Handle_L_Stream.h \
-  Handle_L_Stream.i \
+  Handle_L_Stream.inl \
   Handle_R_Dgram.h \
-  Handle_R_Dgram.i \
+  Handle_R_Dgram.inl \
   Handle_R_Stream.h \
-  Handle_R_Stream.i \
+  Handle_R_Stream.inl \
   Handle_Thr_Stream.h \
   Handle_Timeout.h \
-  Handle_Timeout.i
+  Handle_Timeout.inl
 
 server_test_LDADD = \
   libIPC_Tests_Server.la \

@@ -31,7 +31,7 @@ Event_Server_SOURCES = \
   Consumer_Router.h \
   Event_Analyzer.h \
   Options.h \
-  Options.i \
+  Options.inl \
   Peer_Router.h \
   Supplier_Router.h
 
