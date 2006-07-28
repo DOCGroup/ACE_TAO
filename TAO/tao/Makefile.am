@@ -272,7 +272,7 @@ nobase_include_HEADERS = \
   Acceptor_Impl.cpp \
   Acceptor_Impl.h \
   Acceptor_Registry.h \
-  Acceptor_Registry.i \
+  Acceptor_Registry.inl\
   Adapter.h \
   Adapter_Factory.h \
   Adapter_Registry.h \
@@ -287,7 +287,7 @@ nobase_include_HEADERS = \
   Array_VarOut_T.inl \
   Asynch_Queued_Message.h \
   Asynch_Reply_Dispatcher_Base.h \
-  Asynch_Reply_Dispatcher_Base.i \
+  Asynch_Reply_Dispatcher_Base.inl\
   Auto_Functor.h \
   BD_String_Argument_T.cpp \
   BD_String_Argument_T.h \
@@ -301,7 +301,7 @@ nobase_include_HEADERS = \
   Basic_Types.h \
   BiDir_Adapter.h \
   Bind_Dispatcher_Guard.h \
-  Bind_Dispatcher_Guard.i \
+  Bind_Dispatcher_Guard.inl\
   Block_Flushing_Strategy.h \
   Blocked_Connect_Strategy.h \
   BooleanSeq.pidl \
@@ -320,14 +320,14 @@ nobase_include_HEADERS = \
   Buffer_Allocator_T.cpp \
   Buffer_Allocator_T.h \
   Buffering_Constraint_Policy.h \
-  Buffering_Constraint_Policy.i \
+  Buffering_Constraint_Policy.inl\
   CDR.h \
-  CDR.i \
+  CDR.inl\
   CONV_FRAME.pidl \
   CONV_FRAMEC.h \
   CONV_FRAMES.h \
   CORBALOC_Parser.h \
-  CORBALOC_Parser.i \
+  CORBALOC_Parser.inl\
   CORBANAME_Parser.h \
   CORBA_String.h \
   CORBA_String.inl \
@@ -361,7 +361,7 @@ nobase_include_HEADERS = \
   Connector_Impl.cpp \
   Connector_Impl.h \
   Connector_Registry.h \
-  Connector_Registry.i \
+  Connector_Registry.inl\
   Current.pidl \
   CurrentC.h \
   CurrentS.h \
@@ -379,17 +379,17 @@ nobase_include_HEADERS = \
   DoubleSeqS.h \
   Dynamic_Adapter.h \
   Endpoint.h \
-  Endpoint.i \
+  Endpoint.inl\
   Endpoint_Selector_Factory.h \
   Environment.h \
-  Environment.i \
+  Environment.inl\
   Exception.h \
-  Exception.i \
+  Exception.inl\
   Exception_Data.h \
   Exclusive_TMS.h \
   FILE_Parser.h \
   Fault_Tolerance_Service.h \
-  Fault_Tolerance_Service.i \
+  Fault_Tolerance_Service.inl\
   Fixed_Array_Argument_T.cpp \
   Fixed_Array_Argument_T.h \
   Fixed_Array_Argument_T.inl \
@@ -414,7 +414,7 @@ nobase_include_HEADERS = \
   GIOP_Message_Generator_Parser_Impl.inl \
   GIOP_Message_Lite.h \
   GIOP_Message_Locate_Header.h \
-  GIOP_Message_Locate_Header.i \
+  GIOP_Message_Locate_Header.inl\
   GIOP_Message_State.h \
   GIOP_Message_State.inl \
   GIOP_Message_Version.h \
@@ -426,11 +426,11 @@ nobase_include_HEADERS = \
   IIOP.pidl \
   IIOPC.h \
   IIOP_Acceptor.h \
-  IIOP_Acceptor.i \
+  IIOP_Acceptor.inl\
   IIOP_Connection_Handler.h \
   IIOP_Connector.h \
   IIOP_Endpoint.h \
-  IIOP_Endpoint.i \
+  IIOP_Endpoint.inl\
   IIOP_Endpoints.pidl \
   IIOP_EndpointsC.h \
   IIOP_Factory.h \
@@ -483,10 +483,10 @@ nobase_include_HEADERS = \
   LF_Strategy_Complete.h \
   LRU_Connection_Purging_Strategy.h \
   Leader_Follower.h \
-  Leader_Follower.i \
+  Leader_Follower.inl\
   Leader_Follower_Flushing_Strategy.h \
   LocalObject.h \
-  LocalObject.i \
+  LocalObject.inl\
   LocateRequest_Invocation.h \
   LocateRequest_Invocation_Adapter.h \
   LongDoubleSeq.pidl \
@@ -499,10 +499,10 @@ nobase_include_HEADERS = \
   LongSeqC.h \
   LongSeqS.h \
   MCAST_Parser.h \
-  MCAST_Parser.i \
+  MCAST_Parser.inl\
   MMAP_Allocator.h \
   MProfile.h \
-  MProfile.i \
+  MProfile.inl\
   Messaging_PolicyValue.pidl \
   Messaging_PolicyValueC.h \
   Messaging_SyncScope.pidl \
@@ -512,19 +512,19 @@ nobase_include_HEADERS = \
   New_Leader_Generator.h \
   Null_Fragmentation_Strategy.h \
   ORB.h \
-  ORB.i \
+  ORB.inl\
   ORBInitializer_Registry.h \
   ORBInitializer_Registry_Adapter.h \
   ORB_Constants.h \
   ORB_Core.h \
-  ORB_Core.i \
+  ORB_Core.inl\
   ORB_Core_Auto_Ptr.h \
   ORB_Core_Auto_Ptr.inl \
   ORB_Core_TSS_Resources.h \
   ORB_Table.h \
   ORB_Table.inl \
   Object.h \
-  Object.i \
+  Object.inl\
   ObjectIdList.pidl \
   ObjectIdListC.h \
   ObjectKey_Table.h \
@@ -554,10 +554,10 @@ nobase_include_HEADERS = \
   ParameterModeC.h \
   ParameterModeS.h \
   Parser_Registry.h \
-  Parser_Registry.i \
+  Parser_Registry.inl\
   Pluggable_Messaging.h \
   Pluggable_Messaging_Utils.h \
-  Pluggable_Messaging_Utils.i \
+  Pluggable_Messaging_Utils.inl\
   Policy.pidl \
   PolicyC.h \
   PolicyC.inl \
@@ -572,18 +572,18 @@ nobase_include_HEADERS = \
   Policy_ForwardC.h \
   Policy_ForwardS.h \
   Policy_Manager.h \
-  Policy_Manager.i \
+  Policy_Manager.inl\
   Policy_Set.h \
-  Policy_Set.i \
+  Policy_Set.inl\
   Policy_Validator.h \
   PortableInterceptor.h \
   PortableInterceptor.pidl \
   PortableInterceptorC.h \
   PortableInterceptorS.h \
   Principal.h \
-  Principal.i \
+  Principal.inl\
   Profile.h \
-  Profile.i \
+  Profile.inl\
   Profile_Transport_Resolver.h \
   Profile_Transport_Resolver.inl \
   Protocol_Factory.h \
@@ -600,7 +600,7 @@ nobase_include_HEADERS = \
   Remote_Invocation.h \
   Remote_Object_Proxy_Broker.h \
   Reply_Dispatcher.h \
-  Reply_Dispatcher.i \
+  Reply_Dispatcher.inl\
   Request_Dispatcher.h \
   Resource_Factory.h \
   Resume_Handle.h \
@@ -638,7 +638,7 @@ nobase_include_HEADERS = \
   String_Traits_Base_T.h \
   String_Traits_T.h \
   Stub.h \
-  Stub.i \
+  Stub.inl\
   Stub_Factory.h \
   Synch_Invocation.h \
   Synch_Invocation.inl \
@@ -652,7 +652,7 @@ nobase_include_HEADERS = \
   TAO_Export.h \
   TAO_Internal.h \
   TAO_Server_Request.h \
-  TAO_Server_Request.i \
+  TAO_Server_Request.inl\
   TAO_Singleton.cpp \
   TAO_Singleton.h \
   TAO_Singleton.inl \
@@ -660,9 +660,9 @@ nobase_include_HEADERS = \
   TAO_Singleton_Manager.inl \
   TSS_Resources.h \
   Tagged_Components.h \
-  Tagged_Components.i \
+  Tagged_Components.inl\
   Tagged_Profile.h \
-  Tagged_Profile.i \
+  Tagged_Profile.inl\
   Thread_Lane_Resources.h \
   Thread_Lane_Resources_Manager.h \
   Thread_Per_Connection_Handler.h \
@@ -752,16 +752,16 @@ nobase_include_HEADERS = \
   default_server.h \
   objectid.h \
   operation_details.h \
-  operation_details.i \
+  operation_details.inl\
   orb.idl \
   orb_types.pidl \
   orb_typesC.h \
   orb_typesS.h \
   orbconf.h \
   params.h \
-  params.i \
+  params.inl\
   target_specification.h \
-  target_specification.i \
+  target_specification.inl\
   varbase.h
 
 pkgconfig_DATA = \
@@ -1947,7 +1947,7 @@ libTAO_PortableServer_la_LIBADD = \
 nobase_include_HEADERS += \
   PortableServer/Acceptor_Filter_Factory.h \
   PortableServer/Active_Object_Map.h \
-  PortableServer/Active_Object_Map.i \
+  PortableServer/Active_Object_Map.inl\
   PortableServer/Active_Object_Map_Entry.h \
   PortableServer/Active_Policy_Strategies.h \
   PortableServer/Active_Policy_Strategies.inl \
@@ -2033,7 +2033,7 @@ nobase_include_HEADERS += \
   PortableServer/ORT_Adapter.h \
   PortableServer/ORT_Adapter_Factory.h \
   PortableServer/Object_Adapter.h \
-  PortableServer/Object_Adapter.i \
+  PortableServer/Object_Adapter.inl\
   PortableServer/Object_Adapter_Factory.h \
   PortableServer/Object_SArg_Traits.h \
   PortableServer/Object_SArgument_T.cpp \
@@ -2048,7 +2048,7 @@ nobase_include_HEADERS += \
   PortableServer/POA.pidl \
   PortableServer/POAC.h \
   PortableServer/POAManager.h \
-  PortableServer/POAManager.i \
+  PortableServer/POAManager.inl\
   PortableServer/POAManager.pidl \
   PortableServer/POAManager.pidl \
   PortableServer/POAManagerC.h \
@@ -2057,14 +2057,14 @@ nobase_include_HEADERS += \
   PortableServer/POAManagerFactory.pidl \
   PortableServer/POAManagerFactoryC.h \
   PortableServer/POA_Cached_Policies.h \
-  PortableServer/POA_Cached_Policies.i \
+  PortableServer/POA_Cached_Policies.inl\
   PortableServer/POA_Current.h \
   PortableServer/POA_Current_Factory.h \
   PortableServer/POA_Current_Impl.h \
   PortableServer/POA_Current_Impl.inl \
   PortableServer/POA_Guard.h \
   PortableServer/POA_Policy_Set.h \
-  PortableServer/POA_Policy_Set.i \
+  PortableServer/POA_Policy_Set.inl\
   PortableServer/PS_Current.pidl \
   PortableServer/PS_Current.pidl \
   PortableServer/PS_CurrentC.h \
@@ -2133,7 +2133,7 @@ nobase_include_HEADERS += \
   PortableServer/ServantRetentionStrategyRetain.h \
   PortableServer/ServantRetentionStrategyRetainFactoryImpl.h \
   PortableServer/Servant_Base.h \
-  PortableServer/Servant_Base.i \
+  PortableServer/Servant_Base.inl\
   PortableServer/Servant_Dispatcher.h \
   PortableServer/Servant_Location.h \
   PortableServer/Servant_Upcall.h \
@@ -2876,7 +2876,7 @@ nobase_include_HEADERS += \
   Messaging/Messaging_ORBInitializer.h \
   Messaging/Messaging_PolicyFactory.h \
   Messaging/Messaging_Policy_i.h \
-  Messaging/Messaging_Policy_i.i \
+  Messaging/Messaging_Policy_i.inl\
   Messaging/Messaging_RT_Policy.pidl \
   Messaging/Messaging_RT_Policy.pidl \
   Messaging/Messaging_RT_PolicyA.h \
@@ -3568,10 +3568,10 @@ nobase_include_HEADERS += \
   RTCORBA/Multi_Priority_Mapping.h \
   RTCORBA/Network_Priority_Mapping.h \
   RTCORBA/Network_Priority_Mapping_Manager.h \
-  RTCORBA/Network_Priority_Mapping_Manager.i \
+  RTCORBA/Network_Priority_Mapping_Manager.inl\
   RTCORBA/Priority_Mapping.h \
   RTCORBA/Priority_Mapping_Manager.h \
-  RTCORBA/Priority_Mapping_Manager.i \
+  RTCORBA/Priority_Mapping_Manager.inl\
   RTCORBA/RTCORBA.h \
   RTCORBA/RTCORBA.pidl \
   RTCORBA/RTCORBAC.h \
@@ -3666,7 +3666,7 @@ nobase_include_HEADERS += \
   RTPortableServer/RT_Collocation_Resolver.h \
   RTPortableServer/RT_Object_Adapter_Factory.h \
   RTPortableServer/RT_POA.h \
-  RTPortableServer/RT_POA.i \
+  RTPortableServer/RT_POA.inl\
   RTPortableServer/RT_Policy_Validator.h \
   RTPortableServer/RT_Servant_Dispatcher.h \
   RTPortableServer/rtportableserver_export.h
@@ -3734,7 +3734,7 @@ nobase_include_HEADERS += \
   RTScheduling/RTScheduler_Initializer.h \
   RTScheduling/RTScheduler_Loader.h \
   RTScheduling/RTScheduler_Manager.h \
-  RTScheduling/RTScheduler_Manager.i \
+  RTScheduling/RTScheduler_Manager.inl\
   RTScheduling/RTScheduler_include.pidl \
   RTScheduling/RTScheduler_includeA.h \
   RTScheduling/RTScheduler_includeC.h \
@@ -3865,11 +3865,11 @@ libTAO_Strategies_la_LIBADD = \
 
 nobase_include_HEADERS += \
   Strategies/DIOP_Acceptor.h \
-  Strategies/DIOP_Acceptor.i \
+  Strategies/DIOP_Acceptor.inl\
   Strategies/DIOP_Connection_Handler.h \
   Strategies/DIOP_Connector.h \
   Strategies/DIOP_Endpoint.h \
-  Strategies/DIOP_Endpoint.i \
+  Strategies/DIOP_Endpoint.inl\
   Strategies/DIOP_Factory.h \
   Strategies/DIOP_Profile.h \
   Strategies/DIOP_Transport.h \
@@ -3882,11 +3882,11 @@ nobase_include_HEADERS += \
   Strategies/OC_Endpoint_Selector_Loader.h \
   Strategies/Optimized_Connection_Endpoint_Selector.h \
   Strategies/SCIOP_Acceptor.h \
-  Strategies/SCIOP_Acceptor.i \
+  Strategies/SCIOP_Acceptor.inl\
   Strategies/SCIOP_Connection_Handler.h \
   Strategies/SCIOP_Connector.h \
   Strategies/SCIOP_Endpoint.h \
-  Strategies/SCIOP_Endpoint.i \
+  Strategies/SCIOP_Endpoint.inl\
   Strategies/SCIOP_Factory.h \
   Strategies/SCIOP_Lite_Factory.h \
   Strategies/SCIOP_Profile.h \
@@ -3895,7 +3895,7 @@ nobase_include_HEADERS += \
   Strategies/SHMIOP_Connection_Handler.h \
   Strategies/SHMIOP_Connector.h \
   Strategies/SHMIOP_Endpoint.h \
-  Strategies/SHMIOP_Endpoint.i \
+  Strategies/SHMIOP_Endpoint.inl\
   Strategies/SHMIOP_Factory.h \
   Strategies/SHMIOP_Profile.h \
   Strategies/SHMIOP_Transport.h \
@@ -3903,7 +3903,7 @@ nobase_include_HEADERS += \
   Strategies/UIOP_Connection_Handler.h \
   Strategies/UIOP_Connector.h \
   Strategies/UIOP_Endpoint.h \
-  Strategies/UIOP_Endpoint.i \
+  Strategies/UIOP_Endpoint.inl\
   Strategies/UIOP_Factory.h \
   Strategies/UIOP_Lite_Factory.h \
   Strategies/UIOP_Profile.h \

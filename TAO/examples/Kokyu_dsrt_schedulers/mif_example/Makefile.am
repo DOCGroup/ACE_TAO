@@ -66,7 +66,7 @@ mif_client_SOURCES = \
   client.cpp \
   testC.cpp \
   test_i.h \
-  test_i.i
+  test_i.inl
 
 mif_client_LDADD = \
   $(top_builddir)/examples/Kokyu_dsrt_schedulers/libKokyu_DSRT_Schedulers.la \
@@ -104,7 +104,7 @@ mif_server_SOURCES = \
   testS.cpp \
   test_i.cpp \
   test_i.h \
-  test_i.i
+  test_i.inl
 
 mif_server_LDADD = \
   $(top_builddir)/examples/Kokyu_dsrt_schedulers/libKokyu_DSRT_Schedulers.la \

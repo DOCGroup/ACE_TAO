@@ -42,7 +42,7 @@ noinst_HEADERS = \
   Counting_Consumer.h \
   Counting_Supplier.h \
   Driver.h \
-  Driver.i \
+  Driver.inl\
   Supplier.h \
   ectest_export.h
 

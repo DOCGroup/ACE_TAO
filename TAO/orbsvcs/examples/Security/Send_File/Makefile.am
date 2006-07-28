@@ -59,7 +59,7 @@ client_SOURCES = \
   client.cpp \
   testC.cpp \
   test_i.h \
-  test_i.i
+  test_i.inl
 
 client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
@@ -83,7 +83,7 @@ server_SOURCES = \
   testS.cpp \
   test_i.cpp \
   test_i.h \
-  test_i.i
+  test_i.inl
 
 server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \

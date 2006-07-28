@@ -1,3 +1,23 @@
+Fri Jul 28 15:38:11 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/Makefile.am
+        * orbsvcs/tests/Event/lib/Makefile.am
+        * orbsvcs/tests/Security/Crash_Test/Makefile.am
+        * orbsvcs/tests/Security/MT_SSLIOP/Makefile.am
+        * orbsvcs/tests/EC_Mcast/Makefile.am
+        * orbsvcs/tests/HTIOP/BiDirectional/Makefile.am
+        * orbsvcs/examples/Security/Send_File/Makefile.am
+        * tao/Makefile.am
+        * performance-tests/POA/Demux/Makefile.am
+        * performance-tests/RTCorba/Oneways/Reliable/Makefile.am
+        * performance-tests/RTCorba/Multiple_Endpoints/Common/Makefile.am
+        * examples/Kokyu_dsrt_schedulers/fp_example/Makefile.am
+        * examples/Kokyu_dsrt_schedulers/mif_example/Makefile.am
+        * examples/Kokyu_dsrt_schedulers/muf_example/Makefile.am
+
+          Fixed Makefile.ams to reflect changes from
+          Thu Jul 27 20:50:17 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
+        
 Fri Jul 28 14:29:53 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * Most remaining run_test.pl and run_all.pl scripts
