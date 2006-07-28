@@ -63,7 +63,7 @@ client_SOURCES = \
   demux_testS.cpp \
   demux_test_client.cpp \
   demux_test_client.h \
-  demux_test_client.i
+  demux_test_client.inl
 
 client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
@@ -90,7 +90,7 @@ server_SOURCES = \
   demux_test_i.cpp \
   demux_test_server.cpp \
   server.cpp \
-  demux_test_client.i \
+  demux_test_client.inl\
   demux_test_i.h \
   demux_test_server.h
 

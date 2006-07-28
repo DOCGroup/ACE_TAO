@@ -32,7 +32,7 @@ EC_Mcast_CPPFLAGS = \
 EC_Mcast_SOURCES = \
   EC_Mcast.cpp \
   EC_Mcast.h \
-  EC_Mcast.i
+  EC_Mcast.inl
 
 EC_Mcast_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTEvent_Serv.la \
