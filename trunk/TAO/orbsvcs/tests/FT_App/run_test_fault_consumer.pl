@@ -75,7 +75,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 #
 # [1] Client mediated fault tolerance.  These points will
 #     change when IOGR support is available.
-use lib '../../../../bin';
+use lib "$ENV{ACE_ROOT}/bin";
 #use lib '$ENV{ACE_ROOT}/bin';
 use PerlACE::Run_Test;
 

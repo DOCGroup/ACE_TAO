@@ -94,7 +94,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 #   The factory registry is also run with the quit-on-idle option so when the last
 #   factory unregisters itself, the factory registry shuts down to end the test.
 
-use lib '../../../../bin';
+use lib "$ENV{ACE_ROOT}/bin";
 #use lib '$ENV{ACE_ROOT}/bin';
 use PerlACE::Run_Test;
 
