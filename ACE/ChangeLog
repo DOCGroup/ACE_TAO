@@ -1,3 +1,9 @@
+Fri Jul 28 12:17:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * Kokyu/DSRT_Dispatch_Item_T.inl:
+        * ACEXML/parser/parser/Parser.inl:
+          Fixed file tag
+
 Thu Jul 27 20:30:26 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ace/SSL/SSL_SOCK_Connector.h
@@ -197,7 +203,7 @@ Thu Jul 27 20:30:26 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
         * examples/Service_Configurator/IPC-tests/server/Handle_R_Stream.inl
         * examples/Service_Configurator/IPC-tests/server/Handle_L_Pipe.h
         * examples/Service_Configurator/IPC-tests/server/Handle_L_Pipe.i
-        
+
           Moved the .i file to .inl (with history), changed the includes in the
           .cpp and .h files to match, removed the .i file.
 
