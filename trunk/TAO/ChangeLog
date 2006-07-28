@@ -1,7 +1,16 @@
+Fri Jul 28 10:17:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/IDL_Test/Bug_2616_Regression.idl:
+        * tests/IDL_Test/IDL_Test.mpc:
+          Added regression for bug 2616. Thanks to Keith Nicewarner
+          <Keith dot Nicewarner at SpaceDev dot com> for delivering this
+          test case, it failed with 1.5.2 but works on the head version,
+          just storing it to prevent the bug to appear in the future.
+
 Fri Jul 28 00:44:26 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * Most run_test.pl scripts in the TAO repository
-        
+
           Updated to use the ACE_ROOT environment variable to find
           PerlACE.  This is necessary for the flattened ACE/TAO/CIAO
           Thanks to Adam Mitz for reporting the problem and
@@ -717,7 +726,7 @@ Thu Jul 27 20:50:17 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
         * examples/Kokyu_dsrt_schedulers/muf_example/test_i.inl
         * examples/Kokyu_dsrt_schedulers/muf_example/test_i.h
         * examples/Kokyu_dsrt_schedulers/muf_example/test_i.i
-        
+
           Moved .i to .inl, and updated the associated header and source files.
 
 Thu Jul 27 19:21:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
