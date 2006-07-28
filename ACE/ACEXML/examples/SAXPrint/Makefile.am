@@ -29,7 +29,7 @@ SAXPrint_SOURCES = \
   main.cpp \
   Print_Handler.h \
   SAXPrint_Handler.h \
-  SAXPrint_Handler.i
+  SAXPrint_Handler.inl
 
 SAXPrint_LDADD = \
   $(ACE_BUILDDIR)/ACEXML/parser/parser/libACEXML_Parser.la \

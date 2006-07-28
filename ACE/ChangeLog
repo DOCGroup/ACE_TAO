@@ -1,3 +1,23 @@
+Fri Jul 28 15:32:27 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ace/SSL/Makefile.am
+        * ace/QoS/Makefile.am
+        * performance-tests/Synch-Benchmarks/Base_Test/Makefile.am
+        * performance-tests/Synch-Benchmarks/Perf_Test/Makefile.am
+        * Kokyu/Makefile.am
+        * apps/JAWS/clients/Caching/Makefile.am
+        * ACEXML/apps/svcconf/Makefile.am
+        * ACEXML/common/Makefile.am
+        * ACEXML/parser/parser/Makefile.am
+        * ACEXML/examples/SAXPrint/Makefile.am
+        * websvcs/lib/Makefile.am
+        * examples/ASX/Event_Server/Event_Server/Makefile.am
+        * examples/ASX/UPIPE_Event_Server/Makefile.am
+        * examples/Service_Configurator/IPC-tests/server/Makefile.am
+        
+        Updated to comply with the .i->.inl changes from:
+        Thu Jul 27 20:30:26 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
+
 Fri Jul 28 12:17:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * Kokyu/DSRT_Dispatch_Item_T.inl:

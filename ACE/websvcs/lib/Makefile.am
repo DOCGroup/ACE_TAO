@@ -25,7 +25,7 @@ libwebsvcs_la_SOURCES = \
 
 noinst_HEADERS = \
   URL_Addr.h \
-  URL_Addr.i
+  URL_Addr.inl
 
 ## Clean up template repositories, etc.
 clean-local:

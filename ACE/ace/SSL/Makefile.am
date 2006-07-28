@@ -50,13 +50,13 @@ nobase_include_HEADERS = \
   SSL_Context.inl \
   SSL_Export.h \
   SSL_SOCK.h \
-  SSL_SOCK.i \
+  SSL_SOCK.inl \
   SSL_SOCK_Acceptor.h \
-  SSL_SOCK_Acceptor.i \
+  SSL_SOCK_Acceptor.inl \
   SSL_SOCK_Connector.h \
-  SSL_SOCK_Connector.i \
+  SSL_SOCK_Connector.inl \
   SSL_SOCK_Stream.h \
-  SSL_SOCK_Stream.i \
+  SSL_SOCK_Stream.inl \
   sslconf.h
 
 pkgconfig_DATA = \

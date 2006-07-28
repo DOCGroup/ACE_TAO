@@ -51,7 +51,7 @@ noinst_HEADERS = \
   Benchmark_Performance.h \
   Performance_Test.h \
   Performance_Test_Options.h \
-  Performance_Test_Options.i
+  Performance_Test_Options.inl
 
 endif !BUILD_ACE_FOR_TAO
 

@@ -41,9 +41,9 @@ libACEXML_Parser_la_LIBADD = \
 
 nobase_include_HEADERS = \
   Entity_Manager.h \
-  Entity_Manager.i \
+  Entity_Manager.inl \
   Parser.h \
-  Parser.i \
+  Parser.inl \
   ParserContext.h \
   ParserContext.inl \
   ParserInternals.h \

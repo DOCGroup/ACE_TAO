@@ -30,7 +30,7 @@ libSynch_Benchmarks_Base_Test_la_SOURCES = \
 
 noinst_HEADERS = \
   Baseline_Test.h \
-  Baseline_Test.i
+  Baseline_Test.inl
 
 endif !BUILD_ACE_FOR_TAO
 
