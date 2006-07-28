@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file   RTCosScheduling_PCP_Manager.i
+ *  @file   RTCosScheduling_PCP_Manager.inl
  *
  *  $Id$
  *
