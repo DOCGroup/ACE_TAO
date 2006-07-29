@@ -1,3 +1,8 @@
+Sat Jul 29 11:26:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-icc-common.h:
+          Added fix for Intel C++ 9.1
+
 Fri Jul 28 15:32:27 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ace/SSL/Makefile.am
@@ -14,7 +19,7 @@ Fri Jul 28 15:32:27 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
         * examples/ASX/Event_Server/Event_Server/Makefile.am
         * examples/ASX/UPIPE_Event_Server/Makefile.am
         * examples/Service_Configurator/IPC-tests/server/Makefile.am
-        
+
         Updated to comply with the .i->.inl changes from:
         Thu Jul 27 20:30:26 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
