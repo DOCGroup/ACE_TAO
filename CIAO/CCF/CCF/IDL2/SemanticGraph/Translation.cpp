@@ -182,7 +182,7 @@ namespace CCF
           {
             if (root)
             {
-              result.insert (&dynamic_cast<Root&> (node));
+              result.insert (r);
             }
             else
             {

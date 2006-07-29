@@ -1,10 +1,17 @@
+Fri Jul 28 17:53:57 UTC 2006  Boris Kolpackov  <boris@kolpackov.net>
+
+        * CCF/CCF/IDL2/SemanticGraph/Translation.cpp:
+
+          Reimplemented a chunk of code that resulted in what appears to
+          be invalid code generation by the Intel C++ compiler.
+
 Thu Jul 27 18:08:47 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * CIAO_TAO.mwc
         * CIAO_TAO_DAnCE.mwc
-        
+
           Replaced relative references to ACE/TAO with absolute references
-          using environment variables.  
+          using environment variables.
 
 Mon Jul 24 15:45:34 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
@@ -17,7 +24,7 @@ Sun Jul 23 15:44:43 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 Sat Jul 22 21:34:57 UTC 2006  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * ciao/Container_Base.cpp
-        
+
           Fixed a runtime Segfault bug about destroying POA.  The problem
           is because a Session_Container creates 2 POAs, one of which is called
           facet_cons_POA which uses the Servant_Activator policy to activate component
@@ -49,14 +56,14 @@ Thu Jul 20 01:10:58 UTC 2006  Vipul Singh  <vipuls@dre.vanderbilt.edu>
 	  warnings, also removed an unnecessarily defined namespace.
 
         * DAnCE/RepositoryManager/RepositoryManager_Impl.cpp: Made a few
-	  changes to fix the warnings and to keep the code in sync with 
-	  the changes made to RepositoryManager_Impl.h. Fixed code which 
-	  passed non POD types to a varargs function(ACE_DEBUG) which 
+	  changes to fix the warnings and to keep the code in sync with
+	  the changes made to RepositoryManager_Impl.h. Fixed code which
+	  passed non POD types to a varargs function(ACE_DEBUG) which
 	  resulted in aborts at runtime.
 
         * DAnCE/RepositoryManager/URL_Parser.cpp: Assigned value to ptr before
 	  if condition to fix a few warnings.
-	  
+
 Wed Jul 19 08:00:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tools/Config_Handlers/Config_Handlers.mpc:
