@@ -63,5 +63,9 @@
 
 #define ACE_TEMPLATES_REQUIRE_SOURCE
 
+#if (__INTEL_COMPILER >= 910)
+# define ACE_EXPLICIT_TEMPLATE_DESTRUCTOR_TAKES_ARGS
+#endif
+
 #include /**/ "ace/post.h"
 #endif /* ACE_LINUX_ICC_COMMON_H */
