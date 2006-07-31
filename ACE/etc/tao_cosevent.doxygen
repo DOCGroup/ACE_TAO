@@ -52,7 +52,7 @@ INPUT                 = \
 	TAO/orbsvcs/orbsvcs/CosEventComm.idl \
 	TAO/orbsvcs/orbsvcs/CosEventChannelAdmin.idl \
 	TAO/orbsvcs/orbsvcs/CosEvent
-FILE_PATTERNS         = CEC_*.cpp CEC_*.h CEC_*.i CEC_*.inl CEC_*.pidl *.idl
+FILE_PATTERNS         = CEC_*.cpp CEC_*.h CEC_*.inl CEC_*.pidl *.idl
 RECURSIVE             =
 EXCLUDE               =
 EXCLUDE_PATTERNS      =

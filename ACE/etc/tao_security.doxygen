@@ -54,7 +54,7 @@ INPUT                 = TAO/orbsvcs/orbsvcs/Security.idl \
 			TAO/orbsvcs/orbsvcs/SecurityAdmin.idl \
 			TAO/orbsvcs/orbsvcs/SecurityReplaceable.idl \
 			TAO/orbsvcs/orbsvcs/Security
-FILE_PATTERNS         = *.cpp *.h *.i *.inl *.pidl *.idl
+FILE_PATTERNS         = *.cpp *.h *.inl *.pidl *.idl
 RECURSIVE             =
 EXCLUDE               =
 EXCLUDE_PATTERNS      =

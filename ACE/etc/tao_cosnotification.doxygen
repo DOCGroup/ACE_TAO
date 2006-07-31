@@ -57,7 +57,7 @@ INPUT                 = \
         TAO/orbsvcs/orbsvcs/Notify/Any \
         TAO/orbsvcs/orbsvcs/Notify/Sequence \
         TAO/orbsvcs/orbsvcs/Notify/Structured
-FILE_PATTERNS         = *.cpp *.h *.i *.inl *.idl
+FILE_PATTERNS         = *.cpp *.h *.inl *.idl
 RECURSIVE             =
 EXCLUDE               =
 EXCLUDE_PATTERNS      =
