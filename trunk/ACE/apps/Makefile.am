@@ -20,7 +20,6 @@ SUBDIRS = \
         JAWS2 \
         JAWS3 \
         drwho \
-        gperf \
         mkcsregdb \
         soreduce \
         $(OPTDIRS)
