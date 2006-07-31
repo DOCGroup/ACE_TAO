@@ -51,10 +51,8 @@ public:
   friend class ACE_Unbounded_Stack<T>;
   friend class ACE_Unbounded_Stack_Iterator<T>;
 
-# if ! defined (ACE_HAS_BROKEN_NOOP_DTORS)
   /// This isn't necessary, but it keeps some compilers happy.
   ~ACE_Node (void);
-# endif /* ! defined (ACE_HAS_BROKEN_NOOP_DTORS) */
 
 private:
   // = Initialization methods

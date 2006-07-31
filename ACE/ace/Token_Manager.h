@@ -98,11 +98,11 @@ public:
   void dump (void) const;
 
   /// Turn debug mode on/off.
-  void debug (int d);
+  void debug (bool d);
 
 private:
   /// Whether to print debug messages or not.
-  int debug_;
+  bool debug_;
 
   /// pointer to singleton token manager.
   static ACE_Token_Manager *token_manager_;

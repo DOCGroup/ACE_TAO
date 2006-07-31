@@ -7,13 +7,11 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-# if ! defined (ACE_HAS_BROKEN_NOOP_DTORS)
 template <class EXT_ID, class INT_ID> ACE_INLINE
 ACE_Map_Entry<EXT_ID, INT_ID>::~ACE_Map_Entry (void)
 {
   // No-op just to keep some compilers happy...
 }
-#endif /* ! defined (ACE_HAS_BROKEN_NOOP_DTORS) */
 
 template <class EXT_ID, class INT_ID> ACE_INLINE ACE_UINT32
 ACE_Map_Entry<EXT_ID, INT_ID>::next (void) const

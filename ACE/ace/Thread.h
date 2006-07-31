@@ -92,15 +92,15 @@ public:
                     ACE_Thread_Adapter *thread_adapter = 0);
 
   /**
-   * Spawn N new threads, which execute <func> with argument <arg> (if
-   * <thread_adapter> is non-0 then <func> and <args> are ignored and
-   * are obtained from <thread_adapter>).  If <stack> != 0 it is
-   * assumed to be an array of <n> pointers to the base of the stacks
-   * to use for the threads being spawned.  Likewise, if <stack_size>
-   * != 0 it is assumed to be an array of <n> values indicating how
+   * Spawn N new threads, which execute @a func with argument @a arg (if
+   * @a thread_adapter is non-0 then @a func and @a args are ignored and
+   * are obtained from @a thread_adapter).  If @a stack != 0 it is
+   * assumed to be an array of @a n pointers to the base of the stacks
+   * to use for the threads being spawned.  Likewise, if @a stack_size
+   * != 0 it is assumed to be an array of @a n values indicating how
    * big each of the corresponding <stack>s are.  Returns the number
    * of threads actually spawned (if this doesn't equal the number
-   * requested then something has gone wrong and <errno> will
+   * requested then something has gone wrong and @c errno will
    * explain...).
    *
    * @see spawn()
@@ -158,7 +158,8 @@ public:
    * @param status    Points to the location that receives the joined
    *                  thread's exit value. If @a status is 0, it is ignored.
    *
-   * @retval  0 for success; -1 (with errno set) for failure.
+   * @retval  0 for success
+   * @retval  -1 (with errno set) for failure.
    */
   static int join (ACE_thread_t thread_id,
                    ACE_thread_t *departed,
@@ -216,7 +217,7 @@ public:
                          sigset_t *osigset = 0);
 
   /**
-   * Allocates a <keyp> that is used to identify data that is specific
+   * Allocates a @a keyp that is used to identify data that is specific
    * to each thread in the process.  The key is global to all threads
    * in the process.
    */
@@ -231,13 +232,13 @@ public:
   /// Free up the key so that other threads can reuse it.
   static int keyfree (ACE_thread_key_t key);
 
-  /// Bind value to the thread-specific data key, <key>, for the calling
+  /// Bind value to the thread-specific data key, @a key, for the calling
   /// thread.
   static int setspecific (ACE_thread_key_t key,
                           void *value);
 
-  /// Stores the current value bound to <key> for the calling thread
-  /// into the location pointed to by <valuep>.
+  /// Stores the current value bound to @a key for the calling thread
+  /// into the location pointed to by @a valuep.
   static int getspecific (ACE_thread_key_t key,
                           void **valuep);
 
@@ -253,9 +254,9 @@ public:
                              struct cancel_state *old_state);
 
   /**
-   * Cancel a thread.  Note that this method is only portable on
-   * platforms, such as POSIX pthreads, that support thread
-   * cancellation.
+   * Cancel a thread.
+   * @note This method is only portable on platforms, such as POSIX pthreads,
+   * that support thread cancellation.
    */
   static int cancel (ACE_thread_t t_id);
 

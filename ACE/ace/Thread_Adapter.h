@@ -65,7 +65,7 @@ public:
    */
   virtual ACE_THR_FUNC_RETURN invoke (void);
 
-  /// Accessor for the optional <Thread_Manager>.
+  /// Accessor for the optional ACE_Thread_Manager.
   ACE_Thread_Manager *thr_mgr (void);
 
 protected:
