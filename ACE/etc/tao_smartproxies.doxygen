@@ -49,10 +49,10 @@ WARN_FORMAT           = "$file:$line: $text"
 #---------------------------------------------------------------------------
 
 INPUT                 = TAO/tao/SmartProxies
-FILE_PATTERNS         = *.cpp *.h *.i *.inl *.pidl
+FILE_PATTERNS         = *.cpp *.h *.inl *.pidl
 RECURSIVE             =
 EXCLUDE               =
-EXCLUDE_PATTERNS      = InterfaceC.cpp Services.h
+EXCLUDE_PATTERNS      =
 EXAMPLE_PATH          =
 EXAMPLE_PATTERNS      =
 IMAGE_PATH            =

@@ -52,7 +52,7 @@ INPUT                 = TAO/orbsvcs/orbsvcs/AVStreams.idl \
 			TAO/orbsvcs/orbsvcs/Null_MediaCtrl.idl \
 			TAO/orbsvcs/orbsvcs/sfp.idl \
 			TAO/orbsvcs/orbsvcs/AV
-FILE_PATTERNS         = *.cpp *.h *.i *.inl *.pidl *.idl
+FILE_PATTERNS         = *.cpp *.h *.inl *.pidl *.idl
 RECURSIVE             =
 EXCLUDE               =
 EXCLUDE_PATTERNS      =

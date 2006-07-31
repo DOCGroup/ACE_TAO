@@ -52,7 +52,7 @@ INPUT                 = \
 	TAO/orbsvcs/orbsvcs/miop.idl \
 	TAO/orbsvcs/orbsvcs/PortableGroup.idl \
 	TAO/orbsvcs/orbsvcs/PortableGroup
-FILE_PATTERNS         = *.cpp *.h *.i *.inl *.pidl
+FILE_PATTERNS         = *.cpp *.h *.inl *.pidl
 RECURSIVE             =
 EXCLUDE               =
 EXCLUDE_PATTERNS      =
