@@ -89,7 +89,7 @@ public:
                 u_short portnum,
                 int flags = 0) const;
 
-  /// Broadcast the <iovec> datagrams to every interface.  Returns the
+  /// Broadcast the @c iov datagrams to every interface.  Returns the
   /// average number of bytes sent.
   ssize_t send (const iovec iov[],
                 int n,

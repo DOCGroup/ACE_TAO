@@ -12,8 +12,6 @@
 #define ACE_TEMPLATES_REQUIRE_SOURCE
 #define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
 
-/* For unixware 7.1 && g++ 2.91.57, see if this fixes my problem */
-//#define ACE_HAS_BROKEN_NOOP_DTORS
 #ifndef UNIXWARE_7_1
 #define UNIXWARE_7_1
 #endif

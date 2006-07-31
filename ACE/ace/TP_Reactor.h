@@ -185,9 +185,9 @@ public:
   /**
    * Initialize the ACE_TP_Reactor to manage
    * @a max_number_of_handles.  If @a restart is non-0 then the
-   * ACE_Reactor's <handle_events> method will be restarted
-   * automatically when <EINTR> occurs.  If <signal_handler> or
-   * <timer_queue> are non-0 they are used as the signal handler and
+   * ACE_Reactor's @c handle_events() method will be restarted
+   * automatically when @c EINTR occurs.  If @a sh or
+   * @a tq are non-0 they are used as the signal handler and
    * timer queue, respectively.
    */
   ACE_TP_Reactor (size_t max_number_of_handles,
@@ -200,20 +200,20 @@ public:
   // = Event loop drivers.
 
   /**
-   * This event loop driver that blocks for <max_wait_time> before
+   * This event loop driver that blocks for @a max_wait_time before
    * returning.  It will return earlier if timer events, I/O events,
-   * or signal events occur.  Note that <max_wait_time> can be 0, in
+   * or signal events occur.  Note that @a max_wait_time can be 0, in
    * which case this method blocks indefinitely until events occur.
    *
-   * <max_wait_time> is decremented to reflect how much time this call
+   * @a max_wait_time is decremented to reflect how much time this call
    * took.  For instance, if a time value of 3 seconds is passed to
    * handle_events and an event occurs after 2 seconds,
-   * <max_wait_time> will equal 1 second.  This can be used if an
+   * @a max_wait_time will equal 1 second.  This can be used if an
    * application wishes to handle events for some fixed amount of
    * time.
    *
    * Returns the total number of ACE_Event_Handlers that were
-   * dispatched, 0 if the <max_wait_time> elapsed without dispatching
+   * dispatched, 0 if the @a max_wait_time elapsed without dispatching
    * any handlers, or -1 if something goes wrong.
    */
   virtual int handle_events (ACE_Time_Value *max_wait_time = 0);

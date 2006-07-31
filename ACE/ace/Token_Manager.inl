@@ -14,7 +14,7 @@ ACE_Token_Manager::mutex (void)
 }
 
 ACE_INLINE void
-ACE_Token_Manager::debug (int d)
+ACE_Token_Manager::debug (bool d)
 {
   ACE_TRACE ("ACE_Token_Manager::debug");
   debug_ = d;

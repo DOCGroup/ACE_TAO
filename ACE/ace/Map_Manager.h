@@ -39,11 +39,9 @@ template <class EXT_ID, class INT_ID>
 class ACE_Map_Entry
 {
 public:
-# if ! defined (ACE_HAS_BROKEN_NOOP_DTORS)
   /// We need this destructor to keep some compilers from complaining.
   /// It's just a no-op, however.
   ~ACE_Map_Entry (void);
-# endif /* ! defined (ACE_HAS_BROKEN_NOOP_DTORS) */
 
   /// Key used to look up an entry.
   EXT_ID ext_id_;
