@@ -1,3 +1,14 @@
+Mon Jul 31 19:23:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_stropts.inl (ioctl):
+          Check for ACE_HAS_IOCTL_INT_3_PARAM to make it easier to handle
+          the different VxWorks versions
+
+        * config-vxworks5.x.h:
+        * config-vxworks6.2.h:
+        * config-vxworks6.3.h:
+          Added ACE_HAS_IOCTL_INT_3_PARAM
+
 Mon Jul 31 18:48:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * Containers_T.{h,cpp}:
