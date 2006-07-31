@@ -150,7 +150,7 @@ main ( int, char ** )
          char buf[BUFSIZ];
 
          strcpy ( buf, ace_root );
-#if defined (__hpux)
+#if defined (__hpux) && !(defined (__ia64) && (__ia64 == 1))
          strcat ( buf, "/lib/libACE.sl" );
 #else
          strcat ( buf, "/lib/libACE.so" );
