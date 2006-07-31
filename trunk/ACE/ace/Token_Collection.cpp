@@ -13,7 +13,7 @@ ACE_RCSID (ace,
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_Token_Collection::ACE_Token_Collection (int debug,
+ACE_Token_Collection::ACE_Token_Collection (bool debug,
                                             const ACE_TCHAR *name)
 : debug_ (debug)
 {

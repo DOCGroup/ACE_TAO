@@ -1,3 +1,26 @@
+Mon Jul 31 18:48:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * Containers_T.{h,cpp}:
+        * Hash_Map_Manager_T.{h,cpp}:
+        * Map_Manager.{h,inl}:
+        * Node.{h,cpp}:
+          Removed check for !ACE_HAS_BROKEN_NOOP_DTORS, this define is
+          not in any config file
+
+        * config-unixware-7.1.0.udk.h:
+          Removed commented out define
+
+        * Token_Collection.{h,cpp}:
+        * Token_Manager.{h,inl}:
+          Changed debug flag to be a bool
+
+        * SOCK_Dgram_Bcast.h
+        * TP_Reactor.h
+        * Signal.h
+        * Thread.h
+        * Thread_Adapter.h
+          Documentation updates
+
 Mon Jul 31 14:57:08 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * apps/Makefile.am: Removed hard-coded inclusion of gperf in the

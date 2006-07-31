@@ -1454,12 +1454,10 @@ ACE_DNode<T>::ACE_DNode (const T &i, ACE_DNode<T> *n, ACE_DNode<T> *p)
 {
 }
 
-# if ! defined (ACE_HAS_BROKEN_NOOP_DTORS)
 template <class T>
 ACE_DNode<T>::~ACE_DNode (void)
 {
 }
-# endif /* ! defined (ACE_HAS_BROKEN_NOOP_DTORS) */
 
 // ****************************************************************
 

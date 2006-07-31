@@ -30,7 +30,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * @class ACE_Sig_Adapter
  *
  * @brief Provide an adapter that transforms various types of signal
- * handlers into the scheme used by the <ACE_Reactor>.
+ * handlers into the scheme used by the ACE_Reactor.
  */
 class ACE_Export ACE_Sig_Adapter : public ACE_Event_Handler
 {
@@ -41,7 +41,7 @@ public:
   ~ACE_Sig_Adapter (void);
 
   /// Returns this signal key that's used to remove this from the
-  /// <ACE_Reactor>'s internal table.
+  /// ACE_Reactor's internal table.
   int sigkey (void);
 
   /// Called by the <Reactor> to dispatch the signal handler.

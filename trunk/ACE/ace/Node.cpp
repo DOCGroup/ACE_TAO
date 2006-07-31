@@ -13,12 +13,10 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Node)
 
-# if ! defined (ACE_HAS_BROKEN_NOOP_DTORS)
-  template <class T>
+template <class T>
 ACE_Node<T>::~ACE_Node (void)
 {
 }
-# endif /* ! defined (ACE_HAS_BROKEN_NOOP_DTORS) */
 
 template <class T>
 ACE_Node<T>::ACE_Node (const T &i, ACE_Node<T> *n)

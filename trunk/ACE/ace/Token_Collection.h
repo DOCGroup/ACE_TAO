@@ -52,21 +52,21 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * ACE_Token_Collection allows individual operations on single
  * members of a collection of Token_Proxies.  This provides a
  * single access point for operations on multiple tokens.
+ *
+ * @bug Although ACE_Token_Collection inherits from ACE_Token_Proxy, it
+ * can not be including in a collection.  This is because <clone>
+ * returns zero for now.
+ *
  */
 class ACE_Export ACE_Token_Collection : public ACE_Token_Proxy
 {
-
-  // = BUGS
-  //   Although ACE_Token_Collection inherits from ACE_Token_Proxy, it
-  //   can not be including in a collection.  This is because <clone>
-  //   returns zero for now.
 public:
   /**
    * @a debug print out verbose debugging messages. @a name will give a
    * name to the collection.  Collections don't really need names, but
    * are sometimes useful for debugging.
    */
-  ACE_Token_Collection (int debug = 0,
+  ACE_Token_Collection (bool debug = false,
                         const ACE_TCHAR *name = 0);
 
 // Collection Management operations
@@ -86,7 +86,7 @@ public:
   int insert (ACE_Token_Proxy &token);
 
   /**
-   * removes the ACE_Token matching the given token_name from the
+   * Removes the ACE_Token matching the given token_name from the
    * collection.  On success, extract returns 0. On failure
    * (token_name was not in the collection,) extract returns -1.  On
    * success, the state of the token found is copied into proxy.
@@ -94,7 +94,7 @@ public:
    */
   int extract (const ACE_TCHAR *token_name, ACE_Token_Proxy *&proxy);
 
-  /// returns the proxy if true.  0 otherwise.
+  /// Returns the proxy if true.  0 otherwise.
   ACE_Token_Proxy *is_member (const ACE_TCHAR *token_name);
 
   /**
@@ -220,7 +220,7 @@ protected:
   COLLECTION collection_;
 
   /// Whether to print out debug messages or not.
-  int debug_;
+  bool debug_;
 
   /// Name of the collection.
   ACE_TCHAR name_[ACE_MAXTOKENNAMELEN];

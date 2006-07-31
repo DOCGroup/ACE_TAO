@@ -95,7 +95,7 @@ private:
 /**
  * @class ACE_Sig_Action
  *
- * @brief C++ wrapper facade for the <sigaction> struct.
+ * @brief C++ wrapper facade for the @c sigaction struct.
  */
 class ACE_Export ACE_Sig_Action
 {
@@ -180,12 +180,12 @@ public:
   int register_action (int signum,
                        ACE_Sig_Action *oaction = 0);
 
-  /// Assign the value of <oaction> to <this> and make it become the
+  /// Assign the value of @a oaction to @c this and make it become the
   /// new signal disposition.
   int restore_action (int signum,
                       ACE_Sig_Action &oaction);
 
-  /// Retrieve the current disposition into <this>.
+  /// Retrieve the current disposition into @c this.
   int retrieve_action (int signum);
 
   /// Set current signal action.

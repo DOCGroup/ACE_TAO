@@ -46,10 +46,8 @@ public:
   ACE_Hash_Map_Entry (ACE_Hash_Map_Entry<EXT_ID, INT_ID> *next,
                       ACE_Hash_Map_Entry<EXT_ID, INT_ID> *prev);
 
-  # if ! defined (ACE_HAS_BROKEN_NOOP_DTORS)
   /// Destructor.
   ~ACE_Hash_Map_Entry (void);
-  #endif /* ! defined (ACE_HAS_BROKEN_NOOP_DTORS) */
 
   /// Key accessor.
   EXT_ID& key (void);
@@ -153,7 +151,7 @@ public:
 
   // = Initialization and termination methods.
 
-  /** 
+  /**
    * Initialize a @c Hash_Map_Manager_Ex with default size elements.
    * @param table_alloc is a pointer to a memory allocator used for
    *        table_, so it should supply size*sizeof (ACE_Hash_Map_Entry<EXT_ID, INT_ID>).
@@ -167,7 +165,7 @@ public:
   ACE_Hash_Map_Manager_Ex (ACE_Allocator *table_alloc = 0,
                            ACE_Allocator *entry_alloc = 0);
 
-  /** 
+  /**
    * Initialize a @c Hash_Map_Manager_Ex with @c size elements.
    * @param table_alloc is a pointer to a memory allocator used for
    *        table_, so it should supply size*sizeof (ACE_Hash_Map_Entry<EXT_ID, INT_ID>).
@@ -182,7 +180,7 @@ public:
                            ACE_Allocator *table_alloc = 0,
                            ACE_Allocator *entry_alloc = 0);
 
-  /** 
+  /**
    * Initialize a @c Hash_Map_Manager_Ex with @c size elements.
    * @param table_alloc is a pointer to a memory allocator used for
    *        table_, so it should supply size*sizeof (ACE_Hash_Map_Entry<EXT_ID, INT_ID>).
