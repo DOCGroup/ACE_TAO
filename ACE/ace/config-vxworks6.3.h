@@ -216,6 +216,7 @@
   #define ACE_LACKS_FGETWC
   #define ACE_LACKS_FGETWS
   #define ACE_LACKS_FPUTWS
+  #define ACE_HAS_IOCTL_INT_3_PARAM
   #if !defined (ACE_MAIN)
   #  define ACE_MAIN ace_main
   #endif /* ! ACE_MAIN */
