@@ -1,3 +1,8 @@
+Mon Jul 31 14:36:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/*.doxygen:
+          Cleanup of these files
+
 Sat Jul 29 11:26:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-icc-common.h:
