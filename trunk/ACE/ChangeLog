@@ -751,7 +751,7 @@ Mon Jul 17 22:52:19 UTC 2006  Steve Huston  <shuston@riverace.com>
 
 Mon Jul 17 16:06:57 UTC 2006  Steve Huston  <shuston@riverace.com>
 
-        * tests/Unload_LibACE.cpp: Alter the libACE suffix for HP-UX on
+        * tests/Unload_libACE.cpp: Alter the libACE suffix for HP-UX on
           PA-RISC only. Also see:
           Fri Jul 14 19:44:03 UTC 2006  john_c  <johnc@ociweb.com>
 
