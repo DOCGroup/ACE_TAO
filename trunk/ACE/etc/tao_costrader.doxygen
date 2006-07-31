@@ -53,7 +53,7 @@ INPUT                 = \
 	TAO/orbsvcs/orbsvcs/CosTradingDynamic.idl \
 	TAO/orbsvcs/orbsvcs/CosTradingRepos.idl \
 	TAO/orbsvcs/orbsvcs/Trader
-FILE_PATTERNS         = *.cpp *.h *.idl
+FILE_PATTERNS         = *.cpp *.h *.inl *.idl
 RECURSIVE             =
 EXCLUDE               =
 EXCLUDE_PATTERNS      =

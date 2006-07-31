@@ -50,7 +50,7 @@ WARN_FORMAT           = "$file:$line: $text"
 
 INPUT                 = TAO/orbsvcs/orbsvcs/CosNaming.idl \
                 TAO/orbsvcs/orbsvcs/Naming
-FILE_PATTERNS         = *.cpp *.h *.i *.inl *.pidl *.idl
+FILE_PATTERNS         = *.cpp *.h *.inl *.pidl *.idl
 RECURSIVE             =
 EXCLUDE               =
 EXCLUDE_PATTERNS      =
