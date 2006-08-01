@@ -261,7 +261,7 @@ ACE_OS::getipnodebyaddr (const void *src, size_t len, int family)
   ACE_UNUSED_ARG (family);
   ACE_NOTSUP_RETURN (0);
 #  else
-  struct hostent *hptr;
+  struct hostent *hptr = 0;
   int errnum;
   if ((hptr = ::getipnodebyaddr (src, len, family, &errnum)) == 0)
     {
@@ -284,7 +284,7 @@ ACE_INLINE struct hostent *
 ACE_OS::getipnodebyname (const char *name, int family, int flags)
 {
   ACE_OS_TRACE ("ACE_OS::getipnodebyname");
-# if defined (ACE_HAS_IPV6) && !defined (ACE_WIN32)
+# if defined (ACE_HAS_IPV6) && !defined (ACE_LACKS_GETIPNODEBYNAME_IPV6)
 #   if defined (ACE_LACKS_GETIPNODEBYNAME)
   ACE_UNUSED_ARG (flags);
 #     if defined (ACE_HAS_NONCONST_GETBY)
@@ -296,7 +296,7 @@ ACE_OS::getipnodebyname (const char *name, int family, int flags)
                        struct hostent *, 0);
 #     endif /* ACE_HAS_NONCONST_GETBY */
 #   else
-  struct hostent *hptr;
+  struct hostent *hptr = 0;
   int errnum;
   if ((hptr = ::getipnodebyname (name, family, flags, &errnum)) == 0)
     {
@@ -311,7 +311,7 @@ ACE_OS::getipnodebyname (const char *name, int family, int flags)
     return ACE_OS::gethostbyname (name);
 
   ACE_NOTSUP_RETURN (0);
-# endif /* defined (ACE_HAS_IPV6) && !defined (ACE_WIN32) */
+# endif /* defined (ACE_HAS_IPV6) && !ACE_LACKS_GETIPNODEBYNAME_IPV6 */
 }
 
 ACE_INLINE struct protoent *
