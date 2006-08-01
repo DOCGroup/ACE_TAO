@@ -1,3 +1,9 @@
+Tue Aug  1 20:00:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-vxworks6.3.h:
+          Enabled some features in ACE because vxworks 6.3 delivers more system
+          api's
+
 Mon Jul 31 19:23:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_stropts.inl (ioctl):
