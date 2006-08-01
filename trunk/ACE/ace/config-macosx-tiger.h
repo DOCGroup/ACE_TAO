@@ -30,9 +30,13 @@
 # endif // GCC 3.3
 #endif // ACE_SIZEOF_LONG_DOUBLE
 
-#if defined (ACE_HAS_PENTIUM)
-# undef ACE_HAS_PENTIUM
-#endif /* ACE_HAS_PENTIUM */
+#if !defined (__i386__)
+# if defined (ACE_HAS_PENTIUM)
+#  undef ACE_HAS_PENTIUM
+# endif /* ACE_HAS_PENTIUM */
+#else // __i386__
+# define ACE_HAS_PENTIUM
+#endif //__i386__
 
 #if !defined (_THREAD_SAFE)
 #define _THREAD_SAFE
