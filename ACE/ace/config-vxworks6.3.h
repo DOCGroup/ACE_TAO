@@ -91,9 +91,6 @@
 #define ACE_LACKS_MKFIFO
 #define ACE_LACKS_MKTEMP
 #define ACE_LACKS_MKSTEMP
-#define ACE_LACKS_MMAP
-#define ACE_LACKS_MPROTECT
-#define ACE_LACKS_MSYNC
 #define ACE_LACKS_NETDB_REENTRANT_FUNCTIONS
 #define ACE_LACKS_SYS_PARAM_H
 #define ACE_LACKS_PWD_FUNCTIONS
@@ -174,6 +171,7 @@
   #define ACE_HAS_3_PARAM_WCSTOK
   #define ACE_HAS_WCHAR
   #define ACE_SIZEOF_WCHAR 2
+  #define ACE_HAS_SHM_OPEN
 #else
   // We are building for kernel mode
   #define ACE_LACKS_SUSECONDS_T
@@ -219,6 +217,9 @@
   #define ACE_LACKS_FGETWS
   #define ACE_LACKS_FPUTWS
   #define ACE_HAS_IOCTL_INT_3_PARAM
+  #define ACE_LACKS_MMAP
+  #define ACE_LACKS_MSYNC
+  #define ACE_LACKS_MPROTECT
   #if !defined (ACE_MAIN)
   #  define ACE_MAIN ace_main
   #endif /* ! ACE_MAIN */
