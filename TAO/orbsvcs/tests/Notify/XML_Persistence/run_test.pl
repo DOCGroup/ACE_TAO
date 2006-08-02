@@ -11,9 +11,6 @@ use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 use File::Compare;
 
-$ACE_ROOT = $ENV{ACE_ROOT};
-$TAO_ROOT = "$ACE_ROOT/TAO";
-
 $port = 12000 + PerlACE::uniqueid ();
 
 sub cleanup() {

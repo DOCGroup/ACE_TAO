@@ -10,9 +10,6 @@ use PerlACE::Run_Test;
 
 my($eventType) = "-any"; # your choice of -any -structured or -sequence
 
-my($ACE_ROOT) = $ENV{ACE_ROOT};
-my($TAO_ROOT) = "$ACE_ROOT/TAO";
-
 my($notify_port) = "9889";
 
 #file used to detect notification service startup
@@ -69,7 +66,7 @@ unlink $notify_ior;
 
 
 ##define the processes first
-my($NS) = new PerlACE::Process("$TAO_ROOT/orbsvcs/Notify_Service/Notify_Service");
+my($NS) = new PerlACE::Process("$PerlACE::TAO_ROOT/orbsvcs/Notify_Service/Notify_Service");
 my($CON) = new PerlACE::Process("./Consumer");
 my($SUP) = new PerlACE::Process("./Supplier");
 
