@@ -18,7 +18,7 @@ unlink $esiorfile;
 
 # start Naming Service
 
-$NameService = "$ENV{ACE_ROOT}/TAO/orbsvcs/Naming_Service/Naming_Service";
+$NameService = "$PerlACE::TAO_ROOT/orbsvcs/Naming_Service/Naming_Service";
 $NS = new PerlACE::Process($NameService, "-o $nsiorfile");
 $NS->Spawn();
 if (PerlACE::waitforfile_timed ($nsiorfile, 5) == -1) {
@@ -28,7 +28,7 @@ if (PerlACE::waitforfile_timed ($nsiorfile, 5) == -1) {
 }
 
 # start Event Service
-$EventService = "$ENV{ACE_ROOT}/TAO/orbsvcs/CosEvent_Service/CosEvent_Service";
+$EventService = "$PerlACE::TAO_ROOT/orbsvcs/CosEvent_Service/CosEvent_Service";
 $ES = new PerlACE::Process($EventService, "-ORBSvcConf cosevent.conf "
                                           ."-b -o $esiorfile $arg_ns_ref");
 $ES->Spawn();

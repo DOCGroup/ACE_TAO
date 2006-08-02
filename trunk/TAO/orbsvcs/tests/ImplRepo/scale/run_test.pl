@@ -6,8 +6,6 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 ###############################################################################
-my $ACE_ROOT = $ENV{ACE_ROOT};
-
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 use Cwd;
@@ -18,11 +16,6 @@ use strict;
 
 my $cwd = getcwd();
 
-if (!defined $ACE_ROOT) {
-    print "Error: ACE_ROOT not defined.\n";
-    return 1;
-}
-
 my $imr_activator_ior = PerlACE::LocalFile ("imr_activator.ior");
 my $imr_locator_ior = PerlACE::LocalFile ("imr_locator.ior");
 
@@ -31,9 +24,9 @@ my $refstyle = " -ORBobjrefstyle URL";
 my $persistxml = PerlACE::LocalFile ("persist.xml");
 my $persist = PerlACE::LocalFile ("persist.dat");
 
-my $IMR_LOCATOR = new PerlACE::Process ("$ACE_ROOT/TAO/orbsvcs/ImplRepo_Service/ImplRepo_Service");
-my $IMR_ACTIVATOR = new PerlACE::Process ("$ACE_ROOT/TAO/orbsvcs/ImplRepo_Service/ImR_Activator");
-my $TAO_IMR = new PerlACE::Process("$ACE_ROOT/bin/tao_imr");
+my $IMR_LOCATOR = new PerlACE::Process ("$PerlACE::TAO_ROOT/orbsvcs/ImplRepo_Service/ImplRepo_Service");
+my $IMR_ACTIVATOR = new PerlACE::Process ("$PerlACE::TAO_ROOT/orbsvcs/ImplRepo_Service/ImR_Activator");
+my $TAO_IMR = new PerlACE::Process("$PerlACE::ACE_ROOT/bin/tao_imr");
 
 my $SVR = new PerlACE::Process (PerlACE::LocalFile ("server"));
 my $CLI = new PerlACE::Process (PerlACE::LocalFile ("client"));
