@@ -112,7 +112,8 @@ namespace TAO
 
   private:
 
-    void group_version_context (PortableInterceptor::ClientRequestInfo_ptr ri
+    void group_version_context (PortableInterceptor::ClientRequestInfo_ptr ri,
+                                IOP::TaggedComponent* tp
                                 ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 

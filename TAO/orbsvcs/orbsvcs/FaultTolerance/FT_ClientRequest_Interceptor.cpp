@@ -88,7 +88,22 @@ namespace TAO
                     op.in ()));
       }
 
-    this->group_version_context (ri
+    IOP::TaggedComponent_var tp;
+    ACE_TRY
+      {
+        tp =
+          ri->get_effective_component (IOP::TAG_FT_GROUP
+                                       ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+      }
+    ACE_CATCHANY
+      {
+        return;
+      }
+    ACE_ENDTRY;
+
+    this->group_version_context (ri,
+                                 tp
                                  ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
 
@@ -239,17 +254,13 @@ namespace TAO
 
   void
     FT_ClientRequest_Interceptor::group_version_context (
-    PortableInterceptor::ClientRequestInfo_ptr ri
+    PortableInterceptor::ClientRequestInfo_ptr ri,
+    IOP::TaggedComponent* tp
     ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     ACE_TRY
     {
-      IOP::TaggedComponent_var tp =
-        ri->get_effective_component (IOP::TAG_FT_GROUP
-        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
       // Grab the object group version
       // @@ NOTE: This involves an allocation and a dellocation. This is
       // really bad.
