@@ -144,9 +144,9 @@ CORBA::ValueBase::_tao_marshal (TAO_OutputCDR &strm,
                                 const CORBA::ValueBase *this_,
                                 ptrdiff_t formal_type_id)
 {
-  if ( ! write_special_value (strm, this_))
+  if ( ! _tao_write_special_value (strm, this_))
   {
-    return write_value (strm, this_, formal_type_id);
+    return _tao_write_value (strm, this_, formal_type_id);
   }
 
   return true;
@@ -243,14 +243,12 @@ CORBA::ValueBase::_tao_unmarshal_pre (TAO_InputCDR &strm,
     }
   else if (TAO_OBV_GIOP_Flags::has_single_type_info (valuetag))
     {
-      ACE_CString id;
-      if (! strm.read_string(id))
+      if (! _tao_read_repository_id(strm, ids))
         return false;
-      ids.push_back (id);
     }
   else if (TAO_OBV_GIOP_Flags::has_list_type_info (valuetag))
     {
-      if (! read_repository_ids(strm, ids))
+      if (! _tao_read_repository_id_list(strm, ids))
         return false;
     }
   else if (TAO_OBV_GIOP_Flags::has_no_type_info (valuetag))
@@ -422,7 +420,7 @@ CORBA::ValueBase::_tao_validate_box_type (TAO_InputCDR &strm,
 
 
 CORBA::Boolean
-CORBA::ValueBase::write_special_value(TAO_OutputCDR &strm,
+CORBA::ValueBase::_tao_write_special_value(TAO_OutputCDR &strm,
                                       const CORBA::ValueBase *value)
 {
   // If the 'value' is null then write the null value to the stream.
@@ -442,11 +440,11 @@ CORBA::ValueBase::write_special_value(TAO_OutputCDR &strm,
 
 
 CORBA::Boolean
-CORBA::ValueBase::write_value(TAO_OutputCDR &strm,
+CORBA::ValueBase::_tao_write_value(TAO_OutputCDR &strm,
                               const CORBA::ValueBase * value,
                               ptrdiff_t formal_type_id)
 {
-  if (! value->write_value_header (strm, formal_type_id))
+  if (! value->_tao_write_value_header (strm, formal_type_id))
     return false;
 
   if (! value->_tao_marshal_v (strm))
@@ -457,7 +455,7 @@ CORBA::ValueBase::write_value(TAO_OutputCDR &strm,
 
 
 CORBA::Boolean
-CORBA::ValueBase::write_value_header(TAO_OutputCDR &strm,
+CORBA::ValueBase::_tao_write_value_header(TAO_OutputCDR &strm,
                                      ptrdiff_t formal_type_id) const
 {
 #if defined (TAO_HAS_OPTIMIZED_VALUETYPE_MARSHALING)
@@ -727,7 +725,8 @@ TAO_ChunkInfo::skip_chunks (TAO_InputCDR &strm)
 }
 
 CORBA::Boolean
-CORBA::ValueBase::read_repository_ids(ACE_InputCDR& strm, Repository_Id_List& ids)
+CORBA::ValueBase::_tao_read_repository_id_list (ACE_InputCDR& strm,
+                                                Repository_Id_List& ids)
 {
   CORBA::Long num_ids;
   if (!strm.read_long(num_ids))
@@ -743,12 +742,63 @@ CORBA::ValueBase::read_repository_ids(ACE_InputCDR& strm, Repository_Id_List& id
     //@@TODO: map repository id for indirection
     for (CORBA::Long i = 0; i < num_ids; i ++)
     {
-      ACE_CString id;
-      if (! strm.read_string(id))
+      if (!_tao_read_repository_id (strm,ids))
         return false;
-      ids.push_back (id);
     }
   }
+
+  return true;
+}
+
+CORBA::Boolean
+CORBA::ValueBase::_tao_read_repository_id (ACE_InputCDR& strm,
+                                           Repository_Id_List& ids)
+{
+      ACE_CString id;
+  CORBA::ULong length = 0;
+
+  CORBA::Long offset = 0;
+  size_t buffer_size = strm.length();
+
+  if (!strm.read_ulong (length))
+    {
+        return false;
+    }
+
+  // 'length' may not be the repo id length - it could be the
+  // FFFFFFF indirection marker instead. If it is an indirection marker, we
+  // get the offset following the indirection marker, otherwise we can follow
+  // the same logic using the offset to simply rewind to the start of length
+  // and re-read the length as part of the string
+  if (TAO_OBV_GIOP_Flags::is_indirection_tag (length))
+    {
+      // Read the negative byte offset
+      if (!strm.read_long (offset) || offset >= 0)
+        {
+          return false;
+        }
+      buffer_size = -(offset) + sizeof (CORBA::Long);
+    }
+
+  // Cribbed from tc_demarshal_indirection in Typecode_CDR_Extraction.cpp
+  TAO_InputCDR indir_stream (strm.rd_ptr () + offset - sizeof (CORBA::Long),
+                             buffer_size,
+                             strm.byte_order ());
+
+  if (!indir_stream.good_bit ())
+    {
+      return false;
+  }
+  indir_stream.read_string(id);
+
+  // Since the ID is always read from the indirection cdr we have to skip
+  // the main CDR forward if we were in fact reading from the current
+  // location and not rewinding back some offset.
+
+  if (offset == 0)
+    strm.skip_bytes (length);
+
+  ids.push_back (id);
 
   return true;
 }
