@@ -1,3 +1,31 @@
+Wed Aug  2 14:55:45 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ACE-INSTALL.html:
+
+          Updated the location of the MPC documentation.  It was moved from
+          the MPC root directory to a docs directory.
+
+        * bin/ChangeLogEditor/CVSFileLocator.pm:
+        * bin/ChangeLogEditor/ChangeLogEdit.pm:
+        * bin/ChangeLogEditor/ChangeLogEntry.pm:
+        * bin/ChangeLogEditor/FileLocator.pm:
+        * bin/ChangeLogEditor/SVNFileLocator.pm:
+        * bin/cle.pl:
+
+          Added better support for subversion and it now reports errors from
+          cvs/svn.
+
+        * bin/MakeProjectCreator/README:
+
+          Updated to provide information on anonymously checking out MPC
+          using Subversion.
+
+        * bin/make_release:
+
+          I added "-type gnuace" to the options where the default project
+          type was assumed.  Eventually, MPC will not have a default project
+          type.
+
 Wed Aug  2 13:47:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/ACE-development-process.html:

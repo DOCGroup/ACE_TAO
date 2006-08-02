@@ -30,11 +30,13 @@ sub locate {
   my(@removed)   = ();
   my(@conflicts) = ();
   my(@unknown)   = ();
+  my($error)     = undef;
   my($cvsroot)   = $self->obtainCVSROOT();
-  my($nul)       = ($^O eq 'MSWin32' ? 'nul' : '/dev/null');
+  my($err)       = $self->tmpnam('cle_cvs.err');
 
-  if (open($fh, 'cvs -q ' . (defined $cvsroot ? "-d $cvsroot " : '') .
-                "-n update @dirs 2> $nul |")) {
+  if (open($fh, 'cvs -f -q ' . ($^O eq 'MSWin32' ? '-N ' : '') .
+                (defined $cvsroot ? "-d $cvsroot " : '') .
+                "-n update @dirs 2> $err |")) {
     while(<$fh>) {
       my($line) = $_;
       if ($line =~ /^[AM]\s+(.*)/) {
@@ -46,13 +48,19 @@ sub locate {
       elsif ($line =~ /^[C]\s+(.*)/) {
         push(@conflicts, $1);
       }
-      elsif ($line =~ /^[\?]\s+(.*)/) {
+      elsif ($line =~ /^[\?]\s+(.*)/ && index($line, $err) == -1) {
         push(@unknown, $1);
       }
     }
     close($fh);
+
+    $error = $self->process_errors($err);
   }
-  return \@modified, \@removed, \@conflicts, \@unknown;
+  else {
+    $error = "Unable to run cvs with error redirection.";
+  }
+
+  return \@modified, \@removed, \@conflicts, \@unknown, $error;
 }
 
 
