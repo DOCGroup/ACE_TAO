@@ -9,7 +9,6 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # full path to perl, as long as it is in the user's PATH.
 # Taken from perlrun man page.
 
-# Do not use environment variables here since not all platforms use ACE_ROOT
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 use English;
@@ -106,7 +105,7 @@ $CL->Arguments ($clflags . $clnsflags . $quietflag . " -x ");
 
 run_test_helper ();
 
-if ($OSNAME ne "MSWin32") {
+if ($OSNAME ne "MSWin32" && $OSNAME ne "VMS") {
     print STDERR "============================================================\n";
     print STDERR "Running IDL_Cubit with the UIOP protocol.\n\n";
 
@@ -115,6 +114,9 @@ if ($OSNAME ne "MSWin32") {
 
     run_test_helper ();
 
+}
+
+if ($OSNAME ne "MSWin32") {
     print STDERR "============================================================\n";
     print STDERR "Running IDL_Cubit with the SHMIOP protocol.\n\n";
 
