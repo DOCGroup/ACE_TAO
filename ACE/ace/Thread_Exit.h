@@ -55,7 +55,7 @@ public:
   /// Singleton access point.
   static ACE_Thread_Exit *instance (void);
 
-  /// Cleanup method, used by the <ACE_Object_Manager> to destroy the
+  /// Cleanup method, used by the ACE_Object_Manager to destroy the
   /// singleton.
   static void cleanup (void *instance);
 

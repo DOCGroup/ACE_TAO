@@ -35,7 +35,7 @@ class ACE_Time_Value;
 /**
  * @class ACE_Null_Mutex
  *
- * @brief Implement a do nothing <ACE_Mutex>, i.e., all the methods are
+ * @brief Implement a do nothing ACE_Mutex, i.e., all the methods are
  * no ops.
  */
 class ACE_Null_Mutex
