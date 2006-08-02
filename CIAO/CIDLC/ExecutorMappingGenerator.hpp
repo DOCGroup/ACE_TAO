@@ -17,9 +17,7 @@
 class ExecutorMappingGenerator
 {
 public:
-
-  //@@ should be static?
-  void
+  static void
   options (CL::Description& d);
 
   //@@ maybe I should introduce constant and non-constant

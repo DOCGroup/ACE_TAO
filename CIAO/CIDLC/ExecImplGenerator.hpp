@@ -14,10 +14,10 @@
 class ExecImplGenerator
 {
 public:
-  ExecImplGenerator (CommandLine const& cl);
-
-  void
+  static void
   options (CL::Description& d);
+
+  ExecImplGenerator (CommandLine const& cl);
 
   void
   generate (CCF::CIDL::SemanticGraph::TranslationUnit&,

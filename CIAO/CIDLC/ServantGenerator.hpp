@@ -17,10 +17,10 @@
 class ServantGenerator
 {
 public:
-  ServantGenerator (CommandLine const& cl);
-
-  void
+  static void
   options (CL::Description& d);
+
+  ServantGenerator (CommandLine const& cl);
 
   void
   generate (CCF::CIDL::SemanticGraph::TranslationUnit&,

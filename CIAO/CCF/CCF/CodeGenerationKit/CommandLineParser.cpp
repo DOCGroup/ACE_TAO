@@ -3,57 +3,118 @@
 // cvs-id    : $Id$
 
 #include "CCF/CodeGenerationKit/CommandLineParser.hpp"
-#include "CCF/CodeGenerationKit/CommandLineGrammar.hpp"
 
-#include <vector>
 #include <string>
 #include <iostream>
 
 using std::cerr;
 using std::endl;
 
-bool parse (int argc, char* argv[], CommandLine& cl) throw ()
+bool
+parse (int argc, char* argv[], CL::Description const& cld, CommandLine& cl)
 {
-  typedef
-  std::vector<std::string>
-  Argv;
+  cl.command = argv[0];
 
-  Argv v;
+  bool seen_double_dash (false);
 
-  for (int i = 0; i < argc; i++)
+  for (int i (1); i < argc; ++i)
   {
-    v.push_back (argv[i]);
-  }
+    std::string arg (argv[i]);
 
-  Argv::iterator first = v.begin ();
-  Argv::iterator last  = v.end ();
-
-  scanner<Argv::iterator, scanner_policies <> > scan(first, last);
-
-  CLineGrammar g (cl);
-
-  match<nil_t> hit = g.parse(scan);
-
-  bool result = static_cast<std::size_t>(hit.length()) == v.size ();
-
-  // some semantic analisys
-  if (!cl.separator)
-  {
-    CommandLine::Options::reverse_iterator r = cl.options.rbegin ();
-
-    if (r != cl.options.rend () &&
-        r->value_ != "" &&
-        r->type_ == CommandLine::Option::COMPOSITE)
+    if (seen_double_dash)
     {
-
-      cerr << "command line: assuming <" << r->value_
-           << "> to be a value of option <" << r->name_
-           << "> and not the first argument" << endl;
-
-      cerr  << "command line: write ... --" << r->name_ << " -- "
-            << r->value_ << " ... to indicate otherwise" << endl;
+      cl.arguments.push_back (arg);
+      continue;
     }
+
+    if (arg == "--")
+    {
+      seen_double_dash = true;
+      continue;
+    }
+
+    if (arg.length () > 0 && arg[0] == '-')
+    {
+      if (arg.length () > 1 && arg[1] == '-')
+      {
+        // Double-dash (long) option.
+        //
+
+        std::string op (arg, 2);
+
+        if (CL::OptionDescription const* d = cld.find_option (op))
+        {
+          if (d->type () == CL::OptionType::value)
+          {
+            if (++i >= argc)
+            {
+              cerr << argv[0] << ": argument expected for option '--"
+                   << op << "'" << endl;
+              return false;
+            }
+
+            // cerr << "--" << op << ": " << argv[i] << endl;
+
+            cl.options.push_back (CommandLine::Option (op, argv[i]));
+          }
+          else
+            cl.options.push_back (CommandLine::Option (op));
+
+          continue;
+        }
+      }
+      else
+      {
+        // Single-dash (short) option. We support two formats: '-D foo' and
+        // -Dfoo.
+        //
+        std::string op (arg, 1, 1);
+
+        if (CL::OptionDescription const* d = cld.find_option (op))
+        {
+          if (d->type () == CL::OptionType::value)
+          {
+            std::string value;
+
+            if (arg.length () > 2)
+            {
+              value.assign (arg, 2, arg.size () - 2);
+            }
+            else
+            {
+              if (++i >= argc)
+              {
+                cerr << argv[0] << ": argument expected for option '-"
+                     << op << "'" << endl;
+                return false;
+              }
+
+              value = argv[i];
+            }
+
+            // cerr << "-" << op << ": " << value << endl;
+
+            cl.options.push_back (CommandLine::Option (op, value));
+          }
+          else
+          {
+            if (arg.length () > 2)
+            {
+              cerr << argv[0] << ": argument not expected for option '-"
+                   << op << "' in '" << arg << "'" << endl;
+              return false;
+            }
+
+            cl.options.push_back (CommandLine::Option (op));
+          }
+
+          continue;
+        }
+      }
+    }
+
+    cl.arguments.push_back (arg);
   }
 
-  return result;
+  return true;
 }

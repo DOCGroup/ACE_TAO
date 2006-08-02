@@ -14,9 +14,9 @@
 class CommandLine
 {
 public:
-
-  CommandLine () throw () : separator (false) {}
-
+  CommandLine ()
+  {
+  }
 
   // Option constrain checking
 public:
@@ -71,9 +71,9 @@ public:
       options.end (),
       OptionNamePredicat (name));
 
-    if (i != options.end () && !(i->value_.empty ()))
+    if (i != options.end () && !(i->value ().empty ()))
     {
-      return i->value_;
+      return i->value ();
     }
     else
     {
@@ -92,9 +92,9 @@ public:
       options.end (),
       OptionNamePredicat (name));
 
-    if (i != options.end () && !(i->value_.empty ()))
+    if (i != options.end () && !(i->value ().empty ()))
     {
-      return i->value_;
+      return i->value ();
     }
     else
     {
@@ -123,34 +123,31 @@ public:
 
   struct Option
   {
-    enum OptionType
+    Option (std::string const& name)
+        : name_ (name)
     {
-      EQUATIONAL,
-      COMPOSITE
-    };
+    }
 
-    Option (OptionType type,
-            std::string const& name,
-            std::string const& value) throw ()
-        : type_ (type),
-          name_ (name),
+    Option (std::string const& name,
+            std::string const& value)
+        : name_ (name),
           value_ (value)
     {
     }
 
-    std::string
+    std::string const&
     name () const
     {
       return name_;
     }
 
-    std::string
+    std::string const&
     value () const
     {
       return value_;
     }
 
-    OptionType  type_;
+  private:
     std::string name_;
     std::string value_;
   };
@@ -210,7 +207,7 @@ public:
 
     bool operator ()(Option const& option) throw ()
     {
-      return name_ == option.name_;
+      return name_ == option.name ();
     }
 
   private:
@@ -220,8 +217,6 @@ public:
   std::string command;
   Options     options;
   Arguments   arguments;
-
-  bool        separator;
 };
 
 #endif  // COMMAND_LINE_HPP
