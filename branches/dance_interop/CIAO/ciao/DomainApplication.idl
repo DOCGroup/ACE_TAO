@@ -1,0 +1,15 @@
+// $Id$
+#ifndef DOMAINAPPLICATION_IDL
+#define DOMAINAPPLICATION_IDL
+
+#include "Deployment.idl"
+
+module Deployment {
+  interface DomainApplication : Application
+  {
+  };
+  
+  typedef sequence < DomainApplication > DomainApplications;
+};
+
+#endif /* DOMAINAPPLICATION_IDL */

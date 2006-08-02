@@ -1,0 +1,16 @@
+// $Id$
+
+project (DomainApplication) : ciao_deployment_svnt {
+   sharedname = DomainApplication
+   
+   dynamicflags = DOMAINAPPLICATION_BUILD_DLL
+
+   Source_Files {
+     DomainApplication_Impl.cpp
+   }
+
+   Header_Files {
+     DomainApplication_Impl.h
+     DomainApplication_Export.h
+   }
+}
