@@ -1,3 +1,26 @@
+Wed Aug  2 15:11:08 UTC 2006  Simon McQueen  <sm@prismtech.com>
+
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.h:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.cpp:
+
+          Do not transmit a FT_REQUEST service context if the destination is
+          not an IOGR (i.e. does not contain a IOP::TAG_FT_GROUP component).
+
+        * orbsvcs/tests/Bug_2615_Regression/Bug_2615_Regression.mpc:
+        * orbsvcs/tests/Bug_2615_Regression/Hello.h:
+        * orbsvcs/tests/Bug_2615_Regression/Hello.cpp:
+        * orbsvcs/tests/Bug_2615_Regression/README:
+        * orbsvcs/tests/Bug_2615_Regression/ServerORBInitializer2.h:
+        * orbsvcs/tests/Bug_2615_Regression/ServerORBInitializer2.cpp:
+        * orbsvcs/tests/Bug_2615_Regression/ServerRequest_Interceptor2.h:
+        * orbsvcs/tests/Bug_2615_Regression/ServerRequest_Interceptor2.cpp:
+        * orbsvcs/tests/Bug_2615_Regression/Test.idl:
+        * orbsvcs/tests/Bug_2615_Regression/client.cpp:
+        * orbsvcs/tests/Bug_2615_Regression/run_test.pl:
+        * orbsvcs/tests/Bug_2615_Regression/server.cpp:
+
+          Regression test for the above.
+
 Wed Aug  2 13:03:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/DynamicInterface/DII_Invocation_Adapter.{h,cpp}:
