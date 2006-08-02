@@ -47,16 +47,20 @@ bug report</a>.
   <li>Implement the change in your workspace(s).
   <li>Test the change sufficiently to demonstrate that it both does
     what is intended, and doesn't break anything.  The test may be
-    as simple as building and running the ACE+TAO tests on one platform.
+    as simple as building and running the ACE+TAO tests on at least two 
+    platforms.
     Or as complicated as rebuilding and test all of ACE+TAO on
     all platforms that we have.
   <li>Create an appropriate ChangeLog entry.
-  <li>Commit the change using a ChangeLogTag commit message.
+  <li>Commit the change using a ChangeLogTag commit message only when 
+    you are available the next 3 days to resolve any issues. 
+    If you aren't available, hold your commit until you are available
   <li>Respond to the requester of the change, if any.  Please do this
     <em>after</em> committing your change.
   <li>Make sure that the requester is listed in the THANKS file.
   <li>Update the bug report to indicate resolution.
-  <li>Monitor the next round of build/tests for problems with your change.
+  <li>Monitor the next round of build/tests for problems with your change. 
+   Because there are slow systems it can take up to 4 days to get all builds done.
   <li>Respond immediately to reports of problems with your changes.
 </ol>
 
@@ -100,7 +104,7 @@ next kits are clean, <em>i.e.</em>, it builds and runs cleanly on all
 platforms.  The status of all ACE+TAO builds is tracked automatically
 <A HREF="http://tao.doc.wustl.edu/scoreboard/"</A>online</A>.<p>
 
-A comprehensive summary of the build czar's role is available <A HREF="http://www.cs.wustl.edu/~bugzilla/">online</A>.
+A comprehensive summary of the build czar's role is available <A HREF="bczar/bczar.html">here</A>.
 This role is briefly summarized below:<p>
 <ul>
   <li>Remind people to check build logs.  Developers are still
