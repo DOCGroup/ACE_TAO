@@ -111,6 +111,7 @@ TAO/orbsvcs/tests/ImplRepo/run_test.pl perclient: !MINIMUM !ACE_FOR_TAO
 TAO/orbsvcs/tests/ImplRepo/NameService/run_test.pl: !MINIMUM !ACE_FOR_TAO
 TAO/orbsvcs/tests/ImplRepo/locked/run_test.pl: !MINIMUM !DISABLE_ToFix_LynxOS_x86 !DISABLE_ToFix_LynxOS_PPC !ACE_FOR_TAO
 TAO/orbsvcs/tests/ImplRepo/scale/run_test.pl -servers 5 -objects 5: !MINIMUM !ACE_FOR_TAO
+TAO/orbsvcs/tests/ImplRepo/Bug_2604_Regression/run_test.pl: !MINIMUM !NO_EXCEPTIONS !ACE_FOR_TAO
 TAO/orbsvcs/examples/ImR/Combined_Service/run_test.pl: !MINIMUM !STATIC !ST !ACE_FOR_TAO
 TAO/orbsvcs/examples/CosEC/TypedSimple/run_test.pl: !MINIMUM !NO_IFR !ACE_FOR_TAO
 TAO/orbsvcs/tests/CosEvent/Timeout/run_test.pl: !MINIMUM !ST !NO_MESSAGING !ACE_FOR_TAO
