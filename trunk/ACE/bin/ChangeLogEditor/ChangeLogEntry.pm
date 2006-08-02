@@ -87,7 +87,8 @@ sub create {
   my($modif,
      $remov,
      $confl,
-     $unknown) = $fl->locate(@dirs);
+     $unknown,
+     $error) = $fl->locate(@dirs);
   my($entry) = scalar(gmtime());
 
   if (defined $$confl[0]) {
@@ -137,7 +138,7 @@ sub create {
     $entry = undef;
   }
 
-  return $entry, $unknown;
+  return $entry, $unknown, $error;
 }
 
 
