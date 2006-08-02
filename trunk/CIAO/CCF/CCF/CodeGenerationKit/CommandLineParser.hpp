@@ -6,7 +6,9 @@
 #define COMMAND_LINE_PARSER_H
 
 #include "CCF/CodeGenerationKit/CommandLine.hpp"
+#include "CCF/CodeGenerationKit/CommandLineDescriptor.hpp"
 
-bool parse (int argc, char* argv[], CommandLine& cl) throw ();
+bool
+parse (int argc, char* argv[], CL::Description const&, CommandLine&);
 
 #endif  // COMMAND_LINE_PARSER_H

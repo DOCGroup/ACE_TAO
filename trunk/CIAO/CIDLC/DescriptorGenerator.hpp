@@ -13,7 +13,7 @@
 class DescriptorGenerator
 {
 public:
-  void
+  static void
   options (CL::Description& d);
 
   void

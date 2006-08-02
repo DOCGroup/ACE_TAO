@@ -43,50 +43,54 @@ void ServantGenerator::options (CL::Description& d)
                   "suffix",
                   "Use provided suffix instead of default \'_svnt.h\' "
                   "when constructing name of servant file.",
-                  true));
+                  CL::OptionType::value));
 
   d.add_option (CL::OptionDescription (
                   "svnt-hdr-file-regex",
                   "regex",
                   "Use provided regular expression when constructing "
                   "name of servant file.",
-                  true));
+                  CL::OptionType::value));
+
   d.add_option (CL::OptionDescription (
                   "svnt-src-file-suffix",
                   "suffix",
                   "Use provided suffix instead of default \'_svnt.cpp\' "
                   "when constructing name of servant file.",
-                  true));
+                  CL::OptionType::value));
 
   d.add_option (CL::OptionDescription (
                   "svnt-src-file-regex",
                   "regex",
                   "Use provided regular expression when constructing "
                   "name of servant file.",
-                  true));
+                  CL::OptionType::value));
+
   d.add_option (CL::OptionDescription (
                   "svnt-export-macro",
                   "macro",
                   "Replace default servant DLL export macro "
                   "with provided ,acro.",
-                  true));
+                  CL::OptionType::value));
+
   d.add_option (CL::OptionDescription (
                   "svnt-export-include",
                   "file",
                   "Replace default servant export include file "
                   "with provided file.",
-                  true));
+                  CL::OptionType::value));
+
   d.add_option (CL::OptionDescription (
                   "suppress-register-factory",
-                  "",
                   "Suppress generation of code to register eventtype "
                   "factories for event sinks.",
-                  true));
+                  CL::OptionType::flag));
+
   d.add_option (CL::OptionDescription (
                   "custom-container",
                   "type",
                   "Generate code for custom container of the provided type.",
-                  true));
+                  CL::OptionType::value));
 }
 
 
