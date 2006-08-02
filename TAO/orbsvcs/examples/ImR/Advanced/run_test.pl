@@ -137,7 +137,7 @@ sub start_imr
         # Start the IMR Service
         unlink "implrepo.ior";
         $IMPL = new PerlACE::Process(
-                    "$ENV{ACE_ROOT}/TAO/orbsvcs/ImplRepo_Service/ImplRepo_Service", 
+                    "$PerlACE::TAO_ROOT/orbsvcs/ImplRepo_Service/ImplRepo_Service", 
                     $IMR_CMD);
         $IMPL->Spawn();
         PerlACE::waitforfile_timed("implrepo.ior", 10);
@@ -156,7 +156,7 @@ sub kill_imr
               $tool_params = "$tool_params -a";
             }
 
-            my $TOOL = new PerlACE::Process("$ENV{ACE_ROOT}/bin/tao_imr", $tool_params);
+            my $TOOL = new PerlACE::Process("$PerlACE::ACE_ROOT/bin/tao_imr", $tool_params);
             $TOOL->IgnoreExeSubDir(1);
             $TOOL->SpawnWaitKill(5);
             
@@ -220,7 +220,7 @@ sub start_activator
         # Start the Activator
         unlink "activator.ior";
         $ACT = new PerlACE::Process(
-                "$ENV{ACE_ROOT}/TAO/orbsvcs/ImplRepo_Service/ImR_Activator", 
+                "$PerlACE::TAO_ROOT/orbsvcs/ImplRepo_Service/ImR_Activator", 
                 $ACT_CMD);
         $ACT->Spawn();
         PerlACE::waitforfile_timed("activator.ior", 5);
