@@ -76,12 +76,6 @@ namespace TAO
      * is an optimization which helps us to avoid calling strlen ()
      * while creating a message format.
      *
-     * @param cpb The collocation proxy broker for the target if one
-     * exists.
-     *
-     * @param type The operation type which could be a oneway or two
-     * way operation. this information is availbe in the IDL file.
-     *
      * @param mode Invocation mode. This information is also available
      * in the IDL file and in the generated code.
      */
@@ -92,7 +86,7 @@ namespace TAO
                             size_t op_len,
                             CORBA::ExceptionList *exception,
                             CORBA::Request *r,
-                            Invocation_Mode m = TAO_DII_INVOCATION);
+                            Invocation_Mode mode = TAO_DII_INVOCATION);
 
 
     virtual ~DII_Invocation_Adapter (void) {}
