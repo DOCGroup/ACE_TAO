@@ -226,19 +226,27 @@ namespace CORBA
 
   private:
     /// Write some special values such as null value or indirection value.
-    static CORBA::Boolean write_special_value(TAO_OutputCDR &strm, const CORBA::ValueBase * value);
+    static CORBA::Boolean _tao_write_special_value(TAO_OutputCDR &strm,
+                                              const CORBA::ValueBase * value);
     /// Write whole value.
-    static CORBA::Boolean write_value(TAO_OutputCDR &strm,
+    static CORBA::Boolean _tao_write_value(TAO_OutputCDR &strm,
                                       const CORBA::ValueBase * value,
                                       ptrdiff_t formal_type_id);
 
     /// Write the header of the value which includes the valuetag, number of
     /// repository ids and list of repository ids.
-    CORBA::Boolean write_value_header(TAO_OutputCDR &strm,
+    CORBA::Boolean _tao_write_value_header(TAO_OutputCDR &strm,
                                       ptrdiff_t formal_type_id) const;
 
-    /// Read the repository ids from the CDR input stream.
-    static CORBA::Boolean read_repository_ids(ACE_InputCDR& strm, Repository_Id_List& ids);
+    /// Read a single repository id from the CDR input stream,
+    /// accounting for indirection.
+    static CORBA::Boolean _tao_read_repository_id (ACE_InputCDR& strm,
+                                                    Repository_Id_List& ids);
+
+    ///  Read a list of repository ids from the CDR input stream,
+    /// accounting for indirection
+    static CORBA::Boolean _tao_read_repository_id_list (ACE_InputCDR& strm,
+                                                    Repository_Id_List& ids);
 
   private:
     ValueBase & operator= (const ValueBase &);
