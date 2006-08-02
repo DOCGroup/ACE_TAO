@@ -1,3 +1,9 @@
+Wed Aug  2 11:16:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/Download.html:
+          Also put the download page from deuce.doc under svn control
+          so that we can update it for the svn conversion
+
 Wed Aug  2 11:07:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/bczar/bczar.html:
