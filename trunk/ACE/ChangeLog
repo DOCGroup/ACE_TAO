@@ -1,3 +1,14 @@
+Wed Aug  2 21:27:59 UTC 2006  Adam Mitz  <mitza@ociweb.com>
+
+        * bin/PerlACE/Run_Test.pm:
+
+          Added two new packaged-scoped variables, $PerlACE::ACE_ROOT and
+          $PerlACE::TAO_ROOT.  $PerlACE::TAO_ROOT is set to the TAO_ROOT
+          environment variable, if one exists.  If not it is set to
+          $ACE_ROOT/TAO.  $PerlACE::ACE_ROOT is the same as the ACE_ROOT
+          envrionment variable so it's just there for convenience and for
+          symmetry.
+
 Wed Aug  2 20:19:04 UTC 2006  Adam Mitz  <mitza@ociweb.com>
 
         * bin/tao_other_tests.lst:
