@@ -11,6 +11,14 @@ package PerlACE;
 use File::Spec;
 use Cwd;
 
+$PerlACE::ACE_ROOT = $ENV{ACE_ROOT};
+$PerlACE::TAO_ROOT;
+if(exists $ENV{TAO_ROOT}) {
+    $PerlACE::TAO_ROOT = $ENV{TAO_ROOT};
+} else {
+    $PerlACE::TAO_ROOT = "$PerlACE::ACE_ROOT/TAO";
+}
+
 my $config = new PerlACE::ConfigList;
 $PerlACE::VxWorks_Test = $config->check_config("VxWorks");
 
