@@ -810,7 +810,7 @@ sub generate_makefiles () {
     my $ce_option = '-name_modifier *_WinCE -features "uses_wchar=1,wince=1" '.$tmp_ce;
 
     &ex ("cd ACE_wrappers; \
-          bin/mwc.pl $exclude_option $mpc_option; \
+          bin/mwc.pl -type gnuace $exclude_option $mpc_option; \
           find ./ -name 'GNUmake*' | /usr/bin/xargs chmod 0644");
 
     &ex ("cd ACE_wrappers; \

@@ -45,7 +45,7 @@ sub edit {
     my($creator) = new ChangeLogEntry($self->{'name'},
                                       $self->{'email'});
     my($entry) = '';
-    ($entry, $unknown) = $creator->create(@dirs);
+    ($entry, $unknown, $error) = $creator->create(@dirs);
     if (defined $entry) {
       if ($entry =~ /^ERROR:/) {
         $error = $entry;
@@ -95,8 +95,9 @@ sub edit {
       }
     }
     else {
-      $error = "Either there are no modified/removed files files or " .
-               "there is a revision\ncontrol system problem.";
+      $error = (defined $error ? "There is a revision control system " .
+                                 "problem:\n$error" :
+                                 'There are no modified/removed files.');
     }
   }
   else {
