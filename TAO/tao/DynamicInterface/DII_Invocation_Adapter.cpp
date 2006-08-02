@@ -29,7 +29,7 @@ namespace TAO
                                                   size_t op_len,
                                                   CORBA::ExceptionList *excp,
                                                   CORBA::Request *r,
-                                                  Invocation_Mode m)
+                                                  Invocation_Mode mode)
 
     : Invocation_Adapter (target,
                           args,
@@ -38,7 +38,7 @@ namespace TAO
                           op_len,
                           0, // Collocation Proxy broker pointer
                           TAO_TWOWAY_INVOCATION,
-                          m)
+                          mode)
       , exception_list_ (excp)
       , request_ (r)
   {
