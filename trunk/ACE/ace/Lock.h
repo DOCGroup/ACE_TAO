@@ -32,9 +32,9 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * mechanisms.
  *
  * This class is typically used in conjunction with the
- * <ACE_Lock_Adapter> in order to provide a polymorphic
+ * ACE_Lock_Adapter in order to provide a polymorphic
  * interface to the ACE synchronization mechanisms (e.g.,
- * <ACE_Mutex>, <ACE_Semaphore>, <ACE_RW_Mutex>, etc).  Note that
+ * ACE_Mutex, ACE_Semaphore, ACE_RW_Mutex, etc).  Note that
  * the reason that all of ACE doesn't use polymorphic locks is
  * that (1) they add ~20% extra overhead for virtual function
  * calls and (2) objects with virtual functions can't be placed

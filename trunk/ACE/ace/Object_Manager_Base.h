@@ -192,7 +192,7 @@ public:
 public:
   // = Applications shouldn't use these so they're hidden here.
 
-  // They're public so that the <ACE_Object_Manager> can be
+  // They're public so that the ACE_Object_Manager can be
   // constructed/destructed in <main> with
   // <ACE_HAS_NONSTATIC_OBJECT_MANAGER>.
   /// Constructor.

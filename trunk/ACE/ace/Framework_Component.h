@@ -8,7 +8,7 @@
  *
  * A prototype mechanism that allows framework components, singletons
  * such as ACE_Reactor, ACE_Proactor, etc, to be registered with a
- * central repository managed by the <ACE_Object_Manager> or
+ * central repository managed by the ACE_Object_Manager or
  * ACE_Service_Config that will handle destruction.
  *
  * This technique obviates changing ACE_Object_Manager and

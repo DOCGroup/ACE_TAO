@@ -58,8 +58,8 @@ public:
   ~ACE_Pair_Caching_Utility (void);
 
   /**
-   * Purge entries from the <container>. The Cleanup_Strategy will do the actual
-   * job of cleanup once the entries to be cleaned up are decided.
+   * Purge entries from the @a container. The Cleanup_Strategy will do the
+   * actual job of cleanup once the entries to be cleaned up are decided.
    */
   int clear_cache (CONTAINER &container,
                    double purge_percent);

@@ -127,7 +127,7 @@ public:
   /// Called when a <handle_*()> method returns -1 or when the
   /// <remove_handler> method is called on an ACE_Reactor.  The
   /// <close_mask> indicates which event has triggered the
-  /// <handle_close> method callback on a particular <handle>.
+  /// <handle_close> method callback on a particular @a handle.
   virtual int handle_close (ACE_HANDLE handle,
                             ACE_Reactor_Mask close_mask);
 
@@ -178,7 +178,7 @@ public:
    * work around Win32 limitations that don't allow us to <select> on
    * non-sockets (such as ACE_STDIN).  This is commonly used in
    * situations where the Reactor is used to demultiplex read events
-   * on ACE_STDIN on UNIX.  Note that <event_handler> must be a
+   * on ACE_STDIN on UNIX.  Note that @a event_handler must be a
    * subclass of ACE_Event_Handler.  If the <get_handle> method of
    * this event handler returns <ACE_INVALID_HANDLE> we default to
    * reading from ACE_STDIN.

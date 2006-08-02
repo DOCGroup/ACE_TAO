@@ -141,7 +141,7 @@ ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::handle_input (ACE_HANDLE)
   ACE_TRACE ("ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::handle_input");
 
   SVC_HANDLER *svc_handler = 0;
-  int retval = this->close (svc_handler) ? 0 : -1;
+  int const retval = this->close (svc_handler) ? 0 : -1;
 
   // Close Svc_Handler.
   if (svc_handler != 0)
@@ -159,7 +159,7 @@ ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::handle_output (ACE_HANDLE handle)
   // Grab the connector ref before smashing ourselves in close().
   ACE_Connector_Base<SVC_HANDLER> &connector = this->connector_;
   SVC_HANDLER *svc_handler = 0;
-  int retval = this->close (svc_handler) ? 0 : -1;
+  int const retval = this->close (svc_handler) ? 0 : -1;
 
   if (svc_handler != 0)
     connector.initialize_svc_handler (handle, svc_handler);
@@ -370,7 +370,7 @@ ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::connect_i
     return -1;
 
   ACE_Time_Value *timeout = 0;
-  int use_reactor = synch_options[ACE_Synch_Options::USE_REACTOR];
+  int const use_reactor = synch_options[ACE_Synch_Options::USE_REACTOR];
 
   if (use_reactor)
     timeout = const_cast<ACE_Time_Value *> (&ACE_Time_Value::zero);

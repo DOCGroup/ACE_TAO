@@ -30,8 +30,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * @brief This is an adapter that allows applications to transparently
  * combine the <ACE_Lock> abstract base class (which contains
  * pure virtual methods) with any of the other concrete ACE
- * synchronization classes (e.g., <ACE_Mutex>, <ACE_Semaphore>,
- * <ACE_RW_Mutex>, etc.).
+ * synchronization classes (e.g., ACE_Mutex, ACE_Semaphore,
+ * ACE_RW_Mutex, etc.).
  *
  * This class uses a form of the Adapter pattern.
  */

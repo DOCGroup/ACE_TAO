@@ -1,3 +1,23 @@
+Wed Aug  2 18:16:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Connector.cpp:
+          Const improvements
+
+        * ace/Caching_Utility_T.h:
+        * ace/config-lite.h:
+        * ace/Event_Handler.h:
+        * ace/Framework_Component.h:
+        * ace/Lock.h:
+        * ace/Lock_Adapter_T.h:
+        * ace/Null_Mutex.h:
+        * ace/Object_Manager.h:
+        * ace/Object_Manager_Base.h:
+        * ace/Proactor.cpp:
+        * ace/Process_Manager.h:
+        * ace/Semaphore.h:
+        * ace/Thread_Exit.h:
+          Doxygen improvements
+
 Wed Aug  2 15:50:48 UTC 2006  Simon McQueen  <sm@prismtech.com>
 
         * bin/tao_other_tests.lst:
