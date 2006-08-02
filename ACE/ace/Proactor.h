@@ -202,7 +202,7 @@ public:
   /// Delete the dynamically allocated Singleton.
   static void close_singleton (void);
 
-  /// Cleanup method, used by the <ACE_Object_Manager> to destroy the
+  /// Cleanup method, used by the ACE_Object_Manager to destroy the
   /// singleton.
   static void cleanup (void *instance, void *arg);
 

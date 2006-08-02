@@ -78,7 +78,7 @@ template <class T> class ACE_Cleanup_Adapter;
  *
  * @brief Manager for ACE library services and singleton cleanup.
  *
- * The <ACE_Object_Manager> manages cleanup of objects, typically
+ * The ACE_Object_Manager manages cleanup of objects, typically
  * singletons, at program termination.  In addition to managing
  * the cleanup of the ACE library, it provides an interface for
  * application to register objects to be cleaned up.
@@ -90,23 +90,23 @@ template <class T> class ACE_Cleanup_Adapter;
  * for cleanup, e.g., destruction.  The order of such cleanup
  * calls is in the reverse order of registration, i.e., that
  * last object/array to register gets cleaned up first.
- * The <ACE_Object_Manager> API includes <ACE_Managed_Object>.  That
+ * The ACE_Object_Manager API includes ACE_Managed_Object.  That
  * class is contained in a separate file because it is a
  * template class, and some compilers require that template and
  * non-template class definitions appear in separate files.
  * Please see ace/Managed_Object.h for a description of that
- * part of the API.  In summary, <ACE_Managed_Object> provides two
- * adapters, the <ACE_Cleanup_Adapter> and <ACE_Managed_Object>
+ * part of the API.  In summary, ACE_Managed_Object provides two
+ * adapters, the ACE_Cleanup_Adapter and ACE_Managed_Object
  * template classes for adapting objects of any type to be
- * easily managed by the <ACE_Object_Manager>.  There are several
+ * easily managed by the ACE_Object_Manager.  There are several
  * mechanisms for adapting objects and arrays for cleanup at
  * program termination, in roughly increasing order of ease-of-use:
- * 1) Derive the object's class from <ACE_Cleanup>.
- * 2) Allow the <ACE_Object_Manager> to both dynamically allocate
+ * 1) Derive the object's class from ACE_Cleanup.
+ * 2) Allow the ACE_Object_Manager to both dynamically allocate
  * and deallocate the object.
  * 3) Provide an <ACE_CLEANUP_FUNC> cleanup hook for the object or
  * array.
- * 4) Allow the <ACE_Object_Manager> to both preallocate the object
+ * 4) Allow the ACE_Object_Manager to both preallocate the object
  * or array, either statically in global data or dynamically on
  * the heap, when its singleton instance is construction.
  *
@@ -121,7 +121,7 @@ template <class T> class ACE_Cleanup_Adapter;
  * cleanup activity at program termination.
  * 2) ACE_Object_Manager::at_exit (ACE_Cleanup *object,
  * void *param = 0);
- * can be used to register an <ACE_Cleanup> object
+ * can be used to register an ACE_Cleanup object
  * for any cleanup activity at program termination.
  * The final mechanism is not general purpose, but can only
  * be used to allocate objects and arrays at program startup:
@@ -133,7 +133,7 @@ template <class T> class ACE_Cleanup_Adapter;
  * can only be used to allocate objects at program startup,
  * either in global data or on the heap (selected at compile
  * time).  These are intended to replace static locks, etc.
- * Instead of creating a static <ACE_Object_Manager> instance, one
+ * Instead of creating a static ACE_Object_Manager instance, one
  * can alternatively be created on the stack of the main program
  * thread.  It is created just after entry to ::main (int, char
  * *[]), and before any existing code in that function is
@@ -149,10 +149,10 @@ template <class T> class ACE_Cleanup_Adapter;
  * Note that the ACE_Object_Manager _must_ be created before
  * any threads are spawned by the program.
  * If ACE_HAS_NONSTATIC_OBJECT_MANAGER is not #defined, the ACE
- * library creates a static, singleton <ACE_Object_Manager> instance.
+ * library creates a static, singleton ACE_Object_Manager instance.
  * The instance is placed in global program data, and constructed
  * via a static object constructor.  If ACE_HAS_NONSTATIC_OBJECT_MANAGER
- * is #defined, the <ACE_Object_Manager> instance is created on the stack
+ * is #defined, the ACE_Object_Manager instance is created on the stack
  * of the main program thread, as noted above.
  *
  * With ACE_HAS_NONSTATIC_OBJECT_MANAGER enabled, the ACE
@@ -168,7 +168,7 @@ template <class T> class ACE_Cleanup_Adapter;
  * NOTE on the use of <::exit> -- <::exit> does not destroy
  * automatic objects.  Therefore, if
  * ACE_HAS_NONSTATIC_OBJECT_MANAGER is enabled, the
- * <ACE_Object_Manager> instance will *not* be destroyed if
+ * ACE_Object_Manager instance will *not* be destroyed if
  * <::exit> is called!  However, <ACE_OS::exit> will properly
  * destroy the ACE_Object_Manager.  It is highly recommended
  * that <ACE_OS::exit> be used instead of <::exit>.
@@ -185,7 +185,7 @@ template <class T> class ACE_Cleanup_Adapter;
  * destroy automatic objects, and for developing the
  * recommendations in this paragraph.
  *
- * Instead of creating a static <ACE_Object_Manager>, or letting
+ * Instead of creating a static ACE_Object_Manager, or letting
  * ACE create it on the stack of <main> for you, another
  * alternative is to #define
  * ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER.  With that
@@ -193,7 +193,7 @@ template <class T> class ACE_Cleanup_Adapter;
  * The recommended way is to call <ACE::init> at the start of
  * the program, and call <ACE::fini> at the end.  Alternatively,
  * the application could explicity construct an
- * <ACE_Object_Manager>.
+ * ACE_Object_Manager.
  */
 class ACE_Export ACE_Object_Manager : public ACE_Object_Manager_Base
 {
@@ -360,7 +360,7 @@ public:
   static int get_singleton_lock (ACE_Thread_Mutex *&);
 
   /**
-   * Accesses a non-recursive <ACE_Mutex> to be used for construction
+   * Accesses a non-recursive ACE_Mutex to be used for construction
    * of <ACE_Singletons>.  Returns 0, and the lock in the argument, on
    * success; returns -1 on failure.
    */
@@ -374,7 +374,7 @@ public:
   static int get_singleton_lock (ACE_Recursive_Thread_Mutex *&);
 
   /**
-   * Accesses a readers/writer <ACE_RW_Thread_Mutex> to be used for
+   * Accesses a readers/writer ACE_RW_Thread_Mutex to be used for
    * construction of <ACE_Singletons>.  Returns 0, and the lock in the
    * argument, on success; returns -1 on failure.
    */
