@@ -1,3 +1,11 @@
+Wed Aug  2 11:07:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/bczar/bczar.html:
+        * docs/bczar/privileges.html:
+          Added documents that where on deuce.doc, the documentation
+          for the bczar how to create a release should really be handled
+          with care, so put them under svn control
+
 Tue Aug  1 20:23:50 UTC 2006  Adam Mitz  <mitza@ociweb.com>
 
         * ace/config-macosx-tiger.h:
