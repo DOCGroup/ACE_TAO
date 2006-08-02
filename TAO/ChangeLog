@@ -1,3 +1,41 @@
+Wed Aug  2 20:15:37 UTC 2006  Adam Mitz  <mitza@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+          Updated comment to reflect what's actually in the code.
+
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+
+          This is a fix for bugzilla bug #2604.  This only applies to
+          per_client activation mode.  The ImR may receive
+          "server_is_running()" invocations from servers that it did
+          not launch (they may have been launched by a prior instance
+          of the ImR or manually).  When this happens the ImR records
+          the info about the running server and places it on a queue.
+          Later, when a client request comes in a new server is
+          launched (as it should be), but the old queued server info is
+          used to ping it.  This can fail with various exceptions
+          depending on if the old process is still alive or if some
+          other process is now running on its port.  If it fails enough
+          times (greater than the retry count) the client invocation
+          will fail.  The fix is simply to keep track of whether or not
+          the ImR expects a new server (that it launched) to be coming
+          online.  If not, it can ignore the server_is_running().  This
+          mechanism is already in place for normal activation, but due
+          to differences in per_client it doesn't work there.
+
+        * orbsvcs/tests/ImplRepo/Bug_2604_Regression:
+        * orbsvcs/tests/ImplRepo/Bug_2604_Regression/Bug_2604.mpc:
+        * orbsvcs/tests/ImplRepo/Bug_2604_Regression/Messenger.idl:
+        * orbsvcs/tests/ImplRepo/Bug_2604_Regression/MessengerClient.cpp:
+        * orbsvcs/tests/ImplRepo/Bug_2604_Regression/MessengerServer.cpp:
+        * orbsvcs/tests/ImplRepo/Bug_2604_Regression/Messenger_i.h:
+        * orbsvcs/tests/ImplRepo/Bug_2604_Regression/Messenger_i.cpp:
+        * orbsvcs/tests/ImplRepo/Bug_2604_Regression/README:
+        * orbsvcs/tests/ImplRepo/Bug_2604_Regression/run_test.pl:
+
+          New regeression test for the bugfix described above.
+
 Wed Aug  2 15:11:08 UTC 2006  Simon McQueen  <sm@prismtech.com>
 
         * orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.h:

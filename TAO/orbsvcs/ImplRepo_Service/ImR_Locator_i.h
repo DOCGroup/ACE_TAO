@@ -1,3 +1,4 @@
+// -*- C++ -*-
 // $Id$
 
 #ifndef IMR_LOCATOR_I_H
@@ -129,7 +130,8 @@ private:
     ImplementationRepository::CannotActivate));
 
   ImplementationRepository::StartupInfo*
-    start_server(Server_Info& info, bool manual_start ACE_ENV_ARG_DECL)
+    start_server(Server_Info& info, bool manual_start, int& waiting_clients
+                 ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
     ImplementationRepository::NotFound,
     ImplementationRepository::CannotActivate));

@@ -58,7 +58,8 @@ createPersistentPOA (PortableServer::POA_ptr root_poa, const char* poa_name ACE_
 
 // It's ok if we can't register with the ImR. It just
 // means we won't be able to notify it of any events
-// (Currently, just that we're shutting down.)
+// (Currently, just that we're shutting down and to
+// notify of the ImR when a child process exits.)
 void
 ImR_Activator_i::register_with_imr (ImplementationRepository::Activator_ptr activator)
 {
