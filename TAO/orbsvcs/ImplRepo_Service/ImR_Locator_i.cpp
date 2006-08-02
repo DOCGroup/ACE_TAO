@@ -582,9 +582,10 @@ ACE_THROW_SPEC ((CORBA::SystemException,
                             (CORBA::string_dup ("Cannot start server.")), 0);
         }
 
-      // Note : We already updated info with StartupInfo in server_is_running ()
+      // Note: We already updated info with StartupInfo in server_is_running ()
       ImplementationRepository::StartupInfo_var si =
-        start_server (info, manual_start ACE_ENV_ARG_PARAMETER);
+        start_server (info, manual_start, info.waiting_clients
+                      ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
     }
 }
@@ -595,10 +596,12 @@ ACE_THROW_SPEC ((CORBA::SystemException,
                 ImplementationRepository::NotFound,
                 ImplementationRepository::CannotActivate))
 {
+  Server_Info_Ptr shared_info = this->repository_.get_server (info.name);
   do
     {
       ImplementationRepository::StartupInfo* psi =
-        start_server (info, manual_start ACE_ENV_ARG_PARAMETER);
+        start_server (info, manual_start, shared_info->waiting_clients
+                      ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       if (psi != 0)
@@ -631,7 +634,8 @@ ACE_THROW_SPEC ((CORBA::SystemException,
 }
 
 ImplementationRepository::StartupInfo*
-ImR_Locator_i::start_server (Server_Info& info, bool manual_start ACE_ENV_ARG_DECL)
+ImR_Locator_i::start_server (Server_Info& info, bool manual_start,
+                             int& waiting_clients ACE_ENV_ARG_DECL)
 ACE_THROW_SPEC ((CORBA::SystemException,
                 ImplementationRepository::NotFound,
                 ImplementationRepository::CannotActivate))
@@ -665,9 +669,10 @@ ACE_THROW_SPEC ((CORBA::SystemException,
 
   ACE_TRY
     {
-      ++ info.waiting_clients;
+      ++waiting_clients;
 
-      if (info.waiting_clients <= 1 || info.activation_mode == ImplementationRepository::PER_CLIENT)
+      if (waiting_clients <= 1 ||
+          info.activation_mode == ImplementationRepository::PER_CLIENT)
         {
           info.starting = true;
           ++info.start_count;
@@ -697,7 +702,7 @@ ACE_THROW_SPEC ((CORBA::SystemException,
             waiter_->wait_for_startup (info.name.c_str () ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          -- info.waiting_clients;
+          --waiting_clients;
           info.starting = false;
 
           return si._retn ();
@@ -708,13 +713,13 @@ ACE_THROW_SPEC ((CORBA::SystemException,
             {
               ACE_DEBUG ((LM_DEBUG, "ImR: <%s> Skipping wait. Already started.\n", info.name.c_str ()));
             }
-          -- info.waiting_clients;
+          --waiting_clients;
           info.starting = false;
         }
     }
   ACE_CATCH (CORBA::TIMEOUT, ex)
     {
-      -- info.waiting_clients;
+      --waiting_clients;
       info.starting = false;
       // We may have connected successfully, because the timeout could occur before
       // the AsyncStartupWaiter manages to return. In fact, when the ImR is very busy
@@ -728,7 +733,7 @@ ACE_THROW_SPEC ((CORBA::SystemException,
     }
   ACE_CATCH (ImplementationRepository::CannotActivate, ex)
     {
-      -- info.waiting_clients;
+      --waiting_clients;
       info.starting = false;
       info.reset ();
       if (debug_ > 0)
@@ -736,7 +741,7 @@ ACE_THROW_SPEC ((CORBA::SystemException,
     }
   ACE_CATCHANY
     {
-      -- info.waiting_clients;
+      --waiting_clients;
       info.starting = false;
       if (debug_ > 0)
         ACE_DEBUG ((LM_DEBUG, "ImR: Unexpected exception while starting <%s>.\n", info.name.c_str ()));
@@ -1061,7 +1066,16 @@ ImR_Locator_i::server_is_running (const char* name,
       } else {
         // Note : There's no need to unblock all the waiting request until
         // we know the final status of the server.
-        waiter_svt_.unblock_one (name, partial_ior, ior.in (), true);
+        if (info->waiting_clients > 0)
+        {
+          waiter_svt_.unblock_one (name, partial_ior, ior.in (), true);
+        }
+        else if (this->debug_ > 1) 
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("ImR - Ignoring server_is_running due to no ")
+                      ACE_TEXT ("waiting PER_CLIENT clients.\n")));
+        }
       }
     }
 }
