@@ -172,6 +172,7 @@
   #define ACE_HAS_WCHAR
   #define ACE_SIZEOF_WCHAR 2
   #define ACE_HAS_SHM_OPEN
+  #define ACE_HAS_AIO_CALLS
 #else
   // We are building for kernel mode
   #define ACE_LACKS_SUSECONDS_T
