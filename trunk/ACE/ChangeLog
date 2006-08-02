@@ -1,3 +1,10 @@
+Wed Aug  2 13:47:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/ACE-development-process.html:
+          Document the fact that people should test on at least two
+          platforms and should be available for some days after they
+          commit a change.
+
 Wed Aug  2 11:16:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/Download.html:
