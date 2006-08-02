@@ -5,32 +5,65 @@
 #ifndef COMMAND_LINE_DESCRIPTOR_H
 #define COMMAND_LINE_DESCRIPTOR_H
 
-#include <string>
+#include <map>
+#include <list>
 #include <vector>
+#include <string>
 #include <ostream>
+#include <cassert>
 
-//@@ temporary. should probably be changed to CommandLine
+
 namespace CL
 {
+  struct OptionType
+  {
+    enum Value
+    {
+      flag,
+      value
+    };
+
+    OptionType (Value v)
+        : v_ (v)
+    {
+    }
+
+    operator Value () const
+    {
+      return v_;
+    }
+
+  private:
+    Value v_;
+  };
+
+
   class OptionDescription
   {
   public:
     OptionDescription (std::string name,
                        std::string description,
-                       bool optional)
-      : optional_ (optional),
-        name_ (name),
-        value_synopsis_ (),
-        description_ (description)
+                       OptionType type,
+                       bool optional = true)
+        : optional_ (optional),
+          type_ (type),
+          name_ (name),
+          value_synopsis_ (),
+          description_ (description)
     {
+      // There should be value_synopsis for non-flag options.
+      //
+      assert (type == OptionType::flag);
     }
 
 
     OptionDescription (std::string name,
                        std::string value_synopsis,
                        std::string description,
-                       bool optional)
+                       OptionType type,
+                       bool optional = true)
         : optional_ (optional),
+          type_ (type),
           name_ (name),
           value_synopsis_ (value_synopsis),
           description_ (description)
@@ -42,6 +75,12 @@ namespace CL
     optional () const
     {
       return optional_;
+    }
+
+    OptionType
+    type () const
+    {
+      return type_;
     }
 
     std::string
@@ -65,6 +104,7 @@ namespace CL
 
   private:
     bool optional_;
+    OptionType type_;
     std::string name_;
     std::string value_synopsis_;
     std::string description_;
@@ -80,9 +120,22 @@ namespace CL
     }
 
   private:
+    Description (Description const&);
+
+    Description&
+    operator= (Description const&);
+
+  private:
+    // We are storing pointer to elements in this list in the map below.
+    // To prevent element moving we will use list instead of vector.
+    //
     typedef
-    std::vector<OptionDescription>
+    std::list<OptionDescription>
     OptionDescriptionList;
+
+    typedef
+    std::map<std::string, OptionDescription*>
+    OptionDescriptionMap;
 
   public:
 
@@ -110,10 +163,24 @@ namespace CL
       return options_.end ();
     }
 
+    typedef
+    OptionDescriptionMap::const_iterator
+    OptionMapIterator;
+
+    OptionDescription const*
+    find_option (std::string const& option) const
+    {
+      OptionDescriptionMap::const_iterator i  (
+        option_map_.find (option));
+
+      return i == option_map_.end () ? 0 : i->second;
+    }
+
     void
     add_option (OptionDescription const& od)
     {
       options_.push_back (od);
+      option_map_[od.name ()] = &options_.back ();
     }
 
   private:
@@ -145,9 +212,9 @@ namespace CL
     }
 
   private:
-
     std::string command_;
     OptionDescriptionList options_;
+    OptionDescriptionMap option_map_;
     ArgumentDescriptionList arguments_;
   };
 
@@ -178,11 +245,13 @@ namespace CL
 
     for (; ob != oe; ob++)
     {
-      os << (ob->optional () ? "[--" : "--")
-         << ob->name ()
-         << (ob->value_synopsis ().empty () ? "" : " ")
-         << ob->value_synopsis ()
-         << (ob->optional () ? "]" : "")
+      bool flag (ob->type () == OptionType::flag);
+      bool optional (ob->optional ());
+      std::string prefix (ob->name ().length () == 1 ? "-" : "--");
+
+      os << (optional ? "[" : "") << prefix << ob->name ()
+         << (flag ? "" : " ") << ob->value_synopsis ()
+         << (optional ? "]" : "")
          << endl;
 
       os << "\t\t" << ob->description () << endl << endl;
@@ -234,13 +303,15 @@ namespace CL
 
     for (; ob != oe; ob++)
     {
+      bool flag (ob->type () == OptionType::flag);
+      bool optional (ob->optional ());
+      std::string prefix (ob->name ().length () == 1 ? "-" : "--");
+
       os << "<dt>" << endl
          << "<code>" << endl
-         << (ob->optional () ? "[--" : "--")
-         << ob->name ()
-         << (ob->value_synopsis ().empty () ? "" : " ")
-         << ob->value_synopsis ()
-         << (ob->optional () ? "]" : "") << endl
+         << (optional ? "[" : "") << prefix << ob->name ()
+         << (flag ? "" : " ") << ob->value_synopsis ()
+         << (optional ? "]" : "") << endl
          << "</code>" << endl
          << "</dt>" << endl;
 

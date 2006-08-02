@@ -43,39 +43,42 @@ void ExecImplGenerator::options (CL::Description& d)
                   "suffix",
                   "Use provided suffix instead of default \'_exec.h\' "
                   "when constructing name of executor implementation file.",
-                  true));
+                  CL::OptionType::value));
 
   d.add_option (CL::OptionDescription (
                   "exec-hdr-file-regex",
                   "regex",
                   "Use provided regular expression when constructing "
                   "name of executor implementation file.",
-                  true));
+                  CL::OptionType::value));
+
   d.add_option (CL::OptionDescription (
                   "exec-src-file-suffix",
                   "suffix",
                   "Use provided suffix instead of default \'_exec.cpp\' "
                   "when constructing name of executor implementation file.",
-                  true));
+                  CL::OptionType::value));
 
   d.add_option (CL::OptionDescription (
                   "exec-src-file-regex",
                   "regex",
                   "Use provided regular expression when constructing "
                   "name of executor implementation file.",
-                  true));
+                  CL::OptionType::value));
+
   d.add_option (CL::OptionDescription (
                   "exec-export-macro",
                   "macro",
                   "Replace default executor DLL export macro "
                   "with provided macro.",
-                  true));
+                  CL::OptionType::value));
+
   d.add_option (CL::OptionDescription (
                   "exec-export-include",
                   "file",
                   "Replace default executor export include file "
                   "with provided file.",
-                  true));
+                  CL::OptionType::value));
 }
 
 

@@ -82,14 +82,67 @@ main (int argc, char* argv[])
 {
   try
   {
-    // Parsing command line options and arguments
+    // Parsing command line options and arguments.
     //
-    //
+
+    CL::Description cld (argv[0]);
+
+    cld.add_option (CL::OptionDescription (
+                      "version",
+                      "Display version information and exit.",
+                      CL::OptionType::flag));
+
+    cld.add_option (CL::OptionDescription (
+                      "help",
+                      "Display usage information and exit.",
+                      CL::OptionType::flag));
+
+    cld.add_option (CL::OptionDescription (
+                      "help-html",
+                      "Dump usage information in html format and exit.",
+                      CL::OptionType::flag));
+
+    cld.add_option (CL::OptionDescription (
+                      "I",
+                      "dir",
+                      "Add the directory dir to the list of directories to "
+                      "be searched for header files.",
+                      CL::OptionType::value));
+
+    cld.add_option (CL::OptionDescription (
+                      "D",
+                      "name[=definition]",
+                      "Predefine name as a macro with the value definition "
+                      "if present, 1 otherwise.",
+                      CL::OptionType::value));
+
+    cld.add_option (CL::OptionDescription (
+                      "gen-exec-impl",
+                      "Generate the executor implementation classes.",
+                      CL::OptionType::flag));
+
+    ExecutorMappingGenerator::options (cld);
+    ServantGenerator::options (cld);
+    DescriptorGenerator::options (cld);
+    ExecImplGenerator::options (cld);
+
+    cld.add_option (CL::OptionDescription (
+                      "trace-semantic-actions",
+                      "Turn on semantic actions tracing facility.",
+                      CL::OptionType::flag));
+
+    cld.add_option (CL::OptionDescription (
+                      "preprocess-only",
+                      "Run preprocessor only and output result to stdout.",
+                      CL::OptionType::flag));
+
+    cld.add_argument ("cidl file");
+
+
     CommandLine cl;
 
-    if (!parse (argc, argv, cl))
+    if (!parse (argc, argv, cld, cl))
     {
-      cerr << "command line syntax error" << endl;
       cerr << "try " << argv[0] << " --help for usage information" << endl;
       return -1;
     }
@@ -101,55 +154,18 @@ main (int argc, char* argv[])
       return 0;
     }
 
-
-    ExecutorMappingGenerator lem_gen;
-    ServantGenerator svnt_gen (cl);
-    ExecImplGenerator impl_gen (cl);
-    RepositoryIdGenerator repid_gen;
-    DescriptorGenerator desc_gen;
-    SizeTypeCalculator sizetype_calc;
-
-    if (cl.get_value ("help", false) || cl.get_value ("help-html", false))
+    if (cl.get_value ("help", false))
     {
-      CL::Description d (argv[0]);
-
-      lem_gen.options (d);
-      svnt_gen.options (d);
-      desc_gen.options (d);
-      impl_gen.options (d);
-
-      d.add_option (CL::OptionDescription (
-                      "trace-semantic-actions",
-                      "Turn on semantic actions tracing facility.",
-                      true));
-
-      d.add_option (CL::OptionDescription (
-                      "preprocess-only",
-                      "Run preprocessor only and output result to stdout.",
-                      true));
-
-      d.add_option (CL::OptionDescription (
-                      "gen-exec-impl",
-                      "Generate the executor implementation classes.",
-                      true));
-
-      d.add_option (CL::OptionDescription (
-                      "help",
-                      "Display usage information and exit.",
-                      true));
-
-      d.add_option (CL::OptionDescription (
-                      "help-html",
-                      "Dump usage information in html format and exit.",
-                      true));
-
-      d.add_argument ("cidl file");
-
-      if (cl.get_value ("help-html", false)) CL::print_html (cerr, d);
-      else CL::print_text (cerr, d);
-
+      CL::print_text (cerr, cld);
       return 0;
     }
+
+    if (cl.get_value ("help-html", false))
+    {
+      CL::print_html (cerr, cld);
+      return 0;
+    }
+
 
     fs::ifstream ifs;
     ifs.exceptions (std::ios_base::badbit | std::ios_base::failbit);
@@ -208,12 +224,6 @@ main (int argc, char* argv[])
           symbols.insert (std::string (def, 0, p));
         else
           symbols.insert (def);
-      }
-      else if (i->name ()[0] == 'D')
-      {
-        std::string opt (i->name ());
-        std::string def (opt.begin () + 1, opt.end ());
-        symbols.insert (def);
       }
     }
 
@@ -278,23 +288,18 @@ main (int argc, char* argv[])
       if (i->name () == "I")
       {
         path = i->value ();
-      }
-      else if (i->name ()[0] == 'I')
-      {
-        std::string opt (i->name ());
-        path = std::string (opt.begin () + 1, opt.end ());
-      }
 
-      try
-      {
-        include_paths.push_back (fs::path (path, fs::native));
-      }
-      catch (fs::filesystem_error const&)
-      {
-        cerr << "error: invalid filesystem path '" << path << "' "
-             << "provided with the -I option" << endl;
+        try
+        {
+          include_paths.push_back (fs::path (path, fs::native));
+        }
+        catch (fs::filesystem_error const&)
+        {
+          cerr << "error: invalid filesystem path '" << path << "' "
+               << "provided with the -I option" << endl;
 
-        return 1;
+          return 1;
+        }
       }
     }
 
@@ -324,33 +329,39 @@ main (int argc, char* argv[])
 
     // Generate executor mapping.
     {
+      ExecutorMappingGenerator lem_gen;
       lem_gen.generate (cl, tu, file_path);
     }
 
     // Calculate the size type of everything in the AST.
     // This must be executed before the servant code generator.
     {
+      SizeTypeCalculator sizetype_calc;
       sizetype_calc.calculate (tu);
     }
 
     // Compute repository IDs in a separate pass.
     {
+      RepositoryIdGenerator repid_gen;
       if (!repid_gen.generate (tu)) return 1;
     }
 
     // Generate servant code.
     {
+      ServantGenerator svnt_gen (cl);
       svnt_gen.generate (tu, file_path);
     }
 
     // Generate executor implementation code.
     if (cl.get_value ("gen-exec-impl", false))
     {
+      ExecImplGenerator impl_gen (cl);
       impl_gen.generate (tu, file_path);
     }
 
     // Generate descriptor code.
     {
+      DescriptorGenerator desc_gen;
       desc_gen.generate (cl, tu);
     }
 

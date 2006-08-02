@@ -1672,27 +1672,27 @@ void ExecutorMappingGenerator::
 options (CL::Description& d)
 {
   d.add_option (CL::OptionDescription (
-                  "lem-file-suffix",
-                  "suffix",
-                  "Use provided suffix instead of default \'E\' "
-                  "when constructing name of local executor mapping file.",
-                  true));
-
-  d.add_option (CL::OptionDescription (
-                  "lem-file-regex",
-                  "regex",
-                  "Use provided regular expression when constructing "
-                  "name of local executor mapping file.",
-                  true));
-
-  d.add_option (CL::OptionDescription (
                   "lem-force-all",
                   "Force generation of local executor mapping for all IDL "
                   "types including those not used (directly or inderectly) "
                   "by compositions. This option is useful for generating a "
                   "common portion of local executor mapping used by more "
                   "than one component or composition.",
-                  true));
+                  CL::OptionType::flag));
+
+  d.add_option (CL::OptionDescription (
+                  "lem-file-suffix",
+                  "suffix",
+                  "Use provided suffix instead of default \'E\' "
+                  "when constructing name of local executor mapping file.",
+                  CL::OptionType::value));
+
+  d.add_option (CL::OptionDescription (
+                  "lem-file-regex",
+                  "regex",
+                  "Use provided regular expression when constructing "
+                  "name of local executor mapping file.",
+                  CL::OptionType::value));
 }
 
 
@@ -1929,7 +1929,7 @@ generate (CommandLine const& cl,
 
   {
     os << "#include \"ciao/CCM_Container.idl\"" << endl;
-    
+
     if (cl.get_value ("lem-force-all", false) && !file_name.empty ())
     {
       os << "#include \"" << file_name << '\"' << endl;
@@ -1970,7 +1970,7 @@ generate (CommandLine const& cl,
     Traversal::BracketIncludes bracket_includes;
     IncludesEmitter includes_emitter (ctx, os);
 
-    
+
     principal_region.edge_traverser (includes_emitter);
     principal_region.edge_traverser (quote_includes);
     principal_region.edge_traverser (bracket_includes);

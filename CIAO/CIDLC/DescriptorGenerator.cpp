@@ -526,14 +526,14 @@ DescriptorGenerator::options (CL::Description& d)
                   "suffix",
                   "Use provided suffix instead of default \'.ccd\' "
                   "when constructing name of descriptor file.",
-                  true));
+                  CL::OptionType::value));
 
   d.add_option (CL::OptionDescription (
                   "desc-file-regex",
                   "regex",
                   "Use provided regular expression when constructing "
                   "name of descriptor file.",
-                  true));
+                  CL::OptionType::value));
 }
 
 void

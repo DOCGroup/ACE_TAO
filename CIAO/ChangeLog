@@ -1,9 +1,41 @@
+Wed Aug  2 18:52:14 UTC 2006  Boris Kolpackov  <boris@kolpackov.net>
+
+        * CCF/CCF/CodeGenerationKit/CommandLineDescriptor.hpp:
+
+          Added option types: flag or value.
+
+        * CCF/CCF/CodeGenerationKit/CommandLineParser.cpp:
+        * CCF/CCF/CodeGenerationKit/CommandLineParser.hpp:
+        * CCF/CCF/CodeGenerationKit/CommandLine.hpp:
+
+          Reimplemented to use hand-coded parser instead of Spirit. The
+          new implementation takes into account the option types.
+
+        * CCF/CCF/CodeGenerationKit/CommandLineGrammar.hpp:
+        * CCF/CCF/CodeGenerationKit/CommandLineGrammar.cpp:
+
+          Removed.
+
+        * CIDLC/cidlc.cpp:
+        * CIDLC/ServantGenerator.hpp:
+        * CIDLC/ServantGenerator.cpp:
+        * CIDLC/DescriptorGenerator.hpp:
+        * CIDLC/DescriptorGenerator.cpp:
+        * CIDLC/ExecutorMappingGenerator.hpp:
+        * CIDLC/ExecutorMappingGenerator.cpp:
+        * CIDLC/ExecImplGenerator.cpp:
+        * CIDLC/ExecImplGenerator.hpp:
+
+          Updated with the option types. This fixes bugzilla bug #2426.
+
+
 Fri Jul 28 17:53:57 UTC 2006  Boris Kolpackov  <boris@kolpackov.net>
 
         * CCF/CCF/IDL2/SemanticGraph/Translation.cpp:
 
           Reimplemented a chunk of code that resulted in what appears to
-          be invalid code generation by the Intel C++ compiler.
+          be invalid code generation by the Intel C++ compiler. This
+          fixes bugzilla bug #2387.
 
 Thu Jul 27 18:08:47 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
