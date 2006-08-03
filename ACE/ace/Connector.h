@@ -193,11 +193,11 @@ public:
   // = Connection establishment methods.
 
   /**
-   * Initiate connection of <svc_handler> to peer at <remote_addr>
-   * using <synch_options>.  If the caller wants to designate the
-   * selected <local_addr> they can (and can also insist that the
-   * <local_addr> be reused by passing a value <reuse_addr> ==
-   * 1). @a flags and <perms> can be used to pass any flags that are
+   * Initiate connection of @a svc_handler to peer at @a remote_addr
+   * using @a synch_options.  If the caller wants to designate the
+   * selected @a local_addr they can (and can also insist that the
+   * @a local_addr be reused by passing a value @a reuse_addr ==
+   * 1). @a flags and @a perms can be used to pass any flags that are
    * needed to perform specific operations such as opening a file
    * within connect with certain permissions.  If the connection fails
    * the <close> hook on the <svc_handler> will be called
@@ -214,11 +214,11 @@ public:
 
   /**
    * This is a variation on the previous <connect> method.  On cached
-   * connectors the <svc_handler_hint> variable can be used as a hint
+   * connectors the @a svc_handler_hint variable can be used as a hint
    * for future lookups.  Since this variable is modified in the
    * context of the internal cache its use is thread-safe.  But the
    * actual svc_handler for the current connection is returned in the
-   * second parameter <svc_handler>.  If the connection fails the
+   * second parameter @a svc_handler.  If the connection fails the
    * <close> hook on the <svc_handler> will be called automatically to
    * prevent resource leaks.
    */
@@ -233,8 +233,8 @@ public:
                        int perms = 0);
 
   /**
-   * Initiate connection of <n> <svc_handlers> to peers at
-   * <remote_addrs> using <synch_options>.  Returns -1 if failure
+   * Initiate connection of @a n @a svc_handlers to peers at
+   * @a remote_addrs using @a synch_options.  Returns -1 if failure
    * occurs and 0 otherwise.  If <failed_svc_handlers> is non-NULL, a
    * 1 is placed in the corresponding index of <failed_svc_handler>
    * for each <svc_handlers[i]> that failed to connect, else a 0 is
@@ -248,10 +248,10 @@ public:
                          ACE_Synch_Options::defaults);
 
   /**
-   * Cancel a <svc_handler> that was started asynchronously. Note that
+   * Cancel the @a svc_handler that was started asynchronously. Note that
    * this is the only case when the Connector does not actively close
-   * the <svc_handler>. It is left up to the caller of <cancel> to
-   * decide the fate of the <svc_handler>.
+   * the @a svc_handler. It is left up to the caller of <cancel> to
+   * decide the fate of the @a svc_handler.
    */
   virtual int cancel (SVC_HANDLER *svc_handler);
 
