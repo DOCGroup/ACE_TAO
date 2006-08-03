@@ -85,17 +85,15 @@ namespace CIAO
         CORBA::String_var my_resource_id ("");
         const char *my_policy_set_id = "";
 
+        // @@ super hack here.  we are assuming RT policy set is
+        // the only thing that will be specified.
         if (this->plan_.instance[i].deployedResource.length () != 0)
           {
-            /*
             my_resource_id =
               this->plan_.instance[i].deployedResource[0].resourceName.in ();
 
-            this->plan_.instance[i].deployedResource[0].resourceValue >>=
+            this->plan_.instance[i].deployedResource[0].property[0].value >>=
               my_policy_set_id;
-            */
-
-            // ACE_ERROR ((LM_ERROR, "ERROR: RT-CCM support has been disabled until code in Containers_Info_Map is updated to reflect IDL changes."));
           }
 
         // If we find a existing policy_set_id, then do nothing.

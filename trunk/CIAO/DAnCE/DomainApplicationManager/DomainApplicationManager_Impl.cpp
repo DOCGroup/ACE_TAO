@@ -717,7 +717,7 @@ install_all_es (void)
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION  (ACE_ANY_EXCEPTION,
-                            "DomainApplicationManager_Impl::post_finishLaunch.\n");
+                            "DomainApplicationManager_Impl::install_all_es.\n");
       ACE_RE_THROW;
     }
   ACE_ENDTRY;
