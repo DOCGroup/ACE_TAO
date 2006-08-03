@@ -1,7 +1,7 @@
 <!-- $Id$ -->
 <html>
 
-  <title>CIAO CIDL Compiler Options</title>
+<title>CIAO CIDL Compiler Options</title>
 
 <body>
 
@@ -17,6 +17,76 @@
 </code>
 </p>
 <dl>
+<dt>
+<code>
+[--version]
+</code>
+</dt>
+<dd>
+<p>
+Display version information and exit.
+</p>
+</dd>
+<dt>
+<code>
+[--help]
+</code>
+</dt>
+<dd>
+<p>
+Display usage information and exit.
+</p>
+</dd>
+<dt>
+<code>
+[--help-html]
+</code>
+</dt>
+<dd>
+<p>
+Dump usage information in html format and exit.
+</p>
+</dd>
+<dt>
+<code>
+[-I dir]
+</code>
+</dt>
+<dd>
+<p>
+Add the directory dir to the list of directories to be searched for header files.
+</p>
+</dd>
+<dt>
+<code>
+[-D name[=definition]]
+</code>
+</dt>
+<dd>
+<p>
+Predefine name as a macro with the value definition if present, 1 otherwise.
+</p>
+</dd>
+<dt>
+<code>
+[--gen-exec-impl]
+</code>
+</dt>
+<dd>
+<p>
+Generate the executor implementation classes.
+</p>
+</dd>
+<dt>
+<code>
+[--lem-force-all]
+</code>
+</dt>
+<dd>
+<p>
+Force generation of local executor mapping for all IDL types including those not used (directly or inderectly) by compositions. This option is useful for generating a common portion of local executor mapping used by more than one component or composition.
+</p>
+</dd>
 <dt>
 <code>
 [--lem-file-suffix suffix]
@@ -35,16 +105,6 @@ Use provided suffix instead of default 'E' when constructing name of local execu
 <dd>
 <p>
 Use provided regular expression when constructing name of local executor mapping file.
-</p>
-</dd>
-<dt>
-<code>
-[--lem-force-all]
-</code>
-</dt>
-<dd>
-<p>
-Force generation of local executor mapping for all IDL types including those not used (directly or inderectly) by compositions. This option is useful for generating a common portion of local executor mapping used by more than one component or composition.
 </p>
 </dd>
 <dt>
@@ -225,36 +285,6 @@ Turn on semantic actions tracing facility.
 <dd>
 <p>
 Run preprocessor only and output result to stdout.
-</p>
-</dd>
-<dt>
-<code>
-[--gen-exec-impl]
-</code>
-</dt>
-<dd>
-<p>
-Generate the executor implementation classes.
-</p>
-</dd>
-<dt>
-<code>
-[--help]
-</code>
-</dt>
-<dd>
-<p>
-Display usage information and exit.
-</p>
-</dd>
-<dt>
-<code>
-[--help-html]
-</code>
-</dt>
-<dd>
-<p>
-Dump usage information in html format and exit.
 </p>
 </dd>
 </dl>

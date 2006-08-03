@@ -1,3 +1,9 @@
+Thu Aug  3 15:33:11 UTC 2006  Boris Kolpackov  <boris@kolpackov.net>
+
+        * docs/cidlc.html:
+
+          Regenerated to include the -D and -I options.
+
 Wed Aug  2 18:52:14 UTC 2006  Boris Kolpackov  <boris@kolpackov.net>
 
         * CCF/CCF/CodeGenerationKit/CommandLineDescriptor.hpp:
