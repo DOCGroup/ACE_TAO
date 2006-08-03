@@ -589,9 +589,9 @@ validate_plan (const Deployment::DeploymentPlan &plan)
           // are checking to make sure that all component instances have
           // the same server_resource_id.
 
-          //resource_id =
-          //  plan.instance[i].deployedResource[0].resourceName.in ();
-          //break;
+          resource_id =
+            plan.instance[i].deployedResource[0].resourceName.in ();
+          break;
         }
     }
   if (i == plan.instance.length ()) // No server resource id has been set for any instance
@@ -600,7 +600,7 @@ validate_plan (const Deployment::DeploymentPlan &plan)
   for (i = 0; i < plan.instance.length (); ++i)
     {
       const char * my_resource_id;
-      if (true || plan.instance[i].deployedResource.length () == 0)
+      if (plan.instance[i].deployedResource.length () == 0)
         {
           continue;
         }

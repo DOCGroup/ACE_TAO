@@ -41,9 +41,16 @@ CIAO::NodeImplementationInfoHandler::populate_server_resource_def (void)
   // instance in this NodeApplication should have the same "server_resource_def"
   // defined. Since currently we ignored this sanity check, then will allow
   // users to specify some self-conflicting configuration in the descriptor.
+
+  // NW: this stuff is broken because it assumes all component
+  // instances in a node will use the same ServerResource file.  This
+  // is not the case.  Component instances using the same
+  // ServerResource file will be deployed in the same NA.  However,
+  // those using different ServerResource files should be deployed to
+  // different NAs.  Something to be fixed later.
   for (i = 0; i < instance_len; ++i)
     {
-      if (false && this->plan_.instance[i].deployedResource.length () != 0)
+      if (this->plan_.instance[i].deployedResource.length () != 0)
         {
           target_resource_id =
             this->plan_.instance[i].deployedResource[0].resourceName.in ();
