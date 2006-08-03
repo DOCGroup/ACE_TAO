@@ -1,11 +1,11 @@
 //
-// $Id: Hello.cpp,v 1.1 2006/07/26 12:54:06 sm Exp $
+// $Id:$
 //
 
 #include "ServerRequest_Interceptor2.h"
 #include "Hello.h"
 
-ACE_RCSID(Hello, Hello, "$Id: Hello.cpp,v 1.1 2006/07/26 12:54:06 sm Exp $")
+ACE_RCSID(Hello, Hello, "$Id:$")
 
 Hello::Hello (CORBA::ORB_ptr orb, Test::Hello_ptr, CORBA::ULong)
   : orb_ (CORBA::ORB::_duplicate (orb))

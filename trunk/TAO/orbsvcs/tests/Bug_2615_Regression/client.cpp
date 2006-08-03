@@ -1,11 +1,11 @@
-// $Id: client.cpp,v 1.1 2006/07/26 12:54:06 sm Exp $
+// $Id:$
 
 #include "TestS.h"
 #include "ace/Get_Opt.h"
 #include "orbsvcs/FaultTolerance/FT_ClientService_Activate.h"
 #include "Hello.h"
 
-ACE_RCSID(Hello, client, "$Id: client.cpp,v 1.1 2006/07/26 12:54:06 sm Exp $")
+ACE_RCSID(Hello, client, "$Id:$")
 
 const char *ior = "file://ior.ior";
 const char *iogr = "file://iogr.ior";

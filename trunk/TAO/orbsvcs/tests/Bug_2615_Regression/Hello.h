@@ -1,5 +1,5 @@
 //
-// $Id: Hello.h,v 1.1 2006/07/26 12:54:06 sm Exp $
+// $Id:$
 //
 
 #ifndef HELLO_H
