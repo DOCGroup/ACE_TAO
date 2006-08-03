@@ -17,7 +17,7 @@
 
 ACE_RCSID (FaultTolerance,
            ServerRequest_Interceptor2,
-           "$Id: ServerRequest_Interceptor2.cpp,v 1.1 2006/07/26 12:54:06 sm Exp $")
+           "$Id:$")
 
 CORBA::Boolean
 ServerRequest_Interceptor2::has_ft_request_sc_ = false;

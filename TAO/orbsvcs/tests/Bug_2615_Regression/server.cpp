@@ -1,4 +1,4 @@
-// $Id: server.cpp,v 1.1 2006/07/26 12:54:06 sm Exp $
+// $Id:$
 
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
@@ -13,7 +13,7 @@
 
 ACE_RCSID (Hello,
            server,
-           "$Id: server.cpp,v 1.1 2006/07/26 12:54:06 sm Exp $")
+           "$Id:$")
 
 const char *ior_output_file = "ior.ior";
 const char *iogr_output_file = "iogr.ior";
