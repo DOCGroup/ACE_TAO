@@ -1,3 +1,8 @@
+Thu Aug  3 10:39:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Connector.h:
+          Improved documentation
+
 Wed Aug  2 22:54:24 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * THANKS: Added Eric Danielou to the hall of fame.
