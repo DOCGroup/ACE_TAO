@@ -1,5 +1,5 @@
 //
-// $Id:$
+// $Id$
 //
 
 #ifndef HELLO_H
