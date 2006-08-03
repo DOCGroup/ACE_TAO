@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- * $Id:$
+ * $Id$
  */
 //=============================================================================
 
@@ -21,7 +21,7 @@
 #include "tao/PI_Server/PI_Server.h"
 
 /**
-* $Id:$
+* $Id$
 */
 class ServerRequest_Interceptor2
 : public virtual PortableInterceptor::ServerRequestInterceptor,

@@ -1,6 +1,6 @@
 // -*- C++ -*-
 //
-// $Id:$
+// $Id$
 
 #include "ServerORBInitializer2.h"
 #include "ServerRequest_Interceptor2.h"

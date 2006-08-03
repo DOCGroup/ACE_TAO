@@ -1,11 +1,11 @@
-// $Id:$
+// $Id$
 
 #include "TestS.h"
 #include "ace/Get_Opt.h"
 #include "orbsvcs/FaultTolerance/FT_ClientService_Activate.h"
 #include "Hello.h"
 
-ACE_RCSID(Hello, client, "$Id:$")
+ACE_RCSID(Hello, client, "$Id$")
 
 const char *ior = "file://ior.ior";
 const char *iogr = "file://iogr.ior";

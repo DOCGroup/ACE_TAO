@@ -1,11 +1,11 @@
 //
-// $Id:$
+// $Id$
 //
 
 #include "ServerRequest_Interceptor2.h"
 #include "Hello.h"
 
-ACE_RCSID(Hello, Hello, "$Id:$")
+ACE_RCSID(Hello, Hello, "$Id$")
 
 Hello::Hello (CORBA::ORB_ptr orb, Test::Hello_ptr, CORBA::ULong)
   : orb_ (CORBA::ORB::_duplicate (orb))

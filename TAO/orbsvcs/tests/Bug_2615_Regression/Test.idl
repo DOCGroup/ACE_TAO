@@ -1,5 +1,5 @@
 //
-// $Id:$
+// $Id$
 //
 
 /// Put the interfaces in a module, to avoid global namespace pollution
