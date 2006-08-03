@@ -1,9 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : security, ifr_client, valuetype, pi, codecfactory {
-  after    += CIAO_DnC_Client
-  includes   += $(CIAO_ROOT) $(CIAO_ROOT)/ciao $(CIAO_ROOT)/DAnCE 
-  idlflags += -I$(CIAO_ROOT) -I$(CIAO_ROOT)/ciao -I$(CIAO_ROOT)/DAnCE -Sc
-  libs     += CIAO_DnC_Client
-}
