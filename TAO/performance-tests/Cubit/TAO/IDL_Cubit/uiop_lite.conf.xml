@@ -1,8 +1,0 @@
-<?xml version='1.0'?>
-<!-- Converted from ./performance-tests/Cubit/TAO/IDL_Cubit/uiop_lite.conf by svcconf-convert.pl -->
-<ACE_Svc_Conf>
- <dynamic id="UIOP_Lite_Factory" type="Service_Object">
-   <initializer path="TAO_Strategies" init="_make_TAO_UIOP_Lite_Protocol_Factory"/>
- </dynamic>
- <static id="Advanced_Resource_Factory" params="-ORBProtocolFactory UIOP_Lite_Factory"/>
-</ACE_Svc_Conf>

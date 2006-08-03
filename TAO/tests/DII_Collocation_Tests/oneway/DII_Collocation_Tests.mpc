@@ -1,6 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project(*oneway) : taoserver,  dynamicinterface, minimum_corba{
-  exename = Collocated_Test
-}
