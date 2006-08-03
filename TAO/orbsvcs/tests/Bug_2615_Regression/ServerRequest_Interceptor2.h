@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- * $Id: ServerRequest_Interceptor2.h,v 1.1 2006/07/26 12:54:06 sm Exp $
+ * $Id:$
  */
 //=============================================================================
 
@@ -21,7 +21,7 @@
 #include "tao/PI_Server/PI_Server.h"
 
 /**
-* $Id: ServerRequest_Interceptor2.h,v 1.1 2006/07/26 12:54:06 sm Exp $
+* $Id:$
 */
 class ServerRequest_Interceptor2
 : public virtual PortableInterceptor::ServerRequestInterceptor,
