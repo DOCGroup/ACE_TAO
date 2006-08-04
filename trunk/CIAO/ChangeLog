@@ -1,3 +1,14 @@
+Fri Aug  4 21:40:46 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * docs/tutorials/CoSMIC/01.html
+        * docs/tutorials/CoSMIC/02.html
+        * docs/tutorials/CoSMIC/03.html
+        * docs/tutorials/CoSMIC/04.html
+        * docs/tutorials/CoSMIC/style.css
+        * docs/tutorials/CoSMIC/index.html
+        
+          Style fixes, grammatical and spelling corrections, clarifications.
+        
 Thu Aug  3 20:38:39 UTC 2006  Nanbor Wang  <nanbor (at) txcorp (dot) com>
 
         * DAnCE/NodeManager/NodeManager_Impl.cpp:
