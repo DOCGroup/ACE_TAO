@@ -1082,6 +1082,10 @@ until all the data is sent.
         <td><code>-ORBZeroCopyWrite</code> </td>
         <td><a name="-ORBZeroCopyWrite"></a> Use a zero copy write
         protocol, which at this moment the only option is sendfile.
+        If your platform does support sendfile but you don't want
+	that TAO uses it you can disable 
+	sendfile in TAO by add the define <code>TAO_HAS_SENDFILE 0</code>
+	to your config.h file.
         </td>
       </tr>
     </tbody>

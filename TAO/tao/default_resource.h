@@ -220,9 +220,9 @@ protected:
   enum Output_CDR_Allocator_Type
     {
       LOCAL_MEMORY_POOL,
-#ifdef ACE_HAS_SENDFILE
+#if TAO_HAS_SENDFILE == 1
       MMAP_ALLOCATOR,
-#endif  /* ACE_HAS_SENDFILE */
+#endif  /* TAO_HAS_SENDFILE == 1*/
       DEFAULT
     };
 

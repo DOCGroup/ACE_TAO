@@ -490,12 +490,12 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
             if (ACE_OS::strcasecmp (current_arg,
                                     ACE_TEXT("mmap")) == 0)
               {
-#ifdef ACE_HAS_SENDFILE
+#if TAO_HAS_SENDFILE == 1
                 this->output_cdr_allocator_type_ = MMAP_ALLOCATOR;
 #else
                 ACE_DEBUG ((LM_WARNING,
                             ACE_TEXT ("MMAP allocator unsupport on this platform")));
-#endif  /* ACE_HAS_SENDFILE */
+#endif  /* TAO_HAS_SENDFILE==1 */
               }
             else if (ACE_OS::strcasecmp (current_arg,
                                          ACE_TEXT("local_memory_pool")) == 0
@@ -518,12 +518,12 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
     else if (0 == ACE_OS::strcasecmp (argv[curarg],
                                       ACE_TEXT("-ORBZeroCopyWrite")))
       {
-#ifdef ACE_HAS_SENDFILE
+#if TAO_HAS_SENDFILE == 1
         this->output_cdr_allocator_type_ = MMAP_ALLOCATOR;
 #else
         ACE_DEBUG ((LM_WARNING,
                     ACE_TEXT ("Zero copy writes unsupported on this platform\n")));
-#endif  /* ACE_HAS_SENDFILE */
+#endif  /* TAO_HAS_SENDFILE==1 */
       }
     else if (ACE_OS::strncmp (argv[curarg],
                               ACE_TEXT ("-ORB"),
@@ -874,14 +874,14 @@ TAO_Default_Resource_Factory::output_cdr_buffer_allocator (void)
 
       break;
 
-#ifdef ACE_HAS_SENDFILE
+#if TAO_HAS_SENDFILE == 1
     case MMAP_ALLOCATOR:
       ACE_NEW_RETURN (allocator,
                       TAO_MMAP_Allocator,
                       0);
 
       break;
-#endif  /* ACE_HAS_SENDFILE */
+#endif  /* TAO_HAS_SENDFILE==1 */
 
     case DEFAULT:
     default:
