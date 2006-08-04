@@ -359,7 +359,7 @@ private:
  * @class ACE_Notification_Buffer
  *
  * @brief Simple wrapper for passing <ACE_Event_Handler *>s and
- * <ACE_Reactor_Mask>s between threads.
+ * ACE_Reactor_Masks between threads.
  */
 class ACE_Export ACE_Notification_Buffer
 {

@@ -1118,7 +1118,7 @@ protected:
  *
  * @brief Defines a map implementation.
  *
- * Implementation to be provided by <ACE_Hash_Map_Manager_Ex>.
+ * Implementation to be provided by ACE_Hash_Map_Manager_Ex.
  */
 template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class KEY_GENERATOR>
 class ACE_Hash_Map_Manager_Ex_Adapter : public ACE_Map<KEY, VALUE>
@@ -1404,7 +1404,7 @@ protected:
  *
  * @brief Defines a map implementation.
  *
- * Implementation to be provided by <ACE_Map_Manager>.
+ * Implementation to be provided by ACE_Map_Manager.
  */
 template <class KEY, class VALUE, class KEY_GENERATOR>
 class ACE_Map_Manager_Adapter : public ACE_Map<KEY, VALUE>

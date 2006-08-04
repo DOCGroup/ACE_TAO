@@ -405,7 +405,7 @@ protected:
   /// Pointer to a memory allocator.
   ACE_Allocator *allocator_;
 
-  /// Synchronization variable for the MT_SAFE <ACE_Map_Manager>.
+  /// Synchronization variable for the MT_SAFE ACE_Map_Manager.
   mutable ACE_LOCK lock_;
 
   /// Implement the Map as a resizeable array of <ACE_Map_Entry>.
@@ -562,10 +562,10 @@ protected:
  * @brief Forward iterator for the ACE_Map_Manager.
  *
  * This class does not perform any internal locking of the
- * <ACE_Map_Manager> it is iterating upon since locking is
+ * ACE_Map_Manager it is iterating upon since locking is
  * inherently inefficient and/or error-prone within an STL-style
  * iterator.  If you require locking, you can explicitly use an
- * ACE_Guard or ACE_Read_Guard on the <ACE_Map_Manager>'s
+ * ACE_Guard or ACE_Read_Guard on the ACE_Map_Manager's
  * internal lock, which is accessible via its <mutex> method.
  */
 template <class EXT_ID, class INT_ID, class ACE_LOCK>
@@ -609,10 +609,10 @@ public:
  * @brief Forward const iterator for the ACE_Map_Manager.
  *
  * This class does not perform any internal locking of the
- * <ACE_Map_Manager> it is iterating upon since locking is
+ * ACE_Map_Manager it is iterating upon since locking is
  * inherently inefficient and/or error-prone within an STL-style
  * iterator.  If you require locking, you can explicitly use an
- * ACE_Guard or ACE_Read_Guard on the <ACE_Map_Manager>'s
+ * ACE_Guard or ACE_Read_Guard on the ACE_Map_Manager's
  * internal lock, which is accessible via its <mutex> method.
  */
 template <class EXT_ID, class INT_ID, class ACE_LOCK>
@@ -653,13 +653,13 @@ public:
 /**
  * @class ACE_Map_Reverse_Iterator
  *
- * @brief Reverse Iterator for the <ACE_Map_Manager>.
+ * @brief Reverse Iterator for the ACE_Map_Manager.
  *
  * This class does not perform any internal locking of the
- * <ACE_Map_Manager> it is iterating upon since locking is
+ * ACE_Map_Manager it is iterating upon since locking is
  * inherently inefficient and/or error-prone within an STL-style
  * iterator.  If you require locking, you can explicitly use an
- * ACE_Guard or ACE_Read_Guard on the <ACE_Map_Manager>'s
+ * ACE_Guard or ACE_Read_Guard on the ACE_Map_Manager's
  * internal lock, which is accessible via its <mutex> method.
  */
 template <class EXT_ID, class INT_ID, class ACE_LOCK>

@@ -528,7 +528,7 @@ private:
 /**
  * @class ACE_Hash_Map_Iterator_Base_Ex
  *
- * @brief Base iterator for the <ACE_Hash_Map_Manager_Ex>
+ * @brief Base iterator for the ACE_Hash_Map_Manager_Ex
  *
  * This class factors out common code from its templatized
  * subclasses.
@@ -595,7 +595,7 @@ protected:
 /**
  * @class ACE_Hash_Map_Const_Iterator_Base_Ex
  *
- * @brief Base const iterator for the <ACE_Hash_Map_Manager_Ex>
+ * @brief Base const iterator for the ACE_Hash_Map_Manager_Ex
  *
  * This class factors out common code from its templatized
  * subclasses.
@@ -662,13 +662,13 @@ protected:
 /**
  * @class ACE_Hash_Map_Iterator_Ex
  *
- * @brief Forward iterator for the <ACE_Hash_Map_Manager_Ex>.
+ * @brief Forward iterator for the ACE_Hash_Map_Manager_Ex.
  *
  * This class does not perform any internal locking of the
- * <ACE_Hash_Map_Manager_Ex> it is iterating upon since locking is
+ * ACE_Hash_Map_Manager_Ex it is iterating upon since locking is
  * inherently inefficient and/or error-prone within an STL-style
  * iterator.  If you require locking, you can explicitly use an
- * ACE_Guard or ACE_Read_Guard on the <ACE_Hash_Map_Manager_Ex>'s
+ * ACE_Guard or ACE_Read_Guard on the ACE_Hash_Map_Manager_Ex's
  * internal lock, which is accessible via its <mutex> method.
  */
 template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK>
@@ -708,13 +708,13 @@ public:
 /**
  * @class ACE_Hash_Map_Const_Iterator_Ex
  *
- * @brief Const forward iterator for the <ACE_Hash_Map_Manager_Ex>.
+ * @brief Const forward iterator for the ACE_Hash_Map_Manager_Ex.
  *
  * This class does not perform any internal locking of the
- * <ACE_Hash_Map_Manager_Ex> it is iterating upon since locking is
+ * ACE_Hash_Map_Manager_Ex it is iterating upon since locking is
  * inherently inefficient and/or error-prone within an STL-style
  * iterator.  If you require locking, you can explicitly use an
- * ACE_Guard or ACE_Read_Guard on the <ACE_Hash_Map_Manager_Ex>'s
+ * ACE_Guard or ACE_Read_Guard on the ACE_Hash_Map_Manager_Ex's
  * internal lock, which is accessible via its <mutex> method.
  */
 template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK>
@@ -754,15 +754,15 @@ public:
 /**
  * @class ACE_Hash_Map_Bucket_Iterator
  *
- * @brief Forward iterator for the <ACE_Hash_Map_Manager_Ex> which
+ * @brief Forward iterator for the ACE_Hash_Map_Manager_Ex which
  * only traverses a particular bucket.  The particular bucket is
  * specified by the <EXT_ID> parameter specified in the constructor.
  *
  * This class does not perform any internal locking of the
- * <ACE_Hash_Map_Manager_Ex> it is iterating upon since locking is
+ * ACE_Hash_Map_Manager_Ex it is iterating upon since locking is
  * inherently inefficient and/or error-prone within an STL-style
  * iterator.  If you require locking, you can explicitly use an
- * ACE_Guard or ACE_Read_Guard on the <ACE_Hash_Map_Manager_Ex>'s
+ * ACE_Guard or ACE_Read_Guard on the ACE_Hash_Map_Manager_Ex's
  * internal lock, which is accessible via its <mutex> method.
  *
  * Note that a creation method for this new iterator cannot be added
@@ -830,13 +830,13 @@ protected:
 /**
  * @class ACE_Hash_Map_Reverse_Iterator_Ex
  *
- * @brief Reverse iterator for the <ACE_Hash_Map_Manager_Ex>.
+ * @brief Reverse iterator for the ACE_Hash_Map_Manager_Ex.
  *
  * This class does not perform any internal locking of the
- * <ACE_Hash_Map_Manager_Ex> it is iterating upon since locking is
+ * ACE_Hash_Map_Manager_Ex it is iterating upon since locking is
  * inherently inefficient and/or error-prone within an STL-style
  * iterator.  If you require locking, you can explicitly use an
- * ACE_Guard or ACE_Read_Guard on the <ACE_Hash_Map_Manager_Ex>'s
+ * ACE_Guard or ACE_Read_Guard on the ACE_Hash_Map_Manager_Ex's
  * internal lock, which is accessible via its <mutex> method.
  */
 template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK>
@@ -918,7 +918,7 @@ class ACE_Hash_Map_Manager : public ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, ACE_
 {
 public:
 
-  /** 
+  /**
    * Initialize a @c Hash_Map_Manager with default size elements.
    * @param table_alloc is a pointer to a memory allocator used for
    *        table_, so it should supply size*sizeof (ACE_Hash_Map_Entry<EXT_ID, INT_ID>).
@@ -932,7 +932,7 @@ public:
   ACE_Hash_Map_Manager (ACE_Allocator *table_alloc = 0,
                         ACE_Allocator *entry_alloc = 0);
 
-  /** 
+  /**
    * Initialize a @c Hash_Map_Manager with @c size elements.
    * @param table_alloc is a pointer to a memory allocator used for
    *        table_, so it should supply size*sizeof (ACE_Hash_Map_Entry<EXT_ID, INT_ID>).
