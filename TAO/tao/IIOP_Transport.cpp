@@ -95,7 +95,7 @@ TAO_IIOP_Transport::send (iovec *iov, int iovcnt,
   return retval;
 }
 
-#ifdef ACE_HAS_SENDFILE
+#if TAO_HAS_SENDFILE == 1
 ssize_t
 TAO_IIOP_Transport::sendfile (TAO_MMAP_Allocator * allocator,
                               iovec * iov,
@@ -173,7 +173,7 @@ TAO_IIOP_Transport::sendfile (TAO_MMAP_Allocator * allocator,
 
   return retval;
 }
-#endif  /* ACE_HAS_SENDFILE */
+#endif  /* TAO_HAS_SENDFILE==1 */
 
 ssize_t
 TAO_IIOP_Transport::recv (char *buf,

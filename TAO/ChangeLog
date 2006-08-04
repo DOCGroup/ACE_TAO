@@ -1,3 +1,18 @@
+Fri Aug  4 09:06:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/default_resource.{h,cpp}:
+        * tao/IIOP_Transport.{h,cpp}:
+        * tao/MMAP_Allocator.{h,cpp}:
+        * tao/orbconf.h:
+        * tao/Transport.{h,cpp}:
+        * docs/Options.html:
+          Added TAO_HAS_SENDFILE, this is set to 1 when ACE_HAS_SENDFILE
+          is enabled, else it is set to 0. Users can explicitly define
+          this to 0 also to build TAO without sendfile support, this
+          reduces then the footprint for applications running on a
+          platform that supports sendfile but where the app doesn't
+          use it. This fixes bugzilla bug 2587.
+
 Wed Aug  2 22:47:53 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * NEWS:

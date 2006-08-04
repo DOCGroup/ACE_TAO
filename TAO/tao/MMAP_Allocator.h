@@ -21,7 +21,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#ifdef ACE_HAS_SENDFILE
+#if TAO_HAS_SENDFILE == 1
 
 #include "ace/Malloc_T.h"
 #include "ace/MMAP_Memory_Pool.h"
@@ -70,7 +70,7 @@ private:
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-#endif  /* ACE_HAS_SENDFILE */
+#endif  /* TAO_HAS_SENDFILE==1 */
 
 #include /**/ "ace/post.h"
 

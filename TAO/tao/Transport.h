@@ -399,7 +399,7 @@ public:
                         size_t &bytes_transferred,
                         const ACE_Time_Value *timeout = 0) = 0;
 
-#ifdef ACE_HAS_SENDFILE
+#if TAO_HAS_SENDFILE == 1
   /// Send data through zero-copy write mechanism, if available.
   /**
    * This method sends the data in the I/O vector through the platform
@@ -415,7 +415,7 @@ public:
                             int iovcnt,
                             size_t &bytes_transferred,
                             ACE_Time_Value const * timeout = 0);
-#endif  /* ACE_HAS_SENDFILE */
+#endif  /* TAO_HAS_SENDFILE==1 */
 
 
   /// Read len bytes from into buf.
@@ -1047,14 +1047,14 @@ private:
   /// Holds the partial GIOP message (if there is one)
   ACE_Message_Block* partial_message_;
 
-#ifdef ACE_HAS_SENDFILE
+#if TAO_HAS_SENDFILE == 1
   /// mmap()-based allocator used to allocator output CDR buffers.
   /**
    * If this pointer is non-zero, sendfile() will be used to send data
    * in a TAO_OutputCDR stream instance.
    */
   TAO_MMAP_Allocator * const mmap_allocator_;
-#endif  /* ACE_HAS_SENDFILE */
+#endif  /* TAO_HAS_SENDFILE==1 */
 
   /*
    * specialization hook to add class members from concrete

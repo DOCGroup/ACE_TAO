@@ -2,8 +2,7 @@
 
 #include "tao/MMAP_Allocator.h"
 
-
-#ifdef ACE_HAS_SENDFILE
+#if TAO_HAS_SENDFILE == 1
 
 #include "ace/Mem_Map.h"
 #include "ace/Default_Constants.h"
@@ -96,4 +95,4 @@ TAO_MMAP_Allocator::offset (void * p)
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-#endif  /* ACE_HAS_SENDFILE */
+#endif  /* TAO_HAS_SENDFILE==1 */
