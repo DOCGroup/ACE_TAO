@@ -32,7 +32,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * @class ACE_LSOCK_Connector
  *
  * @brief Defines the format and interface for the connector side of
- * the <ACE_LSOCK_Stream>.
+ * the ACE_LSOCK_Stream.
  */
 class ACE_Export ACE_LSOCK_Connector : public ACE_SOCK_Connector
 {

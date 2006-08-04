@@ -685,7 +685,7 @@ protected:
  * @brief Allows Token_Manger to identify tokens.
  *
  * For now, this is just a string.  We need a string class
- * anyway to use in <ACE_Map_Manager>.  Having this class
+ * anyway to use in ACE_Map_Manager.  Having this class
  * (instead of <ACE_SString>) allows us to easily change if
  * needed.  For instance, we may choose to identify tokens by
  * name and *type* in the future.

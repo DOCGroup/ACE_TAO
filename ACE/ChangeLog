@@ -1,3 +1,17 @@
+Fri Aug  4 07:57:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Asynch_IO.h:
+        * ace/Event_Handler.h:
+        * ace/Framework_Component_T.h:
+        * ace/Hash_Map_Manager_T.h:
+        * ace/IO_SAP.h:
+        * ace/Local_Tokens.h:
+        * ace/LSOCK_Connector.h:
+        * ace/Map_Manager.h:
+        * ace/Map_T.h:
+        * ace/WFM_Reactor.h:
+          Doxygen improvements
+
 Thu Aug  3 10:39:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Connector.h:

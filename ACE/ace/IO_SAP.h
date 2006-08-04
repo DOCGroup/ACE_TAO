@@ -28,7 +28,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 /**
  * @class ACE_IO_SAP
  *
- * @brief Defines the methods for the base class of the <ACE_IO_SAP>
+ * @brief Defines the methods for the base class of the ACE_IO_SAP
  * abstraction, which includes <ACE_FILE> and <ACE_DEV>.
  */
 class ACE_Export ACE_IO_SAP

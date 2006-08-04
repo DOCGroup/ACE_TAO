@@ -489,7 +489,7 @@ protected:
  * <WaitForMultipleObjects> when updates occur other than in the
  * main <ACE_WFMO_Reactor> thread.  To do this, we signal an
  * auto-reset event the <ACE_WFMO_Reactor> is listening on.  If
- * an ACE_Event_Handler and <ACE_Reactor_Mask> is passed to
+ * an ACE_Event_Handler and ACE_Reactor_Mask is passed to
  * <notify>, the appropriate <handle_*> method is dispatched.
  */
 class ACE_Export ACE_WFMO_Reactor_Notify : public ACE_Reactor_Notify

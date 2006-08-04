@@ -26,10 +26,10 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * @brief This class inherits the interface of the abstract
  * ACE_Framework_Component class and is instantiated with the
- * implementation of the concrete component class <class Concrete>.
+ * implementation of the concrete component class @c class Concrete.
  *
  * This design is similar to the Adapter and Decorator patterns
- * from the ``Gang of Four'' book.  Note that <class Concrete>
+ * from the ``Gang of Four'' book.  Note that @c class Concrete
  * need not inherit from a common class since ACE_Framework_Component
  * provides the uniform virtual interface!  (implementation based on
  * ACE_Dumpable_Adapter in <ace/Dump_T.h>.
