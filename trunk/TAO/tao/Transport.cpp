@@ -139,7 +139,7 @@ TAO_Transport::TAO_Transport (CORBA::ULong tag,
   , tcs_set_ (0)
   , first_request_ (1)
   , partial_message_ (0)
-#ifdef ACE_HAS_SENDFILE
+#if TAO_HAS_SENDFILE == 1
     // The ORB has been configured to use the MMAP allocator, meaning
     // we could/should use sendfile() to send data.  Cast once rather
     // here rather than during each send.  This assumes that all
@@ -148,7 +148,7 @@ TAO_Transport::TAO_Transport (CORBA::ULong tag,
   , mmap_allocator_ (
       dynamic_cast<TAO_MMAP_Allocator *> (
         orb_core->output_cdr_buffer_allocator ()))
-#endif  /* ACE_HAS_SENDFILE */
+#endif  /* TAO_HAS_SENDFILE==1 */
 {
   TAO_Client_Strategy_Factory *cf =
     this->orb_core_->client_factory ();
@@ -329,7 +329,7 @@ TAO_Transport::register_handler (void)
                               ACE_Event_Handler::READ_MASK);
 }
 
-#ifdef ACE_HAS_SENDFILE
+#if TAO_HAS_SENDFILE == 1
 ssize_t
 TAO_Transport::sendfile (TAO_MMAP_Allocator * /* allocator */,
                          iovec * iov,
@@ -346,7 +346,7 @@ TAO_Transport::sendfile (TAO_MMAP_Allocator * /* allocator */,
   //      -Ossama
   return this->send (iov, iovcnt, bytes_transferred, timeout);
 }
-#endif  /* ACE_HAS_SENDFILE */
+#endif  /* TAO_HAS_SENDFILE==1 */
 
 int
 TAO_Transport::generate_locate_request (
@@ -832,14 +832,14 @@ TAO_Transport::drain_queue_helper (int &iovcnt, iovec iov[])
   // ... send the message ...
   ssize_t retval = -1;
 
-#ifdef ACE_HAS_SENDFILE
+#if TAO_HAS_SENDFILE == 1
   if (this->mmap_allocator_)
     retval = this->sendfile (this->mmap_allocator_,
                              iov,
                              iovcnt,
                              byte_count);
   else
-#endif  /* ACE_HAS_SENDFILE */
+#endif  /* TAO_HAS_SENDFILE==1 */
     retval = this->send (iov, iovcnt, byte_count);
 
   if (TAO_debug_level == 5)

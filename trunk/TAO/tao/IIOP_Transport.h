@@ -84,13 +84,13 @@ protected:
                         size_t &bytes_transferred,
                         const ACE_Time_Value *timeout = 0);
 
-#ifdef ACE_HAS_SENDFILE
+#if TAO_HAS_SENDFILE == 1
   virtual ssize_t sendfile (TAO_MMAP_Allocator * allocator,
                             iovec * iov,
                             int iovcnt,
                             size_t &bytes_transferred,
                             ACE_Time_Value const * timeout = 0);
-#endif  /* ACE_HAS_SENDFILE */
+#endif  /* TAO_HAS_SENDFILE==1 */
 
 
   virtual ssize_t recv (char *buf,
