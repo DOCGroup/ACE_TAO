@@ -6,9 +6,9 @@
  *
  *  $Id$
  *
- *  This works on Win32 (#if defined (ACE_WIN32) && !defined
+ *  This works on Win32 (defined (ACE_WIN32) && !defined
  *  (ACE_HAS_WINCE)) platforms and on POSIX4 platforms with {aio_*}
- *  routines (#if defined (ACE_HAS_AIO_CALLS))
+ *  routines (defined (ACE_HAS_AIO_CALLS))
  *
  *  On Win32 platforms, the implementation of
  *  {ACE_Asynch_Transmit_File} and {ACE_Asynch_Accept} are only
