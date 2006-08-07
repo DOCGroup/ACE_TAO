@@ -1,43 +1,62 @@
+Mon Aug  7 19:29:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/EndpointPolicy.mpc:
+          Enabed regeneration of EndpointPolicyType.pidl:
+
+        * tao/EndpointPolicy/EndpointPolicy{A,C}.{h,cpp}:
+          Removed, not needed anymore
+
+        * tao/EndpointPolicy/EndpointPolicyType.pidl:
+          Include Policy_Forward.pidl, Policy.pidl pulls in too
+          much.
+
+        * tao/BiDIR_GIOP/BiDIR_GIOP.{h,cpp}:
+          Changed is_activated to a bool
+
+        * tao/Profile.cpp (decode):
+          Only get encap_len when ACE_NLOGGING is not defined, if it is
+          defined then we don't use this variable, so no need to get it.
+
 Mon Aug  7 17:06:52 UTC 2006  Yan Dai  <dai_y@ociweb.com>
 
         * tao/PortableServer/POAManagerFactory.cpp:
-        
+
           Removed hard coded policy checking in create_POAManager().
-          Instead, the TAO_Policy_Validator is used to validate the 
-          policies. 
-          
+          Instead, the TAO_Policy_Validator is used to validate the
+          policies.
+
         * tao/orbconf.h:
-          
+
           Fixed a bug that the TAO_CACHED_POLICY_ENDPOINT was set
           after TAO_CACHED_POLICY_MAX_CACHED. This would fix the
           access beyond cached_policies_ array bound problem.
-          
+
         * tao/EndpointPolicy/EndpointPolicy_Factory.cpp:
-        
+
           Fixed a bug in TAO_EndpointPolicy_Factory::create_policy()
           that initializes the local variable "found_one" to true which
           makes the supplied endpoints are never verified against
           the ORB listening endpoints.
-       
+
         * tao/EndpointPolicy/Endpoint_Acceptor_Filter.cpp:
         * tao/EndpointPolicy/Endpoint_Acceptor_Filter.h:
         * tao/EndpointPolicy/Endpoint_Acceptor_Filter_Factory.cpp:
-        
-          Fixed a bug that does not count all endpoints if multiple 
+
+          Fixed a bug that does not count all endpoints if multiple
           endpoint policies are supplied. Previously, it just counted
           the endpoints in the first endpoint policy.
-          
+
         * tao/EndpointPolicy/EndpointPolicy_i.cpp:
         * tao/EndpointPolicy/EndpointPolicy_i.h:
-        
-          Added virtual destructor and reset endpoint_list to length 0 
+
+          Added virtual destructor and reset endpoint_list to length 0
           when the policy is destroyed.
-          
+
         * tao/EndpointPolicy/IIOPEndpointValue_i.cpp:
 
-          Removed the duplicate of the const char* ("") since the 
+          Removed the duplicate of the const char* ("") since the
           CORBA::String_var constructor duplicates the string internally.
-          
+
 Mon Aug  7 11:41:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/IORManipulation/IOR.pidl:
