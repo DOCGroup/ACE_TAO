@@ -195,11 +195,6 @@ public:
    */
   ACE_HANDLE operator () (void);
 
-  /// This is a no-op and no longer does anything.  It's only here for
-  /// backwards compatibility.
-  /// @deprecated
-  void operator++ (void);
-
   /// Dump the state of an object.
   void dump (void) const;
 

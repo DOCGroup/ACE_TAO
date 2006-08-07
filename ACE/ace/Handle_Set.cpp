@@ -434,14 +434,6 @@ ACE_Handle_Set_Iterator::operator () (void)
 #endif /* ACE_WIN32 */
 }
 
-void
-ACE_Handle_Set_Iterator::operator++ (void)
-{
-  ACE_TRACE ("ACE_Handle_Set_Iterator::operator++");
-
-  // This is now a no-op.
-}
-
 ACE_Handle_Set_Iterator::ACE_Handle_Set_Iterator (const ACE_Handle_Set &hs)
   : handles_ (hs),
 #if !defined (ACE_HAS_BIG_FD_SET) || defined (ACE_WIN32)
