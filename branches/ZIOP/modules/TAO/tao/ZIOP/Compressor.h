@@ -7,6 +7,7 @@ namespace TAO
   {
     class BaseCompressor : public ::ZIOP::Compressor
     {
+      public:
       BaseCompressor (::ZIOP::CompressionLevel compression_level,
                       ::ZIOP::CompressorFactory_ptr compressor_factory) :
         compression_level_ (compression_level),

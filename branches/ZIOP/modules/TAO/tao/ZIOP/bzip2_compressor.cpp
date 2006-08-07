@@ -1,1 +1,1 @@
-#include "Compressor_Factory.h"
+#include "bzip2_compressor.h"
