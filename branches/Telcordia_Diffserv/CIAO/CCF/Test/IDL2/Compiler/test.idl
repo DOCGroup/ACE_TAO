@@ -1,0 +1,151 @@
+// file      : CCF/Test/IDL2/Compiler/test.idl
+// author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
+// cvs-id    : $Id$
+
+// Attribute
+//
+//
+module AttributeTest
+{
+  interface I
+  {
+    attribute long a;
+    attribute string foo;
+  };
+};
+
+// Interface
+//
+//
+module InterfaceTest
+{
+  abstract interface AI;
+  local interface LI;
+  interface I;
+
+  abstract interface AI
+  {
+  };
+
+  interface I : AI
+  {
+  };
+
+  local interface LI : I, AI
+  {
+  };
+};
+
+// Member
+//
+//
+module MemberTest
+{
+  typedef long Id;
+
+  struct S
+  {
+    Id id;
+    string foo, bar, baz;
+  };
+};
+
+// Module
+//
+//
+module ModuleTest
+{
+  module M
+  {
+    module N
+    {
+      typedef long L;
+    };
+  };
+
+  module M
+  {
+    typedef N::L L;
+  };
+
+  module N
+  {
+    typedef M::N::L L;
+  };
+};
+
+
+// Operation
+//
+//
+module OperationTest
+{
+  interface I
+  {
+    long f (in string a, out long b, inout octet c);
+  };
+};
+
+
+// Sequence
+//
+//
+module Sequence
+{
+  typedef sequence<octet> OctetSeq;
+
+  typedef OctetSeq RawSeq;
+
+  typedef sequence<string> StringSeq, StrSeq;
+};
+
+
+// Struct
+//
+//
+module StructTest
+{
+  struct S;
+
+  struct S
+  {
+    long m; // Struct cannot be empty.
+  };
+
+};
+
+// Typeid
+//
+//
+module TypeidTest
+{
+  interface I;
+
+  typeid I "Foo";
+  typeprefix TypeidTest "Bar";
+};
+
+
+// Typedef
+//
+//
+
+module TypedefTest
+{
+  interface I;
+
+  typedef I J;
+
+  interface I
+  {
+    /*
+    struct S
+    {
+      long l;
+    };
+
+    J::S op ();
+    */
+  };
+};
+
