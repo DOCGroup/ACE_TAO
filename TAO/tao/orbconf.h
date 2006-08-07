@@ -745,10 +745,14 @@ enum TAO_Cached_Policy_Type
 #endif /* TAO_HAS_CONNECTION_TIMEOUT_POLICY == 1 */
 
   TAO_CACHED_POLICY_BIDIRECTIONAL_GIOP,
+  
+  TAO_CACHED_POLICY_ENDPOINT,
 
-  TAO_CACHED_POLICY_MAX_CACHED,
-
-  TAO_CACHED_POLICY_ENDPOINT
+  /// NOTE: The "TAO_CACHED_POLICY_MAX_CACHED" should always be the last. 
+  ///       This value is used as the cached_policies_ array size in TAO_Policy_Set,
+  ///       Any policy type defined after "TAO_CACHED_POLICY_MAX_CACHED" will cause
+  ///       the policy access beyond bound problem.
+  TAO_CACHED_POLICY_MAX_CACHED
 };
 
 // This enum provides a mask that represent the scope at which a given

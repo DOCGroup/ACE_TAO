@@ -22,23 +22,40 @@ TAO_Endpoint_Acceptor_Filter_Factory::~TAO_Endpoint_Acceptor_Filter_Factory(void
  TAO_Endpoint_Acceptor_Filter_Factory::create_object (TAO_POA_Manager& poamanager)
 {
   CORBA::PolicyList& policies = poamanager.get_policies ();
-  EndpointPolicy::Policy_var policy;
+
+  EndpointPolicy::EndpointList endpoints;
   TAO_Acceptor_Filter* filter = 0;
-  for (CORBA::ULong i = 0; i < policies.length(); i++)
+
+  for (CORBA::ULong i = 0; i < policies.length(); ++i)
     {
       if (policies[i]->policy_type() == EndpointPolicy::ENDPOINT_POLICY_TYPE)
         {
-          policy = EndpointPolicy::Policy::_narrow (policies[i]);
-          ACE_NEW_RETURN (filter,
-                          TAO_Endpoint_Acceptor_Filter (policy.in()),
-                          0);
-          return filter;
+          EndpointPolicy::Policy_var cur_policy = EndpointPolicy::Policy::_narrow (policies[i]);
+          if (CORBA::is_nil (cur_policy.in ()))
+            return 0;
+          
+          EndpointPolicy::EndpointList_var cur_endpoints = cur_policy->value ();
+          CORBA::ULong cur_num_endpoints = cur_endpoints->length ();
+
+          CORBA::ULong num_endpoints = endpoints.length ();
+          endpoints.length (num_endpoints + cur_num_endpoints);
+
+          for (CORBA::ULong ii = 0; ii < cur_num_endpoints; ++ii)
+            {
+              endpoints[num_endpoints + ii] = cur_endpoints[ii];
+            }
         }
     }
-  // no policy was in force, just return a default filter
-  ACE_NEW_RETURN (filter,
-                  TAO_Default_Acceptor_Filter (),
-                  0);
+
+  if (endpoints.length () > 0)
+    ACE_NEW_RETURN (filter,
+                    TAO_Endpoint_Acceptor_Filter (endpoints),
+                    0);
+  else
+    // no policy was in force, just return a default filter
+    ACE_NEW_RETURN (filter,
+                    TAO_Default_Acceptor_Filter (),
+                    0);
 
   return filter;
 }
