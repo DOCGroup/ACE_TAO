@@ -64,10 +64,7 @@ namespace TAO
           )
           ACE_THROW_SPEC ((
             ::CORBA::SystemException
-          ))
-        {
-          // todo
-        }
+          )) = 0;
 
         virtual void add_sample (
             ::CORBA::ULongLong compressed_bytes,
