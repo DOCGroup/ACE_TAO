@@ -63,10 +63,10 @@ private:
 
   /// Flag to indicate whether the BiDirGIOP library has been
   /// activated.
-  static int is_activated_;
+  static bool is_activated_;
 };
 
-static int
+static bool
 TAO_Requires_BiDirGIOP_Initializer = TAO_BiDirGIOP_Loader::Initializer ();
 
 TAO_END_VERSIONED_NAMESPACE_DECL

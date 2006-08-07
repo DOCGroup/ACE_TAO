@@ -180,7 +180,6 @@ public:
   u_long operator () (PortableServer::Servant servant) const;
 };
 
-
 namespace PortableServer
 {
   typedef Servant_var<TAO_ServantBase> ServantBase_var;

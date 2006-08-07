@@ -24,7 +24,6 @@ project : taolib, core, portableserver, pi, tao_versioning_idl_defaults, tao_no_
   }
 
   PIDL_Files {
-    EndpointPolicy/EndpointPolicyType.pidl
   }
 
   IDL_Files {
@@ -35,6 +34,7 @@ project : taolib, core, portableserver, pi, tao_versioning_idl_defaults, tao_no_
     idlflags -= -St
     EndpointPolicy/EndpointPolicy.pidl
     EndpointPolicy/IIOPEndpointValue.pidl
+    EndpointPolicy/EndpointPolicyType.pidl
   }
 
   Pkgconfig_Files {
