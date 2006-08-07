@@ -12,7 +12,7 @@ ACE_RCSID (BiDir_GIOP,
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Set the flag to zero to start with
-int TAO_BiDirGIOP_Loader::is_activated_ = 0;
+bool TAO_BiDirGIOP_Loader::is_activated_ = false;
 
 TAO_BiDirGIOP_Loader::TAO_BiDirGIOP_Loader (void)
 {
@@ -26,7 +26,7 @@ int
 TAO_BiDirGIOP_Loader::init (int,
                             ACE_TCHAR* [])
 {
-  if (TAO_BiDirGIOP_Loader::is_activated_ == 0 && TAO_DEF_GIOP_MINOR >= 2)
+  if (TAO_BiDirGIOP_Loader::is_activated_ == false && TAO_DEF_GIOP_MINOR >= 2)
     {
       PortableInterceptor::ORBInitializer_ptr tmp_orb_initializer =
         PortableInterceptor::ORBInitializer::_nil ();
@@ -52,7 +52,7 @@ TAO_BiDirGIOP_Loader::init (int,
             ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          TAO_BiDirGIOP_Loader::is_activated_ = 1;
+          TAO_BiDirGIOP_Loader::is_activated_ = true;
         }
       ACE_CATCHANY
         {

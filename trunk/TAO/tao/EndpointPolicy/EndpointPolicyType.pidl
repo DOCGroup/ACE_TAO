@@ -20,7 +20,7 @@
 #ifndef _TAO_ENDPOINT_POLICY_TYPE_IDL_
 #define _TAO_ENDPOINT_POLICY_TYPE_IDL_
 
-#include "tao/Policy.pidl"
+#include "tao/Policy_Forward.pidl"
 
 module EndpointPolicy
 {

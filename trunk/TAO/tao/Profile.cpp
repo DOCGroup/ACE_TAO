@@ -159,7 +159,9 @@ TAO_Profile::encode (TAO_OutputCDR &stream) const
 int
 TAO_Profile::decode (TAO_InputCDR& cdr)
 {
+#if !defined (ACE_NLOGGING)
   size_t const encap_len = cdr.length ();
+#endif
 
   // Read and verify major, minor versions, ignoring profiles
   // whose versions we don't understand.
