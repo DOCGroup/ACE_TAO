@@ -95,6 +95,7 @@ project(Deployment_stub) : taolib_with_idl, valuetype, ifr_client, ciao_events_b
     ExecutionManager.idl
     RepositoryManager.idl
     ServerResources.idl
+    NetQoS.idl
     Deployment_Events.idl
   }
 
@@ -112,6 +113,7 @@ project(Deployment_stub) : taolib_with_idl, valuetype, ifr_client, ciao_events_b
     RepositoryManagerC.cpp
     NodeApplication_CallBackC.cpp
     ServerResourcesC.cpp
+    NetQoSC.cpp
     Deployment_EventsC.cpp
   }
 }
@@ -147,6 +149,7 @@ project(Deployment_svnt) : taolib_with_idl, portableserver, valuetype, ifr_clien
     NodeApp_CB_Impl.cpp
     NodeApplication_CallBackS.cpp
     ServerResourcesS.cpp
+    NetQoSS.cpp
     Deployment_EventsS.cpp
   }
 

@@ -12,6 +12,7 @@
 #include "Property_Handler.h"
 #include "cdp.hpp"
 #include "RT-CCM/SRD_Handler.h"
+#include "NetQoS/NetQoS_Handler.h"
 #include "RT-CCM/CIAOServerResources.hpp"
 #include "CIAO_Events/CIAOEvents_Handler.h"
 #include "CIAO_Events/CIAOEvents.hpp"
@@ -152,6 +153,23 @@ ACE_RCSID (Config_Handlers,
                 // Populate the property
                 this->idl_dp_->infoProperty [len].name = pstart->name ().c_str ();
                 this->idl_dp_->infoProperty [len].value <<= *(srd_handler.srd_idl ());
+              }
+            else if (pstart->name () == "CIAONetworkQoS")
+              {
+                /*
+                 * Hook for Network QoS 
+                 */
+
+
+                ACE_DEBUG ((LM_DEBUG,
+                            "Importing Network QoS...\n"));
+
+                // Parse the SR document
+                NetQoS_Handler netqos_handler (pstart->value ().value ().begin_string ()->c_str ());
+
+                // Populate the property
+                this->idl_dp_->infoProperty [len].name = pstart->name ().c_str ();
+                this->idl_dp_->infoProperty [len].value <<= *(netqos_handler.netqos_idl ());
               }
             else if (pstart->name () == "CIAOEvents")
               {

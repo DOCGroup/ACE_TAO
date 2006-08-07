@@ -15,7 +15,7 @@ ACE_RCSID (IIOPEndpointValue,
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 IIOPEndpointValue_i::IIOPEndpointValue_i ()
-  :host_(""),
+  :host_(CORBA::string_dup("")),
    port_(0)
 {
 }
