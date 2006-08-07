@@ -17,8 +17,22 @@ namespace TAO
         {
           if (!CORBA::is_nil (compressor_factory))
             {
-              // Search for compressor, if there, raise exception, if not
-              // add it
+              CORBA::ULong const length = this->factories_.length ();
+
+              for (CORBA::ULong i = 0; i < length; ++i)
+                {
+                  ::ZIOP::CompressorId const current =
+                    this->factories_[i]->compressor_id ();
+
+                  if (compressor_factory->compressor_id () == current)
+                    {
+                      // exception
+                    }
+
+                }
+
+              factories_.length (length + 1);
+              factories_[length] = ::ZIOP::CompressorFactory::_duplicate (compressor_factory);
             }
           else
             {
@@ -33,6 +47,25 @@ namespace TAO
             ::ZIOP::UnknownCompressorId
           ))
         {
+          CORBA::ULong const length = this->factories_.length ();
+
+          for (CORBA::ULong i = 0; i < length; ++i)
+            {
+              ::ZIOP::CompressorId const current =
+                this->factories_[i]->compressor_id ();
+
+              if (current != compressor_id)
+                {
+                  continue;
+                }
+
+              this->factories_[i] = ::ZIOP::CompressorFactory::_nil ();
+              // make sequence smaller
+            }
+
+          // todo exception
+//          return ::ZIOP::CompressorFactory::_nil ();
+
           // search for id, if not there, raise exception, if there,
           // remove it
         }

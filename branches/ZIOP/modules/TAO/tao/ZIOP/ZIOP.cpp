@@ -1,4 +1,4 @@
-//#include "tao/BiDir_GIOP/BiDir_ORBInitializer.h"
+#include "tao/ZIOP/ZIOP_ORBInitializer.h"
 #include "tao/ZIOP/ZIOP.h"
 //#include "tao/BiDir_GIOP/BiDirPolicy_Validator.h"
 #include "tao/ORB_Core.h"
@@ -26,18 +26,18 @@ int
 TAO_ZIOP_Loader::init (int,
                             ACE_TCHAR* [])
 {
-  /*if (TAO_ZIOP_Loader::is_activated_ == 0 && TAO_DEF_GIOP_MINOR >= 2)
+  if (TAO_ZIOP_Loader::is_activated_ == 0 && TAO_DEF_GIOP_MINOR >= 2)
     {
       PortableInterceptor::ORBInitializer_ptr tmp_orb_initializer =
         PortableInterceptor::ORBInitializer::_nil ();
-      PortableInterceptor::ORBInitializer_var bidir_orb_initializer;
+      PortableInterceptor::ORBInitializer_var ziop_orb_initializer;
 
       ACE_DECLARE_NEW_CORBA_ENV;
       ACE_TRY
         {
           /// Register the BiDir ORBInitializer.
           ACE_NEW_THROW_EX (tmp_orb_initializer,
-                            TAO_BiDir_ORBInitializer,
+                            TAO_ZIOP_ORBInitializer,
                             CORBA::NO_MEMORY (
                                 CORBA::SystemException::_tao_minor_code (
                                     TAO::VMCID,
@@ -45,10 +45,10 @@ TAO_ZIOP_Loader::init (int,
                                 CORBA::COMPLETED_NO));
           ACE_TRY_CHECK;
 
-          bidir_orb_initializer = tmp_orb_initializer;
+          ziop_orb_initializer = tmp_orb_initializer;
 
           PortableInterceptor::register_orb_initializer (
-            bidir_orb_initializer.in ()
+            ziop_orb_initializer.in ()
             ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
@@ -64,7 +64,7 @@ TAO_ZIOP_Loader::init (int,
           return -1;
         }
       ACE_ENDTRY;
-    }*/
+    }
 
   return 0;
 }
