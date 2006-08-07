@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<xsd:schema targetNamespace="http://www.dre.vanderbilt.edu/NetQoSRequirements" 
+            xmlns:CIAO="http://www.dre.vanderbilt.edu/NetQoSRequirements"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+            attributeFormDefault="unqualified">
+  <!--<xsd:import namespace="http://www.omg.org/Deployment" schemaLocation="file:///opt/RACE/ACE_wrappers/TAO/CIAO/docs/schema/Deployment.xsd" />-->
+  <xsd:element name="NetQoSRequirements" type="CIAO:NetQoSRequirementsDef">
+    <xsd:annotation>
+      <xsd:documentation>
+        Root element for defining the network QoS requirements
+        used by a DeploymentPlan. A CIAO:NetQoSRequirements document should reside in a separate file.
+        A DeploymentPlan can refer to one or more CIAO:NetQoSRequirements 
+        file names using the "infoProperty" tag.  
+      </xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+
+  <xsd:complexType name="NetQoSRequirementsDef">
+    <xsd:annotation>
+      <xsd:documentation>
+        A list of structures - one per connection - that describe
+        the QoS required on each of the connections.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="connectionQoS" type="CIAO:ConnectionQoS" maxOccurs="unbounded" />
+    </xsd:sequence>
+    <xsd:attribute name="id" type="xsd:ID" />
+  </xsd:complexType>
+
+  <!-- ================================================================ -->
+  <xsd:simpleType name="NetworkQoS">
+    <xsd:restriction base="xsd:NCName">
+      <xsd:enumeration value="HIGH_PRIORITY" />
+      <xsd:enumeration value="HIGH_RELIABILITY" />
+      <xsd:enumeration value="VOICE" />
+      <xsd:enumeration value="VIDEO" />
+      <!-- included for completeness, though if you want best effort	-->
+      <!-- just don't specify any QoS info for a connection		-->
+      <xsd:enumeration value="BEST_EFFORT" />
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <!-- ================================================================ -->
+  <xsd:simpleType name="AdmissionPriority">
+    <xsd:restriction base="xsd:NCName">
+      <xsd:enumeration value="NORMAL" />
+      <!-- default -->
+      <xsd:enumeration value="HIGH" />
+      <xsd:enumeration value="LOW" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- =============================================================== -->
+
+  <xsd:complexType name="ConnectionQoS">
+    <xsd:annotation>
+      <xsd:documentation>
+        Describes the QoS required for the connection.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <!-- This may be more than necessary, but should be sufficient	-->
+      <!-- to identify the instances on the ends of the connection	-->
+      <xsd:element name="connectionName" type="xsd:string" maxOccurs="unbounded"/>
+      <!-- BW in KB/s from receptacle to facet				-->
+      <xsd:element name="fwdBW" type="xsd:unsignedInt" />
+      <!-- BW in KB/s from facet to receptacle				-->
+      <xsd:element name="revBW" type="xsd:unsignedInt" />
+      <!-- required QoS for this connection				-->
+      <xsd:element name="qos" type="CIAO:NetworkQoS" />
+      <!-- (optional) priority to be used when re-admitting flows	-->
+      <!-- after a network fault.					-->
+      <xsd:element name="admissionPriority" type="CIAO:AdmissionPriority" minOccurs="0" />
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

@@ -1,0 +1,21 @@
+// $Id: $
+
+project (NetQoS_Handler) : acelib, ciao_deployment_stub, xerces {
+  sharedname = NetQoS_Config_Handler
+  dynamicflags   = NETQOS_HANDLER_BUILD_DLL
+  macros   += XML_USE_PTHREADS
+  requires += exceptions
+  includes += $(CIAO_ROOT)/tools/Config_Handlers
+  after    += CIAO_XML_Utils
+  libs     += CIAO_XML_Utils
+  includes += $(CIAO_ROOT)/ciao
+
+  Source_Files {
+        NetQoSRequirements.cpp
+        NetQoS_Handler.cpp
+        }
+
+  Header_Files {
+  }
+}
+

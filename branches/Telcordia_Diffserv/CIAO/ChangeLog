@@ -1,3 +1,21 @@
+Mon Aug  7 21:31:29 UTC 2006  Sumant Tambe  <sutambe@nospam>
+
+        Added the NetQoS XML schema, the NetQoSRequirements IDL and the 
+        configuration handler code.
+
+        * ciao/NetQoS.idl:
+
+        * docs/schema/NetQoSRequirements.xsd:
+
+        * tools/Config_Handlers/NetQoS:
+
+        * tools/Config_Handlers/NetQoS/NetQoSRequirements.hpp:
+        * tools/Config_Handlers/NetQoS/NetQoSRequirements.cpp:
+        * tools/Config_Handlers/NetQoS/NetQoS_Handler.h:
+        * tools/Config_Handlers/NetQoS/NetQoS_Handler.cpp:
+        * tools/Config_Handlers/NetQoS/NetQoS_Handler.mpc:
+        * tools/Config_Handlers/NetQoS/NetQoS_Handler_Export.h:
+
 Fri Aug  4 21:40:46 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * docs/tutorials/CoSMIC/01.html
@@ -6,18 +24,18 @@ Fri Aug  4 21:40:46 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
         * docs/tutorials/CoSMIC/04.html
         * docs/tutorials/CoSMIC/style.css
         * docs/tutorials/CoSMIC/index.html
-        
+
           Style fixes, grammatical and spelling corrections, clarifications.
-        
+
 Thu Aug  3 20:38:39 UTC 2006  Nanbor Wang  <nanbor (at) txcorp (dot) com>
 
         * DAnCE/NodeManager/NodeManager_Impl.cpp:
         * DAnCE/NodeApplicationManager/ImplementationInfo.cpp:
         * DAnCE/NodeApplicationManager/Containers_Info_Map.cpp:
         * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
-          
-          Fixed RT-CCM support.  
-        
+
+          Fixed RT-CCM support.
+
 Thu Aug  3 15:33:11 UTC 2006  Boris Kolpackov  <boris@kolpackov.net>
 
         * docs/cidlc.html:
@@ -106,21 +124,21 @@ Thu Jul 20 22:03:31 UTC 2006  Nanbor Wang  <nanbor (at) txcorp (dot) com>
 Thu Jul 20 01:10:58 UTC 2006  Vipul Singh  <vipuls@dre.vanderbilt.edu>
 
         * DAnCE/RepositoryManager/PC_Updater.cpp: Removed the variable name
-	  from the arguments in function definition in empty functions to
-	  fix warnings.
+          from the arguments in function definition in empty functions to
+          fix warnings.
 
         * DAnCE/RepositoryManager/RepositoryManager_Impl.h: Changed declaration
-	  at a few places from const static to static const to fix a few
-	  warnings, also removed an unnecessarily defined namespace.
+          at a few places from const static to static const to fix a few
+          warnings, also removed an unnecessarily defined namespace.
 
         * DAnCE/RepositoryManager/RepositoryManager_Impl.cpp: Made a few
-	  changes to fix the warnings and to keep the code in sync with
-	  the changes made to RepositoryManager_Impl.h. Fixed code which
-	  passed non POD types to a varargs function(ACE_DEBUG) which
-	  resulted in aborts at runtime.
+          changes to fix the warnings and to keep the code in sync with
+          the changes made to RepositoryManager_Impl.h. Fixed code which
+          passed non POD types to a varargs function(ACE_DEBUG) which
+          resulted in aborts at runtime.
 
         * DAnCE/RepositoryManager/URL_Parser.cpp: Assigned value to ptr before
-	  if condition to fix a few warnings.
+          if condition to fix a few warnings.
 
 Wed Jul 19 08:00:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
