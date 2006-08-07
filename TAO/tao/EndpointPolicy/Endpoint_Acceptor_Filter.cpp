@@ -16,8 +16,8 @@ ACE_RCSID(EndpointPolicy,
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Endpoint_Acceptor_Filter::TAO_Endpoint_Acceptor_Filter (EndpointPolicy::Policy_ptr p)
-: endpoints_(p->value())
+TAO_Endpoint_Acceptor_Filter::TAO_Endpoint_Acceptor_Filter (const EndpointPolicy::EndpointList & eps)
+: endpoints_(eps)
 {
 }
 
@@ -28,7 +28,7 @@ TAO_Endpoint_Acceptor_Filter::fill_profile (const TAO::ObjectKey &object_key,
                                             TAO_Acceptor **acceptors_end,
                                             CORBA::Short priority)
 {
-  CORBA::ULong const num_endpoints = endpoints_->length ();
+  CORBA::ULong const num_endpoints = endpoints_.length ();
 
   for (TAO_Acceptor** acceptor = acceptors_begin;
        acceptor != acceptors_end;

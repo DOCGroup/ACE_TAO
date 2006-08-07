@@ -47,7 +47,7 @@ class TAO_EndpointPolicy_Export TAO_Endpoint_Acceptor_Filter
   : public TAO_Default_Acceptor_Filter
 {
 public:
-  TAO_Endpoint_Acceptor_Filter (EndpointPolicy::Policy_ptr p);
+  TAO_Endpoint_Acceptor_Filter (const EndpointPolicy::EndpointList & eps);
 
   /// Populate @a mprofile with endpoints match the POAManager endpoint 
   /// policy.
@@ -60,7 +60,7 @@ public:
 private:
   // this is the list of endpoints as obtained from the policy value supplied
   // to the constructor.
-  EndpointPolicy::EndpointList_var endpoints_;
+  EndpointPolicy::EndpointList endpoints_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

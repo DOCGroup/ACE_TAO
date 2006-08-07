@@ -53,7 +53,7 @@ TAO_EndpointPolicy_Factory::create_policy (
     // at least one endpoint in the list matches an endpoint the
     // ORB is listening on.
 
-    bool found_one = true;
+    bool found_one = false;
     for (CORBA::ULong idx = 0; !found_one && idx < num_eps; ++idx)
     {
       CORBA::ULong prot_tag = (*endpoint_list)[idx]->protocol_tag();

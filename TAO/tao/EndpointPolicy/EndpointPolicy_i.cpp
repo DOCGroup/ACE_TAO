@@ -26,6 +26,11 @@ TAO_EndpointPolicy_i::TAO_EndpointPolicy_i (const TAO_EndpointPolicy_i &rhs)
 {
 }
 
+TAO_EndpointPolicy_i::~TAO_EndpointPolicy_i ()
+{
+}
+
+
 CORBA::PolicyType
 TAO_EndpointPolicy_i::policy_type (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
@@ -72,6 +77,7 @@ void
 TAO_EndpointPolicy_i::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  this->value_.length (0);
 }
 
 TAO_Cached_Policy_Type

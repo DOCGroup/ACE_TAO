@@ -2,7 +2,6 @@
 
 #include "tao/PortableServer/POAManagerFactory.h"
 #include "tao/PortableServer/POAManager.h"
-#include "tao/EndpointPolicy/EndpointPolicyTypeC.h"
 
 #include "ace/OS_NS_string.h"
 
@@ -39,16 +38,32 @@ TAO_POAManager_Factory::create_POAManager (
                      ::PortableServer::POAManagerFactory::ManagerAlreadyExists,
                      ::CORBA::PolicyError))
 {
-  if (policies.length () > 1
-    || (policies.length () == 1 &&
-        policies[0]->policy_type () != EndpointPolicy::ENDPOINT_POLICY_TYPE))
-  {
-    ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY),
-                      ::PortableServer::POAManager::_nil ());
-  }
+  // Validate the policy.
+  TAO_POA_Policy_Set tao_policies (TAO_POA_Policy_Set (this->object_adapter_.default_poa_policies ()));
 
-  PortableServer::POAManager_var poamanager =
-    PortableServer::POAManager::_nil ();
+  // Merge policies from the ORB level.
+  this->object_adapter_.validator ().merge_policies (tao_policies.policies ()
+                                                      ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (::PortableServer::POAManager::_nil ());
+
+  // Merge in any policies that the user may have specified.
+  tao_policies.merge_policies (policies
+                              ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (::PortableServer::POAManager::_nil ());
+
+  // If any of the policy objects specified are not valid for the ORB
+  // implementation, if conflicting policy objects are specified, or
+  // if any of the specified policy objects require prior
+  // administrative action that has not been performed, an
+  // InvalidPolicy exception is raised containing the index in the
+  // policies parameter value of the first offending policy object.
+  tao_policies.validate_policies (this->object_adapter_.validator (),
+                                  this->object_adapter_.orb_core ()
+                                  ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (::PortableServer::POAManager::_nil ());
+
+  PortableServer::POAManager_var poamanager;
+
   if (id != 0)
   {
     poamanager = this->find (id ACE_ENV_ARG_PARAMETER);
@@ -78,7 +93,7 @@ TAO_POAManager_Factory::create_POAManager (
 
   this->register_poamanager (poamanager.in ());
 
-  return PortableServer::POAManager::_duplicate (poamanager.in ());
+  return poamanager._retn ();
 }
 
 ::PortableServer::POAManagerFactory::POAManagerSeq *
