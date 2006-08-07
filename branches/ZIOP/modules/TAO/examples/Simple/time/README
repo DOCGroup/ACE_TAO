@@ -1,0 +1,89 @@
+$Id$
+
+This is a simple CORBA example that has an object (Time) with two
+methods: one that returns the current time of day and another that
+shuts down the server.  There are clients programs written in both C++
+and Java to access the simple Time service.  The Java client uses
+JACE's GetOpt class to parse the command line arguments.  See
+
+  http://www.cs.wustl.edu/~schmidt/JACE.html
+  http://ace.cs.wustl.edu/cvsweb/ace-latest.cgi/ACE_wrappers/java/JACE/Misc/GetOpt.java
+
+for more details.
+
+run_test.pl : This is a perl script to run the server and client as :
+------------
+	      server -o ior_file
+	      client -f ior_file
+
+This perl script runs the server and client and shuts down the server
+when it is done.
+
+Passing the Server IOR to Clients:
+---------------------------------
+
+To keep this example simple, the server advertises its IOR in the
+following manner - The server program writes its server object's IOR
+to a ior_file.  Later on, the client reads this IOR from the specified
+ior_file and uses the <string_to_object> method to obtain a reference
+to the server object.
+
+For this mechanism to work, the file must be readable and writable. If
+it doesn't exist, a new file is created by the server.  Moreover, the
+file path must be accessible to both the client and server.
+
+If the client and server are on different machine, then there must be
+a shared directory accessible by both. On UNIX system's this is
+typically done via the NFS mount command.  On Windows, the 'explorer'
+application provides an option to share drives.
+
+In general if no such file sharing option is available, then using the
+the Naming Service mechanism is the only alternative, as descrbed by
+the -n option below.
+
+server:
+-------
+
+server [-nd] [-o <ior_output_file>]
+
+Options:
+-------
+-o    Outputs the server ior to the file
+
+When the server is started, you should see as the first line of output
+something that looks like
+        iiop:1.0//danzon.cs.wustl.edu:10015/P35ad159600081a38/child_poa/server
+        (-ORBobjrefstyle url)
+or
+        IOR:000000000000001649444c3a43756269745...
+        (-ORBobjrefstyle ior)
+
+The -o option makes it easier to run from a script because the ior
+passing is done through the <ior_output_file>.
+
+-d    Debug flag
+-n    Use the naming service
+
+Using -d turns on debugging messages.  This option is additive, i.e.,
+the more -d options provided, the more debugging you can get.  At the
+moment, only 2 levels of debugging are implemented, and more than 2 -d
+options are ignored.
+
+client:
+-------
+
+client [-d] [-x] [-f <Server_ior_file>] [-n iterations] [-k ior]
+
+Options:
+-------
+-d    Debug flag
+-x    Tells the server to shutdown at the end of the test.
+-f    Reads the server ior from the file
+-n    Use the naming service
+-k    IOR or The IOR can also be given in the format like file://[file.ior]
+      with the full path
+
+You can either cut and paste the IOR from the server to the client
+(with the -k option), or have the client read the IOR from a file
+using the -f option. (This file is produced using the -o option with the
+server.)

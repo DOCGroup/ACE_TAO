@@ -1,0 +1,5 @@
+// $Id$
+
+project: namingexe, iortable, core, dsnotifylogadmin_serv, valuetype {
+  exename   = Notify_Logging_Service
+}
