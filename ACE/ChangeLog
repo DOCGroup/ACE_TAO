@@ -1,3 +1,8 @@
+Mon Aug  7 08:02:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Handle_Set.{h,cpp}:
+          Removed operator++, it is deprecated and nothing more then a noop
+
 Fri Aug  4 07:57:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Asynch_IO.h:
