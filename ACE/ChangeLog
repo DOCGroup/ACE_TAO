@@ -1,3 +1,16 @@
+Tue Aug  8 09:15:00 UTC 2006  Simon Massey  <sma@prismtech.com>
+
+        * ace/OS_Memory.h
+        * ace/config-win32-msvc.h
+        * bin/MakeProjectCreator/config/ace_mfc.mpb
+        * bin/MakeProjectCreator/config/acedefaults.mpb
+
+          Chad's fix for MPC building MFC projects. Correction for
+          Thu Apr 27 21:04:08 UTC 2006  Steve Huston  <shuston@riverace.com>
+          throw CMemoryException on out-of-memory condition. These
+          exceptions must be caught by pointer and thrown via calling
+          AfxThrowMemoryException ().
+
 Tue Aug  8 08:06:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Select_Reactor_Base.cpp:

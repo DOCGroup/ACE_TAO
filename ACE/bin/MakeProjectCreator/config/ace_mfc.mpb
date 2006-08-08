@@ -1,6 +1,6 @@
 // -*- MPC -*-
 // $Id$
 
-project: mfc {
+feature(mfc): mfc {
   macros += ACE_HAS_MFC=1
 }

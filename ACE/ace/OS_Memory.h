@@ -145,19 +145,39 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #  elif defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB)
 #    include /**/ <new>
 #    if !defined (ACE_bad_alloc)
-#      define ACE_bad_alloc std::bad_alloc
+       // MFC changes the behavior of operator new at all MSVC versions from 6 up.
+#      if defined (ACE_HAS_MFC) && (ACE_HAS_MFC == 1)
+#        define ACE_bad_alloc CMemoryException*
+#      else
+#        define ACE_bad_alloc std::bad_alloc
+#      endif
 #    endif
 #    define ACE_nothrow   std::nothrow
 #    define ACE_nothrow_t std::nothrow_t
-#    define ACE_throw_bad_alloc throw ACE_bad_alloc ()
+     // MFC changes the behavior of operator new at all MSVC versions from 6 up.
+#    if defined (ACE_HAS_MFC) && (ACE_HAS_MFC == 1)
+#      define ACE_throw_bad_alloc AfxThrowMemoryException ()
+#    else
+#      define ACE_throw_bad_alloc throw ACE_bad_alloc ()
+#    endif
 #  else
 #    include /**/ <new>
 #    if !defined (ACE_bad_alloc)
-#      define ACE_bad_alloc bad_alloc
+       // MFC changes the behavior of operator new at all MSVC versions from 6 up.
+#      if defined (ACE_HAS_MFC) && (ACE_HAS_MFC == 1)
+#        define ACE_bad_alloc CMemoryException*
+#      else
+#        define ACE_bad_alloc bad_alloc
+#      endif
 #    endif
 #    define ACE_nothrow   nothrow
 #    define ACE_nothrow_t nothrow_t
-#    define ACE_throw_bad_alloc throw ACE_bad_alloc ()
+     // MFC changes the behavior of operator new at all MSVC versions from 6 up.
+#    if defined (ACE_HAS_MFC) && (ACE_HAS_MFC == 1)
+#      define ACE_throw_bad_alloc AfxThrowMemoryException ()
+#    else
+#      define ACE_throw_bad_alloc throw ACE_bad_alloc ()
+#    endif
 #  endif /* __HP_aCC */
 
 #  if defined (ACE_HAS_NEW_NOTHROW)

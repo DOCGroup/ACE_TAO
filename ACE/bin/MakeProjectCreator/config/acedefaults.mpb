@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project: zlib, zzip, ipv6 {
+project: zlib, zzip, ipv6, ace_mfc {
   staticflags += ACE_AS_STATIC_LIBS
   includes    += $(ACE_ROOT)
   libpaths    += $(ACE_ROOT)/lib
