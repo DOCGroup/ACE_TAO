@@ -255,6 +255,10 @@ ACE_TP_Reactor::dispatch_i (ACE_Time_Value *max_wait_time,
   int event_count =
     this->get_event_for_dispatching (max_wait_time);
 
+  // We use this count to detect potential infinite loops as described
+  // in bug 2540.
+  int initial_event_count = event_count;
+
   int result = 0;
 
   // Note: We are passing the <event_count> around, to have record of
@@ -310,8 +314,14 @@ ACE_TP_Reactor::dispatch_i (ACE_Time_Value *max_wait_time,
   if (event_count > 0)
     {
       // Handle socket events
-      return this->handle_socket_events (event_count,
-                                         guard);
+      result = this->handle_socket_events (event_count,
+                                           guard);
+    }
+
+  if (event_count != 0
+      && event_count == initial_event_count)
+    {
+      this->state_changed_ = true;
     }
 
   return 0;
