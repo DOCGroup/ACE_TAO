@@ -1,3 +1,8 @@
+Tue Aug  8 07:53:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * CIAO-INSTALL.html:
+          Removed vc6 info
+
 Fri Aug  4 21:40:46 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * docs/tutorials/CoSMIC/01.html
@@ -6,18 +11,18 @@ Fri Aug  4 21:40:46 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
         * docs/tutorials/CoSMIC/04.html
         * docs/tutorials/CoSMIC/style.css
         * docs/tutorials/CoSMIC/index.html
-        
+
           Style fixes, grammatical and spelling corrections, clarifications.
-        
+
 Thu Aug  3 20:38:39 UTC 2006  Nanbor Wang  <nanbor (at) txcorp (dot) com>
 
         * DAnCE/NodeManager/NodeManager_Impl.cpp:
         * DAnCE/NodeApplicationManager/ImplementationInfo.cpp:
         * DAnCE/NodeApplicationManager/Containers_Info_Map.cpp:
         * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
-          
-          Fixed RT-CCM support.  
-        
+
+          Fixed RT-CCM support.
+
 Thu Aug  3 15:33:11 UTC 2006  Boris Kolpackov  <boris@kolpackov.net>
 
         * docs/cidlc.html:
