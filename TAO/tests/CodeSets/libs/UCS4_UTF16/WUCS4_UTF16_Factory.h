@@ -16,7 +16,7 @@
 
 #include /**/ "ace/pre.h"
 #include "ace/Service_Config.h"
-#include "tao/Codeset_Translator_Factory.h"
+#include "tao/Codeset/Codeset_Translator_Factory.h"
 
 #include "WUCS4_UTF16_export.h"
 #include "WUCS4_UTF16.h"
