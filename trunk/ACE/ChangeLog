@@ -1,3 +1,9 @@
+Tue Aug  8 09:28:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE-INSTALL.html:
+          Removed some parts of the VxWorks building instructions because
+          it was really wrong what was said
+
 Tue Aug  8 09:15:00 UTC 2006  Simon Massey  <sma@prismtech.com>
 
         * ace/OS_Memory.h
