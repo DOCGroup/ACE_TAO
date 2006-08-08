@@ -33,7 +33,7 @@ to run TAO on:<P>
     <td><b>Fully supported, i.e., continually tested and used daily</b></td>
     <td>Solaris 7, 8 and 9, Windows 2000/XP (7.1, and 8.0 and
         Borland C++ Builder 6/2006), Linux/Intel (Redhat,
-        Debian and SuSe), Linux/Alpha (SuSe), VxWorks 5.5.1/6.2, OpenVMS 8.2
+        Debian and SuSe), Linux/Alpha (SuSe), VxWorks 5.5.1/6.2/6.3, OpenVMS 8.2
     </td>
   </tr>
   <tr valign=top bgcolor="#AFAFAF">
@@ -381,13 +381,13 @@ project </a> file.</P>
       tests and examples are set up to transparently use one or the
       other.
  <P>
-  <LI>Load the workspace <CODE>$TAO_ROOT\TAO.dsw</CODE> and build the TAO
-      library. This workspace has almost all the projects under TAO
+  <LI>Load the solution <CODE>$TAO_ROOT\TAO.sln</CODE> and build the TAO
+      library. This solution has almost all the projects under TAO
       which can be built. Therefore please pick and choose projects
       that you want to build.<P>
 
-  <LI>To build the Param_Test, load the workspace
-      <CODE>tests\tests.dsw</CODE>
+  <LI>To build the Param_Test, load the solution
+      <CODE>tests\tests.sln</CODE>
       and build both client and server. <P>
 </OL>
 
@@ -431,7 +431,7 @@ C/C++ settings under Input.</P>
 <H4>Creating Static Libraries (*.lib)</H4>
 
 <P> Instructions for dynamic libraries apply to static libraries as
-well. Users will have to use _Static.dsw's and _Static.sln files for
+well. Users will have to use the _Static.sln files for
 creating static libraries and linking with them.
 
 <H4>MinGW and Cygwin</H4> <P>
