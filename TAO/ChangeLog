@@ -1,3 +1,11 @@
+Tue Aug  8 14:13:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/tests/Codesets/libs/IBM1047_ISO8859/Char_IBM1047_ISO8859_Factory.h:
+        * tao/tests/Codesets/libs/IBM1047_ISO8859/Wchar_IBM1047_ISO8859_Factory.h:
+        * tao/tests/Codesets/libs/UCS4_UTF16/WUCS4_UTF16_Factory.h:
+          Updated includes because of the removal of Codeset_Translator_Factory.h
+          from the core TAO directory
+
 Tue Aug  8 09:38:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
