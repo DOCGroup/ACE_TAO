@@ -151,7 +151,7 @@ template <class ACE_SELECT_REACTOR_TOKEN> int
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::restart (int r)
 {
   ACE_MT (ACE_GUARD_RETURN (ACE_SELECT_REACTOR_TOKEN, ace_mon, this->token_, -1));
-  int current_value = this->restart_;
+  int const current_value = this->restart_;
   this->restart_ = r;
   return current_value;
 }
@@ -213,13 +213,11 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::notify (ACE_Event_Handler *eh,
 {
   ACE_TRACE ("ACE_Select_Reactor_T::notify");
 
-  ssize_t n = 0;
-
   // Pass over both the Event_Handler *and* the mask to allow the
   // caller to dictate which Event_Handler method the receiver
   // invokes.  Note that this call can timeout.
 
-  n = this->notify_handler_->notify (eh, mask, timeout);
+  ssize_t n = this->notify_handler_->notify (eh, mask, timeout);
   return n == -1 ? -1 : 0;
 }
 
@@ -810,7 +808,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::notify_handle
   if (event_handler == 0)
     return;
 
-  int reference_counting_required =
+  bool const reference_counting_required =
     event_handler->reference_counting_policy ().value () ==
     ACE_Event_Handler::Reference_Counting_Policy::ENABLED;
 
@@ -1045,10 +1043,10 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::work_pending
     this->timer_queue_->calculate_timeout (&mwt, &timer_buf);
 
   // Check if we have timers to fire.
-  int timers_pending =
+  int const timers_pending =
     (this_timeout != 0 && *this_timeout != mwt ? 1 : 0);
 
-  u_long width = (u_long) this->handler_rep_.max_handlep1 ();
+  u_long const width = (u_long) this->handler_rep_.max_handlep1 ();
 
   ACE_Select_Reactor_Handle_Set fd_set;
   fd_set.rd_mask_ = this->wait_set_.rd_mask_;
