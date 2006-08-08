@@ -1,4 +1,5 @@
 #include <orb.idl>
+#include "tao/Policy.pidl"
 
 module ZIOP
 {
@@ -8,8 +9,8 @@ module ZIOP
         typedef unsigned long CompressorId;
         typedef unsigned long CompressionLevel;
         const unsigned long TAG_IONA_ZIOP_COMPONENT = 1230266182;
-        const unsigned long COMPRESSION_ENABLING_POLICY_ID = 1230266247;
-        const unsigned long COMPRESSOR_ID_POLICY_ID = 1230266248;
+        const CORBA::PolicyType COMPRESSION_ENABLING_POLICY_ID = 1230266247;
+        const CORBA::PolicyType COMPRESSOR_ID_POLICY_ID = 1230266248;
         local interface CompressorFactory;
         local interface Compressor
         {

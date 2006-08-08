@@ -75,6 +75,51 @@ private:
   ::ZIOP::CompressorId value_;
 
 };
+
+/**
+ * @class CompressionEnablingPolicy
+ *
+ * @brief  Implementation of the ZIOP::CompressionEnablingPolicy
+ */
+class CompressionEnablingPolicy
+  : public virtual ::ZIOP::CompressionEnablingPolicy
+  , public virtual TAO_Local_RefCounted_Object
+{
+public:
+
+  /// Constructor.
+  CompressionEnablingPolicy (const ::CORBA::Boolean val);
+
+  /// Copy constructor.
+  CompressionEnablingPolicy (const CompressionEnablingPolicy &rhs);
+
+  /// Returns a copy of <this>.
+  virtual CompressionEnablingPolicy *clone (void) const;
+
+  /// = The ZIOP::BidirectionalPolicy methods
+  virtual ::CORBA::Boolean compression_enabled (
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
+
+  virtual CORBA::PolicyType policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  virtual CORBA::Policy_ptr copy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  virtual TAO_Cached_Policy_Type _tao_cached_type (void) const;
+
+private:
+
+  /// The attribute
+  ::CORBA::Boolean value_;
+
+};
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
