@@ -1,3 +1,8 @@
+Tue Aug  8 07:11:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Select_Reactor_T.cpp (dump):
+          Removed usage of not needed operator++ on the handle set
+
 Mon Aug  7 08:02:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Handle_Set.{h,cpp}:
