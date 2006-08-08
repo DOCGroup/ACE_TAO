@@ -286,8 +286,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core, tao_vers
     Codeset_Manager.h
     Codeset_Manager_Factory_Base.h
     Codeset_Translator_Base.h
-//    Codeset_Translator_Factory.h  *** file is for backwardscompatibility only
-//                                  *** there should be no dependencies on it
     Collocated_Invocation.h
     Collocation_Proxy_Broker.h
     Collocation_Resolver.h
