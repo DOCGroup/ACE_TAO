@@ -6,7 +6,7 @@
 #include "tao/debug.h"
 #include "tao/ORB_Constants.h"
 
-ACE_RCSID (TAO,
+ACE_RCSID (BiDir_GIOP,
            BiDir_Policy_i,
            "$Id$")
 
