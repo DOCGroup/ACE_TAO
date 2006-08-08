@@ -4,6 +4,7 @@
 
 #include "tao/ZIOP/ZIOP.h"
 #include "tao/ZIOP/Compression_Manager.h"
+#include "tao/ZIOP/ZIOP_PolicyFactory.h"
 #include "tao/ORB_Core.h"
 #include "tao/PI/ORBInitInfo.h"
 
@@ -49,10 +50,10 @@ TAO_ZIOP_ORBInitializer::register_policy_factories (
   ::ZIOP::CompressionManager_var manager = compression_manager_ptr;
   info->register_initial_reference ("CompressionManager", manager.in ());
 
-/*  // Register the ZIOP policy factories.
+  // Register the ZIOP policy factories.
   PortableInterceptor::PolicyFactory_ptr policy_factory_ptr;
   ACE_NEW_THROW_EX (policy_factory_ptr,
-                    TAO_ZIOP_Factory(the_orb_core),
+                    TAO_ZIOP_PolicyFactory,
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
                         TAO::VMCID,
@@ -66,7 +67,12 @@ TAO_ZIOP_ORBInitializer::register_policy_factories (
 
   ACE_TRY
     {
-      info->register_policy_factory (ZIOP::ENDPOINT_POLICY_TYPE,
+      info->register_policy_factory (ZIOP::COMPRESSION_ENABLING_POLICY_ID,
+                                     policy_factory.in ()
+                                     ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      info->register_policy_factory (ZIOP::COMPRESSOR_ID_POLICY_ID,
                                      policy_factory.in ()
                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -89,7 +95,7 @@ TAO_ZIOP_ORBInitializer::register_policy_factories (
       ACE_RE_THROW;
     }
   ACE_ENDTRY;
-  ACE_CHECK;*/
+  ACE_CHECK;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
