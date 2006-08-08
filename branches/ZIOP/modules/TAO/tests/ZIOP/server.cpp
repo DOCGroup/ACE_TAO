@@ -3,6 +3,8 @@
 #include "Hello.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
+#include "tao/ZIOP/ZIOP.h"
+#include "bzip2_compressor.h"
 
 ACE_RCSID (Hello,
            server,
@@ -61,6 +63,19 @@ main (int argc, char *argv[])
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
+
+      CORBA::Object_var compression_manager =
+        orb->resolve_initial_references("CompressionManager");
+
+      ZIOP::CompressionManager_var manager =
+        ZIOP::CompressionMananger::_narrow(compression_manager.in);
+
+      if (CORBA::is_nil(manager.in ()))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           " (%P|%t) Panic: nil compression manager\n"),
+                          1);
+
+      manager.register_factory(new TAO::ZIOP::Bzip2_CompressorFactory ());
 
       if (parse_args (argc, argv) != 0)
         return 1;
