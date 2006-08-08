@@ -1,6 +1,19 @@
+Tue Aug  8 23:14:23 UTC 2006  Sumant Tambe  <sutambe@nospam>
+
+        Added a test for NetQoS_Config_Handler with an example.
+
+        * tools/Config_Handlers/Config_Handlers.mpc:
+
+        * tools/Config_Handlers/NetQoS/NetQoS-example.xml:
+        * tools/Config_Handlers/NetQoS/NetQoSRequirements.hpp:
+        * tools/Config_Handlers/NetQoS/NetQoSRequirements.cpp:
+        * tools/Config_Handlers/NetQoS/NetQoS_Handler.mpc:
+        * tools/Config_Handlers/NetQoS/XSC-command.txt:
+        * tools/Config_Handlers/NetQoS/test.cpp:
+
 Mon Aug  7 21:31:29 UTC 2006  Sumant Tambe  <sutambe@nospam>
 
-        Added the NetQoS XML schema, the NetQoSRequirements IDL and the 
+        Added the NetQoS XML schema, the NetQoSRequirements IDL and the
         configuration handler code.
 
         * ciao/NetQoS.idl:

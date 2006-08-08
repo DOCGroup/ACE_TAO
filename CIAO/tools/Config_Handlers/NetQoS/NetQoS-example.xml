@@ -1,0 +1,25 @@
+
+<CIAO:NetQoSRequirements
+ xmlns:CIAO="http://www.dre.vanderbilt.edu/NetQoSRequirements"
+ xmlns:xmi="http://www.omg.org/XMI"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://www.dre.vanderbilt.edu/NetQoSRequirements NetQoSRequirements.xsd"
+ id="test_netQoS_id">
+  
+  <connectionQoS>
+    <connectionName> UniqueName1  </connectionName>
+    <connectionName> UniqueName5  </connectionName>
+    <fwdBW> 100  </fwdBW>
+    <revBW> 100  </revBW>
+    <qos> HIGH_PRIORITY  </qos>
+  </connectionQoS>
+
+  <connectionQoS>
+    <connectionName> UniqueName2  </connectionName>  
+    <fwdBW> 100  </fwdBW>
+    <revBW> 100  </revBW>
+    <qos> HIGH_RELIABILITY  </qos>
+    <admissionPriority> HIGH  </admissionPriority>
+  </connectionQoS>
+
+</CIAO:NetQoSRequirements>

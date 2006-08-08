@@ -1,6 +1,7 @@
-// $Id: $
 #ifndef NET_QO_SREQUIREMENTS_HPP
 #define NET_QO_SREQUIREMENTS_HPP
+
+#include "NetQoS/NetQoS_Handler_Export.h"
 
 // Forward declarations.
 //
@@ -23,7 +24,7 @@ namespace CIAO
 {
   namespace Config_Handlers
   {
-    class NetQoSRequirementsDef : public ::XSCRT::Type
+    class NetQoS_Handler_Export NetQoSRequirementsDef : public ::XSCRT::Type
     {
       //@@ VC6 anathema
       typedef ::XSCRT::Type Base__;
@@ -68,7 +69,7 @@ namespace CIAO
     };
 
 
-    class NetworkQoS : public ::XSCRT::Type
+    class NetQoS_Handler_Export NetworkQoS : public ::XSCRT::Type
     {
       public:
       NetworkQoS (::XSCRT::XML::Element< wchar_t > const&);
@@ -89,10 +90,10 @@ namespace CIAO
       Value
       integral () const;
 
-      friend bool 
+      friend bool NetQoS_Handler_Export 
       operator== (NetworkQoS const& a, NetworkQoS const& b);
 
-      friend bool 
+      friend bool NetQoS_Handler_Export 
       operator!= (NetworkQoS const& a, NetworkQoS const& b);
 
       private:
@@ -101,12 +102,12 @@ namespace CIAO
       Value v_;
     };
 
-    bool operator== (NetworkQoS const &a, NetworkQoS const &b);
+    bool NetQoS_Handler_Export operator== (NetworkQoS const &a, NetworkQoS const &b);
 
-    bool operator!= (NetworkQoS const &a, NetworkQoS const &b);
+    bool NetQoS_Handler_Export operator!= (NetworkQoS const &a, NetworkQoS const &b);
 
 
-    class AdmissionPriority : public ::XSCRT::Type
+    class NetQoS_Handler_Export AdmissionPriority : public ::XSCRT::Type
     {
       public:
       AdmissionPriority (::XSCRT::XML::Element< wchar_t > const&);
@@ -125,10 +126,10 @@ namespace CIAO
       Value
       integral () const;
 
-      friend bool 
+      friend bool NetQoS_Handler_Export 
       operator== (AdmissionPriority const& a, AdmissionPriority const& b);
 
-      friend bool 
+      friend bool NetQoS_Handler_Export 
       operator!= (AdmissionPriority const& a, AdmissionPriority const& b);
 
       private:
@@ -137,12 +138,12 @@ namespace CIAO
       Value v_;
     };
 
-    bool operator== (AdmissionPriority const &a, AdmissionPriority const &b);
+    bool NetQoS_Handler_Export operator== (AdmissionPriority const &a, AdmissionPriority const &b);
 
-    bool operator!= (AdmissionPriority const &a, AdmissionPriority const &b);
+    bool NetQoS_Handler_Export operator!= (AdmissionPriority const &a, AdmissionPriority const &b);
 
 
-    class ConnectionQoS : public ::XSCRT::Type
+    class NetQoS_Handler_Export ConnectionQoS : public ::XSCRT::Type
     {
       //@@ VC6 anathema
       typedef ::XSCRT::Type Base__;
@@ -220,6 +221,7 @@ namespace CIAO
 {
   namespace Config_Handlers
   {
+    NetQoS_Handler_Export
     ::CIAO::Config_Handlers::NetQoSRequirementsDef
     NetQoSRequirements (xercesc::DOMDocument const*);
   }
