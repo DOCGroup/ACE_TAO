@@ -531,7 +531,7 @@ AST_Type::match_names (AST_Type *t, ACE_Unbounded_Queue<AST_Type *> &list)
        (void) iter.advance ())
     {
       // Queue element.
-      AST_Type **temp;
+      AST_Type **temp = 0;
 
       (void) iter.next (temp);
 
