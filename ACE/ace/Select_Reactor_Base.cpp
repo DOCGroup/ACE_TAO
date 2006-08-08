@@ -435,7 +435,7 @@ ACE_Select_Reactor_Handler_Repository::unbind (ACE_HANDLE handle,
 
     }
 
-  int requires_reference_counting =
+  bool const requires_reference_counting =
     event_handler->reference_counting_policy ().value () ==
     ACE_Event_Handler::Reference_Counting_Policy::ENABLED;
 
@@ -842,10 +842,10 @@ ACE_Select_Reactor_Notify::notify (ACE_Event_Handler *event_handler,
   }
 #endif /* ACE_HAS_REACTOR_NOTIFICATION_QUEUE */
 
-  ssize_t n = ACE::send (this->notification_pipe_.write_handle (),
-                         (char *) &buffer,
-                         sizeof buffer,
-                         timeout);
+  ssize_t const n = ACE::send (this->notification_pipe_.write_handle (),
+                               (char *) &buffer,
+                               sizeof buffer,
+                               timeout);
   if (n == -1)
     return -1;
 
@@ -864,7 +864,7 @@ ACE_Select_Reactor_Notify::dispatch_notifications (int &number_of_active_handles
 {
   ACE_TRACE ("ACE_Select_Reactor_Notify::dispatch_notifications");
 
-  ACE_HANDLE read_handle =
+  ACE_HANDLE const read_handle =
     this->notification_pipe_.read_handle ();
 
   if (read_handle != ACE_INVALID_HANDLE
@@ -969,7 +969,7 @@ ACE_Select_Reactor_Notify::dispatch_notify (ACE_Notification_Buffer &buffer)
       ACE_Event_Handler *event_handler =
         buffer.eh_;
 
-      int requires_reference_counting =
+      bool const requires_reference_counting =
         event_handler->reference_counting_policy ().value () ==
         ACE_Event_Handler::Reference_Counting_Policy::ENABLED;
 
@@ -1017,14 +1017,14 @@ ACE_Select_Reactor_Notify::read_notify_pipe (ACE_HANDLE handle,
 {
   ACE_TRACE ("ACE_Select_Reactor_Notify::read_notify_pipe");
 
-  ssize_t n = ACE::recv (handle, (char *) &buffer, sizeof buffer);
+  ssize_t const n = ACE::recv (handle, (char *) &buffer, sizeof buffer);
 
   if (n > 0)
     {
       // Check to see if we've got a short read.
       if (n != sizeof buffer)
         {
-          ssize_t remainder = sizeof buffer - n;
+          ssize_t const remainder = sizeof buffer - n;
 
           // If so, try to recover by reading the remainder.  If this
           // doesn't work we're in big trouble since the input stream

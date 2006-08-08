@@ -1,3 +1,9 @@
+Tue Aug  8 08:06:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Select_Reactor_Base.cpp:
+        * ace/Select_Reactor_T.cpp:
+          Const improvements, use bool when possible
+
 Tue Aug  8 07:46:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/generate_rel_manpages:
