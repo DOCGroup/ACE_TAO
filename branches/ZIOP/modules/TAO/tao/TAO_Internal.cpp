@@ -632,6 +632,16 @@ namespace
         rtscheduler_loader->init (0, 0);
       }
 
+    ACE_Service_Object * const ziop_loader =
+      ACE_Dynamic_Service<ACE_Service_Object>::instance (
+        pcfg,
+        "ZIOP_Loader");
+
+    if (ziop_loader != 0)
+      {
+        ziop_loader->init (0, 0);
+      }
+
   } /* register_additional_services_i */
 
   int
