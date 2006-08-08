@@ -77,15 +77,51 @@ main (int argc, char *argv[])
 
       manager->register_factory(new TAO::ZIOP::Bzip2_CompressorFactory ());
 
+      // Policies for the childPOA to be created.
+      CORBA::PolicyList policies (2);
+      policies.length (2);
+
+      CORBA::Any pol;
+      ::ZIOP::CompressorId compid = 3;
+      pol <<= compid;
+      policies[0] =
+        orb->create_policy (ZIOP::COMPRESSOR_ID_POLICY_ID,
+                            pol
+                            ACE_ENV_ARG_PARAMETER);
+      pol <<= CORBA::Any::from_boolean (true);
+      policies[1] =
+        orb->create_policy (ZIOP::COMPRESSION_ENABLING_POLICY_ID,
+                            pol
+                            ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      ACE_CString name = "ChildPOA";
+      PortableServer::POA_var child_poa =
+        root_poa->create_POA (name.c_str (),
+                              poa_manager.in (),
+                              policies
+                              ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      // Destroy policies.
+      for (CORBA::ULong i = 0;
+           i < policies.length ();
+           ++i)
+        {
+          CORBA::Policy_ptr policy = policies[i];
+          policy->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      Hello *hello_impl;
+      Hello *hello_impl = 0;
       ACE_NEW_RETURN (hello_impl,
                       Hello (orb.in ()),
                       1);
       PortableServer::ServantBase_var owner_transfer(hello_impl);
-
+// todo update next line
       Test::Hello_var hello =
         hello_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
