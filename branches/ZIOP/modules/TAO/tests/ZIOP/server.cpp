@@ -121,10 +121,16 @@ main (int argc, char *argv[])
                       Hello (orb.in ()),
                       1);
       PortableServer::ServantBase_var owner_transfer(hello_impl);
-// todo update next line
+
+      PortableServer::ObjectId_var second_oid =
+        PortableServer::string_to_ObjectId ("test");
+
+      child_poa->activate_object_with_id (second_oid.in (),
+                                          hello_impl
+                                          ACE_ENV_ARG_PARAMETER);
+
       Test::Hello_var hello =
         hello_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
 
       CORBA::String_var ior =
         orb->object_to_string (hello.in () ACE_ENV_ARG_PARAMETER);
