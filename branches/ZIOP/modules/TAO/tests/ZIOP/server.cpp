@@ -68,7 +68,7 @@ main (int argc, char *argv[])
         orb->resolve_initial_references("CompressionManager");
 
       ZIOP::CompressionManager_var manager =
-        ZIOP::CompressionMananger::_narrow(compression_manager.in);
+        ZIOP::CompressionManager::_narrow(compression_manager.in);
 
       if (CORBA::is_nil(manager.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
