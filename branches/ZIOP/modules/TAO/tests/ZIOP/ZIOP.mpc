@@ -1,0 +1,21 @@
+// -*- MPC -*-
+// $Id: Hello.mpc 69739 2005-12-01 18:16:23Z parsons $
+
+project(*Server): taoserver, bzip2 {
+  idlflags += -Sa -St
+  Source_Files {
+    Hello.cpp
+    server.cpp
+    bzip2_compressor.cpp
+  }
+}
+
+project(*Client): taoclient, bzip2 {
+  after += *Server
+  Source_Files {
+    TestC.cpp
+    client.cpp
+    bzip2_compressor.cpp
+  }
+}
+
