@@ -1,3 +1,16 @@
+Tue Aug  8 14:00:06 UTC 2006  Carlos O'Ryan  <coryan@atdesk.com>
+
+        * Merged in all the changes from the fix_bug_2540 branch, that is,
+          from revision 73857 to revision 73859.
+
+        Thu Aug  3 21:49:27 UTC 2006  Carlos O'Ryan  <coryan@atdesk.com>
+
+        * ace/TP_Reactor.cpp:
+        * ace/Select_Reactor_T.cpp:
+          Avoid the problems described in bug 2540 by detecting the
+          infinite loop and recomputing the number of active handlers.
+          Thanks to Jody Hagins for correcting my original "fix."
+
 Tue Aug  8 14:05:00 UTC 2006  Simon Massey  <sma@prismtech.com>
 
         * bin/MakeProjectCreator/config/ace_mfc.mpb
