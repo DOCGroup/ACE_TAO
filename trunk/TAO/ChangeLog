@@ -1,3 +1,9 @@
+Tue Aug  8 09:33:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/ast/ast_interface.cpp:
+        * TAO_IDL/ast/ast_type.cpp:
+          Initailize some pointers explicitly with 0 to fix gcc41 warnings
+
 Tue Aug  8 08:30:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Codeset_Translator_Factory.h:
