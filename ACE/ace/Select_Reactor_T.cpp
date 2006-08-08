@@ -1537,48 +1537,39 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::dump (void) const
   ACE_HANDLE h;
 
   for (ACE_Handle_Set_Iterator handle_iter_wr (this->wait_set_.wr_mask_);
-       (h = handle_iter_wr ()) != ACE_INVALID_HANDLE;
-       ++handle_iter_wr)
+       (h = handle_iter_wr ()) != ACE_INVALID_HANDLE;)
     ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("write_handle = %d\n"), h));
 
   for (ACE_Handle_Set_Iterator handle_iter_rd (this->wait_set_.rd_mask_);
-       (h = handle_iter_rd ()) != ACE_INVALID_HANDLE;
-       ++handle_iter_rd)
+       (h = handle_iter_rd ()) != ACE_INVALID_HANDLE;)
     ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("read_handle = %d\n"), h));
 
   for (ACE_Handle_Set_Iterator handle_iter_ex (this->wait_set_.ex_mask_);
-       (h = handle_iter_ex ()) != ACE_INVALID_HANDLE;
-       ++handle_iter_ex)
+       (h = handle_iter_ex ()) != ACE_INVALID_HANDLE;)
     ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("except_handle = %d\n"), h));
 
   for (ACE_Handle_Set_Iterator handle_iter_wr_ready (this->ready_set_.wr_mask_);
-       (h = handle_iter_wr_ready ()) != ACE_INVALID_HANDLE;
-       ++handle_iter_wr_ready)
+       (h = handle_iter_wr_ready ()) != ACE_INVALID_HANDLE;)
     ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("write_handle_ready = %d\n"), h));
 
   for (ACE_Handle_Set_Iterator handle_iter_rd_ready (this->ready_set_.rd_mask_);
-       (h = handle_iter_rd_ready ()) != ACE_INVALID_HANDLE;
-       ++handle_iter_rd_ready)
+       (h = handle_iter_rd_ready ()) != ACE_INVALID_HANDLE;)
     ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("read_handle_ready = %d\n"), h));
 
   for (ACE_Handle_Set_Iterator handle_iter_ex_ready (this->ready_set_.ex_mask_);
-       (h = handle_iter_ex_ready ()) != ACE_INVALID_HANDLE;
-       ++handle_iter_ex_ready)
+       (h = handle_iter_ex_ready ()) != ACE_INVALID_HANDLE;)
     ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("except_handle_ready = %d\n"), h));
 
   for (ACE_Handle_Set_Iterator handle_iter_su_ready (this->suspend_set_.wr_mask_);
-       (h = handle_iter_su_ready ()) != ACE_INVALID_HANDLE;
-       ++handle_iter_su_ready)
+       (h = handle_iter_su_ready ()) != ACE_INVALID_HANDLE;)
     ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("write_handle_suspend = %d\n"), h));
 
   for (ACE_Handle_Set_Iterator handle_iter_su_ready (this->suspend_set_.rd_mask_);
-       (h = handle_iter_su_ready ()) != ACE_INVALID_HANDLE;
-       ++handle_iter_su_ready)
+       (h = handle_iter_su_ready ()) != ACE_INVALID_HANDLE;)
     ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("read_handle_suspend = %d\n"), h));
 
   for (ACE_Handle_Set_Iterator handle_iter_su_ready (this->suspend_set_.ex_mask_);
-       (h = handle_iter_su_ready ()) != ACE_INVALID_HANDLE;
-       ++handle_iter_su_ready)
+       (h = handle_iter_su_ready ()) != ACE_INVALID_HANDLE;)
     ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("except_handle_suspend = %d\n"), h));
 
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("restart_ = %d\n"), this->restart_));
