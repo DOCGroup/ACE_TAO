@@ -361,7 +361,7 @@ be_visitor_operation::gen_stub_operation_body (
 
   if (!node->is_abstract ())
     {
-      // If the object is lazily evaluated the proxy brker might well
+      // If the object is lazily evaluated the proxy broker might well
       // be null.  Initialize it now.
       *os << "if (!this->is_evaluated ())" << be_idt_nl
           << "{" << be_idt_nl
