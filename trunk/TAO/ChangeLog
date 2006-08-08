@@ -1,3 +1,8 @@
+Tue Aug  8 14:55:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/BiDIR_GIOP/BiDir_PolicyFactory.cpp:
+          No need to extract the value twice out of the any
+
 Tue Aug  8 14:13:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/tests/Codesets/libs/IBM1047_ISO8859/Char_IBM1047_ISO8859_Factory.h:
