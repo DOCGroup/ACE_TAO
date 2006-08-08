@@ -1,0 +1,7 @@
+// -*- MPC -*-
+// $Id: portableserver.mpb 67714 2005-08-19 08:02:52Z jwillemsen $
+
+project : taolib, pi {
+  after   += ZIOP
+  libs    += TAO_ZIOP
+}
