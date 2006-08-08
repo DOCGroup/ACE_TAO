@@ -1,3 +1,11 @@
+Tue Aug  8 08:30:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Codeset_Translator_Factory.h:
+          Removed, it was deprecated for more then a year
+
+        * tao/tao.mpc:
+          Removed remark about Codeset_Translator_Factory.h
+
 Tue Aug  8 07:53:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO-INSTALL.html:
