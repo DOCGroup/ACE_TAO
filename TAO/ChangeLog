@@ -1,3 +1,8 @@
+Tue Aug  8 07:49:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_operation/operation.cpp:
+          Fixed typo in comment
+
 Mon Aug  7 19:29:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/EndpointPolicy.mpc:
