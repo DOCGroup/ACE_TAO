@@ -68,14 +68,14 @@ main (int argc, char *argv[])
         orb->resolve_initial_references("CompressionManager");
 
       ZIOP::CompressionManager_var manager =
-        ZIOP::CompressionManager::_narrow(compression_manager.in);
+        ZIOP::CompressionManager::_narrow (compression_manager.in ());
 
       if (CORBA::is_nil(manager.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Panic: nil compression manager\n"),
                           1);
 
-      manager.register_factory(new TAO::ZIOP::Bzip2_CompressorFactory ());
+      manager->register_factory(new TAO::ZIOP::Bzip2_CompressorFactory ());
 
       if (parse_args (argc, argv) != 0)
         return 1;
