@@ -1,3 +1,8 @@
+Tue Aug  8 09:38:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+          Initailize some pointers explicitly with 0 to fix gcc41 warnings
+
 Tue Aug  8 09:33:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/ast/ast_interface.cpp:
