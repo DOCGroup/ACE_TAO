@@ -9,7 +9,6 @@ PLANNED MAJOR CHANGES TARGETED FOR ACE-5.5.3
 USER VISIBLE CHANGES BETWEEN ACE-5.5.2 and ACE-5.5.3
 ====================================================
 
-
 . Changed the prototype(s) for ACE::debug () to return (and take) a
   bool. This is consistent with the original intent for this
   feature. If you have been using it like 'ACE::debug () > 0' or
@@ -82,11 +81,13 @@ USER VISIBLE CHANGES BETWEEN ACE-5.5.2 and ACE-5.5.3
 . The return type of "ACE_Refcounted_Auto_Ptr::null (void) const" changed
   from int to bool. It's possible values, true and false, have not changed.
 
-. TTY_IO now accepts "none" as a valid parity value. Due to this change 
-  'parityenb' member is now deprecated and will be removed in the future. 
+. TTY_IO now accepts "none" as a valid parity value. Due to this change
+  'parityenb' member is now deprecated and will be removed in the future.
   The users of TTY_IO class should change their code to use only 'paritymode'
   member for parity control and leave 'parityenb' unchanged (it is
   enabled by default in class constructor).
+
+. Support for Intel C++ 9.1 on Windows and Linux
 
 USER VISIBLE CHANGES BETWEEN ACE-5.5.1 and ACE-5.5.2
 ====================================================
