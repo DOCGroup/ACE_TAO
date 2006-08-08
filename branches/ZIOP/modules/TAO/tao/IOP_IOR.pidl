@@ -107,6 +107,8 @@ module IOP
   const ProfileId TAG_UIPMC = 3;
   const ComponentId TAG_GROUP = 39;
   const ComponentId TAG_GROUP_IIOP = 40;
+
+  const ComponentId TAG_ZIOP_COMPONENT = 1056;
 };
 
 #pragma prefix ""
