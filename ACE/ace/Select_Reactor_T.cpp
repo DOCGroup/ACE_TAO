@@ -1284,6 +1284,13 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::dispatch
 
   do
     {
+      // We expect that the loop will decrease the number of active
+      // handles in each iteration.  If it does not, then something is
+      // inconsistent in the state of the Reactor and we should avoid
+      // the loop.  Please read the comments on bug 2540 for more
+      // details.
+      int initial_handle_count = active_handle_count;
+
       // Note that we keep track of changes to our state.  If any of
       // the dispatch_*() methods below return -1 it means that the
       // <wait_set_> state has changed as the result of an
@@ -1358,11 +1365,10 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::dispatch
 
       // if state changed, we need to re-eval active_handle_count,
       // so we will not end with an endless loop
-      if (this->state_changed_)
+      if (initial_handle_count == active_handle_count
+          || this->state_changed_)
       {
-          active_handle_count = this->dispatch_set_.rd_mask_.num_set ()
-              + this->dispatch_set_.wr_mask_.num_set ()
-              + this->dispatch_set_.ex_mask_.num_set ();
+        active_handle_count = this->any_ready (dispatch_set);
       }
     }
   while (active_handle_count > 0);
