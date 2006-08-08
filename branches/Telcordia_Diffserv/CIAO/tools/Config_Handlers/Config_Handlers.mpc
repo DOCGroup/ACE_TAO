@@ -33,7 +33,8 @@ project (XSC_Config_Handlers) : ciao_deployment_stub, ciao_events_dnc, ciao_conf
   after += CIAO_Events_Handlers \
            RT_CCM_Config_Handlers \
            XSC_DynAny_Handler \
-           XSC_Config_Handlers_Common
+           XSC_Config_Handlers_Common \
+           NetQoS_Handler
   sharedname = XSC_Config_Handlers
   dynamicflags   = CONFIG_HANDLERS_BUILD_DLL
   libs += CIAO_XML_Utils \
@@ -41,7 +42,8 @@ project (XSC_Config_Handlers) : ciao_deployment_stub, ciao_events_dnc, ciao_conf
           RT_CCM_Config_Handlers \
           XSC_XML_Handlers \
           XSC_DynAny_Handler \
-          XSC_Config_Handlers_Common
+          XSC_Config_Handlers_Common \
+          NetQoS_Config_Handler
 
   Source_Files {
     DP_Handler.cpp

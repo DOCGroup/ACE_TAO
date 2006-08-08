@@ -19,3 +19,21 @@ project (NetQoS_Handler) : acelib, ciao_deployment_stub, xerces {
   }
 }
 
+project (NetQoS_Handler_Test) : ciao_config_handlers_base {
+
+  after += NetQoS_Handler
+  includes += $(CIAO_ROOT)/tools/Config_Handlers
+  dynamicflags   = NETQOS_HANDLER_BUILD_DLL
+  exename = test
+  macros   += XML_USE_PTHREADS
+  libs += NetQoS_Config_Handler
+
+  Source_Files {
+    test.cpp
+  }
+
+  Header_Files {
+  }
+}
+
+

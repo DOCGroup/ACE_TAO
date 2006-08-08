@@ -1,4 +1,3 @@
-// $Id: $
 #include "NetQoSRequirements.hpp"
 
 namespace CIAO
