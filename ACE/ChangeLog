@@ -1,3 +1,9 @@
+Tue Aug  8 07:46:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/generate_rel_manpages:
+        * bin/make_release:
+          Did a little bit of cleanup removing old things
+
 Tue Aug  8 07:11:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Select_Reactor_T.cpp (dump):
