@@ -103,14 +103,17 @@
       <resourceUsage>InstanceUsesResource</resourceUsage>
       <requirementName>CIAO:PolicySet</requirementName>
       <resourceName>test_server_resource_id</resourceName>
-      <resourceValue>
-        <type>
-          <kind>tk_string</kind>
-        </type>
+      <property>
+        <name>CIAO:PolicySetName</name>
         <value>
-          <string>test_policy_set_id</string>
+          <type>
+            <kind>tk_string</kind>
+          </type>
+          <value>
+            <string>test_policy_set_id</string>
+          </value>
         </value>
-      </resourceValue>
+      </property>
     </deployedResource>
 
   </instance>
@@ -136,14 +139,17 @@
       <resourceUsage>InstanceUsesResource</resourceUsage>
       <requirementName>CIAO:PolicySet</requirementName>
       <resourceName>test_server_resource_id</resourceName>
-      <resourceValue>
-        <type>
-          <kind>tk_string</kind>
-        </type>
+      <property>
+        <name>CIAO:PolicySetName</name>
         <value>
-          <string>test_policy_set_id</string>
+          <type>
+            <kind>tk_string</kind>
+          </type>
+          <value>
+            <string>test_policy_set_id</string>
+          </value>
         </value>
-      </resourceValue>
+      </property>
     </deployedResource>
 
   </instance>
