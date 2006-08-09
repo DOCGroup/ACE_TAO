@@ -1,6 +1,6 @@
 // $Id$
 
-project(*Server): taoexe, portableserver, minimum_corba {
+project(*Server): taoexe, portableserver, minimum_corba, imr_client {
   idlflags += -Sc -Sa -St
   Source_Files {
     Messenger_i.cpp
