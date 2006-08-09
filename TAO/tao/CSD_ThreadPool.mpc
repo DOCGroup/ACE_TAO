@@ -1,9 +1,8 @@
 //$Id$
-project : csd_framework, core {
+project : csd_framework, core, threads {
   sharedname   = TAO_CSD_ThreadPool
   dynamicflags = TAO_CSD_TP_BUILD_DLL
   includes    += $(TAO_ROOT)/tao
-  requires    += threads
 
   Source_Files {
     CSD_ThreadPool
