@@ -217,6 +217,7 @@ namespace CIAO
     const char * policy_set_id = "";
     if (instance.deployedResource.length () != 0)
       {
+        instance.deployedResource[0].property[0].value >>= policy_set_id;
         //        instance.deployedResource[0].resourceValue >>= policy_set_id;
         //ACE_ERROR ((LM_ERROR, "ERROR: RT-CCM support has been disabled until code in Containers_Info_Map is updated to reflect IDL changes."));
       }
