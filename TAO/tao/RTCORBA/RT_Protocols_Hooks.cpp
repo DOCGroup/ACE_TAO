@@ -656,7 +656,7 @@ TAO_RT_Protocols_Hooks::get_selector_hook (
   if (priority_model_policy->get_priority_model ()
         == RTCORBA::CLIENT_PROPAGATED)
     {
-      is_client_propagated = 1;
+      is_client_propagated = true;
     }
 
   if (!is_client_propagated)

@@ -1,3 +1,11 @@
+Wed Aug  9 08:17:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/RTCORBA/RT_Protocol_Hooks.cpp:
+          Use true instead of 1
+
+        * tao/RTCORBA/RTCORBA.pidl:
+          Doxygen changes
+
 Tue Aug  8 14:55:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/BiDIR_GIOP/BiDir_PolicyFactory.cpp:
