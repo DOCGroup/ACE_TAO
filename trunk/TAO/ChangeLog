@@ -1,3 +1,10 @@
+Tue Aug  8 22:39:56 UTC 2006  Ciju John  <johnc@ociweb.com>
+
+        * tao/CSD_ThreadPool.mpc:
+          Replaced the requires for threads with dependency upon
+          threads.mpb which does essentially the same thing. Only looks
+          cleaner.
+
 Wed Aug  9 13:18:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_2503_Regression/run_test.pl:
