@@ -1,3 +1,10 @@
+Wed Aug  9 14:15:18 UTC 2006  Ciju John  <johnc@ociweb.com>
+
+        * bin/MakeProjectCreator/config/csd_threadpool.mpb:
+
+          Added a dependency upon threads.mpb as this project shouldn't be
+          built if thread support is not going to be built into TAO.
+
 Wed Aug  9 13:45:00 UTC 2006  Simon Massey  <sma@prismtech.com>
 
         * bin/MakeProjectCreator/config/acedefaults.mpb
