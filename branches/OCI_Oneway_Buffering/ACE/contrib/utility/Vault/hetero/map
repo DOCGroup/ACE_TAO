@@ -1,0 +1,13 @@
+// file      : Utility/hetero/map
+// author    : Boris Kolpackov <boris@kolpackov.net>
+// copyright : Copyright (c) 2002-2003 Boris Kolpackov
+// license   : http://kolpackov.net/license.html
+
+#ifndef UTILITY_HETERO_MAP
+#define UTILITY_HETERO_MAP
+
+#include "Utility/hetero/map.hpp"
+
+#endif  // UTILITY_HETERO_MAP
+
+// $Id$
