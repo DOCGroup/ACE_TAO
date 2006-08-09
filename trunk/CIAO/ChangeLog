@@ -1,3 +1,16 @@
+Wed Aug  9 18:53:48 UTC 2006  Jaiganesh B  <jai.dre.vanderbilt.edu>
+
+        * DAnCE/NodeApplicationManager/ImplementationInfo.cpp:
+          DAnCE/NodeApplicationManager/Containers_Info_Map.cpp:
+          DAnCE/NodeApplication/RTNodeApp_Configurator.cpp:
+          examples/Hello/descriptors_RTCCM/rt-example.cdp:
+          examples/Hello/descriptors_RTCCM/rt-config-example.csr:
+        
+        Fixed the RT-CCM code to conform to the schema changes. Made changes
+        to the descriptors directory to fix the working example for RT-CCM.
+        
+        Thanks to Nanbor Wang for helping fix the codebase.
+
 Tue Aug  8 07:53:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * CIAO-INSTALL.html:
