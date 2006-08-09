@@ -1,3 +1,9 @@
+Wed Aug  9 13:45:00 UTC 2006  Simon Massey  <sma@prismtech.com>
+
+        * bin/MakeProjectCreator/config/acedefaults.mpb
+
+          Typo, Remove the + character that came with the patch file.
+
 Wed Aug  9 12:17:00 UTC 2006  Simon Massey  <sma@prismtech.com>
 
         * bin/MakeProjectCreator/config/ace_opt_mfc.mpb
