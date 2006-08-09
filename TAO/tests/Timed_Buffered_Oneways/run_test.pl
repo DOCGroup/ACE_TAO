@@ -17,9 +17,13 @@ if (PerlACE::is_vxworks_test()) {
     $SV = new PerlACE::ProcessVX ("server", "-o server.ior");
 }
 else {
-    $SV = new PerlACE::Process ("server", "-o $iorfile");
+    $SV = new PerlACE::Process ("server", "-o $iorfile"
+." -ORBDebugLevel 6 -ORBLogFile server.log"
+);
 }
-$CL = new PerlACE::Process ("client", "-k file://$iorfile -x");
+$CL = new PerlACE::Process ("client", "-k file://$iorfile -x"
+." -ORBDebugLevel 6 -ORBLogFile client.log"
+);
 
 $SV->Spawn ();
 
@@ -30,16 +34,16 @@ if (PerlACE::waitforfile_timed ($iorfile,
     exit 1;
 }
 
-$client = $CL->SpawnWaitKill (200);
-
+$client = $CL->SpawnWaitKill (120);
 if ($client != 0) {
     $time = localtime;
     print STDERR "ERROR: client returned $client at $time\n";
     $status = 1;
 }
 
-$server = $SV->WaitKill (100);
+print "Client finished...\n";
 
+$server = $SV->WaitKill (10);
 if ($server != 0) {
     $time = localtime;
     print STDERR "ERROR: server returned $server at $time\n";

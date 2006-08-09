@@ -103,11 +103,9 @@ TAO_ConnectionTimeoutPolicy::hook (TAO_ORB_Core *orb_core,
 
       if (TAO_debug_level > 0)
         {
-          CORBA::ULong msecs =
-            static_cast<CORBA::ULong> (microseconds / 1000);
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) - Timeout is <%u>\n"),
-                      msecs));
+                      ACE_TEXT ("TAO (%P|%t) - Connect timeout is <%dms>\n"),
+                      time_value.msec ()));
         }
     }
   ACE_CATCHANY
@@ -188,10 +186,9 @@ TAO_ConnectionTimeoutPolicy::set_time_value (ACE_Time_Value &time_value)
 
   if (TAO_debug_level > 0)
     {
-      CORBA::ULong const msecs = time_value.msec ();
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - Timeout is <%u>\n"),
-                  msecs));
+                  ACE_TEXT ("TAO (%P|%t) - Connect timeout is <%dms>\n"),
+                  time_value.msec ()));
     }
 }
 
