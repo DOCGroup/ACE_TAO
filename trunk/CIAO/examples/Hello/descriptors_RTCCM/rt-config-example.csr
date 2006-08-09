@@ -11,9 +11,7 @@
   </cmdline>
   
   <svcconf>
-    <uri>
-      RTsvc.conf
-    </uri>
+    <uri>RTsvc.conf</uri>
   </svcconf>
   
   <orbConfigs>

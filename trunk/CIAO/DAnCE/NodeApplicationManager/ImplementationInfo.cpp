@@ -69,7 +69,7 @@ CIAO::NodeImplementationInfoHandler::populate_server_resource_def (void)
                   this->node_info_->nodeapp_config.length (1);
 
                   this->node_info_->nodeapp_config[0].name =
-                    CORBA::string_dup ("CIAOServerResource");
+                    CORBA::string_dup ("CIAOServerResources");
 
                   this->node_info_->nodeapp_config[0].value <<=
                     *server_resource_def;
