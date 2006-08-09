@@ -1,3 +1,10 @@
+Wed Aug  9 15:00:55 UTC 2006  Adam Mitz  <mitza@ociweb.com>
+
+        * orbsvcs/tests/ImplRepo/Bug_2604_Regression/Bug_2604.mpc:
+        * orbsvcs/tests/ImplRepo/Bug_2604_Regression/MessengerServer.cpp:
+          Added dependency on ImR_Client library so that static builds can make
+          use of ImR features without dynamic library loading.
+
 Tue Aug  8 22:39:56 UTC 2006  Ciju John  <johnc@ociweb.com>
 
         * tao/CSD_ThreadPool.mpc:
