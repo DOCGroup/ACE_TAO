@@ -219,8 +219,8 @@ module RTCORBA
   {
       void lock ();
       void unlock ();
+      /// if max_wait = 0 then return immediately
       boolean try_lock (in TimeBase::TimeT max_wait);
-    // if max_wait = 0 then return immediately
   };
 
   // RTORB.
