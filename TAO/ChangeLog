@@ -1,3 +1,8 @@
+Wed Aug  9 13:18:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2503_Regression/run_test.pl:
+          No need to run the client with orb debug level 10
+
 Wed Aug  9 08:17:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/RTCORBA/RT_Protocol_Hooks.cpp:
