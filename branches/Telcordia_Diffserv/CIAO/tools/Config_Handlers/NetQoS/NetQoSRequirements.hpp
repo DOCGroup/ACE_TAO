@@ -1,8 +1,6 @@
 #ifndef NET_QO_SREQUIREMENTS_HPP
 #define NET_QO_SREQUIREMENTS_HPP
 
-#include "NetQoS/NetQoS_Handler_Export.h"
-
 // Forward declarations.
 //
 namespace CIAO
@@ -48,17 +46,17 @@ namespace CIAO
       // 
       public:
       bool id_p () const;
-      ::XMLSchema::ID< wchar_t > const& id () const;
-      ::XMLSchema::ID< wchar_t >& id ();
-      void id (::XMLSchema::ID< wchar_t > const& );
+      ::XMLSchema::ID< ACE_TCHAR > const& id () const;
+      ::XMLSchema::ID< ACE_TCHAR >& id ();
+      void id (::XMLSchema::ID< ACE_TCHAR > const& );
 
       protected:
-      ::std::auto_ptr< ::XMLSchema::ID< wchar_t > > id_;
+      ::std::auto_ptr< ::XMLSchema::ID< ACE_TCHAR > > id_;
 
       public:
       NetQoSRequirementsDef ();
 
-      NetQoSRequirementsDef (::XSCRT::XML::Element< wchar_t > const&);
+      NetQoSRequirementsDef (::XSCRT::XML::Element< ACE_TCHAR > const&);
       NetQoSRequirementsDef (NetQoSRequirementsDef const& s);
 
       NetQoSRequirementsDef&
@@ -72,8 +70,8 @@ namespace CIAO
     class NetQoS_Handler_Export NetworkQoS : public ::XSCRT::Type
     {
       public:
-      NetworkQoS (::XSCRT::XML::Element< wchar_t > const&);
-      NetworkQoS (::XSCRT::XML::Attribute< wchar_t > const&);
+      NetworkQoS (::XSCRT::XML::Element< ACE_TCHAR > const&);
+      NetworkQoS (::XSCRT::XML::Attribute< ACE_TCHAR > const&);
 
       static NetworkQoS const HIGH_PRIORITY;
       static NetworkQoS const HIGH_RELIABILITY;
@@ -110,8 +108,8 @@ namespace CIAO
     class NetQoS_Handler_Export AdmissionPriority : public ::XSCRT::Type
     {
       public:
-      AdmissionPriority (::XSCRT::XML::Element< wchar_t > const&);
-      AdmissionPriority (::XSCRT::XML::Attribute< wchar_t > const&);
+      AdmissionPriority (::XSCRT::XML::Element< ACE_TCHAR > const&);
+      AdmissionPriority (::XSCRT::XML::Attribute< ACE_TCHAR > const&);
 
       static AdmissionPriority const NORMAL;
       static AdmissionPriority const HIGH;
@@ -151,17 +149,17 @@ namespace CIAO
       // connectionName
       // 
       public:
-      typedef ::std::list< ::XMLSchema::string< wchar_t > >::iterator connectionName_iterator;
-      typedef ::std::list< ::XMLSchema::string< wchar_t > >::const_iterator connectionName_const_iterator;
+      typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::iterator connectionName_iterator;
+      typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::const_iterator connectionName_const_iterator;
       connectionName_iterator begin_connectionName ();
       connectionName_iterator end_connectionName ();
       connectionName_const_iterator begin_connectionName () const;
       connectionName_const_iterator end_connectionName () const;
-      void add_connectionName (::XMLSchema::string< wchar_t > const& );
+      void add_connectionName (::XMLSchema::string< ACE_TCHAR > const& );
       size_t count_connectionName (void) const;
 
       protected:
-      ::std::list< ::XMLSchema::string< wchar_t > > connectionName_;
+      ::std::list< ::XMLSchema::string< ACE_TCHAR > > connectionName_;
 
       // fwdBW
       // 
@@ -205,7 +203,7 @@ namespace CIAO
                      ::XMLSchema::unsignedInt const& revBW__,
                      ::CIAO::Config_Handlers::NetworkQoS const& qos__);
 
-      ConnectionQoS (::XSCRT::XML::Element< wchar_t > const&);
+      ConnectionQoS (::XSCRT::XML::Element< ACE_TCHAR > const&);
       ConnectionQoS (ConnectionQoS const& s);
 
       ConnectionQoS&
