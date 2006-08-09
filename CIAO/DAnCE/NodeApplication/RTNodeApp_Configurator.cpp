@@ -45,7 +45,7 @@ CIAO::RTNodeApp_Configurator::init_resource_manager
       ACE_DEBUG ((LM_DEBUG, "RTNodeApp_Configurator::init_resource_manager processing property: %s\n",
                   properties[i].name.in ()));
 
-      if (ACE_OS::strcmp ("CIAOServerResource", properties[i].name.in ()) == 0)
+      if (ACE_OS::strcmp ("CIAOServerResources", properties[i].name.in ()) == 0)
         {
           const CIAO::DAnCE::ServerResource *svr_resource;
           if (properties[i].value >>= svr_resource)
@@ -102,4 +102,3 @@ create_nodeapp_configurator (void)
   ACE_NEW_RETURN (config, CIAO::RTNodeApp_Configurator, 0);
   return config;
 }
-
