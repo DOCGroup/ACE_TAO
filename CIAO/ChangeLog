@@ -1,3 +1,11 @@
+Wed Aug  9 21:03:27 UTC 2006  Dimple Kaul   <dkaul@isis.vanderbilt.edu>
+        
+        NetQos Config handler test works with this version
+
+        * tools/Config_Handlers/NetQoS/NetQoSRequirements.cpp:
+        * tools/Config_Handlers/NetQoS/NetQoSRequirements.hpp:
+        * tools/Config_Handlers/NetQoS/XSC-command.txt:
+
 Tue Aug  8 23:14:23 UTC 2006  Sumant Tambe  <sutambe@nospam>
 
         Added a test for NetQoS_Config_Handler with an example.

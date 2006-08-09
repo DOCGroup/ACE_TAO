@@ -227,4 +227,375 @@ namespace CIAO
   }
 }
 
+#include "XMLSchema/Traversal.hpp"
+
+namespace CIAO
+{
+  namespace Config_Handlers
+  {
+    namespace Traversal
+    {
+      struct NetQoS_Handler_Export NetQoSRequirementsDef : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::NetQoSRequirementsDef >
+      {
+        virtual void
+        traverse (Type&);
+
+        virtual void
+        traverse (Type const&);
+
+        virtual void
+        pre (Type&);
+
+        virtual void
+        pre (Type const&);
+
+        virtual void
+        connectionQoS (Type&);
+
+        virtual void
+        connectionQoS (Type const&);
+
+        virtual void
+        connectionQoS_pre (Type&);
+
+        virtual void
+        connectionQoS_pre (Type const&);
+
+        virtual void
+        connectionQoS_next (Type&);
+
+        virtual void
+        connectionQoS_next (Type const&);
+
+        virtual void
+        connectionQoS_post (Type&);
+
+        virtual void
+        connectionQoS_post (Type const&);
+
+        virtual void
+        id (Type&);
+
+        virtual void
+        id (Type const&);
+
+        virtual void
+        id_none (Type&);
+
+        virtual void
+        id_none (Type const&);
+
+        virtual void
+        post (Type&);
+
+        virtual void
+        post (Type const&);
+      };
+
+      typedef
+      ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::NetworkQoS >
+      NetworkQoS;
+
+      typedef
+      ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::AdmissionPriority >
+      AdmissionPriority;
+
+      struct NetQoS_Handler_Export ConnectionQoS : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::ConnectionQoS >
+      {
+        virtual void
+        traverse (Type&);
+
+        virtual void
+        traverse (Type const&);
+
+        virtual void
+        pre (Type&);
+
+        virtual void
+        pre (Type const&);
+
+        virtual void
+        connectionName (Type&);
+
+        virtual void
+        connectionName (Type const&);
+
+        virtual void
+        connectionName_pre (Type&);
+
+        virtual void
+        connectionName_pre (Type const&);
+
+        virtual void
+        connectionName_next (Type&);
+
+        virtual void
+        connectionName_next (Type const&);
+
+        virtual void
+        connectionName_post (Type&);
+
+        virtual void
+        connectionName_post (Type const&);
+
+        virtual void
+        fwdBW (Type&);
+
+        virtual void
+        fwdBW (Type const&);
+
+        virtual void
+        revBW (Type&);
+
+        virtual void
+        revBW (Type const&);
+
+        virtual void
+        qos (Type&);
+
+        virtual void
+        qos (Type const&);
+
+        virtual void
+        admissionPriority (Type&);
+
+        virtual void
+        admissionPriority (Type const&);
+
+        virtual void
+        admissionPriority_none (Type&);
+
+        virtual void
+        admissionPriority_none (Type const&);
+
+        virtual void
+        post (Type&);
+
+        virtual void
+        post (Type const&);
+      };
+    }
+  }
+}
+
+#include "XMLSchema/Writer.hpp"
+
+namespace CIAO
+{
+  namespace Config_Handlers
+  {
+    namespace Writer
+    {
+      struct NetQoSRequirementsDef : Traversal::NetQoSRequirementsDef, 
+      virtual ::XSCRT::Writer< ACE_TCHAR >
+      {
+        typedef ::CIAO::Config_Handlers::NetQoSRequirementsDef Type;
+        NetQoSRequirementsDef (::XSCRT::XML::Element< ACE_TCHAR >&);
+
+        virtual void 
+        traverse (Type &o)
+        {
+
+          this->traverse (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        traverse (Type const&);
+
+        virtual void 
+        connectionQoS_pre (Type &o)
+        {
+
+          this->connectionQoS_pre (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        connectionQoS_pre (Type const&);
+
+        virtual void 
+        connectionQoS_next (Type &o)
+        {
+
+          this->connectionQoS_next (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        connectionQoS_next (Type const&);
+
+        virtual void 
+        connectionQoS_post (Type &o)
+        {
+
+          this->connectionQoS_post (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        connectionQoS_post (Type const&);
+
+        virtual void 
+        id (Type &o)
+        {
+
+          this->id (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        id (Type const&);
+
+        protected:
+        NetQoSRequirementsDef ();
+      };
+
+      struct NetworkQoS : Traversal::NetworkQoS, 
+      virtual ::XSCRT::Writer< ACE_TCHAR >
+      {
+        NetworkQoS (::XSCRT::XML::Element< ACE_TCHAR >&);
+
+        virtual void 
+        traverse (Type &o)
+        {
+          this->traverse (const_cast <Type const &> (o));
+        }
+
+        virtual void
+        traverse (Type const&);
+
+        protected:
+        NetworkQoS ();
+      };
+
+      struct AdmissionPriority : Traversal::AdmissionPriority, 
+      virtual ::XSCRT::Writer< ACE_TCHAR >
+      {
+        AdmissionPriority (::XSCRT::XML::Element< ACE_TCHAR >&);
+
+        virtual void 
+        traverse (Type &o)
+        {
+          this->traverse (const_cast <Type const &> (o));
+        }
+
+        virtual void
+        traverse (Type const&);
+
+        protected:
+        AdmissionPriority ();
+      };
+
+      struct ConnectionQoS : Traversal::ConnectionQoS, 
+      virtual ::XSCRT::Writer< ACE_TCHAR >
+      {
+        typedef ::CIAO::Config_Handlers::ConnectionQoS Type;
+        ConnectionQoS (::XSCRT::XML::Element< ACE_TCHAR >&);
+
+        virtual void 
+        traverse (Type &o)
+        {
+
+          this->traverse (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        traverse (Type const&);
+
+        virtual void 
+        connectionName_pre (Type &o)
+        {
+
+          this->connectionName_pre (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        connectionName_pre (Type const&);
+
+        virtual void 
+        connectionName_next (Type &o)
+        {
+
+          this->connectionName_next (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        connectionName_next (Type const&);
+
+        virtual void 
+        connectionName_post (Type &o)
+        {
+
+          this->connectionName_post (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        connectionName_post (Type const&);
+
+        virtual void 
+        fwdBW (Type &o)
+        {
+
+          this->fwdBW (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        fwdBW (Type const&);
+
+        virtual void 
+        revBW (Type &o)
+        {
+
+          this->revBW (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        revBW (Type const&);
+
+        virtual void 
+        qos (Type &o)
+        {
+
+          this->qos (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        qos (Type const&);
+
+        virtual void 
+        admissionPriority (Type &o)
+        {
+
+          this->admissionPriority (const_cast <Type const &> (o));
+        }
+
+
+        virtual void
+        admissionPriority (Type const&);
+
+        protected:
+        ConnectionQoS ();
+      };
+    }
+  }
+}
+
+namespace CIAO
+{
+  namespace Config_Handlers
+  {
+    NetQoS_Handler_Export
+    void
+    NetQoSRequirements (::CIAO::Config_Handlers::NetQoSRequirementsDef const&, xercesc::DOMDocument*);
+  }
+}
+
 #endif // NET_QO_SREQUIREMENTS_HPP

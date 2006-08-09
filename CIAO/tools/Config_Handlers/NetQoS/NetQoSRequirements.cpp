@@ -540,3 +540,639 @@ namespace CIAO
   }
 }
 
+#include "XMLSchema/TypeInfo.hpp"
+
+namespace CIAO
+{
+  namespace Config_Handlers
+  {
+    namespace
+    {
+      ::XMLSchema::TypeInfoInitializer < ACE_TCHAR > XMLSchemaTypeInfoInitializer_ (::XSCRT::extended_type_info_map ());
+
+      struct NetQoSRequirementsDefTypeInfoInitializer
+      {
+        NetQoSRequirementsDefTypeInfoInitializer ()
+        {
+          ::XSCRT::TypeId id (typeid (NetQoSRequirementsDef));
+          ::XSCRT::ExtendedTypeInfo nf (id);
+
+          nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
+          ::XSCRT::extended_type_info_map ().insert (::std::make_pair (id, nf));
+        }
+      };
+
+      NetQoSRequirementsDefTypeInfoInitializer NetQoSRequirementsDefTypeInfoInitializer_;
+
+      struct NetworkQoSTypeInfoInitializer
+      {
+        NetworkQoSTypeInfoInitializer ()
+        {
+          ::XSCRT::TypeId id (typeid (NetworkQoS));
+          ::XSCRT::ExtendedTypeInfo nf (id);
+
+          nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
+
+          ::XSCRT::extended_type_info_map ().insert (::std::make_pair (id, nf));
+        }
+      };
+
+      NetworkQoSTypeInfoInitializer NetworkQoSTypeInfoInitializer_;
+
+      struct AdmissionPriorityTypeInfoInitializer
+      {
+        AdmissionPriorityTypeInfoInitializer ()
+        {
+          ::XSCRT::TypeId id (typeid (AdmissionPriority));
+          ::XSCRT::ExtendedTypeInfo nf (id);
+
+          nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
+
+          ::XSCRT::extended_type_info_map ().insert (::std::make_pair (id, nf));
+        }
+      };
+
+      AdmissionPriorityTypeInfoInitializer AdmissionPriorityTypeInfoInitializer_;
+
+      struct ConnectionQoSTypeInfoInitializer
+      {
+        ConnectionQoSTypeInfoInitializer ()
+        {
+          ::XSCRT::TypeId id (typeid (ConnectionQoS));
+          ::XSCRT::ExtendedTypeInfo nf (id);
+
+          nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
+          ::XSCRT::extended_type_info_map ().insert (::std::make_pair (id, nf));
+        }
+      };
+
+      ConnectionQoSTypeInfoInitializer ConnectionQoSTypeInfoInitializer_;
+    }
+  }
+}
+
+namespace CIAO
+{
+  namespace Config_Handlers
+  {
+    namespace Traversal
+    {
+      // NetQoSRequirementsDef
+      //
+      //
+
+      void NetQoSRequirementsDef::
+      traverse (Type& o)
+      {
+        pre (o);
+        connectionQoS (o);
+        if (o.id_p ()) id (o);
+        else id_none (o);
+        post (o);
+      }
+
+      void NetQoSRequirementsDef::
+      traverse (Type const& o)
+      {
+        pre (o);
+        connectionQoS (o);
+        if (o.id_p ()) id (o);
+        else id_none (o);
+        post (o);
+      }
+
+      void NetQoSRequirementsDef::
+      pre (Type&)
+      {
+      }
+
+      void NetQoSRequirementsDef::
+      pre (Type const&)
+      {
+      }
+
+      void NetQoSRequirementsDef::
+      connectionQoS (Type& o)
+      {
+        // VC6 anathema strikes again
+        //
+        NetQoSRequirementsDef::Type::connectionQoS_iterator b (o.begin_connectionQoS()), e (o.end_connectionQoS());
+
+        if (b != e)
+        {
+          connectionQoS_pre (o);
+          for (; b != e;)
+          {
+            dispatch (*b);
+            if (++b != e) connectionQoS_next (o);
+          }
+
+          connectionQoS_post (o);
+        }
+      }
+
+      void NetQoSRequirementsDef::
+      connectionQoS (Type const& o)
+      {
+        // VC6 anathema strikes again
+        //
+        NetQoSRequirementsDef::Type::connectionQoS_const_iterator b (o.begin_connectionQoS()), e (o.end_connectionQoS());
+
+        if (b != e)
+        {
+          connectionQoS_pre (o);
+          for (; b != e;)
+          {
+            dispatch (*b);
+            if (++b != e) connectionQoS_next (o);
+          }
+
+          connectionQoS_post (o);
+        }
+      }
+
+      void NetQoSRequirementsDef::
+      connectionQoS_pre (Type&)
+      {
+      }
+
+      void NetQoSRequirementsDef::
+      connectionQoS_pre (Type const&)
+      {
+      }
+
+      void NetQoSRequirementsDef::
+      connectionQoS_next (Type&)
+      {
+      }
+
+      void NetQoSRequirementsDef::
+      connectionQoS_next (Type const&)
+      {
+      }
+
+      void NetQoSRequirementsDef::
+      connectionQoS_post (Type&)
+      {
+      }
+
+      void NetQoSRequirementsDef::
+      connectionQoS_post (Type const&)
+      {
+      }
+
+      void NetQoSRequirementsDef::
+      id (Type& o)
+      {
+        dispatch (o.id ());
+      }
+
+      void NetQoSRequirementsDef::
+      id (Type const& o)
+      {
+        dispatch (o.id ());
+      }
+
+      void NetQoSRequirementsDef::
+      id_none (Type&)
+      {
+      }
+
+      void NetQoSRequirementsDef::
+      id_none (Type const&)
+      {
+      }
+
+      void NetQoSRequirementsDef::
+      post (Type&)
+      {
+      }
+
+      void NetQoSRequirementsDef::
+      post (Type const&)
+      {
+      }
+
+      // ConnectionQoS
+      //
+      //
+
+      void ConnectionQoS::
+      traverse (Type& o)
+      {
+        pre (o);
+        connectionName (o);
+        fwdBW (o);
+        revBW (o);
+        qos (o);
+        if (o.admissionPriority_p ()) admissionPriority (o);
+        else admissionPriority_none (o);
+        post (o);
+      }
+
+      void ConnectionQoS::
+      traverse (Type const& o)
+      {
+        pre (o);
+        connectionName (o);
+        fwdBW (o);
+        revBW (o);
+        qos (o);
+        if (o.admissionPriority_p ()) admissionPriority (o);
+        else admissionPriority_none (o);
+        post (o);
+      }
+
+      void ConnectionQoS::
+      pre (Type&)
+      {
+      }
+
+      void ConnectionQoS::
+      pre (Type const&)
+      {
+      }
+
+      void ConnectionQoS::
+      connectionName (Type& o)
+      {
+        // VC6 anathema strikes again
+        //
+        ConnectionQoS::Type::connectionName_iterator b (o.begin_connectionName()), e (o.end_connectionName());
+
+        if (b != e)
+        {
+          connectionName_pre (o);
+          for (; b != e;)
+          {
+            dispatch (*b);
+            if (++b != e) connectionName_next (o);
+          }
+
+          connectionName_post (o);
+        }
+      }
+
+      void ConnectionQoS::
+      connectionName (Type const& o)
+      {
+        // VC6 anathema strikes again
+        //
+        ConnectionQoS::Type::connectionName_const_iterator b (o.begin_connectionName()), e (o.end_connectionName());
+
+        if (b != e)
+        {
+          connectionName_pre (o);
+          for (; b != e;)
+          {
+            dispatch (*b);
+            if (++b != e) connectionName_next (o);
+          }
+
+          connectionName_post (o);
+        }
+      }
+
+      void ConnectionQoS::
+      connectionName_pre (Type&)
+      {
+      }
+
+      void ConnectionQoS::
+      connectionName_pre (Type const&)
+      {
+      }
+
+      void ConnectionQoS::
+      connectionName_next (Type&)
+      {
+      }
+
+      void ConnectionQoS::
+      connectionName_next (Type const&)
+      {
+      }
+
+      void ConnectionQoS::
+      connectionName_post (Type&)
+      {
+      }
+
+      void ConnectionQoS::
+      connectionName_post (Type const&)
+      {
+      }
+
+      void ConnectionQoS::
+      fwdBW (Type& o)
+      {
+        dispatch (o.fwdBW ());
+      }
+
+      void ConnectionQoS::
+      fwdBW (Type const& o)
+      {
+        dispatch (o.fwdBW ());
+      }
+
+      void ConnectionQoS::
+      revBW (Type& o)
+      {
+        dispatch (o.revBW ());
+      }
+
+      void ConnectionQoS::
+      revBW (Type const& o)
+      {
+        dispatch (o.revBW ());
+      }
+
+      void ConnectionQoS::
+      qos (Type& o)
+      {
+        dispatch (o.qos ());
+      }
+
+      void ConnectionQoS::
+      qos (Type const& o)
+      {
+        dispatch (o.qos ());
+      }
+
+      void ConnectionQoS::
+      admissionPriority (Type& o)
+      {
+        dispatch (o.admissionPriority ());
+      }
+
+      void ConnectionQoS::
+      admissionPriority (Type const& o)
+      {
+        dispatch (o.admissionPriority ());
+      }
+
+      void ConnectionQoS::
+      admissionPriority_none (Type&)
+      {
+      }
+
+      void ConnectionQoS::
+      admissionPriority_none (Type const&)
+      {
+      }
+
+      void ConnectionQoS::
+      post (Type&)
+      {
+      }
+
+      void ConnectionQoS::
+      post (Type const&)
+      {
+      }
+    }
+  }
+}
+
+namespace CIAO
+{
+  namespace Config_Handlers
+  {
+    namespace Writer
+    {
+      // NetQoSRequirementsDef
+      //
+      //
+
+      NetQoSRequirementsDef::
+      NetQoSRequirementsDef (::XSCRT::XML::Element< ACE_TCHAR >& e)
+      : ::XSCRT::Writer< ACE_TCHAR > (e)
+      {
+      }
+
+      NetQoSRequirementsDef::
+      NetQoSRequirementsDef ()
+      {
+      }
+
+      void NetQoSRequirementsDef::
+      traverse (Type const& o)
+      {
+        Traversal::NetQoSRequirementsDef::traverse (o);
+      }
+
+      void NetQoSRequirementsDef::
+      connectionQoS_pre (Type const&)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("connectionQoS", top_ ()));
+      }
+
+      void NetQoSRequirementsDef::
+      connectionQoS_next (Type const& o)
+      {
+        connectionQoS_post (o);
+        connectionQoS_pre (o);
+      }
+
+      void NetQoSRequirementsDef::
+      connectionQoS_post (Type const&)
+      {
+        pop_ ();
+      }
+
+      void NetQoSRequirementsDef::
+      id (Type const& o)
+      {
+        ::XSCRT::XML::Attribute< ACE_TCHAR > a ("id", "", top_ ());
+        attr_ (&a);
+        Traversal::NetQoSRequirementsDef::id (o);
+        attr_ (0);
+      }
+
+      // NetworkQoS
+      //
+      //
+
+      NetworkQoS::
+      NetworkQoS (::XSCRT::XML::Element< ACE_TCHAR >& e)
+      : ::XSCRT::Writer< ACE_TCHAR > (e)
+      {
+      }
+
+      NetworkQoS::
+      NetworkQoS ()
+      {
+      }
+
+      void NetworkQoS::
+      traverse (Type const& o)
+      {
+        ::std::basic_string< ACE_TCHAR > s;
+
+        if (o == ::CIAO::Config_Handlers::NetworkQoS::HIGH_PRIORITY) s = "HIGH_PRIORITY";
+        else if (o == ::CIAO::Config_Handlers::NetworkQoS::HIGH_RELIABILITY) s = "HIGH_RELIABILITY";
+        else if (o == ::CIAO::Config_Handlers::NetworkQoS::VOICE) s = "VOICE";
+        else if (o == ::CIAO::Config_Handlers::NetworkQoS::VIDEO) s = "VIDEO";
+        else if (o == ::CIAO::Config_Handlers::NetworkQoS::BEST_EFFORT) s = "BEST_EFFORT";
+        else 
+        {
+        }
+
+        if (::XSCRT::XML::Attribute< ACE_TCHAR >* a = attr_ ())
+        {
+          a->value (s);
+        }
+
+        else
+        {
+          top_().value (s);
+        }
+      }
+
+      // AdmissionPriority
+      //
+      //
+
+      AdmissionPriority::
+      AdmissionPriority (::XSCRT::XML::Element< ACE_TCHAR >& e)
+      : ::XSCRT::Writer< ACE_TCHAR > (e)
+      {
+      }
+
+      AdmissionPriority::
+      AdmissionPriority ()
+      {
+      }
+
+      void AdmissionPriority::
+      traverse (Type const& o)
+      {
+        ::std::basic_string< ACE_TCHAR > s;
+
+        if (o == ::CIAO::Config_Handlers::AdmissionPriority::NORMAL) s = "NORMAL";
+        else if (o == ::CIAO::Config_Handlers::AdmissionPriority::HIGH) s = "HIGH";
+        else if (o == ::CIAO::Config_Handlers::AdmissionPriority::LOW) s = "LOW";
+        else 
+        {
+        }
+
+        if (::XSCRT::XML::Attribute< ACE_TCHAR >* a = attr_ ())
+        {
+          a->value (s);
+        }
+
+        else
+        {
+          top_().value (s);
+        }
+      }
+
+      // ConnectionQoS
+      //
+      //
+
+      ConnectionQoS::
+      ConnectionQoS (::XSCRT::XML::Element< ACE_TCHAR >& e)
+      : ::XSCRT::Writer< ACE_TCHAR > (e)
+      {
+      }
+
+      ConnectionQoS::
+      ConnectionQoS ()
+      {
+      }
+
+      void ConnectionQoS::
+      traverse (Type const& o)
+      {
+        Traversal::ConnectionQoS::traverse (o);
+      }
+
+      void ConnectionQoS::
+      connectionName_pre (Type const&)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("connectionName", top_ ()));
+      }
+
+      void ConnectionQoS::
+      connectionName_next (Type const& o)
+      {
+        connectionName_post (o);
+        connectionName_pre (o);
+      }
+
+      void ConnectionQoS::
+      connectionName_post (Type const&)
+      {
+        pop_ ();
+      }
+
+      void ConnectionQoS::
+      fwdBW (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("fwdBW", top_ ()));
+        Traversal::ConnectionQoS::fwdBW (o);
+        pop_ ();
+      }
+
+      void ConnectionQoS::
+      revBW (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("revBW", top_ ()));
+        Traversal::ConnectionQoS::revBW (o);
+        pop_ ();
+      }
+
+      void ConnectionQoS::
+      qos (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("qos", top_ ()));
+        Traversal::ConnectionQoS::qos (o);
+        pop_ ();
+      }
+
+      void ConnectionQoS::
+      admissionPriority (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("admissionPriority", top_ ()));
+        Traversal::ConnectionQoS::admissionPriority (o);
+        pop_ ();
+      }
+    }
+  }
+}
+
+namespace CIAO
+{
+  namespace Config_Handlers
+  {
+    void
+    NetQoSRequirements (::CIAO::Config_Handlers::NetQoSRequirementsDef const& s, xercesc::DOMDocument* d)
+    {
+      ::XSCRT::XML::Element< ACE_TCHAR > e (d->getDocumentElement ());
+      if (e.name () != "NetQoSRequirements")
+      {
+        throw 1;
+      }
+
+      struct W : virtual ::CIAO::Config_Handlers::Writer::NetQoSRequirementsDef,
+      virtual ::CIAO::Config_Handlers::Writer::ConnectionQoS,
+      virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::string< ACE_TCHAR >, ACE_TCHAR >,
+      virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedInt, ACE_TCHAR >,
+      virtual ::CIAO::Config_Handlers::Writer::NetworkQoS,
+      virtual ::CIAO::Config_Handlers::Writer::AdmissionPriority,
+      virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::ID< ACE_TCHAR >, ACE_TCHAR >,
+      virtual ::XSCRT::Writer< ACE_TCHAR >
+      {
+        W (::XSCRT::XML::Element< ACE_TCHAR >& e)
+        : ::XSCRT::Writer< ACE_TCHAR > (e)
+        {
+        }
+      };
+
+      W w (e);
+      w.dispatch (s);
+    }
+  }
+}
+
