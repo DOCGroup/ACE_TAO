@@ -19,7 +19,7 @@ namespace CIAO
     NetQoSRequirementsDef (::CIAO::Config_Handlers::NetQoSRequirementsDef const& s)
     :
     ::XSCRT::Type (),
-    id_ (s.id_.get () ? new ::XMLSchema::ID< wchar_t > (*s.id_) : 0),
+    id_ (s.id_.get () ? new ::XMLSchema::ID< ACE_TCHAR > (*s.id_) : 0),
     regulator__ ()
     {
       {
@@ -38,7 +38,7 @@ namespace CIAO
       }
 
       if (s.id_.get ()) id (*(s.id_));
-      else id_ = ::std::auto_ptr< ::XMLSchema::ID< wchar_t > > (0);
+      else id_ = ::std::auto_ptr< ::XMLSchema::ID< ACE_TCHAR > > (0);
 
       return *this;
     }
@@ -90,20 +90,20 @@ namespace CIAO
       return id_.get () != 0;
     }
 
-    ::XMLSchema::ID< wchar_t > const& NetQoSRequirementsDef::
+    ::XMLSchema::ID< ACE_TCHAR > const& NetQoSRequirementsDef::
     id () const
     {
       return *id_;
     }
 
-    ::XMLSchema::ID< wchar_t >& NetQoSRequirementsDef::
+    ::XMLSchema::ID< ACE_TCHAR >& NetQoSRequirementsDef::
     id ()
     {
       return *id_;
     }
 
     void NetQoSRequirementsDef::
-    id (::XMLSchema::ID< wchar_t > const& e)
+    id (::XMLSchema::ID< ACE_TCHAR > const& e)
     {
       if (id_.get ())
       {
@@ -112,7 +112,7 @@ namespace CIAO
 
       else
       {
-        id_ = ::std::auto_ptr< ::XMLSchema::ID< wchar_t > > (new ::XMLSchema::ID< wchar_t > (e));
+        id_ = ::std::auto_ptr< ::XMLSchema::ID< ACE_TCHAR > > (new ::XMLSchema::ID< ACE_TCHAR > (e));
         id_->container (this);
       }
     }
@@ -259,7 +259,7 @@ namespace CIAO
     }
 
     void ConnectionQoS::
-    add_connectionName (::XMLSchema::string< wchar_t > const& e)
+    add_connectionName (::XMLSchema::string< ACE_TCHAR > const& e)
     {
       connectionName_.push_back (e);
     }
@@ -351,18 +351,18 @@ namespace CIAO
     //
 
     NetQoSRequirementsDef::
-    NetQoSRequirementsDef (::XSCRT::XML::Element< wchar_t > const& e)
+    NetQoSRequirementsDef (::XSCRT::XML::Element< ACE_TCHAR > const& e)
     :Base__ (e), regulator__ ()
     {
 
-      ::XSCRT::Parser< wchar_t > p (e);
+      ::XSCRT::Parser< ACE_TCHAR > p (e);
 
       while (p.more_elements ())
       {
-        ::XSCRT::XML::Element< wchar_t > e (p.next_element ());
-        ::std::basic_string< wchar_t > n (::XSCRT::XML::uq_name (e.name ()));
+        ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
+        ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
 
-        if (n == L"connectionQoS")
+        if (n == "connectionQoS")
         {
           ::CIAO::Config_Handlers::ConnectionQoS t (e);
           add_connectionQoS (t);
@@ -375,11 +375,11 @@ namespace CIAO
 
       while (p.more_attributes ())
       {
-        ::XSCRT::XML::Attribute< wchar_t > a (p.next_attribute ());
-        ::std::basic_string< wchar_t > n (::XSCRT::XML::uq_name (a.name ()));
-        if (n == L"id")
+        ::XSCRT::XML::Attribute< ACE_TCHAR > a (p.next_attribute ());
+        ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (a.name ()));
+        if (n == "id")
         {
-          ::XMLSchema::ID< wchar_t > t (a);
+          ::XMLSchema::ID< ACE_TCHAR > t (a);
           id (t);
         }
 
@@ -393,32 +393,32 @@ namespace CIAO
     //
 
     NetworkQoS::
-    NetworkQoS (::XSCRT::XML::Element< wchar_t > const& e)
+    NetworkQoS (::XSCRT::XML::Element< ACE_TCHAR > const& e)
     : ::XSCRT::Type (e)
     {
-      ::std::basic_string< wchar_t > v (e.value ());
+      ::std::basic_string< ACE_TCHAR > v (e.value ());
 
-      if (v == L"HIGH_PRIORITY") v_ = HIGH_PRIORITY_l;
-      else if (v == L"HIGH_RELIABILITY") v_ = HIGH_RELIABILITY_l;
-      else if (v == L"VOICE") v_ = VOICE_l;
-      else if (v == L"VIDEO") v_ = VIDEO_l;
-      else if (v == L"BEST_EFFORT") v_ = BEST_EFFORT_l;
+      if (v == "HIGH_PRIORITY") v_ = HIGH_PRIORITY_l;
+      else if (v == "HIGH_RELIABILITY") v_ = HIGH_RELIABILITY_l;
+      else if (v == "VOICE") v_ = VOICE_l;
+      else if (v == "VIDEO") v_ = VIDEO_l;
+      else if (v == "BEST_EFFORT") v_ = BEST_EFFORT_l;
       else 
       {
       }
     }
 
     NetworkQoS::
-    NetworkQoS (::XSCRT::XML::Attribute< wchar_t > const& a)
+    NetworkQoS (::XSCRT::XML::Attribute< ACE_TCHAR > const& a)
     : ::XSCRT::Type (a)
     {
-      ::std::basic_string< wchar_t > v (a.value ());
+      ::std::basic_string< ACE_TCHAR > v (a.value ());
 
-      if (v == L"HIGH_PRIORITY") v_ = HIGH_PRIORITY_l;
-      else if (v == L"HIGH_RELIABILITY") v_ = HIGH_RELIABILITY_l;
-      else if (v == L"VOICE") v_ = VOICE_l;
-      else if (v == L"VIDEO") v_ = VIDEO_l;
-      else if (v == L"BEST_EFFORT") v_ = BEST_EFFORT_l;
+      if (v == "HIGH_PRIORITY") v_ = HIGH_PRIORITY_l;
+      else if (v == "HIGH_RELIABILITY") v_ = HIGH_RELIABILITY_l;
+      else if (v == "VOICE") v_ = VOICE_l;
+      else if (v == "VIDEO") v_ = VIDEO_l;
+      else if (v == "BEST_EFFORT") v_ = BEST_EFFORT_l;
       else 
       {
       }
@@ -434,28 +434,28 @@ namespace CIAO
     //
 
     AdmissionPriority::
-    AdmissionPriority (::XSCRT::XML::Element< wchar_t > const& e)
+    AdmissionPriority (::XSCRT::XML::Element< ACE_TCHAR > const& e)
     : ::XSCRT::Type (e)
     {
-      ::std::basic_string< wchar_t > v (e.value ());
+      ::std::basic_string< ACE_TCHAR > v (e.value ());
 
-      if (v == L"NORMAL") v_ = NORMAL_l;
-      else if (v == L"HIGH") v_ = HIGH_l;
-      else if (v == L"LOW") v_ = LOW_l;
+      if (v == "NORMAL") v_ = NORMAL_l;
+      else if (v == "HIGH") v_ = HIGH_l;
+      else if (v == "LOW") v_ = LOW_l;
       else 
       {
       }
     }
 
     AdmissionPriority::
-    AdmissionPriority (::XSCRT::XML::Attribute< wchar_t > const& a)
+    AdmissionPriority (::XSCRT::XML::Attribute< ACE_TCHAR > const& a)
     : ::XSCRT::Type (a)
     {
-      ::std::basic_string< wchar_t > v (a.value ());
+      ::std::basic_string< ACE_TCHAR > v (a.value ());
 
-      if (v == L"NORMAL") v_ = NORMAL_l;
-      else if (v == L"HIGH") v_ = HIGH_l;
-      else if (v == L"LOW") v_ = LOW_l;
+      if (v == "NORMAL") v_ = NORMAL_l;
+      else if (v == "HIGH") v_ = HIGH_l;
+      else if (v == "LOW") v_ = LOW_l;
       else 
       {
       }
@@ -469,42 +469,42 @@ namespace CIAO
     //
 
     ConnectionQoS::
-    ConnectionQoS (::XSCRT::XML::Element< wchar_t > const& e)
+    ConnectionQoS (::XSCRT::XML::Element< ACE_TCHAR > const& e)
     :Base__ (e), regulator__ ()
     {
 
-      ::XSCRT::Parser< wchar_t > p (e);
+      ::XSCRT::Parser< ACE_TCHAR > p (e);
 
       while (p.more_elements ())
       {
-        ::XSCRT::XML::Element< wchar_t > e (p.next_element ());
-        ::std::basic_string< wchar_t > n (::XSCRT::XML::uq_name (e.name ()));
+        ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
+        ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
 
-        if (n == L"connectionName")
+        if (n == "connectionName")
         {
-          ::XMLSchema::string< wchar_t > t (e);
+          ::XMLSchema::string< ACE_TCHAR > t (e);
           add_connectionName (t);
         }
 
-        else if (n == L"fwdBW")
+        else if (n == "fwdBW")
         {
           fwdBW_ = ::std::auto_ptr< ::XMLSchema::unsignedInt > (new ::XMLSchema::unsignedInt (e));
           fwdBW_->container (this);
         }
 
-        else if (n == L"revBW")
+        else if (n == "revBW")
         {
           revBW_ = ::std::auto_ptr< ::XMLSchema::unsignedInt > (new ::XMLSchema::unsignedInt (e));
           revBW_->container (this);
         }
 
-        else if (n == L"qos")
+        else if (n == "qos")
         {
           qos_ = ::std::auto_ptr< ::CIAO::Config_Handlers::NetworkQoS > (new ::CIAO::Config_Handlers::NetworkQoS (e));
           qos_->container (this);
         }
 
-        else if (n == L"admissionPriority")
+        else if (n == "admissionPriority")
         {
           ::CIAO::Config_Handlers::AdmissionPriority t (e);
           admissionPriority (t);
@@ -525,8 +525,8 @@ namespace CIAO
     ::CIAO::Config_Handlers::NetQoSRequirementsDef
     NetQoSRequirements (xercesc::DOMDocument const* d)
     {
-      ::XSCRT::XML::Element< wchar_t > e (d->getDocumentElement ());
-      if (e.name () == L"NetQoSRequirements")
+      ::XSCRT::XML::Element< ACE_TCHAR > e (d->getDocumentElement ());
+      if (e.name () == "NetQoSRequirements")
       {
         ::CIAO::Config_Handlers::NetQoSRequirementsDef r (e);
         return r;

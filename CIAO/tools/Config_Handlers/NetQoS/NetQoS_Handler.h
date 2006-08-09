@@ -16,6 +16,7 @@
 #include "NetQoS_Handler_Export.h"
 #include "ciao/NetQoSC.h"
 #include "ace/Auto_Ptr.h"
+#include "NetQoS/NetQoSRequirements.hpp"
 // #include "Utils/XML_Helper.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -58,6 +59,13 @@ namespace CIAO
 
       NetQoSRequirementsDef *netqos_xsc (void)
         throw (NoNetQoS);
+
+    private:
+
+       ::CIAO::Config_Handlers::NetworkQoS
+        get_idl_net_qos (::CIAO::DAnCE::DataTrafficQoS);
+
+
 
     private:
       bool build_netqos ();

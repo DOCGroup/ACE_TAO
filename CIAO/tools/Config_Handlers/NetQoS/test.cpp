@@ -59,7 +59,7 @@ int main (int argc, char *argv[])
 
       // Convert XSC to idl datatype
       NetQoS_Handler net_qos_handler (new NetQoSRequirementsDef (net_qos));
-/*
+
       std::cout << "Instance document import succeeded.  Dumping contents to file\n";
   
       CIAO::DAnCE::NetQoSRequirement *sr (net_qos_handler.netqos_idl ());
@@ -75,11 +75,11 @@ int main (int argc, char *argv[])
                 << std::string (xercesc::XMLString::transcode (the_xsc->getDocumentElement ()->getLocalName ())) << std::endl
                 << std::endl;
   
-      //NetQoSRequirements (*reverse_handler.netqos_xsc (), the_xsc);
+      NetQoSRequirements (*reverse_handler.netqos_xsc (), the_xsc);
   
       // write out the result
       the_helper.write_DOM (the_xsc, "output.netqos");
-*/
+
     }
   }
   catch (CIAO::Config_Handlers::NetQoS_Handler::NoNetQoS)
