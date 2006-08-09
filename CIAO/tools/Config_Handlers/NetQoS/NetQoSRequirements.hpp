@@ -1,3 +1,5 @@
+#include "NetQoS/NetQoS_Handler_Export.h"
+
 #ifndef NET_QO_SREQUIREMENTS_HPP
 #define NET_QO_SREQUIREMENTS_HPP
 
