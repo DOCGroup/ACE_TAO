@@ -1,0 +1,5 @@
+// -*- MPC -*-
+// $Id: ace_opt_mfc.mpb 73920 2006-08-08 14:04:28Z sma $
+
+feature(mfc): ace_mfc {
+}
