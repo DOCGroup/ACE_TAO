@@ -328,6 +328,7 @@ ACE_Event_Handler_var::ACE_Event_Handler_var (const ACE_Event_Handler_var &b)
 
 ACE_Event_Handler_var::~ACE_Event_Handler_var (void)
 {
+  ACE_Errno_Guard eguard (errno);
   if (this->ptr_ != 0)
     {
       this->ptr_->remove_reference ();
