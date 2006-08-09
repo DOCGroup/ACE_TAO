@@ -12,7 +12,7 @@ ACE_RCSID(AMI_Buffering, client, "$Id$")
 
 const char *server_ior = "file://server.ior";
 const char *admin_ior = "file://admin.ior";
-int iterations = 200;
+int iterations = 20;
 
 int run_message_count_test = 0;
 int run_timeout_test = 0;
@@ -20,12 +20,12 @@ int run_timeout_reactive_test = 0;
 int run_buffer_size_test = 0;
 
 const int PAYLOAD_LENGTH = 1024;
-const int BUFFERED_MESSAGES_COUNT = 50;
-const unsigned int TIMEOUT_MILLISECONDS = 25;
-const int BUFFER_SIZE = 64 * PAYLOAD_LENGTH;
+const int BUFFERED_MESSAGES_COUNT = 10;
+const unsigned int TIMEOUT_MILLISECONDS = 50;
+const int BUFFER_SIZE = 10 * PAYLOAD_LENGTH;
 
 /// Allow a larger timeout to occur due to scheduler differences
-const unsigned int TIMEOUT_TOLERANCE = 20 * TIMEOUT_MILLISECONDS;
+const unsigned int TIMEOUT_TOLERANCE = 4 * TIMEOUT_MILLISECONDS;
 
 /// Check that no more than 10% of the messages are not sent.
 const double LIVENESS_TOLERANCE = 0.9;
@@ -393,6 +393,10 @@ run_liveness_test (CORBA::ORB_ptr orb,
         ami_buffering_admin->request_count (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
 
+      ACE_Time_Value tv (0, 10 * 1000);
+      orb->run (tv ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (-1);
+
       // Once the system has sent enough messages we don't
       // expect it to fall too far behind, i.e. at least 90% of the
       // messages should be delivered....
@@ -489,6 +493,10 @@ run_message_count (CORBA::ORB_ptr orb,
 
           CORBA::ULong receive_count =
             ami_buffering_admin->request_count (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_CHECK_RETURN (-1);
+
+          ACE_Time_Value tv (0, 10 * 1000);
+          orb->run (tv ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (-1);
 
           CORBA::ULong iteration_count =
@@ -603,6 +611,10 @@ run_timeout (CORBA::ORB_ptr orb,
 
           CORBA::ULong receive_count =
             ami_buffering_admin->request_count (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_CHECK_RETURN (-1);
+
+          ACE_Time_Value tv (0, 10 * 1000);
+          orb->run (tv ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (-1);
 
           ACE_Time_Value elapsed = ACE_OS::gettimeofday () - start;
@@ -720,8 +732,8 @@ run_timeout_reactive (CORBA::ORB_ptr orb,
             ami_buffering_admin->request_count (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK_RETURN (-1);
 
-          ACE_Time_Value sleep (0, 10000);
-          orb->run (sleep ACE_ENV_ARG_PARAMETER);
+          ACE_Time_Value tv (0, 10 * 1000);
+          orb->run (tv ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (-1);
 
           ACE_Time_Value elapsed = ACE_OS::gettimeofday () - start;
@@ -836,6 +848,10 @@ run_buffer_size (CORBA::ORB_ptr orb,
 
           CORBA::ULong bytes_received =
             ami_buffering_admin->bytes_received_count (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_CHECK_RETURN (-1);
+
+          ACE_Time_Value tv (0, 10 * 1000);
+          orb->run (tv ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (-1);
 
           CORBA::ULong payload_delta =

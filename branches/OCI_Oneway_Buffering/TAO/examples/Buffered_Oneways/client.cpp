@@ -230,6 +230,13 @@ main (int argc, char **argv)
                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
+      if (buffering_constraint.mode == TAO::BUFFER_FLUSH) 
+        {
+          ACE_ERROR((LM_ERROR, "Error : Must specify a timeout, message"
+            " count, or message bytes constraint.\n"));
+          return 1;
+        }
+
       // Setup the constraints.
       policy_current->set_policy_overrides (buffering_constraint_policy_list,
                                             CORBA::ADD_OVERRIDE

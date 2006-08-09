@@ -56,7 +56,13 @@ public:
   /// Destructor
   virtual ~TAO_Flushing_Strategy (void);
 
+  enum SCHEDULE_OUTPUT_RETURN { MUST_FLUSH = -2 };
+
   /// Schedule the transport argument to be flushed
+  /// If -2 is returned then the caller must call one of
+  ///   the flush_* methods.
+  /// If -1 is returned then there was an error.
+  /// If 0 is returned then the flush was scheduled successfully.
   virtual int schedule_output (TAO_Transport *transport) = 0;
 
   /// Cancel all scheduled output for the transport argument

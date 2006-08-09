@@ -17,12 +17,15 @@
 
 #include "tao/Queued_Message.h"
 
+#include "ace/Time_Value.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+class ACE_Message_Block;
 /**
  * @class TAO_Asynch_Queued_Message
  *
@@ -39,6 +42,9 @@ public:
    *
    * @param alloc Allocator used for creating @c this object.
    *
+   * @param timeout The relative timeout after which this 
+   * message should be expired.
+   *
    * @todo I'm almost sure this class will require a callback
    *       interface for AMIs sent with SYNC_NONE policy.  Those guys
    *       need to hear when the connection timeouts or closes, but
@@ -46,6 +52,7 @@ public:
    */
   TAO_Asynch_Queued_Message (const ACE_Message_Block *contents,
                              TAO_ORB_Core *oc,
+                             ACE_Time_Value *timeout,
                              ACE_Allocator *alloc = 0,
                              bool is_heap_allocated = false);
 
@@ -65,6 +72,7 @@ public:
   /// it here for the sake of uniformity.
   virtual TAO_Queued_Message *clone (ACE_Allocator *alloc);
   virtual void destroy (void);
+  virtual bool is_expired (const ACE_Time_Value &now) const;
   //@}
 
 protected:
@@ -78,11 +86,14 @@ protected:
    * @param size The size of the buffer <buf> that is being handed
    *             over.
    *
+   * @param abs_timeout The time after which this  message should be expired.
+   *
    * @param alloc Allocator used for creating <this> object.
    */
   TAO_Asynch_Queued_Message (char *buf,
                              TAO_ORB_Core *oc,
                              size_t size,
+                             const ACE_Time_Value &abs_timeout,
                              ACE_Allocator *alloc = 0);
 private:
   /// The number of bytes in the buffer
@@ -97,6 +108,10 @@ private:
 
   /// The buffer containing the complete message.
   char *buffer_;
+
+  // Expiration time
+  ACE_Time_Value abs_timeout_;
+
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
