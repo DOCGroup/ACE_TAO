@@ -1,3 +1,22 @@
+Thu Aug 10 12:20:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Messaging.mpc:
+          Enabled regeneration of Messaging_No_Impl.pidl. This had a diff
+          to undef TRANSPARENT if it was defined, we moved that to
+          Messaging.h
+
+        * tao/Messaging/diffs/*:
+          Removed, not needed anymore
+
+        * tao/Messaging/Messaging.h:
+          Undef TRANSPARENT when it is defined
+
+        * tao/Messaging/Messaging.pidl:
+          Documentation cleanup
+
+        * tao/Messaging/Messaging_No_Impl{A,C,S}.{h,cpp,inl}:
+          Removed, will get regenerated as part of the build
+
 Thu Aug 10 12:03:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_codegen.cpp:
