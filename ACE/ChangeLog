@@ -1,3 +1,8 @@
+Thu Aug 10 01:52:34 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-aix-4.x.h: Added ACE_HAS_TEMPLATE_TYPEDEFS for Visual
+          Age C++ 6 and higher.
+
 Wed Aug  9 14:15:18 UTC 2006  Ciju John  <johnc@ociweb.com>
 
         * bin/MakeProjectCreator/config/csd_threadpool.mpb:
