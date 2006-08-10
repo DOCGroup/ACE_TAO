@@ -17,13 +17,9 @@ if (PerlACE::is_vxworks_test()) {
     $SV = new PerlACE::ProcessVX ("server", "-o server.ior");
 }
 else {
-    $SV = new PerlACE::Process ("server", "-o $iorfile"
-." -ORBDebugLevel 6 -ORBLogFile server.log"
-);
+    $SV = new PerlACE::Process ("server", "-o $iorfile");
 }
-$CL = new PerlACE::Process ("client", "-k file://$iorfile -x"
-." -ORBDebugLevel 6 -ORBLogFile client.log"
-);
+$CL = new PerlACE::Process ("client", "-k file://$iorfile -x");
 
 $SV->Spawn ();
 
