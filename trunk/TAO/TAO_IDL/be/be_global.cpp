@@ -97,6 +97,7 @@ BE_GlobalData::BE_GlobalData (void)
     gen_inline_constants_ (true),
     gen_dcps_type_support_ (false),
     gen_orb_h_include_ (true),
+    gen_empty_anyop_header_ (false),
     lookup_strategy_ (TAO_PERFECT_HASH),
     void_type_ (0),
     ccmobject_ (0),
@@ -183,7 +184,7 @@ be_change_idl_file_extension (UTL_String* idl_file,
 
   // Anyop * skel file output defaults to general output dir if not set.
   const char *output_path = 0;
-  
+
   if (for_anyop && 0 != be_global->anyop_output_dir ())
     {
       output_path = be_global->anyop_output_dir ();
@@ -1140,6 +1141,18 @@ BE_GlobalData::gen_orb_h_include (void) const
 }
 
 void
+BE_GlobalData::gen_empty_anyop_header (bool val)
+{
+  this->gen_empty_anyop_header_ = val;
+}
+
+bool
+BE_GlobalData::gen_empty_anyop_header (void) const
+{
+  return this->gen_empty_anyop_header_;
+}
+
+void
 BE_GlobalData::lookup_strategy (LOOKUP_STRATEGY s)
 {
   this->lookup_strategy_ = s;
@@ -1901,6 +1914,11 @@ BE_GlobalData::parse_args (long &i, char **av)
           {
             // AMH classes.
             be_global->gen_amh_classes (true);
+          }
+        else if (av[i][2] == 'X')
+          {
+            // Generate empty A.h file.
+            be_global->gen_empty_anyop_header (true);
           }
         else if (av[i][2] == 'A')
           {

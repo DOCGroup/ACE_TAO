@@ -28,7 +28,7 @@ project : taolib, rtcorba, pi, pi_server, portableserver, core, corba_messaging,
   }
 
   IDL_Files {
-    idlflags += -Gp -Gd -Ge 1 -Sci -SS -Sorb \
+    idlflags += -Gp -Gd -Ge 1 -Sci -SS -Sorb -GX \
                 -Wb,export_macro=TAO_RTScheduler_Export \
                 -Wb,export_include=tao/RTScheduling/rtscheduler_export.h \
                 -Wb,include_guard=TAO_RTSCHEDULER_SAFE_INCLUDE \

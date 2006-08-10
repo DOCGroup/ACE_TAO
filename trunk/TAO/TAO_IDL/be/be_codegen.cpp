@@ -804,7 +804,7 @@ TAO_CodeGen::server_template_inline (void)
 int
 TAO_CodeGen::start_anyop_header (const char *fname)
 {
-  if (!be_global->gen_anyop_files ())
+  if (!be_global->gen_anyop_files () && !be_global->gen_empty_anyop_header ())
     {
       return 0;
     }
@@ -832,6 +832,14 @@ TAO_CodeGen::start_anyop_header (const char *fname)
                          "TAO_CodeGen::start_anyop_header - "
                          "Error opening file\n"),
                         -1);
+    }
+
+  if (be_global->gen_empty_anyop_header ())
+    {
+      *this->anyop_header_ << be_nl
+                           << "// Generated empty using -GX" << be_nl
+                           << be_nl;
+      return 0;
     }
 
   *this->anyop_header_ << be_nl
@@ -871,7 +879,7 @@ TAO_CodeGen::start_anyop_header (const char *fname)
 
   const char *tao_prefix = "";
   ACE_CString pidl_checker (idl_global->filename ()->get_string ());
-  bool got_pidl =
+  bool const got_pidl =
     (pidl_checker.substr (pidl_checker.length () - 5) == ".pidl");
 
   // If we're here and we have a .pidl file, we need to generate
