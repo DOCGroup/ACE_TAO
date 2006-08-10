@@ -24,7 +24,7 @@ project : taolib, core, portableserver, pi, valuetype, tao_versioning_idl_defaul
   }
 
   PIDL_Files {
-    Messaging
+    Messaging/Messaging_No_Impl.diff
   }
 
   IDL_Files {
@@ -37,7 +37,7 @@ project : taolib, core, portableserver, pi, valuetype, tao_versioning_idl_defaul
   }
 
   IDL_Files {
-    idlflags += -Sci -SS -Gp -Gd -Ge 1 -Sc -Sorb -Sal \
+    idlflags += -Sci -SS -Gp -Gd -Ge 1 -Sc -Sorb -Sal -GX \
                 -Wb,export_macro=TAO_Messaging_Export \
                 -Wb,export_include=tao/Messaging/messaging_export.h \
                 -o Messaging
@@ -54,6 +54,17 @@ project : taolib, core, portableserver, pi, valuetype, tao_versioning_idl_defaul
     Messaging/TAO_Ext.pidl
     Messaging/Messaging_RT_Policy.pidl
     Messaging/Messaging_SyncScope_Policy.pidl
+  }
+
+  IDL_Files {
+    idlflags += -Ssi -GA -Gp -Gd -Ge 1 -Sc -Sorb -Sal \
+                -Wb,export_macro=TAO_Messaging_Export \
+                -Wb,export_include=tao/Messaging/messaging_export.h \
+                -Wb,include_guard=TAO_MESSAGING_SAFE_INCLUDE \
+                -Wb,safe_include=tao/Messaging/Messaging.h \
+                -o Messaging
+    idlflags -= -Sa -St
+    Messaging/Messaging.pidl
   }
 
   Pkgconfig_Files {
