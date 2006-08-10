@@ -684,13 +684,13 @@ also receives other options that are specific to it.<p>
     <td>&nbsp;</td>
   </tr>
 
-  <tr><a name="GA">
-    <td><tt>-GA</tt></td>
+  <tr><a name="GX">
+    <td><tt>-GX</tt></td>
 
-    <td>Generate type codes and Any operators in *A.h and *A.cpp</td>
-    <td>Decouples client and server decisions to compile and link
-        TypeCode- and Any-related code, which is generated in
-        *C.h and *C.cpp by default.</td>
+    <td>Generate empty A.h file</td>
+    <td>Used by TAO developers for generating an empty A.h file when the
+        -GA option can't be used.
+    </td>
   </tr>
 
   <tr><a name="Guc">
@@ -765,6 +765,15 @@ also receives other options that are specific to it.<p>
     <td>Enable generation of the TIE classes, and the *S_T.* files that
     contain them.</td>
     <td>&nbsp;</td>
+  </tr>
+
+  <tr><a name="GA">
+    <td><tt>-GA</tt></td>
+
+    <td>Generate type codes and Any operators in *A.h and *A.cpp</td>
+    <td>Decouples client and server decisions to compile and link
+        TypeCode- and Any-related code, which is generated in
+        *C.h and *C.cpp by default.</td>
   </tr>
 
   <tr><a name="Sa">
