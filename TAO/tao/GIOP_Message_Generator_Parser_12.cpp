@@ -543,8 +543,7 @@ TAO_GIOP_Message_Generator_Parser_12::check_bidirectional_context (
 
   // Check whether we have the BiDir service context info available in
   // the ServiceContextList
-  if (service_context.is_service_id (IOP::BI_DIR_IIOP)
-      == 1)
+  if (service_context.is_service_id (IOP::BI_DIR_IIOP))
     {
       return this->process_bidir_context (service_context,
                                           request.transport ());

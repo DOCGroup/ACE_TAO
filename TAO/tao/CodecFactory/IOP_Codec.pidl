@@ -7,7 +7,7 @@
  *
  * @brief Pre-compiled IDL source for the IOP module.
  *
- * This file is used to generate IOPC.{h,cpp}, using the following
+ * This file is used to generate IOP_CodecC.{h,cpp}, using the following
  * command:
  *
  *   tao_idl.exe
