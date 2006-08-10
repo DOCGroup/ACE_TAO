@@ -41,7 +41,6 @@ namespace TAO
 
     TAO_Operation_Details op_details (this->operation_,
                                       this->op_len_,
-                                      this->number_args_ > 1,
                                       this->args_,
                                       this->number_args_,
                                       ex_data,

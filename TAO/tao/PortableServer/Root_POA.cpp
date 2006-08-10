@@ -417,6 +417,7 @@ TAO_Root_POA::create_POA_i (const char *adapter_name,
 
   if (CORBA::is_nil (poa_manager))
     {
+#if !defined (CORBA_E_COMPACT)
       PortableServer::POA_var poa = PortableServer::POA::_duplicate (this);
       PortableServer::POA_var root_poa;
 
@@ -442,6 +443,7 @@ TAO_Root_POA::create_POA_i (const char *adapter_name,
                                                       empty_policies
                                                       ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (PortableServer::POA::_nil ());
+#endif /* !CORBA_E_COMPACT */
     }
   else
     {
@@ -456,7 +458,7 @@ TAO_Root_POA::create_POA_i (const char *adapter_name,
 
   return poa._retn ();
 }
-#endif
+#endif /* !CORBA_E_MICRO */
 
 TAO_Root_POA *
 TAO_Root_POA::new_POA (const String &name,
