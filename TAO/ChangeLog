@@ -1,3 +1,56 @@
+Thu Aug 10 09:43:56 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/CodecFactory/IOP_Codec.pidl:
+        * tao/CSD_Framework/CSD_Framework.pidl:
+          Documentation improvements
+
+        * tao/Connector_Registry.cpp:
+          Improved some debug statements to mention the class and method
+          where the debug message is coming from
+
+        * tao/CSD_Framework/CSD_FW_Server_Request_Wrapper.cpp:
+          Initialize some pointers with 0
+
+        * tao/CSD_Framework/CSD_FW_Server_Request_Wrapper.cpp:
+        * tao/Invocation_Adapter.cpp:
+        * tao/LocateRequest_Invocation_Adapter.cpp:
+        * tao/operation_details.{h,inl}:
+          Removed the argument_flag as member, we just determine whether
+          we have arguments or not on the number of arguments. Changed the
+          accessor to just check it when requested. Introduced a flag
+          whether the stub arguments should be used or not, this can
+          then be changed is some part of the code knows the stub
+          arguments are not valid, for example with AMI.
+
+        * tao/operation_details.h:
+          Guarded the ft_* methods with TAO_HAS_INTERCEPTORS, the
+          implementation did use the macro, just not the declaration
+
+        * tao/extra_core.mpb:
+          Removed a generated file from the list of files
+
+        * tao/GIOP_Message_Generator_Parser_12.cpp:
+        * tao/Service_Context.{h,inl}:
+          is_service_id is now returning a real bool
+
+        * tao/Messaging/Async_Invocation_Adapter.{h,cpp}:
+          Overruled invoke_collocated_i to set the use_stub_args
+          flag in the operations details to false, when using
+          collocation we should use the skeleton arguments. This fixes
+          bugzilla bug 2503, thanks to Charles Frasch <cfrash at atdesk dot com>
+          for reporting this bug.
+
+        * tao/PortableServer/get_arg.h:
+          Use the operation_details stub_args method to determine
+          which args should be used
+
+        * TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
+          Small optimization for AMI operations with just out arguments as
+          supplied by Ossama Othman as partly fix for bug 2503.
+
+        * tao/PortableServer/Root_POA.cpp:
+          Don't use POAManagerFactory with CORBA/e compact.
+
 Wed Aug  9 15:00:55 UTC 2006  Adam Mitz  <mitza@ociweb.com>
 
         * orbsvcs/tests/ImplRepo/Bug_2604_Regression/Bug_2604.mpc:
