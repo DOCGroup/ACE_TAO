@@ -1,3 +1,8 @@
+Thu Aug 10 10:33:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/taoidldefaults.mpb:
+          Updated for -GX
+
 Thu Aug 10 09:38:13 UTC 2006  Simon McQueen  <sm@prismtech.com>
 
         * bin/tao_other_tests.lst:
