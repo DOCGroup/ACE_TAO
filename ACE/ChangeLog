@@ -1,3 +1,9 @@
+Thu Aug 10 13:14:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_other_tests.lst:
+          Disabled the performance tests on OpenVMS for the moment, they
+          result in too much error logs
+
 Thu Aug 10 10:33:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/taoidldefaults.mpb:
