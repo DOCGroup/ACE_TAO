@@ -17,19 +17,6 @@
  *        -Wb,pre_include="ace/pre.h"
  *        -Wb,post_include="ace/post.h" -I$(TAO_ROOT)
  *        Messaging.pidl
- *
- * after the file is generated a patch must be applied:
- *
- *   cp orig/Messaging{A,C,S,S_T}.{h,inl,cpp} .
- *   patch < diffs/Messaging.diff
- *
- * The patch eliminates cycles in the include dependencies.
- *
- * Note: to update the patch file after re-generating the code use:
- *
- *   for i in Messaging{A,C,S,S_T}.{h,inl,cpp}; do
- *     diff -uBbw orig/$i $i;
- *   done > diffs/Messaging.diff
  */
 //=============================================================================
 
