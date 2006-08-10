@@ -477,6 +477,12 @@ public:
   bool gen_orb_h_include (void) const;
   // Return the flag.
 
+  bool gen_empty_anyop_header (void) const;
+  // Generate an empty anyop header (A.h)
+
+  void gen_empty_anyop_header (bool value);
+  // Generate an empty anyop header (A.h)
+
   void lookup_strategy (LOOKUP_STRATEGY s);
   // Set the lookup strategy.
 
@@ -719,6 +725,9 @@ private:
   bool gen_orb_h_include_;
   // Flag to indicate whether ORB.h include should be generated, needed for
   // regenerating the pidl files.
+
+  bool gen_empty_anyop_header_;
+  // Flag to indicate whether an empty A.h should be generated
 
   LOOKUP_STRATEGY lookup_strategy_;
   // The enumerated value indicating the lookup strategy.

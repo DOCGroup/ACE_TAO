@@ -1,3 +1,30 @@
+Thu Aug 10 10:29:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be_include/be_global.h:
+        * TAO_IDL/be/be_codegen.cpp:
+        * docs/compiler.html
+          Added -GX option, generates an empty A.h file. This can be used
+          for the pidl files in the archive which can't be build with -GA
+          but we do need an A.h file to not get compile errors when end
+          users do include the pidl files directly.
+
+        * tao/CodecFactory.mpc:
+        * tao/ImR_Client.mpc:
+        * tao/ObjRefTemplate.mpc:
+        * tao/PI.mpc:
+        * tao/RTScheduler.mpc:
+        * tao/IORManipulation.mpc:
+          Use the new -GX option
+
+        * tao/CodecFactory/IOP_CodecA.h:
+        * tao/ImR_Client/ImplRepoA.h:
+        * tao/IORManipulation/IORA.h:
+        * tao/ObjRefTemplate/ObjectReferenceTemplateA.h:
+        * tao/PI/ORBInitInfoA.h:
+        * tao/RTScheduling/RTSchedulerA.h:
+          Removed from the repo, do get generated now with -GX.
+
 Thu Aug 10 09:43:56 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/CodecFactory/IOP_Codec.pidl:
