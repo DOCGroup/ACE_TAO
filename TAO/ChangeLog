@@ -1,3 +1,22 @@
+Thu Aug 10 12:03:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_codegen.cpp:
+          In the server header include the safe include when this is defined
+
+        * tao/Messaging.mpc:
+          Enabled regeneration of Messaging.pidl and added some -GX flags to
+          get the empty A.h files
+
+        * tao/Messaging/Messaging_No_ImplS.h:
+          Added empty file, needed because Messaging.pidl gets regenerated
+
+        * tao/Messaging/Messaging.pidl:
+          Removed include of OldExceptionHolder.pidl which got removed some
+          time ago.
+
+        * tao/Messaging/Messaging{A,C,S}.{h,cpp,inl}:
+          Removed because they get regenerated as part of the build
+
 Thu Aug 10 10:29:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_global.cpp:

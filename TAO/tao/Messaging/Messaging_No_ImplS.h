@@ -25,17 +25,4 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-// TAO_IDL - Generated from 
-// be\be_codegen.cpp:627
-
-#ifndef _TAO_IDL_MESSAGINGS_T_CPP_
-#define _TAO_IDL_MESSAGINGS_T_CPP_
-
-#include "tao/Messaging/MessagingS_T.h"
-
-#if !defined (__ACE_INLINE__)
-#include "tao/Messaging/MessagingS_T.inl"
-#endif /* !defined INLINE */
-
-
-#endif /* ifndef */
+// Skeleton file generation suppressed with command line option -SS
