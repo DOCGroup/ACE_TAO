@@ -77,6 +77,10 @@
 #      define ACE_HAS_STANDARD_CPP_LIBRARY 1
 #      define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
 #    endif /* __IBMCPP__ >= 500 */
+
+#    if (__IBMCPP__ >= 600) /* Visual Age 6 and XL C/C++ 7 and up */
+#      define ACE_HAS_TEMPLATE_TYPEDEFS
+#    endif /* __IBMCPP__ >= 600 */
 #  endif /* __IBMCPP__ */
 
 #elif defined (__GNUG__)
