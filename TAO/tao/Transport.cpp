@@ -962,11 +962,12 @@ TAO_Transport::drain_queue_i (void)
               ACE_TEXT ("Discarding expired queued message.\n"),
               this->id ()));
           }
+          TAO_Queued_Message *next = i->next ();
           i->state_changed (TAO_LF_Event::LFS_TIMEOUT,
                             this->orb_core_->leader_follower ());
           i->remove_from_list (this->head_, this->tail_);
           i->destroy ();
-          i = this->head_;
+          i = next;
           continue;
         }
       // ... each element fills the iovector ...

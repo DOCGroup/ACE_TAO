@@ -193,20 +193,12 @@ TAO_Asynch_Queued_Message::destroy (void)
 bool
 TAO_Asynch_Queued_Message::is_expired (const ACE_Time_Value &now) const
 {
-  ACE_DEBUG ((LM_DEBUG,
-              "TAO (%P|%t) - Asynch_Queued_Message::is_expired - "
-              "Age of message is <%dms> this = %x.\n",
-              (now - this->abs_timeout_).msec (), this));
-  if (this->offset_ > 0)
-    {
-      // This debug is for testing purposes!
-      ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) - Asynch_Queued_Message::is_expired - "
-                  "Can't expire message due to partial send. \n"));
-      return false; //never expire partial messages
-    }
   if (this->abs_timeout_ > ACE_Time_Value::zero) 
     {
+      if (this->offset_ > 0)
+        {
+          return false; //never expire partial messages
+        }
       return this->abs_timeout_ < now;
     }
   return false;
