@@ -426,9 +426,20 @@ TAO_CodeGen::start_server_header (const char *fname)
     }
 
   // The server header should include the client header.
-  *this->server_header_ << "\n#include \""
-                        << be_global->be_get_client_hdr_fname (1)
-                        << "\"";
+  if (be_global->safe_include ())
+    {
+      // Generate the safe include if it is defined instead of the client header
+      // need to put only the base names. Path info is not required.
+      *this->server_header_ << "\n#include \""
+                            << be_global->safe_include ()
+                            << "\"";
+    }
+  else
+    {
+      *this->server_header_ << "\n#include \""
+                            << be_global->be_get_client_hdr_fname (1)
+                            << "\"";
+    }
 
   // We must include all the skeleton headers corresponding to
   // IDL files included by the current IDL file.
