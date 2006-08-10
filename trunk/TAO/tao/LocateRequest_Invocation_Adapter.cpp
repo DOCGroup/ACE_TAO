@@ -67,8 +67,7 @@ namespace TAO
             // Dummy operation details that is used to instantiate the
             // LocateRequest class.
             TAO_Operation_Details op (0,
-                                      0,
-                                      false);
+                                      0);
 
             op.request_id (resolver.transport ()->tms ()->request_id ());
             TAO::LocateRequest_Invocation synch (this->target_,

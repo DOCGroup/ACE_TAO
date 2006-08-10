@@ -72,7 +72,6 @@ public:
   /// Constructor
   TAO_Operation_Details (const char *name,
                          CORBA::ULong len,
-                         CORBA::Boolean argument_flag,
                          TAO::Argument **args = 0,
                          CORBA::ULong num_args = 0,
                          TAO::Exception_Data *ex_data = 0,
@@ -156,11 +155,16 @@ public:
 
   TAO::Exception_Data const * ex_data (void) const;
 
+  CORBA::Boolean use_stub_args (void) const;
+  void use_stub_args (CORBA::Boolean use_stub_arguments);
+
+#if TAO_HAS_INTERCEPTORS == 1
   void ft_expiration_time (TimeBase::TimeT time);
   TimeBase::TimeT ft_expiration_time (void) const;
 
   void ft_retention_id (CORBA::Long request_id);
   CORBA::Long ft_retention_id (void) const;
+#endif /*TAO_HAS_INTERCEPTORS == 1*/
 
 private:
 
@@ -172,12 +176,6 @@ private:
 
   /// Request ID of this operation.
   CORBA::ULong request_id_;
-
-  /**
-   * Flag that indicates whether the operation has any arguments.  If
-   * there are arguments this flag is true, else false.
-   */
-  CORBA::Boolean argument_flag_;
 
   /// Response flags
   CORBA::Octet response_flags_;
@@ -207,6 +205,11 @@ private:
 
   /// Count of the exceptions that operations can throw.
   CORBA::ULong ex_count_;
+
+  /// Boolean flag to indicate whether in the skeletons the stub arguments
+  /// stored in these operation details should be used or not.
+  CORBA::Boolean use_stub_args_;
+
 #if TAO_HAS_INTERCEPTORS == 1
   /// FT request expiration time (absolute gregorian)
   TimeBase::TimeT ft_expiration_time_;

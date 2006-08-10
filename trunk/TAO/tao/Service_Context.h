@@ -61,7 +61,7 @@ class TAO_Export TAO_Service_Context
 {
 public:
   /// Declare FW_Server_Request_Wrapper a friend
-  /// This friendship makes the FW_Server_Request_Wrapper be able to 
+  /// This friendship makes the FW_Server_Request_Wrapper be able to
   /// clone the TAO_Service_Context data member in TAO_ServerRequest.
   friend class TAO::CSD::FW_Server_Request_Wrapper;
 
@@ -114,8 +114,8 @@ public:
   void set_context (IOP::ServiceContext &context, TAO_OutputCDR &cdr);
 
   /// Is the <id> available in the underlying service context list? If
-  /// so return 1, else return 0
-  int is_service_id (IOP::ServiceId id);
+  /// so return true, else return false
+  bool is_service_id (IOP::ServiceId id);
 
   /// = Marshaling and demarshaling the list
   int encode (TAO_OutputCDR& cdr) const;

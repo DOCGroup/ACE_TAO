@@ -172,40 +172,52 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
           << "}" << be_uidt;
     }
 
-  *os << be_nl<< be_nl
-      << "TAO::Arg_Traits<void>::ret_val _tao_retval;";
-
-  // Declare the argument helper classes.
-  this->gen_stub_body_arglist (ami_op, os, true);
-
-  // Assemble the arg helper class pointer array.
-  *os << be_nl << be_nl
-      << "TAO::Argument *_the_tao_operation_signature [] =" << be_idt_nl
-      << "{" << be_idt_nl
-      << "&_tao_retval";
-
-  AST_Argument *arg = 0;
-  UTL_ScopeActiveIterator arg_list_iter (ami_op,
-                                         UTL_Scope::IK_decls);
-
-  // For a sendc_* operation, skip the reply handler (first argument).
-  arg_list_iter.next ();
-
-  for (; ! arg_list_iter.is_done (); arg_list_iter.next ())
-    {
-      arg = AST_Argument::narrow_from_decl (arg_list_iter.item ());
-
-      *os << "," << be_nl
-          << "&_tao_" << arg->local_name ();
-    }
-
-  *os << be_uidt_nl
-      << "};" << be_uidt;
-
-  be_interface *intf = be_interface::narrow_from_decl (parent);
-
   // Includes the reply handler, but we have to add 1 for the retval anyway.
   int nargs = ami_op->argument_count ();
+
+  if (nargs == 1)
+    {
+      // No arguments other than the reply handler, and the return
+      // type is void.  No need to generate argument list.
+
+      *os << be_nl << be_nl
+          << "TAO::Argument ** _the_tao_operation_signature = 0;";
+      nargs = 0; // Don't count the reply handler.
+    }
+  else
+    {
+      *os << be_nl<< be_nl
+          << "TAO::Arg_Traits<void>::ret_val _tao_retval;";
+
+      // Declare the argument helper classes.
+      this->gen_stub_body_arglist (ami_op, os, true);
+
+      // Assemble the arg helper class pointer array.
+      *os << be_nl << be_nl
+          << "TAO::Argument *_the_tao_operation_signature[] =" << be_idt_nl
+          << "{" << be_idt_nl
+          << "&_tao_retval";
+
+      AST_Argument *arg = 0;
+      UTL_ScopeActiveIterator arg_list_iter (ami_op,
+                                             UTL_Scope::IK_decls);
+
+      // For a sendc_* operation, skip the reply handler (first argument).
+      arg_list_iter.next ();
+
+      for (; ! arg_list_iter.is_done (); arg_list_iter.next ())
+        {
+          arg = AST_Argument::narrow_from_decl (arg_list_iter.item ());
+
+          *os << "," << be_nl
+              << "&_tao_" << arg->local_name ();
+        }
+
+      *os << be_uidt_nl
+          << "};" << be_uidt;
+    }
+
+  be_interface *intf = be_interface::narrow_from_decl (parent);
 
   const char *lname = node->local_name ()->get_string ();
   size_t opname_len = ACE_OS::strlen (lname);

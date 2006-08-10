@@ -120,6 +120,25 @@ namespace TAO
   }
 
   Invocation_Status
+  Asynch_Invocation_Adapter::invoke_collocated_i (
+    TAO_Stub *stub,
+    TAO_Operation_Details &details,
+    CORBA::Object_var &effective_target,
+    Collocation_Strategy strat
+    ACE_ENV_ARG_DECL)
+  {
+    // When doing a collocation asynch invocation we shouldn't use the
+    // stub args but use the skel args
+    details.use_stub_args (false);
+
+    return Invocation_Adapter::invoke_collocated_i (stub,
+                                                    details,
+                                                    effective_target,
+                                                    strat
+                                                    ACE_ENV_ARG_PARAMETER);
+  }
+
+  Invocation_Status
   Asynch_Invocation_Adapter::invoke_twoway (
     TAO_Operation_Details &op,
     CORBA::Object_var &effective_target,
@@ -165,7 +184,7 @@ namespace TAO
        op,
        this->safe_rd_.release ());
 
-    Invocation_Status s =
+    Invocation_Status const s =
       asynch.remote_invocation (max_wait_time
                                 ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
@@ -176,10 +195,10 @@ namespace TAO
         effective_target = asynch.steal_forwarded_reference ();
 
 #if TAO_HAS_INTERCEPTORS == 1
-        const CORBA::Boolean permanent_forward =
+        CORBA::Boolean const permanent_forward =
             (asynch.reply_status() == TAO_GIOP_LOCATION_FORWARD_PERM);
 #else
-        const CORBA::Boolean permanent_forward = false;
+        CORBA::Boolean const permanent_forward = false;
 #endif
 
         this->object_forwarded (effective_target,
