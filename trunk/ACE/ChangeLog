@@ -1,3 +1,9 @@
+Fri Aug 11 07:17:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/svn/config:
+        * docs/svn/svn-prefs.reg:
+          Added settings for .idl and .pidl
+
 Thu Aug 10 13:14:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_other_tests.lst:
