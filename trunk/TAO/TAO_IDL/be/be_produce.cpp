@@ -101,7 +101,7 @@ BE_visit_root (be_visitor_decl &root_visitor, const char *which_pass)
 {
   static be_root *root =
     be_root::narrow_from_decl (idl_global->root ());
-    
+
   if (-1 == root->accept (&root_visitor))
     {
       ACE_ERROR ((LM_ERROR,
@@ -109,7 +109,7 @@ BE_visit_root (be_visitor_decl &root_visitor, const char *which_pass)
                   which_pass));
       BE_abort ();
     }
-    
+
   root_visitor.ctx ()->reset ();
 }
 
@@ -138,13 +138,13 @@ BE_produce (void)
     }
 
   const char *fname = be_global->be_get_anyop_header_fname ();
-      
+
   // No-op if the -GA wasn't on the command line.
   if (-1 == tao_cg->start_anyop_header (fname))
     {
       BE_abort ();
     }
-        
+
   ctx.state (TAO_CodeGen::TAO_ROOT_CH);
   be_visitor_root_ch root_ch_visitor (&ctx);
   BE_visit_root (root_ch_visitor, "client header");
@@ -155,7 +155,7 @@ BE_produce (void)
   // and before stub source file generation, since
   // generation of Any-related #includes may be redirected.
   fname = be_global->be_get_anyop_source_fname ();
-  
+
   if (-1 == tao_cg->start_anyop_source (fname))
     {
       BE_abort ();
@@ -168,9 +168,12 @@ BE_produce (void)
       BE_visit_root (root_ci_visitor, "client inline");
     }
 
-  ctx.state (TAO_CodeGen::TAO_ROOT_CS);
-  be_visitor_root_cs root_cs_visitor (&ctx);
-  BE_visit_root (root_cs_visitor, "client stub");
+  if (be_global->gen_client_stub ())
+    {
+      ctx.state (TAO_CodeGen::TAO_ROOT_CS);
+      be_visitor_root_cs root_cs_visitor (&ctx);
+      BE_visit_root (root_cs_visitor, "client stub");
+    }
 
   ctx.state (TAO_CodeGen::TAO_ROOT_SH);
   be_visitor_root_sh root_sh_visitor (&ctx);
@@ -190,9 +193,12 @@ BE_produce (void)
       BE_visit_root (root_si_visitor, "server inline");
     }
 
-  ctx.state (TAO_CodeGen::TAO_ROOT_SS);
-  be_visitor_root_ss root_ss_visitor (&ctx);
-  BE_visit_root (root_ss_visitor, "server skeleton");
+  if (be_global->gen_server_skeleton ())
+    {
+      ctx.state (TAO_CodeGen::TAO_ROOT_SS);
+      be_visitor_root_ss root_ss_visitor (&ctx);
+      BE_visit_root (root_ss_visitor, "server skeleton");
+    }
 
   // Inline and source files for tie classes are generated
   // by the corresponding skeleton visitors.

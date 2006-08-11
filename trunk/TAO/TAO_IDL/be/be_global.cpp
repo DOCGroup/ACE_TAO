@@ -109,6 +109,8 @@ BE_GlobalData::BE_GlobalData (void)
     gen_skel_files_ (true),
     gen_client_inline_ (true),
     gen_server_inline_ (true),
+    gen_client_stub_ (true),
+    gen_server_skeleton_ (true),
     gen_local_iface_anyops_ (true)
 {
 }
@@ -1529,6 +1531,30 @@ BE_GlobalData::gen_server_inline (bool val)
 }
 
 bool
+BE_GlobalData::gen_client_stub (void) const
+{
+  return this->gen_client_stub_;
+}
+
+void
+BE_GlobalData::gen_client_stub (bool val)
+{
+  this->gen_client_stub_ = val;
+}
+
+bool
+BE_GlobalData::gen_server_skeleton (void) const
+{
+  return this->gen_server_skeleton_;
+}
+
+void
+BE_GlobalData::gen_server_skeleton (bool val)
+{
+  this->gen_server_skeleton_ = val;
+}
+
+bool
 BE_GlobalData::gen_local_iface_anyops (void) const
 {
   return this->gen_local_iface_anyops_;
@@ -2136,6 +2162,19 @@ BE_GlobalData::parse_args (long &i, char **av)
                 // No stub inline.
                 be_global->gen_client_inline (false);
               }
+            else if (av[i][3] == 'c')
+              {
+                // No stub inline.
+                be_global->gen_client_stub (false);
+              }
+            else
+              {
+                ACE_ERROR ((
+                    LM_ERROR,
+                    ACE_TEXT ("IDL: I don't understand the '%s' option\n"),
+                    av[i]
+                  ));
+              }
           }
         else if (av[i][2] == 'm')
           {
@@ -2153,6 +2192,11 @@ BE_GlobalData::parse_args (long &i, char **av)
               {
                 // No skeleton inline.
                 be_global->gen_server_inline (false);
+              }
+            else if (av[i][3] == 'c')
+              {
+                // No skeleton inline.
+                be_global->gen_server_skeleton (false);
               }
             else
               {
