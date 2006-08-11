@@ -1,3 +1,14 @@
+Fri Aug 11 12:49:55 UTC 2006  Ciju John  <johnc@ociweb.com>
+
+        * tests/Optimized_Connection/Optimized_Connection.mpc:
+        * tests/Optimized_Connection/README:
+        * tests/Optimized_Connection/Test.idl:
+        * tests/Optimized_Connection/oc.ior:
+
+          This test was failing on OpenVMS due to the way the linker
+          handles template instantiations. Copied the Hello test IDL here,
+          so the test is now self-contained.
+
 Fri Aug 11 09:10:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/IFR_Client.mpc:
