@@ -15,7 +15,7 @@
 ### Section for configuring external helper applications.
 ### Set editor to the command used to invoke your text editor.
 ###   This will override the environment variables that Subversion
-###   examines by default to find this information ($EDITOR, 
+###   examines by default to find this information ($EDITOR,
 ###   et al).
 ### Set diff-cmd to the absolute path of your 'diff' program.
 ###   This will override the compile-time default, which is to use
@@ -83,6 +83,8 @@ enable-auto-props = yes
 *.cpp=svn:eol-style=native;svn:keywords
 *.h=svn:eol-style=native;svn:keywords
 *.inl=svn:eol-style=native;svn:keywords
+*.idl=svn:eol-style=native;svn:keywords
+*.pidl=svn:eol-style=native;svn:keywords
 *.html=svn:eol-style=native;svn:keywords
 *.sh=svn:eol-style=native;svn:keywords;svn:executable
 *.py=svn:eol-style=native;svn:keywords;svn:executable
