@@ -1,3 +1,11 @@
+Fri Aug 11 07:30:35 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tools/Config_Handlers/Utils/XML_Helper.h
+        * DAnCE/RepositoryManager/RMadmin.cpp
+        
+          Fixes for a compiler error in the version of GCC shipped with
+          FC5.
+
 Wed Aug  9 18:53:48 UTC 2006  Jaiganesh B  <jai.dre.vanderbilt.edu>
 
         * DAnCE/NodeApplicationManager/ImplementationInfo.cpp:
