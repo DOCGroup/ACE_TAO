@@ -2350,7 +2350,7 @@ map_dependency_i (RtecScheduler::handle_t key,
               " TAO_Reconfig_Scheduler::map_dependency_i.\n"));
 #endif /* SCHEDULER_LOGGING */
 
-  RtecScheduler::Dependency_Set *dependency_set;
+  RtecScheduler::Dependency_Set *dependency_set = 0;
 
   // Look up the dependency set in the passed map
   if (dependency_map.find (key, dependency_set) != 0)
