@@ -13,6 +13,7 @@
 #include "Literals.hpp"
 
 #include <ostream>
+#include <sstream>
 
 #include "CCF/CodeGenerationKit/Regex.hpp"
 
@@ -67,7 +68,12 @@ namespace
     virtual void
     traverse (SemanticGraph::Type& t)
     {
-      os << regex::perl_s (t.scoped_name ().str (), "/::/_/");
+      // We need to escape C++ keywords before flattening the name.
+      //
+      std::ostringstream ostr;
+      ostr.pword (name_printer_index) = os.pword (name_printer_index);
+      ostr << t.scoped_name ();
+      os << regex::perl_s (ostr.str (), "/::/_/");
     }
   };
 
@@ -415,9 +421,19 @@ namespace
     {
       if (i.context ().count ("facet_src_gen")) return;
 
+      // We need to escape C++ keywords before flattening the name.
+      //
+      string name;
+      {
+        std::ostringstream ostr;
+        ostr.pword (name_printer_index) = os.pword (name_printer_index);
+        ostr << i.scoped_name ().scope_name ();
+        name = regex::perl_s (ostr.str (), "/::/_/");
+      }
+
+
       /// Open a namespace made from the interface scope's name.
-      os << "namespace " << STRS[FACET_PREFIX]
-         << regex::perl_s (i.scoped_name ().scope_name ().str (), "/::/_/")
+      os << "namespace " << STRS[FACET_PREFIX] << name
          << "{";
 
       os << "template <typename T>" << endl
@@ -1038,7 +1054,7 @@ namespace
       traverse (SemanticGraph::Publisher& p)
       {
         os << "if (ACE_OS::strcmp (publisher_name, \""
-           << p.name () << "\") == 0)" << endl
+           << p.name ().unescaped_str () << "\") == 0)" << endl
            << "{"
            << "_ciao_size = this->ciao_publishes_" << p.name ()
            << "_map_.current_size ();" << endl
@@ -1267,7 +1283,7 @@ namespace
       traverse (Type& t)
       {
         os << "if (ACE_OS::strcmp (emitter_name, \""
-           << t.name () << "\") == 0)" << endl
+           << t.name ().unescaped_str () << "\") == 0)" << endl
            << "{";
 
         Traversal::EmitterData::belongs (t, belongs_);
@@ -1311,7 +1327,7 @@ namespace
       traverse (Type& t)
       {
         os << "if (ACE_OS::strcmp (source_name, \""
-           << t.name () << "\") == 0)" << endl
+           << t.name ().unescaped_str () << "\") == 0)" << endl
            << "{"
            << "return this->disconnect_" << t.name ()
            << " (" << STRS[ENV_SNGL_ARG] << ");" << endl
@@ -1330,7 +1346,7 @@ namespace
       traverse (Type& t)
       {
         os << "if (ACE_OS::strcmp (name, \""
-           << t.name () << "\") == 0)" << endl
+           << t.name ().unescaped_str () << "\") == 0)" << endl
            << "{"
            << "return this->executor_->get_" << t.name ()
            << " (" << STRS[ENV_SNGL_ARG] << ");" << endl
@@ -1453,7 +1469,7 @@ namespace
       traverse (SemanticGraph::SingleUser& u)
       {
         os << "if (ACE_OS::strcmp (name, \""
-           << u.name () << "\") == 0)" << endl
+           << u.name ().unescaped_str () << "\") == 0)" << endl
            << "{";
 
         Traversal::SingleUserData::belongs (u, belongs_);
@@ -1484,7 +1500,7 @@ namespace
       traverse (SemanticGraph::MultiUser& u)
       {
         os << "if (ACE_OS::strcmp (name, \""
-           << u.name () << "\") == 0)" << endl
+           << u.name ().unescaped_str () << "\") == 0)" << endl
            << "{";
 
         Traversal::MultiUserData::belongs (u, belongs_);
@@ -1527,7 +1543,7 @@ namespace
       traverse (SemanticGraph::SingleUser& u)
       {
         os << "if (ACE_OS::strcmp (name, \""
-           << u.name () << "\") == 0)" << endl
+           << u.name ().unescaped_str () << "\") == 0)" << endl
            << "{"
            << "// Simplex disconnect." << endl
            << "return this->disconnect_" << u.name ()
@@ -1539,7 +1555,7 @@ namespace
       traverse (SemanticGraph::MultiUser& u)
       {
         os << "if (ACE_OS::strcmp (name, \""
-           << u.name () << "\") == 0)" << endl
+           << u.name ().unescaped_str () << "\") == 0)" << endl
            << "{"
            << "// Multiplex disconnect." << endl
            << "if (ck == 0)" << endl
@@ -1587,7 +1603,7 @@ namespace
            << endl
            << "c" << endl
            << STRS[ENV_ARG] << ");" << endl
-           << "this->add_receptacle (\"" << u.name ()
+           << "this->add_receptacle (\"" << u.name ().unescaped_str ()
            << "\", c, 0);" << endl
            << "}";
 
@@ -1642,7 +1658,7 @@ namespace
            << endl
            << "c" << endl
            << STRS[ENV_ARG] << ");" << endl
-           << "this->add_receptacle (\"" << u.name ()
+           << "this->add_receptacle (\"" << u.name ().unescaped_str ()
            << "\", c, cookie);" << endl
            << "return cookie;" << endl
            << "}";
@@ -1697,7 +1713,7 @@ namespace
       traverse (Type& p)
       {
         os << "if (ACE_OS::strcmp (publisher_name, \""
-           << p.name () << "\") == 0)" << endl
+           << p.name ().unescaped_str () << "\") == 0)" << endl
            << "{";
 
         Traversal::PublisherData::belongs (p, belongs_);
@@ -1760,7 +1776,7 @@ namespace
       traverse (Type& p)
       {
         os << "if (ACE_OS::strcmp (publisher_name, \""
-           << p.name () << "\") == 0)" << endl
+           << p.name ().unescaped_str () << "\") == 0)" << endl
            << "{"
            << "return this->unsubscribe_" << p.name ()
            << " (" << endl
@@ -1944,7 +1960,8 @@ namespace
            << STRS[EXCP_SNGL] << endl
            << "{"
            << "::CORBA::Object_ptr ret =" << endl
-           << "  this->lookup_facet (\"" << p.name () << "\");" << endl;
+           << "  this->lookup_facet (\""
+           << p.name ().unescaped_str () << "\");" << endl;
 
         os << "if (! ::CORBA::is_nil (ret))" << endl
            << "{"
@@ -1998,13 +2015,13 @@ namespace
            << "MACRO_MADNESS_TYPEDEF;" << endl;
 
         os << "ACE_CString obj_id (this->ins_name_);"
-           << "obj_id += \"_" << p.name () << "\";" << endl;
+           << "obj_id += \"_" << p.name ().unescaped_str () << "\";" << endl;
 
         os << "ACE_NEW_THROW_EX ("
            << "tmp," << endl
            << "MACRO_MADNESS_TYPEDEF (" << endl
            << "obj_id.c_str ()," << endl
-           << "\"" << p.name () << "\"," << endl
+           << "\"" << p.name ().unescaped_str () << "\"," << endl
            << "::CIAO::Port_Activator::Facet," << endl
            << "0," << endl
            << "this->context_," << endl
@@ -2037,7 +2054,8 @@ namespace
         Traversal::ProviderData::belongs (p, belongs_);
 
         os << "::_nil ());" << endl
-           << "this->add_facet (\"" << p.name () << "\"," << endl
+           << "this->add_facet (\""
+           << p.name ().unescaped_str () << "\"," << endl
            << "obj.in ()" << endl
            << STRS[ENV_ARG] << ");"
            << STRS[ACE_CR] << " ( ";
@@ -2313,7 +2331,8 @@ namespace
            << STRS[EXCP_SNGL] << endl
            << "{"
            << "::Components::EventConsumerBase_ptr ret =" << endl
-           << "  this->lookup_consumer (\"" << c.name () << "\");" << endl;
+           << "  this->lookup_consumer (\""
+           << c.name ().unescaped_str () << "\");" << endl;
 
         os << "if (! ::CORBA::is_nil (ret))" << endl
            << "{"
@@ -2357,13 +2376,13 @@ namespace
            << "MACRO_MADNESS_TYPEDEF;" << endl;
 
         os << "ACE_CString obj_id (this->ins_name_);"
-           << "obj_id += \"_" << c.name () << "\";" << endl;
+           << "obj_id += \"_" << c.name ().unescaped_str () << "\";" << endl;
 
         os << "ACE_NEW_THROW_EX (" << endl
            << "tmp," << endl
            << "MACRO_MADNESS_TYPEDEF ("
            << "obj_id.c_str ()," << endl
-           << "\"" << c.name () << "\"," << endl
+           << "\"" << c.name ().unescaped_str () << "\"," << endl
            << "::CIAO::Port_Activator::Sink," << endl
            << "this->executor_.in ()," << endl
            << "this->context_," << endl
@@ -2407,7 +2426,8 @@ namespace
 
         os << "Consumer::_nil ());" << endl;
 
-        os << "this->add_consumer (\"" << c.name () << "\"," << endl
+        os << "this->add_consumer (\""
+           << c.name ().unescaped_str () << "\"," << endl
            << "ecb.in ()" << endl
            << STRS[ENV_ARG] << ");"
            << STRS[ACE_CR] << " ( ";
@@ -2709,7 +2729,7 @@ namespace
         Traversal::SingleUserData::belongs (u, belongs_);
 
         os << "_var" << endl
-           << "  > (\"" << u.name () << "\"," << endl;
+           << "  > (\"" << u.name ().unescaped_str () << "\"," << endl;
 
         Traversal::SingleUserData::belongs (u, repo_id_belongs_);
 
@@ -2731,7 +2751,7 @@ namespace
         Traversal::MultiUserData::belongs (u, belongs_);
 
         os << "_var" << endl
-           << "  > (\"" << u.name () << "\"," << endl;
+           << "  > (\"" << u.name ().unescaped_str () << "\"," << endl;
 
         Traversal::MultiUserData::belongs (u, repo_id_belongs_);
 
@@ -2793,7 +2813,7 @@ namespace
         Traversal::PublisherData::belongs (p, belongs_);
 
         os << "Consumer_var" << endl
-           << "  > (\"" << p.name () << "\"," << endl;
+           << "  > (\"" << p.name ().unescaped_str () << "\"," << endl;
 
         Traversal::PublisherData::belongs (p, repo_id_belongs_);
 
@@ -2857,7 +2877,7 @@ namespace
         Traversal::EmitterData::belongs (e, belongs_);
 
         os << "Consumer_var" << endl
-           << "  > (\"" << e.name () << "\"," << endl;
+           << "  > (\"" << e.name ().unescaped_str () << "\"," << endl;
 
         Traversal::EmitterData::belongs (e, repo_id_belongs_);
 
@@ -4237,12 +4257,20 @@ namespace
     virtual void
     post (Type& t)
     {
+      // We need to escape C++ keywords before flattening the name.
+      //
+      string name;
+      {
+        std::ostringstream ostr;
+        ostr.pword (name_printer_index) = os.pword (name_printer_index);
+        ostr << t.scoped_name ();
+        name = regex::perl_s (ostr.str (), "/::/_/");
+      }
+
       os << "extern \"C\" " << ctx.export_macro ()
          << " ::PortableServer::Servant"
          << endl
-         << "create"
-         << regex::perl_s (t.scoped_name ().str (), "/::/_/")
-         << "_Servant (" << endl
+         << "create" << name << "_Servant (" << endl
          << "::Components::HomeExecutorBase_ptr p," << endl
          << "::CIAO::Session_Container *c," << endl
          << "const char *ins_name" << endl

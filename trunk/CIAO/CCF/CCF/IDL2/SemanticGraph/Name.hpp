@@ -28,6 +28,8 @@ namespace CCF
         SimpleName (std::string const& name) throw (InvalidName);
 
       public:
+        // Comparisons are escape-insensitive.
+        //
         bool
         operator< (SimpleName const& other) const
         {
@@ -47,24 +49,44 @@ namespace CCF
         }
 
       public:
+        bool
+        escaped () const
+        {
+          return escaped_;
+        }
+
         std::string
         str () const
+        {
+          return (escaped_ ? "_" : "") + name_;
+        }
+
+        std::string
+        unescaped_str () const
         {
           return name_;
         }
 
       private:
+        bool escaped_;
         std::string name_;
       };
 
+      // The following operators preserve escaping.
+      //
       SimpleName
       operator+ (SimpleName const& name, std::string const& str);
 
       SimpleName
       operator+ (std::string const& str, SimpleName const& name);
 
+
+      // Uses the name printer (see below) If it is installed, otherwise
+      // prints in the escaped form.
+      //
       std::ostream&
       operator << (std::ostream& o, SimpleName const& name);
+
 
       //
       //
@@ -88,6 +110,8 @@ namespace CCF
         Name (Iterator begin, Iterator end) throw (InvalidName);
 
       public:
+        // Comparisons are escape-insensitive.
+        //
         bool
         operator< (Name const& other) const
         {
@@ -130,18 +154,32 @@ namespace CCF
         std::string
         str () const
         {
+          std::string r;
+
+          for (Iterator b (begin ()), i (b), e (end ()); i != e; ++i)
+            r += (i != b ? "::" : "") + i->str ();
+
+          return r;
+        }
+
+        std::string
+        unescaped_str () const
+        {
           return name_cache_;
         }
 
       private:
         void
-        init () throw (InvalidName);
+        init (std::string const& name) throw (InvalidName);
 
       private:
         Name_ name_;
-        std::string name_cache_;
+        std::string name_cache_; // Unescaped name cache.
       };
 
+      // Uses the name printer (see below) If it is installed, otherwise
+      // prints in the escaped form.
+      //
       std::ostream&
       operator << (std::ostream& o, Name const& name);
 
@@ -173,11 +211,26 @@ namespace CCF
 
         ScopedName
         scope_name () const throw (FileScope);
+      };
 
-        /*
-        Name
-        in_file_scope () const throw (FileScope);
-        */
+
+      // Name printer index for the stream's pword.
+      //
+      extern int const name_printer_index;
+
+      //
+      //
+      struct NamePrinter
+      {
+        virtual void
+        print (std::ostream&, SimpleName const&) = 0;
+
+        // The default implementation prints individul simple names
+        // using the print function above seperated by '::'.
+        //
+        virtual void
+        print (std::ostream&, Name const&);
+
       };
     }
   }

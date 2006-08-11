@@ -26,16 +26,20 @@ namespace CCF
 
       SimpleName::
       SimpleName (char const* name) throw (InvalidName)
-          : name_ (name)
+          : escaped_ (name[0] == '_'),
+            name_ (escaped_ ? name + 1 : name)
       {
-        if (name_.find (':') != std::string::npos) throw InvalidName ();
+        if (name_.find (':') != std::string::npos)
+          throw InvalidName ();
       }
 
       SimpleName::
       SimpleName (std::string const& name) throw (InvalidName)
-          : name_ (name)
+          : escaped_ (name[0] == '_'),
+            name_ (name, escaped_ ? 1 : 0)
       {
-        if (name_.find (':') != std::string::npos) throw InvalidName ();
+        if (name_.find (':') != std::string::npos)
+          throw InvalidName ();
       }
 
       SimpleName
@@ -53,7 +57,14 @@ namespace CCF
       std::ostream&
       operator << (std::ostream& o, SimpleName const& name)
       {
-        return o << name.str ();
+        if (void* tmp = o.pword (name_printer_index))
+        {
+          NamePrinter* p (reinterpret_cast<NamePrinter*> (tmp));
+          p->print (o, name);
+          return o;
+        }
+        else
+          return o << name.str ();
       }
 
       // Name
@@ -61,36 +72,33 @@ namespace CCF
       //
       Name::
       Name (SimpleName const& name)
-          : name_cache_ (name.str ())
+          : name_cache_ (name.unescaped_str ())
       {
         name_.push_back (name);
       }
 
       Name::
       Name (char const* name) throw (InvalidName)
-          : name_cache_ (name)
       {
-        init ();
+        init (name);
       }
 
       Name::
       Name (std::string const& name) throw (InvalidName)
-        : name_cache_ (name)
       {
-        init ();
+        init (name);
       }
 
       void Name::
-      init () throw (InvalidName)
+      init (std::string const& name) throw (InvalidName)
       {
         // cerr << "parsing name \'" << name_cache_ << "\' {"<< endl;
 
-        for (std::string::size_type
-               pos (0), next (name_cache_.find ("::", pos));;
-             next = name_cache_.find ("::", pos))
+        for (std::string::size_type pos (0), next (name.find ("::", pos));;
+             next = name.find ("::", pos))
         {
           std::string simple_name (
-            name_cache_,
+            name,
             pos,
             next == std::string::npos ? next : next - pos);
 
@@ -105,15 +113,19 @@ namespace CCF
           }
 
           name_.push_back (SimpleName (simple_name));
+          name_cache_ += (pos != 0 ? "::" : "") +
+            name_.back ().unescaped_str ();
 
-          if (next == std::string::npos) break;
+          if (next == std::string::npos)
+            break;
 
           pos = next + 2;
         }
 
         // cerr << "parsing name }" << name_cache_ << endl;
 
-        if (name_.empty ()) throw InvalidName ();
+        if (name_.empty ())
+          throw InvalidName ();
       }
 
 
@@ -122,11 +134,12 @@ namespace CCF
       {
         for (Iterator i (begin); i != end; ++i)
         {
-          name_cache_ += (i != begin ? "::" : "") + i->str ();
+          name_cache_ += (i != begin ? "::" : "") + i->unescaped_str ();
           name_.push_back (*i);
         }
 
-        if (name_.empty ()) throw InvalidName ();
+        if (name_.empty ())
+          throw InvalidName ();
       }
 
       bool Name::
@@ -144,7 +157,14 @@ namespace CCF
       std::ostream&
       operator << (std::ostream& o, Name const& name)
       {
-        return o << name.str ();
+        if (void* tmp = o.pword (name_printer_index))
+        {
+          NamePrinter* p (reinterpret_cast<NamePrinter*> (tmp));
+          p->print (o, name);
+          return o;
+        }
+        else
+          return o << name.str ();
       }
 
       // ScopedName
@@ -203,16 +223,22 @@ namespace CCF
         return ScopedName (begin (), end);
       }
 
-      /*
-      Name ScopedName::
-      in_file_scope () const throw (FileScope)
+
+      // NamePrinter
+      //
+      int const name_printer_index = std::ios_base::xalloc ();
+
+      void NamePrinter::
+      print (std::ostream& os, Name const& n)
       {
-        if (name_.empty ()) throw FileScope ();
+        for (Name::Iterator b (n.begin ()), i (b); i != n.end (); ++i)
+        {
+          if (i != b)
+            os << "::";
 
-        return Name(std::string (name_.begin () + 2, name_.end ()));
+          print (os, *i);
+        }
       }
-
-      */
     }
   }
 }
