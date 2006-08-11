@@ -1,3 +1,12 @@
+Fri Aug 11 09:10:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/IFR_Client.mpc:
+          Added -GX to the generation of the pidl files to get empty
+          A.h files
+
+        * tao/IFR_Client/*A.h:
+          Removed from the repo, do get regenerated now automatically
+
 Fri Aug 11 07:35:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_global.cpp:
