@@ -1,3 +1,21 @@
+Fri Aug 11 16:46:56 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
+
+        * ace/Hash_MultiMap_Manager.h
+        * ace/Hash_MultiMap_Manager_T.cpp
+        * ace/Hash_MultiMap_Manager_T.h
+        * ace/Hash_MultiMap_Manager_T.inl
+          Add these files which implement Hash_MultiMap_Manager.
+          
+        * test/Hash_MultiMap_Manager_Test.cpp
+          Add this test file for Hash_MultiMap_Manager.
+          
+        * ace/ace.mpc
+          Modify this file to include Hash_MultiMap_Manager.
+          
+        * test/run_test.lst
+        * test/tests.mpc
+          Modify these files to include Hash_MultiMap_Manager_Test.
+
 Fri Aug 11 16:37:34 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * tests/CDR_File_Test.cpp: Corrected a signed/unsigned compare.
