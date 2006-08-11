@@ -199,8 +199,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         // Parse the PCD to make sure that there are no package errors.
         ACE_TRY
         {
-          xercesc::DOMDocument *doc =
-            CIAO::Config_Handlers::XML_HELPER->create_dom ("default.pcd");
+          xercesc::DOMDocument *doc = XML_HELPER->create_dom ("default.pcd");
 
           if (0 != doc)
             {
