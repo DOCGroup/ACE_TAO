@@ -1,3 +1,8 @@
+Fri Aug 11 07:35:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.cpp:
+          Initialise pointer with 0 to address gcc 4.1 warning
+
 Fri Aug 11 07:09:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Messaging/Messaging_Types.pidl:
