@@ -4,7 +4,7 @@
 /**
  *  @file    Hash_MultiMap_Manager_T.h
  *
- *  $Id: Hash_MultiMap_Manager_T.h
+ *  $Id$
  *
  * The code in Hash_MultiMap_Manager_T.* was based on the code in Hash_Map_Manager_T.*.
  * ACE_Hash_MultiMap_Manager uses ACE_Unbounded_Set to store differet values with the

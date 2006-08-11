@@ -1,6 +1,6 @@
 // -*- C++ -*-
 //
-// $Id: Hash_MultiMap_Manager_T.inl
+// $Id$
 
 #include "ace/Guard_T.h"
 
