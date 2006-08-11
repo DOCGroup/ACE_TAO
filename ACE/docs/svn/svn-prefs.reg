@@ -38,6 +38,8 @@ REGEDIT4
 "*.cpp"="svn:eol-style=native;svn:keywords"
 "*.h"="svn:eol-style=native;svn:keywords"
 "*.inl"="svn:eol-style=native;svn:keywords"
+"*.idl"="svn:eol-style=native;svn:keywords"
+"*.pidl"="svn:eol-style=native;svn:keywords"
 "*.html"="svn:eol-style=native;svn:keywords"
 "*.sh"="svn:eol-style=native;svn:keywords;svn:executable"
 "*.py"="svn:eol-style=native;svn:keywords;svn:executable"
