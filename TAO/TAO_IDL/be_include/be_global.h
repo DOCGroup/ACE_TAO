@@ -541,6 +541,14 @@ public:
   void gen_server_inline (bool val);
   // Accessors for the member gen_server_inline_.
 
+  bool gen_client_stub (void) const;
+  void gen_client_stub (bool val);
+  // Accessors for the member gen_client_stub_.
+
+  bool gen_server_skeleton (void) const;
+  void gen_server_skeleton (bool val);
+  // Accessors for the member gen_server_skeleton_.
+
   bool gen_local_iface_anyops (void) const;
   void gen_local_iface_anyops (bool val);
   // Accessors for the member gen_local_iface_anyops_.
@@ -764,6 +772,14 @@ private:
   bool gen_server_inline_;
   // True by default, but a command line option can turn this off so
   // that we don't generate a server inline file
+
+  bool gen_client_stub_;
+  // True by default, but a command line option can turn this off so
+  // that we don't generate a client stub file
+
+  bool gen_server_skeleton_;
+  // True by default, but a command line option can turn this off so
+  // that we don't generate a server skeleton file
 
   bool gen_local_iface_anyops_;
   // True by default, can be turned off by a command line option

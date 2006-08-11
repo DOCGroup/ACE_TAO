@@ -1,5 +1,17 @@
 Fri Aug 11 07:35:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be/be_produce.cpp:
+        * TAO_IDL/be_include/be_global.h:
+        * docs/compiler.html:
+          Added -Scc to suppress generation of client stub and -Ssc of
+          generation of server skeleton file. These options don't check
+          if something is generated in these files or not, they just
+          suppress the generation. Usefull for some pidl files in the
+          core libraries. This fixes bugzilla 2631
+
+Fri Aug 11 07:35:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
         * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.cpp:
           Initialise pointer with 0 to address gcc 4.1 warning
 
