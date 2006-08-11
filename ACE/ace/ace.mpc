@@ -307,6 +307,7 @@ project(ACE) : acedefaults, core, other, codecs, token, svcconf, uuid, filecache
     Guard_T.cpp
     Hash_Cache_Map_Manager_T.cpp
     Hash_Map_Manager_T.cpp
+    Hash_MultiMap_Manager_T.cpp
     Hash_Map_With_Allocator_T.cpp
     IOStream_T.cpp
     Intrusive_List.cpp
@@ -378,6 +379,7 @@ project(ACE) : acedefaults, core, other, codecs, token, svcconf, uuid, filecache
     Global_Macros.h
     Guard_T.h
     Hash_Map_Manager.h
+    Hash_MultiMap_Manager.h
     Handle_Gobbler.h
     If_Then_Else.h
     IO_Cntl_Msg.h
