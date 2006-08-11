@@ -61,6 +61,7 @@ Get_Opt_Test
 Handle_Set_Test: !ACE_FOR_TAO
 Hash_Map_Bucket_Iterator_Test
 Hash_Map_Manager_Test
+Hash_MultiMap_Manager_Test
 High_Res_Timer_Test: !ACE_FOR_TAO
 INET_Addr_Test
 IOStream_Test
