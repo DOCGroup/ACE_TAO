@@ -15,7 +15,7 @@ CompositionEmitter::CompositionEmitter (Context& c)
 void
 CompositionEmitter::pre (Type& t)
 {
-  ctx.composition_name (t.name ().str ());
+  ctx.composition_name (t.name ().unescaped_str ());
 
   os << STRS[CIDL_NS] << t.name () << "{";
 }

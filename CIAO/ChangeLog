@@ -1,8 +1,41 @@
+Fri Aug 11 11:46:17 UTC 2006  Boris Kolpackov  <boris@codesynthesis.com>
+
+        * CCF/CCF/IDL2/SemanticGraph/Name.cpp:
+        * CCF/CCF/IDL2/SemanticGraph/Name.hpp:
+
+          Added support for IDL (underscore) escaping. Added support
+          for custom name printers.
+
+        * CIDLC/UnescapedNamePrinter.hpp:
+
+          Name printer that prints names unescaped (without the IDL
+          underscore).
+
+        * CIDLC/CxxNamePrinter.cpp:
+        * CIDLC/CxxNamePrinter.hpp:
+
+          Name printer that escapes C++ keywords.
+
+        * CIDLC/CorbaTypeNameEmitters.cpp:
+        * CIDLC/DescriptorGenerator.cpp:
+        * CIDLC/ExecImplHeaderGenerator.cpp:
+        * CIDLC/ExecImplSourceGenerator.cpp:
+        * CIDLC/ServantHeaderGenerator.cpp:
+        * CIDLC/RepositoryIdGenerator.cpp:
+        * CIDLC/ServantSourceGenerator.cpp:
+        * CIDLC/ExecImplGenerator.cpp:
+        * CIDLC/UtilityTypeNameEmitters.cpp:
+        * CIDLC/ServantGenerator.cpp:
+        * CIDLC/CompositionEmitter.cpp:
+
+          Updated to handle IDL and C++ name escaping. This fixes
+          bugzilla bug #2427.
+
 Fri Aug 11 07:30:35 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tools/Config_Handlers/Utils/XML_Helper.h
         * DAnCE/RepositoryManager/RMadmin.cpp
-        
+
           Fixes for a compiler error in the version of GCC shipped with
           FC5.
 
@@ -13,10 +46,10 @@ Wed Aug  9 18:53:48 UTC 2006  Jaiganesh B  <jai.dre.vanderbilt.edu>
           DAnCE/NodeApplication/RTNodeApp_Configurator.cpp:
           examples/Hello/descriptors_RTCCM/rt-example.cdp:
           examples/Hello/descriptors_RTCCM/rt-config-example.csr:
-        
+
         Fixed the RT-CCM code to conform to the schema changes. Made changes
         to the descriptors directory to fix the working example for RT-CCM.
-        
+
         Thanks to Nanbor Wang for helping fix the codebase.
 
 Tue Aug  8 07:53:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>

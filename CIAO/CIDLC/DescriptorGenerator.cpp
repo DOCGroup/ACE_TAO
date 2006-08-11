@@ -1,6 +1,7 @@
 // $Id$
 
 #include "DescriptorGenerator.hpp"
+#include "UnescapedNamePrinter.hpp"
 #include "Literals.hpp"
 
 #include <ostream>
@@ -22,14 +23,6 @@ using namespace CCF::CIDL::SemanticGraph;
 
 namespace
 {
-  string
-  name_to_string (Name const& n)
-  {
-    std::ostringstream os;
-    os << n;
-    return os.str ();
-  }
-
   class EmitterBase
   {
   public:
@@ -376,7 +369,7 @@ namespace
     {
       ScopedName scoped (c.scoped_name ());
       Name stripped (scoped.begin () + 1, scoped.end ());
-      string name = name_to_string (stripped);
+      string name (stripped.unescaped_str ());
       configure_stream (name);
 
       os << "<?xml version=\"1.0\"?>" << endl
@@ -540,9 +533,16 @@ void
 DescriptorGenerator::generate (CommandLine const& cl,
                                TranslationUnit& u)
 {
-  // Set auto-indentation for os
+  // Set auto-indentation for os.
+  //
   Indentation::Implanter<Indentation::XML> guard (ofs_);
 
+  // Set unescaped name printer for os.
+  //
+  UnescapedNamePrinter name_printer;
+  ofs_.pword (name_printer_index) = &name_printer;
+
+  //
   Traversal::TranslationUnit unit;
 
   // Layer 1
