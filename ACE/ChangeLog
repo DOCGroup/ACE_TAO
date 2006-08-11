@@ -1,3 +1,7 @@
+Fri Aug 11 16:37:34 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * tests/CDR_File_Test.cpp: Corrected a signed/unsigned compare.
+
 Fri Aug 11 13:59:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/CDR_Size.cpp:
