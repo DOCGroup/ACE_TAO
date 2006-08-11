@@ -417,6 +417,13 @@ project(Hash Map Manager Test) : acetest {
   }
 }
 
+project(Hash MultiMap Manager Test) : acetest {
+  exename = Hash_MultiMap_Manager_Test
+  Source_Files {
+    Hash_MultiMap_Manager_Test.cpp
+  }
+}
+
 project(Hash Map Bucket Iterator Test) : acetest {
   exename = Hash_Map_Bucket_Iterator_Test
   Source_Files {
