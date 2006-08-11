@@ -1,3 +1,24 @@
+Fri Aug 11 07:09:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Messaging/Messaging_Types.pidl:
+          Moved all policy type constants to this new pidl file that is
+          included by the other pidl files. This way the catior utility
+          only needs to include the generated client file for this pidl
+          file.
+
+        * tao/Messaging/Messaging_No_Impl.pidl:
+        * tao/Messaging/Messaging_RT_Policy.pidl:
+        * tao/Messaging/Messaging_SyncScope_Policy.pidl:
+          Moved the policy constants out of these file and included the
+          new file above
+
+        * tao/Messaging.mpc:
+          Added new pidl file
+
+        * tao/utils/catior/catior.cpp:
+          Include Messaging_TypesC.h instead of all seperate messaging
+          files.
+
 Thu Aug 10 12:20:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Messaging.mpc:
