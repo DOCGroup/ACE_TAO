@@ -6,6 +6,8 @@
  * $Id$
  *
  * @author Carlos O'Ryan <coryan@atdesk.com>
+ *
+ * @deprecated This file is deprecated
  */
 //=============================================================================
 #ifndef TAO_UTILS_AUTO_FUNCTOR_H

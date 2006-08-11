@@ -177,7 +177,6 @@ public:
 #endif
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
-
   PortableServer::ImplicitActivationPolicy_ptr
   create_implicit_activation_policy (
       PortableServer::ImplicitActivationPolicyValue value
