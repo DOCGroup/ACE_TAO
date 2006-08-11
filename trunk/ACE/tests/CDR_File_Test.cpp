@@ -278,7 +278,7 @@ run_test (int write_file,
                           -1);
 
       char byte_order;
-      size_t size = file.recv (&byte_order, 1);
+      ssize_t size = file.recv (&byte_order, 1);
       if (size != 1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("Read %d bytes, rather than expected ")
