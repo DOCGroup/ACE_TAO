@@ -586,7 +586,7 @@ TAO_RT_POA::destroy (CORBA::Boolean etherealize_objects,
 }
 
 
-#if (TAO_HAS_MINIMUM_POA == 0)
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 
 PortableServer::ThreadPolicy_ptr
 TAO_RT_POA::create_thread_policy (PortableServer::ThreadPolicyValue value
@@ -602,6 +602,7 @@ TAO_RT_POA::create_thread_policy (PortableServer::ThreadPolicyValue value
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
+#if !defined (CORBA_E_MICRO)
 PortableServer::LifespanPolicy_ptr
 TAO_RT_POA::create_lifespan_policy (PortableServer::LifespanPolicyValue value
                                     ACE_ENV_ARG_DECL)
@@ -613,7 +614,9 @@ TAO_RT_POA::create_lifespan_policy (PortableServer::LifespanPolicyValue value
   ACE_CHECK_RETURN (policy);
   return policy;
 }
+#endif
 
+#if !defined (CORBA_E_MICRO)
 PortableServer::IdUniquenessPolicy_ptr
 TAO_RT_POA::create_id_uniqueness_policy (PortableServer::IdUniquenessPolicyValue value
                                          ACE_ENV_ARG_DECL)
@@ -625,8 +628,9 @@ TAO_RT_POA::create_id_uniqueness_policy (PortableServer::IdUniquenessPolicyValue
   ACE_CHECK_RETURN (policy);
   return policy;
 }
+#endif
 
-
+#if !defined (CORBA_E_MICRO)
 PortableServer::IdAssignmentPolicy_ptr
 TAO_RT_POA::create_id_assignment_policy (PortableServer::IdAssignmentPolicyValue value
                                          ACE_ENV_ARG_DECL)
@@ -638,9 +642,10 @@ TAO_RT_POA::create_id_assignment_policy (PortableServer::IdAssignmentPolicyValue
   ACE_CHECK_RETURN (policy);
   return policy;
 }
+#endif
 
 
-#if (TAO_HAS_MINIMUM_POA == 0)
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 
 PortableServer::ImplicitActivationPolicy_ptr
 TAO_RT_POA::create_implicit_activation_policy (PortableServer::ImplicitActivationPolicyValue value
@@ -679,8 +684,7 @@ TAO_RT_POA::create_request_processing_policy (PortableServer::RequestProcessingP
   return policy;
 }
 
-
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
+#endif /* TAO_HAS_MINIMUM_POA == 0 && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO) */
 
 char *
 TAO_RT_POA::the_name (ACE_ENV_SINGLE_ARG_DECL)
@@ -723,7 +727,7 @@ TAO_RT_POA::the_POAManager (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 
-#if (TAO_HAS_MINIMUM_POA == 0)
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 
 PortableServer::AdapterActivator_ptr
 TAO_RT_POA::the_activator (ACE_ENV_SINGLE_ARG_DECL)
@@ -806,6 +810,7 @@ TAO_RT_POA::activate_object (PortableServer::Servant p_servant
   return object_id;
 }
 
+#if !defined (CORBA_E_MICRO)
 void
 TAO_RT_POA::activate_object_with_id (const PortableServer::ObjectId &id,
                                      PortableServer::Servant p_servant
@@ -820,6 +825,7 @@ TAO_RT_POA::activate_object_with_id (const PortableServer::ObjectId &id,
                                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
+#endif
 
 void
 TAO_RT_POA::deactivate_object (const PortableServer::ObjectId &oid
