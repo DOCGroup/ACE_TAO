@@ -42,6 +42,7 @@ project : taolib, core, portableserver, pi, valuetype, tao_versioning_idl_defaul
                 -o Messaging
     idlflags -= -Sa -St
     Messaging/Pollable.pidl
+    Messaging/Messaging_Types.pidl
   }
 
   IDL_Files {
