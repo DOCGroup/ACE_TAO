@@ -1,3 +1,15 @@
+Fri Aug 11 13:59:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/CDR_Size.cpp:
+          Add include of OS_Memory.h to get ACE_align_binary
+
+        * ace/Sig_Handler.cpp:
+          Add include of Guard_T.h to get the guards
+
+        * ace/config-vxworks6.3.h:
+          Add some code for the diab compiler but this is not complete
+          support, just some testing results.
+
 Fri Aug 11 07:17:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/svn/config:
