@@ -1,3 +1,9 @@
+Sun Aug 13 22:21:55 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
+
+        * test/Hash_Multi_Map_Manager_Test.cpp
+          Address the "Implicit conversion of string literal to char * is
+          deprecated" warnings.
+
 Sun Aug 13 15:25:17 UTC 2006  Boris Kolpackov  <boris@codesynthesis.com>
 
         * bin/MakeProjectCreator/config/ciaocidldefaults.mpb:
