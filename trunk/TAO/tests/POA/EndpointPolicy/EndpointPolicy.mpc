@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Server): taoserver, endpointpolicy, pi_server {
+project(*Server): taoserver, endpointpolicy, pi_server, minimum_corba {
   idlflags += -Sa -St
   Source_Files {
     Hello.cpp
