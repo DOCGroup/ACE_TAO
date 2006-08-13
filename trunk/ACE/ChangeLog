@@ -1,3 +1,10 @@
+Sun Aug 13 23:30:02 UTC 2006  Yan Dai  <dai_y@ociweb.com>
+
+        * bin/tao_other_tests.lst:
+          
+          Excluded TAO POAManagerFactory and EndpointPolicy tests from  
+          running in a minimum CORBA configuration.
+
 Sun Aug 13 22:21:55 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
 
         * test/Hash_Multi_Map_Manager_Test.cpp
