@@ -1,28 +1,34 @@
+Sun Aug 13 15:25:17 UTC 2006  Boris Kolpackov  <boris@codesynthesis.com>
+
+        * bin/MakeProjectCreator/config/ciaocidldefaults.mpb:
+
+          Removed '--' from the cidlc command line.
+
 Sun Aug 13 000:02:00 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
 
         * ace/Hash_MultiMap_Manager_T.inl
         * ace/Hash_MultiMap_Manager_T.cpp
         * ace/Hash_MultiMap_Manager_T.h
           Change the name of these files into Hash_Multi_Map_Manager.*.
-          Add some comments to explain in brief the purpose of using 
+          Add some comments to explain in brief the purpose of using
           ACE_Hash_Multi_Map_Manager class and how to use it.
           Remove the backward compatibility of ACE_Hash_Multi_Map_Manager class
           and its associated iterator classes.
           Remove "_Ex" on the names of ACE_Hash_Multi_Map_Manager class and its
           associated iterator classes.
-        
+
         * ace/Hash_MultiMap_Manager.h
           Remove this file since it simply includes the Hash_MultiMap_Manager_T.h
           file.
-          
+
         * test/Hash_MultiMap_Manager_Test.cpp
           Change the name of this file into Hash_Multi_Map_Manager_Test.cpp.
           Address the "convert const char* to ACE_TCHAR*" errors.
-          
+
         * ace/ace.mpc
           Change the name of Hash_MultiMap_Manager project into
           Hash_Multi_Map_Manager.
-          
+
         * test/run_test.lst
         * test/tests.mpc
           Change the name of Hash_MultiMap_Manager_Test project into
@@ -35,13 +41,13 @@ Fri Aug 11 16:46:56 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
         * ace/Hash_MultiMap_Manager_T.h
         * ace/Hash_MultiMap_Manager_T.inl
           Add these files which implement Hash_MultiMap_Manager.
-          
+
         * test/Hash_MultiMap_Manager_Test.cpp
           Add this test file for Hash_MultiMap_Manager.
-          
+
         * ace/ace.mpc
           Modify this file to include Hash_MultiMap_Manager.
-          
+
         * test/run_test.lst
         * test/tests.mpc
           Modify these files to include Hash_MultiMap_Manager_Test.
