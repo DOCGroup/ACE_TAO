@@ -1,3 +1,36 @@
+Sun Aug 13 23:30:02 UTC 2006  Yan Dai  <dai_y@ociweb.com>
+
+          These changes excluded the POAManagerFactory and EndpointPolicy 
+          from minimum corba, minimum poa and CORBA/e builds.
+
+        * tao/PortableServer/POA.pidl:
+        
+          Excluded the_POAManagerFactory attribute in POA.  
+          
+        * tao/PortableServer/POAManagerFactory.pidl:
+        
+          Excluded POAManagerFactory interface.
+          
+        * tao/PortableServer/POAManager.cpp:
+        * tao/PortableServer/POAManager.inl:
+        * tao/PortableServer/POAManager.h:
+        * tao/PortableServer/Object_Adapter.cpp:
+        * tao/PortableServer/Object_Adapter.h:
+        * tao/PortableServer/Acceptor_Filter_Factory.cpp:
+        * tao/PortableServer/Acceptor_Filter_Factory.h:
+        * tao/PortableServer/POAManagerFactory.cpp:
+        * tao/PortableServer/POAManagerFactory.h:
+        * tao/PortableServer/Root_POA.cpp:
+        * tao/PortableServer/Root_POA.h:
+        
+          Excluded the use of POAManagerFactory in the code.
+          
+        * tao/EndpointPolicy.mpc:
+        * tests/POA/EndpointPolicy/EndpointPolicy.mpc:
+        * tests/POA/POAManagerFactory/POAManagerFactory.mpc:
+        
+          Made these projects inherit from minimum_corba.
+          
 Fri Aug 11 12:49:55 UTC 2006  Ciju John  <johnc@ociweb.com>
 
         * tests/Optimized_Connection/Optimized_Connection.mpc:

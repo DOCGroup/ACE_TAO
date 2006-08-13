@@ -494,8 +494,10 @@ private:
   /// The Root POA
   TAO_Root_POA *root_;
 
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
   /// The POAManager factory.
   TAO_POAManager_Factory *poa_manager_factory_;
+#endif
 
   /// The default validator and the beginning of the chain of
   /// policy validators.
