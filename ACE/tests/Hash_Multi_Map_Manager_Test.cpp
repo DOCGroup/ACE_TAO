@@ -23,10 +23,10 @@
 
 ACE_RCSID(tests, Hash_Multi_Map_Manager_Test, "$Id$")
 
-typedef ACE_Hash_Multi_Map_Manager<ACE_TCHAR *,
-                                   ACE_TCHAR *,
-                                   ACE_Hash<ACE_TCHAR *>,
-                                   ACE_Equal_To<ACE_TCHAR *>,
+typedef ACE_Hash_Multi_Map_Manager<const ACE_TCHAR *,
+                                   const ACE_TCHAR *,
+                                   ACE_Hash<const ACE_TCHAR *>,
+                                   ACE_Equal_To<const ACE_TCHAR *>,
                                    ACE_Null_Mutex> HASH_STRING_MAP;
 
 typedef HASH_STRING_MAP::ENTRY HASH_STRING_ENTRY;
@@ -36,20 +36,10 @@ typedef HASH_STRING_MAP::ITERATOR HASH_STRING_ITERATOR;
 typedef HASH_STRING_MAP::CONST_ITERATOR HASH_STRING_CONST_ITERATOR;
 typedef HASH_STRING_MAP::REVERSE_ITERATOR HASH_STRING_REVERSE_ITERATOR;
 
-ACE_TCHAR * color_sorts[] = {ACE_TEXT ("warm"),
-                             ACE_TEXT ("cold"),
-                             ACE_TEXT ("neutral"),
-                             0};
-ACE_TCHAR * warm_colors[] = {ACE_TEXT ("red"),
-                             ACE_TEXT ("yellow"),
-                             ACE_TEXT ("orange"),
-                             0};
-ACE_TCHAR * cold_colors[] = {ACE_TEXT ("blue"),
-                             ACE_TEXT ("cyan"),
-                             0};
-ACE_TCHAR * neutral_colors[] = {ACE_TEXT ("green"),
-                                ACE_TEXT ("purple"),
-                                0};
+static const ACE_TCHAR *color_sorts[] = {ACE_TEXT ("warm"), ACE_TEXT ("cold"), ACE_TEXT ("neutral"), 0};
+static const ACE_TCHAR *warm_colors[] = {ACE_TEXT ("red"), ACE_TEXT ("yellow"), ACE_TEXT ("orange"), 0};
+static const ACE_TCHAR *cold_colors[] = {ACE_TEXT ("blue"), ACE_TEXT ("cyan"), 0};
+static const ACE_TCHAR *neutral_colors[] = {ACE_TEXT ("green"), ACE_TEXT ("purple"), 0};
 
 static int
 run_test (void)
