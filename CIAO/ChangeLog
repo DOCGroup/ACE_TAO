@@ -1,3 +1,10 @@
+Sun Aug 13 15:18:00 UTC 2006  Boris Kolpackov  <boris@kolpackov.net>
+
+        * CCF/CCF/CodeGenerationKit/Regex.hpp:
+
+          Reimplemented regex wrapper to allow building CIDLC on
+          platforms without wchat_t support (e.g., Cygwin/Mingw).
+
 Fri Aug 11 11:46:17 UTC 2006  Boris Kolpackov  <boris@codesynthesis.com>
 
         * CCF/CCF/IDL2/SemanticGraph/Name.cpp:

@@ -10,26 +10,28 @@
 
 namespace regex
 {
-  using boost::regex;
-  using boost::regex_merge;
-
-  inline std::string
-  perl_s (std::string src, std::string e)
+  template <typename C>
+  std::basic_string<C>
+  perl_s (std::basic_string<C> const& src, std::basic_string<C> const& e)
   {
-    if (e.empty ()) return src;
+    typedef std::basic_string<C> string;
+    typedef typename string::size_type size;
 
-    char delimiter (e[0]);
+    if (e.empty ())
+      return src;
 
-    std::string::size_type first = e.find (delimiter);
-    std::string::size_type middle = e.find (delimiter, first + 1);
-    std::string::size_type last = e.find (delimiter, middle + 1);
+    C delimiter (e[0]);
 
-    std::string pattern (e, first + 1, middle - first - 1);
-    std::string format (e, middle + 1, last - middle - 1);
+    size first = e.find (delimiter);
+    size middle = e.find (delimiter, first + 1);
+    size last = e.find (delimiter, middle + 1);
+
+    string pattern (e, first + 1, middle - first - 1);
+    string format (e, middle + 1, last - middle - 1);
 
     //std::cout << pattern << "  " << format << std::endl;
 
-    regex expr (pattern);
+    boost::basic_regex<C> expr (pattern);
 
     return regex_merge (
       src,
@@ -38,31 +40,11 @@ namespace regex
       boost::match_default | boost::format_all );
   }
 
-  using boost::wregex;
-
-  inline std::wstring
-  perl_s (std::wstring src, std::wstring e)
+  template <typename C>
+  std::basic_string<C>
+  perl_s (std::basic_string<C> const& src, C const* e)
   {
-    if (e.empty ()) return src;
-
-    wchar_t delimiter (e[0]);
-
-    std::wstring::size_type first = e.find (delimiter);
-    std::wstring::size_type middle = e.find (delimiter, first + 1);
-    std::wstring::size_type last = e.find (delimiter, middle + 1);
-
-    std::wstring pattern (e, first + 1, middle - first - 1);
-    std::wstring format (e, middle + 1, last - middle - 1);
-
-    //std::cout << pattern << "  " << format << std::endl;
-
-    wregex expr (pattern);
-
-    return regex_merge (
-      src,
-      expr,
-      format,
-      boost::match_default | boost::format_all );
+    return perl_s (src, std::basic_string<C> (e));
   }
 }
 
