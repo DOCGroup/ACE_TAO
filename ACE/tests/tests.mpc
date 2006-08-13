@@ -417,10 +417,10 @@ project(Hash Map Manager Test) : acetest {
   }
 }
 
-project(Hash MultiMap Manager Test) : acetest {
-  exename = Hash_MultiMap_Manager_Test
+project(Hash Multi Map Manager Test) : acetest {
+  exename = Hash_Multi_Map_Manager_Test
   Source_Files {
-    Hash_MultiMap_Manager_Test.cpp
+    Hash_Multi_Map_Manager_Test.cpp
   }
 }
 
