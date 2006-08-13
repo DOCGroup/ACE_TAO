@@ -52,7 +52,7 @@ ACE_RCSID (PortableServer,
            Object_Adapter,
            "$Id$")
 
-#if !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 namespace PortableServer
 {
   class POAManagerFactory;
@@ -157,6 +157,9 @@ TAO_Object_Adapter::TAO_Object_Adapter (const TAO_Server_Strategy_Factory::Activ
     non_servant_upcall_nesting_level_ (0),
     non_servant_upcall_thread_ (ACE_OS::NULL_thread),
     root_ (0),
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
+    poa_manager_factory_ (0),
+#endif
     default_validator_ (orb_core),
     default_poa_policies_ ()
 {
@@ -609,7 +612,7 @@ TAO_Object_Adapter::open (ACE_ENV_SINGLE_ARG_DECL)
                TAO_Default_Servant_Dispatcher);
     }
 
-#if !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
   ACE_NEW_THROW_EX (this->poa_manager_factory_,
                     TAO_POAManager_Factory (*this),
                     CORBA::NO_MEMORY ());
@@ -622,15 +625,13 @@ TAO_Object_Adapter::open (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CHECK;
 #else
   PortableServer::POAManager_var poa_manager;
-  PortableServer::POAManager_ptr pm = PortableServer::POAManager::_nil ();
   ::CORBA::PolicyList policy_list;
-  ACE_NEW_THROW_EX (pm,
-                    TAO_POA_Manager (*this, 0, policy_list, 0),
+  ACE_NEW_THROW_EX (poa_manager,
+                    TAO_POA_Manager (*this, TAO_DEFAULT_ROOTPOAMANAGER_NAME),
                     CORBA::NO_MEMORY
                     (CORBA::SystemException::_tao_minor_code (0, ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (::PortableServer::POAManager::_nil ());
-  poa_manager = pm;
+  ACE_CHECK;
 #endif
 
   // This makes sure that the default resources are open when the Root
@@ -714,17 +715,22 @@ TAO_Object_Adapter::close (int wait_for_completion
   // etherealizations have finished and root POA has been destroyed
   // (implying that all descendent POAs have also been destroyed).
   TAO_Root_POA *root = 0;
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
   TAO_POAManager_Factory* factory = 0;
+#endif
   {
     ACE_GUARD (ACE_Lock, ace_mon, this->lock ());
     if (this->root_ == 0)
       return;
     root = this->root_;
     this->root_ = 0;
+
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
     if (this->poa_manager_factory_ == 0)
       return;
     factory = this->poa_manager_factory_;
     this->poa_manager_factory_ = 0;
+#endif
   }
   CORBA::Boolean etherealize_objects = 1;
   root->destroy (etherealize_objects,
@@ -732,7 +738,7 @@ TAO_Object_Adapter::close (int wait_for_completion
                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   ::CORBA::release (root);
-#if !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
   ::CORBA::release (factory);
 #endif
 }

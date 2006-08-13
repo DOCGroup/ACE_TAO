@@ -42,6 +42,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 // Forward decl.
 class TAO_Root_POA;
 class TAO_Object_Adapter;
+
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 class TAO_POAManager_Factory;
 
 namespace PortableServer
@@ -49,6 +51,7 @@ namespace PortableServer
   class POAManagerFactory;
   typedef POAManagerFactory *POAManagerFactory_ptr;
 }
+#endif
 
 class TAO_PortableServer_Export TAO_POA_Manager :
   public PortableServer::POAManager,
@@ -90,9 +93,13 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   TAO_POA_Manager (TAO_Object_Adapter &object_adapter,
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
                    const char * id,
                    const ::CORBA::PolicyList & policies,
                    PortableServer::POAManagerFactory_ptr poa_manager_factory);
+#else
+                   const char * id);
+#endif
 
   ~TAO_POA_Manager (void);
 
@@ -106,7 +113,9 @@ public:
       ACE_ENV_SINGLE_ARG_DECL
     );
 
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
   CORBA::PolicyList& get_policies ();
+#endif
 
 protected:
 
@@ -160,11 +169,13 @@ protected:
 
   CORBA::String_var id_;
 
-#if !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
+  
   TAO_POAManager_Factory& poa_manager_factory_;
+  CORBA::PolicyList policies_;
+
 #endif
 
-  CORBA::PolicyList policies_;
 
 private :
 

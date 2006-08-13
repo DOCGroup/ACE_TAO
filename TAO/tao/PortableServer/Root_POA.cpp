@@ -219,7 +219,11 @@ TAO_Root_POA::TAO_Root_POA (const TAO_Root_POA::String &name,
                             ACE_ENV_ARG_DECL)
   : name_ (name),
     poa_manager_ (* (dynamic_cast <TAO_POA_Manager*> (poa_manager))),
+
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
     poa_manager_factory_ (* (object_adapter->poa_manager_factory_)),
+#endif
+
     tagged_component_ (),
     tagged_component_id_ (),
     profile_id_array_ (0),
@@ -243,7 +247,11 @@ TAO_Root_POA::TAO_Root_POA (const TAO_Root_POA::String &name,
     wait_for_completion_pending_ (0),
     waiting_destruction_ (0),
     servant_deactivation_condition_ (thread_lock),
+
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
     filter_factory_ (0),
+#endif 
+
     caller_key_to_object_ (0),
     servant_for_key_to_object_ (0)
 {
@@ -417,7 +425,8 @@ TAO_Root_POA::create_POA_i (const char *adapter_name,
 
   if (CORBA::is_nil (poa_manager))
     {
-#if !defined (CORBA_E_COMPACT)
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) 
+
       PortableServer::POA_var poa = PortableServer::POA::_duplicate (this);
       PortableServer::POA_var root_poa;
 
@@ -442,8 +451,14 @@ TAO_Root_POA::create_POA_i (const char *adapter_name,
         = tao_poa_manager_factory->create_POAManager (0,
                                                       empty_policies
                                                       ACE_ENV_ARG_PARAMETER);
+#else
+  
+      ACE_NEW_THROW_EX (the_poa_manager,
+                        TAO_POA_Manager (this->object_adapter (), 0),
+                        CORBA::NO_MEMORY ());
+#endif /* TAO_HAS_MINIMUM_POA == 0 && ! CORBA_E_COMPACT) */
+
       ACE_CHECK_RETURN (PortableServer::POA::_nil ());
-#endif /* !CORBA_E_COMPACT */
     }
   else
     {
@@ -2289,13 +2304,21 @@ TAO_Root_POA::key_to_stub_i (const TAO::ObjectKey &key,
     this->client_exposed_policies (priority
                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
+  
+  TAO_Acceptor_Filter* filter = 0;
 
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
   if (this->filter_factory_ == 0)
     this->filter_factory_
       = ACE_Dynamic_Service<TAO_Acceptor_Filter_Factory>::instance ("TAO_Acceptor_Filter_Factory");
 
-  TAO_Acceptor_Filter* filter =
+  filter =
     this->filter_factory_->create_object (this->poa_manager_);
+#else
+  ACE_NEW_RETURN (filter,
+                  TAO_Default_Acceptor_Filter (),
+                  0);
+#endif
 
   // Give ownership to the auto pointer.
   auto_ptr<TAO_Acceptor_Filter> new_filter (filter);
@@ -2910,7 +2933,7 @@ TAO_Root_POA::the_POAManager (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   return PortableServer::POAManager::_duplicate (&this->poa_manager_);
 }
 
-#if !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 PortableServer::POAManagerFactory_ptr
 TAO_Root_POA::the_POAManagerFactory (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
