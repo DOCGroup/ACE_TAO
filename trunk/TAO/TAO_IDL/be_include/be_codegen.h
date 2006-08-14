@@ -398,7 +398,8 @@ private:
                           const char *suffix);
 
   void gen_standard_include (TAO_OutStream *stream,
-                             const char *included_file);
+                             const char *included_file,
+                             bool add_comment=false);
 
   // Utility methods for generating ORB file includes.
   void gen_stub_hdr_includes (void);
