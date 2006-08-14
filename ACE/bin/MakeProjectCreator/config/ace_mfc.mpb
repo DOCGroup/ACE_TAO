@@ -2,5 +2,7 @@
 // $Id$
 
 project: mfc {
-  macros += ACE_HAS_MFC=1
+  specific(vc6, vc7, vc71, vc8, nmake, borland, bmake, cbx) {
+    macros += ACE_HAS_MFC=1
+  }
 }
