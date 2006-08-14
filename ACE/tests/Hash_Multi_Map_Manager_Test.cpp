@@ -161,7 +161,7 @@ run_test (void)
 
   value_set.reset ();
   value_set.insert (neutral_colors[0]);
-  ACE_TCHAR *old_key;
+  const ACE_TCHAR *old_key;
   old_value_set.reset ();
   if (colors.rebind (color_sorts[2],
                      value_set,
