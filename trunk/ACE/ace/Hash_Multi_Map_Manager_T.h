@@ -124,8 +124,8 @@ class ACE_Allocator;
 /**
  * @class ACE_Hash_Multi_Map_Manager
  *
- * @brief Define a multi-map abstraction that efficiently associates
- * <EXT_ID>s with <INT_ID>s.
+ * @brief Define a multi-map abstraction that efficiently associates the keys
+ * with their different values.
  *
  * This implementation of a multi-map uses a hash table.  Key hashing
  * is achieved through the HASH_KEY object and key comparison is
@@ -179,7 +179,7 @@ public:
    *        ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID>).
    * @param entry_alloc is a pointer to an additional allocator for
    *        entries, so it should be able to allocate 'size' / chunks
-   *        of sizeof(ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID>) bytes each.
+   *        of sizeof (ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID>) bytes each.
    * If @c table_alloc is 0 it defaults to @c ACE_Allocator::instance().
    * If @c entry_alloc is 0 then it defaults to the same allocator as
    * @c table_alloc.
@@ -194,7 +194,7 @@ public:
    *        ACE_Hash_Multi_Map_Entry<EXT_ID, <INT_ID>).
    * @param entry_alloc is a pointer to an additional allocator for
    *        entries, so it should be able to allocate 'size' / chunks
-   *        of sizeof(ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID>) bytes each.
+   *        of sizeof (ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID>) bytes each.
    * If @c table_alloc is 0 it defaults to @c ACE_Allocator::instance().
    * If @c entry_alloc is 0 then it defaults to the same allocator as
    * @c table_alloc.
@@ -210,7 +210,7 @@ public:
    *        (ACE_Hash_Multi_Map_Entry<EXT_ID, <INT_ID>).
    * @param entry_alloc is a pointer to an additional allocator for
    *        entries, so it should be able to allocate 'size' / chunks
-   *        of sizeof(ACE_Hash_Multi_Map_Entry<EXT_ID, <INT_ID>) bytes each.
+   *        of sizeof (ACE_Hash_Multi_Map_Entry<EXT_ID, <INT_ID>) bytes each.
    * If @c table_alloc is 0 it defaults to @c ACE_Allocator::instance().
    * If @c entry_alloc is 0 then it defaults to the same allocator as
    * @c table_alloc.
@@ -221,21 +221,23 @@ public:
             ACE_Allocator *table_alloc = 0,
             ACE_Allocator *entry_alloc = 0);
 
-  /// Close down a <Hash_Multi_Map_Manager> and release dynamically allocated
+  /// Close down a Hash_Multi_Map_Manager and release dynamically allocated
   /// resources.
   int close (void);
 
-  /// Removes all the entries in <Map_Manager>.
+  /// Removes all the entries in Hash_Multi_Map_Manager.
   int unbind_all (void);
 
-  /// Cleanup the <Hash_Multi_Map_Manager>.
+  /// Cleanup the Hash_Multi_Map_Manager.
   ~ACE_Hash_Multi_Map_Manager (void);
 
   /**
-   * Associate <ext_id> with <int_id>.  If <ext_id> and <int_id> is already in
-   * the map then the <ACE_Hash_Multi_Map_Entry> is not changed.  Returns 0 if
+   * Associate ext_id with int_id.  If ext_id and int_id is already in
+   * the map then the ACE_Hash_Multi_Map_Entry is not changed.  Returns 0 if
    * a new entry is bound successfully, returns 1 if an attempt is made
    * to bind an existing entry, and returns -1 if failures occur.
+   *
+   * @sa ACE_Hash_Multi_Map_Entry
    */
   int bind (const EXT_ID &ext_id,
             const INT_ID &int_id);
@@ -250,10 +252,12 @@ public:
             ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *&entry);
 
   /**
-   * Associate <ext_id> with <int_id_set>.  If <ext_id> is already in the
-   * map then the <ACE_Hash_Multi_Map_Entry> is not changed.  Returns 0 if a
+   * Associate ext_id with int_id_set.  If ext_id is already in the
+   * map then the ACE_Hash_Multi_Map_Entry is not changed.  Returns 0 if a
    * new entry is bound successfully, returns 1 if an attempt is made
    * to bind an existing entry, and returns -1 if failures occur.
+   *
+   * @sa ACE_Hash_Multi_Map_Entry
    */
   int bind (const EXT_ID &ext_id,
             const ACE_Unbounded_Set<INT_ID> &int_id_set);
@@ -268,8 +272,8 @@ public:
             ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *&entry);
 
   /**
-   * Associate <ext_id> with <int_id_set> if and only if <ext_id> is not
-   * in the map.  If <ext_id> is already in the map then the <int_id_set>
+   * Associate ext_id with int_id_set if and only if ext_id is not
+   * in the map.  If ext_id is already in the map then the int_id_set
    * parameter is assigned the existing value in the map.  Returns 0
    * if a new entry is bound successfully, returns 1 if an attempt is
    * made to bind an existing entry, and returns -1 if failures occur.
@@ -287,8 +291,8 @@ public:
                ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *&entry);
 
   /**
-   * Reassociate <ext_id> with <int_id_set>.  If <ext_id> is not in the
-   * map then behaves just like <bind>.  Returns 0 if a new entry is
+   * Reassociate ext_id with int_id_set.  If ext_id is not in the
+   * map then behaves just like bind.  Returns 0 if a new entry is
    * bound successfully, returns 1 if an existing entry was rebound,
    * and returns -1 if failures occur.
    */
@@ -305,9 +309,9 @@ public:
               ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *&entry);
 
   /**
-   * Associate <ext_id> with <int_id_set>.  If <ext_id> is not in the map
-   * then behaves just like <bind>.  Otherwise, store the old value of
-   * <int_id_set> into the "out" parameter and rebind the new parameters.
+   * Associate ext_id with int_id_set.  If ext_id is not in the map
+   * then behaves just like bind.  Otherwise, store the old value of
+   * int_id_set into the "out" parameter and rebind the new parameters.
    * Returns 0 if a new entry is bound successfully, returns 1 if an
    * existing entry was rebound, and returns -1 if failures occur.
    */
@@ -326,14 +330,16 @@ public:
               ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *&entry);
 
   /**
-   * Associate <ext_id> with <int_id_set>.  If <ext_id> is not in the map
-   * then behaves just like <bind>.  Otherwise, store the old values
-   * of <ext_id> and <int_id_set> into the "out" parameters and rebind the
+   * Associate ext_id with int_id_set.  If ext_id is not in the map
+   * then behaves just like bind.  Otherwise, store the old values
+   * of ext_id and int_id_set into the "out" parameters and rebind the
    * new parameters.  This is very useful if you need to have an
-   * atomic way of updating <ACE_Hash_Multi_Map_Entrys> and you also need
-   * full control over memory allocation.  Returns 0 if a new entry is
-   * bound successfully, returns 1 if an existing entry was rebound,
+   * atomic way of updating ACE_Hash_Multi_Map_Entry objects and you also
+   * need full control over memory allocation.  Returns 0 if a new entry
+   * is bound successfully, returns 1 if an existing entry was rebound,
    * and returns -1 if failures occur.
+   *
+   * @sa ACE_Hash_Multi_Map_Entry
    */
   int rebind (const EXT_ID &ext_id,
               const ACE_Unbounded_Set<INT_ID> &int_id_set,
@@ -351,38 +357,38 @@ public:
               ACE_Unbounded_Set<INT_ID> &old_int_id_set,
               ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *&entry);
 
-  /// Locate <ext_id> and pass out parameter via <int_id_set>.
+  /// Locate ext_id and pass out parameter via int_id_set.
   /// Return 0 if found, returns -1 if not found.
   int find (const EXT_ID &ext_id,
             ACE_Unbounded_Set<INT_ID> &int_id_set) const;
 
-  /// Locate <ext_id> and <int_id>.
+  /// Locate ext_id and int_id.
   /// Return 0 if found, returns -1 if not found.
   int find (const EXT_ID &ext_id,
             const INT_ID &int_id) const;
 
-  /// Returns 0 if the <ext_id> is in the mapping, otherwise -1.
+  /// Returns 0 if the ext_id is in the mapping, otherwise -1.
   int find (const EXT_ID &ext_id) const;
 
-  /// Locate <ext_id> and pass out parameter via <entry>.  If found,
+  /// Locate ext_id and pass out parameter via entry.  If found,
   /// return 0, returns -1 if not found.
   int find (const EXT_ID &ext_id,
             ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *&entry) const;
 
   /**
-   * Unbind (remove) the <ext_id> from the map.  Don't return the
-   * <int_id> to the caller (this is useful for collections where the
-   * <int_id>s are *not* dynamically allocated...)
+   * Unbind (remove) the ext_id from the map.  Don't return the
+   * int_id to the caller (this is useful for collections where the
+   * int_ids are *not* dynamically allocated...)
    */
   int unbind (const EXT_ID &ext_id);
 
-  /// Break any association of <ext_id>.  Returns the value of <int_id_set>
+  /// Break any association of ext_id.  Returns the value of int_id_set
   /// in case the caller needs to deallocate memory. Return 0 if the
   /// unbind was successfully, and returns -1 if failures occur.
   int unbind (const EXT_ID &ext_id,
               ACE_Unbounded_Set<INT_ID> &int_id_set);
 
-  /// Break any association of <ext_id> and <int_id>. Return 0 if the
+  /// Break any association of ext_id and int_id. Return 0 if the
   /// unbind was successfully, and returns -1 if failures occur.
   int unbind (const EXT_ID &ext_id,
               const INT_ID &int_id);
@@ -400,12 +406,12 @@ public:
   size_t total_size (void) const;
 
   /**
-   * Returns a reference to the underlying <ACE_LOCK>.  This makes it
+   * Returns a reference to the underlying ACE_LOCK.  This makes it
    * possible to acquire the lock explicitly, which can be useful in
    * some cases if you instantiate the ACE_Atomic_Op with an
    * ACE_Recursive_Mutex or ACE_Process_Mutex, or if you need to
    * guard the state of an iterator.
-   * @note The right name would be <lock>, but HP/C++ will choke on that!
+   * @note The right name would be lock, but HP/C++ will choke on that!
    */
   ACE_LOCK &mutex (void);
 
@@ -425,11 +431,11 @@ public:
 protected:
   // = The following methods do the actual work.
 
-  /// Returns 1 if <id1> == <id2>, else 0.  This is defined as a
+  /// Returns 1 if id1 == id2, else 0.  This is defined as a
   /// separate method to facilitate template specialization.
   int equal (const EXT_ID &id1, const EXT_ID &id2);
 
-  /// Compute the hash value of the <ext_id>.  This is defined as a
+  /// Compute the hash value of the ext_id.  This is defined as a
   /// separate method to facilitate template specialization.
   u_long hash (const EXT_ID &ext_id);
 
@@ -495,21 +501,21 @@ protected:
                 ACE_Unbounded_Set<INT_ID> &old_int_id_set,
                 ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *&entry);
 
-  /// Performs a find of <int_id_set> using <ext_id> as the key.  Must be
+  /// Performs a find of int_id_set using ext_id as the key.  Must be
   /// called with locks held.
   int find_i (const EXT_ID &ext_id,
               ACE_Unbounded_Set<INT_ID> &int_id_set);
 
-  /// Performs a find of <ext_id> and <int_id>.  Must be
+  /// Performs a find of ext_id and int_id.  Must be
   /// called with locks held.
   int find_i (const EXT_ID &ext_id,
               const INT_ID &int_id);
 
-  /// Performs a find using <ext_id> as the key.  Must be called with
+  /// Performs a find using ext_id as the key.  Must be called with
   /// locks held.
   int find_i (const EXT_ID &ext_id);
 
-  /// Performs a find using <ext_id> as the key.  Must be called with
+  /// Performs a find using ext_id as the key.  Must be called with
   /// locks held.
   int find_i (const EXT_ID &ext_id,
               ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *&entry);
@@ -535,11 +541,11 @@ protected:
    */
   int create_buckets (size_t size);
 
-  /// Close down a <Map_Manager>.  Must be called with
+  /// Close down a Map_Manager.  Must be called with
   /// locks held.
   int close_i (void);
 
-  /// Removes all the entries in <Map_Manager>.  Must be called with
+  /// Removes all the entries in Map_Manager.  Must be called with
   /// locks held.
   int unbind_all_i (void);
 
@@ -548,8 +554,8 @@ protected:
   ACE_Allocator *table_allocator_;
 
   /// Addidtional allocator for entries, so it should be able to
-  /// allocate 'size' / chunks of sizeof(ACE_Hash_Multi_Map_Entry<EXT_ID,
-  /// INT_ID>) bytes each.
+  /// allocate 'size' / chunks of sizeof 
+  /// (ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID>) bytes each.
   ACE_Allocator *entry_allocator_;
 
   /// Synchronization variable for the MT_SAFE
@@ -563,7 +569,7 @@ protected:
   COMPARE_KEYS compare_keys_;
 
 protected:
-  /// Returns the <ACE_Hash_Multi_Map_Entry> that corresponds to <ext_id>.
+  /// Returns the ACE_Hash_Multi_Map_Entry object that corresponds to ext_id.
   int shared_find (const EXT_ID &ext_id,
                    ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *&entry,
                    size_t &loc);
@@ -576,9 +582,11 @@ protected:
 
 private:
   /**
-   * Array of <ACE_Hash_Multi_Map_Entry> *s, each of which points to an
-   * <ACE_Hash_Multi_Map_Entry> that serves as the beginning of a linked
-   * list of <EXT_ID>s that hash to that bucket.
+   * Array of the pointers to ACE_Hash_Multi_Map_Entry objects, each of which
+   * points to an ACE_Hash_Multi_Map_Entry that serves as the beginning of a
+   * linked list of EXT_IDs that hash to that bucket.
+   *
+   * @sa ACE_Hash_Multi_Map_Entry
    */
   ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *table_;
 
@@ -586,7 +594,7 @@ private:
   size_t total_size_;
 
   /// Current number of entries in the table
-  /// @note That this can be larger than <total_size_> due to the
+  /// @note That this can be larger than total_size_ due to the
   /// bucket chaining).
   size_t cur_size_;
 
@@ -598,10 +606,12 @@ private:
 /**
  * @class ACE_Hash_Multi_Map_Iterator_Base
  *
- * @brief Base iterator for the <ACE_Hash_Multi_Map_Manager>
+ * @brief Base iterator for the ACE_Hash_Multi_Map_Manager
  *
  * This class factors out common code from its templatized
  * subclasses.
+ *
+ * @sa ACE_Hash_Multi_Map_Manager
  */
 template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK>
 class ACE_Hash_Multi_Map_Iterator_Base
@@ -615,17 +625,17 @@ public:
 
   // = ITERATION methods.
 
-  /// Pass back the next <entry> that hasn't been seen in the Set.
+  /// Pass back the next entry that hasn't been seen in the Set.
   /// Returns 0 when all items have been seen, else 1.
   int next (ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *&next_entry) const;
 
   /// Returns 1 when all items have been seen, else 0.
   int done (void) const;
 
-  /// Returns a reference to the interal element <this> is pointing to.
+  /// Returns a reference to the interal element this object is pointing to.
   ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID>& operator* (void) const;
 
-  /// Returns a pointer to the interal element <this> is pointing to.
+  /// Returns a pointer to the interal element this object is pointing to.
   ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID>* operator-> (void) const;
 
   /// Returns reference the Hash_Multi_Map_Manager that is being iterated
@@ -665,10 +675,12 @@ protected:
 /**
  * @class ACE_Hash_Multi_Map_Const_Iterator_Base
  *
- * @brief Base const iterator for the <ACE_Hash_Multi_Map_Manager>
+ * @brief Base const iterator for the ACE_Hash_Multi_Map_Manager
  *
  * This class factors out common code from its templatized
  * subclasses.
+ *
+ * @sa ACE_Hash_Multi_Map_Manager
  */
 template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK>
 class ACE_Hash_Multi_Map_Const_Iterator_Base
@@ -682,17 +694,17 @@ public:
 
   // = ITERATION methods.
 
-  /// Pass back the next <entry> that hasn't been seen in the Set.
+  /// Pass back the next entry that hasn't been seen in the Set.
   /// Returns 0 when all items have been seen, else 1.
   int next (ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *&next_entry) const;
 
   /// Returns 1 when all items have been seen, else 0.
   int done (void) const;
 
-  /// Returns a reference to the interal element <this> is pointing to.
+  /// Returns a reference to the interal element this object is pointing to.
   ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID>& operator* (void) const;
 
-  /// Returns a pointer to the interal element <this> is pointing to.
+  /// Returns a pointer to the interal element this object is pointing to.
   ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID>* operator-> (void) const;
 
   /// Returns reference the Hash_Multi_Map_Manager that is being iterated
@@ -732,14 +744,17 @@ protected:
 /**
  * @class ACE_Hash_Multi_Map_Iterator
  *
- * @brief Forward iterator for the <ACE_Hash_Multi_Map_Manager>.
+ * @brief Forward iterator for the ACE_Hash_Multi_Map_Manager.
  *
  * This class does not perform any internal locking of the
- * <ACE_Hash_Multi_Map_Manager> it is iterating upon since locking is
+ * ACE_Hash_Multi_Map_Manager it is iterating upon since locking is
  * inherently inefficient and/or error-prone within an STL-style
  * iterator.  If you require locking, you can explicitly use an
- * ACE_Guard or ACE_Read_Guard on the <ACE_Hash_Multi_Map_Manager>'s
- * internal lock, which is accessible via its <mutex> method.
+ * ACE_Guard or ACE_Read_Guard on the ACE_Hash_Multi_Map_Manager's
+ * internal lock, which is accessible via its mutex method.
+ *
+ * @sa ACE_Hash_Multi_Map_Manager
+ * @sa mutex
  */
 template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK>
 class ACE_Hash_Multi_Map_Iterator : public ACE_Hash_Multi_Map_Iterator_Base<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>
@@ -778,14 +793,17 @@ public:
 /**
  * @class ACE_Hash_Multi_Map_Const_Iterator
  *
- * @brief Const forward iterator for the <ACE_Hash_Multi_Map_Manager>.
+ * @brief Const forward iterator for the ACE_Hash_Multi_Map_Manager.
  *
  * This class does not perform any internal locking of the
- * <ACE_Hash_Multi_Map_Manager> it is iterating upon since locking is
+ * ACE_Hash_Multi_Map_Manager it is iterating upon since locking is
  * inherently inefficient and/or error-prone within an STL-style
  * iterator.  If you require locking, you can explicitly use an
- * ACE_Guard or ACE_Read_Guard on the <ACE_Hash_Multi_Map_Manager>'s
- * internal lock, which is accessible via its <mutex> method.
+ * ACE_Guard or ACE_Read_Guard on the ACE_Hash_Multi_Map_Manager's
+ * internal lock, which is accessible via its mutex method.
+ *
+ * @sa ACE_Hash_Multi_Map_Manager
+ * @sa mutex
  */
 template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK>
 class ACE_Hash_Multi_Map_Const_Iterator : public ACE_Hash_Multi_Map_Const_Iterator_Base<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>
@@ -824,21 +842,24 @@ public:
 /**
  * @class ACE_Hash_Multi_Map_Bucket_Iterator
  *
- * @brief Forward iterator for the <ACE_Hash_Multi_Map_Manager> which
+ * @brief Forward iterator for the ACE_Hash_Multi_Map_Manager which
  * only traverses a particular bucket.  The particular bucket is
- * specified by the <EXT_ID> parameter specified in the constructor.
+ * specified by the EXT_ID parameter specified in the constructor.
  *
  * This class does not perform any internal locking of the
- * <ACE_Hash_Multi_Map_Manager> it is iterating upon since locking is
+ * ACE_Hash_Multi_Map_Manager it is iterating upon since locking is
  * inherently inefficient and/or error-prone within an STL-style
  * iterator.  If you require locking, you can explicitly use an
- * ACE_Guard or ACE_Read_Guard on the <ACE_Hash_Multi_Map_Manager>'s
- * internal lock, which is accessible via its <mutex> method.
+ * ACE_Guard or ACE_Read_Guard on the ACE_Hash_Multi_Map_Manager's
+ * internal lock, which is accessible via its mutex method.
  *
  * Note that a creation method for this new iterator cannot be added
  * to the hash map, since this would require adding explicit template
  * instantiations for bucket iterators on platforms with broken
  * templates.
+ *
+ * @sa ACE_Hash_Multi_Map_Manager
+ * @sa mutex
  */
 template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK>
 class ACE_Hash_Multi_Map_Bucket_Iterator
@@ -863,10 +884,10 @@ public:
   /// Postfix reverse.
   ACE_Hash_Multi_Map_Bucket_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> operator-- (int);
 
-  /// Returns a reference to the interal element <this> is pointing to.
+  /// Returns a reference to the interal element this object is pointing to.
   ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID>& operator* (void) const;
 
-  /// Returns a pointer to the interal element <this> is pointing to.
+  /// Returns a pointer to the interal element this object is pointing to.
   ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID>* operator-> (void) const;
 
   /// Returns reference the Hash_Multi_Map_Manager that is being iterated
@@ -900,14 +921,17 @@ protected:
 /**
  * @class ACE_Hash_Multi_Map_Reverse_Iterator
  *
- * @brief Reverse iterator for the <ACE_Hash_Multi_Map_Manager>.
+ * @brief Reverse iterator for the ACE_Hash_Multi_Map_Manager.
  *
  * This class does not perform any internal locking of the
- * <ACE_Hash_Multi_Map_Manager> it is iterating upon since locking is
+ * ACE_Hash_Multi_Map_Manager it is iterating upon since locking is
  * inherently inefficient and/or error-prone within an STL-style
  * iterator.  If you require locking, you can explicitly use an
- * ACE_Guard or ACE_Read_Guard on the <ACE_Hash_Multi_Map_Manager>'s
- * internal lock, which is accessible via its <mutex> method.
+ * ACE_Guard or ACE_Read_Guard on the ACE_Hash_Multi_Map_Manager's
+ * internal lock, which is accessible via its mutex method.
+ *
+ * @sa ACE_Hash_Multi_Map_Manager
+ * @sa mutex
  */
 template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK>
 class ACE_Hash_Multi_Map_Reverse_Iterator : public ACE_Hash_Multi_Map_Iterator_Base<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>

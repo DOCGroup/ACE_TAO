@@ -1,3 +1,11 @@
+Mon Aug 14 16:14:56 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
+
+        * test/Hash_Multi_Map_Manager_Test.cpp
+          Address the "no matching function for call" errors.
+          
+        * ace/Hash_MultiMap_Manager_T.h
+          Address the "unsupported xml/html tag" warnings in doxygen build. 
+
 Mon Aug 14 16:00:00 UTC 2006  Simon Massey  <sma@prismtech.com>
 
         * bin/MakeProjectCreator/config/ace_mfc.mpb:
