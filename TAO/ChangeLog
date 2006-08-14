@@ -1,16 +1,27 @@
+Mon Aug 14 07:44:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/AnyTypeCode/TypeCode_Case_Enum_T.{h,cpp,inl}:
+        * tao/AnyTypeCode/TypeCode_CDR_Extraction.cpp:
+          Fixed handling of union with enums. This fixes bugzilla bug
+          2446, thanks to Tommy Persson <tpe at ida dot liu dot se> for
+          reporting this bug. Also it fixes bugzilla bug 2539 which
+          has been reported by sdjiangwei@sina.com. The real fix has
+          been made by Dale Boan <boan at sedsystems dot ca>, many thanks
+          to him.
+
 Sun Aug 13 23:30:02 UTC 2006  Yan Dai  <dai_y@ociweb.com>
 
-          These changes excluded the POAManagerFactory and EndpointPolicy 
+          These changes excluded the POAManagerFactory and EndpointPolicy
           from minimum corba, minimum poa and CORBA/e builds.
 
         * tao/PortableServer/POA.pidl:
-        
-          Excluded the_POAManagerFactory attribute in POA.  
-          
+
+          Excluded the_POAManagerFactory attribute in POA.
+
         * tao/PortableServer/POAManagerFactory.pidl:
-        
+
           Excluded POAManagerFactory interface.
-          
+
         * tao/PortableServer/POAManager.cpp:
         * tao/PortableServer/POAManager.inl:
         * tao/PortableServer/POAManager.h:
@@ -22,15 +33,15 @@ Sun Aug 13 23:30:02 UTC 2006  Yan Dai  <dai_y@ociweb.com>
         * tao/PortableServer/POAManagerFactory.h:
         * tao/PortableServer/Root_POA.cpp:
         * tao/PortableServer/Root_POA.h:
-        
+
           Excluded the use of POAManagerFactory in the code.
-          
+
         * tao/EndpointPolicy.mpc:
         * tests/POA/EndpointPolicy/EndpointPolicy.mpc:
         * tests/POA/POAManagerFactory/POAManagerFactory.mpc:
-        
+
           Made these projects inherit from minimum_corba.
-          
+
 Fri Aug 11 12:49:55 UTC 2006  Ciju John  <johnc@ociweb.com>
 
         * tests/Optimized_Connection/Optimized_Connection.mpc:
@@ -41,6 +52,14 @@ Fri Aug 11 12:49:55 UTC 2006  Ciju John  <johnc@ociweb.com>
           This test was failing on OpenVMS due to the way the linker
           handles template instantiations. Copied the Hello test IDL here,
           so the test is now self-contained.
+
+Fri Aug 11 11:55:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/RTPortableServer/RT_POA.{h,cpp}:
+          CORBA/e changes
+
+        * tao/Utils/Auto_Function.h:
+          Marked this header as deprecated
 
 Fri Aug 11 09:10:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
