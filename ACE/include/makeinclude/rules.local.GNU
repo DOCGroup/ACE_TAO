@@ -310,6 +310,17 @@ endif
 #       Cleanup targets
 #----------------------------------------------------------------------------
 
+clean_binaries.local:
+ifneq ($(BIN_UNCHECKED),)
+	-$(RM) $(BIN_UNCHECKED)
+endif
+ifneq ($(SHLIB_UNCHECKED),)
+	-$(RM) $(SHLIB_UNCHECKED)
+ifeq ($(versioned_so),1)
+	-$(RM) $(SHLIB_UNCHECKED)$(SOVERSION)
+endif
+endif
+
 clean_idl_stubs.local: makefile_name.local
 ifdef IDL_FILES
 	-$(RM) $(foreach ext, $(IDL_EXT), $(addsuffix $(ext), $(IDL_FILES)))

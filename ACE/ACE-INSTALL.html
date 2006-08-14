@@ -1929,31 +1929,31 @@ libraries.
         consists of five steps
         <ol>
           <li> In the first pass one gets that <code>x11</code> (X11 libraries) is missing.<br>
-            <code>$ mwc.pl
+            <code>$ mwc.pl -type gnuace
               Skipping ACE_FlReactor (ace_flreactor.mpc), it requires x11.
             </code></li>
             Ensure that <code>X11</code> libraries are installed, then pass <code>x11=1</code> feature to MPC.
           <li>In the second pass one gets that <code>gl</code> (OpenGL library) is missing.<br>
-            <code>$ mwc.pl -features x11=1 ace.mwc
+            <code>$ mwc.pl -type gnuace -features x11=1 ace.mwc
               Skipping ACE_FlReactor (ace_flreactor.mpc), it requires gl.
             </code></li>
             Ensure that <code>OpenGL</code> libraries are installed, then pass <code>gl=1</code> feature to MPC.
           <li>In the third pass one gets that <code>fl</code> (Fast Light Toolkit) is missing.<br>
-            <code>$ mwc.pl -features x11=1,gl=1 ace.mwc
+            <code>$ mwc.pl -type gnuace -features x11=1,gl=1 ace.mwc
               Skipping ACE_FlReactor (ace_flreactor.mpc), it requires fl.
             </code></li>
             Ensure that <code>Fast Light Toolkit</code> libraries are installed, then pass <code>fl=1</code>
             feature to MPC.
           <li>In the fourth pass one gets that <code>ace_flreactor</code> feature is missing<br>
-            <code>$ mwc.pl -features x11=1,gl=1,fl=1 ace.mwc
+            <code>$ mwc.pl -type gnuace -features x11=1,gl=1,fl=1 ace.mwc
               Skipping ACE_FlReactor (ace_flreactor.mpc), it requires ace_flreactor.
             </code></li>
           Allow MPC to generate makefiles for <code>FlReactor</code> by setting <code>ace_flreactor=1</code> feature.
           <li>In the last pass one obtains files for building <code>FlReactor</code>.<br>
-            <code>$ mwc.pl -features x11=1,gl=1,fl=1,ace_flreactor=1 ace.mwc
+            <code>$ mwc.pl -type gnuace -features x11=1,gl=1,fl=1,ace_flreactor=1 ace.mwc
             </code></li>
         </ol>
-        Currently to simplify MPC generation some of features are turn on by default in
+        Currently to simplify MPC generation some of features are turned on by default in
         <code>ACE_wrappers/bin/MakeProjectCreator/global.features</code>. For examples to generate
         files related with Fl one has to provide only fl=1 feature. To obtain a more fine grained controll
         over MPC generation process one may modify <code>ACE_wrappers/bin/MakeProjectCreator/*.features</code>
@@ -2624,15 +2624,16 @@ A common usage for creating a Windows workspace containing just the
 core ACE and TAO libraries and executables is the following:
 
 <pre><code>
-C:> cd %TAO_ROOT% C:> %ACE_ROOT%\bin\mwc.pl -type vc71 TAO_ACE.mwc
+C:> cd %TAO_ROOT%
+C:> %ACE_ROOT%\bin\mwc.pl -type vc71 TAO_ACE.mwc
 </pre></code>
 
 Replace vc71 with whatever project type you want to use.  On Linux and
-other UNIX platform it's even easier: <P>
+other UNIX platform use the gnuace type: <P>
 
 <pre><code>
 % cd $TAO_ROOT
-% $ACE_ROOT/bin/mwc.pl TAO_ACE.mwc
+% $ACE_ROOT/bin/mwc.pl -type gnuace TAO_ACE.mwc
 </pre></code>
 
 this creates the appropriate GNUmakefiles.  Additional information on
@@ -2974,7 +2975,7 @@ quickly.
   based platforms. <p>
   </p></li><li>If you just want to build ACE and associated tests, examples,
   and associated utility libraries, we recommend that you do <p>
-  <code> $ACE_ROOT/bin/mwc.pl ACE.mwc</code> </p><p>
+  <code> $ACE_ROOT/bin/mwc.pl -type gnuace ACE.mwc</code> </p><p>
 
   from <code> $ACE_ROOT </code> to generate GNUmakefiles. Please use
 
