@@ -52,7 +52,6 @@ namespace TAO
 
       /// Constructor.
       Case_Enum_T (CORBA::TypeCode_ptr discriminator_tc,
-
                    CORBA::ULong member_label,
                    char const * member_name,
                    TypeCodeType member_type);
@@ -63,7 +62,6 @@ namespace TAO
        * @c TypeCode case.
        */
       Case_Enum_T (CORBA::TypeCode_ptr discriminator_tc,
-
                    CORBA::ULong member_label);
 
       /**
