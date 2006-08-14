@@ -216,4 +216,7 @@ includes_install: $(INCLUDES)
 includes_install:
 	@echo Nothing to install.
 <%endif%>
+
+realclean:
+        @echo Nothing to realclean.
 <%marker(bottom)%>
