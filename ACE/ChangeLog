@@ -1,4 +1,11 @@
-Mon Aug 14 16:43:12 UTC 2006  Steve Huston  <shuston@riverace.com>
+Mon Aug 14 15:20:00 UTC 2006  Simon Massey  <sma@prismtech.com>
+
+        * bin/MakeProjectCreator/config/ace_mfc.mpb:
+        * bin/MakeProjectCreator/config/ace_opt_mfc.mpb:
+
+          Specific the macro and don't inherit from mfc for opt.
+
+Mon Aug 14 15:43:12 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * tests/Makefile.am: Added Hash_Multi_Map_Manager_Test.
 
