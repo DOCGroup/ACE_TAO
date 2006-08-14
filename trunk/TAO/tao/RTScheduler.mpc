@@ -37,6 +37,15 @@ project : taolib, rtcorba, pi, pi_server, portableserver, core, corba_messaging,
     RTScheduling/RTScheduler.pidl
   }
 
+  IDL_Files {
+    idlflags += -Ge 1 -SS -Sorb -GX -Sci \
+                -Wb,export_macro=TAO_RTScheduler_Export \
+                -Wb,export_include=tao/RTScheduling/rtscheduler_export.h \
+                -Wb,safe_include=tao/RTScheduling/RTScheduler.h \
+                -o RTScheduling
+    RTScheduling/RTScheduler_include.pidl
+  }
+
   Pkgconfig_Files {
     RTScheduling/TAO_RTScheduler.pc.in
   }

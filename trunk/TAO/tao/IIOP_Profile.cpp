@@ -456,7 +456,7 @@ TAO_IIOP_Profile::to_string (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
        1 /* colon separator */ +
        1 /* object key separator */ +
        ACE_OS::strlen (key.in ()));
-  size_t pfx_len = (
+  size_t const pfx_len = (
        ACE_OS::strlen (::the_prefix) /* "iiop" */ +
        1 /* colon separator */);
 
@@ -547,8 +547,8 @@ TAO_IIOP_Profile::create_profile_body (TAO_OutputCDR &encap) const
 #if defined (ACE_HAS_IPV6)
   // For IPv6 decimal addresses make sure the possibly included scopeid
   // is not published as this has only local meaning.
-  const char* host;
-  const char* pos;
+  const char* host = 0;
+  const char* pos = 0;
   if (this->endpoint_.is_ipv6_decimal_ &&
       (pos = ACE_OS::strchr (host = this->endpoint_.host (), '%')) != 0)
     {
@@ -606,8 +606,8 @@ TAO_IIOP_Profile::encode_alternate_endpoints (void)
 #if defined (ACE_HAS_IPV6)
       // For IPv6 decimal addresses make sure the possibly included scopeid
       // is not published as this has only local meaning.
-      const char* host;
-      const char* pos;
+      const char* host = 0;
+      const char* pos = 0;
       if (endpoint->is_ipv6_decimal_ &&
           (pos = ACE_OS::strchr (host = endpoint->host (), '%')) != 0)
         {
