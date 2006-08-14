@@ -1,3 +1,8 @@
+Mon Aug 14 11:39:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/AnyTypeCode/TypeCode_Case_Enum_T.{h,cpp,inl}:
+          Fixed gcc warnings
+
 Mon Aug 14 10:43:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_codegen.cpp:
