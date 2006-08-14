@@ -1,3 +1,10 @@
+Mon Aug 14 16:00:00 UTC 2006  Simon Massey  <sma@prismtech.com>
+
+        * bin/MakeProjectCreator/config/ace_mfc.mpb:
+        * bin/MakeProjectCreator/config/ace_opt_mfc.mpb:
+
+          Backout the "Specific" guards.
+
 Mon Aug 14 15:20:00 UTC 2006  Simon Massey  <sma@prismtech.com>
 
         * bin/MakeProjectCreator/config/ace_mfc.mpb:
