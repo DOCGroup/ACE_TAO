@@ -1,3 +1,11 @@
+Mon Aug 14 19:05:38 UTC 2006  Yan Dai  <dai_y@ociweb.com>
+
+        * tao/PortableServer/Object_Adapter.h:
+        * tao/PortableServer/Object_Adapter.cpp:
+
+          Made the TAO_Object_Adapter keep a reference to POAManager 
+          object on minimum corba builds to fix leaking of POAManager object. 
+          
 Mon Aug 14 17:21:00 UTC 2006  Yan Dai  <dai_y@ociweb.com>
 
         * tao/PortableServer/Object_Adapter.cpp:
