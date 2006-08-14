@@ -26,6 +26,7 @@
 #include "tao/PortableServer/Servant_Location.h"
 #include "tao/PortableServer/Default_Policy_Validator.h"
 #include "tao/PortableServer/POA_Policy_Set.h"
+#include "tao/PortableServer/POAManagerC.h"
 
 #include "tao/Adapter.h"
 #include "tao/Adapter_Factory.h"
@@ -497,6 +498,9 @@ private:
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
   /// The POAManager factory.
   TAO_POAManager_Factory *poa_manager_factory_;
+#else
+  /// The POAManager object reference.
+  PortableServer::POAManager_var the_poa_manager_;
 #endif
 
   /// The default validator and the beginning of the chain of
