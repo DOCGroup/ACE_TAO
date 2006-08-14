@@ -1,3 +1,9 @@
+Mon Aug 14 15:46:34 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tools/Config_Handlers/Utils/XML_Helper.h
+        
+          Fixed a compile error for pedantic GCC4.
+
 Sun Aug 13 15:18:00 UTC 2006  Boris Kolpackov  <boris@codesynthesis.com>
 
         * CCF/CCF/CodeGenerationKit/Regex.hpp:
