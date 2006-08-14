@@ -16,7 +16,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/ACE_export.h"
+#include /**/ "ace/ACE_export.h"
 #include "ace/os_include/os_stddef.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

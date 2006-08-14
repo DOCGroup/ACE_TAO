@@ -20,7 +20,7 @@
 # error ace/Signal.h was #included instead of signal.h by ace/OS_NS_signal.h:  fix!!!!
 #endif /* ACE_DONT_INCLUDE_ACE_SIGNAL_H */
 
-#include "ace/ACE_export.h"
+#include /**/ "ace/ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

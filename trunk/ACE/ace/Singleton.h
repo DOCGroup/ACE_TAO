@@ -20,7 +20,7 @@
 #define ACE_SINGLETON_H
 #include /**/ "ace/pre.h"
 
-#include "ace/config-all.h"
+#include /**/ "ace/config-all.h"
 #include "ace/TSS_T.h"
 #include "ace/Cleanup.h"
 

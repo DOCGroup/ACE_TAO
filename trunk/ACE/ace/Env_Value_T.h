@@ -19,7 +19,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/config-all.h"
+#include /**/ "ace/config-all.h"
 #include "ace/Global_Macros.h"
 #include "ace/OS_NS_stdlib.h"
 

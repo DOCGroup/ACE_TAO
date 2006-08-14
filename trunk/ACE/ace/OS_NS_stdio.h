@@ -27,7 +27,7 @@
 
 #include "ace/os_include/os_stdio.h"
 #include "ace/os_include/os_fcntl.h"
-#include "ace/ACE_export.h"
+#include /**/ "ace/ACE_export.h"
 
 /* OPENVMS needs unistd for cuserid() */
 #if defined (CYGWIN32) || defined (ACE_OPENVMS)

@@ -14,7 +14,7 @@
 #define ACE_BASIC_STATS_H
 #include /**/ "ace/pre.h"
 
-#include "ace/config-all.h"
+#include /**/ "ace/config-all.h"
 #include "ace/Basic_Types.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

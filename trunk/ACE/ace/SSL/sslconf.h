@@ -16,7 +16,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/config-all.h"
+#include /**/ "ace/config-all.h"
 
 #if !defined (ACE_DEFAULT_SSL_CERT_FILE)
 #  ifdef WIN32

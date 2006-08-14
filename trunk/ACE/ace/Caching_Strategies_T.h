@@ -15,7 +15,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/config-all.h"
+#include /**/ "ace/config-all.h"
 #include "ace/Caching_Utility_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

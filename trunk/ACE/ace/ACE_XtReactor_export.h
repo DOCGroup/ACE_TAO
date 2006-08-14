@@ -7,7 +7,7 @@
 #ifndef ACE_XTREACTOR_EXPORT_H
 #define ACE_XTREACTOR_EXPORT_H
 
-#include "ace/config-all.h"
+#include /**/ "ace/config-all.h"
 
 #if defined (ACE_AS_STATIC_LIBS) && !defined (ACE_XTREACTOR_HAS_DLL)
 #  define ACE_XTREACTOR_HAS_DLL 0

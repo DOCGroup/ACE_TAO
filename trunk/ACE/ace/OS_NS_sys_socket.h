@@ -28,7 +28,7 @@
 #include "ace/os_include/sys/os_socket.h"
 #include "ace/os_include/net/os_if.h"
 #include "ace/OS_NS_stropts.h"
-#include "ace/ACE_export.h"
+#include /**/ "ace/ACE_export.h"
 
 #if defined (ACE_EXPORT_MACRO)
 #  undef ACE_EXPORT_MACRO

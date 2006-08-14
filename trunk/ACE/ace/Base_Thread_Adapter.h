@@ -20,7 +20,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/ACE_export.h"
+#include /**/ "ace/ACE_export.h"
 #include "ace/OS_Log_Msg_Attributes.h"
 
 #ifdef ACE_USES_GPROF
