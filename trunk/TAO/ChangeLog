@@ -1,3 +1,8 @@
+Mon Aug 14 09:07:12 UTC 2006  Martin Corino  <mcorino@remedy.nl>
+
+        * examples/Simulator/Event_Supplier/Logging_Sup.cpp:
+          Small OpenVMS compatibility changes.
+
 Mon Aug 14 08:35:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Messaging/Messaging.h:
