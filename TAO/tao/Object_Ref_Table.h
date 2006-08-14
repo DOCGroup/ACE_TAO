@@ -23,7 +23,7 @@
 
 #include "tao/CORBA_String.h"
 #include "tao/Object.h"
-#include "tao/TAO_Export.h"
+#include /**/ "tao/TAO_Export.h"
 #include "tao/orbconf.h"
 
 #include "ace/Array_Map.h"

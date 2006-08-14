@@ -1,3 +1,10 @@
+Mon Aug 14 13:45:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/*.h:
+          Added /**/ to the include of the export and versioned
+          namespace files to get them out of the doxygen include
+          pictures
+
 Mon Aug 14 13:11:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer.mpc:
