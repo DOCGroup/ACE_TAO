@@ -37,4 +37,9 @@
 
 #endif /* TAO_MESSAGING_EXPORT_H */
 
+#if defined(TRANSPARENT)
+// Some platforms define this macro for ioctl()
+#undef TRANSPARENT
+#endif
+
 // End of auto generated file.
