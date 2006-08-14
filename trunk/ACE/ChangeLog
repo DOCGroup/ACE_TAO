@@ -1,3 +1,7 @@
+Mon Aug 14 16:43:12 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * tests/Makefile.am: Added Hash_Multi_Map_Manager_Test.
+
 Mon Aug 14 13:33:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/clean.bor:
@@ -61,8 +65,8 @@ Sun Aug 13 000:02:00 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
           associated iterator classes.
 
         * ace/Hash_MultiMap_Manager.h
-          Remove this file since it simply includes the Hash_MultiMap_Manager_T.h
-          file.
+          Remove this file since it simply includes the
+          Hash_MultiMap_Manager_T.h file.
 
         * test/Hash_MultiMap_Manager_Test.cpp
           Change the name of this file into Hash_Multi_Map_Manager_Test.cpp.
