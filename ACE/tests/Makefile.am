@@ -945,6 +945,21 @@ Hash_Map_Manager_Test_LDADD = \
   libTest_Output.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+## Makefile.Hash_Multi_Map_Manager_Test.am
+noinst_PROGRAMS += Hash_Multi_Map_Manager_Test
+
+Hash_Multi_Map_Manager_Test_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
+
+Hash_Multi_Map_Manager_Test_SOURCES = \
+  $(ACE_ROOT)/tests/Main.cpp \
+  Hash_Multi_Map_Manager_Test.cpp
+
+Hash_Multi_Map_Manager_Test_LDADD = \
+  libTest_Output.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
 ## Makefile.High_Res_Timer_Test.am
 
 if !BUILD_ACE_FOR_TAO
