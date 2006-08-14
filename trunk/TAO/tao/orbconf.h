@@ -27,7 +27,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Versioned_Namespace.h"
+#include /**/ "tao/Versioned_Namespace.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -745,10 +745,10 @@ enum TAO_Cached_Policy_Type
 #endif /* TAO_HAS_CONNECTION_TIMEOUT_POLICY == 1 */
 
   TAO_CACHED_POLICY_BIDIRECTIONAL_GIOP,
-  
+
   TAO_CACHED_POLICY_ENDPOINT,
 
-  /// NOTE: The "TAO_CACHED_POLICY_MAX_CACHED" should always be the last. 
+  /// NOTE: The "TAO_CACHED_POLICY_MAX_CACHED" should always be the last.
   ///       This value is used as the cached_policies_ array size in TAO_Policy_Set,
   ///       Any policy type defined after "TAO_CACHED_POLICY_MAX_CACHED" will cause
   ///       the policy access beyond bound problem.

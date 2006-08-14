@@ -15,14 +15,14 @@
 
 #include /**/ "ace/pre.h"
 #include "tao/orbconf.h"
-#include "tao/Versioned_Namespace.h"
+#include /**/ "tao/Versioned_Namespace.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// Define symbolic names for the ORB collocation strategies.
 namespace TAO
 {
-  enum Collocation_Strategy 
+  enum Collocation_Strategy
     {
       /// i.e no collocation.
       TAO_CS_REMOTE_STRATEGY,

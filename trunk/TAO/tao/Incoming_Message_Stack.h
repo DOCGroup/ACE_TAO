@@ -22,7 +22,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined (__BORLANDC__) && (__BORLANDC__ <= 0x582)
-#include "tao/TAO_Export.h"
+#include /**/ "tao/TAO_Export.h"
 #endif
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

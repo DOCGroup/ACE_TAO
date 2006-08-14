@@ -17,7 +17,7 @@
 #include /**/ "ace/pre.h"
 
 #include "tao/Basic_Types.h"
-#include "tao/TAO_Export.h"
+#include /**/ "tao/TAO_Export.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

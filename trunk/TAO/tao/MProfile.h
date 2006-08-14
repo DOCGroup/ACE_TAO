@@ -25,7 +25,7 @@
 
 #include "ace/Recursive_Thread_Mutex.h"
 
-#include "tao/TAO_Export.h"
+#include /**/ "tao/TAO_Export.h"
 #include "tao/Basic_Types.h"
 #include "tao/orbconf.h"
 
