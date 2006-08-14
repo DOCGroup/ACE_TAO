@@ -7,7 +7,7 @@
 #if !defined (ACE_QOS_EXPORT_H)
 #define ACE_QOS_EXPORT_H
 
-#include "ace/config-all.h"
+#include /**/ "ace/config-all.h"
 
 #if defined (ACE_AS_STATIC_LIBS)
 # if !defined (ACE_QoS_HAS_DLL)

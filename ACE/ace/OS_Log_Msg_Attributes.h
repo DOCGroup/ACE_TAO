@@ -10,7 +10,7 @@
  */
 //=============================================================================
 
-#include "ace/config-all.h"
+#include /**/ "ace/config-all.h"
 
 #ifndef ACE_OS_LOG_MSG_ATTRIBUTES_H
 #define ACE_OS_LOG_MSG_ATTRIBUTES_H
@@ -20,7 +20,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/ACE_export.h"
+#include /**/ "ace/ACE_export.h"
 #include "ace/os_include/os_stdio.h"
 #include "ace/iosfwd.h"
 

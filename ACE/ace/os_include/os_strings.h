@@ -18,7 +18,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/config-all.h"
+#include /**/ "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -43,7 +43,7 @@ extern "C"
 #if defined (ACE_LACKS_STRNCASECMP_PROTOTYPE)
   int strncasecmp(const char *, const char *, size_t);
 #endif /* ACE_LACKS_STRNCASECMP_PROTOTYPE */
-    
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

@@ -16,7 +16,7 @@
 #include /**/ "ace/pre.h"
 
 #include "ace/config-lite.h"
-#include "ace/ACE_export.h"
+#include /**/ "ace/ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

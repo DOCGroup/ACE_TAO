@@ -14,7 +14,7 @@
  */
 //=============================================================================
 
-#include "ace/ACE_export.h"
+#include /**/ "ace/ACE_export.h"
 
 #ifndef ACE_OS_MAIN_H
 # define ACE_OS_MAIN_H

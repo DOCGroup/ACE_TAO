@@ -16,7 +16,7 @@
 #define ACE_THREAD_MUTEX_H
 #include /**/ "ace/pre.h"
 
-#include "ace/config-all.h"
+#include /**/ "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -27,7 +27,7 @@
 #else /* ACE_HAS_THREADS */
 // ACE platform supports some form of threading.
 
-#include "ace/ACE_export.h"
+#include /**/ "ace/ACE_export.h"
 #include "ace/OS_NS_Thread.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

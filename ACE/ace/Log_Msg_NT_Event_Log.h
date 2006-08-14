@@ -14,7 +14,7 @@
 #define ACE_LOG_MSG_NT_EVENT_LOG_H
 #include /**/ "ace/pre.h"
 
-#include "ace/config-all.h"
+#include /**/ "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
