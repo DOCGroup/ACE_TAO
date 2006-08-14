@@ -32,7 +32,7 @@
 #define TAO_RAISE(EXCEPTION)
 #endif /* ACE_HAS_EXCEPTIONS */
 
-#include "tao/TAO_Export.h"
+#include /**/ "tao/TAO_Export.h"
 #include "tao/Basic_Types.h"
 #include "tao/CORBA_String.h"
 #include "ace/SStringfwd.h"

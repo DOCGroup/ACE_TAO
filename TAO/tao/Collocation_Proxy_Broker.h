@@ -16,14 +16,14 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/TAO_Export.h"
+#include /**/ "tao/TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Collocation_Strategy.h"
-#include "tao/Versioned_Namespace.h"
+#include /**/ "tao/Versioned_Namespace.h"
 
 #include "ace/CORBA_macros.h"
 #include "ace/os_include/os_stddef.h"
