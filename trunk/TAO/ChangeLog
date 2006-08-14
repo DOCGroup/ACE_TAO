@@ -1,3 +1,18 @@
+Mon Aug 14 09:50:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/compiler.html:
+        * TAO_IDL/be_codegen.cpp:
+        * TAO_IDL/be_global.cpp:
+        * TAO_IDL/be/be_global.h:
+          Added -Wb,unique_include as option, when this is specifified
+          instead of the normal includes only the specified include is
+          done. This is needed for regeneration the *_include.pidl files
+          in the archive as part of the regular build
+
+        * TAO_IDL/be/be_visitor_component/component_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+          Generate false instead of 0
+
 Mon Aug 14 09:07:12 UTC 2006  Martin Corino  <mcorino@remedy.nl>
 
         * examples/Simulator/Event_Supplier/Logging_Sup.cpp:
