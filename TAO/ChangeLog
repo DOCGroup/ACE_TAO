@@ -1,3 +1,67 @@
+Mon Aug 14 12:49:11 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation.cpp:
+        * TAO_IDL/be_include/be_global.h:
+
+          Added a new option (-b) which controls the use of clonable in
+          arguments on oneway calls.
+
+        * tao/AnyTypeCode/TypeCode.h:
+        * tao/AnyTypeCode/TypeCode.cpp:
+        * tao/Argument.h:
+        * tao/Argument.cpp:
+        * tao/BD_String_Argument_T.h:
+        * tao/BD_String_Argument_T.inl:
+        * tao/BD_String_Argument_T.cpp:
+        * tao/Basic_Argument_T.h:
+        * tao/Basic_Argument_T.inl:
+        * tao/Basic_Argument_T.cpp:
+        * tao/Basic_Arguments.h:
+        * tao/CSD_Framework/CSD_FW_Server_Request_Wrapper.cpp:
+        * tao/Fixed_Array_Argument_T.h:
+        * tao/Fixed_Array_Argument_T.inl:
+        * tao/Fixed_Array_Argument_T.cpp:
+        * tao/Fixed_Size_Argument_T.h:
+        * tao/Fixed_Size_Argument_T.inl:
+        * tao/Fixed_Size_Argument_T.cpp:
+        * tao/Object.h:
+        * tao/Object.cpp:
+        * tao/Object_Argument_T.h:
+        * tao/Object_Argument_T.inl:
+        * tao/Object_Argument_T.cpp:
+        * tao/Special_Basic_Argument_T.h:
+        * tao/Special_Basic_Argument_T.inl:
+        * tao/Special_Basic_Argument_T.cpp:
+        * tao/UB_String_Argument_T.h:
+        * tao/UB_String_Argument_T.inl:
+        * tao/UB_String_Argument_T.cpp:
+        * tao/Var_Array_Argument_T.h:
+        * tao/Var_Array_Argument_T.inl:
+        * tao/Var_Array_Argument_T.cpp:
+        * tao/Var_Size_Argument_T.h:
+        * tao/Var_Size_Argument_T.inl:
+        * tao/Var_Size_Argument_T.cpp:
+
+          Created "clonable" template classes based on all In_*_Argument_T.
+          Through the use of traits, the clonable templates are not
+          instantiated unless the idl generated code uses them (through the
+          -b option).
+
+          Code in the CSD_FW_Server_Request is able to determine if the
+          arguments (for collocated oneway's) can be cloned or not.  If they
+          can be, they will be cloned during the copy of the server request.
+          If they can not be cloned, it will use the original method of
+          marshaling the pararameters to copy them. [RT 8372]
+
+        * tests/CSD_Strategy_Tests/TP_Foo_B/csd_tp_foo_b_lib.mpc:
+        * tests/CSD_Strategy_Tests/TP_Foo_C/csd_tp_foo_c_lib.mpc:
+
+          Use the -b option for the idl files in these projects.  I left
+          some CSD tests to not use the -b option to exercise both methods
+          of argument copying.
+
 Mon Aug 14 11:39:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/AnyTypeCode/TypeCode_Case_Enum_T.{h,cpp,inl}:

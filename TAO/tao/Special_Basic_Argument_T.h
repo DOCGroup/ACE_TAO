@@ -48,8 +48,31 @@ namespace TAO
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
     S const & arg (void) const;
 
-  private:
+  protected:
     S const & x_;
+  };
+
+  /**
+   * @class In_Special_Basic_Clonable_Argument_T
+   *
+   * @brief Template class for IN stub argument of (w)char/boolean/octet.
+   *
+   */
+  template<typename S,
+           typename to_S,
+           typename from_S,
+           class Insert_Policy>
+  class In_Special_Basic_Clonable_Argument_T :
+        public In_Special_Basic_Argument_T<S, to_S, from_S, Insert_Policy>
+  {
+  public:
+    In_Special_Basic_Clonable_Argument_T (S const &);
+    virtual ~In_Special_Basic_Clonable_Argument_T (void);
+
+    virtual Argument* clone (void);
+
+  private:
+    bool is_clone_;
   };
 
   /**
@@ -157,6 +180,8 @@ namespace TAO
     typedef T &                                             out_type;
 
     typedef In_Special_Basic_Argument_T<T,to_T,from_T,Insert_Policy>      in_arg_val;
+    typedef In_Special_Basic_Clonable_Argument_T<T,to_T,from_T,Insert_Policy>
+                                                                          in_clonable_arg_val;
     typedef Inout_Special_Basic_Argument_T<T,to_T,from_T,Insert_Policy>   inout_arg_val;
     typedef Out_Special_Basic_Argument_T<T,to_T,from_T,Insert_Policy>     out_arg_val;
     typedef Ret_Special_Basic_Argument_T<T,to_T,from_T,Insert_Policy>     ret_val;

@@ -2,7 +2,7 @@
 project : csd_tp_test_lib {
   sharedname   = CSD_TP_Foo_B
   dynamicflags = CSD_TP_FOO_B_BUILD_DLL
-  idlflags  += -Wb,export_macro=CSD_TP_Foo_B_Export -Wb,export_include=CSD_TP_Foo_B_Export.h
+  idlflags  += -b -Wb,export_macro=CSD_TP_Foo_B_Export -Wb,export_include=CSD_TP_Foo_B_Export.h
   includes  += $(TAO_ROOT)/tao   
 
   IDL_Files {

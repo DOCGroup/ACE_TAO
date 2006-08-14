@@ -112,7 +112,8 @@ BE_GlobalData::BE_GlobalData (void)
     gen_server_inline_ (true),
     gen_client_stub_ (true),
     gen_server_skeleton_ (true),
-    gen_local_iface_anyops_ (true)
+    gen_local_iface_anyops_ (true),
+    use_clonable_in_args_ (false)
 {
 }
 
@@ -867,6 +868,18 @@ BE_GlobalData::anyop_header_ending (const char* s)
 {
   delete [] this->anyop_hdr_ending_;
   this->anyop_hdr_ending_ = ACE::strnew (s);
+}
+
+void
+BE_GlobalData::use_clonable_in_args (bool clonable)
+{
+  this->use_clonable_in_args_ = clonable;
+}
+
+bool
+BE_GlobalData::use_clonable_in_args (void) const
+{
+  return this->use_clonable_in_args_;
 }
 
 const char*
@@ -1644,6 +1657,21 @@ BE_GlobalData::parse_args (long &i, char **av)
               ));
           }
 
+        break;
+      case 'b':
+        if (av[i][2] == '\0')
+          {
+            be_global->use_clonable_in_args(true);
+          }
+        else
+          { 
+            ACE_ERROR ((
+                LM_ERROR,
+                ACE_TEXT ("IDL: I don't understand")
+                ACE_TEXT (" the '%s' option\n"),
+                av[i]
+              ));
+          }
         break;
       // = Various 'c'lient side stub file_name_endings.
       case 'c':
@@ -2527,6 +2555,10 @@ BE_GlobalData::usage (void) const
       ACE_TEXT ("a \"versioned\" namespace\n")
     ));
 #endif  /* ACE_HAS_VERSIONED_NAMESPACE || TAO_HAS_VERSIONED_NAMESPACE */
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -b\t\t\tUse a clonable argument type for oneway methods.\n")
+    ));
   ACE_DEBUG ((
       LM_DEBUG,
       ACE_TEXT (" -ci\t\t\tClient inline file name ending. Default is C.inl\n")

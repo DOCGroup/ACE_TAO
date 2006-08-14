@@ -334,6 +334,12 @@ public:
   void anyop_header_ending (const char* s);
   // Set the anyop_header_ending.
 
+  void use_clonable_in_args (bool clonable);
+  // Set the clonable_in_args.
+
+  bool use_clonable_in_args (void) const;
+  // Get the clonable_in_args setting.
+
   const char* anyop_header_ending (void) const;
   // Get the anyop_header_ending.
 
@@ -793,6 +799,9 @@ private:
   bool gen_local_iface_anyops_;
   // True by default, can be turned off by a command line option
   // for regenerating internal ORB files.
+
+  bool use_clonable_in_args_;
+  // Use in_clonable_arg_val instead of in_arg_val?
 };
 
 #endif /* _BE_GLOBAL_H */
