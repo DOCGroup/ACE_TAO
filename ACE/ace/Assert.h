@@ -15,9 +15,9 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/ACE_export.h"
+#include /**/ "ace/ACE_export.h"
 
-#include "ace/config-all.h"
+#include /**/ "ace/config-all.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_Export void __ace_assert(const char *file, int line, const ACE_TCHAR *expression);

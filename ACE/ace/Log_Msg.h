@@ -18,8 +18,8 @@
 // headers...
 // ... but ACE_NDEBUG and ACE_NLOGGING can come from the config.h file, so
 // pull that one early.
-#include "ace/config-all.h"
-#include "ace/ACE_export.h"
+#include /**/ "ace/config-all.h"
+#include /**/ "ace/ACE_export.h"
 #include "ace/Global_Macros.h"
 #include "ace/Default_Constants.h"
 #include "ace/Log_Priority.h"

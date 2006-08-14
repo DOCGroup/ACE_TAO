@@ -15,7 +15,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/config-all.h"
+#include /**/ "ace/config-all.h"
 #include "ace/Default_Constants.h"
 #include "ace/Service_Gestalt.h"
 

@@ -14,7 +14,7 @@
 #ifndef ACE_METRICS_CACHE_T_H
 #define ACE_METRICS_CACHE_T_H
 
-#include "ace/config-all.h"
+#include /**/ "ace/config-all.h"
 
 // helpful macro definitions
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

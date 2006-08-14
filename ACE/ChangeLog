@@ -1,8 +1,15 @@
+Mon Aug 14 11:15:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/*.h:
+          Added /**/ to the include of config-all.h and ACE_export.h, this
+          way doxygen doesn't add these files to the include graphs which
+          make them much easier to read
+
 Sun Aug 13 23:30:02 UTC 2006  Yan Dai  <dai_y@ociweb.com>
 
         * bin/tao_other_tests.lst:
-          
-          Excluded TAO POAManagerFactory and EndpointPolicy tests from  
+
+          Excluded TAO POAManagerFactory and EndpointPolicy tests from
           running in a minimum CORBA configuration.
 
 Sun Aug 13 22:21:55 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>

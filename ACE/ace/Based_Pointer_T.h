@@ -16,7 +16,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/config-all.h"
+#include /**/ "ace/config-all.h"
 #include "ace/Basic_Types.h"
 
 #if defined (_MSC_VER)

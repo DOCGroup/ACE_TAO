@@ -10,7 +10,7 @@
  * Hash_Map_Manager_T.*.
  *
  * ACE_Hash_Multi_Map_Manager maps a key type to more than one value types.
- * The template takes the key and value types as parameters. The bind and 
+ * The template takes the key and value types as parameters. The bind and
  * unbind operations can take a key and the value or the set of the values that
  * is to be associated with that key. The find operation can take a key or a
  * key and the value that is associated with the key.
@@ -26,7 +26,7 @@
 #define ACE_HASH_MULTI_MAP_MANAGER_T_H
 #include /**/ "ace/pre.h"
 
-#include "ace/config-all.h"
+#include /**/ "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -50,7 +50,7 @@ class ACE_Hash_Multi_Map_Entry
 {
 public:
   friend class ACE_Unbounded_Set<INT_ID>;
-  
+
   typedef ACE_Unbounded_Set<INT_ID> VALUE_SET;
   typedef ACE_Unbounded_Set_Iterator<INT_ID> VALUE_SET_ITERATOR;
 
@@ -172,7 +172,7 @@ public:
 
   // = Initialization and termination methods.
 
-  /** 
+  /**
    * Initialize a @c Hash_Multi_Map_Manager with default size elements.
    * @param table_alloc is a pointer to a memory allocator used for
    *        table_, so it should supply size*sizeof (
@@ -187,7 +187,7 @@ public:
   ACE_Hash_Multi_Map_Manager (ACE_Allocator *table_alloc = 0,
                               ACE_Allocator *entry_alloc = 0);
 
-  /** 
+  /**
    * Initialize a @c Hash_Multi_Map_Manager with @c size elements.
    * @param table_alloc is a pointer to a memory allocator used for
    *        table_, so it should supply size*sizeof (
@@ -203,10 +203,10 @@ public:
                               ACE_Allocator *table_alloc = 0,
                               ACE_Allocator *entry_alloc = 0);
 
-  /** 
+  /**
    * Initialize a @c Hash_Multi_Map_Manager with @c size elements.
    * @param table_alloc is a pointer to a memory allocator used for
-   *        table_, so it should supply size*sizeof 
+   *        table_, so it should supply size*sizeof
    *        (ACE_Hash_Multi_Map_Entry<EXT_ID, <INT_ID>).
    * @param entry_alloc is a pointer to an additional allocator for
    *        entries, so it should be able to allocate 'size' / chunks

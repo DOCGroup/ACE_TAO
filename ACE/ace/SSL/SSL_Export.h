@@ -7,7 +7,7 @@
 #if !defined (ACE_SSL_EXPORT_H)
 #define ACE_SSL_EXPORT_H
 
-#include "ace/config-all.h"
+#include /**/ "ace/config-all.h"
 
 #if defined (ACE_AS_STATIC_LIBS) && !defined (ACE_SSL_HAS_DLL)
 #  define ACE_SSL_HAS_DLL 0

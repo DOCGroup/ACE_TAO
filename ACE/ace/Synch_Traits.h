@@ -16,7 +16,7 @@
 #define ACE_SYNCH_TRAITS_H
 #include /**/ "ace/pre.h"
 
-#include "ace/config-all.h"    /* Need to know threads, template settings */
+#include /**/ "ace/config-all.h"    /* Need to know threads, template settings */
 #include "ace/Lock.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

@@ -27,7 +27,7 @@
 
 #include "ace/os_include/sys/os_stat.h"
 #include "ace/Default_Constants.h" // for ACE_DEFAULT_DIR_PERMS
-#include "ace/ACE_export.h"
+#include /**/ "ace/ACE_export.h"
 
 #if defined (ACE_EXPORT_MACRO)
 #  undef ACE_EXPORT_MACRO

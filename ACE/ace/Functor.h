@@ -32,13 +32,13 @@
 #define ACE_FUNCTOR_H
 #include /**/ "ace/pre.h"
 
-#include "ace/config-all.h"
+#include /**/ "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/ACE_export.h"
+#include /**/ "ace/ACE_export.h"
 #include "ace/Basic_Types.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

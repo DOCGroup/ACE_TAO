@@ -14,7 +14,7 @@
 #define ACE_ATM_ADDR_H
 #include /**/ "ace/pre.h"
 
-#include "ace/config-all.h"
+#include /**/ "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -22,7 +22,7 @@
 
 #if defined (ACE_HAS_ATM)
 
-#include "ace/ACE_export.h"
+#include /**/ "ace/ACE_export.h"
 #include "ace/Addr.h"
 
 #if defined (ACE_HAS_FORE_ATM_XTI)
