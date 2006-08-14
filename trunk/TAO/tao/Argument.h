@@ -68,6 +68,9 @@ namespace TAO
      */
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
 
+    /// Template method to clone a TAO Argument
+    virtual Argument* clone (void);
+
 #if TAO_HAS_INTERCEPTORS == 1
 
     /**
@@ -132,6 +135,12 @@ namespace TAO
 #else
   typedef Argument RetArgument;
 #endif
+
+  class TAO_Export Void_Return_Argument : public RetArgument
+  {
+  public:
+    virtual Argument* clone (void);
+  };
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

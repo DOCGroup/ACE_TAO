@@ -31,6 +31,49 @@ TAO::In_Object_Argument_T<S_ptr,Insert_Policy>::interceptor_value (CORBA::Any *a
 
 #endif /* TAO_HAS_INTERCEPTORS */
 
+template<typename S_ptr>
+void
+TAO::In_Object_Argument_Cloner_T<S_ptr>::duplicate (S_ptr objref)
+{
+  if (objref)
+    {
+      objref->_add_ref ();
+    }
+}
+
+template<typename S_ptr>
+void
+TAO::In_Object_Argument_Cloner_T<S_ptr>::release (S_ptr objref)
+{
+  if (objref)
+    {
+      objref->_remove_ref ();
+    }
+}
+
+template<typename S_ptr,
+         class Insert_Policy>
+TAO::In_Object_Clonable_Argument_T<S_ptr,Insert_Policy>::~In_Object_Clonable_Argument_T (void)
+{
+  if (this->is_clone_)
+    {
+      In_Object_Argument_Cloner_T<S_ptr>::release (this->x_);
+    }
+}
+
+template<typename S_ptr,
+         class Insert_Policy>
+TAO::Argument*
+TAO::In_Object_Clonable_Argument_T<S_ptr,Insert_Policy>::clone (void)
+{
+  In_Object_Argument_Cloner_T<S_ptr>::duplicate (this->x_);
+
+  In_Object_Clonable_Argument_T<S_ptr,Insert_Policy>* clone_arg
+    = new In_Object_Clonable_Argument_T<S_ptr,Insert_Policy> (this->x_);
+  clone_arg->is_clone_ = true;
+  return clone_arg;
+}
+
 // ===========================================================
 
 template<typename S_ptr,

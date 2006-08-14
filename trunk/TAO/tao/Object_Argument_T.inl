@@ -20,6 +20,14 @@ TAO::In_Object_Argument_T<S_ptr,Insert_Policy>::arg (void) const
   return this->x_;
 }
 
+template<typename S_ptr,
+         class Insert_Policy>
+ACE_INLINE
+TAO::In_Object_Clonable_Argument_T<S_ptr,Insert_Policy>::In_Object_Clonable_Argument_T (S_ptr x)
+  : In_Object_Argument_T<S_ptr,Insert_Policy> (x),
+    is_clone_ (false)
+{}
+
 // ==========================================================================
 
 template<typename S_ptr,

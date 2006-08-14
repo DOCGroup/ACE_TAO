@@ -44,8 +44,29 @@ namespace TAO
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
     typename S_forany::_slice_type const * arg (void) const;
 
-  private:
+  protected:
     S_forany x_;
+  };
+
+  /**
+   * @class In_Fixed_Array_Clonable_Argument_T
+   *
+   * @brief IN stub argument of fixed size element array.
+   *
+   */
+  template<typename S_forany,
+           class Insert_Policy>
+  class In_Fixed_Array_Clonable_Argument_T :
+           public In_Fixed_Array_Argument_T<S_forany, Insert_Policy>
+  {
+  public:
+    In_Fixed_Array_Clonable_Argument_T (const typename S_forany::_slice_type * x);
+    virtual ~In_Fixed_Array_Clonable_Argument_T (void);
+
+    virtual Argument* clone (void);
+
+  private:
+    bool is_clone_;
   };
 
   /**
@@ -140,6 +161,9 @@ namespace TAO
 
     typedef In_Fixed_Array_Argument_T<T_forany,
                                       Insert_Policy>         in_arg_val;
+    typedef In_Fixed_Array_Clonable_Argument_T<T_forany,
+                                               Insert_Policy>
+                                                             in_clonable_arg_val;
     typedef Inout_Fixed_Array_Argument_T<T_forany,
                                          Insert_Policy>      inout_arg_val;
     typedef Out_Fixed_Array_Argument_T<T_forany,

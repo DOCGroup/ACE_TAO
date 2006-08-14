@@ -581,6 +581,13 @@ namespace TAO
     static CORBA::Boolean marshal (::CORBA::TypeCode_ptr p,
                                    TAO_OutputCDR & cdr);
   };
+
+  template<>
+  struct TAO_Export In_Object_Argument_Cloner_T<CORBA::TypeCode_ptr>
+  {
+    static void duplicate(CORBA::TypeCode_ptr objref);
+    static void release(CORBA::TypeCode_ptr objref);
+  };
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

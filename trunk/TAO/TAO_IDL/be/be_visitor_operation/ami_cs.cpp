@@ -187,7 +187,10 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
   else
     {
       *os << be_nl<< be_nl
-          << "TAO::Arg_Traits<void>::ret_val _tao_retval;";
+          << "TAO::Arg_Traits<void>::"
+          << (node->flags () == AST_Operation::OP_oneway &&
+              be_global->use_clonable_in_args() ? "clonable_" : "")
+          << "ret_val _tao_retval;";
 
       // Declare the argument helper classes.
       this->gen_stub_body_arglist (ami_op, os, true);

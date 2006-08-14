@@ -383,7 +383,10 @@ be_visitor_operation::gen_stub_operation_body (
                                      return_type,
                                      os);
 
-  *os << ">::ret_val _tao_retval;";
+  *os << ">::"
+      << (node->flags () == AST_Operation::OP_oneway &&
+          be_global->use_clonable_in_args() ? "clonable_" : "")
+      << "ret_val _tao_retval;";
 
   // Declare the argument helper classes.
   this->gen_stub_body_arglist (node, os);
@@ -602,6 +605,11 @@ be_visitor_operation::gen_stub_body_arglist (be_operation *node,
         {
           case AST_Argument::dir_IN:
             *os << "in";
+            if (be_global->use_clonable_in_args() &&
+                node->flags () == AST_Operation::OP_oneway)
+              {
+                *os << "_clonable";
+              }
             break;
           case AST_Argument::dir_INOUT:
             *os << "inout";

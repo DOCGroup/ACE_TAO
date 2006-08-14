@@ -22,6 +22,15 @@ TAO::In_Var_Array_Argument_T<S_forany,Insert_Policy>::arg (void) const
   return this->x_.in ();
 }
 
+template<typename S_forany,
+         class Insert_Policy>
+ACE_INLINE
+TAO::In_Var_Array_Clonable_Argument_T<S_forany,Insert_Policy>::
+In_Var_Array_Clonable_Argument_T (const typename S_forany::_slice_type * x)
+  : In_Var_Array_Argument_T<S_forany,Insert_Policy> (x),
+    is_clone_ (false)
+{}
+
 // ==========================================================================
 
 template<typename S_forany,
