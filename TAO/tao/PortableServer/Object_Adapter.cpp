@@ -632,6 +632,7 @@ TAO_Object_Adapter::open (ACE_ENV_SINGLE_ARG_DECL)
                     (CORBA::SystemException::_tao_minor_code (0, ENOMEM),
                       CORBA::COMPLETED_NO));
   ACE_CHECK;
+
 #endif
 
   // This makes sure that the default resources are open when the Root
@@ -674,7 +675,11 @@ TAO_Object_Adapter::open (ACE_ENV_SINGLE_ARG_DECL)
   TAO_Root_POA::String root_poa_name (TAO_DEFAULT_ROOTPOA_NAME);
   this->root_ =
     this->servant_dispatcher_->create_Root_POA (root_poa_name,
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
                                                 poa_manager.in (),
+#else
+                                                PortableServer::POAManager::_duplicate (poa_manager.in ()),
+#endif
                                                 policies,
                                                 this->lock (),
                                                 this->thread_lock (),
