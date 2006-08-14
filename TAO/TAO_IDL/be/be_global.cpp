@@ -52,6 +52,7 @@ BE_GlobalData::BE_GlobalData (void)
     post_include_ (0),
     include_guard_ (0),
     safe_include_ (0),
+    unique_include_ (0),
     core_versioning_begin_ ("\nTAO_BEGIN_VERSIONED_NAMESPACE_DECL\n"),
     core_versioning_end_   ("\nTAO_END_VERSIONED_NAMESPACE_DECL\n"),
     versioning_begin_ (),
@@ -629,6 +630,18 @@ BE_GlobalData::safe_include (const char *s)
   this->safe_include_ = ACE_OS::strdup (s);
 }
 
+const char*
+BE_GlobalData::unique_include (void) const
+{
+  return this->unique_include_;
+}
+
+void
+BE_GlobalData::unique_include (const char *s)
+{
+  this->unique_include_ = ACE_OS::strdup (s);
+}
+
 void
 BE_GlobalData::versioning_begin (const char * s)
 {
@@ -1183,6 +1196,9 @@ BE_GlobalData::destroy (void)
 
   ACE_OS::free (this->safe_include_);
   this->safe_include_ = 0;
+
+  ACE_OS::free (this->unique_include_);
+  this->unique_include_ = 0;
 
   delete [] this->client_hdr_ending_;
   this->client_hdr_ending_ = 0;
@@ -2250,6 +2266,7 @@ BE_GlobalData::prep_be_arg (char *s)
   static const char obv_opt_accessor[]     = "obv_opt_accessor";
   static const char include_guard[]        = "include_guard=";
   static const char safe_include[]         = "safe_include=";
+  static const char unique_include[]       = "unique_include=";
 
   char* last = 0;
 
@@ -2323,6 +2340,11 @@ BE_GlobalData::prep_be_arg (char *s)
         {
           char* val = arg + sizeof (safe_include) - 1;
           be_global->safe_include (val);
+        }
+      else if (ACE_OS::strstr (arg, unique_include) == arg)
+        {
+          char* val = arg + sizeof (unique_include) - 1;
+          be_global->unique_include (val);
         }
       else if (ACE_OS::strstr (arg, obv_opt_accessor) == arg)
         {
@@ -2478,6 +2500,12 @@ BE_GlobalData::usage (void) const
       LM_DEBUG,
       ACE_TEXT (" -Wb,safe_include=<include path>\t\tinclude that should ")
       ACE_TEXT ("be used instead of the own generated client header file\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Wb,unique_include=<include path>\t\tinclude that should ")
+      ACE_TEXT ("be generated as only contents of the generated client ")
+      ACE_TEXT ("header file.\n")
     ));
   ACE_DEBUG ((
       LM_DEBUG,
