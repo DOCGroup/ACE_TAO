@@ -19,11 +19,6 @@
 
 #include "tao/Messaging/messaging_export.h"
 
-#if defined(TRANSPARENT)
-// Some platforms define this macro for ioctl()
-#undef TRANSPARENT
-#endif
-
 #define TAO_MESSAGING_SAFE_INCLUDE
 #include "tao/Messaging/MessagingC.h"
 #undef TAO_MESSAGING_SAFE_INCLUDE
