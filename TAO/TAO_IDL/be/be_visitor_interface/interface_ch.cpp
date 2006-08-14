@@ -177,7 +177,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       << "return static_cast<" << node->local_name ()
       << "_ptr> (0);" << be_uidt_nl
       << "}" << be_nl << be_nl;
-      
+
   bool gen_any_destructor =
     be_global->any_support ()
     && (!node->is_local () || be_global->gen_local_iface_anyops ());
@@ -317,7 +317,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       *os << "// Non-local interface only." << be_nl
           << node->local_name () << " (" << be_idt << be_idt_nl
           << "TAO_Stub *objref," << be_nl
-          << "::CORBA::Boolean _tao_collocated = 0," << be_nl
+          << "::CORBA::Boolean _tao_collocated = false," << be_nl
           << "TAO_Abstract_ServantBase *servant = 0," <<  be_nl
           << "TAO_ORB_Core *orb_core = 0" << be_uidt_nl
           << ");" << be_uidt_nl << be_nl;
@@ -426,7 +426,7 @@ be_visitor_interface_ch::gen_abstract_ops_helper (be_interface *node,
 
       if (d->node_type () == AST_Decl::NT_op)
         {
-          
+
           be_operation *op = be_operation::narrow_from_decl (d);
           op->set_local (node->is_local ());
           ctx.state (TAO_CodeGen::TAO_OPERATION_CH);

@@ -209,50 +209,59 @@ TAO_CodeGen::start_client_header (const char *fname)
                             << "\"";
     }
 
-  this->gen_stub_hdr_includes ();
-
-  size_t nfiles = idl_global->n_included_idl_files ();
-
-  if (nfiles > 0)
+  if (be_global->unique_include () != 0)
     {
-      *this->client_header_ << "\n";
+      *this->client_header_ << "\n#include \""
+                            << be_global->unique_include ()
+                            << "\"";
     }
-
-  // We must include all the client headers corresponding to
-  // IDL files included by the current IDL file.
-  // We will use the included IDL file names as they appeared
-  // in the original main IDL file, not the one which went
-  // thru CC preprocessor.
-  for (size_t j = 0; j < nfiles; ++j)
+  else
     {
-      char* idl_name = idl_global->included_idl_files ()[j];
+      this->gen_stub_hdr_includes ();
 
-      // Make a String out of it.
-      UTL_String idl_name_str = idl_name;
+      size_t const nfiles = idl_global->n_included_idl_files ();
 
-      // Make sure this file was actually got included, not
-      // ignored by some #if defined compiler directive.
-
-
-      // Get the clnt header from the IDL file name.
-      const char* client_hdr =
-        BE_GlobalData::be_get_client_hdr (&idl_name_str,
-                                          1);
-
-      idl_name_str.destroy ();
-
-      // Sanity check and then print.
-      if (client_hdr != 0)
+      if (nfiles > 0)
         {
-          this->client_header_->print ("\n#include \"%s\"",
-                                       client_hdr);
+          *this->client_header_ << "\n";
         }
-      else
+
+      // We must include all the client headers corresponding to
+      // IDL files included by the current IDL file.
+      // We will use the included IDL file names as they appeared
+      // in the original main IDL file, not the one which went
+      // thru CC preprocessor.
+      for (size_t j = 0; j < nfiles; ++j)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("\nERROR, invalid file '%s' included"),
-                             idl_name),
-                            -1);
+          char* idl_name = idl_global->included_idl_files ()[j];
+
+          // Make a String out of it.
+          UTL_String idl_name_str = idl_name;
+
+          // Make sure this file was actually got included, not
+          // ignored by some #if defined compiler directive.
+
+
+          // Get the clnt header from the IDL file name.
+          const char* client_hdr =
+            BE_GlobalData::be_get_client_hdr (&idl_name_str,
+                                              1);
+
+          idl_name_str.destroy ();
+
+          // Sanity check and then print.
+          if (client_hdr != 0)
+            {
+              this->client_header_->print ("\n#include \"%s\"",
+                                           client_hdr);
+            }
+          else
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("\nERROR, invalid file '%s' included"),
+                                 idl_name),
+                                -1);
+            }
         }
     }
 

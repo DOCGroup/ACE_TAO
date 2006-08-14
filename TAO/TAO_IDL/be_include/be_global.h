@@ -223,6 +223,14 @@ public:
   // set the name of the include file that is used instead of the own
   // generated client header file
 
+  const char* unique_include (void) const;
+  // returns the name of the include file that should on get
+  // generated in the client header file
+
+  void unique_include (const char* s);
+  // set the name of the include file that should on get
+  // generated in the client header file
+
   /// Set text that opens a "versioned" namespace.
   void versioning_begin (const char* s);
 
@@ -594,6 +602,7 @@ private:
   char* post_include_;
   char* include_guard_;
   char* safe_include_;
+  char* unique_include_;
 
   /// Text that opens a "versioned" namespace for core TAO and orbsvcs
   /// related code.
