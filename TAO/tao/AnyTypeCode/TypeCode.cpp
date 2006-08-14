@@ -470,6 +470,20 @@ namespace TAO
   {
     return cdr << p;
   }
+
+  void
+  In_Object_Argument_Cloner_T<CORBA::TypeCode_ptr>::duplicate (
+                                                CORBA::TypeCode_ptr p)
+  {
+    CORBA::TypeCode::_duplicate (p);
+  }
+   
+  void
+  In_Object_Argument_Cloner_T<CORBA::TypeCode_ptr>::release (
+                                                CORBA::TypeCode_ptr p)
+  {
+    CORBA::release (p);
+  }
 }
 
 // =========================================================

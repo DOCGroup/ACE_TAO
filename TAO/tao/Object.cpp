@@ -977,6 +977,17 @@ operator>> (TAO_InputCDR& cdr, CORBA::Object*& x)
 // Traits specializations for CORBA::Object.
 namespace TAO
 {
+
+  void In_Object_Argument_Cloner_T<CORBA::InterfaceDef_ptr>::duplicate
+                                              (CORBA::InterfaceDef_ptr)
+  {
+  }
+
+  void In_Object_Argument_Cloner_T<CORBA::InterfaceDef_ptr>::release
+                                              (CORBA::InterfaceDef_ptr)
+  {
+  }
+
   CORBA::Object_ptr
   Objref_Traits<CORBA::Object>::duplicate (CORBA::Object_ptr p)
   {

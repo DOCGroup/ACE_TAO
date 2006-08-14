@@ -31,6 +31,29 @@ TAO::In_Fixed_Size_Argument_T<S,Insert_Policy>::interceptor_value (CORBA::Any *a
 
 #endif /* TAO_HAS_INTERCEPTORS */
 
+template<typename S,
+         class Insert_Policy>
+TAO::In_Fixed_Size_Clonable_Argument_T<S,Insert_Policy>::~In_Fixed_Size_Clonable_Argument_T (void)
+{
+  if (this->is_clone_)
+    {
+      S* tmp = const_cast<S*> (this->x_);
+      delete tmp;
+    }
+}
+
+template<typename S,
+         class Insert_Policy>
+TAO::Argument*
+TAO::In_Fixed_Size_Clonable_Argument_T<S,Insert_Policy>::clone (void)
+{
+  S* clone_x = new S (*(this->x_));
+  In_Fixed_Size_Clonable_Argument_T<S,Insert_Policy>* clone_arg =
+      new In_Fixed_Size_Clonable_Argument_T<S,Insert_Policy> (*clone_x);
+  clone_arg->is_clone_ = true;
+  return clone_arg;
+}
+
 // ===========================================================
 
 template<typename S,

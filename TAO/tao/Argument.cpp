@@ -2,6 +2,7 @@
 // $Id$
 
 #include "tao/Argument.h"
+#include "ace/OS_Memory.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -19,6 +20,12 @@ CORBA::Boolean
 TAO::Argument::demarshal (TAO_InputCDR &)
 {
   return true;
+}
+
+TAO::Argument*
+TAO::Argument::clone ()
+{
+  return 0;
 }
 
 #if TAO_HAS_INTERCEPTORS == 1
@@ -53,5 +60,15 @@ TAO::RetArgument::mode (void) const
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
+
+TAO::Argument*
+TAO::Void_Return_Argument::clone (void)
+{
+  TAO::Argument* clone_arg;
+  ACE_NEW_RETURN (clone_arg,
+                  Void_Return_Argument (),
+                  0);
+  return clone_arg;
+}
 
 TAO_END_VERSIONED_NAMESPACE_DECL

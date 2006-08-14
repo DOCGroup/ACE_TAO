@@ -21,6 +21,14 @@ TAO::In_Var_Size_Argument_T<S,Insert_Policy>::arg (void) const
   return *this->x_;
 }
 
+template<typename S,
+         class Insert_Policy>
+ACE_INLINE
+TAO::In_Var_Size_Clonable_Argument_T<S,Insert_Policy>::In_Var_Size_Clonable_Argument_T (S const & x)
+  : In_Var_Size_Argument_T<S,Insert_Policy> (x),
+    is_clone_ (false)
+{}
+
 // ==========================================================================
 
 template<typename S,
