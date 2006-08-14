@@ -1,3 +1,18 @@
+Mon Aug 14 12:52:19 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ACE-INSTALL.html:
+
+          I added "-type gnuace" to the options where the default project
+          type was assumed.  Eventually, MPC will not have a default project
+          type.
+
+        * include/makeinclude/macros.GNU:
+        * include/makeinclude/rules.common.GNU:
+        * include/makeinclude/rules.local.GNU:
+
+          Added a new target to remove only the binaries (executables and
+          shared libraries).
+
 Mon Aug 14 11:15:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/*.h:
