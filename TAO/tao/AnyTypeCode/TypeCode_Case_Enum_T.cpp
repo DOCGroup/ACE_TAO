@@ -85,7 +85,7 @@ TAO::TypeCode::Case_Enum_T<StringType,
 
     out_cdr.write_ulong (this->label_);
 
-    CORBA::Any *retval;
+    CORBA::Any *retval = 0;
     ACE_NEW_THROW_EX (retval,
                         CORBA::Any,
                         CORBA::NO_MEMORY ());
