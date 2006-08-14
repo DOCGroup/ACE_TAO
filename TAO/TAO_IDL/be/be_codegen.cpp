@@ -190,7 +190,8 @@ TAO_CodeGen::start_client_header (const char *fname)
 
   // To get ACE_UNUSED_ARGS
   this->gen_standard_include (this->client_header_,
-                              "ace/config-all.h");
+                              "ace/config-all.h",
+                              true);
 
   // Some compilers don't optimize the #ifndef header include
   // protection, but do optimize based on #pragma once.
@@ -204,7 +205,7 @@ TAO_CodeGen::start_client_header (const char *fname)
 
   if (be_global->stub_export_include () != 0)
     {
-      *this->client_header_ << "\n#include \""
+      *this->client_header_ << "\n#include /**/ \""
                             << be_global->stub_export_include ()
                             << "\"";
     }
@@ -510,7 +511,7 @@ TAO_CodeGen::start_server_header (const char *fname)
 
   if (be_global->skel_export_include () != 0)
     {
-      *this->server_header_ << "\n\n#include \""
+      *this->server_header_ << "\n\n#include /**/ \""
                             << be_global->skel_export_include ()
                             << "\"";
 
@@ -1588,7 +1589,8 @@ TAO_CodeGen::gen_ifndef_string (const char *fname,
 
 void
 TAO_CodeGen::gen_standard_include (TAO_OutStream *stream,
-                                   const char *included_file)
+                                   const char *included_file,
+                                   bool add_comment)
 {
   // Switch between changing or non-changing standard include files
   // include files, so that #include statements can be
@@ -1604,7 +1606,14 @@ TAO_CodeGen::gen_standard_include (TAO_OutStream *stream,
       end_delimiter = ">";
     }
 
-  *stream << "\n#include " << start_delimiter
+  *stream << "\n#include ";
+
+  if (add_comment)
+    {
+      *stream << "/**/ ";
+    }
+
+  *stream << start_delimiter
           << included_file
           << end_delimiter;
 }
@@ -1824,7 +1833,8 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
 
   // Versioned namespace support.
   this->gen_standard_include (this->client_header_,
-                              "tao/Versioned_Namespace.h");
+                              "tao/Versioned_Namespace.h",
+                              true);
 }
 
 void

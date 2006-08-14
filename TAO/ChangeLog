@@ -1,9 +1,19 @@
+Mon Aug 14 10:43:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be_include/be_codegen.h:
+          Part of fixes for bug 2605, when generating the include of
+          config-all.h, Versioned_Namespace.h and the export include
+          do generate /**/ between the include statement and the filename
+          so that doxygen doesn't add these standard includes to the
+          include picture to make them more readable.
+
 Mon Aug 14 09:50:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/compiler.html:
-        * TAO_IDL/be_codegen.cpp:
-        * TAO_IDL/be_global.cpp:
-        * TAO_IDL/be/be_global.h:
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be_include/be_global.h:
           Added -Wb,unique_include as option, when this is specifified
           instead of the normal includes only the specified include is
           done. This is needed for regeneration the *_include.pidl files
