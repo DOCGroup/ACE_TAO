@@ -7,6 +7,7 @@
 
 #include "tao/AnyTypeCode/Alias_TypeCode.h"
 #include "tao/AnyTypeCode/Enum_TypeCode.h"
+#include "tao/AnyTypeCode/TypeCode_Case_Enum_T.h"
 #include "tao/AnyTypeCode/Fixed_TypeCode.h"
 #include "tao/AnyTypeCode/Objref_TypeCode.h"
 #include "tao/AnyTypeCode/Sequence_TypeCode.h"
@@ -517,7 +518,20 @@ TAO::TypeCodeFactory::tc_union_factory (CORBA::TCKind /* kind */,
       // Ugly.  *sigh*
       switch (discriminant_kind)
         {
-        case CORBA::tk_enum:  // Enumerators are encoded as unsigned longs.
+        case CORBA::tk_enum:
+          {
+            CORBA::ULong label;
+            if (!(cdr >> label))
+              return false;
+
+            typedef TypeCode::Case_Enum_T<CORBA::String_var,
+                                          CORBA::TypeCode_var> case_type;
+
+            ACE_NEW_RETURN (the_case,
+                            case_type (discriminant_type.in(), label),
+                            false);
+          }
+          break;
         case CORBA::tk_ulong:
           {
             CORBA::ULong label;
