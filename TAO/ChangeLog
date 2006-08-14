@@ -1,3 +1,11 @@
+Mon Aug 14 08:35:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Messaging/Messaging.h:
+        * tao/Messaging/messaging_export.h:
+          Moved the undef of TRANSPART to the export file to fix
+          compile errors on solaris. This way we don't need to handcraft
+          generated files for the messaging lib
+
 Mon Aug 14 07:44:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/AnyTypeCode/TypeCode_Case_Enum_T.{h,cpp,inl}:
