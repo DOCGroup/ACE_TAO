@@ -29,6 +29,12 @@ project : taolib, core, pi {
   }
 
   IDL_Files {
+    idlflags += -Ge 1 -Sci -SS -Sorb -Sa -GX \
+                -Wb,export_macro=TAO_RTCORBA_Export \
+                -Wb,export_include=tao/RTCORBA/rtcorba_export.h \
+                -Wb,unique_include=tao/RTCORBA/RTCORBA.h \
+                -o RTCORBA
+    RTCORBA/RTCORBA_include.pidl
   }
 
   Pkgconfig_Files {

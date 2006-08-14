@@ -1,3 +1,27 @@
+Mon Aug 14 12:59:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/CodecFactory.mpc:
+        * tao/ObjRefTemplate.mpc:
+        * tao/PortableServer.mpc:
+        * tao/RTCORBA.mpc:
+        * tao/RTPortableServer.mpc:
+        * tao/RTScheduler.mpc:
+        * tao/PI_Server.mpc:
+          Enabed regeneration of *_include.pidl files, this will result
+          in an almost empty C.cpp file but that is needed to retrigger
+          the regeneration of the header files.
+
+        * tao/CodecFactory/IOP_Codec_include{A,C,S}.h:
+        * tao/ObjRefTemplate/ObjectReferenceTemplate_include{A,C,S}.h:
+        * tao/PI_Server/PI_Server_include{A,C,S}.h:
+        * tao/PortableServer/PortableServer_include{A,C,S}.h:
+        * tao/RTCORBA/RTCORBA_include{A,C,S}.h:
+        * tao/RTPortableServer/RTPortableServer_include{A,C,S}.h:
+        * tao/RTScheduling/RTScheduler_include{A,C,S}.h:
+        * tao/RTScheduling/diffs/RTScheduler.diff:
+        * tao/RTPortableServer/RTPortableServerA.h:
+          Removed from the archive
+
 Mon Aug 14 12:49:11 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * TAO_IDL/be/be_global.cpp:
