@@ -1,3 +1,67 @@
+Thu Aug  3 23:28:41 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Timeprobe_T.cpp (print_times): More fixed for timestamp
+          inversion due to recording time from different threads.  This
+          prints a warning message the first time it detects a timestamp
+          inversion.  It also fixes various minor problems in the
+          timeprobe reports whenever the total number of timeprobes
+          exceeds 8192.  Thanks to Patrick Rabau for contributing this.
+
+Thu Aug  3 20:14:07 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/INET_Addr.h: Updated the documentation of the non-reentrant
+          versions of get_host_addr() and get_host_name() to clarify how
+          they can be used correctly (or better yet not used at all..).
+          Thanks to Ephy Levy <EphyLevy at gmail dot com> for motivating
+          this.
+
+Thu Aug  3 20:02:29 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Logging_Strategy.cpp: Added a destructor to delete
+          this->filename_, which is allocated in the constructor.  Thanks
+          to Amnon AB <AmnonAB at gmail dot com> for reporting this.
+
+Wed Aug  2 14:26:37 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Acceptor.h: Made the suspend()/resume() methods of
+          ACE_Strategy_Acceptor public rather than protected.  Thanks to
+          Amnon AB <AmnonAB at gmail dot com> for reporting this.
+
+Fri Jul 28 00:57:42 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * docs/Symbol_Versioning.html (HREF): Added a link to the Riverace
+          webpage that describes symbol versioning in ACE.  Thanks to
+          Steve Huston for contributing this.
+
+Tue Jul 25 13:31:24 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Timeprobe_T.cpp (print_times): Revised the code so that if
+          there is a timestamp inversion due to recording time from
+          different threads, the time difference will be displayed as a
+          negative value instead of a gigantic positive value.  Also
+          compute the time difference correctly when the timeprobe array
+          wraps around.  Thanks to Patrick Rabau <pr2345 at gmail dot com>
+          for this fix.
+
+Mon Jul 24 15:30:33 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Containers_T.cpp,
+        * ace/Log_Msg.cpp,
+        * ace/CDR_Size.cpp,
+        * ace/CDR_Size.inl,
+        * ace/CDR_Stream.cpp: Fixed a bunch of problems with type punning.
+          Thanks to Thomas Girard <thomas.g.girard at free dot fr> for
+          reporting this.
+
+Mon Jul 24 14:52:24 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/TSS_T.cpp (tryacquire): There was a missing '&' in
+  
+          ACE_Thread::getspecific (this->key_, temp);
+          
+          Thanks to Thomas Girard <thomas.g.girard at free dot fr> for
+          reporting this.
+
 Tue Aug 15 17:47:11 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
         * ace/Numeric_Limits.h:
