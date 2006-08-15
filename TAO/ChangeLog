@@ -1,3 +1,9 @@
+Tue Aug 15 11:19:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Big_Reply/Client_Task.cpp:
+          Added some more debug output to better see why this test fails on
+          OpenVMS.
+
 Tue Aug 15 10:50:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/RTCORBA/Server_Protocol/run_test.pl:
