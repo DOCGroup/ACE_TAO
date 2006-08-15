@@ -1,3 +1,8 @@
+Tue Aug 15 10:50:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/RTCORBA/Server_Protocol/run_test.pl:
+          OpenVMS doesn't have uiop
+
 Tue Aug 15 10:45:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_2503_Regression/run_test.pl:
