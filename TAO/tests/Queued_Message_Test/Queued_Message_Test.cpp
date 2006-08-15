@@ -33,8 +33,7 @@ create_new_message (void)
   ACE_Message_Block mb (block_size);
   mb.wr_ptr (block_size);
 
-  return new TAO_Asynch_Queued_Message (&mb, TAO_ORB_Core_instance (),
-                                        0, 1);
+  return new TAO_Asynch_Queued_Message (&mb, TAO_ORB_Core_instance (), 0, 0, 1);
 }
 
 /// Add a new message at the tail of the queue.

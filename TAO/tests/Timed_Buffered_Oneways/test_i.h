@@ -1,3 +1,4 @@
+// -*- C++ -*-
 // $Id$
 
 // ============================================================================
@@ -29,12 +30,16 @@ public:
 
   // = The test interface methods.
   void method (CORBA::ULong request_number,
+               CORBA::Long start_time,
                const test::data &,
                CORBA::ULong work
                ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  void flush (ACE_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  void shutdown (CORBA::Long start_time ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

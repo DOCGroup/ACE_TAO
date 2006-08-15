@@ -9,14 +9,9 @@ ACE_RCSID(tao, Block_Flushing_Strategy, "$Id$")
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
-TAO_Block_Flushing_Strategy::schedule_output (TAO_Transport *transport)
+TAO_Block_Flushing_Strategy::schedule_output (TAO_Transport *)
 {
-  while (!transport->queue_is_empty_i ())
-    {
-      if (transport->drain_queue_i () == -1)
-        return -1;
-    }
-  return 0;
+  return MUST_FLUSH;
 }
 
 int

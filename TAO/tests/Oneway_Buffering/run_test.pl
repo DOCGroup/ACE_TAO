@@ -41,7 +41,7 @@ foreach $test_type ("-c", "-t", "-b", "-r") {
     exit 1;
   }
 
-  $client = $CL->SpawnWaitKill (300);
+  $client = $CL->SpawnWaitKill (30);
 
   if ($client != 0) {
     print STDERR "ERROR: client returned $client\n";

@@ -117,123 +117,68 @@ parse_args (int argc, char **argv)
   return 0;
 }
 
-void
-setup_timeouts (CORBA::ORB_ptr orb
-                ACE_ENV_ARG_DECL)
+test_ptr
+setup_policies (CORBA::ORB_ptr orb, test_ptr object ACE_ENV_ARG_DECL)
 {
-  // Escape value.
+
+  test_var object_with_policy;
+  CORBA::PolicyList policy_list (1);
   if (timeout == -1)
-    return;
+    {
+      object_with_policy = test::_duplicate (object);
+    }
+  else
+    {
+      policy_list.length (1);
+      TimeBase::TimeT rt_timeout = 10000 * timeout;
+      CORBA::Any rt_timeout_any;
+      rt_timeout_any <<= rt_timeout;
+      policy_list[0] =
+        orb->create_policy (Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE,
+                            rt_timeout_any
+                            ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
 
-  // Obtain PolicyCurrent.
-  CORBA::Object_var object = orb->resolve_initial_references ("PolicyCurrent"
-                                                              ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+      CORBA::Object_var object_temp =
+        object->_set_policy_overrides (policy_list,
+                                       CORBA::ADD_OVERRIDE
+                                       ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
 
-  // Narrow down to correct type.
-  CORBA::PolicyCurrent_var policy_current =
-    CORBA::PolicyCurrent::_narrow (object.in ()
-                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+      object_with_policy = test::_narrow (object_temp ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
 
-  TimeBase::TimeT rt_timeout = 10000 * timeout;
+      policy_list[0]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
+    }
 
-  CORBA::Any rt_timeout_any;
-  rt_timeout_any <<= rt_timeout;
-
-  CORBA::PolicyList rt_timeout_policy_list (1);
-  rt_timeout_policy_list.length (1);
-
-  rt_timeout_policy_list[0] =
-    orb->create_policy (Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE,
-                        rt_timeout_any
-                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
-  policy_current->set_policy_overrides (rt_timeout_policy_list,
-                                        CORBA::ADD_OVERRIDE
-                                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
-  rt_timeout_policy_list[0]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-}
-
-void
-setup_buffering_constraints (CORBA::ORB_ptr orb
-                             ACE_ENV_ARG_DECL)
-{
-  // Obtain PolicyCurrent.
-  CORBA::Object_var object = orb->resolve_initial_references ("PolicyCurrent"
-                                                              ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
-  // Narrow down to correct type.
-  CORBA::PolicyCurrent_var policy_current =
-    CORBA::PolicyCurrent::_narrow (object.in ()
-                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
-  // Setup the sync scope policy, i.e., the ORB will buffer oneways.
   Messaging::SyncScope sync =
     eager_buffering ? TAO::SYNC_EAGER_BUFFERING : TAO::SYNC_DELAYED_BUFFERING;
 
-  // Setup the sync scope any.
   CORBA::Any sync_any;
   sync_any <<= sync;
 
-  // Setup the sync scope policy list.
-  CORBA::PolicyList sync_policy_list (1);
-  sync_policy_list.length (1);
-
-  // Setup the sync scope policy.
-  sync_policy_list[0] =
+  policy_list.length (1);
+  policy_list[0] =
     orb->create_policy (Messaging::SYNC_SCOPE_POLICY_TYPE,
                         sync_any
                         ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  // Setup the sync scope.
-  policy_current->set_policy_overrides (sync_policy_list,
-                                        CORBA::ADD_OVERRIDE
-                                        ACE_ENV_ARG_PARAMETER);
+  CORBA::Object_var object_temp = 
+    object_with_policy->_set_policy_overrides (policy_list,
+                                               CORBA::ADD_OVERRIDE
+                                               ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  // We are now done with this policy.
-  sync_policy_list[0]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+  test_var object_with_two_policies = test::_narrow (object_temp
+                                                     ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  // Flush buffers.
-  TAO::BufferingConstraint buffering_constraint;
-  buffering_constraint.mode = TAO::BUFFER_FLUSH;
-  buffering_constraint.message_count = 0;
-  buffering_constraint.message_bytes = 0;
-  buffering_constraint.timeout = 0;
-
-  // Setup the buffering constraint any.
-  CORBA::Any buffering_constraint_any;
-  buffering_constraint_any <<= buffering_constraint;
-
-  // Setup the buffering constraint policy list.
-  CORBA::PolicyList buffering_constraint_policy_list (1);
-  buffering_constraint_policy_list.length (1);
-
-  // Setup the buffering constraint policy.
-  buffering_constraint_policy_list[0] =
-    orb->create_policy (TAO::BUFFERING_CONSTRAINT_POLICY_TYPE,
-                        buffering_constraint_any
-                        ACE_ENV_ARG_PARAMETER);
+  policy_list[0]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  // Setup the constraints.
-  policy_current->set_policy_overrides (buffering_constraint_policy_list,
-                                        CORBA::ADD_OVERRIDE
-                                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
-  // We are done with the policy.
-  buffering_constraint_policy_list[0]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  return object_with_two_policies._retn ();
 }
 
 int
@@ -263,18 +208,14 @@ main (int argc, char **argv)
       ACE_TRY_CHECK;
 
       // Try to narrow the object reference to a <test> reference.
-      test_var test_object = test::_narrow (object.in ()
-                                            ACE_ENV_ARG_PARAMETER);
+      test_var test_object_no_policy = test::_narrow (object.in ()
+                                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      // Setup buffering.
-      setup_buffering_constraints (orb.in ()
-                                   ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      // Setup timeout.
-      setup_timeouts (orb.in ()
-                      ACE_ENV_ARG_PARAMETER);
+      // Setup buffering and timeout
+      test_var test_object = setup_policies (orb.in (),
+                                             test_object_no_policy.in ()
+                                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       test::data the_data (data_bytes);
@@ -282,30 +223,43 @@ main (int argc, char **argv)
 
       for (CORBA::ULong i = 1; i <= iterations; ++i)
         {
-          ACE_DEBUG ((LM_DEBUG,
-                      "client: Iteration %d @ %T\n",
-                      i));
-
+          ACE_Time_Value start = ACE_OS::gettimeofday ();
           // Invoke the oneway method.
           test_object->method (i,
+                               start.msec (),
                                the_data,
                                work
                                ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
+          ACE_Time_Value end = ACE_OS::gettimeofday ();
+
+          ACE_DEBUG ((LM_DEBUG,
+                      "client:\t%d took\t%dms\n",
+                      i, (end - start).msec ()));
+
           // Interval between successive calls.
-          ACE_Time_Value sleep_interval (0,
-                                         interval * 1000);
+          ACE_Time_Value sleep_interval (0, interval * 1000);
 
-          ACE_OS::sleep (sleep_interval);
-        }
-
-      // Shutdown server.
-      if (shutdown_server)
-        {
-          test_object->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
+          // If we don't run the orb, then no data will be sent, and no
+          // connection will be made initially. 
+          orb->run (sleep_interval ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
+
+      test_object_no_policy->flush (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      ACE_DEBUG ((LM_DEBUG, "client: Shutting down...\n"));
+      if (shutdown_server)
+        {
+          long now = ACE_OS::gettimeofday ().msec ();
+          test_object_no_policy->shutdown (now ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+
+      orb->shutdown (1 ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
       // Destroy the ORB.  On some platforms, e.g., Win32, the socket
       // library is closed at the end of main().  This means that any
