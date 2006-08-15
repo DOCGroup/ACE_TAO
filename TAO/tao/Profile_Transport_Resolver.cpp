@@ -123,28 +123,28 @@ namespace TAO
   bool
   Profile_Transport_Resolver::try_connect (
       TAO_Transport_Descriptor_Interface *desc,
-       ACE_Time_Value *max_time_value
+       ACE_Time_Value *timeout
        ACE_ENV_ARG_DECL
      )
   {
-    return this->try_connect_i (desc,max_time_value,0 ACE_ENV_ARG_PARAMETER);
+    return this->try_connect_i (desc, timeout, 0 ACE_ENV_ARG_PARAMETER);
   }
 
   bool
   Profile_Transport_Resolver::try_parallel_connect (
        TAO_Transport_Descriptor_Interface *desc,
-       ACE_Time_Value *max_time_value
+       ACE_Time_Value *timeout
        ACE_ENV_ARG_DECL
      )
   {
-    return this->try_connect_i (desc,max_time_value,1 ACE_ENV_ARG_PARAMETER);
+    return this->try_connect_i (desc, timeout, 1 ACE_ENV_ARG_PARAMETER);
   }
 
 
   bool
   Profile_Transport_Resolver::try_connect_i (
        TAO_Transport_Descriptor_Interface *desc,
-       ACE_Time_Value *max_time_value,
+       ACE_Time_Value *timeout,
        bool parallel
        ACE_ENV_ARG_DECL
      )
@@ -165,41 +165,40 @@ namespace TAO
       }
 
     ACE_Time_Value connection_timeout;
+    bool has_con_timeout = this->get_connection_timeout (connection_timeout);
 
-    bool const is_conn_timeout =
-      this->get_connection_timeout (connection_timeout);
+    if (has_con_timeout && !blocked_)
+      {
+        timeout = &connection_timeout;
+      }
+    else if (has_con_timeout) 
+      {
+        if (timeout == 0 || connection_timeout < *timeout) 
+          timeout = &connection_timeout;
+      }
+    else if (!blocked_) 
+      {
+        timeout = 0;
+      }
 
-    ACE_Time_Value *max_wait_time =
-      is_conn_timeout ? &connection_timeout : max_time_value;
-
+    TAO_Connector *con = conn_reg->get_connector (desc->endpoint ()->tag ());
+    ACE_ASSERT(con != 0);
     if (parallel)
       {
-        this->transport_ =
-          conn_reg->get_connector (desc->endpoint ()->tag ())->
-          parallel_connect (this,
-                            desc,
-                            max_wait_time
-                            ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK_RETURN (false);
+        this->transport_ = con->parallel_connect (this, desc, timeout
+                                                  ACE_ENV_ARG_PARAMETER);
       }
     else
       {
-    // Obtain a connection.
-    this->transport_ =
-          conn_reg->get_connector (desc->endpoint ()->tag ())->
-          connect (this,
-        desc,
-        max_wait_time
-        ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (false);
+        this->transport_ = con->connect (this, desc, timeout
+                                         ACE_ENV_ARG_PARAMETER);
       }
+    ACE_CHECK_RETURN (false);
     // A timeout error occurred.
     // If the user has set a roundtrip timeout policy, throw a timeout
     // exception.  Otherwise, just fall through and return false to
     // look at the next endpoint.
-    if (this->transport_ == 0
-        && is_conn_timeout == false
-        && errno == ETIME)
+    if (this->transport_ == 0 && errno == ETIME)
       {
         ACE_THROW_RETURN (CORBA::TIMEOUT (
                             CORBA::SystemException::_tao_minor_code (

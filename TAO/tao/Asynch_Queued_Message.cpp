@@ -8,7 +8,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/Message_Block.h"
 #include "ace/Malloc_Base.h"
-
+#include "ace/High_Res_Timer.h"
 
 ACE_RCSID (tao,
            Asynch_Queued_Message,
@@ -19,12 +19,16 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO_Asynch_Queued_Message::TAO_Asynch_Queued_Message (
   const ACE_Message_Block *contents,
   TAO_ORB_Core *oc,
+  ACE_Time_Value *timeout,
   ACE_Allocator *alloc,
   bool is_heap_allocated)
   : TAO_Queued_Message (oc, alloc, is_heap_allocated)
   , size_ (contents->total_length ())
   , offset_ (0)
+  , abs_timeout_ (ACE_Time_Value::zero)
 {
+  if (timeout != 0 && *timeout != ACE_Time_Value::zero) 
+    this->abs_timeout_ = ACE_High_Res_Timer::gettimeofday_hr () + *timeout;
   // @@ Use a pool for these guys!!
   ACE_NEW (this->buffer_, char[this->size_]);
 
@@ -43,11 +47,13 @@ TAO_Asynch_Queued_Message::TAO_Asynch_Queued_Message (
 TAO_Asynch_Queued_Message::TAO_Asynch_Queued_Message (char *buf,
                                                       TAO_ORB_Core *oc,
                                                       size_t size,
+                                                      const ACE_Time_Value &abs_timeout,
                                                       ACE_Allocator *alloc)
-  : TAO_Queued_Message (oc, alloc)
+  : TAO_Queued_Message (oc, alloc, 0)
   , size_ (size)
   , offset_ (0)
   , buffer_ (buf)
+  , abs_timeout_ (abs_timeout)
 {
 }
 
@@ -133,6 +139,7 @@ TAO_Asynch_Queued_Message::clone (ACE_Allocator *alloc)
                              TAO_Asynch_Queued_Message (buf,
                                                         this->orb_core_,
                                                         sz,
+                                                        this->abs_timeout_,
                                                         alloc),
                              0);
     }
@@ -150,7 +157,8 @@ TAO_Asynch_Queued_Message::clone (ACE_Allocator *alloc)
       ACE_NEW_RETURN (qm,
                       TAO_Asynch_Queued_Message (buf,
                                                  this->orb_core_,
-                                                 sz),
+                                                 sz,
+                                                 this->abs_timeout_),
                       0);
     }
 
@@ -180,7 +188,20 @@ TAO_Asynch_Queued_Message::destroy (void)
           delete this;
         }
     }
+}
 
+bool
+TAO_Asynch_Queued_Message::is_expired (const ACE_Time_Value &now) const
+{
+  if (this->abs_timeout_ > ACE_Time_Value::zero) 
+    {
+      if (this->offset_ > 0)
+        {
+          return false; //never expire partial messages
+        }
+      return this->abs_timeout_ < now;
+    }
+  return false;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -635,14 +635,9 @@ TAO::SSLIOP::Connector::ssliop_connect (
       this->active_connect_strategy_->synch_options (max_wait_time,
                                                      synch_options);
 
-      // If we don't need to block for a transport just set the timeout to
-      // be zero.
-      ACE_Time_Value tmp_zero (ACE_Time_Value::zero);
-      if (!resolver->blocked_connect ())
-        {
-          synch_options.timeout (ACE_Time_Value::zero);
-          max_wait_time = &tmp_zero;
-        }
+      // The code used to set the timeout to zero, with the intent of 
+      // polling the reactor for connection completion. However, the side-effect
+      // was to cause the connection to timeout immediately. 
 
       // We obtain the transport in the <svc_handler> variable.  As we
       // know now that the connection is not available in Cache we can
@@ -708,6 +703,11 @@ TAO::SSLIOP::Connector::ssliop_connect (
             }
 
           return 0;
+        }
+
+      if (transport->connection_handler ()->keep_waiting ()) 
+        {
+          svc_handler->add_reference ();
         }
 
       // At this point, the connection has be successfully connected.

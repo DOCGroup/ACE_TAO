@@ -60,6 +60,7 @@ TAO_IIOP_Connection_Handler_Array_Guard::TAO_IIOP_Connection_Handler_Array_Guard
 
 TAO_IIOP_Connection_Handler_Array_Guard::~TAO_IIOP_Connection_Handler_Array_Guard (void)
 {
+  ACE_Errno_Guard eguard (errno);
   if (this->ptr_ != 0)
     {
       for (unsigned i = 0; i < this->count_; i++)
@@ -205,9 +206,10 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
   TAO_IIOP_Endpoint **ep_ptr = &iiop_endpoint;
   TAO_LF_Multi_Event mev;
   mev.add_event(svc_handler);
-  return this->complete_connection (result, desc,
-                                    sh_ptr, ep_ptr,
-                                    1U, r, &mev,  timeout);
+  TAO_Transport* tp = this->complete_connection (result, desc,
+                                                 sh_ptr, ep_ptr,
+                                                 1U, r, &mev,  timeout);
+  return tp;
 }
 
 TAO_Transport *
@@ -327,14 +329,9 @@ TAO_IIOP_Connector::begin_connection (TAO_IIOP_Connection_Handler *&svc_handler,
   this->active_connect_strategy_->synch_options (timeout,
                                                  synch_options);
 
-  // If we don't need to block for a transport just set the timeout to
-  // be zero.
-  ACE_Time_Value tmp_zero (ACE_Time_Value::zero);
-  if (!r->blocked_connect ())
-    {
-      synch_options.timeout (ACE_Time_Value::zero);
-      timeout = &tmp_zero;
-    }
+  // The code used to set the timeout to zero, with the intent of 
+  // polling the reactor for connection completion. However, the side-effect
+  // was to cause the connection to timeout immediately. 
 
   svc_handler = 0;
 
@@ -427,7 +424,7 @@ TAO_IIOP_Connector::complete_connection (int result,
             }
         }
     }
-  // At this point, the connection has be successfully created
+  // At this point, the connection has been successfully created
   // connected or not connected, but we have a connection.
   TAO_IIOP_Connection_Handler *svc_handler = 0;
   TAO_IIOP_Endpoint *iiop_endpoint = 0;
@@ -461,14 +458,15 @@ TAO_IIOP_Connector::complete_connection (int result,
       if (TAO_debug_level > 3)
         {
           for (unsigned i = 0; i < count; i++)
-          ACE_DEBUG ((LM_ERROR,
-                        ACE_TEXT ("(%P|%t) IIOP_Connector::make_connection, ")
-                        ACE_TEXT("connection to <%s:%d> failed (%p)\n"),
-                        ACE_TEXT_CHAR_TO_TCHAR (ep_list[i]->host ()),
-                        ep_list[i]->port (),
-                      ACE_TEXT("errno")));
+            {
+              ACE_DEBUG ((LM_ERROR,
+                          ACE_TEXT ("(%P|%t) IIOP_Connector::make_connection,")
+                          ACE_TEXT (" connection to <%s:%d> failed (%p)\n"),
+                          ACE_TEXT_CHAR_TO_TCHAR (ep_list[i]->host ()),
+                          ep_list[i]->port (),
+                          ACE_TEXT("errno")));
+            }
         }
-
       return 0;
     }
 

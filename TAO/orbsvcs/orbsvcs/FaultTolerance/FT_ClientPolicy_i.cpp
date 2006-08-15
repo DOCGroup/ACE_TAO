@@ -87,11 +87,9 @@ TAO_FT_Request_Duration_Policy::set_time_value (ACE_Time_Value &time_value)
 
   if (TAO_debug_level > 0)
     {
-      CORBA::ULong msecs =
-        static_cast<CORBA::ULong> (microseconds / 1000);
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO_FT (%P|%t) - Timeout is <%u>\n"),
-                  msecs));
+                  ACE_TEXT ("TAO_FT (%P|%t) - Timeout is <%dms>\n"),
+                  time_value.msec ()));
     }
 }
 
@@ -182,11 +180,9 @@ TAO_FT_Heart_Beat_Policy::set_time_value (ACE_Time_Value &time_value,
 
   if (TAO_debug_level > 0)
     {
-      CORBA::ULong msecs =
-        static_cast<CORBA::ULong> (microseconds / 1000);
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO_FT (%P|%t) - Timeout is <%u>\n"),
-                  msecs));
+                  ACE_TEXT ("TAO_FT (%P|%t) - Timeout is <%dms>\n"),
+                  time_value.msec ()));
     }
 }
 
