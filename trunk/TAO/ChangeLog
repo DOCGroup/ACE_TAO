@@ -1,3 +1,13 @@
+Tue Aug 15 17:57:20 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/driver/drv_preproc.cpp (drv_post_init):
+
+          Added check for environment variable CIAO_ROOT when adding
+          default include paths for CIAO_ROOT and CIAO_ROOT/ciao. This
+          check is necessary if the middleware SubVersion modules have
+          been checked out in non-nested mode, since in that case,
+          CIAO_ROOT cannot be derived from TAO_ROOT or ACE_ROOT.
+
 Tue Aug 15 17:24:05 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
         * tao/Strategies/SCIOP_Endpoint.cpp (preferred_interfaces):
@@ -10,7 +20,7 @@ Tue Aug 15 14:56:35 UTC 2006  Adam Mitz  <mitza@ociweb.com>
 
         Checking in on behalf of Justin Michel <michel_j at ociweb dot com>...
 
-        Fixed bugs related to OCI RT8769. There were several problems 
+        Fixed bugs related to OCI RT8769. There were several problems
         identified in this ticket.
 
         All of these changes are on the branch "OCI_Oneway_Buffering".
@@ -135,7 +145,7 @@ Tue Aug 15 14:56:35 UTC 2006  Adam Mitz  <mitza@ociweb.com>
           Update Queued_Message constructor to allow specifying an
           absolute timeout, and a new is_expired() method to check
           whether the queued message is expired.
-        
+
 
         * tao/Synch_Invocation.cpp:
         * tao/Transport.h:
