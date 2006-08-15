@@ -1,3 +1,218 @@
+Tue Aug 15 14:56:35 UTC 2006  Adam Mitz  <mitza@ociweb.com>
+
+        Checking in on behalf of Justin Michel <michel_j at ociweb dot com>...
+
+        Fixed bugs related to OCI RT8769. There were several problems 
+        identified in this ticket.
+
+        All of these changes are on the branch "OCI_Oneway_Buffering".
+
+        1. The SyncScopes SYNC_NONE, SYNC_DELAYED_BUFFERING, and
+           SYNC_EAGER_BUFFERING use non-blocking connects, but the
+           non-blocking connect mechanism allows the caller to
+           effectively block, because it enters the reactor.  (Even
+           though it used a timeout of zero, this still makes it
+           possible for the caller to be blocked.)  The solution is to
+           queue any messages until the connection is complete, and to
+           rely on the reactor to complete the connection. This was
+           already implemented, and the fix just involved NOT polling
+           the reactor. A side-effect of this change, is that
+           applications that make connections within oneway requests
+           with the above SyncScope policies must call orb->run() to
+           complete the connection. Alternatively an invocation that
+           doesn't use the above SyncScopes can be made to complete
+           the connection.
+
+        2. Connection and request timeouts did not work correctly for
+           every scenario. (e.g. For non-blocking connects, the
+           request timeout should not be used even if it's less than
+           the connect timeout, because the connect does not happen in
+           the context of the request.)  The fix required numerous
+           changes detailed below.
+
+        3. Queued messages would never be expired even if a roundtrip
+           request timeout policy was in place. The solution is to
+           calculate an absolute expiration time for queued
+           asynchronous messages that have timeouts. The messages are
+           then discarded in Transport::drain_queue_i() if expired.
+
+        4. Connection timeouts result in TRANSIENT instead of TIMEOUT.
+           The fix required numerous changes detailed below.
+
+        5. Queued messages were flushed at connection startup, which
+           effectively ignored the buffering constraint policies.
+           Removed the code that flushed the messages.
+
+        * NEWS: explains user-visible implications of these changes
+
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ClientPolicy_i.cpp:
+        * tao/Messaging/Connection_Timeout_Policy_i.cpp:
+        * tao/Messaging/Messaging_Policy_i.cpp:
+
+          Enhanced display of millisecond timeouts in log
+          messages. Log messages now say "Connect timeout <50ms>" or
+          "Request timeout <100ms>" instead of "timeout <100>".
+
+        * examples/Buffered_Oneways/client.cpp:
+
+          Add a check to make sure that the test is run with a valid
+          buffering constraint policy.
+
+        * tao/Connection_Handler.h:
+        * tao/Connection_Handler.inl:
+
+          Added an is_timeout() method for Connection_Handler() so that
+          we can tell the difference between a timeout and a close.
+
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Connector.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
+        * tao/IIOP_Connection_Handler.cpp:
+        * tao/IIOP_Connector.cpp:
+        * tao/Strategies/SCIOP_Connection_Handler.cpp:
+        * tao/Strategies/SCIOP_Connector.cpp:
+        * tao/Strategies/SHMIOP_Connection_Handler.cpp:
+        * tao/Strategies/UIOP_Connection_Handler.cpp:
+        * tao/Strategies/UIOP_Connector.cpp:
+
+          Update log message during IIOP_Connection_Handler::open() to
+          show ip address and port instead of just ip address.
+
+          Update all connection handlers that closed a connection due
+          to timeout to set the state to TAO_LF_Event::LFS_TIMEOUT
+          instead of closed.
+
+          Changed xxx_Connector to NOT set synch_options.timeout() to
+          ACE_Time_Value::zero when the connect is
+          non-blocking. Setting it here is unnecessary and prevents
+          non-blocking timeouts from working.
+
+          Update the IIOP_Connector logged error message to show
+          errno in addition to the errno description.
+
+          Increment the reference count of the xxx_Connection_Handler
+          when the xxx_Connector is unable to complete the connection
+          synchronously. (Same as BugZilla 2417, but for all protocols
+          instead of just IIOP.)
+
+        * tao/Invocation_Adapter.cpp:
+
+          Move the max_wait_time variable to an inner scope in
+          Invocation_Adapter::invoke_i(), because it wasn't needed in
+          most code paths.
+
+        * tao/Profile_Transport_Resolver.cpp:
+
+          Fixed the logic in profile_transport_resolver::resolve() to
+          correctly detect TIMEOUT exceptions, and to ensure that the
+          connection timeout uses the minimum of the connection
+          timeout policy and request timeout for blocking
+          connects. Also ensure that request timeout is never used as
+          the connection timeout for non-blocking connects.
+
+        * tao/Asynch_Queued_Message.h:
+        * tao/Asynch_Queued_Message.cpp:
+        * tao/Queued_Message.h:
+        * tao/Queued_Message.cpp:
+        * tao/Synch_Queued_Message.cpp:
+
+          Add expiration time to Asynch_Queued_Messages. The
+          constructor now takes an ACE_Time_Value for the relative
+          timeout. If the timeout is nonzero and nonnull then it is
+          used to calculate an absolute expiration time using the high
+          res timer.
+
+          Update Queued_Message constructor to allow specifying an
+          absolute timeout, and a new is_expired() method to check
+          whether the queued message is expired.
+        
+
+        * tao/Synch_Invocation.cpp:
+        * tao/Transport.h:
+        * tao/Transport.cpp:
+
+          Update various places in Transport and Synch_Invocation to
+          create queued messages with the correct timeout value. This
+          includes ensuring that partially delivered messages can
+          never timeout.
+
+          Update Transport to discard expired messages. This happens
+          in drain_queue_i().
+
+          Add more descriptive logging output to
+          Transport::cleanup_queue_i.
+
+          Update Transport post_open to NOT flush queued
+          messages. This effectively ignored the specified buffering
+          constraint policies.
+
+        * tao/Transport_Connector.cpp:
+
+          Update Transport_Connector to correctly detect timed out
+          connections. Also fixed the code that checked the return
+          value of
+          base_transport->wait_strategy()->register_handler(). This
+          was recently changed from "if != 0" to "if == 0", but the
+          correct check for failure should be "if == -1".
+
+          Updated Transport_Connector to not enter the wait strategy
+          for non-blocking connects. Instead we rely on the
+          application to eventually call orb->run() which will
+          complete the connection, and send any queued messages.
+
+        * tao/Transport_Queueing_Strategies.cpp:
+
+          Update Eager_Transport_Queuing_Strategy to not use a pointer
+          to something that looks like it could go out of scope. I
+          think the code was actually safe, but it was confusing.
+
+        * tao/Block_Flushing_Strategy.cpp:
+        * tao/Flushing_Strategy.h:
+
+          Change block_flushing strategy to NOT synchronously flush in
+          the schedule_output() method. Instead we added a new special
+          return value indicating that the caller should do the flush
+          immediately. This allows the calling code to hold a lock
+          during the call to schedule_output() that can be released
+          before calling flush_transport().
+
+        * tests/AMI_Buffering/client.cpp:
+        * tests/AMI_Buffering/run_buffer_size.pl:
+        * tests/AMI_Buffering/run_message_count.pl:
+        * tests/AMI_Buffering/run_test.pl:
+        * tests/AMI_Buffering/run_timeout.pl:
+        * tests/AMI_Buffering/run_timeout_reactive.pl:
+        * tests/Oneway_Buffering/client.cpp:
+        * tests/Oneway_Buffering/run_buffer_size.pl:
+        * tests/Oneway_Buffering/run_message_count.pl:
+        * tests/Oneway_Buffering/run_test.pl:
+        * tests/Oneway_Buffering/run_timeout.pl:
+        * tests/Oneway_Buffering/run_timeout_reactive.pl:
+        * tests/Queued_Message_Test/Queued_Message_Test.cpp:
+        * tests/Timed_Buffered_Oneways/client.cpp:
+        * tests/Timed_Buffered_Oneways/run_test.pl:
+        * tests/Timed_Buffered_Oneways/server.cpp:
+        * tests/Timed_Buffered_Oneways/test.idl:
+        * tests/Timed_Buffered_Oneways/test_i.h:
+        * tests/Timed_Buffered_Oneways/test_i.cpp:
+
+          Updated various tests to comply with the above changes.
+
+          Fixed tests that used sync_none or sync_delayed_buffering
+          without calling orb->run().
+
+        * tests/Oneway_Timeouts:
+        * tests/Oneway_Timeouts/Test.idl:
+        * tests/Oneway_Timeouts/client.cpp:
+        * tests/Oneway_Timeouts/run_test.pl:
+        * tests/Oneway_Timeouts/server.cpp:
+        * tests/Oneway_Timeouts/test.mpc:
+
+          Added new test for various combinations of timeouts with oneways:
+          connection timeouts and relative round-trip timeouts.
+
 Tue Aug 15 14:02:23 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * tao/CSD_Framework/CSD_FW_Server_Request_Wrapper.cpp:

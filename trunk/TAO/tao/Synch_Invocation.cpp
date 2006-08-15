@@ -772,7 +772,7 @@ namespace TAO
                           "TAO (%P|%t) - Synch_Oneway_Invocation::"
                           "remote_oneway, queueing message\n"));
 
-            if (transport->format_queue_message (cdr) != 0)
+            if (transport->format_queue_message (cdr, max_wait_time) != 0)
               s = TAO_INVOKE_FAILURE;
           }
 

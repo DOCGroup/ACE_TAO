@@ -30,16 +30,16 @@ if (PerlACE::waitforfile_timed ($iorfile,
     exit 1;
 }
 
-$client = $CL->SpawnWaitKill (200);
-
+$client = $CL->SpawnWaitKill (120);
 if ($client != 0) {
     $time = localtime;
     print STDERR "ERROR: client returned $client at $time\n";
     $status = 1;
 }
 
-$server = $SV->WaitKill (100);
+print "Client finished...\n";
 
+$server = $SV->WaitKill (10);
 if ($server != 0) {
     $time = localtime;
     print STDERR "ERROR: server returned $server at $time\n";

@@ -17,6 +17,7 @@
 
 #include "tao/LF_Invocation_Event.h"
 #include "ace/os_include/os_stddef.h"
+#include "ace/Time_Value.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -76,8 +77,8 @@ class TAO_Export TAO_Queued_Message : public TAO_LF_Invocation_Event
 public:
   /// Constructor
   TAO_Queued_Message (TAO_ORB_Core *oc,
-                      ACE_Allocator *alloc = 0,
-                      bool is_heap_allocated = false);
+                      ACE_Allocator *alloc,
+                      bool is_heap_allocated);
 
   /// Destructor
   virtual ~TAO_Queued_Message (void);
@@ -194,6 +195,16 @@ public:
    * a pool), they need to be reclaimed explicitly.
    */
   virtual void destroy (void) = 0;
+  
+  /// Check for timeout
+  /**
+   * @param now Pass in the current time using
+   *  ACE_High_Res_Timer::gettimeofday_hr(). 
+   *  This is a parameter in order to avoid calling gettimeofday_hr() inside
+   *  of this method (which will be called in a tight loop).
+   * @return true if the relative roundtrip timeout has expired.
+   */
+  virtual bool is_expired (const ACE_Time_Value &now) const;
   //@}
 
 protected:
