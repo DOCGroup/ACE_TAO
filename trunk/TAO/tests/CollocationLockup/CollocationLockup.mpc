@@ -1,8 +1,8 @@
 // -*- MPC -*-
 // $Id$
 
-project: taoexe, portableserver {
-  idlflags += -Sc -St
+project: taoserver {
+  idlflags += -St
   exename = CollocationLockup
 
   Source_Files {
@@ -13,8 +13,8 @@ project: taoexe, portableserver {
   }
 }
 
-project(*SimpleNamingService): taoexe, portableserver {
-  idlflags += -Sc -St
+project(*SimpleNamingService): taoserver {
+  idlflags += -St
   exename = SimpleNamingService
 
   IDL_Files {
