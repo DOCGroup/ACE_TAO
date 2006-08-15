@@ -28,7 +28,7 @@ project : taolib, codecfactory, core, tao_versioning_idl_defaults {
   }
 
   IDL_Files {
-    idlflags += -Sci -SS -Gp -Gd -Ge 1 -Sc -Sorb -Sal -GX \
+    idlflags += -Sci -SS -Gp -Gd -Ge 1 -Sorb -Sal -GX \
                 -Wb,export_macro=TAO_PI_Export \
                 -Wb,export_include=tao/PI/pi_export.h \
                 -o PI
@@ -37,7 +37,7 @@ project : taolib, codecfactory, core, tao_versioning_idl_defaults {
   }
 
   IDL_Files {
-    idlflags += -Sci -SS -GA -Gp -Gd -Ge 1 -Sc -Sorb -Sal \
+    idlflags += -Sci -SS -GA -Gp -Gd -Ge 1 -Sorb -Sal \
                 -Wb,export_macro=TAO_PI_Export \
                 -Wb,export_include=tao/PI/pi_export.h \
                 -o PI
@@ -53,7 +53,7 @@ project : taolib, codecfactory, core, tao_versioning_idl_defaults {
   }
 
   IDL_Files {
-    idlflags += -Sci -SS -GA -Gp -Gd -Ge 1 -Sc -Sal \
+    idlflags += -Sci -SS -GA -Gp -Gd -Ge 1 -Sal \
                 -Wb,export_macro=TAO_PI_Export \
                 -Wb,export_include=tao/PI/pi_export.h \
                 -o PI
