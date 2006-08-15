@@ -1,3 +1,9 @@
+Tue Aug 15 16:17:56 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
+
+        * ace/Hash_MultiMap_Manager_T.h
+          Made some minor changes to the documentation to use @a to refer to
+          argument names.
+
 Tue Aug 15 15:00:00 UTC 2006  Adam Mitz  <mitza@ociweb.com>
 
         * ace/Event_Handler.cpp:
