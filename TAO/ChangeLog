@@ -1,3 +1,11 @@
+Tue Aug 15 11:37:06 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tao/AnyTypeCode/TypeCode.h:
+
+          Changed the export on In_Object_Argument_Cloner_T from TAO_Export
+          to TAO_AnyTypeCode_Export.  Thanks to Johnny Willemsen for
+          pointing out the build warnings.
+
 Tue Aug 15 11:19:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Big_Reply/Client_Task.cpp:

@@ -583,7 +583,7 @@ namespace TAO
   };
 
   template<>
-  struct TAO_Export In_Object_Argument_Cloner_T<CORBA::TypeCode_ptr>
+  struct TAO_AnyTypeCode_Export In_Object_Argument_Cloner_T<CORBA::TypeCode_ptr>
   {
     static void duplicate(CORBA::TypeCode_ptr objref);
     static void release(CORBA::TypeCode_ptr objref);
