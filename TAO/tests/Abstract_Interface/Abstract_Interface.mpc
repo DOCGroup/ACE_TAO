@@ -2,8 +2,6 @@
 // $Id$
 
 project(*client) : taoclient, valuetype {
-  idlflags += -Sc
-
   IDL_Files {
     test.idl
   }
@@ -20,7 +18,6 @@ project(*client) : taoclient, valuetype {
 
 project(*server) : taoserver, valuetype {
   after += *client
-  idlflags += -Sc
 
   IDL_Files {
     test.idl
