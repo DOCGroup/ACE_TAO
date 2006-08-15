@@ -33,7 +33,7 @@ _EOF_
 close(HANDLE);
 
 $TAO_IDL    = new PerlACE::Process("$tao_idl_bin/tao_idl");
-$TAO_IDL->Arguments("-Sc $test_idl");
+$TAO_IDL->Arguments("$test_idl");
 $result = $TAO_IDL->SpawnWaitKill (30);
 
 # Search one of the stub files for the munged for of the interface name
