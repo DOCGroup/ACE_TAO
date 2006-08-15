@@ -1,3 +1,11 @@
+Tue Aug 15 17:24:05 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * tao/Strategies/SCIOP_Endpoint.cpp (preferred_interfaces):
+
+          Use new ACE_CString::size_type type to hold string
+          position/index value, instead of "int".  Addresses "comparison
+          between signed and unsigned" warnings.
+
 Tue Aug 15 14:56:35 UTC 2006  Adam Mitz  <mitza@ociweb.com>
 
         Checking in on behalf of Justin Michel <michel_j at ociweb dot com>...
