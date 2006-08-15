@@ -463,8 +463,10 @@ DRV_cpp_post_init (void)
   ACE_OS::strcpy (option4, "-I");
   ACE_OS::strcpy (option5, "-I");
 
-  char* TAO_ROOT = ACE_OS::getenv ("TAO_ROOT");
   size_t len = 0;
+
+  // Add include path for TAO_ROOT/orbsvcs.
+  char* TAO_ROOT = ACE_OS::getenv ("TAO_ROOT");
 
   if (TAO_ROOT != 0)
     {
@@ -477,20 +479,15 @@ DRV_cpp_post_init (void)
         }
 
       ACE_OS::strcat (option3, TAO_ROOT);
-      ACE_OS::strcat (option4, TAO_ROOT);
-      ACE_OS::strcat (option5, TAO_ROOT);
 #if defined (ACE_WIN32)
       ACE_OS::strcat (option3, "\\orbsvcs");
-      ACE_OS::strcat (option4, "\\CIAO");
-      ACE_OS::strcat (option5, "\\CIAO\\ciao");
 #else
       ACE_OS::strcat (option3, "/orbsvcs");
-      ACE_OS::strcat (option4, "/CIAO");
-      ACE_OS::strcat (option5, "/CIAO/ciao");
 #endif
     }
   else
     {
+      // If TAO_ROOT isn't defined, assume it's under ACE_ROOT.
       char* ACE_ROOT = ACE_OS::getenv ("ACE_ROOT");
 
       if (ACE_ROOT != 0)
@@ -504,21 +501,83 @@ DRV_cpp_post_init (void)
             }
 
           ACE_OS::strcat (option3, ACE_ROOT);
+#if defined (ACE_WIN32)
+          ACE_OS::strcat (option3, "\\TAO\\orbsvcs");
+#else
+          ACE_OS::strcat (option3, "/TAO/orbsvcs");
+#endif
+        }
+      else
+        {
+          // If ACE_ROOT isn't defined either, there will already
+          // be a warning from DRV_preproc().
+          ACE_OS::strcat (option3, ".");
+        }
+    }
+
+  // Add include paths for CIAO_ROOT and CIAO_ROOT/ciao.
+  char* CIAO_ROOT = ACE_OS::getenv ("CIAO_ROOT");
+
+  if (CIAO_ROOT != 0)
+    {
+      len = ACE_OS::strlen (CIAO_ROOT);
+
+      // Some compilers choke on "//" separators.
+      if (CIAO_ROOT[len - 1] == '/')
+        {
+          CIAO_ROOT[len - 1] = '\0';
+        }
+
+      ACE_OS::strcat (option4, CIAO_ROOT);
+      ACE_OS::strcat (option5, CIAO_ROOT);
+#if defined (ACE_WIN32)
+      ACE_OS::strcat (option5, "\\ciao");
+#else
+      ACE_OS::strcat (option5, "/ciao");
+#endif
+    }
+  else if (TAO_ROOT != 0)
+    {
+      // If CIAO_ROOT hasn't been set, maybe it's nested under TAO_ROOT.
+      ACE_OS::strcat (option4, TAO_ROOT);
+      ACE_OS::strcat (option5, TAO_ROOT);
+#if defined (ACE_WIN32)
+      ACE_OS::strcat (option4, "\\CIAO");
+      ACE_OS::strcat (option5, "\\CIAO\\ciao");
+#else
+      ACE_OS::strcat (option4, "/CIAO");
+      ACE_OS::strcat (option5, "/CIAO/ciao");
+#endif
+    }
+  else
+    {
+      // If TAO_ROOT hasn't been set, try ACE_ROOT.
+      char* ACE_ROOT = ACE_OS::getenv ("ACE_ROOT");
+
+      if (ACE_ROOT != 0)
+        {
+          len = ACE_OS::strlen (ACE_ROOT);
+
+          // Some compilers choke on "//" separators.
+          if (ACE_ROOT[len - 1] == '/')
+            {
+              ACE_ROOT[len - 1] = '\0';
+            }
+
           ACE_OS::strcat (option4, ACE_ROOT);
           ACE_OS::strcat (option5, ACE_ROOT);
 #if defined (ACE_WIN32)
-          ACE_OS::strcat (option3, "\\TAO\\orbsvcs");
           ACE_OS::strcat (option4, "\\TAO\\CIAO");
           ACE_OS::strcat (option5, "\\TAO\\CIAO\\ciao");
 #else
-          ACE_OS::strcat (option3, "/TAO/orbsvcs");
           ACE_OS::strcat (option4, "/TAO/CIAO");
           ACE_OS::strcat (option5, "/TAO/CIAO/ciao");
 #endif
         }
       else
         {
-          ACE_OS::strcat (option3, ".");
+          // If ACE_ROOT isn't defined either, there will already
+          // be a warning from DRV_preproc().
           ACE_OS::strcat (option4, ".");
           ACE_OS::strcat (option5, ".");
         }
@@ -1250,7 +1309,7 @@ DRV_pre_proc (const char *myfile)
     }
 
 #if !defined (ACE_WIN32) || defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)
- 
+
   if (ACE_OS::unlink (t_file) == -1)
     {
       ACE_ERROR ((LM_ERROR,
