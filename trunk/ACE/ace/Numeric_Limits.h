@@ -27,6 +27,16 @@
 
 #include /**/ "ace/pre.h"
 
+#ifdef __MINGW32__
+// Windows defines min/max macros that interfere with the
+// numeric_limits::min/max() traits.  Prevent those macros from being
+// defined by defining the Windows-specific NOMINMAX symbol before any
+// Windows headers are included.
+//
+// @@ Why isn't this a problem with MSVC++ and Borland builds?
+# define NOMINMAX
+# endif  /* __MINGW32__ */
+
 #include /**/ "ace/ACE_export.h"
 
 # if !defined (ACE_LACKS_PRAGMA_ONCE)

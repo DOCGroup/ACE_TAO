@@ -1,3 +1,14 @@
+Tue Aug 15 17:47:11 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * ace/Numeric_Limits.h:
+
+          Windows defines min/max macros that interfere with the
+          numeric_limits::min/max() traits.  Prevent those macros from
+          being defined by defining the Windows-specific NOMINMAX symbol
+          before any Windows headers are included.  This is currently
+          only done for Mingw builds since the problem is not exhibited by
+          other Windows builds (e.g. MSVC++, Borland, etc).
+
 Tue Aug 15 16:17:56 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
 
         * ace/Hash_MultiMap_Manager_T.h
