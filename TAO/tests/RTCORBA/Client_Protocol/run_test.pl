@@ -23,10 +23,10 @@ $server_args =
     (PerlACE::is_vxworks_test() ? "" : (($^O eq "MSWin32") ? "-p 1413566210 " : "-p 1413566208 "))
     ."-ORBendpoint iiop:// "
     .(PerlACE::is_vxworks_test() ? "" : "-ORBendpoint shmiop:// ")
-    .(($^O eq "MSWin32") ? "" : "-ORBEndpoint uiop:// ");
+    .(($^O eq "MSWin32" || $^O eq "VMS") ? "" : "-ORBEndpoint uiop:// ");
 $client_args =
     "-s file://$iorfile1 -c file://$iorfile2 "
-    .(($^O eq "MSWin32") ? "" : "-p 1413566210 ")
+    .(($^O eq "MSWin32" || $^O eq "VMS") ? "" : "-p 1413566210 ")
     ."-ORBdebuglevel 1 ";
 
 #if ($^O eq "MSWin32") {
