@@ -1,3 +1,18 @@
+Tue Aug 15 08:40:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Bug_1393_Regression/run_test.pl:
+        * tests/CollocationLockup/CollocationLockup.mpc:
+        * tests/Bug_2494_Regression/Bug_2494_Regression.mpc:
+        * tests/Abstract_Interface/Abstract_Interface.mpc:
+        * orbsvcs/tests/Trading/Trading.mpc:
+        * orbsvcs/tests/ImplRepo/Bug_2604_Regression/Bug_2604.mpc:
+        * orbsvcs/tests/Bug_2248_Regression/Bug_2248_Regression.mpc:
+        * orbsvcs/orbsvcs/SSLIOP.mpc:
+        * orbsvcs/orbsvcs/HTIOP.mpc:
+        * tao/ImR_Client.mpc:
+        * tao/PI.mpc:
+          Don't use -Sc as tao_idl option, this doesn't exist anymore
+
 Tue Aug 15 08:02:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_operation/ami_handler_reply_stub_operation_cs.cpp:
