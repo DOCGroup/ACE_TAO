@@ -1,19 +1,31 @@
+Tue Aug 15 08:02:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_operation/ami_handler_reply_stub_operation_cs.cpp:
+          Const improvement
+
+        * tao/RTPortableServer.mpc:
+        * tao/RTScheduler.mpc:
+          Fixed regeneration instructions
+
+        * TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
+          Cleanup of old stuff
+
 Mon Aug 14 19:05:38 UTC 2006  Yan Dai  <dai_y@ociweb.com>
 
         * tao/PortableServer/Object_Adapter.h:
         * tao/PortableServer/Object_Adapter.cpp:
 
-          Made the TAO_Object_Adapter keep a reference to POAManager 
-          object on minimum corba builds to fix leaking of POAManager object. 
-          
+          Made the TAO_Object_Adapter keep a reference to POAManager
+          object on minimum corba builds to fix leaking of POAManager object.
+
 Mon Aug 14 17:21:00 UTC 2006  Yan Dai  <dai_y@ociweb.com>
 
         * tao/PortableServer/Object_Adapter.cpp:
 
           Fixed a bug in open() on minimum corba builds. The problems is
-          the new poa_manager passed to create_Root_POA() was actually 
-          destructed when exit from open() function. This would cause 
-          access violation when application access the poa manager in 
+          the new poa_manager passed to create_Root_POA() was actually
+          destructed when exit from open() function. This would cause
+          access violation when application access the poa manager in
           the Root_POA.
 
 Mon Aug 14 13:45:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
