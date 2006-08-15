@@ -178,6 +178,7 @@ TAO/tests/Oneway_Buffering/run_message_count.pl: !MINIMUM
 TAO/tests/Oneway_Buffering/run_buffer_size.pl: !MINIMUM
 TAO/tests/Oneway_Buffering/run_timeout.pl: !MINIMUM
 TAO/tests/Oneway_Buffering/run_timeout_reactive.pl: !MINIMUM
+TAO/tests/Oneway_Timeouts/run_test.pl: !MINIMUM !NO_MESSAGING
 TAO/tests/AMI_Buffering/run_message_count.pl: !MINIMUM !ST
 TAO/tests/AMI_Buffering/run_buffer_size.pl: !MINIMUM !ST
 TAO/tests/AMI_Buffering/run_timeout.pl: !MINIMUM !ST
