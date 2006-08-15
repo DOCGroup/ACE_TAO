@@ -1,7 +1,7 @@
 // $Id$
 
-project(*Server): taoexe, portableserver, minimum_corba, imr_client {
-  idlflags += -Sc -Sa -St
+project(*Server): taoserver, minimum_corba, imr_client {
+  idlflags += -Sa -St
   Source_Files {
     Messenger_i.cpp
     MessengerServer.cpp
@@ -9,7 +9,7 @@ project(*Server): taoexe, portableserver, minimum_corba, imr_client {
 }
 
 project(*Client): taoexe, minimum_corba {
-  idlflags += -Sc -Sa -St
+  idlflags += -Sa -St
   Source_Files {
     MessengerC.cpp
     MessengerClient.cpp
