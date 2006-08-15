@@ -1,3 +1,8 @@
+Tue Aug 15 19:36:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Policies/Policies.mpc:
+          Simplified this file
+
 Tue Aug 15 17:57:20 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/driver/drv_preproc.cpp (drv_post_init):
