@@ -1,3 +1,10 @@
+Tue Aug 15 14:02:23 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tao/CSD_Framework/CSD_FW_Server_Request_Wrapper.cpp:
+
+          Before cloning the arguments, check to make sure that we have at
+          least one argument/return value.
+
 Tue Aug 15 11:37:06 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
 
         * tao/AnyTypeCode/TypeCode.h:
