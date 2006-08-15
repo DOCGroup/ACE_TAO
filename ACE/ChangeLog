@@ -1,3 +1,13 @@
+Tue Aug 15 08:36:00 UTC 2006  Simon Massey  <sma@prismtech.com>
+
+        * bin/MakeProjectCreator/config/acedefaults.mpb
+
+        Backout all of the recent MFC changes.
+
+        * bin/MakeProjectCreator/config/ace_opt_mfc.mpb:
+
+        DELETED.
+
 Mon Aug 14 23:34:11 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ace/TP_Reactor.cpp
