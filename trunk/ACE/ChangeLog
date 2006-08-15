@@ -1,3 +1,14 @@
+Tue Aug 15 15:00:00 UTC 2006  Adam Mitz  <mitza@ociweb.com>
+
+        * ace/Event_Handler.cpp:
+
+          Updated Event_Handler_var to use an ACE_Errno_Guard to
+          prevent overwriting the errno.
+
+        * bin/tao_orb_tests.lst
+
+          Added new test: TAO/tests/Oneway_Timeouts/run_test.pl
+
 Tue Aug 15 14:22:53 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
 
         * ace/Hash_MultiMap_Manager_T.h
@@ -17,8 +28,8 @@ Mon Aug 14 23:34:11 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ace/TP_Reactor.cpp
         * ace/TP_Reactor.h
-        
-          Removed all register_handler member functions from these files. 
+
+          Removed all register_handler member functions from these files.
           This essentially enables the ability to register signal handlers in
           the TP Reactor by implicitly delegating to the select reactor base class.
 
@@ -31,9 +42,9 @@ Mon Aug 14 16:14:56 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
 
         * test/Hash_Multi_Map_Manager_Test.cpp
           Address the "no matching function for call" errors.
-          
+
         * ace/Hash_MultiMap_Manager_T.h
-          Address the "unsupported xml/html tag" warnings in doxygen build. 
+          Address the "unsupported xml/html tag" warnings in doxygen build.
 
 Mon Aug 14 16:00:00 UTC 2006  Simon Massey  <sma@prismtech.com>
 
