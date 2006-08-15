@@ -274,7 +274,7 @@ TAO_SCIOP_Endpoint::preferred_interfaces (TAO_ORB_Core *oc)
   ACE_CString tmp (
     oc->orb_params ()->preferred_interfaces ());
 
-  ssize_t pos = 0;
+  ACE_CString::size_type pos = 0;
 
   pos = tmp.find (this->host_.in ());
 
@@ -285,11 +285,10 @@ TAO_SCIOP_Endpoint::preferred_interfaces (TAO_ORB_Core *oc)
   while (pos != ACE_CString::npos)
     {
       // Do we have a "," or an '\0'?
-      ssize_t new_pos = tmp.find (",",
-                                  pos + 1);
+      ACE_CString::size_type new_pos = tmp.find (",", pos + 1);
 
       // Length of the preferred path
-      int length = 0;
+      ACE_CString::size_type length = 0;
 
       if (new_pos == ACE_CString::npos)
         length = tmp.length () - pos;
@@ -299,7 +298,7 @@ TAO_SCIOP_Endpoint::preferred_interfaces (TAO_ORB_Core *oc)
       ACE_CString rem_tmp = tmp.substr (pos, length);
 
       // Search for the ":"
-      ssize_t col_pos = rem_tmp.find (":");
+      ACE_CString::size_type col_pos = rem_tmp.find (":");
 
       if (col_pos == ACE_CString::npos)
         {
