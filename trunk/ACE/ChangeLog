@@ -1,3 +1,8 @@
+Tue Aug 15 14:22:53 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
+
+        * ace/Hash_MultiMap_Manager_T.h
+          Address the "unsupported xml/html tag" warnings in doxygen build.
+
 Tue Aug 15 08:36:00 UTC 2006  Simon Massey  <sma@prismtech.com>
 
         * bin/MakeProjectCreator/config/acedefaults.mpb
