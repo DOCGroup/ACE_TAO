@@ -1,3 +1,11 @@
+Tue Aug 15 10:45:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2503_Regression/run_test.pl:
+          Extended wait time for server to let this test succeed on OpenVMS
+
+        * tests/RTCORBA/Client_Protocol/run_test.pl:
+          Small update for OpenVMS
+
 Tue Aug 15 08:40:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Bug_1393_Regression/run_test.pl:
