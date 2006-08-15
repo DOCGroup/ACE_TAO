@@ -41,7 +41,7 @@ project : taolib, core, rtcorba, portableserver {
     idlflags += -Ge 1 -SS -Sorb -GX -Sci \
                 -Wb,export_macro=TAO_RTPortableServer_Export \
                 -Wb,export_include=tao/RTPortableServer/rtportableserver_export.h \
-                -Wb,safe_include=tao/RTPortableServer/RTPortableServer.h \
+                -Wb,unique_include=tao/RTPortableServer/RTPortableServer.h \
                 -o RTPortableServer
     RTPortableServer/RTPortableServer_include.pidl
   }
