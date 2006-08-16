@@ -3,14 +3,17 @@
 /**
  * @file Broker_i.h
  * @author Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
+ * @author William R. Otte <wotte@dre.vanderbilt.edu>
+ * @author Douglas C. Schmidt <schmidt@dre.vanderbilt.edu>
  */
 
 #ifndef BROKERI_H_
 #define BROKERI_H_
 
 // local headers
-#include "Common_i.h"
+#include "StockNameConsumer_i.h"
 #include "BrokerS.h"
+#include "DistributorC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -29,11 +32,11 @@ public:
    *
    * @param orb
    * @param stock_name The name of the stock that the Stock Broker client is interested in.
-   * @param priority The priority of this  Stock Broker client.
+   * @param priority The CORBA priority of this Stock Broker client.
    */
   Stock_StockBroker_i (CORBA::ORB_ptr orb,
-                       const char *stock_name,
-                       RTCORBA::Priority priority);
+                       Stock::StockDistributor_ptr dist,
+                       const char *stock_name);
 
   /// Destructor
   virtual ~Stock_StockBroker_i (void);
@@ -65,17 +68,32 @@ public:
   /**
    * Return the StockQuoter object.
    *
-   * @return Returns the StockQuoter object reference that has been created by connect_quoter_info ().
+   * @return Returns the StockQuoter object reference that has been
+   *         created by connect_quoter_info (). 
    */
   virtual ::Stock::StockQuoter_ptr get_connection_quoter_info ()
     throw (::CORBA::SystemException);
 
+  /**
+   * Shutdown the object and destroy the application.
+   */
+  virtual void shutdown ()
+    throw (::CORBA::SystemException);
+  
 private:
-  /// A StockQuoter object reference that is used to get detailed stock information. 
+  // Cached ORB pointer
+  CORBA::ORB_var orb_;
+  
+  /// A StockQuoter object reference that is used to get detailed
+  /// stock information.
   Stock::StockQuoter_var quoter_;
 
-  /// A StockNameConsumer object that is used to get notification of updates.
+  /// A StockNameConsumer servant that is used to get notification of
+  /// updates.
   Stock_StockNameConsumer_i *consumer_;
+  
+  /// The distributor that we are registered with, useful for shutdown.
+  Stock::StockDistributor_var distributor_;
 };
 
 /**
@@ -83,7 +101,8 @@ private:
  * @brief This class defined the Stock Broker home.
  */
 class  Stock_StockBrokerHome_i
-  : public virtual POA_Stock::StockBrokerHome
+  : public virtual POA_Stock::StockBrokerHome,
+    public ACE_Event_Handler  
 {
 public:
   /**
@@ -93,9 +112,7 @@ public:
    *
    * @param orb
    */
-  Stock_StockBrokerHome_i (CORBA::ORB_ptr orb,
-                           const char *stock_name,
-                           RTCORBA::Priority priority);
+  Stock_StockBrokerHome_i (CORBA::ORB_ptr orb);
 
   /// Destructor
   virtual ~Stock_StockBrokerHome_i (void);
@@ -105,12 +122,20 @@ public:
    *
    * @return The StockBroker object created by the Constructor.
    */
-  virtual ::Stock::StockBroker_ptr create ()
+  virtual ::Stock::StockBroker_ptr create (Stock::StockDistributor_ptr dist,
+                                           const char *stock_name)
     throw (::CORBA::SystemException);
+
+  virtual int handle_signal (int signum,
+                             siginfo_t * = 0,
+                             ucontext_t * = 0);
 
 private:
   /// The StockDistributor object created by its home.
-  Stock_StockBroker_i *broker_;
+  Stock::StockBroker_var broker_;
+  
+  /// Cache a reference to the ORB.
+  CORBA::ORB_var orb_;
 };
 
 #endif /* BROKERI_H_  */

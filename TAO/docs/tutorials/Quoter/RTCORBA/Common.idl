@@ -1,11 +1,13 @@
 /**
-* @file Common.idl
-* @author William Otte <wotte@dre.vanderbilt.edu>
-*         Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
-* $Id$
-* Contains common IDL definitions in the Publish/Subscribe Real-time CORBA
-* Stock Quoter Service.
-*/
+ * @file Common.idl
+ * @author Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
+ * @author William R. Otte <wotte@dre.vanderbilt.edu>
+ * @author Douglas C. Schmidt <schmidt@dre.vanderbilt.edu>
+
+ * $Id$
+ * Contains common IDL definitions in the Publish/Subscribe Real-time CORBA
+ * Stock Quoter Service.
+ */
 
 #ifndef QUOTER_COMMON_IDL
 #define QUOTER_COMMON_IDL
@@ -43,18 +45,20 @@ module Stock
   };
 
   /**
-  * @class StockNameConsumer
-  * @brief Callback interface used by the distributor to notify brokers of updates.
-  */
+   * @class StockNameConsumer
+   * @brief Callback interface used by the distributor to notify brokers of updates.
+   */
   interface StockNameConsumer
   {
     void push_StockName (in StockName the_stockname);
+    
+    attribute Cookie cookie;
   };
 
   /**
-  * @class StockQuoter
-  * @brief Provides an interface for brokers to get detailed stock information.
-  */
+   * @class StockQuoter
+   * @brief Provides an interface for brokers to get detailed stock information.
+   */
   interface StockQuoter 
   {
     /// Returns detailed stock information to brokers.
