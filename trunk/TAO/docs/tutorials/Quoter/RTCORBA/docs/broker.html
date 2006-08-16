@@ -118,7 +118,26 @@ The main steps of this function are described as follows: <P>
 <li>Create a new instance of the StockNameConsumer object with the specified name and activate it 
 under the former RTPOA.</li>
 
-
+<PRE>
+    CORBA::Object_var obj = orb->resolve_initial_references ("RTORB");
+    RTCORBA::RTORB_var rt_orb = RTCORBA::RTORB::_narrow (obj.in ());
+    
+    TAO::Utils::PolicyList_Destroyer consumer_policies (1);
+    consumer_policies.length (1);
+    
+    consumer_policies[0] = rt_orb->create_priority_model_policy (RTCORBA::CLIENT_PROPAGATED, Stock::Priority_Mapping::MEDIUM);
+    
+    PortableServer::POA_var poa = this->_default_POA ();
+    PortableServer::POAManager_var poa_mgr = poa->the_POAManager ();
+    
+    PortableServer::POA_var child_poa = poa->create_POA ("StockNameConsumer_POA", poa_mgr.in (), consumer_policies);
+    
+    RTPortableServer::POA_var rt_poa = RTPortableServer::POA::_narrow (child_poa.in ());
+    
+    this->consumer_ = new Stock_StockNameConsumer_i (*this, stock_name);
+    PortableServer::ServantBase_var nameconsumer_owner_transfer = this->consumer_;
+    rt_poa->activate_object (this->consumer_);
+</PRE>
 
 <h4>Implementing the get_consumer_notifier () member function</h4>
 
