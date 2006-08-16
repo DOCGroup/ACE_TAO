@@ -1,3 +1,17 @@
+Wed Aug 16 21:48:22 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
+
+        * docs/tutorials/Quoter/RTCORBA/docs/broker.html
+        * docs/tutorials/Quoter/RTCORBA/docs/database.html
+        * docs/tutorials/Quoter/RTCORBA/docs/distributor.html
+        * docs/tutorials/Quoter/RTCORBA/docs/idl.html
+        * docs/tutorials/Quoter/RTCORBA/docs/index.html
+        * docs/tutorials/Quoter/RTCORBA/docs/mpc.html
+        * docs/tutorials/Quoter/RTCORBA/docs/nameConsumer.html
+        * docs/tutorials/Quoter/RTCORBA/docs/prioritymapping.html
+        * docs/tutorials/Quoter/RTCORBA/docs/run.html
+          Update these files according to William R. Otte's modification to the
+          corresponding source code.
+
 Wed Aug 16 18:09:44 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * docs/tutorials/Quoter/RTCORBA/StockNameConsumer_i.cpp
