@@ -122,6 +122,24 @@ under the former RTPOA.</li>
 
 
 
+<h4>Implementing the connect_quoter_info () member function</h4>
+
+<li>Duplicate a StockQuoter object using the StockQuoter object reference "c" in the argument.</li>
+
+<PRE>
+    quoter_ = Stock::StockQuoter::_duplicate (c);
+</PRE>
+
+<h4>Implementing the disconnect_quoter_info () member function</h4>
+
+<li>Destroy the StockQuoter object and return it.</li>
+
+<PRE>
+    Stock::StockQuoter_var old_quoter = this->quoter_;
+    this->quoter_ = Stock::StockQuoter::_nil();
+    return old_quoter._retn ();
+</PRE>
+
 <h4>Implementing the get_connection_quoter_info () member function</h4>
 
 <li>Return the StockQuoter object.</li>
