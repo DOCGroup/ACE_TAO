@@ -100,24 +100,6 @@ which is a subclass of POA_Stock::StockBroker class. <P>
         distributor_ (Stock::StockDistributor::_duplicate (dist))
 </PRE>
 
-The "quoter_", "consumer_", and "distributor_" are four private members of the Stock_StockBroker_i class. 
-They stand for the StockQuoter object that is used to get detailed stock information, the StockNameConsumer 
-object that is used to get notification of updates, and the StockDistributor object that the StockBroker object 
-is used to unsubscribe to. <P>
-
-The main steps of this function are described as follows: <P>
-
-<li>Get a reference to the RTORB.</li>
-
-<li>Initialize a CORBA::PolicyList object.</li>
-
-<li>Create a CLIENT_PROPAGATED priority model policy and add it into the former CORBA::PolicyList object.</li>
-
-<li>Create a child POA using the former CORBA::PolicyList and narrow it to RTPOA.</li>
-
-<li>Create a new instance of the StockNameConsumer object with the specified name and activate it 
-under the former RTPOA.</li>
-
 <hr><b>Email: </b><a href="mailto:"</a<ADDRESS>shanshan.jiang@vanderbilt.edu</ADDRESS>
 
 </body>
