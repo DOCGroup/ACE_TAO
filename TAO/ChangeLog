@@ -1,3 +1,16 @@
+Tue Aug 15 21:25:50 UTC 2006  Ciju John  <johnc@ociweb.com>
+
+        * tao/PortableServer/Servant_var.h:
+        * tao/PortableServer/Servant_var.inl:
+
+          Removed the member templates as
+          - They didn't seem to be serving any purpose.
+          - They were causing build problems in SunStudio 11 builds and
+          VxWorks builds using gcc 2.96.
+
+          Made the Servant_var constructor implicit to comply with the c++
+          language mapping.
+
 Wed Aug 16 08:18:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ObjRefTemplate/ObjectReferenceTemplate_include.pidl
