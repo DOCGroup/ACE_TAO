@@ -68,6 +68,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "global_extern.h"
 #include "utl_err.h"
 #include "utl_string.h"
+#include "fe_private.h"
 
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
@@ -78,14 +79,15 @@ ACE_RCSID (util,
 
 Identifier::Identifier (void)
   : pv_string (0),
-    escaped_ (0)
+    escaped_ (false)
 {
 }
 
 Identifier::Identifier (const char *s)
+  : pv_string (0),
+    escaped_ (false)
 {
-  bool shift = 0;
-  this->escaped_ = 0;
+  bool shift = false;
 
   if (*s == '_')
     {
@@ -95,18 +97,27 @@ Identifier::Identifier (const char *s)
           idl_global->err ()->error0 (UTL_Error::EIDL_UNDERSCORE);
         }
 
-      shift = 1;
-      this->escaped_ = 1;
+      shift = true;
+      this->escaped_ = true;
+      ACE_CString str (s, 0, 0);
 
-      ACE_CString str (s,
-                       0,
-                       0);
-
-      if (str.find ("_cxx_") == 0
-          || str.find ("_tc_") == 0
+      if (str.find ("_tc_") == 0
           || str.find ("_tao_") == 0)
         {
-          shift = 0;
+          shift = false;
+        }
+      else if (str.find ("_cxx_") == 0)
+        {
+          TAO_IDL_CPP_Keyword_Table cpp_key_tbl;
+          unsigned int len =
+            static_cast<unsigned int> (ACE_OS::strlen (s + 5));
+          const TAO_IDL_CPP_Keyword_Entry *entry =
+            cpp_key_tbl.lookup (s + 5, len);
+
+          if (entry != 0)
+            {
+              shift = false;
+            }
         }
     }
 

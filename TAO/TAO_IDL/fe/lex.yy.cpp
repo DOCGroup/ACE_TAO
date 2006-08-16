@@ -903,7 +903,7 @@ static idl_uns_long     idl_atoui (char *, long);
 static void             idl_parse_line_and_file (char *);
 static void             idl_store_pragma (char *);
 static char *           idl_get_pragma_string (char *);
-static bool         idl_valid_version (char *);
+static bool             idl_valid_version (char *);
 static AST_Decl *       idl_find_node (char *);
 
 #define ace_tao_yytext tao_yytext
@@ -2797,7 +2797,7 @@ idl_store_pragma (char *buf)
           char *int_id = 0;
           int status = idl_global->file_prefixes ().find (ext_id,
                                                           int_id);
-                                                          
+
           if (status != 0)
             {
               ext_id = ACE::strnew (ext_id);
@@ -3291,7 +3291,7 @@ idl_find_node (char *s)
     {
       idl_global->err ()->lookup_error (node);
     }
-    
+
   node->destroy ();
   delete node;
   node = 0;
