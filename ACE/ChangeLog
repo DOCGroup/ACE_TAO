@@ -1,3 +1,11 @@
+Wed Aug 16 14:51:58 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * docs/svn/svn-prefs.reg
+        * docs/svn/config
+        
+          Updated to correct keywords values, and add use-commit-times
+          as a default option.
+
 Wed Aug 16 10:19:41 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Obstack_T.{cpp,inl}:
