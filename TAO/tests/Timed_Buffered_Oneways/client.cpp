@@ -23,6 +23,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_sys_time.h"
 
 ACE_RCSID(Timed_Buffered_Oneways, client, "$Id$")
 
