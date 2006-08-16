@@ -44,7 +44,7 @@ namespace PortableServer
     typedef T servant_type;
 
     /// Constructor.  Assumes ownership of @c p.
-    explicit Servant_var (T * p = 0);
+    Servant_var (T * p = 0);
 
     /// Copy constructor.  Adds reference to @c rhs.
     Servant_var (Servant_var<T> const & rhs);
@@ -61,30 +61,6 @@ namespace PortableServer
 
     /// Assignment operator.  Assumes ownership of @c p.
     Servant_var<T> & operator= (T * p);
-
-# if !defined(ACE_LACKS_MEMBER_TEMPLATES)
-    /// Template member constructor from a pointer that will implicitly
-    /// cast to type T.  Assumes ownership of @c p.
-    /// This constructor allows constructs such as:
-    /// Servant_Base<Base> p(new Derived);
-    template <class Y>
-    Servant_var (Y * p);
-
-    /// Template member copy constructor from a Servant_var<Y>, where
-    /// Y can be implicitly cast to type T.
-    template <class Y>
-    Servant_var (Servant_var<Y> const & rhs);
-
-    /// Template member assignment operator from a Servant_var<Y>, where
-    /// Y can be implicitly cast to type T.
-    template <class Y>
-    Servant_var<T> & operator= (Servant_var<Y> const & rhs);
-
-    /// Template member assignment operator from a pointer to Y, where Y
-    /// can be implicitly cast to type T.
-    template <class Y>
-    Servant_var<T> & operator= (Y * p);
-# endif /* ACE_LACKS_MEMBER_TEMPLATES */
 
     /// Smart pointer operator-> provides access to the underlying object.
     T const * operator->() const;
