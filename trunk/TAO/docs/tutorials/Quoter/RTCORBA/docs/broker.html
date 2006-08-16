@@ -120,7 +120,14 @@ under the former RTPOA.</li>
 
 
 
+<h4>Implementing the get_consumer_notifier () member function</h4>
 
+<li>Return the StockNameConsumer object created by the Constructor.</li>
+
+<PRE>
+    Stock::StockNameConsumer_var consumer = this->consumer_->_this ();
+    return consumer._retn();
+</PRE>
 
 <h4>Implementing the connect_quoter_info () member function</h4>
 
