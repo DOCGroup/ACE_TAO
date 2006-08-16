@@ -8,7 +8,6 @@
 # STATIC - if defined means creating a static library or executable
 # DEBUG - if defined means building with debug information
 # UNICODE - if defined means building unicode
-# CBX - if defined means building with the new CBuilderX preview compiler
 # CPU_FLAG - if defined the flag for CPU optimization
 #
 # Outputs:
@@ -52,29 +51,16 @@ VCLVER = 40
 !endif
 !endif
 
-!ifdef CBX
-OBJ_EXT = o
-LIB_EXT = a
-!else
 OBJ_EXT = obj
 LIB_EXT = lib
-!endif
 
 #
 # Build tools
 #
-
-!ifdef CBX
-CC = bccx
-LD = ilink
-AR = ar
-RC = brcc32
-!else
 CC = bcc32
 LD = ilink32
 AR = tlib
 RC = brcc32
-!endif
 
 #
 # Common flags
@@ -90,13 +76,8 @@ CPU_CFLAG =
 !endif
 
 !ifdef DEBUG
-!ifdef CBX
-DEBUG_CFLAGS = -v -y -Od -vi- -k -D_DEBUG -DACE_NO_INLINE=1
-DEBUG_LFLAGS = -v
-!else
 DEBUG_CFLAGS = -v -y -Od -r- -vi- -k -D_DEBUG -DACE_NO_INLINE=1
 DEBUG_LFLAGS = -v -L$(BCB)\lib\debug
-!endif
 !else
 !if $(BCBVER) == 6 || $(BCBVER) == 5
 DEBUG_CFLAGS = -OS -Ov -Og -DNDEBUG
@@ -128,11 +109,6 @@ PCH_CFLAGS = -H=$(OBJDIR)\$(NAME).csm -Hh=$(PCH_HEADER)
 
 THREAD_CFLAGS = -tWM
 WARNINGS_CFLAGS = -w-rvl -w-rch -w-ccc -w-obs -w-aus -w-pia -w-inl
-!ifdef CBX
-DEFINES_CFLAGS =
-QUIET_CFLAGS =
-MISC_CFLAGS =
-!else
 !ifdef VCL
 DEFINES_CFLAGS = -DWIN32
 !else
@@ -140,7 +116,6 @@ DEFINES_CFLAGS = -DWIN32;_NO_VCL
 !endif
 QUIET_CFLAGS = -q
 MISC_CFLAGS =
-!endif
 DECORATOR_CFLAGS = -DACE_LD_DECORATOR_STR=ACE_LIB_TEXT(\"$(LIB_DECORATOR)\")
 
 COMMON_CFLAGS = $(QUIET_CFLAGS) $(DEBUG_CFLAGS) $(THREAD_CFLAGS) \
@@ -193,16 +168,11 @@ EXE_STARTUP_OBJ = c0x32.$(OBJ_EXT)
 #
 
 LIB_CFLAGS =
-!ifdef CBX
-LIB_LFLAGS = cfrv
-!else
 !ifdef DEBUG
 LIB_LFLAGS = /C /P4096
 !else
 LIB_LFLAGS = /C /P512
 !endif
-!endif
-
 
 #
 # Libraries to be linked
