@@ -9,7 +9,11 @@ Tue Aug 15 21:25:50 UTC 2006  Ciju John  <johnc@ociweb.com>
         * tao/PortableServer/Servant_var.inl:
 
           Removed the member templates as
-          - They didn't seem to be serving any purpose.
+          - They dodn't seem to be serving any purpose. It appears that the
+          only reason these member templates were defined was so that the
+          hand-crafted constructor could be declared to be
+          explicit. However since the member template constructor is
+          implicit this just adds complexity without any benefits.
           - They were causing build problems in SunStudio 11 builds and
           VxWorks builds using gcc 2.96.
 
