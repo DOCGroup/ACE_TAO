@@ -1,3 +1,14 @@
+Wed Aug 16 08:37:41 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/build_lib.bor:
+        * include/makeinclude/clean.bor:
+        * include/makeinclude/compiler.bor:
+          Removed support for the CBuilderX preview compiler, it has never
+          become more then preview and we don't test with it anymore
+
+        * include/makeinclude/recurse.bor:
+          Removed from the repo, seems not to be used anymore
+
 Thu Aug  3 23:28:41 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/Timeprobe_T.cpp (print_times): More fixed for timestamp
@@ -56,9 +67,9 @@ Mon Jul 24 15:30:33 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 Mon Jul 24 14:52:24 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/TSS_T.cpp (tryacquire): There was a missing '&' in
-  
+
           ACE_Thread::getspecific (this->key_, temp);
-          
+
           Thanks to Thomas Girard <thomas.g.girard at free dot fr> for
           reporting this.
 
