@@ -41,6 +41,8 @@ its high, low and last values randomly.</li> <P>
 
 The main steps of this function are described as follows: <P>
 
+<li>Get the read thread mutex of the stock map.</li> <P>
+
 <li>Locate the stock in the stock database with the same stock name given in the argument.</li> <P>
 
 <li>Create a StockInfo object of the former stock and return it.</li> <P>
@@ -49,6 +51,9 @@ The main steps of this function are described as follows: <P>
 
 This function is called by the Stock Distributor server's thread function to notify the Stock Broker client 
 the state change of the stock it interested in. <P>
+
+<li>Get the read thread mutex of the stock map.</li> <P>
+
 For each stock in the stock database, do the following steps: <P>
 
 <li>Initialze the StockName object with the name of the stock.</li> <P>
@@ -60,6 +65,15 @@ using the former StockName object.</li> <P>
 
 This function will be run when the stock database is started. This function is used to 
 calculate the new high, low and last values of each stock in the stock database. <P>
+
+<li>Get the write thread mutex of the stock map.</li> <P>
+
+<li>Calculate the new values for the stock.</li> <P>
+
+<li>Sleep for a while.</li> <P>
+
+<P> Note: The get_stock_info (), publish_stock_info (), and svc () functions should have mutual exclusion of 
+the stock map. <P>
 
 <hr><b>Email: </b><a href="mailto:"</a<ADDRESS>shanshan.jiang@vanderbilt.edu</ADDRESS>
 
