@@ -40,13 +40,13 @@ The main steps of this function are described as follows: <P>
 
 <PRE>
     CORBA::Object_var obj = orb->resolve_initial_references ("PriorityMappingManager");
-    TAO_Priority_Mapping_Manager_var manager = TAO_Priority_Mapping_Manager::_narrow (obj);
+    TAO_Priority_Mapping_Manager_var manager = TAO_Priority_Mapping_Manager::_narrow (obj.in ());
 </PRE>
 
 <li>Create an instance of Stock Priority Mapping object and install it.</li> <P>
 
 <PRE>
-    RTCORBA::PriorityMapping *my_mapping = new Stock_PriorityMapping;
+    RTCORBA::PriorityMapping *my_mapping = new Stock::Priority_Mapping;
     manager->mapping (my_mapping);
 </PRE>
 
