@@ -1,11 +1,6 @@
 PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 ===========================================================================
 
-PLANNED MAJOR CHANGES TARGETED FOR ACE-5.5.3
-====================================================
-
-. (Remedy) VxWorks 6.3 support
-
 USER VISIBLE CHANGES BETWEEN ACE-5.5.2 and ACE-5.5.3
 ====================================================
 
@@ -14,7 +9,7 @@ USER VISIBLE CHANGES BETWEEN ACE-5.5.2 and ACE-5.5.3
   feature. If you have been using it like 'ACE::debug () > 0' or
   'ACE::debug (1)', you may have to rebuild ACE.
 
-. (OCI) An assembler (within a C source file) based implementation for SPARC
+. An assembler (within a C source file) based implementation for SPARC
   of atomic operations suitable for use with the
   ACE_Atomic_Op<ACE_Thread_Mutex, long> and
   ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long> specializations has
@@ -88,6 +83,8 @@ USER VISIBLE CHANGES BETWEEN ACE-5.5.2 and ACE-5.5.3
   enabled by default in class constructor).
 
 . Support for Intel C++ 9.1 on Windows and Linux
+
+. VxWorks 6.3 support
 
 USER VISIBLE CHANGES BETWEEN ACE-5.5.1 and ACE-5.5.2
 ====================================================
