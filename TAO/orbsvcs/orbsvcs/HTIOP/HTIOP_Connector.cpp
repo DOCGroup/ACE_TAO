@@ -116,7 +116,7 @@ TAO::HTIOP::Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
 }
 
 TAO_Transport *
-TAO::HTIOP::Connector::make_connection (TAO::Profile_Transport_Resolver *r,
+TAO::HTIOP::Connector::make_connection (TAO::Profile_Transport_Resolver *,
                                   TAO_Transport_Descriptor_Interface &desc,
                                   ACE_Time_Value *timeout)
 {
