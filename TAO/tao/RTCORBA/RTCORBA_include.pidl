@@ -32,6 +32,8 @@
 #ifndef _RT_CORBA_INCLUDE_IDL_
 #define _RT_CORBA_INCLUDE_IDL_
 
+#pragma prefix ""
+
 #include "tao/RTCORBA/RTCORBA.pidl"
 
 #endif /* _RT_CORBA_INCLUDE_IDL_ */
