@@ -59,7 +59,7 @@ void Stock_StockNameConsumer_i::push_StockName (::Stock::StockName *the_stocknam
 Stock_StockNameConsumer_i::cookie ()
   throw (::CORBA::SystemException)
 {
-  return this->cookie_;
+  return this->cookie_.in ();
 }
 
 void 
@@ -67,5 +67,6 @@ Stock_StockNameConsumer_i::cookie (::Stock::Cookie *cookie)
   throw (::CORBA::SystemException)
 {
   this->cookie_ = cookie;
+  cookie->_add_ref ();
 }
 

@@ -82,7 +82,7 @@ private:
   /// Name of the stock to listen to.
   CORBA::String_var stock_name_;
   
-  Stock::Cookie *cookie_;
+  Stock::Cookie_var cookie_;
 };
 
 #endif /*  STOCKNAMECONSUMER_I_H_ */
