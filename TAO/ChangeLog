@@ -1,3 +1,8 @@
+Wed Aug 16 15:35:29 UTC 2006  Adam Mitz  <mitza@ociweb.com>
+
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Connector.cpp: fixed warning (unused arg)
+        * tao/Asynch_Queued_Message.h: fixed error in VERSIONED_NAMESPACE build
+
 Tue Aug 15 21:25:50 UTC 2006  Ciju John  <johnc@ociweb.com>
 
         * tao/PortableServer/Servant_var.h:
