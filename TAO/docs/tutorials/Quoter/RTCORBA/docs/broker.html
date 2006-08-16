@@ -118,6 +118,35 @@ The main steps of this function are described as follows: <P>
 <li>Create a new instance of the StockNameConsumer object with the specified name and activate it 
 under the former RTPOA.</li>
 
+
+
+
+
+<h4>Implementing the get_connection_quoter_info () member function</h4>
+
+<li>Return the StockQuoter object.</li>
+
+<PRE>
+    return Stock::StockQuoter::_duplicate (this->quoter_);
+</PRE>
+
+<h4>Implementing the shutdown () member function</h4>
+
+<li>Unsubscribe the StockBroker object.</li>
+
+<PRE>
+    this->distributor_->unsubscribe_notifier (this->consumer_->cookie ());
+</PRE>
+
+<li>Deactivate the StockBroker object.</li>
+
+<PRE>  
+    ::Stock::StockBroker_var broker = this->_this ();
+    PortableServer::ObjectId_var oid = this->_default_POA ()->reference_to_id (broker.in ());
+  
+    this->_default_POA ()->deactivate_object (oid.in ()); 
+</PRE>
+
 <hr><b>Email: </b><a href="mailto:"</a<ADDRESS>shanshan.jiang@vanderbilt.edu</ADDRESS>
 
 </body>
