@@ -1,3 +1,11 @@
+Wed Aug 16 08:18:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ObjRefTemplate/ObjectReferenceTemplate_include.pidl
+        * tao/PortableServer/PortableServer_include.pidl
+        * tao/RTCORBA/RTCORBA_include.pidl
+          Added empty pragma prefix to be able to compile these pidl files
+          correctly when the visual age preprocessor is used on AIX
+
 Wed Aug 16 04:47:24 UTC 2006  Adam Mitz  <mitza@ociweb.com>
 
         * tests/Timed_Buffered_Oneways/client.cpp:
