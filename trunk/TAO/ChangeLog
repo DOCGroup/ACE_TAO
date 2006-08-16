@@ -1,3 +1,31 @@
+Wed Aug 16 17:17:30 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * docs/tutorials/Quoter/RTCORBA/Common_Export.h
+        * docs/tutorials/Quoter/RTCORBA/Stock_PriorityMapping.cpp
+        * docs/tutorials/Quoter/RTCORBA/Distributor.idl
+        * docs/tutorials/Quoter/RTCORBA/Common_i.cpp
+        * docs/tutorials/Quoter/RTCORBA/Broker_i.h
+        * docs/tutorials/Quoter/RTCORBA/Common_i.h
+        * docs/tutorials/Quoter/RTCORBA/Stock_PriorityMapping.h
+        * docs/tutorials/Quoter/RTCORBA/Stock_Database.cpp
+        * docs/tutorials/Quoter/RTCORBA/StockNameConsumer_i.cpp
+        * docs/tutorials/Quoter/RTCORBA/Distributor.cpp
+        * docs/tutorials/Quoter/RTCORBA/Broker.idl
+        * docs/tutorials/Quoter/RTCORBA/Stock_Database.h
+        * docs/tutorials/Quoter/RTCORBA/StockNameConsumer_i.h
+        * docs/tutorials/Quoter/RTCORBA/Common.idl
+        * docs/tutorials/Quoter/RTCORBA/StockQuoter.mpc
+        * docs/tutorials/Quoter/RTCORBA/Distributor_i.cpp
+        * docs/tutorials/Quoter/RTCORBA/Broker.cpp
+        * docs/tutorials/Quoter/RTCORBA/Distributor_i.h
+        * docs/tutorials/Quoter/RTCORBA/Admin.cpp
+        * docs/tutorials/Quoter/RTCORBA/Broker_i.cpp
+        
+          This is a major overhaul of the RTCORBA tutorial to fix bugs,
+          correct a broken priority model, and add new features.
+        
+          Thanks to Doug Schmidt for providing code, feedback, and suggestions. 
+
 Wed Aug 16 15:35:29 UTC 2006  Adam Mitz  <mitza@ociweb.com>
 
         * orbsvcs/orbsvcs/HTIOP/HTIOP_Connector.cpp: fixed warning (unused arg)

@@ -2,111 +2,217 @@
 
 // ACE header files
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_stdlib.h"
+#include "orbsvcs/CosNamingC.h"
+
+// STL strings
+#include <iostream>
+#include <string>
 
 // local header files
 #include "Broker_i.h"
 #include "Distributor_i.h"
 #include "Stock_PriorityMapping.h"
 
-static const char *ior = "file://StockDistributor.ior";
-static const char *priority_level = "2";
-static const char *stock_name = "IBM";
+using Stock::Priority_Mapping;
 
-int parse_args (int argc, char *argv[])
+// Name of the file that stores the StockDistributor IOR.
+static std::string ior = "file://StockDistributor.ior";
+
+// Name of the StockDistributor registered with the Naming Service.
+static std::string distributor_name = "StockDistributor";
+
+// Default priority level for running the broker.
+static Priority_Mapping::Priority priority_level 
+    = Priority_Mapping::MEDIUM;
+
+// Default stock name.
+static std::string stock_name = "IBM";
+
+// A flag that indicates use of the Naming Service.
+bool use_naming = false;
+
+static int 
+parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:p:n:");
+  ACE_Get_Opt get_opts (argc, argv, "o:p:n:c");
   int c;
 
   while ((c = get_opts ()) != -1)
-  {
-    switch (c)
     {
-      case 'o':
-        ior = get_opts.opt_arg ();
-        break;
-      case 'p':
-        priority_level = get_opts.opt_arg ();
-        break;
-      case 'n':
-        stock_name = get_opts.opt_arg ();
-        break;
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                          "usage: %s\n"
-                          "-o <Distributor IOR> (default is file://StockDistributor.ior) \n"
-                          "-p <Priority> (default is 2) \n"
-                          "-n <Stock name> (default is IBM) \n"
-                          "\n",
-                          argv [0]),
-                          -1);
+      switch (c)
+        {
+        case 'o':
+          ior = get_opts.opt_arg ();
+          break;
+        case 'p':
+          switch (ACE_OS::atoi (get_opts.opt_arg ()))
+            {
+            case 0:
+              priority_level = Priority_Mapping::VERY_LOW;
+              break;
+              
+            case 1:
+              priority_level = Priority_Mapping::LOW;
+              break;
+              
+            case 2:
+              priority_level = Priority_Mapping::MEDIUM;
+              break;
+              
+            case 3:
+              priority_level = Priority_Mapping::HIGH;
+              break;
+              
+            case 4:
+              priority_level = Priority_Mapping::VERY_HIGH;
+              break;
+              
+            default:
+              std::cerr << "Warning: Invalid priority detected, defaulting to very low.\n";
+              priority_level = Priority_Mapping::VERY_LOW;
+              break;
+              
+            }
+          break;
+
+        case 'n':
+          stock_name = get_opts.opt_arg ();
+          break;
+        case 'c':
+          use_naming = true;
+          break;
+          
+        case '?':
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "usage: %s\n"
+                             "-o <Distributor IOR> (default is file://StockDistributor.ior) \n"
+                             "-p <Priority> (default is 2) \n"
+                             "-n <Stock name> (default is IBM) \n"
+                             "-c Use the naming service"
+                             "\n",
+                             argv [0]),
+                            -1);
+        }
     }
-  }
 
   return 0;
 }
 
-int main (int argc, char *argv[])
+static CORBA::Object_ptr
+get_distributor_reference (CORBA::ORB_ptr orb)
 {
-  if (parse_args (argc, argv) != 0)
-    return 1;
-
-  try
-  {
-    // Initialiaze the ORB.
-    CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
-
-    // Get a reference to the RootPOA.
-    CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA");
-    PortableServer::POA_var poa = PortableServer::POA::_narrow (obj);
-
-    // Activate the POAManager.
-    PortableServer::POAManager_var mgr = poa->the_POAManager ();
-    mgr->activate ();
-
-    // Create an instance of the <StockBroker>.
-    static const RTCORBA::Priority priority = static_cast<RTCORBA::Priority> (atoi (priority_level));
-    Stock_StockBrokerHome_i stock_broker_home (orb, stock_name, priority);
-    Stock::StockBroker_var stock_broker = stock_broker_home.create ();
-    if (CORBA::is_nil (stock_broker.in ()))
+  if (use_naming)
     {
-      ACE_ERROR_RETURN ((LM_DEBUG,
-                         "Nil StockBroker object reference <%s>\n",
-                         ior),
-                        1);
-    }
+      CORBA::Object_var tmp =
+        orb->resolve_initial_references ("NameService");
 
+      CosNaming::NamingContext_var pns =
+        CosNaming::NamingContext::_narrow (tmp.in ());
+
+      CosNaming::Name name (1);
+      name.length (1);
+      name[0].id = distributor_name.c_str ();
+
+      return pns->resolve (name);
+    }
+  else
     // Read and destringify the Stock_Distributor object's IOR.
-    obj = orb->string_to_object (ior);
+    return orb->string_to_object (ior.c_str ());
+}
 
-    // Narrow the IOR to a Stock_Distributor object reference.
-    Stock::StockDistributor_var stock_distributor = Stock::StockDistributor::_narrow(obj);
-    if (CORBA::is_nil (stock_distributor.in ()))
+int 
+main (int argc, char *argv[])
+{
+  try
     {
-      ACE_ERROR_RETURN ((LM_DEBUG,
-                         "Nil StockDistributor object reference <%s>\n",
-                         ior),
-                        1);
+      // Initialiaze the ORB.
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+
+      // This call MUST come after ORB_init(), which may need to
+      // extract -ORB options first.
+      if (parse_args (argc, argv) != 0)
+        return 1;
+
+      // Get a reference to the RootPOA.
+      CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA");
+      PortableServer::POA_var poa = PortableServer::POA::_narrow (obj);
+
+      // Activate the POAManager.
+      PortableServer::POAManager_var mgr = poa->the_POAManager ();
+      mgr->activate ();
+
+      // Read and destringify the Stock_Distributor object's IOR.
+      obj = get_distributor_reference (orb);
+
+      // Narrow the IOR to a Stock_Distributor object reference.
+      Stock::StockDistributor_var stock_distributor =
+        Stock::StockDistributor::_narrow (obj);
+
+      if (CORBA::is_nil (stock_distributor.in ()))
+        ACE_ERROR_RETURN ((LM_DEBUG,
+                           "Nil StockDistributor object reference <%s>\n",
+                           ior.c_str ()),
+                          1);
+
+      // Create an instance of the <StockBroker>.
+
+      // Create the factory object. Create a <Stock::StockBroker>.
+      Stock_StockBrokerHome_i stock_broker_home (orb);
+      Stock::StockBroker_var stock_broker = 
+        stock_broker_home.create (stock_distributor.in (),
+                                  stock_name.c_str ());
+
+      if (CORBA::is_nil (stock_broker.in ()))
+        ACE_ERROR_RETURN ((LM_DEBUG,
+                           "Nil StockBroker object reference <%s>\n",
+                           ior.c_str ()),
+                          1);
+      
+      // Create a new consumer and initialize it.
+      Stock::StockNameConsumer_var consumer =
+        stock_broker->get_consumer_notifier ();
+
+      // Subscribe the consumer with the distributor.
+      ::Stock::Cookie_var cookie = 
+          stock_distributor->subscribe_notifier (consumer, priority_level);
+      
+      consumer->cookie (cookie.in ());
+
+      // Get the object reference to a StockQuoter that's been
+      // activated at the appropriate priority.
+      Stock::StockQuoter_var stock_quoter =
+        stock_distributor->provide_quoter_info (cookie.in ());
+
+      if (CORBA::is_nil (stock_quoter.in ()))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "ERROR: Quoter reference was nil!\n"),
+                          -1);
+
+      // Stash the stock_quoter object reference away for later use.
+      stock_broker->connect_quoter_info (stock_quoter);
+
+      // Run the event loop.
+      ACE_DEBUG ((LM_DEBUG, 
+                  "running the event loop:\n"
+                  "*** message: ready to receieve stock information...\n\n"));
+      orb->run ();
+      
+      // Cleanup the POA and ORB.
+      poa->destroy (1, 1);
+      orb->destroy ();
+    }
+  catch (CORBA::Exception &ex)
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "Exception caught:");
+      return 1;
+    }
+  catch (...)
+    {
+      ACE_ERROR ((LM_ERROR, "Broker: Caught unknown C++ exception\n"));
     }
 
-    // Connect the <stock_quoter> to the <stock_broker>.
-    Stock::StockQuoter_var stock_quoter = stock_distributor->provide_quoter_info ();
-    stock_broker->connect_quoter_info (stock_quoter);
-
-    // Create a new consumer; initialize it; subscribe to the notification service.
-    Stock::StockNameConsumer_var consumer = stock_broker->get_consumer_notifier ();
-    stock_distributor->subscribe_notifier (consumer, priority);
-
-    // Run the event loop.
-    ACE_DEBUG ((LM_DEBUG, "*** message: ready to receieve stock information...\n"));
-    orb->run ();
-    orb->destroy ();
-  }
-  catch (CORBA::Exception &ex)
-  {
-    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                         "Exception caught:");
-    return 1;
-  }
   return 0;
 }
