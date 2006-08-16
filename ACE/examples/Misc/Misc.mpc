@@ -44,6 +44,13 @@ project(*test_sstring) : aceexe {
   }
 }
 
+project(*test_timestamp) : aceexe {
+  exename = test_timestamp
+  Source_Files {
+    test_timestamp.cpp
+  }
+}
+
 project(*test_trace) : aceexe {
   exename = test_trace
   Source_Files {
