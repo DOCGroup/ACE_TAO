@@ -1,3 +1,13 @@
+Thu Aug 17 08:30:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/ciao_client_dnc.mpb:
+        * bin/MakeProjectCreator/config/ciao_deployment_stub.mpb:
+        * bin/MakeProjectCreator/config/ciao_deployment_svnt.mpb:
+        * bin/MakeProjectCreator/config/ciao_events_dnc.mpb:
+        * bin/MakeProjectCreator/config/ciao_rtevent_dnc.mpb:
+          Removed -Sc form the taoidlflags, it is deprecated already sometime
+          ago
+
 Wed Aug 16 22:19:47 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * ace/Acceptor.h: Doxygen improvements.
@@ -21,7 +31,7 @@ Wed Aug 16 14:51:58 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * docs/svn/svn-prefs.reg
         * docs/svn/config
-        
+
           Updated to correct keywords values, and add use-commit-times
           as a default option.
 
