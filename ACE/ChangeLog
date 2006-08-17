@@ -1,3 +1,31 @@
+Thu Aug 17 14:20:00 UTC 2006  Simon Massey  <sma@prismtech.com>
+
+        * apps/drwho/Binary_Search.cpp:
+        * apps/drwho/CM_Client.cpp:
+        * apps/drwho/CM_Server.cpp:
+        * apps/drwho/Hash_Table.cpp:
+        * apps/drwho/Options.cpp:
+        * apps/drwho/Options.h:
+        * apps/drwho/PMC_All.cpp:
+        * apps/drwho/PMC_Flo.cpp:
+        * apps/drwho/PMC_Ruser.cpp:
+        * apps/drwho/PMC_Usr.cpp:
+        * apps/drwho/PMS_All.cpp:
+        * apps/drwho/PMS_Flo.cpp:
+        * apps/drwho/PMS_Ruser.cpp:
+        * apps/drwho/PMS_Usr.cpp:
+        * apps/drwho/Protocol_Manger.cpp:
+        * apps/drwho/Protocol_Record.cpp:
+        * apps/drwho/Rwho_DB_Manager.cpp:
+        * apps/drwho/Search_Struct.cpp:
+        * apps/drwho/Single_Lookup.cpp:
+        * apps/Gateway/Gateway/Gateway.cpp:
+        * apps/Gateway/Gateway/Options.cpp:
+        * apps/Gateway/Gateway/Options.h:
+
+          Renamed the enum ID "DEBUG" to "DEBUGGING", was causing problems
+          with MFC builds.
+
 Thu Aug 17 12:15:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/SString_Test.cpp:

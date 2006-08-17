@@ -46,7 +46,7 @@ Protocol_Manager::Protocol_Manager (void)
 
 Protocol_Manager::~Protocol_Manager (void)
 {
-  if (Options::get_opt (Options::DEBUG))
+  if (Options::get_opt (Options::DEBUGGING))
     ACE_DEBUG ((LM_DEBUG,
                 "disposing Protocol_Manager\n"));
 }

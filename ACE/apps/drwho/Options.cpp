@@ -98,7 +98,7 @@ Options::set_options (int argc, char *argv[])
           Options::set_opt (Options::BE_A_DAEMON);
           break;
         case 'd':
-          Options::set_opt (Options::DEBUG);
+          Options::set_opt (Options::DEBUGGING);
           break;
         case 'f':
           Options::friend_file = getopt.opt_arg ();

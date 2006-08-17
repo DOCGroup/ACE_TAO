@@ -6,7 +6,7 @@
 
 Search_Struct::~Search_Struct (void)
 {
-  if (Options::get_opt (Options::DEBUG))
+  if (Options::get_opt (Options::DEBUGGING))
     ACE_DEBUG ((LM_DEBUG,
                 "disposing Search_Struct\n"));
 }
