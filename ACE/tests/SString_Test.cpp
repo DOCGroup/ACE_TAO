@@ -87,6 +87,9 @@ run_main (int, ACE_TCHAR *[])
     ACE_CString empty_string;
     ACE_CString zero_size_string (s1.c_str (), 0, 0, 1);
 
+    if (ACE_CString::npos == 0)
+      ACE_ERROR((LM_ERROR,"Set #1: npos is incorrect.\n"));
+
     // Not equal comparisons. Error if they are equal
     if (s1 == s2){ACE_ERROR((LM_ERROR,"Set #1:\n"));return 1;}
     if (s1 == s5){ACE_ERROR((LM_ERROR,"Set #1: \n"));return 1;}
