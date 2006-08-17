@@ -10,7 +10,7 @@ Drwho_Node Protocol_Record::drwho_node_;
 
 Protocol_Record::~Protocol_Record (void)
 {
-  if (Options::get_opt (Options::DEBUG))
+  if (Options::get_opt (Options::DEBUGGING))
     ACE_DEBUG ((LM_DEBUG,
                 "disposing Protocol_Record\n"));
 

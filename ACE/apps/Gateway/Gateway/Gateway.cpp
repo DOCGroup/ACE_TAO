@@ -222,7 +222,7 @@ Gateway::parse_connection_config_file (void)
       // increase by 1.
       previous_connection_id = pci.connection_id_;
 
-      if (Options::instance ()->enabled (Options::DEBUG))
+      if (Options::instance ()->enabled (Options::DEBUGGING))
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("(%t) conn id = %d, ")
                     ACE_TEXT ("host = %s, ")
@@ -283,7 +283,7 @@ Gateway::parse_consumer_config_file (void)
     {
       file_empty = 0;
 
-      if (Options::instance ()->enabled (Options::DEBUG))
+      if (Options::instance ()->enabled (Options::DEBUGGING))
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%t) connection id = %d, payload = %d, ")

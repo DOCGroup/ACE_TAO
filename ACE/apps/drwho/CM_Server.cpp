@@ -47,7 +47,7 @@ CM_Server::receive (int)
 {
   int sin_len = sizeof this->sin_;
 
-  if (Options::get_opt (Options::DEBUG) != 0)
+  if (Options::get_opt (Options::DEBUGGING) != 0)
     ACE_DEBUG ((LM_DEBUG, "waiting for client to send...\n"));
 
   int n = ACE_OS::recvfrom (this->sokfd_,
@@ -59,7 +59,7 @@ CM_Server::receive (int)
   if (n == -1)
     return -1;
 
-  if (Options::get_opt (Options::DEBUG) != 0)
+  if (Options::get_opt (Options::DEBUGGING) != 0)
     ACE_DEBUG ((LM_DEBUG,
                 "receiving from client host %s\n",
                 ACE_OS::inet_ntoa (this->sin_.sin_addr)));
@@ -79,7 +79,7 @@ CM_Server::send (void)
                  packet_length) < 0)
     return -1;
 
-  if (Options::get_opt (Options::DEBUG) != 0)
+  if (Options::get_opt (Options::DEBUGGING) != 0)
     ACE_DEBUG ((LM_DEBUG,
                 "sending to client host %s\n",
                 ACE_OS::inet_ntoa (this->sin_.sin_addr)));
@@ -101,7 +101,7 @@ CM_Server::CM_Server (void)
 
 CM_Server::~CM_Server (void)
 {
-  if (Options::get_opt (Options::DEBUG))
+  if (Options::get_opt (Options::DEBUGGING))
     ACE_DEBUG ((LM_DEBUG,
                 "CM_Server\n"));
 

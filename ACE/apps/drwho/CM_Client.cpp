@@ -64,7 +64,7 @@ CM_Client::receive (int timeout)
             return -1;
           else
             {
-              if (Options::get_opt (Options::DEBUG) != 0)
+              if (Options::get_opt (Options::DEBUGGING) != 0)
                 {
                   hostent *np = ACE_OS::gethostbyaddr ((char *) &this->sin_.sin_addr,
                                                        sizeof this->sin_.sin_addr,
@@ -105,7 +105,7 @@ CM_Client::send (void)
 
   while (Multicast_Manager::get_next_host_addr (this->sin_.sin_addr) != 0)
     {
-      if (Options::get_opt (Options::DEBUG) != 0)
+      if (Options::get_opt (Options::DEBUGGING) != 0)
         {
           hostent *np = ACE_OS::gethostbyaddr ((char *) &this->sin_.sin_addr,
                                                sizeof this->sin_.sin_addr,
@@ -135,7 +135,7 @@ CM_Client::CM_Client (void)
 
 CM_Client::~CM_Client (void)
 {
-  if (Options::get_opt (Options::DEBUG))
+  if (Options::get_opt (Options::DEBUGGING))
     ACE_DEBUG ((LM_DEBUG,
                 "disposing CM_Client\n"));
 

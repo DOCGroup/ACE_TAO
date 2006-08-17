@@ -12,7 +12,7 @@
 int
 PMC_Usr::encode (char *packet, int &packet_length)
 {
-  if (Options::get_opt (Options::DEBUG) != 0)
+  if (Options::get_opt (Options::DEBUGGING) != 0)
     ACE_DEBUG ((LM_DEBUG,
                 "in PMC_Usr::encode"));
 
@@ -29,7 +29,7 @@ PMC_Usr::encode (char *packet, int &packet_length)
 
   packet_length = buf_ptr - packet;
 
-  if (Options::get_opt (Options::DEBUG) != 0)
+  if (Options::get_opt (Options::DEBUGGING) != 0)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "packet_length = %d\n",
@@ -47,7 +47,7 @@ PMC_Usr::encode (char *packet, int &packet_length)
 int
 PMC_Usr::decode (char *packet, int &packet_length)
 {
-  if (Options::get_opt (Options::DEBUG) != 0)
+  if (Options::get_opt (Options::DEBUGGING) != 0)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "in PMC_Usr::decode, packet_length = %d\n",
