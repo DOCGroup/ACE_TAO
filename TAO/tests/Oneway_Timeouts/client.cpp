@@ -460,7 +460,8 @@ int main (int ac, char *av[])
               ms = num_requests_sent * request_interval;
             }
 
-          if (std::abs (ms - connect_timeout) > TIME_THRESHOLD)
+          if (std::abs (static_cast<int>(ms - connect_timeout))
+              > TIME_THRESHOLD)
             {
               cerr << "Error: Timeout expected in " << connect_timeout
                    << "ms, but took " << ms << "ms" << endl;

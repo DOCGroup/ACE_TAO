@@ -146,7 +146,8 @@ setup_policies (CORBA::ORB_ptr orb, test_ptr object ACE_ENV_ARG_DECL)
                                        ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
-      object_with_policy = test::_narrow (object_temp ACE_ENV_ARG_PARAMETER);
+      object_with_policy = test::_narrow (object_temp.in ()
+                                          ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       policy_list[0]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -172,7 +173,7 @@ setup_policies (CORBA::ORB_ptr orb, test_ptr object ACE_ENV_ARG_DECL)
                                                ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  test_var object_with_two_policies = test::_narrow (object_temp
+  test_var object_with_two_policies = test::_narrow (object_temp.in ()
                                                      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
