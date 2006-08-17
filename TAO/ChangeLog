@@ -1,3 +1,14 @@
+Thu Aug 17 12:54:58 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/lex.yy.cpp:
+
+          Touched this file, to eliminate warnings about it being possible
+          outdated, since minor changes were made in
+
+          Wed Aug 16 17:29:44 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+          to idl.ll, which generates it.
+
 Wed Aug 16 21:48:22 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
 
         * docs/tutorials/Quoter/RTCORBA/docs/broker.html
@@ -16,7 +27,7 @@ Wed Aug 16 18:09:44 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * docs/tutorials/Quoter/RTCORBA/StockNameConsumer_i.cpp
         * docs/tutorials/Quoter/RTCORBA/StockNameConsumer_i.h
-        
+
           Improved valuetype memory management.
 
 Wed Aug 16 17:29:44 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
