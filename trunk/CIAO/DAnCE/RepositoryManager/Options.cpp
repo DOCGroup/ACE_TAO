@@ -56,10 +56,8 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
       case 'T':
         this->all_types_ = true;
         break;
-      case 'a':
-        this->names_by_type_ = true;
-        break;
       case 't':
+        this->names_by_type_ = true;
         this->type_ = get_opt.opt_arg ();
         break;
         // Usage fallthrough.
@@ -72,7 +70,8 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
     && (this->shutdown_ == false)
     && (this->uuid_ == "")
     && (this->all_names_ == false)
-    && (this->all_types_ == false))
+    && (this->all_types_ == false)
+    && (this->names_by_type_ == false))
   {
     this->usage ();
     return false;
@@ -97,7 +96,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
   }
   else if (this->uuid_ != "")
   {
-    if (!this->find_ && !this->names_by_type_)
+    if (!this->find_)
     {
       this->usage ();
       return false;
