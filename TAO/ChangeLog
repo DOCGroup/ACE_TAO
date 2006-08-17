@@ -1,3 +1,15 @@
+Thu Aug 17 20:46:29 UTC 2006  Adam Mitz  <mitza@ociweb.com>
+
+        * orbsvcs/tests/ImplRepo/Bug_2604_Regression/Bug_2604.mpc:
+          Set the exename explicitly, the default wasn't behaving as expected.
+
+        * tests/Oneway_Timeouts/client.cpp:
+          Added a cast to int to eliminate warning about ambiguous call to
+          std::abs().
+
+        * tests/Timed_Buffered_Oneways/client.cpp:
+          Eliminated warnings due to using var's without ".in():.
+
 Thu Aug 17 12:54:58 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/lex.yy.cpp:
