@@ -3,7 +3,7 @@
 
 project : rtevent_serv, ciao_events_base_dnc {
   includes   += $(CIAO_ROOT)/ciaosvcs/Events
-  idlflags += -I$(CIAO_ROOT)/ciaosvcs/Events -Sc
+  idlflags += -I$(CIAO_ROOT)/ciaosvcs/Events
   libs     += CIAO_RTEvent
   after    += CIAO_RTEvent
 }
