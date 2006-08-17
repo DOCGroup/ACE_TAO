@@ -14,6 +14,7 @@
  *  the D&C spec
  *
  * @author Stoyan Paunov
+ *         Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
  */
 //======================================================================
 
@@ -28,13 +29,11 @@
 //hash tables because the specificType field in assembly interfaces
 //is empty, so two unrelated intefaces appear to be related.
 
-//uncomment this line to turn on the code that relates to interface types
-//#define ASSEMBLY_INTERFACE_SUPPORT 1
-
 
 #include "RepositoryManagerDaemonS.h"
 
-#include "ace/Hash_Map_Manager.h"      //for the ACE_Hash_Map_Manager
+#include "ace/Hash_Map_Manager_T.h"      //for the ACE_Hash_Map_Manager
+#include "ace/Hash_Multi_Map_Manager_T.h"      //for the ACE_Hash_MultiMap_Manager
 #include "ace/Null_Mutex.h"          //for ACE_Null_Mutex
 #include "ace/RW_Mutex.h"          //for ACE_RW_Mutex
 #include "ace/OS_NS_string.h"        //for ACE_CString
@@ -44,6 +43,16 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+namespace
+{
+  const static size_t TEMP_LEN = 1024;
+
+  const static char* PC_EXTENSION = ".epc";
+
+  const static char *RM_RECORD_FILE = "RM_record";
+  const static char *RM_RECORD_NAME_SECTION = "Names";
+  const static char *RM_RECORD_UUID_SECTION = "UUIDs";
+}
 
 class  CIAO_RepositoryManagerDaemon_i :
   public virtual POA_CIAO::RepositoryManagerDaemon
@@ -140,124 +149,116 @@ public:
       ::Deployment::NoSuchName
     ));
 
-  protected:
+protected:
 
-    /// Function to parse and return the PackageConfiguration from a specified
-    /// package
-    Deployment::PackageConfiguration* retrieve_PC_from_package (char* package);
+  /// Function to parse and return the PackageConfiguration from a specified
+  /// package
+  Deployment::PackageConfiguration* retrieve_PC_from_package (char* package);
 
-    /// Find out what the name of the PackageConfiguration file is
-    void find_PC_name (char* package, ACE_CString& pcd_name);
+  /// Find out what the name of the PackageConfiguration file is
+  void find_PC_name (char* package, ACE_CString& pcd_name);
 
-    /// Function to parse and return the PackageConfiguration from the already
-    /// extracted descriptor files
-    Deployment::PackageConfiguration* retrieve_PC_from_descriptors (const char* pc_name,
-                                    const char* descriptor_dir);
-
-
-    /// Function to retrieve a file via HTTP
-    /// stores the file in the passed preallocated ACE_Message_Block
-    /// @retval 1 success
-    /// @retval 0 error
-
-    int HTTP_Get (const char* URL, ACE_Message_Block &mb);
-
-    /// Function to extract all necessary files for parsing the
-    /// PackageConfiguration descriptor and populating the idl struct.
-    /// @retval 1 success
-    /// @retval 0 error
-    ///
-    /// @note ACE_CString& pcd_name is an out parameter
-
-    int extract_descriptor_files (char* package,
-                                  ACE_CString& pcd_name);
+  /// Function to parse and return the PackageConfiguration from the already
+  /// extracted descriptor files
+  Deployment::PackageConfiguration* retrieve_PC_from_descriptors (const char* pc_name,
+                                                                  const char* descriptor_dir);
 
 
-    ///function to remove the files extracted for parsing the PackageConfiguration
-    ///descriptor and populating the idl struct. It reads the names of the files
-    ///from the package. They correspond to the names on disk.
-    ///return 1 on success
-    ///       0 on error
+  /// Function to retrieve a file via HTTP
+  /// stores the file in the passed preallocated ACE_Message_Block
+  /// @retval 1 success
+  /// @retval 0 error
 
-    int remove_descriptor_files (char* package);
+  int HTTP_Get (const char* URL, ACE_Message_Block &mb);
+
+  /// Function to extract all necessary files for parsing the
+  /// PackageConfiguration descriptor and populating the idl struct.
+  /// @retval 1 success
+  /// @retval 0 error
+  ///
+  /// @note ACE_CString& pcd_name is an out parameter
+
+  int extract_descriptor_files (char* package,
+    ACE_CString& pcd_name);
 
 
-    ///function to remove the files extracted from the package upon istallation
-    ///It reads the names of the files from the package. They correspond to the
-    ///names on disk. It deletes each file, then it deletes the directories that
-    ///contain them.
-    ///NOTE: extraction location is path/*archive_name*/
-    ///returns 1 on success
-    ///        0 on error
+  ///function to remove the files extracted for parsing the PackageConfiguration
+  ///descriptor and populating the idl struct. It reads the names of the files
+  ///from the package. They correspond to the names on disk.
+  ///return 1 on success
+  ///       0 on error
 
-    int remove_extracted_package (const char* package_path, const char* extraction_location);
+  int remove_descriptor_files (char* package);
 
-#if defined ASSEMBLY_INTERFACE_SUPPORT
-    ///function to extract the type of the component from
-    ///the PackageConfiguration and update the interface map
-    ///returns 1 on success
-    ///        0 on error
 
-    int add_type (::Deployment::PackageConfiguration& pc,
-          const char* name);
+  ///function to remove the files extracted from the package upon istallation
+  ///It reads the names of the files from the package. They correspond to the
+  ///names on disk. It deletes each file, then it deletes the directories that
+  ///contain them.
+  ///NOTE: extraction location is path/*archive_name*/
+  ///returns 1 on success
+  ///        0 on error
 
-      ///function to remove the interface type of the component
-    ///being removed from the interface map
-    ///returns 1 on success
-    ///        0 on error
+  int remove_extracted_package (const char* package_path, const char* extraction_location);
 
-    int remove_type (::Deployment::PackageConfiguration& pc,
-             const char* name);
+  ///function to extract the type of the component from
+  ///the PackageConfiguration and update the interface map
+  ///returns 1 on success
+  ///        0 on error
 
-#endif
+  int add_type (::Deployment::PackageConfiguration& pc,
+                const char* name);
 
-    ///function to dump the state of the RepositoryManager
-    void dump (void);
+  ///function to remove the interface type of the component
+  ///being removed from the interface map
+  ///returns 1 on success
+  ///        0 on error
 
-  private:
+  int remove_type (::Deployment::PackageConfiguration& pc,
+                   const char* name);
+
+  ///function to dump the state of the RepositoryManager
+  void dump (void);
+
+private:
   /// Cached information about the installed PackageConfigurations
   /// A separate map for the installation names and their UUID's
-    /// Key:  PackageConfiguration name or its UUID (CString type)
-    /// Value:  The location of the local copy of the package
+  /// Key:  PackageConfiguration name or its UUID (CString type)
+  /// Value:  The location of the local copy of the package
 
   ///Based on the synchronization needed we can parametrize this with either
   ///ACE_Null_Mutex or ACE_RW_Mutex
 
-    typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
-                                    ACE_CString,
-                                    ACE_Hash<ACE_CString>,
-                                    ACE_Equal_To<ACE_CString>,
-                                    ACE_RW_Mutex> PCMap;
+  typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
+                                  ACE_CString,
+                                  ACE_Hash<ACE_CString>,
+                                  ACE_Equal_To<ACE_CString>,
+                                  ACE_RW_Mutex> PCMap;
 
-
-  typedef PCMap::iterator PCMap_Iterator;
-  typedef ACE_Hash_Map_Entry <ACE_CString,ACE_CString> PCEntry;
+  typedef PCMap::ITERATOR PCMap_Iterator;
+  typedef PCMap::ENTRY PCEntry;
 
 
   /// Cached information about the installed Component Interfaces
-  /// A map which associates Component Interface UUIDs with the
+  /// A map which associates Component supportedType with the
   /// names of packages which implement this component type
-  /// Key:  Component Interface UUID
-  /// Value:  linked list of the names of installed packages which
+  /// Key:  Component supportedType
+  /// Value:  Unbounded set of the names of installed packages which
   ///      implement this component type
 
   ///Based on the synchronization needed we can parametrize this with either
   ///ACE_Null_Mutex or ACE_RW_Mutex
 
-    typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
-                                    ACE_CString,
-                                    ACE_Hash<ACE_CString>,
-                                    ACE_Equal_To<ACE_CString>,
-                                    ACE_RW_Mutex> CIMap;
+  typedef ACE_Hash_Multi_Map_Manager<ACE_CString,
+                                     ACE_CString,
+                                     ACE_Hash<ACE_CString>,
+                                     ACE_Equal_To<ACE_CString>,
+                                     ACE_RW_Mutex> CIMap;
 
-
-  typedef CIMap::iterator CIMap_Iterator;
-  typedef ACE_Hash_Map_Entry <ACE_CString,ACE_CString> CIEntry;
-  typedef ACE_Hash_Map_Bucket_Iterator<ACE_CString,
-                                       ACE_CString,
-                                       ACE_Hash<ACE_CString>,
-                                       ACE_Equal_To<ACE_CString>,
-                                       ACE_RW_Mutex> CIBucket_Iterator;
+  typedef CIMap::ITERATOR CIMap_Iterator;
+  typedef CIMap::ENTRY CIEntry;
+  typedef CIEntry::VALUE_SET CISet;
+  typedef CIEntry::VALUE_SET_ITERATOR CISet_Iterator;
 
   //a hash map that associates the names of
   //PackageConfigurations with their location
@@ -266,19 +267,10 @@ public:
   /// a hash map that associates the UUIDs of
   /// PackageConfigurations with their location
   PCMap uuids_;
-  
-  static  const  size_t TEMP_LEN = 1024;
-  static  const  char* PC_EXTENSION;
-  static  const  char *RM_RECORD_FILE;
-  static  const  char *RM_RECORD_NAME_SECTION;
-  static  const  char *RM_RECORD_UUID_SECTION;
- 
-#if defined ASSEMBLY_INTERFACE_SUPPORT
-  static const char *RM_RECORD_TYPE_SECTION;
+
   //a hash map which associates Component Interface
   //UUIDs with their implementations
   CIMap types_;
-#endif
 
   //the ORB
   CORBA::ORB_var the_orb_;
