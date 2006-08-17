@@ -3283,8 +3283,8 @@ idl_find_node (char *s)
 
   if (node != 0)
     {
-      d = idl_global->scopes ().top_non_null ()->lookup_by_name (node,
-                                                                 true);
+      d =
+        idl_global->scopes ().top_non_null ()->lookup_by_name (node, true);
     }
 
   if (d == 0)
@@ -3295,6 +3295,5 @@ idl_find_node (char *s)
   node->destroy ();
   delete node;
   node = 0;
-
   return d;
 }
