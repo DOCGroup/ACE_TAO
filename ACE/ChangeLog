@@ -1,3 +1,10 @@
+Thu Aug 17 12:15:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/SString_Test.cpp:
+          Added a check whether npos is zero, if it is print an error,
+          with Intel C++ 9.0 with the Microsoft platform SDK this seems
+          to be zero
+
 Thu Aug 17 08:30:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/ciao_client_dnc.mpb:
