@@ -18,7 +18,7 @@
 int
 PMC_Ruser::encode (char *packet, int &packet_length)
 {
-  if (Options::get_opt (Options::DEBUG) != 0)
+  if (Options::get_opt (Options::DEBUGGING) != 0)
     ACE_DEBUG ((LM_DEBUG,
                 "in PMC_Ruser::encode\n"));
 
@@ -43,7 +43,7 @@ PMC_Ruser::encode (char *packet, int &packet_length)
 int
 PMC_Ruser::decode (char *packet, int &packet_length)
 {
-  if (Options::get_opt (Options::DEBUG) != 0)
+  if (Options::get_opt (Options::DEBUGGING) != 0)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "in PMC_Ruser::decode, packet_length = %d\n",

@@ -20,7 +20,7 @@
 int
 PMS_Ruser::encode (char *packet, int &packet_length)
 {
-  if (Options::get_opt (Options::DEBUG) != 0)
+  if (Options::get_opt (Options::DEBUGGING) != 0)
     ACE_DEBUG ((LM_DEBUG,
                 "in PMS_Ruser::encode"));
 
@@ -44,7 +44,7 @@ PMS_Ruser::encode (char *packet, int &packet_length)
   *buf_ptr++ = '\n';
   packet_length = buf_ptr - packet;
 
-  if (Options::get_opt (Options::DEBUG) != 0)
+  if (Options::get_opt (Options::DEBUGGING) != 0)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "packet_length = %d\n",
@@ -63,7 +63,7 @@ PMS_Ruser::encode (char *packet, int &packet_length)
 int
 PMS_Ruser::decode (char *packet, int &packet_length)
 {
-  if (Options::get_opt (Options::DEBUG) != 0)
+  if (Options::get_opt (Options::DEBUGGING) != 0)
     ACE_DEBUG ((LM_DEBUG,
                 "in PMS_Ruser::decode, packet_length = %d\n",
                 packet_length));

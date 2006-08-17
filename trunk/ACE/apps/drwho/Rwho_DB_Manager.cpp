@@ -50,7 +50,7 @@ RWho_DB_Manager::~RWho_DB_Manager (void)
                 Options::program_name,
                 1));
 
-  if (Options::get_opt (Options::DEBUG))
+  if (Options::get_opt (Options::DEBUGGING))
     ACE_DEBUG ((LM_DEBUG,
                 "disposing the RWho_DB_Manager\n"));
 }
