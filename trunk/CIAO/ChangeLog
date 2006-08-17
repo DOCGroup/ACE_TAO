@@ -1,3 +1,13 @@
+Thu Aug 17 16:09:09 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
+
+        * DAnCE/RepositoryManager/Options.cpp
+        * DAnCE/RepositoryManager/RMadmin.cpp
+        * DAnCE/RepositoryManager/RepositoryManager_Impl.h
+        * DAnCE/RepositoryManager/RepositoryManager_Impl.cpp
+          Reimplemented the findNamesByType () and getAllTypes () operations
+          of Repository Manager, which use the newly generated
+          ACE_Hash_MultiMap_Manager class and its corresponding classes.        
+
 Mon Aug 14 15:46:34 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tools/Config_Handlers/Utils/XML_Helper.h
