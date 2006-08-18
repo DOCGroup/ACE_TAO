@@ -322,7 +322,7 @@ TAO_IIOP_Connection_Handler::handle_timeout (const ACE_Time_Value &,
   // We don't use this upcall for I/O.  This is only used by the
   // Connector to indicate that the connection timedout.  Therefore,
   // we should call close().
-  int ret = this->close ();
+  int const ret = this->close ();
   this->reset_state (TAO_LF_Event::LFS_TIMEOUT);
   return ret;
 }

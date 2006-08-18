@@ -1,3 +1,29 @@
+Fri Aug 18 07:17:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/GIOP_Message_Base.cpp:
+          Fixed incorrect method name in debug macro. When the parsing of the
+          request header has failed, throw the marshal exception directly, don't
+          try to process the service context and assign translators, we just
+          don't know at this stage if that is safe to do, so don't do that.
+          Also in parse_request_id do the demarshaling of the service contexts
+          and the request id in two seperate steps, if the demarshaling of the
+          service context fails, then we can't demarshal the request id
+          safely.
+
+        * tao/GIOP_Message_Generator_Parser.cpp (parse_reply):
+          When the demarshaling of the request id failed then return with -1
+          instead of trying to demarshal anymore data. Also when we have
+          received an unknow reply status return -1 instead of returning 0
+
+        * tao/GIOP_Message_Generator_Parser_10.cpp :
+          In parse_request_header check whether the demarshaling of the
+          service contexts didn't fail. Also in parse_reply log an error when
+          demarshaling fails.
+
+        * tao/IIOP_Connection_Handler.cpp:
+        * tao/Transport_Cache_Manager.cpp:
+          Const improvement
+
 Thu Aug 17 20:46:29 UTC 2006  Adam Mitz  <mitza@ociweb.com>
 
         * orbsvcs/tests/ImplRepo/Bug_2604_Regression/Bug_2604.mpc:

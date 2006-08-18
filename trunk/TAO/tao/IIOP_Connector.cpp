@@ -160,7 +160,7 @@ TAO_IIOP_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
        if (TAO_debug_level > 0)
          {
            ACE_DEBUG ((LM_DEBUG,
-                       ACE_TEXT ("(%P|%t) IIOP connection failed.\n")
+                       ACE_TEXT ("TAO (%P|%t) IIOP connection failed.\n")
                        ACE_TEXT ("     This is most likely ")
                        ACE_TEXT ("due to a hostname lookup ")
                        ACE_TEXT ("failure.\n")));
@@ -329,9 +329,9 @@ TAO_IIOP_Connector::begin_connection (TAO_IIOP_Connection_Handler *&svc_handler,
   this->active_connect_strategy_->synch_options (timeout,
                                                  synch_options);
 
-  // The code used to set the timeout to zero, with the intent of 
+  // The code used to set the timeout to zero, with the intent of
   // polling the reactor for connection completion. However, the side-effect
-  // was to cause the connection to timeout immediately. 
+  // was to cause the connection to timeout immediately.
 
   svc_handler = 0;
 
