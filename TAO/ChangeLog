@@ -1,3 +1,8 @@
+Fri Aug 18 13:27:02 UTC 2006  Adam Mitz  <mitza@ociweb.com>
+
+        * tests/Oneway_Timeouts/client.cpp:
+          Eliminated warnings due to using var's without ".in()".
+
 Fri Aug 18 09:09:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/GIOP_Message_Generator_Parser*.*:
@@ -52,11 +57,11 @@ Thu Aug 17 20:46:29 UTC 2006  Adam Mitz  <mitza@ociweb.com>
           Set the exename explicitly, the default wasn't behaving as expected.
 
         * tests/Oneway_Timeouts/client.cpp:
-          Added a cast to int to eliminate warning about ambiguous call to
-          std::abs().
+          Added a cast to int to eliminate Borland compiler error due to 
+          ambiguous call to std::abs().
 
         * tests/Timed_Buffered_Oneways/client.cpp:
-          Eliminated warnings due to using var's without ".in():.
+          Eliminated warnings due to using var's without ".in()".
 
 Thu Aug 17 12:54:58 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 

@@ -200,7 +200,7 @@ namespace
     POA_var root = POA::_narrow (obj.in ());
     ACE_ASSERT (! is_nil (root.in ()));
     POAManager_var man = root->the_POAManager ();
-    poa = root->create_POA ("X", man, pols); 
+    poa = root->create_POA ("X", man.in (), pols); 
     return poa._retn ();
   }
 
