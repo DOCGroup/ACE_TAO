@@ -1,3 +1,10 @@
+Fri Aug 18 13:34:43 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/Profile_Transport_Resolver.cpp:
+          Fix for connection timeout errors introduced by Adam's commit of
+          Justin's changes in Tue Aug 15 14:56:35 UTC 2006  Adam Mitz
+          <mitza@ociweb.com>
+
 Fri Aug 18 13:27:02 UTC 2006  Adam Mitz  <mitza@ociweb.com>
 
         * tests/Oneway_Timeouts/client.cpp:
@@ -57,7 +64,7 @@ Thu Aug 17 20:46:29 UTC 2006  Adam Mitz  <mitza@ociweb.com>
           Set the exename explicitly, the default wasn't behaving as expected.
 
         * tests/Oneway_Timeouts/client.cpp:
-          Added a cast to int to eliminate Borland compiler error due to 
+          Added a cast to int to eliminate Borland compiler error due to
           ambiguous call to std::abs().
 
         * tests/Timed_Buffered_Oneways/client.cpp:
