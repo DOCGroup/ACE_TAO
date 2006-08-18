@@ -1,4 +1,4 @@
-// $Id: test.cpp 72251 2006-04-21 16:29:20Z wotte $
+// $Id$
 
 #include <iostream>
 
@@ -87,7 +87,7 @@ int main (int argc, char *argv[])
     std::cerr << "Not a valid NetQoS file." << std::endl;
   }
 
-  std::cout << "Test completed!";
+  std::cout << "Test completed!" << std::endl;
 
   return 0;
 

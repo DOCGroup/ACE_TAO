@@ -15,6 +15,7 @@
 #include "Upcase.hpp"
 
 #include <ostream>
+#include <sstream>
 
 #include "CCF/CodeGenerationKit/Regex.hpp"
 
@@ -601,11 +602,20 @@ namespace
     {
       os << "};";
 
+      string name;
+
+      // We need to escape C++ keywords before flattening the name.
+      //
+      {
+        std::ostringstream ostr;
+        ostr.pword (name_printer_index) = os.pword (name_printer_index);
+        ostr << t.scoped_name ();
+        name = regex::perl_s (ostr.str (), "/::/_/");
+      }
+
       os << "extern \"C\" " << ctx.export_macro ()
          << " ::Components::HomeExecutorBase_ptr" << endl
-         << "create"
-         << regex::perl_s (t.scoped_name ().str (), "/::/_/")
-         << "_Impl (void);" << endl;
+         << "create" << name << "_Impl (void);" << endl;
     }
 
   private:

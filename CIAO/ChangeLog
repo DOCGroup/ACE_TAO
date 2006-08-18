@@ -1,5 +1,51 @@
+Fri Aug 18 20:02:58 UTC 2006  Sumant Tambe  <sutambe@nospam>
+
+        Merged the changed made to the main branch with the Telcordia_Diffserv
+        branch. svn merge -r 73884:74122 https://svn.dre.vanderbilt.edu/DOC/Middleware/trunk
+
+        * CCF/CCF/CodeGenerationKit/Regex.hpp:
+
+        * CCF/CCF/IDL2/SemanticGraph/Name.hpp:
+        * CCF/CCF/IDL2/SemanticGraph/Name.cpp:
+
+        * CIAO-INSTALL.html:
+
+        * CIDLC/CompositionEmitter.cpp:
+        * CIDLC/CorbaTypeNameEmitters.cpp:
+        * CIDLC/CxxNamePrinter.hpp:
+        * CIDLC/CxxNamePrinter.cpp:
+        * CIDLC/DescriptorGenerator.cpp:
+        * CIDLC/ExecImplGenerator.cpp:
+        * CIDLC/ExecImplHeaderGenerator.cpp:
+        * CIDLC/ExecImplSourceGenerator.cpp:
+        * CIDLC/RepositoryIdGenerator.cpp:
+        * CIDLC/ServantGenerator.cpp:
+        * CIDLC/ServantHeaderGenerator.cpp:
+        * CIDLC/ServantSourceGenerator.cpp:
+        * CIDLC/UnescapedNamePrinter.hpp:
+        * CIDLC/UtilityTypeNameEmitters.cpp:
+
+        * DAnCE/NodeApplication/RTNodeApp_Configurator.cpp:
+
+        * DAnCE/NodeApplicationManager/Containers_Info_Map.cpp:
+        * DAnCE/NodeApplicationManager/ImplementationInfo.cpp:
+
+        * DAnCE/RepositoryManager/Options.cpp:
+        * DAnCE/RepositoryManager/RMadmin.cpp:
+        * DAnCE/RepositoryManager/RepositoryManager_Impl.h:
+        * DAnCE/RepositoryManager/RepositoryManager_Impl.cpp:
+
+        * examples/Hello/descriptors_RTCCM/rt-config-example.csr:
+        * examples/Hello/descriptors_RTCCM/rt-example.cdp:
+
+        * tools/Config_Handlers/DP_Handler.cpp:
+
+        * tools/Config_Handlers/NetQoS/test.cpp:
+
+        * tools/Config_Handlers/Utils/XML_Helper.h:
+
 Wed Aug  9 21:03:27 UTC 2006  Dimple Kaul   <dkaul@isis.vanderbilt.edu>
-        
+
         NetQos Config handler test works with this version
 
         * tools/Config_Handlers/NetQoS/NetQoSRequirements.cpp:
@@ -36,6 +82,88 @@ Mon Aug  7 21:31:29 UTC 2006  Sumant Tambe  <sutambe@nospam>
         * tools/Config_Handlers/NetQoS/NetQoS_Handler.cpp:
         * tools/Config_Handlers/NetQoS/NetQoS_Handler.mpc:
         * tools/Config_Handlers/NetQoS/NetQoS_Handler_Export.h:
+
+Thu Aug 17 16:09:09 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
+
+        * DAnCE/RepositoryManager/Options.cpp
+        * DAnCE/RepositoryManager/RMadmin.cpp
+        * DAnCE/RepositoryManager/RepositoryManager_Impl.h
+        * DAnCE/RepositoryManager/RepositoryManager_Impl.cpp
+          Reimplemented the findNamesByType () and getAllTypes () operations
+          of Repository Manager, which use the newly generated
+          ACE_Hash_MultiMap_Manager class and its corresponding classes.
+
+Mon Aug 14 15:46:34 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tools/Config_Handlers/Utils/XML_Helper.h
+
+          Fixed a compile error for pedantic GCC4.
+
+Sun Aug 13 15:18:00 UTC 2006  Boris Kolpackov  <boris@codesynthesis.com>
+
+        * CCF/CCF/CodeGenerationKit/Regex.hpp:
+
+          Reimplemented regex wrapper to allow building CIDLC on
+          platforms without wchat_t support (e.g., Cygwin/Mingw).
+
+Fri Aug 11 11:46:17 UTC 2006  Boris Kolpackov  <boris@codesynthesis.com>
+
+        * CCF/CCF/IDL2/SemanticGraph/Name.cpp:
+        * CCF/CCF/IDL2/SemanticGraph/Name.hpp:
+
+          Added support for IDL (underscore) escaping. Added support
+          for custom name printers.
+
+        * CIDLC/UnescapedNamePrinter.hpp:
+
+          Name printer that prints names unescaped (without the IDL
+          underscore).
+
+        * CIDLC/CxxNamePrinter.cpp:
+        * CIDLC/CxxNamePrinter.hpp:
+
+          Name printer that escapes C++ keywords.
+
+        * CIDLC/CorbaTypeNameEmitters.cpp:
+        * CIDLC/DescriptorGenerator.cpp:
+        * CIDLC/ExecImplHeaderGenerator.cpp:
+        * CIDLC/ExecImplSourceGenerator.cpp:
+        * CIDLC/ServantHeaderGenerator.cpp:
+        * CIDLC/RepositoryIdGenerator.cpp:
+        * CIDLC/ServantSourceGenerator.cpp:
+        * CIDLC/ExecImplGenerator.cpp:
+        * CIDLC/UtilityTypeNameEmitters.cpp:
+        * CIDLC/ServantGenerator.cpp:
+        * CIDLC/CompositionEmitter.cpp:
+
+          Updated to handle IDL and C++ name escaping. This fixes
+          bugzilla bug #2427.
+
+Fri Aug 11 07:30:35 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tools/Config_Handlers/Utils/XML_Helper.h
+        * DAnCE/RepositoryManager/RMadmin.cpp
+
+          Fixes for a compiler error in the version of GCC shipped with
+          FC5.
+
+Wed Aug  9 18:53:48 UTC 2006  Jaiganesh B  <jai.dre.vanderbilt.edu>
+
+        * DAnCE/NodeApplicationManager/ImplementationInfo.cpp:
+          DAnCE/NodeApplicationManager/Containers_Info_Map.cpp:
+          DAnCE/NodeApplication/RTNodeApp_Configurator.cpp:
+          examples/Hello/descriptors_RTCCM/rt-example.cdp:
+          examples/Hello/descriptors_RTCCM/rt-config-example.csr:
+
+        Fixed the RT-CCM code to conform to the schema changes. Made changes
+        to the descriptors directory to fix the working example for RT-CCM.
+
+        Thanks to Nanbor Wang for helping fix the codebase.
+
+Tue Aug  8 07:53:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * CIAO-INSTALL.html:
+          Removed vc6 info
 
 Fri Aug  4 21:40:46 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 

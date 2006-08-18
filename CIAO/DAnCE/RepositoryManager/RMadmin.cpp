@@ -9,6 +9,7 @@
  * A sample client to the RepositoryManager showcasing how to use it
  *
  * author Stoyan Paunov <spaunov@isis.vanderbilt.edu>
+ *        Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
  **/
 
 #include "RepositoryManagerDaemonC.h"
@@ -34,10 +35,10 @@ using namespace std;
 
 
 //IOR file of the RM
-const char *ior = "file://RepositoryManagerDeamon.ior";
+static const char *ior = "file://RepositoryManagerDeamon.ior";
 
 //Name service of the RM
-char *RMname_service;
+static const char *RMname_service;
 
 ///main function that provides a sample interface for RM clients
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
@@ -112,7 +113,6 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       {
         CORBA::StringSeq_var seq = rm->getAllNames ();
         cout << "Known Names:\n";
-        cout << "Seq length () : " << seq->length () << endl;
         for (size_t i = 0;
            i < seq->length ();
            ++i)
@@ -141,11 +141,11 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         return 0;
       }
     }
-    else if (options->uuid_ != "" && options->names_by_type_)
+    else if (options->type_ != "" && options->names_by_type_)
     {
       try
       {
-        CORBA::StringSeq_var seq = rm->findNamesByType (options->uuid_.c_str ());
+        CORBA::StringSeq_var seq = rm->findNamesByType (options->type_.c_str ());
         cout << "Known Component Interface Types:\n";
         for (size_t i = 0;
            i < seq->length ();
@@ -199,8 +199,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         // Parse the PCD to make sure that there are no package errors.
         ACE_TRY
         {
-          xercesc::DOMDocument *doc =
-            CIAO::Config_Handlers::XML_HELPER->create_dom ("default.pcd");
+          xercesc::DOMDocument *doc = XML_HELPER->create_dom ("default.pcd");
 
           if (0 != doc)
             {

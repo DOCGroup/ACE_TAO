@@ -2223,7 +2223,7 @@ void
 SetAttributeDelegationEmitter::open_if_block (void)
 {
   os << "if (ACE_OS::strcmp (descr_name, \""
-     << attr_.name () << "\") == 0)" << endl
+     << attr_.name ().unescaped_str () << "\") == 0)" << endl
      << "{";
 }
 

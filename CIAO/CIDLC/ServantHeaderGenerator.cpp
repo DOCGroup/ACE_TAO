@@ -15,6 +15,7 @@
 #include "Upcase.hpp"
 
 #include <ostream>
+#include <sstream>
 
 #include "CCF/CodeGenerationKit/Regex.hpp"
 
@@ -43,9 +44,18 @@ namespace
       ScopedName scoped (i.scoped_name ());
       Name stripped (scoped.begin () + 1, scoped.end ());
 
+      // We need to escape C++ keywords before flattening the name.
+      //
+      string name;
+      {
+        std::ostringstream ostr;
+        ostr.pword (name_printer_index) = os.pword (name_printer_index);
+        ostr << scoped.scope_name ();
+        name = regex::perl_s (ostr.str (), "/::/_/");
+      }
+
       /// Open a namespace made from the interface scope's name.
-      os << "namespace " << STRS[FACET_PREFIX]
-         << regex::perl_s (scoped.scope_name ().str (), "/::/_/")
+      os << "namespace " << STRS[FACET_PREFIX] << name
          << "{";
 
       os << "template <typename T>" << endl
@@ -1440,11 +1450,20 @@ namespace
       // Home servant class closer.
       os << "};";
 
+      string name;
+
+      // We need to escape C++ keywords before flattening the name.
+      //
+      {
+        std::ostringstream ostr;
+        ostr.pword (name_printer_index) = os.pword (name_printer_index);
+        ostr << t.scoped_name ();
+        name = regex::perl_s (ostr.str (), "/::/_/");
+      }
+
       os << "extern \"C\" " << ctx.export_macro ()
          << " ::PortableServer::Servant" << endl
-         << "create"
-         << regex::perl_s (t.scoped_name ().str (), "/::/_/")
-         << "_Servant (" << endl
+         << "create" << name << "_Servant (" << endl
          << "::Components::HomeExecutorBase_ptr p," << endl
          << "CIAO::Session_Container *c," << endl
          << "const char *ins_name" << endl

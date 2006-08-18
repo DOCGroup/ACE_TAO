@@ -13,6 +13,7 @@
 #include "Literals.hpp"
 
 #include <ostream>
+#include <sstream>
 
 #include "CCF/CodeGenerationKit/Regex.hpp"
 
@@ -1013,11 +1014,19 @@ namespace
     virtual void
     post (Type& t)
     {
+      // We need to escape C++ keywords before flattening the name.
+      //
+      string name;
+      {
+        std::ostringstream ostr;
+        ostr.pword (name_printer_index) = os.pword (name_printer_index);
+        ostr << t.scoped_name ();
+        name = regex::perl_s (ostr.str (), "/::/_/");
+      }
+
       os << "extern \"C\" " << ctx.export_macro ()
          << " ::Components::HomeExecutorBase_ptr" << endl
-         << "create"
-         << regex::perl_s (t.scoped_name ().str (), "/::/_/")
-         << "_Impl (void)" << endl
+         << "create" << name << "_Impl (void)" << endl
          << "{"
          << "::Components::HomeExecutorBase_ptr retval =" << endl
          << "  ::Components::HomeExecutorBase::_nil ();" << endl
