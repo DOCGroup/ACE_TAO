@@ -81,6 +81,8 @@ namespace TAO
     // deals with the argument list as a whole.
     void interceptor_paramlist (Dynamic::ParameterList *);
 
+    CORBA::NVList_ptr arg () const;
+
   private:
     CORBA::NVList_ptr x_;
 

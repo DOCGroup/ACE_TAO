@@ -28,6 +28,14 @@ namespace TAO
       , lazy_evaluation_ (lazy_eval)
   {
   }
+
+  ACE_INLINE
+  CORBA::NVList_ptr 
+  NVList_Argument::arg () const
+  {
+    return this->x_;
+  }
+
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

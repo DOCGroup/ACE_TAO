@@ -108,6 +108,9 @@ namespace TAO
      *
      * @param mode Invocation mode. This information is also available
      * in the IDL file and in the generated code.
+     *
+     * @param is_dii_request DII request flag. This flag defaults to false,
+     *  it's set to be true when invoking via DynamicInterface.
      */
     Invocation_Adapter (CORBA::Object_ptr target,
                         Argument **args,
@@ -116,7 +119,8 @@ namespace TAO
                         size_t op_len,
                         Collocation_Proxy_Broker *cpb,
                         TAO::Invocation_Type type = TAO_TWOWAY_INVOCATION,
-                        TAO::Invocation_Mode mode = TAO_SYNCHRONOUS_INVOCATION);
+                        TAO::Invocation_Mode mode = TAO_SYNCHRONOUS_INVOCATION,                        
+                        CORBA::Boolean is_dii_request = false);
 
     virtual ~Invocation_Adapter (void);
 
@@ -280,6 +284,8 @@ namespace TAO
     /// The invocation mode
     Invocation_Mode const mode_;
 
+    /// Flag that indicates a dii request.
+    CORBA::Boolean  is_dii_request_;
   };
 } // End namespace TAO
 
