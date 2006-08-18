@@ -164,7 +164,7 @@ ACE_RCSID (Config_Handlers,
                 ACE_DEBUG ((LM_DEBUG,
                             "Importing Network QoS...\n"));
 
-                // Parse the SR document
+                // Parse the NetQoS document
                 NetQoS_Handler netqos_handler (pstart->value ().value ().begin_string ()->c_str ());
 
                 // Populate the property

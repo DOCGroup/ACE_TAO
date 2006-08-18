@@ -5,6 +5,7 @@
 #include "ExecImplGenerator.hpp"
 #include "ExecImplHeaderGenerator.hpp"
 #include "ExecImplSourceGenerator.hpp"
+#include "CxxNamePrinter.hpp"
 
 #include "CCF/CodeGenerationKit/Regex.hpp"
 #include "CCF/CodeGenerationKit/IndentationCxx.hpp"
@@ -97,6 +98,11 @@ void ExecImplGenerator::generate (SemanticGraph::TranslationUnit& u,
 
     Indentation::Implanter<Indentation::Cxx> header_guard (hdr_os);
 
+    // Set C++ name printer for os.
+    //
+    CxxNamePrinter name_printer;
+    hdr_os.pword (name_printer_index) = &name_printer;
+
 
     ExecImplHeaderEmitter hdr_emitter (hdr_os,
                                        cl_,
@@ -113,6 +119,11 @@ void ExecImplGenerator::generate (SemanticGraph::TranslationUnit& u,
                                         src_ofs);
 
     Indentation::Implanter<Indentation::Cxx> header_guard (src_os);
+
+    // Set C++ name printer for os.
+    //
+    CxxNamePrinter name_printer;
+    src_os.pword (name_printer_index) = &name_printer;
 
     ExecImplSourceEmitter src_emitter (src_os,
                                        cl_,

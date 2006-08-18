@@ -9,6 +9,7 @@
  * Description: Actial implementation of the RepoMan
  *
  * @author Stoyan Paunov
+ *         Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
  */
 //====================================================================
 
@@ -30,7 +31,6 @@
 #include "ace/Malloc_Allocator.h"       //for ACE_New_Allocator
 
 //for the PackageConfiguration parsing
-//#include "Config_Handlers/Package_Handlers/PC_Intf.h"
 #include "ciao/Deployment_DataC.h"
 #include "ciao/Packaging_DataC.h"
 #include "Config_Handlers/Utils/XML_Helper.h"
@@ -48,18 +48,9 @@
 #include "PC_Updater.h"           //A visitor class to walk through the elements of the PC
 
 #include "ace/Configuration_Import_Export.h"
- 
+
 #include <iostream>
 using namespace std;
-
-const  char* CIAO_RepositoryManagerDaemon_i::PC_EXTENSION = ".epc";
-const  char *CIAO_RepositoryManagerDaemon_i::RM_RECORD_FILE = "RM_record";
-const  char *CIAO_RepositoryManagerDaemon_i::RM_RECORD_NAME_SECTION = "Names";
-const  char *CIAO_RepositoryManagerDaemon_i::RM_RECORD_UUID_SECTION = "UUIDs";
- 
-#if defined ASSEMBLY_INTERFACE_SUPPORT
-const char *CIAO_RepositoryManagerDaemon_i::RM_RECORD_TYPE_SECTION = "Types";
-# endif
 
 //-----------------------------------------------------------------
 //Constructor
@@ -126,18 +117,19 @@ CIAO_RepositoryManagerDaemon_i::CIAO_RepositoryManagerDaemon_i
     ++index;
   }
 
-#if defined ASSEMBLY_INTERFACE_SUPPORT
-  ACE_Configuration_Section_Key TypeSection;
-  cfg.open_section (root, RM_RECORD_TYPE_SECTION, 1, TypeSection);
+  // Add types
   index = 0;
-  while (!cfg.enumerate_values (TypeSection, index, name, type))
+  for (PCMap_Iterator iter = this->names_.begin ();
+    iter != this->names_.end ();
+    ++iter, ++index)
   {
-    cfg.get_string_value (TypeSection, name.c_str (), path);
-    this->types_.bind (name, path);
+    PCEntry& element = *iter;
 
-    ++index;
+    ::Deployment::PackageConfiguration_var pc = this->findPackageByName (element.ext_id_.c_str ());
+
+    if(!this->add_type (pc, element.ext_id_.c_str ()))
+      ACE_DEBUG ((LM_ERROR, "Failed to add the type\n"));
   }
-# endif
 }
 
 //-----------------------------------------------------------------
@@ -149,6 +141,7 @@ CIAO_RepositoryManagerDaemon_i::~CIAO_RepositoryManagerDaemon_i (void)
 {
   this->names_.unbind_all ();
   this->uuids_.unbind_all ();
+  this->types_.unbind_all ();
 }
 
 //-----------------------------------------------------------------
@@ -187,18 +180,6 @@ void CIAO_RepositoryManagerDaemon_i::shutdown ()
     cfg.set_string_value (UUIDSection, element.ext_id_.c_str (), element.int_id_.c_str ());
   }
 
-#if defined ASSEMBLY_INTERFACE_SUPPORT
-  ACE_Configuration_Section_Key TypeSection;
-  cfg.open_section (root, RM_RECORD_TYPE_SECTION, 1, TypeSection);
-  for (PCMap_Iterator iter = this->types_.begin ();
-    iter != this->types_.end ();
-    ++iter)
-  {
-    PCEntry& element = *iter;
-    cfg.set_string_value (TypeSection, element.ext_id_.c_str (), element.int_id_.c_str ());
-  }
-# endif
-
   ACE_Registry_ImpExp exporter (cfg);
   ACE_OS::chdir (install_path.c_str ());
   exporter.export_config (RM_RECORD_FILE);
@@ -207,6 +188,7 @@ void CIAO_RepositoryManagerDaemon_i::shutdown ()
   // Release resource.
   this->names_.unbind_all ();
   this->uuids_.unbind_all ();
+  this->types_.unbind_all ();
 
   this->the_orb_->shutdown (0);
 }
@@ -381,7 +363,7 @@ void CIAO_RepositoryManagerDaemon_i::installPackage (
   {
      ACE_DEBUG ((LM_ERROR,
                  "[RM] could not bind %s.\n",
-                 pc->UUID.in()));
+                 pc->UUID));
 
      //unbind the name
      this->names_.unbind (installationName);
@@ -397,18 +379,15 @@ void CIAO_RepositoryManagerDaemon_i::installPackage (
      ACE_THROW (CORBA::INTERNAL ());
   }
 
-#if defined ASSEMBLY_INTERFACE_SUPPORT
   //now add the type interface
-  //TODO: CHECK if successful
   if(!this->add_type (pc, installationName))
     ACE_DEBUG ((LM_ERROR, "Failed to add the type\n"));
-#endif
 
   this->dump ();
 
   ACE_DEBUG ((LM_INFO,
               "Installed PackageConfiguration \n\tname: %s \n\tuuid: %s\n",
-              installationName, pc->UUID.in()));
+              installationName, pc->UUID));
 }
 
 
@@ -421,7 +400,7 @@ void CIAO_RepositoryManagerDaemon_i::createPackage (
                                                     const char * installationName,
                                                     const ::Deployment::PackageConfiguration & package,
                                                     const char * baseLocation,
-                                                    ::CORBA::Boolean 
+                                                    ::CORBA::Boolean replace
                                                     )
                    ACE_THROW_SPEC ((
                                     CORBA::SystemException,
@@ -537,7 +516,7 @@ void CIAO_RepositoryManagerDaemon_i::createPackage (
   {
      ACE_DEBUG ((LM_ERROR,
                  "[RM] could not bind %s.\n",
-                 pc.UUID.in()));
+                 pc.UUID));
 
      //unbind the name
      this->names_.unbind (installationName);
@@ -553,18 +532,16 @@ void CIAO_RepositoryManagerDaemon_i::createPackage (
      ACE_THROW (CORBA::INTERNAL ());
   }
 
-#if defined ASSEMBLY_INTERFACE_SUPPORT
   //now add the type interface
   //TODO: CHECK if successful
   if(!this->add_type (pc, installationName))
     ACE_DEBUG ((LM_ERROR, "Failed to add the type\n"));
-#endif
 
   this->dump ();
 
   ACE_DEBUG ((LM_INFO,
-	      "Created PackageConfiguration \n  directory: %s \n  name: %s \n  uuid: %s\n",
-	      path.c_str (), installationName, pc.UUID.in()));
+              "Created PackageConfiguration \n  directory: %s \n  name: %s \n  uuid: %s\n",
+              path.c_str (), installationName, pc.UUID));
 }
 
 
@@ -655,74 +632,49 @@ CIAO_RepositoryManagerDaemon_i::findPackageByUUID (const char * UUID)
 //-----------------------------------------------------------------
 
 ::CORBA::StringSeq * CIAO_RepositoryManagerDaemon_i::findNamesByType (
-                                                                      const char * 
+                                                                      const char * type
                                                                       )
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
 {
-
-#if !defined ASSEMBLY_INTERFACE_SUPPORT
-  ACE_THROW (CORBA::NO_IMPLEMENT ());
-#endif
-
-#if defined ASSEMBLY_INTERFACE_SUPPORT
-
   CIEntry *entry = 0;
 
     //find the type in the interface map
-  if (!this->types_.find (ACE_CString (type), entry))
+  if (this->types_.find (ACE_CString (type), entry) != 0)
   {
     //return an empty sequence
     CORBA::StringSeq_var seq;
     ACE_NEW_THROW_EX (seq, CORBA::StringSeq (0), CORBA::INTERNAL ());
     ACE_CHECK_RETURN (0);
-  return seq._retn ();
+  
+    return seq._retn ();
   }
   else
   {
-    //The CORBA::StringSeq is implemented as an array and growing
-    //one at a time on demand is very inefficient due to the
-    //deallocations and reallocations. This is why we figure out the
-    //number of elements in advance and then create a CORBA::StringSeq
-    //of the right length
+    CISet ci_set = (*entry).int_id_set_;
 
-    CIBucket_Iterator counter (this->types_, type);
-
-    CIBucket_Iterator end (this->types_,
-                           type,
-                           1 /*tail = true*/);
-
-    //count the number of components implementing this type
-    CORBA::ULong num_entries = 0;
-    for (;
-         counter != end;
-         ++counter)
-       ++num_entries;
+    CORBA::ULong len = ci_set.size ();
 
     //allocate a sequence of the right length
     CORBA::StringSeq_var seq;
     ACE_NEW_THROW_EX (seq,
-                      CORBA::StringSeq (num_entries),
+                      CORBA::StringSeq (len),
                       CORBA::INTERNAL ());
-
-    ACE_CHECK_RETURN (0);
+    seq->length (len);
 
     //store the elements in the string sequence
-    CIBucket_Iterator iter (this->types_, type);
+    CISet_Iterator ci_set_iter (ci_set);
     CORBA::ULong index = 0;
-    for (;
-         iter != end && index < num_entries;
-         ++iter, ++index)
+    for (ci_set_iter = ci_set.begin ();
+         ci_set_iter != ci_set.end () && index < len;
+         ++ci_set_iter, ++index)
     {
-      CIEntry& element = *iter;
-      seq[index] = CORBA::string_dup (element.int_id_.c_str ());
+      seq[index] = CORBA::string_dup ((*ci_set_iter).c_str ());
     }
 
     return seq._retn ();
   }
-
-#endif
 }
 
 
@@ -766,7 +718,7 @@ CIAO_RepositoryManagerDaemon_i::getAllNames ()
     seq[index] = CORBA::string_dup (element.ext_id_.c_str ());
   }
 
-  ACE_DEBUG ((LM_INFO, "Current # packages [ %d ]\n", seq->length ()));
+  ACE_DEBUG ((LM_INFO, "The number of packages %d\n", seq->length ()));
 
   return seq._retn ();    //release the underlying CORBA::StringSeq
 }
@@ -784,13 +736,6 @@ CIAO_RepositoryManagerDaemon_i::getAllNames ()
                    CORBA::SystemException
                    ))
 {
-
-#if !defined ASSEMBLY_INTERFACE_SUPPORT
-  ACE_THROW (CORBA::NO_IMPLEMENT ());
-#endif
-
-#if defined ASSEMBLY_INTERFACE_SUPPORT
-
   //Map.current_size () gives you the current number with the duplicates
   //Map.total_size () gives you the allocated space + the empty slots
   //Apparently the only way to figure out the number of keys is to
@@ -802,9 +747,6 @@ CIAO_RepositoryManagerDaemon_i::getAllNames ()
        i != this->types_.end ();
        ++i)
      ++num_entries;
-
-  ACE_DEBUG ((LM_DEBUG, "# types: %d\n", num_entries));
-
 
   CORBA::StringSeq_var seq;
   ACE_NEW_THROW_EX (seq,
@@ -822,12 +764,12 @@ CIAO_RepositoryManagerDaemon_i::getAllNames ()
 
   {
     CIEntry& element = *iter;
-    seq[index] = CORBA::string_dup (element.int_id_.c_str ());
+    seq[index] = CORBA::string_dup (element.ext_id_.c_str ());
   }
 
-  return seq._retn ();    //release the underlying CORBA::StringSeq
+  ACE_DEBUG ((LM_DEBUG, "The number of types: %d\n", num_entries));
 
-#endif
+  return seq._retn ();    //release the underlying CORBA::StringSeq
 }
 
 
@@ -890,14 +832,12 @@ void CIAO_RepositoryManagerDaemon_i::deletePackage (
     internal_err = true;
   }
 
-#if defined ASSEMBLY_INTERFACE_SUPPORT
   //remove the type from the interface map
   if (!this->remove_type (pc, installationName))
   {
     ACE_DEBUG ((LM_ERROR, "Could not remove type\n"));
     internal_err = true;
   }
-#endif
 
   //actually delete the package here!
 
@@ -916,9 +856,6 @@ void CIAO_RepositoryManagerDaemon_i::deletePackage (
     ACE_DEBUG ((LM_INFO, "Successfully deleted \'%s\'\n", installationName));
 
 }
-
-
-
 
 
 //==========================================HELPER METHODS==================================================
@@ -1249,36 +1186,30 @@ int CIAO_RepositoryManagerDaemon_i::remove_extracted_package
   return return_code;
 }
 
-#if defined ASSEMBLY_INTERFACE_SUPPORT
-
 //function to extract the type of the component from
 //the PackageConfiguration and update the interface map
 //returns 1 on success
 //        0 on error
 
 int CIAO_RepositoryManagerDaemon_i::add_type (Deployment::PackageConfiguration& pc,
-                        const char* name)
+                                              const char* name)
 {
-  const char* ifaceUUID = 0;
-  //
   if (pc.basePackage.length () > 0)
   {
-    ifaceUUID = pc.basePackage[0]
-            .implementation[0]
-            .referencedImplementation
-            .implements
-            .specificType.in ();
-            //.UUID.in ();
+    ::CORBA::StringSeq supportedTypes = pc.basePackage[0]
+                                        .implementation[0]
+                                        .referencedImplementation
+                                        .implements
+                                        .supportedType;
 
-            ACE_DEBUG ((LM_DEBUG,  "storing under: %s\n", ifaceUUID));
-
-       CIEntry *entry = 0;
-
-         //create an entry for this interface type
-       if (this->types_.bind (ACE_CString (ifaceUUID),
-                ACE_CString (name)/*pc.label.in ()*/ ) != 0)
-       return 0;
-
+    if (supportedTypes.length () != 0)
+    {
+      CORBA::ULong len = supportedTypes.length ();
+      for (CORBA::ULong i = 0; i < len; ++i)
+      {
+        this->types_.bind (ACE_CString (supportedTypes[i]), name);
+      }
+    }
   }
   else //ComponentPackageReference
   {
@@ -1288,8 +1219,6 @@ int CIAO_RepositoryManagerDaemon_i::add_type (Deployment::PackageConfiguration& 
 
   return 1;
 }
-
-
 
 //function to remove the interface type of the component
 //being removed from the interface map
@@ -1297,56 +1226,27 @@ int CIAO_RepositoryManagerDaemon_i::add_type (Deployment::PackageConfiguration& 
 //        0 on error
 
 int CIAO_RepositoryManagerDaemon_i::remove_type (Deployment::PackageConfiguration& pc,
-                         const char* name)
+                                                 const char* name)
 {
-  const char* ifaceUUID = 0;
-  //
   if (pc.basePackage.length () > 0)
   {
-    ifaceUUID = pc.basePackage[0]
-            .implementation[0]
-            .referencedImplementation
-            .implements
-            .specificType.in ();
-            //.UUID.in ();
+    ::CORBA::StringSeq supportedTypes = pc.basePackage[0]
+                                        .implementation[0]
+                                        .referencedImplementation
+                                        .implements
+                                        .supportedType;
 
-            ACE_DEBUG ((LM_DEBUG, "removing by: %s\n", ifaceUUID));
-
-       CIEntry *entry = 0;
-
-         //find the type in the interface map
-       if (this->types_.find (ACE_CString (ifaceUUID), entry) == 0)
-     {
-       ACE_DEBUG ((LM_DEBUG,  "Type to be removed: ",
-             "KEY: %s", entry->ext_id_.c_str (),
-             " VAL: %s\n", entry->int_id_.c_str ()));
-     }
-     else
-       ACE_DEBUG ((LM_DEBUG, "Could not find type!\n"));
-
-    ACE_DEBUG ((LM_DEBUG,  "Attempting to remove: %s\n", ifaceUUID));
-    CIBucket_Iterator iter (this->types_, ACE_CString (ifaceUUID));
-
-    CIBucket_Iterator end (this->types_,
-              ACE_CString (ifaceUUID),
-              1 /*tail = true*/);
-    for (;
-      iter != end;
-      ++iter)
-    {
-      CIEntry& element = *iter;
-
-      if(!(strcmp (element.int_id_.c_str (), name /*pc.label.in ()*/)))
+    if (supportedTypes.length () != 0)
+    {      
+      CORBA::ULong len = supportedTypes.length ();
+      for (CORBA::ULong i = 0; i < len; ++i)
       {
-        //clashes are not allowed so this must be the ONLY
-        //element that we are interested in
-
-        //lets remove this element
-        this->types_.unbind (&element);
-        return 1;
+        if (this->types_.unbind (ACE_CString (supportedTypes[i]), ACE_CString (name)) != 0)
+          ACE_DEBUG ((LM_DEBUG, "Could not find type %s with package name %s!\n",
+                      supportedTypes[i],
+                      name));
       }
     }
-
   }
   else //ComponentPackageReference
   {
@@ -1357,22 +1257,17 @@ int CIAO_RepositoryManagerDaemon_i::remove_type (Deployment::PackageConfiguratio
   return 1;
 }
 
-#endif //for has ASSEMBLY_INTERFACE_SUPPORT
-
 //function to dump the state of the RepositoryManager
 void CIAO_RepositoryManagerDaemon_i::dump (void)
 {
 #if defined (ACE_HAS_DUMP)
 
   ACE_DEBUG(LM_DEBUG, "NAMES:\n");
-    this->names_.dump ();
+  this->names_.dump ();
   ACE_DEBUG(LM_DEBUG, "UUIDs:\n");
   this->uuids_.dump ();
-
-#if defined ASSEMBLY_INTERFACE_SUPPORT
   ACE_DEBUG (LM_DEBUG, "Component Interface Types:\n");
   this->types_.dump ();
-#endif
 
 #endif /* ACE_HAS_DUMP */
 }

@@ -16,14 +16,6 @@ using namespace std;
 
 namespace
 {
-  string
-  name_to_string (Name const& n)
-  {
-    ostringstream os;
-    os << n;
-    return os.str ();
-  }
-
   Nameable* defined_in (Nameable& n)
   {
     for (Nameable::NamedIterator i (n.named_begin ()), e (n.named_end ());
@@ -74,7 +66,7 @@ namespace
     ScopedName scoped (d.scoped_name ());
     Name stripped (scoped.begin () + 1, scoped.end ());
 
-    string scope_name = regex::perl_s (name_to_string (stripped), "%::%/%");
+    string scope_name = regex::perl_s (stripped.unescaped_str (), "%::%/%");
 
     string repo_id = "IDL:" + prefix + scope_name + ":1.0";
 

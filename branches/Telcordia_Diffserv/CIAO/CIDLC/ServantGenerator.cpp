@@ -5,6 +5,7 @@
 #include "ServantGenerator.hpp"
 #include "ServantHeaderGenerator.hpp"
 #include "ServantSourceGenerator.hpp"
+#include "CxxNamePrinter.hpp"
 
 #include "CCF/CodeGenerationKit/Regex.hpp"
 #include "CCF/CodeGenerationKit/IndentationCxx.hpp"
@@ -109,6 +110,10 @@ void ServantGenerator::generate (SemanticGraph::TranslationUnit& u,
 
     Indentation::Implanter<Indentation::Cxx> header_guard (hdr_os);
 
+    // Set C++ name printer for os.
+    //
+    CxxNamePrinter name_printer;
+    hdr_os.pword (name_printer_index) = &name_printer;
 
     ServantHeaderEmitter hdr_emitter (hdr_os,
                                       cl_,
@@ -125,6 +130,11 @@ void ServantGenerator::generate (SemanticGraph::TranslationUnit& u,
                                         src_ofs);
 
     Indentation::Implanter<Indentation::Cxx> header_guard (src_os);
+
+    // Set C++ name printer for os.
+    //
+    CxxNamePrinter name_printer;
+    src_os.pword (name_printer_index) = &name_printer;
 
     ServantSourceEmitter src_emitter (src_os,
                                       cl_,

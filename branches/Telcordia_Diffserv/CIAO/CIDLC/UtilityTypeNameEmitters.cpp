@@ -5,6 +5,8 @@
 #include "UtilityTypeNameEmitters.hpp"
 #include "CCF/CodeGenerationKit/Regex.hpp"
 
+#include <sstream>
+
 FullTypeNameEmitter::FullTypeNameEmitter (Context& c)
   : EmitterBase (c)
 {
@@ -66,6 +68,11 @@ FacetEnclosingTypeNameEmitter::FacetEnclosingTypeNameEmitter (Context& c)
 void
 FacetEnclosingTypeNameEmitter::traverse (SemanticGraph::Type& t)
 {
-  os << regex::perl_s (t.scoped_name ().scope_name ().str (), "/::/_/");
+  // We need to escape C++ keywords before flattening the name.
+  //
+  std::ostringstream ostr;
+  ostr.pword (name_printer_index) = os.pword (name_printer_index);
+  ostr << t.scoped_name ().scope_name ();
+  os << regex::perl_s (ostr.str (), "/::/_/");
 }
 
