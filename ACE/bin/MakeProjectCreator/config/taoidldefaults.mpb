@@ -55,7 +55,7 @@ project {
       commandflags(-GT && !-SS && !-oS) += S_T
     }
     optional(header_pre_extension) {
-      commandflags(-GA && !-oA) += A
+      commandflags(-GA && !-oA || -GX) += A
     }
   }
 

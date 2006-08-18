@@ -34,6 +34,37 @@ TAO::In_Var_Array_Argument_T<S_forany,Insert_Policy>::interceptor_value (
 
 #endif /* TAO_HAS_INTERCEPTORS */
 
+template<typename S_forany,
+         class Insert_Policy>
+TAO::In_Var_Array_Clonable_Argument_T<S_forany,Insert_Policy>::~In_Var_Array_Clonable_Argument_T (void)
+{
+  if (this->is_clone_)
+    {
+      typedef TAO::details::array_traits<S_forany> ARRAY_TRAITS;
+      typename ARRAY_TRAITS::slice_type * tmp =
+               const_cast<typename ARRAY_TRAITS::slice_type*> (this->x_.in ());
+      ARRAY_TRAITS::free (tmp);
+    }
+}
+
+template<typename S_forany,
+         class Insert_Policy>
+TAO::Argument*
+TAO::In_Var_Array_Clonable_Argument_T<S_forany,Insert_Policy>::clone (void)
+{
+  typedef TAO::details::array_traits<S_forany> ARRAY_TRAITS;
+  typename ARRAY_TRAITS::slice_type * tmp_ptr = 0;
+  ACE_ALLOCATOR_RETURN (tmp_ptr,
+                        ARRAY_TRAITS::alloc (),
+                        0);
+  ARRAY_TRAITS::copy(tmp_ptr, this->x_.in ());
+
+  In_Var_Array_Clonable_Argument_T<S_forany,Insert_Policy>* clone_arg
+    = new In_Var_Array_Clonable_Argument_T<S_forany,Insert_Policy> (tmp_ptr);
+  clone_arg->is_clone_ = true;
+  return clone_arg;
+}
+
 // ===========================================================
 
 template<typename S_forany,

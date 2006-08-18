@@ -59,10 +59,6 @@ unless ("$hostname" eq 'deuce.doc.wustl.edu') {
   die "$0: must run on host deuce\n";
 }
 
-
-$ENV{'CVSROOT'} ||
-  die "$0: must set your CVSROOT environment variable\n";
-
 $ENV{'ACE_ROOT'} ||
   die "$0: must set your ACE_ROOT environment variable\n";
 
@@ -90,7 +86,7 @@ my $release_type = 'beta';
 my $ace_tag = my $tao_tag = my $ciao_tag = '';
 my $controlled_files = my $release_files = my $release_lib_files = '';
 my $release_tag_files = my $release_autoconf_files = '';
-my $release_filter = '\\( -name CVS -o -name build \\) -prune -o ' .
+my $release_filter = '\\( -o -name build \\) -prune -o ' .
                      '! -name \'.\#*\' ! -name \'\#*\' ! -name \'*~\' ' .
                      '! -name \'*.MAK\' ! -name \'.cvsignore\' -print';
 my $update_versions = 0;
@@ -174,6 +170,7 @@ my $chmod = 'chmod';
 my $chgrp = 'chgrp';
 my $cpio = 'cpio';
 my $cvs = 'cvs';
+my $svn = 'svn';
 my $date = 'date';
 my $egrep = 'egrep';
 my $find = 'find';

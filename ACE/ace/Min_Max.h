@@ -17,7 +17,7 @@
 #define ACE_MIN_MAX_H
 #include /**/ "ace/pre.h"
 
-#include "ace/config-all.h"
+#include /**/ "ace/config-all.h"
 
 # if !defined (ACE_LACKS_PRAGMA_ONCE)
 #   pragma once

@@ -28,7 +28,7 @@
 #include "ace/os_include/os_fcntl.h"
 #include "ace/Global_Macros.h"  // for LPSECURITY_ATTRIBUTES :-(
 #include "ace/Default_Constants.h"
-#include "ace/ACE_export.h"
+#include /**/ "ace/ACE_export.h"
 
 #if defined (ACE_EXPORT_MACRO)
 #  undef ACE_EXPORT_MACRO

@@ -43,7 +43,6 @@ print "Starting doxygen document generation \n";
 
 my $chgrp = 'chgrp';
 my $cpio = 'cpio';
-my $cvs = 'cvs';
 my $date = 'date';
 my $egrep = 'egrep';
 my $find = 'find';
@@ -62,12 +61,12 @@ my $checksum = '$md5sum';
 
 $SIG{'HUP'} = $SIG{'INT'} = $SIG{'QUIT'} = $SIG{'TERM'} = 'cleanup';
 
-my $release_filter = '\\( -name CVS -o -name build \\) -prune -o ' .
+my $release_filter = '\\( -o -name build \\) -prune -o ' .
                      '! -name \'.\#*\' ! -name \'\#*\' ! -name \'*~\' ' .
                      '! -name \'*.MAK\' -print';
 
 my $bin_files =
-    "\"\\.dsp|\\.dsw|\\.mak|\\.mdp|\\.ide|\\.exe\|\\.ico\|\\.gz\|\\.zip\|" .
+    "\"\\.mak|\\.mdp|\\.ide|\\.exe\|\\.ico\|\\.gz\|\\.zip\|" .
     "\\.gif|\\.vcp|\\.vcproj|\\.vcw|\\.sln\"";
 
 my $dest = 'bugzilla@deuce.doc.wustl.edu:/project/deuce/ftp/pub/ACE+TAO-distribution';

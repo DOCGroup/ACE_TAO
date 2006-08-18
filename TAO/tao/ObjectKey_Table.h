@@ -23,7 +23,7 @@
 #include "ace/Null_Mutex.h"
 
 #include "tao/Object_KeyC.h"
-#include "tao/Versioned_Namespace.h"
+#include /**/ "tao/Versioned_Namespace.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

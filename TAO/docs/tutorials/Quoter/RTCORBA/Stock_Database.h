@@ -3,6 +3,8 @@
 /**
  * @file Stock_Database.h
  * @author Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
+ * @author William R. Otte <wotte@dre.vanderbilt.edu>
+ * @author Douglas C. Schmidt <schmidt@dre.vanderbilt.edu>
  */
 
 #ifndef STOCK_DATABASE_H_
@@ -10,12 +12,11 @@
 
 // ACE headers
 #include "ace/Task.h"
-
-// local headers
-#include "Common_i.h"
+#include "CommonC.h"
 
 // STL headers
 #include <map>
+#include <string>
 
 /**
  * @class Stock_Database
@@ -52,14 +53,24 @@ public:
    * for each stock in the stock database randomly. 
    */
   virtual int svc (void);
+  
+  void update_rate (u_int rate);
 
 private:
   /// Stock map.
-  typedef std::map<std::string, Stock::StockInfo_var> StockMap;
-  StockMap stock_map_;
+  typedef std::map<std::string, Stock::StockInfo_var> Stock_Map;
+
+  // Keep track of the stock names and information about them.
+  Stock_Map stock_map_;
+  
+  // Lock to protect concurrent access to the <stock_map_>.
+  ACE_RW_Thread_Mutex lock_;
+  
+  u_int rate_;
+
 };
 
 typedef ACE_Singleton<Stock_Database, ACE_Thread_Mutex> Stock_Database_Singleton;
 #define STOCK_DATABASE Stock_Database_Singleton::instance()
 
-#endif	// !defined STOCK_DATABASE_H_
+#endif  // !defined STOCK_DATABASE_H_

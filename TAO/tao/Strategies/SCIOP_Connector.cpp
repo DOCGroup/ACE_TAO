@@ -172,14 +172,9 @@ TAO_SCIOP_Connector::make_connection_i (TAO::Profile_Transport_Resolver *r,
   this->active_connect_strategy_->synch_options (timeout,
                                                  synch_options);
 
-  // If we don't need to block for a transport just set the timeout to
-  // be zero.
-  ACE_Time_Value tmp_zero (ACE_Time_Value::zero);
-  if (!r->blocked_connect())
-    {
-      synch_options.timeout (ACE_Time_Value::zero);
-      timeout = &tmp_zero;
-    }
+  // The code used to set the timeout to zero, with the intent of 
+  // polling the reactor for connection completion. However, the side-effect
+  // was to cause the connection to timeout immediately. 
 
   TAO_SCIOP_Connection_Handler *svc_handler = 0;
 
@@ -266,6 +261,11 @@ TAO_SCIOP_Connector::make_connection_i (TAO::Profile_Transport_Resolver *r,
         }
 
       return 0;
+    }
+
+  if (transport->connection_handler ()->keep_waiting ()) 
+    {
+      svc_handler->add_reference ();
     }
 
   // At this point, the connection has be successfully connected.

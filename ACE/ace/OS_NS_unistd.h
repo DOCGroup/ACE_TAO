@@ -28,7 +28,7 @@
 #include "ace/os_include/os_unistd.h"
 #include "ace/Time_Value.h"
 #include "ace/os_include/os_stdio.h"
-#include "ace/ACE_export.h"
+#include /**/ "ace/ACE_export.h"
 
 #if defined (ACE_EXPORT_MACRO)
 #  undef ACE_EXPORT_MACRO

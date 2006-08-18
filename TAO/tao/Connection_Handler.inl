@@ -24,6 +24,12 @@ TAO_Connection_Handler::is_closed (void) const
 }
 
 ACE_INLINE bool
+TAO_Connection_Handler::is_timeout (void) const
+{
+  return (this->state_ == TAO_LF_Event::LFS_TIMEOUT);
+}
+
+ACE_INLINE bool
 TAO_Connection_Handler::is_open (void) const
 {
   return this->state_ == TAO_LF_Event::LFS_SUCCESS;

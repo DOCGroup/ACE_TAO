@@ -383,7 +383,7 @@ be_visitor_typecode_defn::visit_array (be_array *node)
   this->gen_begin_NS_for_anon ();
 
   unsigned long const ndims = node->n_dims ();
-  
+
   for (unsigned long i = 0; i < ndims; ++i)
     {
       os << "TAO::TypeCode::Sequence< ::CORBA::TypeCode_ptr const *," << be_nl
@@ -452,7 +452,7 @@ be_visitor_typecode_defn::visit_array (be_array *node)
         }
 
       os << ";" << be_uidt;
-      
+
       if (i < ndims - 1)
         {
           os << be_nl << be_nl;
@@ -463,7 +463,7 @@ be_visitor_typecode_defn::visit_array (be_array *node)
   this->gen_end_NS_for_anon ();
 
   os << be_global->core_versioning_end ();
-  
+
   os << "\n#endif /* _TAO_TYPECODE_" << node->flat_name () << "_GUARD */"
      << be_nl;
 
@@ -790,7 +790,8 @@ be_visitor_typecode_defn::queue_lookup (
        !iter.done ();
        iter.advance ())
     {
-      be_visitor_typecode_defn::QNode **addr, *item;
+      be_visitor_typecode_defn::QNode **addr = 0;
+      be_visitor_typecode_defn::QNode *item = 0;
       iter.next (addr);
       item = *addr;
 

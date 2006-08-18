@@ -1,3 +1,504 @@
+Fri Aug 18 17:22:08 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS_NS_unistd.cpp (pwrite): Corrected the large-file-offset
+          logic to build correctly for Windows. Also moved the explicit
+          SetFilePointerEx() before WriteFile() to the non-ACE_HAS_WINNT4
+          section - for ACE_HAS_WINNT4 the supplied OVERLAPPED structure
+          carries the file offset to write at.
+
+Fri Aug 18 17:08:35 UTC 2006  Yan Dai  <dai_y@ociweb.com>
+
+        * bin/tao_orb_tests.lst
+
+          Added DII collocation oneway test. This is the regression test
+          for bugzilla #2545.
+
+Fri Aug 18 15:49:01 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * examples/APG/Logging/Trace.h: Changed the varargs form used in the
+          macros from ##__VA_ARGS__ to ,__VA_ARGS__ in an effort to conform
+          to C99 and clear some compile warnings from gcc4. This effectively
+          prohibits leaving the varargs out completely from the macro
+          invocation but that use-case isn't exercised anyway.
+
+        * bin/ace_tests.lst: Add protocols/tests/RMCast/run_test.pl to run
+          RMCast tests, except ACE_FOR_TAO builds.
+
+Fri Aug 18 12:03:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Don't run Bug_2510_Regression in a ST build, it uses threading
+
+        * bin/MakeProjectCreator/templates/bor.mpd:
+          Don't print a message with the dummy realclean
+
+Thu Aug 17 14:20:00 UTC 2006  Simon Massey  <sma@prismtech.com>
+
+        * apps/drwho/Binary_Search.cpp:
+        * apps/drwho/CM_Client.cpp:
+        * apps/drwho/CM_Server.cpp:
+        * apps/drwho/Hash_Table.cpp:
+        * apps/drwho/Options.cpp:
+        * apps/drwho/Options.h:
+        * apps/drwho/PMC_All.cpp:
+        * apps/drwho/PMC_Flo.cpp:
+        * apps/drwho/PMC_Ruser.cpp:
+        * apps/drwho/PMC_Usr.cpp:
+        * apps/drwho/PMS_All.cpp:
+        * apps/drwho/PMS_Flo.cpp:
+        * apps/drwho/PMS_Ruser.cpp:
+        * apps/drwho/PMS_Usr.cpp:
+        * apps/drwho/Protocol_Manger.cpp:
+        * apps/drwho/Protocol_Record.cpp:
+        * apps/drwho/Rwho_DB_Manager.cpp:
+        * apps/drwho/Search_Struct.cpp:
+        * apps/drwho/Single_Lookup.cpp:
+        * apps/Gateway/Gateway/Gateway.cpp:
+        * apps/Gateway/Gateway/Options.cpp:
+        * apps/Gateway/Gateway/Options.h:
+
+          Renamed the enum ID "DEBUG" to "DEBUGGING", was causing problems
+          with MFC builds.
+
+Thu Aug 17 12:15:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/SString_Test.cpp:
+          Added a check whether npos is zero, if it is print an error,
+          with Intel C++ 9.0 with the Microsoft platform SDK this seems
+          to be zero
+
+Thu Aug 17 08:30:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/ciao_client_dnc.mpb:
+        * bin/MakeProjectCreator/config/ciao_deployment_stub.mpb:
+        * bin/MakeProjectCreator/config/ciao_deployment_svnt.mpb:
+        * bin/MakeProjectCreator/config/ciao_events_dnc.mpb:
+        * bin/MakeProjectCreator/config/ciao_rtevent_dnc.mpb:
+          Removed -Sc form the taoidlflags, it is deprecated already sometime
+          ago
+
+Wed Aug 16 22:19:47 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/Acceptor.h: Doxygen improvements.
+
+Wed Aug 16 17:42:02 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * ace/Numeric_Limits.h:
+
+          Explicitly #undef min and max before including <limits> in the
+          Mingw case to address global namespace pollution induced
+          conflicts.  The previous attempt to address this problem where
+          the Windows-specific NOMINMAX preprocessor symbol was defined in
+          this header didn't work since the min and max macros were
+          already defined beforehand.  In order for NOMINMAX to work as
+          expected, it would be have to be defined before any Windows
+          headers are included, or more preferrably on the
+          preprocessor/compiler command line.  Unfortunately, that would
+          probably break some applications.
+
+Wed Aug 16 14:51:58 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * docs/svn/svn-prefs.reg
+        * docs/svn/config
+
+          Updated to correct keywords values, and add use-commit-times
+          as a default option.
+
+Wed Aug 16 10:19:41 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Obstack_T.{cpp,inl}:
+          Moved grow_fast and freeze methods from inl to cpp file,
+          should fix the link problems with the RHAS IPv6 build
+
+Wed Aug 16 09:50:41 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Misc/Misc.mpc:
+        * examples/Misc/test_timestamp.cpp:
+          Simple small test for ACE::timestamp()
+
+Wed Aug 16 08:37:41 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/build_lib.bor:
+        * include/makeinclude/clean.bor:
+        * include/makeinclude/compiler.bor:
+          Removed support for the CBuilderX preview compiler, it has never
+          become more then preview and we don't test with it anymore
+
+        * include/makeinclude/recurse.bor:
+          Removed from the repo, seems not to be used anymore
+
+Thu Aug  3 23:28:41 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Timeprobe_T.cpp (print_times): More fixed for timestamp
+          inversion due to recording time from different threads.  This
+          prints a warning message the first time it detects a timestamp
+          inversion.  It also fixes various minor problems in the
+          timeprobe reports whenever the total number of timeprobes
+          exceeds 8192.  Thanks to Patrick Rabau for contributing this.
+
+Thu Aug  3 20:14:07 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/INET_Addr.h: Updated the documentation of the non-reentrant
+          versions of get_host_addr() and get_host_name() to clarify how
+          they can be used correctly (or better yet not used at all..).
+          Thanks to Ephy Levy <EphyLevy at gmail dot com> for motivating
+          this.
+
+Thu Aug  3 20:02:29 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Logging_Strategy.cpp: Added a destructor to delete
+          this->filename_, which is allocated in the constructor.  Thanks
+          to Amnon AB <AmnonAB at gmail dot com> for reporting this.
+
+Wed Aug  2 14:26:37 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Acceptor.h: Made the suspend()/resume() methods of
+          ACE_Strategy_Acceptor public rather than protected.  Thanks to
+          Amnon AB <AmnonAB at gmail dot com> for reporting this.
+
+Fri Jul 28 00:57:42 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * docs/Symbol_Versioning.html (HREF): Added a link to the Riverace
+          webpage that describes symbol versioning in ACE.  Thanks to
+          Steve Huston for contributing this.
+
+Tue Jul 25 13:31:24 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Timeprobe_T.cpp (print_times): Revised the code so that if
+          there is a timestamp inversion due to recording time from
+          different threads, the time difference will be displayed as a
+          negative value instead of a gigantic positive value.  Also
+          compute the time difference correctly when the timeprobe array
+          wraps around.  Thanks to Patrick Rabau <pr2345 at gmail dot com>
+          for this fix.
+
+Mon Jul 24 15:30:33 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Containers_T.cpp,
+        * ace/Log_Msg.cpp,
+        * ace/CDR_Size.cpp,
+        * ace/CDR_Size.inl,
+        * ace/CDR_Stream.cpp: Fixed a bunch of problems with type punning.
+          Thanks to Thomas Girard <thomas.g.girard at free dot fr> for
+          reporting this.
+
+Mon Jul 24 14:52:24 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/TSS_T.cpp (tryacquire): There was a missing '&' in
+
+          ACE_Thread::getspecific (this->key_, temp);
+
+          Thanks to Thomas Girard <thomas.g.girard at free dot fr> for
+          reporting this.
+
+Tue Aug 15 17:47:11 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * ace/Numeric_Limits.h:
+
+          Windows defines min/max macros that interfere with the
+          numeric_limits::min/max() traits.  Prevent those macros from
+          being defined by defining the Windows-specific NOMINMAX symbol
+          before any Windows headers are included.  This is currently
+          only done for Mingw builds since the problem is not exhibited by
+          other Windows builds (e.g. MSVC++, Borland, etc).
+
+Tue Aug 15 16:17:56 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
+
+        * ace/Hash_MultiMap_Manager_T.h
+          Made some minor changes to the documentation to use @a to refer to
+          argument names.
+
+Tue Aug 15 15:00:00 UTC 2006  Adam Mitz  <mitza@ociweb.com>
+
+        * ace/Event_Handler.cpp:
+
+          Updated Event_Handler_var to use an ACE_Errno_Guard to
+          prevent overwriting the errno.
+
+        * bin/tao_orb_tests.lst
+
+          Added new test: TAO/tests/Oneway_Timeouts/run_test.pl
+
+Tue Aug 15 14:22:53 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
+
+        * ace/Hash_MultiMap_Manager_T.h
+          Address the "unsupported xml/html tag" warnings in doxygen build.
+
+Tue Aug 15 08:36:00 UTC 2006  Simon Massey  <sma@prismtech.com>
+
+        * bin/MakeProjectCreator/config/acedefaults.mpb
+
+          Backout all of the recent MFC changes.
+
+        * bin/MakeProjectCreator/config/ace_opt_mfc.mpb:
+
+          DELETED.
+
+Mon Aug 14 23:34:11 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ace/TP_Reactor.cpp
+        * ace/TP_Reactor.h
+
+          Removed all register_handler member functions from these files.
+          This essentially enables the ability to register signal handlers in
+          the TP Reactor by implicitly delegating to the select reactor base
+          class.
+
+          Other register_handler methods (not relating to signal handling)
+          were explicit delegations to the select reactor base class, present
+          only to silence virtual function hiding warnings created by
+          disabling the signal related methods.
+
+Mon Aug 14 16:14:56 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
+
+        * test/Hash_Multi_Map_Manager_Test.cpp
+          Address the "no matching function for call" errors.
+
+        * ace/Hash_MultiMap_Manager_T.h
+          Address the "unsupported xml/html tag" warnings in doxygen build.
+
+Mon Aug 14 16:00:00 UTC 2006  Simon Massey  <sma@prismtech.com>
+
+        * bin/MakeProjectCreator/config/ace_mfc.mpb:
+        * bin/MakeProjectCreator/config/ace_opt_mfc.mpb:
+
+          Backout the "Specific" guards.
+
+Mon Aug 14 15:20:00 UTC 2006  Simon Massey  <sma@prismtech.com>
+
+        * bin/MakeProjectCreator/config/ace_mfc.mpb:
+        * bin/MakeProjectCreator/config/ace_opt_mfc.mpb:
+
+          Specific the macro and don't inherit from mfc for opt.
+
+Mon Aug 14 15:43:12 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * tests/Makefile.am: Added Hash_Multi_Map_Manager_Test.
+
+Mon Aug 14 13:33:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/clean.bor:
+          Use .inl as file extension to clean instead of .i
+
+        * bin/MakeProjectCreator/templates/bor.mpd:
+          Added empty realclean target
+
+Mon Aug 14 12:52:19 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ACE-INSTALL.html:
+
+          I added "-type gnuace" to the options where the default project
+          type was assumed.  Eventually, MPC will not have a default project
+          type.
+
+        * include/makeinclude/macros.GNU:
+        * include/makeinclude/rules.common.GNU:
+        * include/makeinclude/rules.local.GNU:
+
+          Added a new target to remove only the binaries (executables and
+          shared libraries).
+
+Mon Aug 14 11:15:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/*.h:
+          Added /**/ to the include of config-all.h and ACE_export.h, this
+          way doxygen doesn't add these files to the include graphs which
+          make them much easier to read
+
+Sun Aug 13 23:30:02 UTC 2006  Yan Dai  <dai_y@ociweb.com>
+
+        * bin/tao_other_tests.lst:
+
+          Excluded TAO POAManagerFactory and EndpointPolicy tests from
+          running in a minimum CORBA configuration.
+
+Sun Aug 13 22:21:55 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
+
+        * test/Hash_Multi_Map_Manager_Test.cpp
+          Address the "Implicit conversion of string literal to char * is
+          deprecated" warnings.
+
+Sun Aug 13 15:25:17 UTC 2006  Boris Kolpackov  <boris@codesynthesis.com>
+
+        * bin/MakeProjectCreator/config/ciaocidldefaults.mpb:
+
+          Removed '--' from the cidlc command line.
+
+Sun Aug 13 000:02:00 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
+
+        * ace/Hash_MultiMap_Manager_T.inl
+        * ace/Hash_MultiMap_Manager_T.cpp
+        * ace/Hash_MultiMap_Manager_T.h
+          Change the name of these files into Hash_Multi_Map_Manager.*.
+          Add some comments to explain in brief the purpose of using
+          ACE_Hash_Multi_Map_Manager class and how to use it.
+          Remove the backward compatibility of ACE_Hash_Multi_Map_Manager class
+          and its associated iterator classes.
+          Remove "_Ex" on the names of ACE_Hash_Multi_Map_Manager class and its
+          associated iterator classes.
+
+        * ace/Hash_MultiMap_Manager.h
+          Remove this file since it simply includes the
+          Hash_MultiMap_Manager_T.h file.
+
+        * test/Hash_MultiMap_Manager_Test.cpp
+          Change the name of this file into Hash_Multi_Map_Manager_Test.cpp.
+          Address the "convert const char* to ACE_TCHAR*" errors.
+
+        * ace/ace.mpc
+          Change the name of Hash_MultiMap_Manager project into
+          Hash_Multi_Map_Manager.
+
+        * test/run_test.lst
+        * test/tests.mpc
+          Change the name of Hash_MultiMap_Manager_Test project into
+          Hash_Multi_Map_Manager_Test.
+
+Fri Aug 11 16:46:56 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
+
+        * ace/Hash_MultiMap_Manager.h
+        * ace/Hash_MultiMap_Manager_T.cpp
+        * ace/Hash_MultiMap_Manager_T.h
+        * ace/Hash_MultiMap_Manager_T.inl
+          Add these files which implement Hash_MultiMap_Manager.
+
+        * test/Hash_MultiMap_Manager_Test.cpp
+          Add this test file for Hash_MultiMap_Manager.
+
+        * ace/ace.mpc
+          Modify this file to include Hash_MultiMap_Manager.
+
+        * test/run_test.lst
+        * test/tests.mpc
+          Modify these files to include Hash_MultiMap_Manager_Test.
+
+Fri Aug 11 16:37:34 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * tests/CDR_File_Test.cpp: Corrected a signed/unsigned compare.
+
+Fri Aug 11 13:59:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/CDR_Size.cpp:
+          Add include of OS_Memory.h to get ACE_align_binary
+
+        * ace/Sig_Handler.cpp:
+          Add include of Guard_T.h to get the guards
+
+        * ace/config-vxworks6.3.h:
+          Add some code for the diab compiler but this is not complete
+          support, just some testing results.
+
+Fri Aug 11 07:17:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/svn/config:
+        * docs/svn/svn-prefs.reg:
+          Added settings for .idl and .pidl
+
+Thu Aug 10 13:14:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_other_tests.lst:
+          Disabled the performance tests on OpenVMS for the moment, they
+          result in too much error logs
+
+Thu Aug 10 10:33:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/taoidldefaults.mpb:
+          Updated for -GX
+
+Thu Aug 10 09:38:13 UTC 2006  Simon McQueen  <sm@prismtech.com>
+
+        * bin/tao_other_tests.lst:
+
+          Exclude Bug_2615_Regression from running on 'ACE for TAO' builds.
+
+Thu Aug 10 01:52:34 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-aix-4.x.h: Added ACE_HAS_TEMPLATE_TYPEDEFS for Visual
+          Age C++ 6 and higher.
+
+Wed Aug  9 14:15:18 UTC 2006  Ciju John  <johnc@ociweb.com>
+
+        * bin/MakeProjectCreator/config/csd_threadpool.mpb:
+
+          Added a dependency upon threads.mpb as this project shouldn't be
+          built if thread support is not going to be built into TAO.
+
+Wed Aug  9 13:45:00 UTC 2006  Simon Massey  <sma@prismtech.com>
+
+        * bin/MakeProjectCreator/config/acedefaults.mpb
+
+          Typo, Remove the + character that came with the patch file.
+
+Wed Aug  9 12:17:00 UTC 2006  Simon Massey  <sma@prismtech.com>
+
+        * bin/MakeProjectCreator/config/ace_opt_mfc.mpb
+        * bin/MakeProjectCreator/config/acedefaults.mpb
+
+          Chad's new fix for MPC building MFC projects.
+
+Tue Aug  8 14:00:06 UTC 2006  Carlos O'Ryan  <coryan@atdesk.com>
+
+        * Merged in all the changes from the fix_bug_2540 branch, that is,
+          from revision 73857 to revision 73859.
+
+        Thu Aug  3 21:49:27 UTC 2006  Carlos O'Ryan  <coryan@atdesk.com>
+
+        * ace/TP_Reactor.cpp:
+        * ace/Select_Reactor_T.cpp:
+          Avoid the problems described in bug 2540 by detecting the
+          infinite loop and recomputing the number of active handlers.
+          Thanks to Jody Hagins for correcting my original "fix."
+
+Tue Aug  8 14:05:00 UTC 2006  Simon Massey  <sma@prismtech.com>
+
+        * bin/MakeProjectCreator/config/ace_mfc.mpb
+        * bin/MakeProjectCreator/config/acedefaults.mpb
+
+          Reverted Chad's fix for MPC building MFC projects.
+          It seems that this causes non MFC builds to build as MFC
+          breaking the scoreboard.
+
+Tue Aug  8 09:30:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE.mwc:
+          Removed several directories which aren't existing anymore
+
+Tue Aug  8 09:28:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE-INSTALL.html:
+          Removed some parts of the VxWorks building instructions because
+          it was really wrong what was said
+
+Tue Aug  8 09:15:00 UTC 2006  Simon Massey  <sma@prismtech.com>
+
+        * ace/OS_Memory.h
+        * ace/config-win32-msvc.h
+        * bin/MakeProjectCreator/config/ace_mfc.mpb
+        * bin/MakeProjectCreator/config/acedefaults.mpb
+
+          Chad's fix for MPC building MFC projects. Correction for
+          Thu Apr 27 21:04:08 UTC 2006  Steve Huston  <shuston@riverace.com>
+          throw CMemoryException on out-of-memory condition. These
+          exceptions must be caught by pointer and thrown via calling
+          AfxThrowMemoryException ().
+
+Tue Aug  8 08:06:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Select_Reactor_Base.cpp:
+        * ace/Select_Reactor_T.cpp:
+          Const improvements, use bool when possible
+
+Tue Aug  8 07:46:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/generate_rel_manpages:
+        * bin/make_release:
+          Did a little bit of cleanup removing old things
+
+Tue Aug  8 07:11:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Select_Reactor_T.cpp (dump):
+          Removed usage of not needed operator++ on the handle set
+
 Mon Aug  7 08:02:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Handle_Set.{h,cpp}:

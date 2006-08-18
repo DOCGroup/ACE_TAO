@@ -45,8 +45,36 @@ namespace TAO
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
     S_ptr arg (void) const;
 
-  private:
+  protected:
     S_ptr x_;
+  };
+
+  template<typename S_ptr>
+  struct In_Object_Argument_Cloner_T
+  {
+    static void duplicate(S_ptr objref);
+    static void release(S_ptr objref);
+  };
+
+  /**
+   * @class In_Object_Clonable_Argument_T
+   *
+   * @brief Template class for IN object argument.
+   *
+   */
+  template<typename S_ptr,
+           class Insert_Policy>
+  class In_Object_Clonable_Argument_T :
+          public In_Object_Argument_T<S_ptr, Insert_Policy>
+  {
+  public:
+    In_Object_Clonable_Argument_T (S_ptr x);
+    virtual ~In_Object_Clonable_Argument_T (void);
+
+    virtual Argument* clone (void);
+
+  private:
+    bool is_clone_;
   };
 
   /**
@@ -145,6 +173,8 @@ namespace TAO
 
     typedef In_Object_Argument_T<T_ptr,
                                  Insert_Policy>           in_arg_val;
+    typedef In_Object_Clonable_Argument_T<T_ptr,
+                                          Insert_Policy>  in_clonable_arg_val;
     typedef Inout_Object_Argument_T<T_ptr,
                                     T_traits,
                                     Insert_Policy>        inout_arg_val;

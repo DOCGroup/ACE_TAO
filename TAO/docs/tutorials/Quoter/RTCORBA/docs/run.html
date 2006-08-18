@@ -26,22 +26,29 @@ Distributor execution file. The main steps in this file are described as follows
 
 <li>Initalize the ORB.</li> <P>
 
+<li>Parse the command-line arguments, which give the stock distributor notification rate and the stock database 
+update rate.<P>
+
 <li>Get the RootPOA.</li> <P>
 
 <li>Activate the POAManager.</li> <P>
 
-<li>Create a Distributor factory object, which will then create a Distributor object.</li>
+<li>Create a StockDistributor factory object, which will then create a StockDistributor object.</li>
 <PRE>
-    Stock_StockDistributorHome_i stock_distributor_home (orb);
+    Stock_StockDistributorHome_i stock_distributor_home (orb.in ());
     Stock::StockDistributor_var stock_distributor = stock_distributor_home.create ();
 </PRE>
 
-<li>Write the object reference for the Distributor object to a file so other projects
-can read it when they are bootstrapping.</li> <P>
+<li>Register the StockDistributor servant with the Naming Service or write the object reference of the 
+StockDistributor object to a file such that other projects can read it when they are bootstrapping.</li> <P>
 
-<li>Set the rate of the Distributor object.</li> <P>
+<li>Set the initial notification rate of the StockDistributor object.</li> <P>
+
+<li>Set the database update rate.</li> <P>
 
 <li>Enter into the event looping.</li> <P>
+
+<li>Cleanup the POA and ORB.</li> <P>
 
 <hr><h3>Building the Broker program</h3>
 
@@ -50,34 +57,53 @@ Broker execution file. The main steps in this file are described as follows: <P>
 
 <li>Initalize the ORB.</li> <P>
 
+<li>Parse the command-line arguments, which give the stock name and the priority of the StockBroker object 
+(actually, the priority of the StockNameConsumer object that the StockBroker object contains).</li> <P>
+
 <li>Get the RootPOA.</li> <P>
 
 <li>Activate the POAManager.</li> <P>
 
-<li>Extract the command-line arguments, which give the stock name and the priority of the Broker objec
-(actually, the priority of the StockNameConsumer object that the Broker object contains).</li> <P>
-
-<li>Create a Broker factory object, which will then create a Broker object.</li>
+<li>Create a StockBroker factory object, which will then create a StockBroker object.</li>
 <PRE>
     Stock_StockBrokerHome_i stock_broker_home (orb, stock_name, priority);
     Stock::StockBroker_var stock_broker = stock_broker_home.create ();
 </PRE>
 
-<li>Read and destringify the Distributor object's IOR and narrow it to a Distributor object reference.</li> <P>
+<li>Read and destringify the StockDistributor object's IOR or use Naming Service to get the object reference 
+and narrow it to a StockDistributor object reference.</li> <P>
 
-<li>Connect the Quoter object to the Broker object.</li>
+<li>Create a StockBroker factory object and use it to create a StockBroker object.</li>
 <PRE>
-    Stock::StockQuoter_var stock_quoter = stock_distributor->provide_quoter_info ();
+    Stock_StockBrokerHome_i stock_broker_home (orb.in ());
+    Stock::StockBroker_var stock_broker = stock_broker_home.create (stock_distributor.in (), stock_name.c_str ());
+</PRE>
+
+<li>Create a new consumer; initialize it; subscribe it with the Stock Distributor server.</li>
+<PRE>
+    Stock::StockNameConsumer_var consumer = stock_broker->get_consumer_notifier ();
+    Stock::Cookie_var cookie = stock_distributor->subscribe_notifier (consumer, priority_level);
+    consumer->cookie (cookie.in ());
+</PRE>
+
+<li>Set the cookie attribute of the consumer.</li>
+<PRE>
+    consumer->cookie (cookie.in ());
+</PRE>
+
+<li>Get the object reference to a StockQuoter that's been activated at the appropriate priority.</li>
+<PRE>
+    Stock::StockQuoter_var stock_quoter = stock_distributor->provide_quoter_info (cookie.in ());
+</PRE>
+
+<li>Stash the StockQuoter object reference away for later use.</li>
+<PRE>
     stock_broker->connect_quoter_info (stock_quoter);
 </PRE>
 
-<li>Create a new consumer; initialize it; subscribe it to the notification service.</li>
-<PRE>
-    Stock::StockNameConsumer_var consumer = stock_broker->get_consumer_notifier ();
-    Stock::Cookie *cookie = stock_distributor->subscribe_notifier (consumer, priority);
-</PRE>
-
 <li>Enter into the event looping.</li> <P>
+
+<li>Cleanup the POA and ORB.</li> <P>
 
 <hr><h3>Building the Admin program</h3>
 
@@ -86,7 +112,10 @@ Admin execution file. The main steps in this file are described as follows: <P>
 
 <li>Initalize the ORB.</li> <P>
 
-<li>Read and destringify the Distributor object's IOR and narrow it to a Distributor object reference.</li> <P>
+<li>Parse the command-line arguments, which give the option of different operations of StockDistributor interface.</li> <P>
+
+<li>Read and destringify the StockDistributor object's IOR or use Naming Service to get the object reference 
+and narrow it to a StockDistributor object reference.</li> <P>
 
 <li>Call the operations of StockDistributor interface:</li>
 <PRE>
@@ -94,6 +123,8 @@ Admin execution file. The main steps in this file are described as follows: <P>
     stop: Stop the distributor.
     rate: Change the notification rate of the distributor.
 </PRE>
+
+<li>Cleanup the ORB.</li> <P>
 
 <hr><h3>Running the Stock Quoter Service</h3>
 

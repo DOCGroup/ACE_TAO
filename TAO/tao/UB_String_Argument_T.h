@@ -45,8 +45,29 @@ namespace TAO
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
     const typename S_var::s_traits::char_type * arg (void) const;
 
-  private:
+  protected:
     typename S_var::s_traits::char_type const * x_;
+  };
+
+  /**
+   * @class In_UB_String_Clonable_Argument_T
+   *
+   * @brief Template class for IN unbounded (w)string argument.
+   *
+   */
+  template<typename S_var,
+           class Insert_Policy>
+  class In_UB_String_Clonable_Argument_T :
+            public In_UB_String_Argument_T<S_var, Insert_Policy>
+  {
+  public:
+    In_UB_String_Clonable_Argument_T (const typename S_var::s_traits::char_type * x);
+    virtual ~In_UB_String_Clonable_Argument_T (void);
+
+    virtual Argument* clone (void);
+
+  private:
+    bool is_clone_;
   };
 
   /**
@@ -137,6 +158,8 @@ namespace TAO
     typedef typename T_var::s_traits::string_out             out_type;
 
     typedef In_UB_String_Argument_T<T_var, Insert_Policy>    in_arg_val;
+    typedef In_UB_String_Clonable_Argument_T<T_var,
+                                             Insert_Policy>  in_clonable_arg_val;
     typedef Inout_UB_String_Argument_T<T_var, Insert_Policy> inout_arg_val;
     typedef Out_UB_String_Argument_T<T_var, Insert_Policy>   out_arg_val;
     typedef Ret_UB_String_Argument_T<T_var, Insert_Policy>   ret_val;

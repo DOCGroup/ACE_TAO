@@ -42,7 +42,7 @@ $server_reverse_nt_conf  = PerlACE::LocalFile ("server_reverse_nt$PerlACE::svcco
              ."          (POA Server Protocol set to UIOP only): \n");
 
 # UIOP only available on Unix.  Substitute with alternative tests on Windows.
-if ($^O eq "MSWin32") {
+if ($^O eq "MSWin32" || $^O eq "VMS") {
     @server_opts =
         ("-ORBSndSock 54321 -ORBendpoint iiop://",
 

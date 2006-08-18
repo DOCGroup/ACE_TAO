@@ -1,7 +1,10 @@
 // $Id$
 
-// TAO headers
+// ACE+TAO headers
+#include "ace/Reactor.h"
 #include "tao/RTPortableServer/RTPortableServer.h"
+#include "tao/ORB_Core.h"
+#include "tao/Utils/PolicyList_Destroyer.h"
 
 // local headers
 #include "Broker_i.h"
@@ -10,39 +13,47 @@
 
 // Implementation skeleton constructor
 Stock_StockBroker_i::Stock_StockBroker_i (CORBA::ORB_ptr orb,
-                                          const char *stock_name,
-                                          RTCORBA::Priority priority)
-                                          : quoter_ (Stock::StockQuoter::_nil()),
-                                            consumer_ (0)
+                                          Stock::StockDistributor_ptr dist,
+                                          const char *stock_name)
+  : orb_ (CORBA::ORB::_duplicate (orb)),
+    quoter_ (Stock::StockQuoter::_nil()),
+    consumer_ (0),
+    distributor_ (Stock::StockDistributor::_duplicate (dist))
 {
   // Get a reference to the <RTORB>.
   CORBA::Object_var obj = orb->resolve_initial_references ("RTORB");
   RTCORBA::RTORB_var rt_orb = RTCORBA::RTORB::_narrow (obj.in ());
 
   // Create a <CORBA::PolicyList> for the child POA.
-  CORBA::PolicyList consumer_policies (1);
+  TAO::Utils::PolicyList_Destroyer  consumer_policies (1);
   consumer_policies.length (1);
 
-  // Create a <SERVER_DECLARED> priority model policy.
-  consumer_policies[0] = rt_orb->create_priority_model_policy (RTCORBA::SERVER_DECLARED,
-    Stock_PriorityMapping::MEDIUM);
+  // Create a <CLIENT_PROPAGATED> priority model policy.
+    consumer_policies[0] =
+      rt_orb->create_priority_model_policy (RTCORBA::CLIENT_PROPAGATED,
+                                            Stock::Priority_Mapping::MEDIUM);
 
-  // Create a child POA with SERVER_DECLARED policies. The name of the
-  // POA will be <Stock_StockDistributorHome>. Any instances of the
-  // Stock_StockDistributor_i created via the create() method will be
-  // activated under this POA.
-  PortableServer::POA_var poa = this->_default_POA()->create_POA (
-    "StockNameConsumer_POA", PortableServer::POAManager::_nil (), consumer_policies);
+  PortableServer::POA_var poa = this->_default_POA ();
+  PortableServer::POAManager_var poa_mgr = poa->the_POAManager ();
 
-  consumer_policies[0]->destroy ();
-
+  // Create a child POA with CLIENT_PROPAGATED policies. The name of
+  // the POA will be <StockNameConsumer_POA>.  Instances of the
+  // Stock_StockNameConsumer_i will be activated under this POA.
+  PortableServer::POA_var child_poa = 
+    poa->create_POA ("StockNameConsumer_POA", 
+                     poa_mgr,
+                     consumer_policies);
+  
   // Narrow the POA to a <RTPortableServer::POA>.
-  RTPortableServer::POA_var rt_poa = RTPortableServer::POA::_narrow (poa);
+  RTPortableServer::POA_var rt_poa =
+    RTPortableServer::POA::_narrow (child_poa);
 
-  // Activate the <consumer_> with the specified <priority>.
-  this->consumer_ = new Stock_StockNameConsumer_i (this->_this (), stock_name);
-  PortableServer::ServantBase_var nameconsumer_owner_transfer = this->consumer_;
-  rt_poa->activate_object_with_priority (this->consumer_, priority);
+  // Create and activate the <consumer_>.
+  this->consumer_ = 
+    new Stock_StockNameConsumer_i (*this, stock_name);
+  PortableServer::ServantBase_var nameconsumer_owner_transfer = 
+    this->consumer_;
+  rt_poa->activate_object (this->consumer_);
 }
 
 // Implementation skeleton destructor
@@ -77,37 +88,48 @@ void Stock_StockBroker_i::connect_quoter_info (::Stock::StockQuoter_ptr c)
   return Stock::StockQuoter::_duplicate (this->quoter_);
 }
 
+void 
+Stock_StockBroker_i::shutdown (void)
+  throw (::CORBA::SystemException)
+{
+  // Unsubscribe
+  ACE_DEBUG ((LM_DEBUG, "Shutdown unsubscribing notifiers\n"));
+  this->distributor_->unsubscribe_notifier
+    (this->consumer_->cookie ());
+  
+  ACE_DEBUG ((LM_DEBUG, "Shutdown deactivating object\n"));
+  ::Stock::StockBroker_var broker = this->_this ();
+  PortableServer::ObjectId_var oid = 
+    this->_default_POA ()->reference_to_id (broker.in ());
+  
+  this->_default_POA ()->deactivate_object (oid.in ());  
+}
+
 // Implementation skeleton constructor
-Stock_StockBrokerHome_i::Stock_StockBrokerHome_i (CORBA::ORB_ptr orb,
-                                                  const char *stock_name,
-                                                  RTCORBA::Priority priority)
-                                                  : broker_ (0)
+Stock_StockBrokerHome_i::Stock_StockBrokerHome_i (CORBA::ORB_ptr orb)
+  : broker_ (0),
+    orb_ (CORBA::ORB::_duplicate (orb))
 {
   // Register the necessary factories and mappings with the specified
   // <orb>. If we neglect to perform these registrations then the app
   // will not execute.
-  Stock::StockName_init *stockname_factory = new Stock::StockName_init;
+  Stock::StockName_init *stockname_factory =
+    new Stock::StockName_init;
   orb->register_value_factory (stockname_factory->tao_repository_id (),
                                stockname_factory);
 
-  Stock::Cookie_init *cookie_factory = new Stock::Cookie_init;
+  Stock::Cookie_init *cookie_factory =
+    new Stock::Cookie_init;
   orb->register_value_factory (cookie_factory->tao_repository_id (),
                                cookie_factory);
 
-  Stock_PriorityMapping::register_mapping (orb);
-
-  // Because the broker has nothing to do with any of the RTCORBA
-  // mechanisms, we can register it under the <default_POA>.
-  try
-  {
-    this->broker_ = new Stock_StockBroker_i (orb, stock_name, priority);
-    PortableServer::ServantBase_var broker_owner_transfer = this->broker_;
-    this->_default_POA ()->activate_object (this->broker_);
-  }
-  catch (PortableServer::POA::ServantAlreadyActive &) {
-    // we only catch this exception and let any other exception
-    // propogate to the upper level.
-  }
+  Stock::Priority_Mapping::register_mapping (orb);
+  
+  // Register this class as an event handler with the ORB to catch
+  // ctrl-c from the command line. 
+  if (orb_->orb_core ()->reactor ()->register_handler (SIGINT, this) == -1)
+    ACE_DEBUG ((LM_DEBUG, "ERROR: Failed to register as a signal handler: %p\n", 
+                "register_handler\n"));
 }
 
 // Implementation skeleton destructor
@@ -115,9 +137,38 @@ Stock_StockBrokerHome_i::~Stock_StockBrokerHome_i (void)
 {
 }
 
-::Stock::StockBroker_ptr Stock_StockBrokerHome_i::create ()
+::Stock::StockBroker_ptr 
+Stock_StockBrokerHome_i::create (Stock::StockDistributor_ptr dist,
+                                 const char *stock_name)
   throw (::CORBA::SystemException)
 {
-  Stock::StockBroker_var broker = this->broker_->_this ();
-  return broker._retn();
+  if (CORBA::is_nil (this->broker_.in ()))
+    {
+      // Since the broker has nothing to do with any of the RTCORBA
+      // mechanisms, we can activate it under the <default_POA>, which
+      // is the <RootPOA>.
+      Stock_StockBroker_i *broker =
+        new Stock_StockBroker_i (orb_, dist, stock_name);
+      PortableServer::ServantBase_var owner_transfer 
+        = broker;
+      this->broker_ = broker->_this ();
+    }
+
+  return Stock::StockBroker::_duplicate (this->broker_.in ());
+}
+
+int 
+Stock_StockBrokerHome_i::handle_signal (int,
+                                        siginfo_t *,
+                                        ucontext_t *)
+{
+  ACE_DEBUG ((LM_DEBUG, "Disconnecting all brokers..\n"));
+  
+  this->broker_->shutdown ();
+  
+  ACE_DEBUG ((LM_DEBUG, "Shutting down the ORB\n"));
+  
+  this->orb_->shutdown (0);
+  
+  return 0;
 }

@@ -307,6 +307,7 @@ project(ACE) : acedefaults, core, other, codecs, token, svcconf, uuid, filecache
     Guard_T.cpp
     Hash_Cache_Map_Manager_T.cpp
     Hash_Map_Manager_T.cpp
+    Hash_Multi_Map_Manager_T.cpp
     Hash_Map_With_Allocator_T.cpp
     IOStream_T.cpp
     Intrusive_List.cpp

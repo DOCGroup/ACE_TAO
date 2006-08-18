@@ -68,11 +68,15 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward Declaration
 class TAO_Acceptor_Filter;
+
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 class TAO_Acceptor_Filter_Factory;
+class TAO_POAManager_Factory;
+#endif
+
 class TAO_Acceptor_Registry;
 class TAO_IORInfo;
 class TAO_Regular_POA;
-class TAO_POAManager_Factory;
 
 namespace PortableInterceptor
 {
@@ -177,7 +181,6 @@ public:
 #endif
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
-
   PortableServer::ImplicitActivationPolicy_ptr
   create_implicit_activation_policy (
       PortableServer::ImplicitActivationPolicyValue value
@@ -216,7 +219,7 @@ public:
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-#if !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
   PortableServer::POAManagerFactory_ptr the_POAManagerFactory (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -892,8 +895,11 @@ protected:
 
   /// Reference to the POAManager that this poa assicuates with.
   TAO_POA_Manager &poa_manager_;
+
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
   /// Reference to the POAManagerFactory that generate the POAManager.
   TAO_POAManager_Factory& poa_manager_factory_;
+#endif
 
   IOP::TaggedComponentList tagged_component_;
 
@@ -953,7 +959,9 @@ protected:
 
   TAO_SYNCH_CONDITION servant_deactivation_condition_;
 
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
   TAO_Acceptor_Filter_Factory * filter_factory_;
+#endif
 
 public:
     // @todo Temporarily for servant retention

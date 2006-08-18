@@ -89,6 +89,13 @@ namespace TAO
         ACE_Time_Value *&max_wait_time
         ACE_ENV_ARG_DECL);
 
+    virtual Invocation_Status invoke_collocated_i (
+        TAO_Stub *stub,
+        TAO_Operation_Details &details,
+        CORBA::Object_var &effective_target,
+        Collocation_Strategy strat
+        ACE_ENV_ARG_DECL);
+
   private:
     /// Autofunctor to manage the reply dispatcher
     ACE_Utils::Auto_Functor<TAO_Asynch_Reply_Dispatcher_Base,

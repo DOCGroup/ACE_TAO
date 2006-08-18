@@ -151,7 +151,7 @@ template <class ACE_SELECT_REACTOR_TOKEN> int
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::restart (int r)
 {
   ACE_MT (ACE_GUARD_RETURN (ACE_SELECT_REACTOR_TOKEN, ace_mon, this->token_, -1));
-  int current_value = this->restart_;
+  int const current_value = this->restart_;
   this->restart_ = r;
   return current_value;
 }
@@ -213,13 +213,11 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::notify (ACE_Event_Handler *eh,
 {
   ACE_TRACE ("ACE_Select_Reactor_T::notify");
 
-  ssize_t n = 0;
-
   // Pass over both the Event_Handler *and* the mask to allow the
   // caller to dictate which Event_Handler method the receiver
   // invokes.  Note that this call can timeout.
 
-  n = this->notify_handler_->notify (eh, mask, timeout);
+  ssize_t n = this->notify_handler_->notify (eh, mask, timeout);
   return n == -1 ? -1 : 0;
 }
 
@@ -810,7 +808,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::notify_handle
   if (event_handler == 0)
     return;
 
-  int reference_counting_required =
+  bool const reference_counting_required =
     event_handler->reference_counting_policy ().value () ==
     ACE_Event_Handler::Reference_Counting_Policy::ENABLED;
 
@@ -1045,10 +1043,10 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::work_pending
     this->timer_queue_->calculate_timeout (&mwt, &timer_buf);
 
   // Check if we have timers to fire.
-  int timers_pending =
+  int const timers_pending =
     (this_timeout != 0 && *this_timeout != mwt ? 1 : 0);
 
-  u_long width = (u_long) this->handler_rep_.max_handlep1 ();
+  u_long const width = (u_long) this->handler_rep_.max_handlep1 ();
 
   ACE_Select_Reactor_Handle_Set fd_set;
   fd_set.rd_mask_ = this->wait_set_.rd_mask_;
@@ -1286,6 +1284,13 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::dispatch
 
   do
     {
+      // We expect that the loop will decrease the number of active
+      // handles in each iteration.  If it does not, then something is
+      // inconsistent in the state of the Reactor and we should avoid
+      // the loop.  Please read the comments on bug 2540 for more
+      // details.
+      int initial_handle_count = active_handle_count;
+
       // Note that we keep track of changes to our state.  If any of
       // the dispatch_*() methods below return -1 it means that the
       // <wait_set_> state has changed as the result of an
@@ -1360,11 +1365,10 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::dispatch
 
       // if state changed, we need to re-eval active_handle_count,
       // so we will not end with an endless loop
-      if (this->state_changed_)
+      if (initial_handle_count == active_handle_count
+          || this->state_changed_)
       {
-          active_handle_count = this->dispatch_set_.rd_mask_.num_set ()
-              + this->dispatch_set_.wr_mask_.num_set ()
-              + this->dispatch_set_.ex_mask_.num_set ();
+        active_handle_count = this->any_ready (dispatch_set);
       }
     }
   while (active_handle_count > 0);
@@ -1537,48 +1541,39 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::dump (void) const
   ACE_HANDLE h;
 
   for (ACE_Handle_Set_Iterator handle_iter_wr (this->wait_set_.wr_mask_);
-       (h = handle_iter_wr ()) != ACE_INVALID_HANDLE;
-       ++handle_iter_wr)
+       (h = handle_iter_wr ()) != ACE_INVALID_HANDLE;)
     ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("write_handle = %d\n"), h));
 
   for (ACE_Handle_Set_Iterator handle_iter_rd (this->wait_set_.rd_mask_);
-       (h = handle_iter_rd ()) != ACE_INVALID_HANDLE;
-       ++handle_iter_rd)
+       (h = handle_iter_rd ()) != ACE_INVALID_HANDLE;)
     ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("read_handle = %d\n"), h));
 
   for (ACE_Handle_Set_Iterator handle_iter_ex (this->wait_set_.ex_mask_);
-       (h = handle_iter_ex ()) != ACE_INVALID_HANDLE;
-       ++handle_iter_ex)
+       (h = handle_iter_ex ()) != ACE_INVALID_HANDLE;)
     ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("except_handle = %d\n"), h));
 
   for (ACE_Handle_Set_Iterator handle_iter_wr_ready (this->ready_set_.wr_mask_);
-       (h = handle_iter_wr_ready ()) != ACE_INVALID_HANDLE;
-       ++handle_iter_wr_ready)
+       (h = handle_iter_wr_ready ()) != ACE_INVALID_HANDLE;)
     ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("write_handle_ready = %d\n"), h));
 
   for (ACE_Handle_Set_Iterator handle_iter_rd_ready (this->ready_set_.rd_mask_);
-       (h = handle_iter_rd_ready ()) != ACE_INVALID_HANDLE;
-       ++handle_iter_rd_ready)
+       (h = handle_iter_rd_ready ()) != ACE_INVALID_HANDLE;)
     ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("read_handle_ready = %d\n"), h));
 
   for (ACE_Handle_Set_Iterator handle_iter_ex_ready (this->ready_set_.ex_mask_);
-       (h = handle_iter_ex_ready ()) != ACE_INVALID_HANDLE;
-       ++handle_iter_ex_ready)
+       (h = handle_iter_ex_ready ()) != ACE_INVALID_HANDLE;)
     ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("except_handle_ready = %d\n"), h));
 
   for (ACE_Handle_Set_Iterator handle_iter_su_ready (this->suspend_set_.wr_mask_);
-       (h = handle_iter_su_ready ()) != ACE_INVALID_HANDLE;
-       ++handle_iter_su_ready)
+       (h = handle_iter_su_ready ()) != ACE_INVALID_HANDLE;)
     ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("write_handle_suspend = %d\n"), h));
 
   for (ACE_Handle_Set_Iterator handle_iter_su_ready (this->suspend_set_.rd_mask_);
-       (h = handle_iter_su_ready ()) != ACE_INVALID_HANDLE;
-       ++handle_iter_su_ready)
+       (h = handle_iter_su_ready ()) != ACE_INVALID_HANDLE;)
     ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("read_handle_suspend = %d\n"), h));
 
   for (ACE_Handle_Set_Iterator handle_iter_su_ready (this->suspend_set_.ex_mask_);
-       (h = handle_iter_su_ready ()) != ACE_INVALID_HANDLE;
-       ++handle_iter_su_ready)
+       (h = handle_iter_su_ready ()) != ACE_INVALID_HANDLE;)
     ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("except_handle_suspend = %d\n"), h));
 
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("restart_ = %d\n"), this->restart_));

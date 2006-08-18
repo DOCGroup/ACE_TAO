@@ -12,6 +12,8 @@
 #include "tao/Transport_Mux_Strategy.h"
 #include "tao/Collocation_Proxy_Broker.h"
 #include "tao/GIOP_Utils.h"
+#include "tao/TAOC.h"
+
 #if !defined (__ACE_INLINE__)
 # include "tao/Invocation_Adapter.inl"
 #endif /* __ACE_INLINE__ */
@@ -41,11 +43,11 @@ namespace TAO
 
     TAO_Operation_Details op_details (this->operation_,
                                       this->op_len_,
-                                      this->number_args_ > 1,
                                       this->args_,
                                       this->number_args_,
                                       ex_data,
-                                      ex_count);
+                                      ex_count,
+                                      this->is_dii_request_);
 
     this->invoke_i (stub,
                     op_details
@@ -64,8 +66,6 @@ namespace TAO
 
     // Initial state
     TAO::Invocation_Status status = TAO_INVOKE_START;
-
-    ACE_Time_Value *max_wait_time = 0;
 
     while (status == TAO_INVOKE_START ||
            status == TAO_INVOKE_RESTART)
@@ -88,6 +88,7 @@ namespace TAO
         if (strat == TAO_CS_REMOTE_STRATEGY ||
             strat == TAO_CS_LAST)
           {
+            ACE_Time_Value *max_wait_time = 0;
             status =
               this->invoke_remote_i (stub,
                                      details,
@@ -262,12 +263,18 @@ namespace TAO
     (void) this->set_response_flags (stub,
                                      details);
 
+    CORBA::Octet rflags = details.response_flags ();
+    bool block_connect =
+      rflags != static_cast<CORBA::Octet> (Messaging::SYNC_NONE) 
+      && rflags != static_cast<CORBA::Octet> (TAO::SYNC_EAGER_BUFFERING)
+      && rflags != static_cast<CORBA::Octet> (TAO::SYNC_DELAYED_BUFFERING);
+
     // Create the resolver which will pick (or create) for us a
     // transport and a profile from the effective_target.
     Profile_Transport_Resolver resolver (
       effective_target.in (),
       stub,
-      (details.response_flags () != Messaging::SYNC_NONE));
+      block_connect);
 
     resolver.resolve (max_wait_time
                       ACE_ENV_ARG_PARAMETER);

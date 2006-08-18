@@ -11,7 +11,7 @@
 #if !defined (ACE_SVC_EXPORT_H)
 #define ACE_SVC_EXPORT_H
 
-#include "ace/config-all.h"
+#include /**/ "ace/config-all.h"
 
 #if defined (ACE_AS_STATIC_LIBS) && !defined (ACE_SVC_HAS_DLL)
 #  define ACE_SVC_HAS_DLL 0

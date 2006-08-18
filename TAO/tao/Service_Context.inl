@@ -39,7 +39,7 @@ TAO_Service_Context::set_context (IOP::ServiceContext &context,
                        cdr);
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 TAO_Service_Context::is_service_id (IOP::ServiceId id)
 {
   for (CORBA::ULong i = 0;
@@ -48,10 +48,10 @@ TAO_Service_Context::is_service_id (IOP::ServiceId id)
     {
       if (id == this->service_context_[i].context_id)
         {
-          return 1;
+          return true;
         }
     }
-  return 0;
+  return false;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

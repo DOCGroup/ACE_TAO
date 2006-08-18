@@ -41,6 +41,8 @@ namespace TAO
     typedef void        ret_type;
 
     typedef RetArgument ret_val;
+    typedef Void_Return_Argument
+                        clonable_ret_val;
   };
 
   /**

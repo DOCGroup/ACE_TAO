@@ -1275,7 +1275,7 @@ AST_Interface::insert_non_dup (AST_Interface *t,
        (void) q_iter.advance ())
     {
       // Queue element.
-      AST_Interface **temp;
+      AST_Interface **temp = 0;
 
       (void) q_iter.next (temp);
 
@@ -1295,7 +1295,7 @@ AST_Interface::insert_non_dup (AST_Interface *t,
        (void) del_q_iter.advance ())
     {
       // Queue element.
-      AST_Interface **temp;
+      AST_Interface **temp = 0;
 
       (void) del_q_iter.next (temp);
 
@@ -1331,25 +1331,25 @@ AST_Interface::redefine (AST_Interface *from)
   // from here, we have to update the scope now.
   this->pd_n_inherits = from->pd_n_inherits;
   unsigned long i = 0;
-  
+
   unsigned long array_size =
     static_cast<unsigned long> (from->pd_n_inherits);
   ACE_NEW (this->pd_inherits,
            AST_Interface *[array_size]);
-           
+
   for (i = 0; i < array_size; ++i)
     {
       this->pd_inherits[i] = from->pd_inherits[i];
     }
-    
+
   this->pd_n_inherits_flat = from->pd_n_inherits_flat;
   array_size =
     static_cast<unsigned long> (from->pd_n_inherits_flat);
   ACE_NEW (this->pd_inherits_flat,
            AST_Interface *[array_size]);
-   
+
   for (i = 0; i < array_size; ++i)
-    {  
+    {
       this->pd_inherits_flat[i] = from->pd_inherits_flat[i];
     }
 
@@ -1661,11 +1661,11 @@ AST_Interface::destroy (void)
   delete [] this->pd_inherits;
   this->pd_inherits = 0;
   this->pd_n_inherits = 0;
-  
+
   delete [] this->pd_inherits_flat;
   this->pd_inherits_flat = 0;
   this->pd_n_inherits_flat = 0;
-  
+
   this->UTL_Scope::destroy ();
   this->AST_Type::destroy ();
 }

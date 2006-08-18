@@ -223,6 +223,14 @@ public:
   // set the name of the include file that is used instead of the own
   // generated client header file
 
+  const char* unique_include (void) const;
+  // returns the name of the include file that should on get
+  // generated in the client header file
+
+  void unique_include (const char* s);
+  // set the name of the include file that should on get
+  // generated in the client header file
+
   /// Set text that opens a "versioned" namespace.
   void versioning_begin (const char* s);
 
@@ -325,6 +333,12 @@ public:
 
   void anyop_header_ending (const char* s);
   // Set the anyop_header_ending.
+
+  void use_clonable_in_args (bool clonable);
+  // Set the clonable_in_args.
+
+  bool use_clonable_in_args (void) const;
+  // Get the clonable_in_args setting.
 
   const char* anyop_header_ending (void) const;
   // Get the anyop_header_ending.
@@ -477,6 +491,12 @@ public:
   bool gen_orb_h_include (void) const;
   // Return the flag.
 
+  bool gen_empty_anyop_header (void) const;
+  // Generate an empty anyop header (A.h)
+
+  void gen_empty_anyop_header (bool value);
+  // Generate an empty anyop header (A.h)
+
   void lookup_strategy (LOOKUP_STRATEGY s);
   // Set the lookup strategy.
 
@@ -535,6 +555,14 @@ public:
   void gen_server_inline (bool val);
   // Accessors for the member gen_server_inline_.
 
+  bool gen_client_stub (void) const;
+  void gen_client_stub (bool val);
+  // Accessors for the member gen_client_stub_.
+
+  bool gen_server_skeleton (void) const;
+  void gen_server_skeleton (bool val);
+  // Accessors for the member gen_server_skeleton_.
+
   bool gen_local_iface_anyops (void) const;
   void gen_local_iface_anyops (bool val);
   // Accessors for the member gen_local_iface_anyops_.
@@ -580,6 +608,7 @@ private:
   char* post_include_;
   char* include_guard_;
   char* safe_include_;
+  char* unique_include_;
 
   /// Text that opens a "versioned" namespace for core TAO and orbsvcs
   /// related code.
@@ -720,6 +749,9 @@ private:
   // Flag to indicate whether ORB.h include should be generated, needed for
   // regenerating the pidl files.
 
+  bool gen_empty_anyop_header_;
+  // Flag to indicate whether an empty A.h should be generated
+
   LOOKUP_STRATEGY lookup_strategy_;
   // The enumerated value indicating the lookup strategy.
 
@@ -756,9 +788,20 @@ private:
   // True by default, but a command line option can turn this off so
   // that we don't generate a server inline file
 
+  bool gen_client_stub_;
+  // True by default, but a command line option can turn this off so
+  // that we don't generate a client stub file
+
+  bool gen_server_skeleton_;
+  // True by default, but a command line option can turn this off so
+  // that we don't generate a server skeleton file
+
   bool gen_local_iface_anyops_;
   // True by default, can be turned off by a command line option
   // for regenerating internal ORB files.
+
+  bool use_clonable_in_args_;
+  // Use in_clonable_arg_val instead of in_arg_val?
 };
 
 #endif /* _BE_GLOBAL_H */

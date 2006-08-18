@@ -26,7 +26,6 @@ TAO_BiDir_PolicyFactory::create_policy (
       BiDirPolicy::BidirectionalPolicyValue val;
 
       // Extract the value from the any.
-      value >>= val;
       if ((value >>= val) == 0)
         {
           ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_VALUE),

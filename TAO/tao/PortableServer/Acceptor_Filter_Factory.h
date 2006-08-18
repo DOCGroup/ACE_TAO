@@ -26,9 +26,12 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Versioned_Namespace.h"
+#include "tao/orbconf.h"
 
 #include "ace/Service_Object.h"
 #include "ace/Service_Config.h"
+
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -69,5 +72,7 @@ ACE_STATIC_SVC_DECLARE (TAO_Acceptor_Filter_Factory)
 ACE_FACTORY_DECLARE (TAO_PortableServer, TAO_Acceptor_Filter_Factory)
 
 #include /**/ "ace/post.h"
+
+#endif /* #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)*/
 
 #endif /* TAO_ACCEPTOR_FILTER_FACTORY_H */

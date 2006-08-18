@@ -203,6 +203,24 @@ ACE_Obstack_T<CHAR>::release (void)
   this->curr_->block_ = this->curr_->cur_ = this->curr_->contents_;
 }
 
+template <class CHAR> void
+ACE_Obstack_T<CHAR>::grow_fast (CHAR c)
+{
+  * (reinterpret_cast<CHAR *> (this->curr_->cur_)) = c;
+  this->curr_->cur_ += sizeof (CHAR);
+}
+
+template <class CHAR> CHAR *
+ACE_Obstack_T<CHAR>::freeze (void)
+{
+  CHAR *retv = reinterpret_cast<CHAR *> (this->curr_->block_);
+  * (reinterpret_cast<CHAR *> (this->curr_->cur_)) = 0;
+
+  this->curr_->cur_ += sizeof (CHAR);
+  this->curr_->block_ = this->curr_->cur_;
+  return retv;
+}
+
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_OBSTACK_T_CPP */

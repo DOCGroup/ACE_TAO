@@ -29,19 +29,19 @@ module CSD_Framework {
 
   # pragma version CSD_Framework 2.3
 
-  // This is a common base interface for all CSD strategy
-  // implementations
+  /// This is a common base interface for all CSD strategy
+  /// implementations
   local interface Strategy {
 
     # pragma version Strategy 2.3
 
-    // This is support for a legacy method of supplying a strategy to a
-    // POA.
+    /// This is support for a legacy method of supplying a strategy to a
+    /// POA.
     boolean apply_to(in PortableServer::POA p);
   };
 
-  // Specialized POA providing a method to supply a strategy object to
-  // the POA.
+  /// Specialized POA providing a method to supply a strategy object to
+  /// the POA.
   local interface POA : PortableServer::POA {
 
     # pragma version POA 2.3

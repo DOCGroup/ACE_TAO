@@ -20,27 +20,34 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_POA_Manager::TAO_POA_Manager (
   TAO_Object_Adapter &object_adapter,
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
   const char * id,
   const ::CORBA::PolicyList &policies,
   PortableServer::POAManagerFactory_ptr poa_manager_factory)
+#else
+  const char * id)
+#endif
   : state_ (PortableServer::POAManager::HOLDING),
     lock_ (object_adapter.lock ()),
     poa_collection_ (),
     object_adapter_ (object_adapter),
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
     id_ (id == 0 ? this->generate_manager_id () : CORBA::string_dup (id)),
-#if !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
     poa_manager_factory_ (* dynamic_cast <TAO_POAManager_Factory*> (poa_manager_factory)),
-#endif
     policies_ (policies)
 {
-#if !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
   poa_manager_factory_._add_ref ();
-#endif
 }
+#else
+    id_ (id == 0 ? this->generate_manager_id () : CORBA::string_dup (id))
+{
+}
+#endif
+
 
 TAO_POA_Manager::~TAO_POA_Manager (void)
 {
-#if !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
   poa_manager_factory_._remove_ref ();
 #endif
 }
@@ -315,16 +322,21 @@ TAO_POA_Manager::remove_poa (TAO_Root_POA *poa)
 {
   int const result = this->poa_collection_.remove (poa);
 
+  // The #if really only needs to go around the 
+  // "this->poa_manager_factory_.remove_poamanager (this);" line, but it's 
+  // moved out as an optimization for now.  If additional non-CORBA/e and 
+  // non-minimum POA code needs to go in that clause the #if would have to 
+  // move back in.
+
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
   if (result == 0)
     {
       if (this->poa_collection_.is_empty ())
         {
-#if !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
           this->poa_manager_factory_.remove_poamanager (this);
-#endif
         }
     }
-
+#endif
   return result;
 }
 

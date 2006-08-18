@@ -20,7 +20,7 @@
 #include "ace/Basic_Types.h"
 
 #if defined (ACE_USES_WCHAR)
-#include "ace/ACE_export.h"
+#include /**/ "ace/ACE_export.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

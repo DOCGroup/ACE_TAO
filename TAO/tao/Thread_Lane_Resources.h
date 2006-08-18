@@ -22,7 +22,7 @@
 
 #include "ace/Thread_Mutex.h"
 
-#include "tao/TAO_Export.h"
+#include /**/ "tao/TAO_Export.h"
 #include "tao/orbconf.h"
 #include "tao/params.h"
 

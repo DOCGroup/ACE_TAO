@@ -70,11 +70,14 @@ public:
   /// Set the underlying transport object
   void transport (TAO_Transport* transport);
 
-  /// Is the handler closed?
+  /// Is the handler closed or timed out?
   bool is_closed (void) const;
 
   /// Is the handler open?
   bool is_open (void) const;
+
+  /// Closed due to timeout?
+  bool is_timeout (void) const;
 
   /// Is the handler in the process of being connected?
   bool is_connecting (void) const;

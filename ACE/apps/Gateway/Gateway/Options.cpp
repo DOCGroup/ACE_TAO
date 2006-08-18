@@ -245,7 +245,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
           /* NOTREACHED */
         case 'd': // We are debugging.
           ACE_SET_BITS (this->options_,
-                        Options::DEBUG);
+                        Options::DEBUGGING);
           break;
         case 'P': // Use a different connection config filename.
           ACE_OS::strncpy (this->connection_config_file_,

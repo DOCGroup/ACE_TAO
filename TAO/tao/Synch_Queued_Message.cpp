@@ -129,7 +129,8 @@ TAO_Synch_Queued_Message::clone (ACE_Allocator *alloc)
                                alloc->malloc (sizeof (TAO_Synch_Queued_Message))),
                              TAO_Synch_Queued_Message (mb,
                                                        this->orb_core_,
-                                                       alloc),
+                                                       alloc,
+                                                       0),
                              0);
     }
   else
@@ -144,7 +145,7 @@ TAO_Synch_Queued_Message::clone (ACE_Allocator *alloc)
         }
 
       ACE_NEW_RETURN (qm,
-                      TAO_Synch_Queued_Message (mb, this->orb_core_),
+                      TAO_Synch_Queued_Message (mb, this->orb_core_, 0, 0),
                       0);
     }
 
