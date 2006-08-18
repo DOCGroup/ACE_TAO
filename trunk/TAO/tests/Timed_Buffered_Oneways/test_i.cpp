@@ -38,6 +38,7 @@ void
 test_i::flush (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  ACE_DEBUG ((LM_DEBUG, "server: got flush request\n"));
 }
 
 void

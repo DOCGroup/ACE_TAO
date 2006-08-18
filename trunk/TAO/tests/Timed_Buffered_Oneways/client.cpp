@@ -131,7 +131,8 @@ setup_policies (CORBA::ORB_ptr orb, test_ptr object ACE_ENV_ARG_DECL)
   else
     {
       policy_list.length (1);
-      TimeBase::TimeT rt_timeout = 10000 * timeout;
+      TimeBase::TimeT rt_timeout = 10 * 1000 * timeout;
+
       CORBA::Any rt_timeout_any;
       rt_timeout_any <<= rt_timeout;
       policy_list[0] =
@@ -167,7 +168,7 @@ setup_policies (CORBA::ORB_ptr orb, test_ptr object ACE_ENV_ARG_DECL)
                         ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  CORBA::Object_var object_temp = 
+  CORBA::Object_var object_temp =
     object_with_policy->_set_policy_overrides (policy_list,
                                                CORBA::ADD_OVERRIDE
                                                ACE_ENV_ARG_PARAMETER);
@@ -244,17 +245,19 @@ main (int argc, char **argv)
           ACE_Time_Value sleep_interval (0, interval * 1000);
 
           // If we don't run the orb, then no data will be sent, and no
-          // connection will be made initially. 
+          // connection will be made initially.
           orb->run (sleep_interval ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 
+      ACE_DEBUG ((LM_DEBUG, "client: flushing\n"));
       test_object_no_policy->flush (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "client: Shutting down...\n"));
       if (shutdown_server)
         {
+          ACE_DEBUG ((LM_DEBUG,"client killing server\n"));
           long now = ACE_OS::gettimeofday ().msec ();
           test_object_no_policy->shutdown (now ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
