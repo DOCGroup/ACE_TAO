@@ -1,3 +1,11 @@
+Fri Aug 18 12:03:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Don't run Bug_2510_Regression in a ST build, it uses threading
+
+        * bin/MakeProjectCreator/templates/bor.mpd:
+          Don't print a message with the dummy realclean
+
 Thu Aug 17 14:20:00 UTC 2006  Simon Massey  <sma@prismtech.com>
 
         * apps/drwho/Binary_Search.cpp:
