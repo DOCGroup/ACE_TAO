@@ -1,3 +1,14 @@
+Fri Aug 18 15:49:01 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * examples/APG/Logging/Trace.h: Changed the varargs form used in the
+          macros from ##__VA_ARGS__ to ,__VA_ARGS__ in an effort to conform
+          to C99 and clear some compile warnings from gcc4. This effectively
+          prohibits leaving the varargs out completely from the macro
+          invocation but that use-case isn't exercised anyway.
+
+        * bin/ace_tests.lst: Add protocols/tests/RMCast/run_test.pl to run
+          RMCast tests, except ACE_FOR_TAO builds.
+
 Fri Aug 18 12:03:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
@@ -202,11 +213,11 @@ Tue Aug 15 08:36:00 UTC 2006  Simon Massey  <sma@prismtech.com>
 
         * bin/MakeProjectCreator/config/acedefaults.mpb
 
-        Backout all of the recent MFC changes.
+          Backout all of the recent MFC changes.
 
         * bin/MakeProjectCreator/config/ace_opt_mfc.mpb:
 
-        DELETED.
+          DELETED.
 
 Mon Aug 14 23:34:11 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
@@ -215,12 +226,13 @@ Mon Aug 14 23:34:11 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
           Removed all register_handler member functions from these files.
           This essentially enables the ability to register signal handlers in
-          the TP Reactor by implicitly delegating to the select reactor base class.
+          the TP Reactor by implicitly delegating to the select reactor base
+          class.
 
           Other register_handler methods (not relating to signal handling)
           were explicit delegations to the select reactor base class, present
-          only to silence virtual function hiding warnings created by disabling the
-          signal related methods.
+          only to silence virtual function hiding warnings created by
+          disabling the signal related methods.
 
 Mon Aug 14 16:14:56 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
 
