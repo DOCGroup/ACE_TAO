@@ -2,6 +2,7 @@
 
 #include "tao/PortableServer/Upcall_Wrapper.h"
 #include "tao/PortableServer/Upcall_Command.h"
+#include "tao/PortableServer/DII_Arguments_Converter.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 # include "tao/ServerRequestInterceptor_Adapter.h"
@@ -38,6 +39,24 @@ TAO::Upcall_Wrapper::upcall (TAO_ServerRequest & server_request,
                              ACE_ENV_ARG_DECL
                              )
 {
+  if (server_request.collocated ()
+    && server_request.operation_details ()->is_dii_request ())
+    {
+      TAO_DII_Arguments_Converter* dii_arguments_converter 
+          = ACE_Dynamic_Service<TAO_DII_Arguments_Converter>::instance ("DII_Arguments_Converter");
+      
+      if (dii_arguments_converter != 0)
+        {  
+          dii_arguments_converter->convert (server_request,
+                                            args,
+                                            nargs 
+                                            ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK;
+        }
+      else
+        ACE_THROW (CORBA::NO_IMPLEMENT ());
+    }
+
   if (server_request.incoming ())
     {
       this->pre_upcall (*server_request.incoming (),

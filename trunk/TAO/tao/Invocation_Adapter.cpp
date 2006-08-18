@@ -46,7 +46,8 @@ namespace TAO
                                       this->args_,
                                       this->number_args_,
                                       ex_data,
-                                      ex_count);
+                                      ex_count,
+                                      this->is_dii_request_);
 
     this->invoke_i (stub,
                     op_details

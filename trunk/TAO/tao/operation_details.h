@@ -75,7 +75,8 @@ public:
                          TAO::Argument **args = 0,
                          CORBA::ULong num_args = 0,
                          TAO::Exception_Data *ex_data = 0,
-                         CORBA::ULong ex_count = 0);
+                         CORBA::ULong ex_count = 0,
+                         CORBA::Boolean is_dii_request = false);
 
   /// Operation name
   const char* opname (void) const;
@@ -166,6 +167,9 @@ public:
   CORBA::Long ft_retention_id (void) const;
 #endif /*TAO_HAS_INTERCEPTORS == 1*/
 
+  /// Accessor for is_dii_request_ flag.
+  CORBA::Boolean is_dii_request (void) const;
+
 private:
 
   /// Name of the operation being invoked.
@@ -217,6 +221,9 @@ private:
   /// FT request retention id
   CORBA::Long ft_retention_id_;
 #endif /*TAO_HAS_INTERCEPTORS == 1*/
+
+  /// The dii request flag.
+  CORBA::Boolean is_dii_request_;  
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

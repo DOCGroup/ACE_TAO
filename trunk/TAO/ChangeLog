@@ -1,3 +1,68 @@
+Fri Aug 18 17:00:15 UTC 2006  Yan Dai  <dai_y@ociweb.com>
+
+        Merged OCI changes that fix the problem that CORBA::Request::send_oneway()
+        crashes on get_in_arg() or gives incorrect arguments when the request is
+        collocated oneway request. These fixes are combination of 
+        "Tue Dec 27 13:20:58 USMST 2005  Yan Dai  <dai_y@ociweb.com>" and 
+        "Tue May  2 16:52:43 UTC 2006  Chad Elliott  <elliott_c@ociweb.com>"
+        (See BugZilla #2545 for details). 
+        Note this only fixed the oneway DII collocation requests, the twoway 
+        collocation request was not tested yet.
+              
+        * tao/Invocation_Adapter.cpp:
+        * tao/Invocation_Adapter.h:
+        * tao/Invocation_Adapter.inl:
+        
+          Added is_dii_request_ data member.
+          Added an extra parameter is_dii_request(defaults to false - not a dii request)
+          to the invoke() function so it can be passed to the Operation_Details 
+          to mark the request is a dii request.
+
+        * tao/operation_details.h:
+        * tao/operation_details.i:
+        
+          Added is_dii_request_ data member and the accessor and added the is_dii_request
+          parameter to the constructor.
+
+        * tao/DynamicInterface/DII_Arguments.h:
+        * tao/DynamicInterface/DII_Arguments.inl:
+        
+          Added accessor to the NVList.
+          
+        * tao/PortableServer/Upcall_Wrapper.cpp:
+
+          Updated upcall () to use the DII_Argument_Convert to expand the 
+          DII request parameter from NVList to list of *SArgument.
+          This would make DII request parameters in NVList from the client
+          side to be changed to the list of arguments so the server side 
+          can correctly retrieve the arguments.
+
+        * tao/DynamicInterface/DII_Arguments_Converter_Impl.cpp:
+        * tao/DynamicInterface/DII_Arguments_Converter_Impl.h:
+        * tao/PortableServer/DII_Arguments_Converter.h:
+        
+          An abstract class DII_Arguments_Converter is added for conversion 
+          of the NVList to list of *SArgument.        
+          These new files are added to resolve the library circuit dependency
+          problem. This makes the conversion of NVList to list of *SArgument
+          can be done in DynamicInterface instead of in PortableServer. The 
+          expanded skel args are used in get_in_arg() to give the correct
+          "IN" arguments. 
+          
+        * tao/DynamicInterface/DII_Invocation_Adapter.cpp:
+        
+          Passed is_dii_request true to Invocation_Adapter constructor to 
+          indicate it's a dii request invocation.
+
+        * tao/DynamicInterface/Request.cpp:
+                
+          Passed is_dii_request true to construct Invocation_Adapter object to
+          indicate it's a dii request invocation.
+          
+        * tests/DII_Collocation_Tests/oneway/Collocated_Test.cpp:
+        
+          Removed the commented include.
+          
 Fri Aug 18 16:18:35 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/Timed_Buffered_Oneways/client.cpp:
