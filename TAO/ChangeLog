@@ -1,3 +1,14 @@
+Fri Aug 18 16:18:35 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/Timed_Buffered_Oneways/client.cpp:
+        * tests/Timed_Buffered_Oneways/test_i.cpp:
+
+          I am unable to reproduce the failure in this test locally. The
+          output in the scoreboard files is inconclusive, but the failure
+          seems to be consistent on the affected platforms. This is just
+          some additional output to help make sense of what might be
+          causing the failure.
+
 Fri Aug 18 13:34:43 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/Profile_Transport_Resolver.cpp:
