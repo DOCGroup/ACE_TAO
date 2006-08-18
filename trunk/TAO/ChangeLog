@@ -1,3 +1,25 @@
+Fri Aug 18 09:09:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/GIOP_Message_Generator_Parser*.*:
+          Changed all write_* methods to return a bool instead of int, the
+          return value was used as bool, so made this explicit. Also added
+          more const usage when possible.
+
+        * tao/GIOP_Message_Base.cpp:
+          Use true for a bool
+
+        * tao/GIOP_Mesage_Locate_Header.{h,inl}:
+          Const improvements
+
+        * tao/GIOP_Utils.h:
+          Removed stuff that was not used
+
+        * tao/GIOP_Utils.cpp:
+          Removed this file, not used at all
+
+        * tao/tao.mpc:
+          Removed GIOP_Utils.cpp
+
 Fri Aug 18 07:17:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/GIOP_Message_Base.cpp:

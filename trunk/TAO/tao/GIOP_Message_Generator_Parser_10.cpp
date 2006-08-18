@@ -19,7 +19,7 @@ ACE_RCSID (tao,
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-int
+bool
 TAO_GIOP_Message_Generator_Parser_10::write_request_header (
     const TAO_Operation_Details &opdetails,
     TAO_Target_Specification &spec,
@@ -57,10 +57,10 @@ TAO_GIOP_Message_Generator_Parser_10::write_request_header (
     {
       if (TAO_debug_level)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("(%N |%l) Unable to handle this request \n")));
         }
-      return 0;
+      return false;
     }
 
   msg.write_string (opdetails.opname_len (),
@@ -109,13 +109,10 @@ TAO_GIOP_Message_Generator_Parser_10::write_request_header (
 
   msg << req_principal;
 
-  return 1;
+  return true;
 }
 
-
-
-
-int
+bool
 TAO_GIOP_Message_Generator_Parser_10::write_locate_request_header (
     CORBA::ULong request_id,
     TAO_Target_Specification  &spec,
@@ -136,16 +133,17 @@ TAO_GIOP_Message_Generator_Parser_10::write_locate_request_header (
   else
     {
       if (TAO_debug_level)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%N | %l) Unable to handle this request \n")));
-      return 0;
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%N | %l) Unable to handle this request\n")));
+        }
+      return false;
     }
 
-  return 1;
+  return true;
 }
 
-
-int
+bool
 TAO_GIOP_Message_Generator_Parser_10::write_reply_header (
     TAO_OutputCDR &output,
     TAO_Pluggable_Reply_Params_Base &reply
@@ -158,7 +156,7 @@ TAO_GIOP_Message_Generator_Parser_10::write_reply_header (
   output << reply.service_context_notowned ();
   ACE_ENV_ARG_NOT_USED; // FUZZ: ignore check_for_ace_check
 #else
-  if (reply.is_dsi_ == 0)
+  if (reply.is_dsi_ == false)
     {
       output << reply.service_context_notowned ();
     }
@@ -171,7 +169,7 @@ TAO_GIOP_Message_Generator_Parser_10::write_reply_header (
       CORBA::ULong count = 0;
       IOP::ServiceContextList &svc_ctx =
         reply.service_context_notowned ();
-      CORBA::ULong l = svc_ctx.length ();
+      CORBA::ULong const l = svc_ctx.length ();
       CORBA::ULong i;
 
       for (i = 0; i != l; ++i)
@@ -181,11 +179,11 @@ TAO_GIOP_Message_Generator_Parser_10::write_reply_header (
               continue;
             }
 
-          count++;
+          ++count;
         }
 
       // Now increment it to account for the last dummy one...
-      count++;
+      ++count;
 
       // Now marshal the rest of the service context objects
       output << count;
@@ -201,7 +199,7 @@ TAO_GIOP_Message_Generator_Parser_10::write_reply_header (
 
     }
 
-  if (reply.is_dsi_ == 1)
+  if (reply.is_dsi_ == true)
     {
       // @@ Much of this code is GIOP 1.1 specific and should be
       ptrdiff_t target = reply.dsi_nvlist_align_;
@@ -274,11 +272,11 @@ TAO_GIOP_Message_Generator_Parser_10::write_reply_header (
   this->marshal_reply_status (output,
                               reply);
 
-  return 1;
+  return true;
 }
 
 
-int
+bool
 TAO_GIOP_Message_Generator_Parser_10::write_locate_reply_mesg (
     TAO_OutputCDR &output,
     CORBA::ULong request_id,
@@ -294,20 +292,21 @@ TAO_GIOP_Message_Generator_Parser_10::write_locate_reply_mesg (
       CORBA::Object_ptr object_ptr =
         status_info.forward_location_var.in ();
 
-      if ((output << object_ptr) == 0)
+      if ((output << object_ptr) == false)
         {
           if (TAO_debug_level > 0)
             {
-              ACE_DEBUG ((
-                  LM_DEBUG,
+              ACE_ERROR ((
+                  LM_ERROR,
                   ACE_TEXT ("TAO (%P|%t|%N|%l) write_locate_reply_mesg-")
                   ACE_TEXT (" cannot marshal object reference\n")
                 ));
             }
+          return false;
         }
     }
 
-  return 1;
+  return true;
 }
 
 bool
@@ -479,14 +478,14 @@ TAO_GIOP_Message_Generator_Parser_10::parse_locate_reply (
 }
 
 CORBA::Octet
-TAO_GIOP_Message_Generator_Parser_10::major_version (void)
+TAO_GIOP_Message_Generator_Parser_10::major_version (void) const
 {
   // Any harm in hardcoding??
   return static_cast<CORBA::Octet> (1);
 }
 
 CORBA::Octet
-TAO_GIOP_Message_Generator_Parser_10::minor_version (void)
+TAO_GIOP_Message_Generator_Parser_10::minor_version (void) const
 {
   // Any harm in hardcoding??
   return 0;

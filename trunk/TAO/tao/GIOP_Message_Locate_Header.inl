@@ -21,7 +21,7 @@ TAO_GIOP_Locate_Request_Header::request_id (CORBA::ULong id)
 }
 
 ACE_INLINE CORBA::ULong
-TAO_GIOP_Locate_Request_Header::request_id (void)
+TAO_GIOP_Locate_Request_Header::request_id (void) const
 {
   return this->request_id_;
 }
