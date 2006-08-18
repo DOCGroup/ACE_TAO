@@ -114,37 +114,37 @@ private:
 #define ALERT_PREFIX       ACE_TEXT ("ALERT%I")
 #define EMERGENCY_PREFIX   ACE_TEXT ("EMERGENCY%I")
 
-#define MY_DEBUG(FMT, ...)     \
+#define MY_DEBUG(...)     \
         ACE_DEBUG(( LM_DEBUG,  \
-                    DEBUG_PREFIX FMT, \
+                    DEBUG_PREFIX \
                     __VA_ARGS__))
-#define MY_INFO(FMT, ...)     \
+#define MY_INFO(...)     \
         ACE_DEBUG(( LM_INFO,  \
-                    INFO_PREFIX FMT, \
+                    INFO_PREFIX \
                     __VA_ARGS__))
-#define MY_NOTICE(FMT, ...)     \
+#define MY_NOTICE(...)     \
         ACE_DEBUG(( LM_NOTICE,  \
-                    NOTICE_PREFIX FMT, \
+                    NOTICE_PREFIX \
                     __VA_ARGS__))
-#define MY_WARNING(FMT, ...)     \
+#define MY_WARNING(...)     \
         ACE_DEBUG(( LM_WARNING,  \
-                    WARNING_PREFIX FMT, \
+                    WARNING_PREFIX \
                     __VA_ARGS__))
-#define MY_ERROR(FMT, ...)     \
+#define MY_ERROR(...)     \
         ACE_DEBUG(( LM_ERROR,  \
-                    ERROR_PREFIX FMT, \
+                    ERROR_PREFIX \
                     __VA_ARGS__))
-#define MY_CRITICAL(FMT, ...)     \
+#define MY_CRITICAL(...)     \
         ACE_DEBUG(( LM_CRITICAL,  \
-                    CRITICAL_PREFIX FMT, \
+                    CRITICAL_PREFIX \
                     __VA_ARGS__))
-#define MY_ALERT(FMT, ...)     \
+#define MY_ALERT(...)     \
         ACE_DEBUG(( LM_ALERT,  \
-                    ALERT_PREFIX FMT, \
+                    ALERT_PREFIX \
                     __VA_ARGS__))
-#define MY_EMERGENCY(FMT, ...)     \
+#define MY_EMERGENCY(...)     \
         ACE_DEBUG(( LM_EMERGENCY,  \
-                    EMERGENCY_PREFIX FMT, \
+                    EMERGENCY_PREFIX \
                     __VA_ARGS__))
 // Listing 3
 
