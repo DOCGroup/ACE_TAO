@@ -1,3 +1,9 @@
+Fri Aug 18 20:38:35 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * examples/APG/Logging/Trace.h: Further changed use of __VA_ARGS__
+          to remove the comma and the fixed FMT arg from the macros. This
+          may still trigger the same ISO C99 warning, but it doesn't fail.
+
 Fri Aug 18 17:22:08 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * ace/OS_NS_unistd.cpp (pwrite): Corrected the large-file-offset
