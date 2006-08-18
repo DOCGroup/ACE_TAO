@@ -1179,7 +1179,7 @@ TAO_GIOP_Message_Base::process_locate_request (TAO_Transport *transport,
   // Defaulting.
   status_info.status = TAO_GIOP_UNKNOWN_OBJECT;
 
-  CORBA::Boolean response_required = 1;
+  CORBA::Boolean response_required = true;
 
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY

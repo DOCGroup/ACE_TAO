@@ -40,21 +40,21 @@ class TAO_Export TAO_GIOP_Message_Generator_Parser_12:
 public:
 
   /// Write the request header in to @a msg
-  virtual int write_request_header (
+  virtual bool write_request_header (
       const TAO_Operation_Details &opdetails,
       TAO_Target_Specification &spec,
       TAO_OutputCDR &msg
     );
 
   /// Write the LocateRequest header
-  virtual int write_locate_request_header (
+  virtual bool write_locate_request_header (
       CORBA::ULong request_id,
       TAO_Target_Specification &spec,
       TAO_OutputCDR &msg
     );
 
   /// Write the reply header in to @a output
-  virtual int write_reply_header (
+  virtual bool write_reply_header (
       TAO_OutputCDR &output,
       TAO_Pluggable_Reply_Params_Base &reply
       ACE_ENV_ARG_DECL
@@ -62,7 +62,7 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Writes the locate _reply message in to the @a output
-  virtual int write_locate_reply_mesg (
+  virtual bool write_locate_reply_mesg (
       TAO_OutputCDR &output,
       CORBA::ULong request_id,
       TAO_GIOP_Locate_Status_Msg &status
@@ -90,12 +90,12 @@ public:
                                   TAO_Pluggable_Reply_Params &params);
 
   /// Our versions
-  virtual CORBA::Octet major_version (void);
-  virtual CORBA::Octet minor_version (void);
+  virtual CORBA::Octet major_version (void) const;
+  virtual CORBA::Octet minor_version (void) const;
 
   /// Is the messaging object ready for processing BiDirectional
   /// request/response?
-  virtual int is_ready_for_bidirectional (void);
+  virtual bool is_ready_for_bidirectional (void) const;
 
   /// The header length of a fragment
   virtual size_t fragment_header_length (void) const;
@@ -106,19 +106,19 @@ private:
 
   /// This method may be required for other GIOP versiona coming out
   /// later than 1.2. We need to share this method
-  int marshall_target_spec (TAO_Target_Specification &spec,
-                            TAO_OutputCDR &msg);
+  bool marshall_target_spec (TAO_Target_Specification &spec,
+                             TAO_OutputCDR &msg);
 
   /// Check whether we have BiDirContext info available. If available
   /// delegate  the responsibility on to the TAO_Transport classes to
   /// initiate action.
   /// @note At somepoint this may be needed for future versions of
   /// GIOP and we may have to share this
-  int check_bidirectional_context (TAO_ServerRequest &);
+  bool check_bidirectional_context (TAO_ServerRequest &);
 
   /// Process the BiDirContext info that we have received.
-  int process_bidir_context (TAO_Service_Context &,
-                             TAO_Transport *transport);
+  bool process_bidir_context (TAO_Service_Context &,
+                              TAO_Transport *transport);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

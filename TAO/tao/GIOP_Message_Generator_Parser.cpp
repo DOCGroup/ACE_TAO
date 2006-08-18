@@ -141,11 +141,10 @@ TAO_GIOP_Message_Generator_Parser::parse_locate_reply (
 
 }
 
-
-int
-TAO_GIOP_Message_Generator_Parser::is_ready_for_bidirectional (void)
+bool
+TAO_GIOP_Message_Generator_Parser::is_ready_for_bidirectional (void) const
 {
-  return 0;
+  return false;
 }
 
 void

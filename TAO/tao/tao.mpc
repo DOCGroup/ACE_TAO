@@ -77,7 +77,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core, tao_vers
     GIOP_Message_Locate_Header.cpp
     GIOP_Message_State.cpp
     GIOP_Message_Version.cpp
-    GIOP_Utils.cpp
     GIOPC.cpp
     IFR_Client_Adapter.cpp
     IIOP_Acceptor.cpp
