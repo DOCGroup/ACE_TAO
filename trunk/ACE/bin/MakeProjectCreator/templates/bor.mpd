@@ -218,5 +218,6 @@ includes_install:
 <%endif%>
 
 realclean:
-        @echo Nothing to realclean.
+        @-rem
+
 <%marker(bottom)%>
