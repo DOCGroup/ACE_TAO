@@ -6,7 +6,7 @@ Motivation:
 ----------
 Middleware is often developed as a set of frameworks that can be
 extended and configured with alternative implementations of key
-components, such as different types of transport protocols e.g., 
+components, such as different types of transport protocols e.g.,
 TCP/IP, VME, or shared memory), event demultiplexing mechanisms
 e.g., reactive-, proactive-, or thread-based), request
 demultiplexing strategies (e.g., dynamic hashing, perfect
@@ -44,12 +44,12 @@ weaver specializes the code.
 
 To help in this transformation process, FOCUS applies markers
 within the source code. These markers are added as special
-comments. For example, //@@ REACTOR_SPL_INCLUDE_FORWARD_DECL_ADD_HOOK 
-represents a hook where forward declarations and include files are 
+comments. For example, //@@ REACTOR_SPL_INCLUDE_FORWARD_DECL_ADD_HOOK
+represents a hook where forward declarations and include files are
 added by the weaver. As these markers are comments therefore should not
-affect normal applications in *any* manner. Additionally, applications 
-that use multiple reactor implementations not be affected/do not need any 
-change. Currently, these specializations are targeted for TAO middleware, 
+affect normal applications in *any* manner. Additionally, applications
+that use multiple reactor implementations not be affected/do not need any
+change. Currently, these specializations are targeted for TAO middleware,
 where applications know the target reactor a priori and want to
 leverage the specialization to improve performance.
 
@@ -57,7 +57,7 @@ FOCUS Installation
 ------------------
 . FOCUS is written using Perl and does not require any compilation. Additionally
   FOCUS does not depend on any external tools.
-                                                                                    
+
 Requirements
 ------------
 . FOCUS has been tested on Perl version 5.8.0 and uses the following Perl
