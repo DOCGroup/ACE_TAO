@@ -33,7 +33,7 @@
 #endif
 
 #include "ace/os_include/sys/os_select.h"
-#include "ace/ACE_export.h"
+#include /**/ "ace/ACE_export.h"
 
 #if defined (ACE_EXPORT_MACRO)
 #  undef ACE_EXPORT_MACRO

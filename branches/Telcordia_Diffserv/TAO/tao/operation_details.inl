@@ -7,25 +7,26 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_INLINE
 TAO_Operation_Details::TAO_Operation_Details (const char *name,
                                               CORBA::ULong len,
-                                              CORBA::Boolean argument_flag,
                                               TAO::Argument **args,
                                               CORBA::ULong num,
                                               TAO::Exception_Data *data,
-                                              CORBA::ULong count)
+                                              CORBA::ULong count,
+                                              CORBA::Boolean is_dii_request)
   : opname_ (name)
     , opname_len_ (len)
     , request_id_ (0)
-    , argument_flag_ (argument_flag)
     , response_flags_ (0)
     , addressing_mode_ (TAO_Target_Specification::Key_Addr)
     , args_ (args)
     , num_args_ (num)
     , ex_data_ (data)
     , ex_count_ (count)
+    , use_stub_args_ (args ? true : false)
 #if TAO_HAS_INTERCEPTORS == 1
     , ft_expiration_time_ (0)
     , ft_retention_id_ (0)
 #endif /*TAO_HAS_INTERCEPTORS == 1*/
+    , is_dii_request_ (is_dii_request)
 {
 }
 
@@ -44,7 +45,7 @@ TAO_Operation_Details::opname_len (void) const
 ACE_INLINE CORBA::Boolean
 TAO_Operation_Details::argument_flag (void) const
 {
-  return this->argument_flag_;
+  return (this->num_args_ > 1);
 }
 
 ACE_INLINE TAO_Service_Context &
@@ -171,6 +172,18 @@ TAO_Operation_Details::args_num (void) const
   return this->num_args_;
 }
 
+ACE_INLINE CORBA::Boolean
+TAO_Operation_Details::use_stub_args (void) const
+{
+  return this->use_stub_args_;
+}
+
+ACE_INLINE void
+TAO_Operation_Details::use_stub_args (CORBA::Boolean use_stub_args)
+{
+  this->use_stub_args_ = use_stub_args;
+}
+
 #if TAO_HAS_INTERCEPTORS == 1
 ACE_INLINE void
 TAO_Operation_Details::ft_expiration_time (TimeBase::TimeT time)
@@ -196,5 +209,12 @@ TAO_Operation_Details::ft_retention_id (void) const
   return this->ft_retention_id_;
 }
 #endif /*TAO_HAS_INTERCEPTORS == 1*/
+
+
+ACE_INLINE CORBA::Boolean
+TAO_Operation_Details::is_dii_request (void) const
+{
+  return this->is_dii_request_;
+}
 
 TAO_END_VERSIONED_NAMESPACE_DECL

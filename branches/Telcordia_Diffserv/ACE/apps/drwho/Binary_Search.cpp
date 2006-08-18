@@ -67,7 +67,7 @@ Binary_Search::get_each_entry (void)
 
 Binary_Search::~Binary_Search (void)
 {
-  if (Options::get_opt (Options::DEBUG))
+  if (Options::get_opt (Options::DEBUGGING))
     ACE_DEBUG ((LM_DEBUG,
                 "disposing Binary_Search\n"));
 } 

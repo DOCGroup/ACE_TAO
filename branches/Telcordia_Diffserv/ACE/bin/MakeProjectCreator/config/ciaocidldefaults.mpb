@@ -6,7 +6,7 @@ project {
   specific {
     cidlc      = $(CIAO_ROOT)/bin/cidlc
     cidlc_dep  = $(CIAO_ROOT)/bin/cidlc
-    cidlc_flags = -I $(CIAO_ROOT) -I$(CIAO_ROOT)/DAnCE -I$(CIAO_ROOT)/ciao -I$(TAO_ROOT) -I$(TAO_ROOT)/tao -I$(TAO_ROOT)/orbsvcs --
+    cidlc_flags = -I $(CIAO_ROOT) -I$(CIAO_ROOT)/DAnCE -I$(CIAO_ROOT)/ciao -I$(TAO_ROOT) -I$(TAO_ROOT)/tao -I$(TAO_ROOT)/orbsvcs
   }
 
   Define_Custom(CIDL) {

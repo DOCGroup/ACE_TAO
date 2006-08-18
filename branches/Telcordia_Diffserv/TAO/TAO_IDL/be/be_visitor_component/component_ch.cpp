@@ -210,7 +210,7 @@ be_visitor_component_ch::visit_component (be_component *node)
   *os << be_nl << be_nl
       << node->local_name ()
       << " (" << be_idt << be_idt_nl << "TAO_Stub *objref, " << be_nl
-      << "::CORBA::Boolean _tao_collocated = 0," << be_nl
+      << "::CORBA::Boolean _tao_collocated = false," << be_nl
       << "TAO_Abstract_ServantBase *servant = 0," << be_nl
       << "TAO_ORB_Core *oc = 0" << be_uidt_nl
       << ");" << be_uidt;

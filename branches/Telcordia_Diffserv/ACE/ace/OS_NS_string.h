@@ -27,7 +27,7 @@
 
 #include "ace/Basic_Types.h" // to get ACE_WCHAR_T,
                             // should be in os_stddef.h or not used like this.
-#include "ace/ACE_export.h"
+#include /**/ "ace/ACE_export.h"
 
 #if defined (ACE_EXPORT_MACRO)
 #  undef ACE_EXPORT_MACRO

@@ -42,7 +42,7 @@ public:
     INPUT_MT = 2,
 
     VERBOSE = 01,
-    DEBUG = 02,
+    DEBUGGING = 02,
 
     SUPPLIER_ACCEPTOR = 04,
     CONSUMER_ACCEPTOR = 010,

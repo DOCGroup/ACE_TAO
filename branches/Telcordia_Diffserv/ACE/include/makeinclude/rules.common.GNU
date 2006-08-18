@@ -11,6 +11,7 @@ debug:	          debug.nested debug.local
 profile:          profile.nested profile.local
 install:          install.nested install.local
 deinstall:        deinstall.nested deinstall.local
+clean_binaries:   clean_binaries.nested clean_binaries.local
 clean_idl_stubs:  clean_idl_stubs.nested clean_idl_stubs.local
 clean:            clean.nested clean.local
 realclean:        realclean.nested realclean.local

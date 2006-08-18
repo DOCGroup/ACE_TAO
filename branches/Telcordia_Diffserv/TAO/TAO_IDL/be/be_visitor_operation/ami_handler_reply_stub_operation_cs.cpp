@@ -242,7 +242,7 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (
 
       *os << be_uidt_nl << "};" << be_nl << be_nl;
 
-      *os << "::CORBA::ULong exceptions_count = "
+      *os << "::CORBA::ULong const exceptions_count = "
           << excep_count << ";\n" << be_nl;
 
       exception_data_arg = "exceptions_data";

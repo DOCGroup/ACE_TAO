@@ -44,8 +44,29 @@ namespace TAO
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
     S const & arg (void) const;
 
-  private:
+  protected:
     S const * x_;
+  };
+
+  /**
+   * @class In_Fixed_Size_Clonable_Argument_T
+   *
+   * @brief Template class for IN stub argument of fixed size IDL types.
+   *
+   */
+  template<typename S,
+           class Insert_Policy>
+  class In_Fixed_Size_Clonable_Argument_T :
+          public In_Fixed_Size_Argument_T<S, Insert_Policy>
+  {
+  public:
+    In_Fixed_Size_Clonable_Argument_T (S const & x);
+    virtual ~In_Fixed_Size_Clonable_Argument_T (void);
+
+    virtual Argument* clone (void);
+
+  private:
+    bool is_clone_;
   };
 
   /**
@@ -137,6 +158,8 @@ namespace TAO
     typedef T &                                          out_type;
 
     typedef In_Fixed_Size_Argument_T<T,Insert_Policy>    in_arg_val;
+    typedef In_Fixed_Size_Clonable_Argument_T<T,Insert_Policy>
+                                                         in_clonable_arg_val;
     typedef Inout_Fixed_Size_Argument_T<T,Insert_Policy> inout_arg_val;
     typedef Out_Fixed_Size_Argument_T<T,Insert_Policy>   out_arg_val;
     typedef Ret_Fixed_Size_Argument_T<T,Insert_Policy>   ret_val;

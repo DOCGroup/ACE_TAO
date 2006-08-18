@@ -127,11 +127,16 @@ TAO_POA_Manager::generate_manager_id (void) const
   return buf;
 }
 
+
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
+
 ACE_INLINE 
 CORBA::PolicyList& TAO_POA_Manager::get_policies ()
 {
   return this->policies_;
 }
+
+#endif
 
 
 TAO_END_VERSIONED_NAMESPACE_DECL

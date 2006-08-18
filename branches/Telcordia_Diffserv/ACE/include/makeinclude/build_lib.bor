@@ -38,20 +38,6 @@ TARGET = $(BINDIR)\$(NAME)$(LIB_DECORATOR).lib
 all: $(TARGET)
 	@echo Do nothing >NUL
 
-!ifdef CBX
-!ifdef TARGET
-$(TARGET): $(OBJFILES)
-	@$(MAKE_BINDIR)
-	-@del $(TARGET) 2>NUL
-	$(AR) -M < @&&!
-VERBOSE
-CREATE $@
-ADDMOD $(OBJFILES:\=/)
-SAVE
-END
-!
-!endif
-!else
 !ifdef TARGET
 $(TARGET): $(OBJFILES)
 	@$(MAKE_BINDIR)
@@ -60,7 +46,6 @@ $(TARGET): $(OBJFILES)
 + $(**: = &^
 + )
 !
-!endif
 !endif
 
 !include <$(ACE_ROOT)\include\makeinclude\clean.bor>

@@ -62,7 +62,7 @@ Hash_Table::get_each_entry (void)
 
 Hash_Table::~Hash_Table (void)
 {
-  if (Options::get_opt (Options::DEBUG))
+  if (Options::get_opt (Options::DEBUGGING))
     ACE_DEBUG ((LM_DEBUG,
                 "disposing Hash_Table\n"));
 

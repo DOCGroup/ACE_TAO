@@ -190,7 +190,8 @@ TAO_CodeGen::start_client_header (const char *fname)
 
   // To get ACE_UNUSED_ARGS
   this->gen_standard_include (this->client_header_,
-                              "ace/config-all.h");
+                              "ace/config-all.h",
+                              true);
 
   // Some compilers don't optimize the #ifndef header include
   // protection, but do optimize based on #pragma once.
@@ -204,55 +205,64 @@ TAO_CodeGen::start_client_header (const char *fname)
 
   if (be_global->stub_export_include () != 0)
     {
-      *this->client_header_ << "\n#include \""
+      *this->client_header_ << "\n#include /**/ \""
                             << be_global->stub_export_include ()
                             << "\"";
     }
 
-  this->gen_stub_hdr_includes ();
-
-  size_t nfiles = idl_global->n_included_idl_files ();
-
-  if (nfiles > 0)
+  if (be_global->unique_include () != 0)
     {
-      *this->client_header_ << "\n";
+      *this->client_header_ << "\n#include \""
+                            << be_global->unique_include ()
+                            << "\"";
     }
-
-  // We must include all the client headers corresponding to
-  // IDL files included by the current IDL file.
-  // We will use the included IDL file names as they appeared
-  // in the original main IDL file, not the one which went
-  // thru CC preprocessor.
-  for (size_t j = 0; j < nfiles; ++j)
+  else
     {
-      char* idl_name = idl_global->included_idl_files ()[j];
+      this->gen_stub_hdr_includes ();
 
-      // Make a String out of it.
-      UTL_String idl_name_str = idl_name;
+      size_t const nfiles = idl_global->n_included_idl_files ();
 
-      // Make sure this file was actually got included, not
-      // ignored by some #if defined compiler directive.
-
-
-      // Get the clnt header from the IDL file name.
-      const char* client_hdr =
-        BE_GlobalData::be_get_client_hdr (&idl_name_str,
-                                          1);
-
-      idl_name_str.destroy ();
-
-      // Sanity check and then print.
-      if (client_hdr != 0)
+      if (nfiles > 0)
         {
-          this->client_header_->print ("\n#include \"%s\"",
-                                       client_hdr);
+          *this->client_header_ << "\n";
         }
-      else
+
+      // We must include all the client headers corresponding to
+      // IDL files included by the current IDL file.
+      // We will use the included IDL file names as they appeared
+      // in the original main IDL file, not the one which went
+      // thru CC preprocessor.
+      for (size_t j = 0; j < nfiles; ++j)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("\nERROR, invalid file '%s' included"),
-                             idl_name),
-                            -1);
+          char* idl_name = idl_global->included_idl_files ()[j];
+
+          // Make a String out of it.
+          UTL_String idl_name_str = idl_name;
+
+          // Make sure this file was actually got included, not
+          // ignored by some #if defined compiler directive.
+
+
+          // Get the clnt header from the IDL file name.
+          const char* client_hdr =
+            BE_GlobalData::be_get_client_hdr (&idl_name_str,
+                                              1);
+
+          idl_name_str.destroy ();
+
+          // Sanity check and then print.
+          if (client_hdr != 0)
+            {
+              this->client_header_->print ("\n#include \"%s\"",
+                                           client_hdr);
+            }
+          else
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("\nERROR, invalid file '%s' included"),
+                                 idl_name),
+                                -1);
+            }
         }
     }
 
@@ -426,9 +436,20 @@ TAO_CodeGen::start_server_header (const char *fname)
     }
 
   // The server header should include the client header.
-  *this->server_header_ << "\n#include \""
-                        << be_global->be_get_client_hdr_fname (1)
-                        << "\"";
+  if (be_global->safe_include ())
+    {
+      // Generate the safe include if it is defined instead of the client header
+      // need to put only the base names. Path info is not required.
+      *this->server_header_ << "\n#include \""
+                            << be_global->safe_include ()
+                            << "\"";
+    }
+  else
+    {
+      *this->server_header_ << "\n#include \""
+                            << be_global->be_get_client_hdr_fname (1)
+                            << "\"";
+    }
 
   // We must include all the skeleton headers corresponding to
   // IDL files included by the current IDL file.
@@ -490,7 +511,7 @@ TAO_CodeGen::start_server_header (const char *fname)
 
   if (be_global->skel_export_include () != 0)
     {
-      *this->server_header_ << "\n\n#include \""
+      *this->server_header_ << "\n\n#include /**/ \""
                             << be_global->skel_export_include ()
                             << "\"";
 
@@ -804,7 +825,7 @@ TAO_CodeGen::server_template_inline (void)
 int
 TAO_CodeGen::start_anyop_header (const char *fname)
 {
-  if (!be_global->gen_anyop_files ())
+  if (!be_global->gen_anyop_files () && !be_global->gen_empty_anyop_header ())
     {
       return 0;
     }
@@ -832,6 +853,14 @@ TAO_CodeGen::start_anyop_header (const char *fname)
                          "TAO_CodeGen::start_anyop_header - "
                          "Error opening file\n"),
                         -1);
+    }
+
+  if (be_global->gen_empty_anyop_header ())
+    {
+      *this->anyop_header_ << be_nl
+                           << "// Generated empty using -GX" << be_nl
+                           << be_nl;
+      return 0;
     }
 
   *this->anyop_header_ << be_nl
@@ -871,7 +900,7 @@ TAO_CodeGen::start_anyop_header (const char *fname)
 
   const char *tao_prefix = "";
   ACE_CString pidl_checker (idl_global->filename ()->get_string ());
-  bool got_pidl =
+  bool const got_pidl =
     (pidl_checker.substr (pidl_checker.length () - 5) == ".pidl");
 
   // If we're here and we have a .pidl file, we need to generate
@@ -1560,7 +1589,8 @@ TAO_CodeGen::gen_ifndef_string (const char *fname,
 
 void
 TAO_CodeGen::gen_standard_include (TAO_OutStream *stream,
-                                   const char *included_file)
+                                   const char *included_file,
+                                   bool add_comment)
 {
   // Switch between changing or non-changing standard include files
   // include files, so that #include statements can be
@@ -1576,7 +1606,14 @@ TAO_CodeGen::gen_standard_include (TAO_OutStream *stream,
       end_delimiter = ">";
     }
 
-  *stream << "\n#include " << start_delimiter
+  *stream << "\n#include ";
+
+  if (add_comment)
+    {
+      *stream << "/**/ ";
+    }
+
+  *stream << start_delimiter
           << included_file
           << end_delimiter;
 }
@@ -1796,7 +1833,8 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
 
   // Versioned namespace support.
   this->gen_standard_include (this->client_header_,
-                              "tao/Versioned_Namespace.h");
+                              "tao/Versioned_Namespace.h",
+                              true);
 }
 
 void

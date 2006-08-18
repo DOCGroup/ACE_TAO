@@ -24,6 +24,8 @@ Client_Task::svc (void)
   // Make the connections ..
   this->validate_connection ();
 
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Starting big reply\n"));
+
   ACE_DECLARE_NEW_CORBA_ENV;
 
   // Now get the big replies..
@@ -39,7 +41,7 @@ Client_Task::svc (void)
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception Caught \n");
+                           "Exception Caught\n");
       return -1;
     }
   ACE_ENDTRY;

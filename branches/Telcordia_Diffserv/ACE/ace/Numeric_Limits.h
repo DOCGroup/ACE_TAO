@@ -27,7 +27,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/ACE_export.h"
+#include /**/ "ace/ACE_export.h"
 
 # if !defined (ACE_LACKS_PRAGMA_ONCE)
 #   pragma once
@@ -36,6 +36,20 @@
 #ifdef ACE_LACKS_NUMERIC_LIMITS
 # include "ace/Basic_Types.h"
 #else
+# ifdef __MINGW32__
+// Windows defines min/max macros that interfere with the
+// numeric_limits::min/max() traits.  Undefine those macros before
+// including <limits>.
+//
+// Ideally, we could prevent those macros from being defined by
+// defining the Windows-specific NOMINMAX symbol before any Windows
+// headers are included, preferrably on the command line.  However,
+// that would probably break some applications.
+//
+// @@ Why isn't this a problem with MSVC++ and Borland builds?
+#  undef min
+#  undef max
+# endif  /* __MINGW32__ */
 # include <limits>
 #endif /* ACE_LACKS_NUMERIC_LIMITS */
 

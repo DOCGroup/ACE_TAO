@@ -16,7 +16,7 @@
 #define ACE_OBJECT_MANAGER_H
 #include /**/ "ace/pre.h"
 
-#include "ace/ACE_export.h"
+#include /**/ "ace/ACE_export.h"
 #include "ace/Object_Manager_Base.h"
 #include "ace/Global_Macros.h"
 

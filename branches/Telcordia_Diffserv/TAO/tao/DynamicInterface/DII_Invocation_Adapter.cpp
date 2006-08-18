@@ -38,7 +38,8 @@ namespace TAO
                           op_len,
                           0, // Collocation Proxy broker pointer
                           TAO_TWOWAY_INVOCATION,
-                          mode)
+                          mode,
+                          true) // is a dii request
       , exception_list_ (excp)
       , request_ (r)
   {
@@ -118,7 +119,8 @@ namespace TAO
                           op_len,
                           b,
                           TAO_TWOWAY_INVOCATION,
-                          mode)
+                          mode,
+                          true) // is a dii request
       , request_ (req)
       , rd_ (0)
       , orb_core_ (oc)

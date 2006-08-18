@@ -51,8 +51,29 @@ namespace TAO
 
     typename S_var::s_traits::char_type const * arg (void) const;
 
-  private:
+  protected:
     typename S_var::s_traits::char_type const * x_;
+  };
+
+  /**
+   * @class In_BD_String_Clonable_Argument_T
+   *
+   * @brief Template class for IN bounded (w)string argument.
+   *
+   */
+  template<typename S_var,
+           size_t BOUND,
+           class Insert_Policy>
+  class In_BD_String_Clonable_Argument_T :
+           public In_BD_String_Argument_T<S_var, BOUND, Insert_Policy>
+  {
+  public:
+    In_BD_String_Clonable_Argument_T (const typename S_var::s_traits::char_type * x);
+    virtual ~In_BD_String_Clonable_Argument_T (void);
+
+    virtual Argument* clone (void);
+  private:
+    bool is_clone_;
   };
 
   /**
@@ -150,6 +171,10 @@ namespace TAO
     typedef In_BD_String_Argument_T<T_var,
                                     BOUND,
                                     Insert_Policy>        in_arg_val;
+    typedef In_BD_String_Clonable_Argument_T<T_var,
+                                             BOUND,
+                                             Insert_Policy>
+                                                          in_clonable_arg_val;
     typedef Inout_BD_String_Argument_T<T_var,
                                        BOUND,
                                        Insert_Policy>     inout_arg_val;

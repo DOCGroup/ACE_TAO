@@ -25,7 +25,7 @@
 
 #include /**/ "ace/pre.h"
 #include "ace/Service_Config.h"
-#include "tao/Codeset_Translator_Factory.h"
+#include "tao/Codeset/Codeset_Translator_Factory.h"
 
 #include "IBM1047_ISO8859_export.h"
 #include "Wchar_IBM1047_ISO8859_Translator.h"

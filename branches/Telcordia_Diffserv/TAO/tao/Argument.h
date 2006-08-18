@@ -24,7 +24,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/orbconf.h"
-#include "tao/TAO_Export.h"
+#include /**/ "tao/TAO_Export.h"
 #include "tao/ParameterModeC.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -67,6 +67,9 @@ namespace TAO
      * @note The default implementation simply returns @c true.
      */
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
+
+    /// Template method to clone a TAO Argument
+    virtual Argument* clone (void);
 
 #if TAO_HAS_INTERCEPTORS == 1
 
@@ -132,6 +135,12 @@ namespace TAO
 #else
   typedef Argument RetArgument;
 #endif
+
+  class TAO_Export Void_Return_Argument : public RetArgument
+  {
+  public:
+    virtual Argument* clone (void);
+  };
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

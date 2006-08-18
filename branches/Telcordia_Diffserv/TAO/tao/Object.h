@@ -441,6 +441,13 @@ namespace TAO
     static CORBA::Boolean marshal (const CORBA::Object_ptr p,
                                    TAO_OutputCDR & cdr);
   };
+
+  template<>
+  struct TAO_Export In_Object_Argument_Cloner_T<CORBA::InterfaceDef_ptr>
+  {
+    static void duplicate(CORBA::InterfaceDef_ptr objref);
+    static void release(CORBA::InterfaceDef_ptr objref);
+  };
 }
 
 /// This function pointer is set only when the Portable server

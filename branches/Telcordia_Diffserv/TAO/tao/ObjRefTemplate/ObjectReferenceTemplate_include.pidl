@@ -32,6 +32,8 @@
 #ifndef _OBJECTREFERENCETEMPLATE_INCLUDE_IDL_
 #define _OBJECTREFERENCETEMPLATE_INCLUDE_IDL_
 
+#pragma prefix ""
+
 #include "tao/ObjRefTemplate/ObjectReferenceTemplate.pidl"
 
 #endif /* _OBJECTREFERENCETEMPLATE_INCLUDE_IDL_ */

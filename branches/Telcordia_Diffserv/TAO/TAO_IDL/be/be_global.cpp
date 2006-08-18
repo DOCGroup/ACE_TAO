@@ -52,6 +52,7 @@ BE_GlobalData::BE_GlobalData (void)
     post_include_ (0),
     include_guard_ (0),
     safe_include_ (0),
+    unique_include_ (0),
     core_versioning_begin_ ("\nTAO_BEGIN_VERSIONED_NAMESPACE_DECL\n"),
     core_versioning_end_   ("\nTAO_END_VERSIONED_NAMESPACE_DECL\n"),
     versioning_begin_ (),
@@ -97,6 +98,7 @@ BE_GlobalData::BE_GlobalData (void)
     gen_inline_constants_ (true),
     gen_dcps_type_support_ (false),
     gen_orb_h_include_ (true),
+    gen_empty_anyop_header_ (false),
     lookup_strategy_ (TAO_PERFECT_HASH),
     void_type_ (0),
     ccmobject_ (0),
@@ -108,7 +110,10 @@ BE_GlobalData::BE_GlobalData (void)
     gen_skel_files_ (true),
     gen_client_inline_ (true),
     gen_server_inline_ (true),
-    gen_local_iface_anyops_ (true)
+    gen_client_stub_ (true),
+    gen_server_skeleton_ (true),
+    gen_local_iface_anyops_ (true),
+    use_clonable_in_args_ (false)
 {
 }
 
@@ -183,7 +188,7 @@ be_change_idl_file_extension (UTL_String* idl_file,
 
   // Anyop * skel file output defaults to general output dir if not set.
   const char *output_path = 0;
-  
+
   if (for_anyop && 0 != be_global->anyop_output_dir ())
     {
       output_path = be_global->anyop_output_dir ();
@@ -626,6 +631,18 @@ BE_GlobalData::safe_include (const char *s)
   this->safe_include_ = ACE_OS::strdup (s);
 }
 
+const char*
+BE_GlobalData::unique_include (void) const
+{
+  return this->unique_include_;
+}
+
+void
+BE_GlobalData::unique_include (const char *s)
+{
+  this->unique_include_ = ACE_OS::strdup (s);
+}
+
 void
 BE_GlobalData::versioning_begin (const char * s)
 {
@@ -851,6 +868,18 @@ BE_GlobalData::anyop_header_ending (const char* s)
 {
   delete [] this->anyop_hdr_ending_;
   this->anyop_hdr_ending_ = ACE::strnew (s);
+}
+
+void
+BE_GlobalData::use_clonable_in_args (bool clonable)
+{
+  this->use_clonable_in_args_ = clonable;
+}
+
+bool
+BE_GlobalData::use_clonable_in_args (void) const
+{
+  return this->use_clonable_in_args_;
 }
 
 const char*
@@ -1140,6 +1169,18 @@ BE_GlobalData::gen_orb_h_include (void) const
 }
 
 void
+BE_GlobalData::gen_empty_anyop_header (bool val)
+{
+  this->gen_empty_anyop_header_ = val;
+}
+
+bool
+BE_GlobalData::gen_empty_anyop_header (void) const
+{
+  return this->gen_empty_anyop_header_;
+}
+
+void
 BE_GlobalData::lookup_strategy (LOOKUP_STRATEGY s)
 {
   this->lookup_strategy_ = s;
@@ -1168,6 +1209,9 @@ BE_GlobalData::destroy (void)
 
   ACE_OS::free (this->safe_include_);
   this->safe_include_ = 0;
+
+  ACE_OS::free (this->unique_include_);
+  this->unique_include_ = 0;
 
   delete [] this->client_hdr_ending_;
   this->client_hdr_ending_ = 0;
@@ -1516,6 +1560,30 @@ BE_GlobalData::gen_server_inline (bool val)
 }
 
 bool
+BE_GlobalData::gen_client_stub (void) const
+{
+  return this->gen_client_stub_;
+}
+
+void
+BE_GlobalData::gen_client_stub (bool val)
+{
+  this->gen_client_stub_ = val;
+}
+
+bool
+BE_GlobalData::gen_server_skeleton (void) const
+{
+  return this->gen_server_skeleton_;
+}
+
+void
+BE_GlobalData::gen_server_skeleton (bool val)
+{
+  this->gen_server_skeleton_ = val;
+}
+
+bool
 BE_GlobalData::gen_local_iface_anyops (void) const
 {
   return this->gen_local_iface_anyops_;
@@ -1589,6 +1657,21 @@ BE_GlobalData::parse_args (long &i, char **av)
               ));
           }
 
+        break;
+      case 'b':
+        if (av[i][2] == '\0')
+          {
+            be_global->use_clonable_in_args(true);
+          }
+        else
+          { 
+            ACE_ERROR ((
+                LM_ERROR,
+                ACE_TEXT ("IDL: I don't understand")
+                ACE_TEXT (" the '%s' option\n"),
+                av[i]
+              ));
+          }
         break;
       // = Various 'c'lient side stub file_name_endings.
       case 'c':
@@ -1902,6 +1985,11 @@ BE_GlobalData::parse_args (long &i, char **av)
             // AMH classes.
             be_global->gen_amh_classes (true);
           }
+        else if (av[i][2] == 'X')
+          {
+            // Generate empty A.h file.
+            be_global->gen_empty_anyop_header (true);
+          }
         else if (av[i][2] == 'A')
           {
             // TAO-team-only, undocumented option to generate
@@ -2118,6 +2206,19 @@ BE_GlobalData::parse_args (long &i, char **av)
                 // No stub inline.
                 be_global->gen_client_inline (false);
               }
+            else if (av[i][3] == 'c')
+              {
+                // No stub inline.
+                be_global->gen_client_stub (false);
+              }
+            else
+              {
+                ACE_ERROR ((
+                    LM_ERROR,
+                    ACE_TEXT ("IDL: I don't understand the '%s' option\n"),
+                    av[i]
+                  ));
+              }
           }
         else if (av[i][2] == 'm')
           {
@@ -2135,6 +2236,11 @@ BE_GlobalData::parse_args (long &i, char **av)
               {
                 // No skeleton inline.
                 be_global->gen_server_inline (false);
+              }
+            else if (av[i][3] == 'c')
+              {
+                // No skeleton inline.
+                be_global->gen_server_skeleton (false);
               }
             else
               {
@@ -2188,6 +2294,7 @@ BE_GlobalData::prep_be_arg (char *s)
   static const char obv_opt_accessor[]     = "obv_opt_accessor";
   static const char include_guard[]        = "include_guard=";
   static const char safe_include[]         = "safe_include=";
+  static const char unique_include[]       = "unique_include=";
 
   char* last = 0;
 
@@ -2261,6 +2368,11 @@ BE_GlobalData::prep_be_arg (char *s)
         {
           char* val = arg + sizeof (safe_include) - 1;
           be_global->safe_include (val);
+        }
+      else if (ACE_OS::strstr (arg, unique_include) == arg)
+        {
+          char* val = arg + sizeof (unique_include) - 1;
+          be_global->unique_include (val);
         }
       else if (ACE_OS::strstr (arg, obv_opt_accessor) == arg)
         {
@@ -2419,6 +2531,12 @@ BE_GlobalData::usage (void) const
     ));
   ACE_DEBUG ((
       LM_DEBUG,
+      ACE_TEXT (" -Wb,unique_include=<include path>\t\tinclude that should ")
+      ACE_TEXT ("be generated as only contents of the generated client ")
+      ACE_TEXT ("header file.\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
       ACE_TEXT (" -Wb,obv_opt_accessor\t\t\t\toptimizes access to base class ")
       ACE_TEXT ("data in valuetypes\n")
     ));
@@ -2437,6 +2555,10 @@ BE_GlobalData::usage (void) const
       ACE_TEXT ("a \"versioned\" namespace\n")
     ));
 #endif  /* ACE_HAS_VERSIONED_NAMESPACE || TAO_HAS_VERSIONED_NAMESPACE */
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -b\t\t\tUse a clonable argument type for oneway methods.\n")
+    ));
   ACE_DEBUG ((
       LM_DEBUG,
       ACE_TEXT (" -ci\t\t\tClient inline file name ending. Default is C.inl\n")

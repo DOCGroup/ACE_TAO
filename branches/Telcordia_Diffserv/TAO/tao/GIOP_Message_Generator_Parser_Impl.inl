@@ -17,7 +17,7 @@ TAO_GIOP_Message_Generator_Parser_Impl::check_revision (
 
   // If it's greater than the max, we know it's not allowed.
   if (version_as_whole_num > max_allowable_version)
-    return 0;
+    return false;
 
   // If it's less than the max, though, we still have to check for
   // each explicit version and only allow the ones we know work.
@@ -26,10 +26,10 @@ TAO_GIOP_Message_Generator_Parser_Impl::check_revision (
     case 0x0100:
     case 0x0101:
     case 0x0102:
-      return 1;
+      return true;
     }
 
-  return 0;
+  return false;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

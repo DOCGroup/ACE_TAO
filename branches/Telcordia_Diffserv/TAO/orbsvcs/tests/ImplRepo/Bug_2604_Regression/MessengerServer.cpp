@@ -1,6 +1,8 @@
 // $Id$
 #include "Messenger_i.h"
 
+#include "tao/ImR_Client/ImR_Client.h"
+
 #include "ace/SString.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_string.h"

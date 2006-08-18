@@ -7,30 +7,30 @@
 #include "tao/RTCORBA/Priority_Mapping_Manager.h"
 
 //
-// Stock_PriorityMapping
+// Stock::Priority_Mapping
 //
-Stock_PriorityMapping::Stock_PriorityMapping (void)
-  : TAO_Continuous_Priority_Mapping (5)
+Stock::Priority_Mapping::Priority_Mapping (void)
+  : TAO_Linear_Priority_Mapping (ACE_SCHED_OTHER)
 {
 }
 
 //
-// ~Stock_PriorityMapping
+// ~Stock::Priority_Mapping
 //
-Stock_PriorityMapping::~Stock_PriorityMapping (void)
+Stock::Priority_Mapping::~Priority_Mapping (void)
 {
 }
 
 //
 // register_mapping
 //
-void Stock_PriorityMapping::register_mapping (CORBA::ORB_ptr orb)
+void Stock::Priority_Mapping::register_mapping (CORBA::ORB_ptr orb)
 {
   // Get the PriorityMappingManager.
   CORBA::Object_var obj = orb->resolve_initial_references ("PriorityMappingManager");
-  TAO_Priority_Mapping_Manager_var manager = TAO_Priority_Mapping_Manager::_narrow (obj);
+  TAO_Priority_Mapping_Manager_var manager = TAO_Priority_Mapping_Manager::_narrow (obj.in ());
 
   // Create an instance of my mapping and install it.
-  RTCORBA::PriorityMapping *my_mapping = new Stock_PriorityMapping;
+  RTCORBA::PriorityMapping *my_mapping = new Stock::Priority_Mapping;
   manager->mapping (my_mapping);
 }

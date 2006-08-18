@@ -62,7 +62,6 @@ Unlike structs, however, they can have user-defined operations and support inher
 <PRE>
 valuetype StockName
 {
-  // Name of the stock.
   public string name;
 };
 </PRE>
@@ -98,8 +97,9 @@ a daemon that can be started and stopped by a system administrator. <P>
 <PRE>
 interface StockNameConsumer
 {
-  // Push an event to the consumer.
   void push_StockName (in StockName the_stockname);
+  
+  attribute Cookie cookie;
 };
 </PRE>
 
@@ -114,6 +114,62 @@ interface StockQuoter
 
 This interface is used by brokers to get detailed stock information. <P>
 
+<hr><h3>Distributor</h3>
+
+This IDL file (Distributor.idl) contains IDL definitions for the Stock Distributor in the
+Publish/Subscribe Real-time CORBA Stock Quoter Service. <P>
+
+<li><h4>Defining the IDL exception</h4></li>
+
+<PRE>
+exception Invalid_Subscription {};
+</PRE>
+
+This exception is used when the needed cookie does not exist in the stock subscribers list. <P>
+
+<li><h4>Defining the IDL interfaces</h4></li>
+
+<PRE>
+interface StockDistributor : Trigger
+{
+  /// Event source operation to establish connectivity.
+  Cookie subscribe_notifier (in Stock::StockNameConsumer c, in RTCORBA::Priority priority);
+  
+  /// Event source operation to discontinue connectivity.
+  Stock::StockNameConsumer unsubscribe_notifier (in Cookie ck)
+    raises (Invalid_Subscription);;
+
+  /// Factory operation to return StockQuoter object reference.
+  StockQuoter provide_quoter_info ()
+    raises (Invalid_Subscription);;
+  
+  /// Shutdown the object and terminate the application.
+  oneway void shutdown ();
+  
+  /// Controls rate of updates.
+  attribute long notification_rate;
+};
+</PRE>
+
+This is the interface definition for Stock Distributor servers. <P>
+The subscribe_notifier() and unsubscribe_notifier() operations are to subscribe/unsubscribe Stock Broker
+clients with the Stock Distributor servers. <P>
+The provide_quoter_info() factory operation returns StockQuoter object references that Stock Broker clients can
+use to get more information about a particular stock. <P>
+The shutdown() operation is a oneway operation which shuts down the object and terminates the application. <P>
+The notification_rate attribute stands for the notification frequency that the Stock Distributor servers used 
+to communicate with the Stock Broker clients. <P>
+
+<PRE>
+interface StockDistributorHome
+{
+  StockDistributor create ();
+};
+</PRE>
+
+This is the interface definition for Stock Distributor Home.
+This factory reduces the bookkeeping that CORBA applications must do to create and manage their objects. <P>
+
 <hr><h3>Broker</h3>
 
 This IDL file (Broker.idl) contains IDL definitions for the Stock Broker in the
@@ -124,71 +180,41 @@ Publish/Subscribe Real-time CORBA Stock Quoter Service. <P>
 <PRE>
 interface StockBroker
 {
-  // Factory operation to return StockNameConsumer object reference.
+  /// Factory operation to return StockNameConsumer object reference.
   StockNameConsumer get_consumer_notifier ();
 
-  // Event sink operations to perform connectivity.
+  /// Connects the broker to a supplied Quoter object reference.
   void connect_quoter_info  (in StockQuoter c);
+
+  /// Disconnects a the quoter connection.
   StockQuoter disconnect_quoter_info ();
+
+  /// Gets the current quoter connection.
   StockQuoter get_connection_quoter_info ();
+  
+  /// Shutdown the object and terminate the application.
+  oneway void shutdown ();
 };
 </PRE>
 
-This is the interface definition for Stock Broker client. <P>
-The get_consumer_notifier() operation returns an object reference to the StockNameConsumer interface
+This is the interface definition for Stock Broker clients. <P>
+The get_consumer_notifier() operation returns an object reference of the StockNameConsumer interface
 shown earlier. When the stock quoter system is initialized, this factory operation will be used to 
-return the StockNameConsumer object that belongs to the Stock Broker object. <P>
-These connect_quoter_info(), disconnect_quoter_info(), and get_connection_quoter_info() operations
-are used to connect the StockBroker with the StockQuoter object that's provided by the StockDistributor
-interface describe next. <P>
+return the StockNameConsumer object that belongs to the StockBroker object. <P>
+The connect_quoter_info() and disconnect_quoter_info() operations are used to connect/disconnect the StockBroker 
+object with the StockQuoter object that's provided by the StockDistributor interface described next. <P>
+The get_connection_quoter_info() operation is used to get the current connected StockQuoter object. <P>
+The shutdown() operation is a oneway operation which shuts down the object and terminates the application. <P>
 
 <PRE>
 interface StockBrokerHome
 {
-  StockBroker create ();
+  /// Create a StockBroker object.
+  StockBroker create (in StockDistributor dist, in string stock_name);
 };
 </PRE>
 
 This is the interface definition for Stock Broker Home.
-This factory reduces the bookkeeping that CORBA applications must do to create and manage their objects. <P>
-
-<hr><h3>Distributor</h3>
-
-This IDL file (Distributor.idl) contains IDL definitions for the Stock Distributor in the
-Publish/Subscribe Real-time CORBA Stock Quoter Service. <P>
-
-<li><h4>Defining the IDL interfaces</h4></li>
-
-<PRE>
-interface StockDistributor : Trigger
-{
-  // Event source operations to establish connectivity.
-  Cookie subscribe_notifier (in Stock::StockNameConsumer c);
-  Stock::StockNameConsumer unsubscribe_notifier (in Cookie ck);
-
-  // Factory operation to return StockQuoter object reference.
-  StockQuoter provide_quoter_info ();
-
-  attribute long notification_rate;
-};
-</PRE>
-
-This is the interface definition for Stock Distributor server. <P>
-The subscribe_notifier() and unsubscribe_notifier() operations are to subscribe/unsubscribe StockBroker
-objects that consume the StockName events published by the StockDistributor. <P>
-The provide_quoter_info() factory operation returns object references that StockBroker consumers can
-use to obtain more information about a particular stock. <P>
-The notification_rate attribute stands for the notification frequency that the Stock Distributor server used 
-to communicate with the Stock Broker client. <P>
-
-<PRE>
-interface StockBrokerHome
-{
-  StockBroker create ();
-};
-</PRE>
-
-This is the interface definition for Stock Distributor Home.
 This factory reduces the bookkeeping that CORBA applications must do to create and manage their objects. <P>
 
 <hr><h3>Compiling the IDL files and generating the stub, skeleton and implementation files</h3>

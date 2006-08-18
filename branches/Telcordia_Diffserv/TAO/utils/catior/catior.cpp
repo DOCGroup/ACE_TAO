@@ -19,9 +19,7 @@
 // ============================================================================
 
 #include "tao/Messaging_PolicyValueC.h"
-#include "tao/Messaging/Messaging_RT_PolicyC.h"
-#include "tao/Messaging/Messaging_SyncScope_PolicyC.h"
-#include "tao/Messaging/Messaging_No_ImplC.h"
+#include "tao/Messaging/Messaging_TypesC.h"
 #include "tao/RTCORBA/RTCORBA.h"
 #include "tao/AnyTypeCode/Marshal.h"
 #include "tao/IIOP_Profile.h"

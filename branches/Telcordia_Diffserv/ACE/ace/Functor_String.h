@@ -17,13 +17,13 @@
 #define ACE_FUNCTOR_STRING_H
 #include /**/ "ace/pre.h"
 
-#include "ace/config-all.h"
+#include /**/ "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/ACE_export.h"
+#include /**/ "ace/ACE_export.h"
 #include "ace/SStringfwd.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

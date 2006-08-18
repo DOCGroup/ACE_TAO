@@ -16,7 +16,7 @@
 int
 PMC_All::encode (char *packet, int &packet_length)
 {
-  if (Options::get_opt (Options::DEBUG) != 0)
+  if (Options::get_opt (Options::DEBUGGING) != 0)
     ACE_DEBUG ((LM_DEBUG,
                 "in PMC_All::encode\n"));
 
@@ -39,7 +39,7 @@ PMC_All::encode (char *packet, int &packet_length)
 int
 PMC_All::decode (char *packet, int &packet_length)
 {
-  if (Options::get_opt (Options::DEBUG) != 0)
+  if (Options::get_opt (Options::DEBUGGING) != 0)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "in PMC_All::decode, packet_length = %d\n",

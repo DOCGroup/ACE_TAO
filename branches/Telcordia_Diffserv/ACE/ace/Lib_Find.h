@@ -15,8 +15,8 @@
 #define ACE_LIB_FIND_H
 #include /**/ "ace/pre.h"
 
-#include "ace/config-all.h"
-#include "ace/ACE_export.h"
+#include /**/ "ace/config-all.h"
+#include /**/ "ace/ACE_export.h"
 #include "ace/os_include/os_stdio.h"
 #if defined (ACE_OPENVMS)
 # include "ace/OS_NS_dlfcn.h"

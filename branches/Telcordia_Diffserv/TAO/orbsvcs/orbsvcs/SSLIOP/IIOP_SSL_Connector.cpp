@@ -215,6 +215,11 @@ TAO::IIOP_SSL_Connector::make_connection (
       return 0;
     }
 
+  if (transport->connection_handler ()->keep_waiting ()) 
+    {
+      svc_handler->add_reference ();
+    }
+
   // At this point, the connection has be successfully connected.
   // #REFCOUNT# is one.
   if (TAO_debug_level > 2)

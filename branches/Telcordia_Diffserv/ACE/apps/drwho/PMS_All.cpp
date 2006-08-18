@@ -19,7 +19,7 @@
 int
 PMS_All::encode (char *packet, int &packet_length)
 {
-  if (Options::get_opt (Options::DEBUG) != 0)
+  if (Options::get_opt (Options::DEBUGGING) != 0)
     ACE_DEBUG ((LM_DEBUG,
                 "in PMS_All::encode"));
 
@@ -46,7 +46,7 @@ PMS_All::encode (char *packet, int &packet_length)
   *buf_ptr++ = '\n';
   packet_length = buf_ptr - packet;
 
-  if (Options::get_opt (Options::DEBUG) != 0)
+  if (Options::get_opt (Options::DEBUGGING) != 0)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "packet_length = %d\n",
@@ -65,7 +65,7 @@ PMS_All::encode (char *packet, int &packet_length)
 int
 PMS_All::decode (char *, int &packet_length)
 {
-  if (Options::get_opt (Options::DEBUG) != 0)
+  if (Options::get_opt (Options::DEBUGGING) != 0)
     ACE_DEBUG ((LM_DEBUG,
                 "in PMS_All::decode, packet_length = %d\n",
                 packet_length));

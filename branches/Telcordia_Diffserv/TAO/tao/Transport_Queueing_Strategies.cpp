@@ -90,7 +90,7 @@ namespace TAO
     must_flush = false;
     set_timer = false;
 
-    TAO_Buffering_Constraint_Policy *buffering_constraint_policy = 0;
+    TAO::BufferingConstraint buffering_constraint;
 
     ACE_TRY_NEW_ENV
       {
@@ -99,18 +99,18 @@ namespace TAO
                                    ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
-        TAO::BufferingConstraintPolicy_var bcp =
+        TAO::BufferingConstraintPolicy_var bcpv =
           TAO::BufferingConstraintPolicy::_narrow (bcp_policy.in ()
                                                    ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
-        buffering_constraint_policy =
-          dynamic_cast<TAO_Buffering_Constraint_Policy *> (bcp.in ());
-
-        if (buffering_constraint_policy == 0)
+        TAO_Buffering_Constraint_Policy* bcp =
+          dynamic_cast<TAO_Buffering_Constraint_Policy *> (bcpv.in ());
+        if (bcp == 0)
           {
             return true;
           }
+        bcp->get_buffering_constraint (buffering_constraint);
       }
     ACE_CATCHANY
       {
@@ -118,8 +118,6 @@ namespace TAO
       }
     ACE_ENDTRY;
 
-    TAO::BufferingConstraint buffering_constraint;
-    buffering_constraint_policy->get_buffering_constraint (buffering_constraint);
 
     if (buffering_constraint.mode == TAO::BUFFER_FLUSH)
       {

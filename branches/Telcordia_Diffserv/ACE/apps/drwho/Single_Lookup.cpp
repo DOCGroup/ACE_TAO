@@ -14,7 +14,7 @@ Single_Lookup::Single_Lookup (const char *usr_name)
 
 Single_Lookup::~Single_Lookup (void)
 {
-  if (Options::get_opt (Options::DEBUG))
+  if (Options::get_opt (Options::DEBUGGING))
     ACE_DEBUG ((LM_DEBUG,
                 "disposing Single_Lookup\n"));
 }

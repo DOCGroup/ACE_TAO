@@ -174,86 +174,16 @@ ACE_TP_Reactor::handle_events (ACE_Time_Value *max_wait_time)
                            guard);
 }
 
-/*
- * Hook to specialize the register_handler method.
- */
-//@@ REACTOR_SPL_COMMENT_HOOK_START
-int
-ACE_TP_Reactor::register_handler (int,
-                                  ACE_Event_Handler *,
-                                  ACE_Sig_Action *,
-                                  ACE_Event_Handler **,
-                                  ACE_Sig_Action *)
-{
-  ACE_NOTSUP_RETURN (-1);
-}
-//@@ REACTOR_SPL_COMMENT_HOOK_END
-
-int
-ACE_TP_Reactor::register_handler (const ACE_Sig_Set &,
-                                  ACE_Event_Handler *,
-                                  ACE_Sig_Action *)
-{
-  ACE_NOTSUP_RETURN (-1);
-}
-
-int
-ACE_TP_Reactor::register_handler (ACE_Event_Handler *eh,
-                                  ACE_Reactor_Mask mask)
-{
-  return ACE_Select_Reactor::register_handler (eh,
-                                               mask);
-}
-
-int
-ACE_TP_Reactor::register_handler (ACE_HANDLE handle,
-                                  ACE_Event_Handler *eh,
-                                  ACE_Reactor_Mask mask)
-{
-  return ACE_Select_Reactor::register_handler (handle,
-                                               eh,
-                                               mask);
-}
-
-#if defined (ACE_WIN32)
-
-int
-ACE_TP_Reactor::register_handler (ACE_Event_Handler *eh,
-                                  ACE_HANDLE h)
-{
-  return ACE_Select_Reactor::register_handler (eh,
-                                               h);
-}
-
-#endif /* ACE_WIN32 */
-int
-ACE_TP_Reactor::register_handler (ACE_HANDLE event_handle,
-                                  ACE_HANDLE io_handle,
-                                  ACE_Event_Handler *event_handler,
-                                  ACE_Reactor_Mask mask)
-{
-  return ACE_Select_Reactor::register_handler (event_handle,
-                                               io_handle,
-                                               event_handler,
-                                               mask);
-}
-
-int
-ACE_TP_Reactor::register_handler (const ACE_Handle_Set &handles,
-                                  ACE_Event_Handler *eh,
-                                  ACE_Reactor_Mask mask)
-{
-  return ACE_Select_Reactor::register_handler (handles,
-                                               eh,
-                                               mask);
-}
-
 int
 ACE_TP_Reactor::dispatch_i (ACE_Time_Value *max_wait_time,
                             ACE_TP_Token_Guard &guard)
 {
   int event_count =
     this->get_event_for_dispatching (max_wait_time);
+
+  // We use this count to detect potential infinite loops as described
+  // in bug 2540.
+  int initial_event_count = event_count;
 
   int result = 0;
 
@@ -310,8 +240,14 @@ ACE_TP_Reactor::dispatch_i (ACE_Time_Value *max_wait_time,
   if (event_count > 0)
     {
       // Handle socket events
-      return this->handle_socket_events (event_count,
-                                         guard);
+      result = this->handle_socket_events (event_count,
+                                           guard);
+    }
+
+  if (event_count != 0
+      && event_count == initial_event_count)
+    {
+      this->state_changed_ = true;
     }
 
   return 0;

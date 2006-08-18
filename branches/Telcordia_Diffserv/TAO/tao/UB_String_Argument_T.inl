@@ -21,6 +21,15 @@ TAO::In_UB_String_Argument_T<S_var,Insert_Policy>::arg (void) const
   return this->x_;
 }
 
+template<typename S_var,
+         class Insert_Policy>
+ACE_INLINE
+TAO::In_UB_String_Clonable_Argument_T<S_var,Insert_Policy>::In_UB_String_Clonable_Argument_T (
+  const typename S_var::s_traits::char_type * x)
+  : In_UB_String_Argument_T<S_var,Insert_Policy> (x),
+    is_clone_ (false)
+{}
+
 // ==========================================================================
 
 template<typename S_var,

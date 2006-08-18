@@ -6,6 +6,7 @@
 #include "ace/Recursive_Thread_Mutex.h"
 #include "ace/Managed_Object.h"
 #include "ace/Containers.h"
+#include "ace/Guard_T.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Sig_Handler.inl"

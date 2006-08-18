@@ -507,33 +507,27 @@ ACE_OS::pwrite (ACE_HANDLE handle,
   ACE_OS_GUARD
 
   // Remember the original file pointer position
-  DWORD original_position = ::SetFilePointer (handle,
-                                              0,
-                                              0,
-                                              FILE_CURRENT);
-
-  if (original_position == 0xFFFFFFFF)
-    return -1;
-
-  // Go to the correct position
-  LARGE_INTEGER loffset;
-  loffset.QuadPart = offset;
-  DWORD altered_position = ::SetFilePointerEx (handle,
-                                               loffset,
-                                               0,
-                                               FILE_BEGIN);
-  if (altered_position == 0xFFFFFFFF)
+  LARGE_INTEGER orig_position;
+  orig_position.QuadPart = 0;
+  orig_position.LowPart = ::SetFilePointer (handle,
+                                            0,
+                                            &orig_position.HighPart,
+                                            FILE_CURRENT);
+  if (orig_position.LowPart == INVALID_SET_FILE_POINTER &&
+      GetLastError () != NO_ERROR)
     return -1;
 
   DWORD bytes_written;
+  LARGE_INTEGER loffset;
+  loffset.QuadPart = offset;
 
 #     if defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)
 
   OVERLAPPED overlapped;
   overlapped.Internal = 0;
   overlapped.InternalHigh = 0;
-  overlapped.Offset = offset;
-  overlapped.OffsetHigh = 0;
+  overlapped.Offset = loffset.LowPart;
+  overlapped.OffsetHigh = loffset.HighPart;
   overlapped.hEvent = 0;
 
   BOOL result = ::WriteFile (handle,
@@ -547,18 +541,19 @@ ACE_OS::pwrite (ACE_HANDLE handle,
       if (::GetLastError () != ERROR_IO_PENDING)
         return -1;
 
-      else
-        {
-          result = ::GetOverlappedResult (handle,
-                                          &overlapped,
-                                          &bytes_written,
-                                          TRUE);
-          if (result == FALSE)
-            return -1;
-        }
+      result = ::GetOverlappedResult (handle,
+                                      &overlapped,
+                                      &bytes_written,
+                                      TRUE);
+      if (result == FALSE)
+        return -1;
     }
 
 #     else /* ACE_HAS_WINNT4 && (ACE_HAS_WINNT4 != 0) */
+
+  // Go to the correct position
+  if (0 != ::SetFilePointerEx (handle, loffset, 0, FILE_BEGIN))
+    return -1;
 
   BOOL result = ::WriteFile (handle,
                              buf,
@@ -572,9 +567,9 @@ ACE_OS::pwrite (ACE_HANDLE handle,
 
   // Reset the original file pointer position
   if (::SetFilePointer (handle,
-                        original_position,
-                        0,
-                        FILE_BEGIN) == 0xFFFFFFFF)
+                        orig_position.LowPart,
+                        &orig_position.HighPart,
+                        FILE_BEGIN) == INVALID_SET_FILE_POINTER)
     return -1;
 
   return (ssize_t) bytes_written;

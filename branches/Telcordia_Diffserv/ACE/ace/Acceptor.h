@@ -66,16 +66,17 @@ public:
 
   /**
    * Open the contained @c PEER_ACCEPTOR object to begin listening, and
-   * register with the specified reactor for accept events.  An
-   * acceptor can only listen to one port at a time, so make sure to
-   * @c close() the acceptor before calling @c open() again.
+   * register with the specified reactor for connection accept events.
+   * An ACE_Acceptor can only listen to one port at a time; if one desires to
+   * change the address that an ACE_Acceptor listens on, call close()
+   * before calling open() again.
    *
-   * The @c PEER_ACCEPTOR handle is put into non-blocking mode as a
+   * The @c PEER_ACCEPTOR handle is put into nonblocking mode as a
    * safeguard against the race condition that can otherwise occur
    * between the time when the passive-mode socket handle is "ready"
-   * and when the actual @c accept() call is made.  During this
-   * interval, the client can shutdown the connection, in which case,
-   * the @c accept() call can hang.
+   * and when the actual accept() call is made.  During this
+   * interval, the client can shut down the connection, in which case
+   * the accept() call can block indefinitely.
    *
    * @param local_addr The address to listen at.
    * @param reactor    Pointer to the ACE_Reactor instance to register
@@ -98,7 +99,7 @@ public:
    *                   OS allow reuse of the listen port.  The default is 1.
    */
   ACE_Acceptor (const ACE_PEER_ACCEPTOR_ADDR &local_addr,
-                ACE_Reactor * = ACE_Reactor::instance (),
+                ACE_Reactor *reactor = ACE_Reactor::instance (),
                 int flags = 0,
                 int use_select = 1,
                 int reuse_addr = 1);
@@ -183,17 +184,18 @@ protected:
 
   /**
    * Bridge method for accepting the new connection into the
-   * <svc_handler>.  The default behavior delegates to the
-   * PEER_ACCEPTOR::accept.
+   * specified @a svc_handler.  The default behavior delegates to the
+   * @c PEER_ACCEPTOR::accept() method.
    */
   virtual int accept_svc_handler (SVC_HANDLER *svc_handler);
 
   /**
-   * Bridge method for activating a {svc_handler} with the appropriate
-   * concurrency strategy.  The default behavior of this method is to
-   * activate the SVC_HANDLER by calling its {open} method (which
-   * allows the SVC_HANDLER to define its own concurrency strategy).
-   * However, subclasses can override this strategy to do more
+   * Bridge method for activating the specified @a svc_handler with the
+   * appropriate concurrency strategy.
+   * The default behavior of this method is to activate the service handler
+   * by calling its open() method (which allows the handler to define its
+   * own concurrency strategy).
+   * However, subclasses of ACE_Acceptor can override this method to do more
    * sophisticated concurrency activations (such as making the
    * SVC_HANDLER as an "active object" via multi-threading or
    * multi-processing).

@@ -28,7 +28,7 @@
 #include "ace/OS_NS_errno.h"
 #include "ace/Basic_Types.h"
 #include "ace/os_include/os_time.h"
-#include "ace/ACE_export.h"
+#include /**/ "ace/ACE_export.h"
 
 #if defined (ACE_EXPORT_MACRO)
 #  undef ACE_EXPORT_MACRO

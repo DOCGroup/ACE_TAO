@@ -102,4 +102,10 @@ TAO_Queued_Message::push_front (TAO_Queued_Message *&head,
     }
 }
 
+bool
+TAO_Queued_Message::is_expired (const ACE_Time_Value &) const
+{
+  return false;
+}
+
 TAO_END_VERSIONED_NAMESPACE_DECL

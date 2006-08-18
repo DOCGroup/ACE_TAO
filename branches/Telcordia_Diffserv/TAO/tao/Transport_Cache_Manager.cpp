@@ -212,8 +212,8 @@ namespace TAO
                                *this->cache_lock_,
                                -1));
 
-    int status =  this->find_i (key,
-                                value);
+    int const status =  this->find_i (key,
+                                      value);
 
     if (status == 0)
       {

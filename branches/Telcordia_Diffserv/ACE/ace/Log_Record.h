@@ -19,7 +19,7 @@
 #define ACE_LOG_RECORD_H
 #include /**/ "ace/pre.h"
 
-#include "ace/ACE_export.h"
+#include /**/ "ace/ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -151,7 +151,7 @@ public:
   /// Get the message data of the <Log_Record>.
   const ACE_TCHAR *msg_data (void) const;
 
-  /// Set the message data pointer 
+  /// Set the message data pointer
   void set_msg_data_ptr (ACE_TCHAR *data);
 
   /// Set the message data of the <Log_Record>.
