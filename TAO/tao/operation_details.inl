@@ -10,7 +10,8 @@ TAO_Operation_Details::TAO_Operation_Details (const char *name,
                                               TAO::Argument **args,
                                               CORBA::ULong num,
                                               TAO::Exception_Data *data,
-                                              CORBA::ULong count)
+                                              CORBA::ULong count,
+                                              CORBA::Boolean is_dii_request)
   : opname_ (name)
     , opname_len_ (len)
     , request_id_ (0)
@@ -25,6 +26,7 @@ TAO_Operation_Details::TAO_Operation_Details (const char *name,
     , ft_expiration_time_ (0)
     , ft_retention_id_ (0)
 #endif /*TAO_HAS_INTERCEPTORS == 1*/
+    , is_dii_request_ (is_dii_request)
 {
 }
 
@@ -207,5 +209,12 @@ TAO_Operation_Details::ft_retention_id (void) const
   return this->ft_retention_id_;
 }
 #endif /*TAO_HAS_INTERCEPTORS == 1*/
+
+
+ACE_INLINE CORBA::Boolean
+TAO_Operation_Details::is_dii_request (void) const
+{
+  return this->is_dii_request_;
+}
 
 TAO_END_VERSIONED_NAMESPACE_DECL

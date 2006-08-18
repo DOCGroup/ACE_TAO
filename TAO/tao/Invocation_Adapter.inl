@@ -15,7 +15,8 @@ namespace TAO
       size_t op_len,
       Collocation_Proxy_Broker *p,
       Invocation_Type type,
-      Invocation_Mode mode)
+      Invocation_Mode mode,
+      CORBA::Boolean  is_dii_request)
     : target_ (target)
     , args_ (args)
     , number_args_  (arg_number)
@@ -24,6 +25,7 @@ namespace TAO
     , cpb_ (p)
     , type_ (type)
     , mode_ (mode)
+    , is_dii_request_ (is_dii_request)
   {
   }
 }

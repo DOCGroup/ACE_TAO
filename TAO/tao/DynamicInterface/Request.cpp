@@ -217,7 +217,9 @@ CORBA::Request::send_oneway (ACE_ENV_SINGLE_ARG_DECL)
       this->opname_,
       static_cast<CORBA::ULong> (ACE_OS::strlen (this->opname_)),
       0,
-      TAO::TAO_ONEWAY_INVOCATION);
+      TAO::TAO_ONEWAY_INVOCATION,
+      TAO::TAO_SYNCHRONOUS_INVOCATION,
+      true); // is_dii_request
 
   _tao_call.invoke (0,
                     0
