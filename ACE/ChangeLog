@@ -1,3 +1,10 @@
+Fri Aug 18 17:08:35 UTC 2006  Yan Dai  <dai_y@ociweb.com>
+
+        * bin/tao_orb_tests.lst
+
+          Added DII collocation oneway test. This is the regression test
+          for bugzilla #2545.
+
 Fri Aug 18 15:49:01 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * examples/APG/Logging/Trace.h: Changed the varargs form used in the
