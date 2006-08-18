@@ -852,7 +852,7 @@ TAO_GIOP_Message_Base::process_reply_message (
       // every reply on this connection.
       if (TAO_debug_level > 0)
         ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("TAO (%P|%t) - GIOP_Message_Base[%d]::process_parsed_messages, ")
+                    ACE_TEXT ("TAO (%P|%t) - GIOP_Message_Base[%d]::process_reply_message, ")
                     ACE_TEXT ("dispatch reply failed\n"),
                     params.transport_->id ()));
     }
@@ -964,6 +964,11 @@ TAO_GIOP_Message_Base::process_request (
       parse_error =
         parser->parse_request_header (request);
 
+      // Throw an exception if the
+      if (parse_error != 0)
+        ACE_TRY_THROW (CORBA::MARSHAL (0,
+                                       CORBA::COMPLETED_NO));
+
       TAO_Codeset_Manager *csm = request.orb_core ()->codeset_manager ();
       if (csm)
         {
@@ -971,10 +976,6 @@ TAO_GIOP_Message_Base::process_request (
           transport->assign_translators (&cdr, &output);
         }
 
-      // Throw an exception if the
-      if (parse_error != 0)
-        ACE_TRY_THROW (CORBA::MARSHAL (0,
-                                       CORBA::COMPLETED_NO));
       request_id = request.request_id ();
 
       response_required = request.response_expected ();
@@ -1000,7 +1001,7 @@ TAO_GIOP_Message_Base::process_request (
 
       if (!CORBA::is_nil (forward_to.in ()))
         {
-          const CORBA::Boolean permanent_forward_condition =
+          CORBA::Boolean const permanent_forward_condition =
               this->orb_core_->is_permanent_forward_condition
               (forward_to.in (),
                request.request_service_context ());
@@ -1750,7 +1751,8 @@ TAO_GIOP_Message_Base::init_queued_data (
 }
 
 int
-TAO_GIOP_Message_Base::parse_request_id (const TAO_Queued_Data *qd, CORBA::ULong &request_id) const
+TAO_GIOP_Message_Base::parse_request_id (const TAO_Queued_Data *qd,
+                                         CORBA::ULong &request_id) const
 {
   // Get a parser for us
   TAO_GIOP_Message_Generator_Parser *generator_parser = 0;
@@ -1812,8 +1814,12 @@ TAO_GIOP_Message_Base::parse_request_id (const TAO_Queued_Data *qd, CORBA::ULong
         {
           IOP::ServiceContextList service_context;
 
-          if ( ! (input_cdr >> service_context &&
-                  input_cdr >> request_id) )
+          if ( ! (input_cdr >> service_context))
+            {
+              return -1;
+            }
+
+          if ( ! (input_cdr >> request_id))
             {
               return -1;
             }
