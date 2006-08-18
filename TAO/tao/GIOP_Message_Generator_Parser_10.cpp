@@ -339,7 +339,8 @@ TAO_GIOP_Message_Generator_Parser_10::parse_request_header (
   IOP::ServiceContextList &service_info =
     request.request_service_info ();
 
-  input >> service_info;
+  if ( ! (input >> service_info))
+    return -1;
 
   CORBA::Boolean hdr_status =
     (CORBA::Boolean) input.good_bit ();
@@ -443,12 +444,14 @@ TAO_GIOP_Message_Generator_Parser_10::parse_reply (
 
 {
   // Read the service context list first
-  if ((cdr >> params.svc_ctx_) == 0)
+  if ( ! (cdr >> params.svc_ctx_))
     {
-      if (TAO_debug_level >     0)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) parse_reply, ")
-                    ACE_TEXT ("extracting context\n")));
+      if (TAO_debug_level > 0)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("TAO (%P|%t) parse_reply, ")
+                      ACE_TEXT ("extracting context\n")));
+        }
       return -1;
     }
 

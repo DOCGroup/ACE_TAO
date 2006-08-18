@@ -34,6 +34,7 @@ TAO_GIOP_Message_Generator_Parser::parse_reply (
                       ACE_TEXT ("TAO (%P|%t) : TAO_GIOP_Message_Generator_Parser::parse_reply :")
                       ACE_TEXT ("extracting request id\n")));
         }
+      return -1;
     }
 
   // and the reply status type.  status can be NO_EXCEPTION,
@@ -43,9 +44,11 @@ TAO_GIOP_Message_Generator_Parser::parse_reply (
   if (!stream.read_ulong (rep_stat))
     {
       if (TAO_debug_level > 0)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("TAO (%P|%t) : TAO_GIOP_Message_Generator_Parser::parse_reply, ")
-                    ACE_TEXT ("extracting reply status\n")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("TAO (%P|%t) : TAO_GIOP_Message_Generator_Parser::parse_reply, ")
+                      ACE_TEXT ("extracting reply status\n")));
+        }
       return -1;
     }
 
@@ -89,8 +92,12 @@ TAO_GIOP_Message_Generator_Parser::parse_reply (
       break;
     default:
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%N|%l) Unknown reply status \n")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("TAO (%P|%t) : TAO_GIOP_Message_Generator_Parser::parse_reply, ")
+                      ACE_TEXT ("Unknown reply status \n")));
+        }
+      return -1;
     }
 
   return 0;
