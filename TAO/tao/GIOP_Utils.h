@@ -25,15 +25,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/IOP_IORC.h"
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-class ACE_Time_Value;
-ACE_END_VERSIONED_NAMESPACE_DECL
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-class TAO_Transport;
 
 /**
  * All GIOP messages include a header and message type.  Not
@@ -108,46 +100,6 @@ typedef enum GIOP_ReplyStatusType
   TAO_GIOP_NEEDS_ADDRESSING_MODE
 
 } TAO_GIOP_Reply_Status_Type;
-
-
-/**
- * @class TAO_GIOP_ReplyHeader
- *
- * @brief This class embodies the header of a GIOP reply.
- * @@Not used. Could be used in future
- */
-class TAO_Export TAO_GIOP_ReplyHeader
-{
-public:
-  /// Information
-  IOP::ServiceContextList service_info;
-
-  /// Unique identifier of the request for which this is a reply.
-  CORBA::ULong request_id;
-
-  /// Status of the reply (see above enum).
-  TAO_GIOP_Reply_Status_Type reply_status;
-};
-
-/**
- * @class TAO_GIOP_Utils
- *
- * @brief Utility class that has some commonly used methods for both GIOP
- * Base  & GIOP lite
- */
-class TAO_Export TAO_GIOP_Utils
-{
-public:
-  static int read_bytes_input (TAO_Transport *transport,
-                               TAO_InputCDR &cdr,
-                               CORBA::ULong buf_size,
-                               ACE_Time_Value *value = 0);
-
-  static ssize_t read_buffer (TAO_Transport *transport,
-                              char *buf,
-                              size_t len,
-                              ACE_Time_Value *max_wait_time = 0);
-};
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

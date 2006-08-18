@@ -51,26 +51,26 @@ public:
   virtual ~TAO_GIOP_Message_Generator_Parser (void);
 
   /// Write the request header in to @a msg
-  virtual int write_request_header (
+  virtual bool write_request_header (
       const TAO_Operation_Details &opdetails,
       TAO_Target_Specification &spec,
       TAO_OutputCDR &msg) = 0;
 
   /// Write the LocateRequest header
-  virtual int write_locate_request_header (
+  virtual bool write_locate_request_header (
       CORBA::ULong request_id,
       TAO_Target_Specification &spec,
       TAO_OutputCDR &msg) = 0;
 
   /// Write the reply header in to @a output
-  virtual int write_reply_header (
+  virtual bool write_reply_header (
       TAO_OutputCDR &output,
       TAO_Pluggable_Reply_Params_Base &reply
       ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 
   /// Writes the locate _reply message in to the @a output
-  virtual int write_locate_reply_mesg (
+  virtual bool write_locate_reply_mesg (
       TAO_OutputCDR &output,
       CORBA::ULong request_id,
       TAO_GIOP_Locate_Status_Msg &status) = 0;
@@ -98,12 +98,12 @@ public:
                                   TAO_Pluggable_Reply_Params &params);
 
   /// Our versions
-  virtual CORBA::Octet major_version (void) = 0;
-  virtual CORBA::Octet minor_version (void) = 0;
+  virtual CORBA::Octet major_version (void) const = 0;
+  virtual CORBA::Octet minor_version (void) const = 0;
 
   /// Is the messaging object ready for processing BiDirectional
   /// request/response?
-  virtual int is_ready_for_bidirectional (void);
+  virtual bool is_ready_for_bidirectional (void) const;
 
   /// The header length of a fragment
   virtual size_t fragment_header_length (void) const = 0;
