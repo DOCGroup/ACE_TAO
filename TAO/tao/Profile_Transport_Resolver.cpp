@@ -171,12 +171,14 @@ namespace TAO
       {
         timeout = &connection_timeout;
       }
-    else if (has_con_timeout) 
+    else if (has_con_timeout)
       {
-        if (timeout == 0 || connection_timeout < *timeout) 
+        if (timeout == 0 || connection_timeout < *timeout)
           timeout = &connection_timeout;
+        else
+          has_con_timeout = false;
       }
-    else if (!blocked_) 
+    else if (!blocked_)
       {
         timeout = 0;
       }
@@ -198,7 +200,9 @@ namespace TAO
     // If the user has set a roundtrip timeout policy, throw a timeout
     // exception.  Otherwise, just fall through and return false to
     // look at the next endpoint.
-    if (this->transport_ == 0 && errno == ETIME)
+    if (this->transport_ == 0 &&
+        has_con_timeout == false &&
+        errno == ETIME)
       {
         ACE_THROW_RETURN (CORBA::TIMEOUT (
                             CORBA::SystemException::_tao_minor_code (
