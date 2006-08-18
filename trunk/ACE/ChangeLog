@@ -1,3 +1,11 @@
+Fri Aug 18 17:22:08 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS_NS_unistd.cpp (pwrite): Corrected the large-file-offset
+          logic to build correctly for Windows. Also moved the explicit
+          SetFilePointerEx() before WriteFile() to the non-ACE_HAS_WINNT4
+          section - for ACE_HAS_WINNT4 the supplied OVERLAPPED structure
+          carries the file offset to write at.
+
 Fri Aug 18 17:08:35 UTC 2006  Yan Dai  <dai_y@ociweb.com>
 
         * bin/tao_orb_tests.lst
