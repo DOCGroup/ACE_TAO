@@ -1,3 +1,10 @@
+Sat Aug 19 22:03:03 UTC 2006  Yan Dai  <dai_y@ociweb.com>
+
+        * bin/tao_orb_tests.lst
+
+          Excluded the DII collocation oneway test from running in the minimum
+          CORBA build.
+          
 Fri Aug 18 20:38:35 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * examples/APG/Logging/Trace.h: Further changed use of __VA_ARGS__
