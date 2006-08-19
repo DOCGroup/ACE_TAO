@@ -1,3 +1,10 @@
+Sat Aug 19 22:03:03 UTC 2006  Yan Dai  <dai_y@ociweb.com>
+
+        * tests/DII_Collocation_Tests/oneway/Collocated_Test.cpp:
+        
+          Added the DII_Arguments_Converter_Impl.h include to force static builds
+          to load the DII_Arguments_Converter service.
+
 Fri Aug 18 17:00:15 UTC 2006  Yan Dai  <dai_y@ociweb.com>
 
         Merged OCI changes that fix the problem that CORBA::Request::send_oneway()
