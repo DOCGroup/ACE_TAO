@@ -4,6 +4,8 @@
 #include "Hello.h"
 #include "tao/ORB_Core.h"
 #include "tao/ORB_Table.h"
+// Force static build to load the DII_Arguments_Converter service.
+#include "tao/DynamicInterface/DII_Arguments_Converter_Impl.h"
 
 ACE_RCSID(DII_Collocation_Tests, Hello, "$Id$")
 
