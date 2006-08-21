@@ -279,15 +279,31 @@ public:
 #endif /* ACE_HAS_WCHAR */
 
   /**
-   * Return the character representation of the hostname (this version
-   * is non-reentrant since it returns a pointer to a static data
-   * area).
+   * Return the character representation of the hostname.  This
+   * version is non-reentrant since it returns a pointer to a static
+   * data area.  You should therefore either (1) do a "deep copy" of
+   * the address returned by get_host_name(), e.g., using strdup() or
+   * (2) use the "reentrant" version of get_host_name() described
+   * above.
    */
   const char *get_host_name (void) const;
 
-  /// Return the "dotted decimal" Internet address.
+  /**
+   * Return the "dotted decimal" Internet address representation of
+   * the hostname storing it in the <addr> (which is assumed to be
+   * <addr_size> bytes long).  This version is reentrant.
+   */
+  const char *get_host_addr (char *addr, int addr_size) const;
+
+  /**
+   * Return the "dotted decimal" Internet address representation of
+   * the hostname.  This version is non-reentrant since it returns a
+   * pointer to a static data area.  You should therefore either
+   * (1) do a "deep copy" of the address returned by get_host_addr(), e.g., 
+   * using strdup() or (2) use the "reentrant" version of
+   * get_host_addr() described above. 
+   */
   const char *get_host_addr (void) const;
-  const char *get_host_addr (char *dst, int size) const;
 
   /// Return the 4-byte IP address, converting it into host byte
   /// order.

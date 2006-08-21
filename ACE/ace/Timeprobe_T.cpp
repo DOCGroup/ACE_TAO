@@ -83,17 +83,6 @@ ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::timeprobe (u_long event)
 {
   ACE_GUARD (ACE_LOCK, ace_mon, this->lock_);
 
-# if defined (ACE_TIMEPROBE_ASSERTS_FIXED_SIZE)
-  ACE_ASSERT (this->current_size_ < this->max_size_);
-# else /* ! ACE_TIMEPROBE_ASSERTS_FIXED_SIZE */
-  // wrap around to the beginning on overflow
-  if (this->current_size_ >= this->max_size_)
-    {
-      this->current_size_ = 0;
-      this->report_buffer_full_ = 1;
-    }
-# endif /* ACE_TIMEPROBE_ASSERTS_FIXED_SIZE */
-
   this->timeprobes_[this->current_size_].event_.event_number_ = event;
   this->timeprobes_[this->current_size_].event_type_ = ACE_timeprobe_t::NUMBER;
   this->timeprobes_[this->current_size_].time_ = ACE_OS::gethrtime ();
@@ -101,18 +90,7 @@ ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::timeprobe (u_long event)
 
   ++this->current_size_;
 
-}
-
-template <class ACE_LOCK, class ALLOCATOR> void
-ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::timeprobe (const char *event)
-{
-  ACE_GUARD (ACE_LOCK, ace_mon, this->lock_);
-
-  ACE_ASSERT (this->current_size_ < this->max_size_);
-
-#if defined (ACE_TIMEPROBE_ASSERTS_FIXED_SIZE)
-  ACE_ASSERT (this->current_size_ < this->max_size_);
-#else /* ! ACE_TIMEPROBE_ASSERTS_FIXED_SIZE */
+#if !defined (ACE_TIMEPROBE_ASSERTS_FIXED_SIZE)
   // wrap around to the beginning on overflow
   if (this->current_size_ >= this->max_size_)
     {
@@ -121,12 +99,31 @@ ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::timeprobe (const char *event)
     }
 #endif /* ACE_TIMEPROBE_ASSERTS_FIXED_SIZE */
 
+  ACE_ASSERT (this->current_size_ < this->max_size_);
+}
+
+template <class ACE_LOCK, class ALLOCATOR> void
+ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::timeprobe (const char *event)
+{
+  ACE_GUARD (ACE_LOCK, ace_mon, this->lock_);
+
   this->timeprobes_[this->current_size_].event_.event_description_ = event;
   this->timeprobes_[this->current_size_].event_type_ = ACE_timeprobe_t::STRING;
   this->timeprobes_[this->current_size_].time_ = ACE_OS::gethrtime ();
   this->timeprobes_[this->current_size_].thread_ = ACE_OS::thr_self ();
 
   ++this->current_size_;
+
+#if !defined (ACE_TIMEPROBE_ASSERTS_FIXED_SIZE)
+  // wrap around to the beginning on overflow
+  if (this->current_size_ >= this->max_size_)
+    {
+      this->current_size_ = 0;
+      this->report_buffer_full_ = 1;
+    }
+#endif /* ACE_TIMEPROBE_ASSERTS_FIXED_SIZE */
+
+  ACE_ASSERT (this->current_size_ < this->max_size_);
 }
 
 template <class ACE_LOCK, class ALLOCATOR> void
@@ -141,35 +138,35 @@ ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::reset (void)
 template <class ACE_LOCK, class ALLOCATOR> void
 ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::increase_size (u_long size)
 {
-   ACE_GUARD (ACE_LOCK, ace_mon, this->lock_);
+  ACE_GUARD (ACE_LOCK, ace_mon, this->lock_);
 
-   if (size > this->max_size_)
-   {
+  if (size > this->max_size_)
+    {
       ACE_timeprobe_t *temp = 0;
       ACE_NEW_MALLOC_ARRAY (temp,
-                           (ACE_timeprobe_t *) this->allocator ()->
-                           malloc (this->max_size_
-                           * sizeof (ACE_timeprobe_t)),
-                           ACE_timeprobe_t,
-                           size);
+                            (ACE_timeprobe_t *) this->allocator ()->
+                            malloc (this->max_size_
+                                    * sizeof (ACE_timeprobe_t)),
+                            ACE_timeprobe_t,
+                            size);
 
       if (this->max_size_ > 0)
-      {
-         ACE_OS::memcpy (temp,
-                         this->timeprobes_,
-                         this->max_size_ * sizeof (ACE_timeprobe_t));
+        {
+          ACE_OS::memcpy (temp,
+                          this->timeprobes_,
+                          this->max_size_ * sizeof (ACE_timeprobe_t));
 
-         // Iterates over the array explicitly calling the destructor for
-         // each probe instance, then deallocates the memory
+          // Iterates over the array explicitly calling the destructor for
+          // each probe instance, then deallocates the memory
 
-         ACE_DES_ARRAY_FREE ((ACE_timeprobe_t *)(this->timeprobes_),
-                             this->max_size_,
-                             this->allocator ()->free,
-                             ACE_timeprobe_t);
-      }
+          ACE_DES_ARRAY_FREE ((ACE_timeprobe_t *)(this->timeprobes_),
+                              this->max_size_,
+                              this->allocator ()->free,
+                              ACE_timeprobe_t);
+        }
       this->timeprobes_ = temp;
       this->max_size_ = size;
-   }
+    }
 }
 
 template <class ACE_LOCK, class ALLOCATOR> ACE_Unbounded_Set<ACE_Event_Descriptions> &
@@ -231,11 +228,14 @@ ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::print_times (void)
   // Sort the event descriptions
   this->sort_event_descriptions_i ();
 
-  ACE_DEBUG ((LM_DEBUG,
-              "\nACE_Timeprobe_Ex; %d timestamps were recorded:\n",
-              this->current_size_));
+  u_long size = this->report_buffer_full_ ? this->max_size_
+                                          : this->current_size_;
 
-  if (this->current_size_ == 0)
+  ACE_DEBUG ((LM_DEBUG,
+              "\nACE_Timeprobe_Ex; %u timestamps were recorded:\n",
+              size));
+
+  if (size == 0)
     return;
 
   ACE_DEBUG ((LM_DEBUG,
@@ -244,52 +244,65 @@ ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::print_times (void)
               "thread",
               "usec"));
 
-  ACE_DEBUG ((LM_DEBUG,
-              "%-50.50s %8.8x %13.13s\n",
-              this->find_description_i (0),
-              this->timeprobes_[0].thread_,
-              "START"));
-
-  ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+  double gsf = ACE_High_Res_Timer::global_scale_factor ();
   u_long i, j;
 
-  if (report_buffer_full_ == 0) {
-    i = 1;
-  }
-  else {
-    i = this->current_size_;
-  }
+  // First element
+  i = this->report_buffer_full_ ? this->current_size_ : 0;
+
+  ACE_DEBUG ((LM_DEBUG,
+              "%-50.50s %8.8x %13.13s\n",
+              this->find_description_i (i),
+              this->timeprobes_[i].thread_,
+              "START"));
+
+  if (size == 1)
+    return;
+
+  bool has_timestamp_inversion = false;
+
+  j = i;
+  i = (i + 1) % this->max_size_;
 
   do
     {
-      if (i == 0) {
-        j = this->max_size_;
-      }
-      else {
-        j = i - 1;
-      }
+      // When reusing the same ACE_Timeprobe from multiple threads
+      // with Linux on Intel SMP, it sometimes happens that the
+      // recorded times go backward in time if they are recorded from
+      // different threads (see bugzilla #2342).  To obtain the
+      // correct signed difference between consecutive recorded times,
+      // one has to cast the time difference to an intermediate signed
+      // integral type of the same size as ACE_hrtime_t.
 
-      ACE_hrtime_t time_difference =
-        this->timeprobes_[i].time_ - this->timeprobes_[j].time_;
+      double time_difference =
+        (ACE_INT64) (this->timeprobes_[i].time_ - this->timeprobes_[j].time_);
 
-      ACE_UINT32 elapsed_time_in_micro_seconds =
-        (ACE_UINT32) (time_difference / gsf);
-      ACE_UINT32 remainder =
-        (ACE_UINT32) (time_difference % gsf);
-      // Convert to the fractional part in microseconds, with 3 digits
-      // of precision (hence the 1000).
-      ACE_UINT32 fractional = remainder * 1000 / gsf;
+      if (time_difference < 0)
+        has_timestamp_inversion = true;
+
+      // Convert to microseconds.
+      time_difference /= gsf;
 
       ACE_DEBUG ((LM_DEBUG,
-                  "%-50.50s %8.8x %10u.%03.3u\n",
+                  "%-50.50s %8.8x %14.3f\n",
                   this->find_description_i (i),
                   this->timeprobes_[i].thread_,
-                  (unsigned int) elapsed_time_in_micro_seconds,
-                  (unsigned int) fractional));
+                  time_difference));
 
-      i = (i + 1) % this ->max_size_; // Modulus increment: loops around at the end.
+      j = i;
+      i = (i + 1) % this->max_size_; 
+    } 
+  while (i != this->current_size_);
 
-    } while (i != this->current_size_);
+  static bool inversion_warning_printed = false;
+  if (!inversion_warning_printed && has_timestamp_inversion)
+    {
+      inversion_warning_printed = true;
+      ACE_DEBUG ((LM_DEBUG,
+                  "\nWARNING: The timestamps recorded by gethrtime() on"
+                  " this platform are\n"
+                  "not monotonic across different threads.\n"));
+    }
 }
 
 template <class ACE_LOCK, class ALLOCATOR> void
@@ -300,13 +313,15 @@ ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::print_absolute_times (void)
   // Sort the event descriptions
   this->sort_event_descriptions_i ();
 
-  ACE_DEBUG ((LM_DEBUG,
-              "\nACE_Timeprobe_Ex; %d timestamps were recorded:\n",
-              this->current_size_));
+  u_long size = this->report_buffer_full_ ? this->max_size_
+                                          : this->current_size_;
 
-  if (this->current_size_ == 0 && this->report_buffer_full_ == 0) {
+  ACE_DEBUG ((LM_DEBUG,
+              "\nACE_Timeprobe_Ex; %u timestamps were recorded:\n",
+              size));
+
+  if (size == 0)
     return;
-  }
 
   ACE_DEBUG ((LM_DEBUG,
               "\n%-50.50s %8.8s %13.13s\n\n",
@@ -314,13 +329,7 @@ ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::print_absolute_times (void)
               "thread",
               "stamp"));
 
-  u_long i;
-  if (report_buffer_full_ == 0) {
-    i = 1;
-  }
-  else {
-    i = this->current_size_;
-  }
+  u_long i = this->report_buffer_full_ ? this->current_size_ : 0;
 
   ACE_Time_Value tv; // to convert ACE_hrtime_t
   do
@@ -333,17 +342,18 @@ ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::print_absolute_times (void)
                   this->timeprobes_ [i].thread_,
                   tv.sec () * 1000000
                    + tv.usec ()));
-      i = (i + 1) % this ->max_size_; // Modulus increment: loops around at the end.
 
-    } while (i != this->current_size_);
+      // Modulus increment: loops around at the end.
+      i = (i + 1) % this->max_size_;
+    } 
+  while (i != this->current_size_);
 }
 
 template <class ACE_LOCK, class ALLOCATOR> const char *
 ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::find_description_i (u_long i)
 {
-  if (this->timeprobes_[i].event_type_ == ACE_timeprobe_t::STRING) {
+  if (this->timeprobes_[i].event_type_ == ACE_timeprobe_t::STRING) 
     return this->timeprobes_[i].event_.event_description_;
-  }
   else
     {
       EVENT_DESCRIPTIONS::iterator iterator = this->sorted_event_descriptions_.begin ();

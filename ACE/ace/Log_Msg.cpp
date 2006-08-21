@@ -254,12 +254,12 @@ ACE_Log_Msg::exists (void)
 # if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || \
      defined (ACE_HAS_TSS_EMULATION)
   ACE_Log_Msg *tss_log_msg = 0;
+  void *temp = 0; // Need this temp to keep G++ from complaining.
 
   // Get the tss_log_msg from thread-specific storage.
   return key_created_
-    && ACE_Thread::getspecific (*(log_msg_tss_key ()),
-                                reinterpret_cast<void **> (&tss_log_msg)) != -1
-    && tss_log_msg;
+    && ACE_Thread::getspecific (*(log_msg_tss_key ()), &temp) != -1
+    && (tss_log_msg = static_cast <ACE_Log_Msg *> (temp)) != 0;
 # else
 #   error "Platform must support thread-specific storage if threads are used."
 # endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATION */
@@ -325,11 +325,13 @@ ACE_Log_Msg::instance (void)
     }
 
   ACE_Log_Msg *tss_log_msg = 0;
+  void *temp = tss_log_msg;
 
   // Get the tss_log_msg from thread-specific storage.
-  if (ACE_Thread::getspecific (*(log_msg_tss_key ()),
-                               reinterpret_cast<void **> (&tss_log_msg)) == -1)
+  if (ACE_Thread::getspecific (*(log_msg_tss_key ()), &temp) == -1)
     return 0; // This should not happen!
+
+  tss_log_msg = static_cast <ACE_Log_Msg *> (temp);
 
   // Check to see if this is the first time in for this thread.
   if (tss_log_msg == 0)

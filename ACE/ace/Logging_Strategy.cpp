@@ -266,10 +266,19 @@ ACE_Logging_Strategy::ACE_Logging_Strategy (void)
 #endif /* ACE_DEFAULT_LOGFILE */
 }
 
+ACE_Logging_Strategy::~ACE_Logging_Strategy (void)
+{
+  // This is allocated in constructor, so it must be deallocated in
+  // the destructor!
+  delete [] this->filename_;
+}
+
 int
 ACE_Logging_Strategy::fini (void)
 {
   delete [] this->filename_;
+  this->filename_ = 0; // Avoid double deletions.
+
   delete [] this->logger_key_;
   delete [] this->program_name_;
 

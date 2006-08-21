@@ -1,6 +1,5 @@
 #include "ace/CDR_Size.h"
 #include "ace/SString.h"
-#include "ace/OS_Memory.h"
 
 #if !defined (__ACE_INLINE__)
 # include "ace/CDR_Size.inl"
@@ -59,7 +58,10 @@ ACE_SizeCDR::write_wchar (ACE_CDR::WChar x)
       return (this->good_bit_ = false);
     }
   if (ACE_OutputCDR::wchar_maxbytes () == sizeof (ACE_CDR::WChar))
-    return this->write_4 (reinterpret_cast<const ACE_CDR::ULong *> (&x));
+    {
+      const void *temp = &x;
+      return this->write_4 (reinterpret_cast<const ACE_CDR::ULong *> (temp));
+    }
   else if (ACE_OutputCDR::wchar_maxbytes () == 2)
     {
       ACE_CDR::Short sx = static_cast<ACE_CDR::Short> (x);
