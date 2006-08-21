@@ -210,31 +210,30 @@ public:
 
   // moved inside the class to resolve namespace lookup issues.
   // This is a replacement for the commented block below.
-
   inline bool operator== (const unbounded_value_sequence<CORBA::Octet> & rhs) const
-{
-  ::CORBA::ULong const rlen = rhs.length ();
+  {
+    ::CORBA::ULong const rlen = rhs.length ();
 
-  if (rlen != this->length ())
-    {
-      return false;
-    }
+    if (rlen != this->length ())
+      {
+        return false;
+      }
 
-  for (::CORBA::ULong i = 0; i < rlen; ++i)
-    {
-      if (rhs[i] != this->buffer_[i])
-        {
-          return false;
-        }
-    }
+    for (::CORBA::ULong i = 0; i < rlen; ++i)
+      {
+        if (rhs[i] != this->buffer_[i])
+          {
+            return false;
+          }
+      }
 
-  return true;
-}
+    return true;
+  }
 
   inline bool operator!= (const unbounded_value_sequence<CORBA::Octet> & rhs) const
-{
-  return !this->operator==(rhs);
-}
+  {
+    return !this->operator==(rhs);
+  }
 
   inline void swap(unbounded_value_sequence & rhs) throw() {
     std::swap (mb_, rhs.mb_);
@@ -325,9 +324,9 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
 
-#if 0
-// This doesn't work for an unexplained reason. At least
-// PortableServer::Active_Object_Map.cpp fails to compile.
+#if (TAO_NO_COPY_OCTET_SEQUENCES == 0)
+// This doesn't work always for unexplained reason. At least
+// PortableServer::Active_Object_Map.cpp fails to compile with some compilers.
 // But I'm keeping this in for the moment so that it may be
 // resurrected if need be
 inline
@@ -360,6 +359,6 @@ operator!= (const TAO_VERSIONED_NAMESPACE_NAME::TAO::unbounded_value_sequence<CO
 {
   return !(lhs == rhs);
 }
-#endif /* 0 */
+#endif /* TAO_NO_COPY_OCTET_SEQUENCES==0 */
 
 #endif // guard_unbounded_octet_sequence_hpp
