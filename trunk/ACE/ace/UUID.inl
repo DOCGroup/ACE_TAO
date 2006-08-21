@@ -108,6 +108,12 @@ namespace ACE_Utils
     this->pid_ = pid;
   }
 
+  ACE_INLINE void
+  UUID::from_string (const ACE_CString& uuidString)
+  {
+    this->from_string_i (uuidString);
+  }
+
   //ACE_INLINE bool
   //UUID::operator == (const UUID &right) const
   //{
