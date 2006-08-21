@@ -39,6 +39,13 @@ Tester::test (void)
               "UUID Constructed from above Generated UUID\n %s\n",
               new_uuid.to_string ()->c_str ()));
 
+  // Construct UUID from string by assigning it
+  ACE_Utils::UUID new_uuid_assign;
+  new_uuid_assign.from_string (new_uuid.to_string ()->c_str ());
+  ACE_DEBUG ((LM_DEBUG,
+              "UUID Constructed from above Generated UUID with assign\n %s\n",
+              new_uuid_assign.to_string ()->c_str ()));
+
   // Generate UUID with process and thread ids.
   ACE_Utils::UUID* uuid_with_tp_id =
     ACE_Utils::UUID_GENERATOR::instance ()->generateUUID (0x0001, 0xc0);
@@ -52,6 +59,7 @@ Tester::test (void)
               "UUID with Thread and Process ID reconstructed from above UUID \n %s\n",
               new_uuid_with_tp_id.to_string ()->c_str ()));
   delete uuid_with_tp_id;
+
 
   return 0;
 }
