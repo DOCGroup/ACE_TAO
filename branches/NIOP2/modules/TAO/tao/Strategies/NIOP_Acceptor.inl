@@ -1,6 +1,6 @@
 // -*- C++ -*-
 //
-// $Id: NIOP_Acceptor.i,v 1.2 2005/11/04 18:39:05 ossama Exp $
+// $Id$
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

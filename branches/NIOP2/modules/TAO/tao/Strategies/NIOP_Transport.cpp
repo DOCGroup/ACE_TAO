@@ -1,4 +1,4 @@
-// $Id: NIOP_Transport.cpp,v 1.29 2006/04/20 12:37:17 jwillemsen Exp $
+// $Id$
 
 #include "tao/Strategies/NIOP_Transport.h"
 
@@ -20,7 +20,7 @@
 #include "tao/GIOP_Message_Base.h"
 #include "tao/GIOP_Message_Lite.h"
 
-ACE_RCSID (tao, NIOP_Transport, "$Id: NIOP_Transport.cpp,v 1.29 2006/04/20 12:37:17 jwillemsen Exp $")
+ACE_RCSID (tao, NIOP_Transport, "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

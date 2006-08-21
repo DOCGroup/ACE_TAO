@@ -4,7 +4,7 @@
 /**
  *  @file   NIOP_Connection_Handler.h
  *
- *  $Id: NIOP_Connection_Handler.h,v 1.21 2006/04/19 11:38:50 jwillemsen Exp $
+ *  $Id$
  *
  *  @author  Johnny Willemsen <jwillemsen@remedy.nl>
  */

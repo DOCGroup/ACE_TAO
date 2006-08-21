@@ -4,7 +4,7 @@
 /**
  *  @file   NIOP_Transport.h
  *
- *  $Id: NIOP_Transport.h,v 1.18 2006/07/20 10:24:45 jwillemsen Exp $
+ *  $Id$
  *
  *  @author  Johnny Willemsen <jwillemsen@remedy.nl>
  */

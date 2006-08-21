@@ -1,4 +1,4 @@
-// $Id: NIOP_Factory.cpp,v 1.9 2006/03/10 07:19:18 jtc Exp $
+// $Id$
 
 #include "tao/Strategies/NIOP_Factory.h"
 
@@ -13,7 +13,7 @@
 
 ACE_RCSID (Strategies,
            NIOP_Factory,
-           "$Id: NIOP_Factory.cpp,v 1.9 2006/03/10 07:19:18 jtc Exp $")
+           "$Id$")
 
 static const char the_prefix[] = "NIOP";
 

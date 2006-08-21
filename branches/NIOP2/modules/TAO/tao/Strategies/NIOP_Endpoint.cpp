@@ -1,5 +1,5 @@
 // This may look like C, but it's really -*- C++ -*-
-// $Id: NIOP_Endpoint.cpp,v 1.15 2006/05/16 12:35:39 jwillemsen Exp $
+// $Id$
 
 
 #include "tao/Strategies/NIOP_Endpoint.h"
@@ -16,7 +16,7 @@
 
 ACE_RCSID (Strategies,
            NIOP_Endpoint,
-           "$Id: NIOP_Endpoint.cpp,v 1.15 2006/05/16 12:35:39 jwillemsen Exp $")
+           "$Id$")
 
 
 #if !defined (__ACE_INLINE__)
@@ -26,40 +26,20 @@ ACE_RCSID (Strategies,
 #include "ace/os_include/os_netdb.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-/*
-TAO_NIOP_Endpoint::TAO_NIOP_Endpoint (const ACE_INET_Addr &addr,
-                                      int use_dotted_decimal_addresses)
 
-  : TAO_Endpoint (TAO_TAG_NIOP_PROFILE)
-    , host_ ()
-    , port_ (0)
-    , object_addr_ (addr)
-    , object_addr_set_ (0)
-    , next_ (0)
-{
-  this->set (addr, use_dotted_decimal_addresses);
-}
-*/
-TAO_NIOP_Endpoint::TAO_NIOP_Endpoint (const char *host,
-                                      CORBA::UShort port)
-  //                                    const ACE_INET_Addr &addr
-    //                                  CORBA::Short priority)
+TAO_NIOP_Endpoint::TAO_NIOP_Endpoint (const ACE_Utils::UUID& uuid)
   : TAO_Endpoint (TAO_TAG_NIOP_PROFILE
                   )//priority)
-    , host_ ()
-    , port_ (port)
-//    , object_addr_ (addr)
-  //  , object_addr_set_ (0)
+    , uuid_ ()
     , next_ (0)
 {
-  if (host != 0)
-    this->host_ = host;
+  const ACE_CString * to_string = (const_cast <ACE_Utils::UUID&>(uuid)).to_string ();
+  uuid_.from_string (*to_string);
 }
 
 TAO_NIOP_Endpoint::TAO_NIOP_Endpoint (void)
   : TAO_Endpoint (TAO_TAG_NIOP_PROFILE),
-    host_ (),
-    port_ (0),
+    uuid_ (),
 //    object_addr_ (),
   //  object_addr_set_ (0),
     next_ (0)
@@ -121,27 +101,17 @@ TAO_NIOP_Endpoint::set (const ACE_INET_Addr &addr,
 int
 TAO_NIOP_Endpoint::addr_to_string (char *buffer, size_t length)
 {
+  const ACE_CString *str = uuid_.to_string ();
   size_t const actual_len =
-    ACE_OS::strlen (this->host_.in ()) // chars in host name
-    + sizeof (':')                     // delimiter
-    + ACE_OS::strlen ("65536")         // max port
-    + sizeof ('\0');
+    str->length ();
 
   if (length < actual_len)
     return -1;
 
-  ACE_OS::sprintf (buffer, "%s:%d",
-                   this->host_.in (), 0);//this->port_);
+  ACE_OS::sprintf (buffer, "%s",
+                   str->c_str());
 
   return 0;
-}
-
-const char *
-TAO_NIOP_Endpoint::host (const char *h)
-{
-  this->host_ = h;
-
-  return this->host_.in ();
 }
 
 TAO_Endpoint *
@@ -156,8 +126,7 @@ TAO_NIOP_Endpoint::duplicate (void)
   TAO_NIOP_Endpoint *endpoint = 0;
 
   ACE_NEW_RETURN (endpoint,
-                  TAO_NIOP_Endpoint (this->host_.in (),
-                                     this->port_),
+                  TAO_NIOP_Endpoint (this->uuid_),
                   0);
 
   return endpoint;
@@ -172,8 +141,9 @@ TAO_NIOP_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
   if (endpoint == 0)
     return false;
 
-  return (this->port () == endpoint->port ()
-          && ACE_OS::strcmp(this->host (), endpoint->host()) == 0);
+  const ACE_CString * thisstr = this->uuid_.to_string();
+  const ACE_CString * other = endpoint->uuid_.to_string ();
+  return (*thisstr == *other);
 }
 
 CORBA::ULong
@@ -191,8 +161,9 @@ TAO_NIOP_Endpoint::hash (void)
     if (this->hash_val_ != 0)
       return this->hash_val_;
 
+    const ACE_CString *stringval = this->uuid_.to_string ();
     this->hash_val_ =
-      ACE::hash_pjw (this->host ()) + this->port ();
+      stringval->hash ();
   }
 
   return this->hash_val_;

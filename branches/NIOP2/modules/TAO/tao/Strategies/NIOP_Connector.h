@@ -4,7 +4,7 @@
 /**
  *  @file    NIOP_Connector.h
  *
- *  $Id: NIOP_Connector.h,v 1.19 2006/06/01 13:14:04 jwillemsen Exp $
+ *  $Id$
  *
  *  NIOP specific connector processing
  *

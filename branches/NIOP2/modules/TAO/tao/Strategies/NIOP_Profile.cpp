@@ -1,4 +1,4 @@
-// $Id: NIOP_Profile.cpp,v 1.25 2006/03/10 07:19:18 jtc Exp $
+// $Id$
 
 #include "tao/Strategies/NIOP_Profile.h"
 
@@ -9,7 +9,7 @@
 #include "tao/ORB.h"
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
-#include "tao/IIOP_EndpointsC.h"
+#include "tao/Strategies/NIOP_EndpointsC.h"
 
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
@@ -17,7 +17,7 @@
 
 ACE_RCSID (Strategies,
            NIOP_Profile,
-           "$Id: NIOP_Profile.cpp,v 1.25 2006/03/10 07:19:18 jtc Exp $")
+           "$Id$")
 
 static const char the_prefix[] = "niop";
 
@@ -46,8 +46,7 @@ TAO_NIOP_Profile::TAO_NIOP_Profile (const ACE_INET_Addr &addr,
 {
 }
 */
-TAO_NIOP_Profile::TAO_NIOP_Profile (const char* host,
-                                    CORBA::UShort port,
+TAO_NIOP_Profile::TAO_NIOP_Profile (const ACE_Utils::UUID& uuid,
                                     const TAO::ObjectKey &object_key,
                                     const TAO_GIOP_Message_Version &version,
                                     TAO_ORB_Core *orb_core)
@@ -55,7 +54,7 @@ TAO_NIOP_Profile::TAO_NIOP_Profile (const char* host,
                  orb_core,
                  object_key,
                  version),
-    endpoint_ (host, port),
+    endpoint_ (uuid),
     count_ (1)
 {
 }
@@ -95,18 +94,19 @@ TAO_NIOP_Profile::decode_profile (TAO_InputCDR& cdr)
   // @@ NOTE: This code is repeated thrice. Need to factor out in a
   // better manner.
   // Decode host and port into the <endpoint_>.
-  if (cdr.read_string (this->endpoint_.host_.out ()) == 0
-      || cdr.read_ushort (this->endpoint_.port_) == 0)
+  CORBA::String_var uuid;
+  if (cdr.read_string (uuid.out ()) == 0)
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) NIOP_Profile::decode - ")
-                    ACE_TEXT ("error while decoding host/port")));
+                    ACE_TEXT ("error while uuid")));
       return -1;
     }
 
   if (cdr.good_bit ())
     {
+      this->endpoint_.uuid_.from_string (uuid.in());
       // Invalidate the object_addr_ until first access.
       //this->endpoint_.object_addr_.set_type (-1);
 
@@ -136,36 +136,8 @@ TAO_NIOP_Profile::parse_string_i (const char *ior
     }
 
   // Length of host string.
-  CORBA::ULong length_host = 0;
+  CORBA::ULong length_host = okd - ior;
 
-  const char *cp_pos = ACE_OS::strchr (ior, ':');  // Look for a port
-
-  if (cp_pos == ior)
-    {
-      // No hostname specified!  It is required by the spec.
-      ACE_THROW (CORBA::INV_OBJREF (
-                   CORBA::SystemException::_tao_minor_code (
-                     TAO::VMCID,
-                     EINVAL),
-                   CORBA::COMPLETED_NO));
-    }
-  else if (cp_pos != 0)
-    {
-      // A port number or port name was specified.
-      CORBA::ULong length_port = okd - cp_pos - 1;
-
-      CORBA::String_var tmp = CORBA::string_alloc (length_port);
-
-      ACE_OS::strncpy (tmp.inout (), cp_pos + 1, length_port);
-      tmp[length_port] = '\0';
-
-      this->endpoint_.port_ =
-        static_cast<CORBA::UShort> (ACE_OS::atoi (tmp.in ()));
-
-      length_host = cp_pos - ior;
-    }
-  else
-    length_host = okd - ior;
 
   CORBA::String_var tmp = CORBA::string_alloc (length_host);
 
@@ -173,9 +145,9 @@ TAO_NIOP_Profile::parse_string_i (const char *ior
   ACE_OS::strncpy (tmp.inout (), ior, length_host);
   tmp[length_host] = '\0';
 
-  this->endpoint_.host_ = tmp._retn ();
+  this->endpoint_.uuid_.from_string (tmp._retn ());
 
-  if (ACE_OS::strcmp (this->endpoint_.host_.in (), "") == 0)
+//  if (ACE_OS::strcmp (this->endpoint_.host_.in (), "") == 0)
     {
 /*      ACE_INET_Addr host_addr;
 
@@ -204,7 +176,7 @@ TAO_NIOP_Profile::parse_string_i (const char *ior
                        CORBA::COMPLETED_NO));
         }
       else*/
-        this->endpoint_.host_ = CORBA::string_dup ("localhost");
+  //      this->endpoint_.host_ = CORBA::string_dup ("localhost");
     }
 
   TAO::ObjectKey ok;
@@ -294,6 +266,7 @@ TAO_NIOP_Profile::to_string (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   TAO::ObjectKey::encode_sequence_to_string (key.inout(),
                                             this->ref_object_key_->object_key ());
 
+  const ACE_CString * uuidstr = this->endpoint_.uuid_.to_string ();
   size_t buflen = (8 /* "corbaloc" */ +
                    1 /* colon separator */ +
                    ACE_OS::strlen (::the_prefix) +
@@ -302,7 +275,7 @@ TAO_NIOP_Profile::to_string (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
                    1 /* decimal point */ +
                    1 /* minor version */ +
                    1 /* `@' character */ +
-                   ACE_OS::strlen (this->endpoint_.host ()) +
+                   uuidstr->length() +
                    1 /* colon separator */ +
                    5 /* port number */ +
                    1 /* object key separator */ +
@@ -313,12 +286,11 @@ TAO_NIOP_Profile::to_string (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   static const char digits [] = "0123456789";
 
   ACE_OS::sprintf (buf,
-                   "corbaloc:%s:%c.%c@%s:%d%c%s",
+                   "corbaloc:%s:%c.%c@%s%c%s",
                    ::the_prefix,
                    digits [this->version_.major],
                    digits [this->version_.minor],
-                   this->endpoint_.host (),
-                   this->endpoint_.port (),
+                   uuidstr->c_str (),
                    this->object_key_delimiter_,
                    key.in ());
 
@@ -341,10 +313,8 @@ TAO_NIOP_Profile::create_profile_body (TAO_OutputCDR &encap) const
   encap.write_octet (this->version_.minor);
 
   // STRING hostname from profile
-  encap.write_string (this->endpoint_.host ());
-
-  // UNSIGNED SHORT port number
-  encap.write_ushort (this->endpoint_.port ());
+  const ACE_CString * uuid_str = this->endpoint_.uuid_.to_string();
+  encap.write_string (uuid_str->c_str ());
 
   // OCTET SEQUENCE for object key
   if (this->ref_object_key_)
@@ -371,7 +341,7 @@ TAO_NIOP_Profile::encode_endpoints (void)
   // info is transmitted using standard ProfileBody components, its
   // priority is not!
 
-  TAO::IIOPEndpointSequence endpoints;
+  TAO::NIOPEndpointSequence endpoints;
   endpoints.length (this->count_);
 
   const TAO_NIOP_Endpoint *endpoint = &this->endpoint_;
@@ -379,8 +349,9 @@ TAO_NIOP_Profile::encode_endpoints (void)
        i < this->count_;
        ++i)
     {
-      endpoints[i].host = endpoint->host ();
-      endpoints[i].port = endpoint->port ();
+      const ACE_CString* uuidstr = endpoint->uuid_.to_string();
+      CORBA::String_var uuid (uuidstr->c_str());
+      endpoints[i].uuid = uuid;
       endpoints[i].priority = endpoint->priority ();
 
       endpoint = endpoint->next_;
@@ -438,9 +409,9 @@ TAO_NIOP_Profile::decode_endpoints (void)
       in_cdr.reset_byte_order (static_cast<int> (byte_order));
 
       // Extract endpoints sequence.
-      TAO::IIOPEndpointSequence endpoints;
+      TAO::NIOPEndpointSequence endpoints;
 
-      if ((in_cdr >> endpoints) == 0)
+      if (! (in_cdr >> endpoints))
         return -1;
 
       // Get the priority of the first endpoint (head of the list.
@@ -459,9 +430,10 @@ TAO_NIOP_Profile::decode_endpoints (void)
            --i)
         {
           TAO_NIOP_Endpoint *endpoint = 0;
+          CORBA::String_var strvar = CORBA::string_dup (endpoints[i].uuid);
+          ACE_Utils::UUID uuid1 (strvar.in());
           ACE_NEW_RETURN (endpoint,
-                          TAO_NIOP_Endpoint (endpoints[i].host,
-                                             endpoints[i].port),
+                          TAO_NIOP_Endpoint (uuid1),
                           -1);
 
           this->add_endpoint (endpoint);

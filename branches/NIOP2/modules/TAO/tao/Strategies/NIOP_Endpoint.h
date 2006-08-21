@@ -4,7 +4,7 @@
 /**
  *  @file     NIOP_Endpoint.h
  *
- *  $Id: NIOP_Endpoint.h,v 1.9 2006/04/19 11:38:50 jwillemsen Exp $
+ *  $Id$
  *
  *   NIOP implementation of PP Framework Endpoint interface.
  *
@@ -28,6 +28,7 @@
 #include "tao/Strategies/strategies_export.h"
 #include "tao/Endpoint.h"
 #include "tao/CORBA_String.h"
+#include "ace/UUID.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -54,19 +55,7 @@ public:
 
   /// Constructor.  This is the most efficient constructor since it
   /// does not require any address resolution processing.
-  TAO_NIOP_Endpoint (const char *host,
-                     CORBA::UShort port);
-//                     const ACE_INET_Addr &addr,
-//                     CORBA::Short priority = TAO_INVALID_PRIORITY);
-
-  /// Constructor.
-//  TAO_NIOP_Endpoint (const ACE_INET_Addr &addr,
-//                     int use_dotted_decimal_addresses);
-
-  /// Constructor.  This constructor is used when decoding endpoints.
-//  TAO_NIOP_Endpoint (const char *host,
-//                     CORBA::UShort port,
-//                     CORBA::Short priority);
+  TAO_NIOP_Endpoint (const ACE_Utils::UUID& uuid);
 
   /// Destructor.
   ~TAO_NIOP_Endpoint (void);
@@ -93,32 +82,12 @@ public:
 
   /// Return a pointer to the host string.  This object maintains
   /// ownership of this string.
-  const char *host (void) const;
-
-  /// Copy the string <h> into <host_> and return the resulting pointer.
-  /// This object maintains ownership of this string.
-  const char *host (const char *h);
-
-  /// Return the port number.
-  CORBA::UShort port (void) const;
-
-  /// Set the port number.
-  CORBA::UShort port (CORBA::UShort p);
+  const ACE_Utils::UUID& uuid (void) const;
 
 private:
 
-  /// Helper method for setting INET_Addr.
-//  int set (const ACE_INET_Addr &addr,
-//           int use_dotted_decimal_addresses);
-
-  /// String representing the host name.
-  CORBA::String_var host_;
-
-  /// TCP port number.
-  CORBA::UShort port_;
-
-  /// Flag to indicate if the address has been resolved and set.
-//  int object_addr_set_;
+  /// UUID uniquely identifying this NIOP endpoint
+  mutable ACE_Utils::UUID uuid_;
 
   /// NIOP Endpoints can be stringed into a list.  Return the next
   /// endpoint in the list, if any.

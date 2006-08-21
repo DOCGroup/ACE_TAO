@@ -4,7 +4,7 @@
 /**
  *  @file   NIOP_Factory.h
  *
- *  $Id: NIOP_Factory.h,v 1.8 2006/04/19 11:38:50 jwillemsen Exp $
+ *  $Id$
  *
  *  @author  Johnny Willemsen <jwillemsen@remedy.nl>
  */

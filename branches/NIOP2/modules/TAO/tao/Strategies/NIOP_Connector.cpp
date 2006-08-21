@@ -1,5 +1,5 @@
 // This may look like C, but it's really -*- C++ -*-
-// $Id: NIOP_Connector.cpp,v 1.30 2006/05/24 09:12:03 jwillemsen Exp $
+// $Id$
 
 #include "tao/Strategies/NIOP_Connector.h"
 
@@ -20,7 +20,7 @@
 
 ACE_RCSID (Strategies,
            NIOP_Connector,
-           "$Id: NIOP_Connector.cpp,v 1.30 2006/05/24 09:12:03 jwillemsen Exp $")
+           "$Id$")
 
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

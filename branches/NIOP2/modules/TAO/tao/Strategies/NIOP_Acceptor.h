@@ -4,7 +4,7 @@
 /**
  *  @file    NIOP_Acceptor.h
  *
- *  $Id: NIOP_Acceptor.h,v 1.14 2006/06/01 13:13:11 jwillemsen Exp $
+ *  $Id$
  *
  *  NIOP specific acceptor processing
  *

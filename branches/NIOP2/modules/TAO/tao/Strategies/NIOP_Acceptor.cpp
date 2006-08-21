@@ -1,5 +1,5 @@
 // This may look like C, but it's really -*- C++ -*-
-// $Id: NIOP_Acceptor.cpp,v 1.29 2006/07/17 17:24:15 ossama Exp $
+// $Id$
 
 #include "tao/Strategies/NIOP_Acceptor.h"
 
@@ -24,7 +24,7 @@
 
 ACE_RCSID (Strategies,
            NIOP_Acceptor,
-           "$Id: NIOP_Acceptor.cpp,v 1.29 2006/07/17 17:24:15 ossama Exp $")
+           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -93,9 +93,10 @@ TAO_NIOP_Acceptor::create_new_profile (const TAO::ObjectKey &object_key,
   for (size_t i = 0; i < this->endpoint_count_; ++i)
     {
       TAO_NIOP_Profile *pfile = 0;
+      ACE_Utils::UUID uuid;
+      uuid.from_string (this->hosts_[i]);
       ACE_NEW_RETURN (pfile,
-                      TAO_NIOP_Profile (this->hosts_[i],
-                                        0,//this->addrs_[i].get_port_number (),
+                      TAO_NIOP_Profile (uuid,
                                         object_key,
 //                                        this->addrs_[i],
                                         this->version_,
@@ -151,9 +152,9 @@ TAO_NIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
   // one.
   if (iiop_profile == 0)
     {
+      ACE_Utils::UUID uuid (this->hosts_[0]);
       ACE_NEW_RETURN (iiop_profile,
-                      TAO_NIOP_Profile (this->hosts_[0],
-  0,//                                      this->addrs_[0].get_port_number (),
+                      TAO_NIOP_Profile (uuid,
                                         object_key,
       //                                  this->addrs_[0],
                                         this->version_,
@@ -187,8 +188,7 @@ TAO_NIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
     {
       TAO_NIOP_Endpoint *endpoint = 0;
       ACE_NEW_RETURN (endpoint,
-                      TAO_NIOP_Endpoint (this->hosts_[index],
-        0//                                 this->addrs_[index].get_port_number (),
+                      TAO_NIOP_Endpoint (ACE_Utils::UUID (this->hosts_[index])
             ),//                             this->addrs_[index]),
                       -1);
       endpoint->priority (priority);
@@ -310,7 +310,7 @@ TAO_NIOP_Acceptor::open (TAO_ORB_Core *orb_core,
                   char *[this->endpoint_count_],
                   -1);
 
-  this->hosts_[0] = 0;
+  this->hosts_[0] = CORBA::string_dup (specified_hostname);
 
 //  if (this->hostname (orb_core,
   //                    addr,

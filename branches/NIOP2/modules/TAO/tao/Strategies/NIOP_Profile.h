@@ -4,7 +4,7 @@
 /**
  *  @file     NIOP_Profile.h
  *
- *  $Id: NIOP_Profile.h,v 1.17 2006/04/19 11:38:50 jwillemsen Exp $
+ *  $Id$
  *
  *   NIOP profile specific processing
  *
@@ -60,8 +60,7 @@ public:
 */
   /// Profile constructor, this is the most efficient since it
   /// doesn't require any address resolution processing.
-  TAO_NIOP_Profile (const char *host,
-                    CORBA::UShort port,
+  TAO_NIOP_Profile (const ACE_Utils::UUID& uuid,
                     const TAO::ObjectKey &object_key,
                     const TAO_GIOP_Message_Version &version,
                     TAO_ORB_Core *orb_core);

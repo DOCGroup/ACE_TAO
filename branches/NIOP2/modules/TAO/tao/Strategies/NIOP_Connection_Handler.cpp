@@ -1,4 +1,4 @@
-// $Id: NIOP_Connection_Handler.cpp,v 1.39 2006/03/10 07:19:18 jtc Exp $
+// $Id$
 
 #include "tao/Strategies/NIOP_Connection_Handler.h"
 
@@ -22,7 +22,7 @@
 #include "ace/os_include/netinet/os_tcp.h"
 #include "ace/os_include/os_netdb.h"
 
-ACE_RCSID(tao, NIOP_Connect, "$Id: NIOP_Connection_Handler.cpp,v 1.39 2006/03/10 07:19:18 jtc Exp $")
+ACE_RCSID(tao, NIOP_Connect, "$Id$")
 
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
