@@ -139,7 +139,7 @@ namespace ACE_Utils
     u_char clockSeqHiAndReserved_;
     u_char clockSeqLow_;
     UUID_node* node_;
-    int node_release_;
+    bool node_release_;
     ACE_CString thr_id_;
     ACE_CString pid_;
 

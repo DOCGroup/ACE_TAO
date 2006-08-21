@@ -55,15 +55,15 @@ namespace ACE_Utils
   UUID::UUID(void)
     : timeLow_ (0),
       timeMid_ (0),
-    timeHiAndVersion_ (0),
+      timeHiAndVersion_ (0),
       clockSeqHiAndReserved_ (0),
       clockSeqLow_ (0),
+      node_ (0),
+      node_release_ (true),
       as_string_ (0)
   {
     ACE_NEW (node_,
              UUID_node);
-
-    node_release_ = 1;
   }
 
   /// Construct a UUID from a string representation of an UUID.
@@ -73,17 +73,16 @@ namespace ACE_Utils
       timeHiAndVersion_ (0),
       clockSeqHiAndReserved_ (0),
       clockSeqLow_ (0),
+      node_ (0),
+      node_release_ (true),
       as_string_ (0)
   {
     ACE_NEW (node_,
              UUID_node);
 
-    node_release_ = 1;
-
-
     if (uuid_string.length() < NIL_UUID.to_string ()->length ())
       {
-        ACE_DEBUG ((LM_DEBUG,
+        ACE_ERROR ((LM_ERROR,
                     "%N ACE_UUID::UUID - "
                     "IllegalArgument(incorrect string length)\n"));
         return;

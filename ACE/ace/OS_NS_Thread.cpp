@@ -5089,7 +5089,7 @@ ACE_OS::thr_setprio (const ACE_Sched_Priority prio)
   ACE_hthread_t my_thread_id;
   ACE_OS::thr_self (my_thread_id);
 
-  int status = ACE_OS::thr_setprio (my_thread_id, prio);
+  int const status = ACE_OS::thr_setprio (my_thread_id, prio);
 
 #if defined (ACE_NEEDS_LWP_PRIO_SET)
   // If the thread is in the RT class, then set the priority on its
