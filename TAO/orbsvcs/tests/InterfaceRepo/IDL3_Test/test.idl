@@ -4,7 +4,22 @@
 #ifndef INTERFACEREPO_IDL3_TEST
 #define INTERFACEREPO_IDL3_TEST
 
-#include <Components.idl>
+// This module is here to contain the base valuetype for
+// h_key below. This base class is required when a valuetype
+// is used as a primary key. This module replaces the original
+// #include of Components.idl, and breaks the resulting
+// dependency of this test on CIAO. Note that this workaround
+// is sufficient for the IFR loader, which is the only thing
+// that processes this IDL file in the test. If the IDL
+// compiler is executed on this file, there will be
+// lookup errors, since it needs to find more things from
+// Components.idl.
+module Components
+{
+  typeprefix Components "omg.org";
+
+  abstract valuetype PrimaryKeyBase {};
+};
 
 module help
 {
@@ -21,12 +36,12 @@ module help
   valuetype v_base : v_base_base {};
   interface v_supp1 {};
   abstract interface v_supp2 {};
-  
+
   valuetype h_key : Components::PrimaryKeyBase
   {
     public long id_key;
   };
-  
+
   interface h_supp1 {};
   interface h_supp2 {};
   home h_base supports h_supp1, h_supp2 manages c_base {};
@@ -46,8 +61,8 @@ module mod
 {
   component test_component : help::c_base
   {
-    attribute long c_attr1 
-      getraises (help::doh) 
+    attribute long c_attr1
+      getraises (help::doh)
       setraises (help::whups, help::doh);
 
     provides help::c_provides1 test_provides1;
@@ -63,11 +78,11 @@ module mod
     consumes help::c_consumes1 test_consumes1;
   };
 
-  valuetype test_valuetype 
+  valuetype test_valuetype
     : help::v_base supports help::v_supp1, help::v_supp2
   {
-    attribute long c_attr1 
-      getraises (help::doh) 
+    attribute long c_attr1
+      getraises (help::doh)
       setraises (help::whups, help::doh);
 
     string v_op (inout string inoutarg,
@@ -85,7 +100,7 @@ module mod
   };
 
   home test_home : help::h_base
-    manages test_component primarykey help::h_key 
+    manages test_component primarykey help::h_key
   {
     factory create_tc (in string set_uid)
       raises (help::doh);
@@ -96,11 +111,11 @@ module mod
       raises (help::whups);
   };
 
-  eventtype test_eventtype 
+  eventtype test_eventtype
     : help::v_base supports help::v_supp1, help::v_supp2
   {
-    attribute long c_attr1 
-      getraises (help::doh) 
+    attribute long c_attr1
+      getraises (help::doh)
       setraises (help::whups, help::doh);
 
     string v_op (inout string inoutarg,
@@ -116,7 +131,6 @@ module mod
                        in short set_tm2)
       raises (help::whups, help::doh);
   };
-
 };
 
 #endif /* INTERFACEREPO_IDL3_TEST */

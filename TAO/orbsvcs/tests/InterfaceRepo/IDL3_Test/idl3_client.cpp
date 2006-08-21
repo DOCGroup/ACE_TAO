@@ -248,7 +248,7 @@ const char *HOME_FINDER_EXCEP_NAMES[][1] =
   };
 
 IDL3_Client::IDL3_Client (void)
-  : debug_ (0)
+  : debug_ (false)
 {
 }
 
@@ -352,7 +352,7 @@ IDL3_Client::parse_args (int argc,
     switch (c)
       {
       case 'd':   // Turn on debugging outoput.
-        this->debug_ = 1;
+        this->debug_ = true;
         break;
       case '?':
       default:
