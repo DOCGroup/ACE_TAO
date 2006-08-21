@@ -1,3 +1,9 @@
+Mon Aug 21 15:19:25 UTC 2006  Nishanth Shankaran  <nshankar@dre.vanderbilt.edu>
+
+        * examples/Hello/descriptors/run_test.pl:
+        * examples/Hello/descriptors/run_test_without_ns.pl: Fixed the
+          environment variable DANCE_ROOT to point to CIAO_ROOT/DAnCE.
+
 Thu Aug 17 16:09:09 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
 
         * DAnCE/RepositoryManager/Options.cpp
@@ -6,12 +12,12 @@ Thu Aug 17 16:09:09 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
         * DAnCE/RepositoryManager/RepositoryManager_Impl.cpp
           Reimplemented the findNamesByType () and getAllTypes () operations
           of Repository Manager, which use the newly generated
-          ACE_Hash_MultiMap_Manager class and its corresponding classes.        
+          ACE_Hash_MultiMap_Manager class and its corresponding classes.
 
 Mon Aug 14 15:46:34 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tools/Config_Handlers/Utils/XML_Helper.h
-        
+
           Fixed a compile error for pedantic GCC4.
 
 Sun Aug 13 15:18:00 UTC 2006  Boris Kolpackov  <boris@codesynthesis.com>
