@@ -12,6 +12,8 @@
 #ifndef QUOTER_COMMON_IDL
 #define QUOTER_COMMON_IDL
 
+#include "tao/StringSeq.pidl"
+
 module Stock
 {
   exception Invalid_Stock 
@@ -28,9 +30,9 @@ module Stock
   };
 
   /// Used to communicate an available update.
-  valuetype StockName
+  valuetype StockNames
   {
-    public string name;
+    public CORBA::StringSeq names;
   };
 
   valuetype Cookie
@@ -50,7 +52,7 @@ module Stock
    */
   interface StockNameConsumer
   {
-    void push_StockName (in StockName the_stockname);
+    void push_StockName (in StockNames the_stocknames);
     
     attribute Cookie cookie;
   };
