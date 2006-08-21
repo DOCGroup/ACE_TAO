@@ -268,11 +268,26 @@ StockQuoter_i::get_stock_info (const char * stock_name)
 {
   // Obtain the stock information from the database.
   ACE_DEBUG ((LM_DEBUG, "*** message: requesting stock_info from the database\n"));
-  Stock::StockInfo *stock = STOCK_DATABASE->get_stock_info (stock_name);
+  
+  try
+    {
+      Stock_Database<StockDistributor_i>::StockInfo si
+        (STOCK_DATABASE->get_stock_info (stock_name));
+      
+      Stock::StockInfo_var stock_info = new Stock::StockInfo;
+      stock_info->name = si.name_.c_str ();
+      stock_info->high = si.high_;
+      stock_info->low = si.low_;
+      stock_info->last = si.last_;
+      
+      return stock_info._retn ();
+      
+    }
+  catch (Stock_Database<StockDistributor_i>::Invalid_Stock &ex)
+    {
+      throw Stock::Invalid_Stock ();
+    }
 
-  if (stock == 0)
-    throw Stock::Invalid_Stock();
-  return stock;
 }
 
 // Implementation skeleton constructor
