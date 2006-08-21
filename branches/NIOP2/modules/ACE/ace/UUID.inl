@@ -77,11 +77,11 @@ namespace ACE_Utils
   ACE_INLINE void
   UUID::node (UUID_node* node)
   {
-    if (node_release_ == 1)
-    delete node_;
+    if (node_release_)
+      delete node_;
 
     this->node_ = node;
-    node_release_ = 0;
+    node_release_ = false;
   }
 
   ACE_INLINE ACE_CString*
@@ -106,6 +106,12 @@ namespace ACE_Utils
   UUID::pid (char* pid)
   {
     this->pid_ = pid;
+  }
+
+  ACE_INLINE void
+  UUID::from_string (const ACE_CString& uuidString)
+  {
+    this->from_string_i (uuidString);
   }
 
   //ACE_INLINE bool
