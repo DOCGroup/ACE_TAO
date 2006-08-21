@@ -56,7 +56,7 @@ public:
    *
    * @param the_stockname The name of the stock that will be provided to the context StockBroker object.
    */
-  virtual void push_StockName (::Stock::StockName *the_stockname)
+  virtual void push_StockName (::Stock::StockNames *the_stockname)
     throw (::CORBA::SystemException);
   
   /**

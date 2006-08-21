@@ -14,6 +14,7 @@
 #include "tao/RTPortableServer/RTPortableServer.h"
 #include "tao/ORB_Core.h"
 #include "tao/Utils/PolicyList_Destroyer.h"
+#include "tao/StringSeqC.h"
 
 // STL headers
 #include <sstream>
@@ -142,26 +143,21 @@ StockDistributor_i::notification_rate (::CORBA::Long notification_rate)
   throw (::CORBA::SystemException)
 {
   this->rate_ = notification_rate;
+  STOCK_DATABASE->update_rate (this->rate_);
 }
 
 void 
 StockDistributor_i::start ()
   throw (::CORBA::SystemException)
 {
-  if (!this->active_)
-    {
-      this->active_ = true;
-
-      // Initiate the active object.
-      this->activate (THR_NEW_LWP | THR_JOINABLE, 1);
-    }
+  STOCK_DATABASE->start ();
 }
 
 void 
 StockDistributor_i::stop ()
   throw (::CORBA::SystemException)
 {
-  this->active_ = false;
+  STOCK_DATABASE->stop ();
 }
 
 void 
@@ -180,51 +176,80 @@ StockDistributor_i::shutdown ()
   this->rt_poa_->deactivate_object (oid.in ());
 }
 
-int 
-StockDistributor_i::svc (void)
+// @@Todo: It would be cool to be able to use boost::Lambda, so we wouldn't
+// have to create stupid functors like this!
+struct StrSeq_Converter
 {
-  // Continue looping while the stock distributor is active.
-  while (this->active_) 
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "*** message: transmitting data to the StockNameConsumer...\n"));
+  StrSeq_Converter (CORBA::StringSeq &seq)
+    : seq_ (seq),
+      pos_ (0) 
+  {
+  }
+  
+  void operator () (const std::string &str)
+  {
+    this->seq_[pos_++] = str.c_str ();
+  }
+  
+  CORBA::StringSeq &seq_;
+  CORBA::ULong pos_;
+};
 
-      { 
-        // Control the scope of the mutex.
-        ACE_READ_GUARD_RETURN (ACE_RW_Thread_Mutex, g, lock_, 0);
-
-        // Push the information to all the consumers that have subscribed.
-
-        for (StockDistributor_i::CookieMap::iterator iter = this->subscribers_list_.begin ();
-             iter != this->subscribers_list_.end ();
-             ++iter)
-          {
-            try 
-              {
-                // Set the designated priority for current request.
-                CORBA::Object_var obj = orb_->resolve_initial_references ("RTCurrent");
-                RTCORBA::Current_var rt_current =
-                  RTCORBA::Current::_narrow (obj.in ());
-
-                rt_current->the_priority (iter->second.second);
-
-                // Tell the database to push its information to the
-                // <consumer>, which passes along the CORBA priority
-                // in the service_context list of the GIOP message. 
-                STOCK_DATABASE->publish_stock_info (iter->second.first.in ());
-              }
-            catch (CORBA::Exception &ex)
-              {
-                ACE_PRINT_EXCEPTION (ex, "StockDistributor_i::svc: ");
-              }
-          }
+struct Stock_Publisher
+{
+  Stock_Publisher (CORBA::ORB_ptr orb,
+                   CORBA::StringSeq &stocks)
+  {
+    CORBA::Object_var obj = orb->resolve_initial_references ("RTCurrent");
+    rt_current_ = RTCORBA::Current::_narrow (obj.in ());
+    
+    // Create the message
+    sn_ = new OBV_Stock::StockNames ();
+    sn_->names (stocks);
+  }
+  
+  void operator () (const StockDistributor_i::CookieMap::value_type &item)
+  {
+    try
+      {
+        // Set priority of the request
+        this->rt_current_->the_priority (item.second.second);
+        
+        // publish!
+        item.second.first->push_StockName (this->sn_.in ());
       }
+    catch (CORBA::Exception &ex)
+      {
+        ACE_PRINT_EXCEPTION (ex, "Distributor: Stock_Publisher");
+      }
+  }
+  
+  RTCORBA::Current_var rt_current_;
+  Stock::StockNames_var sn_;
+};
 
-      // Sleep for the specified amount of seconds. The notification
-      // rate is in milliseconds.
-      ACE_OS::sleep(this->notification_rate ());
-    }
-  return 0;
+    
+void 
+StockDistributor_i::operator () (std::vector <std::string> &stocks)
+{
+  ACE_DEBUG ((LM_DEBUG,
+              "*** message: transmitting data to the StockNameConsumer, got %i stocks\n",
+              stocks.size ()));
+  
+  // Convert the stocks into a stringseq
+  CORBA::StringSeq_var corba_stocks = new CORBA::StringSeq ();
+  corba_stocks->length (stocks.size ());
+  
+  std::for_each (stocks.begin (),
+                 stocks.end (),
+                 StrSeq_Converter (corba_stocks));
+  
+  
+  ACE_READ_GUARD (ACE_RW_Thread_Mutex, g, lock_);
+  std::for_each (this->subscribers_list_.begin (),
+                 this->subscribers_list_.end (),
+                 Stock_Publisher (this->orb_.in (),
+                                  corba_stocks));
 }
 
 // Implementation skeleton constructor
@@ -264,7 +289,7 @@ StockDistributorHome_i::StockDistributorHome_i (CORBA::ORB_ptr orb)
   // Register the necessary factories and mappings with the specified
   // <orb>. If we neglect to perform these registrations then the app
   // will not execute.
-  Stock::StockName_init *stockname_factory = new Stock::StockName_init;
+  Stock::StockNames_init *stockname_factory = new Stock::StockNames_init;
   orb_->register_value_factory (stockname_factory->tao_repository_id (),
                                stockname_factory);
 
@@ -273,9 +298,6 @@ StockDistributorHome_i::StockDistributorHome_i (CORBA::ORB_ptr orb)
                                cookie_factory);
   
   Stock::Priority_Mapping::register_mapping (orb_.in ());
-  
-  // Initialize the database so it runs as an active object.
-  STOCK_DATABASE->activate (THR_NEW_LWP | THR_JOINABLE, 1);
   
   // Get a reference to the <RTORB>.
   CORBA::Object_var obj = orb_->resolve_initial_references ("RTORB");
@@ -393,4 +415,7 @@ StockDistributorHome_i::create_distributor (void)
   StockDistributor_i *servant = new StockDistributor_i (this->rt_poa_.in ());
   PortableServer::ServantBase_var distributor_owner_transfer = servant;
   this->dist_id_ = this->rt_poa_->activate_object (servant);
+
+  // Register the distributor with the database as a callback.
+  STOCK_DATABASE->register_callback (*servant);
 }
