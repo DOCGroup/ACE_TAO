@@ -38,7 +38,7 @@ ACE_Thread_Exit::instance (void)
   ACE_OS_TRACE ("ACE_Thread_Exit::instance");
 
   // Determines if we were dynamically allocated.
-  static ACE_TSS_TYPE (ACE_Thread_Exit) *instance_;
+  static ACE_TSS_TYPE (ACE_Thread_Exit) * volatile instance_;
 
   // Implement the Double Check pattern.
 
