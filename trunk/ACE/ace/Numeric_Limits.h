@@ -36,6 +36,7 @@
 #ifdef ACE_LACKS_NUMERIC_LIMITS
 # include "ace/Basic_Types.h"
 #else
+
 # ifdef __MINGW32__
 // Windows defines min/max macros that interfere with the
 // numeric_limits::min/max() traits.  Undefine those macros before
@@ -50,6 +51,7 @@
 #  undef min
 #  undef max
 # endif  /* __MINGW32__ */
+
 # include <limits>
 #endif /* ACE_LACKS_NUMERIC_LIMITS */
 
@@ -208,6 +210,32 @@ struct ACE_Numeric_Limits
   static T min (void) { return std::numeric_limits<T>::min (); }
   static T max (void) { return std::numeric_limits<T>::max (); }
 };
+
+# if defined (ACE_WIN64) && defined (_MSC_VER) && _MSC_VER <= 1310
+// The Microsoft Platform SDK does not provide std::numeric_limits<>
+// specializations for 64 bit integers so we need to explicitly provide
+// ACE_Numeric_Limits<> specializations to compensate for this
+// deficiency.
+//
+// Unfortunately there is no way to tell if the platform SDK is being
+// used so we specialize for the ACE_WIN64 + MSVC++ 7.1 case, which is
+// the configuration that exhibits this problem.  It also happens to
+// be a fairly isolated configuration since 64-bit support in MSVC++
+// 7.1 was not very good to begin with.
+template<>
+struct ACE_Numeric_Limits<LONGLONG>
+{
+   static LONGLONG min (void) { return _I64_MIN; }
+   static LONGLONG max (void) { return _I64_MAX; }
+};
+
+template<>
+struct ACE_Numeric_Limits<ULONGLONG>
+{
+   static ULONGLONG min (void) { return 0; }
+   static ULONGLONG max (void) { return _UI64_MAX; }
+};
+# endif  /* ACE_WIN64 && _MSC_VER <= 1310 */
 
 #endif /* ACE_LACKS_NUMERIC_LIMITS */
 

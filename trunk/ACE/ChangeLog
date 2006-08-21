@@ -1,3 +1,18 @@
+Mon Aug 21 18:46:55 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * ace/Numeric_Limits.h (ACE_Numeric_Limits):
+
+          The Microsoft Platform SDK does not provide
+          std::numeric_limits<> specializations for 64 bit integers so we
+          need to explicitly provide ACE_Numeric_Limits<> specializations
+          to compensate for this deficiency.
+
+          Unfortunately there is no way to tell if the platform SDK is
+          being used so we specialize for the ACE_WIN64 + MSVC++ 7.1 case,
+          which is the configuration that exhibits this problem.  It also
+          happens to be a fairly isolated configuration since 64-bit
+          support in MSVC++ 7.1 was not very good to begin with.
+
 Mon Aug 21 15:35:26 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/Timeprobe_T.cpp (print_times): More fixed for timestamp
