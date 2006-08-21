@@ -1,3 +1,11 @@
+Mon Aug 21 18:42:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Seq_Var_T.{cpp,inl}:
+          Moved include of OS_Memory.h from cpp to inl file to resolve
+          compile problems when building static and TAO_NO_COPY_OCTET_SEQUENCES
+          is defined to 0. This file is included to get ACE_NEW which is
+          only used in the inl file
+
 Mon Aug 21 18:04:51 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/tests/InterfaceRepo/IDL3_Test/idl3_client.h:
