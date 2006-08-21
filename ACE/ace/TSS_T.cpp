@@ -602,7 +602,7 @@ ACE_TSS_Write_Guard<ACE_LOCK>::tryacquire (void)
   guard = static_cast <ACE_Write_Guard<ACE_LOCK> *> (tss_adapter->ts_obj_);
 #else
   void *temp = guard; // Need this temp to keep G++ from complaining.
-  ACE_Thread::getspecific (this->key_, temp);
+  ACE_Thread::getspecific (this->key_, &temp);
   guard = static_cast <ACE_Write_Guard<ACE_LOCK> *> (temp);
 #endif /* ACE_HAS_THR_C_DEST */
 

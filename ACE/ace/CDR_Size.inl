@@ -90,25 +90,29 @@ ACE_SizeCDR::write_longlong (const ACE_CDR::LongLong &x)
 ACE_INLINE ACE_CDR::Boolean
 ACE_SizeCDR::write_ulonglong (const ACE_CDR::ULongLong &x)
 {
-  return this->write_8 (reinterpret_cast<const ACE_CDR::ULongLong*> (&x));
+  const void *temp = &x;
+  return this->write_8 (reinterpret_cast<const ACE_CDR::ULongLong *> (temp));
 }
 
 ACE_INLINE ACE_CDR::Boolean
 ACE_SizeCDR::write_float (ACE_CDR::Float x)
 {
-  return this->write_4 (reinterpret_cast<const ACE_CDR::ULong*> (&x));
+  const void *temp = &x;
+  return this->write_4 (reinterpret_cast<const ACE_CDR::ULong *> (temp));
 }
 
 ACE_INLINE ACE_CDR::Boolean
 ACE_SizeCDR::write_double (const ACE_CDR::Double &x)
 {
-  return this->write_8 (reinterpret_cast<const ACE_CDR::ULongLong*> (&x));
+  const void *temp = &x;
+  return this->write_8 (reinterpret_cast<const ACE_CDR::ULongLong*> (temp));
 }
 
 ACE_INLINE ACE_CDR::Boolean
 ACE_SizeCDR::write_longdouble (const ACE_CDR::LongDouble &x)
 {
-  return this->write_16 (reinterpret_cast<const ACE_CDR::LongDouble*> (&x));
+  const void *temp = &x;
+  return this->write_16 (reinterpret_cast<const ACE_CDR::LongDouble*> (temp));
 }
 
 ACE_INLINE ACE_CDR::Boolean

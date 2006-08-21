@@ -80,6 +80,9 @@ public:
   /// Constructor.
   ACE_Logging_Strategy (void);
 
+  /// Destructor.
+  ~ACE_Logging_Strategy (void);
+
   /// Dynamic linking initialization hook.
   virtual int init (int argc, ACE_TCHAR *argv[]);
 

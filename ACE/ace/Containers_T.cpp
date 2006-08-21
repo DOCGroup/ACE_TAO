@@ -1865,9 +1865,10 @@ template <class T> T *
 ACE_DLList<T>::insert_tail (T *new_item)
 {
   ACE_DLList_Node *temp1, *temp2;
+  void *temp = new_item;
   ACE_NEW_MALLOC_RETURN (temp1,
                          static_cast<ACE_DLList_Node *> (this->allocator_->malloc (sizeof (ACE_DLList_Node))),
-                         ACE_DLList_Node ((void *&)new_item),
+                         ACE_DLList_Node (temp),
                          0);
   temp2 = ACE_DLList_Base::insert_tail (temp1);
   return (T *) (temp2 ? temp2->item_ : 0);
@@ -1877,9 +1878,10 @@ template <class T> T *
 ACE_DLList<T>::insert_head (T *new_item)
 {
   ACE_DLList_Node *temp1;
+  void *temp = new_item;
   ACE_NEW_MALLOC_RETURN (temp1,
                          (ACE_DLList_Node *) this->allocator_->malloc (sizeof (ACE_DLList_Node)),
-                         ACE_DLList_Node ((void *&)new_item), 0);
+                         ACE_DLList_Node (temp), 0);
   ACE_DLList_Node *temp2 =
     ACE_DLList_Base::insert_head (temp1);
   return (T *) (temp2 ? temp2->item_ : 0);
