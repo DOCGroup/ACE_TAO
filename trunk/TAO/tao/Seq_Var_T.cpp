@@ -9,8 +9,6 @@
 #include "tao/Seq_Var_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/OS_Memory.h"
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<typename T>
