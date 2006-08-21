@@ -1,3 +1,13 @@
+Mon Aug 21 20:46:43 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * configure.ac: Modified the check for the net/if.h header file
+          to do a #include <sys/socket.h> if it exists. Allows the compile
+          of net/if.h to succeed, fixing a configure warning for a file that
+          exists but won't compile. Thanks to Don Meek <Don dot Meek at
+          windstream dot com> for reporting this problem.
+
+        * THANKS: Added Don Meek to the Hall of Fame.
+
 Mon Aug 21 20:43:59 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * ace/Service_Config.inl:

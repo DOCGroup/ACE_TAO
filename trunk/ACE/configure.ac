@@ -624,7 +624,13 @@ ACE_CHECK_LACKS_HEADERS(netinet/in.h)
 
 ACE_CHECK_LACKS_HEADERS(netinet/tcp.h)
 
-ACE_CHECK_LACKS_HEADERS(net/if.h)
+ACE_CHECK_LACKS_HEADERS(sys/socket.h)
+
+ACE_CHECK_LACKS_HEADERS(net/if.h, [], [],
+[#ifndef ACE_LACKS_SYS_SOCKET_H
+# include <sys/socket.h>
+# endif
+])
 
 ACE_CHECK_HAS_HEADERS(sys/filio.h)
 
@@ -647,8 +653,6 @@ ACE_CHECK_LACKS_HEADERS(sys/shm.h)
 ACE_CHECK_LACKS_HEADERS(sys/select.h)
 
 ACE_CHECK_HAS_HEADERS(sys/sockio.h)
-
-ACE_CHECK_LACKS_HEADERS(sys/socket.h)
 
 ACE_CHECK_LACKS_HEADERS(sys/stat.h)
 
