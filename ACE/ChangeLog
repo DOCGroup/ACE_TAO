@@ -1,4 +1,12 @@
-Mon Aug 21 18:46:55 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+Mon Aug 21 18:31:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/*.doxygen:
+          In all files except ace.doxygen added SHORT_NAMES=YES to let
+          doxygen generate shorter filenames, this should fix the problems
+          we had during the release with cpio not capable of handling
+          long filenames
+
+Mon Aug 21 17:46:55 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
         * ace/Numeric_Limits.h (ACE_Numeric_Limits):
 
