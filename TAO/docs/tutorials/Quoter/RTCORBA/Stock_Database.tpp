@@ -21,15 +21,13 @@ struct Map_Init
   
   void operator () (const typename Stock_Database<CALLBACK>::Init_Map::value_type &item)
   {
-    Stock::StockInfo stock_info;
-    
-    stock_info.name = item.first.c_str ();
+    typename Stock_Database<CALLBACK>::StockInfo stock_info (item.first.c_str ());
     
     // If the initial value is nonzero, use that - otherwise, use a number 
     // between 0 and 100
-    stock_info.low = 
-      stock_info.last = 
-      stock_info.high = item.second ? item.second : ACE_OS::rand () % 100;
+    stock_info.low_ = 
+      stock_info.last_ = 
+      stock_info.high_ = item.second ? item.second : ACE_OS::rand () % 100;
     
     map_[item.first] = stock_info;
   }
@@ -75,29 +73,27 @@ Stock_Database<CALLBACK>::Stock_Database (const Init_Map &stockmap,
 
 // get_stock_info
 template <typename CALLBACK>
-Stock::StockInfo * 
-Stock_Database<CALLBACK>::get_stock_info (const char *name)
+typename Stock_Database<CALLBACK>::StockInfo 
+Stock_Database<CALLBACK>::get_stock_info(const char *name)
+  throw (Invalid_Stock)
 {
   ACE_READ_GUARD_RETURN (ACE_RW_Thread_Mutex,
                          guard,
                          this->lock_,
-                         0);
-
+                         StockInfo ("Error"));
+  
   // Locate the <stock_name> in the database.
   ACE_DEBUG ((LM_DEBUG,
               "*** message: searching the stock_map_ for the stock_name\n"));
-  Stock_Map::iterator iter = this->stock_map_.find (std::string (name));
+  
+  typename Stock_Map::iterator iter = this->stock_map_.find (std::string (name));
 
   if (iter == this->stock_map_.end ())
-    return 0;
+    throw Invalid_Stock ();
 
   ACE_DEBUG ((LM_DEBUG, "*** message: returning stock_info to the client\n"));
 
-  Stock::StockInfo_var stock_info = new Stock::StockInfo;
-
-  *stock_info = iter->second;
-  
-  return stock_info._retn ();
+  return iter->second;
 }
 
 template <typename CALLBACK>
@@ -198,16 +194,16 @@ struct Stock_Updater
     int delta = ACE_OS::rand () % 10 - 5;
     
     // We don't want negative stock values!
-    if (item.second.last <= delta)
+    if (item.second.last_ <= delta)
       delta *= -1;
     
     // Calculate the new values for the stock.
-    item.second.last += delta;
+    item.second.last_ += delta;
     
-    if (item.second.last < item.second.low)
-      item.second.low = item.second.last;
-    else if (item.second.last > item.second.high)
-      item.second.high = item.second.last;
+    if (item.second.last_ < item.second.low_)
+      item.second.low_ = item.second.last_;
+    else if (item.second.last_ > item.second.high_)
+      item.second.high_ = item.second.last_;
   }
   
   void operator () (typename Stock_Database<CALLBACK>::Callback_Map::value_type &item)

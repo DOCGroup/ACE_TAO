@@ -9,9 +9,6 @@
 
 #ifndef STOCK_DATABASE_H_
 #define STOCK_DATABASE_H_
-#include "CommonC.h"
-#include "Stock_Database.h"
-
 
 // ACE headers
 #include "ace/Task.h"
@@ -63,13 +60,32 @@ public:
    */
   bool remove_callback (const Cookie &);
   
+  /// Raised if an invalid stock name is requested.
+  class Invalid_Stock {};
+    
+  struct StockInfo
+  {
+    StockInfo (void)
+      : name_(""), high_ (0), low_ (0), last_ (0)
+    {};
+    
+    StockInfo (const std::string name)
+      : name_ (name), high_ (0), low_(0), last_(0)
+    {};
+    
+    std::string name_;
+    int high_;
+    int low_;
+    int last_;
+  };
+    
   /**
    * Create a StockInfo object stored in the database with the given name.
    *
    * @param name The name of the stock.
    * @return A StockInfo object.
    */
-  Stock::StockInfo *get_stock_info (const char *name);
+  StockInfo get_stock_info (const char *name) throw (Invalid_Stock);
   
   /**
    * This function is used to calculate the new high, low and last values
@@ -86,7 +102,7 @@ public:
   /// Stop the active object
   void stop (void);
   
-  typedef std::map <std::string, Stock::StockInfo> Stock_Map;
+  typedef std::map <std::string, StockInfo> Stock_Map;
   
   /// This method is not intended to be called by clients of this class,
   /// it is public only by necessity. 
