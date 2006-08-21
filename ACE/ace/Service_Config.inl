@@ -96,7 +96,14 @@ ACE_Service_Config::initialize (const ACE_Service_Type *sr,
                                                      parameters);
 }
 
+/// Process a file containing a list of service configuration
+/// directives.
+ACE_INLINE int ACE_Service_Config::process_file (const ACE_TCHAR file[])
+{
+  return ACE_Service_Config::current ()->process_file (file);
+}
 
+///
 ACE_INLINE int
 ACE_Service_Config::process_directive (const ACE_TCHAR directive[])
 {
