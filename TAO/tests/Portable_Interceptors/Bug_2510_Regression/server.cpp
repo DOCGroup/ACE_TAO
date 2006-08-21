@@ -4,6 +4,7 @@
 #include "ace/OS_NS_stdio.h"
 #include "test_i.h"
 #include "tao/ORBInitializer_Registry.h"
+#include "Server_ORBInitializer.h"
 
 ACE_RCSID (Bug_2510_Regression,
            server,
@@ -41,6 +42,16 @@ main (int argc, char *argv[])
 {
   ACE_TRY_NEW_ENV
     {
+      // create initializer
+      Server_ORBInitializer * temp_initializer = 0;
+
+      ACE_NEW_RETURN (temp_initializer,
+                      Server_ORBInitializer,
+                      -1);  // No exceptions yet!
+      PortableInterceptor::ORBInitializer_var initializer = temp_initializer;
+
+      PortableInterceptor::register_orb_initializer (initializer.in ()
+                                                     ACE_ENV_ARG_PARAMETER);
       // Now create an ORB
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);

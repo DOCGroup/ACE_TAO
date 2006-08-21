@@ -1,6 +1,9 @@
-// $Id$
+// test_i.cpp,v 1.1 2003/08/27 22:43:35 edwardgt Exp
 
 #include "test_i.h"
+#include "tao/PI/PI.h"
+
+extern PortableInterceptor::SlotId slotId;
 
 ACE_RCSID (Bug_2510_Regression,
            test_i,
@@ -18,30 +21,41 @@ Visual_i::normal (CORBA::Long arg
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG, "Visual::normal called with %d\n", arg));
-}
 
-void
-Visual_i::nothing (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  ACE_DEBUG ((LM_DEBUG, "Visual::nothing\n"));
-}
+  // retrieve Slot
+  CORBA::Object_var piobj = orb_->resolve_initial_references ("PICurrent");
+  PortableInterceptor::Current_var pi_current =
+      PortableInterceptor::Current::_narrow (piobj.in () );
+  
+  if (CORBA::is_nil (pi_current.in ())) 
+  {
+    ACE_DEBUG ((LM_DEBUG, "Visual_i::normal : Unable to obtain PICurrent reference\n"));
+    throw CORBA::INTERNAL();
+  }
 
-void
-Visual_i::user (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Test_Interceptors::Silly))
-{
-  ACE_DEBUG ((LM_DEBUG, "Visual::user, throwing Silly\n"));
-  ACE_THROW (Test_Interceptors::Silly ());
-}
+  CORBA::Any_var retrieved_any;
+  ACE_TRY
+  {
+      retrieved_any = pi_current->get_slot(slotId);
+  }
+  ACE_CATCHANY
+  {
+      ACE_PRINT_EXCEPTION (ex, "Visual_i::normal : get_slot() threw Exception\n");
+      throw;
+  }
+  ACE_ENDTRY;
+  ACE_CHECK;
 
-void
-Visual_i::system (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  ACE_DEBUG ((LM_DEBUG, "Visual::user, throwing INV_OBJREF\n"));
-  ACE_THROW (CORBA::INV_OBJREF ());
+  const char *str = 0;
+  if (! (retrieved_any.in() >>= str) ) 
+  {
+    ACE_DEBUG ((LM_DEBUG, "Visual_i::normal : Problem extracting data from CORBA::Any\n"));
+    throw CORBA::INTERNAL();
+  }
+  else
+  {
+    ACE_DEBUG ((LM_DEBUG, "Visual_i::normal : extracted %s data from CORBA::Any\n",str));
+  }
 }
 
 void
