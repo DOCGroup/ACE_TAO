@@ -56,15 +56,16 @@ our work we will respond to it in a very timely manner.  Please
 contact <A HREF="mailto:schmidt@cs.wustl.edu">me</A> if you'd like to
 become a sponsor. <P>
 
-<LI> If it's a bug report along with a fix we will try to apply this
-in a timely manner. In general, people who submit good bug reports
-with fixes tend to get much better help from the core DOC group team,
+<LI> If it's a bug report that pertains to the latest official and/or
+beta release and it also contains a fix we will try to apply this in a
+timely manner.  In general, people who submit good bug reports with
+fixes tend to get much better help from the core DOC group team,
 irrespective of whether they are sponsors or not since they are
 helping our overall effort move ahead. <P>
 
-<LI> If it's a bug report that prevents ACE, TAO, or CIAO from working
-on a major platform used by ourselves or our sponsors we'll try to fix
-it as time permits. <P>
+<LI> If it's a bug report for the latest official and/or beta release
+that prevents ACE, TAO, or CIAO from working on a major platform used
+by ourselves or our sponsors we'll try to fix it as time permits. <P>
 
 </OL>
 
@@ -97,7 +98,7 @@ post something and don't get a reply, please do the following:<P>
   can see by checking out the <A
     HREF="http://groups.google.com/groups?q=comp.soft-sys.ace&ie=UTF-8&oe=UTF-8&hl=en">comp.soft-sys.ace</A> newsgroup to see if your posting is visible. <P>
 
-<LI> If it's not visible, please make sure you're
+<LI> If it's not visible, please make sure you're 
   <A HREF="http://www.cs.wustl.edu/~schmidt/ACE-mail.html">subscribed
 to the mailing
   list(s)</A> you sent the report to since we have a "members only" posting
@@ -105,7 +106,7 @@ to the mailing
 
 <LI> If it is visible and you haven't received a reply this probably means
   that either no one knows the answer or no one has time to answer it.
-  As always, if you need more predictable help please contact one of
+  As always, if you need more predictable help please contact one of 
   <A
 HREF="http://www.cs.wustl.edu/~schmidt/commercial-support.html">commercial
 support</a> companies for ACE+TAO.<P>
@@ -115,8 +116,12 @@ support</a> companies for ACE+TAO.<P>
 <LI> If you find a problem with a version of TAO that was released by
     <A HREF="http://www.theaceorb.com/">OCI</A> then please report it
     to <A
-    HREF="mailto:taosupport@ociweb.com">taosupport@ociweb.com</A>
-    since their version of TAO is different from the DOC group's
+    HREF="mailto:taosupport@ociweb.com">taosupport@ociweb.com</A>.
+    Likewise, if you find a problem with a version of TAO that was released by
+    <A HREF="http://www.prismtech.com">PrismTech</A> then please
+    report it to <A
+    HREF="mailto:technical-support@prismtech.com">technical-support@prismtech.com</A>.
+    Their versions of TAO are different from the DOC group's
     version of TAO and thus they provide their own support. <P>
 
 <LI> If it's a general question about how to use ACE, TAO, or CIAO
@@ -138,10 +143,10 @@ lists and newsgroup.  If you have a patch that fixes a problem you've
 found with our software here's the process for submitting it:
 
 <OL>
-<LI> Use the latest contents of our SVN repository, i.e., what's available from <P>
+<LI> Use the latest contents of our CVS repository, i.e., what's available from <P>
 
-  <A HREF="https://svn.dre.vanderbilt.edu/viewvc/Middleware/trunk/">https://svn.dre.vanderbilt.edu/viewvc/Middleware/trunk/</A> <P>
-
+  <A HREF="http://cvs.doc.wustl.edu/">http://cvs.doc.wustl.edu/</A> <P>
+  
 <LI> Create a ``unified diff'' and put this into Bugzilla at <P>
 
   <A HREF="http://deuce.doc.wustl.edu/bugzilla/index.cgi">http://deuce.doc.wustl.edu/bugzilla/index.cgi</A> <P>
@@ -152,7 +157,7 @@ list(s)</A> and/or <A HREF="news:comp.soft-sys.ace">newsgroup</A>
 newsgroup summarizing what the problem was and you've done to fix the
 problem, i.e., use the <A HREF="../ChangeLog"</A>ChangeLog</A>
 format. <P>
-
+  
 <LI> Ideally, you could also create (or augment) a test program that
   validates your patch and integrate it into the <A
 HREF="../tests">ACE_ROOT/tests</A> directory. <P> </OL>
