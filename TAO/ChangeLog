@@ -1,3 +1,23 @@
+Mon Aug 21 15:37:23 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Out_Endpoint.i:
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Receiver.cpp: Made the
+          simplest fix to the problem where if a UDP RTEC supplier
+          restarts while the consumer is still running, it gets duplicate
+          fragment errors.  The cost of this fix is that duplicate
+          completed requests are no longer detected.  Thanks to Keith
+          Nicewarner for these fixes.
+
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FT_ProxyAdmin_T.cpp
+          (set_state): Fixed a problem with type punning.  Thanks to
+          Thomas Girard <thomas.g.girard at free dot fr> for reporting
+          this.
+
+        * examples/Advanced/ch_8_and_10/server.cpp: Fixed a compile error
+          by adding a _duplicate() call.  Thanks to Christoph Schmalhofer
+          <christoph dot schmalhofer at gmx dot net> for contributing this
+          fix.  This fixes bugid 2611.
+
 Mon Aug 21 16:28:51 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * docs/tutorials/Quoter/RTCORBA/Stock_Database.cpp
