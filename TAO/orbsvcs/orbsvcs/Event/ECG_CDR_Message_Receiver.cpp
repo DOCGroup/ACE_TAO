@@ -393,7 +393,7 @@ TAO_ECG_CDR_Message_Receiver::mark_received (const ACE_INET_Addr &from,
                          -1);
     }
 
-  *request = &Request_Completed_;
+  *request = 0;
   return 1;
 }
 
@@ -477,7 +477,7 @@ TAO_ECG_CDR_Message_Receiver::process_fragment (
     return -1;
 
   delete *request;
-  *request = &Request_Completed_;
+  *request = 0;
   return 1;
 }
 
