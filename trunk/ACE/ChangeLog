@@ -4,6 +4,9 @@ Mon Aug 21 10:45:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
           Extended UUID to make it possible to assign a string to a UUID
           to set it a new value.
 
+        * tests/UUIDTest.cpp:
+          Extended this test to test the new functionality above.
+
 Mon Aug 21 10:26:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/UUID.{h,cpp,inl}:
