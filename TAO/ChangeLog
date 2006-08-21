@@ -1,3 +1,11 @@
+Mon Aug 21 10:07:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Portable_Interceptors/Bug_2510_Regression/*:
+          Integrated more advanced test, thanks to Martin Cornelius
+          <Martin dot Cornelius at smiths-heimann dot com> for creating
+          this version. This test doesn't crash anymore, probably due
+          to the recent PI refactoring
+
 Mon Aug 21 05:58:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Unbounded_Octet_Sequence_T.h:
