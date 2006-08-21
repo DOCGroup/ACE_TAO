@@ -40,9 +40,18 @@ static ACE_THR_FUNC_RETURN run_test(void* pData)
 {
     Test_Interceptors::Visual_ptr server = static_cast<Test_Interceptors::Visual_ptr>(pData);
 
-    server->normal (10 ACE_ENV_ARG_PARAMETER);
+    ACE_TRY
+    {
+        server->normal (10 ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+    }
+    ACE_CATCHANY
+    {
+        ACE_PRINT_EXCEPTION (ex, "Exception thrown in run_test()\n");
+    }
+    ACE_ENDTRY;
     ACE_CHECK;
-
+  
     return (ACE_THR_FUNC_RETURN)0;
 }
 
@@ -88,7 +97,7 @@ main (int argc, char *argv[])
 
         ACE_hthread_t threadHandle;
         if ( ACE_Thread::spawn(	run_test,
-                                static_cast<void*>(server.in()),
+                                static_cast<void*>(server.in()), 
 						        THR_NEW_LWP | THR_JOINABLE ,
                                 0,
                                 & threadHandle
@@ -110,7 +119,7 @@ main (int argc, char *argv[])
                            "Caught exception in client:");
         return 1;
     }
-
+    
     ACE_ENDTRY;
 
     return 0;

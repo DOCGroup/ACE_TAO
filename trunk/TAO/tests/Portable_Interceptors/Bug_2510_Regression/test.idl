@@ -1,4 +1,4 @@
-// $Id$
+// test.idl,v 1.1 2003/08/27 22:43:35 edwardgt Exp
 
 module Test_Interceptors
 {
@@ -16,17 +16,7 @@ module Test_Interceptors
     void normal (in long arg);
     // Normal operation.
 
-    void nothing ();
-    // Normal operation without return.
-
-    void user ()
-      raises (Silly);
-    // throws a user exception.
-
-    void system ();
-    // thows a system exception.
-
-   oneway void shutdown ();
+    oneway void shutdown ();
     // shutdown the ORB
   };
 };

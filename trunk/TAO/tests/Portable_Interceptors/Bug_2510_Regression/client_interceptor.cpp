@@ -10,10 +10,8 @@ ACE_RCSID (Bug_2510_Regression,
            client_interceptor,
            "$Id$")
 
-const IOP::ServiceId service_id = 0xdeadbeef;
-const char *request_msg = "REQUEST message";
-const char *reply_msg = "REPLY message";
-const char *forward_msg = "FORWARD message";
+const IOP::ServiceId service_id = 0x08154711;
+const char * const request_msg = "TEST 0123456789 TEST";
 
 Echo_Client_Request_Interceptor::
 Echo_Client_Request_Interceptor ()
@@ -63,6 +61,20 @@ Echo_Client_Request_Interceptor::send_request (
   ACE_CHECK;
 
   ACE_DEBUG ((LM_DEBUG,"%s.send_request from %s\n", this->myname_, operation.in ()));
+
+  // Make the context to send to the target
+  IOP::ServiceContext sc;
+  sc.context_id = ::service_id;
+
+  CORBA::ULong string_len = ACE_OS::strlen (request_msg) + 1;
+  CORBA::Octet *buf = CORBA::OctetSeq::allocbuf (string_len);
+  ACE_OS::strcpy (reinterpret_cast<char *> (buf), request_msg);
+
+  sc.context_data.replace (string_len, string_len, buf, 1);
+
+  // Add this context to the service context list.
+  ri->add_request_service_context (sc, 0 ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
 void

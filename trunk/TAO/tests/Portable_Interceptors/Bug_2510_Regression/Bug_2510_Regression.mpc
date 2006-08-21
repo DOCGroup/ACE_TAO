@@ -5,6 +5,8 @@ project(*Server): taoserver, pi_server, interceptors {
   Source_Files {
     test_i.cpp
     server.cpp
+    server_interceptor.cpp
+    Server_ORBInitializer.cpp
   }
 }
 
