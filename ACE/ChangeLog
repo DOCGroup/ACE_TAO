@@ -1,11 +1,12 @@
-Mon Aug 21 12:06:38 Pacific Daylight Time 2006    <ossama_othman at symantec dot com>
+Mon Aug 21 20:06:38 Pacific Daylight Time 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
         From Russell Mora <russell_mora at symantec dot com>:
         * ace/Thread_Exit.cpp (instance):
 
           Fixed race condition in generated code by stopping optimizer
           from re-ordering static variable initializations by declaring
-          static "instance_" variable as "volatile".
+          static "instance_" variable as "volatile".  This problem was
+          observed on a quad-CPU Solaris 8 box.
 
 Mon Aug 21 18:31:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
