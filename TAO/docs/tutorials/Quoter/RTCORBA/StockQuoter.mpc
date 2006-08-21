@@ -61,7 +61,6 @@ project(RTCORBA_Quoter_Distributor): valuetype, rt_server, naming, utils, stl {
       DistributorS.cpp
       Distributor.cpp
       Distributor_i.cpp               
-      Stock_Database.cpp
       CommonS.cpp
   }
 

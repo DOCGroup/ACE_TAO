@@ -1,41 +1,82 @@
 // $Id$
 
-// ACE headers
-#include <ace/OS_NS_unistd.h>
-
+#ifndef STOCK_DATABASE_TPP
+#define STOCK_DATABASE_TPP
 // local headers
 #include "Stock_Database.h"
 
-// Stock_Database
+// ACE headers
+#include <ace/OS_NS_unistd.h>
+#include <ace/UUID.h>
 
-Stock_Database::Stock_Database (void)
-  : rate_ (1)
+#include <fstream>
+#include <vector>
+template <typename CALLBACK>
+struct Map_Init
 {
-  // Only keep track of a few stock names a this point.
-  const char *stock_names [] = {"MSFT", "INTEL", "IBM"};
+  Map_Init (typename Stock_Database<CALLBACK>::Stock_Map &map)
+    : map_ (map)
+  {
+  }
+  
+  void operator () (const typename Stock_Database<CALLBACK>::Init_Map::value_type &item)
+  {
+    Stock::StockInfo stock_info;
+    
+    stock_info.name = item.first.c_str ();
+    
+    // If the initial value is nonzero, use that - otherwise, use a number 
+    // between 0 and 100
+    stock_info.low = 
+      stock_info.last = 
+      stock_info.high = item.second ? item.second : ACE_OS::rand () % 100;
+    
+    map_[item.first] = stock_info;
+  }
+  
+  typename Stock_Database<CALLBACK>::Stock_Map &map_;
+};
 
-  Stock::StockInfo_var stock_info; 
+// Stock_Database
+template <typename CALLBACK>
+Stock_Database<CALLBACK>::Stock_Database (u_int rate)
+  : rate_ (rate),
+    active_ (false)
+{
+  Init_Map map;
+  map["IBM"] = 0;
+  map["MSFT"] = 0;
+  map["INTEL"] = 0;
+  
+  std::for_each (map.begin (),
+                 map.end (),
+                 Map_Init<CALLBACK> (this->stock_map_));
+}
 
-  for (size_t i = 0;
-       i < sizeof (stock_names) / sizeof (const char *);
-       ++i) 
-    {
-      stock_info = new Stock::StockInfo;
-      
-      stock_info->name = stock_names[i];
-      stock_info->high = 70 + (ACE_OS::rand () % 30);
-      stock_info->last = 65 + (ACE_OS::rand () % 15);
-      stock_info->low = 60 + (ACE_OS::rand () % 20);
+template <typename CALLBACK>
+Stock_Database<CALLBACK>::Stock_Database (const char *file, u_int rate)
+  : filename_ (file),
+    rate_ (rate),
+    active_ (false)
+{
+  this->handle_signal (0, 0, 0);
+}
 
-      this->stock_map_.insert (std::make_pair (std::string (stock_names[i]),
-                                               stock_info));
-    }
+template <typename CALLBACK>
+Stock_Database<CALLBACK>::Stock_Database (const Init_Map &stockmap, 
+                                          u_int rate)
+  : rate_ (rate),
+    active_ (false)
+{
+  std::for_each (stockmap.begin (),
+                 stockmap.end (),
+                 Map_Init<CALLBACK> (this->stock_map_));
 }
 
 // get_stock_info
-
+template <typename CALLBACK>
 Stock::StockInfo * 
-Stock_Database::get_stock_info (const char *name)
+Stock_Database<CALLBACK>::get_stock_info (const char *name)
 {
   ACE_READ_GUARD_RETURN (ACE_RW_Thread_Mutex,
                          guard,
@@ -54,67 +95,158 @@ Stock_Database::get_stock_info (const char *name)
 
   Stock::StockInfo_var stock_info = new Stock::StockInfo;
 
-  *stock_info = *iter->second;
+  *stock_info = iter->second;
   
-  return stock_info._retn ();;
+  return stock_info._retn ();
 }
 
-// publish_stock_info
-
-void 
-Stock_Database::publish_stock_info (Stock::StockNameConsumer_ptr consumer)
+template <typename CALLBACK>
+typename Stock_Database<CALLBACK>::Cookie
+Stock_Database<CALLBACK>::register_callback (CALLBACK &obj)
 {
-  ACE_READ_GUARD (ACE_RW_Thread_Mutex,
-                  guard,
-                  this->lock_)
-    
-    Stock::StockName_var stock_name = new OBV_Stock::StockName;
-
-  // Send all the values of the current stocks to <consumer>.
-
-  for (Stock_Map::iterator iter = this->stock_map_.begin ();
-       iter != this->stock_map_.end(); ++iter)
-    {
-      stock_name->name (iter->first.c_str());
-      consumer->push_StockName (stock_name);
-    }
+  ACE_Utils::UUID uuid;
+  ACE_Utils::UUID_GENERATOR::instance ()->generateUUID (uuid);
+  
+  this->callbacks_[uuid.to_string ()->c_str ()] = &obj;
+  
+  return uuid.to_string ()->c_str ();
 }
 
+template <typename CALLBACK>
 void 
-Stock_Database::update_rate (u_int rate)
+Stock_Database<CALLBACK>::update_rate (u_int rate)
 {
   this->rate_ = rate;
 }
 
-int 
-Stock_Database::svc (void)
+template <typename CALLBACK>
+void 
+Stock_Database<CALLBACK>::start (void)
 {
-  while (true) 
+  if (!this->active_)
+    { // Double checked locking
+      ACE_WRITE_GUARD (ACE_RW_Thread_Mutex,
+                       guard,
+                       this->lock_);
+      if (!this->active_)
+        {
+          this->active_ = true;
+          this->activate (THR_NEW_LWP | THR_JOINABLE, 1);
+        }
+    }
+}
+
+template <typename CALLBACK>
+void 
+Stock_Database<CALLBACK>::stop (void)
+{
+  ACE_WRITE_GUARD (ACE_RW_Thread_Mutex,
+                          guard,
+                          this->lock_);
+
+  this->active_ = false;
+}
+
+template <typename CALLBACK>
+int 
+Stock_Database<CALLBACK>::handle_signal (int,
+                                         siginfo_t *,
+                                         ucontext_t *)
+{
+  ACE_WRITE_GUARD_RETURN (ACE_RW_Thread_Mutex,
+                          guard,
+                          this->lock_,
+                          -1);
+
+  std::ifstream input (this->filename_.c_str ());
+  
+  std::string name;
+  u_int value = 0;
+  
+  typename Stock_Database<CALLBACK>::Init_Map map;
+  
+  while (input.good ())
+    {
+      input >> name;
+      input >> value;
+      map[name] = value;
+    }
+  
+  input.close ();
+  
+  std::for_each (map.begin (),
+                 map.end (),
+                 Map_Init<CALLBACK> (this->stock_map_));
+  
+  return 0;
+}
+
+
+template <typename CALLBACK>
+struct Stock_Updater
+{  
+  void operator () (typename Stock_Database<CALLBACK>::Stock_Map::value_type &item)
+  {
+    // Determine if the stock has changed.
+    if (ACE_OS::rand () % 2)
+      return; // Nope! On to the next!
+    
+    changed_.push_back (item.first);
+    
+    // Determine the amount of change of the stock. We will
+    // only permit a 5 point change at a time in either direction
+    int delta = ACE_OS::rand () % 10 - 5;
+    
+    // We don't want negative stock values!
+    if (item.second.last <= delta)
+      delta *= -1;
+    
+    // Calculate the new values for the stock.
+    item.second.last += delta;
+    
+    if (item.second.last < item.second.low)
+      item.second.low = item.second.last;
+    else if (item.second.last > item.second.high)
+      item.second.high = item.second.last;
+  }
+  
+  void operator () (typename Stock_Database<CALLBACK>::Callback_Map::value_type &item)
+  {
+    (*item.second)  (changed_);
+  }
+  
+private:
+  std::vector <std::string> changed_;
+};  
+  
+template <typename CALLBACK>
+int 
+Stock_Database<CALLBACK>::svc (void)
+{
+  ACE_DEBUG ((LM_DEBUG, "tock!\n"));
+  
+  while (this->active_) 
     {
       {
-        ACE_WRITE_GUARD_RETURN (ACE_RW_Thread_Mutex,
-                                guard,
-                                this->lock_,
-                                -1);                    
-        for (Stock_Database::Stock_Map::iterator iter = this->stock_map_.begin ();
-             iter != this->stock_map_.end ();
-             ++iter)
-          {
-            // Determine whether the stock has increased or decreased.
-            int mult = ACE_OS::rand ();
-            mult = mult % 2 == 0 ? 1 : -1;
-
-            // Determine the amount of change of the stock. We will
-            // only permit a 5 point change at a time.
-            int delta = mult * (ACE_OS::rand () % 5);
+        // Init our functor
+        Stock_Updater<CALLBACK> updater;
+        
+        { // Control the scope of our mutex to avoid deadlock.
+          ACE_WRITE_GUARD_RETURN (ACE_RW_Thread_Mutex,
+                                  guard,
+                                  this->lock_,
+                                  -1);
           
-            // Calculate the new values for the stock.
-            iter->second->last += delta;
-            if (iter->second->last < iter->second->low)
-              iter->second->low = iter->second->last;
-            else if (iter->second->last > iter->second->high)
-              iter->second->high = iter->second->last;
-          }
+          updater = std::for_each (this->stock_map_.begin (),
+                                   this->stock_map_.end (),
+                                   updater);
+        }
+      
+        // Update stock prices
+        // notify callbacks
+        std::for_each (this->callbacks_.begin (),
+                       this->callbacks_.end (),
+                       updater);
       }
 
       // Sleep for one second.
@@ -123,3 +255,5 @@ Stock_Database::svc (void)
 
   return 0;
 }
+
+#endif /* STOCK_DATABASE_TPP */

@@ -113,8 +113,8 @@ Stock_StockBrokerHome_i::Stock_StockBrokerHome_i (CORBA::ORB_ptr orb)
   // Register the necessary factories and mappings with the specified
   // <orb>. If we neglect to perform these registrations then the app
   // will not execute.
-  Stock::StockName_init *stockname_factory =
-    new Stock::StockName_init;
+  Stock::StockNames_init *stockname_factory =
+    new Stock::StockNames_init;
   orb->register_value_factory (stockname_factory->tao_repository_id (),
                                stockname_factory);
 

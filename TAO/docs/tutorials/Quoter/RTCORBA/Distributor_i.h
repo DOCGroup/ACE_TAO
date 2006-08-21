@@ -10,18 +10,18 @@
 #ifndef DISTRIBUTORI_H_
 #define DISTRIBUTORI_H_
 
+// local headers
+#include "DistributorS.h"
+#include "Stock_Database.h"
+
 // ACE headers
 #include "ace/Task.h"
 #include "ace/Event_Handler.h"
 #include "tao/RTPortableServer/RTPortableServer.h"
 
-#include "tao/RTPortableServer/RTPortableServer.h"
-
-// local headers
-#include "DistributorS.h"
-
 // STL headers
 #include <map>
+#include <vector>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -32,8 +32,8 @@
  * @brief This class defined the Stock Distributor server.
  */
 class  StockDistributor_i
-  : public ACE_Task_Base, // Enable us to run as an active object to generate notifications.
-    public virtual POA_Stock::StockDistributor
+  : public virtual POA_Stock::StockDistributor,
+    public virtual ACE_Task_Base
 {
 public:
   /**
@@ -109,21 +109,22 @@ public:
     throw (::CORBA::SystemException);
   
   virtual void shutdown ()
-      throw (::CORBA::SystemException);
+    throw (::CORBA::SystemException);
   
-private:
-
-  /// This is a hook method that runs in a separate thread of control
-  /// to push notifications to subscribers.
-  virtual int svc (void);
-
-  /// Notification rate for distributor in milliseconds.
-  CORBA::Long rate_;
-
+  /// Callback for stock database.
+  void operator () (std::vector <std::string> &stocks);
+  
+  int svn (void);
+  
   /// The map that stores the subscribed StockNameConsumer object.
   typedef std::map <std::string,
                     std::pair <Stock::StockNameConsumer_var,
                                RTCORBA::Priority> > CookieMap;
+
+private:
+  /// Notification rate for distributor in seconds.
+  CORBA::Long rate_;
+
   CookieMap subscribers_list_;
 
   /// This lock serializes access to the subscriber list.
@@ -207,5 +208,10 @@ private:
   /// The StockDistributor servant created by its home.
   PortableServer::ObjectId_var dist_id_;
 };
+
+
+// Define typedefs for our version of the stock database.
+typedef ACE_Singleton<Stock_Database<StockDistributor_i>, ACE_Thread_Mutex> Stock_Database_Singleton;
+#define STOCK_DATABASE Stock_Database_Singleton::instance()
 
 #endif /* DISTRIBUTORI_H_  */
