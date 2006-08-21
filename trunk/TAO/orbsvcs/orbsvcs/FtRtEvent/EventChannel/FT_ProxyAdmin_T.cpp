@@ -128,9 +128,11 @@ void FT_ProxyAdmin<EC_PROXY_ADMIN, Proxy, ProxyInterface, State>::set_state(
     ACE_CHECK;
 
     typedef typename Proxy::Skeleton Skeleton;
-    const PortableServer::Servant servant = poa_->id_to_servant(
-      reinterpret_cast<const PortableServer::ObjectId&> (proxy_state.object_id)
-      ACE_ENV_ARG_PARAMETER);
+    const void *temp = &proxy_state.object_id;
+    const PortableServer::ObjectId *oid =
+      reinterpret_cast<const PortableServer::ObjectId *> (temp);
+    const PortableServer::Servant servant = 
+      poa_->id_to_servant (*oid ACE_ENV_ARG_PARAMETER);
 
     ACE_CHECK;
     Skeleton skeleton = dynamic_cast<Skeleton> (servant);

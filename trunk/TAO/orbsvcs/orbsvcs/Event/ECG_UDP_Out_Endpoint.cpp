@@ -70,10 +70,8 @@ TAO_ECG_UDP_Out_Endpoint::operator= (const TAO_ECG_UDP_Out_Endpoint& rhs)
           ACE_NEW_RETURN (this->ifs_,
                           ACE_INET_Addr [this->if_count_],
                           *this);
-          for(size_t i = 0; i < this->if_count_; ++i)
-            {
-              this->ifs_[i] = rhs.ifs_[i];
-            }
+          for (size_t i = 0; i < this->if_count_; ++i)
+            this->ifs_[i] = rhs.ifs_[i];
         }
     }
 
