@@ -8,7 +8,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib "$ENV{'ACE_ROOT'}/bin";
 use PerlACE::Run_Test;
 $CIAO_ROOT = "$ENV{'CIAO_ROOT'}";
-$DAnCE = "$ENV{'ACE_ROOT'}/TAO/CIAO/DAnCE";
+$DAnCE = "$ENV{'CIAO_ROOT'}/DAnCE";
 
 $daemons_running = 0;
 $em_running = 0;
@@ -104,7 +104,7 @@ if (PerlACE::waitforfile_timed ("EM.ior",
                         $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR
       "ERROR: The ior file of execution manager could not be found\n";
-    kill_open_processes (); 
+    kill_open_processes ();
     exit 1;
 }
 
@@ -115,21 +115,21 @@ print "Invoking executor - start the application -\n";
 $E =
   new PerlACE::Process ("$DAnCE/Plan_Launcher/plan_launcher",
                         "-p flattened_deploymentplan_without_ns.cdp -k file://EM.ior -o DAM.ior");
- 
+
 $E->SpawnWaitKill (5000);
 
 if (PerlACE::waitforfile_timed (
       "Receiver.ior",
       $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: The ior file of receiver could not be found\n";
-    kill_open_processes (); 
+    kill_open_processes ();
     exit 1;
 }
 
 if (PerlACE::waitforfile_timed ("Sender.ior",
                         $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: The ior file of sender could not be found\n";
-    kill_open_processes (); 
+    kill_open_processes ();
     exit 1;
 }
 
