@@ -114,6 +114,9 @@ namespace ACE_Utils
     /// Returns a string representation of the UUID
     const ACE_CString* to_string (void);
 
+    /// Set the value using a string
+    void from_string (const ACE_CString& uuid_string);
+
     static UUID NIL_UUID;
 
     /// Equality Operations
@@ -127,6 +130,8 @@ namespace ACE_Utils
     //bool operator>= (const UUID &right) const;
 
   private:
+    void from_string_i (const ACE_CString& uuidString);
+
     // Copy constructor and assignment operator were not implemented
     // correctly, so I removed their implementation as an easy solution.
     UUID (const UUID&);
@@ -185,8 +190,7 @@ namespace ACE_Utils
 
     /// Set a new locking strategy and return the old one.
     ACE_SYNCH_MUTEX* lock (ACE_SYNCH_MUTEX*lock,
-                           int release_lock);
-
+                           bool release_lock);
 
   private:
 
@@ -215,7 +219,7 @@ namespace ACE_Utils
     UUID_State uuid_state_;
 
     ACE_SYNCH_MUTEX* lock_;
-    int destroy_lock_;
+    bool destroy_lock_;
   };
 
   typedef ACE_Singleton<UUID_Generator, ACE_SYNCH_MUTEX> UUID_GENERATOR;

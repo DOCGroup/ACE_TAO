@@ -80,143 +80,7 @@ namespace ACE_Utils
     ACE_NEW (node_,
              UUID_node);
 
-    if (uuid_string.length() < NIL_UUID.to_string ()->length ())
-      {
-        ACE_ERROR ((LM_ERROR,
-                    "%N ACE_UUID::UUID - "
-                    "IllegalArgument(incorrect string length)\n"));
-        return;
-      }
-
-    /// Special case for the nil UUID.
-    if (uuid_string == *NIL_UUID.to_string ())
-      {
-        bool copy_constructor_not_supported = false;
-        ACE_ASSERT (copy_constructor_not_supported);
-        //*this = NIL_UUID;
-        ACE_UNUSED_ARG (copy_constructor_not_supported);
-        return;
-      }
-
-    unsigned int timeLow;
-    unsigned int timeMid;
-    unsigned int timeHiAndVersion;
-    unsigned int clockSeqHiAndReserved;
-    unsigned int clockSeqLow;
-    unsigned int node [UUID_node::NODE_ID_SIZE];
-    char thr_pid_buf [BUFSIZ];
-
-    if (uuid_string.length() == NIL_UUID.to_string()->length())
-      {
-        // This might seem quite strange this being in ACE, but it
-        // seems to be a bit difficult to write a facade for ::sscanf
-        // because some compilers dont support vsscanf, including
-        // MSVC. It appears that most platforms support sscanf though
-        // so we need to use it directly.
-        const int nScanned =
-          ::sscanf(uuid_string.c_str(),
-                   "%8x-%4x-%4x-%2x%2x-%2x%2x%2x%2x%2x%2x",
-                   &timeLow,
-                   &timeMid,
-                   &timeHiAndVersion,
-                   &clockSeqHiAndReserved,
-                   &clockSeqLow,
-                   &node[0],
-                   &node[1],
-                   &node[2],
-                   &node[3],
-                   &node[4],
-                   &node[5]
-                   );
-
-        if (nScanned != 11)
-          {
-            ACE_DEBUG ((LM_DEBUG,
-                        "UUID::UUID - "
-                        "IllegalArgument(invalid string representation)\n"));
-            return;
-          }
-      }
-    else
-      {
-        const int nScanned =
-          ::sscanf (uuid_string.c_str(),
-                    "%8x-%4x-%4x-%2x%2x-%2x%2x%2x%2x%2x%2x-%s",
-                    &timeLow,
-                    &timeMid,
-                    &timeHiAndVersion,
-                    &clockSeqHiAndReserved,
-                    &clockSeqLow,
-                    &node[0],
-                    &node[1],
-                    &node[2],
-                    &node[3],
-                    &node[4],
-                    &node[5],
-                    thr_pid_buf
-                    );
-
-        if (nScanned != 12)
-          {
-            ACE_DEBUG ((LM_DEBUG,
-                        "ACE_UUID::ACE_UUID - "
-                        "IllegalArgument(invalid string representation)\n"));
-            return;
-          }
-      }
-
-    this->timeLow_ = static_cast<ACE_UINT32> (timeLow);
-    this->timeMid_ = static_cast<ACE_UINT16> (timeMid);
-    this->timeHiAndVersion_ = static_cast<ACE_UINT16> (timeHiAndVersion);
-    this->clockSeqHiAndReserved_ = static_cast<u_char> (clockSeqHiAndReserved);
-    this->clockSeqLow_ = static_cast<u_char> (clockSeqLow);
-
-    UUID_node::NodeID nodeID;
-    for (int i = 0; i < UUID_node::NODE_ID_SIZE; ++i)
-      nodeID [i] = static_cast<u_char> (node[i]);
-
-    this->node_->nodeID (nodeID);
-
-    // Support varient 10- only
-    if ((this->clockSeqHiAndReserved_ & 0xc0) != 0x80 && (this->clockSeqHiAndReserved_ & 0xc0) != 0xc0)
-      {
-        ACE_DEBUG ((LM_DEBUG,
-                    "ACE_UUID_Impl::ACE_UUID_Impl - "
-                    "IllegalArgument(unsupported variant)\n"));
-        return;
-      }
-
-    /// Support versions 1, 3, and 4 only
-    ACE_UINT16 V1 = this->timeHiAndVersion_;
-
-    if ((V1 & 0xF000) != 0x1000 &&
-        (V1 & 0xF000) != 0x3000 &&
-      (V1 & 0xF000) != 0x4000)
-      {
-        ACE_DEBUG ((LM_DEBUG,
-                    "ACE_UUID::ACE_UUID - "
-                    "IllegalArgument(unsupported version)\n"));
-        return;
-      }
-    if ((this->clockSeqHiAndReserved_ & 0xc0) == 0xc0)
-      {
-        if (uuid_string.length() == NIL_UUID.to_string()->length())
-          {
-            ACE_DEBUG ((LM_DEBUG,
-                      "ACE_UUID::ACE_UUID - "
-                        "IllegalArgument (Missing Thread and Process Id)\n"));
-            return;
-          }
-        ACE_CString thr_pid_str (thr_pid_buf);
-        ssize_t pos = thr_pid_str.find ('-');
-        if (pos == -1)
-          ACE_DEBUG ((LM_DEBUG,
-                      "ACE_UUID::ACE_UUID - "
-                      "IllegalArgument (Thread and Process Id format incorrect)\n"));
-
-        this->thr_id_ = thr_pid_str.substr (0, pos);
-      this->pid_ = thr_pid_str.substr (pos+1, thr_pid_str.length ()-pos-1);
-      }
+    this->from_string_i (uuid_string);
   }
 
   UUID::~UUID (void)
@@ -294,12 +158,154 @@ namespace ACE_Utils
     return as_string_;
   }
 
+  void
+  UUID::from_string_i (const ACE_CString& uuid_string)
+  {
+    if (uuid_string.length() < NIL_UUID.to_string ()->length ())
+      {
+        ACE_ERROR ((LM_ERROR,
+                    "%N ACE_UUID::from_string_i - "
+                    "IllegalArgument(incorrect string length)\n"));
+        return;
+      }
+
+    /// Special case for the nil UUID.
+    if (uuid_string == *NIL_UUID.to_string ())
+      {
+        bool copy_constructor_not_supported = false;
+        ACE_ASSERT (copy_constructor_not_supported);
+        //*this = NIL_UUID;
+        ACE_UNUSED_ARG (copy_constructor_not_supported);
+        return;
+      }
+
+    unsigned int timeLow;
+    unsigned int timeMid;
+    unsigned int timeHiAndVersion;
+    unsigned int clockSeqHiAndReserved;
+    unsigned int clockSeqLow;
+    unsigned int node [UUID_node::NODE_ID_SIZE];
+    char thr_pid_buf [BUFSIZ];
+
+    if (uuid_string.length() == NIL_UUID.to_string()->length())
+      {
+        // This might seem quite strange this being in ACE, but it
+        // seems to be a bit difficult to write a facade for ::sscanf
+        // because some compilers dont support vsscanf, including
+        // MSVC. It appears that most platforms support sscanf though
+        // so we need to use it directly.
+        const int nScanned =
+          ::sscanf(uuid_string.c_str(),
+                   "%8x-%4x-%4x-%2x%2x-%2x%2x%2x%2x%2x%2x",
+                   &timeLow,
+                   &timeMid,
+                   &timeHiAndVersion,
+                   &clockSeqHiAndReserved,
+                   &clockSeqLow,
+                   &node[0],
+                   &node[1],
+                   &node[2],
+                   &node[3],
+                   &node[4],
+                   &node[5]
+                   );
+
+        if (nScanned != 11)
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                        "UUID::from_string_i - "
+                        "IllegalArgument(invalid string representation)\n"));
+            return;
+          }
+      }
+    else
+      {
+        const int nScanned =
+          ::sscanf (uuid_string.c_str(),
+                    "%8x-%4x-%4x-%2x%2x-%2x%2x%2x%2x%2x%2x-%s",
+                    &timeLow,
+                    &timeMid,
+                    &timeHiAndVersion,
+                    &clockSeqHiAndReserved,
+                    &clockSeqLow,
+                    &node[0],
+                    &node[1],
+                    &node[2],
+                    &node[3],
+                    &node[4],
+                    &node[5],
+                    thr_pid_buf
+                    );
+
+        if (nScanned != 12)
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                        "ACE_UUID::from_string_i - "
+                        "IllegalArgument(invalid string representation)\n"));
+            return;
+          }
+      }
+
+    this->timeLow_ = static_cast<ACE_UINT32> (timeLow);
+    this->timeMid_ = static_cast<ACE_UINT16> (timeMid);
+    this->timeHiAndVersion_ = static_cast<ACE_UINT16> (timeHiAndVersion);
+    this->clockSeqHiAndReserved_ = static_cast<u_char> (clockSeqHiAndReserved);
+    this->clockSeqLow_ = static_cast<u_char> (clockSeqLow);
+
+    UUID_node::NodeID nodeID;
+    for (int i = 0; i < UUID_node::NODE_ID_SIZE; ++i)
+      nodeID [i] = static_cast<u_char> (node[i]);
+
+    this->node_->nodeID (nodeID);
+
+    // Support varient 10- only
+    if ((this->clockSeqHiAndReserved_ & 0xc0) != 0x80 && (this->clockSeqHiAndReserved_ & 0xc0) != 0xc0)
+      {
+        ACE_DEBUG ((LM_DEBUG,
+                    "ACE_UUID::from_string_i - "
+                    "IllegalArgument(unsupported variant)\n"));
+        return;
+      }
+
+    /// Support versions 1, 3, and 4 only
+    ACE_UINT16 V1 = this->timeHiAndVersion_;
+
+    if ((V1 & 0xF000) != 0x1000 &&
+        (V1 & 0xF000) != 0x3000 &&
+      (V1 & 0xF000) != 0x4000)
+      {
+        ACE_DEBUG ((LM_DEBUG,
+                    "ACE_UUID::from_string_i - "
+                    "IllegalArgument(unsupported version)\n"));
+        return;
+      }
+    if ((this->clockSeqHiAndReserved_ & 0xc0) == 0xc0)
+      {
+        if (uuid_string.length() == NIL_UUID.to_string()->length())
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                      "ACE_UUID::from_string_i - "
+                        "IllegalArgument (Missing Thread and Process Id)\n"));
+            return;
+          }
+        ACE_CString thr_pid_str (thr_pid_buf);
+        ssize_t pos = thr_pid_str.find ('-');
+        if (pos == -1)
+          ACE_DEBUG ((LM_DEBUG,
+                      "ACE_UUID::from_string_i - "
+                      "IllegalArgument (Thread and Process Id format incorrect)\n"));
+
+        this->thr_id_ = thr_pid_str.substr (0, pos);
+      this->pid_ = thr_pid_str.substr (pos+1, thr_pid_str.length ()-pos-1);
+      }
+  }
+
   UUID_Generator::UUID_Generator ()
-    : timeLast_ (0)
+    : timeLast_ (0),
+      destroy_lock_ (true)
   {
     ACE_NEW (lock_,
              ACE_SYNCH_MUTEX);
-    destroy_lock_ = 1;
   }
 
   UUID_Generator::~UUID_Generator()
@@ -459,7 +465,7 @@ namespace ACE_Utils
 
   ACE_SYNCH_MUTEX*
   UUID_Generator::lock (ACE_SYNCH_MUTEX* lock,
-                        int release_lock_)
+                        bool release_lock_)
   {
     if (destroy_lock_)
       delete lock_;
