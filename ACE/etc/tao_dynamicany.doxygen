@@ -35,6 +35,7 @@ SORT_MEMBER_DOCS      = YES
 DISTRIBUTE_GROUP_DOC  = YES
 TAB_SIZE              = 8
 ENABLED_SECTIONS      =
+SHORT_NAMES           = YES
 
 #---------------------------------------------------------------------------
 # configuration options related to warning and progress messages
