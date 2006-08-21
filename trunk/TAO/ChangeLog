@@ -1,3 +1,22 @@
+Mon Aug 21 18:04:51 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/tests/InterfaceRepo/IDL3_Test/idl3_client.h:
+        * orbsvcs/tests/InterfaceRepo/IDL3_Test/idl3_client.cpp:
+
+          Changed a CORBA::Boolean class member to native boolean,
+          since it isn't used in a CORBA call.
+
+        * orbsvcs/tests/InterfaceRepo/IDL3_Test/test.idl:
+
+          Added a workaround IDL module called 'Components',
+          containing just enough for the IFR loader to look up
+          necessary stuff, eliminating the need to include
+          Components.idl and the corresponding dependency on CIAO.
+
+        * orbsvcs/tests/InterfaceRepo/IDL3_Test/run_test.pl:
+
+          Removed CIAO_ROOT/ciao from the list of include paths.
+
 Mon Aug 21 15:37:23 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/Event/ECG_UDP_Out_Endpoint.i:
@@ -29,11 +48,12 @@ Mon Aug 21 16:28:51 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
         * docs/tutorials/Quoter/RTCORBA/Distributor_i.cpp
         * docs/tutorials/Quoter/RTCORBA/Distributor_i.h
         * docs/tutorials/Quoter/RTCORBA/Broker_i.cpp
-        
+
           More updates to the Quoter tutorial, the most significant
           being a redesign on the Stock_Database to make is more generic
           and easily plugged into other Quoter examples.
 
+>>>>>>> .r74150
 Mon Aug 21 10:07:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Portable_Interceptors/Bug_2510_Regression/*:

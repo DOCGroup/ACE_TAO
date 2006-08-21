@@ -120,7 +120,7 @@ private:
                         ACE_ENV_ARG_DECL);
 
 private:
-  CORBA::Boolean debug_;
+  bool debug_;
   // Flag to output detailed error messages.
 
   CORBA::ORB_var orb_;
