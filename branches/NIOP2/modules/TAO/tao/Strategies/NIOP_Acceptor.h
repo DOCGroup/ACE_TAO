@@ -88,43 +88,7 @@ public:
                           TAO::ObjectKey &key);
   //@}
 
-  /**
-   * Set the host name for the given addr.
-   * A hostname may be forced by using specified_hostname.  This
-   * is useful if the given address corresponds to more than one
-   * hostname and the desired one cannot be determined in any
-   * other way.
-   */
-  int hostname (TAO_ORB_Core *orb_core,
-       //         ACE_INET_Addr &addr,
-                char *&host,
-                const char *specified_hostname = 0);
-
-  /**
-   * Set the host name for the given address using the dotted decimal
-   * format.
-   */
-  //int dotted_decimal_address (ACE_INET_Addr &addr,
-                              //char *&host);
-
 protected:
-
-  /**
-   * Implement the common part of the open*() methods.  This method is
-   * virtual to allow a derived class implementation to be invoked
-   * instead.
-   */
-  //virtual int open_i (const ACE_INET_Addr &addr,
-    //                  ACE_Reactor *reactor);
-
-  /**
-   * Probe the system for available network interfaces, and initialize
-   * the <addrs_> array with an ACE_INET_Addr for each network
-   * interface.  The port for each initialized ACE_INET_Addr will be
-   * set in the open_i() method.  This method only gets invoked when
-   * no explicit hostname is provided in the specified endpoint.
-   */
-  //int probe_interfaces (TAO_ORB_Core *orb_core);
 
   /// Parse protocol specific options.
   virtual int parse_options (const char *options);

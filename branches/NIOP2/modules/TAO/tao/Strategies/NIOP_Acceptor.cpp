@@ -218,7 +218,7 @@ TAO_NIOP_Acceptor::close (void)
 
 int
 TAO_NIOP_Acceptor::open (TAO_ORB_Core *orb_core,
-                         ACE_Reactor *reactor,
+                         ACE_Reactor *,
                          int major,
                          int minor,
                          const char *address,
@@ -247,57 +247,16 @@ TAO_NIOP_Acceptor::open (TAO_ORB_Core *orb_core,
   if (this->parse_options (options) == -1)
     return -1;
 
-//  ACE_INET_Addr addr;
-
   const char *port_separator_loc = ACE_OS::strchr (address, ':');
   const char *specified_hostname = 0;
   char tmp_host[MAXHOSTNAMELEN + 1];
 
-  if (port_separator_loc == address)
-    {
-      // The address is a port number or port name.  No hostname was
-      // specified.  The hostname for each network interface and the
-      // fully qualified domain name must be obtained.
+  // Extract out just the host part of the address.
+  size_t len = port_separator_loc - address;
+  ACE_OS::memcpy (tmp_host, address, len);
+  tmp_host[len] = '\0';
 
-      // Check for multiple network interfaces.
-//      if (this->probe_interfaces (orb_core) == -1)
-  //      return -1;
-
-      // First convert the port into a usable form.
-    //  if (addr.set (address + sizeof (':')) != 0)
-      //  return -1;
-
-      // Now reset the port and set the host.
-//      if (addr.set (addr.get_port_number (),
-  //                  static_cast<ACE_UINT32> (INADDR_ANY),
-    //                1) != 0)
-//        return -1;
-  //    else
-    //    return this->open_i (addr,
-      //                       reactor);
-    }
-  else if (port_separator_loc == 0)
-    {
-      // The address is a hostname.  No port was specified, so assume
-      // port zero (port will be chosen for us).
-//      if (addr.set ((unsigned short) 0, address) != 0)
-  //      return -1;
-
-      specified_hostname = address;
-    }
-  else
-    {
-      // Host and port were specified.
-//      if (addr.set (address) != 0)
-  //      return -1;
-
-      // Extract out just the host part of the address.
-      size_t len = port_separator_loc - address;
-      ACE_OS::memcpy (tmp_host, address, len);
-      tmp_host[len] = '\0';
-
-      specified_hostname = tmp_host;
-    }
+  specified_hostname = tmp_host;
 
   this->endpoint_count_ = 1;  // Only one hostname to store
 
@@ -312,7 +271,7 @@ TAO_NIOP_Acceptor::open (TAO_ORB_Core *orb_core,
 
 int
 TAO_NIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
-                                 ACE_Reactor *reactor,
+                                 ACE_Reactor *,
                                  int major,
                                  int minor,
                                  const char *options)
@@ -352,220 +311,8 @@ TAO_NIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
                 1) != 0)
     return -1;
 
-  return 0;//; this->open_i (addr,
-             //          reactor);
-}
-/*
-int
-TAO_NIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
-                           ACE_Reactor *reactor)
-{
-  ACE_NEW_RETURN (this->connection_handler_,
-                  TAO_NIOP_Connection_Handler (this->orb_core_,
-                                               this->lite_flag_),
-                  -1);
-
-  this->connection_handler_->local_addr (addr);
-  this->connection_handler_->open_server ();
-
-  // Register only with a valid handle
-  int const result =
-    reactor->register_handler (this->connection_handler_,
-                               ACE_Event_Handler::READ_MASK);
-  if (result == -1)
-    return result;
-
-  // Connection handler ownership now belongs to the Reactor.
-  this->connection_handler_->remove_reference ();
-
-  ACE_INET_Addr address;
-
-  // We do this make sure the port number the endpoint is listening on
-  // gets set in the addr.
-  if (this->connection_handler_->dgram ().get_local_addr (address) != 0)
-    {
-      if (TAO_debug_level > 0)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("TAO (%P|%t) NIOP_Acceptor::open_i ")
-                    ACE_TEXT ("- %p"),
-                    ACE_TEXT ("cannot get local addr\n")));
-      return -1;
-    }
-
-  // Set the port for each addr.  If there is more than one network
-  // interface then the endpoint created on each interface will be on
-  // the same port.  This is how a wildcard socket bind() is supposed
-  // to work.
-  u_short const port = address.get_port_number ();
-  for (size_t j = 0; j < this->endpoint_count_; ++j)
-    this->addrs_[j].set_port_number (port, 1);
-
-  if (TAO_debug_level > 5)
-    {
-      for (size_t i = 0; i < this->endpoint_count_; ++i)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("\nTAO (%P|%t) NIOP_Acceptor::open_i - ")
-                      ACE_TEXT ("listening on: <%s:%u>\n"),
-                      ACE_TEXT_CHAR_TO_TCHAR (this->hosts_[i]),
-                      this->addrs_[i].get_port_number ()));
-        }
-    }
-
-  return 0;
-} */
-
-int
-TAO_NIOP_Acceptor::hostname (TAO_ORB_Core *orb_core,
-    //                         ACE_INET_Addr &addr,
-                             char *&host,
-                             const char *specified_hostname)
-{
-//  if (orb_core->orb_params ()->use_dotted_decimal_addresses ())
-    {
-      // If dotted decimal addresses are enabled,
-      // just return ours.
-//      return this->dotted_decimal_address (addr, host);
-    }
-//  else
-  if (specified_hostname != 0)
-    {
-      // If the user specified a hostname, pass it back
-      // blindly as it overrides our choice of hostname.
-      host = CORBA::string_dup (specified_hostname);
-    }
-  else
-    {
-//      char tmp_host[MAXHOSTNAMELEN + 1];
-
-      // Get the hostname associated with our address
-  //    if (addr.get_host_name (tmp_host, sizeof (tmp_host)) != 0)
-  //      {
-          // On failure, just return the decimal address.
-    //      return this->dotted_decimal_address (addr, host);
-    //    }
-      //else
-        {
-          host = CORBA::string_dup ("localhost");
-        }
-    }
-
   return 0;
 }
-       /*&
-int
-TAO_NIOP_Acceptor::dotted_decimal_address (ACE_INET_Addr &addr,
-                                           char *&host)
-{
-  const char *tmp = addr.get_host_addr ();
-  if (tmp == 0)
-    {
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("\n\nTAO (%P|%t) ")
-                    ACE_TEXT ("NIOP_Acceptor::dotted_decimal_address ")
-                    ACE_TEXT ("- %p\n\n"),
-                    ACE_TEXT ("cannot determine hostname")));
-      return -1;
-    }
-
-  host = CORBA::string_dup (tmp);
-  return 0;
-}         */
-            /*
-int
-TAO_NIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
-{
-  // Extract the hostname for each network interface, and then cache
-  // it.  The hostnames will then be used when creating a
-  // TAO_NIOP_Profile for each endpoint setup on the probed
-  // network interfaces.
-  ACE_INET_Addr *if_addrs = 0;
-  size_t if_cnt = 0;
-
-  if (ACE::get_ip_interfaces (if_cnt,
-                              if_addrs) != 0
-      && errno != ENOTSUP)
-    {
-      // In the case where errno == ENOTSUP, if_cnt and if_addrs will
-      // not be modified, and will each remain equal to zero.  This
-      // causes the default interface to be used.
-      return -1;
-    }
-
-  if (if_cnt == 0 || if_addrs == 0)
-    {
-      if (TAO_debug_level > 0)
-        {
-          ACE_DEBUG ((LM_WARNING,
-                      ACE_TEXT ("TAO (%P|%t) Unable to probe network ")
-                      ACE_TEXT ("interfaces.  Using default.")));
-        }
-
-      if_cnt = 1; // Force the network interface count to be one.
-      delete [] if_addrs;
-      ACE_NEW_RETURN (if_addrs,
-                      ACE_INET_Addr[if_cnt],
-                      -1);
-    }
-
-  // Scan for the loopback interface since it shouldn't be included in
-  // the list of cached hostnames unless it is the only interface.
-  size_t lo_cnt = 0;  // Loopback interface count
-  for (size_t j = 0; j < if_cnt; ++j)
-    if (if_addrs[j].get_ip_address () == INADDR_LOOPBACK)
-      lo_cnt++;
-
-  // The instantiation for this template is in
-  // tao/NIOP_Connector.cpp.
-  ACE_Auto_Basic_Array_Ptr<ACE_INET_Addr> safe_if_addrs (if_addrs);
-
-  // If the loopback interface is the only interface then include it
-  // in the list of interfaces to query for a hostname, otherwise
-  // exclude it from the list.
-  if (if_cnt == lo_cnt)
-    this->endpoint_count_ = static_cast<CORBA::ULong> (if_cnt);
-  else
-    this->endpoint_count_ = static_cast<CORBA::ULong> (if_cnt - lo_cnt);
-
-  ACE_NEW_RETURN (this->addrs_,
-                  ACE_INET_Addr[this->endpoint_count_],
-                  -1);
-
-  ACE_NEW_RETURN (this->hosts_,
-                  char *[this->endpoint_count_],
-                  -1);
-
-  ACE_OS::memset (this->hosts_, 0, sizeof (char*) * this->endpoint_count_);
-
-  // The number of hosts/interfaces we want to cache may not be the
-  // same as the number of detected interfaces so keep a separate
-  // count.
-  size_t host_cnt = 0;
-
-  for (size_t i = 0; i < if_cnt; ++i)
-    {
-      // Ignore any loopback interface if there are other
-      // non-loopback interfaces.
-      if (if_cnt != lo_cnt &&
-          if_addrs[i].get_ip_address() == INADDR_LOOPBACK)
-        continue;
-
-      if (this->hostname (orb_core,
-                          if_addrs[i],
-                          this->hosts_[host_cnt]) != 0)
-        return -1;
-
-      // Copy the addr.  The port is (re)set in
-      // TAO_NIOP_Acceptor::open_i().
-      if (this->addrs_[host_cnt].set (if_addrs[i]) != 0)
-        return -1;
-
-      host_cnt++;
-    }
-
-  return 0;
-}             */
 
 CORBA::ULong
 TAO_NIOP_Acceptor::endpoint_count (void)
@@ -603,12 +350,10 @@ TAO_NIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
     return -1;
   }
 
-  CORBA::String_var host;
-  CORBA::UShort port = 0;
+  CORBA::String_var uuid;
 
   // Get host and port. No processing here too..
-  if (cdr.read_string (host.out ()) == 0
-      || cdr.read_ushort (port) == 0)
+  if (cdr.read_string (uuid.out ()) == 0)
     {
       if (TAO_debug_level > 0)
         {
