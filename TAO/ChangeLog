@@ -1,3 +1,9 @@
+Tue Aug 22 09:58:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Transport_Conector.cpp:
+          Made some debug statements consistent with the regular
+          way we format things in TAO
+
 Tue Aug 22 09:49:48 UTC 2006  Simon McQueen  <sm@prismtech.com>
 
         * tao/Client_Strategy_Factory.h:
