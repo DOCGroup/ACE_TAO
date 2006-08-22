@@ -1,3 +1,8 @@
+Tue Aug 22 11:27:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Trader/Constraint_Interpreter.cpp:
+          Initialise pointer with 0 to fix gcc4 warning
+
 Tue Aug 22 09:58:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Transport_Conector.cpp:
