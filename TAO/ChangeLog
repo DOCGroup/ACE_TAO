@@ -1,3 +1,18 @@
+Tue Aug 22 20:28:26 UTC 2006  Yan Dai  <dai_y@ociweb.com>
+
+        * tao\PortableServer\DII_Arguments_Converter.cpp:
+        * tao\PortableServer\DII_Arguments_Converter.h:
+        * tao\DynamicInterface\DII_Arguments_Converter_Impl.h:
+        * tao\DynamicInterface\DII_Arguments_Converter_Impl.cpp:
+
+          Made the TAO_DII_Arguments_Converter service object registered
+          when PortableServer is loaded and the TAO_DII_Arguments_Converter_Impl
+          will overwrite the registered "DII_Arguments_Converter" service 
+          object. This would fix failure of dynamic_cast from the service object
+          the TAO_DII_Arguments_Converter object on FC4 with gcc4.x builds. 
+          This should fix the $TAO_ROOT/tests/DII_Collocation_Tests/oneway
+          test failure on FC4 with gcc4.x builds.
+
 Tue Aug 22 19:39:07 UTC 2006  Ciju John  <john@ociweb.com>
 
         * orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/EchoEventConsumerMain.cpp:
