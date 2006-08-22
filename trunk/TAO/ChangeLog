@@ -1,3 +1,9 @@
+Tue Aug 22 09:26:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PI_Server.mpc:
+          Removed invalid -Sc flag, thanks to Simon McQueen for reporting
+          this.
+
 Tue Aug 22 07:45:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Event/ECG_UDP_Out_Endpoint.inl:
