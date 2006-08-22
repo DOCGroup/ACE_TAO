@@ -59,13 +59,39 @@ run_main (int, ACE_TCHAR *[])
                 ACE_TEXT ("No interfaces presently configured in the kernel\n")));
   else
     {
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("there are %d interfaces\n"), how_many));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" there are %d interfaces\n"), how_many));
 
+#if defined (ACE_HAS_IPV6)
+      int num_ipv4 = 0;
+      int num_ipv6 = 0;
+#endif /* ACE_HAS_IPV6 */
       for (size_t i = 0; i < how_many; i++)
+        {
+#if defined (ACE_HAS_IPV6)
+          if (the_addr_array[i].get_type() == AF_INET)
+            ++num_ipv4;
+          else if (the_addr_array[i].get_type() == AF_INET6)
+            ++num_ipv6;
+#endif /* ACE_HAS_IPV6 */
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\t%s\n"),
                     ACE_TEXT_CHAR_TO_TCHAR (the_addr_array[i].get_host_addr ())));
+        }
 
       delete [] the_addr_array;
+
+#if defined (ACE_HAS_IPV6)
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT (" there are %d IPv4 interfaces, ")
+                  ACE_TEXT ("and %d IPv6 interfaces\n"),
+                  num_ipv4, num_ipv6));
+      if (num_ipv6 == 0)
+        {
+          rc = 1;
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT (" Error: At least 1 ipv6 interface ")
+                      ACE_TEXT ("was expected\n")));
+        }
+#endif /* ACE_HAS_IPV6  */
     }
 
   ACE_END_TEST;
