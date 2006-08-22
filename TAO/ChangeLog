@@ -1,3 +1,14 @@
+Tue Aug 22 14:57:18 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/Oneway_Timeouts/client.cpp:
+          Added a test case for transient exceptions. The TAO-specific
+          connection timout causes a connection attempt to give up, which
+          in turn causes the invocation endpoint selector to try
+          connecting to a new endpoint. If no more endpoints are available
+          for connecting, a transient exception is raised. Thus the ORB
+          code is working correctly, but the test was not handing the
+          transient exception as it should.
+
 Tue Aug 22 11:27:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Trader/Constraint_Interpreter.cpp:
