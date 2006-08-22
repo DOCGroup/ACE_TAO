@@ -1,3 +1,30 @@
+Tue Aug 22 15:19:46 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/Sock_Connect.h:
+        * ace/Sock_Connect.cpp:
+
+          Refactored interface discovery code. The methods used to find
+          IPv6 interface addresses is highly platform specific. So much so
+          that the single method was too confusing to maintain. With this
+          patch, the code has been refactored to put each
+          platform-specific variation in its own method, then only compile
+          the method needed by any given platform. I'm not sure this will
+          yield much of a footprint reduction, as all the existing code is
+          still present, it is just easier to keep track of what is going on.
+
+          Also, when IPv6 is enabled, it might be on a platform that is
+          using IPv6 exclusively, ie, with no IPv4 enabled. At least one
+          third-party user of ACE requested a specific test for IPv4
+          enablement status, thus I have added a new method for that test.
+
+        * ace/config-linux.h:
+          Linux supplies the getipaddrs system call.
+
+        * tests/Enum_Interfaces_Test.cpp:
+          Extended the test so that if ACE is built with ACE_HAS_IPV6
+          defined, the test will expect at least one IPv6 endpoint or it
+          will fail.
+
 Tue Aug 22 11:41:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/UUID.{h,cpp}:
