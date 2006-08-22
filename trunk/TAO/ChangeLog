@@ -1,11 +1,16 @@
+Tue Aug 22 07:45:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Out_Endpoint.inl:
+          Added missing include
+
 Mon Aug 21 21:38:15 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * docs/tutorials/Quoter/RTCORBA/Stock_Database.h
         * docs/tutorials/Quoter/RTCORBA/Distributor_i.cpp
         * docs/tutorials/Quoter/RTCORBA/Stock_Database.tpp
-        
+
           Removed a dependancy that the Stock_Database had on IDL.
-        
+
 Mon Aug 21 18:42:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Seq_Var_T.{cpp,inl}:
