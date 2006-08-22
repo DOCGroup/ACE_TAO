@@ -568,15 +568,6 @@ namespace CORBA
     /// Get the ORB core.
     TAO_ORB_Core *orb_core (void) const;
 
-    /**
-     * TAO specific extension to get and set the client ID. The client
-     * id can be set by the application which would be used by the FT
-     * service. As there are no specific interfaces defined in the
-     * spec, we have this proprietary extension.
-     */
-    const ACE_CString &_tao_ft_client_id (void);
-    void _tao_ft_client_id (const char *id);
-
     /// Factory method that creates an ORB.
     static CORBA::ORB_ptr _tao_make_ORB (TAO_ORB_Core * orb_core);
 

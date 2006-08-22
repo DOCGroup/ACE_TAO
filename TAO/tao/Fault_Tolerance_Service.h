@@ -26,11 +26,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Basic_Types.h"
-#include "ace/SString.h"
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-class ACE_Lock;
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -42,12 +37,7 @@ class TAO_ORB_Core;
  *
  * @brief TAO_Fault_Tolerant_Service
  *
- * A collection of ORB & ORB_Core related stuff that is needed at
- * the ORB level. The ORB Core would carry an instance of this
- * class and invoke methods on this.
- * Note: This collection would be really useful when we have
- * logging in  place. The contents of this class can be logged at
- * regular check point intervals.
+ * A class that holds an FT service call back instance.
  */
 class TAO_Export TAO_Fault_Tolerance_Service
 {
@@ -65,38 +55,10 @@ public:
   /// Return the underlying callback object
   TAO_Service_Callbacks *service_callback (void);
 
-  /// Return the underlying <ft_object_id>
-  const ACE_CString &client_id (void);
-
-  /// Set the client id
-  void client_id (const char *id);
-
-  /// Generate and return a new retention id
-  CORBA::Long retention_id (void);
-
 private:
 
   /// hook to callback on to the service
   TAO_Service_Callbacks *ft_service_callback_;
-
-  /// The object id that would be used if the ft service is loaded.
-  ACE_CString ft_object_id_;
-
-  /**
-   * This and the <ft_object_id_> act as unique identifiers for the
-   * request sent from the source Object. Modification of this value
-   * is done by the loaded FT
-   */
-  CORBA::Long ft_object_retention_id_;
-
-  /// Lock for the retention id
-  ACE_Lock *ft_object_retention_id_lock_;
-
-  // NOTE: At a glance this retention id can be easily mistaken for a
-  // request id in a GIOP request. But the purpose served are a lot
-  // more than what a RequestId does for GIOP. So, we have a unique
-  // generator with a lock to protect from different threads accessing
-  // this.
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

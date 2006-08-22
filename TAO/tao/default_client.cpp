@@ -384,18 +384,6 @@ TAO_Default_Client_Strategy_Factory::allow_callback (void)
   return (this->wait_strategy_ != TAO_WAIT_ON_READ);
 }
 
-ACE_Lock *
-TAO_Default_Client_Strategy_Factory::create_ft_service_retention_id_lock (void)
-{
-  ACE_Lock *the_lock = 0;
-
-  ACE_NEW_RETURN (the_lock,
-                  ACE_Lock_Adapter<TAO_SYNCH_MUTEX>,
-                  0);
-
-  return the_lock;
-}
-
 void
 TAO_Default_Client_Strategy_Factory::report_option_value_error (
                                  const ACE_TCHAR* option_name,
