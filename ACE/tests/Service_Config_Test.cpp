@@ -206,16 +206,18 @@ testLimits (int , ACE_TCHAR *[])
   // We cant simply rely on the fact that insertion fails, because it
   // is typical to have no easy way of getting detailed error
   // information from a parser.
-  one.process_directive (svc_desc1);
-  one.process_directive (svc_desc2);
-
-  if (-1 == one.find (ACE_TEXT ("Test_Object_1_More"), 0, 0))
+  int ret1 = one.process_directive (svc_desc1);
+  if (ret1 != 0 ||
+      -1 == one.find (ACE_TEXT ("Test_Object_1_More"), 0, 0))
     {
       ++error;
       ACE_ERROR ((LM_ERROR, ACE_TEXT("Expected to have registered the first service\n")));
     }
 
-  if (-1 != one.find (ACE_TEXT ("Test_Object_2_More"), 0, 0))
+  int ret2 = one.process_directive (svc_desc2);
+
+  if (ret2 == 0 ||
+      -1 != one.find (ACE_TEXT ("Test_Object_2_More"), 0, 0))
     {
       ++error;
       ACE_ERROR ((LM_ERROR, ACE_TEXT("Being able to add more than 1 service was not expected\n")));
@@ -250,8 +252,8 @@ run_main (int argc, ACE_TCHAR *argv[])
 {
   ACE_START_TEST (ACE_TEXT ("Service_Config_Test"));
 
-  testOrderlyInstantialtion (argc, argv);
-  testLoadingServiceConfFile (argc, argv);
+   testOrderlyInstantialtion (argc, argv);
+   testLoadingServiceConfFile (argc, argv);
   testLimits (argc, argv);
 
   ACE_END_TEST;
