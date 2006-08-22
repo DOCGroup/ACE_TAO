@@ -22,7 +22,6 @@
 #include "tao/ORB_Core.h"
 
 #include "ace/Auto_Ptr.h"
-#include <iostream>
 #include <fstream>
 
 const RtecEventComm::EventSourceID MY_SOURCE_ID  = ACE_ES_EVENT_SOURCE_ANY + 1;
@@ -53,28 +52,32 @@ int main (int argc, char* argv[])
           i++;
           ecname = argv[i];
         } else {
-          std::cerr << "Missing Event channel name" << std::endl;
+    ACE_ERROR ((LM_ERROR,
+          "Missing Event channel name\n"));
         }
       } else if (strcmp(argv[i], "-address") == 0) {
         if (argv[i+1] != 0) {
           i++;
           address = argv[i];
         } else {
-          std::cerr << "Missing address" << std::endl;
+    ACE_ERROR ((LM_ERROR,
+          "Missing address\n"));
         }
       } else if (strcmp(argv[i], "-port") == 0) {
         if (argv[i+1] != 0) {
           i++;
           port = ACE_OS::atoi(argv[i]);
         } else {
-          std::cerr << "Missing port" << std::endl;
+    ACE_ERROR ((LM_ERROR,
+          "Missing port\n"));
         }
       } else if (strcmp(argv[i], "-listenport") == 0) {
         if (argv[i+1] != 0) {
           i++;
           listenport = ACE_OS::atoi(argv[i]);
         } else {
-          std::cerr << "Missing port" << std::endl;
+    ACE_ERROR ((LM_ERROR,
+          "Missing port\n"));
         }
       } else if (strcmp(argv[i], "-iorfile") == 0) {
         if (argv[i+1] != 0) {
@@ -145,8 +148,9 @@ int main (int argc, char* argv[])
                                 TAO_ECG_UDP_Sender::create();
     TAO_ECG_UDP_Out_Endpoint endpoint;
     if (endpoint.dgram ().open (ACE_Addr::sap_any) == -1) {
-      std::cerr << "Cannot open send endpoint" << std::endl;
-      return 1;
+      ACE_ERROR_RETURN ((LM_ERROR,
+       "Cannot open send endpoint\n"),
+      1);
     }
 
     // TAO_ECG_UDP_Sender::init() takes a TAO_ECG_Refcounted_Endpoint.
@@ -196,7 +200,8 @@ int main (int argc, char* argv[])
       udp_eh->reactor (orb->orb_core ()->reactor ());
       ACE_INET_Addr local_addr (listenport);
       if (udp_eh->open (local_addr) == -1) {
-        std::cerr << "Cannot open EH" << std::endl;
+  ACE_ERROR ((LM_ERROR,
+        "Cannot open EH\n"));
       }
       ACE_AUTO_PTR_RESET(eh,udp_eh.release(),ACE_Event_Handler);
       //eh.reset(udp_eh.release());
@@ -223,7 +228,8 @@ int main (int argc, char* argv[])
       iorFile << str.in() << std::endl;
       iorFile.close();
     }
-    std::cout << "Starting main loop" << std::endl;
+    ACE_DEBUG ((LM_DEBUG,
+    "Starting main loop\n"));
 
     const int EVENT_DELAY_MS = 10;
 
@@ -239,7 +245,9 @@ int main (int argc, char* argv[])
   }
   catch (CORBA::Exception& exc)
   {
-    std::cerr << "Caught CORBA::Exception" << std::endl << exc << std::endl;
+    ACE_ERROR ((LM_ERROR,
+    "Caught CORBA::Exception\n%s (%s)\n",
+    exc._name (), exc._rep_id ()));
   }
   return 1;
 }

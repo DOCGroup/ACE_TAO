@@ -1,3 +1,17 @@
+Tue Aug 22 19:39:07 UTC 2006  Ciju John  <john@ociweb.com>
+
+        * orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/EchoEventConsumerMain.cpp:
+        * orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/EchoEventSupplierMain.cpp:
+          For increased portability replaced iostream API with ACE IO
+          macros.
+
+        * tao/Wait_On_Read.cpp:
+          If reactor registration fails, the 'is_registered_' flag
+          shouldn't be set.
+
+        * tests/Oneway_Timeouts/client.cpp:
+          Std header <cmath> is contains the signature for std::abs ().
+
 Tue Aug 22 14:57:18 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/Oneway_Timeouts/client.cpp:
