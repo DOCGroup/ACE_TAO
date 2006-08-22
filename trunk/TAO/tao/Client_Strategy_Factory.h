@@ -87,10 +87,6 @@ public:
   /// Does the client allow any form of callback?
   virtual int allow_callback (void);
 
-  /// Create a lock to be used by the TAO_Fault_Tolerant_Service class
-  /// to generate unique retention ids
-  virtual ACE_Lock *create_ft_service_retention_id_lock (void);
-
   /// Cleanup options for wait strategy.
   /**
     * Only applicable to RW wait strategy

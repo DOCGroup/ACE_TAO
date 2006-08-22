@@ -61,7 +61,6 @@ public:
   virtual int allow_callback (void);
   virtual TAO_Wait_Strategy *create_wait_strategy (TAO_Transport *transport);
   virtual TAO_Connect_Strategy *create_connect_strategy (TAO_ORB_Core *);
-  virtual ACE_Lock *create_ft_service_retention_id_lock (void);
   virtual bool use_cleanup_options (void) const;
   virtual Connect_Strategy connect_strategy (void) const;
 
