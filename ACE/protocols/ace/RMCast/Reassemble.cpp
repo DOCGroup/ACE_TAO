@@ -88,7 +88,19 @@ namespace ACE_RMCast
 
             new_msg->add (Profile_ptr (new To (to)));
             new_msg->add (Profile_ptr (new From (from)));
-            new_msg->add (Profile_ptr (new_data.release ()));
+            /*
+             * Heads up... we need to add the new_data to new_msg then
+             * unbind the entry that maps to new_data, which will decrement
+             * its reference count. If the bound/refcounted pointer acted
+             * polymorphically like a regular pointer does, we'd be able to
+             * just pass new_data to add(Profile_Ptr) and it would work.
+             * However, Profile_Ptr and Data_Ptr are not compatible, but
+             * we can use the secret knowledge that both are instances of the
+             * same template and that the pointers they contain really are
+             * hierarchically compatible, and do this funky cast to get
+             * the result we want.
+             */
+            new_msg->add (*(reinterpret_cast<Profile_ptr*> (&new_data)));
 
             map_.unbind (from);
 
