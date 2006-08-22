@@ -1,3 +1,15 @@
+Tue Aug 22 18:37:48 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * bin/MakeProjectCreator/config/ipv6.mpb:
+
+          Building with IPv6 for WinCE requires an additional library for
+          rtti that is not required for the windows builds.
+
+        * bin/ciao_tests.lst:
+        * bin/tao_orb_tests.lst:
+        * bin/tao_other_tests.lst:
+          Added ACE_FOR_TAO exclusions as necessary
+
 Tue Aug 22 15:19:46 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ace/Sock_Connect.h:
