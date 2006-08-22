@@ -25,6 +25,8 @@ Tester::init (void)
 int
 Tester::test (void)
 {
+  int retval = 0;
+
   // Generate UUID
   ACE_Utils::UUID* uuid = ACE_Utils::UUID_GENERATOR::instance ()->generateUUID ();
   ACE_CString uuid_str (uuid->to_string ()->c_str ());
@@ -46,12 +48,24 @@ Tester::test (void)
               "UUID Constructed from above Generated UUID with assign\n %s\n",
               new_uuid_assign.to_string ()->c_str ()));
 
+  if (new_uuid != new_uuid_assign)
+    {
+      ACE_ERROR ((LM_ERROR, "Error: UUIDs are not the same\n"));
+      retval = -1;
+    }
+
   // Generate UUID with process and thread ids.
   ACE_Utils::UUID* uuid_with_tp_id =
     ACE_Utils::UUID_GENERATOR::instance ()->generateUUID (0x0001, 0xc0);
   ACE_DEBUG ((LM_DEBUG,
               "UUID with Thread and Process ID\n %s\n",
               uuid_with_tp_id->to_string ()->c_str ()));
+
+  if (new_uuid == *uuid_with_tp_id)
+    {
+      ACE_ERROR ((LM_ERROR, "Error: UUIDs are the same\n"));
+      retval = -1;
+    }
 
   // Construct UUID from string
   ACE_Utils::UUID new_uuid_with_tp_id (uuid_with_tp_id->to_string ()->c_str ());
@@ -61,7 +75,7 @@ Tester::test (void)
   delete uuid_with_tp_id;
 
 
-  return 0;
+  return retval;
 }
 
 int run_main(int, ACE_TCHAR* [])
