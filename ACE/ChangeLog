@@ -1,3 +1,72 @@
+Tue Aug 22 21:43:34 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+          This change fixes bug#2612.
+
+        * ace/DLL.h:
+        * ace/DLL.cpp:
+
+          Made assignment return 'T&' instead of 'const T&'. Adjusted code
+          formatting and logging messages.
+
+        * ace/DLL_Manager.cpp:
+
+          Fixed formatting.
+
+        * ace/Parse_Node.h:
+        * ace/Parse_Node.cpp:
+
+          Added accessor for the underlying ACE_DLL and adjusted logging.
+
+        * ace/Service_Gestalt.h:
+        * ace/Service_Gestalt.cpp:
+
+          Introduced ACE_Service_Type_DLL_Guard class. As dynamic service
+          objects are loaded, static service objects that come with the
+          same DLL code, may also be registered. The static services
+          however, have no information about the context in which their
+          registration takes place and their relation with the DLL is
+          lost. A situation can easily arise where the dynamic service
+          object is finalized and its DLL - unmapped, but some of the
+          DLL's static services may still be around. Their finalization
+          would not be possible, if the DLL counting that code is gone.
+
+          The guard, when instantiated (on the stack) swaps out the
+          current Gestalt and its service repository, and replaces them
+          with a "sandbox" Gestalt, which has lifetime sufficient for just
+          the current service initialization. Note that this mechanism is
+          effective even in the case where a service initialization causes
+          re-entry into the Gestalt to load and initialize another service
+          as part of the initialization.
+
+          If no action is taken (in case of an error, for instance) the
+          guard destructor will simply finalize all newly initialized
+          service(s) from the sandbox. On the other hand, if
+          initialization is successful the service object descriptors are
+          "relocated" to the original Gestalt.
+
+          During the relocation, all static services are "fixed-up" to
+          hold a reference to the DLL they belong to. Effectively, a
+          static service, initialized via loading of a particular DLL,
+          becomes a dynamic service. Thus the order of service
+          finalization does not matter anymore because the DLL will be
+          help in memory until the last service object it provides is
+          finalized.
+
+        * ace/Service_Object.h:
+        * ace/Service_Object.inl:
+        * ace/Service_Object.cpp:
+
+          Added a relocate method to modify the ACE_DLL each SO has.
+
+        * ace/Service_Repository.h:
+        * ace/Service_Repository.cpp:
+
+          Befrended ACE_Service_Type_DLL_Guard. Adjusted logging.
+
+        * tests/Service_Config_Test.cpp:
+
+          Simplified test case.
+
 Tue Aug 22 18:37:48 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * bin/MakeProjectCreator/config/ipv6.mpb:

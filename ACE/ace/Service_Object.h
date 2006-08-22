@@ -128,6 +128,10 @@ public:
   /// Get to the DLL's implentation
   const ACE_DLL & dll () const;
 
+  /// Use to associate static service object with the DLL that
+  /// contains their destruction/finalization code.
+  void relocate (const ACE_DLL &);
+
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
@@ -139,8 +143,9 @@ private:
   const ACE_Service_Type_Impl *type_;
 
   /// ACE_DLL representing the shared object file (non-zero if
-  /// dynamically linked).
-  mutable ACE_DLL dll_;
+  /// dynamically linked or loaded as part of another dynamically
+  /// linked service).
+  ACE_DLL dll_;
 
   /// 1 if svc is currently active, otherwise 0.
   int active_;
