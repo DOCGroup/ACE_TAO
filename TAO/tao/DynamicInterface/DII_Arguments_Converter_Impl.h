@@ -41,7 +41,6 @@ class TAO_DynamicInterface_Export TAO_DII_Arguments_Converter_Impl
   : public TAO_DII_Arguments_Converter
 {
 public:
-  virtual ~TAO_DII_Arguments_Converter_Impl (void);
 
   virtual void convert ( TAO_ServerRequest & server_request,
                          TAO::Argument * const args[],
@@ -53,7 +52,7 @@ public:
 };
 
 static int
-TAO_Requires_DII_Arguments_Converter_Initializer =
+TAO_Requires_DII_Arguments_Converter_Impl_Initializer =
   TAO_DII_Arguments_Converter_Impl::Initializer ();
 
 TAO_END_VERSIONED_NAMESPACE_DECL
