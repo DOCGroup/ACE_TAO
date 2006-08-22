@@ -188,7 +188,7 @@ order_offer (TAO_Constraint_Evaluator& evaluator,
                    offer_iter.done () == 0;
                    offer_iter.advance (), i++)
                 {
-                  Preference_Info* current_offer;
+                  Preference_Info* current_offer = 0;
                   offer_iter.next (current_offer);
 
                   // Maintain the sorted order in the first partition.
