@@ -44,16 +44,14 @@ TAO_NIOP_Transport::TAO_NIOP_Transport (TAO_NIOP_Connection_Handler *handler,
     {
       // Use the lite version of the protocol
       ACE_NEW (this->messaging_object_,
-               TAO_GIOP_Message_Lite (orb_core,
-                                      ACE_MAX_DGRAM_SIZE));
-                                      }
+               TAO_GIOP_Message_Lite (orb_core));
+    }
   else
     {
       // Use the normal GIOP object
       ACE_NEW (this->messaging_object_,
                TAO_GIOP_Message_Base (orb_core,
-                                      this,
-                                      ACE_MAX_DGRAM_SIZE));
+                                      this));
     }
 
 //@@ MESSAGING_SPL_COMMENT_HOOK_END
