@@ -57,7 +57,7 @@ TAO_Connector::corbaloc_scan (const char *str,
     {
       if (TAO_debug_level)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT("(%P|%t) TAO_CONNECTOR::corbaloc_scan warning: ")
+                    ACE_TEXT("TAO (%P|%t) TAO_Connector::corbaloc_scan warning: ")
                     ACE_TEXT("supplied string contains no comma or slash: %s\n"),
                     str));
       len = ACE_OS::strlen (str);
@@ -304,7 +304,7 @@ TAO_Connector::parallel_connect (TAO::Profile_Transport_Resolver *r,
           if (TAO_debug_level)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("(%P|%t) TAO_Connector::parallel_connect: ")
+                          ACE_TEXT ("TAO (%P|%t) TAO_Connector::parallel_connect: ")
                           ACE_TEXT ("found a transport [%d]\n"),
                           base_transport->id ()));
             }
@@ -361,7 +361,7 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
       if (TAO_debug_level > 4)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT("(%P|%t) Transport_Connector::connect, ")
+                      ACE_TEXT("TAO (%P|%t) Transport_Connector::connect, ")
                       ACE_TEXT("opening Transport[%d] in TAO_CLIENT_ROLE\n"),
                       t->id ()));
         }
@@ -461,7 +461,7 @@ TAO_Connector::wait_for_connection_completion (
   int result = -1;
   if (!r->blocked_connect ())
     {
-      if (transport->connection_handler ()->is_open ()) 
+      if (transport->connection_handler ()->is_open ())
         {
           result = 0;
         }
@@ -490,7 +490,7 @@ TAO_Connector::wait_for_connection_completion (
             }
           result = -1;
         }
-      else 
+      else
         {
           if (TAO_debug_level > 2)
             {
@@ -505,7 +505,7 @@ TAO_Connector::wait_for_connection_completion (
           result = 0;
         }
     }
-  else 
+  else
     {
       if (TAO_debug_level > 2)
         {
@@ -591,7 +591,7 @@ TAO_Connector::wait_for_connection_completion (
   if (TAO_debug_level > 2)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT("(%P|%t) Transport_Connector::")
+                  ACE_TEXT("TAO (%P|%t) Transport_Connector::")
                   ACE_TEXT("wait_for_connection_completion, ")
                   ACE_TEXT("waiting for connection completion on ")
                   ACE_TEXT("%d transports, ["),
@@ -619,7 +619,7 @@ TAO_Connector::wait_for_connection_completion (
       if (TAO_debug_level > 2)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) Transport_Connector::")
+                      ACE_TEXT ("TAO (%P|%t) Transport_Connector::")
                       ACE_TEXT ("wait_for_connection_completion, ")
                       ACE_TEXT ("transport [%d]\n"),
                       the_winner->id ()));
@@ -659,7 +659,7 @@ TAO_Connector::wait_for_connection_completion (
       if (TAO_debug_level > 2)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("(%P|%t) Transport_Connector::")
+                      ACE_TEXT ("TAO (%P|%t) Transport_Connector::")
                       ACE_TEXT ("wait_for_connection_completion, failed\n")
                       ));
         }
@@ -689,7 +689,7 @@ TAO_Connector::wait_for_connection_completion (
     }
 
   // Connection may not ready for SYNC_NONE and SYNC_DELAYED_BUFFERING cases
-  // but we can use this transport, if we need a connected one we will poll 
+  // but we can use this transport, if we need a connected one we will poll
   // later to make sure it is connected
   return true;
 }
