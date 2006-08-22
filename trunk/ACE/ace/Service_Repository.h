@@ -29,6 +29,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Service_Type;
 
 #define ACE_Component_Repository ACE_Service_Repository
+
 /**
  * @class ACE_Service_Repository
  *
@@ -48,6 +49,7 @@ class ACE_Export ACE_Service_Repository
 {
 public:
   friend class ACE_Service_Repository_Iterator;
+  friend class ACE_Service_Type_DLL_Guard;
 
   enum
   {
@@ -138,6 +140,7 @@ private:
               const ACE_Service_Type ** = 0,
               int ignore_suspended = 1) const;
 
+private:
   /// Contains all the configured services.
   const ACE_Service_Type **service_vector_;
 
@@ -147,6 +150,7 @@ private:
   /// Maximum number of services.
   size_t total_size_;
 
+private:
   /// Pointer to a process-wide ACE_Service_Repository.
   static ACE_Service_Repository *svc_rep_;
 
