@@ -5,7 +5,7 @@
 #ifndef ACE_RMCAST_PROTOCOL_H
 #define ACE_RMCAST_PROTOCOL_H
 
-#include "ace/Refcounted_Auto_Ptr.h"
+#include "ace/Bound_Ptr.h"
 
 #include "ace/Vector_T.h"
 #include "ace/Hash_Map_Manager.h"
@@ -68,7 +68,7 @@ namespace ACE_RMCast
   struct Profile;
 
   typedef
-  ACE_Refcounted_Auto_Ptr<Profile, Mutex>
+  ACE_Strong_Bound_Ptr<Profile, Mutex>
   Profile_ptr;
 
   struct Profile
@@ -123,7 +123,8 @@ namespace ACE_RMCast
     Profile_ptr
     clone ()
     {
-      return clone_ ();
+      Profile_ptr p (clone_ ());
+      return p;
     }
 
   protected:
@@ -137,7 +138,7 @@ namespace ACE_RMCast
     {
     }
 
-    virtual Profile_ptr
+    virtual Profile *
     clone_ () = 0;
 
   private:
@@ -240,7 +241,7 @@ namespace ACE_RMCast
   class Message;
 
   typedef
-  ACE_Refcounted_Auto_Ptr<Message, Mutex>
+  ACE_Strong_Bound_Ptr<Message, Mutex>
   Message_ptr;
 
   class Message
@@ -258,7 +259,8 @@ namespace ACE_RMCast
     Message_ptr
     clone ()
     {
-      return new Message (*this);
+      Message_ptr cloned (new Message (*this));
+      return cloned;
     }
 
   protected:
@@ -372,7 +374,7 @@ namespace ACE_RMCast
   struct From;
 
   typedef
-  ACE_Refcounted_Auto_Ptr<From, Mutex>
+  ACE_Strong_Bound_Ptr<From, Mutex>
   From_ptr;
 
   struct From : Profile
@@ -401,11 +403,11 @@ namespace ACE_RMCast
     From_ptr
     clone ()
     {
-      return From_ptr (static_cast<From*> (clone_ ().release ()));
+      return From_ptr (dynamic_cast<From *> (clone_ ()));
     }
 
   protected:
-    virtual Profile_ptr
+    virtual Profile *
     clone_ ()
     {
       return new From (*this);
@@ -456,7 +458,7 @@ namespace ACE_RMCast
   struct To;
 
   typedef
-  ACE_Refcounted_Auto_Ptr<To, Mutex>
+  ACE_Strong_Bound_Ptr<To, Mutex>
   To_ptr;
 
   struct To : Profile
@@ -485,11 +487,11 @@ namespace ACE_RMCast
     To_ptr
     clone ()
     {
-      return To_ptr (static_cast<To*> (clone_ ().release ()));
+      return To_ptr (dynamic_cast<To *> (clone_ ()));
     }
 
   protected:
-    virtual Profile_ptr
+    virtual Profile *
     clone_ ()
     {
       return new To (*this);
@@ -540,7 +542,7 @@ namespace ACE_RMCast
   struct Data;
 
   typedef
-  ACE_Refcounted_Auto_Ptr<Data, Mutex>
+  ACE_Strong_Bound_Ptr<Data, Mutex>
   Data_ptr;
 
   struct Data : Profile
@@ -586,11 +588,11 @@ namespace ACE_RMCast
     Data_ptr
     clone ()
     {
-      return Data_ptr (static_cast<Data*> (clone_ ().release ()));
+      return Data_ptr (dynamic_cast<Data *> (clone_ ()));
     }
 
   protected:
-    virtual Profile_ptr
+    virtual Profile *
     clone_ ()
     {
       return new Data (*this);
@@ -673,7 +675,7 @@ namespace ACE_RMCast
   struct SN;
 
   typedef
-  ACE_Refcounted_Auto_Ptr<SN, Mutex>
+  ACE_Strong_Bound_Ptr<SN, Mutex>
   SN_ptr;
 
   struct SN : Profile
@@ -696,11 +698,11 @@ namespace ACE_RMCast
     SN_ptr
     clone ()
     {
-      return SN_ptr (static_cast<SN*> (clone_ ().release ()));
+      return SN_ptr (dynamic_cast<SN *> (clone_ ()));
     }
 
   protected:
-    virtual Profile_ptr
+    virtual Profile *
     clone_ ()
     {
       return new SN (*this);
@@ -743,7 +745,7 @@ namespace ACE_RMCast
   class NAK;
 
   typedef
-  ACE_Refcounted_Auto_Ptr<NAK, Mutex>
+  ACE_Strong_Bound_Ptr<NAK, Mutex>
   NAK_ptr;
 
   class NAK : public Profile
@@ -799,11 +801,11 @@ namespace ACE_RMCast
     NAK_ptr
     clone ()
     {
-      return NAK_ptr (static_cast<NAK*> (clone_ ().release ()));
+      return NAK_ptr (dynamic_cast<NAK *> (clone_ ()));
     }
 
   protected:
-    virtual Profile_ptr
+    virtual Profile *
     clone_ ()
     {
       return new NAK (*this);
@@ -939,7 +941,7 @@ namespace ACE_RMCast
   struct NRTM;
 
   typedef
-  ACE_Refcounted_Auto_Ptr<NRTM, Mutex>
+  ACE_Strong_Bound_Ptr<NRTM, Mutex>
   NRTM_ptr;
 
   struct NRTM : Profile
@@ -984,11 +986,11 @@ namespace ACE_RMCast
     NRTM_ptr
     clone ()
     {
-      return NRTM_ptr (static_cast<NRTM*> (clone_ ().release ()));
+      return NRTM_ptr (dynamic_cast<NRTM *> (clone_ ()));
     }
 
   protected:
-    virtual Profile_ptr
+    virtual Profile *
     clone_ ()
     {
       return new NRTM (*this);
@@ -1113,7 +1115,7 @@ namespace ACE_RMCast
   struct NoData;
 
   typedef
-  ACE_Refcounted_Auto_Ptr<NoData, Mutex>
+  ACE_Strong_Bound_Ptr<NoData, Mutex>
   NoData_ptr;
 
   struct NoData : Profile
@@ -1135,11 +1137,11 @@ namespace ACE_RMCast
     NoData_ptr
     clone ()
     {
-      return NoData_ptr (static_cast<NoData*> (clone_ ().release ()));
+      return NoData_ptr (dynamic_cast<NoData *> (clone_ ()));
     }
 
   protected:
-    virtual Profile_ptr
+    virtual Profile *
     clone_ ()
     {
       return new NoData (*this);
@@ -1169,7 +1171,7 @@ namespace ACE_RMCast
   struct Part;
 
   typedef
-  ACE_Refcounted_Auto_Ptr<Part, Mutex>
+  ACE_Strong_Bound_Ptr<Part, Mutex>
   Part_ptr;
 
   struct Part : Profile
@@ -1197,11 +1199,11 @@ namespace ACE_RMCast
     Part_ptr
     clone ()
     {
-      return Part_ptr (static_cast<Part*> (clone_ ().release ()));
+      return Part_ptr (dynamic_cast<Part *> (clone_ ()));
     }
 
   protected:
-    virtual Profile_ptr
+    virtual Profile *
     clone_ ()
     {
       return new Part (*this);
