@@ -120,7 +120,7 @@ namespace ACE_RMCast
 
           Profile_ptr nrtm (create_nrtm (max_elem));
 
-          if (nrtm.get ())
+          if (!nrtm.null ())
           {
             Message_ptr m (new Message);
             m->add (nrtm);
@@ -179,7 +179,7 @@ namespace ACE_RMCast
     //
     while (i != e)
     {
-      NAK_ptr nak (new NAK (addr));
+      auto_ptr<NAK> nak (new NAK (addr));
 
       // Inner loop that fills NAK profile with up to max_elem elements.
       //
@@ -355,7 +355,7 @@ namespace ACE_RMCast
   {
     // Prepare NRTM.
     //
-    NRTM_ptr nrtm (new NRTM ());
+    auto_ptr<NRTM> nrtm (new NRTM ());
 
     // Gather the information.
     //

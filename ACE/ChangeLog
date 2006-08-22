@@ -1,3 +1,27 @@
+Tue Aug 22 22:52:41 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * protocols/ace/RMCast/Protocol.h: Replaced use of
+          ACE_Refcounted_Auto_Ptr with ACE_Strong_Bound_Ptr. Code formerly used
+          ACE_Refcounted_Auto_Ptr::release() with the assumption it had the
+          same semantics as auto_ptr::release() - stealing the pointer away.
+          This used to work by accident. The fixed ACE_Refcounted_Auto_Ptr's
+          release() method decrements the reference count which may cause the
+          object to be deleted, which is what happened all the time in the
+          RMCast protocol's clone() methods. Because all the clone() methods
+          relied on being able to take a more-derived pointer and use it as
+          a Profile*, changing the refcounted pointer type necessitated
+          changing the protected clone_() methods to return a naked pointer
+          rather than a refcounted one. This is acceptable because the naked
+          pointer is not exposed to class users; the public methods insert
+          the naked pointer into a ACE_Strong_Bound_Ptr before giving access
+          to it externally.
+
+        * protocols/ace/RMCast/Acknowledge.cpp:
+        * protocols/ace/RMCast/Reassemble.cpp: With properly functioning
+          refcounted pointers (see above) these needed a few changes to
+          make proper use of the pointers while maintaining correct reference
+          counts.
+
 Tue Aug 22 21:43:34 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
           This change fixes bug#2612.
