@@ -1302,18 +1302,6 @@ TAO::ORB::init_orb_globals (ACE_ENV_SINGLE_ARG_DECL)
     ::TAO_unexpected_exception_handler);
 }
 
-const ACE_CString &
-CORBA::ORB::_tao_ft_client_id (void)
-{
-  return this->orb_core ()->fault_tolerance_service ().client_id ();
-}
-
-void
-CORBA::ORB::_tao_ft_client_id (const char *id)
-{
-  this->orb_core ()->fault_tolerance_service ().client_id (id);
-}
-
 CORBA::ORB_ptr
 CORBA::ORB::_tao_make_ORB (TAO_ORB_Core * orb_core)
 {

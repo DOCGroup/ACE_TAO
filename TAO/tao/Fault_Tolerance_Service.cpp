@@ -18,7 +18,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO_Fault_Tolerance_Service::~TAO_Fault_Tolerance_Service (void)
 {
   delete this->ft_service_callback_;
-  delete this->ft_object_retention_id_lock_;
 }
 
 void
@@ -36,31 +35,7 @@ TAO_Fault_Tolerance_Service::init (TAO_ORB_Core *orb_core)
         this->ft_service_callback_ = service->activate_services (orb_core);
     }
 
-  // If we have a valid service then we instantiate our lock and the
-  // client id
-  if (this->ft_service_callback_)
-    {
-      // Initialize the lock
-      this->ft_object_retention_id_lock_ =
-        orb_core->client_factory ()
-          ->create_ft_service_retention_id_lock ();
-
-      // Initialize the client id
-      this->ft_object_id_ = "TAO_Client";
-    }
-
   return;
-}
-
-CORBA::Long
-TAO_Fault_Tolerance_Service::retention_id (void)
-{
-  ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
-                            guard,
-                            *this->ft_object_retention_id_lock_,
-                            0));
-
-  return ++this->ft_object_retention_id_;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

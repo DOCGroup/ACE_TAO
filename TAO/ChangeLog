@@ -1,3 +1,17 @@
+Tue Aug 22 09:49:48 UTC 2006  Simon McQueen  <sm@prismtech.com>
+
+        * tao/Client_Strategy_Factory.h:
+        * tao/Client_Strategy_Factory.cpp:
+        * tao/Fault_Tolerance_Service.h:
+        * tao/Fault_Tolerance_Service.inl:
+        * tao/Fault_Tolerance_Service.cpp:
+        * tao/ORB.h:
+        * tao/ORB.cpp:
+        * tao/default_client.h:
+        * tao/default_client.cpp:
+
+          Remove spurious FT methods. This fixes bug #2644.
+
 Tue Aug 22 09:26:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PI_Server.mpc:
