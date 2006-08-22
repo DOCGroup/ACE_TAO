@@ -1,3 +1,11 @@
+Tue Aug 22 11:41:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/UUID.{h,cpp}:
+          Implemented copy constructor
+
+        * tests/UUIDTest.cpp:
+          Test copy constructor
+
 Tue Aug 22 09:36:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/UUID.{h,inl}:
