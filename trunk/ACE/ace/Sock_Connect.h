@@ -61,14 +61,6 @@ namespace ACE
   extern ACE_Export int get_ip_interfaces (size_t &count,
                                            ACE_INET_Addr *&addr_array);
 
-  /**
-   * Helper routine for get_ip_interfaces, differs by UNIX platform so
-   * put into own subroutine.  perform some ioctls to retrieve ifconf
-   * list of ifreq structs.
-   */
-  extern ACE_Export int count_interfaces (ACE_HANDLE handle,
-                               size_t &how_many);
-
   /// Routine to return a handle from which @c ioctl requests can be
   /// made.  Caller must close the handle.
   extern ACE_Export ACE_HANDLE get_handle (void);
@@ -81,6 +73,7 @@ namespace ACE
    * returning 1 if it succeeds, and 0 if it fails. Caches the result
    * so it only gets checked once.
    */
+  extern ACE_Export int ipv4_enabled (void);
   extern ACE_Export int ipv6_enabled (void);
 }
 
