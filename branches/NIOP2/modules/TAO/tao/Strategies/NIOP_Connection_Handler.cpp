@@ -29,8 +29,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_NIOP_Connection_Handler::TAO_NIOP_Connection_Handler (ACE_Thread_Manager *t)
   : TAO_NIOP_SVC_HANDLER (t, 0 , 0),
-    TAO_Connection_Handler (0),
-    dscp_codepoint_ (IPDSFIELD_DSCP_DEFAULT << 2)
+    TAO_Connection_Handler (0)
 {
   // This constructor should *never* get called, it is just here to
   // make the compiler happy: the default implementation of the
@@ -43,9 +42,7 @@ TAO_NIOP_Connection_Handler::TAO_NIOP_Connection_Handler (ACE_Thread_Manager *t)
 
 TAO_NIOP_Connection_Handler::TAO_NIOP_Connection_Handler (TAO_ORB_Core *orb_core,
                                                           CORBA::Boolean flag)
-  : TAO_NIOP_SVC_HANDLER (orb_core->thr_mgr (), 0, 0),
-    TAO_Connection_Handler (orb_core),
-    dscp_codepoint_ (IPDSFIELD_DSCP_DEFAULT << 2)
+  : TAO_NIOP_SVC_HANDLER (orb_core->thr_mgr (), 0, 0), TAO_Connection_Handler (orb_core)
 {
   TAO_NIOP_Transport* specific_transport = 0;
   ACE_NEW (specific_transport,
@@ -59,17 +56,18 @@ TAO_NIOP_Connection_Handler::TAO_NIOP_Connection_Handler (TAO_ORB_Core *orb_core
 TAO_NIOP_Connection_Handler::~TAO_NIOP_Connection_Handler (void)
 {
   delete this->transport ();
-  this->udp_socket_.close ();
+//  this->udp_socket_.close ();
 }
 
 // NIOP Additions - Begin
 ACE_HANDLE
 TAO_NIOP_Connection_Handler::get_handle (void) const
 {
-  return this->udp_socket_.get_handle ();
+  return ACE_INVALID_HANDLE;
+  //return this->udp_socket_.get_handle ();
 }
 
-
+                           /*
 const ACE_INET_Addr &
 TAO_NIOP_Connection_Handler::addr (void)
 {
@@ -102,7 +100,7 @@ const ACE_SOCK_Dgram &
 TAO_NIOP_Connection_Handler::dgram (void)
 {
   return this->udp_socket_;
-}
+}                            */
 // NIOP Additions - End
 
 int
@@ -122,16 +120,16 @@ TAO_NIOP_Connection_Handler::open (void*)
 
   ACE_DECLARE_NEW_CORBA_ENV;
 
-  this->udp_socket_.open (this->local_addr_);
+//  this->udp_socket_.open (this->local_addr_);
 
-  if (TAO_debug_level > 5)
+/*  if (TAO_debug_level > 5)
   {
      ACE_DEBUG ((LM_DEBUG,
                  ACE_TEXT("\nTAO (%P|%t) TAO_NIOP_Connection_Handler::open -")
                  ACE_TEXT("listening on: <%s:%u>\n"),
                  ACE_TEXT_CHAR_TO_TCHAR (this->local_addr_.get_host_name ()),
                  this->local_addr_.get_port_number ()));
-  }
+  }*/
 
   // Set that the transport is now connected, if fails we return -1
   // Use C-style cast b/c otherwise we get warnings on lots of
@@ -148,7 +146,7 @@ TAO_NIOP_Connection_Handler::open (void*)
 int
 TAO_NIOP_Connection_Handler::open_server (void)
 {
-  this->udp_socket_.open (this->local_addr_);
+/*  this->udp_socket_.open (this->local_addr_);
   if( TAO_debug_level > 5)
   {
      ACE_DEBUG ((LM_DEBUG,
@@ -158,7 +156,7 @@ TAO_NIOP_Connection_Handler::open_server (void)
                  this->local_addr_.get_port_number ()
                ));
   }
-
+  */
   this->transport ()->id ((size_t) this->get_handle ());
 
   return 0;
@@ -185,7 +183,7 @@ TAO_NIOP_Connection_Handler::handle_input (ACE_HANDLE h)
 int
 TAO_NIOP_Connection_Handler::handle_output (ACE_HANDLE handle)
 {
-  int result =
+  int const result =
     this->handle_output_eh (handle, this);
 
   if (result == -1)
@@ -229,48 +227,6 @@ int
 TAO_NIOP_Connection_Handler::release_os_resources (void)
 {
   return this->peer ().close ();
-}
-
-int
-TAO_NIOP_Connection_Handler::set_dscp_codepoint (CORBA::Boolean set_network_priority)
-{
-  int tos = IPDSFIELD_DSCP_DEFAULT << 2;
-
-  if (set_network_priority)
-    {
-      TAO_Protocols_Hooks *tph =
-        this->orb_core ()->get_protocols_hooks ();
-
-      CORBA::Long codepoint =
-        tph->get_dscp_codepoint ();
-
-      tos = (int)(codepoint) << 2;
-    }
-
-  if (tos != this->dscp_codepoint_)
-    {
-      int result = this->dgram ().set_option (IPPROTO_IP,
-                                              IP_TOS,
-                                              (int *) &tos ,
-                                              (int) sizeof (tos));
-
-      if (TAO_debug_level)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      "TAO (%P|%t) - NIOP_Connection_Handler::"
-                      "set_dscp_codepoint -> dscp: %x; result: %d; %s\n",
-                      tos,
-                      result,
-                      result == -1 ? "try running as superuser" : ""));
-        }
-
-      // On successful setting of TOS field.
-      if (result == 0)
-        this->dscp_codepoint_ = tos;
-
-    }
-
-  return 0;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

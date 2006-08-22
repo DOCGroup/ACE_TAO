@@ -108,6 +108,8 @@ TAO_NIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
   if (NIOP_endpoint == 0)
     return 0;
 
+    // no remote connection possible
+  return 0;
 //  const ACE_INET_Addr &remote_address =
 //    NIOP_endpoint->object_addr ();
 

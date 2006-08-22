@@ -107,7 +107,7 @@ public:
    *
    */
   //@{
-  ACE_HANDLE get_handle (void) const;
+  ACE_HANDLE get_handle (void) const;/*
 
   const ACE_INET_Addr &addr (void);
 
@@ -126,7 +126,7 @@ public:
   // NIOP Additions - End
 
   /// Set Diff-Serv codepoint on outgoing packets.
-  int set_dscp_codepoint (CORBA::Boolean set_network_priority);
+  int set_dscp_codepoint (CORBA::Boolean set_network_priority);*/
 
 protected:
 
@@ -143,19 +143,19 @@ protected:
    *
    */
   //@{
-  ACE_SOCK_Dgram udp_socket_;
+//  ACE_SOCK_Dgram udp_socket_;
 
   /// This is always the remote address
-  ACE_INET_Addr addr_;
+//  ACE_INET_Addr addr_;
 
   /// This is always the local address for the connector
-  ACE_INET_Addr local_addr_;
+//  ACE_INET_Addr local_addr_;
   //@}
   // NIOP Additions - End
 
 private:
   /// Stores the type of service value.
-  int dscp_codepoint_;
+//  int dscp_codepoint_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
