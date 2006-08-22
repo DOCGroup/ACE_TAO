@@ -13,11 +13,18 @@ namespace CIAO
   namespace Plan_Launcher
   {
     // deployment plan URL
-    const char* package_url = 0;
+    const char* deployment_plan_url = 0;
+    bool use_package_name = true;
+    const char* package_names = 0;
+    const char* package_types = 0;
     const char* new_package_url = 0;
     const char* plan_uuid = 0;
-    bool use_naming = false;
-    const char* ior_file = "file://em.ior";
+    bool em_use_naming = false;
+    const char* em_ior_file = "file://em.ior";
+    bool rm_use_naming = false;
+    bool use_repoman = false;
+    const char* rm_ior_file = "file://rm.ior";
+    const char* repoman_name_ = "RepositoryManager";
     const char* dap_ior_filename = 0;
     const char* dap_ior = 0;
 
@@ -37,11 +44,16 @@ namespace CIAO
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("[(%P|%t) Executor] Usage: %s\n")
-                  ACE_TEXT ("-p <PACKAGE_URI>\n")
+                  ACE_TEXT ("-p <PACKAGE_NAMES>\n")
+                  ACE_TEXT ("-e <PACKAGE_TYPES>\n")
+                  ACE_TEXT ("-d <DEPLOYMENT_PLAN_URL>\n")
+                  ACE_TEXT ("-n : Use naming service to fetch EM")
                   ACE_TEXT ("-k <EXECUTION_MANAGER_IOR>")
                   ACE_TEXT (" : Default file://em.ior\n")
-                  ACE_TEXT ("-n : Use naming service to fetch")
-                  ACE_TEXT (" Execution Manager IOR Alternative to -k\n")
+                  ACE_TEXT ("-l <REPOSITORY_MANAGER_IOR>")
+                  ACE_TEXT (" : Default file://rm.ior\n")
+                  ACE_TEXT ("-v <REPOSITORY_MANAGER_NAME>: Use naming service to fetch RM with the given name")
+                  ACE_TEXT (" : Default RepositoryManager\n")
                   ACE_TEXT ("-t <PLAN_UUID>\n")
                   ACE_TEXT ("-o <DOMAIN_APPLICATION_MANAGER_IOR_OUTPUT_FILE>\n")
                   ACE_TEXT ("-i <DOMAIN_APPLICATION_MANAGER_IOR_FOR_INPUT>\n")
@@ -56,7 +68,7 @@ namespace CIAO
     {
       ACE_Get_Opt get_opt (argc,
                            argv,
-                           ACE_TEXT ("p:nk:t:o:i:r:h"));
+                           ACE_TEXT ("p:e:d:nk:l:v:t:o:i:r:h"));
       int c;
 
       while ((c = get_opt ()) != EOF)
@@ -64,13 +76,30 @@ namespace CIAO
           switch (c)
             {
             case 'p':
-              package_url = get_opt.opt_arg ();
+              package_names = get_opt.opt_arg ();
+              use_package_name = true;
+              break;
+            case 'e':
+              package_types = get_opt.opt_arg ();
+              use_package_name = false;
+              break;
+            case 'd':
+              deployment_plan_url = get_opt.opt_arg ();
               break;
             case 'n':
-              use_naming = true;
+              em_use_naming = true;
               break;
             case 'k':
-              ior_file = get_opt.opt_arg ();
+              em_ior_file = get_opt.opt_arg ();
+              break;
+            case 'l':
+              use_repoman = true;
+              rm_ior_file = get_opt.opt_arg ();
+              break;
+            case 'v':
+              use_repoman = true;
+              rm_use_naming = true;
+              repoman_name_ = get_opt.opt_arg ();
               break;
             case 'o':
               dap_ior_filename = get_opt.opt_arg ();
@@ -97,8 +126,10 @@ namespace CIAO
 
       if ((mode != pl_mode_stop_by_dam) &&
           (mode != pl_mode_stop_by_uuid) &&
-          (package_url == 0) &&
-          (new_package_url ==0))
+          (package_names == 0) &&
+          (package_types == 0) &&
+          (deployment_plan_url == 0) &&
+          (new_package_url == 0))
         {
           usage (argv[0]);
           return false;
@@ -155,11 +186,13 @@ namespace CIAO
           if (parse_args (argc, argv) == false)
             return -1;
 
-
           Plan_Launcher_i launcher;
 
-          if (!launcher.init (use_naming ? 0 : ior_file,
-                              orb.in ()))
+          if (!launcher.init (em_use_naming ? 0 : em_ior_file,
+                              orb.in (),
+                              use_repoman,
+                              rm_use_naming,
+                              rm_use_naming ? repoman_name_ : rm_ior_file))
             {
               ACE_ERROR ((LM_ERROR, "(%P|%t) Plan_Launcher: Error initializing the EM.\n"));
               return -1;
@@ -169,7 +202,18 @@ namespace CIAO
 
           if (mode == pl_mode_start || mode == pl_mode_interactive)  // initial deployment
             {
-              const char* uuid = launcher.launch_plan (package_url);
+              const char* uuid;
+
+              if (package_names != 0)
+                uuid = launcher.launch_plan (deployment_plan_url,
+                                                         package_names,
+                                                         use_package_name,
+                                                         use_repoman);
+              else
+                uuid = launcher.launch_plan (deployment_plan_url,
+                                                         package_types,
+                                                         use_package_name,
+                                                         use_repoman);
 
               if (uuid == 0)
                 {

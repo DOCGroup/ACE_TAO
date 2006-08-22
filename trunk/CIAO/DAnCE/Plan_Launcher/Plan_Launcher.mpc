@@ -11,11 +11,15 @@ project(Plan_Launcher_Impl) : ciao_servant_dnc, ciao_config_handlers {
   Source_Files {
     Plan_Launcher_Impl.cpp
     ../ExecutionManager/DAM_Map.cpp
+    PCVisitor.cpp
+    PCVisitorBase.cpp
   }
 
   Header_Files {
     ../ExecutionManager/DAM_Map.h
     Plan_Launcher_Impl_Export.h
+    PCVisitor.h
+    PCVisitorBase.h
   }
 }
 
