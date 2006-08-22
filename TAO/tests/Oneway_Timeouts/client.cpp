@@ -9,6 +9,8 @@
 #include "ace/High_Res_Timer.h"
 #include "ace/Arg_Shifter.h"
 
+#include <cmath>
+
 using namespace CORBA;
 using namespace PortableServer;
 

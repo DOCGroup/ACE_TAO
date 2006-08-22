@@ -11,7 +11,6 @@
 #include <orbsvcs/Event_Utilities.h>
 #include <orbsvcs/CosNamingC.h>
 
-#include <iostream>
 const RtecEventComm::EventSourceID MY_SOURCE_ID  = ACE_ES_EVENT_SOURCE_ANY + 1;
 const RtecEventComm::EventType     MY_EVENT_TYPE = ACE_ES_EVENT_UNDEFINED + 1;
 
@@ -30,7 +29,8 @@ int main (int argc, char* argv[])
         if (argv[i+1] != 0) {
           ecname = argv[i+1];
         } else {
-          std::cerr << "Missing Event channel name" << std::endl;
+    ACE_ERROR ((LM_ERROR,
+          "Missing Event channel name\n"));
         }
       }
     }
@@ -46,10 +46,12 @@ int main (int argc, char* argv[])
     RtecEventChannelAdmin::EventChannel_var ec =
       RtecEventChannelAdmin::EventChannel::_narrow(obj.in());
     if (CORBA::is_nil(ec.in())) {
-      std::cerr << "Could not narrow EchoEventChannel." << std::endl;
-      return 1;
+      ACE_ERROR_RETURN ((LM_ERROR,
+       "Could not narrow EchoEventChannel.\n"),
+      1);
     }
-    std::cout << "EchoEventConsumerMain.cpp: Found the EchoEventChannel." << std::endl;
+    ACE_DEBUG ((LM_DEBUG,
+    "EchoEventConsumerMain.cpp: Found the EchoEventChannel.\n"));
 
     // Obtain a reference to the consumer administration object.
     RtecEventChannelAdmin::ConsumerAdmin_var admin = ec->for_consumers();
@@ -84,7 +86,8 @@ int main (int argc, char* argv[])
     PortableServer::POAManager_var poa_manager = poa->the_POAManager();
     poa_manager->activate();
 
-    std::cout << "EchoEventConsumerMain.cpp: Ready to receive events..." << std::endl;
+    ACE_DEBUG ((LM_DEBUG,
+    "EchoEventConsumerMain.cpp: Ready to receive events...\n"));
 
     // Enter the ORB event loop.
     orb->run();
@@ -102,7 +105,9 @@ int main (int argc, char* argv[])
   }
   catch (CORBA::Exception& exc)
   {
-    std::cerr << "Caught CORBA::Exception" << std::endl << exc << std::endl;
+    ACE_ERROR ((LM_ERROR,
+    "Caught CORBA::Exception\n%s (%s)\n",
+    exc._name (), exc._rep_id ()));
   }
 
   return 1;
