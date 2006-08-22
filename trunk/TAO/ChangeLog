@@ -100,7 +100,6 @@ Mon Aug 21 16:28:51 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
           being a redesign on the Stock_Database to make is more generic
           and easily plugged into other Quoter examples.
 
->>>>>>> .r74150
 Mon Aug 21 10:07:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Portable_Interceptors/Bug_2510_Regression/*:
