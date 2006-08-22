@@ -54,6 +54,18 @@ Tester::test (void)
       retval = -1;
     }
 
+  // Construct UUID using the copy constructor
+  ACE_Utils::UUID new_uuid_copy (new_uuid);
+  ACE_DEBUG ((LM_DEBUG,
+              "UUID Constructed from above Generated UUID with copy\n %s\n",
+              new_uuid_copy.to_string ()->c_str ()));
+
+  if (new_uuid != new_uuid_copy)
+    {
+      ACE_ERROR ((LM_ERROR, "Error: UUIDs are not the same with copy\n"));
+      retval = -1;
+    }
+
   // Generate UUID with process and thread ids.
   ACE_Utils::UUID* uuid_with_tp_id =
     ACE_Utils::UUID_GENERATOR::instance ()->generateUUID (0x0001, 0xc0);
