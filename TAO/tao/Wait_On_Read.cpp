@@ -103,8 +103,10 @@ TAO_Wait_On_Read::wait (ACE_Time_Value * max_wait_time,
                         ACE_TEXT ("registration with reactor returned an error \n"),
                          this->transport_->id ()));
         }
-
-       this->is_registered_ = true;
+       else {
+   // Only set this flag when registration succeeds
+   this->is_registered_ = true;
+       }
 
        return 0;
      }
