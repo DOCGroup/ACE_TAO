@@ -28,75 +28,23 @@ ACE_RCSID (Strategies,
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_NIOP_Endpoint::TAO_NIOP_Endpoint (const ACE_Utils::UUID& uuid)
-  : TAO_Endpoint (TAO_TAG_NIOP_PROFILE
-                  )//priority)
-    , uuid_ ()
+  : TAO_Endpoint (TAO_TAG_NIOP_PROFILE)
+    , uuid_ (uuid)
     , next_ (0)
 {
-  const ACE_CString * to_string = (const_cast <ACE_Utils::UUID&>(uuid)).to_string ();
-  uuid_.from_string (*to_string);
 }
 
 TAO_NIOP_Endpoint::TAO_NIOP_Endpoint (void)
   : TAO_Endpoint (TAO_TAG_NIOP_PROFILE),
     uuid_ (),
-//    object_addr_ (),
-  //  object_addr_set_ (0),
     next_ (0)
 {
 }
-              /*
-TAO_NIOP_Endpoint::TAO_NIOP_Endpoint (const char *host,
-                                      CORBA::UShort port,
-                                      CORBA::Short priority)
-  : TAO_Endpoint (TAO_TAG_NIOP_PROFILE),
-    host_ (),
-    port_ (port),
-    object_addr_ (),
-    object_addr_set_ (0),
-    next_ (0)
-{
-  if (host != 0)
-    this->host_ = host;
 
-  this->priority (priority);
-}
-                */
 TAO_NIOP_Endpoint::~TAO_NIOP_Endpoint (void)
 {
 
 }
-
-/*int
-TAO_NIOP_Endpoint::set (const ACE_INET_Addr &addr,
-                        int use_dotted_decimal_addresses)
-{
-  char tmp_host[MAXHOSTNAMELEN + 1];
-
-  if (use_dotted_decimal_addresses
-      || addr.get_host_name (tmp_host, sizeof (tmp_host)) != 0)
-    {
-      const char *tmp = addr.get_host_addr ();
-      if (tmp == 0)
-        {
-          if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("\n\nTAO (%P|%t) ")
-                        ACE_TEXT ("NIOP_Endpoint::set ")
-                        ACE_TEXT ("- %p\n\n"),
-                        ACE_TEXT ("cannot determine hostname")));
-          return -1;
-        }
-      else
-        this->host_ = tmp;
-    }
-  else
-    this->host_ = CORBA::string_dup (tmp_host);
-
-  this->port_ = addr.get_port_number();
-
-  return 0;
-} */
 
 int
 TAO_NIOP_Endpoint::addr_to_string (char *buffer, size_t length)

@@ -27,7 +27,6 @@
 
 #include "tao/Strategies/strategies_export.h"
 #include "tao/Endpoint.h"
-#include "tao/CORBA_String.h"
 #include "ace/UUID.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -85,7 +84,6 @@ public:
   const ACE_Utils::UUID& uuid (void) const;
 
 private:
-
   /// UUID uniquely identifying this NIOP endpoint
   mutable ACE_Utils::UUID uuid_;
 
