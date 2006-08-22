@@ -84,6 +84,8 @@ namespace ACE_Utils
     /// Constructs a UUID from a string representation.
     UUID (const ACE_CString& uuidString);
 
+    UUID (const UUID &right);
+
     // Destructor
     ~UUID (void);
 
@@ -132,9 +134,6 @@ namespace ACE_Utils
   private:
     void from_string_i (const ACE_CString& uuidString);
 
-    // Copy constructor and assignment operator were not implemented
-    // correctly, so I removed their implementation as an easy solution.
-    UUID (const UUID&);
     UUID& operator= (const UUID&);
 
     /// Data Members for Class Attributes

@@ -83,6 +83,18 @@ namespace ACE_Utils
     this->from_string_i (uuid_string);
   }
 
+  UUID::UUID(const UUID &right)
+    : timeLow_ (right.timeLow_),
+      timeMid_ (right.timeMid_),
+      timeHiAndVersion_ (right.timeHiAndVersion_),
+      clockSeqHiAndReserved_ (right.clockSeqHiAndReserved_),
+      clockSeqLow_ (right.clockSeqLow_),
+      as_string_ (0)
+  {
+    ACE_NEW (node_,
+             UUID_node (*right.node_));
+  }
+
   UUID::~UUID (void)
   {
     if (node_release_)
