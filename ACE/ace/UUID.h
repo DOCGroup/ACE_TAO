@@ -44,8 +44,8 @@ namespace ACE_Utils
     void nodeID (NodeID&);
 
     ///// Equality Operations
-    //bool operator == (const UUID_node& right) const;
-    //bool operator != (const UUID_node& right) const;
+    bool operator == (const UUID_node& right) const;
+    bool operator != (const UUID_node& right) const;
 
     ///// Relational Operations
     //bool operator <  (const UUID_node& right) const;
@@ -87,22 +87,22 @@ namespace ACE_Utils
     // Destructor
     ~UUID (void);
 
-    ACE_UINT32 timeLow (void);
+    ACE_UINT32 timeLow (void) const;
     void timeLow (ACE_UINT32);
 
-    ACE_UINT16 timeMid (void);
+    ACE_UINT16 timeMid (void) const;
     void timeMid (ACE_UINT16);
 
-    ACE_UINT16 timeHiAndVersion (void);
+    ACE_UINT16 timeHiAndVersion (void) const;
     void timeHiAndVersion (ACE_UINT16);
 
-    u_char clockSeqHiAndReserved (void);
+    u_char clockSeqHiAndReserved (void) const;
     void clockSeqHiAndReserved (u_char);
 
-    u_char clockSeqLow (void);
+    u_char clockSeqLow (void) const;
     void clockSeqLow (u_char);
 
-    UUID_node* node (void);
+    UUID_node* node (void) const;
     void node (UUID_node*);
 
     ACE_CString* thr_id (void);
@@ -120,8 +120,8 @@ namespace ACE_Utils
     static UUID NIL_UUID;
 
     /// Equality Operations
-    //bool operator== (const UUID &right) const;
-    //bool operator!= (const UUID &right) const;
+    bool operator== (const UUID &right) const;
+    bool operator!= (const UUID &right) const;
 
     /// Relational Operations
     //bool operator<  (const UUID &right) const;

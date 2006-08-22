@@ -1,3 +1,12 @@
+Tue Aug 22 09:36:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/UUID.{h,inl}:
+          Made the accessors const and reimplemented operator == and
+          operator !=.
+
+        * tests/UUIDTest.cpp:
+          Test the operator != and ==.
+
 Mon Aug 21 20:46:43 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * configure.ac: Modified the check for the net/if.h header file
