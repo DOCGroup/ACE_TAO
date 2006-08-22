@@ -180,7 +180,7 @@ namespace
           }
         else
           {
-            cerr << "Error: Unknown argument \"" 
+            cerr << "Error: Unknown argument \""
                  << args.get_current () << "\"" << endl;
             print_usage ();
             return false;
@@ -200,7 +200,7 @@ namespace
     POA_var root = POA::_narrow (obj.in ());
     ACE_ASSERT (! is_nil (root.in ()));
     POAManager_var man = root->the_POAManager ();
-    poa = root->create_POA ("X", man.in (), pols); 
+    poa = root->create_POA ("X", man.in (), pols);
     return poa._retn ();
   }
 
@@ -420,7 +420,7 @@ int main (int ac, char *av[])
         }
 
 
-      // Let the server know we're finished. 
+      // Let the server know we're finished.
       tester->test2 (-1);
 
       orb->shutdown (1);
@@ -437,14 +437,52 @@ int main (int ac, char *av[])
       return 0;
 
     }
+  catch (CORBA::TRANSIENT &ex)
+    {
+      if (force_timeout)
+        {
+          ACE_Time_Value after = ACE_High_Res_Timer::gettimeofday_hr ();
+          long ms = (after - before).msec ();
+          if ( (use_twoway || !use_sync_scope)
+              && request_timeout > 0
+              && request_timeout < connect_timeout)
+            {
+              connect_timeout = request_timeout;
+            }
+          else if (use_sync_scope && !use_sleep)
+            {
+              if (ms > TIME_THRESHOLD)
+                {
+                  cerr << "Error: Buffered request took " << ms << endl;
+                  return 1;
+                }
+
+              ms = num_requests_sent * request_interval;
+            }
+
+          if (std::abs (static_cast<int>(ms - connect_timeout))
+              > TIME_THRESHOLD)
+            {
+              cerr << "Error: Timeout expected in " << connect_timeout
+                   << "ms, but took " << ms << "ms" << endl;
+              return 1;
+            }
+
+          return 0;
+        }
+      else
+        {
+          cerr << "Error: Unexpected transient\n" << ex << endl;
+        }
+    }
   catch (CORBA::TIMEOUT &ex)
     {
       if (force_timeout)
         {
           ACE_Time_Value after = ACE_High_Res_Timer::gettimeofday_hr ();
           long ms = (after - before).msec ();
-          if ( (use_twoway || !use_sync_scope) 
-              && request_timeout > 0 
+          if ( (use_twoway || !use_sync_scope)
+              && request_timeout > 0
               && request_timeout < connect_timeout)
             {
               connect_timeout = request_timeout;
@@ -479,9 +517,9 @@ int main (int ac, char *av[])
   catch (Exception &ex)
     {
       cerr << "client: " << ex << endl;
-      cerr << "\nLast operation took " 
-           << (ACE_High_Res_Timer::gettimeofday_hr () - before).msec () 
-           << "ms" 
+      cerr << "\nLast operation took "
+           << (ACE_High_Res_Timer::gettimeofday_hr () - before).msec ()
+           << "ms"
            << endl;
     }
 
