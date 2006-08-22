@@ -141,9 +141,7 @@ TAO_NIOP_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
   if (endpoint == 0)
     return false;
 
-  const ACE_CString * thisstr = this->uuid_.to_string();
-  const ACE_CString * other = endpoint->uuid_.to_string ();
-  return (*thisstr == *other);
+  return (this->uuid_ == endpoint->uuid_);
 }
 
 CORBA::ULong
