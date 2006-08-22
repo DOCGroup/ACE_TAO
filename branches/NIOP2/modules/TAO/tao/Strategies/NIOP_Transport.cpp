@@ -115,8 +115,6 @@ TAO_NIOP_Transport::handle_input (TAO_Resume_Handle &,
 int
 TAO_NIOP_Transport::register_handler (void)
 {
-  // @@ Michael:
-  //
   // We do never register register the handler with the reactor
   // as we never need to be informed about any incoming data,
   // assuming we only use one-ways.
@@ -129,29 +127,29 @@ TAO_NIOP_Transport::register_handler (void)
 
 
 int
-TAO_NIOP_Transport::send_request (TAO_Stub *stub,
-                                  TAO_ORB_Core *orb_core,
-                                  TAO_OutputCDR &stream,
-                                  int message_semantics,
-                                  ACE_Time_Value *max_wait_time)
+TAO_NIOP_Transport::send_request (TAO_Stub *,
+                                  TAO_ORB_Core *,
+                                  TAO_OutputCDR &,
+                                  int,
+                                  ACE_Time_Value *)
 {
   return 0;
 }
 
 int
-TAO_NIOP_Transport::send_message (TAO_OutputCDR &stream,
-                                  TAO_Stub *stub,
-                                  int message_semantics,
-                                  ACE_Time_Value *max_wait_time)
+TAO_NIOP_Transport::send_message (TAO_OutputCDR &,
+                                  TAO_Stub *,
+                                  int,
+                                  ACE_Time_Value *)
 {
   return 1;
 }
 
 int
-TAO_NIOP_Transport::send_message_shared (TAO_Stub *stub,
-                                         int message_semantics,
-                                         const ACE_Message_Block *message_block,
-                                         ACE_Time_Value *max_wait_time)
+TAO_NIOP_Transport::send_message_shared (TAO_Stub *,
+                                         int,
+                                         const ACE_Message_Block *,
+                                         ACE_Time_Value *)
 {
   return 1;
 }

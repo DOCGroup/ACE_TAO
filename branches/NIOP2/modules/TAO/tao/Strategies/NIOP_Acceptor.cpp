@@ -98,7 +98,6 @@ TAO_NIOP_Acceptor::create_new_profile (const TAO::ObjectKey &object_key,
       ACE_NEW_RETURN (pfile,
                       TAO_NIOP_Profile (uuid,
                                         object_key,
-//                                        this->addrs_[i],
                                         this->version_,
                                         this->orb_core_),
                       -1);
@@ -302,29 +301,13 @@ TAO_NIOP_Acceptor::open (TAO_ORB_Core *orb_core,
 
   this->endpoint_count_ = 1;  // Only one hostname to store
 
-//  ACE_NEW_RETURN (this->addrs_,
-//                  ACE_INET_Addr[this->endpoint_count_],
-//                  -1);
-
   ACE_NEW_RETURN (this->hosts_,
                   char *[this->endpoint_count_],
                   -1);
 
   this->hosts_[0] = CORBA::string_dup (specified_hostname);
 
-//  if (this->hostname (orb_core,
-  //                    addr,
-    //                  this->hosts_[0],
-      //                specified_hostname) != 0)
-    //return -1;
-
-  // Copy the addr.  The port is (re)set in
-  // TAO_NIOP_Acceptor::open_i().
-//  if (this->addrs_[0].set (addr) != 0)
-  //  return -1;
-
-  return 0;//this->open_i (addr,
-            //           reactor);
+  return 0;
 }
 
 int

@@ -51,13 +51,6 @@ public:
   /// Return the char string prefix.
   static const char *prefix (void);
 
-/*  /// Profile constructor, same as above except the object_key has
-  /// already been marshaled.
-  TAO_NIOP_Profile (const ACE_INET_Addr &addr,
-                    const TAO::ObjectKey &object_key,
-                    const TAO_GIOP_Message_Version &version,
-                    TAO_ORB_Core *orb_core);
-*/
   /// Profile constructor, this is the most efficient since it
   /// doesn't require any address resolution processing.
   TAO_NIOP_Profile (const ACE_Utils::UUID& uuid,
@@ -70,7 +63,6 @@ public:
 
   /// Destructor is to be called only through <_decr_refcnt>.
   ~TAO_NIOP_Profile (void);
-
 
   /// Template methods. Please tao/Profile.h for documentation.
   virtual char * to_string (ACE_ENV_SINGLE_ARG_DECL);

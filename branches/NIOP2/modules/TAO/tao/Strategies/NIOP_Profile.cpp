@@ -31,21 +31,6 @@ TAO_NIOP_Profile::object_key_delimiter (void) const
   return TAO_NIOP_Profile::object_key_delimiter_;
 }
 
-/*
-TAO_NIOP_Profile::TAO_NIOP_Profile (const ACE_INET_Addr &addr,
-                                    const TAO::ObjectKey &object_key,
-                                    const TAO_GIOP_Message_Version &version,
-                                    TAO_ORB_Core *orb_core)
-  : TAO_Profile (TAO_TAG_NIOP_PROFILE,
-                 orb_core,
-                 object_key,
-                 version),
-    endpoint_ (addr,
-               orb_core->orb_params ()->use_dotted_decimal_addresses ()),
-    count_ (1)
-{
-}
-*/
 TAO_NIOP_Profile::TAO_NIOP_Profile (const ACE_Utils::UUID& uuid,
                                     const TAO::ObjectKey &object_key,
                                     const TAO_GIOP_Message_Version &version,
@@ -93,7 +78,7 @@ TAO_NIOP_Profile::decode_profile (TAO_InputCDR& cdr)
 {
   // @@ NOTE: This code is repeated thrice. Need to factor out in a
   // better manner.
-  // Decode host and port into the <endpoint_>.
+  // Decode uuid into the <endpoint_>.
   CORBA::String_var uuid;
   if (cdr.read_string (uuid.out ()) == 0)
     {
@@ -107,8 +92,6 @@ TAO_NIOP_Profile::decode_profile (TAO_InputCDR& cdr)
   if (cdr.good_bit ())
     {
       this->endpoint_.uuid_.from_string (uuid.in());
-      // Invalidate the object_addr_ until first access.
-      //this->endpoint_.object_addr_.set_type (-1);
 
       return 1;
     }
@@ -138,7 +121,6 @@ TAO_NIOP_Profile::parse_string_i (const char *ior
   // Length of host string.
   CORBA::ULong length_host = okd - ior;
 
-
   CORBA::String_var tmp = CORBA::string_alloc (length_host);
 
   // Skip the trailing '/'
@@ -146,38 +128,6 @@ TAO_NIOP_Profile::parse_string_i (const char *ior
   tmp[length_host] = '\0';
 
   this->endpoint_.uuid_.from_string (tmp._retn ());
-
-//  if (ACE_OS::strcmp (this->endpoint_.host_.in (), "") == 0)
-    {
-/*      ACE_INET_Addr host_addr;
-
-      char tmp_host [MAXHOSTNAMELEN + 1];
-
-      // If no host is specified: assign the default host, i.e. the
-      // local host.
-      if (host_addr.get_host_name (tmp_host,
-                                   sizeof (tmp_host)) != 0)
-        {
-          // Can't get the IP address since the INET_Addr wasn't
-          // initialized.  Just throw an exception.
-
-          if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("\n\nTAO (%P|%t) ")
-                        ACE_TEXT ("IIOP_Profile::parse_string ")
-                        ACE_TEXT ("- %p\n\n"),
-                        ACE_TEXT ("cannot determine hostname")));
-
-          // @@ What's the right exception to throw here?
-          ACE_THROW (CORBA::INV_OBJREF (
-                       CORBA::SystemException::_tao_minor_code (
-                         TAO::VMCID,
-                         EINVAL),
-                       CORBA::COMPLETED_NO));
-        }
-      else*/
-  //      this->endpoint_.host_ = CORBA::string_dup ("localhost");
-    }
 
   TAO::ObjectKey ok;
   TAO::ObjectKey::decode_string_to_sequence (ok,
@@ -322,7 +272,7 @@ TAO_NIOP_Profile::create_profile_body (TAO_OutputCDR &encap) const
   else
     {
       ACE_ERROR ((LM_ERROR,
-                  "(%P|%t) TAO - UIOP_Profile::create_profile_body "
+                  "(%P|%t) TAO - NIOP_Profile::create_profile_body "
                   "no object key marshalled \n"));
     }
 

@@ -59,50 +59,6 @@ TAO_NIOP_Connection_Handler::~TAO_NIOP_Connection_Handler (void)
 //  this->udp_socket_.close ();
 }
 
-// NIOP Additions - Begin
-ACE_HANDLE
-TAO_NIOP_Connection_Handler::get_handle (void) const
-{
-  return ACE_INVALID_HANDLE;
-  //return this->udp_socket_.get_handle ();
-}
-
-                           /*
-const ACE_INET_Addr &
-TAO_NIOP_Connection_Handler::addr (void)
-{
-  return this->addr_;
-}
-
-
-void
-TAO_NIOP_Connection_Handler::addr (const ACE_INET_Addr &addr)
-{
-  this->addr_ = addr;
-}
-
-
-const ACE_INET_Addr &
-TAO_NIOP_Connection_Handler::local_addr (void)
-{
-  return local_addr_;
-}
-
-
-void
-TAO_NIOP_Connection_Handler::local_addr (const ACE_INET_Addr &addr)
-{
-  local_addr_ = addr;
-}
-
-
-const ACE_SOCK_Dgram &
-TAO_NIOP_Connection_Handler::dgram (void)
-{
-  return this->udp_socket_;
-}                            */
-// NIOP Additions - End
-
 int
 TAO_NIOP_Connection_Handler::open_handler (void *v)
 {
@@ -112,53 +68,6 @@ TAO_NIOP_Connection_Handler::open_handler (void *v)
 int
 TAO_NIOP_Connection_Handler::open (void*)
 {
-  TAO_Protocols_Hooks *tph =
-    this->orb_core ()->get_protocols_hooks ();
-
-  bool client =
-    this->transport ()->opened_as () == TAO::TAO_CLIENT_ROLE;
-
-  ACE_DECLARE_NEW_CORBA_ENV;
-
-//  this->udp_socket_.open (this->local_addr_);
-
-/*  if (TAO_debug_level > 5)
-  {
-     ACE_DEBUG ((LM_DEBUG,
-                 ACE_TEXT("\nTAO (%P|%t) TAO_NIOP_Connection_Handler::open -")
-                 ACE_TEXT("listening on: <%s:%u>\n"),
-                 ACE_TEXT_CHAR_TO_TCHAR (this->local_addr_.get_host_name ()),
-                 this->local_addr_.get_port_number ()));
-  }*/
-
-  // Set that the transport is now connected, if fails we return -1
-  // Use C-style cast b/c otherwise we get warnings on lots of
-  // compilers
-  if (!this->transport ()->post_open ((size_t) this->get_handle ()))
-    return -1;
-
-  this->state_changed (TAO_LF_Event::LFS_SUCCESS,
-                       this->orb_core ()->leader_follower ());
-
-  return 0;
-}
-
-int
-TAO_NIOP_Connection_Handler::open_server (void)
-{
-/*  this->udp_socket_.open (this->local_addr_);
-  if( TAO_debug_level > 5)
-  {
-     ACE_DEBUG ((LM_DEBUG,
-                 ACE_TEXT("\nTAO (%P|%t) TAO_NIOP_Connection_Handler::open_server -")
-                 ACE_TEXT("listening on %s:%d\n"),
-                 ACE_TEXT_CHAR_TO_TCHAR (this->local_addr_.get_host_name ()),
-                 this->local_addr_.get_port_number ()
-               ));
-  }
-  */
-  this->transport ()->id ((size_t) this->get_handle ());
-
   return 0;
 }
 

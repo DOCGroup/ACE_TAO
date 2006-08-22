@@ -27,7 +27,6 @@
 #include "tao/Wait_Strategy.h"
 #include "tao/Connection_Handler.h"
 #include "tao/Strategies/NIOP_Transport.h"
-#include "ace/SOCK_Dgram.h"
 #include "ace/Reactor.h"
 #include "ace/Acceptor.h"
 
@@ -66,9 +65,6 @@ public:
   /// connected.  Argument is unused.
   virtual int open (void *);
 
-  // @@ Frank: Similar to open, but called on server
-  virtual int open_server (void);
-
   //@{
   /**
    * Connection_Handler overloads
@@ -95,39 +91,6 @@ public:
   /// Add ourselves to Cache.
   int add_transport_to_cache (void);
 
-  // @@ Frank: Not needed
-  /*
-  /// Process the <listen_list>
-  int process_listen_point_list (NIOP::ListenPointList &listen_list);
-  */
-
-  // NIOP Additions - Begin
-  /**
-   * @name The NIOP Additions
-   *
-   */
-  //@{
-  ACE_HANDLE get_handle (void) const;/*
-
-  const ACE_INET_Addr &addr (void);
-
-  void addr (const ACE_INET_Addr &addr);
-
-  const ACE_INET_Addr &local_addr (void);
-
-  void local_addr (const ACE_INET_Addr &addr);
-
-  const ACE_INET_Addr &server_addr (void);
-
-  void server_addr (const ACE_INET_Addr &addr);
-
-  const ACE_SOCK_Dgram &dgram (void);
-  //@}
-  // NIOP Additions - End
-
-  /// Set Diff-Serv codepoint on outgoing packets.
-  int set_dscp_codepoint (CORBA::Boolean set_network_priority);*/
-
 protected:
 
   //@{
@@ -136,26 +99,6 @@ protected:
    */
   virtual int release_os_resources (void);
   //@}
-
-  // NIOP Additions - Begin
-  /**
-   * @name The NIOP Additions
-   *
-   */
-  //@{
-//  ACE_SOCK_Dgram udp_socket_;
-
-  /// This is always the remote address
-//  ACE_INET_Addr addr_;
-
-  /// This is always the local address for the connector
-//  ACE_INET_Addr local_addr_;
-  //@}
-  // NIOP Additions - End
-
-private:
-  /// Stores the type of service value.
-//  int dscp_codepoint_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
