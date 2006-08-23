@@ -25,11 +25,11 @@
 
 #if defined (TAO_HAS_COIOP) && (TAO_HAS_COIOP != 0)
 
+#include "tao/Strategies/strategies_export.h"
 #include "tao/Transport_Acceptor.h"
-#include "tao/Strategies/COIOP_Connection_Handler.h"
 #include "tao/Acceptor_Impl.h"
-
 #include "tao/GIOP_Message_Version.h"
+#include "ace/UUID.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -101,15 +101,8 @@ protected:
   /**
    * Cache the information about the endpoints serviced by this
    * acceptor.
-   * There may in fact be multiple hostnames for this endpoint. For
-   * example, if the IP address is INADDR_ANY (0.0.0.0) then there
-   * will be possibly a different hostname for each interface.
    */
-  char **hosts_;
-
-  /// The number of host names cached in the hosts_ array (equivalent
-  /// to the number of endpoints opened by this Acceptor).
-  CORBA::ULong endpoint_count_;
+  ACE_Utils::UUID uuid_;
 
   /**
    * The GIOP version for this endpoint
@@ -123,18 +116,9 @@ protected:
 
   /// Should we use GIOP lite??
   CORBA::Boolean lite_flag_;
-
-private:
-  // @@ Frank: From COIOP_Acceptor.h
-  TAO_COIOP_Connection_Handler *connection_handler_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
-#if defined(__ACE_INLINE__)
-#include "tao/Strategies/COIOP_Acceptor.inl"
-#endif /* __ACE_INLINE__ */
 
 #endif /* TAO_HAS_COIOP && TAO_HAS_COIOP != 0 */
 
