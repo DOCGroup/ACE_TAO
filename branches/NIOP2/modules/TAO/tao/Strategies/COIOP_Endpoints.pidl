@@ -22,20 +22,20 @@
  *          IIOP_Endpoints.pidl
  */
 
-#ifndef _TAO_IIOP_ENDPOINTS_IDL_
-#define _TAO_IIOP_ENDPOINTS_IDL_
+#ifndef _TAO_COIOP_ENDPOINTS_IDL_
+#define _TAO_COIOP_ENDPOINTS_IDL_
 
 module TAO
 {
-  /// Stores information for a single NIOP endpoint.
-  struct NIOP_Endpoint_Info
+  /// Stores information for a single COIOP endpoint.
+  struct COIOP_Endpoint_Info
   {
     string uuid;
     short priority;
   };
 
-  /// Stores information for a collection of IIOP endpoints.
-  typedef sequence <NIOP_Endpoint_Info> NIOPEndpointSequence;
+  /// Stores information for a collection of COIOP endpoints.
+  typedef sequence <COIOP_Endpoint_Info> COIOPEndpointSequence;
 };
 
 #endif /* _TAO_IIOP_ENDPOINTS_IDL_ */

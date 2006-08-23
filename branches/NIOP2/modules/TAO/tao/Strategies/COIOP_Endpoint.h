@@ -2,19 +2,19 @@
 
 //=============================================================================
 /**
- *  @file     NIOP_Endpoint.h
+ *  @file     COIOP_Endpoint.h
  *
  *  $Id$
  *
- *   NIOP implementation of PP Framework Endpoint interface.
+ *   COIOP implementation of PP Framework Endpoint interface.
  *
  *  @author  Johnny Willemsen <jwillemsen@remedy.nl>
  */
 //=============================================================================
 
 
-#ifndef TAO_NIOP_ENDPOINT_H
-#define TAO_NIOP_ENDPOINT_H
+#ifndef TAO_COIOP_ENDPOINT_H
+#define TAO_COIOP_ENDPOINT_H
 #include /**/ "ace/pre.h"
 
 #include "tao/orbconf.h"
@@ -23,7 +23,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (TAO_HAS_NIOP) && (TAO_HAS_NIOP != 0)
+#if defined (TAO_HAS_COIOP) && (TAO_HAS_COIOP != 0)
 
 #include "tao/Strategies/strategies_export.h"
 #include "tao/Endpoint.h"
@@ -31,33 +31,33 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-class TAO_NIOP_Connection_Handler;
+class TAO_COIOP_Connection_Handler;
 
 /**
- * @class TAO_NIOP_Endpoint
+ * @class TAO_COIOP_Endpoint
  *
- * @brief TAO_NIOP_Endpoint
+ * @brief TAO_COIOP_Endpoint
  *
- * NIOP-specific implementation of PP Framework Endpoint interface.
+ * COIOP-specific implementation of PP Framework Endpoint interface.
  */
-class TAO_Strategies_Export TAO_NIOP_Endpoint : public TAO_Endpoint
+class TAO_Strategies_Export TAO_COIOP_Endpoint : public TAO_Endpoint
 {
 public:
 
-  friend class TAO_NIOP_Profile;
+  friend class TAO_COIOP_Profile;
   friend class TAO_SSLIOP_Profile;
 
   // = Initialization and termination methods.
 
   /// Default constructor.
-  TAO_NIOP_Endpoint (void);
+  TAO_COIOP_Endpoint (void);
 
   /// Constructor.  This is the most efficient constructor since it
   /// does not require any address resolution processing.
-  TAO_NIOP_Endpoint (const ACE_Utils::UUID& uuid);
+  TAO_COIOP_Endpoint (const ACE_Utils::UUID& uuid);
 
   /// Destructor.
-  ~TAO_NIOP_Endpoint (void);
+  ~TAO_COIOP_Endpoint (void);
 
   /**
    * @name TAO_Endpoint Methods
@@ -77,28 +77,28 @@ public:
   CORBA::ULong hash (void);
   //@}
 
-  // = NIOP_Endpoint-specific methods.
+  // = COIOP_Endpoint-specific methods.
 
   /// Return a pointer to the host string.  This object maintains
   /// ownership of this string.
   const ACE_Utils::UUID& uuid (void) const;
 
 private:
-  /// UUID uniquely identifying this NIOP endpoint
+  /// UUID uniquely identifying this COIOP endpoint
   mutable ACE_Utils::UUID uuid_;
 
-  /// NIOP Endpoints can be stringed into a list.  Return the next
+  /// COIOP Endpoints can be stringed into a list.  Return the next
   /// endpoint in the list, if any.
-  TAO_NIOP_Endpoint *next_;
+  TAO_COIOP_Endpoint *next_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "tao/Strategies/NIOP_Endpoint.inl"
+# include "tao/Strategies/COIOP_Endpoint.inl"
 #endif /* __ACE_INLINE__ */
 
-#endif /* TAO_HAS_NIOP && TAO_HAS_NIOP != 0 */
+#endif /* TAO_HAS_COIOP && TAO_HAS_COIOP != 0 */
 
 #include /**/ "ace/post.h"
-#endif  /* TAO_NIOP_PROFILE_H */
+#endif  /* TAO_COIOP_PROFILE_H */

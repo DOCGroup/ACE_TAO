@@ -1,11 +1,11 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
-#include "tao/Strategies/NIOP_Acceptor.h"
+#include "tao/Strategies/COIOP_Acceptor.h"
 
-#if defined (TAO_HAS_NIOP) && (TAO_HAS_NIOP != 0)
+#if defined (TAO_HAS_COIOP) && (TAO_HAS_COIOP != 0)
 
-#include "tao/Strategies/NIOP_Profile.h"
+#include "tao/Strategies/COIOP_Profile.h"
 #include "tao/MProfile.h"
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
@@ -17,20 +17,19 @@
 #include "ace/OS_NS_string.h"
 
 #if !defined(__ACE_INLINE__)
-#include "tao/Strategies/NIOP_Acceptor.inl"
+#include "tao/Strategies/COIOP_Acceptor.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/os_include/os_netdb.h"
 
 ACE_RCSID (Strategies,
-           NIOP_Acceptor,
+           COIOP_Acceptor,
            "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_NIOP_Acceptor::TAO_NIOP_Acceptor (CORBA::Boolean flag)
-  : TAO_Acceptor (TAO_TAG_NIOP_PROFILE),
-//    addrs_ (0),
+TAO_COIOP_Acceptor::TAO_COIOP_Acceptor (CORBA::Boolean flag)
+  : TAO_Acceptor (TAO_TAG_COIOP_PROFILE),
     hosts_ (0),
     endpoint_count_ (0),
     version_ (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR),
@@ -40,13 +39,11 @@ TAO_NIOP_Acceptor::TAO_NIOP_Acceptor (CORBA::Boolean flag)
 {
 }
 
-TAO_NIOP_Acceptor::~TAO_NIOP_Acceptor (void)
+TAO_COIOP_Acceptor::~TAO_COIOP_Acceptor (void)
 {
   // Make sure we are closed before we start destroying the
   // strategies.
   this->close ();
-
-  //delete [] this->addrs_;
 
   for (size_t i = 0; i < this->endpoint_count_; ++i)
     CORBA::string_free (this->hosts_[i]);
@@ -58,7 +55,7 @@ TAO_NIOP_Acceptor::~TAO_NIOP_Acceptor (void)
 //    2) For V1.[1,2] there are tagged components
 
 int
-TAO_NIOP_Acceptor::create_profile (const TAO::ObjectKey & object_key,
+TAO_COIOP_Acceptor::create_profile (const TAO::ObjectKey & object_key,
                                    TAO_MProfile &mprofile,
                                    CORBA::Short priority)
 {
@@ -79,7 +76,7 @@ TAO_NIOP_Acceptor::create_profile (const TAO::ObjectKey & object_key,
 }
 
 int
-TAO_NIOP_Acceptor::create_new_profile (const TAO::ObjectKey &object_key,
+TAO_COIOP_Acceptor::create_new_profile (const TAO::ObjectKey &object_key,
                                        TAO_MProfile &mprofile,
                                        CORBA::Short priority)
 {
@@ -92,11 +89,11 @@ TAO_NIOP_Acceptor::create_new_profile (const TAO::ObjectKey &object_key,
   // Create a profile for each acceptor endpoint.
   for (size_t i = 0; i < this->endpoint_count_; ++i)
     {
-      TAO_NIOP_Profile *pfile = 0;
+      TAO_COIOP_Profile *pfile = 0;
       ACE_Utils::UUID uuid;
       uuid.from_string (this->hosts_[i]);
       ACE_NEW_RETURN (pfile,
-                      TAO_NIOP_Profile (uuid,
+                      TAO_COIOP_Profile (uuid,
                                         object_key,
                                         this->version_,
                                         this->orb_core_),
@@ -128,32 +125,32 @@ TAO_NIOP_Acceptor::create_new_profile (const TAO::ObjectKey &object_key,
 }
 
 int
-TAO_NIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
+TAO_COIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
                                           TAO_MProfile &mprofile,
                                           CORBA::Short priority)
 {
   size_t index = 0;
   TAO_Profile *pfile = 0;
-  TAO_NIOP_Profile *iiop_profile = 0;
+  TAO_COIOP_Profile *iiop_profile = 0;
 
-  // First see if <mprofile> already contains a NIOP profile.
+  // First see if <mprofile> already contains a COIOP profile.
   for (TAO_PHandle i = 0; i != mprofile.profile_count (); ++i)
     {
       pfile = mprofile.get_profile (i);
-      if (pfile->tag () == TAO_TAG_NIOP_PROFILE)
+      if (pfile->tag () == TAO_TAG_COIOP_PROFILE)
       {
-        iiop_profile = dynamic_cast<TAO_NIOP_Profile *> (pfile);
+        iiop_profile = dynamic_cast<TAO_COIOP_Profile *> (pfile);
         break;
       }
     }
 
-  // If <mprofile> doesn't contain a NIOP_Profile, we need to create
+  // If <mprofile> doesn't contain a COIOP_Profile, we need to create
   // one.
   if (iiop_profile == 0)
     {
       ACE_Utils::UUID uuid (this->hosts_[0]);
       ACE_NEW_RETURN (iiop_profile,
-                      TAO_NIOP_Profile (uuid,
+                      TAO_COIOP_Profile (uuid,
                                         object_key,
       //                                  this->addrs_[0],
                                         this->version_,
@@ -180,14 +177,14 @@ TAO_NIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
       index = 1;
     }
 
-  // Add any remaining acceptor endpoints to the NIOP_Profile.
+  // Add any remaining acceptor endpoints to the COIOP_Profile.
   for (;
        index < this->endpoint_count_;
        ++index)
     {
-      TAO_NIOP_Endpoint *endpoint = 0;
+      TAO_COIOP_Endpoint *endpoint = 0;
       ACE_NEW_RETURN (endpoint,
-                      TAO_NIOP_Endpoint (ACE_Utils::UUID (this->hosts_[index])
+                      TAO_COIOP_Endpoint (ACE_Utils::UUID (this->hosts_[index])
             ),//                             this->addrs_[index]),
                       -1);
       endpoint->priority (priority);
@@ -198,10 +195,10 @@ TAO_NIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
 }
 
 int
-TAO_NIOP_Acceptor::is_collocated (const TAO_Endpoint *endpoint)
+TAO_COIOP_Acceptor::is_collocated (const TAO_Endpoint *endpoint)
 {
-  const TAO_NIOP_Endpoint *endp =
-    dynamic_cast<const TAO_NIOP_Endpoint *> (endpoint);
+  const TAO_COIOP_Endpoint *endp =
+    dynamic_cast<const TAO_COIOP_Endpoint *> (endpoint);
 
   // Make sure the dynamically cast pointer is valid.
   if (endp == 0)
@@ -211,13 +208,13 @@ TAO_NIOP_Acceptor::is_collocated (const TAO_Endpoint *endpoint)
 }
 
 int
-TAO_NIOP_Acceptor::close (void)
+TAO_COIOP_Acceptor::close (void)
 {
   return 0;
 }
 
 int
-TAO_NIOP_Acceptor::open (TAO_ORB_Core *orb_core,
+TAO_COIOP_Acceptor::open (TAO_ORB_Core *orb_core,
                          ACE_Reactor *,
                          int major,
                          int minor,
@@ -232,7 +229,7 @@ TAO_NIOP_Acceptor::open (TAO_ORB_Core *orb_core,
       // This is bad mojo, i.e. an internal TAO error.
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("TAO (%P|%t) ")
-                         ACE_TEXT ("NIOP_Acceptor::open - ")
+                         ACE_TEXT ("COIOP_Acceptor::open - ")
                          ACE_TEXT ("hostname already set\n\n")),
                         -1);
     }
@@ -247,30 +244,19 @@ TAO_NIOP_Acceptor::open (TAO_ORB_Core *orb_core,
   if (this->parse_options (options) == -1)
     return -1;
 
-  const char *port_separator_loc = ACE_OS::strchr (address, ':');
-  const char *specified_hostname = 0;
-  char tmp_host[MAXHOSTNAMELEN + 1];
-
-  // Extract out just the host part of the address.
-  size_t len = port_separator_loc - address;
-  ACE_OS::memcpy (tmp_host, address, len);
-  tmp_host[len] = '\0';
-
-  specified_hostname = tmp_host;
-
   this->endpoint_count_ = 1;  // Only one hostname to store
 
   ACE_NEW_RETURN (this->hosts_,
                   char *[this->endpoint_count_],
                   -1);
 
-  this->hosts_[0] = CORBA::string_dup (specified_hostname);
+  this->hosts_[0] = CORBA::string_dup (address);
 
   return 0;
 }
 
 int
-TAO_NIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
+TAO_COIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
                                  ACE_Reactor *,
                                  int major,
                                  int minor,
@@ -284,7 +270,7 @@ TAO_NIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
       // This is bad mojo, i.e. an internal TAO error.
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("TAO (%P|%t) ")
-                         ACE_TEXT ("NIOP_Acceptor::open_default - ")
+                         ACE_TEXT ("COIOP_Acceptor::open_default - ")
                          ACE_TEXT ("hostname already set\n\n")),
                         -1);
     }
@@ -315,13 +301,13 @@ TAO_NIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
 }
 
 CORBA::ULong
-TAO_NIOP_Acceptor::endpoint_count (void)
+TAO_COIOP_Acceptor::endpoint_count (void)
 {
   return this->endpoint_count_;
 }
 
 int
-TAO_NIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
+TAO_COIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
                                TAO::ObjectKey &object_key)
 {
   // Create the decoding stream from the encapsulation in the buffer,
@@ -343,7 +329,7 @@ TAO_NIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
     if (TAO_debug_level > 0)
       {
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) NIOP_Profile::decode - v%d.%d\n"),
+                    ACE_TEXT ("TAO (%P|%t) COIOP_Profile::decode - v%d.%d\n"),
                     major,
                     minor));
       }
@@ -358,7 +344,7 @@ TAO_NIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) TAO_NIOP_Acceptor::object_key - ")
+                      ACE_TEXT ("TAO (%P|%t) TAO_COIOP_Acceptor::object_key - ")
                       ACE_TEXT ("error while decoding host/port")));
         }
       return -1;
@@ -375,7 +361,7 @@ TAO_NIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
 
 
 int
-TAO_NIOP_Acceptor::parse_options (const char *str)
+TAO_COIOP_Acceptor::parse_options (const char *str)
 {
   if (str == 0)
     return 0;  // No options to parse.  Not a problem.
@@ -422,7 +408,7 @@ TAO_NIOP_Acceptor::parse_options (const char *str)
       if (end == begin)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("TAO (%P|%t) Zero length NIOP option.\n")),
+                             ACE_TEXT ("TAO (%P|%t) Zero length COIOP option.\n")),
                             -1);
         }
       else if (end != ACE_CString::npos)
@@ -434,7 +420,7 @@ TAO_NIOP_Acceptor::parse_options (const char *str)
           if (slot == len - 1
               || slot == ACE_CString::npos)
             ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("TAO (%P|%t) NIOP option <%s> is ")
+                               ACE_TEXT ("TAO (%P|%t) COIOP option <%s> is ")
                                ACE_TEXT ("missing a value.\n"),
                                ACE_TEXT_CHAR_TO_TCHAR (opt.c_str ())),
                               -1);
@@ -444,21 +430,21 @@ TAO_NIOP_Acceptor::parse_options (const char *str)
 
           if (name.length () == 0)
             ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("TAO (%P|%t) Zero length NIOP ")
+                               ACE_TEXT ("TAO (%P|%t) Zero length COIOP ")
                                ACE_TEXT ("option name.\n")),
                               -1);
 
           if (name == "priority")
             {
               ACE_ERROR_RETURN ((LM_ERROR,
-                                 ACE_TEXT ("TAO (%P|%t) Invalid NIOP endpoint format: ")
+                                 ACE_TEXT ("TAO (%P|%t) Invalid COIOP endpoint format: ")
                                  ACE_TEXT ("endpoint priorities no longer supported. \n")),
                                 -1);
             }
           else
             {
               ACE_ERROR_RETURN ((LM_ERROR,
-                                 ACE_TEXT ("TAO (%P|%t) Invalid NIOP option: <%s>\n"),
+                                 ACE_TEXT ("TAO (%P|%t) Invalid COIOP option: <%s>\n"),
                                  ACE_TEXT_CHAR_TO_TCHAR (name.c_str ())),
                                 -1);
             }
@@ -475,4 +461,4 @@ TAO_NIOP_Acceptor::parse_options (const char *str)
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-#endif /* TAO_HAS_NIOP && TAO_HAS_NIOP != 0 */
+#endif /* TAO_HAS_COIOP && TAO_HAS_COIOP != 0 */

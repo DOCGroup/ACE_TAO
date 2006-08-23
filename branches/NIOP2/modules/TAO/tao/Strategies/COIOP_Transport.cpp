@@ -1,12 +1,12 @@
 // $Id$
 
-#include "tao/Strategies/NIOP_Transport.h"
+#include "tao/Strategies/COIOP_Transport.h"
 
-#if defined (TAO_HAS_NIOP) && (TAO_HAS_NIOP != 0)
+#if defined (TAO_HAS_COIOP) && (TAO_HAS_COIOP != 0)
 
-#include "tao/Strategies/NIOP_Connection_Handler.h"
-#include "tao/Strategies/NIOP_Acceptor.h"
-#include "tao/Strategies/NIOP_Profile.h"
+#include "tao/Strategies/COIOP_Connection_Handler.h"
+#include "tao/Strategies/COIOP_Acceptor.h"
+#include "tao/Strategies/COIOP_Profile.h"
 #include "tao/Acceptor_Registry.h"
 #include "tao/operation_details.h"
 #include "tao/Timeprobe.h"
@@ -20,14 +20,14 @@
 #include "tao/GIOP_Message_Base.h"
 #include "tao/GIOP_Message_Lite.h"
 
-ACE_RCSID (tao, NIOP_Transport, "$Id$")
+ACE_RCSID (tao, COIOP_Transport, "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_NIOP_Transport::TAO_NIOP_Transport (TAO_NIOP_Connection_Handler *handler,
+TAO_COIOP_Transport::TAO_COIOP_Transport (TAO_COIOP_Connection_Handler *handler,
                                         TAO_ORB_Core *orb_core,
                                         CORBA::Boolean flag)
-  : TAO_Transport (TAO_TAG_NIOP_PROFILE,
+  : TAO_Transport (TAO_TAG_COIOP_PROFILE,
                    orb_core)
   , connection_handler_ (handler)
   , messaging_object_ (0)
@@ -58,43 +58,43 @@ TAO_NIOP_Transport::TAO_NIOP_Transport (TAO_NIOP_Connection_Handler *handler,
 
 }
 
-TAO_NIOP_Transport::~TAO_NIOP_Transport (void)
+TAO_COIOP_Transport::~TAO_COIOP_Transport (void)
 {
   delete this->messaging_object_;
 }
 
 ACE_Event_Handler *
-TAO_NIOP_Transport::event_handler_i (void)
+TAO_COIOP_Transport::event_handler_i (void)
 {
   return this->connection_handler_;
 }
 
 TAO_Connection_Handler *
-TAO_NIOP_Transport::connection_handler_i (void)
+TAO_COIOP_Transport::connection_handler_i (void)
 {
   return this->connection_handler_;
 }
 
 TAO_Pluggable_Messaging *
-TAO_NIOP_Transport::messaging_object (void)
+TAO_COIOP_Transport::messaging_object (void)
 {
   return this->messaging_object_;
 }
 
 ssize_t
-TAO_NIOP_Transport::send (iovec *,
+TAO_COIOP_Transport::send (iovec *,
                           int ,
                           size_t &bytes_transferred,
                           const ACE_Time_Value *)
 {
-  // We don't send data over the wire with NIOP
+  // We don't send data over the wire with COIOP
   bytes_transferred = 0;
 
   return 1;
 }
 
 ssize_t
-TAO_NIOP_Transport::recv (char *,
+TAO_COIOP_Transport::recv (char *,
                           size_t ,
                           const ACE_Time_Value *)
 {
@@ -102,7 +102,7 @@ TAO_NIOP_Transport::recv (char *,
 }
 
 int
-TAO_NIOP_Transport::handle_input (TAO_Resume_Handle &,
+TAO_COIOP_Transport::handle_input (TAO_Resume_Handle &,
                                   ACE_Time_Value *,
                                   int /*block*/)
 {
@@ -111,21 +111,21 @@ TAO_NIOP_Transport::handle_input (TAO_Resume_Handle &,
 
 
 int
-TAO_NIOP_Transport::register_handler (void)
+TAO_COIOP_Transport::register_handler (void)
 {
   // We do never register register the handler with the reactor
   // as we never need to be informed about any incoming data,
   // assuming we only use one-ways.
   // If we would register and ICMP Messages would arrive, e.g
   // due to a not reachable server, we would get informed - as this
-  // disturbs the general NIOP assumptions of not being
+  // disturbs the general COIOP assumptions of not being
   // interested in any network failures, we ignore ICMP messages.
   return 0;
 }
 
 
 int
-TAO_NIOP_Transport::send_request (TAO_Stub *,
+TAO_COIOP_Transport::send_request (TAO_Stub *,
                                   TAO_ORB_Core *,
                                   TAO_OutputCDR &,
                                   int,
@@ -135,7 +135,7 @@ TAO_NIOP_Transport::send_request (TAO_Stub *,
 }
 
 int
-TAO_NIOP_Transport::send_message (TAO_OutputCDR &,
+TAO_COIOP_Transport::send_message (TAO_OutputCDR &,
                                   TAO_Stub *,
                                   int,
                                   ACE_Time_Value *)
@@ -144,7 +144,7 @@ TAO_NIOP_Transport::send_message (TAO_OutputCDR &,
 }
 
 int
-TAO_NIOP_Transport::send_message_shared (TAO_Stub *,
+TAO_COIOP_Transport::send_message_shared (TAO_Stub *,
                                          int,
                                          const ACE_Message_Block *,
                                          ACE_Time_Value *)
@@ -153,7 +153,7 @@ TAO_NIOP_Transport::send_message_shared (TAO_Stub *,
 }
 
 int
-TAO_NIOP_Transport::messaging_init (CORBA::Octet major,
+TAO_COIOP_Transport::messaging_init (CORBA::Octet major,
                                     CORBA::Octet minor)
 {
   this->messaging_object_->init (major, minor);
@@ -162,4 +162,4 @@ TAO_NIOP_Transport::messaging_init (CORBA::Octet major,
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-#endif /* TAO_HAS_NIOP && TAO_HAS_NIOP != 0 */
+#endif /* TAO_HAS_COIOP && TAO_HAS_COIOP != 0 */

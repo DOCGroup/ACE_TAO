@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file   NIOP_Factory.h
+ *  @file   COIOP_Factory.h
  *
  *  $Id$
  *
@@ -11,8 +11,8 @@
 //=============================================================================
 
 
-#ifndef TAO_NIOP_FACTORY_H
-#define TAO_NIOP_FACTORY_H
+#ifndef TAO_COIOP_FACTORY_H
+#define TAO_COIOP_FACTORY_H
 
 #include /**/ "ace/pre.h"
 
@@ -22,7 +22,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (TAO_HAS_NIOP) && (TAO_HAS_NIOP != 0)
+#if defined (TAO_HAS_COIOP) && (TAO_HAS_COIOP != 0)
 
 #include "tao/Strategies/strategies_export.h"
 #include "tao/Protocol_Factory.h"
@@ -33,15 +33,15 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Acceptor;
 class TAO_Connector;
 
-class TAO_Strategies_Export TAO_NIOP_Protocol_Factory
+class TAO_Strategies_Export TAO_COIOP_Protocol_Factory
   : public TAO_Protocol_Factory
 {
 public:
   /// Constructor.
-  TAO_NIOP_Protocol_Factory (void);
+  TAO_COIOP_Protocol_Factory (void);
 
   /// Destructor.
-  virtual ~TAO_NIOP_Protocol_Factory (void);
+  virtual ~TAO_COIOP_Protocol_Factory (void);
 
   // = Service Configurator hooks.
   /// Dynamic linking hook
@@ -77,11 +77,11 @@ private:
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-ACE_STATIC_SVC_DECLARE (TAO_NIOP_Protocol_Factory)
-ACE_FACTORY_DECLARE (TAO_Strategies, TAO_NIOP_Protocol_Factory)
+ACE_STATIC_SVC_DECLARE (TAO_COIOP_Protocol_Factory)
+ACE_FACTORY_DECLARE (TAO_Strategies, TAO_COIOP_Protocol_Factory)
 
-#endif /* TAO_HAS_NIOP && TAO_HAS_NIOP != 0 */
+#endif /* TAO_HAS_COIOP && TAO_HAS_COIOP != 0 */
 
 #include /**/ "ace/post.h"
 
-#endif /* TAO_NIOP_FACTORY_H */
+#endif /* TAO_COIOP_FACTORY_H */

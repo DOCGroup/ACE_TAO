@@ -2,18 +2,18 @@
 
 //=============================================================================
 /**
- *  @file    NIOP_Connector.h
+ *  @file    COIOP_Connector.h
  *
  *  $Id$
  *
- *  NIOP specific connector processing
+ *  COIOP specific connector processing
  *
  *  @author  Johnny Willemsen <jwillemsen@remedy.nl>
  */
 //=============================================================================
 
-#ifndef TAO_NIOP_CONNECTOR_H
-#define TAO_NIOP_CONNECTOR_H
+#ifndef TAO_COIOP_CONNECTOR_H
+#define TAO_COIOP_CONNECTOR_H
 
 #include /**/ "ace/pre.h"
 
@@ -23,36 +23,36 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (TAO_HAS_NIOP) && (TAO_HAS_NIOP != 0)
+#if defined (TAO_HAS_COIOP) && (TAO_HAS_COIOP != 0)
 
-#include "tao/Strategies/NIOP_Connection_Handler.h"
+#include "tao/Strategies/COIOP_Connection_Handler.h"
 #include "tao/Transport_Connector.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Endpoint;
-class TAO_NIOP_Endpoint;
+class TAO_COIOP_Endpoint;
 
 // ****************************************************************
 
 /**
- * @class TAO_NIOP_Connector
+ * @class TAO_COIOP_Connector
  *
- * @brief NIOP-specific Connector bridge for pluggable protocols.
+ * @brief COIOP-specific Connector bridge for pluggable protocols.
  *
  * Concrete instance of the TAO_Connector class.  Responsible
  * for establishing a connection with a server and is called from the
  * Connector_Registory.
  */
-class TAO_Strategies_Export TAO_NIOP_Connector : public TAO_Connector
+class TAO_Strategies_Export TAO_COIOP_Connector : public TAO_Connector
 {
 public:
   // = Initialization and termination methods.
   /// Constructor.
-  TAO_NIOP_Connector (CORBA::Boolean flag = false);
+  TAO_COIOP_Connector (CORBA::Boolean flag = false);
 
   /// Destructor.
-  ~TAO_NIOP_Connector (void);
+  ~TAO_COIOP_Connector (void);
 
   /**
    * @name The TAO_Connector Methods
@@ -98,13 +98,13 @@ protected:
 private:
 
   /// Return the remote endpoint, a helper function
-  TAO_NIOP_Endpoint *remote_endpoint (TAO_Endpoint *ep);
+  TAO_COIOP_Endpoint *remote_endpoint (TAO_Endpoint *ep);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-#endif /* TAO_HAS_NIOP && TAO_HAS_NIOP != 0 */
+#endif /* TAO_HAS_COIOP && TAO_HAS_COIOP != 0 */
 
 #include /**/ "ace/post.h"
 
-#endif  /* TAO_NIOP_CONNECTOR_H */
+#endif  /* TAO_COIOP_CONNECTOR_H */

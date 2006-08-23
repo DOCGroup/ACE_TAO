@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file   NIOP_Transport.h
+ *  @file   COIOP_Transport.h
  *
  *  $Id$
  *
@@ -10,8 +10,8 @@
  */
 //=============================================================================
 
-#ifndef TAO_NIOP_TRANSPORT_H
-#define TAO_NIOP_TRANSPORT_H
+#ifndef TAO_COIOP_TRANSPORT_H
+#define TAO_COIOP_TRANSPORT_H
 
 #include /**/ "ace/pre.h"
 
@@ -21,7 +21,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (TAO_HAS_NIOP) && (TAO_HAS_NIOP != 0)
+#if defined (TAO_HAS_COIOP) && (TAO_HAS_COIOP != 0)
 
 #include "tao/Strategies/strategies_export.h"
 #include "tao/Transport.h"
@@ -31,7 +31,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward decls.
-class TAO_NIOP_Connection_Handler;
+class TAO_COIOP_Connection_Handler;
 class TAO_ORB_Core;
 class TAO_Operation_Details;
 class TAO_Pluggable_Messaging;
@@ -39,25 +39,25 @@ class TAO_Acceptor;
 
 // Service Handler for this transport
 typedef ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
-        TAO_NIOP_SVC_HANDLER;
+        TAO_COIOP_SVC_HANDLER;
 
 /**
- * @class TAO_NIOP_Transport
+ * @class TAO_COIOP_Transport
  *
  * @brief Specialization of the base TAO_Transport class to handle the
- *  NIOP protocol.
+ *  COIOP protocol.
  */
-class TAO_Strategies_Export TAO_NIOP_Transport : public TAO_Transport
+class TAO_Strategies_Export TAO_COIOP_Transport : public TAO_Transport
 {
 public:
 
   /// Constructor.
-  TAO_NIOP_Transport (TAO_NIOP_Connection_Handler *handler,
+  TAO_COIOP_Transport (TAO_COIOP_Connection_Handler *handler,
                       TAO_ORB_Core *orb_core,
                       CORBA::Boolean flag);
 
   /// Default destructor.
-  ~TAO_NIOP_Transport (void);
+  ~TAO_COIOP_Transport (void);
 
   /// Look for the documentation in Transport.h.
   virtual int handle_input (TAO_Resume_Handle &rh,
@@ -114,7 +114,7 @@ private:
 
   /// The connection service handler used for accessing lower layer
   /// communication protocols.
-  TAO_NIOP_Connection_Handler *connection_handler_;
+  TAO_COIOP_Connection_Handler *connection_handler_;
 
   /// Our messaging object.
   TAO_Pluggable_Messaging *messaging_object_;
@@ -122,8 +122,8 @@ private:
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-#endif /* TAO_HAS_NIOP && TAO_HAS_NIOP != 0 */
+#endif /* TAO_HAS_COIOP && TAO_HAS_COIOP != 0 */
 
 #include /**/ "ace/post.h"
 
-#endif  /* TAO_NIOP_TRANSPORT_H */
+#endif  /* TAO_COIOP_TRANSPORT_H */

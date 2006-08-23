@@ -2,7 +2,7 @@
 
 // ===================================================================
 /**
- *  @file   NIOP_Connection_Handler.h
+ *  @file   COIOP_Connection_Handler.h
  *
  *  $Id$
  *
@@ -10,8 +10,8 @@
  */
 // ===================================================================
 
-#ifndef TAO_NIOP_CONNECTION_HANDLER_H
-#define TAO_NIOP_CONNECTION_HANDLER_H
+#ifndef TAO_COIOP_CONNECTION_HANDLER_H
+#define TAO_COIOP_CONNECTION_HANDLER_H
 
 #include /**/ "ace/pre.h"
 
@@ -21,12 +21,12 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (TAO_HAS_NIOP) && (TAO_HAS_NIOP != 0)
+#if defined (TAO_HAS_COIOP) && (TAO_HAS_COIOP != 0)
 
 #include "tao/Strategies/strategies_export.h"
 #include "tao/Wait_Strategy.h"
 #include "tao/Connection_Handler.h"
-#include "tao/Strategies/NIOP_Transport.h"
+#include "tao/Strategies/COIOP_Transport.h"
 #include "ace/Reactor.h"
 #include "ace/Acceptor.h"
 
@@ -38,28 +38,28 @@ class TAO_Pluggable_Messaging;
 // ****************************************************************
 
 /**
- * @class TAO_NIOP_Connection_Handler
+ * @class TAO_COIOP_Connection_Handler
  *
  * @brief  Handles requests on a single connection.
  *
  * The Connection handler which is common for the Acceptor and
  * the Connector
  */
-class TAO_Strategies_Export TAO_NIOP_Connection_Handler
-  : public TAO_NIOP_SVC_HANDLER
+class TAO_Strategies_Export TAO_COIOP_Connection_Handler
+  : public TAO_COIOP_SVC_HANDLER
   , public TAO_Connection_Handler
 {
 
 public:
 
-  TAO_NIOP_Connection_Handler (ACE_Thread_Manager* t = 0);
+  TAO_COIOP_Connection_Handler (ACE_Thread_Manager* t = 0);
 
   /// Constructor.
-  TAO_NIOP_Connection_Handler (TAO_ORB_Core *orb_core,
+  TAO_COIOP_Connection_Handler (TAO_ORB_Core *orb_core,
                                CORBA::Boolean flag);
 
   /// Destructor.
-  ~TAO_NIOP_Connection_Handler (void);
+  ~TAO_COIOP_Connection_Handler (void);
 
   /// Called by the <Strategy_Acceptor> when the handler is completely
   /// connected.  Argument is unused.
@@ -91,20 +91,12 @@ public:
   /// Add ourselves to Cache.
   int add_transport_to_cache (void);
 
-protected:
-
-  //@{
-  /**
-   * @name TAO_Connection Handler overloads
-   */
-  virtual int release_os_resources (void);
-  //@}
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-#endif /* TAO_HAS_NIOP && TAO_HAS_NIOP != 0 */
+#endif /* TAO_HAS_COIOP && TAO_HAS_COIOP != 0 */
 
 #include /**/ "ace/post.h"
 
-#endif /* TAO_NIOP_CONNECTION_HANDLER_H */
+#endif /* TAO_COIOP_CONNECTION_HANDLER_H */

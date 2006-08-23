@@ -141,7 +141,7 @@ CORBA::Boolean
 cat_shmiop_profile (TAO_InputCDR& cdr);
 
 CORBA::Boolean
-cat_niop_profile (TAO_InputCDR& cdr);
+cat_coiop_profile (TAO_InputCDR& cdr);
 
 CORBA::Boolean
 cat_nskpw_profile (TAO_InputCDR& cdr);
@@ -303,10 +303,10 @@ catior (char const * str
             continue_decoding =  cat_profile_helper(stream, "DIOP (GIOP over UDP)");
             ACE_DEBUG ((LM_DEBUG, "%}"));
           }
-        else if (tag == TAO_TAG_NIOP_PROFILE)
+        else if (tag == TAO_TAG_COIOP_PROFILE)
           {
             ACE_DEBUG ((LM_DEBUG, "%{"));
-            continue_decoding =  cat_niop_profile(stream);
+            continue_decoding =  cat_coiop_profile(stream);
             ACE_DEBUG ((LM_DEBUG, "%}"));
           }
         else if (tag == TAO_TAG_NSKPW_PROFILE)
@@ -1534,9 +1534,9 @@ cat_profile_helper (TAO_InputCDR& stream,
 }
 
 CORBA::Boolean
-cat_niop_profile (TAO_InputCDR& stream)
+cat_coiop_profile (TAO_InputCDR& stream)
 {
-  // OK, we've got an NIOP profile.  It's going to be
+  // OK, we've got an COIOP profile.  It's going to be
   // encapsulated ProfileData.  Create a new decoding stream and
   // context for it, and tell the "parent" stream that this data
   // isn't part of it any more.
@@ -1569,14 +1569,14 @@ cat_niop_profile (TAO_InputCDR& stream)
          && iiop_version_minor <= 2))
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "%I detected new v%d.%d NIOP profile that catior cannot decode",
+                  "%I detected new v%d.%d COIOP profile that catior cannot decode",
                   iiop_version_major,
                   iiop_version_minor));
       return true;
     }
 
   ACE_DEBUG ((LM_DEBUG,
-              "NIOP Version:\t%d.%d\n",
+              "COIOP Version:\t%d.%d\n",
               iiop_version_major,
               iiop_version_minor));
 

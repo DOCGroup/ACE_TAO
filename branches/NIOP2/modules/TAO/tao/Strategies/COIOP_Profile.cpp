@@ -1,41 +1,41 @@
 // $Id$
 
-#include "tao/Strategies/NIOP_Profile.h"
+#include "tao/Strategies/COIOP_Profile.h"
 
-#if defined (TAO_HAS_NIOP) && (TAO_HAS_NIOP != 0)
+#if defined (TAO_HAS_COIOP) && (TAO_HAS_COIOP != 0)
 
 #include "tao/CDR.h"
 #include "tao/Environment.h"
 #include "tao/ORB.h"
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
-#include "tao/Strategies/NIOP_EndpointsC.h"
+#include "tao/Strategies/COIOP_EndpointsC.h"
 
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 #include "ace/os_include/os_netdb.h"
 
 ACE_RCSID (Strategies,
-           NIOP_Profile,
+           COIOP_Profile,
            "$Id$")
 
 static const char the_prefix[] = "niop";
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-const char TAO_NIOP_Profile::object_key_delimiter_ = '/';
+const char TAO_COIOP_Profile::object_key_delimiter_ = '/';
 
 char
-TAO_NIOP_Profile::object_key_delimiter (void) const
+TAO_COIOP_Profile::object_key_delimiter (void) const
 {
-  return TAO_NIOP_Profile::object_key_delimiter_;
+  return TAO_COIOP_Profile::object_key_delimiter_;
 }
 
-TAO_NIOP_Profile::TAO_NIOP_Profile (const ACE_Utils::UUID& uuid,
-                                    const TAO::ObjectKey &object_key,
-                                    const TAO_GIOP_Message_Version &version,
-                                    TAO_ORB_Core *orb_core)
-  : TAO_Profile (TAO_TAG_NIOP_PROFILE,
+TAO_COIOP_Profile::TAO_COIOP_Profile (const ACE_Utils::UUID& uuid,
+                                      const TAO::ObjectKey &object_key,
+                                      const TAO_GIOP_Message_Version &version,
+                                      TAO_ORB_Core *orb_core)
+  : TAO_Profile (TAO_TAG_COIOP_PROFILE,
                  orb_core,
                  object_key,
                  version),
@@ -44,8 +44,8 @@ TAO_NIOP_Profile::TAO_NIOP_Profile (const ACE_Utils::UUID& uuid,
 {
 }
 
-TAO_NIOP_Profile::TAO_NIOP_Profile (TAO_ORB_Core *orb_core)
-  : TAO_Profile (TAO_TAG_NIOP_PROFILE,
+TAO_COIOP_Profile::TAO_COIOP_Profile (TAO_ORB_Core *orb_core)
+  : TAO_Profile (TAO_TAG_COIOP_PROFILE,
                  orb_core,
                  TAO_GIOP_Message_Version (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR)),
     endpoint_ (),
@@ -53,7 +53,7 @@ TAO_NIOP_Profile::TAO_NIOP_Profile (TAO_ORB_Core *orb_core)
 {
 }
 
-TAO_NIOP_Profile::~TAO_NIOP_Profile (void)
+TAO_COIOP_Profile::~TAO_COIOP_Profile (void)
 {
   // Clean up the list of endpoints since we own it.
   // Skip the head, since it is not dynamically allocated.
@@ -74,7 +74,7 @@ TAO_NIOP_Profile::~TAO_NIOP_Profile (void)
 //  1 -> success.
 
 int
-TAO_NIOP_Profile::decode_profile (TAO_InputCDR& cdr)
+TAO_COIOP_Profile::decode_profile (TAO_InputCDR& cdr)
 {
   // @@ NOTE: This code is repeated thrice. Need to factor out in a
   // better manner.
@@ -84,7 +84,7 @@ TAO_NIOP_Profile::decode_profile (TAO_InputCDR& cdr)
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) NIOP_Profile::decode - ")
+                    ACE_TEXT ("TAO (%P|%t) COIOP_Profile::decode - ")
                     ACE_TEXT ("error while uuid")));
       return -1;
     }
@@ -100,7 +100,7 @@ TAO_NIOP_Profile::decode_profile (TAO_InputCDR& cdr)
 }
 
 void
-TAO_NIOP_Profile::parse_string_i (const char *ior
+TAO_COIOP_Profile::parse_string_i (const char *ior
                                   ACE_ENV_ARG_DECL)
 {
   // Pull off the "hostname:port/" part of the objref
@@ -138,14 +138,14 @@ TAO_NIOP_Profile::parse_string_i (const char *ior
 }
 
 CORBA::Boolean
-TAO_NIOP_Profile::do_is_equivalent (const TAO_Profile *other_profile)
+TAO_COIOP_Profile::do_is_equivalent (const TAO_Profile *other_profile)
 {
-  const TAO_NIOP_Profile *op =
-    dynamic_cast<const TAO_NIOP_Profile *> (other_profile);
+  const TAO_COIOP_Profile *op =
+    dynamic_cast<const TAO_COIOP_Profile *> (other_profile);
 
   // Check endpoints equivalence.
-  const TAO_NIOP_Endpoint *other_endp = &op->endpoint_;
-  for (TAO_NIOP_Endpoint *endp = &this->endpoint_;
+  const TAO_COIOP_Endpoint *other_endp = &op->endpoint_;
+  for (TAO_COIOP_Endpoint *endp = &this->endpoint_;
        endp != 0;
        endp = endp->next_)
     {
@@ -159,12 +159,12 @@ TAO_NIOP_Profile::do_is_equivalent (const TAO_Profile *other_profile)
 }
 
 CORBA::ULong
-TAO_NIOP_Profile::hash (CORBA::ULong max
+TAO_COIOP_Profile::hash (CORBA::ULong max
                         ACE_ENV_ARG_DECL_NOT_USED)
 {
   // Get the hashvalue for all endpoints.
   CORBA::ULong hashval = 0;
-  for (TAO_NIOP_Endpoint *endp = &this->endpoint_;
+  for (TAO_COIOP_Endpoint *endp = &this->endpoint_;
        endp != 0;
        endp = endp->next_)
     {
@@ -189,19 +189,19 @@ TAO_NIOP_Profile::hash (CORBA::ULong max
 }
 
 TAO_Endpoint*
-TAO_NIOP_Profile::endpoint (void)
+TAO_COIOP_Profile::endpoint (void)
 {
   return &this->endpoint_;
 }
 
 CORBA::ULong
-TAO_NIOP_Profile::endpoint_count (void) const
+TAO_COIOP_Profile::endpoint_count (void) const
 {
   return this->count_;
 }
 
 void
-TAO_NIOP_Profile::add_endpoint (TAO_NIOP_Endpoint *endp)
+TAO_COIOP_Profile::add_endpoint (TAO_COIOP_Endpoint *endp)
 {
   endp->next_ = this->endpoint_.next_;
   this->endpoint_.next_ = endp;
@@ -210,7 +210,7 @@ TAO_NIOP_Profile::add_endpoint (TAO_NIOP_Endpoint *endp)
 }
 
 char *
-TAO_NIOP_Profile::to_string (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_COIOP_Profile::to_string (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   CORBA::String_var key;
   TAO::ObjectKey::encode_sequence_to_string (key.inout(),
@@ -248,13 +248,13 @@ TAO_NIOP_Profile::to_string (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 const char *
-TAO_NIOP_Profile::prefix (void)
+TAO_COIOP_Profile::prefix (void)
 {
   return ::the_prefix;
 }
 
 void
-TAO_NIOP_Profile::create_profile_body (TAO_OutputCDR &encap) const
+TAO_COIOP_Profile::create_profile_body (TAO_OutputCDR &encap) const
 {
   encap.write_octet (TAO_ENCAP_BYTE_ORDER);
 
@@ -272,7 +272,7 @@ TAO_NIOP_Profile::create_profile_body (TAO_OutputCDR &encap) const
   else
     {
       ACE_ERROR ((LM_ERROR,
-                  "(%P|%t) TAO - NIOP_Profile::create_profile_body "
+                  "(%P|%t) TAO - COIOP_Profile::create_profile_body "
                   "no object key marshalled \n"));
     }
 
@@ -282,7 +282,7 @@ TAO_NIOP_Profile::create_profile_body (TAO_OutputCDR &encap) const
 }
 
 int
-TAO_NIOP_Profile::encode_endpoints (void)
+TAO_COIOP_Profile::encode_endpoints (void)
 {
   // Create a data structure and fill it with endpoint info for wire
   // transfer.
@@ -291,10 +291,10 @@ TAO_NIOP_Profile::encode_endpoints (void)
   // info is transmitted using standard ProfileBody components, its
   // priority is not!
 
-  TAO::NIOPEndpointSequence endpoints;
+  TAO::COIOPEndpointSequence endpoints;
   endpoints.length (this->count_);
 
-  const TAO_NIOP_Endpoint *endpoint = &this->endpoint_;
+  const TAO_COIOP_Endpoint *endpoint = &this->endpoint_;
   for (CORBA::ULong i = 0;
        i < this->count_;
        ++i)
@@ -339,7 +339,7 @@ TAO_NIOP_Profile::encode_endpoints (void)
 }
 
 int
-TAO_NIOP_Profile::decode_endpoints (void)
+TAO_COIOP_Profile::decode_endpoints (void)
 {
   IOP::TaggedComponent tagged_component;
   tagged_component.tag = TAO_TAG_ENDPOINTS;
@@ -359,7 +359,7 @@ TAO_NIOP_Profile::decode_endpoints (void)
       in_cdr.reset_byte_order (static_cast<int> (byte_order));
 
       // Extract endpoints sequence.
-      TAO::NIOPEndpointSequence endpoints;
+      TAO::COIOPEndpointSequence endpoints;
 
       if (! (in_cdr >> endpoints))
         return -1;
@@ -379,11 +379,11 @@ TAO_NIOP_Profile::decode_endpoints (void)
            i > 0;
            --i)
         {
-          TAO_NIOP_Endpoint *endpoint = 0;
+          TAO_COIOP_Endpoint *endpoint = 0;
           CORBA::String_var strvar = CORBA::string_dup (endpoints[i].uuid);
           ACE_Utils::UUID uuid1 (strvar.in());
           ACE_NEW_RETURN (endpoint,
-                          TAO_NIOP_Endpoint (uuid1),
+                          TAO_COIOP_Endpoint (uuid1),
                           -1);
 
           this->add_endpoint (endpoint);
@@ -395,4 +395,4 @@ TAO_NIOP_Profile::decode_endpoints (void)
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-#endif /* TAO_HAS_NIOP && TAO_HAS_NIOP != 0 */
+#endif /* TAO_HAS_COIOP && TAO_HAS_COIOP != 0 */

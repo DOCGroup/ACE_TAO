@@ -1,8 +1,8 @@
 // $Id$
 
-#include "tao/Strategies/NIOP_Connection_Handler.h"
+#include "tao/Strategies/COIOP_Connection_Handler.h"
 
-#if defined (TAO_HAS_NIOP) && (TAO_HAS_NIOP != 0)
+#if defined (TAO_HAS_COIOP) && (TAO_HAS_COIOP != 0)
 
 #include "tao/Timeprobe.h"
 #include "tao/debug.h"
@@ -16,19 +16,16 @@
 #include "tao/Protocols_Hooks.h"
 #include "tao/Resume_Handle.h"
 
-#include "tao/Strategies/NIOP_Transport.h"
-#include "tao/Strategies/NIOP_Endpoint.h"
+#include "tao/Strategies/COIOP_Transport.h"
+#include "tao/Strategies/COIOP_Endpoint.h"
 
-#include "ace/os_include/netinet/os_tcp.h"
-#include "ace/os_include/os_netdb.h"
-
-ACE_RCSID(tao, NIOP_Connect, "$Id$")
+ACE_RCSID(tao, COIOP_Connect, "$Id$")
 
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_NIOP_Connection_Handler::TAO_NIOP_Connection_Handler (ACE_Thread_Manager *t)
-  : TAO_NIOP_SVC_HANDLER (t, 0 , 0),
+TAO_COIOP_Connection_Handler::TAO_COIOP_Connection_Handler (ACE_Thread_Manager *t)
+  : TAO_COIOP_SVC_HANDLER (t, 0 , 0),
     TAO_Connection_Handler (0)
 {
   // This constructor should *never* get called, it is just here to
@@ -40,57 +37,57 @@ TAO_NIOP_Connection_Handler::TAO_NIOP_Connection_Handler (ACE_Thread_Manager *t)
 }
 
 
-TAO_NIOP_Connection_Handler::TAO_NIOP_Connection_Handler (TAO_ORB_Core *orb_core,
+TAO_COIOP_Connection_Handler::TAO_COIOP_Connection_Handler (TAO_ORB_Core *orb_core,
                                                           CORBA::Boolean flag)
-  : TAO_NIOP_SVC_HANDLER (orb_core->thr_mgr (), 0, 0), TAO_Connection_Handler (orb_core)
+  : TAO_COIOP_SVC_HANDLER (orb_core->thr_mgr (), 0, 0), TAO_Connection_Handler (orb_core)
 {
-  TAO_NIOP_Transport* specific_transport = 0;
+  TAO_COIOP_Transport* specific_transport = 0;
   ACE_NEW (specific_transport,
-           TAO_NIOP_Transport(this, orb_core, flag));
+           TAO_COIOP_Transport(this, orb_core, flag));
 
   // store this pointer (indirectly increment ref count)
   this->transport (specific_transport);
 }
 
 
-TAO_NIOP_Connection_Handler::~TAO_NIOP_Connection_Handler (void)
+TAO_COIOP_Connection_Handler::~TAO_COIOP_Connection_Handler (void)
 {
   delete this->transport ();
 //  this->udp_socket_.close ();
 }
 
 int
-TAO_NIOP_Connection_Handler::open_handler (void *v)
+TAO_COIOP_Connection_Handler::open_handler (void *v)
 {
   return this->open (v);
 }
 
 int
-TAO_NIOP_Connection_Handler::open (void*)
+TAO_COIOP_Connection_Handler::open (void*)
 {
   return 0;
 }
 
 int
-TAO_NIOP_Connection_Handler::resume_handler (void)
+TAO_COIOP_Connection_Handler::resume_handler (void)
 {
   return ACE_Event_Handler::ACE_APPLICATION_RESUMES_HANDLER;
 }
 
 int
-TAO_NIOP_Connection_Handler::close_connection (void)
+TAO_COIOP_Connection_Handler::close_connection (void)
 {
   return this->close_connection_eh (this);
 }
 
 int
-TAO_NIOP_Connection_Handler::handle_input (ACE_HANDLE h)
+TAO_COIOP_Connection_Handler::handle_input (ACE_HANDLE h)
 {
   return this->handle_input_eh (h, this);
 }
 
 int
-TAO_NIOP_Connection_Handler::handle_output (ACE_HANDLE handle)
+TAO_COIOP_Connection_Handler::handle_output (ACE_HANDLE handle)
 {
   int const result =
     this->handle_output_eh (handle, this);
@@ -105,7 +102,7 @@ TAO_NIOP_Connection_Handler::handle_output (ACE_HANDLE handle)
 }
 
 int
-TAO_NIOP_Connection_Handler::handle_timeout (const ACE_Time_Value &,
+TAO_COIOP_Connection_Handler::handle_timeout (const ACE_Time_Value &,
                                              const void *)
 {
   // We don't use this upcall from the Reactor.  However, we should
@@ -115,7 +112,7 @@ TAO_NIOP_Connection_Handler::handle_timeout (const ACE_Time_Value &,
 }
 
 int
-TAO_NIOP_Connection_Handler::handle_close (ACE_HANDLE,
+TAO_COIOP_Connection_Handler::handle_close (ACE_HANDLE,
                                            ACE_Reactor_Mask)
 {
   // No asserts here since the handler is registered with the Reactor
@@ -127,17 +124,11 @@ TAO_NIOP_Connection_Handler::handle_close (ACE_HANDLE,
 }
 
 int
-TAO_NIOP_Connection_Handler::close (u_long)
+TAO_COIOP_Connection_Handler::close (u_long)
 {
   return this->close_handler ();
 }
 
-int
-TAO_NIOP_Connection_Handler::release_os_resources (void)
-{
-  return this->peer ().close ();
-}
-
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-#endif /* TAO_HAS_NIOP && TAO_HAS_NIOP != 0 */
+#endif /* TAO_HAS_COIOP && TAO_HAS_COIOP != 0 */

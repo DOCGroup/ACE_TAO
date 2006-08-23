@@ -1,93 +1,93 @@
 // $Id$
 
-#include "tao/Strategies/NIOP_Factory.h"
+#include "tao/Strategies/COIOP_Factory.h"
 
-#if defined (TAO_HAS_NIOP) && (TAO_HAS_NIOP != 0)
+#if defined (TAO_HAS_COIOP) && (TAO_HAS_COIOP != 0)
 
-#include "tao/Strategies/NIOP_Acceptor.h"
-#include "tao/Strategies/NIOP_Connector.h"
+#include "tao/Strategies/COIOP_Acceptor.h"
+#include "tao/Strategies/COIOP_Connector.h"
 
 #include "tao/ORB_Constants.h"
 
 #include "ace/OS_NS_strings.h"
 
 ACE_RCSID (Strategies,
-           NIOP_Factory,
+           COIOP_Factory,
            "$Id$")
 
-static const char the_prefix[] = "NIOP";
+static const char the_prefix[] = "COIOP";
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_NIOP_Protocol_Factory::TAO_NIOP_Protocol_Factory (void)
-  :  TAO_Protocol_Factory (TAO_TAG_NIOP_PROFILE),
+TAO_COIOP_Protocol_Factory::TAO_COIOP_Protocol_Factory (void)
+  :  TAO_Protocol_Factory (TAO_TAG_COIOP_PROFILE),
      major_ (TAO_DEF_GIOP_MAJOR),
      minor_ (TAO_DEF_GIOP_MINOR)
 {
 }
 
-TAO_NIOP_Protocol_Factory::~TAO_NIOP_Protocol_Factory (void)
+TAO_COIOP_Protocol_Factory::~TAO_COIOP_Protocol_Factory (void)
 {
 }
 
 int
-TAO_NIOP_Protocol_Factory::match_prefix (const ACE_CString &prefix)
+TAO_COIOP_Protocol_Factory::match_prefix (const ACE_CString &prefix)
 {
   // Check for the proper prefix for this protocol.
   return (ACE_OS::strcasecmp (prefix.c_str (), ::the_prefix) == 0);
 }
 
 const char *
-TAO_NIOP_Protocol_Factory::prefix (void) const
+TAO_COIOP_Protocol_Factory::prefix (void) const
 {
   return ::the_prefix;
 }
 
 char
-TAO_NIOP_Protocol_Factory::options_delimiter (void) const
+TAO_COIOP_Protocol_Factory::options_delimiter (void) const
 {
   return '/';
 }
 
 TAO_Acceptor *
-TAO_NIOP_Protocol_Factory::make_acceptor (void)
+TAO_COIOP_Protocol_Factory::make_acceptor (void)
 {
   TAO_Acceptor *acceptor = 0;
 
   ACE_NEW_RETURN (acceptor,
-                  TAO_NIOP_Acceptor,
+                  TAO_COIOP_Acceptor,
                   0);
 
   return acceptor;
 }
 
 int
-TAO_NIOP_Protocol_Factory::init (int /* argc */,
+TAO_COIOP_Protocol_Factory::init (int /* argc */,
                                  ACE_TCHAR* /* argv */ [])
 {
   return 0;
 }
 
 TAO_Connector *
-TAO_NIOP_Protocol_Factory::make_connector (void)
+TAO_COIOP_Protocol_Factory::make_connector (void)
 {
   TAO_Connector *connector = 0;
 
   ACE_NEW_RETURN (connector,
-                  TAO_NIOP_Connector,
+                  TAO_COIOP_Connector,
                   0);
   return connector;
 }
 
 int
-TAO_NIOP_Protocol_Factory::requires_explicit_endpoint (void) const
+TAO_COIOP_Protocol_Factory::requires_explicit_endpoint (void) const
 {
   // This switch is actually meant to distinguish between pluggable
   // protocols which are able to clean up their endpoints and such
   // that aren't. E.g. UIOP will leave files, it therefore returns 1,
   // IIOP cleans up its endpoint resources, which therefore return 0.
   //
-  // NIOP does clean up endpoint resources, but as NIOP is only
+  // COIOP does clean up endpoint resources, but as COIOP is only
   // suitable for special environments, e.g. it supports only one-ways,
   // it returns 1 for an other reason than resource clean-up.
 
@@ -96,14 +96,14 @@ TAO_NIOP_Protocol_Factory::requires_explicit_endpoint (void) const
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-ACE_STATIC_SVC_DEFINE (TAO_NIOP_Protocol_Factory,
-                       ACE_TEXT ("NIOP_Factory"),
+ACE_STATIC_SVC_DEFINE (TAO_COIOP_Protocol_Factory,
+                       ACE_TEXT ("COIOP_Factory"),
                        ACE_SVC_OBJ_T,
-                       &ACE_SVC_NAME (TAO_NIOP_Protocol_Factory),
+                       &ACE_SVC_NAME (TAO_COIOP_Protocol_Factory),
                        ACE_Service_Type::DELETE_THIS |
                                   ACE_Service_Type::DELETE_OBJ,
                        0)
 
-ACE_FACTORY_DEFINE (TAO_Strategies, TAO_NIOP_Protocol_Factory)
+ACE_FACTORY_DEFINE (TAO_Strategies, TAO_COIOP_Protocol_Factory)
 
-#endif /* TAO_HAS_NIOP && TAO_HAS_NIOP != 0 */
+#endif /* TAO_HAS_COIOP && TAO_HAS_COIOP != 0 */

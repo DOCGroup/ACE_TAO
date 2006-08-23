@@ -2,19 +2,18 @@
 
 //=============================================================================
 /**
- *  @file    NIOP_Acceptor.h
+ *  @file    COIOP_Acceptor.h
  *
  *  $Id$
  *
- *  NIOP specific acceptor processing
+ *  COIOP specific acceptor processing
  *
  *  @author  Johnny Willemsen <jwillemsen@remedy.nl>
  */
 //=============================================================================
 
-
-#ifndef TAO_NIOP_ACCEPTOR_H
-#define TAO_NIOP_ACCEPTOR_H
+#ifndef TAO_COIOP_ACCEPTOR_H
+#define TAO_COIOP_ACCEPTOR_H
 
 #include /**/ "ace/pre.h"
 
@@ -24,40 +23,33 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (TAO_HAS_NIOP) && (TAO_HAS_NIOP != 0)
+#if defined (TAO_HAS_COIOP) && (TAO_HAS_COIOP != 0)
 
 #include "tao/Transport_Acceptor.h"
-#include "tao/Strategies/NIOP_Connection_Handler.h"
+#include "tao/Strategies/COIOP_Connection_Handler.h"
 #include "tao/Acceptor_Impl.h"
 
 #include "tao/GIOP_Message_Version.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// TAO NIOP_Acceptor concrete call defination
+// TAO COIOP_Acceptor concrete call defination
 
 /**
- * @class TAO_NIOP_Acceptor
+ * @class TAO_COIOP_Acceptor
  *
- * @brief TAO_NIOP_Acceptor
+ * @brief TAO_COIOP_Acceptor
  *
- * The NIOP-specific bridge class for the concrete acceptor.
+ * The COIOP-specific bridge class for the concrete acceptor.
  */
-class TAO_Strategies_Export TAO_NIOP_Acceptor : public TAO_Acceptor
+class TAO_Strategies_Export TAO_COIOP_Acceptor : public TAO_Acceptor
 {
 public:
   /// Constructor.
-  TAO_NIOP_Acceptor (CORBA::Boolean flag = false);
+  TAO_COIOP_Acceptor (CORBA::Boolean flag = false);
 
   /// Destructor.
-  ~TAO_NIOP_Acceptor (void);
-
-  /// @@ Helper method for the implementation repository, should go
-  ///    away
-//  const ACE_INET_Addr& address (void) const;
-
-  /// Returns the array of endpoints in this acceptor
-//  const ACE_INET_Addr *endpoints (void);
+  ~TAO_COIOP_Acceptor (void);
 
   /**
    * @name The TAO_Acceptor Methods
@@ -106,10 +98,6 @@ protected:
                              CORBA::Short priority);
 protected:
 
-  /// Array of ACE_INET_Addr instances, each one corresponding to a
-  /// given network interface.
-  //ACE_INET_Addr *addrs_;
-
   /**
    * Cache the information about the endpoints serviced by this
    * acceptor.
@@ -137,19 +125,19 @@ protected:
   CORBA::Boolean lite_flag_;
 
 private:
-  // @@ Frank: From NIOP_Acceptor.h
-  TAO_NIOP_Connection_Handler *connection_handler_;
+  // @@ Frank: From COIOP_Acceptor.h
+  TAO_COIOP_Connection_Handler *connection_handler_;
 
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(__ACE_INLINE__)
-#include "tao/Strategies/NIOP_Acceptor.inl"
+#include "tao/Strategies/COIOP_Acceptor.inl"
 #endif /* __ACE_INLINE__ */
 
-#endif /* TAO_HAS_NIOP && TAO_HAS_NIOP != 0 */
+#endif /* TAO_HAS_COIOP && TAO_HAS_COIOP != 0 */
 
 #include /**/ "ace/post.h"
 
-#endif  /* TAO_NIOP_ACCEPTOR_H */
+#endif  /* TAO_COIOP_ACCEPTOR_H */
