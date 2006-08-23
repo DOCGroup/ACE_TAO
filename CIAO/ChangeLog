@@ -1,3 +1,9 @@
+Wed Aug 23 17:57:15 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
+
+        * DAnCE/Plan_Launcher/PCVisitorBase.h
+          Solved the "invalid use of undefined type 'struct PCVisitorBase'"
+          warnings.
+
 Wed Aug 23 15:22:36 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
 
         * DAnCE/Plan_Launcher/PCVisitor.cpp
