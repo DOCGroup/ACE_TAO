@@ -1,3 +1,16 @@
+Wed Aug 23 17:43:29 UTC 2006  Yan Dai  <dai_y@ociweb.com>
+
+        * tao\PortableServer\DII_Arguments_Converter.h:
+        * tao\PortableServer\DII_Arguments_Converter.cpp:
+        * tao\DynamicInterface\DII_Arguments_Converter_Impl.h:
+        * tao\DynamicInterface\DII_Arguments_Converter_Impl.cpp:
+        
+          Reverted back the changes 
+          "Tue Aug 22 20:28:26 UTC 2006  Yan Dai  <dai_y@ociweb.com>".
+          Added the virtual destructor to TAO_DII_Arguments_Converter
+          class to let the rtti work with gcc4 to resolve the oneway
+          test failure on gcc4 builds.
+        
 Wed Aug 23 12:49:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/IIOP_Factory.{h,cpp}:
