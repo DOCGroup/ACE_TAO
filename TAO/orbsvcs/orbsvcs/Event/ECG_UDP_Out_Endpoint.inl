@@ -8,7 +8,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 TAO_ECG_UDP_Out_Endpoint::TAO_ECG_UDP_Out_Endpoint (void)
-  : request_id_generator_ (ACE_OS::time (0)),
+  : // request_id_generator_ (ACE_OS::time (0)),
     port_number_ (0),
     if_count_ (0),
     ifs_ (0)
@@ -17,6 +17,9 @@ TAO_ECG_UDP_Out_Endpoint::TAO_ECG_UDP_Out_Endpoint (void)
 
 ACE_INLINE
 TAO_ECG_UDP_Out_Endpoint::TAO_ECG_UDP_Out_Endpoint (const TAO_ECG_UDP_Out_Endpoint& rhs)
+  : port_number_ (0),
+    if_count_ (0),
+    ifs_ (0)
 {
   // This assignment operator does all the work needed to initialize
   // this object in the copy constructor.
