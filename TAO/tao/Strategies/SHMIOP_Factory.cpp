@@ -23,8 +23,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_SHMIOP_Protocol_Factory::TAO_SHMIOP_Protocol_Factory (void)
   : TAO_Protocol_Factory (TAO_TAG_SHMEM_PROFILE),
-    major_ (TAO_DEF_GIOP_MAJOR),
-    minor_ (TAO_DEF_GIOP_MINOR),
     mmap_prefix_ (0),
     min_bytes_ (10*1024)        // @@ Nanbor, remove this magic number!!
 {

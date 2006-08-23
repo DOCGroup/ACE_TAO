@@ -71,13 +71,6 @@ public:
   virtual TAO_Connector *make_connector  (void);
   virtual int requires_explicit_endpoint (void) const;
   //@}
-
-private:
-  int major_;
-  int minor_;
-  // Changing the version number can be used to provide backwards
-  // compatibility with old clients.
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
