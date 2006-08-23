@@ -14,9 +14,7 @@ static const char prefix_[] = "sciop";
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_SCIOP_Lite_Protocol_Factory::TAO_SCIOP_Lite_Protocol_Factory (void)
-  :  TAO_Protocol_Factory (TAO_TAG_SCIOP_PROFILE),
-     major_ (TAO_DEF_SCIOP_MAJOR),
-     minor_ (TAO_DEF_SCIOP_MINOR)
+  :  TAO_Protocol_Factory (TAO_TAG_SCIOP_PROFILE)
 {
 }
 
