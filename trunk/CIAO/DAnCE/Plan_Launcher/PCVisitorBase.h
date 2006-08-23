@@ -27,37 +27,6 @@
 #include "ace/SString.h"             //for the ACE_CString
 #include "ace/Containers_T.h"        //for ACE_Unbounded_Stack
 
-//forward declaration
-class PCVisitorBase;
-
-template <typename T>
-void Accept (PCVisitorBase &v, T& element_to_visit)
-{
-  v.Visit (element_to_visit);
-}
-
-//========================================================================
-/**
- *  function - visit_sequence
- *
- *  This function is used to handle sequences of elements where each
- *  element takes the form of a Visitor Node.
- */
-//========================================================================
-
-
-/// I am using this to dispatch sequences
-template <typename SEQ>
-void visit_sequence (SEQ &seq, PCVisitorBase& v)
-{
-   const CORBA::ULong size = seq.length ();
-
-   for (CORBA::ULong i = 0; i < size; ++i)
-   {
-     Accept(v, seq[i]);
-   }
-}
-
 //========================================================================
 /**
  *  class PCVisitorBase
@@ -171,6 +140,29 @@ public:
   void Visit (Deployment::ComponentExternalPortEndpoint &cepe) = 0;
   void Visit (Deployment::ComponentExternalPortEndpoints &cepes);
 };
+
+template <typename T>
+void Accept (PCVisitorBase &v, T& element_to_visit)
+{
+  v.Visit (element_to_visit);
+}
+
+/**
+ *  function - visit_sequence
+ *
+ *  This function is used to handle sequences of elements where each
+ *  element takes the form of a Visitor Node.
+ */
+template <typename SEQ>
+void visit_sequence (SEQ &seq, PCVisitorBase& v)
+{
+   const CORBA::ULong size = seq.length ();
+
+   for (CORBA::ULong i = 0; i < size; ++i)
+   {
+     Accept(v, seq[i]);
+   }
+}
 
 #if defined (__ACE_INLINE__)
 #include "PCVisitorBase.inl"
