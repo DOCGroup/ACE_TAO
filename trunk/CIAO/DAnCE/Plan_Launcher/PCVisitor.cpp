@@ -207,7 +207,7 @@ void PCVisitor::Visit (Deployment::ImplementationDependency &)
 
 //ports and connections
 
-void PCVisitor::Visit (Deployment::AssemblyConnectionDescription &acd)
+void PCVisitor::Visit (Deployment::AssemblyConnectionDescription &)
 {
 }
 
