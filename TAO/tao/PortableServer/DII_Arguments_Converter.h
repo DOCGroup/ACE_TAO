@@ -40,25 +40,18 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_PortableServer_Export TAO_DII_Arguments_Converter : public ACE_Service_Object
 {
 public:
-
+  
+  virtual ~TAO_DII_Arguments_Converter (void);
+  
   virtual void convert ( TAO_ServerRequest & server_request,
                          TAO::Argument * const args[],
                          size_t nargs
-                         ACE_ENV_ARG_DECL );
-  static int Initializer ();
+                         ACE_ENV_ARG_DECL) = 0;
 
 };
 
 
-static int
-TAO_Requires_DII_Arguments_Converter_Initializer =
-  TAO_DII_Arguments_Converter::Initializer ();
-
-
 TAO_END_VERSIONED_NAMESPACE_DECL
-  ACE_STATIC_SVC_DECLARE (TAO_DII_Arguments_Converter)
-  ACE_FACTORY_DECLARE (TAO_PortableServer, TAO_DII_Arguments_Converter)
-
 
 
 #include /**/ "ace/post.h"

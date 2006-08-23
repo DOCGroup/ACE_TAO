@@ -12,7 +12,6 @@ ACE_RCSID (DynamicInterface,
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-
 void
 TAO_DII_Arguments_Converter_Impl::convert (
     TAO_ServerRequest & server_request,
@@ -87,8 +86,9 @@ int
 TAO_DII_Arguments_Converter_Impl::Initializer (void)
 {
   return ACE_Service_Config::process_directive (
-    ace_svc_desc_TAO_DII_Arguments_Converter_Impl, 1);
+    ace_svc_desc_TAO_DII_Arguments_Converter_Impl);
 }
+
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
