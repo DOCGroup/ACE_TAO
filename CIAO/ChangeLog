@@ -1,3 +1,8 @@
+Wed Aug 23 000:00:43 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
+
+        * examples/BasicSP/descriptors/basicNodeDaemon.pl
+          Use "$ENV{'ACE_ROOT'}/bin" to point to the location of lib file.
+
 Tue Aug 22 23:47:06 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
 
         * DAnCE/Plan_Launcher/Plan_Launcher.cpp
