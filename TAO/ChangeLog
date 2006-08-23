@@ -1,3 +1,16 @@
+Wed Aug 23 12:49:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/IIOP_Factory.{h,cpp}:
+        * tao/IIOP_Lite_Factory.{h,cpp}:
+        * tao/Strategies/DIOP_Factory.{h,cpp}:
+        * tao/Strategies/SCIOP_Factory.{h,cpp}:
+        * tao/Strategies/SCIOP_Lite_Factory.{h,cpp}:
+        * tao/Strategies/SHMIOP_Factory.{h,cpp}:
+        * tao/Strategies/UIOP_Factory.{h,cpp}:
+        * tao/Strategies/UIOP_Lite_Factory.{h,cpp}:
+          Removed the minor_ and major_ members, they where only initialized
+          to a value and then never used at all. Saves a few bytes of footprint
+
 Tue Aug 22 20:28:26 UTC 2006  Yan Dai  <dai_y@ociweb.com>
 
         * tao\PortableServer\DII_Arguments_Converter.cpp:
@@ -7,11 +20,11 @@ Tue Aug 22 20:28:26 UTC 2006  Yan Dai  <dai_y@ociweb.com>
 
           Made the TAO_DII_Arguments_Converter service object registered
           when PortableServer lib is loaded and the TAO_DII_Arguments_Converter_Impl
-          object will overwrite the registered "DII_Arguments_Converter" service 
-          object. This would fix dynamic_cast failure when accessing the 
+          object will overwrite the registered "DII_Arguments_Converter" service
+          object. This would fix dynamic_cast failure when accessing the
           "DII_Arguments_Converter" dynamic service object in Upcall_Wrapper::upcall()
-          on FC4 with gcc4.x builds. This should fix the 
-          $TAO_ROOT/tests/DII_Collocation_Tests/oneway test failure on FC4 with 
+          on FC4 with gcc4.x builds. This should fix the
+          $TAO_ROOT/tests/DII_Collocation_Tests/oneway test failure on FC4 with
           gcc4.x builds.
 
 Tue Aug 22 19:39:07 UTC 2006  Ciju John  <john@ociweb.com>

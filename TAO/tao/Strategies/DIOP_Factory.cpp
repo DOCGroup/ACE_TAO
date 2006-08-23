@@ -20,9 +20,7 @@ static const char the_prefix[] = "diop";
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_DIOP_Protocol_Factory::TAO_DIOP_Protocol_Factory (void)
-  :  TAO_Protocol_Factory (TAO_TAG_DIOP_PROFILE),
-     major_ (TAO_DEF_GIOP_MAJOR),
-     minor_ (TAO_DEF_GIOP_MINOR)
+  :  TAO_Protocol_Factory (TAO_TAG_DIOP_PROFILE)
 {
 }
 

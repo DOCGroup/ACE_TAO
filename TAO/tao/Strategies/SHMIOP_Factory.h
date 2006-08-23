@@ -75,11 +75,6 @@ public:
   const ACE_TCHAR *mmap_file_prefix (void);
 
 private:
-  int major_;
-  int minor_;
-  // Changing the version number can be used to provide backwards
-  // compatibility with old clients.
-
   /// Specify the prefix (full path) for mmap files
   ACE_TCHAR *mmap_prefix_;
 
