@@ -171,8 +171,6 @@ ACE_Service_Type_Forward_Declaration_Guard::~ACE_Service_Type_Forward_Declaratio
 
 
 
-
-
 // ----------------------------------------
 
 ACE_Service_Gestalt::Processed_Static_Svc::
@@ -182,123 +180,22 @@ Processed_Static_Svc (const ACE_Static_Svc_Descriptor *assd)
 {
   ACE_NEW_NORETURN (name_, ACE_TCHAR[ACE_OS::strlen(assd->name_)+1]);
   ACE_OS::strcpy(name_,assd->name_);
+//   if (ACE::debug ())
+//     ACE_DEBUG ((LM_DEBUG,
+//                 ACE_LIB_TEXT ("ACE (%P|%t) PSS::ctor -  name = %s\n"),
+//                 name_));
 }
 
 ACE_Service_Gestalt::Processed_Static_Svc::
 ~Processed_Static_Svc (void)
 {
+//   if (ACE::debug ())
+//     ACE_DEBUG ((LM_DEBUG,
+//                 ACE_LIB_TEXT ("ACE (%P|%t) PSS::dtor -  name = %s\n"),
+//                 name_));
+
   delete [] name_;
 }
-
-ACE_Service_Type_DLL_Guard::ACE_Service_Type_DLL_Guard (ACE_Service_Gestalt* gestalt)
-  : gestalt_ (gestalt)
-  , repo_ (gestalt->repo_)
-  , processed_static_svcs_ (gestalt->processed_static_svcs_)
- {
-   ACE_NEW_NORETURN (this->gestalt_->repo_,
-                     ACE_Service_Repository (128));
-
-  if (this->processed_static_svcs_ == 0)
-    ACE_NEW_NORETURN (this->processed_static_svcs_,
-                      ACE_Service_Gestalt::ACE_PROCESSED_STATIC_SVCS);
-
-  this->gestalt_->processed_static_svcs_ = 0;
-}
-
-
-int
-ACE_Service_Type_DLL_Guard::relocate (const ACE_DLL& adll)
-{
-  ACE_Service_Repository* target = this->repo_;
-  ACE_Service_Repository* source = this->gestalt_->repo_;
-
-  if (ACE::debug ())
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("ACE (%P|%t) Service_Type_DLL_Guard::relocate, %d services from %@ to repo=%@\n"),
-                source->current_size_,
-                source,
-                target));
-
-  // First associate any static service types with the DLL, because if
-  // any of them have to destroyed (in our dtor) it needs to happen
-  // safely, by properly reference counting the DLL. We don't want the
-  // DLL to get unmapped before finalizing all its services, remember?
-  for (size_t i = 0; i < source->current_size_; i++)
-    {
-      if (source->service_vector_[i]->dll ().get_handle (0) == 0)
-        {
-          ACE_Service_Type* ast =
-            const_cast<ACE_Service_Type*> (source->service_vector_[i]);
-
-          ast->relocate (adll);
-
-          if (ACE::debug ())
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("ACE (%P|%t) Service_Type_DLL_Guard::relocate, service=%s (%@) to repo=%@\n"),
-                        ast->name (),
-                        ast,
-                        target));
-        }
-    }
-
-  // Checking for enough size in the "real" repo
-  if (target->total_size_ < source->current_size_ + target->current_size_)
-    {
-      errno = ENOMEM;
-      return -1; // Not enough memory for the new services. The
-                 // locally loaded services will be safely destroyed
-                 // by the dtor
-    }
-
-  // The recipient's size is sufficient, so we can relocate all local
-  // services to their final repo.
-  for (size_t i = 0; i < source->current_size_; i++)
-    {
-      target->insert (source->service_vector_[i]);
-      source->service_vector_[i] = 0;
-    }
-  source->current_size_ = 0;
-
-
-  // Do relocate any of the "processed static" services, too. These, I
-  // guess are copies of non-local services, i.e. services loaded in
-  // the global repository, but referenced and having a different
-  // instance locally.
-  if (this->gestalt_->processed_static_svcs_ != 0
-      && !this->gestalt_->processed_static_svcs_->is_empty())
-    {
-      ACE_Service_Gestalt::Processed_Static_Svc **pss = 0;
-      for (ACE_Service_Gestalt::ACE_PROCESSED_STATIC_SVCS_ITERATOR
-             iter (*this->gestalt_->processed_static_svcs_);
-           iter.next (pss) != 0;
-           iter.advance ())
-        {
-          ACE_Service_Gestalt::Processed_Static_Svc *tmp = 0;
-          ACE_NEW_RETURN (tmp,
-                          ACE_Service_Gestalt::Processed_Static_Svc((*pss)->assd_),
-                          -1);
-          this->processed_static_svcs_->insert(tmp);
-
-          delete *pss;
-          *pss = 0;
-        }
-    }
-
-  return 0;
-}
-
-ACE_Service_Type_DLL_Guard::~ACE_Service_Type_DLL_Guard (void)
-{
-  ACE_Service_Repository* tmp1 (this->gestalt_->repo_);
-  ACE_Service_Gestalt::ACE_PROCESSED_STATIC_SVCS* tmp2 (this->gestalt_->processed_static_svcs_);
-
-  this->gestalt_->repo_ = this->repo_;
-  this->gestalt_->processed_static_svcs_ = this->processed_static_svcs_;
-
-  delete tmp1;
-  delete tmp2;
-}
-
 
 // ----------------------------------------
 
@@ -491,14 +388,7 @@ ACE_Service_Gestalt::dump (void) const
 
 
 
-/// (Statically) initialize a service object.  Locates the service
-/// object's registration record, identified by svc_name and
-/// initializes it, using the supplied command line parameters. Own
-/// repository is searched first and if the service is located it is
-/// initializaed and activated. The "processed" services descriptors
-/// from the global repository are looked up otherwice, and if one is
-/// found it is duplicated locally. The initialization and activatin
-/// then proceeds as described above.
+///
 
 int
 ACE_Service_Gestalt::initialize (const ACE_TCHAR *svc_name,
@@ -521,6 +411,7 @@ ACE_Service_Gestalt::initialize (const ACE_TCHAR *svc_name,
 
   const ACE_Service_Type *srp = 0;
   for (int i = 0; this->repo_->find (svc_name, &srp) == -1 && i < 2; i++)
+    //  if (this->repo_->find (svc_name, &srp) == -1)
     {
       const ACE_Static_Svc_Descriptor *assd =
         ACE_Service_Config::global()->find_processed_static_svc(svc_name);
@@ -590,12 +481,12 @@ ACE_Service_Gestalt::initialize (const ACE_Service_Type_Factory *stf,
 #ifndef ACE_NLOGGING
       if (ACE::debug ())
         ACE_ERROR_RETURN ((LM_WARNING,
-                           ACE_LIB_TEXT ("ACE (%P|%t) SG::initialze - \'%s\' already installed.")
+                           ACE_LIB_TEXT ("ACE (%P|%t) \'%s\' already installed.")
                            ACE_LIB_TEXT (" Must be removed before re-installing\n"),
                            stf->name ()),
                           0);
 #endif
-      return 0;
+        return 0;
     }
 
   // There is an inactive service by that name, so it may have been
@@ -608,57 +499,35 @@ ACE_Service_Gestalt::initialize (const ACE_Service_Type_Factory *stf,
   // use case must be handled here, because if the DLL_Manager was
   // re-entrant we would have entered an infinite recursion here.
   if (retv == -2 && srp->type () == 0)
-    {
-#ifndef ACE_NLOGGING
-      if (ACE::debug ())
-        ACE_ERROR ((LM_WARNING,
-                    ACE_LIB_TEXT ("ACE (%P|%t) SG::initialize - \'%s\' has not been ")
-                    ACE_LIB_TEXT ("completely defined. Recursive ")
-                    ACE_LIB_TEXT ("initialization request while ")
-                    ACE_LIB_TEXT ("already performing one.\n"),
-                    stf->name ()));
-      return -1;
-#endif
-    }
+    ACE_ERROR_RETURN ((LM_WARNING,
+                       ACE_LIB_TEXT ("ACE (%P|%t) \'%s\' has not been ")
+                       ACE_LIB_TEXT ("completely defined. Recursive ")
+                       ACE_LIB_TEXT ("initialization request while ")
+                       ACE_LIB_TEXT ("already performing one.\n"),
+                       stf->name ()),
+                      -1);
 
-  // Use a temporary repository to "capture" any static services, that
-  // may be loaded with (as part of) the dynamic service. The process
-  // works by assigning the same ACE_DLL to all captured
-  // services. Thus all of them must be finalized to be able to unload
-  // the dll from memory. Also, the order of finalization among these
-  // becomes irrelevant, instead of scheming to make sure the dynamic
-  // service is destroyed last.
-  ACE_Service_Type_DLL_Guard guard (this);
+  // Reserve a spot for the dynamic service by inserting an incomplete
+  // service declaration, i.e. one that can not produce a service
+  // object if asked.  Having this incomplete declaration works
+  // similar to C++'s forward declaration to allow, in this case
+  // proper partial ordering of the loaded services in respect to
+  // their finalization. I.e. dependent static services must be
+  // registered *after* the dynamic service that loads them, so that
+  // their finalization is complete *before* finalizing the dynamic
+  // service.
+  ACE_Service_Type_Forward_Declaration_Guard dummy (this->repo_,
+                                                    stf->name ());
 
   // make_service_type() is doing the dynamic loading and also runs
-  // any static initializer code from the new DLL - this is how any
-  // static services will get registered.
-  ACE_Auto_Ptr <ACE_Service_Type> tmp (stf->make_service_type (this));
-  if (tmp.get () != 0
-      && this->initialize_i (tmp.get (), parameters) == 0)
+  // any static initializers
+  ACE_Auto_Ptr<ACE_Service_Type> tmp (stf->make_service_type (this));
+  if (tmp.get () != 0 &&
+      this->initialize_i (tmp.get (), parameters) == 0)
     {
-      // Try to relocate all SO instances from the sandbox repository
-      const ACE_DLL& relocation_target = tmp->dll ();
-
-      // initialize_i() inserts the ST instance in the gestalt's
-      // repository, so the auto_ptr can now safely give up the
-      // ownership (note: zeroes out the pointer it contained)
+      // All good the ACE_Service_Type instance is now owned by the repository
+      // and we should make sure it is not destroyed upon exit from this method.
       (void)tmp.release ();
-
-      if (guard.relocate (relocation_target) != 0)
-        {
-          // The ST which we dis-owned above will be correctly
-          // destroyed by the ~ACE_Service_Type_DLL_Guard.
-#ifndef ACE_NLOGGING
-          if (ACE::debug ())
-            ACE_ERROR ((LM_ERROR,
-                        ACE_LIB_TEXT ("ACE (%P|%t) SG::initialize - Error")
-                        ACE_LIB_TEXT (" relocating static services for %s: %m\n"),
-                        stf->name ()));
-#endif
-          return -1;
-        }
-
       return 0;
     }
 
@@ -666,7 +535,7 @@ ACE_Service_Gestalt::initialize (const ACE_Service_Type_Factory *stf,
 #ifndef ACE_NLOGGING
   if (ACE::debug ())
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("ACE (%P|%t) SG::initialize - %s failed: %m\n"),
+                       ACE_LIB_TEXT ("ACE (%P|%t) Error initializing %s: %m\n"),
                        stf->name()),
                       -1);
 #endif
@@ -693,28 +562,21 @@ ACE_Service_Gestalt::initialize (const ACE_Service_Type *sr,
 {
   ACE_TRACE ("ACE_Service_Gestalt::initialize");
 
-#ifndef ACE_NLOGGING
   if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
                 ACE_LIB_TEXT ("ACE (%P|%t) SG::initialize - looking up dynamic ")
                 ACE_LIB_TEXT (" service \'%s\' to initialize\n"),
                 sr->name ()));
-#endif
 
   ACE_Service_Type *srp = 0;
   if (this->repo_->find (sr->name (),
                          (const ACE_Service_Type **) &srp) >= 0)
-    {
-#ifndef ACE_NLOGGING
-      if (ACE::debug ())
-        ACE_ERROR ((LM_WARNING,
-                    ACE_LIB_TEXT ("ACE (%P|%t) SG::initialize - \'%s\' ")
-                    ACE_LIB_TEXT ("has already been installed. ")
-                    ACE_LIB_TEXT ("Remove before reinstalling\n"),
-                    sr->name ()));
-#endif
-      return 0;
-    }
+    ACE_ERROR_RETURN ((LM_WARNING,
+                       ACE_LIB_TEXT ("ACE (%P|%t) SG::initialize - \'%s\' ")
+                       ACE_LIB_TEXT ("has already been installed. ")
+                       ACE_LIB_TEXT ("Remove before reinstalling\n"),
+                       sr->name ()),
+                      0);
 
   return this->initialize_i (sr, parameters);
 
@@ -812,8 +674,18 @@ ACE_Service_Gestalt::process_directive (const ACE_Static_Svc_Descriptor &ssd,
 
 int
 ACE_Service_Gestalt::process_directive_i (const ACE_Static_Svc_Descriptor &ssd,
-                                          int force_replace)
+                                        int force_replace)
 {
+#ifndef ACE_NLOGGING
+  if (ACE::debug ())
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_LIB_TEXT ("ACE (%P|%t) SG::process_directive, ")
+                ACE_LIB_TEXT ("repo=%@, replace=%d - %s\n"),
+                this->repo_,
+                force_replace,
+                ssd.name_));
+#endif
+
   if (!force_replace)
     {
       if (this->repo_->find (ssd.name_, 0, 0) >= 0)
@@ -822,16 +694,6 @@ ACE_Service_Gestalt::process_directive_i (const ACE_Static_Svc_Descriptor &ssd,
           return 0;
         }
     }
-
-#ifndef ACE_NLOGGING
-  if (ACE::debug ())
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_LIB_TEXT ("ACE (%P|%t) SG::process_directive_i, ")
-                ACE_LIB_TEXT ("repo=%@, replace=%d - %s\n"),
-                this->repo_,
-                force_replace,
-                ssd.name_));
-#endif
 
   ACE_Service_Object_Exterminator gobbler;
   void *sym = (ssd.alloc_)(&gobbler);
@@ -861,8 +723,6 @@ ACE_Service_Gestalt::process_directive_i (const ACE_Static_Svc_Descriptor &ssd,
 
   return this->repo_->insert (service_type);
 }
-
-
 
 #if (ACE_USES_CLASSIC_SVC_CONF == 1)
 
@@ -960,6 +820,9 @@ ACE_Service_Gestalt::process_file (const ACE_TCHAR file[])
   // The entry will be automaticaly removed once the thread exits this block.
   ACE_Service_Type_Forward_Declaration_Guard recursion_guard (this->repo_, file);
 
+  /*
+   * @TODO: Test with ACE_USES_CLASSIC_SVC_CONF turned off!
+   */
 #if (ACE_USES_CLASSIC_SVC_CONF == 1)
   int result = 0;
 

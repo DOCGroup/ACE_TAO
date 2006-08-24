@@ -33,6 +33,18 @@ ACE_Service_Type::dump (void) const
 #endif /* ACE_HAS_DUMP */
 
 
+  // Using printf, since the log facility may not have been
+  // initialized yet. Using a "//" prefix, in case the executable
+  // happens to be a code generator and the output gets embedded in
+  // the generated C++ code.
+  ACE_OS::fprintf(stderr,
+                  "// [ST] dump, this=%p, name=%s, type=%p, so=%p, active=%d\n",
+                  this,
+                  this->name_,
+                  this->type_,
+                  (this->type_ != 0) ? this->type_->object () : 0,
+                  this->active_);
+
 }
 
 ACE_Service_Type::ACE_Service_Type (const ACE_TCHAR *n,
@@ -79,7 +91,7 @@ ACE_Service_Type::fini (void)
     {
       this->fini_already_called_ = 1;
       if (this->type_ != 0)
-        return this->type_->fini ();
+  return this->type_->fini ();
       else
         return 1; // No implementation was found.
                   // Currently only makes sense for dummy ST, used to "reserve"
@@ -106,17 +118,6 @@ ACE_Service_Type::resume (void) const
   (const_cast<ACE_Service_Type *> (this))->active_ = 1;
   return this->type_->resume ();
 }
-
-/// Replace with a specific dll. Will only succeed (return 0) if the
-/// instance is not associated with a DLL already. Primary use of
-/// this method is to associate static service object with the DLL
-/// that contains their destruction/finalization code.
-void
-ACE_Service_Type::relocate (const ACE_DLL & adll)
-{
-  this->dll_ = adll;
-}
-
 
 ACE_Service_Object::ACE_Service_Object (ACE_Reactor *r)
   : ACE_Event_Handler (r)

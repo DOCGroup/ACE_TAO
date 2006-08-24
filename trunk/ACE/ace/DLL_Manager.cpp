@@ -552,32 +552,32 @@ ACE_DLL_Manager::open_dll (const ACE_TCHAR *dll_name,
                           ACE_DLL_Handle,
                           0);
 
-          dll_handle = temp_handle;
+    dll_handle = temp_handle;
         }
     }
 
   if (dll_handle)
     {
-     if (dll_handle->open (dll_name, open_mode, handle) != 0)
-        {
-          // Error while openind dll. Free temp handle
+      if (dll_handle->open (dll_name, open_mode, handle) != 0)
+  {
+    // Error while openind dll. Free temp handle
           if (ACE::debug ())
             ACE_ERROR ((LM_ERROR,
-                        ACE_LIB_TEXT ("ACE (%P|%t) DLL_Manager::open_dll: Could not ")
+                        ACE_LIB_TEXT ("ACE_DLL_Manager::open_dll: Could not ")
                         ACE_LIB_TEXT ("open dll %s.\n"),
                         dll_name));
 
-          delete temp_handle;
+    delete temp_handle;
           return 0;
         }
 
       // Add the handle to the vector only if the dll is successfully
       // opened.
       if (temp_handle != NULL)
-        {
-          this->handle_vector_[this->current_size_] = dll_handle;
+  {
+    this->handle_vector_[this->current_size_] = dll_handle;
           this->current_size_++;
-        }
+  }
     }
 
   return dll_handle;

@@ -57,7 +57,7 @@ public:
   explicit ACE_DLL (int close_handle_on_destruction = 1);
 
   /// Allow assignment
-  ACE_DLL& operator= (const ACE_DLL &rhs);
+  const ACE_DLL& operator= (const ACE_DLL &rhs);
 
 
   /**
@@ -168,7 +168,8 @@ private:
               ACE_SHLIB_HANDLE handle = 0);
 
 
-private:
+  //private:
+public:
 
   /// Open mode.
   int open_mode_;
