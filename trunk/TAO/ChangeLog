@@ -1,3 +1,10 @@
+Thu Aug 24 10:41:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Security/BiDirectional/run_test.pl:
+        * orbsvcs/tests/Security/ssliop_corbaloc/run_test.pl:
+          Check the result of spawn so that when there is no executable we
+          directly return an error
+
 Wed Aug 23 18:41:15 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/Event/ECG_UDP_Out_Endpoint.inl: Reverted changes
@@ -10,13 +17,13 @@ Wed Aug 23 17:43:29 UTC 2006  Yan Dai  <dai_y@ociweb.com>
         * tao\PortableServer\DII_Arguments_Converter.cpp:
         * tao\DynamicInterface\DII_Arguments_Converter_Impl.h:
         * tao\DynamicInterface\DII_Arguments_Converter_Impl.cpp:
-        
-          Reverted back the changes 
+
+          Reverted back the changes
           "Tue Aug 22 20:28:26 UTC 2006  Yan Dai  <dai_y@ociweb.com>".
           Added the virtual destructor to TAO_DII_Arguments_Converter
           class to let the rtti work with gcc4 to resolve the oneway
           test failure on gcc4 builds.
-        
+
 Wed Aug 23 12:49:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/IIOP_Factory.{h,cpp}:
