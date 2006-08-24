@@ -1,3 +1,8 @@
+Thu Aug 24 13:37:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Factory.{h,cpp}:
+          Removed minor_ and major_ members, where not used at all
+
 Thu Aug 24 10:41:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Security/BiDirectional/run_test.pl:
