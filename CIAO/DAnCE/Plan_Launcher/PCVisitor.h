@@ -43,10 +43,12 @@
 class  PCVisitor : public PCVisitorBase
 {
 public:
-
   //constructor
   PCVisitor (Deployment::DeploymentPlan &plan,
              Deployment::PackageConfiguration &pc);
+
+  //destructor
+  ~PCVisitor (void);
 
   ///Entry point to protected Visitor functions
   void Visit ();

@@ -51,6 +51,11 @@ PCVisitor::PCVisitor (Deployment::DeploymentPlan &plan,
 {
 }
 
+//destructor
+PCVisitor::~PCVisitor (void)
+{
+}
+
 //entry point for the protected visitor to get it do start
 //the visitation process
 void PCVisitor::Visit ()
