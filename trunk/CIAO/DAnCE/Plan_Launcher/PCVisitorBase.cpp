@@ -19,6 +19,10 @@ PCVisitorBase::PCVisitorBase (void)
 {
 }
 
+PCVisitorBase::~PCVisitorBase (void)
+{
+}
+
 #if !defined (__ACE_INLINE__)
 #include "PCVisitorBase.inl"
 #endif /* __ACE_INLINE__ */
