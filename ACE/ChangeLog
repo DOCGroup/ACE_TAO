@@ -1,3 +1,16 @@
+Thu Aug 24 21:40:24 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * tests/Process_Manual_Event_Test.cpp (acquire_release): Fixed a race
+          condition whereby while a parent and child were ping-ponging, it
+          was possible for one process to signal event1, wait on event2, then
+          signal event1 again before the other process could respond to
+          event1 being signaled and reset it. Thus, event1 was being reset
+          after the other process signaled it, ensuring a never-ending
+          wait at the end of the iterations. I changed the code to quickly
+          reset the event before printing the debug message, thereby closing
+          the window of opportunity a lot. But probably not completely
+          removing it... we'll have to see.
+
 Thu Aug 24 16:40:54 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * ace/config-aix-4.x.h: Only need to set
