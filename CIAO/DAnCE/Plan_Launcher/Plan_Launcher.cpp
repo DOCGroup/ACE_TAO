@@ -44,9 +44,9 @@ namespace CIAO
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("[(%P|%t) Executor] Usage: %s\n")
-                  ACE_TEXT ("-p <PACKAGE_NAMES>\n")
+                  ACE_TEXT ("-a <PACKAGE_NAMES>\n")
                   ACE_TEXT ("-e <PACKAGE_TYPES>\n")
-                  ACE_TEXT ("-d <DEPLOYMENT_PLAN_URL>\n")
+                  ACE_TEXT ("-p <DEPLOYMENT_PLAN_URL>\n")
                   ACE_TEXT ("-n : Use naming service to fetch EM")
                   ACE_TEXT ("-k <EXECUTION_MANAGER_IOR>")
                   ACE_TEXT (" : Default file://em.ior\n")
@@ -68,14 +68,14 @@ namespace CIAO
     {
       ACE_Get_Opt get_opt (argc,
                            argv,
-                           ACE_TEXT ("p:e:d:nk:l:v:t:o:i:r:h"));
+                           ACE_TEXT ("a:e:p:nk:l:v:t:o:i:r:h"));
       int c;
 
       while ((c = get_opt ()) != EOF)
         {
           switch (c)
             {
-            case 'p':
+            case 'a':
               package_names = get_opt.opt_arg ();
               use_package_name = true;
               break;
@@ -83,7 +83,7 @@ namespace CIAO
               package_types = get_opt.opt_arg ();
               use_package_name = false;
               break;
-            case 'd':
+            case 'p':
               deployment_plan_url = get_opt.opt_arg ();
               break;
             case 'n':
