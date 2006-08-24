@@ -1,3 +1,10 @@
+Thu Aug 24 16:33:22 UTC 2006  James H. Hill     <hillj@isis.vanderbilt.edu>
+
+        * docs/svn/config:
+        * docs/svn/svn-prefs.reg:
+
+          Added auto-props for *.tex and *.cls files.
+
 Thu Aug 24 13:48:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-openvms.h
