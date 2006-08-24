@@ -1,3 +1,9 @@
+Thu Aug 24 13:48:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-openvms.h
+          Removed ACE_HAS_SOCK_BUF_SIZE_MAX, not needed anymore with the
+          latest OpenVMS versions
+
 Thu Aug 24 08:11:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/DLL.h
