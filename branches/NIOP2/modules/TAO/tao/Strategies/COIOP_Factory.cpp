@@ -20,9 +20,7 @@ static const char the_prefix[] = "COIOP";
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_COIOP_Protocol_Factory::TAO_COIOP_Protocol_Factory (void)
-  :  TAO_Protocol_Factory (TAO_TAG_COIOP_PROFILE),
-     major_ (TAO_DEF_GIOP_MAJOR),
-     minor_ (TAO_DEF_GIOP_MINOR)
+  :  TAO_Protocol_Factory (TAO_TAG_COIOP_PROFILE)
 {
 }
 
@@ -82,16 +80,7 @@ TAO_COIOP_Protocol_Factory::make_connector (void)
 int
 TAO_COIOP_Protocol_Factory::requires_explicit_endpoint (void) const
 {
-  // This switch is actually meant to distinguish between pluggable
-  // protocols which are able to clean up their endpoints and such
-  // that aren't. E.g. UIOP will leave files, it therefore returns 1,
-  // IIOP cleans up its endpoint resources, which therefore return 0.
-  //
-  // COIOP does clean up endpoint resources, but as COIOP is only
-  // suitable for special environments, e.g. it supports only one-ways,
-  // it returns 1 for an other reason than resource clean-up.
-
-  return 1;
+  return 0;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
