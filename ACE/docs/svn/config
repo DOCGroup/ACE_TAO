@@ -101,4 +101,6 @@ Change?og*=svn:eol-style=native;svn:keywords=Author Date Id Revision
 *.ac=svn:eol-style=native;svn:keywords=Author Date Id Revision
 *.lst=svn:eol-style=native;svn:keywords=Author Date Id Revision
 *.pm=svn:eol-style=native;svn:keywords=Author Date Id Revision
+*.tex=svn:eol-style=native;svn:keywords=Author Date Id Revision
+*.cls=svn:eol-style=native;svn:keywords=Author Date Id Revision
 
