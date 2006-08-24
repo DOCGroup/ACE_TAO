@@ -1,3 +1,14 @@
+Thu Aug 24 16:40:54 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-aix-4.x.h: Only need to set
+          ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION for g++
+          prior to g++ 4.1 (have only heard report of this for g++ 4.1;
+          it may need adjustment for 4.0). Thanks to Nzer Zaidenberg
+          <scipioenterprises at yahoo dot com> for reporting the original
+          problem and testing this fix.
+
+        * THANKS: Added Nzer Zaidenberg to the Hall of Fame.
+
 Thu Aug 24 16:33:22 UTC 2006  James H. Hill     <hillj@isis.vanderbilt.edu>
 
         * docs/svn/config:
