@@ -3,6 +3,7 @@
 //
 
 #include "Client_Task.h"
+#include "tao/ORB_Core.h"
 #include "TestC.h"
 
 ACE_RCSID(Muxing, Client_Task, "$Id$")
@@ -20,6 +21,9 @@ Client_Task::Client_Task (const char *ior,
 int
 Client_Task::svc (void)
 {
+  CORBA::Boolean collocation =
+    this->corb_->orb_core()->optimize_collocation_objects ();
+
   ACE_TRY_NEW_ENV
     {
       CORBA::Object_var tmp =
@@ -48,6 +52,18 @@ Client_Task::svc (void)
 
       hello->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
+    }
+  ACE_CATCH (CORBA::TRANSIENT, ex)
+    {
+      if (!collocation && (ex.minor() & 0xFFFU) == 2)
+        {
+          ACE_DEBUG ((LM_DEBUG, "(%P|%t) - caught expected exception\n"));
+          // When collocation has been disabled we expect a trancient
+          // with minor code 2
+          return 0;
+        }
+      ACE_PRINT_EXCEPTION (ex, "Caught exception:");
+      return 1;
     }
   ACE_CATCHANY
     {

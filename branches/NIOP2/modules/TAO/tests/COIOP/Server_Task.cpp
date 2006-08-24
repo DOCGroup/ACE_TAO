@@ -82,7 +82,8 @@ Server_Task::svc (void)
      // Signal the main thread before we call orb->run ();
      this->me_.signal ();
 
-     this->sorb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
+     ACE_Time_Value runtime (10);
+     this->sorb_->run (runtime);
      ACE_TRY_CHECK;
 
      ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));
