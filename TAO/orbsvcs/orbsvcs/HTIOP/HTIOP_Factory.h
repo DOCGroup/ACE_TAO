@@ -67,11 +67,6 @@ namespace TAO
       virtual int requires_explicit_endpoint (void) const;
 
     private:
-      /// Changing the version number can be used to provide backwards
-      /// compatibility with old clients.
-      int major_;
-      int minor_;
-
       /// Configuration reference
       ACE::HTBP::Environment *ht_env_;
 
