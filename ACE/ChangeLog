@@ -1,3 +1,21 @@
+Thu Aug 24 08:11:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/DLL.h
+        * ace/Service_Repository.h
+        * ace/Service_Object.cpp
+        * ace/Parse_Node.cpp
+        * ace/Service_Object.inl
+        * ace/Parse_Node.h
+        * ace/Service_Repository.cpp
+        * ace/Service_Object.h
+        * ace/Service_Gestalt.h
+        * ace/Service_Gestalt.cpp
+        * ace/DLL_Manager.cpp
+        * ace/DLL.cpp
+          Reverted change from below on request of Iliyan because it broke
+          a set of tests that spawn a thread in init.
+          Tue Aug 22 21:43:34 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
 Wed Aug 23 08:32:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Sock_Connect.{h,cpp}:
