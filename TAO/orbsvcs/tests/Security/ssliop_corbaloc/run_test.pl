@@ -57,7 +57,12 @@ sub name_server
     unlink $iorfile;
 
     print STDERR "CommandLine: server " . $NS->Arguments() . "\n\n" unless $quiet;
-    $NS->Spawn ();
+    $ns_server = $NS->Spawn ();
+
+    if ($ns_server != 0) {
+        print STDERR "ERROR: NS returned $ns_server\n";
+        exit 1;
+    }
 
     if (PerlACE::waitforfile_timed ($iorfile, $sleeptime) == -1) {
         print STDERR "ERROR: cannot find IOR file <$iorfile>\n";
