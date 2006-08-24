@@ -13,10 +13,10 @@ unlink $iorfile;
 $status = 0;
 
 if (PerlACE::is_vxworks_test()) {
-    $SV = new PerlACE::ProcessVX ("Collocated_Test");
+    $SV = new PerlACE::ProcessVX ("COIOP_Test");
 }
 else {
-    $SV = new PerlACE::Process ("Collocated_Test");
+    $SV = new PerlACE::Process ("COIOP_Test");
 }
 
 print STDERR "======== Running in Default Mode \n";
