@@ -18,8 +18,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::HTIOP::Protocol_Factory::Protocol_Factory (void)
   :  TAO_Protocol_Factory (OCI_TAG_HTIOP_PROFILE),
-     major_ (TAO_DEF_GIOP_MAJOR),
-     minor_ (TAO_DEF_GIOP_MINOR),
      ht_env_ (0),
      inside_ (-1)
 {
