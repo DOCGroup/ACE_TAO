@@ -42,14 +42,13 @@ ACE_DLL::ACE_DLL (const ACE_DLL &rhs)
                      rhs.close_handle_on_destruction_) != 0
       && ACE::debug ())
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("ACE_DLL::copy_ctor: error: %s\n"),
-                this->error ()));
-
+    ACE_LIB_TEXT ("ACE_DLL::copy_ctor: error: %s\n"),
+    this->error ()));
 }
 
 // Assignment operator
 
-ACE_DLL &
+const ACE_DLL &
 ACE_DLL::operator= (const ACE_DLL &rhs)
 {
   ACE_TRACE ("ACE_DLL::operator= (const ACE_DLL &)");
@@ -67,8 +66,8 @@ ACE_DLL::operator= (const ACE_DLL &rhs)
                      rhs.close_handle_on_destruction_) != 0
       && ACE::debug ())
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("ACE_DLL::operator=: error: %s\n"),
-                this->error ()));
+    ACE_LIB_TEXT ("ACE_DLL::operator=: error: %s\n"),
+    this->error ()));
 
   return *this;
 }
@@ -144,7 +143,14 @@ ACE_DLL::open_i (const ACE_TCHAR *dll_filename,
   this->error_ = 0;
 
   if (!dll_filename)
+    {
+      if (ACE::debug ())
+        ACE_ERROR ((LM_ERROR,
+                    ACE_LIB_TEXT ("ACE_DLL::open_i: dll_name is %s\n"),
+                    this->dll_name_ == 0 ? ACE_LIB_TEXT ("(null)")
+        : this->dll_name_));
       return -1;
+    }
 
   if (this->dll_handle_)
     {
@@ -161,17 +167,9 @@ ACE_DLL::open_i (const ACE_TCHAR *dll_filename,
   this->open_mode_ = open_mode;
   this->close_handle_on_destruction_ = close_handle_on_destruction;
 
-  if (ACE::debug ())
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_LIB_TEXT ("ACE_DLL::open_i: dll_name is %s\n"),
-                this->dll_name_ == 0
-                ? ACE_LIB_TEXT ("(null)")
-                : this->dll_name_));
-
-  this->dll_handle_ =
-    ACE_DLL_Manager::instance()->open_dll (this->dll_name_,
-                                           this->open_mode_,
-                                           handle);
+  this->dll_handle_ = ACE_DLL_Manager::instance()->open_dll (this->dll_name_,
+                                                             this->open_mode_,
+                                                             handle);
 
   if (!this->dll_handle_)
     this->error_ = 1;
