@@ -1,0 +1,25 @@
+//SimpleBinPacker.idl,v 1.1 2005/09/06 19:57:22 wotte Exp
+
+#ifndef RACE_STATIC_PLANNER_IDL
+#define RACE_STATIC_PLANNER_IDL
+
+#include <Components.idl>
+#include "../Base/Planner.idl"
+#include "ciao/Target_Data.idl"
+
+module CIAO
+{
+  module RACE
+  {
+    component StaticPlanner : Planner
+    {
+      uses ::Deployment::TargetManager target_mgr;
+    };
+    
+    home StaticPlanner_Home manages StaticPlanner
+    {
+    };
+  };
+};
+
+#endif /* RACE_STATIC_PLANNER_IDL */

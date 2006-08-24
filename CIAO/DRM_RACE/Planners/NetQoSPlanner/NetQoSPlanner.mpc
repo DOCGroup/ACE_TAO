@@ -1,0 +1,69 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl -p Planner_Interface -p Planner NetQoSPlanner"
+
+project(Planner_NetQoSPlanner_stub): ciao_client_dnc, ciao_race_component {
+  after += Planner_stub Planner_Interface_stub
+  libs += Planner_stub Planner_Interface_stub
+  sharedname = NetQoSPlanner_stub
+  idlflags += -Wb,stub_export_macro=NETQOSPLANNER_STUB_Export -Wb,stub_export_include=NetQoSPlanner_stub_export.h -Wb,skel_export_macro=NETQOSPLANNER_SVNT_Export -Wb,skel_export_include=NetQoSPlanner_svnt_export.h
+  dynamicflags   = NETQOSPLANNER_STUB_BUILD_DLL
+
+  IDL_Files {
+    NetQoSPlanner.idl
+  }
+
+  Source_Files {
+    NetQoSPlannerC.cpp
+  }
+}
+
+project(Planner_NetQoSPlanner_svnt) : ciao_servant_dnc, ciao_race_component {
+  after += Planner_svnt Planner_NetQoSPlanner_stub Planner_Interface_svnt
+  sharedname  = NetQoSPlanner_svnt
+  libs    += NetQoSPlanner_stub Planner_stub Planner_svnt Planner_Interface_stub Planner_Interface_svnt
+  
+  idlflags  +=  -Wb,export_macro=NETQOSPLANNER_SVNT_Export -Wb,export_include=NetQoSPlanner_svnt_export.h
+  dynamicflags = NETQOSPLANNER_SVNT_BUILD_DLL
+
+  CIDL_Files {
+    NetQoSPlanner.cidl
+  }
+
+  IDL_Files {
+    NetQoSPlannerE.idl
+  }
+
+  Source_Files {
+    NetQoSPlannerEC.cpp
+    NetQoSPlannerS.cpp
+    NetQoSPlanner_svnt.cpp
+  }
+}
+
+
+project(Planner_NetQoSPlanner_exec) : ciao_component_dnc, ciao_race_component {
+  after   += Planner_NetQoSPlanner_svnt
+  sharedname = NetQoSPlanner_exec
+  libs      += NetQoSPlanner_stub\
+	       NetQoSPlanner_svnt \
+	       Planner_Interface_stub \
+               Planner_Interface_svnt \
+               Planner_stub \
+               Planner_svnt \
+               RACE_common_stub
+  
+  idlflags  +=  -Wb,export_macro=NETQOSPLANNER_EXEC_Export -Wb,export_include=NetQoSPlanner_exec_export.h
+  dynamicflags   = NETQOSPLANNER_EXEC_BUILD_DLL
+
+  IDL_Files {
+    
+  }
+
+  Source_Files {
+    
+    NetQoSPlanner_exec.cpp
+  }
+}
+
+
+

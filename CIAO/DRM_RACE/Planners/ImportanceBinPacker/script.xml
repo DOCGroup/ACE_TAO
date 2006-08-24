@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<scr:script
+ xmlns:scr="http://dtsn.darpa.mil/ixo/programs.asp?id=6#/DeploymentScript"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://dtsn.darpa.mil/ixo/programs.asp?id=6#/DeploymentScript
+                     DeploymentScript.xsd">
+
+   <shell>
+   # Create a directory for test output
+
+   mkdir -p test
+
+   # Move old test results to an archive directory (bunch of goofy shell code here)
+
+   test `ls test | wc -l` -gt 0 &amp;&amp; mkdir -p old_tests
+
+   test `ls test | wc -l` -gt 0 &amp;&amp;                           \
+        mkdir `ls old_tests | perl -pe 'BEGIN {print qq(test_0\n)}'  \
+        | sed -e 's/test_//' | sort -n                               \
+        | tail -1 | xargs -i expr {} + 1                             \
+        | sed -e 's/^/old_tests\/test_/'`
+
+   test `ls test | wc -l` -gt 0 &amp;&amp; (cd test ; tar -cO * ; rm -r * )  \
+        | (cd `ls old_tests                                               \
+        | sed -e 's/test_//' | sort -n                                    \
+        | tail -1                                                         \
+        | sed -e 's/^/old_tests\/test_/'` ;                               \
+        tar xf - )
+   </shell>
+
+   <dump>
+      <nodes to="test/nodes_0.dat"/>
+   </dump>
+
+   <!--
+        Deploy Strings RT4H and RT5H together.  Then, deploy RT1H and show
+        that the Importance Bin Packer automatically orders the teardown of
+        RT5H in order to make room for higher-importance RT1H.
+    -->
+
+   <deploy>
+      <string    plan="/opt/descriptors/Sample_Strings/descriptors/RT4H.cdp"
+              package="/opt/descriptors/Sample_Strings/descriptors/RT4H.pcd"/>
+      <string    plan="/opt/descriptors/Sample_Strings/descriptors/RT5H.cdp"
+              package="/opt/descriptors/Sample_Strings/descriptors/RT5H.pcd"/>
+   </deploy>
+
+   <dump>
+      <outputStrings to="test/output_strings_1"/>
+      <nodes         to="test/nodes_1.dat"/>
+   </dump>
+
+   <deploy>
+      <string    plan="/opt/descriptors/Sample_Strings/descriptors/RT1H.cdp"
+              package="/opt/descriptors/Sample_Strings/descriptors/RT1H.pcd"/>
+   </deploy>
+
+   <dump>
+      <outputStrings to="test/output_strings_2"/>
+      <nodes         to="test/nodes_2.dat"/>
+   </dump>
+
+   <!--
+        Clean up by tearing down RT1H and RT4H
+    -->
+
+   <teardown>
+      <string    plan="/opt/descriptors/Sample_Strings/descriptors/RT1H.cdp"
+              package="/opt/descriptors/Sample_Strings/descriptors/RT1H.pcd"/>
+      <string    plan="/opt/descriptors/Sample_Strings/descriptors/RT4H.cdp"
+              package="/opt/descriptors/Sample_Strings/descriptors/RT4H.pcd"/>
+   </teardown>
+
+   <dump>
+      <outputStrings to="test/output_strings_3"/>
+      <nodes         to="test/nodes_3.dat"/>
+   </dump>
+
+   <!--
+        Repeat the test above, but increase the importance of
+        RT5H after it's deployed.  The importance of RT5H will
+        now be higher than the importance of RT1H when the
+        latter is deployed.  This means that RT4H (instead of
+        RT5H) will be town down to make room for RT1H.
+    -->
+
+   <deploy>
+      <string    plan="/opt/descriptors/Sample_Strings/descriptors/RT4H.cdp"
+              package="/opt/descriptors/Sample_Strings/descriptors/RT4H.pcd"/>
+      <string    plan="/opt/descriptors/Sample_Strings/descriptors/RT5H.cdp"
+              package="/opt/descriptors/Sample_Strings/descriptors/RT5H.pcd"/>
+   </deploy>
+
+   <change importance="6">
+      <string    plan="/opt/descriptors/Sample_Strings/descriptors/RT5H.cdp"
+              package="/opt/descriptors/Sample_Strings/descriptors/RT5H.pcd"/>
+   </change>
+
+   <dump>
+      <outputStrings to="test/output_strings_4"/>
+      <nodes         to="test/nodes_4.dat"/>
+   </dump>
+
+   <deploy>
+      <string    plan="/opt/descriptors/Sample_Strings/descriptors/RT1H.cdp"
+              package="/opt/descriptors/Sample_Strings/descriptors/RT1H.pcd"/>
+   </deploy>
+
+   <dump>
+      <outputStrings to="test/output_strings_5"/>
+      <nodes         to="test/nodes_5.dat"/>
+   </dump>
+
+   <!--
+        Clean up by tearing down RT1H and RT5H.
+    -->
+
+   <teardown>
+      <string    plan="/opt/descriptors/Sample_Strings/descriptors/RT1H.cdp"
+              package="/opt/descriptors/Sample_Strings/descriptors/RT1H.pcd"/>
+      <string    plan="/opt/descriptors/Sample_Strings/descriptors/RT5H.cdp"
+              package="/opt/descriptors/Sample_Strings/descriptors/RT5H.pcd"/>
+   </teardown>
+
+   <dump>
+      <outputStrings to="test/output_strings_6"/>
+      <nodes         to="test/nodes_6.dat"/>
+   </dump>
+
+</scr:script>

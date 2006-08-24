@@ -1,0 +1,22 @@
+// $Id$
+
+#ifndef RACE_SIMPLEALLOCATIONANALYZER_CIDL
+#define RACE_SIMPLEALLOCATIONANALYZER_CIDL
+#include "Analyzer/SimpleAllocationAnalyzer/SimpleAllocationAnalyzer.idl"
+
+module CIAO
+{
+  module RACE
+  {
+    composition session SimpleAllocationAnalyzer_Impl
+    {
+      home executor SimpleAllocationAnalyzer_Home_Exec
+        {
+          implements RACE::SimpleAllocationAnalyzer_Home;
+          manages SimpleAllocationAnalyzer_Exec;
+        };
+    };
+  };
+};
+
+#endif 

@@ -1,0 +1,26 @@
+// $Id$
+
+#ifndef RACE_ANALYZER_IDL
+#define RACE_ANALYZER_IDL
+
+#include <Components.idl>
+#include "Analyzer/Interface/Analyzer_I.idl"
+
+module CIAO
+{
+  module RACE
+  {
+    component Analyzer
+    {
+      provides Analyzer_I analyzer;
+      
+      readonly attribute RACE_Classifications classification;
+    };
+    
+    home Analyzer_Home manages Analyzer
+    {
+    };
+  };
+};
+
+#endif

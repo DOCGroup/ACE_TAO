@@ -1,0 +1,17 @@
+//MPC file to build the helper program for the python cgi script
+// @author Jonathan Walsh jwalsh@atl.lmco.com
+
+project(Web_Input_Adapter_helper): ciao_component_dnc, ciao_race_component, taoexe {
+   after  +=  XSC_Config_Handlers \
+              Web_Input_Adapter_interface
+   exename = WIA_helper
+
+   libs   += XSC_Config_Handlers \
+             Web_Input_Adapter_interface
+
+   IDL_Files {
+   }
+   Source_Files {
+      WIA_helper.cpp
+   }
+}

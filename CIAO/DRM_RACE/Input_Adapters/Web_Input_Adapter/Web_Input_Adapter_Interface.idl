@@ -1,0 +1,161 @@
+/**
+ * @file
+ *
+ * @brief declare interfaces provided by the Web_Input_Adapter
+ * Component.
+ *
+ * This file contains IDL 3 declaration for RACE Web_Input_Adapter.
+ * The Web_Input_Adapter is a CCM Component; it inherits from
+ * Input_Adapter base component, and it is part of RACE.
+ *
+ * $Id$
+ *
+ * @author Edward Mulholland <emulholl@atl.lmco.com>
+ */
+
+#ifndef RACE_WEB_INPUT_ADAPTER_INTERFACE_IDL
+#define RACE_WEB_INPUT_ADAPTER_INTERFACE_IDL
+
+#include <Components.idl>
+
+module CIAO
+{
+  module RACE
+  {
+    enum Node_Type { COMPONENT_NODE, CONNECTION_NODE };
+    struct Component_Tree_Node;
+
+#ifndef AVOID_IFR_CRASH
+    typedef sequence < Component_Tree_Node > Component_Tree;
+#endif /* AVOID_IFR_CRASH */
+
+    /// Stores a reference to a component along with its name.
+    struct Component_Data
+    {
+      string component_name;
+      ::Components::CCMObject the_component;
+    };
+
+    /// Stores the name of a receptacle.
+    struct Connection_Data
+    {
+      string receptacle_name;
+    };
+
+    union Component_Tree_Node_Union switch (Node_Type)
+    {
+    case ::CIAO::RACE::COMPONENT_NODE:
+      Component_Data the_component_data;
+    case ::CIAO::RACE::CONNECTION_NODE:
+      Connection_Data the_connection_data;
+    };
+
+    /// Represents a node in a tree of CCM Components.
+    /**
+     *  Each node is either a component or a receptacle.  Components
+     *  have receptacles as children, and receptacles have components
+     *  as children.
+     */
+    struct Component_Tree_Node
+    {
+      /// Data for this node.
+      /**
+       *  Either a struct Component_Data or a struct Connection_Data,
+       *  depending on which member of the union is set.
+       */
+      Component_Tree_Node_Union node_data;
+#ifndef AVOID_IFR_CRASH
+      /// Children of this node.
+      Component_Tree children;
+#endif /* AVOID_IFR_CRASH */
+    };
+
+    /// Stores an attribute name-value pair for a CCM Component.
+    struct Attbute
+    {
+      string name;
+      any value;
+    };
+
+    typedef sequence < Attbute > AttbuteSeq;
+
+    /// Provides a mechanism to see what RACE components are running.
+    /**
+     *  This interface is provided by the Web_Input_Adapter component
+     *  in Web_Input_Adapter.idl.  The purpose of this interface to
+     *  provide a mechanism by which some program (usually the
+     *  web_input_adapter.cgi program, which is functionally part of
+     *  the Web_Input_Adapter) can discover the set of running RACE
+     *  components, their topology (including facet-receptacle links),
+     *  and their attributes.
+     */
+    interface Component_Control
+    {
+      /// Check for ininitialization of this interface.
+      /**
+       *  Specifically, check whether or not init_component_tree()
+       *  was called with successful result.
+       */
+      boolean is_initialized ();
+
+#ifndef AVOID_IFR_CRASH
+      /// Initialize the component tree.
+      /**
+       *  Using some object as root, initialize this instance of
+       *  Component_Control with some tree of CCM components
+       *  (beginning with root, connected by facet-receptacle
+       *  links) that can later be discovered through
+       *  get_component_tree(), with the option of obtaining or
+       *  manipulating component attributes using
+       *  get_component_attributes() and set_component_attribute()
+       *  respectively.
+       */
+      void init_component_tree (in ::Components::CCMObject root);
+#endif /* AVOID_IFR_CRASH */
+
+      /**
+       *  @brief Exception thrown by certain methods, if a call
+       *         to is_initialized() would have returned false.
+       */
+      exception TreeNotInitialized {};
+
+      /**
+       *  @brief Exception thrown by attribute-related methods, if
+       *         no component is known under a given name.
+       */
+      exception NoSuchComponent {};
+
+      /// Get the component tree.
+      Component_Tree_Node get_component_tree ()
+        raises (TreeNotInitialized);
+      AttbuteSeq get_component_attributes (in string component_name)
+        raises (TreeNotInitialized, NoSuchComponent);
+      void set_component_attribute (in string component_name,
+                                    in Attbute bute)
+        raises (TreeNotInitialized, NoSuchComponent);
+    };
+
+    typedef string Component_Instance_Name;
+    typedef sequence < Component_Instance_Name > Component_Instance_NameSeq;
+
+    struct Component_Allocation
+    {
+      string node_name;
+      Component_Instance_NameSeq component_instance_names;
+    };
+    typedef sequence < Component_Allocation> Component_AllocationSeq;
+
+    typedef string Plan_Uri;
+    typedef sequence < Plan_Uri > Plan_UriSeq;
+
+    interface Plan_Deployment
+    {
+      Component_AllocationSeq allocate_plan (in Plan_Uri uri, in boolean use_race);
+      void deploy_plan (in Plan_Uri uri, in boolean use_race);
+      void teardown_plan (in Plan_Uri uri);
+      Plan_UriSeq get_deployed_plan_uris ();
+    };
+  };
+};
+
+#endif /* RACE_WEB_INPUT_ADAPTER_INTERFACE_IDL */

@@ -1,0 +1,23 @@
+// $Id$
+
+#ifndef RACE_SIMPLEALLOCATIONANALYZER_IDL
+#define RACE_SIMPLEALLOCATIONANALYZER_IDL
+
+#include "Analyzer/Component/Analyzer.idl"
+
+module CIAO
+{
+  module RACE
+  {
+    component SimpleAllocationAnalyzer : Analyzer
+    {
+    };
+    
+    home SimpleAllocationAnalyzer_Home manages SimpleAllocationAnalyzer
+    {
+    };
+  };
+};
+
+
+#endif /* RACE_SIMPLEALLOCATIONANALYZER_IDL */

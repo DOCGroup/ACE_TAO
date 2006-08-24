@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Deployment:packageConfiguration xmlns:Deployment="http://www.omg.org/Deployment" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+
+  <UUID>A68DBC7F-E021-4511-8C63-7CABECADCE19</UUID>
+
+  <basePackage href="RT1H.cpd"/>
+
+</Deployment:packageConfiguration>

@@ -1,0 +1,63 @@
+// generate_component_mpc.pl,v 1.10 2005/09/27 17:57:44 wotte Exp
+// This file is generated with "generate_component_mpc.pl SimpleAllocationAnalyzer"
+
+project(SimpleAllocationAnalyzer_stub): ciao_client_dnc, ciao_race_component {
+  after += Analyzer_stub 
+  libs += Analyzer_stub Analyzer_I_stub
+  sharedname = SimpleAllocationAnalyzer_stub
+  idlflags += -Wb,stub_export_macro=SIMPLEALLOCATIONANALYZER_STUB_Export -Wb,stub_export_include=SimpleAllocationAnalyzer_stub_export.h -Wb,skel_export_macro=SIMPLEALLOCATIONANALYZER_SVNT_Export -Wb,skel_export_include=SimpleAllocationAnalyzer_svnt_export.h
+  dynamicflags   = SIMPLEALLOCATIONANALYZER_STUB_BUILD_DLL
+
+  IDL_Files {
+    SimpleAllocationAnalyzer.idl
+  }
+
+  Source_Files {
+    SimpleAllocationAnalyzerC.cpp
+  }
+}
+
+project(SimpleAllocationAnalyzer_svnt) : ciao_servant_dnc, ciao_race_component {
+  after +=  SimpleAllocationAnalyzer_stub
+  sharedname  = SimpleAllocationAnalyzer_svnt
+  libs    += SimpleAllocationAnalyzer_stub Analyzer_I_svnt Analyzer_svnt Analyzer_I_stub
+  
+  idlflags  +=  -Wb,export_macro=SIMPLEALLOCATIONANALYZER_SVNT_Export -Wb,export_include=SimpleAllocationAnalyzer_svnt_export.h
+  dynamicflags = SIMPLEALLOCATIONANALYZER_SVNT_BUILD_DLL
+
+  CIDL_Files {
+    SimpleAllocationAnalyzer.cidl
+  }
+
+  IDL_Files {
+    SimpleAllocationAnalyzerE.idl
+  }
+
+  Source_Files {
+    SimpleAllocationAnalyzerEC.cpp
+    SimpleAllocationAnalyzerS.cpp
+    SimpleAllocationAnalyzer_svnt.cpp
+  }
+}
+
+
+project(SimpleAllocationAnalyzer_exec) : ciao_component_dnc, ciao_race_component {
+  after   += SimpleAllocationAnalyzer_svnt
+  sharedname = SimpleAllocationAnalyzer_exec
+  libs      += SimpleAllocationAnalyzer_stub SimpleAllocationAnalyzer_svnt  Analyzer_I_stub
+  
+  idlflags  +=  -Wb,export_macro=SIMPLEALLOCATIONANALYZER_EXEC_Export -Wb,export_include=SimpleAllocationAnalyzer_exec_export.h
+  dynamicflags   = SIMPLEALLOCATIONANALYZER_EXEC_BUILD_DLL
+
+  IDL_Files {
+    
+  }
+
+  Source_Files {
+    
+    SimpleAllocationAnalyzer_exec.cpp
+  }
+}
+
+
+

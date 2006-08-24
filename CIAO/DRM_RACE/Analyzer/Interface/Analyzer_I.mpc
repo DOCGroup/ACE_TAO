@@ -1,0 +1,31 @@
+// generate_component_mpc.pl,v 1.10 2005/09/27 17:57:44 wotte Exp
+// This file is generated with "generate_component_mpc.pl Analyzer_I"
+
+project(Analyzer_I_stub): ciao_client_dnc, ciao_race_component {
+  includes += $(CIAO_ROOT)/RACE  
+  sharedname = Analyzer_I_stub
+  idlflags += -Wb,stub_export_macro=ANALYZER_I_STUB_Export -Wb,stub_export_include=Analyzer_I_stub_export.h -Wb,skel_export_macro=ANALYZER_I_SVNT_Export -Wb,skel_export_include=Analyzer_I_svnt_export.h -I$(CIAO_ROOT)/RACE
+  dynamicflags   = ANALYZER_I_STUB_BUILD_DLL
+  
+  IDL_Files {
+    Analyzer_I.idl
+  }
+
+  Source_Files {
+    Analyzer_IC.cpp
+  }
+}
+
+project(Analyzer_I_svnt) : ciao_servant_dnc, ciao_race_component {
+  includes += $(CIAO_ROOT)/RACE  
+  after +=  Analyzer_I_stub
+  sharedname  = Analyzer_I_svnt
+  libs    += Analyzer_I_stub 
+  
+  idlflags  +=  -Wb,export_macro=ANALYZER_I_SVNT_Export -Wb,export_include=Analyzer_I_svnt_export.h
+  dynamicflags = ANALYZER_I_SVNT_BUILD_DLL
+
+  Source_Files {
+    Analyzer_IS.cpp
+  }
+}

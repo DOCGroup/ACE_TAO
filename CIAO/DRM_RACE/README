@@ -1,0 +1,89 @@
+Thanks to Tom Damiano <tdamiano@atl.lmco.com> for putting
+together this document.
+
+Deploying and running RACE
+==========================
+
+* Points to take care in running RACE
+
+   o NodeDetails.dat
+
+   This file needs to be present in the local directory where
+   RACE, DANCE scripts are invoked from.  The file contains a
+   mapping of logical node names to physical node names. Thus,
+   when RACE is run on a single host by simulating different
+   nodes then all the physical addresses point to the same
+   host. When different hosts are used, then the actual physical
+   hostnames are replaced in this file. This file is used by the
+   Target Manager infrastructure.
+
+   o deployment.dat
+
+   This file is an exact copy of the NodeDetails.dat. It also in
+   the same place as NodeDetails.dat. This file is used by the
+   DAnCE infrastructure.
+
+
+* Instructions for running RACE by simulating different hosts in
+  one physical host.
+
+  1. CD into $CIAO_ROOT/RACE/descriptors
+
+  2. Start RACE by ./run_test.pl
+
+  3. Deploy a string by executing the following command :
+
+    $CIAO_ROOT/RACE/Input_Adapters/Interactive_Input_Adapter/injector
+-p <string_name.pcd> -d <string_name.cdp> -k file://InteractiveAdapter.ior
+
+    for e.g. to deploy string RT1High, execute the following command:
+
+    $CIAO_ROOT/RACE/Input_Adapters/Interactive_Input_Adapter/injector
+-p "RT1H.pcd" -d "RT1H.cdp" -k file://InteractiveAdapter.ior
+
+    NOTE : In this case the NodeDetails.dat file needs to be
+    having all the nodes pointing to the same physical host
+    address.
+
+II) For running RACE using different physical hosts
+
+    Decide on one node, for running the Naming Service(NS_HOST)
+    and one for hosting DAnCE and RACE, (RACE_HOST).
+
+    1.  Start the NameService on the NS_HOST using the command:
+
+$TAO_ROOT/orbsvcs/Naming_Service/Naming_Service -m 1
+
+    2. In each node open a terminal
+
+    3.  CD into $CIAO_ROOT/RACE/descriptors
+
+    4. On each node, execute the run_NodeManager.sh script to
+       start the NodeManager on that node.
+
+    5. On the RACE_HOST start the Execution Manager by the
+       command:
+
+$(CIAO_ROOT)/DAnCE/ExecutionManager/Execution_Manager -i NodeDetails.dat -n
+foo
+
+    6. On the RACE_HOST deploy RACE by running the command:
+
+$(CIAO_ROOT)/DAnCE/Plan_Launcher/plan_launcher -n foo -p RACE.cdp -o
+RACE_DAM.ior
+
+    7. On the RACE_HOST deploy a string by executing the
+       following command :
+
+$CIAO_ROOT/RACE/Input_Adapters/Interactive_Input_Adapter/injector
+-p <string_name.pcd> -d <string_name.cdp> -k file://InteractiveAdapter.ior
+
+       for e.g. to deploy string RT1High, execute the
+       following command:
+
+$CIAO_ROOT/RACE/Input_Adapters/Interactive_Input_Adapter/injector
+-p "RT1H.pcd" -d "RT1H.cdp" -k file://InteractiveAdapter.ior
+
+    NOTE : In this case the NodeDetails.dat file needs to be
+    having all the nodes pointing to the different physical host
+    address.

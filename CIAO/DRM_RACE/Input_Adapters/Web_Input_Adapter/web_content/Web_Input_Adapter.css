@@ -1,0 +1,62 @@
+BODY {
+  background: #99FFFF;
+  color: #000000;
+}
+
+P {
+  font-family: arial;
+  font-size: 14pt;
+}
+
+H2.allocationTitle {
+  font-family: courier, sans-serif;
+  font-style: oblique;
+  font-size: 20pt;
+  color: #990099;
+}
+
+H3.tableTitle {
+  font-family: courier, sans-serif;
+  font-style: oblique;
+  font-size: 20pt;
+  color: #0000FF;
+}
+
+H3.actionTitle {
+  font-family: courier, sans-serif;
+  font-style: oblique;
+  font-size: 20pt;
+  color: #990099;
+}
+
+H3.filename {
+  font-family: courier, sans-serif;
+  font-size: 14pt;
+  color: #000000;
+}
+
+input {
+  padding-top: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 10px;
+  font-family: courier, sans-serif;
+  font-size: 14pt;
+  font-color: #000000;
+  font-weight: bold;
+}
+
+input.smallButton {
+  padding-top: 3px;
+  padding-left: 3px;
+  padding-right: 3px;
+  padding-bottom: 3px;
+  font-family: courier, sans-serif;
+  font-size: 10pt;
+  font-color: #000000;
+  font-weight: bold;
+}
+
+pre {
+  font-size: 12pt;
+}

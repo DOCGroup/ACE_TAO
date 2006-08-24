@@ -1,0 +1,25 @@
+//ImportanceBinPacker.idl,v 1.1 2005/09/06 19:57:22 tdamiano Exp
+
+#ifndef RACE_IMPORTANCE_BIN_PACKER_IDL
+#define RACE_IMPORTANCE_BIN_PACKER_IDL
+
+#include <Components.idl>
+#include "../Base/Planner.idl"
+#include "ciao/Target_Data.idl"
+
+module CIAO
+{
+  module RACE
+  {
+    component ImportanceBinPacker : Planner
+    {
+      uses ::Deployment::TargetManager target_mgr;
+    };
+
+    home ImportanceBinPacker_Home manages ImportanceBinPacker
+    {
+    };
+  };
+};
+
+#endif /* RACE_IMPORTANCE_BIN_PACKER_IDL */

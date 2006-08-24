@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Deployment:packageConfiguration xmlns:Deployment="http://www.omg.org/Deployment" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+
+  <UUID>38819208-5E1D-4C90-B59A-ADEB5B2ABE02</UUID>
+
+  <basePackage href="RACE.cpd"/>
+
+</Deployment:packageConfiguration>

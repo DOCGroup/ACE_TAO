@@ -1,0 +1,25 @@
+//$Id$
+//Web_Output_Adapter.cidl
+
+#ifndef RACE_WEB_OUTPUT_ADAPTER_CIDL
+#define RACE_WEB_OUTPUT_ADAPTER_CIDL
+
+#include "Web_Output_Adapter.idl"
+
+module CIAO
+{
+  module RACE
+  {
+    composition session Web_Output_Adapter_Impl
+    {
+      home executor Web_Output_Adapter_Home_Exec
+        {
+          implements RACE::Web_Output_Adapter_Home;
+          manages Web_Output_Adapter_Exec;
+        };
+    };
+  };
+};
+
+
+#endif /* RACE_WEB_OUTPUT_ADAPTER_CIDL */

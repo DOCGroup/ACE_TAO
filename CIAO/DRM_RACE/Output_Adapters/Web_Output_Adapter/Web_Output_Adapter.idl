@@ -1,0 +1,25 @@
+//$Id$
+#ifndef RACE_WEB_OUTPUT_ADAPTER_IDL
+#define RACE_WEB_OUTPUT_ADAPTER_IDL
+
+#include "../Base/Output_Adapter.idl"
+#include "web_common/web_common.idl"
+#include "Controller/Component/Interface.idl"
+
+module CIAO
+{
+  module RACE
+  {
+    component Web_Output_Adapter : Output_Adapter
+    {
+      uses Descriptors control_output;
+      publishes Web_Deployment dance_depment;
+    };
+
+    home Web_Output_Adapter_Home manages Web_Output_Adapter
+    {
+    };
+  };
+};
+
+#endif /* RACE_WEB_OUTPUT_ADAPTER_IDL */
