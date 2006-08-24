@@ -1,0 +1,15 @@
+set terminal png
+set output "demo.png"
+#cd "/home/gthaker/incoming"
+
+set key left left
+set key box
+set grid
+set xlabel "Measurement Iteration"
+set ylabel "End to End Latency (msec) or #_of_Events"
+
+set title "Race Demo for April 2006 PI Meeting."
+
+#plot "controller.log" using 0:2 t "Avg" with lp, "controller.log" using 0:3 t "Max" with lp lt 3, "controller.log" using 0:5 t "Max Events" with lp lt 4
+
+plot "controller.log" using 0:2 t "Execution Time" with lp,"controller.log" using 0:5 t "# of Events" with lp lt 4

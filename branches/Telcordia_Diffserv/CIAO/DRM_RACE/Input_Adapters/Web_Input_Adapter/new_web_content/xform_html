@@ -1,0 +1,62 @@
+##
+## Modified version of the original xform_html that will output two html files
+## and png images of a detailed and non-detailed view of a supplied deployment 
+## XML file.  This is meant to be called from a CGI script running on the 
+## JAWS webserver.  For a local version of the same script please see 
+## xform_local.
+##
+##
+## @author Jonathan Walsh (jwalsh@atl.lmco.com)
+## @author Tom Damiano (original version)
+##
+##
+
+if [ "$1" = "" ]
+then
+   echo "Usage: $0 [-d] <xsl file> <actual name>"
+   exit
+fi
+
+fn="$1"
+fd="$1_detail"
+
+. $RACE_ROOT/Input_Adapters/Web_Input_Adapter/new_web_content/xform "$1"
+. $RACE_ROOT/Input_Adapters/Web_Input_Adapter/new_web_content/xform -d "$1"
+
+echo $HOSTNAME > testing
+
+echo "
+<HTML>
+<BASE href="http://$HOSTNAME:80/new_web_content/" />
+<body>
+<TITLE>Deployment for $2</TITLE>
+<center>
+<H1>Deployment Visualization: Detail</H1>
+<H3>From XML: $2</H3>
+  <a href="image.htm">Back to Non Detailed Image</a><br>
+  <img src="image_temp.cdp_detail.png">
+</center>
+</body>
+</HTML>
+
+" > $RACE_ROOT/Input_Adapters/Web_Input_Adapter/new_web_content/detail.htm
+
+echo "
+<HTML>
+<BASE href="http://$HOSTNAME:80/new_web_content/" />
+<body>
+<TITLE>Deployment for $2</TITLE>
+<center>
+<H1>Deployment Visualization</H1>
+<H3>From XML: $2</H3>
+  <a href="detail.htm">View Detailed Image</a><br>
+  <img src="image_temp.cdp.png">
+</center>
+</body>
+</HTML>
+" > $RACE_ROOT/Input_Adapters/Web_Input_Adapter/new_web_content/image.htm
+
+#Get rid of temp files not displayed to the user
+rm -f $RACE_ROOT/Input_Adapters/Web_Input_Adapter/new_web_content/image_temp.cdp
+rm -f $RACE_ROOT/Input_Adapters/Web_Input_Adapter/new_web_content/image_temp.cdp_detail.dot
+rm -f $RACE_ROOT/Input_Adapters/Web_Input_Adapter/new_web_content/image_temp.cdp.dot

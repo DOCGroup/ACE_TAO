@@ -1,0 +1,60 @@
+##
+## Modified version of the original xform_html that will output two html files
+## and png images of a detailed and non-detailed view of a supplied deployment 
+## XML file.  This script can be run from a local directory to generate the
+## files for viewing. (The script used by the cgi program is xform_html) This 
+## script needs to be run from the same directory that xform is in.
+##
+## USAGE: xform_local <deployment xml file>
+##
+## @author Jonathan Walsh (jwalsh@atl.lmco.com)
+## @author Tom Damiano (original version)
+##
+##
+
+if [ "$1" = "" ]
+then
+   echo "Usage: $0 [-d] <xml file>"
+   exit
+fi
+
+fn="$1"
+fd="$1_detail"
+
+./xform "$1"
+./xform -d "$1"
+
+
+echo "
+<HTML>
+<body>
+<TITLE>Deployment for $1</TITLE>
+<center>
+<H1>Deployment Visualization: Detail</H1>
+<H3>From XML: $1</H3>
+  <a href="image.htm">Back to Non Detailed Image</a><br>
+  <img src=$1"_detail.png">
+</center>
+</body>
+</HTML>
+
+" > detail.htm
+
+echo "
+<HTML>
+<body>
+<TITLE>Deployment for $1</TITLE>
+<center>
+<H1>Deployment Visualization</H1>
+<H3>From XML: $1</H3>
+  <a href="detail.htm">View Detailed Image</a><br>
+  <img src=$1".png">
+</center>
+</body>
+</HTML>
+" > image.htm
+
+#Get rid of what temporary files we can
+rm -f image_temp.cdp
+rm -f image_temp.cdp_detail.dot
+rm -f image_temp.cdp.dot

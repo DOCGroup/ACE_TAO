@@ -1,0 +1,11 @@
+blade10      corbaloc:iiop:mako.isislab.vanderbilt.edu:50000/NodeManager
+blade35      corbaloc:iiop:blade35.isislab.vanderbilt.edu:50000/NodeManager
+blade36      corbaloc:iiop:blade36.isislab.vanderbilt.edu:50000/NodeManager
+blade37      corbaloc:iiop:blade37.isislab.vanderbilt.edu:50000/NodeManager
+blade38      corbaloc:iiop:blade38.isislab.vanderbilt.edu:50000/NodeManager
+blade39      corbaloc:iiop:blade39.isislab.vanderbilt.edu:50000/NodeManager
+blade40      corbaloc:iiop:localhost:50001/NodeManager
+blade41      corbaloc:iiop:localhost:50002/NodeManager
+blade42      corbaloc:iiop:localhost:50003/NodeManager
+blade43      corbaloc:iiop:blade43.isislab.vanderbilt.edu:50000/NodeManager
+blade44      corbaloc:iiop:blade44.isislab.vanderbilt.edu:50000/NodeManager

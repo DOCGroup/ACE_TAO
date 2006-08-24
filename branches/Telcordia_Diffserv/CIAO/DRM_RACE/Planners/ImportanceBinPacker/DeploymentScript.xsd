@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<xsd:schema
+ xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xmlns:scr="http://dtsn.darpa.mil/ixo/programs.asp?id=6#/DeploymentScript"
+ xsi:schemaLocation="http://www.w3.org/2001/XMLSchema XMLSchema.xsd"
+ targetNamespace="http://dtsn.darpa.mil/ixo/programs.asp?id=6#/DeploymentScript"
+ >
+
+ <!-- The main body of a script file is the <script> element,
+      which can contain any number of
+      <shell>, <initialize>, <changeDomain>,
+      <deploy>, <teardown>, <change>, or <dump> elements. -->
+
+ <xsd:element name="script">
+    <xsd:complexType>
+       <xsd:sequence>
+          <xsd:choice minOccurs="0" maxOccurs="unbounded">
+             <xsd:element name="shell" type="scr:shell"/>
+             <xsd:element name="initialize" type="scr:initialize"/>
+             <xsd:element name="changeDomain" type="scr:changeDomain"/>
+             <xsd:element name="deploy" type="scr:stringList"/>
+             <xsd:element name="teardown" type="scr:stringList"/>
+             <xsd:element name="change" type="scr:changeStringList"/>
+             <xsd:element name="dump" type="scr:dump"/>
+          </xsd:choice>
+       </xsd:sequence>
+    </xsd:complexType>
+ </xsd:element>
+
+ <xsd:simpleType name="shell">
+    <xsd:restriction base="xsd:string">
+       <xsd:whiteSpace value="preserve"/>
+    </xsd:restriction>
+ </xsd:simpleType>
+
+ <xsd:complexType name="initialize">
+    <xsd:sequence>
+       <xsd:element name="node"
+                    minOccurs="0"
+                    maxOccurs="unbounded">
+          <xsd:complexType>
+             <xsd:attribute name="name" type="xsd:string"/>
+             <xsd:attribute name="capacity" type="xsd:integer"/>
+          </xsd:complexType>
+       </xsd:element>
+    </xsd:sequence>
+ </xsd:complexType>
+
+ <xsd:complexType name="changeDomain">
+    <xsd:sequence>
+       <xsd:choice minOccurs="0" maxOccurs="unbounded">
+          <xsd:element name="fail" type="xsd:string"/>
+          <xsd:element name="join" type="xsd:string"/>
+          <xsd:element name="disjoin" type="xsd:string"/>
+       </xsd:choice>
+    </xsd:sequence>
+ </xsd:complexType>
+
+ <xsd:complexType name="stringList">
+    <xsd:sequence>
+       <xsd:element name="string"
+                    minOccurs="0"
+                    maxOccurs="unbounded">
+          <xsd:complexType>
+             <xsd:attribute name="plan" type="xsd:string"/>
+             <xsd:attribute name="package" type="xsd:string"/>
+          </xsd:complexType>
+       </xsd:element>
+    </xsd:sequence>
+ </xsd:complexType>
+
+ <xsd:complexType name="changeStringList">
+    <xsd:complexContent>
+       <xsd:extension base="scr:stringList">
+          <xsd:attribute name="importance" type="xsd:integer"/>
+       </xsd:extension>
+    </xsd:complexContent>
+ </xsd:complexType>
+
+ <xsd:complexType name="dump">
+    <xsd:all>
+       <xsd:element name="outputStrings"
+                    minOccurs="0"
+                    maxOccurs="1">
+          <xsd:complexType>
+             <xsd:attribute name="to" type="xsd:string"/>
+          </xsd:complexType>
+       </xsd:element>
+       <xsd:element name="nodes"
+                    minOccurs="0"
+                    maxOccurs="1">
+          <xsd:complexType>
+             <xsd:attribute name="to" type="xsd:string"/>
+          </xsd:complexType>
+       </xsd:element>
+    </xsd:all>
+ </xsd:complexType>
+
+</xsd:schema>

@@ -1,0 +1,23 @@
+// $Id$
+
+#ifndef RACE_DANCE_OUTPUT_ADAPTER_CIDL
+#define RACE_DANCE_OUTPUT_ADAPTER_CIDL
+
+#include "Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter.idl"
+
+module CIAO
+{
+  module RACE
+  {
+    composition session DAnCE_Output_Adapter_Impl
+    {
+      home executor DAnCE_Output_Adapter_Home_Exec
+      {
+          implements DAnCE_Output_Adapter_Home;
+          manages DAnCE_Output_Adapter_Exec;
+    };
+    };
+  };
+};
+
+#endif /* RACE_DANCE_OUTPUT_ADAPTER_CIDL */

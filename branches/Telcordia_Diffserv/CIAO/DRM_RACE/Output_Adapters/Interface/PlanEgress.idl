@@ -1,0 +1,22 @@
+//PlanEgress.idl,v 1.1 2005/09/06 19:57:22 wotte Exp
+#ifndef RACE_PLAN_EGRESS_IDL
+#define RACE_PLAN_EGRESS_IDL
+
+#include "Packaging_Data.idl"
+#include "common/RACE_common.idl"
+
+module CIAO
+{
+  
+  module RACE
+  {
+    interface PlanEgress
+    {
+//       boolean output_plan (in Deployment::DeploymentPlan plan,
+//                            in Deployment::PackageConfiguration package);
+      boolean output_plan (in Plan_Actions plans);
+    };
+  };
+};
+
+#endif /* RACE_PLAN_EGRESS_IDL */

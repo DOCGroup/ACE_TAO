@@ -1,0 +1,24 @@
+// $Id$
+
+#ifndef RACE_ANALYZER_CIDL
+#define RACE_ANALYZER_CIDL
+
+#include "Analyzer.idl"
+
+module CIAO
+{
+  module RACE
+  {
+    composition session Analyzer_Impl
+    {
+      home executor Analyzer_Home_Exec
+        {
+          implements RACE::Analyzer_Home;
+          manages Analyzer_Exec;
+        };
+    };
+  };
+};
+
+    
+#endif

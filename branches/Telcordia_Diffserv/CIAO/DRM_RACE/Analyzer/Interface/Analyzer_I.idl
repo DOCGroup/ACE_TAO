@@ -1,0 +1,23 @@
+// $Id$
+
+#ifndef RACE_ANALYZER_I_IDL
+#define RACE_ANALYZER_I_IDL
+
+#include "ciao/Packaging_Data.idl"
+#include "common/RACE_common.idl"
+
+module CIAO
+{
+  module RACE
+  {
+    interface Analyzer_I
+    {
+      boolean analyze (in Deployment::DeploymentPlan plan,
+                       in Deployment::PackageConfiguration package,
+                       inout PlannerFlow flow);
+    };
+  };
+};
+
+
+#endif

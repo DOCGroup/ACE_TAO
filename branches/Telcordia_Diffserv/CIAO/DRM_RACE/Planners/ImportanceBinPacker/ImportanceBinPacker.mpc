@@ -1,0 +1,128 @@
+// generate_component_mpc.pl,v 1.9 2003/12/22 21:56:27 boris Exp
+//ImportanceBinPacker.mpc,v 1.3 2005/09/27 18:20:01 tdamiano Exp
+// This file is generated with "generate_component_mpc.pl -p Planner_Interface ImportanceBinPacker"
+
+project(ImportanceBinPacker_stub): ciao_deployment_stub, ciao_race_component  {
+  after += Planner_Interface_stub Planner_stub
+  sharedname = ImportanceBinPacker_stub
+  idlflags += -Sc \
+              -Wb,stub_export_macro=IMPORTANCEBINPACKER_STUB_Export \
+              -Wb,stub_export_include=ImportanceBinPacker_stub_export.h \
+              -Wb,skel_export_macro=IMPORTANCEBINPACKER_SVNT_Export \
+              -Wb,skel_export_include=ImportanceBinPacker_svnt_export.h
+  dynamicflags   = IMPORTANCEBINPACKER_STUB_BUILD_DLL
+  libs += Planner_Interface_stub Planner_stub RACE_common_stub
+
+  IDL_Files {
+    ImportanceBinPacker.idl
+  }
+
+  Source_Files {
+    ImportanceBinPackerC.cpp
+  }
+
+  Header_Files {
+    ImportanceBinPackerC.h
+  }
+
+  Inline_Files {
+    ImportanceBinPackerC.inl
+  }
+}
+
+project(ImportanceBinPacker_svnt) : ciao_servant_dnc, ciao_race_component  {
+  after += Planner_Interface_svnt \
+           ImportanceBinPacker_stub \
+           Planner_svnt
+  sharedname  = ImportanceBinPacker_svnt
+  libs    += ImportanceBinPacker_stub \
+             Planner_Interface_stub \
+             Planner_Interface_svnt \
+             Planner_stub \
+             Planner_svnt \
+             RACE_common_stub
+  idlflags  +=  -Sc \
+                -Wb,export_macro=IMPORTANCEBINPACKER_SVNT_Export \
+                -Wb,export_include=ImportanceBinPacker_svnt_export.h
+
+  dynamicflags = IMPORTANCEBINPACKER_SVNT_BUILD_DLL
+
+  CIDL_Files {
+    ImportanceBinPacker.cidl
+  }
+
+  IDL_Files {
+    ImportanceBinPackerE.idl
+  }
+
+  Source_Files {
+    ImportanceBinPackerEC.cpp
+    ImportanceBinPackerS.cpp
+    ImportanceBinPacker_svnt.cpp
+  }
+
+  Header_Files {
+    ImportanceBinPackerEC.h
+    ImportanceBinPackerS.h
+    ImportanceBinPacker_svnt.h
+  }
+
+  Inline_Files {
+    ImportanceBinPackerEC.inl
+    ImportanceBinPackerS.inl
+    ImportanceBinPacker_svnt.inl
+  }
+}
+
+
+project(ImportanceBinPacker_exec) : ciao_component_dnc, ciao_race_component  {
+  after   += ImportanceBinPacker_svnt
+  sharedname = ImportanceBinPacker_exec
+  libs      += ImportanceBinPacker_stub \
+               ImportanceBinPacker_svnt \
+               Planner_Interface_stub \
+               Planner_Interface_svnt \
+               Planner_stub \
+               Planner_svnt \
+               RACE_common_stub
+
+  idlflags  +=  -Sc \
+                -Wb,export_macro=IMPORTANCEBINPACKER_EXEC_Export \
+                -Wb,export_include=ImportanceBinPacker_exec_export.h
+  dynamicflags   = IMPORTANCEBINPACKER_EXEC_BUILD_DLL
+
+  IDL_Files {
+
+  }
+
+  Source_Files {
+    ibp_core.cc
+    ImportanceBinPacker_exec.cpp
+    ImportanceBinPacker.cpp
+  }
+}
+
+project(ImportanceBinPacker_Main) : ciao_component_dnc, ciao_config_handlers, ciao_race_component {
+  after    += ImportanceBinPacker_exec
+  exename  =  ImportanceBinPacker_Main
+  libs      += ImportanceBinPacker_stub \
+               ImportanceBinPacker_svnt \
+               ImportanceBinPacker_exec \
+               Planner_Interface_stub \
+               Planner_Interface_svnt \
+               Planner_stub \
+               Planner_svnt \
+               RACE_common_stub
+
+  includes += $(CIAO_ROOT)/tools/Config_Handlers
+
+  Source_Files {
+        ImportanceBinPacker_Main.cpp
+        ibp_main_parser.cpp
+        ibp_main_handler.cpp
+  }
+
+  IDL_Files {
+
+  }
+}

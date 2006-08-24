@@ -1,0 +1,79 @@
+/**
+ * @file web_common.idl
+ *
+ * @brief IDL Interface for datatypes used by the Web_Input_Adapter and
+ *        Web_Output_Adapter.
+ *
+ * This file contains IDL declarations for Web_Deployment
+ * Eventtype.  This IDL 3 Eventtype is published by the
+ * Web_Output_Adapter.  It encapsulates a ready-to-deploy Deployment
+ * Plan and presents a simple interface that RACE Components may use
+ * to deploy plans without maintaining their own interfaces to the
+ * DAnCE DomainApplicationManager.
+ *
+ * $Id$
+ *
+ * @author Edward Mulholland <emulholl@atl.lmco.com>
+ */
+
+#ifndef RACE_WEB_COMMON_IDL
+#define RACE_WEB_COMMON_IDL
+
+#ifndef AVOID_IFR_CRASH
+#include "Deployment.idl"
+#include "DomainApplicationManager.idl"
+#else /* AVOID_IFR_CRASH */
+#include "Deployment_Data.idl"
+#endif /* AVOID_IFR_CRASH */
+
+module CIAO
+{
+  module RACE
+  {
+    /**
+     * @brief Encapsulates a ready-to-deploy Deployment Plan.
+     *
+     * This IDL 3 Eventtype is published by the Web_Output_Adapter.
+     * It encapsulates a ready-to-deploy Deployment Plan and presents
+     * a simple interface that RACE Components may use to deploy plans
+     * without maintaining their own interfaces to the DAnCE
+     * DomainApplicationManager.
+     */
+
+    eventtype Web_Deployment
+    {
+      public string plan_uri; ///< URI of ready-to-deploy plan
+      public string pcd_uri ; ///< Package-handler URI
+      public ::Deployment::DeploymentPlan plan; ///< Ready-to-deploy plan
+      public ::Deployment::PackageConfiguration pcd; ///< Package-handler
+#ifndef AVOID_IFR_CRASH
+      /// Reference to a DomainApplicationManager, if plan is deployed.
+      /**
+       *  If the plan is not currently deployed, then the value of
+       *  this member is nil.
+       */
+      public ::Deployment::DomainApplicationManager dam;
+#endif /* AVOID_IFR_CRASH */
+
+#ifndef AVOID_IFR_CRASH
+      /// Launch #plan.
+      /**
+       * @return the DomainApplicationManager for the newly launched
+       *         plan.
+       */
+      ::Deployment::DomainApplicationManager launch_plan ();
+#endif /* AVOID_IFR_CRASH */
+      /// Teardown #plan.
+      /**
+       * @return a boolean indicating whether or not the plan was
+       *         successfully torn down.
+       */
+      boolean teardown_plan ();
+
+      /// Reference to a Controller.
+      public Object controller;
+    };
+  };
+};
+
+#endif /* RACE_WEB_COMMON_IDL */

@@ -1,0 +1,65 @@
+// $Id$
+
+#ifndef RACE_CONTROLLER_IDL
+#define RACE_CONTROLLER_IDL
+
+/**
+ * @file Controller.idl
+ *
+ * @brief Controller Component of RACE.
+ *
+ * This file declares a Controller of the RACE framework.
+ *
+ * @author Nishanth Shankaran <nshankar@dre.vanderbilt.edu>
+ */
+
+#include <Components.idl>
+#include "ciao/Target_Data.idl"
+#include "TargetManager/TargetManagerExt.idl"
+#include "cuts/CUTS.idl"
+#include "Interface.idl"
+
+/**
+ * @module CIAO
+ * @brief The CIAO module.
+ */
+
+module CIAO
+{
+  module RACE
+  {
+
+    struct component_info
+    {
+      string id;
+      string node;
+    };
+    
+    /**
+     * @component Controller
+     * @brief The Controller component of RACE.
+     */
+
+    component Controller supports Trigger
+    {
+      /// Obtain resource utilization infromation from the target manager.
+      uses CIAO::TargetManagerExt target_mgr_ext;
+      uses Deployment::TargetManager targer_mgr;
+      
+      /// Obtain QoS information from the Benchmark Data Collector (BDC).   
+      uses CUTS::Path_Measurement online_measurements;
+      uses CUTS::BDC_Control_Handle controls;
+
+      /// Facet to which the descrpters can be pushed.
+      provides Descriptors descriptors;
+      
+      /// The sampling period of the controller.        
+      readonly attribute long sampling_period;
+    };
+
+    home Controller_Home manages Controller
+    {
+    };
+  };
+};
+#endif /* RACE_CONTROLLER_IDL */

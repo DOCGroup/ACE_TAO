@@ -1,0 +1,63 @@
+#This script will convernt a component deployment plan, generated from PICML by
+# a flattened deployment interpreter, into a viewable image.  This will be used
+# during the RACE demonstration to visualize a deployment after it is 
+# dynamically constructed by RACE.
+#
+#I will look at the possibility of generating an interactive image so that 
+# specific information can be stored with the image and made available on 
+# click.
+#
+#PICML --> Flat Interpreter --> <xml>.cdp --> xslt --> <plan>.dot --> fdp --> image
+#
+
+exec_path="$RACE_ROOT/Input_Adapters/Web_Input_Adapter/new_web_content"
+
+cp $exec_path/dot.xsl $exec_path/tmp.xsl
+fname="$1"
+detail=""
+
+if [ "$1" = "-d" ]
+then
+  
+  if [ "$2" = "" ]
+  then
+     echo "Usage: $0 [-d] <xml file>"
+     exit
+  fi
+
+  sexpr="s/DETAIL/$2/g"
+  cat $exec_path/dot.xsl | sed -e "s/false\(\)/true/" > $exec_path/tmp.xsl
+  fname="$2"
+  detail="_detail"
+fi
+
+#This will remove the Deployment namespace from the deployment XML so that 
+# Xalan can parse it without throwing an error.
+sed 's/Deployment:deploymentPlan/deploymentPlan/g' $fname > sedtmp.cdp
+mv sedtmp.cdp $fname
+
+#The below line was removed because the name of the actual plan is no longer 
+# displayed within the image, it is generated and presented in the html of the
+# page
+#sexpr="s/DEPLOYMENTPLAN/\($fname\)/g;s/ \#ARC\# /\-\>/g;s/ \#TO\# / \=\=\> /g"
+
+##TAKE OUT "." for "_" in connections and id tags here!!!
+/$exec_path/NoPeriod.py $exec_path/image_temp.cdp
+
+sexpr="s/ \#ARC\# /\-\>/g;s/ \#TO\# / \=\=\> /g"
+
+#Generate the .dot file to create the graph from
+Xalan $fname $exec_path/tmp.xsl | tr "-" "_" | sed -e "$sexpr" > $fname$detail.dot
+
+#Replace the tags to do tabling for line breaks!
+sed 's/#BEFORE#/<<TABLE border=\"0\"><TR><TD>/g;s/#MIDDLE#/<\/TD><\/TR><TR><TD>/g;s/#AFTER#/<\/TD><\/TR><\/TABLE>>/g' $fname$detail.dot > seddot.dot
+
+mv seddot.dot $fname$detail.dot
+
+#ORIGINAL: 
+#neato -Gmodel=subset -o $fname$detail.jpg -Kfdp -x -Tjpeg $fname$detail.dot
+#NEW VERSION:
+neato -Gmodel=subset -Gsplines=true -x -o $fname$detail.png -Kfdp -x -Tpng $fname$detail.dot
+
+#Get rid of temporary files
+rm -f $exec_path/tmp.xsl

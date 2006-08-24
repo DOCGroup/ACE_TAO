@@ -1,0 +1,24 @@
+//$Id$
+
+#ifndef RACE_NET_QOS_PLANNER_IDL
+#define RACE_NET_QOS_PLANNER_IDL
+
+#include <Components.idl>
+#include "../Base/Planner.idl"
+#include "ciao/Target_Data.idl"
+
+module CIAO
+{
+  module RACE
+  {
+    component NetQosPlanner : Planner
+    {
+    };
+    
+    home NetQoSPlanner_Home manages NetQosPlanner
+    {
+    };
+  };
+};
+
+#endif /* RACE_NET_QOS_PLANNER_IDL */

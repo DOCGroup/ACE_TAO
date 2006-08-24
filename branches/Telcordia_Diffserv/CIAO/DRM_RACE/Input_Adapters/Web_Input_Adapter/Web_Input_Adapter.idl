@@ -1,0 +1,47 @@
+/**
+ * @file
+ *
+ * @brief declare CCM-Component-based Web_Input_Adapter, part of RACE
+ *
+ * This file contains IDL 3 declaration for RACE Web_Input_Adapter.
+ * The Web_Input_Adapter is a CCM Component; it inherits from
+ * Input_Adapter base component, and it is part of RACE.
+ *
+ * $Id$
+ *
+ * @author Edward Mulholland <emulholl@atl.lmco.com>
+ */
+
+#ifndef RACE_WEB_INPUT_ADAPTER_IDL
+#define RACE_WEB_INPUT_ADAPTER_IDL
+
+#include "../Base/Input_Adapter.idl"
+#include "../../web_common/web_common.idl"
+#include "Web_Input_Adapter_Interface.idl"
+
+module CIAO
+{
+  module RACE
+  {
+    /**
+     * @brief  CCM Component, part of RACE, runs a web server as a
+     * front end to the rest of RACE.
+     */
+    component Web_Input_Adapter : Input_Adapter
+    {
+      provides Component_Control comp_control;
+      provides Plan_Deployment   plan_depment;
+      consumes Web_Deployment dance_depment;
+      attribute string ifr_service_ior;
+    };
+
+    /**
+     * @brief  CCM Home for Web_Input_Adapter.
+     */
+    home Web_Input_Adapter_Home manages Web_Input_Adapter
+    {
+    };
+  };
+};
+
+#endif /* RACE_WEB_INPUT_ADAPTER_IDL */
