@@ -97,8 +97,8 @@ acquire_release (void)
                         ACE_TEXT ("Failed acquiring pong")));
           else
             {
-              ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P) Pong\n")));
               event_pong.reset ();
+              ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P) Pong\n")));
             }
         }
 
@@ -131,9 +131,9 @@ acquire_release (void)
                         ACE_TEXT ("Failed acquiring ping")));
           else
             {
+              event_ping.reset ();
               ACE_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("(%P) Ping\n")));
-              event_ping.reset ();
             }
 
           event_pong.signal ();
