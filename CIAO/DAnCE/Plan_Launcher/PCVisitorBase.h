@@ -44,9 +44,12 @@
 class  PCVisitorBase
 {
 public:
-
   //constructor
   PCVisitorBase (void);
+
+  //destructor
+  virtual
+  ~PCVisitorBase (void);
 
   ///function what dispatches sequences
   template <typename SEQ>
