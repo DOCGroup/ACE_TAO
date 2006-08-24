@@ -267,12 +267,11 @@ ACE_Dynamic_Node::apply (ACE_Service_Gestalt *config, int &yyerrno)
 #ifndef ACE_NLOGGING
   if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
-                ACE_LIB_TEXT ("ACE (%P|%t) Dynamic_Node::apply")
+                ACE_LIB_TEXT ("(%P|%t) ACE_Dynamic_Node::apply")
                 ACE_LIB_TEXT (" - did dynamic on %s, error = %d\n"),
                 this->name (),
                 yyerrno));
 #endif /* ACE_NLOGGING */
-
 }
 
 ACE_ALLOC_HOOK_DEFINE (ACE_Dynamic_Node)
@@ -375,9 +374,8 @@ ACE_Location_Node::~ACE_Location_Node (void)
 }
 
 const ACE_DLL &
-ACE_Location_Node::dll (void) const
+ACE_Location_Node::dll (void)
 {
-  ACE_TRACE ("ACE_Location_Node::dll");
   return this->dll_;
 }
 
@@ -406,6 +404,13 @@ int
 ACE_Location_Node::open_dll (int & yyerrno)
 {
   ACE_TRACE ("ACE_Location_Node::open_dll");
+
+#ifndef ACE_NLOGGING
+  if (ACE::debug ())
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_LIB_TEXT ("(%P|%t) LN::open_dll - path=%s\n"),
+                this->pathname ()));
+#endif /* ACE_NLOGGING */
 
   if (-1 == this->dll_.open (this->pathname ()))
     {
@@ -767,13 +772,6 @@ ACE_Service_Type_Factory::ACE_Service_Type_Factory (ACE_TCHAR const *name,
 
 ACE_Service_Type_Factory::~ACE_Service_Type_Factory (void)
 {
-}
-
-
-const ACE_DLL&
-ACE_Service_Type_Factory::dll (void) const
-{
-  return this->location_->dll();
 }
 
 

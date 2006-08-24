@@ -151,21 +151,28 @@ ACE_Service_Repository::fini (void)
       // order.
 
       for (int i = this->current_size_ - 1; i >= 0; i--)
-        {
-          ACE_Service_Type *s =
-            const_cast<ACE_Service_Type *> (this->service_vector_[i]);
+  {
+    ACE_Service_Type *s =
+      const_cast<ACE_Service_Type *> (this->service_vector_[i]);
 
-          if (ACE::debug ())
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_LIB_TEXT ("ACE (%P|%t) SR::fini, repo=%@ [%d] (size %d) - ")
-                        ACE_LIB_TEXT ("fini so=%@, name=%s, type=%@%s\n"),
-                        this, i, this->total_size_,
-                        s, s->name (), s->type (), ((s->active() != 0)?", active" : "")));
+    if (ACE::debug ())
+      {
+        ACE_DEBUG ((LM_DEBUG,
+        ACE_LIB_TEXT ("(%P|%t) SR::fini, %@ [%d] (%d): "),
+        this, i, this->total_size_));
+        s->dump();
+      }
 
-          // Collect any errors.
-          int ret = s->fini ();
-          retval += ret;
-        }
+    // Collect any errors.
+    int ret = s->fini ();
+    if (ACE::debug ())
+      {
+        ACE_DEBUG ((LM_DEBUG,
+        ACE_LIB_TEXT ("(%P|%t) SR::fini, returned %d\n"),
+        ret));
+      }
+    retval += ret;
+  }
     }
 
   return (retval == 0) ? 0 : -1;
@@ -186,27 +193,31 @@ ACE_Service_Repository::close (void)
       // necessarily be maintained since the <remove> method performs
       // compaction.  However, the common case is not to remove
       // services, so typically they are deleted in reverse order.
-      int lastindex = this->current_size_ - 1;
-      this->current_size_ = 0;
-      for (; lastindex >= 0; lastindex--)
+
+      if(ACE::debug ())
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_LIB_TEXT ("(%P|%t) SR::close, this=%@, size=%d\n"),
+                    this,
+                    this->current_size_));
+
+      for (int i = this->current_size_ - 1; i >= 0; i--)
         {
-          ACE_Service_Type *s = const_cast<ACE_Service_Type *>
-            (this->service_vector_[lastindex]);
-
-          this->service_vector_[lastindex] = 0;
-
           if(ACE::debug ())
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_LIB_TEXT ("ACE (%P|%t) SR::close, repo=%@ [%d] (size=%d) - ")
-                        ACE_LIB_TEXT ("deleting so=%@, type=%@\n"),
-                        this, lastindex, this->total_size_,
-                        s, s->type ()));
+                        ACE_LIB_TEXT ("(%P|%t) SR::close, this=%@, delete so[%d]=%@ (%s)\n"),
+                        this,
+                        i,
+                        this->service_vector_[i],
+                        this->service_vector_[i]->name ()));
 
+          ACE_Service_Type *s = const_cast<ACE_Service_Type *> (this->service_vector_[i]);
+          --this->current_size_;
           delete s;
         }
 
       delete [] this->service_vector_;
       this->service_vector_ = 0;
+      this->current_size_ = 0;
     }
 
   return 0;
@@ -215,6 +226,8 @@ ACE_Service_Repository::close (void)
 ACE_Service_Repository::~ACE_Service_Repository (void)
 {
   ACE_TRACE ("ACE_Service_Repository::~ACE_Service_Repository");
+  if(ACE::debug ())
+    ACE_DEBUG ((LM_DEBUG, "(%P|%t) SR::<dtor>, this=%@\n", this));
   this->close ();
 }
 
@@ -314,21 +327,28 @@ ACE_Service_Repository::insert (const ACE_Service_Type *sr)
       }
 
     if (ACE::debug ())
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_LIB_TEXT ("ACE (%P|%t) SR::insert, repo=%@ [%d] ")
-                  ACE_LIB_TEXT ("(size=%d): %s(@%@), type=%@%s\n"),
-                  this, i, this->total_size_,
-                  sr->name (), sr, sr->type (), ((sr->active() != 0)?", active" : "")));
+      {
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("ACE (%P|%t) SR::insert, repo=%@ [%d] (size=%d): "),
+                    this,
+                    i,
+                    this->total_size_));
+        sr->dump();
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
+      }
   }
 
   // Delete outside the lock
   if (s != 0)
     {
       if (ACE::debug ())
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_LIB_TEXT ("ACE (%P|%t) SR::insert, repo=%@ - ")
-                    ACE_LIB_TEXT ("destroying : %s\n"),
-                    this, s->name ()));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("ACE (%P|%t) SR::insert, repo=%@ - destroying : "),
+                      this));
+          s->dump();
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
+        }
       delete s;
     }
 

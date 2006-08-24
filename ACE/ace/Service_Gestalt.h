@@ -29,7 +29,6 @@
 #include "ace/Singleton.h"
 #include "ace/OS_NS_signal.h"
 #include "ace/Synch_Traits.h"
-#include "ace/DLL.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -72,8 +71,8 @@ private:
   /**
    * Not implemented to enforce no copying
    */
-  ACE_Service_Gestalt(const ACE_Service_Gestalt&);
-  ACE_Service_Gestalt& operator=(const ACE_Service_Gestalt&);
+  ACE_UNIMPLEMENTED_FUNC (ACE_Service_Gestalt(const ACE_Service_Gestalt&))
+  ACE_UNIMPLEMENTED_FUNC (ACE_Service_Gestalt& operator=(const ACE_Service_Gestalt&))
 
 public:
   enum
@@ -437,60 +436,8 @@ protected:
   /// the static_svcs_ list.
   ACE_PROCESSED_STATIC_SVCS* processed_static_svcs_;
 
-private:
-
-  friend class ACE_Service_Type_DLL_Guard;
-
 }; /* class ACE_Service_Gestalt */
 
-/**
- * As dynamic service objects are loaded, static service objects that
- * come with the same DLL code, may also be registered. The static
- * services however, have no information about the context in which
- * their registration takes place and their relation with the DLL is
- * lost. A situation can easily arise where the dynamic service object
- * is finalized and its DLL - unmapped, but some of the DLL's static
- * services may still be around. Their finalization would not be
- * possible, if the DLL counting that code is gone.
- *
- * The guard, when instantiated (on the stack) swaps out the current
- * Gestalt and its service repository, and replaces them with a
- * "sandbox" Gestalt, which has lifetime sufficient for just the
- * current service initialization. Note that this mechanism is
- * effective even in the case where a service initialization causes
- * re-entry into the Gestalt to load and initialize another service as
- * part of the initialization.
- *
- * If no action is taken (in case of an error, for instance) the guard
- * destructor will simply finalize all newly initialized service(s)
- * from the sandbox. On the other hand, if initialization is
- * successful the service object descriptors are "relocated" to the
- * original Gestalt.  **During the relocation, all static services are
- * "fixed-up" to hold a reference to the DLL they belong
- * to. Effectively, a static service, initialized via loading of a
- * particular DLL, becomes a dynamic service. Thus the order of
- * service finalization does not matter anymore because the DLL will
- * be help in memory until the last service object it provides is
- * finalized.
- */
-class ACE_Service_Type_DLL_Guard
-{
-public:
-  ACE_Service_Type_DLL_Guard (ACE_Service_Gestalt* gestalt);
-  ~ACE_Service_Type_DLL_Guard (void);
-  int relocate (const ACE_DLL& adll);
-
-protected:
-  // Unimplemented copy ctor and assigment to prohibit instance
-  // copying.
-  ACE_Service_Type_DLL_Guard (const ACE_Service_Type_DLL_Guard&);
-  ACE_Service_Type_DLL_Guard& operator= (const ACE_Service_Type_DLL_Guard&);
-
-private:
-  ACE_Service_Gestalt* gestalt_;
-  ACE_Service_Repository* repo_;
-  ACE_Service_Gestalt::ACE_PROCESSED_STATIC_SVCS* processed_static_svcs_;
-};
 
 
 ACE_END_VERSIONED_NAMESPACE_DECL

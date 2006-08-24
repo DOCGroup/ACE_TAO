@@ -309,7 +309,7 @@ class ACE_Location_Node
 {
 public:
   ACE_Location_Node (void);
-  const ACE_DLL& dll (void) const;
+  const ACE_DLL &dll (void);
   const ACE_TCHAR *pathname (void) const;
   void pathname (const ACE_TCHAR *h);
   int dispose (void) const;
@@ -491,9 +491,7 @@ public:
 
   ACE_Service_Type *make_service_type (ACE_Service_Gestalt *pcfg) const;
 
-  const ACE_TCHAR * name (void) const;
-
-  const ACE_DLL& dll (void) const;
+  ACE_TCHAR const* name (void) const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
