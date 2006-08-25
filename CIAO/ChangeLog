@@ -1,3 +1,10 @@
+Thu Aug 24 23:37:58 UTC 2006  Sumant Tambe  <sutambe@nospam>
+ 
+        Added the RACE directory in the ARMS CVS repo on escher to 
+        the Telcordia_Diffserv branch as DRM_RACE.
+        
+        * DRM_RACE:
+
 Fri Aug 18 20:02:58 UTC 2006  Sumant Tambe  <sutambe@nospam>
 
         Merged the changed made to the main branch with the Telcordia_Diffserv
