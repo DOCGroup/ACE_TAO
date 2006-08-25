@@ -1,3 +1,408 @@
+Fri Aug 25 04:48:14 UTC 2006  Sumant Tambe  <sutambe@nospam>
+
+        Renamed DRM_RACE to RACE.
+        * RACE:
+
+        * DRM_RACE:
+
+        * DRM_RACE/Analyzer:
+
+        * DRM_RACE/Analyzer/Component:
+
+        * DRM_RACE/Analyzer/Component/Analyzer.cidl:
+        * DRM_RACE/Analyzer/Component/Analyzer.idl:
+        * DRM_RACE/Analyzer/Component/Analyzer.mpc:
+        * DRM_RACE/Analyzer/Component/Analyzer_exec.h:
+        * DRM_RACE/Analyzer/Component/Analyzer_exec.cpp:
+        * DRM_RACE/Analyzer/Component/Analyzer_exec_export.h:
+        * DRM_RACE/Analyzer/Component/Analyzer_stub_export.h:
+        * DRM_RACE/Analyzer/Component/Analyzer_svnt_export.h:
+
+        * DRM_RACE/Analyzer/Interface:
+
+        * DRM_RACE/Analyzer/Interface/Analyzer_I.idl:
+        * DRM_RACE/Analyzer/Interface/Analyzer_I.mpc:
+        * DRM_RACE/Analyzer/Interface/Analyzer_I_exec_export.h:
+        * DRM_RACE/Analyzer/Interface/Analyzer_I_stub_export.h:
+        * DRM_RACE/Analyzer/Interface/Analyzer_I_svnt_export.h:
+
+        * DRM_RACE/Analyzer/SimpleAllocationAnalyzer:
+
+        * DRM_RACE/Analyzer/SimpleAllocationAnalyzer/SimpleAllocationAnalyzer.cidl:
+        * DRM_RACE/Analyzer/SimpleAllocationAnalyzer/SimpleAllocationAnalyzer.idl:
+        * DRM_RACE/Analyzer/SimpleAllocationAnalyzer/SimpleAllocationAnalyzer.mpc:
+        * DRM_RACE/Analyzer/SimpleAllocationAnalyzer/SimpleAllocationAnalyzer_exec.h:
+        * DRM_RACE/Analyzer/SimpleAllocationAnalyzer/SimpleAllocationAnalyzer_exec.cpp:
+        * DRM_RACE/Analyzer/SimpleAllocationAnalyzer/SimpleAllocationAnalyzer_exec_export.h:
+        * DRM_RACE/Analyzer/SimpleAllocationAnalyzer/SimpleAllocationAnalyzer_stub_export.h:
+        * DRM_RACE/Analyzer/SimpleAllocationAnalyzer/SimpleAllocationAnalyzer_svnt_export.h:
+
+        * DRM_RACE/Controller:
+
+        * DRM_RACE/Controller/Component:
+
+        * DRM_RACE/Controller/Component/Controller.cidl:
+        * DRM_RACE/Controller/Component/Controller.idl:
+        * DRM_RACE/Controller/Component/Controller.mpc:
+        * DRM_RACE/Controller/Component/Controller_exec.h:
+        * DRM_RACE/Controller/Component/Controller_exec.cpp:
+        * DRM_RACE/Controller/Component/Controller_exec_export.h:
+        * DRM_RACE/Controller/Component/Controller_stub_export.h:
+        * DRM_RACE/Controller/Component/Controller_svnt_export.h:
+        * DRM_RACE/Controller/Component/Descriptor.h:
+        * DRM_RACE/Controller/Component/Descriptor.cpp:
+        * DRM_RACE/Controller/Component/Interface.idl:
+        * DRM_RACE/Controller/Component/Poller.h:
+        * DRM_RACE/Controller/Component/Poller.cpp:
+        * DRM_RACE/Controller/Component/starter.cpp:
+
+        * DRM_RACE/Input_Adapters:
+
+        * DRM_RACE/Input_Adapters/Base:
+
+        * DRM_RACE/Input_Adapters/Base/Input_Adapter.idl:
+        * DRM_RACE/Input_Adapters/Base/Input_Adapter.mpc:
+        * DRM_RACE/Input_Adapters/Base/Input_Adapter_stub_export.h:
+        * DRM_RACE/Input_Adapters/Base/Input_Adapter_svnt_export.h:
+
+        * DRM_RACE/Input_Adapters/Interactive_Input_Adapter:
+
+        * DRM_RACE/Input_Adapters/Interactive_Input_Adapter/Injector.cpp:
+        * DRM_RACE/Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter.cidl:
+        * DRM_RACE/Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter.idl:
+        * DRM_RACE/Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter.mpc:
+        * DRM_RACE/Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter_exec.h:
+        * DRM_RACE/Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter_exec.cpp:
+        * DRM_RACE/Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter_exec_export.h:
+        * DRM_RACE/Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter_stub_export.h:
+        * DRM_RACE/Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter_svnt_export.h:
+
+        * DRM_RACE/Input_Adapters/LocationUpdater:
+
+        * DRM_RACE/Input_Adapters/LocationUpdater/Injector.cpp:
+        * DRM_RACE/Input_Adapters/LocationUpdater/LocationUpdater.cdp:
+        * DRM_RACE/Input_Adapters/LocationUpdater/LocationUpdater.cidl:
+        * DRM_RACE/Input_Adapters/LocationUpdater/LocationUpdater.idl:
+        * DRM_RACE/Input_Adapters/LocationUpdater/LocationUpdater_deployment.dat:
+        * DRM_RACE/Input_Adapters/LocationUpdater/LocationUpdater_exec.h:
+        * DRM_RACE/Input_Adapters/LocationUpdater/LocationUpdater_exec.cpp:
+        * DRM_RACE/Input_Adapters/LocationUpdater/LocationUpdater_exec_export.h:
+        * DRM_RACE/Input_Adapters/LocationUpdater/LocationUpdater_stub_export.h:
+        * DRM_RACE/Input_Adapters/LocationUpdater/LocationUpdater_svnt_export.h:
+        * DRM_RACE/Input_Adapters/LocationUpdater/Location_Updater.mpc:
+        * DRM_RACE/Input_Adapters/LocationUpdater/PCVisitorBase.h:
+        * DRM_RACE/Input_Adapters/LocationUpdater/PCVisitorBase.inl:
+        * DRM_RACE/Input_Adapters/LocationUpdater/PCVisitorBase.cpp:
+        * DRM_RACE/Input_Adapters/LocationUpdater/PlanUpdater.h:
+        * DRM_RACE/Input_Adapters/LocationUpdater/PlanUpdater.cpp:
+        * DRM_RACE/Input_Adapters/LocationUpdater/README.txt:
+
+        * DRM_RACE/Input_Adapters/PlanGenerator:
+
+        * DRM_RACE/Input_Adapters/PlanGenerator/Injector.cpp:
+        * DRM_RACE/Input_Adapters/PlanGenerator/PCVisitorBase.h:
+        * DRM_RACE/Input_Adapters/PlanGenerator/PCVisitorBase.inl:
+        * DRM_RACE/Input_Adapters/PlanGenerator/PCVisitorBase.cpp:
+        * DRM_RACE/Input_Adapters/PlanGenerator/PlanGenerator.h:
+        * DRM_RACE/Input_Adapters/PlanGenerator/PlanGenerator.cdp:
+        * DRM_RACE/Input_Adapters/PlanGenerator/PlanGenerator.cidl:
+        * DRM_RACE/Input_Adapters/PlanGenerator/PlanGenerator.idl:
+        * DRM_RACE/Input_Adapters/PlanGenerator/PlanGenerator.mpc:
+        * DRM_RACE/Input_Adapters/PlanGenerator/PlanGenerator.cpp:
+        * DRM_RACE/Input_Adapters/PlanGenerator/PlanGenerator_exec.h:
+        * DRM_RACE/Input_Adapters/PlanGenerator/PlanGenerator_exec.cpp:
+        * DRM_RACE/Input_Adapters/PlanGenerator/PlanGenerator_exec_export.h:
+        * DRM_RACE/Input_Adapters/PlanGenerator/PlanGenerator_stub_export.h:
+        * DRM_RACE/Input_Adapters/PlanGenerator/PlanGenerator_svnt_export.h:
+        * DRM_RACE/Input_Adapters/PlanGenerator/README.txt:
+
+        * DRM_RACE/Input_Adapters/Web_Input_Adapter:
+
+        * DRM_RACE/Input_Adapters/Web_Input_Adapter/Component_Control_exec.h:
+        * DRM_RACE/Input_Adapters/Web_Input_Adapter/Component_Control_exec.cpp:
+        * DRM_RACE/Input_Adapters/Web_Input_Adapter/Plan_Deployment_exec.h:
+        * DRM_RACE/Input_Adapters/Web_Input_Adapter/Plan_Deployment_exec.cpp:
+        * DRM_RACE/Input_Adapters/Web_Input_Adapter/Web_Input_Adapter.cidl:
+        * DRM_RACE/Input_Adapters/Web_Input_Adapter/Web_Input_Adapter.idl:
+        * DRM_RACE/Input_Adapters/Web_Input_Adapter/Web_Input_Adapter.mpc:
+        * DRM_RACE/Input_Adapters/Web_Input_Adapter/Web_Input_Adapter_Interface.idl:
+        * DRM_RACE/Input_Adapters/Web_Input_Adapter/Web_Input_Adapter_cgi.cpp:
+        * DRM_RACE/Input_Adapters/Web_Input_Adapter/Web_Input_Adapter_exec.h:
+        * DRM_RACE/Input_Adapters/Web_Input_Adapter/Web_Input_Adapter_exec.cpp:
+        * DRM_RACE/Input_Adapters/Web_Input_Adapter/Web_Input_Adapter_exec_export.h:
+        * DRM_RACE/Input_Adapters/Web_Input_Adapter/Web_Input_Adapter_interface_export.h:
+        * DRM_RACE/Input_Adapters/Web_Input_Adapter/Web_Input_Adapter_stub_export.h:
+        * DRM_RACE/Input_Adapters/Web_Input_Adapter/Web_Input_Adapter_svnt_export.h:
+        * DRM_RACE/Input_Adapters/Web_Input_Adapter/new_web_content:
+
+        * DRM_RACE/Input_Adapters/Web_Input_Adapter/new_web_content/ATL_logo.png:
+        * DRM_RACE/Input_Adapters/Web_Input_Adapter/new_web_content/ImageGen.py:
+        * DRM_RACE/Input_Adapters/Web_Input_Adapter/new_web_content/NoPeriod.py:
+        * DRM_RACE/Input_Adapters/Web_Input_Adapter/new_web_content/RACE_Plot.cgi:
+        * DRM_RACE/Input_Adapters/Web_Input_Adapter/new_web_content/RACE_words.png:
+        * DRM_RACE/Input_Adapters/Web_Input_Adapter/new_web_content/WIA_helper.cpp:
+        * DRM_RACE/Input_Adapters/Web_Input_Adapter/new_web_content/Web_Input_Adapter.cgi:
+        * DRM_RACE/Input_Adapters/Web_Input_Adapter/new_web_content/arms_logo.png:
+        * DRM_RACE/Input_Adapters/Web_Input_Adapter/new_web_content/build.mpc:
+        * DRM_RACE/Input_Adapters/Web_Input_Adapter/new_web_content/demo.gplot:
+        * DRM_RACE/Input_Adapters/Web_Input_Adapter/new_web_content/dot.xsl:
+        * DRM_RACE/Input_Adapters/Web_Input_Adapter/new_web_content/greyweave.jpg:
+        * DRM_RACE/Input_Adapters/Web_Input_Adapter/new_web_content/isis.png:
+        * DRM_RACE/Input_Adapters/Web_Input_Adapter/new_web_content/lockheed.png:
+        * DRM_RACE/Input_Adapters/Web_Input_Adapter/new_web_content/race.png:
+        * DRM_RACE/Input_Adapters/Web_Input_Adapter/new_web_content/vandyV.jpg:
+        * DRM_RACE/Input_Adapters/Web_Input_Adapter/new_web_content/vandy_log.png:
+        * DRM_RACE/Input_Adapters/Web_Input_Adapter/new_web_content/xform:
+        * DRM_RACE/Input_Adapters/Web_Input_Adapter/new_web_content/xform_html:
+        * DRM_RACE/Input_Adapters/Web_Input_Adapter/new_web_content/xform_local:
+
+        * DRM_RACE/Input_Adapters/Web_Input_Adapter/web_content:
+
+        * DRM_RACE/Input_Adapters/Web_Input_Adapter/web_content/ARMS_RACE.jar:
+        * DRM_RACE/Input_Adapters/Web_Input_Adapter/web_content/Web_Input_Adapter.css:
+        * DRM_RACE/Input_Adapters/Web_Input_Adapter/web_content/Web_Input_Adapter.js:
+        * DRM_RACE/Input_Adapters/Web_Input_Adapter/web_content/images:
+
+        * DRM_RACE/Input_Adapters/Web_Input_Adapter/web_content/images/active_race_components.png:
+        * DRM_RACE/Input_Adapters/Web_Input_Adapter/web_content/images/deployment_plan.png:
+        * DRM_RACE/Input_Adapters/Web_Input_Adapter/web_content/images/dp_ar.png:
+        * DRM_RACE/Input_Adapters/Web_Input_Adapter/web_content/images/five_components.png:
+        * DRM_RACE/Input_Adapters/Web_Input_Adapter/web_content/images/manage_live_deployment_plans.png:
+        * DRM_RACE/Input_Adapters/Web_Input_Adapter/web_content/images/race_components.png:
+        * DRM_RACE/Input_Adapters/Web_Input_Adapter/web_content/images/race_title.png:
+        * DRM_RACE/Input_Adapters/Web_Input_Adapter/web_content/images/spacer.gif:
+        * DRM_RACE/Input_Adapters/Web_Input_Adapter/web_content/images/test-image.gif:
+
+        * DRM_RACE/Input_Adapters/Web_Input_Adapter/web_content/race_component_preview.html:
+
+        * DRM_RACE/Input_Adapters/Web_Input_Adapter/web_input_adapter.cgi:
+
+        * DRM_RACE/Output_Adapters:
+
+        * DRM_RACE/Output_Adapters/Base:
+
+        * DRM_RACE/Output_Adapters/Base/Output_Adapter.idl:
+        * DRM_RACE/Output_Adapters/Base/Output_Adapter.mpc:
+        * DRM_RACE/Output_Adapters/Base/Output_Adapter_stub_export.h:
+        * DRM_RACE/Output_Adapters/Base/Output_Adapter_svnt_export.h:
+
+        * DRM_RACE/Output_Adapters/Component:
+
+        * DRM_RACE/Output_Adapters/Component/Output_Manager.cidl:
+        * DRM_RACE/Output_Adapters/Component/Output_Manager.idl:
+        * DRM_RACE/Output_Adapters/Component/Output_Manager.mpc:
+        * DRM_RACE/Output_Adapters/Component/Output_Manager_exec.h:
+        * DRM_RACE/Output_Adapters/Component/Output_Manager_exec.cpp:
+        * DRM_RACE/Output_Adapters/Component/Output_Manager_exec_export.h:
+        * DRM_RACE/Output_Adapters/Component/Output_Manager_stub_export.h:
+        * DRM_RACE/Output_Adapters/Component/Output_Manager_svnt_export.h:
+
+        * DRM_RACE/Output_Adapters/DAnCE_Output_Adapter:
+
+        * DRM_RACE/Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter.cidl:
+        * DRM_RACE/Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter.idl:
+        * DRM_RACE/Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter.mpc:
+        * DRM_RACE/Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter_exec.h:
+        * DRM_RACE/Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter_exec.cpp:
+        * DRM_RACE/Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter_exec_export.h:
+        * DRM_RACE/Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter_stub_export.h:
+        * DRM_RACE/Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter_svnt_export.h:
+
+        * DRM_RACE/Output_Adapters/Interface:
+
+        * DRM_RACE/Output_Adapters/Interface/Output_Adapter_Interface.mpc:
+        * DRM_RACE/Output_Adapters/Interface/Output_Adapter_Interface_stub_export.h:
+        * DRM_RACE/Output_Adapters/Interface/Output_Adapter_Interface_svnt_export.h:
+        * DRM_RACE/Output_Adapters/Interface/PlanEgress.idl:
+
+        * DRM_RACE/Output_Adapters/Web_Output_Adapter:
+
+        * DRM_RACE/Output_Adapters/Web_Output_Adapter/Web_Output_Adapter.cidl:
+        * DRM_RACE/Output_Adapters/Web_Output_Adapter/Web_Output_Adapter.idl:
+        * DRM_RACE/Output_Adapters/Web_Output_Adapter/Web_Output_Adapter.mpc:
+        * DRM_RACE/Output_Adapters/Web_Output_Adapter/Web_Output_Adapter_exec.h:
+        * DRM_RACE/Output_Adapters/Web_Output_Adapter/Web_Output_Adapter_exec.cpp:
+        * DRM_RACE/Output_Adapters/Web_Output_Adapter/Web_Output_Adapter_exec_export.h:
+        * DRM_RACE/Output_Adapters/Web_Output_Adapter/Web_Output_Adapter_stub_export.h:
+        * DRM_RACE/Output_Adapters/Web_Output_Adapter/Web_Output_Adapter_svnt_export.h:
+
+        * DRM_RACE/Output_Adapters/XML_Output_Adapter:
+
+        * DRM_RACE/Output_Adapters/XML_Output_Adapter/XML_Output_Adapter.cidl:
+        * DRM_RACE/Output_Adapters/XML_Output_Adapter/XML_Output_Adapter.idl:
+        * DRM_RACE/Output_Adapters/XML_Output_Adapter/XML_Output_Adapter.mpc:
+        * DRM_RACE/Output_Adapters/XML_Output_Adapter/XML_Output_Adapter_exec.h:
+        * DRM_RACE/Output_Adapters/XML_Output_Adapter/XML_Output_Adapter_exec.cpp:
+        * DRM_RACE/Output_Adapters/XML_Output_Adapter/XML_Output_Adapter_exec_export.h:
+        * DRM_RACE/Output_Adapters/XML_Output_Adapter/XML_Output_Adapter_stub_export.h:
+        * DRM_RACE/Output_Adapters/XML_Output_Adapter/XML_Output_Adapter_svnt_export.h:
+
+        * DRM_RACE/Plan_Analyzer:
+
+        * DRM_RACE/Plan_Analyzer/Component:
+
+        * DRM_RACE/Plan_Analyzer/Component/Plan_Analyzer.cidl:
+        * DRM_RACE/Plan_Analyzer/Component/Plan_Analyzer.idl:
+        * DRM_RACE/Plan_Analyzer/Component/Plan_Analyzer.mpc:
+        * DRM_RACE/Plan_Analyzer/Component/Plan_Analyzer_exec.h:
+        * DRM_RACE/Plan_Analyzer/Component/Plan_Analyzer_exec.cpp:
+        * DRM_RACE/Plan_Analyzer/Component/Plan_Analyzer_exec_export.h:
+        * DRM_RACE/Plan_Analyzer/Component/Plan_Analyzer_stub_export.h:
+        * DRM_RACE/Plan_Analyzer/Component/Plan_Analyzer_svnt_export.h:
+
+        * DRM_RACE/Plan_Analyzer/Interface:
+
+        * DRM_RACE/Plan_Analyzer/Interface/PlanIngress.idl:
+        * DRM_RACE/Plan_Analyzer/Interface/Plan_Analyzer_Interface.mpc:
+        * DRM_RACE/Plan_Analyzer/Interface/Plan_Analyzer_Interface_stub_export.h:
+        * DRM_RACE/Plan_Analyzer/Interface/Plan_Analyzer_Interface_svnt_export.h:
+
+        * DRM_RACE/Planner_Manager:
+
+        * DRM_RACE/Planner_Manager/Component:
+
+        * DRM_RACE/Planner_Manager/Component/Planner_Manager.cidl:
+        * DRM_RACE/Planner_Manager/Component/Planner_Manager.idl:
+        * DRM_RACE/Planner_Manager/Component/Planner_Manager.mpc:
+        * DRM_RACE/Planner_Manager/Component/Planner_Manager_exec.h:
+        * DRM_RACE/Planner_Manager/Component/Planner_Manager_exec.cpp:
+        * DRM_RACE/Planner_Manager/Component/Planner_Manager_exec_export.h:
+        * DRM_RACE/Planner_Manager/Component/Planner_Manager_stub_export.h:
+        * DRM_RACE/Planner_Manager/Component/Planner_Manager_svnt_export.h:
+
+        * DRM_RACE/Planner_Manager/Interface:
+
+        * DRM_RACE/Planner_Manager/Interface/Planner_Manager_I.idl:
+        * DRM_RACE/Planner_Manager/Interface/Planner_Manager_Interface.mpc:
+        * DRM_RACE/Planner_Manager/Interface/Planner_Manager_Interface_stub_export.h:
+        * DRM_RACE/Planner_Manager/Interface/Planner_Manager_Interface_svnt_export.h:
+
+        * DRM_RACE/Planners:
+
+        * DRM_RACE/Planners/Base:
+
+        * DRM_RACE/Planners/Base/Planner.idl:
+        * DRM_RACE/Planners/Base/Planner.mpc:
+        * DRM_RACE/Planners/Base/Planner_stub_export.h:
+        * DRM_RACE/Planners/Base/Planner_svnt_export.h:
+
+        * DRM_RACE/Planners/ImportanceBinPacker:
+
+        * DRM_RACE/Planners/ImportanceBinPacker/DeploymentScript.xsd:
+        * DRM_RACE/Planners/ImportanceBinPacker/ImportanceBinPacker.h:
+        * DRM_RACE/Planners/ImportanceBinPacker/ImportanceBinPacker.cidl:
+        * DRM_RACE/Planners/ImportanceBinPacker/ImportanceBinPacker.idl:
+        * DRM_RACE/Planners/ImportanceBinPacker/ImportanceBinPacker.mpc:
+        * DRM_RACE/Planners/ImportanceBinPacker/ImportanceBinPacker.cpp:
+        * DRM_RACE/Planners/ImportanceBinPacker/ImportanceBinPacker_Main.cpp:
+        * DRM_RACE/Planners/ImportanceBinPacker/ImportanceBinPacker_exec.h:
+        * DRM_RACE/Planners/ImportanceBinPacker/ImportanceBinPacker_exec.cpp:
+        * DRM_RACE/Planners/ImportanceBinPacker/ImportanceBinPacker_exec_export.h:
+        * DRM_RACE/Planners/ImportanceBinPacker/ImportanceBinPacker_stub_export.h:
+        * DRM_RACE/Planners/ImportanceBinPacker/ImportanceBinPacker_svnt_export.h:
+        * DRM_RACE/Planners/ImportanceBinPacker/ibp.h:
+        * DRM_RACE/Planners/ImportanceBinPacker/ibp_core.cc:
+        * DRM_RACE/Planners/ImportanceBinPacker/ibp_main_handler.h:
+        * DRM_RACE/Planners/ImportanceBinPacker/ibp_main_handler.cpp:
+        * DRM_RACE/Planners/ImportanceBinPacker/ibp_main_parser.h:
+        * DRM_RACE/Planners/ImportanceBinPacker/ibp_main_parser.cpp:
+        * DRM_RACE/Planners/ImportanceBinPacker/script.xml:
+
+        * DRM_RACE/Planners/Interface:
+
+        * DRM_RACE/Planners/Interface/Planner_I.idl:
+        * DRM_RACE/Planners/Interface/Planner_Interface.mpc:
+        * DRM_RACE/Planners/Interface/Planner_Interface_stub_export.h:
+        * DRM_RACE/Planners/Interface/Planner_Interface_svnt_export.h:
+
+        * DRM_RACE/Planners/NetQoSPlanner:
+
+        * DRM_RACE/Planners/NetQoSPlanner/NetQoSPlanner.cidl:
+        * DRM_RACE/Planners/NetQoSPlanner/NetQoSPlanner.idl:
+        * DRM_RACE/Planners/NetQoSPlanner/NetQoSPlanner.mpc:
+        * DRM_RACE/Planners/NetQoSPlanner/NetQoSPlanner_exec.h:
+        * DRM_RACE/Planners/NetQoSPlanner/NetQoSPlanner_exec.cpp:
+        * DRM_RACE/Planners/NetQoSPlanner/NetQoSPlanner_exec_export.h:
+        * DRM_RACE/Planners/NetQoSPlanner/NetQoSPlanner_stub_export.h:
+        * DRM_RACE/Planners/NetQoSPlanner/NetQoSPlanner_svnt_export.h:
+
+        * DRM_RACE/Planners/SimpleBinPacker:
+
+        * DRM_RACE/Planners/SimpleBinPacker/Allocation_Utils.h:
+        * DRM_RACE/Planners/SimpleBinPacker/Allocation_Utils.tpp:
+        * DRM_RACE/Planners/SimpleBinPacker/SimpleBinPacker.cidl:
+        * DRM_RACE/Planners/SimpleBinPacker/SimpleBinPacker.idl:
+        * DRM_RACE/Planners/SimpleBinPacker/SimpleBinPacker.mpc:
+        * DRM_RACE/Planners/SimpleBinPacker/SimpleBinPacker_exec.h:
+        * DRM_RACE/Planners/SimpleBinPacker/SimpleBinPacker_exec.cpp:
+        * DRM_RACE/Planners/SimpleBinPacker/SimpleBinPacker_exec_export.h:
+        * DRM_RACE/Planners/SimpleBinPacker/SimpleBinPacker_stub_export.h:
+        * DRM_RACE/Planners/SimpleBinPacker/SimpleBinPacker_svnt_export.h:
+        * DRM_RACE/Planners/SimpleBinPacker/sbp.h:
+        * DRM_RACE/Planners/SimpleBinPacker/sbp_core.cc:
+
+        * DRM_RACE/Planners/StaticPlanner:
+
+        * DRM_RACE/Planners/StaticPlanner/StaticPlanner.cidl:
+        * DRM_RACE/Planners/StaticPlanner/StaticPlanner.idl:
+        * DRM_RACE/Planners/StaticPlanner/StaticPlanner.mpc:
+        * DRM_RACE/Planners/StaticPlanner/StaticPlanner_exec.h:
+        * DRM_RACE/Planners/StaticPlanner/StaticPlanner_exec.cpp:
+        * DRM_RACE/Planners/StaticPlanner/StaticPlanner_exec_export.h:
+        * DRM_RACE/Planners/StaticPlanner/StaticPlanner_stub_export.h:
+        * DRM_RACE/Planners/StaticPlanner/StaticPlanner_svnt_export.h:
+
+        * DRM_RACE/README:
+        * DRM_RACE/common:
+
+        * DRM_RACE/common/RACE_Log_Msg.h:
+        * DRM_RACE/common/RACE_common.idl:
+        * DRM_RACE/common/RACE_common.mpc:
+        * DRM_RACE/common/RACE_common_stub_export.h:
+        * DRM_RACE/common/RACE_common_svnt_export.h:
+
+        * DRM_RACE/descriptors:
+
+        * DRM_RACE/descriptors/DeploymentPlan.cdp:
+        * DRM_RACE/descriptors/NodeDetails.dat:
+        * DRM_RACE/descriptors/RACE.cdp:
+        * DRM_RACE/descriptors/RACE.pcd:
+        * DRM_RACE/descriptors/RACE_Interactive.cdp:
+        * DRM_RACE/descriptors/RACE_NetQoS.cdp:
+        * DRM_RACE/descriptors/RT1H.cdp:
+        * DRM_RACE/descriptors/RT1H.cdp.bak:
+        * DRM_RACE/descriptors/RT1H.pcd:
+        * DRM_RACE/descriptors/RT1H_Shared_A.cdp:
+        * DRM_RACE/descriptors/RT1H_Shared_B.cdp:
+        * DRM_RACE/descriptors/Start_NodeManagers.sh:
+        * DRM_RACE/descriptors/Start_NodeManagers_fix.sh:
+        * DRM_RACE/descriptors/deploy.out:
+        * DRM_RACE/descriptors/deploy_race.sh:
+        * DRM_RACE/descriptors/deployed:
+        * DRM_RACE/descriptors/deployment.dat:
+        * DRM_RACE/descriptors/deployment.local:
+        * DRM_RACE/descriptors/key.pub:
+        * DRM_RACE/descriptors/output:
+        * DRM_RACE/descriptors/path.sh:
+        * DRM_RACE/descriptors/prepare-host.py:
+        * DRM_RACE/descriptors/rt-example.cdp:
+        * DRM_RACE/descriptors/run_NodeManager.sh:
+        * DRM_RACE/descriptors/run_test.pl:
+
+        * DRM_RACE/web_common:
+
+        * DRM_RACE/web_common/WEB_COMMON_impl_export.h:
+        * DRM_RACE/web_common/WEB_COMMON_stub_export.h:
+        * DRM_RACE/web_common/WEB_COMMON_svnt_export.h:
+        * DRM_RACE/web_common/web_common.idl:
+        * DRM_RACE/web_common/web_common.mpc:
+        * DRM_RACE/web_common/web_common_impl.h:
+        * DRM_RACE/web_common/web_common_impl.cpp:
+
+        * RACE/descriptors/8E8594AF-3310-446F-95E2-4440D622D5CE.cdp:
+
+          Removed these files.
+
 Fri Aug 25 04:40:36 UTC 2006  Sumant Tambe  <sutambe@nospam>
 
         * DRM_RACE/Input_Adapters/Web_Input_Adapter/web_input_adapter.cgi:
