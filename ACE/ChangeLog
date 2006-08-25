@@ -1,3 +1,8 @@
+Fri Aug 24 11:17:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/CDR_Size.cpp:
+          Added include of OS_Memory.h to get ACE_align_binary
+
 Thu Aug 24 21:40:24 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * tests/Process_Manual_Event_Test.cpp (acquire_release): Fixed a race
