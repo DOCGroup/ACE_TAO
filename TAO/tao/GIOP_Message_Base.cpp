@@ -12,6 +12,7 @@
 #include "tao/Request_Dispatcher.h"
 #include "tao/Codeset_Manager.h"
 #include "tao/SystemException.h"
+#include "ace/Min_Max.h"
 
 /*
  * Hook to add additional include files during specializations.

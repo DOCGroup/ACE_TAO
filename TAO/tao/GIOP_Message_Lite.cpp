@@ -12,6 +12,7 @@
 #include "tao/Transport_Mux_Strategy.h"
 #include "tao/Codeset_Manager.h"
 #include "tao/SystemException.h"
+#include "ace/Min_Max.h"
 
 ACE_RCSID (tao,
            GIOP_Message_Lite,

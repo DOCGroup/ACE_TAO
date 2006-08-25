@@ -1,3 +1,13 @@
+Fri Aug 25 15:02:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORB_Core.cpp:
+          Use true/false for opt_for_collocation and use_global_collocation
+
+        * tao/GIOP_Message_Lite.cpp:
+        * tao/GIOP_Message_Base.cpp:
+          Add include of ace/Min_Max.h to resolve compile errors with VxWorks
+          6.3 and the diab 5.4.0 compiler
+
 Thu Aug 24 13:37:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/HTIOP/HTIOP_Factory.{h,cpp}:

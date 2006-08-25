@@ -231,8 +231,8 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     resource_factory_ (0),
     client_factory_ (0),
     server_factory_ (0),
-    opt_for_collocation_ (1),
-    use_global_collocation_ (1),
+    opt_for_collocation_ (true),
+    use_global_collocation_ (true),
     collocation_strategy_ (THRU_POA),
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
@@ -639,18 +639,18 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
           const ACE_TCHAR *opt = current_arg;
           if (ACE_OS::strcasecmp (opt, ACE_TEXT("global")) == 0)
             {
-              this->opt_for_collocation_ = 1;
-              this->use_global_collocation_ = 1;
+              this->opt_for_collocation_ = true;
+              this->use_global_collocation_ = true;
             }
           else if (ACE_OS::strcasecmp (opt, ACE_TEXT("NO")) == 0)
             {
-              this->opt_for_collocation_ = 0;
-              this->use_global_collocation_ = 0;
+              this->opt_for_collocation_ = false;
+              this->use_global_collocation_ = false;
             }
           else if (ACE_OS::strcasecmp (opt, ACE_TEXT("per-orb")) == 0)
             {
-              this->opt_for_collocation_ = 1;
-              this->use_global_collocation_ = 0;
+              this->opt_for_collocation_ = true;
+              this->use_global_collocation_ = false;
             }
           else
             {
