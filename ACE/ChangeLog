@@ -1,3 +1,13 @@
+Fri Aug 25 22:01:38 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/Sock_Connect.cpp (get_ip_interfaces, count_interfaces):
+          Corrected to extract IPv6 information correctly from ioctl()-
+          returned structures.
+
+        * tests/Enum_Interfaces_Test.cpp: On error condition ACE_HAS_IPV6 but
+          no ipv6 interfaces, do the log as LM_ERROR so the scoreboard picks
+          it up.
+
 Fri Aug 24 12:55:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-vxworks6.3.h:
