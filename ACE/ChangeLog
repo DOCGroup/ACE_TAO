@@ -1,3 +1,9 @@
+Fri Aug 25 07:57:53 UTC 2006  Sumant Tambe  <sutambe@nospam>
+
+        Added files from ARMS CVS repo for RACE.
+        * bin/MakeProjectCreator/config/ciao_race_component.mpb:
+        * bin/MakeProjectCreator/config/ciaocidldefaults.mpb:
+
 Fri Aug 18 20:38:35 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * examples/APG/Logging/Trace.h: Further changed use of __VA_ARGS__
