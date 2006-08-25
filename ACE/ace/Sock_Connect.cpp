@@ -376,11 +376,7 @@ ACE::get_bcast_addr (ACE_UINT32 &bcast_addr,
 
   // Get interface structure and initialize the addresses using UNIX
   // techniques
-#if defined (AIX)
-  int cmd = CSIOCGIFCONF;
-#else
   int cmd = SIOCGIFCONF;
-#endif /* AIX */
   if (ACE_OS::ioctl (s, cmd, (char *) &ifc) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_LIB_TEXT ("%p\n"),
@@ -1148,11 +1144,7 @@ ACE::get_ip_interfaces (size_t &count,
   ifcfg.ifc_req = p_ifs.get ();
   ifcfg.ifc_len = num_ifs * sizeof (struct ifreq);
 
-#if 0 /*defined (AIX)*/
-  int cmd = CSIOCGIFCONF;
-#else
   int cmd = SIOCGIFCONF;
-#endif /* AIX */
   if (ACE_OS::ioctl (handle,
                      cmd,
                      (caddr_t) &ifcfg) == -1)
@@ -1199,12 +1191,17 @@ ACE::get_ip_interfaces (size_t &count,
           // Sometimes the kernel returns 0.0.0.0 as an IPv4 interface
           // address; skip those...
           if (addr->sin_addr.s_addr != 0
-#if defined (ACE_HAS_IPV6)
+#  if defined (ACE_HAS_IPV6)
               || addr->sin_family == AF_INET6
-#endif
+#  endif
               )
             {
-              addrs[count].set (addr, addr->sin_len);
+	      int addrlen = static_cast<int> (sizeof (struct sockaddr_in));
+#  if defined (ACE_HAS_IPV6)
+              if (addr->sin_family == AF_INET6)
+                addrlen = static_cast<int> (sizeof (struct sockaddr_in6));
+#  endif
+              addrs[count].set (addr, addrlen);
               count++;
             }
 #else /* ! _UNICOS */
@@ -1409,11 +1406,7 @@ ACE::count_interfaces (ACE_HANDLE handle, size_t &how_many)
   ifcfg.ifc_req = p_ifs;
   ifcfg.ifc_len = ifreq_size;
 
-#if 0 /*defined (AIX) */
-  int cmd = CSIOCGIFCONF;
-#else
   int cmd = SIOCGIFCONF;
-#endif /* AIX */
   if (ACE_OS::ioctl (handle,
                      cmd,
                      (caddr_t) &ifcfg) == -1)
