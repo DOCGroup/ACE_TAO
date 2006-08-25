@@ -1,3 +1,10 @@
+Fri Aug 25 21:53:55 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/tao_idl.cpp:
+
+          Added an output message with the name of the IDL file
+          being processed.
+
 Fri Aug 25 15:02:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ORB_Core.cpp:

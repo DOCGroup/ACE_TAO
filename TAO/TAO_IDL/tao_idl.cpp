@@ -218,6 +218,10 @@ DRV_drive (const char *s)
   // and checked below.
   (void) FE_yyparse ();
 
+  // Filename set by FE_yyparse(), so we output it immediately after.
+  ACE_DEBUG ((LM_DEBUG, "processing %s\n",
+              idl_global->filename ()->get_string ()));
+
   // We must do this as late as possible to make sure any
   // forward declared structs or unions contained in a
   // primary key at some level have been fully defined.
