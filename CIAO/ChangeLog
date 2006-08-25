@@ -1,3 +1,9 @@
+Fri Aug 25 08:00:56 UTC 2006  Sumant Tambe  <sutambe@nospam>
+
+        Copied from ARMS CVS.
+        * DAnCE/TargetManager/DomainEvents.idl:
+        * DAnCE/TargetManager/TargetManager.mpc:
+
 Fri Aug 25 04:48:14 UTC 2006  Sumant Tambe  <sutambe@nospam>
 
         Renamed DRM_RACE to RACE.
