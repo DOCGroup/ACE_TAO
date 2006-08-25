@@ -1,6 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project: taoexe, ifr_client, minimum_corba {
-  exename  = IFR_Test
-}
