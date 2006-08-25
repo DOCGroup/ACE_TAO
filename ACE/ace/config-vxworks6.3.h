@@ -37,8 +37,7 @@
 # endif /* (__GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 3)) */
 
 #elif defined (__DCC__)
-
-// To be added
+# define ACE_HAS_STANDARD_CPP_LIBRARY 1
 
 #else  /* ! __GNUG__ && ! ghs && !__DCC__ */
 #  ifdef __cplusplus  /* Let it slide for C compilers. */

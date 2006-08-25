@@ -1,3 +1,10 @@
+Fri Aug 24 12:55:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-vxworks6.3.h:
+        * ace/Process.cpp:
+        * ace/Task.cpp:
+          Fixes for building on vxworks 6.3 with diab 5.4 compiler
+
 Fri Aug 24 11:17:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/CDR_Size.cpp:
