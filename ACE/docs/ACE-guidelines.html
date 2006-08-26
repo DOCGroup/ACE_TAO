@@ -153,13 +153,13 @@ bgcolor="#ffffff">
         should consist of complete sentences, <em>i.e.</em>, start
         with a capital letter and end with a period.<p>
 
-    <li>Insert a CVS/RCS keyword string at the top of every source file,
+    <li>Insert a svn keyword string at the top of every source file,
         Makefile, config file, <em>etc</em>.  For C++ files, it is:
         <pre>
         // $<!-- -->Id$
         </pre>
         It is not necessary to fill in the fields of the keyword string,
-        or modify them when you edit a file that already has one.  CVS
+        or modify them when you edit a file that already has one. SVN
         does that automatically when you checkout or update the file.<p>
 
         To insert that string at the top of a file:
@@ -1225,11 +1225,10 @@ ChangeLogTag: Thu Jul 22 09:55:10 UTC 1999  David L. Levine
 
 
 <hr>
-<h3><a href="http://www.cs.wustl.edu/~levine/CVS.html">CVS</a>
-  Usage Guidelines</h3>
+<h3>SVN Usage Guidelines</h3>
 <ul>
   <li>Always make sure that a change builds and executes correctly
-    on at least one platform before checking it into the CVS repository.
+    on at least one platform before checking it into the SVN repository.
     All changes <strong>must</strong> be tested with g++ before commiting.
     That means you may need to test on at least two platforms.<p>
 </ul>
