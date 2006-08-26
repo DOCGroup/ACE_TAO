@@ -61,7 +61,7 @@
 [miscellany]
 ### Set global-ignores to a set of whitespace-delimited globs
 ### which Subversion will ignore in its status output.
-global-ignores = *.o *.lo *.la #*# .*.rej *.rej .*~ *~ .#* .DS_Store *.class *.dll *.exp *.ilk *.lib *.ncb *.opt *.pdb *.plg *.bsc *.ini *.res *C.i *C.inl *S.i *S.inl *C.h *S.h *C.cpp *S.cpp *C.hh *S.hh *S_T.i *S_T.inl *S_T.h *S_T.cpp .obj .pure .shobj LIB DLL Debug Release Static_Debug Static_Release config.h Templates.DB Thumbs.db ir.out *.aux *.lof *.lot *.log *.dvi *.blg *.bbl *.ior *Cli.* *Ser.* *Ser_T.* *.pch *.idb *.vcl *.vcb *.vcl *.vco *.SUP .depend.* GNUmake* *.so* obj *.exe *_svnt.*
+global-ignores = *.o *.lo *.la #*# .*.rej *.rej .*~ *~ .#* .DS_Store *.class *C.i *C.inl *S.i *S.inl *C.h *S.h *C.cpp *S.cpp *C.hh *S.hh *S_T.i *S_T.inl *S_T.h *S_T.cpp .obj .pure .shobj config.h Templates.DB Thumbs.db ir.out *.aux *.lof *.lot *.log *.dvi *.blg *.bbl *.ior *Cli.* *Ser.* *Ser_T.* *.vcl *.vcb *.vcl *.vco *.SUP .depend.* GNUmake* [Mm]akefile *.mak *.a *.so* *.idb *.obj *.exe *_svnt.* *.user *.vcproj *.dsw *.dsp *.sln *.suo *.dep *.tlb *.pch *.ocx *.dll *.exp *.ilk *.lib *.ncb *.opt *.pdb *.plg *.bsc *.res LIB DLL Debug Release Static_Debug Static_Release
 ### Set log-encoding to the default encoding for log messages
 # log-encoding = latin1
 ### Set use-commit-times to make checkout/update/switch/revert
@@ -81,8 +81,18 @@ enable-auto-props = yes
 ### is typically done by setting the enable-auto-props option.
 [auto-props]
 *.cpp=svn:eol-style=native;svn:keywords=Author Date Id Revision
+*.cxx=svn:eol-style=native;svn:keywords=Author Date Id Revision
+*.cc=svn:eol-style=native;svn:keywords=Author Date Id Revision
+*.C=svn:eol-style=native;svn:keywords=Author Date Id Revision
+*.c=svn:eol-style=native;svn:keywords=Author Date Id Revision
+*.l=svn:eol-style=native;svn:keywords=Author Date Id Revision
+*.y=svn:eol-style=native;svn:keywords=Author Date Id Revision
 *.h=svn:eol-style=native;svn:keywords=Author Date Id Revision
+*.hpp=svn:eol-style=native;svn:keywords=Author Date Id Revision
 *.inl=svn:eol-style=native;svn:keywords=Author Date Id Revision
+*.i=svn:eol-style=native;svn:keywords=Author Date Id Revision
+*.cs=svn:eol-style=native;svn:keywords=Author Date Id Revision
+*.java=svn:eol-style=native;svn:keywords=Author Date Id Revision
 *.idl=svn:eol-style=native;svn:keywords=Author Date Id Revision
 *.pidl=svn:eol-style=native;svn:keywords=Author Date Id Revision
 *.html=svn:eol-style=native;svn:keywords=Author Date Id Revision
@@ -92,15 +102,18 @@ enable-auto-props = yes
 *.mpc=svn:eol-style=native;svn:keywords=Author Date Id Revision
 *.mpb=svn:eol-style=native;svn:keywords=Author Date Id Revision
 *.mpt=svn:eol-style=native;svn:keywords=Author Date Id Revision
-*.hpp=svn:eol-style=native;svn:keywords=Author Date Id Revision
 *.cdp=svn:eol-style=native;svn:keywords=Author Date Id Revision
 *.xsd=svn:eol-style=native;svn:keywords=Author Date Id Revision
 *.txt=svn:eol-style=native;svn:keywords=Author Date Id Revision
-Change?og*=svn:eol-style=native;svn:keywords=Author Date Id Revision
 *.am=svn:eol-style=native;svn:keywords=Author Date Id Revision
 *.ac=svn:eol-style=native;svn:keywords=Author Date Id Revision
 *.lst=svn:eol-style=native;svn:keywords=Author Date Id Revision
 *.pm=svn:eol-style=native;svn:keywords=Author Date Id Revision
-*.tex=svn:eol-style=native;svn:keywords=Author Date Id Revision
+*.sty=svn:eol-style=native;svn:keywords=Author Date Id Revision
 *.cls=svn:eol-style=native;svn:keywords=Author Date Id Revision
-
+*.tex=svn:eol-style=native;svn:keywords=Author Date Id Revision
+*.bib=svn:eol-style=native;svn:keywords=Author Date Id Revision
+*.eps=svn:eol-style=native;svn:keywords=Author Date Id Revision
+*.ps=svn:eol-style=native;svn:keywords=Author Date Id Revision
+*.tab=svn:eol-style=native;svn:keywords=Author Date Id Revision
+Change?og*=svn:eol-style=native;svn:keywords=Author Date Id Revision
