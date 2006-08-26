@@ -1,3 +1,9 @@
+Sat Aug 26 17:40:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/ACE-porting.html:
+          ACE_VXWORKS is the define for VxWorks, exceptions are required
+          for TAO.
+
 Sat Aug 26 17:36:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/ACE-guidelines.html:
