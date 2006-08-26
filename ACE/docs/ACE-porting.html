@@ -91,7 +91,7 @@ thread APIs: <P>
 <LI> <B>Win32 Threads</B> (<CODE>ACE_HAS_WTHREADS</CODE>) - Windows
     NT, Windows '95/98, and Windows CE <P>
 
-<LI> <B>VxWorks Tasks</B> (<CODE>VXWORKS</CODE>) - VxWorks <P>
+<LI> <B>VxWorks Tasks</B> (<CODE>ACE_VXWORKS</CODE>) - VxWorks <P>
 </UL>
 
 If your OS platform does not support any of these threading packages,
@@ -167,8 +167,8 @@ take advantage of if a compiler supports them:
     exceptions.  However, you can use exceptions in code
     that uses ACE including throwing exceptions inside call back
     methods, as long as you provide the code to handle it.
-    TAO can be configured to use C++ exceptions if ACE supports them,
-    <EM>i.e.</EM>, if <CODE>ACE_HAS_EXCEPTIONS</CODE> is defined. <P>
+    TAO requires the use of C++ exceptions,
+    <CODE>ACE_HAS_EXCEPTIONS</CODE> must be defined. <P>
 
 <LI> <B>STL</B> -- Unfortunately many of the platforms that ACE
         supports don't have an STL library.  Moreover, different versions
