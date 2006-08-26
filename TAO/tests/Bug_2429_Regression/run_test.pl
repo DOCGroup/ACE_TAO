@@ -14,10 +14,14 @@ $server_ior_file = PerlACE::LocalFile ("server.ior");
 unlink $server_ior_file;
 
 # The client and server processes
-$SERVER     = new PerlACE::Process(PerlACE::LocalFile("server"));
-$CLIENT     = new PerlACE::Process(PerlACE::LocalFile("client"));
+if (PerlACE::is_vxworks_test()) {
+    $SERVER = new PerlACE::ProcessVX ("server", "-o server.ior");
+}
+else {
+    $SERVER = new PerlACE::Process ("server", "-o $server_ior_file");
+}
 
-$SERVER->Arguments("-o $server_ior_file");
+$CLIENT     = new PerlACE::Process(PerlACE::LocalFile("client"));
 
 # Fire up the server
 $SERVER->Spawn();
