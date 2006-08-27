@@ -9,7 +9,9 @@ use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 
 $iorfile = PerlACE::LocalFile ("test.ior");
+$simple_testfile = PerlACE::LocalFile ("simple_test.ior");
 unlink $iorfile;
+unlink $simple_testfile;
 $status = 0;
 
 $SV = new PerlACE::Process ("Collocated_Test");
@@ -73,5 +75,6 @@ if ($sv != 0) {
     $status = 1;
 }
 unlink $iorfile;
+unlink $simple_testfile;
 
 exit $status;
