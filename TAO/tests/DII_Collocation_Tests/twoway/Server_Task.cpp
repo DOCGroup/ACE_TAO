@@ -50,7 +50,7 @@ Server_Task::svc (void)
        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
      ACE_TRY_CHECK;
 
-     Hello *hello_impl;
+     Hello *hello_impl = 0;
      ACE_NEW_RETURN (hello_impl,
                      Hello (this->sorb_.in (),
                             ACE_Thread::self ()),
@@ -79,7 +79,7 @@ Server_Task::svc (void)
      ACE_OS::fprintf (output_file, "%s", ior.in ());
      ACE_OS::fclose (output_file);
 
-     Test_Simple_Test_i *simple_impl;
+     Test_Simple_Test_i *simple_impl = 0;
      ACE_NEW_RETURN (simple_impl,
                      Test_Simple_Test_i (),
                      1);
@@ -97,7 +97,7 @@ Server_Task::svc (void)
 
      // Output the IOR to the <this->output_>
      FILE *simple_test_output_file= ACE_OS::fopen (this->simple_test_output_,
-                                       "w");
+                                                   "w");
      if (simple_test_output_file == 0)
        ACE_ERROR_RETURN ((LM_ERROR,
                           "Cannot open output file for writing Simple_Test IOR: %s",
@@ -142,7 +142,7 @@ Server_Task::svc (void)
  return 0;
 }
 
-CORBA::ULong 
+CORBA::ULong
 Server_Task::error_count () const
 {
   return error_count_;
