@@ -1,9 +1,14 @@
+Sun Aug 27 11:11:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Added twoway DII collocation test
+
 Sun Aug 27 00:03:07 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
-        * ace/Filecache.cpp (ACE_Filecache_Object): Added a call to 
-        
+        * ace/Filecache.cpp (ACE_Filecache_Object): Added a call to
+
           this->lock_.release ();
-          
+
           to release the lock and so the same file can be fetched again.
           Thanks to Liu Qian <qianliu dot gmail at com> for reporting
           this.
