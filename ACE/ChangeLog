@@ -1,3 +1,13 @@
+Sun Aug 27 00:03:07 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/Filecache.cpp (ACE_Filecache_Object): Added a call to 
+        
+          this->lock_.release ();
+          
+          to release the lock and so the same file can be fetched again.
+          Thanks to Liu Qian <qianliu dot gmail at com> for reporting
+          this.
+
 Sat Aug 26 17:40:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/ACE-porting.html:
