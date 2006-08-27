@@ -1,3 +1,14 @@
+Sun Aug 27 11:10:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/DII_Collocation_Tests/twoway/DII_Collocation_Tests.mpc:
+          New file to build this test
+
+        * tests/DII_Collocation_Tests/twoway/run_test.pl:
+          Also cleanup the simple test ior file
+
+        * tests/DII_Collocation_Tests/twoway/Server_Task.cpp:
+          Layout changes and initialiser pointer to 0
+
 Sat Aug 26 11:44:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_2429_Regression/run_test.pl:
