@@ -273,7 +273,7 @@ ACE_Filecache::remove_i (const ACE_TCHAR *filename)
     {
       handle->stale_ = 1;
 
-      // Try a lock.  If it succeds, we can delete it now.
+      // Try a lock.  If it succeeds, we can delete it now.
       // Otherwise, it will clean itself up later.
       if (handle->lock_.tryacquire_write () == 0)
         {
@@ -618,6 +618,8 @@ ACE_Filecache_Object::~ACE_Filecache_Object (void)
       ACE_OS::close (this->handle_);
       this->handle_ = ACE_INVALID_HANDLE;
     }
+
+  this->lock_.release ();	
 }
 
 int
