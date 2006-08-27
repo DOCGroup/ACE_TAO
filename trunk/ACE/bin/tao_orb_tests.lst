@@ -259,3 +259,4 @@ TAO/tests/CSD_Strategy_Tests/TP_Test_Static/run_test.pl: !ST !VxWorks
 TAO/tests/Permanent_Forward/run_test.pl:
 TAO/tests/Parallel_Connect_Strategy/run_test.pl:
 TAO/tests/DII_Collocation_Tests/oneway/run_test.pl: !ST !MINIMUM
+TAO/tests/DII_Collocation_Tests/twoway/run_test.pl: !ST !MINIMUM
