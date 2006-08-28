@@ -1,3 +1,17 @@
+Mon Aug 28 14:30:11 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * orbsvcs/tests/Security/BiDirectional/run_test.pl:
+
+          Updated the test to run in SSL mode by default.
+
+        * orbsvcs/tests/Security/BiDirectional/ssl/ca.pem:
+        * orbsvcs/tests/Security/BiDirectional/ssl/client-cert.pem:
+        * orbsvcs/tests/Security/BiDirectional/ssl/client-key.pem:
+        * orbsvcs/tests/Security/BiDirectional/ssl/server-cert.pem:
+        * orbsvcs/tests/Security/BiDirectional/ssl/server-key.pem:
+
+          Updated expired certificates.
+
 Mon Aug 28 12:05:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/DII_Collocation_Tests/twoway/Hello.cpp:
