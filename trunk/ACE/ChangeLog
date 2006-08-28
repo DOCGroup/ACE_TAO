@@ -1,3 +1,12 @@
+Mon Aug 28 23:59:50 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        From Amnon Berger <AmnonAB at gmail dot com>
+        * ace/SSL/SSL_Context.h (ACE_SSL_Context):
+        * ace/SSL/SSL_Context.cpp (certificate):
+
+          Added support for reading an X.509 certificate from memory
+          instead of a file.
+
 Mon Aug 28 19:33:50 UTC 2006  Sumant Tambe  <sutambe@nospam>
 
         A quick perl script to create a change-log-entry date and time.

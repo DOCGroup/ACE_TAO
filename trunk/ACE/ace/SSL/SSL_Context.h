@@ -150,6 +150,8 @@ public:
   int certificate (const char *file_name,
                    int type = SSL_FILETYPE_PEM);
 
+  /// Load certificate from memory rather than a file.
+  int certificate (X509* cert);
 
   /**
    *  Load the location of the trusted certification authority
