@@ -11,4 +11,4 @@
 # tests in TAO here..
 tests/run_test.pl
 examples/Reactor/WFMO_Reactor/run_test.pl: !Cygwin !VxWorks
-protocols/tests/RMCast/run_test.pl: !ACE_FOR_TAO
+protocols/tests/RMCast/run_test.pl: !ST !NO_MCAST !nsk !LynxOS !ACE_FOR_TAO
