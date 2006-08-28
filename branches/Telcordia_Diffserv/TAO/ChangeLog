@@ -1,3 +1,60 @@
+Mon Aug 28 19:13:09 UTC 2006  Jaiganesh B  <jai.dre.vanderbilt.edu>
+
+        * tao/Connection_Handler.h:
+          tao/ORB_Core.cpp:
+          tao/tao.mpc:
+          tao/Default_Protocols_Hooks.cpp:
+          tao/PortableServer/POA_Cached_Policies.inl:
+          tao/PortableServer/Default_Servant_Dispatcher.cpp:
+          tao/PortableServer/POA_Cached_Policies.h:
+          tao/PortableServer/POA.pidl:
+          tao/PortableServer/Default_Policy_Validator.cpp:
+          tao/PortableServer/POA_Cached_Policies.cpp:
+          tao/PortableServer/Root_POA.cpp:
+          tao/PortableServer/Root_POA.h:
+          tao/Stub.cpp:
+          tao/Profile.cpp:
+          tao/IIOP_Connection_Handler.cpp:
+          tao/orbconf.h:
+          tao/Protocols_Hooks.h:
+          tao/ORB.cpp:
+          tao/RTPortableServer/RT_Servant_Dispatcher.cpp:
+          tao/ORB.h:
+          tao/Stub.h:
+          tao/Default_Protocols_Hooks.h:
+          tao/IOP_IOR.pidl:
+          tao/Connection_Handler.cpp:
+          tao/Strategies/DIOP_Connection_Handler.h:
+          tao/Strategies/DIOP_Connection_Handler.cpp:
+          tao/Strategies/SCIOP_Connection_Handler.h:
+          tao/Strategies/SCIOP_Connection_Handler.cpp:
+          tao/TAO_Network_Priority_Policy.pidl:
+          tao/IIOP_Connection_Handler.h:
+          tao/Remote_Invocation.cpp:
+          tao/RTCORBA/RT_Protocols_Hooks.cpp:
+          tao/RTCORBA/RT_Protocols_Hooks.h:
+          tao/TAO_Network_Priority_Policy.pidl:
+          tao/Client_Network_Priority_Policy.cpp:
+          tao/Client_Network_Priority_Policy.h:
+          tao/Network_Priority_Policy.cpp:
+          tao/Network_Priority_Policy.h:
+        
+          Added support for specifying diffserv codepoints in client-server
+          communications using a new network priority policy.
+        
+          This support is different from the current RT-CORBA support for diffserv
+          network priority, which is tied down to a mapping between the thread
+          priorities and the diffserv codepoints.
+        
+          This support is more similar to the RT-CORBA priority model policy
+          support, where separate policies can be specified on both the client
+          and the server side to specify the request and the return diffserv
+          codepoints to be used for a particular session of communications between
+          the client and the server.
+        
+          Just like the RTCORBA policies, the network priority model policies
+          can be overridden at the ORB, OBJECT and the THREAD levels.
+
 Mon Aug  7 11:41:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/IORManipulation/IOR.pidl:
