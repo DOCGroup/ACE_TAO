@@ -156,11 +156,19 @@ module CIAO
     const CORBA::PolicyType PRIORITY_MODEL_POLICY_TYPE = 40;
     const CORBA::PolicyType THREADPOOL_POLICY_TYPE = 41;
     const CORBA::PolicyType PRIORITY_BANDED_CONNECTION_POLICY_TYPE = 45;
+    const CORBA::PolicyType CLIENT_NETWORK_PRIORITY_TYPE = 86;
+    const CORBA::PolicyType NETWORK_PRIORITY_TYPE = 87;
 
     enum PriorityModel
       {
         CLIENT_PROPAGATED,
         SERVER_DECLARED
+      };
+
+    enum NWPriorityModel
+      {
+        CLIENT_PROPAGATED_NWPRIORITY,
+        SERVER_DECLARED_NWPRIORITY
       };
 
     /**
@@ -170,6 +178,19 @@ module CIAO
     {
       PriorityModel priority_model;
       Priority server_priority;
+    };
+
+    struct NWPriorityModelPolicyDef
+    {
+      NWPriorityModel nw_priority_model;
+      long request_dscp;
+      long reply_dscp;
+    };
+
+    struct CNWPriorityModelPolicyDef
+    {
+      long request_dscp;
+      long reply_dscp;
     };
 
     /**
@@ -196,6 +217,8 @@ module CIAO
     case 40: PriorityModelPolicyDef PriorityModelDef;
     case 41: ThreadpoolPolicyDef    ThreadpoolDef;
     case 45: PriorityBandedConnectionPolicyDef PriorityBandedConnectionDef;
+    case 86: CNWPriorityModelPolicyDef CNWPriorityModelDef;
+    case 87: NWPriorityModelPolicyDef NWPriorityModelDef;
     };
 
     /**

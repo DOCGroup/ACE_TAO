@@ -8,11 +8,17 @@ namespace CIAO
 {
   Servant_Impl_Base::Servant_Impl_Base (Components::CCMHome_ptr home,
                                         Home_Servant_Impl_Base *home_servant,
-                                        Session_Container * c)
+                                        Session_Container * c,
+                                        ::CIAO::REC_POL_MAP &rec_pol_map)
     : home_ (Components::CCMHome::_duplicate (home)),
       home_servant_ (home_servant),
       container_ (c)
   {
+    for (::CIAO::REC_POL_MAP_ITERATOR it = rec_pol_map.begin ();
+         it != rec_pol_map.end (); ++it)
+      {
+        this->rec_pol_map_.bind ((*it).ext_id_, (*it).int_id_);
+      }
   }
 
   Servant_Impl_Base::~Servant_Impl_Base (void)
@@ -439,6 +445,21 @@ namespace CIAO
   }
 
   /// Protected operations.
+
+  CORBA::PolicyList
+  Servant_Impl_Base::get_receptacle_policy (const char *name
+    ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC (( ::CORBA::SystemException))
+  {
+    CORBA::PolicyList policy_list;
+    if (this->rec_pol_map_.find (name, policy_list) != 0)
+      {
+        ACE_DEBUG ((LM_DEBUG, "Unable to find policies "
+                    "for the receptacle %s\n", name));
+        policy_list.length (0);
+      }
+    return policy_list;
+  }
 
   void
   Servant_Impl_Base::add_facet (const char *port_name,

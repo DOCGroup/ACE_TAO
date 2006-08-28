@@ -14,9 +14,10 @@ namespace CIAO
       EXEC * exe,
       Components::CCMHome_ptr home,
       Home_Servant_Impl_Base *home_servant,
-      Session_Container * c
+      Session_Container * c,
+      ::CIAO::REC_POL_MAP &rec_pol_map
     )
-    : Servant_Impl_Base (home, home_servant, c),
+    : Servant_Impl_Base (home, home_servant, c, rec_pol_map),
       activated_ (false),
       pre_activated_ (false),
       post_activated_ (false),

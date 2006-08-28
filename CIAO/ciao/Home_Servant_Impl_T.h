@@ -50,7 +50,8 @@ namespace CIAO
   public:
     Home_Servant_Impl (typename EXEC::_ptr_type exe,
                        Session_Container * c,
-                       const char *ins_name);
+                       const char *ins_name,
+                       ::CIAO::REC_POL_MAP &rec_pol_map);
 
     virtual ~Home_Servant_Impl (void);
 
@@ -106,6 +107,8 @@ namespace CIAO
     typedef OBJREF_MAP::iterator OBJ_ITERATOR;
 
     OBJREF_MAP objref_map_;
+
+    ::CIAO::REC_POL_MAP rec_pol_map_;
   };
 }
 

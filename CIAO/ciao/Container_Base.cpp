@@ -152,6 +152,7 @@ namespace CIAO
                                            PortableServer::POA_ptr root
                                            ACE_ENV_ARG_DECL)
   {
+    ACE_DEBUG ((LM_DEBUG, "creating the component poa\n"));
     CIAO_TRACE ("Session_Container::create_component_POA");
 
     // Set up proper poa policies here.  Default policies seems to be
@@ -170,12 +171,15 @@ namespace CIAO
       root->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
 
+    ACE_DEBUG ((LM_DEBUG, "creating the poa\n"));
+
     this->component_poa_ =
       root->create_POA (name,
                         poa_manager.in (),
                         policies
                         ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
+    ACE_DEBUG ((LM_DEBUG, "created the component poa\n"));
   }
 
   void
@@ -185,6 +189,7 @@ namespace CIAO
                                                 PortableServer::POA_ptr root
                                                 ACE_ENV_ARG_DECL)
   {
+    ACE_DEBUG ((LM_DEBUG, "creating the facet poa\n"));
     CIAO_TRACE ("Session_Container::create_facet_consumer_POA");
 
     PortableServer::POAManager_var poa_manager =
@@ -239,6 +244,7 @@ namespace CIAO
                                                 ACE_ENV_ARG_PARAMETER
                                                 );
     ACE_CHECK;
+    ACE_DEBUG ((LM_DEBUG, "created the facet poa\n"));
   }
 
   CORBA::Object_ptr
@@ -306,7 +312,8 @@ namespace CIAO
                                         const char *exe_entrypt,
                                         const char *sv_dll_name,
                                         const char *sv_entrypt,
-                                        const char *ins_name
+                                        const char *ins_name,
+                                        REC_POL_MAP &rec_pol_map
                                         ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Deployment::UnknownImplId,
@@ -488,7 +495,8 @@ namespace CIAO
 
     PortableServer::Servant home_servant = screator (home_executor.in (),
                                                      this,
-                                                     ins_name
+                                                     ins_name,
+                                                     rec_pol_map
                                                      ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (Components::CCMHome::_nil ());
 

@@ -39,6 +39,15 @@ namespace CIAO
   class Servant_Activator;
   class Dynamic_Component_Servant_Base;
   class Container_Impl;
+  typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
+                                  CORBA::PolicyList,
+                                  ACE_Hash<ACE_CString>,
+                                  ACE_Equal_To<ACE_CString>,
+                                  ACE_Null_Mutex> REC_POL_MAP;
+  typedef ACE_Hash_Map_Iterator<ACE_CString,
+                                CORBA::PolicyList,
+                                ACE_Null_Mutex> REC_POL_MAP_ITERATOR;
+
 
   /**
    * @class Container
@@ -85,7 +94,8 @@ namespace CIAO
         const char *exe_entrypt,
         const char *sv_dll_name,
         const char *sv_entrypt,
-        const char *ins_name
+        const char *ins_name,
+        REC_POL_MAP &rec_pol_map
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((CORBA::SystemException,
@@ -146,7 +156,8 @@ namespace CIAO
   typedef ::PortableServer::Servant (*ServantFactory)
     (::Components::HomeExecutorBase_ptr p,
      ::CIAO::Session_Container *c,
-     const char *ins_name
+     const char *ins_name,
+     REC_POL_MAP &rec_pol_map
 #if !defined (TAO_HAS_EXCEPTIONS) || defined (ACE_ENV_BKWD_COMPAT)
     , CORBA::Environment &
 #endif
@@ -206,7 +217,8 @@ namespace CIAO
         const char *exe_entrypt,
         const char *sv_dll_name,
         const char *sv_entrypt,
-        const char *ins_name
+        const char *ins_name,
+        REC_POL_MAP &rec_pol_map
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((CORBA::SystemException,
