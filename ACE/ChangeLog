@@ -1,3 +1,8 @@
+Mon Aug 28 11:08:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/acexml.doxygen:
+          Ignore ACEXML_ as prefix
+
 Mon Aug 28 10:34:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/run_test.txt:
