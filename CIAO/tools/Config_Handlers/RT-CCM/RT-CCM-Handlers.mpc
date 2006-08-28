@@ -13,6 +13,8 @@ project (RT_CCM_Config_Handlers) : acelib, ciao_deployment_stub, xerces {
   Source_Files {
         CIAOServerResources.cpp
         CLA_Handler.cpp
+        CNPM_Handler.cpp
+        NPM_Handler.cpp
         OC_Handler.cpp
         OR_Handler.cpp
         PM_Handler.cpp
