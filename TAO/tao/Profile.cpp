@@ -159,7 +159,9 @@ TAO_Profile::encode (TAO_OutputCDR &stream) const
 int
 TAO_Profile::decode (TAO_InputCDR& cdr)
 {
+#if !defined (ACE_NLOGGING)
   size_t const encap_len = cdr.length ();
+#endif
 
   // Read and verify major, minor versions, ignoring profiles
   // whose versions we don't understand.
@@ -468,6 +470,7 @@ TAO_Profile::get_policies (CORBA::PolicyList& pl
 
           CORBA::Policy_var policy;
           CORBA::ULong const length = policy_value_seq.length ();
+          CORBA::ULong temp_policy_length = policy_value_seq.length ();
 
           // Set the policy list length.
           pl.length (length);
@@ -505,6 +508,9 @@ TAO_Profile::get_policies (CORBA::PolicyList& pl
                       // so as specified by the RT-CORBA
                       // spec. ptc/99-05-03 we just ignore these
                       // un-understood policies.
+
+                      temp_policy_length = temp_policy_length - 1;
+                      pl.length (temp_policy_length);
 
                       if (TAO_debug_level >= 5)
                         ACE_DEBUG ((LM_DEBUG,

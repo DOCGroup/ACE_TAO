@@ -78,6 +78,7 @@ module PortableServer
   const CORBA::PolicyType IMPLICIT_ACTIVATION_POLICY_ID   = 20;
   const CORBA::PolicyType SERVANT_RETENTION_POLICY_ID     = 21;
   const CORBA::PolicyType REQUEST_PROCESSING_POLICY_ID    = 22;
+  const CORBA::PolicyType NETWORK_PRIORITY_POLICY_ID      = 23;
 #   endif
 
   // Forward declaration POAManager interface.
@@ -151,6 +152,7 @@ module PortableServer
     IdAssignmentPolicy  create_id_assignment_policy (
         in IdAssignmentPolicyValue value
       );
+
 #endif
 #       if ! defined (CORBA_E_COMPACT) && ! defined (CORBA_E_MICRO) && !defined (TAO_HAS_MINIMUM_POA)
     ImplicitActivationPolicy create_implicit_activation_policy (

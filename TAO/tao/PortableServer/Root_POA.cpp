@@ -2795,6 +2795,18 @@ TAO_Root_POA::server_priority (void) const
   return this->cached_policies_.server_priority ();
 }
 
+CORBA::Long
+TAO_Root_POA::request_diffserv_codepoint (void) const
+{
+  return this->cached_policies_.request_diffserv_codepoint ();
+}
+
+CORBA::Long
+TAO_Root_POA::reply_diffserv_codepoint (void) const
+{
+  return this->cached_policies_.reply_diffserv_codepoint ();
+}
+
 int
 TAO_Root_POA::is_servant_active (
   PortableServer::Servant servant,
@@ -2808,6 +2820,51 @@ TAO::Portable_Server::Cached_Policies::PriorityModel
 TAO_Root_POA::priority_model (void) const
 {
   return cached_policies_.priority_model ();
+}
+
+TAO::Portable_Server::Cached_Policies::NetworkPriorityModel
+TAO_Root_POA::network_priority_model (void) const
+{
+  return cached_policies_.network_priority_model ();
+}
+
+CORBA::Long
+TAO_Root_POA::get_diffserv_codepoint (TAO_Service_Context &sc)
+{
+  CORBA::Long dscp_codepoint = 0;
+  const IOP::ServiceContext *context;
+
+  if (this->network_priority_model () ==
+      TAO::Portable_Server::Cached_Policies::CLIENT_PROPAGATED_NETWORK_PRIORITY)
+    {
+      if (sc.get_context (IOP::REP_NWPRIORITY, &context) == 1)
+        {
+          TAO_InputCDR cdr (reinterpret_cast
+                            <const char*>
+                            (context->context_data.get_buffer ()),
+                            context->context_data.length ());
+
+          CORBA::Boolean byte_order;
+          if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
+            {
+              ACE_THROW (CORBA::MARSHAL ());
+            }
+          cdr.reset_byte_order (static_cast<int> (byte_order));
+
+          if ((cdr >> dscp_codepoint) == 0)
+            {
+              ACE_THROW (CORBA::MARSHAL ());
+            }
+        }
+    }
+  else if (this->network_priority_model () ==
+           TAO::Portable_Server::Cached_Policies::
+           SERVER_DECLARED_NETWORK_PRIORITY)
+    {
+      dscp_codepoint = this->reply_diffserv_codepoint ();
+    }
+
+  return dscp_codepoint;
 }
 
 #if (TAO_HAS_MINIMUM_POA == 0)

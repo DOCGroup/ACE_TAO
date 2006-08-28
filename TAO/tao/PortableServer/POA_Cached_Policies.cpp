@@ -9,9 +9,11 @@
 #include "tao/PortableServer/RequestProcessingPolicyC.h"
 #include "tao/PortableServer/ServantRetentionPolicyC.h"
 #include "tao/PortableServer/ThreadPolicyC.h"
+#include "tao/Network_Priority_Policy.h"
+#include "tao/TAO_Network_Priority_PolicyC.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/PortableServer/POA_Cached_Policies.inl"
+# include "tao/PortableServer/POA_Cached_Policies.i"
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID(PortableServer,
@@ -33,7 +35,10 @@ namespace TAO
         servant_retention_ (::PortableServer::RETAIN),
         request_processing_ (::PortableServer::USE_ACTIVE_OBJECT_MAP_ONLY),
         priority_model_ (Cached_Policies::NOT_SPECIFIED),
-        server_priority_ (TAO_INVALID_PRIORITY)
+        server_priority_ (TAO_INVALID_PRIORITY),
+        network_priority_model_ (Cached_Policies::NO_NETWORK_PRIORITY),
+        request_diffserv_codepoint_ (0),
+        reply_diffserv_codepoint_ (0)
     {
     }
 
@@ -86,6 +91,40 @@ namespace TAO
         {
           this->lifespan_ = lifespan->value (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK;
+
+          return;
+        }
+    #endif
+
+    #if !defined (CORBA_E_MICRO)
+      ::TAO::NetworkPriorityPolicy_var npp
+        = ::TAO::NetworkPriorityPolicy::_narrow (policy
+                                                 ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+
+      if (!CORBA::is_nil (npp.in ()))
+        {
+          TAO::NetworkPriorityModel network_priority_model = 
+            npp->network_priority_model (
+               ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_CHECK;
+
+          this->network_priority_model_ =
+            TAO::Portable_Server::Cached_Policies::NetworkPriorityModel (
+              network_priority_model);
+
+          TAO::DiffservCodepoint request_diffserv_codepoint  = 
+            npp->request_diffserv_codepoint (
+              ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_CHECK;
+
+          TAO::DiffservCodepoint reply_diffserv_codepoint  = 
+            npp->reply_diffserv_codepoint (
+              ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_CHECK;
+
+          this->request_diffserv_codepoint_ = request_diffserv_codepoint;
+          this->reply_diffserv_codepoint_ = reply_diffserv_codepoint;
 
           return;
         }

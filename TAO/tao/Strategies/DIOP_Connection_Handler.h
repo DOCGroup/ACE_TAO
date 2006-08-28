@@ -127,6 +127,7 @@ public:
 
   /// Set Diff-Serv codepoint on outgoing packets.
   int set_dscp_codepoint (CORBA::Boolean set_network_priority);
+  int set_dscp_codepoint (CORBA::Long dscp_codepoint);
 
 protected:
 

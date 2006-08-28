@@ -18,6 +18,7 @@
 #include "tao/Policy_Set.h"
 #include "tao/debug.h"
 #include "tao/CDR.h"
+#include "tao/Client_Network_Priority_Policy.h"
 
 #include "ace/Dynamic_Service.h"
 #include "ace/OS_NS_string.h"
@@ -509,6 +510,12 @@ TAO_RT_Protocols_Hooks::set_server_network_priority (IOP::ProfileId protocol_tag
                                      ACE_ENV_ARG_PARAMETER);
 }
 
+void
+TAO_RT_Protocols_Hooks::set_dscp_codepoint (CORBA::Long &dscp_codepoint
+                                            ACE_ENV_ARG_DECL_NOT_USED)
+{
+}
+
 CORBA::Long
 TAO_RT_Protocols_Hooks::get_dscp_codepoint (void)
 {
@@ -561,6 +568,40 @@ TAO_RT_Protocols_Hooks::get_dscp_codepoint (void)
 }
 
 void
+TAO_RT_Protocols_Hooks::np_service_context (
+  TAO_Stub *stub,
+  TAO_Service_Context &service_context,
+  CORBA::Boolean restart
+  ACE_ENV_ARG_DECL_NOT_USED)
+{
+  if (!restart)
+    {
+      CORBA::Policy_var cnpp =
+        stub->get_cached_policy (TAO_CACHED_POLICY_CLIENT_NETWORK_PRIORITY
+                        ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      if (!CORBA::is_nil (cnpp.in ()))
+        {
+          TAO::NetworkPriorityPolicy_var cnp =
+            TAO::NetworkPriorityPolicy::_narrow (cnpp.in ()
+                            ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+
+          TAO::DiffservCodepoint reply_diffserv_codepoint;
+          reply_diffserv_codepoint = cnp->get_reply_diffserv_codepoint ();
+
+          CORBA::Long rep_dscp_codepoint = reply_diffserv_codepoint;
+
+          this->add_rep_np_service_context_hook (service_context,
+                                             rep_dscp_codepoint
+                                             ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK;
+        }
+    }
+}
+
+void
 TAO_RT_Protocols_Hooks::rt_service_context (
     TAO_Stub *stub,
     TAO_Service_Context &service_context,
@@ -605,6 +646,22 @@ TAO_RT_Protocols_Hooks::rt_service_context (
           // We must be talking to a non-RT ORB.  Do nothing.
         }
     }
+}
+
+void
+TAO_RT_Protocols_Hooks::add_rep_np_service_context_hook (
+  TAO_Service_Context &service_context,
+  CORBA::Long &dscp_codepoint
+  ACE_ENV_ARG_DECL_NOT_USED)
+{
+  TAO_OutputCDR cdr;
+  if ((cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER) == 0)
+      || (cdr << dscp_codepoint) == 0)
+    {
+      ACE_THROW (CORBA::MARSHAL ());
+    }
+
+  service_context.set_context (IOP::REP_NWPRIORITY, cdr);
 }
 
 void
@@ -656,7 +713,7 @@ TAO_RT_Protocols_Hooks::get_selector_hook (
   if (priority_model_policy->get_priority_model ()
         == RTCORBA::CLIENT_PROPAGATED)
     {
-      is_client_propagated = true;
+      is_client_propagated = 1;
     }
 
   if (!is_client_propagated)

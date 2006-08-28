@@ -9,6 +9,8 @@
 #include "tao/operation_details.h"
 #include "tao/ORB_Core.h"
 #include "tao/Protocols_Hooks.h"
+#include "tao/Client_Network_Priority_Policy.h"
+#include "tao/Network_Priority_Policy.h"
 #include "tao/debug.h"
 
 ACE_RCSID (tao,
@@ -149,16 +151,77 @@ namespace TAO
     TAO_Protocols_Hooks *tph =
       this->resolver_.stub ()->orb_core ()->get_protocols_hooks ();
 
-    CORBA::Boolean set_client_network_priority =
-      tph->set_client_network_priority (this->resolver_.transport ()->tag (),
-                                        this->resolver_.stub ()
-                                        ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+    CORBA::Policy_var client_nw_priority_policy =
+      this->resolver_.stub ()->get_cached_policy (
+        TAO_CACHED_POLICY_CLIENT_NETWORK_PRIORITY
+        ACE_ENV_ARG_PARAMETER);
+    ACE_TRY_CHECK;
+
+    CORBA::Policy_var server_nw_priority_policy =
+      this->resolver_.object ()->_get_cached_policy (
+        TAO_CACHED_POLICY_NETWORK_PRIORITY
+        ACE_ENV_ARG_PARAMETER);
+    ACE_TRY_CHECK;
 
     TAO_Connection_Handler *connection_handler =
       this->resolver_.transport ()->connection_handler ();
 
-    connection_handler->set_dscp_codepoint (set_client_network_priority);
+    if (CORBA::is_nil (client_nw_priority_policy.in ()))
+      {
+        if (CORBA::is_nil (server_nw_priority_policy.in ()))
+          {
+            CORBA::Boolean set_client_network_priority =
+              tph->set_client_network_priority (
+                this->resolver_.transport ()->tag (),
+                this->resolver_.stub ()
+                ACE_ENV_ARG_PARAMETER);
+            ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+
+            connection_handler->set_dscp_codepoint (
+               set_client_network_priority);
+          }
+        else
+          {
+            TAO::NetworkPriorityPolicy_var npp =
+              TAO::NetworkPriorityPolicy::_narrow (
+                server_nw_priority_policy.in ()
+                ACE_ENV_ARG_PARAMETER);
+            ACE_TRY_CHECK;
+
+            if (!CORBA::is_nil (npp.in ()))
+              {
+                TAO::NetworkPriorityModel network_priority_model =
+                  npp->network_priority_model (ACE_ENV_SINGLE_ARG_PARAMETER);
+                ACE_CHECK;
+
+                if (network_priority_model ==
+                    TAO::SERVER_DECLARED_NETWORK_PRIORITY)
+                  {
+                    TAO::DiffservCodepoint diffserv_codepoint =
+                      npp->request_diffserv_codepoint (
+                         ACE_ENV_SINGLE_ARG_PARAMETER);
+                    ACE_CHECK;
+                    CORBA::Long dscp = diffserv_codepoint;
+                    connection_handler->set_dscp_codepoint (dscp);
+                  }
+              }
+          }
+      }
+    else
+      {
+        TAO::NetworkPriorityPolicy_var client_nw_priority =
+          TAO::NetworkPriorityPolicy::_narrow (client_nw_priority_policy.in ()
+                                               ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+
+        TAO::DiffservCodepoint diffserv_codepoint;
+        diffserv_codepoint = 
+          client_nw_priority->get_request_diffserv_codepoint ();
+
+        CORBA::Long dscp_codepoint;
+        dscp_codepoint = diffserv_codepoint;
+        connection_handler->set_dscp_codepoint (dscp_codepoint);
+      }
 
     int const retval =
       this->resolver_.transport ()->send_request (
