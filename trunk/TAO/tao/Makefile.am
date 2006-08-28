@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ../bin/mwc.pl -type automake -noreldefs TAO.mwc
+## ..\bin\mwc.pl -type automake -noreldefs TAO.mwc
 
 includedir = @includedir@/tao
 pkgconfigdir = @libdir@/pkgconfig
@@ -21,6 +21,647 @@ TAO_ROOT = $(top_srcdir)
 
 
 ## Makefile.TAO.am
+
+BUILT_SOURCES = \
+  AnyTypeCode/GIOPA.cpp \
+  AnyTypeCode/GIOPA.h \
+  GIOPC.cpp \
+  GIOPC.h \
+  GIOPC.inl \
+  GIOPS.h
+
+CLEANFILES = \
+  GIOP-stamp \
+  AnyTypeCode/GIOPA.cpp \
+  AnyTypeCode/GIOPA.h \
+  GIOPC.cpp \
+  GIOPC.h \
+  GIOPC.inl \
+  GIOPS.h
+
+AnyTypeCode/GIOPA.cpp AnyTypeCode/GIOPA.h GIOPC.cpp GIOPC.h GIOPC.inl GIOPS.h: GIOP-stamp
+
+GIOP-stamp: $(srcdir)/GIOP.pidl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -SS -Sorb -GA -Ge 1 -oA AnyTypeCode -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,anyop_export_macro=TAO_AnyTypeCode_Export -Wb,anyop_export_include=tao/AnyTypeCode/TAO_AnyTypeCode_Export.h $(srcdir)/GIOP.pidl
+	@touch "$@"
+
+BUILT_SOURCES += \
+  AnyTypeCode/BooleanSeqA.cpp \
+  AnyTypeCode/BooleanSeqA.h \
+  BooleanSeqC.cpp \
+  BooleanSeqC.h \
+  BooleanSeqS.h
+
+CLEANFILES += \
+  BooleanSeq-stamp \
+  AnyTypeCode/BooleanSeqA.cpp \
+  AnyTypeCode/BooleanSeqA.h \
+  BooleanSeqC.cpp \
+  BooleanSeqC.h \
+  BooleanSeqS.h
+
+AnyTypeCode/BooleanSeqA.cpp AnyTypeCode/BooleanSeqA.h BooleanSeqC.cpp BooleanSeqC.h BooleanSeqS.h: BooleanSeq-stamp
+
+BooleanSeq-stamp: $(srcdir)/BooleanSeq.pidl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Sci -SS -Sorb -GA -Ge 1 -oA AnyTypeCode -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,anyop_export_macro=TAO_AnyTypeCode_Export -Wb,anyop_export_include=tao/AnyTypeCode/TAO_AnyTypeCode_Export.h $(srcdir)/BooleanSeq.pidl
+	@touch "$@"
+
+BUILT_SOURCES += \
+  AnyTypeCode/CharSeqA.cpp \
+  AnyTypeCode/CharSeqA.h \
+  CharSeqC.cpp \
+  CharSeqC.h \
+  CharSeqS.h
+
+CLEANFILES += \
+  CharSeq-stamp \
+  AnyTypeCode/CharSeqA.cpp \
+  AnyTypeCode/CharSeqA.h \
+  CharSeqC.cpp \
+  CharSeqC.h \
+  CharSeqS.h
+
+AnyTypeCode/CharSeqA.cpp AnyTypeCode/CharSeqA.h CharSeqC.cpp CharSeqC.h CharSeqS.h: CharSeq-stamp
+
+CharSeq-stamp: $(srcdir)/CharSeq.pidl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Sci -SS -Sorb -GA -Ge 1 -oA AnyTypeCode -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,anyop_export_macro=TAO_AnyTypeCode_Export -Wb,anyop_export_include=tao/AnyTypeCode/TAO_AnyTypeCode_Export.h $(srcdir)/CharSeq.pidl
+	@touch "$@"
+
+BUILT_SOURCES += \
+  AnyTypeCode/CONV_FRAMEA.cpp \
+  AnyTypeCode/CONV_FRAMEA.h \
+  CONV_FRAMEC.cpp \
+  CONV_FRAMEC.h \
+  CONV_FRAMES.h
+
+CLEANFILES += \
+  CONV_FRAME-stamp \
+  AnyTypeCode/CONV_FRAMEA.cpp \
+  AnyTypeCode/CONV_FRAMEA.h \
+  CONV_FRAMEC.cpp \
+  CONV_FRAMEC.h \
+  CONV_FRAMES.h
+
+AnyTypeCode/CONV_FRAMEA.cpp AnyTypeCode/CONV_FRAMEA.h CONV_FRAMEC.cpp CONV_FRAMEC.h CONV_FRAMES.h: CONV_FRAME-stamp
+
+CONV_FRAME-stamp: $(srcdir)/CONV_FRAME.pidl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Sci -SS -Sorb -GA -Ge 1 -oA AnyTypeCode -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,anyop_export_macro=TAO_AnyTypeCode_Export -Wb,anyop_export_include=tao/AnyTypeCode/TAO_AnyTypeCode_Export.h $(srcdir)/CONV_FRAME.pidl
+	@touch "$@"
+
+BUILT_SOURCES += \
+  AnyTypeCode/CurrentA.cpp \
+  AnyTypeCode/CurrentA.h \
+  CurrentC.cpp \
+  CurrentC.h \
+  CurrentS.h
+
+CLEANFILES += \
+  Current-stamp \
+  AnyTypeCode/CurrentA.cpp \
+  AnyTypeCode/CurrentA.h \
+  CurrentC.cpp \
+  CurrentC.h \
+  CurrentS.h
+
+AnyTypeCode/CurrentA.cpp AnyTypeCode/CurrentA.h CurrentC.cpp CurrentC.h CurrentS.h: Current-stamp
+
+Current-stamp: $(srcdir)/Current.pidl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Sci -SS -Sorb -GA -Ge 1 -oA AnyTypeCode -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,anyop_export_macro=TAO_AnyTypeCode_Export -Wb,anyop_export_include=tao/AnyTypeCode/TAO_AnyTypeCode_Export.h $(srcdir)/Current.pidl
+	@touch "$@"
+
+BUILT_SOURCES += \
+  AnyTypeCode/DoubleSeqA.cpp \
+  AnyTypeCode/DoubleSeqA.h \
+  DoubleSeqC.cpp \
+  DoubleSeqC.h \
+  DoubleSeqS.h
+
+CLEANFILES += \
+  DoubleSeq-stamp \
+  AnyTypeCode/DoubleSeqA.cpp \
+  AnyTypeCode/DoubleSeqA.h \
+  DoubleSeqC.cpp \
+  DoubleSeqC.h \
+  DoubleSeqS.h
+
+AnyTypeCode/DoubleSeqA.cpp AnyTypeCode/DoubleSeqA.h DoubleSeqC.cpp DoubleSeqC.h DoubleSeqS.h: DoubleSeq-stamp
+
+DoubleSeq-stamp: $(srcdir)/DoubleSeq.pidl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Sci -SS -Sorb -GA -Ge 1 -oA AnyTypeCode -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,anyop_export_macro=TAO_AnyTypeCode_Export -Wb,anyop_export_include=tao/AnyTypeCode/TAO_AnyTypeCode_Export.h $(srcdir)/DoubleSeq.pidl
+	@touch "$@"
+
+BUILT_SOURCES += \
+  AnyTypeCode/FloatSeqA.cpp \
+  AnyTypeCode/FloatSeqA.h \
+  FloatSeqC.cpp \
+  FloatSeqC.h \
+  FloatSeqS.h
+
+CLEANFILES += \
+  FloatSeq-stamp \
+  AnyTypeCode/FloatSeqA.cpp \
+  AnyTypeCode/FloatSeqA.h \
+  FloatSeqC.cpp \
+  FloatSeqC.h \
+  FloatSeqS.h
+
+AnyTypeCode/FloatSeqA.cpp AnyTypeCode/FloatSeqA.h FloatSeqC.cpp FloatSeqC.h FloatSeqS.h: FloatSeq-stamp
+
+FloatSeq-stamp: $(srcdir)/FloatSeq.pidl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Sci -SS -Sorb -GA -Ge 1 -oA AnyTypeCode -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,anyop_export_macro=TAO_AnyTypeCode_Export -Wb,anyop_export_include=tao/AnyTypeCode/TAO_AnyTypeCode_Export.h $(srcdir)/FloatSeq.pidl
+	@touch "$@"
+
+BUILT_SOURCES += \
+  AnyTypeCode/IIOPA.cpp \
+  AnyTypeCode/IIOPA.h \
+  IIOPC.cpp \
+  IIOPC.h
+
+CLEANFILES += \
+  IIOP-stamp \
+  AnyTypeCode/IIOPA.cpp \
+  AnyTypeCode/IIOPA.h \
+  IIOPC.cpp \
+  IIOPC.h
+
+AnyTypeCode/IIOPA.cpp AnyTypeCode/IIOPA.h IIOPC.cpp IIOPC.h: IIOP-stamp
+
+IIOP-stamp: $(srcdir)/IIOP.pidl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Sci -SS -Sorb -GA -Ge 1 -oA AnyTypeCode -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,anyop_export_macro=TAO_AnyTypeCode_Export -Wb,anyop_export_include=tao/AnyTypeCode/TAO_AnyTypeCode_Export.h $(srcdir)/IIOP.pidl
+	@touch "$@"
+
+BUILT_SOURCES += \
+  AnyTypeCode/IIOP_EndpointsA.cpp \
+  AnyTypeCode/IIOP_EndpointsA.h \
+  IIOP_EndpointsC.cpp \
+  IIOP_EndpointsC.h \
+  IIOP_EndpointsS.h
+
+CLEANFILES += \
+  IIOP_Endpoints-stamp \
+  AnyTypeCode/IIOP_EndpointsA.cpp \
+  AnyTypeCode/IIOP_EndpointsA.h \
+  IIOP_EndpointsC.cpp \
+  IIOP_EndpointsC.h \
+  IIOP_EndpointsS.h
+
+AnyTypeCode/IIOP_EndpointsA.cpp AnyTypeCode/IIOP_EndpointsA.h IIOP_EndpointsC.cpp IIOP_EndpointsC.h IIOP_EndpointsS.h: IIOP_Endpoints-stamp
+
+IIOP_Endpoints-stamp: $(srcdir)/IIOP_Endpoints.pidl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Sci -SS -Sorb -GA -Ge 1 -oA AnyTypeCode -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,anyop_export_macro=TAO_AnyTypeCode_Export -Wb,anyop_export_include=tao/AnyTypeCode/TAO_AnyTypeCode_Export.h $(srcdir)/IIOP_Endpoints.pidl
+	@touch "$@"
+
+BUILT_SOURCES += \
+  AnyTypeCode/IOPA.cpp \
+  AnyTypeCode/IOPA.h \
+  IOPC.cpp \
+  IOPC.h \
+  IOPS.h
+
+CLEANFILES += \
+  IOP-stamp \
+  AnyTypeCode/IOPA.cpp \
+  AnyTypeCode/IOPA.h \
+  IOPC.cpp \
+  IOPC.h \
+  IOPS.h
+
+AnyTypeCode/IOPA.cpp AnyTypeCode/IOPA.h IOPC.cpp IOPC.h IOPS.h: IOP-stamp
+
+IOP-stamp: $(srcdir)/IOP.pidl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Sci -SS -Sorb -GA -Ge 1 -oA AnyTypeCode -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,anyop_export_macro=TAO_AnyTypeCode_Export -Wb,anyop_export_include=tao/AnyTypeCode/TAO_AnyTypeCode_Export.h $(srcdir)/IOP.pidl
+	@touch "$@"
+
+BUILT_SOURCES += \
+  AnyTypeCode/IOP_IORA.cpp \
+  AnyTypeCode/IOP_IORA.h \
+  IOP_IORC.cpp \
+  IOP_IORC.h
+
+CLEANFILES += \
+  IOP_IOR-stamp \
+  AnyTypeCode/IOP_IORA.cpp \
+  AnyTypeCode/IOP_IORA.h \
+  IOP_IORC.cpp \
+  IOP_IORC.h
+
+AnyTypeCode/IOP_IORA.cpp AnyTypeCode/IOP_IORA.h IOP_IORC.cpp IOP_IORC.h: IOP_IOR-stamp
+
+IOP_IOR-stamp: $(srcdir)/IOP_IOR.pidl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Sci -SS -Sorb -GA -Ge 1 -oA AnyTypeCode -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,anyop_export_macro=TAO_AnyTypeCode_Export -Wb,anyop_export_include=tao/AnyTypeCode/TAO_AnyTypeCode_Export.h $(srcdir)/IOP_IOR.pidl
+	@touch "$@"
+
+BUILT_SOURCES += \
+  AnyTypeCode/LongDoubleSeqA.cpp \
+  AnyTypeCode/LongDoubleSeqA.h \
+  LongDoubleSeqC.cpp \
+  LongDoubleSeqC.h \
+  LongDoubleSeqS.h
+
+CLEANFILES += \
+  LongDoubleSeq-stamp \
+  AnyTypeCode/LongDoubleSeqA.cpp \
+  AnyTypeCode/LongDoubleSeqA.h \
+  LongDoubleSeqC.cpp \
+  LongDoubleSeqC.h \
+  LongDoubleSeqS.h
+
+AnyTypeCode/LongDoubleSeqA.cpp AnyTypeCode/LongDoubleSeqA.h LongDoubleSeqC.cpp LongDoubleSeqC.h LongDoubleSeqS.h: LongDoubleSeq-stamp
+
+LongDoubleSeq-stamp: $(srcdir)/LongDoubleSeq.pidl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Sci -SS -Sorb -GA -Ge 1 -oA AnyTypeCode -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,anyop_export_macro=TAO_AnyTypeCode_Export -Wb,anyop_export_include=tao/AnyTypeCode/TAO_AnyTypeCode_Export.h $(srcdir)/LongDoubleSeq.pidl
+	@touch "$@"
+
+BUILT_SOURCES += \
+  AnyTypeCode/LongLongSeqA.cpp \
+  AnyTypeCode/LongLongSeqA.h \
+  LongLongSeqC.cpp \
+  LongLongSeqC.h \
+  LongLongSeqS.h
+
+CLEANFILES += \
+  LongLongSeq-stamp \
+  AnyTypeCode/LongLongSeqA.cpp \
+  AnyTypeCode/LongLongSeqA.h \
+  LongLongSeqC.cpp \
+  LongLongSeqC.h \
+  LongLongSeqS.h
+
+AnyTypeCode/LongLongSeqA.cpp AnyTypeCode/LongLongSeqA.h LongLongSeqC.cpp LongLongSeqC.h LongLongSeqS.h: LongLongSeq-stamp
+
+LongLongSeq-stamp: $(srcdir)/LongLongSeq.pidl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Sci -SS -Sorb -GA -Ge 1 -oA AnyTypeCode -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,anyop_export_macro=TAO_AnyTypeCode_Export -Wb,anyop_export_include=tao/AnyTypeCode/TAO_AnyTypeCode_Export.h $(srcdir)/LongLongSeq.pidl
+	@touch "$@"
+
+BUILT_SOURCES += \
+  AnyTypeCode/LongSeqA.cpp \
+  AnyTypeCode/LongSeqA.h \
+  LongSeqC.cpp \
+  LongSeqC.h \
+  LongSeqS.h
+
+CLEANFILES += \
+  LongSeq-stamp \
+  AnyTypeCode/LongSeqA.cpp \
+  AnyTypeCode/LongSeqA.h \
+  LongSeqC.cpp \
+  LongSeqC.h \
+  LongSeqS.h
+
+AnyTypeCode/LongSeqA.cpp AnyTypeCode/LongSeqA.h LongSeqC.cpp LongSeqC.h LongSeqS.h: LongSeq-stamp
+
+LongSeq-stamp: $(srcdir)/LongSeq.pidl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Sci -SS -Sorb -GA -Ge 1 -oA AnyTypeCode -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,anyop_export_macro=TAO_AnyTypeCode_Export -Wb,anyop_export_include=tao/AnyTypeCode/TAO_AnyTypeCode_Export.h $(srcdir)/LongSeq.pidl
+	@touch "$@"
+
+BUILT_SOURCES += \
+  AnyTypeCode/Messaging_PolicyValueA.cpp \
+  AnyTypeCode/Messaging_PolicyValueA.h \
+  Messaging_PolicyValueC.cpp \
+  Messaging_PolicyValueC.h
+
+CLEANFILES += \
+  Messaging_PolicyValue-stamp \
+  AnyTypeCode/Messaging_PolicyValueA.cpp \
+  AnyTypeCode/Messaging_PolicyValueA.h \
+  Messaging_PolicyValueC.cpp \
+  Messaging_PolicyValueC.h
+
+AnyTypeCode/Messaging_PolicyValueA.cpp AnyTypeCode/Messaging_PolicyValueA.h Messaging_PolicyValueC.cpp Messaging_PolicyValueC.h: Messaging_PolicyValue-stamp
+
+Messaging_PolicyValue-stamp: $(srcdir)/Messaging_PolicyValue.pidl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Sci -SS -Sorb -GA -Ge 1 -oA AnyTypeCode -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,anyop_export_macro=TAO_AnyTypeCode_Export -Wb,anyop_export_include=tao/AnyTypeCode/TAO_AnyTypeCode_Export.h $(srcdir)/Messaging_PolicyValue.pidl
+	@touch "$@"
+
+BUILT_SOURCES += \
+  AnyTypeCode/Messaging_SyncScopeA.cpp \
+  AnyTypeCode/Messaging_SyncScopeA.h \
+  Messaging_SyncScopeC.cpp \
+  Messaging_SyncScopeC.h
+
+CLEANFILES += \
+  Messaging_SyncScope-stamp \
+  AnyTypeCode/Messaging_SyncScopeA.cpp \
+  AnyTypeCode/Messaging_SyncScopeA.h \
+  Messaging_SyncScopeC.cpp \
+  Messaging_SyncScopeC.h
+
+AnyTypeCode/Messaging_SyncScopeA.cpp AnyTypeCode/Messaging_SyncScopeA.h Messaging_SyncScopeC.cpp Messaging_SyncScopeC.h: Messaging_SyncScope-stamp
+
+Messaging_SyncScope-stamp: $(srcdir)/Messaging_SyncScope.pidl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Sci -SS -Sorb -GA -Ge 1 -oA AnyTypeCode -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,anyop_export_macro=TAO_AnyTypeCode_Export -Wb,anyop_export_include=tao/AnyTypeCode/TAO_AnyTypeCode_Export.h $(srcdir)/Messaging_SyncScope.pidl
+	@touch "$@"
+
+BUILT_SOURCES += \
+  AnyTypeCode/ObjectIdListA.cpp \
+  AnyTypeCode/ObjectIdListA.h \
+  ObjectIdListC.cpp \
+  ObjectIdListC.h
+
+CLEANFILES += \
+  ObjectIdList-stamp \
+  AnyTypeCode/ObjectIdListA.cpp \
+  AnyTypeCode/ObjectIdListA.h \
+  ObjectIdListC.cpp \
+  ObjectIdListC.h
+
+AnyTypeCode/ObjectIdListA.cpp AnyTypeCode/ObjectIdListA.h ObjectIdListC.cpp ObjectIdListC.h: ObjectIdList-stamp
+
+ObjectIdList-stamp: $(srcdir)/ObjectIdList.pidl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Sci -SS -Sorb -GA -Ge 1 -oA AnyTypeCode -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,anyop_export_macro=TAO_AnyTypeCode_Export -Wb,anyop_export_include=tao/AnyTypeCode/TAO_AnyTypeCode_Export.h $(srcdir)/ObjectIdList.pidl
+	@touch "$@"
+
+BUILT_SOURCES += \
+  AnyTypeCode/orb_typesA.cpp \
+  AnyTypeCode/orb_typesA.h \
+  orb_typesC.cpp \
+  orb_typesC.h \
+  orb_typesS.h
+
+CLEANFILES += \
+  orb_types-stamp \
+  AnyTypeCode/orb_typesA.cpp \
+  AnyTypeCode/orb_typesA.h \
+  orb_typesC.cpp \
+  orb_typesC.h \
+  orb_typesS.h
+
+AnyTypeCode/orb_typesA.cpp AnyTypeCode/orb_typesA.h orb_typesC.cpp orb_typesC.h orb_typesS.h: orb_types-stamp
+
+orb_types-stamp: $(srcdir)/orb_types.pidl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Sci -SS -Sorb -GA -Ge 1 -oA AnyTypeCode -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,anyop_export_macro=TAO_AnyTypeCode_Export -Wb,anyop_export_include=tao/AnyTypeCode/TAO_AnyTypeCode_Export.h $(srcdir)/orb_types.pidl
+	@touch "$@"
+
+BUILT_SOURCES += \
+  AnyTypeCode/ParameterModeA.cpp \
+  AnyTypeCode/ParameterModeA.h \
+  ParameterModeC.cpp \
+  ParameterModeC.h \
+  ParameterModeS.h
+
+CLEANFILES += \
+  ParameterMode-stamp \
+  AnyTypeCode/ParameterModeA.cpp \
+  AnyTypeCode/ParameterModeA.h \
+  ParameterModeC.cpp \
+  ParameterModeC.h \
+  ParameterModeS.h
+
+AnyTypeCode/ParameterModeA.cpp AnyTypeCode/ParameterModeA.h ParameterModeC.cpp ParameterModeC.h ParameterModeS.h: ParameterMode-stamp
+
+ParameterMode-stamp: $(srcdir)/ParameterMode.pidl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Sci -SS -Sorb -GA -Ge 1 -oA AnyTypeCode -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,anyop_export_macro=TAO_AnyTypeCode_Export -Wb,anyop_export_include=tao/AnyTypeCode/TAO_AnyTypeCode_Export.h $(srcdir)/ParameterMode.pidl
+	@touch "$@"
+
+BUILT_SOURCES += \
+  AnyTypeCode/Policy_ForwardA.cpp \
+  AnyTypeCode/Policy_ForwardA.h \
+  Policy_ForwardC.cpp \
+  Policy_ForwardC.h \
+  Policy_ForwardS.h
+
+CLEANFILES += \
+  Policy_Forward-stamp \
+  AnyTypeCode/Policy_ForwardA.cpp \
+  AnyTypeCode/Policy_ForwardA.h \
+  Policy_ForwardC.cpp \
+  Policy_ForwardC.h \
+  Policy_ForwardS.h
+
+AnyTypeCode/Policy_ForwardA.cpp AnyTypeCode/Policy_ForwardA.h Policy_ForwardC.cpp Policy_ForwardC.h Policy_ForwardS.h: Policy_Forward-stamp
+
+Policy_Forward-stamp: $(srcdir)/Policy_Forward.pidl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Sci -SS -Sorb -GA -Ge 1 -oA AnyTypeCode -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,anyop_export_macro=TAO_AnyTypeCode_Export -Wb,anyop_export_include=tao/AnyTypeCode/TAO_AnyTypeCode_Export.h $(srcdir)/Policy_Forward.pidl
+	@touch "$@"
+
+BUILT_SOURCES += \
+  AnyTypeCode/PI_ForwardA.cpp \
+  AnyTypeCode/PI_ForwardA.h \
+  PI_ForwardC.cpp \
+  PI_ForwardC.h
+
+CLEANFILES += \
+  PI_Forward-stamp \
+  AnyTypeCode/PI_ForwardA.cpp \
+  AnyTypeCode/PI_ForwardA.h \
+  PI_ForwardC.cpp \
+  PI_ForwardC.h
+
+AnyTypeCode/PI_ForwardA.cpp AnyTypeCode/PI_ForwardA.h PI_ForwardC.cpp PI_ForwardC.h: PI_Forward-stamp
+
+PI_Forward-stamp: $(srcdir)/PI_Forward.pidl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Sci -SS -Sorb -GA -Ge 1 -oA AnyTypeCode -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,anyop_export_macro=TAO_AnyTypeCode_Export -Wb,anyop_export_include=tao/AnyTypeCode/TAO_AnyTypeCode_Export.h $(srcdir)/PI_Forward.pidl
+	@touch "$@"
+
+BUILT_SOURCES += \
+  AnyTypeCode/PortableInterceptorA.cpp \
+  AnyTypeCode/PortableInterceptorA.h \
+  PortableInterceptorC.cpp \
+  PortableInterceptorC.h \
+  PortableInterceptorS.h
+
+CLEANFILES += \
+  PortableInterceptor-stamp \
+  AnyTypeCode/PortableInterceptorA.cpp \
+  AnyTypeCode/PortableInterceptorA.h \
+  PortableInterceptorC.cpp \
+  PortableInterceptorC.h \
+  PortableInterceptorS.h
+
+AnyTypeCode/PortableInterceptorA.cpp AnyTypeCode/PortableInterceptorA.h PortableInterceptorC.cpp PortableInterceptorC.h PortableInterceptorS.h: PortableInterceptor-stamp
+
+PortableInterceptor-stamp: $(srcdir)/PortableInterceptor.pidl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Sci -SS -Sorb -GA -Ge 1 -oA AnyTypeCode -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,anyop_export_macro=TAO_AnyTypeCode_Export -Wb,anyop_export_include=tao/AnyTypeCode/TAO_AnyTypeCode_Export.h $(srcdir)/PortableInterceptor.pidl
+	@touch "$@"
+
+BUILT_SOURCES += \
+  AnyTypeCode/ServicesA.cpp \
+  AnyTypeCode/ServicesA.h \
+  ServicesC.cpp \
+  ServicesC.h \
+  ServicesS.h
+
+CLEANFILES += \
+  Services-stamp \
+  AnyTypeCode/ServicesA.cpp \
+  AnyTypeCode/ServicesA.h \
+  ServicesC.cpp \
+  ServicesC.h \
+  ServicesS.h
+
+AnyTypeCode/ServicesA.cpp AnyTypeCode/ServicesA.h ServicesC.cpp ServicesC.h ServicesS.h: Services-stamp
+
+Services-stamp: $(srcdir)/Services.pidl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Sci -SS -Sorb -GA -Ge 1 -oA AnyTypeCode -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,anyop_export_macro=TAO_AnyTypeCode_Export -Wb,anyop_export_include=tao/AnyTypeCode/TAO_AnyTypeCode_Export.h $(srcdir)/Services.pidl
+	@touch "$@"
+
+BUILT_SOURCES += \
+  AnyTypeCode/ShortSeqA.cpp \
+  AnyTypeCode/ShortSeqA.h \
+  ShortSeqC.cpp \
+  ShortSeqC.h \
+  ShortSeqS.h
+
+CLEANFILES += \
+  ShortSeq-stamp \
+  AnyTypeCode/ShortSeqA.cpp \
+  AnyTypeCode/ShortSeqA.h \
+  ShortSeqC.cpp \
+  ShortSeqC.h \
+  ShortSeqS.h
+
+AnyTypeCode/ShortSeqA.cpp AnyTypeCode/ShortSeqA.h ShortSeqC.cpp ShortSeqC.h ShortSeqS.h: ShortSeq-stamp
+
+ShortSeq-stamp: $(srcdir)/ShortSeq.pidl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Sci -SS -Sorb -GA -Ge 1 -oA AnyTypeCode -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,anyop_export_macro=TAO_AnyTypeCode_Export -Wb,anyop_export_include=tao/AnyTypeCode/TAO_AnyTypeCode_Export.h $(srcdir)/ShortSeq.pidl
+	@touch "$@"
+
+BUILT_SOURCES += \
+  AnyTypeCode/StringSeqA.cpp \
+  AnyTypeCode/StringSeqA.h \
+  StringSeqC.cpp \
+  StringSeqC.h \
+  StringSeqS.h
+
+CLEANFILES += \
+  StringSeq-stamp \
+  AnyTypeCode/StringSeqA.cpp \
+  AnyTypeCode/StringSeqA.h \
+  StringSeqC.cpp \
+  StringSeqC.h \
+  StringSeqS.h
+
+AnyTypeCode/StringSeqA.cpp AnyTypeCode/StringSeqA.h StringSeqC.cpp StringSeqC.h StringSeqS.h: StringSeq-stamp
+
+StringSeq-stamp: $(srcdir)/StringSeq.pidl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Sci -SS -Sorb -GA -Ge 1 -oA AnyTypeCode -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,anyop_export_macro=TAO_AnyTypeCode_Export -Wb,anyop_export_include=tao/AnyTypeCode/TAO_AnyTypeCode_Export.h $(srcdir)/StringSeq.pidl
+	@touch "$@"
+
+BUILT_SOURCES += \
+  AnyTypeCode/TAOA.cpp \
+  AnyTypeCode/TAOA.h \
+  TAOC.cpp \
+  TAOC.h \
+  TAOS.h
+
+CLEANFILES += \
+  TAO-stamp \
+  AnyTypeCode/TAOA.cpp \
+  AnyTypeCode/TAOA.h \
+  TAOC.cpp \
+  TAOC.h \
+  TAOS.h
+
+AnyTypeCode/TAOA.cpp AnyTypeCode/TAOA.h TAOC.cpp TAOC.h TAOS.h: TAO-stamp
+
+TAO-stamp: $(srcdir)/TAO.pidl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Sci -SS -Sorb -GA -Ge 1 -oA AnyTypeCode -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,anyop_export_macro=TAO_AnyTypeCode_Export -Wb,anyop_export_include=tao/AnyTypeCode/TAO_AnyTypeCode_Export.h $(srcdir)/TAO.pidl
+	@touch "$@"
+
+BUILT_SOURCES += \
+  AnyTypeCode/TimeBaseA.cpp \
+  AnyTypeCode/TimeBaseA.h \
+  TimeBaseC.cpp \
+  TimeBaseC.h \
+  TimeBaseS.h
+
+CLEANFILES += \
+  TimeBase-stamp \
+  AnyTypeCode/TimeBaseA.cpp \
+  AnyTypeCode/TimeBaseA.h \
+  TimeBaseC.cpp \
+  TimeBaseC.h \
+  TimeBaseS.h
+
+AnyTypeCode/TimeBaseA.cpp AnyTypeCode/TimeBaseA.h TimeBaseC.cpp TimeBaseC.h TimeBaseS.h: TimeBase-stamp
+
+TimeBase-stamp: $(srcdir)/TimeBase.pidl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Sci -SS -Sorb -GA -Ge 1 -oA AnyTypeCode -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,anyop_export_macro=TAO_AnyTypeCode_Export -Wb,anyop_export_include=tao/AnyTypeCode/TAO_AnyTypeCode_Export.h $(srcdir)/TimeBase.pidl
+	@touch "$@"
+
+BUILT_SOURCES += \
+  AnyTypeCode/ULongLongSeqA.cpp \
+  AnyTypeCode/ULongLongSeqA.h \
+  ULongLongSeqC.cpp \
+  ULongLongSeqC.h \
+  ULongLongSeqS.h
+
+CLEANFILES += \
+  ULongLongSeq-stamp \
+  AnyTypeCode/ULongLongSeqA.cpp \
+  AnyTypeCode/ULongLongSeqA.h \
+  ULongLongSeqC.cpp \
+  ULongLongSeqC.h \
+  ULongLongSeqS.h
+
+AnyTypeCode/ULongLongSeqA.cpp AnyTypeCode/ULongLongSeqA.h ULongLongSeqC.cpp ULongLongSeqC.h ULongLongSeqS.h: ULongLongSeq-stamp
+
+ULongLongSeq-stamp: $(srcdir)/ULongLongSeq.pidl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Sci -SS -Sorb -GA -Ge 1 -oA AnyTypeCode -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,anyop_export_macro=TAO_AnyTypeCode_Export -Wb,anyop_export_include=tao/AnyTypeCode/TAO_AnyTypeCode_Export.h $(srcdir)/ULongLongSeq.pidl
+	@touch "$@"
+
+BUILT_SOURCES += \
+  AnyTypeCode/ULongSeqA.cpp \
+  AnyTypeCode/ULongSeqA.h \
+  ULongSeqC.cpp \
+  ULongSeqC.h \
+  ULongSeqS.h
+
+CLEANFILES += \
+  ULongSeq-stamp \
+  AnyTypeCode/ULongSeqA.cpp \
+  AnyTypeCode/ULongSeqA.h \
+  ULongSeqC.cpp \
+  ULongSeqC.h \
+  ULongSeqS.h
+
+AnyTypeCode/ULongSeqA.cpp AnyTypeCode/ULongSeqA.h ULongSeqC.cpp ULongSeqC.h ULongSeqS.h: ULongSeq-stamp
+
+ULongSeq-stamp: $(srcdir)/ULongSeq.pidl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Sci -SS -Sorb -GA -Ge 1 -oA AnyTypeCode -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,anyop_export_macro=TAO_AnyTypeCode_Export -Wb,anyop_export_include=tao/AnyTypeCode/TAO_AnyTypeCode_Export.h $(srcdir)/ULongSeq.pidl
+	@touch "$@"
+
+BUILT_SOURCES += \
+  AnyTypeCode/WCharSeqA.cpp \
+  AnyTypeCode/WCharSeqA.h \
+  WCharSeqC.cpp \
+  WCharSeqC.h \
+  WCharSeqS.h
+
+CLEANFILES += \
+  WCharSeq-stamp \
+  AnyTypeCode/WCharSeqA.cpp \
+  AnyTypeCode/WCharSeqA.h \
+  WCharSeqC.cpp \
+  WCharSeqC.h \
+  WCharSeqS.h
+
+AnyTypeCode/WCharSeqA.cpp AnyTypeCode/WCharSeqA.h WCharSeqC.cpp WCharSeqC.h WCharSeqS.h: WCharSeq-stamp
+
+WCharSeq-stamp: $(srcdir)/WCharSeq.pidl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Sci -SS -Sorb -GA -Ge 1 -oA AnyTypeCode -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,anyop_export_macro=TAO_AnyTypeCode_Export -Wb,anyop_export_include=tao/AnyTypeCode/TAO_AnyTypeCode_Export.h $(srcdir)/WCharSeq.pidl
+	@touch "$@"
+
+BUILT_SOURCES += \
+  AnyTypeCode/WStringSeqA.cpp \
+  AnyTypeCode/WStringSeqA.h \
+  WStringSeqC.cpp \
+  WStringSeqC.h \
+  WStringSeqS.h
+
+CLEANFILES += \
+  WStringSeq-stamp \
+  AnyTypeCode/WStringSeqA.cpp \
+  AnyTypeCode/WStringSeqA.h \
+  WStringSeqC.cpp \
+  WStringSeqC.h \
+  WStringSeqS.h
+
+AnyTypeCode/WStringSeqA.cpp AnyTypeCode/WStringSeqA.h WStringSeqC.cpp WStringSeqC.h WStringSeqS.h: WStringSeq-stamp
+
+WStringSeq-stamp: $(srcdir)/WStringSeq.pidl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Sci -SS -Sorb -GA -Ge 1 -oA AnyTypeCode -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,anyop_export_macro=TAO_AnyTypeCode_Export -Wb,anyop_export_include=tao/AnyTypeCode/TAO_AnyTypeCode_Export.h $(srcdir)/WStringSeq.pidl
+	@touch "$@"
 
 lib_LTLIBRARIES = libTAO.la
 
@@ -66,6 +707,7 @@ libTAO_la_SOURCES = \
   Collocated_Invocation.cpp \
   Collocation_Proxy_Broker.cpp \
   Collocation_Resolver.cpp \
+  Configurable_Refcount.cpp \
   Connect_Strategy.cpp \
   Connection_Handler.cpp \
   Connection_Purging_Strategy.cpp \
@@ -101,7 +743,6 @@ libTAO_la_SOURCES = \
   GIOP_Message_Locate_Header.cpp \
   GIOP_Message_State.cpp \
   GIOP_Message_Version.cpp \
-  GIOP_Utils.cpp \
   GUIResource_Factory.cpp \
   IFR_Client_Adapter.cpp \
   IIOPC.cpp \
@@ -261,7 +902,7 @@ libTAO_la_SOURCES = \
   target_specification.cpp
 
 libTAO_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_la_LIBADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
@@ -272,7 +913,7 @@ nobase_include_HEADERS = \
   Acceptor_Impl.cpp \
   Acceptor_Impl.h \
   Acceptor_Registry.h \
-  Acceptor_Registry.inl\
+  Acceptor_Registry.inl \
   Adapter.h \
   Adapter_Factory.h \
   Adapter_Registry.h \
@@ -287,7 +928,7 @@ nobase_include_HEADERS = \
   Array_VarOut_T.inl \
   Asynch_Queued_Message.h \
   Asynch_Reply_Dispatcher_Base.h \
-  Asynch_Reply_Dispatcher_Base.inl\
+  Asynch_Reply_Dispatcher_Base.inl \
   Auto_Functor.h \
   BD_String_Argument_T.cpp \
   BD_String_Argument_T.h \
@@ -301,7 +942,7 @@ nobase_include_HEADERS = \
   Basic_Types.h \
   BiDir_Adapter.h \
   Bind_Dispatcher_Guard.h \
-  Bind_Dispatcher_Guard.inl\
+  Bind_Dispatcher_Guard.inl \
   Block_Flushing_Strategy.h \
   Blocked_Connect_Strategy.h \
   BooleanSeq.pidl \
@@ -320,14 +961,14 @@ nobase_include_HEADERS = \
   Buffer_Allocator_T.cpp \
   Buffer_Allocator_T.h \
   Buffering_Constraint_Policy.h \
-  Buffering_Constraint_Policy.inl\
+  Buffering_Constraint_Policy.inl \
   CDR.h \
-  CDR.inl\
+  CDR.inl \
   CONV_FRAME.pidl \
   CONV_FRAMEC.h \
   CONV_FRAMES.h \
   CORBALOC_Parser.h \
-  CORBALOC_Parser.inl\
+  CORBALOC_Parser.inl \
   CORBANAME_Parser.h \
   CORBA_String.h \
   CORBA_String.inl \
@@ -353,6 +994,8 @@ nobase_include_HEADERS = \
   Condition.cpp \
   Condition.h \
   Condition.inl \
+  Configurable_Refcount.h \
+  Configurable_Refcount.inl \
   Connect_Strategy.h \
   Connection_Handler.h \
   Connection_Handler.inl \
@@ -361,7 +1004,7 @@ nobase_include_HEADERS = \
   Connector_Impl.cpp \
   Connector_Impl.h \
   Connector_Registry.h \
-  Connector_Registry.inl\
+  Connector_Registry.inl \
   Current.pidl \
   CurrentC.h \
   CurrentS.h \
@@ -379,17 +1022,17 @@ nobase_include_HEADERS = \
   DoubleSeqS.h \
   Dynamic_Adapter.h \
   Endpoint.h \
-  Endpoint.inl\
+  Endpoint.inl \
   Endpoint_Selector_Factory.h \
   Environment.h \
-  Environment.inl\
+  Environment.inl \
   Exception.h \
-  Exception.inl\
+  Exception.inl \
   Exception_Data.h \
   Exclusive_TMS.h \
   FILE_Parser.h \
   Fault_Tolerance_Service.h \
-  Fault_Tolerance_Service.inl\
+  Fault_Tolerance_Service.inl \
   Fixed_Array_Argument_T.cpp \
   Fixed_Array_Argument_T.h \
   Fixed_Array_Argument_T.inl \
@@ -414,7 +1057,7 @@ nobase_include_HEADERS = \
   GIOP_Message_Generator_Parser_Impl.inl \
   GIOP_Message_Lite.h \
   GIOP_Message_Locate_Header.h \
-  GIOP_Message_Locate_Header.inl\
+  GIOP_Message_Locate_Header.inl \
   GIOP_Message_State.h \
   GIOP_Message_State.inl \
   GIOP_Message_Version.h \
@@ -426,13 +1069,14 @@ nobase_include_HEADERS = \
   IIOP.pidl \
   IIOPC.h \
   IIOP_Acceptor.h \
-  IIOP_Acceptor.inl\
+  IIOP_Acceptor.inl \
   IIOP_Connection_Handler.h \
   IIOP_Connector.h \
   IIOP_Endpoint.h \
-  IIOP_Endpoint.inl\
+  IIOP_Endpoint.inl \
   IIOP_Endpoints.pidl \
   IIOP_EndpointsC.h \
+  IIOP_EndpointsS.h \
   IIOP_Factory.h \
   IIOP_Lite_Factory.h \
   IIOP_Profile.h \
@@ -483,10 +1127,11 @@ nobase_include_HEADERS = \
   LF_Strategy_Complete.h \
   LRU_Connection_Purging_Strategy.h \
   Leader_Follower.h \
-  Leader_Follower.inl\
+  Leader_Follower.inl \
   Leader_Follower_Flushing_Strategy.h \
+  Load_Protocol_Factory_T.h \
   LocalObject.h \
-  LocalObject.inl\
+  LocalObject.inl \
   LocateRequest_Invocation.h \
   LocateRequest_Invocation_Adapter.h \
   LongDoubleSeq.pidl \
@@ -499,10 +1144,10 @@ nobase_include_HEADERS = \
   LongSeqC.h \
   LongSeqS.h \
   MCAST_Parser.h \
-  MCAST_Parser.inl\
+  MCAST_Parser.inl \
   MMAP_Allocator.h \
   MProfile.h \
-  MProfile.inl\
+  MProfile.inl \
   Messaging_PolicyValue.pidl \
   Messaging_PolicyValueC.h \
   Messaging_SyncScope.pidl \
@@ -512,19 +1157,19 @@ nobase_include_HEADERS = \
   New_Leader_Generator.h \
   Null_Fragmentation_Strategy.h \
   ORB.h \
-  ORB.inl\
+  ORB.inl \
   ORBInitializer_Registry.h \
   ORBInitializer_Registry_Adapter.h \
   ORB_Constants.h \
   ORB_Core.h \
-  ORB_Core.inl\
+  ORB_Core.inl \
   ORB_Core_Auto_Ptr.h \
   ORB_Core_Auto_Ptr.inl \
   ORB_Core_TSS_Resources.h \
   ORB_Table.h \
   ORB_Table.inl \
   Object.h \
-  Object.inl\
+  Object.inl \
   ObjectIdList.pidl \
   ObjectIdListC.h \
   ObjectKey_Table.h \
@@ -554,10 +1199,10 @@ nobase_include_HEADERS = \
   ParameterModeC.h \
   ParameterModeS.h \
   Parser_Registry.h \
-  Parser_Registry.inl\
+  Parser_Registry.inl \
   Pluggable_Messaging.h \
   Pluggable_Messaging_Utils.h \
-  Pluggable_Messaging_Utils.inl\
+  Pluggable_Messaging_Utils.inl \
   Policy.pidl \
   PolicyC.h \
   PolicyC.inl \
@@ -572,18 +1217,18 @@ nobase_include_HEADERS = \
   Policy_ForwardC.h \
   Policy_ForwardS.h \
   Policy_Manager.h \
-  Policy_Manager.inl\
+  Policy_Manager.inl \
   Policy_Set.h \
-  Policy_Set.inl\
+  Policy_Set.inl \
   Policy_Validator.h \
   PortableInterceptor.h \
   PortableInterceptor.pidl \
   PortableInterceptorC.h \
   PortableInterceptorS.h \
   Principal.h \
-  Principal.inl\
+  Principal.inl \
   Profile.h \
-  Profile.inl\
+  Profile.inl \
   Profile_Transport_Resolver.h \
   Profile_Transport_Resolver.inl \
   Protocol_Factory.h \
@@ -600,7 +1245,7 @@ nobase_include_HEADERS = \
   Remote_Invocation.h \
   Remote_Object_Proxy_Broker.h \
   Reply_Dispatcher.h \
-  Reply_Dispatcher.inl\
+  Reply_Dispatcher.inl \
   Request_Dispatcher.h \
   Resource_Factory.h \
   Resume_Handle.h \
@@ -638,7 +1283,7 @@ nobase_include_HEADERS = \
   String_Traits_Base_T.h \
   String_Traits_T.h \
   Stub.h \
-  Stub.inl\
+  Stub.inl \
   Stub_Factory.h \
   Synch_Invocation.h \
   Synch_Invocation.inl \
@@ -652,7 +1297,7 @@ nobase_include_HEADERS = \
   TAO_Export.h \
   TAO_Internal.h \
   TAO_Server_Request.h \
-  TAO_Server_Request.inl\
+  TAO_Server_Request.inl \
   TAO_Singleton.cpp \
   TAO_Singleton.h \
   TAO_Singleton.inl \
@@ -660,9 +1305,9 @@ nobase_include_HEADERS = \
   TAO_Singleton_Manager.inl \
   TSS_Resources.h \
   Tagged_Components.h \
-  Tagged_Components.inl\
+  Tagged_Components.inl \
   Tagged_Profile.h \
-  Tagged_Profile.inl\
+  Tagged_Profile.inl \
   Thread_Lane_Resources.h \
   Thread_Lane_Resources_Manager.h \
   Thread_Per_Connection_Handler.h \
@@ -752,26 +1397,28 @@ nobase_include_HEADERS = \
   default_server.h \
   objectid.h \
   operation_details.h \
-  operation_details.inl\
+  operation_details.inl \
+  orb.h \
   orb.idl \
+  orb.inl \
   orb_types.pidl \
   orb_typesC.h \
   orb_typesS.h \
   orbconf.h \
   params.h \
-  params.inl\
+  params.inl \
   target_specification.h \
-  target_specification.inl\
+  target_specification.inl \
   varbase.h
 
 pkgconfig_DATA = \
   TAO.pc
 
-CLEANFILES = \
+CLEANFILES += \
   TAO.pc
 
 TAO.pc: ${top_builddir}/config.status ${srcdir}/TAO.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO.pc.in
 
 EXTRA_DIST = \
   TAO.pc.in \
@@ -801,7 +1448,7 @@ libTAO_Codeset_la_SOURCES = \
   Codeset/UTF8_Latin1_Translator.cpp
 
 libTAO_Codeset_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_Codeset_la_LIBADD = \
   libTAO.la \
@@ -822,6 +1469,101 @@ nobase_include_HEADERS += \
   Codeset/codeset_export.h
 
 ## Makefile.AnyTypeCode.am
+
+BUILT_SOURCES += \
+  AnyTypeCode/AnySeqA.cpp \
+  AnyTypeCode/AnySeqA.h \
+  AnyTypeCode/AnySeqC.cpp \
+  AnyTypeCode/AnySeqC.h
+
+CLEANFILES += \
+  AnyTypeCode/AnySeq-stamp \
+  AnyTypeCode/AnySeqA.cpp \
+  AnyTypeCode/AnySeqA.h \
+  AnyTypeCode/AnySeqC.cpp \
+  AnyTypeCode/AnySeqC.h
+
+AnyTypeCode/AnySeqA.cpp AnyTypeCode/AnySeqA.h AnyTypeCode/AnySeqC.cpp AnyTypeCode/AnySeqC.h: AnyTypeCode/AnySeq-stamp
+
+AnyTypeCode/AnySeq-stamp: $(srcdir)/AnyTypeCode/AnySeq.pidl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Sci -SS -Sorb -GA -Ge 1 -Wb,export_macro=TAO_AnyTypeCode_Export -Wb,export_include=tao/AnyTypeCode/TAO_AnyTypeCode_Export.h -o AnyTypeCode $(srcdir)/AnyTypeCode/AnySeq.pidl
+	@touch "$@"
+
+BUILT_SOURCES += \
+  AnyTypeCode/Dynamic_ParameterA.cpp \
+  AnyTypeCode/Dynamic_ParameterA.h \
+  AnyTypeCode/Dynamic_ParameterC.cpp \
+  AnyTypeCode/Dynamic_ParameterC.h
+
+CLEANFILES += \
+  AnyTypeCode/Dynamic_Parameter-stamp \
+  AnyTypeCode/Dynamic_ParameterA.cpp \
+  AnyTypeCode/Dynamic_ParameterA.h \
+  AnyTypeCode/Dynamic_ParameterC.cpp \
+  AnyTypeCode/Dynamic_ParameterC.h
+
+AnyTypeCode/Dynamic_ParameterA.cpp AnyTypeCode/Dynamic_ParameterA.h AnyTypeCode/Dynamic_ParameterC.cpp AnyTypeCode/Dynamic_ParameterC.h: AnyTypeCode/Dynamic_Parameter-stamp
+
+AnyTypeCode/Dynamic_Parameter-stamp: $(srcdir)/AnyTypeCode/Dynamic_Parameter.pidl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Sci -SS -Sorb -GA -Ge 1 -Wb,export_macro=TAO_AnyTypeCode_Export -Wb,export_include=tao/AnyTypeCode/TAO_AnyTypeCode_Export.h -o AnyTypeCode $(srcdir)/AnyTypeCode/Dynamic_Parameter.pidl
+	@touch "$@"
+
+BUILT_SOURCES += \
+  AnyTypeCode/ValueModifierA.cpp \
+  AnyTypeCode/ValueModifierA.h \
+  AnyTypeCode/ValueModifierC.cpp \
+  AnyTypeCode/ValueModifierC.h
+
+CLEANFILES += \
+  AnyTypeCode/ValueModifier-stamp \
+  AnyTypeCode/ValueModifierA.cpp \
+  AnyTypeCode/ValueModifierA.h \
+  AnyTypeCode/ValueModifierC.cpp \
+  AnyTypeCode/ValueModifierC.h
+
+AnyTypeCode/ValueModifierA.cpp AnyTypeCode/ValueModifierA.h AnyTypeCode/ValueModifierC.cpp AnyTypeCode/ValueModifierC.h: AnyTypeCode/ValueModifier-stamp
+
+AnyTypeCode/ValueModifier-stamp: $(srcdir)/AnyTypeCode/ValueModifier.pidl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Sci -SS -Sorb -GA -Ge 1 -Wb,export_macro=TAO_AnyTypeCode_Export -Wb,export_include=tao/AnyTypeCode/TAO_AnyTypeCode_Export.h -o AnyTypeCode $(srcdir)/AnyTypeCode/ValueModifier.pidl
+	@touch "$@"
+
+BUILT_SOURCES += \
+  AnyTypeCode/VisibilityA.cpp \
+  AnyTypeCode/VisibilityA.h \
+  AnyTypeCode/VisibilityC.cpp \
+  AnyTypeCode/VisibilityC.h
+
+CLEANFILES += \
+  AnyTypeCode/Visibility-stamp \
+  AnyTypeCode/VisibilityA.cpp \
+  AnyTypeCode/VisibilityA.h \
+  AnyTypeCode/VisibilityC.cpp \
+  AnyTypeCode/VisibilityC.h
+
+AnyTypeCode/VisibilityA.cpp AnyTypeCode/VisibilityA.h AnyTypeCode/VisibilityC.cpp AnyTypeCode/VisibilityC.h: AnyTypeCode/Visibility-stamp
+
+AnyTypeCode/Visibility-stamp: $(srcdir)/AnyTypeCode/Visibility.pidl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Sci -SS -Sorb -GA -Ge 1 -Wb,export_macro=TAO_AnyTypeCode_Export -Wb,export_include=tao/AnyTypeCode/TAO_AnyTypeCode_Export.h -o AnyTypeCode $(srcdir)/AnyTypeCode/Visibility.pidl
+	@touch "$@"
+
+BUILT_SOURCES += \
+  AnyTypeCode/BoundsA.cpp \
+  AnyTypeCode/BoundsA.h \
+  AnyTypeCode/BoundsC.cpp \
+  AnyTypeCode/BoundsC.h
+
+CLEANFILES += \
+  AnyTypeCode/Bounds-stamp \
+  AnyTypeCode/BoundsA.cpp \
+  AnyTypeCode/BoundsA.h \
+  AnyTypeCode/BoundsC.cpp \
+  AnyTypeCode/BoundsC.h
+
+AnyTypeCode/BoundsA.cpp AnyTypeCode/BoundsA.h AnyTypeCode/BoundsC.cpp AnyTypeCode/BoundsC.h: AnyTypeCode/Bounds-stamp
+
+AnyTypeCode/Bounds-stamp: $(srcdir)/AnyTypeCode/Bounds.pidl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Sci -SS -GA -Ge 1 -Wb,export_macro=TAO_AnyTypeCode_Export -Wb,export_include=tao/AnyTypeCode/TAO_AnyTypeCode_Export.h -o AnyTypeCode $(srcdir)/AnyTypeCode/Bounds.pidl
+	@touch "$@"
 
 lib_LTLIBRARIES += libTAO_AnyTypeCode.la
 
@@ -907,7 +1649,7 @@ libTAO_AnyTypeCode_la_SOURCES = \
   AnyTypeCode/skip.cpp
 
 libTAO_AnyTypeCode_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_AnyTypeCode_la_LIBADD = \
   libTAO.la \
@@ -921,9 +1663,9 @@ nobase_include_HEADERS += \
   AnyTypeCode/Alias_TypeCode_Static.inl \
   AnyTypeCode/Any.h \
   AnyTypeCode/Any.inl \
+  AnyTypeCode/AnySeq.pidl \
   AnyTypeCode/AnySeqA.h \
   AnyTypeCode/AnySeqC.h \
-  AnyTypeCode/AnySeqS.h \
   AnyTypeCode/AnyTypeCode_Adapter_Impl.h \
   AnyTypeCode/AnyTypeCode_methods.h \
   AnyTypeCode/Any_Arg_Traits.h \
@@ -946,17 +1688,14 @@ nobase_include_HEADERS += \
   AnyTypeCode/Any_Special_Impl_T.inl \
   AnyTypeCode/Any_SystemException.h \
   AnyTypeCode/Any_Unknown_IDL_Type.h \
-  AnyTypeCode/BooleanSeqA.h \
+  AnyTypeCode/Bounds.pidl \
   AnyTypeCode/BoundsA.h \
   AnyTypeCode/BoundsC.h \
-  AnyTypeCode/CONV_FRAMEA.h \
-  AnyTypeCode/CharSeqA.h \
-  AnyTypeCode/CurrentA.h \
   AnyTypeCode/DomainA.h \
-  AnyTypeCode/DoubleSeqA.h \
   AnyTypeCode/DynamicA.h \
   AnyTypeCode/DynamicC.h \
   AnyTypeCode/DynamicS.h \
+  AnyTypeCode/Dynamic_Parameter.pidl \
   AnyTypeCode/Dynamic_ParameterA.h \
   AnyTypeCode/Dynamic_ParameterC.h \
   AnyTypeCode/Empty_Param_TypeCode.h \
@@ -970,35 +1709,19 @@ nobase_include_HEADERS += \
   AnyTypeCode/Fixed_TypeCode.cpp \
   AnyTypeCode/Fixed_TypeCode.h \
   AnyTypeCode/Fixed_TypeCode.inl \
-  AnyTypeCode/FloatSeqA.h \
-  AnyTypeCode/GIOPA.h \
-  AnyTypeCode/IIOPA.h \
-  AnyTypeCode/IIOP_EndpointsA.h \
-  AnyTypeCode/IOPA.h \
-  AnyTypeCode/IOP_IORA.h \
-  AnyTypeCode/LongDoubleSeqA.h \
-  AnyTypeCode/LongLongSeqA.h \
-  AnyTypeCode/LongSeqA.h \
   AnyTypeCode/Marshal.h \
   AnyTypeCode/Marshal.inl \
-  AnyTypeCode/Messaging_PolicyValueA.h \
-  AnyTypeCode/Messaging_SyncScopeA.h \
   AnyTypeCode/NVList.h \
   AnyTypeCode/NVList.inl \
   AnyTypeCode/NVList_Adapter_Impl.h \
   AnyTypeCode/Null_RefCount_Policy.h \
-  AnyTypeCode/ObjectIdListA.h \
   AnyTypeCode/Objref_TypeCode.cpp \
   AnyTypeCode/Objref_TypeCode.h \
   AnyTypeCode/Objref_TypeCode.inl \
   AnyTypeCode/Objref_TypeCode_Static.h \
   AnyTypeCode/Objref_TypeCode_Static.inl \
   AnyTypeCode/OctetSeqA.h \
-  AnyTypeCode/PI_ForwardA.h \
-  AnyTypeCode/ParameterModeA.h \
   AnyTypeCode/PolicyA.h \
-  AnyTypeCode/Policy_ForwardA.h \
-  AnyTypeCode/PortableInterceptorA.h \
   AnyTypeCode/Recursive_Type_TypeCode.cpp \
   AnyTypeCode/Recursive_Type_TypeCode.h \
   AnyTypeCode/Recursive_Type_TypeCode.inl \
@@ -1008,9 +1731,6 @@ nobase_include_HEADERS += \
   AnyTypeCode/Sequence_TypeCode.inl \
   AnyTypeCode/Sequence_TypeCode_Static.h \
   AnyTypeCode/Sequence_TypeCode_Static.inl \
-  AnyTypeCode/ServicesA.h \
-  AnyTypeCode/ShortSeqA.h \
-  AnyTypeCode/StringSeqA.h \
   AnyTypeCode/String_TypeCode.cpp \
   AnyTypeCode/String_TypeCode.h \
   AnyTypeCode/String_TypeCode.inl \
@@ -1023,10 +1743,8 @@ nobase_include_HEADERS += \
   AnyTypeCode/Struct_TypeCode_Static.h \
   AnyTypeCode/Struct_TypeCode_Static.inl \
   AnyTypeCode/SystemExceptionA.h \
-  AnyTypeCode/TAOA.h \
   AnyTypeCode/TAO_AnyTypeCode_Export.h \
   AnyTypeCode/TC_Constants_Forward.h \
-  AnyTypeCode/TimeBaseA.h \
   AnyTypeCode/True_RefCount_Policy.h \
   AnyTypeCode/True_RefCount_Policy.inl \
   AnyTypeCode/TypeCode.h \
@@ -1038,6 +1756,9 @@ nobase_include_HEADERS += \
   AnyTypeCode/TypeCode_Case_Base_T.cpp \
   AnyTypeCode/TypeCode_Case_Base_T.h \
   AnyTypeCode/TypeCode_Case_Base_T.inl \
+  AnyTypeCode/TypeCode_Case_Enum_T.cpp \
+  AnyTypeCode/TypeCode_Case_Enum_T.h \
+  AnyTypeCode/TypeCode_Case_Enum_T.inl \
   AnyTypeCode/TypeCode_Case_T.cpp \
   AnyTypeCode/TypeCode_Case_T.h \
   AnyTypeCode/TypeCode_Case_T.inl \
@@ -1046,29 +1767,24 @@ nobase_include_HEADERS += \
   AnyTypeCode/TypeCode_Traits.h \
   AnyTypeCode/TypeCode_Value_Field.h \
   AnyTypeCode/Typecode_typesA.h \
-  AnyTypeCode/ULongLongSeqA.h \
-  AnyTypeCode/ULongSeqA.h \
   AnyTypeCode/UShortSeqA.h \
   AnyTypeCode/Union_TypeCode.cpp \
   AnyTypeCode/Union_TypeCode.h \
   AnyTypeCode/Union_TypeCode.inl \
   AnyTypeCode/Union_TypeCode_Static.h \
   AnyTypeCode/Union_TypeCode_Static.inl \
+  AnyTypeCode/ValueModifier.pidl \
   AnyTypeCode/ValueModifierA.h \
   AnyTypeCode/ValueModifierC.h \
-  AnyTypeCode/ValueModifierS.h \
   AnyTypeCode/Value_TypeCode.cpp \
   AnyTypeCode/Value_TypeCode.h \
   AnyTypeCode/Value_TypeCode.inl \
   AnyTypeCode/Value_TypeCode_Static.h \
   AnyTypeCode/Value_TypeCode_Static.inl \
+  AnyTypeCode/Visibility.pidl \
   AnyTypeCode/VisibilityA.h \
   AnyTypeCode/VisibilityC.h \
-  AnyTypeCode/VisibilityS.h \
-  AnyTypeCode/WCharSeqA.h \
-  AnyTypeCode/WStringSeqA.h \
-  AnyTypeCode/WrongTransactionA.h \
-  AnyTypeCode/orb_typesA.h
+  AnyTypeCode/WrongTransactionA.h
 
 pkgconfig_DATA += \
   TAO_AnyTypeCode.pc
@@ -1077,13 +1793,43 @@ CLEANFILES += \
   TAO_AnyTypeCode.pc
 
 TAO_AnyTypeCode.pc: ${top_builddir}/config.status ${srcdir}/AnyTypeCode/TAO_AnyTypeCode.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/AnyTypeCode/TAO_AnyTypeCode.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/AnyTypeCode/TAO_AnyTypeCode.pc.in
 
 EXTRA_DIST += \
   AnyTypeCode/TAO_AnyTypeCode.pc.in
 
 
 ## Makefile.CodecFactory.am
+
+BUILT_SOURCES += \
+  CodecFactory/IOP_CodecC.cpp \
+  CodecFactory/IOP_CodecC.h
+
+CLEANFILES += \
+  CodecFactory/IOP_Codec-stamp \
+  CodecFactory/IOP_CodecC.cpp \
+  CodecFactory/IOP_CodecC.h
+
+CodecFactory/IOP_CodecC.cpp CodecFactory/IOP_CodecC.h: CodecFactory/IOP_Codec-stamp
+
+CodecFactory/IOP_Codec-stamp: $(srcdir)/CodecFactory/IOP_Codec.pidl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Ge 1 -Sci -SS -Sorb -Sal -GX -Wb,export_macro=TAO_CodecFactory_Export -Wb,export_include=tao/CodecFactory/codecfactory_export.h -Wb,include_guard=TAO_CODECFACTORY_SAFE_INCLUDE -Wb,safe_include=tao/CodecFactory/CodecFactory.h -o CodecFactory $(srcdir)/CodecFactory/IOP_Codec.pidl
+	@touch "$@"
+
+BUILT_SOURCES += \
+  CodecFactory/IOP_Codec_includeC.cpp \
+  CodecFactory/IOP_Codec_includeC.h
+
+CLEANFILES += \
+  CodecFactory/IOP_Codec_include-stamp \
+  CodecFactory/IOP_Codec_includeC.cpp \
+  CodecFactory/IOP_Codec_includeC.h
+
+CodecFactory/IOP_Codec_includeC.cpp CodecFactory/IOP_Codec_includeC.h: CodecFactory/IOP_Codec_include-stamp
+
+CodecFactory/IOP_Codec_include-stamp: $(srcdir)/CodecFactory/IOP_Codec_include.pidl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Ge 1 -Sci -SS -Sorb -Sa -GX -Wb,export_macro=TAO_CodecFactory_Export -Wb,export_include=tao/CodecFactory/codecfactory_export.h -Wb,unique_include=tao/CodecFactory/CodecFactory.h -o CodecFactory $(srcdir)/CodecFactory/IOP_Codec_include.pidl
+	@touch "$@"
 
 lib_LTLIBRARIES += libTAO_CodecFactory.la
 
@@ -1098,10 +1844,11 @@ libTAO_CodecFactory_la_SOURCES = \
   CodecFactory/CDR_Encaps_Codec.cpp \
   CodecFactory/CodecFactory.cpp \
   CodecFactory/CodecFactory_impl.cpp \
-  CodecFactory/IOP_CodecC.cpp
+  CodecFactory/IOP_CodecC.cpp \
+  CodecFactory/IOP_Codec_includeC.cpp
 
 libTAO_CodecFactory_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_CodecFactory_la_LIBADD = \
   libTAO_AnyTypeCode.la \
@@ -1113,12 +1860,11 @@ nobase_include_HEADERS += \
   CodecFactory/CodecFactory.h \
   CodecFactory/CodecFactory_impl.h \
   CodecFactory/IOP_Codec.pidl \
+  CodecFactory/IOP_Codec.pidl \
   CodecFactory/IOP_CodecC.h \
-  CodecFactory/IOP_CodecS.h \
   CodecFactory/IOP_Codec_include.pidl \
-  CodecFactory/IOP_Codec_includeA.h \
+  CodecFactory/IOP_Codec_include.pidl \
   CodecFactory/IOP_Codec_includeC.h \
-  CodecFactory/IOP_Codec_includeS.h \
   CodecFactory/codecfactory_export.h
 
 pkgconfig_DATA += \
@@ -1128,7 +1874,7 @@ CLEANFILES += \
   TAO_CodecFactory.pc
 
 TAO_CodecFactory.pc: ${top_builddir}/config.status ${srcdir}/CodecFactory/TAO_CodecFactory.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/CodecFactory/TAO_CodecFactory.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/CodecFactory/TAO_CodecFactory.pc.in
 
 EXTRA_DIST += \
   CodecFactory/TAO_CodecFactory.pc.in \
@@ -1137,7 +1883,7 @@ EXTRA_DIST += \
 
 ## Makefile.PI.am
 
-BUILT_SOURCES = \
+BUILT_SOURCES += \
   PI/ORBInitInfoC.cpp \
   PI/ORBInitInfoC.h
 
@@ -1149,8 +1895,8 @@ CLEANFILES += \
 PI/ORBInitInfoC.cpp PI/ORBInitInfoC.h: PI/ORBInitInfo-stamp
 
 PI/ORBInitInfo-stamp: $(srcdir)/PI/ORBInitInfo.pidl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Sci -SS -Gp -Gd -Ge 1 -Sc -Sorb -Sal -Wb,export_macro=TAO_PI_Export -Wb,export_include=tao/PI/pi_export.h -o PI $(srcdir)/PI/ORBInitInfo.pidl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Sci -SS -Gp -Gd -Ge 1 -Sorb -Sal -GX -Wb,export_macro=TAO_PI_Export -Wb,export_include=tao/PI/pi_export.h -o PI $(srcdir)/PI/ORBInitInfo.pidl
+	@touch "$@"
 
 BUILT_SOURCES += \
   PI/ORBInitializerA.cpp \
@@ -1168,8 +1914,8 @@ CLEANFILES += \
 PI/ORBInitializerA.cpp PI/ORBInitializerA.h PI/ORBInitializerC.cpp PI/ORBInitializerC.h: PI/ORBInitializer-stamp
 
 PI/ORBInitializer-stamp: $(srcdir)/PI/ORBInitializer.pidl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Sci -SS -GA -Gp -Gd -Ge 1 -Sc -Sorb -Sal -Wb,export_macro=TAO_PI_Export -Wb,export_include=tao/PI/pi_export.h -o PI $(srcdir)/PI/ORBInitializer.pidl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Sci -SS -GA -Gp -Gd -Ge 1 -Sorb -Sal -Wb,export_macro=TAO_PI_Export -Wb,export_include=tao/PI/pi_export.h -o PI $(srcdir)/PI/ORBInitializer.pidl
+	@touch "$@"
 
 BUILT_SOURCES += \
   PI/ClientRequestInterceptorA.cpp \
@@ -1187,8 +1933,8 @@ CLEANFILES += \
 PI/ClientRequestInterceptorA.cpp PI/ClientRequestInterceptorA.h PI/ClientRequestInterceptorC.cpp PI/ClientRequestInterceptorC.h: PI/ClientRequestInterceptor-stamp
 
 PI/ClientRequestInterceptor-stamp: $(srcdir)/PI/ClientRequestInterceptor.pidl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Sci -SS -GA -Gp -Gd -Ge 1 -Sc -Sorb -Sal -Wb,export_macro=TAO_PI_Export -Wb,export_include=tao/PI/pi_export.h -o PI $(srcdir)/PI/ClientRequestInterceptor.pidl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Sci -SS -GA -Gp -Gd -Ge 1 -Sorb -Sal -Wb,export_macro=TAO_PI_Export -Wb,export_include=tao/PI/pi_export.h -o PI $(srcdir)/PI/ClientRequestInterceptor.pidl
+	@touch "$@"
 
 BUILT_SOURCES += \
   PI/InterceptorA.cpp \
@@ -1206,8 +1952,8 @@ CLEANFILES += \
 PI/InterceptorA.cpp PI/InterceptorA.h PI/InterceptorC.cpp PI/InterceptorC.h: PI/Interceptor-stamp
 
 PI/Interceptor-stamp: $(srcdir)/PI/Interceptor.pidl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Sci -SS -GA -Gp -Gd -Ge 1 -Sc -Sorb -Sal -Wb,export_macro=TAO_PI_Export -Wb,export_include=tao/PI/pi_export.h -o PI $(srcdir)/PI/Interceptor.pidl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Sci -SS -GA -Gp -Gd -Ge 1 -Sorb -Sal -Wb,export_macro=TAO_PI_Export -Wb,export_include=tao/PI/pi_export.h -o PI $(srcdir)/PI/Interceptor.pidl
+	@touch "$@"
 
 BUILT_SOURCES += \
   PI/ClientRequestInfoA.cpp \
@@ -1225,8 +1971,8 @@ CLEANFILES += \
 PI/ClientRequestInfoA.cpp PI/ClientRequestInfoA.h PI/ClientRequestInfoC.cpp PI/ClientRequestInfoC.h: PI/ClientRequestInfo-stamp
 
 PI/ClientRequestInfo-stamp: $(srcdir)/PI/ClientRequestInfo.pidl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Sci -SS -GA -Gp -Gd -Ge 1 -Sc -Sorb -Sal -Wb,export_macro=TAO_PI_Export -Wb,export_include=tao/PI/pi_export.h -o PI $(srcdir)/PI/ClientRequestInfo.pidl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Sci -SS -GA -Gp -Gd -Ge 1 -Sorb -Sal -Wb,export_macro=TAO_PI_Export -Wb,export_include=tao/PI/pi_export.h -o PI $(srcdir)/PI/ClientRequestInfo.pidl
+	@touch "$@"
 
 BUILT_SOURCES += \
   PI/RequestInfoA.cpp \
@@ -1244,8 +1990,8 @@ CLEANFILES += \
 PI/RequestInfoA.cpp PI/RequestInfoA.h PI/RequestInfoC.cpp PI/RequestInfoC.h: PI/RequestInfo-stamp
 
 PI/RequestInfo-stamp: $(srcdir)/PI/RequestInfo.pidl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Sci -SS -GA -Gp -Gd -Ge 1 -Sc -Sorb -Sal -Wb,export_macro=TAO_PI_Export -Wb,export_include=tao/PI/pi_export.h -o PI $(srcdir)/PI/RequestInfo.pidl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Sci -SS -GA -Gp -Gd -Ge 1 -Sorb -Sal -Wb,export_macro=TAO_PI_Export -Wb,export_include=tao/PI/pi_export.h -o PI $(srcdir)/PI/RequestInfo.pidl
+	@touch "$@"
 
 BUILT_SOURCES += \
   PI/PIForwardRequestA.cpp \
@@ -1263,8 +2009,8 @@ CLEANFILES += \
 PI/PIForwardRequestA.cpp PI/PIForwardRequestA.h PI/PIForwardRequestC.cpp PI/PIForwardRequestC.h: PI/PIForwardRequest-stamp
 
 PI/PIForwardRequest-stamp: $(srcdir)/PI/PIForwardRequest.pidl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Sci -SS -GA -Gp -Gd -Ge 1 -Sc -Sorb -Sal -Wb,export_macro=TAO_PI_Export -Wb,export_include=tao/PI/pi_export.h -o PI $(srcdir)/PI/PIForwardRequest.pidl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Sci -SS -GA -Gp -Gd -Ge 1 -Sorb -Sal -Wb,export_macro=TAO_PI_Export -Wb,export_include=tao/PI/pi_export.h -o PI $(srcdir)/PI/PIForwardRequest.pidl
+	@touch "$@"
 
 BUILT_SOURCES += \
   PI/PICurrentA.cpp \
@@ -1282,8 +2028,8 @@ CLEANFILES += \
 PI/PICurrentA.cpp PI/PICurrentA.h PI/PICurrentC.cpp PI/PICurrentC.h: PI/PICurrent-stamp
 
 PI/PICurrent-stamp: $(srcdir)/PI/PICurrent.pidl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Sci -SS -GA -Gp -Gd -Ge 1 -Sc -Sorb -Sal -Wb,export_macro=TAO_PI_Export -Wb,export_include=tao/PI/pi_export.h -o PI $(srcdir)/PI/PICurrent.pidl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Sci -SS -GA -Gp -Gd -Ge 1 -Sorb -Sal -Wb,export_macro=TAO_PI_Export -Wb,export_include=tao/PI/pi_export.h -o PI $(srcdir)/PI/PICurrent.pidl
+	@touch "$@"
 
 BUILT_SOURCES += \
   PI/ProcessingModePolicyA.cpp \
@@ -1301,8 +2047,8 @@ CLEANFILES += \
 PI/ProcessingModePolicyA.cpp PI/ProcessingModePolicyA.h PI/ProcessingModePolicyC.cpp PI/ProcessingModePolicyC.h: PI/ProcessingModePolicy-stamp
 
 PI/ProcessingModePolicy-stamp: $(srcdir)/PI/ProcessingModePolicy.pidl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Sci -SS -GA -Gp -Gd -Ge 1 -Sc -Sorb -Sal -Wb,export_macro=TAO_PI_Export -Wb,export_include=tao/PI/pi_export.h -o PI $(srcdir)/PI/ProcessingModePolicy.pidl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Sci -SS -GA -Gp -Gd -Ge 1 -Sorb -Sal -Wb,export_macro=TAO_PI_Export -Wb,export_include=tao/PI/pi_export.h -o PI $(srcdir)/PI/ProcessingModePolicy.pidl
+	@touch "$@"
 
 BUILT_SOURCES += \
   PI/InvalidSlotA.cpp \
@@ -1320,8 +2066,8 @@ CLEANFILES += \
 PI/InvalidSlotA.cpp PI/InvalidSlotA.h PI/InvalidSlotC.cpp PI/InvalidSlotC.h: PI/InvalidSlot-stamp
 
 PI/InvalidSlot-stamp: $(srcdir)/PI/InvalidSlot.pidl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Sci -SS -GA -Gp -Gd -Ge 1 -Sc -Sal -Wb,export_macro=TAO_PI_Export -Wb,export_include=tao/PI/pi_export.h -o PI $(srcdir)/PI/InvalidSlot.pidl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Sci -SS -GA -Gp -Gd -Ge 1 -Sal -Wb,export_macro=TAO_PI_Export -Wb,export_include=tao/PI/pi_export.h -o PI $(srcdir)/PI/InvalidSlot.pidl
+	@touch "$@"
 
 lib_LTLIBRARIES += libTAO_PI.la
 
@@ -1372,7 +2118,7 @@ libTAO_PI_la_SOURCES = \
   PI/RequestInfo_Util.cpp
 
 libTAO_PI_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_PI_la_LIBADD = \
   libTAO_CodecFactory.la \
@@ -1456,13 +2202,28 @@ CLEANFILES += \
   TAO_PI.pc
 
 TAO_PI.pc: ${top_builddir}/config.status ${srcdir}/PI/TAO_PI.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/PI/TAO_PI.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/PI/TAO_PI.pc.in
 
 EXTRA_DIST += \
   PI/TAO_PI.pc.in
 
 
 ## Makefile.BiDir_GIOP.am
+
+BUILT_SOURCES += \
+  BiDir_GIOP/BiDirPolicyC.cpp \
+  BiDir_GIOP/BiDirPolicyC.h
+
+CLEANFILES += \
+  BiDir_GIOP/BiDirPolicy-stamp \
+  BiDir_GIOP/BiDirPolicyC.cpp \
+  BiDir_GIOP/BiDirPolicyC.h
+
+BiDir_GIOP/BiDirPolicyC.cpp BiDir_GIOP/BiDirPolicyC.h: BiDir_GIOP/BiDirPolicy-stamp
+
+BiDir_GIOP/BiDirPolicy-stamp: $(srcdir)/BiDir_GIOP/BiDirPolicy.pidl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Ge 1 -Sci -SS -Sorb -Sa -St -Wb,export_macro=TAO_BiDirGIOP_Export -Wb,export_include=tao/BiDir_GIOP/bidirgiop_export.h -Wb,include_guard=TAO_BIDIRGIOP_SAFE_INCLUDE -Wb,safe_include=tao/BiDir_GIOP/BiDirGIOP.h -o BiDir_GIOP $(srcdir)/BiDir_GIOP/BiDirPolicy.pidl
+	@touch "$@"
 
 lib_LTLIBRARIES += libTAO_BiDirGIOP.la
 
@@ -1482,7 +2243,7 @@ libTAO_BiDirGIOP_la_SOURCES = \
   BiDir_GIOP/BiDir_Policy_i.cpp
 
 libTAO_BiDirGIOP_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_BiDirGIOP_la_LIBADD = \
   libTAO_PI.la \
@@ -1493,6 +2254,7 @@ libTAO_BiDirGIOP_la_LIBADD = \
 
 nobase_include_HEADERS += \
   BiDir_GIOP/BiDirGIOP.h \
+  BiDir_GIOP/BiDirPolicy.pidl \
   BiDir_GIOP/BiDirPolicy.pidl \
   BiDir_GIOP/BiDirPolicyC.h \
   BiDir_GIOP/BiDirPolicy_Validator.h \
@@ -1508,7 +2270,7 @@ CLEANFILES += \
   TAO_BiDirGIOP.pc
 
 TAO_BiDirGIOP.pc: ${top_builddir}/config.status ${srcdir}/BiDir_GIOP/TAO_BiDirGIOP.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/BiDir_GIOP/TAO_BiDirGIOP.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/BiDir_GIOP/TAO_BiDirGIOP.pc.in
 
 EXTRA_DIST += \
   BiDir_GIOP/TAO_BiDirGIOP.pc.in \
@@ -1534,7 +2296,7 @@ PortableServer/ForwardRequestA.cpp PortableServer/ForwardRequestA.h PortableServ
 
 PortableServer/ForwardRequest-stamp: $(srcdir)/PortableServer/ForwardRequest.pidl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Sci -SS -Sorb -GA -Ge 1 -Wb,export_macro=TAO_PortableServer_Export -Wb,export_include=tao/PortableServer/portableserver_export.h -o PortableServer $(srcdir)/PortableServer/ForwardRequest.pidl
-	@touch $@
+	@touch "$@"
 
 BUILT_SOURCES += \
   PortableServer/AdapterActivatorA.cpp \
@@ -1553,7 +2315,7 @@ PortableServer/AdapterActivatorA.cpp PortableServer/AdapterActivatorA.h Portable
 
 PortableServer/AdapterActivator-stamp: $(srcdir)/PortableServer/AdapterActivator.pidl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Ge 1 -Sci -SS -Sorb -GA -Sal -Wb,export_macro=TAO_PortableServer_Export -Wb,export_include=tao/PortableServer/portableserver_export.h -o PortableServer $(srcdir)/PortableServer/AdapterActivator.pidl
-	@touch $@
+	@touch "$@"
 
 BUILT_SOURCES += \
   PortableServer/IdAssignmentPolicyA.cpp \
@@ -1572,7 +2334,7 @@ PortableServer/IdAssignmentPolicyA.cpp PortableServer/IdAssignmentPolicyA.h Port
 
 PortableServer/IdAssignmentPolicy-stamp: $(srcdir)/PortableServer/IdAssignmentPolicy.pidl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Ge 1 -Sci -SS -Sorb -GA -Sal -Wb,export_macro=TAO_PortableServer_Export -Wb,export_include=tao/PortableServer/portableserver_export.h -o PortableServer $(srcdir)/PortableServer/IdAssignmentPolicy.pidl
-	@touch $@
+	@touch "$@"
 
 BUILT_SOURCES += \
   PortableServer/IdUniquenessPolicyA.cpp \
@@ -1591,7 +2353,7 @@ PortableServer/IdUniquenessPolicyA.cpp PortableServer/IdUniquenessPolicyA.h Port
 
 PortableServer/IdUniquenessPolicy-stamp: $(srcdir)/PortableServer/IdUniquenessPolicy.pidl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Ge 1 -Sci -SS -Sorb -GA -Sal -Wb,export_macro=TAO_PortableServer_Export -Wb,export_include=tao/PortableServer/portableserver_export.h -o PortableServer $(srcdir)/PortableServer/IdUniquenessPolicy.pidl
-	@touch $@
+	@touch "$@"
 
 BUILT_SOURCES += \
   PortableServer/ImplicitActivationPolicyA.cpp \
@@ -1610,7 +2372,7 @@ PortableServer/ImplicitActivationPolicyA.cpp PortableServer/ImplicitActivationPo
 
 PortableServer/ImplicitActivationPolicy-stamp: $(srcdir)/PortableServer/ImplicitActivationPolicy.pidl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Ge 1 -Sci -SS -Sorb -GA -Sal -Wb,export_macro=TAO_PortableServer_Export -Wb,export_include=tao/PortableServer/portableserver_export.h -o PortableServer $(srcdir)/PortableServer/ImplicitActivationPolicy.pidl
-	@touch $@
+	@touch "$@"
 
 BUILT_SOURCES += \
   PortableServer/LifespanPolicyA.cpp \
@@ -1629,7 +2391,7 @@ PortableServer/LifespanPolicyA.cpp PortableServer/LifespanPolicyA.h PortableServ
 
 PortableServer/LifespanPolicy-stamp: $(srcdir)/PortableServer/LifespanPolicy.pidl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Ge 1 -Sci -SS -Sorb -GA -Sal -Wb,export_macro=TAO_PortableServer_Export -Wb,export_include=tao/PortableServer/portableserver_export.h -o PortableServer $(srcdir)/PortableServer/LifespanPolicy.pidl
-	@touch $@
+	@touch "$@"
 
 BUILT_SOURCES += \
   PortableServer/RequestProcessingPolicyA.cpp \
@@ -1648,7 +2410,7 @@ PortableServer/RequestProcessingPolicyA.cpp PortableServer/RequestProcessingPoli
 
 PortableServer/RequestProcessingPolicy-stamp: $(srcdir)/PortableServer/RequestProcessingPolicy.pidl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Ge 1 -Sci -SS -Sorb -GA -Sal -Wb,export_macro=TAO_PortableServer_Export -Wb,export_include=tao/PortableServer/portableserver_export.h -o PortableServer $(srcdir)/PortableServer/RequestProcessingPolicy.pidl
-	@touch $@
+	@touch "$@"
 
 BUILT_SOURCES += \
   PortableServer/ServantActivatorA.cpp \
@@ -1667,7 +2429,7 @@ PortableServer/ServantActivatorA.cpp PortableServer/ServantActivatorA.h Portable
 
 PortableServer/ServantActivator-stamp: $(srcdir)/PortableServer/ServantActivator.pidl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Ge 1 -Sci -SS -Sorb -GA -Sal -Wb,export_macro=TAO_PortableServer_Export -Wb,export_include=tao/PortableServer/portableserver_export.h -o PortableServer $(srcdir)/PortableServer/ServantActivator.pidl
-	@touch $@
+	@touch "$@"
 
 BUILT_SOURCES += \
   PortableServer/ServantLocatorA.cpp \
@@ -1686,7 +2448,7 @@ PortableServer/ServantLocatorA.cpp PortableServer/ServantLocatorA.h PortableServ
 
 PortableServer/ServantLocator-stamp: $(srcdir)/PortableServer/ServantLocator.pidl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Ge 1 -Sci -SS -Sorb -GA -Sal -Wb,export_macro=TAO_PortableServer_Export -Wb,export_include=tao/PortableServer/portableserver_export.h -o PortableServer $(srcdir)/PortableServer/ServantLocator.pidl
-	@touch $@
+	@touch "$@"
 
 BUILT_SOURCES += \
   PortableServer/ServantManagerA.cpp \
@@ -1705,7 +2467,7 @@ PortableServer/ServantManagerA.cpp PortableServer/ServantManagerA.h PortableServ
 
 PortableServer/ServantManager-stamp: $(srcdir)/PortableServer/ServantManager.pidl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Ge 1 -Sci -SS -Sorb -GA -Sal -Wb,export_macro=TAO_PortableServer_Export -Wb,export_include=tao/PortableServer/portableserver_export.h -o PortableServer $(srcdir)/PortableServer/ServantManager.pidl
-	@touch $@
+	@touch "$@"
 
 BUILT_SOURCES += \
   PortableServer/ServantRetentionPolicyA.cpp \
@@ -1724,7 +2486,7 @@ PortableServer/ServantRetentionPolicyA.cpp PortableServer/ServantRetentionPolicy
 
 PortableServer/ServantRetentionPolicy-stamp: $(srcdir)/PortableServer/ServantRetentionPolicy.pidl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Ge 1 -Sci -SS -Sorb -GA -Sal -Wb,export_macro=TAO_PortableServer_Export -Wb,export_include=tao/PortableServer/portableserver_export.h -o PortableServer $(srcdir)/PortableServer/ServantRetentionPolicy.pidl
-	@touch $@
+	@touch "$@"
 
 BUILT_SOURCES += \
   PortableServer/ThreadPolicyA.cpp \
@@ -1743,7 +2505,7 @@ PortableServer/ThreadPolicyA.cpp PortableServer/ThreadPolicyA.h PortableServer/T
 
 PortableServer/ThreadPolicy-stamp: $(srcdir)/PortableServer/ThreadPolicy.pidl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Ge 1 -Sci -SS -Sorb -GA -Sal -Wb,export_macro=TAO_PortableServer_Export -Wb,export_include=tao/PortableServer/portableserver_export.h -o PortableServer $(srcdir)/PortableServer/ThreadPolicy.pidl
-	@touch $@
+	@touch "$@"
 
 BUILT_SOURCES += \
   PortableServer/POAManagerC.cpp \
@@ -1758,7 +2520,7 @@ PortableServer/POAManagerC.cpp PortableServer/POAManagerC.h: PortableServer/POAM
 
 PortableServer/POAManager-stamp: $(srcdir)/PortableServer/POAManager.pidl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Ge 1 -Sci -SS -Sorb -Wb,export_macro=TAO_PortableServer_Export -Wb,export_include=tao/PortableServer/portableserver_export.h -o PortableServer $(srcdir)/PortableServer/POAManager.pidl
-	@touch $@
+	@touch "$@"
 
 BUILT_SOURCES += \
   PortableServer/POAManagerFactoryC.cpp \
@@ -1773,7 +2535,7 @@ PortableServer/POAManagerFactoryC.cpp PortableServer/POAManagerFactoryC.h: Porta
 
 PortableServer/POAManagerFactory-stamp: $(srcdir)/PortableServer/POAManagerFactory.pidl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Ge 1 -Sci -SS -Sorb -Wb,export_macro=TAO_PortableServer_Export -Wb,export_include=tao/PortableServer/portableserver_export.h -o PortableServer $(srcdir)/PortableServer/POAManagerFactory.pidl
-	@touch $@
+	@touch "$@"
 
 BUILT_SOURCES += \
   PortableServer/POAC.cpp \
@@ -1788,7 +2550,7 @@ PortableServer/POAC.cpp PortableServer/POAC.h: PortableServer/POA-stamp
 
 PortableServer/POA-stamp: $(srcdir)/PortableServer/POA.pidl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Ge 1 -Sci -SS -Sorb -Wb,export_macro=TAO_PortableServer_Export -Wb,export_include=tao/PortableServer/portableserver_export.h -o PortableServer $(srcdir)/PortableServer/POA.pidl
-	@touch $@
+	@touch "$@"
 
 BUILT_SOURCES += \
   PortableServer/PS_CurrentC.cpp \
@@ -1803,7 +2565,37 @@ PortableServer/PS_CurrentC.cpp PortableServer/PS_CurrentC.h: PortableServer/PS_C
 
 PortableServer/PS_Current-stamp: $(srcdir)/PortableServer/PS_Current.pidl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Ge 1 -Sci -SS -Sorb -Wb,export_macro=TAO_PortableServer_Export -Wb,export_include=tao/PortableServer/portableserver_export.h -o PortableServer $(srcdir)/PortableServer/PS_Current.pidl
-	@touch $@
+	@touch "$@"
+
+BUILT_SOURCES += \
+  PortableServer/PortableServer_includeC.cpp \
+  PortableServer/PortableServer_includeC.h
+
+CLEANFILES += \
+  PortableServer/PortableServer_include-stamp \
+  PortableServer/PortableServer_includeC.cpp \
+  PortableServer/PortableServer_includeC.h
+
+PortableServer/PortableServer_includeC.cpp PortableServer/PortableServer_includeC.h: PortableServer/PortableServer_include-stamp
+
+PortableServer/PortableServer_include-stamp: $(srcdir)/PortableServer/PortableServer_include.pidl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Ge 1 -Sci -SS -Sorb -Sa -GX -Wb,export_macro=TAO_PortableServer_Export -Wb,export_include=tao/PortableServer/portableserver_export.h -Wb,unique_include=tao/PortableServer/PortableServer.h -o PortableServer $(srcdir)/PortableServer/PortableServer_include.pidl
+	@touch "$@"
+
+BUILT_SOURCES += \
+  PortableServer/PortableServerC.cpp \
+  PortableServer/PortableServerC.h
+
+CLEANFILES += \
+  PortableServer/PortableServer-stamp \
+  PortableServer/PortableServerC.cpp \
+  PortableServer/PortableServerC.h
+
+PortableServer/PortableServerC.cpp PortableServer/PortableServerC.h: PortableServer/PortableServer-stamp
+
+PortableServer/PortableServer-stamp: $(srcdir)/PortableServer/PortableServer.pidl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Ge 1 -Sci -SS -Sorb -Sa -GX -Wb,export_macro=TAO_PortableServer_Export -Wb,export_include=tao/PortableServer/portableserver_export.h -Wb,include_guard=TAO_PORTABLESERVER_SAFE_INCLUDE -Wb,safe_include=tao/PortableServer/PortableServer.h -o PortableServer $(srcdir)/PortableServer/PortableServer.pidl
+	@touch "$@"
 
 lib_LTLIBRARIES += libTAO_PortableServer.la
 
@@ -1824,6 +2616,7 @@ libTAO_PortableServer_la_SOURCES = \
   PortableServer/Adapter_Activator.cpp \
   PortableServer/Collocated_Object_Proxy_Broker.cpp \
   PortableServer/Creation_Time.cpp \
+  PortableServer/DII_Arguments_Converter.cpp \
   PortableServer/Default_Acceptor_Filter.cpp \
   PortableServer/Default_Policy_Validator.cpp \
   PortableServer/Default_Servant_Dispatcher.cpp \
@@ -1891,6 +2684,7 @@ libTAO_PortableServer_la_SOURCES = \
   PortableServer/PortableServerC.cpp \
   PortableServer/PortableServer_Functions.cpp \
   PortableServer/PortableServer_WFunctions.cpp \
+  PortableServer/PortableServer_includeC.cpp \
   PortableServer/Regular_POA.cpp \
   PortableServer/RequestProcessingPolicy.cpp \
   PortableServer/RequestProcessingPolicyA.cpp \
@@ -1937,7 +2731,7 @@ libTAO_PortableServer_la_SOURCES = \
   PortableServer/Upcall_Wrapper.cpp
 
 libTAO_PortableServer_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_PortableServer_la_LIBADD = \
   libTAO_AnyTypeCode.la \
@@ -1947,7 +2741,7 @@ libTAO_PortableServer_la_LIBADD = \
 nobase_include_HEADERS += \
   PortableServer/Acceptor_Filter_Factory.h \
   PortableServer/Active_Object_Map.h \
-  PortableServer/Active_Object_Map.inl\
+  PortableServer/Active_Object_Map.inl \
   PortableServer/Active_Object_Map_Entry.h \
   PortableServer/Active_Policy_Strategies.h \
   PortableServer/Active_Policy_Strategies.inl \
@@ -1967,6 +2761,7 @@ nobase_include_HEADERS += \
   PortableServer/Collocated_Object_Proxy_Broker.h \
   PortableServer/Creation_Time.h \
   PortableServer/Creation_Time.inl \
+  PortableServer/DII_Arguments_Converter.h \
   PortableServer/Default_Acceptor_Filter.h \
   PortableServer/Default_Policy_Validator.h \
   PortableServer/Default_Servant_Dispatcher.h \
@@ -2033,7 +2828,7 @@ nobase_include_HEADERS += \
   PortableServer/ORT_Adapter.h \
   PortableServer/ORT_Adapter_Factory.h \
   PortableServer/Object_Adapter.h \
-  PortableServer/Object_Adapter.inl\
+  PortableServer/Object_Adapter.inl \
   PortableServer/Object_Adapter_Factory.h \
   PortableServer/Object_SArg_Traits.h \
   PortableServer/Object_SArgument_T.cpp \
@@ -2048,7 +2843,7 @@ nobase_include_HEADERS += \
   PortableServer/POA.pidl \
   PortableServer/POAC.h \
   PortableServer/POAManager.h \
-  PortableServer/POAManager.inl\
+  PortableServer/POAManager.inl \
   PortableServer/POAManager.pidl \
   PortableServer/POAManager.pidl \
   PortableServer/POAManagerC.h \
@@ -2057,14 +2852,14 @@ nobase_include_HEADERS += \
   PortableServer/POAManagerFactory.pidl \
   PortableServer/POAManagerFactoryC.h \
   PortableServer/POA_Cached_Policies.h \
-  PortableServer/POA_Cached_Policies.inl\
+  PortableServer/POA_Cached_Policies.inl \
   PortableServer/POA_Current.h \
   PortableServer/POA_Current_Factory.h \
   PortableServer/POA_Current_Impl.h \
   PortableServer/POA_Current_Impl.inl \
   PortableServer/POA_Guard.h \
   PortableServer/POA_Policy_Set.h \
-  PortableServer/POA_Policy_Set.inl\
+  PortableServer/POA_Policy_Set.inl \
   PortableServer/PS_Current.pidl \
   PortableServer/PS_Current.pidl \
   PortableServer/PS_CurrentC.h \
@@ -2078,14 +2873,13 @@ nobase_include_HEADERS += \
   PortableServer/Policy_Strategy.h \
   PortableServer/PortableServer.h \
   PortableServer/PortableServer.pidl \
+  PortableServer/PortableServer.pidl \
   PortableServer/PortableServerC.h \
-  PortableServer/PortableServerS.h \
   PortableServer/PortableServer_Functions.h \
   PortableServer/PortableServer_WFunctions.h \
   PortableServer/PortableServer_include.pidl \
-  PortableServer/PortableServer_includeA.h \
+  PortableServer/PortableServer_include.pidl \
   PortableServer/PortableServer_includeC.h \
-  PortableServer/PortableServer_includeS.h \
   PortableServer/Regular_POA.h \
   PortableServer/Regular_POA.inl \
   PortableServer/RequestProcessingPolicy.h \
@@ -2133,11 +2927,14 @@ nobase_include_HEADERS += \
   PortableServer/ServantRetentionStrategyRetain.h \
   PortableServer/ServantRetentionStrategyRetainFactoryImpl.h \
   PortableServer/Servant_Base.h \
-  PortableServer/Servant_Base.inl\
+  PortableServer/Servant_Base.inl \
   PortableServer/Servant_Dispatcher.h \
   PortableServer/Servant_Location.h \
   PortableServer/Servant_Upcall.h \
   PortableServer/Servant_Upcall.inl \
+  PortableServer/Servant_var.cpp \
+  PortableServer/Servant_var.h \
+  PortableServer/Servant_var.inl \
   PortableServer/Special_Basic_SArgument_T.cpp \
   PortableServer/Special_Basic_SArgument_T.h \
   PortableServer/Special_Basic_SArgument_T.inl \
@@ -2178,7 +2975,7 @@ CLEANFILES += \
   TAO_PortableServer.pc
 
 TAO_PortableServer.pc: ${top_builddir}/config.status ${srcdir}/PortableServer/TAO_PortableServer.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/PortableServer/TAO_PortableServer.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/PortableServer/TAO_PortableServer.pc.in
 
 EXTRA_DIST += \
   PortableServer/TAO_PortableServer.pc.in \
@@ -2204,7 +3001,7 @@ CSD_Framework/CSD_FrameworkA.cpp CSD_Framework/CSD_FrameworkA.h CSD_Framework/CS
 
 CSD_Framework/CSD_Framework-stamp: $(srcdir)/CSD_Framework/CSD_Framework.pidl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Sci -SS -Gp -Gd -Ge 1 -Sorb -GA -Sal -Wb,export_macro=TAO_CSD_FW_Export -Wb,export_include=tao/CSD_Framework/CSD_FW_Export.h -o CSD_Framework $(srcdir)/CSD_Framework/CSD_Framework.pidl
-	@touch $@
+	@touch "$@"
 
 lib_LTLIBRARIES += libTAO_CSD_Framework.la
 
@@ -2231,7 +3028,7 @@ libTAO_CSD_Framework_la_SOURCES = \
   CSD_Framework/CSD_Strategy_Repository.cpp
 
 libTAO_CSD_Framework_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_CSD_Framework_la_LIBADD = \
   libTAO_PI.la \
@@ -2269,13 +3066,15 @@ CLEANFILES += \
   TAO_CSD_Framework.pc
 
 TAO_CSD_Framework.pc: ${top_builddir}/config.status ${srcdir}/CSD_Framework/TAO_CSD_Framework.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/CSD_Framework/TAO_CSD_Framework.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/CSD_Framework/TAO_CSD_Framework.pc.in
 
 EXTRA_DIST += \
   CSD_Framework/TAO_CSD_Framework.pc.in
 
 
 ## Makefile.CSD_ThreadPool.am
+
+if BUILD_THREADS
 
 lib_LTLIBRARIES += libTAO_CSD_ThreadPool.la
 
@@ -2311,7 +3110,7 @@ libTAO_CSD_ThreadPool_la_SOURCES = \
   CSD_ThreadPool/CSD_ThreadPool.cpp
 
 libTAO_CSD_ThreadPool_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_CSD_ThreadPool_la_LIBADD = \
   libTAO_CSD_Framework.la \
@@ -2372,7 +3171,9 @@ CLEANFILES += \
   TAO_CSD_ThreadPool.pc
 
 TAO_CSD_ThreadPool.pc: ${top_builddir}/config.status ${srcdir}/CSD_ThreadPool/TAO_CSD_ThreadPool.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/CSD_ThreadPool/TAO_CSD_ThreadPool.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/CSD_ThreadPool/TAO_CSD_ThreadPool.pc.in
+
+endif BUILD_THREADS
 
 EXTRA_DIST += \
   CSD_ThreadPool/TAO_CSD_ThreadPool.pc.in
@@ -2394,8 +3195,8 @@ CLEANFILES += \
 IFR_Client/IFR_BaseC.cpp IFR_Client/IFR_BaseC.h IFR_Client/IFR_BaseC.inl: IFR_Client/IFR_Base-stamp
 
 IFR_Client/IFR_Base-stamp: $(srcdir)/IFR_Client/IFR_Base.pidl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -SS -Ge 1 -Sorb -Wb,export_macro=TAO_IFR_Client_Export -Wb,export_include=tao/IFR_Client/ifr_client_export.h -o IFR_Client $(srcdir)/IFR_Client/IFR_Base.pidl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -SS -Ge 1 -GX -Wb,stub_export_macro=TAO_IFR_Client_Export -Wb,stub_export_include=tao/IFR_Client/ifr_client_export.h -o IFR_Client $(srcdir)/IFR_Client/IFR_Base.pidl
+	@touch "$@"
 
 BUILT_SOURCES += \
   IFR_Client/IFR_BasicC.cpp \
@@ -2411,8 +3212,8 @@ CLEANFILES += \
 IFR_Client/IFR_BasicC.cpp IFR_Client/IFR_BasicC.h IFR_Client/IFR_BasicC.inl: IFR_Client/IFR_Basic-stamp
 
 IFR_Client/IFR_Basic-stamp: $(srcdir)/IFR_Client/IFR_Basic.pidl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -SS -Ge 1 -Sorb -Wb,export_macro=TAO_IFR_Client_Export -Wb,export_include=tao/IFR_Client/ifr_client_export.h -o IFR_Client $(srcdir)/IFR_Client/IFR_Basic.pidl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -SS -Ge 1 -GX -Wb,stub_export_macro=TAO_IFR_Client_Export -Wb,stub_export_include=tao/IFR_Client/ifr_client_export.h -o IFR_Client $(srcdir)/IFR_Client/IFR_Basic.pidl
+	@touch "$@"
 
 BUILT_SOURCES += \
   IFR_Client/IFR_ComponentsC.cpp \
@@ -2428,8 +3229,8 @@ CLEANFILES += \
 IFR_Client/IFR_ComponentsC.cpp IFR_Client/IFR_ComponentsC.h IFR_Client/IFR_ComponentsC.inl: IFR_Client/IFR_Components-stamp
 
 IFR_Client/IFR_Components-stamp: $(srcdir)/IFR_Client/IFR_Components.pidl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -SS -Ge 1 -Sorb -Wb,export_macro=TAO_IFR_Client_Export -Wb,export_include=tao/IFR_Client/ifr_client_export.h -o IFR_Client $(srcdir)/IFR_Client/IFR_Components.pidl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -SS -Ge 1 -GX -Wb,stub_export_macro=TAO_IFR_Client_Export -Wb,stub_export_include=tao/IFR_Client/ifr_client_export.h -o IFR_Client $(srcdir)/IFR_Client/IFR_Components.pidl
+	@touch "$@"
 
 BUILT_SOURCES += \
   IFR_Client/IFR_ExtendedC.cpp \
@@ -2445,8 +3246,8 @@ CLEANFILES += \
 IFR_Client/IFR_ExtendedC.cpp IFR_Client/IFR_ExtendedC.h IFR_Client/IFR_ExtendedC.inl: IFR_Client/IFR_Extended-stamp
 
 IFR_Client/IFR_Extended-stamp: $(srcdir)/IFR_Client/IFR_Extended.pidl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -SS -Ge 1 -Sorb -Wb,export_macro=TAO_IFR_Client_Export -Wb,export_include=tao/IFR_Client/ifr_client_export.h -o IFR_Client $(srcdir)/IFR_Client/IFR_Extended.pidl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -SS -Ge 1 -GX -Wb,stub_export_macro=TAO_IFR_Client_Export -Wb,stub_export_include=tao/IFR_Client/ifr_client_export.h -o IFR_Client $(srcdir)/IFR_Client/IFR_Extended.pidl
+	@touch "$@"
 
 lib_LTLIBRARIES += libTAO_IFR_Client.la
 
@@ -2465,7 +3266,7 @@ libTAO_IFR_Client_la_SOURCES = \
   IFR_Client/IFR_ExtendedC.cpp
 
 libTAO_IFR_Client_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_IFR_Client_la_LIBADD = \
   libTAO_AnyTypeCode.la \
@@ -2475,23 +3276,19 @@ libTAO_IFR_Client_la_LIBADD = \
 nobase_include_HEADERS += \
   IFR_Client/IFR_Base.pidl \
   IFR_Client/IFR_Base.pidl \
-  IFR_Client/IFR_BaseA.h \
   IFR_Client/IFR_BaseC.h \
   IFR_Client/IFR_BaseC.inl \
   IFR_Client/IFR_Basic.pidl \
   IFR_Client/IFR_Basic.pidl \
-  IFR_Client/IFR_BasicA.h \
   IFR_Client/IFR_BasicC.h \
   IFR_Client/IFR_BasicC.inl \
   IFR_Client/IFR_Client_Adapter_Impl.h \
   IFR_Client/IFR_Components.pidl \
   IFR_Client/IFR_Components.pidl \
-  IFR_Client/IFR_ComponentsA.h \
   IFR_Client/IFR_ComponentsC.h \
   IFR_Client/IFR_ComponentsC.inl \
   IFR_Client/IFR_Extended.pidl \
   IFR_Client/IFR_Extended.pidl \
-  IFR_Client/IFR_ExtendedA.h \
   IFR_Client/IFR_ExtendedC.h \
   IFR_Client/IFR_ExtendedC.inl \
   IFR_Client/ifr_client_export.h
@@ -2503,7 +3300,7 @@ CLEANFILES += \
   TAO_IFR_Client.pc
 
 TAO_IFR_Client.pc: ${top_builddir}/config.status ${srcdir}/IFR_Client/TAO_IFR_Client.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/IFR_Client/TAO_IFR_Client.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/IFR_Client/TAO_IFR_Client.pc.in
 
 EXTRA_DIST += \
   IFR_Client/TAO_IFR_Client.pc.in \
@@ -2525,7 +3322,7 @@ libTAO_Domain_la_SOURCES = \
   Domain/DomainS.cpp
 
 libTAO_Domain_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_Domain_la_LIBADD = \
   libTAO_PortableServer.la \
@@ -2549,7 +3346,7 @@ CLEANFILES += \
   TAO_Domain.pc
 
 TAO_Domain.pc: ${top_builddir}/config.status ${srcdir}/Domain/TAO_Domain.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/Domain/TAO_Domain.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/Domain/TAO_Domain.pc.in
 
 EXTRA_DIST += \
   Domain/TAO_Domain.pc.in \
@@ -2557,6 +3354,21 @@ EXTRA_DIST += \
 
 
 ## Makefile.DynamicAny.am
+
+BUILT_SOURCES += \
+  DynamicAny/DynamicAnyC.cpp \
+  DynamicAny/DynamicAnyC.h
+
+CLEANFILES += \
+  DynamicAny/DynamicAny-stamp \
+  DynamicAny/DynamicAnyC.cpp \
+  DynamicAny/DynamicAnyC.h
+
+DynamicAny/DynamicAnyC.cpp DynamicAny/DynamicAnyC.h: DynamicAny/DynamicAny-stamp
+
+DynamicAny/DynamicAny-stamp: $(srcdir)/DynamicAny/DynamicAny.pidl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Ge 1 -Sci -SS -Sorb -Wb,export_macro=TAO_DynamicAny_Export -Wb,export_include=tao/DynamicAny/dynamicany_export.h -Wb,include_guard=TAO_DYNAMICANY_SAFE_INCLUDE -Wb,safe_include=tao/DynamicAny/DynamicAny.h -o DynamicAny $(srcdir)/DynamicAny/DynamicAny.pidl
+	@touch "$@"
 
 lib_LTLIBRARIES += libTAO_DynamicAny.la
 
@@ -2580,7 +3392,7 @@ libTAO_DynamicAny_la_SOURCES = \
   DynamicAny/DynamicAnyC.cpp
 
 libTAO_DynamicAny_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_DynamicAny_la_LIBADD = \
   libTAO_AnyTypeCode.la \
@@ -2598,6 +3410,7 @@ nobase_include_HEADERS += \
   DynamicAny/DynUnion_i.h \
   DynamicAny/DynamicAny.h \
   DynamicAny/DynamicAny.pidl \
+  DynamicAny/DynamicAny.pidl \
   DynamicAny/DynamicAnyC.h \
   DynamicAny/dynamicany_export.h
 
@@ -2608,7 +3421,7 @@ CLEANFILES += \
   TAO_DynamicAny.pc
 
 TAO_DynamicAny.pc: ${top_builddir}/config.status ${srcdir}/DynamicAny/TAO_DynamicAny.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/DynamicAny/TAO_DynamicAny.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/DynamicAny/TAO_DynamicAny.pc.in
 
 EXTRA_DIST += \
   DynamicAny/TAO_DynamicAny.pc.in \
@@ -2632,7 +3445,7 @@ Valuetype/StringValueC.cpp Valuetype/StringValueC.h Valuetype/StringValueC.inl: 
 
 Valuetype/StringValue-stamp: $(srcdir)/Valuetype/StringValue.pidl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -SS -Ge 1 -Sorb -Wb,export_macro=TAO_Valuetype_Export -Wb,export_include=tao/Valuetype/valuetype_export.h -o Valuetype $(srcdir)/Valuetype/StringValue.pidl
-	@touch $@
+	@touch "$@"
 
 lib_LTLIBRARIES += libTAO_Valuetype.la
 
@@ -2654,7 +3467,7 @@ libTAO_Valuetype_la_SOURCES = \
   Valuetype/Valuetype_Adapter_Impl.cpp
 
 libTAO_Valuetype_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_Valuetype_la_LIBADD = \
   libTAO_AnyTypeCode.la \
@@ -2696,7 +3509,7 @@ CLEANFILES += \
   TAO_Valuetype.pc
 
 TAO_Valuetype.pc: ${top_builddir}/config.status ${srcdir}/Valuetype/TAO_Valuetype.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/Valuetype/TAO_Valuetype.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/Valuetype/TAO_Valuetype.pc.in
 
 EXTRA_DIST += \
   Valuetype/TAO_Valuetype.pc.in \
@@ -2723,8 +3536,8 @@ CLEANFILES += \
 Messaging/ExceptionHolderA.cpp Messaging/ExceptionHolderA.h Messaging/ExceptionHolderC.cpp Messaging/ExceptionHolderC.h Messaging/ExceptionHolderC.inl: Messaging/ExceptionHolder-stamp
 
 Messaging/ExceptionHolder-stamp: $(srcdir)/Messaging/ExceptionHolder.pidl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -SS -GA -Gp -Gd -Ge 1 -Sc -Sorb -Sal -Wb,export_macro=TAO_Messaging_Export -Wb,export_include=tao/Messaging/messaging_export.h -o Messaging $(srcdir)/Messaging/ExceptionHolder.pidl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -SS -GA -Gp -Gd -Ge 1 -Sorb -Sal -Wb,export_macro=TAO_Messaging_Export -Wb,export_include=tao/Messaging/messaging_export.h -o Messaging $(srcdir)/Messaging/ExceptionHolder.pidl
+	@touch "$@"
 
 BUILT_SOURCES += \
   Messaging/PollableC.cpp \
@@ -2738,8 +3551,23 @@ CLEANFILES += \
 Messaging/PollableC.cpp Messaging/PollableC.h: Messaging/Pollable-stamp
 
 Messaging/Pollable-stamp: $(srcdir)/Messaging/Pollable.pidl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Sci -SS -Gp -Gd -Ge 1 -Sc -Sorb -Sal -Wb,export_macro=TAO_Messaging_Export -Wb,export_include=tao/Messaging/messaging_export.h -o Messaging $(srcdir)/Messaging/Pollable.pidl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Sci -SS -Gp -Gd -Ge 1 -Sorb -Sal -GX -Wb,export_macro=TAO_Messaging_Export -Wb,export_include=tao/Messaging/messaging_export.h -o Messaging $(srcdir)/Messaging/Pollable.pidl
+	@touch "$@"
+
+BUILT_SOURCES += \
+  Messaging/Messaging_TypesC.cpp \
+  Messaging/Messaging_TypesC.h
+
+CLEANFILES += \
+  Messaging/Messaging_Types-stamp \
+  Messaging/Messaging_TypesC.cpp \
+  Messaging/Messaging_TypesC.h
+
+Messaging/Messaging_TypesC.cpp Messaging/Messaging_TypesC.h: Messaging/Messaging_Types-stamp
+
+Messaging/Messaging_Types-stamp: $(srcdir)/Messaging/Messaging_Types.pidl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Sci -SS -Gp -Gd -Ge 1 -Sorb -Sal -GX -Wb,export_macro=TAO_Messaging_Export -Wb,export_include=tao/Messaging/messaging_export.h -o Messaging $(srcdir)/Messaging/Messaging_Types.pidl
+	@touch "$@"
 
 BUILT_SOURCES += \
   Messaging/TAO_ExtA.cpp \
@@ -2757,8 +3585,8 @@ CLEANFILES += \
 Messaging/TAO_ExtA.cpp Messaging/TAO_ExtA.h Messaging/TAO_ExtC.cpp Messaging/TAO_ExtC.h: Messaging/TAO_Ext-stamp
 
 Messaging/TAO_Ext-stamp: $(srcdir)/Messaging/TAO_Ext.pidl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Sci -SS -GA -Gp -Gd -Ge 1 -Sc -Sorb -Sal -Wb,export_macro=TAO_Messaging_Export -Wb,export_include=tao/Messaging/messaging_export.h -o Messaging $(srcdir)/Messaging/TAO_Ext.pidl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Sci -SS -GA -Gp -Gd -Ge 1 -Sorb -Sal -Wb,export_macro=TAO_Messaging_Export -Wb,export_include=tao/Messaging/messaging_export.h -o Messaging $(srcdir)/Messaging/TAO_Ext.pidl
+	@touch "$@"
 
 BUILT_SOURCES += \
   Messaging/Messaging_RT_PolicyA.cpp \
@@ -2776,8 +3604,8 @@ CLEANFILES += \
 Messaging/Messaging_RT_PolicyA.cpp Messaging/Messaging_RT_PolicyA.h Messaging/Messaging_RT_PolicyC.cpp Messaging/Messaging_RT_PolicyC.h: Messaging/Messaging_RT_Policy-stamp
 
 Messaging/Messaging_RT_Policy-stamp: $(srcdir)/Messaging/Messaging_RT_Policy.pidl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Sci -SS -GA -Gp -Gd -Ge 1 -Sc -Sorb -Sal -Wb,export_macro=TAO_Messaging_Export -Wb,export_include=tao/Messaging/messaging_export.h -o Messaging $(srcdir)/Messaging/Messaging_RT_Policy.pidl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Sci -SS -GA -Gp -Gd -Ge 1 -Sorb -Sal -Wb,export_macro=TAO_Messaging_Export -Wb,export_include=tao/Messaging/messaging_export.h -o Messaging $(srcdir)/Messaging/Messaging_RT_Policy.pidl
+	@touch "$@"
 
 BUILT_SOURCES += \
   Messaging/Messaging_SyncScope_PolicyA.cpp \
@@ -2795,8 +3623,52 @@ CLEANFILES += \
 Messaging/Messaging_SyncScope_PolicyA.cpp Messaging/Messaging_SyncScope_PolicyA.h Messaging/Messaging_SyncScope_PolicyC.cpp Messaging/Messaging_SyncScope_PolicyC.h: Messaging/Messaging_SyncScope_Policy-stamp
 
 Messaging/Messaging_SyncScope_Policy-stamp: $(srcdir)/Messaging/Messaging_SyncScope_Policy.pidl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Sci -SS -GA -Gp -Gd -Ge 1 -Sc -Sorb -Sal -Wb,export_macro=TAO_Messaging_Export -Wb,export_include=tao/Messaging/messaging_export.h -o Messaging $(srcdir)/Messaging/Messaging_SyncScope_Policy.pidl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Sci -SS -GA -Gp -Gd -Ge 1 -Sorb -Sal -Wb,export_macro=TAO_Messaging_Export -Wb,export_include=tao/Messaging/messaging_export.h -o Messaging $(srcdir)/Messaging/Messaging_SyncScope_Policy.pidl
+	@touch "$@"
+
+BUILT_SOURCES += \
+  Messaging/Messaging_No_ImplA.cpp \
+  Messaging/Messaging_No_ImplA.h \
+  Messaging/Messaging_No_ImplC.cpp \
+  Messaging/Messaging_No_ImplC.h
+
+CLEANFILES += \
+  Messaging/Messaging_No_Impl-stamp \
+  Messaging/Messaging_No_ImplA.cpp \
+  Messaging/Messaging_No_ImplA.h \
+  Messaging/Messaging_No_ImplC.cpp \
+  Messaging/Messaging_No_ImplC.h
+
+Messaging/Messaging_No_ImplA.cpp Messaging/Messaging_No_ImplA.h Messaging/Messaging_No_ImplC.cpp Messaging/Messaging_No_ImplC.h: Messaging/Messaging_No_Impl-stamp
+
+Messaging/Messaging_No_Impl-stamp: $(srcdir)/Messaging/Messaging_No_Impl.pidl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Sci -SS -GA -Gp -Gd -Ge 1 -Sorb -Sal -Wb,export_macro=TAO_Messaging_Export -Wb,export_include=tao/Messaging/messaging_export.h -Wb,include_guard=TAO_MESSAGING_SAFE_INCLUDE -Wb,safe_include=tao/Messaging/Messaging.h -o Messaging $(srcdir)/Messaging/Messaging_No_Impl.pidl
+	@touch "$@"
+
+BUILT_SOURCES += \
+  Messaging/MessagingA.cpp \
+  Messaging/MessagingA.h \
+  Messaging/MessagingC.cpp \
+  Messaging/MessagingC.h \
+  Messaging/MessagingC.inl \
+  Messaging/MessagingS.cpp \
+  Messaging/MessagingS.h
+
+CLEANFILES += \
+  Messaging/Messaging-stamp \
+  Messaging/MessagingA.cpp \
+  Messaging/MessagingA.h \
+  Messaging/MessagingC.cpp \
+  Messaging/MessagingC.h \
+  Messaging/MessagingC.inl \
+  Messaging/MessagingS.cpp \
+  Messaging/MessagingS.h
+
+Messaging/MessagingA.cpp Messaging/MessagingA.h Messaging/MessagingC.cpp Messaging/MessagingC.h Messaging/MessagingC.inl Messaging/MessagingS.cpp Messaging/MessagingS.h: Messaging/Messaging-stamp
+
+Messaging/Messaging-stamp: $(srcdir)/Messaging/Messaging.pidl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Ssi -GA -Gp -Gd -Ge 1 -Sorb -Sal -Wb,export_macro=TAO_Messaging_Export -Wb,export_include=tao/Messaging/messaging_export.h -Wb,include_guard=TAO_MESSAGING_SAFE_INCLUDE -Wb,safe_include=tao/Messaging/Messaging.h -o Messaging $(srcdir)/Messaging/Messaging.pidl
+	@touch "$@"
 
 lib_LTLIBRARIES += libTAO_Messaging.la
 
@@ -2831,12 +3703,13 @@ libTAO_Messaging_la_SOURCES = \
   Messaging/Messaging_RT_PolicyC.cpp \
   Messaging/Messaging_SyncScope_PolicyA.cpp \
   Messaging/Messaging_SyncScope_PolicyC.cpp \
+  Messaging/Messaging_TypesC.cpp \
   Messaging/PollableC.cpp \
   Messaging/TAO_ExtA.cpp \
   Messaging/TAO_ExtC.cpp
 
 libTAO_Messaging_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_Messaging_la_LIBADD = \
   libTAO_Valuetype.la \
@@ -2855,7 +3728,6 @@ nobase_include_HEADERS += \
   Messaging/Asynch_Timeout_Handler.h \
   Messaging/Connection_Timeout_Policy_i.h \
   Messaging/ExceptionHolder.pidl \
-  Messaging/ExceptionHolder.pidl \
   Messaging/ExceptionHolderA.h \
   Messaging/ExceptionHolderC.h \
   Messaging/ExceptionHolderC.inl \
@@ -2866,9 +3738,6 @@ nobase_include_HEADERS += \
   Messaging/MessagingC.h \
   Messaging/MessagingC.inl \
   Messaging/MessagingS.h \
-  Messaging/MessagingS_T.cpp \
-  Messaging/MessagingS_T.h \
-  Messaging/MessagingS_T.inl \
   Messaging/Messaging_Loader.h \
   Messaging/Messaging_No_Impl.pidl \
   Messaging/Messaging_No_ImplA.h \
@@ -2876,19 +3745,17 @@ nobase_include_HEADERS += \
   Messaging/Messaging_ORBInitializer.h \
   Messaging/Messaging_PolicyFactory.h \
   Messaging/Messaging_Policy_i.h \
-  Messaging/Messaging_Policy_i.inl\
-  Messaging/Messaging_RT_Policy.pidl \
+  Messaging/Messaging_Policy_i.inl \
   Messaging/Messaging_RT_Policy.pidl \
   Messaging/Messaging_RT_PolicyA.h \
   Messaging/Messaging_RT_PolicyC.h \
   Messaging/Messaging_SyncScope_Policy.pidl \
-  Messaging/Messaging_SyncScope_Policy.pidl \
   Messaging/Messaging_SyncScope_PolicyA.h \
   Messaging/Messaging_SyncScope_PolicyC.h \
-  Messaging/Pollable.pidl \
+  Messaging/Messaging_Types.pidl \
+  Messaging/Messaging_TypesC.h \
   Messaging/Pollable.pidl \
   Messaging/PollableC.h \
-  Messaging/TAO_Ext.pidl \
   Messaging/TAO_Ext.pidl \
   Messaging/TAO_ExtA.h \
   Messaging/TAO_ExtC.h \
@@ -2901,7 +3768,7 @@ CLEANFILES += \
   TAO_Messaging.pc
 
 TAO_Messaging.pc: ${top_builddir}/config.status ${srcdir}/Messaging/TAO_Messaging.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/Messaging/TAO_Messaging.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/Messaging/TAO_Messaging.pc.in
 
 EXTRA_DIST += \
   Messaging/TAO_Messaging.pc.in \
@@ -2924,6 +3791,7 @@ libTAO_DynamicInterface_la_CPPFLAGS = \
 libTAO_DynamicInterface_la_SOURCES = \
   DynamicInterface/Context.cpp \
   DynamicInterface/DII_Arguments.cpp \
+  DynamicInterface/DII_Arguments_Converter_Impl.cpp \
   DynamicInterface/DII_Invocation.cpp \
   DynamicInterface/DII_Invocation_Adapter.cpp \
   DynamicInterface/DII_Reply_Dispatcher.cpp \
@@ -2935,7 +3803,7 @@ libTAO_DynamicInterface_la_SOURCES = \
   DynamicInterface/Unknown_User_Exception.cpp
 
 libTAO_DynamicInterface_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_DynamicInterface_la_LIBADD = \
   libTAO_Messaging.la \
@@ -2952,6 +3820,7 @@ nobase_include_HEADERS += \
   DynamicInterface/Context.inl \
   DynamicInterface/DII_Arguments.h \
   DynamicInterface/DII_Arguments.inl \
+  DynamicInterface/DII_Arguments_Converter_Impl.h \
   DynamicInterface/DII_CORBA_methods.h \
   DynamicInterface/DII_Invocation.h \
   DynamicInterface/DII_Invocation_Adapter.h \
@@ -2974,7 +3843,7 @@ CLEANFILES += \
   TAO_DynamicInterface.pc
 
 TAO_DynamicInterface.pc: ${top_builddir}/config.status ${srcdir}/DynamicInterface/TAO_DynamicInterface.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/DynamicInterface/TAO_DynamicInterface.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/DynamicInterface/TAO_DynamicInterface.pc.in
 
 endif BUILD_CORBA_MESSAGING
 
@@ -3002,7 +3871,7 @@ EndpointPolicy/EndpointPolicyA.cpp EndpointPolicy/EndpointPolicyA.h EndpointPoli
 
 EndpointPolicy/EndpointPolicy-stamp: $(srcdir)/EndpointPolicy/EndpointPolicy.pidl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -GA -SS -Sci -Ge 1 -Sorb -Wb,export_macro=TAO_EndpointPolicy_Export -Wb,export_include=tao/EndpointPolicy/EndpointPolicy_Export.h -o EndpointPolicy $(srcdir)/EndpointPolicy/EndpointPolicy.pidl
-	@touch $@
+	@touch "$@"
 
 BUILT_SOURCES += \
   EndpointPolicy/IIOPEndpointValueA.cpp \
@@ -3021,7 +3890,26 @@ EndpointPolicy/IIOPEndpointValueA.cpp EndpointPolicy/IIOPEndpointValueA.h Endpoi
 
 EndpointPolicy/IIOPEndpointValue-stamp: $(srcdir)/EndpointPolicy/IIOPEndpointValue.pidl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -GA -SS -Sci -Ge 1 -Sorb -Wb,export_macro=TAO_EndpointPolicy_Export -Wb,export_include=tao/EndpointPolicy/EndpointPolicy_Export.h -o EndpointPolicy $(srcdir)/EndpointPolicy/IIOPEndpointValue.pidl
-	@touch $@
+	@touch "$@"
+
+BUILT_SOURCES += \
+  EndpointPolicy/EndpointPolicyTypeA.cpp \
+  EndpointPolicy/EndpointPolicyTypeA.h \
+  EndpointPolicy/EndpointPolicyTypeC.cpp \
+  EndpointPolicy/EndpointPolicyTypeC.h
+
+CLEANFILES += \
+  EndpointPolicy/EndpointPolicyType-stamp \
+  EndpointPolicy/EndpointPolicyTypeA.cpp \
+  EndpointPolicy/EndpointPolicyTypeA.h \
+  EndpointPolicy/EndpointPolicyTypeC.cpp \
+  EndpointPolicy/EndpointPolicyTypeC.h
+
+EndpointPolicy/EndpointPolicyTypeA.cpp EndpointPolicy/EndpointPolicyTypeA.h EndpointPolicy/EndpointPolicyTypeC.cpp EndpointPolicy/EndpointPolicyTypeC.h: EndpointPolicy/EndpointPolicyType-stamp
+
+EndpointPolicy/EndpointPolicyType-stamp: $(srcdir)/EndpointPolicy/EndpointPolicyType.pidl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -GA -SS -Sci -Ge 1 -Sorb -Wb,export_macro=TAO_EndpointPolicy_Export -Wb,export_include=tao/EndpointPolicy/EndpointPolicy_Export.h -o EndpointPolicy $(srcdir)/EndpointPolicy/EndpointPolicyType.pidl
+	@touch "$@"
 
 lib_LTLIBRARIES += libTAO_EndpointPolicy.la
 
@@ -3049,7 +3937,7 @@ libTAO_EndpointPolicy_la_SOURCES = \
   EndpointPolicy/IIOPEndpointValue_i.cpp
 
 libTAO_EndpointPolicy_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_EndpointPolicy_la_LIBADD = \
   libTAO_PI.la \
@@ -3086,13 +3974,66 @@ CLEANFILES += \
   TAO_EndpointPolicy.pc
 
 TAO_EndpointPolicy.pc: ${top_builddir}/config.status ${srcdir}/EndpointPolicy/TAO_EndpointPolicy.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/EndpointPolicy/TAO_EndpointPolicy.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/EndpointPolicy/TAO_EndpointPolicy.pc.in
 
 EXTRA_DIST += \
   EndpointPolicy/TAO_EndpointPolicy.pc.in
 
 
 ## Makefile.ObjRefTemplate.am
+
+BUILT_SOURCES += \
+  ObjRefTemplate/ObjectReferenceTemplateC.cpp \
+  ObjRefTemplate/ObjectReferenceTemplateC.h \
+  ObjRefTemplate/ObjectReferenceTemplateC.inl
+
+CLEANFILES += \
+  ObjRefTemplate/ObjectReferenceTemplate-stamp \
+  ObjRefTemplate/ObjectReferenceTemplateC.cpp \
+  ObjRefTemplate/ObjectReferenceTemplateC.h \
+  ObjRefTemplate/ObjectReferenceTemplateC.inl
+
+ObjRefTemplate/ObjectReferenceTemplateC.cpp ObjRefTemplate/ObjectReferenceTemplateC.h ObjRefTemplate/ObjectReferenceTemplateC.inl: ObjRefTemplate/ObjectReferenceTemplate-stamp
+
+ObjRefTemplate/ObjectReferenceTemplate-stamp: $(srcdir)/ObjRefTemplate/ObjectReferenceTemplate.pidl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Ge 1 -SS -Sorb -GX -Wb,export_macro=TAO_ORT_Export -Wb,export_include=tao/ObjRefTemplate/ort_export.h -Wb,include_guard=TAO_OBJREF_TEMPLATE_SAFE_INCLUDE -Wb,safe_include=tao/ObjRefTemplate/ObjectReferenceTemplate.h -o ObjRefTemplate $(srcdir)/ObjRefTemplate/ObjectReferenceTemplate.pidl
+	@touch "$@"
+
+BUILT_SOURCES += \
+  ObjRefTemplate/ObjectReferenceTemplate_includeC.cpp \
+  ObjRefTemplate/ObjectReferenceTemplate_includeC.h
+
+CLEANFILES += \
+  ObjRefTemplate/ObjectReferenceTemplate_include-stamp \
+  ObjRefTemplate/ObjectReferenceTemplate_includeC.cpp \
+  ObjRefTemplate/ObjectReferenceTemplate_includeC.h
+
+ObjRefTemplate/ObjectReferenceTemplate_includeC.cpp ObjRefTemplate/ObjectReferenceTemplate_includeC.h: ObjRefTemplate/ObjectReferenceTemplate_include-stamp
+
+ObjRefTemplate/ObjectReferenceTemplate_include-stamp: $(srcdir)/ObjRefTemplate/ObjectReferenceTemplate_include.pidl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Ge 1 -SS -Sorb -GX -Sci -Wb,export_macro=TAO_ORT_Export -Wb,export_include=tao/ObjRefTemplate/ort_export.h -Wb,unique_include=tao/ObjRefTemplate/ObjectReferenceTemplate.h -o ObjRefTemplate $(srcdir)/ObjRefTemplate/ObjectReferenceTemplate_include.pidl
+	@touch "$@"
+
+BUILT_SOURCES += \
+  ObjRefTemplate/Default_ORTA.cpp \
+  ObjRefTemplate/Default_ORTA.h \
+  ObjRefTemplate/Default_ORTC.cpp \
+  ObjRefTemplate/Default_ORTC.h \
+  ObjRefTemplate/Default_ORTC.inl
+
+CLEANFILES += \
+  ObjRefTemplate/Default_ORT-stamp \
+  ObjRefTemplate/Default_ORTA.cpp \
+  ObjRefTemplate/Default_ORTA.h \
+  ObjRefTemplate/Default_ORTC.cpp \
+  ObjRefTemplate/Default_ORTC.h \
+  ObjRefTemplate/Default_ORTC.inl
+
+ObjRefTemplate/Default_ORTA.cpp ObjRefTemplate/Default_ORTA.h ObjRefTemplate/Default_ORTC.cpp ObjRefTemplate/Default_ORTC.h ObjRefTemplate/Default_ORTC.inl: ObjRefTemplate/Default_ORT-stamp
+
+ObjRefTemplate/Default_ORT-stamp: $(srcdir)/ObjRefTemplate/Default_ORT.pidl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Ge 1 -SS -GA -Sorb -Wb,export_macro=TAO_ORT_Export -Wb,export_include=tao/ObjRefTemplate/ort_export.h -o ObjRefTemplate $(srcdir)/ObjRefTemplate/Default_ORT.pidl
+	@touch "$@"
 
 lib_LTLIBRARIES += libTAO_ObjRefTemplate.la
 
@@ -3108,12 +4049,12 @@ libTAO_ObjRefTemplate_la_SOURCES = \
   ObjRefTemplate/Default_ORTC.cpp \
   ObjRefTemplate/ORT_Adapter_Factory_Impl.cpp \
   ObjRefTemplate/ORT_Adapter_Impl.cpp \
-  ObjRefTemplate/ObjectReferenceTemplateA.cpp \
   ObjRefTemplate/ObjectReferenceTemplateC.cpp \
-  ObjRefTemplate/ObjectReferenceTemplate_i.cpp
+  ObjRefTemplate/ObjectReferenceTemplate_i.cpp \
+  ObjRefTemplate/ObjectReferenceTemplate_includeC.cpp
 
 libTAO_ObjRefTemplate_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_ObjRefTemplate_la_LIBADD = \
   libTAO_PortableServer.la \
@@ -3124,19 +4065,21 @@ libTAO_ObjRefTemplate_la_LIBADD = \
 
 nobase_include_HEADERS += \
   ObjRefTemplate/Default_ORT.pidl \
+  ObjRefTemplate/Default_ORT.pidl \
+  ObjRefTemplate/Default_ORTA.h \
   ObjRefTemplate/Default_ORTC.h \
   ObjRefTemplate/Default_ORTC.inl \
   ObjRefTemplate/ORT_Adapter_Factory_Impl.h \
   ObjRefTemplate/ORT_Adapter_Impl.h \
   ObjRefTemplate/ObjectReferenceTemplate.h \
   ObjRefTemplate/ObjectReferenceTemplate.pidl \
+  ObjRefTemplate/ObjectReferenceTemplate.pidl \
   ObjRefTemplate/ObjectReferenceTemplateC.h \
   ObjRefTemplate/ObjectReferenceTemplateC.inl \
   ObjRefTemplate/ObjectReferenceTemplate_i.h \
   ObjRefTemplate/ObjectReferenceTemplate_include.pidl \
-  ObjRefTemplate/ObjectReferenceTemplate_includeA.h \
+  ObjRefTemplate/ObjectReferenceTemplate_include.pidl \
   ObjRefTemplate/ObjectReferenceTemplate_includeC.h \
-  ObjRefTemplate/ObjectReferenceTemplate_includeS.h \
   ObjRefTemplate/ort_export.h
 
 pkgconfig_DATA += \
@@ -3146,7 +4089,7 @@ CLEANFILES += \
   TAO_ObjRefTemplate.pc
 
 TAO_ObjRefTemplate.pc: ${top_builddir}/config.status ${srcdir}/ObjRefTemplate/TAO_ObjRefTemplate.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/ObjRefTemplate/TAO_ObjRefTemplate.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/ObjRefTemplate/TAO_ObjRefTemplate.pc.in
 
 EXTRA_DIST += \
   ObjRefTemplate/TAO_ObjRefTemplate.pc.in \
@@ -3154,6 +4097,36 @@ EXTRA_DIST += \
 
 
 ## Makefile.IORInterceptor.am
+
+BUILT_SOURCES += \
+  IORInterceptor/IORInterceptorC.cpp \
+  IORInterceptor/IORInterceptorC.h
+
+CLEANFILES += \
+  IORInterceptor/IORInterceptor-stamp \
+  IORInterceptor/IORInterceptorC.cpp \
+  IORInterceptor/IORInterceptorC.h
+
+IORInterceptor/IORInterceptorC.cpp IORInterceptor/IORInterceptorC.h: IORInterceptor/IORInterceptor-stamp
+
+IORInterceptor/IORInterceptor-stamp: $(srcdir)/IORInterceptor/IORInterceptor.pidl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Ge 1 -Sci -SS -Sorb -Sa -St -Wb,export_macro=TAO_IORInterceptor_Export -Wb,export_include=tao/IORInterceptor/iorinterceptor_export.h -Wb,include_guard=TAO_IORINTERCEPTOR_SAFE_INCLUDE -Wb,safe_include=tao/IORInterceptor/IORInterceptor.h -o IORInterceptor $(srcdir)/IORInterceptor/IORInterceptor.pidl
+	@touch "$@"
+
+BUILT_SOURCES += \
+  IORInterceptor/IORInfoC.cpp \
+  IORInterceptor/IORInfoC.h
+
+CLEANFILES += \
+  IORInterceptor/IORInfo-stamp \
+  IORInterceptor/IORInfoC.cpp \
+  IORInterceptor/IORInfoC.h
+
+IORInterceptor/IORInfoC.cpp IORInterceptor/IORInfoC.h: IORInterceptor/IORInfo-stamp
+
+IORInterceptor/IORInfo-stamp: $(srcdir)/IORInterceptor/IORInfo.pidl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Ge 1 -Sci -SS -Sorb -Sa -St -Wb,export_macro=TAO_IORInterceptor_Export -Wb,export_include=tao/IORInterceptor/iorinterceptor_export.h -o IORInterceptor $(srcdir)/IORInterceptor/IORInfo.pidl
+	@touch "$@"
 
 lib_LTLIBRARIES += libTAO_IORInterceptor.la
 
@@ -3173,7 +4146,7 @@ libTAO_IORInterceptor_la_SOURCES = \
   IORInterceptor/IORInterceptor_Details.cpp
 
 libTAO_IORInterceptor_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_IORInterceptor_la_LIBADD = \
   libTAO_PI.la \
@@ -3189,8 +4162,10 @@ nobase_include_HEADERS += \
   IORInterceptor/IORInfo.h \
   IORInterceptor/IORInfo.inl \
   IORInterceptor/IORInfo.pidl \
+  IORInterceptor/IORInfo.pidl \
   IORInterceptor/IORInfoC.h \
   IORInterceptor/IORInterceptor.h \
+  IORInterceptor/IORInterceptor.pidl \
   IORInterceptor/IORInterceptor.pidl \
   IORInterceptor/IORInterceptorC.h \
   IORInterceptor/IORInterceptor_Adapter_Factory_Impl.h \
@@ -3205,7 +4180,7 @@ CLEANFILES += \
   TAO_IORInterceptor.pc
 
 TAO_IORInterceptor.pc: ${top_builddir}/config.status ${srcdir}/IORInterceptor/TAO_IORInterceptor.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/IORInterceptor/TAO_IORInterceptor.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/IORInterceptor/TAO_IORInterceptor.pc.in
 
 EXTRA_DIST += \
   IORInterceptor/TAO_IORInterceptor.pc.in \
@@ -3213,6 +4188,21 @@ EXTRA_DIST += \
 
 
 ## Makefile.IORManipulation.am
+
+BUILT_SOURCES += \
+  IORManipulation/IORC.cpp \
+  IORManipulation/IORC.h
+
+CLEANFILES += \
+  IORManipulation/IOR-stamp \
+  IORManipulation/IORC.cpp \
+  IORManipulation/IORC.h
+
+IORManipulation/IORC.cpp IORManipulation/IORC.h: IORManipulation/IOR-stamp
+
+IORManipulation/IOR-stamp: $(srcdir)/IORManipulation/IOR.pidl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Ge 1 -Sci -SS -Sorb -GX -Wb,export_macro=TAO_IORManip_Export -Wb,export_include=tao/IORManipulation/ior_manip_export.h -Wb,include_guard=TAO_IORMANIP_SAFE_INCLUDE -Wb,safe_include=tao/IORManipulation/IORManip_Loader.h -o IORManipulation $(srcdir)/IORManipulation/IOR.pidl
+	@touch "$@"
 
 lib_LTLIBRARIES += libTAO_IORManip.la
 
@@ -3224,13 +4214,12 @@ libTAO_IORManip_la_CPPFLAGS = \
   -DTAO_IORMANIP_BUILD_DLL
 
 libTAO_IORManip_la_SOURCES = \
-  IORManipulation/IORA.cpp \
   IORManipulation/IORC.cpp \
   IORManipulation/IORManip_Loader.cpp \
   IORManipulation/IORManipulation.cpp
 
 libTAO_IORManip_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_IORManip_la_LIBADD = \
   libTAO_AnyTypeCode.la \
@@ -3238,6 +4227,7 @@ libTAO_IORManip_la_LIBADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 nobase_include_HEADERS += \
+  IORManipulation/IOR.pidl \
   IORManipulation/IOR.pidl \
   IORManipulation/IORC.h \
   IORManipulation/IORManip_Loader.h \
@@ -3251,7 +4241,7 @@ CLEANFILES += \
   TAO_IORManip.pc
 
 TAO_IORManip.pc: ${top_builddir}/config.status ${srcdir}/IORManipulation/TAO_IORManip.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/IORManipulation/TAO_IORManip.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/IORManipulation/TAO_IORManip.pc.in
 
 EXTRA_DIST += \
   IORManipulation/TAO_IORManip.pc.in \
@@ -3259,6 +4249,21 @@ EXTRA_DIST += \
 
 
 ## Makefile.IORTable.am
+
+BUILT_SOURCES += \
+  IORTable/IORTableC.cpp \
+  IORTable/IORTableC.h
+
+CLEANFILES += \
+  IORTable/IORTable-stamp \
+  IORTable/IORTableC.cpp \
+  IORTable/IORTableC.h
+
+IORTable/IORTableC.cpp IORTable/IORTableC.h: IORTable/IORTable-stamp
+
+IORTable/IORTable-stamp: $(srcdir)/IORTable/IORTable.pidl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Ge 1 -Sci -SS -Sorb -Wb,export_macro=TAO_IORTable_Export -Wb,export_include=tao/IORTable/iortable_export.h -Wb,include_guard=TAO_IORTABLE_SAFE_INCLUDE -Wb,safe_include=tao/IORTable/IORTable.h -o IORTable $(srcdir)/IORTable/IORTable.pidl
+	@touch "$@"
 
 lib_LTLIBRARIES += libTAO_IORTable.la
 
@@ -3276,7 +4281,7 @@ libTAO_IORTable_la_SOURCES = \
   IORTable/Table_Adapter.cpp
 
 libTAO_IORTable_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_IORTable_la_LIBADD = \
   libTAO.la \
@@ -3284,6 +4289,7 @@ libTAO_IORTable_la_LIBADD = \
 
 nobase_include_HEADERS += \
   IORTable/IORTable.h \
+  IORTable/IORTable.pidl \
   IORTable/IORTable.pidl \
   IORTable/IORTableC.h \
   IORTable/IOR_Table_Impl.h \
@@ -3297,7 +4303,7 @@ CLEANFILES += \
   TAO_IORTable.pc
 
 TAO_IORTable.pc: ${top_builddir}/config.status ${srcdir}/IORTable/TAO_IORTable.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/IORTable/TAO_IORTable.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/IORTable/TAO_IORTable.pc.in
 
 EXTRA_DIST += \
   IORTable/TAO_IORTable.pc.in \
@@ -3328,8 +4334,8 @@ CLEANFILES += \
 ImR_Client/ServerObjectA.cpp ImR_Client/ServerObjectA.h ImR_Client/ServerObjectC.cpp ImR_Client/ServerObjectC.h ImR_Client/ServerObjectC.inl ImR_Client/ServerObjectS.cpp ImR_Client/ServerObjectS.h: ImR_Client/ServerObject-stamp
 
 ImR_Client/ServerObject-stamp: $(srcdir)/ImR_Client/ServerObject.pidl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Ssi -Sc -Gd -Ge 1 -Sorb -GA -Wb,export_macro=TAO_IMR_Client_Export -Wb,export_include=tao/ImR_Client/imr_client_export.h -o ImR_Client $(srcdir)/ImR_Client/ServerObject.pidl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Ssi -Gd -Ge 1 -Sorb -GA -Wb,export_macro=TAO_IMR_Client_Export -Wb,export_include=tao/ImR_Client/imr_client_export.h -o ImR_Client $(srcdir)/ImR_Client/ServerObject.pidl
+	@touch "$@"
 
 BUILT_SOURCES += \
   ImR_Client/ImplRepoC.cpp \
@@ -3349,8 +4355,8 @@ CLEANFILES += \
 ImR_Client/ImplRepoC.cpp ImR_Client/ImplRepoC.h ImR_Client/ImplRepoC.inl ImR_Client/ImplRepoS.cpp ImR_Client/ImplRepoS.h: ImR_Client/ImplRepo-stamp
 
 ImR_Client/ImplRepo-stamp: $(srcdir)/ImR_Client/ImplRepo.pidl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Ssi -Sc -Gd -Ge 1 -Sorb -Wb,export_macro=TAO_IMR_Client_Export -Wb,export_include=tao/ImR_Client/imr_client_export.h -o ImR_Client $(srcdir)/ImR_Client/ImplRepo.pidl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Ssi -Gd -Ge 1 -Sorb -GX -Wb,export_macro=TAO_IMR_Client_Export -Wb,export_include=tao/ImR_Client/imr_client_export.h -o ImR_Client $(srcdir)/ImR_Client/ImplRepo.pidl
+	@touch "$@"
 
 lib_LTLIBRARIES += libTAO_ImR_Client.la
 
@@ -3371,7 +4377,7 @@ libTAO_ImR_Client_la_SOURCES = \
   ImR_Client/ServerObject_i.cpp
 
 libTAO_ImR_Client_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_ImR_Client_la_LIBADD = \
   libTAO_PortableServer.la \
@@ -3383,7 +4389,6 @@ nobase_include_HEADERS += \
   ImR_Client/ImR_Client.h \
   ImR_Client/ImplRepo.pidl \
   ImR_Client/ImplRepo.pidl \
-  ImR_Client/ImplRepoA.h \
   ImR_Client/ImplRepoC.h \
   ImR_Client/ImplRepoC.inl \
   ImR_Client/ImplRepoS.h \
@@ -3403,7 +4408,7 @@ CLEANFILES += \
   TAO_ImR_Client.pc
 
 TAO_ImR_Client.pc: ${top_builddir}/config.status ${srcdir}/ImR_Client/TAO_ImR_Client.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/ImR_Client/TAO_ImR_Client.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/ImR_Client/TAO_ImR_Client.pc.in
 
 EXTRA_DIST += \
   ImR_Client/TAO_IMR_Client.rc \
@@ -3428,8 +4433,23 @@ CLEANFILES += \
 PI_Server/ServerRequestInfoA.cpp PI_Server/ServerRequestInfoA.h PI_Server/ServerRequestInfoC.cpp PI_Server/ServerRequestInfoC.h: PI_Server/ServerRequestInfo-stamp
 
 PI_Server/ServerRequestInfo-stamp: $(srcdir)/PI_Server/ServerRequestInfo.pidl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Sci -SS -GA -Gp -Gd -Ge 1 -Sc -Sorb -Sal -Wb,export_macro=TAO_PI_Server_Export -Wb,export_include=tao/PI_Server/pi_server_export.h -o PI_Server $(srcdir)/PI_Server/ServerRequestInfo.pidl
-	@touch $@
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Sci -SS -GA -Gp -Gd -Ge 1 -Sorb -Sal -Wb,export_macro=TAO_PI_Server_Export -Wb,export_include=tao/PI_Server/pi_server_export.h -o PI_Server $(srcdir)/PI_Server/ServerRequestInfo.pidl
+	@touch "$@"
+
+BUILT_SOURCES += \
+  PI_Server/PI_Server_includeC.cpp \
+  PI_Server/PI_Server_includeC.h
+
+CLEANFILES += \
+  PI_Server/PI_Server_include-stamp \
+  PI_Server/PI_Server_includeC.cpp \
+  PI_Server/PI_Server_includeC.h
+
+PI_Server/PI_Server_includeC.cpp PI_Server/PI_Server_includeC.h: PI_Server/PI_Server_include-stamp
+
+PI_Server/PI_Server_include-stamp: $(srcdir)/PI_Server/PI_Server_include.pidl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Ge 1 -SS -Sorb -GX -Sci -Wb,export_macro=TAO_PI_Server_Export -Wb,export_include=tao/PI_Server/pi_server_export.h -Wb,unique_include=tao/PI_Server/ServerRequestInterceptorC.h -o PI_Server $(srcdir)/PI_Server/PI_Server_include.pidl
+	@touch "$@"
 
 lib_LTLIBRARIES += libTAO_PI_Server.la
 
@@ -3444,6 +4464,7 @@ libTAO_PI_Server_la_SOURCES = \
   PI_Server/PICurrent_Guard.cpp \
   PI_Server/PI_Server.cpp \
   PI_Server/PI_Server_Loader.cpp \
+  PI_Server/PI_Server_includeC.cpp \
   PI_Server/PortableServer_ORBInitializer.cpp \
   PI_Server/PortableServer_PolicyFactory.cpp \
   PI_Server/ServerInterceptorAdapter.cpp \
@@ -3456,7 +4477,7 @@ libTAO_PI_Server_la_SOURCES = \
   PI_Server/ServerRequestInterceptor_Factory_Impl.cpp
 
 libTAO_PI_Server_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_PI_Server_la_LIBADD = \
   libTAO_PortableServer.la \
@@ -3471,9 +4492,8 @@ nobase_include_HEADERS += \
   PI_Server/PI_Server.h \
   PI_Server/PI_Server_Loader.h \
   PI_Server/PI_Server_include.pidl \
-  PI_Server/PI_Server_includeA.h \
+  PI_Server/PI_Server_include.pidl \
   PI_Server/PI_Server_includeC.h \
-  PI_Server/PI_Server_includeS.h \
   PI_Server/Policy_Creator_T.h \
   PI_Server/PortableServer_ORBInitializer.h \
   PI_Server/PortableServer_PolicyFactory.h \
@@ -3500,7 +4520,7 @@ CLEANFILES += \
   TAO_PI_Server.pc
 
 TAO_PI_Server.pc: ${top_builddir}/config.status ${srcdir}/PI_Server/TAO_PI_Server.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/PI_Server/TAO_PI_Server.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/PI_Server/TAO_PI_Server.pc.in
 
 EXTRA_DIST += \
   PI_Server/TAO_PI_Server.pc.in
@@ -3509,6 +4529,21 @@ EXTRA_DIST += \
 ## Makefile.RTCORBA.am
 
 if BUILD_RT_CORBA
+
+BUILT_SOURCES += \
+  RTCORBA/RTCORBA_includeC.cpp \
+  RTCORBA/RTCORBA_includeC.h
+
+CLEANFILES += \
+  RTCORBA/RTCORBA_include-stamp \
+  RTCORBA/RTCORBA_includeC.cpp \
+  RTCORBA/RTCORBA_includeC.h
+
+RTCORBA/RTCORBA_includeC.cpp RTCORBA/RTCORBA_includeC.h: RTCORBA/RTCORBA_include-stamp
+
+RTCORBA/RTCORBA_include-stamp: $(srcdir)/RTCORBA/RTCORBA_include.pidl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Ge 1 -Sci -SS -Sorb -Sa -GX -Wb,export_macro=TAO_RTCORBA_Export -Wb,export_include=tao/RTCORBA/rtcorba_export.h -Wb,unique_include=tao/RTCORBA/RTCORBA.h -o RTCORBA $(srcdir)/RTCORBA/RTCORBA_include.pidl
+	@touch "$@"
 
 lib_LTLIBRARIES += libTAO_RTCORBA.la
 
@@ -3532,6 +4567,7 @@ libTAO_RTCORBA_la_SOURCES = \
   RTCORBA/RTCORBA.cpp \
   RTCORBA/RTCORBAA.cpp \
   RTCORBA/RTCORBAC.cpp \
+  RTCORBA/RTCORBA_includeC.cpp \
   RTCORBA/RT_Current.cpp \
   RTCORBA/RT_Endpoint_Selector_Factory.cpp \
   RTCORBA/RT_Endpoint_Utils.cpp \
@@ -3551,7 +4587,7 @@ libTAO_RTCORBA_la_SOURCES = \
   RTCORBA/Thread_Pool.cpp
 
 libTAO_RTCORBA_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_RTCORBA_la_LIBADD = \
   libTAO_PI.la \
@@ -3568,17 +4604,18 @@ nobase_include_HEADERS += \
   RTCORBA/Multi_Priority_Mapping.h \
   RTCORBA/Network_Priority_Mapping.h \
   RTCORBA/Network_Priority_Mapping_Manager.h \
-  RTCORBA/Network_Priority_Mapping_Manager.inl\
+  RTCORBA/Network_Priority_Mapping_Manager.inl \
   RTCORBA/Priority_Mapping.h \
   RTCORBA/Priority_Mapping_Manager.h \
-  RTCORBA/Priority_Mapping_Manager.inl\
+  RTCORBA/Priority_Mapping_Manager.inl \
   RTCORBA/RTCORBA.h \
   RTCORBA/RTCORBA.pidl \
+  RTCORBA/RTCORBAA.h \
   RTCORBA/RTCORBAC.h \
+  RTCORBA/RTCORBAS.h \
   RTCORBA/RTCORBA_include.pidl \
-  RTCORBA/RTCORBA_includeA.h \
+  RTCORBA/RTCORBA_include.pidl \
   RTCORBA/RTCORBA_includeC.h \
-  RTCORBA/RTCORBA_includeS.h \
   RTCORBA/RT_Current.h \
   RTCORBA/RT_Endpoint_Selector_Factory.h \
   RTCORBA/RT_Endpoint_Utils.h \
@@ -3609,7 +4646,7 @@ CLEANFILES += \
   TAO_RTCORBA.pc
 
 TAO_RTCORBA.pc: ${top_builddir}/config.status ${srcdir}/RTCORBA/TAO_RTCORBA.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/RTCORBA/TAO_RTCORBA.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/RTCORBA/TAO_RTCORBA.pc.in
 
 endif BUILD_RT_CORBA
 
@@ -3622,6 +4659,36 @@ EXTRA_DIST += \
 
 if BUILD_RT_CORBA
 
+BUILT_SOURCES += \
+  RTPortableServer/RTPortableServerC.cpp \
+  RTPortableServer/RTPortableServerC.h
+
+CLEANFILES += \
+  RTPortableServer/RTPortableServer-stamp \
+  RTPortableServer/RTPortableServerC.cpp \
+  RTPortableServer/RTPortableServerC.h
+
+RTPortableServer/RTPortableServerC.cpp RTPortableServer/RTPortableServerC.h: RTPortableServer/RTPortableServer-stamp
+
+RTPortableServer/RTPortableServer-stamp: $(srcdir)/RTPortableServer/RTPortableServer.pidl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Gp -Gd -Ge 1 -Sci -SS -Sorb -GX -Wb,export_macro=TAO_RTPortableServer_Export -Wb,export_include=tao/RTPortableServer/rtportableserver_export.h -Wb,include_guard=TAO_RT_PORTABLESERVER_SAFE_INCLUDE -Wb,safe_include=tao/RTPortableServer/RTPortableServer.h -o RTPortableServer $(srcdir)/RTPortableServer/RTPortableServer.pidl
+	@touch "$@"
+
+BUILT_SOURCES += \
+  RTPortableServer/RTPortableServer_includeC.cpp \
+  RTPortableServer/RTPortableServer_includeC.h
+
+CLEANFILES += \
+  RTPortableServer/RTPortableServer_include-stamp \
+  RTPortableServer/RTPortableServer_includeC.cpp \
+  RTPortableServer/RTPortableServer_includeC.h
+
+RTPortableServer/RTPortableServer_includeC.cpp RTPortableServer/RTPortableServer_includeC.h: RTPortableServer/RTPortableServer_include-stamp
+
+RTPortableServer/RTPortableServer_include-stamp: $(srcdir)/RTPortableServer/RTPortableServer_include.pidl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Ge 1 -SS -Sorb -GX -Sci -Wb,export_macro=TAO_RTPortableServer_Export -Wb,export_include=tao/RTPortableServer/rtportableserver_export.h -Wb,unique_include=tao/RTPortableServer/RTPortableServer.h -o RTPortableServer $(srcdir)/RTPortableServer/RTPortableServer_include.pidl
+	@touch "$@"
+
 lib_LTLIBRARIES += libTAO_RTPortableServer.la
 
 libTAO_RTPortableServer_la_CPPFLAGS = \
@@ -3633,8 +4700,8 @@ libTAO_RTPortableServer_la_CPPFLAGS = \
 
 libTAO_RTPortableServer_la_SOURCES = \
   RTPortableServer/RTPortableServer.cpp \
-  RTPortableServer/RTPortableServerA.cpp \
   RTPortableServer/RTPortableServerC.cpp \
+  RTPortableServer/RTPortableServer_includeC.cpp \
   RTPortableServer/RT_Acceptor_Filters.cpp \
   RTPortableServer/RT_Collocation_Resolver.cpp \
   RTPortableServer/RT_Object_Adapter_Factory.cpp \
@@ -3643,7 +4710,7 @@ libTAO_RTPortableServer_la_SOURCES = \
   RTPortableServer/RT_Servant_Dispatcher.cpp
 
 libTAO_RTPortableServer_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_RTPortableServer_la_LIBADD = \
   libTAO_PortableServer.la \
@@ -3657,16 +4724,16 @@ libTAO_RTPortableServer_la_LIBADD = \
 nobase_include_HEADERS += \
   RTPortableServer/RTPortableServer.h \
   RTPortableServer/RTPortableServer.pidl \
+  RTPortableServer/RTPortableServer.pidl \
   RTPortableServer/RTPortableServerC.h \
-  RTPortableServer/RTPortableServerS.h \
+  RTPortableServer/RTPortableServer_include.pidl \
   RTPortableServer/RTPortableServer_include.pidl \
   RTPortableServer/RTPortableServer_includeC.h \
-  RTPortableServer/RTPortableServer_includeS.h \
   RTPortableServer/RT_Acceptor_Filters.h \
   RTPortableServer/RT_Collocation_Resolver.h \
   RTPortableServer/RT_Object_Adapter_Factory.h \
   RTPortableServer/RT_POA.h \
-  RTPortableServer/RT_POA.inl\
+  RTPortableServer/RT_POA.inl \
   RTPortableServer/RT_Policy_Validator.h \
   RTPortableServer/RT_Servant_Dispatcher.h \
   RTPortableServer/rtportableserver_export.h
@@ -3678,7 +4745,7 @@ CLEANFILES += \
   TAO_RTPortableServer.pc
 
 TAO_RTPortableServer.pc: ${top_builddir}/config.status ${srcdir}/RTPortableServer/TAO_RTPortableServer.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/RTPortableServer/TAO_RTPortableServer.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/RTPortableServer/TAO_RTPortableServer.pc.in
 
 endif BUILD_RT_CORBA
 
@@ -3691,6 +4758,36 @@ EXTRA_DIST += \
 
 if BUILD_CORBA_MESSAGING
 if BUILD_RT_CORBA
+
+BUILT_SOURCES += \
+  RTScheduling/RTSchedulerC.cpp \
+  RTScheduling/RTSchedulerC.h
+
+CLEANFILES += \
+  RTScheduling/RTScheduler-stamp \
+  RTScheduling/RTSchedulerC.cpp \
+  RTScheduling/RTSchedulerC.h
+
+RTScheduling/RTSchedulerC.cpp RTScheduling/RTSchedulerC.h: RTScheduling/RTScheduler-stamp
+
+RTScheduling/RTScheduler-stamp: $(srcdir)/RTScheduling/RTScheduler.pidl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Gp -Gd -Ge 1 -Sci -SS -Sorb -GX -Wb,export_macro=TAO_RTScheduler_Export -Wb,export_include=tao/RTScheduling/rtscheduler_export.h -Wb,include_guard=TAO_RTSCHEDULER_SAFE_INCLUDE -Wb,safe_include=tao/RTScheduling/RTScheduler.h -o RTScheduling $(srcdir)/RTScheduling/RTScheduler.pidl
+	@touch "$@"
+
+BUILT_SOURCES += \
+  RTScheduling/RTScheduler_includeC.cpp \
+  RTScheduling/RTScheduler_includeC.h
+
+CLEANFILES += \
+  RTScheduling/RTScheduler_include-stamp \
+  RTScheduling/RTScheduler_includeC.cpp \
+  RTScheduling/RTScheduler_includeC.h
+
+RTScheduling/RTScheduler_includeC.cpp RTScheduling/RTScheduler_includeC.h: RTScheduling/RTScheduler_include-stamp
+
+RTScheduling/RTScheduler_include-stamp: $(srcdir)/RTScheduling/RTScheduler_include.pidl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Ge 1 -SS -Sorb -GX -Sci -Wb,export_macro=TAO_RTScheduler_Export -Wb,export_include=tao/RTScheduling/rtscheduler_export.h -Wb,unique_include=tao/RTScheduling/RTScheduler.h -o RTScheduling $(srcdir)/RTScheduling/RTScheduler_include.pidl
+	@touch "$@"
 
 lib_LTLIBRARIES += libTAO_RTScheduler.la
 
@@ -3705,15 +4802,15 @@ libTAO_RTScheduler_la_SOURCES = \
   RTScheduling/Current.cpp \
   RTScheduling/Distributable_Thread.cpp \
   RTScheduling/RTScheduler.cpp \
-  RTScheduling/RTSchedulerA.cpp \
   RTScheduling/RTSchedulerC.cpp \
   RTScheduling/RTScheduler_Initializer.cpp \
   RTScheduling/RTScheduler_Loader.cpp \
   RTScheduling/RTScheduler_Manager.cpp \
+  RTScheduling/RTScheduler_includeC.cpp \
   RTScheduling/Request_Interceptor.cpp
 
 libTAO_RTScheduler_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_RTScheduler_la_LIBADD = \
   libTAO_PI_Server.la \
@@ -3730,15 +4827,15 @@ nobase_include_HEADERS += \
   RTScheduling/Distributable_Thread.h \
   RTScheduling/RTScheduler.h \
   RTScheduling/RTScheduler.pidl \
+  RTScheduling/RTScheduler.pidl \
   RTScheduling/RTSchedulerC.h \
   RTScheduling/RTScheduler_Initializer.h \
   RTScheduling/RTScheduler_Loader.h \
   RTScheduling/RTScheduler_Manager.h \
-  RTScheduling/RTScheduler_Manager.inl\
+  RTScheduling/RTScheduler_Manager.inl \
   RTScheduling/RTScheduler_include.pidl \
-  RTScheduling/RTScheduler_includeA.h \
+  RTScheduling/RTScheduler_include.pidl \
   RTScheduling/RTScheduler_includeC.h \
-  RTScheduling/RTScheduler_includeS.h \
   RTScheduling/Request_Interceptor.h \
   RTScheduling/ThreadAction.h \
   RTScheduling/rtscheduler_export.h
@@ -3750,7 +4847,7 @@ CLEANFILES += \
   TAO_RTScheduler.pc
 
 TAO_RTScheduler.pc: ${top_builddir}/config.status ${srcdir}/RTScheduling/TAO_RTScheduler.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/RTScheduling/TAO_RTScheduler.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/RTScheduling/TAO_RTScheduler.pc.in
 
 endif BUILD_RT_CORBA
 endif BUILD_CORBA_MESSAGING
@@ -3775,7 +4872,7 @@ libTAO_SmartProxies_la_SOURCES = \
   SmartProxies/Smart_Proxies.cpp
 
 libTAO_SmartProxies_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_SmartProxies_la_LIBADD = \
   libTAO.la \
@@ -3793,7 +4890,7 @@ CLEANFILES += \
   TAO_SmartProxies.pc
 
 TAO_SmartProxies.pc: ${top_builddir}/config.status ${srcdir}/SmartProxies/TAO_SmartProxies.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/SmartProxies/TAO_SmartProxies.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/SmartProxies/TAO_SmartProxies.pc.in
 
 EXTRA_DIST += \
   SmartProxies/SmartProxies.rc \
@@ -3803,6 +4900,36 @@ EXTRA_DIST += \
 ## Makefile.Strategies.am
 
 if !BUILD_ACE_FOR_TAO
+
+BUILT_SOURCES += \
+  Strategies/uiop_endpointsC.cpp \
+  Strategies/uiop_endpointsC.h
+
+CLEANFILES += \
+  Strategies/uiop_endpoints-stamp \
+  Strategies/uiop_endpointsC.cpp \
+  Strategies/uiop_endpointsC.h
+
+Strategies/uiop_endpointsC.cpp Strategies/uiop_endpointsC.h: Strategies/uiop_endpoints-stamp
+
+Strategies/uiop_endpoints-stamp: $(srcdir)/Strategies/uiop_endpoints.pidl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Sci -SS -Gp -Gd -Ge 1 -Sorb -DCORBA3 -Wb,export_macro=TAO_Strategies_Export -Wb,export_include=tao/Strategies/strategies_export.h -o Strategies $(srcdir)/Strategies/uiop_endpoints.pidl
+	@touch "$@"
+
+BUILT_SOURCES += \
+  Strategies/sciop_endpointsC.cpp \
+  Strategies/sciop_endpointsC.h
+
+CLEANFILES += \
+  Strategies/sciop_endpoints-stamp \
+  Strategies/sciop_endpointsC.cpp \
+  Strategies/sciop_endpointsC.h
+
+Strategies/sciop_endpointsC.cpp Strategies/sciop_endpointsC.h: Strategies/sciop_endpoints-stamp
+
+Strategies/sciop_endpoints-stamp: $(srcdir)/Strategies/sciop_endpoints.pidl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Sci -SS -Gp -Gd -Ge 1 -Sorb -DCORBA3 -Wb,export_macro=TAO_Strategies_Export -Wb,export_include=tao/Strategies/strategies_export.h -o Strategies $(srcdir)/Strategies/sciop_endpoints.pidl
+	@touch "$@"
 
 lib_LTLIBRARIES += libTAO_Strategies.la
 
@@ -3856,7 +4983,7 @@ libTAO_Strategies_la_SOURCES = \
   Strategies/uiop_endpointsC.cpp
 
 libTAO_Strategies_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_Strategies_la_LIBADD = \
   libTAO_AnyTypeCode.la \
@@ -3865,11 +4992,11 @@ libTAO_Strategies_la_LIBADD = \
 
 nobase_include_HEADERS += \
   Strategies/DIOP_Acceptor.h \
-  Strategies/DIOP_Acceptor.inl\
+  Strategies/DIOP_Acceptor.inl \
   Strategies/DIOP_Connection_Handler.h \
   Strategies/DIOP_Connector.h \
   Strategies/DIOP_Endpoint.h \
-  Strategies/DIOP_Endpoint.inl\
+  Strategies/DIOP_Endpoint.inl \
   Strategies/DIOP_Factory.h \
   Strategies/DIOP_Profile.h \
   Strategies/DIOP_Transport.h \
@@ -3882,11 +5009,11 @@ nobase_include_HEADERS += \
   Strategies/OC_Endpoint_Selector_Loader.h \
   Strategies/Optimized_Connection_Endpoint_Selector.h \
   Strategies/SCIOP_Acceptor.h \
-  Strategies/SCIOP_Acceptor.inl\
+  Strategies/SCIOP_Acceptor.inl \
   Strategies/SCIOP_Connection_Handler.h \
   Strategies/SCIOP_Connector.h \
   Strategies/SCIOP_Endpoint.h \
-  Strategies/SCIOP_Endpoint.inl\
+  Strategies/SCIOP_Endpoint.inl \
   Strategies/SCIOP_Factory.h \
   Strategies/SCIOP_Lite_Factory.h \
   Strategies/SCIOP_Profile.h \
@@ -3895,7 +5022,7 @@ nobase_include_HEADERS += \
   Strategies/SHMIOP_Connection_Handler.h \
   Strategies/SHMIOP_Connector.h \
   Strategies/SHMIOP_Endpoint.h \
-  Strategies/SHMIOP_Endpoint.inl\
+  Strategies/SHMIOP_Endpoint.inl \
   Strategies/SHMIOP_Factory.h \
   Strategies/SHMIOP_Profile.h \
   Strategies/SHMIOP_Transport.h \
@@ -3903,15 +5030,17 @@ nobase_include_HEADERS += \
   Strategies/UIOP_Connection_Handler.h \
   Strategies/UIOP_Connector.h \
   Strategies/UIOP_Endpoint.h \
-  Strategies/UIOP_Endpoint.inl\
+  Strategies/UIOP_Endpoint.inl \
   Strategies/UIOP_Factory.h \
   Strategies/UIOP_Lite_Factory.h \
   Strategies/UIOP_Profile.h \
   Strategies/UIOP_Transport.h \
   Strategies/advanced_resource.h \
   Strategies/sciop_endpoints.pidl \
+  Strategies/sciop_endpoints.pidl \
   Strategies/sciop_endpointsC.h \
   Strategies/strategies_export.h \
+  Strategies/uiop_endpoints.pidl \
   Strategies/uiop_endpoints.pidl \
   Strategies/uiop_endpointsC.h
 
@@ -3922,7 +5051,7 @@ CLEANFILES += \
   TAO_Strategies.pc
 
 TAO_Strategies.pc: ${top_builddir}/config.status ${srcdir}/Strategies/TAO_Strategies.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/Strategies/TAO_Strategies.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/Strategies/TAO_Strategies.pc.in
 
 endif !BUILD_ACE_FOR_TAO
 
@@ -3949,11 +5078,11 @@ libTAO_FlResource_la_CPPFLAGS = \
   -DTAO_FLRESOURCE_BUILD_DLL
 
 libTAO_FlResource_la_SOURCES = \
-  FlResource_Factory.cpp \
-  FlResource_Loader.cpp
+  FlResource/FlResource_Factory.cpp \
+  FlResource/FlResource_Loader.cpp
 
 libTAO_FlResource_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ $(ACE_FLTK_LDFLAGS)
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ $(ACE_FLTK_LDFLAGS) -L. -L$(ACE_ROOT)/lib
 
 libTAO_FlResource_la_LIBADD = \
   $(ACE_BUILDDIR)/ace/libACE_FlReactor.la \
@@ -3962,9 +5091,9 @@ libTAO_FlResource_la_LIBADD = \
   $(ACE_FLTK_LIBS)
 
 nobase_include_HEADERS += \
-  FlResource_Factory.h \
-  FlResource_Loader.h \
-  TAO_FlResource_Export.h
+  FlResource/FlResource_Factory.h \
+  FlResource/FlResource_Loader.h \
+  FlResource/TAO_FlResource_Export.h
 
 endif BUILD_X11
 endif BUILD_GL
@@ -3987,11 +5116,11 @@ libTAO_QtResource_la_CPPFLAGS = \
   -DTAO_QTRESOURCE_BUILD_DLL
 
 libTAO_QtResource_la_SOURCES = \
-  QtResource_Factory.cpp \
-  QtResource_Loader.cpp
+  QtResource/QtResource_Factory.cpp \
+  QtResource/QtResource_Loader.cpp
 
 libTAO_QtResource_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ $(ACE_QT_LDFLAGS)
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ $(ACE_QT_LDFLAGS) -L. -L$(ACE_ROOT)/lib
 
 libTAO_QtResource_la_LIBADD = \
   $(ACE_BUILDDIR)/ace/libACE_QtReactor.la \
@@ -4000,9 +5129,9 @@ libTAO_QtResource_la_LIBADD = \
   $(ACE_QT_LIBS)
 
 nobase_include_HEADERS += \
-  QtResource_Factory.h \
-  QtResource_Loader.h \
-  TAO_QtResource_Export.h
+  QtResource/QtResource_Factory.h \
+  QtResource/QtResource_Loader.h \
+  QtResource/TAO_QtResource_Export.h
 
 endif BUILD_QT
 endif BUILD_ACE_QTREACTOR
@@ -4024,11 +5153,11 @@ libTAO_TkResource_la_CPPFLAGS = \
   -DTAO_TKRESOURCE_BUILD_DLL
 
 libTAO_TkResource_la_SOURCES = \
-  TkResource_Factory.cpp \
-  TkResource_Loader.cpp
+  TkResource/TkResource_Factory.cpp \
+  TkResource/TkResource_Loader.cpp
 
 libTAO_TkResource_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ $(ACE_TK_LDFLAGS) $(ACE_TCL_LDFLAGS)
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ $(ACE_TK_LDFLAGS) $(ACE_TCL_LDFLAGS) -L. -L$(ACE_ROOT)/lib
 
 libTAO_TkResource_la_LIBADD = \
   $(ACE_BUILDDIR)/ace/libACE_TkReactor.la \
@@ -4038,9 +5167,9 @@ libTAO_TkResource_la_LIBADD = \
   $(ACE_TCL_LIBS)
 
 nobase_include_HEADERS += \
-  TAO_TkResource_Export.h \
-  TkResource_Factory.h \
-  TkResource_Loader.h
+  TkResource/TAO_TkResource_Export.h \
+  TkResource/TkResource_Factory.h \
+  TkResource/TkResource_Loader.h
 
 endif BUILD_TK
 endif BUILD_ACE_TKREACTOR
@@ -4063,11 +5192,11 @@ libTAO_XtResource_la_CPPFLAGS = \
   -DTAO_XTRESOURCE_BUILD_DLL
 
 libTAO_XtResource_la_SOURCES = \
-  XtResource_Factory.cpp \
-  XtResource_Loader.cpp
+  XtResource/XtResource_Factory.cpp \
+  XtResource/XtResource_Loader.cpp
 
 libTAO_XtResource_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ $(ACE_X11_LDFLAGS) $(ACE_XT_LDFLAGS)
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ $(ACE_X11_LDFLAGS) $(ACE_XT_LDFLAGS) -L. -L$(ACE_ROOT)/lib
 
 libTAO_XtResource_la_LIBADD = \
   $(ACE_BUILDDIR)/ace/libACE_XtReactor.la \
@@ -4077,9 +5206,9 @@ libTAO_XtResource_la_LIBADD = \
   $(ACE_X11_LIBS)
 
 nobase_include_HEADERS += \
-  TAO_XtResource_Export.h \
-  XtResource_Factory.h \
-  XtResource_Loader.h
+  XtResource/TAO_XtResource_Export.h \
+  XtResource/XtResource_Factory.h \
+  XtResource/XtResource_Loader.h
 
 endif BUILD_XT
 endif BUILD_X11
@@ -4100,7 +5229,7 @@ TypeCodeFactory/TypeCodeFactoryC.cpp TypeCodeFactory/TypeCodeFactoryC.h: TypeCod
 
 TypeCodeFactory/TypeCodeFactory-stamp: $(srcdir)/TypeCodeFactory/TypeCodeFactory.pidl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -SS -Sci -Ge 1 -Sorb -Wb,export_macro=TAO_TypeCodeFactory_Export -Wb,export_include=tao/TypeCodeFactory/typecodefactory_export.h -o TypeCodeFactory $(srcdir)/TypeCodeFactory/TypeCodeFactory.pidl
-	@touch $@
+	@touch "$@"
 
 lib_LTLIBRARIES += libTAO_TypeCodeFactory.la
 
@@ -4119,7 +5248,7 @@ libTAO_TypeCodeFactory_la_SOURCES = \
   TypeCodeFactory/TypeCodeFactory_i.cpp
 
 libTAO_TypeCodeFactory_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_TypeCodeFactory_la_LIBADD = \
   libTAO_IFR_Client.la \
@@ -4144,7 +5273,7 @@ CLEANFILES += \
   TAO_TypeCodeFactory.pc
 
 TAO_TypeCodeFactory.pc: ${top_builddir}/config.status ${srcdir}/TypeCodeFactory/TAO_TypeCodeFactory.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TypeCodeFactory/TAO_TypeCodeFactory.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/TypeCodeFactory/TAO_TypeCodeFactory.pc.in
 
 EXTRA_DIST += \
   TypeCodeFactory/TAO_TypeCodeFactory.pc.in \
@@ -4174,7 +5303,7 @@ libTAO_Utils_la_SOURCES = \
   Utils/Synch_Refcountable.cpp
 
 libTAO_Utils_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ -L. -L$(ACE_ROOT)/lib
 
 libTAO_Utils_la_LIBADD = \
   libTAO_PI.la \
@@ -4207,7 +5336,7 @@ CLEANFILES += \
   TAO_Utils.pc
 
 TAO_Utils.pc: ${top_builddir}/config.status ${srcdir}/TAO_Utils.pc.in
-	${top_builddir}/config.status --file $@:${srcdir}/TAO_Utils.pc.in
+	${top_builddir}/config.status --file "$@":${srcdir}/TAO_Utils.pc.in
 
 EXTRA_DIST += \
   TAO_Utils.pc.in
