@@ -16,11 +16,13 @@
 #include "tao/Transport_Queueing_Strategies.h"
 #include "tao/debug.h"
 #include "tao/Policy_Manager.h"
+#include "tao/Policy_Set.h"
 #include "tao/SystemException.h"
 #include "tao/CDR.h"
+#include "tao/Network_Priority_Policy.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/Stub.inl"
+# include "tao/Stub.i"
 #endif /* ! __ACE_INLINE__ */
 
 #include "ace/Auto_Ptr.h"
@@ -36,6 +38,8 @@ TAO_Stub::TAO_Stub (const char *repository_id,
                     const TAO_MProfile &profiles,
                     TAO_ORB_Core *orb_core)
   : type_id (repository_id)
+  , network_priority_model_policy_ (0)
+  , network_priority_policy_parsed_ (0)
   , orb_core_ (orb_core)
   , orb_ ()
   , is_collocated_ (false)
@@ -485,6 +489,10 @@ TAO_Stub::get_policy (CORBA::PolicyType type
   // No need to lock, the stub only changes its policies at
   // construction time...
 
+  if (type == TAO::NETWORK_PRIORITY_TYPE)
+    return this->exposed_network_priority_model (
+                   ACE_ENV_SINGLE_ARG_PARAMETER);
+
   CORBA::Policy_var result;
   if (this->policies_ != 0)
     {
@@ -511,6 +519,10 @@ TAO_Stub::get_cached_policy (TAO_Cached_Policy_Type type
 {
   // No need to lock, the stub only changes its policies at
   // construction time...
+
+  if (type == TAO_CACHED_POLICY_NETWORK_PRIORITY)
+    return this->exposed_network_priority_model (
+                   ACE_ENV_SINGLE_ARG_PARAMETER);
 
   CORBA::Policy_var result;
   if (this->policies_ != 0)
@@ -594,6 +606,42 @@ TAO_Stub::get_policy_overrides (const CORBA::PolicyTypeSeq &types
 }
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
+
+void
+TAO_Stub::parse_network_priority_policy (ACE_ENV_SINGLE_ARG_DECL)
+{
+  CORBA::PolicyList_var policy_list =
+    this->base_profiles_.policy_list (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+
+  CORBA::ULong length = policy_list->length ();
+
+  for (CORBA::ULong i = 0; i < length; ++i)
+    {
+      if (policy_list[i]->policy_type () == TAO::NETWORK_PRIORITY_TYPE)
+        this->exposed_network_priority_model (policy_list[i]);
+    }
+
+  this->network_priority_policy_parsed_ = 1;
+}
+
+CORBA::Policy *
+TAO_Stub::exposed_network_priority_model (ACE_ENV_SINGLE_ARG_DECL)
+{
+  if (!this->network_priority_policy_parsed_)
+    {
+      this->parse_network_priority_policy (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (CORBA::Policy::_nil ());
+    }
+
+  return CORBA::Policy::_duplicate (this->network_priority_model_policy_.in ());
+}
+
+void
+TAO_Stub::exposed_network_priority_model (CORBA::Policy_ptr policy)
+{
+  this->network_priority_model_policy_ = CORBA::Policy::_duplicate (policy);
+}
 
 TAO::Transport_Queueing_Strategy &
 TAO_Stub::transport_queueing_strategy (void)

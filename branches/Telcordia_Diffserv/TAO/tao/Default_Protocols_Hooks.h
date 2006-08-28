@@ -76,7 +76,15 @@ public:
 
   CORBA::Long get_dscp_codepoint (void);
 
+  void set_dscp_codepoint (CORBA::Long &dscp_codepoint
+                           ACE_ENV_ARG_DECL);
+
   void rt_service_context (TAO_Stub *stub,
+                           TAO_Service_Context &service_context,
+                           CORBA::Boolean restart
+                           ACE_ENV_ARG_DECL);
+
+  void np_service_context (TAO_Stub *stub,
                            TAO_Service_Context &service_context,
                            CORBA::Boolean restart
                            ACE_ENV_ARG_DECL);
@@ -85,6 +93,11 @@ public:
                                     CORBA::Policy *model_policy,
                                     CORBA::Short &client_priority
                                     ACE_ENV_ARG_DECL);
+
+  void add_rep_np_service_context_hook (
+    TAO_Service_Context &service_context,
+    CORBA::Long &dscp_codepoint
+    ACE_ENV_ARG_DECL);
 
   void get_selector_hook (CORBA::Policy *model_policy,
                           CORBA::Boolean
@@ -112,6 +125,10 @@ public:
 
   int set_thread_native_priority (CORBA::Short
                                   ACE_ENV_ARG_DECL);
+
+protected:
+
+  CORBA::Long dscp_codepoint_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

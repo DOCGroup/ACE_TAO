@@ -322,7 +322,7 @@ TAO_IIOP_Connection_Handler::handle_timeout (const ACE_Time_Value &,
   // We don't use this upcall for I/O.  This is only used by the
   // Connector to indicate that the connection timedout.  Therefore,
   // we should call close().
-  int const ret = this->close ();
+  int ret = this->close ();
   this->reset_state (TAO_LF_Event::LFS_TIMEOUT);
   return ret;
 }
@@ -426,6 +426,75 @@ TAO_IIOP_Connection_Handler::process_listen_point_list (
 
       // Make the handler idle and ready for use
       this->transport ()->make_idle ();
+    }
+
+  return 0;
+}
+
+int
+TAO_IIOP_Connection_Handler::set_dscp_codepoint (CORBA::Long dscp_codepoint)
+{
+  int tos = IPDSFIELD_DSCP_DEFAULT << 2;
+
+  CORBA::Long codepoint = dscp_codepoint;
+
+  ACE_DEBUG ((LM_DEBUG, "codepoint is %X\n", codepoint));
+
+  tos = static_cast<int> (codepoint) << 2; 
+  if (tos != this->dscp_codepoint_)
+    {
+      int result = 0;
+#if defined (ACE_HAS_IPV6)
+      ACE_INET_Addr local_addr;
+      if (this->peer ().get_local_addr (local_addr) == -1)
+        return -1;
+      else if (local_addr.get_type () == AF_INET6)
+# if !defined (IPV6_TCLASS)
+      // IPv6 defines option IPV6_TCLASS for specifying traffic class/priority
+      // but not many implementations yet (very new;-).
+        {
+          if (TAO_debug_level)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "TAO (%P|%t) - IIOP_Connection_Handler::"
+                          "set_dscp_codepoint -> IPV6_TCLASS not supported yet\n"));
+            }
+          return 0;
+        }
+# else /* !IPV6_TCLASS */
+        result = this->peer ().set_option (IPPROTO_IPV6,
+                                           IPV6_TCLASS,
+                                           (int *) &tos ,
+                                           (int) sizeof (tos));
+      else
+# endif /* IPV6_TCLASS */
+#endif /* ACE_HAS_IPV6 */
+      result = this->peer ().set_option (IPPROTO_IP,
+                                         IP_TOS,
+                                         (int *) &tos ,
+                                         (int) sizeof (tos));
+
+      if (TAO_debug_level)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "TAO (%P|%t) - IIOP_Connection_Handler::"
+                      "set_dscp_codepoint -> dscp: %x; result: %d; %s\n",
+                      tos,
+                      result,
+                      result == -1 ? "try running as superuser" : ""));
+        }
+
+      ACE_DEBUG ((LM_DEBUG,
+                      "TAO (%P|%t) - IIOP_Connection_Handler::"
+                      "set_dscp_codepoint -> dscp: %x; result: %d; %s\n",
+                      tos,
+                      result,
+                      result == -1 ? "try running as superuser" : ""));
+
+      // On successful setting of TOS field.
+      if (result == 0)
+        this->dscp_codepoint_ = tos;
+
     }
 
   return 0;

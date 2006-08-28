@@ -30,9 +30,14 @@ ACE_RCSID (tao,
 #include "tao/SystemException.h"
 #include "tao/default_environment.h"
 #include "tao/ObjectIdListC.h"
+// #include "tao/Client_Network_Priority_Policy.h"
+// #include "tao/Server_Network_Priority_Policy.h"
+#include "Network_Priority_Policy.h"
+#include "Client_Network_Priority_Policy.h"
+
 
 #if !defined (__ACE_INLINE__)
-# include "tao/ORB.inl"
+# include "tao/ORB.i"
 #endif /* ! __ACE_INLINE__ */
 
 #include "ace/Dynamic_Service.h"
@@ -1718,6 +1723,7 @@ CORBA::Object_ptr
 CORBA::ORB::string_to_object (const char *str
                               ACE_ENV_ARG_DECL)
 {
+
   // This method should not be called if the ORB has been shutdown.
   this->check_shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
@@ -1733,6 +1739,7 @@ CORBA::ORB::string_to_object (const char *str
 
   TAO_IOR_Parser *ior_parser =
     this->orb_core_->parser_registry ()->match_parser (str);
+
 
   if (ior_parser != 0)
     {
@@ -1759,6 +1766,44 @@ CORBA::ORB::id (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   return CORBA::string_dup (this->orb_core_->orbid ());
 }
+
+#if !defined(CORBA_E_MICRO)
+
+TAO::NetworkPriorityPolicy_ptr
+CORBA::ORB::create_network_priority_policy (
+   ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_Network_Priority_Policy *tmp = 0;
+  ACE_NEW_THROW_EX (tmp,
+                    TAO_Network_Priority_Policy (),
+                    CORBA::NO_MEMORY (TAO::VMCID,
+                                      CORBA::COMPLETED_NO));
+  ACE_CHECK_RETURN (TAO::NetworkPriorityPolicy::_nil ());
+
+  return tmp;
+}
+
+#endif
+
+#if !defined(CORBA_E_MICRO)
+
+TAO::NetworkPriorityPolicy_ptr
+CORBA::ORB::create_client_network_priority_policy (
+   ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_Client_Network_Priority_Policy *tmp = 0;
+  ACE_NEW_THROW_EX (tmp,
+                    TAO_Client_Network_Priority_Policy (),
+                    CORBA::NO_MEMORY (TAO::VMCID,
+                                      CORBA::COMPLETED_NO));
+  ACE_CHECK_RETURN (TAO::NetworkPriorityPolicy::_nil ());
+
+  return tmp;
+}
+
+#endif
 
 // ****************************************************************
 
@@ -1796,6 +1841,7 @@ CORBA::ORB::_create_policy (CORBA::PolicyType type
   this->check_shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
+
   TAO::PolicyFactory_Registry_Adapter *adapter =
     this->orb_core_->policy_factory_registry ();
 
@@ -1805,10 +1851,26 @@ CORBA::ORB::_create_policy (CORBA::PolicyType type
                         CORBA::Policy::_nil ());
     }
 
-  // Attempt to obtain the policy from the policy factory registry.
-  return adapter->_create_policy (
-          type
-          ACE_ENV_ARG_PARAMETER);
+  if (adapter->factory_exists (type) == 0)
+    {
+      if (type == TAO::NETWORK_PRIORITY_TYPE)
+        {
+          CORBA::Policy_ptr npp =
+            this->create_network_priority_policy (
+              ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+      
+          return npp;
+        }
+    }
+  else
+    {
+      return adapter->_create_policy (
+        type
+        ACE_ENV_ARG_PARAMETER);
+    }
+
+  return 0;
 }
 #endif
 
