@@ -459,6 +459,30 @@ ACE_SSL_Context::certificate (const char *file_name,
     return 0;
 }
 
+int
+ACE_SSL_Context::certificate (X509* cert)
+{
+  // Is it really a good idea to return 0 if we're not setting the
+  // certificate?
+  if (this->certificate_.type () != -1)
+      return 0;
+
+  this->check_context();
+
+  if (::SSL_CTX_use_certificate (this->context_, cert) <= 0)
+    {
+      return -1;
+    }
+  else
+    {
+      // No file is associated with the certificate, set this to a fictional
+      // value so we don't reset it later.
+      this->certificate_ = ACE_SSL_Data_File ("MEMORY CERTIFICATE");
+
+      return 0;
+    }
+}
+
 void
 ACE_SSL_Context::set_verify_peer (int strict, int once, int depth)
 {
