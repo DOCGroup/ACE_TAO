@@ -1,3 +1,10 @@
+Mon Aug 28 10:34:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/run_test.txt:
+          Updated to explain how the script works on VxWorks and extended
+          the exampl in such a way that if there is not an executable
+          it returns directly
+
 Mon Aug 28 10:07:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/run_test.lst:
