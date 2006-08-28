@@ -1,3 +1,11 @@
+Mon Aug 28 07:18:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Bounded_Sequence_CDR_T.h:
+        * tao/Unbounded_Sequence_CDR_T.h:
+          Only deliver the CORBA::WChar specialization when ACE_LACKS_NATIVE_WCHAR_T
+          is not defined. Thanks to Birgit Platt <bhe at newbase dot de> and
+          Jules Colding <colding at omesc dot com> for reporting this problem
+
 Sun Aug 27 11:10:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/DII_Collocation_Tests/twoway/DII_Collocation_Tests.mpc:
