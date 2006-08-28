@@ -1,3 +1,15 @@
+Mon Aug 28 20:13:50 UTC 2006  Jaiganesh B <jai.dre.vanderbilt.edu>
+
+        * docs/schema/ServerResourceUsage.txt:
+          docs/schema/CIAOServerResources.xsd:
+          docs/schema/Basic_Deployment_Data.xsd:
+        
+          Added the network priority policy support in CIAO.
+        
+          Updated the deployment plan schema to reference multiple
+          instance policies within the instance deployment description
+          elements.
+
 Mon Aug 28 19:59:29 UTC 2006  Jaiganesh B <jai.dre.vanderbilt.edu>
 
         * tools/Config_Handlers/RT-CCM/CNPM_Handler.h:
