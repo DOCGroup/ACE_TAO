@@ -14,8 +14,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/ORB.h"
-
-class ACE_Manual_Event;
+#include "ace/Manual_Event.h"
 
 /// Implement a Task to run the server in a single thread
 class Server_Task : public ACE_Task_Base
@@ -36,7 +35,7 @@ public:
 private:
   /// Output file for server IOR
   const char *output_;
-  
+
   /// Output file for Simple_Test IOR
   const char *simple_test_output_;
 
