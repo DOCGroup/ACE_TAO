@@ -7,6 +7,8 @@
  *  $Id$
  *
  *  @author Iliyan Jeliazkov <iliyan@ociweb.com>
+ *  @author Based on code originally found in Svc_Conf.h by Doug
+            Schmidt and Ossama Othman.
  */
 //=============================================================================
 
