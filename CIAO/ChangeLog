@@ -1,3 +1,15 @@
+Mon Aug 28 20:33:55 UTC 2006  Jaiganesh B <jai.dre.vanderbilt.edu>
+
+        * DAnCE/NodeApplicationManager/Containers_Info_Map.cpp:
+          DAnCE/Plan_Launcher/Plan_Launcher_Impl.h:
+          DAnCE/Plan_Launcher/Plan_Launcher_Impl.cpp:
+        
+          Modified the container creation framework to take into accout
+          both the instance as well as the port policies.
+        
+          Thanks to Nanbor Wang for helping with the design and the 
+          implementation.
+
 Mon Aug 28 20:26:13 UTC 2006  Jaiganesh B <jai.dre.vanderbilt.edu>
 
         * DAnCE/NodeApplication/Container_Impl.cpp:
