@@ -1,3 +1,8 @@
+Mon Aug 28 11:53:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/taodefaults.mpb:
+          Added exceptions as base project, TAO requires native C++ exceptions.
+
 Mon Aug 28 11:45:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * protocols/tests/RMCast/RMCast.mpc:
