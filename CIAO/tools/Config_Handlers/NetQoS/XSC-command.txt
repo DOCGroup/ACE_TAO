@@ -1,2 +1,2 @@
- xsc-binary --backend cxx --cxx-char-type ACE_TCHAR --cxx-generate-writer-types --cxx-export-symbol NetQoS_Handler_Export --cxx-header-banner-file NetQoS-XSC-header-banner --cxx-namespace-regex "%.*NetQoSRequirements.*%CIAO::Config_Handlers" -- NetQoSRequirements.xsd
+ xsc-binary --backend cxx --cxx-char-type ACE_TCHAR --cxx-generate-writer-types --cxx-export-symbol NetQoS_Handler_Export --cxx-header-banner-file NetQoS-XSC-header-banner --cxx-namespace-regex "%.*NetQoSRequirements.*%CIAO::Config_Handlers" -- $CIAO_ROOT/docs/schema/NetQoSRequirements.xsd
 

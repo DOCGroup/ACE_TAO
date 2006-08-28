@@ -103,32 +103,32 @@ namespace CIAO
                 {
                   ACE_ERROR ((LM_ERROR, "Unable to launch plan with UUID %s\n",
                               plan.UUID.in ()));
-                  
+
                   RACE_DEPLOYMENT_STATUS(plan_action.command, Log::EventMark::END_EVENT,
                                          plan.UUID.in (), 0,
                                          Log::Status::FAILURE, importance,
                                          "Failed on Plan Launcher\n"  );
-                  
+
                   return false;
                 }
-              
+
               // Write out DApp IOR
               try
                 {
                   CORBA::String_var ior = this->orb_->object_to_string
                     (this->comp_.launcher_.get_dam (uuid.c_str ()));
                   uuid += "_DAM.ior";
-                  
+
                   FILE* ior_output_file = ACE_OS::fopen (uuid.c_str (), "w");
-                  
+
                   if (ior_output_file)
                     {
                       ACE_OS::fprintf (ior_output_file, "%s", ior.in ());
                       ACE_OS::fclose (ior_output_file);
 
                       RACE_DEPLOYMENT_STATUS(plan_action.command, Log::EventMark::END_EVENT,
-                                             plan.UUID.in(), 0, 
-                                             Log::Status::SUCCESS, importance, 
+                                             plan.UUID.in(), 0,
+                                             Log::Status::SUCCESS, importance,
                                              "Success");
 
                     }
@@ -157,13 +157,13 @@ namespace CIAO
           catch (Plan_Launcher::Plan_Launcher_i::Deployment_Failure &ex_)
             {
               ACE_CString error ("Plan deployment failed: ");
-              error += ex_.error_;
-              
+              //                           error += ex_.error;
+
               RACE_DEPLOYMENT_STATUS(plan_action.command, Log::EventMark::END_EVENT,
                                      plan.UUID.in(), 0,
                                      Log::Status::FAILURE, importance,
                                      error.c_str()   );
-              
+
               return false;
             }
 
@@ -211,7 +211,7 @@ namespace CIAO
           catch (Plan_Launcher::Plan_Launcher_i::Deployment_Failure &ex_)
             {
               ACE_CString error ("Plan teardown failed: ");
-              error += ex_.error_;
+              //              error += ex_.error_;
 
               RACE_DEPLOYMENT_STATUS (
 		      plan_action.command, Log::EventMark::END_EVENT,
@@ -284,7 +284,7 @@ namespace CIAO
         catch (Plan_Launcher::Plan_Launcher_i::Deployment_Failure &ex_)
           {
             ACE_CString error ("!!! SHOULD NEVER HAVE CALLED THIS ROUTINE...Plan teardown failed: ");
-            error += ex_.error_;
+            //            error += ex_.error_;
 
             RACE_DEPLOYMENT_STATUS(
 	          Log::EventType::MANUAL_PLAN,

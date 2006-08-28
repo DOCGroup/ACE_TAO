@@ -82,7 +82,7 @@ namespace CIAO
                              {
                                std::cerr << "Connection Name = " 
                                << conn_qos.connections [conn_num] 
-                               << std::endl; 
+                               << std::endl;
                              }
                            std::cerr << "fwdBWD = " << conn_qos.fwdBWD << std::endl;
                            std::cerr << "revBWD = " << conn_qos.revBWD << std::endl;
