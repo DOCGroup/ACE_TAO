@@ -10,7 +10,8 @@ use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 
 # The server IOR file
-$server_ior_file = PerlACE::LocalFile ("server.ior");
+$plain_server_ior_file = "server.ior";
+$server_ior_file = PerlACE::LocalFile ($plain_server_ior_file);
 unlink $server_ior_file;
 
 # The client and server processes
@@ -24,7 +25,12 @@ else {
 $CLIENT     = new PerlACE::Process(PerlACE::LocalFile("client"));
 
 # Fire up the server
-$SERVER->Spawn();
+$server = $SERVER->Spawn();
+
+if ($server != 0) {
+    print STDERR "ERROR: server returned $server\n";
+    exit 1;
+}
 
 # We can wait on the IOR file
 if (PerlACE::waitforfile_timed ($server_ior_file, 10) == -1)
