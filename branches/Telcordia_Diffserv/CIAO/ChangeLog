@@ -1,3 +1,19 @@
+Mon Aug 28 19:50:17 UTC 2006  Jaiganesh B <jai.dre.vanderbilt.edu>
+
+        * ciao/Deployment_Data.idl:
+          ciao/Servant_Impl_Base.h:
+          ciao/Home_Servant_Impl_T.h:
+          ciao/Servant_Impl_T.h:
+          ciao/Servant_Impl_Base.cpp:
+          ciao/Container_Base.cpp:
+          ciao/ServerResources.idl:
+          ciao/Home_Servant_Impl_T.cpp:
+          ciao/Home_Servant_Impl_Base.h:
+          ciao/Container_Base.h:
+          ciao/Servant_Impl_T.cpp:
+        
+          Added network priority policy support in CIAO
+
 Mon Aug 28 05:21:24 UTC 2006  Sumant Tambe  <sutambe@nospam>
 
         Modified NetQoS schema and NetQoS_Handler. Fixed some RACE build problems.
