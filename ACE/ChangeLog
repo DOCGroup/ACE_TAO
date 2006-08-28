@@ -1,3 +1,8 @@
+Mon Aug 28 11:45:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * protocols/tests/RMCast/RMCast.mpc:
+          Removed avoids usage, that is already in the base projects
+
 Mon Aug 28 11:13:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * etc/*.doxygen:
