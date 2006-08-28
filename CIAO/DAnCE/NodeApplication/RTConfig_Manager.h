@@ -29,6 +29,8 @@
 #include "ace/Null_Mutex.h"
 #include "ace/SString.h"
 #include "ace/Hash_Map_Manager_T.h"
+#include "Config_Manager.h"
+#include "RTNA_Configurator_Export.h"
 
 namespace CIAO
 {
@@ -47,16 +49,20 @@ namespace CIAO
    * Currently, the only resources supported (and managed) by this
    * class are Threadpool and Threadpool_with_Lanes.
    */
-  class RTResource_Config_Manager
+  class RTResource_Config_Manager : public Config_Manager
   {
   public:
     RTResource_Config_Manager (void);
     ~RTResource_Config_Manager (void);
 
-    void init (RTCORBA::RTORB_ptr rtorb);
+    virtual int pre_orb_initialize (void);
+
+    virtual int post_orb_initialize (CORBA::ORB_ptr o);
+
+    virtual void init (CORBA::ORB_ptr orb);
 
     /// Initializing the RTResource_Config_Manager
-    void init_resources (const CIAO::DAnCE::ServerResource &info
+    virtual void init_resources (const CIAO::DAnCE::ServerResource &info
                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -66,8 +72,12 @@ namespace CIAO
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     /// Query a policy set by name
-    CORBA::PolicyList *find_policies_by_name (const char *name
+    virtual CORBA::PolicyList *find_policies_by_name (const char *name
                                               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual bool policy_exists (const char *name
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   protected:

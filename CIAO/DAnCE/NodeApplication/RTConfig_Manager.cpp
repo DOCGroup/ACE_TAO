@@ -9,9 +9,25 @@
 #endif /* __ACE_INLINE__ */
 
 void
-CIAO::RTResource_Config_Manager::init (RTCORBA::RTORB_ptr rtorb)
+CIAO::RTResource_Config_Manager::init (CORBA::ORB_ptr orb)
 {
-  this->rtorb_ = RTCORBA::RTORB::_duplicate (rtorb);
+  ACE_DEBUG ((LM_DEBUG, "CALLING RTC INIT\n"));
+  CORBA::Object_var object = 
+    orb->resolve_initial_references ("RTORB");
+
+  this->rtorb_ = RTCORBA::RTORB::_narrow (object.in ());
+}
+
+int
+CIAO::RTResource_Config_Manager::pre_orb_initialize (void)
+{
+  return 0;
+}
+
+int
+CIAO::RTResource_Config_Manager::post_orb_initialize (CORBA::ORB_ptr)
+{
+  return 0;
 }
 
 void
@@ -117,7 +133,7 @@ CIAO::RTResource_Config_Manager::init_resources
       ACE_THROW (CORBA::INTERNAL ());
     }
 
-  this->print_resources (server_resource);
+  // this->print_resources (server_resource);
   //  return;
 
   const CIAO::DAnCE::ORBResource &orb_resource
@@ -255,31 +271,56 @@ CIAO::RTResource_Config_Manager::init_resources
 
       CORBA::PolicyList_var policy_list = new CORBA::PolicyList (np);
       policy_list->length (np);
+      CORBA::ULong index = 0;
+      CORBA::ULong array_index = np;
 
       // Create a list of policies
       for (CORBA::ULong pc = 0; pc < np; ++pc)
         {
-          policy_list[pc] = this->create_single_policy (sets[i].policies[pc]
-                                                        ACE_ENV_ARG_PARAMETER);
+          CORBA::Policy_var temp_policy =
+            this->create_single_policy (sets[i].policies[pc]
+              ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
+
+          if (temp_policy == 0)
+            {
+              array_index = array_index - 1;
+              policy_list->length (array_index);
+            }
+          else
+            {
+              policy_list[index] = temp_policy;
+              index = index + 1;
+            }
         }
 
       // Bind the policy list to the name.  The bind operation should
       // surrender the ownership of the newly created PolicyList
       // sequence to the map.
-      if (this->policy_map_.bind (sets[i].Id.in (),
-                                  policy_list) != 0)
+      if (array_index != 0)
         {
-          ACE_DEBUG ((LM_DEBUG,
-                      "Error binding Policy_Set with name: %s\n",
-                      sets[i].Id.in ()));
-          ACE_THROW (CORBA::INTERNAL ());
+          if (this->policy_map_.bind (sets[i].Id.in (),
+                                      policy_list) != 0)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "Error binding Policy_Set with name: %s\n",
+                          sets[i].Id.in ()));
+              ACE_THROW (CORBA::INTERNAL ());
+            }
+          else
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "RTResource_Config_Manager::init_resource "
+                          "added policy set: %s with %d policies\n",
+                          sets[i].Id.in (), array_index));
+            }
         }
       else
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "RTResource_Config_Manager::init_resource added policy set: %s\n",
-                      sets[i].Id.in ()));
+                      "RTResource_Config_Manager::init_resource "
+                      "added policy set: %s with %d policies\n",
+                      sets[i].Id.in (), array_index));
         }
     }
 }
@@ -353,6 +394,29 @@ CIAO::RTResource_Config_Manager::find_priority_bands_by_name (const char *name
   return retv._retn ();
 }
 
+bool
+CIAO::RTResource_Config_Manager::policy_exists (const char *name
+  ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  if (name == 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Invalid name string found in "
+                  "CIAO::NAResource_Config_Manager::policy_exists\n"));
+      ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
+    }
+
+  POLICY_MAP::ENTRY *entry = 0;
+
+  if (this->policy_map_.find (name, entry) != 0)
+    {
+      return false;
+    }
+
+  return true;
+}
+
 CORBA::PolicyList *
 CIAO::RTResource_Config_Manager::find_policies_by_name (const char *name
                                                    ACE_ENV_ARG_DECL)
@@ -365,26 +429,20 @@ CIAO::RTResource_Config_Manager::find_policies_by_name (const char *name
       ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
     }
 
-
-  ACE_DEBUG ((LM_DEBUG, "RTResource_Config_Manager::find_policies_by_name: %s\n",
-              name));
-
   POLICY_MAP::ENTRY *entry = 0;
+  CORBA::PolicyList_var retv;
 
   if (this->policy_map_.find (name, entry) != 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "Unable to find a PolicyList named %s\n",
+                  "RTConfigManager::Unable to find a PolicyList named %s\n",
                   name));
-      ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
+      retv = 0;
     }
-
-  // duplicate the sequence PolicyList.
-  CORBA::PolicyList_var retv =
-    new CORBA::PolicyList (entry->int_id_.in ());
-
-  ACE_DEBUG ((LM_DEBUG, "RTResource_Config_Manager::find_policies_by_name ok.\n"));
-
+  else
+    {
+      retv = new CORBA::PolicyList (entry->int_id_.in ());
+    }
   return retv._retn ();
 }
 
@@ -394,11 +452,6 @@ CIAO::RTResource_Config_Manager::create_single_policy
  ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  //  if (CIAO::debug_level () > 9)
-    ACE_DEBUG ((LM_DEBUG,
-                "RTResource_Config_Manager::create_single_policy: %d\n",
-                policy_def._d ()));
-
   CORBA::Policy_var retv;
 
   switch (policy_def._d ())
@@ -408,14 +461,14 @@ CIAO::RTResource_Config_Manager::create_single_policy
         const CIAO::DAnCE::PriorityModelPolicyDef &tmp
           = policy_def.PriorityModelDef ();
 
-        retv = this->rtorb_->create_priority_model_policy ((RTCORBA::PriorityModel) tmp.priority_model,
-                                                           tmp.server_priority
-                                                           ACE_ENV_ARG_PARAMETER);
+        retv = this->rtorb_->create_priority_model_policy (
+                  (RTCORBA::PriorityModel) tmp.priority_model,
+                  tmp.server_priority ACE_ENV_ARG_PARAMETER);
         ACE_CHECK_RETURN (0);
 
         if (! CORBA::is_nil (retv.in ()))
         ACE_DEBUG ((LM_DEBUG,
-                    "Create PriorityModel policy: %d - %d\n",
+                    "RTConfigManager::Create PriorityModel policy: %d - %d\n",
                     tmp.priority_model, tmp.server_priority));
       }
       break;
@@ -433,7 +486,7 @@ CIAO::RTResource_Config_Manager::create_single_policy
 
         if (! CORBA::is_nil (retv.in ()))
         ACE_DEBUG ((LM_DEBUG,
-                    "Create Threadpool policy: %s, TPid: %d\n",
+                    "RTConfigManager::Create Threadpool policy: %s, TPid: %d\n",
                     policy_def.ThreadpoolDef().Id.in (), tpid));
       }
       break;
@@ -452,17 +505,24 @@ CIAO::RTResource_Config_Manager::create_single_policy
 
         if (! CORBA::is_nil (retv.in ()))
         ACE_DEBUG ((LM_DEBUG,
-                    "Created Banded Connection policy: %s\n",
+                    "RTConfigManager::Created Banded Connection policy: %s\n",
                     policy_def.PriorityBandedConnectionDef().Id.in ()));
       }
       break;
 
     default:
-      ACE_DEBUG ((LM_DEBUG,
-                  "Invalid policy type - RTPolicy_Set_Manager::create_single_policy\n"));
-      ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
+      retv = 0;
     }
 
   return retv._retn ();
 }
 
+extern "C" CIAO_RTNA_Configurator_Export CIAO::Config_Manager *create_rt_config_manager (void);
+
+CIAO::Config_Manager *
+create_rt_config_manager (void)
+{
+  CIAO::RTResource_Config_Manager *config;
+  ACE_NEW_RETURN (config, CIAO::RTResource_Config_Manager, 0);
+  return config;
+}

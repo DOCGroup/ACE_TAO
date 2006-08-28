@@ -297,6 +297,7 @@ CIAO::NodeApplication_Impl::install (
       CORBA::ULong old_set_size = this->container_set_.size ();
 
       (void) this->create_all_containers (container_infos);
+
       if (CIAO::debug_level () > 9)
         {
           ACE_DEBUG ((LM_DEBUG,
@@ -517,6 +518,7 @@ CIAO::NodeApplication_Impl::create_container (
                     CIAO::Container_Impl (this->orb_.in (),
                                           this->poa_.in (),
                                           this->get_objref (),
+                                          this->configurator_,
                                           this->static_entrypts_maps_),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
