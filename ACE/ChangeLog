@@ -1,3 +1,12 @@
+Mon Aug 28 19:33:50 UTC 2006  Sumant Tambe  <sutambe@nospam>
+
+        A quick perl script to create a change-log-entry date and time.
+        * bin/cltime.pl:
+
+        Added *.cidl *.pcd *.cdd
+        * docs/svn/config:
+        * docs/svn/svn-prefs.reg:
+
 Mon Aug 28 14:14:39 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * bin/tao_other_tests.lst:
