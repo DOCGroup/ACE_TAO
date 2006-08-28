@@ -152,7 +152,9 @@ ACE_Svc_Conf_Lexer::yylex (ACE_YYSTYPE* ace_yylval,
   do {
     if (param->buffer->need_more_)
       {
+#if defined (ACE_USES_WCHAR)
         size_t skip_bytes = 0;
+#endif /* ACE_USES_WCHAR */
         param->buffer->need_more_ = false;
         size_t amount =
                input (param,
@@ -162,7 +164,9 @@ ACE_Svc_Conf_Lexer::yylex (ACE_YYSTYPE* ace_yylval,
         if (amount == 0)
           {
             param->buffer->eof_ = true;
+#if defined (ACE_USES_WCHAR)
             skip_bytes = param->buffer->size_;
+#endif /* ACE_USES_WCHAR */
           }
         else
           {
@@ -184,8 +188,8 @@ ACE_Svc_Conf_Lexer::yylex (ACE_YYSTYPE* ace_yylval,
                                      amount);
                   }
               }
-#endif /* ACE_USES_WCHAR */
             skip_bytes = param->buffer->size_;
+#endif /* ACE_USES_WCHAR */
             param->buffer->size_ += amount;
           }
 
