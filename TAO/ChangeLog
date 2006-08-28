@@ -1,3 +1,8 @@
+Mon Aug 28 09:39:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/OBV/Simple/run_test.pl:
+          Updated for VxWorks
+
 Mon Aug 28 09:12:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Makefile.am:
