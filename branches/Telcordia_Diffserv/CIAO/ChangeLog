@@ -1,3 +1,25 @@
+Mon Aug 28 05:21:24 UTC 2006  Sumant Tambe  <sutambe@nospam>
+
+        Modified NetQoS schema and NetQoS_Handler. Fixed some RACE build problems.
+
+        * CIAO_DAnCE.mwc:
+
+        * RACE/Controller/Component/Controller.mpc:
+
+        * RACE/Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter_exec.cpp:
+
+        * RACE/Planners/NetQoSPlanner/NetQoSPlanner_exec.cpp:
+
+        * ciao/NetQoS.idl:
+
+        * docs/schema/NetQoSRequirements.xsd:
+
+        * tools/Config_Handlers/NetQoS/NetQoS-example.xml:
+        * tools/Config_Handlers/NetQoS/NetQoSRequirements.hpp:
+        * tools/Config_Handlers/NetQoS/NetQoSRequirements.cpp:
+        * tools/Config_Handlers/NetQoS/NetQoS_Handler.cpp:
+        * tools/Config_Handlers/NetQoS/XSC-command.txt:
+
 Fri Aug 25 08:00:56 UTC 2006  Sumant Tambe  <sutambe@nospam>
 
         Copied from ARMS CVS.

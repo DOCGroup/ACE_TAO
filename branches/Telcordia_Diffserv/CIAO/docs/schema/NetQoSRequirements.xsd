@@ -52,6 +52,23 @@
   </xsd:simpleType>
   <!-- =============================================================== -->
 
+  <xsd:complexType name="Connection">
+    <xsd:annotation>
+      <xsd:documentation>
+        Describes a connection and the participants.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="connectionName" type="xsd:string"/>
+      <xsd:element name="client" type="xsd:string" />
+      <xsd:element name="clientPortName" type="xsd:string" />
+      <xsd:element name="server" type="xsd:string" />
+      <xsd:element name="serverPortName" type="xsd:string" />
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- =============================================================== -->
+
   <xsd:complexType name="ConnectionQoS">
     <xsd:annotation>
       <xsd:documentation>
@@ -61,7 +78,7 @@
     <xsd:sequence>
       <!-- This may be more than necessary, but should be sufficient	-->
       <!-- to identify the instances on the ends of the connection	-->
-      <xsd:element name="connectionName" type="xsd:string" maxOccurs="unbounded"/>
+      <xsd:element name="connectionInfo" type="CIAO:Connection" maxOccurs="unbounded"/>
       <!-- BW in KB/s from receptacle to facet				-->
       <xsd:element name="fwdBW" type="xsd:unsignedInt" />
       <!-- BW in KB/s from facet to receptacle				-->

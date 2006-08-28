@@ -28,7 +28,7 @@ project(Controller_svnt) : ciao_servant_dnc {
   sharedname  = Controller_svnt
   libpaths += $(COSMIC_ROOT)/lib
   includes += $(CUTS_ROOT)
-  libs    += Controller_stub TargetManager_stub TargetManager_svnt CUTS_svnt CUTS_stub
+  libs    += Controller_stub TargetManager_stub TargetManager_svnt CUTS_stub
   idlflags  +=  -Wb,export_macro=CONTROLLER_SVNT_Export \
                 -Wb,export_include=Controller_svnt_export.h \
                 -I $(CUTS_ROOT)
@@ -55,12 +55,12 @@ project(Controller_svnt) : ciao_servant_dnc {
 
 
 project(Controller_exec) : ciao_component_dnc, ciao_config_handlers {
-  after   += Controller_svnt CUTS_stub CUTS_svnt XSC_Config_Handlers
+  after   += Controller_svnt CUTS_stub  XSC_Config_Handlers
   sharedname = Controller_exec
   libpaths += $(COSMIC_ROOT)/lib
   includes += $(CUTS_ROOT) $(CIAO_ROOT)/DAnCE/
   libs      += Controller_stub Controller_svnt TargetManager_stub \
-  TargetManager_svnt CUTS_stub CUTS_svnt NodeManager_stub
+  TargetManager_svnt CUTS_stub NodeManager_stub
 
   idlflags  +=  -Wb,export_macro=CONTROLLER_EXEC_Export \
                 -Wb,export_include=Controller_exec_export.h \

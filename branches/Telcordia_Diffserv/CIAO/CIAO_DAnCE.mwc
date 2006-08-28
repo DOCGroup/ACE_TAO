@@ -5,4 +5,5 @@ workspace {
   DAnCE
   ciaosvcs
   tools/Config_Handlers
+  RACE
 }

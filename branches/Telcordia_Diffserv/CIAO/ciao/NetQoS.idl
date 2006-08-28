@@ -1,4 +1,4 @@
-// $Id: NetQoS.idl $
+// $Id$
 
 /**
  * @file NetQoS.idl
@@ -33,11 +33,18 @@ module CIAO
       LOW
     };
 
-    typedef sequence<string> ConnectionIDs;
+    struct ConnectionInfo
+    {
+      string connection_name;
+      string client, client_port_name;
+      string server, server_port_name;
+    };
+
+    typedef sequence<ConnectionInfo> ConnectionInfos;
      
     struct ConnectionQoS
     {
-      ConnectionIDs connections;
+      ConnectionInfos connections;
       long fwdBWD;
       long revBWD;
       DataTrafficQoS data_qos;
