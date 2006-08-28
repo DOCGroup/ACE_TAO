@@ -1,3 +1,8 @@
+Mon Aug 28 09:12:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Makefile.am:
+          Regenerated
+
 Mon Aug 28 07:18:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Bounded_Sequence_CDR_T.h:
