@@ -48,7 +48,8 @@ namespace CIAO
     Servant_Impl (EXEC * exe,
                   Components::CCMHome_ptr home,
                   Home_Servant_Impl_Base *home_servant,
-                  Session_Container * c);
+                  Session_Container * c,
+                  ::CIAO::REC_POL_MAP &rec_pol_map);
 
     virtual ~Servant_Impl (void);
 

@@ -16,12 +16,18 @@ namespace CIAO
                     COMP_SVNT>::Home_Servant_Impl (
       typename EXEC::_ptr_type exe,
       Session_Container * c,
-      const char *ins_name
+      const char *ins_name,
+      ::CIAO::REC_POL_MAP &rec_pol_map
     )
     : Home_Servant_Impl_Base (c),
       ins_name_ (ins_name),
       executor_ (EXEC::_duplicate (exe))
   {
+    for (::CIAO::REC_POL_MAP_ITERATOR it = rec_pol_map.begin ();
+         it != rec_pol_map.end (); ++it)
+      {
+        this->rec_pol_map_.bind ((*it).ext_id_, (*it).int_id_);
+      }
   }
 
   template <typename BASE_SKEL,
@@ -194,14 +200,15 @@ namespace CIAO
                                     ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (COMP_SVNT::_stub_type::_nil ());
 
-	typedef typename COMP_SVNT::_stub_type stub_type;
+    typedef typename COMP_SVNT::_stub_type stub_type;
     COMP_SVNT *svt = 0;
     ACE_NEW_RETURN (svt,
                     COMP_SVNT (exe,
                                home.in (),
                                this->ins_name_,
                                this,
-                               this->container_),
+                               this->container_,
+                               this->rec_pol_map_),
                     stub_type::_nil ());
 
     PortableServer::ServantBase_var safe (svt);

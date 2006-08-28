@@ -53,7 +53,8 @@ namespace CIAO
   public:
     Servant_Impl_Base (Components::CCMHome_ptr home,
                        Home_Servant_Impl_Base *home_servant,
-                       Session_Container * c);
+                       Session_Container * c,
+                       ::CIAO::REC_POL_MAP &rec_pol_map);
 
     virtual ~Servant_Impl_Base (void);
 
@@ -164,6 +165,11 @@ namespace CIAO
         ACE_ENV_SINGLE_ARG_DECL
       );
 
+    virtual CORBA::PolicyList 
+    get_receptacle_policy (const char *name
+                           ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
   protected:
     void add_facet (const char *port_name,
                     ::CORBA::Object_ptr port_ref
@@ -261,6 +267,7 @@ namespace CIAO
   private:
     /// For internal locking of table reads and writes.
     TAO_SYNCH_MUTEX lock_;
+    ::CIAO::REC_POL_MAP rec_pol_map_;
   };
 }
 

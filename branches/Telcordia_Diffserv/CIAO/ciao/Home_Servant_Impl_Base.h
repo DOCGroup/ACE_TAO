@@ -20,6 +20,7 @@
 #include /**/ "ace/pre.h"
 
 #include "CCM_ComponentS.h"
+#include "Container_Base.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
