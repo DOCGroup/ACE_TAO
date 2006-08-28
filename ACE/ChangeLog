@@ -1,3 +1,10 @@
+Mon Aug 28 14:14:39 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
+
+        * bin/tao_other_tests.lst:
+          Added TAO/orbsvcs/tests/Security/Big_Request/run_test.pl to the
+          list of SSL-based tests. Thanks to Johnny Willemsen
+          <jwillemsen@remedy.nl> for pointig out that it was missing.
+
 Mon Aug 28 13:45:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Svc_Conf_Lexer.cpp:
