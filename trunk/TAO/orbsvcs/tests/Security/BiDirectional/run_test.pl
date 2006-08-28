@@ -19,7 +19,7 @@ $iter = 10;
 sub options () { 
   my $help = 0;       # handled locally 
   my $man = 0;        # handled locally
-  my $ssl = 0;        # handled locally
+  my $ssl = 1;        # handled locally
   my $dotdec = 0;     # handled locally
   my $debug;        # handled locally
   my $shost;        # handled locally
@@ -75,21 +75,23 @@ sub options () {
   return 1;
 }
 
-options () or die "Nothing executed";
+
+# Make sure OpenSSL knows where to find the trust store
+$ENV{'SSL_CERT_DIR'} = './ssl'; 
+
+options () or die "Error: Nothing executed";
 
 unlink $iorfile;
 
-print STDERR "Executing, server options=$conf_server $opt -o $iorfile -i $iter\n";
+print STDERR "Executing: server $conf_server $opt -o $iorfile -i $iter\n";
 $SV = new PerlACE::Process ("server", 
                             "$conf_server $opt -o $iorfile -i $iter");
 
-print STDERR "Executing, client options=$conf_client $opt -k file://$iorfile\n";
+print STDERR "Executing: client $conf_client $opt -k file://$iorfile\n";
 $CL = new PerlACE::Process ("client", 
                             "$conf_client $opt -k file://$iorfile");
-#                            "$conf_client -k file://$iorfile");
 
 $server = $SV->Spawn ();
-
 if ($server != 0) {
     print STDERR "ERROR: server returned $server\n";
     exit 1;
@@ -149,7 +151,7 @@ implementation in TAO over SSLIOP connection. Start the server like this
 
 Or, simply
 
-  $ ./run_test.pl -ssl
+  $ ./run_test.pl
 
 The server starts up writing the IOR to the file. The client then starts
 up, creates its own object and passes the reference to the server. Then
@@ -159,7 +161,7 @@ callback. The server then callsback the client on the same connection
 would crash itself.
 
 Basicaly, the test is a copy of the $TAO_ROOT/tests/BiDirectional with
-added support for SSLIOP
+added support for SSLIOP.
 
 =head1 OPTIONS
 
@@ -184,9 +186,9 @@ added support for SSLIOP
   "client,server".
 
 [B<-ssl>] 
-  Enables the use of SSLIOP instead of IIOP
+  Enables the use of SSLIOP instead of IIOP. Default.
   
 [B<-debug level>]
-  Enables debugging. Values for level are 1-10
+  Enables debugging. Values for level are 1-10. Default is 0.
 
 =cut
