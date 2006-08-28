@@ -90,12 +90,48 @@ CIAO::Container_Impl::install (
 
      const CORBA::ULong len = impl_infos.length ();
      retv->length (len);
+     REC_POL_MAP rec_pol_map;
 
      for (CORBA::ULong i = 0; i < len; ++i)
        {
+         const CORBA::ULong cplen = impl_infos[i].component_config.length ();
+         for (CORBA::ULong cp_len = 0; cp_len < cplen; ++cp_len)
+           {
+             // get the receptacle policy
+             if (impl_infos[i].component_config[cp_len].
+                 value.type ()->kind () == CORBA::tk_string)
+               {
+                 const char * policy_set_id;
+                 const char * receptacle_name;
+                 impl_infos[i].component_config[cp_len].value >>= 
+                   policy_set_id;
+
+                 bool result = this->configurator_.policy_exists (
+                   policy_set_id);
+
+                 if (result == true)
+                   {
+                     receptacle_name = impl_infos[i].component_config[cp_len].
+                       name.in ();
+                     CORBA::PolicyList_var policies =
+                       this->configurator_.find_policies_by_name (
+                          policy_set_id);
+                     CORBA::PolicyList temp_policies (0);
+                     if (policies != 0)
+                       {
+                         temp_policies = *policies;
+                       }
+                     rec_pol_map.bind (receptacle_name, temp_policies);
+                   }
+               }
+           }
+
+         // we have the receptacle name and the policy list now stored in 
+         // a map.
+
          // Install home
          Components::CCMHome_var home =
-           this->install_home (impl_infos[i]
+           this->install_home (impl_infos[i], rec_pol_map
                                ACE_ENV_ARG_PARAMETER);
          ACE_TRY_CHECK;
 
@@ -279,7 +315,8 @@ CIAO::Container_Impl::get_node_application (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 ::Components::CCMHome_ptr
 CIAO::Container_Impl::install_home (
-    const ::Deployment::ComponentImplementationInfo & impl_info
+    const ::Deployment::ComponentImplementationInfo & impl_info,
+    REC_POL_MAP &rec_pol_map
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::UnknownImplId,
@@ -299,12 +336,14 @@ CIAO::Container_Impl::install_home (
     }
 
   Components::CCMHome_var newhome =
-    this->container_->ciao_install_home (impl_info.executor_dll.in (),
-                                         impl_info.executor_entrypt.in (),
-                                         impl_info.servant_dll.in (),
-                                         impl_info.servant_entrypt.in (),
-                                         impl_info.component_instance_name.in ()
-                                         ACE_ENV_ARG_PARAMETER);
+    this->container_->ciao_install_home (
+       impl_info.executor_dll.in (),
+       impl_info.executor_entrypt.in (),
+       impl_info.servant_dll.in (),
+       impl_info.servant_entrypt.in (),
+       impl_info.component_instance_name.in (),
+       rec_pol_map
+       ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (Components::CCMHome::_nil ());
 
   if (CIAO::debug_level () > 9)

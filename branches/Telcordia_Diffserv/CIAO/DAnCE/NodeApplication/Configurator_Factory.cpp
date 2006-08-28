@@ -2,6 +2,7 @@
 
 #include "Configurator_Factory.h"
 #include "NoOp_Configurator.h"
+#include "NodeApp_Configurator.h"
 #include "ace/Null_Mutex.h"
 #include "ciao/CIAO_common.h"
 #include "ace/Arg_Shifter.h"
@@ -81,9 +82,20 @@ CIAO::NodeApplication_Options::parse_args (int &argc, char *argv[])
 CIAO::NodeApp_Configurator *
 CIAO::NodeApplication_Options::create_nodeapp_configurator (void)
 {
-  typedef CIAO::NodeApp_Configurator * (*intelligent_designer)(void);
+  // typedef CIAO::NodeApp_Configurator * (*intelligent_designer)(void);
   CIAO::NodeApp_Configurator* ptr = 0;
+  ACE_NEW_THROW_EX (ptr,
+                    CIAO::NodeApp_Configurator (),
+                    CORBA::NO_MEMORY (TAO::VMCID,
+                                      CORBA::COMPLETED_NO));
+  if (this->rt_support_)
+    {
+      ptr->set_rt_support ();
+    }
 
+  return ptr;
+
+  /*
   if (this->rt_support_)
     {
       int retval =
@@ -134,5 +146,5 @@ CIAO::NodeApplication_Options::create_nodeapp_configurator (void)
                       0);
     }
 
-  return ptr;
+  */
 }
