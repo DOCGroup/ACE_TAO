@@ -95,8 +95,9 @@ ACE_MMAP_Memory_Pool::protect (void *addr, size_t len, int prot)
   return ACE_OS::mprotect (addr, len, prot);
 }
 
-ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool (const ACE_TCHAR *backing_store_name,
-                                            const OPTIONS *options)
+ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool (
+  const ACE_TCHAR *backing_store_name,
+  const OPTIONS *options)
   : base_addr_ (0),
     use_fixed_addr_(0),
     flags_ (MAP_SHARED),
@@ -163,7 +164,7 @@ ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool (const ACE_TCHAR *backing_store_name,
                       ACE_LIB_TEXT ("ace-malloc-XXXXXX"));
 
       // If requested an unique filename, use mktemp to get a random file.
-      if (options->unique_)
+      if (options && options->unique_)
         ACE_OS::mktemp(this->backing_store_name_);
 #endif /* ACE_DEFAULT_BACKING_STORE */
     }
