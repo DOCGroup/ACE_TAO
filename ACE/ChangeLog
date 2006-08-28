@@ -1,3 +1,24 @@
+Mon Aug 29 00:04:29 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * ace/ACE_export.h:
+
+          SGI C++ 7.3 compiler does not support standard C++ "extern
+          inline" declarations.
+
+        * ace/Log_Msg.cpp (log):
+
+          Corrected scalar/vector operator delete mismatch.  The wide
+          string buffer was allocated as an array.  Destroy it
+          accordingly.
+
+        * ace/MMAP_Memory_Pool.cpp (ACE_MMAP_Memory_Pool):
+
+          Prevent potential dereferencing of null pointer.
+
+        * ace/Svc_Conf_Param.h:
+
+          Corrected author information.
+
 Mon Aug 28 23:59:50 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
         From Amnon Berger <AmnonAB at gmail dot com>
