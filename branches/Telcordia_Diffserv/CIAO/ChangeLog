@@ -1,3 +1,10 @@
+Mon Aug 28 21:30:16 UTC 2006  Jaiganesh B <jai.dre.vanderbilt.edu>
+
+        * DAnCE/Plan_Launcher/Plan_Launcher_Impl.h:
+          DAnCE/Plan_Launcher/Plan_Launcher_Impl.cpp:
+        
+          Reverted the changes to a previous version.
+
 Mon Aug 28 20:33:55 UTC 2006  Jaiganesh B <jai.dre.vanderbilt.edu>
 
         * DAnCE/NodeApplicationManager/Containers_Info_Map.cpp:
