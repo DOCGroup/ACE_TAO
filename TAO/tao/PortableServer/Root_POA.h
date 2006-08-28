@@ -48,6 +48,7 @@
 
 // OctetSeq
 #include "tao/OctetSeqC.h"
+#include "tao/Service_Context.h"
 
 #include "ace/SString.h"
 #include "ace/Hash_Map_Manager_T.h"
@@ -181,6 +182,7 @@ public:
 #endif
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
+
   PortableServer::ImplicitActivationPolicy_ptr
   create_implicit_activation_policy (
       PortableServer::ImplicitActivationPolicyValue value
@@ -406,6 +408,10 @@ public:
 
   TAO::Portable_Server::Cached_Policies::PriorityModel priority_model (void) const;
 
+  TAO::Portable_Server::Cached_Policies::NetworkPriorityModel network_priority_model (void) const;
+
+  CORBA::Long get_diffserv_codepoint (TAO_Service_Context &sc);
+
   CORBA::Boolean cleanup_in_progress (void);
 
   /// Calls protected static method used when POACurrent is not appropriate.
@@ -499,6 +505,10 @@ public:
   CORBA::Boolean is_persistent (void) const;
 
   CORBA::Short server_priority (void) const;
+
+  CORBA::Long request_diffserv_codepoint (void) const;
+
+  CORBA::Long reply_diffserv_codepoint (void) const;
 
   bool has_system_id (void) const;
 

@@ -38,8 +38,15 @@
 #include "ace/Thread_Mutex.h"
 #include "ace/Guard_T.h"
 #include "ace/Atomic_Op.h"
+// #include "tao/TAO_Network_Priority_PolicyC.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+namespace TAO
+{
+  class NetworkPriorityPolicy;
+  typedef NetworkPriorityPolicy *NetworkPriorityPolicy_ptr;
+}
 
 typedef enum
 {
@@ -553,6 +560,22 @@ namespace CORBA
     /// demarshaling.
     CORBA::Policy_ptr _create_policy (CORBA::PolicyType type
                                       ACE_ENV_ARG_DECL);
+#endif
+
+#if !defined(CORBA_E_MICRO)
+    /// Create a client network priority policy
+    TAO::NetworkPriorityPolicy_ptr
+    create_network_priority_policy (
+       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+       ACE_THROW_SPEC ((CORBA::SystemException));
+#endif
+
+#if !defined(CORBA_E_MICRO)
+    /// Create a client network priority policy
+    TAO::NetworkPriorityPolicy_ptr
+    create_client_network_priority_policy (
+       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+       ACE_THROW_SPEC ((CORBA::SystemException));
 #endif
 
     // Reference counting...

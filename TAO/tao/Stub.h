@@ -308,6 +308,15 @@ private:
                             IOP::IOR *&ior_info
                             ACE_ENV_ARG_DECL);
 
+  // Helper method for parsing the policies
+  void parse_network_priority_policy (ACE_ENV_SINGLE_ARG_DECL);
+
+  // return the server network priority policy
+  void exposed_network_priority_model (CORBA::Policy_ptr policy);
+  CORBA::Policy_ptr exposed_network_priority_model (ACE_ENV_SINGLE_ARG_DECL);
+  CORBA::Policy_var network_priority_model_policy_;
+  CORBA::Boolean network_priority_policy_parsed_;
+
 private:
 
   // = Disallow copy construction and assignment.

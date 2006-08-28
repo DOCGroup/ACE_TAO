@@ -267,7 +267,16 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
   TAO_Connection_Handler *connection_handler =
     req.transport ()->connection_handler ();
 
-  connection_handler->set_dscp_codepoint (set_server_network_priority);
+  if (set_server_network_priority == 1)
+    {
+      connection_handler->set_dscp_codepoint (set_server_network_priority);
+    }
+  else
+    {
+      CORBA::Long dscp_codepoint;
+      dscp_codepoint = poa.get_diffserv_codepoint (request_service_context);
+      connection_handler->set_dscp_codepoint (dscp_codepoint);
+    }
 }
 
 void

@@ -154,7 +154,15 @@ public:
 
   virtual CORBA::Long get_dscp_codepoint (void) = 0;
 
+  virtual void set_dscp_codepoint (CORBA::Long &dscp_codepoint
+                                          ACE_ENV_ARG_DECL) = 0;
+
   virtual void rt_service_context (TAO_Stub *stub,
+                                   TAO_Service_Context &service_context,
+                                   CORBA::Boolean restart
+                                   ACE_ENV_ARG_DECL) = 0;
+
+  virtual void np_service_context (TAO_Stub *stub,
                                    TAO_Service_Context &service_context,
                                    CORBA::Boolean restart
                                    ACE_ENV_ARG_DECL) = 0;
@@ -163,6 +171,11 @@ public:
     TAO_Service_Context &service_context,
     CORBA::Policy *model_policy,
     CORBA::Short &client_priority
+    ACE_ENV_ARG_DECL) = 0;
+
+  virtual void add_rep_np_service_context_hook (
+    TAO_Service_Context &service_context,
+    CORBA::Long &dscp_codepoint
     ACE_ENV_ARG_DECL) = 0;
 
   virtual void get_selector_hook (CORBA::Policy *model_policy,
