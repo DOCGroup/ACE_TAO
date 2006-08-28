@@ -4,6 +4,8 @@
 #include "Hello.h"
 #include "tao/ORB_Core.h"
 #include "tao/ORB_Table.h"
+// Force static build to load the DII_Arguments_Converter service.
+#include "tao/DynamicInterface/DII_Arguments_Converter_Impl.h"
 
 ACE_RCSID(DII_Collocation_Tests, Hello, "$Id$")
 
@@ -50,7 +52,7 @@ Hello::Hello (CORBA::ORB_ptr orb,
 {
 }
 
-void 
+void
 Hello::test_basic_arg (
     ::CORBA::Long basic,
     ::CORBA::Long_out x
@@ -66,14 +68,14 @@ Hello::test_basic_arg (
   x = 10;
 }
 
-void 
+void
 Hello::test_unbounded_string_arg(const char* message
                                    ACE_ENV_ARG_DECL_NOT_USED)
                             ACE_THROW_SPEC((CORBA::SystemException))
 {
   if (debug)
     ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_unbounded_string_arg ")
-                        ACE_TEXT("got unbounded string: %s\n"), 
+                        ACE_TEXT("got unbounded string: %s\n"),
                         message));
   if (ACE_OS::strncmp (message, TEST_STR, strlen (TEST_STR) != 0))
   {
@@ -82,14 +84,14 @@ Hello::test_unbounded_string_arg(const char* message
 }
 
 
-void 
+void
 Hello::test_bounded_string_arg(const char* message
                                  ACE_ENV_ARG_DECL_NOT_USED)
                             ACE_THROW_SPEC((CORBA::SystemException))
 {
   if (debug)
     ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_bounded_string_arg ")
-                        ACE_TEXT("got bounded string: %s\n"), 
+                        ACE_TEXT("got bounded string: %s\n"),
                         message));
   if (ACE_OS::strncmp (message, TEST_STR, ::Test::BOUNDED_STRING_SIZE) != 0)
   {
@@ -98,7 +100,7 @@ Hello::test_bounded_string_arg(const char* message
 }
 
 
-void 
+void
 Hello::test_fixed_array_arg(const ::Test::Fixed_Array message
                               ACE_ENV_ARG_DECL_NOT_USED)
                             ACE_THROW_SPEC((CORBA::SystemException))
@@ -107,7 +109,7 @@ Hello::test_fixed_array_arg(const ::Test::Fixed_Array message
   {
     if (debug)
       ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_fixed_array_arg ")
-        ACE_TEXT("got fixed array: %d\n"), 
+        ACE_TEXT("got fixed array: %d\n"),
         message[i]));
     if (message[i] != static_cast<CORBA::Long> (i + 999))
       ERROR_COUNT ("Hello::test_fixed_array_arg")
@@ -115,7 +117,7 @@ Hello::test_fixed_array_arg(const ::Test::Fixed_Array message
 }
 
 
-void 
+void
 Hello::test_bounded_var_size_arg(const ::Test::Bounded_Var_Size_Arg& message
                                    ACE_ENV_ARG_DECL_NOT_USED)
                            ACE_THROW_SPEC((CORBA::SystemException))
@@ -128,7 +130,7 @@ Hello::test_bounded_var_size_arg(const ::Test::Bounded_Var_Size_Arg& message
 }
 
 
-void 
+void
 Hello::test_unbounded_var_size_arg(const ::Test::Unbounded_Var_Size_Arg& message
                                      ACE_ENV_ARG_DECL_NOT_USED)
                           ACE_THROW_SPEC((CORBA::SystemException))
@@ -141,7 +143,7 @@ Hello::test_unbounded_var_size_arg(const ::Test::Unbounded_Var_Size_Arg& message
 }
 
 
-void 
+void
 Hello::test_fixed_size_arg(const ::Test::TimeOfDay& t
                              ACE_ENV_ARG_DECL_NOT_USED)
                            ACE_THROW_SPEC ((CORBA::SystemException))
@@ -151,14 +153,14 @@ Hello::test_fixed_size_arg(const ::Test::TimeOfDay& t
                         ACE_TEXT("got timeofday: %d:%d:%d\n"),
                         t.hour, t.minute, t.second));
 
-  if (t.hour != TEST_HOUR 
-      || t.minute != TEST_MINUTE 
+  if (t.hour != TEST_HOUR
+      || t.minute != TEST_MINUTE
       || t.second != TEST_SECOND)
     ERROR_COUNT ("Hello::test_fixed_size_arg")
 }
 
 
-void 
+void
 Hello::test_var_array_arg(const Test::Var_Array messages
                             ACE_ENV_ARG_DECL_NOT_USED)
                           ACE_THROW_SPEC((CORBA::SystemException))
@@ -174,7 +176,7 @@ Hello::test_var_array_arg(const Test::Var_Array messages
 }
 
 
-void 
+void
 Hello::test_special_basic_arg(CORBA::Char value
                                 ACE_ENV_ARG_DECL_NOT_USED)
                            ACE_THROW_SPEC((CORBA::SystemException))
