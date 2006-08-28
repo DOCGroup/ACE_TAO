@@ -137,7 +137,7 @@ namespace TAO {
     return true;
   }
 
-# if defined (ACE_HAS_WCHAR) || defined (ACE_HAS_XPG4_MULTIBYTE_CHAR)
+# if (defined (ACE_HAS_WCHAR) || defined (ACE_HAS_XPG4_MULTIBYTE_CHAR)) && !defined (ACE_LACKS_NATIVE_WCHAR_T)
   template <typename stream, CORBA::ULong MAX>
   bool demarshal_sequence(stream & strm, TAO::bounded_value_sequence <CORBA::WChar, MAX> & target) {
     typedef TAO::bounded_value_sequence <CORBA::WChar, MAX> sequence;
@@ -397,7 +397,7 @@ namespace TAO {
     return strm.write_char_array (source.get_buffer (), length);
   }
 
-# if defined (ACE_HAS_WCHAR) || defined (ACE_HAS_XPG4_MULTIBYTE_CHAR)
+# if (defined (ACE_HAS_WCHAR) || defined (ACE_HAS_XPG4_MULTIBYTE_CHAR)) && !defined (ACE_LACKS_NATIVE_WCHAR_T)
   template <typename stream, CORBA::ULong MAX>
   bool marshal_sequence(stream & strm, const TAO::bounded_value_sequence <CORBA::WChar, MAX> & source) {
     if (0 == &source)
