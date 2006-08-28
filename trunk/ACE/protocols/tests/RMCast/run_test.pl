@@ -22,7 +22,7 @@ sleep ($PerlACE::wait_interval_for_process_creation);
 
 $sender->Spawn ();
 
-$status = $receiver->WaitKill (20);
+$status = $receiver->WaitKill (40);
 
 if ($status != 0) {
     print STDERR "ERROR: receiver returned $status\n";

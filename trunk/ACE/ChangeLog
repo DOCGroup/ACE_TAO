@@ -1,3 +1,14 @@
+Mon Aug 28 09:05:20 UTC 2006  Boris Kolpackov  <boris@codesynthesis.com>
+
+        * bin/ace_tests.lst:
+
+          Copied test exclusion list from the Multicast_Test entry.
+
+        * protocols/tests/RMCast/Protocol.h:
+        * protocols/tests/RMCast/run_test.pl:
+
+          Adjusted the timeout value and message size.
+
 Sun Aug 27 11:11:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
