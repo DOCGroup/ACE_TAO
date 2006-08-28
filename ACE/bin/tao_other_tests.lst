@@ -141,6 +141,7 @@ TAO/orbsvcs/tests/Property/run_test.pl: !NO_MESSAGING !ACE_FOR_TAO
 #HANGS TAO/orbsvcs/tests/ImplRepo/run_test.pl airplane
 #HANGS'TAO/orbsvcs/tests/ImplRepo/run_test.pl airplane_ir
 TAO/orbsvcs/tests/Security/Big_Request/run_test.pl: SSL !STATIC !DISABLE_INTERCEPTORS !ACE_FOR_TAO
+TAO/orbsvcs/tests/Security/BiDirectional/run_test.pl: SSL !STATIC !DISABLE_INTERCEPTORS !ACE_FOR_TAO
 TAO/orbsvcs/tests/Security/Callback/run_test.pl: SSL !STATIC !DISABLE_INTERCEPTORS !ACE_FOR_TAO
 TAO/orbsvcs/tests/Security/MT_SSLIOP/run_test.pl: !ST SSL !STATIC !DISABLE_INTERCEPTORS !ACE_FOR_TAO
 TAO/orbsvcs/tests/Security/MT_IIOP_SSL/run_test.pl: !ST SSL !STATIC !DISABLE_INTERCEPTORS !ACE_FOR_TAO
