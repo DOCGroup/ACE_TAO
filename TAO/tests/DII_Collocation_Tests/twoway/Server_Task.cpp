@@ -5,8 +5,6 @@
 #include "TestS.h"
 #include "Hello.h"
 
-#include "ace/Manual_Event.h"
-
 ACE_RCSID(DII_Collocation_Tests,
           Server_Task,
           "$Id$")
