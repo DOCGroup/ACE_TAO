@@ -182,6 +182,16 @@ module Deployment {
     Properties infoProperty;
   };
 
+  struct DiffservInfo {
+    string server_instance_name;
+    string client_instance_name;
+    string client_receptacle_name;
+    long request_dscp;
+    long reply_dscp;
+  };
+
+  typedef sequence < DiffservInfo > DiffservInfos;
+
   enum DomainUpdateKind {
     Add,
     Delete,
