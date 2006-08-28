@@ -346,6 +346,38 @@ TAO_SCIOP_Connection_Handler::process_listen_point_list (
 }
 
 int
+TAO_SCIOP_Connection_Handler::set_dscp_codepoint (CORBA::Long dscp_codepoint)
+{
+  int tos = IPDSFIELD_DSCP_DEFAULT << 2;
+  CORBA::Long codepoint = dscp_codepoint;
+  tos = (int)(codepoint) << 2;
+
+  if (tos != this->dscp_codepoint_)
+    {
+      int const result = this->peer ().set_option (IPPROTO_IP,
+IP_TOS,
+                                                   (int *) &tos ,
+                                                   (int) sizeof (tos));
+
+      if (TAO_debug_level)         {
+          ACE_DEBUG ((LM_DEBUG,
+                      "TAO (%P|%t) - SCIOP_Connection_Handler::"
+                      "set_dscp_codepoint -> dscp: %x; result: %d; %s\n",
+                      tos,
+                      result,
+                      result == -1 ? "try running as superuser" : ""));
+        }
+
+      // On successful setting of TOS field.
+      if (result == 0)
+        this->dscp_codepoint_ = tos;
+
+    }
+
+  return 0;
+}
+
+int
 TAO_SCIOP_Connection_Handler::set_dscp_codepoint (CORBA::Boolean set_network_priority)
 {
   int tos = IPDSFIELD_DSCP_DEFAULT << 2;

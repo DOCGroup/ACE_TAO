@@ -25,6 +25,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core, tao_vers
     CDR.cpp
     CharSeqC.cpp
     Cleanup_Func_Registry.cpp
+    Client_Network_Priority_Policy.cpp
     Client_Strategy_Factory.cpp
     ClientRequestInterceptor_Adapter_Factory.cpp
     ClientRequestInterceptor_Adapter.cpp
@@ -126,6 +127,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core, tao_vers
     MMAP_Allocator.cpp
     MProfile.cpp
     Muxed_TMS.cpp
+    Network_Priority_Policy.cpp
     New_Leader_Generator.cpp
     NVList_Adapter.cpp
     Null_Fragmentation_Strategy.cpp
@@ -153,13 +155,13 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core, tao_vers
     PI_ForwardC.cpp
     Pluggable_Messaging.cpp
     Pluggable_Messaging_Utils.cpp
+    PolicyC.cpp
     Policy_Current.cpp
     Policy_Current_Impl.cpp
     Policy_ForwardC.cpp
     Policy_Manager.cpp
     Policy_Set.cpp
     Policy_Validator.cpp
-    PolicyC.cpp
     PolicyFactory_Registry_Adapter.cpp
     PolicyFactory_Registry_Factory.cpp
     PortableInterceptorC.cpp
@@ -197,6 +199,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core, tao_vers
     Tagged_Components.cpp
     Tagged_Profile.cpp
     TAO_Internal.cpp
+    TAO_Network_Priority_PolicyC.cpp
     TAO_Server_Request.cpp
     TAO_Singleton_Manager.cpp
     TAOC.cpp
@@ -280,11 +283,14 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core, tao_vers
     CharSeqS.h
     Cleanup_Func_Registry.h
     ClientRequestInterceptor_Adapter.h
+    Client_Network_Priority_Policy.h
     Client_Strategy_Factory.h
     Codeset_Descriptor_Base.h
     Codeset_Manager.h
     Codeset_Manager_Factory_Base.h
     Codeset_Translator_Base.h
+//    Codeset_Translator_Factory.h  *** file is for backwardscompatibility only
+//                                  *** there should be no dependencies on it
     Collocated_Invocation.h
     Collocation_Proxy_Broker.h
     Collocation_Resolver.h
@@ -403,6 +409,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core, tao_vers
     MMAP_Allocator.h
     MProfile.h
     Muxed_TMS.h
+    Network_Priority_Policy.h
     New_Leader_Generator.h
     Object_Argument_T.h
     Object.h
@@ -498,6 +505,8 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core, tao_vers
     Tagged_Components.h
     Tagged_Profile.h
     TAOC.h
+    TAO_Network_Priority_PolicyC.h
+    TAO_Network_Priority_PolicyS.h
     TAO_Export.h
     TAO_Internal.h
     TAO_Server_Request.h
@@ -622,6 +631,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core, tao_vers
     ShortSeq.pidl >> AnyTypeCode/ShortSeqA.h AnyTypeCode/ShortSeqA.cpp
     StringSeq.pidl >> AnyTypeCode/StringSeqA.h AnyTypeCode/StringSeqA.cpp
     TAO.pidl >> AnyTypeCode/TAOA.h AnyTypeCode/TAOA.cpp
+    TAO_Network_Priority_Policy.pidl >> AnyTypeCode/TAO_Network_Priority_PolicyA.h AnyTypeCode/TAO_Network_Priority_PolicyA.cpp
     TimeBase.pidl >> AnyTypeCode/TimeBaseA.h AnyTypeCode/TimeBaseA.cpp
     ULongLongSeq.pidl >> AnyTypeCode/ULongLongSeqA.h AnyTypeCode/ULongLongSeqA.cpp
     ULongSeq.pidl >> AnyTypeCode/ULongSeqA.h AnyTypeCode/ULongSeqA.cpp

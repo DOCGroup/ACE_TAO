@@ -5,6 +5,8 @@
 #include "tao/Policy_Set.h"
 #include "tao/PolicyFactory_Registry_Adapter.h"
 #include "tao/PortableServer/PortableServer.h"
+#include "tao/Network_Priority_Policy.h"
+#include "tao/TAO_Network_Priority_PolicyC.h"
 
 ACE_RCSID (PortableServer,
            Default_Policy_Validator,
@@ -128,6 +130,11 @@ TAO_POA_Default_Policy_Validator::legal_policy_impl (CORBA::PolicyType type)
   // Check known POA policies, or if given PolicyType has a
   // corresponding PolicyFactory.  The PolicyFactory check is mandated
   // by the CORBA specification.
+
+  if (type == ::TAO::NETWORK_PRIORITY_TYPE)
+    {
+      type = PortableServer::NETWORK_PRIORITY_POLICY_ID;
+    }
   return
     (
 #   if ! defined (CORBA_E_COMPACT) && ! defined (CORBA_E_MICRO)
@@ -135,6 +142,7 @@ TAO_POA_Default_Policy_Validator::legal_policy_impl (CORBA::PolicyType type)
 #   endif
 #   if ! defined (CORBA_E_MICRO)
       type == PortableServer::LIFESPAN_POLICY_ID ||
+      type == PortableServer::NETWORK_PRIORITY_POLICY_ID ||
       type == PortableServer::ID_UNIQUENESS_POLICY_ID ||
       type == PortableServer::ID_ASSIGNMENT_POLICY_ID ||
 #   endif

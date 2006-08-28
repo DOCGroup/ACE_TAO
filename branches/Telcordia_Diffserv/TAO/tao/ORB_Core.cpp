@@ -51,6 +51,7 @@
 #include "ace/Arg_Shifter.h"
 #include "ace/Argv_Type_Converter.h"
 #include "ace/Static_Object_Lock.h"
+#include "tao/Network_Priority_Policy.h"
 
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
@@ -72,7 +73,7 @@
 
 
 #if !defined (__ACE_INLINE__)
-# include "tao/ORB_Core.inl"
+# include "tao/ORB_Core.i"
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID (tao,
@@ -1586,7 +1587,6 @@ TAO_ORB_Core::collocation_resolver (void)
 TAO::PolicyFactory_Registry_Adapter *
 TAO_ORB_Core::policy_factory_registry_i (void)
 {
-
   TAO_PolicyFactory_Registry_Factory *loader =
     ACE_Dynamic_Service<TAO_PolicyFactory_Registry_Factory>::instance
       (this->configuration (),
@@ -1773,6 +1773,12 @@ TAO_ORB_Core::service_context_list (
 {
   // @NOTE: Can use Interceptors instead..
   this->protocols_hooks_->rt_service_context (stub,
+                                              service_context,
+                                              restart
+                                              ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  this->protocols_hooks_->np_service_context (stub,
                                               service_context,
                                               restart
                                               ACE_ENV_ARG_PARAMETER);

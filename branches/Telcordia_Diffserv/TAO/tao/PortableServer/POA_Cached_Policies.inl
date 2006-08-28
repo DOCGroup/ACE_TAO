@@ -56,10 +56,28 @@ namespace TAO
       return this->priority_model_;
     }
 
+    ACE_INLINE Cached_Policies::NetworkPriorityModel
+    Cached_Policies::network_priority_model (void) const
+    {
+      return this->network_priority_model_;
+    }
+
     ACE_INLINE CORBA::Short
     Cached_Policies::server_priority (void) const
     {
       return this->server_priority_;
+    }
+
+    ACE_INLINE CORBA::Long
+    Cached_Policies::request_diffserv_codepoint (void) const
+    {
+      return this->request_diffserv_codepoint_;
+    }
+
+    ACE_INLINE CORBA::Long
+    Cached_Policies::reply_diffserv_codepoint (void) const
+    {
+      return this->reply_diffserv_codepoint_;
     }
 
     ACE_INLINE void
@@ -69,9 +87,28 @@ namespace TAO
     }
 
     ACE_INLINE void
+    Cached_Policies::network_priority_model (
+       NetworkPriorityModel network_priority_model)
+    {
+      this->network_priority_model_ = network_priority_model;
+    }
+
+    ACE_INLINE void
     Cached_Policies::server_priority (CORBA::Short priority)
     {
       this->server_priority_ = priority;
+    }
+
+    ACE_INLINE void
+    Cached_Policies::request_diffserv_codepoint (CORBA::Long diffserv_codepoint)
+    {
+      this->request_diffserv_codepoint_ = diffserv_codepoint;
+    }
+
+    ACE_INLINE void
+    Cached_Policies::reply_diffserv_codepoint (CORBA::Long diffserv_codepoint)
+    {
+      this->reply_diffserv_codepoint_ = diffserv_codepoint;
     }
 
     ACE_INLINE void
