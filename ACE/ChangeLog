@@ -1,3 +1,14 @@
+Mon Aug 28 10:07:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/run_test.lst:
+          Added UUIDTest, was just not listed in this file
+
+        * bin/PerlACE/ProcessVX_Unix.pm:
+          New initial file for running tests for VxWorks from an unix host
+
+        * bin/PerlACE/ProcessVX.pm:
+          On unix use the new file above
+
 Mon Aug 28 09:05:20 UTC 2006  Boris Kolpackov  <boris@codesynthesis.com>
 
         * bin/ace_tests.lst:

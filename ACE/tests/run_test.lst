@@ -173,3 +173,4 @@ SOCK_Test_IPv6: !nsk
 Process_Strategy_Test: !VxWorks !LynxOS !ACE_FOR_TAO
 Recursive_Condition_Bug_Test: !DISABLE_ToFix_LynxOS_PPC !ST
 UnloadLibACE: !STATIC !WinCE
+UUIDTest
