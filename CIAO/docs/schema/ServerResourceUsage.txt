@@ -47,13 +47,28 @@ referenced by its name and the CIAO:ServerResources name.
      ....
      <instance ...>
 
+// Multiple "deployedResource" elements can be defined.
+// A "deployedResource" element defines a type of a policy.
+// Policy types can be "InstanceTypes" or "FacetTypes" or
+// "ReceptacleTypes".
+// They are defined accordingly using the "property" tags of the
+// "deployedResource" element.
+// An InstanceDeploymentDescription can have only one "deployedResource"
+// element defining the "InstanceTypes" polices. It can have multiple
+// "deployedResource" element defining the "ReceptacleTypes" or "FacetTypes"
+// policies.
      
        <deployedResource>
          <resourceUsage>InstanceUsesResource</resourceUsage>
-         <requirementName>CIAO:ServerResources</requirementName>
+         <requirementName>CIAO:PolicySet</requirementName>
          <resourceName>here_we_insert_the_name_defined_in_CIAO:ServerResources</resourcename>
          <property>
-           <name>CIAO:PolicySetName</name>
+// 
+// name could be CIAO:InstancePolicy or CIAO:ReceptaclePolicy or
+// CIAO:FacetPolicy. Here we show an example of an 
+// CIAO::InstancePolicy.
+//
+           <name>CIAO:InstancePolicy</name>
            <value>
              <type>tk_string</type>
              <value>
@@ -63,6 +78,43 @@ referenced by its name and the CIAO:ServerResources name.
          </property>
        </deployedResource>
 
+// Now we show an example of a CIAO:ReceptaclePolicy.
+//
+       <deployedResource>
+         <resourceUsage>InstanceUsesResource</resourceUsage>
+         <requirementName>CIAO:PolicySet</requirementName>
+         <resourceName>here_we_insert_the_name_defined_in_CIAO:ServerResources</resourcename>
+//
+// First we specify that we are going to define a receptacle policy.
+//
+         <property>
+//
+// Note the name of the policy.
+//
+           <name>CIAO:ReceptaclePolicy</name>
+           <value>
+             <type>tk_string</type>
+             <value>
+               <string>here_we_insert_the_PolicySet_name_defined_in_the_ServerResources</string>
+             </value>
+           </value>
+         </property>
+//
+// Now we specify the receptacle (using the receptacle name) that is going to
+// be associated with this policy.
+//
+         <property>
+           <name>receptacle name from the .ccd file</name>
+           <value>
+             <type>tk_string</type>
+             <value>
+               <string>here_we_insert_the_PolicySet_name_defined_in_the_ServerResources</string>
+             </value>
+           </value>
+         </property>
+       </deployedResource>
+
+     </instance>
      </instance>
    </deploymentplan>
   
