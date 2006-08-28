@@ -1,3 +1,8 @@
+Mon Aug 28 12:05:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/DII_Collocation_Tests/twoway/Hello.cpp:
+          Added needed include to fix test failures in static builds
+
 Mon Aug 28 09:39:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/OBV/Simple/run_test.pl:
