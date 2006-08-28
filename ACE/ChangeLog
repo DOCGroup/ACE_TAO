@@ -1,4 +1,16 @@
-Mon Aug 29 00:04:29 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+Tue Aug 29 00:26:56 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * ace/SSL/ssl.mpc
+        * ace/SSL/ssl_for_tao.mpc
+        * bin/MakeProjectCreator/config/ssl_full.mpb:
+        * bin/MakeProjectCreator/config/ssl.mpb:
+        * bin/MakeProjectCreator/config/ssl_for_tao.mpb:
+
+          Added support for new ACE_SSL subset "ACE_SSL_FOR_TAO" for
+          "ace_for_tao" configuration.  The ACE_SSL_FOR_TAO subset merely
+          lacks asychronous I/O support.
+
+Tue Aug 29 00:04:29 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
         * ace/ACE_export.h:
 
@@ -7,7 +19,7 @@ Mon Aug 29 00:04:29 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
         * ace/Log_Msg.cpp (log):
 
-          Corrected scalar/vector operator delete mismatch.  The wide
+          Corrected scalar/vector operator delete() mismatch.  The wide
           string buffer was allocated as an array.  Destroy it
           accordingly.
 
