@@ -105,13 +105,6 @@ namespace CIAO
 
       /// Local map for DAMs, to save expensive UUID lookups.
       Execution_Manager::DAM_Map map_;
-
-      typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
-                                      int,
-                                      ACE_Hash<ACE_CString>,
-                                      ACE_Equal_To<ACE_CString>,
-                                      ACE_Null_Mutex> Instance_Map;
-      Instance_Map instance_map_;
     };
 
   }
