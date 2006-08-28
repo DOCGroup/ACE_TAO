@@ -1,3 +1,17 @@
+Mon Aug 28 19:59:29 UTC 2006  Jaiganesh B <jai.dre.vanderbilt.edu>
+
+        * tools/Config_Handlers/RT-CCM/CNPM_Handler.h:
+          tools/Config_Handlers/RT-CCM/CIAOServerResources.hpp:
+          tools/Config_Handlers/RT-CCM/PS_Handler.cpp:
+          tools/Config_Handlers/RT-CCM/RT-CCM-Handlers.mpc:
+          tools/Config_Handlers/RT-CCM/NPM_Handler.cpp:
+          tools/Config_Handlers/RT-CCM/CNPM_Handler.cpp:
+          tools/Config_Handlers/RT-CCM/NPM_Handler.h:
+          tools/Config_Handlers/RT-CCM/CIAOServerResources.cpp:
+        
+          Added support for specifying network priority model policies 
+          using thr CIAOServerResources schema.
+
 Mon Aug 28 19:56:18 UTC 2006  Jaiganesh B <jai.dre.vanderbilt.edu>
 
         * tools/Config_Handlers/Basic_Deployment_Data.cpp:
