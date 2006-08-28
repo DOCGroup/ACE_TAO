@@ -1,3 +1,12 @@
+Mon Aug 28 19:56:18 UTC 2006  Jaiganesh B <jai.dre.vanderbilt.edu>
+
+        * tools/Config_Handlers/Basic_Deployment_Data.cpp:
+          tools/Config_Handlers/IRDD_Handler.h:
+          tools/Config_Handlers/Basic_Deployment_Data.hpp:
+          tools/Config_Handlers/IDD_Handler.cpp:
+        
+          Added support for network priority policy.
+
 Mon Aug 28 19:50:17 UTC 2006  Jaiganesh B <jai.dre.vanderbilt.edu>
 
         * ciao/Deployment_Data.idl:
