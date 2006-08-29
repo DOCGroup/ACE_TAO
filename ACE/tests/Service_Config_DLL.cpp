@@ -229,3 +229,46 @@ ACE_STATIC_SVC_DEFINE (Test_Object_2_More,
 
 // Same factory is used for all service descriptors defined above.
 ACE_FACTORY_DEFINE (Service_Config_DLL, Service_Config_DLL)
+
+/*
+** Simple service which will refuse to load/initialize correctly.
+** The main program should do:
+**  1. Try to load this service (which should fail)
+**  2. Try to look up this service and call its info() hook; if info()
+**     can be called, the test has failed.
+** Similarly, if fini() is called later, something is very wrong.
+*/
+
+/// Initializes object when dynamic linking occurs.
+int
+Refuses_Init::init (int, ACE_TCHAR *[])
+{
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Refuses_Init::init - refusing to init\n")));
+  return -1;
+}
+
+/// Terminates object when dynamic unlinking occurs.
+int
+Refuses_Init::fini (void)
+{
+  ACE_ERROR ((LM_ERROR,
+              ACE_TEXT ("Refuses_Init::fini should not be called!\n")));
+  return 0;
+}
+
+/// Returns information on a service object.
+int
+Refuses_Init::info (ACE_TCHAR **info_string, size_t length) const
+{
+  ACE_TCHAR const *msg =
+    ACE_TEXT ("Refuses_Init service, shouldn't be here!\n");
+  if (*info_string == 0)
+    *info_string = ACE::strnew (msg);
+  else
+    ACE_OS::strncpy (*info_string, msg, length);
+  ACE_ERROR ((LM_ERROR,
+              ACE_TEXT ("Refuses_Init::info() called - shouldn't be\n")));
+  return ACE_OS::strlen (*info_string);
+}
+
+ACE_FACTORY_DEFINE (Service_Config_DLL, Refuses_Init)

@@ -20,6 +20,9 @@
 #include "ace/Log_Msg.h"
 #include "ace/Object_Manager.h"
 #include "ace/Service_Config.h"
+#include "ace/Service_Object.h"
+#include "ace/Service_Repository.h"
+#include "ace/Service_Types.h"
 #include "ace/Reactor.h"
 #include "ace/Thread_Manager.h"
 #include "ace/ARGV.h"
@@ -115,6 +118,47 @@ Test_Singleton::~Test_Singleton (void)
                  variety_)); */
       ++error;
     }
+}
+
+void
+testFailedServiceInit (int argc, ACE_TCHAR *argv[])
+{
+  static const ACE_TCHAR *refuse_svc =
+#if (ACE_USES_CLASSIC_SVC_CONF == 1)
+    ACE_TEXT ("dynamic Refuses_Svc Service_Object * ")
+    ACE_TEXT ("  Service_Config_DLL:_make_Refuses_Init() \"\"")
+#else
+    ACE_TEXT ("<dynamic id=\"Refuses_Svc\" type=\"Service_Object\">")
+    ACE_TEXT ("  <initializer init=\"_make_Refuses_Init\" path=\"Service_Config_DLL\" params=\"\"/>")
+    ACE_TEXT ("</dynamic>")
+#endif /* (ACE_USES_CLASSIC_SVC_CONF == 1) */
+    ;
+
+  int error_count = 0;
+  if ((error_count = ACE_Service_Config::process_directive (refuse_svc)) != 1)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Failed init test should have returned 1; ")
+                  ACE_TEXT ("returned %d instead\n"),
+                  error_count));
+    }
+
+  // Try to find the service; it should not be there.
+  ACE_Service_Type const *svcp;
+  if (-1 != ACE_Service_Repository::instance ()->find (ACE_TEXT ("Refuses_Svc"),
+                                                       &svcp))
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Found service repo entry for Refuses_Svc\n")));
+      ACE_Service_Type_Impl const *svc_impl = svcp->type ();
+      ACE_TCHAR msg[1024];
+      ACE_TCHAR *msgp = msg;
+      if (svc_impl->info (&msgp, sizeof (msg) / sizeof (ACE_TCHAR)) > 0)
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Refuses_Svc said: %s\n"), msg));
+    }
+  else
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("Repo reports no Refuses_Svc; correct.\n")));
 }
 
 void
@@ -232,7 +276,7 @@ testLimits (int , ACE_TCHAR *[])
 
 // @brief ??
 void
-testOrderlyInstantialtion (int , ACE_TCHAR *[])
+testOrderlyInstantiation (int , ACE_TCHAR *[])
 {
   for (u_int i = 0; i < VARIETIES; ++i)
     {
@@ -252,8 +296,9 @@ run_main (int argc, ACE_TCHAR *argv[])
 {
   ACE_START_TEST (ACE_TEXT ("Service_Config_Test"));
 
-   testOrderlyInstantialtion (argc, argv);
-   testLoadingServiceConfFile (argc, argv);
+  testOrderlyInstantiation (argc, argv);
+  testFailedServiceInit (argc, argv);
+  testLoadingServiceConfFile (argc, argv);
   testLimits (argc, argv);
 
   ACE_END_TEST;

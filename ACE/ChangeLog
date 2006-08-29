@@ -1,3 +1,10 @@
+Tue Aug 29 21:17:26 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * tests/Service_Config_DLL.{h cpp}:
+        * tests/Service_Config_Test.cpp: Added a test for ACE_Service_Config's
+          behavior when a dynamic service's init() hook returns -1 (failure).
+          This was precipitated by Bugzilla #2648.
+
 Tue Aug 29 18:07:39 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
         * examples/IPC_SAP/SSL_SAP/SSL_SAP.mpc:
