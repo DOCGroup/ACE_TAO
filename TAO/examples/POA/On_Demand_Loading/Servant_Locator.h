@@ -25,8 +25,12 @@
 
 #include "Servant_Manager.h"
 #include "tao/PortableServer/ServantLocatorC.h"
+#include "tao/LocalObject.h"
 
-class ServantLocator_i : public PortableServer::ServantLocator
+class ServantLocator_i :
+  public virtual PortableServer::ServantLocator,
+  public virtual TAO_Local_RefCounted_Object
+
 {
   // = TITLE
   //   This class is used by a POA with USE_SERVANT_MANAGER and

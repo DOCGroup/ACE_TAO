@@ -24,8 +24,12 @@
 
 #include "Servant_Manager.h"
 #include "tao/PortableServer/ServantActivatorC.h"
+#include "tao/LocalObject.h"
 
-class ServantActivator_i : public PortableServer::ServantActivator
+class ServantActivator_i :
+  public virtual PortableServer::ServantActivator,
+  public virtual TAO_Local_RefCounted_Object
+
 {
   //= TITLE
   //   Servant Activator for the test servant.
