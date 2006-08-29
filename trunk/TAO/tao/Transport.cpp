@@ -661,7 +661,7 @@ TAO_Transport::send_reply_message_i (const ACE_Message_Block *mb,
     {
       ACE_DEBUG ((LM_DEBUG,
          ACE_TEXT ("TAO (%P|%t) - Transport[%d]::send_reply_message_i, ")
-         ACE_TEXT ("preparing to add to queue before leaving \n"),
+         ACE_TEXT ("preparing to add to queue before leaving\n"),
          this->id ()));
     }
 
@@ -681,20 +681,20 @@ TAO_Transport::send_reply_message_i (const ACE_Message_Block *mb,
   TAO_Flushing_Strategy *flushing_strategy =
     this->orb_core ()->flushing_strategy ();
 
-  int result = flushing_strategy->schedule_output (this);
+  int const result = flushing_strategy->schedule_output (this);
 
   if (result == -1)
     {
       if (TAO_debug_level > 5)
         {
           ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - Transport[%d]::send_reply_"
-                      "message_i dequeuing msg due to schedule_output "
+                      "message_i, dequeuing msg due to schedule_output "
                       "failure\n", this->id ()));
         }
       msg->remove_from_list (this->head_, this->tail_);
       msg->destroy ();
     }
-  else if (result == TAO_Flushing_Strategy::MUST_FLUSH) 
+  else if (result == TAO_Flushing_Strategy::MUST_FLUSH)
     {
       typedef ACE_Reverse_Lock<ACE_Lock> TAO_REVERSE_LOCK;
       TAO_REVERSE_LOCK reverse (*this->handler_lock_);
@@ -740,8 +740,11 @@ TAO_Transport::queue_is_empty_i (void)
 int
 TAO_Transport::schedule_output_i (void)
 {
-  ACE_Event_Handler *eh = this->event_handler_i ();
-  ACE_Reactor *reactor = eh->reactor ();
+  ACE_Event_Handler * const eh = this->event_handler_i ();
+  ACE_Reactor * const reactor = eh->reactor ();
+
+  if (reactor == 0)
+     return -1;
 
   // Check to see if our event handler is still registered with the
   // reactor.  It's possible for another thread to have run close_connection()
@@ -816,8 +819,8 @@ TAO_Transport::handle_timeout (const ACE_Time_Value & /* current_time */,
 
       TAO_Flushing_Strategy *flushing_strategy =
         this->orb_core ()->flushing_strategy ();
-      int result = flushing_strategy->schedule_output (this);
-      if (result == TAO_Flushing_Strategy::MUST_FLUSH) 
+      int const result = flushing_strategy->schedule_output (this);
+      if (result == TAO_Flushing_Strategy::MUST_FLUSH)
         {
           typedef ACE_Reverse_Lock<ACE_Lock> TAO_REVERSE_LOCK;
           TAO_REVERSE_LOCK reverse (*this->handler_lock_);
@@ -1074,7 +1077,7 @@ TAO_Transport::cleanup_queue_i ()
 
   if (TAO_debug_level > 4)
     {
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - Transport[%d]::cleanup_queue_i, ")
                   ACE_TEXT ("discarded %d messages, %d bytes.\n"),
                   this->id (), msg_count, byte_count));
@@ -1149,7 +1152,7 @@ TAO_Transport::check_buffering_constraints_i (TAO_Stub *stub,
   if (set_timer)
     {
       ACE_Event_Handler *eh = this->event_handler_i ();
-      ACE_Reactor *reactor = eh->reactor ();
+      ACE_Reactor * const reactor = eh->reactor ();
       this->current_deadline_ = new_deadline;
       ACE_Time_Value delay =
         new_deadline - ACE_OS::gettimeofday ();
@@ -1299,8 +1302,8 @@ TAO_Transport::send_asynchronous_message_i (TAO_Stub *stub,
         }
 
       // If it was partially sent, then we can't allow a timeout
-      if (byte_count > 0) 
-        max_wait_time = 0; 
+      if (byte_count > 0)
+        max_wait_time = 0;
 
       if (TAO_debug_level > 6)
         {
@@ -1361,8 +1364,8 @@ TAO_Transport::send_asynchronous_message_i (TAO_Stub *stub,
 
   if (constraints_reached || try_sending_first)
     {
-      int result = flushing_strategy->schedule_output (this);
-      if (result == TAO_Flushing_Strategy::MUST_FLUSH) 
+      int const result = flushing_strategy->schedule_output (this);
+      if (result == TAO_Flushing_Strategy::MUST_FLUSH)
         {
           must_flush = true;
         }

@@ -1,3 +1,10 @@
+Tue Aug 29 13:46:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Transport.cpp (schedule_output_i):
+          Check whether we have a reactor, if not, return -1, this fixes
+          bugzilla bug 2560. Thanks to Andy Salnikov <a_salnikov at yahoo dot com>
+          for reporting this bug and making a test program
+
 Tue Aug 29 12:53:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_2560_Regression/*:
