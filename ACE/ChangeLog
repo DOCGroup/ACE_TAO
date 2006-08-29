@@ -1,3 +1,12 @@
+Tue Aug 29 18:07:39 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
+
+        * examples/IPC_SAP/SSL_SAP/SSL_SAP.mpc:
+        * tests/SSL/tests.mpc:
+
+          Disable MPC projects in these files that depend on features not
+          found in the "ACE for TAO" subset", i.e. ACE_Profile_Timer and
+          asynch I/O.
+
 Tue Aug 29 13:19:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
