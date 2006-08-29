@@ -1398,9 +1398,6 @@ nobase_include_HEADERS = \
   objectid.h \
   operation_details.h \
   operation_details.inl \
-  orb.h \
-  orb.idl \
-  orb.inl \
   orb_types.pidl \
   orb_typesC.h \
   orb_typesS.h \
