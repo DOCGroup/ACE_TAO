@@ -5,10 +5,11 @@ project (Package_Config_Handlers) : acelib, ciao_deployment_stub, ciao_config_ha
   dynamicflags = PACKAGING_HANDLERS_BUILD_DLL
   avoids   += ace_for_tao
 
-  after    += XSC_Config_Handlers_Common XSC_DynAny_Handler
-  libs     += XSC_Config_Handlers_Common XSC_DynAny_Handler
+  after    += XSC_Config_Handlers_Common XSC_DynAny_Handler CIAO_XML_Utils
+  libs     += XSC_Config_Handlers_Common XSC_DynAny_Handler CIAO_XML_Utils
 
   includes += $(CIAO_ROOT)/ciao
+  includes += $(CIAO_ROOT)/tools/Config_Handlers
 
   Source_files {
     CAD_Handler.cpp

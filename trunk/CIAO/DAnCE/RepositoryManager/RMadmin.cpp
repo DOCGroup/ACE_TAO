@@ -28,8 +28,7 @@ using namespace std;
 #include "tao/CDR.h"          //for TAO CDR classes
 #include "ace/Message_Block.h"      //for ACE_Message_Block
 
-#include "Config_Handlers/Utils/XML_Helper.h"
-#include "Config_Handlers/Package_Handlers/PCD_Handler.h"
+#include "Package_Handlers/PCD_Handler.h"
 
 #include "orbsvcs/CosNamingC.h"
 
@@ -199,14 +198,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         // Parse the PCD to make sure that there are no package errors.
         ACE_TRY
         {
-          xercesc::DOMDocument *doc = XML_HELPER->create_dom ("default.pcd");
-
-          if (0 != doc)
-            {
-              CIAO::Config_Handlers::Packaging::PCD_Handler::package_config (
-                "default.pcd",
-                *pc);
-            }
+          CIAO::Config_Handlers::Packaging::PCD_Handler::package_config ("default.pcd", *pc);
         }
         ACE_CATCHALL
         {

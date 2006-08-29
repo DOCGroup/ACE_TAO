@@ -1,3 +1,14 @@
+Tue Aug 29 23:08:20 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
+
+        * tools/Config_Handlers/Package_Handlers/Package_Handlers.mpc
+          Fixed the "reference to `ACE_Singleton<CIAO::Config_Handlers
+          ::XML_Helper, ACE_Null_Mutex>::instance()'"warnings with
+          FC5_Static build.
+          
+        * DAnCE/RepositoryManager/RMadmin.cpp
+        * DAnCE/RepositoryManager/RepositoryManager_Impl.cpp
+          Removed unnecessary using of CIAO::Config_Handlers::XML_Helper.          
+
 Mon Aug 28 12:53:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Container_Base.cpp:
