@@ -1,12 +1,20 @@
+Tue Aug 29 11:48:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Makefile.am:
+          Fixed small bug
+
+        * orbsvcs/orbsvcs/RTEvent.mpc:
+          Replaced .i with .inl
+
 Tue Aug 29 07:54:00 UTC 2006  Frank Rehberger   <frehberger@prismtech.com>
-        
+
         * tao/PortableServer/Object_Adapter.cpp:
-        
+
           Handle location forward requests raised by colocal
           ServerInterceptor. This fixes bug #2301.
-        
+
         * orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/server.cpp:
-        
+
           Extend test to verify the forward request raised by colocal
           ServerInterceptor is handled correctly
 
