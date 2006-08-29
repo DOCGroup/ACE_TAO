@@ -1,3 +1,12 @@
+Tue Aug 29 17:40:01 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/IIOP_Connection_Handler.cpp:
+          Explicitly call release_os_resources from the dtor.
+          Release_os_resources is a virtual method, but of course calling
+          that from the base class's destructor won't work. This fix
+          ensures that sockets are really closed when the connection
+          handler is destroyed.
+
 Tue Aug 29 17:26:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_2560_Regression/Bug_2560_Regression.mpc:
