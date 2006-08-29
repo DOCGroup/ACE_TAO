@@ -1,3 +1,11 @@
+Tue Aug 29 08:20:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/run_test.lst:
+          Don't run UUIDTest in ACE_FOR_TAO configuration
+
+        * bin/ace-tests.lst:
+          Don't run wfmo reactor tests in ACE_FOR_TAO configuration
+
 Tue Aug 29 00:24:48 UTC 2006  Adam Mitz  <mitza@ociweb.com>
 
         * docs/run_test.txt:
