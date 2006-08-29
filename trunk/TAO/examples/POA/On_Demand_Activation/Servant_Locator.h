@@ -1,3 +1,4 @@
+// -*- C++ -*-
 // $Id$
 
 //================================================================================
@@ -19,10 +20,14 @@
 
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/PortableServer/ServantLocatorC.h"
+#include "tao/LocalObject.h"
 
 #include "tao/ORB.h"
 
-class ServantLocator : public PortableServer::ServantLocator
+class ServantLocator :
+  public virtual PortableServer::ServantLocator,
+  public virtual TAO_Local_RefCounted_Object
+
 {
   // = TITLE
   //   This class is used by a POA with USE_SERVANT_MANAGER and
