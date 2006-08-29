@@ -456,7 +456,7 @@ if (!($tmp = $ENV{TMP}) && !($tmp = $ENV{TEMP})) {
 
 check_for_more_configs ();
 
-if ($config_list->check_config ('VxWorks')) {
+if (PerlACE::is_vxworks_test ()) {
     $opt_v = 1;
 }
 
