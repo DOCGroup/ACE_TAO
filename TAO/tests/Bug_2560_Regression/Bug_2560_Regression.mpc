@@ -2,6 +2,7 @@
 // $Id$
 
 project(*client) : taoclient {
+  after += *Server
   exename = client
   source_files {
     QuoterC.cpp
@@ -10,6 +11,7 @@ project(*client) : taoclient {
 }
 
 project(*server) : taoserver {
+  idlflags += -Sa -St
   source_files {
     server.cpp
     Stock_Factory_i.cpp
