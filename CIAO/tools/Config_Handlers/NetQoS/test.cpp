@@ -62,7 +62,7 @@ int main (int argc, char *argv[])
 
       std::cout << "Instance document import succeeded.  Dumping contents to file\n";
   
-      CIAO::DAnCE::NetQoSRequirement *sr (net_qos_handler.netqos_idl ());
+      CIAO::DAnCE::NetworkQoS::NetQoSRequirement *sr (net_qos_handler.netqos_idl ());
   
       NetQoS_Handler reverse_handler (sr);
   

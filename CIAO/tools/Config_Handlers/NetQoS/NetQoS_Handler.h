@@ -5,7 +5,7 @@
  *   @author Lucas Seibert <lseibert@dre.vanderbilt.edu>
  *   @author Will Otte <wotte@dre.vanderbilt.edu>
  *
- * $Id: NetQoS_Handler.h 72251 2006-04-21 16:29:20Z wotte $
+ * $Id$
  */
 //======================================
 
@@ -44,14 +44,14 @@ namespace CIAO
 
       NetQoS_Handler(NetQoSRequirementsDef *netqos);
 
-      NetQoS_Handler(::CIAO::DAnCE::NetQoSRequirement *netqos);
+      NetQoS_Handler(::CIAO::DAnCE::NetworkQoS::NetQoSRequirement *netqos);
 
       ~NetQoS_Handler (void);
 
-      ::CIAO::DAnCE::NetQoSRequirement const *netqos_idl (void) const
+      ::CIAO::DAnCE::NetworkQoS::NetQoSRequirement const *netqos_idl (void) const
         throw (NoNetQoS);
 
-      ::CIAO::DAnCE::NetQoSRequirement *netqos_idl (void)
+      ::CIAO::DAnCE::NetworkQoS::NetQoSRequirement *netqos_idl (void)
         throw (NoNetQoS);
 
       NetQoSRequirementsDef const *netqos_xsc (void) const
@@ -63,7 +63,7 @@ namespace CIAO
     private:
 
        ::CIAO::Config_Handlers::NetworkQoS
-        get_idl_net_qos (::CIAO::DAnCE::DataTrafficQoS);
+        get_idl_net_qos (::CIAO::DAnCE::NetworkQoS::DataTrafficQoS);
 
 
 
@@ -73,7 +73,7 @@ namespace CIAO
 
       bool build_xsc ();
 
-      auto_ptr < ::CIAO::DAnCE::NetQoSRequirement > idl_netqos_;
+      auto_ptr < ::CIAO::DAnCE::NetworkQoS::NetQoSRequirement > idl_netqos_;
 
       auto_ptr <NetQoSRequirementsDef> netqos_;
 

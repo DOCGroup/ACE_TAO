@@ -67,42 +67,45 @@ namespace CIAO
                                     "CIAONetworkQoS") == 0)
                  {
                    ACE_DEBUG ((LM_DEBUG, "NetQoSPlanner: Inside CIAONetworkQoS\n"));
-                   ::CIAO::DAnCE::NetQoSRequirement *net_qos_req;
+                   ::CIAO::DAnCE::NetworkQoS::NetQoSRequirement *net_qos_req;
                    if (dep_plan.infoProperty [j].value >>= net_qos_req)
                     {
                        ACE_DEBUG ((LM_DEBUG, "NetQoSPlanner: Any successful\n"));
                        size_t set_len = net_qos_req->conn_qos_set.length();
                        for (size_t k = 0; k < set_len; ++k)
                          {
-                           ::CIAO::DAnCE::ConnectionQoS conn_qos 
-                            = net_qos_req->conn_qos_set[k];             
+                           ::CIAO::DAnCE::NetworkQoS::ConnectionQoS conn_qos
+                            = net_qos_req->conn_qos_set[k];
                            for (size_t conn_num = 0; 
                                 conn_num < conn_qos.connections.length (); 
                                 ++conn_num)
                              {
-                               std::cerr << "Connection Name = " 
-                               << conn_qos.connections [conn_num] 
-                               << std::endl;
+                               std::cerr
+                               << "Connection Name = " << conn_qos.connections [conn_num].connection_name   << std::endl
+                               << "client Name = " << conn_qos.connections [conn_num].client                << std::endl
+                               << "client Port Name = " << conn_qos.connections [conn_num].client_port_name << std::endl
+                               << "server Name = " << conn_qos.connections [conn_num].server                << std::endl
+                               << "server Port Name = " << conn_qos.connections [conn_num].server_port_name << std::endl;
                              }
                            std::cerr << "fwdBWD = " << conn_qos.fwdBWD << std::endl;
                            std::cerr << "revBWD = " << conn_qos.revBWD << std::endl;
 
-                           if (CIAO::DAnCE::HIGH_PRIORITY == conn_qos.data_qos)
+                           if (::CIAO::DAnCE::NetworkQoS::HIGH_PRIORITY == conn_qos.data_qos)
                               std::cerr << "DataTrafficQoS = NetworkQoS::HIGH_PRIORITY\n";
-                           else if (CIAO::DAnCE::HIGH_RELIABILITY == conn_qos.data_qos)
+                           else if (::CIAO::DAnCE::NetworkQoS::HIGH_RELIABILITY == conn_qos.data_qos)
                               std::cerr << "DataTrafficQoS = NetworkQoS::HIGH_RELIABILITY\n";
-                           else if (CIAO::DAnCE::VIDEO == conn_qos.data_qos)
+                           else if (::CIAO::DAnCE::NetworkQoS::VIDEO == conn_qos.data_qos)
                               std::cerr << "DataTrafficQoS = NetworkQoS::VIDEO\n";
-                           else if (CIAO::DAnCE::VOICE == conn_qos.data_qos)
+                           else if (::CIAO::DAnCE::NetworkQoS::VOICE == conn_qos.data_qos)
                               std::cerr << "DataTrafficQoS = NetworkQoS::VOICE\n";
-                           else if (CIAO::DAnCE::BEST_EFFORT == conn_qos.data_qos)
+                           else if (::CIAO::DAnCE::NetworkQoS::BEST_EFFORT == conn_qos.data_qos)
                               std::cerr << "DataTrafficQoS = NetworkQoS::BEST_EFFORT\n";
 
-                           if (CIAO::DAnCE::NORMAL == conn_qos.priority)
+                           if (::CIAO::DAnCE::NetworkQoS::NORMAL == conn_qos.priority)
                               std::cerr << "Priority = NORMAL\n";
-                           else if (CIAO::DAnCE::HIGH == conn_qos.priority)
+                           else if (::CIAO::DAnCE::NetworkQoS::HIGH == conn_qos.priority)
                               std::cerr << "Priority = HIGH\n";
-                           else if (CIAO::DAnCE::LOW == conn_qos.priority)
+                           else if (::CIAO::DAnCE::NetworkQoS::LOW == conn_qos.priority)
                               std::cerr << "Priority = LOW\n";
                          }
                     }

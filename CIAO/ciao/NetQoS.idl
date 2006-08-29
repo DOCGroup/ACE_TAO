@@ -5,58 +5,59 @@
  *
  * @brief A collection of IDL data types for Network QoS
  *
- * @author Sumant and Dimple  
+ * @author Sumant and Dimple
  */
 
 #if !defined (CIAO_NETQOS_IDL)
 #define CIAO_NETQOS_IDL
 
-//#include <orb.idl>
-
 module CIAO
 {
   module DAnCE
   {
-    enum DataTrafficQoS
+    module NetworkQoS
     {
-       HIGH_PRIORITY,
-       HIGH_RELIABILITY,
-       VOICE,
-       VIDEO,
-       BEST_EFFORT
-    };
+      enum DataTrafficQoS
+      {
+        HIGH_PRIORITY,
+        HIGH_RELIABILITY,
+        VOICE,
+        VIDEO,
+        BEST_EFFORT
+      };
   
-    enum AdmissionPriority
-    {
-      NORMAL,
-      HIGH,
-      LOW
-    };
-
-    struct ConnectionInfo
-    {
-      string connection_name;
-      string client, client_port_name;
-      string server, server_port_name;
-    };
-
-    typedef sequence<ConnectionInfo> ConnectionInfos;
-     
-    struct ConnectionQoS
-    {
-      ConnectionInfos connections;
-      long fwdBWD;
-      long revBWD;
-      DataTrafficQoS data_qos;
-      AdmissionPriority priority;
-    };
-
-    typedef sequence<ConnectionQoS> ConnectionQoSSet;
-    
-    struct NetQoSRequirement
-    {
-      ConnectionQoSSet conn_qos_set;
-      string Id;
+      enum AdmissionPriority
+      {
+        NORMAL,
+        HIGH,
+        LOW
+      };
+  
+      struct ConnectionInfo
+      {
+        string connection_name;
+        string client, client_port_name;
+        string server, server_port_name;
+      };
+  
+      typedef sequence<ConnectionInfo> ConnectionInfos;
+  
+      struct ConnectionQoS
+      {
+        ConnectionInfos connections;
+        long fwdBWD;
+        long revBWD;
+        DataTrafficQoS data_qos;
+        AdmissionPriority priority;
+      };
+  
+      typedef sequence<ConnectionQoS> ConnectionQoSSet;
+  
+      struct NetQoSRequirement
+      {
+        ConnectionQoSSet conn_qos_set;
+        string Id;
+      };
     };
   };
 };
