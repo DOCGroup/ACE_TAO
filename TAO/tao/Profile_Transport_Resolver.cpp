@@ -167,7 +167,7 @@ namespace TAO
     ACE_Time_Value connection_timeout;
     bool has_con_timeout = this->get_connection_timeout (connection_timeout);
 
-    if (has_con_timeout && !blocked_)
+    if (has_con_timeout && !this->blocked_)
       {
         timeout = &connection_timeout;
       }
@@ -178,7 +178,7 @@ namespace TAO
         else
           has_con_timeout = false;
       }
-    else if (!blocked_)
+    else if (!this->blocked_)
       {
         timeout = 0;
       }
