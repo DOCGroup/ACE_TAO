@@ -120,6 +120,45 @@ add_ft_prop (CORBA::ORB_ptr o,
   return;
 }
 
+void test_colocal (ForwardRequestTest::test_ptr server
+                   ACE_ENV_ARG_DECL)
+{
+  CORBA::ULong number = 0;
+  for (int i = 1; i <= 25; ++i)
+    {
+      ACE_DEBUG ((LM_INFO,
+                  "CLIENT: Issuing colocal request %d.\n",
+                  i));
+      CORBA::ULong retval =
+         server->number (ACE_ENV_SINGLE_ARG_PARAMETER);
+      if (retval != 1 && retval != 317)
+        {
+          // Not a valid return value, forwarding went wrong and
+          // retval is in udefined state
+          ACE_ERROR ((LM_ERROR,
+                      "(%P|%t) ERROR: colocal invocation returned invalid"
+                      " value, location-forwarding must have failed.\n"));
+          ACE_OS::abort ();
+        }
+
+      number += retval;
+      ACE_TRY_CHECK;
+
+
+      ACE_DEBUG ((LM_INFO,
+                  "CLIENT: Number %d .\n",
+                  number));
+    }
+
+  if (number < 250)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "(%P|%t) ERROR: Did not forward to new location \n"));
+      ACE_OS::abort ();
+    }
+}
+
+
 int
 main (int argc, char *argv[])
 {
@@ -232,6 +271,16 @@ main (int argc, char *argv[])
                                        obj2.in ()
                                        ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
+
+      // Run co-local test
+        {
+          ForwardRequestTest::test_var server =
+            ForwardRequestTest::test::_narrow (obj1.in () ACE_ENV_ARG_PARAMETER);
+          test_colocal (server.in() ACE_ENV_ARG_PARAMETER);
+
+          // Reset interceptor for remote tests
+          interceptor->reset (ACE_ENV_SINGLE_ARG_PARAMETER);
+        }
 
       // Write each IOR to a file.
 
