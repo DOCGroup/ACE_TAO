@@ -35,7 +35,7 @@ project(RTEvent) : orbsvcslib, core, svc_utils, tao_versioning_idl_defaults {
   }
 
   Inline_Files {
-    Event_Utilities.i
+    Event_Utilities.inl
     RtecDefaultEventDataC.inl
     RtecEventCommC.inl
     RtecEventChannelAdminC.inl

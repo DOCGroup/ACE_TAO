@@ -3876,7 +3876,7 @@ nobase_include_HEADERS += \
   Event/event_export.h \
   Event/event_skel_export.h \
   Event_Utilities.h \
-  Event_Utilities.i \
+  Event_Utilities.inl \
   RtecDefaultEventData.idl \
   RtecDefaultEventDataC.h \
   RtecDefaultEventDataC.inl \
