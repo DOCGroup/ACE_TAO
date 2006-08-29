@@ -1,3 +1,10 @@
+Tue Aug 29 13:17:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/ProcessVX.pm:
+          Commented out the ProcessVX_Unix require, it resulted in
+          errors on test systems when they don't have Net::Telnet ()
+          available.
+
 Tue Aug 29 11:16:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/PerlACE/Run_Test.pm:
