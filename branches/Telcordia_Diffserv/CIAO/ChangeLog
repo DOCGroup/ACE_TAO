@@ -1,8 +1,25 @@
+Tue Aug 29 05:10:06 UTC 2006  Sumant Tambe  <sutambe@nospam>
+
+        Improved NetQoS idl, config handler. Hello descriptors.
+
+        * RACE/Planners/NetQoSPlanner/NetQoSPlanner_exec.cpp:
+
+        * ciao/NetQoS.idl:
+
+        * examples/Hello/descriptors/Hello.cpd:
+        * examples/Hello/descriptors/Hello.pcd:
+        * examples/Hello/descriptors/run_test.pl:
+        * examples/Hello/descriptors/run_test_without_ns.pl:
+
+        * tools/Config_Handlers/NetQoS/NetQoS_Handler.h:
+        * tools/Config_Handlers/NetQoS/NetQoS_Handler.cpp:
+        * tools/Config_Handlers/NetQoS/test.cpp:
+
 Mon Aug 28 21:30:16 UTC 2006  Jaiganesh B <jai.dre.vanderbilt.edu>
 
         * DAnCE/Plan_Launcher/Plan_Launcher_Impl.h:
           DAnCE/Plan_Launcher/Plan_Launcher_Impl.cpp:
-        
+
           Reverted the changes to a previous version.
 
 Mon Aug 28 20:33:55 UTC 2006  Jaiganesh B <jai.dre.vanderbilt.edu>
@@ -10,11 +27,11 @@ Mon Aug 28 20:33:55 UTC 2006  Jaiganesh B <jai.dre.vanderbilt.edu>
         * DAnCE/NodeApplicationManager/Containers_Info_Map.cpp:
           DAnCE/Plan_Launcher/Plan_Launcher_Impl.h:
           DAnCE/Plan_Launcher/Plan_Launcher_Impl.cpp:
-        
+
           Modified the container creation framework to take into accout
           both the instance as well as the port policies.
-        
-          Thanks to Nanbor Wang for helping with the design and the 
+
+          Thanks to Nanbor Wang for helping with the design and the
           implementation.
 
 Mon Aug 28 20:26:13 UTC 2006  Jaiganesh B <jai.dre.vanderbilt.edu>
@@ -33,16 +50,16 @@ Mon Aug 28 20:26:13 UTC 2006  Jaiganesh B <jai.dre.vanderbilt.edu>
           DAnCE/NodeApplication/NAConfig_Manager.h:
           DAnCE/NodeApplication/Configurator_Factory.cpp:
           DAnCE/NodeApplication/NodeApplication_Impl.cpp:
-        
+
           Redesigned the RT-CCM architecture and added support for parsing
           multiple policies using the RT-CCM support.
-        
+
           Made NodeApplication configurations much more extensible.
-        
+
           Added support for network priority policy support along with RT
           support.
-        
-          Thanks to Nanbor Wang for helping me with the design and 
+
+          Thanks to Nanbor Wang for helping me with the design and
           implementation.
 
 Mon Aug 28 20:13:50 UTC 2006  Jaiganesh B <jai.dre.vanderbilt.edu>
@@ -50,14 +67,14 @@ Mon Aug 28 20:13:50 UTC 2006  Jaiganesh B <jai.dre.vanderbilt.edu>
         * docs/schema/ServerResourceUsage.txt:
           docs/schema/CIAOServerResources.xsd:
           docs/schema/Basic_Deployment_Data.xsd:
-        
+
           Added the network priority policy support in CIAO.
-        
+
           Updated the deployment plan schema to reference multiple
           instance policies within the instance deployment description
           elements.
 
-          Thanks to Nanbor Wang for helping me with the design and 
+          Thanks to Nanbor Wang for helping me with the design and
           implementation.
 
 Mon Aug 28 19:59:29 UTC 2006  Jaiganesh B <jai.dre.vanderbilt.edu>
@@ -70,11 +87,11 @@ Mon Aug 28 19:59:29 UTC 2006  Jaiganesh B <jai.dre.vanderbilt.edu>
           tools/Config_Handlers/RT-CCM/CNPM_Handler.cpp:
           tools/Config_Handlers/RT-CCM/NPM_Handler.h:
           tools/Config_Handlers/RT-CCM/CIAOServerResources.cpp:
-        
-          Added support for specifying network priority model policies 
+
+          Added support for specifying network priority model policies
           using thr CIAOServerResources schema.
 
-          Thanks to Nanbor Wang for helping me with the design and 
+          Thanks to Nanbor Wang for helping me with the design and
           implementation.
 
 Mon Aug 28 19:56:18 UTC 2006  Jaiganesh B <jai.dre.vanderbilt.edu>
@@ -83,10 +100,10 @@ Mon Aug 28 19:56:18 UTC 2006  Jaiganesh B <jai.dre.vanderbilt.edu>
           tools/Config_Handlers/IRDD_Handler.h:
           tools/Config_Handlers/Basic_Deployment_Data.hpp:
           tools/Config_Handlers/IDD_Handler.cpp:
-        
+
           Added support for network priority policy.
 
-          Thanks to Nanbor Wang for helping me with the design and 
+          Thanks to Nanbor Wang for helping me with the design and
           implementation.
 
 Mon Aug 28 19:50:17 UTC 2006  Jaiganesh B <jai.dre.vanderbilt.edu>
@@ -102,10 +119,10 @@ Mon Aug 28 19:50:17 UTC 2006  Jaiganesh B <jai.dre.vanderbilt.edu>
           ciao/Home_Servant_Impl_Base.h:
           ciao/Container_Base.h:
           ciao/Servant_Impl_T.cpp:
-        
+
           Added network priority policy support in CIAO
 
-          Thanks to Nanbor Wang for helping me with the design and 
+          Thanks to Nanbor Wang for helping me with the design and
           implementation.
 
 Mon Aug 28 05:21:24 UTC 2006  Sumant Tambe  <sutambe@nospam>

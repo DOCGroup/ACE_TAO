@@ -37,7 +37,7 @@ namespace CIAO
         throw NoNetQoS ();
     }
 
-    NetQoS_Handler::NetQoS_Handler (::CIAO::DAnCE::NetQoSRequirement *netqos):
+    NetQoS_Handler::NetQoS_Handler (::CIAO::DAnCE::NetworkQoS::NetQoSRequirement *netqos):
       idl_netqos_(netqos),
       netqos_(0),
       retval_(false)
@@ -55,7 +55,7 @@ namespace CIAO
     NetQoS_Handler::build_netqos ()
     {
 
-      this->idl_netqos_.reset ( new ::CIAO::DAnCE::NetQoSRequirement );
+      this->idl_netqos_.reset ( new ::CIAO::DAnCE::NetworkQoS::NetQoSRequirement );
 
       if (true == this->netqos_->id_p ())
         this->idl_netqos_->Id = CORBA::string_dup (this->netqos_->id().c_str());
@@ -67,37 +67,37 @@ namespace CIAO
            ++conn_iter)
         {
           CIAO::Config_Handlers::ConnectionQoS conn_qos = *conn_iter;
-          CIAO::DAnCE::ConnectionQoS idl_conn_qos;
+          CIAO::DAnCE::NetworkQoS::ConnectionQoS idl_conn_qos;
 
           idl_conn_qos.fwdBWD = conn_qos.fwdBW ();
           idl_conn_qos.revBWD = conn_qos.revBW ();
 
           if (conn_qos.qos () == CIAO::Config_Handlers::NetworkQoS::HIGH_PRIORITY)
-            idl_conn_qos.data_qos = CIAO::DAnCE::HIGH_PRIORITY;
+            idl_conn_qos.data_qos = CIAO::DAnCE::NetworkQoS::HIGH_PRIORITY;
           else if (conn_qos.qos () == CIAO::Config_Handlers::NetworkQoS::HIGH_RELIABILITY)
-            idl_conn_qos.data_qos = CIAO::DAnCE::HIGH_RELIABILITY;
+            idl_conn_qos.data_qos = CIAO::DAnCE::NetworkQoS::HIGH_RELIABILITY;
           else if (conn_qos.qos () == CIAO::Config_Handlers::NetworkQoS::VOICE)
-            idl_conn_qos.data_qos = CIAO::DAnCE::VOICE;
+            idl_conn_qos.data_qos = CIAO::DAnCE::NetworkQoS::VOICE;
           else if (conn_qos.qos () == CIAO::Config_Handlers::NetworkQoS::VIDEO)
-            idl_conn_qos.data_qos = CIAO::DAnCE::VIDEO;
+            idl_conn_qos.data_qos = CIAO::DAnCE::NetworkQoS::VIDEO;
           else if (conn_qos.qos () == CIAO::Config_Handlers::NetworkQoS::BEST_EFFORT)
-            idl_conn_qos.data_qos = CIAO::DAnCE::BEST_EFFORT;
+            idl_conn_qos.data_qos = CIAO::DAnCE::NetworkQoS::BEST_EFFORT;
           else
             return false;
 
           if (true == conn_qos.admissionPriority_p ())
           {
             if (CIAO::Config_Handlers::AdmissionPriority::NORMAL == conn_qos.admissionPriority())
-              idl_conn_qos.priority = CIAO::DAnCE::NORMAL;
+              idl_conn_qos.priority = CIAO::DAnCE::NetworkQoS::NORMAL;
             else if (CIAO::Config_Handlers::AdmissionPriority::HIGH == conn_qos.admissionPriority())
-              idl_conn_qos.priority = CIAO::DAnCE::HIGH;
+              idl_conn_qos.priority = CIAO::DAnCE::NetworkQoS::HIGH;
             else if (CIAO::Config_Handlers::AdmissionPriority::LOW == conn_qos.admissionPriority())
-              idl_conn_qos.priority = CIAO::DAnCE::LOW;
+              idl_conn_qos.priority = CIAO::DAnCE::NetworkQoS::LOW;
             else
               return false;
           }
           else
-            idl_conn_qos.priority = CIAO::DAnCE::NORMAL;
+            idl_conn_qos.priority = CIAO::DAnCE::NetworkQoS::NORMAL;
 
           for (CIAO::Config_Handlers::ConnectionQoS::connectionInfo_iterator iter = conn_qos.begin_connectionInfo ();
                iter != conn_qos.end_connectionInfo ();
@@ -131,16 +131,16 @@ namespace CIAO
       size_t len = this->idl_netqos_->conn_qos_set.length ();
       for (size_t i = 0; i < len; ++i)
       {
-        const CIAO::DAnCE::ConnectionQoS & idl_conn_qos = this->idl_netqos_->conn_qos_set [i];
+        const CIAO::DAnCE::NetworkQoS::ConnectionQoS & idl_conn_qos = this->idl_netqos_->conn_qos_set [i];
         CIAO::Config_Handlers::ConnectionQoS xsc_conn_qos (idl_conn_qos.fwdBWD,
                                                            idl_conn_qos.revBWD,
                                                            this->get_idl_net_qos (idl_conn_qos.data_qos));
 
-        if (CIAO::DAnCE::NORMAL == idl_conn_qos.priority)
+        if (CIAO::DAnCE::NetworkQoS::NORMAL == idl_conn_qos.priority)
           xsc_conn_qos.admissionPriority (::CIAO::Config_Handlers::AdmissionPriority::NORMAL);
-        else if (CIAO::DAnCE::HIGH == idl_conn_qos.priority)
+        else if (CIAO::DAnCE::NetworkQoS::HIGH == idl_conn_qos.priority)
           xsc_conn_qos.admissionPriority (::CIAO::Config_Handlers::AdmissionPriority::HIGH);
-        else if (CIAO::DAnCE::LOW == idl_conn_qos.priority)
+        else if (CIAO::DAnCE::NetworkQoS::LOW == idl_conn_qos.priority)
           xsc_conn_qos.admissionPriority (::CIAO::Config_Handlers::AdmissionPriority::LOW);
         else
           return false;
@@ -163,23 +163,23 @@ namespace CIAO
     }
 
     ::CIAO::Config_Handlers::NetworkQoS
-    NetQoS_Handler::get_idl_net_qos (::CIAO::DAnCE::DataTrafficQoS data_qos)
+    NetQoS_Handler::get_idl_net_qos (::CIAO::DAnCE::NetworkQoS::DataTrafficQoS data_qos)
     {
-      if (CIAO::DAnCE::HIGH_PRIORITY == data_qos)
+      if (CIAO::DAnCE::NetworkQoS::HIGH_PRIORITY == data_qos)
         return CIAO::Config_Handlers::NetworkQoS::HIGH_PRIORITY;
-      else if (CIAO::DAnCE::HIGH_RELIABILITY == data_qos)
+      else if (CIAO::DAnCE::NetworkQoS::HIGH_RELIABILITY == data_qos)
         return CIAO::Config_Handlers::NetworkQoS::HIGH_RELIABILITY;
-      else if (CIAO::DAnCE::VIDEO == data_qos)
+      else if (CIAO::DAnCE::NetworkQoS::VIDEO == data_qos)
         return CIAO::Config_Handlers::NetworkQoS::VIDEO;
-      else if (CIAO::DAnCE::VOICE == data_qos)
+      else if (CIAO::DAnCE::NetworkQoS::VOICE == data_qos)
         return CIAO::Config_Handlers::NetworkQoS::VOICE;
-      else if (CIAO::DAnCE::BEST_EFFORT == data_qos)
+      else if (CIAO::DAnCE::NetworkQoS::BEST_EFFORT == data_qos)
         return CIAO::Config_Handlers::NetworkQoS::BEST_EFFORT;
       //TODO else
         //TODO: What to return here? Can't be false.
     }
 
-    ::CIAO::DAnCE::NetQoSRequirement const *
+    ::CIAO::DAnCE::NetworkQoS::NetQoSRequirement const *
     NetQoS_Handler::netqos_idl () const
       throw (NetQoS_Handler::NoNetQoS)
     {
@@ -190,7 +190,7 @@ namespace CIAO
       return this->idl_netqos_.get();
     }
 
-    ::CIAO::DAnCE::NetQoSRequirement *
+    ::CIAO::DAnCE::NetworkQoS::NetQoSRequirement *
     NetQoS_Handler::netqos_idl ()
       throw (NetQoS_Handler::NoNetQoS)
     {
