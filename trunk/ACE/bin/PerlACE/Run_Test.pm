@@ -21,6 +21,7 @@ if(exists $ENV{TAO_ROOT}) {
 
 my $config = new PerlACE::ConfigList;
 $PerlACE::VxWorks_Test = $config->check_config("VxWorks");
+$PerlACE::VxWorks_RTP_Test = $config->check_config("VxWorks_RTP");
 
 # Figure out the svc.conf extension
 $svcconf_ext = $ENV{"ACE_RUNTEST_SVCCONF_EXT"};
@@ -29,7 +30,7 @@ if (!defined $svcconf_ext) {
 }
 
 # Default timeout.  NSCORBA needs more time for process start up.
-$wait_interval_for_process_creation = (($^O eq "lynxos") ? 12 : ($PerlACE::VxWorks_Test ? 60 : 10));
+$wait_interval_for_process_creation = (($^O eq "lynxos") ? 12 : (($PerlACE::VxWorks_Test or $PerlACE::VxWorks_RTP_Test) ? 60 : 10));
 
 # Turn on autoflush
 $| = 1;
@@ -102,7 +103,7 @@ sub waitforfile_timed
 {
   my $file = shift;
   my $maxtime = shift;
-  $maxtime *= ($PerlACE::VxWorks_Test ? $PerlACE::ProcessVX::WAIT_DELAY_FACTOR : $PerlACE::Process::WAIT_DELAY_FACTOR);
+  $maxtime *= (($PerlACE::VxWorks_Test || $PerlACE::VxWorks_RTP_Test) ? $PerlACE::ProcessVX::WAIT_DELAY_FACTOR : $PerlACE::Process::WAIT_DELAY_FACTOR);
 
   while ($maxtime-- != 0) {
     if (-e $file && -s $file) {
@@ -156,7 +157,7 @@ sub generate_test_file
 
 sub is_vxworks_test()
 {
-    return $PerlACE::VxWorks_Test;
+    return ($PerlACE::VxWorks_Test || $PerlACE::VxWorks_RTP_Test);
 }
 
 sub add_path {
