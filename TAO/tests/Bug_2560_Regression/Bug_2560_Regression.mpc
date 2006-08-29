@@ -1,0 +1,18 @@
+// -*- MPC -*-
+// $Id$
+
+project(*client) : taoclient {
+  exename = client
+  source_files {
+    QuoterC.cpp
+    client.cpp
+  }
+}
+
+project(*server) : taoserver {
+  source_files {
+    server.cpp
+    Stock_Factory_i.cpp
+    Stock_i.cpp
+  }
+}
