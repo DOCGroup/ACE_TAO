@@ -2,6 +2,7 @@
 // $Id$
 
 project(*client) : aceexe, ssl {
+  avoids += ace_for_tao
   exename = client
   Source_Files {
     SSL-client.cpp
@@ -9,6 +10,7 @@ project(*client) : aceexe, ssl {
 }
 
 project(*client_simple) : aceexe, ssl {
+  avoids += ace_for_tao
   exename = client-simple
   Source_Files {
     SSL-client-simple.cpp
@@ -16,6 +18,7 @@ project(*client_simple) : aceexe, ssl {
 }
 
 project(*server) : aceexe, ssl {
+  avoids += ace_for_tao
   exename = server
   Source_Files {
     SSL-server.cpp
@@ -23,6 +26,7 @@ project(*server) : aceexe, ssl {
 }
 
 project(*server_fancy) : aceexe, ssl {
+  avoids += ace_for_tao
   exename = server-fancy
   Source_Files {
     SSL-server-fancy.cpp
@@ -30,6 +34,7 @@ project(*server_fancy) : aceexe, ssl {
 }
 
 project(*server_poll) : aceexe, ssl {
+  avoids += ace_for_tao
   exename = server-poll
   Source_Files {
     SSL-server-poll.cpp
@@ -37,6 +42,7 @@ project(*server_poll) : aceexe, ssl {
 }
 
 project(*server_simple) : aceexe, ssl {
+  avoids += ace_for_tao
   exename = server-simple
   Source_Files {
     SSL-server-simple.cpp
