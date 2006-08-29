@@ -68,6 +68,7 @@ TAO/tests/Bug_2429_Regression/run_test.pl: !MINIMUM
 TAO/tests/Bug_2494_Regression/run_test.pl: !ST
 TAO/tests/Bug_2503_Regression/run_test.pl: !ST
 TAO/tests/Bug_2542_Regression/run_test.pl:
+TAO/tests/Bug_2560_Regression/run_test.pl: !ST
 TAO/tests/Bug_2593_Regression/run_test.pl: !MINIMUM !STATIC !ACE_FOR_TAO
 TAO/tests/Bug_2595_Regression/run_test.pl:
 TAO/tests/RTCORBA/Banded_Connections/run_test.pl: !MINIMUM !ST
