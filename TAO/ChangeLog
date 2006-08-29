@@ -1,3 +1,9 @@
+Tue Aug 29 17:26:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2560_Regression/Bug_2560_Regression.mpc:
+          Set needed idlflags and fixed build order, should fix the gcc4 linker
+          errors
+
 Tue Aug 29 13:46:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Transport.cpp (schedule_output_i):
