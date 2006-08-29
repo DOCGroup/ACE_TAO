@@ -1,3 +1,4 @@
+// -*- C++ -*-
 // $Id$
 
 // ================================================================
@@ -18,10 +19,13 @@
 
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/PortableServer/ServantActivatorC.h"
+#include "tao/LocalObject.h"
 
 #include "tao/ORB.h"
 
-class ServantActivator : public PortableServer::ServantActivator
+class ServantActivator :
+  public virtual PortableServer::ServantActivator,
+  public virtual TAO_Local_RefCounted_Object
 {
 public:
   ServantActivator (CORBA::ORB_ptr orb);

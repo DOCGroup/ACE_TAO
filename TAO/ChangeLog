@@ -1,3 +1,21 @@
+Tue Aug 29 20:02:01 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * examples/POA/Forwarding/Servant_Activator.h:
+
+        * examples/POA/Loader/Servant_Activator.h:
+        * examples/POA/Loader/Servant_Locator.h:
+
+        * examples/POA/On_Demand_Activation/Servant_Activator.h:
+        * examples/POA/On_Demand_Activation/Servant_Locator.h:
+
+        * examples/POA/On_Demand_Loading/Servant_Activator.h:
+        * examples/POA/On_Demand_Loading/Servant_Locator.h:
+
+          These all use Servant Managers which are local objects, but need
+          to be reference counted so that they may be shutdown properly
+          and thereby release their reference to the ORB_Core so it can be
+          finalized and clean up resources it owns.
+
 Tue Aug 29 17:40:01 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/IIOP_Connection_Handler.cpp:
