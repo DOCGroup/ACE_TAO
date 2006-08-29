@@ -1,3 +1,10 @@
+Tue Aug 29 00:24:48 UTC 2006  Adam Mitz  <mitza@ociweb.com>
+
+        * docs/run_test.txt:
+          Fixed Perl bug in example (needed "" instead of '' to get $ variable
+          expansion) and added explanatory text on using $PerlACE::ACE_ROOT
+          and $PerlACE::TAO_ROOT.
+
 Tue Aug 29 00:26:56 UTC 2006  Ossama Othman  <ossama_othman at symantec dot com>
 
         * ace/SSL/ssl.mpc

@@ -24,7 +24,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # $Id$
 # -*- perl -*-
 
-use lib '$ENV{ACE_ROOT}/bin';
+use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 
 $status = 0;
@@ -91,11 +91,17 @@ a shell script.
 The SVN ID string is the usual one we put in.
 
 @verbatim
-use lib '$ENV{ACE_ROOT}/bin';
+use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 @endverbatim
 
 The use lib line is used to tell Perl where the PerlACE modules are.
+It should NOT be a relative path to the bin directory.  This is how
+it used to be done, but doing so would be incompatible with the "flat"
+directory layout of ACE+TAO.  The correct way is demonstrated above.
+After the "use lib" line, always use $PerlACE::TAO_ROOT to reference
+the location of TAO.  Use either $ENV{ACE_ROOT} or $PerlACE::ACE_ROOT
+to reference the location of ACE.
 
 And PerlACE::Run_Test is a module to be used by all run_test.pl's.
 It does a couple of things, including parsing some common command
