@@ -1,3 +1,15 @@
+Tue Aug 29 07:54:00 UTC 2006  Frank Rehberger   <frehberger@prismtech.com>
+        
+        * tao/PortableServer/Object_Adapter.cpp:
+        
+          Handle location forward requests raised by colocal
+          ServerInterceptor. This fixes bug #2301.
+        
+        * orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/server.cpp:
+        
+          Extend test to verify the forward request raised by colocal
+          ServerInterceptor is handled correctly
+
 Mon Aug 28 14:30:11 UTC 2006  Iliyan Jeliazkov  <iliyan@ociweb.com>
 
         * orbsvcs/tests/Security/BiDirectional/run_test.pl:
