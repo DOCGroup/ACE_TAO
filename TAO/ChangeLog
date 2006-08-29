@@ -1,3 +1,9 @@
+Tue Aug 29 12:53:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2560_Regression/*:
+          New regression for bug 2560. Thanks to Andy Salnikov
+          <a_salnikov at yahoo dot com> for creating this test.
+
 Tue Aug 29 11:48:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Makefile.am:
