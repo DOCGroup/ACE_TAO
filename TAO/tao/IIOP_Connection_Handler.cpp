@@ -60,6 +60,7 @@ TAO_IIOP_Connection_Handler::TAO_IIOP_Connection_Handler (TAO_ORB_Core *orb_core
 TAO_IIOP_Connection_Handler::~TAO_IIOP_Connection_Handler (void)
 {
   delete this->transport ();
+  this->release_os_resources();
 }
 
 /* Copy hook that copies over the concrete methods from this class
@@ -275,7 +276,6 @@ TAO_IIOP_Connection_Handler::close_connection (void)
       struct linger lval;
       lval.l_onoff = 1;
       lval.l_linger = (u_short)linger;
-
       if (this->peer ().set_option(SOL_SOCKET,
                                    SO_LINGER,
                                    (void*) &lval,
