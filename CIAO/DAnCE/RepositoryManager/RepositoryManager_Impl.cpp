@@ -33,8 +33,7 @@
 //for the PackageConfiguration parsing
 #include "ciao/Deployment_DataC.h"
 #include "ciao/Packaging_DataC.h"
-#include "Config_Handlers/Utils/XML_Helper.h"
-#include "Config_Handlers/Package_Handlers/PCD_Handler.h"
+#include "Package_Handlers/PCD_Handler.h"
 
 #include "RM_Helper.h"            //to be able to externalize/internalize a PackageConfiguration
 #include "ace/Message_Block.h"    //for ACE_Message_Block
@@ -967,19 +966,7 @@ CIAO_RepositoryManagerDaemon_i::retrieve_PC_from_descriptors (const char* pc_nam
   //parse the PCD to make sure that there are no package errors
   ACE_TRY
     {
-      //CIAO::Config_Handlers::STD_PC_Intf intf (pc_name);
-      //pc = intf.get_PC ();
-      //if (xercesc::DOMDocument *doc = CIAO::Config_Handlers::XML_HELPER->create_dom (pc_name))
-      {
-        //Read in the XSC type structure from the DOMDocument
-
-        //Convert the XSC to an IDL datatype
-        CIAO::Config_Handlers::Packaging::PCD_Handler::package_config (pc_name, *pc);
-
-        //Cleanliness is next to Godliness
-        //delete doc;
-        //this causes a run-time error
-      }
+       CIAO::Config_Handlers::Packaging::PCD_Handler::package_config (pc_name, *pc);
     }
   ACE_CATCHALL
     {
