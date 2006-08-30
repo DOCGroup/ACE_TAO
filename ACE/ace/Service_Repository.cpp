@@ -334,7 +334,6 @@ ACE_Service_Repository::insert (const ACE_Service_Type *sr)
                     i,
                     this->total_size_));
         sr->dump();
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
       }
   }
 
@@ -344,10 +343,9 @@ ACE_Service_Repository::insert (const ACE_Service_Type *sr)
       if (ACE::debug ())
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("ACE (%P|%t) SR::insert, repo=%@ - destroying : "),
-                      this));
+                      ACE_TEXT ("ACE (%P|%t) SR::insert, repo=%@ - destroying the former: "),
+                      s));
           s->dump();
-          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
         }
       delete s;
     }

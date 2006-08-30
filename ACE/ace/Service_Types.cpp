@@ -89,6 +89,7 @@ ACE_Service_Object_Type::ACE_Service_Object_Type (void *so,
                                                   u_int f,
                                                   ACE_Service_Object_Exterminator gobbler)
   : ACE_Service_Type_Impl (so, s_name, f, gobbler)
+  , initialized_ (-1)
 {
   ACE_TRACE ("ACE_Service_Object_Type::ACE_Service_Object_Type");
 }
@@ -105,8 +106,10 @@ ACE_Service_Object_Type::init (int argc, ACE_TCHAR *argv[]) const
 
   if (so == 0)
     return -1;
-  else
-    return so->init (argc, argv);
+
+  this->initialized_ = so->init (argc, argv);
+
+  return this->initialized_;
 }
 
 int
@@ -119,17 +122,11 @@ ACE_Service_Object_Type::fini (void) const
   ACE_Service_Object * const so =
     static_cast<ACE_Service_Object *> (obj);
 
-  if (so)
-    {
+  // Call fini() if an only if, the object was successfuly
+  // initialized, i.e. init() returned 0. This is necessary to
+  // maintain the ctor/dtor-like semantics for init/fini.
+  if (so && initialized_ == 0)
       so->fini ();
-
-      // @TODO: Why is this disabled?
-#if 0
-      if (ACE_BIT_ENABLED (this->flags_,
-                           ACE_Service_Type::DELETE_OBJ))
-        delete so;
-#endif /* 1 */
-    }
 
   return ACE_Service_Type_Impl::fini ();
 }

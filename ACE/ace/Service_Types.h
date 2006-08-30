@@ -106,6 +106,10 @@ public:
   virtual int init (int argc, ACE_TCHAR *argv[]) const;
   virtual int fini (void) const;
   virtual int info (ACE_TCHAR **str, size_t len) const;
+
+private:
+  /// Holds the initialization status (result of object->init())
+  mutable int initialized_;
 };
 
 /**
