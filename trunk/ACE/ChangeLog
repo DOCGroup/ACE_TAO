@@ -1,3 +1,23 @@
+Wed Aug 30 13:34:50 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * bin/make_release
+        
+          Updates to the make_release script to make it subversion compatible.
+          major updates to be aware of:
+            . Assumes the working copy it uses is flattened
+            . Must have DOC_ROOT set
+            . Script should be started from DOC_ROOT.
+            . Produces traditional (nested) releases
+            . Now produces a set of source-only kits in addition to
+              the traditional kits.
+              
+          IMPORTANT: The release makefiles have not been updated, and are
+          most likely broken.
+        
+          Producing a release is a two step process:
+          make_release -u  # Update version numbers
+          make_release -k ace+tao+ciao # Create all kits.
+
 Wed Aug 30 12:19:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/CDR_Stream.{h,cpp}:
