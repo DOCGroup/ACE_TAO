@@ -1,3 +1,9 @@
+Wed Aug 30 06:05:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2560_Regression/server.cpp:
+          No need to explicitly set the defaul thread policy, makes it possible
+          to use this test when minimum corb is enabled
+
 Wed Aug 30 04:20:00 UTC 2006  Frank Rehberger <frehberger@prismtech.com>
 
 	* NEWS: explains user-visible implications of patch #2301
