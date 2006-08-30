@@ -1,3 +1,24 @@
+Wed Aug 30 13:20:38 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/IIOP_Connection_Handler.h:
+        * tao/IIOP_Connection_Handler.cpp:
+        * tao/IIOP_Connector.cpp:
+
+          Revised the fix for bug 2417. That fix added a reference count
+          to IIOP Connection Handlers associated with pending asynch
+          connections to accomodate a reference held by an ACE component
+          that does not participate in reference counting. However,
+          blindly adding a reference caused the Connection_Handler to not
+          get cleaned up as part of ORB destruction. This then caused
+          trouble on windows platforms where any sockets that were open at
+          program termination were aborted with a RST and undelivered
+          stream content purged.
+
+          This fix gives control of this additional reference to the
+          connection handler itself, so that upon successful completion of
+          connection establishment, that reference is removed and no
+          resource is leaked.
+
 Wed Aug 30 13:29:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/PortableServer.cpp:
@@ -12,7 +33,7 @@ Wed Aug 30 06:05:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Aug 30 04:20:00 UTC 2006  Frank Rehberger <frehberger@prismtech.com>
 
-	* NEWS: explains user-visible implications of patch #2301
+        * NEWS: explains user-visible implications of patch #2301
 
 Tue Aug 29 21:55:05 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
