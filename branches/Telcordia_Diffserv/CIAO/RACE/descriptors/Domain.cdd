@@ -1,26 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <Deployment:domain xmlns:Deployment="http://www.omg.org/Deployment" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
 
-  <UUID>BCB38121-9F67-4D0D-9363-65FF3AE0188A</UUID>
+  <UUID>C1184C4C-4A3E-4A45-B527-40B10541451F</UUID>
 
   <node>
-    <name>blade34</name>
-    <resource>
-      <name>Processor</name>
-      <resourceType>CPULoad</resourceType>
-      <property>
-        <name>LoadAverage</name>
-        <kind>Quantity</kind>
-        <dynamic>false</dynamic>
-        <value>
-          <type>
-            <kind>tk_double</kind>
-          </type>
-          <value>
-            <double>100</double>
-          </value>
-        </value>
-      </property>
-    </resource>
+    <name>foil</name>
+    <label>BMDisplay</label>
   </node>
-</Deployment:domain>  
+
+</Deployment:domain>

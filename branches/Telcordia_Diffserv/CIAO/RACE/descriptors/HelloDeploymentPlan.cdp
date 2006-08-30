@@ -19,57 +19,80 @@
     <artifact>_34E0ED84-7FF5-4B8D-9F23-BEC1C6BB23A7</artifact>
   </implementation>
 
-  <instance id="_948B16A7-A4CB-4C04-BAD7-1295AEC8C110">
-    <name>_948B16A7-A4CB-4C04-BAD7-1295AEC8C110</name>
+  <instance id="_Hello.ComponentImplementations.HelloAssemblyTypeContainer.HelloAssemblyType.Sender">
+    <name>_Hello.ComponentImplementations.HelloAssemblyTypeContainer.HelloAssemblyType.Sender</name>
     <node>foil</node>
     <source/>
     <implementation>_51B2FD0F-060B-4895-B7F1-2645E7EF4211</implementation>
+  <configProperty>
+      <name>ComponentIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Sender.ior</string>
+        </value>
+      </value>
+    </configProperty>
   </instance>
 
-  <instance id="_F00ADDD1-B223-4D23-A7E7-CDA626F6E661">
-    <name>_F00ADDD1-B223-4D23-A7E7-CDA626F6E661</name>
+  <instance id="_Hello.ComponentImplementations.HelloAssemblyTypeContainer.HelloAssemblyType.Receiver">
+    <name>_Hello.ComponentImplementations.HelloAssemblyTypeContainer.HelloAssemblyType.Receiver</name>
     <node>foil</node>
     <source/>
     <implementation>_9B4442B8-A9B3-4030-A33F-AF343E22DBF2</implementation>
+  <configProperty>
+      <name>ComponentIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Receiver.ior</string>
+        </value>
+      </value>
+    </configProperty>
+
   </instance>
 
   <connection>
-    <name>read_message_push_message_F00ADDD1-B223-4D23-A7E7-CDA626F6E661_948B16A7-A4CB-4C04-BAD7-1295AEC8C110</name>
+    <name>read_message_push_message_Hello.ComponentImplementations.HelloAssemblyTypeContainer.HelloAssemblyType.Receiver_Hello.ComponentImplementations.HelloAssemblyTypeContainer.HelloAssemblyType.Sender</name>
     <internalEndpoint>
       <portName>read_message</portName>
       <kind>SimplexReceptacle</kind>
-      <instance>_F00ADDD1-B223-4D23-A7E7-CDA626F6E661</instance>
+      <instance>_Hello.ComponentImplementations.HelloAssemblyTypeContainer.HelloAssemblyType.Receiver</instance>
     </internalEndpoint>
     <internalEndpoint>
       <portName>push_message</portName>
       <kind>Facet</kind>
-      <instance>_948B16A7-A4CB-4C04-BAD7-1295AEC8C110</instance>
+      <instance>_Hello.ComponentImplementations.HelloAssemblyTypeContainer.HelloAssemblyType.Sender</instance>
     </internalEndpoint>
   </connection>
 
   <connection>
-    <name>click_out_click_in_948B16A7-A4CB-4C04-BAD7-1295AEC8C110_F00ADDD1-B223-4D23-A7E7-CDA626F6E661</name>
+    <name>click_out_click_in_Hello.ComponentImplementations.HelloAssemblyTypeContainer.HelloAssemblyType.Sender_Hello.ComponentImplementations.HelloAssemblyTypeContainer.HelloAssemblyType.Receiver</name>
     <internalEndpoint>
       <portName>click_out</portName>
       <kind>EventPublisher</kind>
-      <instance>_948B16A7-A4CB-4C04-BAD7-1295AEC8C110</instance>
+      <instance>_Hello.ComponentImplementations.HelloAssemblyTypeContainer.HelloAssemblyType.Sender</instance>
     </internalEndpoint>
     <internalEndpoint>
       <portName>click_in</portName>
       <kind>EventConsumer</kind>
-      <instance>_F00ADDD1-B223-4D23-A7E7-CDA626F6E661</instance>
+      <instance>_Hello.ComponentImplementations.HelloAssemblyTypeContainer.HelloAssemblyType.Receiver</instance>
     </internalEndpoint>
   </connection>
 
   <artifact id="_059BC20C-E68B-44B0-A7BC-BFA62BDEB0C4">
-    <name>Hello.ImplementationArtifacts.SenderArtifacts.Sender_DnC_stub</name>
+    <name>Hello.ImplementationArtifacts.SenderArtifacts.Sender_stub</name>
     <source/>
     <node/>
     <location>Sender_DnC_stub</location>
   </artifact>
 
   <artifact id="_533FDB0F-8EDB-4964-8EA9-E3058B1A5CD7">
-    <name>Hello.ImplementationArtifacts.SenderArtifacts.Sender_DnC_svnt</name>
+    <name>Hello.ImplementationArtifacts.SenderArtifacts.Sender_svnt</name>
     <source/>
     <node/>
     <location>Sender_DnC_svnt</location>
@@ -80,14 +103,14 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Hello_Sender_Home_Servant</string>
+          <string>create_Hello_SenderHome_Servant</string>
         </value>
       </value>
     </execParameter>
   </artifact>
 
   <artifact id="_23C4B1A0-DCDE-402D-86E9-FA6A7AD2CDBF">
-    <name>Hello.ImplementationArtifacts.SenderArtifacts.Sender_DnC_exec</name>
+    <name>Hello.ImplementationArtifacts.SenderArtifacts.Sender_exec</name>
     <source/>
     <node/>
     <location>Sender_DnC_exec</location>
@@ -98,21 +121,21 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Hello_Sender_Home_Impl</string>
+          <string>createSenderHome_Impl</string>
         </value>
       </value>
     </execParameter>
   </artifact>
 
   <artifact id="_9DF756D9-ABCF-4799-ACC5-8047C87390FE">
-    <name>Hello.ImplementationArtifacts.ReceiverArtifacts.Receiver_DnC_stub</name>
+    <name>Hello.ImplementationArtifacts.ReceiverArtifacts.Receiver_stub</name>
     <source/>
     <node/>
     <location>Receiver_DnC_stub</location>
   </artifact>
 
   <artifact id="_37A50603-D422-4B45-AEBA-6BB48DF869ED">
-    <name>Hello.ImplementationArtifacts.ReceiverArtifacts.Receiver_DnC_svnt</name>
+    <name>Hello.ImplementationArtifacts.ReceiverArtifacts.Receiver_svnt</name>
     <source/>
     <node/>
     <location>Receiver_DnC_svnt</location>
@@ -123,14 +146,14 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Hello_Receiver_Home_Servant</string>
+          <string>create_Hello_ReceiverHome_Servant</string>
         </value>
       </value>
     </execParameter>
   </artifact>
 
   <artifact id="_34E0ED84-7FF5-4B8D-9F23-BEC1C6BB23A7">
-    <name>Hello.ImplementationArtifacts.ReceiverArtifacts.Receiver_DnC_exec</name>
+    <name>Hello.ImplementationArtifacts.ReceiverArtifacts.Receiver_exec</name>
     <source/>
     <node/>
     <location>Receiver_DnC_exec</location>
@@ -141,7 +164,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Hello_Receiver_Home_Impl</string>
+          <string>createReceiverHome_Impl</string>
         </value>
       </value>
     </execParameter>
