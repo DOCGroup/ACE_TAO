@@ -22,6 +22,7 @@
 #include "ciao/CIAO_common.h"
 #include "ciao/NetQoSC.h"
 #include <iostream>
+#include "ciao/DeploymentS.h"
 
 namespace CIAO
 {
