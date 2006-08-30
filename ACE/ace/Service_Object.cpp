@@ -91,7 +91,7 @@ ACE_Service_Type::fini (void)
     {
       this->fini_already_called_ = 1;
       if (this->type_ != 0)
-  return this->type_->fini ();
+        return this->type_->fini ();
       else
         return 1; // No implementation was found.
                   // Currently only makes sense for dummy ST, used to "reserve"
