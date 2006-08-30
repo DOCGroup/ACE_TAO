@@ -325,6 +325,7 @@ namespace CIAO
         // Attribute operations.
       };
 
+
       extern "C" OUTPUT_MANAGER_SVNT_Export ::PortableServer::Servant
       create_CIAO_RACE_Output_Manager_Home_Servant (
         ::Components::HomeExecutorBase_ptr p,
