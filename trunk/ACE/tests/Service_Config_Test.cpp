@@ -121,7 +121,7 @@ Test_Singleton::~Test_Singleton (void)
 }
 
 void
-testFailedServiceInit (int argc, ACE_TCHAR *argv[])
+testFailedServiceInit (int, ACE_TCHAR *[])
 {
   static const ACE_TCHAR *refuse_svc =
 #if (ACE_USES_CLASSIC_SVC_CONF == 1)
