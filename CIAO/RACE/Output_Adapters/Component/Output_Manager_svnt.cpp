@@ -718,6 +718,7 @@ namespace CIAO
           return 0;
         }
 
+
         return new
         Output_Manager_Home_Servant (
           x.in (),
