@@ -863,6 +863,7 @@ namespace CIAO
           return 0;
         }
 
+
         return new
         Web_Output_Adapter_Home_Servant (
           x.in (),

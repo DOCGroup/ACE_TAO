@@ -380,6 +380,7 @@ namespace CIAO
         // Attribute operations.
       };
 
+
       extern "C" WEB_OUTPUT_ADAPTER_SVNT_Export ::PortableServer::Servant
       create_CIAO_RACE_Web_Output_Adapter_Home_Servant (
         ::Components::HomeExecutorBase_ptr p,
