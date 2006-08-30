@@ -4,12 +4,22 @@ project (Package_Config_Handlers) : acelib, ciao_deployment_stub, ciao_config_ha
   sharedname = Package_Config_Handlers
   dynamicflags = PACKAGING_HANDLERS_BUILD_DLL
   avoids   += ace_for_tao
-
-  after    += XSC_Config_Handlers_Common XSC_DynAny_Handler CIAO_XML_Utils
-  libs     += XSC_Config_Handlers_Common XSC_DynAny_Handler CIAO_XML_Utils
-
+    
   includes += $(CIAO_ROOT)/ciao
-  includes += $(CIAO_ROOT)/tools/Config_Handlers
+  
+  after    += XSC_Config_Handlers_Common \
+              XSC_Config_Handlers \
+              XSC_DynAny_Handler \
+              XSC_XML_Handlers \
+              CIAO_XML_Utils \
+              CIAO_Events_Handlers
+              
+  libs     += XSC_Config_Handlers_Common \
+              XSC_Config_Handlers \
+              XSC_DynAny_Handler \
+              XSC_XML_Handlers \
+              CIAO_XML_Utils \
+              CIAO_Events_Handlers
 
   Source_files {
     CAD_Handler.cpp
@@ -34,15 +44,11 @@ project (Package_Config_Handlers) : acelib, ciao_deployment_stub, ciao_config_ha
 }
 
 project (Package_Config_Handlers_Tests) : ciao_component_dnc, ciao_config_handlers, ifr_client {
-  includes += $(CIAO_ROOT)/tools/Config_Handlers
   exename = test
   macros   += XML_USE_PTHREADS
   avoids   += ace_for_tao
-  libs += Package_Config_Handlers XSC_Config_Handlers
+  
   Source_Files {
     test.cpp
   }
-
 }
-
-
