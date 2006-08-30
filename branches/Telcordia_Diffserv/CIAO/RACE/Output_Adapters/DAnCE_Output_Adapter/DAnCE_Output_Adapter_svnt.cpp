@@ -818,6 +818,7 @@ namespace CIAO
           return 0;
         }
 
+
         return new
         DAnCE_Output_Adapter_Home_Servant (
           x.in (),

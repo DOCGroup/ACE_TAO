@@ -371,6 +371,7 @@ namespace CIAO
         // Attribute operations.
       };
 
+
       extern "C" DANCE_OUTPUT_ADAPTER_SVNT_Export ::PortableServer::Servant
       create_CIAO_RACE_DAnCE_Output_Adapter_Home_Servant (
         ::Components::HomeExecutorBase_ptr p,
