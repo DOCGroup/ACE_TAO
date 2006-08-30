@@ -5,7 +5,8 @@ project : ciao_config_handlers_base, dynamicany, typecodefactory {
   verbatim(gnuace, macros) {
    override no_hidden_visibility = 1
   }
-  after += XSC_DynAny_Handler \
+  after += CIAO_XML_Utils \
+           XSC_DynAny_Handler \
            XSC_Config_Handlers \
            XSC_XML_Handlers \
            RT_CCM_Config_Handlers \
@@ -13,7 +14,8 @@ project : ciao_config_handlers_base, dynamicany, typecodefactory {
            Package_Config_Handlers \
            XSC_Config_Handlers_Common
 
-  libs  += XSC_Config_Handlers \
+  libs  += CIAO_XML_Utils \
+           XSC_Config_Handlers \
            RT_CCM_Config_Handlers \
            CIAO_Events_Handlers \
            Package_Config_Handlers \
