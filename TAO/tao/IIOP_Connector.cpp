@@ -438,7 +438,7 @@ TAO_IIOP_Connector::complete_connection (int result,
               svc_handler = sh_list[i];
               if (transport->connection_handler()->keep_waiting())
                 {
-                  svc_handler->add_reference();
+                  svc_handler->connection_pending();
                 }
               iiop_endpoint = ep_list[i];
               break;
