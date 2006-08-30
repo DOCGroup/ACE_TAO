@@ -33,6 +33,8 @@
 #include "tao/LocalObject.h"
 #include "ace/Hash_Map_Manager_T.h"
 
+#include "ciao/NetQoSC.h"
+
 namespace CIAO
 {
   namespace RACE
@@ -58,6 +60,8 @@ namespace CIAO
 
         void add_network_priorities (Deployment::DeploymentPlan & plan,
                                      const Deployment::DiffservInfos & dscp_infos);
+        void process_netqos_req (::CIAO::DAnCE::NetworkQoS::NetQoSRequirement *net_qos_req,
+                                 ::Deployment::DiffservInfos & dscp_infos);
 
         virtual ::CORBA::Boolean
         process_domain_change (

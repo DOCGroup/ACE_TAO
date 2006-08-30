@@ -67,81 +67,31 @@ namespace CIAO
                 if (ACE_OS::strcmp (dep_plan.infoProperty[j].name.in (),
                                     "CIAONetworkQoS") == 0)
                  {
-                   ::Deployment::DiffservInfos dscp_infos;
-
-                   time_t t;
-                   time (&t);
-                   srandom (t);
-
                    //ACE_DEBUG ((LM_DEBUG, "NetQoSPlanner: Inside CIAONetworkQoS\n"));
+                   ::Deployment::DiffservInfos dscp_infos;
                    ::CIAO::DAnCE::NetworkQoS::NetQoSRequirement *net_qos_req;
+
                    if (dep_plan.infoProperty [j].value >>= net_qos_req)
                     {
                        //ACE_DEBUG ((LM_DEBUG, "NetQoSPlanner: Any successful\n"));
-                       size_t set_len = net_qos_req->conn_qos_set.length();
-                       for (size_t k = 0; k < set_len; ++k)
-                         {
-                           ::CIAO::DAnCE::NetworkQoS::ConnectionQoS conn_qos
-                            = net_qos_req->conn_qos_set[k];
-                           for (size_t conn_num = 0; 
-                                conn_num < conn_qos.connections.length (); 
-                                ++conn_num)
-                             {
-                               /*
-                               std::cerr
-                               << "Connection Name = " << conn_qos.connections [conn_num].connection_name   << std::endl
-                               << "client Name = " << conn_qos.connections [conn_num].client                << std::endl
-                               << "client Port Name = " << conn_qos.connections [conn_num].client_port_name << std::endl
-                               << "server Name = " << conn_qos.connections [conn_num].server                << std::endl
-                               << "server Port Name = " << conn_qos.connections [conn_num].server_port_name << std::endl;
-                               */
-
-                               size_t len = dscp_infos.length ();
-                               dscp_infos.length (len + 1);
-                               dscp_infos [conn_num].server_instance_name = conn_qos.connections [conn_num].server;
-                               dscp_infos [conn_num].client_instance_name = conn_qos.connections [conn_num].client;
-                               dscp_infos [conn_num].client_receptacle_name = conn_qos.connections [conn_num].client_port_name;
-                               dscp_infos [conn_num].request_dscp = random () % 7;
-                               dscp_infos [conn_num].reply_dscp = random () % 7;
-                             }
-                           /*
-                           std::cerr << "fwdBWD = " << conn_qos.fwdBWD << std::endl;
-                           std::cerr << "revBWD = " << conn_qos.revBWD << std::endl;
-
-                           if (::CIAO::DAnCE::NetworkQoS::HIGH_PRIORITY == conn_qos.data_qos)
-                              std::cerr << "DataTrafficQoS = NetworkQoS::HIGH_PRIORITY\n";
-                           else if (::CIAO::DAnCE::NetworkQoS::HIGH_RELIABILITY == conn_qos.data_qos)
-                              std::cerr << "DataTrafficQoS = NetworkQoS::HIGH_RELIABILITY\n";
-                           else if (::CIAO::DAnCE::NetworkQoS::VIDEO == conn_qos.data_qos)
-                              std::cerr << "DataTrafficQoS = NetworkQoS::VIDEO\n";
-                           else if (::CIAO::DAnCE::NetworkQoS::VOICE == conn_qos.data_qos)
-                              std::cerr << "DataTrafficQoS = NetworkQoS::VOICE\n";
-                           else if (::CIAO::DAnCE::NetworkQoS::BEST_EFFORT == conn_qos.data_qos)
-                              std::cerr << "DataTrafficQoS = NetworkQoS::BEST_EFFORT\n";
-
-                           if (::CIAO::DAnCE::NetworkQoS::NORMAL == conn_qos.priority)
-                              std::cerr << "Priority = NORMAL\n";
-                           else if (::CIAO::DAnCE::NetworkQoS::HIGH == conn_qos.priority)
-                              std::cerr << "Priority = HIGH\n";
-                           else if (::CIAO::DAnCE::NetworkQoS::LOW == conn_qos.priority)
-                              std::cerr << "Priority = LOW\n";
-                           */
-                         }
+                       this->process_netqos_req (net_qos_req, dscp_infos);
                     }
                     else
                     {
                       ACE_DEBUG ((LM_DEBUG, "Conversion to Any failed for NetworkQoS.\n"));
                     }
-                    // remove NetQoS infoProperty
-                    //dep_plan.infoProperty.remove (j);
+
+                    // Remove CIAONetworkQoS infoProperty
                     if (dep_plan.infoProperty.length() > j+1)
                     {
-                      for (size_t k = j; k < dep_plan.infoProperty.length(); ++k)
+                      for (size_t k = j + 1; k < dep_plan.infoProperty.length(); ++k)
                         {
-                          dep_plan.infoProperty[k] = dep_plan.infoProperty[k+1];
+                          dep_plan.infoProperty[k-1] = dep_plan.infoProperty[k];
                         }
                     }
                     dep_plan.infoProperty.length(dep_plan.infoProperty.length() - 1);
+                    // Removal code ends
+
                     this->add_network_priorities (dep_plan, dscp_infos);
                  }
               }
@@ -153,6 +103,64 @@ namespace CIAO
 
 // code that creates the deployment plan populating the network
 // priority policies using the diffserv codepoint decisions.
+
+void Planner_I_exec_i::process_netqos_req (::CIAO::DAnCE::NetworkQoS::NetQoSRequirement *net_qos_req,
+                                           ::Deployment::DiffservInfos & dscp_infos)
+      {
+        time_t t;
+        time (&t);
+        srandom (t);
+
+        size_t set_len = net_qos_req->conn_qos_set.length();
+        for (size_t k = 0; k < set_len; ++k)
+          {
+            ::CIAO::DAnCE::NetworkQoS::ConnectionQoS conn_qos
+            = net_qos_req->conn_qos_set[k];
+            for (size_t conn_num = 0;
+                conn_num < conn_qos.connections.length ();
+                ++conn_num)
+              {
+                /*
+                std::cerr
+                << "Connection Name = " << conn_qos.connections [conn_num].connection_name   << std::endl
+                << "client Name = " << conn_qos.connections [conn_num].client                << std::endl
+                << "client Port Name = " << conn_qos.connections [conn_num].client_port_name << std::endl
+                << "server Name = " << conn_qos.connections [conn_num].server                << std::endl
+                << "server Port Name = " << conn_qos.connections [conn_num].server_port_name << std::endl;
+                */
+
+                size_t len = dscp_infos.length ();
+                dscp_infos.length (len + 1);
+                dscp_infos [conn_num].server_instance_name = conn_qos.connections [conn_num].server;
+                dscp_infos [conn_num].client_instance_name = conn_qos.connections [conn_num].client;
+                dscp_infos [conn_num].client_receptacle_name = conn_qos.connections [conn_num].client_port_name;
+                dscp_infos [conn_num].request_dscp = random () % 7;
+                dscp_infos [conn_num].reply_dscp = random () % 7;
+              }
+            /*
+            std::cerr << "fwdBWD = " << conn_qos.fwdBWD << std::endl;
+            std::cerr << "revBWD = " << conn_qos.revBWD << std::endl;
+
+            if (::CIAO::DAnCE::NetworkQoS::HIGH_PRIORITY == conn_qos.data_qos)
+              std::cerr << "DataTrafficQoS = NetworkQoS::HIGH_PRIORITY\n";
+            else if (::CIAO::DAnCE::NetworkQoS::HIGH_RELIABILITY == conn_qos.data_qos)
+              std::cerr << "DataTrafficQoS = NetworkQoS::HIGH_RELIABILITY\n";
+            else if (::CIAO::DAnCE::NetworkQoS::VIDEO == conn_qos.data_qos)
+              std::cerr << "DataTrafficQoS = NetworkQoS::VIDEO\n";
+            else if (::CIAO::DAnCE::NetworkQoS::VOICE == conn_qos.data_qos)
+              std::cerr << "DataTrafficQoS = NetworkQoS::VOICE\n";
+            else if (::CIAO::DAnCE::NetworkQoS::BEST_EFFORT == conn_qos.data_qos)
+              std::cerr << "DataTrafficQoS = NetworkQoS::BEST_EFFORT\n";
+
+            if (::CIAO::DAnCE::NetworkQoS::NORMAL == conn_qos.priority)
+              std::cerr << "Priority = NORMAL\n";
+            else if (::CIAO::DAnCE::NetworkQoS::HIGH == conn_qos.priority)
+              std::cerr << "Priority = HIGH\n";
+            else if (::CIAO::DAnCE::NetworkQoS::LOW == conn_qos.priority)
+              std::cerr << "Priority = LOW\n";
+            */
+          }
+      }
 
 void
 Planner_I_exec_i::add_network_priorities (Deployment::DeploymentPlan & temp_plan,
