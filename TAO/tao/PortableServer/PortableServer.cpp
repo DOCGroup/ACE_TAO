@@ -56,13 +56,17 @@ TAO_POA_Initializer::init (void)
       ace_svc_desc_IdAssignmentStrategySystem
     );
 
+#if !defined (CORBA_E_MICRO)
   ACE_Service_Config::process_directive (
       ace_svc_desc_IdAssignmentStrategyUser
     );
+#endif /* CORBA_E_MICRO */
 
+#if !defined (CORBA_E_MICRO)
   ACE_Service_Config::process_directive (
       ace_svc_desc_IdUniquenessStrategyMultiple
     );
+#endif /* CORBA_E_MICRO */
 
   ACE_Service_Config::process_directive (
       ace_svc_desc_IdUniquenessStrategyUnique
@@ -72,9 +76,11 @@ TAO_POA_Initializer::init (void)
       ace_svc_desc_IdUniquenessStrategyUniqueFactoryImpl
     );
 
+#if !defined (CORBA_E_MICRO)
   ACE_Service_Config::process_directive (
       ace_svc_desc_ImplicitActivationStrategyExplicit
     );
+#endif /* CORBA_E_MICRO */
 
   ACE_Service_Config::process_directive (
       ace_svc_desc_ImplicitActivationStrategyImplicit
@@ -96,9 +102,11 @@ TAO_POA_Initializer::init (void)
       ace_svc_desc_LifespanStrategyFactoryImpl
     );
 
+#if !defined (CORBA_E_MICRO)
   ACE_Service_Config::process_directive (
       ace_svc_desc_LifespanStrategyPersistentFactoryImpl
     );
+#endif /* CORBA_E_MICRO */
 
   ACE_Service_Config::process_directive (
       ace_svc_desc_LifespanStrategyTransientFactoryImpl
