@@ -31,6 +31,7 @@
 
 #include "NetQoSPlanner_exec_export.h"
 #include "tao/LocalObject.h"
+#include "ace/Hash_Map_Manager_T.h"
 
 namespace CIAO
 {
@@ -67,6 +68,13 @@ namespace CIAO
         name (
           ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
         ACE_THROW_SPEC (( ::CORBA::SystemException));
+
+        protected:
+        typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
+                                        int, ACE_Hash<ACE_CString>,
+                                        ACE_Equal_To<ACE_CString>,
+                                        ACE_Null_Mutex> Instance_Map;
+        Instance_Map instance_map_;
       };
 
       class NETQOSPLANNER_EXEC_Export NetQosPlanner_exec_i
