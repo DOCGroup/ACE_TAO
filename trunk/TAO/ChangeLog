@@ -1,3 +1,9 @@
+Wed Aug 30 13:29:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/PortableServer.cpp:
+          Don't do the process_directives for the policies that aren't supported
+          with CORBA/e micro, this will reduce the footprint for a static build
+
 Wed Aug 30 06:05:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_2560_Regression/server.cpp:
