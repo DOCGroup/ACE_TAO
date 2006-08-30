@@ -45,11 +45,10 @@ int main (int argc, char* argv[])
     poa_manager->activate ();
 
     // Make policies for child POA
-    CORBA::PolicyList policies(3) ;
-    policies.length(3) ;
+    CORBA::PolicyList policies(2) ;
+    policies.length(2) ;
     policies[0] = root_poa->create_lifespan_policy ( PortableServer::PERSISTENT ACE_ENV_ARG_PARAMETER ) ;
     policies[1] = root_poa->create_id_assignment_policy ( PortableServer::USER_ID ACE_ENV_ARG_PARAMETER ) ;
-    policies[2] = root_poa->create_thread_policy ( PortableServer::ORB_CTRL_MODEL ACE_ENV_ARG_PARAMETER ) ;
 
     PortableServer::POA_var poa = root_poa->create_POA ( "MyPOA", poa_manager.in(), policies );
 
