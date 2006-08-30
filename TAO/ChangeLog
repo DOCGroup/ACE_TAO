@@ -1,3 +1,7 @@
+Wed Aug 30 04:20:00 UTC 2006  Frank Rehberger <frehberger@prismtech.com>
+
+	* NEWS: explains user-visible implications of patch #2301
+
 Tue Aug 29 21:55:05 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/Profile_Transport_Resolver.cpp:
