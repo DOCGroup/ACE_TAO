@@ -1,3 +1,8 @@
+Wed Aug 30 12:19:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/CDR_Stream.{h,cpp}:
+          Use true/false consistently for the good_bit
+
 Wed Aug 30 05:57:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Service_Config_Test.cpp:
