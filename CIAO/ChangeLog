@@ -1,3 +1,12 @@
+Wed Aug 30 00:48:31 UTC 2006  Jaiganesh B <jai.dre.vanderbilt.edu>
+
+        * RACE/Planners/NetQoSPlanner/NetQoSPlanner_exec.h:
+          RACE/Planners/NetQoSPlanner/NetQoSPlanner_exec.cpp:
+        
+          Integrated code to update the deployment plan with
+          network priority policies referenced using a XML
+          document conforming to the CIAOServerResourcesSchema.
+
 Tue Aug 29 05:10:06 UTC 2006  Sumant Tambe  <sutambe@nospam>
 
         Improved NetQoS idl, config handler. Hello descriptors.
