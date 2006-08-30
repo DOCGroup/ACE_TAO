@@ -387,7 +387,7 @@ public:
    * Returns (in <buf>) the next position in the buffer aligned to
    * <size>, it advances the Message_Block wr_ptr past the data
    * (i.e., <buf> + <size>). If necessary it grows the Message_Block
-   * buffer.  Sets the good_bit to 0 and returns a -1 on failure.
+   * buffer.  Sets the good_bit to false and returns a -1 on failure.
    */
   int adjust (size_t size,
               char *&buf);
@@ -506,7 +506,7 @@ private:
    */
   bool do_byte_swap_;
 
-  /// Set to 0 when an error ocurrs.
+  /// Set to false when an error ocurrs.
   bool good_bit_;
 
   /// Break-even point for copying.
