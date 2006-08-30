@@ -56,6 +56,9 @@ namespace CIAO
         ACE_THROW_SPEC (( ::CORBA::SystemException,
                          ::CIAO::RACE::PlannerFailure));
 
+        void add_network_priorities (Deployment::DeploymentPlan & plan,
+                                     const Deployment::DiffservInfos & dscp_infos);
+
         virtual ::CORBA::Boolean
         process_domain_change (
           const ::CIAO::RACE::Planner_I::Domain_Changes & changes,
