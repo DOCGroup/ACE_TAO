@@ -1,0 +1,10 @@
+// MPC file to generate base Utils library
+project {
+
+   after += Utils
+   includes += $(COSMIC_ROOT)
+   macros += UTILS_HAS_DLL
+   libs += Utils
+   libpaths += $(COSMIC_ROOT)/lib
+   
+}

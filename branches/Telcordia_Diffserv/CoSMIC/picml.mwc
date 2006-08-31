@@ -1,0 +1,6 @@
+workspace {
+  cmdline += -feature_file default.features
+  PIM/PICML/interpreters/Interpreters.mwc
+  PIM/PICML/addons
+  PIM/PICML/decorators/Decorators.mwc
+}

@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?udm interface="PICML2Cadena" version="1.00"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!-- generated on Mon Nov 15 02:46:30 2004 -->
+
+ <xsd:complexType name="PublishConnector_cross_ph_PICMLType">
+  <xsd:attribute name="rem_id" type="xsd:long" use="required"/>
+  <xsd:attribute name="rem_sysname" type="xsd:string" use="required"/>
+  <xsd:attribute name="cadenaESSConnection" type="xsd:IDREF" use="required"/>
+  <xsd:attribute name="_id" type="xsd:ID"/>
+  <xsd:attribute name="_archetype" type="xsd:IDREF"/>
+  <xsd:attribute name="_derived" type="xsd:IDREFS"/>
+  <xsd:attribute name="_instances" type="xsd:IDREFS"/>
+  <xsd:attribute name="_desynched_atts" type="xsd:string"/>
+  <xsd:attribute name="_real_archetype" type="xsd:boolean"/>
+  <xsd:attribute name="_subtype" type="xsd:boolean"/>
+ </xsd:complexType>
+
+ <xsd:complexType name="invoke_cross_ph_PICMLType">
+  <xsd:attribute name="rem_id" type="xsd:long" use="required"/>
+  <xsd:attribute name="rem_sysname" type="xsd:string" use="required"/>
+  <xsd:attribute name="cadenaInvoke" type="xsd:IDREF" use="required"/>
+  <xsd:attribute name="_id" type="xsd:ID"/>
+  <xsd:attribute name="_archetype" type="xsd:IDREF"/>
+  <xsd:attribute name="_derived" type="xsd:IDREFS"/>
+  <xsd:attribute name="_instances" type="xsd:IDREFS"/>
+  <xsd:attribute name="_desynched_atts" type="xsd:string"/>
+  <xsd:attribute name="_real_archetype" type="xsd:boolean"/>
+  <xsd:attribute name="_subtype" type="xsd:boolean"/>
+ </xsd:complexType>
+
+ <xsd:complexType name="emit_cross_ph_PICMLType">
+  <xsd:attribute name="rem_id" type="xsd:long" use="required"/>
+  <xsd:attribute name="rem_sysname" type="xsd:string" use="required"/>
+  <xsd:attribute name="cadenaEmit" type="xsd:IDREFS"/>
+  <xsd:attribute name="_id" type="xsd:ID"/>
+  <xsd:attribute name="_archetype" type="xsd:IDREF"/>
+  <xsd:attribute name="_derived" type="xsd:IDREFS"/>
+  <xsd:attribute name="_instances" type="xsd:IDREFS"/>
+  <xsd:attribute name="_desynched_atts" type="xsd:string"/>
+  <xsd:attribute name="_real_archetype" type="xsd:boolean"/>
+  <xsd:attribute name="_subtype" type="xsd:boolean"/>
+ </xsd:complexType>
+
+ <xsd:complexType name="ComponentAssembly_cross_ph_PICMLType">
+  <xsd:attribute name="rem_id" type="xsd:long" use="required"/>
+  <xsd:attribute name="rem_sysname" type="xsd:string" use="required"/>
+  <xsd:attribute name="rootContainer" type="xsd:IDREF" use="required"/>
+  <xsd:attribute name="_id" type="xsd:ID"/>
+  <xsd:attribute name="_archetype" type="xsd:IDREF"/>
+  <xsd:attribute name="_derived" type="xsd:IDREFS"/>
+  <xsd:attribute name="_instances" type="xsd:IDREFS"/>
+  <xsd:attribute name="_desynched_atts" type="xsd:string"/>
+  <xsd:attribute name="_real_archetype" type="xsd:boolean"/>
+  <xsd:attribute name="_subtype" type="xsd:boolean"/>
+ </xsd:complexType>
+
+ <xsd:complexType name="OutEventPort_cross_ph_PICMLType">
+  <xsd:attribute name="rem_id" type="xsd:long" use="required"/>
+  <xsd:attribute name="rem_sysname" type="xsd:string" use="required"/>
+  <xsd:attribute name="cadenaPort" type="xsd:IDREF" use="required"/>
+  <xsd:attribute name="_id" type="xsd:ID"/>
+  <xsd:attribute name="_archetype" type="xsd:IDREF"/>
+  <xsd:attribute name="_derived" type="xsd:IDREFS"/>
+  <xsd:attribute name="_instances" type="xsd:IDREFS"/>
+  <xsd:attribute name="_desynched_atts" type="xsd:string"/>
+  <xsd:attribute name="_real_archetype" type="xsd:boolean"/>
+  <xsd:attribute name="_subtype" type="xsd:boolean"/>
+ </xsd:complexType>
+
+ <xsd:complexType name="ProvidedRequestPort_cross_ph_PICMLType">
+  <xsd:attribute name="rem_id" type="xsd:long" use="required"/>
+  <xsd:attribute name="rem_sysname" type="xsd:string" use="required"/>
+  <xsd:attribute name="cadenaPort" type="xsd:IDREF" use="required"/>
+  <xsd:attribute name="_id" type="xsd:ID"/>
+  <xsd:attribute name="_archetype" type="xsd:IDREF"/>
+  <xsd:attribute name="_derived" type="xsd:IDREFS"/>
+  <xsd:attribute name="_instances" type="xsd:IDREFS"/>
+  <xsd:attribute name="_desynched_atts" type="xsd:string"/>
+  <xsd:attribute name="_real_archetype" type="xsd:boolean"/>
+  <xsd:attribute name="_subtype" type="xsd:boolean"/>
+ </xsd:complexType>
+
+ <xsd:complexType name="RequiredRequestPort_cross_ph_PICMLType">
+  <xsd:attribute name="rem_id" type="xsd:long" use="required"/>
+  <xsd:attribute name="rem_sysname" type="xsd:string" use="required"/>
+  <xsd:attribute name="cadenaPort" type="xsd:IDREF" use="required"/>
+  <xsd:attribute name="_id" type="xsd:ID"/>
+  <xsd:attribute name="_archetype" type="xsd:IDREF"/>
+  <xsd:attribute name="_derived" type="xsd:IDREFS"/>
+  <xsd:attribute name="_instances" type="xsd:IDREFS"/>
+  <xsd:attribute name="_desynched_atts" type="xsd:string"/>
+  <xsd:attribute name="_real_archetype" type="xsd:boolean"/>
+  <xsd:attribute name="_subtype" type="xsd:boolean"/>
+ </xsd:complexType>
+
+ <xsd:complexType name="InEventPort_cross_ph_PICMLType">
+  <xsd:attribute name="rem_id" type="xsd:long" use="required"/>
+  <xsd:attribute name="rem_sysname" type="xsd:string" use="required"/>
+  <xsd:attribute name="cadenaPort" type="xsd:IDREF" use="required"/>
+  <xsd:attribute name="_id" type="xsd:ID"/>
+  <xsd:attribute name="_archetype" type="xsd:IDREF"/>
+  <xsd:attribute name="_derived" type="xsd:IDREFS"/>
+  <xsd:attribute name="_instances" type="xsd:IDREFS"/>
+  <xsd:attribute name="_desynched_atts" type="xsd:string"/>
+  <xsd:attribute name="_real_archetype" type="xsd:boolean"/>
+  <xsd:attribute name="_subtype" type="xsd:boolean"/>
+ </xsd:complexType>
+
+ <xsd:complexType name="Port_cross_ph_PICMLType">
+  <xsd:attribute name="rem_id" type="xsd:long" use="required"/>
+  <xsd:attribute name="rem_sysname" type="xsd:string" use="required"/>
+  <xsd:attribute name="cadenaPort" type="xsd:IDREF" use="required"/>
+  <xsd:attribute name="_id" type="xsd:ID"/>
+  <xsd:attribute name="_archetype" type="xsd:IDREF"/>
+  <xsd:attribute name="_derived" type="xsd:IDREFS"/>
+  <xsd:attribute name="_instances" type="xsd:IDREFS"/>
+  <xsd:attribute name="_desynched_atts" type="xsd:string"/>
+  <xsd:attribute name="_real_archetype" type="xsd:boolean"/>
+  <xsd:attribute name="_subtype" type="xsd:boolean"/>
+ </xsd:complexType>
+
+ <xsd:complexType name="Component_cross_ph_PICMLType">
+  <xsd:attribute name="rem_id" type="xsd:long" use="required"/>
+  <xsd:attribute name="rem_sysname" type="xsd:string" use="required"/>
+  <xsd:attribute name="cadenaComponentInstance" type="xsd:IDREF" use="required"/>
+  <xsd:attribute name="_id" type="xsd:ID"/>
+  <xsd:attribute name="_archetype" type="xsd:IDREF"/>
+  <xsd:attribute name="_derived" type="xsd:IDREFS"/>
+  <xsd:attribute name="_instances" type="xsd:IDREFS"/>
+  <xsd:attribute name="_desynched_atts" type="xsd:string"/>
+  <xsd:attribute name="_real_archetype" type="xsd:boolean"/>
+  <xsd:attribute name="_subtype" type="xsd:boolean"/>
+ </xsd:complexType>
+
+ <xsd:complexType name="RootContainer_cross_ph_PICMLCadena_Xchange_embedded_EIPropertiesType">
+  <xsd:attribute name="rem_id" type="xsd:long" use="required"/>
+  <xsd:attribute name="rem_sysname" type="xsd:string" use="required"/>
+  <xsd:attribute name="componentAssembly" type="xsd:IDREF" use="required"/>
+  <xsd:attribute name="_id" type="xsd:ID"/>
+  <xsd:attribute name="_archetype" type="xsd:IDREF"/>
+  <xsd:attribute name="_derived" type="xsd:IDREFS"/>
+  <xsd:attribute name="_instances" type="xsd:IDREFS"/>
+  <xsd:attribute name="_desynched_atts" type="xsd:string"/>
+  <xsd:attribute name="_real_archetype" type="xsd:boolean"/>
+  <xsd:attribute name="_subtype" type="xsd:boolean"/>
+ </xsd:complexType>
+
+ <xsd:complexType name="ESSConnection_cross_ph_cadena_scenarioType">
+  <xsd:attribute name="rem_id" type="xsd:long" use="required"/>
+  <xsd:attribute name="rem_sysname" type="xsd:string" use="required"/>
+  <xsd:attribute name="picmlPublishConnector" type="xsd:IDREFS"/>
+  <xsd:attribute name="picmlEmit" type="xsd:IDREFS"/>
+  <xsd:attribute name="_id" type="xsd:ID"/>
+  <xsd:attribute name="_archetype" type="xsd:IDREF"/>
+  <xsd:attribute name="_derived" type="xsd:IDREFS"/>
+  <xsd:attribute name="_instances" type="xsd:IDREFS"/>
+  <xsd:attribute name="_desynched_atts" type="xsd:string"/>
+  <xsd:attribute name="_real_archetype" type="xsd:boolean"/>
+  <xsd:attribute name="_subtype" type="xsd:boolean"/>
+ </xsd:complexType>
+
+ <xsd:complexType name="FRConnection_cross_ph_cadena_scenarioType">
+  <xsd:attribute name="rem_id" type="xsd:long" use="required"/>
+  <xsd:attribute name="rem_sysname" type="xsd:string" use="required"/>
+  <xsd:attribute name="picmlInvoke" type="xsd:IDREF" use="required"/>
+  <xsd:attribute name="_id" type="xsd:ID"/>
+  <xsd:attribute name="_archetype" type="xsd:IDREF"/>
+  <xsd:attribute name="_derived" type="xsd:IDREFS"/>
+  <xsd:attribute name="_instances" type="xsd:IDREFS"/>
+  <xsd:attribute name="_desynched_atts" type="xsd:string"/>
+  <xsd:attribute name="_real_archetype" type="xsd:boolean"/>
+  <xsd:attribute name="_subtype" type="xsd:boolean"/>
+ </xsd:complexType>
+
+ <xsd:complexType name="EventSink_cross_ph_cadena_scenarioType">
+  <xsd:attribute name="rem_id" type="xsd:long" use="required"/>
+  <xsd:attribute name="rem_sysname" type="xsd:string" use="required"/>
+  <xsd:attribute name="picmlPort" type="xsd:IDREF" use="required"/>
+  <xsd:attribute name="_id" type="xsd:ID"/>
+  <xsd:attribute name="_archetype" type="xsd:IDREF"/>
+  <xsd:attribute name="_derived" type="xsd:IDREFS"/>
+  <xsd:attribute name="_instances" type="xsd:IDREFS"/>
+  <xsd:attribute name="_desynched_atts" type="xsd:string"/>
+  <xsd:attribute name="_real_archetype" type="xsd:boolean"/>
+  <xsd:attribute name="_subtype" type="xsd:boolean"/>
+ </xsd:complexType>
+
+ <xsd:complexType name="EventSource_cross_ph_cadena_scenarioType">
+  <xsd:attribute name="rem_id" type="xsd:long" use="required"/>
+  <xsd:attribute name="rem_sysname" type="xsd:string" use="required"/>
+  <xsd:attribute name="picmlPort" type="xsd:IDREF" use="required"/>
+  <xsd:attribute name="_id" type="xsd:ID"/>
+  <xsd:attribute name="_archetype" type="xsd:IDREF"/>
+  <xsd:attribute name="_derived" type="xsd:IDREFS"/>
+  <xsd:attribute name="_instances" type="xsd:IDREFS"/>
+  <xsd:attribute name="_desynched_atts" type="xsd:string"/>
+  <xsd:attribute name="_real_archetype" type="xsd:boolean"/>
+  <xsd:attribute name="_subtype" type="xsd:boolean"/>
+ </xsd:complexType>
+
+ <xsd:complexType name="Receptacle_cross_ph_cadena_scenarioType">
+  <xsd:attribute name="rem_id" type="xsd:long" use="required"/>
+  <xsd:attribute name="rem_sysname" type="xsd:string" use="required"/>
+  <xsd:attribute name="picmlPort" type="xsd:IDREF" use="required"/>
+  <xsd:attribute name="_id" type="xsd:ID"/>
+  <xsd:attribute name="_archetype" type="xsd:IDREF"/>
+  <xsd:attribute name="_derived" type="xsd:IDREFS"/>
+  <xsd:attribute name="_instances" type="xsd:IDREFS"/>
+  <xsd:attribute name="_desynched_atts" type="xsd:string"/>
+  <xsd:attribute name="_real_archetype" type="xsd:boolean"/>
+  <xsd:attribute name="_subtype" type="xsd:boolean"/>
+ </xsd:complexType>
+
+ <xsd:complexType name="Facet_cross_ph_cadena_scenarioType">
+  <xsd:attribute name="rem_id" type="xsd:long" use="required"/>
+  <xsd:attribute name="rem_sysname" type="xsd:string" use="required"/>
+  <xsd:attribute name="picmlPort" type="xsd:IDREF" use="required"/>
+  <xsd:attribute name="_id" type="xsd:ID"/>
+  <xsd:attribute name="_archetype" type="xsd:IDREF"/>
+  <xsd:attribute name="_derived" type="xsd:IDREFS"/>
+  <xsd:attribute name="_instances" type="xsd:IDREFS"/>
+  <xsd:attribute name="_desynched_atts" type="xsd:string"/>
+  <xsd:attribute name="_real_archetype" type="xsd:boolean"/>
+  <xsd:attribute name="_subtype" type="xsd:boolean"/>
+ </xsd:complexType>
+
+ <xsd:complexType name="ComponentPort_cross_ph_cadena_scenarioType">
+  <xsd:attribute name="rem_id" type="xsd:long" use="required"/>
+  <xsd:attribute name="rem_sysname" type="xsd:string" use="required"/>
+  <xsd:attribute name="picmlPort" type="xsd:IDREF" use="required"/>
+  <xsd:attribute name="_id" type="xsd:ID"/>
+  <xsd:attribute name="_archetype" type="xsd:IDREF"/>
+  <xsd:attribute name="_derived" type="xsd:IDREFS"/>
+  <xsd:attribute name="_instances" type="xsd:IDREFS"/>
+  <xsd:attribute name="_desynched_atts" type="xsd:string"/>
+  <xsd:attribute name="_real_archetype" type="xsd:boolean"/>
+  <xsd:attribute name="_subtype" type="xsd:boolean"/>
+ </xsd:complexType>
+
+ <xsd:complexType name="ComponentInstance_cross_ph_cadena_scenarioType">
+  <xsd:attribute name="rem_id" type="xsd:long" use="required"/>
+  <xsd:attribute name="rem_sysname" type="xsd:string" use="required"/>
+  <xsd:attribute name="picmlComponentDef" type="xsd:IDREF" use="required"/>
+  <xsd:attribute name="_id" type="xsd:ID"/>
+  <xsd:attribute name="_archetype" type="xsd:IDREF"/>
+  <xsd:attribute name="_derived" type="xsd:IDREFS"/>
+  <xsd:attribute name="_instances" type="xsd:IDREFS"/>
+  <xsd:attribute name="_desynched_atts" type="xsd:string"/>
+  <xsd:attribute name="_real_archetype" type="xsd:boolean"/>
+  <xsd:attribute name="_subtype" type="xsd:boolean"/>
+ </xsd:complexType>
+
+ <xsd:complexType name="_gen_contType">
+			<xsd:sequence>
+				<xsd:element name="ComponentAssembly_cross_ph_PICML" type="ComponentAssembly_cross_ph_PICMLType" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element name="ComponentInstance_cross_ph_cadena_scenario" type="ComponentInstance_cross_ph_cadena_scenarioType" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element name="ComponentPort_cross_ph_cadena_scenario" type="ComponentPort_cross_ph_cadena_scenarioType" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element name="Component_cross_ph_PICML" type="Component_cross_ph_PICMLType" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element name="ESSConnection_cross_ph_cadena_scenario" type="ESSConnection_cross_ph_cadena_scenarioType" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element name="EventSink_cross_ph_cadena_scenario" type="EventSink_cross_ph_cadena_scenarioType" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element name="EventSource_cross_ph_cadena_scenario" type="EventSource_cross_ph_cadena_scenarioType" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element name="FRConnection_cross_ph_cadena_scenario" type="FRConnection_cross_ph_cadena_scenarioType" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element name="Facet_cross_ph_cadena_scenario" type="Facet_cross_ph_cadena_scenarioType" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element name="InEventPort_cross_ph_PICML" type="InEventPort_cross_ph_PICMLType" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element name="OutEventPort_cross_ph_PICML" type="OutEventPort_cross_ph_PICMLType" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element name="Port_cross_ph_PICML" type="Port_cross_ph_PICMLType" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element name="ProvidedRequestPort_cross_ph_PICML" type="ProvidedRequestPort_cross_ph_PICMLType" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element name="PublishConnector_cross_ph_PICML" type="PublishConnector_cross_ph_PICMLType" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element name="Receptacle_cross_ph_cadena_scenario" type="Receptacle_cross_ph_cadena_scenarioType" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element name="RequiredRequestPort_cross_ph_PICML" type="RequiredRequestPort_cross_ph_PICMLType" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element name="RootContainer_cross_ph_PICMLCadena_Xchange_embedded_EIProperties" type="RootContainer_cross_ph_PICMLCadena_Xchange_embedded_EIPropertiesType" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element name="emit_cross_ph_PICML" type="emit_cross_ph_PICMLType" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element name="invoke_cross_ph_PICML" type="invoke_cross_ph_PICMLType" minOccurs="0" maxOccurs="unbounded"/>
+			</xsd:sequence>
+  <xsd:attribute name="_id" type="xsd:ID"/>
+  <xsd:attribute name="_archetype" type="xsd:IDREF"/>
+  <xsd:attribute name="_derived" type="xsd:IDREFS"/>
+  <xsd:attribute name="_instances" type="xsd:IDREFS"/>
+  <xsd:attribute name="_desynched_atts" type="xsd:string"/>
+  <xsd:attribute name="_real_archetype" type="xsd:boolean"/>
+  <xsd:attribute name="_subtype" type="xsd:boolean"/>
+ </xsd:complexType>
+
+ <xsd:element name="_gen_cont" type="_gen_contType"/>
+
+</xsd:schema>

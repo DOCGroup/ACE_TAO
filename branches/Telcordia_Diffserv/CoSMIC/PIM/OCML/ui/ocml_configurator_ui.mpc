@@ -1,0 +1,64 @@
+// $Id$
+
+project (ocml_configurator_ui): wxwindows, xerces, boost_base {
+  after += ocml_engine
+  sharedname = ocml_configurator_ui
+  includes += .. 
+  macros += _USRDLL WXMAKINGDLL
+  dynamicflags += CONFIGURATOR_UI_BUILD_DLL
+  libout = $(COSMIC_ROOT)/lib
+  dllout = $(COSMIC_ROOT)/bin
+  libpaths += $(COSMIC_ROOT)/lib
+
+  specific (em3, nmake, vc6) {
+    subsystem = windows
+  }
+
+  specific (vc7, vc71, vc8) {
+    subsystem = 2
+  }
+
+  includes += $(WXWINDOWS_ROOT)/include $(WXWINDOWS_ROOT)/lib/mswd
+  libpaths += $(WXWINDOWS_ROOT)/lib
+  libs     += wxmsw ocml_engine ocml_common
+  lit_libs += comctl32 wsock32 rpcrt4
+
+  Source_Files {
+    configurator_ui.cpp
+    main_app.cpp
+    main_frame.cpp
+
+    boolean_edit_control.cpp
+    clear_button.cpp
+    integer_edit_control.cpp
+    string_edit_control.cpp
+
+    boolean_option_editor.cpp
+    editor_panel.cpp
+    integer_option_editor.cpp
+    string_option_editor.cpp
+  }
+
+  Header_Files {
+    CONFIGURATOR_UI_Export.h
+    configurator_ui.hpp
+    main_app.hpp
+    main_frame.hpp
+
+    boolean_edit_control.hpp
+    clear_button.hpp
+    integer_edit_control.hpp
+    string_edit_control.hpp
+
+    boolean_option_editor.hpp
+    editor_panel.hpp
+    integer_option_editor.hpp
+    option_editor.hpp
+    string_option_editor.hpp
+  }
+
+  Inline_Files {
+    option_editor.ipp
+  }
+}
+

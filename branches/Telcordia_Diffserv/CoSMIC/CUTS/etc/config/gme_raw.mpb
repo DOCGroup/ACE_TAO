@@ -1,0 +1,7 @@
+// $Id$
+
+project : gme_component {
+  Source_Files {
+    RawComponent.cpp
+  }
+}

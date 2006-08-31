@@ -1,0 +1,3156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE project SYSTEM "mga.dtd">
+
+<project guid="{00000000-0000-0000-0000-000000000000}" cdate="Mon Nov 17 13:05:37 2003" mdate="Sun Dec 07 23:09:37 2003" metaguid="{6DB38F67-DEAD-BEEF-FEED-DAD000000001}" metaname="MetaGME">
+	<name>FESML</name>
+	<comment></comment>
+	<author></author>
+	<folder id="id-006a-00000001" relid="0x1" childrelidcntr="0x4" kind="RootFolder">
+		<name>FESML</name>
+		<model id="id-0065-00000001" kind="ParadigmSheet" relid="0x1" childrelidcntr="0xa1">
+			<name>Federated_EC</name>
+			<attribute kind="AuthorInformation" status="meta">
+				<value></value>
+			</attribute>
+			<attribute kind="VersionInformation" status="meta">
+				<value></value>
+			</attribute>
+			<attribute kind="DisplayedName" status="meta">
+				<value></value>
+			</attribute>
+			<connection id="id-0068-00000082" kind="Containment" role="Containment" relid="0xa1">
+				<name>Containment</name>
+				<regnode name="autorouterPref" isopaque="yes">
+					<value>We</value>
+				</regnode>
+				<attribute kind="IsPort" status="meta">
+					<value>false</value>
+				</attribute>
+				<attribute kind="Rolename" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="Cardinality" status="meta">
+					<value>0..*</value>
+				</attribute>
+				<connpoint role="dst" target="id-0066-00000006"/>
+				<connpoint role="src" target="id-0066-00000031"/>
+			</connection>
+			<connection id="id-0068-00000080" kind="HasAspect" role="HasAspect" relid="0x9f">
+				<name>HasAspect</name>
+				<connpoint role="dst" target="id-0066-00000006"/>
+				<connpoint role="src" target="id-0069-00000005"/>
+			</connection>
+			<connection id="id-0068-0000007f" kind="ReferTo" role="ReferTo" relid="0x9e">
+				<name>ReferTo</name>
+				<regnode name="autorouterPref" isopaque="yes">
+					<value>w</value>
+				</regnode>
+				<connpoint role="dst" target="id-0067-00000003"/>
+				<connpoint role="src" target="id-0066-0000002c"/>
+			</connection>
+			<connection id="id-0068-0000007c" kind="Containment" role="Containment" relid="0x98">
+				<name>Containment</name>
+				<regnode name="autorouterPref" isopaque="yes">
+					<value>Ww</value>
+				</regnode>
+				<attribute kind="IsPort" status="meta">
+					<value>false</value>
+				</attribute>
+				<attribute kind="Rolename" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="Cardinality" status="meta">
+					<value>0..*</value>
+				</attribute>
+				<connpoint role="dst" target="id-0066-00000022"/>
+				<connpoint role="src" target="id-0066-0000002f"/>
+			</connection>
+			<connection id="id-0068-0000007b" kind="Containment" role="Containment" relid="0x97">
+				<name>Containment</name>
+				<regnode name="autorouterPref" isopaque="yes">
+					<value>Ee</value>
+				</regnode>
+				<attribute kind="IsPort" status="meta">
+					<value>false</value>
+				</attribute>
+				<attribute kind="Rolename" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="Cardinality" status="meta">
+					<value>0..*</value>
+				</attribute>
+				<connpoint role="dst" target="id-0066-00000022"/>
+				<connpoint role="src" target="id-0066-00000030"/>
+			</connection>
+			<connection id="id-0068-0000007a" kind="Containment" role="Containment" relid="0x96">
+				<name>Containment</name>
+				<attribute kind="IsPort" status="meta">
+					<value>false</value>
+				</attribute>
+				<attribute kind="Rolename" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="Cardinality" status="meta">
+					<value>0..*</value>
+				</attribute>
+				<connpoint role="dst" target="id-0066-00000022"/>
+				<connpoint role="src" target="id-0066-0000002c"/>
+			</connection>
+			<connection id="id-0068-00000079" kind="AssociationClass" role="AssociationClass" relid="0x95">
+				<name>AssociationClass</name>
+				<regnode name="autorouterPref" isopaque="yes">
+					<value>e</value>
+				</regnode>
+				<connpoint role="dst" target="id-0066-0000002e"/>
+				<connpoint role="src" target="id-0066-00000030"/>
+			</connection>
+			<connection id="id-0068-00000078" kind="AssociationClass" role="AssociationClass" relid="0x94">
+				<name>AssociationClass</name>
+				<regnode name="autorouterPref" isopaque="yes">
+					<value>w</value>
+				</regnode>
+				<connpoint role="dst" target="id-0066-0000002d"/>
+				<connpoint role="src" target="id-0066-0000002f"/>
+			</connection>
+			<connection id="id-0068-00000077" kind="ConnectorToDestination" role="ConnectorToDestination" relid="0x91">
+				<name>ConnectorToDestination</name>
+				<regnode name="autorouterPref" isopaque="yes">
+					<value>wNeW</value>
+				</regnode>
+				<attribute kind="dstRolename" status="meta">
+					<value>dst</value>
+				</attribute>
+				<attribute kind="Cardinality" status="meta">
+					<value>0..*</value>
+				</attribute>
+				<connpoint role="dst" target="id-0066-0000002c"/>
+				<connpoint role="src" target="id-0066-0000002e"/>
+			</connection>
+			<connection id="id-0068-00000076" kind="SourceToConnector" role="SourceToConnector" relid="0x90">
+				<name>SourceToConnector</name>
+				<regnode name="autorouterPref" isopaque="yes">
+					<value>S</value>
+				</regnode>
+				<attribute kind="srcRolename" status="meta">
+					<value>src</value>
+				</attribute>
+				<attribute kind="Cardinality" status="meta">
+					<value>0..*</value>
+				</attribute>
+				<connpoint role="dst" target="id-0066-0000002e"/>
+				<connpoint role="src" target="id-0066-00000004"/>
+			</connection>
+			<connection id="id-0068-00000075" kind="ConnectorToDestination" role="ConnectorToDestination" relid="0x8f">
+				<name>ConnectorToDestination</name>
+				<regnode name="autorouterPref" isopaque="yes">
+					<value>wS</value>
+				</regnode>
+				<attribute kind="dstRolename" status="meta">
+					<value>dst</value>
+				</attribute>
+				<attribute kind="Cardinality" status="meta">
+					<value>0..*</value>
+				</attribute>
+				<connpoint role="dst" target="id-0066-0000002c"/>
+				<connpoint role="src" target="id-0066-0000002d"/>
+			</connection>
+			<connection id="id-0068-00000074" kind="SourceToConnector" role="SourceToConnector" relid="0x8e">
+				<name>SourceToConnector</name>
+				<regnode name="autorouterPref" isopaque="yes">
+					<value>Sn</value>
+				</regnode>
+				<attribute kind="srcRolename" status="meta">
+					<value>src</value>
+				</attribute>
+				<attribute kind="Cardinality" status="meta">
+					<value>0..*</value>
+				</attribute>
+				<connpoint role="dst" target="id-0066-0000002d"/>
+				<connpoint role="src" target="id-0066-00000003"/>
+			</connection>
+			<connection id="id-0068-00000066" kind="HasAspect" role="HasAspect" relid="0x89">
+				<name>HasAspect</name>
+				<regnode name="autorouterPref" isopaque="yes">
+					<value>Ne</value>
+				</regnode>
+				<connpoint role="dst" target="id-0066-00000002"/>
+				<connpoint role="src" target="id-0069-00000005"/>
+			</connection>
+			<connection id="id-0068-0000005c" kind="Containment" role="Containment" relid="0x7e">
+				<name>Containment</name>
+				<regnode name="autorouterPref" isopaque="yes">
+					<value>Ne</value>
+				</regnode>
+				<attribute kind="IsPort" status="meta">
+					<value>false</value>
+				</attribute>
+				<attribute kind="Rolename" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="Cardinality" status="meta">
+					<value>0..*</value>
+				</attribute>
+				<connpoint role="dst" target="id-0066-00000022"/>
+				<connpoint role="src" target="id-0066-0000001a"/>
+			</connection>
+			<connection id="id-0068-0000005b" kind="Containment" role="Containment" relid="0x7d">
+				<name>Containment</name>
+				<regnode name="autorouterPref" isopaque="yes">
+					<value>Ns</value>
+				</regnode>
+				<attribute kind="IsPort">
+					<value>true</value>
+				</attribute>
+				<attribute kind="Rolename" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="Cardinality" status="meta">
+					<value>0..*</value>
+				</attribute>
+				<connpoint role="dst" target="id-0066-00000022"/>
+				<connpoint role="src" target="id-0066-00000006"/>
+			</connection>
+			<connection id="id-0068-0000005a" kind="HasAspect" role="HasAspect" relid="0x7c">
+				<name>HasAspect</name>
+				<regnode name="autorouterPref" isopaque="yes">
+					<value>Ne</value>
+				</regnode>
+				<connpoint role="dst" target="id-0066-00000022"/>
+				<connpoint role="src" target="id-0069-00000005"/>
+			</connection>
+			<connection id="id-0068-00000059" kind="Containment" role="Containment" relid="0x7a">
+				<name>Containment</name>
+				<regnode name="autorouterPref" isopaque="yes">
+					<value>Ee</value>
+				</regnode>
+				<attribute kind="IsPort" status="meta">
+					<value>false</value>
+				</attribute>
+				<attribute kind="Rolename" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="Cardinality" status="meta">
+					<value>0..*</value>
+				</attribute>
+				<connpoint role="dst" target="id-0066-00000022"/>
+				<connpoint role="src" target="id-0066-0000000a"/>
+			</connection>
+			<connection id="id-0068-00000058" kind="Containment" role="Containment" relid="0x79">
+				<name>Containment</name>
+				<regnode name="autorouterPref" isopaque="yes">
+					<value>Nw</value>
+				</regnode>
+				<attribute kind="IsPort" status="meta">
+					<value>false</value>
+				</attribute>
+				<attribute kind="Rolename" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="Cardinality" status="meta">
+					<value>0..*</value>
+				</attribute>
+				<connpoint role="dst" target="id-0066-00000022"/>
+				<connpoint role="src" target="id-0066-00000009"/>
+			</connection>
+			<connection id="id-0068-00000057" kind="Containment" role="Containment" relid="0x78">
+				<name>Containment</name>
+				<regnode name="autorouterPref" isopaque="yes">
+					<value>Nw</value>
+				</regnode>
+				<attribute kind="IsPort" status="meta">
+					<value>false</value>
+				</attribute>
+				<attribute kind="Rolename" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="Cardinality" status="meta">
+					<value>0..*</value>
+				</attribute>
+				<connpoint role="dst" target="id-0066-00000022"/>
+				<connpoint role="src" target="id-0066-00000003"/>
+			</connection>
+			<connection id="id-0068-00000056" kind="Containment" role="Containment" relid="0x77">
+				<name>Containment</name>
+				<regnode name="autorouterPref" isopaque="yes">
+					<value>Ne</value>
+				</regnode>
+				<attribute kind="IsPort" status="meta">
+					<value>false</value>
+				</attribute>
+				<attribute kind="Rolename" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="Cardinality" status="meta">
+					<value>0..*</value>
+				</attribute>
+				<connpoint role="dst" target="id-0066-00000022"/>
+				<connpoint role="src" target="id-0066-00000004"/>
+			</connection>
+			<connection id="id-0068-00000055" kind="Containment" role="Containment" relid="0x76">
+				<name>Containment</name>
+				<regnode name="autorouterPref" isopaque="yes">
+					<value>Ns</value>
+				</regnode>
+				<attribute kind="IsPort">
+					<value>true</value>
+				</attribute>
+				<attribute kind="Rolename" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="Cardinality" status="meta">
+					<value>0..*</value>
+				</attribute>
+				<connpoint role="dst" target="id-0066-00000022"/>
+				<connpoint role="src" target="id-0066-0000000e"/>
+			</connection>
+			<connection id="id-0068-00000054" kind="Containment" role="Containment" relid="0x75">
+				<name>Containment</name>
+				<regnode name="autorouterPref" isopaque="yes">
+					<value>Ns</value>
+				</regnode>
+				<attribute kind="IsPort" status="meta">
+					<value>false</value>
+				</attribute>
+				<attribute kind="Rolename" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="Cardinality" status="meta">
+					<value>0..*</value>
+				</attribute>
+				<connpoint role="dst" target="id-0066-00000002"/>
+				<connpoint role="src" target="id-0066-00000022"/>
+			</connection>
+			<connection id="id-0068-0000001c" kind="Containment" role="Containment" relid="0x34">
+				<name>Containment</name>
+				<regnode name="autorouterPref" isopaque="yes">
+					<value>Ns</value>
+				</regnode>
+				<attribute kind="IsPort" status="meta">
+					<value>false</value>
+				</attribute>
+				<attribute kind="Rolename" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="Cardinality" status="meta">
+					<value>0..*</value>
+				</attribute>
+				<connpoint role="dst" target="id-0066-00000002"/>
+				<connpoint role="src" target="id-0066-0000001b"/>
+			</connection>
+			<connection id="id-0068-0000001a" kind="AssociationClass" role="AssociationClass" relid="0x32">
+				<name>AssociationClass</name>
+				<regnode name="autorouterPref" isopaque="yes">
+					<value>S</value>
+				</regnode>
+				<connpoint role="dst" target="id-0066-00000019"/>
+				<connpoint role="src" target="id-0066-0000001a"/>
+			</connection>
+			<connection id="id-0068-00000019" kind="AssociationClass" role="AssociationClass" relid="0x31">
+				<name>AssociationClass</name>
+				<regnode name="autorouterPref" isopaque="yes">
+					<value>n</value>
+				</regnode>
+				<connpoint role="dst" target="id-0066-0000001b"/>
+				<connpoint role="src" target="id-0066-00000018"/>
+			</connection>
+			<connection id="id-0068-00000018" kind="ConnectorToDestination" role="ConnectorToDestination" relid="0x2e">
+				<name>ConnectorToDestination</name>
+				<regnode name="autorouterPref" isopaque="yes">
+					<value>ewE</value>
+				</regnode>
+				<attribute kind="dstRolename" status="meta">
+					<value>dst</value>
+				</attribute>
+				<attribute kind="Cardinality" status="meta">
+					<value>0..*</value>
+				</attribute>
+				<connpoint role="dst" target="id-0066-00000006"/>
+				<connpoint role="src" target="id-0066-00000019"/>
+			</connection>
+			<connection id="id-0068-00000017" kind="SourceToConnector" role="SourceToConnector" relid="0x2d">
+				<name>SourceToConnector</name>
+				<regnode name="autorouterPref" isopaque="yes">
+					<value>S</value>
+				</regnode>
+				<attribute kind="srcRolename" status="meta">
+					<value>src</value>
+				</attribute>
+				<attribute kind="Cardinality" status="meta">
+					<value>0..*</value>
+				</attribute>
+				<connpoint role="dst" target="id-0066-00000019"/>
+				<connpoint role="src" target="id-0066-0000000e"/>
+			</connection>
+			<connection id="id-0068-00000016" kind="ConnectorToDestination" role="ConnectorToDestination" relid="0x2c">
+				<name>ConnectorToDestination</name>
+				<regnode name="autorouterPref" isopaque="yes">
+					<value>s</value>
+				</regnode>
+				<attribute kind="dstRolename" status="meta">
+					<value>dst</value>
+				</attribute>
+				<attribute kind="Cardinality" status="meta">
+					<value>0..*</value>
+				</attribute>
+				<connpoint role="dst" target="id-0066-0000000e"/>
+				<connpoint role="src" target="id-0066-00000018"/>
+			</connection>
+			<connection id="id-0068-00000015" kind="SourceToConnector" role="SourceToConnector" relid="0x2b">
+				<name>SourceToConnector</name>
+				<regnode name="autorouterPref" isopaque="yes">
+					<value>W</value>
+				</regnode>
+				<attribute kind="srcRolename" status="meta">
+					<value>src</value>
+				</attribute>
+				<attribute kind="Cardinality" status="meta">
+					<value>0..*</value>
+				</attribute>
+				<connpoint role="dst" target="id-0066-00000018"/>
+				<connpoint role="src" target="id-0066-00000006"/>
+			</connection>
+			<connection id="id-0068-00000014" kind="AssociationClass" role="AssociationClass" relid="0x28">
+				<name>AssociationClass</name>
+				<regnode name="autorouterPref" isopaque="yes">
+					<value>n</value>
+				</regnode>
+				<connpoint role="dst" target="id-0066-0000000a"/>
+				<connpoint role="src" target="id-0066-00000008"/>
+			</connection>
+			<connection id="id-0068-00000013" kind="AssociationClass" role="AssociationClass" relid="0x27">
+				<name>AssociationClass</name>
+				<regnode name="autorouterPref" isopaque="yes">
+					<value>n</value>
+				</regnode>
+				<connpoint role="dst" target="id-0066-00000009"/>
+				<connpoint role="src" target="id-0066-00000007"/>
+			</connection>
+			<connection id="id-0068-00000012" kind="ConnectorToDestination" role="ConnectorToDestination" relid="0x26">
+				<name>ConnectorToDestination</name>
+				<regnode name="autorouterPref" isopaque="yes">
+					<value>e</value>
+				</regnode>
+				<attribute kind="dstRolename" status="meta">
+					<value>dst</value>
+				</attribute>
+				<attribute kind="Cardinality" status="meta">
+					<value>0..*</value>
+				</attribute>
+				<connpoint role="dst" target="id-0066-00000006"/>
+				<connpoint role="src" target="id-0066-00000008"/>
+			</connection>
+			<connection id="id-0068-00000011" kind="SourceToConnector" role="SourceToConnector" relid="0x25">
+				<name>SourceToConnector</name>
+				<regnode name="autorouterPref" isopaque="yes">
+					<value>Ww</value>
+				</regnode>
+				<attribute kind="srcRolename" status="meta">
+					<value>src</value>
+				</attribute>
+				<attribute kind="Cardinality" status="meta">
+					<value>0..*</value>
+				</attribute>
+				<connpoint role="dst" target="id-0066-00000008"/>
+				<connpoint role="src" target="id-0066-00000004"/>
+			</connection>
+			<connection id="id-0068-00000010" kind="ConnectorToDestination" role="ConnectorToDestination" relid="0x24">
+				<name>ConnectorToDestination</name>
+				<regnode name="autorouterPref" isopaque="yes">
+					<value>e</value>
+				</regnode>
+				<attribute kind="dstRolename" status="meta">
+					<value>dst</value>
+				</attribute>
+				<attribute kind="Cardinality" status="meta">
+					<value>0..*</value>
+				</attribute>
+				<connpoint role="dst" target="id-0066-00000003"/>
+				<connpoint role="src" target="id-0066-00000007"/>
+			</connection>
+			<connection id="id-0068-0000000f" kind="SourceToConnector" role="SourceToConnector" relid="0x23">
+				<name>SourceToConnector</name>
+				<regnode name="autorouterPref" isopaque="yes">
+					<value>W</value>
+				</regnode>
+				<attribute kind="srcRolename" status="meta">
+					<value>src</value>
+				</attribute>
+				<attribute kind="Cardinality" status="meta">
+					<value>0..*</value>
+				</attribute>
+				<connpoint role="dst" target="id-0066-00000007"/>
+				<connpoint role="src" target="id-0066-00000006"/>
+			</connection>
+			<atom id="id-0066-00000031" kind="Atom" role="Atom" relid="0xa0">
+				<name>DispatchModule</name>
+				<regnode name="MetaRef" isopaque="yes">
+					<value>1152</value>
+					<regnode name="Event_Channel">
+						<value></value>
+						<regnode name="DispatchModule" isopaque="yes">
+							<value>1153</value>
+							<regnode name="Connectivity" isopaque="yes">
+								<value>1154</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</regnode>
+				<regnode name="PrimaryAspects">
+					<value></value>
+					<regnode name="Event_Channel:DispatchModule">
+						<value></value>
+						<regnode name="Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+					</regnode>
+				</regnode>
+				<regnode name="PartRegs">
+					<value></value>
+					<regnode name="ClassDiagram">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>772,548</value>
+						</regnode>
+					</regnode>
+					<regnode name="Visualization">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>772,548</value>
+						</regnode>
+					</regnode>
+					<regnode name="Constraints">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>772,548</value>
+						</regnode>
+					</regnode>
+					<regnode name="Attributes">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>772,548</value>
+						</regnode>
+					</regnode>
+				</regnode>
+				<attribute kind="IsAbstract" status="meta">
+					<value>false</value>
+				</attribute>
+				<attribute kind="InRootFolder" status="meta">
+					<value>false</value>
+				</attribute>
+				<attribute kind="GeneralPreferences" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="DisplayedName" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="IsTypeShown" status="meta">
+					<value>false</value>
+				</attribute>
+				<attribute kind="Icon" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="IsHotspotEnabled" status="meta">
+					<value>true</value>
+				</attribute>
+				<attribute kind="PortIcon" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="NameWrapNum" status="meta">
+					<value>0</value>
+				</attribute>
+				<attribute kind="SubTypeIcon" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="NamePosition" status="meta">
+					<value>4</value>
+				</attribute>
+				<attribute kind="IsNameEnabled" status="meta">
+					<value>true</value>
+				</attribute>
+				<attribute kind="InstanceIcon" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="Decorator" status="meta">
+					<value></value>
+				</attribute>
+			</atom>
+			<atom id="id-0066-00000030" kind="Connection" role="Connection" relid="0x93">
+				<name>Supplier_Event_Typing</name>
+				<regnode name="PrimaryAspects">
+					<value></value>
+					<regnode name="Site:Supplier_Event_Typing">
+						<value></value>
+						<regnode name="Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+					</regnode>
+				</regnode>
+				<regnode name="MetaRef" isopaque="yes">
+					<value>1129</value>
+					<regnode name="Site">
+						<value></value>
+						<regnode name="Supplier_Event_Typing" isopaque="yes">
+							<value>1134</value>
+							<regnode name="Connectivity" isopaque="yes">
+								<value>1151</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</regnode>
+				<regnode name="PartRegs">
+					<value></value>
+					<regnode name="ClassDiagram">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>946,629</value>
+						</regnode>
+					</regnode>
+					<regnode name="Visualization">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>926,716</value>
+						</regnode>
+					</regnode>
+					<regnode name="Constraints">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>926,716</value>
+						</regnode>
+					</regnode>
+					<regnode name="Attributes">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>926,716</value>
+						</regnode>
+					</regnode>
+				</regnode>
+				<attribute kind="IsAbstract" status="meta">
+					<value>false</value>
+				</attribute>
+				<attribute kind="InRootFolder" status="meta">
+					<value>false</value>
+				</attribute>
+				<attribute kind="GeneralPreferences" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="DisplayedName" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="NamePosition" status="meta">
+					<value>4</value>
+				</attribute>
+				<attribute kind="Color" status="meta">
+					<value>0x000000</value>
+				</attribute>
+				<attribute kind="ConnLineType">
+					<value>dash</value>
+				</attribute>
+				<attribute kind="ConnLineStart" status="meta">
+					<value>butt</value>
+				</attribute>
+				<attribute kind="ConnLineEnd" status="meta">
+					<value>butt</value>
+				</attribute>
+				<attribute kind="SrcAttrLabel1" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="SrcAttrLabel2" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="DstAttrLabel1" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="DstAttrLabel2" status="meta">
+					<value></value>
+				</attribute>
+			</atom>
+			<atom id="id-0066-0000002f" kind="Connection" role="Connection" relid="0x92">
+				<name>Consumer_Event_Typing</name>
+				<regnode name="PrimaryAspects">
+					<value></value>
+					<regnode name="Site:Consumer_Event_Typing">
+						<value></value>
+						<regnode name="Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+					</regnode>
+				</regnode>
+				<regnode name="MetaRef" isopaque="yes">
+					<value>1128</value>
+					<regnode name="Site">
+						<value></value>
+						<regnode name="Consumer_Event_Typing" isopaque="yes">
+							<value>1132</value>
+							<regnode name="Connectivity" isopaque="yes">
+								<value>1149</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</regnode>
+				<regnode name="PartRegs">
+					<value></value>
+					<regnode name="ClassDiagram">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>106,664</value>
+						</regnode>
+					</regnode>
+					<regnode name="Visualization">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>113,769</value>
+						</regnode>
+					</regnode>
+					<regnode name="Constraints">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>156,730</value>
+						</regnode>
+					</regnode>
+					<regnode name="Attributes">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>156,730</value>
+						</regnode>
+					</regnode>
+				</regnode>
+				<attribute kind="IsAbstract" status="meta">
+					<value>false</value>
+				</attribute>
+				<attribute kind="InRootFolder" status="meta">
+					<value>false</value>
+				</attribute>
+				<attribute kind="GeneralPreferences" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="DisplayedName" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="NamePosition" status="meta">
+					<value>4</value>
+				</attribute>
+				<attribute kind="Color" status="meta">
+					<value>0x000000</value>
+				</attribute>
+				<attribute kind="ConnLineType">
+					<value>dash</value>
+				</attribute>
+				<attribute kind="ConnLineStart" status="meta">
+					<value>butt</value>
+				</attribute>
+				<attribute kind="ConnLineEnd" status="meta">
+					<value>butt</value>
+				</attribute>
+				<attribute kind="SrcAttrLabel1" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="SrcAttrLabel2" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="DstAttrLabel1" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="DstAttrLabel2" status="meta">
+					<value></value>
+				</attribute>
+			</atom>
+			<atom id="id-0066-0000002e" kind="Connector" role="Connector" relid="0x8d">
+				<name>Connector</name>
+				<regnode name="PartRegs">
+					<value></value>
+					<regnode name="ClassDiagram">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>858,655</value>
+						</regnode>
+					</regnode>
+					<regnode name="Visualization">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>863,730</value>
+						</regnode>
+					</regnode>
+				</regnode>
+			</atom>
+			<atom id="id-0066-0000002d" kind="Connector" role="Connector" relid="0x8c">
+				<name>Connector</name>
+				<regnode name="PartRegs">
+					<value></value>
+					<regnode name="ClassDiagram">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>312,690</value>
+						</regnode>
+					</regnode>
+					<regnode name="Visualization">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>163,681</value>
+						</regnode>
+					</regnode>
+				</regnode>
+			</atom>
+			<atom id="id-0066-0000002c" kind="Reference" role="Reference" relid="0x8b">
+				<name>Event_Type_Ref</name>
+				<regnode name="PrimaryAspects">
+					<value></value>
+					<regnode name="Site:Event_Type_Ref">
+						<value></value>
+						<regnode name="Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+					</regnode>
+				</regnode>
+				<regnode name="KindAspects">
+					<value></value>
+					<regnode name="Site:Event_Type_Ref">
+						<value></value>
+						<regnode name="Connectivity" isopaque="yes">
+							<value>Connectivity</value>
+						</regnode>
+					</regnode>
+				</regnode>
+				<regnode name="MetaRef" isopaque="yes">
+					<value>1127</value>
+					<regnode name="Site">
+						<value></value>
+						<regnode name="Event_Type_Ref" isopaque="yes">
+							<value>1133</value>
+							<regnode name="Connectivity" isopaque="yes">
+								<value>1150</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</regnode>
+				<regnode name="PartRegs">
+					<value></value>
+					<regnode name="ClassDiagram">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>561,699</value>
+						</regnode>
+					</regnode>
+					<regnode name="Visualization">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>142,702</value>
+						</regnode>
+					</regnode>
+					<regnode name="Constraints">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>142,702</value>
+						</regnode>
+					</regnode>
+					<regnode name="Attributes">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>142,702</value>
+						</regnode>
+					</regnode>
+				</regnode>
+				<attribute kind="IsAbstract" status="meta">
+					<value>false</value>
+				</attribute>
+				<attribute kind="InRootFolder" status="meta">
+					<value>false</value>
+				</attribute>
+				<attribute kind="GeneralPreferences" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="DisplayedName" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="IsTypeShown" status="meta">
+					<value>false</value>
+				</attribute>
+				<attribute kind="Icon">
+					<value>EventRef.bmp</value>
+				</attribute>
+				<attribute kind="IsHotspotEnabled" status="meta">
+					<value>true</value>
+				</attribute>
+				<attribute kind="PortIcon" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="NameWrapNum" status="meta">
+					<value>0</value>
+				</attribute>
+				<attribute kind="SubTypeIcon" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="NamePosition" status="meta">
+					<value>4</value>
+				</attribute>
+				<attribute kind="IsNameEnabled" status="meta">
+					<value>true</value>
+				</attribute>
+				<attribute kind="InstanceIcon" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="Decorator" status="meta">
+					<value></value>
+				</attribute>
+			</atom>
+			<atom id="id-0066-00000022" kind="Model" role="Model" relid="0x74">
+				<name>Site</name>
+				<regnode name="PrimaryAspects">
+					<value></value>
+					<regnode name="Federated_EC:Site">
+						<value></value>
+						<regnode name="Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+					</regnode>
+					<regnode name="Federation:Site">
+						<value></value>
+						<regnode name="Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+					</regnode>
+					<regnode name="Gateway_Federation:Site">
+						<value></value>
+						<regnode name="Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+						<regnode name="InSite_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+						<regnode name="Outside_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+					</regnode>
+				</regnode>
+				<regnode name="KindAspects">
+					<value></value>
+					<regnode name="Federated_EC:Site">
+						<value></value>
+						<regnode name="Connectivity" isopaque="yes">
+							<value>Connectivity</value>
+						</regnode>
+					</regnode>
+					<regnode name="Federation:Site">
+						<value></value>
+						<regnode name="Connectivity" isopaque="yes">
+							<value>Connectivity</value>
+						</regnode>
+					</regnode>
+					<regnode name="Gateway_Federation:Site">
+						<value></value>
+						<regnode name="Connectivity" isopaque="yes">
+							<value>Connectivity</value>
+						</regnode>
+						<regnode name="InSite_Connectivity" isopaque="yes">
+							<value>InSite_Connectivity</value>
+						</regnode>
+						<regnode name="Outside_Connectivity" isopaque="yes">
+							<value>Outside_Connectivity</value>
+						</regnode>
+					</regnode>
+				</regnode>
+				<regnode name="MetaRef" isopaque="yes">
+					<value>1095</value>
+					<regnode name="Federated_EC">
+						<value></value>
+						<regnode name="Site" isopaque="yes">
+							<value>1161</value>
+							<regnode name="Connectivity" isopaque="yes">
+								<value>1164</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<regnode name="Federation">
+						<value></value>
+						<regnode name="Site" isopaque="yes">
+							<value>1156</value>
+							<regnode name="Connectivity" isopaque="yes">
+								<value>1159</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<regnode name="Gateway_Federation">
+						<value></value>
+						<regnode name="Site" isopaque="yes">
+							<value>1094</value>
+							<regnode name="Connectivity" isopaque="yes">
+								<value>1131</value>
+							</regnode>
+							<regnode name="InSite_Connectivity" isopaque="yes">
+								<value>1123</value>
+							</regnode>
+							<regnode name="Outside_Connectivity" isopaque="yes">
+								<value>1103</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</regnode>
+				<regnode name="PartRegs">
+					<value></value>
+					<regnode name="ClassDiagram">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>575,167</value>
+						</regnode>
+					</regnode>
+					<regnode name="Visualization">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>701,111</value>
+						</regnode>
+					</regnode>
+					<regnode name="Constraints">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>687,195</value>
+						</regnode>
+					</regnode>
+					<regnode name="Attributes">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>687,195</value>
+						</regnode>
+					</regnode>
+				</regnode>
+				<attribute kind="IsAbstract" status="meta">
+					<value>false</value>
+				</attribute>
+				<attribute kind="InRootFolder" status="meta">
+					<value>false</value>
+				</attribute>
+				<attribute kind="GeneralPreferences" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="DisplayedName" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="IsTypeShown" status="meta">
+					<value>false</value>
+				</attribute>
+				<attribute kind="Icon" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="IsHotspotEnabled" status="meta">
+					<value>true</value>
+				</attribute>
+				<attribute kind="PortIcon" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="NameWrapNum" status="meta">
+					<value>0</value>
+				</attribute>
+				<attribute kind="SubTypeIcon" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="NamePosition" status="meta">
+					<value>4</value>
+				</attribute>
+				<attribute kind="IsNameEnabled" status="meta">
+					<value>true</value>
+				</attribute>
+				<attribute kind="InstanceIcon" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="Decorator" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="IsTypeInfoShown" status="meta">
+					<value>true</value>
+				</attribute>
+			</atom>
+			<atom id="id-0066-0000001b" kind="Connection" role="Connection" relid="0x30">
+				<name>EC_RemoteGateway</name>
+				<regnode name="MetaRef" isopaque="yes">
+					<value>1010</value>
+					<regnode name="Federated_EC">
+						<value></value>
+						<regnode name="EC_RemoteGateway" isopaque="yes">
+							<value>1160</value>
+							<regnode name="Connectivity" isopaque="yes">
+								<value>1163</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<regnode name="Federation">
+						<value></value>
+						<regnode name="EC_RemoteGateway" isopaque="yes">
+							<value>1155</value>
+							<regnode name="Connectivity" isopaque="yes">
+								<value>1158</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<regnode name="Gateway_Federation">
+						<value></value>
+						<regnode name="EC_RemoteGateway" isopaque="yes">
+							<value>1019</value>
+							<regnode name="Connectivity" isopaque="yes">
+								<value>1130</value>
+							</regnode>
+							<regnode name="InSite_Connectivity" isopaque="yes">
+								<value>1122</value>
+							</regnode>
+							<regnode name="Outside_Connectivity" isopaque="yes">
+								<value>1101</value>
+							</regnode>
+							<regnode name="Gateway_Connectivity" isopaque="yes">
+								<value>1023</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</regnode>
+				<regnode name="PrimaryAspects">
+					<value></value>
+					<regnode name="Federated_EC:EC_RemoteGateway">
+						<value></value>
+						<regnode name="Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+					</regnode>
+					<regnode name="Federation:EC_RemoteGateway">
+						<value></value>
+						<regnode name="Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+					</regnode>
+					<regnode name="Gateway_Federation:EC_RemoteGateway">
+						<value></value>
+						<regnode name="Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+						<regnode name="InSite_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+						<regnode name="Outside_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+						<regnode name="Gateway_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+					</regnode>
+				</regnode>
+				<regnode name="PartRegs">
+					<value></value>
+					<regnode name="ClassDiagram">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>281,363</value>
+						</regnode>
+					</regnode>
+					<regnode name="Visualization">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>358,636</value>
+						</regnode>
+					</regnode>
+					<regnode name="Constraints">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>295,573</value>
+						</regnode>
+					</regnode>
+					<regnode name="Attributes">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>309,489</value>
+						</regnode>
+					</regnode>
+				</regnode>
+				<attribute kind="IsAbstract" status="meta">
+					<value>false</value>
+				</attribute>
+				<attribute kind="InRootFolder" status="meta">
+					<value>false</value>
+				</attribute>
+				<attribute kind="GeneralPreferences" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="DisplayedName" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="NamePosition" status="meta">
+					<value>4</value>
+				</attribute>
+				<attribute kind="Color" status="meta">
+					<value>0x000000</value>
+				</attribute>
+				<attribute kind="ConnLineType" status="meta">
+					<value>solid</value>
+				</attribute>
+				<attribute kind="ConnLineStart" status="meta">
+					<value>butt</value>
+				</attribute>
+				<attribute kind="ConnLineEnd">
+					<value>arrow</value>
+				</attribute>
+				<attribute kind="SrcAttrLabel1" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="SrcAttrLabel2" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="DstAttrLabel1" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="DstAttrLabel2" status="meta">
+					<value></value>
+				</attribute>
+			</atom>
+			<atom id="id-0066-0000001a" kind="Connection" role="Connection" relid="0x2f">
+				<name>LocalGateway_EC</name>
+				<regnode name="MetaRef" isopaque="yes">
+					<value>1012</value>
+					<regnode name="Site">
+						<value></value>
+						<regnode name="LocalGateway_EC" isopaque="yes">
+							<value>1112</value>
+							<regnode name="Connectivity" isopaque="yes">
+								<value>1140</value>
+							</regnode>
+							<regnode name="Outside_Connectivity" isopaque="yes">
+								<value>1118</value>
+							</regnode>
+							<regnode name="InSite_Connectivity" isopaque="yes">
+								<value>1113</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<regnode name="Gateway_Federation">
+						<value></value>
+						<regnode name="LocalGateway_EC" isopaque="yes">
+							<value>1020</value>
+							<regnode name="Outside_Connectivity" isopaque="yes">
+								<value>1102</value>
+							</regnode>
+							<regnode name="Gateway_Connectivity" isopaque="yes">
+								<value>1024</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</regnode>
+				<regnode name="PrimaryAspects">
+					<value></value>
+					<regnode name="Site:LocalGateway_EC">
+						<value></value>
+						<regnode name="Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+						<regnode name="Outside_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+						<regnode name="InSite_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+					</regnode>
+					<regnode name="Gateway_Federation:LocalGateway_EC">
+						<value></value>
+						<regnode name="Outside_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+						<regnode name="InSite_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+						<regnode name="Gateway_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+					</regnode>
+				</regnode>
+				<regnode name="PartRegs">
+					<value></value>
+					<regnode name="ClassDiagram">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>771,377</value>
+						</regnode>
+					</regnode>
+					<regnode name="Visualization">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>575,559</value>
+						</regnode>
+					</regnode>
+					<regnode name="Constraints">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>450,527</value>
+						</regnode>
+					</regnode>
+					<regnode name="Attributes">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>450,527</value>
+						</regnode>
+					</regnode>
+				</regnode>
+				<attribute kind="IsAbstract" status="meta">
+					<value>false</value>
+				</attribute>
+				<attribute kind="InRootFolder" status="meta">
+					<value>false</value>
+				</attribute>
+				<attribute kind="GeneralPreferences" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="DisplayedName" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="NamePosition" status="meta">
+					<value>4</value>
+				</attribute>
+				<attribute kind="Color" status="meta">
+					<value>0x000000</value>
+				</attribute>
+				<attribute kind="ConnLineType" status="meta">
+					<value>solid</value>
+				</attribute>
+				<attribute kind="ConnLineStart" status="meta">
+					<value>butt</value>
+				</attribute>
+				<attribute kind="ConnLineEnd">
+					<value>arrow</value>
+				</attribute>
+				<attribute kind="SrcAttrLabel1" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="SrcAttrLabel2" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="DstAttrLabel1" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="DstAttrLabel2" status="meta">
+					<value></value>
+				</attribute>
+			</atom>
+			<atom id="id-0066-00000019" kind="Connector" role="Connector" relid="0x2a">
+				<name>Connector</name>
+				<regnode name="PartRegs">
+					<value></value>
+					<regnode name="ClassDiagram">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>718,417</value>
+						</regnode>
+					</regnode>
+					<regnode name="Visualization">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>277,424</value>
+						</regnode>
+					</regnode>
+				</regnode>
+			</atom>
+			<atom id="id-0066-00000018" kind="Connector" role="Connector" relid="0x29">
+				<name>Connector</name>
+				<regnode name="PartRegs">
+					<value></value>
+					<regnode name="ClassDiagram">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>592,417</value>
+						</regnode>
+					</regnode>
+					<regnode name="Visualization">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>193,424</value>
+						</regnode>
+					</regnode>
+				</regnode>
+			</atom>
+			<atom id="id-0066-0000000e" kind="Atom" role="Atom" relid="0xe">
+				<name>CORBA_Gateway</name>
+				<regnode name="MetaRef" isopaque="yes">
+					<value>1001</value>
+					<regnode name="Site">
+						<value></value>
+						<regnode name="CORBA_Gateway" isopaque="yes">
+							<value>1096</value>
+							<regnode name="Connectivity" isopaque="yes">
+								<value>1135</value>
+							</regnode>
+							<regnode name="Outside_Connectivity" isopaque="yes">
+								<value>1116</value>
+							</regnode>
+							<regnode name="InSite_Connectivity" isopaque="yes">
+								<value>1105</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<regnode name="Gateway_Federation">
+						<value></value>
+						<regnode name="CORBA_Gateway" isopaque="yes">
+							<value>1018</value>
+							<regnode name="InSite_Connectivity" isopaque="yes">
+								<value>1120</value>
+							</regnode>
+							<regnode name="Outside_Connectivity" isopaque="yes">
+								<value>1114</value>
+							</regnode>
+							<regnode name="Gateway_Connectivity" isopaque="yes">
+								<value>1022</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</regnode>
+				<regnode name="PrimaryAspects">
+					<value></value>
+					<regnode name="Site:CORBA_Gateway">
+						<value></value>
+						<regnode name="Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+						<regnode name="Outside_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+						<regnode name="InSite_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+						<regnode name="Gateway_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+					</regnode>
+					<regnode name="Gateway_Federation:CORBA_Gateway">
+						<value></value>
+						<regnode name="Outside_Connectivity" isopaque="yes">
+							<value>no</value>
+						</regnode>
+						<regnode name="InSite_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+						<regnode name="Gateway_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+					</regnode>
+				</regnode>
+				<regnode name="PartRegs">
+					<value></value>
+					<regnode name="ClassDiagram">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>603,307</value>
+						</regnode>
+					</regnode>
+					<regnode name="Visualization">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>330,384</value>
+						</regnode>
+					</regnode>
+					<regnode name="Constraints">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>344,335</value>
+						</regnode>
+					</regnode>
+					<regnode name="Attributes">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>344,335</value>
+						</regnode>
+					</regnode>
+				</regnode>
+				<attribute kind="IsAbstract" status="meta">
+					<value>false</value>
+				</attribute>
+				<attribute kind="InRootFolder" status="meta">
+					<value>false</value>
+				</attribute>
+				<attribute kind="GeneralPreferences" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="DisplayedName" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="IsTypeShown" status="meta">
+					<value>false</value>
+				</attribute>
+				<attribute kind="Icon" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="IsHotspotEnabled" status="meta">
+					<value>true</value>
+				</attribute>
+				<attribute kind="PortIcon" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="NameWrapNum" status="meta">
+					<value>0</value>
+				</attribute>
+				<attribute kind="SubTypeIcon" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="NamePosition" status="meta">
+					<value>4</value>
+				</attribute>
+				<attribute kind="IsNameEnabled" status="meta">
+					<value>true</value>
+				</attribute>
+				<attribute kind="InstanceIcon" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="Decorator" status="meta">
+					<value></value>
+				</attribute>
+			</atom>
+			<atom id="id-0066-0000000a" kind="Connection" role="Connection" relid="0xa">
+				<name>Supplier_EC</name>
+				<regnode name="PrimaryAspects">
+					<value></value>
+					<regnode name="Site:Supplier_EC">
+						<value></value>
+						<regnode name="Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+						<regnode name="InSite_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+						<regnode name="Gateway_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+					</regnode>
+					<regnode name="EC_Federation:Supplier_EC">
+						<value></value>
+						<regnode name="Multicast_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+						<regnode name="UDP_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+						<regnode name="Gateway_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+					</regnode>
+					<regnode name="Gateway_Federation:Supplier_EC">
+						<value></value>
+						<regnode name="Multicast_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+						<regnode name="UDP_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+						<regnode name="Gateway_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+					</regnode>
+					<regnode name="Multicast_Federation:Supplier_EC">
+						<value></value>
+						<regnode name="Multicast_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+						<regnode name="UDP_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+						<regnode name="Gateway_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+					</regnode>
+					<regnode name="UDP_Federation:Supplier_EC">
+						<value></value>
+						<regnode name="Multicast_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+						<regnode name="UDP_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+						<regnode name="Gateway_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+					</regnode>
+				</regnode>
+				<regnode name="MetaRef" isopaque="yes">
+					<value>1013</value>
+					<regnode name="Site">
+						<value></value>
+						<regnode name="Supplier_EC" isopaque="yes">
+							<value>1100</value>
+							<regnode name="Connectivity" isopaque="yes">
+								<value>1141</value>
+							</regnode>
+							<regnode name="InSite_Connectivity" isopaque="yes">
+								<value>1109</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<regnode name="UDP_Federation">
+						<value></value>
+						<regnode name="Supplier_EC" isopaque="yes">
+							<value>1052</value>
+							<regnode name="UDP_Connectivity" isopaque="yes">
+								<value>1081</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<regnode name="Multicast_Federation">
+						<value></value>
+						<regnode name="Supplier_EC" isopaque="yes">
+							<value>1046</value>
+							<regnode name="Multicast_Connectivity" isopaque="yes">
+								<value>1074</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<regnode name="Gateway_Federation">
+						<value></value>
+						<regnode name="Supplier_EC" isopaque="yes">
+							<value>1036</value>
+							<regnode name="Gateway_Connectivity" isopaque="yes">
+								<value>1041</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<regnode name="EC_Federation">
+						<value></value>
+						<regnode name="Supplier_EC" isopaque="yes">
+							<value>1031</value>
+						</regnode>
+					</regnode>
+				</regnode>
+				<regnode name="PartRegs">
+					<value></value>
+					<regnode name="ClassDiagram">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>624,594</value>
+						</regnode>
+					</regnode>
+					<regnode name="Visualization">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>652,440</value>
+						</regnode>
+					</regnode>
+					<regnode name="Constraints">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>632,373</value>
+						</regnode>
+					</regnode>
+					<regnode name="Attributes">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>632,373</value>
+						</regnode>
+					</regnode>
+				</regnode>
+				<attribute kind="IsAbstract" status="meta">
+					<value>false</value>
+				</attribute>
+				<attribute kind="InRootFolder" status="meta">
+					<value>false</value>
+				</attribute>
+				<attribute kind="GeneralPreferences" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="DisplayedName" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="NamePosition" status="meta">
+					<value>4</value>
+				</attribute>
+				<attribute kind="Color" status="meta">
+					<value>0x000000</value>
+				</attribute>
+				<attribute kind="ConnLineType" status="meta">
+					<value>solid</value>
+				</attribute>
+				<attribute kind="ConnLineStart" status="meta">
+					<value>butt</value>
+				</attribute>
+				<attribute kind="ConnLineEnd">
+					<value>arrow</value>
+				</attribute>
+				<attribute kind="SrcAttrLabel1" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="SrcAttrLabel2" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="DstAttrLabel1" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="DstAttrLabel2" status="meta">
+					<value></value>
+				</attribute>
+			</atom>
+			<atom id="id-0066-00000009" kind="Connection" role="Connection" relid="0x9">
+				<name>EC_Consumer</name>
+				<regnode name="PrimaryAspects">
+					<value></value>
+					<regnode name="Site:EC_Consumer">
+						<value></value>
+						<regnode name="Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+						<regnode name="InSite_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+						<regnode name="Gateway_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+					</regnode>
+					<regnode name="EC_Federation:EC_Consumer">
+						<value></value>
+						<regnode name="Multicast_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+						<regnode name="UDP_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+						<regnode name="Gateway_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+					</regnode>
+					<regnode name="Gateway_Federation:EC_Consumer">
+						<value></value>
+						<regnode name="Multicast_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+						<regnode name="UDP_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+						<regnode name="Gateway_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+					</regnode>
+					<regnode name="Multicast_Federation:EC_Consumer">
+						<value></value>
+						<regnode name="Multicast_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+						<regnode name="UDP_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+						<regnode name="Gateway_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+					</regnode>
+					<regnode name="UDP_Federation:EC_Consumer">
+						<value></value>
+						<regnode name="Multicast_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+						<regnode name="UDP_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+						<regnode name="Gateway_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+					</regnode>
+				</regnode>
+				<regnode name="MetaRef" isopaque="yes">
+					<value>1009</value>
+					<regnode name="Site">
+						<value></value>
+						<regnode name="EC_Consumer" isopaque="yes">
+							<value>1097</value>
+							<regnode name="Connectivity" isopaque="yes">
+								<value>1136</value>
+							</regnode>
+							<regnode name="InSite_Connectivity" isopaque="yes">
+								<value>1106</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<regnode name="UDP_Federation">
+						<value></value>
+						<regnode name="EC_Consumer" isopaque="yes">
+							<value>1047</value>
+							<regnode name="UDP_Connectivity" isopaque="yes">
+								<value>1076</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<regnode name="Multicast_Federation">
+						<value></value>
+						<regnode name="EC_Consumer" isopaque="yes">
+							<value>1042</value>
+							<regnode name="Multicast_Connectivity" isopaque="yes">
+								<value>1065</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<regnode name="Gateway_Federation">
+						<value></value>
+						<regnode name="EC_Consumer" isopaque="yes">
+							<value>1032</value>
+							<regnode name="Gateway_Connectivity" isopaque="yes">
+								<value>1037</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<regnode name="EC_Federation">
+						<value></value>
+						<regnode name="EC_Consumer" isopaque="yes">
+							<value>1027</value>
+						</regnode>
+					</regnode>
+				</regnode>
+				<regnode name="PartRegs">
+					<value></value>
+					<regnode name="ClassDiagram">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>393,594</value>
+						</regnode>
+					</regnode>
+					<regnode name="Visualization">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>470,419</value>
+						</regnode>
+					</regnode>
+					<regnode name="Constraints">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>457,366</value>
+						</regnode>
+					</regnode>
+					<regnode name="Attributes">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>457,366</value>
+						</regnode>
+					</regnode>
+				</regnode>
+				<attribute kind="IsAbstract" status="meta">
+					<value>false</value>
+				</attribute>
+				<attribute kind="InRootFolder" status="meta">
+					<value>false</value>
+				</attribute>
+				<attribute kind="GeneralPreferences" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="DisplayedName" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="NamePosition" status="meta">
+					<value>4</value>
+				</attribute>
+				<attribute kind="Color" status="meta">
+					<value>0x000000</value>
+				</attribute>
+				<attribute kind="ConnLineType" status="meta">
+					<value>solid</value>
+				</attribute>
+				<attribute kind="ConnLineStart" status="meta">
+					<value>butt</value>
+				</attribute>
+				<attribute kind="ConnLineEnd">
+					<value>arrow</value>
+				</attribute>
+				<attribute kind="SrcAttrLabel1" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="SrcAttrLabel2" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="DstAttrLabel1" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="DstAttrLabel2" status="meta">
+					<value></value>
+				</attribute>
+			</atom>
+			<atom id="id-0066-00000008" kind="Connector" role="Connector" relid="0x8">
+				<name>Connector</name>
+				<regnode name="PartRegs">
+					<value></value>
+					<regnode name="ClassDiagram">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>704,564</value>
+						</regnode>
+					</regnode>
+					<regnode name="Visualization">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>660,282</value>
+						</regnode>
+					</regnode>
+				</regnode>
+			</atom>
+			<atom id="id-0066-00000007" kind="Connector" role="Connector" relid="0x7">
+				<name>Connector</name>
+				<regnode name="PartRegs">
+					<value></value>
+					<regnode name="ClassDiagram">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>515,508</value>
+						</regnode>
+					</regnode>
+					<regnode name="Visualization">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>506,289</value>
+						</regnode>
+					</regnode>
+				</regnode>
+			</atom>
+			<atom id="id-0066-00000006" kind="Model" role="Model" relid="0x6">
+				<name>Event_Channel</name>
+				<regnode name="PrimaryAspects">
+					<value></value>
+					<regnode name="Site:Event_Channel">
+						<value></value>
+						<regnode name="Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+						<regnode name="Outside_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+						<regnode name="InSite_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+					</regnode>
+					<regnode name="EC_Federation:Event_Channel">
+						<value></value>
+						<regnode name="Multicast_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+						<regnode name="UDP_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+						<regnode name="Gateway_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+					</regnode>
+					<regnode name="Gateway_Federation:Event_Channel">
+						<value></value>
+						<regnode name="Outside_Connectivity" isopaque="yes">
+							<value>no</value>
+						</regnode>
+						<regnode name="InSite_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+						<regnode name="Multicast_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+						<regnode name="UDP_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+						<regnode name="Gateway_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+					</regnode>
+					<regnode name="Multicast_Federation:Event_Channel">
+						<value></value>
+						<regnode name="Multicast_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+						<regnode name="UDP_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+						<regnode name="Gateway_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+					</regnode>
+					<regnode name="UDP_Federation:Event_Channel">
+						<value></value>
+						<regnode name="Multicast_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+						<regnode name="UDP_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+						<regnode name="Gateway_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+					</regnode>
+				</regnode>
+				<regnode name="KindAspects">
+					<value></value>
+					<regnode name="Site:Event_Channel">
+						<value></value>
+						<regnode name="Connectivity" isopaque="yes">
+							<value>Connectivity</value>
+						</regnode>
+						<regnode name="Outside_Connectivity" isopaque="yes">
+							<value>Outside_Connectivity</value>
+						</regnode>
+						<regnode name="InSite_Connectivity" isopaque="yes">
+							<value>InSite_Connectivity</value>
+						</regnode>
+					</regnode>
+					<regnode name="EC_Federation:Event_Channel">
+						<value></value>
+						<regnode name="Multicast_Connectivity" isopaque="yes">
+							<value>Multicast_Connectivity</value>
+						</regnode>
+						<regnode name="UDP_Connectivity" isopaque="yes">
+							<value>UDP_Connectivity</value>
+						</regnode>
+						<regnode name="Gateway_Connectivity" isopaque="yes">
+							<value>Gateway_Connectivity</value>
+						</regnode>
+					</regnode>
+					<regnode name="Gateway_Federation:Event_Channel">
+						<value></value>
+						<regnode name="Outside_Connectivity" isopaque="yes">
+							<value>Outside_Connectivity</value>
+						</regnode>
+						<regnode name="InSite_Connectivity" isopaque="yes">
+							<value>InSite_Connectivity</value>
+						</regnode>
+						<regnode name="Multicast_Connectivity" isopaque="yes">
+							<value>Multicast_Connectivity</value>
+						</regnode>
+						<regnode name="UDP_Connectivity" isopaque="yes">
+							<value>UDP_Connectivity</value>
+						</regnode>
+						<regnode name="Gateway_Connectivity" isopaque="yes">
+							<value>Gateway_Connectivity</value>
+						</regnode>
+					</regnode>
+					<regnode name="Multicast_Federation:Event_Channel">
+						<value></value>
+						<regnode name="Multicast_Connectivity" isopaque="yes">
+							<value>Multicast_Connectivity</value>
+						</regnode>
+						<regnode name="UDP_Connectivity" isopaque="yes">
+							<value>UDP_Connectivity</value>
+						</regnode>
+						<regnode name="Gateway_Connectivity" isopaque="yes">
+							<value>Gateway_Connectivity</value>
+						</regnode>
+					</regnode>
+					<regnode name="UDP_Federation:Event_Channel">
+						<value></value>
+						<regnode name="Multicast_Connectivity" isopaque="yes">
+							<value>Multicast_Connectivity</value>
+						</regnode>
+						<regnode name="UDP_Connectivity" isopaque="yes">
+							<value>UDP_Connectivity</value>
+						</regnode>
+						<regnode name="Gateway_Connectivity" isopaque="yes">
+							<value>Gateway_Connectivity</value>
+						</regnode>
+					</regnode>
+				</regnode>
+				<regnode name="MetaRef" isopaque="yes">
+					<value>1016</value>
+					<regnode name="Site">
+						<value></value>
+						<regnode name="Event_Channel" isopaque="yes">
+							<value>1110</value>
+							<regnode name="Connectivity" isopaque="yes">
+								<value>1137</value>
+							</regnode>
+							<regnode name="Outside_Connectivity" isopaque="yes">
+								<value>1117</value>
+							</regnode>
+							<regnode name="InSite_Connectivity" isopaque="yes">
+								<value>1111</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<regnode name="UDP_Federation">
+						<value></value>
+						<regnode name="Event_Channel" isopaque="yes">
+							<value>1049</value>
+							<regnode name="UDP_Connectivity" isopaque="yes">
+								<value>1078</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<regnode name="Multicast_Federation">
+						<value></value>
+						<regnode name="Event_Channel" isopaque="yes">
+							<value>1043</value>
+							<regnode name="Multicast_Connectivity" isopaque="yes">
+								<value>1066</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<regnode name="Gateway_Federation">
+						<value></value>
+						<regnode name="Event_Channel" isopaque="yes">
+							<value>1033</value>
+							<regnode name="Outside_Connectivity" isopaque="yes">
+								<value>1121</value>
+							</regnode>
+							<regnode name="Gateway_Connectivity" isopaque="yes">
+								<value>1038</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<regnode name="EC_Federation">
+						<value></value>
+						<regnode name="Event_Channel" isopaque="yes">
+							<value>1028</value>
+						</regnode>
+					</regnode>
+				</regnode>
+				<regnode name="PartRegs">
+					<value></value>
+					<regnode name="ClassDiagram">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>568,482</value>
+						</regnode>
+					</regnode>
+					<regnode name="Visualization">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>953,307</value>
+						</regnode>
+					</regnode>
+					<regnode name="Constraints">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>681,268</value>
+						</regnode>
+					</regnode>
+					<regnode name="Attributes">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>681,268</value>
+						</regnode>
+					</regnode>
+				</regnode>
+				<attribute kind="IsAbstract" status="meta">
+					<value>false</value>
+				</attribute>
+				<attribute kind="InRootFolder" status="meta">
+					<value>false</value>
+				</attribute>
+				<attribute kind="GeneralPreferences" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="DisplayedName" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="IsTypeShown" status="meta">
+					<value>false</value>
+				</attribute>
+				<attribute kind="Icon">
+					<value>Port.bmp</value>
+				</attribute>
+				<attribute kind="IsHotspotEnabled" status="meta">
+					<value>true</value>
+				</attribute>
+				<attribute kind="PortIcon">
+					<value>PortSmall.bmp</value>
+				</attribute>
+				<attribute kind="NameWrapNum" status="meta">
+					<value>0</value>
+				</attribute>
+				<attribute kind="SubTypeIcon" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="NamePosition" status="meta">
+					<value>4</value>
+				</attribute>
+				<attribute kind="IsNameEnabled" status="meta">
+					<value>true</value>
+				</attribute>
+				<attribute kind="InstanceIcon" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="Decorator" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="IsTypeInfoShown" status="meta">
+					<value>true</value>
+				</attribute>
+			</atom>
+			<atom id="id-0066-00000004" kind="Atom" role="Atom" relid="0x4">
+				<name>Event_Supplier</name>
+				<regnode name="PrimaryAspects">
+					<value></value>
+					<regnode name="Site:Event_Supplier">
+						<value></value>
+						<regnode name="Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+						<regnode name="InSite_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+						<regnode name="Gateway_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+					</regnode>
+					<regnode name="Multicast_Federation:Event_Supplier">
+						<value></value>
+						<regnode name="Multicast_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+						<regnode name="UDP_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+						<regnode name="Gateway_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+					</regnode>
+					<regnode name="UDP_Federation:Event_Supplier">
+						<value></value>
+						<regnode name="Multicast_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+						<regnode name="UDP_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+						<regnode name="Gateway_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+					</regnode>
+					<regnode name="EC_Federation:Event_Supplier">
+						<value></value>
+						<regnode name="Multicast_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+						<regnode name="UDP_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+						<regnode name="Gateway_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+					</regnode>
+					<regnode name="Gateway_Federation:Event_Supplier">
+						<value></value>
+						<regnode name="Multicast_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+						<regnode name="UDP_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+						<regnode name="Gateway_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+					</regnode>
+				</regnode>
+				<regnode name="MetaRef" isopaque="yes">
+					<value>1003</value>
+					<regnode name="Site">
+						<value></value>
+						<regnode name="Event_Supplier" isopaque="yes">
+							<value>1099</value>
+							<regnode name="Connectivity" isopaque="yes">
+								<value>1139</value>
+							</regnode>
+							<regnode name="InSite_Connectivity" isopaque="yes">
+								<value>1108</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<regnode name="UDP_Federation">
+						<value></value>
+						<regnode name="Event_Supplier" isopaque="yes">
+							<value>1051</value>
+							<regnode name="UDP_Connectivity" isopaque="yes">
+								<value>1080</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<regnode name="Multicast_Federation">
+						<value></value>
+						<regnode name="Event_Supplier" isopaque="yes">
+							<value>1045</value>
+							<regnode name="Multicast_Connectivity" isopaque="yes">
+								<value>1068</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<regnode name="Gateway_Federation">
+						<value></value>
+						<regnode name="Event_Supplier" isopaque="yes">
+							<value>1035</value>
+							<regnode name="Gateway_Connectivity" isopaque="yes">
+								<value>1040</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<regnode name="EC_Federation">
+						<value></value>
+						<regnode name="Event_Supplier" isopaque="yes">
+							<value>1030</value>
+						</regnode>
+					</regnode>
+				</regnode>
+				<regnode name="PartRegs">
+					<value></value>
+					<regnode name="ClassDiagram">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>883,482</value>
+						</regnode>
+					</regnode>
+					<regnode name="Visualization">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>526,251</value>
+						</regnode>
+					</regnode>
+					<regnode name="Constraints">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>527,261</value>
+						</regnode>
+					</regnode>
+					<regnode name="Attributes">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>527,261</value>
+						</regnode>
+					</regnode>
+				</regnode>
+				<attribute kind="IsAbstract" status="meta">
+					<value>false</value>
+				</attribute>
+				<attribute kind="InRootFolder" status="meta">
+					<value>false</value>
+				</attribute>
+				<attribute kind="GeneralPreferences" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="DisplayedName" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="IsTypeShown" status="meta">
+					<value>false</value>
+				</attribute>
+				<attribute kind="Icon">
+					<value>ccm-event-src.bmp</value>
+				</attribute>
+				<attribute kind="IsHotspotEnabled" status="meta">
+					<value>true</value>
+				</attribute>
+				<attribute kind="PortIcon">
+					<value>ccm-event-src-port.BMP</value>
+				</attribute>
+				<attribute kind="NameWrapNum" status="meta">
+					<value>0</value>
+				</attribute>
+				<attribute kind="SubTypeIcon" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="NamePosition" status="meta">
+					<value>4</value>
+				</attribute>
+				<attribute kind="IsNameEnabled" status="meta">
+					<value>true</value>
+				</attribute>
+				<attribute kind="InstanceIcon" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="Decorator" status="meta">
+					<value></value>
+				</attribute>
+			</atom>
+			<atom id="id-0066-00000003" kind="Atom" role="Atom" relid="0x3">
+				<name>Event_Consumer</name>
+				<regnode name="PrimaryAspects">
+					<value></value>
+					<regnode name="Site:Event_Consumer">
+						<value></value>
+						<regnode name="Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+						<regnode name="InSite_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+						<regnode name="Gateway_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+					</regnode>
+					<regnode name="EC_Federation:Event_Consumer">
+						<value></value>
+						<regnode name="Multicast_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+						<regnode name="UDP_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+						<regnode name="Gateway_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+					</regnode>
+					<regnode name="Gateway_Federation:Event_Consumer">
+						<value></value>
+						<regnode name="Multicast_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+						<regnode name="UDP_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+						<regnode name="Gateway_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+					</regnode>
+					<regnode name="Multicast_Federation:Event_Consumer">
+						<value></value>
+						<regnode name="Multicast_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+						<regnode name="UDP_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+						<regnode name="Gateway_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+					</regnode>
+					<regnode name="UDP_Federation:Event_Consumer">
+						<value></value>
+						<regnode name="Multicast_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+						<regnode name="UDP_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+						<regnode name="Gateway_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+					</regnode>
+				</regnode>
+				<regnode name="MetaRef" isopaque="yes">
+					<value>1002</value>
+					<regnode name="Site">
+						<value></value>
+						<regnode name="Event_Consumer" isopaque="yes">
+							<value>1098</value>
+							<regnode name="Connectivity" isopaque="yes">
+								<value>1138</value>
+							</regnode>
+							<regnode name="InSite_Connectivity" isopaque="yes">
+								<value>1107</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<regnode name="UDP_Federation">
+						<value></value>
+						<regnode name="Event_Consumer" isopaque="yes">
+							<value>1050</value>
+							<regnode name="UDP_Connectivity" isopaque="yes">
+								<value>1079</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<regnode name="Multicast_Federation">
+						<value></value>
+						<regnode name="Event_Consumer" isopaque="yes">
+							<value>1044</value>
+							<regnode name="Multicast_Connectivity" isopaque="yes">
+								<value>1067</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<regnode name="Gateway_Federation">
+						<value></value>
+						<regnode name="Event_Consumer" isopaque="yes">
+							<value>1034</value>
+							<regnode name="Gateway_Connectivity" isopaque="yes">
+								<value>1039</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<regnode name="EC_Federation">
+						<value></value>
+						<regnode name="Event_Consumer" isopaque="yes">
+							<value>1029</value>
+						</regnode>
+					</regnode>
+				</regnode>
+				<regnode name="PartRegs">
+					<value></value>
+					<regnode name="ClassDiagram">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>113,517</value>
+						</regnode>
+					</regnode>
+					<regnode name="Visualization">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>323,258</value>
+						</regnode>
+					</regnode>
+					<regnode name="Constraints">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>379,265</value>
+						</regnode>
+					</regnode>
+					<regnode name="Attributes">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>379,265</value>
+						</regnode>
+					</regnode>
+				</regnode>
+				<attribute kind="IsAbstract" status="meta">
+					<value>false</value>
+				</attribute>
+				<attribute kind="InRootFolder" status="meta">
+					<value>false</value>
+				</attribute>
+				<attribute kind="GeneralPreferences" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="DisplayedName" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="IsTypeShown" status="meta">
+					<value>false</value>
+				</attribute>
+				<attribute kind="Icon">
+					<value>ccm-event-sink.bmp</value>
+				</attribute>
+				<attribute kind="IsHotspotEnabled" status="meta">
+					<value>true</value>
+				</attribute>
+				<attribute kind="PortIcon">
+					<value>ccm-event-sink-port.BMP</value>
+				</attribute>
+				<attribute kind="NameWrapNum" status="meta">
+					<value>0</value>
+				</attribute>
+				<attribute kind="SubTypeIcon" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="NamePosition" status="meta">
+					<value>4</value>
+				</attribute>
+				<attribute kind="IsNameEnabled" status="meta">
+					<value>true</value>
+				</attribute>
+				<attribute kind="InstanceIcon" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="Decorator" status="meta">
+					<value></value>
+				</attribute>
+			</atom>
+			<atom id="id-0066-00000002" kind="Model" role="Model" relid="0x2">
+				<name>Federated_EC</name>
+				<regnode name="PrimaryAspects">
+					<value></value>
+					<regnode name="EC_Federation:Gateway_Federation">
+						<value></value>
+						<regnode name="Federation_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+						<regnode name="Gateway_Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+					</regnode>
+				</regnode>
+				<regnode name="KindAspects">
+					<value></value>
+					<regnode name="EC_Federation:Gateway_Federation">
+						<value></value>
+						<regnode name="Federation_Connectivity" isopaque="yes">
+							<value>Federation_Connectivity</value>
+						</regnode>
+						<regnode name="Gateway_Connectivity" isopaque="yes">
+							<value>Gateway_Connectivity</value>
+						</regnode>
+					</regnode>
+				</regnode>
+				<regnode name="MetaRef" isopaque="yes">
+					<value>1017</value>
+					<regnode name="EC_Federation">
+						<value></value>
+						<regnode name="Gateway_Federation" isopaque="yes">
+							<value>1089</value>
+							<regnode name="Federation_Connectivity" isopaque="yes">
+								<value>1092</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</regnode>
+				<regnode name="PartRegs">
+					<value></value>
+					<regnode name="ClassDiagram">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>281,34</value>
+						</regnode>
+					</regnode>
+					<regnode name="Visualization">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>323,83</value>
+						</regnode>
+					</regnode>
+					<regnode name="Constraints">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>373,198</value>
+						</regnode>
+					</regnode>
+					<regnode name="Attributes">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>373,198</value>
+						</regnode>
+					</regnode>
+				</regnode>
+				<attribute kind="IsAbstract" status="meta">
+					<value>false</value>
+				</attribute>
+				<attribute kind="InRootFolder">
+					<value>true</value>
+				</attribute>
+				<attribute kind="GeneralPreferences" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="DisplayedName" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="IsTypeShown" status="meta">
+					<value>false</value>
+				</attribute>
+				<attribute kind="Icon" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="IsHotspotEnabled" status="meta">
+					<value>true</value>
+				</attribute>
+				<attribute kind="PortIcon" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="NameWrapNum" status="meta">
+					<value>0</value>
+				</attribute>
+				<attribute kind="SubTypeIcon" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="NamePosition" status="meta">
+					<value>4</value>
+				</attribute>
+				<attribute kind="IsNameEnabled" status="meta">
+					<value>true</value>
+				</attribute>
+				<attribute kind="InstanceIcon" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="Decorator" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="IsTypeInfoShown" status="meta">
+					<value>true</value>
+				</attribute>
+			</atom>
+			<set id="id-0069-00000005" kind="Aspect" role="Aspect" relid="0x7b" members="id-0066-00000031 id-0067-00000003 id-0066-00000030 id-0066-0000002c id-0066-0000002f id-0066-0000001b id-0066-00000022 id-0066-00000006 id-0066-00000004 id-0066-00000003 id-0066-0000000e id-0066-0000000a id-0066-00000009 id-0066-0000001a">
+				<name>Connectivity</name>
+				<regnode name="MetaRef">
+					<value></value>
+					<regnode name="Federated_EC" isopaque="yes">
+						<value>1162</value>
+					</regnode>
+					<regnode name="Federation" isopaque="yes">
+						<value>1157</value>
+					</regnode>
+					<regnode name="Event_Channel" isopaque="yes">
+						<value>1124</value>
+					</regnode>
+					<regnode name="Gateway_Federation" isopaque="yes">
+						<value>1119</value>
+					</regnode>
+					<regnode name="Site" isopaque="yes">
+						<value>1104</value>
+					</regnode>
+				</regnode>
+				<regnode name="PartRegs">
+					<value></value>
+					<regnode name="Visualization">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>708,811</value>
+						</regnode>
+					</regnode>
+				</regnode>
+				<attribute kind="DisplayedName" status="meta">
+					<value></value>
+				</attribute>
+			</set>
+			<reference id="id-0067-00000003" kind="ModelProxy" role="ModelProxy" relid="0x9d" referred="id-0066-00000025">
+				<name>Event_Type</name>
+				<regnode name="PartRegs">
+					<value></value>
+					<regnode name="Visualization">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>8,13</value>
+						</regnode>
+					</regnode>
+					<regnode name="ClassDiagram">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>876,699</value>
+						</regnode>
+					</regnode>
+				</regnode>
+				<attribute kind="IsAbstract" status="meta">
+					<value>false</value>
+				</attribute>
+				<attribute kind="InRootFolder" status="meta">
+					<value>false</value>
+				</attribute>
+				<attribute kind="GeneralPreferences" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="DisplayedName" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="IsTypeShown" status="meta">
+					<value>false</value>
+				</attribute>
+				<attribute kind="Icon">
+					<value>event.bmp</value>
+				</attribute>
+				<attribute kind="IsHotspotEnabled" status="meta">
+					<value>true</value>
+				</attribute>
+				<attribute kind="PortIcon" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="NameWrapNum" status="meta">
+					<value>0</value>
+				</attribute>
+				<attribute kind="SubTypeIcon" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="NamePosition" status="meta">
+					<value>4</value>
+				</attribute>
+				<attribute kind="IsNameEnabled" status="meta">
+					<value>true</value>
+				</attribute>
+				<attribute kind="InstanceIcon" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="Decorator" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="IsTypeInfoShown" status="meta">
+					<value>true</value>
+				</attribute>
+			</reference>
+		</model>
+		<model id="id-0065-00000003" kind="ParadigmSheet" relid="0x4" childrelidcntr="0x4">
+			<name>Event</name>
+			<attribute kind="AuthorInformation" status="meta">
+				<value></value>
+			</attribute>
+			<attribute kind="VersionInformation" status="meta">
+				<value></value>
+			</attribute>
+			<attribute kind="DisplayedName" status="meta">
+				<value></value>
+			</attribute>
+			<atom id="id-0066-0000002b" kind="FieldAttribute" role="FieldAttribute" relid="0x1">
+				<name>Event_Field_Type</name>
+				<regnode name="MetaRef" isopaque="yes">
+					<value>1125</value>
+				</regnode>
+				<regnode name="PartRegs">
+					<value></value>
+					<regnode name="Attributes">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>456,111</value>
+						</regnode>
+					</regnode>
+				</regnode>
+				<attribute kind="IsViewable" status="meta">
+					<value>true</value>
+				</attribute>
+				<attribute kind="Help" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="GlobalScope" status="meta">
+					<value>true</value>
+				</attribute>
+				<attribute kind="Prompt" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="DataType" status="meta">
+					<value>string</value>
+				</attribute>
+				<attribute kind="FieldDefault" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="Multiline" status="meta">
+					<value>1</value>
+				</attribute>
+			</atom>
+			<atom id="id-0066-00000026" kind="Folder" role="Folder" relid="0x1">
+				<name>Event_TypeS</name>
+				<regnode name="PartRegs" isopaque="yes">
+					<value></value>
+					<regnode name="Attributes" isopaque="yes">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>114,37</value>
+						</regnode>
+					</regnode>
+					<regnode name="Constraints" isopaque="yes">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>114,37</value>
+						</regnode>
+					</regnode>
+					<regnode name="Visualization" isopaque="yes">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>114,37</value>
+						</regnode>
+					</regnode>
+					<regnode name="ClassDiagram" isopaque="yes">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>92,34</value>
+						</regnode>
+					</regnode>
+				</regnode>
+				<regnode name="MetaRef" isopaque="yes">
+					<value>1145</value>
+				</regnode>
+				<attribute kind="InRootFolder" status="meta">
+					<value>true</value>
+				</attribute>
+				<attribute kind="DisplayedName" status="meta">
+					<value></value>
+				</attribute>
+			</atom>
+			<atom id="id-0066-00000025" kind="Model" role="Model" relid="0x2">
+				<name>Event_Type</name>
+				<regnode name="PartRegs" isopaque="yes">
+					<value></value>
+					<regnode name="Attributes" isopaque="yes">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>261,37</value>
+						</regnode>
+					</regnode>
+					<regnode name="Constraints" isopaque="yes">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>261,37</value>
+						</regnode>
+					</regnode>
+					<regnode name="Visualization" isopaque="yes">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>261,37</value>
+						</regnode>
+					</regnode>
+					<regnode name="ClassDiagram" isopaque="yes">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>260,34</value>
+						</regnode>
+					</regnode>
+				</regnode>
+				<regnode name="KindAspects" isopaque="yes">
+					<value></value>
+					<regnode name="Event_Type:Event_Type" isopaque="yes">
+						<value></value>
+						<regnode name="Connectivity" isopaque="yes">
+							<value>Connectivity</value>
+						</regnode>
+						<regnode name="Structure" isopaque="yes">
+							<value>Structure</value>
+						</regnode>
+						<regnode name="Aspect" isopaque="yes">
+							<value>Aspect</value>
+						</regnode>
+					</regnode>
+				</regnode>
+				<regnode name="PrimaryAspects" isopaque="yes">
+					<value></value>
+					<regnode name="Event_Type:Event_Type" isopaque="yes">
+						<value></value>
+						<regnode name="Connectivity" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+						<regnode name="Structure" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+						<regnode name="Aspect" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+					</regnode>
+				</regnode>
+				<regnode name="MetaRef" isopaque="yes">
+					<value>1142</value>
+					<regnode name="Event_Type" isopaque="yes">
+						<value></value>
+						<regnode name="Event_Type" isopaque="yes">
+							<value>1144</value>
+							<regnode name="Structure" isopaque="yes">
+								<value>1148</value>
+							</regnode>
+							<regnode name="Aspect" isopaque="yes">
+								<value></value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</regnode>
+				<attribute kind="IsAbstract" status="meta">
+					<value>false</value>
+				</attribute>
+				<attribute kind="InRootFolder" status="meta">
+					<value>false</value>
+				</attribute>
+				<attribute kind="GeneralPreferences" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="DisplayedName" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="IsTypeShown" status="meta">
+					<value>false</value>
+				</attribute>
+				<attribute kind="Icon">
+					<value>event.bmp</value>
+				</attribute>
+				<attribute kind="IsHotspotEnabled" status="meta">
+					<value>true</value>
+				</attribute>
+				<attribute kind="PortIcon" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="NameWrapNum" status="meta">
+					<value>0</value>
+				</attribute>
+				<attribute kind="SubTypeIcon" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="NamePosition" status="meta">
+					<value>4</value>
+				</attribute>
+				<attribute kind="IsNameEnabled" status="meta">
+					<value>true</value>
+				</attribute>
+				<attribute kind="InstanceIcon" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="Decorator" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="IsTypeInfoShown" status="meta">
+					<value>true</value>
+				</attribute>
+			</atom>
+			<atom id="id-0066-00000024" kind="Atom" role="Atom" relid="0xc">
+				<name>Event_Field_Name</name>
+				<regnode name="PartRegs" isopaque="yes">
+					<value></value>
+					<regnode name="Attributes" isopaque="yes">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>239,111</value>
+						</regnode>
+					</regnode>
+					<regnode name="Constraints" isopaque="yes">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>247,156</value>
+						</regnode>
+					</regnode>
+					<regnode name="Visualization" isopaque="yes">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>246,146</value>
+						</regnode>
+					</regnode>
+					<regnode name="ClassDiagram" isopaque="yes">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>225,138</value>
+						</regnode>
+					</regnode>
+				</regnode>
+				<regnode name="PrimaryAspects" isopaque="yes">
+					<value></value>
+					<regnode name="Event_Type:Atom" isopaque="yes">
+						<value></value>
+						<regnode name="Structure" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+					</regnode>
+					<regnode name="Event_Type:Event_Field_Type" isopaque="yes">
+						<value></value>
+						<regnode name="Structure" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+						<regnode name="Aspect" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+					</regnode>
+					<regnode name="Event_Type:Event_Field_Name" isopaque="yes">
+						<value></value>
+						<regnode name="Structure" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+						<regnode name="Aspect" isopaque="yes">
+							<value>yes</value>
+						</regnode>
+					</regnode>
+				</regnode>
+				<regnode name="MetaRef" isopaque="yes">
+					<value>1126</value>
+					<regnode name="Event_Type" isopaque="yes">
+						<value></value>
+						<regnode name="Atom" isopaque="yes">
+							<value></value>
+							<regnode name="Structure" isopaque="yes">
+								<value></value>
+							</regnode>
+						</regnode>
+						<regnode name="Event_Field_Type" isopaque="yes">
+							<value>1084</value>
+							<regnode name="Structure" isopaque="yes">
+								<value>1085</value>
+							</regnode>
+							<regnode name="Aspect" isopaque="yes">
+								<value></value>
+							</regnode>
+						</regnode>
+						<regnode name="Event_Field_Name" isopaque="yes">
+							<value>1143</value>
+							<regnode name="Aspect" isopaque="yes">
+								<value></value>
+							</regnode>
+							<regnode name="Structure" isopaque="yes">
+								<value>1147</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</regnode>
+				<attribute kind="IsAbstract" status="meta">
+					<value>false</value>
+				</attribute>
+				<attribute kind="InRootFolder" status="meta">
+					<value>false</value>
+				</attribute>
+				<attribute kind="GeneralPreferences" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="DisplayedName" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="IsTypeShown" status="meta">
+					<value>false</value>
+				</attribute>
+				<attribute kind="Icon" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="IsHotspotEnabled" status="meta">
+					<value>true</value>
+				</attribute>
+				<attribute kind="PortIcon" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="NameWrapNum" status="meta">
+					<value>0</value>
+				</attribute>
+				<attribute kind="SubTypeIcon" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="NamePosition" status="meta">
+					<value>4</value>
+				</attribute>
+				<attribute kind="IsNameEnabled" status="meta">
+					<value>true</value>
+				</attribute>
+				<attribute kind="InstanceIcon" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="Decorator" status="meta">
+					<value></value>
+				</attribute>
+			</atom>
+			<set id="id-0069-00000007" kind="Aspect" role="Aspect" relid="0x3" members="id-0066-00000024 id-0066-00000025">
+				<name>Structure</name>
+				<regnode name="MetaRef">
+					<value></value>
+					<regnode name="Event_Type" isopaque="yes">
+						<value>1146</value>
+					</regnode>
+				</regnode>
+				<regnode name="PartRegs">
+					<value></value>
+					<regnode name="Visualization">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>142,303</value>
+						</regnode>
+					</regnode>
+				</regnode>
+				<attribute kind="DisplayedName" status="meta">
+					<value></value>
+				</attribute>
+			</set>
+			<connection id="id-0068-00000081" kind="HasAspect" role="HasAspect" relid="0x4">
+				<name>HasAspect</name>
+				<connpoint role="dst" target="id-0066-00000025"/>
+				<connpoint role="src" target="id-0069-00000007"/>
+			</connection>
+			<connection id="id-0068-00000073" kind="HasAttribute" role="HasAttribute" relid="0x2">
+				<name>HasAttribute</name>
+				<connpoint role="dst" target="id-0066-00000024"/>
+				<connpoint role="src" target="id-0066-0000002b"/>
+			</connection>
+			<connection id="id-0068-0000006b" kind="FolderContainment" role="FolderContainment" relid="0x3">
+				<name>FolderContainment</name>
+				<regnode name="autorouterPref" isopaque="yes">
+					<value>W</value>
+				</regnode>
+				<attribute kind="Cardinality" status="meta">
+					<value>0..*</value>
+				</attribute>
+				<connpoint role="dst" target="id-0066-00000026"/>
+				<connpoint role="src" target="id-0066-00000025"/>
+			</connection>
+			<connection id="id-0068-0000006a" kind="FolderContainment" role="FolderContainment" relid="0x4">
+				<name>FolderContainment</name>
+				<regnode name="autorouterPref" isopaque="yes">
+					<value>E</value>
+				</regnode>
+				<attribute kind="Cardinality" status="meta">
+					<value>0..*</value>
+				</attribute>
+				<connpoint role="src" target="id-0066-00000026"/>
+				<connpoint role="dst" target="id-0066-00000026"/>
+			</connection>
+			<connection id="id-0068-00000069" kind="Containment" role="Containment" relid="0xb">
+				<name>Containment</name>
+				<regnode name="autorouterPref" isopaque="yes">
+					<value>Es</value>
+				</regnode>
+				<attribute kind="IsPort" status="meta">
+					<value>false</value>
+				</attribute>
+				<attribute kind="Rolename" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="Cardinality" status="meta">
+					<value>0..*</value>
+				</attribute>
+				<connpoint role="src" target="id-0066-00000025"/>
+				<connpoint role="dst" target="id-0066-00000025"/>
+			</connection>
+			<connection id="id-0068-00000068" kind="Containment" role="Containment" relid="0xd">
+				<name>Containment</name>
+				<regnode name="autorouterPref" isopaque="yes">
+					<value>Ns</value>
+				</regnode>
+				<attribute kind="IsPort" status="meta">
+					<value>false</value>
+				</attribute>
+				<attribute kind="Rolename" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="Cardinality" status="meta">
+					<value>0..*</value>
+				</attribute>
+				<connpoint role="dst" target="id-0066-00000025"/>
+				<connpoint role="src" target="id-0066-00000024"/>
+			</connection>
+		</model>
+	</folder>
+</project>

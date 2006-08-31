@@ -1,0 +1,7 @@
+// $Id$
+
+project :  cutslib {
+  libs += CUTS_Utils
+
+  after += CUTS_Utils
+}

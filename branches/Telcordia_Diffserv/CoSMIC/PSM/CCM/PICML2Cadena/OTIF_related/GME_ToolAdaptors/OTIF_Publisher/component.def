@@ -1,0 +1,11 @@
+; Interpreter.def : Declares the module parameters.
+
+LIBRARY      "OTIF_Publisher.DLL"
+
+EXPORTS
+	DllCanUnloadNow     PRIVATE
+	DllGetClassObject   PRIVATE
+	DllRegisterServer   PRIVATE
+	DllUnregisterServer	PRIVATE
+
+

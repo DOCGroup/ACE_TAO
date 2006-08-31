@@ -1,0 +1,20 @@
+// The global features file contains the default feature settings.
+// By default, if a feature isn't listed here then it is enabled.
+// If it is listed, then the value assigned to the feature is interpreted
+// as a boolean value.  You really shouldn't have to edit this file except
+// to change the defaults.  If you want to override these values you can do
+// one of two things.
+//
+// 1) Create a default.features in this directory with the features you
+//    want enabled or disabled.
+// 2) Create a feature file anywhere you like with the features you want and
+//    use the -feature_file option to specify where it is located.
+
+// By default we disable these.
+qt            = 0
+zlib          = 0
+mfc           = 1
+rpc           = 0
+wxWindows     = 1
+boost         = 1
+cidl          = 1

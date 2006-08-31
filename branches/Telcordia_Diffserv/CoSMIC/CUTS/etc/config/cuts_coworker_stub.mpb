@@ -1,0 +1,18 @@
+// $Id$
+
+project : cuts_client_dnc {
+  specific (vc6, vc7, vc71, vc8, nmake) {
+    defines += CUTS_HAS_DATABASE
+
+    // -- place all files in a common location
+    libout = ./lib
+    dllout = ./bin
+  } else {
+    // -- place all files in a common location
+    dllout = ./lib
+  }
+
+
+  // -- place all files in a common location
+  libpaths += ./lib
+}

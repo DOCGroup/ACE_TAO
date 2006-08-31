@@ -1,0 +1,61 @@
+///============================================================================
+///
+/// @file       default.features
+///
+/// @brief      Defines features that control project builds.
+///
+/// $Id$
+///
+/// @author     James H. Hill
+///
+///============================================================================
+
+/// @feature unixodbc
+/// Enable this feature if you are using UnixODBC and building the
+/// projects that require database features. This features is only
+/// required by Unix-based platforms because ODBC support is
+/// integrated into Windows-based platforms. If you set this feature
+/// you must also have an environment variable named $UNIXODBC_ROOT,
+/// which points to the root directory of the UnixODBC build. The
+/// project generator will expect include files to be located in
+/// $UNIXODBC_ROOT/include and library files in $UNIXODBC_ROOT/lib.
+
+unixodbc = 0
+
+/// @feature gme
+/// Enable this feature if you are building any GME specific projects for
+/// CUTS, primarily includes the interpreters.
+
+gme = 0
+
+/// @feature mfc
+/// Enable this feature if you are building any projects that require
+/// MFC. If you enable mfc, then it is wise to enable this feature.
+
+mfc = 0
+
+/// @feature udm
+/// Enable this feature if you are building any projects that require
+/// UDM. If you enable mfc, then it is wise to enable this feature.
+/// If you enable this feature, then you must also have an environment
+/// variable named $UDM_PATH.
+
+udm = 0
+
+/// @feature boost
+/// Enable this feature if you are building interpreters that generate
+/// C++ or XML code. If you enable this feature, then you must also have
+/// an environment variable named $BOOST_ROOT. The project generator will
+/// expect to find the include files in $BOOST_ROOT/include and the library
+/// files in $BOOST_ROOT/lib. You can override the locations of the include
+/// and library files by set the environment variables $BOOST_INCLUDE and
+/// $BOOST_LIB, respectively.
+
+boost = 0
+
+///============================================================================
+// DO NOT CHANGE ANYTHING BELOW THIS LINE
+///============================================================================
+
+exceptions = 1
+cidl = 1

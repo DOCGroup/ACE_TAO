@@ -1,0 +1,100 @@
+<html>
+<head>
+  <!-- $Id$ -->
+  <title>Database Support for CUTS</title>
+</head>
+<body>
+<h1>Database Support for CUTS</h1>
+<hr />
+
+<h2>System Requirements</h2>
+<p>The following are the miminal system requirements for installing database support
+for CUTS.</p>
+
+<ul>
+  <li><a title="MySQL 5.0" href="http://dev.mysql.com/downloads/mysql/5.0.html">MySQL 5.0</a></li>
+</ul>
+
+<b>Windows Environment(s)</b>
+<ul><li><a title="MySQL Connector/ODBC 3.51" 
+           href="http://dev.mysql.com/downloads/connector/odbc/3.51.html">MySQL Connector/ODBC 3.51</a></li>
+</ul>
+
+<b>Linux/Unix Environment(s)</b>
+<ul>
+  <li>UnixODBC</li>    
+</ul>
+
+<hr />
+
+<h2>Installing Database and Drivers</h2>
+<h3>Installing MySQL 5.0</h3>
+<p>There are no special requirements for installing MySQL 5.0. However, we do require you to remember
+the <b>username</b> and <b>password</b> for <u>root</u> access. If you do not remember these, then you will not be able
+to install the CUTS database.</p>
+
+<h3>Installing MySQL Connector/ODBC 3.51</h3>
+<p>There are no special requirements for installing MySQL Connector/ODBC 3.51 Downloads. Just follow
+the instructions that come with the driver.</p>
+
+<h3>Installing UnixODBC</h3>
+<p>Coming soon...</p>
+
+<hr />
+
+<h2>Installing the CUTS Database</h2>
+<p>The following steps are necessary for installing the CUTS database. We are assuming you have successfully
+installed MySQL 5.0. The installation scripts are located in <code>$CUTS_ROOT/SQL</code>.</p>
+
+<ol>
+  <li><code>%> mysql --user=root [--password=&lt;root-password&gt;] < CUTS-create.sql</code></li>
+  <li><code>%> mysql --user=root [--password=&lt;root-password&gt;] < CUTS-procs.sql</code></li>
+</ol>
+
+<hr />
+
+<h2>Configuring CUTS Data Source Name (DSN)</h2>
+<p>CUTS uses Data Source Names (DSNs) to communicate with its database. The following are steps for
+configuring the DSN for your platform.</p>
+
+<h3>Windows Environment(s)</h3>
+<ol>
+  <li>Open the <b>Data Sources (ODBC)</b> tool. On Windows 2000 and above, it's located in: 
+  <b>Control Panel | Adminstrative Tools | Data Sources (ODBC)</b></li>
+
+  <li>In the <b>User DSN</b> tab, select <b>Add..</b>. If you want to make the DSN system-wide, do this
+  under the <b>System DSN</b> tab.</li>
+
+  <li>Scroll down the listing, select <b>MySQL ODBC 3.51 Driver</b>, and click the
+  <b>Finish</b> button.</li>
+
+  <li>In the <b>Login</b> tab fill in the following table:
+
+  <table cellpadding="2" cellspacing="2">
+    <tr><td>Data Source Name: </td><td>CUTS</td></tr>
+    <tr><td>Description: </td><td>CUTS Performance Metrics Database</td></tr>
+    <tr><td>User: </td><td>cuts</td></tr>
+    <tr><td>Password: </td><td>cuts</td></tr>
+    <tr><td>Database: </td><td>cuts</td></tr>
+    </table></li>
+    
+  <li>Test the connection by clicking the <b>Test</b> button.</li>
+  <li>Click the <b>OK</b> button to finish and exit.</li>
+</ol>
+
+<h3>Linux/Unix Environment(s)</h3>
+<p>Coming soon...</p>
+
+<hr />
+
+<h2>Frequently Asked Questions</h2>
+
+<hr />
+<p>If you are experiencing any problems with installing the database support, please contact 
+<a href="mailto:hillj@isis.vanderbilt.edu?subject=CUTS Database Support Help">James H. Hill</a>. We will be
+sure to update this document to reflect any problems experienced.</p>
+
+<address>Last updated: $Date$
+</address>
+</body>
+</html>

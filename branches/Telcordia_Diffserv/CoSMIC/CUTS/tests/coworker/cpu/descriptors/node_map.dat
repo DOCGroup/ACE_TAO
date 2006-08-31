@@ -1,0 +1,5 @@
+Alpha    corbaloc:iiop:localhost:10000/NodeManager
+Bravo    corbaloc:iiop:localhost:10001/NodeManager
+Charlie  corbaloc:iiop:localhost:10002/NodeManager
+Delta    corbaloc:iiop:localhost:10003/NodeManager
+Echo     corbaloc:iiop:localhost:10004/NodeManager

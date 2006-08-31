@@ -1,0 +1,6 @@
+workspace {
+  cmdline += -feature_file default.features
+  CoSMIC.mwc
+  CUTS/CUTS_Release.mwc
+  Installer/RegisterParadigm/RegisterParadigm.mpc
+}

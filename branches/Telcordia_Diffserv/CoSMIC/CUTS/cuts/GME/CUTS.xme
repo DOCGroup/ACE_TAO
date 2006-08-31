@@ -1,0 +1,2478 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE project SYSTEM "mga.dtd">
+
+<project guid="{8EEFF385-F29B-419E-9007-E9B1A315A864}" cdate="Sat Apr 22 01:25:04 2006" mdate="Sat Apr 22 01:25:04 2006" version="" metaguid="{50E32EC2-6078-40AF-85B9-C1F0F865AFFC}" metaversion="" metaname="PICML">
+	<name>CUTS</name>
+	<comment></comment>
+	<author></author>
+	<folder id="id-006a-00000001" relid="0x1" childrelidcntr="0x5" kind="RootFolder">
+		<name>CUTS</name>
+		<folder id="id-006a-00000002" relid="0x5" childrelidcntr="0x3" kind="WorkerLibraries">
+			<name>CUTS_WorkerLibraries</name>
+			<model id="id-0065-00000001" kind="WorkerLibrary" relid="0x1" childrelidcntr="0x4">
+				<name>CUTS_CPU_Worker</name>
+				<attribute kind="Location">
+					<value></value>
+				</attribute>
+				<model id="id-0065-00000002" kind="WorkerFile" role="WorkerFile" relid="0x2" childrelidcntr="0x2">
+					<name>cuts/CPUWorker</name>
+					<regnode name="PartRegs" status="undefined">
+						<value></value>
+						<regnode name="Behavior" status="undefined">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>90,55</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="Location" status="meta">
+						<value></value>
+					</attribute>
+					<model id="id-0065-00000003" kind="Worker" role="Worker" relid="0x1" childrelidcntr="0x1">
+						<name>CUTS_CPU_Worker</name>
+						<regnode name="PartRegs" status="undefined">
+							<value></value>
+							<regnode name="Aspect" status="undefined">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>103,48</value>
+								</regnode>
+							</regnode>
+							<regnode name="Behavior" status="undefined">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>96,13</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<model id="id-0065-00000004" kind="Action" role="Action" relid="0x1" childrelidcntr="0x0">
+							<name>Run_Processor</name>
+							<regnode name="PartRegs" status="undefined">
+								<value></value>
+								<regnode name="Behavior" status="undefined">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>114,79</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="LogAction" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="Repetitions" status="meta">
+								<value>1</value>
+							</attribute>
+						</model>
+					</model>
+				</model>
+			</model>
+			<model id="id-0065-00000005" kind="WorkerLibrary" relid="0x2" childrelidcntr="0x1">
+				<name>CUTS_Memory_Worker</name>
+				<attribute kind="Location">
+					<value></value>
+				</attribute>
+				<model id="id-0065-00000006" kind="WorkerFile" role="WorkerFile" relid="0x1" childrelidcntr="0x1">
+					<name>cuts/MemoryWorker</name>
+					<regnode name="PartRegs" status="undefined">
+						<value></value>
+						<regnode name="Behavior" status="undefined">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>482,55</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="Location" status="meta">
+						<value></value>
+					</attribute>
+					<model id="id-0065-00000007" kind="Worker" role="Worker" relid="0x1" childrelidcntr="0x2">
+						<name>CUTS_Memory_Worker</name>
+						<regnode name="PartRegs" status="undefined">
+							<value></value>
+							<regnode name="Aspect" status="undefined">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>135,86</value>
+								</regnode>
+							</regnode>
+							<regnode name="Behavior" status="undefined">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>110,27</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<model id="id-0065-00000008" kind="Action" role="Action" relid="0x1" childrelidcntr="0x1">
+							<name>Allocate_Memory</name>
+							<regnode name="PartRegs" status="undefined">
+								<value></value>
+								<regnode name="Behavior" status="undefined">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>78,85</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="LogAction" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="Repetitions" status="meta">
+								<value>1</value>
+							</attribute>
+							<model id="id-0065-00000009" kind="Property" role="Property" relid="0x1" childrelidcntr="0x1">
+								<name>kilobytes</name>
+								<regnode name="PartRegs" status="undefined">
+									<value></value>
+									<regnode name="Behavior" status="undefined">
+										<value></value>
+										<regnode name="Position" isopaque="yes">
+											<value>58,163</value>
+										</regnode>
+									</regnode>
+								</regnode>
+								<attribute kind="DataValue" status="meta">
+									<value></value>
+								</attribute>
+								<reference id="id-0067-00000001" kind="DataType" role="DataType" relid="0x1" referred="id-0066-00000008">
+									<name>LongInteger</name>
+									<regnode name="PartRegs" status="undefined">
+										<value></value>
+										<regnode name="Packaging" status="undefined">
+											<value></value>
+											<regnode name="Position" isopaque="yes">
+												<value>123,88</value>
+											</regnode>
+										</regnode>
+									</regnode>
+								</reference>
+							</model>
+						</model>
+						<model id="id-0065-0000000a" kind="Action" role="Action" relid="0x2" childrelidcntr="0x1">
+							<name>Deallocate_Memory</name>
+							<regnode name="PartRegs" status="undefined">
+								<value></value>
+								<regnode name="Behavior" status="undefined">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>274,85</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="LogAction" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="Repetitions" status="meta">
+								<value>1</value>
+							</attribute>
+							<model id="id-0065-0000000b" kind="Property" role="Property" relid="0x1" childrelidcntr="0x1">
+								<name>kilobytes</name>
+								<regnode name="PartRegs" status="undefined">
+									<value></value>
+									<regnode name="Behavior" status="undefined">
+										<value></value>
+										<regnode name="Position" isopaque="yes">
+											<value>86,156</value>
+										</regnode>
+									</regnode>
+								</regnode>
+								<attribute kind="DataValue" status="meta">
+									<value></value>
+								</attribute>
+								<reference id="id-0067-00000002" kind="DataType" role="DataType" relid="0x1" referred="id-0066-00000008">
+									<name>LongInteger</name>
+									<regnode name="PartRegs" status="undefined">
+										<value></value>
+										<regnode name="Packaging" status="undefined">
+											<value></value>
+											<regnode name="Position" isopaque="yes">
+												<value>46,123</value>
+											</regnode>
+										</regnode>
+									</regnode>
+								</reference>
+							</model>
+						</model>
+					</model>
+				</model>
+			</model>
+			<model id="id-0065-0000000c" kind="WorkerLibrary" relid="0x3" childrelidcntr="0x1">
+				<name>CUTS_Database_Worker</name>
+				<attribute kind="Location">
+					<value></value>
+				</attribute>
+				<model id="id-0065-0000000d" kind="WorkerFile" role="WorkerFile" relid="0x1" childrelidcntr="0x1">
+					<name>cuts/DatabaseWorker</name>
+					<regnode name="PartRegs" status="undefined">
+						<value></value>
+						<regnode name="Behavior" status="undefined">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>286,55</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="Location" status="meta">
+						<value></value>
+					</attribute>
+					<model id="id-0065-0000000e" kind="Worker" role="Worker" relid="0x1" childrelidcntr="0x3">
+						<name>CUTS_Database_Worker</name>
+						<regnode name="PartRegs" status="undefined">
+							<value></value>
+							<regnode name="Aspect" status="undefined">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>142,142</value>
+								</regnode>
+							</regnode>
+							<regnode name="Behavior" status="undefined">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>12,13</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<model id="id-0065-0000000f" kind="Action" role="Action" relid="0x1" childrelidcntr="0x2">
+							<name>Process</name>
+							<regnode name="PartRegs" status="undefined">
+								<value></value>
+								<regnode name="Behavior" status="undefined">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>142,205</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="LogAction" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="Repetitions" status="meta">
+								<value>1</value>
+							</attribute>
+							<model id="id-0065-00000010" kind="Property" role="Property" relid="0x1" childrelidcntr="0x1">
+								<name>minsize</name>
+								<regnode name="PartRegs" status="undefined">
+									<value></value>
+									<regnode name="Behavior" status="undefined">
+										<value></value>
+										<regnode name="Position" isopaque="yes">
+											<value>107,191</value>
+										</regnode>
+									</regnode>
+								</regnode>
+								<attribute kind="DataValue">
+									<value>16</value>
+								</attribute>
+								<reference id="id-0067-00000003" kind="DataType" role="DataType" relid="0x1" referred="id-0066-00000008">
+									<name>LongInteger</name>
+									<regnode name="PartRegs" status="undefined">
+										<value></value>
+										<regnode name="Packaging" status="undefined">
+											<value></value>
+											<regnode name="Position" isopaque="yes">
+												<value>200,200</value>
+											</regnode>
+										</regnode>
+									</regnode>
+								</reference>
+							</model>
+							<model id="id-0065-00000011" kind="Property" role="Property" relid="0x2" childrelidcntr="0x1">
+								<name>maxsize</name>
+								<regnode name="PartRegs" status="undefined">
+									<value></value>
+									<regnode name="Behavior" status="undefined">
+										<value></value>
+										<regnode name="Position" isopaque="yes">
+											<value>226,191</value>
+										</regnode>
+									</regnode>
+								</regnode>
+								<attribute kind="DataValue">
+									<value>16</value>
+								</attribute>
+								<reference id="id-0067-00000004" kind="DataType" role="DataType" relid="0x1" referred="id-0066-00000008">
+									<name>LongInteger</name>
+									<regnode name="PartRegs" status="undefined">
+										<value></value>
+										<regnode name="Packaging" status="undefined">
+											<value></value>
+											<regnode name="Position" isopaque="yes">
+												<value>193,165</value>
+											</regnode>
+										</regnode>
+									</regnode>
+								</reference>
+							</model>
+						</model>
+						<model id="id-0065-00000012" kind="Action" role="Action" relid="0x2" childrelidcntr="0x1">
+							<name>Create_Connection</name>
+							<attribute kind="LogAction" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="Repetitions" status="meta">
+								<value>1</value>
+							</attribute>
+							<model id="id-0065-00000013" kind="Property" role="Property" relid="0x1" childrelidcntr="0x1">
+								<name>hostname</name>
+								<attribute kind="DataValue" status="meta">
+									<value></value>
+								</attribute>
+								<reference id="id-0067-00000005" kind="DataType" role="DataType" relid="0x1" referred="id-0066-00000007">
+									<name>String</name>
+									<regnode name="PartRegs" status="undefined">
+										<value></value>
+										<regnode name="Packaging" status="undefined">
+											<value></value>
+											<regnode name="Position" isopaque="yes">
+												<value>144,32</value>
+											</regnode>
+										</regnode>
+									</regnode>
+								</reference>
+							</model>
+						</model>
+						<model id="id-0065-00000014" kind="Action" role="Action" relid="0x3" childrelidcntr="0x0">
+							<name>Destroy_Connection</name>
+							<attribute kind="LogAction" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="Repetitions" status="meta">
+								<value>1</value>
+							</attribute>
+						</model>
+					</model>
+				</model>
+			</model>
+		</folder>
+		<folder id="id-006a-00000003" relid="0x2" childrelidcntr="0x4" kind="InterfaceDefinitions">
+			<name>CUTS_InterfaceDefinitions</name>
+			<model id="id-0065-00000015" kind="File" relid="0x1" childrelidcntr="0x2">
+				<name>cuts/CUTS</name>
+				<attribute kind="PrefixTag" status="meta">
+					<value></value>
+				</attribute>
+				<model id="id-0065-00000016" kind="Package" role="Package" relid="0x3" childrelidcntr="0x15">
+					<name>CUTS</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="InterfaceDefinition" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>111,27</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="PrefixTag" status="meta">
+						<value></value>
+					</attribute>
+					<attribute kind="SpecifyIdTag" status="meta">
+						<value></value>
+					</attribute>
+					<attribute kind="VersionTag" status="meta">
+						<value></value>
+					</attribute>
+					<model id="id-0065-00000017" kind="Event" role="Event" relid="0x1" childrelidcntr="0x1">
+						<name>CUTS_Event</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="InterfaceDefinition" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>59,26</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="PrefixTag" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="SpecifyIdTag" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="VersionTag" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="abstract" status="meta">
+							<value>false</value>
+						</attribute>
+						<reference id="id-0067-00000023" kind="Member" role="Member" relid="0x1" referred="id-0066-00000008">
+							<name>dispatch_time</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="InterfaceDefinition" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>518,318</value>
+									</regnode>
+								</regnode>
+							</regnode>
+						</reference>
+					</model>
+					<model id="id-0065-00000018" kind="Event" role="Event" relid="0x2" childrelidcntr="0x2">
+						<name>Data_Event</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="InterfaceDefinition" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>48,83</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="PrefixTag" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="SpecifyIdTag" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="VersionTag" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="abstract" status="meta">
+							<value>false</value>
+						</attribute>
+						<reference id="id-0067-00000006" kind="Inherits" role="Inherits" relid="0x1" referred="id-0065-00000017">
+							<name>Inherits</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="InterfaceDefinition" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>334,201</value>
+									</regnode>
+								</regnode>
+							</regnode>
+						</reference>
+						<reference id="id-0067-00000024" kind="Member" role="Member" relid="0x3" referred="id-0066-00000007">
+							<name>data</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="InterfaceDefinition" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>1066,667</value>
+									</regnode>
+								</regnode>
+							</regnode>
+						</reference>
+					</model>
+					<model id="id-0065-00000019" kind="Aggregate" role="Aggregate" relid="0x3" childrelidcntr="0x2">
+						<name>CoWorkEr_Info</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="InterfaceDefinition" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>188,27</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="SpecifyIdTag" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="VersionTag" status="meta">
+							<value></value>
+						</attribute>
+						<reference id="id-0067-00000025" kind="Member" role="Member" relid="0x1" referred="id-0066-00000008">
+							<name>id_tag</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="InterfaceDefinition" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>334,201</value>
+									</regnode>
+								</regnode>
+							</regnode>
+						</reference>
+						<reference id="id-0067-00000026" kind="Member" role="Member" relid="0x2" referred="id-0066-00000008">
+							<name>ipaddr</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="InterfaceDefinition" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>700,434</value>
+									</regnode>
+								</regnode>
+							</regnode>
+						</reference>
+					</model>
+					<model id="id-0065-0000001a" kind="Object" role="Object" relid="0x4" childrelidcntr="0x2">
+						<name>Testing_Service</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="InterfaceDefinition" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>62,223</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="PrefixTag" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="SpecifyIdTag" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="VersionTag" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="abstract" status="meta">
+							<value>false</value>
+						</attribute>
+						<attribute kind="local" status="meta">
+							<value>false</value>
+						</attribute>
+						<model id="id-0065-0000001b" kind="TwowayOperation" role="TwowayOperation" relid="0x1" childrelidcntr="0x1">
+							<name>register_component</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="InterfaceDefinition" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>83,55</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="SpecifyIdTag" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="VersionTag" status="meta">
+								<value></value>
+							</attribute>
+							<reference id="id-0067-00000027" kind="ReturnType" role="ReturnType" relid="0x1" referred="id-0065-00000030">
+								<name>ReturnType</name>
+								<regnode name="PartRegs" isopaque="yes">
+									<value></value>
+									<regnode name="InterfaceDefinition" isopaque="yes">
+										<value></value>
+										<regnode name="Position" isopaque="yes">
+											<value>518,318</value>
+										</regnode>
+									</regnode>
+								</regnode>
+							</reference>
+						</model>
+						<model id="id-0065-0000001c" kind="TwowayOperation" role="TwowayOperation" relid="0x2" childrelidcntr="0x0">
+							<name>unregister_component</name>
+							<regnode name="PartRegs" status="undefined">
+								<value></value>
+								<regnode name="InterfaceDefinition" status="undefined">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>86,149</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="SpecifyIdTag" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="VersionTag" status="meta">
+								<value></value>
+							</attribute>
+						</model>
+					</model>
+					<model id="id-0065-0000001d" kind="Aggregate" role="Aggregate" relid="0x5" childrelidcntr="0x1">
+						<name>Path_Element</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="InterfaceDefinition" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>321,27</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="SpecifyIdTag" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="VersionTag" status="meta">
+							<value></value>
+						</attribute>
+						<reference id="id-0067-00000028" kind="Member" role="Member" relid="0x1" referred="id-0066-00000008">
+							<name>UUID</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="InterfaceDefinition" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>518,318</value>
+									</regnode>
+								</regnode>
+							</regnode>
+						</reference>
+					</model>
+					<model id="id-0065-0000001e" kind="Object" role="Object" relid="0x7" childrelidcntr="0x3">
+						<name>Path_Measurement</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="InterfaceDefinition" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>216,223</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="PrefixTag" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="SpecifyIdTag" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="VersionTag" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="abstract" status="meta">
+							<value>false</value>
+						</attribute>
+						<attribute kind="local" status="meta">
+							<value>false</value>
+						</attribute>
+						<model id="id-0065-0000001f" kind="TwowayOperation" role="TwowayOperation" relid="0x1" childrelidcntr="0x2">
+							<name>bind_to_path</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="InterfaceDefinition" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>243,143</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="SpecifyIdTag" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="VersionTag" status="meta">
+								<value></value>
+							</attribute>
+							<reference id="id-0067-00000029" kind="InParameter" role="InParameter" relid="0x3" referred="id-0067-00000007">
+								<name>path</name>
+								<regnode name="PartRegs" isopaque="yes">
+									<value></value>
+									<regnode name="InterfaceDefinition" isopaque="yes">
+										<value></value>
+										<regnode name="Position" isopaque="yes">
+											<value>1066,667</value>
+										</regnode>
+									</regnode>
+								</regnode>
+							</reference>
+							<reference id="id-0067-0000002a" kind="ReturnType" role="ReturnType" relid="0x1" referred="id-0066-00000008">
+								<name>ReturnType</name>
+								<regnode name="PartRegs" isopaque="yes">
+									<value></value>
+									<regnode name="InterfaceDefinition" isopaque="yes">
+										<value></value>
+										<regnode name="Position" isopaque="yes">
+											<value>334,201</value>
+										</regnode>
+									</regnode>
+								</regnode>
+							</reference>
+						</model>
+						<model id="id-0065-00000020" kind="TwowayOperation" role="TwowayOperation" relid="0x2" childrelidcntr="0x1">
+							<name>unbind_to_path</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="InterfaceDefinition" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>518,318</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="SpecifyIdTag" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="VersionTag" status="meta">
+								<value></value>
+							</attribute>
+							<reference id="id-0067-0000002b" kind="InParameter" role="InParameter" relid="0x1" referred="id-0066-00000008">
+								<name>path_id</name>
+								<regnode name="PartRegs" isopaque="yes">
+									<value></value>
+									<regnode name="InterfaceDefinition" isopaque="yes">
+										<value></value>
+										<regnode name="Position" isopaque="yes">
+											<value>518,318</value>
+										</regnode>
+									</regnode>
+								</regnode>
+							</reference>
+						</model>
+						<model id="id-0065-00000021" kind="TwowayOperation" role="TwowayOperation" relid="0x3" childrelidcntr="0x2">
+							<name>execution_time</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="InterfaceDefinition" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>793,493</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="SpecifyIdTag" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="VersionTag" status="meta">
+								<value></value>
+							</attribute>
+							<reference id="id-0067-0000002c" kind="ReturnType" role="ReturnType" relid="0x1" referred="id-0066-00000008">
+								<name>ReturnType</name>
+								<regnode name="PartRegs" isopaque="yes">
+									<value></value>
+									<regnode name="InterfaceDefinition" isopaque="yes">
+										<value></value>
+										<regnode name="Position" isopaque="yes">
+											<value>334,201</value>
+										</regnode>
+									</regnode>
+								</regnode>
+							</reference>
+							<reference id="id-0067-0000002d" kind="InParameter" role="InParameter" relid="0x3" referred="id-0066-00000008">
+								<name>path_id</name>
+								<regnode name="PartRegs" isopaque="yes">
+									<value></value>
+									<regnode name="InterfaceDefinition" isopaque="yes">
+										<value></value>
+										<regnode name="Position" isopaque="yes">
+											<value>1066,667</value>
+										</regnode>
+									</regnode>
+								</regnode>
+							</reference>
+						</model>
+					</model>
+					<model id="id-0065-00000022" kind="Object" role="Object" relid="0x8" childrelidcntr="0x1">
+						<name>BDC_Control_Handle</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="InterfaceDefinition" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>377,223</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="PrefixTag" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="SpecifyIdTag" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="VersionTag" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="abstract" status="meta">
+							<value>false</value>
+						</attribute>
+						<attribute kind="local" status="meta">
+							<value>false</value>
+						</attribute>
+						<model id="id-0065-00000023" kind="TwowayOperation" role="TwowayOperation" relid="0x1" childrelidcntr="0x0">
+							<name>collect_performance_data</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="InterfaceDefinition" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>518,318</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="SpecifyIdTag" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="VersionTag" status="meta">
+								<value></value>
+							</attribute>
+						</model>
+					</model>
+					<model id="id-0065-00000024" kind="Exception" role="Exception" relid="0xe" childrelidcntr="0x0">
+						<name>Registration_Failed</name>
+						<regnode name="PartRegs" status="undefined">
+							<value></value>
+							<regnode name="InterfaceDefinition" status="undefined">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>643,20</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="SpecifyIdTag" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="VersionTag" status="meta">
+							<value></value>
+						</attribute>
+					</model>
+					<model id="id-0065-00000025" kind="Exception" role="Exception" relid="0xf" childrelidcntr="0x0">
+						<name>Registration_Limit</name>
+						<regnode name="PartRegs" status="undefined">
+							<value></value>
+							<regnode name="InterfaceDefinition" status="undefined">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>643,83</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="SpecifyIdTag" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="VersionTag" status="meta">
+							<value></value>
+						</attribute>
+					</model>
+					<model id="id-0065-00000026" kind="Exception" role="Exception" relid="0x10" childrelidcntr="0x0">
+						<name>Operation_Failed</name>
+						<regnode name="PartRegs" status="undefined">
+							<value></value>
+							<regnode name="InterfaceDefinition" status="undefined">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>646,149</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="SpecifyIdTag" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="VersionTag" status="meta">
+							<value></value>
+						</attribute>
+					</model>
+					<model id="id-0065-00000027" kind="Exception" role="Exception" relid="0x11" childrelidcntr="0x0">
+						<name>ID_Not_Found</name>
+						<regnode name="PartRegs" status="undefined">
+							<value></value>
+							<regnode name="InterfaceDefinition" status="undefined">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>646,219</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="SpecifyIdTag" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="VersionTag" status="meta">
+							<value></value>
+						</attribute>
+					</model>
+					<reference id="id-0067-00000007" kind="Collection" role="Collection" relid="0x6" referred="id-0065-0000001d">
+						<name>Path_Sequence</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="InterfaceDefinition" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>321,111</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="SpecifyIdTag" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="VersionTag" status="meta">
+							<value></value>
+						</attribute>
+					</reference>
+				</model>
+				<reference id="id-0067-0000002e" kind="FileRef" role="FileRef" relid="0x1" referred="id-0065-00000028">
+					<name>FileRef</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="InterfaceDefinition" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>34,27</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+			</model>
+			<model id="id-0065-00000028" kind="File" relid="0x2" childrelidcntr="0x1">
+				<name>cuts/performance</name>
+				<attribute kind="PrefixTag" status="meta">
+					<value></value>
+				</attribute>
+				<model id="id-0065-00000029" kind="Package" role="Package" relid="0x1" childrelidcntr="0xc">
+					<name>CUTS</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="InterfaceDefinition" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>55,48</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="PrefixTag" status="meta">
+						<value></value>
+					</attribute>
+					<attribute kind="SpecifyIdTag" status="meta">
+						<value></value>
+					</attribute>
+					<attribute kind="VersionTag" status="meta">
+						<value></value>
+					</attribute>
+					<model id="id-0065-0000002a" kind="Enum" role="Enum" relid="0x1" childrelidcntr="0x6">
+						<name>Sample_Type</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="InterfaceDefinition" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>52,21</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="SpecifyIdTag" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="VersionTag" status="meta">
+							<value></value>
+						</attribute>
+						<atom id="id-0066-00000001" kind="EnumValue" role="EnumValue" relid="0x1">
+							<name>TRANSIT</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="InterfaceDefinition" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>125,68</value>
+									</regnode>
+								</regnode>
+							</regnode>
+						</atom>
+						<atom id="id-0066-00000002" kind="EnumValue" role="EnumValue" relid="0x2">
+							<name>PROCESS</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="InterfaceDefinition" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>282,168</value>
+									</regnode>
+								</regnode>
+							</regnode>
+						</atom>
+						<atom id="id-0066-00000003" kind="EnumValue" role="EnumValue" relid="0x3">
+							<name>CPU</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="InterfaceDefinition" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>439,268</value>
+									</regnode>
+								</regnode>
+							</regnode>
+						</atom>
+						<atom id="id-0066-00000004" kind="EnumValue" role="EnumValue" relid="0x4">
+							<name>DATABASE</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="InterfaceDefinition" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>596,368</value>
+									</regnode>
+								</regnode>
+							</regnode>
+						</atom>
+						<atom id="id-0066-00000005" kind="EnumValue" role="EnumValue" relid="0x5">
+							<name>MEMORY</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="InterfaceDefinition" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>753,468</value>
+									</regnode>
+								</regnode>
+							</regnode>
+						</atom>
+						<atom id="id-0066-00000006" kind="EnumValue" role="EnumValue" relid="0x6">
+							<name>PUBLICATION</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="InterfaceDefinition" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>910,568</value>
+									</regnode>
+								</regnode>
+							</regnode>
+						</atom>
+					</model>
+					<model id="id-0065-0000002b" kind="Aggregate" role="Aggregate" relid="0x3" childrelidcntr="0x3">
+						<name>Time_Info</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="InterfaceDefinition" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>272,20</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="SpecifyIdTag" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="VersionTag" status="meta">
+							<value></value>
+						</attribute>
+						<reference id="id-0067-00000041" kind="Member" role="Member" relid="0x1" referred="id-0067-00000038">
+							<name>total</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="InterfaceDefinition" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>39,25</value>
+									</regnode>
+								</regnode>
+							</regnode>
+						</reference>
+						<reference id="id-0067-00000042" kind="Member" role="Member" relid="0x2" referred="id-0067-00000038">
+							<name>max</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="InterfaceDefinition" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>39,116</value>
+									</regnode>
+								</regnode>
+							</regnode>
+						</reference>
+						<reference id="id-0067-00000043" kind="Member" role="Member" relid="0x3" referred="id-0067-00000038">
+							<name>min</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="InterfaceDefinition" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>39,221</value>
+									</regnode>
+								</regnode>
+							</regnode>
+						</reference>
+					</model>
+					<model id="id-0065-0000002c" kind="Aggregate" role="Aggregate" relid="0x4" childrelidcntr="0x2">
+						<name>Time_Sample</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="InterfaceDefinition" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>272,90</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="SpecifyIdTag" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="VersionTag" status="meta">
+							<value></value>
+						</attribute>
+						<reference id="id-0067-00000008" kind="Member" role="Member" relid="0x2" referred="id-0065-0000002b">
+							<name>time</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="InterfaceDefinition" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>39,123</value>
+									</regnode>
+								</regnode>
+							</regnode>
+						</reference>
+						<reference id="id-0067-0000002f" kind="Member" role="Member" relid="0x1" referred="id-0066-00000008">
+							<name>count</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="InterfaceDefinition" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>39,18</value>
+									</regnode>
+								</regnode>
+							</regnode>
+						</reference>
+					</model>
+					<model id="id-0065-0000002d" kind="Aggregate" role="Aggregate" relid="0x5" childrelidcntr="0x3">
+						<name>Action_Measurement</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="InterfaceDefinition" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>412,20</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="SpecifyIdTag" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="VersionTag" status="meta">
+							<value></value>
+						</attribute>
+						<reference id="id-0067-00000009" kind="Member" role="Member" relid="0x3" referred="id-0065-0000002b">
+							<name>time</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="InterfaceDefinition" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>793,493</value>
+									</regnode>
+								</regnode>
+							</regnode>
+						</reference>
+						<reference id="id-0067-00000030" kind="Member" role="Member" relid="0x1" referred="id-0066-00000008">
+							<name>type</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="InterfaceDefinition" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>243,143</value>
+									</regnode>
+								</regnode>
+							</regnode>
+						</reference>
+						<reference id="id-0067-00000031" kind="Member" role="Member" relid="0x2" referred="id-0066-00000008">
+							<name>reps</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="InterfaceDefinition" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>518,318</value>
+									</regnode>
+								</regnode>
+							</regnode>
+						</reference>
+					</model>
+					<model id="id-0065-0000002e" kind="Aggregate" role="Aggregate" relid="0x7" childrelidcntr="0x2">
+						<name>Worker_Measurement</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="InterfaceDefinition" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>412,90</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="SpecifyIdTag" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="VersionTag" status="meta">
+							<value></value>
+						</attribute>
+						<reference id="id-0067-00000032" kind="Member" role="Member" relid="0x2" referred="id-0067-0000000c">
+							<name>actions</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="InterfaceDefinition" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>700,434</value>
+									</regnode>
+								</regnode>
+							</regnode>
+						</reference>
+						<reference id="id-0067-00000033" kind="Member" role="Member" relid="0x1" referred="id-0066-00000008">
+							<name>type</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="InterfaceDefinition" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>334,201</value>
+									</regnode>
+								</regnode>
+							</regnode>
+						</reference>
+					</model>
+					<model id="id-0065-0000002f" kind="Aggregate" role="Aggregate" relid="0x9" childrelidcntr="0x4">
+						<name>Port_Measurement</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="InterfaceDefinition" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>412,167</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="SpecifyIdTag" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="VersionTag" status="meta">
+							<value></value>
+						</attribute>
+						<reference id="id-0067-0000000a" kind="Member" role="Member" relid="0x2" referred="id-0065-0000002c">
+							<name>transit_time</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="InterfaceDefinition" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>408,248</value>
+									</regnode>
+								</regnode>
+							</regnode>
+						</reference>
+						<reference id="id-0067-0000000b" kind="Member" role="Member" relid="0x3" referred="id-0065-0000002c">
+							<name>process_time</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="InterfaceDefinition" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>628,388</value>
+									</regnode>
+								</regnode>
+							</regnode>
+						</reference>
+						<reference id="id-0067-00000034" kind="Member" role="Member" relid="0x4" referred="id-0067-0000000d">
+							<name>workers</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="InterfaceDefinition" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>848,528</value>
+									</regnode>
+								</regnode>
+							</regnode>
+						</reference>
+						<reference id="id-0067-00000035" kind="Member" role="Member" relid="0x1" referred="id-0066-00000007">
+							<name>port</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="InterfaceDefinition" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>188,108</value>
+									</regnode>
+								</regnode>
+							</regnode>
+						</reference>
+					</model>
+					<model id="id-0065-00000030" kind="Aggregate" role="Aggregate" relid="0xc" childrelidcntr="0x3">
+						<name>Benchmark_Data</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="InterfaceDefinition" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>412,251</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="SpecifyIdTag" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="VersionTag" status="meta">
+							<value></value>
+						</attribute>
+						<reference id="id-0067-00000036" kind="Member" role="Member" relid="0x3" referred="id-0067-0000000e">
+							<name>ports</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="InterfaceDefinition" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>60,256</value>
+									</regnode>
+								</regnode>
+							</regnode>
+						</reference>
+						<reference id="id-0067-00000037" kind="Member" role="Member" relid="0x1" referred="id-0066-00000008">
+							<name>owner</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="InterfaceDefinition" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>60,39</value>
+									</regnode>
+								</regnode>
+							</regnode>
+						</reference>
+						<reference id="id-0067-00000044" kind="Member" role="Member" relid="0x2" referred="id-0067-00000038">
+							<name>timestamp</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="InterfaceDefinition" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>60,151</value>
+									</regnode>
+								</regnode>
+							</regnode>
+						</reference>
+					</model>
+					<reference id="id-0067-0000000c" kind="Collection" role="Collection" relid="0x6" referred="id-0065-0000002d">
+						<name>Action_Measurement_Seq</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="InterfaceDefinition" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>594,20</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="SpecifyIdTag" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="VersionTag" status="meta">
+							<value></value>
+						</attribute>
+					</reference>
+					<reference id="id-0067-0000000d" kind="Collection" role="Collection" relid="0x8" referred="id-0065-0000002e">
+						<name>Worker_Measurement_Seq</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="InterfaceDefinition" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>594,90</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="SpecifyIdTag" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="VersionTag" status="meta">
+							<value></value>
+						</attribute>
+					</reference>
+					<reference id="id-0067-0000000e" kind="Collection" role="Collection" relid="0xa" referred="id-0065-0000002f">
+						<name>Port_Measurement_Seq</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="InterfaceDefinition" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>594,167</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="SpecifyIdTag" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="VersionTag" status="meta">
+							<value></value>
+						</attribute>
+					</reference>
+					<reference id="id-0067-00000038" kind="Alias" role="Alias" relid="0x2" referred="id-0066-00000008">
+						<name>Time_Stamp</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="InterfaceDefinition" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>160,20</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="SpecifyIdTag" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="VersionTag" status="meta">
+							<value></value>
+						</attribute>
+					</reference>
+				</model>
+			</model>
+			<model id="id-0065-00000031" kind="File" relid="0x3" childrelidcntr="0x1">
+				<name>cuts/BDC/Benchmark_Data_Collector</name>
+				<attribute kind="PrefixTag" status="meta">
+					<value></value>
+				</attribute>
+				<model id="id-0065-00000032" kind="Package" role="Package" relid="0x1" childrelidcntr="0x3">
+					<name>CUTS</name>
+					<regnode name="PartRegs" status="undefined">
+						<value></value>
+						<regnode name="InterfaceDefinition" status="undefined">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>76,34</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="PrefixTag" status="meta">
+						<value></value>
+					</attribute>
+					<attribute kind="SpecifyIdTag" status="meta">
+						<value></value>
+					</attribute>
+					<attribute kind="VersionTag" status="meta">
+						<value></value>
+					</attribute>
+					<model id="id-0065-00000033" kind="Component" role="Component" relid="0x1" childrelidcntr="0x7">
+						<name>Benchmark_Data_Collector</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="InterfaceDefinition" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>41,74</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="SpecifyIdTag" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="UUID">
+							<value>5050F959-F68B-47C9-AF7A-019985386975</value>
+						</attribute>
+						<attribute kind="VersionTag" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="label" status="meta">
+							<value></value>
+						</attribute>
+						<model id="id-0065-00000034" kind="Attribute" role="Attribute" relid="0xa" childrelidcntr="0x1">
+							<name>timeout</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="InterfaceDefinition" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>293,349</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="SpecifyIdTag" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="VersionTag" status="meta">
+								<value></value>
+							</attribute>
+							<reference id="id-0067-00000039" kind="AttributeMember" role="AttributeMember" relid="0x1" referred="id-0066-00000008">
+								<name>AttributeMember</name>
+								<regnode name="PartRegs" isopaque="yes">
+									<value></value>
+									<regnode name="InterfaceDefinition" isopaque="yes">
+										<value></value>
+										<regnode name="Position" isopaque="yes">
+											<value>518,318</value>
+										</regnode>
+									</regnode>
+								</regnode>
+							</reference>
+						</model>
+						<reference id="id-0067-0000000f" kind="ProvidedRequestPort" role="ProvidedRequestPort" relid="0x7" referred="id-0065-0000001a">
+							<name>testing_service</name>
+							<regnode name="PartRegs" status="undefined">
+								<value></value>
+								<regnode name="Behavior" status="undefined">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>569,128</value>
+									</regnode>
+								</regnode>
+								<regnode name="InterfaceDefinition" status="undefined">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>69,41</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="SpecifyIdTag" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="VersionTag" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="exclusiveProvider" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="exclusiveUser" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="optional" status="meta">
+								<value>false</value>
+							</attribute>
+						</reference>
+						<reference id="id-0067-00000010" kind="ProvidedRequestPort" role="ProvidedRequestPort" relid="0x3" referred="id-0065-00000022">
+							<name>controls</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="InterfaceDefinition" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>69,174</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="SpecifyIdTag" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="VersionTag" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="exclusiveProvider" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="exclusiveUser" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="optional" status="meta">
+								<value>false</value>
+							</attribute>
+						</reference>
+						<reference id="id-0067-00000011" kind="ProvidedRequestPort" role="ProvidedRequestPort" relid="0x2" referred="id-0065-0000001e">
+							<name>online_measurements</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="InterfaceDefinition" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>69,104</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="SpecifyIdTag" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="VersionTag" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="exclusiveProvider" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="exclusiveUser" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="optional" status="meta">
+								<value>false</value>
+							</attribute>
+						</reference>
+					</model>
+					<model id="id-0065-00000035" kind="ComponentFactory" role="ComponentFactory" relid="0x2" childrelidcntr="0x0">
+						<name>Benchmark_Data_Collector_Home</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="InterfaceDefinition" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>167,209</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="SpecifyIdTag" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="VersionTag" status="meta">
+							<value></value>
+						</attribute>
+					</model>
+					<connection id="id-0068-00000001" kind="ManagesComponent" role="ManagesComponent" relid="0x3">
+						<name>ManagesComponent</name>
+						<regnode name="autorouterPref" isopaque="yes">
+							<value>Ws</value>
+						</regnode>
+						<connpoint role="dst" target="id-0065-00000033"/>
+						<connpoint role="src" target="id-0065-00000035"/>
+					</connection>
+				</model>
+			</model>
+			<model id="id-0065-00000036" kind="File" relid="0x4" childrelidcntr="0x1">
+				<name>cuts/BDC/Benchmark_Data_Collector_Ex</name>
+				<attribute kind="PrefixTag" status="meta">
+					<value></value>
+				</attribute>
+				<model id="id-0065-00000037" kind="Package" role="Package" relid="0x1" childrelidcntr="0x3">
+					<name>CUTS</name>
+					<regnode name="PartRegs" status="undefined">
+						<value></value>
+						<regnode name="InterfaceDefinition" status="undefined">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>205,79</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="PrefixTag" status="meta">
+						<value></value>
+					</attribute>
+					<attribute kind="SpecifyIdTag" status="meta">
+						<value></value>
+					</attribute>
+					<attribute kind="VersionTag" status="meta">
+						<value></value>
+					</attribute>
+					<model id="id-0065-00000038" kind="Component" role="Component" derivedfrom="id-0065-00000033" isinstance="no" isprimary="yes" relid="0x1" childrelidcntr="0x0">
+						<name>Benchmark_Data_Collector_Ex</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="InterfaceDefinition" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>111,95</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="SpecifyIdTag" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="UUID">
+							<value>BD9F4168-FA81-4E39-9635-45E09F08D165</value>
+						</attribute>
+						<attribute kind="VersionTag" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="label" status="meta">
+							<value></value>
+						</attribute>
+						<model id="id-0065-00000039" kind="Attribute" role="Attribute" derivedfrom="id-0065-00000034" isinstance="no" isprimary="no" childrelidcntr="0x0">
+							<name>timeout</name>
+							<attribute kind="SpecifyIdTag" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="VersionTag" status="meta">
+								<value></value>
+							</attribute>
+							<reference id="id-0067-0000003a" kind="AttributeMember" role="AttributeMember" derivedfrom="id-0067-00000039" isinstance="no" isprimary="no" referred="id-0066-00000008" isbound="yes">
+								<name>AttributeMember</name>
+							</reference>
+						</model>
+						<reference id="id-0067-00000012" kind="ProvidedRequestPort" role="ProvidedRequestPort" derivedfrom="id-0067-0000000f" isinstance="no" isprimary="no" referred="id-0065-0000001a" isbound="yes">
+							<name>testing_service</name>
+							<attribute kind="SpecifyIdTag" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="VersionTag" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="exclusiveProvider" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="exclusiveUser" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="optional" status="meta">
+								<value>false</value>
+							</attribute>
+						</reference>
+						<reference id="id-0067-00000013" kind="ProvidedRequestPort" role="ProvidedRequestPort" derivedfrom="id-0067-00000010" isinstance="no" isprimary="no" referred="id-0065-00000022" isbound="yes">
+							<name>controls</name>
+							<attribute kind="SpecifyIdTag" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="VersionTag" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="exclusiveProvider" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="exclusiveUser" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="optional" status="meta">
+								<value>false</value>
+							</attribute>
+						</reference>
+						<reference id="id-0067-00000014" kind="ProvidedRequestPort" role="ProvidedRequestPort" derivedfrom="id-0067-00000011" isinstance="no" isprimary="no" referred="id-0065-0000001e" isbound="yes">
+							<name>online_measurements</name>
+							<attribute kind="SpecifyIdTag" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="VersionTag" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="exclusiveProvider" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="exclusiveUser" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="optional" status="meta">
+								<value>false</value>
+							</attribute>
+						</reference>
+					</model>
+					<model id="id-0065-0000003a" kind="ComponentFactory" role="ComponentFactory" relid="0x2" childrelidcntr="0x0">
+						<name>Benchmark_Data_Collector_Ex_Home</name>
+						<regnode name="PartRegs" status="undefined">
+							<value></value>
+							<regnode name="InterfaceDefinition" status="undefined">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>310,261</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="SpecifyIdTag" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="VersionTag" status="meta">
+							<value></value>
+						</attribute>
+					</model>
+					<connection id="id-0068-00000002" kind="ManagesComponent" role="ManagesComponent" relid="0x3">
+						<name>ManagesComponent</name>
+						<regnode name="autorouterPref" isopaque="yes">
+							<value>Ws</value>
+						</regnode>
+						<connpoint role="dst" target="id-0065-00000038"/>
+						<connpoint role="src" target="id-0065-0000003a"/>
+					</connection>
+				</model>
+			</model>
+		</folder>
+		<folder id="id-006a-00000004" relid="0x1" childrelidcntr="0xb" kind="PredefinedTypes">
+			<name>CUTS_PredefinedTypes</name>
+			<atom id="id-0066-00000007" kind="String" relid="0x9">
+				<name>String</name>
+			</atom>
+			<atom id="id-0066-00000008" kind="LongInteger" relid="0x5">
+				<name>LongInteger</name>
+			</atom>
+		</folder>
+		<folder id="id-006a-00000005" relid="0x3" childrelidcntr="0x1" kind="ComponentImplementations">
+			<name>CUTS_ComponentImplementations</name>
+			<model id="id-0065-0000003b" kind="ComponentImplementationContainer" relid="0x1" childrelidcntr="0xd">
+				<name>BDC_Implementation</name>
+				<model id="id-0065-0000003c" kind="Property" role="Property" relid="0x2" childrelidcntr="0x2">
+					<name>ComponentIOR</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Packaging" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>118,139</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="DataValue">
+						<value>BDC.ior</value>
+					</attribute>
+					<reference id="id-0067-00000015" kind="DataType" role="DataType" relid="0x2" referred="id-0066-00000007">
+						<name>String</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="Packaging" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>46,102</value>
+								</regnode>
+							</regnode>
+						</regnode>
+					</reference>
+				</model>
+				<atom id="id-0066-00000009" kind="MonolithicImplementation" role="MonolithicImplementation" relid="0x1">
+					<name>BDC_Monolithic_Impl</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Packaging" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>286,139</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="UUID" status="meta">
+						<value></value>
+					</attribute>
+					<attribute kind="label" status="meta">
+						<value></value>
+					</attribute>
+				</atom>
+				<reference id="id-0067-00000016" kind="ComponentRef" role="ComponentRef" relid="0x9" referred="id-0065-00000033">
+					<name>Benchmark_Data_Collector</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Packaging" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>230,11</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<reference id="id-0067-0000003b" kind="ImplementationArtifactReference" role="ImplementationArtifactReference" relid="0x3" referred="id-0066-0000000b">
+					<name>BDC_stub</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Packaging" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>223,258</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<reference id="id-0067-0000003c" kind="ImplementationArtifactReference" role="ImplementationArtifactReference" relid="0x4" referred="id-0066-0000000c">
+					<name>BDC_svnt</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Packaging" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>286,314</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<reference id="id-0067-0000003d" kind="ImplementationArtifactReference" role="ImplementationArtifactReference" relid="0x5" referred="id-0066-0000000d">
+					<name>BDC_exec</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Packaging" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>356,258</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<connection id="id-0068-00000003" kind="MonolithprimaryArtifact" role="MonolithprimaryArtifact" relid="0x6">
+					<name>MonolithprimaryArtifact</name>
+					<connpoint role="src" target="id-0066-00000009"/>
+					<connpoint role="dst" target="id-0067-0000003b"/>
+				</connection>
+				<connection id="id-0068-00000004" kind="MonolithprimaryArtifact" role="MonolithprimaryArtifact" relid="0x7">
+					<name>MonolithprimaryArtifact</name>
+					<connpoint role="src" target="id-0066-00000009"/>
+					<connpoint role="dst" target="id-0067-0000003c"/>
+				</connection>
+				<connection id="id-0068-00000005" kind="MonolithprimaryArtifact" role="MonolithprimaryArtifact" relid="0x8">
+					<name>MonolithprimaryArtifact</name>
+					<connpoint role="src" target="id-0066-00000009"/>
+					<connpoint role="dst" target="id-0067-0000003d"/>
+				</connection>
+				<connection id="id-0068-00000006" kind="Implements" role="Implements" relid="0xc">
+					<name>Implements</name>
+					<regnode name="autorouterPref" isopaque="yes">
+						<value>Ns</value>
+					</regnode>
+					<connpoint role="src" target="id-0066-00000009"/>
+					<connpoint role="dst" target="id-0067-00000016"/>
+				</connection>
+				<connection id="id-0068-00000007" kind="ConfigProperty" role="ConfigProperty" relid="0xd">
+					<name>ConfigProperty</name>
+					<regnode name="autorouterPref" isopaque="yes">
+						<value>We</value>
+					</regnode>
+					<connpoint role="dst" target="id-0065-0000003c"/>
+					<connpoint role="src" target="id-0066-00000009"/>
+				</connection>
+			</model>
+			<model id="id-0065-0000003d" kind="ComponentImplementationContainer" relid="0x1" childrelidcntr="0xb">
+				<name>BDC_Ex_Implementation</name>
+				<model id="id-0065-0000003e" kind="Property" role="Property" relid="0xa" childrelidcntr="0x2">
+					<name>ComponentIOR</name>
+					<regnode name="PartRegs" status="undefined">
+						<value></value>
+						<regnode name="Packaging" status="undefined">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>233,303</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="DataValue">
+						<value>BDC_Ex.ior</value>
+					</attribute>
+					<reference id="id-0067-00000017" kind="DataType" role="DataType" relid="0x2" referred="id-0066-00000007">
+						<name>String</name>
+						<regnode name="PartRegs" status="undefined">
+							<value></value>
+							<regnode name="Packaging" status="undefined">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>277,144</value>
+								</regnode>
+							</regnode>
+						</regnode>
+					</reference>
+				</model>
+				<atom id="id-0066-0000000a" kind="MonolithicImplementation" role="MonolithicImplementation" relid="0x5">
+					<name>BDC_Ex_Impl</name>
+					<regnode name="PartRegs" status="undefined">
+						<value></value>
+						<regnode name="Packaging" status="undefined">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>230,209</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="UUID" status="meta">
+						<value></value>
+					</attribute>
+					<attribute kind="label" status="meta">
+						<value></value>
+					</attribute>
+				</atom>
+				<reference id="id-0067-00000018" kind="ComponentRef" role="ComponentRef" relid="0x1" referred="id-0065-00000038">
+					<name>Benchmark_Data_Collector_Ex</name>
+					<regnode name="PartRegs" status="undefined">
+						<value></value>
+						<regnode name="Packaging" status="undefined">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>174,32</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<reference id="id-0067-0000003e" kind="ImplementationArtifactReference" role="ImplementationArtifactReference" relid="0x2" referred="id-0066-0000000e">
+					<name>BDC_Ex_exec</name>
+					<regnode name="PartRegs" status="undefined">
+						<value></value>
+						<regnode name="Packaging" status="undefined">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>398,272</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<reference id="id-0067-0000003f" kind="ImplementationArtifactReference" role="ImplementationArtifactReference" relid="0x3" referred="id-0066-00000010">
+					<name>BDC_Ex_svnt</name>
+					<regnode name="PartRegs" status="undefined">
+						<value></value>
+						<regnode name="Packaging" status="undefined">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>398,209</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<reference id="id-0067-00000040" kind="ImplementationArtifactReference" role="ImplementationArtifactReference" relid="0x4" referred="id-0066-0000000f">
+					<name>CUTS_stub</name>
+					<regnode name="PartRegs" status="undefined">
+						<value></value>
+						<regnode name="Packaging" status="undefined">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>398,146</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<connection id="id-0068-00000008" kind="Implements" role="Implements" relid="0x6">
+					<name>Implements</name>
+					<regnode name="autorouterPref" isopaque="yes">
+						<value>Ns</value>
+					</regnode>
+					<connpoint role="src" target="id-0066-0000000a"/>
+					<connpoint role="dst" target="id-0067-00000018"/>
+				</connection>
+				<connection id="id-0068-00000009" kind="MonolithprimaryArtifact" role="MonolithprimaryArtifact" relid="0x7">
+					<name>MonolithprimaryArtifact</name>
+					<regnode name="autorouterPref" isopaque="yes">
+						<value>Ew</value>
+					</regnode>
+					<connpoint role="src" target="id-0066-0000000a"/>
+					<connpoint role="dst" target="id-0067-0000003f"/>
+				</connection>
+				<connection id="id-0068-0000000a" kind="MonolithprimaryArtifact" role="MonolithprimaryArtifact" relid="0x8">
+					<name>MonolithprimaryArtifact</name>
+					<regnode name="autorouterPref" isopaque="yes">
+						<value>Ew</value>
+					</regnode>
+					<connpoint role="src" target="id-0066-0000000a"/>
+					<connpoint role="dst" target="id-0067-00000040"/>
+				</connection>
+				<connection id="id-0068-0000000b" kind="MonolithprimaryArtifact" role="MonolithprimaryArtifact" relid="0x9">
+					<name>MonolithprimaryArtifact</name>
+					<regnode name="autorouterPref" isopaque="yes">
+						<value>Ew</value>
+					</regnode>
+					<connpoint role="src" target="id-0066-0000000a"/>
+					<connpoint role="dst" target="id-0067-0000003e"/>
+				</connection>
+				<connection id="id-0068-0000000c" kind="ConfigProperty" role="ConfigProperty" relid="0xb">
+					<name>ConfigProperty</name>
+					<regnode name="autorouterPref" isopaque="yes">
+						<value>S</value>
+					</regnode>
+					<connpoint role="dst" target="id-0065-0000003e"/>
+					<connpoint role="src" target="id-0066-0000000a"/>
+				</connection>
+			</model>
+		</folder>
+		<folder id="id-006a-00000006" relid="0x4" childrelidcntr="0x2" kind="ImplementationArtifacts">
+			<name>CUTS_ImplementationArtifacts</name>
+			<model id="id-0065-0000003f" kind="ArtifactContainer" relid="0x1" childrelidcntr="0xa">
+				<name>BDC_Artifacts</name>
+				<model id="id-0065-00000040" kind="Property" role="Property" relid="0x2" childrelidcntr="0x2">
+					<name>entryPoint</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Packaging" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>181,293</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="DataValue">
+						<value>create_CUTS_Benchmark_Data_Collector_Home_Servant</value>
+					</attribute>
+					<reference id="id-0067-00000019" kind="DataType" role="DataType" relid="0x2" referred="id-0066-00000007">
+						<name>String</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="Packaging" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>518,318</value>
+								</regnode>
+							</regnode>
+						</regnode>
+					</reference>
+				</model>
+				<model id="id-0065-00000041" kind="Property" role="Property" relid="0x4" childrelidcntr="0x2">
+					<name>entryPoint</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Packaging" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>524,230</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="DataValue">
+						<value>create_CUTS_Benchmark_Data_Collector_Home_Impl</value>
+					</attribute>
+					<reference id="id-0067-0000001a" kind="DataType" role="DataType" relid="0x2" referred="id-0066-00000007">
+						<name>String</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="Packaging" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>518,318</value>
+								</regnode>
+							</regnode>
+						</regnode>
+					</reference>
+				</model>
+				<atom id="id-0066-0000000b" kind="ImplementationArtifact" role="ImplementationArtifact" relid="0x1">
+					<name>BDC_stub</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Packaging" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>181,62</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="UUID" status="meta">
+						<value></value>
+					</attribute>
+					<attribute kind="configuration" status="meta">
+						<value></value>
+					</attribute>
+					<attribute kind="label">
+						<value></value>
+					</attribute>
+					<attribute kind="location">
+						<value>Benchmark_Data_Collector_stub</value>
+					</attribute>
+				</atom>
+				<atom id="id-0066-0000000c" kind="ImplementationArtifact" role="ImplementationArtifact" relid="0x3">
+					<name>BDC_svnt</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Packaging" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>181,188</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="UUID" status="meta">
+						<value></value>
+					</attribute>
+					<attribute kind="configuration" status="meta">
+						<value></value>
+					</attribute>
+					<attribute kind="label">
+						<value></value>
+					</attribute>
+					<attribute kind="location">
+						<value>Benchmark_Data_Collector_svnt</value>
+					</attribute>
+				</atom>
+				<atom id="id-0066-0000000d" kind="ImplementationArtifact" role="ImplementationArtifact" relid="0x5">
+					<name>BDC_exec</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Packaging" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>384,118</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="UUID" status="meta">
+						<value></value>
+					</attribute>
+					<attribute kind="configuration" status="meta">
+						<value></value>
+					</attribute>
+					<attribute kind="label">
+						<value></value>
+					</attribute>
+					<attribute kind="location">
+						<value>Benchmark_Data_Collector_exec</value>
+					</attribute>
+				</atom>
+				<connection id="id-0068-0000000d" kind="ArtifactExecParameter" role="ArtifactExecParameter" relid="0x7">
+					<name>ArtifactExecParameter</name>
+					<connpoint role="dst" target="id-0065-00000040"/>
+					<connpoint role="src" target="id-0066-0000000c"/>
+				</connection>
+				<connection id="id-0068-0000000e" kind="ArtifactDependency" role="ArtifactDependency" relid="0x8">
+					<name>ArtifactDependency</name>
+					<connpoint role="dst" target="id-0066-0000000b"/>
+					<connpoint role="src" target="id-0066-0000000c"/>
+				</connection>
+				<connection id="id-0068-0000000f" kind="ArtifactExecParameter" role="ArtifactExecParameter" relid="0x8">
+					<name>ArtifactExecParameter</name>
+					<connpoint role="dst" target="id-0065-00000041"/>
+					<connpoint role="src" target="id-0066-0000000d"/>
+				</connection>
+				<connection id="id-0068-00000010" kind="ArtifactDependency" role="ArtifactDependency" relid="0x9">
+					<name>ArtifactDependency</name>
+					<connpoint role="dst" target="id-0066-0000000c"/>
+					<connpoint role="src" target="id-0066-0000000d"/>
+				</connection>
+				<connection id="id-0068-00000011" kind="ArtifactDependency" role="ArtifactDependency" relid="0xa">
+					<name>ArtifactDependency</name>
+					<connpoint role="dst" target="id-0066-0000000b"/>
+					<connpoint role="src" target="id-0066-0000000d"/>
+				</connection>
+			</model>
+			<model id="id-0065-00000042" kind="ArtifactContainer" relid="0x2" childrelidcntr="0xa">
+				<name>BDC_Ex_Artifacts</name>
+				<model id="id-0065-00000043" kind="Property" role="Property" relid="0x2" childrelidcntr="0x2">
+					<name>entryPoint</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Packaging" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>181,293</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="DataValue">
+						<value>create_CUTS_Benchmark_Data_Collector_Ex_Home_Servant</value>
+					</attribute>
+					<reference id="id-0067-0000001b" kind="DataType" role="DataType" relid="0x2" referred="id-0066-00000007">
+						<name>String</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="Packaging" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>518,318</value>
+								</regnode>
+							</regnode>
+						</regnode>
+					</reference>
+				</model>
+				<model id="id-0065-00000044" kind="Property" role="Property" relid="0x4" childrelidcntr="0x2">
+					<name>entryPoint</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Packaging" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>524,230</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="DataValue">
+						<value>create_CUTS_Benchmark_Data_Collector_Ex_Home_Impl</value>
+					</attribute>
+					<reference id="id-0067-0000001c" kind="DataType" role="DataType" relid="0x2" referred="id-0066-00000007">
+						<name>String</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="Packaging" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>518,318</value>
+								</regnode>
+							</regnode>
+						</regnode>
+					</reference>
+				</model>
+				<atom id="id-0066-0000000e" kind="ImplementationArtifact" role="ImplementationArtifact" relid="0x5">
+					<name>BDC_Ex_exec</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Packaging" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>384,118</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="UUID" status="meta">
+						<value></value>
+					</attribute>
+					<attribute kind="configuration" status="meta">
+						<value></value>
+					</attribute>
+					<attribute kind="label">
+						<value></value>
+					</attribute>
+					<attribute kind="location">
+						<value>Benchmark_Data_Collector_Ex_exec</value>
+					</attribute>
+				</atom>
+				<atom id="id-0066-0000000f" kind="ImplementationArtifact" role="ImplementationArtifact" relid="0x1">
+					<name>BDC_Ex_stub</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Packaging" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>181,62</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="UUID" status="meta">
+						<value></value>
+					</attribute>
+					<attribute kind="configuration" status="meta">
+						<value></value>
+					</attribute>
+					<attribute kind="label">
+						<value></value>
+					</attribute>
+					<attribute kind="location">
+						<value>Benchmark_Data_Collector_Ex_stub</value>
+					</attribute>
+				</atom>
+				<atom id="id-0066-00000010" kind="ImplementationArtifact" role="ImplementationArtifact" relid="0x3">
+					<name>BDC_Ex_svnt</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Packaging" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>181,188</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="UUID" status="meta">
+						<value></value>
+					</attribute>
+					<attribute kind="configuration" status="meta">
+						<value></value>
+					</attribute>
+					<attribute kind="label">
+						<value></value>
+					</attribute>
+					<attribute kind="location">
+						<value>Benchmark_Data_Collector_Ex_svnt</value>
+					</attribute>
+				</atom>
+				<connection id="id-0068-00000012" kind="ArtifactDependency" role="ArtifactDependency" relid="0xa">
+					<name>ArtifactDependency</name>
+					<connpoint role="src" target="id-0066-0000000e"/>
+					<connpoint role="dst" target="id-0066-0000000f"/>
+				</connection>
+				<connection id="id-0068-00000013" kind="ArtifactDependency" role="ArtifactDependency" relid="0x9">
+					<name>ArtifactDependency</name>
+					<connpoint role="src" target="id-0066-0000000e"/>
+					<connpoint role="dst" target="id-0066-00000010"/>
+				</connection>
+				<connection id="id-0068-00000014" kind="ArtifactExecParameter" role="ArtifactExecParameter" relid="0x8">
+					<name>ArtifactExecParameter</name>
+					<connpoint role="dst" target="id-0065-00000044"/>
+					<connpoint role="src" target="id-0066-0000000e"/>
+				</connection>
+				<connection id="id-0068-00000015" kind="ArtifactDependency" role="ArtifactDependency" relid="0x8">
+					<name>ArtifactDependency</name>
+					<connpoint role="dst" target="id-0066-0000000f"/>
+					<connpoint role="src" target="id-0066-00000010"/>
+				</connection>
+				<connection id="id-0068-00000016" kind="ArtifactExecParameter" role="ArtifactExecParameter" relid="0x7">
+					<name>ArtifactExecParameter</name>
+					<connpoint role="dst" target="id-0065-00000043"/>
+					<connpoint role="src" target="id-0066-00000010"/>
+				</connection>
+			</model>
+		</folder>
+		<folder id="id-006a-00000007" relid="0x5" childrelidcntr="0x1" kind="ComponentTypes">
+			<name>CUTS_ComponentTypes</name>
+			<model id="id-0065-00000045" kind="ComponentContainer" relid="0x1" childrelidcntr="0x1">
+				<name>BDC_Container</name>
+				<reference id="id-0067-0000001d" kind="ComponentRef" role="ComponentRef" relid="0x1" referred="id-0065-00000033">
+					<name>Benchmark_Data_Collector</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Packaging" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>41,60</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+			</model>
+			<model id="id-0065-00000046" kind="ComponentContainer" relid="0x1" childrelidcntr="0x1">
+				<name>BDC_Ex_Container</name>
+				<reference id="id-0067-0000001e" kind="ComponentRef" role="ComponentRef" relid="0x1" referred="id-0065-00000038">
+					<name>Benchmark_Data_Collector_Ex</name>
+					<regnode name="PartRegs" status="undefined">
+						<value></value>
+						<regnode name="Packaging" status="undefined">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>188,109</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+			</model>
+		</folder>
+		<folder id="id-006a-00000008" relid="0x3" childrelidcntr="0x2" kind="ComponentPackages">
+			<name>CUTS_ComponentPackages</name>
+			<model id="id-0065-00000047" kind="PackageContainer" relid="0x1" childrelidcntr="0x5">
+				<name>BDC_Package</name>
+				<atom id="id-0066-00000011" kind="ComponentPackage" role="ComponentPackage" relid="0x3">
+					<name>BDC_Package</name>
+					<regnode name="PartRegs" status="undefined">
+						<value></value>
+						<regnode name="Packaging" status="undefined">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>296,212</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="UUID" status="meta">
+						<value></value>
+					</attribute>
+					<attribute kind="label" status="meta">
+						<value></value>
+					</attribute>
+				</atom>
+				<reference id="id-0067-0000001f" kind="ComponentImplementationReference" role="ComponentImplementationReference" relid="0x1" referred="id-0066-00000009">
+					<name>BDC_Monolithic_Impl</name>
+					<regnode name="PartRegs" status="undefined">
+						<value></value>
+						<regnode name="Packaging" status="undefined">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>438,102</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<reference id="id-0067-00000020" kind="ComponentRef" role="ComponentRef" relid="0x2" referred="id-0065-00000033">
+					<name>Benchmark_Data_Collector</name>
+					<regnode name="PartRegs" status="undefined">
+						<value></value>
+						<regnode name="Packaging" status="undefined">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>69,74</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<connection id="id-0068-00000017" kind="Implementation" role="Implementation" relid="0x4">
+					<name>Implementation</name>
+					<regnode name="autorouterPref" isopaque="yes">
+						<value>Es</value>
+					</regnode>
+					<connpoint role="src" target="id-0066-00000011"/>
+					<connpoint role="dst" target="id-0067-0000001f"/>
+				</connection>
+				<connection id="id-0068-00000018" kind="PackageInterface" role="PackageInterface" relid="0x5">
+					<name>PackageInterface</name>
+					<regnode name="autorouterPref" isopaque="yes">
+						<value>Ws</value>
+					</regnode>
+					<connpoint role="src" target="id-0066-00000011"/>
+					<connpoint role="dst" target="id-0067-00000020"/>
+				</connection>
+			</model>
+			<model id="id-0065-00000048" kind="PackageContainer" relid="0x2" childrelidcntr="0x5">
+				<name>BDC_Ex_Package</name>
+				<atom id="id-0066-00000012" kind="ComponentPackage" role="ComponentPackage" relid="0x1">
+					<name>BDC_Ex_Package</name>
+					<regnode name="PartRegs" status="undefined">
+						<value></value>
+						<regnode name="Packaging" status="undefined">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>261,100</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="UUID" status="meta">
+						<value></value>
+					</attribute>
+					<attribute kind="label" status="meta">
+						<value></value>
+					</attribute>
+				</atom>
+				<reference id="id-0067-00000021" kind="ComponentImplementationReference" role="ComponentImplementationReference" relid="0x2" referred="id-0066-0000000a">
+					<name>BDC_Ex_Impl</name>
+					<regnode name="PartRegs" status="undefined">
+						<value></value>
+						<regnode name="Packaging" status="undefined">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>79,207</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<reference id="id-0067-00000022" kind="ComponentRef" role="ComponentRef" relid="0x3" referred="id-0065-00000038">
+					<name>Benchmark_Data_Collector_Ex</name>
+					<regnode name="PartRegs" status="undefined">
+						<value></value>
+						<regnode name="Packaging" status="undefined">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>335,207</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<connection id="id-0068-00000019" kind="Implementation" role="Implementation" relid="0x4">
+					<name>Implementation</name>
+					<regnode name="autorouterPref" isopaque="yes">
+						<value>W</value>
+					</regnode>
+					<connpoint role="src" target="id-0066-00000012"/>
+					<connpoint role="dst" target="id-0067-00000021"/>
+				</connection>
+				<connection id="id-0068-0000001a" kind="PackageInterface" role="PackageInterface" relid="0x5">
+					<name>PackageInterface</name>
+					<regnode name="autorouterPref" isopaque="yes">
+						<value>En</value>
+					</regnode>
+					<connpoint role="src" target="id-0066-00000012"/>
+					<connpoint role="dst" target="id-0067-00000022"/>
+				</connection>
+			</model>
+		</folder>
+	</folder>
+</project>

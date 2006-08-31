@@ -1,0 +1,1159 @@
+<?xml version="1.0"?>
+<wsdl:definitions xmlns:typens="http://soap.amazon.com" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://soap.amazon.com" name="AmazonSearch">
+  <wsdl:types>
+    <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://soap.amazon.com">
+      <xsd:complexType name="ProductLineArray">
+        <xsd:complexContent>
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="typens:ProductLine[]"/>
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="ProductLine">
+        <xsd:all>
+          <xsd:element name="Mode" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="ProductInfo" type="typens:ProductInfo" minOccurs="0"/>
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="ProductInfo">
+        <xsd:all>
+          <xsd:element name="TotalResults" type="xsd:string" minOccurs="0"/>
+          <!-- Total number of Search Results -->
+          <xsd:element name="TotalPages" type="xsd:string" minOccurs="0"/>
+          <!-- Total number of Pages of Search Results -->
+          <xsd:element name="ListName" type="xsd:string" minOccurs="0"/>
+          <!-- Listmania list name -->
+          <xsd:element name="Details" type="typens:DetailsArray" minOccurs="0"/>
+        </xsd:all>
+      </xsd:complexType>
+      <!-- Product Details
+           L - indicates that a piece of data is returned in a "lite" request
+           O - indicates that a piece of data will be returned only if it exists for the specific item-->
+      <xsd:complexType name="DetailsArray">
+        <xsd:complexContent>
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="typens:Details[]"/>
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="Details">
+        <xsd:all>
+          <xsd:element name="Url" type="xsd:string" minOccurs="0"/>
+          <!-- L -->
+          <xsd:element name="Asin" type="xsd:string" minOccurs="0"/>
+          <!-- L -->
+          <xsd:element name="ProductName" type="xsd:string" minOccurs="0"/>
+          <!-- L -->
+          <xsd:element name="Catalog" type="xsd:string" minOccurs="0"/>
+          <!-- L -->
+          <xsd:element name="KeyPhrases" type="typens:KeyPhraseArray" minOccurs="0"/>
+          <xsd:element name="Artists" type="typens:ArtistArray" minOccurs="0"/>
+          <!-- LO -->
+          <xsd:element name="Authors" type="typens:AuthorArray" minOccurs="0"/>
+          <!-- LO -->
+          <xsd:element name="Mpn" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="Starring" type="typens:StarringArray" minOccurs="0"/>
+          <xsd:element name="Directors" type="typens:DirectorArray" minOccurs="0"/>
+          <xsd:element name="TheatricalReleaseDate" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="ReleaseDate" type="xsd:string" minOccurs="0"/>
+          <!-- LO -->
+          <xsd:element name="Manufacturer" type="xsd:string" minOccurs="0"/>
+          <!-- LO -->
+          <xsd:element name="Distributor" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="ImageUrlSmall" type="xsd:string" minOccurs="0"/>
+          <!-- LO -->
+          <xsd:element name="ImageUrlMedium" type="xsd:string" minOccurs="0"/>
+          <!-- LO -->
+          <xsd:element name="ImageUrlLarge" type="xsd:string" minOccurs="0"/>
+          <!-- LO -->
+          <xsd:element name="ListPrice" type="xsd:string" minOccurs="0"/>
+          <!-- LO -->
+          <xsd:element name="OurPrice" type="xsd:string" minOccurs="0"/>
+          <!-- LO -->
+          <xsd:element name="UsedPrice" type="xsd:string" minOccurs="0"/>
+          <!-- LO -->
+          <xsd:element name="RefurbishedPrice" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="CollectiblePrice" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="ThirdPartyNewPrice" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="NumberOfOfferings" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="ThirdPartyNewCount" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="UsedCount" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="CollectibleCount" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="RefurbishedCount" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="ThirdPartyProductInfo" type="typens:ThirdPartyProductInfo" minOccurs="0"/>
+          <xsd:element name="SalesRank" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="BrowseList" type="typens:BrowseNodeArray" minOccurs="0"/>
+          <xsd:element name="Media" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="ReadingLevel" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="NumberOfPages" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="NumberOfIssues" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="IssuesPerYear" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="SubscriptionLength" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="DeweyNumber" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="RunningTime" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="Publisher" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="NumMedia" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="Isbn" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="Features" type="typens:FeaturesArray" minOccurs="0"/>
+          <xsd:element name="MpaaRating" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="EsrbRating" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="AgeGroup" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="Availability" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="Upc" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="Tracks" type="typens:TrackArray" minOccurs="0"/>
+          <xsd:element name="Accessories" type="typens:AccessoryArray" minOccurs="0"/>
+          <xsd:element name="Platforms" type="typens:PlatformArray" minOccurs="0"/>
+          <xsd:element name="Encoding" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="Reviews" type="typens:Reviews" minOccurs="0"/>
+          <xsd:element name="SimilarProducts" type="typens:SimilarProductsArray" minOccurs="0"/>
+          <xsd:element name="Lists" type="typens:ListArray" minOccurs="0"/>
+          <xsd:element name="Status" type="xsd:string" minOccurs="0"/>
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="KeyPhraseArray">
+        <xsd:complexContent>
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="typens:KeyPhrase[]"/>
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="KeyPhrase">
+        <xsd:all>
+          <xsd:element name="KeyPhrase" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="Type" type="xsd:string" minOccurs="0"/>
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="ArtistArray">
+        <xsd:complexContent>
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="xsd:string[]"/>
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="AuthorArray">
+        <xsd:complexContent>
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="xsd:string[]"/>
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="StarringArray">
+        <xsd:complexContent>
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="xsd:string[]"/>
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="DirectorArray">
+        <xsd:complexContent>
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="xsd:string[]"/>
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="BrowseNodeArray">
+        <xsd:complexContent>
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="typens:BrowseNode[]"/>
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="BrowseNode">
+        <xsd:all>
+          <xsd:element name="BrowseId" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="BrowseName" type="xsd:string" minOccurs="0"/>
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="FeaturesArray">
+        <xsd:complexContent>
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="xsd:string[]"/>
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="TrackArray">
+        <xsd:complexContent>
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="typens:Track[]"/>
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="Track">
+        <xsd:all>
+          <xsd:element name="TrackName" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="ByArtist" type="xsd:string" minOccurs="0"/>
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="AccessoryArray">
+        <xsd:complexContent>
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="xsd:string[]"/>
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="PlatformArray">
+        <xsd:complexContent>
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="xsd:string[]"/>
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="Reviews">
+        <xsd:all>
+          <xsd:element name="AvgCustomerRating" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="TotalCustomerReviews" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="CustomerReviews" type="typens:CustomerReviewArray" minOccurs="0"/>
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="CustomerReviewArray">
+        <xsd:complexContent>
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="typens:CustomerReview[]"/>
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="CustomerReview">
+        <xsd:all>
+          <xsd:element name="Rating" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="Summary" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="Comment" type="xsd:string" minOccurs="0"/>
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="SimilarProductsArray">
+        <xsd:complexContent>
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="xsd:string[]"/>
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="ListArray">
+        <xsd:complexContent>
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="xsd:string[]"/>
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="MarketplaceSearch">
+        <xsd:all>
+          <xsd:element name="MarketplaceSearchDetails" type="typens:MarketplaceSearchDetailsArray"/>
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="SellerProfile">
+        <xsd:all>
+          <xsd:element name="SellerProfileDetails" type="typens:SellerProfileDetailsArray"/>
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="SellerSearch">
+        <xsd:all>
+          <xsd:element name="SellerSearchDetails" type="typens:SellerSearchDetailsArray"/>
+        </xsd:all>
+      </xsd:complexType>
+      <!--			<xsd:complexType name="ExchangeSearch">
+           <xsd:all>
+           <xsd:element name="ListingProductDetails" type="typens:ListingProductDetailsArray"/>
+           </xsd:all>
+           </xsd:complexType> -->
+      <xsd:complexType name="MarketplaceSearchDetails">
+        <xsd:all>
+          <xsd:element name="NumberOfOpenListings" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="ListingProductInfo" type="typens:ListingProductInfo" minOccurs="0"/>
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="MarketplaceSearchDetailsArray">
+        <xsd:complexContent>
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="typens:MarketplaceSearchDetails[]"/>
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="SellerProfileDetails">
+        <xsd:all>
+          <xsd:element name="SellerNickname" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="OverallFeedbackRating" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="NumberOfFeedback" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="NumberOfCanceledBids" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="NumberOfCanceledAuctions" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="StoreId" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="StoreName" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="SellerFeedback" type="typens:SellerFeedback" minOccurs="0"/>
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="SellerProfileDetailsArray">
+        <xsd:complexContent>
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="typens:SellerProfileDetails[]"/>
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="SellerSearchDetails">
+        <xsd:all>
+          <xsd:element name="SellerNickname" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="StoreId" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="StoreName" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="NumberOfOpenListings" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="ListingProductInfo" type="typens:ListingProductInfo" minOccurs="0"/>
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="SellerSearchDetailsArray">
+        <xsd:complexContent>
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="typens:SellerSearchDetails[]"/>
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="ListingProductInfo">
+        <xsd:all>
+          <xsd:element name="ListingProductDetails" type="typens:ListingProductDetailsArray"/>
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="ListingProductDetailsArray">
+        <xsd:complexContent>
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="typens:ListingProductDetails[]"/>
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="ListingProductDetails">
+        <xsd:all>
+          <xsd:element name="ExchangeId" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="ListingId" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="ExchangeTitle" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="ExchangePrice" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="ExchangeAsin" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="ExchangeEndDate" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="ExchangeTinyImage" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="ExchangeSellerId" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="ExchangeSellerNickname" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="ExchangeStartDate" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="ExchangeStatus" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="ExchangeQuantity" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="ExchangeQuantityAllocated" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="ExchangeFeaturedCategory" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="ExchangeCondition" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="ExchangeConditionType" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="ExchangeAvailability" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="ExchangeOfferingType" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="ExchangeSellerState" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="ExchangeSellerCountry" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="ExchangeSellerRating" type="xsd:string" minOccurs="0"/>
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="SellerFeedback">
+        <xsd:all>
+          <xsd:element name="Feedback" type="typens:FeedbackArray"/>
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="FeedbackArray">
+        <xsd:complexContent>
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="typens:Feedback[]"/>
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="Feedback">
+        <xsd:all>
+          <xsd:element name="FeedbackRating" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="FeedbackComments" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="FeedbackDate" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="FeedbackRater" type="xsd:string" minOccurs="0"/>
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="ThirdPartyProductInfo">
+        <xsd:all>
+          <xsd:element name="ThirdPartyProductDetails" type="typens:ThirdPartyProductDetailsArray"/>
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="ThirdPartyProductDetailsArray">
+        <xsd:complexContent>
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="typens:ThirdPartyProductDetails[]"/>
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="ThirdPartyProductDetails">
+        <xsd:all>
+          <xsd:element name="OfferingType" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="SellerId" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="SellerNickname" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="ExchangeId" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="OfferingPrice" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="Condition" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="ConditionType" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="ExchangeAvailability" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="SellerCountry" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="SellerState" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="ShipComments" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="SellerRating" type="xsd:string" minOccurs="0"/>
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="KeywordRequest">
+        <xsd:all>
+          <xsd:element name="keyword" type="xsd:string"/>
+          <xsd:element name="page" type="xsd:string"/>
+          <xsd:element name="mode" type="xsd:string"/>
+          <xsd:element name="tag" type="xsd:string"/>
+          <xsd:element name="type" type="xsd:string"/>
+          <xsd:element name="devtag" type="xsd:string"/>
+          <xsd:element name="sort" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="variations" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="locale" type="xsd:string" minOccurs="0"/>
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="PowerRequest">
+        <xsd:all>
+          <xsd:element name="power" type="xsd:string"/>
+          <xsd:element name="page" type="xsd:string"/>
+          <xsd:element name="mode" type="xsd:string"/>
+          <xsd:element name="tag" type="xsd:string"/>
+          <xsd:element name="type" type="xsd:string"/>
+          <xsd:element name="devtag" type="xsd:string"/>
+          <xsd:element name="sort" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="variations" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="locale" type="xsd:string" minOccurs="0"/>
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="BrowseNodeRequest">
+        <xsd:all>
+          <xsd:element name="browse_node" type="xsd:string"/>
+          <xsd:element name="page" type="xsd:string"/>
+          <xsd:element name="mode" type="xsd:string"/>
+          <xsd:element name="tag" type="xsd:string"/>
+          <xsd:element name="type" type="xsd:string"/>
+          <xsd:element name="devtag" type="xsd:string"/>
+          <xsd:element name="sort" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="locale" type="xsd:string" minOccurs="0"/>
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="AsinRequest">
+        <xsd:all>
+          <xsd:element name="asin" type="xsd:string"/>
+          <xsd:element name="tag" type="xsd:string"/>
+          <xsd:element name="type" type="xsd:string"/>
+          <xsd:element name="devtag" type="xsd:string"/>
+          <xsd:element name="offer" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="offerpage" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="locale" type="xsd:string" minOccurs="0"/>
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="BlendedRequest">
+        <xsd:all>
+          <xsd:element name="blended" type="xsd:string"/>
+          <xsd:element name="tag" type="xsd:string"/>
+          <xsd:element name="type" type="xsd:string"/>
+          <xsd:element name="devtag" type="xsd:string"/>
+          <xsd:element name="locale" type="xsd:string" minOccurs="0"/>
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="UpcRequest">
+        <xsd:all>
+          <xsd:element name="upc" type="xsd:string"/>
+          <xsd:element name="mode" type="xsd:string"/>
+          <xsd:element name="tag" type="xsd:string"/>
+          <xsd:element name="type" type="xsd:string"/>
+          <xsd:element name="devtag" type="xsd:string"/>
+          <xsd:element name="sort" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="variations" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="locale" type="xsd:string" minOccurs="0"/>
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="ArtistRequest">
+        <xsd:all>
+          <xsd:element name="artist" type="xsd:string"/>
+          <xsd:element name="page" type="xsd:string"/>
+          <xsd:element name="mode" type="xsd:string"/>
+          <xsd:element name="tag" type="xsd:string"/>
+          <xsd:element name="type" type="xsd:string"/>
+          <xsd:element name="devtag" type="xsd:string"/>
+          <xsd:element name="sort" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="variations" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="locale" type="xsd:string" minOccurs="0"/>
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="AuthorRequest">
+        <xsd:all>
+          <xsd:element name="author" type="xsd:string"/>
+          <xsd:element name="page" type="xsd:string"/>
+          <xsd:element name="mode" type="xsd:string"/>
+          <xsd:element name="tag" type="xsd:string"/>
+          <xsd:element name="type" type="xsd:string"/>
+          <xsd:element name="devtag" type="xsd:string"/>
+          <xsd:element name="sort" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="variations" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="locale" type="xsd:string" minOccurs="0"/>
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="ActorRequest">
+        <xsd:all>
+          <xsd:element name="actor" type="xsd:string"/>
+          <xsd:element name="page" type="xsd:string"/>
+          <xsd:element name="mode" type="xsd:string"/>
+          <xsd:element name="tag" type="xsd:string"/>
+          <xsd:element name="type" type="xsd:string"/>
+          <xsd:element name="devtag" type="xsd:string"/>
+          <xsd:element name="sort" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="variations" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="locale" type="xsd:string" minOccurs="0"/>
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="DirectorRequest">
+        <xsd:all>
+          <xsd:element name="director" type="xsd:string"/>
+          <xsd:element name="page" type="xsd:string"/>
+          <xsd:element name="mode" type="xsd:string"/>
+          <xsd:element name="tag" type="xsd:string"/>
+          <xsd:element name="type" type="xsd:string"/>
+          <xsd:element name="devtag" type="xsd:string"/>
+          <xsd:element name="sort" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="variations" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="locale" type="xsd:string" minOccurs="0"/>
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="ExchangeRequest">
+        <xsd:all>
+          <xsd:element name="exchange_id" type="xsd:string"/>
+          <xsd:element name="tag" type="xsd:string"/>
+          <xsd:element name="type" type="xsd:string"/>
+          <xsd:element name="devtag" type="xsd:string"/>
+          <xsd:element name="locale" type="xsd:string" minOccurs="0"/>
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="ManufacturerRequest">
+        <xsd:all>
+          <xsd:element name="manufacturer" type="xsd:string"/>
+          <xsd:element name="page" type="xsd:string"/>
+          <xsd:element name="mode" type="xsd:string"/>
+          <xsd:element name="tag" type="xsd:string"/>
+          <xsd:element name="type" type="xsd:string"/>
+          <xsd:element name="devtag" type="xsd:string"/>
+          <xsd:element name="sort" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="variations" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="locale" type="xsd:string" minOccurs="0"/>
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="ListManiaRequest">
+        <xsd:all>
+          <xsd:element name="lm_id" type="xsd:string"/>
+          <xsd:element name="page" type="xsd:string"/>
+          <xsd:element name="tag" type="xsd:string"/>
+          <xsd:element name="type" type="xsd:string"/>
+          <xsd:element name="devtag" type="xsd:string"/>
+          <xsd:element name="locale" type="xsd:string" minOccurs="0"/>
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="WishlistRequest">
+        <xsd:all>
+          <xsd:element name="wishlist_id" type="xsd:string"/>
+          <xsd:element name="page" type="xsd:string"/>
+          <xsd:element name="tag" type="xsd:string"/>
+          <xsd:element name="type" type="xsd:string"/>
+          <xsd:element name="devtag" type="xsd:string"/>
+          <xsd:element name="locale" type="xsd:string" minOccurs="0"/>
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="MarketplaceRequest">
+        <xsd:all>
+          <xsd:element name="marketplace_search" type="xsd:string"/>
+          <xsd:element name="tag" type="xsd:string"/>
+          <xsd:element name="type" type="xsd:string"/>
+          <xsd:element name="devtag" type="xsd:string"/>
+          <xsd:element name="page" type="xsd:string"/>
+          <xsd:element name="keyword" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="keyword_search" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="browse_id" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="zipcode" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="area_id" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="geo" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="sort" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="listing_id" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="locale" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="index" type="xsd:string" minOccurs="0"/>
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="SellerProfileRequest">
+        <xsd:all>
+          <xsd:element name="seller_id" type="xsd:string"/>
+          <xsd:element name="tag" type="xsd:string"/>
+          <xsd:element name="type" type="xsd:string"/>
+          <xsd:element name="devtag" type="xsd:string"/>
+          <xsd:element name="page" type="xsd:string"/>
+          <xsd:element name="locale" type="xsd:string" minOccurs="0"/>
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="SellerRequest">
+        <xsd:all>
+          <xsd:element name="seller_id" type="xsd:string"/>
+          <xsd:element name="tag" type="xsd:string"/>
+          <xsd:element name="type" type="xsd:string"/>
+          <xsd:element name="devtag" type="xsd:string"/>
+          <xsd:element name="offerstatus" type="xsd:string"/>
+          <xsd:element name="page" type="xsd:string"/>
+          <xsd:element name="seller_browse_id" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="keyword" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="locale" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="index" type="xsd:string" minOccurs="0"/>
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="SimilarityRequest">
+        <xsd:all>
+          <xsd:element name="asin" type="xsd:string"/>
+          <xsd:element name="tag" type="xsd:string"/>
+          <xsd:element name="type" type="xsd:string"/>
+          <xsd:element name="devtag" type="xsd:string"/>
+          <xsd:element name="locale" type="xsd:string" minOccurs="0"/>
+        </xsd:all>
+      </xsd:complexType>
+      <!-- Shopping Cart -->
+      <xsd:complexType name="ItemIdArray">
+        <xsd:complexContent>
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="xsd:string[]"/>
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="ItemArray">
+        <xsd:complexContent>
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="typens:Item[]"/>
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="Item">
+        <xsd:all>
+          <xsd:element name="ItemId" type="xsd:string"/>
+          <xsd:element name="ProductName" type="xsd:string"/>
+          <xsd:element name="Catalog" type="xsd:string"/>
+          <xsd:element name="Asin" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="ExchangeId" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="Quantity" type="xsd:string"/>
+          <xsd:element name="ListPrice" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="OurPrice" type="xsd:string"/>
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="ItemQuantityArray">
+        <xsd:complexContent>
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="typens:ItemQuantity[]"/>
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="ItemQuantity">
+        <xsd:all>
+          <xsd:element name="ItemId" type="xsd:string"/>
+          <xsd:element name="Quantity" type="xsd:string"/>
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="AddItemArray">
+        <xsd:complexContent>
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="typens:AddItem[]"/>
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="AddItem">
+        <xsd:all>
+          <xsd:element name="Asin" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="ExchangeId" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="Quantity" type="xsd:string"/>
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="ShoppingCart">
+        <xsd:all>
+          <xsd:element name="CartId" type="xsd:string"/>
+          <xsd:element name="HMAC" type="xsd:string"/>
+          <xsd:element name="PurchaseUrl" type="xsd:string"/>
+          <xsd:element name="Items" type="typens:ItemArray" minOccurs="0"/>
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="GetShoppingCartRequest">
+        <xsd:all>
+          <xsd:element name="tag" type="xsd:string"/>
+          <xsd:element name="devtag" type="xsd:string"/>
+          <xsd:element name="CartId" type="xsd:string"/>
+          <xsd:element name="HMAC" type="xsd:string"/>
+          <xsd:element name="locale" type="xsd:string" minOccurs="0"/>
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="ClearShoppingCartRequest">
+        <xsd:all>
+          <xsd:element name="tag" type="xsd:string"/>
+          <xsd:element name="devtag" type="xsd:string"/>
+          <xsd:element name="CartId" type="xsd:string"/>
+          <xsd:element name="HMAC" type="xsd:string"/>
+          <xsd:element name="locale" type="xsd:string" minOccurs="0"/>
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="AddShoppingCartItemsRequest">
+        <xsd:all>
+          <xsd:element name="tag" type="xsd:string"/>
+          <xsd:element name="devtag" type="xsd:string"/>
+          <xsd:element name="CartId" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="HMAC" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="Items" type="typens:AddItemArray"/>
+          <xsd:element name="locale" type="xsd:string" minOccurs="0"/>
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="RemoveShoppingCartItemsRequest">
+        <xsd:all>
+          <xsd:element name="tag" type="xsd:string"/>
+          <xsd:element name="devtag" type="xsd:string"/>
+          <xsd:element name="CartId" type="xsd:string"/>
+          <xsd:element name="HMAC" type="xsd:string"/>
+          <xsd:element name="Items" type="typens:ItemIdArray"/>
+          <xsd:element name="locale" type="xsd:string" minOccurs="0"/>
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="ModifyShoppingCartItemsRequest">
+        <xsd:all>
+          <xsd:element name="tag" type="xsd:string"/>
+          <xsd:element name="devtag" type="xsd:string"/>
+          <xsd:element name="CartId" type="xsd:string"/>
+          <xsd:element name="HMAC" type="xsd:string"/>
+          <xsd:element name="Items" type="typens:ItemQuantityArray"/>
+          <xsd:element name="locale" type="xsd:string" minOccurs="0"/>
+        </xsd:all>
+      </xsd:complexType>
+    </xsd:schema>
+  </wsdl:types>
+  <message name="KeywordSearchRequest">
+    <!-- Messages for Amazon Web APIs -->
+    <part name="KeywordSearchRequest" type="typens:KeywordRequest"/>
+  </message>
+  <message name="KeywordSearchResponse">
+    <part name="return" type="typens:ProductInfo"/>
+  </message>
+  <message name="PowerSearchRequest">
+    <part name="PowerSearchRequest" type="typens:PowerRequest"/>
+  </message>
+  <message name="PowerSearchResponse">
+    <part name="return" type="typens:ProductInfo"/>
+  </message>
+  <message name="BrowseNodeSearchRequest">
+    <part name="BrowseNodeSearchRequest" type="typens:BrowseNodeRequest"/>
+  </message>
+  <message name="BrowseNodeSearchResponse">
+    <part name="return" type="typens:ProductInfo"/>
+  </message>
+  <message name="AsinSearchRequest">
+    <part name="AsinSearchRequest" type="typens:AsinRequest"/>
+  </message>
+  <message name="AsinSearchResponse">
+    <part name="return" type="typens:ProductInfo"/>
+  </message>
+  <message name="BlendedSearchRequest">
+    <part name="BlendedSearchRequest" type="typens:BlendedRequest"/>
+  </message>
+  <message name="BlendedSearchResponse">
+    <part name="return" type="typens:ProductLineArray"/>
+  </message>
+  <message name="UpcSearchRequest">
+    <part name="UpcSearchRequest" type="typens:UpcRequest"/>
+  </message>
+  <message name="UpcSearchResponse">
+    <part name="return" type="typens:ProductInfo"/>
+  </message>
+  <message name="AuthorSearchRequest">
+    <part name="AuthorSearchRequest" type="typens:AuthorRequest"/>
+  </message>
+  <message name="AuthorSearchResponse">
+    <part name="return" type="typens:ProductInfo"/>
+  </message>
+  <message name="ArtistSearchRequest">
+    <part name="ArtistSearchRequest" type="typens:ArtistRequest"/>
+  </message>
+  <message name="ArtistSearchResponse">
+    <part name="return" type="typens:ProductInfo"/>
+  </message>
+  <message name="ActorSearchRequest">
+    <part name="ActorSearchRequest" type="typens:ActorRequest"/>
+  </message>
+  <message name="ActorSearchResponse">
+    <part name="return" type="typens:ProductInfo"/>
+  </message>
+  <message name="DirectorSearchRequest">
+    <part name="DirectorSearchRequest" type="typens:DirectorRequest"/>
+  </message>
+  <message name="DirectorSearchResponse">
+    <part name="return" type="typens:ProductInfo"/>
+  </message>
+  <message name="ExchangeSearchRequest">
+    <part name="ExchangeSearchRequest" type="typens:ExchangeRequest"/>
+  </message>
+  <message name="ExchangeSearchResponse">
+    <part name="return" type="typens:ListingProductDetails"/>
+  </message>
+  <message name="ManufacturerSearchRequest">
+    <part name="ManufacturerSearchRequest" type="typens:ManufacturerRequest"/>
+  </message>
+  <message name="ManufacturerSearchResponse">
+    <part name="return" type="typens:ProductInfo"/>
+  </message>
+  <message name="MarketplaceSearchRequest">
+    <part name="MarketplaceSearchRequest" type="typens:MarketplaceRequest"/>
+  </message>
+  <message name="MarketplaceSearchResponse">
+    <part name="return" type="typens:MarketplaceSearch"/>
+  </message>
+  <message name="ListManiaSearchRequest">
+    <part name="ListManiaSearchRequest" type="typens:ListManiaRequest"/>
+  </message>
+  <message name="ListManiaSearchResponse">
+    <part name="return" type="typens:ProductInfo"/>
+  </message>
+  <message name="WishlistSearchRequest">
+    <part name="WishlistSearchRequest" type="typens:WishlistRequest"/>
+  </message>
+  <message name="WishlistSearchResponse">
+    <part name="return" type="typens:ProductInfo"/>
+  </message>
+  <message name="SellerProfileSearchRequest">
+    <part name="SellerProfileSearchRequest" type="typens:SellerProfileRequest"/>
+  </message>
+  <message name="SellerProfileSearchResponse">
+    <part name="return" type="typens:SellerProfile"/>
+  </message>
+  <message name="SellerSearchRequest">
+    <part name="SellerSearchRequest" type="typens:SellerRequest"/>
+  </message>
+  <message name="SellerSearchResponse">
+    <part name="return" type="typens:SellerSearch"/>
+  </message>
+  <message name="SimilaritySearchRequest">
+    <part name="SimilaritySearchRequest" type="typens:SimilarityRequest"/>
+  </message>
+  <message name="SimilaritySearchResponse">
+    <part name="return" type="typens:ProductInfo"/>
+  </message>
+  <message name="GetShoppingCartRequest">
+    <part name="GetShoppingCartRequest" type="typens:GetShoppingCartRequest"/>
+  </message>
+  <message name="ClearShoppingCartRequest">
+    <part name="ClearShoppingCartRequest" type="typens:ClearShoppingCartRequest"/>
+  </message>
+  <message name="AddShoppingCartItemsRequest">
+    <part name="AddShoppingCartItemsRequest" type="typens:AddShoppingCartItemsRequest"/>
+  </message>
+  <message name="RemoveShoppingCartItemsRequest">
+    <part name="RemoveShoppingCartItemsRequest" type="typens:RemoveShoppingCartItemsRequest"/>
+  </message>
+  <message name="ModifyShoppingCartItemsRequest">
+    <part name="ModifyShoppingCartItemsRequest" type="typens:ModifyShoppingCartItemsRequest"/>
+  </message>
+  <message name="ShoppingCartResponse">
+    <part name="ShoppingCart" type="typens:ShoppingCart"/>
+  </message>
+  <portType name="AmazonSearchPort">
+    <!-- Port for Amazon Web APIs -->
+    <operation name="KeywordSearchRequest">
+      <input message="typens:KeywordSearchRequest"/>
+      <output message="typens:KeywordSearchResponse"/>
+    </operation>
+    <operation name="PowerSearchRequest">
+      <input message="typens:PowerSearchRequest"/>
+      <output message="typens:PowerSearchResponse"/>
+    </operation>
+    <operation name="BrowseNodeSearchRequest">
+      <input message="typens:BrowseNodeSearchRequest"/>
+      <output message="typens:BrowseNodeSearchResponse"/>
+    </operation>
+    <operation name="AsinSearchRequest">
+      <input message="typens:AsinSearchRequest"/>
+      <output message="typens:AsinSearchResponse"/>
+    </operation>
+    <operation name="BlendedSearchRequest">
+      <input message="typens:BlendedSearchRequest"/>
+      <output message="typens:BlendedSearchResponse"/>
+    </operation>
+    <operation name="UpcSearchRequest">
+      <input message="typens:UpcSearchRequest"/>
+      <output message="typens:UpcSearchResponse"/>
+    </operation>
+    <operation name="AuthorSearchRequest">
+      <input message="typens:AuthorSearchRequest"/>
+      <output message="typens:AuthorSearchResponse"/>
+    </operation>
+    <operation name="ArtistSearchRequest">
+      <input message="typens:ArtistSearchRequest"/>
+      <output message="typens:ArtistSearchResponse"/>
+    </operation>
+    <operation name="ActorSearchRequest">
+      <input message="typens:ActorSearchRequest"/>
+      <output message="typens:ActorSearchResponse"/>
+    </operation>
+    <operation name="ManufacturerSearchRequest">
+      <input message="typens:ManufacturerSearchRequest"/>
+      <output message="typens:ManufacturerSearchResponse"/>
+    </operation>
+    <operation name="DirectorSearchRequest">
+      <input message="typens:DirectorSearchRequest"/>
+      <output message="typens:DirectorSearchResponse"/>
+    </operation>
+    <operation name="ListManiaSearchRequest">
+      <input message="typens:ListManiaSearchRequest"/>
+      <output message="typens:ListManiaSearchResponse"/>
+    </operation>
+    <operation name="WishlistSearchRequest">
+      <input message="typens:WishlistSearchRequest"/>
+      <output message="typens:WishlistSearchResponse"/>
+    </operation>
+    <operation name="ExchangeSearchRequest">
+      <input message="typens:ExchangeSearchRequest"/>
+      <output message="typens:ExchangeSearchResponse"/>
+    </operation>
+    <operation name="MarketplaceSearchRequest">
+      <input message="typens:MarketplaceSearchRequest"/>
+      <output message="typens:MarketplaceSearchResponse"/>
+    </operation>
+    <operation name="SellerProfileSearchRequest">
+      <input message="typens:SellerProfileSearchRequest"/>
+      <output message="typens:SellerProfileSearchResponse"/>
+    </operation>
+    <operation name="SellerSearchRequest">
+      <input message="typens:SellerSearchRequest"/>
+      <output message="typens:SellerSearchResponse"/>
+    </operation>
+    <operation name="SimilaritySearchRequest">
+      <input message="typens:SimilaritySearchRequest"/>
+      <output message="typens:SimilaritySearchResponse"/>
+    </operation>
+    <!-- Shopping Cart -->
+    <operation name="GetShoppingCartRequest">
+      <input message="typens:GetShoppingCartRequest"/>
+      <output message="typens:ShoppingCartResponse"/>
+    </operation>
+    <operation name="ClearShoppingCartRequest">
+      <input message="typens:ClearShoppingCartRequest"/>
+      <output message="typens:ShoppingCartResponse"/>
+    </operation>
+    <operation name="AddShoppingCartItemsRequest">
+      <input message="typens:AddShoppingCartItemsRequest"/>
+      <output message="typens:ShoppingCartResponse"/>
+    </operation>
+    <operation name="RemoveShoppingCartItemsRequest">
+      <input message="typens:RemoveShoppingCartItemsRequest"/>
+      <output message="typens:ShoppingCartResponse"/>
+    </operation>
+    <operation name="ModifyShoppingCartItemsRequest">
+      <input message="typens:ModifyShoppingCartItemsRequest"/>
+      <output message="typens:ShoppingCartResponse"/>
+    </operation>
+  </portType>
+  <binding name="AmazonSearchBinding" type="typens:AmazonSearchPort">
+    <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <!-- Binding for Amazon Web APIs - RPC, SOAP over HTTP -->
+    <operation name="KeywordSearchRequest">
+      <soap:operation soapAction="http://soap.amazon.com"/>
+      <input>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://soap.amazon.com"/>
+      </input>
+      <output>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://soap.amazon.com"/>
+      </output>
+    </operation>
+    <operation name="PowerSearchRequest">
+      <soap:operation soapAction="http://soap.amazon.com"/>
+      <input>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://soap.amazon.com"/>
+      </input>
+      <output>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://soap.amazon.com"/>
+      </output>
+    </operation>
+    <operation name="BrowseNodeSearchRequest">
+      <soap:operation soapAction="http://soap.amazon.com"/>
+      <input>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://soap.amazon.com"/>
+      </input>
+      <output>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://soap.amazon.com"/>
+      </output>
+    </operation>
+    <operation name="AsinSearchRequest">
+      <soap:operation soapAction="http://soap.amazon.com"/>
+      <input>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://soap.amazon.com"/>
+      </input>
+      <output>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://soap.amazon.com"/>
+      </output>
+    </operation>
+    <operation name="BlendedSearchRequest">
+      <soap:operation soapAction="http://soap.amazon.com"/>
+      <input>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://soap.amazon.com"/>
+      </input>
+      <output>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://soap.amazon.com"/>
+      </output>
+    </operation>
+    <operation name="UpcSearchRequest">
+      <soap:operation soapAction="http://soap.amazon.com"/>
+      <input>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://soap.amazon.com"/>
+      </input>
+      <output>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://soap.amazon.com"/>
+      </output>
+    </operation>
+    <operation name="AuthorSearchRequest">
+      <soap:operation soapAction="http://soap.amazon.com"/>
+      <input>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://soap.amazon.com"/>
+      </input>
+      <output>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://soap.amazon.com"/>
+      </output>
+    </operation>
+    <operation name="ArtistSearchRequest">
+      <soap:operation soapAction="http://soap.amazon.com"/>
+      <input>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://soap.amazon.com"/>
+      </input>
+      <output>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://soap.amazon.com"/>
+      </output>
+    </operation>
+    <operation name="ActorSearchRequest">
+      <soap:operation soapAction="http://soap.amazon.com"/>
+      <input>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://soap.amazon.com"/>
+      </input>
+      <output>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://soap.amazon.com"/>
+      </output>
+    </operation>
+    <operation name="ManufacturerSearchRequest">
+      <soap:operation soapAction="http://soap.amazon.com"/>
+      <input>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://soap.amazon.com"/>
+      </input>
+      <output>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://soap.amazon.com"/>
+      </output>
+    </operation>
+    <operation name="DirectorSearchRequest">
+      <soap:operation soapAction="http://soap.amazon.com"/>
+      <input>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://soap.amazon.com"/>
+      </input>
+      <output>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://soap.amazon.com"/>
+      </output>
+    </operation>
+    <operation name="ExchangeSearchRequest">
+      <soap:operation soapAction="http://soap.amazon.com"/>
+      <input>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://soap.amazon.com"/>
+      </input>
+      <output>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://soap.amazon.com"/>
+      </output>
+    </operation>
+    <operation name="ListManiaSearchRequest">
+      <soap:operation soapAction="http://soap.amazon.com"/>
+      <input>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://soap.amazon.com"/>
+      </input>
+      <output>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://soap.amazon.com"/>
+      </output>
+    </operation>
+    <operation name="WishlistSearchRequest">
+      <soap:operation soapAction="http://soap.amazon.com"/>
+      <input>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://soap.amazon.com"/>
+      </input>
+      <output>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://soap.amazon.com"/>
+      </output>
+    </operation>
+    <operation name="SellerProfileSearchRequest">
+      <soap:operation soapAction="http://soap.amazon.com"/>
+      <input>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://soap.amazon.com"/>
+      </input>
+      <output>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://soap.amazon.com"/>
+      </output>
+    </operation>
+    <operation name="SellerSearchRequest">
+      <soap:operation soapAction="http://soap.amazon.com"/>
+      <input>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://soap.amazon.com"/>
+      </input>
+      <output>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://soap.amazon.com"/>
+      </output>
+    </operation>
+    <operation name="MarketplaceSearchRequest">
+      <soap:operation soapAction="http://soap.amazon.com"/>
+      <input>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://soap.amazon.com"/>
+      </input>
+      <output>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://soap.amazon.com"/>
+      </output>
+    </operation>
+    <operation name="SimilaritySearchRequest">
+      <soap:operation soapAction="http://soap.amazon.com"/>
+      <input>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://soap.amazon.com"/>
+      </input>
+      <output>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://soap.amazon.com"/>
+      </output>
+    </operation>
+    <!-- Shopping Cart -->
+    <operation name="GetShoppingCartRequest">
+      <soap:operation soapAction="http://soap.amazon.com"/>
+      <input>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://soap.amazon.com"/>
+      </input>
+      <output>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://soap.amazon.com"/>
+      </output>
+    </operation>
+    <operation name="ClearShoppingCartRequest">
+      <soap:operation soapAction="http://soap.amazon.com"/>
+      <input>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://soap.amazon.com"/>
+      </input>
+      <output>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://soap.amazon.com"/>
+      </output>
+    </operation>
+    <operation name="AddShoppingCartItemsRequest">
+      <soap:operation soapAction="http://soap.amazon.com"/>
+      <input>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://soap.amazon.com"/>
+      </input>
+      <output>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://soap.amazon.com"/>
+      </output>
+    </operation>
+    <operation name="RemoveShoppingCartItemsRequest">
+      <soap:operation soapAction="http://soap.amazon.com"/>
+      <input>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://soap.amazon.com"/>
+      </input>
+      <output>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://soap.amazon.com"/>
+      </output>
+    </operation>
+    <operation name="ModifyShoppingCartItemsRequest">
+      <soap:operation soapAction="http://soap.amazon.com"/>
+      <input>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://soap.amazon.com"/>
+      </input>
+      <output>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://soap.amazon.com"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="AmazonSearchService">
+    <!-- Endpoint for Amazon Web APIs -->
+    <port name="AmazonSearchPort" binding="typens:AmazonSearchBinding">
+      <soap:address location="http://soap.amazon.com/onca/soap2"/>
+    </port>
+  </service>
+  <!--Shopping Cart-->
+</wsdl:definitions>

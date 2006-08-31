@@ -1,0 +1,65 @@
+[Please use the PRF form below to submit bug reports, problem reports,
+ etc., to the CUTS developers and interested users.  Send to
+ cuts-users@list.isis.vanderbilt.edu.  Please also send your PRF as
+ plain ASCII text, _not_ uuencoded or as an attachment.
+
+ Not using the problem report form will make it harder or impossible to
+ identify the problem, and in many cases we will be unable to help at all.
+ Also please try to browse ChangeLog files to find out if your problem
+ has been solved in a more recent version of CUTS.
+
+ To ensure that you see responses, please subscribe to the
+ cosmic-users@list.isis.vanderbilt.edu mailing list by visiting
+ http://list.isis.vanderbilt.edu/mailman/listinfo/cuts-users web page.
+
+ Replace/remove all the explanatory text in brackets before mailing.
+
+ Please send this form as ASCII text only.  Do _not_ send it as an
+ attachment, or as tar'ed, compressed and/or uuencoded text.  And
+ limit line lengths to less than 80 characters.
+
+ PLEASE make your Subject: line as descriptive as possible.
+ Subjects like "CUTS bug" or "bug report" are not helpful!
+ Also, do _not_ include the word "help" in the Subject!
+
+ Please compress the attached files in a zip file.]
+
+
+8<----------8<----------8<----------8<----------8<----------8<----------8<----
+
+To: cuts-users@list.isis.vanderbilt.edu
+Subject: [area]: [synopsis]
+
+    CUTS VERSION: 0.4.5
+
+    HOST MACHINE and OPERATING SYSTEM:
+      i.e., which version of Windows are you using.
+
+    TOOL/AREA/CLASS/EXAMPLE AFFECTED:
+[Particularly, which tool in CUTS is affected? What example failed?
+ What module failed to compile?]
+
+    DOES THE PROBLEM AFFECT:
+        COMPILATION?
+        LINKING?
+        EXECUTION?
+        OTHER (please specify)?
+
+    SYNOPSIS:
+[Brief description of the problem]
+
+    DESCRIPTION:
+[Detailed description of problem.  Don't just say "<blah>
+doesn't work, here's a fix," explain what your program does
+to get to the <blah> state. ]
+
+    REPEAT BY:
+[What you did to get the error; include test program or session
+transcript if at all possible.  ]
+
+    SAMPLE FIX/WORKAROUND:
+[If available ]
+
+    RELATED FILES:
+[Please attach the XME file of your model, generated descriptors and code.
+ In GME you can use "File->Export XML" menu to generate XME files.]

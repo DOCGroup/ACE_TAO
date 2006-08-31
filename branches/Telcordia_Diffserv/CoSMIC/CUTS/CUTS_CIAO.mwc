@@ -1,0 +1,6 @@
+// $Id$
+
+workspace (CUTS_CIAO) {
+  CUTS.mwc
+  $(CIAO_ROOT)/CIAO_TAO_DAnCE.mwc
+}

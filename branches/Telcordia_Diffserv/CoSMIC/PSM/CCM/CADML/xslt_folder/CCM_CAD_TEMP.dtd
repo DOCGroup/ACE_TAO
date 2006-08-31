@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- generated on Tue Jul 08 09:49:41 2003 -->
+
+<!-- Cutomized by (tao.lu@vanderbilt.edu) -->
+<!-- Version 1.0 (only solves the ordering of elements issue) -->
+<!-- Next version should fix the PCDATA problem. -->
+<!-- This DTD is used by XSLT to change the UDM generated XML of CCM assembly descriptor, thus xml file could be used by CIAO framework. -->
+
+<!ELEMENT destination EMPTY>
+<!ATTLIST destination
+         content	CDATA	#REQUIRED
+>
+
+<!ELEMENT writeiortofile EMPTY>
+<!ATTLIST writeiortofile
+	name	CDATA	#REQUIRED
+>
+
+<!ELEMENT providesidentifier EMPTY>
+<!ATTLIST providesidentifier
+	content	CDATA	#REQUIRED
+>
+
+<!ELEMENT hostcollocation ((homeplacement | processcollocation)+, destination?)>
+<!ATTLIST hostcollocation
+	id	CDATA	#REQUIRED
+>
+
+<!ELEMENT processcollocation (homeplacement+, destination?)>
+<!ATTLIST processcollocation
+	id	CDATA	#REQUIRED
+>
+
+<!ELEMENT homeplacement (componentfileref, componentinstantiation*, destination?)>
+<!ATTLIST homeplacement
+	id	CDATA	#REQUIRED
+>
+
+<!ELEMENT providesport (providesidentifier, componentinstantiationref)>
+
+<!ELEMENT connections (connectevent*, connectinterface*)>
+
+<!ELEMENT connectevent (consumesport, (emitsport | publishesport) )>
+<!ATTLIST connectevent
+	id	CDATA	#IMPLIED
+>
+
+<!ELEMENT usesidentifier EMPTY>
+<!ATTLIST usesidentifier
+	content	CDATA	#REQUIRED
+>
+
+<!ELEMENT componentassembly (description?, componentfiles, partitioning, connections?)>
+<!ATTLIST componentassembly
+	id	CDATA	#REQUIRED
+	derivedfrom	CDATA	#IMPLIED
+>
+
+<!ELEMENT description EMPTY>
+<!ATTLIST description
+	content	CDATA	#REQUIRED
+>
+
+<!ELEMENT componentinstantiationref EMPTY>
+<!ATTLIST componentinstantiationref
+	idref	CDATA	#REQUIRED
+>
+
+<!ELEMENT componentfileref EMPTY>
+<!ATTLIST componentfileref
+	idref	CDATA	#REQUIRED
+>
+
+<!ELEMENT consumesport (consumesidentifier, componentinstantiationref)>
+
+<!ELEMENT fileinarchive EMPTY>
+<!ATTLIST fileinarchive
+	name	CDATA	#REQUIRED
+>
+
+<!ELEMENT componentfile (fileinarchive)>
+<!ATTLIST componentfile
+	id	CDATA	#REQUIRED
+	type	CDATA	#IMPLIED
+>
+
+<!ELEMENT publishesidentifier EMPTY>
+<!ATTLIST publishesidentifier
+	content	CDATA	#REQUIRED
+>
+
+<!ELEMENT partitioning (homeplacement | hostcollocation | processcollocation)* >
+
+<!ELEMENT componentinstantiation (registercomponent*)>
+<!ATTLIST componentinstantiation
+	id	CDATA	#REQUIRED
+>
+
+<!ELEMENT connectinterface (usesport,providesport)>
+<!ATTLIST connectinterface
+	id	CDATA	#IMPLIED
+>
+
+<!ELEMENT emitsport (emitsidentifier, componentinstantiationref)>
+
+<!ELEMENT registercomponent (writeiortofile*)>
+
+<!ELEMENT publishesport (publishesidentifier, componentinstantiationref)>
+
+<!ELEMENT componentfiles (componentfile+)>
+
+<!ELEMENT emitsidentifier EMPTY>
+<!ATTLIST emitsidentifier
+	content	CDATA	#REQUIRED
+>
+
+<!ELEMENT consumesidentifier EMPTY>
+<!ATTLIST consumesidentifier
+	content	CDATA	#REQUIRED
+>
+
+<!ELEMENT usesport (usesidentifier, componentinstantiationref)>

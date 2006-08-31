@@ -1,0 +1,96 @@
+This documentation is composed to be as a manual for using CADML tool kit.
+(http://www.dre.vanderbilt.edu/~gokhale/cosmic.html)
+
+
+The tool bases on GME(Generic Modeling Environment) developed at ISIS of
+Vanderbilt University. To download the newest version of GME please go to:
+http://www.isis.vanderbilt.edu/Projects/gme/Download.html
+
+For information about MIC(Model Integrated Computing) please go to:
+http://www.isis.vanderbilt.edu/research/mic.html
+
+==========================================================================
+CADML(Component Assemble and Deployment Modeling Language) is a modeling
+paradigm designed to help user to generate the cad(component assembly
+descriptor) file. This XML file will be used by the CCM deployment tool to
+instantiate/assembly/deploy components.
+
+Note: This tool has been tested with GME3 Release r3.4.29 and r3.10.13
+==========================================================================
+To test the tool:
+
+1. Download GME3 and install it on a Windows box.
+
+2. Put bin/xerces-c_2_2_0D.dll and bin/Xalan-C_1_5_0D.dll in your system path.
+   Note: You can download the file from www.apache.org
+
+3. Open GME3 then file->Import XML...select the Meta_CADML.xml..
+   ->select "Create Project File"->next->store the file( make sure that
+   the "icons" folder is in the same directory as the generated XMP file);
+
+4. Go to the part browser then double click on "CADML" to expend the tree.
+
+5. Click on any childer model so a new window shows up.
+
+6. file->Run-Interpreter->interpreter->ok->select place to save paradigm file
+   ->yes to register paradigm.
+
+7. Open another GME then repeat step 3,4 on  BuildingBlocks.xml
+
+8. In the part browser find any model inside the "Product_Scenarios" folder.
+
+9. Menu file->register component->new->find the bin/CADML.dll file.
+
+10.Menu file->run interpreter->then follow the instruction.
+
+11.Follow the instruction.
+
+12.Look at the generated cad file to see the result.
+
+==========================================================================
+This tool conforms the old CCM D&C spec, we are currently working on the
+new tool kit.
+==========================================================================
+The source code will be available soon in our CVS repository.
+If you have any question please contact lu@dre.vanderbilt.edu.
+==========================================================================
+
+
+To Compile the interpreter.
+Because of the extensive usage of LIBs from the third party, compiling CADML could
+be troublesome. Please be patient and follow the following instructions.
+Currently CADML could be compiled under VC6. VC7 support will be added in soon.
+
+-Steps:
+
+1. Download the latest version of UDM(1.76) from
+   http://www.isis.vanderbilt.edu/Projects/mobies/
+
+2. Download Xerces Binary(2.2.0) and Xalan(1.5) for C++ from
+   http://www.apache.org/
+   Note: The current CADML dosen't compile with newer version of Xerces and Xalan.
+
+3. Set system variables:
+   XERCES_ROOT: where directory "xerces-c_2_2_0-win32" is.
+   XALAN_ROOT:  where directory "xml-xalan\c" is.
+   UDM_ROOT: where directory "UdmBinary-1.76_w32" is.
+   GME_ROOT: where the installation directory of "GME" is.
+
+5. Add the path where the Xerces and Xalan dll resides to the system path.
+
+4. Open the project "Component" with VC6, build the corresponsive dll.
+
+6. Now inside the CADML paradigm in GME, you can register your own CADML*.dll as the
+   interpreter for the paradigm.
+
+============================================================================
+============================================================================
+Note: I have been receiving reports from our users of CADML about the dll registration problem
+
+Please make sure that you have followed the steps above carefully and reboot your Windows
+box if necessary. If the problem persists then you might need some dlls in the windows Visual Studio
+distribution. If you have Visual studio 6 then please open the tool in the software pack named "Depends"
+to view the dependency of the component.dll. Most likely your system don't have some of the dlls.
+If you don't have VC6 please go to http://www.dependencywalker.com and use the tool to see the dependency
+and make sure that you have all the requried dlls in your system path. If you find out that some dlls are
+missing and you can't find them please email me and I will ship the file to you.

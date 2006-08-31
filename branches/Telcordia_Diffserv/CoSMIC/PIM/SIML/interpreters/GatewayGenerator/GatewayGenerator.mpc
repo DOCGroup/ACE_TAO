@@ -1,0 +1,87 @@
+project (GatewayGenerator): bon {
+
+   sharedname = GatewayGenerator
+   includes += $(COSMIC_ROOT)/PIM/SIML/interpreters
+   includes += $(COSMIC_ROOT)/PIM/SIML/interpreters/GatewayGenerator
+   includes += $(CIAO_ROOT)/CCF $(ACE_ROOT)/contrib/utility
+
+   specific {
+     use_lib_modifier =
+   }
+
+   specific(nmake, vc71, vc8) {
+    compile_flags += /wd4290 /wd4800 /wd4250 /wd4355
+   }
+
+   specific (vc6,vc7,vc71,vc8) {
+     link_options += /DEF:Component.def
+   }
+
+   Source_Files {
+     $(GME_ROOT)/SDK/BON/BON.cpp
+     $(GME_ROOT)/SDK/BON/BONImpl.cpp
+     $(GME_ROOT)/SDK/BON/ComHelp.cpp
+     $(GME_ROOT)/SDK/BON/Common.cpp
+     Component.rc
+     $(GME_ROOT)/SDK/BON/ComponentDll.cpp
+     $(GME_ROOT)/SDK/BON/ComponentLib.idl
+     $(GME_ROOT)/SDK/BON/ComponentObj.cpp
+     $(GME_ROOT)/SDK/BON/Events.cpp
+     $(GME_ROOT)/SDK/BON/Exceptions.cpp
+     $(GME_ROOT)/SDK/BON/Extensions.cpp
+     $(GME_ROOT)/SDK/BON/MON.cpp
+     $(GME_ROOT)/SDK/BON/MONImpl.cpp
+     StdAfx.cpp
+     $(GME_ROOT)/SDK/BON/Utils.cpp
+     BON2Component.cpp
+     PICMLBonX.cpp
+     PICMLBonX1.cpp
+     PICMLBonX2.cpp
+     PICMLBonX3.cpp
+     PICMLBonX4.cpp
+     WSMLBonX.cpp
+     SIMLBonX.cpp
+     GatewayGeneratorVisitor.cpp
+   }
+
+   Header_Files {
+     $(GME_ROOT)/SDK/BON/BON.h
+     $(GME_ROOT)/SDK/BON/BONImpl.h
+     $(GME_ROOT)/SDK/BON/ComHelp.h
+     $(GME_ROOT)/SDK/BON/Common.h
+     Resource.h
+     ComponentConfig.h
+     $(GME_ROOT)/SDK/BON/ComponentDll.h
+     ComponentLib.h
+     $(GME_ROOT)/SDK/BON/ComponentObj.h
+     $(GME_ROOT)/SDK/BON/Events.h
+     $(GME_ROOT)/SDK/BON/Exceptions.h
+     $(GME_ROOT)/SDK/BON/Extensions.h
+     $(GME_ROOT)/SDK/BON/MON.h
+     $(GME_ROOT)/SDK/BON/MONImpl.h
+     StdAfx.h
+     $(GME_ROOT)/SDK/BON/Utils.h
+     BON2Component.h
+     PICMLBonX.h
+     PICMLBonX1.h
+     PICMLBonX2.h
+     PICMLBonX3.h
+     PICMLBonX4.h
+     WSMLBonX.h
+     SIMLBonX.h
+     GatewayGeneratorVisitor.h
+   }
+
+   Resource_Files {
+     CompIcon.ico
+   }
+}
+
+project (RegisterGatewayGenerator) : register {
+  after += GatewayGenerator
+  custom_only = 1
+
+  Register_Files {
+    $(COSMIC_ROOT)\bin\GatewayGenerator.dll
+  }
+}

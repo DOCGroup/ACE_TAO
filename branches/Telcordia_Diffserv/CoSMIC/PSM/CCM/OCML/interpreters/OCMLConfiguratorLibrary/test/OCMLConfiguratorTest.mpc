@@ -1,0 +1,21 @@
+project {
+  after += OCMLConfigurator
+  exename = configurator_test
+
+  specific(em3, nmake, vc6) {
+    subsystem = windows
+  }
+  specific(vc7, vc71, vc8) {
+    subsystem = 2
+  }
+
+  Source_Files {
+    main.cpp
+    ../LoadLibrary.cpp
+  }
+
+  Header_Files {
+    ../DllEntry.hpp
+    ../LoadLibrary.hpp
+  }
+}

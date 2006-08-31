@@ -1,0 +1,30 @@
+// $Id$
+
+project (CUTS_Database_Utility) {
+  sharedname = CUTS_Database_Utility
+
+  dllout     = ../bin
+
+  lit_libs   = System \
+               System.Data \
+               System.Xml \
+               MySql.Data
+
+  requires  += mysql
+
+  specific {
+    output_dir =
+  }
+
+  Source_Files {
+    Database_Utility.cs
+  }
+
+  ASPX_Files {
+
+  }
+
+  Config_Files {
+
+  }
+}

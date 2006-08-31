@@ -1,0 +1,191 @@
+<!-- $Id$ -->
+
+<html>
+<body>
+<a name="#ocml_introduction"/>
+<h2> Introduction </h2>
+  <p>
+  Options Configuration Modeling Language (OCML) is a language developed to
+  provide constraints and dependencies of the options used to customize the
+  libraries and tools used by the application developers. OCML is defined in
+  the GME meta-modeling paradigm to form a base for the tool specific option
+  rule definitions. GME as a sophisticated modeling environment, is used to
+  visually represent the OCML and the tool specific option rule definitions.
+  In GME, OCML is defined as a meta-model for the tool-specific option rule
+  definitions. This section explains the general structure of an OCML model
+  and the outputs resulted from an interpretation process.
+  </p>
+<a name="#ocml_new_model"/>
+<h2> Creating a new OCML model </h2>
+  <p>
+  For each application or library the tool developer should define a new OCML
+  model. To create a new OCML model in GME:
+    <ul>
+    <li> Select the File -&gt; New Project menu item. </li>
+    <li> Select <em> OCML </em> from the list of paradigms. </li>
+    <li> Select <em> Create project file. </em> </li>
+    <li> Give a name to save your model. </li>
+    </ul>
+  </p>
+  <p>
+  You can insert two different kind of models into your project:
+  (1) Option Category, and (2) Rule.
+  </p>
+<a name="#ocml_options_paradigm"/>
+<h3> OCML options paradigm </h3>
+  <p>
+  To add a new category, right click on the
+  model tree and select Insert Model -&gt; Option Category. After you give a
+  name to your category you can double click it to define it. Options
+  hierarchically reside in the <em>option categories.</em> An
+  <em> option category </em> may include other option categories recursively.
+  </p>
+  <p>
+  There are five elements an option category can contain in addition to other
+  option categories. (see <a href="#figure_ocml_options_aspect">
+  Figure: Options Aspect </a>)
+  </p>
+  <a name="#figure_ocml_options_aspect"/>
+  <img src="ocml_option_aspect.png"/>
+  <ul>
+    <li> <b> Boolean Option: </b>
+         Boolean options are the options which can take one of the only two
+         possible values, <em> true </em> and <em> false. </em>
+         </li>
+    <li> <b> Integer Option: </b>
+         Options having an integer numeric value are named as
+         <em>integer options. </em>
+         </li>
+    <li> <b> String Option: </b>
+         Options having an alphanumeric value are named as
+         <em>string options. </em>
+         </li>
+    <li> <b> Enum Option: </b>
+         Options which can be selected from a set of values are named as
+         <em>enum options. </em> When you double click on an
+         <em> enum option </em> you see that new elements named
+         <em> enum items </em> can be added to the enum options. The
+         enumerated values which can be contained in <em> enum options </em>
+         are represented with <em>enum items.</em>
+         </li>
+    <li> <b> Flag Option: </b>
+         The <em>flag option </em> can be set to a combination of the values
+         from the given value set. Similar to the <em> enum options </em>
+         flag options contains <em> flag items </em> to represent value for
+         the flag option.
+         </li>
+  </ul>
+  <p>
+  Each of the option elements has one common attribute, <em>description.</em>
+  You can add textual description describes the effects of this option. In
+  addition to the pure textual descriptions, you can add HTML tags for better
+  visualization.
+  </p>
+<a name="#ocml_rule_paradigm"/>
+<h3> OCML rule paradigm </h3>
+  <p>
+  The second model you can insert to your OCML model is
+  <em >rule definitions. </em> To add a new rule definitions model, right click
+  on the model tree and select Insert Model -&gt; Rule. After you give a name
+  to the new rule model you can double click it to define it.
+  A <em> rule </em>is the combination of logical operations. A <em> rule </em>
+  can contain other <em> rules </em> or references to <em> options </em>
+  associated with the following logical operators. (see
+  <a href="#figure_ocml_rule_aspect"> Figure: Rule Aspect </a>)
+  </p>
+  <a name="#figure_ocml_rule_aspect"/>
+  <img src="ocml_rule_aspect.png"/>
+  <ul>
+    <li> <b> AND operator: </b> Logical <em> and </em> operator.
+         </li>
+    <li> <b> OR operator: </b> Logical <em> or </em> operator.
+         </li>
+    <li> <b> NOT operator: </b> Logical <em> not </em> operator.
+         </li>
+    <li> <b> IF operator: </b> Logical <em> if </em> operator.
+         </li>
+    <li> <b> IFF operator: </b> Logical <em> if and only if </em> operator.
+         </li>
+  </ul>
+  <p>
+  A rule is defined by connecting references to the options to the logical
+  operators. Assuming we have two options such as enum option: 
+  <em> concurrency </em> (which can have values, <em> single threaded </em> and
+  <em> multi threaded </em>) and integer option: <em> thread count. </em> We
+  want to define a rule such as <em> If the concurrency is set to single
+  threaded the thread count cannot have any other value than 1. </em>
+  If we would like to write this in a textual form it would be,
+  </p><p>
+  <code> concurrency = single_threaded =&gt; thread_count=1 </code>.
+  </p><p>
+  To define this rule in our OCML rule model, we need to follow these steps:
+  </p>
+  <ul>
+    <li> Open the model window containing the <em> concurrency </em> option.
+         </li>
+    <li> Right click on the <em> concurrency </em> option then select
+         <em> copy. </em>
+         </li>
+    <li> Open the rule model window.
+         </li>
+    <li> Right click on the empty window area then select
+         Paste Special -&gt; As Reference.
+         </li>
+    <li> Follow the same steps for the <em> thread count </em> model.
+         </li>
+    <li> Now you rule model should contain two option references,
+         <em> concurrency </em> and <em> thread count. </em> 
+         Insert a <em> IF </em> operator into your model by dragging it from
+         the <em> Rule Aspect </em> elements view.
+    <li> Select <em> Connect Mode </em> by clicking the connection item with
+         a plus sign on it on the tool bar residing at the left side of the
+         GME.
+         </li>
+    <li> Make the connection from <em> concurrency -&gt; single threaded </em>
+         option item to the <em> IF </em> operator.
+         </li>
+    <li> Then connect the <em> IF </em> operator to the <em> thread count </em>
+         option. When you make the second connection, GME will pop up a window
+         to show you possible connection types, because we want to enforce a
+         constant value for the integer option we will select the
+         <em> Integer Equality Association. </em>
+	 </li>
+    <li> Click on the connection and set the value of it to 1.
+         </li>
+  </ul>
+  <p>The final look of the rule is given in the Figure below.</p>
+  <a name="#figure_ocml_sample_rule"/>
+  <img src="ocml_sample_rule.png"/>
+<a name="#ocml_interpreter"/>
+<h2> OCML Interpreter </h2>
+  <p>
+  The modeled options and rules can be exported into an xml file by invoking
+  the OCML interpreter registered with the OCML paradigm. To do this, simply
+  click the <em> OCML Interpreter </em> button on tool bar. Then a save file
+  dialog will appear asking a file name to save the model. The exported file
+  will be used by the <em> OCML configurator </em> which is a graphical user
+  interface for editing options.
+  </p>
+<a name="#ocml_option_configurator"/>
+<h2> Option Configurator </h2>
+  <p>
+  <em> Option Configurator </em> provides a graphical user interface for users
+  to enter values for the options modeled within the GME OCML paradigm.
+  Different editing areas are used for different option types (i.e. while 
+  integer and string options are edited in a text area, for the enum option
+  the configurator displays a combo box where all the possible values are
+  shown and one can be selected.)
+  </p>
+  <p>
+  The value in the <em> description </em> attribute of the OCML modeling
+  elements are displayed in a text area to provide assistance for the user.
+  The rules defined in the rules paradigm are enforced by the OCML Configurator
+  (i.e. the rule defined in the section <a href="#ocml_rule_paradigm"> OCML
+  rule paradigm </a> will prevent the <em> thread count </em> option to have
+  a value different then 1, if the <em> concurrency </em> option's value
+  is <em> single threaded. </em>
+  </p>
+  <a name="#figure_ocml_configurator"/>
+  <img src="ocml_configurator.png"/>
+</body>
+</html>

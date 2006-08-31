@@ -1,0 +1,23 @@
+// -*- IDL -*-
+
+#ifndef _CUTS_EVENTS_IDL_
+#define _CUTS_EVENTS_IDL_
+
+#include <Components.idl>
+
+module CUTS
+{
+  eventtype Collection_Statistics
+  {
+    /// Start time of the collection.
+    public long start_time;
+
+    /// Finish time of the collection.
+    public long finish_time;
+
+    /// Number of components included in the collection.
+    public unsigned long component_count;
+  };
+};
+
+#endif  // !defined _CUTS_EVENTS_IDL_

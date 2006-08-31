@@ -1,0 +1,569 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE project SYSTEM "mga.dtd">
+
+<project guid="{00000000-0000-0000-0000-000000000000}" cdate="Sun Dec 07 21:46:49 2003" mdate="Sun Dec 07 21:54:49 2003" metaguid="{88C7B107-DEAD-BEEF-FEED-DAD000000000}" metaname="FESML">
+	<name>Fed_EC_Example</name>
+	<comment></comment>
+	<author></author>
+	<folder id="id-006a-00000001" relid="0x1" childrelidcntr="0x3" kind="RootFolder">
+		<name>Fed_EC_Example</name>
+		<folder id="id-006a-00000002" relid="0x3" childrelidcntr="0x1" kind="Event_TypeS">
+			<name>NewEvent_TypeS</name>
+			<model id="id-0065-00000001" kind="Event_Type" relid="0x1" childrelidcntr="0x2">
+				<name>NewEvent_Type</name>
+				<model id="id-0065-00000002" kind="Event_Type" role="Event_Type" relid="0x1" childrelidcntr="0x0">
+					<name>Event_Type</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Structure" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>387,275</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</model>
+				<atom id="id-0066-00000001" kind="Event_Field_Name" role="Event_Field_Name" relid="0x2">
+					<name>Event_Field_Name</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Structure" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>394,464</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="Event_Field_Type">
+						<value>123</value>
+					</attribute>
+				</atom>
+			</model>
+		</folder>
+		<model id="id-0065-00000003" kind="Gateway_Federation" relid="0x2" childrelidcntr="0xa">
+			<name>Fed_EC_Example</name>
+			<connection id="id-0068-0000001b" kind="EC_RemoteGateway" role="EC_RemoteGateway" relid="0x3">
+				<name>EC_RemoteGateway</name>
+				<connpoint role="dst" target="id-0066-00000005"/>
+				<connpoint role="src" target="id-0065-00000009"/>
+			</connection>
+			<model id="id-0065-00000008" kind="Site" role="Site" relid="0x2" childrelidcntr="0xa">
+				<name>Site1</name>
+				<regnode name="PartRegs" isopaque="yes">
+					<value></value>
+					<regnode name="InSite_Connectivity" isopaque="yes">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>394,170</value>
+						</regnode>
+					</regnode>
+					<regnode name="Connectivity" isopaque="yes">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>140,57</value>
+						</regnode>
+					</regnode>
+				</regnode>
+				<connection id="id-0068-0000001a" kind="Supplier_EC" role="Supplier_EC" relid="0x4">
+					<name>Supplier_EC</name>
+					<regnode name="autorouterPref" isopaque="yes">
+						<value>N</value>
+					</regnode>
+					<connpoint role="src" target="id-0066-0000000c"/>
+					<connpoint role="dst" target="id-0065-00000009"/>
+				</connection>
+				<connection id="id-0068-00000019" kind="LocalGateway_EC" role="LocalGateway_EC" relid="0x7">
+					<name>LocalGateway_EC</name>
+					<connpoint role="src" target="id-0066-0000000e"/>
+					<connpoint role="dst" target="id-0065-00000009"/>
+				</connection>
+				<connection id="id-0068-00000018" kind="EC_Consumer" role="EC_Consumer" relid="0x9">
+					<name>EC_Consumer</name>
+					<connpoint role="src" target="id-0065-00000009"/>
+					<connpoint role="dst" target="id-0066-0000000d"/>
+				</connection>
+				<connection id="id-0068-00000017" kind="LocalGateway_EC" role="LocalGateway_EC" relid="0xa">
+					<name>LocalGateway_EC</name>
+					<connpoint role="src" target="id-0066-0000000f"/>
+					<connpoint role="dst" target="id-0065-00000009"/>
+				</connection>
+				<atom id="id-0066-0000000d" kind="Event_Consumer" role="Event_Consumer" relid="0x2">
+					<name>Event_Consumer</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="InSite_Connectivity" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>334,215</value>
+							</regnode>
+						</regnode>
+						<regnode name="Connectivity" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>40,130</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</atom>
+				<atom id="id-0066-0000000c" kind="Event_Supplier" role="Event_Supplier" relid="0x3">
+					<name>Event_Supplier</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="InSite_Connectivity" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>124,341</value>
+							</regnode>
+						</regnode>
+						<regnode name="Connectivity" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>32,370</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</atom>
+				<model id="id-0065-00000009" kind="Event_Channel" role="Event_Channel" relid="0x1" childrelidcntr="0x0">
+					<name>EC5</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="InSite_Connectivity" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>142,226</value>
+							</regnode>
+						</regnode>
+						<regnode name="Connectivity" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>212,247</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</model>
+				<atom id="id-0066-0000000f" kind="CORBA_Gateway" role="CORBA_Gateway" relid="0x8">
+					<name>CORBA_Gateway</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Connectivity" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>369,348</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</atom>
+				<atom id="id-0066-0000000e" kind="CORBA_Gateway" role="CORBA_Gateway" relid="0x6">
+					<name>CORBA_Gateway</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Connectivity" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>366,121</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</atom>
+			</model>
+			<model id="id-0065-00000006" kind="Site" role="Site" relid="0x5" childrelidcntr="0x19">
+				<name>Site3</name>
+				<regnode name="PartRegs" isopaque="yes">
+					<value></value>
+					<regnode name="Connectivity" isopaque="yes">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>336,337</value>
+						</regnode>
+					</regnode>
+				</regnode>
+				<reference id="id-0067-00000007" kind="Event_Type_Ref" role="Event_Type_Ref" relid="0x2">
+					<name>Event_Type_Ref</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Connectivity" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>505,217</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<reference id="id-0067-00000006" kind="Event_Type_Ref" role="Event_Type_Ref" relid="0x7">
+					<name>Event_Type_Ref</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Connectivity" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>29,35</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<reference id="id-0067-00000005" kind="Event_Type_Ref" role="Event_Type_Ref" relid="0x12">
+					<name>Event_Type_Ref</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Connectivity" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>492,660</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<reference id="id-0067-00000004" kind="Event_Type_Ref" role="Event_Type_Ref" relid="0x13">
+					<name>Event_Type_Ref</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Connectivity" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>331,660</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<reference id="id-0067-00000003" kind="Event_Type_Ref" role="Event_Type_Ref" relid="0x16">
+					<name>Event_Type_Ref</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Connectivity" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>23,653</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<connection id="id-0068-00000016" kind="Consumer_Event_Typing" role="Consumer_Event_Typing" relid="0x8">
+					<name>Consumer_Event_Typing</name>
+					<connpoint role="src" target="id-0066-00000009"/>
+					<connpoint role="dst" target="id-0067-00000007"/>
+				</connection>
+				<connection id="id-0068-00000015" kind="LocalGateway_EC" role="LocalGateway_EC" relid="0x9">
+					<name>LocalGateway_EC</name>
+					<connpoint role="src" target="id-0066-0000000b"/>
+					<connpoint role="dst" target="id-0065-00000007"/>
+				</connection>
+				<connection id="id-0068-00000014" kind="EC_Consumer" role="EC_Consumer" relid="0xa">
+					<name>EC_Consumer</name>
+					<connpoint role="dst" target="id-0066-00000009"/>
+					<connpoint role="src" target="id-0065-00000007"/>
+				</connection>
+				<connection id="id-0068-00000013" kind="Supplier_EC" role="Supplier_EC" relid="0xb">
+					<name>Supplier_EC</name>
+					<connpoint role="src" target="id-0066-00000008"/>
+					<connpoint role="dst" target="id-0065-00000007"/>
+				</connection>
+				<connection id="id-0068-00000012" kind="LocalGateway_EC" role="LocalGateway_EC" relid="0xc">
+					<name>LocalGateway_EC</name>
+					<connpoint role="src" target="id-0066-0000000a"/>
+					<connpoint role="dst" target="id-0065-00000007"/>
+				</connection>
+				<connection id="id-0068-00000011" kind="Supplier_Event_Typing" role="Supplier_Event_Typing" relid="0xd">
+					<name>Supplier_Event_Typing</name>
+					<connpoint role="src" target="id-0066-00000008"/>
+					<connpoint role="dst" target="id-0067-00000006"/>
+				</connection>
+				<connection id="id-0068-00000010" kind="Supplier_EC" role="Supplier_EC" relid="0x10">
+					<name>Supplier_EC</name>
+					<connpoint role="src" target="id-0066-00000007"/>
+					<connpoint role="dst" target="id-0065-00000007"/>
+				</connection>
+				<connection id="id-0068-0000000f" kind="EC_Consumer" role="EC_Consumer" relid="0x11">
+					<name>EC_Consumer</name>
+					<connpoint role="src" target="id-0065-00000007"/>
+					<connpoint role="dst" target="id-0066-00000006"/>
+				</connection>
+				<connection id="id-0068-0000000e" kind="Consumer_Event_Typing" role="Consumer_Event_Typing" relid="0x14">
+					<name>Consumer_Event_Typing</name>
+					<connpoint role="src" target="id-0066-00000006"/>
+					<connpoint role="dst" target="id-0067-00000005"/>
+				</connection>
+				<connection id="id-0068-0000000d" kind="Consumer_Event_Typing" role="Consumer_Event_Typing" relid="0x15">
+					<name>Consumer_Event_Typing</name>
+					<connpoint role="src" target="id-0066-00000006"/>
+					<connpoint role="dst" target="id-0067-00000004"/>
+				</connection>
+				<connection id="id-0068-0000000c" kind="Supplier_Event_Typing" role="Supplier_Event_Typing" relid="0x17">
+					<name>Supplier_Event_Typing</name>
+					<connpoint role="src" target="id-0066-00000007"/>
+					<connpoint role="dst" target="id-0067-00000003"/>
+				</connection>
+				<atom id="id-0066-00000009" kind="Event_Consumer" role="Event_Consumer" relid="0x3">
+					<name>Event_Consumer</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Connectivity" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>488,382</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</atom>
+				<atom id="id-0066-00000008" kind="Event_Supplier" role="Event_Supplier" relid="0x5">
+					<name>Event_Supplier</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Connectivity" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>32,356</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</atom>
+				<atom id="id-0066-00000007" kind="Event_Supplier" role="Event_Supplier" relid="0xe">
+					<name>Event_Supplier</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Connectivity" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>23,513</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</atom>
+				<atom id="id-0066-00000006" kind="Event_Consumer" role="Event_Consumer" relid="0xf">
+					<name>Event_Consumer</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Connectivity" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>488,508</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</atom>
+				<model id="id-0065-00000007" kind="Event_Channel" role="Event_Channel" relid="0x1" childrelidcntr="0x0">
+					<name>EC2</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="InSite_Connectivity" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>303,359</value>
+							</regnode>
+						</regnode>
+						<regnode name="Connectivity" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>184,303</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</model>
+				<atom id="id-0066-0000000b" kind="CORBA_Gateway" role="CORBA_Gateway" relid="0x4">
+					<name>CORBA_Gateway</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="InSite_Connectivity" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>149,366</value>
+							</regnode>
+						</regnode>
+						<regnode name="Connectivity" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>117,159</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</atom>
+				<atom id="id-0066-0000000a" kind="CORBA_Gateway" role="CORBA_Gateway" relid="0x6">
+					<name>CORBA_Gateway</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Connectivity" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>264,159</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</atom>
+			</model>
+			<model id="id-0065-00000004" kind="Site" role="Site" relid="0x1" childrelidcntr="0xe">
+				<name>Site2</name>
+				<regnode name="PartRegs" isopaque="yes">
+					<value></value>
+					<regnode name="InSite_Connectivity" isopaque="yes">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>14,8</value>
+						</regnode>
+					</regnode>
+					<regnode name="Outside_Connectivity" isopaque="yes">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>240,212</value>
+						</regnode>
+					</regnode>
+					<regnode name="Connectivity" isopaque="yes">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>665,85</value>
+						</regnode>
+					</regnode>
+				</regnode>
+				<reference id="id-0067-00000002" kind="Event_Type_Ref" role="Event_Type_Ref" relid="0x4">
+					<name>Event_Type_Ref</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Connectivity" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>337,224</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<reference id="id-0067-00000001" kind="Event_Type_Ref" role="Event_Type_Ref" relid="0xd">
+					<name>Event_Type_Ref</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Connectivity" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>324,527</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<connection id="id-0068-00000007" kind="Consumer_Event_Typing" role="Consumer_Event_Typing" relid="0x6">
+					<name>Consumer_Event_Typing</name>
+					<connpoint role="src" target="id-0066-00000003"/>
+					<connpoint role="dst" target="id-0067-00000002"/>
+				</connection>
+				<connection id="id-0068-00000006" kind="Supplier_EC" role="Supplier_EC" relid="0x9">
+					<name>Supplier_EC</name>
+					<connpoint role="src" target="id-0066-00000002"/>
+					<connpoint role="dst" target="id-0065-00000005"/>
+				</connection>
+				<connection id="id-0068-00000005" kind="EC_Consumer" role="EC_Consumer" relid="0xa">
+					<name>EC_Consumer</name>
+					<connpoint role="src" target="id-0065-00000005"/>
+					<connpoint role="dst" target="id-0066-00000003"/>
+				</connection>
+				<connection id="id-0068-00000004" kind="LocalGateway_EC" role="LocalGateway_EC" relid="0xb">
+					<name>LocalGateway_EC</name>
+					<connpoint role="src" target="id-0066-00000004"/>
+					<connpoint role="dst" target="id-0065-00000005"/>
+				</connection>
+				<connection id="id-0068-00000003" kind="LocalGateway_EC" role="LocalGateway_EC" relid="0xc">
+					<name>LocalGateway_EC</name>
+					<connpoint role="src" target="id-0066-00000005"/>
+					<connpoint role="dst" target="id-0065-00000005"/>
+				</connection>
+				<connection id="id-0068-00000002" kind="Supplier_Event_Typing" role="Supplier_Event_Typing" relid="0xe">
+					<name>Supplier_Event_Typing</name>
+					<connpoint role="src" target="id-0066-00000002"/>
+					<connpoint role="dst" target="id-0067-00000001"/>
+				</connection>
+				<atom id="id-0066-00000003" kind="Event_Consumer" role="Event_Consumer" relid="0x5">
+					<name>Event_Consumer</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Connectivity" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>194,109</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</atom>
+				<atom id="id-0066-00000002" kind="Event_Supplier" role="Event_Supplier" relid="0x8">
+					<name>Event_Supplier</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Connectivity" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>193,447</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</atom>
+				<model id="id-0065-00000005" kind="Event_Channel" role="Event_Channel" relid="0x3" childrelidcntr="0x0">
+					<name>EC1</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="InSite_Connectivity" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>303,359</value>
+							</regnode>
+						</regnode>
+						<regnode name="Connectivity" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>100,296</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</model>
+				<atom id="id-0066-00000005" kind="CORBA_Gateway" role="CORBA_Gateway" relid="0x2">
+					<name>CORBA_Gateway</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="InSite_Connectivity" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>149,366</value>
+							</regnode>
+						</regnode>
+						<regnode name="Connectivity" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>61,180</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</atom>
+				<atom id="id-0066-00000004" kind="CORBA_Gateway" role="CORBA_Gateway" relid="0x7">
+					<name>CORBA_Gateway</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Connectivity" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>65,415</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</atom>
+			</model>
+			<connection id="id-0068-0000000b" kind="EC_RemoteGateway" role="EC_RemoteGateway" relid="0x6">
+				<name>EC_RemoteGateway</name>
+				<connpoint role="src" target="id-0065-00000009"/>
+				<connpoint role="dst" target="id-0066-0000000b"/>
+			</connection>
+			<connection id="id-0068-0000000a" kind="EC_RemoteGateway" role="EC_RemoteGateway" relid="0x7">
+				<name>EC_RemoteGateway</name>
+				<connpoint role="src" target="id-0065-00000007"/>
+				<connpoint role="dst" target="id-0066-0000000f"/>
+			</connection>
+			<connection id="id-0068-00000009" kind="EC_RemoteGateway" role="EC_RemoteGateway" relid="0x8">
+				<name>EC_RemoteGateway</name>
+				<connpoint role="src" target="id-0065-00000007"/>
+				<connpoint role="dst" target="id-0066-00000004"/>
+			</connection>
+			<connection id="id-0068-00000008" kind="EC_RemoteGateway" role="EC_RemoteGateway" relid="0x4">
+				<name>EC_RemoteGateway</name>
+				<connpoint role="dst" target="id-0066-0000000e"/>
+				<connpoint role="src" target="id-0065-00000005"/>
+			</connection>
+			<connection id="id-0068-00000001" kind="EC_RemoteGateway" role="EC_RemoteGateway" relid="0x9">
+				<name>EC_RemoteGateway</name>
+				<connpoint role="src" target="id-0065-00000005"/>
+				<connpoint role="dst" target="id-0066-0000000a"/>
+			</connection>
+		</model>
+	</folder>
+</project>

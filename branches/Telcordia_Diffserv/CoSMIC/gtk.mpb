@@ -1,0 +1,26 @@
+// $Id$
+
+project {
+  libpaths += $(GTK_PATH)/lib
+  includes += $(GTK_PATH)/include/gtkmm-2.4 \
+              $(GTK_PATH)/include/glibmm-2.4 \
+              $(GTK_PATH)/include/gdkmm-2.4 \
+              $(GTK_PATH)/include/pangomm-1.4 \
+              $(GTK_PATH)/include/atkmm-1.6 \
+              $(GTK_PATH)/include/gtk-2.0 \
+              $(GTK_PATH)/lib/gtkmm-2.4/include \
+              $(GTK_PATH)/lib/glibmm-2.4/include \
+              $(GTK_PATH)/lib/gdkmm-2.4/include \
+              $(GTK_PATH)/include/sigc++-2.0 \
+              $(GTK_PATH)/lib/sigc++-2.0/include \
+              $(GTK_PATH)/include/glib-2.0 \
+              $(GTK_PATH)/lib/glib-2.0/include \
+              $(GTK_PATH)/lib/gtk-2.0/include \
+              $(GTK_PATH)/include/pango-1.0 \
+              $(GTK_PATH)/include/atk-1.0
+
+  lit_libs = gtkmm-2.4 gdkmm-2.4 atkmm-1.6 gtk-win32-2.0 \
+             pangomm-1.4 glibmm-2.4 sigc-2.0 gdk-win32-2.0 \
+             atk-1.0 gdk_pixbuf-2.0 pangowin32-1.0 gdi32 \
+             pango-1.0 gobject-2.0 gmodule-2.0 glib-2.0 intl iconv
+}

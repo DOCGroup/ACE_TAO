@@ -1,0 +1,734 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE project SYSTEM "mga.dtd">
+
+<project guid="{00000000-0000-0000-0000-000000000000}" cdate="Wed Dec 17 14:54:15 2003" mdate="Fri Apr 16 14:49:22 2004" metaguid="{29C95612-DEAD-BEEF-FEED-DAD000000001}" metaname="EQALMeta">
+	<name>BasicSP</name>
+	<comment></comment>
+	<author></author>
+	<folder id="id-006a-00000001" relid="0x1" childrelidcntr="0x1" kind="RootFolder">
+		<name>BasicSP</name>
+		<model id="id-0065-00000001" kind="Component_Assembly" relid="0x1" childrelidcntr="0x19">
+			<name>BasicSP</name>
+			<connection id="id-0068-00000007" kind="Port_eventtype" role="Port_eventtype" relid="0x11">
+				<name>Port_eventtype</name>
+				<regnode name="autorouterPref" isopaque="yes">
+					<value>w</value>
+				</regnode>
+				<connpoint role="dst" target="id-0066-00000004"/>
+				<connpoint role="src" target="id-0066-00000009"/>
+			</connection>
+			<connection id="id-0068-00000004" kind="Port_eventtype" role="Port_eventtype" relid="0xe">
+				<name>Port_eventtype</name>
+				<regnode name="autorouterPref" isopaque="yes">
+					<value>w</value>
+				</regnode>
+				<connpoint role="dst" target="id-0066-00000003"/>
+				<connpoint role="src" target="id-0066-00000008"/>
+			</connection>
+			<model id="id-0065-00000006" kind="RTEC_Proxy_Consumer" role="RTEC_Proxy_Consumer" relid="0x18" childrelidcntr="0x3">
+				<name>RTEC_Proxy_Consumer</name>
+				<regnode name="PartRegs">
+					<value></value>
+					<regnode name="RealTime_Event_Service">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>527,268</value>
+						</regnode>
+					</regnode>
+				</regnode>
+				<connection id="id-0068-0000000c" kind="Use_RT_Info" role="Use_RT_Info" relid="0x3">
+					<name>Use_RT_Info</name>
+					<regnode name="autorouterPref" isopaque="yes">
+						<value>E</value>
+					</regnode>
+					<connpoint role="dst" target="id-0067-00000001"/>
+					<connpoint role="src" target="id-0066-0000000e"/>
+				</connection>
+				<atom id="id-0066-0000000e" kind="RT_Info" role="RT_Info" relid="0x2">
+					<name>RT_Info</name>
+					<regnode name="PartRegs">
+						<value></value>
+						<regnode name="RealTime_Event_Service">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>79,387</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="period" status="meta">
+						<value>0</value>
+					</attribute>
+					<attribute kind="entry_point" status="meta">
+						<value></value>
+					</attribute>
+					<attribute kind="criticality" status="meta">
+						<value>MEDIUM_CRITICALITY</value>
+					</attribute>
+					<attribute kind="enabled" status="meta">
+						<value>DEPENDENCY_NON_VOLATILE</value>
+					</attribute>
+					<attribute kind="importance" status="meta">
+						<value>MEDIUM_IMPORTANCE</value>
+					</attribute>
+					<attribute kind="quantum" status="meta">
+						<value>0</value>
+					</attribute>
+					<attribute kind="threads" status="meta">
+						<value>1</value>
+					</attribute>
+					<attribute kind="cached_execution_time" status="meta">
+						<value>0</value>
+					</attribute>
+					<attribute kind="worst_case_execution_time" status="meta">
+						<value>0</value>
+					</attribute>
+					<attribute kind="info_type" status="meta">
+						<value>OPERATION</value>
+					</attribute>
+					<attribute kind="typical_execution_time" status="meta">
+						<value>0</value>
+					</attribute>
+				</atom>
+				<reference id="id-0067-00000001" kind="RTEC_Resource_Factory_Reference" role="RTEC_Resource_Factory_Reference" relid="0x1" referred="id-0066-0000000c">
+					<name>RTEC_Resource_Factory</name>
+					<regnode name="PartRegs">
+						<value></value>
+						<regnode name="RealTime_Event_Service">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>1011,388</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+			</model>
+			<connection id="id-0068-00000009" kind="Port_eventtype" role="Port_eventtype" relid="0x13">
+				<name>Port_eventtype</name>
+				<regnode name="autorouterPref" isopaque="yes">
+					<value>E</value>
+				</regnode>
+				<connpoint role="dst" target="id-0066-0000000a"/>
+				<connpoint role="src" target="id-0066-00000006"/>
+			</connection>
+			<connection id="id-0068-0000000b" kind="Direct_Connection" role="Direct_Connection" relid="0x17">
+				<name>Direct_Connection</name>
+				<regnode name="autorouterPref" isopaque="yes">
+					<value>Ew</value>
+				</regnode>
+				<connpoint role="dst" target="id-0066-00000001"/>
+				<connpoint role="src" target="id-0066-00000002"/>
+			</connection>
+			<atom id="id-0066-00000005" kind="Event_Sink" role="Event_Sink" relid="0x9">
+				<name>in_avail</name>
+				<regnode name="PartRegs">
+					<value></value>
+					<regnode name="Assembly_Aspect">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>576,450</value>
+						</regnode>
+					</regnode>
+					<regnode name="Event_Service">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>576,450</value>
+						</regnode>
+					</regnode>
+					<regnode name="Notification_Service">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>576,450</value>
+						</regnode>
+					</regnode>
+					<regnode name="RealTime_Event_Service">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>576,450</value>
+						</regnode>
+					</regnode>
+				</regnode>
+			</atom>
+			<model id="id-0065-00000004" kind="Component" role="Component" relid="0x3" childrelidcntr="0x1">
+				<name>BMClosedED</name>
+				<regnode name="PartRegs">
+					<value></value>
+					<regnode name="Assembly_Aspect">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>625,429</value>
+						</regnode>
+					</regnode>
+					<regnode name="Event_Service">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>625,429</value>
+						</regnode>
+					</regnode>
+					<regnode name="Notification_Service">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>625,429</value>
+						</regnode>
+					</regnode>
+					<regnode name="RealTime_Event_Service">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>625,429</value>
+						</regnode>
+					</regnode>
+				</regnode>
+				<atom id="id-0066-00000009" kind="eventtype" role="eventtype" relid="0x1">
+					<name>DataAvailable</name>
+					<regnode name="PartRegs">
+						<value></value>
+						<regnode name="Event_Service">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>1248,443</value>
+							</regnode>
+						</regnode>
+						<regnode name="RealTime_Event_Service">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>1248,443</value>
+							</regnode>
+						</regnode>
+						<regnode name="Notification_Service">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>1248,443</value>
+							</regnode>
+						</regnode>
+						<regnode name="Assembly_Aspect">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>1248,457</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</atom>
+			</model>
+			<atom id="id-0066-0000000d" kind="NS_Resource_Factory" role="NS_Resource_Factory" relid="0x15">
+				<name>NS_Resource_Factory</name>
+				<regnode name="PartRegs">
+					<value></value>
+					<regnode name="Assembly_Aspect">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>611,646</value>
+						</regnode>
+					</regnode>
+				</regnode>
+				<attribute kind="MTLookup" status="meta">
+					<value>false</value>
+				</attribute>
+				<attribute kind="RejectNewEvents" status="meta">
+					<value>false</value>
+				</attribute>
+				<attribute kind="MTListenerEval" status="meta">
+					<value>false</value>
+				</attribute>
+				<attribute kind="EventReliability" status="meta">
+					<value>BestEffort</value>
+				</attribute>
+				<attribute kind="MTDispatching" status="meta">
+					<value>false</value>
+				</attribute>
+				<attribute kind="MaxQueueLength" status="meta">
+					<value>0</value>
+				</attribute>
+				<attribute kind="MTSourceEval" status="meta">
+					<value>false</value>
+				</attribute>
+				<attribute kind="MaxConsumers" status="meta">
+					<value>0</value>
+				</attribute>
+				<attribute kind="AllocateTaskPerProxy" status="meta">
+					<value>false</value>
+				</attribute>
+				<attribute kind="MaxSuppliers" status="meta">
+					<value>0</value>
+				</attribute>
+				<attribute kind="AsynchUpdates" status="meta">
+					<value>false</value>
+				</attribute>
+				<attribute kind="LookupThreads" status="meta">
+					<value>1</value>
+				</attribute>
+				<attribute kind="SourceThreads" status="meta">
+					<value>1</value>
+				</attribute>
+				<attribute kind="ListenerThreads" status="meta">
+					<value>1</value>
+				</attribute>
+				<attribute kind="DispatchingThreads" status="meta">
+					<value>1</value>
+				</attribute>
+			</atom>
+			<connection id="id-0068-00000006" kind="Port_eventtype" role="Port_eventtype" relid="0x10">
+				<name>Port_eventtype</name>
+				<regnode name="autorouterPref" isopaque="yes">
+					<value>E</value>
+				</regnode>
+				<connpoint role="dst" target="id-0066-00000009"/>
+				<connpoint role="src" target="id-0066-00000005"/>
+			</connection>
+			<model id="id-0065-00000002" kind="Component" role="Component" relid="0x1" childrelidcntr="0x1">
+				<name>EC</name>
+				<regnode name="PartRegs">
+					<value></value>
+					<regnode name="Assembly_Aspect">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>65,93</value>
+						</regnode>
+					</regnode>
+					<regnode name="Event_Service">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>65,93</value>
+						</regnode>
+					</regnode>
+					<regnode name="Notification_Service">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>65,93</value>
+						</regnode>
+					</regnode>
+					<regnode name="RealTime_Event_Service">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>65,93</value>
+						</regnode>
+					</regnode>
+				</regnode>
+				<atom id="id-0066-00000007" kind="eventtype" role="eventtype" relid="0x1">
+					<name>TimeOut</name>
+					<regnode name="PartRegs">
+						<value></value>
+						<regnode name="Assembly_Aspect">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>1248,450</value>
+							</regnode>
+						</regnode>
+						<regnode name="Notification_Service">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>1248,450</value>
+							</regnode>
+						</regnode>
+						<regnode name="RealTime_Event_Service">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>1248,450</value>
+							</regnode>
+						</regnode>
+						<regnode name="Event_Service">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>1248,450</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</atom>
+			</model>
+			<model id="id-0065-00000005" kind="Component" role="Component" relid="0x4" childrelidcntr="0x1">
+				<name>BMDisplay</name>
+				<regnode name="PartRegs">
+					<value></value>
+					<regnode name="Notification_Service">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>1003,604</value>
+						</regnode>
+					</regnode>
+					<regnode name="RealTime_Event_Service">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>1003,604</value>
+						</regnode>
+					</regnode>
+					<regnode name="Assembly_Aspect">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>1003,604</value>
+						</regnode>
+					</regnode>
+					<regnode name="Event_Service">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>1003,604</value>
+						</regnode>
+					</regnode>
+				</regnode>
+				<atom id="id-0066-0000000a" kind="eventtype" role="eventtype" relid="0x1">
+					<name>DataAvailable</name>
+					<regnode name="PartRegs">
+						<value></value>
+						<regnode name="Assembly_Aspect">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>44,450</value>
+							</regnode>
+						</regnode>
+						<regnode name="Event_Service">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>1248,443</value>
+							</regnode>
+						</regnode>
+						<regnode name="Notification_Service">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>1248,443</value>
+							</regnode>
+						</regnode>
+						<regnode name="RealTime_Event_Service">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>1248,443</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</atom>
+			</model>
+			<atom id="id-0066-00000006" kind="Event_Sink" role="Event_Sink" relid="0xa">
+				<name>data_ready</name>
+				<regnode name="PartRegs">
+					<value></value>
+					<regnode name="Assembly_Aspect">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>940,625</value>
+						</regnode>
+					</regnode>
+					<regnode name="Event_Service">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>954,625</value>
+						</regnode>
+					</regnode>
+					<regnode name="Notification_Service">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>954,625</value>
+						</regnode>
+					</regnode>
+					<regnode name="RealTime_Event_Service">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>954,625</value>
+						</regnode>
+					</regnode>
+				</regnode>
+			</atom>
+			<connection id="id-0068-00000001" kind="Port_eventtype" role="Port_eventtype" relid="0xb">
+				<name>Port_eventtype</name>
+				<regnode name="autorouterPref" isopaque="yes">
+					<value>w</value>
+				</regnode>
+				<connpoint role="dst" target="id-0066-00000002"/>
+				<connpoint role="src" target="id-0066-00000007"/>
+			</connection>
+			<model id="id-0065-00000003" kind="Component" role="Component" relid="0x2" childrelidcntr="0x2">
+				<name>BMDevice</name>
+				<regnode name="PartRegs">
+					<value></value>
+					<regnode name="Assembly_Aspect">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>289,261</value>
+						</regnode>
+					</regnode>
+					<regnode name="Event_Service">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>289,261</value>
+						</regnode>
+					</regnode>
+					<regnode name="Notification_Service">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>289,261</value>
+						</regnode>
+					</regnode>
+					<regnode name="RealTime_Event_Service">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>289,261</value>
+						</regnode>
+					</regnode>
+				</regnode>
+				<atom id="id-0066-0000000b" kind="eventtype" role="eventtype" relid="0x2">
+					<name>TimeOut</name>
+					<regnode name="PartRegs">
+						<value></value>
+						<regnode name="Assembly_Aspect">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>37,401</value>
+							</regnode>
+						</regnode>
+						<regnode name="Notification_Service">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>37,401</value>
+							</regnode>
+						</regnode>
+						<regnode name="RealTime_Event_Service">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>37,401</value>
+							</regnode>
+						</regnode>
+						<regnode name="Event_Service">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>37,401</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</atom>
+				<atom id="id-0066-00000008" kind="eventtype" role="eventtype" relid="0x1">
+					<name>DataAvailable</name>
+					<regnode name="PartRegs">
+						<value></value>
+						<regnode name="Assembly_Aspect">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>1248,443</value>
+							</regnode>
+						</regnode>
+						<regnode name="Event_Service">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>1248,443</value>
+							</regnode>
+						</regnode>
+						<regnode name="RealTime_Event_Service">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>1248,443</value>
+							</regnode>
+						</regnode>
+						<regnode name="Notification_Service">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>1248,443</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</atom>
+			</model>
+			<connection id="id-0068-00000003" kind="Port_eventtype" role="Port_eventtype" relid="0xd">
+				<name>Port_eventtype</name>
+				<regnode name="autorouterPref" isopaque="yes">
+					<value>E</value>
+				</regnode>
+				<connpoint role="dst" target="id-0066-0000000b"/>
+				<connpoint role="src" target="id-0066-00000001"/>
+			</connection>
+			<connection id="id-0068-0000000d" kind="RTEC_Connection" role="RTEC_Connection" relid="0x19">
+				<name>RTEC_Connection</name>
+				<regnode name="autorouterPref" isopaque="yes">
+					<value>E</value>
+				</regnode>
+				<connpoint role="src" target="id-0066-00000003"/>
+				<connpoint role="dst" target="id-0066-0000000e"/>
+			</connection>
+			<atom id="id-0066-00000004" kind="Event_Source" role="Event_Source" relid="0x8">
+				<name>out_avail</name>
+				<regnode name="PartRegs">
+					<value></value>
+					<regnode name="Assembly_Aspect">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>765,450</value>
+						</regnode>
+					</regnode>
+					<regnode name="Event_Service">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>751,450</value>
+						</regnode>
+					</regnode>
+					<regnode name="Notification_Service">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>751,450</value>
+						</regnode>
+					</regnode>
+					<regnode name="RealTime_Event_Service">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>751,450</value>
+						</regnode>
+					</regnode>
+				</regnode>
+			</atom>
+			<atom id="id-0066-0000000c" kind="RTEC_Resource_Factory" role="RTEC_Resource_Factory" relid="0x14">
+				<name>RTEC_Resource_Factory</name>
+				<regnode name="PartRegs">
+					<value></value>
+					<regnode name="Assembly_Aspect">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>261,499</value>
+						</regnode>
+					</regnode>
+				</regnode>
+				<attribute kind="ECConsumerLock">
+					<value>null</value>
+				</attribute>
+				<attribute kind="ECSupplierFiltering">
+					<value>null</value>
+				</attribute>
+				<attribute kind="ECDispatching">
+					<value>priority</value>
+				</attribute>
+				<attribute kind="ECTimeout">
+					<value>priority</value>
+				</attribute>
+				<attribute kind="ECConsumerControlPeriod" status="meta">
+					<value>5000000</value>
+				</attribute>
+				<attribute kind="ECSupplierLock">
+					<value>recursive</value>
+				</attribute>
+				<attribute kind="ECSupplierControl">
+					<value>reactive</value>
+				</attribute>
+				<attribute kind="ECObserver">
+					<value>basic</value>
+				</attribute>
+				<attribute kind="ECFiltering">
+					<value>prefix</value>
+				</attribute>
+				<attribute kind="ECConsumerControl">
+					<value>reactive</value>
+				</attribute>
+				<attribute kind="ECProxyPushConsumerCollectionSynch">
+					<value>st</value>
+				</attribute>
+				<attribute kind="ECUseORBId" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="ECProxyPushConsumerCollectionFlag">
+					<value>rb_tree</value>
+				</attribute>
+				<attribute kind="ECScheduling">
+					<value>priority</value>
+				</attribute>
+				<attribute kind="ECSupplierControlPeriod" status="meta">
+					<value>5000000</value>
+				</attribute>
+				<attribute kind="ECProxyPushConsumerCollectionIterator" status="meta">
+					<value>immediate (default)</value>
+				</attribute>
+				<attribute kind="ECProxyPushSupplierCollectionFlag" status="meta">
+					<value>list (default)</value>
+				</attribute>
+				<attribute kind="ECDispatchingThreads" status="meta">
+					<value>1</value>
+				</attribute>
+				<attribute kind="ECProxyPushSupplierCollectionIterator" status="meta">
+					<value>immediate (default)</value>
+				</attribute>
+				<attribute kind="ECProxyPushSupplierCollectionSynch" status="meta">
+					<value>mt (default)</value>
+				</attribute>
+			</atom>
+			<atom id="id-0066-00000003" kind="Event_Source" role="Event_Source" relid="0x7">
+				<name>data_available</name>
+				<regnode name="PartRegs">
+					<value></value>
+					<regnode name="Assembly_Aspect">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>450,282</value>
+						</regnode>
+					</regnode>
+					<regnode name="Event_Service">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>415,282</value>
+						</regnode>
+					</regnode>
+					<regnode name="Notification_Service">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>415,282</value>
+						</regnode>
+					</regnode>
+					<regnode name="RealTime_Event_Service">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>415,282</value>
+						</regnode>
+					</regnode>
+				</regnode>
+			</atom>
+			<atom id="id-0066-00000002" kind="Event_Source" role="Event_Source" relid="0x6">
+				<name>timeout</name>
+				<regnode name="PartRegs">
+					<value></value>
+					<regnode name="Event_Service">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>198,114</value>
+						</regnode>
+					</regnode>
+					<regnode name="Notification_Service">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>198,114</value>
+						</regnode>
+					</regnode>
+					<regnode name="RealTime_Event_Service">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>198,114</value>
+						</regnode>
+					</regnode>
+					<regnode name="Assembly_Aspect">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>198,114</value>
+						</regnode>
+					</regnode>
+				</regnode>
+			</atom>
+			<atom id="id-0066-00000001" kind="Event_Sink" role="Event_Sink" relid="0x5">
+				<name>timeout</name>
+				<regnode name="PartRegs">
+					<value></value>
+					<regnode name="Assembly_Aspect">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>233,282</value>
+						</regnode>
+					</regnode>
+					<regnode name="Event_Service">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>240,121</value>
+						</regnode>
+					</regnode>
+					<regnode name="Notification_Service">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>240,121</value>
+						</regnode>
+					</regnode>
+					<regnode name="RealTime_Event_Service">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>240,121</value>
+						</regnode>
+					</regnode>
+				</regnode>
+			</atom>
+		</model>
+	</folder>
+</project>

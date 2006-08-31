@@ -1,0 +1,68 @@
+project: xerces, boost_base {
+  includes += ..
+  libs += ocml_common
+  after += ocml_common
+  sharedname = ocml_engine
+  dynamicflags += OCML_ENGINE_BUILD_DLL
+  libout = $(COSMIC_ROOT)/lib
+  dllout = $(COSMIC_ROOT)/bin
+  libpaths += $(COSMIC_ROOT)/lib
+
+  Source_Files {
+    configurator.cpp
+    constraint_engine.cpp
+    logic_rules.cpp
+    rule.cpp
+    tree_parser.cpp
+    definitions.cpp
+    value_parser.cpp
+    rules_grammar.cpp
+  }
+
+  Header_Files {
+    OCML_Engine_Export.h
+    configurator.hpp
+    constraint_engine.hpp
+    definitions.hpp
+    logic_rules.hpp
+    option.hpp
+    option_interface.hpp
+    option_reference.hpp
+    option_rules.hpp
+    option_traits.hpp
+    option_value.hpp
+    rule.hpp
+    tree_parser.hpp
+    value_parser.hpp
+
+    actions.hpp
+    common_parsers.hpp
+    rules_grammar.hpp
+    spirit_helpers.hpp
+  }
+
+  Inline_Files {
+    configurator.ipp
+    constraint_engine.ipp
+    definitions.ipp
+    logic_rules.ipp
+    option.ipp
+    option_interface.ipp
+    option_reference.ipp
+    option_rules.ipp
+    option_traits.ipp
+    option_value.ipp
+    rule.ipp
+    tree_parser.ipp
+  }
+
+  Template_Files {
+    definitions.tpp
+    logic_rules.tpp
+    option.tpp
+    option_reference.tpp
+    option_rules.tpp
+    option_value.tpp
+    rules_grammar.tpp
+  }
+}

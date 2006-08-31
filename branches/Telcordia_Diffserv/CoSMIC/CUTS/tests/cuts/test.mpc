@@ -1,0 +1,33 @@
+// $Id$
+
+project (Time_Metric_Test) : cuts_test {
+  sharedname = Time_Metric_Test
+
+  Source_Files {
+    Time_Metric_Test.cpp
+  }
+}
+
+project (Time_Measurement_Test) : cuts_test {
+  sharedname = Time_Measurement_Test
+
+  Source_Files {
+    Time_Measurement_Test.cpp
+  }
+}
+
+project (Worker_Test) : cuts_test {
+  sharedname = Worker_Test
+
+  Source_Files {
+    Worker_Test.cpp
+  }
+}
+
+project (Worker_T_Test) : cuts_test {
+  sharedname = Worker_T_Test
+
+  Source_Files {
+    Worker_T_Test.cpp
+  }
+}

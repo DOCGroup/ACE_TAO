@@ -1,0 +1,41 @@
+// -*- IDL -*-
+
+//=============================================================================
+/**
+ * @file      ComponentLib.idl
+ *
+ * $Id$
+ *
+ * [insert description here]
+ *
+ * @author    James H. Hill <hillj@isis.vanderbilt.edu>
+ */
+//=============================================================================
+
+#ifndef _CUTS_PICML_IMPL_COMPONENTLIB_IDL_
+#define _CUTS_PICML_IMPL_COMPONENTLIB_IDL_
+
+#include "cuts/GME/BON/ComponentLib.idl";
+#include "ComponentConfig.h"
+
+[
+  uuid(TYPELIB_UUID),
+  version(1.0),
+  helpstring(TYPELIB_NAME)
+]
+library MgaComponentLib
+{
+  importlib("stdole32.tlb");
+  [
+    uuid(COCLASS_UUID),
+    helpstring(COCLASS_NAME)
+  ]
+  coclass MgaComponent
+  {
+    [default] interface IMgaComponentEx;
+    interface IMgaComponent;
+    interface IMgaVersionInfo;
+  };
+};
+
+#endif  // !defined _CUTS_PICML_IMPL_COMPONENTLIB_IDL_

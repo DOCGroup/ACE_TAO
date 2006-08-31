@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- WSDL for IDL to WSDL CORBA Namespace Name: corba.wsdl -->
+<definitions name="corba"
+             xmlns="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:corba="http://www.omg.org/IDL-WSDL/1.0/"
+             targetNamespace="http://www.omg.org/IDL-WSDL/1.0/" >
+  <types>
+    <xsd:schema targetNamespace="http://www.omg.org/IDL-WSDL/1.0/">
+      <xsd:include schemaLocation="CORBA.xsd" />
+    </xsd:schema>
+  </types>
+  <message name="CORBA.SystemExceptionMessage">
+    <part name="_return" type="corba:CORBA.SystemException"/>
+  </message>
+</definitions>

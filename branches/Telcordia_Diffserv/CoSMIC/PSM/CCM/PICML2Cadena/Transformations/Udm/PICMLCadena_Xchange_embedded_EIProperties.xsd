@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?udm interface="PICMLCadena_Xchange_embedded_EIProperties" version="1.00"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!-- generated on Mon Nov 15 23:04:57 2004 -->
+
+ <xsd:complexType name="PropertyType">
+  <xsd:attribute name="type" type="xsd:string" use="required"/>
+  <xsd:attribute name="name" type="xsd:string" use="required"/>
+  <xsd:attribute name="value" type="xsd:string" use="required"/>
+  <xsd:attribute name="_id" type="xsd:ID"/>
+  <xsd:attribute name="_archetype" type="xsd:IDREF"/>
+  <xsd:attribute name="_derived" type="xsd:IDREFS"/>
+  <xsd:attribute name="_instances" type="xsd:IDREFS"/>
+  <xsd:attribute name="_desynched_atts" type="xsd:string"/>
+  <xsd:attribute name="_real_archetype" type="xsd:boolean"/>
+  <xsd:attribute name="_subtype" type="xsd:boolean"/>
+ </xsd:complexType>
+
+ <xsd:complexType name="RootContainerType">
+			<xsd:sequence>
+				<xsd:element name="ConnectionSelector" type="ConnectionSelectorType" minOccurs="0" maxOccurs="unbounded"/>
+			</xsd:sequence>
+  <xsd:attribute name="_id" type="xsd:ID"/>
+  <xsd:attribute name="_archetype" type="xsd:IDREF"/>
+  <xsd:attribute name="_derived" type="xsd:IDREFS"/>
+  <xsd:attribute name="_instances" type="xsd:IDREFS"/>
+  <xsd:attribute name="_desynched_atts" type="xsd:string"/>
+  <xsd:attribute name="_real_archetype" type="xsd:boolean"/>
+  <xsd:attribute name="_subtype" type="xsd:boolean"/>
+ </xsd:complexType>
+
+ <xsd:complexType name="ConnectionSelectorType">
+			<xsd:sequence>
+				<xsd:element name="Property" type="PropertyType" minOccurs="0" maxOccurs="unbounded"/>
+			</xsd:sequence>
+  <xsd:attribute name="slaveComponentName" type="xsd:string" use="required"/>
+  <xsd:attribute name="masterPortName" type="xsd:string" use="required"/>
+  <xsd:attribute name="slavePortName" type="xsd:string" use="required"/>
+  <xsd:attribute name="_id" type="xsd:ID"/>
+  <xsd:attribute name="_archetype" type="xsd:IDREF"/>
+  <xsd:attribute name="_derived" type="xsd:IDREFS"/>
+  <xsd:attribute name="_instances" type="xsd:IDREFS"/>
+  <xsd:attribute name="_desynched_atts" type="xsd:string"/>
+  <xsd:attribute name="_real_archetype" type="xsd:boolean"/>
+  <xsd:attribute name="_subtype" type="xsd:boolean"/>
+ </xsd:complexType>
+
+ <xsd:element name="RootContainer" type="RootContainerType"/>
+
+</xsd:schema>

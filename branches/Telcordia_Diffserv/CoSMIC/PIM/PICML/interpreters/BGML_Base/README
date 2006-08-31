@@ -1,0 +1,18 @@
+          README FILE 
+          ===========
+
+This directory has the base library that BGML interpreters depends
+on. To compile the files in this directory, do the following:
+
+1: Run the mwc.pl file to generate the workspace for compiling
+   the source files
+
+$> mwc.pl 
+
+2: Compiling the workspace should generate the library and also 
+   put the library in $ACE_ROOT/lib file
+
+3: To compile and run the benchmarking files generated from BGML,
+   please set an environment variable called BGML_HOME pointing to
+   this directory.
+

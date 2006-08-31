@@ -1,0 +1,55 @@
+project (PICMLDecorator): bon {
+   // DON'T REMOVE THE FOLLOWING MACROS.  THE DECORATOR WILL CRASH IF YOU
+   // DO SO.
+   MACROS +=  _WINDLL _USRDLL _ATL_DLL
+   sharedname = PICMLDecorator
+   includes += $(COSMIC_ROOT)/PIM/PICML/decorators/PICMLDecorator
+
+   specific {
+     use_lib_modifier =
+   }
+
+   specific (vc6,vc7,vc71,vc8) {
+     link_options += /DEF:DecoratorApp.def
+   }
+
+   Source_Files {
+     DecoratorLib.idl
+     CommonError.cpp
+     Decorator.cpp
+     Decorator.rc
+     DecoratorApp.cpp
+     DecoratorApp.def
+     DecoratorLib.idl
+     DecoratorUtil.cpp
+     IDMLDecorators.cpp
+     MaskedBitmap.cpp
+     StdAfx.cpp
+   }
+
+   Header_Files {
+     CommonError.h
+     CommonSmart.h
+     Decorator.h
+     DecoratorConfig.h
+     DecoratorStd.h
+     DecoratorUtil.h
+     IDMLDecorators.h
+     MaskedBitmap.h
+     Resource.h
+     StdAfx.h
+   }
+
+   Resource_Files {
+     Decorator.rgs
+   }
+}
+
+project (RegisterPICMLDecorator) : register {
+  after += PICMLDecorator
+  custom_only = 1
+
+  Register_Files {
+    $(COSMIC_ROOT)\bin\PICMLDecorator.dll
+  }
+}

@@ -1,0 +1,16 @@
+// $Id$
+
+project : ciao_servant_dnc, cutslib {
+  //-- additional dependencies
+  after += CUTS_stub
+
+  //-- required libraries
+  libs  += CUTS_stub
+
+  //-- define additional CIDLC include directories
+  cidlflags -= --
+  cidlflags += -I$(CUTS_ROOT) --
+
+  //-- additional IDL options
+  idlflags += -I $(CUTS_ROOT)
+}

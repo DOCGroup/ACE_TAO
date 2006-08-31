@@ -1,0 +1,62 @@
+// -*- IDL -*-
+
+#ifndef _BENCHMARK_DATA_COLLECTOR_EX_IDL_
+#define _BENCHMARK_DATA_COLLECTOR_EX_IDL_
+
+#include "Benchmark_Data_Collector.idl"
+
+module CUTS
+{
+  //===========================================================================
+  /**
+   * @interface Database_Controller
+   *
+   * More advanced interface provided by the extended BDC. This interface
+   * allow clients to programmatically control interaction with the
+   * database.
+   */
+  //===========================================================================
+
+  interface Database_Service
+  {
+    /**
+     * Force the creation of a new test. This causes data entered
+     * into the database to be associated with a new test.
+     *
+     * @return The new test number.
+     */
+    long create_new_test ();
+
+    /// Stops the current test. Any data collected after the test
+    /// will not be logged to the database and discarded.
+    void stop_current_test ();
+
+    /// Get the id of the current test.
+    long current_test ();
+  };
+
+  //===========================================================================
+  /**
+   * @interface Benchmark_Data_Collector_Ex
+   *
+   * More advanced interface provided by the extended BDC. This interface
+   * allow clients to programmatically control interaction with the
+   * database.
+   */
+  //===========================================================================
+
+  component Benchmark_Data_Collector_Ex : Benchmark_Data_Collector
+  {
+    provides Database_Service database_service;
+
+    attribute string server_name;
+  };
+
+  home Benchmark_Data_Collector_Ex_Home
+    manages Benchmark_Data_Collector_Ex
+  {
+
+  };
+};
+
+#endif // !defined _BENCHMARK_DATA_COLLECTOR_EX_IDL_

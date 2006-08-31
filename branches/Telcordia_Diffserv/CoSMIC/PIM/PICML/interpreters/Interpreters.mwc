@@ -1,0 +1,22 @@
+workspace {
+  cmdline += -feature_file $COSMIC_ROOT/default.features \
+             -include $COSMIC_ROOT
+
+  PICML
+  Package
+  PackageComponent
+  Target
+  TargetComponent
+  DeploymentPlan
+  DeploymentPlanComponent
+  IDLGenerator
+  IDLImporter
+  BGML
+  BGMLcomponent
+  MPC_Interpreter
+  MPCComponent
+  CIDL_Interpreter
+  CIDLComponent
+  Path
+  PathComponent
+}

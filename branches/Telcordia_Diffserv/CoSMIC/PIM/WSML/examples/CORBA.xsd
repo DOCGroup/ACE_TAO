@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:corba="http://www.omg.org/IDL-WSDL/1.0/"
+            targetNamespace="http://www.omg.org/IDL-WSDL/1.0/"
+            elementFormDefault="qualified">
+  <xsd:element name="SourceIDL" >
+    <xsd:annotation>
+      <xsd:documentation>IDL/WSDL Mapping Info</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="source" type="xsd:string" minOccurs="1"
+                     maxOccurs="1"/>
+        <xsd:element name="version" type="xsd:string" minOccurs="1"
+                     maxOccurs="1"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="SourceRepositoryID" >
+    <xsd:annotation>
+      <xsd:documentation>IDL Mapped Repository ID </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="repositoryID" type="xsd:string" minOccurs="1"
+                     maxOccurs="1"/>
+        <xsd:element name="version" type="xsd:string" minOccurs="1"
+                     maxOccurs="1"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="ObjectReference">
+    <xsd:sequence>
+      <xsd:element name="url" type="xsd:anyURI" minOccurs="1"
+                   maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="CORBA.TypeCode">
+    <xsd:sequence>
+      <xsd:element name="definition" type="xsd:anyURI" maxOccurs="1"
+                   minOccurs="1"/>
+      <xsd:element name="typename" type="xsd:string" maxOccurs="1"
+                   minOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="CORBA.Any">
+    <xsd:sequence>
+      <xsd:element name="type" type="corba:CORBA.TypeCode" maxOccurs="1"
+                   minOccurs="1"/>
+      <xsd:element name="value" type="xsd:anyType" maxOccurs="1"
+                   minOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:simpleType name="CORBA.completion_status">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="COMPLETED_YES"/>
+      <xsd:enumeration value="COMPLETED_NO"/>
+      <xsd:enumeration value="COMPLETED_MAYBE"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:complexType name="CORBA.SystemException">
+    <xsd:sequence>
+      <xsd:element name="minor" type="xsd:unsignedInt" maxOccurs="1"
+                   minOccurs="1"/>
+      <xsd:element name="completion_status"
+                   type="corba:CORBA.completion_status" maxOccurs="1" minOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

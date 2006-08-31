@@ -1,0 +1,76 @@
+file ::=
+        { command }*
+        ;
+
+command ::=
+        define option option_path: type { '(' description ')'}?.
+        | define category category_path { '(' description ')'}?.
+        | define rule rule_name: rule_expression.
+        ;
+
+rule_expression ::=
+        '(' rule_expression ')'
+        | option_rule
+        | if_rule
+        | iff_rule
+        | and_rule
+        | or_rule
+        ;
+
+option_rule ::=
+        option_selection_rule
+        | option_equality_rule
+        ;
+
+option_selection_rule ::=
+        option_path
+        ;
+
+option_equality_rule ::=
+        option = option
+        ;
+
+const_equality_rule ::=
+        option = constant
+        ;
+
+if_rule ::=
+        if rule_expression
+                then rule_expression;
+
+iff_expression ::=
+        iff rule_expression
+                then rule_expression;
+
+and_expression ::=
+        rule_expression & and_expression
+        ;
+
+or_expression ::=
+        rule_expression | and_expression
+        ;
+
+type ::=
+        boolean, integer, string, enum { enum_value+ };
+
+--------
+
+option_path ::= { category_path '/' }? option_name ;
+
+category_path ::= {category_path '/' }? category_name ;
+
+option_name ::= id ;
+
+category_name ::= id ;
+
+rule_name ::= id ;
+
+constant ::= boolean_constant | string_constant | numeric_constant ;
+
+boolean_constant ::= true | false ;
+
+string_constant ::= quoted_string ;
+
+description ::= quoted_string ;
+
+numeric_constant ::= numeric_value ;

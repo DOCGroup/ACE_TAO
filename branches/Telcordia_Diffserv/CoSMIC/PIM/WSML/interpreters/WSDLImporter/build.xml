@@ -1,0 +1,62 @@
+<?xml version="1.0" standalone="yes"?>
+<project basedir="." default="compile">
+  <description>Ant task to compile WSDLImporter </description>
+  <property environment="env" />
+  <property name="jwsdp.home" value="${env.JWSDP_HOME}" />
+  <property name="wsdl4j.home" value="${env.WSDL4J_HOME}" />
+  <path id="classpath">
+    <pathelement path="src" />
+    <pathelement path="lib" />
+    <fileset dir="${jwsdp.home}" includes="jaxb/lib/*.jar" />
+    <fileset dir="${jwsdp.home}" includes="sjsxp/lib/*.jar" />
+    <fileset dir="${jwsdp.home}" includes="jwsdp-shared/lib/activation.jar" />
+    <fileset dir="${jwsdp.home}" includes="jwsdp-shared/lib/resolver.jar" />
+    <fileset dir="${wsdl4j.home}" includes="lib/*.jar" />
+  </path>
+  <taskdef name="xjc" classname="com.sun.tools.xjc.XJCTask">
+    <classpath refid="classpath" />
+  </taskdef>
+
+  <!--compile Java source files-->
+  <target name="compile" description="Compile all Java source files">
+    <echo message="Compiling the schema..." />
+    <xjc schema="mga.xsd" package="edu.vanderbilt.isis.gme.xme" destdir="src">
+      <produces dir="src/edu/vanderbilt/isis/gme/xme" includes="**/*.java" />
+    </xjc>
+    <echo message="Compiling the java source files..." />
+    <mkdir dir="lib" />
+    <javac destdir="lib" debug="on">
+      <src path="src" />
+      <classpath refid="classpath" />
+      <compilerarg value="-Xlint:unchecked" />
+    </javac>
+  </target>
+
+  <target name="run" depends="compile" description="Run the WSDLImporter">
+    <echo message="Running the WSDLImporter..." />
+    <java classname="edu.vanderbilt.dre.WSML.WSDLImporter.WSDLImporter" fork="true">
+      <arg file="GoogleSearch.wsdl" />
+      <arg file="GoogleSearch.xme" />
+      <classpath refid="classpath" />
+    </java>
+  </target>
+
+  <target name="slice" depends="compile" description="Run the WSDLImporter">
+    <echo message="Running the WSDLImporter..." />
+    <java classname="edu.vanderbilt.dre.WSML.WSDLImporter.WSDLImporter" fork="true">
+      <arg file="SLICE.wsdl" />
+      <arg file="SLICE.xme" />
+      <classpath refid="classpath" />
+    </java>
+  </target>
+
+  <target name="amazon" depends="compile" description="Run the WSDLImporter">
+    <echo message="Running the WSDLImporter..." />
+    <java classname="edu.vanderbilt.dre.WSML.WSDLImporter.WSDLImporter" fork="true">
+      <arg file="AmazonWebServices.wsdl" />
+      <arg file="AmazonWebServices.xme" />
+      <classpath refid="classpath" />
+    </java>
+  </target>
+
+</project>
