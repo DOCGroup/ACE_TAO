@@ -106,6 +106,8 @@ enable-auto-props = yes
 *.cdp=svn:eol-style=native;svn:keywords=Author Date Id Revision
 *.pcd=svn:eol-style=native;svn:keywords=Author Date Id Revision
 *.cdd=svn:eol-style=native;svn:keywords=Author Date Id Revision
+*.cid=svn:eol-style=native;svn:keywords=Author Date Id Revision
+*.cpd=svn:eol-style=native;svn:keywords=Author Date Id Revision
 *.xsd=svn:eol-style=native;svn:keywords=Author Date Id Revision
 *.xml=svn:eol-style=native;svn:keywords=Author Date Id Revision
 *.txt=svn:eol-style=native;svn:keywords=Author Date Id Revision
