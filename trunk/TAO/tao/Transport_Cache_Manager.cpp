@@ -167,8 +167,8 @@ namespace TAO
     Cache_ExtId ext_id (prop);
     Cache_IntId int_id;
 
-    int retval = this->find (ext_id,
-                             int_id);
+    int const retval = this->find (ext_id,
+                                   int_id);
     if (retval == 0)
       {
         transport = int_id.relinquish_transport ();
@@ -176,10 +176,10 @@ namespace TAO
         if (transport->wait_strategy ()->non_blocking () == 0 &&
             transport->orb_core ()->client_factory ()->use_cleanup_options ())
           {
-            ACE_Event_Handler *eh =
+            ACE_Event_Handler * const eh =
               transport->event_handler_i ();
 
-            ACE_Reactor *r =
+            ACE_Reactor * const r =
               transport->orb_core ()->reactor ();
 
             if (eh &&

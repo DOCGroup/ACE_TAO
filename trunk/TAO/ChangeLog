@@ -1,3 +1,16 @@
+Thu Aug 31 11:22:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Messaging/Messaging_Loader.cpp:
+          Changed called_once to a real bool
+
+        * tao/Base_Transport_Property.{cpp,inl}:
+        * tao/Cache_Entries.inl:
+        * tao/Transport_Descriptor_Interface.{h,cpp}:
+          Use true/false instead of 1/0
+
+        * tao/Transport_Cache_Manager.cpp:
+          Const improvements
+
 Thu Aug 31 03:35:14 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/Asynch_Queued_Message.cpp:
