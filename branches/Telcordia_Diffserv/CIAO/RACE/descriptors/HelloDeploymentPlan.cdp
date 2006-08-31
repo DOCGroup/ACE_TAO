@@ -19,30 +19,12 @@
     <artifact>_34E0ED84-7FF5-4B8D-9F23-BEC1C6BB23A7</artifact>
   </implementation>
 
-  <instance id="_Hello.ComponentImplementations.HelloAssemblyTypeContainer.HelloAssemblyType.Sender">
-    <name>_Hello.ComponentImplementations.HelloAssemblyTypeContainer.HelloAssemblyType.Sender</name>
-    <node>foil</node>
-    <source/>
-    <implementation>_51B2FD0F-060B-4895-B7F1-2645E7EF4211</implementation>
-  <configProperty>
-      <name>ComponentIOR</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>Sender.ior</string>
-        </value>
-      </value>
-    </configProperty>
-  </instance>
-
   <instance id="_Hello.ComponentImplementations.HelloAssemblyTypeContainer.HelloAssemblyType.Receiver">
     <name>_Hello.ComponentImplementations.HelloAssemblyTypeContainer.HelloAssemblyType.Receiver</name>
     <node>foil</node>
     <source/>
     <implementation>_9B4442B8-A9B3-4030-A33F-AF343E22DBF2</implementation>
-  <configProperty>
+    <configProperty>
       <name>ComponentIOR</name>
       <value>
         <type>
@@ -53,7 +35,24 @@
         </value>
       </value>
     </configProperty>
+  </instance>
 
+  <instance id="_Hello.ComponentImplementations.HelloAssemblyTypeContainer.HelloAssemblyType.Sender">
+    <name>_Hello.ComponentImplementations.HelloAssemblyTypeContainer.HelloAssemblyType.Sender</name>
+    <node>foil</node>
+    <source/>
+    <implementation>_51B2FD0F-060B-4895-B7F1-2645E7EF4211</implementation>
+    <configProperty>
+      <name>ComponentIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Sender.ior</string>
+        </value>
+      </value>
+    </configProperty>
   </instance>
 
   <connection>
@@ -177,7 +176,7 @@
         <kind>tk_string</kind>
       </type>
       <value>
-        <string>NetQoS-example.xml</string>
+        <string>myNetQoS.nqs</string>
       </value>
     </value>
   </infoProperty>
