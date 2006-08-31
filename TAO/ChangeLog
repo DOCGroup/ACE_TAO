@@ -1,3 +1,9 @@
+Thu Aug 31 18:28:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/PortableServer.cpp:
+          With CORBA/e micro don't use single thread strategy and non
+          retain servant retention strategy
+
 Thu Aug 31 11:22:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Messaging/Messaging_Loader.cpp:
