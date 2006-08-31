@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<CIAO:NetQoSRequirements xmlns:CIAO="http://www.dre.vanderbilt.edu/NetQoSRequirements" id="_E6550977-056D-4CDD-BC51-3932FD733770" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.dre.vanderbilt.edu/NetQoSRequirements NetQoSRequirements.xsd">
+
+  <connectionQoS>
+    <connectionInfo>
+      <connectionName>click_out_click_in_Hello.ComponentImplementations.HelloAssemblyTypeContainer.HelloAssemblyType.Sender_Hello.ComponentImplementations.HelloAssemblyTypeContainer.HelloAssemblyType.Receiver</connectionName>
+      <client>_Hello.ComponentImplementations.HelloAssemblyTypeContainer.HelloAssemblyType.Sender</client>
+      <clientPortName>click_out</clientPortName>
+      <server>_Hello.ComponentImplementations.HelloAssemblyTypeContainer.HelloAssemblyType.Receiver</server>
+      <serverPortName>click_in</serverPortName>
+    </connectionInfo>
+    <fwdBW>100</fwdBW>
+    <revBW>50</revBW>
+    <qos>HIGH_PRIORITY</qos>
+    <admissionPriority>HIGH</admissionPriority>
+  </connectionQoS>
+
+</CIAO:NetQoSRequirements>

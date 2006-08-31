@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Deployment:deploymentPlan xmlns:Deployment="http://www.omg.org/Deployment" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+
+  <UUID>56F7B27E-F6B3-440C-9F89-4189E9050AD6</UUID>
+
+  <implementation id="_9FEF7506-7CDA-415B-AA40-C2D25F809429">
+    <name>BasicSP.ComponentImplementations.BMClosedED.BMClosedED</name>
+    <source/>
+    <artifact>_3C7B5311-2929-48D2-B7AD-472C67417099</artifact>
+    <artifact>_C3C0E4EF-101B-422D-90AD-C49354D2D66F</artifact>
+    <artifact>_E9B0F33E-89E2-4BDB-8BA3-5703CF539CD2</artifact>
+  </implementation>
+
+  <implementation id="_B10EECC1-2875-4077-B603-2F1BD31C4BB1">
+    <name>BasicSP.ComponentImplementations.BMDevice.BMDevice</name>
+    <source/>
+    <artifact>_4A020A29-FC86-4926-8A02-7E247714AA55</artifact>
+    <artifact>_849E8939-C204-4473-843B-06FB4FDF6374</artifact>
+    <artifact>_2805E23D-164F-4725-995F-7F9904EB2120</artifact>
+  </implementation>
+
+  <implementation id="_7060C81A-E8CC-4FB4-813A-84BBA7719E64">
+    <name>BasicSP.ComponentImplementations.BMDisplay.BMDisplay</name>
+    <source/>
+    <artifact>_3ABEDF7D-885D-4F25-A3C0-7BE116B4D9B8</artifact>
+    <artifact>_DB3237D7-74EF-4916-997D-BFA0FBFAAD98</artifact>
+    <artifact>_92D614E5-686A-4CCF-B11A-B323A497EAD1</artifact>
+  </implementation>
+
+  <implementation id="_9968ADF0-36EF-4757-ACCD-359642F968B4">
+    <name>BasicSP.ComponentImplementations.EC.EC</name>
+    <source/>
+    <artifact>_90FA50A6-E102-458C-8C1E-3F4E974947A7</artifact>
+    <artifact>_FDCF7D7C-610D-4E57-B73F-1293CD7E0C2E</artifact>
+    <artifact>_C1AD75BE-E23D-4BF1-BA5E-D7427B227C21</artifact>
+  </implementation>
+
+  <instance id="_53F58E8F-D493-4182-B502-01947BFB0B16">
+    <name>_53F58E8F-D493-4182-B502-01947BFB0B16</name>
+    <node>BMDisplay</node>
+    <source/>
+    <implementation>_9FEF7506-7CDA-415B-AA40-C2D25F809429</implementation>
+    <configProperty>
+      <name>ComponentIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>BMClosedED.ior</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <instance id="_2780180C-2DB8-48A8-B481-21774531E5B3">
+    <name>_2780180C-2DB8-48A8-B481-21774531E5B3</name>
+    <node>BMDisplay</node>
+    <source/>
+    <implementation>_B10EECC1-2875-4077-B603-2F1BD31C4BB1</implementation>
+    <configProperty>
+      <name>ComponentIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>BMDevice.ior</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <instance id="_27166A59-C227-4789-A6FD-ABFD95910372">
+    <name>_27166A59-C227-4789-A6FD-ABFD95910372</name>
+    <node>BMDisplay</node>
+    <source/>
+    <implementation>_7060C81A-E8CC-4FB4-813A-84BBA7719E64</implementation>
+    <configProperty>
+      <name>ComponentIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>BMDisplay.ior</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <instance id="_500A8DB6-D883-4272-9DCF-FA0CE27BE93D">
+    <name>_500A8DB6-D883-4272-9DCF-FA0CE27BE93D</name>
+    <node>EC</node>
+    <source/>
+    <implementation>_9968ADF0-36EF-4757-ACCD-359642F968B4</implementation>
+    <configProperty>
+      <name>ComponentIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>EC.ior</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <connection>
+    <name>datain_data_read_53F58E8F-D493-4182-B502-01947BFB0B16_2780180C-2DB8-48A8-B481-21774531E5B3</name>
+    <internalEndpoint>
+      <portName>datain</portName>
+      <kind>SimplexReceptacle</kind>
+      <instance>_53F58E8F-D493-4182-B502-01947BFB0B16</instance>
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>data_read</portName>
+      <kind>Facet</kind>
+      <instance>_2780180C-2DB8-48A8-B481-21774531E5B3</instance>
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>comp_data_dataout_27166A59-C227-4789-A6FD-ABFD95910372_53F58E8F-D493-4182-B502-01947BFB0B16</name>
+    <internalEndpoint>
+      <portName>comp_data</portName>
+      <kind>SimplexReceptacle</kind>
+      <instance>_27166A59-C227-4789-A6FD-ABFD95910372</instance>
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>dataout</portName>
+      <kind>Facet</kind>
+      <instance>_53F58E8F-D493-4182-B502-01947BFB0B16</instance>
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>timeout_timeout_500A8DB6-D883-4272-9DCF-FA0CE27BE93D_2780180C-2DB8-48A8-B481-21774531E5B3</name>
+    <internalEndpoint>
+      <portName>timeout</portName>
+      <kind>EventPublisher</kind>
+      <instance>_500A8DB6-D883-4272-9DCF-FA0CE27BE93D</instance>
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>timeout</portName>
+      <kind>EventConsumer</kind>
+      <instance>_2780180C-2DB8-48A8-B481-21774531E5B3</instance>
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>data_available_in_avail_2780180C-2DB8-48A8-B481-21774531E5B3_53F58E8F-D493-4182-B502-01947BFB0B16</name>
+    <internalEndpoint>
+      <portName>data_available</portName>
+      <kind>EventPublisher</kind>
+      <instance>_2780180C-2DB8-48A8-B481-21774531E5B3</instance>
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>in_avail</portName>
+      <kind>EventConsumer</kind>
+      <instance>_53F58E8F-D493-4182-B502-01947BFB0B16</instance>
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>out_avail_data_ready_53F58E8F-D493-4182-B502-01947BFB0B16_27166A59-C227-4789-A6FD-ABFD95910372</name>
+    <internalEndpoint>
+      <portName>out_avail</portName>
+      <kind>EventPublisher</kind>
+      <instance>_53F58E8F-D493-4182-B502-01947BFB0B16</instance>
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>data_ready</portName>
+      <kind>EventConsumer</kind>
+      <instance>_27166A59-C227-4789-A6FD-ABFD95910372</instance>
+    </internalEndpoint>
+  </connection>
+
+  <artifact id="_3C7B5311-2929-48D2-B7AD-472C67417099">
+    <name>BasicSP.ImplementationArtifacts.BMClosedED.BMClosedED_exec</name>
+    <source/>
+    <node/>
+    <location>BMClosedED_exec</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>createBMClosedEDHome_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact id="_E9B0F33E-89E2-4BDB-8BA3-5703CF539CD2">
+    <name>BasicSP.ImplementationArtifacts.BMClosedED.BMClosedED_stub</name>
+    <source/>
+    <node/>
+    <location>BMClosedED_stub</location>
+  </artifact>
+
+  <artifact id="_C3C0E4EF-101B-422D-90AD-C49354D2D66F">
+    <name>BasicSP.ImplementationArtifacts.BMClosedED.BMClosedED_svnt</name>
+    <source/>
+    <node/>
+    <location>BMClosedED_svnt</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>createBMClosedEDHome_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact id="_4A020A29-FC86-4926-8A02-7E247714AA55">
+    <name>BasicSP.ImplementationArtifacts.BMDevice.BMDevice_exec</name>
+    <source/>
+    <node/>
+    <location>BMDevice_exec</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>createBMDeviceHome_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact id="_849E8939-C204-4473-843B-06FB4FDF6374">
+    <name>BasicSP.ImplementationArtifacts.BMDevice.BMDevice_stub</name>
+    <source/>
+    <node/>
+    <location>BMDevice_stub</location>
+  </artifact>
+
+  <artifact id="_2805E23D-164F-4725-995F-7F9904EB2120">
+    <name>BasicSP.ImplementationArtifacts.BMDevice.BMDevice_svnt</name>
+    <source/>
+    <node/>
+    <location>BMDevice_svnt</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>createBMDeviceHome_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact id="_3ABEDF7D-885D-4F25-A3C0-7BE116B4D9B8">
+    <name>BasicSP.ImplementationArtifacts.BMDisplay.BMDisplay_exec</name>
+    <source/>
+    <node/>
+    <location>BMDisplay_exec</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>createBMDisplayHome_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact id="_DB3237D7-74EF-4916-997D-BFA0FBFAAD98">
+    <name>BasicSP.ImplementationArtifacts.BMDisplay.BMDisplay_svnt</name>
+    <source/>
+    <node/>
+    <location>BMDisplay_svnt</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>createBMDisplayHome_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact id="_92D614E5-686A-4CCF-B11A-B323A497EAD1">
+    <name>BasicSP.ImplementationArtifacts.BMDisplay.BMDisplay_stub</name>
+    <source/>
+    <node/>
+    <location>BMDisplay_stub</location>
+  </artifact>
+
+  <artifact id="_C1AD75BE-E23D-4BF1-BA5E-D7427B227C21">
+    <name>BasicSP.ImplementationArtifacts.EC.EC_exec</name>
+    <source/>
+    <node/>
+    <location>EC_exec</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>createECHome_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact id="_FDCF7D7C-610D-4E57-B73F-1293CD7E0C2E">
+    <name>BasicSP.ImplementationArtifacts.EC.EC_svnt</name>
+    <source/>
+    <node/>
+    <location>EC_svnt</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>createECHome_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact id="_90FA50A6-E102-458C-8C1E-3F4E974947A7">
+    <name>BasicSP.ImplementationArtifacts.EC.EC_stub</name>
+    <source/>
+    <node/>
+    <location>EC_stub</location>
+  </artifact>
+
+  <artifact id="_1CD6476D-E96B-41F4-95BC-7F9D61A723F0">
+    <name>BasicSP.ImplementationArtifacts.CommonArtifacts.BasicSP_stub</name>
+    <source/>
+    <node/>
+    <location/>
+  </artifact>
+
+  <artifact id="_7B8A0806-00D1-4C7E-B079-C4A326BBCA28">
+    <name>BasicSP.ImplementationArtifacts.CommonArtifacts.BasicSP_svnt</name>
+    <source/>
+    <node/>
+    <location/>
+  </artifact>
+
+</Deployment:deploymentPlan>
