@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Deployment:implementationArtifactDescription xmlns:Deployment="http://www.omg.org/Deployment" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+
+  <UUID>533FDB0F-8EDB-4964-8EA9-E3058B1A5CD7</UUID>
+
+  <location>Sender_DnC_svnt</location>
+
+  <dependsOn>
+    <name>Hello.ImplementationArtifacts.SenderArtifacts.Sender_stub</name>
+    <referencedArtifact href="Sender_stub.iad"/>
+  </dependsOn>
+
+  <execParameter>
+    <name>entryPoint</name>
+    <value>
+      <type>
+        <kind>tk_string</kind>
+      </type>
+      <value>
+        <string>create_Hello_SenderHome_Servant</string>
+      </value>
+    </value>
+  </execParameter>
+
+</Deployment:implementationArtifactDescription>

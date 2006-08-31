@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Deployment:implementationArtifactDescription xmlns:Deployment="http://www.omg.org/Deployment" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+
+  <UUID>059BC20C-E68B-44B0-A7BC-BFA62BDEB0C4</UUID>
+
+  <location>Sender_DnC_stub</location>
+
+</Deployment:implementationArtifactDescription>
