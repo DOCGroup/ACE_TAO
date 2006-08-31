@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Deployment:implementationArtifactDescription xmlns:Deployment="http://www.omg.org/Deployment" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+
+  <UUID>37A50603-D422-4B45-AEBA-6BB48DF869ED</UUID>
+
+  <location>Receiver_DnC_svnt</location>
+
+  <dependsOn>
+    <name>Hello.ImplementationArtifacts.ReceiverArtifacts.Receiver_stub</name>
+    <referencedArtifact href="Receiver_stub.iad"/>
+  </dependsOn>
+
+  <execParameter>
+    <name>entryPoint</name>
+    <value>
+      <type>
+        <kind>tk_string</kind>
+      </type>
+      <value>
+        <string>create_Hello_ReceiverHome_Servant</string>
+      </value>
+    </value>
+  </execParameter>
+
+</Deployment:implementationArtifactDescription>
