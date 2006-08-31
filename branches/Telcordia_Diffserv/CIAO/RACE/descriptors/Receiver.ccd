@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Deployment:componentInterfaceDescription xmlns:Deployment="http://www.omg.org/Deployment" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+
+  <UUID>530A924D-9A42-4653-8FEF-B5769E1E284E</UUID>
+
+  <specificType>IDL:Hello/Receiver:1.0</specificType>
+
+  <supportedType>IDL:Hello/Receiver:1.0</supportedType>
+
+  <supportedType>IDL:omg.org/Components/Navigation:1.0</supportedType>
+
+  <supportedType>IDL:omg.org/Components/Receptacles:1.0</supportedType>
+
+  <supportedType>IDL:omg.org/Components/Events:1.0</supportedType>
+
+  <supportedType>IDL:omg.org/Components/CCMObject:1.0</supportedType>
+
+  <supportedType>IDL:omg.org/CORBA/Object:1.0</supportedType>
+
+  <idlFile>Receiver.idl</idlFile>
+
+  <port>
+    <name>click_in</name>
+    <specificType>IDL:Hello/TimeOutConsumer:1.0</specificType>
+    <supportedType>IDL:Hello/TimeOutConsumer:1.0</supportedType>
+    <supportedType>IDL:omg.org/Components/EventConsumerBase:1.0</supportedType>
+    <supportedType>IDL:omg.org/CORBA/Object:1.0</supportedType>
+    <provider>false</provider>
+    <exclusiveProvider>false</exclusiveProvider>
+    <exclusiveUser>false</exclusiveUser>
+    <optional>false</optional>
+    <kind>EventConsumer</kind>
+  </port>
+
+  <port>
+    <name>read_message</name>
+    <specificType>IDL:Hello/ReadMessage:1.0</specificType>
+    <supportedType>IDL:Hello/ReadMessage:1.0</supportedType>
+    <supportedType>IDL:omg.org/CORBA/Object:1.0</supportedType>
+    <provider>false</provider>
+    <exclusiveProvider>false</exclusiveProvider>
+    <exclusiveUser>false</exclusiveUser>
+    <optional>false</optional>
+    <kind>SimplexReceptacle</kind>
+  </port>
+
+</Deployment:componentInterfaceDescription>
