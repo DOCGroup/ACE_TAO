@@ -7,10 +7,32 @@
     <instance id="_948B16A7-A4CB-4C04-BAD7-1295AEC8C110">
       <name>Hello.ComponentImplementations.HelloAssemblyTypeContainer.HelloAssemblyType.Sender</name>
       <basePackage href="ComponentPackage.cpd"/>
+      <configProperty>
+        <name>ComponentIOR</name>
+        <value>
+          <type>
+            <kind>tk_string</kind>
+          </type>
+          <value>
+            <string>Sender.ior</string>
+          </value>
+        </value>
+      </configProperty>
     </instance>
     <instance id="_F00ADDD1-B223-4D23-A7E7-CDA626F6E661">
       <name>Hello.ComponentImplementations.HelloAssemblyTypeContainer.HelloAssemblyType.Receiver</name>
       <basePackage href="ComponentPackage.cpd"/>
+      <configProperty>
+        <name>ComponentIOR</name>
+        <value>
+          <type>
+            <kind>tk_string</kind>
+          </type>
+          <value>
+            <string>Receiver.ior</string>
+          </value>
+        </value>
+      </configProperty>
     </instance>
     <connection>
       <name>read_message_push_message</name>

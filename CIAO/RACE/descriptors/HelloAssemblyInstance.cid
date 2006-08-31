@@ -4,13 +4,35 @@
   <UUID>412A0018-562E-4755-977A-F0AA57EDA945</UUID>
 
   <assemblyImpl>
-    <instance id="_76F274A9-9624-4E21-AFBC-F2E5FE1B5BCC">
-      <name>Hello.ComponentImplementations.HelloAssemblyInstanceContainer.HelloAssemblyInstance.Receiver</name>
-      <basePackage href="ComponentPackage.cpd"/>
-    </instance>
     <instance id="_5FF4082A-1B70-433E-AC0D-3337FDCD463C">
       <name>Hello.ComponentImplementations.HelloAssemblyInstanceContainer.HelloAssemblyInstance.Sender</name>
       <basePackage href="ComponentPackage.cpd"/>
+      <configProperty>
+        <name>ComponentIOR</name>
+        <value>
+          <type>
+            <kind>tk_string</kind>
+          </type>
+          <value>
+            <string>Sender.ior</string>
+          </value>
+        </value>
+      </configProperty>
+    </instance>
+    <instance id="_76F274A9-9624-4E21-AFBC-F2E5FE1B5BCC">
+      <name>Hello.ComponentImplementations.HelloAssemblyInstanceContainer.HelloAssemblyInstance.Receiver</name>
+      <basePackage href="ComponentPackage.cpd"/>
+      <configProperty>
+        <name>ComponentIOR</name>
+        <value>
+          <type>
+            <kind>tk_string</kind>
+          </type>
+          <value>
+            <string>Receiver.ior</string>
+          </value>
+        </value>
+      </configProperty>
     </instance>
     <connection>
       <name>read_message_push_message</name>
