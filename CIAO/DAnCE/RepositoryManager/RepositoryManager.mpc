@@ -34,6 +34,8 @@ project (RepositoryManager) : ciao_server_dnc, ciao_config_handlers, zzip, zlib 
 // RMadmin project: a sample client for the RM.
 
 project (RMAdmin) : ciao_servant_dnc, ciao_config_handlers {
+  includes += $(CIAO_ROOT)/tools/Config_Handlers
+  
   exename = RMadmin
   after  += RepositoryManager
 
