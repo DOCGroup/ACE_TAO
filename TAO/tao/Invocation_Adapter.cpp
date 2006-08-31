@@ -265,7 +265,7 @@ namespace TAO
 
     CORBA::Octet rflags = details.response_flags ();
     bool block_connect =
-      rflags != static_cast<CORBA::Octet> (Messaging::SYNC_NONE) 
+      rflags != static_cast<CORBA::Octet> (Messaging::SYNC_NONE)
       && rflags != static_cast<CORBA::Octet> (TAO::SYNC_EAGER_BUFFERING)
       && rflags != static_cast<CORBA::Octet> (TAO::SYNC_DELAYED_BUFFERING);
 
@@ -279,6 +279,15 @@ namespace TAO
     resolver.resolve (max_wait_time
                       ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+
+    if (TAO_debug_level)
+      {
+        if (is_timeout && *max_wait_time == ACE_Time_Value::zero)
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t)Invocation_Adapter::invoke_remote_i: ")
+                      ACE_TEXT ("max wait time consumed during transport resolution\n")));
+      }
+
 
     // Update the request id now that we have a transport
     details.request_id (resolver.transport ()->tms ()->request_id ());
