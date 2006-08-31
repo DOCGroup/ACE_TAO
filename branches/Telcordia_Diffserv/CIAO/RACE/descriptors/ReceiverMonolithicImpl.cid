@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Deployment:componentImplementationDescription xmlns:Deployment="http://www.omg.org/Deployment" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+
+  <UUID>9B4442B8-A9B3-4030-A33F-AF343E22DBF2</UUID>
+
+  <implements href="Receiver.ccd"/>
+
+  <monolithicImpl>
+    <primaryArtifact>
+      <name>Hello.ImplementationArtifacts.ReceiverArtifacts.Receiver_stub</name>
+      <referencedArtifact href="Receiver_stub.iad"/>
+    </primaryArtifact>
+    <primaryArtifact>
+      <name>Hello.ImplementationArtifacts.ReceiverArtifacts.Receiver_svnt</name>
+      <referencedArtifact href="Receiver_svnt.iad"/>
+    </primaryArtifact>
+    <primaryArtifact>
+      <name>Hello.ImplementationArtifacts.ReceiverArtifacts.Receiver_exec</name>
+      <referencedArtifact href="Receiver_exec.iad"/>
+    </primaryArtifact>
+  </monolithicImpl>
+
+  <configProperty>
+    <name>ComponentIOR</name>
+    <value>
+      <type>
+        <kind>tk_string</kind>
+      </type>
+      <value>
+        <string>Receiver.ior</string>
+      </value>
+    </value>
+  </configProperty>
+
+</Deployment:componentImplementationDescription>
