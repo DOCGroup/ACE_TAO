@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Deployment:componentPackageDescription xmlns:Deployment="http://www.omg.org/Deployment" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+
+  <UUID>DEF86A6B-8425-4D3A-8971-3611A91F837A</UUID>
+
+  <realizes href="Receiver.ccd"/>
+
+  <implementation>
+    <name>Hello.ComponentImplementations.ReceiverImplementation.ReceiverMonolithicImpl</name>
+    <referencedImplementation href="ReceiverMonolithicImpl.cid"/>
+  </implementation>
+
+</Deployment:componentPackageDescription>
