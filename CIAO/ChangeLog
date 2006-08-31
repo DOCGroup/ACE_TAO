@@ -1,3 +1,9 @@
+Thu Aug 31 22:45:09 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
+
+        * DAnCE/RepositoryManager/RepositoryManager.mpc
+          Modified this file to include $(CIAO_ROOT)/tools/Config_Handlers
+          in the RMAdmin project.  
+
 Wed Aug 30 17:16:18 UTC 2006  Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
 
         * tools/Config_Handlers/Package_Handlers/Package_Handlers.mpc
