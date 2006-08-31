@@ -29,7 +29,7 @@ TAO_Base_Transport_Property::duplicate (void)
   TAO_Base_Transport_Property *prop = 0;
   ACE_NEW_RETURN (prop,
                   TAO_Base_Transport_Property (endpt,
-                                               1),
+                                               true),
                   0);
   return prop;
 }
@@ -43,7 +43,7 @@ TAO_Base_Transport_Property::is_equivalent (
     dynamic_cast<const TAO_Base_Transport_Property *> (rhs);
 
   if (other_desc == 0)
-    return 0;
+    return false;
 
   return this->endpoint_->is_equivalent (other_desc->endpoint_);
 }
