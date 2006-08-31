@@ -27,11 +27,11 @@ TAO_Messaging_Loader::init (int,
 {
   ACE_TRACE ("TAO_Messaging_Loader::init");
 
-  static int called_once = 0;
+  static bool called_once = false;
 
-  if (called_once != 0)
+  if (called_once == true)
     return 0;
-  called_once = 1;
+  called_once = true;
 
   PortableInterceptor::ORBInitializer_ptr temp_orb_initializer =
     PortableInterceptor::ORBInitializer::_nil ();

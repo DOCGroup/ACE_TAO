@@ -70,7 +70,7 @@ namespace TAO
   ACE_INLINE
   Cache_ExtId::Cache_ExtId (void)
     : transport_property_ (0),
-      is_delete_ (0),
+      is_delete_ (false),
       index_ (0)
   {
   }
@@ -78,7 +78,7 @@ namespace TAO
   ACE_INLINE
   Cache_ExtId::Cache_ExtId (TAO_Transport_Descriptor_Interface *prop)
     : transport_property_ (prop),
-      is_delete_ (0),
+      is_delete_ (false),
       index_ (0)
   {
 
@@ -102,12 +102,12 @@ namespace TAO
 
         if (this->transport_property_ == 0)
           {
-            this->is_delete_ = 0;
+            this->is_delete_ = false;
             this->index_ = 0;
           }
         else
           {
-            this->is_delete_ = 1;
+            this->is_delete_ = true;
             this->index_ = rhs.index_;
           }
       }
@@ -117,7 +117,7 @@ namespace TAO
   ACE_INLINE
   Cache_ExtId::Cache_ExtId (const Cache_ExtId &rhs)
     : transport_property_ (0),
-      is_delete_ (0),
+      is_delete_ (false),
       index_ (0)
   {
     *this = rhs;
@@ -161,7 +161,7 @@ namespace TAO
     if (this->is_delete_)
       delete this->transport_property_;
 
-    this->is_delete_ = 1;
+    this->is_delete_ = true;
     this->transport_property_ = prop;
   }
 

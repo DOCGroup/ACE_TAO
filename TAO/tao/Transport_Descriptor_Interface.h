@@ -80,7 +80,7 @@ protected:
 
   /// Constructor
   TAO_Transport_Descriptor_Interface (TAO_Endpoint *endpoint,
-                                      CORBA::Boolean take_ownership = 0);
+                                      CORBA::Boolean take_ownership = false);
 
   /// The base property of the connection ie. the peer's endpoint
   TAO_Endpoint *endpoint_;
