@@ -23,7 +23,7 @@ my $srv_ior = PerlACE::LocalFile ("server.ior");
 my $CLI = new PerlACE::Process ("client");
 my $SRV = new PerlACE::Process ("server");
 my $SRV_PORT = PerlACE::random_port();
-my $SRV_ARGS = "-orbobjrefstyle url -orbendpoint iiop://:$SRV_PORT";
+my $SRV_ARGS = "-orbendpoint iiop://:$SRV_PORT";
 
 sub test_timeouts
 {
@@ -72,11 +72,13 @@ sub test_timeouts
         return $ret;
     }
     print "test_timeouts 6 passed...\n";
+    print "test_timeouts 7 testing...\n";
     $CLI->Arguments("-sync delayed -force_timeout -request_timeout 100 -connect_timeout 200 -max_request_time 30");
     my $ret = $CLI->SpawnWaitKill(5);
     if ($ret != 0) {
         return $ret;
     }
+    print "test_timeouts 7 passed...\n";
     return $ret;
 }
 
@@ -84,7 +86,7 @@ sub test_buffering
 {
     print "test_buffering 1 testing...\n";
     unlink $srv_ior;
-    $SRV->Arguments("$SRV_ARGS -expected 10 -elapsed_min 400");
+    $SRV->Arguments("$SRV_ARGS -expected 10 -elapsed_min 350");
     if ($SRV->Spawn() != 0) {
         return 1;
     }
@@ -104,7 +106,7 @@ sub test_buffering
     print "test_buffering 1 passed...\n";
     print "test_buffering 2 testing...\n";
     unlink $srv_ior;
-    $SRV->Arguments("$SRV_ARGS -expected 10 -elapsed_min 400");
+    $SRV->Arguments("$SRV_ARGS -expected 10 -elapsed_min 350");
     if ($SRV->Spawn() != 0) {
         return 1;
     }
@@ -124,7 +126,7 @@ sub test_buffering
     print "test_buffering 2 passed...\n";
     print "test_buffering 3 testing...\n";
     # Using sleep() instead of orb->run() for the interval
-    # should cause all requests to be sent at once.     
+    # should cause all requests to be sent at once.
     unlink $srv_ior;
     $SRV->Arguments("$SRV_ARGS -expected 10 -elapsed_max 50");
     if ($SRV->Spawn() != 0) {
@@ -167,10 +169,10 @@ sub test_buffering
     }
     print "test_buffering 4 passed...\n";
     print "test_buffering 5 testing...\n";
-    # However, if we connect first, then delayed buffering will 
+    # However, if we connect first, then delayed buffering will
     # cause the data to be sent right away
     unlink $srv_ior;
-    $SRV->Arguments("$SRV_ARGS -expected 10 -elapsed_min 400");
+    $SRV->Arguments("$SRV_ARGS -expected 10 -elapsed_min 350");
     if ($SRV->Spawn() != 0) {
         return 1;
     }
@@ -189,7 +191,7 @@ sub test_buffering
     }
     print "test_buffering 5 passed...\n";
     print "test_buffering 6 testing...\n";
-    # Forcing the connection won't help sync_none, because it always buffers    
+    # Forcing the connection won't help sync_none, because it always buffers
     unlink $srv_ior;
     $SRV->Arguments("$SRV_ARGS -expected 10 -elapsed_max 50");
     if ($SRV->Spawn() != 0) {
@@ -212,7 +214,7 @@ sub test_buffering
     return 0;
 }
 
-# Set a buffer count trigger and a request timeout so that a 
+# Set a buffer count trigger and a request timeout so that a
 # predictable number will be discarded.
 sub test_buffer_count_timeout
 {
@@ -276,7 +278,7 @@ sub test_buffer_timeout
         print STDERR "Error: IOR not found.\n";
         return 1;
     }
-    # Must use run_orb_time so that the timer will fire, and to prevent sending the 
+    # Must use run_orb_time so that the timer will fire, and to prevent sending the
     # test_done twoway request which would flush the queue.
     $CLI->Arguments("-sync none -buffer_timeout 1000 -max_request_time 30 -run_orb_time 1500");
     if ($CLI->SpawnWaitKill(5) != 0) {
@@ -289,7 +291,7 @@ sub test_buffer_timeout
     }
     print "test_buffer_timeout 1 passed...\n";
     print "test_buffer_timeout 2 testing...\n";
-    # delayed buffering should behave as above, because it will start out buffering 
+    # delayed buffering should behave as above, because it will start out buffering
     # due to the connection not being established.
     unlink $srv_ior;
     $SRV->Arguments("$SRV_ARGS -expected 10 -elapsed_max 50 -first_min 1000");
@@ -300,7 +302,7 @@ sub test_buffer_timeout
         print STDERR "Error: IOR not found.\n";
         return 1;
     }
-    # Must use run_orb_time so that the timer will fire, and to prevent sending the 
+    # Must use run_orb_time so that the timer will fire, and to prevent sending the
     # test_done twoway request which would flush the queue.
     $CLI->Arguments("-sync delayed -buffer_timeout 1000 -max_request_time 30 -run_orb_time 1500");
     if ($CLI->SpawnWaitKill(5) != 0) {
@@ -323,7 +325,7 @@ sub test_buffer_timeout
         print STDERR "Error: IOR not found.\n";
         return 1;
     }
-    # Must use run_orb_time so that the timer will fire, and to prevent sending the 
+    # Must use run_orb_time so that the timer will fire, and to prevent sending the
     # test_done twoway request which would flush the queue.
     $CLI->Arguments("-sync delayed -force_connect -buffer_timeout 1000 -max_request_time 30 -run_orb_time 1500");
     if ($CLI->SpawnWaitKill(5) != 0) {
@@ -338,7 +340,7 @@ sub test_buffer_timeout
     return 0;
 }
 
-# test sending one request with buffering timeout constraint. 
+# test sending one request with buffering timeout constraint.
 sub test_one_request
 {
     print "test_one_request testing...\n";
@@ -351,7 +353,7 @@ sub test_one_request
         print STDERR "Error: IOR not found.\n";
         return 1;
     }
-    # Must use run_orb_time so that the timer will fire, and to prevent sending the 
+    # Must use run_orb_time so that the timer will fire, and to prevent sending the
     # test_done twoway request which would flush the queue.
     $CLI->Arguments("-sync none -buffer_timeout 1000 -max_request_time 30 -run_orb_time 1500 -num_requests 1");
     if ($CLI->SpawnWaitKill(5) != 0) {
@@ -372,10 +374,10 @@ sub run_test
     if ($ret != 0) {
         exit $ret;
     }
-} 
+}
 
 unlink $srv_ior;
-  
+
 run_test(test_timeouts());
 run_test(test_buffering());
 run_test(test_buffer_count_timeout());

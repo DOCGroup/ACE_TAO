@@ -32,7 +32,7 @@ if (PerlACE::is_vxworks_test()) {
     $SV = new PerlACE::ProcessVX ("server", "-o server.ior $server_args");
 }
 else {
-    $SV = new PerlACE::Process ("server", "-o $iorfile $server_args");    
+    $SV = new PerlACE::Process ("server", "-o $iorfile $server_args");
 }
 $CL1 = new PerlACE::Process ("client", " -k file://$iorfile");
 $CL2 = new PerlACE::Process ("client", " -k file://$iorfile");
@@ -55,21 +55,21 @@ $CL1->Spawn ();
 $CL2->Spawn ();
 $CL3->Spawn ();
 
-$client1 = $CL1->WaitKill (300);
+$client1 = $CL1->WaitKill (180);
 
 if ($client1 != 0) {
   print STDERR "ERROR: client 1 returned $client1\n";
   $status = 1;
 }
 
-$client2 = $CL2->WaitKill (300);
+$client2 = $CL2->WaitKill (5);
 
 if ($client2 != 0) {
   print STDERR "ERROR: client 2 returned $client2\n";
   $status = 1;
 }
 
-$client3 = $CL3->WaitKill (300);
+$client3 = $CL3->WaitKill (5);
 
 if ($client3 != 0) {
   print STDERR "ERROR: client 3 returned $client3\n";
