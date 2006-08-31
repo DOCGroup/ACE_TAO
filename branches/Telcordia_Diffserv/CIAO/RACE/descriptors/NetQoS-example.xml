@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<CIAO:NetQoSRequirements xmlns:CIAO="http://www.dre.vanderbilt.edu/NetQoSRequirements" id="_85455873-7FC3-4604-884C-373FBFDDB177" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.dre.vanderbilt.edu/NetQoSRequirements NetQoSRequirements.xsd">
+
+  <connectionQoS>
+    <connectionInfo>
+      <connectionName>timeout_timeout__0AA31CE6-12A8-4632-A4B8-369065242C71__E3F0AAE7-DF69-4B8C-95E4-46DCCE707B75</connectionName>
+      <client>BasicSP.ComponentImplementations.BasicSP.BasicSP.EC</client>
+      <clientPortName>timeout</clientPortName>
+      <server>BasicSP.ComponentImplementations.BasicSP.BasicSP.BMDevice</server>
+      <serverPortName>timeout</serverPortName>
+    </connectionInfo>
+    <connectionInfo>
+      <connectionName>timeout_timeout__0AA31CE6-12A8-4632-A4B8-369065242C71__E3F0AAE7-DF69-4B8C-95E4-46DCCE707B75</connectionName>
+      <client>BasicSP.ComponentImplementations.BasicSP.BasicSP.EC</client>
+      <clientPortName>timeout</clientPortName>
+      <server>BasicSP.ComponentImplementations.BasicSP.BasicSP.BMDevice</server>
+      <serverPortName>timeout</serverPortName>
+    </connectionInfo>
+    <fwdBW>10</fwdBW>
+    <revBW>5</revBW>
+    <qos>HIGH_PRIORITY</qos>
+    <admissionPriority>HIGH</admissionPriority>
+  </connectionQoS>
+  <connectionQoS>
+    <connectionInfo>
+      <connectionName>timeout_timeout__0AA31CE6-12A8-4632-A4B8-369065242C71__E3F0AAE7-DF69-4B8C-95E4-46DCCE707B75</connectionName>
+      <client>BasicSP.ComponentImplementations.BasicSP.BasicSP.EC</client>
+      <clientPortName>timeout</clientPortName>
+      <server>BasicSP.ComponentImplementations.BasicSP.BasicSP.BMDevice</server>
+      <serverPortName>timeout</serverPortName>
+    </connectionInfo>
+    <connectionInfo>
+      <connectionName>timeout_timeout__0AA31CE6-12A8-4632-A4B8-369065242C71__E3F0AAE7-DF69-4B8C-95E4-46DCCE707B75</connectionName>
+      <client>BasicSP.ComponentImplementations.BasicSP.BasicSP.EC</client>
+      <clientPortName>timeout</clientPortName>
+      <server>BasicSP.ComponentImplementations.BasicSP.BasicSP.BMDevice</server>
+      <serverPortName>timeout</serverPortName>
+    </connectionInfo>
+    <fwdBW>10</fwdBW>
+    <revBW>5</revBW>
+    <qos>HIGH_PRIORITY</qos>
+    <admissionPriority>HIGH</admissionPriority>
+  </connectionQoS>
+
+</CIAO:NetQoSRequirements>
