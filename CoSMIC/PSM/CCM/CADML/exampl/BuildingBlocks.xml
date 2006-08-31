@@ -1,0 +1,2665 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE project SYSTEM "mga.dtd">
+
+<project guid="{00000000-0000-0000-0000-000000000000}" cdate="Wed May 14 14:24:58 2003" mdate="Mon Jul 14 20:55:48 2003" metaguid="{6F21A5BC-DEAD-BEEF-FEED-DAD000000001}" metaname="CADML">
+	<name>BuildingBlocks</name>
+	<comment></comment>
+	<author></author>
+	<folder id="id-006a-00000001" relid="0x1" childrelidcntr="0xc" kind="RootFolder">
+		<name>BuildingBlocks</name>
+		<folder id="id-006a-00000009" relid="0xc" childrelidcntr="0x5" kind="Interaction_Folder">
+			<name>Product_Scenarios</name>
+			<folder id="id-006a-0000000e" relid="0x5" childrelidcntr="0x2" kind="Interaction_Folder">
+				<name>BasicSP_CIAO</name>
+				<model id="id-0065-0000004e" kind="Assembly_Descriptor" relid="0x2" childrelidcntr="0x10">
+					<name>BasicSP</name>
+					<attribute kind="Assembly_Description" status="meta">
+						<value></value>
+					</attribute>
+					<atom id="id-0066-00000072" kind="Registration_Point" role="Registration_Point" relid="0xf">
+						<name>Registration_Point</name>
+						<regnode name="PartRegs">
+							<value></value>
+							<regnode name="Location">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>44,282</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="Registration_Description">
+							<value>ec.ior</value>
+						</attribute>
+					</atom>
+					<model id="id-0065-00000053" kind="Host_Location" role="Host_Location" relid="0xa" childrelidcntr="0x0">
+						<name>Host_Location</name>
+						<regnode name="PartRegs">
+							<value></value>
+							<regnode name="Location">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>317,254</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="Destination" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="Hostlocation_Description" status="meta">
+							<value></value>
+						</attribute>
+					</model>
+					<model id="id-0065-00000052" kind="Component_Type" role="Component_Type" derivedfrom="id-0065-0000004c" isinstance="yes" isprimary="yes" relid="0x8" childrelidcntr="0x0">
+						<name>EC</name>
+						<regnode name="PartRegs">
+							<value></value>
+							<regnode name="Location">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>8,91</value>
+								</regnode>
+							</regnode>
+							<regnode name="Aspect">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>50,70</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="Destination" status="meta">
+							<value></value>
+						</attribute>
+						<connection isbound="yes" id="id-0068-00000061" kind="Event_Typing" role="Event_Typing" derivedfrom="id-0068-00000060" isinstance="yes" isprimary="no">
+							<name>Event_Typing</name>
+						</connection>
+						<reference id="id-0067-000000ca" kind="Event_Type_Ref" role="Event_Type_Ref" derivedfrom="id-0067-000000c9" isinstance="yes" isprimary="no" referred="id-0065-00000009" isbound="yes">
+							<name>timeout</name>
+						</reference>
+						<atom id="id-0066-00000071" kind="Event_Source" role="Event_Source" derivedfrom="id-0066-00000070" isinstance="yes" isprimary="no">
+							<name>timeout</name>
+							<attribute kind="Event_Source_Type" status="meta">
+								<value>Publisher</value>
+							</attribute>
+						</atom>
+					</model>
+					<model id="id-0065-00000051" kind="Component_Type" role="Component_Type" derivedfrom="id-0065-00000010" isinstance="yes" isprimary="yes" relid="0x3" childrelidcntr="0x0">
+						<name>BMDisplay</name>
+						<regnode name="PartRegs">
+							<value></value>
+							<regnode name="Location">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>596,77</value>
+								</regnode>
+							</regnode>
+							<regnode name="Aspect">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>589,56</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="Destination" status="meta">
+							<value></value>
+						</attribute>
+						<connection isbound="yes" id="id-0068-0000005e" kind="Event_Typing" role="Event_Typing" derivedfrom="id-0068-00000001" isinstance="yes" isprimary="no">
+							<name>Event_Typing</name>
+						</connection>
+						<reference id="id-0067-000000c6" kind="Event_Type_Ref" role="Event_Type_Ref" derivedfrom="id-0067-0000000a" isinstance="yes" isprimary="no" referred="id-0065-0000000a" isbound="yes">
+							<name>DataAvailable</name>
+						</reference>
+						<atom id="id-0066-0000006d" kind="Event_Sink" role="Event_Sink" derivedfrom="id-0066-00000011" isinstance="yes" isprimary="no">
+							<name>data_ready</name>
+						</atom>
+						<reference id="id-0067-000000c8" kind="Facet" role="Facet" derivedfrom="id-0067-00000009" isinstance="yes" isprimary="no" referred="id-0065-0000000c" isbound="yes">
+							<name>ProvideUpdateFunctionalFacet</name>
+						</reference>
+						<reference id="id-0067-000000c7" kind="Receptacle" role="Receptacle" derivedfrom="id-0067-0000002c" isinstance="yes" isprimary="no" referred="id-0065-0000000d" isbound="yes">
+							<name>comp_data</name>
+						</reference>
+					</model>
+					<model id="id-0065-00000050" kind="Component_Type" role="Component_Type" derivedfrom="id-0065-00000017" isinstance="yes" isprimary="yes" relid="0x2" childrelidcntr="0x0">
+						<name>BMDevice</name>
+						<regnode name="PartRegs">
+							<value></value>
+							<regnode name="Location">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>218,84</value>
+								</regnode>
+							</regnode>
+							<regnode name="Aspect">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>211,63</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="Destination" status="meta">
+							<value></value>
+						</attribute>
+						<connection isbound="yes" id="id-0068-0000005d" kind="Event_Typing" role="Event_Typing" derivedfrom="id-0068-00000006" isinstance="yes" isprimary="no">
+							<name>Event_Typing</name>
+						</connection>
+						<connection isbound="yes" id="id-0068-0000005c" kind="Event_Typing" role="Event_Typing" derivedfrom="id-0068-00000005" isinstance="yes" isprimary="no">
+							<name>Event_Typing</name>
+						</connection>
+						<reference id="id-0067-000000c3" kind="Event_Type_Ref" role="Event_Type_Ref" derivedfrom="id-0067-00000021" isinstance="yes" isprimary="no" referred="id-0065-0000000a" isbound="yes">
+							<name>DataAvailable</name>
+						</reference>
+						<reference id="id-0067-000000c2" kind="Event_Type_Ref" role="Event_Type_Ref" derivedfrom="id-0067-0000001f" isinstance="yes" isprimary="no" referred="id-0065-00000009" isbound="yes">
+							<name>IntervalTimeout</name>
+						</reference>
+						<atom id="id-0066-0000006c" kind="Event_Source" role="Event_Source" derivedfrom="id-0066-00000020" isinstance="yes" isprimary="no">
+							<name>data_available</name>
+							<attribute kind="Event_Source_Type" status="meta">
+								<value>Publisher</value>
+							</attribute>
+						</atom>
+						<atom id="id-0066-0000006b" kind="Event_Sink" role="Event_Sink" derivedfrom="id-0066-0000001f" isinstance="yes" isprimary="no">
+							<name>timeout</name>
+						</atom>
+						<reference id="id-0067-000000c5" kind="Facet" role="Facet" derivedfrom="id-0067-0000001e" isinstance="yes" isprimary="no" referred="id-0065-0000000c" isbound="yes">
+							<name>ProvideUpdateFunctionalFacet</name>
+						</reference>
+						<reference id="id-0067-000000c4" kind="Facet" role="Facet" derivedfrom="id-0067-0000001d" isinstance="yes" isprimary="no" referred="id-0065-0000000d" isbound="yes">
+							<name>data_read</name>
+						</reference>
+					</model>
+					<model id="id-0065-0000004f" kind="Component_Type" role="Component_Type" derivedfrom="id-0065-00000016" isinstance="yes" isprimary="yes" relid="0x1" childrelidcntr="0x0">
+						<name>BMClosedED</name>
+						<regnode name="PartRegs">
+							<value></value>
+							<regnode name="Location">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>414,77</value>
+								</regnode>
+							</regnode>
+							<regnode name="Aspect">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>407,56</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="Destination" status="meta">
+							<value></value>
+						</attribute>
+						<connection isbound="yes" id="id-0068-00000058" kind="Event_Typing" role="Event_Typing" derivedfrom="id-0068-00000004" isinstance="yes" isprimary="no">
+							<name>Event_Typing</name>
+						</connection>
+						<connection isbound="yes" id="id-0068-00000057" kind="Event_Typing" role="Event_Typing" derivedfrom="id-0068-00000003" isinstance="yes" isprimary="no">
+							<name>Event_Typing</name>
+						</connection>
+						<reference id="id-0067-000000be" kind="Event_Type_Ref" role="Event_Type_Ref" derivedfrom="id-0067-0000001c" isinstance="yes" isprimary="no" referred="id-0065-0000000a" isbound="yes">
+							<name>DataAvailable</name>
+						</reference>
+						<atom id="id-0066-0000006a" kind="Event_Source" role="Event_Source" derivedfrom="id-0066-0000001e" isinstance="yes" isprimary="no">
+							<name>out_avail</name>
+							<attribute kind="Event_Source_Type" status="meta">
+								<value>Publisher</value>
+							</attribute>
+						</atom>
+						<atom id="id-0066-00000069" kind="Event_Sink" role="Event_Sink" derivedfrom="id-0066-0000001d" isinstance="yes" isprimary="no">
+							<name>in_avail</name>
+						</atom>
+						<reference id="id-0067-000000c1" kind="Receptacle" role="Receptacle" derivedfrom="id-0067-0000002b" isinstance="yes" isprimary="no" referred="id-0065-0000000d" isbound="yes">
+							<name>datain</name>
+						</reference>
+						<reference id="id-0067-000000c0" kind="Facet" role="Facet" derivedfrom="id-0067-0000001b" isinstance="yes" isprimary="no" referred="id-0065-0000000c" isbound="yes">
+							<name>ProvideUpdateFunctionalFacet</name>
+						</reference>
+						<reference id="id-0067-000000bf" kind="Facet" role="Facet" derivedfrom="id-0067-0000001a" isinstance="yes" isprimary="no" referred="id-0065-0000000d" isbound="yes">
+							<name>dataout</name>
+						</reference>
+					</model>
+					<connection id="id-0068-00000067" kind="Registration_Association" role="Registration_Association" relid="0x10">
+						<name>Registration_Association</name>
+						<regnode name="autorouterPref" isopaque="yes">
+							<value>n</value>
+						</regnode>
+						<attribute kind="Registration_Method" status="meta">
+							<value>writetoior</value>
+						</attribute>
+						<connpoint role="dst" target="id-0066-00000072"/>
+						<connpoint role="src" target="id-0065-00000052"/>
+					</connection>
+					<connection id="id-0068-00000066" kind="Host_Location_Association" role="Host_Location_Association" relid="0xe">
+						<name>Host_Location_Association</name>
+						<regnode name="autorouterPref" isopaque="yes">
+							<value>s</value>
+						</regnode>
+						<connpoint role="dst" target="id-0065-00000051"/>
+						<connpoint role="src" target="id-0065-00000053"/>
+					</connection>
+					<connection id="id-0068-00000065" kind="Host_Location_Association" role="Host_Location_Association" relid="0xd">
+						<name>Host_Location_Association</name>
+						<regnode name="autorouterPref" isopaque="yes">
+							<value>s</value>
+						</regnode>
+						<connpoint role="dst" target="id-0065-0000004f"/>
+						<connpoint role="src" target="id-0065-00000053"/>
+					</connection>
+					<connection id="id-0068-00000064" kind="Host_Location_Association" role="Host_Location_Association" relid="0xc">
+						<name>Host_Location_Association</name>
+						<regnode name="autorouterPref" isopaque="yes">
+							<value>s</value>
+						</regnode>
+						<connpoint role="dst" target="id-0065-00000050"/>
+						<connpoint role="src" target="id-0065-00000053"/>
+					</connection>
+					<connection id="id-0068-00000063" kind="Host_Location_Association" role="Host_Location_Association" relid="0xb">
+						<name>Host_Location_Association</name>
+						<connpoint role="dst" target="id-0065-00000052"/>
+						<connpoint role="src" target="id-0065-00000053"/>
+					</connection>
+					<connection id="id-0068-00000062" kind="Event_Connection" role="Event_Connection" relid="0x9">
+						<name>Event_Connection</name>
+						<connpoint role="dst" target="id-0066-0000006b"/>
+						<connpoint role="src" target="id-0066-00000071"/>
+					</connection>
+					<connection id="id-0068-0000005f" kind="Event_Connection" role="Event_Connection" relid="0x5">
+						<name>Event_Connection</name>
+						<connpoint role="src" target="id-0066-0000006a"/>
+						<connpoint role="dst" target="id-0066-0000006d"/>
+					</connection>
+					<connection id="id-0068-0000005b" kind="Event_Connection" role="Event_Connection" relid="0x4">
+						<name>Event_Connection</name>
+						<connpoint role="src" target="id-0066-0000006c"/>
+						<connpoint role="dst" target="id-0066-00000069"/>
+					</connection>
+					<connection id="id-0068-0000005a" kind="Facet_Receptacle_Connection" role="Facet_Receptacle_Connection" relid="0x6">
+						<name>Facet_Receptacle_Connection</name>
+						<connpoint role="src" target="id-0067-000000c7"/>
+						<connpoint role="dst" target="id-0067-000000bf"/>
+					</connection>
+					<connection id="id-0068-00000059" kind="Facet_Receptacle_Connection" role="Facet_Receptacle_Connection" relid="0x7">
+						<name>Facet_Receptacle_Connection</name>
+						<connpoint role="src" target="id-0067-000000c1"/>
+						<connpoint role="dst" target="id-0067-000000c4"/>
+					</connection>
+				</model>
+			</folder>
+			<folder id="id-006a-0000000c" relid="0x3" childrelidcntr="0x2" kind="Interaction_Folder">
+				<name>ModalSP</name>
+				<model id="id-0065-0000003a" kind="Assembly_Descriptor" relid="0x2" childrelidcntr="0x1a">
+					<name>ModalSP</name>
+					<attribute kind="Assembly_Description" status="meta">
+						<value></value>
+					</attribute>
+					<model id="id-0065-00000048" kind="Component_Type" role="Component_Type" derivedfrom="id-0065-00000047" isinstance="yes" isprimary="yes" relid="0x12" childrelidcntr="0x0">
+						<name>NavSteeringPoints</name>
+						<regnode name="PartRegs">
+							<value></value>
+							<regnode name="Aspect">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>274,140</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="Destination" status="meta">
+							<value></value>
+						</attribute>
+						<atom id="id-0066-00000062" kind="Event_Source" role="Event_Source" derivedfrom="id-0066-00000061" isinstance="yes" isprimary="no">
+							<name>Event_Source</name>
+							<attribute kind="Event_Source_Type" status="meta">
+								<value>Publisher</value>
+							</attribute>
+						</atom>
+						<connection isbound="yes" id="id-0068-0000004c" kind="Event_Typing" role="Event_Typing" derivedfrom="id-0068-0000004b" isinstance="yes" isprimary="no">
+							<name>Event_Typing</name>
+						</connection>
+						<reference id="id-0067-000000ae" kind="Facet" role="Facet" derivedfrom="id-0067-000000a7" isinstance="yes" isprimary="no" referred="id-0065-0000000c" isbound="yes">
+							<name>ProvideUpdateFunctionalFacet</name>
+						</reference>
+						<reference id="id-0067-000000ad" kind="Facet" role="Facet" derivedfrom="id-0067-000000a9" isinstance="yes" isprimary="no" referred="id-0065-0000000d" isbound="yes">
+							<name>ProvideClosedFunctionalFacet</name>
+						</reference>
+						<reference id="id-0067-000000ac" kind="Facet" role="Facet" derivedfrom="id-0067-000000a8" isinstance="yes" isprimary="no" referred="id-0065-00000011" isbound="yes">
+							<name>ProvideOpenFunctionalFacet</name>
+						</reference>
+						<reference id="id-0067-000000ab" kind="Event_Type_Ref" role="Event_Type_Ref" derivedfrom="id-0067-000000aa" isinstance="yes" isprimary="no" referred="id-0065-0000000a" isbound="yes">
+							<name>DataAvailable</name>
+						</reference>
+					</model>
+					<model id="id-0065-00000045" kind="Component_Type" role="Component_Type" derivedfrom="id-0065-00000036" isinstance="yes" isprimary="yes" relid="0xb" childrelidcntr="0x0">
+						<name>TacticalSteering</name>
+						<regnode name="PartRegs">
+							<value></value>
+							<regnode name="Aspect">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>484,231</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="Destination" status="meta">
+							<value></value>
+						</attribute>
+						<atom id="id-0066-0000005e" kind="Event_Source" role="Event_Source" derivedfrom="id-0066-0000004b" isinstance="yes" isprimary="no">
+							<name>PushEvent</name>
+							<attribute kind="Event_Source_Type" status="meta">
+								<value>Publisher</value>
+							</attribute>
+						</atom>
+						<atom id="id-0066-0000005d" kind="Event_Sink" role="Event_Sink" derivedfrom="id-0066-0000004c" isinstance="yes" isprimary="no">
+							<name>ConsumeEvent</name>
+						</atom>
+						<reference id="id-0067-000000a1" kind="Facet" role="Facet" derivedfrom="id-0067-00000079" isinstance="yes" isprimary="no" referred="id-0065-0000000d" isbound="yes">
+							<name>ProvideClosedFunctionalFacet</name>
+						</reference>
+						<reference id="id-0067-000000a0" kind="Facet" role="Facet" derivedfrom="id-0067-00000077" isinstance="yes" isprimary="no" referred="id-0065-00000011" isbound="yes">
+							<name>ProvideOpenFunctionalFacet</name>
+						</reference>
+						<reference id="id-0067-0000009f" kind="Facet" role="Facet" derivedfrom="id-0067-00000078" isinstance="yes" isprimary="no" referred="id-0065-0000000c" isbound="yes">
+							<name>ProvideUpdateFunctionalFacet</name>
+						</reference>
+						<reference id="id-0067-0000009e" kind="Facet" role="Facet" derivedfrom="id-0067-00000076" isinstance="yes" isprimary="no" referred="id-0065-0000000b" isbound="yes">
+							<name>ProvideModeChangeFunctionalFacet</name>
+						</reference>
+					</model>
+					<model id="id-0065-00000042" kind="Component_Type" role="Component_Type" derivedfrom="id-0065-00000035" isinstance="yes" isprimary="yes" relid="0x8" childrelidcntr="0x0">
+						<name>PilotControl</name>
+						<regnode name="PartRegs">
+							<value></value>
+							<regnode name="Aspect">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>50,238</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="Destination" status="meta">
+							<value></value>
+						</attribute>
+						<atom id="id-0066-00000059" kind="Event_Source" role="Event_Source" derivedfrom="id-0066-00000049" isinstance="yes" isprimary="no">
+							<name>Event_Source</name>
+							<attribute kind="Event_Source_Type" status="meta">
+								<value>Publisher</value>
+							</attribute>
+						</atom>
+						<atom id="id-0066-00000058" kind="Event_Sink" role="Event_Sink" derivedfrom="id-0066-0000004a" isinstance="yes" isprimary="no">
+							<name>Event_Sink</name>
+						</atom>
+						<reference id="id-0067-000000b8" kind="Receptacle" role="Receptacle" derivedfrom="id-0067-000000b7" isinstance="yes" isprimary="no" referred="id-0065-0000002f" isbound="yes">
+							<name>ConnectModeSourceModeChangeFunctionalFacet</name>
+						</reference>
+						<reference id="id-0067-00000096" kind="Facet" role="Facet" derivedfrom="id-0067-00000074" isinstance="yes" isprimary="no" referred="id-0065-0000002f" isbound="yes">
+							<name>ProvideModeSourceModeChangeFunctionalFacet</name>
+						</reference>
+						<reference id="id-0067-00000095" kind="Facet" role="Facet" derivedfrom="id-0067-00000075" isinstance="yes" isprimary="no" referred="id-0065-0000000c" isbound="yes">
+							<name>ProvideUpdateFunctionalFacet</name>
+						</reference>
+					</model>
+					<model id="id-0065-00000041" kind="Component_Type" role="Component_Type" derivedfrom="id-0065-00000038" isinstance="yes" isprimary="yes" relid="0x7" childrelidcntr="0x0">
+						<name>Navigator</name>
+						<regnode name="PartRegs">
+							<value></value>
+							<regnode name="Aspect">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>43,133</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="Destination" status="meta">
+							<value></value>
+						</attribute>
+						<atom id="id-0066-00000060" kind="Event_Sink" role="Event_Sink" derivedfrom="id-0066-0000005f" isinstance="yes" isprimary="no">
+							<name>Event_Sink</name>
+						</atom>
+						<connection isbound="yes" id="id-0068-0000004a" kind="Event_Typing" role="Event_Typing" derivedfrom="id-0068-00000049" isinstance="yes" isprimary="no">
+							<name>Event_Typing</name>
+						</connection>
+						<reference id="id-0067-000000b0" kind="Receptacle" role="Receptacle" derivedfrom="id-0067-000000af" isinstance="yes" isprimary="no" referred="id-0065-00000011" isbound="yes">
+							<name>ConnectOpenFunctionalFacet</name>
+						</reference>
+						<reference id="id-0067-000000a3" kind="Event_Type_Ref" role="Event_Type_Ref" derivedfrom="id-0067-000000a2" isinstance="yes" isprimary="no" referred="id-0065-00000009" isbound="yes">
+							<name>IntervalTimeout</name>
+						</reference>
+						<reference id="id-0067-00000094" kind="Facet" role="Facet" derivedfrom="id-0067-0000007e" isinstance="yes" isprimary="no" referred="id-0065-0000000c" isbound="yes">
+							<name>ProvideUpdateFunctionalFacet</name>
+						</reference>
+					</model>
+					<model id="id-0065-0000003f" kind="Component_Type" role="Component_Type" derivedfrom="id-0065-00000037" isinstance="yes" isprimary="yes" relid="0x5" childrelidcntr="0x0">
+						<name>NavSteering</name>
+						<regnode name="PartRegs">
+							<value></value>
+							<regnode name="Aspect">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>484,133</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="Destination" status="meta">
+							<value></value>
+						</attribute>
+						<atom id="id-0066-00000057" kind="Event_Sink" role="Event_Sink" derivedfrom="id-0066-0000004e" isinstance="yes" isprimary="no">
+							<name>ConsumeEvent</name>
+						</atom>
+						<atom id="id-0066-00000056" kind="Event_Source" role="Event_Source" derivedfrom="id-0066-0000004d" isinstance="yes" isprimary="no">
+							<name>PushEvent</name>
+							<attribute kind="Event_Source_Type" status="meta">
+								<value>Publisher</value>
+							</attribute>
+						</atom>
+						<connection isbound="yes" id="id-0068-00000050" kind="Event_Typing" role="Event_Typing" derivedfrom="id-0068-0000004f" isinstance="yes" isprimary="no">
+							<name>Event_Typing</name>
+						</connection>
+						<reference id="id-0067-000000b4" kind="Receptacle" role="Receptacle" derivedfrom="id-0067-000000b3" isinstance="yes" isprimary="no" referred="id-0065-00000011" isbound="yes">
+							<name>ConnectOpenFunctionalFacet</name>
+						</reference>
+						<reference id="id-0067-000000b2" kind="Event_Type_Ref" role="Event_Type_Ref" derivedfrom="id-0067-000000b1" isinstance="yes" isprimary="no" referred="id-0065-0000000a" isbound="yes">
+							<name>DataAvailable</name>
+						</reference>
+						<reference id="id-0067-00000092" kind="Facet" role="Facet" derivedfrom="id-0067-0000007c" isinstance="yes" isprimary="no" referred="id-0065-0000000c" isbound="yes">
+							<name>ProvideUpdateFunctionalFacet</name>
+						</reference>
+						<reference id="id-0067-00000091" kind="Facet" role="Facet" derivedfrom="id-0067-0000007d" isinstance="yes" isprimary="no" referred="id-0065-0000000d" isbound="yes">
+							<name>ProvideClosedFunctionalFacet</name>
+						</reference>
+						<reference id="id-0067-00000090" kind="Facet" role="Facet" derivedfrom="id-0067-0000007b" isinstance="yes" isprimary="no" referred="id-0065-00000011" isbound="yes">
+							<name>ProvideOpenFunctionalFacet</name>
+						</reference>
+						<reference id="id-0067-0000008f" kind="Facet" role="Facet" derivedfrom="id-0067-0000007a" isinstance="yes" isprimary="no" referred="id-0065-0000000b" isbound="yes">
+							<name>ProvideModeChangeFunctionalFacet</name>
+						</reference>
+					</model>
+					<model id="id-0065-0000003e" kind="Component_Type" role="Component_Type" derivedfrom="id-0065-00000010" isinstance="yes" isprimary="yes" relid="0x4" childrelidcntr="0x0">
+						<name>NavDisplay</name>
+						<regnode name="PartRegs">
+							<value></value>
+							<regnode name="Aspect">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>554,371</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="Destination" status="meta">
+							<value></value>
+						</attribute>
+						<atom id="id-0066-00000055" kind="Event_Sink" role="Event_Sink" derivedfrom="id-0066-00000011" isinstance="yes" isprimary="no">
+							<name>ConsumeEvent</name>
+						</atom>
+						<connection isbound="yes" id="id-0068-0000003f" kind="Event_Typing" role="Event_Typing" derivedfrom="id-0068-00000001" isinstance="yes" isprimary="no">
+							<name>Event_Typing</name>
+						</connection>
+						<reference id="id-0067-0000008e" kind="Receptacle" role="Receptacle" derivedfrom="id-0067-0000002c" isinstance="yes" isprimary="no" referred="id-0065-0000000d" isbound="yes">
+							<name>ConnectClosedFunctionalFacet</name>
+						</reference>
+						<reference id="id-0067-0000008d" kind="Facet" role="Facet" derivedfrom="id-0067-00000009" isinstance="yes" isprimary="no" referred="id-0065-0000000c" isbound="yes">
+							<name>ProvideUpdateFunctionalFacet</name>
+						</reference>
+						<reference id="id-0067-0000008c" kind="Event_Type_Ref" role="Event_Type_Ref" derivedfrom="id-0067-0000000a" isinstance="yes" isprimary="no" referred="id-0065-0000000a" isbound="yes">
+							<name>DataAvailable</name>
+						</reference>
+					</model>
+					<model id="id-0065-0000003d" kind="Component_Type" role="Component_Type" derivedfrom="id-0065-00000017" isinstance="yes" isprimary="yes" relid="0x3" childrelidcntr="0x0">
+						<name>GPS</name>
+						<regnode name="PartRegs">
+							<value></value>
+							<regnode name="Aspect">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>43,378</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="Destination" status="meta">
+							<value></value>
+						</attribute>
+						<atom id="id-0066-00000054" kind="Event_Source" role="Event_Source" derivedfrom="id-0066-00000020" isinstance="yes" isprimary="no">
+							<name>PushEvent</name>
+							<attribute kind="Event_Source_Type" status="meta">
+								<value>Publisher</value>
+							</attribute>
+						</atom>
+						<atom id="id-0066-00000053" kind="Event_Sink" role="Event_Sink" derivedfrom="id-0066-0000001f" isinstance="yes" isprimary="no">
+							<name>ConsumeIntervalTimeout</name>
+						</atom>
+						<connection isbound="yes" id="id-0068-0000003e" kind="Event_Typing" role="Event_Typing" derivedfrom="id-0068-00000006" isinstance="yes" isprimary="no">
+							<name>Event_Typing</name>
+						</connection>
+						<connection isbound="yes" id="id-0068-0000003d" kind="Event_Typing" role="Event_Typing" derivedfrom="id-0068-00000005" isinstance="yes" isprimary="no">
+							<name>Event_Typing</name>
+						</connection>
+						<reference id="id-0067-0000008b" kind="Facet" role="Facet" derivedfrom="id-0067-0000001e" isinstance="yes" isprimary="no" referred="id-0065-0000000c" isbound="yes">
+							<name>ProvideUpdateFunctionalFacet</name>
+						</reference>
+						<reference id="id-0067-0000008a" kind="Facet" role="Facet" derivedfrom="id-0067-0000001d" isinstance="yes" isprimary="no" referred="id-0065-0000000d" isbound="yes">
+							<name>ProvideClosedFunctionalFacet</name>
+						</reference>
+						<reference id="id-0067-00000089" kind="Event_Type_Ref" role="Event_Type_Ref" derivedfrom="id-0067-00000021" isinstance="yes" isprimary="no" referred="id-0065-0000000a" isbound="yes">
+							<name>DataAvailable</name>
+						</reference>
+						<reference id="id-0067-00000088" kind="Event_Type_Ref" role="Event_Type_Ref" derivedfrom="id-0067-0000001f" isinstance="yes" isprimary="no" referred="id-0065-00000009" isbound="yes">
+							<name>IntervalTimeout</name>
+						</reference>
+					</model>
+					<model id="id-0065-0000003b" kind="Component_Type" role="Component_Type" derivedfrom="id-0065-00000016" isinstance="yes" isprimary="yes" relid="0x1" childrelidcntr="0x0">
+						<name>AirFrame</name>
+						<regnode name="PartRegs">
+							<value></value>
+							<regnode name="Aspect">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>295,371</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="Destination" status="meta">
+							<value></value>
+						</attribute>
+						<atom id="id-0066-00000050" kind="Event_Sink" role="Event_Sink" derivedfrom="id-0066-0000001d" isinstance="yes" isprimary="no">
+							<name>ConsumeEvent</name>
+						</atom>
+						<atom id="id-0066-0000004f" kind="Event_Source" role="Event_Source" derivedfrom="id-0066-0000001e" isinstance="yes" isprimary="no">
+							<name>PushEvent</name>
+							<attribute kind="Event_Source_Type" status="meta">
+								<value>Publisher</value>
+							</attribute>
+						</atom>
+						<connection isbound="yes" id="id-0068-0000003a" kind="Event_Typing" role="Event_Typing" derivedfrom="id-0068-00000004" isinstance="yes" isprimary="no">
+							<name>Event_Typing</name>
+						</connection>
+						<connection isbound="yes" id="id-0068-00000039" kind="Event_Typing" role="Event_Typing" derivedfrom="id-0068-00000003" isinstance="yes" isprimary="no">
+							<name>Event_Typing</name>
+						</connection>
+						<reference id="id-0067-00000083" kind="Receptacle" role="Receptacle" derivedfrom="id-0067-0000002b" isinstance="yes" isprimary="no" referred="id-0065-0000000d" isbound="yes">
+							<name>ConnectClosedFunctionalFacet</name>
+						</reference>
+						<reference id="id-0067-00000082" kind="Facet" role="Facet" derivedfrom="id-0067-0000001b" isinstance="yes" isprimary="no" referred="id-0065-0000000c" isbound="yes">
+							<name>ProvideUpdateFunctionalFacet</name>
+						</reference>
+						<reference id="id-0067-00000081" kind="Facet" role="Facet" derivedfrom="id-0067-0000001a" isinstance="yes" isprimary="no" referred="id-0065-0000000d" isbound="yes">
+							<name>ProvideClosedFunctionalFacet</name>
+						</reference>
+						<reference id="id-0067-00000080" kind="Event_Type_Ref" role="Event_Type_Ref" derivedfrom="id-0067-0000001c" isinstance="yes" isprimary="no" referred="id-0065-0000000a" isbound="yes">
+							<name>DataAvailable</name>
+						</reference>
+					</model>
+					<connection id="id-0068-00000056" kind="Facet_Receptacle_Connection" role="Facet_Receptacle_Connection" relid="0x1a">
+						<name>Facet_Receptacle_Connection</name>
+						<connpoint role="dst" target="id-0067-000000a1"/>
+						<connpoint role="src" target="id-0067-0000008e"/>
+					</connection>
+					<connection id="id-0068-00000055" kind="Event_Connection" role="Event_Connection" relid="0x19">
+						<name>Event_Connection</name>
+						<connpoint role="dst" target="id-0066-00000055"/>
+						<connpoint role="src" target="id-0066-0000005e"/>
+					</connection>
+					<connection id="id-0068-00000054" kind="Facet_Receptacle_Connection" role="Facet_Receptacle_Connection" relid="0x18">
+						<name>Facet_Receptacle_Connection</name>
+						<connpoint role="dst" target="id-0067-0000009e"/>
+						<connpoint role="src" target="id-0067-000000b8"/>
+					</connection>
+					<connection id="id-0068-00000053" kind="Facet_Receptacle_Connection" role="Facet_Receptacle_Connection" relid="0x17">
+						<name>Facet_Receptacle_Connection</name>
+						<connpoint role="dst" target="id-0067-0000008f"/>
+						<connpoint role="src" target="id-0067-000000b8"/>
+					</connection>
+					<connection id="id-0068-00000051" kind="Facet_Receptacle_Connection" role="Facet_Receptacle_Connection" relid="0x15">
+						<name>Facet_Receptacle_Connection</name>
+						<connpoint role="dst" target="id-0067-000000ac"/>
+						<connpoint role="src" target="id-0067-000000b4"/>
+					</connection>
+					<connection id="id-0068-0000004e" kind="Event_Connection" role="Event_Connection" relid="0x14">
+						<name>Event_Connection</name>
+						<connpoint role="dst" target="id-0066-00000057"/>
+						<connpoint role="src" target="id-0066-00000062"/>
+					</connection>
+					<connection id="id-0068-0000004d" kind="Facet_Receptacle_Connection" role="Facet_Receptacle_Connection" relid="0x13">
+						<name>Facet_Receptacle_Connection</name>
+						<connpoint role="dst" target="id-0067-000000ac"/>
+						<connpoint role="src" target="id-0067-000000b0"/>
+					</connection>
+					<connection id="id-0068-00000048" kind="Event_Connection" role="Event_Connection" relid="0x11">
+						<name>Event_Connection</name>
+						<connpoint role="dst" target="id-0066-00000057"/>
+						<connpoint role="src" target="id-0066-0000004f"/>
+					</connection>
+					<connection id="id-0068-00000047" kind="Event_Connection" role="Event_Connection" relid="0x10">
+						<name>Event_Connection</name>
+						<connpoint role="dst" target="id-0066-0000005d"/>
+						<connpoint role="src" target="id-0066-0000004f"/>
+					</connection>
+					<connection id="id-0068-00000046" kind="Facet_Receptacle_Connection" role="Facet_Receptacle_Connection" relid="0xf">
+						<name>Facet_Receptacle_Connection</name>
+						<connpoint role="dst" target="id-0067-00000081"/>
+						<connpoint role="src" target="id-0067-0000008e"/>
+					</connection>
+					<connection id="id-0068-00000045" kind="Event_Connection" role="Event_Connection" relid="0xe">
+						<name>Event_Connection</name>
+						<connpoint role="dst" target="id-0066-00000055"/>
+						<connpoint role="src" target="id-0066-0000004f"/>
+					</connection>
+					<connection id="id-0068-00000044" kind="Facet_Receptacle_Connection" role="Facet_Receptacle_Connection" relid="0xd">
+						<name>Facet_Receptacle_Connection</name>
+						<connpoint role="dst" target="id-0067-0000008a"/>
+						<connpoint role="src" target="id-0067-00000083"/>
+					</connection>
+					<connection id="id-0068-00000043" kind="Event_Connection" role="Event_Connection" relid="0xc">
+						<name>Event_Connection</name>
+						<connpoint role="dst" target="id-0066-00000050"/>
+						<connpoint role="src" target="id-0066-00000054"/>
+					</connection>
+				</model>
+			</folder>
+			<folder id="id-006a-0000000b" relid="0x2" childrelidcntr="0x1" kind="Interaction_Folder">
+				<name>BasicSP</name>
+				<model id="id-0065-0000001a" kind="Assembly_Descriptor" relid="0x1" childrelidcntr="0x9">
+					<name>BasicSP</name>
+					<attribute kind="Assembly_Description" status="meta">
+						<value></value>
+					</attribute>
+					<model id="id-0065-00000054" kind="Component_Type" role="Component_Type" derivedfrom="id-0065-0000004b" isinstance="yes" isprimary="yes" relid="0x8" childrelidcntr="0x0">
+						<name>Timer</name>
+						<regnode name="PartRegs">
+							<value></value>
+							<regnode name="Aspect">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>15,63</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="Destination" status="meta">
+							<value></value>
+						</attribute>
+						<atom id="id-0066-00000074" kind="Event_Source" role="Event_Source" derivedfrom="id-0066-00000066" isinstance="yes" isprimary="no">
+							<name>PushEvent</name>
+							<attribute kind="Event_Source_Type" status="meta">
+								<value>Publisher</value>
+							</attribute>
+						</atom>
+						<atom id="id-0066-00000073" kind="Event_Sink" role="Event_Sink" derivedfrom="id-0066-00000065" isinstance="yes" isprimary="no">
+							<name>ConsumeEvent</name>
+						</atom>
+						<reference id="id-0067-000000cc" kind="Facet" role="Facet" derivedfrom="id-0067-000000bb" isinstance="yes" isprimary="no" referred="id-0065-0000000d" isbound="yes">
+							<name>ProvideClosedFunctionalFacet</name>
+						</reference>
+						<reference id="id-0067-000000cb" kind="Facet" role="Facet" derivedfrom="id-0067-000000bc" isinstance="yes" isprimary="no" referred="id-0065-0000000c" isbound="yes">
+							<name>ProvideUpdateFunctionalFacet</name>
+						</reference>
+					</model>
+					<model id="id-0065-0000001d" kind="Component_Type" role="Component_Type" derivedfrom="id-0065-00000010" isinstance="yes" isprimary="yes" relid="0x3" childrelidcntr="0x0">
+						<name>NavDisplay</name>
+						<regnode name="PartRegs">
+							<value></value>
+							<regnode name="Aspect">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>561,63</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="Destination" status="meta">
+							<value></value>
+						</attribute>
+						<atom id="id-0066-00000029" kind="Event_Sink" role="Event_Sink" derivedfrom="id-0066-00000011" isinstance="yes" isprimary="no">
+							<name>ConsumeEvent</name>
+						</atom>
+						<connection isbound="yes" id="id-0068-0000000b" kind="Event_Typing" role="Event_Typing" derivedfrom="id-0068-00000001" isinstance="yes" isprimary="no">
+							<name>Event_Typing</name>
+						</connection>
+						<reference id="id-0067-00000037" kind="Facet" role="Facet" derivedfrom="id-0067-00000009" isinstance="yes" isprimary="no" referred="id-0065-0000000c" isbound="yes">
+							<name>ProvideUpdateFunctionalFacet</name>
+						</reference>
+						<reference id="id-0067-00000036" kind="Event_Type_Ref" role="Event_Type_Ref" derivedfrom="id-0067-0000000a" isinstance="yes" isprimary="no" referred="id-0065-0000000a" isbound="yes">
+							<name>DataAvailable</name>
+						</reference>
+						<reference id="id-0067-00000035" kind="Receptacle" role="Receptacle" derivedfrom="id-0067-0000002c" isinstance="yes" isprimary="no" referred="id-0065-0000000d" isbound="yes">
+							<name>ConnectClosedFunctionalFacet</name>
+						</reference>
+					</model>
+					<model id="id-0065-0000001c" kind="Component_Type" role="Component_Type" derivedfrom="id-0065-00000017" isinstance="yes" isprimary="yes" relid="0x2" childrelidcntr="0x0">
+						<name>GPS</name>
+						<regnode name="PartRegs">
+							<value></value>
+							<regnode name="Aspect">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>183,63</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="Destination" status="meta">
+							<value></value>
+						</attribute>
+						<atom id="id-0066-00000028" kind="Event_Sink" role="Event_Sink" derivedfrom="id-0066-0000001f" isinstance="yes" isprimary="no">
+							<name>ConsumeIntervalTimeout</name>
+						</atom>
+						<atom id="id-0066-00000027" kind="Event_Source" role="Event_Source" derivedfrom="id-0066-00000020" isinstance="yes" isprimary="no">
+							<name>PushEvent</name>
+							<attribute kind="Event_Source_Type" status="meta">
+								<value>Publisher</value>
+							</attribute>
+						</atom>
+						<connection isbound="yes" id="id-0068-0000000a" kind="Event_Typing" role="Event_Typing" derivedfrom="id-0068-00000005" isinstance="yes" isprimary="no">
+							<name>Event_Typing</name>
+						</connection>
+						<connection isbound="yes" id="id-0068-00000009" kind="Event_Typing" role="Event_Typing" derivedfrom="id-0068-00000006" isinstance="yes" isprimary="no">
+							<name>Event_Typing</name>
+						</connection>
+						<reference id="id-0067-00000034" kind="Facet" role="Facet" derivedfrom="id-0067-0000001d" isinstance="yes" isprimary="no" referred="id-0065-0000000d" isbound="yes">
+							<name>ProvideClosedFunctionalFacet</name>
+						</reference>
+						<reference id="id-0067-00000033" kind="Facet" role="Facet" derivedfrom="id-0067-0000001e" isinstance="yes" isprimary="no" referred="id-0065-0000000c" isbound="yes">
+							<name>ProvideUpdateFunctionalFacet</name>
+						</reference>
+						<reference id="id-0067-00000032" kind="Event_Type_Ref" role="Event_Type_Ref" derivedfrom="id-0067-0000001f" isinstance="yes" isprimary="no" referred="id-0065-00000009" isbound="yes">
+							<name>IntervalTimeout</name>
+						</reference>
+						<reference id="id-0067-00000031" kind="Event_Type_Ref" role="Event_Type_Ref" derivedfrom="id-0067-00000021" isinstance="yes" isprimary="no" referred="id-0065-0000000a" isbound="yes">
+							<name>DataAvailable</name>
+						</reference>
+					</model>
+					<model id="id-0065-0000001b" kind="Component_Type" role="Component_Type" derivedfrom="id-0065-00000016" isinstance="yes" isprimary="yes" relid="0x1" childrelidcntr="0x0">
+						<name>AirFrame</name>
+						<regnode name="PartRegs">
+							<value></value>
+							<regnode name="Aspect">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>379,63</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="Destination" status="meta">
+							<value></value>
+						</attribute>
+						<atom id="id-0066-00000026" kind="Event_Sink" role="Event_Sink" derivedfrom="id-0066-0000001d" isinstance="yes" isprimary="no">
+							<name>ConsumeEvent</name>
+						</atom>
+						<atom id="id-0066-00000025" kind="Event_Source" role="Event_Source" derivedfrom="id-0066-0000001e" isinstance="yes" isprimary="no">
+							<name>PushEvent</name>
+							<attribute kind="Event_Source_Type" status="meta">
+								<value>Publisher</value>
+							</attribute>
+						</atom>
+						<connection isbound="yes" id="id-0068-00000008" kind="Event_Typing" role="Event_Typing" derivedfrom="id-0068-00000003" isinstance="yes" isprimary="no">
+							<name>Event_Typing</name>
+						</connection>
+						<connection isbound="yes" id="id-0068-00000007" kind="Event_Typing" role="Event_Typing" derivedfrom="id-0068-00000004" isinstance="yes" isprimary="no">
+							<name>Event_Typing</name>
+						</connection>
+						<reference id="id-0067-00000030" kind="Facet" role="Facet" derivedfrom="id-0067-0000001a" isinstance="yes" isprimary="no" referred="id-0065-0000000d" isbound="yes">
+							<name>ProvideClosedFunctionalFacet</name>
+						</reference>
+						<reference id="id-0067-0000002f" kind="Facet" role="Facet" derivedfrom="id-0067-0000001b" isinstance="yes" isprimary="no" referred="id-0065-0000000c" isbound="yes">
+							<name>ProvideUpdateFunctionalFacet</name>
+						</reference>
+						<reference id="id-0067-0000002e" kind="Event_Type_Ref" role="Event_Type_Ref" derivedfrom="id-0067-0000001c" isinstance="yes" isprimary="no" referred="id-0065-0000000a" isbound="yes">
+							<name>DataAvailable</name>
+						</reference>
+						<reference id="id-0067-0000002d" kind="Receptacle" role="Receptacle" derivedfrom="id-0067-0000002b" isinstance="yes" isprimary="no" referred="id-0065-0000000d" isbound="yes">
+							<name>ConnectClosedFunctionalFacet</name>
+						</reference>
+					</model>
+					<connection id="id-0068-00000068" kind="Event_Connection" role="Event_Connection" relid="0x9">
+						<name>Event_Connection</name>
+						<connpoint role="dst" target="id-0066-00000028"/>
+						<connpoint role="src" target="id-0066-00000074"/>
+					</connection>
+					<connection id="id-0068-0000000f" kind="Facet_Receptacle_Connection" role="Facet_Receptacle_Connection" relid="0x7">
+						<name>Facet_Receptacle_Connection</name>
+						<connpoint role="dst" target="id-0067-00000034"/>
+						<connpoint role="src" target="id-0067-0000002d"/>
+					</connection>
+					<connection id="id-0068-0000000e" kind="Facet_Receptacle_Connection" role="Facet_Receptacle_Connection" relid="0x6">
+						<name>Facet_Receptacle_Connection</name>
+						<connpoint role="dst" target="id-0067-00000030"/>
+						<connpoint role="src" target="id-0067-00000035"/>
+					</connection>
+					<connection id="id-0068-0000000d" kind="Event_Connection" role="Event_Connection" relid="0x5">
+						<name>Event_Connection</name>
+						<connpoint role="dst" target="id-0066-00000029"/>
+						<connpoint role="src" target="id-0066-00000025"/>
+					</connection>
+					<connection id="id-0068-0000000c" kind="Event_Connection" role="Event_Connection" relid="0x4">
+						<name>Event_Connection</name>
+						<connpoint role="dst" target="id-0066-00000026"/>
+						<connpoint role="src" target="id-0066-00000027"/>
+					</connection>
+				</model>
+			</folder>
+			<folder id="id-006a-0000000a" relid="0x1" childrelidcntr="0x1" kind="Interaction_Folder">
+				<name>MultiRateSP</name>
+				<model id="id-0065-0000001e" kind="Assembly_Descriptor" relid="0x1" childrelidcntr="0xe">
+					<name>MultiRateSP</name>
+					<attribute kind="Assembly_Description" status="meta">
+						<value></value>
+					</attribute>
+					<model id="id-0065-00000027" kind="Component_Type" role="Component_Type" derivedfrom="id-0065-00000021" isinstance="yes" isprimary="yes" relid="0x6" childrelidcntr="0x0">
+						<name>TacticalDisplay</name>
+						<regnode name="PartRegs">
+							<value></value>
+							<regnode name="Aspect">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>603,49</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="Destination" status="meta">
+							<value></value>
+						</attribute>
+						<atom id="id-0066-00000036" kind="Event_Sink" role="Event_Sink" derivedfrom="id-0066-0000002d" isinstance="yes" isprimary="no">
+							<name>ConsumeEvent</name>
+						</atom>
+						<connection isbound="yes" id="id-0068-00000024" kind="Event_Typing" role="Event_Typing" derivedfrom="id-0068-00000023" isinstance="yes" isprimary="no">
+							<name>Event_Typing</name>
+						</connection>
+						<reference id="id-0067-00000058" kind="Receptacle" role="Receptacle" derivedfrom="id-0067-00000057" isinstance="yes" isprimary="no" referred="id-0065-0000000d" isbound="yes">
+							<name>BM__ClosedFunctionalFacet</name>
+						</reference>
+						<reference id="id-0067-00000056" kind="Event_Type_Ref" role="Event_Type_Ref" derivedfrom="id-0067-00000055" isinstance="yes" isprimary="no" referred="id-0065-0000000a" isbound="yes">
+							<name>DataAvailable</name>
+						</reference>
+						<reference id="id-0067-0000004e" kind="Facet" role="Facet" derivedfrom="id-0067-0000003d" isinstance="yes" isprimary="no" referred="id-0065-0000000c" isbound="yes">
+							<name>ProvideUpdateFunctionalFacet</name>
+						</reference>
+					</model>
+					<model id="id-0065-00000026" kind="Component_Type" role="Component_Type" derivedfrom="id-0065-00000020" isinstance="yes" isprimary="yes" relid="0x5" childrelidcntr="0x0">
+						<name>SelectedPoint</name>
+						<regnode name="PartRegs">
+							<value></value>
+							<regnode name="Aspect">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>365,49</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="Destination" status="meta">
+							<value></value>
+						</attribute>
+						<atom id="id-0066-00000035" kind="Event_Sink" role="Event_Sink" derivedfrom="id-0066-0000002c" isinstance="yes" isprimary="no">
+							<name>ConsumeEvent</name>
+						</atom>
+						<atom id="id-0066-00000034" kind="Event_Source" role="Event_Source" derivedfrom="id-0066-0000002b" isinstance="yes" isprimary="no">
+							<name>PushEvent</name>
+							<attribute kind="Event_Source_Type" status="meta">
+								<value>Publisher</value>
+							</attribute>
+						</atom>
+						<connection isbound="yes" id="id-0068-00000022" kind="Event_Typing" role="Event_Typing" derivedfrom="id-0068-00000021" isinstance="yes" isprimary="no">
+							<name>Event_Typing</name>
+						</connection>
+						<connection isbound="yes" id="id-0068-00000020" kind="Event_Typing" role="Event_Typing" derivedfrom="id-0068-0000001f" isinstance="yes" isprimary="no">
+							<name>Event_Typing</name>
+						</connection>
+						<reference id="id-0067-00000054" kind="Receptacle" role="Receptacle" derivedfrom="id-0067-00000053" isinstance="yes" isprimary="no" referred="id-0065-0000000d" isbound="yes">
+							<name>ConnectClosedFunctionalFacet</name>
+						</reference>
+						<reference id="id-0067-00000052" kind="Event_Type_Ref" role="Event_Type_Ref" derivedfrom="id-0067-00000051" isinstance="yes" isprimary="no" referred="id-0065-0000000a" isbound="yes">
+							<name>DataAvailable</name>
+						</reference>
+						<reference id="id-0067-0000004d" kind="Facet" role="Facet" derivedfrom="id-0067-0000003c" isinstance="yes" isprimary="no" referred="id-0065-0000000d" isbound="yes">
+							<name>ProvideClosedFunctionalFacet</name>
+						</reference>
+						<reference id="id-0067-0000004c" kind="Facet" role="Facet" derivedfrom="id-0067-0000003b" isinstance="yes" isprimary="no" referred="id-0065-0000000c" isbound="yes">
+							<name>ProvideUpdateFunctionalFacet</name>
+						</reference>
+					</model>
+					<model id="id-0065-00000025" kind="Component_Type" role="Component_Type" derivedfrom="id-0065-00000010" isinstance="yes" isprimary="yes" relid="0x4" childrelidcntr="0x0">
+						<name>NavDisplay</name>
+						<regnode name="PartRegs">
+							<value></value>
+							<regnode name="Aspect">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>596,273</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="Destination" status="meta">
+							<value></value>
+						</attribute>
+						<atom id="id-0066-00000033" kind="Event_Sink" role="Event_Sink" derivedfrom="id-0066-00000011" isinstance="yes" isprimary="no">
+							<name>ConsumeEvent</name>
+						</atom>
+						<connection isbound="yes" id="id-0068-00000016" kind="Event_Typing" role="Event_Typing" derivedfrom="id-0068-00000001" isinstance="yes" isprimary="no">
+							<name>Event_Typing</name>
+						</connection>
+						<reference id="id-0067-0000004b" kind="Facet" role="Facet" derivedfrom="id-0067-00000009" isinstance="yes" isprimary="no" referred="id-0065-0000000c" isbound="yes">
+							<name>ProvideUpdateFunctionalFacet</name>
+						</reference>
+						<reference id="id-0067-0000004a" kind="Event_Type_Ref" role="Event_Type_Ref" derivedfrom="id-0067-0000000a" isinstance="yes" isprimary="no" referred="id-0065-0000000a" isbound="yes">
+							<name>DataAvailable</name>
+						</reference>
+						<reference id="id-0067-00000049" kind="Receptacle" role="Receptacle" derivedfrom="id-0067-0000002c" isinstance="yes" isprimary="no" referred="id-0065-0000000d" isbound="yes">
+							<name>ConnectClosedFunctionalFacet</name>
+						</reference>
+					</model>
+					<model id="id-0065-00000024" kind="Component_Type" role="Component_Type" derivedfrom="id-0065-00000017" isinstance="yes" isprimary="yes" relid="0x3" childrelidcntr="0x0">
+						<name>GPS</name>
+						<regnode name="PartRegs">
+							<value></value>
+							<regnode name="Aspect">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>99,280</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="Destination" status="meta">
+							<value></value>
+						</attribute>
+						<atom id="id-0066-00000032" kind="Event_Sink" role="Event_Sink" derivedfrom="id-0066-0000001f" isinstance="yes" isprimary="no">
+							<name>ConsumeIntervalTimeout</name>
+						</atom>
+						<atom id="id-0066-00000031" kind="Event_Source" role="Event_Source" derivedfrom="id-0066-00000020" isinstance="yes" isprimary="no">
+							<name>PushEvent</name>
+							<attribute kind="Event_Source_Type" status="meta">
+								<value>Publisher</value>
+							</attribute>
+						</atom>
+						<connection isbound="yes" id="id-0068-00000015" kind="Event_Typing" role="Event_Typing" derivedfrom="id-0068-00000005" isinstance="yes" isprimary="no">
+							<name>Event_Typing</name>
+						</connection>
+						<connection isbound="yes" id="id-0068-00000014" kind="Event_Typing" role="Event_Typing" derivedfrom="id-0068-00000006" isinstance="yes" isprimary="no">
+							<name>Event_Typing</name>
+						</connection>
+						<reference id="id-0067-00000048" kind="Facet" role="Facet" derivedfrom="id-0067-0000001d" isinstance="yes" isprimary="no" referred="id-0065-0000000d" isbound="yes">
+							<name>ProvideClosedFunctionalFacet</name>
+						</reference>
+						<reference id="id-0067-00000047" kind="Facet" role="Facet" derivedfrom="id-0067-0000001e" isinstance="yes" isprimary="no" referred="id-0065-0000000c" isbound="yes">
+							<name>ProvideUpdateFunctionalFacet</name>
+						</reference>
+						<reference id="id-0067-00000046" kind="Event_Type_Ref" role="Event_Type_Ref" derivedfrom="id-0067-0000001f" isinstance="yes" isprimary="no" referred="id-0065-00000009" isbound="yes">
+							<name>IntervalTimeout</name>
+						</reference>
+						<reference id="id-0067-00000045" kind="Event_Type_Ref" role="Event_Type_Ref" derivedfrom="id-0067-00000021" isinstance="yes" isprimary="no" referred="id-0065-0000000a" isbound="yes">
+							<name>DataAvailable</name>
+						</reference>
+					</model>
+					<model id="id-0065-00000023" kind="Component_Type" role="Component_Type" derivedfrom="id-0065-0000001f" isinstance="yes" isprimary="yes" relid="0x2" childrelidcntr="0x0">
+						<name>CursorDevice</name>
+						<regnode name="PartRegs">
+							<value></value>
+							<regnode name="Aspect">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>99,56</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="Destination" status="meta">
+							<value></value>
+						</attribute>
+						<atom id="id-0066-00000038" kind="Event_Source" role="Event_Source" derivedfrom="id-0066-00000037" isinstance="yes" isprimary="no">
+							<name>Event_Source</name>
+							<attribute kind="Event_Source_Type" status="meta">
+								<value>Publisher</value>
+							</attribute>
+						</atom>
+						<atom id="id-0066-00000030" kind="Event_Sink" role="Event_Sink" derivedfrom="id-0066-0000002a" isinstance="yes" isprimary="no">
+							<name>ConsumeIntervalTimeout</name>
+						</atom>
+						<connection isbound="yes" id="id-0068-0000001c" kind="Event_Typing" role="Event_Typing" derivedfrom="id-0068-0000001b" isinstance="yes" isprimary="no">
+							<name>Event_Typing</name>
+						</connection>
+						<connection isbound="yes" id="id-0068-00000013" kind="Event_Typing" role="Event_Typing" derivedfrom="id-0068-00000010" isinstance="yes" isprimary="no">
+							<name>Event_Typing</name>
+						</connection>
+						<reference id="id-0067-00000050" kind="Event_Type_Ref" role="Event_Type_Ref" derivedfrom="id-0067-0000004f" isinstance="yes" isprimary="no" referred="id-0065-0000000a" isbound="yes">
+							<name>DataAvailable</name>
+						</reference>
+						<reference id="id-0067-00000044" kind="Facet" role="Facet" derivedfrom="id-0067-00000039" isinstance="yes" isprimary="no" referred="id-0065-0000000c" isbound="yes">
+							<name>ProvideUpdateFunctionalFacet</name>
+						</reference>
+						<reference id="id-0067-00000043" kind="Facet" role="Facet" derivedfrom="id-0067-0000003a" isinstance="yes" isprimary="no" referred="id-0065-0000000d" isbound="yes">
+							<name>ProvideClosedFunctionalFacet</name>
+						</reference>
+						<reference id="id-0067-00000042" kind="Event_Type_Ref" role="Event_Type_Ref" derivedfrom="id-0067-00000038" isinstance="yes" isprimary="no" referred="id-0065-00000009" isbound="yes">
+							<name>IntervalTimeout</name>
+						</reference>
+					</model>
+					<model id="id-0065-00000022" kind="Component_Type" role="Component_Type" derivedfrom="id-0065-00000016" isinstance="yes" isprimary="yes" relid="0x1" childrelidcntr="0x0">
+						<name>AirFrame</name>
+						<regnode name="PartRegs">
+							<value></value>
+							<regnode name="Aspect">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>358,273</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="Destination" status="meta">
+							<value></value>
+						</attribute>
+						<atom id="id-0066-0000002f" kind="Event_Sink" role="Event_Sink" derivedfrom="id-0066-0000001d" isinstance="yes" isprimary="no">
+							<name>ConsumeEvent</name>
+						</atom>
+						<atom id="id-0066-0000002e" kind="Event_Source" role="Event_Source" derivedfrom="id-0066-0000001e" isinstance="yes" isprimary="no">
+							<name>PushEvent</name>
+							<attribute kind="Event_Source_Type" status="meta">
+								<value>Publisher</value>
+							</attribute>
+						</atom>
+						<connection isbound="yes" id="id-0068-00000012" kind="Event_Typing" role="Event_Typing" derivedfrom="id-0068-00000003" isinstance="yes" isprimary="no">
+							<name>Event_Typing</name>
+						</connection>
+						<connection isbound="yes" id="id-0068-00000011" kind="Event_Typing" role="Event_Typing" derivedfrom="id-0068-00000004" isinstance="yes" isprimary="no">
+							<name>Event_Typing</name>
+						</connection>
+						<reference id="id-0067-00000041" kind="Facet" role="Facet" derivedfrom="id-0067-0000001a" isinstance="yes" isprimary="no" referred="id-0065-0000000d" isbound="yes">
+							<name>ProvideClosedFunctionalFacet</name>
+						</reference>
+						<reference id="id-0067-00000040" kind="Facet" role="Facet" derivedfrom="id-0067-0000001b" isinstance="yes" isprimary="no" referred="id-0065-0000000c" isbound="yes">
+							<name>ProvideUpdateFunctionalFacet</name>
+						</reference>
+						<reference id="id-0067-0000003f" kind="Event_Type_Ref" role="Event_Type_Ref" derivedfrom="id-0067-0000001c" isinstance="yes" isprimary="no" referred="id-0065-0000000a" isbound="yes">
+							<name>DataAvailable</name>
+						</reference>
+						<reference id="id-0067-0000003e" kind="Receptacle" role="Receptacle" derivedfrom="id-0067-0000002b" isinstance="yes" isprimary="no" referred="id-0065-0000000d" isbound="yes">
+							<name>ConnectClosedFunctionalFacet</name>
+						</reference>
+					</model>
+					<connection id="id-0068-00000026" kind="Facet_Receptacle_Connection" role="Facet_Receptacle_Connection" relid="0xe">
+						<name>Facet_Receptacle_Connection</name>
+						<connpoint role="dst" target="id-0067-0000004d"/>
+						<connpoint role="src" target="id-0067-00000058"/>
+					</connection>
+					<connection id="id-0068-00000025" kind="Facet_Receptacle_Connection" role="Facet_Receptacle_Connection" relid="0xd">
+						<name>Facet_Receptacle_Connection</name>
+						<connpoint role="dst" target="id-0067-00000043"/>
+						<connpoint role="src" target="id-0067-00000054"/>
+					</connection>
+					<connection id="id-0068-0000001e" kind="Event_Connection" role="Event_Connection" relid="0xc">
+						<name>Event_Connection</name>
+						<connpoint role="dst" target="id-0066-00000036"/>
+						<connpoint role="src" target="id-0066-00000034"/>
+					</connection>
+					<connection id="id-0068-0000001d" kind="Event_Connection" role="Event_Connection" relid="0xb">
+						<name>Event_Connection</name>
+						<connpoint role="dst" target="id-0066-00000035"/>
+						<connpoint role="src" target="id-0066-00000038"/>
+					</connection>
+					<connection id="id-0068-0000001a" kind="Facet_Receptacle_Connection" role="Facet_Receptacle_Connection" relid="0xa">
+						<name>Facet_Receptacle_Connection</name>
+						<connpoint role="dst" target="id-0067-00000041"/>
+						<connpoint role="src" target="id-0067-00000049"/>
+					</connection>
+					<connection id="id-0068-00000019" kind="Facet_Receptacle_Connection" role="Facet_Receptacle_Connection" relid="0x9">
+						<name>Facet_Receptacle_Connection</name>
+						<connpoint role="dst" target="id-0067-00000048"/>
+						<connpoint role="src" target="id-0067-0000003e"/>
+					</connection>
+					<connection id="id-0068-00000018" kind="Event_Connection" role="Event_Connection" relid="0x8">
+						<name>Event_Connection</name>
+						<connpoint role="dst" target="id-0066-00000033"/>
+						<connpoint role="src" target="id-0066-0000002e"/>
+					</connection>
+					<connection id="id-0068-00000017" kind="Event_Connection" role="Event_Connection" relid="0x7">
+						<name>Event_Connection</name>
+						<connpoint role="dst" target="id-0066-0000002f"/>
+						<connpoint role="src" target="id-0066-00000031"/>
+					</connection>
+				</model>
+			</folder>
+		</folder>
+		<folder id="id-006a-00000004" relid="0x2" childrelidcntr="0x11" kind="InterfaceS">
+			<name>InterfaceFolder</name>
+			<model id="id-0065-00000033" kind="Interface" derivedfrom="id-0065-00000007" isinstance="no" isprimary="yes" relid="0x11" childrelidcntr="0x1">
+				<name>BM__UpdateReceptaclesFacet</name>
+				<atom id="id-0066-00000048" kind="Method" role="Method" relid="0x1">
+					<name>UpdateReceptacles</name>
+					<regnode name="PartRegs">
+						<value></value>
+						<regnode name="Aspect">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>352,65</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</atom>
+				<atom id="id-0066-00000047" kind="Method" role="Method" derivedfrom="id-0066-00000006" isinstance="no" isprimary="no">
+					<name>IsNil</name>
+				</atom>
+			</model>
+			<model id="id-0065-0000002f" kind="Interface" derivedfrom="id-0065-00000007" isinstance="no" isprimary="yes" relid="0x10" childrelidcntr="0x1">
+				<name>BM__ModeSourceModeChangeFunctionalFacet</name>
+				<atom id="id-0066-00000044" kind="Method" role="Method" relid="0x1">
+					<name>ChangeMode</name>
+					<regnode name="PartRegs">
+						<value></value>
+						<regnode name="Aspect">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>198,163</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</atom>
+				<atom id="id-0066-00000043" kind="Method" role="Method" derivedfrom="id-0066-00000006" isinstance="no" isprimary="no">
+					<name>IsNil</name>
+				</atom>
+			</model>
+			<model id="id-0065-00000011" kind="Interface" derivedfrom="id-0065-0000000d" isinstance="no" isprimary="yes" relid="0xd" childrelidcntr="0x2">
+				<name>BM__OpenFunctionalFacet</name>
+				<atom id="id-0066-00000017" kind="Method" role="Method" relid="0x1">
+					<name>SetData1</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Aspect" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>415,30</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</atom>
+				<atom id="id-0066-00000016" kind="Method" role="Method" relid="0x2">
+					<name>SetData2</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Aspect" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>408,149</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</atom>
+				<atom id="id-0066-00000015" kind="Method" role="Method" derivedfrom="id-0066-0000000e" isinstance="no" isprimary="no">
+					<name>GetData2</name>
+				</atom>
+				<atom id="id-0066-00000014" kind="Method" role="Method" derivedfrom="id-0066-0000000c" isinstance="no" isprimary="no">
+					<name>IsNil</name>
+				</atom>
+				<atom id="id-0066-00000013" kind="Method" role="Method" derivedfrom="id-0066-0000000f" isinstance="no" isprimary="no">
+					<name>GetData1</name>
+				</atom>
+				<atom id="id-0066-00000012" kind="Method" role="Method" derivedfrom="id-0066-0000000d" isinstance="no" isprimary="no">
+					<name>GetValidity</name>
+				</atom>
+			</model>
+			<model id="id-0065-0000000d" kind="Interface" derivedfrom="id-0065-00000007" isinstance="no" isprimary="yes" relid="0x7" childrelidcntr="0x3">
+				<name>BM__ClosedFunctionalFacet</name>
+				<atom id="id-0066-0000000f" kind="Method" role="Method" relid="0x1">
+					<name>GetData1</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Aspect" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>152,152</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</atom>
+				<atom id="id-0066-0000000e" kind="Method" role="Method" relid="0x2">
+					<name>GetData2</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Aspect" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>285,33</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</atom>
+				<atom id="id-0066-0000000d" kind="Method" role="Method" relid="0x3">
+					<name>GetValidity</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Aspect" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>285,145</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</atom>
+				<atom id="id-0066-0000000c" kind="Method" role="Method" derivedfrom="id-0066-00000006" isinstance="no" isprimary="no">
+					<name>IsNil</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Aspect" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>152,26</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</atom>
+			</model>
+			<model id="id-0065-0000000c" kind="Interface" derivedfrom="id-0065-00000007" isinstance="no" isprimary="yes" relid="0xb" childrelidcntr="0x1">
+				<name>BM__UpdateFunctionalFacet</name>
+				<atom id="id-0066-0000000b" kind="Method" role="Method" relid="0x1">
+					<name>Update</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Aspect" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>331,65</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</atom>
+				<atom id="id-0066-0000000a" kind="Method" role="Method" derivedfrom="id-0066-00000006" isinstance="no" isprimary="no">
+					<name>IsNil</name>
+				</atom>
+			</model>
+			<model id="id-0065-0000000b" kind="Interface" derivedfrom="id-0065-00000007" isinstance="no" isprimary="yes" relid="0xf" childrelidcntr="0x1">
+				<name>BM__ModeChangeFunctionalFacet</name>
+				<atom id="id-0066-00000009" kind="Method" role="Method" relid="0x1">
+					<name>ChangeMode</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Aspect" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>373,79</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</atom>
+				<atom id="id-0066-00000008" kind="Method" role="Method" derivedfrom="id-0066-00000006" isinstance="no" isprimary="no">
+					<name>IsNil</name>
+				</atom>
+			</model>
+			<model id="id-0065-00000007" kind="Interface" relid="0x6" childrelidcntr="0x1">
+				<name>BM__Facet</name>
+				<atom id="id-0066-00000006" kind="Method" role="Method" relid="0x1">
+					<name>IsNil</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Aspect" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>198,72</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</atom>
+			</model>
+			<model id="id-0065-00000006" kind="Interface" relid="0x8" childrelidcntr="0x1">
+				<name>BM__Receptacle</name>
+				<atom id="id-0066-00000005" kind="Method" role="Method" relid="0x1">
+					<name>Connect</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Aspect" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>191,72</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</atom>
+			</model>
+			<model id="id-0065-00000005" kind="Interface" relid="0x9" childrelidcntr="0x1">
+				<name>BM__StateUpdate</name>
+				<atom id="id-0066-00000004" kind="Method" role="Method" relid="0x1">
+					<name>StateUpdated</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Aspect" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>177,86</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</atom>
+			</model>
+			<model id="id-0065-00000004" kind="Interface" relid="0xa" childrelidcntr="0x1">
+				<name>BM__EventSink</name>
+				<atom id="id-0066-00000003" kind="Method" role="Method" relid="0x1">
+					<name>Push</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Aspect" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>163,121</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</atom>
+			</model>
+			<model id="id-0065-00000003" kind="Interface" relid="0xc" childrelidcntr="0x0">
+				<name>BM__ClosedReadStrategy</name>
+			</model>
+			<model id="id-0065-00000002" kind="Interface" relid="0xe" childrelidcntr="0x2">
+				<name>BM__OpenWriteStrategy</name>
+				<atom id="id-0066-00000002" kind="Method" role="Method" relid="0x1">
+					<name>SetData1</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Aspect" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>114,44</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</atom>
+				<atom id="id-0066-00000001" kind="Method" role="Method" relid="0x2">
+					<name>SetData2</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Aspect" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>317,44</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</atom>
+			</model>
+		</folder>
+		<folder id="id-006a-00000002" relid="0x7" childrelidcntr="0x11" kind="Component_TypeS">
+			<name>AvionicsBuildingBlocksFolder</name>
+			<model id="id-0065-00000010" kind="Component_Type" derivedfrom="id-0065-0000000e" isinstance="no" isprimary="yes" relid="0x7" childrelidcntr="0x3">
+				<name>NavDisplay</name>
+				<attribute kind="Destination" status="meta">
+					<value></value>
+				</attribute>
+				<connection id="id-0068-00000001" kind="Event_Typing" role="Event_Typing" relid="0x2">
+					<name>Event_Typing</name>
+					<regnode name="autorouterPref" isopaque="yes">
+						<value>w</value>
+					</regnode>
+					<connpoint role="src" target="id-0066-00000011"/>
+					<connpoint role="dst" target="id-0067-0000000a"/>
+				</connection>
+				<reference id="id-0067-0000000a" kind="Event_Type_Ref" role="Event_Type_Ref" relid="0x1" referred="id-0065-0000000a">
+					<name>DataAvailable</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Aspect" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>323,252</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<atom id="id-0066-00000011" kind="Event_Sink" role="Event_Sink" derivedfrom="id-0066-00000010" isinstance="no" isprimary="no">
+					<name>ConsumeEvent</name>
+					<regnode name="PartRegs">
+						<value></value>
+						<regnode name="Aspect">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>82,256</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</atom>
+				<reference id="id-0067-00000009" kind="Facet" role="Facet" derivedfrom="id-0067-00000007" isinstance="no" isprimary="no" referred="id-0065-0000000c" isbound="yes">
+					<name>ProvideUpdateFunctionalFacet</name>
+					<regnode name="PartRegs">
+						<value></value>
+						<regnode name="Aspect">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>92,77</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<reference id="id-0067-0000002c" kind="Receptacle" role="Receptacle" relid="0x3" referred="id-0065-0000000d">
+					<name>ConnectClosedFunctionalFacet</name>
+					<regnode name="PartRegs">
+						<value></value>
+						<regnode name="Aspect">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>435,84</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+			</model>
+			<model id="id-0065-00000016" kind="Component_Type" derivedfrom="id-0065-00000015" isinstance="no" isprimary="yes" relid="0x6" childrelidcntr="0x5">
+				<name>AirFrame</name>
+				<attribute kind="Destination" status="meta">
+					<value></value>
+				</attribute>
+				<connection id="id-0068-00000004" kind="Event_Typing" role="Event_Typing" relid="0x3">
+					<name>Event_Typing</name>
+					<regnode name="autorouterPref" isopaque="yes">
+						<value>Ew</value>
+					</regnode>
+					<connpoint role="src" target="id-0066-0000001d"/>
+					<connpoint role="dst" target="id-0067-0000001c"/>
+				</connection>
+				<connection id="id-0068-00000003" kind="Event_Typing" role="Event_Typing" relid="0x4">
+					<name>Event_Typing</name>
+					<regnode name="autorouterPref" isopaque="yes">
+						<value>We</value>
+					</regnode>
+					<connpoint role="src" target="id-0066-0000001e"/>
+					<connpoint role="dst" target="id-0067-0000001c"/>
+				</connection>
+				<reference id="id-0067-0000001c" kind="Event_Type_Ref" role="Event_Type_Ref" relid="0x1" referred="id-0065-0000000a">
+					<name>DataAvailable</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Aspect" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>288,315</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<atom id="id-0066-0000001e" kind="Event_Source" role="Event_Source" derivedfrom="id-0066-0000001c" isinstance="no" isprimary="no">
+					<name>PushEvent</name>
+					<attribute kind="Event_Source_Type" status="meta">
+						<value>Publisher</value>
+					</attribute>
+				</atom>
+				<atom id="id-0066-0000001d" kind="Event_Sink" role="Event_Sink" derivedfrom="id-0066-0000001b" isinstance="no" isprimary="no">
+					<name>ConsumeEvent</name>
+				</atom>
+				<reference id="id-0067-0000002b" kind="Receptacle" role="Receptacle" relid="0x5" referred="id-0065-0000000d">
+					<name>ConnectClosedFunctionalFacet</name>
+					<regnode name="PartRegs">
+						<value></value>
+						<regnode name="Aspect">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>491,112</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<reference id="id-0067-0000001b" kind="Facet" role="Facet" derivedfrom="id-0067-00000018" isinstance="no" isprimary="no" referred="id-0065-0000000c" isbound="yes">
+					<name>ProvideUpdateFunctionalFacet</name>
+					<regnode name="PartRegs">
+						<value></value>
+						<regnode name="Aspect">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>92,189</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<reference id="id-0067-0000001a" kind="Facet" role="Facet" derivedfrom="id-0067-00000017" isinstance="no" isprimary="no" referred="id-0065-0000000d" isbound="yes">
+					<name>ProvideClosedFunctionalFacet</name>
+					<regnode name="PartRegs">
+						<value></value>
+						<regnode name="Aspect">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>99,35</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+			</model>
+			<model id="id-0065-00000017" kind="Component_Type" derivedfrom="id-0065-00000014" isinstance="no" isprimary="yes" relid="0x4" childrelidcntr="0x3">
+				<name>GPS</name>
+				<attribute kind="Destination" status="meta">
+					<value></value>
+				</attribute>
+				<connection id="id-0068-00000006" kind="Event_Typing" role="Event_Typing" relid="0x3">
+					<name>Event_Typing</name>
+					<regnode name="autorouterPref" isopaque="yes">
+						<value>Ew</value>
+					</regnode>
+					<connpoint role="src" target="id-0066-00000020"/>
+					<connpoint role="dst" target="id-0067-00000021"/>
+				</connection>
+				<connection isbound="yes" id="id-0068-00000005" kind="Event_Typing" role="Event_Typing" derivedfrom="id-0068-00000002" isinstance="no" isprimary="no">
+					<name>Event_Typing</name>
+				</connection>
+				<reference id="id-0067-00000021" kind="Event_Type_Ref" role="Event_Type_Ref" relid="0x2" referred="id-0065-0000000a">
+					<name>DataAvailable</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Aspect" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>575,308</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<reference id="id-0067-0000001f" kind="Event_Type_Ref" role="Event_Type_Ref" derivedfrom="id-0067-00000015" isinstance="no" isprimary="no" referred="id-0065-00000009" isbound="yes">
+					<name>IntervalTimeout</name>
+				</reference>
+				<atom id="id-0066-00000020" kind="Event_Source" role="Event_Source" relid="0x1">
+					<name>PushEvent</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Aspect" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>368,314</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="Event_Source_Type" status="meta">
+						<value>Publisher</value>
+					</attribute>
+				</atom>
+				<atom id="id-0066-0000001f" kind="Event_Sink" role="Event_Sink" derivedfrom="id-0066-0000001a" isinstance="no" isprimary="no">
+					<name>ConsumeIntervalTimeout</name>
+				</atom>
+				<reference id="id-0067-0000001e" kind="Facet" role="Facet" derivedfrom="id-0067-00000014" isinstance="no" isprimary="no" referred="id-0065-0000000c" isbound="yes">
+					<name>ProvideUpdateFunctionalFacet</name>
+					<regnode name="PartRegs">
+						<value></value>
+						<regnode name="Aspect">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>106,42</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<reference id="id-0067-0000001d" kind="Facet" role="Facet" derivedfrom="id-0067-00000013" isinstance="no" isprimary="no" referred="id-0065-0000000d" isbound="yes">
+					<name>ProvideClosedFunctionalFacet</name>
+					<regnode name="PartRegs">
+						<value></value>
+						<regnode name="Aspect">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>561,28</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+			</model>
+			<model id="id-0065-0000001f" kind="Component_Type" derivedfrom="id-0065-00000014" isinstance="no" isprimary="yes" relid="0x8" childrelidcntr="0x3">
+				<name>CursorDevice</name>
+				<attribute kind="Destination" status="meta">
+					<value></value>
+				</attribute>
+				<atom id="id-0066-0000002a" kind="Event_Sink" role="Event_Sink" derivedfrom="id-0066-0000001a" isinstance="no" isprimary="no">
+					<name>ConsumeIntervalTimeout</name>
+				</atom>
+				<connection id="id-0068-0000001b" kind="Event_Typing" role="Event_Typing" relid="0x3">
+					<name>Event_Typing</name>
+					<regnode name="autorouterPref" isopaque="yes">
+						<value>Ew</value>
+					</regnode>
+					<connpoint role="dst" target="id-0067-0000004f"/>
+					<connpoint role="src" target="id-0066-00000037"/>
+				</connection>
+				<connection isbound="yes" id="id-0068-00000010" kind="Event_Typing" role="Event_Typing" derivedfrom="id-0068-00000002" isinstance="no" isprimary="no">
+					<name>Event_Typing</name>
+				</connection>
+				<reference id="id-0067-0000004f" kind="Event_Type_Ref" role="Event_Type_Ref" relid="0x2" referred="id-0065-0000000a">
+					<name>DataAvailable</name>
+					<regnode name="PartRegs">
+						<value></value>
+						<regnode name="Aspect">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>582,308</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<reference id="id-0067-0000003a" kind="Facet" role="Facet" derivedfrom="id-0067-00000013" isinstance="no" isprimary="no" referred="id-0065-0000000d" isbound="yes">
+					<name>ProvideClosedFunctionalFacet</name>
+				</reference>
+				<reference id="id-0067-00000039" kind="Facet" role="Facet" derivedfrom="id-0067-00000014" isinstance="no" isprimary="no" referred="id-0065-0000000c" isbound="yes">
+					<name>ProvideUpdateFunctionalFacet</name>
+				</reference>
+				<reference id="id-0067-00000038" kind="Event_Type_Ref" role="Event_Type_Ref" derivedfrom="id-0067-00000015" isinstance="no" isprimary="no" referred="id-0065-00000009" isbound="yes">
+					<name>IntervalTimeout</name>
+				</reference>
+				<atom id="id-0066-00000037" kind="Event_Source" role="Event_Source" relid="0x1">
+					<name>Event_Source</name>
+					<regnode name="PartRegs">
+						<value></value>
+						<regnode name="Aspect">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>401,317</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="Event_Source_Type" status="meta">
+						<value>Publisher</value>
+					</attribute>
+				</atom>
+			</model>
+			<model id="id-0065-00000020" kind="Component_Type" derivedfrom="id-0065-00000015" isinstance="no" isprimary="yes" relid="0x9" childrelidcntr="0x4">
+				<name>SelectedPoint</name>
+				<attribute kind="Destination" status="meta">
+					<value></value>
+				</attribute>
+				<atom id="id-0066-0000002c" kind="Event_Sink" role="Event_Sink" derivedfrom="id-0066-0000001b" isinstance="no" isprimary="no">
+					<name>ConsumeEvent</name>
+					<regnode name="PartRegs">
+						<value></value>
+						<regnode name="Aspect">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>82,326</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</atom>
+				<connection id="id-0068-00000021" kind="Event_Typing" role="Event_Typing" relid="0x3">
+					<name>Event_Typing</name>
+					<regnode name="autorouterPref" isopaque="yes">
+						<value>We</value>
+					</regnode>
+					<connpoint role="dst" target="id-0067-00000051"/>
+					<connpoint role="src" target="id-0066-0000002b"/>
+				</connection>
+				<connection id="id-0068-0000001f" kind="Event_Typing" role="Event_Typing" relid="0x2">
+					<name>Event_Typing</name>
+					<regnode name="autorouterPref" isopaque="yes">
+						<value>Ew</value>
+					</regnode>
+					<connpoint role="dst" target="id-0067-00000051"/>
+					<connpoint role="src" target="id-0066-0000002c"/>
+				</connection>
+				<reference id="id-0067-00000053" kind="Receptacle" role="Receptacle" relid="0x4" referred="id-0065-0000000d">
+					<name>ConnectClosedFunctionalFacet</name>
+					<regnode name="PartRegs">
+						<value></value>
+						<regnode name="Aspect">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>491,91</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<reference id="id-0067-00000051" kind="Event_Type_Ref" role="Event_Type_Ref" relid="0x1" referred="id-0065-0000000a">
+					<name>DataAvailable</name>
+					<regnode name="PartRegs">
+						<value></value>
+						<regnode name="Aspect">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>295,322</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<reference id="id-0067-0000003c" kind="Facet" role="Facet" derivedfrom="id-0067-00000017" isinstance="no" isprimary="no" referred="id-0065-0000000d" isbound="yes">
+					<name>ProvideClosedFunctionalFacet</name>
+					<regnode name="PartRegs">
+						<value></value>
+						<regnode name="Aspect">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>78,49</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<reference id="id-0067-0000003b" kind="Facet" role="Facet" derivedfrom="id-0067-00000018" isinstance="no" isprimary="no" referred="id-0065-0000000c" isbound="yes">
+					<name>ProvideUpdateFunctionalFacet</name>
+					<regnode name="PartRegs">
+						<value></value>
+						<regnode name="Aspect">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>78,182</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<atom id="id-0066-0000002b" kind="Event_Source" role="Event_Source" derivedfrom="id-0066-0000001c" isinstance="no" isprimary="no">
+					<name>PushEvent</name>
+					<regnode name="PartRegs">
+						<value></value>
+						<regnode name="Aspect">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>522,328</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="Event_Source_Type" status="meta">
+						<value>Publisher</value>
+					</attribute>
+				</atom>
+			</model>
+			<model id="id-0065-00000021" kind="Component_Type" derivedfrom="id-0065-0000000e" isinstance="no" isprimary="yes" relid="0xa" childrelidcntr="0x3">
+				<name>TacticalDisplay</name>
+				<attribute kind="Destination" status="meta">
+					<value></value>
+				</attribute>
+				<atom id="id-0066-0000002d" kind="Event_Sink" role="Event_Sink" derivedfrom="id-0066-00000010" isinstance="no" isprimary="no">
+					<name>ConsumeEvent</name>
+					<regnode name="PartRegs">
+						<value></value>
+						<regnode name="Aspect">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>222,291</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</atom>
+				<connection id="id-0068-00000023" kind="Event_Typing" role="Event_Typing" relid="0x2">
+					<name>Event_Typing</name>
+					<regnode name="autorouterPref" isopaque="yes">
+						<value>We</value>
+					</regnode>
+					<connpoint role="dst" target="id-0067-00000055"/>
+					<connpoint role="src" target="id-0066-0000002d"/>
+				</connection>
+				<reference id="id-0067-00000057" kind="Receptacle" role="Receptacle" relid="0x3" referred="id-0065-0000000d">
+					<name>BM__ClosedFunctionalFacet</name>
+					<regnode name="PartRegs">
+						<value></value>
+						<regnode name="Aspect">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>512,126</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<reference id="id-0067-00000055" kind="Event_Type_Ref" role="Event_Type_Ref" relid="0x1" referred="id-0065-0000000a">
+					<name>DataAvailable</name>
+					<regnode name="PartRegs">
+						<value></value>
+						<regnode name="Aspect">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>43,287</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<reference id="id-0067-0000003d" kind="Facet" role="Facet" derivedfrom="id-0067-00000007" isinstance="no" isprimary="no" referred="id-0065-0000000c" isbound="yes">
+					<name>ProvideUpdateFunctionalFacet</name>
+					<regnode name="PartRegs">
+						<value></value>
+						<regnode name="Aspect">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>141,84</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+			</model>
+			<model id="id-0065-00000035" kind="Component_Type" derivedfrom="id-0065-00000030" isinstance="no" isprimary="yes" relid="0xb" childrelidcntr="0x1">
+				<name>PilotControl</name>
+				<attribute kind="Destination" status="meta">
+					<value></value>
+				</attribute>
+				<atom id="id-0066-0000004a" kind="Event_Sink" role="Event_Sink" derivedfrom="id-0066-00000045" isinstance="no" isprimary="no">
+					<name>Event_Sink</name>
+				</atom>
+				<reference id="id-0067-000000b7" kind="Receptacle" role="Receptacle" relid="0x1" referred="id-0065-0000002f">
+					<name>ConnectModeSourceModeChangeFunctionalFacet</name>
+					<regnode name="PartRegs">
+						<value></value>
+						<regnode name="Aspect">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>463,70</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<reference id="id-0067-00000075" kind="Facet" role="Facet" derivedfrom="id-0067-0000006f" isinstance="no" isprimary="no" referred="id-0065-0000000c" isbound="yes">
+					<name>ProvideUpdateFunctionalFacet</name>
+				</reference>
+				<reference id="id-0067-00000074" kind="Facet" role="Facet" derivedfrom="id-0067-00000070" isinstance="no" isprimary="no" referred="id-0065-0000002f" isbound="yes">
+					<name>ProvideModeSourceModeChangeFunctionalFacet</name>
+				</reference>
+				<atom id="id-0066-00000049" kind="Event_Source" role="Event_Source" derivedfrom="id-0066-00000046" isinstance="no" isprimary="no">
+					<name>Event_Source</name>
+					<regnode name="PartRegs">
+						<value></value>
+						<regnode name="Aspect">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>473,244</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="Event_Source_Type" status="meta">
+						<value>Publisher</value>
+					</attribute>
+				</atom>
+			</model>
+			<model id="id-0065-00000036" kind="Component_Type" derivedfrom="id-0065-00000019" isinstance="no" isprimary="yes" relid="0xc" childrelidcntr="0x0">
+				<name>TacticalSteering</name>
+				<attribute kind="Destination" status="meta">
+					<value></value>
+				</attribute>
+				<atom id="id-0066-0000004c" kind="Event_Sink" role="Event_Sink" derivedfrom="id-0066-00000023" isinstance="no" isprimary="no">
+					<name>ConsumeEvent</name>
+				</atom>
+				<reference id="id-0067-00000079" kind="Facet" role="Facet" derivedfrom="id-0067-00000027" isinstance="no" isprimary="no" referred="id-0065-0000000d" isbound="yes">
+					<name>ProvideClosedFunctionalFacet</name>
+				</reference>
+				<reference id="id-0067-00000078" kind="Facet" role="Facet" derivedfrom="id-0067-00000028" isinstance="no" isprimary="no" referred="id-0065-0000000c" isbound="yes">
+					<name>ProvideUpdateFunctionalFacet</name>
+				</reference>
+				<reference id="id-0067-00000077" kind="Facet" role="Facet" derivedfrom="id-0067-00000029" isinstance="no" isprimary="no" referred="id-0065-00000011" isbound="yes">
+					<name>ProvideOpenFunctionalFacet</name>
+				</reference>
+				<reference id="id-0067-00000076" kind="Facet" role="Facet" derivedfrom="id-0067-0000002a" isinstance="no" isprimary="no" referred="id-0065-0000000b" isbound="yes">
+					<name>ProvideModeChangeFunctionalFacet</name>
+				</reference>
+				<atom id="id-0066-0000004b" kind="Event_Source" role="Event_Source" derivedfrom="id-0066-00000024" isinstance="no" isprimary="no">
+					<name>PushEvent</name>
+					<attribute kind="Event_Source_Type" status="meta">
+						<value>Publisher</value>
+					</attribute>
+				</atom>
+			</model>
+			<model id="id-0065-00000037" kind="Component_Type" derivedfrom="id-0065-00000019" isinstance="no" isprimary="yes" relid="0xd" childrelidcntr="0x4">
+				<name>NavSteering</name>
+				<attribute kind="Destination" status="meta">
+					<value></value>
+				</attribute>
+				<atom id="id-0066-0000004e" kind="Event_Sink" role="Event_Sink" derivedfrom="id-0066-00000023" isinstance="no" isprimary="no">
+					<name>ConsumeEvent</name>
+					<regnode name="PartRegs">
+						<value></value>
+						<regnode name="Aspect">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>187,305</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</atom>
+				<connection id="id-0068-0000004f" kind="Event_Typing" role="Event_Typing" relid="0x2">
+					<name>Event_Typing</name>
+					<regnode name="autorouterPref" isopaque="yes">
+						<value>We</value>
+					</regnode>
+					<connpoint role="dst" target="id-0067-000000b1"/>
+					<connpoint role="src" target="id-0066-0000004e"/>
+				</connection>
+				<reference id="id-0067-000000b3" kind="Receptacle" role="Receptacle" relid="0x3" referred="id-0065-00000011">
+					<name>ConnectOpenFunctionalFacet</name>
+					<regnode name="PartRegs">
+						<value></value>
+						<regnode name="Aspect">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>512,28</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<reference id="id-0067-000000b1" kind="Event_Type_Ref" role="Event_Type_Ref" relid="0x1" referred="id-0065-0000000a">
+					<name>DataAvailable</name>
+					<regnode name="PartRegs">
+						<value></value>
+						<regnode name="Aspect">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>15,301</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<reference id="id-0067-0000007d" kind="Facet" role="Facet" derivedfrom="id-0067-00000027" isinstance="no" isprimary="no" referred="id-0065-0000000d" isbound="yes">
+					<name>ProvideClosedFunctionalFacet</name>
+					<regnode name="PartRegs">
+						<value></value>
+						<regnode name="Aspect">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>491,161</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<reference id="id-0067-0000007c" kind="Facet" role="Facet" derivedfrom="id-0067-00000028" isinstance="no" isprimary="no" referred="id-0065-0000000c" isbound="yes">
+					<name>ProvideUpdateFunctionalFacet</name>
+					<regnode name="PartRegs">
+						<value></value>
+						<regnode name="Aspect">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>477,266</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<reference id="id-0067-0000007b" kind="Facet" role="Facet" derivedfrom="id-0067-00000029" isinstance="no" isprimary="no" referred="id-0065-00000011" isbound="yes">
+					<name>ProvideOpenFunctionalFacet</name>
+				</reference>
+				<reference id="id-0067-0000007a" kind="Facet" role="Facet" derivedfrom="id-0067-0000002a" isinstance="no" isprimary="no" referred="id-0065-0000000b" isbound="yes">
+					<name>ProvideModeChangeFunctionalFacet</name>
+				</reference>
+				<atom id="id-0066-0000004d" kind="Event_Source" role="Event_Source" derivedfrom="id-0066-00000024" isinstance="no" isprimary="no">
+					<name>PushEvent</name>
+					<regnode name="PartRegs">
+						<value></value>
+						<regnode name="Aspect">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>459,370</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="Event_Source_Type" status="meta">
+						<value>Publisher</value>
+					</attribute>
+				</atom>
+			</model>
+			<model id="id-0065-00000038" kind="Component_Type" derivedfrom="id-0065-00000032" isinstance="no" isprimary="yes" relid="0xe" childrelidcntr="0x4">
+				<name>Navigator</name>
+				<attribute kind="Destination" status="meta">
+					<value></value>
+				</attribute>
+				<atom id="id-0066-0000005f" kind="Event_Sink" role="Event_Sink" relid="0x1">
+					<name>Event_Sink</name>
+					<regnode name="PartRegs">
+						<value></value>
+						<regnode name="Aspect">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>243,242</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</atom>
+				<connection id="id-0068-00000049" kind="Event_Typing" role="Event_Typing" relid="0x3">
+					<name>Event_Typing</name>
+					<regnode name="autorouterPref" isopaque="yes">
+						<value>We</value>
+					</regnode>
+					<connpoint role="dst" target="id-0067-000000a2"/>
+					<connpoint role="src" target="id-0066-0000005f"/>
+				</connection>
+				<reference id="id-0067-000000af" kind="Receptacle" role="Receptacle" relid="0x4" referred="id-0065-00000011">
+					<name>ConnectOpenFunctionalFacet</name>
+					<regnode name="PartRegs">
+						<value></value>
+						<regnode name="Aspect">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>533,210</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<reference id="id-0067-000000a2" kind="Event_Type_Ref" role="Event_Type_Ref" relid="0x2" referred="id-0065-00000009">
+					<name>IntervalTimeout</name>
+					<regnode name="PartRegs">
+						<value></value>
+						<regnode name="Aspect">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>78,238</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<reference id="id-0067-0000007e" kind="Facet" role="Facet" derivedfrom="id-0067-00000072" isinstance="no" isprimary="no" referred="id-0065-0000000c" isbound="yes">
+					<name>ProvideUpdateFunctionalFacet</name>
+					<regnode name="PartRegs">
+						<value></value>
+						<regnode name="Aspect">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>85,70</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+			</model>
+			<model id="id-0065-00000047" kind="Component_Type" derivedfrom="id-0065-00000046" isinstance="no" isprimary="yes" relid="0x10" childrelidcntr="0x3">
+				<name>NavSteeringPoints</name>
+				<attribute kind="Destination" status="meta">
+					<value></value>
+				</attribute>
+				<connection id="id-0068-0000004b" kind="Event_Typing" role="Event_Typing" relid="0x3">
+					<name>Event_Typing</name>
+					<regnode name="autorouterPref" isopaque="yes">
+						<value>Ew</value>
+					</regnode>
+					<connpoint role="dst" target="id-0067-000000aa"/>
+					<connpoint role="src" target="id-0066-00000061"/>
+				</connection>
+				<reference id="id-0067-000000aa" kind="Event_Type_Ref" role="Event_Type_Ref" relid="0x1" referred="id-0065-0000000a">
+					<name>DataAvailable</name>
+					<regnode name="PartRegs">
+						<value></value>
+						<regnode name="Aspect">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>498,315</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<reference id="id-0067-000000a9" kind="Facet" role="Facet" derivedfrom="id-0067-000000a6" isinstance="no" isprimary="no" referred="id-0065-0000000d" isbound="yes">
+					<name>ProvideClosedFunctionalFacet</name>
+					<regnode name="PartRegs">
+						<value></value>
+						<regnode name="Aspect">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>113,308</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<reference id="id-0067-000000a8" kind="Facet" role="Facet" derivedfrom="id-0067-000000a4" isinstance="no" isprimary="no" referred="id-0065-00000011" isbound="yes">
+					<name>ProvideOpenFunctionalFacet</name>
+					<regnode name="PartRegs">
+						<value></value>
+						<regnode name="Aspect">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>120,126</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<reference id="id-0067-000000a7" kind="Facet" role="Facet" derivedfrom="id-0067-000000a5" isinstance="no" isprimary="no" referred="id-0065-0000000c" isbound="yes">
+					<name>ProvideUpdateFunctionalFacet</name>
+				</reference>
+				<atom id="id-0066-00000061" kind="Event_Source" role="Event_Source" relid="0x2">
+					<name>Event_Source</name>
+					<regnode name="PartRegs">
+						<value></value>
+						<regnode name="Aspect">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>317,324</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="Event_Source_Type" status="meta">
+						<value>Publisher</value>
+					</attribute>
+				</atom>
+			</model>
+			<model id="id-0065-0000004b" kind="Component_Type" derivedfrom="id-0065-00000015" isinstance="no" isprimary="yes" relid="0x11" childrelidcntr="0x0">
+				<name>RateGen</name>
+				<attribute kind="Destination" status="meta">
+					<value></value>
+				</attribute>
+				<atom id="id-0066-00000065" kind="Event_Sink" role="Event_Sink" derivedfrom="id-0066-0000001b" isinstance="no" isprimary="no">
+					<name>ConsumeEvent</name>
+				</atom>
+				<reference id="id-0067-000000bc" kind="Facet" role="Facet" derivedfrom="id-0067-00000018" isinstance="no" isprimary="no" referred="id-0065-0000000c" isbound="yes">
+					<name>ProvideUpdateFunctionalFacet</name>
+				</reference>
+				<reference id="id-0067-000000bb" kind="Facet" role="Facet" derivedfrom="id-0067-00000017" isinstance="no" isprimary="no" referred="id-0065-0000000d" isbound="yes">
+					<name>ProvideClosedFunctionalFacet</name>
+				</reference>
+				<atom id="id-0066-00000066" kind="Event_Source" role="Event_Source" derivedfrom="id-0066-0000001c" isinstance="no" isprimary="no">
+					<name>PushEvent</name>
+					<attribute kind="Event_Source_Type" status="meta">
+						<value>Publisher</value>
+					</attribute>
+				</atom>
+			</model>
+		</folder>
+		<folder id="id-006a-00000005" relid="0x1" childrelidcntr="0x16" kind="Component_TypeS">
+			<name>CommonBuildingBlocksFolder</name>
+			<model id="id-0065-00000034" kind="Component_Type" derivedfrom="id-0065-00000008" isinstance="no" isprimary="yes" relid="0x14" childrelidcntr="0x0">
+				<name>BM__PushPullComponent</name>
+				<attribute kind="Destination" status="meta">
+					<value></value>
+				</attribute>
+				<reference id="id-0067-00000073" kind="Facet" role="Facet" derivedfrom="id-0067-00000005" isinstance="no" isprimary="no" referred="id-0065-0000000c" isbound="yes">
+					<name>ProvideUpdateFunctionalFacet</name>
+				</reference>
+			</model>
+			<model id="id-0065-00000012" kind="Component_Type" derivedfrom="id-0065-0000000f" isinstance="no" isprimary="yes" relid="0x10" childrelidcntr="0xa">
+				<name>BM__LazyActiveComponent</name>
+				<attribute kind="Destination" status="meta">
+					<value></value>
+				</attribute>
+				<atom id="id-0066-00000019" kind="Event_Sink" role="Event_Sink" relid="0x7">
+					<name>ConsumeEvent</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Aspect" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>86,324</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</atom>
+				<atom id="id-0066-00000018" kind="Event_Source" role="Event_Source" relid="0x8">
+					<name>PushEvent</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Aspect" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>522,321</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="Event_Source_Type" status="meta">
+						<value>Publisher</value>
+					</attribute>
+				</atom>
+				<reference id="id-0067-0000000d" kind="Facet" role="Facet" derivedfrom="id-0067-00000006" isinstance="no" isprimary="no" referred="id-0065-0000000c" isbound="yes">
+					<name>ProvideUpdateFunctionalFacet</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Aspect" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>148,28</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<reference id="id-0067-0000000c" kind="Facet" role="Facet" derivedfrom="id-0067-00000004" isinstance="no" isprimary="no" referred="id-0065-0000000d" isbound="yes">
+					<name>ProvideClosedFunctionalFacet</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Aspect" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>491,175</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+			</model>
+			<model id="id-0065-0000004c" kind="Component_Type" relid="0x16" childrelidcntr="0x6">
+				<name>EventGen</name>
+				<attribute kind="Destination" status="meta">
+					<value></value>
+				</attribute>
+				<connection id="id-0068-00000060" kind="Event_Typing" role="Event_Typing" relid="0x6">
+					<name>Event_Typing</name>
+					<regnode name="autorouterPref" isopaque="yes">
+						<value>Ew</value>
+					</regnode>
+					<connpoint role="dst" target="id-0067-000000c9"/>
+					<connpoint role="src" target="id-0066-00000070"/>
+				</connection>
+				<reference id="id-0067-000000c9" kind="Event_Type_Ref" role="Event_Type_Ref" relid="0x5" referred="id-0065-00000009">
+					<name>IntervalTimeout</name>
+					<regnode name="PartRegs">
+						<value></value>
+						<regnode name="Aspect">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>365,84</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<atom id="id-0066-00000070" kind="Event_Source" role="Event_Source" relid="0x4">
+					<name>Event_Source</name>
+					<regnode name="PartRegs">
+						<value></value>
+						<regnode name="Aspect">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>114,93</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="Event_Source_Type" status="meta">
+						<value>Publisher</value>
+					</attribute>
+				</atom>
+			</model>
+			<model id="id-0065-00000046" kind="Component_Type" derivedfrom="id-0065-00000013" isinstance="no" isprimary="yes" relid="0x15" childrelidcntr="0x0">
+				<name>BM__PassiveComponent</name>
+				<attribute kind="Destination" status="meta">
+					<value></value>
+				</attribute>
+				<reference id="id-0067-000000a5" kind="Facet" role="Facet" derivedfrom="id-0067-00000010" isinstance="no" isprimary="no" referred="id-0065-0000000c" isbound="yes">
+					<name>ProvideUpdateFunctionalFacet</name>
+				</reference>
+				<reference id="id-0067-000000a6" kind="Facet" role="Facet" derivedfrom="id-0067-0000000f" isinstance="no" isprimary="no" referred="id-0065-0000000d" isbound="yes">
+					<name>ProvideClosedFunctionalFacet</name>
+				</reference>
+				<reference id="id-0067-000000a4" kind="Facet" role="Facet" derivedfrom="id-0067-00000011" isinstance="no" isprimary="no" referred="id-0065-00000011" isbound="yes">
+					<name>ProvideOpenFunctionalFacet</name>
+				</reference>
+			</model>
+			<model id="id-0065-00000030" kind="Component_Type" derivedfrom="id-0065-00000008" isinstance="no" isprimary="yes" relid="0x11" childrelidcntr="0x3">
+				<name>BM__ModeSourceComponent</name>
+				<attribute kind="Destination" status="meta">
+					<value></value>
+				</attribute>
+				<atom id="id-0066-00000045" kind="Event_Sink" role="Event_Sink" relid="0x1">
+					<name>Event_Sink</name>
+					<regnode name="PartRegs">
+						<value></value>
+						<regnode name="Aspect">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>47,249</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</atom>
+				<reference id="id-0067-00000070" kind="Facet" role="Facet" relid="0x3" referred="id-0065-0000002f">
+					<name>BM__ModeSourceModeChangeFunctionalFacet</name>
+					<regnode name="PartRegs">
+						<value></value>
+						<regnode name="Aspect">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>43,49</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<reference id="id-0067-0000006f" kind="Facet" role="Facet" derivedfrom="id-0067-00000005" isinstance="no" isprimary="no" referred="id-0065-0000000c" isbound="yes">
+					<name>ProvideUpdateFunctionalFacet</name>
+					<regnode name="PartRegs">
+						<value></value>
+						<regnode name="Aspect">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>43,147</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<atom id="id-0066-00000046" kind="Event_Source" role="Event_Source" relid="0x2">
+					<name>Event_Source</name>
+					<regnode name="PartRegs">
+						<value></value>
+						<regnode name="Aspect">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>436,184</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="Event_Source_Type" status="meta">
+						<value>Publisher</value>
+					</attribute>
+				</atom>
+			</model>
+			<model id="id-0065-00000032" kind="Component_Type" derivedfrom="id-0065-00000008" isinstance="no" isprimary="yes" relid="0x13" childrelidcntr="0x0">
+				<name>BM__PushDataSourceComponent</name>
+				<attribute kind="Destination" status="meta">
+					<value></value>
+				</attribute>
+				<reference id="id-0067-00000072" kind="Facet" role="Facet" derivedfrom="id-0067-00000005" isinstance="no" isprimary="no" referred="id-0065-0000000c" isbound="yes">
+					<name>ProvideUpdateFunctionalFacet</name>
+				</reference>
+			</model>
+			<model id="id-0065-00000019" kind="Component_Type" derivedfrom="id-0065-00000018" isinstance="no" isprimary="yes" relid="0xf" childrelidcntr="0x1">
+				<name>BM__ModalComponent</name>
+				<attribute kind="Destination" status="meta">
+					<value></value>
+				</attribute>
+				<reference id="id-0067-0000002a" kind="Facet" role="Facet" relid="0x1" referred="id-0065-0000000b">
+					<name>ProvideModeChangeFunctionalFacet</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Aspect" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>29,133</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<reference id="id-0067-00000029" kind="Facet" role="Facet" derivedfrom="id-0067-00000025" isinstance="no" isprimary="no" referred="id-0065-00000011" isbound="yes">
+					<name>ProvideOpenFunctionalFacet</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Aspect" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>36,14</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<atom id="id-0066-00000024" kind="Event_Source" role="Event_Source" derivedfrom="id-0066-00000022" isinstance="no" isprimary="no">
+					<name>PushEvent</name>
+					<attribute kind="Event_Source_Type" status="meta">
+						<value>Publisher</value>
+					</attribute>
+				</atom>
+				<atom id="id-0066-00000023" kind="Event_Sink" role="Event_Sink" derivedfrom="id-0066-00000021" isinstance="no" isprimary="no">
+					<name>ConsumeEvent</name>
+				</atom>
+				<reference id="id-0067-00000027" kind="Facet" role="Facet" derivedfrom="id-0067-00000023" isinstance="no" isprimary="no" referred="id-0065-0000000d" isbound="yes">
+					<name>ProvideClosedFunctionalFacet</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Aspect" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>428,119</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<reference id="id-0067-00000028" kind="Facet" role="Facet" derivedfrom="id-0067-00000024" isinstance="no" isprimary="no" referred="id-0065-0000000c" isbound="yes">
+					<name>ProvideUpdateFunctionalFacet</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Aspect" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>428,14</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+			</model>
+			<model id="id-0065-00000018" kind="Component_Type" derivedfrom="id-0065-00000013" isinstance="no" isprimary="yes" relid="0xe" childrelidcntr="0x5">
+				<name>BM__OpenEDComponent</name>
+				<attribute kind="Destination" status="meta">
+					<value></value>
+				</attribute>
+				<reference id="id-0067-00000025" kind="Facet" role="Facet" derivedfrom="id-0067-00000011" isinstance="no" isprimary="no" referred="id-0065-00000011" isbound="yes">
+					<name>ProvideOpenFunctionalFacet</name>
+				</reference>
+				<reference id="id-0067-00000024" kind="Facet" role="Facet" derivedfrom="id-0067-00000010" isinstance="no" isprimary="no" referred="id-0065-0000000c" isbound="yes">
+					<name>ProvideUpdateFunctionalFacet</name>
+				</reference>
+				<reference id="id-0067-00000023" kind="Facet" role="Facet" derivedfrom="id-0067-0000000f" isinstance="no" isprimary="no" referred="id-0065-0000000d" isbound="yes">
+					<name>ProvideClosedFunctionalFacet</name>
+				</reference>
+				<atom id="id-0066-00000022" kind="Event_Source" role="Event_Source" relid="0x3">
+					<name>PushEvent</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Aspect" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>522,307</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="Event_Source_Type" status="meta">
+						<value>Publisher</value>
+					</attribute>
+				</atom>
+				<atom id="id-0066-00000021" kind="Event_Sink" role="Event_Sink" relid="0x2">
+					<name>ConsumeEvent</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Aspect" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>121,310</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</atom>
+			</model>
+			<model id="id-0065-00000015" kind="Component_Type" derivedfrom="id-0065-0000000f" isinstance="no" isprimary="yes" relid="0xa" childrelidcntr="0xa">
+				<name>BM__ClosedEDComponent</name>
+				<attribute kind="Destination" status="meta">
+					<value></value>
+				</attribute>
+				<atom id="id-0066-0000001c" kind="Event_Source" role="Event_Source" relid="0x8">
+					<name>PushEvent</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Aspect" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>522,321</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="Event_Source_Type" status="meta">
+						<value>Publisher</value>
+					</attribute>
+				</atom>
+				<atom id="id-0066-0000001b" kind="Event_Sink" role="Event_Sink" relid="0x7">
+					<name>ConsumeEvent</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Aspect" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>86,324</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</atom>
+				<reference id="id-0067-00000018" kind="Facet" role="Facet" derivedfrom="id-0067-00000006" isinstance="no" isprimary="no" referred="id-0065-0000000c" isbound="yes">
+					<name>ProvideUpdateFunctionalFacet</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Aspect" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>148,28</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<reference id="id-0067-00000017" kind="Facet" role="Facet" derivedfrom="id-0067-00000004" isinstance="no" isprimary="no" referred="id-0065-0000000d" isbound="yes">
+					<name>ProvideClosedFunctionalFacet</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Aspect" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>491,175</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+			</model>
+			<model id="id-0065-00000014" kind="Component_Type" derivedfrom="id-0065-0000000f" isinstance="no" isprimary="yes" relid="0xb" childrelidcntr="0x5">
+				<name>BM__DeviceComponent</name>
+				<attribute kind="Destination" status="meta">
+					<value></value>
+				</attribute>
+				<connection id="id-0068-00000002" kind="Event_Typing" role="Event_Typing" relid="0x5">
+					<name>Event_Typing</name>
+					<regnode name="autorouterPref" isopaque="yes">
+						<value>We</value>
+					</regnode>
+					<connpoint role="src" target="id-0066-0000001a"/>
+					<connpoint role="dst" target="id-0067-00000015"/>
+				</connection>
+				<reference id="id-0067-00000015" kind="Event_Type_Ref" role="Event_Type_Ref" relid="0x4" referred="id-0065-00000009">
+					<name>IntervalTimeout</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Aspect" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>8,189</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<atom id="id-0066-0000001a" kind="Event_Sink" role="Event_Sink" relid="0x2">
+					<name>ConsumeIntervalTimeout</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Aspect" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>222,193</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</atom>
+				<reference id="id-0067-00000014" kind="Facet" role="Facet" derivedfrom="id-0067-00000006" isinstance="no" isprimary="no" referred="id-0065-0000000c" isbound="yes">
+					<name>ProvideUpdateFunctionalFacet</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Aspect" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>148,35</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<reference id="id-0067-00000013" kind="Facet" role="Facet" derivedfrom="id-0067-00000004" isinstance="no" isprimary="no" referred="id-0065-0000000d" isbound="yes">
+					<name>ProvideClosedFunctionalFacet</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Aspect" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>568,168</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+			</model>
+			<model id="id-0065-00000013" kind="Component_Type" derivedfrom="id-0065-0000000f" isinstance="no" isprimary="yes" relid="0xd" childrelidcntr="0x7">
+				<name>BM__OpenComponent</name>
+				<attribute kind="Destination" status="meta">
+					<value></value>
+				</attribute>
+				<reference id="id-0067-00000010" kind="Facet" role="Facet" derivedfrom="id-0067-00000006" isinstance="no" isprimary="no" referred="id-0065-0000000c" isbound="yes">
+					<name>ProvideUpdateFunctionalFacet</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Aspect" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>505,147</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<reference id="id-0067-0000000f" kind="Facet" role="Facet" derivedfrom="id-0067-00000004" isinstance="no" isprimary="no" referred="id-0065-0000000d" isbound="yes">
+					<name>ProvideClosedFunctionalFacet</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Aspect" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>141,161</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<reference id="id-0067-00000011" kind="Facet" role="Facet" relid="0x1" referred="id-0065-00000011">
+					<name>ProvideOpenFunctionalFacet</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Aspect" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>141,14</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+			</model>
+			<model id="id-0065-0000000f" kind="Component_Type" derivedfrom="id-0065-00000008" isinstance="no" isprimary="yes" relid="0x9" childrelidcntr="0x1">
+				<name>BM__ClosedComponent</name>
+				<attribute kind="Destination" status="meta">
+					<value></value>
+				</attribute>
+				<reference id="id-0067-00000006" kind="Facet" role="Facet" derivedfrom="id-0067-00000005" isinstance="no" isprimary="no" referred="id-0065-0000000c" isbound="yes">
+					<name>ProvideUpdateFunctionalFacet</name>
+				</reference>
+				<reference id="id-0067-00000004" kind="Facet" role="Facet" relid="0x1" referred="id-0065-0000000d">
+					<name>ProvideClosedFunctionalFacet</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Aspect" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>134,182</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+			</model>
+			<model id="id-0065-0000000e" kind="Component_Type" derivedfrom="id-0065-00000008" isinstance="no" isprimary="yes" relid="0xc" childrelidcntr="0x6">
+				<name>BM__DisplayComponent</name>
+				<attribute kind="Destination" status="meta">
+					<value></value>
+				</attribute>
+				<atom id="id-0066-00000010" kind="Event_Sink" role="Event_Sink" relid="0x5">
+					<name>ConsumeEvent</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Aspect" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>100,170</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</atom>
+				<reference id="id-0067-00000007" kind="Facet" role="Facet" derivedfrom="id-0067-00000005" isinstance="no" isprimary="no" referred="id-0065-0000000c" isbound="yes">
+					<name>ProvideUpdateFunctionalFacet</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Aspect" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>127,35</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+			</model>
+			<model id="id-0065-00000008" kind="Component_Type" relid="0x8" childrelidcntr="0x2">
+				<name>BM__Component</name>
+				<attribute kind="Destination" status="meta">
+					<value></value>
+				</attribute>
+				<reference id="id-0067-00000005" kind="Facet" role="Facet" relid="0x1" referred="id-0065-0000000c">
+					<name>ProvideUpdateFunctionalFacet</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Aspect" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>134,49</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+			</model>
+		</folder>
+		<folder id="id-006a-00000003" relid="0x3" childrelidcntr="0x7" kind="Event_TypeS">
+			<name>EventFolder</name>
+			<model id="id-0065-0000000a" kind="Event_Type" derivedfrom="id-0065-00000001" isinstance="no" isprimary="yes" relid="0x6" childrelidcntr="0x0">
+				<name>DataAvailable</name>
+			</model>
+			<model id="id-0065-00000009" kind="Event_Type" derivedfrom="id-0065-00000001" isinstance="no" isprimary="yes" relid="0x7" childrelidcntr="0x1">
+				<name>IntervalTimeout</name>
+				<atom id="id-0066-00000007" kind="Event_Field_Name" role="Event_Field_Name" relid="0x1">
+					<name>rate</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Aspect" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>254,51</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="Event_Field_Type" status="meta">
+						<value></value>
+					</attribute>
+				</atom>
+			</model>
+			<model id="id-0065-00000001" kind="Event_Type" relid="0x5" childrelidcntr="0x0">
+				<name>GenericEvent</name>
+			</model>
+		</folder>
+	</folder>
+</project>

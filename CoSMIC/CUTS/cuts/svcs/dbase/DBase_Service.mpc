@@ -1,0 +1,15 @@
+// $Id$
+
+project (CUTS_Database_Service) : cutslib, cutsutils, odbc {
+  sharedname += CUTS_Database_Service
+
+  dynamicflags += CUTS_BUILD_DLL
+
+  libs += CUTS_ODBC_DBase CUTS_Utils_DBase
+
+  after += CUTS_ODBC_DBase CUTS_Utils_DBase
+
+  Source_Files {
+    DBase_Service.cpp
+  }
+}

@@ -1,0 +1,18 @@
+project (Utils) : xerces, cosmic_common {
+
+   includes += $(COSMIC_ROOT)
+   sharedname = Utils
+   macros += UTILS_HAS_DLL UTILS_BUILD_DLL
+   lit_libs += rpcrt4
+
+   Source_Files {
+     XercesString.cpp
+     Utils.cpp
+   }
+
+   Header_Files {
+     Utils.h
+     Utils_Export.h
+     XercesString.h
+   }
+}

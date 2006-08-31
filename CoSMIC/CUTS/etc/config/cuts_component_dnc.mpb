@@ -1,0 +1,9 @@
+// $Id$
+
+project : ciao_component_dnc, cutslib {
+  //-- additional dependencies
+  after += CUTS_Utils
+
+  //-- additional libraries
+  libs += CUTS_stub CIAO_DnC_Server
+}

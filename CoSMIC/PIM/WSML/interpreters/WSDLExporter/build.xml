@@ -1,0 +1,45 @@
+<?xml version="1.0" standalone="yes"?>
+<project basedir="." default="compile">
+  <description>Ant task to compile WSDLImporter </description>
+  <property environment="env"/>
+  <property name="jwsdp.home" location="${env.JWSDP_HOME}" />
+  <property name="wsdl4j.home" location="${env.WSDL4J_HOME}" />
+  <property name="udm.path" location="${env.UDM_PATH}" />
+  <path id="classpath">
+    <pathelement path="lib" />
+    <fileset dir="${wsdl4j.home}" includes="lib/*.jar" />
+    <fileset dir="${udm.path}" includes="bin/judm.jar" />
+  </path>
+
+  <!--compile Java source files-->
+  <target name="compile" description="Compile all Java source files">
+    <echo message="Compiling the java source files..." />
+    <mkdir dir="lib" />
+    <javac destdir="lib" debug="on">
+      <src path="src" />
+      <classpath refid="classpath" />
+      <compilerarg value="-Xlint:unchecked" />
+    </javac>
+  </target>
+
+  <target name="run" depends="compile" description="Run the WSDLImporter">
+    <echo message="Running the WSDLExporter..." />
+    <java classname="edu.vanderbilt.dre.WSML.WSDLExporter.WSDLExporter"
+    	fork="true">
+      <arg file="GoogleSearch.xml" />
+      <arg file="GoogleSearch.wsdl" />
+      <classpath refid="classpath" />
+    </java>
+  </target>
+
+  <target name="slice" depends="compile" description="Run the WSDLImporter">
+    <echo message="Running the WSDLExporter..." />
+    <java classname="edu.vanderbilt.dre.WSML.WSDLExporter.WSDLExporter"
+    	fork="true">
+      <arg file="SLICE.xml" />
+      <arg file="SLICE.wsdl" />
+      <classpath refid="classpath" />
+    </java>
+  </target>
+
+</project>

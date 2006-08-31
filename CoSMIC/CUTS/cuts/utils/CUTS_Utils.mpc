@@ -1,0 +1,56 @@
+// $Id$
+
+//=============================================================================
+//
+// CUTS_Utils project
+//
+//=============================================================================
+
+project (CUTS_Utils) : cutslib {
+  sharedname = CUTS_Utils
+
+  dynamicflags += CUTS_UTILS_BUILD_DLL
+
+  // -- remove the unnecessary dependencies
+  after -= CUTS
+  libs  -= CUTS
+
+  Source_Files {
+    UUID.cpp
+    String.cpp
+  }
+
+  Header_Files {
+    Functor_T.h
+    Utils_Export.h
+  }
+}
+
+//=============================================================================
+//
+// CUTS_Utils_DBase project
+//
+//=============================================================================
+
+project (CUTS_Utils_DBase) : cutslib {
+  sharedname += CUTS_Utils_DBase
+
+  dynamicflags += CUTS_DB_UTILS_BUILD_DLL
+
+  Source_Files {
+    DB_Connection.cpp
+    DB_Exception.cpp
+    DB_Parameter.cpp
+    DB_Query.cpp
+    DB_Record.cpp
+    DB_Types_Impl.cpp
+  }
+
+  Template_Files {
+
+  }
+
+  Header_Files {
+    DB_Utils_Export.h
+  }
+}

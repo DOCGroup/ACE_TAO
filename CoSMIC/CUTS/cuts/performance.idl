@@ -1,0 +1,132 @@
+// -*- IDL -*-
+
+//=============================================================================
+/**
+ * @file    performance.idl
+ *
+ * $Id$
+ *
+ * [insert description here]
+ *
+ * @author James H. Hill <hillj@isis.vanderbilt.edu>
+ */
+//=============================================================================
+
+#ifndef _CUTS_PERFORMANCE_IDL_
+#define _CUTS_PERFORMANCE_IDL_
+
+module CUTS
+{
+  /// type definition for the time
+  typedef long Time_Stamp;
+
+  /// Timing information collected while running an experiment.
+  struct Time_Info
+  {
+    /// total time during which the sample data was processed
+    Time_Stamp total;
+
+    /// maximum time taken to process an event during sample period
+    Time_Stamp max;
+
+    /// minimum time to process an event during the sample period
+    Time_Stamp min;
+  };
+
+  struct Event_Time_Info
+  {
+    Time_Info time;
+
+    long max_events;
+
+    long min_events;
+  };
+
+  struct Time_Sample
+  {
+    /// Number of timing measurements taken.
+    long count;
+
+    /// Timing info for the sample.
+    Time_Info time;
+  };
+
+  struct Action_Measurement
+  {
+    long type;
+
+    Time_Sample time;
+  };
+
+  typedef sequence <Action_Measurement> Action_Measurement_Seq;
+
+  /**
+   * Collection of information relating to a type of sample
+   * taken during a port operation.
+   */
+  struct Worker_Measurement
+  {
+    /// Type of sample collected
+    long type;
+
+    Action_Measurement_Seq actions;
+  };
+
+  /// Type definition for a <Data_Sample> sequence.
+  typedef sequence <Worker_Measurement> Worker_Measurement_Seq;
+
+  struct Exit_Point_Time
+  {
+    string exit_point_;
+
+    Time_Sample time_sample_;
+  };
+
+  typedef sequence <Exit_Point_Time> Exit_Point_Time_Seq;
+
+  struct Mapped_Port_Measurement
+  {
+    long owner;
+
+    /// Time taken to transmit an event.
+    Time_Sample transit_time;
+
+    /// Time taken to process an event.
+    Time_Sample process_time;
+
+    /// Exit point times for this port.
+    Exit_Point_Time_Seq exit_times;
+
+    /// data samples associated with this benchmark sample
+    Worker_Measurement_Seq workers;
+  };
+
+  typedef sequence <Mapped_Port_Measurement> Mapped_Port_Measurement_Seq;
+
+  struct Port_Measurement
+  {
+    /// event id associated with the data samples
+    string port;
+
+    Mapped_Port_Measurement_Seq measurements;
+  };
+
+  typedef sequence <Port_Measurement> Port_Measurement_Seq;
+
+  /// The value of an invalid ID.
+  const long INVALID_ID = -1;
+
+  struct Benchmark_Data
+  {
+    /// id of the CoWorkEr transmitting the data
+    long owner;
+
+    /// time at which the data was reported
+    Time_Stamp timestamp;
+
+    /// this is the sequence of benchmark data being reported
+    Port_Measurement_Seq ports;
+  };
+};
+
+#endif  // !defined _CUTS_PERFORMANCE_IDL_

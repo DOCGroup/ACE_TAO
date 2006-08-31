@@ -1,0 +1,81 @@
+<!-- $Id$ -->
+<%@ master language="C#" codefile="BMW.master.cs" autoeventwireup="true" 
+           inherits="CUTS.BMW_Master"%>
+  
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>CUTS Benchmark Manager Web Utility</title>
+<link rel="stylesheet" href="Style.css" type="text/css" />
+
+<script language="javascript" type="text/javascript">
+function hilite (obj)
+{
+  obj.style.backgroundColor = "lightgrey";
+}
+
+function unhilite(obj)
+{
+  obj.style.backgroundColor = "white";
+}
+</script>
+
+</head>
+<body style="border:0px;margin:0px">
+<form runat="server" id="main_form_">
+<table border="0" width="100%" cellpadding="0" cellspacing="0">
+<tr>
+  <td><img src="images/logo.jpg" alt="CUTS logo" /></td>
+  <td><h1>Component Workload Emulator Utilization Test Suite<br /> 
+        Benchmark Manager Web Utility</h1></td>
+</tr>
+
+<!-- divider row b/t header and content -->
+<tr><td class="alternate-row" colspan="2">&nbsp;</td></tr>
+
+<tr valign="top">
+  <td style="width:150px">
+    <p></p>     
+    <b>Main Menu</b>
+    <div class="menu_item"
+         onmouseover="hilite(this);"
+         onmouseout="unhilite(this);">
+      <asp:hyperlink runat="server" id="test_menu_item_"
+                     navigateurl="~/"
+                     text="Tests" /></div>
+    
+    <p></p>     
+    <asp:contentplaceholder runat="server" id="PageMenu" />
+    
+    <p></p>     
+    <b>Global Information</b>
+    <div class="menu_item" 
+         onmouseover="hilite(this)"
+         onmouseout="unhilite(this)">
+      <asp:hyperlink runat="server" id="hosts_menu_item_"
+                     navigateurl="~/Hosts.aspx"
+                     text="Test Environment" /></div>
+                     
+    <div class="menu_item"
+         onmouseover="hilite(this);"
+         onmouseout="unhilite(this);">
+      <asp:hyperlink runat="server" id="ci_menu_item_"
+                     navigateurl="~/Component_Instances.aspx"
+                     text="Registered Components" /></div>
+                     
+    <div class="menu_item"
+         onmouseover="hilite(this);"
+         onmouseout="unhilite(this);">
+      <asp:hyperlink runat="server" id="cp_menu_item_"
+                     navigateurl="~/Critical_Path.aspx"
+                     text="Critical Paths" /></div>                       
+  </td>
+  <td>
+    <asp:contentplaceholder runat="server" id="MainContent" />
+  </td>
+</tr>
+</table>
+
+<asp:label runat="server" id="status_" />
+</form>
+</body>
+</html>

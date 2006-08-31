@@ -1,0 +1,17 @@
+project(NetQoS): cqmllib {
+
+   after += DeploymentPlanFramework
+   sharedname = NetQoS
+   macros += NETQOS_BUILD_DLL DEPLOYMENTPLANFRAMEWORK_HAS_DLL
+   libs += DeploymentPlanFramework
+
+
+   Source_Files {
+     NetQoSVisitor.cpp
+   }
+
+   Header_Files {
+     NetQoSVisitor.h
+     NetQoS_Export.h
+   }
+}

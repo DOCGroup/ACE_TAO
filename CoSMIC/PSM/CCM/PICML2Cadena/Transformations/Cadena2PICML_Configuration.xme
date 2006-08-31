@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE project SYSTEM "mga.dtd">
+
+<project guid="{080B29EA-2513-4D36-B5F9-43C851BFC790}" cdate="Thu Nov 11 23:24:58 2004" mdate="Thu Nov 11 23:24:58 2004" version="" metaguid="{AFAF678A-DEAD-BEEF-FEED-DAD000000001}" metaversion="" metaname="GReATConfig">
+	<name>Cadena2PICML_Configuration</name>
+	<comment></comment>
+	<author></author>
+	<folder id="id-006a-00000001" relid="0x1" childrelidcntr="0x3" kind="RootFolder">
+		<name>Cadena2PICML_Configuration</name>
+		<model id="id-0065-00000001" kind="UsageInformation" relid="0x1" childrelidcntr="0x6">
+			<name></name>
+			<attribute kind="StartRulePath">
+				<value>RootRuleBlock</value>
+			</attribute>
+			<atom id="id-0066-00000001" kind="FileUsage" role="FileUsage" relid="0x1">
+				<name></name>
+				<attribute kind="DTDFileName">
+					<value></value>
+				</attribute>
+				<attribute kind="FileID">
+					<value>PICML_File</value>
+				</attribute>
+				<attribute kind="MetaName">
+					<value>PICML</value>
+				</attribute>
+				<attribute kind="Mode">
+					<value>rw</value>
+				</attribute>
+				<attribute kind="RootClassName">
+					<value>RootFolder</value>
+				</attribute>
+				<attribute kind="RunInMemory">
+					<value>false</value>
+				</attribute>
+			</atom>
+			<atom id="id-0066-00000002" kind="FileUsage" role="FileUsage" relid="0x2">
+				<name></name>
+				<attribute kind="DTDFileName">
+					<value>udm\cadena_scenario.xsd</value>
+				</attribute>
+				<attribute kind="FileID">
+					<value>CadenaScenario_File</value>
+				</attribute>
+				<attribute kind="MetaName">
+					<value>cadena_scenario</value>
+				</attribute>
+				<attribute kind="Mode">
+					<value>r</value>
+				</attribute>
+				<attribute kind="RootClassName">
+					<value>Scenarios</value>
+				</attribute>
+				<attribute kind="RunInMemory">
+					<value>true</value>
+				</attribute>
+			</atom>
+			<atom id="id-0066-00000003" kind="FileUsage" role="FileUsage" relid="0x3">
+				<name></name>
+				<attribute kind="DTDFileName">
+					<value>udm\PICMLCadena_Xchange_embedded_EIProperties.xsd</value>
+				</attribute>
+				<attribute kind="FileID">
+					<value>EmbeddedDummy_File</value>
+				</attribute>
+				<attribute kind="MetaName">
+					<value>PICMLCadena_Xchange_embedded_EIProperties</value>
+				</attribute>
+				<attribute kind="Mode">
+					<value>w</value>
+				</attribute>
+				<attribute kind="RootClassName">
+					<value>RootContainer</value>
+				</attribute>
+				<attribute kind="RunInMemory">
+					<value>true</value>
+				</attribute>
+			</atom>
+			<atom id="id-0066-00000004" kind="TransformationInput" role="TransformationInput" relid="0x4">
+				<name></name>
+				<attribute kind="FileID">
+					<value>PICML_File</value>
+				</attribute>
+				<attribute kind="ObjectPath">
+					<value>RootFolder</value>
+				</attribute>
+				<attribute kind="PortName">
+					<value>PICML_File_In</value>
+				</attribute>
+			</atom>
+			<atom id="id-0066-00000005" kind="TransformationInput" role="TransformationInput" relid="0x5">
+				<name></name>
+				<attribute kind="FileID">
+					<value>CadenaScenario_File</value>
+				</attribute>
+				<attribute kind="ObjectPath">
+					<value>Scenarios</value>
+				</attribute>
+				<attribute kind="PortName">
+					<value>Cadena_File_In</value>
+				</attribute>
+			</atom>
+			<atom id="id-0066-00000006" kind="TransformationInput" role="TransformationInput" relid="0x6">
+				<name></name>
+				<attribute kind="FileID">
+					<value>EmbeddedDummy_File</value>
+				</attribute>
+				<attribute kind="ObjectPath">
+					<value>RootContainer</value>
+				</attribute>
+				<attribute kind="PortName">
+					<value>Embedded_Dummy_File_In</value>
+				</attribute>
+			</atom>
+		</model>
+		<model id="id-0065-00000002" kind="MetaInformation" relid="0x2" childrelidcntr="0x0">
+			<name></name>
+			<attribute kind="MetaCodeGen">
+				<value>No Library (Source code)</value>
+			</attribute>
+			<attribute kind="TransformationFile">
+				<value>Cadena2PICML-gr.xml</value>
+			</attribute>
+			<attribute kind="UdmProjectFile">
+				<value>Udm\Cadena2PICML.udm</value>
+			</attribute>
+		</model>
+		<model id="id-0065-00000003" kind="RuntimeInformation" relid="0x3" childrelidcntr="0x3">
+			<name></name>
+			<atom id="id-0066-00000007" kind="InputFile" role="InputFile" relid="0x1">
+				<name></name>
+				<attribute kind="CopyName">
+					<value>examples\TweakedRobotAssembly_reimported_from_modified.mga</value>
+				</attribute>
+				<attribute kind="FileID">
+					<value>PICML_File</value>
+				</attribute>
+				<attribute kind="FileName">
+					<value>examples\TweakedRobotAssembly_afterexport.mga</value>
+				</attribute>
+			</atom>
+			<atom id="id-0066-00000008" kind="InputFile" role="InputFile" relid="0x2">
+				<name></name>
+				<attribute kind="CopyName">
+					<value></value>
+				</attribute>
+				<attribute kind="FileID">
+					<value>CadenaScenario_File</value>
+				</attribute>
+				<attribute kind="FileName">
+					<value>examples\exported_modified.xml</value>
+				</attribute>
+			</atom>
+			<atom id="id-0066-00000009" kind="InputFile" role="InputFile" relid="0x3">
+				<name></name>
+				<attribute kind="CopyName">
+					<value></value>
+				</attribute>
+				<attribute kind="FileID">
+					<value>EmbeddedDummy_File</value>
+				</attribute>
+				<attribute kind="FileName">
+					<value>examples\dummy_embedded.xml</value>
+				</attribute>
+			</atom>
+		</model>
+	</folder>
+</project>

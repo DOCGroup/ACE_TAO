@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Deployment:deploymentPlan xmlns:Deployment="http://www.omg.org/Deployment" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+
+  <UUID>_12787981-3825-4D7A-8B40-43658330D80C</UUID>
+
+  <implementation id="_71D1E480-8500-4E1C-A3C2-9F09D4FABF7B">
+    <name>CPU.ComponentImplementations.Sender_Impl.Sender</name>
+    <source/>
+    <artifact>_09229991-310D-42D2-A6DF-28326D61CBB6</artifact>
+    <artifact>_DBE54A5B-0F5B-4434-9363-7ED70CD781EC</artifact>
+    <artifact>_4A7DE7AC-CCFB-434A-991E-3CE815E06F90</artifact>
+  </implementation>
+
+  <implementation id="_C7BC4389-B3B3-4238-9FF2-6F8585FE59CF">
+    <name>CPU.CUTS_ComponentImplementations.BDC_Implementation.BDC_Monolithic_Impl</name>
+    <source/>
+    <artifact>_074F5BF0-366E-46C2-8D67-12E77A0E6A5F</artifact>
+    <artifact>_C53ACCA3-0D38-4F84-AA34-13017CFB4C50</artifact>
+    <artifact>_86990E4C-8389-425C-B8D5-5C1982BC95B4</artifact>
+  </implementation>
+
+  <implementation id="_B96E2B99-CE66-4749-A512-10F64A9D286C">
+    <name>CPU.CUTS_ComponentImplementations.BDC_Ex_Implementation.BDC_Ex_Impl</name>
+    <source/>
+    <artifact>_E13E3DF5-3AAC-4154-A7CB-923D68C6ED06</artifact>
+    <artifact>_0A5902E2-FFFE-4B55-B335-188E67F2123A</artifact>
+    <artifact>_1D0DB166-FC3E-43AD-9BA2-054A69A30C95</artifact>
+  </implementation>
+
+  <implementation id="_4BB5B05E-A7AB-415A-BD59-56F8F31F6F45">
+    <name>CPU.CUTS_ComponentImplementations.System_Monitor_Implementation.System_Monitor_Impl</name>
+    <source/>
+    <artifact>_D9292BB5-BE43-48EF-8F52-C2CE30F7605E</artifact>
+    <artifact>_5C054E94-CB64-40E9-9962-E45E5EC633BA</artifact>
+    <artifact>_14F2B229-4C1B-44F6-9657-F580555B431B</artifact>
+  </implementation>
+
+  <instance id="_B1C44FEA-1B39-4EEC-86F2-1B570BAB883A">
+    <name>CPU.ComponentImplementations.Sender_Assembly.Sender_Assembly.Benchmark_Data_Collector</name>
+    <node>Alpha</node>
+    <source/>
+    <implementation>_C7BC4389-B3B3-4238-9FF2-6F8585FE59CF</implementation>
+    <configProperty>
+      <name>ComponentIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>BDC.ior</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>timeout</name>
+      <value>
+        <type>
+          <kind>tk_long</kind>
+        </type>
+        <value>
+          <long>5</long>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <instance id="_CE33CDAF-6A75-4F12-A784-9DADFD6A2FDB">
+    <name>CPU.ComponentImplementations.Sender_Assembly.Sender_Assembly.Sender</name>
+    <node>Bravo</node>
+    <source/>
+    <implementation>_71D1E480-8500-4E1C-A3C2-9F09D4FABF7B</implementation>
+    <configProperty>
+      <name>ComponentIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Sender.ior</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <connection>
+    <name>cuts_testing_service_testing_service</name>
+    <internalEndpoint>
+      <portName>cuts_testing_service</portName>
+      <kind>SimplexReceptacle</kind>
+      <instance>_CE33CDAF-6A75-4F12-A784-9DADFD6A2FDB</instance>
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>testing_service</portName>
+      <kind>Facet</kind>
+      <instance>_B1C44FEA-1B39-4EEC-86F2-1B570BAB883A</instance>
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>output_input</name>
+    <internalEndpoint>
+      <portName>output</portName>
+      <kind>EventEmitter</kind>
+      <instance>_CE33CDAF-6A75-4F12-A784-9DADFD6A2FDB</instance>
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>input</portName>
+      <kind>EventConsumer</kind>
+      <instance>_CE33CDAF-6A75-4F12-A784-9DADFD6A2FDB</instance>
+    </internalEndpoint>
+  </connection>
+
+  <artifact id="_DBE54A5B-0F5B-4434-9363-7ED70CD781EC">
+    <name>CPU.ImplementationArtifacts.Sender_Artifacts.Sender_stub</name>
+    <source/>
+    <node/>
+    <location>Sender_CoWorkEr_stub</location>
+  </artifact>
+
+  <artifact id="_09229991-310D-42D2-A6DF-28326D61CBB6">
+    <name>CPU.ImplementationArtifacts.Sender_Artifacts.Sender_svnt</name>
+    <source/>
+    <node/>
+    <location>Sender_CoWorkEr_svnt</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Example_Sender_Factory_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact id="_4A7DE7AC-CCFB-434A-991E-3CE815E06F90">
+    <name>CPU.ImplementationArtifacts.Sender_Artifacts.Sender_exec</name>
+    <source/>
+    <node/>
+    <location>Sender_CoWorkEr_exec</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Example_Sender_Factory_CoWorkEr_Factory_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact id="_074F5BF0-366E-46C2-8D67-12E77A0E6A5F">
+    <name>CPU.CUTS_ImplementationArtifacts.BDC_Artifacts.BDC_stub</name>
+    <source/>
+    <node/>
+    <location>Benchmark_Data_Collector_stub</location>
+  </artifact>
+
+  <artifact id="_C53ACCA3-0D38-4F84-AA34-13017CFB4C50">
+    <name>CPU.CUTS_ImplementationArtifacts.BDC_Artifacts.BDC_svnt</name>
+    <source/>
+    <node/>
+    <location>Benchmark_Data_Collector_svnt</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_CUTS_Benchmark_Data_Collector_Home_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact id="_86990E4C-8389-425C-B8D5-5C1982BC95B4">
+    <name>CPU.CUTS_ImplementationArtifacts.BDC_Artifacts.BDC_exec</name>
+    <source/>
+    <node/>
+    <location>Benchmark_Data_Collector_exec</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_CUTS_Benchmark_Data_Collector_Home_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact id="_1D0DB166-FC3E-43AD-9BA2-054A69A30C95">
+    <name>CPU.CUTS_ImplementationArtifacts.BDC_Ex_Artifacts.BDC_Ex_exec</name>
+    <source/>
+    <node/>
+    <location>Benchmark_Data_Collector_Ex_exec</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_CUTS_Benchmark_Data_Collector_Ex_Home_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact id="_0A5902E2-FFFE-4B55-B335-188E67F2123A">
+    <name>CPU.CUTS_ImplementationArtifacts.BDC_Ex_Artifacts.BDC_Ex_stub</name>
+    <source/>
+    <node/>
+    <location>Benchmark_Data_Collector_Ex_stub</location>
+  </artifact>
+
+  <artifact id="_E13E3DF5-3AAC-4154-A7CB-923D68C6ED06">
+    <name>CPU.CUTS_ImplementationArtifacts.BDC_Ex_Artifacts.BDC_Ex_svnt</name>
+    <source/>
+    <node/>
+    <location>Benchmark_Data_Collector_Ex_svnt</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_CUTS_Benchmark_Data_Collector_Ex_Home_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact id="_D9292BB5-BE43-48EF-8F52-C2CE30F7605E">
+    <name>CPU.CUTS_ImplementationArtifacts.System_Monitor_Artifacts.System_Monitor_stub</name>
+    <source/>
+    <node/>
+    <location>System_Monitor_stub</location>
+  </artifact>
+
+  <artifact id="_5C054E94-CB64-40E9-9962-E45E5EC633BA">
+    <name>CPU.CUTS_ImplementationArtifacts.System_Monitor_Artifacts.System_Monitor_svnt</name>
+    <source/>
+    <node/>
+    <location>System_Monitor_svnt</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_CUTS_System_Monitor_Home_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact id="_14F2B229-4C1B-44F6-9657-F580555B431B">
+    <name>CPU.CUTS_ImplementationArtifacts.System_Monitor_Artifacts.System_Monitor_exec</name>
+    <source/>
+    <node/>
+    <location>System_Monitor_exec</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_CUTS_System_Monitor_Home_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+</Deployment:deploymentPlan>

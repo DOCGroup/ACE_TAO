@@ -1,0 +1,23 @@
+// $Id$
+
+project (CUTS_Test) : cutslib, cuts_test_base {
+  sharedname = CUTS_Test
+
+  Header_Files {
+    Test_Macros.h
+  }
+
+  Source_Files {
+    Test.cpp
+    Unit_Test.cpp
+  }
+}
+
+project (CUTS_Test_Client) : cutsexe, cuts_test_base {
+  exename = CUTS_Test_Client
+
+  Source_Files {
+    Test_Client.cpp
+  }
+}
+

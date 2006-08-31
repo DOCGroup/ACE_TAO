@@ -1,0 +1,30 @@
+// $Id$
+
+project : gme_base {
+  includes += $(CUTS_ROOT)
+
+  specific {
+     midl_flags += /server none /client none
+     midl_includes += $(GME_ROOT) $(GME_ROOT)/Interfaces .
+  }
+
+  specific {
+    link_options += /DEF:component.def
+  }
+
+  Source_Files {
+    $(GME_ROOT)/SDK/BON/ComponentLib.idl
+    $(GME_ROOT)/SDK/BON/ComHelp.cpp
+    $(GME_ROOT)/SDK/BON/ComponentDll.cpp
+    $(GME_ROOT)/SDK/BON/ComponentObj.cpp
+  }
+
+  Header_Files {
+    ComponentLib.h
+    $(GME_ROOT)/SDK/BON/GMECOM.h
+  }
+  
+  Resource_Files {
+  
+  }
+}

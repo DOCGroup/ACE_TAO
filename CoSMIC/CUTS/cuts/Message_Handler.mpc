@@ -1,0 +1,11 @@
+// $Id$
+
+project (CUTS_Message_Handler) : cutslib {
+  sharedname = CUTS_Message_Handler
+
+  dynamicflags += CUTS_BUILD_DLL
+
+  Source_Files {
+    Message_Handler.cpp
+  }
+}

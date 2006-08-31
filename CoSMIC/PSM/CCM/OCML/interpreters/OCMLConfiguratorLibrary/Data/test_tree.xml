@@ -1,0 +1,19 @@
+<OptionCategory name="root" description = "Root option category">
+      <BooleanOption name = "opt1" description = "Test option"/>
+      <IntegerOption name = "opt2" description ="Another test option"/>
+      <StringOption name = "opt3" description ="Some other test option"/>
+      <EnumOption  name = "enumOption" description ="Some enum option">
+            <Item name = "enum_item1"/>
+    	    <Item name = "enum_item2"/>
+            <Item name = "Some very very very very very very long item"/>
+      </EnumOption>
+
+    <OptionCategory name = "child1" description ="i A i child category"/>
+    <OptionCategory name = "child2"
+                    description ="b Another b child category">
+        <OptionCategory name = "child11"
+	                description ="font color='red' Some font grand child category"/>
+        <OptionCategory name = "child12"
+	                description ="a href='http://www.dre.vanderbilt.edu/~turkaye' Some other grand child category a">
+    </OptionCategory>
+</OptionCategory>

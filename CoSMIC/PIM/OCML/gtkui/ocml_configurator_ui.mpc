@@ -1,0 +1,23 @@
+project: gtk {
+  sharedname = ocml_configurator_ui
+  libout = $(COSMIC_ROOT)/lib
+  dllout = $(COSMIC_ROOT)/bin
+  dynamicflags += CONFIGURATOR_UI_BUILD_DLL
+
+  specific (em3, nmake, vc6) {
+    subsystem = windows
+  }
+
+  specific (vc7, vc71, vc8) {
+    subsystem = 2
+  }
+
+  Source_Files {
+    configurator_ui.cpp
+  }
+
+  Header_Files {
+    configurator_ui.hpp
+    main_window.hpp
+  }
+}

@@ -1,0 +1,15 @@
+project(RTConfig): picmllib {
+   after += PICML
+   sharedname = RTConfig
+   macros += RTConfig_BUILD_DLL PICML_HAS_DLL
+   libs += PICML
+
+   Source_Files {
+     RTConfigVisitor.cpp
+   }
+
+   Header_Files {
+     RTConfigVisitor.h
+     RTConfig_Export.h
+   }
+}

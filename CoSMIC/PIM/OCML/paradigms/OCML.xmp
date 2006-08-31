@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<!DOCTYPE paradigm SYSTEM "edf.dtd">
+
+<paradigm name="OCML" guid="{03C81A05-F698-43F0-88E5-D94EAA8901C5}" cdate="Wed Apr 13 12:16:48 2005" mdate="Wed Apr 13 12:16:48 2005" >
+
+	<comment></comment>
+
+	<author></author>
+
+	<folder name = "RootFolder" metaref = "1000"  rootobjects = "Option_Category" >
+		<attrdef name="Boolean_Default_Value" metaref = "1181" valuetype = "boolean" defvalue = "false">
+			<dispname>Default</dispname>
+		</attrdef>
+		<attrdef name="Description" metaref = "1130" valuetype = "string" defvalue = "">
+			<regnode name="multiLine" value = "99"></regnode>
+		</attrdef>
+		<attrdef name="Integer_Default_Value" metaref = "1182" valuetype = "string" defvalue = "">
+			<dispname>Default</dispname>
+		</attrdef>
+		<attrdef name="Item_Default_Value" metaref = "1183" valuetype = "boolean" defvalue = "false">
+			<dispname>Default</dispname>
+		</attrdef>
+		<attrdef name="Parameter_Name" metaref = "1180" valuetype = "string" defvalue = "">
+		</attrdef>
+		<attrdef name="String_Default_Value" metaref = "1184" valuetype = "string" defvalue = "">
+			<dispname>Default</dispname>
+		</attrdef>
+		<attrdef name="Title" metaref = "1179" valuetype = "string" defvalue = "">
+		</attrdef>
+		<atom name = "Boolean_Option" metaref = "1001"  attributes = "Parameter_Name Description Title Boolean_Default_Value">
+				<regnode name = "namePosition" value ="4"></regnode>
+				<regnode name = "icon" value ="option_toggle.bmp"></regnode>
+		</atom>
+		<atom name = "Enum_Item" metaref = "1014"  attributes = "Item_Default_Value Description Title">
+				<regnode name = "namePosition" value ="4"></regnode>
+				<regnode name = "icon" value ="enum_option.bmp"></regnode>
+				<regnode name = "porticon" value ="option_port.bmp"></regnode>
+		</atom>
+		<atom name = "Flag_Item" metaref = "1015"  attributes = "Item_Default_Value Description Title">
+				<regnode name = "namePosition" value ="4"></regnode>
+				<regnode name = "icon" value ="flag_option.bmp"></regnode>
+				<regnode name = "porticon" value ="option_port.bmp"></regnode>
+		</atom>
+		<atom name = "Integer_Option" metaref = "1002"  attributes = "Parameter_Name Description Title Integer_Default_Value">
+				<regnode name = "namePosition" value ="4"></regnode>
+				<regnode name = "icon" value ="option_integer.bmp"></regnode>
+		</atom>
+		<atom name = "String_Option" metaref = "1003"  attributes = "Parameter_Name Description Title String_Default_Value">
+				<regnode name = "namePosition" value ="4"></regnode>
+				<regnode name = "icon" value ="option_string.bmp"></regnode>
+		</atom>
+		<model name = "Enum_Option" metaref = "1016" attributes = "Parameter_Name Description Title" >
+				<regnode name = "namePosition" value ="4"></regnode>
+				<regnode name = "icon" value ="option_enum.bmp"></regnode>
+			<role name = "Enum_Item" metaref = "1017" kind = "Enum_Item"></role>
+			<aspect name = "Model_Option_Aspect" metaref = "1024" attributes = "Parameter_Name Description Title" >
+				<part metaref = "1025" role = "Enum_Item" primary = "yes" linked = "yes"></part>
+			</aspect>
+		</model>
+		<model name = "Flag_Option" metaref = "1018" attributes = "Parameter_Name Description Title" >
+				<regnode name = "namePosition" value ="4"></regnode>
+				<regnode name = "icon" value ="option_flag.bmp"></regnode>
+			<role name = "Flag_Item" metaref = "1019" kind = "Flag_Item"></role>
+			<aspect name = "Model_Option_Aspect" metaref = "1026" attributes = "Parameter_Name Description Title" >
+				<part metaref = "1027" role = "Flag_Item" primary = "yes" linked = "yes"></part>
+			</aspect>
+		</model>
+		<model name = "Option_Category" metaref = "1035" attributes = "Description Title" >
+				<regnode name = "namePosition" value ="4"></regnode>
+			<role name = "Boolean_Option" metaref = "1008" kind = "Boolean_Option"></role>
+			<role name = "Enum_Option" metaref = "1020" kind = "Enum_Option"></role>
+			<role name = "Flag_Option" metaref = "1021" kind = "Flag_Option"></role>
+			<role name = "Integer_Option" metaref = "1009" kind = "Integer_Option"></role>
+			<role name = "Option_Category" metaref = "1177" kind = "Option_Category"></role>
+			<role name = "String_Option" metaref = "1010" kind = "String_Option"></role>
+			<aspect name = "Option_Aspect" metaref = "1028" attributes = "Description Title" >
+				<part metaref = "1029" role = "Boolean_Option" primary = "yes" linked = "no"></part>
+				<part metaref = "1030" role = "Enum_Option" primary = "yes" linked = "no"></part>
+				<part metaref = "1031" role = "Flag_Option" primary = "yes" linked = "no"></part>
+				<part metaref = "1032" role = "Integer_Option" primary = "yes" linked = "no"></part>
+				<part metaref = "1178" role = "Option_Category" primary = "yes" linked = "no"></part>
+				<part metaref = "1033" role = "String_Option" primary = "yes" linked = "no"></part>
+			</aspect>
+		</model>
+	</folder>
+</paradigm>

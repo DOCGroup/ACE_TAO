@@ -1,0 +1,56 @@
+
+                  IDL To WSDL Converter
+
+A pluggable back end used with the IDL compiler parser
+and command line processor, this tool converts
+IDL constructs into their corresponding WSDL equivalents,
+in an XML file.
+
+COMPILING:
+
+Use the provided .mpc file to generate a project or makefile to
+compile the pluggable back end library and the executable.
+Make sure the TAO IDL compiler front end is already built.
+
+EXECUTABLE NAME:
+
+idl_to_wsdl
+
+COMMAND LINE OPTIONS:
+
+All the usual front-end command line options that apply to the IDL compiler
+(such as path includes) work with this tool as well, since the IDL compiler
+front end is simply reused. The options -? or -h will display a usage
+message, including both front end and back end options. For a complete
+list of IDL compiler command line options and a description of each, see
+TAO/docs/compiler.html.
+
+BACKEND OPTIONS:
+
+-o <path> Also works the same as with the IDL compiler, setting the
+output directory, overriding the default, which is the directory of
+execution.
+
+-x <filename> Name of the generated WSDL file.
+
+None of the other backend options display have been implemented or
+tested yet.
+
+IDL CONSTRUCTS NOT YET SUPPORTED:
+
+- typedefs of constructed types (structs, unions, exceptions),
+  interfaces, and valuetypes
+  
+- arrays
+
+- sequence and array operation parameters and return types
+
+- forward declarations
+
+- component ports other than facets
+
+
+
+-- Jeff Parsons
+
+   July 22, 2006

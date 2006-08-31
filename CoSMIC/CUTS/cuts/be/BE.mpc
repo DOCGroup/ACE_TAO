@@ -1,0 +1,29 @@
+// $Id$
+
+project (CUTS_BE) : picml_udm, boost_base, cutslib {
+  after += PICML
+
+  sharedname = CUTS_BE
+
+  dynamicflags += CUTS_BE_BUILD_DLL
+
+  includes += $(COSMIC_ROOT)/PIM/PICML/interpreters
+
+  Source_Files {
+    CUTS_Project.cpp
+    CoWorkEr_Cache.cpp
+    Dependency_Generator.cpp
+    Dependency_Graph.cpp
+    CoWorkEr_Generator.cpp
+    BE_File_Generator.cpp
+    BE_File_Generator_Manager.cpp
+    BE_Workspace_Generator.cpp
+    Null_File_Generator.cpp
+    Preprocess_Data.cpp
+    Project_Generator.cpp
+  }
+
+  Template_Files {
+    UDM_Utility_T.cpp
+  }
+}

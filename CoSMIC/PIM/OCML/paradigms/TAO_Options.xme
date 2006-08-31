@@ -1,0 +1,4315 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE project SYSTEM "mga.dtd">
+
+<project guid="{06BF96EC-6B08-44C3-B46F-0335680B62DD}" cdate="Wed Mar 02 10:04:39 2005" mdate="Wed Mar 02 10:04:40 2005" version="" metaguid="{B87AE84D-9D62-480A-9858-D6DE4C926863}" metaversion="" metaname="OCML">
+	<name>TAO_Options</name>
+	<comment></comment>
+	<author></author>
+	<folder id="id-006a-00000001" relid="0x1" childrelidcntr="0x9" kind="RootFolder">
+		<name>TAO_Options</name>
+		<model id="id-0065-00000001" kind="Option_Category" relid="0x8" childrelidcntr="0x7">
+			<name>ORB_Configuration_Options</name>
+			<attribute kind="Description">
+				<value>
+This section provides a detailed overview of how to configure TAO&apos;s options using environment variables, command-line options, and service configuration files.
+				</value>
+			</attribute>
+			<attribute kind="Title">
+				<value>ORB Configuration Options</value>
+			</attribute>
+			<model id="id-0065-00000002" kind="Option_Category" role="Option_Category" relid="0x5" childrelidcntr="0x6">
+				<name>Environment_Variables</name>
+				<regnode name="PartRegs" isopaque="yes">
+					<value></value>
+					<regnode name="OptionAspect" isopaque="yes">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>50,23</value>
+						</regnode>
+					</regnode>
+					<regnode name="Option_Aspect" isopaque="yes">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>42,14</value>
+						</regnode>
+					</regnode>
+				</regnode>
+				<attribute kind="Description">
+					<value>As mentioned earlier, environment variables have a limited use in TAO ORB configuration.  The currently supported environment variables are listed below. They are used to specify the IOR and port numbers for three of TAO&apos;s ORB services. &lt;P&gt; In general, setting environment variables is not particularly portable or convenient, which is why users can also set these options via command-line options. The example shown below demonstrates a deployment scenario where the client and Naming Service run on the same host: &lt;P&gt; &lt;code&gt; % NameService.exe -ORBEndpoint iiop://localhost:12345 &lt;/CODE&gt;&lt;P&gt; &lt;CODE&gt; % client.exe -ORBInitRef NameService=iiop://localhost:12345&quot; &lt;/code&gt;&lt;P&gt; An explanation of these command-line options appears below. &lt;P&gt;</value>
+				</attribute>
+				<attribute kind="Title">
+					<value>Environment Variables</value>
+				</attribute>
+				<atom id="id-0066-00000001" kind="Integer_Option" role="Integer_Option" relid="0x2">
+					<name>NameServicePort</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="OptionAspect" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>58,157</value>
+							</regnode>
+						</regnode>
+						<regnode name="Option_Aspect" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>404,12</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="Description">
+						<value>Specifies the IOR for the Naming Service that can be used to bootstrap the Naming Service object reference within an application.</value>
+					</attribute>
+					<attribute kind="Integer_Default_Value" status="meta">
+						<value></value>
+					</attribute>
+					<attribute kind="Parameter_Name">
+						<value>which</value>
+					</attribute>
+					<attribute kind="Title" status="meta">
+						<value></value>
+					</attribute>
+				</atom>
+				<atom id="id-0066-00000002" kind="Integer_Option" role="Integer_Option" relid="0x4">
+					<name>TradingServicePort</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="OptionAspect" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>268,157</value>
+							</regnode>
+						</regnode>
+						<regnode name="Option_Aspect" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>243,12</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="Description">
+						<value>Specifies which port the Trading Service is listening on for multicast requests.</value>
+					</attribute>
+					<attribute kind="Integer_Default_Value" status="meta">
+						<value></value>
+					</attribute>
+					<attribute kind="Parameter_Name">
+						<value>which</value>
+					</attribute>
+					<attribute kind="Title" status="meta">
+						<value></value>
+					</attribute>
+				</atom>
+				<atom id="id-0066-00000003" kind="Integer_Option" role="Integer_Option" relid="0x6">
+					<name>ImplRepoServicePort</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="OptionAspect" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>485,157</value>
+							</regnode>
+						</regnode>
+						<regnode name="Option_Aspect" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>68,12</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="Description">
+						<value>Specifies which port the Trading Service is listening on for multicast requests.</value>
+					</attribute>
+					<attribute kind="Integer_Default_Value" status="meta">
+						<value></value>
+					</attribute>
+					<attribute kind="Parameter_Name">
+						<value>which</value>
+					</attribute>
+					<attribute kind="Title" status="meta">
+						<value></value>
+					</attribute>
+				</atom>
+			</model>
+			<model id="id-0065-00000003" kind="Option_Category" role="Option_Category" relid="0x6" childrelidcntr="0x5">
+				<name>Command_Line_Options</name>
+				<regnode name="PartRegs" isopaque="yes">
+					<value></value>
+					<regnode name="OptionAspect" isopaque="yes">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>267,23</value>
+						</regnode>
+					</regnode>
+					<regnode name="Option_Aspect" isopaque="yes">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>266,14</value>
+						</regnode>
+					</regnode>
+				</regnode>
+				<attribute kind="Description">
+					<value>TAO&apos;s run-time behavior can also be controlled by passing options via the CORBA initialization method &lt;CODE&gt;CORBA::ORB_init()&lt;/CODE&gt;.  ORB initialization options are commonly passed into the program from the command-line, using the &lt;CODE&gt;argc&lt;/CODE&gt; and &lt;CODE&gt;argv&lt;/CODE&gt; parameters available to the &lt;CODE&gt;main()&lt;/CODE&gt; function. &lt;P&gt; Command-line options can be classified into the following groups according to their purposes:&lt;/P&gt; &lt;OL&gt; &lt;LI&gt;&lt;A href=&quot;#Ctrl_Svc_Conf&quot;&gt;Controlling Service Configurator Behavior&lt;/A&gt; &lt;LI&gt;&lt;A href=&quot;#Ctrl_Debug_Info&quot;&gt;Controlling Debugging Information&lt;/A&gt; &lt;LI&gt;&lt;A href=&quot;#Opt_Req_Proc&quot;&gt;Optimizing Request Processing&lt;/A&gt; &lt;LI&gt;&lt;A href=&quot;#Conn_Man_Protocol_Sel&quot;&gt;Connection Management and Protocol Selection&lt;/A&gt; &lt;LI&gt;&lt;A href=&quot;#Misc_Opt&quot;&gt;Miscellaneous Options&lt;/A&gt; &lt;/OL&gt; We describe each of these five groups of options below.  &lt;P&gt;</value>
+				</attribute>
+				<attribute kind="Title">
+					<value>Command-line Options</value>
+				</attribute>
+				<model id="id-0065-00000004" kind="Option_Category" role="Option_Category" relid="0x1" childrelidcntr="0x2">
+					<name>Ctrl_Svc_Conf</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="OptionAspect" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>50,16</value>
+							</regnode>
+						</regnode>
+						<regnode name="Option_Aspect" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>21,14</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="Description">
+						<value>The options described below influence the behavior of the ORB&apos;s &lt;A HREF=&quot;#Service_Configurator_File&quot;&gt;service configurator&lt;/CODE&gt;, which is opened and processed &lt;EM&gt;after&lt;/EM&gt; the command-line options have been parsed. &lt;P&gt;</value>
+					</attribute>
+					<attribute kind="Title">
+						<value>Controling Service Configurator Behavior</value>
+					</attribute>
+					<atom id="id-0066-00000004" kind="String_Option" role="String_Option" relid="0x1">
+						<name>ORBSvcConf</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="OptionAspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>37,17</value>
+								</regnode>
+							</regnode>
+							<regnode name="Option_Aspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>54,12</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="Description">
+							<value>Specifies the name of the file used to read service configuration directives via the Service Configurator framework. By default, a service configurator-based application will look for a file named &lt;CODE&gt;&quot;svc.conf&quot;&lt;/CODE&gt; in the current directory.</value>
+						</attribute>
+						<attribute kind="Parameter_Name">
+							<value>config filename</value>
+						</attribute>
+						<attribute kind="String_Default_Value">
+							<value>svc.conf</value>
+						</attribute>
+						<attribute kind="Title" status="meta">
+							<value></value>
+						</attribute>
+					</atom>
+					<atom id="id-0066-00000005" kind="String_Option" role="String_Option" relid="0x2">
+						<name>ORBSvcConfDirective</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="OptionAspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>205,17</value>
+								</regnode>
+							</regnode>
+							<regnode name="Option_Aspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>187,12</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="Description">
+							<value>Specifies a service configuration directive, which is passed to the Service Configurator. You can pass multiple of these options on the same command-line.</value>
+						</attribute>
+						<attribute kind="Parameter_Name">
+							<value>directivestring</value>
+						</attribute>
+						<attribute kind="String_Default_Value" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="Title" status="meta">
+							<value></value>
+						</attribute>
+					</atom>
+				</model>
+				<model id="id-0065-00000005" kind="Option_Category" role="Option_Category" relid="0x2" childrelidcntr="0x5">
+					<name>Ctrl_Debug_Info</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="OptionAspect" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>211,16</value>
+							</regnode>
+						</regnode>
+						<regnode name="Option_Aspect" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>182,14</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="Description">
+						<value>During application development and testing, it is often necessary to control the amount and type of debugging information output by the ORB.  The following options enable TAO to provide debugging information at several levels of granularity.&lt;P&gt;</value>
+					</attribute>
+					<attribute kind="Title">
+						<value>Controlling Debugging Information</value>
+					</attribute>
+					<model id="id-0065-00000006" kind="Enum_Option" role="Enum_Option" relid="0x4" childrelidcntr="0x2">
+						<name>ORBObjRefStyle</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="OptionAspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>506,23</value>
+								</regnode>
+							</regnode>
+							<regnode name="Option_Aspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>231,126</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="Description">
+							<value>Specifies the user-visible style of object references.  The &lt;CODE&gt;IOR&lt;/CODE&gt; style (default) is the conventional CORBA object reference, whereas the &lt;CODE&gt;URL&lt;/CODE&gt; style looks more like a URL.</value>
+						</attribute>
+						<attribute kind="Parameter_Name">
+							<value>IOR/URL</value>
+						</attribute>
+						<attribute kind="Title" status="meta">
+							<value></value>
+						</attribute>
+						<atom id="id-0066-00000006" kind="Enum_Item" role="Enum_Item" relid="0x2">
+							<name>URL</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="Model_Option_Aspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>68,12</value>
+									</regnode>
+								</regnode>
+								<regnode name="OptionAspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>18,88</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="Description" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="Item_Default_Value" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="Title" status="meta">
+								<value></value>
+							</attribute>
+						</atom>
+						<atom id="id-0066-00000007" kind="Enum_Item" role="Enum_Item" relid="0x1">
+							<name>IOR</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="Model_Option_Aspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>12,12</value>
+									</regnode>
+								</regnode>
+								<regnode name="OptionAspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>18,18</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="Description" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="Item_Default_Value">
+								<value>true</value>
+							</attribute>
+							<attribute kind="Title" status="meta">
+								<value></value>
+							</attribute>
+						</atom>
+					</model>
+					<model id="id-0065-00000007" kind="Enum_Option" role="Enum_Option" relid="0x5" childrelidcntr="0x5">
+						<name>ORBVerboseLogging</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="OptionAspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>506,23</value>
+								</regnode>
+							</regnode>
+							<regnode name="Option_Aspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>49,126</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="Description">
+							<value>Controls the amount of status data printed on each line of the debug log. Higher numbers generate more output. The default value of this option is 0.</value>
+						</attribute>
+						<attribute kind="Parameter_Name">
+							<value>level (0 | 1 | 2)</value>
+						</attribute>
+						<attribute kind="Title" status="meta">
+							<value></value>
+						</attribute>
+						<atom id="id-0066-00000008" kind="Enum_Item" role="Enum_Item" relid="0x3">
+							<name>0</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="Model_Option_Aspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>663,19</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="Description" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="Item_Default_Value">
+								<value>true</value>
+							</attribute>
+							<attribute kind="Title" status="meta">
+								<value></value>
+							</attribute>
+						</atom>
+						<atom id="id-0066-00000009" kind="Enum_Item" role="Enum_Item" relid="0x4">
+							<name>1</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="Model_Option_Aspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>663,96</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="Description" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="Item_Default_Value" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="Title" status="meta">
+								<value></value>
+							</attribute>
+						</atom>
+						<atom id="id-0066-0000000a" kind="Enum_Item" role="Enum_Item" relid="0x5">
+							<name>2</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="Model_Option_Aspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>663,166</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="Description" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="Item_Default_Value" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="Title" status="meta">
+								<value></value>
+							</attribute>
+						</atom>
+					</model>
+					<atom id="id-0066-0000000b" kind="Boolean_Option" role="Boolean_Option" relid="0x1">
+						<name>ORBDebug</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="OptionAspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>30,30</value>
+								</regnode>
+							</regnode>
+							<regnode name="Option_Aspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>26,12</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="Boolean_Default_Value" status="meta">
+							<value>false</value>
+						</attribute>
+						<attribute kind="Description">
+							<value>Instructs the ORB to print debugging messages from the service configurator framework. This option does not have a value but is used as a toggle to enable or disable debugging messages.</value>
+						</attribute>
+						<attribute kind="Parameter_Name" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="Title" status="meta">
+							<value></value>
+						</attribute>
+					</atom>
+					<atom id="id-0066-0000000c" kind="Integer_Option" role="Integer_Option" relid="0x2">
+						<name>ORBDebugLevel</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="OptionAspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>184,24</value>
+								</regnode>
+							</regnode>
+							<regnode name="Option_Aspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>138,12</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="Description">
+							<value>Control the level of debugging in the ORB.  Higher numbers generate more output (try 10). The default value of this option is 0.</value>
+						</attribute>
+						<attribute kind="Integer_Default_Value">
+							<value>0</value>
+						</attribute>
+						<attribute kind="Parameter_Name">
+							<value>level</value>
+						</attribute>
+						<attribute kind="Title" status="meta">
+							<value></value>
+						</attribute>
+					</atom>
+					<atom id="id-0066-0000000d" kind="String_Option" role="String_Option" relid="0x3">
+						<name>ORBLogFile</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="OptionAspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>345,23</value>
+								</regnode>
+							</regnode>
+							<regnode name="Option_Aspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>271,12</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="Description">
+							<value>Causes all &lt;CODE&gt;ACE_DEBUG&lt;/CODE&gt; and &lt;CODE&gt;ACE_ERROR&lt;/CODE&gt; output to be redirected to the designated &lt;CODE&gt;Logfilename&lt;/CODE&gt;.</value>
+						</attribute>
+						<attribute kind="Parameter_Name">
+							<value>Logfilename</value>
+						</attribute>
+						<attribute kind="String_Default_Value" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="Title" status="meta">
+							<value></value>
+						</attribute>
+					</atom>
+				</model>
+				<model id="id-0065-00000008" kind="Option_Category" role="Option_Category" relid="0x3" childrelidcntr="0xa">
+					<name>Opt_Req_Proc</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="OptionAspect" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>372,16</value>
+							</regnode>
+						</regnode>
+						<regnode name="Option_Aspect" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>343,14</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="Description">
+						<value>It is often possible to &lt;A HREF=&quot;performance.html&quot;&gt;increase TAO&apos;s throughput and reduce latency&lt;/A&gt; by optimizing certain stages of request processing in the ORB. The following command-line options control various optimizations during request processing.&lt;P&gt;</value>
+					</attribute>
+					<attribute kind="Title">
+						<value>Optimizing Request Processing</value>
+					</attribute>
+					<model id="id-0065-00000009" kind="Enum_Option" role="Enum_Option" relid="0x2" childrelidcntr="0x3">
+						<name>ORBCollocation</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="OptionAspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>239,42</value>
+								</regnode>
+							</regnode>
+							<regnode name="Option_Aspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>175,14</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="Description">
+							<value>Specifies the use of collocation object optimization. If &lt;CODE&gt;global&lt;/CODE&gt; is specified (default), objects in the same process will be treated as collocated. If &lt;CODE&gt;per-orb&lt;/CODE&gt; is specified, only objects in the same ORB are treated as collocated. When &lt;EM&gt;no&lt;/EM&gt; is specified, no objects are treated as collocated.</value>
+						</attribute>
+						<attribute kind="Parameter_Name">
+							<value>global/per-orb/no</value>
+						</attribute>
+						<attribute kind="Title" status="meta">
+							<value></value>
+						</attribute>
+						<atom id="id-0066-0000000e" kind="Enum_Item" role="Enum_Item" relid="0x3">
+							<name>no</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="Model_Option_Aspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>12,12</value>
+									</regnode>
+								</regnode>
+								<regnode name="OptionAspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>46,179</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="Description" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="Item_Default_Value" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="Title" status="meta">
+								<value></value>
+							</attribute>
+						</atom>
+						<atom id="id-0066-0000000f" kind="Enum_Item" role="Enum_Item" relid="0x2">
+							<name>per-orb</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="Model_Option_Aspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>12,103</value>
+									</regnode>
+								</regnode>
+								<regnode name="OptionAspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>46,102</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="Description" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="Item_Default_Value" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="Title" status="meta">
+								<value></value>
+							</attribute>
+						</atom>
+						<atom id="id-0066-00000010" kind="Enum_Item" role="Enum_Item" relid="0x1">
+							<name>global</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="Model_Option_Aspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>12,201</value>
+									</regnode>
+								</regnode>
+								<regnode name="OptionAspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>46,25</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="Description" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="Item_Default_Value">
+								<value>true</value>
+							</attribute>
+							<attribute kind="Title" status="meta">
+								<value></value>
+							</attribute>
+						</atom>
+					</model>
+					<model id="id-0065-0000000a" kind="Enum_Option" role="Enum_Option" relid="0x3" childrelidcntr="0x2">
+						<name>ORBCollocationStrategy</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="OptionAspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>421,42</value>
+								</regnode>
+							</regnode>
+							<regnode name="Option_Aspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>357,14</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="Description">
+							<value>Specifies what type of collocated object to use. If the &lt;CODE&gt;thru_poa&lt;/CODE&gt; (default) strategy is used, TAO uses the collocation object implementation that respects POA&apos;s current state and policies. When using the &lt;CODE&gt;direct&lt;/CODE&gt; strategy, method invocations on collocated objects become direct calls to servant without checking POA&apos;s status, which can increase performance.  If you use the &lt;CODE&gt;direct&lt;/CODE&gt; strategy,  your interfaces must be compiled with the &lt;CODE&gt;&lt;A href=&quot;compiler.html#collocation-stubs&quot;&gt;-Gd&lt;/A&gt;&lt;/CODE&gt; IDL &lt;A HREF=&quot;compiler.html&quot;&gt;compiler option&lt;/a&gt;.</value>
+						</attribute>
+						<attribute kind="Parameter_Name">
+							<value>thru_poa/direct</value>
+						</attribute>
+						<attribute kind="Title" status="meta">
+							<value></value>
+						</attribute>
+						<atom id="id-0066-00000011" kind="Enum_Item" role="Enum_Item" relid="0x2">
+							<name>direct</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="Model_Option_Aspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>68,12</value>
+									</regnode>
+								</regnode>
+								<regnode name="OptionAspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>25,88</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="Description" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="Item_Default_Value" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="Title" status="meta">
+								<value></value>
+							</attribute>
+						</atom>
+						<atom id="id-0066-00000012" kind="Enum_Item" role="Enum_Item" relid="0x1">
+							<name>thru_poa</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="Model_Option_Aspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>12,12</value>
+									</regnode>
+								</regnode>
+								<regnode name="OptionAspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>25,18</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="Description" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="Item_Default_Value">
+								<value>true</value>
+							</attribute>
+							<attribute kind="Title" status="meta">
+								<value></value>
+							</attribute>
+						</atom>
+					</model>
+					<model id="id-0065-0000000b" kind="Enum_Option" role="Enum_Option" relid="0x5" childrelidcntr="0x2">
+						<name>ORBNodelay</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="OptionAspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>78,154</value>
+								</regnode>
+							</regnode>
+							<regnode name="Option_Aspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>532,21</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="Description">
+							<value>Enable or disable the &lt;CODE&gt;TCP_NODELAY&lt;/CODE&gt; option (Nagle&apos;s algorithm). By default, &lt;CODE&gt;TCP_NODELAY&lt;/CODE&gt; is enabled.</value>
+						</attribute>
+						<attribute kind="Parameter_Name">
+							<value>boolean (0|1)</value>
+						</attribute>
+						<attribute kind="Title" status="meta">
+							<value></value>
+						</attribute>
+						<atom id="id-0066-00000013" kind="Enum_Item" role="Enum_Item" relid="0x2">
+							<name>1</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="Model_Option_Aspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>12,12</value>
+									</regnode>
+								</regnode>
+								<regnode name="OptionAspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>18,74</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="Description" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="Item_Default_Value">
+								<value>true</value>
+							</attribute>
+							<attribute kind="Title" status="meta">
+								<value></value>
+							</attribute>
+						</atom>
+						<atom id="id-0066-00000014" kind="Enum_Item" role="Enum_Item" relid="0x1">
+							<name>0</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="Model_Option_Aspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>68,12</value>
+									</regnode>
+								</regnode>
+								<regnode name="OptionAspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>23,16</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="Description" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="Item_Default_Value" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="Title" status="meta">
+								<value></value>
+							</attribute>
+						</atom>
+					</model>
+					<model id="id-0065-0000000c" kind="Enum_Option" role="Enum_Option" relid="0x8" childrelidcntr="0x2">
+						<name>ORBStdProfileComponents</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="OptionAspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>148,273</value>
+								</regnode>
+							</regnode>
+							<regnode name="Option_Aspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>322,126</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="Description">
+							<value>If &lt;EM&gt;0&lt;/EM&gt; then the ORB does not generate the OMG standardized profile components, such as the ORB type and code sets. Notice that the presence of this components is optional in GIOP 1.1 The default value is controlled by a compile-time flag (check orbconf.h).</value>
+						</attribute>
+						<attribute kind="Parameter_Name">
+							<value>boolean (0|1)</value>
+						</attribute>
+						<attribute kind="Title" status="meta">
+							<value></value>
+						</attribute>
+						<atom id="id-0066-00000015" kind="Enum_Item" role="Enum_Item" relid="0x2">
+							<name>1</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="OptionAspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>18,74</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="Description" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="Item_Default_Value" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="Title" status="meta">
+								<value></value>
+							</attribute>
+						</atom>
+						<atom id="id-0066-00000016" kind="Enum_Item" role="Enum_Item" relid="0x1">
+							<name>0</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="OptionAspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>23,16</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="Description" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="Item_Default_Value" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="Title" status="meta">
+								<value></value>
+							</attribute>
+						</atom>
+					</model>
+					<model id="id-0065-0000000d" kind="Enum_Option" role="Enum_Option" relid="0x9" childrelidcntr="0x2">
+						<name>ORBSingleReadOptimization</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="OptionAspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>358,273</value>
+								</regnode>
+							</regnode>
+							<regnode name="Option_Aspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>539,126</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="Description">
+							<value>This option controls whether TAO&apos;s ``single read optimization&apos;&apos; is used when receiving requests. If this option is disabled (&lt;code&gt;0&lt;/code&gt;), the ORB will do two reads to read a request: one reads the request header and the other reads the request payload. If this option is enabled (&lt;CODE&gt;1&lt;/CODE&gt;), the ORB will do a read of size &lt;CODE&gt;TAO_MAXBUFSIZE&lt;/CODE&gt;, hoping to read the entire request.  If more than one request is read they will be queued up for processing later. &lt;P&gt; This option defaults to &lt;CODE&gt;1&lt;/CODE&gt; because it can provide better performance. However, in the case of RT-CORBA, this option should be set to &lt;code&gt;0&lt;/code&gt;. Consider the following scenario: (1) two requests are read from one socket, (2) the additional request is queued, and (3) the ORB uses its Reactor&apos;s notification mechanism to wake up the follower threads. If at the same time, however, new requests arrive on others sockets of higher priority the lower priority queued message will be processed before the newly arrived higher priority request since Reactor notifications are given preferences over normal I/O, thereby causing priority inversion.&lt;/P&gt;</value>
+						</attribute>
+						<attribute kind="Parameter_Name">
+							<value>boolean (0|1)</value>
+						</attribute>
+						<attribute kind="Title" status="meta">
+							<value></value>
+						</attribute>
+						<atom id="id-0066-00000017" kind="Enum_Item" role="Enum_Item" relid="0x2">
+							<name>1</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="Model_Option_Aspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>12,12</value>
+									</regnode>
+								</regnode>
+								<regnode name="OptionAspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>18,74</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="Description" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="Item_Default_Value">
+								<value>true</value>
+							</attribute>
+							<attribute kind="Title" status="meta">
+								<value></value>
+							</attribute>
+						</atom>
+						<atom id="id-0066-00000018" kind="Enum_Item" role="Enum_Item" relid="0x1">
+							<name>0</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="Model_Option_Aspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>68,12</value>
+									</regnode>
+								</regnode>
+								<regnode name="OptionAspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>23,16</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="Description" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="Item_Default_Value" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="Title" status="meta">
+								<value></value>
+							</attribute>
+						</atom>
+					</model>
+					<model id="id-0065-0000000e" kind="Enum_Option" role="Enum_Option" relid="0xa" childrelidcntr="0x2">
+						<name>ORBDisableRTCollocation</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="OptionAspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>358,273</value>
+								</regnode>
+							</regnode>
+							<regnode name="Option_Aspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>182,245</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="Description">
+							<value>This option controls whether the application wants to use or discard RT collocation decisions made by the RT ORB. A value of true disables RT collocation decisions and falls back on the default collocation decisions implemented in the default ORB. This is very useful for applications using the RT ORB and doesn&apos;t want to use the RT collocation decisions but fallback on the default decisions for better performance. The default value is 0.</value>
+						</attribute>
+						<attribute kind="Parameter_Name">
+							<value>boolean (0|1)</value>
+						</attribute>
+						<attribute kind="Title" status="meta">
+							<value></value>
+						</attribute>
+						<atom id="id-0066-00000019" kind="Enum_Item" role="Enum_Item" relid="0x2">
+							<name>1</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="Model_Option_Aspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>68,12</value>
+									</regnode>
+								</regnode>
+								<regnode name="OptionAspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>18,74</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="Description" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="Item_Default_Value" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="Title" status="meta">
+								<value></value>
+							</attribute>
+						</atom>
+						<atom id="id-0066-0000001a" kind="Enum_Item" role="Enum_Item" relid="0x1">
+							<name>0</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="Model_Option_Aspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>12,12</value>
+									</regnode>
+								</regnode>
+								<regnode name="OptionAspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>23,16</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="Description" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="Item_Default_Value">
+								<value>true</value>
+							</attribute>
+							<attribute kind="Title" status="meta">
+								<value></value>
+							</attribute>
+						</atom>
+					</model>
+					<atom id="id-0066-0000001b" kind="Integer_Option" role="Integer_Option" relid="0x1">
+						<name>ORBCDRTradeoff</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="OptionAspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>79,45</value>
+								</regnode>
+							</regnode>
+							<regnode name="Option_Aspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>54,12</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="Description">
+							<value>Control the strategy to tradeoff between copy vs. no copy marshaling of octet sequences. If an octet sequence is smaller than &lt;CODE&gt;maxsize&lt;/CODE&gt; (which defaults to &lt;CODE&gt;ACE_DEFAULT_CDR_MEMORY_TRADEOFF&lt;/CODE&gt;) -- and the current message block contains enough space for it -- the octet sequence is copied instead of appended to the CDR stream.</value>
+						</attribute>
+						<attribute kind="Integer_Default_Value" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="Parameter_Name">
+							<value>maxsize</value>
+						</attribute>
+						<attribute kind="Title" status="meta">
+							<value></value>
+						</attribute>
+					</atom>
+					<atom id="id-0066-0000001c" kind="Integer_Option" role="Integer_Option" relid="0x6">
+						<name>ORBRcvSock</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="OptionAspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>240,157</value>
+								</regnode>
+							</regnode>
+							<regnode name="Option_Aspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>54,138</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="Description">
+							<value>Specify the size of the socket receive buffer as a positive, non-zero integer. If not specified, the &lt;CODE&gt;ACE_DEFAULT_MAX_SOCKET_BUFSIZ&lt;/CODE&gt; default is used.</value>
+						</attribute>
+						<attribute kind="Integer_Default_Value" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="Parameter_Name">
+							<value>receive buffer size</value>
+						</attribute>
+						<attribute kind="Title" status="meta">
+							<value></value>
+						</attribute>
+					</atom>
+					<atom id="id-0066-0000001d" kind="Integer_Option" role="Integer_Option" relid="0x7">
+						<name>ORBSndSock</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="OptionAspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>422,150</value>
+								</regnode>
+							</regnode>
+							<regnode name="Option_Aspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>180,138</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="Description">
+							<value>Specify the size of the socket send buffer as a positive, non-zero integer. If not specified, the &lt;CODE&gt;ACE_DEFAULT_MAX_SOCKET_BUFSIZ&lt;/CODE&gt; default is used.</value>
+						</attribute>
+						<attribute kind="Integer_Default_Value" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="Parameter_Name">
+							<value>send buffer size</value>
+						</attribute>
+						<attribute kind="Title" status="meta">
+							<value></value>
+						</attribute>
+					</atom>
+				</model>
+				<model id="id-0065-0000000f" kind="Option_Category" role="Option_Category" relid="0x4" childrelidcntr="0xa">
+					<name>Conn_Man_Protocol_Sel</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="OptionAspect" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>134,156</value>
+							</regnode>
+						</regnode>
+						<regnode name="Option_Aspect" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>497,14</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="Description">
+						<value>TAO can send and receive requests and replies using various &lt;A HREF=&quot;pluggable_protocols&quot;&gt;transport protocols&lt;/a&gt;.  Each protocol has its own concept of an &lt;A HREF=&quot;ORBEndpoint.html&quot;&gt;endpoint&lt;/A&gt;.  The following options manage connections and control protocol selection within a TAO application.&lt;P&gt;</value>
+					</attribute>
+					<attribute kind="Title">
+						<value>Connection Management and Protocol Selection</value>
+					</attribute>
+					<model id="id-0065-00000010" kind="Enum_Option" role="Enum_Option" relid="0x2" childrelidcntr="0x2">
+						<name>ORBDottedDecimalAddresses</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="OptionAspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>218,35</value>
+								</regnode>
+							</regnode>
+							<regnode name="Option_Aspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>70,28</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="Description">
+							<value>Use the dotted decimal notation for addresses. This option can be used to workaround broken DNS implementations and may also reduce the time spent resolving IP addresses.  By default, this option is disabled (&lt;CODE&gt;0&lt;/CODE&gt;) since domain names are the standard address notation for IORs.</value>
+						</attribute>
+						<attribute kind="Parameter_Name">
+							<value>boolean (0|1)</value>
+						</attribute>
+						<attribute kind="Title" status="meta">
+							<value></value>
+						</attribute>
+						<atom id="id-0066-0000001e" kind="Enum_Item" role="Enum_Item" relid="0x2">
+							<name>1</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="Model_Option_Aspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>12,12</value>
+									</regnode>
+								</regnode>
+								<regnode name="OptionAspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>18,74</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="Description" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="Item_Default_Value" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="Title" status="meta">
+								<value></value>
+							</attribute>
+						</atom>
+						<atom id="id-0066-0000001f" kind="Enum_Item" role="Enum_Item" relid="0x1">
+							<name>0</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="Model_Option_Aspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>68,12</value>
+									</regnode>
+								</regnode>
+								<regnode name="OptionAspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>23,16</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="Description" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="Item_Default_Value">
+								<value>true</value>
+							</attribute>
+							<attribute kind="Title" status="meta">
+								<value></value>
+							</attribute>
+						</atom>
+					</model>
+					<model id="id-0065-00000011" kind="Enum_Option" role="Enum_Option" relid="0xa" childrelidcntr="0x2">
+						<name>ORBUseIMR</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="OptionAspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>239,294</value>
+								</regnode>
+							</regnode>
+							<regnode name="Option_Aspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>266,28</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="Description">
+							<value>This argument specifies that for POAs with the &lt;CODE&gt;PERSISTENT&lt;/CODE&gt; policy, that the TAO &lt;A HREF=&quot;implrepo/&quot;&gt;Implementation Repository&lt;/A&gt; should be used for notification of startup and shutdown and object references should be changed to use the Implementation Repository also.</value>
+						</attribute>
+						<attribute kind="Parameter_Name" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="Title" status="meta">
+							<value></value>
+						</attribute>
+						<atom id="id-0066-00000020" kind="Enum_Item" role="Enum_Item" relid="0x2">
+							<name>1</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="Model_Option_Aspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>12,12</value>
+									</regnode>
+								</regnode>
+								<regnode name="OptionAspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>18,74</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="Description" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="Item_Default_Value" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="Title" status="meta">
+								<value></value>
+							</attribute>
+						</atom>
+						<atom id="id-0066-00000021" kind="Enum_Item" role="Enum_Item" relid="0x1">
+							<name>0</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="Model_Option_Aspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>68,12</value>
+									</regnode>
+								</regnode>
+								<regnode name="OptionAspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>23,16</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="Description" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="Item_Default_Value">
+								<value>true</value>
+							</attribute>
+							<attribute kind="Title" status="meta">
+								<value></value>
+							</attribute>
+						</atom>
+					</model>
+					<atom id="id-0066-00000022" kind="String_Option" role="String_Option" relid="0x1">
+						<name>ORBDefaultInitRef</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="OptionAspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>30,38</value>
+								</regnode>
+							</regnode>
+							<regnode name="Option_Aspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>320,215</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="Description">
+							<value>This argument allows resolution of initial references not explicitly specified with -ORBInitRef. It requires a URL prefix that, after appending a slash &apos;/&apos; (&apos;|&apos; for the UIOP pluggable protocol) and a simple object key, forms a new URL to identify an initial object reference. The URL prefix format currently supported is based on the standard &lt;CODE&gt;corbaloc&lt;/CODE&gt; mechanism in the CORBA &lt;A HREF=&quot;INS.html&quot;&gt;Interoperable Naming Service&lt;/CODE&gt;.</value>
+						</attribute>
+						<attribute kind="Parameter_Name">
+							<value>IOR prefix</value>
+						</attribute>
+						<attribute kind="String_Default_Value" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="Title" status="meta">
+							<value></value>
+						</attribute>
+					</atom>
+					<atom id="id-0066-00000023" kind="String_Option" role="String_Option" relid="0x4">
+						<name>ORBListenEndpoints</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="OptionAspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>583,38</value>
+								</regnode>
+							</regnode>
+							<regnode name="Option_Aspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>712,201</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="Description">
+							<value>This option was introduced with the CORBA &lt;A href=&quot;http://cgi.omg.org/docs/orbos/01-01-04.pdf&quot;&gt; ORT &lt;/a&gt; (Object Reference Template) specification.  It instructs a server ORB	to listen for requests on the interface specified by	&lt;code&gt;endpoint&lt;/code&gt;.  TAO &lt;A href=&quot;ORBEndpoint.html&quot;&gt; endpoints&lt;/A&gt;  are specified using a URL style format. An endpoint has the form: &lt;BLOCKQUOTE&gt;&lt;CODE&gt;protocol://V.v@addr1,...,W.w@addrN &lt;/CODE&gt;&lt;/BLOCKQUOTE&gt;where &lt;CODE&gt;V.v&lt;/CODE&gt; and &lt;CODE&gt;W.w&lt;/CODE&gt; are optional protocol versions for each address. An example of an IIOP endpoint is: &lt;BLOCKQUOTE&gt;&lt;CODE&gt;iiop://&lt;I&gt;&lt;EM&gt;hostname&lt;/EM&gt;&lt;/I&gt;:&lt;I&gt;&lt;EM&gt;port&lt;/EM&gt;&lt;/I&gt; &lt;/CODE&gt;&lt;/BLOCKQUOTE&gt;Sets of endpoints may be specified using multiple &lt;CODE&gt;-ORBEndpoint&lt;/CODE&gt; options or by delimiting endpoints with a semi-colon (;). For example, &lt;BLOCKQUOTE&gt;&lt;CODE&gt;-ORBEndpoint iiop://localhost:9999 -ORBEndpoint uiop:///tmp/mylocalsock -ORBEndpoint shmiop://10002 &lt;/CODE&gt;&lt;/BLOCKQUOTE&gt;is equivalent to: &lt;BLOCKQUOTE&gt;&lt;CODE&gt;-ORBEndpoint &apos;iiop://localhost:9999;uiop:///tmp/mylocalsock;shmiop://10002&apos; &lt;/CODE&gt;&lt;/BLOCKQUOTE&gt;Notice the single quotes (&apos;) in the latter option specification. Single quotes are needed to prevent the shell from interpreting text after the semi-colon as another command to run.  &lt;P&gt;If an endpoint is specified without an &lt;CODE&gt;addr&lt;/CODE&gt; such as the following: &lt;BLOCKQUOTE&gt;&lt;CODE&gt;-ORBEndpoint uiop:// -ORBEndpoint shmiop:// &lt;/CODE&gt;&lt;/BLOCKQUOTE&gt;then a default endpoint will be created for the specified protocol. &lt;P&gt;</value>
+						</attribute>
+						<attribute kind="Parameter_Name" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="String_Default_Value" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="Title" status="meta">
+							<value></value>
+						</attribute>
+					</atom>
+					<atom id="id-0066-00000024" kind="Integer_Option" role="Integer_Option" relid="0x5">
+						<name>ORBImplRepoServicePort</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="OptionAspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>58,171</value>
+								</regnode>
+							</regnode>
+							<regnode name="Option_Aspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>516,201</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="Description">
+							<value>Specifies which port the Implementation Repository is listening on for multicast requests. By default, the &lt;CODE&gt;TAO_DEFAULT_IMPLREPO_SERVER_REQUEST_PORT&lt;/CODE&gt; (10018) is used.</value>
+						</attribute>
+						<attribute kind="Integer_Default_Value">
+							<value>10018</value>
+						</attribute>
+						<attribute kind="Parameter_Name" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="Title" status="meta">
+							<value></value>
+						</attribute>
+					</atom>
+					<atom id="id-0066-00000025" kind="String_Option" role="String_Option" relid="0x6">
+						<name>ORBInitRef</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="OptionAspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>233,171</value>
+								</regnode>
+							</regnode>
+							<regnode name="Option_Aspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>712,110</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="Description">
+							<value>Allows specification of an arbitrary object reference for an initial service. The IOR could be in any one of the following formats: OMG &lt;CODE&gt;IOR&lt;/CODE&gt;, &lt;CODE&gt;URL&lt;/CODE&gt;, &lt;CODE&gt;corbaloc&lt;/CODE&gt; (including &lt;CODE&gt;uioploc&lt;/CODE&gt;) or &lt;CODE&gt;file&lt;/CODE&gt;.  &lt;CODE&gt;corbaloc&lt;/CODE&gt; is a multiple end-point IOR understood by &lt;CODE&gt;ORB::string_to_object()&lt;/CODE&gt; and used as a boot-strapping mechanism by the &lt;CODE&gt;ORB::resolve_initial_references()&lt;/CODE&gt;. The mappings specified through this argument override the ORB install-time defaults. The &lt;CODE&gt;file://pathname&lt;/CODE&gt; interprets the contents of the &lt;CODE&gt;pathname&lt;/CODE&gt; file as an object reference in any of the above formats.</value>
+						</attribute>
+						<attribute kind="Parameter_Name" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="String_Default_Value" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="Title" status="meta">
+							<value></value>
+						</attribute>
+					</atom>
+					<atom id="id-0066-00000026" kind="String_Option" role="String_Option" relid="0x7">
+						<name>ORBMulticastDiscoveryEndpoint</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="OptionAspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>457,164</value>
+								</regnode>
+							</regnode>
+							<regnode name="Option_Aspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>110,222</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="Description">
+							<value>Specifies the &lt;CODE&gt;endpoint&lt;/CODE&gt; that should be used for locating the Naming Service through multicast. &lt;EM&gt;endpoint&lt;/EM&gt; is of the form &lt;CODE&gt;ip-number:port-number&lt;/CODE&gt; (&lt;EM&gt;e.g.&lt;/EM&gt;, &lt;CODE&gt;&quot;tango.cs.wustl.edu:1234&quot;&lt;/CODE&gt; or &lt;CODE&gt;&quot;128.252.166.57:1234&quot;&lt;/CODE&gt;). If there is no &lt;CODE&gt;&apos;:&apos;&lt;/CODE&gt; in the end_point it is assumed to be a port number, with the IP address being &lt;CODE&gt;INADDR_ANY&lt;/CODE&gt;.</value>
+						</attribute>
+						<attribute kind="Parameter_Name" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="String_Default_Value" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="Title" status="meta">
+							<value></value>
+						</attribute>
+					</atom>
+					<atom id="id-0066-00000027" kind="Integer_Option" role="Integer_Option" relid="0x8">
+						<name>ORBNameServicePort</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="OptionAspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>681,164</value>
+								</regnode>
+							</regnode>
+							<regnode name="Option_Aspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>509,33</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="Description">
+							<value>Specifies which port the Naming Service is listening on for multicast requests. By default, the &lt;CODE&gt;TAO_DEFAULT_NAME_SERVICE_REQUEST_PORT&lt;/CODE&gt; (10013) value is used.</value>
+						</attribute>
+						<attribute kind="Integer_Default_Value">
+							<value>10013</value>
+						</attribute>
+						<attribute kind="Parameter_Name" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="Title" status="meta">
+							<value></value>
+						</attribute>
+					</atom>
+					<atom id="id-0066-00000028" kind="Integer_Option" role="Integer_Option" relid="0x9">
+						<name>ORBTradingServicePort</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="OptionAspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>44,297</value>
+								</regnode>
+							</regnode>
+							<regnode name="Option_Aspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>516,117</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="Description">
+							<value>Specifies to which port the Trading Service is listening on for multicast requests. By default, the &lt;CODE&gt;TAO_DEFAULT_TRADING_SERVICE_REQUEST_PORT&lt;/CODE&gt; (10016) value is used.</value>
+						</attribute>
+						<attribute kind="Integer_Default_Value">
+							<value>10016</value>
+						</attribute>
+						<attribute kind="Parameter_Name" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="Title" status="meta">
+							<value></value>
+						</attribute>
+					</atom>
+				</model>
+				<model id="id-0065-00000012" kind="Option_Category" role="Option_Category" relid="0x5" childrelidcntr="0x3">
+					<name>Misc_Opt</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="OptionAspect" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>302,156</value>
+							</regnode>
+						</regnode>
+						<regnode name="Option_Aspect" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>14,182</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="Description">
+						<value>Options in this category don&apos;t control the behavior of the ORB in terms of resouces or strategies.  Instead, they are helper options provided for specific application requirements.</value>
+					</attribute>
+					<attribute kind="Title">
+						<value>Miscellaneous Options</value>
+					</attribute>
+					<atom id="id-0066-00000029" kind="String_Option" role="String_Option" relid="0x1">
+						<name>ORBId</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="OptionAspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>44,31</value>
+								</regnode>
+							</regnode>
+							<regnode name="Option_Aspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>110,138</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="Description">
+							<value>This option allows the name of an ORB to be set to &lt;CODE&gt;orb_name&lt;/CODE&gt;. The ORBId will be passed to the ORB_init() method to differentiate coexisting ORBs (when there are more than one ORBs).</value>
+						</attribute>
+						<attribute kind="Parameter_Name" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="String_Default_Value" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="Title" status="meta">
+							<value></value>
+						</attribute>
+					</atom>
+					<atom id="id-0066-0000002a" kind="String_Option" role="String_Option" relid="0x2">
+						<name>ORBServerId</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="OptionAspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>198,31</value>
+								</regnode>
+							</regnode>
+							<regnode name="Option_Aspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>166,40</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="Description">
+							<value>This option allows setting a name/id to a server to uniquely identify a server to TAO&apos;s &lt;A HREF=&quot;implrepo&quot;&gt;Implementation Repository&lt;/A&gt;.</value>
+						</attribute>
+						<attribute kind="Parameter_Name" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="String_Default_Value" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="Title" status="meta">
+							<value></value>
+						</attribute>
+					</atom>
+					<atom id="id-0066-0000002b" kind="Boolean_Option" role="Boolean_Option" relid="0x3">
+						<name>ORBDaemon</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="OptionAspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>359,31</value>
+								</regnode>
+							</regnode>
+							<regnode name="Option_Aspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>47,40</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="Boolean_Default_Value" status="meta">
+							<value>false</value>
+						</attribute>
+						<attribute kind="Description">
+							<value>Specifies that the ORB should &lt;EM&gt;daemonize&lt;/EM&gt; itself, &lt;em&gt;i.e.&lt;/EM&gt;, run as a background process.  This option is only meaningful on OS platforms that support daemonization.</value>
+						</attribute>
+						<attribute kind="Parameter_Name" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="Title" status="meta">
+							<value></value>
+						</attribute>
+					</atom>
+				</model>
+			</model>
+			<model id="id-0065-00000013" kind="Option_Category" role="Option_Category" relid="0x7" childrelidcntr="0x5">
+				<name>Service_Configurator_File</name>
+				<regnode name="PartRegs" isopaque="yes">
+					<value></value>
+					<regnode name="OptionAspect" isopaque="yes">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>491,23</value>
+						</regnode>
+					</regnode>
+					<regnode name="Option_Aspect" isopaque="yes">
+						<value></value>
+						<regnode name="Position" isopaque="yes">
+							<value>154,133</value>
+						</regnode>
+					</regnode>
+				</regnode>
+				<attribute kind="Description">
+					<value>Internally, TAO uses the &lt;A href=&quot;http://www.cs.wustl.edu/~schmidt/PDF/Svc-Conf.pdf&quot;&gt; ACE Service Configurator framework &lt;/A&gt; to allow applications to configure the ORB at run-time.  Applications provide a file named &lt;CODE&gt; svc.conf &lt;/CODE&gt; with options that configure appropriate strategies in to the ORB. The options enable developers to control the behavior of the factories, strategies, and resources that the ORB uses.  By default, TAO provides the following set of factories: &lt;OL&gt; &lt;LI&gt; Default Resource and Advanced Resource Factories.  This factory controls the creation of configurable resources used by TAO&apos;s ORB core. The resource factory is responsible for constructing and providing access to various resources used by the ORB irrespective of whether they perform client or server roles. ORB resources include reactors, protocol factories, message flushing strategies, connection purging strategies and different IOR parsers. &lt;/LI&gt; &lt;LI&gt; Server Strategy Factory.  This factory creates various strategies of special utility to the ORB that is useful for controlling the behavior of servers. This factory is responsible for creating strategies useful for server objects like the concurrency strategy	and the request demultiplexing strategies used by the POA. &lt;/LI&gt; &lt;LI&gt; Client Strategy Factory.  This factory creates various strategies of special utility to the ORB, useful for controlling the behavior of clients. This factory is responsible for creating strategies useful for clients such as request multiplexing strategies, wait strategies, connect strategies etc.  &lt;/LI&gt; &lt;/OL&gt; Options specified via a &lt;CODE&gt;svc.conf&lt;/CODE&gt; file can represent either the components provided by TAO (including the &lt;CODE&gt;Resource_Factory&lt;/CODE&gt;, and the &lt;CODE&gt;Server_Strategy_Factory&lt;/CODE&gt; and &lt;CODE&gt;Client_Strategy_Factory&lt;/CODE&gt;) or customized components developed by the users. The service configurator file (&lt;CODE&gt;svc.conf&lt;/CODE&gt;) provided by the user identifies the components to be loaded with the required strategies for each component.  &lt;BR/&gt; A &lt;CODE&gt;svc.conf&lt;/CODE&gt; file is &lt;EM&gt;&lt;B&gt;not&lt;/B&gt;&lt;/EM&gt; required to run TAO applications since TAO provides a set of default values for strategies useful for the most common use cases, &lt;EM&gt;i.e.&lt;/EM&gt;, the default values are set for all options.  When a TAO application calls &lt;CODE&gt;CORBA::ORB_init()&lt;/CODE&gt; it will try to find the &lt;CODE&gt;svc.conf&lt;/CODE&gt; file.  If found, TAO will parse and process the directives in the file; if not found, the default value for the default components will be used.</value>
+				</attribute>
+				<attribute kind="Title">
+					<value>The Service Configurator File</value>
+				</attribute>
+				<model id="id-0065-00000014" kind="Option_Category" role="Option_Category" relid="0x5" childrelidcntr="0x2">
+					<name>Resource_Factories</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="OptionAspect" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>35,22</value>
+							</regnode>
+						</regnode>
+						<regnode name="Option_Aspect" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>252,14</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="Description" status="meta">
+						<value></value>
+					</attribute>
+					<attribute kind="Title">
+						<value>Resource_Factories</value>
+					</attribute>
+					<model id="id-0065-00000015" kind="Option_Category" role="Option_Category" relid="0x2" childrelidcntr="0x3">
+						<name>Advanced_Resource_Factory</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="OptionAspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>154,99</value>
+								</regnode>
+							</regnode>
+							<regnode name="Option_Aspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>105,140</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="Description">
+							<value>This factory is located in the &lt;CODE&gt;TAO_Strategies&lt;/CODE&gt; library. It accepts the options below as well as those described above in the &lt;CODE&gt;Resource_Factory&lt;/CODE&gt;. This factory can be loaded dynamically using a service configurator directive of the form (all on one line): &lt;P&gt; &lt;CODE&gt;dynamic Advanced_Resource_Factory Service_Object *&lt;/CODE&gt;&lt;BR&gt;&lt;CODE&gt;TAO_Strategies:_make_TAO_Advanced_Resource_Factory () &quot;-ORBReactorType select_st&quot; &lt;/CODE&gt;&lt;P&gt; It can also be loaded statically by doing the following:&lt;P&gt; &lt;UL&gt; &lt;LI&gt;Add &lt;CODE&gt;#include &quot;tao/Strategies/advanced_resource.h&quot;&lt;/CODE&gt; to the file containing &lt;CODE&gt;main()&lt;/CODE&gt;.  &lt;LI&gt;Link the TAO_Strategies library into the executable.  &lt;LI&gt;Specify a service configurator directive of the form: &lt;CODE&gt;static Advanced_Resource_Factory &quot;-ORBReactorType select_st&quot;&lt;/CODE&gt; &lt;/LI&gt;&lt;/UL&gt;You can omit the &lt;CODE&gt;#include&lt;/CODE&gt; if you always use dynamic libraries.&lt;P&gt; Loading the &lt;CODE&gt;Advanced_Resource_Factory&lt;/CODE&gt; disables the &lt;CODE&gt;Resource_Factory&lt;/CODE&gt;. Any directives for the &lt;CODE&gt;Resource_Factory&lt;/CODE&gt; will have no effect (and generate warnings telling you so). The following table lists the options that can be provided in double quotes. An example is available &lt;A href=&quot;http://cvs.doc.wustl.edu/viewcvs.cgi/TAO/performance-tests/Latency/Single_Threaded/svc.conf?rev=HEAD&quot;&gt;online &lt;/A&gt; that shows how to specify this option in the svc.conf file.&lt;P&gt;</value>
+						</attribute>
+						<attribute kind="Title">
+							<value>Advanced Resource Factory</value>
+						</attribute>
+						<model id="id-0065-00000016" kind="Enum_Option" role="Enum_Option" relid="0x1" childrelidcntr="0x6">
+							<name>ORBReactorType</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="OptionAspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>37,37</value>
+									</regnode>
+								</regnode>
+								<regnode name="Option_Aspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>203,239</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="Description">
+								<value>Specify what kind of reactor the ORB uses. The default reactor is the ACE_TP_Reactor.</value>
+							</attribute>
+							<attribute kind="Parameter_Name" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="Title" status="meta">
+								<value></value>
+							</attribute>
+							<atom id="id-0066-0000002c" kind="Enum_Item" role="Enum_Item" relid="0x2">
+								<name>select_st</name>
+								<regnode name="PartRegs" isopaque="yes">
+									<value></value>
+									<regnode name="Model_Option_Aspect" isopaque="yes">
+										<value></value>
+										<regnode name="Position" isopaque="yes">
+											<value>124,12</value>
+										</regnode>
+									</regnode>
+									<regnode name="OptionAspect" isopaque="yes">
+										<value></value>
+										<regnode name="Position" isopaque="yes">
+											<value>718,382</value>
+										</regnode>
+									</regnode>
+								</regnode>
+								<attribute kind="Description" status="meta">
+									<value></value>
+								</attribute>
+								<attribute kind="Item_Default_Value" status="meta">
+									<value>false</value>
+								</attribute>
+								<attribute kind="Title" status="meta">
+									<value></value>
+								</attribute>
+							</atom>
+							<atom id="id-0066-0000002d" kind="Enum_Item" role="Enum_Item" relid="0x4">
+								<name>wfmo</name>
+								<regnode name="PartRegs" isopaque="yes">
+									<value></value>
+									<regnode name="Model_Option_Aspect" isopaque="yes">
+										<value></value>
+										<regnode name="Position" isopaque="yes">
+											<value>68,68</value>
+										</regnode>
+									</regnode>
+									<regnode name="OptionAspect" isopaque="yes">
+										<value></value>
+										<regnode name="Position" isopaque="yes">
+											<value>39,319</value>
+										</regnode>
+									</regnode>
+								</regnode>
+								<attribute kind="Description" status="meta">
+									<value></value>
+								</attribute>
+								<attribute kind="Item_Default_Value" status="meta">
+									<value>false</value>
+								</attribute>
+								<attribute kind="Title" status="meta">
+									<value></value>
+								</attribute>
+							</atom>
+							<atom id="id-0066-0000002e" kind="Enum_Item" role="Enum_Item" relid="0x3">
+								<name>fl</name>
+								<regnode name="PartRegs" isopaque="yes">
+									<value></value>
+									<regnode name="Model_Option_Aspect" isopaque="yes">
+										<value></value>
+										<regnode name="Position" isopaque="yes">
+											<value>12,12</value>
+										</regnode>
+									</regnode>
+									<regnode name="OptionAspect" isopaque="yes">
+										<value></value>
+										<regnode name="Position" isopaque="yes">
+											<value>718,452</value>
+										</regnode>
+									</regnode>
+								</regnode>
+								<attribute kind="Description" status="meta">
+									<value></value>
+								</attribute>
+								<attribute kind="Item_Default_Value" status="meta">
+									<value>false</value>
+								</attribute>
+								<attribute kind="Title" status="meta">
+									<value></value>
+								</attribute>
+							</atom>
+							<atom id="id-0066-0000002f" kind="Enum_Item" role="Enum_Item" relid="0x1">
+								<name>select_mt</name>
+								<regnode name="PartRegs" isopaque="yes">
+									<value></value>
+									<regnode name="Model_Option_Aspect" isopaque="yes">
+										<value></value>
+										<regnode name="Position" isopaque="yes">
+											<value>68,12</value>
+										</regnode>
+									</regnode>
+									<regnode name="OptionAspect" isopaque="yes">
+										<value></value>
+										<regnode name="Position" isopaque="yes">
+											<value>718,319</value>
+										</regnode>
+									</regnode>
+								</regnode>
+								<attribute kind="Description" status="meta">
+									<value></value>
+								</attribute>
+								<attribute kind="Item_Default_Value" status="meta">
+									<value>false</value>
+								</attribute>
+								<attribute kind="Title" status="meta">
+									<value></value>
+								</attribute>
+							</atom>
+							<atom id="id-0066-00000030" kind="Enum_Item" role="Enum_Item" relid="0x6">
+								<name>tp</name>
+								<regnode name="PartRegs" isopaque="yes">
+									<value></value>
+									<regnode name="Model_Option_Aspect" isopaque="yes">
+										<value></value>
+										<regnode name="Position" isopaque="yes">
+											<value>124,68</value>
+										</regnode>
+									</regnode>
+									<regnode name="OptionAspect" isopaque="yes">
+										<value></value>
+										<regnode name="Position" isopaque="yes">
+											<value>39,452</value>
+										</regnode>
+									</regnode>
+								</regnode>
+								<attribute kind="Description" status="meta">
+									<value></value>
+								</attribute>
+								<attribute kind="Item_Default_Value">
+									<value>true</value>
+								</attribute>
+								<attribute kind="Title" status="meta">
+									<value></value>
+								</attribute>
+							</atom>
+							<atom id="id-0066-00000031" kind="Enum_Item" role="Enum_Item" relid="0x5">
+								<name>msg_wfmo</name>
+								<regnode name="PartRegs" isopaque="yes">
+									<value></value>
+									<regnode name="Model_Option_Aspect" isopaque="yes">
+										<value></value>
+										<regnode name="Position" isopaque="yes">
+											<value>12,68</value>
+										</regnode>
+									</regnode>
+									<regnode name="OptionAspect" isopaque="yes">
+										<value></value>
+										<regnode name="Position" isopaque="yes">
+											<value>39,382</value>
+										</regnode>
+									</regnode>
+								</regnode>
+								<attribute kind="Description" status="meta">
+									<value></value>
+								</attribute>
+								<attribute kind="Item_Default_Value" status="meta">
+									<value>false</value>
+								</attribute>
+								<attribute kind="Title" status="meta">
+									<value></value>
+								</attribute>
+							</atom>
+						</model>
+						<model id="id-0065-00000017" kind="Enum_Option" role="Enum_Option" relid="0x3" childrelidcntr="0x2">
+							<name>ORBInputCDRAllocator</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="OptionAspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>569,44</value>
+									</regnode>
+								</regnode>
+								<regnode name="Option_Aspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>287,70</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="Description">
+								<value>Specify whether the ORB uses locked (&lt;EM&gt;which&lt;/EM&gt; = &lt;CODE&gt;thread&lt;/CODE&gt;) or lock-free (&lt;EM&gt;which&lt;/EM&gt; = &lt;CODE&gt;null&lt;/CODE&gt;) allocators for the incoming CDR buffers. Though &lt;CODE&gt;null&lt;/CODE&gt; should give the optimal performance; we made the default &lt;CODE&gt;thread&lt;/CODE&gt;. TAO optimizations for octet sequences will not work in all cases when the allocator does not have locks (for example if the octet sequences are part of a return value).  Using locked allocators also allows the users to take advantage of the TAO octet sequence extensions to preserve the buffer after the upcall.</value>
+							</attribute>
+							<attribute kind="Parameter_Name" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="Title" status="meta">
+								<value></value>
+							</attribute>
+							<atom id="id-0066-00000032" kind="Enum_Item" role="Enum_Item" relid="0x1">
+								<name>thread</name>
+								<regnode name="PartRegs" isopaque="yes">
+									<value></value>
+									<regnode name="Model_Option_Aspect" isopaque="yes">
+										<value></value>
+										<regnode name="Position" isopaque="yes">
+											<value>12,12</value>
+										</regnode>
+									</regnode>
+									<regnode name="OptionAspect" isopaque="yes">
+										<value></value>
+										<regnode name="Position" isopaque="yes">
+											<value>695,58</value>
+										</regnode>
+									</regnode>
+								</regnode>
+								<attribute kind="Description" status="meta">
+									<value></value>
+								</attribute>
+								<attribute kind="Item_Default_Value">
+									<value>true</value>
+								</attribute>
+								<attribute kind="Title" status="meta">
+									<value></value>
+								</attribute>
+							</atom>
+							<atom id="id-0066-00000033" kind="Enum_Item" role="Enum_Item" relid="0x2">
+								<name>null</name>
+								<regnode name="PartRegs" isopaque="yes">
+									<value></value>
+									<regnode name="Model_Option_Aspect" isopaque="yes">
+										<value></value>
+										<regnode name="Position" isopaque="yes">
+											<value>68,12</value>
+										</regnode>
+									</regnode>
+									<regnode name="OptionAspect" isopaque="yes">
+										<value></value>
+										<regnode name="Position" isopaque="yes">
+											<value>690,116</value>
+										</regnode>
+									</regnode>
+								</regnode>
+								<attribute kind="Description" status="meta">
+									<value></value>
+								</attribute>
+								<attribute kind="Item_Default_Value" status="meta">
+									<value>false</value>
+								</attribute>
+								<attribute kind="Title" status="meta">
+									<value></value>
+								</attribute>
+							</atom>
+						</model>
+						<model id="id-0065-00000018" kind="Enum_Option" role="Enum_Option" relid="0x2" childrelidcntr="0x2">
+							<name>ORBReactorThreadQueue</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="OptionAspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>289,44</value>
+									</regnode>
+								</regnode>
+								<regnode name="Option_Aspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>70,49</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="Description">
+								<value>Applies only to the ACE_TP_Reactor, i.e., when &lt;CODE&gt;-ORBReactorType&lt;/CODE&gt; = &lt;CODE&gt;tp&lt;/CODE&gt;, and specifies the order, last-in-first-out (&lt;EM&gt;which&lt;/EM&gt; = &lt;CODE&gt;LIFO&lt;/CODE&gt;), the default, or first-in-first-out (&lt;EM&gt;which&lt;/EM&gt; = &lt;CODE&gt;FIFO&lt;/CODE&gt;), in which waiting threads are selected to run by the ACE_Select_Reactor_Token.</value>
+							</attribute>
+							<attribute kind="Parameter_Name" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="Title" status="meta">
+								<value></value>
+							</attribute>
+							<atom id="id-0066-00000034" kind="Enum_Item" role="Enum_Item" relid="0x2">
+								<name>FIFO</name>
+								<regnode name="PartRegs" isopaque="yes">
+									<value></value>
+									<regnode name="Model_Option_Aspect" isopaque="yes">
+										<value></value>
+										<regnode name="Position" isopaque="yes">
+											<value>12,12</value>
+										</regnode>
+									</regnode>
+									<regnode name="OptionAspect" isopaque="yes">
+										<value></value>
+										<regnode name="Position" isopaque="yes">
+											<value>725,102</value>
+										</regnode>
+									</regnode>
+								</regnode>
+								<attribute kind="Description" status="meta">
+									<value></value>
+								</attribute>
+								<attribute kind="Item_Default_Value" status="meta">
+									<value>false</value>
+								</attribute>
+								<attribute kind="Title" status="meta">
+									<value></value>
+								</attribute>
+							</atom>
+							<atom id="id-0066-00000035" kind="Enum_Item" role="Enum_Item" relid="0x1">
+								<name>LIFO</name>
+								<regnode name="PartRegs" isopaque="yes">
+									<value></value>
+									<regnode name="Model_Option_Aspect" isopaque="yes">
+										<value></value>
+										<regnode name="Position" isopaque="yes">
+											<value>68,12</value>
+										</regnode>
+									</regnode>
+									<regnode name="OptionAspect" isopaque="yes">
+										<value></value>
+										<regnode name="Position" isopaque="yes">
+											<value>725,25</value>
+										</regnode>
+									</regnode>
+								</regnode>
+								<attribute kind="Description" status="meta">
+									<value></value>
+								</attribute>
+								<attribute kind="Item_Default_Value">
+									<value>true</value>
+								</attribute>
+								<attribute kind="Title" status="meta">
+									<value></value>
+								</attribute>
+							</atom>
+						</model>
+					</model>
+					<model id="id-0065-00000019" kind="Option_Category" role="Option_Category" relid="0x1" childrelidcntr="0x11">
+						<name>Default_Resource_Factory</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="OptionAspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>399,99</value>
+								</regnode>
+							</regnode>
+							<regnode name="Option_Aspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>105,14</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="Description">
+							<value>Typically, the above options are exercised via the service configurator (svc.conf) file. The following line in the &lt;CODE&gt;svc.conf&lt;/CODE&gt; file (all in one line) &lt;P&gt; &lt;CODE&gt;static Resource_Factory &quot;[list of options]&quot;&lt;/CODE&gt;&lt;P&gt;will load the default resource factory with the options listed within the double quotes. The following table shows the list of possible options that can be specified within the double quotes in the above directive. There is an &lt;A href=&quot;http://cvs.doc.wustl.edu/viewcvs.cgi/TAO/tests/LongUpcalls/svc.conf?rev=HEAD&quot;&gt; online&lt;/A&gt; example of how this is used in TAO.&lt;P&gt;</value>
+						</attribute>
+						<attribute kind="Title">
+							<value>Resource Factory</value>
+						</attribute>
+						<model id="id-0065-0000001a" kind="Enum_Option" role="Enum_Option" relid="0x10" childrelidcntr="0x3">
+							<name>ORBFlushingStrategy</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="OptionAspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>337,378</value>
+									</regnode>
+								</regnode>
+								<regnode name="Option_Aspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>483,21</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="Description">
+								<value>strategies to flush queued messages. The &lt;CODE&gt;leader_follower&lt;/CODE&gt; strategy uses the Reactor and non-blocking I/O to send the outgoing messages, this strategy participates in the Leader/Followers protocol to synchronize access to the Reactor. The &lt;CODE&gt;reactive&lt;/CODE&gt; strategy uses the Reactor but does not take part in the Leader/Followers protocol, thus it is better used only in single threaded applications. Finally, the &lt;CODE&gt;blocking&lt;/CODE&gt; strategy flushes the queue as soon as it becomes &quot;full&quot;, and blocks the thread until all the data is sent.</value>
+							</attribute>
+							<attribute kind="Parameter_Name" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="Title" status="meta">
+								<value></value>
+							</attribute>
+							<atom id="id-0066-00000036" kind="Enum_Item" role="Enum_Item" relid="0x3">
+								<name>blocking</name>
+								<regnode name="PartRegs" isopaque="yes">
+									<value></value>
+									<regnode name="OptionAspect" isopaque="yes">
+										<value></value>
+										<regnode name="Position" isopaque="yes">
+											<value>690,151</value>
+										</regnode>
+									</regnode>
+								</regnode>
+								<attribute kind="Description" status="meta">
+									<value></value>
+								</attribute>
+								<attribute kind="Item_Default_Value" status="meta">
+									<value>false</value>
+								</attribute>
+								<attribute kind="Title" status="meta">
+									<value></value>
+								</attribute>
+							</atom>
+							<atom id="id-0066-00000037" kind="Enum_Item" role="Enum_Item" relid="0x2">
+								<name>reactive</name>
+								<regnode name="PartRegs" isopaque="yes">
+									<value></value>
+									<regnode name="OptionAspect" isopaque="yes">
+										<value></value>
+										<regnode name="Position" isopaque="yes">
+											<value>695,93</value>
+										</regnode>
+									</regnode>
+								</regnode>
+								<attribute kind="Description" status="meta">
+									<value></value>
+								</attribute>
+								<attribute kind="Item_Default_Value" status="meta">
+									<value>false</value>
+								</attribute>
+								<attribute kind="Title" status="meta">
+									<value></value>
+								</attribute>
+							</atom>
+							<atom id="id-0066-00000038" kind="Enum_Item" role="Enum_Item" relid="0x1">
+								<name>leader_follower</name>
+								<regnode name="PartRegs" isopaque="yes">
+									<value></value>
+									<regnode name="OptionAspect" isopaque="yes">
+										<value></value>
+										<regnode name="Position" isopaque="yes">
+											<value>695,30</value>
+										</regnode>
+									</regnode>
+								</regnode>
+								<attribute kind="Description" status="meta">
+									<value></value>
+								</attribute>
+								<attribute kind="Item_Default_Value" status="meta">
+									<value>false</value>
+								</attribute>
+								<attribute kind="Title" status="meta">
+									<value></value>
+								</attribute>
+							</atom>
+						</model>
+						<model id="id-0065-0000001b" kind="Enum_Option" role="Enum_Option" relid="0x11" childrelidcntr="0x4">
+							<name>ORBConnectionPurgingStrategy</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="OptionAspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>337,147</value>
+									</regnode>
+								</regnode>
+								<regnode name="Option_Aspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>63,126</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="Description">
+								<value>Opened connections are added to the transport cache so they can be reused. However, if a process continues to run and these connections are not reused, the cache will continue to grow. Therefore, before each new connection, the cache is checked and purged if it has reached the limit specified by the -ORBConnectionCacheMax option or the system default if that option was not used. The possible values for type are lru, lfu, fifo and null. The default is LRU (Least Recently Used). The others LFU (Least Frequently Used), FIFO (First In First Out), and null (No connections are purged) are contained within the TAO Strategies library.</value>
+							</attribute>
+							<attribute kind="Parameter_Name" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="Title" status="meta">
+								<value></value>
+							</attribute>
+							<atom id="id-0066-00000039" kind="Enum_Item" role="Enum_Item" relid="0x4">
+								<name>lfu</name>
+								<regnode name="PartRegs" isopaque="yes">
+									<value></value>
+									<regnode name="Model_Option_Aspect" isopaque="yes">
+										<value></value>
+										<regnode name="Position" isopaque="yes">
+											<value>12,12</value>
+										</regnode>
+									</regnode>
+									<regnode name="OptionAspect" isopaque="yes">
+										<value></value>
+										<regnode name="Position" isopaque="yes">
+											<value>620,109</value>
+										</regnode>
+									</regnode>
+								</regnode>
+								<attribute kind="Description" status="meta">
+									<value></value>
+								</attribute>
+								<attribute kind="Item_Default_Value" status="meta">
+									<value>false</value>
+								</attribute>
+								<attribute kind="Title" status="meta">
+									<value></value>
+								</attribute>
+							</atom>
+							<atom id="id-0066-0000003a" kind="Enum_Item" role="Enum_Item" relid="0x3">
+								<name>null</name>
+								<regnode name="PartRegs" isopaque="yes">
+									<value></value>
+									<regnode name="Model_Option_Aspect" isopaque="yes">
+										<value></value>
+										<regnode name="Position" isopaque="yes">
+											<value>12,110</value>
+										</regnode>
+									</regnode>
+									<regnode name="OptionAspect" isopaque="yes">
+										<value></value>
+										<regnode name="Position" isopaque="yes">
+											<value>620,249</value>
+										</regnode>
+									</regnode>
+								</regnode>
+								<attribute kind="Description" status="meta">
+									<value></value>
+								</attribute>
+								<attribute kind="Item_Default_Value" status="meta">
+									<value>false</value>
+								</attribute>
+								<attribute kind="Title" status="meta">
+									<value></value>
+								</attribute>
+							</atom>
+							<atom id="id-0066-0000003b" kind="Enum_Item" role="Enum_Item" relid="0x2">
+								<name>lru</name>
+								<regnode name="PartRegs" isopaque="yes">
+									<value></value>
+									<regnode name="Model_Option_Aspect" isopaque="yes">
+										<value></value>
+										<regnode name="Position" isopaque="yes">
+											<value>68,12</value>
+										</regnode>
+									</regnode>
+									<regnode name="OptionAspect" isopaque="yes">
+										<value></value>
+										<regnode name="Position" isopaque="yes">
+											<value>620,46</value>
+										</regnode>
+									</regnode>
+								</regnode>
+								<attribute kind="Description" status="meta">
+									<value></value>
+								</attribute>
+								<attribute kind="Item_Default_Value">
+									<value>true</value>
+								</attribute>
+								<attribute kind="Title" status="meta">
+									<value></value>
+								</attribute>
+							</atom>
+							<atom id="id-0066-0000003c" kind="Enum_Item" role="Enum_Item" relid="0x1">
+								<name>fifo</name>
+								<regnode name="PartRegs" isopaque="yes">
+									<value></value>
+									<regnode name="Model_Option_Aspect" isopaque="yes">
+										<value></value>
+										<regnode name="Position" isopaque="yes">
+											<value>75,117</value>
+										</regnode>
+									</regnode>
+									<regnode name="OptionAspect" isopaque="yes">
+										<value></value>
+										<regnode name="Position" isopaque="yes">
+											<value>620,179</value>
+										</regnode>
+									</regnode>
+								</regnode>
+								<attribute kind="Description" status="meta">
+									<value></value>
+								</attribute>
+								<attribute kind="Item_Default_Value" status="meta">
+									<value>false</value>
+								</attribute>
+								<attribute kind="Title" status="meta">
+									<value></value>
+								</attribute>
+							</atom>
+						</model>
+						<model id="id-0065-0000001c" kind="Enum_Option" role="Enum_Option" relid="0xf" childrelidcntr="0x2">
+							<name>ORBObjectKeyTableLock</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="OptionAspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>589,266</value>
+									</regnode>
+								</regnode>
+								<regnode name="Option_Aspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>483,126</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="Description">
+								<value>Specify the type of lock to be used by the ObjectKey table. ObjectKey table keeps track of the ObjectKeys that are generated and made available through IORs. The table manages the life time of the object keys within the ORB through a reference counting mechanism. Possible values for lock type are &lt;code&gt;thread&lt;/code&gt;, which specifies   that an inter-thread mutex is used to guarantee exclusive access, and &lt;code&gt;null&lt;/code&gt;, which specifies that no locking be performed. The default is thread.</value>
+							</attribute>
+							<attribute kind="Parameter_Name" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="Title" status="meta">
+								<value></value>
+							</attribute>
+							<atom id="id-0066-0000003d" kind="Enum_Item" role="Enum_Item" relid="0x1">
+								<name>thread</name>
+								<regnode name="PartRegs" isopaque="yes">
+									<value></value>
+									<regnode name="Model_Option_Aspect" isopaque="yes">
+										<value></value>
+										<regnode name="Position" isopaque="yes">
+											<value>68,12</value>
+										</regnode>
+									</regnode>
+									<regnode name="OptionAspect" isopaque="yes">
+										<value></value>
+										<regnode name="Position" isopaque="yes">
+											<value>681,93</value>
+										</regnode>
+									</regnode>
+								</regnode>
+								<attribute kind="Description" status="meta">
+									<value></value>
+								</attribute>
+								<attribute kind="Item_Default_Value">
+									<value>true</value>
+								</attribute>
+								<attribute kind="Title" status="meta">
+									<value></value>
+								</attribute>
+							</atom>
+							<atom id="id-0066-0000003e" kind="Enum_Item" role="Enum_Item" relid="0x2">
+								<name>null</name>
+								<regnode name="PartRegs" isopaque="yes">
+									<value></value>
+									<regnode name="Model_Option_Aspect" isopaque="yes">
+										<value></value>
+										<regnode name="Position" isopaque="yes">
+											<value>12,12</value>
+										</regnode>
+									</regnode>
+									<regnode name="OptionAspect" isopaque="yes">
+										<value></value>
+										<regnode name="Position" isopaque="yes">
+											<value>676,158</value>
+										</regnode>
+									</regnode>
+								</regnode>
+								<attribute kind="Description" status="meta">
+									<value></value>
+								</attribute>
+								<attribute kind="Item_Default_Value" status="meta">
+									<value>false</value>
+								</attribute>
+								<attribute kind="Title" status="meta">
+									<value></value>
+								</attribute>
+							</atom>
+						</model>
+						<model id="id-0065-0000001d" kind="Enum_Option" role="Enum_Option" relid="0xe" childrelidcntr="0x2">
+							<name>ORBCorbaObjectLock</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="OptionAspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>589,147</value>
+									</regnode>
+								</regnode>
+								<regnode name="Option_Aspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>287,21</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="Description">
+								<value>Specify the type of lock to be used by CORBA::Object. The lock is needed within the CORBA object to synchronize the state when the same object is shared by multiple threads.  Possible values for lock type are &lt;code&gt;thread&lt;/code&gt;, which specifies that an inter-thread mutex is used to guarantee exclusive access, and &lt;code&gt;null&lt;/code&gt;, which specifies that no locking be performed. The default is thread.  The &lt;code&gt;null&lt;/code&gt; lock option is useful when there is only one thread in the system. This option can be used to minimize the amount of memory consumed by the locks in applications where locks are not needed. The memory growth problem gets particularly exacerbated for applications dealing with hundreds and thousands of objects.</value>
+							</attribute>
+							<attribute kind="Parameter_Name" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="Title" status="meta">
+								<value></value>
+							</attribute>
+							<atom id="id-0066-0000003f" kind="Enum_Item" role="Enum_Item" relid="0x2">
+								<name>null</name>
+								<regnode name="PartRegs" isopaque="yes">
+									<value></value>
+									<regnode name="Model_Option_Aspect" isopaque="yes">
+										<value></value>
+										<regnode name="Position" isopaque="yes">
+											<value>12,12</value>
+										</regnode>
+									</regnode>
+									<regnode name="OptionAspect" isopaque="yes">
+										<value></value>
+										<regnode name="Position" isopaque="yes">
+											<value>662,102</value>
+										</regnode>
+									</regnode>
+								</regnode>
+								<attribute kind="Description" status="meta">
+									<value></value>
+								</attribute>
+								<attribute kind="Item_Default_Value" status="meta">
+									<value>false</value>
+								</attribute>
+								<attribute kind="Title" status="meta">
+									<value></value>
+								</attribute>
+							</atom>
+							<atom id="id-0066-00000040" kind="Enum_Item" role="Enum_Item" relid="0x1">
+								<name>thread</name>
+								<regnode name="PartRegs" isopaque="yes">
+									<value></value>
+									<regnode name="Model_Option_Aspect" isopaque="yes">
+										<value></value>
+										<regnode name="Position" isopaque="yes">
+											<value>68,12</value>
+										</regnode>
+									</regnode>
+									<regnode name="OptionAspect" isopaque="yes">
+										<value></value>
+										<regnode name="Position" isopaque="yes">
+											<value>667,44</value>
+										</regnode>
+									</regnode>
+								</regnode>
+								<attribute kind="Description" status="meta">
+									<value></value>
+								</attribute>
+								<attribute kind="Item_Default_Value">
+									<value>true</value>
+								</attribute>
+								<attribute kind="Title" status="meta">
+									<value></value>
+								</attribute>
+							</atom>
+						</model>
+						<model id="id-0065-0000001e" kind="Enum_Option" role="Enum_Option" relid="0xd" childrelidcntr="0x2">
+							<name>ORBConnectionCacheLock</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="OptionAspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>78,378</value>
+									</regnode>
+								</regnode>
+								<regnode name="Option_Aspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>63,21</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="Description">
+								<value>Specify the type of lock to be used by the Connection Cache. Possible values for lock type are &lt;CODE&gt;thread&lt;/CODE&gt;, which specifies that an inter-thread mutex is used to guarantee exclusive access, and &lt;CODE&gt;null&lt;/CODE&gt;, which specifies that no locking be performed. The default is thread.</value>
+							</attribute>
+							<attribute kind="Parameter_Name" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="Title" status="meta">
+								<value></value>
+							</attribute>
+							<atom id="id-0066-00000041" kind="Enum_Item" role="Enum_Item" relid="0x2">
+								<name>null</name>
+								<regnode name="PartRegs" isopaque="yes">
+									<value></value>
+									<regnode name="Model_Option_Aspect" isopaque="yes">
+										<value></value>
+										<regnode name="Position" isopaque="yes">
+											<value>12,12</value>
+										</regnode>
+									</regnode>
+									<regnode name="OptionAspect" isopaque="yes">
+										<value></value>
+										<regnode name="Position" isopaque="yes">
+											<value>676,130</value>
+										</regnode>
+									</regnode>
+								</regnode>
+								<attribute kind="Description" status="meta">
+									<value></value>
+								</attribute>
+								<attribute kind="Item_Default_Value" status="meta">
+									<value>false</value>
+								</attribute>
+								<attribute kind="Title" status="meta">
+									<value></value>
+								</attribute>
+							</atom>
+							<atom id="id-0066-00000042" kind="Enum_Item" role="Enum_Item" relid="0x1">
+								<name>thread</name>
+								<regnode name="PartRegs" isopaque="yes">
+									<value></value>
+									<regnode name="Model_Option_Aspect" isopaque="yes">
+										<value></value>
+										<regnode name="Position" isopaque="yes">
+											<value>68,12</value>
+										</regnode>
+									</regnode>
+									<regnode name="OptionAspect" isopaque="yes">
+										<value></value>
+										<regnode name="Position" isopaque="yes">
+											<value>681,72</value>
+										</regnode>
+									</regnode>
+								</regnode>
+								<attribute kind="Description" status="meta">
+									<value></value>
+								</attribute>
+								<attribute kind="Item_Default_Value">
+									<value>true</value>
+								</attribute>
+								<attribute kind="Title" status="meta">
+									<value></value>
+								</attribute>
+							</atom>
+						</model>
+						<model id="id-0065-0000001f" kind="Enum_Option" role="Enum_Option" relid="0x6" childrelidcntr="0x2">
+							<name>ORBReactorMaskSignals</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="OptionAspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>85,42</value>
+									</regnode>
+								</regnode>
+								<regnode name="Option_Aspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>287,126</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="Description">
+								<value>ACE select reactors mask signals during upcalls to the event handlers.  This is only useful if the application is going to trap those signals and handle them in any special way. Disabling the mask can improve performance by reducing the number of kernel level locks.</value>
+							</attribute>
+							<attribute kind="Parameter_Name" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="Title" status="meta">
+								<value></value>
+							</attribute>
+							<atom id="id-0066-00000043" kind="Enum_Item" role="Enum_Item" relid="0x2">
+								<name>1</name>
+								<regnode name="PartRegs" isopaque="yes">
+									<value></value>
+									<regnode name="Model_Option_Aspect" isopaque="yes">
+										<value></value>
+										<regnode name="Position" isopaque="yes">
+											<value>68,12</value>
+										</regnode>
+									</regnode>
+									<regnode name="OptionAspect" isopaque="yes">
+										<value></value>
+										<regnode name="Position" isopaque="yes">
+											<value>620,137</value>
+										</regnode>
+									</regnode>
+								</regnode>
+								<attribute kind="Description" status="meta">
+									<value></value>
+								</attribute>
+								<attribute kind="Item_Default_Value">
+									<value>true</value>
+								</attribute>
+								<attribute kind="Title" status="meta">
+									<value></value>
+								</attribute>
+							</atom>
+							<atom id="id-0066-00000044" kind="Enum_Item" role="Enum_Item" relid="0x1">
+								<name>0</name>
+								<regnode name="PartRegs" isopaque="yes">
+									<value></value>
+									<regnode name="Model_Option_Aspect" isopaque="yes">
+										<value></value>
+										<regnode name="Position" isopaque="yes">
+											<value>12,12</value>
+										</regnode>
+									</regnode>
+									<regnode name="OptionAspect" isopaque="yes">
+										<value></value>
+										<regnode name="Position" isopaque="yes">
+											<value>620,60</value>
+										</regnode>
+									</regnode>
+								</regnode>
+								<attribute kind="Description" status="meta">
+									<value></value>
+								</attribute>
+								<attribute kind="Item_Default_Value" status="meta">
+									<value>false</value>
+								</attribute>
+								<attribute kind="Title" status="meta">
+									<value></value>
+								</attribute>
+							</atom>
+						</model>
+						<atom id="id-0066-00000045" kind="Integer_Option" role="Integer_Option" relid="0xa">
+							<name>ORBConnectionCacheMax</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="OptionAspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>86,269</value>
+									</regnode>
+								</regnode>
+								<regnode name="Option_Aspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>663,278</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="Description">
+								<value>The transport cache will grow to a maximum of the specified limit. The default is system dependent, but can be overridden at compile-time by defining the preprocessor macro TAO_CONNECTION_CACHE_MAXIMUM.</value>
+							</attribute>
+							<attribute kind="Integer_Default_Value" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="Parameter_Name" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="Title" status="meta">
+								<value></value>
+							</attribute>
+						</atom>
+						<atom id="id-0066-00000046" kind="Integer_Option" role="Integer_Option" relid="0xc">
+							<name>ORBConnectionCachePurgePercentage</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="OptionAspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>590,45</value>
+									</regnode>
+								</regnode>
+								<regnode name="Option_Aspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>166,250</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="Description">
+								<value>If the transport cache is purged, the specified percentage (20 by default) of the total number of connections cached will be closed.</value>
+							</attribute>
+							<attribute kind="Integer_Default_Value">
+								<value>20</value>
+							</attribute>
+							<attribute kind="Parameter_Name" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="Title" status="meta">
+								<value></value>
+							</attribute>
+						</atom>
+						<atom id="id-0066-00000047" kind="String_Option" role="String_Option" relid="0x8">
+							<name>ORBIORParser</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="OptionAspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>86,164</value>
+									</regnode>
+								</regnode>
+								<regnode name="Option_Aspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>446,327</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="Description">
+								<value>Name an IOR Parser to load. IOR Parsers are used to interpret strings passed to &lt;CODE&gt;ORB::string_to_object()&lt;/CODE&gt;.  By default the ORB can handle multiple string formats, including &lt;CODE&gt;IOR:&lt;/CODE&gt;, &lt;CODE&gt;corbaloc:&lt;/CODE&gt;, &lt;CODE&gt;corbaname:&lt;/CODE&gt;, and &lt;CODE&gt;file:&lt;/CODE&gt;. The application developer can &lt;A href=&quot;http://cvs.doc.wustl.edu/viewcvs.cgi/*checkout*/TAO/docs/ior_parsing.html?rev=HEAD&quot;&gt;add new IOR formats &lt;/A&gt;using this option.</value>
+							</attribute>
+							<attribute kind="Parameter_Name" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="String_Default_Value">
+								<value></value>
+							</attribute>
+							<attribute kind="Title" status="meta">
+								<value></value>
+							</attribute>
+						</atom>
+						<atom id="id-0066-00000048" kind="String_Option" role="String_Option" relid="0x7">
+							<name>ORBProtocolFactory</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="OptionAspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>338,45</value>
+									</regnode>
+								</regnode>
+								<regnode name="Option_Aspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>166,334</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="Description">
+								<value>Specify which pluggable protocol factory to load. By default, only the factory for the IIOP protocol (&lt;CODE&gt;IIOP_Factory&lt;/CODE&gt; is loaded.  &lt;P&gt;For example, if some protocol called &lt;EM&gt;&lt;CODE&gt;Foo&lt;/CODE&gt;&lt;/EM&gt; whose factory was called &lt;EM&gt;&lt;CODE&gt;Foo_Factory&lt;/CODE&gt;&lt;/EM&gt; was available, then it could be loaded into TAO by specifying &lt;CODE&gt;-ORBProtocolFactory Foo_Factory&lt;/CODE&gt; in the service configurator file. The &lt;EM&gt;&lt;CODE&gt;Foo&lt;/CODE&gt;&lt;/EM&gt; pluggable protocol would then be available for use. &lt;/P&gt;</value>
+							</attribute>
+							<attribute kind="Parameter_Name" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="String_Default_Value">
+								<value>IIOP_Factory</value>
+							</attribute>
+							<attribute kind="Title" status="meta">
+								<value></value>
+							</attribute>
+						</atom>
+						<atom id="id-0066-00000049" kind="Integer_Option" role="Integer_Option" relid="0xb">
+							<name>ORBMuxedConnectionMax</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="OptionAspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>338,269</value>
+									</regnode>
+								</regnode>
+								<regnode name="Option_Aspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>453,243</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="Description">
+								<value>The transport cache allows only specified number of connections-per-QoS property to be added to connection cache. Threads not getting the connections will wait for the connections to be released. This option is more useful for transports using a muxed connection strategy and want control over the number of connections that are created by the active threads.</value>
+							</attribute>
+							<attribute kind="Integer_Default_Value" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="Parameter_Name" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="Title" status="meta">
+								<value></value>
+							</attribute>
+						</atom>
+					</model>
+				</model>
+				<model id="id-0065-00000020" kind="Option_Category" role="Option_Category" relid="0x2" childrelidcntr="0xe">
+					<name>Server_Strategy_Factory</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="OptionAspect" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>253,23</value>
+							</regnode>
+						</regnode>
+						<regnode name="Option_Aspect" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>84,147</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="Description">
+						<value>Certain elements of the ORB relate only to a TAO server. In this context, the server is any application that passively accepts connection from other processes and receives requests from those other connections. The server strategy factory is responsible for supporting features of TAO that are specific to servers. In particular, these include the following strategies: &lt;UL&gt; &lt;LI&gt; The &lt;EM&gt;concurrency strategies&lt;/EM&gt; control the thread creation flags and other concurrency related behaviors. &lt;P&gt; &lt;LI&gt; The &lt;EM&gt;demuliplexing strategies&lt;/EM&gt; are used to locate servants inside the POA that are responsible for handling requests.&lt;P&gt; &lt;/UL&gt; TAO provides a default server strategy factory called &lt;CODE&gt;Server_Strategy_Factory&lt;/CODE&gt; &lt;p&gt; Typically, the following options are set via the service configurator (svc.conf) file. The following line in the svc.conf file (all in one line)&lt;P&gt;&lt;CODE&gt;static Server_Strategy_Factory &quot;[list of options]&quot;&lt;/CODE&gt;&lt;P&gt;would load all the options listed within &quot;&quot;.  An example is available &lt;A href=&quot;http://cvs.doc.wustl.edu/viewcvs.cgi/TAO/performance-tests/Latency/Single_Threaded/svc.conf?rev=HEAD&quot;&gt;online&lt;/A&gt; that shows how to specify this option in the &lt;code&gt;svc.conf&lt;/code&gt; file.  &lt;p&gt;</value>
+					</attribute>
+					<attribute kind="Title">
+						<value>Server_Strategy_Factory</value>
+					</attribute>
+					<model id="id-0065-00000021" kind="Enum_Option" role="Enum_Option" relid="0xe" childrelidcntr="0x2">
+						<name>ORBPOALock</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="OptionAspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>358,476</value>
+								</regnode>
+							</regnode>
+							<regnode name="Option_Aspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>924,224</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="Description">
+							<value>Specify the type of lock to be used for POA accesses. Possible values for &lt;EM&gt;lock type&lt;/EM&gt; are &lt;CODE&gt;thread&lt;/CODE&gt;, which specifies that an inter-thread mutex is used to guarantee exclusive access, and &lt;CODE&gt;null&lt;/CODE&gt;, which specifies that no locking be performed. The default is &lt;CODE&gt;thread&lt;/CODE&gt;.</value>
+						</attribute>
+						<attribute kind="Parameter_Name" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="Title" status="meta">
+							<value></value>
+						</attribute>
+						<atom id="id-0066-0000004a" kind="Enum_Item" role="Enum_Item" relid="0x1">
+							<name>thread</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="Model_Option_Aspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>68,12</value>
+									</regnode>
+								</regnode>
+								<regnode name="OptionAspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>695,58</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="Description" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="Item_Default_Value">
+								<value>true</value>
+							</attribute>
+							<attribute kind="Title" status="meta">
+								<value></value>
+							</attribute>
+						</atom>
+						<atom id="id-0066-0000004b" kind="Enum_Item" role="Enum_Item" relid="0x2">
+							<name>null</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="Model_Option_Aspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>12,12</value>
+									</regnode>
+								</regnode>
+								<regnode name="OptionAspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>690,116</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="Description" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="Item_Default_Value" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="Title" status="meta">
+								<value></value>
+							</attribute>
+						</atom>
+					</model>
+					<model id="id-0065-00000022" kind="Enum_Option" role="Enum_Option" relid="0x4" childrelidcntr="0x2">
+						<name>ORBUseridPolicyDemuxStrategy</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="OptionAspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>78,147</value>
+								</regnode>
+							</regnode>
+							<regnode name="Option_Aspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>672,126</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="Description">
+							<value>Specify the demultiplexing lookup strategy to be used with the user id policy. The &lt;EM&gt;demultiplexing strategy&lt;/EM&gt; can be one of &lt;CODE&gt;dynamic&lt;/CODE&gt; or &lt;CODE&gt;linear&lt;/CODE&gt;. This option defaults to using the &lt;CODE&gt;dynamic&lt;/CODE&gt; strategy.</value>
+						</attribute>
+						<attribute kind="Parameter_Name" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="Title" status="meta">
+							<value></value>
+						</attribute>
+						<atom id="id-0066-0000004c" kind="Enum_Item" role="Enum_Item" relid="0x2">
+							<name>linear</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="Model_Option_Aspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>68,12</value>
+									</regnode>
+								</regnode>
+								<regnode name="OptionAspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>683,95</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="Description" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="Item_Default_Value" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="Title" status="meta">
+								<value></value>
+							</attribute>
+						</atom>
+						<atom id="id-0066-0000004d" kind="Enum_Item" role="Enum_Item" relid="0x1">
+							<name>dynamic</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="Model_Option_Aspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>12,12</value>
+									</regnode>
+								</regnode>
+								<regnode name="OptionAspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>688,37</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="Description" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="Item_Default_Value">
+								<value>true</value>
+							</attribute>
+							<attribute kind="Title" status="meta">
+								<value></value>
+							</attribute>
+						</atom>
+					</model>
+					<model id="id-0065-00000023" kind="Enum_Option" role="Enum_Option" relid="0xc" childrelidcntr="0x2">
+						<name>ORBActiveHintsInPOANames</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="OptionAspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>603,364</value>
+								</regnode>
+							</regnode>
+							<regnode name="Option_Aspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>119,140</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="Description">
+							<value>Specify whether an active hint should be added to POA names. With active hints, POA names can be found quickly. However, they lead to larger IORs. The &lt;CODE&gt;-ORBActiveHintInPOANames&lt;/CODE&gt; can be &lt;CODE&gt;0&lt;/CODE&gt; or &lt;CODE&gt;1&lt;/CODE&gt;. This option defaults to &lt;CODE&gt;1&lt;/CODE&gt;.</value>
+						</attribute>
+						<attribute kind="Parameter_Name" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="Title" status="meta">
+							<value></value>
+						</attribute>
+						<atom id="id-0066-0000004e" kind="Enum_Item" role="Enum_Item" relid="0x2">
+							<name>1</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="Model_Option_Aspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>12,12</value>
+									</regnode>
+								</regnode>
+								<regnode name="OptionAspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>620,137</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="Description" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="Item_Default_Value">
+								<value>true</value>
+							</attribute>
+							<attribute kind="Title" status="meta">
+								<value></value>
+							</attribute>
+						</atom>
+						<atom id="id-0066-0000004f" kind="Enum_Item" role="Enum_Item" relid="0x1">
+							<name>0</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="Model_Option_Aspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>68,12</value>
+									</regnode>
+								</regnode>
+								<regnode name="OptionAspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>620,60</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="Description" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="Item_Default_Value" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="Title" status="meta">
+								<value></value>
+							</attribute>
+						</atom>
+					</model>
+					<model id="id-0065-00000024" kind="Flag_Option" role="Flag_Option" relid="0xd" childrelidcntr="0x4">
+						<name>ORBThreadFlags</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="OptionAspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>79,478</value>
+								</regnode>
+							</regnode>
+							<regnode name="Option_Aspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>126,21</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="Description">
+							<value>Specify the flags used for thread creation. Flags can be any logical-OR combination of &lt;CODE&gt;THR_DETACHED&lt;/CODE&gt;, &lt;CODE&gt;THR_BOUND&lt;/CODE&gt;, &lt;CODE&gt;THR_NEW_LWP&lt;/CODE&gt;, &lt;CODE&gt;THE_SUSPENDED&lt;/CODE&gt;. The default is &lt;CODE&gt;THR_BOUND | THR_DETACHED&lt;/CODE&gt; .</value>
+						</attribute>
+						<attribute kind="Parameter_Name" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="Title" status="meta">
+							<value></value>
+						</attribute>
+						<atom id="id-0066-00000050" kind="Flag_Item" role="Flag_Item" relid="0x4">
+							<name>THR_SUSPENDED</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="Model_Option_Aspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>54,138</value>
+									</regnode>
+								</regnode>
+								<regnode name="OptionAspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>88,172</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="Description" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="Item_Default_Value" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="Title" status="meta">
+								<value></value>
+							</attribute>
+						</atom>
+						<atom id="id-0066-00000051" kind="Flag_Item" role="Flag_Item" relid="0x2">
+							<name>THR_BOUND</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="Model_Option_Aspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>54,229</value>
+									</regnode>
+								</regnode>
+								<regnode name="OptionAspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>648,172</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="Description" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="Item_Default_Value">
+								<value>true</value>
+							</attribute>
+							<attribute kind="Title" status="meta">
+								<value></value>
+							</attribute>
+						</atom>
+						<atom id="id-0066-00000052" kind="Flag_Item" role="Flag_Item" relid="0x3">
+							<name>THR_NEW_LWP</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="Model_Option_Aspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>54,320</value>
+									</regnode>
+								</regnode>
+								<regnode name="OptionAspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>88,88</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="Description" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="Item_Default_Value" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="Title" status="meta">
+								<value></value>
+							</attribute>
+						</atom>
+						<atom id="id-0066-00000053" kind="Flag_Item" role="Flag_Item" relid="0x1">
+							<name>THR_DETACHED</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="Model_Option_Aspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>54,47</value>
+									</regnode>
+								</regnode>
+								<regnode name="OptionAspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>655,95</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="Description" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="Item_Default_Value">
+								<value>true</value>
+							</attribute>
+							<attribute kind="Title" status="meta">
+								<value></value>
+							</attribute>
+						</atom>
+					</model>
+					<model id="id-0065-00000025" kind="Enum_Option" role="Enum_Option" relid="0xb" childrelidcntr="0x3">
+						<name>ORBTransientPolicyDemuxStrategy</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="OptionAspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>351,364</value>
+								</regnode>
+							</regnode>
+							<regnode name="Option_Aspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>679,231</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="Description">
+							<value>Specify the demultiplexing lookup strategy to be used with the transient id policy. The &lt;EM&gt;demultiplexing strategy&lt;/EM&gt; can be one of &lt;CODE&gt;dynamic&lt;/CODE&gt;, &lt;CODE&gt;linear&lt;/CODE&gt;, or &lt;CODE&gt;active&lt;/CODE&gt;. This option defaults to using the &lt;CODE&gt;active&lt;/CODE&gt; strategy.</value>
+						</attribute>
+						<attribute kind="Parameter_Name" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="Title" status="meta">
+							<value></value>
+						</attribute>
+						<atom id="id-0066-00000054" kind="Enum_Item" role="Enum_Item" relid="0x3">
+							<name>active</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="Model_Option_Aspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>68,12</value>
+									</regnode>
+								</regnode>
+								<regnode name="OptionAspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>681,170</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="Description" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="Item_Default_Value">
+								<value>true</value>
+							</attribute>
+							<attribute kind="Title" status="meta">
+								<value></value>
+							</attribute>
+						</atom>
+						<atom id="id-0066-00000055" kind="Enum_Item" role="Enum_Item" relid="0x1">
+							<name>dynamic</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="Model_Option_Aspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>12,12</value>
+									</regnode>
+								</regnode>
+								<regnode name="OptionAspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>688,37</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="Description" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="Item_Default_Value" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="Title" status="meta">
+								<value></value>
+							</attribute>
+						</atom>
+						<atom id="id-0066-00000056" kind="Enum_Item" role="Enum_Item" relid="0x2">
+							<name>linear</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="Model_Option_Aspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>75,103</value>
+									</regnode>
+								</regnode>
+								<regnode name="OptionAspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>683,95</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="Description" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="Item_Default_Value" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="Title" status="meta">
+								<value></value>
+							</attribute>
+						</atom>
+					</model>
+					<model id="id-0065-00000026" kind="Enum_Option" role="Enum_Option" relid="0xa" childrelidcntr="0x2">
+						<name>ORBPersistentidPolicyDemuxStrategy</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="OptionAspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>78,364</value>
+								</regnode>
+							</regnode>
+							<regnode name="Option_Aspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>672,21</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="Description">
+							<value>Specify the demultiplexing lookup strategy to be used with the persistent id policy. The &lt;EM&gt;demultiplexing strategy&lt;/EM&gt; can be one of &lt;CODE&gt;dynamic&lt;/CODE&gt; or &lt;CODE&gt;linear&lt;/CODE&gt;. This option defaults to using the &lt;CODE&gt;dynamic&lt;/CODE&gt; strategy.</value>
+						</attribute>
+						<attribute kind="Parameter_Name" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="Title" status="meta">
+							<value></value>
+						</attribute>
+						<atom id="id-0066-00000057" kind="Enum_Item" role="Enum_Item" relid="0x1">
+							<name>dynamic</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="Model_Option_Aspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>68,12</value>
+									</regnode>
+								</regnode>
+								<regnode name="OptionAspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>688,37</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="Description" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="Item_Default_Value">
+								<value>true</value>
+							</attribute>
+							<attribute kind="Title" status="meta">
+								<value></value>
+							</attribute>
+						</atom>
+						<atom id="id-0066-00000058" kind="Enum_Item" role="Enum_Item" relid="0x2">
+							<name>linear</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="Model_Option_Aspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>12,12</value>
+									</regnode>
+								</regnode>
+								<regnode name="OptionAspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>683,95</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="Description" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="Item_Default_Value" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="Title" status="meta">
+								<value></value>
+							</attribute>
+						</atom>
+					</model>
+					<model id="id-0065-00000027" kind="Enum_Option" role="Enum_Option" relid="0x1" childrelidcntr="0x2">
+						<name>ORBConcurrency</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="OptionAspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>78,21</value>
+								</regnode>
+							</regnode>
+							<regnode name="Option_Aspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>917,119</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="Description">
+							<value>Specify which concurrency strategy to use. Range of values is &lt;CODE&gt;reactive&lt;/CODE&gt; for a purely Reactor-driven concurrency strategy or &lt;CODE&gt;thread-per-connection&lt;/CODE&gt; for creating a new thread to service each connection. The default is reactive.</value>
+						</attribute>
+						<attribute kind="Parameter_Name" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="Title" status="meta">
+							<value></value>
+						</attribute>
+						<atom id="id-0066-00000059" kind="Enum_Item" role="Enum_Item" relid="0x2">
+							<name>thread_per_connection</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="Model_Option_Aspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>61,117</value>
+									</regnode>
+								</regnode>
+								<regnode name="OptionAspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>676,102</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="Description" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="Item_Default_Value" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="Title" status="meta">
+								<value></value>
+							</attribute>
+						</atom>
+						<atom id="id-0066-0000005a" kind="Enum_Item" role="Enum_Item" relid="0x1">
+							<name>reactive</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="Model_Option_Aspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>61,12</value>
+									</regnode>
+								</regnode>
+								<regnode name="OptionAspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>681,37</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="Description" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="Item_Default_Value">
+								<value>true</value>
+							</attribute>
+							<attribute kind="Title" status="meta">
+								<value></value>
+							</attribute>
+						</atom>
+					</model>
+					<model id="id-0065-00000028" kind="Enum_Option" role="Enum_Option" relid="0x5" childrelidcntr="0x3">
+						<name>ORBSystemidPolicyDemuxStrategy</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="OptionAspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>323,147</value>
+								</regnode>
+							</regnode>
+							<regnode name="Option_Aspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>392,231</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="Description">
+							<value>Specify the demultiplexing lookup strategy to be used with the system id policy. The &lt;EM&gt;demultiplexing strategy&lt;/EM&gt; can be one of &lt;CODE&gt;dynamic&lt;/CODE&gt;, &lt;CODE&gt;linear&lt;/CODE&gt;, or &lt;CODE&gt;active&lt;/CODE&gt;. This option defaults to use the &lt;CODE&gt;dynamic&lt;/CODE&gt; strategy when &lt;CODE&gt;-ORBAllowReactivationOfSystemids&lt;/CODE&gt; is true, and to &lt;CODE&gt;active&lt;/CODE&gt; strategy when &lt;CODE&gt;-ORBAllowReactivationOfSystemids&lt;/CODE&gt; is false.</value>
+						</attribute>
+						<attribute kind="Parameter_Name" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="Title" status="meta">
+							<value></value>
+						</attribute>
+						<atom id="id-0066-0000005b" kind="Enum_Item" role="Enum_Item" relid="0x1">
+							<name>dynamic</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="Model_Option_Aspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>12,12</value>
+									</regnode>
+								</regnode>
+								<regnode name="OptionAspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>688,37</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="Description" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="Item_Default_Value">
+								<value>true</value>
+							</attribute>
+							<attribute kind="Title" status="meta">
+								<value></value>
+							</attribute>
+						</atom>
+						<atom id="id-0066-0000005c" kind="Enum_Item" role="Enum_Item" relid="0x2">
+							<name>linear</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="Model_Option_Aspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>96,19</value>
+									</regnode>
+								</regnode>
+								<regnode name="OptionAspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>683,95</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="Description" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="Item_Default_Value" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="Title" status="meta">
+								<value></value>
+							</attribute>
+						</atom>
+						<atom id="id-0066-0000005d" kind="Enum_Item" role="Enum_Item" relid="0x3">
+							<name>active</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="Model_Option_Aspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>68,131</value>
+									</regnode>
+								</regnode>
+								<regnode name="OptionAspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>681,170</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="Description" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="Item_Default_Value" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="Title" status="meta">
+								<value></value>
+							</attribute>
+						</atom>
+					</model>
+					<model id="id-0065-00000029" kind="Enum_Option" role="Enum_Option" relid="0x6" childrelidcntr="0x2">
+						<name>ORBUniqueidPolicyReverseDemuxStrategy</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="OptionAspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>603,147</value>
+								</regnode>
+							</regnode>
+							<regnode name="Option_Aspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>392,126</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="Description">
+							<value>Specify the reverse demultiplexing lookup strategy to be used with the unique id policy. The &lt;EM&gt;reverse demultiplexing strategy&lt;/EM&gt; can be one of &lt;CODE&gt;dynamic&lt;/CODE&gt; or &lt;CODE&gt;linear&lt;/CODE&gt;. This option defaults to using the &lt;CODE&gt;dynamic&lt;/CODE&gt; strategy.</value>
+						</attribute>
+						<attribute kind="Parameter_Name" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="Title" status="meta">
+							<value></value>
+						</attribute>
+						<atom id="id-0066-0000005e" kind="Enum_Item" role="Enum_Item" relid="0x1">
+							<name>dynamic</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="Model_Option_Aspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>12,12</value>
+									</regnode>
+								</regnode>
+								<regnode name="OptionAspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>688,37</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="Description" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="Item_Default_Value">
+								<value>true</value>
+							</attribute>
+							<attribute kind="Title" status="meta">
+								<value></value>
+							</attribute>
+						</atom>
+						<atom id="id-0066-0000005f" kind="Enum_Item" role="Enum_Item" relid="0x2">
+							<name>linear</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="Model_Option_Aspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>68,12</value>
+									</regnode>
+								</regnode>
+								<regnode name="OptionAspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>683,95</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="Description" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="Item_Default_Value" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="Title" status="meta">
+								<value></value>
+							</attribute>
+						</atom>
+					</model>
+					<model id="id-0065-0000002a" kind="Enum_Option" role="Enum_Option" relid="0x7" childrelidcntr="0x2">
+						<name>ORBAllowReactivationOfSystemids</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="OptionAspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>78,259</value>
+								</regnode>
+							</regnode>
+							<regnode name="Option_Aspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>392,21</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="Description">
+							<value>Specify whether system ids can be reactivated, i.e., once an id that was generated by the system has been deactivated, will the user reactivate a new servant using the old id. If the user is not going to use this feature, the IORs can be shortened, an extra comparison in the critical upcall path removed, and some memory on the server side can be saved. The &lt;CODE&gt;ORBAllowReactivationOfSystemids&lt;/CODE&gt; can be &lt;CODE&gt;0&lt;/CODE&gt; or &lt;CODE&gt;1&lt;/CODE&gt;. This option defaults to &lt;CODE&gt;1&lt;/CODE&gt;.</value>
+						</attribute>
+						<attribute kind="Parameter_Name" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="Title" status="meta">
+							<value></value>
+						</attribute>
+						<atom id="id-0066-00000060" kind="Enum_Item" role="Enum_Item" relid="0x2">
+							<name>1</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="Model_Option_Aspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>68,12</value>
+									</regnode>
+								</regnode>
+								<regnode name="OptionAspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>620,137</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="Description" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="Item_Default_Value">
+								<value>true</value>
+							</attribute>
+							<attribute kind="Title" status="meta">
+								<value></value>
+							</attribute>
+						</atom>
+						<atom id="id-0066-00000061" kind="Enum_Item" role="Enum_Item" relid="0x1">
+							<name>0</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="Model_Option_Aspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>12,12</value>
+									</regnode>
+								</regnode>
+								<regnode name="OptionAspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>620,60</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="Description" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="Item_Default_Value" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="Title" status="meta">
+								<value></value>
+							</attribute>
+						</atom>
+					</model>
+					<model id="id-0065-0000002b" kind="Enum_Option" role="Enum_Option" relid="0x8" childrelidcntr="0x2">
+						<name>ORBActiveHintsInIds</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="OptionAspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>323,259</value>
+								</regnode>
+							</regnode>
+							<regnode name="Option_Aspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>917,21</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="Description">
+							<value>Specify whether an active hint should be added to ids. With active hints, ids can be found quickly. However, they lead to larger IORs. Note that this option is disregarded &lt;CODE&gt;if -ORBAllowReactivationOfSystemids&lt;/CODE&gt; is set to &lt;CODE&gt;0&lt;/CODE&gt;.  The &lt;EM&gt;-ORBActiveHintInIds&lt;/EM&gt; can be &lt;CODE&gt;0&lt;/CODE&gt; or &lt;CODE&gt;1&lt;/CODE&gt;.  This option defaults to &lt;CODE&gt;1&lt;/CODE&gt;.</value>
+						</attribute>
+						<attribute kind="Parameter_Name" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="Title" status="meta">
+							<value></value>
+						</attribute>
+						<atom id="id-0066-00000062" kind="Enum_Item" role="Enum_Item" relid="0x1">
+							<name>0</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="Model_Option_Aspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>12,12</value>
+									</regnode>
+								</regnode>
+								<regnode name="OptionAspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>620,60</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="Description" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="Item_Default_Value" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="Title" status="meta">
+								<value></value>
+							</attribute>
+						</atom>
+						<atom id="id-0066-00000063" kind="Enum_Item" role="Enum_Item" relid="0x2">
+							<name>1</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="Model_Option_Aspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>68,12</value>
+									</regnode>
+								</regnode>
+								<regnode name="OptionAspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>620,137</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="Description" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="Item_Default_Value">
+								<value>true</value>
+							</attribute>
+							<attribute kind="Title" status="meta">
+								<value></value>
+							</attribute>
+						</atom>
+					</model>
+					<atom id="id-0066-00000064" kind="Integer_Option" role="Integer_Option" relid="0x2">
+						<name>ORBThreadPerConnectionTimeout</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="OptionAspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>324,24</value>
+								</regnode>
+							</regnode>
+							<regnode name="Option_Aspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>873,341</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="Description">
+							<value>In many platforms it is impossible to interrupt the server threads created by the &lt;CODE&gt;thread-per-connection&lt;/CODE&gt; model. This is because these threads are blocked in &lt;CODE&gt;read()&lt;/CODE&gt; operations (and not in &lt;CODE&gt;select()&lt;/CODE&gt;). As a workaround, the server threads periodically poll the ORB to find out if they should shutdown. This option controls the period of the polling, expressed in milliseconds. Applications that do not shutdown, or that can otherwise ensure that no server threads will be running at shutdown (for example if all the clients terminate before the server) can disable the polling using the magic value &lt;CODE&gt;INFINITE&lt;/CODE&gt;.  &lt;P&gt;If the option is not provided then the ORB uses the compile-time flag &lt;CODE&gt;TAO_DEFAULT_THREAD_PER_CONNECTION_TIMEOUT&lt;/CODE&gt;, this flag also expresses the time in milliseconds (as a string constant) and the magic value &lt;CODE&gt;&quot;INFINITE&quot;&lt;/CODE&gt; can be used to disable polling entirely.  This yields a slight performance improvement (around 1%).</value>
+						</attribute>
+						<attribute kind="Integer_Default_Value" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="Parameter_Name" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="Title" status="meta">
+							<value></value>
+						</attribute>
+					</atom>
+					<atom id="id-0066-00000065" kind="Integer_Option" role="Integer_Option" relid="0x9">
+						<name>ORBPoaMapSize</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="OptionAspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>604,262</value>
+								</regnode>
+							</regnode>
+							<regnode name="Option_Aspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>656,341</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="Description">
+							<value>Specify the size of the POA map. If not specified, the default value is 24.</value>
+						</attribute>
+						<attribute kind="Integer_Default_Value">
+							<value>24</value>
+						</attribute>
+						<attribute kind="Parameter_Name" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="Title" status="meta">
+							<value></value>
+						</attribute>
+					</atom>
+					<atom id="id-0066-00000066" kind="Integer_Option" role="Integer_Option" relid="0x3">
+						<name>ORBActiveObjectMapSize</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="OptionAspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>604,24</value>
+								</regnode>
+							</regnode>
+							<regnode name="Option_Aspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>481,341</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="Description">
+							<value>Specify the size of the active object map. If not specified, the default value is 64.</value>
+						</attribute>
+						<attribute kind="Integer_Default_Value">
+							<value>64</value>
+						</attribute>
+						<attribute kind="Parameter_Name" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="Title" status="meta">
+							<value></value>
+						</attribute>
+					</atom>
+				</model>
+				<model id="id-0065-0000002c" kind="Option_Category" role="Option_Category" relid="0x3" childrelidcntr="0x4">
+					<name>Client_Strategy_Factory</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="OptionAspect" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>35,148</value>
+							</regnode>
+						</regnode>
+						<regnode name="Option_Aspect" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>56,14</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="Description">
+						<value>Similar to the server strategy factory, the client strategy factory supports those elements of TAO that are specific to the behavior of clients, which are any CORBA applications that actively establish connections, submit requests, and perhap receive responses. The client strategy factory provides control over several resources used by clients.  TAO provides a default client strategy factory called &lt;CODE&gt;Client_Strategy_Factory&lt;/CODE&gt;.&lt;p&gt; Typically, the following options are set via the service configurator (&lt;code&gt;svc.conf&lt;/code&gt;) file. The following line in the &lt;code&gt;svc.conf&lt;/code&gt; file (all in one line)&lt;P&gt;&lt;CODE&gt;static Client_Strategy_Factory &quot;[list of options]&quot;&lt;/CODE&gt;&lt;P&gt; would load all the options listed within &quot;&quot;. An example is available &lt;A href=&quot;http://cvs.doc.wustl.edu/viewcvs.cgi/TAO/performance-tests/Latency/Single_Threaded/svc.conf?rev=HEAD&quot;&gt;online&lt;/A&gt; that shows how to specify this option in the &lt;code&gt;svc.conf&lt;/code&gt; file.</value>
+					</attribute>
+					<attribute kind="Title">
+						<value>Client_Strategy_Factory</value>
+					</attribute>
+					<model id="id-0065-0000002d" kind="Enum_Option" role="Enum_Option" relid="0x4" childrelidcntr="0x3">
+						<name>ORBConnectStrategy</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="OptionAspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>92,133</value>
+								</regnode>
+							</regnode>
+							<regnode name="Option_Aspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>273,168</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="Description">
+							<value>TAO provides three strategies to connect to remote servers. The default &lt;EM&gt;leader_follower&lt;/EM&gt; strategy uses the Reactor and non-blocking connects to connect and this strategy participates in the Leader/Followers protocol to synchronize access to the Reactor. The &lt;EM&gt;reactive&lt;/EM&gt; strategy uses the Reactor for non-blocking connects but does not take part in the Leader/Followers protocol, thus it is better used only in single threaded applications.  Finally, the &lt;EM&gt;blocked&lt;/EM&gt; strategy as the name implies, blocks the thread until connection is complete. Some of the protocols in TAO (such as SHMIOP and SSLIOP) can only use the &lt;EM&gt;blocked&lt;/EM&gt; strategy.</value>
+						</attribute>
+						<attribute kind="Parameter_Name" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="Title" status="meta">
+							<value></value>
+						</attribute>
+						<atom id="id-0066-00000067" kind="Enum_Item" role="Enum_Item" relid="0x1">
+							<name>leader_follower</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="Model_Option_Aspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>61,117</value>
+									</regnode>
+								</regnode>
+								<regnode name="OptionAspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>695,30</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="Description" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="Item_Default_Value">
+								<value>true</value>
+							</attribute>
+							<attribute kind="Title" status="meta">
+								<value></value>
+							</attribute>
+						</atom>
+						<atom id="id-0066-00000068" kind="Enum_Item" role="Enum_Item" relid="0x2">
+							<name>reactive</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="Model_Option_Aspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>12,12</value>
+									</regnode>
+								</regnode>
+								<regnode name="OptionAspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>695,93</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="Description" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="Item_Default_Value" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="Title" status="meta">
+								<value></value>
+							</attribute>
+						</atom>
+						<atom id="id-0066-00000069" kind="Enum_Item" role="Enum_Item" relid="0x3">
+							<name>blocking</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="Model_Option_Aspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>103,12</value>
+									</regnode>
+								</regnode>
+								<regnode name="OptionAspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>690,151</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="Description" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="Item_Default_Value" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="Title" status="meta">
+								<value></value>
+							</attribute>
+						</atom>
+					</model>
+					<model id="id-0065-0000002e" kind="Enum_Option" role="Enum_Option" relid="0x3" childrelidcntr="0x2">
+						<name>ORBTransportMuxStrategy</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="OptionAspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>442,133</value>
+								</regnode>
+							</regnode>
+							<regnode name="Option_Aspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>231,21</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="Description">
+							<value>&lt;A name=-ORBTransportMuxStrategy&gt;&lt;/A&gt;&lt;EM&gt;EXCLUSIVE&lt;/EM&gt; means that the Transport does not multiplex requests on a connection. At a time, there can be only one request pending on a connection.  &lt;P&gt;&lt;EM&gt;MUXED&lt;/EM&gt; means that Transport multiplexes more than one request at the same time on a connection. This option is often used in conjunction with AMI, because multiple requests can be sent &quot;in bulk.&quot; &lt;P&gt;Default for this option is &lt;EM&gt;MUXED&lt;/EM&gt;. &lt;/P&gt;</value>
+						</attribute>
+						<attribute kind="Parameter_Name" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="Title" status="meta">
+							<value></value>
+						</attribute>
+						<atom id="id-0066-0000006a" kind="Enum_Item" role="Enum_Item" relid="0x2">
+							<name>MUXED</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="Model_Option_Aspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>12,12</value>
+									</regnode>
+								</regnode>
+								<regnode name="OptionAspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>611,268</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="Description" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="Item_Default_Value">
+								<value>true</value>
+							</attribute>
+							<attribute kind="Title" status="meta">
+								<value></value>
+							</attribute>
+						</atom>
+						<atom id="id-0066-0000006b" kind="Enum_Item" role="Enum_Item" relid="0x1">
+							<name>EXCLUSIVE</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="Model_Option_Aspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>166,19</value>
+									</regnode>
+								</regnode>
+								<regnode name="OptionAspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>611,198</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="Description" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="Item_Default_Value" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="Title" status="meta">
+								<value></value>
+							</attribute>
+						</atom>
+					</model>
+					<model id="id-0065-0000002f" kind="Enum_Option" role="Enum_Option" relid="0x2" childrelidcntr="0x3">
+						<name>ORBClientConnectionHandler</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="OptionAspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>442,21</value>
+								</regnode>
+							</regnode>
+							<regnode name="Option_Aspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>56,182</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="Description">
+							<value>&lt;EM&gt;ST&lt;/EM&gt; means use the single-threaded client connection handler, i.e., the leader follower model will not be used. However, &lt;EM&gt;ST&lt;/EM&gt; does support nested upcalls and handling of new requests while waiting for the reply from a server.  &lt;P&gt;&lt;EM&gt;MT&lt;/EM&gt; means use the multi-threaded client connection handler which uses the leader follower model. This model allows the use of multiple threads with a single Reactor.  &lt;P&gt;&lt;EM&gt;RW&lt;/EM&gt; selects a strategy that simply blocks in &lt;CODE&gt;recv()&lt;/CODE&gt; when waiting for a response from the server instead of waiting in the Reactor. The &lt;EM&gt;RW&lt;/EM&gt; strategy only works when the application does not have to worry about new request showing up when waiting for a response. Further, this strategy cannot be used with Asynchronous Method Invocation (AMI) calls. Therefore, this strategy is appropriate only for &quot;pure&quot; synchronous clients. Note that applications with nested upcalls are not &quot;pure&quot; synchronous clients. Also note that this strategy will only effect two way calls, since there is no waiting for one way calls. This strategy can also be used in an application that is both a client and a server if the server side is handled by a separate thread and the client threads are &quot;pure&quot; clients.  &lt;P&gt;Default for this option is &lt;EM&gt;MT&lt;/EM&gt;. &lt;/P&gt;</value>
+						</attribute>
+						<attribute kind="Parameter_Name" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="Title" status="meta">
+							<value></value>
+						</attribute>
+						<atom id="id-0066-0000006c" kind="Enum_Item" role="Enum_Item" relid="0x3">
+							<name>RW</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="Model_Option_Aspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>82,117</value>
+									</regnode>
+								</regnode>
+								<regnode name="OptionAspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>725,165</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="Description" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="Item_Default_Value" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="Title" status="meta">
+								<value></value>
+							</attribute>
+						</atom>
+						<atom id="id-0066-0000006d" kind="Enum_Item" role="Enum_Item" relid="0x2">
+							<name>ST</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="Model_Option_Aspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>68,12</value>
+									</regnode>
+								</regnode>
+								<regnode name="OptionAspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>725,102</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="Description" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="Item_Default_Value" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="Title" status="meta">
+								<value></value>
+							</attribute>
+						</atom>
+						<atom id="id-0066-0000006e" kind="Enum_Item" role="Enum_Item" relid="0x1">
+							<name>MT</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="Model_Option_Aspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>12,12</value>
+									</regnode>
+								</regnode>
+								<regnode name="OptionAspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>725,32</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="Description" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="Item_Default_Value">
+								<value>true</value>
+							</attribute>
+							<attribute kind="Title" status="meta">
+								<value></value>
+							</attribute>
+						</atom>
+					</model>
+					<model id="id-0065-00000030" kind="Enum_Option" role="Enum_Option" relid="0x1" childrelidcntr="0x2">
+						<name>ORBProfileLock</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="OptionAspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>92,21</value>
+								</regnode>
+							</regnode>
+							<regnode name="Option_Aspect" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>56,21</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="Description">
+							<value>Specify the kind of synchronization primitive for the Profiles.  Default is &lt;EM&gt;thread&lt;/EM&gt;, which means that a regular thread mutex is used. The second option is &lt;EM&gt;null&lt;/EM&gt;, which means a null lock is used. This makes sense in case of optimizations and is allowed when no forwarding is used or only a single threaded client.</value>
+						</attribute>
+						<attribute kind="Parameter_Name" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="Title" status="meta">
+							<value></value>
+						</attribute>
+						<atom id="id-0066-0000006f" kind="Enum_Item" role="Enum_Item" relid="0x1">
+							<name>thread</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="Model_Option_Aspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>12,12</value>
+									</regnode>
+								</regnode>
+								<regnode name="OptionAspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>695,58</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="Description" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="Item_Default_Value">
+								<value>true</value>
+							</attribute>
+							<attribute kind="Title" status="meta">
+								<value></value>
+							</attribute>
+						</atom>
+						<atom id="id-0066-00000070" kind="Enum_Item" role="Enum_Item" relid="0x2">
+							<name>null</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="Model_Option_Aspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>68,12</value>
+									</regnode>
+								</regnode>
+								<regnode name="OptionAspect" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>690,116</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="Description" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="Item_Default_Value" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="Title" status="meta">
+								<value></value>
+							</attribute>
+						</atom>
+					</model>
+				</model>
+			</model>
+		</model>
+	</folder>
+</project>

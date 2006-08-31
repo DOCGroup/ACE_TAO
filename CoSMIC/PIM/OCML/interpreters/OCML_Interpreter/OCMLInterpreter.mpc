@@ -1,0 +1,74 @@
+project (OCML): mfc,picmllib {
+   macros += BUILDER_OBJECT_NETWORK_V2
+   sharedname = OCML
+   includes += . $(GME_ROOT)/SDK/BON \
+               $(COSMIC_ROOT)/PIM/OCML/interpreters/OCML_Interpreter
+
+   specific {
+     use_lib_modifier =
+   }
+
+   specific (vc6,vc7,vc71,vc8) {
+     link_options += /DEF:Component.def
+   }
+
+   Source_Files {
+     $(GME_ROOT)/SDK/BON/ComponentLib.idl
+     $(GME_ROOT)/SDK/BON/BON.cpp
+     BON2Component.cpp
+     $(GME_ROOT)/SDK/BON/BONImpl.cpp
+     $(GME_ROOT)/SDK/BON/ComHelp.cpp
+     $(GME_ROOT)/SDK/BON/Common.cpp
+     Component.rc
+     $(GME_ROOT)/SDK/BON/ComponentDll.cpp
+     $(GME_ROOT)/SDK/BON/ComponentObj.cpp
+     $(GME_ROOT)/SDK/BON/Events.cpp
+     $(GME_ROOT)/SDK/BON/Exceptions.cpp
+     $(GME_ROOT)/SDK/BON/Extensions.cpp
+     $(GME_ROOT)/SDK/BON/MON.cpp
+     $(GME_ROOT)/SDK/BON/MONImpl.cpp
+     OCMLBonExtension_Manual.cpp
+     OCMLBonX.cpp
+     OCMLInterpreter.cpp
+     OCMLVisitor.cpp
+     StdAfx.cpp
+     $(GME_ROOT)/SDK/BON/Utils.cpp
+   }
+
+   Header_Files {
+     $(GME_ROOT)/SDK/BON/BON.h
+     BON2Component.h
+     $(GME_ROOT)/SDK/BON/BONImpl.h
+     $(GME_ROOT)/SDK/BON/ComHelp.h
+     $(GME_ROOT)/SDK/BON/Common.h
+     ComponentConfig.h
+     $(GME_ROOT)/SDK/BON/ComponentDll.h
+     $(GME_ROOT)/SDK/BON/ComponentObj.h
+     ComponentLib.h
+     $(GME_ROOT)/SDK/BON/Events.h
+     $(GME_ROOT)/SDK/BON/Exceptions.h
+     $(GME_ROOT)/SDK/BON/Extensions.h
+     $(GME_ROOT)/SDK/BON/MON.h
+     $(GME_ROOT)/SDK/BON/MONImpl.h
+     OCMLBonX.h
+     OCMLInterpreter.h
+     OCMLUtils.h
+     OCMLVisitor.h
+     Resource.h
+     StdAfx.h
+     $(GME_ROOT)/SDK/BON/Utils.h
+   }
+
+   Resource_Files {
+     CompIcon.ico
+   }
+}
+
+project (RegisterOCML) : picmllib {
+  after += OCML
+  custom_only = 1
+
+  Register_Files {
+    $(COSMIC_ROOT)\bin\OCML.dll
+  }
+}

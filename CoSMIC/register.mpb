@@ -1,0 +1,11 @@
+// MPC file to generate base library
+project {
+  Define_Custom(Register) {
+    automatic           = 0
+    command             = regsvr32.exe
+    commandflags        = /s
+    inputext            = .dll
+    generic_outputext   = .txt
+    postcommand         = echo regsvr32 exec. time <%gt%> <%output%>
+  }
+}

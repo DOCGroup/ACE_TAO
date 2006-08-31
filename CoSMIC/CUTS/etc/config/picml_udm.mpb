@@ -1,0 +1,16 @@
+// $Id$
+
+project {
+  requires += udm
+
+  includes  += $(COSMIC_ROOT)/PIM/PICML/interpreters \
+               $(UDM_PATH)/include
+
+  libpaths  += $(COSMIC_ROOT)/lib \
+               $(UDM_PATH)/lib
+
+  libs      += PICML UdmDll
+
+  dynamicflags += UDM_DYNAMIC_LINKING \
+                  PICML_HAS_DLL
+}

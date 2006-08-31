@@ -1,0 +1,1 @@
+<OptionCategory name="root"><OptionCategory name="child1"/><OptionCategory name="child2"><OptionCategory name="child11"/><OptionCategory name="child12"/></OptionCategory><BooleanOption name="opt1">true</BooleanOption><StringOption name="opt3">Some text value</StringOption><EnumOption name="enumOption">enum_item1</EnumOption></OptionCategory>

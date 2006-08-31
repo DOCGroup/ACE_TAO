@@ -1,0 +1,69 @@
+project (ConfigExport): mfc, picmllib {
+   after += PICML
+
+   macros += PICML_HAS_DLL _USRDLL _WINDLL \
+             OCML_CONFIGURATOR_INTERPRETER_BUILD_DLL
+   sharedname = ConfigExport
+   libs += PICML
+   pch_header = StdAfx.h
+   pch_source = StdAfx.cpp
+
+   specific {
+     use_lib_modifier =
+   }
+
+   specific (vc6,vc7,vc71,vc8) {
+     link_options += /DEF:Component.def
+   }
+
+   Source_Files {
+     $(GME_ROOT)/SDK/BON/ComponentLib.idl
+     StdAfx.cpp
+     $(GME_ROOT)/SDK/BON/ComHelp.cpp
+     $(GME_ROOT)/SDK/BON/ComponentDll.cpp
+     $(GME_ROOT)/SDK/BON/ComponentObj.cpp
+     Component.rc
+     Component.def
+     RawComponent.cpp
+     UdmApp.cpp
+
+     ConfigExportVisitor.cpp
+   }
+
+   Header_Files {
+     ComponentConfig.h
+     ComponentLib.h
+     $(GME_ROOT)/SDK/BON/ComHelp.h
+     $(GME_ROOT)/SDK/BON/ComponentDll.h
+     $(GME_ROOT)/SDK/BON/ComponentObj.h
+     $(GME_ROOT)/SDK/BON/GMECOM.h
+     RawComponent.h
+     Resource.h
+     StdAfx.h
+     UdmApp.h
+     UdmConfig.h
+
+     ConfigExportVisitor.h
+   }
+
+   Resource_Files {
+     CompIcon.ico
+   }
+
+   Source_Files {
+     ConfigExportVisitor.cpp
+   }
+
+   Header_Files {
+     OCML_Configurator_Interpreter_Visitor.h
+   }
+}
+
+project (RegisterConfigExport): picmllib {
+  after += ConfigExport
+  custom_only = 1
+
+  Register_Files {
+    $(COSMIC_ROOT)\bin\ConfigExport.dll
+  }
+}

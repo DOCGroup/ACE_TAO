@@ -1,0 +1,161 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "winres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""winres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "1 TYPELIB ""DecoratorLib.tlb""\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x2L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904B0"
+        BEGIN
+            VALUE "FileDescription", "Decorator Module"
+            VALUE "FileVersion", "1, 0, 0, 1"
+            VALUE "InternalName", "Decorator"
+            VALUE "LegalCopyright", "Copyright 2001"
+            VALUE "OriginalFilename", "Decorator.DLL"
+            VALUE "ProductName", "Decorator Module"
+            VALUE "ProductVersion", "1, 0, 0, 1"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// REGISTRY
+//
+
+IDR_DECORATOR           REGISTRY                "Decorator.rgs"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_BITMAP_MEMBER       BITMAP                  "..\\paradigms\\icons\\member.bmp"
+IDB_BITMAP_STRING       BITMAP                  "..\\paradigms\\icons\\string.bmp"
+IDB_BITMAP_COLLECTIONREF BITMAP                  "..\\paradigms\\icons\\variablecollectionref.bmp"
+IDB_BITMAP_ALIASREF     BITMAP                  "..\\paradigms\\icons\\aliasref.bmp"
+IDB_BITMAP_BOOLEAN      BITMAP                  "..\\paradigms\\icons\\boolean.bmp"
+IDB_BITMAP_BOXEDREF     BITMAP                  "..\\paradigms\\icons\\boxedref.bmp"
+IDB_BITMAP_BYTE         BITMAP                  "..\\paradigms\\icons\\byte.bmp"
+IDB_BITMAP_COMPONENTREF BITMAP                  "..\\paradigms\\icons\\componentref.bmp"
+IDB_BITMAP_ENUMREF      BITMAP                  "..\\paradigms\\icons\\enumref.bmp"
+IDB_BITMAP_EVENTREF     BITMAP                  "..\\paradigms\\icons\\eventref.bmp"
+IDB_BITMAP_GENERICOBJECT BITMAP                  "..\\paradigms\\icons\\genericobject.bmp"
+IDB_BITMAP_GENERICVALUE BITMAP                  "..\\paradigms\\icons\\genericvalue.bmp"
+IDB_BITMAP_GENERICVALUEOBJECT BITMAP                  "..\\paradigms\\icons\\genericvalueobject.bmp"
+IDB_BITMAP_LONG         BITMAP                  "..\\paradigms\\icons\\long.bmp"
+IDB_BITMAP_OBJECTREF    BITMAP                  "..\\paradigms\\icons\\objectref.bmp"
+IDB_BITMAP_REALNUMBER   BITMAP                  "..\\paradigms\\icons\\realnumber.bmp"
+IDB_BITMAP_VALUEREF     BITMAP                  "..\\paradigms\\icons\\valueref.bmp"
+IDB_BITMAP_COMPONENTFACTORYREF BITMAP                  "..\\paradigms\\icons\\componentfactoryref.bmp"
+IDB_BITMAP_SWITCHEDAGGREGATEREF BITMAP                  "..\\paradigms\\icons\\switchedaggregateref.bmp"
+IDB_BITMAP_TYPEKIND     BITMAP                  "..\\paradigms\\icons\\typekind.bmp"
+IDB_BITMAP_TYPEENCODING BITMAP                  "..\\paradigms\\icons\\typeencoding.bmp"
+IDB_BITMAP_SHORTINTEGER BITMAP                  "..\\paradigms\\icons\\short.bmp"
+IDB_BITMAP_COMPONENT    BITMAP                  "..\\paradigms\\icons\\component.bmp"
+IDB_BITMAP_RECEPTACLE_RT BITMAP                  "..\\paradigms\\icons\\receptacle_rt.bmp"
+IDB_BITMAP_INEVENT_LF   BITMAP                  "..\\paradigms\\icons\\inevent_lf.bmp"
+IDB_BITMAP_INEVENT_RT   BITMAP                  "..\\paradigms\\icons\\inevent_rt.bmp"
+IDB_BITMAP_OUTEVENT_LF  BITMAP                  "..\\paradigms\\icons\\outevent_lf.bmp"
+IDB_BITMAP_OUTEVENT_RT  BITMAP                  "..\\paradigms\\icons\\outevent_rt.bmp"
+IDB_BITMAP_RECEPTACLE_LF BITMAP                  "..\\paradigms\\icons\\receptacle_lf.bmp"
+IDB_BITMAP_FACET        BITMAP                  "..\\paradigms\\icons\\providedrequestport.bmp"
+IDB_BITMAP_AGGREGATEREF BITMAP                  "..\\paradigms\\icons\\aggregateref.bmp"
+IDB_BITMAP_INHERITS     BITMAP                  "..\\paradigms\\icons\\inherits.bmp"
+IDB_BITMAP_ATTRIBUTE    BITMAP                  "..\\paradigms\\icons\\attribute.bmp"
+IDB_BITMAP_READONLYATTRIBUTE BITMAP                  "..\\paradigms\\icons\\readonlyattribute.bmp"
+IDB_BITMAP_ATTRIBUTEMAPPING BITMAP                  "..\\paradigms\\icons\\AttributeMapping.bmp"
+IDB_BITMAP_DATATYPE     BITMAP                  "..\\paradigms\\icons\\DataType.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE 
+BEGIN
+    IDS_PROJNAME            "Decorator"
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+1 TYPELIB "DecoratorLib.tlb"
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

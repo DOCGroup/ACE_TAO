@@ -1,0 +1,1139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE project SYSTEM "mga.dtd">
+
+<project guid="{00000000-0000-0000-0000-000000000000}" cdate="Wed Mar 03 22:44:24 2004" mdate="Wed Mar 10 15:47:22 2004" metaguid="{AE174566-DEAD-BEEF-FEED-DAD000000001}" metaname="CompassML">
+	<name>HUDisplay</name>
+	<comment></comment>
+	<author></author>
+	<folder id="id-006a-00000001" relid="0x1" childrelidcntr="0x5" kind="RootFolder">
+		<name>HUDisplay</name>
+		<folder id="id-006a-00000004" relid="0x3" childrelidcntr="0x1" kind="TopLevelPackageFolder">
+			<name>NewTopLevelPackageFolder</name>
+			<model id="id-0065-00000010" kind="TopLevelPackage" relid="0x1" childrelidcntr="0x2">
+				<name>HUDisplay</name>
+				<attribute kind="label">
+					<value>Heads Up Display Package</value>
+				</attribute>
+				<reference id="id-0067-00000002" kind="ComponentPackageReference" role="package" relid="0x2" referred="id-0065-00000008">
+					<name>HUDisplay</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Package" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>250,313</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+			</model>
+		</folder>
+		<folder id="id-006a-00000003" relid="0x4" childrelidcntr="0x4" kind="ComponentPackages">
+			<name>NewComponentPackages</name>
+			<model id="id-0065-0000000a" kind="ComponentPackage" relid="0x3" childrelidcntr="0x2">
+				<name>NavDisplay</name>
+				<attribute kind="label" status="meta">
+					<value></value>
+				</attribute>
+				<attribute kind="UUID" status="meta">
+					<value></value>
+				</attribute>
+				<reference id="id-0067-0000000d" kind="ComponentInterfaceReference" role="realizes" relid="0x2" referred="id-0065-00000028">
+					<name>NavDisplay</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Package" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>325,388</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<model id="id-0065-0000000b" kind="PackagedComponentImplementation" role="implementation" relid="0x1" childrelidcntr="0x1">
+					<name>NavDisplayImpl</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Package" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>100,429</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<reference id="id-0067-0000000c" kind="ComponentImplementationReference" role="referencedImplementation" relid="0x1" referred="id-0065-0000001f">
+						<name>NavDisplay</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="Package" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>236,341</value>
+								</regnode>
+							</regnode>
+						</regnode>
+					</reference>
+				</model>
+			</model>
+			<model id="id-0065-0000000c" kind="ComponentPackage" relid="0x2" childrelidcntr="0x2">
+				<name>GPS</name>
+				<attribute kind="label">
+					<value>GPS System</value>
+				</attribute>
+				<attribute kind="UUID">
+					<value>b55c949b-a9e8-41dd-bbb5-67d8f610dffe</value>
+				</attribute>
+				<reference id="id-0067-0000000f" kind="ComponentInterfaceReference" role="realizes" relid="0x2" referred="id-0065-0000002a">
+					<name>GPS</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Package" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>430,409</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<model id="id-0065-0000000d" kind="PackagedComponentImplementation" role="implementation" relid="0x1" childrelidcntr="0x1">
+					<name>GPSImpl</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Package" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>149,457</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<reference id="id-0067-0000000e" kind="ComponentImplementationReference" role="referencedImplementation" relid="0x1" referred="id-0065-00000022">
+						<name>GPS</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="Package" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>173,390</value>
+								</regnode>
+							</regnode>
+						</regnode>
+					</reference>
+				</model>
+			</model>
+			<model id="id-0065-0000000e" kind="ComponentPackage" relid="0x1" childrelidcntr="0x3">
+				<name>RateGen</name>
+				<attribute kind="label">
+					<value>Rate Generator </value>
+				</attribute>
+				<attribute kind="UUID">
+					<value>3c4c5adf-ae85-4b18-a404-a7c4887d6f7d</value>
+				</attribute>
+				<reference id="id-0067-00000011" kind="ComponentInterfaceReference" role="realizes" relid="0x3" referred="id-0065-00000029">
+					<name>RateGen</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Package" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>584,388</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<model id="id-0065-0000000f" kind="PackagedComponentImplementation" role="implementation" relid="0x1" childrelidcntr="0x1">
+					<name>RateGenImpl</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Package" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>198,324</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<reference id="id-0067-00000010" kind="ComponentImplementationReference" role="referencedImplementation" relid="0x1" referred="id-0065-00000025">
+						<name>RateGen</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="Package" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>194,404</value>
+								</regnode>
+							</regnode>
+						</regnode>
+					</reference>
+				</model>
+				<atom id="id-0066-00000004" kind="Property" role="configProperty" relid="0x2">
+					<name>hertz</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Package" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>338,352</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="value">
+						<value>40</value>
+					</attribute>
+				</atom>
+			</model>
+			<model id="id-0065-00000008" kind="ComponentPackage" relid="0x4" childrelidcntr="0x1">
+				<name>HUDisplay</name>
+				<attribute kind="label">
+					<value>HUDisplay Package</value>
+				</attribute>
+				<attribute kind="UUID">
+					<value>823e4287-f53c-4caa-8619-f3dfda4c4998</value>
+				</attribute>
+				<model id="id-0065-00000009" kind="PackagedComponentImplementation" role="implementation" relid="0x1" childrelidcntr="0x1">
+					<name>HUDisplayImpl</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Package" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>117,502</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<reference id="id-0067-0000000b" kind="ComponentImplementationReference" role="referencedImplementation" relid="0x1" referred="id-0065-00000011">
+						<name>HUDisplay</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="Package" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>222,348</value>
+								</regnode>
+							</regnode>
+						</regnode>
+					</reference>
+				</model>
+			</model>
+		</folder>
+		<folder id="id-006a-00000002" relid="0x5" childrelidcntr="0x4" kind="ImplementationArtifacts">
+			<name>NewImplementationArtifacts</name>
+			<model id="id-0065-00000001" kind="ImplementationArtifact" relid="0x4" childrelidcntr="0x2">
+				<name>NavDisplay</name>
+				<attribute kind="label">
+					<value>NavDisplay Implementation Artifacts</value>
+				</attribute>
+				<attribute kind="UUID">
+					<value>4d02c22b-768e-4d1a-bf07-76da2f5d1fbf</value>
+				</attribute>
+				<attribute kind="location">
+					<value>/usr/lib/libNavDisplay_svnt.so,/usr/lib/libNavDisplay_stub.so,/usr/lib/libNavDisplay_exec.so</value>
+				</attribute>
+				<atom id="id-0066-00000001" kind="Property" role="execParameter" relid="0x2">
+					<name>entryPoint</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Package" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>310,464</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="value">
+						<value>createNavDisplayHome_Impl</value>
+					</attribute>
+				</atom>
+				<model id="id-0065-00000002" kind="NamedImplementationArtifact" role="dependsOn" relid="0x1" childrelidcntr="0x1">
+					<name>dependsOn</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Package" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>121,520</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<reference id="id-0067-00000009" kind="ImplementationArtifactReference" role="referencedArtifact" relid="0x1" referred="id-0065-00000005">
+						<name>Libraries</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="Package" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>174,251</value>
+								</regnode>
+							</regnode>
+						</regnode>
+					</reference>
+				</model>
+			</model>
+			<model id="id-0065-00000003" kind="ImplementationArtifact" relid="0x3" childrelidcntr="0x2">
+				<name>GPS</name>
+				<attribute kind="label">
+					<value>GPS Implementation Artifacts</value>
+				</attribute>
+				<attribute kind="UUID">
+					<value>c7264c15-d373-4d01-84ee-d37536599240</value>
+				</attribute>
+				<attribute kind="location">
+					<value>/usr/lib/libbGPS_svnt.so,/usr/lib/libGPS_stub.so,/usr/lib/libGPS_exec.so</value>
+				</attribute>
+				<model id="id-0065-00000004" kind="NamedImplementationArtifact" role="dependsOn" relid="0x1" childrelidcntr="0x1">
+					<name>dependsOn</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Package" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>121,436</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<reference id="id-0067-0000000a" kind="ImplementationArtifactReference" role="referencedArtifact" relid="0x1" referred="id-0065-00000005">
+						<name>Libraries</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="Package" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>209,349</value>
+								</regnode>
+							</regnode>
+						</regnode>
+					</reference>
+				</model>
+				<atom id="id-0066-00000002" kind="Property" role="execParameter" relid="0x2">
+					<name>entryPoint</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Package" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>289,443</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="value">
+						<value>createGPSHome_Impl</value>
+					</attribute>
+				</atom>
+			</model>
+			<model id="id-0065-00000005" kind="ImplementationArtifact" relid="0x2" childrelidcntr="0x0">
+				<name>Libraries</name>
+				<attribute kind="label">
+					<value>Common Libraries</value>
+				</attribute>
+				<attribute kind="UUID">
+					<value>6bae4fcd-c71c-44b4-a0d4-0e4199ce1a49</value>
+				</attribute>
+				<attribute kind="location">
+					<value>/usr/lib/libACE.so,/usr/lib/libTAO.so,/usr/lib/libCIAO_Client.so</value>
+				</attribute>
+			</model>
+			<model id="id-0065-00000006" kind="ImplementationArtifact" relid="0x1" childrelidcntr="0x2">
+				<name>RateGen</name>
+				<attribute kind="label">
+					<value>RateGen Implementation Artifacts</value>
+				</attribute>
+				<attribute kind="UUID">
+					<value>93bbdf7d-d3f7-4227-bb75-b0562ac15b92</value>
+				</attribute>
+				<attribute kind="location">
+					<value>/usr/lib/libRateGen_exec.so,/usr/lib/RateGen_svnt.so,/usr/lib/libRateGen_stub.so</value>
+				</attribute>
+				<model id="id-0065-00000007" kind="NamedImplementationArtifact" role="dependsOn" relid="0x1" childrelidcntr="0x1">
+					<name>dependsOn</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Package" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>163,541</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<reference id="id-0067-00000001" kind="ImplementationArtifactReference" role="referencedArtifact" relid="0x1" referred="id-0065-00000005">
+						<name>Libraries</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="Package" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>608,363</value>
+								</regnode>
+							</regnode>
+						</regnode>
+					</reference>
+				</model>
+				<atom id="id-0066-00000003" kind="Property" role="execParameter" relid="0x2">
+					<name>entryPoint</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Package" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>373,569</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="value">
+						<value>createRateGen_Impl</value>
+					</attribute>
+				</atom>
+			</model>
+		</folder>
+		<folder id="id-006a-00000005" relid="0x2" childrelidcntr="0x4" kind="ComponentImplementations">
+			<name>NewComponentImplementations</name>
+			<model id="id-0065-00000025" kind="ComponentImplementation" relid="0x1" childrelidcntr="0x4">
+				<name>RateGen</name>
+				<attribute kind="label">
+					<value>RateGen Implementation</value>
+				</attribute>
+				<attribute kind="UUID">
+					<value>789e1be2-703f-4bd3-af50-b400eef91fd0</value>
+				</attribute>
+				<reference id="id-0067-0000001a" kind="ComponentInterfaceReference" role="implements" relid="0x1" referred="id-0065-00000029">
+					<name>RateGen</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Package" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>598,465</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<model id="id-0065-00000026" kind="MonolithicImplementation" role="monolithicImpl" relid="0x4" childrelidcntr="0x1">
+					<name>monolithicImpl</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Package" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>170,415</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<model id="id-0065-00000027" kind="NamedImplementationArtifact" role="primaryArtifact" relid="0x1" childrelidcntr="0x1">
+						<name>primaryArtifact</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="Package" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>198,373</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<reference id="id-0067-00000008" kind="ImplementationArtifactReference" role="referencedArtifact" relid="0x1" referred="id-0065-00000006">
+							<name>RateGen</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="Package" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>300,286</value>
+									</regnode>
+								</regnode>
+							</regnode>
+						</reference>
+					</model>
+				</model>
+				<atom id="id-0066-00000005" kind="Property" role="configProperty" relid="0x3">
+					<name>hertz</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Package" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>426,496</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="value">
+						<value>40</value>
+					</attribute>
+				</atom>
+			</model>
+			<model id="id-0065-00000011" kind="ComponentImplementation" relid="0x4" childrelidcntr="0x6">
+				<name>HUDisplay</name>
+				<attribute kind="label">
+					<value>HUDDisplay Implementation</value>
+				</attribute>
+				<attribute kind="UUID">
+					<value>effd4bd0-6db0-4c50-9bb7-db9decebae1c</value>
+				</attribute>
+				<model id="id-0065-00000012" kind="ComponentAssembly" role="assemblyImpl" relid="0x1" childrelidcntr="0x6">
+					<name>assemblyImpl</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Package" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>177,387</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<model id="id-0065-0000001c" kind="SubComponentInstantiation" role="instance" relid="0x3" childrelidcntr="0x1">
+						<name>NavDisplay</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="Package" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>338,408</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="id">
+							<value>a_NavDisplay</value>
+						</attribute>
+						<reference id="id-0067-00000003" kind="ComponentPackageReference" role="reference" relid="0x1" referred="id-0065-0000000a">
+							<name>NavDisplay</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="Package" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>271,446</value>
+									</regnode>
+								</regnode>
+							</regnode>
+						</reference>
+					</model>
+					<model id="id-0065-00000019" kind="AssemblyConnection" role="connection" relid="0x4" childrelidcntr="0x2">
+						<name>GPS-RateGen</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="Package" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>450,415</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<model id="id-0065-0000001b" kind="SubComponentPortEndPoint" role="internalEndpoint" relid="0x1" childrelidcntr="0x3">
+							<name>a_GPS</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="Package" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>170,520</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="portName">
+								<value>Refresh</value>
+							</attribute>
+							<reference id="id-0067-00000017" kind="SubComponentInstantiationReference" role="instance" relid="0x3" referred="id-0065-0000001d">
+								<name>GPS</name>
+								<regnode name="PartRegs" isopaque="yes">
+									<value></value>
+									<regnode name="Package" isopaque="yes">
+										<value></value>
+										<regnode name="Position" isopaque="yes">
+											<value>335,300</value>
+										</regnode>
+									</regnode>
+								</regnode>
+							</reference>
+						</model>
+						<model id="id-0065-0000001a" kind="SubComponentPortEndPoint" role="internalEndpoint" relid="0x2" childrelidcntr="0x1">
+							<name>a_RateGen</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="Package" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>293,517</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="portName">
+								<value>Pulse</value>
+							</attribute>
+							<reference id="id-0067-00000016" kind="SubComponentInstantiationReference" role="instance" relid="0x1" referred="id-0065-0000001e">
+								<name>RateGen</name>
+								<regnode name="PartRegs" isopaque="yes">
+									<value></value>
+									<regnode name="Package" isopaque="yes">
+										<value></value>
+										<regnode name="Position" isopaque="yes">
+											<value>188,230</value>
+										</regnode>
+									</regnode>
+								</regnode>
+							</reference>
+						</model>
+					</model>
+					<model id="id-0065-00000016" kind="AssemblyConnection" role="connection" relid="0x5" childrelidcntr="0x2">
+						<name>NavDisplay-GPS</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="Package" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>543,493</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<model id="id-0065-00000017" kind="SubComponentPortEndPoint" role="internalEndpoint" relid="0x2" childrelidcntr="0x1">
+							<name>a_GPS</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="Package" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>254,492</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="portName">
+								<value>Ready</value>
+							</attribute>
+							<reference id="id-0067-00000014" kind="SubComponentInstantiationReference" role="instance" relid="0x1" referred="id-0065-0000001d">
+								<name>GPS</name>
+								<regnode name="PartRegs" isopaque="yes">
+									<value></value>
+									<regnode name="Package" isopaque="yes">
+										<value></value>
+										<regnode name="Position" isopaque="yes">
+											<value>223,356</value>
+										</regnode>
+									</regnode>
+								</regnode>
+							</reference>
+						</model>
+						<model id="id-0065-00000018" kind="SubComponentPortEndPoint" role="internalEndpoint" relid="0x1" childrelidcntr="0x1">
+							<name>a_NavDisplay</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="Package" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>128,485</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="portName">
+								<value>Refresh</value>
+							</attribute>
+							<reference id="id-0067-00000015" kind="SubComponentInstantiationReference" role="instance" relid="0x1" referred="id-0065-0000001c">
+								<name>NavDisplay</name>
+								<regnode name="PartRegs" isopaque="yes">
+									<value></value>
+									<regnode name="Package" isopaque="yes">
+										<value></value>
+										<regnode name="Position" isopaque="yes">
+											<value>398,321</value>
+										</regnode>
+									</regnode>
+								</regnode>
+							</reference>
+						</model>
+					</model>
+					<model id="id-0065-00000013" kind="AssemblyConnection" role="connection" relid="0x6" childrelidcntr="0x2">
+						<name>GPS-NavDisplay</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="Package" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>695,401</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<model id="id-0065-00000015" kind="SubComponentPortEndPoint" role="internalEndpoint" relid="0x1" childrelidcntr="0x1">
+							<name>a_GPS</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="Package" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>135,513</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="portName">
+								<value>GPSLocation</value>
+							</attribute>
+							<reference id="id-0067-00000013" kind="SubComponentInstantiationReference" role="instance" relid="0x1" referred="id-0065-0000001d">
+								<name>GPS</name>
+								<regnode name="PartRegs" isopaque="yes">
+									<value></value>
+									<regnode name="Package" isopaque="yes">
+										<value></value>
+										<regnode name="Position" isopaque="yes">
+											<value>272,342</value>
+										</regnode>
+									</regnode>
+								</regnode>
+							</reference>
+						</model>
+						<model id="id-0065-00000014" kind="SubComponentPortEndPoint" role="internalEndpoint" relid="0x2" childrelidcntr="0x1">
+							<name>a_NavDisplay</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="Package" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>247,520</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="portName">
+								<value>MyLocation</value>
+							</attribute>
+							<reference id="id-0067-00000012" kind="SubComponentInstantiationReference" role="instance" relid="0x1" referred="id-0065-0000001c">
+								<name>NavDisplay</name>
+								<regnode name="PartRegs" isopaque="yes">
+									<value></value>
+									<regnode name="Package" isopaque="yes">
+										<value></value>
+										<regnode name="Position" isopaque="yes">
+											<value>363,286</value>
+										</regnode>
+									</regnode>
+								</regnode>
+							</reference>
+						</model>
+					</model>
+					<model id="id-0065-0000001e" kind="SubComponentInstantiation" role="instance" relid="0x1" childrelidcntr="0x3">
+						<name>RateGen</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="Package" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>125,405</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="id">
+							<value>a_RateGen</value>
+						</attribute>
+						<reference id="id-0067-00000005" kind="ComponentPackageReference" role="reference" relid="0x3" referred="id-0065-0000000e">
+							<name>RateGen</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="Package" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>397,418</value>
+									</regnode>
+								</regnode>
+							</regnode>
+						</reference>
+					</model>
+					<model id="id-0065-0000001d" kind="SubComponentInstantiation" role="instance" relid="0x2" childrelidcntr="0x2">
+						<name>GPS</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="Package" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>233,415</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="id">
+							<value>a_GPS</value>
+						</attribute>
+						<reference id="id-0067-00000004" kind="ComponentPackageReference" role="reference" relid="0x1" referred="id-0065-0000000c">
+							<name>GPS</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="Package" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>320,334</value>
+									</regnode>
+								</regnode>
+							</regnode>
+						</reference>
+					</model>
+				</model>
+			</model>
+			<model id="id-0065-0000001f" kind="ComponentImplementation" relid="0x3" childrelidcntr="0x2">
+				<name>NavDisplay</name>
+				<attribute kind="label">
+					<value>NavDisplay Implementation</value>
+				</attribute>
+				<attribute kind="UUID">
+					<value>0a52c9de-7852-42e4-aac7-bf478169a21a</value>
+				</attribute>
+				<reference id="id-0067-00000018" kind="ComponentInterfaceReference" role="implements" relid="0x1" referred="id-0065-00000028">
+					<name>NavDisplay</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Package" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>444,276</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<model id="id-0065-00000020" kind="MonolithicImplementation" role="monolithicImpl" relid="0x2" childrelidcntr="0x1">
+					<name>monolithicImpl</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Package" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>170,359</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<model id="id-0065-00000021" kind="NamedImplementationArtifact" role="primaryArtifact" relid="0x1" childrelidcntr="0x1">
+						<name>primaryArtifact</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="Package" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>156,380</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<reference id="id-0067-00000006" kind="ImplementationArtifactReference" role="referencedArtifact" relid="0x1" referred="id-0065-00000001">
+							<name>NavDisplay</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="Package" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>321,237</value>
+									</regnode>
+								</regnode>
+							</regnode>
+						</reference>
+					</model>
+				</model>
+			</model>
+			<model id="id-0065-00000022" kind="ComponentImplementation" relid="0x2" childrelidcntr="0x5">
+				<name>GPS</name>
+				<attribute kind="label">
+					<value>GPS Implementation</value>
+				</attribute>
+				<attribute kind="UUID">
+					<value>154cf3cd-1770-4e92-b19b-8c2c921fea38</value>
+				</attribute>
+				<reference id="id-0067-00000019" kind="ComponentInterfaceReference" role="implements" relid="0x2" referred="id-0065-0000002a">
+					<name>GPS</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Package" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>500,493</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<model id="id-0065-00000023" kind="MonolithicImplementation" role="monolithicImpl" relid="0x1" childrelidcntr="0x1">
+					<name>monolithicImpl</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Package" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>233,485</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<model id="id-0065-00000024" kind="NamedImplementationArtifact" role="primaryArtifact" relid="0x1" childrelidcntr="0x1">
+						<name>primaryArtifact</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="Package" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>121,464</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<reference id="id-0067-00000007" kind="ImplementationArtifactReference" role="referencedArtifact" relid="0x1" referred="id-0065-00000003">
+							<name>GPS</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="Package" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>286,209</value>
+									</regnode>
+								</regnode>
+							</regnode>
+						</reference>
+					</model>
+				</model>
+			</model>
+		</folder>
+		<folder id="id-006a-00000006" relid="0x1" childrelidcntr="0x3" kind="ComponentInterfaces">
+			<name>NewComponentInterfaces</name>
+			<model id="id-0065-00000028" kind="ComponentInterface" relid="0x3" childrelidcntr="0x2">
+				<name>NavDisplay</name>
+				<attribute kind="label">
+					<value>NavDisplay Component </value>
+				</attribute>
+				<attribute kind="specificType">
+					<value>IDL:HUDDisplay/NavDisplay:1.0</value>
+				</attribute>
+				<attribute kind="UUID">
+					<value>589462ed-e88f-4f96-a7a7-359cdc333d63</value>
+				</attribute>
+				<attribute kind="supportedType">
+					<value>IDL:HUDDisplay/NavDisplay:1.0</value>
+				</attribute>
+				<atom id="id-0066-00000006" kind="ComponentPort" role="port" relid="0x2">
+					<name>GPSLocation</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Package" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>334,445</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="specificType">
+						<value>IDL:HUDDisplay/position:1.0</value>
+					</attribute>
+					<attribute kind="supportedType">
+						<value>IDL:HUDDisplay/position:1.0</value>
+					</attribute>
+					<attribute kind="provider" status="meta">
+						<value>false</value>
+					</attribute>
+					<attribute kind="exclusiveUser" status="meta">
+						<value>false</value>
+					</attribute>
+					<attribute kind="optional" status="meta">
+						<value>false</value>
+					</attribute>
+					<attribute kind="exclusiveProvider" status="meta">
+						<value>false</value>
+					</attribute>
+					<attribute kind="kind">
+						<value>SimplexReceptacle</value>
+					</attribute>
+				</atom>
+				<atom id="id-0066-00000007" kind="ComponentPort" role="port" relid="0x1">
+					<name>Refresh</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Package" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>215,445</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="specificType">
+						<value>IDL:HUDDisplay/tick:1.0</value>
+					</attribute>
+					<attribute kind="supportedType">
+						<value>IDL:HUDDisplay/tick:1.0</value>
+					</attribute>
+					<attribute kind="provider" status="meta">
+						<value>false</value>
+					</attribute>
+					<attribute kind="exclusiveUser" status="meta">
+						<value>false</value>
+					</attribute>
+					<attribute kind="optional" status="meta">
+						<value>false</value>
+					</attribute>
+					<attribute kind="exclusiveProvider" status="meta">
+						<value>false</value>
+					</attribute>
+					<attribute kind="kind">
+						<value>EventConsumer</value>
+					</attribute>
+				</atom>
+			</model>
+			<model id="id-0065-0000002a" kind="ComponentInterface" relid="0x1" childrelidcntr="0x3">
+				<name>GPS</name>
+				<attribute kind="label">
+					<value>GPS Component</value>
+				</attribute>
+				<attribute kind="specificType">
+					<value>IDL:HUDDisplay/GPS:1.0</value>
+				</attribute>
+				<attribute kind="UUID">
+					<value>058178f1-430a-460c-927a-d3c98b4ec860</value>
+				</attribute>
+				<attribute kind="supportedType">
+					<value>IDL:HUDDisplay/GPS:1.0</value>
+				</attribute>
+				<atom id="id-0066-0000000b" kind="ComponentPort" role="port" relid="0x1">
+					<name>MyLocation</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Package" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>187,389</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="specificType">
+						<value>IDL:HUDDisplay/position:1.0</value>
+					</attribute>
+					<attribute kind="supportedType">
+						<value>IDL:HUDDisplay/position:1.0</value>
+					</attribute>
+					<attribute kind="provider">
+						<value>true</value>
+					</attribute>
+					<attribute kind="exclusiveUser" status="meta">
+						<value>false</value>
+					</attribute>
+					<attribute kind="optional" status="meta">
+						<value>false</value>
+					</attribute>
+					<attribute kind="exclusiveProvider" status="meta">
+						<value>false</value>
+					</attribute>
+					<attribute kind="kind" status="meta">
+						<value>Facet</value>
+					</attribute>
+				</atom>
+				<atom id="id-0066-0000000a" kind="ComponentPort" role="port" relid="0x2">
+					<name>Ready</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Package" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>338,387</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="specificType">
+						<value>IDL:HUDDisplay/tick:1.0</value>
+					</attribute>
+					<attribute kind="supportedType">
+						<value>IDL:HUDDisplay/tick:1.0</value>
+					</attribute>
+					<attribute kind="provider">
+						<value>true</value>
+					</attribute>
+					<attribute kind="exclusiveUser" status="meta">
+						<value>false</value>
+					</attribute>
+					<attribute kind="optional" status="meta">
+						<value>false</value>
+					</attribute>
+					<attribute kind="exclusiveProvider" status="meta">
+						<value>false</value>
+					</attribute>
+					<attribute kind="kind">
+						<value>EventPublisher</value>
+					</attribute>
+				</atom>
+				<atom id="id-0066-00000009" kind="ComponentPort" role="port" relid="0x3">
+					<name>Refresh</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Package" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>464,394</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="specificType">
+						<value>IDL:HUDDisplay/tick:1.0</value>
+					</attribute>
+					<attribute kind="supportedType">
+						<value>IDL:HUDDisplay/tick:1.0</value>
+					</attribute>
+					<attribute kind="provider" status="meta">
+						<value>false</value>
+					</attribute>
+					<attribute kind="exclusiveUser" status="meta">
+						<value>false</value>
+					</attribute>
+					<attribute kind="optional" status="meta">
+						<value>false</value>
+					</attribute>
+					<attribute kind="exclusiveProvider" status="meta">
+						<value>false</value>
+					</attribute>
+					<attribute kind="kind">
+						<value>EventConsumer</value>
+					</attribute>
+				</atom>
+			</model>
+			<model id="id-0065-00000029" kind="ComponentInterface" relid="0x2" childrelidcntr="0x1">
+				<name>RateGen</name>
+				<attribute kind="label">
+					<value>Rate Generator Component</value>
+				</attribute>
+				<attribute kind="specificType">
+					<value>IDL:HUDDisplay/RateGen:1.0</value>
+				</attribute>
+				<attribute kind="UUID">
+					<value>803f8fc7-55de-4a20-81eb-ae951d85b7f4</value>
+				</attribute>
+				<attribute kind="supportedType">
+					<value>IDL:HUDDisplay/opmode:1.0</value>
+				</attribute>
+				<atom id="id-0066-00000008" kind="ComponentPort" role="port" relid="0x1">
+					<name>Pulse</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Package" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>205,380</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="specificType">
+						<value>IDL:HUDDisplay/tick:1.0</value>
+					</attribute>
+					<attribute kind="supportedType">
+						<value>IDL:HUDDisplay/tick:1.0</value>
+					</attribute>
+					<attribute kind="provider">
+						<value>true</value>
+					</attribute>
+					<attribute kind="exclusiveUser" status="meta">
+						<value>false</value>
+					</attribute>
+					<attribute kind="optional" status="meta">
+						<value>false</value>
+					</attribute>
+					<attribute kind="exclusiveProvider" status="meta">
+						<value>false</value>
+					</attribute>
+					<attribute kind="kind">
+						<value>EventPublisher</value>
+					</attribute>
+				</atom>
+			</model>
+		</folder>
+		<regnode name="ConstraintManagerSettings" isopaque="yes">
+			<value></value>
+			<regnode name="ShortCircuitLogicalOperators" isopaque="yes">
+				<value>yes</value>
+			</regnode>
+			<regnode name="ShortCircuitIterators" isopaque="yes">
+				<value>yes</value>
+			</regnode>
+			<regnode name="Tracking" isopaque="yes">
+				<value>yes</value>
+			</regnode>
+			<regnode name="ViolationCount" isopaque="yes">
+				<value>-2</value>
+			</regnode>
+			<regnode name="ModelDepth" isopaque="yes">
+				<value>1</value>
+			</regnode>
+		</regnode>
+	</folder>
+</project>

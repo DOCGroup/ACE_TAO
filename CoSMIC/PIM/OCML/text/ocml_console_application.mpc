@@ -1,0 +1,31 @@
+project: aceexe, xerces {
+  exename = ocml
+  includes += ../
+  libs += ocml_common ocml_engine
+  after += ocml_common ocml_engine
+
+  Source_Files {
+    main.cpp
+    ocml_console_application.cpp
+    application.cpp
+    environment.cpp
+    basic_commands.cpp
+    option_commands.cpp
+    category_commands.cpp
+    rule_commands.cpp
+  }
+
+  Header_Files {
+    ocml_console_application.hpp
+    application.hpp
+    environment.hpp
+    category_commands.hpp
+    option_commands.hpp
+    basic_commands.hpp
+    text_option_wrapper.hpp
+  }
+
+  Template_Files {
+    category_commands.tpp
+  }
+}

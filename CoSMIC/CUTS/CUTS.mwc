@@ -1,0 +1,29 @@
+// $Id$
+
+workspace (CUTS) {
+  cmdline += -include $CUTS_ROOT/etc/config \
+             -feature_file default.features
+
+  // -- The following projects/directories are shared builds.
+  cuts
+
+  exclude (!vc6, !vc7, !vc71, !vc8) {
+    cmdline += -include $COSMIC_ROOT
+    utils/Node_Daemon
+    $(COSMIC_ROOT)/PIM/PICML/interpreters/PICML
+  }
+
+  exclude {
+    performance-tests
+    tests
+    utils/BMW
+  }
+
+  // -- The following projects are static builds
+
+  // -- This project is necessary for the code generation projects.
+  exclude (!vc6, !vc7, !vc71, !vc8) {
+    cmdline += -static
+    $(CIAO_ROOT)/CCF/CCF/CodeGenerationKit
+  }
+}

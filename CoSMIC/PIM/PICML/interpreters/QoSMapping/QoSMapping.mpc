@@ -1,0 +1,15 @@
+project(QoSMapping): picmllib {
+   after += PICML
+   sharedname = QoSMapping
+   macros += QOSMAPPING_BUILD_DLL PICML_HAS_DLL
+   libs += PICML
+
+   Source_Files {
+     QoSMappingVisitor.cpp
+   }
+
+   Header_Files {
+     QoSMappingVisitor.h
+     QoSMapping_Export.h
+   }
+}

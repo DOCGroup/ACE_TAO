@@ -1,0 +1,13 @@
+
+
+We need the following constraints: 
+
+priotity 0 - 32767
+
+names must me unique for everything if I am going to use name-based ids
+
+PolicySetRef cannot point to a PolicySet within the same QoSModel
+
+no more than one ref to PolicySet from within the same QoSModel
+
+references are not NULL! (I am checking but anyways)

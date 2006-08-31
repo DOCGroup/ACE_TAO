@@ -1,0 +1,19 @@
+project (PICML): picmllib {
+
+   UDM_Files {
+      gendir = .
+      $(COSMIC_ROOT)/PIM/PICML/paradigms/PICML.xml
+   }
+
+   sharedname = PICML
+   macros += PICML_HAS_DLL PICML_EXPORT
+
+   Source_Files {
+     PICML.cpp
+   }
+
+   Header_Files {
+     PICML.h
+     PICML_Export.h
+   }
+}

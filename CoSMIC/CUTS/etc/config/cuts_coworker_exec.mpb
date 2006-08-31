@@ -1,0 +1,25 @@
+// $Id$
+
+project : cuts_component_dnc, rt_server {
+  // -- include the required libraries
+  libs += CUTS CUTS_Utils CUTS_exec
+
+  libpaths += ./lib
+
+  specific (vc6, vc7, vc71, vc8, nmake) {
+    // -- place all files in a common location
+    libout = ./lib
+    dllout = ./bin
+  } else {
+    // -- place all files in a common location
+    dllout = ./lib
+  }
+
+  IDL_Files {
+
+  }
+}
+
+feature (odbc) {
+  libs += Benchmark_Data_Collector_Ex_svnt
+}

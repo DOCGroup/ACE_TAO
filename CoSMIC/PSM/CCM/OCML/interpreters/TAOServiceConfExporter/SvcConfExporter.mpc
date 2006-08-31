@@ -1,0 +1,27 @@
+// $Id$
+
+project {
+  sharedName = OCMLSvcConfExporter
+  macros += SVC_CONF_EXPORTER_DLL_ENTRY_EXPORTS _USRDLL WXMAKINGDLL
+
+  libout = $(COSMIC_ROOT)/lib
+  dllout = $(COSMIC_ROOT)/bin
+
+  includes += $(XERCESCROOT)/include
+  libpaths += $(XERCESCROOT)/lib
+  libs     += xerces-c_2
+
+  Source_Files {
+    SvcConfExporter.cpp
+    ../Common/XercesHelpers.cpp
+  }
+
+  Header_Files {
+    SvcConfExporter.hpp
+    extern_declarations.hpp
+    ../Common/StringUtils.hpp
+    ../Common/StringUtils.ipp
+    ../Common/XercesHelpers.hpp
+    ../Common/XercesHelpers.ipp
+  }
+}

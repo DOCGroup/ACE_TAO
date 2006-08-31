@@ -1,0 +1,35 @@
+INSTRUCTIONS FOR INTEGRATING TOOL META-MODELS WITH PICML
+--------------------------------------------------------
+Step 1:
+  - Import the Meta Model of IDML (IDML.xme)
+  - Run the MetaGME to UML Interpreter (This is the only interpreter registered
+    with the paradigm)
+  - Save it in the following directory (PICML/paradigms). File saved will be IDML-UML.mga
+
+Step 2:
+  - Open PICML and refresh library. During refresh process you will be prompted
+    for a "Conector String"
+  - Using the dialogue box, point this to the IDML.mga path
+  - Check for Null references by Edit -> Search for Null References menu option
+
+Step 3:
+  - Integrate you meta-model with PICML
+
+Step 4:
+  - Use the Meta-GME to UML Interpreter (Comes with the installation of GREAT)
+    to generate the PICML-UML.mga. Make sure that this file is put in the PICML/paradigms
+    directory
+
+Step 5:
+  - Open the PICML-UML.mga and interpret it using the XML interpreter
+    (This is the only interpreter registered)
+  - This generates the PICML.xml file
+
+Step 6:
+  - Use Udm.exe to generate the PICML.h PICML.xsd and PICML.cpp files
+     using:
+         Udm.exe -v Picml.xml
+
+Step 7:
+  - Make sure that you export your paradigm to generate the PICML.xmp file same is
+    the case with XML file to generate the PICML.xme file

@@ -1,0 +1,13 @@
+workspace {
+  cmdline += -feature_file $COSMIC_ROOT/default.features \
+             -include $COSMIC_ROOT
+
+  CQML
+  NetQoS  
+  NetQoSComponent
+//  DeploymentPlan
+//  DeploymentPlanComponent
+  DeploymentPlanFramework
+  FaultTolerance
+  FaultToleranceComponent
+}

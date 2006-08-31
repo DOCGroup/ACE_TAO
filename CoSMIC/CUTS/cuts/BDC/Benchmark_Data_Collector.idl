@@ -1,0 +1,35 @@
+// -*- IDL -*-
+
+#ifndef _BENCHMARK_DATA_COLLECTOR_IDL_
+#define _BENCHMARK_DATA_COLLECTOR_IDL_
+
+#include "cuts/CUTS.idl"
+#include "cuts/Events.idl"
+
+module CUTS
+{
+  component Benchmark_Data_Collector
+  {
+    provides Testing_Service testing_service;
+
+    provides Path_Measurement online_measurements;
+
+    provides BDC_Control_Handle controls;
+
+    publishes Collection_Statistics collection_done;
+
+    attribute long timeout;
+
+    attribute long collection_threads;
+
+    attribute string metrics_outfile;
+  };
+
+  home Benchmark_Data_Collector_Home
+    manages Benchmark_Data_Collector
+  {
+
+  };
+};
+
+#endif // !defined _BENCHMARK_DATA_COLLECTOR_IDL_

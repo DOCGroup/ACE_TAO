@@ -1,0 +1,13 @@
+// $Id$
+
+project : gme_raw, picml_udm, xerces {
+  requires += udm
+
+  Header_Files {
+    UdmConfig.h
+  }
+
+  Source_Files {
+    UdmApp.cpp
+  }
+}

@@ -1,0 +1,16 @@
+// $Id$
+
+project(CIDL): picmllib {
+   after += PICML
+   sharedname = CIDL
+   macros += CIDL_BUILD_DLL PICML_HAS_DLL
+   libs += PICML
+
+   Source_Files {
+     Cidlc_Visitor.cpp
+   }
+
+   Header_Files {
+     CIDL_Export.h
+   }
+}

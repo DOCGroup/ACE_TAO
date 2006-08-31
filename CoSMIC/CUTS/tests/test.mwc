@@ -1,0 +1,13 @@
+// $Id$
+
+workspace (CUTS_Test) {
+  cmdline += -include $CUTS_ROOT/etc/config
+
+  // -- explicitly specify the project directories
+  test.mpc
+  cuts
+
+  exclude {
+    coworker
+  }
+}

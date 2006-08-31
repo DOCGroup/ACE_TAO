@@ -1,0 +1,12 @@
+project {
+  exename = config_exe
+  includes += ..
+  libs  += ocml_configurator_ui ocml_engine ocml_common
+  after += ocml_configurator_ui ocml_engine ocml_common
+  install = $(COSMIC_ROOT)/bin
+  libpaths += $(COSMIC_ROOT)/lib
+
+  Source_Files {
+    config_exe.cpp
+  }
+}

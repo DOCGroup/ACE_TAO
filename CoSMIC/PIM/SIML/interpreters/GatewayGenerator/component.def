@@ -1,0 +1,10 @@
+; Interpreter.def : Declares the module parameters.
+
+LIBRARY      "GatewayGenerator.DLL"
+
+EXPORTS
+	DllCanUnloadNow     PRIVATE
+	DllGetClassObject   PRIVATE
+	DllRegisterServer   PRIVATE
+	DllUnregisterServer	PRIVATE
+

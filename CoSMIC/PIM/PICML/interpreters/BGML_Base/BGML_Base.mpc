@@ -1,0 +1,17 @@
+// -*- MPC -*-
+// $Id$
+
+project (BGML_Base): acelib {
+  sharedname = BGML_Base
+  dynamicflags = BGML_BUILD_DLL
+  libs += ACE
+  libout = "$(ACE_ROOT)"/lib
+
+  Source_Files {
+    BGML_Task_Base.cpp
+  }
+
+  Header_Files {
+    BGML_Export.h
+  }
+}

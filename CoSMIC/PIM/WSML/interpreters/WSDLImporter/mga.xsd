@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="atom">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="name" />
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:element ref="regnode" />
+          <xs:element ref="constraint" />
+          <xs:element ref="attribute" />
+        </xs:choice>
+      </xs:sequence>
+      <xs:attribute name="isprimary" use="optional" default="yes">
+        <xs:simpleType>
+          <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="yes" />
+            <xs:enumeration value="no" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="relid" type="xs:string" use="optional" />
+      <xs:attribute name="perm" type="xs:string" use="optional" />
+      <xs:attribute name="kind" type="xs:NMTOKEN" use="required" />
+      <xs:attribute name="isinstance" use="optional" default="no">
+        <xs:simpleType>
+          <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="yes" />
+            <xs:enumeration value="no" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="derivedfrom" type="xs:IDREF" use="optional" />
+      <xs:attribute name="role" type="xs:NMTOKEN" use="optional" />
+      <xs:attribute name="id" type="xs:ID" use="optional" />
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="attribute">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="value" />
+        <xs:element ref="regnode" minOccurs="0" maxOccurs="unbounded" />
+      </xs:sequence>
+      <xs:attribute name="status" use="optional">
+        <xs:simpleType>
+          <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="inherited" />
+            <xs:enumeration value="meta" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="kind" type="xs:NMTOKEN" use="required" />
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="author">
+    <xs:complexType mixed="true" />
+  </xs:element>
+
+  <xs:element name="comment">
+    <xs:complexType mixed="true" />
+  </xs:element>
+
+  <xs:element name="connection">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="name" minOccurs="0" />
+        <xs:choice minOccurs="0" maxOccurs="unbounded" >
+          <xs:element ref="regnode" />
+          <xs:element ref="constraint" />
+          <xs:element ref="connpoint" />
+          <xs:element ref="attribute" />
+        </xs:choice>
+      </xs:sequence>
+      <xs:attribute name="isprimary" use="optional" default="yes">
+        <xs:simpleType>
+          <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="yes" />
+            <xs:enumeration value="no" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="id" type="xs:ID" use="optional" />
+      <xs:attribute name="kind" type="xs:NMTOKEN" use="required" />
+      <xs:attribute name="perm" type="xs:string" use="optional" />
+      <xs:attribute name="relid" type="xs:string" use="optional" />
+      <xs:attribute name="role" type="xs:NMTOKEN" use="optional" />
+      <xs:attribute name="isbound" use="optional" default="no">
+        <xs:simpleType>
+          <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="yes" />
+            <xs:enumeration value="no" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="isinstance" use="optional" default="no">
+        <xs:simpleType>
+          <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="yes" />
+            <xs:enumeration value="no" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="derivedfrom" type="xs:IDREF" use="optional" />
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="connpoint">
+    <xs:complexType>
+      <xs:attribute name="isbound" use="optional" default="no">
+        <xs:simpleType>
+          <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="yes" />
+            <xs:enumeration value="no" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="refs" type="xs:IDREFS" use="optional" />
+      <xs:attribute name="target" type="xs:IDREF" use="required" />
+      <xs:attribute name="role" type="xs:NMTOKEN" use="required" />
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="constraint">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="name" />
+        <xs:element ref="value" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="folder">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="name" />
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:element ref="regnode" />
+          <xs:element ref="constraint" />
+          <xs:element ref="folder" />
+          <xs:element ref="model" />
+          <xs:element ref="atom" />
+          <xs:element ref="reference" />
+          <xs:element ref="set" />
+          <xs:element ref="connection" />
+        </xs:choice>
+      </xs:sequence>
+      <xs:attribute name="relid" type="xs:string" use="optional" />
+      <xs:attribute name="perm" type="xs:string" use="optional" />
+      <xs:attribute name="libref" type="xs:string" use="optional" />
+      <xs:attribute name="kind" type="xs:NMTOKEN" use="required" />
+      <xs:attribute name="childrelidcntr" type="xs:string" use="optional" />
+      <xs:attribute name="id" type="xs:ID" use="optional" />
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="model">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="name" />
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:element ref="regnode" />
+          <xs:element ref="constraint" />
+          <xs:element ref="attribute" />
+          <xs:element ref="model" />
+          <xs:element ref="atom" />
+          <xs:element ref="reference" />
+          <xs:element ref="set" />
+          <xs:element ref="connection" />
+        </xs:choice>
+      </xs:sequence>
+      <xs:attribute name="isprimary" use="optional" default="yes">
+        <xs:simpleType>
+          <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="yes" />
+            <xs:enumeration value="no" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="id" type="xs:ID" use="optional" />
+      <xs:attribute name="childrelidcntr" type="xs:string" use="optional" />
+      <xs:attribute name="kind" type="xs:NMTOKEN" use="required" />
+      <xs:attribute name="perm" type="xs:string" use="optional" />
+      <xs:attribute name="relid" type="xs:string" use="optional" />
+      <xs:attribute name="role" type="xs:NMTOKEN" use="optional" />
+      <xs:attribute name="isinstance" use="optional" default="no">
+        <xs:simpleType>
+          <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="yes" />
+            <xs:enumeration value="no" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="derivedfrom" type="xs:IDREF" use="optional" />
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="name">
+    <xs:complexType mixed="true" />
+  </xs:element>
+
+  <xs:element name="project">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="name" />
+        <xs:element ref="comment" minOccurs="0" />
+        <xs:element ref="author" minOccurs="0" />
+        <xs:element ref="folder" />
+      </xs:sequence>
+      <xs:attribute name="metaname" type="xs:string" use="required" />
+      <xs:attribute name="metaguid" type="xs:string" use="optional" />
+      <xs:attribute name="version" type="xs:string" use="optional" />
+      <xs:attribute name="cdate" type="xs:string" use="optional" />
+      <xs:attribute name="guid" type="xs:string" use="optional" />
+      <xs:attribute name="mdate" type="xs:string" use="optional" />
+      <xs:attribute name="metaversion" type="xs:string" use="optional" />
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="reference">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="name" />
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:element ref="regnode" />
+          <xs:element ref="constraint" />
+          <xs:element ref="attribute" />
+        </xs:choice>
+      </xs:sequence>
+      <xs:attribute name="isprimary" use="optional" default="yes">
+        <xs:simpleType>
+          <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="yes" />
+            <xs:enumeration value="no" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="id" type="xs:ID" use="optional" />
+      <xs:attribute name="kind" type="xs:NMTOKEN" use="required" />
+      <xs:attribute name="perm" type="xs:string" use="optional" />
+      <xs:attribute name="relid" type="xs:string" use="optional" />
+      <xs:attribute name="referred" type="xs:IDREF" use="optional" />
+      <xs:attribute name="role" type="xs:NMTOKEN" use="optional" />
+      <xs:attribute name="isbound" use="optional" default="no">
+        <xs:simpleType>
+          <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="yes" />
+            <xs:enumeration value="no" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="isinstance" use="optional" default="no">
+        <xs:simpleType>
+          <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="yes" />
+            <xs:enumeration value="no" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="derivedfrom" type="xs:IDREF" use="optional" />
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="regnode">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="value" />
+        <xs:element ref="regnode" minOccurs="0" maxOccurs="unbounded" />
+      </xs:sequence>
+      <xs:attribute name="status" use="optional">
+        <xs:simpleType>
+          <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="inherited" />
+            <xs:enumeration value="meta" />
+            <xs:enumeration value="undefined" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="name" type="xs:string" use="required" />
+      <xs:attribute name="isopaque" use="optional" default="no">
+        <xs:simpleType>
+          <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="yes" />
+            <xs:enumeration value="no" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="set">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="name" />
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:element ref="regnode" />
+          <xs:element ref="constraint" />
+          <xs:element ref="attribute" />
+        </xs:choice>
+      </xs:sequence>
+      <xs:attribute name="isprimary" use="optional" default="yes">
+        <xs:simpleType>
+          <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="yes" />
+            <xs:enumeration value="no" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="id" type="xs:ID" use="optional" />
+      <xs:attribute name="kind" type="xs:NMTOKEN" use="required" />
+      <xs:attribute name="perm" type="xs:string" use="optional" />
+      <xs:attribute name="relid" type="xs:string" use="optional" />
+      <xs:attribute name="members" type="xs:IDREFS" use="optional" />
+      <xs:attribute name="role" type="xs:NMTOKEN" use="optional" />
+      <xs:attribute name="isbound" use="optional" default="no">
+        <xs:simpleType>
+          <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="yes" />
+            <xs:enumeration value="no" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="isinstance" use="optional" default="no">
+        <xs:simpleType>
+          <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="yes" />
+            <xs:enumeration value="no" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="derivedfrom" type="xs:IDREF" use="optional" />
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="value">
+    <xs:complexType mixed="true" />
+  </xs:element>
+
+</xs:schema>
