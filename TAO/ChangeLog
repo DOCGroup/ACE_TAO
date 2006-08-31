@@ -1,3 +1,25 @@
+Thu Aug 31 03:35:14 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/Asynch_Queued_Message.cpp:
+        * tao/Invocation_Adapter.cpp:
+          Fix for timed, asynch messages that happen to expire during
+          transport resolution. This fixes part of the Oneway_Timeout test.
+
+        * tests/Big_Oneways/run_test.pl:
+          This test still has an undefined intermittent deadlock, but I
+          lowered the timeout thresholds so it doesn't wait 15 minutes in
+          a deadlock condition. If any client fails, they all deadlock, so
+          there is no reason to wait 5 minutes before killing clients 2
+          and 3.
+
+        * tests/Oneway_Timeouts/client.cpp:
+        * tests/Oneway_Timeouts/run_test.pl:
+
+          Fixed a math error in run_test.pl that falsely triggered a
+          timeout failure every time. Rearranged the semantics of forced
+          connection establishment to ensure it always works without
+          regard to messaging timeouts.
+
 Wed Aug 30 13:20:38 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/IIOP_Connection_Handler.h:

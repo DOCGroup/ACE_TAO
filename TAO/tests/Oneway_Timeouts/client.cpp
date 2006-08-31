@@ -16,7 +16,7 @@ using namespace PortableServer;
 
 namespace
 {
-  const char *non_existent_ior = "corbaloc:iiop:1.2@ociweb.com:12345/test";
+  const char *non_existent_ior = "corbaloc:iiop:1.2@63.246.9.65:12345/test";
   const int TIME_THRESHOLD = 50; //ms
 
   int request_timeout = 0;
@@ -310,7 +310,6 @@ int main (int ac, char *av[])
           return 1;
         }
 
-
       set_connect_timeout (orb.in ());
       set_buffering (orb.in ());
 
@@ -324,20 +323,21 @@ int main (int ac, char *av[])
 
       ACE_ASSERT (! is_nil (obj.in ()));
 
-      Tester_var tmp_tester = Tester::_unchecked_narrow (obj.in ());
+      Tester_var tmp_tester;
+      if (force_connect)
+        {
+          tmp_tester = Tester::_narrow (obj.in ());
+          tmp_tester->test2 (-2);
+          cout << "Connected..." << endl;
+        }
+      else
+        tmp_tester = Tester::_unchecked_narrow (obj.in ());
 
       Tester_var tester = set_request_timeout (tmp_tester.in (), orb.in ());
 
       ACE_ASSERT (! is_nil (tester.in ()));
 
       Long i = 0;
-
-      if (force_connect)
-        {
-          tester->test2 (-2);
-          cout << "Connected..." << endl;
-        }
-
 
       for (; i < num_requests; ++i)
         {
@@ -443,6 +443,7 @@ int main (int ac, char *av[])
     {
       if (force_timeout)
         {
+          ACE_DEBUG ((LM_DEBUG, "caught exception\n"));
           ACE_Time_Value after = ACE_High_Res_Timer::gettimeofday_hr ();
           long ms = (after - before).msec ();
           if ( (use_twoway || !use_sync_scope)
