@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Deployment:componentImplementationDescription xmlns:Deployment="http://www.omg.org/Deployment" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+
+  <UUID>51B2FD0F-060B-4895-B7F1-2645E7EF4211</UUID>
+
+  <implements href="Sender.ccd"/>
+
+  <monolithicImpl>
+    <primaryArtifact>
+      <name>Hello.ImplementationArtifacts.SenderArtifacts.Sender_stub</name>
+      <referencedArtifact href="Sender_stub.iad"/>
+    </primaryArtifact>
+    <primaryArtifact>
+      <name>Hello.ImplementationArtifacts.SenderArtifacts.Sender_svnt</name>
+      <referencedArtifact href="Sender_svnt.iad"/>
+    </primaryArtifact>
+    <primaryArtifact>
+      <name>Hello.ImplementationArtifacts.SenderArtifacts.Sender_exec</name>
+      <referencedArtifact href="Sender_exec.iad"/>
+    </primaryArtifact>
+  </monolithicImpl>
+
+  <configProperty>
+    <name>ComponentIOR</name>
+    <value>
+      <type>
+        <kind>tk_string</kind>
+      </type>
+      <value>
+        <string>Sender.ior</string>
+      </value>
+    </value>
+  </configProperty>
+
+</Deployment:componentImplementationDescription>
