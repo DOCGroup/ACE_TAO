@@ -62,6 +62,7 @@ REGEDIT4
 "*.pcd"="svn:eol-style=native;svn:keywords=Author Date Id Revision"
 "*.cdd"="svn:eol-style=native;svn:keywords=Author Date Id Revision"
 "*.xsd"="svn:eol-style=native;svn:keywords=Author Date Id Revision"
+"*.xml"="svn:eol-style=native;svn:keywords=Author Date Id Revision"
 "*.txt"="svn:eol-style=native;svn:keywords=Author Date Id Revision"
 "*.am"="svn:eol-style=native;svn:keywords=Author Date Id Revision"
 "*.ac"="svn:eol-style=native;svn:keywords=Author Date Id Revision"
