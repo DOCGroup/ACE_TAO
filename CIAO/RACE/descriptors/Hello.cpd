@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Deployment:componentPackageDescription xmlns:Deployment="http://www.omg.org/Deployment" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+
+  <UUID>2B7E8CB2-82B4-4B10-9E32-CF6E8CDC94A0</UUID>
+
+  <implementation>
+    <name>Hello.ComponentImplementations.HelloAssemblyTypeContainer.HelloAssemblyType</name>
+    <referencedImplementation href="HelloAssemblyType.cid"/>
+  </implementation>
+
+</Deployment:componentPackageDescription>

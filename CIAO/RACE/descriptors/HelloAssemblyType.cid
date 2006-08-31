@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Deployment:componentImplementationDescription xmlns:Deployment="http://www.omg.org/Deployment" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+
+  <UUID>9C501DB0-D63B-46FB-BA3F-5B9D89DF1AEB</UUID>
+
+  <assemblyImpl>
+    <instance id="_948B16A7-A4CB-4C04-BAD7-1295AEC8C110">
+      <name>Hello.ComponentImplementations.HelloAssemblyTypeContainer.HelloAssemblyType.Sender</name>
+      <basePackage href="ComponentPackage.cpd"/>
+    </instance>
+    <instance id="_F00ADDD1-B223-4D23-A7E7-CDA626F6E661">
+      <name>Hello.ComponentImplementations.HelloAssemblyTypeContainer.HelloAssemblyType.Receiver</name>
+      <basePackage href="ComponentPackage.cpd"/>
+    </instance>
+    <connection>
+      <name>read_message_push_message</name>
+      <internalEndpoint>
+        <portName>read_message</portName>
+        <instance>_F00ADDD1-B223-4D23-A7E7-CDA626F6E661</instance>
+      </internalEndpoint>
+      <internalEndpoint>
+        <portName>push_message</portName>
+        <instance>_948B16A7-A4CB-4C04-BAD7-1295AEC8C110</instance>
+      </internalEndpoint>
+    </connection>
+    <connection>
+      <name>click_out_click_in</name>
+      <internalEndpoint>
+        <portName>click_out</portName>
+        <instance>_948B16A7-A4CB-4C04-BAD7-1295AEC8C110</instance>
+      </internalEndpoint>
+      <internalEndpoint>
+        <portName>click_in</portName>
+        <instance>_F00ADDD1-B223-4D23-A7E7-CDA626F6E661</instance>
+      </internalEndpoint>
+    </connection>
+  </assemblyImpl>
+
+</Deployment:componentImplementationDescription>
