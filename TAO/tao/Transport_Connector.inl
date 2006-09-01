@@ -22,4 +22,9 @@ TAO_Connector::tag (void) const
   return this->tag_;
 }
 
+ACE_INLINE void
+TransportCleanupGuard::awake () {
+  awake_ = true;
+};
+
 TAO_END_VERSIONED_NAMESPACE_DECL

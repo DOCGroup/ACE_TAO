@@ -2941,8 +2941,14 @@ TAO_ORB_Core::call_sync_scope_hook (TAO_Stub *stub,
                                     bool &has_synchronization,
                                     Messaging::SyncScope &scope)
 {
+  // The below is safe as
+  // The ORB Resource object has been initialized at this point.
+  TAO_ORB_Core_Static_Resources* tocsr =
+    ACE_Dynamic_Service<TAO_ORB_Core_Static_Resources>::instance
+    (this->configuration (), ACE_TEXT("TAO_ORB_Core_Static_Resources"));
+
   Sync_Scope_Hook sync_scope_hook =
-    TAO_ORB_Core_Static_Resources::instance ()->sync_scope_hook_;
+    tocsr->sync_scope_hook_;
 
   if (sync_scope_hook == 0)
     {
