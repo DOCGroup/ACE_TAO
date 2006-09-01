@@ -412,10 +412,13 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
   // done with it. In that case it is up to a subsequent invocation to
   // handle the connection completion.
 
+  TransportCleanupGuard tg(base_transport);
   if (!this->wait_for_connection_completion (r,
                                              base_transport,
                                              timeout))
     {
+      tg.awake();
+
       if (TAO_debug_level > 2)
         {
           ACE_ERROR ((LM_ERROR,
@@ -430,13 +433,7 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
       base_transport->wait_strategy ()->register_handler () == -1)
     {
       // Registration failures.
-
-      // Purge from the connection cache, if we are not in the cache, this
-      // just does nothing.
-      (void) base_transport->purge_entry ();
-
-      // Close the handler.
-      (void) base_transport->close_connection ();
+      tg.awake();
 
       if (TAO_debug_level > 0)
         {
@@ -765,6 +762,27 @@ TAO_Connector::check_connection_closure (
     }
 
   return result;
+}
+
+TransportCleanupGuard::TransportCleanupGuard (TAO_Transport *tp
+                , bool awake)
+  : tp_ (tp)
+    , awake_ (awake)
+{}
+
+TransportCleanupGuard::~TransportCleanupGuard (void)
+{
+  if (awake_ && (tp_ != 0))
+    {
+      // Purge from the connection cache, if we are not in the cache, this
+      // just does nothing.
+      tp_->purge_entry ();
+
+      // Close the handler.
+      tp_->close_connection ();
+
+      tp_->remove_reference ();
+    }
 }
 
 //@@ TAO_CONNECTOR_SPL_METHODS_ADD_HOOK
