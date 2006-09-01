@@ -24,7 +24,8 @@ Crashed_Callback::crash_now_please (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
               "(%P|%t) Crashed_Callback - crashing application \n"));
 // Tru64 seems to hang and not abort and dump core when abort() is called
 // here. This needs further investigation. This fix is a temporary one.
-#if defined (DIGITAL_UNIX) || defined (DEC_CXX)
+// Likewise for OpenVMS.
+#if defined (DIGITAL_UNIX) || defined (DEC_CXX) || defined (ACE_OPENVMS)
   ACE_OS::_exit();
 #else
   ACE_OS::abort();

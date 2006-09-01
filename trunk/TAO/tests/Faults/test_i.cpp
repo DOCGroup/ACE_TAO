@@ -21,7 +21,8 @@ Callback_i::shutdown (CORBA::Boolean is_clean
 
 // Tru64 seems to hang and not abort and dump core when abort() is called
 // here. This needs further investigation. This fix is a temporary one.
-#if defined (DIGITAL_UNIX) || defined (DEC_CXX)
+// Likewise for OpenVMS.
+#if defined (DIGITAL_UNIX) || defined (DEC_CXX) || defined (ACE_OPENVMS)
       ACE_OS::_exit();
 #else
       ACE_OS::abort();
@@ -63,7 +64,7 @@ Simple_Server_i::shutdown_now (CORBA::Boolean is_clean
   if (is_clean == 0)
     {
       ACE_DEBUG ((LM_DEBUG, "Performing catastrophic shutdown \n"));
-#if defined (DIGITAL_UNIX) || defined (DEC_CXX)
+#if defined (DIGITAL_UNIX) || defined (DEC_CXX) || defined (ACE_OPENVMS)
       ACE_OS::_exit();
 #else
       ACE_OS::abort();

@@ -19,7 +19,10 @@ else {
   $SERVER     = new PerlACE::Process(PerlACE::LocalFile("server"));
 }
 $perl_executable = $^X;
-$perl_executable =~ s/\.exe//g;
+$perl_executable =~ s/\.exe//ig;
+if ($^O == 'VMS') {
+  $perl_executable =~ s/000000\///g;
+}
 $DUMMY_CLIENT = new PerlACE::Process($perl_executable);
 $CLIENT     = new PerlACE::Process(PerlACE::LocalFile("client"));
 
