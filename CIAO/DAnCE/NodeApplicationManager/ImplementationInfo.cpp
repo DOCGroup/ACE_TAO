@@ -52,6 +52,7 @@ CIAO::NodeImplementationInfoHandler::populate_server_resource_def (void)
   CORBA::ULong i;
   CORBA::ULong j;
   CORBA::ULong info_pro_len = this->plan_.infoProperty.length ();
+  bool found = false;
 
   for (i = 0; i < info_pro_len; ++i)
     {
@@ -60,24 +61,28 @@ CIAO::NodeImplementationInfoHandler::populate_server_resource_def (void)
         {
           this->plan_.infoProperty[i].value >>= server_resource_def;
           server_resource_id = (*server_resource_def).Id;
+          found = true;
         }
     }
 
-  for (i = 0; i < instance_len; ++i)
+  if (found == true)
     {
-      dep_res_len = this->plan_.instance[i].deployedResource.length ();
-      for (j = 0; j < dep_res_len; ++j)
+      for (i = 0; i < instance_len; ++i)
         {
-          target_resource_id = this->plan_.instance[i].deployedResource[j].
-                                 resourceName.in ();
-          if (ACE_OS::strcmp (server_resource_id, target_resource_id) == 0)
+          dep_res_len = this->plan_.instance[i].deployedResource.length ();
+          for (j = 0; j < dep_res_len; ++j)
             {
-              this->node_info_->nodeapp_config.length (1);
-              this->node_info_->nodeapp_config[0].name =
-                CORBA::string_dup ("CIAOServerResources");
-              this->node_info_->nodeapp_config[0].value <<=
-                *server_resource_def;
-              break;
+              target_resource_id = this->plan_.instance[i].deployedResource[j].
+                                     resourceName.in ();
+              if (ACE_OS::strcmp (server_resource_id, target_resource_id) == 0)
+                {
+                  this->node_info_->nodeapp_config.length (1);
+                  this->node_info_->nodeapp_config[0].name =
+                    CORBA::string_dup ("CIAOServerResources");
+                  this->node_info_->nodeapp_config[0].value <<=
+                    *server_resource_def;
+                  break;
+                }
             }
         }
     }
