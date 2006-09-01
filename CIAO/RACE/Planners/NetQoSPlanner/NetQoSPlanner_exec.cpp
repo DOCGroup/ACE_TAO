@@ -51,47 +51,29 @@ namespace CIAO
       ACE_THROW_SPEC (( ::CORBA::SystemException,
                        ::CIAO::RACE::PlannerFailure))
       {
-        // Your code here.
-        //ACE_DEBUG ((LM_DEBUG, "NetQoSPlanner::Planner_I_exec_i::process_plan()\n"));
-
         for (size_t i = 0; i < plans.length (); ++i)
           {
             ::CIAO::RACE::Plan_Action plan_action = plans [i];
             ::Deployment::DeploymentPlan dep_plan = plan_action.plan;
-            //ACE_DEBUG ((LM_DEBUG, "NetQoSPlanner: Inside plans.length loop\n"));
 
             for (size_t j = 0;
                  j < dep_plan.infoProperty.length();
                  ++j)
               {
-                //ACE_DEBUG ((LM_DEBUG, "NetQoSPlanner: Inside infoProperty loop\n"));
                 if (ACE_OS::strcmp (dep_plan.infoProperty[j].name.in (),
                                     "CIAONetworkQoS") == 0)
                  {
-                   //ACE_DEBUG ((LM_DEBUG, "NetQoSPlanner: Inside CIAONetworkQoS\n"));
                    ::Deployment::DiffservInfos dscp_infos;
                    ::CIAO::DAnCE::NetworkQoS::NetQoSRequirement *net_qos_req;
 
                    if (dep_plan.infoProperty [j].value >>= net_qos_req)
                     {
-                       //ACE_DEBUG ((LM_DEBUG, "NetQoSPlanner: Any successful\n"));
                        this->process_netqos_req (net_qos_req, dscp_infos);
                     }
                     else
                     {
                       ACE_DEBUG ((LM_DEBUG, "Conversion to Any failed for NetworkQoS.\n"));
                     }
-
-                    // Remove CIAONetworkQoS infoProperty
-                    if (dep_plan.infoProperty.length() > j+1)
-                    {
-                      for (size_t k = j + 1; k < dep_plan.infoProperty.length(); ++k)
-                        {
-                          dep_plan.infoProperty[k-1] = dep_plan.infoProperty[k];
-                        }
-                    }
-                    dep_plan.infoProperty.length(dep_plan.infoProperty.length() - 1);
-                    // Removal code ends
 
                     this->add_network_priorities (dep_plan, dscp_infos);
                  }
