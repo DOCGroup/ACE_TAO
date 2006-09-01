@@ -76,6 +76,12 @@ Crasher::handle_timeout (ACE_Time_Value const & ,
 {
   // ACE_DEBUG ((LM_DEBUG, "(%P|%t) Performing intentional crash
   // %a\n"));
+  // This tests hangs on OpenVMS when abort() is used.
+  // Also see Crashed_Callback test.
+#if defined (ACE_OPENVMS)
+  ACE_OS::_exit ();
+#else
   ACE_OS::abort();
+#endif
   return 0;
 }

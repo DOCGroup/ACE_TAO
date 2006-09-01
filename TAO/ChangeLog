@@ -1,3 +1,19 @@
+Fri Sep  1 14:05:12 UTC 2006  Martin Corino  <mcorino@remedy.nl>
+
+        * tests/Bug_2183_Regression/run_test.pl:
+          Fixed spawning of PERL process on OpenVMS.
+          
+        * tests/File_IO/run_test.pl:
+          Replaced literal timeout value ('10') with platformdependent
+          variable defined in PerlACE/Run_Test.pm for that purpose.
+          
+        * tests/Faults/test_i.cpp:
+        * tests/Crashed_Callback/Crashed_Callback.cpp:
+        * tests/Nested_Upcall_Crash/Client_Peer.cpp:
+          Fixed these tests for OpenVMS replacing ACE_OS::abort() as deliberate
+          crash trigger by ACE_OS::_exit() as using abort() causes these tests
+          to 'hang' instead of crash.
+
 Thu Aug 31 18:28:12 UTC 2006  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/PortableServer.cpp:
