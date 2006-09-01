@@ -1,12 +1,45 @@
+Thu Aug 31 23:05:46 UTC 2006  Ciju John  <johnc@ociweb.com>
+
+        * tao/ORB_Core.cpp:
+          Access to the TAO_ORB_Core_Static_Resources was through the
+          static instance() API. This created a bug when the object which
+          earlier was a true singleton was converted to a service object
+          under the control of the service config. The service config
+          depending upon the access point can either return the global
+          object or the object local to the particular orb. In this case
+          (during an invocation) we need to access the local object and
+          the service config was returning the global object. This led to
+          incorrect synch-scope policies being set in invocations via a
+          non-default orb (named orb). Since at this point the ORB_Core
+          has a pointer to the local service config, its safe to query it
+          to request the local service object.
+
+        * tao/Transport_Connector.h:
+        * tao/Transport_Connector.inl:
+        * tao/Transport_Connector.cpp:
+
+          In case of a asynch connection establishment failure or
+          registration failure we need to clean up teh transport, else we
+          have a file descriptor leak. The 'TransportCleanupGuard' takes
+          care of that.
+
+        * tests/Bug_1476_Test:
+        * tests/Bug_1476_Test/Bug_1476_Test.mpc:
+        * tests/Bug_1476_Test/Hello.idl:
+        * tests/Bug_1476_Test/README:
+        * tests/Bug_1476_Test/client.cpp:
+        * tests/Bug_1476_Test/run_test.pl:
+          Add new regression test for buzilla 1476
+
 Fri Sep  1 14:05:12 UTC 2006  Martin Corino  <mcorino@remedy.nl>
 
         * tests/Bug_2183_Regression/run_test.pl:
           Fixed spawning of PERL process on OpenVMS.
-          
+
         * tests/File_IO/run_test.pl:
           Replaced literal timeout value ('10') with platformdependent
           variable defined in PerlACE/Run_Test.pm for that purpose.
-          
+
         * tests/Faults/test_i.cpp:
         * tests/Crashed_Callback/Crashed_Callback.cpp:
         * tests/Nested_Upcall_Crash/Client_Peer.cpp:
