@@ -1,0 +1,25 @@
+
+<CIAO:ServerResources
+ xmlns:CIAO="http://www.dre.vanderbilt.edu/ServerResources"
+ xmlns:xmi="http://www.omg.org/XMI"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://www.dre.vanderbilt.edu/ServerResources CIAOServerResources.xsd"
+ id="test_server_resource_id">
+  
+  <orbConfigs>
+    <policySet id="test_policy_set_id">
+      <nwpriorityModel>
+        <nw_priority_model>CLIENT_PROPAGATED_NWPRIORITY</nw_priority_model>
+        <request_dscp>4</request_dscp>
+        <reply_dscp>4</reply_dscp>
+      </nwpriorityModel>
+    </policySet>
+
+    <policySet id="test_policy_set_3">
+      <cnwpriorityModel>
+        <request_dscp>5</request_dscp>
+        <reply_dscp>7</reply_dscp>
+      </cnwpriorityModel>
+    </policySet>
+  </orbConfigs>
+</CIAO:ServerResources>
