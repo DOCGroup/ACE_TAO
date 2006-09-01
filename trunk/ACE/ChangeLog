@@ -1,3 +1,8 @@
+Fri Sep  1 19:58:06 UTC 2006  Ciju John  <johnc@ociweb.com>
+
+        * bin/tao_orb_tests.lst:
+          Turn on nightly regression test for bug 1476.
+
 Fri Sep 1 13:49:12 UTC 2006  Martin Corino <mcorino@remedy.nl>
 
         * bin/PerlACE/Run_Test.pm:
