@@ -35,52 +35,6 @@
         </value>
       </value>
     </configProperty>
-
-    <deployedResource>
-      <resourceUsage>InstanceUsesResource</resourceUsage>
-      <requirementName>CIAO:PolicySet</requirementName>
-      <resourceName>test_server_resource_id</resourceName>
-      <property>
-        <name>CIAO:InstancePolicy</name>
-        <value>
-          <type>
-            <kind>tk_string</kind>
-          </type>
-          <value>
-            <string>test_policy_set_id</string>
-          </value>
-        </value>
-      </property>
-    </deployedResource>
-
-    <deployedResource>
-      <resourceUsage>InstanceUsesResource</resourceUsage>
-      <requirementName>CIAO:PolicySet</requirementName>
-      <resourceName>test_server_resource_id</resourceName>
-      <property>
-        <name>CIAO:ReceptaclePolicy</name>
-        <value>
-          <type>
-            <kind>tk_string</kind>
-          </type>
-          <value>
-            <string>test_policy_set_3</string>
-          </value>
-        </value>
-      </property>
-      <property>
-        <name>read_message</name>
-        <value>
-          <type>
-            <kind>tk_string</kind>
-          </type>
-          <value>
-            <string>test_policy_set_3</string>
-          </value>
-        </value>
-      </property>
-    </deployedResource>
-
   </instance>
 
   <instance id="_Hello.ComponentImplementations.HelloAssemblyTypeContainer.HelloAssemblyType.Sender">
@@ -99,24 +53,6 @@
         </value>
       </value>
     </configProperty>
-
-    <deployedResource>
-      <resourceUsage>InstanceUsesResource</resourceUsage>
-      <requirementName>CIAO:PolicySet</requirementName>
-      <resourceName>test_server_resource_id</resourceName>
-      <property>
-        <name>CIAO:InstancePolicy</name>
-        <value>
-          <type>
-            <kind>tk_string</kind>
-          </type>
-          <value>
-            <string>test_policy_set_id</string>
-          </value>
-        </value>
-      </property>
-    </deployedResource>
-
   </instance>
 
   <connection>
@@ -241,18 +177,6 @@
       </type>
       <value>
         <string>myNetQoS.nqs</string>
-      </value>
-    </value>
-  </infoProperty>
-
-  <infoProperty>
-    <name>CIAOServerResources</name>
-    <value>
-      <type>
-        <kind>tk_string</kind>
-      </type>
-      <value>
-        <string>rt-config-example.csr</string>
       </value>
     </value>
   </infoProperty>

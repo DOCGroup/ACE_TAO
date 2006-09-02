@@ -1,2 +1,4 @@
 foil      corbaloc:iiop:localhost:50200/NodeManager
-blade34      corbaloc:iiop:localhost:50200/NodeManager
+blade34   corbaloc:iiop:localhost:50200/NodeManager
+sender    corbaloc:iiop:localhost:60003/NodeManager
+receiver  corbaloc:iiop:localhost:60004/NodeManager
