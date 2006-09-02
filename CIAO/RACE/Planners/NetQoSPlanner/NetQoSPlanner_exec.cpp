@@ -53,8 +53,7 @@ namespace CIAO
       {
         for (size_t i = 0; i < plans.length (); ++i)
           {
-            ::CIAO::RACE::Plan_Action plan_action = plans [i];
-            ::Deployment::DeploymentPlan dep_plan = plan_action.plan;
+            ::Deployment::DeploymentPlan &dep_plan = plans[i].plan;
 
             for (size_t j = 0;
                  j < dep_plan.infoProperty.length();
@@ -74,8 +73,20 @@ namespace CIAO
                     {
                       ACE_DEBUG ((LM_DEBUG, "Conversion to Any failed for NetworkQoS.\n"));
                     }
-
-                    this->add_network_priorities (plans[i].plan, dscp_infos);
+                   
+                    // Remove CIAONetworkQoS infoProperty
+                    CORBA::ULong length = dep_plan.infoProperty.length();
+                    std::cerr << "Length of dep_plan.infoProperty before removal = " << length << std::endl; 
+                    if (length > j+1)
+                    {
+                      for (size_t k = j + 1; k < length; ++k)
+                        {
+                          dep_plan.infoProperty[k-1] = dep_plan.infoProperty[k];
+                        }
+                    }
+                    dep_plan.infoProperty.length(length - 1);
+                    // Removal code ends
+                    this->add_network_priorities (dep_plan, dscp_infos);
                  }
               }
           }
@@ -100,25 +111,24 @@ void Planner_I_exec_i::process_netqos_req (::CIAO::DAnCE::NetworkQoS::NetQoSRequ
             ::CIAO::DAnCE::NetworkQoS::ConnectionQoS conn_qos
             = net_qos_req->conn_qos_set[k];
             for (size_t conn_num = 0;
-                conn_num < conn_qos.connections.length ();
-                ++conn_num)
+                 conn_num < conn_qos.connections.length ();
+                 ++conn_num)
               {
-                /*
+
                 std::cerr
                 << "Connection Name = " << conn_qos.connections [conn_num].connection_name   << std::endl
                 << "client Name = " << conn_qos.connections [conn_num].client                << std::endl
                 << "client Port Name = " << conn_qos.connections [conn_num].client_port_name << std::endl
                 << "server Name = " << conn_qos.connections [conn_num].server                << std::endl
                 << "server Port Name = " << conn_qos.connections [conn_num].server_port_name << std::endl;
-                */
 
                 size_t len = dscp_infos.length ();
                 dscp_infos.length (len + 1);
-                dscp_infos [conn_num].server_instance_name = conn_qos.connections [conn_num].server;
-                dscp_infos [conn_num].client_instance_name = conn_qos.connections [conn_num].client;
-                dscp_infos [conn_num].client_receptacle_name = conn_qos.connections [conn_num].client_port_name;
-                dscp_infos [conn_num].request_dscp = random () % 7;
-                dscp_infos [conn_num].reply_dscp = random () % 7;
+                dscp_infos [len].server_instance_name = CORBA::string_dup (conn_qos.connections [conn_num].server);
+                dscp_infos [len].client_instance_name = CORBA::string_dup (conn_qos.connections [conn_num].client);
+                dscp_infos [len].client_receptacle_name = CORBA::string_dup (conn_qos.connections [conn_num].client_port_name);
+                dscp_infos [len].request_dscp = random () % 7;
+                dscp_infos [len].reply_dscp = random () % 7;
               }
             /*
             std::cerr << "fwdBWD = " << conn_qos.fwdBWD << std::endl;
@@ -349,9 +359,8 @@ Planner_I_exec_i::add_network_priorities (Deployment::DeploymentPlan & temp_plan
         CORBA::ULong info_prop_len = temp_plan.infoProperty.length ();
         new_info_prop_len = info_prop_len + 1;
         temp_plan.infoProperty.length (new_info_prop_len);
-        temp_plan.infoProperty[0].name =
-            CORBA::string_dup ("CIAOServerResources");
-        temp_plan.infoProperty[0].value <<= server_resource;
+        temp_plan.infoProperty[new_info_prop_len - 1].name = CORBA::string_dup ("CIAOServerResources");
+        temp_plan.infoProperty[new_info_prop_len - 1].value <<= server_resource;
       }
     
       ::CORBA::Boolean
