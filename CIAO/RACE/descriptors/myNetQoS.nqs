@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<CIAO:NetQoSRequirements xmlns:CIAO="http://www.dre.vanderbilt.edu/NetQoSRequirements" id="_E6550977-056D-4CDD-BC51-3932FD733770" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.dre.vanderbilt.edu/NetQoSRequirements NetQoSRequirements.xsd">
+<CIAO:NetQoSRequirements xmlns:CIAO="http://www.dre.vanderbilt.edu/NetQoSRequirements" id="_AD4E5A4B-FB4D-4DBA-9BE8-B87874998A6F" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.dre.vanderbilt.edu/NetQoSRequirements NetQoSRequirements.xsd">
 
   <connectionQoS>
     <connectionInfo>
-      <connectionName>click_out_click_in_Hello.ComponentImplementations.HelloAssemblyTypeContainer.HelloAssemblyType.Sender_Hello.ComponentImplementations.HelloAssemblyTypeContainer.HelloAssemblyType.Receiver</connectionName>
-      <client>_Hello.ComponentImplementations.HelloAssemblyTypeContainer.HelloAssemblyType.Sender</client>
-      <clientPortName>click_out</clientPortName>
-      <server>_Hello.ComponentImplementations.HelloAssemblyTypeContainer.HelloAssemblyType.Receiver</server>
-      <serverPortName>click_in</serverPortName>
+      <connectionName>read_message_push_message_Hello.ComponentImplementations.HelloAssemblyTypeContainer.HelloAssemblyType.Receiver_Hello.ComponentImplementations.HelloAssemblyTypeContainer.HelloAssemblyType.Sender</connectionName>
+      <client>_Hello.ComponentImplementations.HelloAssemblyTypeContainer.HelloAssemblyType.Receiver</client>
+      <clientPortName>read_message</clientPortName>
+      <server>_Hello.ComponentImplementations.HelloAssemblyTypeContainer.HelloAssemblyType.Sender</server>
+      <serverPortName>push_message</serverPortName>
     </connectionInfo>
     <fwdBW>100</fwdBW>
     <revBW>50</revBW>
