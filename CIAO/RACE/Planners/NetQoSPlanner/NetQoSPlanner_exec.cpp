@@ -75,7 +75,7 @@ namespace CIAO
                       ACE_DEBUG ((LM_DEBUG, "Conversion to Any failed for NetworkQoS.\n"));
                     }
 
-                    this->add_network_priorities (dep_plan, dscp_infos);
+                    this->add_network_priorities (plans[i].plan, dscp_infos);
                  }
               }
           }
