@@ -114,14 +114,14 @@ void Planner_I_exec_i::process_netqos_req (::CIAO::DAnCE::NetworkQoS::NetQoSRequ
                  conn_num < conn_qos.connections.length ();
                  ++conn_num)
               {
-
+/*
                 std::cerr
                 << "Connection Name = " << conn_qos.connections [conn_num].connection_name   << std::endl
                 << "client Name = " << conn_qos.connections [conn_num].client                << std::endl
                 << "client Port Name = " << conn_qos.connections [conn_num].client_port_name << std::endl
                 << "server Name = " << conn_qos.connections [conn_num].server                << std::endl
                 << "server Port Name = " << conn_qos.connections [conn_num].server_port_name << std::endl;
-
+*/
                 size_t len = dscp_infos.length ();
                 dscp_infos.length (len + 1);
                 dscp_infos [len].server_instance_name = CORBA::string_dup (conn_qos.connections [conn_num].server);
@@ -153,6 +153,8 @@ void Planner_I_exec_i::process_netqos_req (::CIAO::DAnCE::NetworkQoS::NetQoSRequ
               std::cerr << "Priority = LOW\n";
             */
           }
+          // dscp_infos data structure is completely populated here.
+          std::cerr << "Node_map Filename: " << this->node_map_file () << std::endl;
       }
 
 void
@@ -386,14 +388,14 @@ Planner_I_exec_i::add_network_priorities (Deployment::DeploymentPlan & temp_plan
       }
 
       //==================================================================
-      // Component Executor Implementation Class:   NetQosPlanner_exec_i
+      // Component Executor Implementation Class:   NetQoSPlanner_exec_i
       //==================================================================
 
-      NetQosPlanner_exec_i::NetQosPlanner_exec_i (void)
+      NetQoSPlanner_exec_i::NetQoSPlanner_exec_i (void)
       {
       }
 
-      NetQosPlanner_exec_i::~NetQosPlanner_exec_i (void)
+      NetQoSPlanner_exec_i::~NetQoSPlanner_exec_i (void)
       {
       }
 
@@ -402,7 +404,7 @@ Planner_I_exec_i::add_network_priorities (Deployment::DeploymentPlan & temp_plan
       // Attribute operations.
 
       char *
-      NetQosPlanner_exec_i::name (
+      NetQoSPlanner_exec_i::name (
         ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC (( ::CORBA::SystemException))
       {
@@ -413,7 +415,7 @@ Planner_I_exec_i::add_network_priorities (Deployment::DeploymentPlan & temp_plan
       }
 
       void
-      NetQosPlanner_exec_i::name (
+      NetQoSPlanner_exec_i::name (
         const char * /* name */
         ACE_ENV_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC (( ::CORBA::SystemException))
@@ -422,7 +424,7 @@ Planner_I_exec_i::add_network_priorities (Deployment::DeploymentPlan & temp_plan
       }
 
       char *
-      NetQosPlanner_exec_i::type (
+      NetQoSPlanner_exec_i::type (
         ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC (( ::CORBA::SystemException))
       {
@@ -433,7 +435,7 @@ Planner_I_exec_i::add_network_priorities (Deployment::DeploymentPlan & temp_plan
       }
 
       void
-      NetQosPlanner_exec_i::type (
+      NetQoSPlanner_exec_i::type (
         const char * /* type */
         ACE_ENV_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC (( ::CORBA::SystemException))
@@ -441,10 +443,19 @@ Planner_I_exec_i::add_network_priorities (Deployment::DeploymentPlan & temp_plan
         // Your code here.
       }
 
+      char *
+      NetQoSPlanner_exec_i::node_map_file (
+        ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+      ACE_THROW_SPEC (( ::CORBA::SystemException))
+      {
+        // Your code here.
+        return 0;
+      }
+
       // Port operations.
 
       ::CIAO::RACE::CCM_Planner_I_ptr
-      NetQosPlanner_exec_i::get_planner_i (
+      NetQoSPlanner_exec_i::get_planner_i (
         ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC (( ::CORBA::SystemException))
       {
@@ -456,14 +467,14 @@ Planner_I_exec_i::add_network_priorities (Deployment::DeploymentPlan & temp_plan
       // Operations from Components::SessionComponent
 
       void
-      NetQosPlanner_exec_i::set_session_context (
+      NetQoSPlanner_exec_i::set_session_context (
         ::Components::SessionContext_ptr ctx
         ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC (( ::CORBA::SystemException,
                        ::Components::CCMException))
       {
         this->context_ =
-          NetQosPlanner_Context::_narrow (
+          NetQoSPlanner_Context::_narrow (
             ctx
             ACE_ENV_ARG_PARAMETER);
         ACE_CHECK;
@@ -475,7 +486,7 @@ Planner_I_exec_i::add_network_priorities (Deployment::DeploymentPlan & temp_plan
       }
 
       void
-      NetQosPlanner_exec_i::ciao_preactivate (
+      NetQoSPlanner_exec_i::ciao_preactivate (
         ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC (( ::CORBA::SystemException,
                        ::Components::CCMException))
@@ -484,7 +495,7 @@ Planner_I_exec_i::add_network_priorities (Deployment::DeploymentPlan & temp_plan
       }
 
       void
-      NetQosPlanner_exec_i::ciao_postactivate (
+      NetQoSPlanner_exec_i::ciao_postactivate (
         ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC (( ::CORBA::SystemException,
                        ::Components::CCMException))
@@ -493,7 +504,7 @@ Planner_I_exec_i::add_network_priorities (Deployment::DeploymentPlan & temp_plan
       }
 
       void
-      NetQosPlanner_exec_i::ccm_activate (
+      NetQoSPlanner_exec_i::ccm_activate (
         ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC (( ::CORBA::SystemException,
                        ::Components::CCMException))
@@ -502,7 +513,7 @@ Planner_I_exec_i::add_network_priorities (Deployment::DeploymentPlan & temp_plan
       }
 
       void
-      NetQosPlanner_exec_i::ccm_passivate (
+      NetQoSPlanner_exec_i::ccm_passivate (
         ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC (( ::CORBA::SystemException,
                        ::Components::CCMException))
@@ -511,7 +522,7 @@ Planner_I_exec_i::add_network_priorities (Deployment::DeploymentPlan & temp_plan
       }
 
       void
-      NetQosPlanner_exec_i::ccm_remove (
+      NetQoSPlanner_exec_i::ccm_remove (
         ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC (( ::CORBA::SystemException,
                        ::Components::CCMException))
@@ -552,7 +563,7 @@ Planner_I_exec_i::add_network_priorities (Deployment::DeploymentPlan & temp_plan
 
         ACE_NEW_THROW_EX (
           retval,
-          NetQosPlanner_exec_i,
+          NetQoSPlanner_exec_i,
           ::CORBA::NO_MEMORY ());
         ACE_CHECK_RETURN (::Components::EnterpriseComponent::_nil ());
 

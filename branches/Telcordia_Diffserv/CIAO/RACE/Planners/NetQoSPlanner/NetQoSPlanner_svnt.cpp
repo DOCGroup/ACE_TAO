@@ -118,54 +118,54 @@ namespace CIAO
   {
     namespace CIDL_NetQoSPlanner_Impl
     {
-      NetQosPlanner_Context::NetQosPlanner_Context (
+      NetQoSPlanner_Context::NetQoSPlanner_Context (
         ::Components::CCMHome_ptr h,
         ::CIAO::Session_Container *c,
-        NetQosPlanner_Servant *sv)
+        NetQoSPlanner_Servant *sv)
         : ::CIAO::Context_Impl_Base (h, c), 
           ::CIAO::Context_Impl<
-              ::CIAO::RACE::CCM_NetQosPlanner_Context,
-              NetQosPlanner_Servant,
-              ::CIAO::RACE::NetQosPlanner,
-              ::CIAO::RACE::NetQosPlanner_var
+              ::CIAO::RACE::CCM_NetQoSPlanner_Context,
+              NetQoSPlanner_Servant,
+              ::CIAO::RACE::NetQoSPlanner,
+              ::CIAO::RACE::NetQoSPlanner_var
             > (h, c, sv)
       {
       }
 
-      NetQosPlanner_Context::~NetQosPlanner_Context (void)
+      NetQoSPlanner_Context::~NetQoSPlanner_Context (void)
       {
       }
 
-      // Operations for NetQosPlanner receptacles and event sources,
-      // defined in ::CIAO::RACE::CCM_NetQosPlanner_Context.
+      // Operations for NetQoSPlanner receptacles and event sources,
+      // defined in ::CIAO::RACE::CCM_NetQoSPlanner_Context.
 
       // CIAO-specific.
 
-      NetQosPlanner_Context *
-      NetQosPlanner_Context::_narrow (
+      NetQoSPlanner_Context *
+      NetQoSPlanner_Context::_narrow (
         ::Components::SessionContext_ptr p
         ACE_ENV_ARG_DECL_NOT_USED)
       {
-        return dynamic_cast<NetQosPlanner_Context *> (p);
+        return dynamic_cast<NetQoSPlanner_Context *> (p);
       }
 
-      NetQosPlanner_Servant::NetQosPlanner_Servant (
-        ::CIAO::RACE::CCM_NetQosPlanner_ptr exe,
+      NetQoSPlanner_Servant::NetQoSPlanner_Servant (
+        ::CIAO::RACE::CCM_NetQoSPlanner_ptr exe,
         ::Components::CCMHome_ptr h,
         const char *ins_name,
         ::CIAO::Home_Servant_Impl_Base *hs,
         ::CIAO::Session_Container *c,
-        CIAO::REC_POL_MAP &rec_pol_map)
+        ::CIAO::REC_POL_MAP &rec_pol_map)
         : ::CIAO::Servant_Impl_Base (h, hs, c, rec_pol_map),
           ::CIAO::Servant_Impl<
-              ::POA_CIAO::RACE::NetQosPlanner,
-              ::CIAO::RACE::CCM_NetQosPlanner,
-              NetQosPlanner_Context
+              ::POA_CIAO::RACE::NetQoSPlanner,
+              ::CIAO::RACE::CCM_NetQoSPlanner,
+              NetQoSPlanner_Context
             > (exe, h, hs, c, rec_pol_map),
           ins_name_ (ins_name)
       {
         ACE_NEW (this->context_,
-                 NetQosPlanner_Context (h, c, this));
+                 NetQoSPlanner_Context (h, c, this));
 
         // Set the instance id of the component on the context
 
@@ -199,12 +199,12 @@ namespace CIAO
         ACE_ENDTRY;
       }
 
-      NetQosPlanner_Servant::~NetQosPlanner_Servant (void)
+      NetQoSPlanner_Servant::~NetQoSPlanner_Servant (void)
       {
       }
 
       void
-      NetQosPlanner_Servant::set_attributes (
+      NetQoSPlanner_Servant::set_attributes (
         const ::Components::ConfigValues &descr
         ACE_ENV_ARG_DECL)
       {
@@ -237,7 +237,7 @@ namespace CIAO
       }
 
       ::CIAO::RACE::Planner_I_ptr
-      NetQosPlanner_Servant::provide_planner_i (
+      NetQoSPlanner_Servant::provide_planner_i (
         ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC (( ::CORBA::SystemException))
       {
@@ -260,7 +260,7 @@ namespace CIAO
       }
 
       ::CORBA::Object_ptr
-      NetQosPlanner_Servant::provide_planner_i_i (
+      NetQoSPlanner_Servant::provide_planner_i_i (
         ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC (( ::CORBA::SystemException))
       {
@@ -276,14 +276,14 @@ namespace CIAO
             ::CIAO_FACET_CIAO_RACE::Planner_I_Servant,
             ::CIAO::RACE::CCM_Planner_I,
             ::Components::CCMContext,
-            NetQosPlanner_Servant
+            NetQoSPlanner_Servant
           > *tmp = 0;
 
         typedef ::CIAO::Port_Activator_T<
             ::CIAO_FACET_CIAO_RACE::Planner_I_Servant,
             ::CIAO::RACE::CCM_Planner_I,
             ::Components::CCMContext,
-            NetQosPlanner_Servant
+            NetQoSPlanner_Servant
           >
         MACRO_MADNESS_TYPEDEF;
 
@@ -325,7 +325,7 @@ namespace CIAO
       }
 
       ::Components::Cookie *
-      NetQosPlanner_Servant::connect (
+      NetQoSPlanner_Servant::connect (
         const char *name,
         ::CORBA::Object_ptr connection
         ACE_ENV_ARG_DECL)
@@ -347,7 +347,7 @@ namespace CIAO
       }
 
       ::CORBA::Object_ptr
-      NetQosPlanner_Servant::disconnect (
+      NetQoSPlanner_Servant::disconnect (
         const char *name,
         ::Components::Cookie * ck
         ACE_ENV_ARG_DECL)
@@ -370,7 +370,7 @@ namespace CIAO
       }
 
       ::Components::ReceptacleDescriptions *
-      NetQosPlanner_Servant::get_all_receptacles (
+      NetQoSPlanner_Servant::get_all_receptacles (
         ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC (( ::CORBA::SystemException))
       {
@@ -385,7 +385,7 @@ namespace CIAO
       }
 
       void
-      NetQosPlanner_Servant::connect_consumer (
+      NetQoSPlanner_Servant::connect_consumer (
         const char * emitter_name,
         ::Components::EventConsumerBase_ptr consumer
         ACE_ENV_ARG_DECL)
@@ -404,7 +404,7 @@ namespace CIAO
       }
 
       ::Components::EventConsumerBase_ptr
-      NetQosPlanner_Servant::disconnect_consumer (
+      NetQoSPlanner_Servant::disconnect_consumer (
         const char *source_name
         ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC (( ::CORBA::SystemException,
@@ -422,7 +422,7 @@ namespace CIAO
       }
 
       ::Components::PublisherDescriptions *
-      NetQosPlanner_Servant::get_all_publishers (
+      NetQoSPlanner_Servant::get_all_publishers (
         ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC (( ::CORBA::SystemException))
       {
@@ -437,7 +437,7 @@ namespace CIAO
       }
 
       ::Components::EmitterDescriptions *
-      NetQosPlanner_Servant::get_all_emitters (
+      NetQoSPlanner_Servant::get_all_emitters (
         ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC (( ::CORBA::SystemException))
       {
@@ -452,7 +452,7 @@ namespace CIAO
       }
 
       ::Components::Cookie *
-      NetQosPlanner_Servant::subscribe (
+      NetQoSPlanner_Servant::subscribe (
         const char *publisher_name,
         ::Components::EventConsumerBase_ptr subscribe
         ACE_ENV_ARG_DECL)
@@ -473,7 +473,7 @@ namespace CIAO
       }
 
       ::Components::EventConsumerBase_ptr
-      NetQosPlanner_Servant::unsubscribe (
+      NetQoSPlanner_Servant::unsubscribe (
         const char *publisher_name,
         ::Components::Cookie *ck
         ACE_ENV_ARG_DECL)
@@ -495,7 +495,7 @@ namespace CIAO
       }
 
       ::CORBA::Object_ptr
-      NetQosPlanner_Servant::get_facet_executor (
+      NetQoSPlanner_Servant::get_facet_executor (
         const char *name
         ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC (( ::CORBA::SystemException))
@@ -519,7 +519,7 @@ namespace CIAO
       // Component attribute operations.
 
       char *
-      NetQosPlanner_Servant::name (
+      NetQoSPlanner_Servant::name (
         ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC (( ::CORBA::SystemException))
       {
@@ -528,7 +528,7 @@ namespace CIAO
       }
 
       void
-      NetQosPlanner_Servant::name (
+      NetQoSPlanner_Servant::name (
         const char * name
         ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC (( ::CORBA::SystemException))
@@ -539,7 +539,7 @@ namespace CIAO
       }
 
       char *
-      NetQosPlanner_Servant::type (
+      NetQoSPlanner_Servant::type (
         ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC (( ::CORBA::SystemException))
       {
@@ -548,7 +548,7 @@ namespace CIAO
       }
 
       void
-      NetQosPlanner_Servant::type (
+      NetQoSPlanner_Servant::type (
         const char * type
         ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC (( ::CORBA::SystemException))
@@ -558,9 +558,18 @@ namespace CIAO
           ACE_ENV_ARG_PARAMETER);
       }
 
+      char *
+      NetQoSPlanner_Servant::node_map_file (
+        ACE_ENV_SINGLE_ARG_DECL)
+      ACE_THROW_SPEC (( ::CORBA::SystemException))
+      {
+        return this->executor_->node_map_file (
+          ACE_ENV_SINGLE_ARG_PARAMETER);
+      }
+
       // Private method to populate the port tables.
       void
-      NetQosPlanner_Servant::populate_port_tables (
+      NetQoSPlanner_Servant::populate_port_tables (
         ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC (( ::CORBA::SystemException))
       {
@@ -578,12 +587,12 @@ namespace CIAO
         ::CIAO::RACE::CCM_NetQoSPlanner_Home_ptr exe,
         const char *ins_name,
         ::CIAO::Session_Container *c,
-        CIAO::REC_POL_MAP &rec_pol_map)
+        ::CIAO::REC_POL_MAP &rec_pol_map)
         : ::CIAO::Home_Servant_Impl_Base (c),
           ::CIAO::Home_Servant_Impl<
                 ::POA_CIAO::RACE::NetQoSPlanner_Home,
                 ::CIAO::RACE::CCM_NetQoSPlanner_Home,
-                NetQosPlanner_Servant
+                NetQoSPlanner_Servant
               > (exe, c, ins_name, rec_pol_map)
       {
       }
@@ -605,7 +614,7 @@ namespace CIAO
         ::Components::HomeExecutorBase_ptr p,
         ::CIAO::Session_Container *c,
         const char *ins_name,
-        CIAO::REC_POL_MAP &rec_pol_map
+        ::CIAO::REC_POL_MAP &rec_pol_map
         ACE_ENV_ARG_DECL)
       {
         if (p == 0)
@@ -628,7 +637,8 @@ namespace CIAO
         NetQoSPlanner_Home_Servant (
           x.in (),
           ins_name,
-          c, rec_pol_map);
+          c,
+          rec_pol_map);
       }
     }
   }
