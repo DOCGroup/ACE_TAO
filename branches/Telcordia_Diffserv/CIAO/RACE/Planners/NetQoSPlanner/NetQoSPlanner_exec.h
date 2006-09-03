@@ -41,27 +41,22 @@ namespace CIAO
   {
     namespace CIDL_NetQoSPlanner_Impl
     {
+      class NetQoSPlanner_exec_i;
+
       class NETQOSPLANNER_EXEC_Export Planner_I_exec_i
         : public virtual ::CIAO::RACE::CCM_Planner_I,
           public virtual TAO_Local_RefCounted_Object
       {
         public:
-        Planner_I_exec_i (void);
+        Planner_I_exec_i (NetQoSPlanner_exec_i &);
         virtual ~Planner_I_exec_i (void);
 
         // Operations from ::CIAO::RACE::Planner_I
 
         virtual ::CORBA::Boolean
-        process_plan (
-          ::CIAO::RACE::Plan_Actions & plan
-          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-        ACE_THROW_SPEC (( ::CORBA::SystemException,
-                         ::CIAO::RACE::PlannerFailure));
-
-        void add_network_priorities (Deployment::DeploymentPlan & plan,
-                                     const Deployment::DiffservInfos & dscp_infos);
-        void process_netqos_req (::CIAO::DAnCE::NetworkQoS::NetQoSRequirement *net_qos_req,
-                                 ::Deployment::DiffservInfos & dscp_infos);
+        process_plan (::CIAO::RACE::Plan_Actions & plan
+                      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                      ACE_THROW_SPEC (( ::CORBA::SystemException, ::CIAO::RACE::PlannerFailure));
 
         virtual ::CORBA::Boolean
         process_domain_change (
@@ -76,12 +71,13 @@ namespace CIAO
           ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
         ACE_THROW_SPEC (( ::CORBA::SystemException));
 
+        char *
+        type (
+          ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+          ACE_THROW_SPEC (( ::CORBA::SystemException));
+        
         protected:
-        typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
-                                        int, ACE_Hash<ACE_CString>,
-                                        ACE_Equal_To<ACE_CString>,
-                                        ACE_Null_Mutex> Instance_Map;
-        Instance_Map instance_map_;
+          NetQoSPlanner_exec_i *net_qos_planner_exec_;
       };
 
       class NETQOSPLANNER_EXEC_Export NetQoSPlanner_exec_i
@@ -118,18 +114,28 @@ namespace CIAO
           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
         ACE_THROW_SPEC (( ::CORBA::SystemException));
 
-        char *
+        virtual char *
         NetQoSPlanner_exec_i::node_map_file (
           ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
         ACE_THROW_SPEC (( ::CORBA::SystemException));
 
-        void
+        virtual void
         NetQoSPlanner_exec_i::node_map_file (
           const char * /* node_map_file */
           ACE_ENV_ARG_DECL_NOT_USED)
         ACE_THROW_SPEC (( ::CORBA::SystemException));
 
         // Port operations.
+
+        ::CORBA::Boolean process_plan (::CIAO::RACE::Plan_Actions &  plans
+                                       ACE_ENV_ARG_DECL_NOT_USED)
+             ACE_THROW_SPEC (( ::CORBA::SystemException, ::CIAO::RACE::PlannerFailure));
+        
+        void process_netqos_req (::CIAO::DAnCE::NetworkQoS::NetQoSRequirement *net_qos_req,
+                                 ::Deployment::DiffservInfos & dscp_infos);
+
+        void add_network_priorities (Deployment::DeploymentPlan & temp_plan,
+                                     const Deployment::DiffservInfos & dscp_infos);
 
         virtual ::CIAO::RACE::CCM_Planner_I_ptr
         get_planner_i (
@@ -183,6 +189,14 @@ namespace CIAO
 
         protected:
         NetQoSPlanner_Context *context_;
+        std::string node_map_filename_;
+        std::string planner_name_;
+        std::string planner_type_;
+        typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
+                                        int, ACE_Hash<ACE_CString>,
+                                        ACE_Equal_To<ACE_CString>,
+                                        ACE_Null_Mutex> Instance_Map;
+        Instance_Map instance_map_;
       };
 
       class NETQOSPLANNER_EXEC_Export NetQoSPlanner_Home_exec_i

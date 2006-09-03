@@ -35,7 +35,7 @@ namespace CIAO
       //==================================================================
 
       Planner_I_exec_i::Planner_I_exec_i (NetQoSPlanner_exec_i & net_qos)
-        : net_qos_planner_exec_(net_qos)
+        : net_qos_planner_exec_(&net_qos)
       {
       }
 
@@ -49,11 +49,130 @@ namespace CIAO
       Planner_I_exec_i::process_plan (
         ::CIAO::RACE::Plan_Actions &  plans
         ACE_ENV_ARG_DECL_NOT_USED)
-      ACE_THROW_SPEC (( ::CORBA::SystemException,
+      ACE_THROW_SPEC ((::CORBA::SystemException,
                        ::CIAO::RACE::PlannerFailure))
       {
         return this->net_qos_planner_exec_->process_plan (plans);
       }
+    
+      ::CORBA::Boolean
+      Planner_I_exec_i::process_domain_change (
+        const ::CIAO::RACE::Planner_I::Domain_Changes & /* changes */,
+        ::CIAO::RACE::Plan_Actions_out /* plans */
+        ACE_ENV_ARG_DECL_NOT_USED)
+      ACE_THROW_SPEC (( ::CORBA::SystemException,
+                      ::CIAO::RACE::PlannerFailure))
+      {
+        // Your code here.
+        return true;
+      }
+
+      char *
+      Planner_I_exec_i::name (
+        ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+      ACE_THROW_SPEC (( ::CORBA::SystemException))
+      {
+        // Your code here.
+        return this->net_qos_planner_exec_->name ();
+      }
+      
+      char *
+      Planner_I_exec_i::type (
+        ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+      ACE_THROW_SPEC (( ::CORBA::SystemException))
+      {
+        // Your code here.
+        return this->net_qos_planner_exec_->type ();
+      }
+
+      //==================================================================
+      // Component Executor Implementation Class:   NetQoSPlanner_exec_i
+      //==================================================================
+
+      NetQoSPlanner_exec_i::NetQoSPlanner_exec_i (void)
+       : node_map_filename_ ("NodeDetails.dat"), 
+         planner_name_ ("NetQoSPlanner"),
+         planner_type_ ("Netqork QoS Planner")
+      {
+      }
+
+      NetQoSPlanner_exec_i::~NetQoSPlanner_exec_i (void)
+      {
+      }
+
+      // Supported or inherited operations.
+
+      // Attribute operations.
+
+      char *
+      NetQoSPlanner_exec_i::name (
+        ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+      ACE_THROW_SPEC (( ::CORBA::SystemException))
+      {
+        ACE_DEBUG ((LM_DEBUG, "NetQoSPlanner_exec_i::name()\n"));
+        return CORBA::string_dup (this->planner_name_.c_str());
+        // Your code here.
+        //return 0;
+      }
+
+      void
+      NetQoSPlanner_exec_i::name (
+        const char *  name 
+        ACE_ENV_ARG_DECL_NOT_USED)
+      ACE_THROW_SPEC (( ::CORBA::SystemException))
+      {
+        this->planner_name_ = name;// Your code here.
+      }
+
+      char *
+      NetQoSPlanner_exec_i::type (
+        ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+      ACE_THROW_SPEC (( ::CORBA::SystemException))
+      {
+        ACE_DEBUG ((LM_DEBUG, "NetQoSPlanner_exec_i::type()\n"));
+        return CORBA::string_dup (this->planner_type_.c_str());
+        // Your code here.
+        //return 0;
+      }
+
+      void
+      NetQoSPlanner_exec_i::type (
+        const char *  type 
+        ACE_ENV_ARG_DECL_NOT_USED)
+      ACE_THROW_SPEC (( ::CORBA::SystemException))
+      {
+        // Your code here.
+        this->planner_type_ = type;
+      }
+
+      char *
+      NetQoSPlanner_exec_i::node_map_file (
+        ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+      ACE_THROW_SPEC (( ::CORBA::SystemException))
+      {
+        // Your code here.
+        return CORBA::string_dup(this->node_map_filename_.c_str());
+      }
+
+      void
+      NetQoSPlanner_exec_i::node_map_file (
+        const char *  node_map_file 
+        ACE_ENV_ARG_DECL_NOT_USED)
+      ACE_THROW_SPEC (( ::CORBA::SystemException))
+      {
+        // Your code here.
+        this->node_map_filename_ = node_map_file;
+      }
+
+      // Port operations.
+      
+      ::CORBA::Boolean
+      NetQoSPlanner_exec_i::process_plan (
+        ::CIAO::RACE::Plan_Actions &  plans
+        ACE_ENV_ARG_DECL_NOT_USED)
+      ACE_THROW_SPEC (( ::CORBA::SystemException,
+                       ::CIAO::RACE::PlannerFailure))
+      {
         for (size_t i = 0; i < plans.length (); ++i)
           {
             ::Deployment::DeploymentPlan &dep_plan = plans[i].plan;
@@ -96,13 +215,9 @@ namespace CIAO
         return true;
       }
 
-// *********************************************************
 
-// code that creates the deployment plan populating the network
-// priority policies using the diffserv codepoint decisions.
-
-void Planner_I_exec_i::process_netqos_req (::CIAO::DAnCE::NetworkQoS::NetQoSRequirement *net_qos_req,
-                                           ::Deployment::DiffservInfos & dscp_infos)
+      void NetQoSPlanner_exec_i::process_netqos_req (::CIAO::DAnCE::NetworkQoS::NetQoSRequirement *net_qos_req,
+                                                     ::Deployment::DiffservInfos & dscp_infos)
       {
         time_t t;
         time (&t);
@@ -160,9 +275,13 @@ void Planner_I_exec_i::process_netqos_req (::CIAO::DAnCE::NetworkQoS::NetQoSRequ
           std::cerr << "Node_map Filename: " << this->node_map_file () << std::endl;
       }
 
-void
-Planner_I_exec_i::add_network_priorities (Deployment::DeploymentPlan & temp_plan,
-                                         const Deployment::DiffservInfos & dscp_infos)
+      // *********************************************************
+      // code that creates the deployment plan populating the network
+      // priority policies using the diffserv codepoint decisions.
+      
+      void
+      NetQoSPlanner_exec_i::add_network_priorities (Deployment::DeploymentPlan & temp_plan,
+                                                    const Deployment::DiffservInfos & dscp_infos)
       {
         //Deployment::DeploymentPlan temp_plan = plan.in ();
 
@@ -367,104 +486,6 @@ Planner_I_exec_i::add_network_priorities (Deployment::DeploymentPlan & temp_plan
         temp_plan.infoProperty[new_info_prop_len - 1].name = CORBA::string_dup ("CIAOServerResources");
         temp_plan.infoProperty[new_info_prop_len - 1].value <<= server_resource;
       }
-    
-      ::CORBA::Boolean
-      Planner_I_exec_i::process_domain_change (
-        const ::CIAO::RACE::Planner_I::Domain_Changes & /* changes */,
-        ::CIAO::RACE::Plan_Actions_out /* plans */
-        ACE_ENV_ARG_DECL_NOT_USED)
-      ACE_THROW_SPEC (( ::CORBA::SystemException,
-                      ::CIAO::RACE::PlannerFailure))
-      {
-        // Your code here.
-        return true;
-      }
-
-      char *
-      Planner_I_exec_i::name (
-        ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-      ACE_THROW_SPEC (( ::CORBA::SystemException))
-      {
-        // Your code here.
-        ACE_DEBUG ((LM_DEBUG, "NetQoSPlanner::Planner_I_exec_i::name()\n"));
-        return CORBA::string_dup ("NetQoSPlanner");
-      }
-
-      //==================================================================
-      // Component Executor Implementation Class:   NetQoSPlanner_exec_i
-      //==================================================================
-
-      NetQoSPlanner_exec_i::NetQoSPlanner_exec_i (void)
-      {
-      }
-
-      NetQoSPlanner_exec_i::~NetQoSPlanner_exec_i (void)
-      {
-      }
-
-      // Supported or inherited operations.
-
-      // Attribute operations.
-
-      char *
-      NetQoSPlanner_exec_i::name (
-        ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-      ACE_THROW_SPEC (( ::CORBA::SystemException))
-      {
-        ACE_DEBUG ((LM_DEBUG, "NetQoSPlanner_exec_i::name()\n"));
-        return CORBA::string_dup ("NetQoSPlanner");
-        // Your code here.
-        //return 0;
-      }
-
-      void
-      NetQoSPlanner_exec_i::name (
-        const char * /* name */
-        ACE_ENV_ARG_DECL_NOT_USED)
-      ACE_THROW_SPEC (( ::CORBA::SystemException))
-      {
-        // Your code here.
-      }
-
-      char *
-      NetQoSPlanner_exec_i::type (
-        ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-      ACE_THROW_SPEC (( ::CORBA::SystemException))
-      {
-        ACE_DEBUG ((LM_DEBUG, "NetQoSPlanner_exec_i::type()\n"));
-        return CORBA::string_dup ("Network QoS Planner");
-        // Your code here.
-        //return 0;
-      }
-
-      void
-      NetQoSPlanner_exec_i::type (
-        const char * /* type */
-        ACE_ENV_ARG_DECL_NOT_USED)
-      ACE_THROW_SPEC (( ::CORBA::SystemException))
-      {
-        // Your code here.
-      }
-
-      char *
-      NetQoSPlanner_exec_i::node_map_file (
-        ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-      ACE_THROW_SPEC (( ::CORBA::SystemException))
-      {
-        // Your code here.
-        return 0;
-      }
-
-      void
-      NetQoSPlanner_exec_i::node_map_file (
-        const char * /* node_map_file */
-        ACE_ENV_ARG_DECL_NOT_USED)
-      ACE_THROW_SPEC (( ::CORBA::SystemException))
-      {
-        // Your code here.
-      }
-
-      // Port operations.
 
       ::CIAO::RACE::CCM_Planner_I_ptr
       NetQoSPlanner_exec_i::get_planner_i (
