@@ -92,33 +92,33 @@ namespace CIAO
   {
     namespace CIDL_NetQoSPlanner_Impl
     {
-      class NetQosPlanner_Servant;
+      class NetQoSPlanner_Servant;
 
-      class NETQOSPLANNER_SVNT_Export NetQosPlanner_Context
+      class NETQOSPLANNER_SVNT_Export NetQoSPlanner_Context
         : public virtual CIAO::Context_Impl<
-            ::CIAO::RACE::CCM_NetQosPlanner_Context,
-            NetQosPlanner_Servant,
-            ::CIAO::RACE::NetQosPlanner,
-            ::CIAO::RACE::NetQosPlanner_var
+            ::CIAO::RACE::CCM_NetQoSPlanner_Context,
+            NetQoSPlanner_Servant,
+            ::CIAO::RACE::NetQoSPlanner,
+            ::CIAO::RACE::NetQoSPlanner_var
           >
       {
         public:
         // We will allow the servant glue code we generate to access our state.
-        friend class NetQosPlanner_Servant;
+        friend class NetQoSPlanner_Servant;
 
-        NetQosPlanner_Context (
+        NetQoSPlanner_Context (
           ::Components::CCMHome_ptr h,
           ::CIAO::Session_Container *c,
-          NetQosPlanner_Servant *sv);
+          NetQoSPlanner_Servant *sv);
 
-        virtual ~NetQosPlanner_Context (void);
+        virtual ~NetQoSPlanner_Context (void);
 
-        // Operations for NetQosPlanner receptacles and event sources,
-        // defined in ::CIAO::RACE::CCM_NetQosPlanner_Context.
+        // Operations for NetQoSPlanner receptacles and event sources,
+        // defined in ::CIAO::RACE::CCM_NetQoSPlanner_Context.
 
         // CIAO-specific.
 
-        static NetQosPlanner_Context *
+        static NetQoSPlanner_Context *
         _narrow (
           ::Components::SessionContext_ptr p
           ACE_ENV_ARG_DECL_WITH_DEFAULTS);
@@ -129,26 +129,26 @@ namespace CIAO
         protected:
       };
 
-      class NETQOSPLANNER_SVNT_Export NetQosPlanner_Servant
+      class NETQOSPLANNER_SVNT_Export NetQoSPlanner_Servant
         : public virtual CIAO::Servant_Impl<
-            POA_CIAO::RACE::NetQosPlanner,
-            ::CIAO::RACE::CCM_NetQosPlanner,
-            NetQosPlanner_Context
+            POA_CIAO::RACE::NetQoSPlanner,
+            ::CIAO::RACE::CCM_NetQoSPlanner,
+            NetQoSPlanner_Context
           >
       {
         public:
 
-        typedef ::CIAO::RACE::CCM_NetQosPlanner _exec_type;
+        typedef ::CIAO::RACE::CCM_NetQoSPlanner _exec_type;
 
-        NetQosPlanner_Servant (
-          ::CIAO::RACE::CCM_NetQosPlanner_ptr executor,
+        NetQoSPlanner_Servant (
+          ::CIAO::RACE::CCM_NetQoSPlanner_ptr executor,
           ::Components::CCMHome_ptr h,
           const char *ins_name,
           ::CIAO::Home_Servant_Impl_Base *hs,
           ::CIAO::Session_Container *c,
-          CIAO::REC_POL_MAP &rec_pol_map);
+          ::CIAO::REC_POL_MAP &rec_pol_map);
 
-        virtual ~NetQosPlanner_Servant (void);
+        virtual ~NetQoSPlanner_Servant (void);
 
         virtual void
         set_attributes (
@@ -186,6 +186,11 @@ namespace CIAO
         type (
           const char * type
           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_THROW_SPEC (( ::CORBA::SystemException));
+
+        virtual char *
+        node_map_file (
+          ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
         ACE_THROW_SPEC (( ::CORBA::SystemException));
 
         // Operations for Receptacles interface.
@@ -298,7 +303,7 @@ namespace CIAO
             ::CIAO::Home_Servant_Impl<
                 ::POA_CIAO::RACE::NetQoSPlanner_Home,
                 ::CIAO::RACE::CCM_NetQoSPlanner_Home,
-                NetQosPlanner_Servant
+                NetQoSPlanner_Servant
               >
       {
         public:
@@ -307,7 +312,7 @@ namespace CIAO
           ::CIAO::RACE::CCM_NetQoSPlanner_Home_ptr exe,
           const char *ins_name,
           ::CIAO::Session_Container *c,
-          CIAO::REC_POL_MAP &rec_pol_map);
+          ::CIAO::REC_POL_MAP &rec_pol_map);
 
         virtual ~NetQoSPlanner_Home_Servant (void);
 
@@ -322,7 +327,7 @@ namespace CIAO
         ::Components::HomeExecutorBase_ptr p,
         CIAO::Session_Container *c,
         const char *ins_name,
-        CIAO::REC_POL_MAP &rec_pol_map
+        ::CIAO::REC_POL_MAP &rec_pol_map
         ACE_ENV_ARG_DECL_WITH_DEFAULTS);
     }
   }

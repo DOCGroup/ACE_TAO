@@ -84,13 +84,13 @@ namespace CIAO
         Instance_Map instance_map_;
       };
 
-      class NETQOSPLANNER_EXEC_Export NetQosPlanner_exec_i
+      class NETQOSPLANNER_EXEC_Export NetQoSPlanner_exec_i
         : public virtual NetQoSPlanner_Exec,
           public virtual TAO_Local_RefCounted_Object
       {
         public:
-        NetQosPlanner_exec_i (void);
-        virtual ~NetQosPlanner_exec_i (void);
+        NetQoSPlanner_exec_i (void);
+        virtual ~NetQoSPlanner_exec_i (void);
 
         // Supported or inherited operations.
 
@@ -116,6 +116,11 @@ namespace CIAO
         type (
           const char * type
           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_THROW_SPEC (( ::CORBA::SystemException));
+
+        char *
+        node_map_file (
+          ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
         ACE_THROW_SPEC (( ::CORBA::SystemException));
 
         // Port operations.
@@ -171,7 +176,7 @@ namespace CIAO
                           ::Components::CCMException));
 
         protected:
-        NetQosPlanner_Context *context_;
+        NetQoSPlanner_Context *context_;
       };
 
       class NETQOSPLANNER_EXEC_Export NetQoSPlanner_Home_exec_i

@@ -11,11 +11,12 @@ module CIAO
 {
   module RACE
   {
-    component NetQosPlanner : Planner
+    component NetQoSPlanner : Planner
     {
+        readonly attribute string node_map_file;
     };
     
-    home NetQoSPlanner_Home manages NetQosPlanner
+    home NetQoSPlanner_Home manages NetQoSPlanner
     {
     };
   };
