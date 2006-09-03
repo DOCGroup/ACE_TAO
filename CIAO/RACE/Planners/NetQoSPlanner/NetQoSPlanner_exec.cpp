@@ -34,7 +34,8 @@ namespace CIAO
       // Facet Executor Implementation Class:   Planner_I_exec_i
       //==================================================================
 
-      Planner_I_exec_i::Planner_I_exec_i (void)
+      Planner_I_exec_i::Planner_I_exec_i (NetQoSPlanner_exec_i & net_qos)
+        : net_qos_planner_exec_(net_qos)
       {
       }
 
@@ -51,6 +52,8 @@ namespace CIAO
       ACE_THROW_SPEC (( ::CORBA::SystemException,
                        ::CIAO::RACE::PlannerFailure))
       {
+        return this->net_qos_planner_exec_->process_plan (plans);
+      }
         for (size_t i = 0; i < plans.length (); ++i)
           {
             ::Deployment::DeploymentPlan &dep_plan = plans[i].plan;
@@ -452,6 +455,15 @@ Planner_I_exec_i::add_network_priorities (Deployment::DeploymentPlan & temp_plan
         return 0;
       }
 
+      void
+      NetQoSPlanner_exec_i::node_map_file (
+        const char * /* node_map_file */
+        ACE_ENV_ARG_DECL_NOT_USED)
+      ACE_THROW_SPEC (( ::CORBA::SystemException))
+      {
+        // Your code here.
+      }
+
       // Port operations.
 
       ::CIAO::RACE::CCM_Planner_I_ptr
@@ -460,7 +472,7 @@ Planner_I_exec_i::add_network_priorities (Deployment::DeploymentPlan & temp_plan
       ACE_THROW_SPEC (( ::CORBA::SystemException))
       {
         // Your code here.
-        return new Planner_I_exec_i ();
+        return new Planner_I_exec_i (*this);
         //return ::CIAO::RACE::CCM_Planner_I::_nil ();
       }
 

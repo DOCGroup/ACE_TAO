@@ -119,8 +119,14 @@ namespace CIAO
         ACE_THROW_SPEC (( ::CORBA::SystemException));
 
         char *
-        node_map_file (
+        NetQoSPlanner_exec_i::node_map_file (
           ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+        ACE_THROW_SPEC (( ::CORBA::SystemException));
+
+        void
+        NetQoSPlanner_exec_i::node_map_file (
+          const char * /* node_map_file */
+          ACE_ENV_ARG_DECL_NOT_USED)
         ACE_THROW_SPEC (( ::CORBA::SystemException));
 
         // Port operations.
