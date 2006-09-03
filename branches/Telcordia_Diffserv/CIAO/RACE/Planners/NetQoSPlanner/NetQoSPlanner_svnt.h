@@ -193,6 +193,12 @@ namespace CIAO
           ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
         ACE_THROW_SPEC (( ::CORBA::SystemException));
 
+        void
+        node_map_file (
+          const char * node_map_file
+          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_THROW_SPEC (( ::CORBA::SystemException));
+
         // Operations for Receptacles interface.
 
         virtual ::Components::Cookie *

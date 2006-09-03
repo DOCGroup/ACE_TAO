@@ -13,7 +13,7 @@ module CIAO
   {
     component NetQoSPlanner : Planner
     {
-        readonly attribute string node_map_file;
+       attribute string node_map_file;
     };
     
     home NetQoSPlanner_Home manages NetQoSPlanner

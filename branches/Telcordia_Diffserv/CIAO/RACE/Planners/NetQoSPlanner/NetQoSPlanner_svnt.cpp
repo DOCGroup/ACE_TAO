@@ -231,6 +231,14 @@ namespace CIAO
             continue;
           }
 
+          if (ACE_OS::strcmp (descr_name, "node_map_file") == 0)
+          {
+            const char * _ciao_extract_val = 0;
+            descr_value >>= _ciao_extract_val;
+            this->node_map_file (_ciao_extract_val);
+            continue;
+          }
+
           ACE_UNUSED_ARG (descr_name);
           ACE_UNUSED_ARG (descr_value);
         }
@@ -565,6 +573,17 @@ namespace CIAO
       {
         return this->executor_->node_map_file (
           ACE_ENV_SINGLE_ARG_PARAMETER);
+      }
+
+      void
+      NetQoSPlanner_Servant::node_map_file (
+        const char * node_map_file
+        ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC (( ::CORBA::SystemException))
+      {
+        this->executor_->node_map_file (
+          node_map_file
+          ACE_ENV_ARG_PARAMETER);
       }
 
       // Private method to populate the port tables.
