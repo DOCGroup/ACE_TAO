@@ -1,0 +1,2235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE project SYSTEM "mga.dtd">
+
+<project guid="{E93DB6A4-01A1-4396-BC75-A42C5A039FA3}" cdate="Wed Aug 30 23:47:19 2006" mdate="Wed Aug 30 23:47:19 2006" version="" metaguid="{3C97A7DA-2916-4FD1-AE2C-139763FF108B}" metaversion="" metaname="CQML">
+	<name>Hello</name>
+	<comment></comment>
+	<author></author>
+	<folder id="id-006a-00000001" relid="0x1" childrelidcntr="0x2" kind="RootFolder">
+		<name>Hello</name>
+		<folder id="id-006a-00000002" relid="0x2" childrelidcntr="0x3" kind="InterfaceDefinitions">
+			<name>InterfaceDefinitions</name>
+			<model id="id-0065-00000001" kind="File" relid="0x1" childrelidcntr="0x1">
+				<name>Hello_Base</name>
+				<attribute kind="PrefixTag" status="meta">
+					<value></value>
+				</attribute>
+				<model id="id-0065-00000002" kind="Package" role="Package" relid="0x1" childrelidcntr="0x2">
+					<name>Hello</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="InterfaceDefinition" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>518,318</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="PrefixTag" status="meta">
+						<value></value>
+					</attribute>
+					<attribute kind="SpecifyIdTag" status="meta">
+						<value></value>
+					</attribute>
+					<attribute kind="VersionTag" status="meta">
+						<value></value>
+					</attribute>
+					<model id="id-0065-00000003" kind="Object" role="Object" relid="0x1" childrelidcntr="0x1">
+						<name>ReadMessage</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="InterfaceDefinition" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>334,201</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="PrefixTag" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="SpecifyIdTag" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="VersionTag" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="abstract" status="meta">
+							<value>false</value>
+						</attribute>
+						<attribute kind="local" status="meta">
+							<value>false</value>
+						</attribute>
+						<model id="id-0065-00000004" kind="TwowayOperation" role="TwowayOperation" relid="0x1" childrelidcntr="0x1">
+							<name>get_message</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="InterfaceDefinition" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>518,318</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="SpecifyIdTag" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="VersionTag" status="meta">
+								<value></value>
+							</attribute>
+							<reference id="id-0067-0000002a" kind="ReturnType" role="ReturnType" relid="0x1" referred="id-0066-00000007">
+								<name>ReturnType</name>
+								<regnode name="PartRegs" isopaque="yes">
+									<value></value>
+									<regnode name="InterfaceDefinition" isopaque="yes">
+										<value></value>
+										<regnode name="Position" isopaque="yes">
+											<value>518,318</value>
+										</regnode>
+									</regnode>
+								</regnode>
+							</reference>
+						</model>
+					</model>
+					<model id="id-0065-00000005" kind="Event" role="Event" relid="0x2" childrelidcntr="0x1">
+						<name>TimeOut</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="InterfaceDefinition" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>700,434</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="PrefixTag" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="SpecifyIdTag" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="VersionTag" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="abstract" status="meta">
+							<value>false</value>
+						</attribute>
+						<reference id="id-0067-0000002b" kind="Member" role="Member" relid="0x1" referred="id-0066-00000007">
+							<name>data</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="InterfaceDefinition" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>518,318</value>
+									</regnode>
+								</regnode>
+							</regnode>
+						</reference>
+					</model>
+				</model>
+			</model>
+			<model id="id-0065-00000006" kind="File" relid="0x2" childrelidcntr="0x2">
+				<name>Sender</name>
+				<attribute kind="PrefixTag" status="meta">
+					<value></value>
+				</attribute>
+				<model id="id-0065-00000007" kind="Package" role="Package" relid="0x2" childrelidcntr="0x5">
+					<name>Hello</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="InterfaceDefinition" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>700,434</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="PrefixTag" status="meta">
+						<value></value>
+					</attribute>
+					<attribute kind="SpecifyIdTag" status="meta">
+						<value></value>
+					</attribute>
+					<attribute kind="VersionTag" status="meta">
+						<value></value>
+					</attribute>
+					<model id="id-0065-00000008" kind="Object" role="Object" relid="0x1" childrelidcntr="0x1">
+						<name>trigger</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="InterfaceDefinition" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>188,108</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="PrefixTag" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="SpecifyIdTag" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="VersionTag" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="abstract" status="meta">
+							<value>false</value>
+						</attribute>
+						<attribute kind="local" status="meta">
+							<value>false</value>
+						</attribute>
+						<model id="id-0065-00000009" kind="TwowayOperation" role="TwowayOperation" relid="0x1" childrelidcntr="0x0">
+							<name>start</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="InterfaceDefinition" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>518,318</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="SpecifyIdTag" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="VersionTag" status="meta">
+								<value></value>
+							</attribute>
+						</model>
+					</model>
+					<model id="id-0065-0000000a" kind="Enum" role="Enum" relid="0x2" childrelidcntr="0x4">
+						<name>COLOR_SELECTION</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="InterfaceDefinition" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>408,248</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="SpecifyIdTag" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="VersionTag" status="meta">
+							<value></value>
+						</attribute>
+						<atom id="id-0066-00000001" kind="EnumValue" role="EnumValue" relid="0x1">
+							<name>empty</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="InterfaceDefinition" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>188,108</value>
+									</regnode>
+								</regnode>
+							</regnode>
+						</atom>
+						<atom id="id-0066-00000002" kind="EnumValue" role="EnumValue" relid="0x2">
+							<name>white</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="InterfaceDefinition" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>408,248</value>
+									</regnode>
+								</regnode>
+							</regnode>
+						</atom>
+						<atom id="id-0066-00000003" kind="EnumValue" role="EnumValue" relid="0x3">
+							<name>red</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="InterfaceDefinition" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>628,388</value>
+									</regnode>
+								</regnode>
+							</regnode>
+						</atom>
+						<atom id="id-0066-00000004" kind="EnumValue" role="EnumValue" relid="0x4">
+							<name>yellow</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="InterfaceDefinition" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>848,528</value>
+									</regnode>
+								</regnode>
+							</regnode>
+						</atom>
+					</model>
+					<model id="id-0065-0000000b" kind="Component" role="Component" relid="0x3" childrelidcntr="0x6">
+						<name>Sender</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="InterfaceDefinition" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>628,388</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="SpecifyIdTag" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="UUID">
+							<value>5BAE8EB8-6F64-4FFA-9DF6-40818B17FA89</value>
+						</attribute>
+						<attribute kind="VersionTag" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="label" status="meta">
+							<value></value>
+						</attribute>
+						<model id="id-0065-0000000c" kind="Attribute" role="Attribute" relid="0x4" childrelidcntr="0x1">
+							<name>local_message</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="InterfaceDefinition" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>596,368</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="SpecifyIdTag" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="VersionTag" status="meta">
+								<value></value>
+							</attribute>
+							<reference id="id-0067-0000002c" kind="AttributeMember" role="AttributeMember" relid="0x1" referred="id-0066-00000007">
+								<name>AttributeMember</name>
+								<regnode name="PartRegs" isopaque="yes">
+									<value></value>
+									<regnode name="InterfaceDefinition" isopaque="yes">
+										<value></value>
+										<regnode name="Position" isopaque="yes">
+											<value>518,318</value>
+										</regnode>
+									</regnode>
+								</regnode>
+							</reference>
+						</model>
+						<model id="id-0065-0000000d" kind="ReadonlyAttribute" role="ReadonlyAttribute" relid="0x5" childrelidcntr="0x1">
+							<name>hertz</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="InterfaceDefinition" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>753,468</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="SpecifyIdTag" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="VersionTag" status="meta">
+								<value></value>
+							</attribute>
+							<reference id="id-0067-0000002f" kind="AttributeMember" role="AttributeMember" relid="0x1" referred="id-0066-0000000b">
+								<name>AttributeMember</name>
+								<regnode name="PartRegs" isopaque="yes">
+									<value></value>
+									<regnode name="InterfaceDefinition" isopaque="yes">
+										<value></value>
+										<regnode name="Position" isopaque="yes">
+											<value>518,318</value>
+										</regnode>
+									</regnode>
+								</regnode>
+							</reference>
+						</model>
+						<model id="id-0065-0000000e" kind="Attribute" role="Attribute" relid="0x6" childrelidcntr="0x1">
+							<name>color</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="InterfaceDefinition" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>910,568</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="SpecifyIdTag" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="VersionTag" status="meta">
+								<value></value>
+							</attribute>
+							<reference id="id-0067-00000001" kind="AttributeMember" role="AttributeMember" relid="0x1" referred="id-0065-0000000a">
+								<name>AttributeMember</name>
+								<regnode name="PartRegs" isopaque="yes">
+									<value></value>
+									<regnode name="InterfaceDefinition" isopaque="yes">
+										<value></value>
+										<regnode name="Position" isopaque="yes">
+											<value>518,318</value>
+										</regnode>
+									</regnode>
+								</regnode>
+							</reference>
+						</model>
+						<reference id="id-0067-00000002" kind="ProvidedRequestPort" role="ProvidedRequestPort" relid="0x2" referred="id-0065-00000003">
+							<name>push_message</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="InterfaceDefinition" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>282,168</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="SpecifyIdTag" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="VersionTag" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="exclusiveProvider" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="exclusiveUser" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="optional" status="meta">
+								<value>false</value>
+							</attribute>
+						</reference>
+						<reference id="id-0067-00000003" kind="OutEventPort" role="OutEventPort" relid="0x3" referred="id-0065-00000005">
+							<name>click_out</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="InterfaceDefinition" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>439,268</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="SpecifyIdTag" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="VersionTag" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="exclusiveProvider" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="exclusiveUser" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="optional" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="out_event_port_type" status="meta">
+								<value>DirectConnect</value>
+							</attribute>
+							<attribute kind="single_destination">
+								<value>false</value>
+							</attribute>
+						</reference>
+						<reference id="id-0067-00000004" kind="Supports" role="Supports" relid="0x1" referred="id-0065-00000008">
+							<name>Supports</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="InterfaceDefinition" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>125,68</value>
+									</regnode>
+								</regnode>
+							</regnode>
+						</reference>
+					</model>
+					<model id="id-0065-0000000f" kind="ComponentFactory" role="ComponentFactory" relid="0x4" childrelidcntr="0x0">
+						<name>SenderHome</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="InterfaceDefinition" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>848,528</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="SpecifyIdTag" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="VersionTag" status="meta">
+							<value></value>
+						</attribute>
+					</model>
+					<connection id="id-0068-00000001" kind="ManagesComponent" role="ManagesComponent" relid="0x5">
+						<name>ManagesComponent</name>
+						<regnode name="autorouterPref" isopaque="yes">
+							<value>Ws</value>
+						</regnode>
+						<connpoint role="dst" target="id-0065-0000000b"/>
+						<connpoint role="src" target="id-0065-0000000f"/>
+					</connection>
+				</model>
+				<reference id="id-0067-00000005" kind="FileRef" role="FileRef" relid="0x1" referred="id-0065-00000001">
+					<name>FileRef</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="InterfaceDefinition" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>334,201</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+			</model>
+			<model id="id-0065-00000010" kind="File" relid="0x3" childrelidcntr="0x2">
+				<name>Receiver</name>
+				<attribute kind="PrefixTag" status="meta">
+					<value></value>
+				</attribute>
+				<model id="id-0065-00000011" kind="Package" role="Package" relid="0x2" childrelidcntr="0x3">
+					<name>Hello</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="InterfaceDefinition" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>700,434</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="PrefixTag" status="meta">
+						<value></value>
+					</attribute>
+					<attribute kind="SpecifyIdTag" status="meta">
+						<value></value>
+					</attribute>
+					<attribute kind="VersionTag" status="meta">
+						<value></value>
+					</attribute>
+					<model id="id-0065-00000012" kind="Component" role="Component" relid="0x1" childrelidcntr="0x2">
+						<name>Receiver</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="InterfaceDefinition" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>334,201</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="SpecifyIdTag" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="UUID">
+							<value>530A924D-9A42-4653-8FEF-B5769E1E284E</value>
+						</attribute>
+						<attribute kind="VersionTag" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="label" status="meta">
+							<value></value>
+						</attribute>
+						<reference id="id-0067-00000006" kind="RequiredRequestPort" role="RequiredRequestPort" relid="0x1" referred="id-0065-00000003">
+							<name>read_message</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="InterfaceDefinition" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>334,201</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="SpecifyIdTag" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="VersionTag" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="exclusiveProvider" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="exclusiveUser" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="multiple_connections">
+								<value>false</value>
+							</attribute>
+							<attribute kind="optional" status="meta">
+								<value>false</value>
+							</attribute>
+						</reference>
+						<reference id="id-0067-00000007" kind="InEventPort" role="InEventPort" relid="0x2" referred="id-0065-00000005">
+							<name>click_in</name>
+							<regnode name="PartRegs" isopaque="yes">
+								<value></value>
+								<regnode name="InterfaceDefinition" isopaque="yes">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>700,434</value>
+									</regnode>
+								</regnode>
+							</regnode>
+							<attribute kind="SpecifyIdTag" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="VersionTag" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="exclusiveProvider" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="exclusiveUser" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="optional" status="meta">
+								<value>false</value>
+							</attribute>
+						</reference>
+					</model>
+					<model id="id-0065-00000013" kind="ComponentFactory" role="ComponentFactory" relid="0x2" childrelidcntr="0x0">
+						<name>ReceiverHome</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="InterfaceDefinition" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>700,434</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="SpecifyIdTag" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="VersionTag" status="meta">
+							<value></value>
+						</attribute>
+					</model>
+					<connection id="id-0068-00000002" kind="ManagesComponent" role="ManagesComponent" relid="0x3">
+						<name>ManagesComponent</name>
+						<regnode name="autorouterPref" isopaque="yes">
+							<value>Ws</value>
+						</regnode>
+						<connpoint role="dst" target="id-0065-00000012"/>
+						<connpoint role="src" target="id-0065-00000013"/>
+					</connection>
+				</model>
+				<reference id="id-0067-00000008" kind="FileRef" role="FileRef" relid="0x1" referred="id-0065-00000001">
+					<name>FileRef</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="InterfaceDefinition" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>334,201</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+			</model>
+		</folder>
+		<folder id="id-006a-00000003" relid="0x1" childrelidcntr="0xb" kind="PredefinedTypes">
+			<name>PredefinedTypes</name>
+			<atom id="id-0066-00000005" kind="TypeKind" relid="0xb">
+				<name>TypeKind</name>
+			</atom>
+			<atom id="id-0066-00000006" kind="TypeEncoding" relid="0xa">
+				<name>TypeEncoding</name>
+			</atom>
+			<atom id="id-0066-00000007" kind="String" relid="0x9">
+				<name>String</name>
+			</atom>
+			<atom id="id-0066-00000008" kind="Boolean" relid="0x8">
+				<name>Boolean</name>
+			</atom>
+			<atom id="id-0066-00000009" kind="ShortInteger" relid="0x7">
+				<name>ShortInteger</name>
+			</atom>
+			<atom id="id-0066-0000000a" kind="RealNumber" relid="0x6">
+				<name>RealNumber</name>
+			</atom>
+			<atom id="id-0066-0000000b" kind="LongInteger" relid="0x5">
+				<name>LongInteger</name>
+			</atom>
+			<atom id="id-0066-0000000c" kind="GenericValueObject" relid="0x4">
+				<name>GenericValueObject</name>
+			</atom>
+			<atom id="id-0066-0000000d" kind="GenericValue" relid="0x3">
+				<name>GenericValue</name>
+			</atom>
+			<atom id="id-0066-0000000e" kind="GenericObject" relid="0x2">
+				<name>GenericObject</name>
+			</atom>
+			<atom id="id-0066-0000000f" kind="Byte" relid="0x1">
+				<name>Byte</name>
+			</atom>
+		</folder>
+		<folder id="id-006a-00000004" relid="0x3" childrelidcntr="0x4" kind="ComponentImplementations">
+			<name>ComponentImplementations</name>
+			<model id="id-0065-00000014" kind="ComponentImplementationContainer" relid="0x1" childrelidcntr="0xb">
+				<name>SenderImplementation</name>
+				<model id="id-0065-00000015" kind="Property" role="Property" relid="0x2" childrelidcntr="0x2">
+					<name>ComponentIOR</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Packaging" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>282,168</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="DataValue">
+						<value>Sender.ior</value>
+					</attribute>
+					<reference id="id-0067-00000009" kind="DataType" role="DataType" relid="0x2" referred="id-0066-00000007">
+						<name>String</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="Packaging" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>518,318</value>
+								</regnode>
+							</regnode>
+						</regnode>
+					</reference>
+				</model>
+				<atom id="id-0066-00000010" kind="MonolithicImplementation" role="MonolithicImplementation" relid="0x1">
+					<name>SenderMonolithicImpl</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Packaging" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>125,68</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="UUID">
+						<value>51B2FD0F-060B-4895-B7F1-2645E7EF4211</value>
+					</attribute>
+					<attribute kind="label" status="meta">
+						<value></value>
+					</attribute>
+				</atom>
+				<reference id="id-0067-0000000a" kind="ComponentRef" role="ComponentRef" relid="0x9" referred="id-0065-0000000b">
+					<name>SenderRef</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Packaging" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>910,568</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<reference id="id-0067-00000032" kind="ImplementationArtifactReference" role="ImplementationArtifactReference" relid="0x3" referred="id-0066-00000014">
+					<name>Sender_stubRef</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Packaging" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>433,265</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<reference id="id-0067-00000033" kind="ImplementationArtifactReference" role="ImplementationArtifactReference" relid="0x4" referred="id-0066-00000015">
+					<name>Sender_svntRef</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Packaging" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>596,368</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<reference id="id-0067-00000034" kind="ImplementationArtifactReference" role="ImplementationArtifactReference" relid="0x5" referred="id-0066-00000016">
+					<name>Sender_execRef</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Packaging" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>753,468</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<connection id="id-0068-00000003" kind="ConfigProperty" role="ConfigProperty" relid="0xa">
+					<name>ConfigProperty</name>
+					<connpoint role="dst" target="id-0065-00000015"/>
+					<connpoint role="src" target="id-0066-00000010"/>
+				</connection>
+				<connection id="id-0068-00000004" kind="MonolithprimaryArtifact" role="MonolithprimaryArtifact" relid="0x6">
+					<name>MonolithprimaryArtifact</name>
+					<connpoint role="src" target="id-0066-00000010"/>
+					<connpoint role="dst" target="id-0067-00000032"/>
+				</connection>
+				<connection id="id-0068-00000005" kind="MonolithprimaryArtifact" role="MonolithprimaryArtifact" relid="0x7">
+					<name>MonolithprimaryArtifact</name>
+					<connpoint role="src" target="id-0066-00000010"/>
+					<connpoint role="dst" target="id-0067-00000033"/>
+				</connection>
+				<connection id="id-0068-00000006" kind="MonolithprimaryArtifact" role="MonolithprimaryArtifact" relid="0x8">
+					<name>MonolithprimaryArtifact</name>
+					<connpoint role="src" target="id-0066-00000010"/>
+					<connpoint role="dst" target="id-0067-00000034"/>
+				</connection>
+				<connection id="id-0068-00000007" kind="Implements" role="Implements" relid="0xb">
+					<name>Implements</name>
+					<connpoint role="src" target="id-0066-00000010"/>
+					<connpoint role="dst" target="id-0067-0000000a"/>
+				</connection>
+			</model>
+			<model id="id-0065-00000016" kind="ComponentImplementationContainer" relid="0x2" childrelidcntr="0xb">
+				<name>ReceiverImplementation</name>
+				<model id="id-0065-00000017" kind="Property" role="Property" relid="0x2" childrelidcntr="0x2">
+					<name>ComponentIOR</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Packaging" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>282,168</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="DataValue">
+						<value>Receiver.ior</value>
+					</attribute>
+					<reference id="id-0067-0000000b" kind="DataType" role="DataType" relid="0x2" referred="id-0066-00000007">
+						<name>String</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="Packaging" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>518,318</value>
+								</regnode>
+							</regnode>
+						</regnode>
+					</reference>
+				</model>
+				<atom id="id-0066-00000011" kind="MonolithicImplementation" role="MonolithicImplementation" relid="0x1">
+					<name>ReceiverMonolithicImpl</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Packaging" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>125,68</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="UUID">
+						<value>9B4442B8-A9B3-4030-A33F-AF343E22DBF2</value>
+					</attribute>
+					<attribute kind="label" status="meta">
+						<value></value>
+					</attribute>
+				</atom>
+				<reference id="id-0067-0000000c" kind="ComponentRef" role="ComponentRef" relid="0x9" referred="id-0065-00000012">
+					<name>ReceiverRef</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Packaging" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>910,568</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<reference id="id-0067-00000035" kind="ImplementationArtifactReference" role="ImplementationArtifactReference" relid="0x3" referred="id-0066-00000017">
+					<name>Receiver_stubRef</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Packaging" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>439,268</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<reference id="id-0067-00000036" kind="ImplementationArtifactReference" role="ImplementationArtifactReference" relid="0x4" referred="id-0066-00000018">
+					<name>Receiver_svntRef</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Packaging" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>596,368</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<reference id="id-0067-00000037" kind="ImplementationArtifactReference" role="ImplementationArtifactReference" relid="0x5" referred="id-0066-00000019">
+					<name>Receiver_execRef</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Packaging" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>753,468</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<connection id="id-0068-00000008" kind="ConfigProperty" role="ConfigProperty" relid="0xa">
+					<name>ConfigProperty</name>
+					<connpoint role="dst" target="id-0065-00000017"/>
+					<connpoint role="src" target="id-0066-00000011"/>
+				</connection>
+				<connection id="id-0068-00000009" kind="MonolithprimaryArtifact" role="MonolithprimaryArtifact" relid="0x6">
+					<name>MonolithprimaryArtifact</name>
+					<connpoint role="src" target="id-0066-00000011"/>
+					<connpoint role="dst" target="id-0067-00000035"/>
+				</connection>
+				<connection id="id-0068-0000000a" kind="MonolithprimaryArtifact" role="MonolithprimaryArtifact" relid="0x7">
+					<name>MonolithprimaryArtifact</name>
+					<connpoint role="src" target="id-0066-00000011"/>
+					<connpoint role="dst" target="id-0067-00000036"/>
+				</connection>
+				<connection id="id-0068-0000000b" kind="MonolithprimaryArtifact" role="MonolithprimaryArtifact" relid="0x8">
+					<name>MonolithprimaryArtifact</name>
+					<connpoint role="src" target="id-0066-00000011"/>
+					<connpoint role="dst" target="id-0067-00000037"/>
+				</connection>
+				<connection id="id-0068-0000000c" kind="Implements" role="Implements" relid="0xb">
+					<name>Implements</name>
+					<connpoint role="src" target="id-0066-00000011"/>
+					<connpoint role="dst" target="id-0067-0000000c"/>
+				</connection>
+			</model>
+			<model id="id-0065-00000018" kind="ComponentImplementationContainer" relid="0x1" childrelidcntr="0x2">
+				<name>HelloAssemblyTypeContainer</name>
+				<model id="id-0065-00000019" kind="ComponentAssembly" role="ComponentAssembly" relid="0x1" childrelidcntr="0xf">
+					<name>HelloAssemblyType</name>
+					<regnode name="PartRegs" status="undefined">
+						<value></value>
+						<regnode name="Packaging" status="undefined">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>11,12</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="UUID">
+						<value>9C501DB0-D63B-46FB-BA3F-5B9D89DF1AEB</value>
+					</attribute>
+					<attribute kind="label" status="meta">
+						<value></value>
+					</attribute>
+					<model id="id-0065-0000001a" kind="Component" role="Component" derivedfrom="id-0065-0000000b" isinstance="yes" isprimary="yes" relid="0x1" childrelidcntr="0x0">
+						<name>Sender</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="Packaging" status="undefined">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>480,138</value>
+								</regnode>
+							</regnode>
+							<regnode name="QoS" status="undefined">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>480,138</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="SpecifyIdTag" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="UUID">
+							<value>948B16A7-A4CB-4C04-BAD7-1295AEC8C110</value>
+						</attribute>
+						<attribute kind="VersionTag" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="label" status="meta">
+							<value></value>
+						</attribute>
+						<model id="id-0065-0000001b" kind="Attribute" role="Attribute" derivedfrom="id-0065-0000000c" isinstance="yes" isprimary="no" childrelidcntr="0x0">
+							<name>local_message</name>
+							<attribute kind="SpecifyIdTag" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="VersionTag" status="meta">
+								<value></value>
+							</attribute>
+							<reference id="id-0067-0000002d" kind="AttributeMember" role="AttributeMember" derivedfrom="id-0067-0000002c" isinstance="yes" isprimary="no" referred="id-0066-00000007" isbound="yes">
+								<name>AttributeMember</name>
+							</reference>
+						</model>
+						<model id="id-0065-0000001c" kind="ReadonlyAttribute" role="ReadonlyAttribute" derivedfrom="id-0065-0000000d" isinstance="yes" isprimary="no" childrelidcntr="0x0">
+							<name>hertz</name>
+							<attribute kind="SpecifyIdTag" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="VersionTag" status="meta">
+								<value></value>
+							</attribute>
+							<reference id="id-0067-00000030" kind="AttributeMember" role="AttributeMember" derivedfrom="id-0067-0000002f" isinstance="yes" isprimary="no" referred="id-0066-0000000b" isbound="yes">
+								<name>AttributeMember</name>
+							</reference>
+						</model>
+						<model id="id-0065-0000001d" kind="Attribute" role="Attribute" derivedfrom="id-0065-0000000e" isinstance="yes" isprimary="no" childrelidcntr="0x0">
+							<name>color</name>
+							<attribute kind="SpecifyIdTag" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="VersionTag" status="meta">
+								<value></value>
+							</attribute>
+							<reference id="id-0067-0000000d" kind="AttributeMember" role="AttributeMember" derivedfrom="id-0067-00000001" isinstance="yes" isprimary="no" referred="id-0065-0000000a" isbound="yes">
+								<name>AttributeMember</name>
+							</reference>
+						</model>
+						<reference id="id-0067-0000000e" kind="OutEventPort" role="OutEventPort" derivedfrom="id-0067-00000003" isinstance="yes" isprimary="no" referred="id-0065-00000005" isbound="yes">
+							<name>click_out</name>
+							<attribute kind="SpecifyIdTag" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="VersionTag" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="exclusiveProvider" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="exclusiveUser" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="optional" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="out_event_port_type" status="meta">
+								<value>DirectConnect</value>
+							</attribute>
+							<attribute kind="single_destination" status="inherited">
+								<value>false</value>
+							</attribute>
+						</reference>
+						<reference id="id-0067-0000000f" kind="ProvidedRequestPort" role="ProvidedRequestPort" derivedfrom="id-0067-00000002" isinstance="yes" isprimary="no" referred="id-0065-00000003" isbound="yes">
+							<name>push_message</name>
+							<attribute kind="SpecifyIdTag" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="VersionTag" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="exclusiveProvider" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="exclusiveUser" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="optional" status="meta">
+								<value>false</value>
+							</attribute>
+						</reference>
+						<reference id="id-0067-00000010" kind="Supports" role="Supports" derivedfrom="id-0067-00000004" isinstance="yes" isprimary="no" referred="id-0065-00000008" isbound="yes">
+							<name>Supports</name>
+						</reference>
+					</model>
+					<model id="id-0065-0000001e" kind="Component" role="Component" derivedfrom="id-0065-00000012" isinstance="yes" isprimary="yes" relid="0x2" childrelidcntr="0x0">
+						<name>Receiver</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="Packaging" status="undefined">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>186,145</value>
+								</regnode>
+							</regnode>
+							<regnode name="QoS" status="undefined">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>186,145</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="SpecifyIdTag" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="UUID">
+							<value>F00ADDD1-B223-4D23-A7E7-CDA626F6E661</value>
+						</attribute>
+						<attribute kind="VersionTag" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="label" status="meta">
+							<value></value>
+						</attribute>
+						<reference id="id-0067-00000011" kind="RequiredRequestPort" role="RequiredRequestPort" derivedfrom="id-0067-00000006" isinstance="yes" isprimary="no" referred="id-0065-00000003" isbound="yes">
+							<name>read_message</name>
+							<attribute kind="SpecifyIdTag" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="VersionTag" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="exclusiveProvider" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="exclusiveUser" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="multiple_connections" status="inherited">
+								<value>false</value>
+							</attribute>
+							<attribute kind="optional" status="meta">
+								<value>false</value>
+							</attribute>
+						</reference>
+						<reference id="id-0067-00000012" kind="InEventPort" role="InEventPort" derivedfrom="id-0067-00000007" isinstance="yes" isprimary="no" referred="id-0065-00000005" isbound="yes">
+							<name>click_in</name>
+							<attribute kind="SpecifyIdTag" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="VersionTag" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="exclusiveProvider" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="exclusiveUser" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="optional" status="meta">
+								<value>false</value>
+							</attribute>
+						</reference>
+					</model>
+					<model id="id-0065-0000001f" kind="Property" role="Property" relid="0x7" childrelidcntr="0x1">
+						<name>ComponentIOR</name>
+						<regnode name="PartRegs" status="undefined">
+							<value></value>
+							<regnode name="Packaging" status="undefined">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>223,314</value>
+								</regnode>
+							</regnode>
+							<regnode name="QoS" status="undefined">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>223,314</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="DataValue">
+							<value>Receiver.ior</value>
+						</attribute>
+						<reference id="id-0067-00000013" kind="DataType" role="DataType" relid="0x1" referred="id-0066-00000007">
+							<name>DataType</name>
+							<regnode name="PartRegs" status="undefined">
+								<value></value>
+								<regnode name="Packaging" status="undefined">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>289,163</value>
+									</regnode>
+								</regnode>
+							</regnode>
+						</reference>
+					</model>
+					<model id="id-0065-00000020" kind="Property" role="Property" relid="0x9" childrelidcntr="0x1">
+						<name>ComponentIOR</name>
+						<regnode name="PartRegs" status="undefined">
+							<value></value>
+							<regnode name="Packaging" status="undefined">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>384,314</value>
+								</regnode>
+							</regnode>
+							<regnode name="QoS" status="undefined">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>69,314</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="DataValue">
+							<value>Sender.ior</value>
+						</attribute>
+						<reference id="id-0067-00000014" kind="DataType" role="DataType" relid="0x1" referred="id-0066-00000007">
+							<name>DataType</name>
+							<regnode name="PartRegs" status="undefined">
+								<value></value>
+								<regnode name="Packaging" status="undefined">
+									<value></value>
+									<regnode name="Position" isopaque="yes">
+										<value>289,177</value>
+									</regnode>
+								</regnode>
+							</regnode>
+						</reference>
+					</model>
+					<atom id="id-0066-00000012" kind="PublishConnector" role="PublishConnector" relid="0x3">
+						<name></name>
+						<regnode name="PartRegs" status="undefined">
+							<value></value>
+							<regnode name="Packaging" status="undefined">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>394,177</value>
+								</regnode>
+							</regnode>
+						</regnode>
+					</atom>
+					<atom id="id-0066-0000001f" kind="QoSConnector" role="QoSConnector" relid="0xb">
+						<name>QoSConnector</name>
+						<regnode name="PartRegs" status="undefined">
+							<value></value>
+							<regnode name="QoS" status="undefined">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>401,177</value>
+								</regnode>
+							</regnode>
+						</regnode>
+					</atom>
+					<atom id="id-0066-00000021" kind="NetQoS" role="NetQoS" relid="0xe">
+						<name>NetQoS</name>
+						<regnode name="PartRegs" status="undefined">
+							<value></value>
+							<regnode name="QoS" status="undefined">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>394,254</value>
+								</regnode>
+							</regnode>
+						</regnode>
+						<attribute kind="admissionPriority">
+							<value>HIGH</value>
+						</attribute>
+						<attribute kind="custom" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="fwdBW">
+							<value>100</value>
+						</attribute>
+						<attribute kind="quality">
+							<value>HIGH_PRIORITY</value>
+						</attribute>
+						<attribute kind="revBW">
+							<value>50</value>
+						</attribute>
+					</atom>
+					<connection id="id-0068-0000000d" kind="publish" role="publish" relid="0x4">
+						<name>publish</name>
+						<connpoint role="dst" target="id-0066-00000012"/>
+						<connpoint role="src" target="id-0067-0000000e"/>
+					</connection>
+					<connection id="id-0068-0000000e" kind="deliverTo" role="deliverTo" relid="0x5">
+						<name>deliverTo</name>
+						<connpoint role="src" target="id-0066-00000012"/>
+						<connpoint role="dst" target="id-0067-00000012"/>
+					</connection>
+					<connection id="id-0068-0000000f" kind="invoke" role="invoke" relid="0x6">
+						<name>invoke</name>
+						<connpoint role="dst" target="id-0067-0000000f"/>
+						<connpoint role="src" target="id-0067-00000011"/>
+					</connection>
+					<connection id="id-0068-00000010" kind="AssemblyConfigProperty" role="AssemblyConfigProperty" relid="0x8">
+						<name>AssemblyConfigProperty</name>
+						<regnode name="autorouterPref" isopaque="yes">
+							<value>e</value>
+						</regnode>
+						<connpoint role="src" target="id-0065-0000001e"/>
+						<connpoint role="dst" target="id-0065-0000001f"/>
+					</connection>
+					<connection id="id-0068-00000011" kind="AssemblyConfigProperty" role="AssemblyConfigProperty" relid="0xa">
+						<name>AssemblyConfigProperty</name>
+						<connpoint role="src" target="id-0065-0000001a"/>
+						<connpoint role="dst" target="id-0065-00000020"/>
+					</connection>
+					<connection id="id-0068-00000029" kind="EventSourcePublish" role="EventSourcePublish" relid="0xc">
+						<name>EventSourcePublish</name>
+						<connpoint role="dst" target="id-0066-0000001f"/>
+						<connpoint role="src" target="id-0067-0000000e"/>
+					</connection>
+					<connection id="id-0068-0000002b" kind="EventSinkPublish" role="EventSinkPublish" relid="0xd">
+						<name>EventSinkPublish</name>
+						<connpoint role="src" target="id-0066-0000001f"/>
+						<connpoint role="dst" target="id-0067-00000012"/>
+					</connection>
+					<connection id="id-0068-0000002d" kind="QoSReq" role="QoSReq" relid="0xf">
+						<name>QoSReq</name>
+						<regnode name="autorouterPref" isopaque="yes">
+							<value>n</value>
+						</regnode>
+						<connpoint role="src" target="id-0066-0000001f"/>
+						<connpoint role="dst" target="id-0066-00000021"/>
+					</connection>
+				</model>
+			</model>
+			<model id="id-0065-00000021" kind="ComponentImplementationContainer" relid="0x4" childrelidcntr="0x3">
+				<name>HelloAssemblyInstanceContainer</name>
+				<model id="id-0065-00000022" kind="ComponentAssembly" role="ComponentAssembly" derivedfrom="id-0065-00000019" isinstance="yes" isprimary="yes" relid="0x3" childrelidcntr="0x0">
+					<name>HelloAssemblyInstance</name>
+					<regnode name="PartRegs" status="undefined">
+						<value></value>
+						<regnode name="Packaging" status="undefined">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>172,12</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="UUID">
+						<value>412A0018-562E-4755-977A-F0AA57EDA945</value>
+					</attribute>
+					<attribute kind="label" status="meta">
+						<value></value>
+					</attribute>
+					<model id="id-0065-00000023" kind="Component" role="Component" derivedfrom="id-0065-0000001a" isinstance="yes" isprimary="no" childrelidcntr="0x0">
+						<name>Sender</name>
+						<attribute kind="SpecifyIdTag" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="UUID">
+							<value>5FF4082A-1B70-433E-AC0D-3337FDCD463C</value>
+						</attribute>
+						<attribute kind="VersionTag" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="label" status="meta">
+							<value></value>
+						</attribute>
+						<model id="id-0065-00000024" kind="Attribute" role="Attribute" derivedfrom="id-0065-0000001b" isinstance="yes" isprimary="no" childrelidcntr="0x0">
+							<name>local_message</name>
+							<attribute kind="SpecifyIdTag" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="VersionTag" status="meta">
+								<value></value>
+							</attribute>
+							<reference id="id-0067-0000002e" kind="AttributeMember" role="AttributeMember" derivedfrom="id-0067-0000002d" isinstance="yes" isprimary="no" referred="id-0066-00000007" isbound="yes">
+								<name>AttributeMember</name>
+							</reference>
+						</model>
+						<model id="id-0065-00000025" kind="ReadonlyAttribute" role="ReadonlyAttribute" derivedfrom="id-0065-0000001c" isinstance="yes" isprimary="no" childrelidcntr="0x0">
+							<name>hertz</name>
+							<attribute kind="SpecifyIdTag" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="VersionTag" status="meta">
+								<value></value>
+							</attribute>
+							<reference id="id-0067-00000031" kind="AttributeMember" role="AttributeMember" derivedfrom="id-0067-00000030" isinstance="yes" isprimary="no" referred="id-0066-0000000b" isbound="yes">
+								<name>AttributeMember</name>
+							</reference>
+						</model>
+						<model id="id-0065-00000026" kind="Attribute" role="Attribute" derivedfrom="id-0065-0000001d" isinstance="yes" isprimary="no" childrelidcntr="0x0">
+							<name>color</name>
+							<attribute kind="SpecifyIdTag" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="VersionTag" status="meta">
+								<value></value>
+							</attribute>
+							<reference id="id-0067-00000015" kind="AttributeMember" role="AttributeMember" derivedfrom="id-0067-0000000d" isinstance="yes" isprimary="no" referred="id-0065-0000000a" isbound="yes">
+								<name>AttributeMember</name>
+							</reference>
+						</model>
+						<reference id="id-0067-00000016" kind="OutEventPort" role="OutEventPort" derivedfrom="id-0067-0000000e" isinstance="yes" isprimary="no" referred="id-0065-00000005" isbound="yes">
+							<name>click_out</name>
+							<attribute kind="SpecifyIdTag" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="VersionTag" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="exclusiveProvider" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="exclusiveUser" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="optional" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="out_event_port_type" status="meta">
+								<value>DirectConnect</value>
+							</attribute>
+							<attribute kind="single_destination" status="inherited">
+								<value>false</value>
+							</attribute>
+						</reference>
+						<reference id="id-0067-00000017" kind="ProvidedRequestPort" role="ProvidedRequestPort" derivedfrom="id-0067-0000000f" isinstance="yes" isprimary="no" referred="id-0065-00000003" isbound="yes">
+							<name>push_message</name>
+							<attribute kind="SpecifyIdTag" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="VersionTag" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="exclusiveProvider" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="exclusiveUser" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="optional" status="meta">
+								<value>false</value>
+							</attribute>
+						</reference>
+						<reference id="id-0067-00000018" kind="Supports" role="Supports" derivedfrom="id-0067-00000010" isinstance="yes" isprimary="no" referred="id-0065-00000008" isbound="yes">
+							<name>Supports</name>
+						</reference>
+					</model>
+					<model id="id-0065-00000027" kind="Component" role="Component" derivedfrom="id-0065-0000001e" isinstance="yes" isprimary="no" childrelidcntr="0x0">
+						<name>Receiver</name>
+						<attribute kind="SpecifyIdTag" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="UUID">
+							<value>76F274A9-9624-4E21-AFBC-F2E5FE1B5BCC</value>
+						</attribute>
+						<attribute kind="VersionTag" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="label" status="meta">
+							<value></value>
+						</attribute>
+						<reference id="id-0067-00000019" kind="RequiredRequestPort" role="RequiredRequestPort" derivedfrom="id-0067-00000011" isinstance="yes" isprimary="no" referred="id-0065-00000003" isbound="yes">
+							<name>read_message</name>
+							<attribute kind="SpecifyIdTag" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="VersionTag" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="exclusiveProvider" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="exclusiveUser" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="multiple_connections" status="inherited">
+								<value>false</value>
+							</attribute>
+							<attribute kind="optional" status="meta">
+								<value>false</value>
+							</attribute>
+						</reference>
+						<reference id="id-0067-0000001a" kind="InEventPort" role="InEventPort" derivedfrom="id-0067-00000012" isinstance="yes" isprimary="no" referred="id-0065-00000005" isbound="yes">
+							<name>click_in</name>
+							<attribute kind="SpecifyIdTag" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="VersionTag" status="meta">
+								<value></value>
+							</attribute>
+							<attribute kind="exclusiveProvider" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="exclusiveUser" status="meta">
+								<value>false</value>
+							</attribute>
+							<attribute kind="optional" status="meta">
+								<value>false</value>
+							</attribute>
+						</reference>
+					</model>
+					<model id="id-0065-00000028" kind="Property" role="Property" derivedfrom="id-0065-0000001f" isinstance="yes" isprimary="no" childrelidcntr="0x0">
+						<name>ComponentIOR</name>
+						<attribute kind="DataValue" status="inherited">
+							<value>Receiver.ior</value>
+						</attribute>
+						<reference id="id-0067-0000001b" kind="DataType" role="DataType" derivedfrom="id-0067-00000013" isinstance="yes" isprimary="no" referred="id-0066-00000007" isbound="yes">
+							<name>DataType</name>
+						</reference>
+					</model>
+					<model id="id-0065-00000029" kind="Property" role="Property" derivedfrom="id-0065-00000020" isinstance="yes" isprimary="no" childrelidcntr="0x0">
+						<name>ComponentIOR</name>
+						<attribute kind="DataValue" status="inherited">
+							<value>Sender.ior</value>
+						</attribute>
+						<reference id="id-0067-0000001c" kind="DataType" role="DataType" derivedfrom="id-0067-00000014" isinstance="yes" isprimary="no" referred="id-0066-00000007" isbound="yes">
+							<name>DataType</name>
+						</reference>
+					</model>
+					<atom id="id-0066-00000013" kind="PublishConnector" role="PublishConnector" derivedfrom="id-0066-00000012" isinstance="yes" isprimary="no">
+						<name></name>
+					</atom>
+					<atom id="id-0066-00000020" kind="QoSConnector" role="QoSConnector" derivedfrom="id-0066-0000001f" isinstance="yes" isprimary="no">
+						<name>QoSConnector</name>
+					</atom>
+					<atom id="id-0066-00000022" kind="NetQoS" role="NetQoS" derivedfrom="id-0066-00000021" isinstance="yes" isprimary="no">
+						<name>NetQoS</name>
+						<attribute kind="admissionPriority" status="inherited">
+							<value>HIGH</value>
+						</attribute>
+						<attribute kind="custom" status="meta">
+							<value></value>
+						</attribute>
+						<attribute kind="fwdBW" status="inherited">
+							<value>100</value>
+						</attribute>
+						<attribute kind="quality" status="inherited">
+							<value>HIGH_PRIORITY</value>
+						</attribute>
+						<attribute kind="revBW" status="inherited">
+							<value>50</value>
+						</attribute>
+					</atom>
+					<connection isbound="yes" id="id-0068-00000012" kind="publish" role="publish" derivedfrom="id-0068-0000000d" isinstance="yes" isprimary="no">
+						<name>publish</name>
+					</connection>
+					<connection isbound="yes" id="id-0068-00000013" kind="deliverTo" role="deliverTo" derivedfrom="id-0068-0000000e" isinstance="yes" isprimary="no">
+						<name>deliverTo</name>
+					</connection>
+					<connection isbound="yes" id="id-0068-00000014" kind="invoke" role="invoke" derivedfrom="id-0068-0000000f" isinstance="yes" isprimary="no">
+						<name>invoke</name>
+					</connection>
+					<connection isbound="yes" id="id-0068-00000015" kind="AssemblyConfigProperty" role="AssemblyConfigProperty" derivedfrom="id-0068-00000010" isinstance="yes" isprimary="no">
+						<name>AssemblyConfigProperty</name>
+					</connection>
+					<connection isbound="yes" id="id-0068-00000016" kind="AssemblyConfigProperty" role="AssemblyConfigProperty" derivedfrom="id-0068-00000011" isinstance="yes" isprimary="no">
+						<name>AssemblyConfigProperty</name>
+					</connection>
+					<connection isbound="yes" id="id-0068-0000002a" kind="EventSourcePublish" role="EventSourcePublish" derivedfrom="id-0068-00000029" isinstance="yes" isprimary="no">
+						<name>EventSourcePublish</name>
+					</connection>
+					<connection isbound="yes" id="id-0068-0000002c" kind="EventSinkPublish" role="EventSinkPublish" derivedfrom="id-0068-0000002b" isinstance="yes" isprimary="no">
+						<name>EventSinkPublish</name>
+					</connection>
+					<connection isbound="yes" id="id-0068-0000002e" kind="QoSReq" role="QoSReq" derivedfrom="id-0068-0000002d" isinstance="yes" isprimary="no">
+						<name>QoSReq</name>
+					</connection>
+				</model>
+			</model>
+		</folder>
+		<folder id="id-006a-00000005" relid="0x4" childrelidcntr="0x0" kind="ImplementationArtifacts">
+			<name>ImplementationArtifacts</name>
+			<model id="id-0065-0000002a" kind="ArtifactContainer" relid="0x1" childrelidcntr="0xa">
+				<name>SenderArtifacts</name>
+				<model id="id-0065-0000002b" kind="Property" role="Property" relid="0x2" childrelidcntr="0x2">
+					<name>entryPoint</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Packaging" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>334,200</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="DataValue">
+						<value>create_Hello_SenderHome_Servant</value>
+					</attribute>
+					<reference id="id-0067-0000001d" kind="DataType" role="DataType" relid="0x2" referred="id-0066-00000007">
+						<name>String</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="Packaging" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>518,318</value>
+								</regnode>
+							</regnode>
+						</regnode>
+					</reference>
+				</model>
+				<model id="id-0065-0000002c" kind="Property" role="Property" relid="0x4" childrelidcntr="0x2">
+					<name>entryPoint</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Packaging" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>700,432</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="DataValue">
+						<value>createSenderHome_Impl</value>
+					</attribute>
+					<reference id="id-0067-0000001e" kind="DataType" role="DataType" relid="0x2" referred="id-0066-00000007">
+						<name>String</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="Packaging" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>518,318</value>
+								</regnode>
+							</regnode>
+						</regnode>
+					</reference>
+				</model>
+				<atom id="id-0066-00000014" kind="ImplementationArtifact" role="ImplementationArtifact" relid="0x1">
+					<name>Sender_stub</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Packaging" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>151,84</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="UUID">
+						<value>059BC20C-E68B-44B0-A7BC-BFA62BDEB0C4</value>
+					</attribute>
+					<attribute kind="configuration" status="meta">
+						<value></value>
+					</attribute>
+					<attribute kind="label">
+						<value></value>
+					</attribute>
+					<attribute kind="location">
+						<value>Sender_DnC_stub</value>
+					</attribute>
+				</atom>
+				<atom id="id-0066-00000015" kind="ImplementationArtifact" role="ImplementationArtifact" relid="0x3">
+					<name>Sender_svnt</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Packaging" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>517,316</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="UUID">
+						<value>533FDB0F-8EDB-4964-8EA9-E3058B1A5CD7</value>
+					</attribute>
+					<attribute kind="configuration" status="meta">
+						<value></value>
+					</attribute>
+					<attribute kind="label">
+						<value></value>
+					</attribute>
+					<attribute kind="location">
+						<value>Sender_DnC_svnt</value>
+					</attribute>
+				</atom>
+				<atom id="id-0066-00000016" kind="ImplementationArtifact" role="ImplementationArtifact" relid="0x5">
+					<name>Sender_exec</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Packaging" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>883,548</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="UUID">
+						<value>23C4B1A0-DCDE-402D-86E9-FA6A7AD2CDBF</value>
+					</attribute>
+					<attribute kind="configuration" status="meta">
+						<value></value>
+					</attribute>
+					<attribute kind="label">
+						<value></value>
+					</attribute>
+					<attribute kind="location">
+						<value>Sender_DnC_exec</value>
+					</attribute>
+				</atom>
+				<connection id="id-0068-00000017" kind="ArtifactExecParameter" role="ArtifactExecParameter" relid="0x7">
+					<name>ArtifactExecParameter</name>
+					<connpoint role="dst" target="id-0065-0000002b"/>
+					<connpoint role="src" target="id-0066-00000015"/>
+				</connection>
+				<connection id="id-0068-00000018" kind="ArtifactDependency" role="ArtifactDependency" relid="0x8">
+					<name>ArtifactDependency</name>
+					<connpoint role="dst" target="id-0066-00000014"/>
+					<connpoint role="src" target="id-0066-00000015"/>
+				</connection>
+				<connection id="id-0068-00000019" kind="ArtifactExecParameter" role="ArtifactExecParameter" relid="0x8">
+					<name>ArtifactExecParameter</name>
+					<connpoint role="dst" target="id-0065-0000002c"/>
+					<connpoint role="src" target="id-0066-00000016"/>
+				</connection>
+				<connection id="id-0068-0000001a" kind="ArtifactDependency" role="ArtifactDependency" relid="0x9">
+					<name>ArtifactDependency</name>
+					<connpoint role="dst" target="id-0066-00000015"/>
+					<connpoint role="src" target="id-0066-00000016"/>
+				</connection>
+				<connection id="id-0068-0000001b" kind="ArtifactDependency" role="ArtifactDependency" relid="0xa">
+					<name>ArtifactDependency</name>
+					<connpoint role="dst" target="id-0066-00000014"/>
+					<connpoint role="src" target="id-0066-00000016"/>
+				</connection>
+			</model>
+			<model id="id-0065-0000002d" kind="ArtifactContainer" relid="0x2" childrelidcntr="0xa">
+				<name>ReceiverArtifacts</name>
+				<model id="id-0065-0000002e" kind="Property" role="Property" relid="0x2" childrelidcntr="0x2">
+					<name>entryPoint</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Packaging" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>334,200</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="DataValue">
+						<value>create_Hello_ReceiverHome_Servant</value>
+					</attribute>
+					<reference id="id-0067-0000001f" kind="DataType" role="DataType" relid="0x2" referred="id-0066-00000007">
+						<name>String</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="Packaging" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>518,318</value>
+								</regnode>
+							</regnode>
+						</regnode>
+					</reference>
+				</model>
+				<model id="id-0065-0000002f" kind="Property" role="Property" relid="0x4" childrelidcntr="0x2">
+					<name>entryPoint</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Packaging" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>700,432</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="DataValue">
+						<value>createReceiverHome_Impl</value>
+					</attribute>
+					<reference id="id-0067-00000020" kind="DataType" role="DataType" relid="0x2" referred="id-0066-00000007">
+						<name>String</name>
+						<regnode name="PartRegs" isopaque="yes">
+							<value></value>
+							<regnode name="Packaging" isopaque="yes">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>518,318</value>
+								</regnode>
+							</regnode>
+						</regnode>
+					</reference>
+				</model>
+				<atom id="id-0066-00000017" kind="ImplementationArtifact" role="ImplementationArtifact" relid="0x1">
+					<name>Receiver_stub</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Packaging" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>151,84</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="UUID">
+						<value>9DF756D9-ABCF-4799-ACC5-8047C87390FE</value>
+					</attribute>
+					<attribute kind="configuration" status="meta">
+						<value></value>
+					</attribute>
+					<attribute kind="label">
+						<value></value>
+					</attribute>
+					<attribute kind="location">
+						<value>Receiver_DnC_stub</value>
+					</attribute>
+				</atom>
+				<atom id="id-0066-00000018" kind="ImplementationArtifact" role="ImplementationArtifact" relid="0x3">
+					<name>Receiver_svnt</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Packaging" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>517,316</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="UUID">
+						<value>37A50603-D422-4B45-AEBA-6BB48DF869ED</value>
+					</attribute>
+					<attribute kind="configuration" status="meta">
+						<value></value>
+					</attribute>
+					<attribute kind="label">
+						<value></value>
+					</attribute>
+					<attribute kind="location">
+						<value>Receiver_DnC_svnt</value>
+					</attribute>
+				</atom>
+				<atom id="id-0066-00000019" kind="ImplementationArtifact" role="ImplementationArtifact" relid="0x5">
+					<name>Receiver_exec</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Packaging" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>883,548</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="UUID">
+						<value>34E0ED84-7FF5-4B8D-9F23-BEC1C6BB23A7</value>
+					</attribute>
+					<attribute kind="configuration" status="meta">
+						<value></value>
+					</attribute>
+					<attribute kind="label">
+						<value></value>
+					</attribute>
+					<attribute kind="location">
+						<value>Receiver_DnC_exec</value>
+					</attribute>
+				</atom>
+				<connection id="id-0068-0000001c" kind="ArtifactExecParameter" role="ArtifactExecParameter" relid="0x7">
+					<name>ArtifactExecParameter</name>
+					<connpoint role="dst" target="id-0065-0000002e"/>
+					<connpoint role="src" target="id-0066-00000018"/>
+				</connection>
+				<connection id="id-0068-0000001d" kind="ArtifactDependency" role="ArtifactDependency" relid="0x8">
+					<name>ArtifactDependency</name>
+					<connpoint role="dst" target="id-0066-00000017"/>
+					<connpoint role="src" target="id-0066-00000018"/>
+				</connection>
+				<connection id="id-0068-0000001e" kind="ArtifactExecParameter" role="ArtifactExecParameter" relid="0x8">
+					<name>ArtifactExecParameter</name>
+					<connpoint role="dst" target="id-0065-0000002f"/>
+					<connpoint role="src" target="id-0066-00000019"/>
+				</connection>
+				<connection id="id-0068-0000001f" kind="ArtifactDependency" role="ArtifactDependency" relid="0x9">
+					<name>ArtifactDependency</name>
+					<connpoint role="dst" target="id-0066-00000018"/>
+					<connpoint role="src" target="id-0066-00000019"/>
+				</connection>
+				<connection id="id-0068-00000020" kind="ArtifactDependency" role="ArtifactDependency" relid="0xa">
+					<name>ArtifactDependency</name>
+					<connpoint role="dst" target="id-0066-00000017"/>
+					<connpoint role="src" target="id-0066-00000019"/>
+				</connection>
+			</model>
+		</folder>
+		<folder id="id-006a-00000006" relid="0x5" childrelidcntr="0x0" kind="ComponentTypes">
+			<name>ComponentTypes</name>
+			<model id="id-0065-00000030" kind="ComponentContainer" relid="0x1" childrelidcntr="0x1">
+				<name>SenderContainer</name>
+				<reference id="id-0067-00000021" kind="ComponentRef" role="ComponentRef" relid="0x1" referred="id-0065-0000000b">
+					<name>SenderRef</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Packaging" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>518,318</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+			</model>
+			<model id="id-0065-00000031" kind="ComponentContainer" relid="0x2" childrelidcntr="0x1">
+				<name>ReceiverContainer</name>
+				<reference id="id-0067-00000022" kind="ComponentRef" role="ComponentRef" relid="0x1" referred="id-0065-00000012">
+					<name>ReceiverRef</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Packaging" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>518,318</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+			</model>
+		</folder>
+		<folder id="id-006a-00000007" relid="0x6" childrelidcntr="0x1" kind="PackageConfigurations">
+			<name>PackageConfigurations</name>
+			<model id="id-0065-00000032" kind="PackageConfigurationContainer" relid="0x1" childrelidcntr="0x3">
+				<name>Default</name>
+				<atom id="id-0066-0000001a" kind="PackageConfiguration" role="PackageConfiguration" relid="0x1">
+					<name>Hello</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Packaging" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>431,305</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="UUID">
+						<value>F4044C8D-DA7A-4E22-B77F-3056334B4B6F</value>
+					</attribute>
+					<attribute kind="label" status="meta">
+						<value></value>
+					</attribute>
+				</atom>
+				<reference id="id-0067-00000038" kind="ComponentPackageReference" role="ComponentPackageReference" relid="0x2" referred="id-0066-0000001b">
+					<name>Hello</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Packaging" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>662,305</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="requiredName" status="meta">
+						<value></value>
+					</attribute>
+					<attribute kind="requiredType">
+						<value>BasicSP</value>
+					</attribute>
+					<attribute kind="requiredUUID" status="meta">
+						<value></value>
+					</attribute>
+				</reference>
+				<connection id="id-0068-00000021" kind="PackageConfReference" role="PackageConfReference" relid="0x3">
+					<name>PackageConfReference</name>
+					<regnode name="autorouterPref" isopaque="yes">
+						<value>Ew</value>
+					</regnode>
+					<connpoint role="src" target="id-0066-0000001a"/>
+					<connpoint role="dst" target="id-0067-00000038"/>
+				</connection>
+			</model>
+		</folder>
+		<folder id="id-006a-00000008" relid="0x7" childrelidcntr="0x3" kind="ComponentPackages">
+			<name>ComponentPackages</name>
+			<model id="id-0065-00000033" kind="PackageContainer" relid="0x1" childrelidcntr="0x9">
+				<name>HelloPackageContainer</name>
+				<atom id="id-0066-0000001b" kind="ComponentPackage" role="ComponentPackage" relid="0x1">
+					<name>Hello</name>
+					<regnode name="PartRegs" status="undefined">
+						<value></value>
+						<regnode name="Packaging" status="undefined">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>191,156</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="UUID">
+						<value>2B7E8CB2-82B4-4B10-9E32-CF6E8CDC94A0</value>
+					</attribute>
+					<attribute kind="label" status="meta">
+						<value></value>
+					</attribute>
+				</atom>
+				<reference id="id-0067-00000023" kind="ComponentImplementationReference" role="ComponentImplementationReference" relid="0x8" referred="id-0065-00000019">
+					<name>HelloAssemblyType</name>
+					<regnode name="PartRegs" status="undefined">
+						<value></value>
+						<regnode name="Packaging" status="undefined">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>485,137</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<connection id="id-0068-00000022" kind="Implementation" role="Implementation" relid="0x9">
+					<name>Implementation</name>
+					<regnode name="autorouterPref" isopaque="yes">
+						<value>Ew</value>
+					</regnode>
+					<connpoint role="src" target="id-0066-0000001b"/>
+					<connpoint role="dst" target="id-0067-00000023"/>
+				</connection>
+			</model>
+			<model id="id-0065-00000034" kind="PackageContainer" relid="0x2" childrelidcntr="0x5">
+				<name>SenderPackageContainer</name>
+				<atom id="id-0066-0000001c" kind="ComponentPackage" role="ComponentPackage" relid="0x3">
+					<name>ComponentPackage</name>
+					<regnode name="PartRegs" status="undefined">
+						<value></value>
+						<regnode name="Packaging" status="undefined">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>380,149</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="UUID">
+						<value>D41520F8-42A3-4B88-B73F-C9620702E23E</value>
+					</attribute>
+					<attribute kind="label" status="meta">
+						<value></value>
+					</attribute>
+				</atom>
+				<reference id="id-0067-00000024" kind="ComponentRef" role="ComponentRef" relid="0x1" referred="id-0065-0000000b">
+					<name>Sender</name>
+					<regnode name="PartRegs" status="undefined">
+						<value></value>
+						<regnode name="Packaging" status="undefined">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>510,130</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<reference id="id-0067-00000025" kind="ComponentImplementationReference" role="ComponentImplementationReference" relid="0x2" referred="id-0066-00000010">
+					<name>SenderMonolithicImpl</name>
+					<regnode name="PartRegs" status="undefined">
+						<value></value>
+						<regnode name="Packaging" status="undefined">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>156,137</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<connection id="id-0068-00000023" kind="Implementation" role="Implementation" relid="0x4">
+					<name>Implementation</name>
+					<regnode name="autorouterPref" isopaque="yes">
+						<value>We</value>
+					</regnode>
+					<connpoint role="src" target="id-0066-0000001c"/>
+					<connpoint role="dst" target="id-0067-00000025"/>
+				</connection>
+				<connection id="id-0068-00000024" kind="PackageInterface" role="PackageInterface" relid="0x5">
+					<name>PackageInterface</name>
+					<regnode name="autorouterPref" isopaque="yes">
+						<value>Ew</value>
+					</regnode>
+					<connpoint role="src" target="id-0066-0000001c"/>
+					<connpoint role="dst" target="id-0067-00000024"/>
+				</connection>
+			</model>
+			<model id="id-0065-00000035" kind="PackageContainer" relid="0x3" childrelidcntr="0x5">
+				<name>ReceiverPackageContainer</name>
+				<atom id="id-0066-0000001d" kind="ComponentPackage" role="ComponentPackage" relid="0x3">
+					<name>ComponentPackage</name>
+					<regnode name="PartRegs" status="undefined">
+						<value></value>
+						<regnode name="Packaging" status="undefined">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>352,128</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="UUID">
+						<value>DEF86A6B-8425-4D3A-8971-3611A91F837A</value>
+					</attribute>
+					<attribute kind="label" status="meta">
+						<value></value>
+					</attribute>
+				</atom>
+				<reference id="id-0067-00000026" kind="ComponentImplementationReference" role="ComponentImplementationReference" relid="0x1" referred="id-0066-00000011">
+					<name>ReceiverMonolithicImpl</name>
+					<regnode name="PartRegs" status="undefined">
+						<value></value>
+						<regnode name="Packaging" status="undefined">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>121,102</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<reference id="id-0067-00000027" kind="ComponentRef" role="ComponentRef" relid="0x2" referred="id-0065-00000012">
+					<name>Receiver</name>
+					<regnode name="PartRegs" status="undefined">
+						<value></value>
+						<regnode name="Packaging" status="undefined">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>496,102</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<connection id="id-0068-00000025" kind="Implementation" role="Implementation" relid="0x4">
+					<name>Implementation</name>
+					<regnode name="autorouterPref" isopaque="yes">
+						<value>W</value>
+					</regnode>
+					<connpoint role="src" target="id-0066-0000001d"/>
+					<connpoint role="dst" target="id-0067-00000026"/>
+				</connection>
+				<connection id="id-0068-00000026" kind="PackageInterface" role="PackageInterface" relid="0x5">
+					<name>PackageInterface</name>
+					<regnode name="autorouterPref" isopaque="yes">
+						<value>Ew</value>
+					</regnode>
+					<connpoint role="src" target="id-0066-0000001d"/>
+					<connpoint role="dst" target="id-0067-00000027"/>
+				</connection>
+			</model>
+		</folder>
+		<folder id="id-006a-00000009" relid="0x8" childrelidcntr="0x1" kind="DeploymentPlans">
+			<name>DeploymentPlans</name>
+			<model id="id-0065-00000036" kind="DeploymentPlan" relid="0x1" childrelidcntr="0xe">
+				<name>HelloDeploymentPlan</name>
+				<attribute kind="UUID">
+					<value>AF99A04B-1C6B-4696-A9E3-4104CBA9B66A</value>
+				</attribute>
+				<attribute kind="label" status="meta">
+					<value></value>
+				</attribute>
+				<model id="id-0065-0000003a" kind="Property" role="Property" relid="0xc" childrelidcntr="0x1">
+					<name>CIAONetworkQoS</name>
+					<regnode name="PartRegs" status="undefined">
+						<value></value>
+						<regnode name="NodeMapping" status="undefined">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>268,268</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="DataValue">
+						<value>myNetQoS.nqs</value>
+					</attribute>
+					<reference id="id-0067-0000003a" kind="DataType" role="DataType" relid="0x1" referred="id-0066-00000007">
+						<name>DataType</name>
+						<regnode name="PartRegs" status="undefined">
+							<value></value>
+							<regnode name="Packaging" status="undefined">
+								<value></value>
+								<regnode name="Position" isopaque="yes">
+									<value>268,156</value>
+								</regnode>
+							</regnode>
+						</regnode>
+					</reference>
+				</model>
+				<reference id="id-0067-00000039" kind="NodeReference" role="NodeReference" relid="0x2" referred="id-0065-00000038">
+					<name>foil</name>
+					<regnode name="PartRegs" status="undefined">
+						<value></value>
+						<regnode name="NodeMapping" status="undefined">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>130,74</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<reference id="id-0067-0000003c" kind="ComponentAssemblyReference" role="ComponentAssemblyReference" relid="0xe" referred="id-0065-00000019">
+					<name>HelloAssemblyType</name>
+					<regnode name="PartRegs" status="undefined">
+						<value></value>
+						<regnode name="NodeMapping" status="undefined">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>440,116</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<connection id="id-0068-00000027" kind="InstanceMapping" role="InstanceMapping" relid="0x4">
+					<name>InstanceMapping</name>
+					<regnode name="autorouterPref" isopaque="yes">
+						<value>Ns</value>
+					</regnode>
+					<connpoint role="dst" target="id-0067-00000039"/>
+					<connpoint role="src" target="id-0069-00000001"/>
+				</connection>
+				<set id="id-0069-00000001" kind="CollocationGroup" role="CollocationGroup" relid="0x3" members="id-0067-0000003c">
+					<name>CollocationGroup</name>
+					<regnode name="PartRegs" status="undefined">
+						<value></value>
+						<regnode name="NodeMapping" status="undefined">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>132,181</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</set>
+			</model>
+		</folder>
+		<folder id="id-006a-0000000a" relid="0x9" childrelidcntr="0x1" kind="Targets">
+			<name>Targets</name>
+			<model id="id-0065-00000037" kind="Domain" relid="0x1" childrelidcntr="0x2">
+				<name>Domain</name>
+				<attribute kind="UUID">
+					<value>C1184C4C-4A3E-4A45-B527-40B10541451F</value>
+				</attribute>
+				<attribute kind="label" status="meta">
+					<value></value>
+				</attribute>
+				<model id="id-0065-00000038" kind="Node" role="Node" relid="0x1" childrelidcntr="0x0">
+					<name>foil</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Target" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>95,60</value>
+							</regnode>
+						</regnode>
+					</regnode>
+					<attribute kind="label">
+						<value>BMDisplay</value>
+					</attribute>
+				</model>
+			</model>
+		</folder>
+		<folder id="id-006a-0000000b" relid="0xa" childrelidcntr="0x1" kind="TopLevelPackages">
+			<name>TopLevelPackages</name>
+			<model id="id-0065-00000039" kind="TopLevelPackageContainer" relid="0x1" childrelidcntr="0x3">
+				<name>Hello</name>
+				<atom id="id-0066-0000001e" kind="TopLevelPackage" role="TopLevelPackage" relid="0x1">
+					<name>TopLevelPackage</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Packaging" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>86,100</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</atom>
+				<reference id="id-0067-00000029" kind="PackageConfigurationReference" role="PackageConfigurationReference" relid="0x2" referred="id-0066-0000001a">
+					<name>Hello</name>
+					<regnode name="PartRegs" isopaque="yes">
+						<value></value>
+						<regnode name="Packaging" isopaque="yes">
+							<value></value>
+							<regnode name="Position" isopaque="yes">
+								<value>389,116</value>
+							</regnode>
+						</regnode>
+					</regnode>
+				</reference>
+				<connection id="id-0068-00000028" kind="package" role="package" relid="0x3">
+					<name>package</name>
+					<connpoint role="src" target="id-0066-0000001e"/>
+					<connpoint role="dst" target="id-0067-00000029"/>
+				</connection>
+			</model>
+		</folder>
+		<folder id="id-006a-0000000c" relid="0xb" childrelidcntr="0x0" kind="ComponentBuild">
+			<name>ComponentBuild</name>
+		</folder>
+	</folder>
+</project>
