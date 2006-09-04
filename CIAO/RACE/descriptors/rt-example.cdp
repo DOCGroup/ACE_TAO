@@ -48,7 +48,7 @@
 
   <instance id="Hello-Sender-idd">
     <name>Hello-Sender-idd</name>
-    <node>SenderNode</node>
+    <node>sender</node>
     <source><!-- @@ What goes here --></source>
     <implementation>Hello-Sender-mdd</implementation>
 
@@ -120,7 +120,7 @@
 
   <instance id="Hello-Receiver-idd">
     <name>Hello-Receiver-idd</name>
-    <node>SenderNode</node>
+    <node>receiver</node>
     <source><!-- @@ What goes here --></source>
     <implementation>Hello-Receiver-mdd</implementation>
     <configProperty>
