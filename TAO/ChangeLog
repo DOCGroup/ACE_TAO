@@ -1,3 +1,10 @@
+Tue Sep  5 20:39:15 UTC 2006  Ciju John  <johnc@ociweb.com>
+
+        * tao/PortableServer/Servant_var.h:
+        * tao/PortableServer/Servant_var.inl:
+          Commented out the member templates code. See:
+          Tue Aug 15 21:25:50 UTC 2006  Ciju John  <johnc@ociweb.com>
+
 Tue Sep  5 13:56:58 UTC 2006  Ciju John  <johnc@ociweb.com>
 
         * tests/Bug_1476_Test/run_test.pl:
