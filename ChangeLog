@@ -1,3 +1,190 @@
-Tue Sep  5 19:54:05 UTC 2006  Nishanth Shankaran  <nshankar@dre.vanderbilt.edu>
+Tue Sep  5 20:33:35 UTC 2006  Nishanth Shankaran  <nshankar@dre.vanderbilt.edu>
 
-        * ChangeLog: Testing the new branch.
+        * Controller:
+
+        * Controller/Component:
+
+        * Controller/Component/Controller.cidl:
+        * Controller/Component/Controller.idl:
+        * Controller/Component/Controller.mpc:
+        * Controller/Component/Controller_exec.h:
+        * Controller/Component/Controller_exec.cpp:
+        * Controller/Component/Controller_exec_export.h:
+        * Controller/Component/Controller_stub_export.h:
+        * Controller/Component/Controller_svnt_export.h:
+        * Controller/Component/Descriptor.h:
+        * Controller/Component/Descriptor.cpp:
+        * Controller/Component/Interface.idl:
+        * Controller/Component/Path.idl:
+        * Controller/Component/PathS_T.h:
+        * Controller/Component/PathS_T.inl:
+        * Controller/Component/PathS_T.cpp:
+        * Controller/Component/Path_exec_export.h:
+        * Controller/Component/Path_stub_export.h:
+        * Controller/Component/Path_svnt_export.h:
+        * Controller/Component/Poller.:
+        * Controller/Component/Poller.h:
+        * Controller/Component/Poller.cpp:
+        * Controller/Component/RACE_common.h:
+        * Controller/Component/common.h:
+        * Controller/Component/starter.cpp:
+
+        * Input_Adapters:
+
+        * Input_Adapters/Base:
+
+        * Input_Adapters/Base/Input_Adapter.idl:
+        * Input_Adapters/Base/Input_Adapter.mpc:
+        * Input_Adapters/Base/Input_Adapter_stub_export.h:
+        * Input_Adapters/Base/Input_Adapter_svnt_export.h:
+
+        * Input_Adapters/Interactive_Input_Adapter:
+
+        * Input_Adapters/Interactive_Input_Adapter/Injector.cpp:
+        * Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter.cidl:
+        * Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter.idl:
+        * Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter.mpc:
+        * Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter_exec.h:
+        * Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter_exec.cpp:
+        * Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter_exec_export.h:
+        * Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter_stub_export.h:
+        * Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter_svnt_export.h:
+
+        * Monitor:
+
+        * Monitor/Central_Monitor:
+
+        * Monitor/Central_Monitor/Monitor.h:
+        * Monitor/Central_Monitor/Monitor.cidl:
+        * Monitor/Central_Monitor/Monitor.idl:
+        * Monitor/Central_Monitor/Monitor.cpp:
+        * Monitor/Central_Monitor/Monitor.mpc:
+        * Monitor/Central_Monitor/Monitor_exec.h:
+        * Monitor/Central_Monitor/Monitor_exec.cpp:
+        * Monitor/Central_Monitor/Monitor_exec_export.h:
+        * Monitor/Central_Monitor/Monitor_stub_export.h:
+        * Monitor/Central_Monitor/Monitor_svnt_export.h:
+
+        * Monitor/Local_Monitor:
+
+        * Monitor/Local_Monitor/Local_Monitor.h:
+        * Monitor/Local_Monitor/Local_Monitor.cpp:
+        * Monitor/Local_Monitor/Local_Monitor.mpc:
+
+        * Output_Adapters:
+
+        * Output_Adapters/Base:
+
+        * Output_Adapters/Base/Output_Adapter.idl:
+        * Output_Adapters/Base/Output_Adapter.mpc:
+        * Output_Adapters/Base/Output_Adapter_stub_export.h:
+        * Output_Adapters/Base/Output_Adapter_svnt_export.h:
+
+        * Output_Adapters/Component:
+
+        * Output_Adapters/Component/Output_Manager.cidl:
+        * Output_Adapters/Component/Output_Manager.idl:
+        * Output_Adapters/Component/Output_Manager.mpc:
+        * Output_Adapters/Component/Output_Manager_exec.h:
+        * Output_Adapters/Component/Output_Manager_exec.cpp:
+        * Output_Adapters/Component/Output_Manager_exec_export.h:
+        * Output_Adapters/Component/Output_Manager_stub_export.h:
+        * Output_Adapters/Component/Output_Manager_svnt_export.h:
+
+        * Output_Adapters/DAnCE_Output_Adapter:
+
+        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter.cidl:
+        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter.idl:
+        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter.mpc:
+        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter_exec.h:
+        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter_exec.cpp:
+        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter_exec_export.h:
+        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter_stub_export.h:
+        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter_svnt_export.h:
+
+        * Output_Adapters/Interface:
+
+        * Output_Adapters/Interface/Output_Adapter_Interface.mpc:
+        * Output_Adapters/Interface/Output_Adapter_Interface_stub_export.h:
+        * Output_Adapters/Interface/Output_Adapter_Interface_svnt_export.h:
+        * Output_Adapters/Interface/PlanEgress.idl:
+
+        * Plan_Analyzer:
+
+        * Plan_Analyzer/Component:
+
+        * Plan_Analyzer/Component/Plan_Analyzer.cidl:
+        * Plan_Analyzer/Component/Plan_Analyzer.idl:
+        * Plan_Analyzer/Component/Plan_Analyzer.mpc:
+        * Plan_Analyzer/Component/Plan_Analyzer_exec.h:
+        * Plan_Analyzer/Component/Plan_Analyzer_exec.cpp:
+        * Plan_Analyzer/Component/Plan_Analyzer_exec_export.h:
+        * Plan_Analyzer/Component/Plan_Analyzer_stub_export.h:
+        * Plan_Analyzer/Component/Plan_Analyzer_svnt_export.h:
+
+        * Plan_Analyzer/Interface:
+
+        * Plan_Analyzer/Interface/Analyzer_I.idl:
+        * Plan_Analyzer/Interface/Analyzer_I_exec_export.h:
+        * Plan_Analyzer/Interface/Analyzer_I_stub_export.h:
+        * Plan_Analyzer/Interface/Analyzer_I_svnt_export.h:
+        * Plan_Analyzer/Interface/PlanIngress.idl:
+        * Plan_Analyzer/Interface/Plan_Analyzer_Interface.mpc:
+        * Plan_Analyzer/Interface/Plan_Analyzer_Interface_stub_export.h:
+        * Plan_Analyzer/Interface/Plan_Analyzer_Interface_svnt_export.h:
+
+        * Planner_Manager:
+
+        * Planner_Manager/Component:
+
+        * Planner_Manager/Component/Planner_Manager.cidl:
+        * Planner_Manager/Component/Planner_Manager.idl:
+        * Planner_Manager/Component/Planner_Manager.mpc:
+        * Planner_Manager/Component/Planner_Manager_exec.h:
+        * Planner_Manager/Component/Planner_Manager_exec.cpp:
+        * Planner_Manager/Component/Planner_Manager_exec_export.h:
+        * Planner_Manager/Component/Planner_Manager_stub_export.h:
+        * Planner_Manager/Component/Planner_Manager_svnt_export.h:
+
+        * Planner_Manager/Interface:
+
+        * Planner_Manager/Interface/Planner_Manager_I.idl:
+        * Planner_Manager/Interface/Planner_Manager_Interface.mpc:
+        * Planner_Manager/Interface/Planner_Manager_Interface_stub_export.h:
+        * Planner_Manager/Interface/Planner_Manager_Interface_svnt_export.h:
+
+        * Planners:
+
+        * Planners/Base:
+
+        * Planners/Base/Planner.idl:
+        * Planners/Base/Planner.mpc:
+        * Planners/Base/Planner_stub_export.h:
+        * Planners/Base/Planner_svnt_export.h:
+
+        * Planners/Interface:
+
+        * Planners/Interface/Planner_I.idl:
+        * Planners/Interface/Planner_Interface.mpc:
+        * Planners/Interface/Planner_Interface_stub_export.h:
+        * Planners/Interface/Planner_Interface_svnt_export.h:
+
+        * Planners/StaticPlanner:
+
+        * Planners/StaticPlanner/StaticPlanner.cidl:
+        * Planners/StaticPlanner/StaticPlanner.idl:
+        * Planners/StaticPlanner/StaticPlanner.mpc:
+        * Planners/StaticPlanner/StaticPlanner_exec.h:
+        * Planners/StaticPlanner/StaticPlanner_exec.cpp:
+        * Planners/StaticPlanner/StaticPlanner_exec_export.h:
+        * Planners/StaticPlanner/StaticPlanner_stub_export.h:
+        * Planners/StaticPlanner/StaticPlanner_svnt_export.h:
+
+        * common/RACE_Log_Msg.h:
+
+        * descriptors/Domain.cdd:
+        * descriptors/NodeDetails.dat:
+        * descriptors/RACE.cdp:
+        * descriptors/run_RACE.pl:
+
+        Checking in the initial version of RACE.
