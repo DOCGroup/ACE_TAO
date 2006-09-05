@@ -1,7 +1,4 @@
-// $Id$
-// This file is generated with "generate_component_mpc.pl -p Planner_Interface -p Planner StaticPlanner"
-
-project(Planner_StaticPlanner_stub): ciao_client_dnc, ciao_race_component {
+project(Planner_StaticPlanner_stub): ciao_deployment_stub, ciao_race_component {
   after += Planner_stub Planner_Interface_stub
   libs += Planner_stub Planner_Interface_stub
   sharedname = StaticPlanner_stub
@@ -21,7 +18,7 @@ project(Planner_StaticPlanner_svnt) : ciao_servant_dnc, ciao_race_component {
   after += Planner_svnt Planner_StaticPlanner_stub Planner_Interface_svnt
   sharedname  = StaticPlanner_svnt
   libs    += StaticPlanner_stub Planner_stub Planner_svnt Planner_Interface_stub Planner_Interface_svnt
-  
+
   idlflags  +=  -Wb,export_macro=STATICPLANNER_SVNT_Export -Wb,export_include=StaticPlanner_svnt_export.h
   dynamicflags = STATICPLANNER_SVNT_BUILD_DLL
 
@@ -51,19 +48,16 @@ project(Planner_StaticPlanner_exec) : ciao_component_dnc, ciao_race_component {
                Planner_stub \
                Planner_svnt \
                RACE_common_stub
-  
+
   idlflags  +=  -Wb,export_macro=STATICPLANNER_EXEC_Export -Wb,export_include=StaticPlanner_exec_export.h
   dynamicflags   = STATICPLANNER_EXEC_BUILD_DLL
 
   IDL_Files {
-    
+
   }
 
   Source_Files {
-    
+
     StaticPlanner_exec.cpp
   }
 }
-
-
-

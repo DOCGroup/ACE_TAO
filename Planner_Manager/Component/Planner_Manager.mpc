@@ -1,7 +1,3 @@
-// generate_component_mpc.pl,v 1.9 2003/12/22 21:56:27 boris Exp
-//Planner_Manager.mpc,v 1.3 2005/09/30 20:11:36 wotte Exp
-// This file is generated with "generate_component_mpc.pl Planner_Manager"
-
 project(Planner_Manager_stub): ciao_deployment_stub, ciao_race_component {
   after += Planner_Manager_Interface_stub \
            Planner_Interface_stub \
@@ -47,7 +43,9 @@ project(Planner_Manager_svnt) : ciao_servant_dnc, ciao_race_component {
              Planner_Manager_Interface_svnt \
              Planner_Interface_stub \
              Output_Adapter_Interface_stub \
-             TargetManager_svnt
+             TargetManager_stub \
+             TargetManager_svnt \
+             NodeManager_stub
   idlflags  +=  -Sc \
                 -Wb,export_macro=PLANNER_MANAGER_SVNT_Export \
                 -Wb,export_include=Planner_Manager_svnt_export.h
@@ -94,6 +92,7 @@ project(Planner_Manager_exec) : ciao_component_dnc, ciao_race_component {
              Planner_stub \
              Output_Adapter_Interface_stub \
              TargetManager_stub \
+             TargetManager_svnt \
              NodeManager_stub
 
   idlflags  +=  -Sc \
