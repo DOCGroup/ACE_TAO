@@ -1,0 +1,31 @@
+//Interactive_Input_Adapter.idl,v 1.1 2005/09/06 19:57:22 wotte Exp
+#ifndef RACE_INTERACTIVE_INPUT_ADAPTER_IDL
+#define RACE_INTERACTIVE_INPUT_ADAPTER_IDL
+
+#include <Components.idl>
+#include "RACE/Input_Adapters/Base/Input_Adapter.idl"
+#include "RACE/common/RACE_common.idl"
+
+module CIAO
+{
+  module RACE
+  {
+    eventtype Deploy_Input
+    {
+      public string plan_uri;
+      public string package_uri;
+      public Action command;
+    };
+
+    component Interactive_Input_Adapter : Input_Adapter
+    {
+      consumes Deploy_Input deployment;
+    };
+
+    home Interactive_Input_Adapter_Home manages Interactive_Input_Adapter
+    {
+    };
+  };
+};
+
+#endif /* RACE_INTERACTIVE_INPUT_ADAPTER_IDL */
