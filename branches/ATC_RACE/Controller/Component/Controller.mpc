@@ -1,29 +1,14 @@
-project(Path_stub): taolib_with_idl {
-
-  sharedname = Path_stub
-  idlflags += -Wb,stub_export_macro=PATH_STUB_Export \
-              -Wb,stub_export_include=Path_stub_export.h \
-               -Wb,skel_export_macro=PATH_SVNT_Export \
-               -Wb,skel_export_include=Path_svnt_export.h
-
-  dynamicflags   = PATH_STUB_BUILD_DLL
-
-  IDL_Files {
-    Path.idl
-  }
-
-  Source_Files {
-    PathC.cpp
-  }
-}
 project(Controller_stub): ciao_deployment_stub {
 
   after += CIAO_TargetManager_stub \
+           TargetManager_stub       \
+           NodeManager_stub \
            Monitor_stub
 
   sharedname = Controller_stub
 
   libs += TargetManager_stub \
+          NodeManager_stub \
           Monitor_stub
 
   idlflags += -Wb,stub_export_macro=CONTROLLER_STUB_Export \
@@ -52,7 +37,9 @@ project(Controller_svnt) : ciao_servant_dnc {
 
   libs    += Controller_stub \
              TargetManager_stub \
-             TargetManager_svnt
+             TargetManager_svnt \
+             NodeManager_stub \
+             Monitor_stub
 
   idlflags  +=  -Wb,export_macro=CONTROLLER_SVNT_Export \
                 -Wb,export_include=Controller_svnt_export.h
@@ -87,7 +74,8 @@ project(Controller_exec) : ciao_component_dnc, ciao_config_handlers {
                Controller_svnt \
                TargetManager_stub \
                TargetManager_svnt \
-               Path_stub
+               NodeManager_stub \
+               Monitor_stub
 
   idlflags  +=  -Wb,export_macro=CONTROLLER_EXEC_Export \
                 -Wb,export_include=Controller_exec_export.h
@@ -110,10 +98,14 @@ project(Controller_exec) : ciao_component_dnc, ciao_config_handlers {
 }
 
 
-project (Controller_Starter) : ciao_client_dnc, valuetype {
+project (Controller_Starter) : ciao_client_dnc, ciao_deployment_stub, valuetype {
   exename = starter
   after += Controller_stub
-  libs += Controller_stub
+  libs += Controller_stub \
+          TargetManager_stub       \
+          NodeManager_stub \
+          Monitor_stub
+
 
   IDL_Files {
   }

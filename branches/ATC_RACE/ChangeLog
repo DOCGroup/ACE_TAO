@@ -1,3 +1,15 @@
+Tue Sep  5 23:29:45 UTC 2006  Nishanth Shankaran  <nshankar@dre.vanderbilt.edu>
+
+        * Controller/Component/Controller.mpc:
+        * Output_Adapters/Component/Output_Manager.mpc:
+        * Output_Adapters/DAnCE_Output_Adapter/DAnCE_Output_Adapter.mpc:
+        * Planner_Manager/Component/Planner_Manager.mpc:
+        * Planners/StaticPlanner/StaticPlanner.mpc: Updated the mpc files
+          to prevent linking errors on mac.
+
+        * Controller/Component/Path.idl: Removed this file as it's no
+          longer needed.
+
 Tue Sep  5 21:03:22 UTC 2006  Nishanth Shankaran  <nshankar@dre.vanderbilt.edu>
 
         * descriptors/flattened_deploymentplan.cdp: Removed this file
