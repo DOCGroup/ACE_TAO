@@ -1,6 +1,6 @@
 
 // -*- C++ -*-
-// $Id$
+// RACE_common_svnt_export.h,v 1.1 2005/09/06 19:57:23 wotte Exp
 // Definition for Win32 Export directives.
 // This file is generated automatically by generate_export_file.pl RACE_COMMON_SVNT
 // ------------------------------
