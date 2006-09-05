@@ -1,0 +1,55 @@
+#ifndef RACE_CONTROLLER_INTERFACE_IDL
+#define RACE_CONTROLLER_INTERFACE_IDL
+
+#include "ciao/Packaging_Data.idl"
+
+module CIAO
+{
+  module RACE
+  {
+
+    struct Path_Element
+    {
+      /// UUID of the component.
+      string node;
+
+      /// Name of the source port.
+      string src;
+
+      /// Name of the destination port.
+      string dst;
+    };
+
+    /// Type definition for a path sequence.
+    typedef sequence <Path_Element> Critical_Path;
+
+
+    /**
+     * @interface Trigger
+     * @brief This interface is used to start and stop
+     * the feedback loop of the controller.
+     */
+    interface Trigger
+    {
+      oneway void start_poller ();
+
+      oneway void stop_poller ();
+
+      oneway void start_controller ();
+
+      oneway void stop_controller ();
+      };
+
+    interface Descriptors
+    {
+      void register_string (in Deployment::PackageConfiguration pcd,
+                            in Deployment::DeploymentPlan plan);
+
+      void unregister_string (in string UUID);
+
+
+    };
+  };
+};
+
+#endif

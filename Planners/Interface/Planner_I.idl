@@ -1,0 +1,47 @@
+// Planner_I.idl,v 1.1 2005/09/06 19:57:22 wotte Exp
+#ifndef RACE_PLANNER_I_IDL
+#define RACE_PLANNER_I_IDL
+
+#include "Packaging_Data.idl"
+#include "RACE/common/RACE_common.idl"
+
+module CIAO
+{
+
+  module RACE
+  {
+    exception PlannerFailure
+    {
+      string name;
+      string reason;
+    };
+
+    interface Planner_I
+    {
+      enum Domain_Change_Type
+      {
+        NODE_JOINED,
+        NODE_DISJOINED,
+        NODE_FAILED
+      };
+
+      struct Domain_Change
+      {
+        string hostname;
+        Domain_Change_Type change;
+      };
+
+      typedef sequence <Domain_Change> Domain_Changes;
+
+      boolean process_plan (inout Plan_Actions plan)
+        raises (PlannerFailure);
+      boolean process_domain_change (in Domain_Changes changes,
+                                     out Plan_Actions plans)
+        raises (PlannerFailure);
+      readonly attribute string name;
+    };
+  };
+};
+
+
+#endif /* RACE_PLANNER_I_IDL */
