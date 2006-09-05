@@ -1,3 +1,8 @@
+Tue Sep  5 21:03:22 UTC 2006  Nishanth Shankaran  <nshankar@dre.vanderbilt.edu>
+
+        * descriptors/flattened_deploymentplan.cdp: Removed this file
+          since it was accidently added during the previous check-in.
+
 Tue Sep  5 20:33:35 UTC 2006  Nishanth Shankaran  <nshankar@dre.vanderbilt.edu>
 
         * Controller:
