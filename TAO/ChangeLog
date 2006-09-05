@@ -1,3 +1,8 @@
+Tue Sep  5 13:56:58 UTC 2006  Ciju John  <johnc@ociweb.com>
+
+        * tests/Bug_1476_Test/run_test.pl:
+          Took out a debug print statement.
+
 Thu Aug 31 23:05:46 UTC 2006  Ciju John  <johnc@ociweb.com>
 
         * tao/ORB_Core.cpp:

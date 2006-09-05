@@ -31,8 +31,6 @@ if (PerlACE::waitforfile_timed ($iorfile,
 @synchs = ("none","delayed");
 @levels = ("obj", "orb", "thread");
 
-print STDOUT @synchs;
-
 for ($s = 0; $s < @synchs; $s++)
 {
     $synch = $synchs[$s];
