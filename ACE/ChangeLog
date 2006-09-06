@@ -1,3 +1,14 @@
+Wed Sep  6 07:40:03 UTC 2006  Boris Kolpackov  <boris@codesynthesis.com>
+
+        * ace/Bound_Ptr.h:
+
+          Added new constructor and assignment operator templates that
+          support the naked pointer-like implicit conversion.
+
+        * protocols/ace/RMCast/Reassemble.cpp:
+
+          Use the new constructor to get rid of reinterpret_cast.
+
 Tue Sep  5 21:28:02 UTC 2006  Nishanth Shankaran  <nshankar@dre.vanderbilt.edu>
 
         * bin/MakeProjectCreator/config/ciao_race_component.mpb:
