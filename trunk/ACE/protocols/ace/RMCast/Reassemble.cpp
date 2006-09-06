@@ -100,7 +100,9 @@ namespace ACE_RMCast
              * hierarchically compatible, and do this funky cast to get
              * the result we want.
              */
-            new_msg->add (*(reinterpret_cast<Profile_ptr*> (&new_data)));
+            //new_msg->add (*(reinterpret_cast<Profile_ptr*> (&new_data)));
+
+            new_msg->add (Profile_ptr (new_data));
 
             map_.unbind (from);
 
