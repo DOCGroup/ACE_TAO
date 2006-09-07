@@ -1,3 +1,9 @@
+Thu Sep  7 14:19:58 UTC 2006  Ciju John  <johnc@ociweb.com>
+
+        * tao/Transport_Connector.inl:
+          Removed the extra semicolon. This was creating havoc on the
+          windows builds.
+
 Tue Sep  5 20:39:15 UTC 2006  Ciju John  <johnc@ociweb.com>
 
         * tao/PortableServer/Servant_var.h:
