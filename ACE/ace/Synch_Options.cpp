@@ -46,7 +46,7 @@ ACE_Synch_Options::set (unsigned long options,
 {
   // ACE_TRACE ("ACE_Synch_Options::set");
   this->options_ = options;
-  this->timeout_ = (ACE_Time_Value &) timeout;
+  this->timeout_ = timeout;
 
   // Whoa, possible dependence on static initialization here.  This
   // function is called during initialization of the statics above.
@@ -58,7 +58,7 @@ ACE_Synch_Options::set (unsigned long options,
   this->arg_ = arg;
 }
 
-int
+bool
 ACE_Synch_Options::operator[] (unsigned long option) const
 {
   ACE_TRACE ("ACE_Synch_Options::operator[]");
