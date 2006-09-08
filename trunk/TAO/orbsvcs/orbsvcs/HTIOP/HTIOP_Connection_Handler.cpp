@@ -54,6 +54,8 @@ TAO::HTIOP::Connection_Handler::Connection_Handler (TAO_ORB_Core *orb_core,
 
 TAO::HTIOP::Connection_Handler::~Connection_Handler (void)
 {
+  delete this->transport ();
+  this->release_os_resources();
 }
 
 int

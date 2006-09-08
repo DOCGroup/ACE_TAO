@@ -1,3 +1,17 @@
+Fri Sep  8 20:03:26 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
+        * tao/Strategies/DIOP_Connection_Handler.cpp:
+        * tao/Strategies/SCIOP_Connection_Handler.cpp:
+        * tao/Strategies/UIOP_Connection_Handler.cpp:
+        * NEWS:
+          Applied fix from Tue Aug 29 17:40:01 UTC 2006  Phil Mesnier
+          <mesnier_p@ociweb.com> to other protocols. This explicitly calls
+          release_os_resources from the derived destructor, as was
+          originally intended.
+
 Thu Sep  7 14:19:58 UTC 2006  Ciju John  <johnc@ociweb.com>
 
         * tao/Transport_Connector.inl:
