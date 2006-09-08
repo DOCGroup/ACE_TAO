@@ -131,7 +131,7 @@ public:
   template <class Y>
   ACE_Strong_Bound_Ptr (const ACE_Strong_Bound_Ptr<Y, ACE_LOCK> &r)
       : counter_ (r.counter_),
-        ptr_ (r.ptr_)
+        ptr_ (dynamic_cast<X*>(r.ptr_))
   {
     // This ctor is temporarily defined here to increase our chances
     // of being accepted by broken compilers.
@@ -161,7 +161,7 @@ public:
     // This will work if &r == this, by first increasing the ref count
 
     COUNTER *new_counter = r.counter_;
-    X* new_ptr = r.ptr_;
+    X* new_ptr = dynamic_cast<X*> (r.ptr_);
     COUNTER::attach_strong (new_counter);
     if (COUNTER::detach_strong (this->counter_) == 0)
       delete this->ptr_;

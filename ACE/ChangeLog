@@ -1,3 +1,22 @@
+Fri Sep  8 21:11:20 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/CDR_Stream.cpp (ACE_OutputCDR::replace()): Fixed compile error
+          from apparant cut/paste error in ACE_ENABLE_SWAP_ON_WRITE path.
+          Thanks to JR Andreassen for reporting this.
+
+        * ace/Bound_Ptr.h: Changed new constructor/assignment to use
+          dynamic_cast in order to be able to transport pointers through
+          that can go both up and down a class hierarchy.
+          (See Wed Sep  6 07:40:03 UTC 2006  Boris Kolpackov
+          <boris@codesynthesis.com>).
+
+        * protocols/ace/RMCast/Protocol.h (clone(), clone_()): Replaced use of
+          naked pointers returned from clone_() with ACE_Strong_Bound_Ptr and
+          used new ACE_Strong_Bound_Ptr ctor to facilitate carrying a more-
+          refined type through a Profile_ptr and back. Closes up a window
+          for exception unsafeness noticed by Boris Kolpackov. Also see
+          Tue Aug 22 22:52:41 UTC 2006  Steve Huston  <shuston@riverace.com>
+
 Fri Sep  8 18:25:17 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * ace/Synch_Options.{h cpp}: Improved the documentation for this

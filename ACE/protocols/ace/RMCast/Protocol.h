@@ -5,6 +5,7 @@
 #ifndef ACE_RMCAST_PROTOCOL_H
 #define ACE_RMCAST_PROTOCOL_H
 
+#include "ace/Auto_Ptr.h"
 #include "ace/Bound_Ptr.h"
 
 #include "ace/Vector_T.h"
@@ -138,7 +139,7 @@ namespace ACE_RMCast
     {
     }
 
-    virtual Profile *
+    virtual Profile_ptr
     clone_ () = 0;
 
   private:
@@ -403,14 +404,15 @@ namespace ACE_RMCast
     From_ptr
     clone ()
     {
-      return From_ptr (dynamic_cast<From *> (clone_ ()));
+      return From_ptr (clone_ ());
     }
 
   protected:
-    virtual Profile *
+    virtual Profile_ptr
     clone_ ()
     {
-      return new From (*this);
+      Profile_ptr p (new From (*this));
+      return p;
     }
 
     From (From const& from)
@@ -487,14 +489,15 @@ namespace ACE_RMCast
     To_ptr
     clone ()
     {
-      return To_ptr (dynamic_cast<To *> (clone_ ()));
+      return To_ptr (clone_ ());
     }
 
   protected:
-    virtual Profile *
+    virtual Profile_ptr
     clone_ ()
     {
-      return new To (*this);
+      Profile_ptr p (new To (*this));
+      return p;
     }
 
     To (To const& to)
@@ -588,14 +591,15 @@ namespace ACE_RMCast
     Data_ptr
     clone ()
     {
-      return Data_ptr (dynamic_cast<Data *> (clone_ ()));
+      return Data_ptr (clone_ ());
     }
 
   protected:
-    virtual Profile *
+    virtual Profile_ptr
     clone_ ()
     {
-      return new Data (*this);
+      Profile_ptr p (new Data (*this));
+      return p;
     }
 
     Data (Data const& d)
@@ -698,14 +702,15 @@ namespace ACE_RMCast
     SN_ptr
     clone ()
     {
-      return SN_ptr (dynamic_cast<SN *> (clone_ ()));
+      return SN_ptr (clone_ ());
     }
 
   protected:
-    virtual Profile *
+    virtual Profile_ptr
     clone_ ()
     {
-      return new SN (*this);
+      Profile_ptr p (new SN (*this));
+      return p;
     }
 
     SN (SN const& sn)
@@ -801,14 +806,15 @@ namespace ACE_RMCast
     NAK_ptr
     clone ()
     {
-      return NAK_ptr (dynamic_cast<NAK *> (clone_ ()));
+      return NAK_ptr (clone_ ());
     }
 
   protected:
-    virtual Profile *
+    virtual Profile_ptr
     clone_ ()
     {
-      return new NAK (*this);
+      Profile_ptr p (new NAK (*this));
+      return p;
     }
 
     NAK (NAK const& nak)
@@ -986,14 +992,15 @@ namespace ACE_RMCast
     NRTM_ptr
     clone ()
     {
-      return NRTM_ptr (dynamic_cast<NRTM *> (clone_ ()));
+      return NRTM_ptr (clone_ ());
     }
 
   protected:
-    virtual Profile *
+    virtual Profile_ptr
     clone_ ()
     {
-      return new NRTM (*this);
+      Profile_ptr p (new NRTM (*this));
+      return p;
     }
 
     NRTM (NRTM const& nrtm)
@@ -1137,14 +1144,15 @@ namespace ACE_RMCast
     NoData_ptr
     clone ()
     {
-      return NoData_ptr (dynamic_cast<NoData *> (clone_ ()));
+      return NoData_ptr (clone_ ());
     }
 
   protected:
-    virtual Profile *
+    virtual Profile_ptr
     clone_ ()
     {
-      return new NoData (*this);
+      Profile_ptr p (new NoData (*this));
+      return p;
     }
 
     NoData (NoData const& no_data)
@@ -1199,14 +1207,15 @@ namespace ACE_RMCast
     Part_ptr
     clone ()
     {
-      return Part_ptr (dynamic_cast<Part *> (clone_ ()));
+      return Part_ptr (clone_ ());
     }
 
   protected:
-    virtual Profile *
+    virtual Profile_ptr
     clone_ ()
     {
-      return new Part (*this);
+      Profile_ptr p (new Part (*this));
+      return p;
     }
 
     Part (Part const& part)
