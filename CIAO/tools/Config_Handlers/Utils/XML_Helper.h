@@ -71,16 +71,27 @@ namespace CIAO
       bool initialized_;
       XERCES_CPP_NAMESPACE::DOMImplementation *impl_;
     };
+    
+   
   }
 }
 
+#ifdef _MSC_VER
 CIAO_XML_UTILS_SINGLETON_DECLARE (ACE_Singleton,
-                                  CIAO::Config_Handlers::XML_Helper,
-                                  ACE_Null_Mutex)
+				  CIAO::Config_Handlers::XML_Helper,
+				  ACE_Null_Mutex);
+#endif
+
+namespace CIAO
+{
+  namespace Config_Handlers
+  {
+    typedef ACE_Singleton < XML_Helper, ACE_Null_Mutex > XML_Helper_Singleton;
+  }
+}
 
 
-typedef ACE_Singleton < CIAO::Config_Handlers::XML_Helper, ACE_Null_Mutex > XML_Helper_Singleton;
-#define XML_HELPER XML_Helper_Singleton::instance ()
+#define XML_HELPER CIAO::Config_Handlers::XML_Helper_Singleton::instance ()
 
 
 #include /**/ "ace/post.h"
