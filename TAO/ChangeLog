@@ -10,7 +10,7 @@ Fri Sep  8 20:03:26 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
           Applied fix from Tue Aug 29 17:40:01 UTC 2006  Phil Mesnier
           <mesnier_p@ociweb.com> to other protocols. This explicitly calls
           release_os_resources from the derived destructor, as was
-          originally intended.
+          originally intended. This resolves bug 2649.
 
 Thu Sep  7 14:19:58 UTC 2006  Ciju John  <johnc@ociweb.com>
 
