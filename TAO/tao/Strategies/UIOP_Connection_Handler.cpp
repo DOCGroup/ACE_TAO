@@ -56,6 +56,7 @@ TAO_UIOP_Connection_Handler::TAO_UIOP_Connection_Handler (
 TAO_UIOP_Connection_Handler::~TAO_UIOP_Connection_Handler (void)
 {
   delete this->transport ();
+  this->release_os_resources();
 }
 
 int
