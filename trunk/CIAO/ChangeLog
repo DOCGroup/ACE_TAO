@@ -1,3 +1,12 @@
+Fri Sep  8 00:28:27 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tools/Config_Handlers/Utils/XML_Helper.cpp
+        * tools/Config_Handlers/Utils/XML_Helper.h
+        
+          Made the export declaration on the singleton typedef
+          contingent on a Microsoft compiler, as the GCC included
+          with FC5 was not defining the symbol as a result.
+
 Fri Sep  1 03:09:38 UTC 2006  xiong,ming  <ming.xiong@vanderbilt.edu>
 
         * docs\tutorials\CoSMIC\index.html
