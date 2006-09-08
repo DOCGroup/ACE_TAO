@@ -651,7 +651,7 @@ ACE_OutputCDR::replace (ACE_CDR::Long x, char* loc)
 #if !defined (ACE_ENABLE_SWAP_ON_WRITE)
   *reinterpret_cast<ACE_CDR::Long*> (loc) = x;
 #else
-  if (!strm->do_byte_swap ())
+  if (!this->do_byte_swap_)
   {
     *reinterpret_cast<ACE_CDR::Long *> (loc) = x;
   }
