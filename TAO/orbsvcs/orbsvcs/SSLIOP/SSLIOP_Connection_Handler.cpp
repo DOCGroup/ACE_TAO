@@ -61,6 +61,7 @@ TAO::SSLIOP::Connection_Handler::Connection_Handler (
 TAO::SSLIOP::Connection_Handler::~Connection_Handler (void)
 {
   delete this->transport ();
+  this->release_os_resources();
 }
 
 int

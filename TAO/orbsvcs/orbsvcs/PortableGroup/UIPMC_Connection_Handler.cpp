@@ -69,6 +69,7 @@ TAO_UIPMC_Connection_Handler::~TAO_UIPMC_Connection_Handler (void)
     this->udp_socket_.close ();
 
   delete this->transport ();
+  this->release_os_resources();
 }
 
 ACE_HANDLE

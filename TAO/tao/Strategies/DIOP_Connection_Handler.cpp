@@ -59,6 +59,7 @@ TAO_DIOP_Connection_Handler::TAO_DIOP_Connection_Handler (TAO_ORB_Core *orb_core
 TAO_DIOP_Connection_Handler::~TAO_DIOP_Connection_Handler (void)
 {
   delete this->transport ();
+  this->release_os_resources();
   this->udp_socket_.close ();
 }
 
