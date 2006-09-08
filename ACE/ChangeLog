@@ -1,3 +1,18 @@
+Fri Sep  8 18:25:17 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/Synch_Options.{h cpp}: Improved the documentation for this
+          class, particularly the table that explains the behavior for the
+          valid combinations of reactor-usage and timeout. Thank you to
+          Andriy Gapon <avg at icyb dot net dot ua> for motivating this.
+
+          Also changed the return type of operator[] from int to bool; its
+          meaning was always 1/0 but was overlooked in the sweep for this
+          type of thing last year.
+
+        * NEWS: Added the ACE_Synch_Options::operator[] return type change.
+
+        * THANKS: Added Andriy Gapon to the Hall of Fame.
+
 Wed Sep  6 07:40:03 UTC 2006  Boris Kolpackov  <boris@codesynthesis.com>
 
         * ace/Bound_Ptr.h:

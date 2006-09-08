@@ -4,6 +4,10 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 USER VISIBLE CHANGES BETWEEN ACE-5.5.2 and ACE-5.5.3
 ====================================================
 
+. Changed the ACE_Synch_Options::operator[] method to return bool rather than
+  int. The value returned is a yes/no indication of whether or not the
+  specified option(s) are set in the object.
+
 . Changed the prototype(s) for ACE::debug () to return (and take) a
   bool. This is consistent with the original intent for this
   feature. If you have been using it like 'ACE::debug () > 0' or
