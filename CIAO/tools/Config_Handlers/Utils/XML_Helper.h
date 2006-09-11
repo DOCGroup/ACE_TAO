@@ -76,12 +76,9 @@ namespace CIAO
   }
 }
 
-#ifdef _MSC_VER
 CIAO_XML_UTILS_SINGLETON_DECLARE (ACE_Singleton,
 				  CIAO::Config_Handlers::XML_Helper,
 				  ACE_Null_Mutex);
-#endif
-
 namespace CIAO
 {
   namespace Config_Handlers
