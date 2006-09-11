@@ -100,5 +100,19 @@ ifeq ($(shared_libs), 1)
         CPPFLAGS += -DACE_HAS_CUSTOM_EXPORT_MACROS=0
       endif # no_hidden_visibility
     endif # GXX_4_OR_BETTER == 1
+  else
+    # Explicitly disable G++ (>= 4.x) visibility attributes since
+    # they are only meant for use when building shared libraries.
+    ifeq ($(GXX_4_OR_BETTER), 1)
+      no_hidden_visibility = 1
+      CPPFLAGS += -DACE_HAS_CUSTOM_EXPORT_MACROS=0
+    endif # GXX_4_OR_BETTER == 1
   endif # static_libs_only
+else
+  # Explicitly disable G++ (>= 4.x) visibility attributes since
+  # they are only meant for use when building shared libraries.
+  ifeq ($(GXX_4_OR_BETTER), 1)
+    no_hidden_visibility = 1
+    CPPFLAGS += -DACE_HAS_CUSTOM_EXPORT_MACROS=0
+  endif # GXX_4_OR_BETTER == 1
 endif # shared_libs

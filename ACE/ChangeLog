@@ -1,3 +1,10 @@
+Sun Sep 10 09:23:04 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * include/makeinclude/platform_g++_common.GNU
+        
+          Committing a fix provided by Ossama Othman (Ossama_Othman at symantec dot com)
+          to fix a problem with symbol visibility when building static libraries.
+
 Fri Sep  8 21:11:20 UTC 2006  Steve Huston  <shuston@riverace.com>
 
         * ace/CDR_Stream.cpp (ACE_OutputCDR::replace()): Fixed compile error
