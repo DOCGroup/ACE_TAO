@@ -1,7 +1,15 @@
+Mon Sep 11 13:03:17 UTC 2006  Boris Kolpackov  <boris@codesynthesis.com>
+
+        * ace/Bound_Ptr.h:
+        * protocols/ace/RMCast/Reassemble.cpp:
+
+          Reverted my previous changes (Wed Sep  6) since BCB2006
+          is unable to handle the required C++ constructs.
+
 Sun Sep 10 09:23:04 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * include/makeinclude/platform_g++_common.GNU
-        
+
           Committing a fix provided by Ossama Othman (Ossama_Othman at symantec dot com)
           to fix a problem with symbol visibility when building static libraries.
 
