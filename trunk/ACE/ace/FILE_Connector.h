@@ -51,13 +51,11 @@ public:
    * filename (via <ACE_OS::mktemp>).  The <timeout> is the amount of
    * time to wait to create/open the file.  If it's 0 then we block
    * indefinitely.  If *timeout == {0, 0} then the file is created
-   * using non-blocking mode.  In this case, if the create/open can't
-   * be done immediately the value of -1 is returned with <errno ==
-   * EWOULDBLOCK>.  If *timeout > {0, 0} then this is the maximum amount of
-   * time to wait before timing out.  If the time expires before the
-   * connection is made <errno == ETIME>.  The <local_sap> and
-   * <reuse_addr> parameters are ignored.  The <flags> and <perms>
-   * arguments are passed down to the <ACE_OS::open> method.
+   * using non-blocking mode.  If *timeout > {0, 0} then this is the
+   * maximum amount of time to wait before timing out.  The
+   * <local_sap> and <reuse_addr> parameters are ignored.  The <flags>
+   * and <perms> arguments are passed down to the <ACE_OS::open>
+   * method.
    */
   ACE_FILE_Connector (ACE_FILE_IO &new_io,
                       const ACE_FILE_Addr &remote_sap,

@@ -827,9 +827,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::notify_handle
 
   // Call remove_reference() if needed.
   if (reference_counting_required)
-    {
-      event_handler->remove_reference ();
-    }
+    event_handler->remove_reference ();
 }
 
 // Perform GET, CLR, SET, and ADD operations on the select()
