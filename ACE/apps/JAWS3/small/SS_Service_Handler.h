@@ -9,6 +9,7 @@
 #include "ace/Acceptor.h"
 #include "ace/Svc_Handler.h"
 #include "ace/SOCK_Acceptor.h"
+#include "ace/svc_export.h"
 
 #include "jaws3/Protocol_Handler.h"
 

@@ -1,3 +1,16 @@
+Tue Sep 12 13:56:22 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * apps/JAWS3/small/SS_Service_Handler.h: Added #include
+          "ace/svc_export.h".  Thanks to Andy Wang <ypwangandy at gmail
+          dot com> for reporting this.
+
+Tue Sep 12 13:56:09 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+  
+        * apps/JAWS3/small/SS_State_DONE.h: 
+        * apps/JAWS3/small/SS_State_READ.h: Added #include
+          "ace/Synch_Traits.h".  Thanks to Andy Wang <ypwangandy at gmail
+          dot com> for reporting this.
+
 Thu Sep  7 19:43:02 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/FILE_Connector.h (ACE_FILE_Connector): Updated the
