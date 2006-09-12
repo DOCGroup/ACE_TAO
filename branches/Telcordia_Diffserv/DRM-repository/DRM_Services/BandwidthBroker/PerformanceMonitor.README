@@ -1,0 +1,88 @@
+#$Id$
+
+Performance Monitor / Network Monitor README
+===========================================
+
+Author: Kirthika Parmeswaran
+	
+The Performance Monitor is a CORBA server that provides
+delay/jitter/loss measurements across pools, hosts and flows. 
+Currently it is implemented to deliver delay measurements only.
+
+To run the Performance Monitor: (from BandwidthBroker/deploy)
+
+(1) The BandwidthBroker database must be setup (source
+src/db/arms-initdb.sql, it has new entries for NetworkMonitor) and the
+cfg/BandwidthBroker/bbconfig.prop option file must be filled
+appropriately.  
+NOTE: The DBConnections parameter must be >=4, if less, it will be taken to be 4 internally as the software requires atleast two connections to be used by its threads to access the MySQL DB.
+
+Setup Java 1.4.2 on path and source bin/bbinit and
+bin/setup-classpath.sh 
+
+(2) The Network Probes need to be started. Verify that time on the
+probe server, probes and the CORBA Network Monitor server host are
+synchronized. If not, use "ntpdate -u <timeserver>" to do so.
+
+First start the probe server by executing bin/runProbeServer.sh on
+the probe server host.  Then start the probes by executing
+bin/runProbe.sh on the probe hosts one after the other.
+
+(3) Run the naming service:
+bin/nsstart.sh (Make sure the ONS_PORT and ONS_HOST are setup
+appropriately as per your environment)
+
+(4) Setup the Performance/Network Monitor option file:
+cfg/BandwidthBroker/nmconfig.prop
+It contains the garbage collection and measurement hosts information.
+Fill this up appropriately. 
+# nmconfig.prop Sample
+
+# Whether to use probes or not 
+UseProbes=1 
+#The garbage collection timertask period, here it means that the
+#garbage collection of the Incore Network Monitor DB will be tried
+#every 90000 milliseconds
+DBGarbageCollectionTimeout=90000 
+# The time for which a entry in the Incore Network Monitor DB will be
+kept, here it is for 180000 milliseconds
+DBStayTimePeriod=180000
+# The Probe server 
+ProbeServer=impdb
+# The sink for the measurement notifications from the probe server,
+#this is the host on which the NetworkMonitor server is running
+ProbeSink=science
+# The following entries specify the probe/measurement hosts and their
+# subnets. Note these hosts must also be available in the
+# BandwidthBroker HostSubnet DB
+NumOfMeasurementHosts=2
+MeasurementHost1=172.26.4.6
+MeasurementHostSubnet1=172.26.4.0
+MeasurementHost2=172.27.4.6
+MeasurementHostSubnet2=172.27.4.0
+
+(5) To run the Network Monitor, execute
+bin/netmon.sh
+The detailed log of the execution is at data/logs/nmserver.log
+If you require execution trace only for the current run, you should delete
+this file between different runs of the NetworkMonitor.
+
+(6) To run the Network Monitor clients: (note, each
+subscription/probe setup takes upto a minute)
+
+First source the src/db/nm-data.sql file into the BandwidthBroker DB, this
+creates dummy FlowRecord and HostSubnet entries for the tests.
+
+For NetworkMonitorClient that tests probe setup and synchronous calls:
+[duration ~ 2-3min]
+(first two tests are for error cases and the rest of the tests are for
+host, pool, flow synchronous calls for delay measurement)
+bin/netmonclient.sh
+
+For NetworkMonitorEventClient that tests measurement events: [duration ~10 min]
+(first test tries registers for delay events for various QoS events
+between same two hosts and the rest of the tests are for host, pool,
+flow events)
+bin/netmoneventclient.sh <clientname>
+
+This test can be run from BBGUI too, the rest of the components need to be started before starting this client from BBGUI.

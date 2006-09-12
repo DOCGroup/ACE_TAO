@@ -1,0 +1,62 @@
+$Id$
+FlowProvisioner README
+=======================
+
+Compilation:
+===========
+To compile from the BandwidthBroker directory, run:
+  ant dist
+
+To start the FlowProvisioner from the deploy directory:
+======================================================
+ 
+ source bin/setup-classpath.sh
+ source bin/bbinit.sh
+ 
+ Start the naming service:
+ bin/nsstart.sh
+
+ Start the FlowProvisioner server (in loopback mode):
+
+[To start server in loopback mode, use keyword "loopback" at the end. 
+In the loopback mode, the Flow Provisioner will not send commands
+to the network, it will only log generated commands to a file]
+
+ bin/fpstart.sh
+
+When prompted for the decryption key, enter the string "darpa_ar".
+When prompted for username, password, please enter the username and
+password appropriate for device access. This prompt will appear only
+if the device is not an entry in the cfg/BandwidthBroker/routerAuth
+file. For details on building such a file, please see the section:
+Node authentication.
+
+Now to test the flowprovisioner execute (in another window):
+ bin/fptest.sh
+
+The output of the test will be available in data/logs/networkprovisioner.ios.log
+
+Node authentication:
+====================
+
+The Flow Provisioner uses a DES encrypted store of node authentication information such as 
+router passwords, privileged passwords etc. Node authentication information can be 
+supplied to the Flow Provisioner in a DES encrypted file with each line in the file 
+corresponding to a single router/switch with the following format:
+
+nodeName pwd enPwd type
+
+Once Flow Provisioner starts, it requests the user for a decryption password. This is the
+same password that is used to DES encrypt the file. 
+
+A utility called EncryptStuff is also supplied to enable the user to easily create DES
+encrypted files. Usage is as follows:
+
+java EncryptStuff <in_file> routerAuth
+ 
+where in_file has the plain text router/switch info in the following format:
+
+nodeName pwd enPwd type
+
+Delete the in_file immediately after creation. This will prompt for an encryption key. 
+Remember this key to use for the decryption key in the flow provisioner.

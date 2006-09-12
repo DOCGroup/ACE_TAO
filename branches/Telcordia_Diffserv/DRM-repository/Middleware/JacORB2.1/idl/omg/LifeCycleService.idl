@@ -1,0 +1,44 @@
+// LifeCycleService Module, p 6- 55 CORBAservices, Life Cycle
+// Service V1.0, 3/94
+
+#include <CosLifeCycle.idl> 
+
+module LifeCycleService {
+
+        typedef sequence <CosLifeCycle::NameValuePair> PolicyList;
+        typedef sequence <CosLifeCycle::Key> Keys;
+        typedef sequence <CosLifeCycle::NameValuePair> PropertyList; 
+        typedef sequence <CosNaming::NameComponent> NameComponents;
+
+        interface LifeCycleServiceAdmin {
+
+                attribute PolicyList policies;
+
+                void bind_generic_factory(
+                                in CosLifeCycle::GenericFactory gf,
+                                in CosNaming::NameComponent name,
+                                in Keys key_set,
+                                in PropertyList other_properties)
+                        raises (CosNaming::NamingContext::AlreadyBound, CosNaming::NamingContext::InvalidName);
+
+                void unbind_generic_factory(
+                                in CosNaming::NameComponent name)
+                        raises (CosNaming::NamingContext::NotFound, CosNaming::NamingContext::InvalidName);
+
+               CosLifeCycle::GenericFactory resolve_generic_factory(
+                                in CosNaming::NameComponent name)
+                        raises (CosNaming::NamingContext::NotFound, CosNaming::NamingContext::InvalidName);
+
+                NameComponents list_generic_factories();
+
+                boolean match_service (in CosLifeCycle::GenericFactory f);
+
+                string get_hint();
+
+                void get_link_properties(
+                                in CosNaming::NameComponent name,
+                                out Keys key_set,
+                                out PropertyList other_properties)
+                        raises (CosNaming::NamingContext::NotFound, CosNaming::NamingContext::InvalidName);
+        };
+};

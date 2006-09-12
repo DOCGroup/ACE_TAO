@@ -1,0 +1,39 @@
+#$Id$
+# For the general syntax of property based configuration files see the
+# documenation of org.apache.log4j.PropertyConfigurator.
+
+# The root category uses the appender called A1. Since no priority is
+# specified, the root category assumes the default priority for root
+# which is DEBUG in log4j. The root category is the only category that
+# has a default priority. All other categories need not be assigned a
+# priority in which case they inherit their priority from the
+# hierarchy.
+
+log4j.rootLogger=DEBUG
+
+#, B1
+
+log4j.logger.arms.mlrm.bandwidthbroker.networkprovisioner.topologyDB=DEBUG,B1
+
+# B1 is set to be a FileAppender which outputs to the file
+# "networkprovisioner.topologyDB.log".
+  
+log4j.appender.B1=org.apache.log4j.FileAppender
+log4j.appender.B1.File=data/logs/networkprovisioner.topologyDB.log
+log4j.appender.B1.layout=org.apache.log4j.PatternLayout
+
+# Note the %x conversion specifier for NDC printing.
+#log4j.appender.B1.layout.ConversionPattern=%-4r %-5p [%t] (%x) - %m\n
+#log4j.appender.B1.layout.ConversionPattern=%d %5p [%t] (%F:%L) - %m%n
+log4j.appender.B1.layout.ConversionPattern=date=%d{yyyyMMdd}|time=%d{HH:mm:ss:SSS}|thrd=%t|lvl=%-5p|cls=%c|ndc=%x|msg=%m%n
+
+
+
+
+
+
+
+
+
+
+

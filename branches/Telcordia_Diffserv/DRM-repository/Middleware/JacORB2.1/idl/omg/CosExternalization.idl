@@ -1,0 +1,76 @@
+// CosExternalization Module, 8-12 CORBAservices,
+// Externalization Service V1.0, 3/94
+
+#include <CosLifeCycle.idl>
+#include <CosStream.idl>
+
+module CosExternalization {
+                exception InvalidFileNameError{};
+                exception ContextAlreadyRegistered{};
+                interface Stream: CosLifeCycle::LifeCycleObject{
+                        void externalize(
+                                        in CosStream::Streamable theObject);
+                        CosStream::Streamable internalize( 
+                                        in CosLifeCycle::FactoryFinder there)
+                                raises( CosLifeCycle::NoFactory,
+                                        CosStream::StreamDataFormatError );
+                        void begin_context()
+                                raises( ContextAlreadyRegistered);
+                        void end_context(); 
+                        void flush();
+                };
+                interface StreamFactory {
+                        Stream create();
+                };
+                interface FileStreamFactory {
+                        Stream create(
+                                        in string theFileName) 
+                                raises( InvalidFileNameError );
+                };
+};
+
+
+
+//  CosExternalizationContainment Module, p 8-26 CORBAservices,
+// Externalization Service V1.0, 3/94
+
+#include <CosContainment.idl>
+#include <CosCompoundExternalization.idl>
+
+module CosExternalizationContainment {
+
+        interface Relationship : 
+                        CosCompoundExternalization::Relationship,
+                        CosContainment::Relationship {};
+
+        interface ContainsRole : 
+                        CosCompoundExternalization::Role,
+                        CosContainment::ContainsRole {};
+
+        interface ContainedInRole : 
+                        CosCompoundExternalization::Role,
+                        CosContainment::ContainedInRole {};
+};
+
+// CosExternalizationReference Module, p 8-28 CORBAservices, 
+// Externalization Service V1.0, 3/94
+
+#include <CosReference.idl>
+#include <CosCompoundExternalization.idl>
+
+module CosExternalizationReference {
+
+        interface Relationship : 
+                        CosCompoundExternalization::Relationship,
+                        CosReference::Relationship {};
+
+        interface ReferencesRole : 
+                        CosCompoundExternalization::Role,
+                        CosReference::ReferencesRole {};
+
+        interface ReferencedByRole : 
+                        CosCompoundExternalization::Role,
+                        CosReference::ReferencedByRole {};
+};
+
+

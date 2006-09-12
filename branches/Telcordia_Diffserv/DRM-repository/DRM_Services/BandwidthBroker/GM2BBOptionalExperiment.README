@@ -1,0 +1,250 @@
+
+/***********************************************
+// GM2BBOptionalExperiment.README,
+
+// Updated by S. Gadgil, December 3, 2004
+/***********************************************
+
+This script assumes a simple topology for which a .ns file
+is provided in Appendix A.
+
+Start the experiment using the NS file and login to mako using 
+the ssh command set environments as follows in your .profile
+
+export JAVA_HOME=/usr/java/j2sdk1.4.2_04
+                                                                                
+export CVSROOT=das@escher.dre.vanderbilt.edu:/project/ARMS-repository
+export CVS_RSH=ssh
+export ANT_HOME=/opt/ant
+export PATH=/usr/testbed/bin:$JAVA_HOME/bin:$ANT_HOME/bin:$PATH
+export SRC=/opt/DRM/DRM_Services/BandwidthBroker/src
+export OpenCCM_HOMEDIR=/opt/OpenCCM-0.8.1/openccm/JacORB-2.1
+ 
+// In a Emulab terminal, get ready to run BandwidthBroker & Flow Provisioner
+
+cd /opt/DRM
+ . ./set_DRM_ROOT_to_pwd.sh
+
+cd /opt/DRM/DRM_Services/BandwidthBroker/deploy
+. bin/bbinit.sh
+
+//Initialize the BB mysql database and populate with the network topology
+// This script discovers the mapping of the IP addresses to Ethernet
+// interfaces, as they are dynamically assigned in Emulab
+
+. bin/bb_dbsetup.csh
+
+// Set the classpath for the BB & Flow Provisioner
+. bin/setup-classpath.sh
+
+// Start the Name Service
+ . bin/nsstart.sh
+
+// Start the Flow Provisioner
+. bin/fpstart.sh
+
+// Start the Bandwidth Broker
+. bin/bbstart.sh
+
+// In another Emulab terminal, get ready to run a BB CCM client
+// This client is a place holder for ASM, running in the OpenCCM
+// environment 
+
+// Set the environment variables for DRM_ROOT and Stuff l
+cd /opt/DRM
+ . ./set_DRM_ROOT_to_pwd.sh
+
+// Set the environment variables for OpenCCM
+. /opt/OpenCCM-0.8.1/openccm/JacORB-2.1/bin/envi.OpenCCM.sh
+cd /opt/DRM/DRM_Services/BandwidthBroker/ccmtest/proto
+
+// Start the OpenCCM container services, GUI,and the 
+// Open CCM client component, a client of BB
+// This client component immediately calls BB for reserving an AF class 
+// (High-reliability class) flow of 1 Mbps
+ . bin/start_java
+// You will see this request acted upon in BB window!
+
+// In another Emulab terminal, get ready to run a monitor
+// program that will detect overload condition of the
+// reserved flow and send an event to the Component client.
+
+// Set the environment variables for DRM_ROOT and Stuff l
+cd /opt/DRM
+ . ./set_DRM_ROOT_to_pwd.sh
+
+// Set the environment variables for OpenCCM
+. /opt/OpenCCM-0.8.1/openccm/JacORB-2.1/bin/envi.OpenCCM.sh
+cd /opt/DRM/DRM_Services/BandwidthBroker/ccmtest/proto
+. ./start_event_client.sh
+
+// Open another emulab terminal to generate networkload for the reserved
+// flow using mgen
+cd /opt/DRM/DRM_Services/BandwidthBroker/mgen
+// First we will generate normal amount of load from mako to javelin
+// through the switch across subnets
+./mgen input ./send-j-normal
+// 
+You can actually see the traffic going through the switch
+// without being dropped by logging into the switch from mako
+// Here is the screen shot of how you will do this
+-bash-2.05b$ ssh switch1
+-bash-2.05b$ tc -s filter show dev eth0 rootIn 
+-bash-2.05b$ tc -s filter show dev eth1 root
+filter parent ffff: protocol ip pref 50 fw
+filter parent ffff: protocol ip pref 50 fw handle 0x1 classid :1 police
+1 action drop rate 1000Kbit burst 2999b mtu 2Kb
+ Sent 12251630 bytes 12035 pkts (dropped 0, overlimits 0)
+-bash-2.05b$ sudo iptables -t mangle -L
+Chain PREROUTING (policy ACCEPT)
+target     prot opt source               destination
+MARK       all  --  mako-lan0            javelin-lan1        DSCP match
+0x01 MARK set 0x1
+DSCP       all  --  mako-lan0            javelin-lan1        DSCP match
+0x01 DSCP set 0x20
+
+In the Event Generator/Monitor Window, you will see every 15 seconds (at frequecy of 
+monitoring) a "Null" message meaning that there is no overflow condition, i.e., no 
+event being generated
+// Now we will be overloading the flow
+// First kill the regular flow traffic by 
+// Now start the overflow traffic
+./mgen input ./send-j-overload
+
+// 
+
+In the Event Generator/Monitor Window, you will see FlowID:#Overflow packet messages
+In the Event Consumer window, you will see the same event message (caught)
+After four event messages the event consumer component invokes Bandwidth Broker to modify
+the flow (actually delete followed by add requests completed mesages
+The Monior Window no longer generates overflow events meaning we have adapted dynamically
+to mission critical function overload!
+
+// Order of Shutdown for the demo
+
+1. Stop mgen traffic generator Program (Hit ^C)
+
+2. Stop the monitor program (Hit ^C)
+
+3. Stop the CCM Browser in the window you started the container (Hit ^C); in the same window,
+   do . bin/stop_java (It is important you stop this cleanly using this command; otherwise
+   you will have problem starting the container next time)
+
+4. Now stop Bandwidth Broker, Flow Provisioner and Name Service in that order by
+   listing the processes with a ps command them one at a time
+
+
+------- end of README ----------------------
+
+Appendix A - NS file for the experiment.
+
+#generated by Netbuild 1.03
+set ns [new Simulator]
+source tb_compat.tcl
+
+set mako [$ns node]
+tb-set-node-os $mako tt_RH8_DRM
+tb-set-hardware $mako pc850
+tb-set-node-startcmd $mako "/proj/arms/etc/fix_host_info.csh"
+
+
+#set checkmate [$ns node]
+#tb-set-node-os $checkmate tt_RH8_DRM
+#tb-set-hardware $checkmate pc850
+#tb-set-node-startcmd $checkmate "/proj/arms/etc/fix_host_info.csh"
+
+#set uberpc [$ns node]
+#tb-set-node-os $uberpc tt_RH8_DRM
+#tb-set-hardware $uberpc pc850
+#tb-set-node-startcmd $uberpc "/proj/arms/etc/fix_host_info.csh"
+
+#set champion [$ns node]
+#tb-set-node-os $champion tt_RH8_DRM
+#tb-set-hardware $champion pc850
+#tb-set-node-startcmd $champion "/proj/arms/etc/fix_host_info.csh"
+
+
+
+#set l71027144 [$ns node]
+#tb-set-node-os $l71027144 tt_RH8_DRM
+#tb-set-hardware $l71027144 pc850
+#tb-set-node-startcmd $l71027144 "/proj/arms/etc/fix_host_info.csh"
+
+#set e71003093 [$ns node]
+#tb-set-node-os $e71003093 tt_RH8_DRM
+#tb-set-hardware $e71003093 pc850
+#tb-set-node-startcmd $e71003093 "/proj/arms/etc/fix_host_info.csh"
+
+
+set switch1 [$ns node]
+tb-set-node-os $switch1 RHL90-STD
+tb-set-node-startcmd $switch1 "/proj/arms/etc/mrouted/start_mcd.csh"
+
+
+
+#set switch2 [$ns node]
+#tb-set-node-os $switch2 RHL90-STD
+#tb-set-node-startcmd $switch2 "/proj/arms/etc/mrouted/start_mcd.csh"
+
+set javelin [$ns node]
+tb-set-node-os $javelin tt_RH8_DRM
+tb-set-hardware $javelin pc850
+tb-set-node-startcmd $javelin "/proj/arms/etc/fix_host_info.csh"
+
+#set chaparal [$ns node]
+#tb-set-node-os $chaparal tt_RH8_DRM
+#tb-set-hardware $chaparal pc850
+#tb-set-node-startcmd $chaparal "/proj/arms/etc/fix_host_info.csh"
+
+#set hogfish [$ns node]
+#tb-set-node-os $hogfish tt_RH8_DRM
+#tb-set-hardware $hogfish pc850
+#tb-set-node-startcmd $hogfish "/proj/arms/etc/fix_host_info.csh"
+
+#set l7106754 [$ns node]
+#tb-set-node-os $l7106754 tt_RH8_DRM
+#tb-set-hardware $l7106754 pc850
+#tb-set-node-startcmd $l7106754 "/proj/arms/etc/fix_host_info.csh"
+
+#set l75002066 [$ns node]
+#tb-set-node-os $l75002066 tt_RH8_DRM
+#tb-set-hardware $l75002066 pc850
+#tb-set-node-startcmd $l75002066 "/proj/arms/etc/fix_host_info.csh"
+
+
+#set link9 [$ns duplex-link $switch2 $switch1 100Mb 0ms DropTail]
+
+set lan0 [$ns make-lan "$mako $switch1 " 100Mb 0ms]
+#set lan0 [$ns make-lan "$champion $uberpc $checkmate $mako $switch1 " 100Mb 0ms]
+#set lan0 [$ns make-lan "$e71003093 $l71027144 $champion $uberpc $checkmate $mako $switch1 " 100Mb 0ms]
+set lan1 [$ns make-lan "$switch1 $javelin" 100Mb 0ms]
+#set lan1 [$ns make-lan "$switch1 $javelin $chaparal $hogfish " 100Mb 0ms]
+#set lan2 [$ns make-lan "$switch2 " 100Mb 0ms]
+#set lan2 [$ns make-lan "$switch2 $l7106754 $l75002066 " 100Mb 0ms]
+
+tb-set-ip-lan $mako $lan0 192.168.81.100
+#tb-set-ip-lan $checkmate $lan0 192.168.81.101
+#tb-set-ip-lan $uberpc $lan0 192.168.81.102
+#tb-set-ip-lan $champion $lan0 192.168.81.103
+#tb-set-ip-lan $l71027144 $lan0 192.168.81.104
+#tb-set-ip-lan $e71003093 $lan0 192.168.81.106
+tb-set-ip-lan $switch1 $lan0 192.168.81.1
+tb-set-ip-lan $switch1 $lan1 192.168.82.1
+#tb-set-ip-lan $switch2 $lan2 192.168.83.1
+tb-set-ip-lan $javelin $lan1 192.168.82.101
+#tb-set-ip-lan $chaparal $lan1 192.168.82.100
+#tb-set-ip-lan $hogfish $lan1 192.168.82.102
+#tb-set-ip-lan $l7106754 $lan2 192.168.83.101
+#tb-set-ip-lan $l75002066 $lan2 192.168.83.102
+
+
+$ns rtproto Static
+$ns run
+#netbuild-generated ns file ends.
+
+
+
+
+
+
+

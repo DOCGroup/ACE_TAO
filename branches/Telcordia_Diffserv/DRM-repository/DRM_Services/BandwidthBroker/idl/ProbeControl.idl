@@ -1,0 +1,108 @@
+//$Id$
+// ProbeControl.idl
+// The software supporting this interface
+// is governed by Government Purpose Rights
+// Contract No: NBCHC030132
+// Telcordia Technologies, Inc.
+// One Telcordia Drive
+// Piscataway, NJ 08854-4157
+
+// Authors: Kirthika Parmeswaran <kirthika@research.telcordia.com>
+// Date: 22 June 2005
+
+// This IDL will serve as an interface to control the network probe for
+// feedback on latency, available bandwidth, etc. 
+// The current focus is on latency.
+
+#ifndef _PROBE_CONTROL_IDL_
+#define _PROBE_CONTROL_IDL_
+
+#include "CommonDef.idl"
+
+module mil { module darpa { module arms { module mlrm {
+module BandwidthBroker {
+
+ interface ProbeControl
+ {
+  
+    // This exception is raised when the network probe configuration
+    // fails, if the probeConfigurationError flag is set, it signifies
+    // that the requested probe control parameters such as
+    // measurementPeriod are not available in the current
+    // infrastructure. 
+    exception ProbeControlException
+    {
+      string reason;
+      boolean probeConfigurationError;
+    };
+
+  
+   // The hosts between which the probe will perform measurements
+   struct ProbeEndpoints
+   {
+     string sourceHostName;
+     string destinationHostName;
+   };
+
+   // Probe specific configuration parameters. As of now, out of these
+   // parameters, only  measurementPeriod can be controlled by the end
+   // user.
+   struct ProbeParameters
+   {
+     // The frequency/period in microseconds for probe measurement
+     // function. This is dependent on factors such as system
+     // clock and length of packet train used for measurement
+     long long measurementPeriod; 
+     
+     // Size of IP packets used for measurement
+     long packetSize;
+     
+     // Number of IP packets in the packet train used for measurement
+     long packetTrainLength;
+
+     // Gap between IP packets
+     long packetGap;
+     
+   };
+
+   // Probe setup information
+   struct ProbeControlSpec
+   {
+     // The type of service class that the probe must consider while
+     // measuring latency 
+      CommonDef::QOSRequired qos;
+     
+     // probe specific settings for measurement 
+     ProbeParameters pp; 
+   };
+
+   // Obtain the default probe settings between two endpoints
+   void query_configuration (in ProbeEndpoints pe,
+			     out ProbeParameters pp)
+     raises (ProbeControlException);
+   
+   // The probe service setup configuration, it consists of the source
+   // and destination host names, the probe control parameters such as
+   // measurementPeriod. The method returns a handle, probeID, which
+   // denotes the probe that has been started. An exception is also
+   // raised if the requested latency configuration values such as
+   // averaging window are not available in the existing
+   // infrastructure.  The available default values will be populated
+   // in the latencyInfo structure.
+   void start_measurement (in ProbeEndpoints p,
+			   in ProbeControlSpec ps,
+			   out string probeID)
+     raises (ProbeControlException);
+
+   // The command to stop the probe setup between two hosts for a
+   // particular set of control parameters using the probeID, a handle
+   // that denotes the probe.
+   void stop_measurement (in string probeID)
+     raises (ProbeControlException);
+			      
+ }; // end ProbeControl interface
+
+}; // end module 
+
+ }; }; }; };
+#endif // _PROBE_CONTROL_IDL_

@@ -1,0 +1,51 @@
+//$Id$
+// BandwidthBroker.idl
+//The DARPA ARMS Program
+// The software supporting this interface
+// is governed by Government Purpose Rights
+// Contract No: NBCHC030132
+// Telcordia Technologies, Inc.
+// 1 Technology Drive
+// Piscataway, NJ 08854-4157
+
+// Authors: Kirthika Parmeswaran <kirthika@research.telcordia.com>,
+//          Balakrishnan Dasarathy <das@research.telcordia.com>,
+//	    Murray Conarty <murray.conarty@prismtechnologies.com>
+// Date: December 4, 2003; modified Feb. 20, 2004; modified March 22, 2004
+
+#ifndef _CLIENT_IDL_
+#define _CLIENT_IDL_
+
+
+import mil::darpa::arms::mlrm;
+
+ module mil { module darpa { module arms { module mlrm {
+ module BandwidthBroker {
+  
+
+
+//eventtype BWNotification
+//{
+//    public string type;
+//};
+
+
+component Client
+{
+       
+    attribute string the_name;
+    consumes mil::darpa::arms::mlrm::Condition from_BWComponent;
+};
+
+   
+home ClientHome manages Client
+{
+
+};
+
+ }; // end of module BandwidthBroker   
+
+ }; }; }; };
+#endif // _CLIENT_IDL_
+
+

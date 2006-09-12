@@ -1,0 +1,175 @@
+// $Id$
+//
+// The DARPA ARMS Program
+//
+// The software supporting this interface is governed by Government Purpose 
+// Rights
+//
+// Contract No: NBCHC030132
+// Telcordia Technologies, Inc.
+// 1 Telcordia Drive
+// Piscataway, NJ 08854-4157
+
+// Comments:  This file includes all the component definitions for the 
+// bandwidth broker.
+
+// Authors: Kirthika Parmeswaran <kirthika@research.telcordia.com>,
+//          Balakrishnan Dasarathy <das@research.telcordia.com>,
+//	    Murray Conarty <murray.conarty@prismtechnologies.com>,
+//          Shree Gadgil <sgadgil@research.telcordia.com>
+// Date:   August 3, 2005
+
+#ifndef __BBAPPCOMPONENT_DEFINED
+#define __BBAPPCOMPONENT_DEFINED
+
+//#ifdef __OMG_IDL_3__
+
+/** To have access to definitions in IR3 repository */
+//  Does CIAO support import keyword?
+//import mil::darpa::arms::mlrm::BandwidthBroker;
+
+//#else
+
+#include "MRTypes.idl"
+#include "BandwidthBroker.idl"
+#include "FlowProvisioning.idl"
+#include "NetworkMonitor.idl"
+#include "FaultMonitor.idl"
+
+//#endif /* ifdef __OMG_IDL_3__ */
+
+//  Does CIAO support import keyword?
+
+module mil 
+{ 
+module darpa 
+{ 
+module arms 
+{ 
+module mlrm 
+{
+module BandwidthBroker
+{
+// Overview:  Uses FlowProvisioner, Network Monitor and Fault Monitor Services 
+//          Will also receive events from the Network Monitor and Fault Monitor
+//			
+//   FlowProvisioner receptacles and event sinks
+
+     eventtype BandwidthBrokerInternalEvent
+     {
+		 public string fill;
+		 // Add actual meat later
+		 //public long latencyId;
+		 //public NetworkMonitor::MeasurementEndpointsType theEndpoints;
+		 //public NetworkMonitor::MeasurementEndpoints     theLatencyInfo;
+     };
+
+
+     component BandwidthBrokerComponent 
+     {
+             
+        // Primary interface for managing traffic in the network
+        provides AdmissionControl theController;
+
+        // Clients can subscribe to events related to the network 
+        publishes Condition toBBEventSubscribers;	 	
+
+	    // uses the services of the FlowProvisioner to XXXXX
+	
+		uses FlowProvisioner toFlowProvisioner;
+	
+		// periodically polls for information from Network and Fault Monitors
+		     
+	    uses NetworkMonitor toNetworkMonitor;
+		uses FaultMonitor   toFaultMonitor;
+	
+		// Can asynchronously receive latency and fault events 
+		// from the Bandwidth Broker monitor services
+		consumes BandwidthBrokerInternalEvent frmBBMonitorServer;
+
+     };
+
+     home BandwidthBrokerComponentHome manages BandwidthBrokerComponent
+     {
+     };
+     
+      
+     // FlowProvisioner simply provides services to other components
+     component FlowProvisionerComponent
+     {
+        provides FlowProvisioner aFlowProvisioner;
+     };
+
+     // Provide a simple home
+     home FlowProvisionerComponentHome manages FlowProvisionerComponent
+     {
+     };
+
+     // The FaultMonitor both generates events and provides a direct polling 
+     // service
+
+     component FaultMonitorComponent 
+     {
+	    // Synchronous monitoring services provided by the component
+		provides FaultMonitor aFaultMonitor;	     
+	
+		// Alternate events published by the component
+		publishes BandwidthBrokerInternalEvent toFaultEventSubscribers;     
+     };
+
+     // Provide a simple home
+     home FaultMonitorComponentHome manages FaultMonitorComponent
+     {
+     };
+
+     // The NetworkMonitor both generates events and provides a direct polling 
+     // service
+
+     component NetworkMonitorComponent 
+     {
+	        // Synchronous monitoring services provided by the component  
+		provides NetworkMonitor aNetworkMonitor;
+	
+		// Alternate events published by the component 
+		publishes BandwidthBrokerInternalEvent toNetworkEventSubscribers;
+		    
+     };
+
+     // Provide a simple home
+     home NetworkMonitorComponentHome manages NetworkMonitorComponent
+     {
+     };
+
+     component BBComponentClient
+     {
+        uses AdmissionControl toBandwidthBroker;
+
+	  consumes Condition frmBandwidthBroker;
+     };
+
+     home BBComponentClientHome manages BBComponentClient
+     {
+     };
+     
+     // client component which loads profiles for testing
+     component BBTestClientComponent : BBComponentClient
+     {
+        /** The identifier name property. */
+        attribute string testName;
+        
+        /** Property file identifier **/
+        attribute string propertyFile;
+        
+     };
+     
+     home BBTestClientComponentHome manages BBTestClientComponent
+     {
+     };
+     
+     
+};  // end BandwidthBroker
+};  // end mlrm
+};  // end arms
+};  // end darpa
+};  // end mil
+#endif

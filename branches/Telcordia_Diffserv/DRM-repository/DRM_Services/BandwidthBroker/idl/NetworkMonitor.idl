@@ -1,0 +1,235 @@
+//$Id$
+// NetworkMonitor.idl
+// The software supporting this interface
+// is governed by Government Purpose Rights
+// Contract No: NBCHC030132
+// Telcordia Technologies, Inc.
+// One Telcordia Drive
+// Piscataway, NJ 08854-4157
+
+// Authors: Kirthika Parmeswaran <kirthika@research.telcordia.com>
+//          Shrirang Gadgil <sgadgil@research.telcordia.com>
+// Date: 22 June 2005
+
+// This IDL will serve as an interface to monitor the network for
+// feedback on latency, available bandwidth, etc. 
+// The current focus is on latency.
+
+#ifndef _NETWORK_MONITOR_IDL_
+#define _NETWORK_MONITOR_IDL_
+
+#include "CommonDef.idl"
+
+module mil { module darpa { module arms { module mlrm {
+module BandwidthBroker {
+
+ interface NetworkMonitor
+ {
+  
+    // This exception is raised when the network probe invocation
+    // fails, if the probeConfigurationError flag is set, it signifies
+    // that the requested probe control parameters such as
+    // measurementPeriod are not available in the current
+    // infrastrature. 
+    exception NetworkProbesException
+    {
+      string reason;
+      boolean probeConfigurationError;
+    };
+
+    // This exception is raised when the network monitor event   
+     // subscription/unsubscription fails
+    exception NetworkMonitorEventSubscriptionException
+    {
+      string reason;
+    };
+
+   // Latency information
+   struct Latency
+   {
+     // actual delay in microseconds, will be populated on a probe 
+     long long delayTime;
+
+     // The time window in microseconds over which the latency
+     // measurement is to be taken. If 0, it will be ignored.
+     long long averagingWindow;
+
+     // The frequency/period in microseconds for probe measurement
+     // function
+     long long measurementPeriod;
+
+     // The latency threshold value in microseconds that provides the
+     // "local" latency thresholds between two endpoints. This is
+     // particularly useful for fine-tuning the threshold for a
+     // particular set of endpoints eventhough the event notification
+     // subscription is for a group of endpoints.   
+     long long thresholdTime;
+   };
+   
+   // Available latency per service class
+   struct LatencyPerQoS
+   {
+     Latency availableLatency;
+     CommonDef::QOSRequired qos;
+   };
+   typedef sequence <LatencyPerQoS> LatencyPerQoSSeq;
+
+   struct LatencyBetnPools 
+    {
+      // source pool name 
+      string srcPoolName;
+      // destination pool name
+      string destPoolName;
+      // This is the targeted latency per service class between
+      // different pools 
+      LatencyPerQoSSeq latencyPerClassSeq;
+    };
+    typedef sequence <LatencyBetnPools>  LatencyBetnPoolsSeq;
+
+    struct LatencyBetnHosts 
+    {
+      // source host name 
+      string srcHostName;
+      // destination host name
+      string destHostName;
+      // This is the targeted latency per service class between
+      // different hosts 
+      LatencyPerQoSSeq latencyPerClassSeq;
+    };
+    typedef sequence <LatencyBetnHosts>  LatencyBetnHostsSeq;
+   
+   struct LatencyBetnFlowEndpoints 
+    {
+      // flow ID obtained on a flow request
+      string flowToken;
+
+      // This is the targeted latency per service class between
+      // different flow endpoints. Eventhough service class is already
+      // defined for the flow, this field is required so that the
+      // resultant latency can be populated and returned to the end
+      // user.
+      LatencyPerQoSSeq latencyPerClassSeq;
+    };
+    typedef sequence <LatencyBetnFlowEndpoints>  LatencyBetnFlowEndpointsSeq;
+
+   // Various conditions available for obtaining feedback from the
+   // network such as latency, bandwidth, etc.
+   enum NMEventConditionType
+     {
+       // This signifies that the latency measurement is
+       // required periodically
+       periodicLatency,
+       // This signifies that the latency measurement is
+       // required only when the threshold is reached
+       thresholdLatency
+     };
+
+   // This value signifies the update period for notifications in
+   // microseconds
+   typedef long long ReportingPeriod; 
+
+   // This value signifies the alarm condition that requires to be
+   // notified, such as latency threshold, available bandwidth
+   // threshold, etc.
+   typedef long long ThresholdValue;
+
+   // The union of different network event conditions; other
+   // conditions such as available bandwidth threshold etc can be
+   // added in the future.
+   union NMEventCondition switch (NMEventConditionType)
+   {
+     // The update period for latency notifications in microseconds
+   case periodicLatency: ReportingPeriod rp;
+
+     // When this threshold (specified in microseconds) is reached,
+     // a latency notification will occur.  This value will be
+     // overridden by any "local" threshold values provided between
+     // particular endpoints
+   case thresholdLatency: ThresholdValue tc;
+   };
+
+   // The types of endpoints between which latency probes can be performed
+   enum MeasurementEndpointsType
+     {
+       latency_between_flow_endpoints,
+       latency_between_hosts,
+       latency_between_pools
+     };
+
+   // The union of endpoints between which latency probes can be performed
+   union MeasurementEndpoints switch (MeasurementEndpointsType)
+   {
+   case latency_between_flow_endpoints: LatencyBetnFlowEndpointsSeq flowLatencyInfo;
+   case latency_between_hosts: LatencyBetnHostsSeq hostsLatencyInfo;
+   case latency_between_pools: LatencyBetnPoolsSeq poolLatencyInfo;
+   };
+
+   // The structure used for returned performance events to clients
+   struct NMEvent
+  {
+   // cookie provided at subscription
+   string cookie;
+    
+   // type of measurement endpoints
+   MeasurementEndpointsType type;
+
+   // Available latency  along with details such as source,
+   // destination, threshold, current delay, etc
+   MeasurementEndpoints latencyInfo;
+   };
+ 
+
+   //------Synchronous methods to obtain latency probes  ------------//
+
+   // Obtain latency between flow/host/pool endpoints for all/specific service
+   // classes, with or without duration for measurement.  An exception
+   // is also raised if the requested latency configuration values
+   // such as averaging window are not available in the existing
+   // infrastructure.  The available default values will be populated
+   // in the latencyInfo structure.
+   void get_measurement (in MeasurementEndpointsType type,
+			 inout MeasurementEndpoints latencyInfo)
+     raises (NetworkProbesException);
+
+
+   //----Asynchronous event subscriptions/registrations and unsubscriptions ----//
+
+   
+   // Subscribe a component for an event with latency information
+   // between flow/host/pool endpoints.  The event condition can
+   // either be of a periodic or of a threshold type. The
+   // periodic  event is a update event with the reporting period
+   // specified using NMEventCondition. The threshold event occurs
+   // only when the provided latency threshold is violated.  The
+   // threshold time can be specified using the NMEventCondition. The
+   // kind of latency information expected such as QoS class,
+   // averaging window can be specified using
+   // MeasurementEndpoints.  The cookie is a handle that differentiates the
+   // event for a consumer. For instance, it could be the application
+   // string URI. Using this the consumer can easily differentiate the
+   // latency event for the flows in an application without having to
+   // introspect the MeasurementEndpoints structure.  An exception
+   // is also raised if the latency configuration values such as averaging
+   // window are not available in the existing infrastructure.  The
+   // available default values will be populated in the latencyInfo
+   // structure.
+   void subscribeForLatencyEvent (in string consumerComponentName,
+				  in MeasurementEndpointsType endpointType,
+				  inout MeasurementEndpoints latencyInfo,
+				  in NMEventConditionType conditionType,
+				  in NMEventCondition condition,
+				  in string cookie)
+     raises (NetworkMonitorEventSubscriptionException, NetworkProbesException);
+
+   // Unsubscribe a component for an latency notification, specifying the
+   // component and the cookie that was used to register for the event.
+   void unsubscribeForLatencyEvent (in string consumerComponentName,
+				    in string cookie)
+     raises (NetworkMonitorEventSubscriptionException);
+
+ }; // end NetworkMonitor interface
+
+}; // end module 
+
+ }; }; }; };
+#endif // _NETWORK_MONITOR_IDL_

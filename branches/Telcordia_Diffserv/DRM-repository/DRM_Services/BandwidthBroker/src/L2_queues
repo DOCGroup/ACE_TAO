@@ -1,0 +1,24 @@
+# Configuration of transmit queues on L2 switch
+# shaping is used to limit bandwidth percent
+# since bandwidth command is only supported on small 
+# subset of the ports on Cisco 4507
+
+# the tx-queue 3 is treated as a high priority queue
+
+interface <intf_name>
+tx-queue 1
+   shape 20 mbps
+ tx-queue 2
+   shape 40 mbps
+ tx-queue 3
+   priority high
+   shape 10 mbps
+ tx-queue 4
+   shape 30 mbps
+
+# qos-map to map the appropriate traffic into the queues
+qos map dscp 40 to tx-queue 3
+qos map dscp 32 to tx-queue 1
+qos map dscp 24 to tx-queue 2
+qos map dscp 0 to tx-queue 4
+

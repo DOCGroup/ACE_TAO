@@ -1,0 +1,78 @@
+/*====================================================================
+
+OpenCCM: The Open CORBA Component Model Platform
+Copyright (C) 2000-2003 INRIA - USTL - LIFL - GOAL
+Contact: openccm@objectweb.org
+
+This library is free software; you can redistribute it and/or
+modify it under the terms of the GNU Lesser General Public
+License as published by the Free Software Foundation; either
+version 2.1 of the License, or any later version.
+
+This library is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this library; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
+USA
+
+Initial developer(s): Philippe Merle.
+Contributor(s): .
+
+====================================================================*/
+
+/**
+ * This OMG IDL file contains all definitions of the CORBA module
+ * required to compile all the other OpenCCM's OMG IDL files.
+ *
+ * @author <a href="mailto:Philippe.Merle@lifl.fr">Philippe Merle</a>
+ */
+
+#ifndef _CORBA_IDL_
+#define _CORBA_IDL_
+
+// This specification was written by the OMG.
+#pragma prefix "omg.org"
+
+/**
+ * The OMG's CORBA module.
+ *
+ * Only contains definitions used in other OpenCCM's OMG IDL files.
+ */
+module CORBA
+{
+    /**
+     * Alias for sequence of octets.
+     */
+    typedef sequence<octet> OctetSeq;
+
+    /**
+     * Alias for repository identifiers.
+     */
+    typedef string RepositoryId;
+
+#ifndef _CORBA_IRObject_defined_
+#define _CORBA_IRObject_defined_
+
+    /**
+     * Base interface for objects contained into the Interface Repository.
+     */
+    interface IRObject 
+    {
+    };
+
+#endif /* ifndef _CORBA_IRObject_defined_ */
+
+    /**
+     * The Current interface.
+     */
+    local interface Current
+    {
+    };
+
+}; /* end module CORBA */
+
+#endif /* ifndef _CORBA_IDL_ */

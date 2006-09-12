@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE componentassembly PUBLIC "-//OMG//DTD Component Assembly Descriptor 3.0//EN" "http://openccm.objectweb.org/dtd/ccm/componentassembly.dtd">
+<componentassembly derivedfrom="" id="BandwidthBroker">
+  <componentfiles>
+    <componentfile type="" id="FlowProvisionCSD">
+      <fileinarchive name="archives/fpcomponent.car">
+      </fileinarchive>
+    </componentfile>
+    <componentfile type="" id="BBrokerCSD">
+      <fileinarchive name="archives/bbcomponent.car">
+      </fileinarchive>
+    </componentfile>
+    <componentfile type="" id="FaultMonitorCSD">
+      <fileinarchive name="archives/fmcomponent.car">
+      </fileinarchive>
+    </componentfile>
+    <componentfile type="" id="NetworkMonitorCSD">
+      <fileinarchive name="archives/nmcomponent.car">
+      </fileinarchive>
+    </componentfile>
+    <componentfile type="" id="TestClientCSD">
+      <fileinarchive name="archives/tccomponent.car">
+      </fileinarchive>
+    </componentfile>
+  </componentfiles>
+  <partitioning>
+    <homeplacement cardinality="1" id="FlowProvisioningHome">
+      <componentfileref idref="FlowProvisionCSD"/>
+      <componentimplref idref="FlowProvisionerComponentImpl"/>
+      <registerwithnaming name="mil/darpa/arms/mlrm/BandwidthBroker/FlowProvisionerComponentHome"/>
+      <componentinstantiation id="FlowProvisionerComponent">
+      </componentinstantiation>
+      <destination>
+        <installation type="componentinstallation">
+          <findby>
+            <namingservice name="ComponentServer1"/>
+          </findby>
+        </installation>
+        <activation type="componentserver">
+          <findby>
+            <namingservice name="ComponentServer1"/>
+          </findby>
+        </activation>
+      </destination>
+    </homeplacement>
+    <homeplacement cardinality="1" id="BandwidthBrokerHome">
+      <componentfileref idref="BBrokerCSD"/>
+      <componentimplref idref="BandwidthBrokerComponentImpl"/>
+      <registerwithnaming name="mil/darpa/arms/mlrm/BandwidthBroker/BandwidthBrokerComponentHome"/>
+      <componentinstantiation id="BandwidthBrokerComponent">
+        <registercomponent>
+          <registerwithnaming name="mil/darpa/arms/mlrm/BandwidthBroker/BandwidthBrokerComponent"/>
+        </registercomponent>
+      </componentinstantiation>
+      <destination>
+        <installation type="componentinstallation">
+          <findby>
+            <namingservice name="ComponentServer1"/>
+          </findby>
+        </installation>
+        <activation type="componentserver">
+          <findby>
+            <namingservice name="ComponentServer1"/>
+          </findby>
+        </activation>
+      </destination>
+    </homeplacement>
+    <homeplacement cardinality="1" id="FaultMonitorHome">
+      <componentfileref idref="FaultMonitorCSD"/>
+      <componentimplref idref="FaultMonitorComponentImpl"/>
+      <registerwithnaming name="mil/darpa/arms/mlrm/BandwidthBroker/FaultMonitorComponentHome"/>
+      <componentinstantiation id="FaultMonitorComponent">
+      </componentinstantiation>
+      <destination>
+        <installation type="componentinstallation">
+          <findby>
+            <namingservice name="ComponentServer1"/>
+          </findby>
+        </installation>
+        <activation type="componentserver">
+          <findby>
+            <namingservice name="ComponentServer1"/>
+          </findby>
+        </activation>
+      </destination>
+    </homeplacement>
+    <homeplacement cardinality="1" id="NetworkMonitorHome">
+      <componentfileref idref="NetworkMonitorCSD"/>
+      <componentimplref idref="NetworkMonitorComponentImpl"/>
+      <registerwithnaming name="mil/darpa/arms/mlrm/BandwidthBroker/NetworkMonitorComponentHome"/>
+      <componentinstantiation id="NetworkMonitorComponent">
+      </componentinstantiation>
+      <destination>
+        <installation type="componentinstallation">
+          <findby>
+            <namingservice name="ComponentServer1"/>
+          </findby>
+        </installation>
+        <activation type="componentserver">
+          <findby>
+            <namingservice name="ComponentServer1"/>
+          </findby>
+        </activation>
+      </destination>
+    </homeplacement>
+    <homeplacement cardinality="1" id="BBTestClientHome">
+      <componentfileref idref="TestClientCSD"/>
+      <componentimplref idref="BBTestClientComponentImpl"/>
+      <componentinstantiation id="BBTestClientComponent">
+        <componentproperties>
+          <fileinarchive name="META-INF/testclient.cpf">
+          </fileinarchive>
+        </componentproperties>
+      </componentinstantiation>
+      <destination>
+        <installation type="componentinstallation">
+          <findby>
+            <namingservice name="ComponentServer1"/>
+          </findby>
+        </installation>
+        <activation type="componentserver">
+          <findby>
+            <namingservice name="ComponentServer1"/>
+          </findby>
+        </activation>
+      </destination>
+    </homeplacement>
+  </partitioning>
+  <connections>
+    <connectinterface id="bbroker-flowprovisioner">
+      <usesport>
+        <usesidentifier>toFlowProvisioner</usesidentifier>
+        <componentinstantiationref idref="BandwidthBrokerComponent"/>
+      </usesport>
+      <providesport>
+        <providesidentifier>aFlowProvisioner</providesidentifier>
+        <componentinstantiationref idref="FlowProvisionerComponent"/>
+      </providesport>
+    </connectinterface>
+    <connectinterface id="bbroker-networkmonitor">
+      <usesport>
+        <usesidentifier>toNetworkMonitor</usesidentifier>
+        <componentinstantiationref idref="BandwidthBrokerComponent"/>
+      </usesport>
+      <providesport>
+        <providesidentifier>aNetworkMonitor</providesidentifier>
+        <componentinstantiationref idref="NetworkMonitorComponent"/>
+      </providesport>
+    </connectinterface>
+    <connectinterface id="bbroker-faultmonitor">
+      <usesport>
+        <usesidentifier>toFaultMonitor</usesidentifier>
+        <componentinstantiationref idref="BandwidthBrokerComponent"/>
+      </usesport>
+      <providesport>
+        <providesidentifier>aFaultMonitor</providesidentifier>
+        <componentinstantiationref idref="FaultMonitorComponent"/>
+      </providesport>
+    </connectinterface>
+    <connectinterface id="testclient-bbroker">
+      <usesport>
+        <usesidentifier>toBandwidthBroker</usesidentifier>
+        <componentinstantiationref idref="BBTestClientComponent"/>
+      </usesport>
+      <providesport>
+        <providesidentifier>theController</providesidentifier>
+        <componentinstantiationref idref="BandwidthBrokerComponent"/>
+      </providesport>
+    </connectinterface>
+    <connectevent id="bbroker-faultevents">
+      <consumesport>
+        <consumesidentifier>frmBBMonitorServer</consumesidentifier>
+        <componentinstantiationref idref="BandwidthBrokerComponent"/>
+      </consumesport>
+      <publishesport>
+        <publishesidentifier>toFaultEventSubscribers</publishesidentifier>
+        <componentinstantiationref idref="FaultMonitorComponent"/>
+      </publishesport>
+    </connectevent>
+    <connectevent id="bbroker-nmevents">
+      <consumesport>
+        <consumesidentifier>frmBBMonitorServer</consumesidentifier>
+        <componentinstantiationref idref="BandwidthBrokerComponent"/>
+      </consumesport>
+      <publishesport>
+        <publishesidentifier>toNetworkEventSubscribers</publishesidentifier>
+        <componentinstantiationref idref="NetworkMonitorComponent"/>
+      </publishesport>
+    </connectevent>
+  </connections>
+</componentassembly>

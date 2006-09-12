@@ -1,0 +1,143 @@
+// taken from OMG Security Service Spec. V 1.5
+
+#ifndef _SECURITY_REPLACEABLE_IDL
+#define _SECURITY_REPLACEABLE_IDL
+
+#pragma prefix "omg.org"
+
+#include <SecurityLevel2.idl>
+
+module SecurityReplaceable 
+{
+
+    interface SecurityContext;
+    interface ClientSecurityContext;
+    interface ServerSecurityContext;
+
+    interface Vault 
+    {                            
+	    // Locality Constrained
+
+	Security::AuthenticationMethodList get_supported_authen_methods(
+		in Security::MechanismType mechanism
+		);
+
+	Security::AuthenticationStatus acquire_credentials(
+		in       Security::AuthenticationMethod method,
+		in       Security::MechanismType                 mechanism,
+		in       Security::SecurityName security_name,
+		in       Security::Opaque auth_data,
+		in       Security::AttributeList                 privileges,
+		out      SecurityLevel2::Credentials creds,
+		out      Security::Opaque                        continuation_data,
+		out      Security::Opaque                        auth_specific_data
+		);
+
+	Security::AuthenticationStatus continue_credentials_acquisition(
+		in       Security::Opaque response_data,
+		in       SecurityLevel2::Credentials             creds,
+		out      Security::Opaque                        continuation_data,
+		out      Security::Opaque                        auth_specific_data
+		);
+
+	Security::AssociationStatus init_security_context (
+	        in  SecurityLevel2::Credentials   creds,
+		in Security::SecurityName         target_security_name,
+		in Object                         target,
+		in Security::DelegationMode       delegation_mode,
+		in Security::OptionsDirectionPairList association_options,
+		in Security::MechanismType        mechanism,
+		in     Security::Opaque           mech_data, //from IOR
+		in Security::Opaque               chan_binding,
+		out Security::OpaqueBuffer        security_token,
+		out ClientSecurityContext         security_context
+		);
+	
+	Security::AssociationStatus accept_security_context (
+		in SecurityLevel2::CredentialsList creds_list,
+		in Security::Opaque                chan_bindings,
+		in Security::OpaqueBuffer          in_token,
+		out Security::OpaqueBuffer         out_token,
+		out    ServerSecurityContext       security_context
+		);
+
+	Security::MechandOptionsList get_supported_mechs ();
+    };
+
+    interface SecurityContext 
+    {              // Locality Constrained
+
+	readonly attribute Security::SecurityContextType    context_type; 
+	readonly attribute Security::SecurityContextState   context_state; 
+	readonly attribute Security::MechanismType          mechanism; 
+	readonly attribute boolean                          supports_refresh; 
+	readonly attribute Security::Opaque                 chan_binding; 
+	readonly attribute SecurityLevel2::ReceivedCredentials received_credentials;
+
+	Security::AssociationStatus continue_security_context (
+		in     Security::OpaqueBuffer in_token,
+		out    Security::OpaqueBuffer out_token
+		);
+
+
+	void protect_message (
+		in      Security::OpaqueBuffer message,
+		in      Security::QOP                       qop,
+		out     Security::OpaqueBuffer              text_buffer,
+		out     Security::OpaqueBuffer              token
+		);
+
+	boolean reclaim_message (
+		in      Security::OpaqueBuffer text_buffer,
+		in      Security::OpaqueBuffer token,
+		out     Security::QOP                       qop,
+		out     Security::OpaqueBuffer message
+		);
+
+	boolean is_valid (out Security::UtcT  expiry_time );
+
+	boolean refresh_security_context (
+		in      Security::Opaque refresh_data,
+		out     Security::OpaqueBuffer out_token
+		);
+
+	boolean process_refresh_token (
+		in      Security::OpaqueBuffer refresh_token
+		);
+
+	boolean discard_security_context (
+       	        in      Security::Opaque discard_data,
+		out     Security::OpaqueBuffer out_token
+		);
+
+	boolean process_discard_token (
+		in      Security::OpaqueBuffer discard_token
+		);
+    };
+
+
+    interface ClientSecurityContext : SecurityContext 
+    {
+	// Locality Constrained
+	readonly attribute Security::AssociationOptions  association_options_used; 
+	readonly attribute Security::DelegationMode      delegation_mode; 
+	readonly attribute Security::Opaque              mech_data; 
+	readonly attribute SecurityLevel2::Credentials         client_credentials; 
+	readonly attribute Security::AssociationOptions  server_options_supported; 
+	readonly attribute Security::Opaque server_security_name;
+    };
+
+    interface ServerSecurityContext : SecurityContext 
+    {
+	// Locality Constrained
+	readonly attribute Security::AssociationOptions
+	    association_options_used; 
+	readonly attribute Security::DelegationMode
+	    delegation_mode; 
+	readonly attribute SecurityLevel2::Credentials server_credentials; 
+	readonly attribute Security::AssociationOptions  server_options_supported; 
+	readonly attribute Security::Opaque server_security_name;
+    };
+};
+
+#endif /* _SECURITY_REPLACEABLE_IDL_ */

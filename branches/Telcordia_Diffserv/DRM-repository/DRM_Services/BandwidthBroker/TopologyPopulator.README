@@ -1,0 +1,47 @@
+//$Id$
+TopologyPopulator
+================
+
+This component of the BandwidthBroker package is used to automate the MySQL DB population using XML input.
+The XML schema is primarily defined in BandwidthBroker/networkTopology.xsd.  Sample inputs are available in
+deploy/data.
+
+Compilation:
+-----------
+The TopologyPopulator is compiled as part of the Ant "dist" target used for compiling BandwithBroker. 
+FromBandwidthBroker directory:
+> ant dist
+
+Execution:
+----------
+Prerequisite: Read BandwidthgBroker.README for DB setup information.
+Before using this tool to populate the DB, make sure the inital table structure of ARMSBB database
+is already available using:
+
+> mysql/bin/mysql -u arms -p < DRM/DRM_Services/BandwidthBroker/src/db/arms-initdb.sql
+
+Now define the topology as xml and use the TopologyPopulator to populate the DB 
+(all old entries in ARMSBB DB are removed before population) :
+
+From deploy directory:
+> source bin/bbinit.sh
+> bin/toporun.sh <xmlInputFile> 
+
+Sample xml input files are available such as deploy/data/nw_topo_monopool_data.xml
+The TopologyPopulator obtains logging properties from the deploy/cfg/BandwidthBroker/xmltopo.prop 
+and the database informaton from deploy/cfg/BandwidthBroker/bbconfig.db.prop file.
+Please ensure that the properties in these files are appropriate for your setup.
+Actual command is:
+ java mil.darpa.arms.mlrm.BandwidthBroker.topologyDB.TopologyPopulator data/nw_topo_lab_monopool_data.xml cfg/BandwidthBroker/xmltopo.prop cfg/BandwidthBroker/bbconfig.db.prop
+
+Troubleshooting tip:
+-------------------
+Please note that if you get an MySQL connection error with message : "Using system defualts", 
+it could just be that the input bbconfig.db.file name has an Control-M character attached 
+(its the last argument in the toporun.sh file), so please perform:
+> dos2unix bin/*.sh
+> chmod +x bin/*.sh
+and execute again.
+
+
+	Kirthika Parmeswaran, 1 Nov 2004

@@ -1,0 +1,7 @@
+#Cat OS
+- trap receiver with port 
+set snmp trap 192.4.16.9 public port 40000
+
+#IOS 
+
+snmp-server host 192.4.16.9 public udp-port 40000

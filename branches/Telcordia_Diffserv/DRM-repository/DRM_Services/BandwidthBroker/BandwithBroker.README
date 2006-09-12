@@ -1,0 +1,213 @@
+//$Id$
+/***********************************************
+
+
+README for compiling and running BB server and client in (AIF) Deployment 
+environment
+Date: July 28, 2004, S. Gadgil
+/***********************************************
+
+The BandwidthBroker is a DRM-Middleware service for network QoS management.
+
+Software Installations:
+----------------------
+	-- JDK 1.4.2 ($JAVA_HOME/bin must be in the PATH)
+	-- Ant 1.6.1 ($ANT_HOME/bin must be in PATH)
+	-- MySQL (version > 4.0)
+	  'source' src/db/arms-initdb.sql for the table structure and
+	  aifdata.sql for sample records in the database 
+
+Although JacORB 2.0 and JWSDP 1.3 are used, the libraries are part of
+DRM/Middleware/jars distribution, hence they do not need to be installed.
+
+Compiling and Building Distribution Target
+------------------------------------------
+You will use ant for this purpose from the BandwidthBroker directory:
+
+	ant clean
+	ant dist 
+
+This will create a runtime directory structure with contents  under "deploy" directory.
+
+Deploy Directory structure:
+------------------------------
+bin: Contains scripts for running Bandwidth Broker, Flow Provisioner, Name Server and client.
+
+cfg: Contains various property files
+
+lib:Contains jar files for running the the servers and client
+
+How to run Bandwidth Broker in the ARMS deployment environment:
+
+ Before running the Bandwidth Broker, the mysql database tables need to be populated. Before populating the database, one  needs to create users, say arms and arms database, say armsBB and the database schema. Here is a typical session for this:
+
+		>> create arms users
+		:mysq/bin/mysql -u root -p
+		Enter password: ******
+		Welcome to the MySQL monitor.  
+		Your MySQL connection id is 2 to server version: 4.0.18-max-debug
+
+		Type 'help;' or '\h' for help. Type '\c' to clear the buffer.
+
+		
+		mysql> create database ARMSBB;
+		Query OK, 1 row affected (1.75 sec)
+
+		mysql> grant all privileges on ARMSBB.* to arms@"%" identified by 'arms';		Query OK, 0 rows affected (0.54 sec)
+
+		mysql> grant all privileges on ARMSBB.* to arms@localhost identified by 'arms';
+		Query OK, 0 rows affected (0.00 sec)
+
+		mysql>exit
+
+		>> schema creation
+		mysql/bin/mysql -u arms -p < DRM/DRM_Services/BandwidthBroker/src/db/arms-initdb.sql
+
+	        There are many ways to populate the BB, to use a
+                automated tool which accepts xml input 
+	        and populates the DB:
+		See TopologyPopulator.README
+
+		Or else, one can build the sql file and manually
+                populate the DB:
+                >> Populating the DB
+	         mysql/bin/mysql -u arms -p < DRM/DRM_Services/BandwidthBroker/src/db/aifdata.sql
+
+
+            >> Just to be sure, check the tables created and for the data populated as follows:
+		mysql> use ARMSBB;
+		Database changed
+		mysql> show tables;
++------------------+
+| Tables_in_armsbb |
++------------------+
+| bwperclass       |
+| flowrecord       |
+| hostsubnet       |
+| l2hops           |
+| l2interface      |
+| l2path           |
+| l3hops           |
+| l3interface      |
+| l3path           |
+| ptp              |
+| router           |
+| serviceclass     |
+| switch           |
++------------------+
+13 rows in set (0.00 sec)
+
+mysql> select * from Router;
++----+------+-----------------+------------+-----------+------------+-----------
+-------+------------------+--------------+---------------+----------------+-----
+----+
+| id | name | equipmentID     | vendor     | osVersion | adminState | operationa
+lState | password         | enablePW     | managedIPAddr | isProviderEdge | last
+ACL |
++----+------+-----------------+------------+-----------+------------+-----------
+-------+------------------+--------------+---------------+----------------+-----
+----+
+|  1 | LA   | manufacturerID1 | Cisco 3620 | IOS       | up         | up
+       | lessprivPassword | privPassword | 192.4.20.67   |              1 |
+  1 |
+|  2 | BOS  | manfacturerID2  | Cisco 3620 | IOS       | up         | up
+       | lessPrivPassword | privPassword | 192.4.20.78   |              1 |
+  1 |
+|  3 | DC   | manfacturerID2  | Cisco 3620 | IOS       | up         | up
+       | lessPrivPassword | privPassword | 192.4.20.79   |              1 |
+  1 |
++----+------+-----------------+------------+-----------+------------+-----------
+-------+------------------+--------------+---------------+----------------+-----
+----+
+3 rows in set (0.00 sec)
+
+mysql>
+
+
+Running  of BB server, Flow Provioner server and client(s)
+----------------------------------------------------------
+          
+          There are several scripts provided in the $ARMS_ROOT/bin directory.
+For running these scripts, you are assumed to be in $ARMS_ROOT directory.
+
+           Setup the additionaarel environment variables
+            source bin/bbinit.sh
+ 
+
+	    Start the Naming Service from the src directory, if using Sun's Java Naming service use:
+               bin/nsstart.sh
+		
+		You may check the running of the name server by doing a "ps".
+ 
+           Setup classpath
+              source bin/setup-classpath.sh
+           
+	   Start the Flow Provisioner (in loopback mode)
+
+               bin/fpstart.sh
+	  When prompted for the decryption key, enter the string
+	  "darpa_ar".  When prompted for username, password, please enter the
+	  username and password appropriate for device access. This prompt will
+	  appear only if the device is not an entry in the
+          cfg/BandwidthBroker/routerAuth file.
+
+  	  For details on building such a file, please see
+	  FlowProvisioner.README. To test only the FlowProvisioner:
+		bin/fptest.sh
+	  The output of the test will be available in data/logs/networkprovisioner.ios.log
+
+           Start the BB server 
+              
+               bin/bbstart.sh
+
+Note:  There are several property files in the cfg/BandwidthBroker directory that are of importance in runnning the Bandwidth Broker and Flow Provisioner servers:
+
+A file bbconfig.prop consisting of BB properties need to be modified before executing the BBServer.  These properties include:
+       	DBServer : MySQL server
+	DBLogin: MySQL user
+	DBPassword: MySQLuser password
+	DBConnections: number of database connections 
+        FlowReservationTimeout (in milliseconds): time period when a
+        flow request that is reserved but not yet committed is garbage collected.
+        ConfigureNetwork: denotes whether the flow provisioner that
+       	configures the network is invoked (ConfigureNetwork=1)or not
+        (ConfigureNetwork=0).
+
+The log4j files used  for Bandwidth Broker and Flow Provisioner are  bbserverlog.prop and ioslog.prop, respectively.
+
+ The execution flow of the  servers  can be verified with the
+	     bbserver.log and  networkprovisioner.ios.log files
+
+
+ To run the sample test clients from the src directory	
+ 	           bin/bbtest.sh add 2000
+
+You may verify that the client program working with the check of the database.
+
+	>> Database query to check the admitted flow 1
+	mysql> select * from FlowRecord;
++----+----------+-------------+----------------+-----------------+---------+----
+---------+----------------+-----------------+----------+--------------+---------
+-+--------------+-------------+-------------+------+------------+---------------
++----------------+
+| id | status   | purgeStatus | srcIP          | srcMask         | srcPort | src
+PortHigh | destIP         | destMask        | destPort | destPortHigh | protocol
+ | bandwidthMin | extraBudget | bwAllocated | acl  | svcClassID | inInterfaceID
+| outInterfaceID |
++----+----------+-------------+----------------+-----------------+---------+----
+---------+----------------+-----------------+----------+--------------g+---------
+-+--------------+-------------+-------------+------+------------+---------------
++----------------+
+|  1 | commited |           0 | 192.168.83.100 | 255.255.255.255 | 20      | 20
+         | 192.168.81.100 | 255.255.255.255 | -1       | -1           | tcp
+ |         2000 |          10 |        2000 |    0 |          2 |             6
+|              4 |
++----+----------+-------------+----------------+-----------------+---------+----
+---------+----------------+-----------------+----------+--------------+---------
+-+--------------+-------------+-------------+------+------------+---------------
++----------------+
+1 row in set (0.00 sec)
+
+
+
+

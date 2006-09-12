@@ -1,0 +1,88 @@
+
+<!-- This is a common initialization file -->
+<!--                                                     -->
+<!-- This should not be called directly; instead it      -->
+<!-- should be included with '&common;' syntax.          -->
+<!--$Id$-->
+<target name="init" depends="ant-version">
+    <property name="dirs.base" value="${basedir}"/>
+    <property name="src" value="${dirs.base}/src"/>
+    <property name="lib" value="${dirs.base}/../../Middleware"/>
+    <property name="jacorb_lib" value="JacORB2.1/lib"/>
+    <property name="hsqldb_lib" value="Hsqldb1.7.3/lib"/>
+    <property name="mysql_lib" value="MySQL/lib"/>
+    <property name="telcordia_lib" value="Telcordia/lib"/>
+    <property name="snmp_lib" value="snmp/lib"/>
+    <property name="log4j_lib" value="log4j/lib"/>
+    <!-- <property name="jwsdp_dir" value="/usr/pkg/java/sun-1.4/jwsdp-1.5"/> -->
+    <property name="jwsdp_lib" value="JWSDP1.3/lib"/>
+    <property name="jwsdp_lib_1.5" value="JWSDP1.5/lib/jaxb-api.jar:JWSDP1.5/lib/jaxb-impl.jar:JWSDP1.5/lib/jaxb-libs.jar:JWSDP1.5/lib/jaxb-xjc.jar:JWSDP1.5/lib/jax-qname.jar:JWSDP1.5/lib/relaxngDatatype.jar:JWSDP1.5/lib/namespace.jar"/>
+     <property name="jdom_lib" value="jdom/lib/jdom.jar"/>
+     <property name="cli_lib" value="cli/lib/pnuts.jar:cli/lib/CLI.jar:cli/lib/bsf.jar"/>
+     <property name="jimi_lib" value="jimi/lib/JimiProClasses.zip"/>
+     <property name="armond_lib" value="armond/lib/armond.jar"/>
+     <property name="jsch_lib" value="jsch/jsch-0.1.20.jar"/>
+     <property name="probes_lib" value="Telcordia/lib/telcordia-imp.jar"/>     
+    <property name="build" value="${dirs.base}/build"/>
+    <property name="deploy" value="${dirs.base}/deploy"/>
+    <property name="idl" value="${dirs.base}/idl"/>
+    <property name="idl_include" value="${dirs.base}/idl-include:${dirs.base}/../../Middleware/JacORB2.1/idl/omg:"/>
+    <property name="debug" value="on"/>
+    <!-- This value only used under Ant 1.5 -->
+    <property name="debuglevel" value="lines,source"/>
+    <property name="classdir" value="${dirs.base}/classes"/>
+    <property name="classpath" value="${dirs.base}/classes:${java.class.path}"/>
+    <property name="bbpath" value="mil/darpa/arms/mlrm/BandwidthBroker"/>
+    <property name="bbserverpath" value="mil/darpa/arms/mlrm/BandwidthBroker/bb/server"/>
+    <property name="flowprovisionerpath" value="mil/darpa/arms/mlrm/BandwidthBroker/provisioner/flowprovisioner"/>
+    <property name="l2discpath" value="mil/darpa/arms/mlrm/BandwidthBroker/L2Disc"/>
+    <property name="faultmonitorpath" value="mil/darpa/arms/mlrm/BandwidthBroker/FaultMonitorServer"/>
+    <property name="bbclientpath" value="mil/darpa/arms/mlrm/BandwidthBroker/bb/clients"/>
+    <property name="topoSrc" value="mil/darpa/arms/mlrm/BandwidthBroker/topologyDB"/>
+    <property name="networkmonitorserverpath" value="mil/darpa/arms/mlrm/BandwidthBroker/networkmonitor/server"/>
+    <property name="networkmonitorclientpath" value="mil/darpa/arms/mlrm/BandwidthBroker/networkmonitor/client"/>
+    <mkdir dir="${classdir}"/>
+    <mkdir dir="${build}"/>
+    <mkdir dir="${src}/generated"/>
+    <filter token="path" value="basedir"/>
+ 
+    <property name="lib_classpath" value="${lib}/${jacorb_lib}/jacorb.jar:${lib}/${jacorb_lib}/logkit-1.2.jar:${lib}/${jacorb_lib}/wrapper-3.0.3.jar:${lib}/${jacorb_lib}/concurrent-1.3.2.jar:${lib}/${jacorb_lib}/avalon-framework-4.1.5.jar:${lib}/${jacorb_lib}/antlr-2.7.2.jar:${lib}/${jacorb_lib}/idl.jar:${lib}/${mysql_lib}/mysql-connector-java-3.0.8-stable-bin.jar:${lib}/${mysql_lib}/mm.mysql-2.0.14-bin.jar:${lib}/${log4j_lib}/log4j-1.2.8.jar:${lib}/${jacorb_lib}/wrapper-3.0.3.jar:${lib}/${telcordia_lib}/telcordia-jIOS.jar:${lib}/${snmp_lib}/AdventNetSnmpStudioApi.jar:${lib}/${snmp_lib}/AdventNetSnmp.jar:${lib}/${snmp_lib}/AdventNetLogging.jar:${lib}/${snmp_lib}/SNMP4J.jar:${lib}/OpenCCM/OpenCCM_CORBA.jar:${lib}/OpenCCM/OpenCCM_Deployment.jar:${lib}/OpenCCM/OpenCCM_Plugins.jar:${lib}/OpenCCM/OpenCCM_Runtime.jar:${lib}/OpenCCM/OpenCCM_PropertyService.jar:${lib}/${hsqldb_lib}/hsqldb.jar:${lib}/${jwsdp_lib_1.5}:${lib}/${jdom_lib}:${lib}/${jimi_lib}:${lib}/${cli_lib}:${lib}/${armond_lib}:${lib}/${probes_lib}:${lib}/${jsch_lib}" />
+
+</target>
+
+<target name="load-taskdef">
+   <taskdef name="jacidl" classname="org.jacorb.idl.JacIDL" classpath="${lib}/${jacorb_lib}/idl.jar:${lib_classpath}:${java.class.path}"/>
+</target>
+
+
+<target name="ant-version" unless="ant15">
+    <available classname="org.apache.tools.ant.filters.ClassConstants" property="ant15"/>
+</target>
+
+
+<target name="check-src" unless="javac-src">
+   <property name="javac-src" value="${src}"/>
+</target>
+
+
+<target name="check-excludes" unless="javac-excludes">
+   <property name="javac-excludes" value=""/>
+</target>
+
+
+<target name="check-includes" unless="javac-includes">
+   <fail message="Pass javac-includes to target"/>
+</target>
+
+
+<target name="javac-15"  depends="check-src,check-excludes" >
+   <echo message="Compiling for ${ant.project.name}"/>
+   <javac srcdir="${javac-src}"
+          destdir="${classdir}"
+          classpath="${classpath}:${lib_classpath}"
+          debug="${debug}"
+          debuglevel="${debuglevel}"
+          includes="${javac-includes}"
+          excludes="${javac-excludes}">
+   </javac>
+</target>

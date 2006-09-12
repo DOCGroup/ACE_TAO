@@ -1,0 +1,549 @@
+<!-- ==================================================================== -->
+<!--                                                                      -->
+<!-- OpenCCM: The Open CORBA Component Model Platform                     -->
+<!-- Copyright (C) 2000-2004 INRIA - USTL - LIFL - GOAL                   -->
+<!-- Contact: openccm@objectweb.org                                       -->
+<!--                                                                      -->
+<!-- This library is free software; you can redistribute it and/or        -->
+<!-- modify it under the terms of the GNU Lesser General Public           -->
+<!-- License as published by the Free Software Foundation; either         -->
+<!-- version 2.1 of the License, or any later version.                    -->
+<!--                                                                      -->
+<!-- This library is distributed in the hope that it will be useful,      -->
+<!-- but WITHOUT ANY WARRANTY; without even the implied warranty of       -->
+<!-- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU     -->
+<!-- Lesser General Public License for more details.                      -->
+<!--                                                                      -->
+<!-- You should have received a copy of the GNU Lesser General Public     -->
+<!-- License along with this library; if not, write to the Free Software  -->
+<!-- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 -->
+<!-- USA                                                                  -->
+<!--                                                                      -->
+<!-- Initial developer(s): Philippe Merle.                                -->
+<!-- Contributor(s): Christophe Contreras                                 -->
+<!--                                                                      -->
+<!-- ==================================================================== -->
+
+<!-- ==================================================================== -->
+<!--                                                                      -->
+<!-- Generic Ant targets for compilation with OpenCCM.                    -->
+<!--                                                                      -->
+<!-- ==================================================================== -->
+
+  <!-- ================================================================== -->
+  <!--                                                                    -->
+  <!-- Define global properties.                                          -->
+  <!--                                                                    -->
+  <!-- ================================================================== -->
+
+  <!-- This prefix will give access to environment variables, e.g.        -->
+  <!-- OpenCCM_HOMEDIR, OpenCCM_CONFIG_DIR, and PATH                      -->
+  <property environment="openccm.envi" />
+
+  <!-- Load properties from the installed OpenCCM and ORB                 -->
+  <property file="${openccm.envi.OpenCCM_HOMEDIR}/ant/build.properties" />
+  <property file="${openccm.envi.OpenCCM_HOMEDIR}/ant/ORB.properties" />
+
+  <!-- Default value for extra.arguments                                  -->
+  <property name="extra.arguments" value="" />
+
+  <!-- Default value for exec.dir                                         -->
+  <property name="exec.dir" value="${basedir}" />
+
+  <!-- ================================================================== -->
+  <!--                                                                    -->
+  <!-- Define the project boot class path.                                -->
+  <!--                                                                    -->
+  <!-- ================================================================== -->
+
+  <path id="project.boot.class.path">
+
+    <!-- ================================================================ -->
+    <!--                                                                  -->
+    <!-- All the used ORB JAR files.                                      -->
+    <!--                                                                  -->
+    <!-- ================================================================ -->
+
+    <fileset dir="${ORB.jar.dir}"
+             includes="*.jar" />
+
+    <!-- ================================================================ -->
+    <!--                                                                  -->
+    <!-- All the JRE JAR files, i.e. rt.jar, i18n.jar ...                 -->
+    <!--                                                                  -->
+    <!-- ================================================================ -->
+
+    <fileset dir="${jre.jars.dir}"
+             includes="*.jar" />
+
+  </path>
+
+  <!-- ================================================================== -->
+  <!--                                                                    -->
+  <!-- Define the project class path.                                     -->
+  <!--                                                                    -->
+  <!-- ================================================================== -->
+
+  <path id="project.class.path">
+
+    <!-- ================================================================ -->
+    <!--                                                                  -->
+    <!-- All the required OpenCCM JAR files.                              -->
+    <!--                                                                  -->
+    <!-- ================================================================ -->
+
+    <!-- The OpenCCM runtime.                                             -->
+    <pathelement path="${openccm.envi.OpenCCM_HOMEDIR}/jar/OpenCCM_Runtime.jar" />
+
+    <!-- The OpenCCM production platform.                                 -->
+    <pathelement path="${openccm.envi.OpenCCM_HOMEDIR}/jar/OpenCCM_Platform.jar" />
+
+    <!-- The OpenCCM CORBA wrapper.                                       -->
+    <pathelement path="${openccm.envi.OpenCCM_HOMEDIR}/jar/OpenCCM_CORBA.jar" />
+
+    <!-- The OpenCCM plugins.                                             -->
+    <pathelement path="${openccm.envi.OpenCCM_HOMEDIR}/jar/OpenCCM_Plugins.jar" />
+
+
+    <!-- The OpenCCM launcher.                                            -->
+    <pathelement path="${openccm.envi.OpenCCM_HOMEDIR}/jar/OpenCCM_Launcher.jar" />
+
+     <!-- Temporary required for classes:                                  -->
+    <!-- * org.objectweb.corba.util.LocalObjectBase                       -->
+    <!-- * ...                                                            -->
+    <pathelement path="${openccm.envi.OpenCCM_HOMEDIR}/jar/OpenCCM_Utils.jar" />
+
+    <!-- Temporary required for classes:                                  -->
+    <!-- * org.objectweb.ccm.Deployment.CCMHomeLocal                      -->
+    <!-- * ...                                                            -->
+    <pathelement path="${openccm.envi.OpenCCM_HOMEDIR}/jar/OpenCCM_Deployment.jar" />
+    <pathelement path="${openccm.envi.OpenCCM_HOMEDIR}/jar/OpenCCM_PropertyService.jar" />
+    
+    <pathelement path="${openccm.envi.OpenCCM_HOMEDIR}/externals/browser/browser.jar" />
+
+    <pathelement path="${openccm.envi.DRM_ROOT}/${repository.jars.basedir}/MySQL/lib/mm.mysql-2.0.14-bin.jar" />
+    <pathelement path="${openccm.envi.DRM_ROOT}/${repository.jars.basedir}/log4j/lib//log4j-1.2.8.jar" />
+    <pathelement path="${openccm.envi.DRM_ROOT}/${repository.jars.basedir}/Telcordia/lib/telcordia-jIOS.jar" />
+    <pathelement path="${openccm.envi.DRM_ROOT}/${repository.jars.basedir}/snmp/lib/AdventNetSnmpStudioApi.jar" />
+    <pathelement path="${openccm.envi.DRM_ROOT}/${repository.jars.basedir}/snmp/lib/AdventNetSnmp.jar" />
+    <pathelement path="${openccm.envi.DRM_ROOT}/${repository.jars.basedir}/snmp/lib/AdventNetLogging.jar" />
+    <pathelement path="${openccm.envi.DRM_ROOT}/${application.arms.basedir}/deploy/lib/TelcordiaBBStubs.jar" />
+    <fileset dir="${openccm.envi.DRM_ROOT}/${repository.jars.basedir}/JWSDP1.3/lib/">
+     <include name="**/*.jar" />
+    </fileset>
+  </path>
+
+  <!-- ================================================================== -->
+  <!--                                                                    -->
+  <!-- Javac with OpenCCM bootclass and class paths set.                  -->
+  <!--                                                                    -->
+  <!-- Parameters are:                                                    -->
+  <!-- * srcdir  The directory containing Java source files.              -->
+  <!-- * destdir The directory containing Java class files.               -->
+  <!-- * files   The files to compile.                                    -->
+  <!--                                                                    -->
+  <!-- ================================================================== -->
+
+  <target name="openccm.javac">
+    <javac failonerror="true"
+           srcdir="${srcdir}"
+           destdir="${destdir}"
+	   verbose="no"
+	   debug="on">
+      <classpath refid="project.class.path" />
+      <bootclasspath refid="project.boot.class.path" />
+      <include name="${files}" />
+    </javac>
+  </target>
+
+  <!-- ================================================================== -->
+  <!--                                                                    -->
+  <!-- Targets for executing OpenCCM scripts.                             -->
+  <!--                                                                    -->
+  <!-- ================================================================== -->
+
+  <!-- Execute an OpenCCM script on Unix systems.                         -->
+  <!--                                                                    -->
+  <!-- Parameters are:                                                    -->
+  <!-- * script.name    The OpenCCM script name to execute.               -->
+  <!-- * arguments.line The arguments line for the script to execute.     -->
+  <!-- * exec.dir       The directory where the script will be executed.  -->
+  <!--                                                                    -->
+
+
+    <!--echo message = "Exec: ${arguments.line}"/--> 
+  <target name="execute_OpenCCM_script_on_Unix">
+    <exec executable="${openccm.envi.OpenCCM_HOMEDIR}/bin/${script.name}"
+          dir="${exec.dir}" >
+      <arg line="${arguments.line}" />
+      <env key="OpenCCM_HOMEDIR"
+           value="${openccm.envi.OpenCCM_HOMEDIR}" />
+      <env key="OpenCCM_CONFIG_DIR"
+           value="${openccm.envi.OpenCCM_CONFIG_DIR}" />
+      <env key="PATH"
+           path="${openccm.envi.OpenCCM_HOMEDIR}/bin:${openccm.envi.PATH}" />
+    </exec>
+  </target>
+
+  <!-- Execute an OpenCCM script on Windows systems.                      -->
+  <!--                                                                    -->
+  <!-- Parameters are:                                                    -->
+  <!-- * script.name    The OpenCCM script name to execute.               -->
+  <!-- * arguments.line The arguments line for the script to execute.     -->
+  <!-- * exec.dir       The directory where the script will be executed.  -->
+  <!--                                                                    -->
+
+  <target name="execute_OpenCCM_script_on_Windows">
+    <exec executable="${openccm.envi.OpenCCM_HOMEDIR}\bin\${script.name}.bat"
+          dir="${exec.dir}" >
+      <arg line="${arguments.line}" />
+      <env key="OpenCCM_HOMEDIR"
+           value="${openccm.envi.OpenCCM_HOMEDIR}" />
+      <env key="OpenCCM_CONFIG_DIR"
+           value="${openccm.envi.OpenCCM_CONFIG_DIR}" />
+      <env key="Path"
+           path="${openccm.envi.OpenCCM_HOMEDIR}\bin;${openccm.envi.Path}" />
+    </exec>
+  </target>
+
+  <!-- Execute an OpenCCM script on any operating system.                 -->
+  <!--                                                                    -->
+  <!-- Parameters are:                                                    -->
+  <!-- * script.name    The OpenCCM script name to execute.               -->
+  <!-- * arguments.line The arguments line for the script to execute.     -->
+  <!-- * exec.dir       The directory where the script will be executed.  -->
+  <!--                                                                    -->
+
+  <target name="execute_OpenCCM_script">
+    <echo message="Executing ${script.name} ${arguments.line}" />
+
+    <!-- Set to Unix if Unix systems.                                     -->
+    <condition property="running.operating.system"
+               value="Unix">
+      <os family="unix" />
+    </condition>
+
+    <!-- Set to Windows on Windows systems.                               -->
+    <condition property="running.operating.system"
+               value="Windows">
+      <os family="windows" />
+    </condition>
+
+    <antcall target="execute_OpenCCM_script_on_${running.operating.system}" />
+  </target>
+
+  <!-- ================================================================== -->
+  <!--                                                                    -->
+  <!-- Target name: ir3_start                                             -->
+  <!--                                                                    -->
+  <!-- Description: Starting the OpenCCM's Interface Repository (IR)      -->
+  <!--                                                                    -->
+  <!-- Parameters:                                                        -->
+  <!--                                                                    -->
+  <!--   Name             Description                                     -->
+  <!--                                                                    -->
+  <!--   extra.arguments  Given extra arguments (optional).               -->
+  <!--                                                                    -->
+  <!-- Use example:                                                       -->
+  <!--                                                                    -->
+  <!--   <parallel>                                                       -->
+  <!--     <antcall target="ir3_start" />                                 -->
+  <!--       <sequential>                                                 -->
+  <!--         <antcall target="ir3_wait_started" />                      -->
+  <!--         . . .                                                      -->
+  <!--         <antcall target="ir3_stop" />                              -->
+  <!--       </sequential>                                                -->
+  <!--   </parallel>                                                      -->
+  <!--                                                                    -->
+  <!-- ================================================================== -->
+
+  <target name="ir3_start">
+    <antcall target="execute_OpenCCM_script">
+      <param name="script.name"
+             value="ir3_start" />
+      <param name="arguments.line"
+             value="${extra.arguments}" />
+    </antcall>
+  </target>
+
+  <!-- ================================================================== -->
+  <!--                                                                    -->
+  <!-- Target name: ir3_wait_started                                      -->
+  <!--                                                                    -->
+  <!-- Description: Waiting for the OpenCCM's IR is started.              -->
+  <!--                                                                    -->
+  <!-- No parameter.                                                      -->
+  <!--                                                                    -->
+  <!-- Use example:                                                       -->
+  <!--                                                                    -->
+  <!--   <parallel>                                                       -->
+  <!--     <antcall target="ir3_start" />                                 -->
+  <!--       <sequential>                                                 -->
+  <!--         <antcall target="ir3_wait_started" />                      -->
+  <!--         . . .                                                      -->
+  <!--         <antcall target="ir3_stop" />                              -->
+  <!--       </sequential>                                                -->
+  <!--   </parallel>                                                      -->
+  <!--                                                                    -->
+  <!-- ================================================================== -->
+
+  <target name="ir3_wait_started">
+    <waitfor maxwait="120"
+             maxwaitunit="second">
+      <available file="${openccm.envi.OpenCCM_CONFIG_DIR}/IR3.start" />
+    </waitfor>
+  </target>
+
+  <!-- ================================================================== -->
+  <!--                                                                    -->
+  <!-- Target name: ir3_feed                                              -->
+  <!--                                                                    -->
+  <!-- Description: Feeding an OMG IDL 3.0 file into the OpenCCM's IR.    -->
+  <!--                                                                    -->
+  <!-- Parameters:                                                        -->
+  <!--                                                                    -->
+  <!--   Name             Description                                     -->
+  <!--                                                                    -->
+  <!--   idl3.file        The OMG IDL 3.0 file to feed.                   -->
+  <!--   extra.arguments  Given extra arguments (optional).               -->
+  <!--                                                                    -->
+  <!-- Use example:                                                       -->
+  <!--                                                                    -->
+  <!--   <antcall target="ir3_feed">                                      -->
+  <!--     <param name="idl3.file"                                        -->
+  <!--            value="MyFile.idl3" />                                  -->
+  <!--   </antcall>                                                       -->
+  <!--                                                                    -->
+  <!-- ================================================================== -->
+
+  <target name="ir3_feed">
+    <antcall target="execute_OpenCCM_script">
+      <param name="script.name"
+             value="ir3_feed" />
+      <param name="arguments.line"
+             value="${extra.arguments} ${idl3.file}" />
+    </antcall>
+  </target>
+ 
+  <!-- ================================================================== -->
+  <!--                                                                    -->
+  <!-- Target name: ir3_idl2                                              -->
+  <!--                                                                    -->
+  <!-- Description: Generating an OMG IDL 2.x file from the OpenCCM's IR. -->
+  <!--                                                                    -->
+  <!-- Parameters:                                                        -->
+  <!--                                                                    -->
+  <!--   Name             Description                                     -->
+  <!--                                                                    -->
+  <!--   idl.scope        The OMG OMG scope name to generate from.        -->
+  <!--   idl2.file        The OMG IDL 2.x file to generate.               -->
+  <!--   extra.arguments  Given extra arguments (optional).               -->
+  <!--                                                                    -->
+  <!-- Use example:                                                       -->
+  <!--                                                                    -->
+  <!--   <antcall target="ir3_idl2">                                      -->
+  <!--     <param name="idl.scope" value="::ModuleScopeName" />           -->
+  <!--     <param name="idl2.file" value="MyFile.idl" />                  -->
+  <!--     <param name="extra.arguments"                                  -->
+  <!--            value="-i my_needed.idl -ipath my_needed_path" />       -->
+  <!--   </antcall>                                                       -->
+  <!--                                                                    -->
+  <!-- ================================================================== -->
+
+  <target name="ir3_idl2">
+    <antcall target="execute_OpenCCM_script">
+      <param name="script.name"
+             value="ir3_idl2" />
+      <param name="arguments.line"
+             value="-o ${idl2.file} ${extra.arguments} ${idl.scope}" />
+    </antcall>
+  </target>
+
+  <!-- ================================================================== -->
+  <!--                                                                    -->
+  <!-- Target name: ir3_java                                              -->
+  <!--                                                                    -->
+  <!-- Description: Generating OpenCCM's Java container code.             -->
+  <!--                                                                    -->
+  <!-- Parameters:                                                        -->
+  <!--                                                                    -->
+  <!--   Name             Description                                     -->
+  <!--                                                                    -->
+  <!--   idl.scope        The OMG OMG scope name to generate from.        -->
+  <!--   directory        The directory where Java code will be generated.-->
+  <!--   extra.arguments  Given extra arguments (optional).               -->
+  <!--                                                                    -->
+  <!-- Use example:                                                       -->
+  <!--                                                                    -->
+  <!--   <antcall target="ir3_java">                                      -->
+  <!--     <param name="idl.scope" value="::ModuleScopeName" />           -->
+  <!--     <param name="directory" value="generated" />                   -->
+  <!--   </antcall>                                                       -->
+  <!--                                                                    -->
+  <!-- ================================================================== -->
+
+  <target name="ir3_java">
+    <antcall target="execute_OpenCCM_script">
+      <param name="script.name"
+             value="ir3_java" />
+      <param name="arguments.line"
+             value="${extra.arguments} ${idl.scope}" />
+      <param name="exec.dir"
+             value="${directory}" />
+    </antcall>
+  </target>
+
+  <!-- ================================================================== -->
+  <!--                                                                    -->
+  <!-- Target name: cidl_cif                                              -->
+  <!--                                                                    -->
+  <!-- Description: Compiling an OMG CIDL file and generating all CIF code--> 
+  <!--                                                                    -->
+  <!-- Parameters:                                                        -->
+  <!--                                                                    -->
+  <!--   Name             Description                                     -->
+  <!--                                                                    -->
+  <!--   cidl.file        The OMG CIDL file to compile.                   -->
+  <!--   cif.file         The OMG CIF file to generate.                   -->
+  <!--   include          -ipath for the generated OMG IDL file.          -->
+  <!--   directory        The directory where Java code will be generated.-->
+  <!--   extra.arguments  Given extra arguments (optional).               -->
+  <!--                                                                    -->
+  <!-- Use example:                                                       -->
+  <!--                                                                    -->
+  <!--   <antcall target="cidl_cif">                                      -->
+  <!--     <param name="cidl.file"                                        -->
+  <!--            value="MyFile.cidl" />                                  -->
+  <!--     <param name="cif.file"                                         -->
+  <!--            value="My_File_cif.idl" />                              -->
+  <!--     <param name="include"                                          -->
+  <!--            value="My_File_local.idl" />                            -->
+  <!--     <param name="directory"                                        -->
+  <!--            value="generated" />                                    -->
+  <!--   </antcall>                                                       -->
+  <!--                                                                    -->
+  <!-- ================================================================== -->
+
+  <target name="cidl_cif">
+    <antcall target="execute_OpenCCM_script">
+      <param name="script.name"
+             value="cidl_cif" />
+      <param name="arguments.line"
+             value="-o ${cif.file} -ipath ${include} -d ${directory} -dep ${dependencies} ${extra.arguments} ${cidl.file}" />
+    </antcall>
+  </target>
+
+  <!-- ================================================================== -->
+  <!--                                                                    -->
+  <!-- Target name: ir3_stop                                              -->
+  <!--                                                                    -->
+  <!-- Description: Stopping the OpenCCM's Interface Repository (IR)      -->
+  <!--                                                                    -->
+  <!-- Parameters:                                                        -->
+  <!--                                                                    -->
+  <!--   Name             Description                                     -->
+  <!--                                                                    -->
+  <!--   extra.arguments  Given extra arguments (optional).               -->
+  <!--                                                                    -->
+  <!-- Use example:                                                       -->
+  <!--                                                                    -->
+  <!--   <parallel>                                                       -->
+  <!--     <antcall target="ir3_start" />                                 -->
+  <!--       <sequential>                                                 -->
+  <!--         <antcall target="ir3_wait_started" />                      -->
+  <!--         . . .                                                      -->
+  <!--         <antcall target="ir3_stop" />                                -->
+  <!--       </sequential>                                                -->
+  <!--   </parallel>                                                      -->
+  <!--                                                                    -->
+  <!-- ================================================================== -->
+
+  <target name="ir3_stop">
+    <antcall target="execute_OpenCCM_script">
+      <param name="script.name"
+             value="ir3_stop" />
+      <param name="arguments.line"
+             value="${extra.arguments}" />
+    </antcall>
+  </target>
+
+  <!-- ================================================================== -->
+  <!--                                                                    -->
+  <!-- Target name: idl2java                                              -->
+  <!--                                                                    -->
+  <!-- Description: Executing the OMG IDL to Java compiler of the ORB used-->
+  <!--                                                                    -->
+  <!-- Parameters:                                                        -->
+  <!--                                                                    -->
+  <!--   Name             Description                                     -->
+  <!--                                                                    -->
+  <!--   idl.file         The OMG IDL file to compile to Java.            -->
+  <!--   destdir          The directory where Java will be generated.     -->
+  <!--   package          IDL2 Java generated package.                    -->
+  <!--   extra.arguments  Given extra arguments (optional).               -->
+  <!--                                                                    -->
+  <!-- Use example:                                                       -->
+  <!--                                                                    -->
+  <!--   <antcall target="idl2java">                                      -->
+  <!--     <param name="idl.file"                                         -->
+  <!--            value="MyFile.idl" />                                   -->
+  <!--     <param name="destdir"                                          -->
+  <!--            value="generated" />                                    -->
+  <!--     <param name="package"                                          -->
+  <!--            value="org.foopackage" />                               -->
+  <!--   </antcall>                                                       -->
+  <!--                                                                    -->
+  <!-- ================================================================== -->
+
+  <target name="openccm.idl2java" >
+    <!-- Setting of the IDL2 Java code generation package for some ORB    -->
+    <!--   if the application provides one, it is used                    -->
+    <condition property="idl2java.package" value="${package}">
+      <not>
+        <equals arg1="${package}" arg2="" />
+      </not>
+    </condition>
+    <ant antfile="${openccm.envi.OpenCCM_HOMEDIR}/ant/build.xml" target="idl2java">
+      <property name="file" value="${idl.file}" />
+      <property name="destdir" value="${destdir}" />
+<!-- Updated for Bug #468.
+     Contributor: Philippe Merle. -->
+
+      <!-- property name="flags" value="-I${demo.gen.idl.dir} -I${cfg.ORB.dir} -I${build.idl.dir}" / -->
+      <property name="flags" value="${extra.arguments} -I${openccm.envi.OpenCCM_HOMEDIR}/idl" />
+
+<!-- Update end. -->
+      <property name="idl.module" value="${idl.module}" />
+    </ant>
+  </target>
+
+  <!-- ================================================================== -->
+  <!--                                                                    -->
+  <!-- Target name: monolog_setup                                         -->
+  <!--                                                                    -->
+  <!-- Description: writes Monolog's config file to point an output dir   -->
+  <!--                                                                    -->
+  <!-- Parameters:                                                        -->
+  <!--                                                                    -->
+  <!--   Name             Description                                     -->
+  <!--                                                                    -->
+  <!-- Use example:                                                       -->
+  <!--                                                                    -->
+  <!--   <antcall target="monolog_setup" />                               -->
+  <!--                                                                    -->
+  <!-- ================================================================== -->
+
+  <target name="monolog_setup">
+    <path id="monolog.output.dir">
+        <pathelement location="${openccm.envi.OpenCCM_CONFIG_DIR}/log/" />
+    </path>
+    <pathconvert targetos="unix" property="monolog.output.dir.unix" refid="monolog.output.dir"/>
+
+    <echo message="  ==> Copying Monolog property files" />
+    <copy todir="${basedir}" overwrite="true">
+      <fileset dir="${openccm.envi.OpenCCM_HOMEDIR}/ant" includes="monolog.CCM.properties"/>
+      <filterset>
+        <filter token="MONOLOG_DEFAULT_OUTPUT_DIR" value="${monolog.output.dir.unix}/" />
+      </filterset>
+    </copy>
+  </target>

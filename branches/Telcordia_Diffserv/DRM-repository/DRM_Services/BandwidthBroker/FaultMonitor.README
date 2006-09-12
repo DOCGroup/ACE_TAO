@@ -1,0 +1,22 @@
+
+FaultMonitor implements an SNMP server that can synchronously
+fetch the SNMP status of links/ports on Layer 2/Layer 3 Switches
+and Routers as well as receive SNMP traps from the same. 
+
+The following steps can be used to test FaultMonitor functionality:
+
+Note: FaultMonitor requires access to live network elements, the 
+steps described below will only work if access to a switch (dandelion)
+is available. You can populate the appropriate SQL files with your own
+NEs, if you so prefer.
+
+- Populate the database: Initialize the mySQL database with arms_init.sql
+  Then populate with switch information from switchDisc.sql
+
+- Start the FaultMonitor Server: source ../bin/fmstart.sh
+
+- Start the FaultMonitor test client: source ../bin/fmclient.sh
+
+The client registers for SNMP trap information on a switch (dandelion). 
+In order to receive fault notifications, a port up/down fault must be
+triggered on this switch.

@@ -1,0 +1,9 @@
+module org {
+module jacorb{
+  module proxy{
+    interface Proxy{
+	
+    };
+  };
+};
+};

@@ -1,0 +1,8 @@
+DBServer=pool1db
+DBLogin=arms
+DBPassword=arms
+DBConnections=1
+FlowReservationTimeout=300000
+ConfigureNetwork=0
+CORBAName=AdmissionControl
+#$Id$

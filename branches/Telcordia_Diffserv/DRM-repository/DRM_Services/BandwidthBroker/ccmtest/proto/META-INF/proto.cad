@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE componentassembly PUBLIC "-//OMG//DTD Component Assembly Descriptor 3.0//EN" "http://openccm.objectweb.org/dtd/ccm/componentassembly.dtd">
+<componentassembly derivedfrom="" id="proto">
+  <componentfiles>
+    <componentfile type="CORBA Component" id="ClientCSD">
+      <fileinarchive name="archives/client.car">
+      </fileinarchive>
+    </componentfile>
+  </componentfiles>
+  <partitioning>
+    <homeplacement cardinality="1" id="ClientHome">
+      <componentfileref idref="ClientCSD"/>
+      <componentimplref idref="ClientImpl"/>
+      <registerwithhomefinder name="BandwidthBrokerClientHome"/>
+      <registerwithnaming name="OpenCCM/BandwidthBrokerClientHome"/>
+     <componentinstantiation id="BBClient">
+        <componentproperties>
+          <fileinarchive name="META-INF/Client.cpf">
+          </fileinarchive>
+        </componentproperties>
+        <registercomponent>
+          <registerwithnaming name="OpenCCM/BBClient"/>
+        </registercomponent>
+      </componentinstantiation>
+
+      <destination>
+        <installation type="componentinstallation">
+          <findby>
+            <namingservice name="ComponentClient"/>
+          </findby>
+        </installation>
+        <activation type="componentserver">
+          <findby>
+            <namingservice name="ComponentClient"/>
+          </findby>
+        </activation>
+      </destination>
+    </homeplacement>
+  </partitioning>
+  <connections>
+  </connections>
+</componentassembly>

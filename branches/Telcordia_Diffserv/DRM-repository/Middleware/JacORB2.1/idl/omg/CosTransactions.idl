@@ -1,0 +1,206 @@
+//File: CosTransactions.idl
+//Part of the Transaction Service
+
+#ifndef _COS_TRANSACTIONS_IDL_
+#define _COS_TRANSACTIONS_IDL_
+
+#include <orb.idl>
+
+#pragma prefix "omg.org"
+
+module CosTransactions {
+
+	// Forward references for interfaces defined later in module
+	interface Current;
+	interface TransactionFactory;
+	interface Control;
+	interface Terminator;
+	interface Coordinator;
+	interface RecoveryCoordinator;
+	interface Resource;
+	interface Synchronization;
+	interface SubtransactionAwareResource;
+	interface TransactionalObject; 
+
+	// DATATYPES 
+	enum Status {
+		StatusActive,
+		StatusMarkedRollback,
+		StatusPrepared,
+		StatusCommitted,
+		StatusRolledBack,
+		StatusUnknown,
+		StatusNoTransaction,
+		StatusPreparing,
+		StatusCommitting,
+		StatusRollingBack
+	};
+
+	enum Vote {
+		VoteCommit,
+		VoteRollback,
+		VoteReadOnly
+	};
+
+	// Structure definitions
+	struct otid_t {
+		long formatID; /*format identifier. 0 is OSI TP */
+		long bqual_length;
+		sequence <octet> tid;
+	};
+	struct TransIdentity {
+		Coordinator coord;
+		Terminator term;
+		otid_t otid;
+	};
+	struct PropagationContext {
+		unsigned long timeout;
+		TransIdentity current;
+		sequence <TransIdentity> parents;
+		any implementation_specific_data;
+	};
+
+	// Heuristic exceptions
+	exception HeuristicRollback {};
+	exception HeuristicCommit {};
+	exception HeuristicMixed {};
+	exception HeuristicHazard {};
+
+	// Other transaction-specific exceptions
+	exception SubtransactionsUnavailable {};
+	exception NotSubtransaction {};
+	exception Inactive {};
+	exception NotPrepared {};
+	exception NoTransaction {};
+	exception InvalidControl {};
+	exception Unavailable {};
+	exception SynchronizationUnavailable {};
+	
+	// Current transaction 
+	interface Current : CORBA::Current {
+		void begin()
+			raises(SubtransactionsUnavailable);
+		void commit(in boolean report_heuristics)
+			raises(
+				NoTransaction,
+				HeuristicMixed,
+				HeuristicHazard
+			);
+		void rollback()
+			raises(NoTransaction);
+		void rollback_only()
+			raises(NoTransaction);
+
+		Status get_status();
+		string get_transaction_name();
+		void set_timeout(in unsigned long seconds);
+		Control get_control();
+		Control suspend();
+		void resume(in Control which)
+			raises(InvalidControl);
+	};
+
+
+	interface TransactionFactory {
+		Control create(in unsigned long time_out);
+		Control recreate(in PropagationContext ctx);
+	};
+
+	interface Control {
+		Terminator get_terminator()
+			raises(Unavailable);
+		Coordinator get_coordinator()
+			raises(Unavailable);
+	};
+
+	interface Terminator {
+		void commit(in boolean report_heuristics)
+			raises(
+				HeuristicMixed,
+				HeuristicHazard
+			);
+		void rollback();
+	};
+
+	interface Coordinator {
+
+		Status get_status();
+		Status get_parent_status();
+		Status get_top_level_status();
+
+		boolean is_same_transaction(in Coordinator tc);
+		boolean is_related_transaction(in Coordinator tc);
+		boolean is_ancestor_transaction(in Coordinator tc);
+		boolean is_descendant_transaction(in Coordinator tc);
+		boolean is_top_level_transaction();
+
+		unsigned long hash_transaction();
+		unsigned long hash_top_level_tran();
+
+		RecoveryCoordinator register_resource(in Resource r)
+			raises(Inactive);
+
+		void register_synchronization (in Synchronization sync)
+			raises(Inactive, SynchronizationUnavailable);
+
+		void register_subtran_aware(in SubtransactionAwareResource r)
+			raises(Inactive, NotSubtransaction);
+
+		void rollback_only()
+			raises(Inactive);
+
+		string get_transaction_name();
+		Control create_subtransaction()
+			raises(SubtransactionsUnavailable, Inactive);
+
+		PropagationContext get_txcontext ()
+			raises(Unavailable);
+	};
+
+	interface RecoveryCoordinator {
+		Status replay_completion(in Resource r)
+			raises(NotPrepared);
+	};
+
+	interface Resource {
+		Vote prepare()
+			raises(
+				HeuristicMixed,
+				HeuristicHazard
+			);
+		void rollback()
+			raises(
+				HeuristicCommit,
+				HeuristicMixed,
+				HeuristicHazard
+			);
+		void commit()
+			raises(
+				NotPrepared,
+				HeuristicRollback,
+				HeuristicMixed,
+				HeuristicHazard
+			);
+		void commit_one_phase()
+			raises(
+				HeuristicHazard
+			);
+		void forget();
+	};
+
+	interface TransactionalObject {
+	};
+
+	interface Synchronization : TransactionalObject {
+		void before_completion();
+		void after_completion(in CosTransactions::Status status);
+	};
+
+	interface SubtransactionAwareResource : Resource {
+		void commit_subtransaction(in Coordinator parent);
+		void rollback_subtransaction();
+	};
+
+}; // End of CosTransactions Module
+
+#endif /* ifndef _COS_TRANSACTIONS_IDL_ */
