@@ -1,3 +1,10 @@
+Thu Sep  7 19:43:02 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/FILE_Connector.h (ACE_FILE_Connector): Updated the
+          documentation to remove mention of the return values.  Thanks to
+          Hieu Ngyuen <hieu dot t dot nguyen at vanderbilt dot edu> for
+          reporting this.
+
 Mon Sep 11 13:03:17 UTC 2006  Boris Kolpackov  <boris@codesynthesis.com>
 
         * ace/Bound_Ptr.h:
