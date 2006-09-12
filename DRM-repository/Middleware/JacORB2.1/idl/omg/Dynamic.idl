@@ -1,0 +1,32 @@
+// File: Dynamic.idl
+// Used primarily for Interceptors
+
+#ifndef _DYNAMIC_IDL_
+#define _DYNAMIC_IDL_
+
+#ifndef CORBA3
+#define local  
+#endif
+
+#include <orb.idl>
+
+#pragma prefix "omg.org"
+
+module Dynamic {
+
+  struct Parameter {
+    any argument;
+    CORBA::ParameterMode mode;
+  };
+
+  typedef sequence<Parameter> ParameterList;
+
+  typedef CORBA::StringSeq ContextList;
+
+  typedef sequence<CORBA::TypeCode> ExceptionList;
+
+  typedef CORBA::StringSeq RequestContext;
+
+};
+#endif // _DYNAMIC_IDL_
+

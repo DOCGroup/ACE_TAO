@@ -1,0 +1,12 @@
+To test the L2 Discovery of VLAN information
+Populate the database with the file switch_disc.sql
+Run VlanDisc - this will pick up the list of switches and ports
+from the database and populate the VLAN information 
+
+java mil.darpa.arms.mlrm.BandwidthBroker.L2Disc.VlanDisc 
+
+The VlanDisc program also invokes TreeBuilder to build VLAN trees
+for all VLANs that are discovered from the switches. A single VLAN
+tree is built for each VLAN discovered and the VLAN tree is printed out.
+This includes the PTP ids that form the path to and from the arbitrarily
+chosen root switch of the VLAN.

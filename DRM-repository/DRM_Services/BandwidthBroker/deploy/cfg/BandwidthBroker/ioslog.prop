@@ -1,0 +1,27 @@
+#$Id$
+
+# For the general syntax of property based configuration files see the
+# documenation of org.apache.log4j.PropertyConfigurator.
+
+log4j.rootLogger=DEBUG
+
+log4j.logger.mil.darpa.arms.mlrm.BandwidthBroker.provisioner=DEBUG,P1
+
+log4j.appender.P1=org.apache.log4j.FileAppender
+log4j.appender.P1.File=data/logs/networkprovisioner.ios.log
+log4j.appender.P1.layout=org.apache.log4j.PatternLayout
+
+# Using default pattern conversion so only ios is printed to output: Kirthika
+
+# Note the %x conversion specifier for NDC printing.
+#log4j.appender.P1.layout.ConversionPattern=%-4r %-5p [%t] (%x) - %m\n
+#log4j.appender.P1.layout.ConversionPattern=date=%d{yyyyMMdd}|time=%d{HH:mm:ss:SSS}|thrd=%t|lvl=%-5p|cls=%c|ndc=%x|msg=%m%n
+
+
+
+
+
+
+
+
+

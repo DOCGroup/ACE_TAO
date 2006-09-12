@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- ==================================================================== -->
+<!--                                                                      -->
+<!-- OpenCCM: The Open CORBA Component Model Platform                     -->
+<!-- Copyright (C) 2000-2004 INRIA - USTL - LIFL - GOAL                   -->
+<!-- Contact: openccm@objectweb.org                                       -->
+<!--                                                                      -->
+<!-- This library is free software; you can redistribute it and/or        -->
+<!-- modify it under the terms of the GNU Lesser General Public           -->
+<!-- License as published by the Free Software Foundation; either         -->
+<!-- version 2.1 of the License, or any later version.                    -->
+<!--                                                                      -->
+<!-- This library is distributed in the hope that it will be useful,      -->
+<!-- but WITHOUT ANY WARRANTY; without even the implied warranty of       -->
+<!-- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU     -->
+<!-- Lesser General Public License for more details.                      -->
+<!--                                                                      -->
+<!-- You should have received a copy of the GNU Lesser General Public     -->
+<!-- License along with this library; if not, write to the Free Software  -->
+<!-- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 -->
+<!-- USA                                                                  -->
+<!--                                                                      -->
+<!-- Initial developer(s): Christophe Demarey.                            -->
+<!-- Contributor(s): Christophe Contreras, Philippe Merle.                -->
+<!--                                                                      -->
+<!-- ==================================================================== -->
+
+<!-- ==================================================================== -->
+<!--                                                                      -->
+<!--  Ant Build file for OpenCCM implementation of BandwidthBroker        -->
+<!--                                                                      -->
+<!-- ==================================================================== -->
+
+<project name="BandwidthBrokerCCM" default="all" basedir=".">
+  <echo message="Invoking the build file for the component implementation" />
+  <description>
+    Builds the OpenCCM BandwidthBroker application.
+  </description>
+
+  <!-- ================================================================== -->
+  <!--                                                                    -->
+  <!-- Common macros for files and directories.                           -->
+  <!--                                                                    -->
+  <!-- ================================================================== -->
+
+  <!-- Will allow usage of local environment variables -->
+  <property environment="user.environment"/>
+
+  <property file="bbComponentBuild.properties" />
+  
+  <!-- Definition of some demo's specific CLASSPATH -->
+  <path id="demo.specific.classpath">
+    <pathelement path="${basedir}/lib/cosproperty.jar" />
+    <pathelement path="${middleware.dir}/MySQL/lib/mysql-connector-java-3.1.12-bin.jar" />
+    <pathelement path="${middleware.dir}/log4j/lib//log4j-1.2.8.jar" />
+    <pathelement path="${middleware.dir}/Telcordia/lib/telcordia-jIOS.jar" />
+    <pathelement path="${middleware.dir}/Telcordia/lib/telcordia-imp.jar" />
+    <pathelement path="${middleware.dir}/snmp/lib/AdventNetSnmpStudioApi.jar" />
+    <pathelement path="${middleware.dir}/snmp/lib/AdventNetSnmp.jar" />
+    <pathelement path="${middleware.dir}/snmp/lib/AdventNetLogging.jar" />
+    <fileset dir="${middleware.dir}/JWSDP1.3/lib/">
+     <include name="**/*.jar" />
+    </fileset>
+    <pathelement path="${middleware.dir}/jsch/jsch-0.1.20.jar" />
+  </path>
+
+  <!-- the common build for applications -->
+  <import file="commonComponent.xml"/>
+
+  <!-- ================================================================== -->
+  <!-- The main rule.                                                     -->
+  <!-- ================================================================== -->
+
+  <target name="all" depends="archive_step" />
+
+  <target name="archive_step" depends="application_step3">
+    <echo message="" />
+    <echo message=" * Final Step: Archive Generation" />
+    <antcall target="bb_build_archive" />
+    <antcall target="bb_build_zip"/>
+  </target>
+
+  <!-- ================================================================== -->
+  <!-- Build demonstration jar files.                                     -->
+  <!-- ================================================================== -->
+
+  <target name="bb_build_archive">
+
+    <!-- Create the BandwidthBroker component Jar -->
+    <echo message="  ==> Building ${application.archives.dir}/${bb.component.jar.name}" />
+    <jar destfile="${application.archives.dir}/${bb.component.jar.name}" >
+        <fileset dir="${application.class.dir}"
+                 includesfile="${application.dependencies.dir}/BBSessionComposition.dep" />
+        <fileset dir="${application.class.dir}">
+          <include name="${application.pkg.dir}/cif/BandwidthBrokerComponentHomeImpl.class"/>
+          <include name="${application.pkg.dir}/cif/BandwidthBrokerComponentImpl.class"/>
+          <include name="${application.pkg.dir}/cif/BBConditionImpl.class"/>
+          <include name="${application.pkg.dir}/cif/BBConditionDefaultFactory.class"/>
+          <include name="${application.pkg.dir}/cif/BBInternalEventImpl.class"/>
+          <include name="${application.pkg.dir}/cif/BBInternalEventDefaultFactory.class"/>
+          <include name="${application.pkg.dir}/bb/server/*.class" />
+          <include name="${application.pkg.dir}/bb/server/db/*.class" />
+          <include name="${application.pkg.dir}/common/*.class" />
+        </fileset>
+        <fileset dir="${application.root.dir}/deploy/cfg/BandwidthBroker" />
+<!--        <fileset dir="${application.root.dir}/src" includes="mibs/*" /> -->
+    </jar>
+
+    <!-- Create the FlowProvisioner component Jar -->
+    <echo message="  ==> Building ${application.archives.dir}/${fp.component.jar.name}" />
+    <jar destfile="${application.archives.dir}/${fp.component.jar.name}" >
+        <fileset dir="${application.class.dir}"
+                 includesfile="${application.dependencies.dir}/FPSessionComposition.dep" />
+        <fileset dir="${application.class.dir}">
+          <include name="${application.pkg.dir}/cif/FlowProvisionerComponentHomeImpl.class"/>
+          <include name="${application.pkg.dir}/cif/FlowProvisionerComponentImpl.class"/>
+          <include name="${application.pkg.dir}/cif/Auth.class"/>
+          <include name="${application.pkg.dir}/FlowProvisionerPackage/*.class"/>
+          <include name="${application.pkg.dir}/provisioner/flowprovisioner/server/*.class"/>
+          <include name="${application.pkg.dir}/common/*.class" />
+        </fileset>
+        <fileset dir="${application.root.dir}/deploy/cfg/BandwidthBroker" />
+    </jar>
+
+    <!-- Create the FaultMonitor component Jar -->
+    <echo message="  ==> Building ${application.archives.dir}/${fm.component.jar.name}" />
+    <jar destfile="${application.archives.dir}/${fm.component.jar.name}" >
+        <fileset dir="${application.class.dir}"
+                 includesfile="${application.dependencies.dir}/FMSessionComposition.dep" />
+        <fileset dir="${application.class.dir}">
+          <include name="${application.pkg.dir}/cif/FaultMonitorComponentHomeImpl.class"/>
+          <include name="${application.pkg.dir}/cif/FaultMonitorComponentImpl.class"/>
+          <include name="${application.pkg.dir}/FaultMonitorServer/*.class"/>
+          <include name="${application.pkg.dir}/common/*.class" />
+        </fileset>
+    </jar>
+
+    <!-- Create the NetworkMonitor component Jar -->
+    <echo message="  ==> Building ${application.archives.dir}/${nm.component.jar.name}" />
+    <jar destfile="${application.archives.dir}/${nm.component.jar.name}" >
+        <fileset dir="${application.class.dir}"
+                 includesfile="${application.dependencies.dir}/NMSessionComposition.dep" />
+        <fileset dir="${application.class.dir}">
+          <include name="${application.pkg.dir}/cif/NetworkMonitorComponentHomeImpl.class"/>
+          <include name="${application.pkg.dir}/cif/NetworkMonitorComponentImpl.class"/>
+          <include name="${application.pkg.dir}/networkmonitor/server/*.class"/>
+          <include name="${application.pkg.dir}/networkmonitor/server/db/*.class"/>
+          <include name="${application.pkg.dir}/bb/server/NRDB.class"/>
+          <include name="${application.pkg.dir}/bb/server/db/*.class" />
+          <include name="${application.pkg.dir}/ProbeControl.class"/>
+          <include name="${application.pkg.dir}/ProbeControlHelper.class"/>
+          <include name="${application.pkg.dir}/ProbeControlPOA.class"/>
+          <include name="${application.pkg.dir}/ProbeControlOperations.class"/>
+          <include name="${application.pkg.dir}/ProbeControlPackage/*.class"/>
+          <include name="${application.pkg.dir}/common/*.class" />
+        </fileset>
+        <fileset dir="${application.root.dir}/deploy/cfg/BandwidthBroker" />
+    </jar>
+
+    <!-- Create the BandwidthBroker Test Client component Jar -->
+    <echo message="  ==> Building ${application.archives.dir}/${tc.component.jar.name}" />
+    <jar destfile="${application.archives.dir}/${tc.component.jar.name}" >
+        <fileset dir="${application.class.dir}"
+                 includesfile="${application.dependencies.dir}/TestClientSessionComposition.dep" />
+        <fileset dir="${application.class.dir}">
+          <include name="${application.pkg.dir}/cif/BBTestClientComponentHomeImpl.class"/>
+          <include name="${application.pkg.dir}/cif/BBTestClientComponentImpl.class"/>
+          <include name="${application.pkg.dir}/networkmonitor/server/*.class"/>
+          <include name="${application.mlrm.dir}/ConditionConsumerPOA.class"/>
+          <include name="${application.mlrm.dir}/ConditionConsumerOperations.class"/>
+        </fileset>
+    </jar>
+
+
+    <!-- Create the L2 Disc Jar (Not a Component) -->
+    <echo message="  ==> Building ${application.archives.dir}/${l2.jar.name}" />
+    <jar destfile="${application.archives.dir}/${l2.jar.name}" >
+        <fileset dir="${application.class.dir}">
+          <include name="${application.pkg.dir}/L2Disc/*.class"/>
+        </fileset>
+    </jar>
+
+    <!-- Create the Explorer Jar (contains all demo files) -->
+
+    <echo message="  ==> Building ${application.archives.dir}/bbroker_explorer.jar" />
+    <jar destfile="${application.archives.dir}/bbroker_explorer.jar">
+      <fileset dir="${application.class.dir}" >
+          <include name="${application.pkg.dir}/explorer/*.class"/>
+          <include name="${application.pkg.dir}/BBTestClientComponent.class"/>
+          <include name="${application.pkg.dir}/BBTestClientComponentHelper.class"/>
+          <include name="${application.pkg.dir}/BBTestClientComponentHome.class"/>
+          <include name="${application.pkg.dir}/BBTestClientComponentOperations.class"/>
+          <include name="${application.pkg.dir}/BBComponentClientOperations.class"/>
+          <include name="${application.pkg.dir}/BBComponentClient.class"/>
+          <include name="${application.pkg.dir}/_BBTestClientComponentStub.class"/>
+      </fileset>
+    </jar>
+
+
+    <!-- Create the Demo Jar (contains all demo files) -->
+<!--
+    <echo message="  ==> Building ${application.archives.dir}/bbroker_explorer.jar" />
+    <jar jarfile="${application.archives.dir}/bbroker_explorer.jar">
+      <fileset dir="${application.class.dir}"/>
+    </jar>
+-->
+
+    <!-- Copy the OpenCCM_Plugins Jar as it is always used by: -->
+    <!-- * bin/demo3.cs                                        -->
+    <!-- * src/monolithic/Demo3.java                           -->
+    <!-- * src/cif/Demo3.java                                  -->
+    <!--                                                       -->
+    <echo message="  ==> Copying OpenCCM_Plugins.jar" />
+    <copy todir="${application.archives.dir}"
+          file="${openccm.dir}/lib/OpenCCM_Plugins.jar" />
+
+    <echo message="  ==> Copying cosproperty.jar" />
+    <copy todir="${application.archives.dir}"
+          file="${application.archives.dir}/../lib/cosproperty.jar" />
+  </target>
+
+  <!-- ================================================================== -->
+  <!-- Check if Meta Information is present.                              -->
+  <!-- ================================================================== -->
+
+  <target name="meta_inf_check" >
+    <available file="${application.root.dir}/META-INF/"
+               type="dir"
+               property="meta.present"
+    />
+  </target>
+
+  <!-- ================================================================== -->
+  <!-- Build the demonstration archive.                                   -->
+  <!-- ================================================================== -->
+
+  <target name="bb_build_zip"  depends="meta_inf_check" if="meta.present">
+
+    <echo message="  ==> Building ${application.archives.dir}/bbcomponent.car" />
+    <zip destfile="${application.archives.dir}/bbcomponent.car">
+      <zipfileset dir="${application.archives.dir}/" prefix="archives" includes=" ${bb.component.jar.name}"/>
+      <zipfileset dir="${application.archives.dir}/" prefix="archives" includes=" ${l2.jar.name}"/>
+      <zipfileset dir="${application.archives.dir}/../lib/" prefix="archives" includes="cosproperty.jar"/>
+      <zipfileset dir="${application.root.dir}/META-INF/" prefix="META-INF" includes="bbroker.csd "/>      
+      <zipfileset dir="${middleware.dir}/MySQL/lib/" prefix="extarchives" includes="mysql-connector-java-3.1.12-bin.jar" />   
+<!--      <zipfileset dir="${middleware.dir}/snmp/lib/" prefix="extarchives" includes="AdventNetLogging.jar,AdventNetSnmp.jar,AdventNetSnmpStudioApi.jar" /> -->
+    </zip>        
+
+    <echo message="  ==> Building ${application.archives.dir}/fpcomponent.car" />
+    <zip destfile="${application.archives.dir}/fpcomponent.car">
+      <zipfileset dir="${application.archives.dir}/" prefix="archives" includes="${fp.component.jar.name}"/>
+      <zipfileset dir="${application.root.dir}/META-INF/" prefix="META-INF" includes="fprovisioner.csd "/>   
+      <zipfileset dir="${middleware.dir}/Telcordia/lib/" prefix="extarchives" includes="telcordia-jIOS.jar" />   
+    </zip>
+
+    <echo message="  ==> Building ${application.archives.dir}/fmcomponent.car" />
+    <zip destfile="${application.archives.dir}/fmcomponent.car">
+      <zipfileset dir="${application.archives.dir}/" prefix="archives" includes="${fm.component.jar.name}"/>
+      <zipfileset dir="${application.root.dir}/META-INF/" prefix="META-INF" includes="fmonitor.csd"/>   
+    </zip>    
+
+    <echo message="  ==> Building ${application.archives.dir}/nmcomponent.car" />
+    <zip destfile="${application.archives.dir}/nmcomponent.car">
+      <zipfileset dir="${application.archives.dir}/" prefix="archives" includes="${nm.component.jar.name}"/>
+      <zipfileset dir="${application.root.dir}/META-INF/" prefix="META-INF" includes="nmonitor.csd"/>   
+      <zipfileset dir="${middleware.dir}/Hsqldb1.7.3/lib/" prefix="extarchives" includes="hsqldb.jar" />   
+      <zipfileset dir="${middleware.dir}/Telcordia/lib/" prefix="extarchives" includes="telcordia-imp.jar" />   
+      <zipfileset dir="${middleware.dir}/JWSDP1.3/lib/" prefix="extarchives" includes="*.jar" />   
+    </zip>    
+
+
+    <echo message="  ==> Building ${application.archives.dir}/tccomponent.car" />
+    <zip destfile="${application.archives.dir}/tccomponent.car">
+      <zipfileset dir="${application.archives.dir}/" prefix="archives" includes="${tc.component.jar.name}"/>
+      <zipfileset dir="${application.root.dir}/META-INF/" prefix="META-INF" includes="testclient.csd"/>   
+    </zip>    
+
+
+    <echo message="  ==> Building ${application.archives.dir}/${application.name}.aar" />
+    <zip destfile="${application.archives.dir}/${application.name}.aar">
+      <zipfileset dir="${application.archives.dir}/" prefix="archives" includes="bbcomponent.car fpcomponent.car fmcomponent.car nmcomponent.car tccomponent.car"/>
+      <zipfileset dir="${application.root.dir}/META-INF/" prefix="META-INF" excludes="*.csd"/>   
+    </zip>
+  </target>
+
+</project>

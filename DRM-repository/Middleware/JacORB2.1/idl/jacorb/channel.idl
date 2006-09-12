@@ -1,0 +1,16 @@
+#include <CosEventChannelAdmin.idl>
+
+module org {
+module jacorb
+{
+    module events
+    {
+	interface JacORBEventChannel: 
+	    ::CosEventChannelAdmin::EventChannel, 
+	    CosEventChannelAdmin::ConsumerAdmin, 
+	    CosEventChannelAdmin::SupplierAdmin
+	    {};
+    };
+};
+};
+

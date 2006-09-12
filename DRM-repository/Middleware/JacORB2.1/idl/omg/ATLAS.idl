@@ -1,0 +1,83 @@
+
+#ifndef _ATLAS_IDL_
+#define _ATLAS_IDL_
+
+#include <TimeBase.idl>
+#include <CosNaming.idl>
+#include <CSI.idl>
+#include <CSIIOP.idl>
+
+#pragma prefix "omg.org"
+
+module ATLAS {
+
+typedef sequence<TimeBase::UtcT,1> ExpiryTime;
+    
+typedef sequence<CSI::IdentityToken,1> IdTokenOption;
+    
+struct AuthTokenData {
+    IdTokenOption           ident_token;
+    CSI::AuthorizationToken auth_token;
+    ExpiryTime              expiry_time;
+};
+
+exception IllegalTokenRequest {
+    unsigned long the_errnum;
+    string        the_reason;
+};
+
+exception TokenOkay {};
+
+interface AuthTokenDispenser {
+
+    AuthTokenData get_my_authorization_token()
+        raises (
+            IllegalTokenRequest
+    );
+
+    AuthTokenData translate_authorization_token(
+        in CSI::IdentityToken      the_subject,
+        in CSI::AuthorizationToken the_token
+    ) raises (
+        IllegalTokenRequest,
+        TokenOkay
+    );
+};
+
+struct CosNamingLocator {
+    CosNaming::NamingContext name_service;
+    CosNaming::Name          the_name;
+};
+    
+    
+//
+// This type specifies a string encoded in UTF-8 form [IETF RFC 2044].
+//
+typedef sequence<octet> UTF8String;
+    
+typedef CosNaming::NamingContextExt::URLString URLocator;
+    
+typedef unsigned long ATLASLocatorType;
+    
+const ATLASLocatorType ATLASCosNaming = 1;
+const ATLASLocatorType ATLASURL       = 2;
+const ATLASLocatorType ATLASObject    = 3;
+    
+union ATLASLocator switch (ATLASLocatorType) {
+    case ATLASCosNaming: CosNamingLocator   naming_locator;
+    case ATLASURL:       URLocator          the_url;
+    case ATLASObject:    AuthTokenDispenser the_dispenser;
+};
+    
+typedef sequence<octet> ATLASCacheId;
+
+struct ATLASProfile {
+    ATLASLocator the_locator;
+    ATLASCacheId the_cache_id;
+};
+    
+const CSIIOP::ServiceConfigurationSyntax SCS_ATLAS = 3;
+
+};
+
+#endif // _ATLAS_IDL_

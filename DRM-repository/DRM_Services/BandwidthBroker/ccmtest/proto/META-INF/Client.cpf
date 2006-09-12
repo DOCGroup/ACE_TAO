@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE properties PUBLIC "-//OMG//DTD Component Property File 3.0//EN" "http://openccm.objectweb.org/dtd/ccm/properties.dtd">
+<properties>
+  <simple name="the_name" type="string">
+    <description>Used to establish the Broker Root Directory</description>
+    <value>BWFPClient</value>
+  </simple>
+</properties>

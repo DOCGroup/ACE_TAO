@@ -1,0 +1,15 @@
+// CosContainment Module, p 9- 48 CORBAservices, Relationship
+// Service V1.0, 3/94
+
+#include <CosGraphs.idl>
+
+module CosContainment {
+
+        interface Relationship :
+                        CosRelationships::Relationship {};
+
+        interface ContainsRole : CosGraphs::Role {};
+
+        interface ContainedInRole : CosGraphs::Role {};
+
+};

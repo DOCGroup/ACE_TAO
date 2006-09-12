@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties PUBLIC "-//OMG//DTD Component Property File 3.0//EN" "http://openccm.objectweb.org/dtd/ccm/properties.dtd">
+<properties>
+  <simple name="testName" type="string">
+    <description>Test Name</description>
+    <value>ATest</value>
+  </simple>
+  <simple name="propertyFile" type="string">
+    <description>Property File Location</description>
+    <value>testParams.prop</value>
+  </simple>
+</properties>

@@ -1,0 +1,518 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!--$Id$-->
+<!-- Name: nw_topo_gm2_data.xml, Network Topology Sample File -->
+
+<!-- Date: Updated: Nov 8, 2004 -->
+<!-- Purpose:  This file defines (an instance of) the network toplogy (for the ARMS OEP): routers/switches and their interconnection. The relationship between hosts and edge routers are also defined -->
+
+<!-- See  p. 19, Section 3.2.1.1.2, 3.2.1.1.2, 	Network Resource Specifications
+Dynamic Resource Management Functional Capability Document For the U.S. Navy, Sept. 2003   -->
+
+<!-- Usage:  This file will be read in by the Telcordia network resource management software, 
+the Bandwidth Broker.  This reading in this network configuration information does not exclude future network disovery  during initialization/operations -->
+
+<arms:networkTopology xmlns:arms="www.darpa.mil/ARMS" 
+		      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		      xsi:schemaLocation="www.darpa.mil/ARMS networkTopology.xsd">
+
+  <arms:topologyName>ARMSOEPToplogy </arms:topologyName>
+  <arms:switchList>
+
+    <!-- ==================================================
+	 A network configuration has one or more switches/routers
+	 ================================================== -->
+
+    <!-- A switch can be a Layer2 Switch or Layer 3 Router -->
+    <arms:switch>
+      <!-- If L3 capable, it is a router or it is a Layer 2 switch -->
+      <arms:isL3Capable>true</arms:isL3Capable>  
+      
+      <!-- is it an edge router/switch? -->
+      <arms:isItEdge>true</arms:isItEdge>     
+
+      <!-- internalID of the switch/router -->
+      <arms:internalID>Switch1</arms:internalID>    
+      <!--managedElement is a fully qualified DNS name for the
+           router/switch so as to to able to talk to the switch/router
+           by the flowProvisioner; -->
+      <arms:managedElementID>192.168.81.1</arms:managedElementID>         
+      
+      <!-- user ID, password, enble pasword are for logging into the
+           router/swtich for configuring and enabling new switch
+           configuration and doing privilege operations -->
+      
+      <arms:userID>armsuser1</arms:userID>
+      <arms:password>password</arms:password>
+      <arms:enPassword>password</arms:enPassword>
+      <arms:physicalLocation>gm2 lab</arms:physicalLocation>
+      <arms:switchID>4507</arms:switchID>
+      <arms:switchType>Cisco</arms:switchType>
+      <arms:operatingSystem>
+	<arms:name>IOS</arms:name>
+	<arms:version>12.0</arms:version>
+      </arms:operatingSystem>
+    </arms:switch>
+
+    <arms:switch>                       
+      <!--A L3 router -->
+      <arms:isL3Capable>true</arms:isL3Capable>
+      <arms:isItEdge>true</arms:isItEdge>
+      <arms:internalID>Switch2</arms:internalID>                   
+      <arms:managedElementID>192.168.82.1</arms:managedElementID>                        
+      <arms:userID>armsuser001</arms:userID>
+      <arms:password>password</arms:password>
+      <arms:enPassword>password</arms:enPassword>
+      <arms:switchID>4507</arms:switchID>
+      <arms:switchType>Cisco</arms:switchType>
+      <arms:operatingSystem>
+	<arms:name>IOS</arms:name>
+	<arms:version>12.0</arms:version>
+      </arms:operatingSystem>
+    </arms:switch> 	  
+  
+    <arms:switch>                       
+      <!--A L2 switch -->
+      <arms:isL3Capable>false</arms:isL3Capable>
+      <arms:isItEdge>false</arms:isItEdge>
+      <arms:internalID>Switch1</arms:internalID>                   
+      <arms:managedElementID>192.168.83.1</arms:managedElementID>                        
+      <arms:userID>armsuser001</arms:userID>
+      <arms:password>lessPrivPassword</arms:password>
+      <arms:enPassword>privPassword</arms:enPassword>
+      <arms:switchID>6400</arms:switchID>
+      <arms:switchType>Cisco</arms:switchType>
+      <arms:operatingSystem>
+	<arms:name>catOS</arms:name>
+	<arms:version>12.0</arms:version>
+      </arms:operatingSystem>
+    </arms:switch> 	
+    <arms:switch>                       
+      <!--A L2 switch -->
+      <arms:isL3Capable>false</arms:isL3Capable>
+      <arms:isItEdge>false</arms:isItEdge>
+      <arms:internalID>Switch2</arms:internalID>                   
+      <arms:managedElementID>192.168.82.1</arms:managedElementID>                        
+      <arms:userID>armsuser001</arms:userID>
+      <arms:password>password</arms:password>
+      <arms:enPassword>password</arms:enPassword>
+      <arms:switchID>4507</arms:switchID>
+      <arms:switchType>Cisco</arms:switchType>
+      <arms:operatingSystem>
+	<arms:name>catOS</arms:name>
+	<arms:version>12.0</arms:version>
+      </arms:operatingSystem>
+    </arms:switch> 	  
+    <arms:switch>                       
+      <!--A L2 switch -->
+      <arms:isL3Capable>false</arms:isL3Capable>
+      <arms:isItEdge>true</arms:isItEdge>
+      <arms:internalID>lan0</arms:internalID>                   
+      <arms:managedElementID>192.168.81.99</arms:managedElementID>                        
+      <arms:userID>armsuser001</arms:userID>
+      <arms:password>password</arms:password>
+      <arms:enPassword>password</arms:enPassword>
+      <arms:switchID>4507</arms:switchID>
+      <arms:switchType>Cisco</arms:switchType>
+      <arms:operatingSystem>
+	<arms:name>catOS</arms:name>
+	<arms:version>12.0</arms:version>
+      </arms:operatingSystem>
+    </arms:switch> 
+    <arms:switch>                       
+      <!--A L2 switch -->
+      <arms:isL3Capable>false</arms:isL3Capable>
+      <arms:isItEdge>true</arms:isItEdge>
+      <arms:internalID>lan1</arms:internalID>                   
+      <arms:managedElementID>192.168.82.99</arms:managedElementID>                        
+      <arms:userID>armsuser001</arms:userID>
+      <arms:password>password</arms:password>
+      <arms:enPassword>password</arms:enPassword>
+      <arms:switchID>4507</arms:switchID>
+      <arms:switchType>Cisco</arms:switchType>
+      <arms:operatingSystem>
+	<arms:name>catOS</arms:name>
+	<arms:version>12.0</arms:version>
+      </arms:operatingSystem>
+    </arms:switch> 
+    <arms:switch>                       
+      <!--A L2 switch -->
+      <arms:isL3Capable>false</arms:isL3Capable>
+      <arms:isItEdge>true</arms:isItEdge>
+      <arms:internalID>lan2</arms:internalID>                   
+      <arms:managedElementID>192.168.83.99</arms:managedElementID>                        
+      <arms:userID>armsuser001</arms:userID>
+      <arms:password>password</arms:password>
+      <arms:enPassword>password</arms:enPassword>
+      <arms:switchID>4507</arms:switchID>
+      <arms:switchType>Cisco</arms:switchType>
+      <arms:operatingSystem>
+	<arms:name>catOS</arms:name>
+	<arms:version>12.0</arms:version>
+      </arms:operatingSystem>
+    </arms:switch> 	  
+  </arms:switchList>
+
+  
+  <arms:L3InterfaceList>   
+    <!-- List all the interfaces of all the L3 routers  -->
+    
+    <arms:L3Interface>                       
+      <!-- internalID of the interface -->
+      <arms:internalID>interface001</arms:internalID>     
+      
+      <!-- routerInternalID relates this Interface to the router it belongs to -->
+      <arms:routerInternalID>Switch1</arms:routerInternalID>     
+      
+      <!-- interfaceID is either of the form technology/slot/port or technology chassis/slot/port -->
+      <arms:interfaceID>vlan61</arms:interfaceID>
+      <arms:IPAddress>192.168.81.1</arms:IPAddress>
+      <arms:IPSubnetMask>255.255.255.0</arms:IPSubnetMask>
+      <arms:bandwidthOutbitspersec>10000000</arms:bandwidthOutbitspersec>
+      <arms:bandwidthInbitspersec>10000000</arms:bandwidthInbitspersec>      
+      <arms:isItEdge>1</arms:isItEdge> 
+    </arms:L3Interface>
+
+    <arms:L3Interface>        
+      <arms:internalID>interface002</arms:internalID>                              
+      <arms:routerInternalID>Switch1</arms:routerInternalID>
+      <arms:interfaceID>vlan62</arms:interfaceID>
+      <arms:IPAddress>192.168.82.1</arms:IPAddress>
+      <arms:IPSubnetMask>255.255.255.0</arms:IPSubnetMask>
+      <arms:bandwidthOutbitspersec>10000000</arms:bandwidthOutbitspersec>
+      <arms:bandwidthInbitspersec>10000000</arms:bandwidthInbitspersec>       
+      <arms:isItEdge>1</arms:isItEdge> 
+    </arms:L3Interface>
+
+    <arms:L3Interface>        
+      <arms:internalID>interface003</arms:internalID>                              
+      <arms:routerInternalID>Switch2</arms:routerInternalID>
+      <arms:interfaceID>vlan63</arms:interfaceID>
+      <arms:IPAddress>192.168.83.1</arms:IPAddress>
+      <arms:IPSubnetMask>255.255.255.0</arms:IPSubnetMask>
+      <arms:bandwidthOutbitspersec>10000000</arms:bandwidthOutbitspersec>
+      <arms:bandwidthInbitspersec>10000000</arms:bandwidthInbitspersec>       
+      <arms:isItEdge>1</arms:isItEdge >
+    </arms:L3Interface>
+  
+    <arms:L3Interface>        
+      <arms:internalID>interface004</arms:internalID>                              
+      <arms:routerInternalID>Switch1</arms:routerInternalID>
+      <arms:interfaceID>FastEthernet5/46</arms:interfaceID>
+      <arms:IPAddress>192.168.200.1</arms:IPAddress>
+      <arms:IPSubnetMask>255.255.255.0</arms:IPSubnetMask>
+      <arms:bandwidthOutbitspersec>10000000</arms:bandwidthOutbitspersec>
+      <arms:bandwidthInbitspersec>10000000</arms:bandwidthInbitspersec>       
+      <arms:isItEdge>0</arms:isItEdge> 
+    </arms:L3Interface>
+  
+    <arms:L3Interface>        
+      <arms:internalID>interface005</arms:internalID>                              
+      <arms:routerInternalID>Switch2</arms:routerInternalID>
+      <arms:interfaceID>GigabitEthernet3/46</arms:interfaceID>
+      <arms:IPAddress>192.168.200.2</arms:IPAddress>
+      <arms:IPSubnetMask>255.255.255.0</arms:IPSubnetMask>
+      <arms:bandwidthOutbitspersec>10000000</arms:bandwidthOutbitspersec>
+      <arms:bandwidthInbitspersec>10000000</arms:bandwidthInbitspersec>       
+      <arms:isItEdge>0</arms:isItEdge> 
+    </arms:L3Interface>
+   
+  </arms:L3InterfaceList>
+  
+   <arms:L2InterfaceList>
+     <arms:L2Interface>        
+      <arms:internalID>interfaceL2001</arms:internalID>                              
+      <arms:switchInternalID>lan0</arms:switchInternalID>
+      <arms:portID>FastEthernet5/7</arms:portID>
+      <arms:L2Address>phy</arms:L2Address>
+      <arms:vlanIDs>61</arms:vlanIDs>
+      <!-- <arms:bandwidthOutbitspersec>10000</arms:bandwidthOutbitspersec> -->
+      <arms:bandwidthOutbitspersec>10000000</arms:bandwidthOutbitspersec>
+      <arms:bandwidthInbitspersec>10000000</arms:bandwidthInbitspersec>       
+      <arms:isRemoteL2>0</arms:isRemoteL2>
+    </arms:L2Interface>
+    <arms:L2Interface>        
+      <arms:internalID>interfaceL2002</arms:internalID>                              
+      <arms:switchInternalID>lan0</arms:switchInternalID>
+      <arms:portID>FastEthernet5/8</arms:portID>
+      <arms:L2Address>phy</arms:L2Address>
+      <arms:vlanIDs>61</arms:vlanIDs>
+      <arms:bandwidthOutbitspersec>10000000</arms:bandwidthOutbitspersec>
+      <arms:bandwidthInbitspersec>10000000</arms:bandwidthInbitspersec>       
+      <arms:isRemoteL2>0</arms:isRemoteL2>
+    </arms:L2Interface>
+     <arms:L2Interface>        
+      <arms:internalID>interfaceL2003</arms:internalID>                              
+      <arms:switchInternalID>lan0</arms:switchInternalID>
+      <arms:portID>FastEthernet5/9</arms:portID>
+      <arms:L2Address>phy</arms:L2Address>
+      <arms:vlanIDs>61</arms:vlanIDs>
+      <arms:bandwidthOutbitspersec>10000000</arms:bandwidthOutbitspersec>
+      <arms:bandwidthInbitspersec>10000000</arms:bandwidthInbitspersec>       
+      <arms:isRemoteL2>0</arms:isRemoteL2>
+    </arms:L2Interface>
+     <arms:L2Interface>        
+      <arms:internalID>interfaceL2004</arms:internalID>                              
+      <arms:switchInternalID>lan0</arms:switchInternalID>
+      <arms:portID>FastEthernet5/10</arms:portID>
+      <arms:L2Address>phy</arms:L2Address>
+      <arms:vlanIDs>61</arms:vlanIDs>
+      <arms:bandwidthOutbitspersec>10000000</arms:bandwidthOutbitspersec>
+      <arms:bandwidthInbitspersec>10000000</arms:bandwidthInbitspersec>       
+      <arms:isRemoteL2>0</arms:isRemoteL2>
+    </arms:L2Interface>
+ <arms:L2Interface>        
+      <arms:internalID>interfaceL2005</arms:internalID>                              
+      <arms:switchInternalID>lan0</arms:switchInternalID>
+      <arms:portID>FastEthernet5/11</arms:portID>
+      <arms:L2Address>phy</arms:L2Address>
+      <arms:vlanIDs>61</arms:vlanIDs>
+      <arms:bandwidthOutbitspersec>10000000</arms:bandwidthOutbitspersec>
+      <arms:bandwidthInbitspersec>10000000</arms:bandwidthInbitspersec>       
+      <arms:isRemoteL2>0</arms:isRemoteL2>
+    </arms:L2Interface>
+ <arms:L2Interface>        
+      <arms:internalID>interfaceL2006</arms:internalID>                              
+      <arms:switchInternalID>lan0</arms:switchInternalID>
+      <arms:portID>FastEthernet5/12</arms:portID>
+      <arms:L2Address>phy</arms:L2Address>
+      <arms:vlanIDs>61</arms:vlanIDs>
+      <arms:bandwidthOutbitspersec>10000000</arms:bandwidthOutbitspersec>
+      <arms:bandwidthInbitspersec>10000000</arms:bandwidthInbitspersec>       
+      <arms:isRemoteL2>0</arms:isRemoteL2>
+    </arms:L2Interface>
+ <arms:L2Interface>        
+      <arms:internalID>interfaceL2007</arms:internalID>                              
+      <arms:switchInternalID>lan1</arms:switchInternalID>
+      <arms:portID>FastEthernet5/13</arms:portID>
+      <arms:L2Address>phy</arms:L2Address>
+      <arms:vlanIDs>61</arms:vlanIDs>
+      <arms:bandwidthOutbitspersec>10000000</arms:bandwidthOutbitspersec>
+      <arms:bandwidthInbitspersec>10000000</arms:bandwidthInbitspersec>       
+      <arms:isRemoteL2>0</arms:isRemoteL2>
+    </arms:L2Interface>
+ <arms:L2Interface>        
+      <arms:internalID>interfaceL2008</arms:internalID>                              
+      <arms:switchInternalID>lan1</arms:switchInternalID>
+      <arms:portID>FastEthernet5/14</arms:portID>
+      <arms:L2Address>phy</arms:L2Address>
+      <arms:vlanIDs>61</arms:vlanIDs>
+      <arms:bandwidthOutbitspersec>10000000</arms:bandwidthOutbitspersec>
+      <arms:bandwidthInbitspersec>10000000</arms:bandwidthInbitspersec>       
+      <arms:isRemoteL2>0</arms:isRemoteL2>
+    </arms:L2Interface>
+ <arms:L2Interface>        
+      <arms:internalID>interfaceL2009</arms:internalID>                              
+      <arms:switchInternalID>lan1</arms:switchInternalID>
+      <arms:portID>FastEthernet5/15</arms:portID>
+      <arms:L2Address>phy</arms:L2Address>
+      <arms:vlanIDs>61</arms:vlanIDs>
+      <arms:bandwidthOutbitspersec>10000000</arms:bandwidthOutbitspersec>
+      <arms:bandwidthInbitspersec>10000000</arms:bandwidthInbitspersec>       
+      <arms:isRemoteL2>0</arms:isRemoteL2>
+    </arms:L2Interface>
+ <arms:L2Interface>        
+      <arms:internalID>interfaceL2010</arms:internalID>                              
+      <arms:switchInternalID>lan2</arms:switchInternalID>
+      <arms:portID>FastEthernet5/16</arms:portID>
+      <arms:L2Address>phy</arms:L2Address>
+      <arms:vlanIDs>61</arms:vlanIDs>
+      <arms:bandwidthOutbitspersec>10000000</arms:bandwidthOutbitspersec>
+      <arms:bandwidthInbitspersec>10000000</arms:bandwidthInbitspersec>       
+      <arms:isRemoteL2>0</arms:isRemoteL2>
+    </arms:L2Interface>
+ <arms:L2Interface>        
+      <arms:internalID>interfaceL2011</arms:internalID>                              
+      <arms:switchInternalID>lan2</arms:switchInternalID>
+      <arms:portID>FastEthernet5/17</arms:portID>
+      <arms:L2Address>phy</arms:L2Address>
+      <arms:vlanIDs>61</arms:vlanIDs>
+      <arms:bandwidthOutbitspersec>10000000</arms:bandwidthOutbitspersec>
+      <arms:bandwidthInbitspersec>10000000</arms:bandwidthInbitspersec>       
+      <arms:isRemoteL2>0</arms:isRemoteL2>
+    </arms:L2Interface>
+   </arms:L2InterfaceList>
+    
+  <arms:HostSubnetList>               
+    <!--         ================================================== -->
+    <!--	 HostSubnet  -->
+    <!--	 For every subnet containing hosts, the edge router side -->
+    <!--	 interface info -->
+    <!--	 ================================================== -->
+    <arms:HostSubnet>
+      <arms:internalID>subnet011</arms:internalID>
+      <arms:subnetAddress>192.168.81.100</arms:subnetAddress>
+      <arms:IPSubnetMask>255.255.255.0</arms:IPSubnetMask>
+      <arms:hostName>mako</arms:hostName>
+      <arms:edgeRouterInterfaceInternalID>interface001</arms:edgeRouterInterfaceInternalID> 
+      <arms:edgeRouterinterfaceIPaddress>192.168.81.1</arms:edgeRouterinterfaceIPaddress>
+      <arms:edgeL2SwitchInterfaceInternalID>interfaceL2001</arms:edgeL2SwitchInterfaceInternalID>
+      <arms:poolName>Pool-1A</arms:poolName>
+    </arms:HostSubnet> 
+
+    <arms:HostSubnet> 
+      <arms:internalID>subnet012</arms:internalID>
+      <arms:subnetAddress>192.168.81.101</arms:subnetAddress>
+      <arms:IPSubnetMask>255.255.255.0</arms:IPSubnetMask>
+      <arms:hostName>checkmate</arms:hostName>
+      <arms:edgeRouterInterfaceInternalID>interface001</arms:edgeRouterInterfaceInternalID> 
+      <arms:edgeRouterinterfaceIPaddress>192.168.81.1</arms:edgeRouterinterfaceIPaddress>
+      <arms:edgeL2SwitchInterfaceInternalID>interfaceL2002</arms:edgeL2SwitchInterfaceInternalID>
+      <arms:poolName>Pool-1A</arms:poolName>
+    </arms:HostSubnet> 
+
+    <arms:HostSubnet> 
+      <arms:internalID>subnet013</arms:internalID>
+      <arms:subnetAddress>192.168.81.102</arms:subnetAddress>
+      <arms:IPSubnetMask>255.255.255.0</arms:IPSubnetMask>
+      <arms:hostName>uberpc</arms:hostName>
+      <arms:edgeRouterInterfaceInternalID>interface001</arms:edgeRouterInterfaceInternalID> 
+      <arms:edgeRouterinterfaceIPaddress>192.168.81.1</arms:edgeRouterinterfaceIPaddress>
+      <arms:edgeL2SwitchInterfaceInternalID>interfaceL2003</arms:edgeL2SwitchInterfaceInternalID>
+      <arms:poolName>Pool-1A</arms:poolName>
+    </arms:HostSubnet> 
+
+    <arms:HostSubnet> 
+      <arms:internalID>subnet014</arms:internalID>
+      <arms:subnetAddress>192.168.81.103</arms:subnetAddress>
+      <arms:IPSubnetMask>255.255.255.0</arms:IPSubnetMask>
+      <arms:hostName>champion</arms:hostName>
+      <arms:edgeRouterInterfaceInternalID>interface001</arms:edgeRouterInterfaceInternalID> 
+      <arms:edgeRouterinterfaceIPaddress>192.168.81.1</arms:edgeRouterinterfaceIPaddress>
+      <arms:edgeL2SwitchInterfaceInternalID>interfaceL2004</arms:edgeL2SwitchInterfaceInternalID>
+      <arms:poolName>Pool-1A</arms:poolName>
+    </arms:HostSubnet> 
+    <arms:HostSubnet> 
+      <arms:internalID>subnet015</arms:internalID>
+      <arms:subnetAddress>192.168.81.104</arms:subnetAddress>
+      <arms:IPSubnetMask>255.255.255.0</arms:IPSubnetMask>
+      <arms:hostName>l71027144</arms:hostName>
+      <arms:edgeRouterInterfaceInternalID>interface001</arms:edgeRouterInterfaceInternalID> 
+      <arms:edgeRouterinterfaceIPaddress>192.168.81.1</arms:edgeRouterinterfaceIPaddress>
+      <arms:edgeL2SwitchInterfaceInternalID>interfaceL2005</arms:edgeL2SwitchInterfaceInternalID>
+      <arms:poolName>Pool-1A</arms:poolName>
+    </arms:HostSubnet> 
+    <arms:HostSubnet> 
+      <arms:internalID>subnet016</arms:internalID>
+      <arms:subnetAddress>192.168.81.106</arms:subnetAddress>
+      <arms:IPSubnetMask>255.255.255.0</arms:IPSubnetMask>
+      <arms:hostName>e71003093</arms:hostName>
+      <arms:edgeRouterInterfaceInternalID>interface001</arms:edgeRouterInterfaceInternalID> 
+      <arms:edgeRouterinterfaceIPaddress>192.168.81.1</arms:edgeRouterinterfaceIPaddress>
+      <arms:edgeL2SwitchInterfaceInternalID>interfaceL2006</arms:edgeL2SwitchInterfaceInternalID>
+      <arms:poolName>Pool-1A</arms:poolName>
+    </arms:HostSubnet> 
+    <arms:HostSubnet> 
+      <arms:internalID>subnet017</arms:internalID>
+      <arms:subnetAddress>192.168.82.101</arms:subnetAddress>
+      <arms:IPSubnetMask>255.255.255.0</arms:IPSubnetMask>
+      <arms:hostName>javelin</arms:hostName>
+      <arms:edgeRouterInterfaceInternalID>interface002</arms:edgeRouterInterfaceInternalID> 
+      <arms:edgeRouterinterfaceIPaddress>192.168.82.1</arms:edgeRouterinterfaceIPaddress>
+      <arms:edgeL2SwitchInterfaceInternalID>interfaceL2007</arms:edgeL2SwitchInterfaceInternalID>
+      <arms:poolName>Pool-1B</arms:poolName>
+    </arms:HostSubnet> 
+    <arms:HostSubnet> 
+      <arms:internalID>subnet018</arms:internalID>
+      <arms:subnetAddress>192.168.82.100</arms:subnetAddress>
+      <arms:IPSubnetMask>255.255.255.0</arms:IPSubnetMask>
+      <arms:hostName>chaparal</arms:hostName>
+      <arms:edgeRouterInterfaceInternalID>interface002</arms:edgeRouterInterfaceInternalID> 
+      <arms:edgeRouterinterfaceIPaddress>192.168.82.1</arms:edgeRouterinterfaceIPaddress>
+      <arms:edgeL2SwitchInterfaceInternalID>interfaceL2008</arms:edgeL2SwitchInterfaceInternalID>
+      <arms:poolName>Pool-1B</arms:poolName>
+    </arms:HostSubnet> 
+    <arms:HostSubnet> 
+      <arms:internalID>subnet019</arms:internalID>
+      <arms:subnetAddress>192.168.82.102</arms:subnetAddress>
+      <arms:IPSubnetMask>255.255.255.0</arms:IPSubnetMask>
+      <arms:hostName>hogfish</arms:hostName>
+      <arms:edgeRouterInterfaceInternalID>interface002</arms:edgeRouterInterfaceInternalID> 
+      <arms:edgeRouterinterfaceIPaddress>192.168.82.1</arms:edgeRouterinterfaceIPaddress>
+      <arms:edgeL2SwitchInterfaceInternalID>interfaceL2009</arms:edgeL2SwitchInterfaceInternalID>
+      <arms:poolName>Pool-1B</arms:poolName>
+    </arms:HostSubnet> 
+    <arms:HostSubnet> 
+      <arms:internalID>subnet020</arms:internalID>
+      <arms:subnetAddress>192.168.83.101</arms:subnetAddress>
+      <arms:IPSubnetMask>255.255.255.0</arms:IPSubnetMask>
+      <arms:hostName>l7106754</arms:hostName>
+      <arms:edgeRouterInterfaceInternalID>interface003</arms:edgeRouterInterfaceInternalID> 
+      <arms:edgeRouterinterfaceIPaddress>192.168.83.1</arms:edgeRouterinterfaceIPaddress>
+      <arms:edgeL2SwitchInterfaceInternalID>interfaceL2010</arms:edgeL2SwitchInterfaceInternalID>
+      <arms:poolName>Pool-2A</arms:poolName>
+    </arms:HostSubnet> 
+   <arms:HostSubnet> 
+      <arms:internalID>subnet021</arms:internalID>
+      <arms:subnetAddress>192.168.83.102</arms:subnetAddress>
+      <arms:IPSubnetMask>255.255.255.0</arms:IPSubnetMask>
+      <arms:hostName>l75002066</arms:hostName>
+      <arms:edgeRouterInterfaceInternalID>interface003</arms:edgeRouterInterfaceInternalID> 
+      <arms:edgeRouterinterfaceIPaddress>192.168.83.1</arms:edgeRouterinterfaceIPaddress>
+      <arms:edgeL2SwitchInterfaceInternalID>interfaceL2011</arms:edgeL2SwitchInterfaceInternalID>
+      <arms:poolName>Pool-2A</arms:poolName>
+    </arms:HostSubnet> 
+
+    <arms:HostSubnet> 
+      <arms:internalID>subnet022</arms:internalID>
+      <arms:subnetAddress>192.168.81.0</arms:subnetAddress>
+      <arms:IPSubnetMask>255.255.255.0</arms:IPSubnetMask>
+      <arms:edgeRouterInterfaceInternalID>interface001</arms:edgeRouterInterfaceInternalID> 
+      <arms:poolName>Pool-1A</arms:poolName>
+    </arms:HostSubnet> 
+
+    <arms:HostSubnet> 
+      <arms:internalID>subnet023</arms:internalID>
+      <arms:subnetAddress>192.168.82.0</arms:subnetAddress>
+      <arms:IPSubnetMask>255.255.255.0</arms:IPSubnetMask>
+      <arms:edgeRouterInterfaceInternalID>interface002</arms:edgeRouterInterfaceInternalID> 
+      <arms:poolName>Pool-1B</arms:poolName>
+    </arms:HostSubnet> 
+
+    <arms:HostSubnet> 
+      <arms:internalID>subnet024</arms:internalID>
+      <arms:subnetAddress>192.168.83.0</arms:subnetAddress>
+      <arms:IPSubnetMask>255.255.255.0</arms:IPSubnetMask>
+      <arms:edgeRouterInterfaceInternalID>interface003</arms:edgeRouterInterfaceInternalID> 
+      <arms:poolName>Pool-2A</arms:poolName>
+    </arms:HostSubnet> 
+  </arms:HostSubnetList>
+  
+  <arms:QoSClassList>               
+   <arms:QoSClass>
+     <arms:internalID>serviceClass1</arms:internalID>
+     <arms:QoSClassName>highPriority</arms:QoSClassName>
+     <arms:totalCapacityAllowed>20</arms:totalCapacityAllowed>
+     <arms:DSCP>40</arms:DSCP>
+     <arms:dropPrecedence>0</arms:dropPrecedence>
+   </arms:QoSClass>
+   <arms:QoSClass>
+     <arms:internalID>serviceClass2</arms:internalID>
+     <arms:QoSClassName>highReliability</arms:QoSClassName>
+     <arms:totalCapacityAllowed>30</arms:totalCapacityAllowed>
+     <arms:DSCP>32</arms:DSCP>
+     <arms:dropPrecedence>0</arms:dropPrecedence>
+   </arms:QoSClass>    
+   <arms:QoSClass>
+     <arms:internalID>serviceClass3</arms:internalID>
+     <arms:QoSClassName>mmVideo</arms:QoSClassName>
+     <arms:totalCapacityAllowed>40</arms:totalCapacityAllowed>
+     <arms:DSCP>24</arms:DSCP>
+     <arms:dropPrecedence>0</arms:dropPrecedence>
+   </arms:QoSClass>
+   <arms:QoSClass>
+     <arms:internalID>serviceClass4</arms:internalID>
+     <arms:QoSClassName>mmVoice</arms:QoSClassName>
+     <arms:totalCapacityAllowed>40</arms:totalCapacityAllowed>
+     <arms:DSCP>24</arms:DSCP>
+     <arms:dropPrecedence>0</arms:dropPrecedence>
+   </arms:QoSClass>
+   <arms:QoSClass>
+     <arms:internalID>serviceClass5</arms:internalID>
+     <arms:QoSClassName>bestEffort</arms:QoSClassName>
+     <arms:totalCapacityAllowed>10</arms:totalCapacityAllowed>
+     <arms:DSCP>0</arms:DSCP>
+     <arms:dropPrecedence>0</arms:dropPrecedence>
+   </arms:QoSClass>
+  </arms:QoSClassList>               
+
+</arms:networkTopology>

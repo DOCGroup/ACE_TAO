@@ -1,0 +1,19 @@
+#ifndef _SSLIOP_IDL
+#define _SSLIOP_IDL
+
+#pragma prefix "omg.org"
+#include <IOP.idl>
+#include <Security.idl>
+
+module SSLIOP {
+
+    // Security mechanism SSL
+    const IOP::ComponentId        TAG_SSL_SEC_TRANS = 20;
+
+    struct SSL {
+        Security::AssociationOptions    target_supports;
+        Security::AssociationOptions    target_requires;
+        unsigned short        port;
+    };
+};
+#endif /* _SSLIOP_IDL */

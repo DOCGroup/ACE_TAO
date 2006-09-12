@@ -1,0 +1,33 @@
+// FaultMonitorClient.idl
+// The software supporting this interface
+// is governed by Government Purpose Rights
+// Contract No: NBCHC030132
+// Telcordia Technologies, Inc.
+// 1 Telcordia Drive
+// Piscataway, NJ 08854-4157
+
+// Author: Ravi Vaidyanathan <vravi@research.telcordia.com>
+// Date: 16 Aug 2005
+
+// This IDL will serve as an interface to receive network fault events 
+
+#ifndef _FAULT_MONITOR_CLIENT_IDL_
+#define _FAULT_MONITOR_CLIENT_IDL_
+
+#include "FaultMonitor.idl"
+
+module mil { module darpa { module arms { module mlrm {
+module BandwidthBroker {
+
+ interface FaultMonitorClient
+ {
+  
+   // Notify a change in the state of a port
+   void push_NetworkFault(in FaultMonitor::NetworkFault fault);
+
+ }; // end FaultMonitorClient interface
+
+}; // end module 
+
+ }; }; }; };
+#endif // _FAULT_MONITOR_CLIENT_IDL_

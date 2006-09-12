@@ -1,0 +1,49 @@
+/* This file contains OMG IDL from  CORBA V2.3.1
+*/
+
+#ifndef __IIOP_IDL
+#define __IIOP_IDL
+
+#include <IOP.idl>
+
+#pragma prefix "omg.org"
+
+module IIOP 
+{				
+  // IDL extended for version 1.1
+						
+  struct Version {
+    octet			major;
+    octet			minor;
+  };
+
+  struct ProfileBody_1_0 { // renamed from ProfileBody
+    Version			iiop_version;
+    string			host;
+    unsigned short		port;
+    sequence <octet>	object_key;
+  };
+
+  struct ProfileBody_1_1 {
+    Version			iiop_version;
+    string			host;
+    unsigned short		port;
+    sequence <octet>       	object_key;
+    // Added in 1.1 unchanged for 1.2
+    sequence <IOP::TaggedComponent> components;
+  };
+
+  struct ListenPoint {
+    string host;
+    unsigned short port;
+  };
+
+  typedef sequence<ListenPoint> ListenPointList;
+
+  struct BiDirIIOPServiceContext {// BI_DIR_IIOP Service Context
+    ListenPointList listen_points;
+  };
+
+};
+
+#endif

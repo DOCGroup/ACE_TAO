@@ -1,0 +1,20 @@
+
+#ifndef _SECURITY_LEVEL_1_IDL
+#define _SECURITY_LEVEL_1_IDL
+
+#pragma prefix "omg.org"
+
+#include <Security.idl>
+
+module SecurityLevel1 
+{		
+    interface Current : CORBA::Current 
+    {	
+	// Locality Constrained
+	// thread specific operations
+
+      Security::AttributeList get_attributes (in Security::AttributeTypeList attributes );
+    };
+	
+};
+#endif /* _SECURITY_LEVEL_1_IDL */

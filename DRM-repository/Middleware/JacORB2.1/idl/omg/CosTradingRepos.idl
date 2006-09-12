@@ -1,0 +1,141 @@
+//File: CosTradingRepos.idl
+//Part of the Trading Object Service
+
+#ifndef _COS_TRADING_REPOS_IDL_
+#define _COS_TRADING_REPOS_IDL_
+
+#include <orb.idl>
+#include <CosTrading.idl>
+
+#pragma prefix "omg.org"
+
+module CosTradingRepos {
+
+	interface ServiceTypeRepository {
+
+	// local types
+		typedef sequence<CosTrading::ServiceTypeName> ServiceTypeNameSeq;
+		enum PropertyMode {
+			PROP_NORMAL, PROP_READONLY,
+			PROP_MANDATORY, PROP_MANDATORY_READONLY
+		};
+		struct PropStruct {
+			CosTrading::PropertyName name;
+			CORBA::TypeCode value_type;
+			PropertyMode mode;
+		};
+		typedef sequence<PropStruct> PropStructSeq;
+
+		typedef CosTrading::Istring Identifier;  // IR::Identifier
+		struct IncarnationNumber {
+			unsigned long high;
+			unsigned long low;
+		};
+		struct TypeStruct {
+			Identifier if_name;
+			PropStructSeq props;
+			ServiceTypeNameSeq super_types;
+			boolean masked;
+			IncarnationNumber incarnation;
+		};
+
+		enum ListOption { all, since };
+		union SpecifiedServiceTypes switch ( ListOption ) {
+			case since: IncarnationNumber incarnation;
+		};
+
+	// local exceptions
+		exception ServiceTypeExists {
+			CosTrading::ServiceTypeName name;
+		};
+		exception InterfaceTypeMismatch {
+			CosTrading::ServiceTypeName base_service;
+			Identifier base_if;
+			CosTrading::ServiceTypeName derived_service;
+			Identifier derived_if;
+		};
+		exception HasSubTypes {
+			CosTrading::ServiceTypeName the_type;
+			CosTrading::ServiceTypeName sub_type;
+		};
+		exception AlreadyMasked {
+			CosTrading::ServiceTypeName name;
+		};
+		exception NotMasked {
+			CosTrading::ServiceTypeName name;
+		};
+		exception ValueTypeRedefinition {
+			CosTrading::ServiceTypeName type_1;
+			PropStruct definition_1;
+			CosTrading::ServiceTypeName type_2;
+			PropStruct definition_2;
+		};
+		exception DuplicateServiceTypeName {
+			CosTrading::ServiceTypeName name;
+		};
+
+	// attributes
+		readonly attribute IncarnationNumber incarnation;
+
+	// operation signatures
+		IncarnationNumber add_type (
+			in CosTrading::ServiceTypeName name,
+			in Identifier if_name,
+			in PropStructSeq props,
+			in ServiceTypeNameSeq super_types
+		) raises (
+			CosTrading::IllegalServiceType,
+			ServiceTypeExists,
+			InterfaceTypeMismatch,
+			CosTrading::IllegalPropertyName,
+			CosTrading::DuplicatePropertyName,
+			ValueTypeRedefinition,
+			CosTrading::UnknownServiceType,
+			DuplicateServiceTypeName
+		);
+				
+		void remove_type (
+			in CosTrading::ServiceTypeName name
+		) raises (
+			CosTrading::IllegalServiceType,
+			CosTrading::UnknownServiceType,
+			HasSubTypes
+		);
+
+		ServiceTypeNameSeq list_types (
+			in SpecifiedServiceTypes which_types
+		);
+
+		TypeStruct describe_type (
+			in CosTrading::ServiceTypeName name
+		) raises (
+			CosTrading::IllegalServiceType,
+			CosTrading::UnknownServiceType
+		);
+
+		TypeStruct fully_describe_type (
+			in CosTrading::ServiceTypeName name
+		) raises (
+			CosTrading::IllegalServiceType,
+			CosTrading::UnknownServiceType
+		);
+
+		void mask_type (
+			in CosTrading::ServiceTypeName name
+		) raises (
+			CosTrading::IllegalServiceType,
+			CosTrading::UnknownServiceType,
+			AlreadyMasked
+		);
+
+		void unmask_type (
+			in CosTrading::ServiceTypeName name
+		) raises (
+			CosTrading::IllegalServiceType,
+			CosTrading::UnknownServiceType,
+			NotMasked
+		);
+
+	};
+}; /* end module CosTradingRepos */
+#endif /* ifndef _COS_TRADING_REPOS_IDL_ */

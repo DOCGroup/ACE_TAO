@@ -1,0 +1,10 @@
+UseProbes=1
+DBGarbageCollectionTimeout=90000
+DBStayTimePeriod=180000
+ProbeServer=impdb
+ProbeSink=pool1bb
+NumOfMeasurementHosts=2
+MeasurementHost1=192.168.120.104
+MeasurementHostSubnet1=192.168.120.0
+MeasurementHost2=192.168.130.104
+MeasurementHostSubnet2=192.168.130.0

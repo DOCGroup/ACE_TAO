@@ -1,0 +1,164 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE project [ <!ENTITY common SYSTEM "file:./common.xml"> ]>
+
+<project name="main" default="all" basedir=".">
+
+   <!-- ==================================================== -->
+   <!--            ARMS build file                         -->
+   <!-- ==================================================== -->
+
+   &common;
+
+   <!-- top-level target -->
+   <target name="all" depends="init,arms_idl,gend_idl,bbroker_idl_jar, arms_src,arms_topo"
+      description="Build ARMS BB. Use -Ddebug=lines,vars,source to compile code with full debugging."/>
+
+
+   <!-- ==================================================== -->
+   <!--  ARMS Bandwidth Broker Server and Client files                     -->
+   <!-- ==================================================== -->
+
+  <target name="arms_src" depends="arms_idl" description="compile the source " >
+    <!-- Compile the java code from ${src} into ${classdir} -->
+    <property name="ccmExcludes" value="${bbpath}/**/*LocalImpl.java, ${bbpath}/cif/**, ${bbpath}/explorer/**, ${bbpath}/**/*CCM*"/>
+    <javac srcdir="${src}" destdir="${classdir}" debug="true" classpath="${build}/bbroker_idl.jar:${lib_classpath}" excludes="${topoSrc}/**,${ccmExcludes}" />
+    <delete file="${build}/bbserver.jar"/>
+    <delete file="${build}/nmserver.jar"/>
+    <delete file="${build}/bbclient.jar"/>
+    <jar jarfile="${build}/bbserver.jar"
+      basedir="${classdir}"
+      includes="${bbserverpath}/**"
+      excludes="${topoSrc}/**"
+    />
+    <jar jarfile="${build}/nmserver.jar"
+      basedir="${classdir}"
+      includes="${networkmonitorserverpath}/**"
+      excludes="${topoSrc}/**"
+    />
+    <jar jarfile="${build}/bbclient.jar"
+      basedir="${classdir}"
+      includes="${bbclientpath}/*"
+    />
+    <jar jarfile="${build}/flowprovisioner.jar"
+      basedir="${classdir}"
+      includes="${flowprovisionerpath}/**"
+    />
+    <jar jarfile="${build}/l2disc.jar"
+      basedir="${classdir}"
+      includes="${l2discpath}/**"
+    />
+    <jar jarfile="${build}/faultmonitor.jar"
+      basedir="${classdir}"
+      includes="${faultmonitorpath}/**"
+    />
+  </target>
+
+
+   <!-- ==================================================== -->
+   <!--  ARMS Bandwidth Broker IDL files                     -->
+   <!-- ==================================================== -->
+
+   <target name="arms_idl" depends="init">
+        <ant antfile="${basedir}/idl/build.xml" dir="${basedir}"/>
+   </target>
+
+   <target name="gend_idl" depends="init,arms_idl" >
+      <antcall target="javac-15">
+         <param name="javac-src" value="${src}/generated"/>
+         <param name="javac-includes" value="BandwidthBroker/**/**"/>
+      </antcall>
+   </target>
+
+   <!-- ==================================================== -->
+   <!-- ARMS Probes XML files                     -->
+   <!-- ==================================================== -->
+    <!--
+     <taskdef name="xjc" classname="com.sun.tools.xjc.XJCTask">
+	<classpath refid="lib_classpath"/>
+    </taskdef>
+
+    <target name="arms_probes_xml" depends="init" >
+	<xjc schema="Imp.xsd" 
+		package="mil.darpa.arms.mlrm.BandwidthBroker.networkmonitor.server"
+			target="${src}"/>
+	<copy file="${src}/${networkmonitorserverpath}/jaxb.properties" todir="${classdir}/${networkmonitorserverpath}/impl/runtime"/>		
+	<javac srcdir="${src}" destdir="${classdir}">
+	    <classpath refid="lib_classpath"/>
+	    <include name="mil/darpa/arms/mlrm/BandwidthBroker/networkmonitor/server/**/**/*.java"/>
+	    <debug="on"/>
+	</javac>
+    </target>
+
+    -->
+   <!-- ==================================================== -->
+   <!--  ARMS Bandwidth Broker Topology files                     -->
+   <!-- ==================================================== -->
+  
+   <target name="arms_topo" depends="init">
+        <ant antfile="build-topo.xml" dir="${basedir}"/>
+   </target>
+  <!--
+   <target name="gend_topo" depends="init,arms_topo" >
+      <antcall target="javac-15">
+         <param name="javac-src" value="${basedir}/topologyDB/generated"/>
+         <param name="javac-includes" value="**/**/**/" />
+      </antcall>
+   </target>
+   -->
+
+   <!-- ==================================================== -->
+   <!--                  Libraries                           -->
+   <!-- ==================================================== -->
+
+   <!-- This target creates a jar file that contains the -->
+   <!-- core ORB components and (generated) CORBA classes + -->
+   <target name="bbroker_idl_jar" depends="gend_idl">
+      <delete file="${build}/bbroker_idl.jar"/>
+       <jar jarfile="${build}/bbroker_idl.jar"
+      basedir="${classdir}"
+      includes="BandwidthBroker/CommonDef/*,BandwidthBroker/AdmissionControlPackage/*,BandwidthBroker/FlowProvisionerPackage/*,BandwidthBroker/*,BandwidthBroker/FaultMonitorPackage/*"
+      />
+   </target>
+
+   
+   <!-- ==================================================== -->
+   <!--                   ARMS deploy                        -->
+   <!-- ==================================================== -->
+   <!-- This target creates a jar file that contains the -->
+   <!-- core ORB components and (generated) CORBA classes + -->
+   <!-- for ARMS Deployment environment -->
+   <target name="dist" depends="arms_src,arms_topo">
+      <copy file="${basedir}/idl/libBandwidthBroker.so" todir="${deploy}/lib"
+            failonerror= "false" />
+      <delete file="${deploy}/lib/TelcordiaBB.jar"/>
+       <jar jarfile="${deploy}/lib/TelcordiaBB.jar"
+      basedir="${classdir}"
+      />
+      <delete file="${deploy}/lib/TelcordiaBBStubs.jar"/>
+       <jar jarfile="${deploy}/lib/TelcordiaBBStubs.jar"
+      basedir="${classdir}"
+      includes="mil/darpa/arms/mlrm/BandwidthBroker/CommonDef/*, mil/darpa/arms/mlrm/BandwidthBroker/AdmissionControlPackage/*, mil/darpa/arms/mlrm/BandwidthBroker/*"
+      />
+      <tar tarfile="${basedir}/../../dist/BandwidthBroker.tar"
+         basedir = "${deploy}"
+         includes = "bin/*, lib/*, cfg/**, data/**/**"
+       />
+      <gzip zipfile="${basedir}/../../dist/BandwidthBroker.tar.gz" 
+            src="${basedir}/../../dist/BandwidthBroker.tar"
+      />
+   </target>
+   
+   <!-- ==================================================== -->
+   <!--                   clean up                           -->
+   <!-- ==================================================== -->
+
+   <target name="clean" depends="init" description="Clean the checkout">
+      <delete dir="${classdir}"/>
+	<delete dir="${build}"/>
+      <delete dir="${src}/generated"/>
+       <delete dir="${src}/${topoSrc}/generated"/>
+   </target>
+
+</project>
+<!-- $Id$ -->

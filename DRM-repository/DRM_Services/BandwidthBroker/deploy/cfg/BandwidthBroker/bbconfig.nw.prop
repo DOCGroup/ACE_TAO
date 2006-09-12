@@ -1,0 +1,6 @@
+DBServer=localhost
+DBLogin=arms
+DBPassword=arms
+DBConnections=4
+FlowReservationTimeout=300000
+ConfigureNetwork=0

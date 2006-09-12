@@ -1,0 +1,203 @@
+#$Id$
+
+Performance Monitor / Network Monitor On Emulab  
+===============================================
+
+Author: Kirthika Parmeswaran
+Dated: 26 June 2006
+	
+The Performance Monitor is a CORBA server that provides
+delay/jitter/loss measurements across pools, hosts and flows. 
+Currently it is implemented to deliver delay measurements only.
+
+On Emulab, a experiment to test the working of the Performance Monitor is:
+ perf-mon
+
+To learn more about how to run this experiment see Section 1. If you
+interested in setting up a new experiement for Performance Monitor, see
+Section 2.
+
+--------------------------------------------------------------
+Section 1: To run the Performance Monitor (perf-mon experiment)
+---------------------------------------------------------------
+
+To throw light on the various features of the Performance Monitor, a
+test suite has been written. To execute this experiment, the following
+steps need to be followed:
+
+1.Prerequisites:
+JDK 1.4.2 should be on your path. SSH a priori from rondomon08 and
+rondomon09 onto impdb so that the entry for impdb exists in the
+known_hosts file for future access.
+
+2.Terminal 1: logon to impdb.perf-mon.arms.emulab.net
+From /opt/DRM/DRM_Services/BandwidthBroker/deploy.imp, setup path etc.
+> source bin/impinit.sh
+> source bin/setup-classpath.sh
+Now, run the probe server:
+> bin/runProbeServer-emulab.sh
+You will see the probe server database being populated with probe
+related topology configuration and the server starting up.
+
+
+3.Terminal 2: logon to rondomon08.perf-mon.arms.emulab.net
+From /opt/DRM/DRM_Services/BandwidthBroker/deploy.imp, setup path etc.
+> source bin/impinit.sh
+> source bin/setup-classpath.sh
+Now, run the probe client for this pool:
+> bin/runProbe-emulab.sh
+You will see the probe client connecting to the probe server.
+Note: make sure that you have already "ssh"-ed into impdb as it will
+be used to find out the control interface for the probe server.
+
+
+4.Terminal 3: Repeat (3) but from rondomon09.perf-mon.arms.emulab.net
+
+5.Terminal 4: logon to pool1bb.perf-mon.arms.emulab.net
+(a) Populate the BB database with appropriate flow entries for the
+test from: /opt/DRM/DRM_Services/BandwidthBroker/deploy.imp
+
+> bin/populate_nm_data.sh
+[Troubeshooting Tip: If you see any warnings/errors on trying to
+populate entries into the database:
+
+Logon on to pool1db and execute: /proj/arms/etc/imp/startdb.sh. Then redo 5(a)]
+
+(b) From /opt/DRM/DRM_Services/BandwidthBroker/deploy, setup path etc.
+> source bin/bbinit.sh
+> source bin/setup-classpath.sh
+Now, run the naming server:
+> bin/nsstart.sh
+[Troubeshooting Tip: If the name server doesn’t start up, it could be
+that it is already up and the port is in use, so kill the tnameserv
+process and retry 5(b)]
+
+
+6.Terminal 5: logon to pool1bb.perf-mon.arms.emulab.net
+From /opt/DRM/DRM_Services/BandwidthBroker/deploy, setup path etc.
+> source bin/bbinit.sh
+> source bin/setup-classpath.sh
+Now, run the Performance Monitor server:
+> bin/netmonemulab.sh
+The Performance monitor server will connect to the probe server on impdb.
+The detailed log of the execution is at data/logs/nmserver.log  If you
+require execution trace only for the current run, you should delete
+this file between different runs of the NetworkMonitor.
+
+
+7.Terminal 6: logon to pool1bb.perf-mon.arms.emulab.net
+From /opt/DRM/DRM_Services/BandwidthBroker/deploy, setup path etc.
+> source bin/bbinit.sh
+> source bin/setup-classpath.sh
+Now, run the Performance Monitor client:
+bin/netmontestsuite_emulab.sh
+This test suite tests synchronous and asynchronous requests for hosts,
+pools and flow token for various QoS traffic classes. To begin, type
+in the number of a test case you are interested in, the loop continues
+until you exit the test suite. Note: It could take up to a minute to
+setup probe tasks for each test case. 
+
+[Troubleshooting Tip: There may be cases where you get negative values
+for the delay. This is because of the clocks are not being
+synchronized perfectly even though NTP is used. A quick solution is to
+force the clocks to be synchronized manually by executing the
+following command on impdb, rondomon08 and rondomon09:
+> sudo ntpdate -u ntp1.emulab.net ]
+
+8.To shutdown the experiment: 
+Execute Cntrl-C Performance Monitor server and client and probe server
+and probe clients. Also kill the tnameserv process on pool1bb.
+
+For any issues or questions about this experiment, please contact:
+Kirthika Parmeswaran <Kirthika@research.telcordia.com> 
+
+---------------------------------------------------------------
+Section 2: Setting up new Emulab Performance Monitor Experiment:
+----------------------------------------------------------------
+
+(0) Go over the ns script for perf-mon experiment, the nodes, impdb,
+rondomon08 and rondomon09 are the probe servers and probe clients
+(typically one per subnet) respectively. You will need to use similar
+commands for the probe server and clients in the new experiment.
+
+(1) Impdb (or probe server node) consists of the Imp database used to
+store network topology imformation relevant for probing as well as the
+probe tasks.  The Imp database needs to be populated with the
+experiment specific configuration information.  See
+BandwidthBroker/deploy.imp/runProbeServer-emulab.sh and the
+BandwidthBroker/deploy.imp/impNetOnly.sql file. The SQL data includes
+probe server and clients information as well as which measurement host
+(i.e probe client) is assigned to a host. Also, note, GRANT
+permissions will be needed to access to mysql database with login-name
+of "imp" and password of "rondo".
+
+The database is a non-cluster database and uses MyIsam
+(default for MySQL 5.0) Mysql tables. See the
+BandwidthBroker/deploy.imp/startdb.sh script for details. 
+
+(2) Communication between probe clients and the server is oevr the
+control network for "always-on" reachability. This is figured out
+automatically, see BandwidthBroker/deploy.imp/runProbe-emulab.sh.
+
+(3) The OSPF loopback routes need to be added for the new experiment
+based on its topology under /proj/arms/etc/ospf.
+
+(4) Data pertaining to the testing of the Performance Monitor for
+(pools, hosts and flow token needs to be populated into the BB
+database on the BB Database host. 
+
+The BandwidthBroker database must be setup (source
+src/db/arms-initdb-cluster.sql,then populate-nm-data.sql ) and the
+cfg/BandwidthBroker/bbconfig.prop option file must be filled
+appropriately.  
+
+NOTE: The DBConnections parameter must be >=4, if less, it will be
+taken to be 4 internally as the software requires atleast two
+connections to be used by its threads to access the MySQL DB.
+
+(5) Setup the Performance/Network Monitor option file:
+cfg/BandwidthBroker/nmconfig.prop
+It contains the garbage collection and measurement hosts information.
+Fill this up appropriately. 
+# nmconfig.prop Sample
+
+# Whether to use probes or not 
+UseProbes=1 
+#The garbage collection timertask period, here it means that the
+#garbage collection of the Incore Network Monitor DB will be tried
+#every 90000 milliseconds
+DBGarbageCollectionTimeout=90000 
+# The time for which a entry in the Incore Network Monitor DB will be
+kept, here it is for 180000 milliseconds
+DBStayTimePeriod=180000
+# The Probe server 
+ProbeServer=impdb
+# The sink for the measurement notifications from the probe server,
+#this is the host on which the NetworkMonitor server is running
+ProbeSink=pool1db
+# The following entries specify the probe/measurement hosts and their
+# subnets. Note these hosts must also be available in the
+# BandwidthBroker HostSubnet DB
+# Please fill actual values as per the experimental network addresses.
+NumOfMeasurementHosts=2
+MeasurementHost1=172.26.4.6 
+MeasurementHostSubnet1=172.26.4.0
+MeasurementHost2=172.27.4.6
+MeasurementHostSubnet2=172.27.4.0
+
+(6) The Performance Monitor clients for emulab are currently hardcoded
+to use rondomon08 and rondomon09, please change these as per your
+experiment at:
+BandwidthBroker/src/mil/darpa/arms/mlrm/BandwidthBroker/networkmonitor/client/*.java
+and recompile from main BandwidthBroker directory using:
+ant dist
+
+You can use any host so long it has a designated measurement host
+/probe in its subnet. 
+
+(7) On Emulab, NTP is used by default for time synchronization which is
+required for the probes.
+
+Now you are ready to test the Performance Monitor in the new
+experimental testbed! 
+

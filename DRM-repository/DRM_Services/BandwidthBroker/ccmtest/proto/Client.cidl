@@ -1,0 +1,21 @@
+
+import mil::darpa::arms::mlrm::BandwidthBroker;
+
+
+ module mil { module darpa { module arms { module mlrm {
+module BandwidthBroker
+{
+    //
+    // CIDL declarations
+    //
+    composition session ClientSessionComposition
+    {
+        home executor HomeImpl
+        {
+            implements ClientHome;
+            manages ComponentImpl;
+        }; 
+    };
+
+}; 
+ }; }; }; };
