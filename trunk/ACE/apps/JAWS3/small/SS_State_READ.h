@@ -6,7 +6,7 @@
 
 #include "ace/OS.h"
 #include "ace/Singleton.h"
-
+#include "ace/Synch_Traits.h"
 #include "jaws3/Protocol_Handler.h"
 
 class TeraSS_State_READ : public JAWS_Protocol_State
