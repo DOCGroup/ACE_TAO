@@ -28,6 +28,45 @@ ACE_RCSID (tao,
            Connector,
            "$Id$")
 
+namespace
+{
+  class TransportCleanupGuard
+  {
+  public:
+
+    TransportCleanupGuard (TAO_Transport *tp, bool awake=false)
+      : tp_ (tp)
+      , awake_ (awake)
+    {
+    }
+
+    ~TransportCleanupGuard ()
+    {
+      if (this->awake_ && this->tp_)
+        {
+          // Purge from the connection cache.  If we are not in the
+          // cache, this does nothing.
+          this->tp_->purge_entry ();
+
+          // Close the handler.
+          this->tp_->close_connection ();
+
+          this->tp_->remove_reference ();
+        }
+    }
+
+    void awake ()
+    {
+      this->awake_ = true;
+    }
+
+  private:
+
+    TAO_Transport * const tp_;
+    bool awake_;
+
+  };
+};
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -762,27 +801,6 @@ TAO_Connector::check_connection_closure (
     }
 
   return result;
-}
-
-TransportCleanupGuard::TransportCleanupGuard (TAO_Transport *tp
-                , bool awake)
-  : tp_ (tp)
-    , awake_ (awake)
-{}
-
-TransportCleanupGuard::~TransportCleanupGuard (void)
-{
-  if (awake_ && (tp_ != 0))
-    {
-      // Purge from the connection cache, if we are not in the cache, this
-      // just does nothing.
-      tp_->purge_entry ();
-
-      // Close the handler.
-      tp_->close_connection ();
-
-      tp_->remove_reference ();
-    }
 }
 
 //@@ TAO_CONNECTOR_SPL_METHODS_ADD_HOOK

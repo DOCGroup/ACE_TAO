@@ -231,21 +231,6 @@ private:
   //@@ TAO_CONNECTOR_SPL_PRIVATE_DATA_ADD_HOOK
 };
 
-
-class TransportCleanupGuard
-{
-private:
-  TAO_Transport *tp_;
-  bool awake_;
-
-public:
-  TransportCleanupGuard (TAO_Transport *tp, bool awake = false);
-
-  ~TransportCleanupGuard (void);
-
-  void awake ();
-};
-
 //@@ TAO_CONNECTOR_SPL_EXTERN_ADD_HOOK
 
 TAO_END_VERSIONED_NAMESPACE_DECL

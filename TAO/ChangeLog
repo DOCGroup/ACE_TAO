@@ -1,3 +1,11 @@
+Wed Sep 13 14:58:24 UTC 2006  Ciju John  <johnc@ociweb.com>
+
+        * tao/Transport_Connector.h:
+        * tao/Transport_Connector.inl:
+        * tao/Transport_Connector.cpp:
+          The TransportCleanupGuard class is for local usage, so am moving
+          it into an anonymous namespace.
+
 Fri Sep  8 20:03:26 UTC 2006  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/orbsvcs/HTIOP/HTIOP_Connection_Handler.cpp:
