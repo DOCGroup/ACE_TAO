@@ -120,7 +120,8 @@ enable-auto-props = yes
 *.tex=svn:eol-style=native;svn:keywords=Author Date Id Revision
 *.bib=svn:eol-style=native;svn:keywords=Author Date Id Revision
 *.bst=svn:eol-style=native;svn:keywords=Author Date Id Revision
-*.eps=svn:eol-style=native;svn:keywords=Author Date Id Revision
-*.ps=svn:eol-style=native;svn:keywords=Author Date Id Revision
+*.eps=svn:mime-type=application/postscript
+*.ps=svn:mime-type=application/postscript
+*.pdf=svn:mime-type=application/postscript
 *.tab=svn:eol-style=native;svn:keywords=Author Date Id Revision
 Change?og*=svn:eol-style=native;svn:keywords=Author Date Id Revision
