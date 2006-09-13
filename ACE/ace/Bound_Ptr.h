@@ -7,6 +7,7 @@
  *  $Id$
  *
  *  @author Christopher Kohlhoff <chris@kohlhoff.com>
+ *  @author Boris Kolpackov <boris@codesynthesis.com>
  */
 //=============================================================================
 
@@ -125,6 +126,19 @@ public:
   /// Constructor binds <this> and <r> to the same object.
   ACE_Strong_Bound_Ptr (const ACE_Weak_Bound_Ptr<X, ACE_LOCK> &r);
 
+  /// Copy constructor binds <this> and <r> to the same object if
+  /// Y* can be implicitly converted to X*.
+  template <class Y>
+  ACE_Strong_Bound_Ptr (const ACE_Strong_Bound_Ptr<Y, ACE_LOCK> &r)
+      : counter_ (r.counter_),
+        ptr_ (dynamic_cast<X*>(r.ptr_))
+  {
+    // This ctor is temporarily defined here to increase our chances
+    // of being accepted by broken compilers.
+    //
+    COUNTER::attach_strong (this->counter_);
+  }
+
   /// Destructor.
   ~ACE_Strong_Bound_Ptr (void);
 
@@ -133,6 +147,29 @@ public:
 
   /// Assignment operator that binds <this> and <r> to the same object.
   void operator = (const ACE_Weak_Bound_Ptr<X, ACE_LOCK> &r);
+
+  /// Assignment operator that binds <this> and <r> to the same object
+  /// if Y* can be implicitly converted to X*.
+  template <class Y>
+  ACE_Weak_Bound_Ptr<X, ACE_LOCK>&
+  operator= (const ACE_Strong_Bound_Ptr<Y, ACE_LOCK> &r)
+  {
+    // This operator is temporarily defined here to increase our chances
+    // of being accepted by broken compilers.
+    //
+
+    // This will work if &r == this, by first increasing the ref count
+
+    COUNTER *new_counter = r.counter_;
+    X* new_ptr = dynamic_cast<X*> (r.ptr_);
+    COUNTER::attach_strong (new_counter);
+    if (COUNTER::detach_strong (this->counter_) == 0)
+      delete this->ptr_;
+    this->counter_ = new_counter;
+    this->ptr_ = new_ptr;
+
+    return *this;
+  }
 
   /// Equality operator that returns @c true if both
   /// ACE_Strong_Bound_Ptr instances point to the same underlying
