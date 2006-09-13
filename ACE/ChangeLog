@@ -1,8 +1,16 @@
+Wed Sep 13 18:25:37 UTC 2006  Boris Kolpackov  <boris@codesynthesis.com>
+
+        * ace/Bound_Ptr.h:
+        * protocols/ace/RMCast/Reassemble.cpp:
+
+          Re-applied my changes (Wed Sep  6) on build czar's (Steve
+          Huston) request.
+
 Tue Sep 12 18:07:57 UTC 2006  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * docs/svn/svn-prefs.reg
         * docs/svn/config
-        
+
           Added pdf,eps,ps as binary file types.
 
 Tue Sep 12 13:56:22 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
@@ -12,8 +20,8 @@ Tue Sep 12 13:56:22 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
           dot com> for reporting this.
 
 Tue Sep 12 13:56:09 UTC 2006  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
-  
-        * apps/JAWS3/small/SS_State_DONE.h: 
+
+        * apps/JAWS3/small/SS_State_DONE.h:
         * apps/JAWS3/small/SS_State_READ.h: Added #include
           "ace/Synch_Traits.h".  Thanks to Andy Wang <ypwangandy at gmail
           dot com> for reporting this.
