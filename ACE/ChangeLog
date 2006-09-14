@@ -1,3 +1,8 @@
+Thu Sep 14 23:01:16 UTC 2006  Steve Huston  <shuston@riverace.com>
+
+        * ace/Bound_Ptr.inl: Tweak syntax to try and work around apparant
+          issues with BCB6.
+
 Thu Sep 14 21:48:39 UTC 2006  Steve Huston  <shuston@riverace.com>
 
 	* ace/OS_NS_Thread.inl (thr_getspecific): Removed the ACE_Errno_Guard
