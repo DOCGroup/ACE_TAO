@@ -2809,26 +2809,12 @@ ACE_OS::thr_getspecific_native (ACE_OS_thread_key_t key, void **data)
     int result;
     ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_getspecific (key, data), result), int, -1);
 # elif defined (ACE_HAS_WTHREADS)
-
-  // The following handling of errno is designed like this due to
-  // ACE_Log_Msg::instance calling ACE_OS::thr_getspecific.
-  // Basically, it is ok for a system call to reset the error to zero.
-  // (It really shouldn't, though).  However, we have to remember to
-  // store errno *immediately* after an error is detected.  Calling
-  // ACE_ERROR_RETURN((..., errno)) did not work because errno was
-  // cleared before being passed to the thread-specific instance of
-  // ACE_Log_Msg.  The workaround for was to make it so
-  // thr_getspecific did not have the side effect of clearing errno.
-  // The correct fix is for ACE_ERROR_RETURN to store errno
-  //(actually ACE_OS::last_error) before getting the ACE_Log_Msg tss
-  // pointer, which is how it is implemented now.  However, other uses
-  // of ACE_Log_Msg may not work correctly, so we're keeping this as
-  // it is for now.
-
-  ACE_Errno_Guard error (errno);
   *data = ::TlsGetValue (key);
-  if (*data == 0 && (error = ::GetLastError ()) != NO_ERROR)
-    return -1;
+  if (*data == 0 && ::GetLastError () != NO_ERROR)
+    {
+      ACE_OS::set_errno_to_last_error ();
+      return -1;
+    }
   else
     return 0;
 # else /* ACE_HAS_PTHREADS etc.*/
