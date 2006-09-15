@@ -210,6 +210,7 @@ void
 IDL_GlobalData::reset_flag_seen (void)
 {
   abstract_iface_seen_ = false;
+  abstractbase_seen_ = false;
   aggregate_seen_ = false;
 //ambiguous_type_seen_
   any_arg_seen_ = false;

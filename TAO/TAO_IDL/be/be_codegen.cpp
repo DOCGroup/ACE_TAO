@@ -1632,14 +1632,17 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
                                "tao/AnyTypeCode/AnyTypeCode_methods.h",
                                this->client_header_);
 
-  if (idl_global->abstract_iface_seen_)
+  if (idl_global->abstract_iface_seen_ || idl_global->abstractbase_seen_)
     {
       // Include the AbstractBase file from the Valuetype library.
       this->gen_standard_include (this->client_header_,
                                   "tao/Valuetype/AbstractBase.h");
 
-      // Turn on generation of the rest of the Valuetype library includes.
-      idl_global->valuetype_seen_ = true;
+      if (idl_global->abstract_iface_seen_)
+        {
+          // Turn on generation of the rest of the Valuetype library includes.
+          idl_global->valuetype_seen_ = true;
+        }
     }
 
   if (idl_global->valuebase_seen_)

@@ -504,6 +504,15 @@ fe_populate_global_scope (AST_Module *m)
                             &ValueBase_name
                           );
   m->fe_add_predefined_type (pdt);
+
+  Identifier AbstractBase_id ("AbstractBase");
+  UTL_ScopedName AbstractBase_name (&AbstractBase_id, 0);
+  pdt =
+    idl_global->gen ()->create_predefined_type (
+                            AST_PredefinedType::PT_abstract,
+                            &AbstractBase_name
+                          );
+  m->fe_add_predefined_type (pdt);
 }
 
 // Populate idl_global's hash map with upper case versions of
