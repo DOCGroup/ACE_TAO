@@ -24,7 +24,10 @@
 #include <iostream>
 #include <fstream>
 #include "ciao/DeploymentS.h"
+#include "BandwidthBroker/BandwidthBrokerC.h"
 #include "tao/CORBALOC_Parser.h"
+
+using namespace mil::darpa::arms::mlrm;
 
 namespace CIAO
 {
@@ -195,9 +198,9 @@ namespace CIAO
                     }
                     else
                     {
-                      ACE_DEBUG ((LM_DEBUG, "Conversion to Any failed for NetworkQoS.\n"));
+                      ACE_DEBUG ((LM_ERROR, "Conversion to Any failed for NetworkQoS.\n"));
                     }
-                   
+
                     // Remove CIAONetworkQoS infoProperty
                     CORBA::ULong length = dep_plan.infoProperty.length();
                     std::cerr << "Length of dep_plan.infoProperty before removal = " << length << std::endl; 
@@ -221,6 +224,28 @@ namespace CIAO
       void NetQoSPlanner_exec_i::process_netqos_req (::CIAO::DAnCE::NetworkQoS::NetQoSRequirement *net_qos_req,
                                                      ::Deployment::DiffservInfos & dscp_infos)
       {
+        this->BB_iorfile_ = std::string ("BB.ior");
+        std::string BB_ior_url = std::string ("file://") + this->BB_iorfile_;
+        BB_nameserv_context_ = std::string ("BandwidthBroker");
+
+        CORBA::ORB_var orb =  this->context_->_ciao_the_Container ()->the_ORB ();
+
+        CORBA::Object_var obj = orb->string_to_object (BB_ior_url.c_str());
+
+        if (CORBA::is_nil (obj)) {
+          ACE_DEBUG ((LM_ERROR, "In NetQoSPlanner_exec_i::process_netqos_req(): BandwidthBroker's nil object reference.\n"));
+          return;
+        }
+
+        /// Downcast the object reference to a reference of type AdmissionControl.
+        BandwidthBroker::AdmissionControl_var adm_ctrl = BandwidthBroker::AdmissionControl::_narrow (obj);
+        if (CORBA::is_nil (adm_ctrl)) {
+          ACE_DEBUG ((LM_ERROR, "In NetQoSPlanner_exec_i::process_netqos_req(): The IOR is not a AdmissionControl reference.\n"));
+          return;
+        }
+
+        ACE_DEBUG ((LM_DEBUG, "In NetQoSPlanner_exec_i::process_netqos_req(): BandwidthBroker resolved successfully.\n"));
+
         time_t t;
         time (&t);
         srandom (t);
@@ -386,7 +411,7 @@ namespace CIAO
             ACE_CString policy_set_id;
             ACE_CString temp_policy_set_id;
 
-            int server_instance_iter;
+            int server_instance_iter = 0;
             if (this->instance_map_.find
                     (server_instance_name, server_instance_iter) == 0)
               {
@@ -446,7 +471,7 @@ namespace CIAO
                       value <<= policy_set_id.c_str ();
               }
     
-            int client_instance_iter;
+            int client_instance_iter = 0;
             if (this->instance_map_.find
                     (client_instance_name, client_instance_iter) == 0)
               {
