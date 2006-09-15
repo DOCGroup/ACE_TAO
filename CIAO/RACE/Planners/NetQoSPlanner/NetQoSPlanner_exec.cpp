@@ -22,7 +22,9 @@
 #include "ciao/CIAO_common.h"
 #include "ciao/NetQoSC.h"
 #include <iostream>
+#include <fstream>
 #include "ciao/DeploymentS.h"
+#include "tao/CORBALOC_Parser.h"
 
 namespace CIAO
 {
@@ -222,6 +224,9 @@ namespace CIAO
         time_t t;
         time (&t);
         srandom (t);
+        
+        // Build an in memory map of logical nodes to the physical hosts.
+        this->build_node_map ();
 
         size_t set_len = net_qos_req->conn_qos_set.length();
         for (size_t k = 0; k < set_len; ++k)
@@ -272,7 +277,47 @@ namespace CIAO
             */
           }
           // dscp_infos data structure is completely populated here.
-          std::cerr << "Node_map Filename: " << this->node_map_file () << std::endl;
+          std::cerr << "sender host = " << this->get_physical_host ("sender") << std::endl;
+          
+      }
+
+      void NetQoSPlanner_exec_i::build_node_map ()
+      { 
+          //std::cerr << "Node_map Filename: " << this->node_map_file () << std::endl;
+          std::ifstream input_file (this->node_map_file ());
+          std::istream_iterator <std::string> begin (input_file), end;
+          for (; begin != end; )
+            {
+               std::string logical_node = *begin++;
+               //std::cerr << "Logical node name = " << logical_node << std::endl;
+               std::string corbaloc_url = *begin++;
+               //std::cerr << "Physical corbaloc URL = " << corbaloc_url << std::endl;
+               TAO_CORBALOC_Parser corbaloc_parser;
+               //std:: cerr << "Is it a valid corbaloc URL? = " << corbaloc_parser.match_prefix (corbaloc_url.c_str()) << std::endl;
+               if (corbaloc_parser.match_prefix (corbaloc_url.c_str()))
+                 {
+                    size_t first = corbaloc_url.find (':', 0); 
+                    size_t second = corbaloc_url.find (':', first + 1);
+                    size_t third = corbaloc_url.find (':', second + 1);
+                    std::string hostname = corbaloc_url.substr (second + 1, third - second - 1);
+                    //std::cerr << "Hostname = " << hostname << std::endl;
+                    this->node_map_.insert (make_pair (logical_node, hostname));
+                 } 
+               else
+                 {
+                    std::cerr << "Incorrect corbaloc URL: " <<  corbaloc_url << std::endl;
+                 }  
+            }
+      }
+
+      std::string NetQoSPlanner_exec_i::get_physical_host (const std::string &logical_node)
+      {
+        if (this->node_map_.find (logical_node) != this->node_map_.end ())
+        {
+           return this->node_map_[logical_node];
+        }
+        else
+           return std::string ("");
       }
 
       // *********************************************************
