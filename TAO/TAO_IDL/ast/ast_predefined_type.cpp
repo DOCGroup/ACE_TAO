@@ -194,6 +194,10 @@ AST_PredefinedType::AST_PredefinedType (PredefinedType t,
           ACE_NEW (id,
                    Identifier ("ValueBase"));
           break;
+        case AST_PredefinedType::PT_abstract:
+          ACE_NEW (id,
+                   Identifier ("AbstractBase"));
+          break;
         case AST_PredefinedType::PT_pseudo:
           ACE_NEW (id,
                    Identifier (n->last_component ()->get_string ()));
