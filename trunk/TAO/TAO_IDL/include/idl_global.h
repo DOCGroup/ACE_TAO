@@ -268,6 +268,7 @@ public:
 
   // flags for types of declarations seen while parsing.
   bool abstract_iface_seen_;
+  bool abstractbase_seen_;
   bool aggregate_seen_;
   bool ambiguous_type_seen_;
   bool any_arg_seen_;

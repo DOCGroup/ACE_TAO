@@ -1349,6 +1349,7 @@ UTL_Scope::lookup_pseudo (Identifier *e)
   bool tc_lookup = false;
   bool obj_lookup = false;
   bool vb_lookup = false;
+  bool ab_lookup = false;
 
   if (ACE_OS::strcasecmp (name_string, "Object") == 0)
     {
@@ -1358,8 +1359,12 @@ UTL_Scope::lookup_pseudo (Identifier *e)
     {
       vb_lookup = true;
     }
+  else if (ACE_OS::strcasecmp (name_string, "AbstractBase") == 0)
+    {
+      ab_lookup = true;
+    }
 
-  if (obj_lookup || vb_lookup)
+  if (obj_lookup || vb_lookup || ab_lookup)
     {
       // Iterate over the global scope.
       ACE_NEW_RETURN (i,
@@ -1413,6 +1418,10 @@ UTL_Scope::lookup_pseudo (Identifier *e)
               else if (vb_lookup)
                 {
                   idl_global->valuebase_seen_ = true;
+                }
+              else if (ab_lookup)
+                {
+                  idl_global->abstractbase_seen_ = true;
                 }
             }
 
@@ -1593,7 +1602,7 @@ UTL_Scope::lookup_by_name_local (Identifier *e,
     
   AST_Type *t = 0;
 
-  // Will return 0 unless looking up 'Object' or 'TypeCode'.
+  // Will catch Object, TypeCode, ValueBase and AbstractBase.
   AST_Decl *d = this->lookup_pseudo (e);
 
   if (d != 0)
