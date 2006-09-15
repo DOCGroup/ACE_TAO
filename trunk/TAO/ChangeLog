@@ -1,3 +1,19 @@
+Fri Sep 15 19:02:58 UTC 2006  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/include/ast_predefined_type.h:
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/ast/ast_predefined_type.cpp:
+        * TAO_IDL/fe/fe_init.cpp:
+        * TAO_IDL/util/utl_global.cpp:
+        * TAO_IDL/util/utl_scope.cpp:
+        
+          Added recognition of CORBA::AbstractBase as a pseudo
+          object, similarly to the existing support for Object,
+          ValueBase, and TypeCode. Also added automatic inclusion
+          of tao/Valuetype/AbstractBase.h in generated code
+          if AbstractBase is seen in IDL.
+
 Wed Sep 13 14:58:24 UTC 2006  Ciju John  <johnc@ociweb.com>
 
         * tao/Transport_Connector.h:
