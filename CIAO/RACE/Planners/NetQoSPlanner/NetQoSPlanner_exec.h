@@ -196,6 +196,8 @@ namespace CIAO
         std::string node_map_filename_;
         std::string planner_name_;
         std::string planner_type_;
+        std::string BB_iorfile_;
+        std::string BB_nameserv_context_;
         std::map <std::string, std::string> node_map_;
         typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
                                         int, ACE_Hash<ACE_CString>,
