@@ -1884,16 +1884,6 @@ dump_connections (const ::Deployment::Connections & connections)
             ACE_DEBUG ((LM_DEBUG, "EventConsumer\n"));
             break;
 
-          case Deployment::rtecEventPublisher:
-
-            ACE_DEBUG ((LM_DEBUG, "rtecEventPublisher\n"));
-            break;
-
-          case Deployment::rtecEventConsumer:
-
-            ACE_DEBUG ((LM_DEBUG, "rtecEventConsumer\n"));
-            break;
-
         default:
           ACE_DEBUG ((LM_DEBUG, "Unknown port kind.\n"));
         }
